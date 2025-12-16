@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F9C1345730;
-	Tue, 16 Dec 2025 11:37:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE6D4345758;
+	Tue, 16 Dec 2025 11:37:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885034; cv=none; b=cE9o4V9xRNXoErSUnXqFU1IVzNvzdUSCzUa1KYjOWPmka8nt1EEznr7PYb/OC8ByV1hJtCSjJzLfn7EaBGuxnbCk8lZ6wDYma2dQfaKwFbGn64juIq5xCrzxU9J/xvkvujXpTFPjv7rSPbf/6xMKYq3W+QxIx2WaWBOYTKGFPWQ=
+	t=1765885038; cv=none; b=on6QMMf7hkZJa0uHiA60wLXRar03saXCI2bqXB+erkdOgcD66wqnLpamDeMQB/dH84XHW20jDzRSV02JmFKAzbMmH2TTIDwFSI+igDY/AA6COKDRFPuVh8UE1yFyaGkxMrKvKMRummcgYWEOjoL8y5o+SwI3Uy0icUJByS8aFic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885034; c=relaxed/simple;
-	bh=nJNGQe8DdGlhJoFVCJTnlSuZY61Rmjg8V3ilLv7Y0Xo=;
+	s=arc-20240116; t=1765885038; c=relaxed/simple;
+	bh=Y9AXI9U8w+7R8tRkjC7Y1qPlJCiHo6gj+XaUnuZxJLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nUiSKeyX72E7HDt+ok0l4kb+Zgt3u1k6vxNOwJbUQxBy0knBdfy7ri3mPrDLFDATt07tAUZ24hbyVusDtpk5g78Q5lipegsdilshCwBgVN58N8e9gspwvkvE0Z0jGlIhlWeG969Yb65+o0bAwbiX0/AQUz1+QB7CPffiptXc5p0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N/TAHhae; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L0VcpvRjSvWr83rcrPdkoC41EI+2UzIt9PgrqmFxp+fR3xVCc5VmxlZdwpXqeMvysKoshvu7VF6tTaVa8UpnFyw3ukAMv57r8GmiIZtHhhO5LfJXpzq+wz7EoTjxwE7is6Ci6aOZm/CNX3U8zjQEWCnEnZz/+kFg4iCIPjZc/y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cV9wuaJs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N/TAHhae"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D72DC4CEF1;
-	Tue, 16 Dec 2025 11:37:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cV9wuaJs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DE01C4CEF1;
+	Tue, 16 Dec 2025 11:37:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885034;
-	bh=nJNGQe8DdGlhJoFVCJTnlSuZY61Rmjg8V3ilLv7Y0Xo=;
+	s=korg; t=1765885037;
+	bh=Y9AXI9U8w+7R8tRkjC7Y1qPlJCiHo6gj+XaUnuZxJLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N/TAHhaeJ9d2rdLcgOhmIXhpGF8zjP11WS2Lqt/x8ZmpNAyyWqm0gEMg4f1zLX+ot
-	 4MFxDduOSjTC3HokjtYh1RtjEi9U4Yh+eT5VTllZGWEsG78dzU1kanWoaI5nLidZ5C
-	 uygPsGMZ0RlPQkJmrdIq7r+LTrOWHEijIgyGVk7s=
+	b=cV9wuaJs+2JI12PCAVRcY63srfWdtshZUSB1fQUqmmZwfyIFw32xNagbtrf+DUf/O
+	 q8LbuBjpzPKtDhDseqmaTMkhSTuTNZ2MEvkPkYGElo4v7wKpo6VUvXMZPRTzltmIob
+	 itjfFhNzKY7wX1U8s8zrLEcAlIwYABSeW0YeDsro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seungjin Bae <eeodqql09@gmail.com>,
+	Konstantin Andreev <andreev@swemel.ru>,
+	Casey Schaufler <casey@schaufler-ca.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 019/507] USB: Fix descriptor count when handling invalid MBIM extended descriptor
-Date: Tue, 16 Dec 2025 12:07:40 +0100
-Message-ID: <20251216111346.232537515@linuxfoundation.org>
+Subject: [PATCH 6.17 002/507] smack: fix bug: SMACK64TRANSMUTE set on non-directory
+Date: Tue, 16 Dec 2025 12:07:23 +0100
+Message-ID: <20251216111345.618286637@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -50,45 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seungjin Bae <eeodqql09@gmail.com>
+From: Konstantin Andreev <andreev@swemel.ru>
 
-[ Upstream commit 5570ad1423ee60f6e972dadb63fb2e5f90a54cbe ]
+[ Upstream commit 195da3ff244deff119c3f5244b464b2236ea1725 ]
 
-In cdc_parse_cdc_header(), the check for the USB_CDC_MBIM_EXTENDED_TYPE
-descriptor was using 'break' upon detecting an invalid length.
+When a new file system object is created
+and the conditions for label transmutation are met,
+the SMACK64TRANSMUTE extended attribute is set
+on the object regardless of its type:
+file, pipe, socket, symlink, or directory.
 
-This was incorrect because 'break' only exits the switch statement,
-causing the code to fall through to cnt++, thus incorrectly
-incrementing the count of parsed descriptors for a descriptor that was
-actually invalid and being discarded.
+However,
+SMACK64TRANSMUTE may only be set on directories.
 
-This patch changes 'break' to 'goto next_desc;' to ensure that the
-logic skips the counter increment and correctly proceeds to the next
-descriptor in the buffer. This maintains an accurate count of only
-the successfully parsed descriptors.
+This bug is a combined effect of the commits [1] and [2]
+which both transfer functionality
+from smack_d_instantiate() to smack_inode_init_security(),
+but only in part.
 
-Fixes: e4c6fb7794982 ("usbnet: move the CDC parser into USB core")
-Signed-off-by: Seungjin Bae <eeodqql09@gmail.com>
-Link: https://lore.kernel.org/r/20250928185611.764589-1-eeodqql09@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Commit [1] set blank  SMACK64TRANSMUTE on improper object types.
+Commit [2] set "TRUE" SMACK64TRANSMUTE on improper object types.
+
+[1] 2023-06-10,
+Fixes: baed456a6a2f ("smack: Set the SMACK64TRANSMUTE xattr in smack_inode_init_security()")
+Link: https://lore.kernel.org/linux-security-module/20230610075738.3273764-3-roberto.sassu@huaweicloud.com/
+
+[2] 2023-11-16,
+Fixes: e63d86b8b764 ("smack: Initialize the in-memory inode in smack_inode_init_security()")
+Link: https://lore.kernel.org/linux-security-module/20231116090125.187209-5-roberto.sassu@huaweicloud.com/
+
+Signed-off-by: Konstantin Andreev <andreev@swemel.ru>
+Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
+Stable-dep-of: 78fc6a94be25 ("smack: fix bug: invalid label of unix socket file")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/message.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ security/smack/smack_lsm.c | 26 ++++++++++++++------------
+ 1 file changed, 14 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/usb/core/message.c b/drivers/usb/core/message.c
-index d2b2787be4092..6138468c67c47 100644
---- a/drivers/usb/core/message.c
-+++ b/drivers/usb/core/message.c
-@@ -2431,7 +2431,7 @@ int cdc_parse_cdc_header(struct usb_cdc_parsed_header *hdr,
- 			break;
- 		case USB_CDC_MBIM_EXTENDED_TYPE:
- 			if (elength < sizeof(struct usb_cdc_mbim_extended_desc))
--				break;
-+				goto next_desc;
- 			hdr->usb_cdc_mbim_extended_desc =
- 				(struct usb_cdc_mbim_extended_desc *)buffer;
- 			break;
+diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
+index 8629e58ea4fa1..d6f814aa15bae 100644
+--- a/security/smack/smack_lsm.c
++++ b/security/smack/smack_lsm.c
+@@ -1027,18 +1027,20 @@ static int smack_inode_init_security(struct inode *inode, struct inode *dir,
+ 		if (!trans_cred)
+ 			issp->smk_inode = dsp;
+ 
+-		issp->smk_flags |= SMK_INODE_TRANSMUTE;
+-		xattr_transmute = lsm_get_xattr_slot(xattrs,
+-						     xattr_count);
+-		if (xattr_transmute) {
+-			xattr_transmute->value = kmemdup(TRANS_TRUE,
+-							 TRANS_TRUE_SIZE,
+-							 GFP_NOFS);
+-			if (!xattr_transmute->value)
+-				return -ENOMEM;
+-
+-			xattr_transmute->value_len = TRANS_TRUE_SIZE;
+-			xattr_transmute->name = XATTR_SMACK_TRANSMUTE;
++		if (S_ISDIR(inode->i_mode)) {
++			issp->smk_flags |= SMK_INODE_TRANSMUTE;
++			xattr_transmute = lsm_get_xattr_slot(xattrs,
++							     xattr_count);
++			if (xattr_transmute) {
++				xattr_transmute->value = kmemdup(TRANS_TRUE,
++								 TRANS_TRUE_SIZE,
++								 GFP_NOFS);
++				if (!xattr_transmute->value)
++					return -ENOMEM;
++
++				xattr_transmute->value_len = TRANS_TRUE_SIZE;
++				xattr_transmute->name = XATTR_SMACK_TRANSMUTE;
++			}
+ 		}
+ 	}
+ 
 -- 
 2.51.0
 
