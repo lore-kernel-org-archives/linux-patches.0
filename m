@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3483469F6;
-	Tue, 16 Dec 2025 11:54:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 354CF347FD0;
+	Tue, 16 Dec 2025 11:55:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886098; cv=none; b=CyAHmhFKKIn203WXgeabQQ0DHA4g780A/D5RSXRt6bwtC/Rk/rwAIUier8pMzSBnHruuH4Nn2QM6n1WcpCao4aYfjE0dtZ3sSrddXeNmgNiUNmAFPZ5p+Rnywi/g5Yw069z0aISSjqGURVAYojTRr1P7jGp6oVzTRqaxz3SxeTU=
+	t=1765886102; cv=none; b=RqQF6UYqUNZsqbiudyGqdWaY0FZQnOiTA5/2fPJ40DZjjry2uI2QKcCmT2krqSxcuGs3aB41en6mIQWXDvidv2U5T7N2qIq4uYVCP4gD/sGTA20+jshH7yta9Qm06MXLcxATsjjtO0bkFc5YybaWGWIPFE8LofJIs+tMI7XCTuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886098; c=relaxed/simple;
-	bh=gL835c/mOLa4sQ76Fv2v9EUSf2BMbAATHZjUQ7M6dlg=;
+	s=arc-20240116; t=1765886102; c=relaxed/simple;
+	bh=eHQEWqLf61PCfFmTMMmKjDbFnvkKtfaKLAMYoBrvqos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cDPSSM+zXJK2aBvADGJd0zJQMwXeLVh8wSZHRywRsIvtiztiTFKIiFLSI+iwHH68pMSUQF7ZHVxxZGR5O+yCaWqcqWKcZZ2bMWAsPoR4IjrU1x4Wx9T+l6d0AAFq4P6OFWROtfAHvRjhlMuDzsuMcA4EOB2Cja6qxBS50v7aqRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bujSgNGM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AeJwR5eAz4BeKdb5RX6ZkZHSxmA/wsqEZC9578Xgwh7sCha5H8b3AqxdlZHCMB4H3netCvIaFLwVlHbxuigQ0FuhCBMQ9JdPaRokADpkopdfCUZ29YF7EJpsoe8GL+ITBLJz/qwEhcwOmmm8uqbdZ4ClDEeivYxXoocUOaTMOSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LEzByTqn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bujSgNGM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B143C4CEF1;
-	Tue, 16 Dec 2025 11:54:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LEzByTqn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A54D4C4CEF1;
+	Tue, 16 Dec 2025 11:55:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886098;
-	bh=gL835c/mOLa4sQ76Fv2v9EUSf2BMbAATHZjUQ7M6dlg=;
+	s=korg; t=1765886102;
+	bh=eHQEWqLf61PCfFmTMMmKjDbFnvkKtfaKLAMYoBrvqos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bujSgNGMnWi5aLbJ3T9tlh13vfLALHfqafYSpf8/mI67rW9YKuu1WxvYfBtQnUzKd
-	 EDJazhRHPZ8kT7hNjc9o02dHCrbGQm0pS95cYSD80veuHD1BthuA9iO0gIpSxHFRYG
-	 DCsF8+eMZcHBB4Ndj+WfK9KTbw+JhnvGr3ZbpZqo=
+	b=LEzByTqngCEeNRXMe/xWx8kTxW5ecdiiVagHO5NE5qexURlPuN4UCcjoNQ2mfcgsu
+	 2BojhdxgL4Stq65au4yqVaYld1J7qNQEmR6siyDrxYS+2g78vhFYPiSG/4Cfve/gi3
+	 LqL+aW6SZxPr3woxmTpUUb7lH/CdudzvS5CcWtz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Felix Fietkau <nbd@nbd.name>,
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Dinh Nguyen <dinguyen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 337/507] mt76: mt7615: Fix memory leak in mt7615_mcu_wtbl_sta_add()
-Date: Tue, 16 Dec 2025 12:12:58 +0100
-Message-ID: <20251216111357.672228109@linuxfoundation.org>
+Subject: [PATCH 6.17 338/507] firmware: stratix10-svc: fix make htmldocs warning for stratix10_svc
+Date: Tue, 16 Dec 2025 12:12:59 +0100
+Message-ID: <20251216111357.708032586@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,43 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Dinh Nguyen <dinguyen@kernel.org>
 
-[ Upstream commit 53d1548612670aa8b5d89745116cc33d9d172863 ]
+[ Upstream commit 377441d53a2df61b105e823b335010cd4f1a6e56 ]
 
-In mt7615_mcu_wtbl_sta_add(), an skb sskb is allocated. If the
-subsequent call to mt76_connac_mcu_alloc_wtbl_req() fails, the function
-returns an error without freeing sskb, leading to a memory leak.
+Fix this warning that was generated from "make htmldocs":
 
-Fix this by calling dev_kfree_skb() on sskb in the error handling path
-to ensure it is properly released.
+WARNING: drivers/firmware/stratix10-svc.c:58 struct member 'intel_svc_fcs'
+not described in 'stratix10_svc'
 
-Fixes: 99c457d902cf9 ("mt76: mt7615: move mt7615_mcu_set_bmc to mt7615_mcu_ops")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20251113062415.103611-1-zilin@seu.edu.cn
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: e6281c26674e ("firmware: stratix10-svc: Add support for FCS")
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Closes: https://lore.kernel.org/linux-next/20251106145941.37920e97@canb.auug.org.au/
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
+Link: https://patch.msgid.link/20251114185815.358423-1-dinguyen@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7615/mcu.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/firmware/stratix10-svc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
-index 4064e193d4dec..08ee2e861c4e2 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
-@@ -874,8 +874,10 @@ mt7615_mcu_wtbl_sta_add(struct mt7615_phy *phy, struct ieee80211_vif *vif,
- 	wtbl_hdr = mt76_connac_mcu_alloc_wtbl_req(&dev->mt76, &msta->wcid,
- 						  WTBL_RESET_AND_SET, NULL,
- 						  &wskb);
--	if (IS_ERR(wtbl_hdr))
-+	if (IS_ERR(wtbl_hdr)) {
-+		dev_kfree_skb(sskb);
- 		return PTR_ERR(wtbl_hdr);
-+	}
- 
- 	if (enable) {
- 		mt76_connac_mcu_wtbl_generic_tlv(&dev->mt76, wskb, vif, sta,
+diff --git a/drivers/firmware/stratix10-svc.c b/drivers/firmware/stratix10-svc.c
+index 00f58e27f6de5..deee0e7be34bd 100644
+--- a/drivers/firmware/stratix10-svc.c
++++ b/drivers/firmware/stratix10-svc.c
+@@ -52,6 +52,7 @@ struct stratix10_svc_chan;
+ /**
+  * struct stratix10_svc - svc private data
+  * @stratix10_svc_rsu: pointer to stratix10 RSU device
++ * @intel_svc_fcs: pointer to the FCS device
+  */
+ struct stratix10_svc {
+ 	struct platform_device *stratix10_svc_rsu;
 -- 
 2.51.0
 
