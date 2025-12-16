@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29EDE35503A;
-	Tue, 16 Dec 2025 12:01:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5EB35503D;
+	Tue, 16 Dec 2025 12:01:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886485; cv=none; b=gAyiv/jqk9Zdejou5zuuTOaertGBYOVXm+pcVZ7m1oTcpiOhcLhhmUhsLPegNQftfCcHn/fYub2jxXmqXBfOT/VhEwtkRMTMil2wpg71BMjwgpNnCf8eG2mh2IqqrKbGB100rMVZITAJ/W+KnmX2ixlFcVVoZyKDLbwZ3RvfIO8=
+	t=1765886488; cv=none; b=M0nsMe5611/6CMFwFL4BO6mo0oCh/vT4OkTnpa8Kwdl2nPFs4OJ2b5yMknL9jgRZ+RLO2a00wrCf3XeWcfPAw1ok0vGis7rRdVmfcdkkNnrvjk6XNOoKm8aa8JrRCNvmlLIVLqOsGvfFgQnEHn3qSFaWhw9TWh5hiFkB+r9uPJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886485; c=relaxed/simple;
-	bh=kCphZUm9xIvQe/D+L6BD979Jo9SR/HymK1I3JQnqlR4=;
+	s=arc-20240116; t=1765886488; c=relaxed/simple;
+	bh=ronrqBTE9S+KJkSt8qXzAn05MG+QbsM2oRy+dJmkn8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OcshElCg9zTENx06Ul+rSMqtPHQDuFFDzCZE+PtapYSDXq6JfW2Fh9fsLkU/I/eP2Iurk3zY8clpYXJr+AC+U7eCOdDaDEMg0ZV45ElwZc6qrFvpf5c+hNxi0SrByApvnJhyYKf54YQwjYZatkUAGiQ6GFGzvTybXOtYjO2yoXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jLzLEOnq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iD9F2G7vRBixBkaE2Ba5urACXvAgWhM+hZ0blJaKfE1i2qi3jrxhiMyEXV6/XBaxyolhcr5cfYAhjwAw9U3YunEybLSh7sQ8D2gC0vm1SifEDXmV2wPAVCcyncC+Ruemz8gzlEJ/QFZlsce8rQ9SqehGkDPxN40lSuy+RY4fPe8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tnAcX3yE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jLzLEOnq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BBB5C4CEF1;
-	Tue, 16 Dec 2025 12:01:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tnAcX3yE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09A74C4CEF1;
+	Tue, 16 Dec 2025 12:01:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886485;
-	bh=kCphZUm9xIvQe/D+L6BD979Jo9SR/HymK1I3JQnqlR4=;
+	s=korg; t=1765886488;
+	bh=ronrqBTE9S+KJkSt8qXzAn05MG+QbsM2oRy+dJmkn8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jLzLEOnqNz4u7E1xn8crvnyVI1EzDjCSZYpRbQ2PnpfX+UUuqhsZwck57yO218CVT
-	 I6g0pxlByOkGvwdaGmtjMjvM4oWR+Vm2d7NpxmqI1UcoBsz5oNz6W1skR9vOysreyN
-	 bbhuVJDdF48okruuSIS6LKdSzhkoi35/fdx9+hbM=
+	b=tnAcX3yEPQxp1pT6YyTHbkVn+Y1OOjlX32GEiviG7jymsKuqmmDnjdhcoTtK0eMhJ
+	 jfMkWl4t3RRcxFbldejhB++RRCKKt20ZPuna9kjPMMqr7fHUQUL/q50e5rbQjB9nZZ
+	 uwaDQFwT/LHP04Vfu2pMREFPnX1b/bboirwweu30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Lukasz Majewski <lukma@denx.de>,
-	Xiaoliang Yang <xiaoliang.yang_1@nxp.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	=?UTF-8?q?=C5=81ukasz=20Majewski?= <lukma@nabladev.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alkis Georgopoulos <alkisg@gmail.com>,
+	Li Lingfeng <lilingfeng3@huawei.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 423/507] net: hsr: create an API to get hsr port type
-Date: Tue, 16 Dec 2025 12:14:24 +0100
-Message-ID: <20251216111400.786558949@linuxfoundation.org>
+Subject: [PATCH 6.17 450/507] Revert "nfs: ignore SB_RDONLY when mounting nfs"
+Date: Tue, 16 Dec 2025 12:14:51 +0100
+Message-ID: <20251216111401.755250995@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -49,136 +46,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiaoliang Yang <xiaoliang.yang_1@nxp.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit a0244e76213980f3b9bb5d40b0b6705fcf24230d ]
+[ Upstream commit d4a26d34f1946142f9d32e540490e4926ae9a46b ]
 
-Since the introduction of HSR_PT_INTERLINK in commit 5055cccfc2d1 ("net:
-hsr: Provide RedBox support (HSR-SAN)"), we see that different port
-types require different settings for hardware offload, which was not the
-case before when we only had HSR_PT_SLAVE_A and HSR_PT_SLAVE_B. But
-there is currently no way to know which port is which type, so create
-the hsr_get_port_type() API function and export it.
+This reverts commit 52cb7f8f177878b4f22397b9c4d2c8f743766be3.
 
-When hsr_get_port_type() is called from the device driver, the port can
-must be found in the HSR port list. An important use case is for this
-function to work from offloading drivers' NETDEV_CHANGEUPPER handler,
-which is triggered by hsr_portdev_setup() -> netdev_master_upper_dev_link().
-Therefore, we need to move the addition of the hsr_port to the HSR port
-list prior to calling hsr_portdev_setup(). This makes the error
-restoration path also more similar to hsr_del_port(), where
-kfree_rcu(port) is already used.
+Silently ignoring the "ro" and "rw" mount options causes user confusion,
+and regressions.
 
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc: Lukasz Majewski <lukma@denx.de>
-Signed-off-by: Xiaoliang Yang <xiaoliang.yang_1@nxp.com>
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Łukasz Majewski <lukma@nabladev.com>
-Link: https://patch.msgid.link/20251130131657.65080-3-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 30296ac76426 ("net: dsa: xrs700x: reject unsupported HSR configurations")
+Reported-by: Alkis Georgopoulos<alkisg@gmail.com>
+Cc: Li Lingfeng <lilingfeng3@huawei.com>
+Fixes: 52cb7f8f1778 ("nfs: ignore SB_RDONLY when mounting nfs")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/if_hsr.h |  9 +++++++++
- net/hsr/hsr_device.c   | 20 ++++++++++++++++++++
- net/hsr/hsr_slave.c    |  7 ++++---
- 3 files changed, 33 insertions(+), 3 deletions(-)
+ fs/nfs/internal.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/if_hsr.h b/include/linux/if_hsr.h
-index d7941fd880329..f4cf2dd36d193 100644
---- a/include/linux/if_hsr.h
-+++ b/include/linux/if_hsr.h
-@@ -43,6 +43,8 @@ extern bool is_hsr_master(struct net_device *dev);
- extern int hsr_get_version(struct net_device *dev, enum hsr_version *ver);
- struct net_device *hsr_get_port_ndev(struct net_device *ndev,
- 				     enum hsr_port_type pt);
-+int hsr_get_port_type(struct net_device *hsr_dev, struct net_device *dev,
-+		      enum hsr_port_type *type);
- #else
- static inline bool is_hsr_master(struct net_device *dev)
- {
-@@ -59,6 +61,13 @@ static inline struct net_device *hsr_get_port_ndev(struct net_device *ndev,
- {
- 	return ERR_PTR(-EINVAL);
- }
-+
-+static inline int hsr_get_port_type(struct net_device *hsr_dev,
-+				    struct net_device *dev,
-+				    enum hsr_port_type *type)
-+{
-+	return -EINVAL;
-+}
- #endif /* CONFIG_HSR */
+diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
+index c0a44f389f8f4..5a43543c60b84 100644
+--- a/fs/nfs/internal.h
++++ b/fs/nfs/internal.h
+@@ -13,7 +13,7 @@
+ #include <linux/nfslocalio.h>
+ #include <linux/wait_bit.h>
  
- #endif /*_LINUX_IF_HSR_H_*/
-diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
-index 492cbc78ab75a..d1bfc49b5f017 100644
---- a/net/hsr/hsr_device.c
-+++ b/net/hsr/hsr_device.c
-@@ -690,6 +690,26 @@ struct net_device *hsr_get_port_ndev(struct net_device *ndev,
- }
- EXPORT_SYMBOL(hsr_get_port_ndev);
+-#define NFS_SB_MASK (SB_NOSUID|SB_NODEV|SB_NOEXEC|SB_SYNCHRONOUS)
++#define NFS_SB_MASK (SB_RDONLY|SB_NOSUID|SB_NODEV|SB_NOEXEC|SB_SYNCHRONOUS)
  
-+int hsr_get_port_type(struct net_device *hsr_dev, struct net_device *dev,
-+		      enum hsr_port_type *type)
-+{
-+	struct hsr_priv *hsr = netdev_priv(hsr_dev);
-+	struct hsr_port *port;
-+
-+	rcu_read_lock();
-+	hsr_for_each_port(hsr, port) {
-+		if (port->dev == dev) {
-+			*type = port->type;
-+			rcu_read_unlock();
-+			return 0;
-+		}
-+	}
-+	rcu_read_unlock();
-+
-+	return -EINVAL;
-+}
-+EXPORT_SYMBOL(hsr_get_port_type);
-+
- /* Default multicast address for HSR Supervision frames */
- static const unsigned char def_multicast_addr[ETH_ALEN] __aligned(2) = {
- 	0x01, 0x15, 0x4e, 0x00, 0x01, 0x00
-diff --git a/net/hsr/hsr_slave.c b/net/hsr/hsr_slave.c
-index 102eccf5ead73..82c0bc69c9b34 100644
---- a/net/hsr/hsr_slave.c
-+++ b/net/hsr/hsr_slave.c
-@@ -204,14 +204,14 @@ int hsr_add_port(struct hsr_priv *hsr, struct net_device *dev,
- 	port->type = type;
- 	ether_addr_copy(port->original_macaddress, dev->dev_addr);
- 
-+	list_add_tail_rcu(&port->port_list, &hsr->ports);
-+
- 	if (type != HSR_PT_MASTER) {
- 		res = hsr_portdev_setup(hsr, dev, port, extack);
- 		if (res)
- 			goto fail_dev_setup;
- 	}
- 
--	list_add_tail_rcu(&port->port_list, &hsr->ports);
--
- 	master = hsr_port_get_hsr(hsr, HSR_PT_MASTER);
- 	netdev_update_features(master->dev);
- 	dev_set_mtu(master->dev, hsr_get_max_mtu(hsr));
-@@ -219,7 +219,8 @@ int hsr_add_port(struct hsr_priv *hsr, struct net_device *dev,
- 	return 0;
- 
- fail_dev_setup:
--	kfree(port);
-+	list_del_rcu(&port->port_list);
-+	kfree_rcu(port, rcu);
- 	return res;
- }
+ extern const struct export_operations nfs_export_ops;
  
 -- 
 2.51.0
