@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED6DC3659E5;
-	Tue, 16 Dec 2025 12:11:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4EE31A7F5;
+	Tue, 16 Dec 2025 12:11:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887073; cv=none; b=FMzDd2vYdzNxOAsBs9NNY/uSJTCfP6jBlsfJX7yDfGIlqdkgxDTTrXo+nZMdqs5D55MjJi8zIp1lZktxV1rEep8zlzuuQEx+p3viaHggLIc16BmsIVKJkZrB8D4fVDfnIlb0zw9xM0Mniz5p3FPaH8YTeBiiVOBLWfQ9ecgtuMs=
+	t=1765887076; cv=none; b=Ta+292+GnmOyqGCuOyxYLaGfP0S8jlWY00Un/VuM72ZfSn40Z+/y+tEiVrDf3hZ7YAqv0mkh9pwsY2a65naVN/EPwNGqx86+rsXQA7m4VoZTOKAav2KshuhdIaRkWDEuey2Z+2VDPB/W9I3SxwxPSEUv0uDlz5EX/IczSkPlb4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887073; c=relaxed/simple;
-	bh=X2Rp/aknV+weuF4FuvRRvlnnKJwwHOmO+N3ucfa+YZw=;
+	s=arc-20240116; t=1765887076; c=relaxed/simple;
+	bh=bNhNA8CjNY6+2EQmLoo+vb0cRl8yW0iiqQbbVBkXHlg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WS+mlW5kqPh2yvlvB0Ra0eQkCnQ5zSoaZE6y5ii6wHbrvxvctjx0N4l2VN58DvEA65FWIwgpeQpsyFD4hQcy4GlpmuySmOa6kOSRkNyn/93qIdevZlsMzv5AQjfYFjGYvzCdIQYRBbeb9tSoGPqUB1nod9SU0JBa9y+eMAaForw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G6xRAdiz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ed/Pc4joStJig/f4a5n/FhkSjagMo3yf+hKeWGeVqbZMnIHB+nincvpLG5QTfAKEjSdii+nzpGQIIiCOOvjeUdAIGmQ0drbYO9kPjEkkW/FcX0WOXwHC33TGBE+H0FiJWxThf0xqRA70rLLILDAurdM5w7zU60Z+pezysBdxt7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oAhUNIVH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G6xRAdiz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52674C4CEF1;
-	Tue, 16 Dec 2025 12:11:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oAhUNIVH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 257E7C4CEF1;
+	Tue, 16 Dec 2025 12:11:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887072;
-	bh=X2Rp/aknV+weuF4FuvRRvlnnKJwwHOmO+N3ucfa+YZw=;
+	s=korg; t=1765887076;
+	bh=bNhNA8CjNY6+2EQmLoo+vb0cRl8yW0iiqQbbVBkXHlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G6xRAdizZhnH0QlQroWArGcvkaxAFLlXludA1UPrfiQv0OzzbhG/agTxVyQAD1Ook
-	 Ut/ebuBR75lMJi09cpc6mZX4/jKQfsVCKGFxMWOrjc5Q9cSMEzS2d9FpVwUyv0FAnr
-	 qdDdAJSlvhm+fbTCTSv8QoW2ezL1aMbtraPbmAG4=
+	b=oAhUNIVHFUitNS8Kj0xB0jbsRNSynX6CQaSmZ3CKR/m5lypcPrIGik+nm9DLFz1Ut
+	 ViXJkDS5cqABVRTLoa0IWOI9Xhboy2rCGBnh7BUMpKmE0dRQE+CmrOZP3+AUJ6qhlh
+	 3LhFTVMUJKtq5MvmtbfWzqhEpuO70oOn82xMv3wY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 118/614] arm64: dts: qcom: sm8650: set ufs as dma coherent
-Date: Tue, 16 Dec 2025 12:08:05 +0100
-Message-ID: <20251216111405.612887894@linuxfoundation.org>
+Subject: [PATCH 6.18 119/614] arm64: dts: qcom: sm8750-mtp: move PCIe GPIOs to pcieport0 node
+Date: Tue, 16 Dec 2025 12:08:06 +0100
+Message-ID: <20251216111405.648304193@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -53,45 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 
-[ Upstream commit c2703c90161b45bca5b65f362adbae02ed71fcc1 ]
+[ Upstream commit cc8056a16472d186140d1a66ed5648cee41f4379 ]
 
-The UFS device is ovbiously dma coherent like the other IOMMU devices
-like usb, mmc, ... let's fix this by adding the flag.
+Relocate the wake-gpios and perst-gpios properties from the pcie0
+controller node to the pcieport0 node. These GPIOs are associated with
+the PCIe root port and should reside under the pcieport0 node.
 
-To be sure an extensive test has been performed to be sure it's
-safe, as downstream uses this flag for UFS as well.
+Also rename perst-gpios to reset-gpios to match the expected property name
+in the PCIe port node.
 
-As an experiment, I checked how the dma-coherent could impact
-the UFS bandwidth, and it happens the max bandwidth on cached
-write is slighly highter (up to 10%) while using less cpu time
-since cache sync/flush is skipped.
-
-Fixes: 10e024671295 ("arm64: dts: qcom: sm8650: add interconnect dependent device nodes")
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Fixes: 141714e163bb ("arm64: dts: qcom: sm8750-mtp: Add WiFi and Bluetooth")
+Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251007-topic-sm8650-upstream-ufs-dma-coherent-v1-1-f3cfeaee04ce@linaro.org
+Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20251008-sm8750-v1-1-daeadfcae980@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8650.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8750-mtp.dts | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-index ebf1971b1bfbe..3b03c13539386 100644
---- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-@@ -3988,6 +3988,8 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+diff --git a/arch/arm64/boot/dts/qcom/sm8750-mtp.dts b/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
+index 3bbb53b7c71f3..45b5f75815670 100644
+--- a/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
++++ b/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
+@@ -960,9 +960,6 @@ &pon_resin {
+ };
  
- 			iommus = <&apps_smmu 0x60 0>;
+ &pcie0 {
+-	wake-gpios = <&tlmm 104 GPIO_ACTIVE_HIGH>;
+-	perst-gpios = <&tlmm 102 GPIO_ACTIVE_LOW>;
+-
+ 	pinctrl-0 = <&pcie0_default_state>;
+ 	pinctrl-names = "default";
  
-+			dma-coherent;
+@@ -977,6 +974,9 @@ &pcie0_phy {
+ };
+ 
+ &pcieport0 {
++	wake-gpios = <&tlmm 104 GPIO_ACTIVE_HIGH>;
++	reset-gpios = <&tlmm 102 GPIO_ACTIVE_LOW>;
 +
- 			lanes-per-direction = <2>;
- 			qcom,ice = <&ice>;
- 
+ 	wifi@0 {
+ 		compatible = "pci17cb,1107";
+ 		reg = <0x10000 0x0 0x0 0x0 0x0>;
 -- 
 2.51.0
 
