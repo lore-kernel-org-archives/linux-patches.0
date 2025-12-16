@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 416733502A4;
-	Tue, 16 Dec 2025 11:56:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 463CA3502A4;
+	Tue, 16 Dec 2025 11:56:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886186; cv=none; b=jTmOrquLkDrhBajJ+EuQd5prN+0S+VbGKIg7o29FisPvuOoBekDIh8Xg4PCdfaL/T/zgfkDYtiJO7ocHxt9GCbOKa6qOihVxHAlvd0wrZXlLcK03TdfwUJ7atF4MNO/MCWq43DFrN61jdXLFufs5KVxyUahOSpAd/483mR0fsKs=
+	t=1765886190; cv=none; b=AOv3zz5dljbsljVVewA93UmR0djI+kIPPXaEFtWQ8dTeY67ijcmxGOEiYFJM7cON6yxoro/mWV3S2No7GIbdux7qfIw+eFNLyes68WDzF+cJw/6UrKZnhhL0yIC6+Tzx15TfawsV+F302LU7fPUKplB8dNk3sWvVEXN9yGaOTZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886186; c=relaxed/simple;
-	bh=zTRnUs8LngfGLrUFkTGdw7ly1RSi2Rz7H3KC7TqshpE=;
+	s=arc-20240116; t=1765886190; c=relaxed/simple;
+	bh=vzTv4DixdcYit6bVUJhHvsADrPGzq/fhPj1ZXcQcURE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D1XOgSPDfS0eIVoyNq1Wtu+3o9QHnWXKf4M0fiZ0mv/Sz5UkHgKfnnwgFGr36G3ikHbi6lKNsjGuOSSxplKO9cEjsBYkHBfiHp8RDAzt/mI16l+urFZYv6Zx3cJ0E9Rf1uMlJYzBLkq3P1s9LREiCrG3P9R0FSBDIjXeAJDyoxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MP31f4ah; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qewo/TWYCU/gBjhH6qBrmDRbPADeu9MOcJpw7q+PJuOkB5bpfVyqwwOWdT7QZ+ydVqA/aEV8XRuGGGpW16nXj8IWYyuaQwPHrx3BAnRw3OXNpAh2Gn61MfCB+WxrewTT7BQwx9rgVCxkUDFfa0gFKHiY7CoAwFUUcySRBhpwYGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qLsDPSMl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MP31f4ah"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C842C4CEF1;
-	Tue, 16 Dec 2025 11:56:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qLsDPSMl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23DEC4CEF1;
+	Tue, 16 Dec 2025 11:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886186;
-	bh=zTRnUs8LngfGLrUFkTGdw7ly1RSi2Rz7H3KC7TqshpE=;
+	s=korg; t=1765886190;
+	bh=vzTv4DixdcYit6bVUJhHvsADrPGzq/fhPj1ZXcQcURE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MP31f4ah0eGIOZjH8U9tLBpl87cpliNOivqgFBFm+lA/AMCs76xnL8t9pP4E1ao3Q
-	 Ij4cJmCojGhpJQHvs8zbPpB5ec7aK5kE8q9mWvSClGyvkHoa0zbkaib56J++CtqOlZ
-	 3Pib9sAGTazCieSFfqEB/WenP2z8fNyeVKczjKaA=
+	b=qLsDPSMlT7E3kD4TpKKMwrEy4Op2rIX8rR9KibQz5RY18Zk1MzdiXgRxqY3a8vizZ
+	 5YH721spem9KAA7fE0FybzSJynfP2AGAqVtmH2Xle7n+HY79uR262qQl+jpVp7xZQn
+	 x59UPY3udia45AhrE6Tvgug4PVIQRS+cjdQBCMVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Courbot <acourbot@nvidia.com>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 364/507] firmware_loader: make RUST_FW_LOADER_ABSTRACTIONS select FW_LOADER
-Date: Tue, 16 Dec 2025 12:13:25 +0100
-Message-ID: <20251216111358.646009876@linuxfoundation.org>
+Subject: [PATCH 6.17 365/507] greybus: gb-beagleplay: Fix timeout handling in bootloader functions
+Date: Tue, 16 Dec 2025 12:13:26 +0100
+Message-ID: <20251216111358.682387018@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -50,36 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Courbot <acourbot@nvidia.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 9906efa545d1d2cf25a614eeb219d3f8d5a302cd ]
+[ Upstream commit e6df0f649cff08da7a2feb6d963b39076ca129f9 ]
 
-The use of firmware_loader is an implementation detail of drivers rather
-than a dependency. FW_LOADER is typically selected rather than depended
-on; the Rust abstractions should do the same thing.
+wait_for_completion_timeout() returns the remaining jiffies
+(at least 1) on success or 0 on timeout, but never negative
+error codes. The current code incorrectly checks for negative
+values, causing timeouts to be ignored and treated as success.
 
-Fixes: de6582833db0 ("rust: add firmware abstractions")
-Signed-off-by: Alexandre Courbot <acourbot@nvidia.com>
-Link: https://patch.msgid.link/20251106-b4-select-rust-fw-v3-1-771172257755@nvidia.com
+Check for a zero return value to correctly identify and
+handle timeout events.
+
+Fixes: 0cf7befa3ea2 ("greybus: gb-beagleplay: Add firmware upload API")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20251121064027.571-1-vulab@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/firmware_loader/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/greybus/gb-beagleplay.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/base/firmware_loader/Kconfig b/drivers/base/firmware_loader/Kconfig
-index 752b9a9bea038..15eff8a4b5053 100644
---- a/drivers/base/firmware_loader/Kconfig
-+++ b/drivers/base/firmware_loader/Kconfig
-@@ -38,7 +38,7 @@ config FW_LOADER_DEBUG
- config RUST_FW_LOADER_ABSTRACTIONS
- 	bool "Rust Firmware Loader abstractions"
- 	depends on RUST
--	depends on FW_LOADER=y
-+	select FW_LOADER
- 	help
- 	  This enables the Rust abstractions for the firmware loader API.
+diff --git a/drivers/greybus/gb-beagleplay.c b/drivers/greybus/gb-beagleplay.c
+index 9610f878da1b6..87186f891a6ac 100644
+--- a/drivers/greybus/gb-beagleplay.c
++++ b/drivers/greybus/gb-beagleplay.c
+@@ -644,8 +644,8 @@ static int cc1352_bootloader_wait_for_ack(struct gb_beagleplay *bg)
  
+ 	ret = wait_for_completion_timeout(
+ 		&bg->fwl_ack_com, msecs_to_jiffies(CC1352_BOOTLOADER_TIMEOUT));
+-	if (ret < 0)
+-		return dev_err_probe(&bg->sd->dev, ret,
++	if (!ret)
++		return dev_err_probe(&bg->sd->dev, -ETIMEDOUT,
+ 				     "Failed to acquire ack semaphore");
+ 
+ 	switch (READ_ONCE(bg->fwl_ack)) {
+@@ -683,8 +683,8 @@ static int cc1352_bootloader_get_status(struct gb_beagleplay *bg)
+ 	ret = wait_for_completion_timeout(
+ 		&bg->fwl_cmd_response_com,
+ 		msecs_to_jiffies(CC1352_BOOTLOADER_TIMEOUT));
+-	if (ret < 0)
+-		return dev_err_probe(&bg->sd->dev, ret,
++	if (!ret)
++		return dev_err_probe(&bg->sd->dev, -ETIMEDOUT,
+ 				     "Failed to acquire last status semaphore");
+ 
+ 	switch (READ_ONCE(bg->fwl_cmd_response)) {
+@@ -768,8 +768,8 @@ static int cc1352_bootloader_crc32(struct gb_beagleplay *bg, u32 *crc32)
+ 	ret = wait_for_completion_timeout(
+ 		&bg->fwl_cmd_response_com,
+ 		msecs_to_jiffies(CC1352_BOOTLOADER_TIMEOUT));
+-	if (ret < 0)
+-		return dev_err_probe(&bg->sd->dev, ret,
++	if (!ret)
++		return dev_err_probe(&bg->sd->dev, -ETIMEDOUT,
+ 				     "Failed to acquire last status semaphore");
+ 
+ 	*crc32 = READ_ONCE(bg->fwl_cmd_response);
 -- 
 2.51.0
 
