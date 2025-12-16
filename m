@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E01728CF5E;
-	Tue, 16 Dec 2025 11:58:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5595F28CF5E;
+	Tue, 16 Dec 2025 11:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886299; cv=none; b=FJdM4nTvdqLDGe9jWXzVTJD9thuOPDsVvd03LjbVdt7NTztGMQMk3dpqO53lXPu5c4uesqXnMnaE3d+rde6p8YLl0ZfsX0AXxknONx5aRt1s7bUrbB6zfN0H0VFyD3H2dfENPUJc3gw/oJW+XoFmzPz0jhRcrYC8IRCBDPxDkVA=
+	t=1765886303; cv=none; b=Vc4eikyupsr1iDwthMqwzZ6l+G6RxdHDDAB2/vTcSeypC+rYeni9djtCN3gyGrHriwX8l4ySyoloc/24Ltlpc7hpeq1F+YekNSyxx3+t7ZCXj7tYFGte+6AQO4ThVWL8zO3t8beTaLzqS65UD+aJe2Xgvmnl/3XvPTQS2CLM7RI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886299; c=relaxed/simple;
-	bh=zsb9Rze3uScWubT7VssUk5+HRl/NgjPyMLG49KCOJAI=;
+	s=arc-20240116; t=1765886303; c=relaxed/simple;
+	bh=6twb6plnL4wm62GwJ0BhnqQV+yKuZElM107XeRb2qbU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WSoomXh64JQJixFdy1V5Q/yOEQsS3dE/sKWdCoUOs0CGOJ/zLKl4izWz/QSz3UXlx7kvNejS5TLPIEjqnVj7C+gZ4tcdLiy7oU68CVvrsXfkp2+HDlbyO7ETChFpHvWBC80vKnW2b87gJeTLScdSzMv+VLZyx4upR75jXzULGcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uj1K+qc3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mMKDmaVMVU41mmX1YE6pjBdned25hEH+KHYs8CGOGLWVjEiGSniVkXFGO766obEgT+Bb9oT9sfImNCa+FVVgcqC92xz5TLEv7pB55tHSTAB0GRPjyvN3cPGRqe6gl3chtQfQ541yeeVLShtBBG8ay9SQcsEYWXw38w9Fs7ef5Zw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ycetp2ge; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uj1K+qc3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF20FC4CEF1;
-	Tue, 16 Dec 2025 11:58:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ycetp2ge"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2B34C4CEF1;
+	Tue, 16 Dec 2025 11:58:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886299;
-	bh=zsb9Rze3uScWubT7VssUk5+HRl/NgjPyMLG49KCOJAI=;
+	s=korg; t=1765886303;
+	bh=6twb6plnL4wm62GwJ0BhnqQV+yKuZElM107XeRb2qbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uj1K+qc3ZgJ+x9weTAhHGWLN8uBeKx1K6m7QyQ2K1LvYm/MBRte9kNY0yWBzc3JNT
-	 uNfobOXdPYLicHkez7GL/mL5xbuMI3wObcZgj8X5UAdaWmSqq1Ah9rNxUOJdhZsxBo
-	 R/nEnDHzapOVayJp40SkWksfQXeFXiL06kBD/NjE=
+	b=Ycetp2ge0sDNtegdl8lhkY2amqdTwtlBFc5MqAHzQ0Fvs5mJXn+nNanw3SvLjo3d8
+	 ifRa81UcvMfjF4EA7Uq+17viugmmwB0QeHTQAL+iTuZb668Q/F8uBFO/Ab/+zy8JJf
+	 VapNEg8eJ0oBQsvq/x9CbDHgG4pIZEJXvzZn5ZY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Tianchu Chen <flynnnchen@tencent.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 397/507] mtd: rawnand: renesas: Handle devm_pm_runtime_enable() errors
-Date: Tue, 16 Dec 2025 12:13:58 +0100
-Message-ID: <20251216111359.835720392@linuxfoundation.org>
+Subject: [PATCH 6.17 398/507] spi: ch341: fix out-of-bounds memory access in ch341_transfer_one
+Date: Tue, 16 Dec 2025 12:13:59 +0100
+Message-ID: <20251216111359.872974778@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,43 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Tianchu Chen <flynnnchen@tencent.com>
 
-[ Upstream commit a3623e1ae1ed6be4d49b2ccb9996a9d2b65c1828 ]
+[ Upstream commit 545d1287e40a55242f6ab68bcc1ba3b74088b1bc ]
 
-devm_pm_runtime_enable() can fail due to memory allocation failures.
-The current code ignores its return value and proceeds with
-pm_runtime_resume_and_get(), which may operate on incorrectly
-initialized runtime PM state.
+Discovered by Atuin - Automated Vulnerability Discovery Engine.
 
-Check the return value of devm_pm_runtime_enable() and return the
-error code if it fails.
+The 'len' variable is calculated as 'min(32, trans->len + 1)',
+which includes the 1-byte command header.
 
-Fixes: 6a2277a0ebe7 ("mtd: rawnand: renesas: Use runtime PM instead of the raw clock API")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+When copying data from 'trans->tx_buf' to 'ch341->tx_buf + 1', using 'len'
+as the length is incorrect because:
+
+1. It causes an out-of-bounds read from 'trans->tx_buf' (which has size
+   'trans->len', i.e., 'len - 1' in this context).
+2. It can cause an out-of-bounds write to 'ch341->tx_buf' if 'len' is
+   CH341_PACKET_LENGTH (32). Writing 32 bytes to ch341->tx_buf + 1
+   overflows the buffer.
+
+Fix this by copying 'len - 1' bytes.
+
+Fixes: 8846739f52af ("spi: add ch341a usb2spi driver")
+Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
+Link: https://patch.msgid.link/20251128160630.0f922c45ec6084a46fb57099@linux.dev
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/renesas-nand-controller.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/spi/spi-ch341.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/nand/raw/renesas-nand-controller.c b/drivers/mtd/nand/raw/renesas-nand-controller.c
-index ac8c1b80d7be9..201dd62b99905 100644
---- a/drivers/mtd/nand/raw/renesas-nand-controller.c
-+++ b/drivers/mtd/nand/raw/renesas-nand-controller.c
-@@ -1336,7 +1336,10 @@ static int rnandc_probe(struct platform_device *pdev)
- 	if (IS_ERR(rnandc->regs))
- 		return PTR_ERR(rnandc->regs);
+diff --git a/drivers/spi/spi-ch341.c b/drivers/spi/spi-ch341.c
+index 46bc208f2d050..79d2f9ab4ef03 100644
+--- a/drivers/spi/spi-ch341.c
++++ b/drivers/spi/spi-ch341.c
+@@ -78,7 +78,7 @@ static int ch341_transfer_one(struct spi_controller *host,
  
--	devm_pm_runtime_enable(&pdev->dev);
-+	ret = devm_pm_runtime_enable(&pdev->dev);
-+	if (ret)
-+		return ret;
-+
- 	ret = pm_runtime_resume_and_get(&pdev->dev);
- 	if (ret < 0)
- 		return ret;
+ 	ch341->tx_buf[0] = CH341A_CMD_SPI_STREAM;
+ 
+-	memcpy(ch341->tx_buf + 1, trans->tx_buf, len);
++	memcpy(ch341->tx_buf + 1, trans->tx_buf, len - 1);
+ 
+ 	ret = usb_bulk_msg(ch341->udev, ch341->write_pipe, ch341->tx_buf, len,
+ 			   NULL, CH341_DEFAULT_TIMEOUT);
 -- 
 2.51.0
 
