@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E9956B81;
-	Tue, 16 Dec 2025 11:28:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19DB431B10B;
+	Tue, 16 Dec 2025 11:28:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884519; cv=none; b=CoCuvXC/t8X5K9aNZNSHLQpyZuRma54yUL0xenmdMq5XnXbdGWgT3tH36Uef3Ixjj8p06wpEx098o67uecb77KL8pyAojVwfEBQ5gPI1VmYPE3pRC7n9cC7gOsVOVzTCR+VgBCIwURX7l7mZYZrlzm9DmScZ9ZQUEn7CIePVcF0=
+	t=1765884523; cv=none; b=cSrwN44j+jMmFdk9tfFu78o+jHvLDGTCFACfUJ5ol8o2ntOMl7Fo9OnLbzLBsy9jWtL/T/PHTexq0cho7H9jrdOO2ltwhKiTZDKmXE0uVSVlg0/2BDfAulbkAaFXBz3Slw5R7m+qhROl+jvp7/Gic4X6zgcgghDa0smjPM9mlwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884519; c=relaxed/simple;
-	bh=RJcucaGfa4tsyHpyQGEs9Q3rU78yglw/YkA4DSnGEuE=;
+	s=arc-20240116; t=1765884523; c=relaxed/simple;
+	bh=u/lkwx6QeH+y9seLWfic8c1kUFyWRjR6/fQrjhejFF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dnMqR+C1T4XtldSEGp4ZmYCaQhIVM3Uc5vgrybqlxIx7xv2CSBmYhLgQi8PygqreqNKIOxfLYVBiRMoZ0QrkqZSD2RzqB7u4KlQ0KBX0Pi/HizLm30E+n0Weeniagx+4BrFYlaEOXtUtehb9FGnGA4KjJmMMrpvf1Pp5YJil25Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9XlavU3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RliGehBk+KFAIsNbtFgbz6NMOmMza0kusCuPXXvs/SMKyY8xQw5rTJVvsdt5LwJ3S2bN/FlZ7qSprTNEhH0HLxcHAbgFPdIodfkfQTZiH7MTH15SdNjatw3oI4LMd0ISI7JLGKfP1/qRl+XnVnah4F2P8F4tI/md3HKhQlifU+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=afpq0XTQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9XlavU3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7B49C4CEF1;
-	Tue, 16 Dec 2025 11:28:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="afpq0XTQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 258FEC4CEF1;
+	Tue, 16 Dec 2025 11:28:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884519;
-	bh=RJcucaGfa4tsyHpyQGEs9Q3rU78yglw/YkA4DSnGEuE=;
+	s=korg; t=1765884522;
+	bh=u/lkwx6QeH+y9seLWfic8c1kUFyWRjR6/fQrjhejFF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t9XlavU3O0wOp3cglHY4QMAh5ZLimFrl3bXxyjRx/YG9qc8z4YteF8gy+rGcpOcjx
-	 4EIMs7pXccqKR8AgvLXMmaNUhs0qw4Wl6B/sGxcy/F95wI1HorpHMEiado1MDynl5J
-	 N+6xhvFBfivEDrFBYxDiSC5Ltn2O91Q6b73cGopE=
+	b=afpq0XTQoZXKUgnPmcL4GYJDCmT7BLI8FsXlXFLo8HXUn4USrdq9RmNf8fEXVE1W3
+	 XB4a8siso4SZBdpQ+ZtW+0eJLfnE4GiTwbEfs56wvpYA5gPjB0L+h94LvYM6vhhUos
+	 Ul4H2q1a9hCSkcmPw1t70GRi5IlJvizFp2n0QI1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Mentz <danielmentz@google.com>,
-	Ryan Huang <tzukui@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Pranjal Shrivastava <praan@google.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Will Deacon <will@kernel.org>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 219/354] iommu/arm-smmu-v3: Fix error check in arm_smmu_alloc_cd_tables
-Date: Tue, 16 Dec 2025 12:13:06 +0100
-Message-ID: <20251216111328.853228077@linuxfoundation.org>
+Subject: [PATCH 6.12 220/354] btrfs: fix leaf leak in an error path in btrfs_del_items()
+Date: Tue, 16 Dec 2025 12:13:07 +0100
+Message-ID: <20251216111328.889272661@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -55,44 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Huang <tzukui@google.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 5941f0e0c1e0be03ebc15b461f64208f5250d3d9 ]
+[ Upstream commit e7dd1182fcedee7c6097c9f49eba8de94a4364e3 ]
 
-In arm_smmu_alloc_cd_tables(), the error check following the
-dma_alloc_coherent() for cd_table->l2.l1tab incorrectly tests
-cd_table->l2.l2ptrs.
+If the call to btrfs_del_leaf() fails we return without decrementing the
+extra ref we took on the leaf, therefore leaking it. Fix this by ensuring
+we drop the ref count before returning the error.
 
-This means an allocation failure for l1tab goes undetected, causing
-the function to return 0 (success) erroneously.
-
-Correct the check to test cd_table->l2.l1tab.
-
-Fixes: e3b1be2e73db ("iommu/arm-smmu-v3: Reorganize struct arm_smmu_ctx_desc_cfg")
-Signed-off-by: Daniel Mentz <danielmentz@google.com>
-Signed-off-by: Ryan Huang <tzukui@google.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Pranjal Shrivastava <praan@google.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 751a27615dda ("btrfs: do not BUG_ON() on tree mod log failures at btrfs_del_ptr()")
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 2 +-
+ fs/btrfs/ctree.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 172ce20301971..560a670ee7911 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -1441,7 +1441,7 @@ static int arm_smmu_alloc_cd_tables(struct arm_smmu_master *master)
- 		cd_table->l2.l1tab = dma_alloc_coherent(smmu->dev, l1size,
- 							&cd_table->cdtab_dma,
- 							GFP_KERNEL);
--		if (!cd_table->l2.l2ptrs) {
-+		if (!cd_table->l2.l1tab) {
- 			ret = -ENOMEM;
- 			goto err_free_l2ptrs;
- 		}
+diff --git a/fs/btrfs/ctree.c b/fs/btrfs/ctree.c
+index 81735d19feff5..362df6e96717c 100644
+--- a/fs/btrfs/ctree.c
++++ b/fs/btrfs/ctree.c
+@@ -4599,9 +4599,9 @@ int btrfs_del_items(struct btrfs_trans_handle *trans, struct btrfs_root *root,
+ 			if (btrfs_header_nritems(leaf) == 0) {
+ 				path->slots[1] = slot;
+ 				ret = btrfs_del_leaf(trans, root, path, leaf);
++				free_extent_buffer(leaf);
+ 				if (ret < 0)
+ 					return ret;
+-				free_extent_buffer(leaf);
+ 				ret = 0;
+ 			} else {
+ 				/* if we're still in the path, make sure
 -- 
 2.51.0
 
