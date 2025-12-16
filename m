@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40C63845C4;
-	Tue, 16 Dec 2025 12:37:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A67BB39BEA4;
+	Tue, 16 Dec 2025 12:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888674; cv=none; b=biafvQkRCz0aW8/dKBInIcS5q502YJiWidTL8iBTTmtjKvsfFnBz+EOYFtcpARfg32uBJcFqQnnJyEgxOKYjgM4Eav/0InCqf1dwO6s9wJCR/qXkN7z2l87v/LcjxCK1Du8++xk7SbaTlnLJIDyGYRVHlPHW8L4HFVeiZWBmbUM=
+	t=1765888678; cv=none; b=sA1vvv6TInLgkjDOIEOhNHaOM7zWfpHUcU3RmkhXzBxxrTWeW5G1uf5Lwj6pmHitIiwpb2CgXH2kIxQQaLlKATiQAnx9n7l35AiTchG1qglinhQVDkKYFQJMsP5pM8hp4lnPy1xEIvktvDtnfnkaHijpjm2xq8e2r4x+ZTWipmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888674; c=relaxed/simple;
-	bh=+Ud7VeeukAHNJuxkM7GLYEA6sLbFAlGRgpKJRZaCrfQ=;
+	s=arc-20240116; t=1765888678; c=relaxed/simple;
+	bh=N2xx641WKZjLHRmGEYp/9XFjHkFLWQOWS7ypOUuMmfw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FycIAyiElzSJKo0Di7pzykWl4pqNAAgZ14KWFksEJOL++LI6JKae9XyQibuQ1P1zgKFEdire/7YXSIFpVHAkJWvyNaNn6ZKQiBWjX+rQblOG/A0ymRIIblOV4hYGDfPvXzlsd4xgmin7lT5HqEnuFFCiHf6xHTuV4wr1pmGR5KE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wzl48i0e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A6B7HK37MKCQNkgO+eNVVBEoKid+0EUQwspEekv7u8u6ZfDGxtRazKG56ahmEKIYO4OaramxEtT0hi888wurxlW0+9p94GxPpxDi5sNYaf31qiM5ZCIrf+FJXgY1s8yHgOppgbPZXh0eehAwsh17Q02TMRhccink3EEvZ2OTRyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uO2miDy3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wzl48i0e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 184B1C4CEF1;
-	Tue, 16 Dec 2025 12:37:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uO2miDy3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BEC2C4CEF1;
+	Tue, 16 Dec 2025 12:37:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888674;
-	bh=+Ud7VeeukAHNJuxkM7GLYEA6sLbFAlGRgpKJRZaCrfQ=;
+	s=korg; t=1765888678;
+	bh=N2xx641WKZjLHRmGEYp/9XFjHkFLWQOWS7ypOUuMmfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wzl48i0eSj9Avv9sP/huJBVVnzyg3f25IDQVWrfCYUJ4MFcVTPkIRZxbKvvjwH8p9
-	 lurvvJW+vUqquLk+Rr59cQrSWgzNAlo5VoRBpaRgDU/IByFI/bXu5tbfVs8LMNF2Hp
-	 Z9wBy/Ylhuf8mU6VT7Qr62VKONw8BpQqrSBccnGM=
+	b=uO2miDy3zDij9QESLpRylq4wlDDovP3WpNWPkBxKXUhejtOUib/qMT72rxWD4MHPw
+	 6Kn/kvALh52KUe5/32+3ntwe1iIADhUbnb4tBNN/NDEKxw4CFDbtiLIT0pNa14yyv1
+	 kyb8cU7zVEHhC9kPLnbAJnLPceUY4I/r0uIe+X1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 597/614] irqchip/mchp-eic: Fix error code in mchp_eic_domain_alloc()
-Date: Tue, 16 Dec 2025 12:16:04 +0100
-Message-ID: <20251216111423.023052227@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
+Subject: [PATCH 6.18 606/614] usb: phy: Initialize struct usb_phy list_head
+Date: Tue, 16 Dec 2025 12:16:13 +0100
+Message-ID: <20251216111423.350503151@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,41 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
 
-[ Upstream commit 7dbc0d40d8347bd9de55c904f59ea44bcc8dedb7 ]
+commit c69ff68b097b0f53333114f1b2c3dc128f389596 upstream.
 
-If irq_domain_translate_twocell() sets "hwirq" to >= MCHP_EIC_NIRQ (2) then
-it results in an out of bounds access.
+As part of the registration of a new 'struct usb_phy' with the USB PHY core
+via either usb_add_phy(struct usb_phy *x, ...) or usb_add_phy_dev(struct
+usb_phy *x) these functions call list_add_tail(&x->head, phy_list) in
+order for the new instance x to be stored in phy_list, a static list
+kept internally by the core.
 
-The code checks for invalid values, but doesn't set the error code.  Return
--EINVAL in that case, instead of returning success.
+After 7d21114dc6a2 ("usb: phy: Introduce one extcon device into usb phy")
+when executing either of the registration functions above it is possible
+that usb_add_extcon() fails, leading to either function returning before
+the call to list_add_tail(), leaving x->head uninitialized.
 
-Fixes: 00fa3461c86d ("irqchip/mchp-eic: Add support for the Microchip EIC")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
-Link: https://patch.msgid.link/aTfHmOz6IBpTIPU5@stanley.mountain
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Then, when a driver tries to undo the failed registration by calling
+usb_remove_phy(struct usb_phy *x) there will be an unconditional call to
+list_del(&x->head) acting on an uninitialized variable, and thus a
+possible NULL pointer dereference.
+
+Fix this by initializing x->head before usb_add_extcon() has a
+chance to fail. Note that this was not needed before 7d21114dc6a2 since
+list_add_phy() was executed unconditionally and it guaranteed that x->head
+was initialized.
+
+Fixes: 7d21114dc6a2 ("usb: phy: Introduce one extcon device into usb phy")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
+Link: https://patch.msgid.link/20251121-diogo-smaug_typec-v2-1-5c37c1169d57@tecnico.ulisboa.pt
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-mchp-eic.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/phy/phy.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/irqchip/irq-mchp-eic.c b/drivers/irqchip/irq-mchp-eic.c
-index b513a899c0853..979bb86929f8e 100644
---- a/drivers/irqchip/irq-mchp-eic.c
-+++ b/drivers/irqchip/irq-mchp-eic.c
-@@ -166,7 +166,7 @@ static int mchp_eic_domain_alloc(struct irq_domain *domain, unsigned int virq,
+--- a/drivers/usb/phy/phy.c
++++ b/drivers/usb/phy/phy.c
+@@ -646,6 +646,8 @@ int usb_add_phy(struct usb_phy *x, enum
+ 		return -EINVAL;
+ 	}
  
- 	ret = irq_domain_translate_twocell(domain, fwspec, &hwirq, &type);
- 	if (ret || hwirq >= MCHP_EIC_NIRQ)
--		return ret;
-+		return ret ?: -EINVAL;
++	INIT_LIST_HEAD(&x->head);
++
+ 	usb_charger_init(x);
+ 	ret = usb_add_extcon(x);
+ 	if (ret)
+@@ -696,6 +698,8 @@ int usb_add_phy_dev(struct usb_phy *x)
+ 		return -EINVAL;
+ 	}
  
- 	switch (type) {
- 	case IRQ_TYPE_EDGE_RISING:
--- 
-2.51.0
-
++	INIT_LIST_HEAD(&x->head);
++
+ 	usb_charger_init(x);
+ 	ret = usb_add_extcon(x);
+ 	if (ret)
 
 
