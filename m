@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E65A39A138;
-	Tue, 16 Dec 2025 12:33:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 509CC396DD7;
+	Tue, 16 Dec 2025 12:33:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888391; cv=none; b=IrB7ZEpENKmro0yYon0Zj46iVo2MT2W0brQPPnJOCYurwyL2BaCWzj6h82c3w3cIK1NuqwHF96F0HIULeY1UngBD3p50DosA2zM5mfIuY5AHggO94B5EB6iaIPqKyYul6t6ktC4YQkEO/caWRjzmyaw47vtiLBPaMk1ejtBg4Lk=
+	t=1765888394; cv=none; b=VPB2/BaJq5GuDjr6dVpklndPcz5nxzxvvp6uSlwHfFcJYVE9w8OyxKPLBftB+wajfu56xKXHdNBDaRgwXtRhlBV8cKkazNm/AdZtG+Yi6edbV6aWqMqY5MT2AXz22fRNzNA8/Mxd6Ys8Bk4g8Oain9nB0OGQA6i80GV6sLAtyvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888391; c=relaxed/simple;
-	bh=2jkUi7f9THUx3gF4kVxs10KhInLBEDyaoD/UgIIrGb4=;
+	s=arc-20240116; t=1765888394; c=relaxed/simple;
+	bh=8Qvl/OWRxtm9+YXx2dcih/9wM8VeBmBa1CpNjbRNP+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iTUI037iatghyLv+qFrGStGEyxS6oH/bxCSxEW6eysEOirH8quboP8UVmK3Hgl8oJ1dff1mIf7lmJxgv+uH7WalKU7hCWtN3KKbRq9vKzlJuAAVRSajDgF14RVqtQZ72rb/PYoY/OnU9TMMJRBrpt++oxuzXjGyXeUO58VN3BoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NrRHcuRO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=m81aG8SaoW+RqMBsukEke3pn9YYT3sYi4JxcQDsklEf6ZcBeaLbY2aKIeiyVdddWJ0CVLLMfx7YO/pvIHkl1aRlDqxBxY+9Aa2KkcuplhI0PP8BgH5paus1x8VEeIk/hk6UjVYJ7If7bl4wg9aMUUrGa5tlMsSE1VEB3PD/VS6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u++qQF+J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NrRHcuRO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BC50C4CEF1;
-	Tue, 16 Dec 2025 12:33:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u++qQF+J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BACC7C4CEF1;
+	Tue, 16 Dec 2025 12:33:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888391;
-	bh=2jkUi7f9THUx3gF4kVxs10KhInLBEDyaoD/UgIIrGb4=;
+	s=korg; t=1765888394;
+	bh=8Qvl/OWRxtm9+YXx2dcih/9wM8VeBmBa1CpNjbRNP+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NrRHcuROat52gj3SCQa7swHVFKwI5wP3IVL8FpiloTBqpUx8+EF92xOsnNfMa166k
-	 49CnQ4uB5y+V4DLlysLq04OKS0tTGPB32EOwUAX8fV4s2d/QyBD1KsFAt0acma1udT
-	 3qJk7ZAvUkXbjQSzs2lgthCreRYh88dpVgVB9i7E=
+	b=u++qQF+JAlklrwWGUvb3xObB5kgZYWyssCns2cevyM5KmFGPguIVJ2ZjoUwrUYH5A
+	 uSDzB+y1fUk+pCZAZe1DHtvHNnYK+dHdvMOVJbedfbuMuWNVi9nLb+IgorGPyXQQHp
+	 CqV+l64TYGyfoCEmI97we5jjeY5z0Wo9PDsac3NQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Lukasz Majewski <lukma@denx.de>,
+	Xiaoliang Yang <xiaoliang.yang_1@nxp.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	=?UTF-8?q?=C5=81ukasz=20Majewski?= <lukma@nabladev.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 519/614] net: dsa: b53: fix BCM5325/65 ARL entry VIDs
-Date: Tue, 16 Dec 2025 12:14:46 +0100
-Message-ID: <20251216111420.173445784@linuxfoundation.org>
+Subject: [PATCH 6.18 520/614] net: hsr: create an API to get hsr port type
+Date: Tue, 16 Dec 2025 12:14:47 +0100
+Message-ID: <20251216111420.212006832@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -46,158 +49,137 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonas Gorski <jonas.gorski@gmail.com>
+From: Xiaoliang Yang <xiaoliang.yang_1@nxp.com>
 
-[ Upstream commit d39514e6a2d14f57830d649e2bf03b49612c2f73 ]
+[ Upstream commit a0244e76213980f3b9bb5d40b0b6705fcf24230d ]
 
-BCM5325/65's ARL entry registers do not contain the VID, only the search
-result register does. ARL entries have a separate VID entry register for
-the index into the VLAN table.
+Since the introduction of HSR_PT_INTERLINK in commit 5055cccfc2d1 ("net:
+hsr: Provide RedBox support (HSR-SAN)"), we see that different port
+types require different settings for hardware offload, which was not the
+case before when we only had HSR_PT_SLAVE_A and HSR_PT_SLAVE_B. But
+there is currently no way to know which port is which type, so create
+the hsr_get_port_type() API function and export it.
 
-So make ARL entry accessors use the VID entry registers instead, and
-move the VLAN ID field definition to the search register definition.
+When hsr_get_port_type() is called from the device driver, the port can
+must be found in the HSR port list. An important use case is for this
+function to work from offloading drivers' NETDEV_CHANGEUPPER handler,
+which is triggered by hsr_portdev_setup() -> netdev_master_upper_dev_link().
+Therefore, we need to move the addition of the hsr_port to the HSR port
+list prior to calling hsr_portdev_setup(). This makes the error
+restoration path also more similar to hsr_del_port(), where
+kfree_rcu(port) is already used.
 
-Fixes: c45655386e53 ("net: dsa: b53: add support for FDB operations on 5325/5365")
-Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20251128080625.27181-7-jonas.gorski@gmail.com
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc: Lukasz Majewski <lukma@denx.de>
+Signed-off-by: Xiaoliang Yang <xiaoliang.yang_1@nxp.com>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Łukasz Majewski <lukma@nabladev.com>
+Link: https://patch.msgid.link/20251130131657.65080-3-vladimir.oltean@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 30296ac76426 ("net: dsa: xrs700x: reject unsupported HSR configurations")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_common.c |  9 +++++++--
- drivers/net/dsa/b53/b53_priv.h   | 12 ++++++------
- drivers/net/dsa/b53/b53_regs.h   |  7 +++++--
- 3 files changed, 18 insertions(+), 10 deletions(-)
+ include/linux/if_hsr.h |  9 +++++++++
+ net/hsr/hsr_device.c   | 20 ++++++++++++++++++++
+ net/hsr/hsr_slave.c    |  7 ++++---
+ 3 files changed, 33 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index 5544e8e9c6446..62cafced758e7 100644
---- a/drivers/net/dsa/b53/b53_common.c
-+++ b/drivers/net/dsa/b53/b53_common.c
-@@ -1833,19 +1833,24 @@ static int b53_arl_rw_op(struct b53_device *dev, unsigned int op)
- static void b53_arl_read_entry_25(struct b53_device *dev,
- 				  struct b53_arl_entry *ent, u8 idx)
+diff --git a/include/linux/if_hsr.h b/include/linux/if_hsr.h
+index d7941fd880329..f4cf2dd36d193 100644
+--- a/include/linux/if_hsr.h
++++ b/include/linux/if_hsr.h
+@@ -43,6 +43,8 @@ extern bool is_hsr_master(struct net_device *dev);
+ extern int hsr_get_version(struct net_device *dev, enum hsr_version *ver);
+ struct net_device *hsr_get_port_ndev(struct net_device *ndev,
+ 				     enum hsr_port_type pt);
++int hsr_get_port_type(struct net_device *hsr_dev, struct net_device *dev,
++		      enum hsr_port_type *type);
+ #else
+ static inline bool is_hsr_master(struct net_device *dev)
  {
-+	u8 vid_entry;
- 	u64 mac_vid;
- 
-+	b53_read8(dev, B53_ARLIO_PAGE, B53_ARLTBL_VID_ENTRY_25(idx),
-+		  &vid_entry);
- 	b53_read64(dev, B53_ARLIO_PAGE, B53_ARLTBL_MAC_VID_ENTRY(idx),
- 		   &mac_vid);
--	b53_arl_to_entry_25(ent, mac_vid);
-+	b53_arl_to_entry_25(ent, mac_vid, vid_entry);
- }
- 
- static void b53_arl_write_entry_25(struct b53_device *dev,
- 				   const struct b53_arl_entry *ent, u8 idx)
+@@ -59,6 +61,13 @@ static inline struct net_device *hsr_get_port_ndev(struct net_device *ndev,
  {
-+	u8 vid_entry;
- 	u64 mac_vid;
- 
--	b53_arl_from_entry_25(&mac_vid, ent);
-+	b53_arl_from_entry_25(&mac_vid, &vid_entry, ent);
-+	b53_write8(dev, B53_ARLIO_PAGE, B53_ARLTBL_VID_ENTRY_25(idx), vid_entry);
- 	b53_write64(dev, B53_ARLIO_PAGE, B53_ARLTBL_MAC_VID_ENTRY(idx),
- 		    mac_vid);
+ 	return ERR_PTR(-EINVAL);
  }
-diff --git a/drivers/net/dsa/b53/b53_priv.h b/drivers/net/dsa/b53/b53_priv.h
-index f4afbfcc345e6..bd6849e5bb939 100644
---- a/drivers/net/dsa/b53/b53_priv.h
-+++ b/drivers/net/dsa/b53/b53_priv.h
-@@ -341,7 +341,7 @@ static inline void b53_arl_to_entry(struct b53_arl_entry *ent,
- }
- 
- static inline void b53_arl_to_entry_25(struct b53_arl_entry *ent,
--				       u64 mac_vid)
-+				       u64 mac_vid, u8 vid_entry)
- {
- 	memset(ent, 0, sizeof(*ent));
- 	ent->is_valid = !!(mac_vid & ARLTBL_VALID_25);
-@@ -352,7 +352,7 @@ static inline void b53_arl_to_entry_25(struct b53_arl_entry *ent,
- 		     ARLTBL_DATA_PORT_ID_S_25;
- 	if (is_unicast_ether_addr(ent->mac) && ent->port == B53_CPU_PORT)
- 		ent->port = B53_CPU_PORT_25;
--	ent->vid = (mac_vid >> ARLTBL_VID_S_65) & ARLTBL_VID_MASK_25;
-+	ent->vid = vid_entry;
- }
- 
- static inline void b53_arl_to_entry_89(struct b53_arl_entry *ent,
-@@ -381,7 +381,7 @@ static inline void b53_arl_from_entry(u64 *mac_vid, u32 *fwd_entry,
- 		*fwd_entry |= ARLTBL_AGE;
- }
- 
--static inline void b53_arl_from_entry_25(u64 *mac_vid,
-+static inline void b53_arl_from_entry_25(u64 *mac_vid, u8 *vid_entry,
- 					 const struct b53_arl_entry *ent)
- {
- 	*mac_vid = ether_addr_to_u64(ent->mac);
-@@ -390,14 +390,13 @@ static inline void b53_arl_from_entry_25(u64 *mac_vid,
- 	else
- 		*mac_vid |= ((u64)ent->port << ARLTBL_DATA_PORT_ID_S_25) &
- 			    ARLTBL_DATA_PORT_ID_MASK_25;
--	*mac_vid |= (u64)(ent->vid & ARLTBL_VID_MASK_25) <<
--			  ARLTBL_VID_S_65;
- 	if (ent->is_valid)
- 		*mac_vid |= ARLTBL_VALID_25;
- 	if (ent->is_static)
- 		*mac_vid |= ARLTBL_STATIC_25;
- 	if (ent->is_age)
- 		*mac_vid |= ARLTBL_AGE_25;
-+	*vid_entry = ent->vid;
- }
- 
- static inline void b53_arl_from_entry_89(u64 *mac_vid, u32 *fwd_entry,
-@@ -422,7 +421,8 @@ static inline void b53_arl_search_to_entry_25(struct b53_arl_entry *ent,
- 	ent->is_age = !!(mac_vid & ARLTBL_AGE_25);
- 	ent->is_static = !!(mac_vid & ARLTBL_STATIC_25);
- 	u64_to_ether_addr(mac_vid, ent->mac);
--	ent->vid = (mac_vid >> ARLTBL_VID_S_65) & ARLTBL_VID_MASK_25;
-+	ent->vid = (mac_vid & ARL_SRCH_RSLT_VID_MASK_25) >>
-+		   ARL_SRCH_RSLT_VID_S_25;
- 	ent->port = (mac_vid & ARL_SRCH_RSLT_PORT_ID_MASK_25) >>
- 		    ARL_SRCH_RSLT_PORT_ID_S_25;
- 	if (is_multicast_ether_addr(ent->mac) && (ext & ARL_SRCH_RSLT_EXT_MC_MII))
-diff --git a/drivers/net/dsa/b53/b53_regs.h b/drivers/net/dsa/b53/b53_regs.h
-index e0379e70900b7..b6fe7d207a2c1 100644
---- a/drivers/net/dsa/b53/b53_regs.h
-+++ b/drivers/net/dsa/b53/b53_regs.h
-@@ -325,11 +325,9 @@
- #define B53_ARLTBL_MAC_VID_ENTRY(n)	((0x10 * (n)) + 0x10)
- #define   ARLTBL_MAC_MASK		0xffffffffffffULL
- #define   ARLTBL_VID_S			48
--#define   ARLTBL_VID_MASK_25		0xff
- #define   ARLTBL_VID_MASK		0xfff
- #define   ARLTBL_DATA_PORT_ID_S_25	48
- #define   ARLTBL_DATA_PORT_ID_MASK_25	GENMASK_ULL(53, 48)
--#define   ARLTBL_VID_S_65		53
- #define   ARLTBL_AGE_25			BIT_ULL(61)
- #define   ARLTBL_STATIC_25		BIT_ULL(62)
- #define   ARLTBL_VALID_25		BIT_ULL(63)
-@@ -349,6 +347,9 @@
- #define   ARLTBL_STATIC_89		BIT(14)
- #define   ARLTBL_VALID_89		BIT(15)
- 
-+/* BCM5325/BCM565 ARL Table VID Entry N Registers (8 bit) */
-+#define B53_ARLTBL_VID_ENTRY_25(n)	((0x2 * (n)) + 0x30)
 +
- /* Maximum number of bin entries in the ARL for all switches */
- #define B53_ARLTBL_MAX_BIN_ENTRIES	4
++static inline int hsr_get_port_type(struct net_device *hsr_dev,
++				    struct net_device *dev,
++				    enum hsr_port_type *type)
++{
++	return -EINVAL;
++}
+ #endif /* CONFIG_HSR */
  
-@@ -376,6 +377,8 @@
- #define B53_ARL_SRCH_RSTL_0_MACVID_25	0x24
- #define   ARL_SRCH_RSLT_PORT_ID_S_25	48
- #define   ARL_SRCH_RSLT_PORT_ID_MASK_25	GENMASK_ULL(52, 48)
-+#define   ARL_SRCH_RSLT_VID_S_25	53
-+#define   ARL_SRCH_RSLT_VID_MASK_25	GENMASK_ULL(60, 53)
+ #endif /*_LINUX_IF_HSR_H_*/
+diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
+index 492cbc78ab75a..d1bfc49b5f017 100644
+--- a/net/hsr/hsr_device.c
++++ b/net/hsr/hsr_device.c
+@@ -690,6 +690,26 @@ struct net_device *hsr_get_port_ndev(struct net_device *ndev,
+ }
+ EXPORT_SYMBOL(hsr_get_port_ndev);
  
- /* BCM5325/5365 Search result extend register (8 bit) */
- #define B53_ARL_SRCH_RSLT_EXT_25	0x2c
++int hsr_get_port_type(struct net_device *hsr_dev, struct net_device *dev,
++		      enum hsr_port_type *type)
++{
++	struct hsr_priv *hsr = netdev_priv(hsr_dev);
++	struct hsr_port *port;
++
++	rcu_read_lock();
++	hsr_for_each_port(hsr, port) {
++		if (port->dev == dev) {
++			*type = port->type;
++			rcu_read_unlock();
++			return 0;
++		}
++	}
++	rcu_read_unlock();
++
++	return -EINVAL;
++}
++EXPORT_SYMBOL(hsr_get_port_type);
++
+ /* Default multicast address for HSR Supervision frames */
+ static const unsigned char def_multicast_addr[ETH_ALEN] __aligned(2) = {
+ 	0x01, 0x15, 0x4e, 0x00, 0x01, 0x00
+diff --git a/net/hsr/hsr_slave.c b/net/hsr/hsr_slave.c
+index 8177ac6c2d26d..afe06ba00ea44 100644
+--- a/net/hsr/hsr_slave.c
++++ b/net/hsr/hsr_slave.c
+@@ -207,14 +207,14 @@ int hsr_add_port(struct hsr_priv *hsr, struct net_device *dev,
+ 	port->type = type;
+ 	ether_addr_copy(port->original_macaddress, dev->dev_addr);
+ 
++	list_add_tail_rcu(&port->port_list, &hsr->ports);
++
+ 	if (type != HSR_PT_MASTER) {
+ 		res = hsr_portdev_setup(hsr, dev, port, extack);
+ 		if (res)
+ 			goto fail_dev_setup;
+ 	}
+ 
+-	list_add_tail_rcu(&port->port_list, &hsr->ports);
+-
+ 	master = hsr_port_get_hsr(hsr, HSR_PT_MASTER);
+ 	netdev_update_features(master->dev);
+ 	dev_set_mtu(master->dev, hsr_get_max_mtu(hsr));
+@@ -222,7 +222,8 @@ int hsr_add_port(struct hsr_priv *hsr, struct net_device *dev,
+ 	return 0;
+ 
+ fail_dev_setup:
+-	kfree(port);
++	list_del_rcu(&port->port_list);
++	kfree_rcu(port, rcu);
+ 	return res;
+ }
+ 
 -- 
 2.51.0
 
