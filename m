@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A0C35CB7D;
-	Tue, 16 Dec 2025 12:11:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA85365A01;
+	Tue, 16 Dec 2025 12:11:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887103; cv=none; b=rm5mq1EhPfdOG/m2jO2/DTQhFOjA/T9GOlOMnesK2Di39oZ17C3/V+H54S6Qqcib0nD0nKfVEqKMzofGdALRw97jAHL8L8R2n9edn6S1SPcArUA88jGfx9sMhi2Qy4epWa0HdvWrMbpLAWTV068lHepK2fUha89gMrpvUWsj7s0=
+	t=1765887106; cv=none; b=JLE2kJ9tXl++VwSv49aCG5YjvmmN8SOH7QPYW6JHlLFuAciTPDyxbvCbVT7MXo8n8+lozFhSfn4jf/g/s2nxjEGAQ+zRcVqmw4ZIn7Vu4/2qoscQLt9l42KB8J5BVEuZl6rU6pK5PyFK6ZjVfsuCWrHlic4Tc0wKfJz9Xq1IG/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887103; c=relaxed/simple;
-	bh=QahoTZWlxQMmlBBV3NE7rTJE2n9u41PR6EsD+KO5Mkg=;
+	s=arc-20240116; t=1765887106; c=relaxed/simple;
+	bh=tljLxp1Rgia3/yqsB2WB1ugpWNeH76GKqbBtvGBzrKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jBAD8fO+29iHva8k2Aa4DJzM2FQsvxqEj0gkeFfgCUwPVx0SsQsWl2m/VPaye1XvjAnH35J1d2BS+gQLjCbqaI4bm4znnlE6kSOntU4Hgl2GIyh+uhpv0x9E2fsiW0fqeyOhyxWkGbUjIF7e2f6JB+4pXIDgqolDubXgyEtFAUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HCBuslM3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lCQblhqfo60+fyn7gxtJ/li7JJg4T+O9ioUSvFFzn6I/IlxDCd19Pw+p5xKcEtSGiwkqBmNFo7Wu/Y3Y0RMS91x7OTVMDuOgbt0o4+ctn/tRuDWT6GwXtGOQeAesv7buwiXuMjoJfFf31vN4WjGOt/SK6iNZi2vu3/M5slfgXUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CV7VfFox; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HCBuslM3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8C52C4CEF1;
-	Tue, 16 Dec 2025 12:11:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CV7VfFox"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06149C4CEF1;
+	Tue, 16 Dec 2025 12:11:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887103;
-	bh=QahoTZWlxQMmlBBV3NE7rTJE2n9u41PR6EsD+KO5Mkg=;
+	s=korg; t=1765887106;
+	bh=tljLxp1Rgia3/yqsB2WB1ugpWNeH76GKqbBtvGBzrKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HCBuslM3MkRWIfmAutpWJIFjZMwKL6T4xO6OcFH+jRr1PyQSMipW4dI1fEAxB12Ww
-	 LiImK5s0Isj969j03+Uy/Cigan0E069+TUX5odG4+ufi3/H+eEvxSxTgv0vI603vML
-	 NbX/ahdDF1T/RPbo4VhliW4gfcBBKm17afO1yhWU=
+	b=CV7VfFoxRk3XqwJNxy3u5j0weIepTSS4a4O2OAp3OVw/23ehMWdPFaXLfxEbz9ox3
+	 n463Li01zAltHI4hHQWjfMGVMtI3xD7GzxdRtVEiQLoKG0LO6kBaKvCO4+KGJvY94K
+	 Yr+s3u2q3bHiTlbE8ytpSfJnEfsk9Qb+8s/Pher0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Suchanek <msuchanek@suse.de>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 126/614] perf hwmon_pmu: Fix uninitialized variable warning
-Date: Tue, 16 Dec 2025 12:08:13 +0100
-Message-ID: <20251216111405.902034066@linuxfoundation.org>
+Subject: [PATCH 6.18 127/614] phy: mscc: Fix PTP for VSC8574 and VSC8572
+Date: Tue, 16 Dec 2025 12:08:14 +0100
+Message-ID: <20251216111405.937706043@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -45,48 +46,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Suchanek <msuchanek@suse.de>
+From: Horatiu Vultur <horatiu.vultur@microchip.com>
 
-[ Upstream commit 2fee899c068c159e486e62623afe9e2a4975bd79 ]
+[ Upstream commit ea5df88aeca112aac69e6c32e3dd1433a113b0c9 ]
 
-The line_len is only set on success. Check the return value instead.
+The PTP initialization is two-step. First part are the function
+vsc8584_ptp_probe_once() and vsc8584_ptp_probe() at probe time which
+initialize the locks, queues, creates the PTP device. The second part is
+the function vsc8584_ptp_init() at config_init() time which initialize
+PTP in the HW.
 
- util/hwmon_pmu.c: In function ‘perf_pmus__read_hwmon_pmus’:
- util/hwmon_pmu.c:742:20: warning: ‘line_len’ may be used uninitialized [-Wmaybe-uninitialized]
-   742 |                 if (line_len > 0 && line[line_len - 1] == '\n')
-       |                    ^
- util/hwmon_pmu.c:719:24: note: ‘line_len’ was declared here
-   719 |                 size_t line_len;
+For VSC8574 and VSC8572, the PTP initialization is incomplete. It is
+missing the first part but it makes the second part. Meaning that the
+ptp_clock_register() is never called.
 
-Fixes: 53cc0b351ec9 ("perf hwmon_pmu: Add a tool PMU exposing events from hwmon in sysfs")
-Signed-off-by: Michal Suchanek <msuchanek@suse.de>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+There is no crash without the first part when enabling PTP but this is
+unexpected because some PHys have PTP functionality exposed by the
+driver and some don't even though they share the same PTP clock PTP.
+
+Fixes: 774626fa440e ("net: phy: mscc: Add PTP support for 2 more VSC PHYs")
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Link: https://patch.msgid.link/20251023191350.190940-3-horatiu.vultur@microchip.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/hwmon_pmu.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/phy/mscc/mscc_main.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/perf/util/hwmon_pmu.c b/tools/perf/util/hwmon_pmu.c
-index 416dfea9ffff6..5c27256a220a5 100644
---- a/tools/perf/util/hwmon_pmu.c
-+++ b/tools/perf/util/hwmon_pmu.c
-@@ -742,8 +742,7 @@ int perf_pmus__read_hwmon_pmus(struct list_head *pmus)
- 			continue;
- 		}
- 		io__init(&io, name_fd, buf2, sizeof(buf2));
--		io__getline(&io, &line, &line_len);
--		if (line_len > 0 && line[line_len - 1] == '\n')
-+		if (io__getline(&io, &line, &line_len) > 0 && line[line_len - 1] == '\n')
- 			line[line_len - 1] = '\0';
- 		hwmon_pmu__new(pmus, buf, class_hwmon_ent->d_name, line);
- 		close(name_fd);
+diff --git a/drivers/net/phy/mscc/mscc_main.c b/drivers/net/phy/mscc/mscc_main.c
+index ef0ef1570d392..48d43f60b8ff8 100644
+--- a/drivers/net/phy/mscc/mscc_main.c
++++ b/drivers/net/phy/mscc/mscc_main.c
+@@ -2625,7 +2625,7 @@ static struct phy_driver vsc85xx_driver[] = {
+ 	.suspend	= &genphy_suspend,
+ 	.resume		= &genphy_resume,
+ 	.remove		= &vsc85xx_remove,
+-	.probe		= &vsc8574_probe,
++	.probe		= &vsc8584_probe,
+ 	.set_wol	= &vsc85xx_wol_set,
+ 	.get_wol	= &vsc85xx_wol_get,
+ 	.get_tunable	= &vsc85xx_get_tunable,
+@@ -2648,12 +2648,12 @@ static struct phy_driver vsc85xx_driver[] = {
+ 	.config_aneg    = &vsc85xx_config_aneg,
+ 	.aneg_done	= &genphy_aneg_done,
+ 	.read_status	= &vsc85xx_read_status,
+-	.handle_interrupt = vsc85xx_handle_interrupt,
++	.handle_interrupt = vsc8584_handle_interrupt,
+ 	.config_intr    = &vsc85xx_config_intr,
+ 	.suspend	= &genphy_suspend,
+ 	.resume		= &genphy_resume,
+ 	.remove		= &vsc85xx_remove,
+-	.probe		= &vsc8574_probe,
++	.probe		= &vsc8584_probe,
+ 	.set_wol	= &vsc85xx_wol_set,
+ 	.get_wol	= &vsc85xx_wol_get,
+ 	.get_tunable	= &vsc85xx_get_tunable,
 -- 
 2.51.0
 
