@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDDC43624A6;
-	Tue, 16 Dec 2025 12:36:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4BC8364042;
+	Tue, 16 Dec 2025 12:36:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888565; cv=none; b=sKZYFThO7GpKRO0RwUuXodVOg7ANI31Nea/PBUFW3witbmj9ONbLNBLXT8auKqdxYscEt2RrFCXIHiNOGe49EHq1KXcFwydD978nxKvLpmhm3NNPLQj0wW1/OXe2qyZHugdzyVhN1QxEJkp5rZ/JwqulUNgCMY5I9JKAunzAEbY=
+	t=1765888568; cv=none; b=cdt477qmAHt9pLX30KtZx8Jbc1vcb4c3zubIBB6obXeECAVFYQaJeBPzr20AewpkROJL/nkR1HUPPoSTedjtbBFyPgjV8cnMRBMbGCVEA9rkl0YnuJTFseQQh2zK0q+gwPjZ1EXphlxAmVC0cwi/7phNxpOu3UD8L1pW6AstTp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888565; c=relaxed/simple;
-	bh=4SbF9E32jpDRh8Duu9GZ5foQtITz8oX8m4xvgDTT6m8=;
+	s=arc-20240116; t=1765888568; c=relaxed/simple;
+	bh=/9y1G9mD9ZNQ39rpRXBsfwFQmBusJbeTlJ6R1VFZyuc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eURnXpcOZrvjYoM9Sw6pz8Lv8N5GlgceHRXlM3CrmbTZOOmFhFUAAKJ7C/6JAzvyr73W1dvaeNsmFdCWVrft54B69bKXhMqrVaMKiS1Ku+iOXFQVU9MMlgel4B7PSm6BJ5/s0OakyBk1D/XBXfo99qYJwx9GW45comKBz8OHAUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Plb8cDTB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tJtKN+TDyS/8fIVbcjGrh7fcFaRaV09pMJjSdFEyRhQk+SViF3lHYU7SwNqLSNVJ8D54IKxu9+bBbD5YT9IpLYvJCaRuIi7M7Y+Q2LrbRMthme7abqxdB+VzqnA4uF+HdwkTFX+v7Tv2DdEaJJ7ZtJ7Sy+mG62ZLUInyDkWPAKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ot+lzW3s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Plb8cDTB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39674C4CEF1;
-	Tue, 16 Dec 2025 12:36:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ot+lzW3s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3738BC4CEF5;
+	Tue, 16 Dec 2025 12:36:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888565;
-	bh=4SbF9E32jpDRh8Duu9GZ5foQtITz8oX8m4xvgDTT6m8=;
+	s=korg; t=1765888568;
+	bh=/9y1G9mD9ZNQ39rpRXBsfwFQmBusJbeTlJ6R1VFZyuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Plb8cDTBjm9IH0U3AY1+MFtuPulyR331qE28+WEu/ulILknhfOeDxSqrISfyFDnYx
-	 wfs/e2tWUafXZE8ykt/H7+wOytSJc4rDWq0hDCDOh3+HZWjQwTDfcrOdMS0F+5xIJD
-	 wdefidnK8bH3D+aeThVw0pmlhoJJlZ7zk3ImAFIk=
+	b=ot+lzW3sq9m0VOOjnz8I0mHv4NE6aUOy+791Rk4d67qEFQZDGN6wB82GfouMA8EiY
+	 IyLzXFwMP97ZnZ5k2UZn960bsbTaiQ6n/4MjcSXN3ibJXosUT0wEQAVDcuWCrE51nd
+	 SBsRYnEoCLYIU8WozfoBuyaZcSQ++fo2t1xA2Ft8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@kernel.org>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 573/614] nfs/localio: remove 61 byte hole from needless ____cacheline_aligned
-Date: Tue, 16 Dec 2025 12:15:40 +0100
-Message-ID: <20251216111422.145451834@linuxfoundation.org>
+Subject: [PATCH 6.18 574/614] gpio: tb10x: fix OF_GPIO dependency
+Date: Tue, 16 Dec 2025 12:15:41 +0100
+Message-ID: <20251216111422.181772538@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,37 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 0b873de2c02f9cc655bef6bee0eb9e404126ed6c ]
+[ Upstream commit dd44d4d0c55a4ecf5eabf7856f96ed47e0684780 ]
 
-struct nfs_local_kiocb used ____cacheline_aligned on its iters[] array
-and as the structure evolved it caused a 61 byte hole to form.  Fix
-this by removing ____cacheline_aligned and reordering iters[] before
-iter_is_dio_aligned[].
+Selecting OF_GPIO is generally not allowed, it always gets enabled
+when both GPIOLIB and OF are turned on.
 
-Fixes: 6a218b9c3183 ("nfs/localio: do not issue misaligned DIO out-of-order")
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+The tb10x driver now warns about this after it was enabled for
+compile-testing:
+
+WARNING: unmet direct dependencies detected for OF_GPIO
+  Depends on [n]: GPIOLIB [=y] && OF [=n] && HAS_IOMEM [=y]
+  Selected by [y]:
+  - GPIO_TB10X [=y] && GPIOLIB [=y] && HAS_IOMEM [=y] && (ARC_PLAT_TB10X || COMPILE_TEST [=y])
+
+OF_GPIO is not required for compile-testing and is already enabled
+when the driver is usable, so just drop the 'select' line.
+
+Fixes: 682fbb18e14c ("gpio: tb10x: allow building the module with COMPILE_TEST=y")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20251205095429.1291866-1-arnd@kernel.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/localio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/Kconfig | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/fs/nfs/localio.c b/fs/nfs/localio.c
-index 512d9c5ff608a..b98bb292fef0c 100644
---- a/fs/nfs/localio.c
-+++ b/fs/nfs/localio.c
-@@ -43,8 +43,8 @@ struct nfs_local_kiocb {
- 	size_t                  end_len;
- 	short int		end_iter_index;
- 	atomic_t		n_iters;
-+	struct iov_iter		iters[NFSLOCAL_MAX_IOS];
- 	bool			iter_is_dio_aligned[NFSLOCAL_MAX_IOS];
--	struct iov_iter		iters[NFSLOCAL_MAX_IOS] ____cacheline_aligned;
- 	/* End mostly DIO-specific members */
- };
+diff --git a/drivers/gpio/Kconfig b/drivers/gpio/Kconfig
+index 7ee3afbc2b05d..e053524c5e35f 100644
+--- a/drivers/gpio/Kconfig
++++ b/drivers/gpio/Kconfig
+@@ -738,7 +738,6 @@ config GPIO_TB10X
+ 	depends on ARC_PLAT_TB10X || COMPILE_TEST
+ 	select GPIO_GENERIC
+ 	select GENERIC_IRQ_CHIP
+-	select OF_GPIO
  
+ config GPIO_TEGRA
+ 	tristate "NVIDIA Tegra GPIO support"
 -- 
 2.51.0
 
