@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD3A33DED4;
-	Tue, 16 Dec 2025 11:29:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DEB9315786;
+	Tue, 16 Dec 2025 11:29:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884556; cv=none; b=foqNVSlzasK1YNdzHS+WFc6nQVApD3YtiibEdpGm6tOv55k4vDjQfS3UqGUeW5l/qA/DLW5GTDeow+tFyo8zjNG5Zv8Kk7RDT4h6aoyh8qyYZ/Qfw9hty+u/2r5fUN5nEenEfUKYjdrqT0a+SHd/8nmPPjxMu5W5rBnARGwrPO8=
+	t=1765884559; cv=none; b=rJ/IRqIyZREIevc71aqIxwaGgAutafSbNcZ+IYdwrGeH575ABksdXWfnG/7eUfGa3I/4ACF/kvgdhLrvJCtjYa8Shm+TDrllV/IyYNTOd94oOJ3U0A+HE5efscAstr4MEajTtz6Yb3l3/MEAQK55PJeO0S222vIal6Lu4WXyCrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884556; c=relaxed/simple;
-	bh=sJX3S+SaKGsV4GTGV6di2ag0hHJn8LP6CtH/cD39vJw=;
+	s=arc-20240116; t=1765884559; c=relaxed/simple;
+	bh=/MGKrzlRsXFOmRuMu4EnaA4y+2KSZIwUKfvjfJZMfNs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=srgsUikYEAzo+ZVk9pEvLaH6SIzzATBh55kI7mxnGe3+vHtVfoTTF7OImGi2I4MPIo6k/3hJ/+rHRPE/EEYi42Yx+TBrlzgdrurbdU+7DuRBgTO6Jtwh1pcaJUlMXzaFjID8iCVw7vf1TsYvSDaVyHtaknZLiB7XIj88ydgltW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JrgZeW2R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jrzFQO2f+HhOd2363g+pqCQpbECJaJ7RbydhZKyxovXjbBibmtcvD2ULETRQgzdsjZP6XZXMg3UUKzTYTh2ZdHU6s005U7lvxGnoNROa3JX6YTvWMm4qOODVPYYJ6ldiBLqKNbj0weMuH2Ka7DXXVEDEXVIW8EKWm6J/cYXQMlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bNDeG/gH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JrgZeW2R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10382C4CEF1;
-	Tue, 16 Dec 2025 11:29:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bNDeG/gH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A596C4CEF1;
+	Tue, 16 Dec 2025 11:29:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884555;
-	bh=sJX3S+SaKGsV4GTGV6di2ag0hHJn8LP6CtH/cD39vJw=;
+	s=korg; t=1765884558;
+	bh=/MGKrzlRsXFOmRuMu4EnaA4y+2KSZIwUKfvjfJZMfNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JrgZeW2RX2Jvjr0mlUX80hohPE6HTiOLVJWosIEETK6bDOaRGP3hQYMg/nH5og/03
-	 YVnD9kyjFqLNByHJdFXTYz+XbEMHvr5syj+x/leftSTIxzlh4nqT8745cdOSMmF/11
-	 22jR6AxIMfozbmnTkYpkrAkdQICinJLDA1g3R6IE=
+	b=bNDeG/gHbFyPjEQ79EoIOq2riRrOClrhM94Bw+N24fJRo8EI6n6SsOcGFE6hPdONs
+	 XplvUTUx3q1GOzN+M6gbGtpjnQ6OTeP7+mlLX2vMIS7NaMi28m+BH5Nv5ecpQixf6L
+	 fNW1peXMopWKNpaZPuJU3+88IGVfGSWeOD6GHGpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Will Deacon <will@kernel.org>,
+	Krzysztof Czurylo <krzysztof.czurylo@intel.com>,
+	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 229/354] iommu/arm-smmu-qcom: Enable use of all SMR groups when running bare-metal
-Date: Tue, 16 Dec 2025 12:13:16 +0100
-Message-ID: <20251216111329.214267618@linuxfoundation.org>
+Subject: [PATCH 6.12 230/354] RDMA/irdma: Fix data race in irdma_sc_ccq_arm
+Date: Tue, 16 Dec 2025 12:13:17 +0100
+Message-ID: <20251216111329.250616620@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -51,82 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
+From: Krzysztof Czurylo <krzysztof.czurylo@intel.com>
 
-[ Upstream commit 5583a55e074b33ccd88ac0542fd7cd656a7e2c8c ]
+[ Upstream commit a521928164433de44fed5aaf5f49aeb3f1fb96f5 ]
 
-Some platforms (e.g. SC8280XP and X1E) support more than 128 stream
-matching groups. This is more than what is defined as maximum by the ARM
-SMMU architecture specification. Commit 122611347326 ("iommu/arm-smmu-qcom:
-Limit the SMR groups to 128") disabled use of the additional groups because
-they don't exhibit the same behavior as the architecture supported ones.
+Adds a lock around irdma_sc_ccq_arm body to prevent inter-thread data race.
+Fixes data race in irdma_sc_ccq_arm() reported by KCSAN:
 
-It seems like this is just another quirk of the hypervisor: When running
-bare-metal without the hypervisor, the additional groups appear to behave
-just like all others. The boot firmware uses some of the additional groups,
-so ignoring them in this situation leads to stream match conflicts whenever
-we allocate a new SMR group for the same SID.
+BUG: KCSAN: data-race in irdma_sc_ccq_arm [irdma] / irdma_sc_ccq_arm [irdma]
 
-The workaround exists primarily because the bypass quirk detection fails
-when using a S2CR register from the additional matching groups, so let's
-perform the test with the last reliable S2CR (127) and then limit the
-number of SMR groups only if we detect that we are running below the
-hypervisor (because of the bypass quirk).
+read to 0xffff9d51b4034220 of 8 bytes by task 255 on cpu 11:
+ irdma_sc_ccq_arm+0x36/0xd0 [irdma]
+ irdma_cqp_ce_handler+0x300/0x310 [irdma]
+ cqp_compl_worker+0x2a/0x40 [irdma]
+ process_one_work+0x402/0x7e0
+ worker_thread+0xb3/0x6d0
+ kthread+0x178/0x1a0
+ ret_from_fork+0x2c/0x50
 
-Fixes: 122611347326 ("iommu/arm-smmu-qcom: Limit the SMR groups to 128")
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Signed-off-by: Will Deacon <will@kernel.org>
+write to 0xffff9d51b4034220 of 8 bytes by task 89 on cpu 3:
+ irdma_sc_ccq_arm+0x7e/0xd0 [irdma]
+ irdma_cqp_ce_handler+0x300/0x310 [irdma]
+ irdma_wait_event+0xd4/0x3e0 [irdma]
+ irdma_handle_cqp_op+0xa5/0x220 [irdma]
+ irdma_hw_flush_wqes+0xb1/0x300 [irdma]
+ irdma_flush_wqes+0x22e/0x3a0 [irdma]
+ irdma_cm_disconn_true+0x4c7/0x5d0 [irdma]
+ irdma_disconnect_worker+0x35/0x50 [irdma]
+ process_one_work+0x402/0x7e0
+ worker_thread+0xb3/0x6d0
+ kthread+0x178/0x1a0
+ ret_from_fork+0x2c/0x50
+
+value changed: 0x0000000000024000 -> 0x0000000000034000
+
+Fixes: 3f49d6842569 ("RDMA/irdma: Implement HW Admin Queue OPs")
+Signed-off-by: Krzysztof Czurylo <krzysztof.czurylo@intel.com>
+Signed-off-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
+Link: https://patch.msgid.link/20251125025350.180-2-tatyana.e.nikolova@intel.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 27 ++++++++++++++--------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ drivers/infiniband/hw/irdma/ctrl.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index 0c35a235ab6d0..1a72d067e5843 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -299,17 +299,19 @@ static int qcom_smmu_cfg_probe(struct arm_smmu_device *smmu)
+diff --git a/drivers/infiniband/hw/irdma/ctrl.c b/drivers/infiniband/hw/irdma/ctrl.c
+index 6aed6169c07d7..de1bd2b57414a 100644
+--- a/drivers/infiniband/hw/irdma/ctrl.c
++++ b/drivers/infiniband/hw/irdma/ctrl.c
+@@ -3316,11 +3316,13 @@ int irdma_sc_cqp_destroy(struct irdma_sc_cqp *cqp)
+  */
+ void irdma_sc_ccq_arm(struct irdma_sc_cq *ccq)
+ {
++	unsigned long flags;
+ 	u64 temp_val;
+ 	u16 sw_cq_sel;
+ 	u8 arm_next_se;
+ 	u8 arm_seq_num;
  
- 	/*
- 	 * Some platforms support more than the Arm SMMU architected maximum of
--	 * 128 stream matching groups. For unknown reasons, the additional
--	 * groups don't exhibit the same behavior as the architected registers,
--	 * so limit the groups to 128 until the behavior is fixed for the other
--	 * groups.
-+	 * 128 stream matching groups. The additional registers appear to have
-+	 * the same behavior as the architected registers in the hardware.
-+	 * However, on some firmware versions, the hypervisor does not
-+	 * correctly trap and emulate accesses to the additional registers,
-+	 * resulting in unexpected behavior.
-+	 *
-+	 * If there are more than 128 groups, use the last reliable group to
-+	 * detect if we need to apply the bypass quirk.
- 	 */
--	if (smmu->num_mapping_groups > 128) {
--		dev_notice(smmu->dev, "\tLimiting the stream matching groups to 128\n");
--		smmu->num_mapping_groups = 128;
--	}
--
--	last_s2cr = ARM_SMMU_GR0_S2CR(smmu->num_mapping_groups - 1);
-+	if (smmu->num_mapping_groups > 128)
-+		last_s2cr = ARM_SMMU_GR0_S2CR(127);
-+	else
-+		last_s2cr = ARM_SMMU_GR0_S2CR(smmu->num_mapping_groups - 1);
++	spin_lock_irqsave(&ccq->dev->cqp_lock, flags);
+ 	get_64bit_val(ccq->cq_uk.shadow_area, 32, &temp_val);
+ 	sw_cq_sel = (u16)FIELD_GET(IRDMA_CQ_DBSA_SW_CQ_SELECT, temp_val);
+ 	arm_next_se = (u8)FIELD_GET(IRDMA_CQ_DBSA_ARM_NEXT_SE, temp_val);
+@@ -3331,6 +3333,7 @@ void irdma_sc_ccq_arm(struct irdma_sc_cq *ccq)
+ 		   FIELD_PREP(IRDMA_CQ_DBSA_ARM_NEXT_SE, arm_next_se) |
+ 		   FIELD_PREP(IRDMA_CQ_DBSA_ARM_NEXT, 1);
+ 	set_64bit_val(ccq->cq_uk.shadow_area, 32, temp_val);
++	spin_unlock_irqrestore(&ccq->dev->cqp_lock, flags);
  
- 	/*
- 	 * With some firmware versions writes to S2CR of type FAULT are
-@@ -332,6 +334,11 @@ static int qcom_smmu_cfg_probe(struct arm_smmu_device *smmu)
+ 	dma_wmb(); /* make sure shadow area is updated before arming */
  
- 		reg = FIELD_PREP(ARM_SMMU_CBAR_TYPE, CBAR_TYPE_S1_TRANS_S2_BYPASS);
- 		arm_smmu_gr1_write(smmu, ARM_SMMU_GR1_CBAR(qsmmu->bypass_cbndx), reg);
-+
-+		if (smmu->num_mapping_groups > 128) {
-+			dev_notice(smmu->dev, "\tLimiting the stream matching groups to 128\n");
-+			smmu->num_mapping_groups = 128;
-+		}
- 	}
- 
- 	for (i = 0; i < smmu->num_mapping_groups; i++) {
 -- 
 2.51.0
 
