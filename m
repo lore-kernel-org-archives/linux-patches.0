@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 463CA3502A4;
-	Tue, 16 Dec 2025 11:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF24C350A02;
+	Tue, 16 Dec 2025 11:56:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886190; cv=none; b=AOv3zz5dljbsljVVewA93UmR0djI+kIPPXaEFtWQ8dTeY67ijcmxGOEiYFJM7cON6yxoro/mWV3S2No7GIbdux7qfIw+eFNLyes68WDzF+cJw/6UrKZnhhL0yIC6+Tzx15TfawsV+F302LU7fPUKplB8dNk3sWvVEXN9yGaOTZA=
+	t=1765886194; cv=none; b=bD9GFDDJhe8ok18Kx2bVJ+jOTHKuf/oYmgEt3N7Rsycy202/tGE3cn06acF8pT+MtykEnM6eWVobj/5XxGF9EWD4ifO1E0KL2o46RGS7CFiStvvDZjP8eluU/zTUMKuGnsbDLXsH66KeUCVE0EnY0tNXIaQJDUw6L4vOeEvaxsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886190; c=relaxed/simple;
-	bh=vzTv4DixdcYit6bVUJhHvsADrPGzq/fhPj1ZXcQcURE=;
+	s=arc-20240116; t=1765886194; c=relaxed/simple;
+	bh=+vAqAmyRFTNRM3eQiaEhp5NudsXGtc9iRj1KFnXBBcY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qewo/TWYCU/gBjhH6qBrmDRbPADeu9MOcJpw7q+PJuOkB5bpfVyqwwOWdT7QZ+ydVqA/aEV8XRuGGGpW16nXj8IWYyuaQwPHrx3BAnRw3OXNpAh2Gn61MfCB+WxrewTT7BQwx9rgVCxkUDFfa0gFKHiY7CoAwFUUcySRBhpwYGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qLsDPSMl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JsJl5weYpbA+lpilSxDy8qtPXalT315cXpkqfzyALAxOfHJ+N55/hGikbbeRGvPo1YJaGqEXMHAwKeUSGl7qNIYq96zqZM5RUFBK1/kuN3sEQQkkKl7I/UCX/Xcnk4efRDkDPGXeLpHO+0YMPKJX0GKF7Xrkc9tefdUyLezMRW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=174pOnb6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qLsDPSMl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23DEC4CEF1;
-	Tue, 16 Dec 2025 11:56:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="174pOnb6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FCD5C4CEF1;
+	Tue, 16 Dec 2025 11:56:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886190;
-	bh=vzTv4DixdcYit6bVUJhHvsADrPGzq/fhPj1ZXcQcURE=;
+	s=korg; t=1765886193;
+	bh=+vAqAmyRFTNRM3eQiaEhp5NudsXGtc9iRj1KFnXBBcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qLsDPSMlT7E3kD4TpKKMwrEy4Op2rIX8rR9KibQz5RY18Zk1MzdiXgRxqY3a8vizZ
-	 5YH721spem9KAA7fE0FybzSJynfP2AGAqVtmH2Xle7n+HY79uR262qQl+jpVp7xZQn
-	 x59UPY3udia45AhrE6Tvgug4PVIQRS+cjdQBCMVs=
+	b=174pOnb6Dxrdd9XfIqM2FE8ju5zzjXqeKAG0EsIeYKpVYflS/2ic/HKnww1BZLFWS
+	 cWWVPLJVyUg8xCZisOV9gQ1kfHzPJDOjNlq1AJYYgywsXHiy+Jp85Z2jAkl+S09HMy
+	 TaJZNIIqcPiWWOEoCc77Pv4wOsTAaQl1DbAwHtko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Andrea della Porta <andrea.porta@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 365/507] greybus: gb-beagleplay: Fix timeout handling in bootloader functions
-Date: Tue, 16 Dec 2025 12:13:26 +0100
-Message-ID: <20251216111358.682387018@linuxfoundation.org>
+Subject: [PATCH 6.17 366/507] misc: rp1: Fix an error handling path in rp1_probe()
+Date: Tue, 16 Dec 2025 12:13:27 +0100
+Message-ID: <20251216111358.718340113@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -50,64 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit e6df0f649cff08da7a2feb6d963b39076ca129f9 ]
+[ Upstream commit 43cd4b634ef90c4e2ff75eaeb361786fa04c8874 ]
 
-wait_for_completion_timeout() returns the remaining jiffies
-(at least 1) on success or 0 on timeout, but never negative
-error codes. The current code incorrectly checks for negative
-values, causing timeouts to be ignored and treated as success.
+When DT is used to get the reference of 'rp1_node', it should be released
+when not needed anymore, otherwise it is leaking.
 
-Check for a zero return value to correctly identify and
-handle timeout events.
+In such a case, add the missing of_node_put() call at the end of the probe,
+as already done in the error handling path.
 
-Fixes: 0cf7befa3ea2 ("greybus: gb-beagleplay: Add firmware upload API")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20251121064027.571-1-vulab@iscas.ac.cn
+Fixes: 49d63971f963 ("misc: rp1: RaspberryPi RP1 misc driver")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Andrea della Porta <andrea.porta@suse.com>
+Link: https://patch.msgid.link/9bc1206de787fa86384f3e5ba0a8027947bc00ff.1762585959.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/greybus/gb-beagleplay.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/misc/rp1/rp1_pci.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/greybus/gb-beagleplay.c b/drivers/greybus/gb-beagleplay.c
-index 9610f878da1b6..87186f891a6ac 100644
---- a/drivers/greybus/gb-beagleplay.c
-+++ b/drivers/greybus/gb-beagleplay.c
-@@ -644,8 +644,8 @@ static int cc1352_bootloader_wait_for_ack(struct gb_beagleplay *bg)
+diff --git a/drivers/misc/rp1/rp1_pci.c b/drivers/misc/rp1/rp1_pci.c
+index 803832006ec87..a342bcc6164bb 100644
+--- a/drivers/misc/rp1/rp1_pci.c
++++ b/drivers/misc/rp1/rp1_pci.c
+@@ -289,6 +289,9 @@ static int rp1_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 		goto err_unload_overlay;
+ 	}
  
- 	ret = wait_for_completion_timeout(
- 		&bg->fwl_ack_com, msecs_to_jiffies(CC1352_BOOTLOADER_TIMEOUT));
--	if (ret < 0)
--		return dev_err_probe(&bg->sd->dev, ret,
-+	if (!ret)
-+		return dev_err_probe(&bg->sd->dev, -ETIMEDOUT,
- 				     "Failed to acquire ack semaphore");
++	if (skip_ovl)
++		of_node_put(rp1_node);
++
+ 	return 0;
  
- 	switch (READ_ONCE(bg->fwl_ack)) {
-@@ -683,8 +683,8 @@ static int cc1352_bootloader_get_status(struct gb_beagleplay *bg)
- 	ret = wait_for_completion_timeout(
- 		&bg->fwl_cmd_response_com,
- 		msecs_to_jiffies(CC1352_BOOTLOADER_TIMEOUT));
--	if (ret < 0)
--		return dev_err_probe(&bg->sd->dev, ret,
-+	if (!ret)
-+		return dev_err_probe(&bg->sd->dev, -ETIMEDOUT,
- 				     "Failed to acquire last status semaphore");
- 
- 	switch (READ_ONCE(bg->fwl_cmd_response)) {
-@@ -768,8 +768,8 @@ static int cc1352_bootloader_crc32(struct gb_beagleplay *bg, u32 *crc32)
- 	ret = wait_for_completion_timeout(
- 		&bg->fwl_cmd_response_com,
- 		msecs_to_jiffies(CC1352_BOOTLOADER_TIMEOUT));
--	if (ret < 0)
--		return dev_err_probe(&bg->sd->dev, ret,
-+	if (!ret)
-+		return dev_err_probe(&bg->sd->dev, -ETIMEDOUT,
- 				     "Failed to acquire last status semaphore");
- 
- 	*crc32 = READ_ONCE(bg->fwl_cmd_response);
+ err_unload_overlay:
 -- 
 2.51.0
 
