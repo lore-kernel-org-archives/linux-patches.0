@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A04F325736;
-	Tue, 16 Dec 2025 12:13:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0375C35965;
+	Tue, 16 Dec 2025 12:13:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887204; cv=none; b=lkF9xSwuQAo+D4bY1fYxoFrf0Cx0gVXGpe+nRieTl1apZjrUkbwuTljZ3MJZdpPMBGtbULgxCoLnl1E/j7EaBQ4aKP92BiIqX8CuelZrZlieekSfuqQYtzQK/knHZF+LvcLiHG/AS+qMQzoi6pdK3dgyaC8KAfBv257IE3xL10s=
+	t=1765887208; cv=none; b=cSJiD+kUvu/B5bF1sfudpNik6gK7STPnWeq1/PNKBnDgH3qBXLG57HZgDjYE5HiAz6cPQyBD4YqxktVAwUUUdwTJICRQ3VwpK+3xDNwRj8Qc2umrKiWl8l8IOPEc3Dei/e4XoTb9VEkn2w/xdgY9Z4CdGwPdKg0s83gdDDHrSnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887204; c=relaxed/simple;
-	bh=yDiQO3+he43LRnEhUR86t08/pL7K4xxIfy8ztTNKVtU=;
+	s=arc-20240116; t=1765887208; c=relaxed/simple;
+	bh=UzzlsXLRbk41nNzXr/W6yVGbmeYUu1LRUCdaiZvoJU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aL5gS39nMTeGqedqbJmczy0gSvftG7/jUKAHu7CnkfetJMpTrelWgktiChW2KM9qDNN0qK0WQ2G7nQFOznfn1vwnvr2E5VCgqt6uybddwNjNrhAOwR5ItS+5LVhp66WT3t2gEymY4zGO3frkFBigJQGsAeItBDLEMVcm1go2K8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vVGcCEQR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W9CJnQfxTYO/t17Qpy5CYpnkkBeqq3qA2DJJzUI71+Pu60R0YI6O/punDh9zzx430gYF8ZCpkvE7/jMURXBRi+WhnUIzCw6qFGSgho+yM+OvwiZxH+HbNdkjKgZFvjRTF4DF8VhIOw9vxTVdoICGpPZE3Y9Y8QqoIUr+W18fbmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fyrp1bMB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVGcCEQR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06E97C4CEF1;
-	Tue, 16 Dec 2025 12:13:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fyrp1bMB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67956C4CEF1;
+	Tue, 16 Dec 2025 12:13:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887204;
-	bh=yDiQO3+he43LRnEhUR86t08/pL7K4xxIfy8ztTNKVtU=;
+	s=korg; t=1765887207;
+	bh=UzzlsXLRbk41nNzXr/W6yVGbmeYUu1LRUCdaiZvoJU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vVGcCEQRIFcY22Qps5Z+nFSjEC08QELmLLPE4kuRctMP4lb9xMk1E8bVGuz27dxoB
-	 ww+uekUjWZnyJtV0w0S02Bzr7hNjQExxJh6tVOm3KS3F6XI6jsNikUE6l/ZPGPcyIu
-	 4/wJDLSbDyRiCiOy9DW86lczhVBeVWiM8HuK+JOA=
+	b=Fyrp1bMBF5plvHOGH/X83yB5YFCoIvujt4RlPGosSwW3Zmk8bu1CCyfNCaldxdZhJ
+	 4tCNBRoued1wVJB2wItYQfuMVWhuEoZJS35aBKrvv6BQ7iyhkpdsPF4ndZZ1IEIcus
+	 Jjup7EK/ekKaOFz8csDVnV61snqenH6Tsfcaq1xc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jonathan Corbet <corbet@lwn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 158/614] random: use offstack cpumask when necessary
-Date: Tue, 16 Dec 2025 12:08:45 +0100
-Message-ID: <20251216111407.060859596@linuxfoundation.org>
+Subject: [PATCH 6.18 159/614] docs: kdoc: fix duplicate section warning message
+Date: Tue, 16 Dec 2025 12:08:46 +0100
+Message-ID: <20251216111407.097805254@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,92 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Jacob Keller <jacob.e.keller@intel.com>
 
-[ Upstream commit 5d49f1a5bd358d24e5f88b23b46da833de1dbec8 ]
+[ Upstream commit e5e7ca66a7fc6b8073c30a048e1157b88d427980 ]
 
-The entropy generation function keeps a local cpu mask on the stack,
-which can trigger warnings in configurations with a large number of
-CPUs:
+The python version of the kernel-doc parser emits some strange warnings
+with just a line number in certain cases:
 
-    drivers/char/random.c:1292:20: error: stack frame size (1288)
-    exceeds limit (1280) in 'try_to_generate_entropy' [-Werror,-Wframe-larger-than]
+$ ./scripts/kernel-doc -Wall -none 'include/linux/virtio_config.h'
+Warning: 174
+Warning: 184
+Warning: 190
+Warning: include/linux/virtio_config.h:226 No description found for return value of '__virtio_test_bit'
+Warning: include/linux/virtio_config.h:259 No description found for return value of 'virtio_has_feature'
+Warning: include/linux/virtio_config.h:283 No description found for return value of 'virtio_has_dma_quirk'
+Warning: include/linux/virtio_config.h:392 No description found for return value of 'virtqueue_set_affinity'
 
-Use the cpumask interface to dynamically allocate it in those
-configurations.
+I eventually tracked this down to the lone call of emit_msg() in the
+KernelEntry class, which looks like:
 
-Fixes: 1c21fe00eda7 ("random: spread out jitter callback to different CPUs")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+  self.emit_msg(self.new_start_line, f"duplicate section name '{name}'\n")
+
+This looks like all the other emit_msg calls. Unfortunately, the definition
+within the KernelEntry class takes only a message parameter and not a line
+number. The intended message is passed as the warning!
+
+Pass the filename to the KernelEntry class, and use this to build the log
+message in the same way as the KernelDoc class does.
+
+To avoid future errors, mark the warning parameter for both emit_msg
+definitions as a keyword-only argument. This will prevent accidentally
+passing a string as the warning parameter in the future.
+
+Also fix the call in dump_section to avoid an unnecessary additional
+newline.
+
+Fixes: e3b42e94cf10 ("scripts/lib/kdoc/kdoc_parser.py: move kernel entry to a class")
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+Message-ID: <20251030-jk-fix-kernel-doc-duplicate-return-warning-v2-1-ec4b5c662881@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/random.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ scripts/lib/kdoc/kdoc_parser.py | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/char/random.c b/drivers/char/random.c
-index b8b24b6ed3fe4..4ba5f0c4c8b24 100644
---- a/drivers/char/random.c
-+++ b/drivers/char/random.c
-@@ -1296,6 +1296,7 @@ static void __cold try_to_generate_entropy(void)
- 	struct entropy_timer_state *stack = PTR_ALIGN((void *)stack_bytes, SMP_CACHE_BYTES);
- 	unsigned int i, num_different = 0;
- 	unsigned long last = random_get_entropy();
-+	cpumask_var_t timer_cpus;
- 	int cpu = -1;
+diff --git a/scripts/lib/kdoc/kdoc_parser.py b/scripts/lib/kdoc/kdoc_parser.py
+index 2376f180b1fa9..ccbc1fe4b7ccd 100644
+--- a/scripts/lib/kdoc/kdoc_parser.py
++++ b/scripts/lib/kdoc/kdoc_parser.py
+@@ -274,6 +274,8 @@ class KernelEntry:
  
- 	for (i = 0; i < NUM_TRIAL_SAMPLES - 1; ++i) {
-@@ -1310,13 +1311,15 @@ static void __cold try_to_generate_entropy(void)
+         self.leading_space = None
  
- 	atomic_set(&stack->samples, 0);
- 	timer_setup_on_stack(&stack->timer, entropy_timer, 0);
-+	if (!alloc_cpumask_var(&timer_cpus, GFP_KERNEL))
-+		goto out;
++        self.fname = fname
 +
- 	while (!crng_ready() && !signal_pending(current)) {
- 		/*
- 		 * Check !timer_pending() and then ensure that any previous callback has finished
- 		 * executing by checking timer_delete_sync_try(), before queueing the next one.
- 		 */
- 		if (!timer_pending(&stack->timer) && timer_delete_sync_try(&stack->timer) >= 0) {
--			struct cpumask timer_cpus;
- 			unsigned int num_cpus;
+         # State flags
+         self.brcount = 0
+         self.declaration_start_line = ln + 1
+@@ -288,9 +290,11 @@ class KernelEntry:
+         return '\n'.join(self._contents) + '\n'
  
- 			/*
-@@ -1326,19 +1329,19 @@ static void __cold try_to_generate_entropy(void)
- 			preempt_disable();
+     # TODO: rename to emit_message after removal of kernel-doc.pl
+-    def emit_msg(self, log_msg, warning=True):
++    def emit_msg(self, ln, msg, *, warning=True):
+         """Emit a message"""
  
- 			/* Only schedule callbacks on timer CPUs that are online. */
--			cpumask_and(&timer_cpus, housekeeping_cpumask(HK_TYPE_TIMER), cpu_online_mask);
--			num_cpus = cpumask_weight(&timer_cpus);
-+			cpumask_and(timer_cpus, housekeeping_cpumask(HK_TYPE_TIMER), cpu_online_mask);
-+			num_cpus = cpumask_weight(timer_cpus);
- 			/* In very bizarre case of misconfiguration, fallback to all online. */
- 			if (unlikely(num_cpus == 0)) {
--				timer_cpus = *cpu_online_mask;
--				num_cpus = cpumask_weight(&timer_cpus);
-+				*timer_cpus = *cpu_online_mask;
-+				num_cpus = cpumask_weight(timer_cpus);
- 			}
++        log_msg = f"{self.fname}:{ln} {msg}"
++
+         if not warning:
+             self.config.log.info(log_msg)
+             return
+@@ -336,7 +340,7 @@ class KernelEntry:
+                 # Only warn on user-specified duplicate section names
+                 if name != SECTION_DEFAULT:
+                     self.emit_msg(self.new_start_line,
+-                                  f"duplicate section name '{name}'\n")
++                                  f"duplicate section name '{name}'")
+                 # Treat as a new paragraph - add a blank line
+                 self.sections[name] += '\n' + contents
+             else:
+@@ -387,15 +391,15 @@ class KernelDoc:
+             self.emit_msg(0,
+                           'Python 3.7 or later is required for correct results')
  
- 			/* Basic CPU round-robin, which avoids the current CPU. */
- 			do {
--				cpu = cpumask_next(cpu, &timer_cpus);
-+				cpu = cpumask_next(cpu, timer_cpus);
- 				if (cpu >= nr_cpu_ids)
--					cpu = cpumask_first(&timer_cpus);
-+					cpu = cpumask_first(timer_cpus);
- 			} while (cpu == smp_processor_id() && num_cpus > 1);
+-    def emit_msg(self, ln, msg, warning=True):
++    def emit_msg(self, ln, msg, *, warning=True):
+         """Emit a message"""
  
- 			/* Expiring the timer at `jiffies` means it's the next tick. */
-@@ -1354,6 +1357,8 @@ static void __cold try_to_generate_entropy(void)
- 	}
- 	mix_pool_bytes(&stack->entropy, sizeof(stack->entropy));
+-        log_msg = f"{self.fname}:{ln} {msg}"
+-
+         if self.entry:
+-            self.entry.emit_msg(log_msg, warning)
++            self.entry.emit_msg(ln, msg, warning=warning)
+             return
  
-+	free_cpumask_var(timer_cpus);
-+out:
- 	timer_delete_sync(&stack->timer);
- 	timer_destroy_on_stack(&stack->timer);
- }
++        log_msg = f"{self.fname}:{ln} {msg}"
++
+         if warning:
+             self.config.log.warning(log_msg)
+         else:
 -- 
 2.51.0
 
