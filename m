@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 566E534B191;
-	Tue, 16 Dec 2025 11:40:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C715234B197;
+	Tue, 16 Dec 2025 11:40:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885232; cv=none; b=QDlWonpgHiZRmjHlbbhEwjloA8xVmu4mcqlzX5LuG5pskbzUdo5v81P6wYuT4o9ti9aoguCYArrnHRokKs2EoPP93ILscO4liMMHSCPViKU9UKCRZW9Hc5GLu7HDjaWmPf9xUZ/l4HUgxEY7wRbDUWAB/cBnC/3gxcchGwkN2mk=
+	t=1765885235; cv=none; b=BSXFZ1BHIg34VN5kQkSULLPlkLAF5qmB3Cg0VPBDhjKlAIq60CFGMn4hFWHt0gwm/WpOpt0YdNjpeFDzqjY3+DoW4K4I9BWxXJGEOzguO5bWQYgUuNU5EEfHJcm4HNTij1Z1jv9MbiAJXVGDZ3Jd6EsYRuArLEEhocRU/hbO7/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885232; c=relaxed/simple;
-	bh=O2RvOqVAFylLdn1xUlsE4TG1Eoz3b9dTi5fJhpA9gf8=;
+	s=arc-20240116; t=1765885235; c=relaxed/simple;
+	bh=W+y4C1srKr9Cq/KjFjV3P0FGiUiRkXCYhYazVkek7/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i7Z3U3VrYgnnRX+OBptuqTKxNHXmamRRceFB0E1ob7jTGBgfgdP/NnjOgxqwAkkhqMKZx6SESuENjYdRils5ZlgGFI5KQOkxzDzB7fQSCWRrnkggrN4k94dqXavz/kahca2RxRrc07YyqyaQAKj3GLDWi6BLp02wCRTw6JKDccE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iRJrJA4R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rjgU6Iqc5vYoZp3e1Ubjy8clO/TU8XHuiJKbsdq/LJ3snMbVYz6bWnJ5jrDzUG/+uPrN0O+p2dojviAQOtusMgfvS0fHohRtXSFUD4uPypemMd9M94JNWNTmZC1Aoy4Y6haO4XXVVbrglBQI7X3FxvfrAgwzedwmRdgG6sMUMvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H8g4vicW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iRJrJA4R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5B17C4CEF5;
-	Tue, 16 Dec 2025 11:40:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H8g4vicW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2991FC16AAE;
+	Tue, 16 Dec 2025 11:40:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885232;
-	bh=O2RvOqVAFylLdn1xUlsE4TG1Eoz3b9dTi5fJhpA9gf8=;
+	s=korg; t=1765885235;
+	bh=W+y4C1srKr9Cq/KjFjV3P0FGiUiRkXCYhYazVkek7/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iRJrJA4RtxM3mz7qcTIEXCaHOb7NJXiZX2dwCr5ZFzdsbFVpmpln9JROrhSP8TdLV
-	 1mfMXcB2vHiheStoWkjUtbp4lrD3tnhx+ETWKQkIKdFyNAl1zQ16B3na2L2kqUHbPB
-	 yZwIt6iWgqJEI0q/rJT09YM5LfBK92RakpTTRlqE=
+	b=H8g4vicWE7sD7XoRPihlsld3U/aNPO27wflAJgvNC0rSQysgX758EL7HtpgO+Bdkh
+	 Q96yXGvfRbkDUF2ofba+hOWHcCT6Qs7YoSlBvnaO18O6RdL9bREVFSQtCrvZMaQVyh
+	 SzMUojkymHwg+T+Mj8Q47pY6U1bfxs51U0GHn0pc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Lukas Wunner <lukas@wunner.de>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 078/507] soc: qcom: gsbi: fix double disable caused by devm
-Date: Tue, 16 Dec 2025 12:08:39 +0100
-Message-ID: <20251216111348.368771699@linuxfoundation.org>
+Subject: [PATCH 6.17 079/507] crypto: asymmetric_keys - prevent overflow in asymmetric_key_generate_id
+Date: Tue, 16 Dec 2025 12:08:40 +0100
+Message-ID: <20251216111348.404321946@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,58 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 2286e18e3937c69cc103308a8c1d4898d8a7b04f ]
+[ Upstream commit df0845cf447ae1556c3440b8b155de0926cbaa56 ]
 
-In the commit referenced by the Fixes tag, devm_clk_get_enabled() was
-introduced to replace devm_clk_get() and clk_prepare_enable(). While
-the clk_disable_unprepare() call in the error path was correctly
-removed, the one in the remove function was overlooked, leading to a
-double disable issue.
+Use check_add_overflow() to guard against potential integer overflows
+when adding the binary blob lengths and the size of an asymmetric_key_id
+structure and return ERR_PTR(-EOVERFLOW) accordingly. This prevents a
+possible buffer overflow when copying data from potentially malicious
+X.509 certificate fields that can be arbitrarily large, such as ASN.1
+INTEGER serial numbers, issuer names, etc.
 
-Remove the redundant clk_disable_unprepare() call from gsbi_remove()
-to fix this issue. Since all resources are now managed by devres
-and will be automatically released, the remove function serves no purpose
-and can be deleted entirely.
-
-Fixes: 489d7a8cc286 ("soc: qcom: use devm_clk_get_enabled() in gsbi_probe()")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/stable/20251020160215.523-1-vulab%40iscas.ac.cn
-Link: https://lore.kernel.org/r/20251020160215.523-1-vulab@iscas.ac.cn
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 7901c1a8effb ("KEYS: Implement binary asymmetric key ID handling")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/qcom_gsbi.c | 8 --------
- 1 file changed, 8 deletions(-)
+ crypto/asymmetric_keys/asymmetric_type.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/soc/qcom/qcom_gsbi.c b/drivers/soc/qcom/qcom_gsbi.c
-index 8f1158e0c6313..a25d1de592f06 100644
---- a/drivers/soc/qcom/qcom_gsbi.c
-+++ b/drivers/soc/qcom/qcom_gsbi.c
-@@ -212,13 +212,6 @@ static int gsbi_probe(struct platform_device *pdev)
- 	return of_platform_populate(node, NULL, NULL, &pdev->dev);
- }
- 
--static void gsbi_remove(struct platform_device *pdev)
--{
--	struct gsbi_info *gsbi = platform_get_drvdata(pdev);
+diff --git a/crypto/asymmetric_keys/asymmetric_type.c b/crypto/asymmetric_keys/asymmetric_type.c
+index ba2d9d1ea235a..348966ea2175c 100644
+--- a/crypto/asymmetric_keys/asymmetric_type.c
++++ b/crypto/asymmetric_keys/asymmetric_type.c
+@@ -11,6 +11,7 @@
+ #include <crypto/public_key.h>
+ #include <linux/seq_file.h>
+ #include <linux/module.h>
++#include <linux/overflow.h>
+ #include <linux/slab.h>
+ #include <linux/ctype.h>
+ #include <keys/system_keyring.h>
+@@ -141,12 +142,17 @@ struct asymmetric_key_id *asymmetric_key_generate_id(const void *val_1,
+ 						     size_t len_2)
+ {
+ 	struct asymmetric_key_id *kid;
 -
--	clk_disable_unprepare(gsbi->hclk);
--}
--
- static const struct of_device_id gsbi_dt_match[] = {
- 	{ .compatible = "qcom,gsbi-v1.0.0", },
- 	{ },
-@@ -232,7 +225,6 @@ static struct platform_driver gsbi_driver = {
- 		.of_match_table	= gsbi_dt_match,
- 	},
- 	.probe = gsbi_probe,
--	.remove = gsbi_remove,
- };
- 
- module_platform_driver(gsbi_driver);
+-	kid = kmalloc(sizeof(struct asymmetric_key_id) + len_1 + len_2,
+-		      GFP_KERNEL);
++	size_t kid_sz;
++	size_t len;
++
++	if (check_add_overflow(len_1, len_2, &len))
++		return ERR_PTR(-EOVERFLOW);
++	if (check_add_overflow(sizeof(struct asymmetric_key_id), len, &kid_sz))
++		return ERR_PTR(-EOVERFLOW);
++	kid = kmalloc(kid_sz, GFP_KERNEL);
+ 	if (!kid)
+ 		return ERR_PTR(-ENOMEM);
+-	kid->len = len_1 + len_2;
++	kid->len = len;
+ 	memcpy(kid->data, val_1, len_1);
+ 	memcpy(kid->data + len_1, val_2, len_2);
+ 	return kid;
 -- 
 2.51.0
 
