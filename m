@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D7434F476;
-	Tue, 16 Dec 2025 11:55:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB45B34F49F;
+	Tue, 16 Dec 2025 11:55:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886149; cv=none; b=Wcp7wGEJOhSF9dxkKPqt7W4yJFXIXvTRTSETCnm4GZAo+qZa0QNY7zwkghCdMMcHmkJ+1m04sJdFFt/Xlmg5djWBgAlnn+K0GSRVYZcarZKuoeopUViHi6BWGq/XGcfknEP2PKvrBe5pRL/UdI+mtX1MfCI9jzPtkPwbsAYeinA=
+	t=1765886153; cv=none; b=gTcnOsG/w3XZw3UhvkBefgaFigsyOc5YPyEOzbSJbG/Vo5HOAUzqL97/KEVubQorN9tteTxjpU+Ddz8Pdcw346e6pqZkIDexysnXfbEucDoNd10BO3bXqhZFx+xNqB/OSBcTU88bkICyivEbDs38qkIPO70fM8eUd+dB+ZFe9yM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886149; c=relaxed/simple;
-	bh=l7bXfy8y5r9+e1R6ULGO2HZa6zuZZsXa9S6OP4RUCzs=;
+	s=arc-20240116; t=1765886153; c=relaxed/simple;
+	bh=ctlcZ/DEGnhQ84XgBrMJX8AsaGhgFGwVla9zUAI01D0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GwiESrldHLE/GZYMyMUkvB3/w0m5Fqtv6XW1Yvs0tPGHMMYOfZifP5Ot0kg1IS6lpijhP9aem2rQsRwy9wKasfrMfuSEqUzwfeEVioaDfPqMiIQoVTKNSfywkFKRnUc7V+FLkWRJHQ0Hlnk+HA7Yq/9708EbAKZPj5x6m/Otc7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=11DWY20y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IY1YMnhV0EJEy1ZN2TB6ZMq2VwlN5LO2+yXWvw8ZtoeqxHWC4kUBmuWun/oPMaCnjMSfAgBXutD4jm9WStceZRVb7gu0j+SDYhZERn8cZSBAGR1Twm3yjHz6ja+QFQISZGhBZv6L7tv3Zl1ar8JQUneBzope+4HL3OERgNhb6xA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=adoqJ9hu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="11DWY20y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E002AC4CEF1;
-	Tue, 16 Dec 2025 11:55:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="adoqJ9hu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BCD7C4CEF1;
+	Tue, 16 Dec 2025 11:55:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886149;
-	bh=l7bXfy8y5r9+e1R6ULGO2HZa6zuZZsXa9S6OP4RUCzs=;
+	s=korg; t=1765886152;
+	bh=ctlcZ/DEGnhQ84XgBrMJX8AsaGhgFGwVla9zUAI01D0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=11DWY20yksS6XaSjNzb+b/BhotHW2Oq6s8saoIj8GHQsyRqMdywHgKQbB3ZvPN9gs
-	 vFCtaBDpIg9zBWqc0R11mC0tHNZryvQ6svP8Goa9hT9GcOdQjwuG41tuLpW2k8n4Tb
-	 1FQvYj3M7lxglV0T2j6zl8ibVVmKs6jK7MUkOl3A=
+	b=adoqJ9huisjbutLw9WTtHdXMwuNS1lORRODn3Vx5eW2vxwh3CZbpSyq0lrioSlaOy
+	 591LY+L9eHkGVfdHLDsGQztDYrGOVj13L46Avt3XqSjnTHtUtBaTgGobhYu0/Nr/nl
+	 V+uNuzIsHeSLD3xNp5EMGb9obIJtKmB4w+HgrAmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	T Pratham <t-pratham@ti.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Shenghao Ding <shenghao-ding@ti.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 320/507] crypto: ahash - Zero positive err value in ahash_update_finish
-Date: Tue, 16 Dec 2025 12:12:41 +0100
-Message-ID: <20251216111357.061242912@linuxfoundation.org>
+Subject: [PATCH 6.17 321/507] ASoC: tas2781: correct the wrong period
+Date: Tue, 16 Dec 2025 12:12:42 +0100
+Message-ID: <20251216111357.096639630@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -45,48 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Shenghao Ding <shenghao-ding@ti.com>
 
-[ Upstream commit ebbdf6466b30e3b37f3b360826efd21f0633fb9e ]
+[ Upstream commit 950167a99dfd27eeaf177092908c598a31c79a7e ]
 
-The partial block length returned by a block-only driver should
-not be passed up to the caller since ahash itself deals with the
-partial block data.
+A wrong preiod at the end of the sentence was reported by one of my
+customers. Their thorough code review is greatly appreciated.
 
-Set err to zero in ahash_update_finish if it was positive.
-
-Reported-by: T Pratham <t-pratham@ti.com>
-Tested-by: T Pratham <t-pratham@ti.com>
-Fixes: 9d7a0ab1c753 ("crypto: ahash - Handle partial blocks in API")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 49e2e353fb0d ("ASoC: tas2781: Add Calibration Kcontrols for Chromebook")
+Signed-off-by: Shenghao Ding <shenghao-ding@ti.com>
+Link: https://patch.msgid.link/20251121234427.402-1-shenghao-ding@ti.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/ahash.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/soc/codecs/tas2781-i2c.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/crypto/ahash.c b/crypto/ahash.c
-index 5248aab939ca7..09a02ed4c4a09 100644
---- a/crypto/ahash.c
-+++ b/crypto/ahash.c
-@@ -423,7 +423,11 @@ static int ahash_update_finish(struct ahash_request *req, int err)
+diff --git a/sound/soc/codecs/tas2781-i2c.c b/sound/soc/codecs/tas2781-i2c.c
+index 9890b1a6d2924..e3a4d95b2b827 100644
+--- a/sound/soc/codecs/tas2781-i2c.c
++++ b/sound/soc/codecs/tas2781-i2c.c
+@@ -1340,7 +1340,7 @@ static int tasdevice_create_cali_ctrls(struct tasdevice_priv *priv)
  
- 	req->nbytes += nonzero - blen;
- 
--	blen = err < 0 ? 0 : err + nonzero;
-+	blen = 0;
-+	if (err >= 0) {
-+		blen = err + nonzero;
-+		err = 0;
-+	}
- 	if (ahash_request_isvirt(req))
- 		memcpy(buf, req->svirt + req->nbytes - blen, blen);
- 	else
+ 	/*
+ 	 * Alloc kcontrol via devm_kzalloc(), which don't manually
+-	 * free the kcontrol。
++	 * free the kcontrol.
+ 	 */
+ 	cali_ctrls = devm_kcalloc(priv->dev, nctrls,
+ 		sizeof(cali_ctrls[0]), GFP_KERNEL);
 -- 
 2.51.0
 
