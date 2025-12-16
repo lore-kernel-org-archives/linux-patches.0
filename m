@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598CD36D4ED;
-	Tue, 16 Dec 2025 12:18:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C4236D4F0;
+	Tue, 16 Dec 2025 12:18:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887483; cv=none; b=e3a5LzXxJEoaFjawwMh4ErOiTikU25N57CX1luawDNkDVwYZU/2JjLkQPGtXEKQUtFX8TZVpYIwWMoZVUqk8rFCwe8A9CYHujk2nm7QvuQo2gJdXYvfLUg8Tq3r94sNiS48Vp3JfyNNQ/jYmi6rWovmgD80x+IBvnhZiRJKWlJg=
+	t=1765887486; cv=none; b=fjVZY5QHJ/8UlaedtVpqlcJoY1pGgXhI9bI32U510UJLgTGNzoCvxtHKM7jIjNKx7SPtt0Pp356IdZAYZROCDPPYkx0+o2gsy/OFaMURB8EVTojZVuUoVo2Q/+56J114dJRatOOBj7zqqcZwGmrMoAmrUn0tT2FAgDDjZi9EmA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887483; c=relaxed/simple;
-	bh=9Be7dZvXZDAT2MdKDBtGiUGc7xEMYIjAKjwzEwEdHWk=;
+	s=arc-20240116; t=1765887486; c=relaxed/simple;
+	bh=7aPp2UTEyqNL3DjrLKNb+lwy9o48Ad2hDQtnmRhmiD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LQbCWTvZgU9Fk+Hge+c13UmSVNMaN+7Hf9/L2kIpoJT37sP0x+w5kdkzQtfaR4DurfYVOBI433Exm6iLJbDz1CnCZGg4qGP4g1CBq4s8qKG3Z1Id8bozsAFDVlLguYvwAwzM79f2Nci++5WJuWiutV5bFHKp22E54Qa6a42APXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NpnXeu7J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nCmEn1atFXNtyWHhUEAn+DsbC58Sxmn8WPVkS8P/K/HGWFMv0XvxlyJPkMSCcDJ6cDj/chTw90vjuHbXuoHVm10/9Lsc92G1NhAvroC0DmTA1Iiuz9juZNYq6+0FfpfFPrkiKQR8m2gHzwPqiZyu1pA4lt6EpRp39EUGPADb+us=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k5sVbEqM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NpnXeu7J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D884AC4CEF1;
-	Tue, 16 Dec 2025 12:18:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k5sVbEqM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B532C4CEF1;
+	Tue, 16 Dec 2025 12:18:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887483;
-	bh=9Be7dZvXZDAT2MdKDBtGiUGc7xEMYIjAKjwzEwEdHWk=;
+	s=korg; t=1765887486;
+	bh=7aPp2UTEyqNL3DjrLKNb+lwy9o48Ad2hDQtnmRhmiD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NpnXeu7JbH8Xc+7wHQmSU5LJr8PVRRUQT1WU/S/7RE5nTbV0DzkumN9FfjQSi19me
-	 yKQQr0aaTGNHfCFO4RJmnpi1wCxCR80JIwFmQMsDW4syIcy42w7ZNfiWhiWHG5RdnK
-	 wpv76PCM5ocacOAfuLWn1NffD+92mrYWcoARl2HU=
+	b=k5sVbEqMVa6Vb/veDFP3e7awmPb//TnaAWc2CmSPNJOte3VymhXzltkd0LaU0oDMB
+	 QIdszMndSo34nw45AwgTqBeYaxdacqodRxxTpvvL1/fVwrzQLr9o+vbdD0/nGmqfQQ
+	 HAGR7/7rKasaDBCoNmjpcA6qAFyE40g1Qp3X9FkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael van der Westhuizen <rmikey@meta.com>,
-	Tobias Fleig <tfleig@meta.com>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Usama Arif <usamaarif642@gmail.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Zhang Changzhong <zhangchangzhong@huawei.com>,
+	Wang Liang <wangliang74@huawei.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 211/614] efi/libstub: Fix page table access in 5-level to 4-level paging transition
-Date: Tue, 16 Dec 2025 12:09:38 +0100
-Message-ID: <20251216111409.019931240@linuxfoundation.org>
+Subject: [PATCH 6.18 212/614] locktorture: Fix memory leak in param_set_cpumask()
+Date: Tue, 16 Dec 2025 12:09:39 +0100
+Message-ID: <20251216111409.056142223@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -55,68 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Usama Arif <usamaarif642@gmail.com>
+From: Wang Liang <wangliang74@huawei.com>
 
-[ Upstream commit 84361123413efc84b06f3441c6c827b95d902732 ]
+[ Upstream commit e52b43883d084a9af263c573f2a1bd1ca5088389 ]
 
-When transitioning from 5-level to 4-level paging, the existing code
-incorrectly accesses page table entries by directly dereferencing CR3 and
-applying PAGE_MASK. This approach has several issues:
+With CONFIG_CPUMASK_OFFSTACK=y, the 'bind_writers' buffer is allocated via
+alloc_cpumask_var() in param_set_cpumask(). But it is not freed, when
+setting the module parameter multiple times by sysfs interface or removing
+module.
 
-- __native_read_cr3() returns the raw CR3 register value, which on x86_64
-  includes not just the physical address but also flags Bits above the
-  physical address width of the system (i.e. above __PHYSICAL_MASK_SHIFT) are
-  also not masked.
+Below kmemleak trace is seen for this issue:
 
-- The pgd value is masked by PAGE_SIZE which doesn't take into account the
-  higher bits such as _PAGE_BIT_NOPTISHADOW.
+unreferenced object 0xffff888100aabff8 (size 8):
+  comm "bash", pid 323, jiffies 4295059233
+  hex dump (first 8 bytes):
+    07 00 00 00 00 00 00 00                          ........
+  backtrace (crc ac50919):
+    __kmalloc_node_noprof+0x2e5/0x420
+    alloc_cpumask_var_node+0x1f/0x30
+    param_set_cpumask+0x26/0xb0 [locktorture]
+    param_attr_store+0x93/0x100
+    module_attr_store+0x1b/0x30
+    kernfs_fop_write_iter+0x114/0x1b0
+    vfs_write+0x300/0x410
+    ksys_write+0x60/0xd0
+    do_syscall_64+0xa4/0x260
+    entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Replace this with proper accessor functions:
+This issue can be reproduced by:
+  insmod locktorture.ko bind_writers=1
+  rmmod locktorture
 
-- native_read_cr3_pa(): Uses CR3_ADDR_MASK to additionally mask metadata out
-  of CR3 (like SME or LAM bits). All remaining bits are real address bits or
-  reserved and must be 0.
+or:
+  insmod locktorture.ko bind_writers=1
+  echo 2 > /sys/module/locktorture/parameters/bind_writers
 
-- mask pgd value with PTE_PFN_MASK instead of PAGE_MASK, accounting for flags
-  above bit 51 (_PAGE_BIT_NOPTISHADOW in particular). Bits below 51, but above
-  the max physical address are reserved and must be 0.
+Considering that setting the module parameter 'bind_writers' or
+'bind_readers' by sysfs interface has no real effect, set the parameter
+permissions to 0444. To fix the memory leak when removing module, free
+'bind_writers' and 'bind_readers' memory in lock_torture_cleanup().
 
-Fixes: cb1c9e02b0c1 ("x86/efistub: Perform 4/5 level paging switch from the stub")
-Reported-by: Michael van der Westhuizen <rmikey@meta.com>
-Reported-by: Tobias Fleig <tfleig@meta.com>
-Co-developed-by: Kiryl Shutsemau <kas@kernel.org>
-Signed-off-by: Kiryl Shutsemau <kas@kernel.org>
-Signed-off-by: Usama Arif <usamaarif642@gmail.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://patch.msgid.link/20251103141002.2280812-3-usamaarif642@gmail.com
+Fixes: 73e341242483 ("locktorture: Add readers_bind and writers_bind module parameters")
+Suggested-by: Zhang Changzhong <zhangchangzhong@huawei.com>
+Signed-off-by: Wang Liang <wangliang74@huawei.com>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/libstub/x86-5lvl.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/locking/locktorture.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firmware/efi/libstub/x86-5lvl.c b/drivers/firmware/efi/libstub/x86-5lvl.c
-index f1c5fb45d5f7c..c00d0ae7ed5d5 100644
---- a/drivers/firmware/efi/libstub/x86-5lvl.c
-+++ b/drivers/firmware/efi/libstub/x86-5lvl.c
-@@ -66,7 +66,7 @@ void efi_5level_switch(void)
- 	bool have_la57 = native_read_cr4() & X86_CR4_LA57;
- 	bool need_toggle = want_la57 ^ have_la57;
- 	u64 *pgt = (void *)la57_toggle + PAGE_SIZE;
--	u64 *cr3 = (u64 *)__native_read_cr3();
-+	pgd_t *cr3 = (pgd_t *)native_read_cr3_pa();
- 	u64 *new_cr3;
+diff --git a/kernel/locking/locktorture.c b/kernel/locking/locktorture.c
+index ce0362f0a8719..6567e5eeacc0e 100644
+--- a/kernel/locking/locktorture.c
++++ b/kernel/locking/locktorture.c
+@@ -103,8 +103,8 @@ static const struct kernel_param_ops lt_bind_ops = {
+ 	.get = param_get_cpumask,
+ };
  
- 	if (!la57_toggle || !need_toggle)
-@@ -82,7 +82,7 @@ void efi_5level_switch(void)
- 		new_cr3[0] = (u64)cr3 | _PAGE_TABLE_NOENC;
- 	} else {
- 		/* take the new root table pointer from the current entry #0 */
--		new_cr3 = (u64 *)(cr3[0] & PAGE_MASK);
-+		new_cr3 = (u64 *)(native_pgd_val(cr3[0]) & PTE_PFN_MASK);
+-module_param_cb(bind_readers, &lt_bind_ops, &bind_readers, 0644);
+-module_param_cb(bind_writers, &lt_bind_ops, &bind_writers, 0644);
++module_param_cb(bind_readers, &lt_bind_ops, &bind_readers, 0444);
++module_param_cb(bind_writers, &lt_bind_ops, &bind_writers, 0444);
  
- 		/* copy the new root table if it is not 32-bit addressable */
- 		if ((u64)new_cr3 > U32_MAX)
+ long torture_sched_setaffinity(pid_t pid, const struct cpumask *in_mask, bool dowarn);
+ 
+@@ -1211,6 +1211,10 @@ static void lock_torture_cleanup(void)
+ 			cxt.cur_ops->exit();
+ 		cxt.init_called = false;
+ 	}
++
++	free_cpumask_var(bind_readers);
++	free_cpumask_var(bind_writers);
++
+ 	torture_cleanup_end();
+ }
+ 
 -- 
 2.51.0
 
