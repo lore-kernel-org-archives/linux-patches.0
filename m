@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 750B7341ACA;
-	Tue, 16 Dec 2025 11:25:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9184F341645;
+	Tue, 16 Dec 2025 11:25:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884350; cv=none; b=KTDiZrt5nfCuWSMnbof9Vj5s5L9zkVz34SuSe4Qp5Su20wXv+u3wJPIOuOLHks921E18OBvkBTdpW+3wCxtnw0I2zRjdK63JxbUFoE2FF6jjl5b7nRaFRZ0LSqqXujtUvnvqZUaXUl2mBBMi5h3q2tCxbT2cxsxVey4ufMNrQNw=
+	t=1765884353; cv=none; b=Sa52kJdV269ZVdtOTzMqeK9n9bBHKddAxkk8j74LYmpB+q1+/TWtqbxYhJi8GLymJY08l4HBAd/AFaFsCqSsJUdJNLjI+ffNW158nYsg8P4JbVTzWl++dETdeMtacCaWxnQhnWqHatiy4Jh1n5ilETrQH19WiadBT9WNKErs3MY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884350; c=relaxed/simple;
-	bh=IoXaNsDadhYmlcAUEHeVlOjsOEgv3WFoixpU03kHL3I=;
+	s=arc-20240116; t=1765884353; c=relaxed/simple;
+	bh=AZAO1REybMWWXmoUnIU2AvY1Iw7YkiNo5I42G5zD24A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LxpsQ6q1p8Psrps9EZ9Cz2HsPTxApp+yVHuX8oAR5FEt5u3eMUFSI6DlVL484RmauTew2gfd9QHs7tic401zjDaEbybb0RNpfLIi2eJoaxpAVIED7W0jIWdo7s+kl+91PgNrCnhin02+54D+pcyOCIWNbhszC+iB8JuTVFf46XE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X2qcxWWP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iRHMlNQTAEjiUAaRvjjp6BFa9cEZnRjLtUefuDROPBOOyV01pSU+ixKywsbzacIG9RUpnoTX3mG9puzjBRe+7JgyQgeBHC0HSuW+aaFy7bHxu2z123Ia2eEpB1Unt/RaBQ6BUaGeZ4yP51u0oPRzio3xuzkql2Jci7s/TbsRvHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KN6K0paJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X2qcxWWP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 903F9C4CEF1;
-	Tue, 16 Dec 2025 11:25:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KN6K0paJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA3FFC4CEF1;
+	Tue, 16 Dec 2025 11:25:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884350;
-	bh=IoXaNsDadhYmlcAUEHeVlOjsOEgv3WFoixpU03kHL3I=;
+	s=korg; t=1765884353;
+	bh=AZAO1REybMWWXmoUnIU2AvY1Iw7YkiNo5I42G5zD24A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X2qcxWWP1Bf+w5lfDcLaFs+PpbGsb13Zu8ljfbbezbR0kVxbAJYGaarBK1VMuzGBb
-	 3YU5q6o/cEDhSHHXmhq/tekuXLr+HDNXwh+O+p9JS85F3t9C9YUWzznfY9sA5euFef
-	 5LrHQxX4GMWtHkZiCbhH9m5wYOP9uSVkLuKKcdx4=
+	b=KN6K0paJomFySwLznMr9s07asxRQR1Qk+/is471VUGeHY0lyhrI6VZTbtHwlUF7eo
+	 xlg7cUNZbPQR6TvV471jJhchjPcsGz6uQW3pfL9cdOPLNZXoa//0ps80JiuiKylFq5
+	 U/67EHe1+GpGwho61xI58WTcxYIT7NHcbRSmMD28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
+	Kaiyan Mei <M202472210@hust.edu.cn>,
+	Yinhao Hu <dddddd@hust.edu.cn>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Alexei Starovoitov <ast@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 165/354] selftests/bpf: Fix failure paths in send_signal test
-Date: Tue, 16 Dec 2025 12:12:12 +0100
-Message-ID: <20251216111326.891911858@linuxfoundation.org>
+Subject: [PATCH 6.12 166/354] bpf: Check skb->transport_header is set in bpf_skb_check_mtu
+Date: Tue, 16 Dec 2025 12:12:13 +0100
+Message-ID: <20251216111326.927727753@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -52,44 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Martin KaFai Lau <martin.lau@kernel.org>
 
-[ Upstream commit c13339039891dbdfa6c1972f0483bd07f610b776 ]
+[ Upstream commit d946f3c98328171fa50ddb908593cf833587f725 ]
 
-When test_send_signal_kern__open_and_load() fails parent closes the
-pipe which cases ASSERT_EQ(read(pipe_p2c...)) to fail, but child
-continues and enters infinite loop, while parent is stuck in wait(NULL).
-Other error paths have similar issue, so kill the child before waiting on it.
+The bpf_skb_check_mtu helper needs to use skb->transport_header when
+the BPF_MTU_CHK_SEGS flag is used:
 
-The bug was discovered while compiling all of selftests with -O1 instead of -O2
-which caused progs/test_send_signal_kern.c to fail to load.
+	bpf_skb_check_mtu(skb, ifindex, &mtu_len, 0, BPF_MTU_CHK_SEGS)
 
-Fixes: ab8b7f0cb358 ("tools/bpf: Add self tests for bpf_send_signal_thread()")
+The transport_header is not always set. There is a WARN_ON_ONCE
+report when CONFIG_DEBUG_NET is enabled + skb->gso_size is set +
+bpf_prog_test_run is used:
+
+WARNING: CPU: 1 PID: 2216 at ./include/linux/skbuff.h:3071
+ skb_gso_validate_network_len
+ bpf_skb_check_mtu
+ bpf_prog_3920e25740a41171_tc_chk_segs_flag # A test in the next patch
+ bpf_test_run
+ bpf_prog_test_run_skb
+
+For a normal ingress skb (not test_run), skb_reset_transport_header
+is performed but there is plan to avoid setting it as described in
+commit 2170a1f09148 ("net: no longer reset transport_header in __netif_receive_skb_core()").
+
+This patch fixes the bpf helper by checking
+skb_transport_header_was_set(). The check is done just before
+skb->transport_header is used, to avoid breaking the existing bpf prog.
+The WARN_ON_ONCE is limited to bpf_prog_test_run, so targeting bpf-next.
+
+Fixes: 34b2021cc616 ("bpf: Add BPF-helper for MTU checking")
+Cc: Jesper Dangaard Brouer <hawk@kernel.org>
+Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
+Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://lore.kernel.org/r/20251112232331.1566074-1-martin.lau@linux.dev
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/bpf/20251113171153.2583-1-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/send_signal.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/core/filter.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/send_signal.c b/tools/testing/selftests/bpf/prog_tests/send_signal.c
-index 6cc69900b3106..752b75b7170df 100644
---- a/tools/testing/selftests/bpf/prog_tests/send_signal.c
-+++ b/tools/testing/selftests/bpf/prog_tests/send_signal.c
-@@ -145,6 +145,11 @@ static void test_send_signal_common(struct perf_event_attr *attr,
- skel_open_load_failure:
- 	close(pipe_c2p[0]);
- 	close(pipe_p2c[1]);
-+	/*
-+	 * Child is either about to exit cleanly or stuck in case of errors.
-+	 * Nudge it to exit.
-+	 */
-+	kill(pid, SIGKILL);
- 	wait(NULL);
- }
- 
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 89ed625e14744..0d1f93f944f24 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -6353,9 +6353,12 @@ BPF_CALL_5(bpf_skb_check_mtu, struct sk_buff *, skb,
+ 	 */
+ 	if (skb_is_gso(skb)) {
+ 		ret = BPF_MTU_CHK_RET_SUCCESS;
+-		if (flags & BPF_MTU_CHK_SEGS &&
+-		    !skb_gso_validate_network_len(skb, mtu))
+-			ret = BPF_MTU_CHK_RET_SEGS_TOOBIG;
++		if (flags & BPF_MTU_CHK_SEGS) {
++			if (!skb_transport_header_was_set(skb))
++				return -EINVAL;
++			if (!skb_gso_validate_network_len(skb, mtu))
++				ret = BPF_MTU_CHK_RET_SEGS_TOOBIG;
++		}
+ 	}
+ out:
+ 	*mtu_len = mtu;
 -- 
 2.51.0
 
