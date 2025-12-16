@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FFB8355028;
-	Tue, 16 Dec 2025 11:51:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC85355026;
+	Tue, 16 Dec 2025 11:51:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885861; cv=none; b=EsybKqlT0KITYRoSOXK7vkO5c9jv7UyRfwzOA3aHzK0xJWslwumRQgwdPY0sSQuoHkqJnunXHyqgiYQyxSyXAhsPnWkHK0RbZAvSWd3Oo+hwQRZk+fbdv9wkXPsc/B9jSDx4Z5E0GcTXzWzviufEVevDFDXwESstSnk9CDbxUpY=
+	t=1765885867; cv=none; b=VOohQnYlSvzmGJklsUSZpWLdMV1VH7IM7iBRi0FHB3BwDUh8oVTq6b4AB8ji9Fs/gTHz39nug2ntcxdc2zubGD9aNvBnMQ+cV4EihrRfgw8fgQgiPQnSKUsqhfJbLbnGedJXLFxr6IgFkmK1gY5PqQGnvv594mAbMGukLK/EEZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885861; c=relaxed/simple;
-	bh=COnD8cmPd+snSbuNPWDH2q/M1lSSvz+jbOpvnJ2H1Xg=;
+	s=arc-20240116; t=1765885867; c=relaxed/simple;
+	bh=yuUfNUTU3C6Wb2c8gcWuOQb+p5nMU4yReH23EjaXkJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GsMXh/CpKFebk4Ii1Ph6yvEi/ARpV2QT640/0bshjghYmm46FZZzuXjbwsuY2lK497V8XzH0DK4/ToE0zyhBxthN+Bkjq6yY7k8FdmTxTVyZtvDtddBF0R4teO6akbuvLNJHu8moo7UxYxzGDKld2lE5t/DPUlB53X38Z5wif28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n9fiafnP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SP1Di53ornI4Q6AJDMIxI3LQKD488v7QE+rHRroRVxJHrnOb8GUMG6B+uNqqU7QIHlJQkY1CgZE+21URtCLfrvA+9DTIHAYUYupbQ5weRpQoXQ3oFSRa/ON4KdvEuI8yucfXhkLwd4boFwNDeLXeyx3JLEJypCJr2OMLjYjsfPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M3dg095q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n9fiafnP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B22E6C4CEF1;
-	Tue, 16 Dec 2025 11:51:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M3dg095q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45084C4CEF5;
+	Tue, 16 Dec 2025 11:51:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885861;
-	bh=COnD8cmPd+snSbuNPWDH2q/M1lSSvz+jbOpvnJ2H1Xg=;
+	s=korg; t=1765885867;
+	bh=yuUfNUTU3C6Wb2c8gcWuOQb+p5nMU4yReH23EjaXkJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n9fiafnPt847nknnz1kHGDVnpBphzzKMj4zuUSCuDspbfnLeTiWUgX+wdVIRSYQD7
-	 x1Qg2pAyKwUm5BRrY6seBGfaURMjXiJOPwKaynAAo2Q1k0pNBR+4YxmrYOTnhnxhPK
-	 eKejMyJRIFMzjkStyyDCRm7LCgUdWB6GEvHyQId4=
+	b=M3dg095qu6R6kYEQcYRBIA72pfHyHHoS0lst6CBE/NdKE0jk19JZkZ7a5bpZNJeW1
+	 3UpM+2saqqIFemRXyNJcuPWUWqpu1Dvq+bFawzdsysPNjVw5cc5a6VhcoMMzYFU4yj
+	 8d2CIxm8ydqqer3CL4QTE567eua2cjygW/ya3EkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 266/507] powerpc/64s/hash: Restrict stress_hpt_struct memblock region to within RMA limit
-Date: Tue, 16 Dec 2025 12:11:47 +0100
-Message-ID: <20251216111355.122654726@linuxfoundation.org>
+Subject: [PATCH 6.17 268/507] net: stmmac: Fix VLAN 0 deletion in vlan_del_hw_rx_fltr()
+Date: Tue, 16 Dec 2025 12:11:49 +0100
+Message-ID: <20251216111355.196264613@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -51,75 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
 
-[ Upstream commit 17b45ccf09882e0c808ad2cf62acdc90ad968746 ]
+[ Upstream commit d9db25723677c3741a0cf3643f7f7429fc983921 ]
 
-When HV=0 & IR/DR=0, the Hash MMU is said to be in Virtual Real
-Addressing Mode during early boot. During this, we should ensure that
-memory region allocations for stress_hpt_struct should happen from
-within RMA region as otherwise the boot might get stuck while doing
-memset of this region.
+When the "rx-vlan-filter" feature is enabled on a network device, the 8021q
+module automatically adds a VLAN 0 hardware filter when the device is
+brought administratively up.
 
-History behind why do we have RMA region limitation is better explained
-in these 2 patches [1] & [2]. This patch ensures that memset to
-stress_hpt_struct during early boot does not cross ppc64_rma_size
-boundary.
+For stmmac, this causes vlan_add_hw_rx_fltr() to create a new entry for
+VID 0 in the mac_device_info->vlan_filter array, in the following format:
 
-[1]: https://lore.kernel.org/all/20190710052018.14628-1-sjitindarsingh@gmail.com/
-[2]: https://lore.kernel.org/all/87wp54usvj.fsf@linux.vnet.ibm.com/
+    VLAN_TAG_DATA_ETV | VLAN_TAG_DATA_VEN | vid
 
-Fixes: 6b34a099faa12 ("powerpc/64s/hash: add stress_hpt kernel boot option to increase hash faults")
-Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/ada1173933ea7617a994d6ee3e54ced8797339fc.1761834163.git.ritesh.list@gmail.com
+Here, VLAN_TAG_DATA_VEN indicates that the hardware filter is enabled for
+that VID.
+
+However, on the delete path, vlan_del_hw_rx_fltr() searches the vlan_filter
+array by VID only, without verifying whether a VLAN entry is enabled. As a
+result, when the 8021q module attempts to remove VLAN 0, the function may
+mistakenly match a zero-initialized slot rather than the actual VLAN 0
+entry, causing incorrect deletions and leaving stale entries in the
+hardware table.
+
+Fix this by verifying that the VLAN entry's enable bit (VLAN_TAG_DATA_VEN)
+is set before matching and deleting by VID. This ensures only active VLAN
+entries are removed and avoids leaving stale entries in the VLAN filter
+table, particularly for VLAN ID 0.
+
+Fixes: ed64639bc1e08 ("net: stmmac: Add support for VLAN Rx filtering")
+Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20251113112721.70500-2-ovidiu.panait.rb@renesas.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/mm/book3s64/hash_utils.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_vlan.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/mm/book3s64/hash_utils.c b/arch/powerpc/mm/book3s64/hash_utils.c
-index 4693c464fc5af..1e062056cfb82 100644
---- a/arch/powerpc/mm/book3s64/hash_utils.c
-+++ b/arch/powerpc/mm/book3s64/hash_utils.c
-@@ -1302,11 +1302,14 @@ static void __init htab_initialize(void)
- 	unsigned long table;
- 	unsigned long pteg_count;
- 	unsigned long prot;
--	phys_addr_t base = 0, size = 0, end;
-+	phys_addr_t base = 0, size = 0, end, limit = MEMBLOCK_ALLOC_ANYWHERE;
- 	u64 i;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_vlan.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_vlan.c
+index 0b6f6228ae35d..fd97879a87408 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_vlan.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_vlan.c
+@@ -122,7 +122,8 @@ static int vlan_del_hw_rx_fltr(struct net_device *dev,
  
- 	DBG(" -> htab_initialize()\n");
+ 	/* Extended Rx VLAN Filter Enable */
+ 	for (i = 0; i < hw->num_vlan; i++) {
+-		if ((hw->vlan_filter[i] & VLAN_TAG_DATA_VID) == vid) {
++		if ((hw->vlan_filter[i] & VLAN_TAG_DATA_VEN) &&
++		    ((hw->vlan_filter[i] & VLAN_TAG_DATA_VID) == vid)) {
+ 			ret = vlan_write_filter(dev, hw, i, 0);
  
-+	if (firmware_has_feature(FW_FEATURE_LPAR))
-+		limit = ppc64_rma_size;
-+
- 	if (mmu_has_feature(MMU_FTR_1T_SEGMENT)) {
- 		mmu_kernel_ssize = MMU_SEGSIZE_1T;
- 		mmu_highuser_ssize = MMU_SEGSIZE_1T;
-@@ -1322,7 +1325,7 @@ static void __init htab_initialize(void)
- 		// Too early to use nr_cpu_ids, so use NR_CPUS
- 		tmp = memblock_phys_alloc_range(sizeof(struct stress_hpt_struct) * NR_CPUS,
- 						__alignof__(struct stress_hpt_struct),
--						0, MEMBLOCK_ALLOC_ANYWHERE);
-+						MEMBLOCK_LOW_LIMIT, limit);
- 		memset((void *)tmp, 0xff, sizeof(struct stress_hpt_struct) * NR_CPUS);
- 		stress_hpt_struct = __va(tmp);
- 
-@@ -1356,11 +1359,10 @@ static void __init htab_initialize(void)
- 			mmu_hash_ops.hpte_clear_all();
- #endif
- 	} else {
--		unsigned long limit = MEMBLOCK_ALLOC_ANYWHERE;
- 
- 		table = memblock_phys_alloc_range(htab_size_bytes,
- 						  htab_size_bytes,
--						  0, limit);
-+						  MEMBLOCK_LOW_LIMIT, limit);
- 		if (!table)
- 			panic("ERROR: Failed to allocate %pa bytes below %pa\n",
- 			      &htab_size_bytes, &limit);
+ 			if (!ret)
 -- 
 2.51.0
 
