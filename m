@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7473D396DD7;
-	Tue, 16 Dec 2025 12:33:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5985E2367D5;
+	Tue, 16 Dec 2025 12:33:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888397; cv=none; b=qzME5Ovv1et25NdgwYeXygWS6IQqksMCAvmBSZXAssteGoNVJtuWH84uzm5FYFSv5WI1dPD+9bRI5EPS0u/rP2K1uR7wKrKUHRhkugAOFjA3/0FM2cuPtYKxFPRrrzIPuA7TldoadwYL89Vsm7+dpsZ4oqUtKtmpA0SURQMqRJY=
+	t=1765888400; cv=none; b=g5vA+EqPcIDxZWBQiTsZQ0rANgPesbLS9o2fr7wGOD4PzESgwKpbJ6Oa1HOVSyGDUwc1qnQ5mcmfebz98OxBPUuf0qkG1wipYZOVTDFi2Wo9+DB3Z1WPp7PIY6lbbWyqCjd1Bm9GcsI6N+l6BTMyV4goX5tHyuGKzLyFnmmyPnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888397; c=relaxed/simple;
-	bh=UvNBjFw5OdHlK4pKBum+cRP5F+8n5fDBRirJXYMzfug=;
+	s=arc-20240116; t=1765888400; c=relaxed/simple;
+	bh=EOKDpyZWmjwaai5HDBggms8MEEfTrvXl79omHAyWYVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r+XfPMafTA01eHtCm/Zy7Qc4q+KZqQbqTBNoQH0BM2KDN7AWa5vcVPnGB7QqvSqIfp6HULpsO3FftbsbOCXGqo4ECphbKAio9HWJvW4866vIIJ0blgTE4tZ4OpJTL3EikBEf1owZzbyFV+iMol2sq9OkqvwujfAx1Lv5bCUuQw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kH+JIlPK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bZ0F7X/tHGGU9S2NsMStTiRPmMhbEu1OA9ir3rc5QmimqDt/xR39yMgw626+ti2x5ye48b0cDFbaWDTfjp2ntyDrcmp2dG94r+2QfQLtg5WeeZk6hJYDl3oVjJhF2jDcYdiw4szwhEGPAg/N/wUZ2g/s9tBJVeUzq6BGdHYaIsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pnU8/Khg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kH+JIlPK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2B22C4CEF1;
-	Tue, 16 Dec 2025 12:33:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pnU8/Khg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D69A4C4CEF1;
+	Tue, 16 Dec 2025 12:33:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888397;
-	bh=UvNBjFw5OdHlK4pKBum+cRP5F+8n5fDBRirJXYMzfug=;
+	s=korg; t=1765888400;
+	bh=EOKDpyZWmjwaai5HDBggms8MEEfTrvXl79omHAyWYVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kH+JIlPKyC22MnGxx5MixvyTtqYChuZzP4p1x9Uso2ilt9I9WpquxRC5EWGQ7vuKL
-	 9vsEaN8JP6//UPzUnpV5CmpIoxuoHUi7Xx/+C2GgRT0XgyFuDkmJzxrfxK/0xSmCJf
-	 BD+fVYhJ8C7AJFT08C2cHHbbNGn0lcYLLBNimjbo=
+	b=pnU8/Khg2QxBnPHnQpkjT9ihYJPZsoa5lWaA+y4Iv3Eiy/DgJu+R+F9QJx9RvHmyi
+	 MXTry/CGEwGBvFU36KddiW4QrSVEoHZStRgVXlVUMPg2hQFiMB+WI6LcWhx7bTrXkm
+	 dEBEHsriljVow6XNOeB4zdrllQ4TTjQK6O6KxO74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukasz Majewski <lukma@denx.de>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	George McCollister <george.mccollister@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Xiang Mei <xmei5@asu.edu>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 521/614] net: dsa: xrs700x: reject unsupported HSR configurations
-Date: Tue, 16 Dec 2025 12:14:48 +0100
-Message-ID: <20251216111420.248665361@linuxfoundation.org>
+Subject: [PATCH 6.18 522/614] net/sched: sch_cake: Fix incorrect qlen reduction in cake_drop
+Date: Tue, 16 Dec 2025 12:14:49 +0100
+Message-ID: <20251216111420.290282115@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -47,87 +46,160 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 30296ac7642652428396222e720718f2661e9425 ]
+[ Upstream commit 9fefc78f7f02d71810776fdeb119a05a946a27cc ]
 
-As discussed here:
-https://lore.kernel.org/netdev/20240620090210.drop6jwh7e5qw556@skbuf/
+In cake_drop(), qdisc_tree_reduce_backlog() is used to update the qlen
+and backlog of the qdisc hierarchy. Its caller, cake_enqueue(), assumes
+that the parent qdisc will enqueue the current packet. However, this
+assumption breaks when cake_enqueue() returns NET_XMIT_CN: the parent
+qdisc stops enqueuing current packet, leaving the tree qlen/backlog
+accounting inconsistent. This mismatch can lead to a NULL dereference
+(e.g., when the parent Qdisc is qfq_qdisc).
 
-the fact is that the xrs700x.c driver only supports offloading
-HSR_PT_SLAVE_A and HSR_PT_SLAVE_B (which were the only port types at the
-time the offload was written, _for this driver_).
+This patch computes the qlen/backlog delta in a more robust way by
+observing the difference before and after the series of cake_drop()
+calls, and then compensates the qdisc tree accounting if cake_enqueue()
+returns NET_XMIT_CN.
 
-Up until now, the API did not explicitly tell offloading drivers what
-port has what role. So xrs700x can get confused and think that it can
-support a configuration which it actually can't. There was a table in
-the attached link which gave an example:
+To ensure correct compensation when ACK thinning is enabled, a new
+variable is introduced to keep qlen unchanged.
 
-$ ip link add name hsr0 type hsr slave1 swp0 slave2 swp1 \
-	interlink swp2 supervision 45 version 1
-
-        HSR_PT_SLAVE_A    HSR_PT_SLAVE_B      HSR_PT_INTERLINK
- ----------------------------------------------------------------
- user
- space        0                 1                   2
- requests
- ----------------------------------------------------------------
- XRS700X
- driver       1                 2                   -
- understands
-
-The switch would act as if the ring ports were swp1 and swp2.
-
-Now that we have explicit hsr_get_port_type() API, let's use that to
-work around the unintended semantical changes of the offloading API
-brought by the introduction of interlink ports in HSR.
-
-Fixes: 5055cccfc2d1 ("net: hsr: Provide RedBox support (HSR-SAN)")
-Cc: Lukasz Majewski <lukma@denx.de>
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: George McCollister <george.mccollister@gmail.com>
-Link: https://patch.msgid.link/20251130131657.65080-5-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 15de71d06a40 ("net/sched: Make cake_enqueue return NET_XMIT_CN when past buffer_limit")
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Link: https://patch.msgid.link/20251128001415.377823-1-xmei5@asu.edu
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/xrs700x/xrs700x.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ net/sched/sch_cake.c | 58 ++++++++++++++++++++++++--------------------
+ 1 file changed, 32 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/net/dsa/xrs700x/xrs700x.c b/drivers/net/dsa/xrs700x/xrs700x.c
-index 4dbcc49a9e526..0a05f4156ef4d 100644
---- a/drivers/net/dsa/xrs700x/xrs700x.c
-+++ b/drivers/net/dsa/xrs700x/xrs700x.c
-@@ -566,6 +566,7 @@ static int xrs700x_hsr_join(struct dsa_switch *ds, int port,
- 	struct xrs700x *priv = ds->priv;
- 	struct net_device *user;
- 	int ret, i, hsr_pair[2];
-+	enum hsr_port_type type;
- 	enum hsr_version ver;
- 	bool fwd = false;
+diff --git a/net/sched/sch_cake.c b/net/sched/sch_cake.c
+index 32bacfc314c26..d325a90cde9ee 100644
+--- a/net/sched/sch_cake.c
++++ b/net/sched/sch_cake.c
+@@ -1597,7 +1597,6 @@ static unsigned int cake_drop(struct Qdisc *sch, struct sk_buff **to_free)
  
-@@ -589,6 +590,16 @@ static int xrs700x_hsr_join(struct dsa_switch *ds, int port,
- 		return -EOPNOTSUPP;
+ 	qdisc_drop_reason(skb, sch, to_free, SKB_DROP_REASON_QDISC_OVERLIMIT);
+ 	sch->q.qlen--;
+-	qdisc_tree_reduce_backlog(sch, 1, len);
+ 
+ 	cake_heapify(q, 0);
+ 
+@@ -1743,14 +1742,14 @@ static void cake_reconfigure(struct Qdisc *sch);
+ static s32 cake_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 			struct sk_buff **to_free)
+ {
++	u32 idx, tin, prev_qlen, prev_backlog, drop_id;
+ 	struct cake_sched_data *q = qdisc_priv(sch);
+-	int len = qdisc_pkt_len(skb);
+-	int ret;
++	int len = qdisc_pkt_len(skb), ret;
+ 	struct sk_buff *ack = NULL;
+ 	ktime_t now = ktime_get();
+ 	struct cake_tin_data *b;
+ 	struct cake_flow *flow;
+-	u32 idx, tin;
++	bool same_flow = false;
+ 
+ 	/* choose flow to insert into */
+ 	idx = cake_classify(sch, &b, skb, q->flow_mode, &ret);
+@@ -1823,6 +1822,8 @@ static s32 cake_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		consume_skb(skb);
+ 	} else {
+ 		/* not splitting */
++		int ack_pkt_len = 0;
++
+ 		cobalt_set_enqueue_time(skb, now);
+ 		get_cobalt_cb(skb)->adjusted_len = cake_overhead(q, skb);
+ 		flow_queue_add(flow, skb);
+@@ -1833,13 +1834,13 @@ static s32 cake_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		if (ack) {
+ 			b->ack_drops++;
+ 			sch->qstats.drops++;
+-			b->bytes += qdisc_pkt_len(ack);
+-			len -= qdisc_pkt_len(ack);
++			ack_pkt_len = qdisc_pkt_len(ack);
++			b->bytes += ack_pkt_len;
+ 			q->buffer_used += skb->truesize - ack->truesize;
+ 			if (q->rate_flags & CAKE_FLAG_INGRESS)
+ 				cake_advance_shaper(q, b, ack, now, true);
+ 
+-			qdisc_tree_reduce_backlog(sch, 1, qdisc_pkt_len(ack));
++			qdisc_tree_reduce_backlog(sch, 1, ack_pkt_len);
+ 			consume_skb(ack);
+ 		} else {
+ 			sch->q.qlen++;
+@@ -1848,11 +1849,11 @@ static s32 cake_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 
+ 		/* stats */
+ 		b->packets++;
+-		b->bytes	    += len;
+-		b->backlogs[idx]    += len;
+-		b->tin_backlog      += len;
+-		sch->qstats.backlog += len;
+-		q->avg_window_bytes += len;
++		b->bytes	    += len - ack_pkt_len;
++		b->backlogs[idx]    += len - ack_pkt_len;
++		b->tin_backlog      += len - ack_pkt_len;
++		sch->qstats.backlog += len - ack_pkt_len;
++		q->avg_window_bytes += len - ack_pkt_len;
  	}
  
-+	ret = hsr_get_port_type(hsr, dsa_to_port(ds, port)->user, &type);
-+	if (ret)
-+		return ret;
-+
-+	if (type != HSR_PT_SLAVE_A && type != HSR_PT_SLAVE_B) {
-+		NL_SET_ERR_MSG_MOD(extack,
-+				   "Only HSR slave ports can be offloaded");
-+		return -EOPNOTSUPP;
+ 	if (q->overflow_timeout)
+@@ -1927,24 +1928,29 @@ static s32 cake_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 	if (q->buffer_used > q->buffer_max_used)
+ 		q->buffer_max_used = q->buffer_used;
+ 
+-	if (q->buffer_used > q->buffer_limit) {
+-		bool same_flow = false;
+-		u32 dropped = 0;
+-		u32 drop_id;
++	if (q->buffer_used <= q->buffer_limit)
++		return NET_XMIT_SUCCESS;
+ 
+-		while (q->buffer_used > q->buffer_limit) {
+-			dropped++;
+-			drop_id = cake_drop(sch, to_free);
++	prev_qlen = sch->q.qlen;
++	prev_backlog = sch->qstats.backlog;
+ 
+-			if ((drop_id >> 16) == tin &&
+-			    (drop_id & 0xFFFF) == idx)
+-				same_flow = true;
+-		}
+-		b->drop_overlimit += dropped;
++	while (q->buffer_used > q->buffer_limit) {
++		drop_id = cake_drop(sch, to_free);
++		if ((drop_id >> 16) == tin &&
++		    (drop_id & 0xFFFF) == idx)
++			same_flow = true;
 +	}
 +
- 	dsa_hsr_foreach_port(dp, ds, hsr) {
- 		if (dp->index != port) {
- 			partner = dp;
++	prev_qlen -= sch->q.qlen;
++	prev_backlog -= sch->qstats.backlog;
++	b->drop_overlimit += prev_qlen;
+ 
+-		if (same_flow)
+-			return NET_XMIT_CN;
++	if (same_flow) {
++		qdisc_tree_reduce_backlog(sch, prev_qlen - 1,
++					  prev_backlog - len);
++		return NET_XMIT_CN;
+ 	}
++	qdisc_tree_reduce_backlog(sch, prev_qlen, prev_backlog);
+ 	return NET_XMIT_SUCCESS;
+ }
+ 
 -- 
 2.51.0
 
