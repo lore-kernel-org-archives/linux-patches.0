@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3EB136827E;
-	Tue, 16 Dec 2025 12:30:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E22393DF3;
+	Tue, 16 Dec 2025 12:30:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888223; cv=none; b=dzvVIIOdpdsJez1SLymapCH8xXzb8mSUabrqRUE8Mp2hxbpP9jNXN1Qb7PjOBcopi8jAIeRci2Z6rJhSqDcEo9GW+t8u1jqz855CX/PXop3Rrm/1jga3URZ8EeJsOK1RdR2HAbnZS6grmEsRLfdriBHxTx2vAuQoXLi4oPT8X/o=
+	t=1765888227; cv=none; b=O7KpLjURI6CFUJwhcuKDc08gneW+WjmrdktPpN3ha4hWcmo2D6dy8yhzP7yi6vJEKi/TJCRDbK1O6BEHQtWHlEgKeh4u6xPNPAfJ91cVlBUnptaewNmGPaonEK3E1Ctv3P3Kv6LP+EsulgSoRGUsVWm2K81eq+qoJ2Nn6lUXBJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888223; c=relaxed/simple;
-	bh=kp6BsISeTYRkSDVa+z+/CWlHq9Nwpm/+xuGtsVaj7aE=;
+	s=arc-20240116; t=1765888227; c=relaxed/simple;
+	bh=uPZGInyT0uZW64pRZxRTW1COsiV9BaF4QjXSEj54JY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kiS5z6pkHqFTNJZwDD343NPbykFvnv9q61zeLWJ1tRffxj5s1IuDZFmJKcc4+YHx4tPHs/CzQfkVFK7x8hfQbwOED+OtxLL1zCHGWoEahbfPK9p6cUH+jwts6TA/Sld7P/iQlKPlUM7Ai+2CyAHKFuou5lrEEMUmLweVDr4SfhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W40xR6ww; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZZpqf7UMMRPGnm5+kQQhbj2A2rcCYmB462W8uoulxSfZKnJz8xTl+qMHYji6pUXtyLWOzWA0x3EZTqMxv4Hw3mHnkIslmmQKogaoUnNZw3ZFuc77afpPSXrO4P5ucGeJDmdhc+KngpcK3Ou4uWBYIkz0TO1sut+rV7jklhqT0Og=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pijJswye; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W40xR6ww"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54909C4CEF1;
-	Tue, 16 Dec 2025 12:30:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pijJswye"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 674A8C4CEF1;
+	Tue, 16 Dec 2025 12:30:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888223;
-	bh=kp6BsISeTYRkSDVa+z+/CWlHq9Nwpm/+xuGtsVaj7aE=;
+	s=korg; t=1765888226;
+	bh=uPZGInyT0uZW64pRZxRTW1COsiV9BaF4QjXSEj54JY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W40xR6wwS9/I16h5AgBr3cKRGdqHkbYxdMT0e8gMDZAazqtiiXTUpPQfr+ysRzZF1
-	 J90NL35C4z20T9eInLohYQNunmL33KzBmygRFZQVzsK9/Z1cVptSTi8OOujBRvYkiq
-	 anF5KLs0hgjzfM6/XE6NnY+o4ux9uOyg/rAshz+Y=
+	b=pijJswyeZI1jsdVzhiJAySBtLeihbXt4LNd5uS0pV3fSTnZTnx/5wA0zvHpCzJUOf
+	 xePRihej7YySRpv+sbMrSrkabGTYfQ5XISXThvjr4Z5L1wJQUfjrBSm71Zd7+lpngs
+	 OWNK+hEN0hgy21SC0I72EL7fvkQpDQlPcju6jBxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 470/614] virtio: clean up features qword/dword terms
-Date: Tue, 16 Dec 2025 12:13:57 +0100
-Message-ID: <20251216111418.399777200@linuxfoundation.org>
+Subject: [PATCH 6.18 471/614] ASoC: Intel: catpt: Fix error path in hw_params()
+Date: Tue, 16 Dec 2025 12:13:58 +0100
+Message-ID: <20251216111418.435516278@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,374 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael S. Tsirkin <mst@redhat.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit 9513f25056b22100ddffe24898c587873b0d022c ]
+[ Upstream commit 86a5b621be658fc8fe594ca6db317d64de30cce1 ]
 
-virtio pci uses word to mean "16 bits". mmio uses it to mean
-"32 bits".
+Do not leave any resources hanging on the DSP side if
+applying user settings fails.
 
-To avoid confusion, let's avoid the term in core virtio
-altogether. Just say U64 to mean "64 bit".
-
-Fixes: e7d4c1c5a546 ("virtio: introduce extended features")
-Cc: Paolo Abeni <pabeni@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Message-ID: <ad53b7b6be87fc524f45abaeca0bb05fb3633397.1764225384.git.mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: 768a3a3b327d ("ASoC: Intel: catpt: Optimize applying user settings")
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20251126095523.3925364-4-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/net.c                    | 12 +++++------
- drivers/virtio/virtio.c                | 12 +++++------
- drivers/virtio/virtio_debug.c          | 10 ++++-----
- drivers/virtio/virtio_pci_modern_dev.c |  6 +++---
- include/linux/virtio.h                 |  2 +-
- include/linux/virtio_config.h          |  2 +-
- include/linux/virtio_features.h        | 29 +++++++++++++-------------
- include/linux/virtio_pci_modern.h      |  8 +++----
- 8 files changed, 41 insertions(+), 40 deletions(-)
+ sound/soc/intel/catpt/pcm.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/vhost/net.c b/drivers/vhost/net.c
-index 8f7f50acb6d63..1e77c0482b849 100644
---- a/drivers/vhost/net.c
-+++ b/drivers/vhost/net.c
-@@ -69,7 +69,7 @@ MODULE_PARM_DESC(experimental_zcopytx, "Enable Zero Copy TX;"
+diff --git a/sound/soc/intel/catpt/pcm.c b/sound/soc/intel/catpt/pcm.c
+index bf734c69c4e09..eb03cecdee281 100644
+--- a/sound/soc/intel/catpt/pcm.c
++++ b/sound/soc/intel/catpt/pcm.c
+@@ -417,8 +417,10 @@ static int catpt_dai_hw_params(struct snd_pcm_substream *substream,
+ 		return CATPT_IPC_ERROR(ret);
  
- #define VHOST_DMA_IS_DONE(len) ((__force u32)(len) >= (__force u32)VHOST_DMA_DONE_LEN)
+ 	ret = catpt_dai_apply_usettings(dai, stream);
+-	if (ret)
++	if (ret) {
++		catpt_ipc_free_stream(cdev, stream->info.stream_hw_id);
+ 		return ret;
++	}
  
--static const u64 vhost_net_features[VIRTIO_FEATURES_DWORDS] = {
-+static const u64 vhost_net_features[VIRTIO_FEATURES_U64S] = {
- 	VHOST_FEATURES |
- 	(1ULL << VHOST_NET_F_VIRTIO_NET_HDR) |
- 	(1ULL << VIRTIO_NET_F_MRG_RXBUF) |
-@@ -1731,7 +1731,7 @@ static long vhost_net_set_owner(struct vhost_net *n)
- static long vhost_net_ioctl(struct file *f, unsigned int ioctl,
- 			    unsigned long arg)
- {
--	u64 all_features[VIRTIO_FEATURES_DWORDS];
-+	u64 all_features[VIRTIO_FEATURES_U64S];
- 	struct vhost_net *n = f->private_data;
- 	void __user *argp = (void __user *)arg;
- 	u64 __user *featurep = argp;
-@@ -1763,7 +1763,7 @@ static long vhost_net_ioctl(struct file *f, unsigned int ioctl,
- 
- 		/* Copy the net features, up to the user-provided buffer size */
- 		argp += sizeof(u64);
--		copied = min(count, VIRTIO_FEATURES_DWORDS);
-+		copied = min(count, (u64)VIRTIO_FEATURES_U64S);
- 		if (copy_to_user(argp, vhost_net_features,
- 				 copied * sizeof(u64)))
- 			return -EFAULT;
-@@ -1778,13 +1778,13 @@ static long vhost_net_ioctl(struct file *f, unsigned int ioctl,
- 
- 		virtio_features_zero(all_features);
- 		argp += sizeof(u64);
--		copied = min(count, VIRTIO_FEATURES_DWORDS);
-+		copied = min(count, (u64)VIRTIO_FEATURES_U64S);
- 		if (copy_from_user(all_features, argp, copied * sizeof(u64)))
- 			return -EFAULT;
- 
- 		/*
- 		 * Any feature specified by user-space above
--		 * VIRTIO_FEATURES_MAX is not supported by definition.
-+		 * VIRTIO_FEATURES_BITS is not supported by definition.
- 		 */
- 		for (i = copied; i < count; ++i) {
- 			if (copy_from_user(&features, featurep + 1 + i,
-@@ -1794,7 +1794,7 @@ static long vhost_net_ioctl(struct file *f, unsigned int ioctl,
- 				return -EOPNOTSUPP;
- 		}
- 
--		for (i = 0; i < VIRTIO_FEATURES_DWORDS; i++)
-+		for (i = 0; i < VIRTIO_FEATURES_U64S; i++)
- 			if (all_features[i] & ~vhost_net_features[i])
- 				return -EOPNOTSUPP;
- 
-diff --git a/drivers/virtio/virtio.c b/drivers/virtio/virtio.c
-index a09eb4d62f82d..5bdc6b82b30b4 100644
---- a/drivers/virtio/virtio.c
-+++ b/drivers/virtio/virtio.c
-@@ -53,7 +53,7 @@ static ssize_t features_show(struct device *_d,
- 
- 	/* We actually represent this as a bitstring, as it could be
- 	 * arbitrary length in future. */
--	for (i = 0; i < VIRTIO_FEATURES_MAX; i++)
-+	for (i = 0; i < VIRTIO_FEATURES_BITS; i++)
- 		len += sysfs_emit_at(buf, len, "%c",
- 			       __virtio_test_bit(dev, i) ? '1' : '0');
- 	len += sysfs_emit_at(buf, len, "\n");
-@@ -272,8 +272,8 @@ static int virtio_dev_probe(struct device *_d)
- 	int err, i;
- 	struct virtio_device *dev = dev_to_virtio(_d);
- 	struct virtio_driver *drv = drv_to_virtio(dev->dev.driver);
--	u64 device_features[VIRTIO_FEATURES_DWORDS];
--	u64 driver_features[VIRTIO_FEATURES_DWORDS];
-+	u64 device_features[VIRTIO_FEATURES_U64S];
-+	u64 driver_features[VIRTIO_FEATURES_U64S];
- 	u64 driver_features_legacy;
- 
- 	/* We have a driver! */
-@@ -286,7 +286,7 @@ static int virtio_dev_probe(struct device *_d)
- 	virtio_features_zero(driver_features);
- 	for (i = 0; i < drv->feature_table_size; i++) {
- 		unsigned int f = drv->feature_table[i];
--		if (!WARN_ON_ONCE(f >= VIRTIO_FEATURES_MAX))
-+		if (!WARN_ON_ONCE(f >= VIRTIO_FEATURES_BITS))
- 			virtio_features_set_bit(driver_features, f);
- 	}
- 
-@@ -303,7 +303,7 @@ static int virtio_dev_probe(struct device *_d)
- 	}
- 
- 	if (virtio_features_test_bit(device_features, VIRTIO_F_VERSION_1)) {
--		for (i = 0; i < VIRTIO_FEATURES_DWORDS; ++i)
-+		for (i = 0; i < VIRTIO_FEATURES_U64S; ++i)
- 			dev->features_array[i] = driver_features[i] &
- 						 device_features[i];
- 	} else {
-@@ -325,7 +325,7 @@ static int virtio_dev_probe(struct device *_d)
- 		goto err;
- 
- 	if (drv->validate) {
--		u64 features[VIRTIO_FEATURES_DWORDS];
-+		u64 features[VIRTIO_FEATURES_U64S];
- 
- 		virtio_features_copy(features, dev->features_array);
- 		err = drv->validate(dev);
-diff --git a/drivers/virtio/virtio_debug.c b/drivers/virtio/virtio_debug.c
-index d58713ddf2e58..ccf1955a1183a 100644
---- a/drivers/virtio/virtio_debug.c
-+++ b/drivers/virtio/virtio_debug.c
-@@ -8,12 +8,12 @@ static struct dentry *virtio_debugfs_dir;
- 
- static int virtio_debug_device_features_show(struct seq_file *s, void *data)
- {
--	u64 device_features[VIRTIO_FEATURES_DWORDS];
-+	u64 device_features[VIRTIO_FEATURES_U64S];
- 	struct virtio_device *dev = s->private;
- 	unsigned int i;
- 
- 	virtio_get_features(dev, device_features);
--	for (i = 0; i < VIRTIO_FEATURES_MAX; i++) {
-+	for (i = 0; i < VIRTIO_FEATURES_BITS; i++) {
- 		if (virtio_features_test_bit(device_features, i))
- 			seq_printf(s, "%u\n", i);
- 	}
-@@ -26,7 +26,7 @@ static int virtio_debug_filter_features_show(struct seq_file *s, void *data)
- 	struct virtio_device *dev = s->private;
- 	unsigned int i;
- 
--	for (i = 0; i < VIRTIO_FEATURES_MAX; i++) {
-+	for (i = 0; i < VIRTIO_FEATURES_BITS; i++) {
- 		if (virtio_features_test_bit(dev->debugfs_filter_features, i))
- 			seq_printf(s, "%u\n", i);
- 	}
-@@ -50,7 +50,7 @@ static int virtio_debug_filter_feature_add(void *data, u64 val)
- {
- 	struct virtio_device *dev = data;
- 
--	if (val >= VIRTIO_FEATURES_MAX)
-+	if (val >= VIRTIO_FEATURES_BITS)
- 		return -EINVAL;
- 
- 	virtio_features_set_bit(dev->debugfs_filter_features, val);
-@@ -64,7 +64,7 @@ static int virtio_debug_filter_feature_del(void *data, u64 val)
- {
- 	struct virtio_device *dev = data;
- 
--	if (val >= VIRTIO_FEATURES_MAX)
-+	if (val >= VIRTIO_FEATURES_BITS)
- 		return -EINVAL;
- 
- 	virtio_features_clear_bit(dev->debugfs_filter_features, val);
-diff --git a/drivers/virtio/virtio_pci_modern_dev.c b/drivers/virtio/virtio_pci_modern_dev.c
-index 9e503b7a58d81..413a8c3534638 100644
---- a/drivers/virtio/virtio_pci_modern_dev.c
-+++ b/drivers/virtio/virtio_pci_modern_dev.c
-@@ -401,7 +401,7 @@ void vp_modern_get_extended_features(struct virtio_pci_modern_device *mdev,
- 	int i;
- 
- 	virtio_features_zero(features);
--	for (i = 0; i < VIRTIO_FEATURES_WORDS; i++) {
-+	for (i = 0; i < VIRTIO_FEATURES_BITS / 32; i++) {
- 		u64 cur;
- 
- 		vp_iowrite32(i, &cfg->device_feature_select);
-@@ -427,7 +427,7 @@ vp_modern_get_driver_extended_features(struct virtio_pci_modern_device *mdev,
- 	int i;
- 
- 	virtio_features_zero(features);
--	for (i = 0; i < VIRTIO_FEATURES_WORDS; i++) {
-+	for (i = 0; i < VIRTIO_FEATURES_BITS / 32; i++) {
- 		u64 cur;
- 
- 		vp_iowrite32(i, &cfg->guest_feature_select);
-@@ -448,7 +448,7 @@ void vp_modern_set_extended_features(struct virtio_pci_modern_device *mdev,
- 	struct virtio_pci_common_cfg __iomem *cfg = mdev->common;
- 	int i;
- 
--	for (i = 0; i < VIRTIO_FEATURES_WORDS; i++) {
-+	for (i = 0; i < VIRTIO_FEATURES_BITS / 32; i++) {
- 		u32 cur = features[i >> 1] >> (32 * (i & 1));
- 
- 		vp_iowrite32(i, &cfg->guest_feature_select);
-diff --git a/include/linux/virtio.h b/include/linux/virtio.h
-index 96c66126c0741..132a474e59140 100644
---- a/include/linux/virtio.h
-+++ b/include/linux/virtio.h
-@@ -177,7 +177,7 @@ struct virtio_device {
- 	union virtio_map vmap;
- #ifdef CONFIG_VIRTIO_DEBUG
- 	struct dentry *debugfs_dir;
--	u64 debugfs_filter_features[VIRTIO_FEATURES_DWORDS];
-+	u64 debugfs_filter_features[VIRTIO_FEATURES_U64S];
- #endif
- };
- 
-diff --git a/include/linux/virtio_config.h b/include/linux/virtio_config.h
-index a1af2676bbe6a..69f84ea85d71a 100644
---- a/include/linux/virtio_config.h
-+++ b/include/linux/virtio_config.h
-@@ -80,7 +80,7 @@ struct virtqueue_info {
-  *	Returns the first 64 feature bits.
-  * @get_extended_features:
-  *      vdev: the virtio_device
-- *      Returns the first VIRTIO_FEATURES_MAX feature bits (all we currently
-+ *      Returns the first VIRTIO_FEATURES_BITS feature bits (all we currently
-  *      need).
-  * @finalize_features: confirm what device features we'll be using.
-  *	vdev: the virtio_device
-diff --git a/include/linux/virtio_features.h b/include/linux/virtio_features.h
-index f748f2f87de8d..ea2ad8717882e 100644
---- a/include/linux/virtio_features.h
-+++ b/include/linux/virtio_features.h
-@@ -4,15 +4,16 @@
- 
- #include <linux/bits.h>
- 
--#define VIRTIO_FEATURES_DWORDS	2
--#define VIRTIO_FEATURES_MAX	(VIRTIO_FEATURES_DWORDS * 64)
--#define VIRTIO_FEATURES_WORDS	(VIRTIO_FEATURES_DWORDS * 2)
-+#define VIRTIO_FEATURES_U64S	2
-+#define VIRTIO_FEATURES_BITS	(VIRTIO_FEATURES_U64S * 64)
-+
- #define VIRTIO_BIT(b)		BIT_ULL((b) & 0x3f)
--#define VIRTIO_DWORD(b)		((b) >> 6)
-+#define VIRTIO_U64(b)		((b) >> 6)
-+
- #define VIRTIO_DECLARE_FEATURES(name)			\
- 	union {						\
- 		u64 name;				\
--		u64 name##_array[VIRTIO_FEATURES_DWORDS];\
-+		u64 name##_array[VIRTIO_FEATURES_U64S];\
- 	}
- 
- static inline bool virtio_features_chk_bit(unsigned int bit)
-@@ -22,9 +23,9 @@ static inline bool virtio_features_chk_bit(unsigned int bit)
- 		 * Don't care returning the correct value: the build
- 		 * will fail before any bad features access
- 		 */
--		BUILD_BUG_ON(bit >= VIRTIO_FEATURES_MAX);
-+		BUILD_BUG_ON(bit >= VIRTIO_FEATURES_BITS);
- 	} else {
--		if (WARN_ON_ONCE(bit >= VIRTIO_FEATURES_MAX))
-+		if (WARN_ON_ONCE(bit >= VIRTIO_FEATURES_BITS))
- 			return false;
- 	}
- 	return true;
-@@ -34,26 +35,26 @@ static inline bool virtio_features_test_bit(const u64 *features,
- 					    unsigned int bit)
- {
- 	return virtio_features_chk_bit(bit) &&
--	       !!(features[VIRTIO_DWORD(bit)] & VIRTIO_BIT(bit));
-+	       !!(features[VIRTIO_U64(bit)] & VIRTIO_BIT(bit));
- }
- 
- static inline void virtio_features_set_bit(u64 *features,
- 					   unsigned int bit)
- {
- 	if (virtio_features_chk_bit(bit))
--		features[VIRTIO_DWORD(bit)] |= VIRTIO_BIT(bit);
-+		features[VIRTIO_U64(bit)] |= VIRTIO_BIT(bit);
- }
- 
- static inline void virtio_features_clear_bit(u64 *features,
- 					     unsigned int bit)
- {
- 	if (virtio_features_chk_bit(bit))
--		features[VIRTIO_DWORD(bit)] &= ~VIRTIO_BIT(bit);
-+		features[VIRTIO_U64(bit)] &= ~VIRTIO_BIT(bit);
- }
- 
- static inline void virtio_features_zero(u64 *features)
- {
--	memset(features, 0, sizeof(features[0]) * VIRTIO_FEATURES_DWORDS);
-+	memset(features, 0, sizeof(features[0]) * VIRTIO_FEATURES_U64S);
- }
- 
- static inline void virtio_features_from_u64(u64 *features, u64 from)
-@@ -66,7 +67,7 @@ static inline bool virtio_features_equal(const u64 *f1, const u64 *f2)
- {
- 	int i;
- 
--	for (i = 0; i < VIRTIO_FEATURES_DWORDS; ++i)
-+	for (i = 0; i < VIRTIO_FEATURES_U64S; ++i)
- 		if (f1[i] != f2[i])
- 			return false;
- 	return true;
-@@ -74,14 +75,14 @@ static inline bool virtio_features_equal(const u64 *f1, const u64 *f2)
- 
- static inline void virtio_features_copy(u64 *to, const u64 *from)
- {
--	memcpy(to, from, sizeof(to[0]) * VIRTIO_FEATURES_DWORDS);
-+	memcpy(to, from, sizeof(to[0]) * VIRTIO_FEATURES_U64S);
- }
- 
- static inline void virtio_features_andnot(u64 *to, const u64 *f1, const u64 *f2)
- {
- 	int i;
- 
--	for (i = 0; i < VIRTIO_FEATURES_DWORDS; i++)
-+	for (i = 0; i < VIRTIO_FEATURES_U64S; i++)
- 		to[i] = f1[i] & ~f2[i];
- }
- 
-diff --git a/include/linux/virtio_pci_modern.h b/include/linux/virtio_pci_modern.h
-index 48bc12d1045bd..9a3f2fc53bd65 100644
---- a/include/linux/virtio_pci_modern.h
-+++ b/include/linux/virtio_pci_modern.h
-@@ -107,7 +107,7 @@ void vp_modern_set_extended_features(struct virtio_pci_modern_device *mdev,
- static inline u64
- vp_modern_get_features(struct virtio_pci_modern_device *mdev)
- {
--	u64 features_array[VIRTIO_FEATURES_DWORDS];
-+	u64 features_array[VIRTIO_FEATURES_U64S];
- 
- 	vp_modern_get_extended_features(mdev, features_array);
- 	return features_array[0];
-@@ -116,11 +116,11 @@ vp_modern_get_features(struct virtio_pci_modern_device *mdev)
- static inline u64
- vp_modern_get_driver_features(struct virtio_pci_modern_device *mdev)
- {
--	u64 features_array[VIRTIO_FEATURES_DWORDS];
-+	u64 features_array[VIRTIO_FEATURES_U64S];
- 	int i;
- 
- 	vp_modern_get_driver_extended_features(mdev, features_array);
--	for (i = 1; i < VIRTIO_FEATURES_DWORDS; ++i)
-+	for (i = 1; i < VIRTIO_FEATURES_U64S; ++i)
- 		WARN_ON_ONCE(features_array[i]);
- 	return features_array[0];
- }
-@@ -128,7 +128,7 @@ vp_modern_get_driver_features(struct virtio_pci_modern_device *mdev)
- static inline void
- vp_modern_set_features(struct virtio_pci_modern_device *mdev, u64 features)
- {
--	u64 features_array[VIRTIO_FEATURES_DWORDS];
-+	u64 features_array[VIRTIO_FEATURES_U64S];
- 
- 	virtio_features_from_u64(features_array, features);
- 	vp_modern_set_extended_features(mdev, features_array);
+ 	stream->allocated = true;
+ 	return 0;
 -- 
 2.51.0
 
