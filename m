@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5763E34AB1D;
-	Tue, 16 Dec 2025 11:40:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 956D734B191;
+	Tue, 16 Dec 2025 11:40:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885222; cv=none; b=a9yW+UN9+3XqndejZhCOIzs4M/vRrqeKdVGzQAOoKf/cghOc+lHK/vDrtdfR/fZSGwQFYsejf2i5PbHB1IVE3rNWJGhWjx/CGew/wmEitmBG4yPzeyqVyBtlprxFl/dd81p/nzF0cAA84Iie1j/qch5/Jr5EBvDHTJL9Zi0Aq9M=
+	t=1765885225; cv=none; b=ezkCmkGA8xxbRHDMQSeJzo5YcAyGERhn+dIXFpgOEYTqMaCdMvcNu2kiwOyE4ZxV7Ypp0q0Eg1ruXzJRQtGFdsDpMRd3+Ms0HjWUbrk2PiH1MJ/oaiagUKwTT5eTGEvSEBaZhtK8kxy8ZNyPxehVhrvOTrPbNBk5TtCsPUoNO20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885222; c=relaxed/simple;
-	bh=tgz+ZEXnE8rV3gXfKAzcKoQUtvltPl5zZ0UDoXsnw/s=;
+	s=arc-20240116; t=1765885225; c=relaxed/simple;
+	bh=+xTASS8WZqkbXL/YlPLlke/OLrw5XyotfuL5Okr06RM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hOctmDyusjieqN3BEg1Y1bwH1U6W0qj7ZNvU+gaRlg9WtLud4Ihj43Do9HWIHW5QuF4PAfPv0tNX87n0h6bLQfz3uze6DABDvbMazJ0+4uxhDEpSCQthSup786ugKv3ikBQZR0MdjADhkSHMaBFkb8xvJi3lcnBZjh4Ss3I1OGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0sBiRMBQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PTWDvJ5Mnk4K4ndTNJ/lEkBtDoRSEzcPf8xFZUaWAxjc4vx1UdNHKvEOuL75ZpQoqmvjr294hDvE1i74Ua4yGrZZCNwbhxJi3X+EcDLN+CAnlAVl0t/th1PwDp7PGZmk85/2aRf1d84GUqDDZGW/UKKQjx1vgf5lPaL5K1sOvXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1pYa4yhU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0sBiRMBQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B97D7C4CEF1;
-	Tue, 16 Dec 2025 11:40:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1pYa4yhU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09ABBC4CEF1;
+	Tue, 16 Dec 2025 11:40:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885222;
-	bh=tgz+ZEXnE8rV3gXfKAzcKoQUtvltPl5zZ0UDoXsnw/s=;
+	s=korg; t=1765885225;
+	bh=+xTASS8WZqkbXL/YlPLlke/OLrw5XyotfuL5Okr06RM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0sBiRMBQ+9eQ2YPuy0QfgLpL4qv1polGSQTW7iob/6lIqiHhv/3mngr5XPj/F9FYS
-	 L0AtDOGoHeK8aLcvRQkfqwD4HHu5y9nZBzIu5sM8tIfpMYeq1MBColKfjY8LX0lkdv
-	 lh4BJRLSHrjZQoIyKKpO8wYynE7xjdOme2C3IDmo=
+	b=1pYa4yhUhjbgt099qfAQguJE9gAyrBNfqxerXpxY7XYNVna5k68hLKxq3fGx7V1gG
+	 H/pPWen4IGGHCdFuzsec9//Sn5oStn/pgBSueTkn3KMZx3X7/CO3OnuxjHQpUe574y
+	 Xc1u2ZKMX/83pOIMzJc8XVxDXX1HJmIbfJe4P8E0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Luo Jie <quic_luoj@quicinc.com>,
+	Taniya Das <taniya.das@oss.qualcomm.com>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 075/507] clk: qcom: gcc-ipq5424: Correct the icc_first_node_id
-Date: Tue, 16 Dec 2025 12:08:36 +0100
-Message-ID: <20251216111348.259118717@linuxfoundation.org>
+Subject: [PATCH 6.17 076/507] clk: qcom: camcc-sm6350: Fix PLL config of PLL2
+Date: Tue, 16 Dec 2025 12:08:37 +0100
+Message-ID: <20251216111348.295123531@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,44 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luo Jie <quic_luoj@quicinc.com>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit 464ce94531f5a62ce29081a9d3c70eb4d525f443 ]
+[ Upstream commit ab0e13141d679fdffdd3463a272c5c1b10be1794 ]
 
-Update to use the expected icc_first_node_id for registering the icc
-clocks, ensuring correct association of clocks with interconnect nodes.
+The 'Agera' PLLs (with clk_agera_pll_configure) do not take some of the
+parameters that are provided in the vendor driver. Instead the upstream
+configuration should provide the final user_ctl value that is written to
+the USER_CTL register.
 
-Fixes: 170f3d2c065e ("clk: qcom: ipq5424: Use icc-clk for enabling NoC related clocks")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
-Link: https://lore.kernel.org/r/20251014-qcom_ipq5424_nsscc-v7-1-081f4956be02@quicinc.com
+Fix the config so that the PLL is configured correctly, and fixes
+CAMCC_MCLK* being stuck off.
+
+Fixes: 80f5451d9a7c ("clk: qcom: Add camera clock controller driver for SM6350")
+Suggested-by: Taniya Das <taniya.das@oss.qualcomm.com>
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20251021-agera-pll-fixups-v1-1-8c1d8aff4afc@fairphone.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-ipq5424.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/camcc-sm6350.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-ipq5424.c b/drivers/clk/qcom/gcc-ipq5424.c
-index 3d42f3d85c7a9..71afa1b86b723 100644
---- a/drivers/clk/qcom/gcc-ipq5424.c
-+++ b/drivers/clk/qcom/gcc-ipq5424.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- /*
-  * Copyright (c) 2018,2020 The Linux Foundation. All rights reserved.
-- * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-  */
- 
- #include <linux/clk-provider.h>
-@@ -3284,6 +3284,7 @@ static const struct qcom_cc_desc gcc_ipq5424_desc = {
- 	.num_clk_hws = ARRAY_SIZE(gcc_ipq5424_hws),
- 	.icc_hws = icc_ipq5424_hws,
- 	.num_icc_hws = ARRAY_SIZE(icc_ipq5424_hws),
-+	.icc_first_node_id = IPQ_APPS_ID,
+diff --git a/drivers/clk/qcom/camcc-sm6350.c b/drivers/clk/qcom/camcc-sm6350.c
+index 6c272f7b07219..7df12c1311c68 100644
+--- a/drivers/clk/qcom/camcc-sm6350.c
++++ b/drivers/clk/qcom/camcc-sm6350.c
+@@ -145,15 +145,11 @@ static struct clk_alpha_pll_postdiv camcc_pll1_out_even = {
+ static const struct alpha_pll_config camcc_pll2_config = {
+ 	.l = 0x64,
+ 	.alpha = 0x0,
+-	.post_div_val = 0x3 << 8,
+-	.post_div_mask = 0x3 << 8,
+-	.aux_output_mask = BIT(1),
+-	.main_output_mask = BIT(0),
+-	.early_output_mask = BIT(3),
+ 	.config_ctl_val = 0x20000800,
+ 	.config_ctl_hi_val = 0x400003d2,
+ 	.test_ctl_val = 0x04000400,
+ 	.test_ctl_hi_val = 0x00004000,
++	.user_ctl_val = 0x0000030b,
  };
  
- static int gcc_ipq5424_probe(struct platform_device *pdev)
+ static struct clk_alpha_pll camcc_pll2 = {
 -- 
 2.51.0
 
