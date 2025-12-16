@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886E035CBA8;
-	Tue, 16 Dec 2025 12:25:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 618443624D5;
+	Tue, 16 Dec 2025 12:25:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887905; cv=none; b=M5ce5KFu30EWTrNvRDoh79ukglfirHyENurjw5qZOLL5NtQ8uXe1BmIzKSmDz6n87ylTk7rjD8kVhxIKsQmAHb+N9VrqwSSUSXzs3bMA4kKQTuPECYOlQjYyGpnIUzEPrpl/t6bFS7nUnydS0dJfJAZwrubk2gqpDmy0hk0KGpw=
+	t=1765887910; cv=none; b=iHiP278aEfrcct6KdwFpx0MfpqmTl/uLGb70I/E7n0AsQ7MCg9sjy02lWquhJQPSoaWIZE9sPJD4EEH/MEtBUYVqmEK4dp+tKI/UWxcJUMi3dp1yPpU5VqyXcsbbiN3zHG+lE2yizugayqoxNRic7gMWNs5k2m5NBmmrOQBsYNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887905; c=relaxed/simple;
-	bh=88C6ZN7lWZbdxwR7freLVB9Aune5NN5sSIhxYDkobn0=;
+	s=arc-20240116; t=1765887910; c=relaxed/simple;
+	bh=zdqThhQWEuWhWbslfNt009orzcqRBFoGp8OGsPIcrTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AJZSk+dfnVizw/IL1gXoeSKD3xagj2w4zufTag077Gju7DAeRbVWcXfBQNA8oSmrzM4oeQCw5OrZyrrjMNkvd8owtrlPxnRwkZg7F+HXw+tk30VC12dLMzTlxDWIenZ4iTPXyi1Ou9J8zL/lrJhiYUvGe0xaL1nlImKpqF60x8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kcsvH2r/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Oq4mhJtn4JZe0ILAvlSgRKsgJrv8Oe75tIIP3WqZ034tWOOhy3PgXgKZJ/LGbxT9xPWH+ViF1ahKfjejjIw4OFsJ/sf+sXldD4cQSdY3wg9fnuH5MHMggEKtElWM18OIL2ZMFmyHWOXqjBZD5l3P9vs/c4X1/cy6N3tVzl6VsC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i5Gbbt6/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kcsvH2r/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECE4BC4CEF1;
-	Tue, 16 Dec 2025 12:25:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i5Gbbt6/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A21BC4CEF1;
+	Tue, 16 Dec 2025 12:25:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887905;
-	bh=88C6ZN7lWZbdxwR7freLVB9Aune5NN5sSIhxYDkobn0=;
+	s=korg; t=1765887908;
+	bh=zdqThhQWEuWhWbslfNt009orzcqRBFoGp8OGsPIcrTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kcsvH2r/YcIukP2W4kQ+QxgTM3NI+SyDAPRMKjnFyM3XJ8qPAe+hpGOWCdAR/idTX
-	 EMSi0eNTSUGESXu7gv/pQJsa9toTkTuaxQ+Cp1s+D0wttfteUBNs1HN7ivaQWn674O
-	 U+Cq7Y/cXJ5NFDhnm/rC/5eYoJo3NamLjVWyZGtM=
+	b=i5Gbbt6/xuOtQJOqy9dyMcBHSsWcx22JF27nlsagIZUUPTPv8byMSBhKCUPDpbuzA
+	 CNjPu91uNf59kQyMUt0miUWZ9+wsG5OjUiOsUe6yVTjwGgVLWCiY9VzOFiOtbRMtQn
+	 6z+pY/S9cb4sS31BfgMaCiVKoNYtjCEooRAjOnxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengjie Zhang <zhangpengjie2@huawei.com>,
-	Jie Zhan <zhanjie9@hisilicon.com>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
+	Fangyu Yu <fangyu.yu@linux.alibaba.com>,
+	Anup Patel <anup@brainfault.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 373/614] PM / devfreq: hisi: Fix potential UAF in OPP handling
-Date: Tue, 16 Dec 2025 12:12:20 +0100
-Message-ID: <20251216111414.876366113@linuxfoundation.org>
+Subject: [PATCH 6.18 374/614] RISC-V: KVM: Fix guest page fault within HLV* instructions
+Date: Tue, 16 Dec 2025 12:12:21 +0100
+Message-ID: <20251216111414.912834165@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,41 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengjie Zhang <zhangpengjie2@huawei.com>
+From: Fangyu Yu <fangyu.yu@linux.alibaba.com>
 
-[ Upstream commit 26dd44a40096468396b6438985d8e44e0743f64c ]
+[ Upstream commit 974555d6e417974e63444266e495a06d06c23af5 ]
 
-Ensure all required data is acquired before calling dev_pm_opp_put(opp)
-to maintain correct resource acquisition and release order.
+When executing HLV* instructions at the HS mode, a guest page fault
+may occur when a g-stage page table migration between triggering the
+virtual instruction exception and executing the HLV* instruction.
 
-Fixes: 7da2fdaaa1e6 ("PM / devfreq: Add HiSilicon uncore frequency scaling driver")
-Signed-off-by: Pengjie Zhang <zhangpengjie2@huawei.com>
-Reviewed-by: Jie Zhan <zhanjie9@hisilicon.com>
-Acked-by: Chanwoo Choi <cw00.choi@samsung.com>
-Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
-Link: https://patchwork.kernel.org/project/linux-pm/patch/20250915062135.748653-1-zhangpengjie2@huawei.com/
+This may be a corner case, and one simpler way to handle this is to
+re-execute the instruction where the virtual  instruction exception
+occurred, and the guest page fault will be automatically handled.
+
+Fixes: b91f0e4cb8a3 ("RISC-V: KVM: Factor-out instruction emulation into separate sources")
+Signed-off-by: Fangyu Yu <fangyu.yu@linux.alibaba.com>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Link: https://lore.kernel.org/r/20251121133543.46822-1-fangyu.yu@linux.alibaba.com
+Signed-off-by: Anup Patel <anup@brainfault.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/devfreq/hisi_uncore_freq.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/riscv/kvm/vcpu_insn.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/drivers/devfreq/hisi_uncore_freq.c b/drivers/devfreq/hisi_uncore_freq.c
-index 96d1815059e32..c1ed70fa0a400 100644
---- a/drivers/devfreq/hisi_uncore_freq.c
-+++ b/drivers/devfreq/hisi_uncore_freq.c
-@@ -265,10 +265,11 @@ static int hisi_uncore_target(struct device *dev, unsigned long *freq,
- 		dev_err(dev, "Failed to get opp for freq %lu hz\n", *freq);
- 		return PTR_ERR(opp);
- 	}
--	dev_pm_opp_put(opp);
- 
- 	data = (u32)(dev_pm_opp_get_freq(opp) / HZ_PER_MHZ);
- 
-+	dev_pm_opp_put(opp);
-+
- 	return hisi_uncore_cmd_send(uncore, HUCF_PCC_CMD_SET_FREQ, &data);
+diff --git a/arch/riscv/kvm/vcpu_insn.c b/arch/riscv/kvm/vcpu_insn.c
+index de1f96ea62251..4d89b94128aea 100644
+--- a/arch/riscv/kvm/vcpu_insn.c
++++ b/arch/riscv/kvm/vcpu_insn.c
+@@ -298,6 +298,22 @@ static int system_opcode_insn(struct kvm_vcpu *vcpu, struct kvm_run *run,
+ 	return (rc <= 0) ? rc : 1;
  }
  
++static bool is_load_guest_page_fault(unsigned long scause)
++{
++	/**
++	 * If a g-stage page fault occurs, the direct approach
++	 * is to let the g-stage page fault handler handle it
++	 * naturally, however, calling the g-stage page fault
++	 * handler here seems rather strange.
++	 * Considering this is a corner case, we can directly
++	 * return to the guest and re-execute the same PC, this
++	 * will trigger a g-stage page fault again and then the
++	 * regular g-stage page fault handler will populate
++	 * g-stage page table.
++	 */
++	return (scause == EXC_LOAD_GUEST_PAGE_FAULT);
++}
++
+ /**
+  * kvm_riscv_vcpu_virtual_insn -- Handle virtual instruction trap
+  *
+@@ -323,6 +339,8 @@ int kvm_riscv_vcpu_virtual_insn(struct kvm_vcpu *vcpu, struct kvm_run *run,
+ 							  ct->sepc,
+ 							  &utrap);
+ 			if (utrap.scause) {
++				if (is_load_guest_page_fault(utrap.scause))
++					return 1;
+ 				utrap.sepc = ct->sepc;
+ 				kvm_riscv_vcpu_trap_redirect(vcpu, &utrap);
+ 				return 1;
+@@ -378,6 +396,8 @@ int kvm_riscv_vcpu_mmio_load(struct kvm_vcpu *vcpu, struct kvm_run *run,
+ 		insn = kvm_riscv_vcpu_unpriv_read(vcpu, true, ct->sepc,
+ 						  &utrap);
+ 		if (utrap.scause) {
++			if (is_load_guest_page_fault(utrap.scause))
++				return 1;
+ 			/* Redirect trap if we failed to read instruction */
+ 			utrap.sepc = ct->sepc;
+ 			kvm_riscv_vcpu_trap_redirect(vcpu, &utrap);
+@@ -504,6 +524,8 @@ int kvm_riscv_vcpu_mmio_store(struct kvm_vcpu *vcpu, struct kvm_run *run,
+ 		insn = kvm_riscv_vcpu_unpriv_read(vcpu, true, ct->sepc,
+ 						  &utrap);
+ 		if (utrap.scause) {
++			if (is_load_guest_page_fault(utrap.scause))
++				return 1;
+ 			/* Redirect trap if we failed to read instruction */
+ 			utrap.sepc = ct->sepc;
+ 			kvm_riscv_vcpu_trap_redirect(vcpu, &utrap);
 -- 
 2.51.0
 
