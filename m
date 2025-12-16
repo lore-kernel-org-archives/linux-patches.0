@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B87D4350D48;
-	Tue, 16 Dec 2025 12:13:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A467355025;
+	Tue, 16 Dec 2025 12:14:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887237; cv=none; b=LYkzGhKmH/zFXw4dWD2gpUFnyFVHGVFwrFnVdtPl9GTYsm8UAg/k66w06OOUfAweXmSR80xbcmGhZd0zvK6vSZ1xhYUBdpDbHoCIE98NV7roplij/Qyfevr/5dFgiV4Bxdt9ZRrdXGunTke1d2CP/IOVzJ1ZixM/aTWQvCwIRi0=
+	t=1765887242; cv=none; b=R2Co0lcMk+59DQY+ETAN0kcCoGtCCsRVAT+wG1Rhigeowo6BCqKjKHlS5aTzEz4hrFDA0XWL+5vfPjQM5LmtCUobEoaVbhLsfGjR56VoFkkbJFP5ADXXJ6RTw92GXZuLg2Xv3xu5ncBOO1h/rhINkz368Is053uhbMbA6T+E9qQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887237; c=relaxed/simple;
-	bh=6FqwwX8zHiO8O1gUmHeW1KdG03z9xegg5PsyPRcHxOU=;
+	s=arc-20240116; t=1765887242; c=relaxed/simple;
+	bh=hZG7nOhRnu4tYOQdBki9BENSledmgAqy8C8xzoR2oDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mrgiSIpTqvjOZI6B8ZNoXaXfRX37S22rIzmvAtLYCuDpTlVDV9abR8Dy2hkk2vIqZZfkk5BMKPdIfjJi2pE/MPhWK/ZlshCB8X/0rGQK4vcq3JFUoEZeD/AiFe3hZ0k5khlO70gRVypV7Vz8yAO9bZDSVrXrOWaxeVR6UaqXyt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uISM0pLw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UJIumi0j/87iko1jvKbVTEoU79jWyoj6Qh/pv68VTTFnzryXVEx6BixHmwqeQzusS8Isq4y1jO1Yvs9gAZC6iqatL40cSK6JuAockEWcJ+BNMhYTtcmipgnaAak/gT2MAE/MPxVZIYkzTtIvGIb1IFQYv+rqw/1dKZWs2fJlrf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VHGgCNLX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uISM0pLw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECD97C4CEF1;
-	Tue, 16 Dec 2025 12:13:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VHGgCNLX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5FFEC4CEF1;
+	Tue, 16 Dec 2025 12:14:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887237;
-	bh=6FqwwX8zHiO8O1gUmHeW1KdG03z9xegg5PsyPRcHxOU=;
+	s=korg; t=1765887241;
+	bh=hZG7nOhRnu4tYOQdBki9BENSledmgAqy8C8xzoR2oDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uISM0pLwWzgIgscHtodp4N4ATw5Mb+V0S4Ll+B4ItxF7GBeBuNuJA5/buWCqgoDZ+
-	 ZA2uBdn1n259i8eBpaNIwxvkMlNCiAww/cOGaDwkHtzJfchnstpxImQZZRXAi3EQdz
-	 QsjBqX5nciaD2TXqQbZBhcch3wd0hginHdKRmLjE=
+	b=VHGgCNLXN8ZUrQbDf0ESDEnYKOKacRlYtVirTwtAntctXSIuAC2F8/yzyRPlcy3sp
+	 fMFSxd/FIvwEdDWP0P+9u4xdd9AEKEKoUp0iuMmp3dSPsD+Z37ZsW9MHuVvoO3RGhK
+	 Lczur4+UbPlFPawVeeNNpn2lws/nHYyMuv0Tam7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Aryan Srivastava <aryan.srivastava@alliedtelesis.co.nz>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 136/614] Revert "mtd: rawnand: marvell: fix layouts"
-Date: Tue, 16 Dec 2025 12:08:23 +0100
-Message-ID: <20251216111406.262463842@linuxfoundation.org>
+Subject: [PATCH 6.18 137/614] mtd: nand: relax ECC parameter validation check
+Date: Tue, 16 Dec 2025 12:08:24 +0100
+Message-ID: <20251216111406.297505745@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -53,47 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Aryan Srivastava <aryan.srivastava@alliedtelesis.co.nz>
 
-[ Upstream commit fbd72cb463fdea3a0c900dd5d6e813cdebc3a73c ]
+[ Upstream commit 050553c683f21eebd7d1020df9b2ec852e2a9e4e ]
 
-This reverts commit e6a30d0c48a1e8a68f1cc413bee65302ab03ddfb.
+Due to the custom handling and layouts of certain nand controllers this
+validity check will always fail for certain layouts. The check
+inherently depends on even chunk sizing and this is not always the
+case.
 
-This change resulted in the 8bit ECC layouts having the incorrect amount
-of read/write chunks, the last spare bytes chunk would always be missed.
+Modify the check to only print a warning, instead of failing to
+init the attached NAND. This allows various 8 bit and 12 ECC strength
+layouts to be used.
 
-Fixes: e6a30d0c48a1 ("mtd: rawnand: marvell: fix layouts")
+Fixes: 68c18dae6888 ("mtd: rawnand: marvell: add missing layouts")
 Signed-off-by: Aryan Srivastava <aryan.srivastava@alliedtelesis.co.nz>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/marvell_nand.c | 13 ++++++++-----
+ drivers/mtd/nand/raw/nand_base.c | 13 ++++++++-----
  1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/marvell_nand.c b/drivers/mtd/nand/raw/marvell_nand.c
-index 303b3016a070b..38b7eb5b992c8 100644
---- a/drivers/mtd/nand/raw/marvell_nand.c
-+++ b/drivers/mtd/nand/raw/marvell_nand.c
-@@ -290,13 +290,16 @@ static const struct marvell_hw_ecc_layout marvell_nfc_layouts[] = {
- 	MARVELL_LAYOUT( 2048,   512,  4,  1,  1, 2048, 32, 30,  0,  0,  0),
- 	MARVELL_LAYOUT( 2048,   512,  8,  2,  1, 1024,  0, 30,1024,32, 30),
- 	MARVELL_LAYOUT( 2048,   512,  8,  2,  1, 1024,  0, 30,1024,64, 30),
--	MARVELL_LAYOUT( 2048,   512,  16, 4,  4, 512,   0, 30,  0, 32, 30),
-+	MARVELL_LAYOUT( 2048,   512,  12, 3,  2, 704,   0, 30,640,  0, 30),
-+	MARVELL_LAYOUT( 2048,   512,  16, 5,  4, 512,   0, 30,  0, 32, 30),
- 	MARVELL_LAYOUT( 4096,   512,  4,  2,  2, 2048, 32, 30,  0,  0,  0),
--	MARVELL_LAYOUT( 4096,   512,  8,  4,  4, 1024,  0, 30,  0, 64, 30),
--	MARVELL_LAYOUT( 4096,   512,  16, 8,  8, 512,   0, 30,  0, 32, 30),
-+	MARVELL_LAYOUT( 4096,   512,  8,  5,  4, 1024,  0, 30,  0, 64, 30),
-+	MARVELL_LAYOUT( 4096,   512,  12, 6,  5, 704,   0, 30,576, 32, 30),
-+	MARVELL_LAYOUT( 4096,   512,  16, 9,  8, 512,   0, 30,  0, 32, 30),
- 	MARVELL_LAYOUT( 8192,   512,  4,  4,  4, 2048,  0, 30,  0,  0,  0),
--	MARVELL_LAYOUT( 8192,   512,  8,  8,  8, 1024,  0, 30,  0, 160, 30),
--	MARVELL_LAYOUT( 8192,   512,  16, 16, 16, 512,  0, 30,  0,  32, 30),
-+	MARVELL_LAYOUT( 8192,   512,  8,  9,  8, 1024,  0, 30,  0, 160, 30),
-+	MARVELL_LAYOUT( 8192,   512,  12, 12, 11, 704,  0, 30,448,  64, 30),
-+	MARVELL_LAYOUT( 8192,   512,  16, 17, 16, 512,  0, 30,  0,  32, 30),
- };
+diff --git a/drivers/mtd/nand/raw/nand_base.c b/drivers/mtd/nand/raw/nand_base.c
+index c7d9501f646b3..ad6d66309597b 100644
+--- a/drivers/mtd/nand/raw/nand_base.c
++++ b/drivers/mtd/nand/raw/nand_base.c
+@@ -6338,11 +6338,14 @@ static int nand_scan_tail(struct nand_chip *chip)
+ 		ecc->steps = mtd->writesize / ecc->size;
+ 	if (!base->ecc.ctx.nsteps)
+ 		base->ecc.ctx.nsteps = ecc->steps;
+-	if (ecc->steps * ecc->size != mtd->writesize) {
+-		WARN(1, "Invalid ECC parameters\n");
+-		ret = -EINVAL;
+-		goto err_nand_manuf_cleanup;
+-	}
++
++	/*
++	 * Validity check: Warn if ECC parameters are not compatible with page size.
++	 * Due to the custom handling of ECC blocks in certain controllers the check
++	 * may result in an expected failure.
++	 */
++	if (ecc->steps * ecc->size != mtd->writesize)
++		pr_warn("ECC parameters may be invalid in reference to underlying NAND chip\n");
  
- /**
+ 	if (!ecc->total) {
+ 		ecc->total = ecc->steps * ecc->bytes;
 -- 
 2.51.0
 
