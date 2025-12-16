@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB66C338F25;
-	Tue, 16 Dec 2025 11:30:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 146CA33A6F4;
+	Tue, 16 Dec 2025 11:30:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884602; cv=none; b=tfailWPU15Bi3f7mbYc/rE/pb6BDoCK4zwQQ1Y/2bR5jyeRQhvQVBvY1qUFhWXRkTbAMAuGDS3aopff+ZfEnAkXnzkV8uICR929oYBF9wgJW1ncqEB6cbcIRrbcGktcHiVSNI7rrKtS31FjnzeZMHTyMMNZzKu82obqdGG8QA4Q=
+	t=1765884606; cv=none; b=pWCyzQMu6hlabbfgsGvJaDbb65gR+RK788d591u5clM2T+pFQNJwc7s7nIaxkeqd6GIL8fqpvYJ2p7gAoO9ORfteA992rD6qnVC3v8WRw+ZKvihCMS0tXi3liIbsEvW2xe8Am+sFnhPu0+y/ruQZ1pFaVdqkzO/BLtZPQP0gK6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884602; c=relaxed/simple;
-	bh=LR6Fa1qXonfRtGCmLjKG5yv8LvURE/qDDUTGSirIVSo=;
+	s=arc-20240116; t=1765884606; c=relaxed/simple;
+	bh=3AEi0I6YbQDhJlpkkNVn0R4G5tcVffMXSXrqGbB8X+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nsMfBwG76K+0N2BuGwjqkNLNKIwl9nfLaIQzqGSjOcjVbHUxTitkBVqCYv+o6pGESy6vMTN0RVfnmmWmFrmWx5FmlWFYIa2RGRWVm0hJPo+Pub3dDRznoCRKh6KhfsgwwU4NZvxHIxenOSQXpmycjxdqEE5hQ7XB/PTZs5i7zWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eCRO6h66; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I0jGlyhNBbDS5CdZWxbuBC9VbFO81qSrgIRKd3RwErN/VURKGwwy9Yj9pJWtM8QWJcs/hSed72b6ladcvnoPWAnPT7BJNm9bKBAeOU+VnnDX30lFECGa3q0b4uxFDNpphkeLma/1ljh6yxlbUkLd1rS0eXBYvQKfodvX4qVY4AA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Et30PmnS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eCRO6h66"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 443ACC4CEF1;
-	Tue, 16 Dec 2025 11:30:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Et30PmnS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78A3FC4CEF1;
+	Tue, 16 Dec 2025 11:30:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884602;
-	bh=LR6Fa1qXonfRtGCmLjKG5yv8LvURE/qDDUTGSirIVSo=;
+	s=korg; t=1765884606;
+	bh=3AEi0I6YbQDhJlpkkNVn0R4G5tcVffMXSXrqGbB8X+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eCRO6h66buHz7t1TG/lNrqpnL8JZTvD7nCNNbs9uLPXaCU86CwglFDFdQo1kFW6yb
-	 IVu9yrBsk4p8EYVt22aakuNdnD94qPMmqbCa1ost46Rcczz815pnk+UbBxkT/iPuyO
-	 rIpAxhLvn+LLIZOV9OfD1YnVhSXZjs6U9jjFBxSE=
+	b=Et30PmnS6gnMvCr9hJReXI9bVSl+gsfkQPvZuYaSVtB26S7/SodZnEBlnIjVl7P+g
+	 5Vjs2g5m4klHLUs+eU494+enT1YedF03qV7+bldvf+YuCBc9dpxCGwsMA4u6rXTgC1
+	 A46lCtKLpqPR0Ti7ZEWeQe+naHH0IDpuEGYKLOqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fangyu Yu <fangyu.yu@linux.alibaba.com>,
-	Anup Patel <anup@brainfault.org>,
+	Sheng Yong <shengyong1@xiaomi.com>,
+	Chao Yu <chao@kernel.org>,
+	Hongbo Li <lihongbo22@huawei.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 211/354] RISC-V: KVM: Fix guest page fault within HLV* instructions
-Date: Tue, 16 Dec 2025 12:12:58 +0100
-Message-ID: <20251216111328.565181547@linuxfoundation.org>
+Subject: [PATCH 6.12 212/354] erofs: limit the level of fs stacking for file-backed mounts
+Date: Tue, 16 Dec 2025 12:12:59 +0100
+Message-ID: <20251216111328.601337869@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -51,82 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fangyu Yu <fangyu.yu@linux.alibaba.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 974555d6e417974e63444266e495a06d06c23af5 ]
+[ Upstream commit d53cd891f0e4311889349fff3a784dc552f814b9 ]
 
-When executing HLV* instructions at the HS mode, a guest page fault
-may occur when a g-stage page table migration between triggering the
-virtual instruction exception and executing the HLV* instruction.
+Otherwise, it could cause potential kernel stack overflow (e.g., EROFS
+mounting itself).
 
-This may be a corner case, and one simpler way to handle this is to
-re-execute the instruction where the virtual  instruction exception
-occurred, and the guest page fault will be automatically handled.
-
-Fixes: b91f0e4cb8a3 ("RISC-V: KVM: Factor-out instruction emulation into separate sources")
-Signed-off-by: Fangyu Yu <fangyu.yu@linux.alibaba.com>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://lore.kernel.org/r/20251121133543.46822-1-fangyu.yu@linux.alibaba.com
-Signed-off-by: Anup Patel <anup@brainfault.org>
+Reviewed-by: Sheng Yong <shengyong1@xiaomi.com>
+Fixes: fb176750266a ("erofs: add file-backed mount support")
+Reviewed-by: Chao Yu <chao@kernel.org>
+Reviewed-by: Hongbo Li <lihongbo22@huawei.com>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kvm/vcpu_insn.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ fs/erofs/super.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/arch/riscv/kvm/vcpu_insn.c b/arch/riscv/kvm/vcpu_insn.c
-index 97dec18e69892..3dbd6a09d4825 100644
---- a/arch/riscv/kvm/vcpu_insn.c
-+++ b/arch/riscv/kvm/vcpu_insn.c
-@@ -424,6 +424,22 @@ static int system_opcode_insn(struct kvm_vcpu *vcpu, struct kvm_run *run,
- 	return (rc <= 0) ? rc : 1;
- }
+diff --git a/fs/erofs/super.c b/fs/erofs/super.c
+index 5fcdab6145176..027fd567a4d9f 100644
+--- a/fs/erofs/super.c
++++ b/fs/erofs/super.c
+@@ -636,6 +636,22 @@ static int erofs_fc_fill_super(struct super_block *sb, struct fs_context *fc)
  
-+static bool is_load_guest_page_fault(unsigned long scause)
-+{
-+	/**
-+	 * If a g-stage page fault occurs, the direct approach
-+	 * is to let the g-stage page fault handler handle it
-+	 * naturally, however, calling the g-stage page fault
-+	 * handler here seems rather strange.
-+	 * Considering this is a corner case, we can directly
-+	 * return to the guest and re-execute the same PC, this
-+	 * will trigger a g-stage page fault again and then the
-+	 * regular g-stage page fault handler will populate
-+	 * g-stage page table.
-+	 */
-+	return (scause == EXC_LOAD_GUEST_PAGE_FAULT);
-+}
-+
- /**
-  * kvm_riscv_vcpu_virtual_insn -- Handle virtual instruction trap
-  *
-@@ -449,6 +465,8 @@ int kvm_riscv_vcpu_virtual_insn(struct kvm_vcpu *vcpu, struct kvm_run *run,
- 							  ct->sepc,
- 							  &utrap);
- 			if (utrap.scause) {
-+				if (is_load_guest_page_fault(utrap.scause))
-+					return 1;
- 				utrap.sepc = ct->sepc;
- 				kvm_riscv_vcpu_trap_redirect(vcpu, &utrap);
- 				return 1;
-@@ -504,6 +522,8 @@ int kvm_riscv_vcpu_mmio_load(struct kvm_vcpu *vcpu, struct kvm_run *run,
- 		insn = kvm_riscv_vcpu_unpriv_read(vcpu, true, ct->sepc,
- 						  &utrap);
- 		if (utrap.scause) {
-+			if (is_load_guest_page_fault(utrap.scause))
-+				return 1;
- 			/* Redirect trap if we failed to read instruction */
- 			utrap.sepc = ct->sepc;
- 			kvm_riscv_vcpu_trap_redirect(vcpu, &utrap);
-@@ -630,6 +650,8 @@ int kvm_riscv_vcpu_mmio_store(struct kvm_vcpu *vcpu, struct kvm_run *run,
- 		insn = kvm_riscv_vcpu_unpriv_read(vcpu, true, ct->sepc,
- 						  &utrap);
- 		if (utrap.scause) {
-+			if (is_load_guest_page_fault(utrap.scause))
-+				return 1;
- 			/* Redirect trap if we failed to read instruction */
- 			utrap.sepc = ct->sepc;
- 			kvm_riscv_vcpu_trap_redirect(vcpu, &utrap);
+ 	sbi->blkszbits = PAGE_SHIFT;
+ 	if (!sb->s_bdev) {
++		/*
++		 * (File-backed mounts) EROFS claims it's safe to nest other
++		 * fs contexts (including its own) due to self-controlled RO
++		 * accesses/contexts and no side-effect changes that need to
++		 * context save & restore so it can reuse the current thread
++		 * context.  However, it still needs to bump `s_stack_depth` to
++		 * avoid kernel stack overflow from nested filesystems.
++		 */
++		if (erofs_is_fileio_mode(sbi)) {
++			sb->s_stack_depth =
++				file_inode(sbi->dif0.file)->i_sb->s_stack_depth + 1;
++			if (sb->s_stack_depth > FILESYSTEM_MAX_STACK_DEPTH) {
++				erofs_err(sb, "maximum fs stacking depth exceeded");
++				return -ENOTBLK;
++			}
++		}
+ 		sb->s_blocksize = PAGE_SIZE;
+ 		sb->s_blocksize_bits = PAGE_SHIFT;
+ 
 -- 
 2.51.0
 
