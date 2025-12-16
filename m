@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA1133ADAD;
-	Tue, 16 Dec 2025 12:23:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3BDA32143E;
+	Tue, 16 Dec 2025 12:23:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887833; cv=none; b=XtbNJkoRwo34w4w1McEJy6gGlTxwUyKBFcY9Hg6UGm9aanAP9hpsGPbiw2zW1eFv/CaFN/h3iUdpeDj+ACfBdg82A/NndwGLxS8W8lTBPUsrbWMa3wB7Yh7Iv5PrODOzwd/KlwYMqxcJf7wnTuSJVnJhXqY3wAVEOB0i1nO+Gv0=
+	t=1765887836; cv=none; b=N7dugZalxeRQ+uYFL02lvNukGF0+LHNoFBz4D3Arz96YFh+d11thxTdoLYvoea8jKUHPrYGtJhp9dhYp9I2kxc1rB0avQANH9Xu7qZ+E4J04zoZHBQTBJqJ9Y5UQSnBetuPALeI+bJJUH2q61BarimI5TcHgIxhfmA1U8677n+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887833; c=relaxed/simple;
-	bh=+ETTEnlZCu1HOFhZRpiFbjjJm83d3r0dXMcgrnhZemk=;
+	s=arc-20240116; t=1765887836; c=relaxed/simple;
+	bh=5iUqACtaUvZQDK5c3kqaMoPhtr8lhX9lrfdngXY3Z0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gtN0v/kFvg7I4mYWsYsYYgjY2eZEuAeXrgNNKy3Z/s4vf4XKdYTo8bJcL/BuubEh2Cvv6rJA9kAhbI2Sr3MAhol8pGpObo8pP+9ZmQ9MxDgfrbEbwVRjRrlOBXaowM3dx8jDcZ9ctmvqYpCNS6GZn5AUW1NgcX2YIzkl/dKej/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bi9gLJtI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FQu2SaLOLXTB3L1SBW/nb/baZCf6wr98sDy/LpkgMLvOrbq4GvJYbPDEJxqWN0zijw3VnufFh43NjTgytDerslP9YACVkNclXrcV2pbLTDhT1akbdwb2b1tHN4CZEf0TP4nEEBZWyytA6jze+JgvprIqXzBHr9mZtl3xI0eZPv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QD9GEkSD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bi9gLJtI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D08C4CEF1;
-	Tue, 16 Dec 2025 12:23:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QD9GEkSD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4280CC4CEF1;
+	Tue, 16 Dec 2025 12:23:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887833;
-	bh=+ETTEnlZCu1HOFhZRpiFbjjJm83d3r0dXMcgrnhZemk=;
+	s=korg; t=1765887836;
+	bh=5iUqACtaUvZQDK5c3kqaMoPhtr8lhX9lrfdngXY3Z0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bi9gLJtIkK/TjFf+InM39YePTFYcgwczS3azJ/REOlsJ4C93yPRdFw8QkwehdN+Hv
-	 QprIflL3aIlBbzqRuqckBx9qs2SH7gNLNyvGzn0egneaYLlba33wcMGOhKaW1Wtv+p
-	 qwfrrQgrS5CuCXhglPLHHJr6H0ifYLbbnEsEJNtQ=
+	b=QD9GEkSD/8NeCHj3rOt7qvoFHtbkv7sh5b18HxXcBI9H2wFgFSLc5h9AcHZPGDFaX
+	 MFMxifMLlKcc+gLdYzLUYSvRX7uKw1DfPbNftEcZX3a+xNM0mBkNSi0bibrPKtkUBU
+	 gI2EtGqmwtE9MD4ag/AGLLN0BkLKdUcPV2YCEPcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Edward Adam Davis <eadavis@qq.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 318/614] net: stmmac: Fix VLAN 0 deletion in vlan_del_hw_rx_fltr()
-Date: Tue, 16 Dec 2025 12:11:25 +0100
-Message-ID: <20251216111412.886731025@linuxfoundation.org>
+Subject: [PATCH 6.18 319/614] fs/ntfs3: out1 also needs to put mi
+Date: Tue, 16 Dec 2025 12:11:26 +0100
+Message-ID: <20251216111412.922507011@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,58 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit d9db25723677c3741a0cf3643f7f7429fc983921 ]
+[ Upstream commit 4d78d1173a653acdaf7500a32b8dc530ca4ad075 ]
 
-When the "rx-vlan-filter" feature is enabled on a network device, the 8021q
-module automatically adds a VLAN 0 hardware filter when the device is
-brought administratively up.
+After ntfs_look_free_mft() executes successfully, all subsequent code
+that fails to execute must put mi.
 
-For stmmac, this causes vlan_add_hw_rx_fltr() to create a new entry for
-VID 0 in the mac_device_info->vlan_filter array, in the following format:
-
-    VLAN_TAG_DATA_ETV | VLAN_TAG_DATA_VEN | vid
-
-Here, VLAN_TAG_DATA_VEN indicates that the hardware filter is enabled for
-that VID.
-
-However, on the delete path, vlan_del_hw_rx_fltr() searches the vlan_filter
-array by VID only, without verifying whether a VLAN entry is enabled. As a
-result, when the 8021q module attempts to remove VLAN 0, the function may
-mistakenly match a zero-initialized slot rather than the actual VLAN 0
-entry, causing incorrect deletions and leaving stale entries in the
-hardware table.
-
-Fix this by verifying that the VLAN entry's enable bit (VLAN_TAG_DATA_VEN)
-is set before matching and deleting by VID. This ensures only active VLAN
-entries are removed and avoids leaving stale entries in the VLAN filter
-table, particularly for VLAN ID 0.
-
-Fixes: ed64639bc1e08 ("net: stmmac: Add support for VLAN Rx filtering")
-Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20251113112721.70500-2-ovidiu.panait.rb@renesas.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_vlan.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ntfs3/frecord.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_vlan.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_vlan.c
-index ff02a79c00d4f..b18404dd5a8be 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_vlan.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_vlan.c
-@@ -122,7 +122,8 @@ static int vlan_del_hw_rx_fltr(struct net_device *dev,
+diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
+index 8f9fe1d7a6908..a557e3ec0d4c4 100644
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -1015,9 +1015,9 @@ static int ni_ins_attr_ext(struct ntfs_inode *ni, struct ATTR_LIST_ENTRY *le,
  
- 	/* Extended Rx VLAN Filter Enable */
- 	for (i = 0; i < hw->num_vlan; i++) {
--		if ((hw->vlan_filter[i] & VLAN_TAG_DATA_VID) == vid) {
-+		if ((hw->vlan_filter[i] & VLAN_TAG_DATA_VEN) &&
-+		    ((hw->vlan_filter[i] & VLAN_TAG_DATA_VID) == vid)) {
- 			ret = vlan_write_filter(dev, hw, i, 0);
+ out2:
+ 	ni_remove_mi(ni, mi);
+-	mi_put(mi);
  
- 			if (!ret)
+ out1:
++	mi_put(mi);
+ 	ntfs_mark_rec_free(sbi, rno, is_mft);
+ 
+ out:
 -- 
 2.51.0
 
