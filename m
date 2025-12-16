@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD51A34D3B8;
-	Tue, 16 Dec 2025 11:42:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFD5F34D3BD;
+	Tue, 16 Dec 2025 11:43:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885377; cv=none; b=T4lpWmzPgunHWY3N09lxMXm+WvoLqbwHP2I+ooAgKHW2xTWmKZnx0YFux+lhga3WkM4iHgJQ5EcHf0E098XjK4X2JDMinFadG9qomc1AOeh9YNPD+m+k03cPgGtbe4duxyYeNjQyIpEk5tIAS3dHD1DwC+AqV9YPTKQ++5fwrw0=
+	t=1765885381; cv=none; b=sOhaB/zIMaeh8koEgt0akx7PcfFQfStkGTVE5SLPLgBWLD06NoM5VbvjSObzZn3WKZKAPiO5tPWyobkvNNsfIRVSzSOlPOO9V+S9x7wE8M+8LGKnQQT+CJ80U3oPTu9v2Jtwm6inRCMlUCSaJRyxxGiYNDe5+dFscRzj/A7cT2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885377; c=relaxed/simple;
-	bh=va6neb/QgmqkcpvMi27UD9xBjZWyIP7THwi8HADA3uY=;
+	s=arc-20240116; t=1765885381; c=relaxed/simple;
+	bh=gfPaKI9UcrZpdHdoiMGr+FSPIBRzLxS2m7UyuOoswVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X1DMvz9NHkl54Dx6PLGjlBYikM+ZENLeB6m3Za4sPBmsQUQ0krhxpuvQ0qOadodM1lOWawJUcuZW6H1iqLY3+3OuDWNYWnPCe3EWhWKslKcKynOtbP+oku3BeGodud6URko27pCnQsMolnYUDbpHsiClPJSBMqJJtQ9yCiuF6Ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UH5zGWzL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uCAShpQ/6jze8ql3gBFkJspcNoj5ZBvlxQQN0z3pX/a78kI1UogogFObLqV+ziol2RC6oUEfFHDO61MN3uMWXGQ8ZKqBuxrbnn7uFAHuFeaH+W7nANqfc6VWEPRV3JhOKS/1wHHXjEdGzVef7vfJ0k76I/ekxf65Gr6Vod6jQvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ioh5vZfY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UH5zGWzL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08A5EC4CEF1;
-	Tue, 16 Dec 2025 11:42:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ioh5vZfY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58FA5C4CEF1;
+	Tue, 16 Dec 2025 11:43:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885377;
-	bh=va6neb/QgmqkcpvMi27UD9xBjZWyIP7THwi8HADA3uY=;
+	s=korg; t=1765885380;
+	bh=gfPaKI9UcrZpdHdoiMGr+FSPIBRzLxS2m7UyuOoswVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UH5zGWzLvqZEcUp+j7xCtfHNPVukUveqE3TFkja0KMEY09nv1iFXQ8idaKKL6e2kL
-	 5hCeo2PRK/l2Kuk46cKdV538wiVh+4uZHaUu+yCZkVUo5l4gk/XmLYCBBCwH/GEa3M
-	 ufdvCvAqFBh3AAJyKgCMNrfwIFIbdU+tLaqrihwY=
+	b=Ioh5vZfYevHLZniy5ayyqC9uPUtR5o49k6VbSG+wofJTJua0kzYB39uEhzO8IoFai
+	 +p4TPSiQeiyZT5agoUGdnS5muO0pruSH+SpL2sQso+1eC3eyvKQCtWBYyJCI18NOOg
+	 d/sgqqCBf5B7nkPCBgq7yqIaKWV2+4TLacoytgd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tengda Wu <wutengda@huaweicloud.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+	Karol Wachowski <karol.wachowski@linux.intel.com>,
+	Maciej Falkowski <maciej.falkowski@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 121/507] x86/dumpstack: Prevent KASAN false positive warnings in __show_regs()
-Date: Tue, 16 Dec 2025 12:09:22 +0100
-Message-ID: <20251216111349.916938371@linuxfoundation.org>
+Subject: [PATCH 6.17 122/507] accel/ivpu: Remove skip of dma unmap for imported buffers
+Date: Tue, 16 Dec 2025 12:09:23 +0100
+Message-ID: <20251216111349.952689668@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -53,114 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tengda Wu <wutengda@huaweicloud.com>
+From: Maciej Falkowski <maciej.falkowski@linux.intel.com>
 
-[ Upstream commit ced37e9ceae50e4cb6cd058963bd315ec9afa651 ]
+[ Upstream commit c063c1bbee67391f12956d2ffdd5da00eb87ff79 ]
 
-When triggering a stack dump via sysrq (echo t > /proc/sysrq-trigger),
-KASAN may report false-positive out-of-bounds access:
+Rework of imported buffers introduced in the commit
+e0c0891cd63b ("accel/ivpu: Rework bind/unbind of imported buffers")
+switched the logic of imported buffers by dma mapping/unmapping
+them just as the regular buffers.
 
-  BUG: KASAN: out-of-bounds in __show_regs+0x4b/0x340
-  Call Trace:
-    dump_stack_lvl
-    print_address_description.constprop.0
-    print_report
-    __show_regs
-    show_trace_log_lvl
-    sched_show_task
-    show_state_filter
-    sysrq_handle_showstate
-    __handle_sysrq
-    write_sysrq_trigger
-    proc_reg_write
-    vfs_write
-    ksys_write
-    do_syscall_64
-    entry_SYSCALL_64_after_hwframe
+The commit didn't include removal of skipping dma unmap of imported
+buffers which results in them being mapped without unmapping.
 
-The issue occurs as follows:
-
-  Task A (walk other tasks' stacks)           Task B (running)
-  1. echo t > /proc/sysrq-trigger
-  show_trace_log_lvl
-    regs = unwind_get_entry_regs()
-    show_regs_if_on_stack(regs)
-                                              2. The stack value pointed by
-                                                 `regs` keeps changing, and
-                                                 so are the tags in its
-                                                 KASAN shadow region.
-      __show_regs(regs)
-        regs->ax, regs->bx, ...
-          3. hit KASAN redzones, OOB
-
-When task A walks task B's stack without suspending it, the continuous changes
-in task B's stack (and corresponding KASAN shadow tags) may cause task A to
-hit KASAN redzones when accessing obsolete values on the stack, resulting in
-false positive reports.
-
-Simply stopping the task before unwinding is not a viable fix, as it would
-alter the state intended to inspect. This is especially true for diagnosing
-misbehaving tasks (e.g., in a hard lockup), where stopping might fail or hide
-the root cause by changing the call stack.
-
-Therefore, fix this by disabling KASAN checks during asynchronous stack
-unwinding, which is identified when the unwinding task does not match the
-current task (task != current).
-
-  [ bp: Align arguments on function's opening brace. ]
-
-Fixes: 3b3fa11bc700 ("x86/dumpstack: Print any pt_regs found on the stack")
-Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Link: https://patch.msgid.link/all/20251023090632.269121-1-wutengda@huaweicloud.com
+Fixes: e0c0891cd63b ("accel/ivpu: Rework bind/unbind of imported buffers")
+Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Reviewed-by: Karol Wachowski <karol.wachowski@linux.intel.com>
+Signed-off-by: Maciej Falkowski <maciej.falkowski@linux.intel.com>
+Link: https://patch.msgid.link/20251027150933.2384538-1-maciej.falkowski@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/dumpstack.c | 23 +++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ drivers/accel/ivpu/ivpu_gem.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/arch/x86/kernel/dumpstack.c b/arch/x86/kernel/dumpstack.c
-index 71ee20102a8af..b10684dedc589 100644
---- a/arch/x86/kernel/dumpstack.c
-+++ b/arch/x86/kernel/dumpstack.c
-@@ -181,8 +181,8 @@ static void show_regs_if_on_stack(struct stack_info *info, struct pt_regs *regs,
-  * in false positive reports. Disable instrumentation to avoid those.
-  */
- __no_kmsan_checks
--static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
--			unsigned long *stack, const char *log_lvl)
-+static void __show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
-+				 unsigned long *stack, const char *log_lvl)
- {
- 	struct unwind_state state;
- 	struct stack_info stack_info = {0};
-@@ -303,6 +303,25 @@ static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
+diff --git a/drivers/accel/ivpu/ivpu_gem.c b/drivers/accel/ivpu/ivpu_gem.c
+index 1fca969df19dc..a38e41f9c7123 100644
+--- a/drivers/accel/ivpu/ivpu_gem.c
++++ b/drivers/accel/ivpu/ivpu_gem.c
+@@ -157,9 +157,6 @@ static void ivpu_bo_unbind_locked(struct ivpu_bo *bo)
+ 		bo->ctx = NULL;
  	}
- }
  
-+static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
-+			       unsigned long *stack, const char *log_lvl)
-+{
-+	/*
-+	 * Disable KASAN to avoid false positives during walking another
-+	 * task's stacks, as values on these stacks may change concurrently
-+	 * with task execution.
-+	 */
-+	bool disable_kasan = task && task != current;
-+
-+	if (disable_kasan)
-+		kasan_disable_current();
-+
-+	__show_trace_log_lvl(task, regs, stack, log_lvl);
-+
-+	if (disable_kasan)
-+		kasan_enable_current();
-+}
-+
- void show_stack(struct task_struct *task, unsigned long *sp,
- 		       const char *loglvl)
- {
+-	if (drm_gem_is_imported(&bo->base.base))
+-		return;
+-
+ 	if (bo->base.sgt) {
+ 		if (bo->base.base.import_attach) {
+ 			dma_buf_unmap_attachment(bo->base.base.import_attach,
 -- 
 2.51.0
 
