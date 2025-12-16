@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2477F313E13;
-	Tue, 16 Dec 2025 11:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A329313E13;
+	Tue, 16 Dec 2025 11:23:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884229; cv=none; b=V7TZ/vBFY+KEl/UDgib6q6vpllc4OameUG7J4yCUU2cVmWm0GN5UrbkRpmd6KKmEKQQiEqrLT+BVRYv1GgUtZGEsojYsMR4SPgpU6ELY8dDBnHrpiWb9DWRY+LP8+wSndiGxC8CW9H8i8x4snnzv6Z8KsEv4qhT9Uqk2TIUJR1o=
+	t=1765884232; cv=none; b=sSfv1SdtYZ8Tm32Qf9zpOUXOOK4GFUBnV97i8pqZwVHEf3mXvxuS9Zwz9cPM6YNd8gykElGT71HzTpyFZj+GcSmXgAR2QEfUDMsBUeqFSzaHX2zseMZUJY8yF8fTuaxEekqAhntrOmp8fBmW6jA6frGS177b3pX4A2WVg6dnRHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884229; c=relaxed/simple;
-	bh=PfZKUK1+UWpZEVoMCf9eOz+SBDoQCFvs/nRbd6KjJW8=;
+	s=arc-20240116; t=1765884232; c=relaxed/simple;
+	bh=Qv4T3bViZyS9lpg6SLQO0hTiSbnL2iwknk4dZ+pJlCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TaEky1OvTpTPXUU0JqzMFLnao0W4ZQZSulcSNovIvv6nlMQ71NSUd6eyBbMQh40+wN4HuPfT90dR0k9cl0wFWc5wVwmM/p8yfRlbdtVDBkjzniD2tm9NWzKHkOvkacTNDo+BZmmVWBmI2m3aEfcR6ix7ZHEHQ65mMRI/QQ5aQ4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Td8YtZNJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EEG53lTJyzoQd8p9TJdVTDrVNkzoDFfaH1OILObd6sS+z/vDRO4eQxkPpdBcy/BNuWdShSqNuWIBLUNTrI/6mfRC5fBiPPxnusKZX/nZIfChbTT2a4mtt7IoOeT0h2M6fr0mqSC/xwIucvBAeubXHXiZhA1+emZ6IOASWxeXONI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0DJOnYbm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Td8YtZNJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EE72C4CEF1;
-	Tue, 16 Dec 2025 11:23:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0DJOnYbm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C995FC4CEF1;
+	Tue, 16 Dec 2025 11:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884229;
-	bh=PfZKUK1+UWpZEVoMCf9eOz+SBDoQCFvs/nRbd6KjJW8=;
+	s=korg; t=1765884232;
+	bh=Qv4T3bViZyS9lpg6SLQO0hTiSbnL2iwknk4dZ+pJlCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Td8YtZNJsV+gQ1RzpjD3RVYCuh2+b+6lvi8o4KPgC8VTsUkbv+8jSyhfyTfYikblv
-	 dD4vmWi+JJrJSvZ0JdAC8ZcuFqYTlNI/mDHyWgMwZnvWMrkXw6wcF/kmlsa/Ukd4wP
-	 P5k8efpZIi8hT3Kv5RLaZnhloaEVPOPjhg2YXYyI=
+	b=0DJOnYbmB8u9wAIIj6S0PrrhtUOsA8sgZltVrF9MAAhELpynDhJCj66q1W2Le8Ruw
+	 FDe/q2CKBFjAMMdNFnTn2Ca3mdu1/t4xnEpRc+Nu8vcZt0YsX8XzIwF1JJAxI8gsaz
+	 5G6A9WiZjKwHsEVoH3Q3oWdHIJpxrCbXiQ/LtUOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yun Zhou <yun.zhou@windriver.com>,
-	Li Nan <linan122@huawei.com>,
-	Yu Kuai <yukuai@fnnas.com>,
+	syzbot+56fbf4c7ddf65e95c7cc@syzkaller.appspotmail.com,
+	Zheng Qixing <zhengqixing@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 129/354] md: fix rcu protection in md_wakeup_thread
-Date: Tue, 16 Dec 2025 12:11:36 +0100
-Message-ID: <20251216111325.596562836@linuxfoundation.org>
+Subject: [PATCH 6.12 130/354] nbd: defer config put in recv_work
+Date: Tue, 16 Dec 2025 12:11:37 +0100
+Message-ID: <20251216111325.632250912@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -52,112 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Zhou <yun.zhou@windriver.com>
+From: Zheng Qixing <zhengqixing@huawei.com>
 
-[ Upstream commit 0dc76205549b4c25705e54345f211b9f66e018a0 ]
+[ Upstream commit 9517b82d8d422d426a988b213fdd45c6b417b86d ]
 
-We attempted to use RCU to protect the pointer 'thread', but directly
-passed the value when calling md_wakeup_thread(). This means that the
-RCU pointer has been acquired before rcu_read_lock(), which renders
-rcu_read_lock() ineffective and could lead to a use-after-free.
+There is one uaf issue in recv_work when running NBD_CLEAR_SOCK and
+NBD_CMD_RECONFIGURE:
+  nbd_genl_connect     // conf_ref=2 (connect and recv_work A)
+  nbd_open	       // conf_ref=3
+  recv_work A done     // conf_ref=2
+  NBD_CLEAR_SOCK       // conf_ref=1
+  nbd_genl_reconfigure // conf_ref=2 (trigger recv_work B)
+  close nbd	       // conf_ref=1
+  recv_work B
+    config_put         // conf_ref=0
+    atomic_dec(&config->recv_threads); -> UAF
 
-Link: https://lore.kernel.org/linux-raid/20251015083227.1079009-1-yun.zhou@windriver.com
-Fixes: 446931543982 ("md: protect md_thread with rcu")
-Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
-Reviewed-by: Li Nan <linan122@huawei.com>
-Reviewed-by: Yu Kuai <yukuai@fnnas.com>
-Signed-off-by: Yu Kuai <yukuai@fnnas.com>
+Or only running NBD_CLEAR_SOCK:
+  nbd_genl_connect   // conf_ref=2
+  nbd_open 	     // conf_ref=3
+  NBD_CLEAR_SOCK     // conf_ref=2
+  close nbd
+    nbd_release
+      config_put     // conf_ref=1
+  recv_work
+    config_put 	     // conf_ref=0
+    atomic_dec(&config->recv_threads); -> UAF
+
+Commit 87aac3a80af5 ("nbd: call nbd_config_put() before notifying the
+waiter") moved nbd_config_put() to run before waking up the waiter in
+recv_work, in order to ensure that nbd_start_device_ioctl() would not
+be woken up while nbd->task_recv was still uncleared.
+
+However, in nbd_start_device_ioctl(), after being woken up it explicitly
+calls flush_workqueue() to make sure all current works are finished.
+Therefore, there is no need to move the config put ahead of the wakeup.
+
+Move nbd_config_put() to the end of recv_work, so that the reference is
+held for the whole lifetime of the worker thread. This makes sure the
+config cannot be freed while recv_work is still running, even if clear
++ reconfigure interleave.
+
+In addition, we don't need to worry about recv_work dropping the last
+nbd_put (which causes deadlock):
+
+path A (netlink with NBD_CFLAG_DESTROY_ON_DISCONNECT):
+  connect  // nbd_refs=1 (trigger recv_work)
+  open nbd // nbd_refs=2
+  NBD_CLEAR_SOCK
+  close nbd
+    nbd_release
+      nbd_disconnect_and_put
+        flush_workqueue // recv_work done
+      nbd_config_put
+        nbd_put // nbd_refs=1
+      nbd_put // nbd_refs=0
+        queue_work
+
+path B (netlink without NBD_CFLAG_DESTROY_ON_DISCONNECT):
+  connect  // nbd_refs=2 (trigger recv_work)
+  open nbd // nbd_refs=3
+  NBD_CLEAR_SOCK // conf_refs=2
+  close nbd
+    nbd_release
+      nbd_config_put // conf_refs=1
+      nbd_put // nbd_refs=2
+  recv_work done // conf_refs=0, nbd_refs=1
+  rmmod // nbd_refs=0
+
+Reported-by: syzbot+56fbf4c7ddf65e95c7cc@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/6907edce.a70a0220.37351b.0014.GAE@google.com/T/
+Fixes: 87aac3a80af5 ("nbd: make the config put is called before the notifying the waiter")
+Depends-on: e2daec488c57 ("nbd: Fix hungtask when nbd_config_put")
+Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 14 ++++++--------
- drivers/md/md.h |  8 +++++++-
- 2 files changed, 13 insertions(+), 9 deletions(-)
+ drivers/block/nbd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index d263076442924..5c39246c467e3 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -106,7 +106,7 @@ static int remove_and_add_spares(struct mddev *mddev,
- 				 struct md_rdev *this);
- static void mddev_detach(struct mddev *mddev);
- static void export_rdev(struct md_rdev *rdev, struct mddev *mddev);
--static void md_wakeup_thread_directly(struct md_thread __rcu *thread);
-+static void md_wakeup_thread_directly(struct md_thread __rcu **thread);
+diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
+index deb298371a6a3..e6b756c475cde 100644
+--- a/drivers/block/nbd.c
++++ b/drivers/block/nbd.c
+@@ -963,9 +963,9 @@ static void recv_work(struct work_struct *work)
+ 	nbd_mark_nsock_dead(nbd, nsock, 1);
+ 	mutex_unlock(&nsock->tx_lock);
  
- /*
-  * Default number of read corrections we'll attempt on an rdev
-@@ -4899,7 +4899,7 @@ static void stop_sync_thread(struct mddev *mddev, bool locked)
- 	 * Thread might be blocked waiting for metadata update which will now
- 	 * never happen
- 	 */
--	md_wakeup_thread_directly(mddev->sync_thread);
-+	md_wakeup_thread_directly(&mddev->sync_thread);
- 	if (work_pending(&mddev->sync_work))
- 		flush_work(&mddev->sync_work);
- 
-@@ -8051,22 +8051,21 @@ static int md_thread(void *arg)
- 	return 0;
+-	nbd_config_put(nbd);
+ 	atomic_dec(&config->recv_threads);
+ 	wake_up(&config->recv_wq);
++	nbd_config_put(nbd);
+ 	kfree(args);
  }
  
--static void md_wakeup_thread_directly(struct md_thread __rcu *thread)
-+static void md_wakeup_thread_directly(struct md_thread __rcu **thread)
- {
- 	struct md_thread *t;
- 
- 	rcu_read_lock();
--	t = rcu_dereference(thread);
-+	t = rcu_dereference(*thread);
- 	if (t)
- 		wake_up_process(t->tsk);
- 	rcu_read_unlock();
- }
- 
--void md_wakeup_thread(struct md_thread __rcu *thread)
-+void __md_wakeup_thread(struct md_thread __rcu *thread)
- {
- 	struct md_thread *t;
- 
--	rcu_read_lock();
- 	t = rcu_dereference(thread);
- 	if (t) {
- 		pr_debug("md: waking up MD thread %s.\n", t->tsk->comm);
-@@ -8074,9 +8073,8 @@ void md_wakeup_thread(struct md_thread __rcu *thread)
- 		if (wq_has_sleeper(&t->wqueue))
- 			wake_up(&t->wqueue);
- 	}
--	rcu_read_unlock();
- }
--EXPORT_SYMBOL(md_wakeup_thread);
-+EXPORT_SYMBOL(__md_wakeup_thread);
- 
- struct md_thread *md_register_thread(void (*run) (struct md_thread *),
- 		struct mddev *mddev, const char *name)
-diff --git a/drivers/md/md.h b/drivers/md/md.h
-index 8826dce9717da..20857b8984625 100644
---- a/drivers/md/md.h
-+++ b/drivers/md/md.h
-@@ -838,6 +838,12 @@ struct md_io_clone {
- 
- #define THREAD_WAKEUP  0
- 
-+#define md_wakeup_thread(thread) do {   \
-+	rcu_read_lock();                    \
-+	__md_wakeup_thread(thread);         \
-+	rcu_read_unlock();                  \
-+} while (0)
-+
- static inline void safe_put_page(struct page *p)
- {
- 	if (p) put_page(p);
-@@ -855,7 +861,7 @@ extern struct md_thread *md_register_thread(
- 	struct mddev *mddev,
- 	const char *name);
- extern void md_unregister_thread(struct mddev *mddev, struct md_thread __rcu **threadp);
--extern void md_wakeup_thread(struct md_thread __rcu *thread);
-+extern void __md_wakeup_thread(struct md_thread __rcu *thread);
- extern void md_check_recovery(struct mddev *mddev);
- extern void md_reap_sync_thread(struct mddev *mddev);
- extern enum sync_action md_sync_action(struct mddev *mddev);
 -- 
 2.51.0
 
