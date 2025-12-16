@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0280335A930;
-	Tue, 16 Dec 2025 12:14:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B464E35BDDE;
+	Tue, 16 Dec 2025 12:14:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887292; cv=none; b=E5ehLZHLIxvEGgeBhZ0/8pnTJv0PbCMhcsH0+oiQGukT1vFGyKFVlNb6xeJx6zZvetavm3jUQP2cnE3VX9+ojh6J0KLtNNLpgknvlL2YDyrl9aUDu+C2LkNCmCG2PmExKv9Wunss56GBr6+XTtEOVUANiIjl36gpS0gK8RQBo3c=
+	t=1765887294; cv=none; b=Li3D29BmHyJad1aiW1dlKhdwnyQajZYwe4XmB2eP8/gCdSApmNcnGYmh584p4tjCUf7OUzQtBwzHML0ejzfr5waCLoyENForFms8S489A62kPjluSCDSaYcBfUoiMUnFfr0EI4v/4iVeUEBQOh7kIMsOm5u9N0MFmF5nSQDEpsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887292; c=relaxed/simple;
-	bh=zli94L4yEkYoyfZMuvGlGB/V2JC0MsXp1bTjgaeZP6k=;
+	s=arc-20240116; t=1765887294; c=relaxed/simple;
+	bh=fFvmQ0SbBVcZ2mzcBDLQheuaAmPfIhadTEu8OYsYJRw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GjEQpNw7oCPo0yUJfb01TMmJMgKJ/kMer1oAQn1nMby1iNTM2hTmFLjTrpbMUkhI3Fc5JoejqFlNYn2xMipd4TrI/4sgdAD7Ph+N9tvAadpDWTJXx157n3n3NQaw3QLu2Ph1CqCTcdXHpfoGptCQVhJHwJ1+EGj04NeCIWiDM34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YEOGCv37; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VSzlC+Qa0j848VmkVp2NBQlE7e/AtBnaerlZ5BWtyec+pmEFm0QxVSgfHuQAiLZ2H6LSLpFWNiWtsRQFQ5cAOcH/3fJbXx2NmaFDQdbGZMCiDbL0vJNIcHjnrYaje+y594P+UM9Z2DpHvGD6bxq4++0sYyJsEdoMdV4TQjqhkRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t/W87t+u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YEOGCv37"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 272EEC4CEF1;
-	Tue, 16 Dec 2025 12:14:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t/W87t+u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 342D5C4CEF1;
+	Tue, 16 Dec 2025 12:14:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887291;
-	bh=zli94L4yEkYoyfZMuvGlGB/V2JC0MsXp1bTjgaeZP6k=;
+	s=korg; t=1765887294;
+	bh=fFvmQ0SbBVcZ2mzcBDLQheuaAmPfIhadTEu8OYsYJRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YEOGCv371bGK58IymvHnXo3dyULMWpQ5zhJL2aZKVMsJvUqukjy400RgSP+tEX4z5
-	 fdG8WOx9lLBCh4nGetvbaAo1Gt3Ql8Z4RkumVfNxmc58WiQqPzEME6gHud+YBfvVVp
-	 E/1a2GLx/tZrsfgHrfydrFBdR7v9XZdZr6BjiQrU=
+	b=t/W87t+uoDKstrMnZjNY160rIbUotNW/cdl5p7xGv82uTGvPG1Z+wM99SkSz+C57Y
+	 oA1fuwPIjDWatDlI11LcMDhlL+9vPQyydndDjlIUeEWPhl+Qh25/yy5et8rGrbQZZ2
+	 /7fVjBNtxxV2E6VOuhTMvwAr96da1aO3w3i2ILr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ahelenia=20Ziemia=C5=84ska?= <nabijaczleweli@nabijaczleweli.xyz>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 186/614] power: supply: apm_power: only unset own apm_get_power_status
-Date: Tue, 16 Dec 2025 12:09:13 +0100
-Message-ID: <20251216111408.112902634@linuxfoundation.org>
+Subject: [PATCH 6.18 169/614] arm64: dts: renesas: sparrow-hawk: Fix full-size DP connector node name and labels
+Date: Tue, 16 Dec 2025 12:08:56 +0100
+Message-ID: <20251216111407.472143440@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,37 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahelenia Ziemiańska <nabijaczleweli@nabijaczleweli.xyz>
+From: Marek Vasut <marek.vasut+renesas@mailbox.org>
 
-[ Upstream commit bd44ea12919ac4e83c9f3997240fe58266aa8799 ]
+[ Upstream commit 9d22a34a016313137b9e534a918f1f9aa790aa69 ]
 
-Mirroring drivers/macintosh/apm_emu.c, this means that
-  modprobe apm_power && modprobe $anotherdriver && modprobe -r apm_power
-leaves $anotherdriver's apm_get_power_status instead of deleting it.
+The DisplayPort connector on Retronix R-Car V4H Sparrow Hawk board
+is a full-size DisplayPort connector. Fix the copy-paste error and
+update the DT node name and labels accordingly. No functional change.
 
-Fixes: 3788ec932bfd ("[BATTERY] APM emulation driver for class batteries")
-Signed-off-by: Ahelenia Ziemiańska <nabijaczleweli@nabijaczleweli.xyz>
-Link: https://patch.msgid.link/xczpgox57hxbunkcbdl5fxhc4gnsajsipldfidi7355afezk64@tarta.nabijaczleweli.xyz
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: a719915e76f2 ("arm64: dts: renesas: r8a779g3: Add Retronix R-Car V4H Sparrow Hawk board support")
+Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20251027184604.34550-1-marek.vasut+renesas@mailbox.org
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/apm_power.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/renesas/r8a779g3-sparrow-hawk.dts | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/power/supply/apm_power.c b/drivers/power/supply/apm_power.c
-index 9236e00785786..9933cdc5c387a 100644
---- a/drivers/power/supply/apm_power.c
-+++ b/drivers/power/supply/apm_power.c
-@@ -364,7 +364,8 @@ static int __init apm_battery_init(void)
+diff --git a/arch/arm64/boot/dts/renesas/r8a779g3-sparrow-hawk.dts b/arch/arm64/boot/dts/renesas/r8a779g3-sparrow-hawk.dts
+index 1da8e476b2193..ff07d984cbf29 100644
+--- a/arch/arm64/boot/dts/renesas/r8a779g3-sparrow-hawk.dts
++++ b/arch/arm64/boot/dts/renesas/r8a779g3-sparrow-hawk.dts
+@@ -119,13 +119,13 @@ memory@600000000 {
+ 	};
  
- static void __exit apm_battery_exit(void)
- {
--	apm_get_power_status = NULL;
-+	if (apm_get_power_status == apm_battery_apm_get_power_status)
-+		apm_get_power_status = NULL;
- }
+ 	/* Page 27 / DSI to Display */
+-	mini-dp-con {
++	dp-con {
+ 		compatible = "dp-connector";
+ 		label = "CN6";
+ 		type = "full-size";
  
- module_init(apm_battery_init);
+ 		port {
+-			mini_dp_con_in: endpoint {
++			dp_con_in: endpoint {
+ 				remote-endpoint = <&sn65dsi86_out>;
+ 			};
+ 		};
+@@ -407,7 +407,7 @@ sn65dsi86_in: endpoint {
+ 					port@1 {
+ 						reg = <1>;
+ 						sn65dsi86_out: endpoint {
+-							remote-endpoint = <&mini_dp_con_in>;
++							remote-endpoint = <&dp_con_in>;
+ 						};
+ 					};
+ 				};
 -- 
 2.51.0
 
