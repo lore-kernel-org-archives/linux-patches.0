@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCC233F378;
-	Tue, 16 Dec 2025 11:20:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 316A533C1BD;
+	Tue, 16 Dec 2025 11:20:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884043; cv=none; b=aTTJco55F1Q9+FvxiLPDxKKxHQb1S6Cqh+ovTFnNUsz8/Jh2W9TCev1ww2YGI7/6/vHRoLGJ8SGc/tRINdqqz+TXCBC0dszexwA3U+xLaZ551j6QOIXPbC/RWH0Qd037OZIJDyL+Oazlp/2vxBy2mmxwNUAqO+Ku2p7o2JXk/jI=
+	t=1765884047; cv=none; b=peuqATWFalobELWKy61TujoGgqImK5IPkukoD+6jpI9vmhzHjqmE+15BKQ4U3mps384pfE4kRtaILI39gHkUKhnNq4G2QyvN2Nxgl6LhMOLWfVLyxhjEz73a4wiAF+gVLUYJQi6cRCtRZN5KJJ2DsKFVDga8F1SxTPxdxYBmkgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884043; c=relaxed/simple;
-	bh=KaUDvvOQPE/y6YRuphB4hRBEwWmSMiL0e1pF8ckZq/w=;
+	s=arc-20240116; t=1765884047; c=relaxed/simple;
+	bh=9Ju0dNszKvtpC9nRR+YjLYuCJxs3+h//Ct1WduCUwUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bLiAcYQ/smKn1JmnDOTRCIqjDmHXw8d3EpP/gqk9m0eGuI9nQWVjM6uD+OUSE9TZQmhva8ciaEl9JbZd78aW+9ntJoSg5KoUDzv38SpCyjz3QUR3hDe4NmReXVod6eddMyAgeNRp2KpNzMfQzwUfLPCBI2zm1u0KfBGk6aI+iLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YYTOkk7K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rmmrhcbOnvIdqPiQTPH589Jou1JbtQiFc92ecEl4EV9k+84+0OEQdFHvXlaEZS4kHasigzO4AdzeyKwt7hHpEff20uEBft6YmhIso63FXTVpJ6y57O1m5a+2Dfx1xivUsFmqtHk3wYLKp6xRSTA+YWxcZviD5Fvlu2Bbh1xsDCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bnREqrHC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YYTOkk7K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FFC4C4CEF1;
-	Tue, 16 Dec 2025 11:20:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bnREqrHC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F38EC4CEF1;
+	Tue, 16 Dec 2025 11:20:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884043;
-	bh=KaUDvvOQPE/y6YRuphB4hRBEwWmSMiL0e1pF8ckZq/w=;
+	s=korg; t=1765884046;
+	bh=9Ju0dNszKvtpC9nRR+YjLYuCJxs3+h//Ct1WduCUwUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YYTOkk7KvyUEOOVE6lgwjh0VHb7SaNjP37nIWC4iOPyDYujayjmnw41iaVsvX2s6R
-	 uqRheAetBabHxld+Ba/snBKn0OHlm1V4JCj3t4PEBjsqvSnlBNTMhQVAtJqgnLqn5Y
-	 4gJWYDVP16YYbNr9yLwcW1LRXm/a8Zzd8DCrJHQc=
+	b=bnREqrHCffuIGANOBqU9QLbnKAJEmExFesYQ0uspk0ndWnFwgRE5mtaoIYx/rLc9E
+	 VSJ6Kare5Q5BjIAF2x3x9eqOpfjpTBWWTdaqFS5y4aHhCil03oLFTue3BgoetZ5BcR
+	 0A8X2pScQnQb1nGK7BqFtF+dC21TSLT/H9pu5zBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Martinz <amartinz@shiftphones.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 076/354] arm64: dts: qcom: qcm6490-shift-otter: Add missing reserved-memory
-Date: Tue, 16 Dec 2025 12:10:43 +0100
-Message-ID: <20251216111323.677571180@linuxfoundation.org>
+Subject: [PATCH 6.12 077/354] phy: mscc: Fix PTP for VSC8574 and VSC8572
+Date: Tue, 16 Dec 2025 12:10:44 +0100
+Message-ID: <20251216111323.714594515@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -54,41 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Martinz <amartinz@shiftphones.com>
+From: Horatiu Vultur <horatiu.vultur@microchip.com>
 
-[ Upstream commit f404fdcb50021fdad6bc734d69468cc777901a80 ]
+[ Upstream commit ea5df88aeca112aac69e6c32e3dd1433a113b0c9 ]
 
-It seems we also need to reserve a region of 81 MiB called "removed_mem"
-otherwise we can easily hit memory errors with higher RAM usage.
+The PTP initialization is two-step. First part are the function
+vsc8584_ptp_probe_once() and vsc8584_ptp_probe() at probe time which
+initialize the locks, queues, creates the PTP device. The second part is
+the function vsc8584_ptp_init() at config_init() time which initialize
+PTP in the HW.
 
-Fixes: 249666e34c24 ("arm64: dts: qcom: add QCM6490 SHIFTphone 8")
-Signed-off-by: Alexander Martinz <amartinz@shiftphones.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251009-otter-further-bringup-v2-3-5bb2f4a02cea@fairphone.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+For VSC8574 and VSC8572, the PTP initialization is incomplete. It is
+missing the first part but it makes the second part. Meaning that the
+ptp_clock_register() is never called.
+
+There is no crash without the first part when enabling PTP but this is
+unexpected because some PHys have PTP functionality exposed by the
+driver and some don't even though they share the same PTP clock PTP.
+
+Fixes: 774626fa440e ("net: phy: mscc: Add PTP support for 2 more VSC PHYs")
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Link: https://patch.msgid.link/20251023191350.190940-3-horatiu.vultur@microchip.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/phy/mscc/mscc_main.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts b/arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts
-index 75930f9576966..ce5cd758e28b4 100644
---- a/arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts
-+++ b/arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts
-@@ -118,6 +118,11 @@ cdsp_mem: cdsp@88f00000 {
- 			no-map;
- 		};
- 
-+		removed_mem: removed@c0000000 {
-+			reg = <0x0 0xc0000000 0x0 0x5100000>;
-+			no-map;
-+		};
-+
- 		rmtfs_mem: rmtfs@f8500000 {
- 			compatible = "qcom,rmtfs-mem";
- 			reg = <0x0 0xf8500000 0x0 0x600000>;
+diff --git a/drivers/net/phy/mscc/mscc_main.c b/drivers/net/phy/mscc/mscc_main.c
+index 19983b206405c..a8e587dd96c5c 100644
+--- a/drivers/net/phy/mscc/mscc_main.c
++++ b/drivers/net/phy/mscc/mscc_main.c
+@@ -2595,7 +2595,7 @@ static struct phy_driver vsc85xx_driver[] = {
+ 	.suspend	= &genphy_suspend,
+ 	.resume		= &genphy_resume,
+ 	.remove		= &vsc85xx_remove,
+-	.probe		= &vsc8574_probe,
++	.probe		= &vsc8584_probe,
+ 	.set_wol	= &vsc85xx_wol_set,
+ 	.get_wol	= &vsc85xx_wol_get,
+ 	.get_tunable	= &vsc85xx_get_tunable,
+@@ -2616,12 +2616,12 @@ static struct phy_driver vsc85xx_driver[] = {
+ 	.config_aneg    = &vsc85xx_config_aneg,
+ 	.aneg_done	= &genphy_aneg_done,
+ 	.read_status	= &vsc85xx_read_status,
+-	.handle_interrupt = vsc85xx_handle_interrupt,
++	.handle_interrupt = vsc8584_handle_interrupt,
+ 	.config_intr    = &vsc85xx_config_intr,
+ 	.suspend	= &genphy_suspend,
+ 	.resume		= &genphy_resume,
+ 	.remove		= &vsc85xx_remove,
+-	.probe		= &vsc8574_probe,
++	.probe		= &vsc8584_probe,
+ 	.set_wol	= &vsc85xx_wol_set,
+ 	.get_wol	= &vsc85xx_wol_get,
+ 	.get_tunable	= &vsc85xx_get_tunable,
 -- 
 2.51.0
 
