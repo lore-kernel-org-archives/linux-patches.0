@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95CDB35FF5D;
-	Tue, 16 Dec 2025 12:16:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F06D366551;
+	Tue, 16 Dec 2025 12:16:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887361; cv=none; b=EN2mHcw5qF4I0a1IKmctaFn/udMvBeBGvYMj/E70KLV8busF7H4r/tO47pDHM7fBXBYtawsPEiYnLoVpfTCkE5Shxz4+qlcAiAlTJNinr5QYGrfzgjWGdushe+ksg2gcbsCXJeyjWX/uY2Wz2NZ4IZdyYxM7yFsGgcm+uPeq0DM=
+	t=1765887365; cv=none; b=eP1dYEsolwgoqsLCNoNwYu+eNL0zDE+RYjztUqVhS14DWO15kvel0bD+EG/oXTf4nmnEEZOJcx5n5YHJbY5XvykiNXfsMQoEIRFJGqNpIFnGY0fleyD/q9lcI0CYvoM4sJDuiRImkCy1WuWUtQX04IsnirPp9ljCECJbFkjRaYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887361; c=relaxed/simple;
-	bh=cWOupyvQP4C/W1HzxsTMRzyqORU0xfkl8b9awPmv3jc=;
+	s=arc-20240116; t=1765887365; c=relaxed/simple;
+	bh=aRnH7rvOaIn0aLEhD8a2qmeGtY2riHAtt4vnDR9QZw0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ki7X+VarSpZmEnLqiJYOLouNiKnLhwK85kVDebm3pYjqhLzVUhhQ+0iEwqwf5rK8LBqpUb5/QZfv+Cd5rIjUa/HLEvR3BvrRaQflmS0AkawzzUjXt5k/NKywpZXsQCmG3ajHZnylGckpSq1TgA7s+KlE92UvcPxB3KLqXPk1eqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R/Jji7Gz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KEgBxflKHUdGciHIWQqjlViA0XHqVyPa4izIvTJ0IxVjH728QGDtWn0G1bvQoiA1IBHAGhFl3jdrds2YgIbzPSMHawnibBnXQZ9LmkT6wg6y3+hpz4JxHcljXZCSHhd656f9TDi1ohmcrlW9rl/dtZ1CFPfEYnK5HvCvI58sc90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zNltOoKJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R/Jji7Gz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2782C4CEF1;
-	Tue, 16 Dec 2025 12:16:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zNltOoKJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78DC1C4CEF1;
+	Tue, 16 Dec 2025 12:16:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887361;
-	bh=cWOupyvQP4C/W1HzxsTMRzyqORU0xfkl8b9awPmv3jc=;
+	s=korg; t=1765887365;
+	bh=aRnH7rvOaIn0aLEhD8a2qmeGtY2riHAtt4vnDR9QZw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R/Jji7GzRy++7rRRKN5179qxTzCIXxTI1EdF6OyrFQSstYiHXFeOnb30gXleDdNL5
-	 EOKUft/EVT55ywraOa12yZJamgKfUSZ1xE3cL3QKz5Jh0CBSOsShkiHRUCmm1DovoR
-	 CUWreNm2bz/80QElzTnkfr/PnBLR3cZMEoIVZZVY=
+	b=zNltOoKJ9BXotuPIbrh+MhiGJx9pjq7UTnOIGdJjJx+7dQgZCw9rkeXjdSDmHDwYp
+	 7xK7CEryYbHF6Qsyqmd5YQ8OhzCVbd4fLEQBCgLej9WIdYd/x8HOo6XyOBFkxgF8Tx
+	 ar0jRoDyPxlCbwFFWAozN6bGMBWU6X94FdsqDKlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Taniya Das <taniya.das@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 173/614] perf record: skip synthesize event when open evsel failed
-Date: Tue, 16 Dec 2025 12:09:00 +0100
-Message-ID: <20251216111407.623905533@linuxfoundation.org>
+Subject: [PATCH 6.18 174/614] clk: qcom: tcsrcc-glymur: Update register offsets for clock refs
+Date: Tue, 16 Dec 2025 12:09:01 +0100
+Message-ID: <20251216111407.664830432@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,69 +53,206 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuai Xue <xueshuai@linux.alibaba.com>
+From: Taniya Das <taniya.das@oss.qualcomm.com>
 
-[ Upstream commit 163e5f2b96632b7fb2eaa965562aca0dbdf9f996 ]
+[ Upstream commit a4aa1ceb89f5c0d27a55671d88699cf5eae7331b ]
 
-When using perf record with the `--overwrite` option, a segmentation fault
-occurs if an event fails to open. For example:
+Update the register offsets for all the clock ref branches to match the
+new address mapping in the TCSR subsystem.
 
-  perf record -e cycles-ct -F 1000 -a --overwrite
-  Error:
-  cycles-ct:H: PMU Hardware doesn't support sampling/overflow-interrupts. Try 'perf stat'
-  perf: Segmentation fault
-      #0 0x6466b6 in dump_stack debug.c:366
-      #1 0x646729 in sighandler_dump_stack debug.c:378
-      #2 0x453fd1 in sigsegv_handler builtin-record.c:722
-      #3 0x7f8454e65090 in __restore_rt libc-2.32.so[54090]
-      #4 0x6c5671 in __perf_event__synthesize_id_index synthetic-events.c:1862
-      #5 0x6c5ac0 in perf_event__synthesize_id_index synthetic-events.c:1943
-      #6 0x458090 in record__synthesize builtin-record.c:2075
-      #7 0x45a85a in __cmd_record builtin-record.c:2888
-      #8 0x45deb6 in cmd_record builtin-record.c:4374
-      #9 0x4e5e33 in run_builtin perf.c:349
-      #10 0x4e60bf in handle_internal_command perf.c:401
-      #11 0x4e6215 in run_argv perf.c:448
-      #12 0x4e653a in main perf.c:555
-      #13 0x7f8454e4fa72 in __libc_start_main libc-2.32.so[3ea72]
-      #14 0x43a3ee in _start ??:0
-
-The --overwrite option implies --tail-synthesize, which collects non-sample
-events reflecting the system status when recording finishes. However, when
-evsel opening fails (e.g., unsupported event 'cycles-ct'), session->evlist
-is not initialized and remains NULL. The code unconditionally calls
-record__synthesize() in the error path, which iterates through the NULL
-evlist pointer and causes a segfault.
-
-To fix it, move the record__synthesize() call inside the error check block, so
-it's only called when there was no error during recording, ensuring that evlist
-is properly initialized.
-
-Fixes: 4ea648aec019 ("perf record: Add --tail-synthesize option")
-Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 2c1d6ce4f3da ("clk: qcom: Add TCSR clock driver for Glymur SoC")
+Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Tested-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20251031-tcsrcc_glymur-v1-1-0efb031f0ac5@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-record.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/qcom/tcsrcc-glymur.c | 54 ++++++++++++++++----------------
+ 1 file changed, 27 insertions(+), 27 deletions(-)
 
-diff --git a/tools/perf/builtin-record.c b/tools/perf/builtin-record.c
-index d76f01956e33b..b1fb87016d5aa 100644
---- a/tools/perf/builtin-record.c
-+++ b/tools/perf/builtin-record.c
-@@ -2883,11 +2883,11 @@ static int __cmd_record(struct record *rec, int argc, const char **argv)
- 		rec->bytes_written += off_cpu_write(rec->session);
+diff --git a/drivers/clk/qcom/tcsrcc-glymur.c b/drivers/clk/qcom/tcsrcc-glymur.c
+index c1f8b6d10b7fd..215bc2ac548da 100644
+--- a/drivers/clk/qcom/tcsrcc-glymur.c
++++ b/drivers/clk/qcom/tcsrcc-glymur.c
+@@ -28,10 +28,10 @@ enum {
+ };
  
- 	record__read_lost_samples(rec);
--	record__synthesize(rec, true);
- 	/* this will be recalculated during process_buildids() */
- 	rec->samples = 0;
+ static struct clk_branch tcsr_edp_clkref_en = {
+-	.halt_reg = 0x1c,
++	.halt_reg = 0x60,
+ 	.halt_check = BRANCH_HALT_DELAY,
+ 	.clkr = {
+-		.enable_reg = 0x1c,
++		.enable_reg = 0x60,
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(const struct clk_init_data) {
+ 			.name = "tcsr_edp_clkref_en",
+@@ -45,10 +45,10 @@ static struct clk_branch tcsr_edp_clkref_en = {
+ };
  
- 	if (!err) {
-+		record__synthesize(rec, true);
- 		if (!rec->timestamp_filename) {
- 			record__finish_output(rec);
- 		} else {
+ static struct clk_branch tcsr_pcie_1_clkref_en = {
+-	.halt_reg = 0x4,
++	.halt_reg = 0x48,
+ 	.halt_check = BRANCH_HALT_DELAY,
+ 	.clkr = {
+-		.enable_reg = 0x4,
++		.enable_reg = 0x48,
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(const struct clk_init_data) {
+ 			.name = "tcsr_pcie_1_clkref_en",
+@@ -62,10 +62,10 @@ static struct clk_branch tcsr_pcie_1_clkref_en = {
+ };
+ 
+ static struct clk_branch tcsr_pcie_2_clkref_en = {
+-	.halt_reg = 0x8,
++	.halt_reg = 0x4c,
+ 	.halt_check = BRANCH_HALT_DELAY,
+ 	.clkr = {
+-		.enable_reg = 0x8,
++		.enable_reg = 0x4c,
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(const struct clk_init_data) {
+ 			.name = "tcsr_pcie_2_clkref_en",
+@@ -79,10 +79,10 @@ static struct clk_branch tcsr_pcie_2_clkref_en = {
+ };
+ 
+ static struct clk_branch tcsr_pcie_3_clkref_en = {
+-	.halt_reg = 0x10,
++	.halt_reg = 0x54,
+ 	.halt_check = BRANCH_HALT_DELAY,
+ 	.clkr = {
+-		.enable_reg = 0x10,
++		.enable_reg = 0x54,
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(const struct clk_init_data) {
+ 			.name = "tcsr_pcie_3_clkref_en",
+@@ -96,10 +96,10 @@ static struct clk_branch tcsr_pcie_3_clkref_en = {
+ };
+ 
+ static struct clk_branch tcsr_pcie_4_clkref_en = {
+-	.halt_reg = 0x14,
++	.halt_reg = 0x58,
+ 	.halt_check = BRANCH_HALT_DELAY,
+ 	.clkr = {
+-		.enable_reg = 0x14,
++		.enable_reg = 0x58,
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(const struct clk_init_data) {
+ 			.name = "tcsr_pcie_4_clkref_en",
+@@ -113,10 +113,10 @@ static struct clk_branch tcsr_pcie_4_clkref_en = {
+ };
+ 
+ static struct clk_branch tcsr_usb2_1_clkref_en = {
+-	.halt_reg = 0x28,
++	.halt_reg = 0x6c,
+ 	.halt_check = BRANCH_HALT_DELAY,
+ 	.clkr = {
+-		.enable_reg = 0x28,
++		.enable_reg = 0x6c,
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(const struct clk_init_data) {
+ 			.name = "tcsr_usb2_1_clkref_en",
+@@ -130,10 +130,10 @@ static struct clk_branch tcsr_usb2_1_clkref_en = {
+ };
+ 
+ static struct clk_branch tcsr_usb2_2_clkref_en = {
+-	.halt_reg = 0x2c,
++	.halt_reg = 0x70,
+ 	.halt_check = BRANCH_HALT_DELAY,
+ 	.clkr = {
+-		.enable_reg = 0x2c,
++		.enable_reg = 0x70,
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(const struct clk_init_data) {
+ 			.name = "tcsr_usb2_2_clkref_en",
+@@ -147,10 +147,10 @@ static struct clk_branch tcsr_usb2_2_clkref_en = {
+ };
+ 
+ static struct clk_branch tcsr_usb2_3_clkref_en = {
+-	.halt_reg = 0x30,
++	.halt_reg = 0x74,
+ 	.halt_check = BRANCH_HALT_DELAY,
+ 	.clkr = {
+-		.enable_reg = 0x30,
++		.enable_reg = 0x74,
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(const struct clk_init_data) {
+ 			.name = "tcsr_usb2_3_clkref_en",
+@@ -164,10 +164,10 @@ static struct clk_branch tcsr_usb2_3_clkref_en = {
+ };
+ 
+ static struct clk_branch tcsr_usb2_4_clkref_en = {
+-	.halt_reg = 0x44,
++	.halt_reg = 0x88,
+ 	.halt_check = BRANCH_HALT_DELAY,
+ 	.clkr = {
+-		.enable_reg = 0x44,
++		.enable_reg = 0x88,
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(const struct clk_init_data) {
+ 			.name = "tcsr_usb2_4_clkref_en",
+@@ -181,10 +181,10 @@ static struct clk_branch tcsr_usb2_4_clkref_en = {
+ };
+ 
+ static struct clk_branch tcsr_usb3_0_clkref_en = {
+-	.halt_reg = 0x20,
++	.halt_reg = 0x64,
+ 	.halt_check = BRANCH_HALT_DELAY,
+ 	.clkr = {
+-		.enable_reg = 0x20,
++		.enable_reg = 0x64,
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(const struct clk_init_data) {
+ 			.name = "tcsr_usb3_0_clkref_en",
+@@ -198,10 +198,10 @@ static struct clk_branch tcsr_usb3_0_clkref_en = {
+ };
+ 
+ static struct clk_branch tcsr_usb3_1_clkref_en = {
+-	.halt_reg = 0x24,
++	.halt_reg = 0x68,
+ 	.halt_check = BRANCH_HALT_DELAY,
+ 	.clkr = {
+-		.enable_reg = 0x24,
++		.enable_reg = 0x68,
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(const struct clk_init_data) {
+ 			.name = "tcsr_usb3_1_clkref_en",
+@@ -215,10 +215,10 @@ static struct clk_branch tcsr_usb3_1_clkref_en = {
+ };
+ 
+ static struct clk_branch tcsr_usb4_1_clkref_en = {
+-	.halt_reg = 0x0,
++	.halt_reg = 0x44,
+ 	.halt_check = BRANCH_HALT_DELAY,
+ 	.clkr = {
+-		.enable_reg = 0x0,
++		.enable_reg = 0x44,
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(const struct clk_init_data) {
+ 			.name = "tcsr_usb4_1_clkref_en",
+@@ -232,10 +232,10 @@ static struct clk_branch tcsr_usb4_1_clkref_en = {
+ };
+ 
+ static struct clk_branch tcsr_usb4_2_clkref_en = {
+-	.halt_reg = 0x18,
++	.halt_reg = 0x5c,
+ 	.halt_check = BRANCH_HALT_DELAY,
+ 	.clkr = {
+-		.enable_reg = 0x18,
++		.enable_reg = 0x5c,
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(const struct clk_init_data) {
+ 			.name = "tcsr_usb4_2_clkref_en",
+@@ -268,7 +268,7 @@ static const struct regmap_config tcsr_cc_glymur_regmap_config = {
+ 	.reg_bits = 32,
+ 	.reg_stride = 4,
+ 	.val_bits = 32,
+-	.max_register = 0x44,
++	.max_register = 0x94,
+ 	.fast_io = true,
+ };
+ 
 -- 
 2.51.0
 
