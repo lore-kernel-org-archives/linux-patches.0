@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E22393DF3;
-	Tue, 16 Dec 2025 12:30:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C187E3A1CEB;
+	Tue, 16 Dec 2025 12:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888227; cv=none; b=O7KpLjURI6CFUJwhcuKDc08gneW+WjmrdktPpN3ha4hWcmo2D6dy8yhzP7yi6vJEKi/TJCRDbK1O6BEHQtWHlEgKeh4u6xPNPAfJ91cVlBUnptaewNmGPaonEK3E1Ctv3P3Kv6LP+EsulgSoRGUsVWm2K81eq+qoJ2Nn6lUXBJo=
+	t=1765888230; cv=none; b=UMRpIe+6B/M7m4uSMUQHrszFN06Buv/wAVFGr74MUJMIAi6DX1b6jFh2koyiIgG6PSKNgQgZzQI0ET1iHEGNms6XRmmrW3r0gOqj2mcDA94bBO8KA5lGu1/In/rP3PxXp3mn+PebFJoS1K5PNLhNHwtV2QJGUdyuow94i+6ACKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888227; c=relaxed/simple;
-	bh=uPZGInyT0uZW64pRZxRTW1COsiV9BaF4QjXSEj54JY8=;
+	s=arc-20240116; t=1765888230; c=relaxed/simple;
+	bh=z+FNo4uyXUhapNLpJ9mgHn0Gfvs2plE3jZSmcqdsGqg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZZpqf7UMMRPGnm5+kQQhbj2A2rcCYmB462W8uoulxSfZKnJz8xTl+qMHYji6pUXtyLWOzWA0x3EZTqMxv4Hw3mHnkIslmmQKogaoUnNZw3ZFuc77afpPSXrO4P5ucGeJDmdhc+KngpcK3Ou4uWBYIkz0TO1sut+rV7jklhqT0Og=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pijJswye; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kEuELCpfcdH4jNdkg33VwS7nGXKnO+s/1a0UNeaprz2rY5cK1wsQevbPcZ+iYiYRGZEMYRaBzLGPPNDfk46bnHHmouRIssSBQnBcDcqe/IodzqBb7QqUiVX1zX8m3uOlDyqxsRQEIsTOZJta/Vu6Ca6NW9YOu3LSuNMK6W/6aPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i/y372ca; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pijJswye"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 674A8C4CEF1;
-	Tue, 16 Dec 2025 12:30:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i/y372ca"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30074C4CEF1;
+	Tue, 16 Dec 2025 12:30:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888226;
-	bh=uPZGInyT0uZW64pRZxRTW1COsiV9BaF4QjXSEj54JY8=;
+	s=korg; t=1765888230;
+	bh=z+FNo4uyXUhapNLpJ9mgHn0Gfvs2plE3jZSmcqdsGqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pijJswyeZI1jsdVzhiJAySBtLeihbXt4LNd5uS0pV3fSTnZTnx/5wA0zvHpCzJUOf
-	 xePRihej7YySRpv+sbMrSrkabGTYfQ5XISXThvjr4Z5L1wJQUfjrBSm71Zd7+lpngs
-	 OWNK+hEN0hgy21SC0I72EL7fvkQpDQlPcju6jBxI=
+	b=i/y372ca9fP4pHjDrv0rUKpzUwYp0pb8rQP2nEDer7lbD8CCCP57mOJs67A73LFaI
+	 1x7FMDX+OCMpCBy6p7FBI8W7jR/q1/aVWSINWs+fRYUVjuxQNo9AjaU7/luWPA7iaZ
+	 cZpl0d+AxD1o9gF6HYTkBx8CAvAJypvJZGBXcRSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+cf08c551fecea9fd1320@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 471/614] ASoC: Intel: catpt: Fix error path in hw_params()
-Date: Tue, 16 Dec 2025 12:13:58 +0100
-Message-ID: <20251216111418.435516278@linuxfoundation.org>
+Subject: [PATCH 6.18 454/614] bpf: Fix exclusive map memory leak
+Date: Tue, 16 Dec 2025 12:13:41 +0100
+Message-ID: <20251216111417.817672028@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,39 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 86a5b621be658fc8fe594ca6db317d64de30cce1 ]
+[ Upstream commit 688b745401ab16e2e1a3b504863f0a45fd345638 ]
 
-Do not leave any resources hanging on the DSP side if
-applying user settings fails.
+When excl_prog_hash is 0 and excl_prog_hash_size is non-zero, the map also
+needs to be freed. Otherwise, the map memory will not be reclaimed, just
+like the memory leak problem reported by syzbot [1].
 
-Fixes: 768a3a3b327d ("ASoC: Intel: catpt: Optimize applying user settings")
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20251126095523.3925364-4-cezary.rojewski@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+syzbot reported:
+BUG: memory leak
+  backtrace (crc 7b9fb9b4):
+    map_create+0x322/0x11e0 kernel/bpf/syscall.c:1512
+    __sys_bpf+0x3556/0x3610 kernel/bpf/syscall.c:6131
+
+Fixes: baefdbdf6812 ("bpf: Implement exclusive map creation")
+Reported-by: syzbot+cf08c551fecea9fd1320@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=cf08c551fecea9fd1320
+Tested-by: syzbot+cf08c551fecea9fd1320@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/r/tencent_3F226F882CE56DCC94ACE90EED1ECCFC780A@qq.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/catpt/pcm.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/bpf/syscall.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/intel/catpt/pcm.c b/sound/soc/intel/catpt/pcm.c
-index bf734c69c4e09..eb03cecdee281 100644
---- a/sound/soc/intel/catpt/pcm.c
-+++ b/sound/soc/intel/catpt/pcm.c
-@@ -417,8 +417,10 @@ static int catpt_dai_hw_params(struct snd_pcm_substream *substream,
- 		return CATPT_IPC_ERROR(ret);
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index 15f9afdbfc275..df219e7259099 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -1585,7 +1585,8 @@ static int map_create(union bpf_attr *attr, bpfptr_t uattr)
+ 			goto free_map;
+ 		}
+ 	} else if (attr->excl_prog_hash_size) {
+-		return -EINVAL;
++		err = -EINVAL;
++		goto free_map;
+ 	}
  
- 	ret = catpt_dai_apply_usettings(dai, stream);
--	if (ret)
-+	if (ret) {
-+		catpt_ipc_free_stream(cdev, stream->info.stream_hw_id);
- 		return ret;
-+	}
- 
- 	stream->allocated = true;
- 	return 0;
+ 	err = security_bpf_map_create(map, attr, token, uattr.is_kernel);
 -- 
 2.51.0
 
