@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F05E3644A0;
-	Tue, 16 Dec 2025 12:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 518A33624D3;
+	Tue, 16 Dec 2025 12:25:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887919; cv=none; b=czXk968O+tGZtmhX5QozIMITrOvsyd9laWkL233xmZxAyoxHVDhhb6+xmM2LEpgw5wQig9JDK2VIN9N+lfdbqVv6I1U3o3f2ygOCIutiQzwEKxrIPdNMG8m/+imm8PDv/BCuqQFm8kEediIT4UjqEcWArZ2uw4xyRAKDihFpKiw=
+	t=1765887923; cv=none; b=PLBiOZv7J3vdL1wQlfc5/4IZrkiX1n+M4OG3B22c2p+yBdDiXwRQ/FQ3RIYMHenMyITYw9/+zwjajUALYOPU7zrI+03GUyL4d47LUnFHsEP3kbCiXsCC0c0zcb+dcD/GT9lPAGOhIVHvmIdecUZbMS62l5gOtcQk/EExW3ah72s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887919; c=relaxed/simple;
-	bh=6ZUqyGtz+gXyB9sOdyKdeV/2iBCqcXPPW81reBIPswg=;
+	s=arc-20240116; t=1765887923; c=relaxed/simple;
+	bh=oli2fywteawu3ipDPp6Xy6i4lJu01882ppaMd2LkEkg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bIwJtAMavtjEy3WS83lBrnKPJN30AuQjAfl6j059oQZ+ITyDiCtY66QCyZIxjc6qg9bNGJccOpIawje5qqsqa0lSO3BzffLx5mhOUlYUWrVuUDHZhE29RERJ0fhk6NjblUNM5rnMiM4CO+N1XPwdNfOj9cSzOz4uh+cw8qBZ+xs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A0CYyNqk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PZAf+hSnN4qJh1I43ihEjD7+JXP49UTjCVeC3acGsY6YMK4SgAb9Q2aaS7k55VUAoRwW8APwBRlD2AGbX3VKjcoTl14AfmBEKJoPlW4U/7N29/WE4pvaMLvKIHVrONhdmI6jvvV1UHaZaALFWUtLnhbPO2k5FK7WbXmb8yxwJAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vt3GDhx/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A0CYyNqk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26786C4CEF1;
-	Tue, 16 Dec 2025 12:25:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vt3GDhx/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56BF9C4CEF1;
+	Tue, 16 Dec 2025 12:25:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887918;
-	bh=6ZUqyGtz+gXyB9sOdyKdeV/2iBCqcXPPW81reBIPswg=;
+	s=korg; t=1765887921;
+	bh=oli2fywteawu3ipDPp6Xy6i4lJu01882ppaMd2LkEkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A0CYyNqkVvrJQvJu79r4F2x9FKGp1hEa5q/FHB6h4pwUiWkEKoaxO+PiUzi8bMG0B
-	 ONdT+Nw1yXJ5mmeLoiExt3HNv4L72bFrRqGE7ppHaraAuvitiCbigpfqx5eDbn6sDv
-	 go5/1jCGspJYsqjwi/Ttl1IUbmpU5c2w+lw/TEOo=
+	b=vt3GDhx/MTqisDAw4m6dKC+7GvtZxmNOZ0vneHX6ytS4+lOzmksHunWjfbWJxlG/Q
+	 Zu8TTMuxfsH5omGiECIEZO0IeB7o1aofKsm6cC6A6GKiqJsFXljMIH+mB+Da8887D+
+	 hYiKuQGXwI6tTzmrSFXUZp+p/H1FDTx+i6oZRg/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sheng Yong <shengyong1@xiaomi.com>,
-	Chao Yu <chao@kernel.org>,
-	Hongbo Li <lihongbo22@huawei.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Kashyap Desai <kashyap.desai@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 376/614] erofs: limit the level of fs stacking for file-backed mounts
-Date: Tue, 16 Dec 2025 12:12:23 +0100
-Message-ID: <20251216111414.984248500@linuxfoundation.org>
+Subject: [PATCH 6.18 377/614] RDMA/bnxt_re: Fix the inline size for GenP7 devices
+Date: Tue, 16 Dec 2025 12:12:24 +0100
+Message-ID: <20251216111415.021299127@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -53,50 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Selvin Xavier <selvin.xavier@broadcom.com>
 
-[ Upstream commit d53cd891f0e4311889349fff3a784dc552f814b9 ]
+[ Upstream commit 6afe40ff484a1155b71158b911c65299496e35c3 ]
 
-Otherwise, it could cause potential kernel stack overflow (e.g., EROFS
-mounting itself).
+Inline size supported by the device is based on the number
+of SGEs supported by the adapter. Change the inline
+size calculation based on that.
 
-Reviewed-by: Sheng Yong <shengyong1@xiaomi.com>
-Fixes: fb176750266a ("erofs: add file-backed mount support")
-Reviewed-by: Chao Yu <chao@kernel.org>
-Reviewed-by: Hongbo Li <lihongbo22@huawei.com>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Fixes: de1d364c3815 ("RDMA/bnxt_re: Add support for Variable WQE in Genp7 adapters")
+Reviewed-by: Kashyap Desai <kashyap.desai@broadcom.com>
+Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Link: https://patch.msgid.link/1763624215-10382-1-git-send-email-selvin.xavier@broadcom.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/super.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/infiniband/hw/bnxt_re/qplib_sp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/erofs/super.c b/fs/erofs/super.c
-index cd8ff98c29384..937a215f626c1 100644
---- a/fs/erofs/super.c
-+++ b/fs/erofs/super.c
-@@ -639,6 +639,22 @@ static int erofs_fc_fill_super(struct super_block *sb, struct fs_context *fc)
- 
- 	sbi->blkszbits = PAGE_SHIFT;
- 	if (!sb->s_bdev) {
-+		/*
-+		 * (File-backed mounts) EROFS claims it's safe to nest other
-+		 * fs contexts (including its own) due to self-controlled RO
-+		 * accesses/contexts and no side-effect changes that need to
-+		 * context save & restore so it can reuse the current thread
-+		 * context.  However, it still needs to bump `s_stack_depth` to
-+		 * avoid kernel stack overflow from nested filesystems.
-+		 */
-+		if (erofs_is_fileio_mode(sbi)) {
-+			sb->s_stack_depth =
-+				file_inode(sbi->dif0.file)->i_sb->s_stack_depth + 1;
-+			if (sb->s_stack_depth > FILESYSTEM_MAX_STACK_DEPTH) {
-+				erofs_err(sb, "maximum fs stacking depth exceeded");
-+				return -ENOTBLK;
-+			}
-+		}
- 		sb->s_blocksize = PAGE_SIZE;
- 		sb->s_blocksize_bits = PAGE_SHIFT;
- 
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_sp.c b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
+index 9ef581ed785c8..a9afac2cbb7cf 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_sp.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
+@@ -162,7 +162,7 @@ int bnxt_qplib_get_dev_attr(struct bnxt_qplib_rcfw *rcfw)
+ 	attr->max_srq_wqes = le32_to_cpu(sb->max_srq_wr) - 1;
+ 	attr->max_srq_sges = sb->max_srq_sge;
+ 	attr->max_pkey = 1;
+-	attr->max_inline_data = le32_to_cpu(sb->max_inline_data);
++	attr->max_inline_data = attr->max_qp_sges * sizeof(struct sq_sge);
+ 	if (!bnxt_qplib_is_chip_gen_p7(rcfw->res->cctx))
+ 		attr->l2_db_size = (sb->l2_db_space_size + 1) *
+ 				    (0x01 << RCFW_DBR_BASE_PAGE_SHIFT);
 -- 
 2.51.0
 
