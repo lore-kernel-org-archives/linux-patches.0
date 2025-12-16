@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA2E355026;
-	Tue, 16 Dec 2025 11:51:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A751355027;
+	Tue, 16 Dec 2025 11:51:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885905; cv=none; b=X9SjhC3xL3akDDo8MNFR/2jJZm7NPAhTFrgbfmd8tctUU9XY99N2JQfhjKHgygvaOr4AZEPx/GSxuv1HQu0NVvItsg92yY5SLJ7fBtlRZP1c0dqKY/fnaz+1+cWDYesDn97eLNzM6jYrCbaRhRRcyY4gqKacbDXjtagdOaZeh88=
+	t=1765885909; cv=none; b=Kg8I3Yn2BZVCWcuvxnQQ+IgQMwjKPVjNEE2F4NS94QRBC8I3NkMYT0yTEnd+TYuZbnoZ9o4wfZVFkU6wDVgi4joR0fuRCIS6+Df17ZeTziu02gr+ScDi772i0JzG8EEa2Uj9hbhH0pM5OpIs6vTPv3RnZpK4+ru923G8CsaT7u0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885905; c=relaxed/simple;
-	bh=FCCWh2MQPIE4it4UTGdBhIGkIRC0tk1ItktYFFWLpIE=;
+	s=arc-20240116; t=1765885909; c=relaxed/simple;
+	bh=aMPy9QL5qw+3NxCzIk/fnZT71P7CsDNqllVhb4g5rMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XtuOqm77MIfrhL6HyVJHu7ZwV/J1WPrSsnvNCsLkWcMU0TSAIqRZigoLlEVfSBvGi9x70fvpgLYaLAdzJqs0Z+60YEX3jDGEtWZGrl4K5OBydc7INFjmjAHjTCO2xnFkzcd+nOXqggYcHURXL3GjdHrfVP3Alpc0W7SKxqXbYy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=utJd542I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pdj7vEURAD8yeMot+HtLIvkC/F72LsBkc3WfAttLM2d697Jj2/J8G+rtApD9it/oYU4ca8v8zK+tkVPnyWAJ6jbsA5J3TxQZ2/EupVPlfTmEysDJs+/W1X0KkI6DK9Crk4lnEsweslvAQVBa8WCG0uA9AXYU+1aBApJ4kOvKvdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=frjZ5XIN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="utJd542I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D15A3C4CEF1;
-	Tue, 16 Dec 2025 11:51:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="frjZ5XIN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CABAC4CEF1;
+	Tue, 16 Dec 2025 11:51:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885905;
-	bh=FCCWh2MQPIE4it4UTGdBhIGkIRC0tk1ItktYFFWLpIE=;
+	s=korg; t=1765885908;
+	bh=aMPy9QL5qw+3NxCzIk/fnZT71P7CsDNqllVhb4g5rMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=utJd542IU36UNP9G7mo3g7A2wCqpMtNLz8pWHPp49zgoHt8qqSFWMZ/2FqTXK11zW
-	 6vdocn5OAz3VaHGoNDorydPj0g6cfIb593Cn9XspA0MO+sP4Ahu7vigNg11w++HbRe
-	 wm1Fh5iEAGOeCkg5UWaKsPo6c56+zRYnDA463S0Y=
+	b=frjZ5XINlHKsyipIlb9N+2tod6zJF8iOLVnTBvlbohhCmNYIE4gv7/DybqYvjvmGc
+	 9Ct+m1QcVX1SOUbibS9uhWrSd3+YDWdA8v0/xVsRWTwEb7nm614oKjaRb1dP+eQaLa
+	 8n4wHX2+WFncy+5f8FVjB9NmquA2C8I0vmUQHVGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nuno Das Neves <nunodasneves@linux.microsoft.com>,
+	Roman Kisel <romank@linux.microsoft.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
 	Michael Kelley <mhklinux@outlook.com>,
 	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 246/507] mshv: Fix deposit memory in MSHV_ROOT_HVCALL
-Date: Tue, 16 Dec 2025 12:11:27 +0100
-Message-ID: <20251216111354.408070503@linuxfoundation.org>
+Subject: [PATCH 6.17 247/507] Drivers: hv: VMBus protocol version 6.0
+Date: Tue, 16 Dec 2025 12:11:28 +0100
+Message-ID: <20251216111354.443732020@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,169 +53,191 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nuno Das Neves <nunodasneves@linux.microsoft.com>
+From: Roman Kisel <romank@linux.microsoft.com>
 
-[ Upstream commit 4cc1aa469cd6b714adc958547a4866247bfd60a9 ]
+[ Upstream commit 6802d8af47d1dccd9a74a1f708fb9129244ef843 ]
 
-When the MSHV_ROOT_HVCALL ioctl is executing a hypercall, and gets
-HV_STATUS_INSUFFICIENT_MEMORY, it deposits memory and then returns
--EAGAIN to userspace. The expectation is that the VMM will retry.
+The confidential VMBus is supported starting from the protocol
+version 6.0 onwards.
 
-However, some VMM code in the wild doesn't do this and simply fails.
-Rather than force the VMM to retry, change the ioctl to deposit
-memory on demand and immediately retry the hypercall as is done with
-all the other hypercall helper functions.
+Provide the required definitions. No functional changes.
 
-In addition to making the ioctl easier to use, removing the need for
-multiple syscalls improves performance.
-
-There is a complication: unlike the other hypercall helper functions,
-in MSHV_ROOT_HVCALL the input is opaque to the kernel. This is
-problematic for rep hypercalls, because the next part of the input
-list can't be copied on each loop after depositing pages (this was
-the original reason for returning -EAGAIN in this case).
-
-Introduce hv_do_rep_hypercall_ex(), which adds a 'rep_start'
-parameter. This solves the issue, allowing the deposit loop in
-MSHV_ROOT_HVCALL to restart a rep hypercall after depositing pages
-partway through.
-
-Fixes: 621191d709b1 ("Drivers: hv: Introduce mshv_root module to expose /dev/mshv to VMMs")
-Signed-off-by: Nuno Das Neves <nunodasneves@linux.microsoft.com>
+Signed-off-by: Roman Kisel <romank@linux.microsoft.com>
+Reviewed-by: Alok Tiwari <alok.a.tiwari@oracle.com>
 Reviewed-by: Michael Kelley <mhklinux@outlook.com>
 Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Stable-dep-of: 510164539f16 ("Drivers: hv: Free msginfo when the buffer fails to decrypt")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/mshv_root_main.c    | 58 ++++++++++++++++++----------------
- include/asm-generic/mshyperv.h | 17 ++++++++--
- 2 files changed, 44 insertions(+), 31 deletions(-)
+ drivers/hv/hyperv_vmbus.h   |  2 ++
+ drivers/hv/vmbus_drv.c      | 12 +++++++
+ include/hyperv/hvgdk_mini.h |  1 +
+ include/linux/hyperv.h      | 69 +++++++++++++++++++++++++++----------
+ 4 files changed, 65 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/hv/mshv_root_main.c b/drivers/hv/mshv_root_main.c
-index cad09ff5f94dc..618cac041441a 100644
---- a/drivers/hv/mshv_root_main.c
-+++ b/drivers/hv/mshv_root_main.c
-@@ -164,6 +164,7 @@ static int mshv_ioctl_passthru_hvcall(struct mshv_partition *partition,
- 	unsigned int pages_order;
- 	void *input_pg = NULL;
- 	void *output_pg = NULL;
-+	u16 reps_completed;
+diff --git a/drivers/hv/hyperv_vmbus.h b/drivers/hv/hyperv_vmbus.h
+index 0b450e53161e5..4a01797d48513 100644
+--- a/drivers/hv/hyperv_vmbus.h
++++ b/drivers/hv/hyperv_vmbus.h
+@@ -333,6 +333,8 @@ extern const struct vmbus_channel_message_table_entry
  
- 	if (copy_from_user(&args, user_args, sizeof(args)))
- 		return -EFAULT;
-@@ -215,41 +216,42 @@ static int mshv_ioctl_passthru_hvcall(struct mshv_partition *partition,
- 	 */
- 	*(u64 *)input_pg = partition->pt_id;
+ /* General vmbus interface */
  
--	if (args.reps)
--		status = hv_do_rep_hypercall(args.code, args.reps, 0,
--					     input_pg, output_pg);
--	else
--		status = hv_do_hypercall(args.code, input_pg, output_pg);
--
--	if (hv_result(status) == HV_STATUS_CALL_PENDING) {
--		if (is_async) {
--			mshv_async_hvcall_handler(partition, &status);
--		} else { /* Paranoia check. This shouldn't happen! */
--			ret = -EBADFD;
--			goto free_pages_out;
-+	reps_completed = 0;
-+	do {
-+		if (args.reps) {
-+			status = hv_do_rep_hypercall_ex(args.code, args.reps,
-+							0, reps_completed,
-+							input_pg, output_pg);
-+			reps_completed = hv_repcomp(status);
-+		} else {
-+			status = hv_do_hypercall(args.code, input_pg, output_pg);
- 		}
--	}
- 
--	if (hv_result(status) == HV_STATUS_INSUFFICIENT_MEMORY) {
--		ret = hv_call_deposit_pages(NUMA_NO_NODE, partition->pt_id, 1);
--		if (!ret)
--			ret = -EAGAIN;
--	} else if (!hv_result_success(status)) {
--		ret = hv_result_to_errno(status);
--	}
-+		if (hv_result(status) == HV_STATUS_CALL_PENDING) {
-+			if (is_async) {
-+				mshv_async_hvcall_handler(partition, &status);
-+			} else { /* Paranoia check. This shouldn't happen! */
-+				ret = -EBADFD;
-+				goto free_pages_out;
-+			}
-+		}
++bool vmbus_is_confidential(void);
 +
-+		if (hv_result_success(status))
-+			break;
+ struct hv_device *vmbus_device_create(const guid_t *type,
+ 				      const guid_t *instance,
+ 				      struct vmbus_channel *channel);
+diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
+index 2ed5a1e89d694..c2f913b9aad58 100644
+--- a/drivers/hv/vmbus_drv.c
++++ b/drivers/hv/vmbus_drv.c
+@@ -56,6 +56,18 @@ static long __percpu *vmbus_evt;
+ int vmbus_irq;
+ int vmbus_interrupt;
+ 
++/*
++ * If the Confidential VMBus is used, the data on the "wire" is not
++ * visible to either the host or the hypervisor.
++ */
++static bool is_confidential;
 +
-+		if (hv_result(status) != HV_STATUS_INSUFFICIENT_MEMORY)
-+			ret = hv_result_to_errno(status);
-+		else
-+			ret = hv_call_deposit_pages(NUMA_NO_NODE,
-+						    partition->pt_id, 1);
-+	} while (!ret);
- 
--	/*
--	 * Always return the status and output data regardless of result.
--	 * The VMM may need it to determine how to proceed. E.g. the status may
--	 * contain the number of reps completed if a rep hypercall partially
--	 * succeeded.
--	 */
- 	args.status = hv_result(status);
--	args.reps = args.reps ? hv_repcomp(status) : 0;
-+	args.reps = reps_completed;
- 	if (copy_to_user(user_args, &args, sizeof(args)))
- 		ret = -EFAULT;
- 
--	if (output_pg &&
-+	if (!ret && output_pg &&
- 	    copy_to_user((void __user *)args.out_ptr, output_pg, args.out_sz))
- 		ret = -EFAULT;
- 
-diff --git a/include/asm-generic/mshyperv.h b/include/asm-generic/mshyperv.h
-index a729b77983fab..18ee23174da03 100644
---- a/include/asm-generic/mshyperv.h
-+++ b/include/asm-generic/mshyperv.h
-@@ -123,10 +123,12 @@ static inline unsigned int hv_repcomp(u64 status)
- 
- /*
-  * Rep hypercalls. Callers of this functions are supposed to ensure that
-- * rep_count and varhead_size comply with Hyper-V hypercall definition.
-+ * rep_count, varhead_size, and rep_start comply with Hyper-V hypercall
-+ * definition.
-  */
--static inline u64 hv_do_rep_hypercall(u16 code, u16 rep_count, u16 varhead_size,
--				      void *input, void *output)
-+static inline u64 hv_do_rep_hypercall_ex(u16 code, u16 rep_count,
-+					 u16 varhead_size, u16 rep_start,
-+					 void *input, void *output)
- {
- 	u64 control = code;
- 	u64 status;
-@@ -134,6 +136,7 @@ static inline u64 hv_do_rep_hypercall(u16 code, u16 rep_count, u16 varhead_size,
- 
- 	control |= (u64)varhead_size << HV_HYPERCALL_VARHEAD_OFFSET;
- 	control |= (u64)rep_count << HV_HYPERCALL_REP_COMP_OFFSET;
-+	control |= (u64)rep_start << HV_HYPERCALL_REP_START_OFFSET;
- 
- 	do {
- 		status = hv_do_hypercall(control, input, output);
-@@ -151,6 +154,14 @@ static inline u64 hv_do_rep_hypercall(u16 code, u16 rep_count, u16 varhead_size,
- 	return status;
- }
- 
-+/* For the typical case where rep_start is 0 */
-+static inline u64 hv_do_rep_hypercall(u16 code, u16 rep_count, u16 varhead_size,
-+				      void *input, void *output)
++bool vmbus_is_confidential(void)
 +{
-+	return hv_do_rep_hypercall_ex(code, rep_count, varhead_size, 0,
-+				      input, output);
++	return is_confidential;
++}
++EXPORT_SYMBOL_GPL(vmbus_is_confidential);
++
+ /*
+  * The panic notifier below is responsible solely for unloading the
+  * vmbus connection, which is necessary in a panic event.
+diff --git a/include/hyperv/hvgdk_mini.h b/include/hyperv/hvgdk_mini.h
+index 1be7f6a023046..981a687bdc7eb 100644
+--- a/include/hyperv/hvgdk_mini.h
++++ b/include/hyperv/hvgdk_mini.h
+@@ -260,6 +260,7 @@ union hv_hypervisor_version_info {
+ #define HYPERV_CPUID_VIRT_STACK_PROPERTIES	 0x40000082
+ /* Support for the extended IOAPIC RTE format */
+ #define HYPERV_VS_PROPERTIES_EAX_EXTENDED_IOAPIC_RTE	 BIT(2)
++#define HYPERV_VS_PROPERTIES_EAX_CONFIDENTIAL_VMBUS_AVAILABLE	 BIT(3)
+ 
+ #define HYPERV_HYPERVISOR_PRESENT_BIT		 0x80000000
+ #define HYPERV_CPUID_MIN			 0x40000005
+diff --git a/include/linux/hyperv.h b/include/linux/hyperv.h
+index a59c5c3e95fb8..a1820fabbfc0c 100644
+--- a/include/linux/hyperv.h
++++ b/include/linux/hyperv.h
+@@ -265,16 +265,18 @@ static inline u32 hv_get_avail_to_write_percent(
+  * Linux kernel.
+  */
+ 
+-#define VERSION_WS2008  ((0 << 16) | (13))
+-#define VERSION_WIN7    ((1 << 16) | (1))
+-#define VERSION_WIN8    ((2 << 16) | (4))
+-#define VERSION_WIN8_1    ((3 << 16) | (0))
+-#define VERSION_WIN10 ((4 << 16) | (0))
+-#define VERSION_WIN10_V4_1 ((4 << 16) | (1))
+-#define VERSION_WIN10_V5 ((5 << 16) | (0))
+-#define VERSION_WIN10_V5_1 ((5 << 16) | (1))
+-#define VERSION_WIN10_V5_2 ((5 << 16) | (2))
+-#define VERSION_WIN10_V5_3 ((5 << 16) | (3))
++#define VMBUS_MAKE_VERSION(MAJ, MIN)	((((u32)MAJ) << 16) | (MIN))
++#define VERSION_WS2008					VMBUS_MAKE_VERSION(0, 13)
++#define VERSION_WIN7					VMBUS_MAKE_VERSION(1, 1)
++#define VERSION_WIN8					VMBUS_MAKE_VERSION(2, 4)
++#define VERSION_WIN8_1					VMBUS_MAKE_VERSION(3, 0)
++#define VERSION_WIN10					VMBUS_MAKE_VERSION(4, 0)
++#define VERSION_WIN10_V4_1				VMBUS_MAKE_VERSION(4, 1)
++#define VERSION_WIN10_V5				VMBUS_MAKE_VERSION(5, 0)
++#define VERSION_WIN10_V5_1				VMBUS_MAKE_VERSION(5, 1)
++#define VERSION_WIN10_V5_2				VMBUS_MAKE_VERSION(5, 2)
++#define VERSION_WIN10_V5_3				VMBUS_MAKE_VERSION(5, 3)
++#define VERSION_WIN10_V6_0				VMBUS_MAKE_VERSION(6, 0)
+ 
+ /* Make maximum size of pipe payload of 16K */
+ #define MAX_PIPE_DATA_PAYLOAD		(sizeof(u8) * 16384)
+@@ -335,14 +337,22 @@ struct vmbus_channel_offer {
+ } __packed;
+ 
+ /* Server Flags */
+-#define VMBUS_CHANNEL_ENUMERATE_DEVICE_INTERFACE	1
+-#define VMBUS_CHANNEL_SERVER_SUPPORTS_TRANSFER_PAGES	2
+-#define VMBUS_CHANNEL_SERVER_SUPPORTS_GPADLS		4
+-#define VMBUS_CHANNEL_NAMED_PIPE_MODE			0x10
+-#define VMBUS_CHANNEL_LOOPBACK_OFFER			0x100
+-#define VMBUS_CHANNEL_PARENT_OFFER			0x200
+-#define VMBUS_CHANNEL_REQUEST_MONITORED_NOTIFICATION	0x400
+-#define VMBUS_CHANNEL_TLNPI_PROVIDER_OFFER		0x2000
++#define VMBUS_CHANNEL_ENUMERATE_DEVICE_INTERFACE		0x0001
++/*
++ * This flag indicates that the channel is offered by the paravisor, and must
++ * use encrypted memory for the channel ring buffer.
++ */
++#define VMBUS_CHANNEL_CONFIDENTIAL_RING_BUFFER			0x0002
++/*
++ * This flag indicates that the channel is offered by the paravisor, and must
++ * use encrypted memory for GPA direct packets and additional GPADLs.
++ */
++#define VMBUS_CHANNEL_CONFIDENTIAL_EXTERNAL_MEMORY		0x0004
++#define VMBUS_CHANNEL_NAMED_PIPE_MODE					0x0010
++#define VMBUS_CHANNEL_LOOPBACK_OFFER					0x0100
++#define VMBUS_CHANNEL_PARENT_OFFER						0x0200
++#define VMBUS_CHANNEL_REQUEST_MONITORED_NOTIFICATION	0x0400
++#define VMBUS_CHANNEL_TLNPI_PROVIDER_OFFER				0x2000
+ 
+ struct vmpacket_descriptor {
+ 	u16 type;
+@@ -621,6 +631,12 @@ struct vmbus_channel_relid_released {
+ 	u32 child_relid;
+ } __packed;
+ 
++/*
++ * Used by the paravisor only, means that the encrypted ring buffers and
++ * the encrypted external memory are supported
++ */
++#define VMBUS_FEATURE_FLAG_CONFIDENTIAL_CHANNELS	0x10
++
+ struct vmbus_channel_initiate_contact {
+ 	struct vmbus_channel_message_header header;
+ 	u32 vmbus_version_requested;
+@@ -630,7 +646,8 @@ struct vmbus_channel_initiate_contact {
+ 		struct {
+ 			u8	msg_sint;
+ 			u8	msg_vtl;
+-			u8	reserved[6];
++			u8	reserved[2];
++			u32 feature_flags; /* VMBus version 6.0 */
+ 		};
+ 	};
+ 	u64 monitor_page1;
+@@ -1008,6 +1025,10 @@ struct vmbus_channel {
+ 
+ 	/* boolean to control visibility of sysfs for ring buffer */
+ 	bool ring_sysfs_visible;
++	/* The ring buffer is encrypted */
++	bool co_ring_buffer;
++	/* The external memory is encrypted */
++	bool co_external_memory;
+ };
+ 
+ #define lock_requestor(channel, flags)					\
+@@ -1032,6 +1053,16 @@ u64 vmbus_request_addr_match(struct vmbus_channel *channel, u64 trans_id,
+ 			     u64 rqst_addr);
+ u64 vmbus_request_addr(struct vmbus_channel *channel, u64 trans_id);
+ 
++static inline bool is_co_ring_buffer(const struct vmbus_channel_offer_channel *o)
++{
++	return !!(o->offer.chn_flags & VMBUS_CHANNEL_CONFIDENTIAL_RING_BUFFER);
 +}
 +
- /* Generate the guest OS identifier as described in the Hyper-V TLFS */
- static inline u64 hv_generate_guest_id(u64 kernel_version)
++static inline bool is_co_external_memory(const struct vmbus_channel_offer_channel *o)
++{
++	return !!(o->offer.chn_flags & VMBUS_CHANNEL_CONFIDENTIAL_EXTERNAL_MEMORY);
++}
++
+ static inline bool is_hvsock_offer(const struct vmbus_channel_offer_channel *o)
  {
+ 	return !!(o->offer.chn_flags & VMBUS_CHANNEL_TLNPI_PROVIDER_OFFER);
 -- 
 2.51.0
 
