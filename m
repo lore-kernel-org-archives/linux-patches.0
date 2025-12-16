@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00A6B34A3A7;
-	Tue, 16 Dec 2025 11:59:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E53296BDB;
+	Tue, 16 Dec 2025 11:59:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886383; cv=none; b=Bl0LTUEShe5Eh7pfyJ5Wh/Ei7EOazkcfcsJ5rbvHFHQEZmqp2y1Od5SdWBxoal8M+qlKqPC19CN0wOcug1cObvPCQk4xnkJE+P9lYHAq7L3i97P8bB1yWsk8GhW4DVoDOEtB5sMPZTlOsHclT0mH+NrZHMBrVtq+qMllfhTvYE0=
+	t=1765886386; cv=none; b=oD8w2t7PMJIPAc9mBof68pHf+COMIfdesf2uZKulBEvT0Q030ISskHrLwnm6zrZw+nYBruZw7Ioxgotj4QE2Gv9edTgUMTU/VmpvZjiTs8zf0tkvJ8olNVKwGEZ6hArLJ54tOxPEWn7JfV238pUl2OS36hpnDr+MxA2b4N2db/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886383; c=relaxed/simple;
-	bh=utmf4/PsHPnrtgyajLTQAfZ/5aFTXXkyToC4mJXCdbg=;
+	s=arc-20240116; t=1765886386; c=relaxed/simple;
+	bh=R+Ts2fMn+n67AAOsbT0hL8hUXDzRCWK+drUUaBS0Gec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VxNEy6I7gv3/v/wunGvQXZZx53npWYSedZCz4l0ODKfv5RAgSZPgxLNM2E1tX995t1D6Bkf/afWrttvCpPxIhhx07x1rtT8KfBYPMZecGt2lEvmDt8QEBKNyZIaRO7142ZDOtqJb8ygVz3EjshIScV0OxlN4fcBxXa5p8YqlqyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ORpnZNNN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R/uztWsFQQ9qaqiDMPOlTkI7aJJ7clN97+9NiL1Kc5Z2k33IBc6Cqt6c2peICGhCrbHmHg2FCS7t4o/pTshH6VRRFLKX4BKNB3a4qf8Gs66QmjU051gThc58zf1/BPujUuBI8og+DlmxDiKE16nLH9VfDPrVYbbfZTcTYtS2NjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SmmZNPB9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ORpnZNNN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 597A7C4CEF1;
-	Tue, 16 Dec 2025 11:59:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SmmZNPB9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2B6AC4CEF1;
+	Tue, 16 Dec 2025 11:59:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886382;
-	bh=utmf4/PsHPnrtgyajLTQAfZ/5aFTXXkyToC4mJXCdbg=;
+	s=korg; t=1765886386;
+	bh=R+Ts2fMn+n67AAOsbT0hL8hUXDzRCWK+drUUaBS0Gec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ORpnZNNNg/9D0OgIVNuIt0dgDbzMKHr67UyhH5UUx+DfoYoCXbxtERI4uJmCW3KQ+
-	 fDjT2oLvpW9gCt6kiLWgOB2HJMjY6iD4hdFqWKUwAQ0UXPGoJJR0Da6MgOrF6nq6uE
-	 oAJ112JhzOQc7VTA8RUEO76hgxKxddrY/r17eH3M=
+	b=SmmZNPB9AHJmYEXTRzQE44LzeQAZWWj1pZJn6pJSz4TWpZ6D9gP79Vkg0GvZ+ekjt
+	 5VwVhgdsnShVIrlu80rsLigTXLcheD2orzIWCs2wSBVzvhsUr+IqEv8MvtsGbkVYCj
+	 NE1nnIwcaDQRJ/5pO6n/xec5hJa8bBGQMujSYcF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 419/507] net: dsa: b53: fix CPU port unicast ARL entries for BCM5325/65
-Date: Tue, 16 Dec 2025 12:14:20 +0100
-Message-ID: <20251216111400.641544217@linuxfoundation.org>
+Subject: [PATCH 6.17 388/507] ARM: dts: samsung: exynos4210-trats: turn off SDIO WLAN chip during system suspend
+Date: Tue, 16 Dec 2025 12:13:49 +0100
+Message-ID: <20251216111359.513159578@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,59 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Gorski <jonas.gorski@gmail.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit 85132103f700b1340fc17df8a981509d17bf4872 ]
+[ Upstream commit 97cc9c346b2c9cde075b9420fc172137d2427711 ]
 
-On BCM5325 and BCM5365, unicast ARL entries use 8 as the value for the
-CPU port, so we need to translate it to/from 5 as used for the CPU port
-at most other places.
+Commit 8c3170628a9c ("wifi: brcmfmac: keep power during suspend if board
+requires it") changed default behavior of the BRCMFMAC driver, which now
+keeps SDIO card powered during system suspend to enable optional support
+for WOWL. This feature is not supported by the legacy Exynos4 based
+boards and leads to WLAN disfunction after system suspend/resume cycle.
+Fix this by annotating SDIO host used by WLAN chip with
+'cap-power-off-card' property, which should have been there from the
+beginning.
 
-Fixes: c45655386e53 ("net: dsa: b53: add support for FDB operations on 5325/5365")
-Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20251128080625.27181-5-jonas.gorski@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a19f6efc01df ("ARM: dts: exynos: Enable WLAN support for the Trats board")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://patch.msgid.link/20251126102618.3103517-4-m.szyprowski@samsung.com
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_priv.h | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ arch/arm/boot/dts/samsung/exynos4210-trats.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/dsa/b53/b53_priv.h b/drivers/net/dsa/b53/b53_priv.h
-index 127ce7f6b16ba..80e7dd6169b47 100644
---- a/drivers/net/dsa/b53/b53_priv.h
-+++ b/drivers/net/dsa/b53/b53_priv.h
-@@ -344,12 +344,14 @@ static inline void b53_arl_to_entry_25(struct b53_arl_entry *ent,
- 				       u64 mac_vid)
- {
- 	memset(ent, 0, sizeof(*ent));
--	ent->port = (mac_vid >> ARLTBL_DATA_PORT_ID_S_25) &
--		     ARLTBL_DATA_PORT_ID_MASK_25;
- 	ent->is_valid = !!(mac_vid & ARLTBL_VALID_25);
- 	ent->is_age = !!(mac_vid & ARLTBL_AGE_25);
- 	ent->is_static = !!(mac_vid & ARLTBL_STATIC_25);
- 	u64_to_ether_addr(mac_vid, ent->mac);
-+	ent->port = (mac_vid >> ARLTBL_DATA_PORT_ID_S_25) &
-+		     ARLTBL_DATA_PORT_ID_MASK_25;
-+	if (is_unicast_ether_addr(ent->mac) && ent->port == B53_CPU_PORT)
-+		ent->port = B53_CPU_PORT_25;
- 	ent->vid = (mac_vid >> ARLTBL_VID_S_65) & ARLTBL_VID_MASK_25;
- }
+diff --git a/arch/arm/boot/dts/samsung/exynos4210-trats.dts b/arch/arm/boot/dts/samsung/exynos4210-trats.dts
+index 95e0e01b6ff6b..6bd902cb8f4ad 100644
+--- a/arch/arm/boot/dts/samsung/exynos4210-trats.dts
++++ b/arch/arm/boot/dts/samsung/exynos4210-trats.dts
+@@ -518,6 +518,7 @@ &sdhci_3 {
+ 	#size-cells = <0>;
  
-@@ -383,8 +385,11 @@ static inline void b53_arl_from_entry_25(u64 *mac_vid,
- 					 const struct b53_arl_entry *ent)
- {
- 	*mac_vid = ether_addr_to_u64(ent->mac);
--	*mac_vid |= (u64)(ent->port & ARLTBL_DATA_PORT_ID_MASK_25) <<
--			  ARLTBL_DATA_PORT_ID_S_25;
-+	if (is_unicast_ether_addr(ent->mac) && ent->port == B53_CPU_PORT_25)
-+		*mac_vid |= (u64)B53_CPU_PORT << ARLTBL_DATA_PORT_ID_S_25;
-+	else
-+		*mac_vid |= (u64)(ent->port & ARLTBL_DATA_PORT_ID_MASK_25) <<
-+				  ARLTBL_DATA_PORT_ID_S_25;
- 	*mac_vid |= (u64)(ent->vid & ARLTBL_VID_MASK_25) <<
- 			  ARLTBL_VID_S_65;
- 	if (ent->is_valid)
+ 	non-removable;
++	cap-power-off-card;
+ 	bus-width = <4>;
+ 	mmc-pwrseq = <&wlan_pwrseq>;
+ 	vmmc-supply = <&tflash_reg>;
 -- 
 2.51.0
 
