@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66BF341ACA;
-	Tue, 16 Dec 2025 11:25:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D50EC313E13;
+	Tue, 16 Dec 2025 11:25:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884310; cv=none; b=Pu9ajQe4FE6/3uNfho9plwcsD7vUnxzG6TmHhADVL898HV/04EC4kTz2uohnclpxn4u12Qk1+lgGRSnL6vyuQL6MWEFvF72mXMfd12iXYakFAerC4VcpP5SGqXHRYa/Er2sCrpqIxjSyo9c3V8I3fTJj9DG7NtchsC3u34rfNzY=
+	t=1765884312; cv=none; b=KBUxoDzLGZ/Sz7PxFNo6QFayiPm4GCddMB1pWiqGeIWsP6JmvigfZFjqSP4KwCAlq4CF06ooUQz+fYNOBntGIn5LfhQ3iWImkH4pUVOhUbbNsJdciTDZQkvIDNsvCOYvRDPPzR5/ybpYuqMK0AAVVUdjSiuPxV6KXo/wGqAqTMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884310; c=relaxed/simple;
-	bh=KaA4e8dFhv3IKYxmdTzp371PACOCT4XrdSlM/4FXkaM=;
+	s=arc-20240116; t=1765884312; c=relaxed/simple;
+	bh=F5qI3hBsAH1fsmTg9isPD+Y9U+Ku46gSuSJ49oxeUHU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o4XethROpYDF3a6/QffnIYFl2EKqcUyzVAQiOPgIpND77zMetYK+/eiijjTgywXD1t60gD4IDKq3qbUvuwfI1gVmYnP6ijlR07mOYxh15HvAyrmfbVcn0eIs40HRNvKpHO/40fME6Fozw5QdbXT8AlnC83aZHXevWVDZPMJKABY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I0BQ2SKi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DPP22akwhgPau3bM6+PKcjnmsLukqIoFvo35uyb53Gh51nTtgYxxQYMPT+pvk3lVQ4BoVuG1gYAJTK23gK4luh2vm7VsxOeXWiPqmLpcUx6MLHVm8lRem6olyygp7+i2i5MVBPMPRoTj3Q4J/szg1pzvAtlJSbKu5IAgG6CELuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P/pCYt2o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I0BQ2SKi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54E40C4CEF1;
-	Tue, 16 Dec 2025 11:25:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P/pCYt2o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60E85C4CEF1;
+	Tue, 16 Dec 2025 11:25:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884309;
-	bh=KaA4e8dFhv3IKYxmdTzp371PACOCT4XrdSlM/4FXkaM=;
+	s=korg; t=1765884312;
+	bh=F5qI3hBsAH1fsmTg9isPD+Y9U+Ku46gSuSJ49oxeUHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I0BQ2SKiC/VsfcZlWRaIVZ59ieq5VPrfhNG/dMMKj1qI9ewLUWhV0yv/KRT1GjQHR
-	 D8gGcttYBUZyYkJajp4Ywc6woEvyESWaVJqbncGI7xR3MhE6qoRRgrbKtM0Bf40cXl
-	 z1MBgJEITBgkUtIBikZuqjjn0okV/ec5guV99WG0=
+	b=P/pCYt2oXn92Nzbfxf0hrZdx2z3zvZuu1KoLG8YIfH+y5to01VA12t3rIg3olA6CG
+	 v2dyCmve9qiblm1P/hv7Kl7eTMigasq1hxxY7SaEctSKvQ2zyDjwGUMrzZGHfJ5Bj3
+	 YQDsOzuuQfSXhJDATMW5mJRbagF4vMoSjYYxjdM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akash Goel <akash.goel@arm.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Steven Price <steven.price@arm.com>,
+	Leon Hwang <leon.hwang@linux.dev>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 137/354] drm/panthor: Fix potential memleak of vma structure
-Date: Tue, 16 Dec 2025 12:11:44 +0100
-Message-ID: <20251216111325.882351173@linuxfoundation.org>
+Subject: [PATCH 6.12 155/354] bpf: Free special fields when update [lru_,]percpu_hash maps
+Date: Tue, 16 Dec 2025 12:12:02 +0100
+Message-ID: <20251216111326.531120025@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -52,67 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akash Goel <akash.goel@arm.com>
+From: Leon Hwang <leon.hwang@linux.dev>
 
-[ Upstream commit 4492d54d59872bb72e119ff9f77969ab4d8a0e6b ]
+[ Upstream commit 6af6e49a76c9af7d42eb923703e7648cb2bf401a ]
 
-This commit addresses a memleak issue of panthor_vma (or drm_gpuva)
-structure in Panthor driver, that can happen if the GPU page table
-update operation to map the pages fail.
-The issue is very unlikely to occur in practice.
+As [lru_,]percpu_hash maps support BPF_KPTR_{REF,PERCPU}, missing
+calls to 'bpf_obj_free_fields()' in 'pcpu_copy_value()' could cause the
+memory referenced by BPF_KPTR_{REF,PERCPU} fields to be held until the
+map gets freed.
 
-v2: Add panthor_vm_op_ctx_return_vma() helper (Boris)
+Fix this by calling 'bpf_obj_free_fields()' after
+'copy_map_value[,_long]()' in 'pcpu_copy_value()'.
 
-v3: Add WARN_ON_ONCE (Boris)
-
-Fixes: 647810ec2476 ("drm/panthor: Add the MMU/VM logical block")
-Signed-off-by: Akash Goel <akash.goel@arm.com>
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Signed-off-by: Steven Price <steven.price@arm.com>
-Link: https://patch.msgid.link/20251021081042.1377406-1-akash.goel@arm.com
+Fixes: 65334e64a493 ("bpf: Support kptrs in percpu hashmap and percpu LRU hashmap")
+Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/r/20251105151407.12723-2-leon.hwang@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_mmu.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ kernel/bpf/hashtab.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_mmu.c b/drivers/gpu/drm/panthor/panthor_mmu.c
-index d548a6e0311dd..ed769749ec354 100644
---- a/drivers/gpu/drm/panthor/panthor_mmu.c
-+++ b/drivers/gpu/drm/panthor/panthor_mmu.c
-@@ -1139,6 +1139,20 @@ static void panthor_vm_cleanup_op_ctx(struct panthor_vm_op_ctx *op_ctx,
- 	}
- }
- 
-+static void
-+panthor_vm_op_ctx_return_vma(struct panthor_vm_op_ctx *op_ctx,
-+			     struct panthor_vma *vma)
-+{
-+	for (u32 i = 0; i < ARRAY_SIZE(op_ctx->preallocated_vmas); i++) {
-+		if (!op_ctx->preallocated_vmas[i]) {
-+			op_ctx->preallocated_vmas[i] = vma;
-+			return;
-+		}
-+	}
-+
-+	WARN_ON_ONCE(1);
-+}
-+
- static struct panthor_vma *
- panthor_vm_op_ctx_get_vma(struct panthor_vm_op_ctx *op_ctx)
+diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
+index 570e2f7231443..26883a997e717 100644
+--- a/kernel/bpf/hashtab.c
++++ b/kernel/bpf/hashtab.c
+@@ -961,15 +961,21 @@ static void free_htab_elem(struct bpf_htab *htab, struct htab_elem *l)
+ static void pcpu_copy_value(struct bpf_htab *htab, void __percpu *pptr,
+ 			    void *value, bool onallcpus)
  {
-@@ -2037,8 +2051,10 @@ static int panthor_gpuva_sm_step_map(struct drm_gpuva_op *op, void *priv)
- 	ret = panthor_vm_map_pages(vm, op->map.va.addr, flags_to_prot(vma->flags),
- 				   op_ctx->map.sgt, op->map.gem.offset,
- 				   op->map.va.range);
--	if (ret)
-+	if (ret) {
-+		panthor_vm_op_ctx_return_vma(op_ctx, vma);
- 		return ret;
-+	}
++	void *ptr;
++
+ 	if (!onallcpus) {
+ 		/* copy true value_size bytes */
+-		copy_map_value(&htab->map, this_cpu_ptr(pptr), value);
++		ptr = this_cpu_ptr(pptr);
++		copy_map_value(&htab->map, ptr, value);
++		bpf_obj_free_fields(htab->map.record, ptr);
+ 	} else {
+ 		u32 size = round_up(htab->map.value_size, 8);
+ 		int off = 0, cpu;
  
- 	/* Ref owned by the mapping now, clear the obj field so we don't release the
- 	 * pinning/obj ref behind GPUVA's back.
+ 		for_each_possible_cpu(cpu) {
+-			copy_map_value_long(&htab->map, per_cpu_ptr(pptr, cpu), value + off);
++			ptr = per_cpu_ptr(pptr, cpu);
++			copy_map_value_long(&htab->map, ptr, value + off);
++			bpf_obj_free_fields(htab->map.record, ptr);
+ 			off += size;
+ 		}
+ 	}
 -- 
 2.51.0
 
