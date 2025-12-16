@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8315929CB24;
-	Tue, 16 Dec 2025 12:38:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EADA17BA2;
+	Tue, 16 Dec 2025 12:38:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888718; cv=none; b=pt81Mo0M6kkYvuKjI7CFR9gYkvn0taTljdcLCepquDiYyRIPYxP0QgMzv8VFbMDPyo6HKl2NbvCPJfgfG+vCSEWr9bCtAT8y7EqCer8kIgDh8+CP3Z37hF7OXFVivfQbjqcrNpQqw0PZeLyZJvaLsxNEBfz5bZ0TP+uRyDwV01Q=
+	t=1765888722; cv=none; b=l6PWlzwGpNyigI/u2g9k0J79dIHxkzt6Y5Peocydt7CV8K44/YChbuFrfS6i7547qdzW8p9uXpwViruJbXh3WmyXG7uED+ydLrOujOunRdpov2F8Rb6SQ97a8YlZj2zfsc1Xj+onMS/NdsWM9aWUtTkbUIH4As27b92u0j2uztk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888718; c=relaxed/simple;
-	bh=vNTZ4IRN0S0gAKlFgZwq+V0qlAXCVs51+bBbt6m7VKM=;
+	s=arc-20240116; t=1765888722; c=relaxed/simple;
+	bh=htIG5vftG6HgQxoXF75u+3AlZSUn2EuxTg9vuwTyuUM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UfWNhFeajfGI4BDHf43nwZ/5eUzsTp0bPPXfFR2BkJfV0ej3WjIlDFTX2wtuLIej22O1gMYtSPdPjulHyNF2ifLduDOf5Qp1lkBIrvMQT5qv5Vw1iJYAja7n3nJG+tPVlwL9RZufcfgjklk3SBzQGJUwctUIUxWjedh6ouPp6lc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OMIYHc68; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Wo6w3E45F0tDhqY0hyle3vuXNy+U4LVXOVjsmzSriDXK77p1gaCXAWcMKFWpPcmecPU0MjaQ7YXt7FJSH6Iuantjg5vrj2lmP/qQqRgraRg+au1Px0bDywT9gWSK4mUXtjWuZPN+hL2EltJmx/+8gJsvN1okaIe0sXd6pwljqA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fTicGG5X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OMIYHc68"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3FD5C4CEF1;
-	Tue, 16 Dec 2025 12:38:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fTicGG5X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 831F3C4CEF1;
+	Tue, 16 Dec 2025 12:38:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888718;
-	bh=vNTZ4IRN0S0gAKlFgZwq+V0qlAXCVs51+bBbt6m7VKM=;
+	s=korg; t=1765888722;
+	bh=htIG5vftG6HgQxoXF75u+3AlZSUn2EuxTg9vuwTyuUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OMIYHc68L1xShvf7n98JDCIQZeOitlKpainy/LtFy1aHDw00QvXESwG6DIT8dafGP
-	 kEdvNQVzbrBlqJAfV2PA/JFB55LRJc9CWDaGQvWQEpMJy4J7ItigAZBOR2Y0V9OEbw
-	 R7RelpFJMrHpSJjneDo8Bcp1yMnO1xkiXmI2g5BY=
+	b=fTicGG5X4VrBi+dwh5G8omPqmFG8EgTLVnBYmosVa8toNFYiOsWUi79e79ybYDtSr
+	 GZeQmnxmG1rlVFEM+WZlBq8J2AuCpIeAzRhe53E64ySnMrCEsWFTsUoULi64m5UtYM
+	 hJLvs4lraVKbjNCrfizzFvNb4XSVFua2QM09ZYD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 601/614] efi/cper: Add a new helper function to print bitmasks
-Date: Tue, 16 Dec 2025 12:16:08 +0100
-Message-ID: <20251216111423.169588800@linuxfoundation.org>
+Subject: [PATCH 6.18 602/614] efi/cper: Adjust infopfx size to accept an extra space
+Date: Tue, 16 Dec 2025 12:16:09 +0100
+Message-ID: <20251216111423.205954273@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -47,6 +47,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
@@ -55,129 +56,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-[ Upstream commit a976d790f49499ccaa0f991788ad8ebf92e7fd5c ]
+[ Upstream commit 8ad2c72e21efb3dc76c5b14089fa7984cdd87898 ]
 
-Add a helper function to print a string with names associated
-to each bit field.
+Compiling with W=1 with werror enabled produces an error:
 
-A typical example is:
+drivers/firmware/efi/cper-arm.c: In function ‘cper_print_proc_arm’:
+drivers/firmware/efi/cper-arm.c:298:64: error: ‘snprintf’ output may be truncated before the last format character [-Werror=format-truncation=]
+  298 |                         snprintf(infopfx, sizeof(infopfx), "%s ", newpfx);
+      |                                                                ^
+drivers/firmware/efi/cper-arm.c:298:25: note: ‘snprintf’ output between 2 and 65 bytes into a destination of size 64
+  298 |                         snprintf(infopfx, sizeof(infopfx), "%s ", newpfx);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-	const char * const bits[] = {
-		"bit 3 name",
-		"bit 4 name",
-		"bit 5 name",
-	};
-	char str[120];
-        unsigned int bitmask = BIT(3) | BIT(5);
+As the logic there adds an space at the end of infopx buffer.
+Add an extra space to avoid such warning.
 
-	#define MASK  GENMASK(5,3)
-
-	cper_bits_to_str(str, sizeof(str), FIELD_GET(MASK, bitmask),
-			 bits, ARRAY_SIZE(bits));
-
-The above code fills string "str" with "bit 3 name|bit 5 name".
-
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/cper.c | 60 +++++++++++++++++++++++++++++++++++++
- include/linux/cper.h        |  2 ++
- 2 files changed, 62 insertions(+)
+ drivers/firmware/efi/cper-arm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/efi/cper.c b/drivers/firmware/efi/cper.c
-index 928409199a1a4..79ba688a64f8d 100644
---- a/drivers/firmware/efi/cper.c
-+++ b/drivers/firmware/efi/cper.c
-@@ -12,6 +12,7 @@
-  * Specification version 2.4.
-  */
+diff --git a/drivers/firmware/efi/cper-arm.c b/drivers/firmware/efi/cper-arm.c
+index f0a63d09d3c49..6ff781e47147c 100644
+--- a/drivers/firmware/efi/cper-arm.c
++++ b/drivers/firmware/efi/cper-arm.c
+@@ -240,7 +240,7 @@ void cper_print_proc_arm(const char *pfx,
+ 	int i, len, max_ctx_type;
+ 	struct cper_arm_err_info *err_info;
+ 	struct cper_arm_ctx_info *ctx_info;
+-	char newpfx[64], infopfx[64];
++	char newpfx[64], infopfx[ARRAY_SIZE(newpfx) + 1];
  
-+#include <linux/bitmap.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/time.h>
-@@ -106,6 +107,65 @@ void cper_print_bits(const char *pfx, unsigned int bits,
- 		printk("%s\n", buf);
- }
+ 	printk("%sMIDR: 0x%016llx\n", pfx, proc->midr);
  
-+/**
-+ * cper_bits_to_str - return a string for set bits
-+ * @buf: buffer to store the output string
-+ * @buf_size: size of the output string buffer
-+ * @bits: bit mask
-+ * @strs: string array, indexed by bit position
-+ * @strs_size: size of the string array: @strs
-+ *
-+ * Add to @buf the bitmask in hexadecimal. Then, for each set bit in @bits,
-+ * add the corresponding string describing the bit in @strs to @buf.
-+ *
-+ * A typical example is::
-+ *
-+ *	const char * const bits[] = {
-+ *		"bit 3 name",
-+ *		"bit 4 name",
-+ *		"bit 5 name",
-+ *	};
-+ *	char str[120];
-+ *	unsigned int bitmask = BIT(3) | BIT(5);
-+ *	#define MASK GENMASK(5,3)
-+ *
-+ *	cper_bits_to_str(str, sizeof(str), FIELD_GET(MASK, bitmask),
-+ *			 bits, ARRAY_SIZE(bits));
-+ *
-+ * The above code fills the string ``str`` with ``bit 3 name|bit 5 name``.
-+ *
-+ * Return: number of bytes stored or an error code if lower than zero.
-+ */
-+int cper_bits_to_str(char *buf, int buf_size, unsigned long bits,
-+		     const char * const strs[], unsigned int strs_size)
-+{
-+	int len = buf_size;
-+	char *str = buf;
-+	int i, size;
-+
-+	*buf = '\0';
-+
-+	for_each_set_bit(i, &bits, strs_size) {
-+		if (!(bits & BIT_ULL(i)))
-+			continue;
-+
-+		if (*buf && len > 0) {
-+			*str = '|';
-+			len--;
-+			str++;
-+		}
-+
-+		size = strscpy(str, strs[i], len);
-+		if (size < 0)
-+			return size;
-+
-+		len -= size;
-+		str += size;
-+	}
-+	return len - buf_size;
-+}
-+EXPORT_SYMBOL_GPL(cper_bits_to_str);
-+
- static const char * const proc_type_strs[] = {
- 	"IA32/X64",
- 	"IA64",
-diff --git a/include/linux/cper.h b/include/linux/cper.h
-index 0ed60a91eca9d..58f40477c824e 100644
---- a/include/linux/cper.h
-+++ b/include/linux/cper.h
-@@ -588,6 +588,8 @@ const char *cper_mem_err_type_str(unsigned int);
- const char *cper_mem_err_status_str(u64 status);
- void cper_print_bits(const char *prefix, unsigned int bits,
- 		     const char * const strs[], unsigned int strs_size);
-+int cper_bits_to_str(char *buf, int buf_size, unsigned long bits,
-+		     const char * const strs[], unsigned int strs_size);
- void cper_mem_err_pack(const struct cper_sec_mem_err *,
- 		       struct cper_mem_err_compact *);
- const char *cper_mem_err_unpack(struct trace_seq *,
 -- 
 2.51.0
 
