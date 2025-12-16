@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59A135E545;
-	Tue, 16 Dec 2025 12:06:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B7E535CBA8;
+	Tue, 16 Dec 2025 12:06:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886814; cv=none; b=bAhUP5rbUJZ3meem8x4deBuuW7Bz+5Jcowcbss2R1zXFpUOyODttO6CImm728r7xQnn8ruiZ5iBhnou0AIGKNdQxlBPJFR6NQeq0sMX9jncVrKsh2ZF5h8GbKv4EdXBJmpjgvs+V2mPU+Hj2z8my6KYvNkUKDTmLHvRf2ypX6/k=
+	t=1765886818; cv=none; b=K9iYGqTC2b6SUYZS9sBS18FiPWpN5fg5UFedZwJDpMXFCiAoD9lWDk6ODZ+yl3w2uITwrsQjVnRYLvPUE5EUqxhFZuq2miyq4HVpLAOoPm7ByC5Ie2e+gmF8+CDlXlg1oa7BCnh6OSKTSRVog1szV7syYFbQkTfTsJV3mGw3G48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886814; c=relaxed/simple;
-	bh=LNpy/12O2wGywPk+947opvRZg0GnuFF3hlS4ItEA1YQ=;
+	s=arc-20240116; t=1765886818; c=relaxed/simple;
+	bh=kWYzX0yxtJsmApebuPej7SRR3jmS6GLHs19Tp+qbWcE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KsX7TxagcK7ZX9io/VQ4cJvPMdniLjfFQfHaQ47RNIft77hQRSFBpQhgC1XSjpNW3qCLOib/m1CjYoXt+5P61/cqRHL7OwYtlGWtEwdj/VZ8ygH7xOa09jLYI3YM/s61AF0ZQHSEYNX6oUTBABZ8MwSXNOEtfrpT/9GO6kqGRUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jyLmsRMI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t1boxF4kePxDWJ8SkhhHtysHOSQXsvDehWldiSAi0GeHElyFQtevFp0omWY1KOgE5hRtxS3Jq3+5P2xEdjUUvpMjbCRv0lWuxH/4O/O/pxjKAn4L2VT0vKCBwjI8SNxHiBIygD9ppj4cwnz3hm7Hh15h83WL1/S7W5IHDsUB4Z8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kCcm5lsP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jyLmsRMI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA1B4C4CEF1;
-	Tue, 16 Dec 2025 12:06:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kCcm5lsP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E242C4CEF1;
+	Tue, 16 Dec 2025 12:06:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886814;
-	bh=LNpy/12O2wGywPk+947opvRZg0GnuFF3hlS4ItEA1YQ=;
+	s=korg; t=1765886817;
+	bh=kWYzX0yxtJsmApebuPej7SRR3jmS6GLHs19Tp+qbWcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jyLmsRMIOgTfZTLRcPjiBz+2feDKQzrapdAmsU42I41MprfLDcIFAve5//DPQl2+d
-	 EdMSJmsbg2KLxbOie42C2zbstOGDAzO/491OaaxPYPKWckFr2XqiMWmxEJeSo4DVjH
-	 WNlyn0+aVAMl07iGY8uJTQ6JPbLVYDbo2Eh3Igso=
+	b=kCcm5lsPDahtx3E76Ny3vy1ZmGzTylBrNfX28KbhdMyRptR2aBRrZqqrcqbe2T1rT
+	 KMLQW705Jfhr9dbuf4/X/G4IuMWGpOBv+Ai3lRwCv+POWj2FLkFbitQeN4OQay/1QV
+	 KdoBwIdwMs01+PchCoR6DzNd87bQ0px/Pvklc2I0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sarika Sharma <sarika.sharma@oss.qualcomm.com>,
 	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Pradeep Kumar Chitrapu <quic_pradeepc@quicinc.com>,
 	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 041/614] wifi: ath12k: Fix MSDU buffer types handling in RX error path
-Date: Tue, 16 Dec 2025 12:06:48 +0100
-Message-ID: <20251216111402.797587880@linuxfoundation.org>
+Subject: [PATCH 6.18 042/614] wifi: ath12k: fix VHT MCS assignment
+Date: Tue, 16 Dec 2025 12:06:49 +0100
+Message-ID: <20251216111402.833803584@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -53,40 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sarika Sharma <sarika.sharma@oss.qualcomm.com>
+From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 
-[ Upstream commit 36f9edbb9d0fc36c865c74f3c1ad8e1261ad3981 ]
+[ Upstream commit 8c21b32c2cc82224c7fc1a9f67318f3b1199744b ]
 
-Currently, packets received on the REO exception ring from
-unassociated peers are of MSDU buffer type, while the driver expects
-link descriptor type packets. These packets are not parsed further due
-to a return check on packet type in ath12k_hal_desc_reo_parse_err(),
-but the associated skb is not freed. This may lead to kernel
-crashes and buffer leaks.
+While associating, firmware needs the peer's receive capability
+to calculate its own VHT transmit MCS. Currently, the host
+sends this information via mcs->rx_mcs_set field, but firmware
+actually reads it from mcs->tx_mcs_set field. This mismatch is
+incorrect.
 
-Hence to fix, update the RX error handler to explicitly drop
-MSDU buffer type packets received on the REO exception ring.
-This prevents further processing of invalid packets and ensures
-stability in the RX error handling path.
+This issue has not caused failures so far because most peers
+advertise identical TX and RX capabilities. Fix this by
+assigning the value to tx_mcs_set as expected.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
+Additionally, the rate control mask is intended to limit our
+transmit MCS, so it should also apply to the peer's receive
+capability. Update the logic accordingly.
+
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.0.1-00029-QCAHKSWPL_SILICONZ-1
 
 Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Signed-off-by: Sarika Sharma <sarika.sharma@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Signed-off-by: Pradeep Kumar Chitrapu <quic_pradeepc@quicinc.com>
 Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250930091551.3305312-2-sarika.sharma@oss.qualcomm.com
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251009211656.2386085-2-quic_pradeepc@quicinc.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp_rx.c  | 70 ++++++++++++++++++++++--
- drivers/net/wireless/ath/ath12k/hal_rx.c | 10 +---
- 2 files changed, 66 insertions(+), 14 deletions(-)
+ drivers/net/wireless/ath/ath12k/mac.c |  7 +++----
+ drivers/net/wireless/ath/ath12k/wmi.c | 13 ++++++++-----
+ drivers/net/wireless/ath/ath12k/wmi.h |  2 ++
+ 3 files changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
-index 5e5c14a70316d..99d29eda26cf1 100644
---- a/drivers/net/wireless/ath/ath12k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
+diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
+index db351c9220181..4e6d136433202 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -2249,7 +2249,6 @@ static void ath12k_peer_assoc_h_vht(struct ath12k *ar,
+ 	struct cfg80211_chan_def def;
+ 	enum nl80211_band band;
+ 	u16 *vht_mcs_mask;
+-	u16 tx_mcs_map;
+ 	u8 ampdu_factor;
+ 	u8 max_nss, vht_mcs;
+ 	int i, vht_nss, nss_idx;
+@@ -2340,10 +2339,10 @@ static void ath12k_peer_assoc_h_vht(struct ath12k *ar,
+ 	arg->peer_nss = min(link_sta->rx_nss, max_nss);
+ 	arg->rx_max_rate = __le16_to_cpu(vht_cap->vht_mcs.rx_highest);
+ 	arg->rx_mcs_set = __le16_to_cpu(vht_cap->vht_mcs.rx_mcs_map);
+-	arg->tx_max_rate = __le16_to_cpu(vht_cap->vht_mcs.tx_highest);
++	arg->rx_mcs_set = ath12k_peer_assoc_h_vht_limit(arg->rx_mcs_set, vht_mcs_mask);
+ 
+-	tx_mcs_map = __le16_to_cpu(vht_cap->vht_mcs.tx_mcs_map);
+-	arg->tx_mcs_set = ath12k_peer_assoc_h_vht_limit(tx_mcs_map, vht_mcs_mask);
++	arg->tx_max_rate = __le16_to_cpu(vht_cap->vht_mcs.tx_highest);
++	arg->tx_mcs_set = __le16_to_cpu(vht_cap->vht_mcs.tx_mcs_map);
+ 
+ 	/* In QCN9274 platform, VHT MCS rate 10 and 11 is enabled by default.
+ 	 * VHT MCS rate 10 and 11 is not supported in 11ac standard.
+diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
+index ff6b3d4ea8208..e76275bd6916f 100644
+--- a/drivers/net/wireless/ath/ath12k/wmi.c
++++ b/drivers/net/wireless/ath/ath12k/wmi.c
 @@ -1,7 +1,7 @@
  // SPDX-License-Identifier: BSD-3-Clause-Clear
  /*
@@ -94,139 +124,41 @@ index 5e5c14a70316d..99d29eda26cf1 100644
 - * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All rights reserved.
 + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
   */
+ #include <linux/skbuff.h>
+ #include <linux/ctype.h>
+@@ -2367,10 +2367,13 @@ int ath12k_wmi_send_peer_assoc_cmd(struct ath12k *ar,
+ 	cmd->peer_bw_rxnss_override |= cpu_to_le32(arg->peer_bw_rxnss_override);
  
- #include <linux/ieee80211.h>
-@@ -3781,6 +3781,48 @@ ath12k_dp_process_rx_err_buf(struct ath12k *ar, struct hal_reo_dest_ring *desc,
- 	return 0;
- }
- 
-+static int ath12k_dp_h_msdu_buffer_type(struct ath12k_base *ab,
-+					struct list_head *list,
-+					struct hal_reo_dest_ring *desc)
-+{
-+	struct ath12k_rx_desc_info *desc_info;
-+	struct ath12k_skb_rxcb *rxcb;
-+	struct sk_buff *msdu;
-+	u64 desc_va;
-+
-+	desc_va = (u64)le32_to_cpu(desc->buf_va_hi) << 32 |
-+		  le32_to_cpu(desc->buf_va_lo);
-+	desc_info = (struct ath12k_rx_desc_info *)(uintptr_t)desc_va;
-+	if (!desc_info) {
-+		u32 cookie;
-+
-+		cookie = le32_get_bits(desc->buf_addr_info.info1,
-+				       BUFFER_ADDR_INFO1_SW_COOKIE);
-+		desc_info = ath12k_dp_get_rx_desc(ab, cookie);
-+		if (!desc_info) {
-+			ath12k_warn(ab, "Invalid cookie in manual descriptor retrieval: 0x%x\n",
-+				    cookie);
-+			return -EINVAL;
-+		}
-+	}
-+
-+	if (desc_info->magic != ATH12K_DP_RX_DESC_MAGIC) {
-+		ath12k_warn(ab, "rx exception, magic check failed with value: %u\n",
-+			    desc_info->magic);
-+		return -EINVAL;
-+	}
-+
-+	msdu = desc_info->skb;
-+	desc_info->skb = NULL;
-+	list_add_tail(&desc_info->list, list);
-+	rxcb = ATH12K_SKB_RXCB(msdu);
-+	dma_unmap_single(ab->dev, rxcb->paddr, msdu->len + skb_tailroom(msdu),
-+			 DMA_FROM_DEVICE);
-+	dev_kfree_skb_any(msdu);
-+
-+	return 0;
-+}
-+
- int ath12k_dp_rx_process_err(struct ath12k_base *ab, struct napi_struct *napi,
- 			     int budget)
- {
-@@ -3825,6 +3867,26 @@ int ath12k_dp_rx_process_err(struct ath12k_base *ab, struct napi_struct *napi,
- 		drop = false;
- 		ab->device_stats.err_ring_pkts++;
- 
-+		hw_link_id = le32_get_bits(reo_desc->info0,
-+					   HAL_REO_DEST_RING_INFO0_SRC_LINK_ID);
-+		device_id = hw_links[hw_link_id].device_id;
-+		partner_ab = ath12k_ag_to_ab(ag, device_id);
-+
-+		/* Below case is added to handle data packet from un-associated clients.
-+		 * As it is expected that AST lookup will fail for
-+		 * un-associated station's data packets.
+ 	if (arg->vht_capable) {
+-		mcs->rx_max_rate = cpu_to_le32(arg->rx_max_rate);
+-		mcs->rx_mcs_set = cpu_to_le32(arg->rx_mcs_set);
+-		mcs->tx_max_rate = cpu_to_le32(arg->tx_max_rate);
+-		mcs->tx_mcs_set = cpu_to_le32(arg->tx_mcs_set);
++		/* Firmware interprets mcs->tx_mcs_set field as peer's
++		 * RX capability
 +		 */
-+		if (le32_get_bits(reo_desc->info0, HAL_REO_DEST_RING_INFO0_BUFFER_TYPE) ==
-+		    HAL_REO_DEST_RING_BUFFER_TYPE_MSDU) {
-+			if (!ath12k_dp_h_msdu_buffer_type(partner_ab,
-+							  &rx_desc_used_list[device_id],
-+							  reo_desc)) {
-+				num_buffs_reaped[device_id]++;
-+				tot_n_bufs_reaped++;
-+			}
-+			goto next_desc;
-+		}
-+
- 		ret = ath12k_hal_desc_reo_parse_err(ab, reo_desc, &paddr,
- 						    &desc_bank);
- 		if (ret) {
-@@ -3833,11 +3895,6 @@ int ath12k_dp_rx_process_err(struct ath12k_base *ab, struct napi_struct *napi,
- 			continue;
- 		}
- 
--		hw_link_id = le32_get_bits(reo_desc->info0,
--					   HAL_REO_DEST_RING_INFO0_SRC_LINK_ID);
--		device_id = hw_links[hw_link_id].device_id;
--		partner_ab = ath12k_ag_to_ab(ag, device_id);
--
- 		pdev_id = ath12k_hw_mac_id_to_pdev_id(partner_ab->hw_params,
- 						      hw_links[hw_link_id].pdev_idx);
- 		ar = partner_ab->pdevs[pdev_id].ar;
-@@ -3886,6 +3943,7 @@ int ath12k_dp_rx_process_err(struct ath12k_base *ab, struct napi_struct *napi,
- 			}
- 		}
- 
-+next_desc:
- 		if (tot_n_bufs_reaped >= quota) {
- 			tot_n_bufs_reaped = quota;
- 			goto exit;
-diff --git a/drivers/net/wireless/ath/ath12k/hal_rx.c b/drivers/net/wireless/ath/ath12k/hal_rx.c
-index 669096278fdd4..c4443ca05cd65 100644
---- a/drivers/net/wireless/ath/ath12k/hal_rx.c
-+++ b/drivers/net/wireless/ath/ath12k/hal_rx.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: BSD-3-Clause-Clear
- /*
-  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
-- * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-  */
- 
- #include "debug.h"
-@@ -323,7 +323,7 @@ int ath12k_hal_desc_reo_parse_err(struct ath12k_base *ab,
- {
- 	enum hal_reo_dest_ring_push_reason push_reason;
- 	enum hal_reo_dest_ring_error_code err_code;
--	u32 cookie, val;
-+	u32 cookie;
- 
- 	push_reason = le32_get_bits(desc->info0,
- 				    HAL_REO_DEST_RING_INFO0_PUSH_REASON);
-@@ -338,12 +338,6 @@ int ath12k_hal_desc_reo_parse_err(struct ath12k_base *ab,
- 		return -EINVAL;
++		mcs->rx_max_rate = cpu_to_le32(arg->tx_max_rate);
++		mcs->rx_mcs_set = cpu_to_le32(arg->tx_mcs_set);
++		mcs->tx_max_rate = cpu_to_le32(arg->rx_max_rate);
++		mcs->tx_mcs_set = cpu_to_le32(arg->rx_mcs_set);
  	}
  
--	val = le32_get_bits(desc->info0, HAL_REO_DEST_RING_INFO0_BUFFER_TYPE);
--	if (val != HAL_REO_DEST_RING_BUFFER_TYPE_LINK_DESC) {
--		ath12k_warn(ab, "expected buffer type link_desc");
--		return -EINVAL;
--	}
--
- 	ath12k_hal_rx_reo_ent_paddr_get(ab, &desc->buf_addr_info, paddr, &cookie);
- 	*desc_bank = u32_get_bits(cookie, DP_LINK_DESC_BANK_MASK);
- 
+ 	/* HE Rates */
+diff --git a/drivers/net/wireless/ath/ath12k/wmi.h b/drivers/net/wireless/ath/ath12k/wmi.h
+index a8c3190e8ad95..6d9c645e3d5d0 100644
+--- a/drivers/net/wireless/ath/ath12k/wmi.h
++++ b/drivers/net/wireless/ath/ath12k/wmi.h
+@@ -4218,8 +4218,10 @@ struct wmi_unit_test_cmd {
+ struct ath12k_wmi_vht_rate_set_params {
+ 	__le32 tlv_header;
+ 	__le32 rx_max_rate;
++	/* MCS at which the peer can transmit */
+ 	__le32 rx_mcs_set;
+ 	__le32 tx_max_rate;
++	/* MCS at which the peer can receive */
+ 	__le32 tx_mcs_set;
+ 	__le32 tx_max_mcs_nss;
+ } __packed;
 -- 
 2.51.0
 
