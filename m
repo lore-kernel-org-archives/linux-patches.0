@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99B2361DD2;
-	Tue, 16 Dec 2025 12:22:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF81362129;
+	Tue, 16 Dec 2025 12:22:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887735; cv=none; b=k8tfmZiBLScKOh5xCzvz+W33KtFyHesgB4NqiEj3BaRBh6Z+weW9UPnn/0SbVLChh4p5nO4D8LEJojPQZbT7dz52bE3ogLKQaHu6UFNMoVcK0PKgyp5SGf/D+KvmX3TRpy0y2Pn6m3bxfU/oG3RqybPGzhpQ61/blH8To1n/ah4=
+	t=1765887738; cv=none; b=Q5JhH5QicgIbUdr4jY7dyYWac9Ix4dDSQRmqyel9PW8lJ26dQ6VpA1FfgpXE6+9Mo+yIwtMSjSI4sP/pNaywsb9Htk/paHf7ZmloMvm+b/lFvVGx9XiHC0bhg/uBaYcRLartTfzweEqIkWztHPRZ6oALtIIGCApQSMb7RGGp96A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887735; c=relaxed/simple;
-	bh=A7kGOVvEK4I0vnBZuy09NUk76G6pQhiLNiIZ0e3O8bU=;
+	s=arc-20240116; t=1765887738; c=relaxed/simple;
+	bh=OK2GZo8+BBHN8L9u5k1ACdSJNL5tZ44SL9iC6QbG1Rk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tl2IaHSfKwgrfL9+u5nQgw1AdIslWWzjFbquDpwZScdqHf2F1pu/Se/FIVAYo3HvUJXEV1rixjYWbxBnwqjuqW4arNLeOMzl7g+jjTLb7qoYgagUoHMyDabXBHcSKiTIkwNOzxGI3ZcL0FV4j23E85rMGlobtI7tOnUnF1c3q0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z/QdPQT+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qBPi15pKRp7Tvbcx/Av4f7UHHb7/QNAEMn/DbDUAUXl0A7zAncsaljvmPYbbLH0ZzsGjK5I8gffHAaxXznRgdNHzR049Sm+tQiznV85mXR1NqzsHpOXQBdr15VAl2OIzZWUv+cYp3qit25XJJ+n1LTVUH+rQKVaiJhmUXk7FwD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fV/YPnCS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z/QdPQT+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3A61C4CEF1;
-	Tue, 16 Dec 2025 12:22:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fV/YPnCS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D9B2C4CEF1;
+	Tue, 16 Dec 2025 12:22:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887734;
-	bh=A7kGOVvEK4I0vnBZuy09NUk76G6pQhiLNiIZ0e3O8bU=;
+	s=korg; t=1765887738;
+	bh=OK2GZo8+BBHN8L9u5k1ACdSJNL5tZ44SL9iC6QbG1Rk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z/QdPQT+zLs6SqoaWSMVopZcA3tutcsbaupLsbMegd7YHLClPU+Xw6Vt71/uVBPws
-	 qhsy8XJovPT7eINBu3AVBQUXDz5WgLVrGimJa3SzxBgjadIbxaI44MQqDcIiUE1H9l
-	 GT7BdCn5qi8AFh78fixC4jhn/P7zV7NHM+P0pxvg=
+	b=fV/YPnCSE9eIc0igQWiwPaC8wKnDYY2rt9P26gpNa4UnRgcwQ1RqT//fJ7NOhr3Sg
+	 HqdZ08aZrNx2eTxg+w/6o8EZDNakWC5ydKXNLQCoHd6myQ6WSf3DxUpMdaWBMy36ej
+	 aCIvcsj7S6qXVs9emoVWp6CxMsjPwBZzlMtv12/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
 	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 322/614] drm/msm/a6xx: Flush LRZ cache before PT switch
-Date: Tue, 16 Dec 2025 12:11:29 +0100
-Message-ID: <20251216111413.030712176@linuxfoundation.org>
+Subject: [PATCH 6.18 323/614] drm/msm/a6xx: Fix the gemnoc workaround
+Date: Tue, 16 Dec 2025 12:11:30 +0100
+Message-ID: <20251216111413.066560662@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -54,52 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 
-[ Upstream commit 180349b8407f3b268b2ceac0e590b8199e043081 ]
+[ Upstream commit ff7a6de043fce21ea5891311746b16121b385c59 ]
 
-As per the recommendation, A7x and newer GPUs should flush the LRZ cache
-before switching the pagetable. Update a6xx_set_pagetable() to do this.
-While we are at it, sync both BV and BR before issuing  a
-CP_RESET_CONTEXT_STATE command, to match the downstream sequence.
+Correct the register offset and enable this workaround for all A7x
+and newer GPUs to match the recommendation. Also, downstream does this
+w/a after moving the fence to allow mode. So do the same.
 
-Fixes: af66706accdf ("drm/msm/a6xx: Add skeleton A7xx support")
+Fixes: dbfbb376b50c ("drm/msm/a6xx: Add A621 support")
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/688995/
-Message-ID: <20251118-kaana-gpu-support-v4-2-86eeb8e93fb6@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/688997/
+Message-ID: <20251118-kaana-gpu-support-v4-3-86eeb8e93fb6@oss.qualcomm.com>
 Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index b8f8ae940b55f..6f7ed07670b12 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -224,7 +224,7 @@ static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_gpu,
- 		OUT_RING(ring, submit->seqno - 1);
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index 4e6dc16e4a4c4..605bb55de8d52 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -485,8 +485,9 @@ static void a6xx_gemnoc_workaround(struct a6xx_gmu *gmu)
+ 	 * in the power down sequence not being fully executed. That in turn can
+ 	 * prevent CX_GDSC from collapsing. Assert Qactive to avoid this.
+ 	 */
+-	if (adreno_is_a621(adreno_gpu) || adreno_is_7c3(adreno_gpu))
+-		gmu_write(gmu, REG_A6XX_GMU_AO_AHB_FENCE_CTRL, BIT(0));
++	if (adreno_is_a7xx(adreno_gpu) || (adreno_is_a621(adreno_gpu) ||
++				adreno_is_7c3(adreno_gpu)))
++		gmu_write(gmu, REG_A6XX_GPU_GMU_CX_GMU_CX_FALNEXT_INTF, BIT(0));
+ }
  
- 		OUT_PKT7(ring, CP_THREAD_CONTROL, 1);
--		OUT_RING(ring, CP_SET_THREAD_BOTH);
-+		OUT_RING(ring, CP_THREAD_CONTROL_0_SYNC_THREADS | CP_SET_THREAD_BOTH);
- 
- 		/* Reset state used to synchronize BR and BV */
- 		OUT_PKT7(ring, CP_RESET_CONTEXT_STATE, 1);
-@@ -235,7 +235,13 @@ static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_gpu,
- 			 CP_RESET_CONTEXT_STATE_0_RESET_GLOBAL_LOCAL_TS);
- 
- 		OUT_PKT7(ring, CP_THREAD_CONTROL, 1);
--		OUT_RING(ring, CP_SET_THREAD_BR);
-+		OUT_RING(ring, CP_THREAD_CONTROL_0_SYNC_THREADS | CP_SET_THREAD_BOTH);
-+
-+		OUT_PKT7(ring, CP_EVENT_WRITE, 1);
-+		OUT_RING(ring, LRZ_FLUSH);
-+
-+		OUT_PKT7(ring, CP_THREAD_CONTROL, 1);
-+		OUT_RING(ring, CP_THREAD_CONTROL_0_SYNC_THREADS | CP_SET_THREAD_BR);
+ /* Let the GMU know that we are about to go into slumber */
+@@ -522,10 +523,9 @@ static int a6xx_gmu_notify_slumber(struct a6xx_gmu *gmu)
  	}
  
- 	if (!sysprof) {
+ out:
+-	a6xx_gemnoc_workaround(gmu);
+-
+ 	/* Put fence into allow mode */
+ 	gmu_write(gmu, REG_A6XX_GMU_AO_AHB_FENCE_CTRL, 0);
++	a6xx_gemnoc_workaround(gmu);
+ 	return ret;
+ }
+ 
 -- 
 2.51.0
 
