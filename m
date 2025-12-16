@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F28357A29;
-	Tue, 16 Dec 2025 12:03:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF42C357A3E;
+	Tue, 16 Dec 2025 12:03:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886587; cv=none; b=UqsD+b1SYSXWihbIRT4u3lkVpXj1xDjJG5K5ygZww2ii6qxd49MoWP9/bUHLhP8d1NKgOUnqSi1uo/3lk2PNgd7oorQgqpQB+miLkm1WRVMvPIk/vVVzw6oq+4W/818ClfavFe0lgmes293fjHLc7ubHm5G23/7KWahsi7i9bvY=
+	t=1765886590; cv=none; b=mDJLMwCiyMyxsAuW/cxs5YTmctUSe9NWEyVXjgWE+wfm8cz7WxuxwNzu+ZrbGzDe6Xn26ywOP0EmYCpWaEDOQvbqFQEcXnwasyn6mLJdB32E9jOIfVWw5cvzig5qIGTvkEScPNMTnVM7Nr38AI92jRhzrdUurEOWqGoWgQfVOlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886587; c=relaxed/simple;
-	bh=FXVh8cHOicl4Gik0NeMaSNhxQF+S6EhMn4RVN5HLJvI=;
+	s=arc-20240116; t=1765886590; c=relaxed/simple;
+	bh=oYUdibrvkPD2dOlgeja3wWj3vnHa3hrQNUbPzQLzAeY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=R+qHNFqdw9TZJfnQsGpdRpchhU6xGYdlqn80rfEIrkw0PcUUFtR2V8Ir7Yi9EPPGOf0n7ryl1TmPhH6UKYSiZp8sRlKNSoNfzNLKt8Y1vTHqvx6dXLYO+hW+osWOJ25eNZtcDaxXIK78CbUzVkdeVjJuJCUgGDGQRZPbJYicR5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oo+aSVuc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hmVBB2JpmteseM8yFvLtEdWa3vQO7bf7IesaESC67VSIa1haU5dLXV3N/KsLgz61VrblVTUXd7zSuGazQMEfmNaNhsYsmHHP0hg64LtCLS89DmF9e4O98r7uQAYdG6OVNuC8ZSsZulWQPx5klGrOpKdpMJcxGd1IjCvD6uAyqFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mf6Fs51o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oo+aSVuc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26D4AC4CEF5;
-	Tue, 16 Dec 2025 12:03:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mf6Fs51o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7515CC4CEF1;
+	Tue, 16 Dec 2025 12:03:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886586;
-	bh=FXVh8cHOicl4Gik0NeMaSNhxQF+S6EhMn4RVN5HLJvI=;
+	s=korg; t=1765886589;
+	bh=oYUdibrvkPD2dOlgeja3wWj3vnHa3hrQNUbPzQLzAeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oo+aSVuc2DjN8O1dhmOrot4RoqwjHDxHUp6771fISKyw/sZBq7kGIb2YFyBLHZi6O
-	 BQIuHOjUf4UCUVt8LafpZJkicCOeMsRVfkAQEk32TJEp0YtTM+hIs193TAuB43QuTN
-	 O2SXHJjP3nx1VCtNlh/cK35hFB+nVfcsNFPqVfGo=
+	b=mf6Fs51open20NVZtDzUaxJo+EKcG3sMie90lWCGpOVmaeJwhv7/xkRSvywnEYSbp
+	 hPJg5zHVgiTmCfM2RXUZzzyMK0OHssg93qzRyh6ZsQu1MNqr58W/9McSjQCswHtdGe
+	 adyAPdgUJITTLPS8pVrEZJSIeK0Dp12uVgl6bm+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
 	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 480/507] drm/xe/fbdev: use the same 64-byte stride alignment as i915
-Date: Tue, 16 Dec 2025 12:15:21 +0100
-Message-ID: <20251216111402.832458513@linuxfoundation.org>
+Subject: [PATCH 6.17 481/507] drm/i915/fbdev: make intel_framebuffer_create() error return handling explicit
+Date: Tue, 16 Dec 2025 12:15:22 +0100
+Message-ID: <20251216111402.867983611@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -54,40 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit 4a36b339a14ae6f2a366125e3d64f0c165193293 ]
+[ Upstream commit 6979d2c80c2a5b1f04157c4d6eb038bb32861cfa ]
 
-For reasons unknown, xe uses XE_PAGE_SIZE alignment for
-stride. Presumably it's just a confusion between stride alignment and bo
-allocation size alignment. Switch to 64 byte alignment to, uh, align
-with i915.
+It's sketchy to pass error pointers via to_intel_framebuffer(). It
+probably works as long as struct intel_framebuffer embeds struct
+drm_framebuffer at offset 0, but be explicit about it.
 
-This will also be helpful in deduplicating and unifying the xe and i915
-framebuffer allocation.
-
-Link: https://lore.kernel.org/r/aLqsC87Ol_zCXOkN@intel.com
-Suggested-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
 Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://lore.kernel.org/r/7f4972104de8b179d5724ae83892ee294d3f3fd3.1758184771.git.jani.nikula@intel.com
+Link: https://lore.kernel.org/r/17631db227d527d6c67f5d6b67adec1ff8dc6f8d.1758184771.git.jani.nikula@intel.com
 Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Stable-dep-of: 460b31720369 ("drm/i915/fbdev: Hold runtime PM ref during fbdev BO creation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/display/intel_fbdev_fb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_fbdev_fb.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/display/intel_fbdev_fb.c b/drivers/gpu/drm/xe/display/intel_fbdev_fb.c
-index fba9617a75a53..37a48c6f2d531 100644
---- a/drivers/gpu/drm/xe/display/intel_fbdev_fb.c
-+++ b/drivers/gpu/drm/xe/display/intel_fbdev_fb.c
-@@ -33,7 +33,7 @@ struct intel_framebuffer *intel_fbdev_fb_alloc(struct drm_fb_helper *helper,
- 	mode_cmd.height = sizes->surface_height;
+diff --git a/drivers/gpu/drm/i915/display/intel_fbdev_fb.c b/drivers/gpu/drm/i915/display/intel_fbdev_fb.c
+index 210aee9ae88b8..b9dfd00a7d05b 100644
+--- a/drivers/gpu/drm/i915/display/intel_fbdev_fb.c
++++ b/drivers/gpu/drm/i915/display/intel_fbdev_fb.c
+@@ -67,9 +67,16 @@ struct intel_framebuffer *intel_fbdev_fb_alloc(struct drm_fb_helper *helper,
+ 							  mode_cmd.pixel_format,
+ 							  mode_cmd.modifier[0]),
+ 				      &mode_cmd);
++	if (IS_ERR(fb)) {
++		i915_gem_object_put(obj);
++		goto err;
++	}
++
+ 	i915_gem_object_put(obj);
  
- 	mode_cmd.pitches[0] = ALIGN(mode_cmd.width *
--				    DIV_ROUND_UP(sizes->surface_bpp, 8), XE_PAGE_SIZE);
-+				    DIV_ROUND_UP(sizes->surface_bpp, 8), 64);
- 	mode_cmd.pixel_format = drm_mode_legacy_fb_format(sizes->surface_bpp,
- 							  sizes->surface_depth);
+ 	return to_intel_framebuffer(fb);
++err:
++	return ERR_CAST(fb);
+ }
  
+ int intel_fbdev_fb_fill_info(struct intel_display *display, struct fb_info *info,
 -- 
 2.51.0
 
