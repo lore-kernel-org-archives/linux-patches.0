@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3864134F250;
-	Tue, 16 Dec 2025 12:13:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ED5232824A;
+	Tue, 16 Dec 2025 12:13:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887230; cv=none; b=CpzGwM3nNdoARDDzuGJRlTAqokgNFInEQfKALItLH7DGnSD4hkoaVtKuqoi6uWzkdLR1q+XgD8BEin/1Kd+1aitzLhha6FT/5DO6sMAIlfUVRlQbrwzQNxxYAH2y5R0pFp1fcd7ad1G3C02u9w4dxGixKALmJQorNiGnAR+6cxs=
+	t=1765887233; cv=none; b=hp/lZvcHsUfpIcYzRwN3rDv3Zme5xgv2gQ+jdzbcDaZY3Z08LowziXd9OHEepPBaML7lslnbU5wLJbvWjgc5MtBFu/gw9d6rG/EtGYnZi/BGB46Iod9lNPH5j+vqs5rRtaEL18rNcBchVpRfZ0VI7N9G4KBfOS0FoZJlIjnCQZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887230; c=relaxed/simple;
-	bh=2cKg9UzWQrMZNNNkf7vewopmQWuGXo3QIXdRXuVEkrk=;
+	s=arc-20240116; t=1765887233; c=relaxed/simple;
+	bh=g4D1c6jPxrQSGLmsYL1mD6Ovw/k4n4z+w4gfIGz28c4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hWDI52SOGn++Bm/5Bt4dSuZgWvYZGQG2/cJqV+9jRKUhjPBeh9/lwZzgPbg9itkD/HQ9omnOjz+kal+vUZXCvLoAYw+X7GGGKU4HqaqvnAHai9T9zUeLXVUMCnh48RQdH+rA6sC/S9ooy+N6Y/UszXuzzETsaT9Eql6UV64TU6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2vSGNLQ5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HSOyX6dMAYu1WpSRXfGxbtKBeKhbEi1qE8ScnyLW1NKgixDcFtGUiY7jvJ9tX7OqLgL78+aWkg9+ExJpvDOlt5MZMaDIAQw/ufSP17eJxTQ5WKlWf1VCCypsMf3Lkj9rc7q7N3zUI9NV3HlagQUoMmMnYO2dSDns1jhualTPDh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ptdRRgpz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2vSGNLQ5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7A90C4CEF1;
-	Tue, 16 Dec 2025 12:13:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ptdRRgpz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F47C4CEF1;
+	Tue, 16 Dec 2025 12:13:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887230;
-	bh=2cKg9UzWQrMZNNNkf7vewopmQWuGXo3QIXdRXuVEkrk=;
+	s=korg; t=1765887233;
+	bh=g4D1c6jPxrQSGLmsYL1mD6Ovw/k4n4z+w4gfIGz28c4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2vSGNLQ5fiStXe43qgk2iJxNknWRnhRfAa3abPjZKNlbk7URkjXsOQPHyff2Ud97m
-	 xUPZQMze/CZxd5A9bpsIETxqhtcyNmIANb0viRSnMWLxvpLxOP9imlWFlQGHMrd/XZ
-	 aq3kkuGgoOmDfKN5pN2MvfgJ7IGVKShdOIiuedF4=
+	b=ptdRRgpzRZjeTVTt8mchvjSRKCCT+nIRkOCKDo8H5N9OUHI+pCGdHUOpYcu5T2Hdh
+	 +jzUimwdEdjdTcw6zx6g78wJgsjXJppJIpFpEl8vAvzZNefJLtTSAdnf8ck2npxdxA
+	 VxhB//OzT1Cb1+5HFyT8klKLQQ06ACoQVEJC25r4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Georgi Djakov <djakov@kernel.org>,
+	Li Qiang <liqiang01@kylinos.cn>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 166/614] arm64: dts: qcom: msm8996: add interconnect paths to USB2 controller
-Date: Tue, 16 Dec 2025 12:08:53 +0100
-Message-ID: <20251216111407.350581024@linuxfoundation.org>
+Subject: [PATCH 6.18 135/614] wifi: iwlwifi: mld: add null check for kzalloc() in iwl_mld_send_proto_offload()
+Date: Tue, 16 Dec 2025 12:08:22 +0100
+Message-ID: <20251216111406.226840175@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -53,38 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Li Qiang <liqiang01@kylinos.cn>
 
-[ Upstream commit 242f7558e7bf54cb63c06506f7b0630dd67d45a4 ]
+[ Upstream commit 3df28496673bd8009f1cd3a85a63650c96e369f4 ]
 
-Add the missing interconnects to the USB2 host. The Fixes tag points to
-the commit which broke probing of the USB host on that platform.
+Add a missing NULL pointer check after kzalloc() in
+iwl_mld_send_proto_offload(). Without this check, a failed
+allocation could lead to a NULL dereference.
 
-Fixes: 130733a10079 ("interconnect: qcom: msm8996: Promote to core_initcall")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Acked-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20251002-fix-msm8996-icc-v1-2-a36a05d1f869@oss.qualcomm.com
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Fixes: d1e879ec600f9 ("wifi: iwlwifi: add iwlmld sub-driver")
+Signed-off-by: Li Qiang <liqiang01@kylinos.cn>
+Link: https://patch.msgid.link/20251017041128.1379715-1-liqiang01@kylinos.cn
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/mld/d3.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index c75b522f6eba6..33608b1d7d060 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -3496,6 +3496,9 @@ usb2: usb@76f8800 {
- 					  <&gcc GCC_USB20_MASTER_CLK>;
- 			assigned-clock-rates = <19200000>, <60000000>;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/d3.c b/drivers/net/wireless/intel/iwlwifi/mld/d3.c
+index 1d4282a21f09e..dd85be94433cc 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/d3.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/d3.c
+@@ -1794,6 +1794,10 @@ iwl_mld_send_proto_offload(struct iwl_mld *mld,
+ 	u32 enabled = 0;
  
-+			interconnects = <&pnoc MASTER_USB_HS &bimc SLAVE_EBI_CH0>,
-+					<&bimc MASTER_AMPSS_M0 &pnoc SLAVE_USB_HS>;
-+			interconnect-names = "usb-ddr", "apps-usb";
- 			power-domains = <&gcc USB30_GDSC>;
- 			qcom,select-utmi-as-pipe-clk;
- 			status = "disabled";
+ 	cmd = kzalloc(hcmd.len[0], GFP_KERNEL);
++	if (!cmd) {
++		IWL_DEBUG_WOWLAN(mld, "Failed to allocate proto offload cmd\n");
++		return -ENOMEM;
++	}
+ 
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	struct iwl_mld_vif *mld_vif = iwl_mld_vif_from_mac80211(vif);
 -- 
 2.51.0
 
