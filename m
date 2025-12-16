@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29555355805;
-	Tue, 16 Dec 2025 11:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E993557E8;
+	Tue, 16 Dec 2025 11:57:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886243; cv=none; b=pKtqWcAeb7Bl9WDjFHp+HLeTkEJ1zkwoE9LVQmXSACLjgOzcFbfxWRXxGFooTjcnSdGm/13DlC80+WOOJeXS6AiZi4JRpQ5DKds700fe7w2PgjpB7O0sqWbPK2pWGFz4KgDWAn959esIcu1BiUZl7JoJ81LmxLaXFkmk/Umwjyw=
+	t=1765886246; cv=none; b=d6yl86F9SbAdtbDMpgL8qeklfoG96tPmbYwhLasQcScSGxjHUWU75fNmOgPIGi1JQGLrLBh5LtKdFRsC4Y2jGdlrdyL7DrWnVGki0MSr0n8roRoJS1klWa+FQJTpjJacDiBmqa2pVislvqZYNTj5lWlL3j4+Zs2XNYtKBML21mE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886243; c=relaxed/simple;
-	bh=09QH47jtaaXlJ11VrALNAEzO525CfdEyxrySxxbe9js=;
+	s=arc-20240116; t=1765886246; c=relaxed/simple;
+	bh=cFHyXDWxO62Jg6FFx00gU/mSfrd6iKv3bBTbkF7FM88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lMIW4MDqTyJTSnlwC7tgLkmatRwnNdNtzsV60MY867IFzQ0YMbH9DjdfOPJj976/I9p1RnUQWALrckGxb9zeC6/L0/G8eM52aKyVBeodztjayOAsl3hmSuZ5hAUM6y0ZJek2PDfAyNdvWKmwvUtED1BTKXD3jKCrPg0aXJbHMJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rapnfC8N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jINYCWAK6Z4jzZ4niWEjqpV2urnsdP/w49VHDEimyIvSgxEwFQxFKKkF0+xEzxBijZ5d6woH5uCjYlxNvTLUN8espEEZdQGaHBDYdxIc6jawNSS6oeWMa0JXGHvOoTvio8A1lDvRhCSM67Qt3zToqXbPechA5PJ4zP5fdOFfSjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qO/ql+9k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rapnfC8N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8FDFC4CEF1;
-	Tue, 16 Dec 2025 11:57:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qO/ql+9k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3891C16AAE;
+	Tue, 16 Dec 2025 11:57:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886243;
-	bh=09QH47jtaaXlJ11VrALNAEzO525CfdEyxrySxxbe9js=;
+	s=korg; t=1765886246;
+	bh=cFHyXDWxO62Jg6FFx00gU/mSfrd6iKv3bBTbkF7FM88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rapnfC8N7hgykXJ8Z/WOvPt905jFQwBTYfxzSsCHPUFZD4Jxds/ahpm4F6LpLGdvA
-	 5lsWX3D3K8rBdUQW40hraSF826oBfmRe+Tq/mu/qR6ZejcVVpo36Fua9hVUojYhG6K
-	 /uEDsHlAugJLvEMLQJoyO/ScbPzCZxK5qYoWTaw0=
+	b=qO/ql+9klBOSf4FmlZqB5C6ebyh7XwxGY0cClitIJvbfqb3ckypxA437BSr7/6+Te
+	 naw0+WloXX2H5CviIES+rWkLqUe96TcDHZSUV5NGxk0Q+N290sEcEl/pghONvnPUUE
+	 MEvCddCgxmEm6yZCt/dA2cmrBbj/9Ob0j4UB2pjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jason Wang <jasowang@redhat.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 378/507] virtio: fix grammar in virtio_queue_info docs
-Date: Tue, 16 Dec 2025 12:13:39 +0100
-Message-ID: <20251216111359.154904627@linuxfoundation.org>
+Subject: [PATCH 6.17 379/507] virtio: fix virtqueue_set_affinity() docs
+Date: Tue, 16 Dec 2025 12:13:40 +0100
+Message-ID: <20251216111359.190524125@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -53,12 +53,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael S. Tsirkin <mst@redhat.com>
 
-[ Upstream commit 63598fba55ab9d384818fed48dc04006cecf7be4 ]
+[ Upstream commit 43236d8bbafff94b423afecc4a692dd90602d426 ]
 
-Fix grammar in the description of @ctx
+Rewrite the comment for better grammar and clarity.
 
-Fixes: c502eb85c34e ("virtio: introduce virtio_queue_info struct and find_vqs_info() config op")
-Message-Id: <a5cf2b92573200bdb1c1927e559d3930d61a4af2.1763026134.git.mst@redhat.com>
+Fixes: 75a0a52be3c2 ("virtio: introduce an API to set affinity for a virtqueue")
+Message-Id: <e317e91bd43b070e5eaec0ebbe60c5749d02e2dd.1763026134.git.mst@redhat.com>
 Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
@@ -67,18 +67,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/include/linux/virtio_config.h b/include/linux/virtio_config.h
-index f8a00a780a44d..2e7ead07376d1 100644
+index 2e7ead07376d1..ba621d86517c3 100644
 --- a/include/linux/virtio_config.h
 +++ b/include/linux/virtio_config.h
-@@ -24,7 +24,7 @@ typedef void vq_callback_t(struct virtqueue *);
-  *        a virtqueue unused by the driver.
-  * @callback: A callback to invoke on a used buffer notification.
-  *            NULL for a virtqueue that does not need a callback.
-- * @ctx: A flag to indicate to maintain an extra context per virtqueue.
-+ * @ctx: whether to maintain an extra context per virtqueue.
+@@ -312,7 +312,7 @@ const char *virtio_bus_name(struct virtio_device *vdev)
+  * @vq: the virtqueue
+  * @cpu_mask: the cpu mask
+  *
+- * Pay attention the function are best-effort: the affinity hint may not be set
++ * Note that this function is best-effort: the affinity hint may not be set
+  * due to config support, irq type and sharing.
+  *
   */
- struct virtqueue_info {
- 	const char *name;
 -- 
 2.51.0
 
