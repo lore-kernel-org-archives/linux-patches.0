@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4BFC342513;
-	Tue, 16 Dec 2025 11:27:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213C830EF80;
+	Tue, 16 Dec 2025 11:27:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884463; cv=none; b=jEEecNY+S80f2FgF/jBK/ULsPTrDAdwuhZL9I0TSeCAQ7oOi3Otx7JGHZtRsWgm5yOmq4mfk3+h2YIOkZtu/0GSh84IZXH7SZgM132AFQKgTjQKPb9c6W78g/IwtkdP25cZ0yZJzNKpKSleiU+RwS1BYL8XXdcgRbX4zhI2B+Yo=
+	t=1765884467; cv=none; b=WUoYmywQBeem3/hFLmrBnyErtCxds4/ODUCnDGbFSoOTKxg9ANYvBGuyt9UrBjyVfL5O6zkwtdkTgLxr8HdTqZH0IKUES1kBdy+2DMxj4v83opc0X7PTz9Z5NHV+wa5vLjO/1QsoDZ23deVZwzRR3oZpxIZX3BM6FGLXHEP2Jrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884463; c=relaxed/simple;
-	bh=DR8RChKvj5S1zu31xHlgqK/SncfdVBk8sNmGoi7ecLg=;
+	s=arc-20240116; t=1765884467; c=relaxed/simple;
+	bh=BR11ZeyCzyaFTlj+0u6DyCnWt6Y0Jl/KXKXrBlT8NUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uFIuYwREvGAQ3m6IU1GL5fTrT+/CcZLFHzpggjUSfNZpjnNrQuwXfX1o3cja7mfJ4csCEpchE9PUU1wGygQR09wEhErSRj7agxHZyICzDy3RiB/yFg6z5hPCnbTYWIwZTWy2VhhVVoXBnQ6c70hpX52lTMZ9HKIdMr8V6jLQFyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E0G18Oza; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nq7EYBgbUt873khYTi42YGq8k+1dT/hdulpQ5UFLk6M25YNe4VSsI6dZfCHhnm+Bd7H/2OEfKTQz9UY3fXHEeeTGFQ7drMp0db/mcOF2nxVQBhaOBTnVMbBtoSMrqf6+FVoVislEyeAMBUCyScoF7F6oa6LgQ9/kPQcznMDQOgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z/YqDeMx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E0G18Oza"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39EE8C4CEF1;
-	Tue, 16 Dec 2025 11:27:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z/YqDeMx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 861B3C16AAE;
+	Tue, 16 Dec 2025 11:27:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884463;
-	bh=DR8RChKvj5S1zu31xHlgqK/SncfdVBk8sNmGoi7ecLg=;
+	s=korg; t=1765884467;
+	bh=BR11ZeyCzyaFTlj+0u6DyCnWt6Y0Jl/KXKXrBlT8NUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E0G18OzaVtxnOViETFQ5m0jMul2r7nhdQgBLqoINTzxX7Fmo0pHDF+nu1TItyXcS+
-	 HWNCNH+WBiDiAniF/Dc/7fRA6pYv+xbReox38cmp6+dLa7CCScurMU4vwTqLn+98NQ
-	 81sjy+sZEimW5rouzrTmEAX/JXKxCrDr9ttDprJY=
+	b=z/YqDeMxgwP3yW3g8ji9Lx3Wju7zreFIfhoRbY09+dtZ9OjJU0JYWkGm5aJToQpNM
+	 D2b5lZkNjfsIysIaVrYP/z4yANaOyrK3Rul7jbic5iaXTvoEpSAzXFLxdV2f2lO0Zf
+	 fT7eLsYXhk4pAHuT3MLPUve36AStqGaumRLo/ieg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pu Lehui <pulehui@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Zhao Yipeng <zhaoyipeng5@huawei.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 174/354] bpf: Fix invalid prog->stats access when update_effective_progs fails
-Date: Tue, 16 Dec 2025 12:12:21 +0100
-Message-ID: <20251216111327.217715648@linuxfoundation.org>
+Subject: [PATCH 6.12 201/354] ima: Handle error code returned by ima_filter_rule_match()
+Date: Tue, 16 Dec 2025 12:12:48 +0100
+Message-ID: <20251216111328.201012868@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -51,89 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pu Lehui <pulehui@huawei.com>
+From: Zhao Yipeng <zhaoyipeng5@huawei.com>
 
-[ Upstream commit 7dc211c1159d991db609bdf4b0fb9033c04adcbc ]
+[ Upstream commit 738c9738e690f5cea24a3ad6fd2d9a323cf614f6 ]
 
-Syzkaller triggers an invalid memory access issue following fault
-injection in update_effective_progs. The issue can be described as
-follows:
+In ima_match_rules(), if ima_filter_rule_match() returns -ENOENT due to
+the rule being NULL, the function incorrectly skips the 'if (!rc)' check
+and sets 'result = true'. The LSM rule is considered a match, causing
+extra files to be measured by IMA.
 
-__cgroup_bpf_detach
-  update_effective_progs
-    compute_effective_progs
-      bpf_prog_array_alloc <-- fault inject
-  purge_effective_progs
-    /* change to dummy_bpf_prog */
-    array->items[index] = &dummy_bpf_prog.prog
+This issue can be reproduced in the following scenario:
+After unloading the SELinux policy module via 'semodule -d', if an IMA
+measurement is triggered before ima_lsm_rules is updated,
+in ima_match_rules(), the first call to ima_filter_rule_match() returns
+-ESTALE. This causes the code to enter the 'if (rc == -ESTALE &&
+!rule_reinitialized)' block, perform ima_lsm_copy_rule() and retry. In
+ima_lsm_copy_rule(), since the SELinux module has been removed, the rule
+becomes NULL, and the second call to ima_filter_rule_match() returns
+-ENOENT. This bypasses the 'if (!rc)' check and results in a false match.
 
----softirq start---
-__do_softirq
-  ...
-    __cgroup_bpf_run_filter_skb
-      __bpf_prog_run_save_cb
-        bpf_prog_run
-          stats = this_cpu_ptr(prog->stats)
-          /* invalid memory access */
-          flags = u64_stats_update_begin_irqsave(&stats->syncp)
----softirq end---
+Call trace:
+  selinux_audit_rule_match+0x310/0x3b8
+  security_audit_rule_match+0x60/0xa0
+  ima_match_rules+0x2e4/0x4a0
+  ima_match_policy+0x9c/0x1e8
+  ima_get_action+0x48/0x60
+  process_measurement+0xf8/0xa98
+  ima_bprm_check+0x98/0xd8
+  security_bprm_check+0x5c/0x78
+  search_binary_handler+0x6c/0x318
+  exec_binprm+0x58/0x1b8
+  bprm_execve+0xb8/0x130
+  do_execveat_common.isra.0+0x1a8/0x258
+  __arm64_sys_execve+0x48/0x68
+  invoke_syscall+0x50/0x128
+  el0_svc_common.constprop.0+0xc8/0xf0
+  do_el0_svc+0x24/0x38
+  el0_svc+0x44/0x200
+  el0t_64_sync_handler+0x100/0x130
+  el0t_64_sync+0x3c8/0x3d0
 
-  static_branch_dec(&cgroup_bpf_enabled_key[atype])
+Fix this by changing 'if (!rc)' to 'if (rc <= 0)' to ensure that error
+codes like -ENOENT do not bypass the check and accidentally result in a
+successful match.
 
-The reason is that fault injection caused update_effective_progs to fail
-and then changed the original prog into dummy_bpf_prog.prog in
-purge_effective_progs. Then a softirq came, and accessing the members of
-dummy_bpf_prog.prog in the softirq triggers invalid mem access.
-
-To fix it, skip updating stats when stats is NULL.
-
-Fixes: 492ecee892c2 ("bpf: enable program stats")
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
-Link: https://lore.kernel.org/r/20251115102343.2200727-1-pulehui@huaweicloud.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 4af4662fa4a9d ("integrity: IMA policy")
+Signed-off-by: Zhao Yipeng <zhaoyipeng5@huawei.com>
+Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/filter.h | 12 +++++++-----
- kernel/bpf/syscall.c   |  3 +++
- 2 files changed, 10 insertions(+), 5 deletions(-)
+ security/integrity/ima/ima_policy.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/filter.h b/include/linux/filter.h
-index 9b6908291de7c..a91f2babf4253 100644
---- a/include/linux/filter.h
-+++ b/include/linux/filter.h
-@@ -692,11 +692,13 @@ static __always_inline u32 __bpf_prog_run(const struct bpf_prog *prog,
- 		ret = dfunc(ctx, prog->insnsi, prog->bpf_func);
- 
- 		duration = sched_clock() - start;
--		stats = this_cpu_ptr(prog->stats);
--		flags = u64_stats_update_begin_irqsave(&stats->syncp);
--		u64_stats_inc(&stats->cnt);
--		u64_stats_add(&stats->nsecs, duration);
--		u64_stats_update_end_irqrestore(&stats->syncp, flags);
-+		if (likely(prog->stats)) {
-+			stats = this_cpu_ptr(prog->stats);
-+			flags = u64_stats_update_begin_irqsave(&stats->syncp);
-+			u64_stats_inc(&stats->cnt);
-+			u64_stats_add(&stats->nsecs, duration);
-+			u64_stats_update_end_irqrestore(&stats->syncp, flags);
-+		}
- 	} else {
- 		ret = dfunc(ctx, prog->insnsi, prog->bpf_func);
- 	}
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index ba4543e771a6e..04c8755c0b951 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -2281,6 +2281,9 @@ void notrace bpf_prog_inc_misses_counter(struct bpf_prog *prog)
- 	struct bpf_prog_stats *stats;
- 	unsigned int flags;
- 
-+	if (unlikely(!prog->stats))
-+		return;
-+
- 	stats = this_cpu_ptr(prog->stats);
- 	flags = u64_stats_update_begin_irqsave(&stats->syncp);
- 	u64_stats_inc(&stats->misses);
+diff --git a/security/integrity/ima/ima_policy.c b/security/integrity/ima/ima_policy.c
+index 09da8e6392395..11b3ea1099ba3 100644
+--- a/security/integrity/ima/ima_policy.c
++++ b/security/integrity/ima/ima_policy.c
+@@ -672,7 +672,7 @@ static bool ima_match_rules(struct ima_rule_entry *rule,
+ 				goto retry;
+ 			}
+ 		}
+-		if (!rc) {
++		if (rc <= 0) {
+ 			result = false;
+ 			goto out;
+ 		}
 -- 
 2.51.0
 
