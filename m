@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A8A3596F7;
-	Tue, 16 Dec 2025 12:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC4B3596EC;
+	Tue, 16 Dec 2025 12:04:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886670; cv=none; b=t1oGhVuj1rH8llIOWy98eYD9s2teilmEz0+7IDGS41LhGZlkX4DeMqox4U+fx+8QwX0F+/gFYx/mCfqsrLUQaD65wynwUyf6NHpx3Clg3PEC4aJw+9DZtHufsOmyRBZCXwHmjhvanOQblyTWhuiWbcydkQssevv4Po8FX41sgTY=
+	t=1765886673; cv=none; b=uEjOVT/9dcJTNF0Cu9ZfK0kkKrYmdBsGS3rCiqxww4J7kDmBv5KledrKXt3BufJQSNmDniuCKlulAkg42/Bn4Z+syTMs/27pYxEGUchFN8a9PlwgARYwZ91NomKA+ik4qz6J4Dp6BHTJ9bVPsntfYLP/lrxC8HcWIkoD2tOB3oI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886670; c=relaxed/simple;
-	bh=nIexgY3FuhayDnfbOhLnSvOiwgENZRciWSeqroNnIBE=;
+	s=arc-20240116; t=1765886673; c=relaxed/simple;
+	bh=tmjnlk1t9lXJ2dRRqndlMqMIzehKHxWfk0+5534ldSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OZM/F2LrxQKv5WwaRWVHivvUh5InycykCdi9B4kqSaiQAsIk6+q9FSi3U9jx+ONH3/qc6wWibIANThcGeGqVqV7IjgSMrBu+sQfz4/5CLGMJLjpNlYtessQw1K/GDb/DrnUDRSYwG2HgGHIXmYqrA+6rDzfr/N2MOlxBmIJr5lA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AvSTAWil; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nsShRiAHw0z/VlgtsqPc1ZnJyMxRXfdkHPvn9ZpHaax4mJFcsniTsqsVWcfXQ9+Dg44umUmVIkdQbQKbMAx/etWTP4McN/pQnNhmfVk5zK9H+UbHrI3hsP/YUDkA98oQ+uGLCE1tr1oDpHYtKZ16Yv+/wSBF33qarBKOz5+SsVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A0G2i4xj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AvSTAWil"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61B26C4CEF1;
-	Tue, 16 Dec 2025 12:04:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A0G2i4xj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3D27C4CEF1;
+	Tue, 16 Dec 2025 12:04:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886669;
-	bh=nIexgY3FuhayDnfbOhLnSvOiwgENZRciWSeqroNnIBE=;
+	s=korg; t=1765886673;
+	bh=tmjnlk1t9lXJ2dRRqndlMqMIzehKHxWfk0+5534ldSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AvSTAWil9NQVBhasmePKHhoahyTOEpvBA25Il4RCw0Jg9wV+iQmSnskFk2oudfw7y
-	 6lrXlJT50YcaWFzv9mnthse4clE6DfqQiVBAkPinpE67BmSC8KsASIoqDDcoe6c4na
-	 v0wlCUQSdeSO9nhSxAbQdgwbfgQlUOFq7UmAMdl0=
+	b=A0G2i4xjO8GV36k7rJpM4vDfKNN6PYBwBEyqr6tFxF5fXJsqVvsIrHqcDA4e0yOE0
+	 9NFnMnccdCIY6dgFXLljEtjB5kkDtbeggkRotFL2Oa8mSNRjqgoZaFQfI3kj9cLJH+
+	 QyQDkN1mXJIZJPQwEnsCDhNuYeR4uPx+41qMN4jg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Arefev <arefev@swemel.ru>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.17 506/507] ALSA: hda: cs35l41: Fix NULL pointer dereference in cs35l41_hda_read_acpi()
-Date: Tue, 16 Dec 2025 12:15:47 +0100
-Message-ID: <20251216111403.769380095@linuxfoundation.org>
+Subject: [PATCH 6.17 507/507] ALSA: wavefront: Fix integer overflow in sample size validation
+Date: Tue, 16 Dec 2025 12:15:48 +0100
+Message-ID: <20251216111403.805402009@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -51,37 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis Arefev <arefev@swemel.ru>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit c34b04cc6178f33c08331568c7fd25c5b9a39f66 upstream.
+commit 0c4a13ba88594fd4a27292853e736c6b4349823d upstream.
 
-The acpi_get_first_physical_node() function can return NULL, in which
-case the get_device() function also returns NULL, but this value is
-then dereferenced without checking,so add a check to prevent a crash.
+The wavefront_send_sample() function has an integer overflow issue
+when validating sample size. The header->size field is u32 but gets
+cast to int for comparison with dev->freemem
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Fix by using unsigned comparison to avoid integer overflow.
 
-Fixes: 7b2f3eb492da ("ALSA: hda: cs35l41: Add support for CS35L41 in HDA systems")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Denis Arefev <arefev@swemel.ru>
-Reviewed-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Link: https://patch.msgid.link/SYBPR01MB7881B47789D1B060CE8BF4C3AFC2A@SYBPR01MB7881.ausprd01.prod.outlook.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20251202101338.11437-1-arefev@swemel.ru
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/hda/codecs/side-codecs/cs35l41_hda.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/isa/wavefront/wavefront_synth.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/sound/hda/codecs/side-codecs/cs35l41_hda.c
-+++ b/sound/hda/codecs/side-codecs/cs35l41_hda.c
-@@ -1917,6 +1917,8 @@ static int cs35l41_hda_read_acpi(struct
+--- a/sound/isa/wavefront/wavefront_synth.c
++++ b/sound/isa/wavefront/wavefront_synth.c
+@@ -950,9 +950,9 @@ wavefront_send_sample (snd_wavefront_t *
+ 	if (header->size) {
+ 		dev->freemem = wavefront_freemem (dev);
  
- 	cs35l41->dacpi = adev;
- 	physdev = get_device(acpi_get_first_physical_node(adev));
-+	if (!physdev)
-+		return -ENODEV;
- 
- 	sub = acpi_get_subsystem_id(ACPI_HANDLE(physdev));
- 	if (IS_ERR(sub))
+-		if (dev->freemem < (int)header->size) {
++		if (dev->freemem < 0 || dev->freemem < header->size) {
+ 			dev_err(dev->card->dev,
+-				"insufficient memory to load %d byte sample.\n",
++				"insufficient memory to load %u byte sample.\n",
+ 				header->size);
+ 			return -ENOMEM;
+ 		}
 
 
