@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 582C925FA10;
-	Tue, 16 Dec 2025 11:17:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ACBD2459D7;
+	Tue, 16 Dec 2025 11:17:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765883841; cv=none; b=uPoQqwElpwXWhsZRcFxM3L8WnqCbB4afWHm1e5SezTHZpI+frd7WQ3lG2BkMCDAhcUrTbWJZUHE5mPILlGZ30tsWAQ/GhKyAzFwRFF58brciNpUzYWl9M/tlaT7PmTy7go5yq4lPZkZk/0znAcAtqyXZfEnStO+qVCPILGncRJg=
+	t=1765883845; cv=none; b=OtlF0VFSpcbwV2uqPzrxaQXR4uKvIacJ/qDJTtnjTwjB4fc0umVHoqrC8cdKBrYyN84/kku72LcuThjl6FMwMIr6+ikb5ZSYp5QHfBBXOvoyhHe5uYcysRtEfsUzp7mLDEM4/pQUElScJlXIsUNzkMDycu7Tb/jzmfbIWwsfRGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765883841; c=relaxed/simple;
-	bh=RpXgPCx9Npv0Q7TeqedZA7wK4rPkUYmcMYAUsbxE5BA=;
+	s=arc-20240116; t=1765883845; c=relaxed/simple;
+	bh=Q8WLLTcDuTsosWd6LV5cT8tgr5DXhXeENHrUhJQuNJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tfMuV/BZ0BSJpwClzLgr7kOyZaEoAtwDcsbRabJLCOeyvpWSU/HHhoiH8Aj5tDwvOIuHYJI6ZjdQF467pIcgDuYpcSQoOR0F+0Gq3ThASVL8bpet8Lw+bAsS2ffARYNkBWCrIERaQM0dIgHnIS9QNQFSOyx5zwoZ5s3MKgkytjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nfKjIOXw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EYh23F4UrVJb/3FPvIdyf7Zwrg++r/hY+rs6pJ9Oh3GjYjaYZCTwOGDlGXwqnoGoC8nNUmSrDuZQBacejNsSJ0zTu9D0Qc3MLpNnzETV0nNfDDswoGDmgvw1EO68j/o1IcrLvi+k3T/UhGJVbUQdITcRBwsX8Lbr/r+4WOiLJGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jHWk/djr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nfKjIOXw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A078BC4CEF1;
-	Tue, 16 Dec 2025 11:17:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jHWk/djr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FDF6C4CEF1;
+	Tue, 16 Dec 2025 11:17:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765883841;
-	bh=RpXgPCx9Npv0Q7TeqedZA7wK4rPkUYmcMYAUsbxE5BA=;
+	s=korg; t=1765883844;
+	bh=Q8WLLTcDuTsosWd6LV5cT8tgr5DXhXeENHrUhJQuNJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nfKjIOXwwJOQlBzRro9V3Z4hHQoRniMnOu9X9UQeZGyzWTTLuGjZ8z4KqzeLhmt0w
-	 zYfITETMcWaVSB+i7kGUiPn7k7KMro+rEkg1LmKX8kDu6h1TS0ez497sZYb8bH00eQ
-	 VNmLpWawRmgYknbmIzUQJkIVF0v5kswZvAV7VqG8=
+	b=jHWk/djrb77P8+8/0cdxUC1RxMS0Dt1zT5cULXbvl+xw9bdtJnTAN2MHVL+siRNMk
+	 4FT9AUU3dmkkqAUM0Klb3nHLG5WSDE8f10z51YvpIk4RaQXPH7JbrsRmjWm7/cHtt7
+	 9om/1IPDINXi8KbeYAxxY2ioiE7IJNU8AAWptx00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 016/354] pinctrl: renesas: rzg2l: Fix PMC restore
-Date: Tue, 16 Dec 2025 12:09:43 +0100
-Message-ID: <20251216111321.496467355@linuxfoundation.org>
+Subject: [PATCH 6.12 017/354] clk: renesas: cpg-mssr: Add missing 1ms delay into reset toggle callback
+Date: Tue, 16 Dec 2025 12:09:44 +0100
+Message-ID: <20251216111321.532625638@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -51,39 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Marek Vasut <marek.vasut+renesas@mailbox.org>
 
-[ Upstream commit cea950101108b7bfffe26ec4007b8e263a4b56a8 ]
+[ Upstream commit 62abfd7bedc2b3d86d4209a4146f9d2b5ae21fab ]
 
-PMC restore needs unlocking the register using the PWPR register.
+R-Car V4H Reference Manual R19UH0186EJ0130 Rev.1.30 Apr. 21, 2025 page
+583 Figure 9.3.1(a) Software Reset flow (A) as well as flow (B) / (C)
+indicate after reset has been asserted by writing a matching reset bit
+into register SRCR, it is mandatory to wait 1ms.
 
-Fixes: ede014cd1ea6422d ("pinctrl: renesas: rzg2l: Add function pointer for PMC register write")
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+This 1ms delay is documented on R-Car V4H and V4M, it is currently
+unclear whether S4 is affected as well.  This patch does apply the extra
+delay on R-Car S4 as well.
+
+Fix the reset driver to respect the additional delay when toggling
+resets.  Drivers which use separate reset_control_(de)assert() must
+assure matching delay in their driver code.
+
+Fixes: 0ab55cf18341 ("clk: renesas: cpg-mssr: Add support for R-Car V4H")
+Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
 Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20250921111557.103069-2-biju.das.jz@bp.renesas.com
+Link: https://patch.msgid.link/20250918030552.331389-1-marek.vasut+renesas@mailbox.org
 Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/pinctrl-rzg2l.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/clk/renesas/renesas-cpg-mssr.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pinctrl/renesas/pinctrl-rzg2l.c b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-index 698ab8cc970a6..c6ef77472d9a1 100644
---- a/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-+++ b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-@@ -2807,7 +2807,11 @@ static void rzg2l_pinctrl_pm_setup_regs(struct rzg2l_pinctrl *pctrl, bool suspen
- 		 * Now cache the registers or set them in the order suggested by
- 		 * HW manual (section "Operation for GPIO Function").
- 		 */
--		RZG2L_PCTRL_REG_ACCESS8(suspend, pctrl->base + PMC(off), cache->pmc[port]);
-+		if (suspend)
-+			RZG2L_PCTRL_REG_ACCESS8(suspend, pctrl->base + PMC(off), cache->pmc[port]);
-+		else
-+			pctrl->data->pmc_writeb(pctrl, cache->pmc[port], PMC(off));
-+
- 		if (has_iolh) {
- 			RZG2L_PCTRL_REG_ACCESS32(suspend, pctrl->base + IOLH(off),
- 						 cache->iolh[0][port]);
+diff --git a/drivers/clk/renesas/renesas-cpg-mssr.c b/drivers/clk/renesas/renesas-cpg-mssr.c
+index 112ed81f648ee..ecb7e2024d589 100644
+--- a/drivers/clk/renesas/renesas-cpg-mssr.c
++++ b/drivers/clk/renesas/renesas-cpg-mssr.c
+@@ -630,8 +630,15 @@ static int cpg_mssr_reset(struct reset_controller_dev *rcdev,
+ 	/* Reset module */
+ 	writel(bitmask, priv->base + priv->reset_regs[reg]);
+ 
+-	/* Wait for at least one cycle of the RCLK clock (@ ca. 32 kHz) */
+-	udelay(35);
++	/*
++	 * On R-Car Gen4, delay after SRCR has been written is 1ms.
++	 * On older SoCs, delay after SRCR has been written is 35us
++	 * (one cycle of the RCLK clock @ ca. 32 kHz).
++	 */
++	if (priv->reg_layout == CLK_REG_LAYOUT_RCAR_GEN4)
++		usleep_range(1000, 2000);
++	else
++		usleep_range(35, 1000);
+ 
+ 	/* Release module from reset state */
+ 	writel(bitmask, priv->base + priv->reset_clear_regs[reg]);
 -- 
 2.51.0
 
