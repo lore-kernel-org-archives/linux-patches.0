@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F067B342CBD;
-	Tue, 16 Dec 2025 12:29:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74873344052;
+	Tue, 16 Dec 2025 12:29:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888181; cv=none; b=EKcUpqpx5+ZVRqE/gkKP+sol/SP51TuOFjWKBoPfbGpbtGfGE3YkbK894pgwN7rnvX8fq8WRlaykSIro4Tkpm7H+WTBFbEh6R6wN3MP+WsigFGmw5kJOTIKlmSWPduDByW5Ll6DnvrQLuCSNAUjCT46PhtFRJEe3XDOVGdDzSKE=
+	t=1765888184; cv=none; b=Hl57mgstjB40TIs5h/tUpQFr+mn2CD2J0QHa7teymKs+NKjmKVZa3wdxwLzmGjS3OQB00xIuSDC+XRcdtAgrVOcSqG86CFI0hkvyBLRqP6WL8F6XzlI7UsQdDUfZXtKnAjp8Xs27wKn2nJBTY4mZIcMOLove1dfn2m0wHwpLuEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888181; c=relaxed/simple;
-	bh=DT8pyVDttQAEiYnB831TyXWZ+Nsrp6BCxruGFP89xAk=;
+	s=arc-20240116; t=1765888184; c=relaxed/simple;
+	bh=8q5haPDxKM/EAqwGfoQ6Ne5Qv/Uw9DIGvzIKbqaaPno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lbeH0LvJ7B4Unzp7TrCPSzj2hJiEYmfN83uqNIFsdI+gICwYp3FuyTKVyhdPe3ZnbogTYR618EN/6dhn+y+zHdvYHc8wpqQOl0dq3DtGtkssyU9rVpkfAY+mw+5/vwHEmQMTZWMRJI/Blk1x3cfV//9ezBcISEQkjJqTRTEiK6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pcGX344e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=un1AITcOp9DOp1NP8BDf9ZcaMyIMMf5YFMovJKR3jK4k4mScHXOCi+l48O9f++BaypbUTeTtJ5CWLfsVV9zEZQP6zZjmDJPm3ZCeiKyu/0ZnPty9pyhyW0CqlIG1atw3BSG14cIg+MlTkJbU649/DVx5E2mpeBXk3/8H9Wao9K0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hgNZmTg3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pcGX344e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53D1FC4CEF1;
-	Tue, 16 Dec 2025 12:29:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hgNZmTg3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6327C4CEF1;
+	Tue, 16 Dec 2025 12:29:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888180;
-	bh=DT8pyVDttQAEiYnB831TyXWZ+Nsrp6BCxruGFP89xAk=;
+	s=korg; t=1765888184;
+	bh=8q5haPDxKM/EAqwGfoQ6Ne5Qv/Uw9DIGvzIKbqaaPno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pcGX344ewjjrhcbhe9YvUqZr4Qe5eE41ueRfcLO5bMa2Dm+oqfUAZXmQwCxJ7CM73
-	 NJcrEArl7cw8tClAob/V/h4oQTVOlgHhwLXr9eWJt/CFVb5s06laI1COwtuHFwlC6d
-	 2idtBIDOZt6LdNc6FW7wrAIUtuY2RLa3XetyP5mY=
+	b=hgNZmTg36FJW7D1J+7Ku+5cuKM1FxpiOtDFZTnIrsetrj0vRB2bj2bXRE73X3zofi
+	 wqRRI09udgLkmpuzmyQ24AdiTb5G2rYlEmyvTqc2Cs178KmlOpvL4SHTm1xOxGyahB
+	 R6GTGn4QZ2wB/zAjd0XHkQajg5am2fZ8/ioqsaAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 423/614] RDMA/irdma: Add a missing kfree of struct irdma_pci_f for GEN2
-Date: Tue, 16 Dec 2025 12:13:10 +0100
-Message-ID: <20251216111416.698968622@linuxfoundation.org>
+Subject: [PATCH 6.18 424/614] RDMA/irdma: Fix SIGBUS in AEQ destroy
+Date: Tue, 16 Dec 2025 12:13:11 +0100
+Message-ID: <20251216111416.736096690@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,38 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
+From: Krzysztof Czurylo <krzysztof.czurylo@intel.com>
 
-[ Upstream commit 9e13d880ebae5da9b39ef2ed83a89737e927173f ]
+[ Upstream commit 5eff1ecce30143c3f8924d91770d81d44bd5abe5 ]
 
-During a refactor of the irdma GEN2 code, the kfree of the irdma_pci_f struct
-in icrdma_remove(), which was originally introduced upstream as part of
-commit 80f2ab46c2ee ("irdma: free iwdev->rf after removing MSI-X")
-was accidentally removed.
+Removes write to IRDMA_PFINT_AEQCTL register prior to destroying AEQ,
+as this register does not exist in GEN3+ hardware and this kind of IRQ
+configuration is no longer required.
 
-Fixes: 0c2b80cac96e ("RDMA/irdma: Refactor GEN2 auxiliary driver")
+Fixes: b800e82feba7 ("RDMA/irdma: Add GEN3 support for AEQ and CEQ")
 Signed-off-by: Krzysztof Czurylo <krzysztof.czurylo@intel.com>
 Signed-off-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
-Link: https://patch.msgid.link/20251125025350.180-4-tatyana.e.nikolova@intel.com
+Link: https://patch.msgid.link/20251125025350.180-5-tatyana.e.nikolova@intel.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/icrdma_if.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/infiniband/hw/irdma/ctrl.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/irdma/icrdma_if.c b/drivers/infiniband/hw/irdma/icrdma_if.c
-index 27b191f61caf4..5d3fd118e4f81 100644
---- a/drivers/infiniband/hw/irdma/icrdma_if.c
-+++ b/drivers/infiniband/hw/irdma/icrdma_if.c
-@@ -320,6 +320,8 @@ static void icrdma_remove(struct auxiliary_device *aux_dev)
- 	irdma_ib_unregister_device(iwdev);
- 	icrdma_deinit_interrupts(iwdev->rf, cdev_info);
+diff --git a/drivers/infiniband/hw/irdma/ctrl.c b/drivers/infiniband/hw/irdma/ctrl.c
+index 991ce4890bfb2..cb970c9090ee0 100644
+--- a/drivers/infiniband/hw/irdma/ctrl.c
++++ b/drivers/infiniband/hw/irdma/ctrl.c
+@@ -4734,7 +4734,8 @@ static int irdma_sc_aeq_destroy(struct irdma_sc_aeq *aeq, u64 scratch,
+ 	u64 hdr;
  
-+	kfree(iwdev->rf);
+ 	dev = aeq->dev;
+-	if (dev->privileged)
 +
- 	pr_debug("INIT: Gen[%d] func[%d] device remove success\n",
- 		 rdma_ver, PCI_FUNC(cdev_info->pdev->devfn));
- }
++	if (dev->hw_attrs.uk_attrs.hw_rev <= IRDMA_GEN_2)
+ 		writel(0, dev->hw_regs[IRDMA_PFINT_AEQCTL]);
+ 
+ 	cqp = dev->cqp;
 -- 
 2.51.0
 
