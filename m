@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057CA37C11A;
-	Tue, 16 Dec 2025 12:36:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F0E37C10A;
+	Tue, 16 Dec 2025 12:36:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888597; cv=none; b=I8xD85srtLk1NCbyR8qY51umVdZFIfbzHeBIAOXkFIWsaXBH50LY4BtTTqmcSRHdjnWnMVvRmrXcQwIU/4jQrCgXdFOIi3RIgpcILYmBWAIMAFyMU4Gc/ngbChkoop6CUfZK8LmqL1pUokXJdHPZJaEZGU798IrxWSNgark1MRQ=
+	t=1765888600; cv=none; b=llyGxYn4KWtw9kf5IH/yKXU6MMcCEnokNhgsreBE6TuRK292W+NAFjqvo1k/QS/LXUfJLNuWtYjnX7cI+Dptb4uDmo6NOATjjoXsCAJjH4WgyUNDXAhotEO2ZtxVKG5OGER8Y0K6apYP7tGiWudhYwuiWMG5M2t+FjkxQK2Wve0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888597; c=relaxed/simple;
-	bh=yLF8SPy09RRIb2fnFSatR3E+KytTqyC/gUZL51miT8E=;
+	s=arc-20240116; t=1765888600; c=relaxed/simple;
+	bh=sRrRbLkHt3n4WYt9V2VG7wFCfM7QWFXjcH+iod93U9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LHgohLb1JLIEuf5l1jIjBI7ohLmS6BhrZ7vMioD4Gp8PdATlp8ZMACIZqlUsR4TVQZ+7E+ByPoXRiyOgoQQY7Gi2ruZplQ38lvJEt5soY3Cq5HtRvpnKeiOtrUfUqI2Y//4UtDk1uvWKof44J7njcOUPSix2NDZAEwWkLUnn+Bg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iFGC5wz3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dY76wO71jfDAVXroSHwnbol243tqIducRwRVAPKwuCSYwZhH9P9wbauR6IPVP7wWTVO7ly/60P18twm74z1u0uyiklLgzcKGVOSV0mGGBQs/uqvzlBsx6SYXK9/rOgVxm7r9WCVg+HKLUQOh0X15sxDLAnAu62U9JNvMxcjtC2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iP7eDP8F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iFGC5wz3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 613FFC4CEF1;
-	Tue, 16 Dec 2025 12:36:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iP7eDP8F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7FA0C4CEF5;
+	Tue, 16 Dec 2025 12:36:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888596;
-	bh=yLF8SPy09RRIb2fnFSatR3E+KytTqyC/gUZL51miT8E=;
+	s=korg; t=1765888600;
+	bh=sRrRbLkHt3n4WYt9V2VG7wFCfM7QWFXjcH+iod93U9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iFGC5wz3TidWE9JEhXFtm6atvz+xt5a1OiHL+sJXWzuOCJfNg8IbykNXQqHTsUoDz
-	 OpELbjnORhizqgM+d2pqfYmlMSWQmReTjq1kJlzpUBwS5GsgaK68RxIbf/A2ay7coJ
-	 W3agfJpB3dJX9r1L0ykH9/QOTd1KnQHcUJNzImdc=
+	b=iP7eDP8Fme7m4bUCQwNAwCvdUKHyU2d/wVXCfC4u47EyRkh9k8n2lWOrxU6eBZ4gI
+	 n6LKMi13da+dMghbgvzJduyo4SEP/pbmxjnXTDPwCbW9GpQrh2PbwUEanoXsjbguse
+	 76DC1fvVUydvBA/QIHHgwdipQ8sZmYfl4lKjTXPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 581/614] rtc: max31335: Fix ignored return value in set_alarm
-Date: Tue, 16 Dec 2025 12:15:48 +0100
-Message-ID: <20251216111422.438305072@linuxfoundation.org>
+Subject: [PATCH 6.18 582/614] regulator: spacemit: Align input supply name with the DT binding
+Date: Tue, 16 Dec 2025 12:15:49 +0100
+Message-ID: <20251216111422.475245541@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -45,46 +45,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Javier Martinez Canillas <javierm@redhat.com>
 
-[ Upstream commit f07640f9fb8df2158199da1da1f8282948385a84 ]
+[ Upstream commit 99f0c3a654c4a762aca4fadc8d9f8636b36d570a ]
 
-Return the result from regmap_update_bits() instead of ignoring it
-and always returning 0.
+The Device Tree binding schema for the SpacemiT P1 PMIC defines the main
+input supply property as "vin-supply", but the driver defines the supply
+name for BUCK and ALDO regulators as "vcc".
 
-Fixes: dedaf03b99d6 ("rtc: max31335: add driver support")
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20251128-max31335-handler-error-v1-1-6b6f7f78dbda@analog.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+This causes the regulator core to lookup for a non-existent "vcc-supply".
+Rename the supply from "vcc" to "vin", to match the DT binding and ensure
+that the regulators input supplies are correctly resolved.
+
+After this change, the regulators supply hierarchy is correctly reported:
+
+  $ cat /sys/kernel/debug/regulator/regulator_summary
+   regulator                      use open bypass opmode voltage current     min     max
+  ---------------------------------------------------------------------------------------
+   regulator-dummy                  1    0      0 unknown     0mV     0mA     0mV     0mV
+   dc_in_12v                        2    1      0 unknown 12000mV     0mA 12000mV 12000mV
+      vcc_4v                        7   10      0 unknown  4000mV     0mA  4000mV  4000mV
+         buck1                      1    0      0 unknown  1050mV     0mA   500mV  3425mV
+         buck2                      1    0      0 unknown   900mV     0mA   500mV  3425mV
+         buck3                      1    0      0 unknown  1800mV     0mA   500mV  1800mV
+         buck4                      1    0      0 unknown  3300mV     0mA   500mV  3300mV
+         buck5                      3    7      0 unknown  2100mV     0mA   500mV  3425mV
+            dldo1                   0    0      0 unknown  1200mV     0mA   500mV  3125mV
+            dldo2                   0    0      0 unknown   500mV     0mA   500mV  3125mV
+            dldo3                   0    0      0 unknown   500mV     0mA   500mV  3125mV
+            dldo4                   1    0      0 unknown  1800mV     0mA   500mV  3125mV
+            dldo5                   0    0      0 unknown   500mV     0mA   500mV  3125mV
+            dldo6                   1    0      0 unknown  1800mV     0mA   500mV  3125mV
+            dldo7                   0    0      0 unknown   500mV     0mA   500mV  3125mV
+         buck6                      1    0      0 unknown  1100mV     0mA   500mV  3425mV
+         aldo1                      0    0      0 unknown  1800mV     0mA   500mV  3125mV
+         aldo2                      0    0      0 unknown   500mV     0mA   500mV  3125mV
+         aldo3                      0    0      0 unknown   500mV     0mA   500mV  3125mV
+         aldo4                      0    0      0 unknown   500mV     0mA   500mV  3125mV
+
+Fixes: 8b84d712ad84 ("regulator: spacemit: support SpacemiT P1 regulators")
+Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://patch.msgid.link/20251206133852.1739475-1-javierm@redhat.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-max31335.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/regulator/spacemit-p1.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/rtc/rtc-max31335.c b/drivers/rtc/rtc-max31335.c
-index dfb5bad3a3691..23b7bf16b4cd5 100644
---- a/drivers/rtc/rtc-max31335.c
-+++ b/drivers/rtc/rtc-max31335.c
-@@ -391,10 +391,8 @@ static int max31335_set_alarm(struct device *dev, struct rtc_wkalrm *alrm)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/regulator/spacemit-p1.c b/drivers/regulator/spacemit-p1.c
+index d437e6738ea1e..2bf9137e12b1d 100644
+--- a/drivers/regulator/spacemit-p1.c
++++ b/drivers/regulator/spacemit-p1.c
+@@ -87,10 +87,10 @@ static const struct linear_range p1_ldo_ranges[] = {
+ 	}
  
--	ret = regmap_update_bits(max31335->regmap, max31335->chip->int_status_reg,
--				 MAX31335_STATUS1_A1F, 0);
--
--	return 0;
-+	return regmap_update_bits(max31335->regmap, max31335->chip->int_status_reg,
-+				  MAX31335_STATUS1_A1F, 0);
- }
+ #define P1_BUCK_DESC(_n) \
+-	P1_REG_DESC(BUCK, buck, _n, "vcc", 0x47, BUCK_MASK, 254, p1_buck_ranges)
++	P1_REG_DESC(BUCK, buck, _n, "vin", 0x47, BUCK_MASK, 254, p1_buck_ranges)
  
- static int max31335_alarm_irq_enable(struct device *dev, unsigned int enabled)
+ #define P1_ALDO_DESC(_n) \
+-	P1_REG_DESC(ALDO, aldo, _n, "vcc", 0x5b, LDO_MASK, 117, p1_ldo_ranges)
++	P1_REG_DESC(ALDO, aldo, _n, "vin", 0x5b, LDO_MASK, 117, p1_ldo_ranges)
+ 
+ #define P1_DLDO_DESC(_n) \
+ 	P1_REG_DESC(DLDO, dldo, _n, "buck5", 0x67, LDO_MASK, 117, p1_ldo_ranges)
 -- 
 2.51.0
 
