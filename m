@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E8412D8782;
-	Tue, 16 Dec 2025 12:29:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E88357709;
+	Tue, 16 Dec 2025 12:29:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888187; cv=none; b=RNHbRVpTqu+wmQrEtsFg88MgzaIPsouVwQ85s+b86uuf2wTLoufCiXIAgxerTjNGq2xj0ZlrSL395lue+5fiFLpEnIC82cPcwO/iT5OK9Yd32Qlc8JU/ipH9WR9FlmRTF3OIClqHcU3SLGhhGiNxsCR60CrzBNfUoEQihNtJVbs=
+	t=1765888190; cv=none; b=hiGDqQx5fdcnPxIM5l7ag6SAvFEtAzpK9U6JxnNVDAR+//KaQHJsqTSDdEYUf+Jo15lvI5Axiny130wN1Nr5XoMZ7Y8QBYaeUF2lRMN6XN/T+VAeLsOy3uu95GRfbsU4XzeosgLc2JXqbx4Q0oGT3cmJEWpSMX6Z68aW2VaAleg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888187; c=relaxed/simple;
-	bh=h123Np+glL2TSPZq6oTHxM2FiYI7j13lY0P5ZTNz3so=;
+	s=arc-20240116; t=1765888190; c=relaxed/simple;
+	bh=GHwrdCvjoAFGtN+QX9II4+/ltq0YhId4F4P7Ew4r7yg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pZngl4jrLQTTTpEFKeCVNDri2TKTRN6QWCgIsunP8Ks7zQJHvfwrbKj3PzsC/oXQWHyWf3mJNHgbwSO1cES/+7xskr3kBQ3hZiOvdkYNw5PYwHjgKITKPWmy/fdzrThV3X/p9uIqvSoCazbaqWhSrVOjSG6/CS9daXilH0/O2WY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L+fumBLD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bc6H/wA0XHeI2rTBMkEHscppNuvFQA+BvmYYCTcgLIC3vHysjvSlhK+wOtcdyGLqt0w0+lju3Qn5ilAMN/9inE5Gq4yF5Ii9npLTBCshfmARMI15GuNsPtZQjizifLpIWpUg1Tfbdadx2WzX3k88DzIH1K68t9+wMwV2XYe/WGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aboV35aE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L+fumBLD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E9AAC4CEF1;
-	Tue, 16 Dec 2025 12:29:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aboV35aE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40790C4CEF1;
+	Tue, 16 Dec 2025 12:29:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888187;
-	bh=h123Np+glL2TSPZq6oTHxM2FiYI7j13lY0P5ZTNz3so=;
+	s=korg; t=1765888190;
+	bh=GHwrdCvjoAFGtN+QX9II4+/ltq0YhId4F4P7Ew4r7yg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L+fumBLDlnAC23Ivjpm2+OaUR6O0K8/LA8VJWlFze+caCm1vT0UnjeqmhktJZbG4m
-	 4OM75xD+uSmnKrtHlIY4fR0Z5CkUeOhwx8Z7SNi6zNjstcTVXZLppgjtEhsKbu/dth
-	 A3XyHH736mppYPPiU0ho9yWeYljzV4L+WXC8X3w4=
+	b=aboV35aEWcQyshaDNxhMmz9RmwbIwZuUlbkkoP3C49+9ynuuWXRh2ugx6zNedco1L
+	 r3qtWtVwmQOVpWvVoFMwj2C4FPVlIV982EYO5UMp71v8k8ZaGKYnL9Hq1kGRYDLf6k
+	 BSvt8xfnfO4wJaeujYRJYoC49EYGtUypK9CXdOj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anil Samal <anil.samal@intel.com>,
-	Krzysztof Czurylo <krzysztof.czurylo@intel.com>,
-	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	syzbot+a2b9a4ed0d61b1efb3f5@syzkaller.appspotmail.com,
+	Christoph Hellwig <hch@lst.de>,
+	Dave Chinner <dchinner@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 425/614] RDMA/irdma: Add missing mutex destroy
-Date: Tue, 16 Dec 2025 12:13:12 +0100
-Message-ID: <20251216111416.771477079@linuxfoundation.org>
+Subject: [PATCH 6.18 416/614] iomap: allocate s_dio_done_wq for async reads as well
+Date: Tue, 16 Dec 2025 12:13:03 +0100
+Message-ID: <20251216111416.444147046@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -53,92 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anil Samal <anil.samal@intel.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 35bd787babd1f5a42641d0b1513edbed5d4e1624 ]
+[ Upstream commit 7fd8720dff2d9c70cf5a1a13b7513af01952ec02 ]
 
-Add missing destroy of ah_tbl_lock and vchnl_mutex.
+Since commit 222f2c7c6d14 ("iomap: always run error completions in user
+context"), read error completions are deferred to s_dio_done_wq.  This
+means the workqueue also needs to be allocated for async reads.
 
-Fixes: d5edd33364a5 ("RDMA/irdma: RDMA/irdma: Add GEN3 core driver support")
-Signed-off-by: Anil Samal <anil.samal@intel.com>
-Signed-off-by: Krzysztof Czurylo <krzysztof.czurylo@intel.com>
-Signed-off-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
-Link: https://patch.msgid.link/20251125025350.180-6-tatyana.e.nikolova@intel.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 222f2c7c6d14 ("iomap: always run error completions in user context")
+Reported-by: syzbot+a2b9a4ed0d61b1efb3f5@syzkaller.appspotmail.com
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20251124140013.902853-1-hch@lst.de
+Tested-by: syzbot+a2b9a4ed0d61b1efb3f5@syzkaller.appspotmail.com
+Reviewed-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/icrdma_if.c  | 4 +++-
- drivers/infiniband/hw/irdma/ig3rdma_if.c | 4 ++++
- drivers/infiniband/hw/irdma/verbs.c      | 4 +++-
- 3 files changed, 10 insertions(+), 2 deletions(-)
+ fs/iomap/direct-io.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/infiniband/hw/irdma/icrdma_if.c b/drivers/infiniband/hw/irdma/icrdma_if.c
-index 5d3fd118e4f81..b49fd9cf24765 100644
---- a/drivers/infiniband/hw/irdma/icrdma_if.c
-+++ b/drivers/infiniband/hw/irdma/icrdma_if.c
-@@ -302,7 +302,8 @@ static int icrdma_probe(struct auxiliary_device *aux_dev, const struct auxiliary
- err_ctrl_init:
- 	icrdma_deinit_interrupts(rf, cdev_info);
- err_init_interrupts:
--	kfree(iwdev->rf);
-+	mutex_destroy(&rf->ah_tbl_lock);
-+	kfree(rf);
- 	ib_dealloc_device(&iwdev->ibdev);
+diff --git a/fs/iomap/direct-io.c b/fs/iomap/direct-io.c
+index 143160042552b..6317e4cd42517 100644
+--- a/fs/iomap/direct-io.c
++++ b/fs/iomap/direct-io.c
+@@ -728,12 +728,12 @@ __iomap_dio_rw(struct kiocb *iocb, struct iov_iter *iter,
+ 			}
+ 			goto out_free_dio;
+ 		}
++	}
  
- 	return err;
-@@ -319,6 +320,7 @@ static void icrdma_remove(struct auxiliary_device *aux_dev)
- 	ice_rdma_update_vsi_filter(cdev_info, iwdev->vsi_num, false);
- 	irdma_ib_unregister_device(iwdev);
- 	icrdma_deinit_interrupts(iwdev->rf, cdev_info);
-+	mutex_destroy(&iwdev->rf->ah_tbl_lock);
- 
- 	kfree(iwdev->rf);
- 
-diff --git a/drivers/infiniband/hw/irdma/ig3rdma_if.c b/drivers/infiniband/hw/irdma/ig3rdma_if.c
-index 1bb42eb298ba6..e1d6670d9396e 100644
---- a/drivers/infiniband/hw/irdma/ig3rdma_if.c
-+++ b/drivers/infiniband/hw/irdma/ig3rdma_if.c
-@@ -55,6 +55,7 @@ static int ig3rdma_vchnl_init(struct irdma_pci_f *rf,
- 	ret = irdma_sc_vchnl_init(&rf->sc_dev, &virt_info);
- 	if (ret) {
- 		destroy_workqueue(rf->vchnl_wq);
-+		mutex_destroy(&rf->sc_dev.vchnl_mutex);
- 		return ret;
+-		if (!wait_for_completion && !inode->i_sb->s_dio_done_wq) {
+-			ret = sb_init_dio_done_wq(inode->i_sb);
+-			if (ret < 0)
+-				goto out_free_dio;
+-		}
++	if (!wait_for_completion && !inode->i_sb->s_dio_done_wq) {
++		ret = sb_init_dio_done_wq(inode->i_sb);
++		if (ret < 0)
++			goto out_free_dio;
  	}
  
-@@ -124,7 +125,9 @@ static void ig3rdma_decfg_rf(struct irdma_pci_f *rf)
- {
- 	struct irdma_hw *hw = &rf->hw;
- 
-+	mutex_destroy(&rf->ah_tbl_lock);
- 	destroy_workqueue(rf->vchnl_wq);
-+	mutex_destroy(&rf->sc_dev.vchnl_mutex);
- 	kfree(hw->io_regs);
- 	iounmap(hw->rdma_reg.addr);
- }
-@@ -149,6 +152,7 @@ static int ig3rdma_cfg_rf(struct irdma_pci_f *rf,
- 	err = ig3rdma_cfg_regions(&rf->hw, cdev_info);
- 	if (err) {
- 		destroy_workqueue(rf->vchnl_wq);
-+		mutex_destroy(&rf->sc_dev.vchnl_mutex);
- 		return err;
- 	}
- 
-diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
-index c883c9ea5a831..c884f2ce282f9 100644
---- a/drivers/infiniband/hw/irdma/verbs.c
-+++ b/drivers/infiniband/hw/irdma/verbs.c
-@@ -5500,7 +5500,9 @@ void irdma_ib_dealloc_device(struct ib_device *ibdev)
- 	irdma_rt_deinit_hw(iwdev);
- 	if (!iwdev->is_vport) {
- 		irdma_ctrl_deinit_hw(iwdev->rf);
--		if (iwdev->rf->vchnl_wq)
-+		if (iwdev->rf->vchnl_wq) {
- 			destroy_workqueue(iwdev->rf->vchnl_wq);
-+			mutex_destroy(&iwdev->rf->sc_dev.vchnl_mutex);
-+		}
- 	}
- }
+ 	inode_dio_begin(inode);
 -- 
 2.51.0
 
