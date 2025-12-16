@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7189934253C;
-	Tue, 16 Dec 2025 11:44:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85DB7342506;
+	Tue, 16 Dec 2025 11:44:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885452; cv=none; b=HRkLd594CdTbD/TYneA5TrlTN9YbLTUnwoYFZPN5ifP4eVM0LfJrt/b4iv3X4tE9cHLCHtbvcG+ZChbqVjKFluiohhx71Nw21X2Qe2+MQeG6e1DSZBeNrK0+ZA69zc75ZyNN8oszDwRfvkIGTD3k7ET5PfNUW4y9tmiM64CF6/0=
+	t=1765885456; cv=none; b=KKwf6N6P58lGbwxKjVk9L+LJxZvPsUxj5gn1+i4g64pNIcEZKLJ2H44stmahwt2D685MVptazdcQcR4gxWY+DhnLwQqcpubfUCxZqxOzHVJzkpzD55LaWt2HwegWCjzyQ45xLu0oN1m98inKQ/y5MJniBwHT+/mptw5yW5Z0ecU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885452; c=relaxed/simple;
-	bh=Kxc5n0WWr3cHoaAllhumMYQAmQ2FXQbU8wlrGnMP1o0=;
+	s=arc-20240116; t=1765885456; c=relaxed/simple;
+	bh=xndQ/YOX0plBQvNZX18nyUP/zV4L5abIeIHY55v1ERI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pq/YjU+w2GOwHl6J1PEccm6s2liVtrQpmQlHWdS2VDU/d/QVRLySi7lVOaAu+J3EwQmNQrURzJlmBjgJJ4vIq9bEDxvDPYuc7kUfAkJvAbh8cSNW8WTY6lwlRG91hbgU/hNirZCp6ltlHx2N2Rpe0OpzpoxYGduRQ+bRi1FCgVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OQUErGYK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Z/gsi+V6notCiCUt0YwLMKXwlKmq/uJksfqwDXXhOv3uPuV6Glzl+RmSrJy5RQowOc42lATiLsNbOejBVxAxVNAwcQoBN8BeUYjXePCb77yHrc/Zz4xlr7aUlpGbCKrYkXIMwB7qlSxnIMr2SRhX1vBOD93S5ylJ1hsLnUa49l4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i2egLPxc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OQUErGYK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C36C4CEF1;
-	Tue, 16 Dec 2025 11:44:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i2egLPxc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B97ACC4CEF1;
+	Tue, 16 Dec 2025 11:44:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885452;
-	bh=Kxc5n0WWr3cHoaAllhumMYQAmQ2FXQbU8wlrGnMP1o0=;
+	s=korg; t=1765885456;
+	bh=xndQ/YOX0plBQvNZX18nyUP/zV4L5abIeIHY55v1ERI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OQUErGYKKu3I0kdZiYZ6omtGJBL3d6bfBPZhLKcwUcAbF+ITEC2C/pa0lueynKZZN
-	 mqMovQMFNRs2oKu0FSO+09DRYPpObdiKl1AJWVweu7klrwggiwg6DWYi3PSEJwKJ44
-	 8ovpKgExBMw9WB+K3b2JsPCXaZ6DWj4CGpwVIz2M=
+	b=i2egLPxcM55eoHZhuJUnFMcSs910Ni09R5mSMKJi1YmTp4vVMm6zhiITi+Q3CdkcO
+	 j4oDQyDkRnVnMAEU5jGB4xaDz6AbzwCcLSLq0TS6VkVSg47R2ZrSYJL1gCSGmE5DtJ
+	 e6bBo03bUvsNnQUs8HnSgq3sA24G2ncByYUMvU64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Wei Chiu <visitorckw@gmail.com>,
-	Georgi Djakov <djakov@kernel.org>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 144/507] interconnect: debugfs: Fix incorrect error handling for NULL path
-Date: Tue, 16 Dec 2025 12:09:45 +0100
-Message-ID: <20251216111350.745543802@linuxfoundation.org>
+Subject: [PATCH 6.17 145/507] arm64: dts: renesas: sparrow-hawk: Fix full-size DP connector node name and labels
+Date: Tue, 16 Dec 2025 12:09:46 +0100
+Message-ID: <20251216111350.780989260@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -45,57 +46,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Marek Vasut <marek.vasut+renesas@mailbox.org>
 
-[ Upstream commit 6bfe104fd0f94d0248af22c256ce725ee087157b ]
+[ Upstream commit 9d22a34a016313137b9e534a918f1f9aa790aa69 ]
 
-The icc_commit_set() function, used by the debugfs interface, checks
-the validity of the global cur_path pointer using IS_ERR_OR_NULL().
-However, in the specific case where cur_path is NULL, while
-IS_ERR_OR_NULL(NULL) correctly evaluates to true, the subsequent call
-to PTR_ERR(NULL) returns 0.
+The DisplayPort connector on Retronix R-Car V4H Sparrow Hawk board
+is a full-size DisplayPort connector. Fix the copy-paste error and
+update the DT node name and labels accordingly. No functional change.
 
-This causes the function to return a success code (0) instead of an
-error, misleading the user into believing their bandwidth request was
-successfully committed when, in fact, no operation was performed.
-
-Fix this by adding an explicit check to return -EINVAL if cur_path is
-NULL. This prevents silent failures and ensures that an invalid
-operational sequence is immediately and clearly reported as an error.
-
-Fixes: 770c69f037c1 ("interconnect: Add debugfs test client")
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Link: https://lore.kernel.org/r/20251010151447.2289779-1-visitorckw@gmail.com
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Fixes: a719915e76f2 ("arm64: dts: renesas: r8a779g3: Add Retronix R-Car V4H Sparrow Hawk board support")
+Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20251027184604.34550-1-marek.vasut+renesas@mailbox.org
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/debugfs-client.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/renesas/r8a779g3-sparrow-hawk.dts | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/interconnect/debugfs-client.c b/drivers/interconnect/debugfs-client.c
-index bc3fd8a7b9eb4..778deeb4a7e8a 100644
---- a/drivers/interconnect/debugfs-client.c
-+++ b/drivers/interconnect/debugfs-client.c
-@@ -117,7 +117,12 @@ static int icc_commit_set(void *data, u64 val)
+diff --git a/arch/arm64/boot/dts/renesas/r8a779g3-sparrow-hawk.dts b/arch/arm64/boot/dts/renesas/r8a779g3-sparrow-hawk.dts
+index 2c1ab75e4d910..e5af9c056ac97 100644
+--- a/arch/arm64/boot/dts/renesas/r8a779g3-sparrow-hawk.dts
++++ b/arch/arm64/boot/dts/renesas/r8a779g3-sparrow-hawk.dts
+@@ -118,13 +118,13 @@ memory@600000000 {
+ 	};
  
- 	mutex_lock(&debugfs_lock);
+ 	/* Page 27 / DSI to Display */
+-	mini-dp-con {
++	dp-con {
+ 		compatible = "dp-connector";
+ 		label = "CN6";
+ 		type = "full-size";
  
--	if (IS_ERR_OR_NULL(cur_path)) {
-+	if (!cur_path) {
-+		ret = -EINVAL;
-+		goto out;
-+	}
-+
-+	if (IS_ERR(cur_path)) {
- 		ret = PTR_ERR(cur_path);
- 		goto out;
- 	}
+ 		port {
+-			mini_dp_con_in: endpoint {
++			dp_con_in: endpoint {
+ 				remote-endpoint = <&sn65dsi86_out>;
+ 			};
+ 		};
+@@ -371,7 +371,7 @@ sn65dsi86_in: endpoint {
+ 					port@1 {
+ 						reg = <1>;
+ 						sn65dsi86_out: endpoint {
+-							remote-endpoint = <&mini_dp_con_in>;
++							remote-endpoint = <&dp_con_in>;
+ 						};
+ 					};
+ 				};
 -- 
 2.51.0
 
