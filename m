@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5179734AB1D;
-	Tue, 16 Dec 2025 11:48:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C05C34B1B4;
+	Tue, 16 Dec 2025 11:48:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885711; cv=none; b=Alb4E8zV07JPybH0zoaR0TbMdV5OOm9ewd0G8Ze9ZCyn0DSxxVoOaFFKGM9UKNWoWkx5NovCzdj5YPBGzp1YJY+iaNvp5agpZTRqrqsCeozyccm5wNNlVjii7i4e8rOwcE07DTt9Wg6r3/KTGZ16C9NUWlYGnzbUQhE/N0qpk0c=
+	t=1765885714; cv=none; b=ugJqf40Ts6hvVPQxsP5bDVPprL/VPET2+OdqoOZyHFJxqjlZCRtorcyH2wYp0zceOC+S4cmMde1Kbf8fQ+B1fFXJSPTlMcAitdxBSbBEBaKuuq3e76TSGXhcFCGly2HK2Gb/YepqZxYbMR/rkFeBzS2YA4OwpTOfpTbA1vKFY6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885711; c=relaxed/simple;
-	bh=gvHpRLTdsZvSFo3ZuLuvlyB2bYvhKzAqLqP9+QABCAI=;
+	s=arc-20240116; t=1765885714; c=relaxed/simple;
+	bh=LYdl5Fnww+pqk3BiWz+RgcexLrQJ7GsgOalBXOSbmiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LcX84zTub7oqLQ3pyLuqqcHpb38PALd0AKm2QGXkjwMFvtiLo22Zn9tuJdLPrqjJ24TzbvPkrwQq/XjXXT5NHmOaVkne3LEMSFRGVPXV/GH7ZzHl0aSVnsmsQ1WDDTb+LXn/fVFo4EHXvj/Ia177VWsG+yGZYpxPJ3tVQfG9AWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y1DDISU0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F5KrkuQuHspG7U0rdA0RwHNwYMCXOjdZndiuf4LOo2kofrCfmxouYiqzwxpNayWzRP6vowgykR3tjCguVNsliWWzXAFrLaXSbC01NAuC45eBHWtgwWZuu4eC18vSwnCUm75KBwSOddoZITOQtM5v2HIFTluoonGkOHMXhv9bZR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LX72++Ct; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y1DDISU0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC497C4CEF1;
-	Tue, 16 Dec 2025 11:48:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LX72++Ct"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDBBBC4CEF1;
+	Tue, 16 Dec 2025 11:48:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885711;
-	bh=gvHpRLTdsZvSFo3ZuLuvlyB2bYvhKzAqLqP9+QABCAI=;
+	s=korg; t=1765885714;
+	bh=LYdl5Fnww+pqk3BiWz+RgcexLrQJ7GsgOalBXOSbmiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y1DDISU0f+QAxHWZY1j7oygWCyUctwzLB+DvGxWKl+ZgZ8GPckerGFnJbOpKm7r2r
-	 cXSqnuRZnNlMi1TcVtuwpKTYSlyP/e86CTo2UkxckbqBMQnGOGuFNG0j+awPcwq5KJ
-	 mkIFoTGHI8fWt3iHitlO3KMz1lUq8SwqXT8TMA5c=
+	b=LX72++Ct7cZ8fPbN+paEtn458xU2l/CmNIN/P+k9q2QwpFG99frN0KUtjDhLcigab
+	 CQcwhv/wQmeMPJDI0SspXgKDfKI1XQe37g8esM+Pu2YYkYb9erUwS03CvQ6Q1dn7Ka
+	 oGL/dAKZDjPfcjXXbJ+H9W1BY4lTSsrtVHFv9vAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Petr Mladek <pmladek@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 222/507] clk: renesas: r9a06g032: Fix memory leak in error path
-Date: Tue, 16 Dec 2025 12:11:03 +0100
-Message-ID: <20251216111353.549072223@linuxfoundation.org>
+Subject: [PATCH 6.17 223/507] lib/vsprintf: Check pointer before dereferencing in time_and_date()
+Date: Tue, 16 Dec 2025 12:11:04 +0100
+Message-ID: <20251216111353.584473713@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -51,46 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit f8def051bbcf8677f64701e9699bf6d11e2780cd ]
+[ Upstream commit 372a12bd5df0199aa234eaf8ef31ed7ecd61d40f ]
 
-The current code uses of_iomap() to map registers but never calls
-iounmap() on any error path after the mapping. This causes a memory
-leak when probe fails after successful ioremap, for example when
-of_clk_add_provider() or r9a06g032_add_clk_domain() fails.
+The pointer may be invalid when gets to the printf(). In particular
+the time_and_date() dereferencing it in some cases without checking.
 
-Replace of_iomap() with devm_of_iomap() to automatically unmap the
-region on probe failure. Update the error check accordingly to use
-IS_ERR() and PTR_ERR() since devm_of_iomap() returns ERR_PTR on error.
+Move the check from rtc_str() to time_and_date() to cover all cases.
 
-Fixes: 4c3d88526eba ("clk: renesas: Renesas R9A06G032 clock driver")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20251030061603.1954-1-vulab@iscas.ac.cn
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: 7daac5b2fdf8 ("lib/vsprintf: Print time64_t in human readable format")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Link: https://patch.msgid.link/20251110132118.4113976-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Petr Mladek <pmladek@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/r9a06g032-clocks.c | 6 +++---
+ lib/vsprintf.c | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clk/renesas/r9a06g032-clocks.c b/drivers/clk/renesas/r9a06g032-clocks.c
-index dcda19318b2a9..0f5c91b5dfa99 100644
---- a/drivers/clk/renesas/r9a06g032-clocks.c
-+++ b/drivers/clk/renesas/r9a06g032-clocks.c
-@@ -1333,9 +1333,9 @@ static int __init r9a06g032_clocks_probe(struct platform_device *pdev)
- 	if (IS_ERR(mclk))
- 		return PTR_ERR(mclk);
+diff --git a/lib/vsprintf.c b/lib/vsprintf.c
+index eb0cb11d0d126..a356965c1d734 100644
+--- a/lib/vsprintf.c
++++ b/lib/vsprintf.c
+@@ -1928,9 +1928,6 @@ char *rtc_str(char *buf, char *end, const struct rtc_time *tm,
+ 	bool found = true;
+ 	int count = 2;
  
--	clocks->reg = of_iomap(np, 0);
--	if (WARN_ON(!clocks->reg))
--		return -ENOMEM;
-+	clocks->reg = devm_of_iomap(dev, np, 0, NULL);
-+	if (IS_ERR(clocks->reg))
-+		return PTR_ERR(clocks->reg);
- 
- 	r9a06g032_init_h2mode(clocks);
- 
+-	if (check_pointer(&buf, end, tm, spec))
+-		return buf;
+-
+ 	switch (fmt[count]) {
+ 	case 'd':
+ 		have_t = false;
+@@ -1996,6 +1993,9 @@ static noinline_for_stack
+ char *time_and_date(char *buf, char *end, void *ptr, struct printf_spec spec,
+ 		    const char *fmt)
+ {
++	if (check_pointer(&buf, end, ptr, spec))
++		return buf;
++
+ 	switch (fmt[1]) {
+ 	case 'R':
+ 		return rtc_str(buf, end, (const struct rtc_time *)ptr, spec, fmt);
 -- 
 2.51.0
 
