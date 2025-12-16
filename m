@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F8E834A76E;
-	Tue, 16 Dec 2025 11:40:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A79734A77D;
+	Tue, 16 Dec 2025 11:40:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885201; cv=none; b=RsB9JIn4js8+yj50IYvmVfDmiJRp9+pY97UKqUGVgm4WOS4GZWrXrkeuYIyhXZNY2Qujn1CXqLCdpo8bJNjAvV1V/QAwG8ne6OsRI6e8qw+k/ERJyx541pGndQhU0c5NUYedWglDdLopuAnSCTSL+wns90nI59sA9wPBE/QbVmg=
+	t=1765885206; cv=none; b=tnTezsOOBGnhKZoXP+gJ1NBmhox2u5dnFs0CHSBIfU+D2s+uBrNEXcnH1JDcPdMJiV/WN0QlurD6FTty2jPNuUWs1qcI2SZ0U34YtLRiTgMSF9CFw8hZH9QzPPoPsXN7o4FxPpVNj4E8OCKzPXf2T6gbftulXHnIk/71gf26TVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885201; c=relaxed/simple;
-	bh=BVE7BLl0Jr+QR5+1lrttWKMgqdYZmQkIRyZFAFqJUKY=;
+	s=arc-20240116; t=1765885206; c=relaxed/simple;
+	bh=otH6QjS8pSLgoOtX20j3PVGAvlA9A8LUP4vbPdkAM5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oCeSCqNcsMO/OyhcbYkxa9Vv+acEdS43yfTWGeo5tblv6zl/Hcm+LjkSkxfUa2fJcBv41ZQm7kzM5qzKuirrRArSJFBfInXc248p4d8xJ/b8nnBbWpL3Q3lhKYy2bI+Ux39ZFIKW7OkUB0KfRLcOYEK4U3JekNLwxvegbn4B/9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X0lR48Pu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k6/erCqYqJyw1edNkAyxliUaKTQlKhky8EpHPns7BJ1g7ywl1j2ekBqO9HcAqVMbZI3xC65wcvpHQPFxN/6ufkpTberzoU3Us4WtDW8/GNqJ+pRUZIxcihiQcCxNw9OQBuuE62zq9Ni61SU6JlqYqDAebM9PLw+cs6v0AMaW7cI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKNF9LGZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X0lR48Pu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FFCCC4CEF1;
-	Tue, 16 Dec 2025 11:40:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKNF9LGZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29359C16AAE;
+	Tue, 16 Dec 2025 11:40:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885201;
-	bh=BVE7BLl0Jr+QR5+1lrttWKMgqdYZmQkIRyZFAFqJUKY=;
+	s=korg; t=1765885205;
+	bh=otH6QjS8pSLgoOtX20j3PVGAvlA9A8LUP4vbPdkAM5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X0lR48PupqsIVJILaDAQw/dKtuPIeJTjd84EmaFtQkGS+J1jd/APYk9irJzQWWfe8
-	 RezQPapHuvJ0SClRzGXLlyqsnRZPinAQ2KNoKT4s+SqepZ7O9L/qncX8yk8C+OVmf+
-	 N0lXlvKdFrbHZR3h2Wo7ZHiBEGUSFZUNjnHSEwRs=
+	b=iKNF9LGZBmSV2rVMV65UMhcHbDL4tUjJwAvw34BPRrJuI9s43+oLR9GxUCPYS1qij
+	 4hMsgctpXDcucJphtaq0I4HP1hs2VPTp7TPMEnsCeC4L7pQ7q6eT/ipcf36YM0msJh
+	 n6xPtxCSBdL6KGnoW6qTAo2b6TB/uKlYlUqjEWvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Harvey <tharvey@gateworks.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Sherry Sun <sherry.sun@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 061/507] arm64: dts: imx8mm-venice-gw72xx: remove unused sdhc1 pinctrl
-Date: Tue, 16 Dec 2025 12:08:22 +0100
-Message-ID: <20251216111347.754072202@linuxfoundation.org>
+Subject: [PATCH 6.17 070/507] tty: serial: imx: Only configure the wake register when device is set as wakeup source
+Date: Tue, 16 Dec 2025 12:08:31 +0100
+Message-ID: <20251216111348.079136334@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,44 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Harvey <tharvey@gateworks.com>
+From: Sherry Sun <sherry.sun@nxp.com>
 
-[ Upstream commit d949b8d12d6e8fa119bca10d3157cd42e810f6f7 ]
+[ Upstream commit d55f3d2375ceeb08330d30f1e08196993c0b6583 ]
 
-The SDHC1 interface is not used on the imx8mm-venice-gw72xx. Remove the
-unused pinctrl_usdhc1 iomux node.
+Currently, the i.MX UART driver enables wake-related registers for all
+UART devices by default. However, this is unnecessary for devices that
+are not configured as wakeup sources. To address this, add a
+device_may_wakeup() check before configuring the UART wake-related
+registers.
 
-Fixes: 6f30b27c5ef5 ("arm64: dts: imx8mm: Add Gateworks i.MX 8M Mini Development Kits")
-Signed-off-by: Tim Harvey <tharvey@gateworks.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: db1a9b55004c ("tty: serial: imx: Allow UART to be a source for wakeup")
+Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20251002045259.2725461-2-sherry.sun@nxp.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/freescale/imx8mm-venice-gw72xx.dtsi      | 11 -----------
- 1 file changed, 11 deletions(-)
+ drivers/tty/serial/imx.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mm-venice-gw72xx.dtsi b/arch/arm64/boot/dts/freescale/imx8mm-venice-gw72xx.dtsi
-index 752caa38eb03b..266038fbbef97 100644
---- a/arch/arm64/boot/dts/freescale/imx8mm-venice-gw72xx.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mm-venice-gw72xx.dtsi
-@@ -351,17 +351,6 @@ MX8MM_IOMUXC_UART4_TXD_UART4_DCE_TX	0x140
- 		>;
- 	};
+diff --git a/drivers/tty/serial/imx.c b/drivers/tty/serial/imx.c
+index 500dfc009d03e..90e2ea1e8afe5 100644
+--- a/drivers/tty/serial/imx.c
++++ b/drivers/tty/serial/imx.c
+@@ -2697,8 +2697,22 @@ static void imx_uart_save_context(struct imx_port *sport)
+ /* called with irq off */
+ static void imx_uart_enable_wakeup(struct imx_port *sport, bool on)
+ {
++	struct tty_port *port = &sport->port.state->port;
++	struct device *tty_dev;
++	bool may_wake = false;
+ 	u32 ucr3;
  
--	pinctrl_usdhc1: usdhc1grp {
--		fsl,pins = <
--			MX8MM_IOMUXC_SD1_CLK_USDHC1_CLK		0x190
--			MX8MM_IOMUXC_SD1_CMD_USDHC1_CMD		0x1d0
--			MX8MM_IOMUXC_SD1_DATA0_USDHC1_DATA0	0x1d0
--			MX8MM_IOMUXC_SD1_DATA1_USDHC1_DATA1	0x1d0
--			MX8MM_IOMUXC_SD1_DATA2_USDHC1_DATA2	0x1d0
--			MX8MM_IOMUXC_SD1_DATA3_USDHC1_DATA3	0x1d0
--		>;
--	};
--
- 	pinctrl_usdhc2: usdhc2grp {
- 		fsl,pins = <
- 			MX8MM_IOMUXC_SD2_CLK_USDHC2_CLK		0x190
++	scoped_guard(tty_port_tty, port) {
++		struct tty_struct *tty = scoped_tty();
++
++		tty_dev = tty->dev;
++		may_wake = tty_dev && device_may_wakeup(tty_dev);
++	}
++
++	/* only configure the wake register when device set as wakeup source */
++	if (!may_wake)
++		return;
++
+ 	uart_port_lock_irq(&sport->port);
+ 
+ 	ucr3 = imx_uart_readl(sport, UCR3);
 -- 
 2.51.0
 
