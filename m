@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE94341645;
-	Tue, 16 Dec 2025 11:22:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41836341069;
+	Tue, 16 Dec 2025 11:22:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884124; cv=none; b=oQdFwMuMhB3Qo6xkG9YBlcnV8qa4Co/HTBYhVEtH0QZsNl0eXHTHNkaYMzorqT99Vp5mdUdbjgZiqWi55NeYosd30Fij6U0PV9AydprIkwzLvq2kY2c5nEA0Hlcp7IMGs3tGfziOH7n/zpa989EFZ3mXO1andrz4aftl3lJ1NCA=
+	t=1765884127; cv=none; b=SfgAc8fer/PvqNu6a+2pLesQaXB+VFATq9qkndvtpbYx5rOsaTCvMO7qI2ML9YulwRGxUdUU2f2BlkSCNZP4uAypo45RWDlL/t9BcU+CFpGWqOythKFv/LPOVThLTDjtAfgZLGl5XAdJ1xY+9xXqwqXmhnclH6LVlNC038moD1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884124; c=relaxed/simple;
-	bh=bjhvss62HsBeuoYowWj9Ei6I5iMix6IIrkx1JHaBt4o=;
+	s=arc-20240116; t=1765884127; c=relaxed/simple;
+	bh=IT/z3bc3Z9z4S4KLm082v3ab4J/LVhn/L2DphjBDZRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vn0s4l53TIqof7uy00UM2oTuv9MTzO2b2I9g+2TxFrSieS9YVmctFCAGxHF3G8h6koHJlyA2fO/NJsyuHYj043cdDkKWqJxTU5QIsuoxRJjpa2mNpFHwRDODqJBE0+jr65BwbIYLUoI6LjlyvD8jFQE5C9CS7chd3G/vdJvOS24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kQHUgkIw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gXVPobNhYKVmq9OWdSPyVqTdNjW4ywba3l0S8ej+ifq5siCsJU0XGZ9a+McHN0ujGI875qG3vmMS/yzUzXO7KVriKqRiunoBNKAVskEihouDYfC0E35dkQpC+3CS/K/pQWAY9v0XhwIgN7MKe2GngcuaLjvXK2+b1/5jFdpkynQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vGIgVBKp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kQHUgkIw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ECECC4CEF5;
-	Tue, 16 Dec 2025 11:22:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vGIgVBKp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACD32C4CEF1;
+	Tue, 16 Dec 2025 11:22:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884124;
-	bh=bjhvss62HsBeuoYowWj9Ei6I5iMix6IIrkx1JHaBt4o=;
+	s=korg; t=1765884127;
+	bh=IT/z3bc3Z9z4S4KLm082v3ab4J/LVhn/L2DphjBDZRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kQHUgkIwmlxi0xc1xuUwFCRq/MdNPS1gXH11uXiqfzGMN9HcywI8BchMbFgedm2E0
-	 20EPHJ0Q20gF6PyTc2V/r7/3kNvCTwW4f7w2DbD9SqoGN039g0lS4AKKYYrQSCjyKv
-	 I19OmsftrG0ZAKm2rlfMpBPnwFxHTfLTlHJbfmLk=
+	b=vGIgVBKp05wXmF10DT2Bzcej7sQD3hv0UaQMRyBM3ZFSUttSHNxk3a01WdNkrmFHK
+	 gXJfAzOpbEu9XY08y03L+wWlzuJDLqNfsP+j5wMwmzk73Nltp479kMWEX37EgXgU0d
+	 7lCWO6ZDQ14ZmdgBFPjicYrP5s3qcyLC1vHREzcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 097/354] interconnect: qcom: msm8996: add missing link to SLAVE_USB_HS
-Date: Tue, 16 Dec 2025 12:11:04 +0100
-Message-ID: <20251216111324.434965148@linuxfoundation.org>
+Subject: [PATCH 6.12 098/354] arm64: dts: qcom: msm8996: add interconnect paths to USB2 controller
+Date: Tue, 16 Dec 2025 12:11:05 +0100
+Message-ID: <20251216111324.471946454@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -54,34 +55,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 8cf9b43f6b4d90e19a9341edefdd46842d4adb55 ]
+[ Upstream commit 242f7558e7bf54cb63c06506f7b0630dd67d45a4 ]
 
->From the initial submission the interconnect driver missed the link from
-SNOC_PNOC to the USB 2 configuration space. Add missing link in order to
-let the platform configure and utilize this path.
+Add the missing interconnects to the USB2 host. The Fixes tag points to
+the commit which broke probing of the USB host on that platform.
 
-Fixes: 7add937f5222 ("interconnect: qcom: Add MSM8996 interconnect provider driver")
+Fixes: 130733a10079 ("interconnect: qcom: msm8996: Promote to core_initcall")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251002-fix-msm8996-icc-v1-1-a36a05d1f869@oss.qualcomm.com
+Acked-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20251002-fix-msm8996-icc-v1-2-a36a05d1f869@oss.qualcomm.com
 Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/qcom/msm8996.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/interconnect/qcom/msm8996.c b/drivers/interconnect/qcom/msm8996.c
-index 788131400cd13..6c8c6e974c811 100644
---- a/drivers/interconnect/qcom/msm8996.c
-+++ b/drivers/interconnect/qcom/msm8996.c
-@@ -552,6 +552,7 @@ static struct qcom_icc_node mas_venus_vmem = {
- static const u16 mas_snoc_pnoc_links[] = {
- 	MSM8996_SLAVE_BLSP_1,
- 	MSM8996_SLAVE_BLSP_2,
-+	MSM8996_SLAVE_USB_HS,
- 	MSM8996_SLAVE_SDCC_1,
- 	MSM8996_SLAVE_SDCC_2,
- 	MSM8996_SLAVE_SDCC_4,
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 0a8884145865d..932994f65b250 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -3449,6 +3449,9 @@ usb2: usb@76f8800 {
+ 					  <&gcc GCC_USB20_MASTER_CLK>;
+ 			assigned-clock-rates = <19200000>, <60000000>;
+ 
++			interconnects = <&pnoc MASTER_USB_HS &bimc SLAVE_EBI_CH0>,
++					<&bimc MASTER_AMPSS_M0 &pnoc SLAVE_USB_HS>;
++			interconnect-names = "usb-ddr", "apps-usb";
+ 			power-domains = <&gcc USB30_GDSC>;
+ 			qcom,select-utmi-as-pipe-clk;
+ 			status = "disabled";
 -- 
 2.51.0
 
