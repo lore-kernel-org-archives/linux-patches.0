@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BB13314B4;
-	Tue, 16 Dec 2025 11:35:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645CE3314B4;
+	Tue, 16 Dec 2025 11:35:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884919; cv=none; b=rawZ1hFq5CQogqyWT+ymF9ApqfGoGHw+BmO5XCKmJdEocaLGDzacFMN6VkSgspvFXuABLAo6TUXek0+nAdF+d8Hyh8L7yP12g7tEcYOkXptQhoaMorMkiPd65xfbr/spYRgD7KXrkOlXPfuuz/DkQ/KZ6iaOFXExQsh8eo0zTv4=
+	t=1765884922; cv=none; b=rKUS2QJo80DhFz2kQbXFeUw7AsrXfIPWA5ch+lIYat/v/uKlHHmaYQk1D2B/4TOwt6sZDb9y1VN6WFHscG+VS26DzQgULsRtodo5l35WIy7wOVzpZe9Tq5G4dYNgnHyzgXKL3j5/oVh4DyH5m4hPXHRkpgleb/+Dc92s/Pe40f0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884919; c=relaxed/simple;
-	bh=MNi5h2zP5b2DIHtPlEPS8GFZU91RxEZY9E4BugzNGxc=;
+	s=arc-20240116; t=1765884922; c=relaxed/simple;
+	bh=wUU/oz+FS3i/gUCcBa3fd+FtnEwKxlICEBIXccn2q+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=swUjtByYWdrqZj1IyXpjyJudo7B8yFbQBsAefQKfXz3m4zuou60aqZn09IjKO6iJrOqr1RVBqLr2tVRNSWJOhNH8qaeVx4ytluhGB9/9ntxKyu2pjkmARspKG1iWVwDEM6PpHJWekcbsPILsQpc6uAwBnFlIYIVVxxXFViqPjpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZqRdcRL3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cSHaCB2TsQ+jaJfZTEgiNeUlTZGrEOgsY6cFSftBu5GoHn2NSZJ30cUPibxRAnx4CLnZ0v7eVQXwU1zyXVQ0VcrvWzqdJsqN5ef4TSkt+RlXZUVHkvUsSUh9O5ncYUSGK0Z8Qffm+2LByi3eDeodpEr2T2ubAQeJ7POHnfQlcsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cl7Afu6S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZqRdcRL3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BF51C4CEF1;
-	Tue, 16 Dec 2025 11:35:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cl7Afu6S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5FE6C4CEF1;
+	Tue, 16 Dec 2025 11:35:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884918;
-	bh=MNi5h2zP5b2DIHtPlEPS8GFZU91RxEZY9E4BugzNGxc=;
+	s=korg; t=1765884922;
+	bh=wUU/oz+FS3i/gUCcBa3fd+FtnEwKxlICEBIXccn2q+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZqRdcRL3jIXoyFXP91J7Kh/JXucpxQOICxMfQdTmXkR5ZTr5jZxeZvdmd17SNp5kF
-	 YDDK4/zGxYK7U4geEeikdm2Cv1L1opfDRaio2NbjRW+GEtewz9qn/dWNXhReybOOj6
-	 YhrvIZLhIM5ViuM6/kjDrqfGjDw+PfH1sXfwXiso=
+	b=Cl7Afu6S9isxYHAbLN7B2kUxSkLgmuNVAOITE9K5nPUrjJ8Yn1l73rHWFi+5HwKBo
+	 l7Gu5ZqCLgLUJ7ra6AlTusdzP7MltagZkGWD/GVb8oTVWE8th/OCSITVQjyV8I/NIh
+	 kATAN941n356m6f3LUL3+PDpl7u1DqLjHZZhx+4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Simakov <bigalex934@gmail.com>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Benjamin Marzinski <bmarzins@redhat.com>,
 	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 338/354] dm-raid: fix possible NULL dereference with undefined raid type
-Date: Tue, 16 Dec 2025 12:15:05 +0100
-Message-ID: <20251216111333.153513336@linuxfoundation.org>
+Subject: [PATCH 6.12 339/354] dm log-writes: Add missing set_freezable() for freezable kthread
+Date: Tue, 16 Dec 2025 12:15:06 +0100
+Message-ID: <20251216111333.189129123@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -51,40 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Simakov <bigalex934@gmail.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 2f6cfd6d7cb165a7af8877b838a9f6aab4159324 ]
+[ Upstream commit ab08f9c8b363297cafaf45475b08f78bf19b88ef ]
 
-rs->raid_type is assigned from get_raid_type_by_ll(), which may return
-NULL. This NULL value could be dereferenced later in the condition
-'if (!(rs_is_raid10(rs) && rt_is_raid0(rs->raid_type)))'.
+The log_writes_kthread() calls try_to_freeze() but lacks set_freezable(),
+rendering the freeze attempt ineffective since kernel threads are
+non-freezable by default. This prevents proper thread suspension during
+system suspend/hibernate.
 
-Add a fail-fast check to return early with an error if raid_type is NULL,
-similar to other uses of this function.
+Add set_freezable() to explicitly mark the thread as freezable.
 
-Found by Linux Verification Center (linuxtesting.org) with Svace.
-
-Fixes: 33e53f06850f ("dm raid: introduce extended superblock and new raid types to support takeover/reshaping")
-Signed-off-by: Alexey Simakov <bigalex934@gmail.com>
+Fixes: 0e9cebe72459 ("dm: add log writes target")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Reviewed-by: Benjamin Marzinski <bmarzins@redhat.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-raid.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/md/dm-log-writes.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/md/dm-raid.c b/drivers/md/dm-raid.c
-index c69696d2540ab..b7f1cd81ab056 100644
---- a/drivers/md/dm-raid.c
-+++ b/drivers/md/dm-raid.c
-@@ -2291,6 +2291,8 @@ static int super_init_validation(struct raid_set *rs, struct md_rdev *rdev)
+diff --git a/drivers/md/dm-log-writes.c b/drivers/md/dm-log-writes.c
+index 8d7df8303d0a1..6272c77184200 100644
+--- a/drivers/md/dm-log-writes.c
++++ b/drivers/md/dm-log-writes.c
+@@ -432,6 +432,7 @@ static int log_writes_kthread(void *arg)
+ 	struct log_writes_c *lc = arg;
+ 	sector_t sector = 0;
  
- 			mddev->reshape_position = le64_to_cpu(sb->reshape_position);
- 			rs->raid_type = get_raid_type_by_ll(mddev->level, mddev->layout);
-+			if (!rs->raid_type)
-+				return -EINVAL;
- 		}
- 
- 	} else {
++	set_freezable();
+ 	while (!kthread_should_stop()) {
+ 		bool super = false;
+ 		bool logging_enabled;
 -- 
 2.51.0
 
