@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83FAC126C02;
-	Tue, 16 Dec 2025 11:17:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB4A25FA10;
+	Tue, 16 Dec 2025 11:17:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765883865; cv=none; b=JRlXgCKTnAGepBoQTt/Za0NBQBvhsw5pp0uqVy5rDkJm3SdSJDk35geSjBUnICTdPf1XDP3a0Q5b/1raTF1UbaItp06XbkLLrFCC8FA66mOljargi/0QSjXMM3SpWKD2HmE2VtwmRvoXlgGyBUS0BwuWRELr4HC6/omb5DhsNdU=
+	t=1765883869; cv=none; b=JAkeviH4ZXFig0n6l4bRiST3ribKNZeodzVyWR7xVntYzeKaDmUmSf9Q7cp/lUIb92A8vKiAtg/ePeso75/HVKmLggiWpVVDZpzmQnTXd3v9vFnANwRW1HnPQL0jVX2tK7rb3CN1QE65Qt1AN3y1805iL4DCLa7GeSxL/kXumM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765883865; c=relaxed/simple;
-	bh=hdI+/7HgyXv388L/gRLYsoL3U0OC0+lf8TnBAIS9NCk=;
+	s=arc-20240116; t=1765883869; c=relaxed/simple;
+	bh=Xifj5F+qBj9BoyPZjiRf4AyfZYYMx2kwXsz5CXtL+5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RZFsVhnUBJLLuOm3hjb5Y9uQ3pVkj/wrgnz//Hx/RoclKyLH3C4oh1r1Pi2No2tlNVkUfiL0XfBmuODf8F+3Kej4SFvpNiaFZt+UxDbJOnndQdXE6FKfz/atlMAQVQq8LzwwMZuvRNxqCf+xbK5xi1dQe4I2CTD5x4l9JWss/Qg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EJMDQ2wb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s6pGqbdFek/Evmz7Xxgk5NygLZdePAwT+/s1e15HxVZ9Qdkth0m6ntnxkgFg9jStBrXW9wWO6pbO8fYdpKzXnZuRPxxyP7An2/qnRSdV02Rzm8Ra4ZwhrzJwgNOXmLGi0ADJn+D26R8rQok1o95YnMOWpI6I2h8tN6cDV10d9qE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wHx4USku; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EJMDQ2wb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E839CC4CEF1;
-	Tue, 16 Dec 2025 11:17:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wHx4USku"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F705C4CEF1;
+	Tue, 16 Dec 2025 11:17:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765883865;
-	bh=hdI+/7HgyXv388L/gRLYsoL3U0OC0+lf8TnBAIS9NCk=;
+	s=korg; t=1765883869;
+	bh=Xifj5F+qBj9BoyPZjiRf4AyfZYYMx2kwXsz5CXtL+5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EJMDQ2wbTaFwp8e8kWBWymPb8eZBVZN+7D58omb/dIn89c2FMzO3yQUkeLGM6QiAe
-	 C6nzww7+U9ATRffVObuijvs9iG7DXNDptiomdbkiC2CNjvDLz4C+tOQDVA4r+GfFrZ
-	 JXV17hU90dyF4bsXEixgUz1psmLL6BqYaISPUHnw=
+	b=wHx4USkuGgMPnwhhKz37zxeEsyiLFtu3QSHvG8fsFasabeDLPnHT9Yigxd03jd4Eu
+	 plVk1TarOPRN/EEVCW+IG8aDZALN7fzQayI+gPo88FkyuTNffB/L6V7Pcqt4v3OWQD
+	 afoBvz9wfE1vePybhBpTcj4o85ovkqkgU4dD1XdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mavroudis Chatzilazaridis <mavchatz@protonmail.com>,
-	Stuart Hayhurst <stuart.a.hayhurst@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Dylan Hatch <dylanbhatch@google.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 022/354] HID: logitech-hidpp: Do not assume FAP in hidpp_send_message_sync()
-Date: Tue, 16 Dec 2025 12:09:49 +0100
-Message-ID: <20251216111321.715152108@linuxfoundation.org>
+Subject: [PATCH 6.12 023/354] objtool: Fix standalone --hacks=jump_label
+Date: Tue, 16 Dec 2025 12:09:50 +0100
+Message-ID: <20251216111321.750825933@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -52,57 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mavroudis Chatzilazaridis <mavchatz@protonmail.com>
+From: Dylan Hatch <dylanbhatch@google.com>
 
-[ Upstream commit aba7963544d47d82cdf36602a6678a093af0299d ]
+[ Upstream commit be8374a5ba7cbab6b97df94b4ffe0b92f5c8a6d2 ]
 
-Currently, hidpp_send_message_sync() retries sending the message when the
-device returns a busy error code, specifically HIDPP20_ERROR_BUSY, which
-has a different meaning under RAP. This ends up being a problem because
-this function is used for both FAP and RAP messages.
+The objtool command line 'objtool --hacks=jump_label foo.o' on its own
+should be expected to rewrite jump labels to NOPs. This means the
+add_special_section_alts() code path needs to run when only this option
+is provided.
 
-This issue is not noticeable on older receivers with unreachable devices
-since they return HIDPP_ERROR_RESOURCE_ERROR (0x09), which is not equal to
-HIDPP20_ERROR_BUSY (0x08).
+This is mainly relevant in certain debugging situations, but could
+potentially also fix kernel builds in which objtool is run with
+--hacks=jump_label but without --orc, --stackval, --uaccess, or
+--hacks=noinstr.
 
-However, newer receivers return HIDPP_ERROR_UNKNOWN_DEVICE (0x08) which
-happens to equal to HIDPP20_ERROR_BUSY, causing unnecessary retries when
-the device is not actually busy.
-
-This is resolved by checking if the error response is FAP or RAP and
-picking the respective ERROR_BUSY code.
-
-Fixes: 60165ab774cb ("HID: logitech-hidpp: rework one more time the retries attempts")
-Signed-off-by: Mavroudis Chatzilazaridis <mavchatz@protonmail.com>
-Tested-by: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: de6fbcedf5ab ("objtool: Read special sections with alts only when specific options are selected")
+Signed-off-by: Dylan Hatch <dylanbhatch@google.com>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-logitech-hidpp.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ tools/objtool/check.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
-index 2e72e8967e685..7d5bf5991fc6a 100644
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -352,10 +352,15 @@ static int hidpp_send_message_sync(struct hidpp_device *hidpp,
- 
- 	do {
- 		ret = __do_hidpp_send_message_sync(hidpp, message, response);
--		if (ret != HIDPP20_ERROR_BUSY)
-+		if (response->report_id == REPORT_ID_HIDPP_SHORT &&
-+		    ret != HIDPP_ERROR_BUSY)
-+			break;
-+		if ((response->report_id == REPORT_ID_HIDPP_LONG ||
-+		     response->report_id == REPORT_ID_HIDPP_VERY_LONG) &&
-+		    ret != HIDPP20_ERROR_BUSY)
- 			break;
- 
--		dbg_hid("%s:got busy hidpp 2.0 error %02X, retrying\n", __func__, ret);
-+		dbg_hid("%s:got busy hidpp error %02X, retrying\n", __func__, ret);
- 	} while (--max_retries);
- 
- 	mutex_unlock(&hidpp->send_mutex);
+diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+index 59ca5b0c093d8..4adb3f3d9aed8 100644
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -2671,7 +2671,8 @@ static int decode_sections(struct objtool_file *file)
+ 	 * Must be before add_jump_destinations(), which depends on 'func'
+ 	 * being set for alternatives, to enable proper sibling call detection.
+ 	 */
+-	if (opts.stackval || opts.orc || opts.uaccess || opts.noinstr) {
++	if (opts.stackval || opts.orc || opts.uaccess || opts.noinstr ||
++	    opts.hack_jump_label) {
+ 		ret = add_special_section_alts(file);
+ 		if (ret)
+ 			return ret;
 -- 
 2.51.0
 
