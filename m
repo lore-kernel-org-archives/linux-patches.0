@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A561734D3BA;
-	Tue, 16 Dec 2025 11:41:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B57834D3BB;
+	Tue, 16 Dec 2025 11:41:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885315; cv=none; b=fobvmec4sjBFiX6R07sya6gaZVwr4t7i16ZBQItsH++HBjhuUuF/9Y6g3iXMt/qq7fu6mRikKw8CyuOPmVZ/YwXQyfloCoUkpyM56O9kh/pGDjsqKb0yUy7Ho6bnR4RV3jhHoyBA94F7rgYIir+gnluyDUjEx4XJYhLl9kRM77o=
+	t=1765885319; cv=none; b=PhNFc0DRQ8X3Nnsydb6kT2RKt7BNoWKffRit3C8iZM1IQx0SLegLcZ8IcJYjyAl3VH25h6S/rtJ/1YAFk79U6R1f9OJ2tS1dlg7J8s+GaQQS3v2K/YxShl7P4mH0amG+57rBeyJTT+dBktpqmXFuVEV+/Frna1Ri6+J9KMIg4Qg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885315; c=relaxed/simple;
-	bh=76RrOdDxolX6wmw6xsnwdPTzgoi+Pcy04igDCkvuS8Y=;
+	s=arc-20240116; t=1765885319; c=relaxed/simple;
+	bh=gXhJ5NC2wX6o50hcvU40kpt37gzgD6Bv9FLBsVMq+js=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LrCrLBrvAkVbaaXAMGMsO4Nr7i1zsMq2zsWWJS53M7W3lF13TJMWxKzcK4jAnURVSoaLAtBG8+qcdJSqPqgptzEUE3gSi2KkJ9xgHxBEQoOLRgNCg7C0fcohREEW9Muqv2kqEUgPgNE4id14E+ZkgZYC74SeU5Fu8/FcPwdjhDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F5MXMyKC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nCF4/ZeXerawSDMCDpoAY9wrSsvC+2yAyXNJL7b4tO8ok2luPFghqYcS4XQZ2U/HG3fzkbVTtoelIljQJbkIJ/KJmFsOYPOZTFauetYl/VKouKxjv1cdsHCWrvDVVB4lAU31Da+dxYFCRXSdcZMS+7YUDxP3upw9gpiIj72ZArs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OvoECqBc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F5MXMyKC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B126FC4CEF1;
-	Tue, 16 Dec 2025 11:41:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OvoECqBc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35457C4CEF1;
+	Tue, 16 Dec 2025 11:41:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885315;
-	bh=76RrOdDxolX6wmw6xsnwdPTzgoi+Pcy04igDCkvuS8Y=;
+	s=korg; t=1765885318;
+	bh=gXhJ5NC2wX6o50hcvU40kpt37gzgD6Bv9FLBsVMq+js=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F5MXMyKCBS18Dyq34S3Xoy/8j3QKS7HGUAol1tZLbiXmAoPoahQaCWJpLWdyeN21M
-	 xi1nTmXB9Hxm15sNok0Y1+vmC3vcjADttvSD/ULaqBuV3+Sp43KSilfbUIhAEiP++J
-	 EGzT3ABDVSjPCtQrrOlM7hEk+yHq8xH1Yn21oiZQ=
+	b=OvoECqBcMXA+ySSRbLePwwy1WDi4ULJ/FZp2e983WFRYx5koHVcVMrI1aJvUBsIS8
+	 Va1GClNZT8sozPLqWKPa0nT50SWxXlcpHF07eSbdf2VEVEUB0d32tTgFVyxUWNd0Xb
+	 wMR03ruv+ZKbEPLihpu/A2KK+xpnJVh95Xg3/MRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Tim Harvey <tharvey@gateworks.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 069/507] tty: introduce tty_port_tty guard()
-Date: Tue, 16 Dec 2025 12:08:30 +0100
-Message-ID: <20251216111348.042883962@linuxfoundation.org>
+Subject: [PATCH 6.17 060/507] arm64: dts: freescale: imx8mp-venice-gw7905-2x: remove duplicate usdhc1 props
+Date: Tue, 16 Dec 2025 12:08:21 +0100
+Message-ID: <20251216111347.717409563@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -50,52 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Tim Harvey <tharvey@gateworks.com>
 
-[ Upstream commit e8398b8aed50382c21fcec77e80a5314e7c45c25 ]
+[ Upstream commit 8b7e58ab4a02601a0e86e9f9701d4612038d8b29 ]
 
-Having this, guards like these work:
-  scoped_guard(tty_port_tty, port)
-    tty_wakeup(scoped_tty());
+Remove the un-intended duplicate properties from usdhc1.
 
-See e.g. "tty_port: use scoped_guard()" later in this series.
-
-The definitions depend on CONFIG_TTY. It's due to tty_kref_put().
-On !CONFIG_TTY, it is an inline and its declaration would conflict. The
-guards are not needed in that case, of course.
-
-Signed-off-by: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
-Link: https://lore.kernel.org/r/20250814072456.182853-3-jirislaby@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: d55f3d2375ce ("tty: serial: imx: Only configure the wake register when device is set as wakeup source")
+Fixes: 0d5b288c2110e ("arm64: dts: freescale: Add imx8mp-venice-gw7905-2x")
+Signed-off-by: Tim Harvey <tharvey@gateworks.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/tty_port.h | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ arch/arm64/boot/dts/freescale/imx8mp-venice-gw702x.dtsi | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/include/linux/tty_port.h b/include/linux/tty_port.h
-index 332ddb93603ec..660c254f1efe5 100644
---- a/include/linux/tty_port.h
-+++ b/include/linux/tty_port.h
-@@ -270,4 +270,18 @@ static inline void tty_port_tty_vhangup(struct tty_port *port)
- 	__tty_port_tty_hangup(port, false, false);
- }
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-venice-gw702x.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-venice-gw702x.dtsi
+index cbf0c9a740faa..303995a8adce8 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-venice-gw702x.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-venice-gw702x.dtsi
+@@ -423,9 +423,6 @@ &usdhc1 {
+ 	bus-width = <4>;
+ 	non-removable;
+ 	status = "okay";
+-	bus-width = <4>;
+-	non-removable;
+-	status = "okay";
+ };
  
-+#ifdef CONFIG_TTY
-+void tty_kref_put(struct tty_struct *tty);
-+__DEFINE_CLASS_IS_CONDITIONAL(tty_port_tty, true);
-+__DEFINE_UNLOCK_GUARD(tty_port_tty, struct tty_struct, tty_kref_put(_T->lock));
-+static inline class_tty_port_tty_t class_tty_port_tty_constructor(struct tty_port *tport)
-+{
-+	class_tty_port_tty_t _t = {
-+		.lock = tty_port_tty_get(tport),
-+	};
-+	return _t;
-+}
-+#define scoped_tty()	((struct tty_struct *)(__guard_ptr(tty_port_tty)(&scope)))
-+#endif
-+
- #endif
+ /* eMMC */
 -- 
 2.51.0
 
