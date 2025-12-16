@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 210C52C0276;
-	Tue, 16 Dec 2025 11:53:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050C733A6F4;
+	Tue, 16 Dec 2025 11:53:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885999; cv=none; b=hFpdVXUBRsi7w9uzNd6M8abYqf06+cvInCsLTBsgXusMmvSS0aMeiOgnTCXY/KET4WpyRGaQLGAXlARCyluhpy6+uDeYIgr2FmDbNNs2VCO3t3fCrEqi937bwRE2TttF+t+atQsNeli1QO25fqqp0GJBheU6+HpSc89hTKjfYqI=
+	t=1765886002; cv=none; b=tkLf1rGyFwkHYN5lZ2JaJWk3r8QbCbBgoSPA6c/262XQu1u3f8AlEzcRMcWIagSROk095kKKSdHBbSz7vlrON/9o51iV46irKfSrpAYd2UrAqH9vMrX02NAm6Dxd3ZRUfbgG0wyGO3ajTOLxALangPt1Yja+xubsnPO1+9rM1JM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885999; c=relaxed/simple;
-	bh=4i0a4G56vDwpIFPztPhUrJo0eLqlwnrOwiTbFq12NbE=;
+	s=arc-20240116; t=1765886002; c=relaxed/simple;
+	bh=SDAoNiBYHK1K6MzLIWjRoNFdGvNOSopBTRoQpP5z+3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=awDief1e3ozk87lTxS0GXOaLzbGsIsxlUjsxxPBVnmkiJv1xZH8Qj2+O9bk0R7iUYsI8sIvf8lk4jPb5EzLMn/IKhjTMF8rsdWHsa2v6jUIOezasrDHxrPh63AtP0noGOlwefMB9SSp4286XP+Xxx5jJxSqB3Sb7NQXidV9GwOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N+DLH1Y3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=czSU2Tyiq035nfR2QuVtTWvBOlSEZEtSN67v5m0aDeNHfmAkLnWucHIfuB2mDfNKpoXQkXI9PCi87pD2XNC8bgAfbPdaqmhf1+JBnHGSgN7wlQjiIFeOzMA+TRN0lUMY7DOvttRqFIHLx5FnDRWxm0rs0lGLCbDZxe1HBHvTNrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VV5O6eaA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N+DLH1Y3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A148C4CEF5;
-	Tue, 16 Dec 2025 11:53:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VV5O6eaA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8149CC4CEF1;
+	Tue, 16 Dec 2025 11:53:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885998;
-	bh=4i0a4G56vDwpIFPztPhUrJo0eLqlwnrOwiTbFq12NbE=;
+	s=korg; t=1765886001;
+	bh=SDAoNiBYHK1K6MzLIWjRoNFdGvNOSopBTRoQpP5z+3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N+DLH1Y3dZxQQ17S5EdBaci+HWNByO9EXCgvmH9W494lIOfW9i8uDYuEMJcr4B8Ht
-	 LeoECvAmVm9XDOncwc7nlKAwwA1bttpRjSfa1LP3GM1ltY9ExyrpFoAdTLIIXL7/tl
-	 x7szr5sEBFy0tySAtfnTT3HWw2mk7dFKtfWTwe7k=
+	b=VV5O6eaAjQIiYrvqHZE3+E03SjbdOzmcOc7ebsoGGXyLzd4L2K5bDpmp9XbuRaGtU
+	 R5DtGziWvAz7OEQvWHDOM7GT6Ggz1fiuqyrvgxL+zz93asJZs7Vq6UHsZeWYyPFSm0
+	 IoARerDVWUbuPpEkDlBebSYENaGw2UrUZnkUG4do=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Himanshu Madhani <hmadhani2024@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	syzbot+d8fd35fa6177afa8c92b@syzkaller.appspotmail.com,
+	Gopi Krishna Menon <krishnagopi487@gmail.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 280/507] scsi: qla2xxx: Fix improper freeing of purex item
-Date: Tue, 16 Dec 2025 12:12:01 +0100
-Message-ID: <20251216111355.625212092@linuxfoundation.org>
+Subject: [PATCH 6.17 307/507] usb: raw-gadget: cap raw_io transfer length to KMALLOC_MAX_SIZE
+Date: Tue, 16 Dec 2025 12:12:28 +0100
+Message-ID: <20251216111356.593425498@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,49 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Gopi Krishna Menon <krishnagopi487@gmail.com>
 
-[ Upstream commit 78b1a242fe612a755f2158fd206ee6bb577d18ca ]
+[ Upstream commit a5160af78be7fcf3ade6caab0a14e349560c96d7 ]
 
-In qla2xxx_process_purls_iocb(), an item is allocated via
-qla27xx_copy_multiple_pkt(), which internally calls
-qla24xx_alloc_purex_item().
+The previous commit removed the PAGE_SIZE limit on transfer length of
+raw_io buffer in order to avoid any problems with emulating USB devices
+whose full configuration descriptor exceeds PAGE_SIZE in length. However
+this also removes the upperbound on user supplied length, allowing very
+large values to be passed to the allocator.
 
-The qla24xx_alloc_purex_item() function may return a pre-allocated item
-from a per-adapter pool for small allocations, instead of dynamically
-allocating memory with kzalloc().
+syzbot on fuzzing the transfer length with very large value (1.81GB)
+results in kmalloc() to fall back to the page allocator, which triggers
+a kernel warning as the page allocator cannot handle allocations more
+than MAX_PAGE_ORDER/KMALLOC_MAX_SIZE.
 
-An error handling path in qla2xxx_process_purls_iocb() incorrectly uses
-kfree() to release the item. If the item was from the pre-allocated
-pool, calling kfree() on it is a bug that can lead to memory corruption.
+Since there is no limit imposed on the size of buffer for both control
+and non control transfers, cap the raw_io transfer length to
+KMALLOC_MAX_SIZE and return -EINVAL for larger transfer length to
+prevent any warnings from the page allocator.
 
-Fix this by using the correct deallocation function,
-qla24xx_free_purex_item(), which properly handles both dynamically
-allocated and pre-allocated items.
-
-Fixes: 875386b98857 ("scsi: qla2xxx: Add Unsolicited LS Request and Response Support for NVMe")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Reviewed-by: Himanshu Madhani <hmadhani2024@gmail.com>
-Link: https://patch.msgid.link/20251113151246.762510-1-zilin@seu.edu.cn
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 37b9dd0d114a ("usb: raw-gadget: do not limit transfer length")
+Tested-by: syzbot+d8fd35fa6177afa8c92b@syzkaller.appspotmail.com
+Reported-by: syzbot+d8fd35fa6177afa8c92b@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/68fc07a0.a70a0220.3bf6c6.01ab.GAE@google.com/
+Signed-off-by: Gopi Krishna Menon <krishnagopi487@gmail.com>
+Reviewed-by: Andrey Konovalov <andreyknvl@gmail.com>
+Link: https://patch.msgid.link/20251028165659.50962-1-krishnagopi487@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_nvme.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/gadget/legacy/raw_gadget.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/scsi/qla2xxx/qla_nvme.c b/drivers/scsi/qla2xxx/qla_nvme.c
-index 316594aa40cc5..42eb65a62f1f3 100644
---- a/drivers/scsi/qla2xxx/qla_nvme.c
-+++ b/drivers/scsi/qla2xxx/qla_nvme.c
-@@ -1292,7 +1292,7 @@ void qla2xxx_process_purls_iocb(void **pkt, struct rsp_que **rsp)
- 		a.reason = FCNVME_RJT_RC_LOGIC;
- 		a.explanation = FCNVME_RJT_EXP_NONE;
- 		xmt_reject = true;
--		kfree(item);
-+		qla24xx_free_purex_item(item);
- 		goto out;
- 	}
+diff --git a/drivers/usb/gadget/legacy/raw_gadget.c b/drivers/usb/gadget/legacy/raw_gadget.c
+index b71680c58de6c..46f343ba48b3d 100644
+--- a/drivers/usb/gadget/legacy/raw_gadget.c
++++ b/drivers/usb/gadget/legacy/raw_gadget.c
+@@ -40,6 +40,7 @@ MODULE_LICENSE("GPL");
  
+ static DEFINE_IDA(driver_id_numbers);
+ #define DRIVER_DRIVER_NAME_LENGTH_MAX	32
++#define USB_RAW_IO_LENGTH_MAX KMALLOC_MAX_SIZE
+ 
+ #define RAW_EVENT_QUEUE_SIZE	16
+ 
+@@ -667,6 +668,8 @@ static void *raw_alloc_io_data(struct usb_raw_ep_io *io, void __user *ptr,
+ 		return ERR_PTR(-EINVAL);
+ 	if (!usb_raw_io_flags_valid(io->flags))
+ 		return ERR_PTR(-EINVAL);
++	if (io->length > USB_RAW_IO_LENGTH_MAX)
++		return ERR_PTR(-EINVAL);
+ 	if (get_from_user)
+ 		data = memdup_user(ptr + sizeof(*io), io->length);
+ 	else {
 -- 
 2.51.0
 
