@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45FA534A76F;
-	Tue, 16 Dec 2025 11:59:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00A6B34A3A7;
+	Tue, 16 Dec 2025 11:59:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886379; cv=none; b=reoTc7uoenesV/5f71xJJuQyibvyIT70sz2ve7k+H9zJ7QtG0LOIhcd8UPTRSw5oJOx/YkTSN5faVgrNEgsu79uVFVCPRGGI6NAdhc64a5a2xcL1HOO9Uk8Y8D0AX71J1MRnsY3ZZcMugG1Xc+uwrIlZTxcg7wRoJ7WTGbFMYCc=
+	t=1765886383; cv=none; b=Bl0LTUEShe5Eh7pfyJ5Wh/Ei7EOazkcfcsJ5rbvHFHQEZmqp2y1Od5SdWBxoal8M+qlKqPC19CN0wOcug1cObvPCQk4xnkJE+P9lYHAq7L3i97P8bB1yWsk8GhW4DVoDOEtB5sMPZTlOsHclT0mH+NrZHMBrVtq+qMllfhTvYE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886379; c=relaxed/simple;
-	bh=Fr1QEZwFbQLRtk0w3g/dh5gFTcLXsq5y077fyPEGdpE=;
+	s=arc-20240116; t=1765886383; c=relaxed/simple;
+	bh=utmf4/PsHPnrtgyajLTQAfZ/5aFTXXkyToC4mJXCdbg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iLYbSSOlZGKXMBEHbYT0n6xb5kX5JZmdrJn2YmW3982hG61rF/j+raTT6x173p1qBjjEJbtnMbbSQBJZV1x3aHGUWCw7zoGOJj/aP03gTQvsALS5N20L28zL10U3dN8OAB/L9YAh4Fwr4GrCj3NByF57xpmFRKVAB6WEwuKxZYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D25hMXdY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VxNEy6I7gv3/v/wunGvQXZZx53npWYSedZCz4l0ODKfv5RAgSZPgxLNM2E1tX995t1D6Bkf/afWrttvCpPxIhhx07x1rtT8KfBYPMZecGt2lEvmDt8QEBKNyZIaRO7142ZDOtqJb8ygVz3EjshIScV0OxlN4fcBxXa5p8YqlqyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ORpnZNNN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D25hMXdY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A86E5C16AAE;
-	Tue, 16 Dec 2025 11:59:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ORpnZNNN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 597A7C4CEF1;
+	Tue, 16 Dec 2025 11:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886379;
-	bh=Fr1QEZwFbQLRtk0w3g/dh5gFTcLXsq5y077fyPEGdpE=;
+	s=korg; t=1765886382;
+	bh=utmf4/PsHPnrtgyajLTQAfZ/5aFTXXkyToC4mJXCdbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D25hMXdYS5jAYDXPR8UIyroZBh5S8NHuY2neYW9DZacY77XFESjxSxAJYHd6PucWm
-	 hgQf05NJujmQ8KcBkmTsAdozAz1nIFo/NVlkLU8ILDWmU5q2IrGdusCVGwNWpsK4gm
-	 o3fqF5+P6wbO3SVFRImgG94aWRKOjd3M/4dvdM3g=
+	b=ORpnZNNNg/9D0OgIVNuIt0dgDbzMKHr67UyhH5UUx+DfoYoCXbxtERI4uJmCW3KQ+
+	 fDjT2oLvpW9gCt6kiLWgOB2HJMjY6iD4hdFqWKUwAQ0UXPGoJJR0Da6MgOrF6nq6uE
+	 oAJ112JhzOQc7VTA8RUEO76hgxKxddrY/r17eH3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
 	Jonas Gorski <jonas.gorski@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 418/507] net: dsa: b53: use same ARL search result offset for BCM5325/65
-Date: Tue, 16 Dec 2025 12:14:19 +0100
-Message-ID: <20251216111400.605149435@linuxfoundation.org>
+Subject: [PATCH 6.17 419/507] net: dsa: b53: fix CPU port unicast ARL entries for BCM5325/65
+Date: Tue, 16 Dec 2025 12:14:20 +0100
+Message-ID: <20251216111400.641544217@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -47,7 +46,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
@@ -56,83 +54,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit 8e46aacea4264bcb8d4265fb07577afff58ae78d ]
+[ Upstream commit 85132103f700b1340fc17df8a981509d17bf4872 ]
 
-BCM5365's search result is at the same offset as BCM5325's search
-result, and they (mostly) share the same format, so switch BCM5365 to
-BCM5325's arl ops.
+On BCM5325 and BCM5365, unicast ARL entries use 8 as the value for the
+CPU port, so we need to translate it to/from 5 as used for the CPU port
+at most other places.
 
 Fixes: c45655386e53 ("net: dsa: b53: add support for FDB operations on 5325/5365")
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Tested-by: Álvaro Fernández Rojas <noltari@gmail.com>
 Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
-Link: https://patch.msgid.link/20251128080625.27181-4-jonas.gorski@gmail.com
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20251128080625.27181-5-jonas.gorski@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 18 +-----------------
- drivers/net/dsa/b53/b53_regs.h   |  4 +---
- 2 files changed, 2 insertions(+), 20 deletions(-)
+ drivers/net/dsa/b53/b53_priv.h | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index dedbd53412871..68e9162087ab4 100644
---- a/drivers/net/dsa/b53/b53_common.c
-+++ b/drivers/net/dsa/b53/b53_common.c
-@@ -2093,16 +2093,6 @@ static void b53_arl_search_read_25(struct b53_device *dev, u8 idx,
- 	b53_arl_to_entry_25(ent, mac_vid);
+diff --git a/drivers/net/dsa/b53/b53_priv.h b/drivers/net/dsa/b53/b53_priv.h
+index 127ce7f6b16ba..80e7dd6169b47 100644
+--- a/drivers/net/dsa/b53/b53_priv.h
++++ b/drivers/net/dsa/b53/b53_priv.h
+@@ -344,12 +344,14 @@ static inline void b53_arl_to_entry_25(struct b53_arl_entry *ent,
+ 				       u64 mac_vid)
+ {
+ 	memset(ent, 0, sizeof(*ent));
+-	ent->port = (mac_vid >> ARLTBL_DATA_PORT_ID_S_25) &
+-		     ARLTBL_DATA_PORT_ID_MASK_25;
+ 	ent->is_valid = !!(mac_vid & ARLTBL_VALID_25);
+ 	ent->is_age = !!(mac_vid & ARLTBL_AGE_25);
+ 	ent->is_static = !!(mac_vid & ARLTBL_STATIC_25);
+ 	u64_to_ether_addr(mac_vid, ent->mac);
++	ent->port = (mac_vid >> ARLTBL_DATA_PORT_ID_S_25) &
++		     ARLTBL_DATA_PORT_ID_MASK_25;
++	if (is_unicast_ether_addr(ent->mac) && ent->port == B53_CPU_PORT)
++		ent->port = B53_CPU_PORT_25;
+ 	ent->vid = (mac_vid >> ARLTBL_VID_S_65) & ARLTBL_VID_MASK_25;
  }
  
--static void b53_arl_search_read_65(struct b53_device *dev, u8 idx,
--				   struct b53_arl_entry *ent)
--{
--	u64 mac_vid;
--
--	b53_read64(dev, B53_ARLIO_PAGE, B53_ARL_SRCH_RSTL_0_MACVID_65,
--		   &mac_vid);
--	b53_arl_to_entry_25(ent, mac_vid);
--}
--
- static void b53_arl_search_read_89(struct b53_device *dev, u8 idx,
- 				   struct b53_arl_entry *ent)
+@@ -383,8 +385,11 @@ static inline void b53_arl_from_entry_25(u64 *mac_vid,
+ 					 const struct b53_arl_entry *ent)
  {
-@@ -2699,12 +2689,6 @@ static const struct b53_arl_ops b53_arl_ops_25 = {
- 	.arl_search_read = b53_arl_search_read_25,
- };
- 
--static const struct b53_arl_ops b53_arl_ops_65 = {
--	.arl_read_entry = b53_arl_read_entry_25,
--	.arl_write_entry = b53_arl_write_entry_25,
--	.arl_search_read = b53_arl_search_read_65,
--};
--
- static const struct b53_arl_ops b53_arl_ops_89 = {
- 	.arl_read_entry = b53_arl_read_entry_89,
- 	.arl_write_entry = b53_arl_write_entry_89,
-@@ -2761,7 +2745,7 @@ static const struct b53_chip_data b53_switch_chips[] = {
- 		.arl_buckets = 1024,
- 		.imp_port = 5,
- 		.duplex_reg = B53_DUPLEX_STAT_FE,
--		.arl_ops = &b53_arl_ops_65,
-+		.arl_ops = &b53_arl_ops_25,
- 	},
- 	{
- 		.chip_id = BCM5389_DEVICE_ID,
-diff --git a/drivers/net/dsa/b53/b53_regs.h b/drivers/net/dsa/b53/b53_regs.h
-index d9026cf865549..f2a3696d122fa 100644
---- a/drivers/net/dsa/b53/b53_regs.h
-+++ b/drivers/net/dsa/b53/b53_regs.h
-@@ -370,10 +370,8 @@
- #define B53_ARL_SRCH_RSTL_0_MACVID	0x60
- #define B53_ARL_SRCH_RSLT_MACVID_89	0x33
- 
--/* Single register search result on 5325 */
-+/* Single register search result on 5325/5365 */
- #define B53_ARL_SRCH_RSTL_0_MACVID_25	0x24
--/* Single register search result on 5365 */
--#define B53_ARL_SRCH_RSTL_0_MACVID_65	0x30
- 
- /* ARL Search Data Result (32 bit) */
- #define B53_ARL_SRCH_RSTL_0		0x68
+ 	*mac_vid = ether_addr_to_u64(ent->mac);
+-	*mac_vid |= (u64)(ent->port & ARLTBL_DATA_PORT_ID_MASK_25) <<
+-			  ARLTBL_DATA_PORT_ID_S_25;
++	if (is_unicast_ether_addr(ent->mac) && ent->port == B53_CPU_PORT_25)
++		*mac_vid |= (u64)B53_CPU_PORT << ARLTBL_DATA_PORT_ID_S_25;
++	else
++		*mac_vid |= (u64)(ent->port & ARLTBL_DATA_PORT_ID_MASK_25) <<
++				  ARLTBL_DATA_PORT_ID_S_25;
+ 	*mac_vid |= (u64)(ent->vid & ARLTBL_VID_MASK_25) <<
+ 			  ARLTBL_VID_S_65;
+ 	if (ent->is_valid)
 -- 
 2.51.0
 
