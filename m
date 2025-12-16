@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669E531A7F5;
-	Tue, 16 Dec 2025 12:11:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67DF31A7F5;
+	Tue, 16 Dec 2025 12:11:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887093; cv=none; b=Qy2qM6+cTADePGUFWhRMh5TOZbY3w7UToLsbb65fyyEOFDcDRUGIhsX2e4KnHJnLWqlzbYDzJemqp+ao3aUUcE56Oz+1VdUWYVxzZr/rZ52KA7TSDqaOSTM9ImhOL83F1DRHhCNhJ4WXL8oALx/RSeZNt34yEdwtCHDqsT53kdE=
+	t=1765887096; cv=none; b=jggiohUFBakkorvc0Dmc5rO3NV43K8sR7McOILke9AWGrfrMPOAnBHwlThv7BErrt7QA4Y9yH8aKI2jvgDlcSJm/PZu1ok7Fpao/mQy5QcE/6VCvybp3oVIlLQgbU/rRfTw6JV6cuZEBtgy1s726Xm7JpqEU87n2nYnGff+abaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887093; c=relaxed/simple;
-	bh=v5bQwEmjareuChpXY5RDKE3CreGWIhTGomk/RPr5T8A=;
+	s=arc-20240116; t=1765887096; c=relaxed/simple;
+	bh=ns/g47w/kKA0obY2s4oVE/s1jfDCo0oyk0xbQ7Wx3KU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XqXJBrvzw7o6HoexOhIMaKN7icESrqC6du9Ypv7fqWuCKxl5ujGOBP1+mOZ2UxseP7NyO0fCXSnqP/qxRhkUGXy9iOK7N9LFJKlT6BCCzC1E7+cz9O7Y9f750SppJBLd4tCKEuT1UTozFn0h4N9xM9jAkFIUNAD6BC71Ex6FFUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=17o71qJR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XUWyCbKDKjDMfdNArfhT4Ie/1KhtEL/2zvT2f8c/fBn2YxbQwHrPkFJaD6ukZk6Vn+BGyRdKbQLuJIPRTGFurmL/c+n1NbIf6wYvLOM68GJsanbSZJobdslv9/nLiFNB1WVIazPxoElVYgXsfXXJGFD/KkPfRfoCXbTWtiMevYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RDsRQq/B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="17o71qJR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7B74C4CEF1;
-	Tue, 16 Dec 2025 12:11:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RDsRQq/B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34128C4CEF1;
+	Tue, 16 Dec 2025 12:11:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887093;
-	bh=v5bQwEmjareuChpXY5RDKE3CreGWIhTGomk/RPr5T8A=;
+	s=korg; t=1765887096;
+	bh=ns/g47w/kKA0obY2s4oVE/s1jfDCo0oyk0xbQ7Wx3KU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=17o71qJRiGsOj8pj0QtKYki5SmCDP2wgOcwo7D3bf5XWjQQXtys74bftJ2NF+QP+Y
-	 YznwdGfxamhWcYVwp5kQazCuwihhwu/mdIe3fAHushldMQxo1jvX1mTOGCWeV7M2o0
-	 WHAoX5v9aToqEb957IpSvhv4mjME4gl1mRlZQD0Q=
+	b=RDsRQq/BbaZ9bp81hIqnH3KwGLxR6qbSoM9hU3mTSyQqrUvPbwuh1aDNIUkN0E1sW
+	 /J2/og8CkQy5oQTJqsS469TabLX6AZZXE2lu7Xftuq9DoceyiqVbe7i/fIJQ4jEcMa
+	 Yr2UiD2DrNKIcrJ/qYmeTkDPH6Dc9CxD+2PZI+TI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 124/614] arm64: dts: qcom: sdm845-starqltechn: Fix i2c-gpio node name
-Date: Tue, 16 Dec 2025 12:08:11 +0100
-Message-ID: <20251216111405.829049113@linuxfoundation.org>
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.18 098/614] ice: move service task start out of ice_init_pf()
+Date: Tue, 16 Dec 2025 12:07:45 +0100
+Message-ID: <20251216111404.868619632@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,37 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 
-[ Upstream commit 6030fa06360b8b8d898b66ac156adaaf990b83cb ]
+[ Upstream commit 806c4f32a80627f8977fda53520afc41491d162f ]
 
-Fix the following DT checker warning:
+Move service task start out of ice_init_pf(). Do analogous with deinit.
+Service task is needed up to the very end of driver removal, later commit
+of the series will move it later on execution timeline.
 
-$nodename:0: 'i2c21' does not match '^i2c(@.+|-[a-z0-9]+)?$'
-
-Fixes: 3a4600448bef ("arm64: dts: qcom: sdm845-starqltechn: add display PMIC")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251015-topic-starltechn_i2c_gpio-v1-1-6d303184ee87@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Stable-dep-of: 1390b8b3d2be ("ice: remove duplicate call to ice_deinit_hw() on error paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice.h      |  1 +
+ drivers/net/ethernet/intel/ice/ice_main.c | 18 +++++++++++-------
+ 2 files changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-index 215e1491f3e9a..493c69e991746 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-@@ -158,7 +158,7 @@ rmtfs_mem: rmtfs-mem@fde00000 {
- 		};
- 	};
+diff --git a/drivers/net/ethernet/intel/ice/ice.h b/drivers/net/ethernet/intel/ice/ice.h
+index 22b8323ff0d0e..0e58a58c23eb3 100644
+--- a/drivers/net/ethernet/intel/ice/ice.h
++++ b/drivers/net/ethernet/intel/ice/ice.h
+@@ -1029,6 +1029,7 @@ int ice_open(struct net_device *netdev);
+ int ice_open_internal(struct net_device *netdev);
+ int ice_stop(struct net_device *netdev);
+ void ice_service_task_schedule(struct ice_pf *pf);
++void ice_start_service_task(struct ice_pf *pf);
+ int ice_load(struct ice_pf *pf);
+ void ice_unload(struct ice_pf *pf);
+ void ice_adv_lnk_speed_maps_init(void);
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index 86f5859e88ef5..41c2f0d52ce0d 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -3951,7 +3951,6 @@ u16 ice_get_avail_rxq_count(struct ice_pf *pf)
+  */
+ static void ice_deinit_pf(struct ice_pf *pf)
+ {
+-	ice_service_task_stop(pf);
+ 	mutex_destroy(&pf->lag_mutex);
+ 	mutex_destroy(&pf->adev_mutex);
+ 	mutex_destroy(&pf->sw_mutex);
+@@ -4030,6 +4029,14 @@ static void ice_set_pf_caps(struct ice_pf *pf)
+ 	pf->max_pf_rxqs = func_caps->common_cap.num_rxq;
+ }
  
--	i2c21 {
-+	i2c-21 {
- 		compatible = "i2c-gpio";
- 		sda-gpios = <&tlmm 127 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
- 		scl-gpios = <&tlmm 128 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
++void ice_start_service_task(struct ice_pf *pf)
++{
++	timer_setup(&pf->serv_tmr, ice_service_timer, 0);
++	pf->serv_tmr_period = HZ;
++	INIT_WORK(&pf->serv_task, ice_service_task);
++	clear_bit(ICE_SERVICE_SCHED, pf->state);
++}
++
+ /**
+  * ice_init_pf - Initialize general software structures (struct ice_pf)
+  * @pf: board private structure to initialize
+@@ -4049,12 +4056,6 @@ static int ice_init_pf(struct ice_pf *pf)
+ 
+ 	init_waitqueue_head(&pf->reset_wait_queue);
+ 
+-	/* setup service timer and periodic service task */
+-	timer_setup(&pf->serv_tmr, ice_service_timer, 0);
+-	pf->serv_tmr_period = HZ;
+-	INIT_WORK(&pf->serv_task, ice_service_task);
+-	clear_bit(ICE_SERVICE_SCHED, pf->state);
+-
+ 	mutex_init(&pf->avail_q_mutex);
+ 	pf->avail_txqs = bitmap_zalloc(pf->max_pf_txqs, GFP_KERNEL);
+ 	if (!pf->avail_txqs)
+@@ -4745,6 +4746,7 @@ int ice_init_dev(struct ice_pf *pf)
+ 		ice_set_safe_mode_caps(hw);
+ 	}
+ 
++	ice_start_service_task(pf);
+ 	err = ice_init_pf(pf);
+ 	if (err) {
+ 		dev_err(dev, "ice_init_pf failed: %d\n", err);
+@@ -4791,6 +4793,7 @@ int ice_init_dev(struct ice_pf *pf)
+ 	ice_clear_interrupt_scheme(pf);
+ unroll_pf_init:
+ 	ice_deinit_pf(pf);
++	ice_service_task_stop(pf);
+ 	return err;
+ }
+ 
+@@ -4799,6 +4802,7 @@ void ice_deinit_dev(struct ice_pf *pf)
+ 	ice_free_irq_msix_misc(pf);
+ 	ice_deinit_pf(pf);
+ 	ice_deinit_hw(&pf->hw);
++	ice_service_task_stop(pf);
+ 
+ 	/* Service task is already stopped, so call reset directly. */
+ 	ice_reset(&pf->hw, ICE_RESET_PFR);
 -- 
 2.51.0
 
