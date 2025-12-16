@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1035B346791;
-	Tue, 16 Dec 2025 12:33:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9E6839A137;
+	Tue, 16 Dec 2025 12:33:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888434; cv=none; b=E8tXaFj1djtjQB94VUrK/Y/LttaFqSL7kxc/hpvm7+uwqpQYBJI/mhmUXtPDWh0P6lvYFY8eB1ypxXUqVTw6HlUOYRCHQCmyVlVsLmVBqMkSyByMKhUmotrsXHBViDcALNw3jGf5hIworARGjOdB33oV2pqdNpRdgeU2gjPPbtI=
+	t=1765888437; cv=none; b=VJDHKTl6hcLPhXFXfEKQgcPr0QXwVpx4mWNCovRkLwwaT887xwH3LI4cyO4wgIBVL9U7gFngyJWTcfefNYJd9oE9aQI99XkMq/0jX2LjlYMTU94NAM0xiObbUs25o5rfopcZi6pQhCtFp8O1zBIX0ZdGBJMiQi5bF92qSubalWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888434; c=relaxed/simple;
-	bh=D1wgWFI+ap8r2vXv2wkqzs194vQA1NRPchbZKQD5vLU=;
+	s=arc-20240116; t=1765888437; c=relaxed/simple;
+	bh=Z81E1/Rx7rcrYHgRK+75Nox8oljfM4HPx0yhMmjvBQM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=foE3JnmkxudCq7WM4PjJo7EjQmYxC3Vl1ZOFTg7JA/B2L2F5wGbLuyMx4IzsM9jT15sXSdqC5VI7Jgok0bgiSyUdVhP72U0LgSTvjBSlThmoGC5aNn8ZzZCp+ayQpOAGqoCM+EKGembPRLGlq6j83Vz8i/DsxRxbgYAtXDbtP8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZQ4+RUrZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fOhjAYV7qPrFmB94cGnwSFBCwaFWV2b93Bgf/7eloeGVJg6oafGwCoGPj8Gq9JQKmpFiUalcyEXTddb2WwQ3TpILqIbjKiN7ls/MA9xYX9+b8o6klYSCTuEmVu/+iX5xO+ppOjhJNWmBpPcSVs7KusM13YNb+LFbcULcotomcXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WWkkh51g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZQ4+RUrZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 710D4C4CEF1;
-	Tue, 16 Dec 2025 12:33:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WWkkh51g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 115F1C4CEF1;
+	Tue, 16 Dec 2025 12:33:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888433;
-	bh=D1wgWFI+ap8r2vXv2wkqzs194vQA1NRPchbZKQD5vLU=;
+	s=korg; t=1765888437;
+	bh=Z81E1/Rx7rcrYHgRK+75Nox8oljfM4HPx0yhMmjvBQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZQ4+RUrZmdRoZ0mPNy+FyQxSKLrd0x2n9lfITB10g1UquZniw41tN7Bh6LMAXs2ln
-	 bE4q66A8A1VNhhasIleyj2hGyYiwe1w/+J5bK6/zfmXHlzB4wBftFjgOhIOHH5CRnv
-	 L0BHH+/85ntqS+kj+nV164Ue/DUrSFHjFb2fF4M0=
+	b=WWkkh51gbdXHLKw+ZVxRfBaqSNiZt3Y3XDqgeVpIBrLQjW1y6X97ZyjMT2defHLiF
+	 yce1LzF9cJatLrCxo+HEOOFqj0n3TOd8nz1ZoqSIBnsm/nrdwCpkBoDFaSTDXyT6T/
+	 XQtjzAmvov5WPgHQ3t+ovvZ7eoQs8Quy/tyEYMEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xupengbo <xupengbo@oppo.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	John Stultz <jstultz@google.com>,
 	Ingo Molnar <mingo@kernel.org>,
-	Aaron Lu <ziqianlu@bytedance.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
+	Haiyue Wang <haiyuewa@163.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 534/614] sched/fair: Fix unfairness caused by stalled tg_load_avg_contrib when the last task migrates out
-Date: Tue, 16 Dec 2025 12:15:01 +0100
-Message-ID: <20251216111420.726282032@linuxfoundation.org>
+Subject: [PATCH 6.18 535/614] sched/core: Fix psi_dequeue() for Proxy Execution
+Date: Tue, 16 Dec 2025 12:15:02 +0100
+Message-ID: <20251216111420.762343537@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -54,54 +54,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: xupengbo <xupengbo@oppo.com>
+From: John Stultz <jstultz@google.com>
 
-[ Upstream commit ca125231dd29fc0678dd3622e9cdea80a51dffe4 ]
+[ Upstream commit c2ae8b0df2d1bb7a063f9e356e4e9a06cd4afe11 ]
 
-When a task is migrated out, there is a probability that the tg->load_avg
-value will become abnormal. The reason is as follows:
+Currently, if the sleep flag is set, psi_dequeue() doesn't
+change any of the psi_flags.
 
-1. Due to the 1ms update period limitation in update_tg_load_avg(), there
-   is a possibility that the reduced load_avg is not updated to tg->load_avg
-   when a task migrates out.
+This is because psi_task_switch() will clear TSK_ONCPU as well
+as other potential flags (TSK_RUNNING), and the assumption is
+that a voluntary sleep always consists of a task being dequeued
+followed shortly there after with a psi_sched_switch() call.
 
-2. Even though __update_blocked_fair() traverses the leaf_cfs_rq_list and
-   calls update_tg_load_avg() for cfs_rqs that are not fully decayed, the key
-   function cfs_rq_is_decayed() does not check whether
-   cfs->tg_load_avg_contrib is null. Consequently, in some cases,
-   __update_blocked_fair() removes cfs_rqs whose avg.load_avg has not been
-   updated to tg->load_avg.
+Proxy Execution changes this expectation, as mutex-blocked tasks
+that would normally sleep stay on the runqueue. But in the case
+where the mutex-owning task goes to sleep, or the owner is on a
+remote cpu, we will then deactivate the blocked task shortly
+after.
 
-Add a check of cfs_rq->tg_load_avg_contrib in cfs_rq_is_decayed(),
-which fixes the case (2.) mentioned above.
+In that situation, the mutex-blocked task will have had its
+TSK_ONCPU cleared when it was switched off the cpu, but it will
+stay TSK_RUNNING. Then if we later dequeue it (as currently done
+if we hit a case find_proxy_task() can't yet handle, such as the
+case of the owner being on another rq or a sleeping owner)
+psi_dequeue() won't change any state (leaving it TSK_RUNNING),
+as it incorrectly expects a psi_task_switch() call to
+immediately follow.
 
-Fixes: 1528c661c24b ("sched/fair: Ratelimit update to tg->load_avg")
-Signed-off-by: xupengbo <xupengbo@oppo.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Later on when the task get woken/re-enqueued, and psi_flags are
+set for TSK_RUNNING, we hit an error as the task is already
+TSK_RUNNING:
+
+  psi: inconsistent task state! task=188:kworker/28:0 cpu=28 psi_flags=4 clear=0 set=4
+
+To resolve this, extend the logic in psi_dequeue() so that
+if the sleep flag is set, we also check if psi_flags have
+TSK_ONCPU set (meaning the psi_task_switch is imminent) before
+we do the shortcut return.
+
+If TSK_ONCPU is not set, that means we've already switched away,
+and this psi_dequeue call needs to clear the flags.
+
+Fixes: be41bde4c3a8 ("sched: Add an initial sketch of the find_proxy_task() function")
+Reported-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Signed-off-by: John Stultz <jstultz@google.com>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Aaron Lu <ziqianlu@bytedance.com>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Tested-by: Aaron Lu <ziqianlu@bytedance.com>
-Link: https://patch.msgid.link/20250827022208.14487-1-xupengbo@oppo.com
+Tested-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Tested-by: Haiyue Wang <haiyuewa@163.com>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Link: https://patch.msgid.link/20251205012721.756394-1-jstultz@google.com
+Closes: https://lore.kernel.org/lkml/20251117185550.365156-1-kprateek.nayak@amd.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 3 +++
- 1 file changed, 3 insertions(+)
+ kernel/sched/stats.h | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 2a4a1c6e25da0..71d3f4125b0e7 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -4059,6 +4059,9 @@ static inline bool cfs_rq_is_decayed(struct cfs_rq *cfs_rq)
- 	if (child_cfs_rq_on_list(cfs_rq))
- 		return false;
+diff --git a/kernel/sched/stats.h b/kernel/sched/stats.h
+index 26f3fd4d34cea..73bd6bca4d310 100644
+--- a/kernel/sched/stats.h
++++ b/kernel/sched/stats.h
+@@ -180,8 +180,13 @@ static inline void psi_dequeue(struct task_struct *p, int flags)
+ 	 * avoid walking all ancestors twice, psi_task_switch() handles
+ 	 * TSK_RUNNING and TSK_IOWAIT for us when it moves TSK_ONCPU.
+ 	 * Do nothing here.
++	 *
++	 * In the SCHED_PROXY_EXECUTION case we may do sleeping
++	 * dequeues that are not followed by a task switch, so check
++	 * TSK_ONCPU is set to ensure the task switch is imminent.
++	 * Otherwise clear the flags as usual.
+ 	 */
+-	if (flags & DEQUEUE_SLEEP)
++	if ((flags & DEQUEUE_SLEEP) && (p->psi_flags & TSK_ONCPU))
+ 		return;
  
-+	if (cfs_rq->tg_load_avg_contrib)
-+		return false;
-+
- 	return true;
- }
- 
+ 	/*
 -- 
 2.51.0
 
