@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A467355025;
-	Tue, 16 Dec 2025 12:14:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19DCD355808;
+	Tue, 16 Dec 2025 12:14:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887242; cv=none; b=R2Co0lcMk+59DQY+ETAN0kcCoGtCCsRVAT+wG1Rhigeowo6BCqKjKHlS5aTzEz4hrFDA0XWL+5vfPjQM5LmtCUobEoaVbhLsfGjR56VoFkkbJFP5ADXXJ6RTw92GXZuLg2Xv3xu5ncBOO1h/rhINkz368Is053uhbMbA6T+E9qQ=
+	t=1765887248; cv=none; b=st1Jf4rhexlShQ9nUjzrn30Czk6MNiRggMtgShjnVsdaXEtnIJH35Bw9GMJ8CsctVyoArpbPmN11augNEhFd5DLNqutfNN4dm61OCBPturHm4mgeZAwWQ+pZeWDvlijrHijOWqJmFs7rxBu9+y5+gE8tMNnKhN8IMmd2otA5cWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887242; c=relaxed/simple;
-	bh=hZG7nOhRnu4tYOQdBki9BENSledmgAqy8C8xzoR2oDY=;
+	s=arc-20240116; t=1765887248; c=relaxed/simple;
+	bh=NkWrp3dwbInZjQkaYqzfPACqIQgDYIXOFkm3IBONuVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UJIumi0j/87iko1jvKbVTEoU79jWyoj6Qh/pv68VTTFnzryXVEx6BixHmwqeQzusS8Isq4y1jO1Yvs9gAZC6iqatL40cSK6JuAockEWcJ+BNMhYTtcmipgnaAak/gT2MAE/MPxVZIYkzTtIvGIb1IFQYv+rqw/1dKZWs2fJlrf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VHGgCNLX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y7tY4EOtDzaHdwcNOPtMWIVSqYvgofMjakIXfEYMNGrQ2xgktYTjnn8njeqf13BUdlFboauMYAI3ewNbfY4lwEMMniBmil46OJ8O4l6LAUof3XKdbYJitUjGiDU7+4F8O08tlJ9xKSikvU4i19RDbx0zjfNfzUUI8nyPYovSzQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wtoPgxSB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VHGgCNLX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5FFEC4CEF1;
-	Tue, 16 Dec 2025 12:14:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wtoPgxSB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA27AC4CEF1;
+	Tue, 16 Dec 2025 12:14:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887241;
-	bh=hZG7nOhRnu4tYOQdBki9BENSledmgAqy8C8xzoR2oDY=;
+	s=korg; t=1765887244;
+	bh=NkWrp3dwbInZjQkaYqzfPACqIQgDYIXOFkm3IBONuVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VHGgCNLXN8ZUrQbDf0ESDEnYKOKacRlYtVirTwtAntctXSIuAC2F8/yzyRPlcy3sp
-	 fMFSxd/FIvwEdDWP0P+9u4xdd9AEKEKoUp0iuMmp3dSPsD+Z37ZsW9MHuVvoO3RGhK
-	 Lczur4+UbPlFPawVeeNNpn2lws/nHYyMuv0Tam7I=
+	b=wtoPgxSB5NjLtCt3z2+qV78njr08+c02EGWnjBBKhUsyLhnaJ24pBJZts+pFbqAHt
+	 x0S1mXOKSzHDg6crA3dP/rZULUhCB6tlTXnpBRuA+4dgWFLRt69x1IEPlSYAGlEnEx
+	 sqSbfrRtZmkUPx6QctewYKBThYCDR2yW9nm6FFiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aryan Srivastava <aryan.srivastava@alliedtelesis.co.nz>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 137/614] mtd: nand: relax ECC parameter validation check
-Date: Tue, 16 Dec 2025 12:08:24 +0100
-Message-ID: <20251216111406.297505745@linuxfoundation.org>
+Subject: [PATCH 6.18 138/614] mtd: rawnand: lpc32xx_slc: fix GPIO descriptor leak on probe error and remove
+Date: Tue, 16 Dec 2025 12:08:25 +0100
+Message-ID: <20251216111406.333632669@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,51 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aryan Srivastava <aryan.srivastava@alliedtelesis.co.nz>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 050553c683f21eebd7d1020df9b2ec852e2a9e4e ]
+[ Upstream commit cdf44f1add4ec9ee80569d5a43e6e9bba0d74c7a ]
 
-Due to the custom handling and layouts of certain nand controllers this
-validity check will always fail for certain layouts. The check
-inherently depends on even chunk sizing and this is not always the
-case.
+The driver calls gpiod_get_optional() in the probe function but
+never calls gpiod_put() in the remove function or in the probe
+error path. This leads to a GPIO descriptor resource leak.
+The lpc32xx_mlc.c driver in the same directory handles this
+correctly by calling gpiod_put() on both paths.
 
-Modify the check to only print a warning, instead of failing to
-init the attached NAND. This allows various 8 bit and 12 ECC strength
-layouts to be used.
+Add gpiod_put() in the remove function and in the probe error path
+to fix the resource leak.
 
-Fixes: 68c18dae6888 ("mtd: rawnand: marvell: add missing layouts")
-Signed-off-by: Aryan Srivastava <aryan.srivastava@alliedtelesis.co.nz>
+Fixes: 6b923db2867c ("mtd: rawnand: lpc32xx_slc: switch to using gpiod API")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/nand_base.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/mtd/nand/raw/lpc32xx_slc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/mtd/nand/raw/nand_base.c b/drivers/mtd/nand/raw/nand_base.c
-index c7d9501f646b3..ad6d66309597b 100644
---- a/drivers/mtd/nand/raw/nand_base.c
-+++ b/drivers/mtd/nand/raw/nand_base.c
-@@ -6338,11 +6338,14 @@ static int nand_scan_tail(struct nand_chip *chip)
- 		ecc->steps = mtd->writesize / ecc->size;
- 	if (!base->ecc.ctx.nsteps)
- 		base->ecc.ctx.nsteps = ecc->steps;
--	if (ecc->steps * ecc->size != mtd->writesize) {
--		WARN(1, "Invalid ECC parameters\n");
--		ret = -EINVAL;
--		goto err_nand_manuf_cleanup;
--	}
-+
-+	/*
-+	 * Validity check: Warn if ECC parameters are not compatible with page size.
-+	 * Due to the custom handling of ECC blocks in certain controllers the check
-+	 * may result in an expected failure.
-+	 */
-+	if (ecc->steps * ecc->size != mtd->writesize)
-+		pr_warn("ECC parameters may be invalid in reference to underlying NAND chip\n");
+diff --git a/drivers/mtd/nand/raw/lpc32xx_slc.c b/drivers/mtd/nand/raw/lpc32xx_slc.c
+index b54d76547ffb2..fea3705a21386 100644
+--- a/drivers/mtd/nand/raw/lpc32xx_slc.c
++++ b/drivers/mtd/nand/raw/lpc32xx_slc.c
+@@ -937,6 +937,7 @@ static int lpc32xx_nand_probe(struct platform_device *pdev)
+ 	dma_release_channel(host->dma_chan);
+ enable_wp:
+ 	lpc32xx_wp_enable(host);
++	gpiod_put(host->wp_gpio);
  
- 	if (!ecc->total) {
- 		ecc->total = ecc->steps * ecc->bytes;
+ 	return res;
+ }
+@@ -962,6 +963,7 @@ static void lpc32xx_nand_remove(struct platform_device *pdev)
+ 	writel(tmp, SLC_CTRL(host->io_base));
+ 
+ 	lpc32xx_wp_enable(host);
++	gpiod_put(host->wp_gpio);
+ }
+ 
+ static int lpc32xx_nand_resume(struct platform_device *pdev)
 -- 
 2.51.0
 
