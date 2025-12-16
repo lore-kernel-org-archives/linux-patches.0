@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA9F34320D;
-	Tue, 16 Dec 2025 11:33:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA7CB221F0C;
+	Tue, 16 Dec 2025 11:34:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884838; cv=none; b=Z4vnTNsA/hcgQal86+Ur0VPIu65Z4oDrfRhKgwZ5JPgNVqfw/A4gY0l549cIJ7ABPTLeYnnrHrrAGrzvNXN6bf0byCzHTwKANZVnkbF/cQ4P+eQVOXC8jEV4EMS38KYlWa9ltwUcIcflyC+Z3AdyR84YxisHZS6bePFAT/2fvvA=
+	t=1765884841; cv=none; b=qX/lKrLDfDnUYAudIofNzpXOaMFQvy7LdAbmh+gp/1uKx454L/LkP6ia4IGnyEa9u4jou4VgrzLT6lrN4xX7HDD9A6iYRJHHd7s00gCLG0f8T37dOMaNpXZy5pppKldpzmCAlxPnw1x9ymXLV/408df4pWSMy83rBwL969DzE2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884838; c=relaxed/simple;
-	bh=tWpR2EZJneZmlGg7Gaw+XBttQxflLjgAOYweqbD2FZU=;
+	s=arc-20240116; t=1765884841; c=relaxed/simple;
+	bh=NHDkJtnHTJRSWH7coEhSNq7cUXhwoIS2GgA4LL/DL80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MImBkQT7aEsYDoDyUmqQvrspfQTAm4svcpwQwNwRuTH0lqxrRIhbT6PLEDk78IPkF6fv+mwgOGi2h6qhYcFiz3UAsllWabY2wz43J2/Z4JzNNR4vD0go1tFyL4dd4S1FFVIgBvi+G1D5tZzODL19X2L6ASw5ZMzJaOWwU2286yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zBeeLzQ5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZVK0LNiu5GWNvckMQc0FQs842MELOZGHaiFPkbWkSMaDc2JILqYCYg3UuUIxNLoQEqk+X4PWbFAZYRFShLZ9if76OC9x4RvxV1bmhZ+88GAV0fABpFQVRB+kdr2WjjzOuI2WYMhJN+n7on5n4ZTDd3B0NmerM7QxdZWpTiGAgTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SjpPzSHk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zBeeLzQ5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFBC7C4CEF1;
-	Tue, 16 Dec 2025 11:33:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SjpPzSHk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20243C4CEF1;
+	Tue, 16 Dec 2025 11:34:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884838;
-	bh=tWpR2EZJneZmlGg7Gaw+XBttQxflLjgAOYweqbD2FZU=;
+	s=korg; t=1765884841;
+	bh=NHDkJtnHTJRSWH7coEhSNq7cUXhwoIS2GgA4LL/DL80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zBeeLzQ5raWSF1mXITqLrX5GSj0HIFqgeIvNQ+/v1IEMbLbWESlTeoaoyrpKnNf08
-	 N0cy9Axq+d6F1MLx1ypEt1WD/GeWpq+JFVxSjRok980BxXl/08tVeu9gEhLK2TYqiR
-	 5NWR1RV+aje3TnOW/FgokpXyxVCE3t9hancL6CZA=
+	b=SjpPzSHkGJ+/1ol2r66sJcZ/wPMgM3bh8gcaLJK80AT/XVdiJdODJVF2LOlP8RAHC
+	 c464+hS7GlF2kmk4DuLAp9e2Yrb4CHKHaO5LhsXVnO6rM7mqURMX5xKxykF/qzZu3b
+	 0/RFbeNkNhsljc9Cy0ESQ0wcBPOmSOn6UhkkUKh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@primarydata.com>,
-	Lance Shelton <lance.shelton@hammerspace.com>,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Lukasz Majewski <lukma@denx.de>,
+	Xiaoliang Yang <xiaoliang.yang_1@nxp.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	=?UTF-8?q?=C5=81ukasz=20Majewski?= <lukma@nabladev.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 313/354] Expand the type of nfs_fattr->valid
-Date: Tue, 16 Dec 2025 12:14:40 +0100
-Message-ID: <20251216111332.250851195@linuxfoundation.org>
+Subject: [PATCH 6.12 282/354] net: hsr: create an API to get hsr port type
+Date: Tue, 16 Dec 2025 12:14:09 +0100
+Message-ID: <20251216111331.130795573@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -48,131 +49,137 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@primarydata.com>
+From: Xiaoliang Yang <xiaoliang.yang_1@nxp.com>
 
-[ Upstream commit ce60ab3964782df9ba34f0a64c0bc766dd508bde ]
+[ Upstream commit a0244e76213980f3b9bb5d40b0b6705fcf24230d ]
 
-We need to be able to track more than 32 attributes per inode.
+Since the introduction of HSR_PT_INTERLINK in commit 5055cccfc2d1 ("net:
+hsr: Provide RedBox support (HSR-SAN)"), we see that different port
+types require different settings for hardware offload, which was not the
+case before when we only had HSR_PT_SLAVE_A and HSR_PT_SLAVE_B. But
+there is currently no way to know which port is which type, so create
+the hsr_get_port_type() API function and export it.
 
-Signed-off-by: Trond Myklebust <trond.myklebust@primarydata.com>
-Signed-off-by: Lance Shelton <lance.shelton@hammerspace.com>
-Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://lore.kernel.org/r/1e3405fca54efd0be7c91c1da77917b94f5dfcc4.1748515333.git.bcodding@redhat.com
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Stable-dep-of: 2b092175f5e3 ("NFS: Fix inheritance of the block sizes when automounting")
+When hsr_get_port_type() is called from the device driver, the port can
+must be found in the HSR port list. An important use case is for this
+function to work from offloading drivers' NETDEV_CHANGEUPPER handler,
+which is triggered by hsr_portdev_setup() -> netdev_master_upper_dev_link().
+Therefore, we need to move the addition of the hsr_port to the HSR port
+list prior to calling hsr_portdev_setup(). This makes the error
+restoration path also more similar to hsr_del_port(), where
+kfree_rcu(port) is already used.
+
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc: Lukasz Majewski <lukma@denx.de>
+Signed-off-by: Xiaoliang Yang <xiaoliang.yang_1@nxp.com>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Łukasz Majewski <lukma@nabladev.com>
+Link: https://patch.msgid.link/20251130131657.65080-3-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 30296ac76426 ("net: dsa: xrs700x: reject unsupported HSR configurations")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/inode.c            |  2 +-
- include/linux/nfs_fs_sb.h |  2 +-
- include/linux/nfs_xdr.h   | 54 +++++++++++++++++++--------------------
- 3 files changed, 29 insertions(+), 29 deletions(-)
+ include/linux/if_hsr.h |  9 +++++++++
+ net/hsr/hsr_device.c   | 20 ++++++++++++++++++++
+ net/hsr/hsr_slave.c    |  7 ++++---
+ 3 files changed, 33 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nfs/inode.c b/fs/nfs/inode.c
-index 5bab9db5417c2..1b43331eb6ece 100644
---- a/fs/nfs/inode.c
-+++ b/fs/nfs/inode.c
-@@ -2214,7 +2214,7 @@ static int nfs_update_inode(struct inode *inode, struct nfs_fattr *fattr)
- 	bool attr_changed = false;
- 	bool have_delegation;
+diff --git a/include/linux/if_hsr.h b/include/linux/if_hsr.h
+index d7941fd880329..f4cf2dd36d193 100644
+--- a/include/linux/if_hsr.h
++++ b/include/linux/if_hsr.h
+@@ -43,6 +43,8 @@ extern bool is_hsr_master(struct net_device *dev);
+ extern int hsr_get_version(struct net_device *dev, enum hsr_version *ver);
+ struct net_device *hsr_get_port_ndev(struct net_device *ndev,
+ 				     enum hsr_port_type pt);
++int hsr_get_port_type(struct net_device *hsr_dev, struct net_device *dev,
++		      enum hsr_port_type *type);
+ #else
+ static inline bool is_hsr_master(struct net_device *dev)
+ {
+@@ -59,6 +61,13 @@ static inline struct net_device *hsr_get_port_ndev(struct net_device *ndev,
+ {
+ 	return ERR_PTR(-EINVAL);
+ }
++
++static inline int hsr_get_port_type(struct net_device *hsr_dev,
++				    struct net_device *dev,
++				    enum hsr_port_type *type)
++{
++	return -EINVAL;
++}
+ #endif /* CONFIG_HSR */
  
--	dfprintk(VFS, "NFS: %s(%s/%lu fh_crc=0x%08x ct=%d info=0x%x)\n",
-+	dfprintk(VFS, "NFS: %s(%s/%lu fh_crc=0x%08x ct=%d info=0x%llx)\n",
- 			__func__, inode->i_sb->s_id, inode->i_ino,
- 			nfs_display_fhandle_hash(NFS_FH(inode)),
- 			atomic_read(&inode->i_count), fattr->valid);
-diff --git a/include/linux/nfs_fs_sb.h b/include/linux/nfs_fs_sb.h
-index 2cff5cafbaa78..97edf7b583d5e 100644
---- a/include/linux/nfs_fs_sb.h
-+++ b/include/linux/nfs_fs_sb.h
-@@ -169,8 +169,8 @@ struct nfs_server {
- #define NFS_MOUNT_SHUTDOWN			0x08000000
- #define NFS_MOUNT_NO_ALIGNWRITE		0x10000000
+ #endif /*_LINUX_IF_HSR_H_*/
+diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
+index c568d91764235..386aba50930a3 100644
+--- a/net/hsr/hsr_device.c
++++ b/net/hsr/hsr_device.c
+@@ -689,6 +689,26 @@ struct net_device *hsr_get_port_ndev(struct net_device *ndev,
+ }
+ EXPORT_SYMBOL(hsr_get_port_ndev);
  
--	unsigned int		fattr_valid;	/* Valid attributes */
- 	unsigned int		caps;		/* server capabilities */
-+	__u64			fattr_valid;	/* Valid attributes */
- 	unsigned int		rsize;		/* read size */
- 	unsigned int		rpages;		/* read size (in pages) */
- 	unsigned int		wsize;		/* write size */
-diff --git a/include/linux/nfs_xdr.h b/include/linux/nfs_xdr.h
-index b7a08c875514f..ea751edf247bf 100644
---- a/include/linux/nfs_xdr.h
-+++ b/include/linux/nfs_xdr.h
-@@ -45,7 +45,7 @@ struct nfs4_threshold {
- };
++int hsr_get_port_type(struct net_device *hsr_dev, struct net_device *dev,
++		      enum hsr_port_type *type)
++{
++	struct hsr_priv *hsr = netdev_priv(hsr_dev);
++	struct hsr_port *port;
++
++	rcu_read_lock();
++	hsr_for_each_port(hsr, port) {
++		if (port->dev == dev) {
++			*type = port->type;
++			rcu_read_unlock();
++			return 0;
++		}
++	}
++	rcu_read_unlock();
++
++	return -EINVAL;
++}
++EXPORT_SYMBOL(hsr_get_port_type);
++
+ /* Default multicast address for HSR Supervision frames */
+ static const unsigned char def_multicast_addr[ETH_ALEN] __aligned(2) = {
+ 	0x01, 0x15, 0x4e, 0x00, 0x01, 0x00
+diff --git a/net/hsr/hsr_slave.c b/net/hsr/hsr_slave.c
+index 9ac7cf0835118..70472726c6049 100644
+--- a/net/hsr/hsr_slave.c
++++ b/net/hsr/hsr_slave.c
+@@ -203,14 +203,14 @@ int hsr_add_port(struct hsr_priv *hsr, struct net_device *dev,
+ 	port->dev = dev;
+ 	port->type = type;
  
- struct nfs_fattr {
--	unsigned int		valid;		/* which fields are valid */
-+	__u64			valid;		/* which fields are valid */
- 	umode_t			mode;
- 	__u32			nlink;
- 	kuid_t			uid;
-@@ -80,32 +80,32 @@ struct nfs_fattr {
- 	struct nfs4_label	*label;
- };
++	list_add_tail_rcu(&port->port_list, &hsr->ports);
++
+ 	if (type != HSR_PT_MASTER) {
+ 		res = hsr_portdev_setup(hsr, dev, port, extack);
+ 		if (res)
+ 			goto fail_dev_setup;
+ 	}
  
--#define NFS_ATTR_FATTR_TYPE		(1U << 0)
--#define NFS_ATTR_FATTR_MODE		(1U << 1)
--#define NFS_ATTR_FATTR_NLINK		(1U << 2)
--#define NFS_ATTR_FATTR_OWNER		(1U << 3)
--#define NFS_ATTR_FATTR_GROUP		(1U << 4)
--#define NFS_ATTR_FATTR_RDEV		(1U << 5)
--#define NFS_ATTR_FATTR_SIZE		(1U << 6)
--#define NFS_ATTR_FATTR_PRESIZE		(1U << 7)
--#define NFS_ATTR_FATTR_BLOCKS_USED	(1U << 8)
--#define NFS_ATTR_FATTR_SPACE_USED	(1U << 9)
--#define NFS_ATTR_FATTR_FSID		(1U << 10)
--#define NFS_ATTR_FATTR_FILEID		(1U << 11)
--#define NFS_ATTR_FATTR_ATIME		(1U << 12)
--#define NFS_ATTR_FATTR_MTIME		(1U << 13)
--#define NFS_ATTR_FATTR_CTIME		(1U << 14)
--#define NFS_ATTR_FATTR_PREMTIME		(1U << 15)
--#define NFS_ATTR_FATTR_PRECTIME		(1U << 16)
--#define NFS_ATTR_FATTR_CHANGE		(1U << 17)
--#define NFS_ATTR_FATTR_PRECHANGE	(1U << 18)
--#define NFS_ATTR_FATTR_V4_LOCATIONS	(1U << 19)
--#define NFS_ATTR_FATTR_V4_REFERRAL	(1U << 20)
--#define NFS_ATTR_FATTR_MOUNTPOINT	(1U << 21)
--#define NFS_ATTR_FATTR_MOUNTED_ON_FILEID (1U << 22)
--#define NFS_ATTR_FATTR_OWNER_NAME	(1U << 23)
--#define NFS_ATTR_FATTR_GROUP_NAME	(1U << 24)
--#define NFS_ATTR_FATTR_V4_SECURITY_LABEL (1U << 25)
-+#define NFS_ATTR_FATTR_TYPE		BIT_ULL(0)
-+#define NFS_ATTR_FATTR_MODE		BIT_ULL(1)
-+#define NFS_ATTR_FATTR_NLINK		BIT_ULL(2)
-+#define NFS_ATTR_FATTR_OWNER		BIT_ULL(3)
-+#define NFS_ATTR_FATTR_GROUP		BIT_ULL(4)
-+#define NFS_ATTR_FATTR_RDEV		BIT_ULL(5)
-+#define NFS_ATTR_FATTR_SIZE		BIT_ULL(6)
-+#define NFS_ATTR_FATTR_PRESIZE		BIT_ULL(7)
-+#define NFS_ATTR_FATTR_BLOCKS_USED	BIT_ULL(8)
-+#define NFS_ATTR_FATTR_SPACE_USED	BIT_ULL(9)
-+#define NFS_ATTR_FATTR_FSID		BIT_ULL(10)
-+#define NFS_ATTR_FATTR_FILEID		BIT_ULL(11)
-+#define NFS_ATTR_FATTR_ATIME		BIT_ULL(12)
-+#define NFS_ATTR_FATTR_MTIME		BIT_ULL(13)
-+#define NFS_ATTR_FATTR_CTIME		BIT_ULL(14)
-+#define NFS_ATTR_FATTR_PREMTIME		BIT_ULL(15)
-+#define NFS_ATTR_FATTR_PRECTIME		BIT_ULL(16)
-+#define NFS_ATTR_FATTR_CHANGE		BIT_ULL(17)
-+#define NFS_ATTR_FATTR_PRECHANGE	BIT_ULL(18)
-+#define NFS_ATTR_FATTR_V4_LOCATIONS	BIT_ULL(19)
-+#define NFS_ATTR_FATTR_V4_REFERRAL	BIT_ULL(20)
-+#define NFS_ATTR_FATTR_MOUNTPOINT	BIT_ULL(21)
-+#define NFS_ATTR_FATTR_MOUNTED_ON_FILEID BIT_ULL(22)
-+#define NFS_ATTR_FATTR_OWNER_NAME	BIT_ULL(23)
-+#define NFS_ATTR_FATTR_GROUP_NAME	BIT_ULL(24)
-+#define NFS_ATTR_FATTR_V4_SECURITY_LABEL BIT_ULL(25)
+-	list_add_tail_rcu(&port->port_list, &hsr->ports);
+-
+ 	master = hsr_port_get_hsr(hsr, HSR_PT_MASTER);
+ 	netdev_update_features(master->dev);
+ 	dev_set_mtu(master->dev, hsr_get_max_mtu(hsr));
+@@ -218,7 +218,8 @@ int hsr_add_port(struct hsr_priv *hsr, struct net_device *dev,
+ 	return 0;
  
- #define NFS_ATTR_FATTR (NFS_ATTR_FATTR_TYPE \
- 		| NFS_ATTR_FATTR_MODE \
+ fail_dev_setup:
+-	kfree(port);
++	list_del_rcu(&port->port_list);
++	kfree_rcu(port, rcu);
+ 	return res;
+ }
+ 
 -- 
 2.51.0
 
