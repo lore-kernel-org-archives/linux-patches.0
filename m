@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A201A3491CF;
-	Tue, 16 Dec 2025 11:39:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C5E3349AE7;
+	Tue, 16 Dec 2025 11:39:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885161; cv=none; b=m64cxVT4exrrabzonBemfpy+a7TsF48ze9UDyqC/qwrMOApMfL13Qw+8APda5L0ajz4jOAtncFPAA1ws9EL40nOt7Lwslvy2lkoa2aMg4wViU6YW/CT7Wjza+qSNiz/orcYBCPPKdRZIF/ewa3tLZoi0Ql51X1du9szhu3R3NLI=
+	t=1765885165; cv=none; b=cMDE4y/foep6m7EOIyDW/nhn3Qr76oJg278jOWoOMNxr1LfeokDeaLlY+KQAypvJsdeqWGyX2D5hHNvihnuyHzKRylTINsHL+zEMGVh3cOK/wWkLhLARMKuSUesI6j0KwvL9F2tD7FP6Yqiv0zHU4ypq8LaTEezsSK5IJlBrJEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885161; c=relaxed/simple;
-	bh=xmJcuaMufgc3GYvM+u3Xey4Yc7N2xXBeRLpEikD0cHs=;
+	s=arc-20240116; t=1765885165; c=relaxed/simple;
+	bh=gUlxE7T/X3TXOl3GMWsnB/EewsF3sH2Cq6HdW3dMq/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cFAxVRgmnIGJDuGsZ/zB4dd/+rW7MB+vIFIuIIEMwBk/8FROZa+otj9HpyZP8cJLXpxs2sP3r9xTXrrDBtfBaFZ4UyeS1yaauoqGbH/p58zoeYPS7NVMxcPih4DQE5Nte7Fb+5yRnJYY9DgjsmWrqW9FhHd0ogUkei4BfcieYuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QEcq0o1E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bv4SmpD3t1X4sv4XO/dclvjGFDUwyuN3P4Ly1q7lxh9VyPQ0s9J3A5P+AKryW/rReHcxJzS257BEzbjV0fpH/UBHUV3+1YlXMZFFkT4+EBAyc4X0ck4lnOgWW80Y6gb+ZsZLUO2ZlLBFZnwVkGQI19Bu3nsecla+gpUmAxML0QE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bvHDwRH5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QEcq0o1E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9586C4CEF1;
-	Tue, 16 Dec 2025 11:39:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bvHDwRH5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17DE5C4CEF1;
+	Tue, 16 Dec 2025 11:39:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885161;
-	bh=xmJcuaMufgc3GYvM+u3Xey4Yc7N2xXBeRLpEikD0cHs=;
+	s=korg; t=1765885164;
+	bh=gUlxE7T/X3TXOl3GMWsnB/EewsF3sH2Cq6HdW3dMq/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QEcq0o1EwdFWBTRgD9LR3eK2oWaQkCfu3uSzmrlSdvwZITVda3gFuKl9a74SgqTsx
-	 yWesfs5djEGheMydAmEzEHl7wC9Dv2WP1faj/MwX9Viyd3KH12S+6whC5FM2iQnbA9
-	 dLZYwhm0kMdj34AYHIJeaveKSo8GYqJLhY31ELbI=
+	b=bvHDwRH56jXU1kfTIO1fkaunkRe6MVFHi8VVcjTB4VJ/ttqUACVTTAbXV3rAi0M87
+	 da642V6+rzsHvkVQ71a596V5dBJQW/xHgaSQ3qJ2ShDI9dhGVddCDwp+21f7otAypC
+	 GVQZ6KMYueaSS2/OMsoAQEKiezqs7Nou/f7mjVW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Lavra <flavra@baylibre.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 055/507] iio: imu: st_lsm6dsx: Fix measurement unit for odr struct member
-Date: Tue, 16 Dec 2025 12:08:16 +0100
-Message-ID: <20251216111347.537063043@linuxfoundation.org>
+Subject: [PATCH 6.17 056/507] firmware: qcom: tzmem: fix qcom_tzmem_policy kernel-doc
+Date: Tue, 16 Dec 2025 12:08:17 +0100
+Message-ID: <20251216111347.572996448@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,35 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Francesco Lavra <flavra@baylibre.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit c6d702f2b77194b62fb2098c63bb7f2a87da142d ]
+[ Upstream commit edd548dc64a699d71ea4f537f815044e763d01e1 ]
 
-The `odr` field in struct st_lsm6dsx_sensor contains a data rate
-value expressed in mHz, not in Hz.
+Fix kernel-doc warnings by using correct kernel-doc syntax and
+formatting to prevent warnings:
 
-Fixes: f8710f0357bc3 ("iio: imu: st_lsm6dsx: express odr in mHZ")
-Signed-off-by: Francesco Lavra <flavra@baylibre.com>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Warning: include/linux/firmware/qcom/qcom_tzmem.h:25 Enum value
+ 'QCOM_TZMEM_POLICY_STATIC' not described in enum 'qcom_tzmem_policy'
+Warning: ../include/linux/firmware/qcom/qcom_tzmem.h:25 Enum value
+ 'QCOM_TZMEM_POLICY_MULTIPLIER' not described in enum 'qcom_tzmem_policy'
+Warning: ../include/linux/firmware/qcom/qcom_tzmem.h:25 Enum value
+ 'QCOM_TZMEM_POLICY_ON_DEMAND' not described in enum 'qcom_tzmem_policy'
+
+Fixes: 84f5a7b67b61 ("firmware: qcom: add a dedicated TrustZone buffer allocator")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://lore.kernel.org/r/20251017191323.1820167-1-rdunlap@infradead.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/imu/st_lsm6dsx/st_lsm6dsx.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/firmware/qcom/qcom_tzmem.h | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx.h b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx.h
-index 381b016fa5243..56244d49ab2fc 100644
---- a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx.h
-+++ b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx.h
-@@ -383,7 +383,7 @@ enum st_lsm6dsx_fifo_mode {
-  * @id: Sensor identifier.
-  * @hw: Pointer to instance of struct st_lsm6dsx_hw.
-  * @gain: Configured sensor sensitivity.
-- * @odr: Output data rate of the sensor [Hz].
-+ * @odr: Output data rate of the sensor [mHz].
-  * @samples_to_discard: Number of samples to discard for filters settling time.
-  * @watermark: Sensor watermark level.
-  * @decimator: Sensor decimation factor.
+diff --git a/include/linux/firmware/qcom/qcom_tzmem.h b/include/linux/firmware/qcom/qcom_tzmem.h
+index b83b63a0c049b..e1e26dc4180e7 100644
+--- a/include/linux/firmware/qcom/qcom_tzmem.h
++++ b/include/linux/firmware/qcom/qcom_tzmem.h
+@@ -17,11 +17,20 @@ struct qcom_tzmem_pool;
+  * enum qcom_tzmem_policy - Policy for pool growth.
+  */
+ enum qcom_tzmem_policy {
+-	/**< Static pool, never grow above initial size. */
++	/**
++	 * @QCOM_TZMEM_POLICY_STATIC: Static pool,
++	 * never grow above initial size.
++	 */
+ 	QCOM_TZMEM_POLICY_STATIC = 1,
+-	/**< When out of memory, add increment * current size of memory. */
++	/**
++	 * @QCOM_TZMEM_POLICY_MULTIPLIER: When out of memory,
++	 * add increment * current size of memory.
++	 */
+ 	QCOM_TZMEM_POLICY_MULTIPLIER,
+-	/**< When out of memory add as much as is needed until max_size. */
++	/**
++	 * @QCOM_TZMEM_POLICY_ON_DEMAND: When out of memory
++	 * add as much as is needed until max_size.
++	 */
+ 	QCOM_TZMEM_POLICY_ON_DEMAND,
+ };
+ 
 -- 
 2.51.0
 
