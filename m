@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5DAA37D127;
-	Tue, 16 Dec 2025 12:31:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCCC5382BC9;
+	Tue, 16 Dec 2025 12:31:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888263; cv=none; b=ZfO7x/50PcXId/37iY1fngh25DAYqsc+Hl/bJLs6HzEsMFM3WqYPVKJQP3PKuIa2M8WgjSCXQ4QHFXVxtirUC8+mYShdq4rA8lnztPfFlOVitlsSPc7A4Qerxb+3e5ZGBMuMUjbZre4+bLlFsnlkDzIf5fdP32yDjnb3s4UEXkc=
+	t=1765888267; cv=none; b=dJ217PTjNZspCwxJsoIQ7KQrpzf9WNm6XYSmiKvJOh2eh2oIO2YMH3buqriS9P/JwWG3iVeSi+CZBK3fJNr0n2ZChb1mdGF3ZiI74aNxbdBcL8i/+bzvD6JPjymD1EFe6OzOZJnB0UXtNGRtbGwgciuYhBDzDPqYhTYkPx5pUyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888263; c=relaxed/simple;
-	bh=+63wee75tyR4/ZB4Y7brvtuNgvDJa5GfGv1cUsN02zg=;
+	s=arc-20240116; t=1765888267; c=relaxed/simple;
+	bh=TOLULb9s3uWk/L8QDiHnJAcrSvXX+c2gCKFvf0RbHuc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RkSn4ZnF8977bgVJ3Tz2Cp/xHNj3sChkl7VjJkfqrBe16idHmeih0BUy/y9OCCHJggrJrB8gzpOjHGxoHO2IAVuA8/DWjMszYEcdo9KV2XBFRSueBcxvlxLA4yocjwGV0yvk9YsFbv0qDV9lZZ3ql6Mqm362G0k9PSa6YGhQPcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=afzP6cRw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sOXP+9wEbqg5O/yZiyUQPJYxwURJq+iI8fWj6EiYxZgZ8OS9aMhFJucHBozmBhXlLRyQMFHwNj6NHjbZYhVuisUi3v2U79Y0W4uNrJKrOtnHFRpHwFbpDHsdLTWzv5sarn0cnlkzIzsu4oPtPwRXcv8OO2N9lKV89/LT8X9Ag64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2jXkuZk6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="afzP6cRw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0BF2C4CEF1;
-	Tue, 16 Dec 2025 12:31:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2jXkuZk6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09439C4CEF1;
+	Tue, 16 Dec 2025 12:31:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888263;
-	bh=+63wee75tyR4/ZB4Y7brvtuNgvDJa5GfGv1cUsN02zg=;
+	s=korg; t=1765888266;
+	bh=TOLULb9s3uWk/L8QDiHnJAcrSvXX+c2gCKFvf0RbHuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=afzP6cRw+onQQp+7H7UnFy2GIn5nAbaoscE3RanppUvj7yyGs6b1gmBDSVSApgVYb
-	 uMLU+IfZf+D0cGJPreXvU61YP/or1Tnp1PrOdo6tIL3L9w4pMOz0bWjcA1FRqS/DKX
-	 ivAdLcJVT9fCeTIAvdtAjGb8nDkGb7znmgEJWFRs=
+	b=2jXkuZk6LH0qK/G3r1s27pPw3EYBIGmBNezFJ6RAiLZdzogBf5W0ROTOsiGeT45R8
+	 oF+QdkKf0s71AregsbR/n043hLA6YhYvJ3bJBgE7BMzYZ+Pd3URDH88xQtOL/HNel8
+	 wNSKYb2o+ft0zET038GJOHwlcbV3j2l4SMP8D0pc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Jan Kara <jack@suse.cz>,
+	Yongjian Sun <sunyongjian1@huawei.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 481/614] netfilter: flowtable: check for maximum number of encapsulations in bridge vlan
-Date: Tue, 16 Dec 2025 12:14:08 +0100
-Message-ID: <20251216111418.798838946@linuxfoundation.org>
+Subject: [PATCH 6.18 455/614] ext4: improve integrity checking in __mb_check_buddy by enhancing order-0 validation
+Date: Tue, 16 Dec 2025 12:13:42 +0100
+Message-ID: <20251216111417.853644724@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -50,45 +53,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Yongjian Sun <sunyongjian1@huawei.com>
 
-[ Upstream commit 634f3853cc98d73bdec8918010ee29b06981583e ]
+[ Upstream commit d9ee3ff810f1cc0e253c9f2b17b668b973cb0e06 ]
 
-Add a sanity check to skip path discovery if the maximum number of
-encapsulation is reached. While at it, check for underflow too.
+When the MB_CHECK_ASSERT macro is enabled, we found that the
+current validation logic in __mb_check_buddy has a gap in
+detecting certain invalid buddy states, particularly related
+to order-0 (bitmap) bits.
 
-Fixes: 26267bf9bb57 ("netfilter: flowtable: bridge vlan hardware offload and switchdev")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+The original logic consists of three steps:
+1. Validates higher-order buddies: if a higher-order bit is
+set, at most one of the two corresponding lower-order bits
+may be free; if a higher-order bit is clear, both lower-order
+bits must be allocated (and their bitmap bits must be 0).
+2. For any set bit in order-0, ensures all corresponding
+higher-order bits are not free.
+3. Verifies that all preallocated blocks (pa) in the group
+have pa_pstart within bounds and their bitmap bits marked as
+allocated.
+
+However, this approach fails to properly validate cases where
+order-0 bits are incorrectly cleared (0), allowing some invalid
+configurations to pass:
+
+               corrupt            integral
+
+order 3           1                  1
+order 2       1       1          1       1
+order 1     1   1   1   1      1   1   1   1
+order 0    0 0 1 1 1 1 1 1    1 1 1 1 1 1 1 1
+
+Here we get two adjacent free blocks at order-0 with inconsistent
+higher-order state, and the right one shows the correct scenario.
+
+The root cause is insufficient validation of order-0 zero bits.
+To fix this and improve completeness without significant performance
+cost, we refine the logic:
+
+1. Maintain the top-down higher-order validation, but we no longer
+check the cases where the higher-order bit is 0, as this case will
+be covered in step 2.
+2. Enhance order-0 checking by examining pairs of bits:
+   - If either bit in a pair is set (1), all corresponding
+     higher-order bits must not be free.
+   - If both bits are clear (0), then exactly one of the
+     corresponding higher-order bits must be free
+3. Keep the preallocation (pa) validation unchanged.
+
+This change closes the validation gap, ensuring illegal buddy states
+involving order-0 are correctly detected, while removing redundant
+checks and maintaining efficiency.
+
+Fixes: c9de560ded61f ("ext4: Add multi block allocator for ext4")
+Suggested-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Yongjian Sun <sunyongjian1@huawei.com>
+Reviewed-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Message-ID: <20251106060614.631382-3-sunyongjian@huaweicloud.com>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_flow_offload.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ fs/ext4/mballoc.c | 49 +++++++++++++++++++++++++++++++----------------
+ 1 file changed, 32 insertions(+), 17 deletions(-)
 
-diff --git a/net/netfilter/nft_flow_offload.c b/net/netfilter/nft_flow_offload.c
-index 14dd1c0698c3c..e95e5f59a3d6a 100644
---- a/net/netfilter/nft_flow_offload.c
-+++ b/net/netfilter/nft_flow_offload.c
-@@ -141,12 +141,19 @@ static void nft_dev_path_info(const struct net_device_path_stack *stack,
- 				info->ingress_vlans |= BIT(info->num_encaps - 1);
- 				break;
- 			case DEV_PATH_BR_VLAN_TAG:
-+				if (info->num_encaps >= NF_FLOW_TABLE_ENCAP_MAX) {
-+					info->indev = NULL;
-+					break;
-+				}
- 				info->encap[info->num_encaps].id = path->bridge.vlan_id;
- 				info->encap[info->num_encaps].proto = path->bridge.vlan_proto;
- 				info->num_encaps++;
- 				break;
- 			case DEV_PATH_BR_VLAN_UNTAG:
--				info->num_encaps--;
-+				if (WARN_ON_ONCE(info->num_encaps-- == 0)) {
-+					info->indev = NULL;
-+					break;
-+				}
- 				break;
- 			case DEV_PATH_BR_VLAN_KEEP:
- 				break;
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index 9087183602e44..c56b51e1162eb 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -682,6 +682,24 @@ do {									\
+ 	}								\
+ } while (0)
+ 
++/*
++ * Perform buddy integrity check with the following steps:
++ *
++ * 1. Top-down validation (from highest order down to order 1, excluding order-0 bitmap):
++ *    For each pair of adjacent orders, if a higher-order bit is set (indicating a free block),
++ *    at most one of the two corresponding lower-order bits may be clear (free).
++ *
++ * 2. Order-0 (bitmap) validation, performed on bit pairs:
++ *    - If either bit in a pair is set (1, allocated), then all corresponding higher-order bits
++ *      must not be free (0).
++ *    - If both bits in a pair are clear (0, free), then exactly one of the corresponding
++ *      higher-order bits must be free (0).
++ *
++ * 3. Preallocation (pa) list validation:
++ *    For each preallocated block (pa) in the group:
++ *    - Verify that pa_pstart falls within the bounds of this block group.
++ *    - Ensure the corresponding bit(s) in the order-0 bitmap are marked as allocated (1).
++ */
+ static void __mb_check_buddy(struct ext4_buddy *e4b, char *file,
+ 				const char *function, int line)
+ {
+@@ -723,15 +741,6 @@ static void __mb_check_buddy(struct ext4_buddy *e4b, char *file,
+ 				continue;
+ 			}
+ 
+-			/* both bits in buddy2 must be 1 */
+-			MB_CHECK_ASSERT(mb_test_bit(i << 1, buddy2));
+-			MB_CHECK_ASSERT(mb_test_bit((i << 1) + 1, buddy2));
+-
+-			for (j = 0; j < (1 << order); j++) {
+-				k = (i * (1 << order)) + j;
+-				MB_CHECK_ASSERT(
+-					!mb_test_bit(k, e4b->bd_bitmap));
+-			}
+ 			count++;
+ 		}
+ 		MB_CHECK_ASSERT(e4b->bd_info->bb_counters[order] == count);
+@@ -747,15 +756,21 @@ static void __mb_check_buddy(struct ext4_buddy *e4b, char *file,
+ 				fragments++;
+ 				fstart = i;
+ 			}
+-			continue;
++		} else {
++			fstart = -1;
+ 		}
+-		fstart = -1;
+-		/* check used bits only */
+-		for (j = 0; j < e4b->bd_blkbits + 1; j++) {
+-			buddy2 = mb_find_buddy(e4b, j, &max2);
+-			k = i >> j;
+-			MB_CHECK_ASSERT(k < max2);
+-			MB_CHECK_ASSERT(mb_test_bit(k, buddy2));
++		if (!(i & 1)) {
++			int in_use, zero_bit_count = 0;
++
++			in_use = mb_test_bit(i, buddy) || mb_test_bit(i + 1, buddy);
++			for (j = 1; j < e4b->bd_blkbits + 2; j++) {
++				buddy2 = mb_find_buddy(e4b, j, &max2);
++				k = i >> j;
++				MB_CHECK_ASSERT(k < max2);
++				if (!mb_test_bit(k, buddy2))
++					zero_bit_count++;
++			}
++			MB_CHECK_ASSERT(zero_bit_count == !in_use);
+ 		}
+ 	}
+ 	MB_CHECK_ASSERT(!EXT4_MB_GRP_NEED_INIT(e4b->bd_info));
 -- 
 2.51.0
 
