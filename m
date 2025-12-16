@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B518935BDD4;
-	Tue, 16 Dec 2025 12:15:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ABB235CBCF;
+	Tue, 16 Dec 2025 12:15:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887322; cv=none; b=l+J8vCX3c2nFp79o+EwIPEmD81fWLw5uAUdzKwHdEUET+NLzQvmBXxCAhnPyfHwYrVqso2rT9BcMMg+x40vX0rboLailrVmJ6F3CR9YBTlFmLJnhXH2oSKN2zqH/nkmmGayV8SOmFp/CKbREWG0vsl5KU0y4VdiiwFleksu9HNU=
+	t=1765887325; cv=none; b=NZlx8sF0Sgpdh6GMhKH4pgK0CbrkNJxwmwgzx9mWB68UGQ1K9jD7tc0AOwVmJtTUExQJBI6G7u341zHBzWZlISwHPJKG9W6CgckJGXz70huZKM5ugd927jxHxRpoYaVoPwL/bXBAm/01bKUWf1+lTyMLrSNW6gWMbu8h/7bh4jk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887322; c=relaxed/simple;
-	bh=0P5TH3Ql91VnPvIg+V23ILPzGaz3FwnFkQHOKhJPYMs=;
+	s=arc-20240116; t=1765887325; c=relaxed/simple;
+	bh=k1gm23oBa45U3/QtLmX+ThVse+3mnzUm9B/p1Eqhn2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AqSzsoGlYGDY3AqCHcLBMZjalIW1Q5nbsfQu6KJYbk+cal53lg150T6o1m9xlT/onbLr53xbK8oJ10nEVvOHH7uW3KZ4y+CuG9UOi0cO52RZm1SPTJ+3n2TJa+FKKFbWDKJCKnXy1SB54IwPEmFeIIB0zzQw1NMAmQU2+CVI764=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vCIOMwaU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NtyCc6G//YRzE4H0h2fCHEdLQBpz3J3Z2dtz8BIMyjwG6xsCG1o920+vmhL7ZuawzgfPrZT0s0tJ9l3sSk24FqvnRUaXD+klDUeuTHA4uBRBgb5jBkZanuszjhYLfCoKe4QqgI1ltIk3YqYB58GyPYuuSpIGPyFqDtFKFD7Izo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p5gO3ZvL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vCIOMwaU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7CBFC4CEF1;
-	Tue, 16 Dec 2025 12:15:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p5gO3ZvL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40739C4CEF1;
+	Tue, 16 Dec 2025 12:15:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887321;
-	bh=0P5TH3Ql91VnPvIg+V23ILPzGaz3FwnFkQHOKhJPYMs=;
+	s=korg; t=1765887324;
+	bh=k1gm23oBa45U3/QtLmX+ThVse+3mnzUm9B/p1Eqhn2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vCIOMwaU/I9kJ3SE/okQaPjNzoPECqVGKnnO3undpxKpcGPYFWSRm1yL0igtnL024
-	 dIlAGySj3sP5xVLeBBOKWfbhtnLFWq17Rs/QItIaoLBnDgqZzp0FGdYStZE0FKfiOi
-	 bD6mXtkLJHE0ckTAky79mCAZR5QBslb8a3Ioox5c=
+	b=p5gO3ZvLHIKqjeBPL9kCmYQrdEzCfof2+YyRfI/wDA4LHm0Z2v+vj0aAyMLdCqQTa
+	 oCie8FrYaWJK+6lYH3xYcHGYzASgf7K8HXRvVTgvYmgNWwZQfs0NC8B0TP41zW3Di3
+	 Anmh3w3TsB62C53g7MlkKjt7POEyo1VoD1Y8xJBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lars-Ivar Hesselberg Simonsen <lars-ivar.simonsen@arm.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
+	"Thomas Richard (TI.com)" <thomas.richard@bootlin.com>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 194/614] drm/panthor: Fix UAF on kernel BO VA nodes
-Date: Tue, 16 Dec 2025 12:09:21 +0100
-Message-ID: <20251216111408.400018272@linuxfoundation.org>
+Subject: [PATCH 6.18 195/614] firmware: ti_sci: Set IO Isolation only if the firmware is capable
+Date: Tue, 16 Dec 2025 12:09:22 +0100
+Message-ID: <20251216111408.442328570@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,66 +52,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Brezillon <boris.brezillon@collabora.com>
+From: Thomas Richard (TI.com) <thomas.richard@bootlin.com>
 
-[ Upstream commit 98dd5143447af0ee33551776d8b2560c35d0bc4a ]
+[ Upstream commit 999e9bc953e321651d69556fdd5dfd178f96f128 ]
 
-If the MMU is down, panthor_vm_unmap_range() might return an error.
-We expect the page table to be updated still, and if the MMU is blocked,
-the rest of the GPU should be blocked too, so no risk of accessing
-physical memory returned to the system (which the current code doesn't
-cover for anyway).
+Prevent calling ti_sci_cmd_set_io_isolation() on firmware
+that does not support the IO_ISOLATION capability. Add the
+MSG_FLAG_CAPS_IO_ISOLATION capability flag and check it before
+attempting to set IO isolation during suspend/resume operations.
 
-Proceed with the rest of the cleanup instead of bailing out and leaving
-the va_node inserted in the drm_mm, which leads to UAF when other
-adjacent nodes are removed from the drm_mm tree.
+Without this check, systems with older firmware may experience
+undefined behavior or errors when entering/exiting suspend states.
 
-Reported-by: Lars-Ivar Hesselberg Simonsen <lars-ivar.simonsen@arm.com>
-Closes: https://gitlab.freedesktop.org/panfrost/linux/-/issues/57
-Fixes: 8a1cc07578bf ("drm/panthor: Add GEM logical block")
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patch.msgid.link/20251031154818.821054-2-boris.brezillon@collabora.com
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
+Fixes: ec24643bdd62 ("firmware: ti_sci: Add system suspend and resume call")
+Signed-off-by: Thomas Richard (TI.com) <thomas.richard@bootlin.com>
+Reviewed-by: Kevin Hilman <khilman@baylibre.com>
+Link: https://patch.msgid.link/20251031-ti-sci-io-isolation-v2-1-60d826b65949@bootlin.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_gem.c | 14 +++-----------
- 1 file changed, 3 insertions(+), 11 deletions(-)
+ drivers/firmware/ti_sci.c | 21 +++++++++++++--------
+ drivers/firmware/ti_sci.h |  2 ++
+ 2 files changed, 15 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_gem.c b/drivers/gpu/drm/panthor/panthor_gem.c
-index 3f43686f01958..14ed09d700f2f 100644
---- a/drivers/gpu/drm/panthor/panthor_gem.c
-+++ b/drivers/gpu/drm/panthor/panthor_gem.c
-@@ -86,7 +86,6 @@ static void panthor_gem_free_object(struct drm_gem_object *obj)
- void panthor_kernel_bo_destroy(struct panthor_kernel_bo *bo)
- {
- 	struct panthor_vm *vm;
--	int ret;
+diff --git a/drivers/firmware/ti_sci.c b/drivers/firmware/ti_sci.c
+index 49fd2ae01055d..8d96a3c12b36a 100644
+--- a/drivers/firmware/ti_sci.c
++++ b/drivers/firmware/ti_sci.c
+@@ -3751,9 +3751,11 @@ static int __maybe_unused ti_sci_suspend_noirq(struct device *dev)
+ 	struct ti_sci_info *info = dev_get_drvdata(dev);
+ 	int ret = 0;
  
- 	if (IS_ERR_OR_NULL(bo))
- 		return;
-@@ -94,18 +93,11 @@ void panthor_kernel_bo_destroy(struct panthor_kernel_bo *bo)
- 	vm = bo->vm;
- 	panthor_kernel_bo_vunmap(bo);
- 
--	if (drm_WARN_ON(bo->obj->dev,
--			to_panthor_bo(bo->obj)->exclusive_vm_root_gem != panthor_vm_root_gem(vm)))
--		goto out_free_bo;
--
--	ret = panthor_vm_unmap_range(vm, bo->va_node.start, bo->va_node.size);
+-	ret = ti_sci_cmd_set_io_isolation(&info->handle, TISCI_MSG_VALUE_IO_ENABLE);
 -	if (ret)
--		goto out_free_bo;
--
-+	drm_WARN_ON(bo->obj->dev,
-+		    to_panthor_bo(bo->obj)->exclusive_vm_root_gem != panthor_vm_root_gem(vm));
-+	panthor_vm_unmap_range(vm, bo->va_node.start, bo->va_node.size);
- 	panthor_vm_free_va(vm, &bo->va_node);
- 	drm_gem_object_put(bo->obj);
--
--out_free_bo:
- 	panthor_vm_put(vm);
- 	kfree(bo);
+-		return ret;
++	if (info->fw_caps & MSG_FLAG_CAPS_IO_ISOLATION) {
++		ret = ti_sci_cmd_set_io_isolation(&info->handle, TISCI_MSG_VALUE_IO_ENABLE);
++		if (ret)
++			return ret;
++	}
+ 
+ 	return 0;
  }
+@@ -3767,9 +3769,11 @@ static int __maybe_unused ti_sci_resume_noirq(struct device *dev)
+ 	u8 pin;
+ 	u8 mode;
+ 
+-	ret = ti_sci_cmd_set_io_isolation(&info->handle, TISCI_MSG_VALUE_IO_DISABLE);
+-	if (ret)
+-		return ret;
++	if (info->fw_caps & MSG_FLAG_CAPS_IO_ISOLATION) {
++		ret = ti_sci_cmd_set_io_isolation(&info->handle, TISCI_MSG_VALUE_IO_DISABLE);
++		if (ret)
++			return ret;
++	}
+ 
+ 	ret = ti_sci_msg_cmd_lpm_wake_reason(&info->handle, &source, &time, &pin, &mode);
+ 	/* Do not fail to resume on error as the wake reason is not critical */
+@@ -3928,11 +3932,12 @@ static int ti_sci_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	ti_sci_msg_cmd_query_fw_caps(&info->handle, &info->fw_caps);
+-	dev_dbg(dev, "Detected firmware capabilities: %s%s%s%s\n",
++	dev_dbg(dev, "Detected firmware capabilities: %s%s%s%s%s\n",
+ 		info->fw_caps & MSG_FLAG_CAPS_GENERIC ? "Generic" : "",
+ 		info->fw_caps & MSG_FLAG_CAPS_LPM_PARTIAL_IO ? " Partial-IO" : "",
+ 		info->fw_caps & MSG_FLAG_CAPS_LPM_DM_MANAGED ? " DM-Managed" : "",
+-		info->fw_caps & MSG_FLAG_CAPS_LPM_ABORT ? " LPM-Abort" : ""
++		info->fw_caps & MSG_FLAG_CAPS_LPM_ABORT ? " LPM-Abort" : "",
++		info->fw_caps & MSG_FLAG_CAPS_IO_ISOLATION ? " IO-Isolation" : ""
+ 	);
+ 
+ 	ti_sci_setup_ops(info);
+diff --git a/drivers/firmware/ti_sci.h b/drivers/firmware/ti_sci.h
+index 701c416b2e78f..7559cde17b6cc 100644
+--- a/drivers/firmware/ti_sci.h
++++ b/drivers/firmware/ti_sci.h
+@@ -149,6 +149,7 @@ struct ti_sci_msg_req_reboot {
+  *		MSG_FLAG_CAPS_LPM_PARTIAL_IO: Partial IO in LPM
+  *		MSG_FLAG_CAPS_LPM_DM_MANAGED: LPM can be managed by DM
+  *		MSG_FLAG_CAPS_LPM_ABORT: Abort entry to LPM
++ *		MSG_FLAG_CAPS_IO_ISOLATION: IO Isolation support
+  *
+  * Response to a generic message with message type TI_SCI_MSG_QUERY_FW_CAPS
+  * providing currently available SOC/firmware capabilities. SoC that don't
+@@ -160,6 +161,7 @@ struct ti_sci_msg_resp_query_fw_caps {
+ #define MSG_FLAG_CAPS_LPM_PARTIAL_IO	TI_SCI_MSG_FLAG(4)
+ #define MSG_FLAG_CAPS_LPM_DM_MANAGED	TI_SCI_MSG_FLAG(5)
+ #define MSG_FLAG_CAPS_LPM_ABORT		TI_SCI_MSG_FLAG(9)
++#define MSG_FLAG_CAPS_IO_ISOLATION	TI_SCI_MSG_FLAG(7)
+ #define MSG_MASK_CAPS_LPM		GENMASK_ULL(4, 1)
+ 	u64 fw_caps;
+ } __packed;
 -- 
 2.51.0
 
