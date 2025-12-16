@@ -1,126 +1,150 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0609332EB4
-	for <patches@lists.linux.dev>; Tue, 16 Dec 2025 13:35:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8AF533065F
+	for <patches@lists.linux.dev>; Tue, 16 Dec 2025 15:09:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765892153; cv=none; b=sVvViR9FQub3qD9riugqISe2Wms/vHdIb4JkK2THRK22aF5tqzKW/kqlaChZBC0wZbfymtBfF5vqEekLuYFtj0IzXf3w1KLZyn4O+W7C8/Olc2VJVTt/0r7l9U/QkB6NnHUtn3x4FoE8Gcc0WqgcA5AHpLaV8K1Uk+aNtc7/214=
+	t=1765897750; cv=none; b=u5xRARO24ftCTUuTF+KoyzYVMOCWsFnV/orn5uRrhwAyLmYId73UIsYPY/SluOjdMpyXl8OFiniusrPBdtQtFXcKfbURrZKstVyz/dtdFGcrKQawyVAV5nE4nSZiNyOrhOdsLnndGRsfh32gElQoslNqtx4r0WBxIUDDTYnzJcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765892153; c=relaxed/simple;
-	bh=0wZOep+vf42EUVGIqGI3k0Pa5hX7YqzN7oMbFAFNdJg=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=h2bOZUPFKvW1OJX2GFBs7WU10lZWR8k1hjUGatPMNth2+Bdy6ge8u0kix5Dv1RkQWwt4W/b0Gq3inYems/nIhAHu5qxcqtSxlWjJSmom10nkwDNXDH1Y3Jh49tm/1sdaCxyNf1mh6XglA3V1qCbE9eKxNgAhZ9qfBCLyxhnO6ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=eJ9JXItx; arc=none smtp.client-ip=198.175.65.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1765897750; c=relaxed/simple;
+	bh=kaCnNQu10IecAEcgUBVksPSpUHP7s0XUXmn3lqVr7io=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=thR2RBXXkZKJcohfl/KzgQgKDQoJ6+Hr1vDguo8WixJmFMzp97YUp8+BDo4VwxCxAcagCcBYh38hY3gJgHyIwbAFrv9pwQ9DCxuAJW4mkM6AXzZqKfR0E0XjI26o8RMNidREp5lzciAE5jbwtsHiNJN7Oy92/7aU8HNEpL+LNVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hz1ySY+I; arc=none smtp.client-ip=209.85.214.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="eJ9JXItx"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1765892150; x=1797428150;
-  h=message-id:subject:from:to:cc:date:in-reply-to:
-   references:content-transfer-encoding:mime-version;
-  bh=0wZOep+vf42EUVGIqGI3k0Pa5hX7YqzN7oMbFAFNdJg=;
-  b=eJ9JXItxenVlXthbdOpKpnVsK0/VBgUICOghP24KRprLC9JBgBSmXa1Q
-   p2mBtFZhuPR3UqwQPKZb5bIqF1Fh99+dBttPlTZLOgghOU60oITJmLlKV
-   nsZj56h+jA3hC01Hxs9+EQcv2pKIq35uI6B8hO1sXxuN3YMiOhSEW6/zv
-   nNpFTrvrgyo3VlOXZ/1OBXmP9sJ0abdda3Lzg059SLQCrPP1YBuQBRa4Y
-   oA62XbMINJqlp/ZT79aR5QdFagE1O9wmbN9nn61ZGo37X03TDdqWUlurH
-   0cuQzqVSjgm4rTIyhILkLZxgKWjdLjbuB+R6aiTdWvXaFNRc56j52Ir0c
-   g==;
-X-CSE-ConnectionGUID: r4YKYmfSRJqe2ffW+CnGeg==
-X-CSE-MsgGUID: Zr7fUNceQzqNlmOTxaxanw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11643"; a="71662915"
-X-IronPort-AV: E=Sophos;i="6.21,153,1763452800"; 
-   d="scan'208";a="71662915"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Dec 2025 05:35:49 -0800
-X-CSE-ConnectionGUID: Ca5/tllxRES7zFidJ/1LAw==
-X-CSE-MsgGUID: cPdGDVlTSMqZlWd2e/vxnA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,153,1763452800"; 
-   d="scan'208";a="197303392"
-Received: from smoticic-mobl1.ger.corp.intel.com (HELO [10.245.244.249]) ([10.245.244.249])
-  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Dec 2025 05:35:47 -0800
-Message-ID: <12329cbafe39d7db6f182676c5d96ba244fc4f73.camel@linux.intel.com>
-Subject: Re: [PATCH 6.18 200/614] drm/xe: Enforce correct user fence
- signaling order using
-From: Thomas =?ISO-8859-1?Q?Hellstr=F6m?= <thomas.hellstrom@linux.intel.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Matthew Brost <matthew.brost@intel.com>, Sasha
- Levin <sashal@kernel.org>
-Date: Tue, 16 Dec 2025 14:35:44 +0100
-In-Reply-To: <20251216111408.624748288@linuxfoundation.org>
-References: <20251216111401.280873349@linuxfoundation.org>
-	 <20251216111408.624748288@linuxfoundation.org>
-Organization: Intel Sweden AB, Registration Number: 556189-6027
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.54.3 (3.54.3-2.fc41) 
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hz1ySY+I"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2a110548f10so4191595ad.1
+        for <patches@lists.linux.dev>; Tue, 16 Dec 2025 07:09:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1765897747; x=1766502547; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TBQ+KEKtZFBQW9f8fhCsIZyeGJB9EoLToMD3vA7Aj08=;
+        b=Hz1ySY+IcEV+DUW7qnHPOGzFfPWOPTQxX2ilMqbM9ZjdoRwwCOYDSuKJOYnuj4xt9n
+         YtafYYbBTW4oqJbjCdzrjDxNFSAhtj7WYCBh7/b2Ap5LuwnOknTXU90Fqw11XYoUIvpX
+         tRyTrgyQ4Dv722EehaDnalqEuYD4zLBT5j9FBGlXG6wvxOIg3SzbxGsLFIFm36H68L0j
+         Nle6HrUmN9535FXUhuyHBLN7/4/Ru31+ZvEtQNk3653buAC2uME9XXoLY+YizkYBa9ed
+         K9QiOZBHuSFZ/xv6zgslukdr0TkG+RZTRasWt021j9na7k4Pp7g+NBycjU6+cnn6QX/3
+         rFgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765897747; x=1766502547;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=TBQ+KEKtZFBQW9f8fhCsIZyeGJB9EoLToMD3vA7Aj08=;
+        b=lGhcV5LOnlSNn17ymBFl7ewWEkZCJ7dQ6sdG3wIvFKuad8JqqBUNFpd1MIO2eQOcUf
+         JI/CFhG4SsevuHj46j6BiIw0FYvgVfBaC6N2oytfEPdrq1yElAYcyCENdHto6o5B9Hm/
+         N3or3xzEgpifBXK2+MlOzAaUULCZMMK9ASaTYEKBNuM681t0w3hZl3LYDAVAkHdoAbiW
+         d7ZVgAl2MLZJDoUCJRfJGgSlki/Q0YcEKLmXrnCCcZrx9+xHhOtHr4RnneJt16g7xal1
+         7Z99DOwDryZ2GgX21kk9CWJzUkyKYSy/YnqK9/oM1A+vBMcOUwtAJixPUCN4WoyLhJ6z
+         9oSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU+kfrx64Sun/bOxwpAnNjls8NUnbAa/eQ7t+hgNdSyCk4Ln34VpCaSIAjsRNoPGDBOoiQPctgW@lists.linux.dev
+X-Gm-Message-State: AOJu0YwgkjhNkRcA460W9xygEwHAZ5F8H+Kui1Irev/30mec9FEy9TEg
+	9LOKVCXr76ecbrix98mX6mZKX07ifZUL7f/5XOs017Z9VSVZKR18JfAVQ4h9vzbvhs04ZfDR533
+	ltm0yS7n7jD0b4wrYF8LuQacJwZJGTLE=
+X-Gm-Gg: AY/fxX5StBeOccddAtl5QNbe3WvfhlF8EG4CPmhMateDLgMe0sle2dpWS6MHRxvk02W
+	+pGIIXf6FPUcTvr6VkB+FG0vVOWakHNTqbpY9Sdgtcp74Eq0E4TdTBQLbXf6YCXJoi3+91MysOW
+	wHvbftuNnuzTHJ0GnZ06r1JaQrgmO6xGA4iwJr06XlgvxQG1pDugPA2IYwWHGgAbaFmw+lcatke
+	5LdD9iOkWvk+BXpldk/8gKpblMxeCS6DN45SSZ8wdv2Hw3kSYBVW4+mQovcpwuGv4SKSfQG8xVL
+	I6ajgrQ=
+X-Google-Smtp-Source: AGHT+IE06XFlmMgvXerznAhzoCBIgwCI6cVyUE2Vj6xD/o7J8s5VveIDQEUmJl1xe3ToLTKUn/phA5QKg6FpsbGtWOw=
+X-Received: by 2002:a05:7022:fa2:b0:11b:862d:8031 with SMTP id
+ a92af1059eb24-11f34874285mr6126769c88.0.1765897746571; Tue, 16 Dec 2025
+ 07:09:06 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+References: <20251213-dml-bump-frame-warn-clang-sanitizers-v1-1-0e91608db9eb@kernel.org>
+In-Reply-To: <20251213-dml-bump-frame-warn-clang-sanitizers-v1-1-0e91608db9eb@kernel.org>
+From: Alex Deucher <alexdeucher@gmail.com>
+Date: Tue, 16 Dec 2025 10:08:55 -0500
+X-Gm-Features: AQt7F2qcbLgX7_41oZokd-Bui00GaFx0PuQiAfWWLBHHuXsoZHZJuKEIq9MvOX0
+Message-ID: <CADnq5_OHj3Vz1uVKer8AKH+h3jthM=FE+hCJ=M=xFox65sxcHw@mail.gmail.com>
+Subject: Re: [PATCH] drm/amd/display: Apply e4479aecf658 to dml
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Austin Zheng <austin.zheng@amd.com>, Jun Lei <jun.lei@amd.com>, 
+	Harry Wentland <harry.wentland@amd.com>, Leo Li <sunpeng.li@amd.com>, 
+	Rodrigo Siqueira <siqueira@igalia.com>, Alex Deucher <alexander.deucher@amd.com>, 
+	=?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
+	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, Bill Wendling <morbo@google.com>, 
+	Justin Stitt <justinstitt@google.com>, amd-gfx@lists.freedesktop.org, 
+	dri-devel@lists.freedesktop.org, llvm@lists.linux.dev, 
+	patches@lists.linux.dev, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Folks,
+Applied.  Thanks!
 
-This is an incorrect merge resolution followed by the patch already
-been applied.
-
-Please skip this patch.
-
-Thanks,
-Thomas
-
-
-On Tue, 2025-12-16 at 12:09 +0100, Greg Kroah-Hartman wrote:
-> 6.18-stable review patch.=C2=A0 If anyone has any objections, please let
-> me know.
->=20
-> ------------------
->=20
-> From: Matthew Brost <matthew.brost@intel.com>
->=20
-> [ Upstream commit adda4e855ab6409a3edaa585293f1f2069ab7299 ]
->=20
-> Prevent application hangs caused by out-of-order fence signaling when
-> user fences are attached. Use drm_syncobj (via dma-fence-chain) to
-> guarantee that each user fence signals in order, regardless of the
-> signaling order of the attached fences. Ensure user fence writebacks
-> to
-> user space occur in the correct sequence.
->=20
-> v7:
-> =C2=A0- Skip drm_syncbj create of error (CI)
->=20
-> Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel
-> GPUs")
-> Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-> Reviewed-by: Thomas Hellstr=C3=B6m <thomas.hellstrom@linux.intel.com>
-> Link:
-> https://patch.msgid.link/20251031234050.3043507-2-matthew.brost@intel.com
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
+On Sat, Dec 13, 2025 at 1:16=E2=80=AFAM Nathan Chancellor <nathan@kernel.or=
+g> wrote:
+>
+> After an innocuous optimization change in clang-22, allmodconfig (which
+> enables CONFIG_KASAN and CONFIG_WERROR) breaks with:
+>
+>   drivers/gpu/drm/amd/amdgpu/../display/dc/dml/dcn32/display_mode_vba_32.=
+c:1724:6: error: stack frame size (3144) exceeds limit (3072) in 'dml32_Mod=
+eSupportAndSystemConfigurationFull' [-Werror,-Wframe-larger-than]
+>    1724 | void dml32_ModeSupportAndSystemConfigurationFull(struct display=
+_mode_lib *mode_lib)
+>         |      ^
+>
+> With clang-21, this function was already pretty close to the existing
+> limit of 3072 bytes.
+>
+>   drivers/gpu/drm/amd/amdgpu/../display/dc/dml/dcn32/display_mode_vba_32.=
+c:1724:6: error: stack frame size (2904) exceeds limit (2048) in 'dml32_Mod=
+eSupportAndSystemConfigurationFull' [-Werror,-Wframe-larger-than]
+>    1724 | void dml32_ModeSupportAndSystemConfigurationFull(struct display=
+_mode_lib *mode_lib)
+>         |      ^
+>
+> A similar situation occurred in dml2, which was resolved by
+> commit e4479aecf658 ("drm/amd/display: Increase sanitizer frame larger
+> than limit when compile testing with clang") by increasing the limit for
+> clang when compile testing with certain sanitizer enabled, so that
+> allmodconfig (an easy testing target) continues to work.
+>
+> Apply that same change to the dml folder to clear up the warning for
+> allmodconfig, unbreaking the build.
+>
+> Cc: stable@vger.kernel.org
+> Closes: https://github.com/ClangBuiltLinux/linux/issues/2135
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 > ---
-> =C2=A0drivers/gpu/drm/xe/xe_exec_queue.c | 3 +++
-> =C2=A01 file changed, 3 insertions(+)
->=20
-> diff --git a/drivers/gpu/drm/xe/xe_exec_queue.c
-> b/drivers/gpu/drm/xe/xe_exec_queue.c
-> index cb5f204c08ed6..a6efe4e8ab556 100644
-> --- a/drivers/gpu/drm/xe/xe_exec_queue.c
-> +++ b/drivers/gpu/drm/xe/xe_exec_queue.c
-> @@ -344,6 +344,9 @@ void xe_exec_queue_destroy(struct kref *ref)
-> =C2=A0	struct xe_exec_queue *q =3D container_of(ref, struct
-> xe_exec_queue, refcount);
-> =C2=A0	struct xe_exec_queue *eq, *next;
-> =C2=A0
-> +	if (q->ufence_syncobj)
-> +		drm_syncobj_put(q->ufence_syncobj);
-> +
-> =C2=A0	if (q->ufence_syncobj)
-> =C2=A0		drm_syncobj_put(q->ufence_syncobj);
-> =C2=A0
-
+>  drivers/gpu/drm/amd/display/dc/dml/Makefile | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/amd/display/dc/dml/Makefile b/drivers/gpu/dr=
+m/amd/display/dc/dml/Makefile
+> index b357683b4255..268b5fbdb48b 100644
+> --- a/drivers/gpu/drm/amd/display/dc/dml/Makefile
+> +++ b/drivers/gpu/drm/amd/display/dc/dml/Makefile
+> @@ -30,7 +30,11 @@ dml_rcflags :=3D $(CC_FLAGS_NO_FPU)
+>
+>  ifneq ($(CONFIG_FRAME_WARN),0)
+>      ifeq ($(filter y,$(CONFIG_KASAN)$(CONFIG_KCSAN)),y)
+> -        frame_warn_limit :=3D 3072
+> +        ifeq ($(CONFIG_CC_IS_CLANG)$(CONFIG_COMPILE_TEST),yy)
+> +            frame_warn_limit :=3D 4096
+> +        else
+> +            frame_warn_limit :=3D 3072
+> +        endif
+>      else
+>          frame_warn_limit :=3D 2048
+>      endif
+>
+> ---
+> base-commit: f24e96d69f5b9eb0f3b9c49e53c385c50729edfd
+> change-id: 20251213-dml-bump-frame-warn-clang-sanitizers-0a34fc916aec
+>
+> Best regards,
+> --
+> Nathan Chancellor <nathan@kernel.org>
+>
