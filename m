@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A49F735505A;
-	Tue, 16 Dec 2025 12:21:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E0835580A;
+	Tue, 16 Dec 2025 12:21:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887707; cv=none; b=mfPdRY/KaoIhWafUDMuR9fleZwUF0r1XugYQecu4NCpINe32fAvck3nfqTy9q659uhuOeG5AdrB53JtonoxCEZ65Nxg2o/EO25NsvbsZa2hCeQURofHluKU9t1DiC1Ooyei5DVpQ5aGhevrt0tKeK76dSrJbWdjp+7lv6gNul2Y=
+	t=1765887711; cv=none; b=IBps4WsTkH5uJbh7Ozfta3YjnKIjmJF11kE2EkIz/LomCLl3GibPwV98Rhg1zGqlF0IKCDl7Jyrwhg5uHzMws9rxdReUUcE6fNJfrbXIzzz6g5We1Enb46QJLpyNvEfoEF4XOQgs7+y0OoFYTM0XVCmFzEWpcSlI+hd+ogw4MVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887707; c=relaxed/simple;
-	bh=WJL80oa9Sos26e96UI3OALJZqtHjlWatO1D3kkMq6DU=;
+	s=arc-20240116; t=1765887711; c=relaxed/simple;
+	bh=KKZE3T3XTFMGsmh9i0AIpbipDrxFXNNLqCJMxOgux70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bGIa/WO1ytCp+OMhFul/AhjMUE/kt+PeMwiguhmh8yjxDGlvqVTWyUK6lV5hg+2O2ceAWMfi+Mq6CXHv5BVgF9ZNQb5YncAT2yN5PGu1fx9jkY/PO9LXb7KZqZfbzMLvsxyBeQGjGfUHuUd3KaNc9oeSFSi4fxA7R+HOvh2Od0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1jBM5QgZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r1noedRfS+X4yo5FA4P5orUROK9n6oNuHQbHyiXfURb6kWfst9kmvKDPW5TrdFvIQz0ZgW+vbSf79XdQGor5hv6obZaNuzfnrHbBF6/ictVKLIizC+C4seczdkasHOYjNOMliTVTp/B/rtxPCWjjRrtwZ9VkjFvJaFfpJFBrA+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gmKqllS4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1jBM5QgZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21774C4CEF1;
-	Tue, 16 Dec 2025 12:21:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gmKqllS4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD47FC4CEF1;
+	Tue, 16 Dec 2025 12:21:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887707;
-	bh=WJL80oa9Sos26e96UI3OALJZqtHjlWatO1D3kkMq6DU=;
+	s=korg; t=1765887711;
+	bh=KKZE3T3XTFMGsmh9i0AIpbipDrxFXNNLqCJMxOgux70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1jBM5QgZJ+mqhX4o5h1rc1nxT73tt2KtyDsV8o257/lSo/wgdePCepnTcdAzwMprJ
-	 deXgVaheg669N2LBRG3eGAErwmWXoIPheGIfxdmKv+khz/apjyqjhM7bufo7mZNhew
-	 dVVpabbrwJsGQsW/ryukqrNyY9YPX5u5xidd2PlE=
+	b=gmKqllS4gZPXBoCA6Gg+w7/oj3UTN0LFG/QcDChuTNmfxzs3Zh0/oaPii6NzKcVsk
+	 u/fH+10GJY9+fMtuf6+5222mjJzfKnh7irNz3iaq7ZwrghKaggylLEjm4Bq0KRXF3t
+	 DgDsvIvxgoBPaU6cUYeDaKu23NR3dL/ICv4DuRnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Richter <tmricht@linux.ibm.com>,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 280/614] perf vendor metrics s390: Avoid has_event(INSTRUCTIONS)
-Date: Tue, 16 Dec 2025 12:10:47 +0100
-Message-ID: <20251216111411.519418812@linuxfoundation.org>
+Subject: [PATCH 6.18 281/614] crypto: iaa - Fix incorrect return value in save_iaa_wq()
+Date: Tue, 16 Dec 2025 12:10:48 +0100
+Message-ID: <20251216111411.555156930@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,95 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit c1932fb85af8e51ac9f6bd9947145b06c716106e ]
+[ Upstream commit 76ce17f6f7f78ab79b9741388bdb4dafa985b4e9 ]
 
-The instructions event is now provided in json meaning the has_event
-test always succeeds. Switch to using non-legacy event names in the
-affected metrics.
+The save_iaa_wq() function unconditionally returns 0, even when an error
+is encountered. This prevents the error code from being propagated to the
+caller.
 
-Reported-by: Thomas Richter <tmricht@linux.ibm.com>
-Closes: https://lore.kernel.org/linux-perf-users/3e80f453-f015-4f4f-93d3-8df6bb6b3c95@linux.ibm.com/
-Fixes: 0012e0fa221b ("perf jevents: Add legacy-hardware and legacy-cache json")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Reviewed-by: Thomas Richter <tmricht@linux.ibm.com>
-Tested-by: Thomas Richter <tmricht@linux.ibm.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fix this by returning the 'ret' variable, which holds the actual status
+of the operations within the function.
+
+Fixes: ea7a5cbb43696 ("crypto: iaa - Add Intel IAA Compression Accelerator crypto driver core")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/pmu-events/arch/s390/cf_z16/transaction.json | 8 ++++----
- tools/perf/pmu-events/arch/s390/cf_z17/transaction.json | 8 ++++----
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ drivers/crypto/intel/iaa/iaa_crypto_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/pmu-events/arch/s390/cf_z16/transaction.json b/tools/perf/pmu-events/arch/s390/cf_z16/transaction.json
-index 3ab1d3a6638c4..57b785307a85f 100644
---- a/tools/perf/pmu-events/arch/s390/cf_z16/transaction.json
-+++ b/tools/perf/pmu-events/arch/s390/cf_z16/transaction.json
-@@ -7,17 +7,17 @@
-   {
-     "BriefDescription": "Cycles per Instruction",
-     "MetricName": "cpi",
--    "MetricExpr": "CPU_CYCLES / INSTRUCTIONS if has_event(INSTRUCTIONS) else 0"
-+    "MetricExpr": "CPU_CYCLES / INSTRUCTIONS if has_event(CPU_CYCLES) else 0"
-   },
-   {
-     "BriefDescription": "Problem State Instruction Ratio",
-     "MetricName": "prbstate",
--    "MetricExpr": "(PROBLEM_STATE_INSTRUCTIONS / INSTRUCTIONS) * 100 if has_event(INSTRUCTIONS) else 0"
-+    "MetricExpr": "(PROBLEM_STATE_INSTRUCTIONS / INSTRUCTIONS) * 100 if has_event(PROBLEM_STATE_INSTRUCTIONS) else 0"
-   },
-   {
-     "BriefDescription": "Level One Miss per 100 Instructions",
-     "MetricName": "l1mp",
--    "MetricExpr": "((L1I_DIR_WRITES + L1D_DIR_WRITES) / INSTRUCTIONS) * 100 if has_event(INSTRUCTIONS) else 0"
-+    "MetricExpr": "((L1I_DIR_WRITES + L1D_DIR_WRITES) / INSTRUCTIONS) * 100 if has_event(L1I_DIR_WRITES) else 0"
-   },
-   {
-     "BriefDescription": "Percentage sourced from Level 2 cache",
-@@ -52,7 +52,7 @@
-   {
-     "BriefDescription": "Estimated Instruction Complexity CPI infinite Level 1",
-     "MetricName": "est_cpi",
--    "MetricExpr": "(CPU_CYCLES / INSTRUCTIONS) - (L1C_TLB2_MISSES / INSTRUCTIONS) if has_event(INSTRUCTIONS) else 0"
-+    "MetricExpr": "(CPU_CYCLES / INSTRUCTIONS) - (L1C_TLB2_MISSES / INSTRUCTIONS) if has_event(CPU_CYCLES) else 0"
-   },
-   {
-     "BriefDescription": "Estimated Sourcing Cycles per Level 1 Miss",
-diff --git a/tools/perf/pmu-events/arch/s390/cf_z17/transaction.json b/tools/perf/pmu-events/arch/s390/cf_z17/transaction.json
-index 74df533c8b6fa..7ded6a5a76c0f 100644
---- a/tools/perf/pmu-events/arch/s390/cf_z17/transaction.json
-+++ b/tools/perf/pmu-events/arch/s390/cf_z17/transaction.json
-@@ -7,17 +7,17 @@
-   {
-     "BriefDescription": "Cycles per Instruction",
-     "MetricName": "cpi",
--    "MetricExpr": "CPU_CYCLES / INSTRUCTIONS if has_event(INSTRUCTIONS) else 0"
-+    "MetricExpr": "CPU_CYCLES / INSTRUCTIONS if has_event(CPU_CYCLES) else 0"
-   },
-   {
-     "BriefDescription": "Problem State Instruction Ratio",
-     "MetricName": "prbstate",
--    "MetricExpr": "(PROBLEM_STATE_INSTRUCTIONS / INSTRUCTIONS) * 100 if has_event(INSTRUCTIONS) else 0"
-+    "MetricExpr": "(PROBLEM_STATE_INSTRUCTIONS / INSTRUCTIONS) * 100 if has_event(PROBLEM_STATE_INSTRUCTIONS) else 0"
-   },
-   {
-     "BriefDescription": "Level One Miss per 100 Instructions",
-     "MetricName": "l1mp",
--    "MetricExpr": "((L1I_DIR_WRITES + L1D_DIR_WRITES) / INSTRUCTIONS) * 100 if has_event(INSTRUCTIONS) else 0"
-+    "MetricExpr": "((L1I_DIR_WRITES + L1D_DIR_WRITES) / INSTRUCTIONS) * 100 if has_event(L1I_DIR_WRITES) else 0"
-   },
-   {
-     "BriefDescription": "Percentage sourced from Level 2 cache",
-@@ -52,7 +52,7 @@
-   {
-     "BriefDescription": "Estimated Instruction Complexity CPI infinite Level 1",
-     "MetricName": "est_cpi",
--    "MetricExpr": "(CPU_CYCLES / INSTRUCTIONS) - (L1C_TLB2_MISSES / INSTRUCTIONS) if has_event(INSTRUCTIONS) else 0"
-+    "MetricExpr": "(CPU_CYCLES / INSTRUCTIONS) - (L1C_TLB2_MISSES / INSTRUCTIONS) if has_event(L1C_TLB2_MISSES) else 0"
-   },
-   {
-     "BriefDescription": "Estimated Sourcing Cycles per Level 1 Miss",
+diff --git a/drivers/crypto/intel/iaa/iaa_crypto_main.c b/drivers/crypto/intel/iaa/iaa_crypto_main.c
+index 23f585219fb4b..d0058757b0000 100644
+--- a/drivers/crypto/intel/iaa/iaa_crypto_main.c
++++ b/drivers/crypto/intel/iaa/iaa_crypto_main.c
+@@ -805,7 +805,7 @@ static int save_iaa_wq(struct idxd_wq *wq)
+ 	if (!cpus_per_iaa)
+ 		cpus_per_iaa = 1;
+ out:
+-	return 0;
++	return ret;
+ }
+ 
+ static void remove_iaa_wq(struct idxd_wq *wq)
 -- 
 2.51.0
 
