@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 265EA25CC40;
-	Tue, 16 Dec 2025 12:28:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9624734F491;
+	Tue, 16 Dec 2025 12:28:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888108; cv=none; b=EdFOlzjhuz6m/O96KcjzjcXIzd7ggYhewO/wfOljuylCL3sPSqY0uY9bkOxKiZbwjuKHT7SpvBJKVXa5P+R7rPPmZyyDIQyffiQqWLRLFOKohMH1hOA/KeWN4fRQnuLwVIiClS9glBrp6mRfKg2h0SHD4wErdfJJEqWulUufPqQ=
+	t=1765888111; cv=none; b=HsDf284jMSSTx//pQzFNHNZhqBeAKDjMXzqI9PNoqosPceeWt94gWwckzRNAqOpp5JG7sPboPueg0FnoI6/h6+vpna/lK/2N/tlYaDXvNO8sx5uuEsYVY/2ONZziydQp0+pVSEniXgr+MXQsyF/6rgp7o3NiFqn5G0RNRYkdCYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888108; c=relaxed/simple;
-	bh=PnAGG4HJq3yz7LfEr55nI74CHq9ghrhXtEVli+E62zA=;
+	s=arc-20240116; t=1765888111; c=relaxed/simple;
+	bh=7kpFJ+9KDX3isoMhQQQwoAFvaeNjFxy7oPpAouA8SFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dfRDLtMw21MCq2Xyb28LOtXeu8QC1FWv7Hyheg3Sfka8eQ8o7eShq8wSawHv3Xf6t+iAXPXYMHLtXzcjz9wqF1PdCyAiQhG4mQZU4BAOX1HS2q0XNdhztA4LOCfCZtUwbCTZEwTS+3bZFohJJvj2Pswep7n21F5jmWB7pImbgaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uc6rTAPv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DFLHF73LN1VSG6CJuBCob0fSIEO/O1orvftH8S1JrTlg6ugCjWxB8jmJ7ht9UflvTUIPtdWzae/5eIliQKLBJFwuO2TARNHJuufxzHpsmCTLeT49hmoY6OHv5RzYcTcTn3yFJWalt7/O5dh2BhhLJ6hYCzAgKVuzjWYU0KI/L2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wkFoco+V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uc6rTAPv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EF41C4CEF1;
-	Tue, 16 Dec 2025 12:28:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wkFoco+V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB747C4CEF1;
+	Tue, 16 Dec 2025 12:28:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888108;
-	bh=PnAGG4HJq3yz7LfEr55nI74CHq9ghrhXtEVli+E62zA=;
+	s=korg; t=1765888111;
+	bh=7kpFJ+9KDX3isoMhQQQwoAFvaeNjFxy7oPpAouA8SFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uc6rTAPvKCo8p9/2KPUC2TKKga0RZS2vNVQ89AulCd3WNua2j3o2nsFlG7qRP+StE
-	 2mGRalb+sGhVDVjGoFU1lXoGEo8OGbOVlxXMK//drpe+yclSpEc6VbQS9cEMw/wNEv
-	 +JdsazRjgxFdtUIQS11y2r6pMTHPNUhzzDEP8WpQ=
+	b=wkFoco+VdxrbuhpfQbTFNV1OkqkVmdZJHtD9P8h7n4ibdyJUqwOlCVrugyxZqPk+f
+	 uPdQJlCN/wfLOWBxC7Dj4Ej+ReEB8yMid9tjKf5UZaHQMMBBy31ByMrRoVKnmrsrfK
+	 BUE5YSwNo0y3cjP2bZClosNpOeh/eljNaQO/bREE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
+	Herve Codina <herve.codina@bootlin.com>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 435/614] clocksource/drivers/nxp-pit: Prevent driver unbind
-Date: Tue, 16 Dec 2025 12:13:22 +0100
-Message-ID: <20251216111417.133900325@linuxfoundation.org>
+Subject: [PATCH 6.18 418/614] backlight: led-bl: Add devlink to supplier LEDs
+Date: Tue, 16 Dec 2025 12:13:05 +0100
+Message-ID: <20251216111416.516653023@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,44 +54,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Luca Ceresoli <luca.ceresoli@bootlin.com>
 
-[ Upstream commit e25f964cf414dafa6bee5c9c2c0b1d1fb041dc92 ]
+[ Upstream commit 9341d6698f4cfdfc374fb6944158d111ebe16a9d ]
 
-The driver does not support unbinding (e.g. as clockevents cannot be
-deregistered) so suppress the bind attributes to prevent the driver from
-being unbound and rebound after registration (and disabling the timer
-when reprobing fails).
+LED Backlight is a consumer of one or multiple LED class devices, but
+devlink is currently unable to create correct supplier-producer links when
+the supplier is a class device. It creates instead a link where the
+supplier is the parent of the expected device.
 
-Even if the driver can currently only be built-in, also switch to
-builtin_platform_driver() to prevent it from being unloaded should
-modular builds ever be enabled.
+One consequence is that removal order is not correctly enforced.
 
-Fixes: bee33f22d7c3 ("clocksource/drivers/nxp-pit: Add NXP Automotive s32g2 / s32g3 support")
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://patch.msgid.link/20251111153226.579-3-johan@kernel.org
+Issues happen for example with the following sections in a device tree
+overlay:
+
+    // An LED driver chip
+    pca9632@62 {
+        compatible = "nxp,pca9632";
+        reg = <0x62>;
+
+	// ...
+
+        addon_led_pwm: led-pwm@3 {
+            reg = <3>;
+            label = "addon:led:pwm";
+        };
+    };
+
+    backlight-addon {
+        compatible = "led-backlight";
+        leds = <&addon_led_pwm>;
+        brightness-levels = <255>;
+        default-brightness-level = <255>;
+    };
+
+In this example, the devlink should be created between the backlight-addon
+(consumer) and the pca9632@62 (supplier). Instead it is created between the
+backlight-addon (consumer) and the parent of the pca9632@62, which is
+typically the I2C bus adapter.
+
+On removal of the above overlay, the LED driver can be removed before the
+backlight device, resulting in:
+
+    Unable to handle kernel NULL pointer dereference at virtual address 0000000000000010
+    ...
+    Call trace:
+     led_put+0xe0/0x140
+     devm_led_release+0x6c/0x98
+
+Another way to reproduce the bug without any device tree overlays is
+unbinding the LED class device (pca9632@62) before unbinding the consumer
+(backlight-addon):
+
+  echo 11-0062 >/sys/bus/i2c/drivers/leds-pca963x/unbind
+  echo ...backlight-dock >/sys/bus/platform/drivers/led-backlight/unbind
+
+Fix by adding a devlink between the consuming led-backlight device and the
+supplying LED device, as other drivers and subsystems do as well.
+
+Fixes: ae232e45acf9 ("backlight: add led-backlight driver")
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Reviewed-by: Daniel Thompson (RISCstar) <danielt@kernel.org>
+Reviewed-by: Herve Codina <herve.codina@bootlin.com>
+Tested-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Link: https://patch.msgid.link/20250519-led-backlight-add-devlink-to-supplier-class-device-v6-1-845224aeb2ce@bootlin.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-nxp-pit.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/video/backlight/led_bl.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/clocksource/timer-nxp-pit.c b/drivers/clocksource/timer-nxp-pit.c
-index 2d0a3554b6bf7..d1740f18f7180 100644
---- a/drivers/clocksource/timer-nxp-pit.c
-+++ b/drivers/clocksource/timer-nxp-pit.c
-@@ -374,9 +374,10 @@ static struct platform_driver nxp_pit_driver = {
- 	.driver = {
- 		.name = "nxp-pit",
- 		.of_match_table = pit_timer_of_match,
-+		.suppress_bind_attrs = true,
- 	},
- 	.probe = pit_timer_probe,
- };
--module_platform_driver(nxp_pit_driver);
-+builtin_platform_driver(nxp_pit_driver);
+diff --git a/drivers/video/backlight/led_bl.c b/drivers/video/backlight/led_bl.c
+index efc5e380669ae..f7ab9b3607313 100644
+--- a/drivers/video/backlight/led_bl.c
++++ b/drivers/video/backlight/led_bl.c
+@@ -210,6 +210,19 @@ static int led_bl_probe(struct platform_device *pdev)
+ 		return PTR_ERR(priv->bl_dev);
+ 	}
  
- TIMER_OF_DECLARE(vf610, "fsl,vf610-pit", pit_timer_init);
++	for (i = 0; i < priv->nb_leds; i++) {
++		struct device_link *link;
++
++		link = device_link_add(&pdev->dev, priv->leds[i]->dev->parent,
++				       DL_FLAG_AUTOREMOVE_CONSUMER);
++		if (!link) {
++			dev_err(&pdev->dev, "Failed to add devlink (consumer %s, supplier %s)\n",
++				dev_name(&pdev->dev), dev_name(priv->leds[i]->dev->parent));
++			backlight_device_unregister(priv->bl_dev);
++			return -EINVAL;
++		}
++	}
++
+ 	for (i = 0; i < priv->nb_leds; i++) {
+ 		mutex_lock(&priv->leds[i]->led_access);
+ 		led_sysfs_disable(priv->leds[i]);
 -- 
 2.51.0
 
