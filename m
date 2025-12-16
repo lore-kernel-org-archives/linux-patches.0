@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85DB7342506;
-	Tue, 16 Dec 2025 11:44:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D4D342506;
+	Tue, 16 Dec 2025 11:44:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885456; cv=none; b=KKwf6N6P58lGbwxKjVk9L+LJxZvPsUxj5gn1+i4g64pNIcEZKLJ2H44stmahwt2D685MVptazdcQcR4gxWY+DhnLwQqcpubfUCxZqxOzHVJzkpzD55LaWt2HwegWCjzyQ45xLu0oN1m98inKQ/y5MJniBwHT+/mptw5yW5Z0ecU=
+	t=1765885459; cv=none; b=G9zqac+2j3pJRCjBHsgon85A7uUrzb8X7tfUW3CInlF33ZTeimNILYQImCJuqsk+h96tzHu7Oj4FbbyOLnZA4GWqmxODWCpkqoqXqi5CnkGP9VEl66a7aHZS+FWpcj7TXfrnxKjIQbZij3JALP155AanAzvu7kNdUGc3kunsYqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885456; c=relaxed/simple;
-	bh=xndQ/YOX0plBQvNZX18nyUP/zV4L5abIeIHY55v1ERI=;
+	s=arc-20240116; t=1765885459; c=relaxed/simple;
+	bh=Cpr8i17Idk2I+h7zFjJveCjQbcDSdh1V8xgWlIwFmVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Z/gsi+V6notCiCUt0YwLMKXwlKmq/uJksfqwDXXhOv3uPuV6Glzl+RmSrJy5RQowOc42lATiLsNbOejBVxAxVNAwcQoBN8BeUYjXePCb77yHrc/Zz4xlr7aUlpGbCKrYkXIMwB7qlSxnIMr2SRhX1vBOD93S5ylJ1hsLnUa49l4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i2egLPxc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gOFfrUTjg6HlYiChoTWZcxj05qEPshETVj9Zju6dbMGUuJDQX8BUJXv63rKFZPN/rFGgtIhuGmAqaW5qN4vjOzzCleKs6F5DQf7ZBiM6qXr6d2A3vJIny7vdf+C1g5n0mwApxRXC/xUpnslXVTvC6f0fLE19k2KfaV2lSjoXA+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E9DeGlUK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i2egLPxc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B97ACC4CEF1;
-	Tue, 16 Dec 2025 11:44:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E9DeGlUK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19F92C4CEF1;
+	Tue, 16 Dec 2025 11:44:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885456;
-	bh=xndQ/YOX0plBQvNZX18nyUP/zV4L5abIeIHY55v1ERI=;
+	s=korg; t=1765885459;
+	bh=Cpr8i17Idk2I+h7zFjJveCjQbcDSdh1V8xgWlIwFmVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i2egLPxcM55eoHZhuJUnFMcSs910Ni09R5mSMKJi1YmTp4vVMm6zhiITi+Q3CdkcO
-	 j4oDQyDkRnVnMAEU5jGB4xaDz6AbzwCcLSLq0TS6VkVSg47R2ZrSYJL1gCSGmE5DtJ
-	 e6bBo03bUvsNnQUs8HnSgq3sA24G2ncByYUMvU64=
+	b=E9DeGlUKNgPpLV0E9W5pKD+xJJNKZESB8srsQ8ts0WJ3ojelb80JKvmfEcCQnowql
+	 2jd4JE95LjDO/+9wuNanmC4XkTDNQYPKl8kQWOG8xVpI8DK9TRXkJ/j3Mu3BmsZBUp
+	 MKrM9BsLfeaVVOhSSXct8KKJNPCpzyK2klWf5yAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Matt Coster <matt.coster@imgtec.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 145/507] arm64: dts: renesas: sparrow-hawk: Fix full-size DP connector node name and labels
-Date: Tue, 16 Dec 2025 12:09:46 +0100
-Message-ID: <20251216111350.780989260@linuxfoundation.org>
+Subject: [PATCH 6.17 146/507] drm/imagination: Fix reference to devm_platform_get_and_ioremap_resource()
+Date: Tue, 16 Dec 2025 12:09:47 +0100
+Message-ID: <20251216111350.817101334@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -46,61 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Vasut <marek.vasut+renesas@mailbox.org>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 9d22a34a016313137b9e534a918f1f9aa790aa69 ]
+[ Upstream commit f1aa93005d0d6fb3293ca9c3eb08d1d1557117bf ]
 
-The DisplayPort connector on Retronix R-Car V4H Sparrow Hawk board
-is a full-size DisplayPort connector. Fix the copy-paste error and
-update the DT node name and labels accordingly. No functional change.
+The call to devm_platform_ioremap_resource() was replaced by a call to
+devm_platform_get_and_ioremap_resource(), but the comment referring to
+the function's possible returned error codes was not updated.
 
-Fixes: a719915e76f2 ("arm64: dts: renesas: r8a779g3: Add Retronix R-Car V4H Sparrow Hawk board support")
-Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
-Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20251027184604.34550-1-marek.vasut+renesas@mailbox.org
+Fixes: 927f3e0253c11276 ("drm/imagination: Implement MIPS firmware processor and MMU support")
 Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Matt Coster <matt.coster@imgtec.com>
+Link: https://patch.msgid.link/2266514318480d17f52c7e5e67578dae6827914e.1761745586.git.geert+renesas@glider.be
+Signed-off-by: Matt Coster <matt.coster@imgtec.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/r8a779g3-sparrow-hawk.dts | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/imagination/pvr_device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/r8a779g3-sparrow-hawk.dts b/arch/arm64/boot/dts/renesas/r8a779g3-sparrow-hawk.dts
-index 2c1ab75e4d910..e5af9c056ac97 100644
---- a/arch/arm64/boot/dts/renesas/r8a779g3-sparrow-hawk.dts
-+++ b/arch/arm64/boot/dts/renesas/r8a779g3-sparrow-hawk.dts
-@@ -118,13 +118,13 @@ memory@600000000 {
- 	};
- 
- 	/* Page 27 / DSI to Display */
--	mini-dp-con {
-+	dp-con {
- 		compatible = "dp-connector";
- 		label = "CN6";
- 		type = "full-size";
- 
- 		port {
--			mini_dp_con_in: endpoint {
-+			dp_con_in: endpoint {
- 				remote-endpoint = <&sn65dsi86_out>;
- 			};
- 		};
-@@ -371,7 +371,7 @@ sn65dsi86_in: endpoint {
- 					port@1 {
- 						reg = <1>;
- 						sn65dsi86_out: endpoint {
--							remote-endpoint = <&mini_dp_con_in>;
-+							remote-endpoint = <&dp_con_in>;
- 						};
- 					};
- 				};
+diff --git a/drivers/gpu/drm/imagination/pvr_device.c b/drivers/gpu/drm/imagination/pvr_device.c
+index 8b9ba4983c4cb..f9271efbd74aa 100644
+--- a/drivers/gpu/drm/imagination/pvr_device.c
++++ b/drivers/gpu/drm/imagination/pvr_device.c
+@@ -47,7 +47,7 @@
+  *
+  * Return:
+  *  * 0 on success, or
+- *  * Any error returned by devm_platform_ioremap_resource().
++ *  * Any error returned by devm_platform_get_and_ioremap_resource().
+  */
+ static int
+ pvr_device_reg_init(struct pvr_device *pvr_dev)
 -- 
 2.51.0
 
