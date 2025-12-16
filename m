@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD21355802;
-	Tue, 16 Dec 2025 12:13:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F2EC36654F;
+	Tue, 16 Dec 2025 12:13:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887194; cv=none; b=JTn2m8y59Vg6Eygy7w9DEEbkLjKezQ3FkkNDf8HjdEREcTCLGpzyhy+0NxAs11liCu1e6bI9mmjgiE3CXZbsLVeUR0QuSokubA1G5a5e6At4IMW2rxYc/DkTbIfb+PbEzXQ+uq8vFMM44RrcEOqGOiSZAL9PUuQS7MSA202x6A8=
+	t=1765887198; cv=none; b=JGBDiMHJsoS+iPeSCnYh+MIqNq4NJUgEgSu2iy0Q0u6tGcqfDFbDb1hvWkrfXBHFlNleopNHoET6drjsvXBaGXHpbs+5LtgcNswkooT62TloHzMOmMdY6Lh/CZunAAQT1t2Vy1wjsgmVMW2QiCNI7sfs0Zyh32LUE0HSwkFeM14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887194; c=relaxed/simple;
-	bh=zPH8ptpFMuDYG9Fo6aXeooUaLJY8ertEdDTNDuDAZu4=;
+	s=arc-20240116; t=1765887198; c=relaxed/simple;
+	bh=gfB2eDQDuTIicMB/plVSz9aPsJUe/X5XpS+fm2K3g7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ciig8rUNrQcHYpvHXqlHSPd+hx/jAiWctgt/OfQVuuAuUZmnVPgu4tHWhm9sDMMrjaT4HfM1RQ0QITKXY6hyxZHPHqahaVPc409Qev+R9VSiYd58iSWL744ynvxbFU282i5C93Qzoli5td13ZNm9Vp6mDJU8l0Dw0+/GrJ2WWnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x4v/fiIK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e9hYSWZS8SG8E2LiFJYixBj4Yr2r12KJEOk2qp8IgBeb/A+RLZg3eFMMKjxtDsbjnxY7hZKE6OqRECaYIxSTFGzl8Yips3js9R5iGRamvciCn66Qq1YoJJ1K2Btbn8B0r744uRfAGXh6XtyBZ6bYQDFsk/vBVleCfeSFfwr1auo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MTRvtja/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x4v/fiIK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43ABAC4CEF1;
-	Tue, 16 Dec 2025 12:13:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MTRvtja/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82471C4CEF1;
+	Tue, 16 Dec 2025 12:13:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887194;
-	bh=zPH8ptpFMuDYG9Fo6aXeooUaLJY8ertEdDTNDuDAZu4=;
+	s=korg; t=1765887197;
+	bh=gfB2eDQDuTIicMB/plVSz9aPsJUe/X5XpS+fm2K3g7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x4v/fiIKgI4Wh1D0ZDUiYjzD0JWzicgkAM6D6i6SRZvitemquoU64aEH5IwFyQfbZ
-	 +AXZISWQx+a1I2r19q3gSez6dXqVS67WkhZY2/0aWDf+m1PiIXSVgL6R1U/6uOkzix
-	 9Ag4u3Z9Ywk25oodJJqKY2AKZvh6A+rGctEtjV30=
+	b=MTRvtja/eEqW480+gnZcrngCBP62rRv2Dv4SHB4r4f+sU+W9sByWiFPGpSyWHiUsG
+	 jV9Cqw4dJXPwGtqVGyiyTwfI0rBdfYLpvRbacxYSOcMVPRuggOabsc99a7ezA6Wh+j
+	 0EvOrZXdlpfrFkSRsU4iOrvYyrznWW1ZT9IPZPD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aniket Limaye <a-limaye@ti.com>,
-	Udit Kumar <u-kumar1@ti.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
+	Shuhao Fu <sfual@cse.ust.hk>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 155/614] arm64: dts: ti: k3-j784s4: Fix I2C pinmux pull configuration
-Date: Tue, 16 Dec 2025 12:08:42 +0100
-Message-ID: <20251216111406.951329182@linuxfoundation.org>
+Subject: [PATCH 6.18 156/614] i3c: fix refcount inconsistency in i3c_master_register
+Date: Tue, 16 Dec 2025 12:08:43 +0100
+Message-ID: <20251216111406.987060890@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,77 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aniket Limaye <a-limaye@ti.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-[ Upstream commit 671c852fc53d1b6f5eccdb03c1889a484c9d1996 ]
+[ Upstream commit 9d4f219807d5ac11fb1d596e4ddb09336b040067 ]
 
-The I2C pins for some of the instances on J784S4/J742S2/AM69 are
-configured as PIN_INPUT_PULLUP while these pins are open-drain type and
-do not support internal pull-ups [0][1][2]. The pullup configuration
-bits in the corresponding padconfig registers are reserved and any
-writes to them have no effect and readback checks on those bits fail.
+In `i3c_master_register`, a possible refcount inconsistency has been
+identified, causing possible resource leak.
 
-Update the pinmux settings to use PIN_INPUT instead of PIN_INPUT_PULLUP
-to reflect the correct hardware behaviour.
+Function `of_node_get` increases the refcount of `parent->of_node`. If
+function `i3c_bus_init` fails, the function returns immediately without
+a corresponding decrease, resulting in an inconsistent refcounter.
 
-[0]: https://www.ti.com/lit/gpn/tda4ah-q1 (J784S4 Datasheet: Table 5-1. Pin Attributes)
-[1]: https://www.ti.com/lit/gpn/tda4ape-q1 (J742S2 Datasheet: Table 5-1. Pin Attributes)
-[2]: https://www.ti.com/lit/gpn/am69a (AM69 Datasheet: Table 5-1. Pin Attributes)
+Move call i3c_bus_init() after device_initialize() to let callback
+i3c_masterdev_release() release of_node.
 
-Fixes: e20a06aca5c9 ("arm64: dts: ti: Add support for J784S4 EVM board")
-Fixes: 635fb18ba008 ("arch: arm64: dts: Add support for AM69 Starter Kit")
-Fixes: 0ec1a48d99dd ("arm64: dts: ti: k3-am69-sk: Add pinmux for RPi Header")
-Signed-off-by: Aniket Limaye <a-limaye@ti.com>
-Reviewed-by: Udit Kumar <u-kumar1@ti.com>
-Link: https://patch.msgid.link/20251022122638.234367-1-a-limaye@ti.com
-Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Reported-by: Shuhao Fu <sfual@cse.ust.hk>
+Closes: https://lore.kernel.org/linux-i3c/aO2tjp_FsV_WohPG@osx.local/T/#m2c05a982beeb14e7bf039c1d8db856734bf234c7
+Fixes: 3a379bbcea0a ("i3c: Add core I3C infrastructure")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20251016143814.2551256-1-Frank.Li@nxp.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am69-sk.dts                   | 8 ++++----
- arch/arm64/boot/dts/ti/k3-j784s4-j742s2-evm-common.dtsi | 4 ++--
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/i3c/master.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am69-sk.dts b/arch/arm64/boot/dts/ti/k3-am69-sk.dts
-index 5896e57b5b9ed..0e2d12cb051da 100644
---- a/arch/arm64/boot/dts/ti/k3-am69-sk.dts
-+++ b/arch/arm64/boot/dts/ti/k3-am69-sk.dts
-@@ -236,8 +236,8 @@ J784S4_IOPAD(0x0d4, PIN_OUTPUT, 11) /* (AN38) SPI0_CLK.UART8_TXD */
+diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
+index d946db75df706..66513a27e6e77 100644
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -2883,10 +2883,6 @@ int i3c_master_register(struct i3c_master_controller *master,
+ 	INIT_LIST_HEAD(&master->boardinfo.i2c);
+ 	INIT_LIST_HEAD(&master->boardinfo.i3c);
  
- 	main_i2c0_pins_default: main-i2c0-default-pins {
- 		pinctrl-single,pins = <
--			J784S4_IOPAD(0x0e0, PIN_INPUT_PULLUP, 0) /* (AN36) I2C0_SCL */
--			J784S4_IOPAD(0x0e4, PIN_INPUT_PULLUP, 0) /* (AP37) I2C0_SDA */
-+			J784S4_IOPAD(0x0e0, PIN_INPUT, 0) /* (AN36) I2C0_SCL */
-+			J784S4_IOPAD(0x0e4, PIN_INPUT, 0) /* (AP37) I2C0_SDA */
- 		>;
- 	};
+-	ret = i3c_bus_init(i3cbus, master->dev.of_node);
+-	if (ret)
+-		return ret;
+-
+ 	device_initialize(&master->dev);
+ 	dev_set_name(&master->dev, "i3c-%d", i3cbus->id);
  
-@@ -416,8 +416,8 @@ J784S4_WKUP_IOPAD(0x088, PIN_OUTPUT, 0) /* (J37) WKUP_GPIO0_12.MCU_UART0_TXD */
+@@ -2894,6 +2890,10 @@ int i3c_master_register(struct i3c_master_controller *master,
+ 	master->dev.coherent_dma_mask = parent->coherent_dma_mask;
+ 	master->dev.dma_parms = parent->dma_parms;
  
- 	mcu_i2c0_pins_default: mcu-i2c0-default-pins {
- 		pinctrl-single,pins = <
--			J784S4_WKUP_IOPAD(0x0a0, PIN_INPUT_PULLUP, 0) /* (M35) MCU_I2C0_SCL */
--			J784S4_WKUP_IOPAD(0x0a4, PIN_INPUT_PULLUP, 0) /* (G34) MCU_I2C0_SDA */
-+			J784S4_WKUP_IOPAD(0x0a0, PIN_INPUT, 0) /* (M35) MCU_I2C0_SCL */
-+			J784S4_WKUP_IOPAD(0x0a4, PIN_INPUT, 0) /* (G34) MCU_I2C0_SDA */
- 		>;
- 	};
- 
-diff --git a/arch/arm64/boot/dts/ti/k3-j784s4-j742s2-evm-common.dtsi b/arch/arm64/boot/dts/ti/k3-j784s4-j742s2-evm-common.dtsi
-index 419c1a70e028d..2834f0a8bbee0 100644
---- a/arch/arm64/boot/dts/ti/k3-j784s4-j742s2-evm-common.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-j784s4-j742s2-evm-common.dtsi
-@@ -270,8 +270,8 @@ J784S4_IOPAD(0x0d4, PIN_OUTPUT, 11) /* (AN38) SPI0_CLK.UART8_TXD */
- 
- 	main_i2c0_pins_default: main-i2c0-default-pins {
- 		pinctrl-single,pins = <
--			J784S4_IOPAD(0x0e0, PIN_INPUT_PULLUP, 0) /* (AN36) I2C0_SCL */
--			J784S4_IOPAD(0x0e4, PIN_INPUT_PULLUP, 0) /* (AP37) I2C0_SDA */
-+			J784S4_IOPAD(0x0e0, PIN_INPUT, 0) /* (AN36) I2C0_SCL */
-+			J784S4_IOPAD(0x0e4, PIN_INPUT, 0) /* (AP37) I2C0_SDA */
- 		>;
- 	};
- 
++	ret = i3c_bus_init(i3cbus, master->dev.of_node);
++	if (ret)
++		goto err_put_dev;
++
+ 	ret = of_populate_i3c_bus(master);
+ 	if (ret)
+ 		goto err_put_dev;
 -- 
 2.51.0
 
