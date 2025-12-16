@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9E6839A137;
-	Tue, 16 Dec 2025 12:33:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F13F34C98A;
+	Tue, 16 Dec 2025 12:34:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888437; cv=none; b=VJDHKTl6hcLPhXFXfEKQgcPr0QXwVpx4mWNCovRkLwwaT887xwH3LI4cyO4wgIBVL9U7gFngyJWTcfefNYJd9oE9aQI99XkMq/0jX2LjlYMTU94NAM0xiObbUs25o5rfopcZi6pQhCtFp8O1zBIX0ZdGBJMiQi5bF92qSubalWw=
+	t=1765888441; cv=none; b=fyH0dH4t4WlhEsUXz64xgVYOKUl7XXmu4QjrncUoj6xaCYA7A5mRWnRQKH7QnBI+uI1rwkGSUJ1UDupSPDKwKhPLUTdZbYU2csEjpaC8KeqA8dO9DwF8byymwxMj7r5ZlnuFyWwBBrRfAHBlx6yDuGRQbTq8ZMcWjm/GG2cfvQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888437; c=relaxed/simple;
-	bh=Z81E1/Rx7rcrYHgRK+75Nox8oljfM4HPx0yhMmjvBQM=;
+	s=arc-20240116; t=1765888441; c=relaxed/simple;
+	bh=/qlpLGuxEQN6ZTkf2/jL7I8y2IQD6QtnJe/dKT8rnaI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fOhjAYV7qPrFmB94cGnwSFBCwaFWV2b93Bgf/7eloeGVJg6oafGwCoGPj8Gq9JQKmpFiUalcyEXTddb2WwQ3TpILqIbjKiN7ls/MA9xYX9+b8o6klYSCTuEmVu/+iX5xO+ppOjhJNWmBpPcSVs7KusM13YNb+LFbcULcotomcXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WWkkh51g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=k+rliEZnJYandaNpqeUTlNmwcoSyWeEe2V6deFv7IyvnJqkNQMq01PvR9PjNNjNZIKn89NzCRZq4qjAxRH6Ax+NE1kgJ7ifR2kGcgMCYOIyP7JKT7z7LG0MnB+7cmKDLNeeX4gJP3PXrvZ1rxDDcFTTuhvR4P3ex0K1oluD/+pY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FguRZR3V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WWkkh51g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 115F1C4CEF1;
-	Tue, 16 Dec 2025 12:33:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FguRZR3V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C641DC4CEF1;
+	Tue, 16 Dec 2025 12:34:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888437;
-	bh=Z81E1/Rx7rcrYHgRK+75Nox8oljfM4HPx0yhMmjvBQM=;
+	s=korg; t=1765888441;
+	bh=/qlpLGuxEQN6ZTkf2/jL7I8y2IQD6QtnJe/dKT8rnaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WWkkh51gbdXHLKw+ZVxRfBaqSNiZt3Y3XDqgeVpIBrLQjW1y6X97ZyjMT2defHLiF
-	 yce1LzF9cJatLrCxo+HEOOFqj0n3TOd8nz1ZoqSIBnsm/nrdwCpkBoDFaSTDXyT6T/
-	 XQtjzAmvov5WPgHQ3t+ovvZ7eoQs8Quy/tyEYMEY=
+	b=FguRZR3Vyx0ovhS9ZMc91cTfDngk4BzThz0zVJhTT+VyICERhylxbFGE+NuleAVsG
+	 3tH5mEedUmVWWnS56PMbcq2hJuHu+JDF5usgegvMGgemViDGJI3pB2//SceIdkKNgk
+	 ZQj54/Plo+JrJLCBGgnBtyHU1XmKZvV/vEOPRhIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	John Stultz <jstultz@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Haiyue Wang <haiyuewa@163.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	Xi Pardee <xi.pardee@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 535/614] sched/core: Fix psi_dequeue() for Proxy Execution
-Date: Tue, 16 Dec 2025 12:15:02 +0100
-Message-ID: <20251216111420.762343537@linuxfoundation.org>
+Subject: [PATCH 6.18 536/614] platform/x86:intel/pmc: Update Arrow Lake telemetry GUID
+Date: Tue, 16 Dec 2025 12:15:03 +0100
+Message-ID: <20251216111420.799890461@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -48,86 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Stultz <jstultz@google.com>
+From: Xi Pardee <xi.pardee@linux.intel.com>
 
-[ Upstream commit c2ae8b0df2d1bb7a063f9e356e4e9a06cd4afe11 ]
+[ Upstream commit 644ab3bc98ee386f178d5209ae8170b3fac591aa ]
 
-Currently, if the sleep flag is set, psi_dequeue() doesn't
-change any of the psi_flags.
+Update ARL_PMT_DMU_GUID value. Arrow Lake PMT DMU GUID has been updated
+after it was add to the driver. This updates ensures that the die C6
+value is available in the debug filesystem.
 
-This is because psi_task_switch() will clear TSK_ONCPU as well
-as other potential flags (TSK_RUNNING), and the assumption is
-that a voluntary sleep always consists of a task being dequeued
-followed shortly there after with a psi_sched_switch() call.
-
-Proxy Execution changes this expectation, as mutex-blocked tasks
-that would normally sleep stay on the runqueue. But in the case
-where the mutex-owning task goes to sleep, or the owner is on a
-remote cpu, we will then deactivate the blocked task shortly
-after.
-
-In that situation, the mutex-blocked task will have had its
-TSK_ONCPU cleared when it was switched off the cpu, but it will
-stay TSK_RUNNING. Then if we later dequeue it (as currently done
-if we hit a case find_proxy_task() can't yet handle, such as the
-case of the owner being on another rq or a sleeping owner)
-psi_dequeue() won't change any state (leaving it TSK_RUNNING),
-as it incorrectly expects a psi_task_switch() call to
-immediately follow.
-
-Later on when the task get woken/re-enqueued, and psi_flags are
-set for TSK_RUNNING, we hit an error as the task is already
-TSK_RUNNING:
-
-  psi: inconsistent task state! task=188:kworker/28:0 cpu=28 psi_flags=4 clear=0 set=4
-
-To resolve this, extend the logic in psi_dequeue() so that
-if the sleep flag is set, we also check if psi_flags have
-TSK_ONCPU set (meaning the psi_task_switch is imminent) before
-we do the shortcut return.
-
-If TSK_ONCPU is not set, that means we've already switched away,
-and this psi_dequeue call needs to clear the flags.
-
-Fixes: be41bde4c3a8 ("sched: Add an initial sketch of the find_proxy_task() function")
-Reported-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Signed-off-by: John Stultz <jstultz@google.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Tested-by: Haiyue Wang <haiyuewa@163.com>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Link: https://patch.msgid.link/20251205012721.756394-1-jstultz@google.com
-Closes: https://lore.kernel.org/lkml/20251117185550.365156-1-kprateek.nayak@amd.com/
+Bugzilla Link: https://bugzilla.kernel.org/show_bug.cgi?id=220421
+Fixes: 83f168a1a437 ("platform/x86/intel/pmc: Add Arrow Lake S support to intel_pmc_core driver")
+Tested-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Signed-off-by: Xi Pardee <xi.pardee@linux.intel.com>
+Link: https://patch.msgid.link/20251014214548.629023-2-xi.pardee@linux.intel.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/stats.h | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/platform/x86/intel/pmc/core.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/sched/stats.h b/kernel/sched/stats.h
-index 26f3fd4d34cea..73bd6bca4d310 100644
---- a/kernel/sched/stats.h
-+++ b/kernel/sched/stats.h
-@@ -180,8 +180,13 @@ static inline void psi_dequeue(struct task_struct *p, int flags)
- 	 * avoid walking all ancestors twice, psi_task_switch() handles
- 	 * TSK_RUNNING and TSK_IOWAIT for us when it moves TSK_ONCPU.
- 	 * Do nothing here.
-+	 *
-+	 * In the SCHED_PROXY_EXECUTION case we may do sleeping
-+	 * dequeues that are not followed by a task switch, so check
-+	 * TSK_ONCPU is set to ensure the task switch is imminent.
-+	 * Otherwise clear the flags as usual.
- 	 */
--	if (flags & DEQUEUE_SLEEP)
-+	if ((flags & DEQUEUE_SLEEP) && (p->psi_flags & TSK_ONCPU))
- 		return;
+diff --git a/drivers/platform/x86/intel/pmc/core.h b/drivers/platform/x86/intel/pmc/core.h
+index f4dadb696a314..d6818bd34768e 100644
+--- a/drivers/platform/x86/intel/pmc/core.h
++++ b/drivers/platform/x86/intel/pmc/core.h
+@@ -282,7 +282,7 @@ enum ppfear_regs {
+ /* Die C6 from PUNIT telemetry */
+ #define MTL_PMT_DMU_DIE_C6_OFFSET		15
+ #define MTL_PMT_DMU_GUID			0x1A067102
+-#define ARL_PMT_DMU_GUID			0x1A06A000
++#define ARL_PMT_DMU_GUID			0x1A06A102
  
- 	/*
+ #define LNL_PMC_MMIO_REG_LEN			0x2708
+ #define LNL_PMC_LTR_OSSE			0x1B88
 -- 
 2.51.0
 
