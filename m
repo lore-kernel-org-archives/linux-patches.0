@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E2E5355028;
-	Tue, 16 Dec 2025 11:52:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D94D35502A;
+	Tue, 16 Dec 2025 11:52:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885929; cv=none; b=aJAcYUTnHx53clvYd6kZiqSt3EjNLqRjuz8u1OJdRJyCY5sXOTRPkaNLcJmpsis1BJ4bJfiogbM+jnF6bVvAiJ25H8032nnW7/bAo7eceZvNOKHWJCDZ9/HbHVQiIB9J0P2ftqiMi/MUiT3s3RDOQ0pj/is7nFGCbz9iFF2QyDc=
+	t=1765885932; cv=none; b=JdSvdF1J4J8vyEnNr7GWCzGDw3/I2gOoy8g2UN7TkZgqhl46V94F+8PZB3Oco7vXTiLOD1niYqmtvWuch4nYUTt8Sog/IeYtvjR5MR6M/3vRrIzhTHLcFnke6gzghOaDYtQboR9jQPDlIxjOzsl59nslA9mtewp+UxU5FwQZzBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885929; c=relaxed/simple;
-	bh=o3NAQwnDYzc4Z64kZS3CjdCU0j47iAW6ekWuqcOX69E=;
+	s=arc-20240116; t=1765885932; c=relaxed/simple;
+	bh=A0k3qKXZhMV4LhBNueyRYdk1eCw/AP2SRjLGgP4Vo+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ikaPWkjhvUnLSHy+8bbLOjaErqk05GYYEQSt3IBoArj+6G+q/UbD3+8ANHf2LqF3US6CMAxwZHR05MeM4qHNDyKzQUCA/gp6XxgddXJr/ZcBi/YmO7AAw1NSg0UEWvi2vJ2yhqKZt3Bj2L0vVVaePgoOzn4FI9m/iJFUiWpUG68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L/t9rxOI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sJQib717X6rgyaTJUX9e2o0SYBCH6HcbgAb+5MtZuvfGCoGNhzpeMW0KB+9goW1a8HgfGHb81rOsJ3uECNdJ5DS87zMjMH3SFp2Y2pbbusO+4V9Q6nttFJARwlN8DBqZ+1g9u8+F2F41Vz9d3e2NhtKJDXDm6Qj1XkA27Nd6e/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WzhahL1D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/t9rxOI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CCA3C4CEF1;
-	Tue, 16 Dec 2025 11:52:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WzhahL1D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B2EC4CEF1;
+	Tue, 16 Dec 2025 11:52:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885929;
-	bh=o3NAQwnDYzc4Z64kZS3CjdCU0j47iAW6ekWuqcOX69E=;
+	s=korg; t=1765885932;
+	bh=A0k3qKXZhMV4LhBNueyRYdk1eCw/AP2SRjLGgP4Vo+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L/t9rxOIopgw824+sqjirIRRHfj74Et8ysDCnDTp2O9R7KSj7zNIsY/cFbmPbTpAw
-	 YFQ4a0m9Gp7bBK8z+8e5MpiH6cEY4tiYo1TWeImJuQhHwu2LBO5vi6dO75CuHjFPqY
-	 WUYPMTispvj8TDwdfJmV9UR7ObmPcUGLUlm+UM4o=
+	b=WzhahL1D5RK5u/1SQTRGM4FONVnh98oTEYkXbrOntx4VLnfBS+qjCckyZHEuq5kvH
+	 gfxh4bTfCGD0KCXdGx5+rRfzprbcWvNx4j/bbTAmzrjgXcxX+J8ID2Rf8/+fIcisn2
+	 P44DFW53P/Ejjo7L8u3IksRfoAjSy3GPJC9w8Dcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuntao Wang <yuntao.wang@linux.dev>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	Fenglin Wu <fenglin.wu@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 287/507] of/fdt: Fix incorrect use of dt_root_addr_cells in early_init_dt_check_kho()
-Date: Tue, 16 Dec 2025 12:12:08 +0100
-Message-ID: <20251216111355.875120581@linuxfoundation.org>
+Subject: [PATCH 6.17 288/507] leds: rgb: leds-qcom-lpg: Dont enable TRILED when configuring PWM
+Date: Tue, 16 Dec 2025 12:12:09 +0100
+Message-ID: <20251216111355.910339281@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -51,60 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuntao Wang <yuntao.wang@linux.dev>
+From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
 
-[ Upstream commit c85da64ce2c36bba469f6feede9ca768f0361741 ]
+[ Upstream commit 072cd5f458d76b9e15d89ebdaea8b5cb1312eeef ]
 
-When reading the fdt_size value, the argument passed to dt_mem_next_cell()
-is dt_root_addr_cells, but it should be dt_root_size_cells.
+The PWM signal from the LPG channel can be routed to PMIC GPIOs with
+proper GPIO configuration, and it is not necessary to enable the
+TRILED channel in that case. This also applies to the LPG channels
+that mapped to TRILED channels. Additionally, enabling the TRILED
+channel unnecessarily would cause a voltage increase in its power
+supply. Hence remove it.
 
-The same issue occurs when reading the scratch_size value.
-
-Use a helper function to simplify the code and fix these issues.
-
-Fixes: 274cdcb1c004 ("arm64: add KHO support")
-Signed-off-by: Yuntao Wang <yuntao.wang@linux.dev>
-Link: https://patch.msgid.link/20251115134753.179931-5-yuntao.wang@linux.dev
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Fixes: 24e2d05d1b68 ("leds: Add driver for Qualcomm LPG")
+Signed-off-by: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://patch.msgid.link/20251119-lpg_triled_fix-v3-2-84b6dbdc774a@oss.qualcomm.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/fdt.c | 16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
+ drivers/leds/rgb/leds-qcom-lpg.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/of/fdt.c b/drivers/of/fdt.c
-index 0c18bdefbbeea..de16785a48695 100644
---- a/drivers/of/fdt.c
-+++ b/drivers/of/fdt.c
-@@ -924,26 +924,18 @@ static void __init early_init_dt_check_kho(void)
- {
- 	unsigned long node = chosen_node_offset;
- 	u64 fdt_start, fdt_size, scratch_start, scratch_size;
--	const __be32 *p;
--	int l;
+diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
+index 4f2a178e3d265..e197f548cddb0 100644
+--- a/drivers/leds/rgb/leds-qcom-lpg.c
++++ b/drivers/leds/rgb/leds-qcom-lpg.c
+@@ -2,7 +2,7 @@
+ /*
+  * Copyright (c) 2017-2022 Linaro Ltd
+  * Copyright (c) 2010-2012, The Linux Foundation. All rights reserved.
+- * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+  */
+ #include <linux/bits.h>
+ #include <linux/bitfield.h>
+@@ -1247,8 +1247,6 @@ static int lpg_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
  
- 	if (!IS_ENABLED(CONFIG_KEXEC_HANDOVER) || (long)node < 0)
- 		return;
+ 	lpg_apply(chan);
  
--	p = of_get_flat_dt_prop(node, "linux,kho-fdt", &l);
--	if (l != (dt_root_addr_cells + dt_root_size_cells) * sizeof(__be32))
-+	if (!of_flat_dt_get_addr_size(node, "linux,kho-fdt",
-+				      &fdt_start, &fdt_size))
- 		return;
- 
--	fdt_start = dt_mem_next_cell(dt_root_addr_cells, &p);
--	fdt_size = dt_mem_next_cell(dt_root_addr_cells, &p);
+-	triled_set(lpg, chan->triled_mask, chan->enabled ? chan->triled_mask : 0);
 -
--	p = of_get_flat_dt_prop(node, "linux,kho-scratch", &l);
--	if (l != (dt_root_addr_cells + dt_root_size_cells) * sizeof(__be32))
-+	if (!of_flat_dt_get_addr_size(node, "linux,kho-scratch",
-+				      &scratch_start, &scratch_size))
- 		return;
- 
--	scratch_start = dt_mem_next_cell(dt_root_addr_cells, &p);
--	scratch_size = dt_mem_next_cell(dt_root_addr_cells, &p);
--
- 	kho_populate(fdt_start, fdt_size, scratch_start, scratch_size);
- }
+ out_unlock:
+ 	mutex_unlock(&lpg->lock);
  
 -- 
 2.51.0
