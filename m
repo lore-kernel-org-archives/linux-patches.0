@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEEAF2367D5;
-	Tue, 16 Dec 2025 12:33:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40141338F26;
+	Tue, 16 Dec 2025 12:33:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888407; cv=none; b=FQ35oXRf14KU74hViiRTvtT2ApG44AHgVuJzzIml+zo9+M+1YyfmBiTi6G1ysH8EySSQmbZUbGqCXbEhVB9e88RrGdQiFyRRmUUucYlG1QMQ9Kb/iU26v/1Gc7HELAyOtGSFvWueAYgwZaP7FBVW8X0NxC3XpOQ651ohs50/270=
+	t=1765888410; cv=none; b=J8YA345lODTg3csYPmBdFSCXPdcYx1MsssLo8Ap4nDlrBwuScut09VNxHavjiCHBKb/3Mex0YSOsC4vxV0p14oBjtRYmGYnz4ZKXu+D4+4hnujpBDCIS56P9y++T/ChSMSkuMOQ69L5KVoML3Hmbhr749HXJXawRaPvaDO/0H4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888407; c=relaxed/simple;
-	bh=BmKYnkQGGYe1q64FVBR1Rxx1p9ZMVUqGyYHUOjlvN8E=;
+	s=arc-20240116; t=1765888410; c=relaxed/simple;
+	bh=P6kx2nXwd8IfT6gQcNM778E9XiGlJkiE5WMVG6d/RUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pKFufJOTJhGaZur761fRSIqWukpD34Kpz3D7PwCN+tvBjBEDmL3iMfoO4utgImg+XfU/nQRXiRIleRzk5L1txeSBc0NMyIjw6O1Rwk1Jtoyqg51eDhpELWeeBM7TQJRqBg1hdB3nO9oHJygxODyNGFCdzDU5iMZlvct+SUPESaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eql+BfnS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zcb011Y6XJnRTS6wMeoDWGltGHARqzx27pxzLbqW/7OIoRBqN27cDHpZExlTglFaJN7UGDvBnMk/sj45MP2X7Eqw0Tjs/sk5WJ1Aht5iE7cCiPz4+F/+sb5KJ+qBlImP1ed1YAcV0wJ06vgfQ/W8i0Lafuvt62xd7B9ofHr8Tms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H5UEXUyo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eql+BfnS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C4AFC4CEF1;
-	Tue, 16 Dec 2025 12:33:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H5UEXUyo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C04C4CEF1;
+	Tue, 16 Dec 2025 12:33:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888406;
-	bh=BmKYnkQGGYe1q64FVBR1Rxx1p9ZMVUqGyYHUOjlvN8E=;
+	s=korg; t=1765888410;
+	bh=P6kx2nXwd8IfT6gQcNM778E9XiGlJkiE5WMVG6d/RUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eql+BfnSIQZnNWqYixWhmRhWz/6u6MEyYhUY1wBVeA/z4xdxxQ7u4oExvOusP/aD1
-	 zU0INpATZKnTFZb3YEvqdhBn0GoSVrsbPiP/GyUDuSPbr9JmTgxLfOv4mRgE9vfKYg
-	 /HKYniySkjen49/Ppd8u7Ed9ibivvEMA03fk4xmw=
+	b=H5UEXUyo64WSWM2Ulj0U0B9lKTxQebBQ/jGywrznz5nWw7xiv+iRFKwayW1zLwgfe
+	 MfOoZtErDCmm221JccxAZUrPsP+apz8v83K7yONRNDNO7WA1C7qkHw8o3j6UfhUVCn
+	 e5+CbA3yINPY10NJzDQYrmgafc63eEzXz3+pdFZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Marko <robimarko@gmail.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Jakub Kicinski <kuba@kernel.org>,
+	Hangbin Liu <liuhangbin@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 492/614] net: phy: aquantia: check for NVMEM deferral
-Date: Tue, 16 Dec 2025 12:14:19 +0100
-Message-ID: <20251216111419.197792825@linuxfoundation.org>
+Subject: [PATCH 6.18 493/614] selftests: bonding: add delay before each xvlan_over_bond connectivity check
+Date: Tue, 16 Dec 2025 12:14:20 +0100
+Message-ID: <20251216111419.233352274@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,39 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robert Marko <robimarko@gmail.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit a6c121a2432eee2c4ebceb1483ccd4a50a52983d ]
+[ Upstream commit 2c28ee720ad14f58eb88a97ec3efe7c5c315ea5d ]
 
-Currently, if NVMEM provider is probed later than Aquantia, loading the
-firmware will fail with -EINVAL.
+Jakub reported increased flakiness in bond_macvlan_ipvlan.sh on regular
+kernel, while the tests consistently pass on a debug kernel. This suggests
+a timing-sensitive issue.
 
-To fix this, simply check for -EPROBE_DEFER when NVMEM is attempted and
-return it.
+To mitigate this, introduce a short sleep before each xvlan_over_bond
+connectivity check. The delay helps ensure neighbor and route cache
+have fully converged before verifying connectivity.
 
-Fixes: e93984ebc1c8 ("net: phy: aquantia: add firmware load support")
-Signed-off-by: Robert Marko <robimarko@gmail.com>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://patch.msgid.link/20251127114514.460924-1-robimarko@gmail.com
+The sleep interval is kept minimal since check_connection() is invoked
+nearly 100 times during the test.
+
+Fixes: 246af950b940 ("selftests: bonding: add macvlan over bond testing")
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Closes: https://lore.kernel.org/netdev/20251114082014.750edfad@kernel.org
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://patch.msgid.link/20251127143310.47740-1-liuhangbin@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/aquantia/aquantia_firmware.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../testing/selftests/drivers/net/bonding/bond_macvlan_ipvlan.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/phy/aquantia/aquantia_firmware.c b/drivers/net/phy/aquantia/aquantia_firmware.c
-index bbbcc9736b00e..569256152689f 100644
---- a/drivers/net/phy/aquantia/aquantia_firmware.c
-+++ b/drivers/net/phy/aquantia/aquantia_firmware.c
-@@ -369,7 +369,7 @@ int aqr_firmware_load(struct phy_device *phydev)
- 		 * assume that, and load a new image.
- 		 */
- 		ret = aqr_firmware_load_nvmem(phydev);
--		if (!ret)
-+		if (ret == -EPROBE_DEFER || !ret)
- 			return ret;
+diff --git a/tools/testing/selftests/drivers/net/bonding/bond_macvlan_ipvlan.sh b/tools/testing/selftests/drivers/net/bonding/bond_macvlan_ipvlan.sh
+index c4711272fe45d..559f300f965aa 100755
+--- a/tools/testing/selftests/drivers/net/bonding/bond_macvlan_ipvlan.sh
++++ b/tools/testing/selftests/drivers/net/bonding/bond_macvlan_ipvlan.sh
+@@ -30,6 +30,7 @@ check_connection()
+ 	local message=${3}
+ 	RET=0
  
- 		ret = aqr_firmware_load_fs(phydev);
++	sleep 0.25
+ 	ip netns exec ${ns} ping ${target} -c 4 -i 0.1 &>/dev/null
+ 	check_err $? "ping failed"
+ 	log_test "${bond_mode}/${xvlan_type}_${xvlan_mode}: ${message}"
 -- 
 2.51.0
 
