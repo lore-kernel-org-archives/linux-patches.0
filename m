@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ACBD2459D7;
-	Tue, 16 Dec 2025 11:17:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8CB3126C02;
+	Tue, 16 Dec 2025 11:17:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765883845; cv=none; b=OtlF0VFSpcbwV2uqPzrxaQXR4uKvIacJ/qDJTtnjTwjB4fc0umVHoqrC8cdKBrYyN84/kku72LcuThjl6FMwMIr6+ikb5ZSYp5QHfBBXOvoyhHe5uYcysRtEfsUzp7mLDEM4/pQUElScJlXIsUNzkMDycu7Tb/jzmfbIWwsfRGg=
+	t=1765883848; cv=none; b=ofNbm45szfO1B+IaahVttShqo558UmZei6Rc2cSeACvz7p1QrzIcIBCfzT0gq6gmwfmP0aAYlQNlumBQmudrUZHRE6VAB/X2+XAUDdU5M0fnPzaJnyeni8eo6SGet7iHb4hLUHG15/GzHfhLUoB9ANcXWsWF7XNE2Hprd/5e3f0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765883845; c=relaxed/simple;
-	bh=Q8WLLTcDuTsosWd6LV5cT8tgr5DXhXeENHrUhJQuNJE=;
+	s=arc-20240116; t=1765883848; c=relaxed/simple;
+	bh=7S0OUiJQ3jWgUjEMF4ppgnpMR6BWvTkn/sj2aAJIigY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EYh23F4UrVJb/3FPvIdyf7Zwrg++r/hY+rs6pJ9Oh3GjYjaYZCTwOGDlGXwqnoGoC8nNUmSrDuZQBacejNsSJ0zTu9D0Qc3MLpNnzETV0nNfDDswoGDmgvw1EO68j/o1IcrLvi+k3T/UhGJVbUQdITcRBwsX8Lbr/r+4WOiLJGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jHWk/djr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VOddxS8AKfLntwRNuJXrWk0OC6Mi9WknEQhBc/8bAImwPYEgdarIDo+X7vXLLeQBwC/nqWVrrsQMybawE3oN+4SRdNLbiqO+oXw8f+FjO5Cji2T/DVIfY2LjNfZ4WtXqqtIGP0FLXYrr60R2+T+R0bR+sEav14MDK9b4a6TyL2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EnIZyAQ3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jHWk/djr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FDF6C4CEF1;
-	Tue, 16 Dec 2025 11:17:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EnIZyAQ3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09DFCC4CEF1;
+	Tue, 16 Dec 2025 11:17:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765883844;
-	bh=Q8WLLTcDuTsosWd6LV5cT8tgr5DXhXeENHrUhJQuNJE=;
+	s=korg; t=1765883848;
+	bh=7S0OUiJQ3jWgUjEMF4ppgnpMR6BWvTkn/sj2aAJIigY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jHWk/djrb77P8+8/0cdxUC1RxMS0Dt1zT5cULXbvl+xw9bdtJnTAN2MHVL+siRNMk
-	 4FT9AUU3dmkkqAUM0Klb3nHLG5WSDE8f10z51YvpIk4RaQXPH7JbrsRmjWm7/cHtt7
-	 9om/1IPDINXi8KbeYAxxY2ioiE7IJNU8AAWptx00=
+	b=EnIZyAQ3TrHDgjyOBhE8rwpqxlh3xJPFYcSho2YE3/nLENZeGdUgVbyGGLfqtANEt
+	 +/dAyetDqEUwJ8MO+iiw58sycWF3wdhojTOiq5OC+GpYiQKowa+zOFl2MKhQKuDdYq
+	 5F4eW75jmNSD/kxjDU0OiqGMvwrM7mjZYNxS070I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 017/354] clk: renesas: cpg-mssr: Add missing 1ms delay into reset toggle callback
-Date: Tue, 16 Dec 2025 12:09:44 +0100
-Message-ID: <20251216111321.532625638@linuxfoundation.org>
+Subject: [PATCH 6.12 018/354] clk: renesas: Use str_on_off() helper
+Date: Tue, 16 Dec 2025 12:09:45 +0100
+Message-ID: <20251216111321.568612451@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -51,55 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marek.vasut+renesas@mailbox.org>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 62abfd7bedc2b3d86d4209a4146f9d2b5ae21fab ]
+[ Upstream commit aff664cc8cbc5c28e5aa57dc4201c34497f3c871 ]
 
-R-Car V4H Reference Manual R19UH0186EJ0130 Rev.1.30 Apr. 21, 2025 page
-583 Figure 9.3.1(a) Software Reset flow (A) as well as flow (B) / (C)
-indicate after reset has been asserted by writing a matching reset bit
-into register SRCR, it is mandatory to wait 1ms.
+Use the str_on_off() helper instead of open-coding the same operation.
+Note that this does change the case of the flags, which doesn't matter
+much for debug messages.
 
-This 1ms delay is documented on R-Car V4H and V4M, it is currently
-unclear whether S4 is affected as well.  This patch does apply the extra
-delay on R-Car S4 as well.
-
-Fix the reset driver to respect the additional delay when toggling
-resets.  Drivers which use separate reset_control_(de)assert() must
-assure matching delay in their driver code.
-
-Fixes: 0ab55cf18341 ("clk: renesas: cpg-mssr: Add support for R-Car V4H")
-Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20250918030552.331389-1-marek.vasut+renesas@mailbox.org
 Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/622f8554dcb815c8fc73511a1a118c1724570fa9.1745840497.git.geert+renesas@glider.be
+Stable-dep-of: b91401af6c00 ("clk: renesas: cpg-mssr: Read back reset registers to assure values latched")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/renesas-cpg-mssr.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/clk/renesas/renesas-cpg-mssr.c | 3 ++-
+ drivers/clk/renesas/rzg2l-cpg.c        | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/clk/renesas/renesas-cpg-mssr.c b/drivers/clk/renesas/renesas-cpg-mssr.c
-index 112ed81f648ee..ecb7e2024d589 100644
+index ecb7e2024d589..22699a47e675c 100644
 --- a/drivers/clk/renesas/renesas-cpg-mssr.c
 +++ b/drivers/clk/renesas/renesas-cpg-mssr.c
-@@ -630,8 +630,15 @@ static int cpg_mssr_reset(struct reset_controller_dev *rcdev,
- 	/* Reset module */
- 	writel(bitmask, priv->base + priv->reset_regs[reg]);
+@@ -27,6 +27,7 @@
+ #include <linux/psci.h>
+ #include <linux/reset-controller.h>
+ #include <linux/slab.h>
++#include <linux/string_choices.h>
  
--	/* Wait for at least one cycle of the RCLK clock (@ ca. 32 kHz) */
--	udelay(35);
-+	/*
-+	 * On R-Car Gen4, delay after SRCR has been written is 1ms.
-+	 * On older SoCs, delay after SRCR has been written is 35us
-+	 * (one cycle of the RCLK clock @ ca. 32 kHz).
-+	 */
-+	if (priv->reg_layout == CLK_REG_LAYOUT_RCAR_GEN4)
-+		usleep_range(1000, 2000);
-+	else
-+		usleep_range(35, 1000);
+ #include <dt-bindings/clock/renesas-cpg-mssr.h>
  
- 	/* Release module from reset state */
- 	writel(bitmask, priv->base + priv->reset_clear_regs[reg]);
+@@ -205,7 +206,7 @@ static int cpg_mstp_clock_endisable(struct clk_hw *hw, bool enable)
+ 	int error;
+ 
+ 	dev_dbg(dev, "MSTP %u%02u/%pC %s\n", reg, bit, hw->clk,
+-		enable ? "ON" : "OFF");
++		str_on_off(enable));
+ 	spin_lock_irqsave(&priv->rmw_lock, flags);
+ 
+ 	if (priv->reg_layout == CLK_REG_LAYOUT_RZ_A) {
+diff --git a/drivers/clk/renesas/rzg2l-cpg.c b/drivers/clk/renesas/rzg2l-cpg.c
+index e2ecc9d36e051..e4f2d974f38a1 100644
+--- a/drivers/clk/renesas/rzg2l-cpg.c
++++ b/drivers/clk/renesas/rzg2l-cpg.c
+@@ -27,6 +27,7 @@
+ #include <linux/pm_domain.h>
+ #include <linux/reset-controller.h>
+ #include <linux/slab.h>
++#include <linux/string_choices.h>
+ #include <linux/units.h>
+ 
+ #include <dt-bindings/clock/renesas-cpg-mssr.h>
+@@ -1222,7 +1223,7 @@ static int rzg2l_mod_clock_endisable(struct clk_hw *hw, bool enable)
+ 	}
+ 
+ 	dev_dbg(dev, "CLK_ON 0x%x/%pC %s\n", CLK_ON_R(reg), hw->clk,
+-		enable ? "ON" : "OFF");
++		str_on_off(enable));
+ 
+ 	value = bitmask << 16;
+ 	if (enable)
 -- 
 2.51.0
 
