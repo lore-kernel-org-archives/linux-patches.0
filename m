@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED47A3358A8;
-	Tue, 16 Dec 2025 11:19:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA943233EE;
+	Tue, 16 Dec 2025 11:19:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765883979; cv=none; b=JmqnJzT2X49M1ivZFWG84CCCiZA6yJGoyRCH13PB+jWLUk8QgQ4+kTDIkhn661OOJwakBnVBaH32jU9KrKq0UnX0bU4PRwg9jUX4h7AtRoy0OXAH1VSfa6Fgpsv0X6aiPi2/Jrz7WGvWOIFypKeJatRVwZPI2B3DvZaIrhyrS6s=
+	t=1765883982; cv=none; b=gZrXwnu7NT+gni67sNY3Ls/lWfOv0PiqbIufXa5RyuHKQPILL4Gd2oIqo05siodfcqrKK+e3EucRf+1S+2Jybu+veiIEGLF3XTnYESWL1wu74BMJtwMBAuoc/zfafJb6I2NUcS7HRvd7Mx4qblp15ErIIN34vPNCylY5up4LVmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765883979; c=relaxed/simple;
-	bh=fDQ/pU1dSh0CXqtWww+Qvn4tvPQJlKvd+M9bi8cQkpk=;
+	s=arc-20240116; t=1765883982; c=relaxed/simple;
+	bh=SaPs8BsPlIsJ6bBiYLb3Dix3cdHTeaVcyvLSKocgUJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CaUG28axs95EZazRnAI2ibgNVK7o/LiW3Gh+Bx8XP/I/2tE2hyAphLNFiuOpG5n2LRsccyWNc9MWmizDtfvCXkHnXx8Fz3Eziq0vtjACKfE8honj19civ3cfwNc9TH+1orVLbVPIjfGtxCTg2RRsUn/FBJkRuA15pgsRi82REyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h2jX2jKC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QFbmpHdjgwg3HPcXOiWbvw2n6qpCOLta9ov2wOA8nwmmQSXeovxxU2z7DTQhbv8XG4eBt3hCFD9x6PzDxnd6nt+bN1/OAACfG/OrujXaO/zMOIcLNv3IqmSqt4oNfv0SWkzycurSqbhhHzKXKkEW1mctKJqA9M50YbjGnZORECo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s94pXcmd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h2jX2jKC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CD82C4CEF1;
-	Tue, 16 Dec 2025 11:19:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s94pXcmd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3C99C4CEF1;
+	Tue, 16 Dec 2025 11:19:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765883978;
-	bh=fDQ/pU1dSh0CXqtWww+Qvn4tvPQJlKvd+M9bi8cQkpk=;
+	s=korg; t=1765883982;
+	bh=SaPs8BsPlIsJ6bBiYLb3Dix3cdHTeaVcyvLSKocgUJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h2jX2jKCY/RMl5Em+bcHA07SJY3QF5ZyiEu8Oc/d31G5MYpPyzqkAa2Hd9XsQBqSl
-	 OXeOe7PyMeUS/S0x7Rmoaiun5QForbT7/EiG5GXUVUzgk11zlH8ieKFiHG2UlyEQh4
-	 MA99B07yQVVoTuq32xk8T/rWjyIUZmmIKntzpwYE=
+	b=s94pXcmdaN/Jfb4li7HDnrYm0+JLaq/weSYCpLbUTPpZ51kzF8hMSbGwiRgbeIlhD
+	 vsh3nZrzCQhxFNjjX6dRk9CayrfLtIN2kI9EwQYS/9HtE6C/zbETusxtTSXiQ/k/CK
+	 t/XAsnLnJDZiJnZX1afn+AnxpdUXW8TjQ0wh8ZX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Griffin <peter.griffin@linaro.org>,
-	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Ilpo Jarvinen <ilpo.jarvinen@linux.intel.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 055/354] arm64: dts: exynos: gs101: fix sysreg_apm reg property
-Date: Tue, 16 Dec 2025 12:10:22 +0100
-Message-ID: <20251216111322.911770314@linuxfoundation.org>
+Subject: [PATCH 6.12 056/354] PCI: rcar-gen2: Drop ARM dependency from PCI_RCAR_GEN2
+Date: Tue, 16 Dec 2025 12:10:23 +0100
+Message-ID: <20251216111322.948245084@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -53,40 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Griffin <peter.griffin@linaro.org>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 4348c22a4f15dbef1314f1a353d7f053b24e9ace ]
+[ Upstream commit d312742f686582e6457070bcfd24bee8acfdf213 ]
 
-Both the start address and size are incorrect for the apm_sysreg DT
-node. Update to match the TRM (rather than how it was defined
-downstream).
+Since the reliance on ARM-specific struct pci_sys_data was removed, this
+driver can be compile-tested on other architectures.
 
-Fixes: ea89fdf24fd9 ("arm64: dts: exynos: google: Add initial Google gs101 SoC support")
-Signed-off-by: Peter Griffin <peter.griffin@linaro.org>
-Reviewed-by: André Draszik <andre.draszik@linaro.org>
-Link: https://patch.msgid.link/20251013-automatic-clocks-v1-5-72851ee00300@linaro.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+While at it, make the help text a bit more generic, as some members of
+the R-Car Gen2 family have a different number of internal PCI
+controllers.
+
+Fixes: 4a957563fe0231e0 ("PCI: rcar-gen2: Convert to use modern host bridge probe functions")
+Suggested-by: Ilpo Jarvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+[bhelgaas: add rcar-gen2 to subject]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://patch.msgid.link/00f75d6732eacce93f04ffaeedc415d2db714cd6.1759480426.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/exynos/google/gs101.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/controller/Kconfig | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/exynos/google/gs101.dtsi b/arch/arm64/boot/dts/exynos/google/gs101.dtsi
-index a509a59def428..d03987cc4370c 100644
---- a/arch/arm64/boot/dts/exynos/google/gs101.dtsi
-+++ b/arch/arm64/boot/dts/exynos/google/gs101.dtsi
-@@ -1390,9 +1390,9 @@ cmu_apm: clock-controller@17400000 {
- 			clock-names = "oscclk";
- 		};
+diff --git a/drivers/pci/controller/Kconfig b/drivers/pci/controller/Kconfig
+index 9800b76810540..481acb03af80d 100644
+--- a/drivers/pci/controller/Kconfig
++++ b/drivers/pci/controller/Kconfig
+@@ -249,12 +249,11 @@ config PCIE_RCAR_EP
  
--		sysreg_apm: syscon@174204e0 {
-+		sysreg_apm: syscon@17420000 {
- 			compatible = "google,gs101-apm-sysreg", "syscon";
--			reg = <0x174204e0 0x1000>;
-+			reg = <0x17420000 0x10000>;
- 		};
+ config PCI_RCAR_GEN2
+ 	bool "Renesas R-Car Gen2 Internal PCI controller"
+-	depends on ARCH_RENESAS || COMPILE_TEST
+-	depends on ARM
++	depends on (ARCH_RENESAS && ARM) || COMPILE_TEST
+ 	help
+ 	  Say Y here if you want internal PCI support on R-Car Gen2 SoC.
+-	  There are 3 internal PCI controllers available with a single
+-	  built-in EHCI/OHCI host controller present on each one.
++	  Each internal PCI controller contains a single built-in EHCI/OHCI
++	  host controller.
  
- 		pmu_system_controller: system-controller@17460000 {
+ config PCIE_ROCKCHIP
+ 	bool
 -- 
 2.51.0
 
