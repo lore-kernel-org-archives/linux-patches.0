@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7A7A34EEFB;
-	Tue, 16 Dec 2025 11:47:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481D034EEEE;
+	Tue, 16 Dec 2025 11:47:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885622; cv=none; b=VUo4FCYZfk0GZKP/35hcxBdMYi/5mRi64W+TZ2kc+Vnfak5n1kRtrLYqG4Erzq00/pbOVteH0P4GRYqTQNCmOrKTPW6g1CqETWY6ttfZKC3Yu07XDxSZwuR1JbZG2mmLFpz0nf/IUWYpnzIdkJBsJgl+prKumF/oIW8c+FqyHb4=
+	t=1765885626; cv=none; b=WgdgxDVs5Wx/e4KurSZhhgW5AQ0wK6hBQ+o46UWS99k+m83bDXmyQZcNPh6FbcW5zj4q70FGQSKdroBmWiWzk2hR9l/UwGOYLrzvVpi6ehs1Kq2CVIc8HzBrovwopsdcEr4rX8F4bY6reZDK3X1D4tZC01uJv0oHN045x3mQT30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885622; c=relaxed/simple;
-	bh=BIOfW6657/bLTsVSnjv5HS1iRtwJEegSEsEXH9jRFgY=;
+	s=arc-20240116; t=1765885626; c=relaxed/simple;
+	bh=7IPIlzPYMh6lmc5boU6X2He+9MsExdAqaCUXxU53Pmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lp9/CnZSYHde/Q2sLhh8GgxF0eN78Pfe4ZT5Mdde2sThiBchphN1FtpTB9XQRnH0XkPyqSkTQKPX8IBYW44hcSMjpY0cL7fQhq59XiDvH7ZGC4javKyWuFdfT2QbrhllSq8J5D5ihUrBcHKOwreqC7/3twPIhLMmgkhwGRWH4cg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RSngTtNS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aWsy5Mc3nvgapaL+g6DPn1aChXVjtytVs1YjfXSuFxp0W55fJj3B4/wm1ZTpDz74B7CLuRLBzHFRAjyutHhNUU59Mi6dreptP0XrxYrGupyM7oRO7DlgONyXWhZ29JUIbQ8xGrG0TU87MJweZ1ZOioo3kLA2K1vFiD568dICC9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I2DQ975G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RSngTtNS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38FD3C4CEF5;
-	Tue, 16 Dec 2025 11:47:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I2DQ975G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CA52C4CEF1;
+	Tue, 16 Dec 2025 11:47:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885622;
-	bh=BIOfW6657/bLTsVSnjv5HS1iRtwJEegSEsEXH9jRFgY=;
+	s=korg; t=1765885626;
+	bh=7IPIlzPYMh6lmc5boU6X2He+9MsExdAqaCUXxU53Pmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RSngTtNSVaz/xeXCYlOrmQEP7HncqNfAxAjJqzuhWL9oJ6tKTWH8JPtMK9TYTG9E7
-	 mTJKKZu9nsVzfgsVLLRTrzya0yEoYIljWIfYLUwSAA79DkdSC7yOExsc6JgEBQ1pAk
-	 EBhUvkbtApr1TJwQeJYLkvN4L8WJxJ+ChFUGz3lw=
+	b=I2DQ975Gz8ZkKNSLEYRb6BrWj6Io58zsod3XHHxk2CqOZ+DPgf5DTKuiLlvVoNYN4
+	 rTtrDmtEF1oKU+PKDZWy0lRo1Ltxl9pAvx2yrgCJ02hBR1omVLYaG8AiLXUhJMGA2r
+	 mjrcLg7+hoT+zbgoo6S5VFKZA7YR8L96YpV6JcDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
+	Scott Teel <scott.teel@microchip.com>,
+	Scott Benesh <scott.benesh@microchip.com>,
+	Mike McGowen <mike.mcgowen@microchip.com>,
+	Don Brace <don.brace@microchip.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 194/507] scsi: stex: Fix reboot_notifier leak in probe error path
-Date: Tue, 16 Dec 2025 12:10:35 +0100
-Message-ID: <20251216111352.538924139@linuxfoundation.org>
+Subject: [PATCH 6.17 195/507] scsi: smartpqi: Fix device resources accessed after device removal
+Date: Tue, 16 Dec 2025 12:10:36 +0100
+Message-ID: <20251216111352.574473947@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -51,38 +54,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Mike McGowen <mike.mcgowen@microchip.com>
 
-[ Upstream commit 20da637eb545b04753e20c675cfe97b04c7b600b ]
+[ Upstream commit b518e86d1a70a88f6592a7c396cf1b93493d1aab ]
 
-In stex_probe(), register_reboot_notifier() is called at the beginning,
-but if any subsequent initialization step fails, the function returns
-without unregistering the notifier, resulting in a resource leak.
+Correct possible race conditions during device removal.
 
-Add unregister_reboot_notifier() in the out_disable error path to ensure
-proper cleanup on all failure paths.
+Previously, a scheduled work item to reset a LUN could still execute
+after the device was removed, leading to use-after-free and other
+resource access issues.
 
-Fixes: 61b745fa63db ("scsi: stex: Add S6 support")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20251104094847.270-1-vulab@iscas.ac.cn
+This race condition occurs because the abort handler may schedule a LUN
+reset concurrently with device removal via sdev_destroy(), leading to
+use-after-free and improper access to freed resources.
+
+  - Check in the device reset handler if the device is still present in
+    the controller's SCSI device list before running; if not, the reset
+    is skipped.
+
+  - Cancel any pending TMF work that has not started in sdev_destroy().
+
+  - Ensure device freeing in sdev_destroy() is done while holding the
+    LUN reset mutex to avoid races with ongoing resets.
+
+Fixes: 2d80f4054f7f ("scsi: smartpqi: Update deleting a LUN via sysfs")
+Reviewed-by: Scott Teel <scott.teel@microchip.com>
+Reviewed-by: Scott Benesh <scott.benesh@microchip.com>
+Signed-off-by: Mike McGowen <mike.mcgowen@microchip.com>
+Signed-off-by: Don Brace <don.brace@microchip.com>
+Link: https://patch.msgid.link/20251106163823.786828-3-don.brace@microchip.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/stex.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/smartpqi/smartpqi_init.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/drivers/scsi/stex.c b/drivers/scsi/stex.c
-index 63ed7f9aaa937..34a557297feff 100644
---- a/drivers/scsi/stex.c
-+++ b/drivers/scsi/stex.c
-@@ -1844,6 +1844,7 @@ static int stex_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- out_scsi_host_put:
- 	scsi_host_put(host);
- out_disable:
-+	unregister_reboot_notifier(&stex_notifier);
- 	pci_disable_device(pdev);
+diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
+index 125944941601e..9f4f6e74f3e38 100644
+--- a/drivers/scsi/smartpqi/smartpqi_init.c
++++ b/drivers/scsi/smartpqi/smartpqi_init.c
+@@ -6409,10 +6409,22 @@ static int pqi_device_reset(struct pqi_ctrl_info *ctrl_info, struct pqi_scsi_dev
  
- 	return err;
+ static int pqi_device_reset_handler(struct pqi_ctrl_info *ctrl_info, struct pqi_scsi_dev *device, u8 lun, struct scsi_cmnd *scmd, u8 scsi_opcode)
+ {
++	unsigned long flags;
+ 	int rc;
+ 
+ 	mutex_lock(&ctrl_info->lun_reset_mutex);
+ 
++	spin_lock_irqsave(&ctrl_info->scsi_device_list_lock, flags);
++	if (pqi_find_scsi_dev(ctrl_info, device->bus, device->target, device->lun) == NULL) {
++		dev_warn(&ctrl_info->pci_dev->dev,
++			"skipping reset of scsi %d:%d:%d:%u, device has been removed\n",
++			ctrl_info->scsi_host->host_no, device->bus, device->target, device->lun);
++		spin_unlock_irqrestore(&ctrl_info->scsi_device_list_lock, flags);
++		mutex_unlock(&ctrl_info->lun_reset_mutex);
++		return 0;
++	}
++	spin_unlock_irqrestore(&ctrl_info->scsi_device_list_lock, flags);
++
+ 	dev_err(&ctrl_info->pci_dev->dev,
+ 		"resetting scsi %d:%d:%d:%u SCSI cmd at %p due to cmd opcode 0x%02x\n",
+ 		ctrl_info->scsi_host->host_no, device->bus, device->target, lun, scmd, scsi_opcode);
+@@ -6593,7 +6605,9 @@ static void pqi_sdev_destroy(struct scsi_device *sdev)
+ {
+ 	struct pqi_ctrl_info *ctrl_info;
+ 	struct pqi_scsi_dev *device;
++	struct pqi_tmf_work *tmf_work;
+ 	int mutex_acquired;
++	unsigned int lun;
+ 	unsigned long flags;
+ 
+ 	ctrl_info = shost_to_hba(sdev->host);
+@@ -6620,8 +6634,13 @@ static void pqi_sdev_destroy(struct scsi_device *sdev)
+ 
+ 	mutex_unlock(&ctrl_info->scan_mutex);
+ 
++	for (lun = 0, tmf_work = device->tmf_work; lun < PQI_MAX_LUNS_PER_DEVICE; lun++, tmf_work++)
++		cancel_work_sync(&tmf_work->work_struct);
++
++	mutex_lock(&ctrl_info->lun_reset_mutex);
+ 	pqi_dev_info(ctrl_info, "removed", device);
+ 	pqi_free_device(device);
++	mutex_unlock(&ctrl_info->lun_reset_mutex);
+ }
+ 
+ static int pqi_getpciinfo_ioctl(struct pqi_ctrl_info *ctrl_info, void __user *arg)
 -- 
 2.51.0
 
