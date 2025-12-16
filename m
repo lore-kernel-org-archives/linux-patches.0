@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E88357709;
-	Tue, 16 Dec 2025 12:29:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077AE2D8782;
+	Tue, 16 Dec 2025 12:29:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888190; cv=none; b=hiGDqQx5fdcnPxIM5l7ag6SAvFEtAzpK9U6JxnNVDAR+//KaQHJsqTSDdEYUf+Jo15lvI5Axiny130wN1Nr5XoMZ7Y8QBYaeUF2lRMN6XN/T+VAeLsOy3uu95GRfbsU4XzeosgLc2JXqbx4Q0oGT3cmJEWpSMX6Z68aW2VaAleg=
+	t=1765888194; cv=none; b=OP/9M0T/SEgU71BsFQH1ZJcTihMQQbGnS5T1AX0F15y2Y/D6lUE3Qps6hRldPBPYT3+WwLeWGHgqpxjiZl/Bl+Hf78DFAKL2Wm1zQw21WTsHEN/R4G3xhSI86pjCJEJ6wfmg2uQxNwf7b3ROPsDiNzeualVxl5am2HRHqayIPQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888190; c=relaxed/simple;
-	bh=GHwrdCvjoAFGtN+QX9II4+/ltq0YhId4F4P7Ew4r7yg=;
+	s=arc-20240116; t=1765888194; c=relaxed/simple;
+	bh=Ox2eQ77NBe5Bjpa6ijwuhM/aKlRidGvxgTV9tNj4qP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bc6H/wA0XHeI2rTBMkEHscppNuvFQA+BvmYYCTcgLIC3vHysjvSlhK+wOtcdyGLqt0w0+lju3Qn5ilAMN/9inE5Gq4yF5Ii9npLTBCshfmARMI15GuNsPtZQjizifLpIWpUg1Tfbdadx2WzX3k88DzIH1K68t9+wMwV2XYe/WGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aboV35aE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=k/R6+RyH2rswLsU3nenLugW3k0TDsOXWt8Ka8Z5dqK9EKRuiAinZfP/ZabBrq4VbZWi1lgNxEE0NIFZXKMdI541s70Ct7tauEQ9Qp1T/w6TxAZAUfG9d/Iw1Q7fC5QjheceJyXU/pwuKUxK/rJudUNdFIrf1/TAVGSdzcwrzln8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nxvyCruA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aboV35aE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40790C4CEF1;
-	Tue, 16 Dec 2025 12:29:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nxvyCruA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82BC9C4CEF1;
+	Tue, 16 Dec 2025 12:29:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888190;
-	bh=GHwrdCvjoAFGtN+QX9II4+/ltq0YhId4F4P7Ew4r7yg=;
+	s=korg; t=1765888193;
+	bh=Ox2eQ77NBe5Bjpa6ijwuhM/aKlRidGvxgTV9tNj4qP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aboV35aEWcQyshaDNxhMmz9RmwbIwZuUlbkkoP3C49+9ynuuWXRh2ugx6zNedco1L
-	 r3qtWtVwmQOVpWvVoFMwj2C4FPVlIV982EYO5UMp71v8k8ZaGKYnL9Hq1kGRYDLf6k
-	 BSvt8xfnfO4wJaeujYRJYoC49EYGtUypK9CXdOj8=
+	b=nxvyCruALQRfwQ5R00sm5klRJjJpYWQBr6NJmGpCOJ7Glkd68RUaYhzPe4k41/MgA
+	 aVt/Bd+u5e18zqb8muYT5LCkvtLmcc653Tuz8t0Qh/lPJBGcPxnO8/gwasoXMnuuB7
+	 rkv1fG7M0hqS8u4ur28o8rcI3WMMv8nMYjYkKCo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a2b9a4ed0d61b1efb3f5@syzkaller.appspotmail.com,
-	Christoph Hellwig <hch@lst.de>,
-	Dave Chinner <dchinner@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
+	Matthieu Buffet <matthieu@buffet.re>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 416/614] iomap: allocate s_dio_done_wq for async reads as well
-Date: Tue, 16 Dec 2025 12:13:03 +0100
-Message-ID: <20251216111416.444147046@linuxfoundation.org>
+Subject: [PATCH 6.18 453/614] selftests/landlock: Fix makefile header list
+Date: Tue, 16 Dec 2025 12:13:40 +0100
+Message-ID: <20251216111417.781370366@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -48,55 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Matthieu Buffet <matthieu@buffet.re>
 
-[ Upstream commit 7fd8720dff2d9c70cf5a1a13b7513af01952ec02 ]
+[ Upstream commit e61462232a58bddd818fa6a913a9a2e76fd3634f ]
 
-Since commit 222f2c7c6d14 ("iomap: always run error completions in user
-context"), read error completions are deferred to s_dio_done_wq.  This
-means the workqueue also needs to be allocated for async reads.
+Make all headers part of make's dependencies computations.
+Otherwise, updating audit.h, common.h, scoped_base_variants.h,
+scoped_common.h, scoped_multiple_domain_variants.h, or wrappers.h,
+re-running make and running selftests could lead to testing stale headers.
 
-Fixes: 222f2c7c6d14 ("iomap: always run error completions in user context")
-Reported-by: syzbot+a2b9a4ed0d61b1efb3f5@syzkaller.appspotmail.com
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20251124140013.902853-1-hch@lst.de
-Tested-by: syzbot+a2b9a4ed0d61b1efb3f5@syzkaller.appspotmail.com
-Reviewed-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 6a500b22971c ("selftests/landlock: Add tests for audit flags and domain IDs")
+Fixes: fefcf0f7cf47 ("selftests/landlock: Test abstract UNIX socket scoping")
+Fixes: 5147779d5e1b ("selftests/landlock: Add wrappers.h")
+Signed-off-by: Matthieu Buffet <matthieu@buffet.re>
+Link: https://lore.kernel.org/r/20251027011440.1838514-1-matthieu@buffet.re
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/iomap/direct-io.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ tools/testing/selftests/landlock/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/iomap/direct-io.c b/fs/iomap/direct-io.c
-index 143160042552b..6317e4cd42517 100644
---- a/fs/iomap/direct-io.c
-+++ b/fs/iomap/direct-io.c
-@@ -728,12 +728,12 @@ __iomap_dio_rw(struct kiocb *iocb, struct iov_iter *iter,
- 			}
- 			goto out_free_dio;
- 		}
-+	}
+diff --git a/tools/testing/selftests/landlock/Makefile b/tools/testing/selftests/landlock/Makefile
+index a3f449914bf93..044b83bde16eb 100644
+--- a/tools/testing/selftests/landlock/Makefile
++++ b/tools/testing/selftests/landlock/Makefile
+@@ -4,7 +4,7 @@
  
--		if (!wait_for_completion && !inode->i_sb->s_dio_done_wq) {
--			ret = sb_init_dio_done_wq(inode->i_sb);
--			if (ret < 0)
--				goto out_free_dio;
--		}
-+	if (!wait_for_completion && !inode->i_sb->s_dio_done_wq) {
-+		ret = sb_init_dio_done_wq(inode->i_sb);
-+		if (ret < 0)
-+			goto out_free_dio;
- 	}
+ CFLAGS += -Wall -O2 $(KHDR_INCLUDES)
  
- 	inode_dio_begin(inode);
+-LOCAL_HDRS += common.h
++LOCAL_HDRS += $(wildcard *.h)
+ 
+ src_test := $(wildcard *_test.c)
+ 
 -- 
 2.51.0
 
