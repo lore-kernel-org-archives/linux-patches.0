@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC5CC34D3BA;
-	Tue, 16 Dec 2025 11:42:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC83C34D3BA;
+	Tue, 16 Dec 2025 11:42:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885325; cv=none; b=Yd4lGvi6AyZwjryyCKQ3JA5BumJ8UIqyfq3W5QBUk+5r4hBcjU/0vplo+nbSd1D9Y00JuiX83Lhl5AWLQ9hktZq20jgdVvtwSg9X4Sqon6K0FtL6cMFjLbiSFgjGr2nWryWIZj56Fj+qpNfXbGGv3+8MEMJ8pkkpgHa3heimVPY=
+	t=1765885329; cv=none; b=GNcki+dQ9TjGBPsCVv7wH4/rRAQsjfx4Pz08VhKxyuIlqEh3yvUoWxXpRW/kxLzUBhkFnOaslB9DDwUqEfGQ5uqzBUFvhETas1KDblndABpYbD0RM1F4Oe9qgkLY9lvZ4VdVkv0/w5ZOIAGhCa1HFgakzfn1MpDsNYD4pmHY7w8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885325; c=relaxed/simple;
-	bh=o8HvTvAQLHI8JH29givA4HbpScuBBQ8iLzuaCVgPUbY=;
+	s=arc-20240116; t=1765885329; c=relaxed/simple;
+	bh=x0CfzFRzLWrRoXJOJpp5bFvR5SZNFhe7VFYn/Au5PMM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IMjiIdQnHfaQzbjRuYXBMmeGptk52NVDNAzXSOcQc5Dx5z97jHXjDOla1JSkxmInxSixFxnaqwr4AJu/MpQRjF8WFm6Z5Qj/QkmAg6DK6/HdjsM8hz6vBuopV273tafbGp6PiB4+HP1DGhiYhpHkbZErKEQNvQEx0vQDWNjMOY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xBFa5EaM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZEyRURrzaC1f6mbuj7RCBUsrFoiZ/oqgJvLHHyghIIGxLiXRSDb/OK401kXxoxtj+x8H8TIzsv/+jBrYrZ1nPntnqIvungU7h7VxDtwBxXa6cgiaArzgYX8AdKIDsUQUx9DYTpuNHct4lVphGlaqldiRDRAe5h5F9x4+5KqaoE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KYZnc5RR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xBFa5EaM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1AB5C4CEF1;
-	Tue, 16 Dec 2025 11:42:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYZnc5RR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 075DCC4CEF1;
+	Tue, 16 Dec 2025 11:42:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885325;
-	bh=o8HvTvAQLHI8JH29givA4HbpScuBBQ8iLzuaCVgPUbY=;
+	s=korg; t=1765885328;
+	bh=x0CfzFRzLWrRoXJOJpp5bFvR5SZNFhe7VFYn/Au5PMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xBFa5EaMINqfMFlETdavC5GaclmPACBATuYDG5+IgKiI90ZGq4DsXDI+YdDUnvDwd
-	 BDdO+FJH3I7K1+3X7aDgkcX/hFUfk0WV2rXFhOeEuJa8Rr3V1/17eRiEcBatS//6TG
-	 vZAGIiMm5bJ+4hU/E7yKEhhDEl4foyH/DG3KW698=
+	b=KYZnc5RRTb38N1V3S6/g6k9F/Frs9cJmlY7sxH4fHq7ixLh2ljH1b5KXFD9HfTvmS
+	 20NXlL0PTh94VwvDhmlDlKcK3yboNZi7tis5mMKpOHJjg10p8CYEwTh/3vKFoLciSH
+	 UEFPfUaenQcCXUD7cUnBEfQ/3ZRBWx2rXQNGhEbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Liu Yi <asatsuyu.liu@gmail.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 106/507] arm64: dts: qcom: qcm2290: Fix camss register prop ordering
-Date: Tue, 16 Dec 2025 12:09:07 +0100
-Message-ID: <20251216111349.377506569@linuxfoundation.org>
+Subject: [PATCH 6.17 107/507] RDMA/rxe: Fix null deref on srq->rq.queue after resize failure
+Date: Tue, 16 Dec 2025 12:09:08 +0100
+Message-ID: <20251216111349.413125947@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -51,58 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
+From: Zhu Yanjun <yanjun.zhu@linux.dev>
 
-[ Upstream commit 67445dc8a8060309eeb7aebbc41fa0e58302fc09 ]
+[ Upstream commit 503a5e4690ae14c18570141bc0dcf7501a8419b0 ]
 
-The qcm2290 CAMSS node has been applied from the V4 series, but a later
-version changed the order of the register property, fix it to prevent
-dtb check error.
+A NULL pointer dereference can occur in rxe_srq_chk_attr() when
+ibv_modify_srq() is invoked twice in succession under certain error
+conditions. The first call may fail in rxe_queue_resize(), which leads
+rxe_srq_from_attr() to set srq->rq.queue = NULL. The second call then
+triggers a crash (null deref) when accessing
+srq->rq.queue->buf->index_mask.
 
-Fixes: 2b3aef30dd9d ("arm64: dts: qcom: qcm2290: Add CAMSS node")
-Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250918155456.1158691-1-loic.poulain@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Call Trace:
+<TASK>
+rxe_modify_srq+0x170/0x480 [rdma_rxe]
+? __pfx_rxe_modify_srq+0x10/0x10 [rdma_rxe]
+? uverbs_try_lock_object+0x4f/0xa0 [ib_uverbs]
+? rdma_lookup_get_uobject+0x1f0/0x380 [ib_uverbs]
+ib_uverbs_modify_srq+0x204/0x290 [ib_uverbs]
+? __pfx_ib_uverbs_modify_srq+0x10/0x10 [ib_uverbs]
+? tryinc_node_nr_active+0xe6/0x150
+? uverbs_fill_udata+0xed/0x4f0 [ib_uverbs]
+ib_uverbs_handler_UVERBS_METHOD_INVOKE_WRITE+0x2c0/0x470 [ib_uverbs]
+? __pfx_ib_uverbs_handler_UVERBS_METHOD_INVOKE_WRITE+0x10/0x10 [ib_uverbs]
+? uverbs_fill_udata+0xed/0x4f0 [ib_uverbs]
+ib_uverbs_run_method+0x55a/0x6e0 [ib_uverbs]
+? __pfx_ib_uverbs_handler_UVERBS_METHOD_INVOKE_WRITE+0x10/0x10 [ib_uverbs]
+ib_uverbs_cmd_verbs+0x54d/0x800 [ib_uverbs]
+? __pfx_ib_uverbs_cmd_verbs+0x10/0x10 [ib_uverbs]
+? __pfx___raw_spin_lock_irqsave+0x10/0x10
+? __pfx_do_vfs_ioctl+0x10/0x10
+? ioctl_has_perm.constprop.0.isra.0+0x2c7/0x4c0
+? __pfx_ioctl_has_perm.constprop.0.isra.0+0x10/0x10
+ib_uverbs_ioctl+0x13e/0x220 [ib_uverbs]
+? __pfx_ib_uverbs_ioctl+0x10/0x10 [ib_uverbs]
+__x64_sys_ioctl+0x138/0x1c0
+do_syscall_64+0x82/0x250
+? fdget_pos+0x58/0x4c0
+? ksys_write+0xf3/0x1c0
+? __pfx_ksys_write+0x10/0x10
+? do_syscall_64+0xc8/0x250
+? __pfx_vm_mmap_pgoff+0x10/0x10
+? fget+0x173/0x230
+? fput+0x2a/0x80
+? ksys_mmap_pgoff+0x224/0x4c0
+? do_syscall_64+0xc8/0x250
+? do_user_addr_fault+0x37b/0xfe0
+? clear_bhb_loop+0x50/0xa0
+? clear_bhb_loop+0x50/0xa0
+? clear_bhb_loop+0x50/0xa0
+entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Tested-by: Liu Yi <asatsuyu.liu@gmail.com>
+Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Link: https://patch.msgid.link/20251027215203.1321-1-yanjun.zhu@linux.dev
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qcm2290.dtsi | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_srq.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcm2290.dtsi b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
-index 4613713124f77..7705ef6ebea12 100644
---- a/arch/arm64/boot/dts/qcom/qcm2290.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
-@@ -1679,25 +1679,25 @@ cci_i2c1: i2c-bus@1 {
- 			};
- 		};
+diff --git a/drivers/infiniband/sw/rxe/rxe_srq.c b/drivers/infiniband/sw/rxe/rxe_srq.c
+index 3661cb627d28a..2a234f26ac104 100644
+--- a/drivers/infiniband/sw/rxe/rxe_srq.c
++++ b/drivers/infiniband/sw/rxe/rxe_srq.c
+@@ -171,7 +171,7 @@ int rxe_srq_from_attr(struct rxe_dev *rxe, struct rxe_srq *srq,
+ 				       udata, mi, &srq->rq.producer_lock,
+ 				       &srq->rq.consumer_lock);
+ 		if (err)
+-			goto err_free;
++			return err;
  
--		camss: camss@5c6e000 {
-+		camss: camss@5c11000 {
- 			compatible = "qcom,qcm2290-camss";
+ 		srq->rq.max_wr = attr->max_wr;
+ 	}
+@@ -180,11 +180,6 @@ int rxe_srq_from_attr(struct rxe_dev *rxe, struct rxe_srq *srq,
+ 		srq->limit = attr->srq_limit;
  
--			reg = <0x0 0x5c6e000 0x0 0x1000>,
-+			reg = <0x0 0x5c11000 0x0 0x1000>,
-+			      <0x0 0x5c6e000 0x0 0x1000>,
- 			      <0x0 0x5c75000 0x0 0x1000>,
- 			      <0x0 0x5c52000 0x0 0x1000>,
- 			      <0x0 0x5c53000 0x0 0x1000>,
- 			      <0x0 0x5c66000 0x0 0x400>,
- 			      <0x0 0x5c68000 0x0 0x400>,
--			      <0x0 0x5c11000 0x0 0x1000>,
- 			      <0x0 0x5c6f000 0x0 0x4000>,
- 			      <0x0 0x5c76000 0x0 0x4000>;
--			reg-names = "csid0",
-+			reg-names = "top",
-+				    "csid0",
- 				    "csid1",
- 				    "csiphy0",
- 				    "csiphy1",
- 				    "csitpg0",
- 				    "csitpg1",
--				    "top",
- 				    "vfe0",
- 				    "vfe1";
+ 	return 0;
+-
+-err_free:
+-	rxe_queue_cleanup(q);
+-	srq->rq.queue = NULL;
+-	return err;
+ }
  
+ void rxe_srq_cleanup(struct rxe_pool_elem *elem)
 -- 
 2.51.0
 
