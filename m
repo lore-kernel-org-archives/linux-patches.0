@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED84A3446C6;
-	Tue, 16 Dec 2025 12:33:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D63734106A;
+	Tue, 16 Dec 2025 12:33:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888424; cv=none; b=tuyQTxEUxkImwEfhGUBVnvnit8K7+NzoD7k0hXoX8obKtAR67GEwmAd5sthyzD1jO3SZJJBrrj8d2gtxSHo2QoJDZMYcM40sdtL5nU5/nP/PlXNURqA2wuORVvrh2I1Kd8dEDdbApE8fNKmMlabnAwS6v+IiDTZFydjMNi0K60g=
+	t=1765888427; cv=none; b=RkqsBffeBEAaD/vTaLAAO0wN3sTElt3xuQqG+IQjm/4Qe6ax8MQZCSZjAp8JYsxUDXguc4LOoEziK8AfiuCMfNYFSM4prw8uKWZGAmcRVQ3rhRJ9N9q9SIon+HRX0Lt/ZAqAunXCIQieGT5BgJcJLR4GJJueVOiu40hEIwXiZng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888424; c=relaxed/simple;
-	bh=npJfQFqeMUFF5znyZPT79rjAEdr/f7fhB/r2ME5F4rI=;
+	s=arc-20240116; t=1765888427; c=relaxed/simple;
+	bh=Xci+LabOWJqUSEH9M4qdoPtaDe3Hl0emJE8NgWarRAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nI8Kx7eS1YBLE5Lss9+++fOnNXTJD3EiOjfkDFzijPu2sbCYDPctPD7bbmCKCohfaSir2HBbUbrYbjCJyw0KulJgZQvdAvdy4RbOSbqo7kh3IZ2nQTITHwSTHE9kBxbo2ukAhduFGFPbqtUmImBKYNshVrqH/+XLXKwMFscvufg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=afBb2Kqo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PLDuse3kujLWAZyu8NzNC1gf/UaR2Xxki9+3doe4wOa4Ucn6bTURxT02v5ziBANC4eUDr1Jy4Q/dYe7oHwQTJpvuiU2bi+JLjvYMDXmt9jerEQkrMTea57AXapT98bJ5n9eJFUMGsN9dyor1UJU+rrd7CA5N66XilaEueQfeEyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CN6rh2BM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="afBb2Kqo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A781C4CEF1;
-	Tue, 16 Dec 2025 12:33:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CN6rh2BM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B305C4CEF1;
+	Tue, 16 Dec 2025 12:33:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888423;
-	bh=npJfQFqeMUFF5znyZPT79rjAEdr/f7fhB/r2ME5F4rI=;
+	s=korg; t=1765888427;
+	bh=Xci+LabOWJqUSEH9M4qdoPtaDe3Hl0emJE8NgWarRAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=afBb2KqolUGEKEsB3y1MqFVqm2KTHMtiFTmMqixpRbE94DXAlQdtlDgiQ8RwsF3EU
-	 pthwE5UYbKkVjJXUbZUaXdW3E+gY+Q5xoivaA68WSov3GIupbxPeWNpzRc1Xf3ajtb
-	 m3dUg7dMreUxYkKgSBIC/qfKL73HsiDdo7CamOSA=
+	b=CN6rh2BM8J7pJlUqIFOTabtFpDxck87h8/Df5PgJfZl2TJvvOI5Yxwq/M6ozTWOuF
+	 3D1qnEV3uIk1ca+Y1OqYVngjdOrz+jcLpeHfWntjWJaTTzKFmdGaKcHD83ik/BRi9j
+	 fjwdk37R4/9M5JQug8KOHxRbKwjtzU/AkNE7z7fk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ritesh Oedayrajsingh Varma <ritesh@superluminal.eu>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Tianchu Chen <flynnnchen@tencent.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 497/614] rqspinlock: Use trylock fallback when per-CPU rqnode is busy
-Date: Tue, 16 Dec 2025 12:14:24 +0100
-Message-ID: <20251216111419.377720492@linuxfoundation.org>
+Subject: [PATCH 6.18 488/614] spi: ch341: fix out-of-bounds memory access in ch341_transfer_one
+Date: Tue, 16 Dec 2025 12:14:15 +0100
+Message-ID: <20251216111419.050852685@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,85 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Tianchu Chen <flynnnchen@tencent.com>
 
-[ Upstream commit 81d5a6a438595e46be191d602e5c2d6d73992fdc ]
+[ Upstream commit 545d1287e40a55242f6ab68bcc1ba3b74088b1bc ]
 
-In addition to deferring to the trylock fallback in NMIs, only do so
-when an rqspinlock waiter is queued on the current CPU. This is detected
-by noticing a non-zero node index. This allows NMI waiters to join the
-waiter queue if it isn't interrupting an existing rqspinlock waiter, and
-increase the chances of fairly obtaining the lock, performing deadlock
-detection as the head, and not being starved while attempting the
-trylock.
+Discovered by Atuin - Automated Vulnerability Discovery Engine.
 
-The trylock path in particular is unlikely to succeed under contention,
-as it relies on the lock word becoming 0, which indicates no contention.
-This means that the most likely result for NMIs attempting a trylock is
-a timeout under contention if they don't hit an AA or ABBA case.
+The 'len' variable is calculated as 'min(32, trans->len + 1)',
+which includes the 1-byte command header.
 
-The core problem being addressed through the fixed commit was removing
-the dependency edge between an NMI queue waiter and the queue waiter it
-is interrupting. Whenever a circular dependency forms, and with no way
-to break it (as non-head waiters don't poll for deadlocks or timeouts),
-we would enter into a deadlock. A trylock either breaks such an edge by
-probing for deadlocks, and finally terminating the waiting loop using a
-timeout.
+When copying data from 'trans->tx_buf' to 'ch341->tx_buf + 1', using 'len'
+as the length is incorrect because:
 
-By excluding queueing on CPUs where the node index is non-zero for NMIs,
-this sort of dependency is broken. The CPU enters the trylock path for
-those cases, and falls back to deadlock checks and timeouts. However, in
-other case where it doesn't interrupt the CPU in the slow path while its
-queued on the lock, it can join the queue as a normal waiter, and avoid
-trylock associated starvation and subsequent timeouts.
+1. It causes an out-of-bounds read from 'trans->tx_buf' (which has size
+   'trans->len', i.e., 'len - 1' in this context).
+2. It can cause an out-of-bounds write to 'ch341->tx_buf' if 'len' is
+   CH341_PACKET_LENGTH (32). Writing 32 bytes to ch341->tx_buf + 1
+   overflows the buffer.
 
-There are a few remaining cases here that matter: the NMI can still
-preempt the owner in its critical section, and if it queues as a
-non-head waiter, it can end up impeding the progress of the owner. While
-this won't deadlock, since the head waiter will eventually signal the
-NMI waiter to either stop (due to a timeout), it can still lead to long
-timeouts. These gaps will be addressed in subsequent commits.
+Fix this by copying 'len - 1' bytes.
 
-Note that while the node count detection approach is less conservative
-than simply deferring NMIs to trylock, it is going to return errors
-where attempts to lock B in NMI happen while waiters for lock A are in a
-lower context on the same CPU. However, this only occurs when the lower
-context is queued in the slow path, and the NMI attempt can proceed
-without failure in all other cases. To continue to prevent AA deadlocks
-(or ABBA in a similar NMI interrupting lower context pattern), we'd need
-a more fleshed out algorithm to unlink NMI waiters after they queue and
-detect such cases. However, all that complexity isn't appealing yet to
-reduce the failure rate in the small window inside the slow path.
-
-It is important to note that reentrancy in the slow path can also happen
-through trace_contention_{begin,end}, but in those cases, unlike an NMI,
-the forward progress of the head waiter (or the predecessor in general)
-is not being blocked.
-
-Fixes: 0d80e7f951be ("rqspinlock: Choose trylock fallback for NMI waiters")
-Reported-by: Ritesh Oedayrajsingh Varma <ritesh@superluminal.eu>
-Suggested-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20251128232802.1031906-4-memxor@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 8846739f52af ("spi: add ch341a usb2spi driver")
+Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
+Link: https://patch.msgid.link/20251128160630.0f922c45ec6084a46fb57099@linux.dev
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/rqspinlock.c | 2 +-
+ drivers/spi/spi-ch341.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/rqspinlock.c b/kernel/bpf/rqspinlock.c
-index f4c534fa4e87b..3faf9cbd6c753 100644
---- a/kernel/bpf/rqspinlock.c
-+++ b/kernel/bpf/rqspinlock.c
-@@ -465,7 +465,7 @@ int __lockfunc resilient_queued_spin_lock_slowpath(rqspinlock_t *lock, u32 val)
- 	 * any MCS node. This is not the most elegant solution, but is
- 	 * simple enough.
- 	 */
--	if (unlikely(idx >= _Q_MAX_NODES || in_nmi())) {
-+	if (unlikely(idx >= _Q_MAX_NODES || (in_nmi() && idx > 0))) {
- 		lockevent_inc(lock_no_node);
- 		RES_RESET_TIMEOUT(ts, RES_DEF_TIMEOUT);
- 		while (!queued_spin_trylock(lock)) {
+diff --git a/drivers/spi/spi-ch341.c b/drivers/spi/spi-ch341.c
+index 46bc208f2d050..79d2f9ab4ef03 100644
+--- a/drivers/spi/spi-ch341.c
++++ b/drivers/spi/spi-ch341.c
+@@ -78,7 +78,7 @@ static int ch341_transfer_one(struct spi_controller *host,
+ 
+ 	ch341->tx_buf[0] = CH341A_CMD_SPI_STREAM;
+ 
+-	memcpy(ch341->tx_buf + 1, trans->tx_buf, len);
++	memcpy(ch341->tx_buf + 1, trans->tx_buf, len - 1);
+ 
+ 	ret = usb_bulk_msg(ch341->udev, ch341->write_pipe, ch341->tx_buf, len,
+ 			   NULL, CH341_DEFAULT_TIMEOUT);
 -- 
 2.51.0
 
