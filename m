@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B34387B33;
-	Tue, 16 Dec 2025 12:31:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C820396550;
+	Tue, 16 Dec 2025 12:31:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888301; cv=none; b=WEct1AbWTNNlcoERNis49q4ilpWzWIG08qBDRvx0Xh5k4MwXC0/V5ZLnxAzwlvIR9a2E+YVwxK5evwG6xrGLFBcABvPTpuBj4nohoyJ6puDMj2DKUFGEgwLTY3UZrBa5aRXUcppHEgvfG8OVxX40m2Qzo9WDmoIZ4w2LDDklTGo=
+	t=1765888305; cv=none; b=Xn+G1+svlPjn9OVxJL2Qdi/+smrSOPy9f6QBLgfFqFETGSq7mA5fHDb0JWCBXTptIabDmE2pS3dI4M/vlStQMmylRGietZ9rY1BcVzMiGcyaSAxeFR4lp8TXI57Mliys+b6VTpS63+nKY899+Wq8JVGY4Cd6djUb4Yks2qu5cF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888301; c=relaxed/simple;
-	bh=Z4wgdNoXJyvfK+hcdLvGbV6cKKJUX++da331BF1zwn0=;
+	s=arc-20240116; t=1765888305; c=relaxed/simple;
+	bh=yGLvqjQltyMy6SkwtI93cBYEbOYVhiYgu6y8uMnqi04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MIdBigMxUAV8vb6bJyHDDMp73qK1Eb7P4pvATXAd3yJzak0OnnrKfx5OsDfYt4ofMo8ReCG8a0T0cfln9GjfD/peaUIL3A8+0d9vZzHr3YFpxAw8lYiEpsiqD5ErbrKJdqhOcmrmKJ4OfYwYPhgiBil5O3ivS1SDANi5fbW0r2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TKeqwA3E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DbJKz/gmoVsxjdldrhgLNqvHC6rM1HuMflMh4+jLYwahDFHjigxABvSXjbNGeXQKPEXC9ZIMi4fnZ0yvjWkEXyR4xR1SGcVQefy8tgAwyMl2aYtV9aDfrrbCxAIOnhsxh8lURLNwC4nGdl+sPl7XQeNtEQhxWeSuzQglStH3kII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FdrbVheJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TKeqwA3E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45BE0C4CEF1;
-	Tue, 16 Dec 2025 12:31:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FdrbVheJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82137C4CEF5;
+	Tue, 16 Dec 2025 12:31:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888301;
-	bh=Z4wgdNoXJyvfK+hcdLvGbV6cKKJUX++da331BF1zwn0=;
+	s=korg; t=1765888304;
+	bh=yGLvqjQltyMy6SkwtI93cBYEbOYVhiYgu6y8uMnqi04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TKeqwA3EmdllwVPpFiU52QdL2hBwwO0A/b94m61+Gn85mEPdQudGKaJvRfkd7whmD
-	 kVyxvbjBtPXMwyPtDfKlbtaBiymDTphD5beNFXofkOx2R5+9AcaeMxaXDq9zBHKkup
-	 m3MaPPMA7RVW6SJgt2x5DIBbFr1FsJFBhPcJeuPk=
+	b=FdrbVheJE/82xGztNFYIxmWEFb0wdXZGECVWkK9LdjNQzEJS9g2J6G5UvCj6S49oN
+	 43RmNOTdNH2zaHcZCoRVNpE/hiDYz8pbq/261gMJnAFSP6wcYggYg6c0yHyo74mOy1
+	 3vTO/gDb+JKIqc/kSW12KUpYYqQBVtCL/YoLQVPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jason Wang <jasowang@redhat.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 460/614] virtio: fix typo in virtio_device_ready() comment
-Date: Tue, 16 Dec 2025 12:13:47 +0100
-Message-ID: <20251216111418.036124213@linuxfoundation.org>
+Subject: [PATCH 6.18 461/614] virtio: fix whitespace in virtio_config_ops
+Date: Tue, 16 Dec 2025 12:13:48 +0100
+Message-ID: <20251216111418.072150479@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -53,12 +53,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael S. Tsirkin <mst@redhat.com>
 
-[ Upstream commit 361173f95ae4b726ebbbf0bd594274f5576c4abc ]
+[ Upstream commit 7831791e77a1cd29528d4dc336ce14466aef5ba6 ]
 
-"coherenct" -> "coherent"
+The finalize_features documentation uses a tab between words.
+Use space instead.
 
-Fixes: 8b4ec69d7e09 ("virtio: harden vring IRQ")
-Message-Id: <db286e9a65449347f6584e68c9960fd5ded2b4b0.1763026134.git.mst@redhat.com>
+Fixes: d16c0cd27331 ("docs: driver-api: virtio: virtio on Linux")
+Message-Id: <39d7685c82848dc6a876d175e33a1407f6ab3fc1.1763026134.git.mst@redhat.com>
 Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
@@ -67,18 +68,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/include/linux/virtio_config.h b/include/linux/virtio_config.h
-index 16001e9f9b391..1ea5baa62141f 100644
+index 1ea5baa62141f..dbc7eff1f101f 100644
 --- a/include/linux/virtio_config.h
 +++ b/include/linux/virtio_config.h
-@@ -362,7 +362,7 @@ void virtio_device_ready(struct virtio_device *dev)
- 	 * specific set_status() method.
- 	 *
- 	 * A well behaved device will only notify a virtqueue after
--	 * DRIVER_OK, this means the device should "see" the coherenct
-+	 * DRIVER_OK, this means the device should "see" the coherent
- 	 * memory write that set vq->broken as false which is done by
- 	 * the driver when it sees DRIVER_OK, then the following
- 	 * driver's vring_interrupt() will see vq->broken as false so
+@@ -86,7 +86,7 @@ struct virtqueue_info {
+  *	vdev: the virtio_device
+  *	This sends the driver feature bits to the device: it can change
+  *	the dev->feature bits if it wants.
+- *	Note that despite the name this	can be called any number of
++ *	Note that despite the name this can be called any number of
+  *	times.
+  *	Returns 0 on success or error status
+  * @bus_name: return the bus name associated with the device (optional)
 -- 
 2.51.0
 
