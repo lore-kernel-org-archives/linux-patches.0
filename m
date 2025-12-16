@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8626A366DBA;
-	Tue, 16 Dec 2025 12:16:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA595368289;
+	Tue, 16 Dec 2025 12:16:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887371; cv=none; b=JrOUcb52njXBUAk3ayLOv128y5K/BlWX3YQX4sUFMI2uGiIzYz0UsrKEATiLEjXHGIdaGhXaUa75aM7oxDZI+eqaAFwu3+Jji01zyk9IHdAdN355Skw9uj2DS4BUgK+XKmMAZVg814qZRSjDlCqTGBu6TnMs11hKvTcPeXin4zw=
+	t=1765887374; cv=none; b=EQAWmuCv6Dx2tAgV4PmHAf0wejNooU4RlNeeK9NHySEsXYiWyZsKsOzSFkPv8hq5sAbZeljzT02aAkfOutPf22E3NoBanzfoGZ1Nu/WyAu7bxKQMy66AxId/TFnmbhWyfZrMknMX/+AzJgOaudysohZyP231tJzbiUoMmnP1RPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887371; c=relaxed/simple;
-	bh=oOK3erHLT7O0rArS53ybUWVCTYxoVxzAyY4AXcHhy0k=;
+	s=arc-20240116; t=1765887374; c=relaxed/simple;
+	bh=k31IFOoRKxtc8pLlet0xN4ukyiTxiNvYjvsX6nb7Ycs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kXWKkHqSsqYHfwMo2XWcPktVmwk0dd8RiZQFxImgnDbvhKBsd1VRN2SZnCo49ZYCsWUd+NuHDevtYOWEr0JEGTC/luLzP2K3moi03dlUdO7Vg8wlIDg9vCHe7KRjJv6UNkPHi9RqbcXh8sHLnoY/ppUmvY9qknvvM8t6IZHhE+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SfKex+GY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gNONvHBWIhxpJpNzbpayvtlcGyLEQL+aVlypmHHaZ3qGqylURpsb9C48rwF0MCm001qsjEG21m4NMt2+8U3w+m04HXuI07uiVVwbrHpf79aatyLR8LflBoTVd3cnnXEaJGouOsAywIqDEk+1FmHG73h4c9e8MqMGPNS/e7WpQNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CVMetHUC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SfKex+GY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F82C4CEF5;
-	Tue, 16 Dec 2025 12:16:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CVMetHUC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22F03C4CEF5;
+	Tue, 16 Dec 2025 12:16:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887371;
-	bh=oOK3erHLT7O0rArS53ybUWVCTYxoVxzAyY4AXcHhy0k=;
+	s=korg; t=1765887374;
+	bh=k31IFOoRKxtc8pLlet0xN4ukyiTxiNvYjvsX6nb7Ycs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SfKex+GYZ5X4NPQWavso/cmpa+l8byMKez4I70ZCC7jHXIQa/giotm0HXhp4Ns0Az
-	 D5MIeszoWnHkVlipbk0O4B0WEVbBOiRRIPaSD8YECAC66GP10u6cyx53+QC30y8L8B
-	 gtQVHR3ObtokWd1upfAgmUT0V/bi3YoyV+ryvjhI=
+	b=CVMetHUCyztYrOQ9MkHTPmEs0BkYvpOH00gqhauc07mNIxaP/MhSkAzc1+JswkQLT
+	 2qoDWiRTQ6OVowKVn2P8Bv0ZLQt4pD/0KteQVfBW53kd4ueoH0dth5dkoCcCZvZx2h
+	 9cbwOK6nTHF4IMg8KcG0gCZodUzoDTRwmLXh7Kx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 176/614] timers/migration: Remove locking on group connection
-Date: Tue, 16 Dec 2025 12:09:03 +0100
-Message-ID: <20251216111407.748433896@linuxfoundation.org>
+Subject: [PATCH 6.18 167/614] accel/amdxdna: Fix incorrect command state for timed out job
+Date: Tue, 16 Dec 2025 12:08:54 +0100
+Message-ID: <20251216111407.387740631@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,91 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frederic Weisbecker <frederic@kernel.org>
+From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit fa9620355d4192200f15cb3d97c6eb9c02442249 ]
+[ Upstream commit 6fb7f298883246e21f60f971065adcb789ae6eba ]
 
-Initializing the tmc's group, the group's number of children and the
-group's parent can all be done without locking because:
+When a command times out, mark it as ERT_CMD_STATE_TIMEOUT. Any other
+commands that are canceled due to this timeout should be marked as
+ERT_CMD_STATE_ABORT.
 
-  1) Reading the group's parent and its group mask is done locklessly.
-
-  2) The connections prepared for a given CPU hierarchy are visible to the
-     target CPU once online, thanks to the CPU hotplug enforced memory
-     ordering.
-
-  3) In case of a newly created upper level, the new root and its
-     connections and initialization are made visible by the CPU which made
-     the connections. When that CPUs goes idle in the future, the new link
-     is published by tmigr_inactive_up() through the atomic RmW on
-     ->migr_state.
-
-  4) If CPUs were still walking up the active hierarchy, they could observe
-     the new root earlier. In this case the ordering is enforced by an
-     early initialization of the group mask and by barriers that maintain
-     address dependency as explained in:
-
-     b729cc1ec21a ("timers/migration: Fix another race between hotplug and idle entry/exit")
-     de3ced72a792 ("timers/migration: Enforce group initialization visibility to tree walkers")
-
-  5) Timers are propagated by a chain of group locking from the bottom to
-     the top. And while doing so, the tree also propagates groups links
-     and initialization. Therefore remote expiration, which also relies
-     on group locking, will observe those links and initialization while
-     holding the root lock before walking the tree remotely and update
-     remote timers. This is especially important for migrators in the
-     active hierarchy that may observe the new root early.
-
-Therefore the locking is unnecessary at initialization. If anything, it
-just brings confusion. Remove it.
-
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://patch.msgid.link/20251024132536.39841-3-frederic@kernel.org
-Stable-dep-of: 5eb579dfd46b ("timers/migration: Fix imbalanced NUMA trees")
+Fixes: aac243092b70 ("accel/amdxdna: Add command execution")
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patch.msgid.link/20251029193423.2430463-1-lizhi.hou@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/timer_migration.c | 10 ----------
- 1 file changed, 10 deletions(-)
+ drivers/accel/amdxdna/aie2_ctx.c    | 15 +++++++++++++--
+ drivers/accel/amdxdna/amdxdna_ctx.h |  1 +
+ 2 files changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/time/timer_migration.c b/kernel/time/timer_migration.c
-index 1e371f1fdc86c..5f8aef94ca0f7 100644
---- a/kernel/time/timer_migration.c
-+++ b/kernel/time/timer_migration.c
-@@ -1573,9 +1573,6 @@ static void tmigr_connect_child_parent(struct tmigr_group *child,
- {
- 	struct tmigr_walk data;
+diff --git a/drivers/accel/amdxdna/aie2_ctx.c b/drivers/accel/amdxdna/aie2_ctx.c
+index e9f9b1fa5dc1b..c9f712f0ec00c 100644
+--- a/drivers/accel/amdxdna/aie2_ctx.c
++++ b/drivers/accel/amdxdna/aie2_ctx.c
+@@ -204,10 +204,13 @@ aie2_sched_resp_handler(void *handle, void __iomem *data, size_t size)
  
--	raw_spin_lock_irq(&child->lock);
--	raw_spin_lock_nested(&parent->lock, SINGLE_DEPTH_NESTING);
--
- 	if (activate) {
- 		/*
- 		 * @child is the old top and @parent the new one. In this
-@@ -1596,9 +1593,6 @@ static void tmigr_connect_child_parent(struct tmigr_group *child,
- 	 */
- 	smp_store_release(&child->parent, parent);
+ 	cmd_abo = job->cmd_bo;
  
--	raw_spin_unlock(&parent->lock);
--	raw_spin_unlock_irq(&child->lock);
--
- 	trace_tmigr_connect_child_parent(child);
+-	if (unlikely(!data))
++	if (unlikely(job->job_timeout)) {
++		amdxdna_cmd_set_state(cmd_abo, ERT_CMD_STATE_TIMEOUT);
++		ret = -EINVAL;
+ 		goto out;
++	}
  
- 	if (!activate)
-@@ -1695,13 +1689,9 @@ static int tmigr_setup_groups(unsigned int cpu, unsigned int node)
- 		if (i == 0) {
- 			struct tmigr_cpu *tmc = per_cpu_ptr(&tmigr_cpu, cpu);
+-	if (unlikely(size != sizeof(u32))) {
++	if (unlikely(!data) || unlikely(size != sizeof(u32))) {
+ 		amdxdna_cmd_set_state(cmd_abo, ERT_CMD_STATE_ABORT);
+ 		ret = -EINVAL;
+ 		goto out;
+@@ -260,6 +263,13 @@ aie2_sched_cmdlist_resp_handler(void *handle, void __iomem *data, size_t size)
+ 	int ret = 0;
  
--			raw_spin_lock_irq(&group->lock);
--
- 			tmc->tmgroup = group;
- 			tmc->groupmask = BIT(group->num_children++);
+ 	cmd_abo = job->cmd_bo;
++
++	if (unlikely(job->job_timeout)) {
++		amdxdna_cmd_set_state(cmd_abo, ERT_CMD_STATE_TIMEOUT);
++		ret = -EINVAL;
++		goto out;
++	}
++
+ 	if (unlikely(!data) || unlikely(size != sizeof(u32) * 3)) {
+ 		amdxdna_cmd_set_state(cmd_abo, ERT_CMD_STATE_ABORT);
+ 		ret = -EINVAL;
+@@ -362,6 +372,7 @@ aie2_sched_job_timedout(struct drm_sched_job *sched_job)
  
--			raw_spin_unlock_irq(&group->lock);
--
- 			trace_tmigr_connect_cpu_parent(tmc);
+ 	xdna = hwctx->client->xdna;
+ 	trace_xdna_job(sched_job, hwctx->name, "job timedout", job->seq);
++	job->job_timeout = true;
+ 	mutex_lock(&xdna->dev_lock);
+ 	aie2_hwctx_stop(xdna, hwctx, sched_job);
  
- 			/* There are no children that need to be connected */
+diff --git a/drivers/accel/amdxdna/amdxdna_ctx.h b/drivers/accel/amdxdna/amdxdna_ctx.h
+index 7cd7a55936f09..8c1d181df6e79 100644
+--- a/drivers/accel/amdxdna/amdxdna_ctx.h
++++ b/drivers/accel/amdxdna/amdxdna_ctx.h
+@@ -105,6 +105,7 @@ struct amdxdna_sched_job {
+ 	/* user can wait on this fence */
+ 	struct dma_fence	*out_fence;
+ 	bool			job_done;
++	bool			job_timeout;
+ 	u64			seq;
+ 	struct amdxdna_gem_obj	*cmd_bo;
+ 	size_t			bo_cnt;
 -- 
 2.51.0
 
