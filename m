@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC67356B81;
-	Tue, 16 Dec 2025 11:22:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF92C341069;
+	Tue, 16 Dec 2025 11:22:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884131; cv=none; b=eQGg5Lfih/y9L4hxVXoz62fQi186FEXbnkGvYG0mxAJ5hl0V7OWyGkeVJe+4lY8Lb9WaasphHitEvKH8U3oBlBNM9REm3hUKwFYXJy3aDMFNIhWzw+viI4xX5QyURec/3mh9sC2iUaFyQiiZRtIpti/2moys0tzLfUYJ7Rr0O6k=
+	t=1765884134; cv=none; b=Ltv5gBNFnS2vgPSfF81cGdbvggzvMb6TqiD148gP8TAVjvdCABt83lzQbQPfDNZXMzv9p2xKP2lTCYfrC3Oaam85tK2ve14qEt92tCKaGZTorgK8F/jpfkEKcBpgphodGPW45ltkBVyRx3kYwJKdVooSvYlDIfVm3RJYbCfGwVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884131; c=relaxed/simple;
-	bh=OPQ9gSipo5fKfETWiCnyx8iJen4NkgilBHasUw4ipks=;
+	s=arc-20240116; t=1765884134; c=relaxed/simple;
+	bh=DZwnqcNt6jhb7lptX6qxfSAQbjxfixpbIsaIc97RToA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TdLc4k0AC2MrovET2pKKO34iF3PfzLxdebt1BZA57OxFuZwCZEflH793U8MLE6V12APELLL1MaN5UIqHq+B0HRuOMaiVLnRN42y0NBLwaFZ3R4Sh5VEtSxQzhisk68bEf3n1z/DgzmAkUkl6KrOCbPSW8pEDvbJFyDmsZKL3cig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FBKAB9Zk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QdelH4KsqLJDg+ZuBS4Y+dkZN26LBzge5qJGnLp0vyNZE7WxnLJaHKEi4Qhk3/uWuwZqQOHJ8P3P68y0wmUx0OY6EDG7KXr9sQ2mMrulFdl2fqRgehlUe8XcxizI8V82bmYeQSlEaqmbCxM/2VctdNkw6kofiiUSeEpjQdLIfaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dm4wfKEy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FBKAB9Zk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EB5DC4CEF1;
-	Tue, 16 Dec 2025 11:22:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dm4wfKEy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B2AFC4CEF1;
+	Tue, 16 Dec 2025 11:22:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884130;
-	bh=OPQ9gSipo5fKfETWiCnyx8iJen4NkgilBHasUw4ipks=;
+	s=korg; t=1765884133;
+	bh=DZwnqcNt6jhb7lptX6qxfSAQbjxfixpbIsaIc97RToA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FBKAB9ZkSNfElGxzzlD295gwxzzdRpYq1lqexVOCpFTNXBcJ4C0CixYcZVCNvnIXC
-	 7hOlckNqm+X14bdvU+0Ta8EiTel5IT+yynirxwVwGlChvy/T8uffriuURjAzBl/2Mc
-	 jII0uY1thGlhXfkOrPNYj+ct2GM0QA06EszRdkxM=
+	b=dm4wfKEy7sye1DVCCG9PCG9kVUGeZPIAqdVU9pjs3mVVaP19QeoSguHe0iejnABe6
+	 J2N2G9/mLMprzQsz+nBWoBfQl/e+WDaqoWtYd4cWX7vTA9uUsRqciWH+6FP6PNpHgX
+	 A8/GU6s7g8Kl9gjT2TKA4hS5dotJ1UHJpmA27sTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Alexander Egorenkov <egorenar@linux.ibm.com>,
+	Mete Durlu <meted@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 067/354] wifi: ath11k: fix peer HE MCS assignment
-Date: Tue, 16 Dec 2025 12:10:34 +0100
-Message-ID: <20251216111323.353468277@linuxfoundation.org>
+Subject: [PATCH 6.12 068/354] s390/smp: Fix fallback CPU detection
+Date: Tue, 16 Dec 2025 12:10:35 +0100
+Message-ID: <20251216111323.389604910@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -52,92 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit 4a013ca2d490c73c40588d62712ffaa432046a04 ]
+[ Upstream commit 07a75d08cfa1b883a6e1256666e5f0617ee99231 ]
 
-In ath11k_wmi_send_peer_assoc_cmd(), peer's transmit MCS is sent to
-firmware as receive MCS while peer's receive MCS sent as transmit MCS,
-which goes against firmwire's definition.
+In case SCLP CPU detection does not work a fallback mechanism using SIGP is
+in place. Since a cleanup this does not work correctly anymore: new CPUs
+are only considered if their type matches the boot CPU.
 
-While connecting to a misbehaved AP that advertises 0xffff (meaning not
-supported) for 160 MHz transmit MCS map, firmware crashes due to 0xffff
-is assigned to he_mcs->rx_mcs_set field.
+Before the cleanup the information if a CPU type should be considered was
+also part of a structure generated by the fallback mechanism and indicated
+that a CPU type should not be considered when adding CPUs.
 
-	Ext Tag: HE Capabilities
-	    [...]
-	    Supported HE-MCS and NSS Set
-		[...]
-	        Rx and Tx MCS Maps 160 MHz
-		    [...]
-	            Tx HE-MCS Map 160 MHz: 0xffff
+Since the rework a global SCLP state is used instead. If the global SCLP
+state indicates that the CPU type should be considered and the fallback
+mechanism is used, there may be a mismatch with CPU types if CPUs are
+added. This can lead to a system with only a single CPU even tough there
+are many more CPUs.
 
-Swap the assignment to fix this issue.
+Address this by simply copying the boot cpu type into the generated data
+structure from the fallback mechanism.
 
-As the HE rate control mask is meant to limit our own transmit MCS, it
-needs to go via he_mcs->rx_mcs_set field. With the aforementioned swapping
-done, change is needed as well to apply it to the peer's receive MCS.
-
-Tested-on: WCN6855 hw2.1 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.41
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
-
-Fixes: 61fe43e7216d ("ath11k: add support for setting fixed HE rate/gi/ltf")
-Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251017-ath11k-mcs-assignment-v1-2-da40825c1783@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Reported-by: Alexander Egorenkov <egorenar@linux.ibm.com>
+Fixes: d08d94306e90 ("s390/smp: cleanup core vs. cpu in the SCLP interface")
+Reviewed-by: Mete Durlu <meted@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/mac.c | 4 ++--
- drivers/net/wireless/ath/ath11k/wmi.c | 7 +++++--
- 2 files changed, 7 insertions(+), 4 deletions(-)
+ arch/s390/kernel/smp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
-index 9521fcb2c11ce..dd5690a4996f3 100644
---- a/drivers/net/wireless/ath/ath11k/mac.c
-+++ b/drivers/net/wireless/ath/ath11k/mac.c
-@@ -2512,10 +2512,10 @@ static void ath11k_peer_assoc_h_he(struct ath11k *ar,
- 			he_tx_mcs = v;
+diff --git a/arch/s390/kernel/smp.c b/arch/s390/kernel/smp.c
+index 4df56fdb24880..b976f603dddcd 100644
+--- a/arch/s390/kernel/smp.c
++++ b/arch/s390/kernel/smp.c
+@@ -710,6 +710,7 @@ static void __ref smp_get_core_info(struct sclp_core_info *info, int early)
+ 				continue;
+ 			info->core[info->configured].core_id =
+ 				address >> smp_cpu_mt_shift;
++			info->core[info->configured].type = boot_core_type;
+ 			info->configured++;
  		}
- 		v = le16_to_cpu(he_cap->he_mcs_nss_supp.rx_mcs_160);
-+		v = ath11k_peer_assoc_h_he_limit(v, he_mcs_mask);
- 		arg->peer_he_rx_mcs_set[WMI_HECAP_TXRX_MCS_NSS_IDX_160] = v;
- 
- 		v = le16_to_cpu(he_cap->he_mcs_nss_supp.tx_mcs_160);
--		v = ath11k_peer_assoc_h_he_limit(v, he_mcs_mask);
- 		arg->peer_he_tx_mcs_set[WMI_HECAP_TXRX_MCS_NSS_IDX_160] = v;
- 
- 		arg->peer_he_mcs_count++;
-@@ -2525,10 +2525,10 @@ static void ath11k_peer_assoc_h_he(struct ath11k *ar,
- 
- 	default:
- 		v = le16_to_cpu(he_cap->he_mcs_nss_supp.rx_mcs_80);
-+		v = ath11k_peer_assoc_h_he_limit(v, he_mcs_mask);
- 		arg->peer_he_rx_mcs_set[WMI_HECAP_TXRX_MCS_NSS_IDX_80] = v;
- 
- 		v = le16_to_cpu(he_cap->he_mcs_nss_supp.tx_mcs_80);
--		v = ath11k_peer_assoc_h_he_limit(v, he_mcs_mask);
- 		arg->peer_he_tx_mcs_set[WMI_HECAP_TXRX_MCS_NSS_IDX_80] = v;
- 
- 		arg->peer_he_mcs_count++;
-diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
-index 6f1fd7d661a89..3b41bc5b125f4 100644
---- a/drivers/net/wireless/ath/ath11k/wmi.c
-+++ b/drivers/net/wireless/ath/ath11k/wmi.c
-@@ -2091,8 +2091,11 @@ int ath11k_wmi_send_peer_assoc_cmd(struct ath11k *ar,
- 				     FIELD_PREP(WMI_TLV_LEN,
- 						sizeof(*he_mcs) - TLV_HDR_SIZE);
- 
--		he_mcs->rx_mcs_set = param->peer_he_tx_mcs_set[i];
--		he_mcs->tx_mcs_set = param->peer_he_rx_mcs_set[i];
-+		/* firmware interprets mcs->rx_mcs_set field as peer's
-+		 * RX capability
-+		 */
-+		he_mcs->rx_mcs_set = param->peer_he_rx_mcs_set[i];
-+		he_mcs->tx_mcs_set = param->peer_he_tx_mcs_set[i];
- 		ptr += sizeof(*he_mcs);
- 	}
- 
+ 		info->combined = info->configured;
 -- 
 2.51.0
 
