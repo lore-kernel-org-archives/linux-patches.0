@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9FE636D512;
-	Tue, 16 Dec 2025 12:27:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DEC336D512;
+	Tue, 16 Dec 2025 12:27:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888059; cv=none; b=NSaW+EQjNNKc2/4aN9IgAe/IWSK65Gcc1bDeN2QrBmurBZYQwY92IYqhI1QWazr8uyxbA3xJkcYx1I7uHElCmsU7znqQ0CSmhawnRe6l/i39mi60V7pko0yJk9pYo9OPqh1ZEQVBzQ43e3H6r8l0vAWNSmTRXdYfHLYdD/4Aez8=
+	t=1765888062; cv=none; b=mSrXB+Yv+A8Ukk1GF2rPGZ8LgSQY0pePL4Qwa/zjF2m+gsF/Yvd7r202s73IZvtqytyCKzzGw9BN1al3ymeDqv6e9gyoRSW+JK9eupyomWU8h1uoFMVdMNLu6msxPYneIG8QOCqy856jTa+7rrYO6Qcbl5IQM/muSQHTTS/rjck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888059; c=relaxed/simple;
-	bh=7f228i3z3npAQl2rlL81PYGnLl7PGCzeUtU+rfjEwwI=;
+	s=arc-20240116; t=1765888062; c=relaxed/simple;
+	bh=5B8olh9fY67KBi+lIoTeoRrAsauC1AYrDcus89wy0MI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cM/rZEjR8b5hHQ4MVIZbuddBhq5sb5/uBVLxpr25EP58xhOnsfCrI0OJkCAOYkl6ZBhfRpKsJV2r7OdaVXXKs0nKsZIl/tQGYBZQuW9RxwEU5o3LaXutexOMJLKQtbfWrCBiMHwHH4DfxdNPc/du1pzx3sBcfgfCmk42G+zqQa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WA+eQv+F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JZRfAF2OlblEiH/sx2YRlmF9XkxVthZiGLsmYVTDpnBWVeDi0AooEb3AqOEY9LvzXHR0yQ46+080zdUTKtwM4/GqmyufkXNzn9umXH7aIxok0gViuh5lDIwCRl1pTVipjdkwn7t0GCl4MYuoZDftklFdBicGU4XeN9vjdnsLf/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ATvLkxci; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WA+eQv+F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57DD6C4CEF1;
-	Tue, 16 Dec 2025 12:27:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ATvLkxci"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84495C4CEF1;
+	Tue, 16 Dec 2025 12:27:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888058;
-	bh=7f228i3z3npAQl2rlL81PYGnLl7PGCzeUtU+rfjEwwI=;
+	s=korg; t=1765888062;
+	bh=5B8olh9fY67KBi+lIoTeoRrAsauC1AYrDcus89wy0MI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WA+eQv+F0flF4ZhZ4u59mZvcMs/DEVJGhHUnediHBrbNXOJ1SRfSw2a89/mufbXnC
-	 UghUnTZZD7glPLU/wx+9V42T99OOggQBUEvRbz9SHLg5+9K2wugm6B5eUzOZ3svt4I
-	 VLBvWaI/ctJb8Sodt6bY0j6iJpiarXig5hn3Prog=
+	b=ATvLkxciyc8fqclLwG/4Wel8gmo3NdteHDySFw/Bg3INh6hluMZ1YZEstXbxnAYKw
+	 scM3XF5gN8nuaMcGzwLSdR4TuRSRNZVdw2wXIPuSBK/vXRDNjuKV4DfjH8ZRXHsip+
+	 Qsos2giX5sRfguoB4i4c4dpjKu7jRklIJ5ap7mDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
+	StanleyYP Wang <StanleyYP.Wang@mediatek.com>,
+	Shayne Chen <shayne.chen@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 387/614] Revert "wifi: mt76: mt792x: improve monitor interface handling"
-Date: Tue, 16 Dec 2025 12:12:34 +0100
-Message-ID: <20251216111415.390444593@linuxfoundation.org>
+Subject: [PATCH 6.18 388/614] wifi: mt76: mt7996: fix max nss value when getting rx chainmask
+Date: Tue, 16 Dec 2025 12:12:35 +0100
+Message-ID: <20251216111415.428284905@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,43 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
 
-[ Upstream commit cdb2941a516cf06929293604e2e0f4c1d6f3541e ]
+[ Upstream commit 361b59b6be7c33c43b619d5cada394efc0f3b398 ]
 
-This reverts commit 55e95ce469d0c61041bae48b2ebb7fcbf6d1ba7f.
+Since wiphy->available_antennas_tx now accumulates the chainmask of all
+the radios of a wiphy, use phy->orig_antenna_mask to get the original
+max nss for comparison.
 
-mt792x drivers don't seem to support multi-radio devices yet.  At least
-they don't mess with `struct wiphy_radio` at the moment.
-
-Packet capturing on monitor interface doesn't work after the blamed patch:
-
-  tcpdump -i wls6mon -n -vvv
-
-Revert the NO_VIRTUAL_MONITOR feature for now to resolve the issue.
-
-Found by Linux Verification Center (linuxtesting.org).
-
-Fixes: 55e95ce469d0 ("wifi: mt76: mt792x: improve monitor interface handling")
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Link: https://patch.msgid.link/20251027111843.38975-1-pchelkin@ispras.ru
+Fixes: 69d54ce7491d ("wifi: mt76: mt7996: switch to single multi-radio wiphy")
+Signed-off-by: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
+Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
+Link: https://patch.msgid.link/20251106064203.1000505-1-shayne.chen@mediatek.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt792x_core.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_core.c b/drivers/net/wireless/mediatek/mt76/mt792x_core.c
-index c0e56541a9547..9cad572c34a38 100644
---- a/drivers/net/wireless/mediatek/mt76/mt792x_core.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt792x_core.c
-@@ -688,7 +688,6 @@ int mt792x_init_wiphy(struct ieee80211_hw *hw)
- 	ieee80211_hw_set(hw, SUPPORTS_DYNAMIC_PS);
- 	ieee80211_hw_set(hw, SUPPORTS_VHT_EXT_NSS_BW);
- 	ieee80211_hw_set(hw, CONNECTION_MONITOR);
--	ieee80211_hw_set(hw, NO_VIRTUAL_MONITOR);
- 	ieee80211_hw_set(hw, SUPPORTS_MULTI_BSSID);
- 	ieee80211_hw_set(hw, SUPPORTS_ONLY_HE_MULTI_BSSID);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
+index 718e4d4ad85f2..1727e73a99ce6 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
+@@ -786,7 +786,7 @@ void mt7996_memcpy_fromio(struct mt7996_dev *dev, void *buf, u32 offset,
+ 
+ static inline u16 mt7996_rx_chainmask(struct mt7996_phy *phy)
+ {
+-	int max_nss = hweight8(phy->mt76->hw->wiphy->available_antennas_tx);
++	int max_nss = hweight16(phy->orig_antenna_mask);
+ 	int cur_nss = hweight8(phy->mt76->antenna_mask);
+ 	u16 tx_chainmask = phy->mt76->chainmask;
  
 -- 
 2.51.0
