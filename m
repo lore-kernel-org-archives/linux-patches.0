@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E613659E7;
-	Tue, 16 Dec 2025 12:10:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E4C328638;
+	Tue, 16 Dec 2025 12:10:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887056; cv=none; b=XyhT6XN20xdHTEYCpn0dU/UIoD9jmbfaSeZ8fQndHoK1FvF+T79aqNewZ+udcIchIv6Z4swLdLkclZ0nFBuhfcNZIyAG5AYFz3ZWAH3I3rQPpGq79oZO9qWNY9O38AvFz+mLZ51D2lCV1kLcYgYYzwwr8c1lqRGZwHkHU7ST9nc=
+	t=1765887059; cv=none; b=bIvVzzChtwePoubqI3llXBQMQYadbyT2y5LMB7megi56Rch9Siht/GEybxw1NSfiOBHXK34nRFj+7uUiX8QAdIRAD273WWdAYXA9zCv3XexZHafyz1bVosyXtZmJyauY4KpzhawqhlrLgyVgVWOaf6qUYsRI89y305CEdLkujpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887056; c=relaxed/simple;
-	bh=1OMHyFLZu1STVhNJUdYJjUf/tnqNE6aIglU9uGmMyjA=;
+	s=arc-20240116; t=1765887059; c=relaxed/simple;
+	bh=Ax/UmH3dY1+iRn+EIpLDhTyFpo/3669DejVBzWFzPTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mocfWUZhhhtF7G+ubUptz0PD+vVOZs1uV2gj0a27qh2Ik6lVULHpHdLcP9I68iUg9UJgat1juk74xRIkE3pBHM5imo0n+QqJcbpvkpZzhXLFp9ArrApWvyNIVMKaoLk2SZGxbBNRD+j3vxKhrgV4UTTiVAn+kt1kKvyu/XXEzIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gWl1V01y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OWlGjppjFrcmcQfHHZfkNgd5ilzMEtVQZpvMbWPz75LNyvXIoI6HIAqmceXGoQtkDot4iiu+Npr11rkA+4leHudN0zFIpnPxYESd792T7g/tuVFTkNY4g18qgQOoozorJjk7RxpRGlDpDglaC+4rn9k15aLVI7FXeXr+IUiRoTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JKm4+WjY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gWl1V01y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC3E5C4CEF1;
-	Tue, 16 Dec 2025 12:10:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JKm4+WjY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06E26C4CEF1;
+	Tue, 16 Dec 2025 12:10:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887056;
-	bh=1OMHyFLZu1STVhNJUdYJjUf/tnqNE6aIglU9uGmMyjA=;
+	s=korg; t=1765887059;
+	bh=Ax/UmH3dY1+iRn+EIpLDhTyFpo/3669DejVBzWFzPTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gWl1V01ypVr5sVtXDiIJ4F6jPEL6St62f9ZUH+17Xpq+4jzpohxoEQ/+7MJtS8rVM
-	 IV+OeHuK9veaiCrW+pD/lI5ShBUOV6LOmYIFvawA6dxJb0/gDZOfLrlGr+h87h/czI
-	 tBr+8aLKuGh8yfOUWAaPDvrXGV96BaRdVD81qkgA=
+	b=JKm4+WjYlnUVcK1dyC5ZSQBgZVifCht4bK/E6HkoZHolpKi3tusRK0kt2R8pnR246
+	 ZH8d3m2oLelpMtLmz7T2MeF8/7eJFQJ9WKo8Xg9eWHiVP5D2wA4EnqOBK9nqlOnm1I
+	 BoaKWT8td8sj3Xya2dTHaNF0N5dZSgXMHDVpg4n8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dzmitry Sankouski <dsankouski@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 114/614] arm64: dts: qcom: sdm845-starqltechn: remove (address|size)-cells
-Date: Tue, 16 Dec 2025 12:08:01 +0100
-Message-ID: <20251216111405.467059248@linuxfoundation.org>
+Subject: [PATCH 6.18 097/614] accel/amdxdna: Fix uninitialized return value
+Date: Tue, 16 Dec 2025 12:07:44 +0100
+Message-ID: <20251216111404.833346202@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -53,40 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dzmitry Sankouski <dsankouski@gmail.com>
+From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit 4133486382364f60ea7e4f2c9070555689d9606e ]
+[ Upstream commit 81233d5419cf20e4f5ef505882951616888a2ef9 ]
 
-Drop the unused address/size-cells properties to silence the DT
-checker warning:
+In aie2_get_hwctx_status() and aie2_query_ctx_status_array(), the
+functions could return an uninitialized value in some cases. Update them
+to always return 0. The amount of valid results is indicated by the
+returned buffer_size, element_size, and num_element fields.
 
-pmic@66 (maxim,max77705): '#address-cells', '#size-cells' do not
-match any of the regexes: '^pinctrl-[0-9]+$'
-
-Fixes: 7a88a931d095 ("arm64: dts: qcom: sdm845-starqltechn: add max77705 PMIC")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250926-starqltechn-correct_max77705_nodes-v5-1-c6ab35165534@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 2f509fe6a42c ("accel/amdxdna: Add ioctl DRM_IOCTL_AMDXDNA_GET_ARRAY")
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patch.msgid.link/20251024165503.1548131-1-lizhi.hou@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/accel/amdxdna/aie2_pci.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-index 75a53f0bbebd0..45c7aa0f602d8 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-@@ -606,8 +606,6 @@ pmic@66 {
- 		interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
- 		pinctrl-0 = <&pmic_int_default>;
- 		pinctrl-names = "default";
--		#address-cells = <1>;
--		#size-cells = <0>;
+diff --git a/drivers/accel/amdxdna/aie2_pci.c b/drivers/accel/amdxdna/aie2_pci.c
+index 6e39c769bb6d8..43f725e1a2d76 100644
+--- a/drivers/accel/amdxdna/aie2_pci.c
++++ b/drivers/accel/amdxdna/aie2_pci.c
+@@ -845,7 +845,7 @@ static int aie2_get_hwctx_status(struct amdxdna_client *client,
+ 	}
  
- 		leds {
- 			compatible = "maxim,max77705-rgb";
+ 	args->buffer_size -= (u32)(array_args.buffer - args->buffer);
+-	return ret;
++	return 0;
+ }
+ 
+ static int aie2_get_info(struct amdxdna_client *client, struct amdxdna_drm_get_info *args)
+@@ -920,7 +920,7 @@ static int aie2_query_ctx_status_array(struct amdxdna_client *client,
+ 	args->num_element = (u32)((array_args.buffer - args->buffer) /
+ 				  args->element_size);
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ static int aie2_get_array(struct amdxdna_client *client,
 -- 
 2.51.0
 
