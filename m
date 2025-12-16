@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346CF349AE5;
-	Tue, 16 Dec 2025 11:59:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B417334A3BF;
+	Tue, 16 Dec 2025 11:59:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886365; cv=none; b=o7Y1b0fBHbaVCIWg6yNmqoV2ImSVj5wtjZOt2H2qqZB8ul00Gn4ua+ECQ/w5Z3+Axnw5zTUx2etHAhxSDRW0aP6bTsG93tobGWxzfPNkUuiSJfC2hAWXx3egTm3/8qxkE9QV1tkyLY9PrQ/pStZGkOEBW/9n256Dq6R+RUOO3EQ=
+	t=1765886368; cv=none; b=gzlCtg/5uPZ2LvUX/ek3haz/B91F8LxM9NqUVGCEpfZfavuQSMvQL9ZAKfpbN+R7GD32ZhyHMGAz/WbJcoGYWHx2DZc1LhNzuOqqUPfwiGl5b2rMtJbWM9n52hGyvHOmuXZuUYpfO3AK9G9Bd8NGm4pm0VLPGsPv1iznFSIJauI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886365; c=relaxed/simple;
-	bh=pYXAxC18i+dgOpk71t/cmFPa0lo6hfHijBPBZo2Hcv0=;
+	s=arc-20240116; t=1765886368; c=relaxed/simple;
+	bh=J0Vpr1lSzESiReWImJIzHuBQ2qbp46pVm/AWx0msAGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V8RDs8ZO1//GrCq4i4esrg6MYNuNcnT99qgF6DtjDVtpiKpZ4y+nORUH7BZcUsGg+svTdiiIK1wF09xk6Y2DtB4/McCQASqzubDiUzZW0aEOfBdqROwFrICFAns/BQi7Zzq+mm6K5JyOpsb8WjFVpK4N49WMDpZLuebffXgxnJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=048f2AmP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p8yTL85tB1APmW02MdZxNtXTUO7S01z414wjINLUKIvwf/z7Hk3H0UfBDLFUbc5MoDaLHYdq98IT2EKU9L1UfPlC5HrM399TKf7dBEYVXVylLN4Sv68T6deaSwOidbRZjNeE0McC2hQt76Z5NOUDfMYQjRn+dnaegJndI5gqA2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mqvYrxFu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="048f2AmP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B33C4CEF1;
-	Tue, 16 Dec 2025 11:59:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mqvYrxFu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09698C4CEF1;
+	Tue, 16 Dec 2025 11:59:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886365;
-	bh=pYXAxC18i+dgOpk71t/cmFPa0lo6hfHijBPBZo2Hcv0=;
+	s=korg; t=1765886368;
+	bh=J0Vpr1lSzESiReWImJIzHuBQ2qbp46pVm/AWx0msAGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=048f2AmP6d5mQDuQvlox1qF8nDkRCN6IBfW+v34sUSheEdSmkjQq3ZbEgWfWlKoip
-	 R8XiWXwQdsvlbn2V51OQxpA08zhrJjH84cmDXhKD1B8v3f8hg4LxMUPpgOs1TVVZBm
-	 6SWwCB1NUYekLkg/3kjNf8q4hrAA4Cs/KCD2Kz+A=
+	b=mqvYrxFucQSFdvDYBtrKbI2uIvGC+ajgG+M0wggClnj7Ixy5xOslB4U44N9qrxUo0
+	 oabpHE6ig/yXq4eRYouJbUCgvmy1EMw6yl2oRrqLdpsX35naAjUfpEDp2Lg+vnFcO8
+	 v+6rPn2ihiUK1Vujr73wT8d0XygKZHFHLZpMGXqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 414/507] net: dsa: b53: provide accessors for accessing ARL_SRCH_CTL
-Date: Tue, 16 Dec 2025 12:14:15 +0100
-Message-ID: <20251216111400.460340252@linuxfoundation.org>
+Subject: [PATCH 6.17 415/507] net: dsa: b53: split reading search entry into their own functions
+Date: Tue, 16 Dec 2025 12:14:16 +0100
+Message-ID: <20251216111400.496414626@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -54,92 +54,91 @@ Content-Transfer-Encoding: 8bit
 
 From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit 1716be6db04af53bac9b869f01156a460595cf41 ]
+[ Upstream commit e0c476f325a8c9b961a3d446c24d3c8ecae7d186 ]
 
-In order to more easily support more formats, move accessing
-ARL_SRCH_CTL into helper functions to contain the differences.
+Split reading search entries into a function for each format.
 
 Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
 Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20251107080749.26936-5-jonas.gorski@gmail.com
+Link: https://patch.msgid.link/20251107080749.26936-6-jonas.gorski@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 8e46aacea426 ("net: dsa: b53: use same ARL search result offset for BCM5325/65")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 37 +++++++++++++++++++++-----------
- 1 file changed, 24 insertions(+), 13 deletions(-)
+ drivers/net/dsa/b53/b53_common.c | 56 ++++++++++++++++++++++----------
+ 1 file changed, 38 insertions(+), 18 deletions(-)
 
 diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index 4c418e0531f73..38e6fa05042ca 100644
+index 38e6fa05042ca..190eb11644917 100644
 --- a/drivers/net/dsa/b53/b53_common.c
 +++ b/drivers/net/dsa/b53/b53_common.c
-@@ -2017,18 +2017,37 @@ int b53_fdb_del(struct dsa_switch *ds, int port,
+@@ -2060,28 +2060,48 @@ static int b53_arl_search_wait(struct b53_device *dev)
+ 	return -ETIMEDOUT;
  }
- EXPORT_SYMBOL(b53_fdb_del);
  
--static int b53_arl_search_wait(struct b53_device *dev)
-+static void b53_read_arl_srch_ctl(struct b53_device *dev, u8 *val)
+-static void b53_arl_search_rd(struct b53_device *dev, u8 idx,
+-			      struct b53_arl_entry *ent)
++static void b53_arl_search_read_25(struct b53_device *dev, u8 idx,
++				   struct b53_arl_entry *ent)
  {
--	unsigned int timeout = 1000;
--	u8 reg, offset;
-+	u8 offset;
+ 	u64 mac_vid;
+ 
+-	if (is5325(dev)) {
+-		b53_read64(dev, B53_ARLIO_PAGE, B53_ARL_SRCH_RSTL_0_MACVID_25,
+-			   &mac_vid);
+-		b53_arl_to_entry_25(ent, mac_vid);
+-	} else if (is5365(dev)) {
+-		b53_read64(dev, B53_ARLIO_PAGE, B53_ARL_SRCH_RSTL_0_MACVID_65,
+-			   &mac_vid);
+-		b53_arl_to_entry_25(ent, mac_vid);
+-	} else {
+-		u32 fwd_entry;
++	b53_read64(dev, B53_ARLIO_PAGE, B53_ARL_SRCH_RSTL_0_MACVID_25,
++		   &mac_vid);
++	b53_arl_to_entry_25(ent, mac_vid);
++}
+ 
+-		b53_read64(dev, B53_ARLIO_PAGE, B53_ARL_SRCH_RSTL_MACVID(idx),
+-			   &mac_vid);
+-		b53_read32(dev, B53_ARLIO_PAGE, B53_ARL_SRCH_RSTL(idx),
+-			   &fwd_entry);
+-		b53_arl_to_entry(ent, mac_vid, fwd_entry);
+-	}
++static void b53_arl_search_read_65(struct b53_device *dev, u8 idx,
++				   struct b53_arl_entry *ent)
++{
++	u64 mac_vid;
 +
-+	if (is5325(dev) || is5365(dev))
-+		offset = B53_ARL_SRCH_CTL_25;
++	b53_read64(dev, B53_ARLIO_PAGE, B53_ARL_SRCH_RSTL_0_MACVID_65,
++		   &mac_vid);
++	b53_arl_to_entry_25(ent, mac_vid);
++}
++
++static void b53_arl_search_read_95(struct b53_device *dev, u8 idx,
++				   struct b53_arl_entry *ent)
++{
++	u32 fwd_entry;
++	u64 mac_vid;
++
++	b53_read64(dev, B53_ARLIO_PAGE, B53_ARL_SRCH_RSTL_MACVID(idx),
++		   &mac_vid);
++	b53_read32(dev, B53_ARLIO_PAGE, B53_ARL_SRCH_RSTL(idx),
++		   &fwd_entry);
++	b53_arl_to_entry(ent, mac_vid, fwd_entry);
++}
++
++static void b53_arl_search_rd(struct b53_device *dev, u8 idx,
++			      struct b53_arl_entry *ent)
++{
++	if (is5325(dev))
++		b53_arl_search_read_25(dev, idx, ent);
++	else if (is5365(dev))
++		b53_arl_search_read_65(dev, idx, ent);
 +	else
-+		offset = B53_ARL_SRCH_CTL;
-+
-+	b53_read8(dev, B53_ARLIO_PAGE, offset, val);
-+}
-+
-+static void b53_write_arl_srch_ctl(struct b53_device *dev, u8 val)
-+{
-+	u8 offset;
++		b53_arl_search_read_95(dev, idx, ent);
+ }
  
- 	if (is5325(dev) || is5365(dev))
- 		offset = B53_ARL_SRCH_CTL_25;
- 	else
- 		offset = B53_ARL_SRCH_CTL;
- 
-+	b53_write8(dev, B53_ARLIO_PAGE, offset, val);
-+}
-+
-+static int b53_arl_search_wait(struct b53_device *dev)
-+{
-+	unsigned int timeout = 1000;
-+	u8 reg;
-+
- 	do {
--		b53_read8(dev, B53_ARLIO_PAGE, offset, &reg);
-+		b53_read_arl_srch_ctl(dev, &reg);
- 		if (!(reg & ARL_SRCH_STDN))
- 			return -ENOENT;
- 
-@@ -2083,23 +2102,15 @@ int b53_fdb_dump(struct dsa_switch *ds, int port,
- 	unsigned int count = 0, results_per_hit = 1;
- 	struct b53_device *priv = ds->priv;
- 	struct b53_arl_entry results[2];
--	u8 offset;
- 	int ret;
--	u8 reg;
- 
- 	if (priv->num_arl_bins > 2)
- 		results_per_hit = 2;
- 
- 	mutex_lock(&priv->arl_mutex);
- 
--	if (is5325(priv) || is5365(priv))
--		offset = B53_ARL_SRCH_CTL_25;
--	else
--		offset = B53_ARL_SRCH_CTL;
--
- 	/* Start search operation */
--	reg = ARL_SRCH_STDN;
--	b53_write8(priv, B53_ARLIO_PAGE, offset, reg);
-+	b53_write_arl_srch_ctl(priv, ARL_SRCH_STDN);
- 
- 	do {
- 		ret = b53_arl_search_wait(priv);
+ static int b53_fdb_copy(int port, const struct b53_arl_entry *ent,
 -- 
 2.51.0
 
