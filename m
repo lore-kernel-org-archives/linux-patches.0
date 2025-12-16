@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D2B341AC3;
-	Tue, 16 Dec 2025 11:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49B4341AC3;
+	Tue, 16 Dec 2025 11:33:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884802; cv=none; b=k8jQj0IxkRMEsQM2pvFX7LCweJ6FbeKW4T9DsYYAresGifR+wVrKEdk/JQboqqXeHV6jxxGP2tOTvrxX0bQyFMw/U50gLhPfq82wgPO00EF/rLJ0kv1Lb51SW4HPjGDERbQ7az9yLOSwzboPqys2W/emexwBCV4lZAw8j8ecBhE=
+	t=1765884805; cv=none; b=eYI8GvQ71dGWQheDEW0GgE3Ok+/+MztycKw5cTF+I4IOvxKAtxi5hrAZKEi/xBsVizBYzuklijCGKiHYTHrUpSUAfRirApMDRfr2mH0vXOnju+byCvKmmLqS+NCXr8tCpQUivbbC5kWW9YUw2YOaEckLuVdDqfYz/2+tc3h2cGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884802; c=relaxed/simple;
-	bh=XKCXpiRw27t+PePNG8B70mYH2Wa00M4DG7FmcH0uG9U=;
+	s=arc-20240116; t=1765884805; c=relaxed/simple;
+	bh=2YJObbejIoCSiH9cJlxpTzW3IZC33D6rFGZbVuPxvBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=s5PlFZclmL30FvMZjB1RPigHa3g9j5Epe731pGm73k59fRwZn4dr97TzhiDnyoXxV3W2g4v7rfjnl3zD+iN0a3UAZ0hntDWBAtMEz9bGYaj04JTG6Lw/x4qdGcHoGi1Tcg5f2czeA6gGVz31qROjMmIHB7yQThfW8uIT1ctaYLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QeQPuw6n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XYjBdl0NLXlVeGrw7KnVpiHAlkHE9BwyUcJWj/HhaBmRu+CwosJAb5PWDGIKkYCpwRibrnHuZKQAFo0QVmAjGBZz84bDVCD2cvFiSK0RU/6a7w7k2ubCMkdcbLqYbSol/hAkX2FJ4ZQkVDkhTJLmOzOmRJDPkWCMGY6Bimu3Vq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f6g3M4Bg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QeQPuw6n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00885C4CEF5;
-	Tue, 16 Dec 2025 11:33:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f6g3M4Bg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4733DC4CEF1;
+	Tue, 16 Dec 2025 11:33:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884802;
-	bh=XKCXpiRw27t+PePNG8B70mYH2Wa00M4DG7FmcH0uG9U=;
+	s=korg; t=1765884805;
+	bh=2YJObbejIoCSiH9cJlxpTzW3IZC33D6rFGZbVuPxvBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QeQPuw6nmUsAbp3nJ6lS3rkMh499Kbjf9ydZSD2ZXwy7uP0wD55RuUeRziqnGEIh7
-	 1bPaV9g6KKftKVeVeFtCLKppPRupyYpG3RLxZEa4Bq/ZAuy+dHD/GEBG1f5F+seiba
-	 WQOXBRp3azPDSxwjESXp/4+3USPHoVkWUOJA6GxA=
+	b=f6g3M4BgOoRw3hSPDXrj5r0Yllfx+6oveJaSV/Otm0lBQ3lVpjJ9m3je0m0vMBtVd
+	 rHCPpPPoq6kRhxaQtjZlOvO96AGHdA7f6KB2HVx6V6VKn/GpRt8KSr17kTJX0UfKxR
+	 WXuP3+/ALlYAlOYAa/TOjngiQsiym/dJZP57Adqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Michael Stoler <michael.stoler@vastdata.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 303/354] fs/nls: Fix utf16 to utf8 conversion
-Date: Tue, 16 Dec 2025 12:14:30 +0100
-Message-ID: <20251216111331.889661035@linuxfoundation.org>
+Subject: [PATCH 6.12 304/354] NFS: Initialise verifiers for visible dentries in readdir and lookup
+Date: Tue, 16 Dec 2025 12:14:31 +0100
+Message-ID: <20251216111331.926746561@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -45,83 +45,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 25524b6190295577e4918c689644451365e6466d ]
+[ Upstream commit 9bd545539b233725a3416801f7c374bff0327d6e ]
 
-Currently the function responsible for converting between utf16 and
-utf8 strings will ignore any characters that cannot be converted. This
-however also includes multi-byte characters that do not fit into the
-provided string buffer.
+Ensure that the verifiers are initialised before calling
+d_splice_alias() in both nfs_prime_dcache() and nfs_lookup().
 
-This can cause problems if such a multi-byte character is followed by
-a single-byte character. In such a case the multi-byte character might
-be ignored when the provided string buffer is too small, but the
-single-byte character might fit and is thus still copied into the
-resulting string.
-
-Fix this by stop filling the provided string buffer once a character
-does not fit. In order to be able to do this extend utf32_to_utf8()
-to return useful errno codes instead of -1.
-
-Fixes: 74675a58507e ("NLS: update handling of Unicode")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://patch.msgid.link/20251111131125.3379-2-W_Armin@gmx.de
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reported-by: Michael Stoler <michael.stoler@vastdata.com>
+Fixes: a1147b8281bd ("NFS: Fix up directory verifier races")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nls/nls_base.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ fs/nfs/dir.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nls/nls_base.c b/fs/nls/nls_base.c
-index 18d597e49a194..d434c4463a8f7 100644
---- a/fs/nls/nls_base.c
-+++ b/fs/nls/nls_base.c
-@@ -94,7 +94,7 @@ int utf32_to_utf8(unicode_t u, u8 *s, int maxout)
- 
- 	l = u;
- 	if (l > UNICODE_MAX || (l & SURROGATE_MASK) == SURROGATE_PAIR)
--		return -1;
-+		return -EILSEQ;
- 
- 	nc = 0;
- 	for (t = utf8_table; t->cmask && maxout; t++, maxout--) {
-@@ -110,7 +110,7 @@ int utf32_to_utf8(unicode_t u, u8 *s, int maxout)
- 			return nc;
- 		}
+diff --git a/fs/nfs/dir.c b/fs/nfs/dir.c
+index 01af2bb8a7216..8c4fcd140fa13 100644
+--- a/fs/nfs/dir.c
++++ b/fs/nfs/dir.c
+@@ -787,16 +787,17 @@ void nfs_prime_dcache(struct dentry *parent, struct nfs_entry *entry,
+ 		goto out;
  	}
--	return -1;
-+	return -EOVERFLOW;
- }
- EXPORT_SYMBOL(utf32_to_utf8);
  
-@@ -217,8 +217,16 @@ int utf16s_to_utf8s(const wchar_t *pwcs, int inlen, enum utf16_endian endian,
- 				inlen--;
- 			}
- 			size = utf32_to_utf8(u, op, maxout);
--			if (size == -1) {
--				/* Ignore character and move on */
-+			if (size < 0) {
-+				if (size == -EILSEQ) {
-+					/* Ignore character and move on */
-+					continue;
-+				}
-+				/*
-+				 * Stop filling the buffer with data once a character
-+				 * does not fit anymore.
-+				 */
-+				break;
- 			} else {
- 				op += size;
- 				maxout -= size;
++	nfs_set_verifier(dentry, dir_verifier);
+ 	inode = nfs_fhget(dentry->d_sb, entry->fh, entry->fattr);
+ 	alias = d_splice_alias(inode, dentry);
+ 	d_lookup_done(dentry);
+ 	if (alias) {
+ 		if (IS_ERR(alias))
+ 			goto out;
++		nfs_set_verifier(alias, dir_verifier);
+ 		dput(dentry);
+ 		dentry = alias;
+ 	}
+-	nfs_set_verifier(dentry, dir_verifier);
+ 	trace_nfs_readdir_lookup(d_inode(parent), dentry, 0);
+ out:
+ 	dput(dentry);
+@@ -2002,13 +2003,14 @@ struct dentry *nfs_lookup(struct inode *dir, struct dentry * dentry, unsigned in
+ 	nfs_lookup_advise_force_readdirplus(dir, flags);
+ 
+ no_entry:
++	nfs_set_verifier(dentry, dir_verifier);
+ 	res = d_splice_alias(inode, dentry);
+ 	if (res != NULL) {
+ 		if (IS_ERR(res))
+ 			goto out;
++		nfs_set_verifier(res, dir_verifier);
+ 		dentry = res;
+ 	}
+-	nfs_set_verifier(dentry, dir_verifier);
+ out:
+ 	trace_nfs_lookup_exit(dir, dentry, flags, PTR_ERR_OR_ZERO(res));
+ 	nfs_free_fattr(fattr);
 -- 
 2.51.0
 
