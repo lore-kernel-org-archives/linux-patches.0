@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F2EC36654F;
-	Tue, 16 Dec 2025 12:13:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498E435965;
+	Tue, 16 Dec 2025 12:13:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887198; cv=none; b=JGBDiMHJsoS+iPeSCnYh+MIqNq4NJUgEgSu2iy0Q0u6tGcqfDFbDb1hvWkrfXBHFlNleopNHoET6drjsvXBaGXHpbs+5LtgcNswkooT62TloHzMOmMdY6Lh/CZunAAQT1t2Vy1wjsgmVMW2QiCNI7sfs0Zyh32LUE0HSwkFeM14=
+	t=1765887201; cv=none; b=fHalSIQFT3XjH9TzigcGfwwOFs55I1419fkfu3sWrFMKsULZw397QUsoOlju46+LAbI+XWqOpbkPN9UsN7eYYt1m0Ss9PF7SOcyqgC0RcSUwa01A482VCpIl2PGwG3FdD7js2NcdcTLr66w8ulGKqdooNmqyioKwQqEW7KEqmr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887198; c=relaxed/simple;
-	bh=gfB2eDQDuTIicMB/plVSz9aPsJUe/X5XpS+fm2K3g7Q=;
+	s=arc-20240116; t=1765887201; c=relaxed/simple;
+	bh=m5QDvS8tSZzjlsF1gtmRULXGNj3qI8AT7DtVdeluoLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e9hYSWZS8SG8E2LiFJYixBj4Yr2r12KJEOk2qp8IgBeb/A+RLZg3eFMMKjxtDsbjnxY7hZKE6OqRECaYIxSTFGzl8Yips3js9R5iGRamvciCn66Qq1YoJJ1K2Btbn8B0r744uRfAGXh6XtyBZ6bYQDFsk/vBVleCfeSFfwr1auo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MTRvtja/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PNRAkvskjX8zShDe/WbQb6ucgtNcIE/88onZDoT1rEssrJ56yWevG595v0/wslLvDNi+PkJjvu9wiHqE5+47QuVfL8RRHXeC6gwd/35bcTqIMhr0U/5jvaSH4TSNnzHK/iZ/mY5SLIFXdhH4oIfCbUrtXhnj38dGP6FR2bhArnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SRLCtiF2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MTRvtja/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82471C4CEF1;
-	Tue, 16 Dec 2025 12:13:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SRLCtiF2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFA6BC4CEF1;
+	Tue, 16 Dec 2025 12:13:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887197;
-	bh=gfB2eDQDuTIicMB/plVSz9aPsJUe/X5XpS+fm2K3g7Q=;
+	s=korg; t=1765887201;
+	bh=m5QDvS8tSZzjlsF1gtmRULXGNj3qI8AT7DtVdeluoLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MTRvtja/eEqW480+gnZcrngCBP62rRv2Dv4SHB4r4f+sU+W9sByWiFPGpSyWHiUsG
-	 jV9Cqw4dJXPwGtqVGyiyTwfI0rBdfYLpvRbacxYSOcMVPRuggOabsc99a7ezA6Wh+j
-	 0EvOrZXdlpfrFkSRsU4iOrvYyrznWW1ZT9IPZPD8=
+	b=SRLCtiF2XUOYFtrVXERTjeJ2iXQUMnOTlmIuhvfTrtCLA/MyYWB0iUvAqTV6oMqoh
+	 bLbOZUrTNB7m2aT5uuKx/6uPLoqCJFl4RNp+hMM6KHdsb+EVrGtQYhe52XEPOQbTkQ
+	 5T7DTHP89Ijvk3IPy7WpcgOc8vCyU5ayR8qtRQGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuhao Fu <sfual@cse.ust.hk>,
+	Stanley Chu <yschu@nuvoton.com>,
 	Frank Li <Frank.Li@nxp.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 156/614] i3c: fix refcount inconsistency in i3c_master_register
-Date: Tue, 16 Dec 2025 12:08:43 +0100
-Message-ID: <20251216111406.987060890@linuxfoundation.org>
+Subject: [PATCH 6.18 157/614] i3c: master: svc: Prevent incomplete IBI transaction
+Date: Tue, 16 Dec 2025 12:08:44 +0100
+Message-ID: <20251216111407.023617861@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,57 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Stanley Chu <yschu@nuvoton.com>
 
-[ Upstream commit 9d4f219807d5ac11fb1d596e4ddb09336b040067 ]
+[ Upstream commit 3a36273e5a07dda0ccec193800f3b78c3c0380af ]
 
-In `i3c_master_register`, a possible refcount inconsistency has been
-identified, causing possible resource leak.
+If no free IBI slot is available, svc_i3c_master_handle_ibi returns
+immediately. This causes the STOP condition to be missed because the
+EmitStop request is sent when the transfer is not complete. To resolve
+this, svc_i3c_master_handle_ibi must wait for the transfer to complete
+before returning.
 
-Function `of_node_get` increases the refcount of `parent->of_node`. If
-function `i3c_bus_init` fails, the function returns immediately without
-a corresponding decrease, resulting in an inconsistent refcounter.
-
-Move call i3c_bus_init() after device_initialize() to let callback
-i3c_masterdev_release() release of_node.
-
-Reported-by: Shuhao Fu <sfual@cse.ust.hk>
-Closes: https://lore.kernel.org/linux-i3c/aO2tjp_FsV_WohPG@osx.local/T/#m2c05a982beeb14e7bf039c1d8db856734bf234c7
-Fixes: 3a379bbcea0a ("i3c: Add core I3C infrastructure")
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20251016143814.2551256-1-Frank.Li@nxp.com
+Fixes: dd3c52846d59 ("i3c: master: svc: Add Silvaco I3C master driver")
+Signed-off-by: Stanley Chu <yschu@nuvoton.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://patch.msgid.link/20251027034715.708243-1-yschu@nuvoton.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/i3c/master/svc-i3c-master.c | 22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index d946db75df706..66513a27e6e77 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -2883,10 +2883,6 @@ int i3c_master_register(struct i3c_master_controller *master,
- 	INIT_LIST_HEAD(&master->boardinfo.i2c);
- 	INIT_LIST_HEAD(&master->boardinfo.i3c);
+diff --git a/drivers/i3c/master/svc-i3c-master.c b/drivers/i3c/master/svc-i3c-master.c
+index 9641e66a4e5f2..e70a64f2a32fa 100644
+--- a/drivers/i3c/master/svc-i3c-master.c
++++ b/drivers/i3c/master/svc-i3c-master.c
+@@ -406,21 +406,27 @@ static int svc_i3c_master_handle_ibi(struct svc_i3c_master *master,
+ 	int ret, val;
+ 	u8 *buf;
  
--	ret = i3c_bus_init(i3cbus, master->dev.of_node);
--	if (ret)
--		return ret;
+-	slot = i3c_generic_ibi_get_free_slot(data->ibi_pool);
+-	if (!slot)
+-		return -ENOSPC;
 -
- 	device_initialize(&master->dev);
- 	dev_set_name(&master->dev, "i3c-%d", i3cbus->id);
+-	slot->len = 0;
+-	buf = slot->data;
+-
++	/*
++	 * Wait for transfer to complete before returning. Otherwise, the EmitStop
++	 * request might be sent when the transfer is not complete.
++	 */
+ 	ret = readl_relaxed_poll_timeout(master->regs + SVC_I3C_MSTATUS, val,
+ 						SVC_I3C_MSTATUS_COMPLETE(val), 0, 1000);
+ 	if (ret) {
+ 		dev_err(master->dev, "Timeout when polling for COMPLETE\n");
+-		i3c_generic_ibi_recycle_slot(data->ibi_pool, slot);
+ 		return ret;
+ 	}
  
-@@ -2894,6 +2890,10 @@ int i3c_master_register(struct i3c_master_controller *master,
- 	master->dev.coherent_dma_mask = parent->coherent_dma_mask;
- 	master->dev.dma_parms = parent->dma_parms;
- 
-+	ret = i3c_bus_init(i3cbus, master->dev.of_node);
-+	if (ret)
-+		goto err_put_dev;
++	slot = i3c_generic_ibi_get_free_slot(data->ibi_pool);
++	if (!slot) {
++		dev_dbg(master->dev, "No free ibi slot, drop the data\n");
++		writel(SVC_I3C_MDATACTRL_FLUSHRB, master->regs + SVC_I3C_MDATACTRL);
++		return -ENOSPC;
++	}
 +
- 	ret = of_populate_i3c_bus(master);
- 	if (ret)
- 		goto err_put_dev;
++	slot->len = 0;
++	buf = slot->data;
++
+ 	while (SVC_I3C_MSTATUS_RXPEND(readl(master->regs + SVC_I3C_MSTATUS))  &&
+ 	       slot->len < SVC_I3C_FIFO_SIZE) {
+ 		mdatactrl = readl(master->regs + SVC_I3C_MDATACTRL);
 -- 
 2.51.0
 
