@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F64234029C;
-	Tue, 16 Dec 2025 11:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACFB8340DB7;
+	Tue, 16 Dec 2025 11:32:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884740; cv=none; b=GHwHBsk9zN4pldnZ3XkDWHWdl/j611QXcp+FXZxW6fcC/7I7j6Lp+6ZEcTl+1EFjGOFR+av+kV1X2GFwcpGqVQahGsjraOsWBq1W10VUCt18TuSXoNZFklORiAViNFxFdklPc9E2wOJAdt4/0HTKYvRMkH1lsWBKOQbLEaE/sxw=
+	t=1765884743; cv=none; b=Ius46422nBeixZ6Sue3bQmqAIWw7nQT7IzC8BzQokZ6iRL8Izpyy4cqP+3z5rzSHNyxE5iPONKxrqIDb59IjVNtVlisH8t/rtIXr1HMTgPqY3ortEYz4zjaIePXwMRvu129L4WFUzqn/QmIhXtU579NnfYiEzgr4ddrn+UpPDU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884740; c=relaxed/simple;
-	bh=8vsJKrdCM2scu/GOnY8mQo6+JlILvrB83G1Az9LC8zU=;
+	s=arc-20240116; t=1765884743; c=relaxed/simple;
+	bh=yI6o7d4X0gqb4KMtg/RBm5kQqE9K8uNpnstlZOGfjJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QyvdCYFeBwFjdv1sgoUv144dWOnixrB4mQJKgNWJllPlg72dOnrN2P/sQWoWgBVXyhus+bzSyUo7HNbg+VX46f68azSxvjqOQR7egFIz0/8GsMyNgVfiwvWvaMrSOCBGPyx9zVZiB/nDiu2L2n0PyPPRLuebge/Ofc3ITs3so0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Payccz9h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lqs285krgKxxodRc6jQho81Wn0hFcFlsUxojXJFm2lRpmwYpOtRogedD2L9tknRMHkgnY44TeVW3i9h2JUWLsC+2wU4IoCv53hOrLyz9qGHyjJJbzJEz8dqp+LZgCKINA+OyEf9/Rm28YQMa6Eh9kTS9UWDCZcBjW1Q7/hak1vg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ancjjWiF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Payccz9h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E573C4CEF1;
-	Tue, 16 Dec 2025 11:32:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ancjjWiF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30B3AC4CEF1;
+	Tue, 16 Dec 2025 11:32:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884740;
-	bh=8vsJKrdCM2scu/GOnY8mQo6+JlILvrB83G1Az9LC8zU=;
+	s=korg; t=1765884743;
+	bh=yI6o7d4X0gqb4KMtg/RBm5kQqE9K8uNpnstlZOGfjJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Payccz9hMxsSwYkVyeEbNsi8/SEgp8Ym47B8+DhAwHI46TlPoUn8w+SBVexQu6Pc3
-	 N5XWYXtleqYZiVTh13jEU4rFyAfYvUE6C2VqCZzwBVLU07577vTd4K+jW5+K8q1xk9
-	 7lgoxaZpj1RXtl1eYwde0yW23LJDbEPfOiAdxkmw=
+	b=ancjjWiFcTAYUqRDHDtX6p4je9S/7cJz9d7lBignrb+qXGmfxZSmWFWfh2iiErUEU
+	 cJ0YMeFv5ilVQQZC/PYvtrL20AG+Pj+tpSDhZwPw6bIQi3eIk4NM0Oknm7A3rStdER
+	 7QwbNSC9HTday+dTFnloLcRBBsC4jnN9CBv2Yge8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 251/354] virtio: fix virtqueue_set_affinity() docs
-Date: Tue, 16 Dec 2025 12:13:38 +0100
-Message-ID: <20251216111330.009278862@linuxfoundation.org>
+Subject: [PATCH 6.12 242/354] hwmon: sy7636a: Fix regulator_enable resource leak on error path
+Date: Tue, 16 Dec 2025 12:13:29 +0100
+Message-ID: <20251216111329.680978688@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -51,34 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael S. Tsirkin <mst@redhat.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 43236d8bbafff94b423afecc4a692dd90602d426 ]
+[ Upstream commit 2f88425ef590b7fcc2324334b342e048edc144a9 ]
 
-Rewrite the comment for better grammar and clarity.
+In sy7636a_sensor_probe(), regulator_enable() is called but if
+devm_hwmon_device_register_with_info() fails, the function returns
+without calling regulator_disable(), leaving the regulator enabled
+and leaking the reference count.
 
-Fixes: 75a0a52be3c2 ("virtio: introduce an API to set affinity for a virtqueue")
-Message-Id: <e317e91bd43b070e5eaec0ebbe60c5749d02e2dd.1763026134.git.mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Switch to devm_regulator_get_enable() to automatically
+manage the regulator resource.
+
+Fixes: de34a4053250 ("hwmon: sy7636a: Add temperature driver for sy7636a")
+Suggested-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20251126162602.2086-1-vulab@iscas.ac.cn
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/virtio_config.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/sy7636a-hwmon.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/include/linux/virtio_config.h b/include/linux/virtio_config.h
-index 1255493b7f377..94b3adc7c2dbf 100644
---- a/include/linux/virtio_config.h
-+++ b/include/linux/virtio_config.h
-@@ -312,7 +312,7 @@ const char *virtio_bus_name(struct virtio_device *vdev)
-  * @vq: the virtqueue
-  * @cpu_mask: the cpu mask
-  *
-- * Pay attention the function are best-effort: the affinity hint may not be set
-+ * Note that this function is best-effort: the affinity hint may not be set
-  * due to config support, irq type and sharing.
-  *
-  */
+diff --git a/drivers/hwmon/sy7636a-hwmon.c b/drivers/hwmon/sy7636a-hwmon.c
+index a12fc0ce70e76..d51daaf63d632 100644
+--- a/drivers/hwmon/sy7636a-hwmon.c
++++ b/drivers/hwmon/sy7636a-hwmon.c
+@@ -66,18 +66,13 @@ static const struct hwmon_chip_info sy7636a_chip_info = {
+ static int sy7636a_sensor_probe(struct platform_device *pdev)
+ {
+ 	struct regmap *regmap = dev_get_regmap(pdev->dev.parent, NULL);
+-	struct regulator *regulator;
+ 	struct device *hwmon_dev;
+ 	int err;
+ 
+ 	if (!regmap)
+ 		return -EPROBE_DEFER;
+ 
+-	regulator = devm_regulator_get(&pdev->dev, "vcom");
+-	if (IS_ERR(regulator))
+-		return PTR_ERR(regulator);
+-
+-	err = regulator_enable(regulator);
++	err = devm_regulator_get_enable(&pdev->dev, "vcom");
+ 	if (err)
+ 		return err;
+ 
 -- 
 2.51.0
 
