@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08510328638;
-	Tue, 16 Dec 2025 12:12:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4940E343D9D;
+	Tue, 16 Dec 2025 12:12:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887169; cv=none; b=SSNxLBYzQpekePlEa7LH7Zn0MeJCEumItK7MbNJ4JT5oH6yGUJVSIUogyUnzI8s13OOEk6GDkBHLjBNldGs4va4KcXJ/LbUAhswqAxYz/KsxB4H6IBRV2ci8KmbqfAylXL3ecRMz7/ipxU85k575cxljw0+XijWi1Dn0YsyGIH8=
+	t=1765887172; cv=none; b=boPCXgAIZPYSJc+jAaXyg6kWwVwVVoMEtohwJsgN3gG+O25wfk/Wx3IYC16v11OHMRWhW38R+uoC9hEOq9GXlxgEn+sU+UrjcTZwD+LSIjUKNMVMPS1lYQINbf3Hgsx+hbCEjVJ5FM3JXDH6/NzSTnmF1bNiH29EWzfhatxoKmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887169; c=relaxed/simple;
-	bh=wk88wL49tii2eN4NM0b15s2OnkDM+9ezGZIqGKJ571M=;
+	s=arc-20240116; t=1765887172; c=relaxed/simple;
+	bh=2CIGqTM8+/RB1kVE9pDTes1uromWqpa9HBHU32EtskE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nz9FPgAS+wdFvc73ZNluxPVID/fh9J6duQF3c5jM3XoNElrz0EdlXxVeNdlvThsITGfxOLafkj87DbTpRuYI/NkeMkLRg0aN90+elz332sHM+0AFHbjWHHmgZPxDnwGf8pkfqp+ew3z+R4TG25KfsBqcJU6fLlsFgGCRles8RUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j26+uq9d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ubVaaTh40jdc6d0szME6p/q6pgfFRyHOyC+DgSbSRNFHuEjYAhl+wGp/tvVe68vPmKKEUPTl+3OQe07XHMfYNlScQ7ZVCcov4jfqiCQoyYt3QpgP+9nY92IL0qu8QJGcOox4jALMCBQR5SoovuYfidio/1D7FXq/pIbKHZVkaQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jxGr4adQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j26+uq9d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ACEFC4CEF1;
-	Tue, 16 Dec 2025 12:12:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jxGr4adQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D0CC4CEF1;
+	Tue, 16 Dec 2025 12:12:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887168;
-	bh=wk88wL49tii2eN4NM0b15s2OnkDM+9ezGZIqGKJ571M=;
+	s=korg; t=1765887172;
+	bh=2CIGqTM8+/RB1kVE9pDTes1uromWqpa9HBHU32EtskE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j26+uq9dN2LOp9tlHx3WmNiO0/ffY3ShX1nhv7A9o8587F/P68IITqW1geV1BqlA1
-	 eSfVNShaHxZ0eIKGdromVe+fQBunUV/hRLGf0xhKaGIlWG09j7naTUPmX6cXahUgcN
-	 OBDG0hV4wIuOf5Pn6jRn+YaFmL8/9KkxlVadrO7s=
+	b=jxGr4adQZoZ86Mkh3LaCcQtN5mgid+DscduBgF4d/q+KwGaGFv8O9LtRcg0RkruqN
+	 9ClE4RqW/YEcP3VXKoKAnx/YkgrzI6HU4tRjL3XipitPwdNOdzmVB9DINbMDkLwB8j
+	 tkNseFD5JinYiPBrKZMeKM2tuYQeX2PkdureL2KQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 148/614] clk: qcom: gcc-qcs615: Update the SDCC clock to use shared_floor_ops
-Date: Tue, 16 Dec 2025 12:08:35 +0100
-Message-ID: <20251216111406.698490954@linuxfoundation.org>
+Subject: [PATCH 6.18 149/614] soc: qcom: smem: fix hwspinlock resource leak in probe error paths
+Date: Tue, 16 Dec 2025 12:08:36 +0100
+Message-ID: <20251216111406.734508099@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -53,59 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taniya Das <taniya.das@oss.qualcomm.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 0820c9373369c83de5202871d02682d583a91a9c ]
+[ Upstream commit dc5db35073a19f6d3c30bea367b551c1a784ef8f ]
 
-Fix "gcc_sdcc2_apps_clk_src: rcg didn't update its configuration" during
-boot. This happens due to the floor_ops tries to update the rcg
-configuration even if the clock is not enabled.
-The shared_floor_ops ensures that the RCG is safely parked and the new
-parent configuration is cached in the parked_cfg when the clock is off.
+The hwspinlock acquired via hwspin_lock_request_specific() is not
+released on several error paths. This results in resource leakage
+when probe fails.
 
-Ensure to use the ops for the other SDCC clock instances as well.
+Switch to devm_hwspin_lock_request_specific() to automatically
+handle cleanup on probe failure. Remove the manual hwspin_lock_free()
+in qcom_smem_remove() as devm handles it automatically.
 
-Fixes: 39d6dcf67fe9 ("clk: qcom: gcc: Add support for QCS615 GCC clocks")
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+Fixes: 20bb6c9de1b7 ("soc: qcom: smem: map only partitions used by local HOST")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251029-sdcc_rcg2_shared_ops-v3-1-ecf47d9601d1@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20251029022733.255-1-vulab@iscas.ac.cn
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-qcs615.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/soc/qcom/smem.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-qcs615.c b/drivers/clk/qcom/gcc-qcs615.c
-index 9695446bc2a3c..5b3b8dd4f114b 100644
---- a/drivers/clk/qcom/gcc-qcs615.c
-+++ b/drivers/clk/qcom/gcc-qcs615.c
-@@ -784,7 +784,7 @@ static struct clk_rcg2 gcc_sdcc1_apps_clk_src = {
- 		.name = "gcc_sdcc1_apps_clk_src",
- 		.parent_data = gcc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_1),
--		.ops = &clk_rcg2_floor_ops,
-+		.ops = &clk_rcg2_shared_floor_ops,
- 	},
- };
+diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
+index c4c45f15dca4f..f1d1b5aa5e4db 100644
+--- a/drivers/soc/qcom/smem.c
++++ b/drivers/soc/qcom/smem.c
+@@ -1190,7 +1190,7 @@ static int qcom_smem_probe(struct platform_device *pdev)
+ 		return dev_err_probe(&pdev->dev, hwlock_id,
+ 				     "failed to retrieve hwlock\n");
  
-@@ -806,7 +806,7 @@ static struct clk_rcg2 gcc_sdcc1_ice_core_clk_src = {
- 		.name = "gcc_sdcc1_ice_core_clk_src",
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--		.ops = &clk_rcg2_floor_ops,
-+		.ops = &clk_rcg2_shared_floor_ops,
- 	},
- };
+-	smem->hwlock = hwspin_lock_request_specific(hwlock_id);
++	smem->hwlock = devm_hwspin_lock_request_specific(&pdev->dev, hwlock_id);
+ 	if (!smem->hwlock)
+ 		return -ENXIO;
  
-@@ -830,7 +830,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
- 		.name = "gcc_sdcc2_apps_clk_src",
- 		.parent_data = gcc_parent_data_8,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_8),
--		.ops = &clk_rcg2_floor_ops,
-+		.ops = &clk_rcg2_shared_floor_ops,
- 	},
- };
+@@ -1243,7 +1243,6 @@ static void qcom_smem_remove(struct platform_device *pdev)
+ {
+ 	platform_device_unregister(__smem->socinfo);
+ 
+-	hwspin_lock_free(__smem->hwlock);
+ 	__smem = NULL;
+ }
  
 -- 
 2.51.0
