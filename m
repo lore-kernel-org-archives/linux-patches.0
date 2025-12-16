@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49FB3491C7;
-	Tue, 16 Dec 2025 11:59:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D067D347BC7;
+	Tue, 16 Dec 2025 11:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886358; cv=none; b=rgZW9p17srkXxVn+AdAkAVkP2zdKg3BE/Pq/KavyiiVW6Y+WJXVQF0Redxk9edLoecibyuH5IDgR0VAhqFI+aLWlFG0PtCWTwncNmugkCASTAu5P/BZCy6Mh9dRPwVJpPlPoLmbchK35u6T/3dhqlfOK4e3CO467ubll41VHJ6Y=
+	t=1765886361; cv=none; b=TcJusLbAwaJuPJTkhFfrbAyWq+NVB/hWczhJ/dTgPNgl1h3QUQxAPodQ7lY7KT35JzXv7qB1fzcf9rRGxXO5QBOZ0h3ZPM5SYqQSTHX+jvaymgtMS/vYWviyZJDjLZ2ZM9EIlhhFvBnD+/PMyMPdUGTuXbzisZdzamKskHT354E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886358; c=relaxed/simple;
-	bh=UBA6g8JtKd4NJZfhg3R1Actyh7T0USLegkLcQqTDfh4=;
+	s=arc-20240116; t=1765886361; c=relaxed/simple;
+	bh=gYiTWZ8Jpvis7C28GpYv3K59Fp3DXVA3Rez/bG7fqR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DNl/jxwQ2rHNniwaiE2ps+zUYXnU4aMJZONVzMt4Ge6rbUoTT14t9kMju1kDvTIy7urOlZgFcfQ7RllzFum2xMEhCHyEDH1S4H3zlxI2oWSfdSwLCQDvLiqk8S8wwdHTP89SCJbjvz7Ha4NTwK5X16lmcX+SkuTDPwQ/1gqud5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fJWrqkaW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ol/4lfn/JcwdAXS98hndSpXTUkY9PoB0D9jyi4JjEHTE2Egfx2oDkL4aCnm37WfV0yBuqpBDVRtYtVJipM3f9X2aTAIVF1GRp5YqJJKZ1Xs/ftX10EnLou4VnocXw6VIaPCsc2dxUu32CsJbufEy9zJZjva0rxmJYQrBqitvwGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZDG8d7N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fJWrqkaW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1926DC4CEF1;
-	Tue, 16 Dec 2025 11:59:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZDG8d7N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F5D1C4CEF1;
+	Tue, 16 Dec 2025 11:59:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886358;
-	bh=UBA6g8JtKd4NJZfhg3R1Actyh7T0USLegkLcQqTDfh4=;
+	s=korg; t=1765886361;
+	bh=gYiTWZ8Jpvis7C28GpYv3K59Fp3DXVA3Rez/bG7fqR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fJWrqkaW/5IfDFQObT/brDcbIyBXZVPsMJP09x6g2FwhqSV2rQddMNzgog1G/6QUb
-	 PFNYSgLYXJ5O3HwhN9Tbpv7ljROItcDhAo91MbX2NAPJFARra0ittT7YG1+47Zyr1C
-	 YH3v4Jr73PpGwgRHM1wTq+sqQxfDNiVBwUnJqoX0=
+	b=jZDG8d7Nz5fn3nKXe+FRh+4dZoOfa4deFr31EzYePIp6OsRAcc70r8cD4kfSnC4WA
+	 xfkSUQK9JnJA822wggNrAgRtWU2XwU82ObQSp+G0Aa0rnWvREVIU0tVpe/NWFIVGgO
+	 8QgdKmbf3jrW+f9dm2AP1W+YBqDjT9u8Ny/OanXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 413/507] net: dsa: b53: move writing ARL entries into their own functions
-Date: Tue, 16 Dec 2025 12:14:14 +0100
-Message-ID: <20251216111400.424476586@linuxfoundation.org>
+Subject: [PATCH 6.17 387/507] ARM: dts: samsung: exynos4210-i9100: turn off SDIO WLAN chip during system suspend
+Date: Tue, 16 Dec 2025 12:13:48 +0100
+Message-ID: <20251216111359.477459181@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,101 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Gorski <jonas.gorski@gmail.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit bf6e9d2ae1dbafee53ec4ccd126595172e1e5278 ]
+[ Upstream commit 863d69923bdb6f414d0a3f504f1dfaeacbc00b09 ]
 
-Move writing ARL entries into individual functions for each format.
+Commit 8c3170628a9c ("wifi: brcmfmac: keep power during suspend if board
+requires it") changed default behavior of the BRCMFMAC driver, which now
+keeps SDIO card powered during system suspend to enable optional support
+for WOWL. This feature is not supported by the legacy Exynos4 based
+boards and leads to WLAN disfunction after system suspend/resume cycle.
+Fix this by annotating SDIO host used by WLAN chip with
+'cap-power-off-card' property, which should have been there from the
+beginning.
 
-Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20251107080749.26936-4-jonas.gorski@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 8e46aacea426 ("net: dsa: b53: use same ARL search result offset for BCM5325/65")
+Fixes: 8620cc2f99b7 ("ARM: dts: exynos: Add devicetree file for the Galaxy S2")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://patch.msgid.link/20251126102618.3103517-3-m.szyprowski@samsung.com
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 38 ++++++++++++++++++++++----------
- 1 file changed, 26 insertions(+), 12 deletions(-)
+ arch/arm/boot/dts/samsung/exynos4210-i9100.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index 41dcd2d03230d..4c418e0531f73 100644
---- a/drivers/net/dsa/b53/b53_common.c
-+++ b/drivers/net/dsa/b53/b53_common.c
-@@ -1840,6 +1840,16 @@ static void b53_arl_read_entry_25(struct b53_device *dev,
- 	b53_arl_to_entry_25(ent, mac_vid);
- }
+diff --git a/arch/arm/boot/dts/samsung/exynos4210-i9100.dts b/arch/arm/boot/dts/samsung/exynos4210-i9100.dts
+index df229fb8a16be..8a635bee59fa9 100644
+--- a/arch/arm/boot/dts/samsung/exynos4210-i9100.dts
++++ b/arch/arm/boot/dts/samsung/exynos4210-i9100.dts
+@@ -853,6 +853,7 @@ &sdhci_3 {
+ 	#size-cells = <0>;
  
-+static void b53_arl_write_entry_25(struct b53_device *dev,
-+				   const struct b53_arl_entry *ent, u8 idx)
-+{
-+	u64 mac_vid;
-+
-+	b53_arl_from_entry_25(&mac_vid, ent);
-+	b53_write64(dev, B53_ARLIO_PAGE, B53_ARLTBL_MAC_VID_ENTRY(idx),
-+		    mac_vid);
-+}
-+
- static void b53_arl_read_entry_95(struct b53_device *dev,
- 				  struct b53_arl_entry *ent, u8 idx)
- {
-@@ -1852,6 +1862,19 @@ static void b53_arl_read_entry_95(struct b53_device *dev,
- 	b53_arl_to_entry(ent, mac_vid, fwd_entry);
- }
- 
-+static void b53_arl_write_entry_95(struct b53_device *dev,
-+				   const struct b53_arl_entry *ent, u8 idx)
-+{
-+	u32 fwd_entry;
-+	u64 mac_vid;
-+
-+	b53_arl_from_entry(&mac_vid, &fwd_entry, ent);
-+	b53_write64(dev, B53_ARLIO_PAGE, B53_ARLTBL_MAC_VID_ENTRY(idx),
-+		    mac_vid);
-+	b53_write32(dev, B53_ARLIO_PAGE, B53_ARLTBL_DATA_ENTRY(idx),
-+		    fwd_entry);
-+}
-+
- static int b53_arl_read(struct b53_device *dev, const u8 *mac,
- 			u16 vid, struct b53_arl_entry *ent, u8 *idx)
- {
-@@ -1892,9 +1915,8 @@ static int b53_arl_op(struct b53_device *dev, int op, int port,
- 		      const unsigned char *addr, u16 vid, bool is_valid)
- {
- 	struct b53_arl_entry ent;
--	u32 fwd_entry;
--	u64 mac, mac_vid = 0;
- 	u8 idx = 0;
-+	u64 mac;
- 	int ret;
- 
- 	/* Convert the array into a 64-bit MAC */
-@@ -1931,7 +1953,6 @@ static int b53_arl_op(struct b53_device *dev, int op, int port,
- 		/* We could not find a matching MAC, so reset to a new entry */
- 		dev_dbg(dev->dev, "{%pM,%.4d} not found, using idx: %d\n",
- 			addr, vid, idx);
--		fwd_entry = 0;
- 		break;
- 	default:
- 		dev_dbg(dev->dev, "{%pM,%.4d} found, using idx: %d\n",
-@@ -1959,16 +1980,9 @@ static int b53_arl_op(struct b53_device *dev, int op, int port,
- 	ent.is_age = false;
- 	memcpy(ent.mac, addr, ETH_ALEN);
- 	if (is5325(dev) || is5365(dev))
--		b53_arl_from_entry_25(&mac_vid, &ent);
-+		b53_arl_write_entry_25(dev, &ent, idx);
- 	else
--		b53_arl_from_entry(&mac_vid, &fwd_entry, &ent);
--
--	b53_write64(dev, B53_ARLIO_PAGE,
--		    B53_ARLTBL_MAC_VID_ENTRY(idx), mac_vid);
--
--	if (!is5325(dev) && !is5365(dev))
--		b53_write32(dev, B53_ARLIO_PAGE,
--			    B53_ARLTBL_DATA_ENTRY(idx), fwd_entry);
-+		b53_arl_write_entry_95(dev, &ent, idx);
- 
- 	return b53_arl_rw_op(dev, 0);
- }
+ 	non-removable;
++	cap-power-off-card;
+ 	bus-width = <4>;
+ 	mmc-pwrseq = <&wlan_pwrseq>;
+ 	vmmc-supply = <&vtf_reg>;
 -- 
 2.51.0
 
