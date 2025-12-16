@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E873358A8;
-	Tue, 16 Dec 2025 11:19:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED47A3358A8;
+	Tue, 16 Dec 2025 11:19:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765883975; cv=none; b=WhI3CVGJfqQicukY3s/TeGnEHDAeZoel1aXrakaXgp8fRXzChQDs0bKVNusz3gGTuGHH9qv3zS8tCBDlhha36hnRy+TaAi/QFTITHW19KRhzNY8Vh755fn4UNyav7KJuLP5p+PUdJFKtVKnMNrfGlxrC28dMl07ChSX5oXPs3Mg=
+	t=1765883979; cv=none; b=JmqnJzT2X49M1ivZFWG84CCCiZA6yJGoyRCH13PB+jWLUk8QgQ4+kTDIkhn661OOJwakBnVBaH32jU9KrKq0UnX0bU4PRwg9jUX4h7AtRoy0OXAH1VSfa6Fgpsv0X6aiPi2/Jrz7WGvWOIFypKeJatRVwZPI2B3DvZaIrhyrS6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765883975; c=relaxed/simple;
-	bh=D+vmz+KjA1wl8oOVc3g3geEUWNZizbtZpbA8JYDstjw=;
+	s=arc-20240116; t=1765883979; c=relaxed/simple;
+	bh=fDQ/pU1dSh0CXqtWww+Qvn4tvPQJlKvd+M9bi8cQkpk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KoNc1lr1qp49+II66/7J5c2vceXpe3RCQmvlAe5l1JTXPcuRNhvMcynt6mj6R7/1P1B7q5sq8VSVqa+RVKx2BTShBE8u+7A+FmSg+mXoVCa/HGRUxLO4FfdpNSPuCWn67sCAOLVFGYKfK7PCk6nLTku0JerD+tpiwbrrfcE3gLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QT0me6Dm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=CaUG28axs95EZazRnAI2ibgNVK7o/LiW3Gh+Bx8XP/I/2tE2hyAphLNFiuOpG5n2LRsccyWNc9MWmizDtfvCXkHnXx8Fz3Eziq0vtjACKfE8honj19civ3cfwNc9TH+1orVLbVPIjfGtxCTg2RRsUn/FBJkRuA15pgsRi82REyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h2jX2jKC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QT0me6Dm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3B04C4CEF1;
-	Tue, 16 Dec 2025 11:19:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h2jX2jKC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CD82C4CEF1;
+	Tue, 16 Dec 2025 11:19:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765883975;
-	bh=D+vmz+KjA1wl8oOVc3g3geEUWNZizbtZpbA8JYDstjw=;
+	s=korg; t=1765883978;
+	bh=fDQ/pU1dSh0CXqtWww+Qvn4tvPQJlKvd+M9bi8cQkpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QT0me6DmMSseCeaynXQMFM3fm4uzqhnmXO3zS4qbOV0zAt0PqQpjQ75aLVdxZVnWg
-	 cMuo6CxCKTrJQ9HZ27iRUhb9h+x2U50FSKUE1r5H2ZZJx5qzlGCNywRMDWJsZIGdhJ
-	 0rIC0aVKC9u9omOQjGJ1BuQOT7JNeKDRzmltIR8w=
+	b=h2jX2jKCY/RMl5Em+bcHA07SJY3QF5ZyiEu8Oc/d31G5MYpPyzqkAa2Hd9XsQBqSl
+	 OXeOe7PyMeUS/S0x7Rmoaiun5QForbT7/EiG5GXUVUzgk11zlH8ieKFiHG2UlyEQh4
+	 MA99B07yQVVoTuq32xk8T/rWjyIUZmmIKntzpwYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@linaro.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Tianyou Li <tianyou.li@intel.com>,
+	Peter Griffin <peter.griffin@linaro.org>,
+	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 054/354] perf annotate: Check return value of evsel__get_arch() properly
-Date: Tue, 16 Dec 2025 12:10:21 +0100
-Message-ID: <20251216111322.875803301@linuxfoundation.org>
+Subject: [PATCH 6.12 055/354] arm64: dts: exynos: gs101: fix sysreg_apm reg property
+Date: Tue, 16 Dec 2025 12:10:22 +0100
+Message-ID: <20251216111322.911770314@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -46,43 +46,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tianyou Li <tianyou.li@intel.com>
+From: Peter Griffin <peter.griffin@linaro.org>
 
-[ Upstream commit f1204e5846d22fb2fffbd1164eeb19535f306797 ]
+[ Upstream commit 4348c22a4f15dbef1314f1a353d7f053b24e9ace ]
 
-Check the error code of evsel__get_arch() in the symbol__annotate().
-Previously it checked non-zero value but after the refactoring it does
-only for negative values.
+Both the start address and size are incorrect for the apm_sysreg DT
+node. Update to match the TRM (rather than how it was defined
+downstream).
 
-Fixes: 0669729eb0afb0cf ("perf annotate: Factor out evsel__get_arch()")
-Suggested-by: James Clark <james.clark@linaro.org>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Tianyou Li <tianyou.li@intel.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: ea89fdf24fd9 ("arm64: dts: exynos: google: Add initial Google gs101 SoC support")
+Signed-off-by: Peter Griffin <peter.griffin@linaro.org>
+Reviewed-by: André Draszik <andre.draszik@linaro.org>
+Link: https://patch.msgid.link/20251013-automatic-clocks-v1-5-72851ee00300@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/annotate.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/exynos/google/gs101.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/annotate.c b/tools/perf/util/annotate.c
-index 37ce43c4eb8f6..cb8f191e19fd9 100644
---- a/tools/perf/util/annotate.c
-+++ b/tools/perf/util/annotate.c
-@@ -974,7 +974,7 @@ int symbol__annotate(struct map_symbol *ms, struct evsel *evsel,
- 	int err, nr;
+diff --git a/arch/arm64/boot/dts/exynos/google/gs101.dtsi b/arch/arm64/boot/dts/exynos/google/gs101.dtsi
+index a509a59def428..d03987cc4370c 100644
+--- a/arch/arm64/boot/dts/exynos/google/gs101.dtsi
++++ b/arch/arm64/boot/dts/exynos/google/gs101.dtsi
+@@ -1390,9 +1390,9 @@ cmu_apm: clock-controller@17400000 {
+ 			clock-names = "oscclk";
+ 		};
  
- 	err = evsel__get_arch(evsel, &arch);
--	if (err < 0)
-+	if (err)
- 		return err;
+-		sysreg_apm: syscon@174204e0 {
++		sysreg_apm: syscon@17420000 {
+ 			compatible = "google,gs101-apm-sysreg", "syscon";
+-			reg = <0x174204e0 0x1000>;
++			reg = <0x17420000 0x10000>;
+ 		};
  
- 	if (parch)
+ 		pmu_system_controller: system-controller@17460000 {
 -- 
 2.51.0
 
