@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2151365A08;
-	Tue, 16 Dec 2025 12:12:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5992B749C;
+	Tue, 16 Dec 2025 12:12:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887148; cv=none; b=WO7ceH5xswEjgDchBjYl2Y5thre2slHJExD17jJ6Mzif4vToKsDBWUzt1lknz2fa57XUtcRj32rB0gWc27d+btmgrcVWIt2MKoZRLqUE4Do2mPCJnLLoJ9eJ+/SOiUSrPQZ6UYoqYd2CzpH9+xw79o1IJj97bVAzI63cJojgFl0=
+	t=1765887152; cv=none; b=ikmNQFKAi5uPeoy9NKR7sDePWpfDTd0D99gHlE9fOeQiPyKbrI82jZLfK6duZGHzeyW7/9CjGIDZs5TMBfalJ+ZCP6VoRlBuSdir4g9lG3xA3RFpVA+LmzS0l0udcattzzwzX/LniBnWpsgOpSmwI0B7Rv2TCRvXCvX8CfmUwfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887148; c=relaxed/simple;
-	bh=coozyttKnIgaCKmbdwvywM8LUfQEZIA/UQS8gZiMNrw=;
+	s=arc-20240116; t=1765887152; c=relaxed/simple;
+	bh=2njQImmUuqr//3tK1SMhvb/odYYGusP3xbgcXQKkUbU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LtDxKq831YTcnplPYgRn+UWkSjEUkz5aXdDhBBRqX8dpbQVsFk6zHm4/LmvQTb32QupSM/VIxuCtaSsOZDdsOkuCYb+Rdq93Nd9VQpIQ06ewzAAGQUXTEgcId5tXqUwgp/Zy0yrZdzPDIGqQzFELInvCwJ/vh8b0vbvMRyB1AdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WDQjmo90; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y2t/C0tHELSZtOOsPT+H0ht4AoONWXa/2iguV7q4sEZI78/fzFBAbVkga1oRg4ftYFZEjDPIg9uzLQ45XRjO0VfopuAk0VIdfycOioQOiFuhnyZ0qWCRgflTDmWtgHZCn5iqQ0D5WfUFRbh33CYZA5bDHsurQqxjJwVN26/3ogU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m2l5Myqz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WDQjmo90"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53A6DC4CEF5;
-	Tue, 16 Dec 2025 12:12:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m2l5Myqz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D18A9C4CEF5;
+	Tue, 16 Dec 2025 12:12:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887148;
-	bh=coozyttKnIgaCKmbdwvywM8LUfQEZIA/UQS8gZiMNrw=;
+	s=korg; t=1765887152;
+	bh=2njQImmUuqr//3tK1SMhvb/odYYGusP3xbgcXQKkUbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WDQjmo90YMGW6OLVz9y3dFSUYDx5CRQKPlFcqQr8N3oiiisbBNavKCM8YhfcBajjE
-	 PNMAtpo5F/P6yF1DlebsTC13zhOxOllO1DtYTFgav9rY9/CmFxYBz4UpN3HHbrsdUE
-	 sIeU6/krj/C7F43wEW74Nded01mtluZz+jqdnOF8=
+	b=m2l5Myqz8BLQaQuHHFCnEkaRTre9xSASdP8omQXDpiPRH1gNdYuabJFcrnGbEmy8R
+	 tScKkmIhYgKzTvBB57rpXVuIJK4qf6Zr4DHRhE0KOgtVfqPOa0IGs4MtHLWOyB1roR
+	 UIfnDeMU+CZtt7EULRrt/zBnTrmK+iExfpbOAnwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 142/614] task_work: Fix NMI race condition
-Date: Tue, 16 Dec 2025 12:08:29 +0100
-Message-ID: <20251216111406.481388821@linuxfoundation.org>
+Subject: [PATCH 6.18 143/614] drm/rcar-du: dsi: Fix missing parameter in RXSETR_...EN macros
+Date: Tue, 16 Dec 2025 12:08:30 +0100
+Message-ID: <20251216111406.516777981@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,60 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Marek Vasut <marek.vasut+renesas@mailbox.org>
 
-[ Upstream commit ef1ea98c8fffe227e5319215d84a53fa2a4bcebc ]
+[ Upstream commit 42bbf82b73bda18bbc3e158cb6fda040bb586feb ]
 
-  __schedule()
-  // disable irqs
-      <NMI>
-	  task_work_add(current, work, TWA_NMI_CURRENT);
-      </NMI>
-  // current = next;
-  // enable irqs
-      <IRQ>
-	  task_work_set_notify_irq()
-	  test_and_set_tsk_thread_flag(current,
-                                       TIF_NOTIFY_RESUME); // wrong task!
-      </IRQ>
-  // original task skips task work on its next return to user (or exit!)
+The RXSETR_CRCEN(n) and RXSETR_ECCEN(n) macros both take parameter (n),
+add the missing macro parameter. Neither of those macros is used by the
+driver, so for now the bug is harmless.
 
-Fixes: 466e4d801cd4 ("task_work: Add TWA_NMI_CURRENT as an additional notify mode.")
-Reported-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Link: https://patch.msgid.link/20250924080118.425949403@infradead.org
+Fixes: 685e8dae19df ("drm/rcar-du: dsi: Implement DSI command support")
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>
+Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+Reported-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Link: https://patch.msgid.link/20251028232959.109936-2-marek.vasut+renesas@mailbox.org
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/task_work.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/renesas/rcar-du/rcar_mipi_dsi_regs.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/task_work.c b/kernel/task_work.c
-index d1efec571a4a4..0f7519f8e7c93 100644
---- a/kernel/task_work.c
-+++ b/kernel/task_work.c
-@@ -9,7 +9,12 @@ static struct callback_head work_exited; /* all we need is ->next == NULL */
- #ifdef CONFIG_IRQ_WORK
- static void task_work_set_notify_irq(struct irq_work *entry)
- {
--	test_and_set_tsk_thread_flag(current, TIF_NOTIFY_RESUME);
-+	/*
-+	 * no-op IPI
-+	 *
-+	 * TWA_NMI_CURRENT will already have set the TIF flag, all
-+	 * this interrupt does it tickle the return-to-user path.
-+	 */
- }
- static DEFINE_PER_CPU(struct irq_work, irq_work_NMI_resume) =
- 	IRQ_WORK_INIT_HARD(task_work_set_notify_irq);
-@@ -86,6 +91,7 @@ int task_work_add(struct task_struct *task, struct callback_head *work,
- 		break;
- #ifdef CONFIG_IRQ_WORK
- 	case TWA_NMI_CURRENT:
-+		set_tsk_thread_flag(current, TIF_NOTIFY_RESUME);
- 		irq_work_queue(this_cpu_ptr(&irq_work_NMI_resume));
- 		break;
- #endif
+diff --git a/drivers/gpu/drm/renesas/rcar-du/rcar_mipi_dsi_regs.h b/drivers/gpu/drm/renesas/rcar-du/rcar_mipi_dsi_regs.h
+index 76521276e2af8..dd871e17dcf53 100644
+--- a/drivers/gpu/drm/renesas/rcar-du/rcar_mipi_dsi_regs.h
++++ b/drivers/gpu/drm/renesas/rcar-du/rcar_mipi_dsi_regs.h
+@@ -50,8 +50,8 @@
+ #define TXCMPPD3R			0x16c
+ 
+ #define RXSETR				0x200
+-#define RXSETR_CRCEN			(((n) & 0xf) << 24)
+-#define RXSETR_ECCEN			(((n) & 0xf) << 16)
++#define RXSETR_CRCEN(n)			(((n) & 0xf) << 24)
++#define RXSETR_ECCEN(n)			(((n) & 0xf) << 16)
+ #define RXPSETR				0x210
+ #define RXPSETR_LPPDACC			(1 << 0)
+ #define RXPSR				0x220
 -- 
 2.51.0
 
