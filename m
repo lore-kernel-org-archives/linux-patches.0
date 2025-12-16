@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E9FB35C1B1;
-	Tue, 16 Dec 2025 12:14:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A18FA35BDAC;
+	Tue, 16 Dec 2025 12:15:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887298; cv=none; b=mHB/O00iKMeH4CnfEZn2HQd6izAzJmB8xO2iS4XQZSVzOLKj/ek8s87P740izNlZB/6kyH1yBptCMdXneZs8/EEUHLJovzhvxjrCQldFYcC/5EoGXuiZL5xtBr7+0iorkGN3WiS7lLdYoX9utHF4GF1d48UOZO4D3bwjVSxIodU=
+	t=1765887301; cv=none; b=IFIdjpTY3uk4H1gQfEOI1ulmJXVMPt04qZrt14D20eP9i2w2fIV23kFTd1lNgw/avgmALcgkUhqOJziXvPQP55WUoeRVAV7ODThQ7bytuMyOL1A2PQL8kiOQG2cjS5gV67vWw59YfaaF+J/Twjkl+gKVtkcNea3EI2vDhCBuuOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887298; c=relaxed/simple;
-	bh=1wQsLA4GKjqWSAEFbsyXnmJQotEkqhJmxjRaoJLoWhM=;
+	s=arc-20240116; t=1765887301; c=relaxed/simple;
+	bh=cQd7NL2yUGO1idG1dpPXHugLdIh4UXaa/M1fy++rSg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YLIu+VE3vlKOm0JX3Be3zekSF0K9I1G961t1+0BXoUJdux8u8ggNUtY8E/5N2qyLO1Lknd6MbwjM127LbmNO1raBXn2tlAEKSaet+6odtZi+E3dAwGJvtr/y7UR1idE4GvhhJpIVsT0nONUuQ2aB969W5XAvFq7sxXfPVCt8YrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JruAzYCO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DpHFb0uv0Cyf8VRvoA6Cyvzd/+lZr05Z1X1Bl8DGV9Q27hlVaD4oIn71Jh4rU6m8b6G3U1opSIMbWyGhNbB8Skv6Yx5Ltfabck3pFcmEI9HnbbtDveO30MNDM1RrUWX5RZM4vJeTTGPtNN5rPFydLchPHygNv9AXNuiQT7vrOTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AOPnh2Xk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JruAzYCO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82FE5C4CEF1;
-	Tue, 16 Dec 2025 12:14:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AOPnh2Xk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185C3C4CEF1;
+	Tue, 16 Dec 2025 12:15:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887298;
-	bh=1wQsLA4GKjqWSAEFbsyXnmJQotEkqhJmxjRaoJLoWhM=;
+	s=korg; t=1765887301;
+	bh=cQd7NL2yUGO1idG1dpPXHugLdIh4UXaa/M1fy++rSg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JruAzYCOy6AA9lE0MGPfKZXexP5xGCd5adfPz9mnaQNXZZVQwLyopq5+g5565piR3
-	 jNbO4nlWF3kEFQw4z/9DmZYYqwHJNprnGE4f3oWKZfWOp9PTIRIinwe6agap2z4Bo4
-	 SCCAhe8s2533xHPbq67Gttpk8VyMIOZF9nwauAyc=
+	b=AOPnh2XkWD3mXfoCJTVEBZefK8FezgA0iJbMvnmKNTTPiVSIhGvL+cLv8GvHFqMfA
+	 skJ/HC5guUKlLQjdMw88Ed0ggmFEaRuOnox1wYR7W5QNlG3CnaXNlmbveskvbnHv20
+	 9GUP3eKBJfjIdgQSPFl782hJf1Wk9J9EmFiiJQdE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
+	Mike Christie <michael.christie@oracle.com>,
+	Dmitry Bogdanov <d.bogdanov@yadro.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 187/614] scsi: target: Do not write NUL characters into ASCII configfs output
-Date: Tue, 16 Dec 2025 12:09:14 +0100
-Message-ID: <20251216111408.149248558@linuxfoundation.org>
+Subject: [PATCH 6.18 188/614] scsi: target: Fix LUN/device R/W and total command stats
+Date: Tue, 16 Dec 2025 12:09:15 +0100
+Message-ID: <20251216111408.184997414@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,34 +52,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Mike Christie <michael.christie@oracle.com>
 
-[ Upstream commit c03b55f235e283cae49c88b9602fd11096b92eba ]
+[ Upstream commit 95aa2041c654161d1b5c1eca5379d67d91ef1cf2 ]
 
-NUL characters are not allowed in ASCII configfs output. Hence this
-patch.
+In commit 9cf2317b795d ("scsi: target: Move I/O path stats to per CPU")
+I saw we sometimes use %u and also misread the spec. As a result I
+thought all the stats were supposed to be 32-bit only. However, for the
+majority of cases we support currently, the spec specifies u64 bit
+stats. This patch converts the stats changed in the commit above to u64.
 
-Fixes: c66ac9db8d4a ("[SCSI] target: Add LIO target core v4.0.0-rc6")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20251027184639.3501254-2-bvanassche@acm.org
+Fixes: 9cf2317b795d ("scsi: target: Move I/O path stats to per CPU")
+Signed-off-by: Mike Christie <michael.christie@oracle.com>
+Reviewed-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
+Link: https://patch.msgid.link/20250917221338.14813-2-michael.christie@oracle.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/target_core_configfs.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/target/target_core_stat.c | 24 ++++++++++++------------
+ include/target/target_core_base.h | 12 ++++++------
+ 2 files changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/target/target_core_configfs.c b/drivers/target/target_core_configfs.c
-index b19acd662726d..1bd28482e7cb3 100644
---- a/drivers/target/target_core_configfs.c
-+++ b/drivers/target/target_core_configfs.c
-@@ -2772,7 +2772,6 @@ static ssize_t target_lu_gp_members_show(struct config_item *item, char *page)
- 		cur_len = snprintf(buf, LU_GROUP_NAME_BUF, "%s/%s\n",
- 			config_item_name(&hba->hba_group.cg_item),
- 			config_item_name(&dev->dev_group.cg_item));
--		cur_len++; /* Extra byte for NULL terminator */
+diff --git a/drivers/target/target_core_stat.c b/drivers/target/target_core_stat.c
+index 6bdf2d8bd6942..4fdc307ea38bc 100644
+--- a/drivers/target/target_core_stat.c
++++ b/drivers/target/target_core_stat.c
+@@ -282,7 +282,7 @@ static ssize_t target_stat_lu_num_cmds_show(struct config_item *item,
+ 	struct se_device *dev = to_stat_lu_dev(item);
+ 	struct se_dev_io_stats *stats;
+ 	unsigned int cpu;
+-	u32 cmds = 0;
++	u64 cmds = 0;
  
- 		if ((cur_len + len) > PAGE_SIZE || cur_len > LU_GROUP_NAME_BUF) {
- 			pr_warn("Ran out of lu_gp_show_attr"
+ 	for_each_possible_cpu(cpu) {
+ 		stats = per_cpu_ptr(dev->stats, cpu);
+@@ -290,7 +290,7 @@ static ssize_t target_stat_lu_num_cmds_show(struct config_item *item,
+ 	}
+ 
+ 	/* scsiLuNumCommands */
+-	return snprintf(page, PAGE_SIZE, "%u\n", cmds);
++	return snprintf(page, PAGE_SIZE, "%llu\n", cmds);
+ }
+ 
+ static ssize_t target_stat_lu_read_mbytes_show(struct config_item *item,
+@@ -299,7 +299,7 @@ static ssize_t target_stat_lu_read_mbytes_show(struct config_item *item,
+ 	struct se_device *dev = to_stat_lu_dev(item);
+ 	struct se_dev_io_stats *stats;
+ 	unsigned int cpu;
+-	u32 bytes = 0;
++	u64 bytes = 0;
+ 
+ 	for_each_possible_cpu(cpu) {
+ 		stats = per_cpu_ptr(dev->stats, cpu);
+@@ -307,7 +307,7 @@ static ssize_t target_stat_lu_read_mbytes_show(struct config_item *item,
+ 	}
+ 
+ 	/* scsiLuReadMegaBytes */
+-	return snprintf(page, PAGE_SIZE, "%u\n", bytes >> 20);
++	return snprintf(page, PAGE_SIZE, "%llu\n", bytes >> 20);
+ }
+ 
+ static ssize_t target_stat_lu_write_mbytes_show(struct config_item *item,
+@@ -316,7 +316,7 @@ static ssize_t target_stat_lu_write_mbytes_show(struct config_item *item,
+ 	struct se_device *dev = to_stat_lu_dev(item);
+ 	struct se_dev_io_stats *stats;
+ 	unsigned int cpu;
+-	u32 bytes = 0;
++	u64 bytes = 0;
+ 
+ 	for_each_possible_cpu(cpu) {
+ 		stats = per_cpu_ptr(dev->stats, cpu);
+@@ -324,7 +324,7 @@ static ssize_t target_stat_lu_write_mbytes_show(struct config_item *item,
+ 	}
+ 
+ 	/* scsiLuWrittenMegaBytes */
+-	return snprintf(page, PAGE_SIZE, "%u\n", bytes >> 20);
++	return snprintf(page, PAGE_SIZE, "%llu\n", bytes >> 20);
+ }
+ 
+ static ssize_t target_stat_lu_resets_show(struct config_item *item, char *page)
+@@ -1044,7 +1044,7 @@ static ssize_t target_stat_auth_num_cmds_show(struct config_item *item,
+ 	struct se_dev_entry *deve;
+ 	unsigned int cpu;
+ 	ssize_t ret;
+-	u32 cmds = 0;
++	u64 cmds = 0;
+ 
+ 	rcu_read_lock();
+ 	deve = target_nacl_find_deve(nacl, lacl->mapped_lun);
+@@ -1059,7 +1059,7 @@ static ssize_t target_stat_auth_num_cmds_show(struct config_item *item,
+ 	}
+ 
+ 	/* scsiAuthIntrOutCommands */
+-	ret = snprintf(page, PAGE_SIZE, "%u\n", cmds);
++	ret = snprintf(page, PAGE_SIZE, "%llu\n", cmds);
+ 	rcu_read_unlock();
+ 	return ret;
+ }
+@@ -1073,7 +1073,7 @@ static ssize_t target_stat_auth_read_mbytes_show(struct config_item *item,
+ 	struct se_dev_entry *deve;
+ 	unsigned int cpu;
+ 	ssize_t ret;
+-	u32 bytes = 0;
++	u64 bytes = 0;
+ 
+ 	rcu_read_lock();
+ 	deve = target_nacl_find_deve(nacl, lacl->mapped_lun);
+@@ -1088,7 +1088,7 @@ static ssize_t target_stat_auth_read_mbytes_show(struct config_item *item,
+ 	}
+ 
+ 	/* scsiAuthIntrReadMegaBytes */
+-	ret = snprintf(page, PAGE_SIZE, "%u\n", bytes >> 20);
++	ret = snprintf(page, PAGE_SIZE, "%llu\n", bytes >> 20);
+ 	rcu_read_unlock();
+ 	return ret;
+ }
+@@ -1102,7 +1102,7 @@ static ssize_t target_stat_auth_write_mbytes_show(struct config_item *item,
+ 	struct se_dev_entry *deve;
+ 	unsigned int cpu;
+ 	ssize_t ret;
+-	u32 bytes = 0;
++	u64 bytes = 0;
+ 
+ 	rcu_read_lock();
+ 	deve = target_nacl_find_deve(nacl, lacl->mapped_lun);
+@@ -1117,7 +1117,7 @@ static ssize_t target_stat_auth_write_mbytes_show(struct config_item *item,
+ 	}
+ 
+ 	/* scsiAuthIntrWrittenMegaBytes */
+-	ret = snprintf(page, PAGE_SIZE, "%u\n", bytes >> 20);
++	ret = snprintf(page, PAGE_SIZE, "%llu\n", bytes >> 20);
+ 	rcu_read_unlock();
+ 	return ret;
+ }
+diff --git a/include/target/target_core_base.h b/include/target/target_core_base.h
+index c4d9116904aa0..27e1f9d5f0c6c 100644
+--- a/include/target/target_core_base.h
++++ b/include/target/target_core_base.h
+@@ -671,9 +671,9 @@ struct se_lun_acl {
+ };
+ 
+ struct se_dev_entry_io_stats {
+-	u32			total_cmds;
+-	u32			read_bytes;
+-	u32			write_bytes;
++	u64			total_cmds;
++	u64			read_bytes;
++	u64			write_bytes;
+ };
+ 
+ struct se_dev_entry {
+@@ -806,9 +806,9 @@ struct se_device_queue {
+ };
+ 
+ struct se_dev_io_stats {
+-	u32			total_cmds;
+-	u32			read_bytes;
+-	u32			write_bytes;
++	u64			total_cmds;
++	u64			read_bytes;
++	u64			write_bytes;
+ };
+ 
+ struct se_device {
 -- 
 2.51.0
 
