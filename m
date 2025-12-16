@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A14D35771A;
-	Tue, 16 Dec 2025 12:14:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 845A9355808;
+	Tue, 16 Dec 2025 12:14:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887255; cv=none; b=uMfqEVmSvwh4up/Chz8EntnBj6WJz6/JtMu3dJVzWQ+ZOsZkzuwI2ugcK1XMgAfSz7CD094fqiJIzBDwwrzbWdGwkP9DplRp6mCrGLGX/dF3E9woM4/8cNkxEdetskSNayT6b5CIsXz4URxaf8X2rYfX8X5GIO9285+iI1MbfS8=
+	t=1765887258; cv=none; b=cLfhHEgm77CZLaXDN74X76VvWTTvOeW0JaRF28mKKziJ/6/c0c0WBFiCf+PdtpUAZy5fZeW3MJH1M9VeZcylHQkWbrpoqEL46oZy4EhY5nXlh8IOXZlr8n6LuwI0rSXCHjklwgG0kxM8aGEJ1ekZfGj0KCAS6wGqFLrEPvpQQ4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887255; c=relaxed/simple;
-	bh=ZOyuIJ1xZCRkjyMq6AVA09XPRV+xMMxzvOc7N8TtTts=;
+	s=arc-20240116; t=1765887258; c=relaxed/simple;
+	bh=4ZNb+gOF025MZr9gPbktjoE0fteH/nBRF2p5x+5vK64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ins4+0ohL7p0pVxzNLgVffat2r7hFm4B8N/Ymh/IaQm0j2sh705eJU9LVKkriaHJIhfJob14u0lNnERYlkorNiDPYeJ1cLy4O6JAkpqhLEZ628ch4N7lSZaXkmSTSzvP4QPJR4AY1swny7FBdoMuqarfGWsnbwnk1Y+0YzTLRmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CP74uH6Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OOPlcg3/91FHHv4mYZvZytv8UQUoYK8FBrpEvFoaMbbwdCdhICXCi3OAL4nkqSyusJGjfmqBgClrMJWfQTl8Vvio5ffnnQDTSDOtNj8ROTpUvnM3kZtJI0uCv4Q8CUeLCVaX4eo35lk7iyS11re8SEF+X5gnZzXyqhF1MMrhWZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zW64TyQ/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CP74uH6Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1913C4CEF1;
-	Tue, 16 Dec 2025 12:14:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zW64TyQ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FB3BC4CEF1;
+	Tue, 16 Dec 2025 12:14:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887255;
-	bh=ZOyuIJ1xZCRkjyMq6AVA09XPRV+xMMxzvOc7N8TtTts=;
+	s=korg; t=1765887258;
+	bh=4ZNb+gOF025MZr9gPbktjoE0fteH/nBRF2p5x+5vK64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CP74uH6YQqpeXjcZVzFmRaf26onJvsPmrS+gi90q7YDG40DiKItik3pFjuVOA4MiY
-	 ghrCT6d6Cy415n1BfWDAqibY0NQ9JcyPdLko0OYMFjeme9PoQnH/+AL/0/+YRnG9kC
-	 c+KVHo2dzUDe6J/z1dFvF00RFyNFtlqsbgvA8cCw=
+	b=zW64TyQ/jCsLA/zfkde3gSvJfeeWc9Q2w0Xorvh0qDyBaVZy4KAz68mPw73lWFRFo
+	 CH2JV8XiVHnPVrys4Mi1LABQNdRlbQh6H6a9mgit942shihWUxxSn+oC8MiTG7ufOs
+	 cUvw/KNhew44FXOD3Pc4H2tw5i+HsEVy7oCA92oI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Kuan-Wei Chiu <visitorckw@gmail.com>,
+	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 131/614] ARM: dts: renesas: gose: Remove superfluous port property
-Date: Tue, 16 Dec 2025 12:08:18 +0100
-Message-ID: <20251216111406.082202380@linuxfoundation.org>
+Subject: [PATCH 6.18 168/614] interconnect: debugfs: Fix incorrect error handling for NULL path
+Date: Tue, 16 Dec 2025 12:08:55 +0100
+Message-ID: <20251216111407.424642090@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,37 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-[ Upstream commit 00df14f34615630f92f97c9d6790bd9d25c4242d ]
+[ Upstream commit 6bfe104fd0f94d0248af22c256ce725ee087157b ]
 
-'bus-width' is defined for the corresponding vin input port already.
-No need to declare it in the output port again. Fixes:
+The icc_commit_set() function, used by the debugfs interface, checks
+the validity of the global cur_path pointer using IS_ERR_OR_NULL().
+However, in the specific case where cur_path is NULL, while
+IS_ERR_OR_NULL(NULL) correctly evaluates to true, the subsequent call
+to PTR_ERR(NULL) returns 0.
 
-    arch/arm/boot/dts/renesas/r8a7793-gose.dtb: composite-in@20 (adi,adv7180cp): ports:port@3:endpoint: Unevaluated properties are not allowed ('bus-width' was unexpected)
-    from schema $id: http://devicetree.org/schemas/media/i2c/adi,adv7180.yaml#
+This causes the function to return a success code (0) instead of an
+error, misleading the user into believing their bandwidth request was
+successfully committed when, in fact, no operation was performed.
 
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20250929093616.17679-2-wsa+renesas@sang-engineering.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fix this by adding an explicit check to return -EINVAL if cur_path is
+NULL. This prevents silent failures and ensures that an invalid
+operational sequence is immediately and clearly reported as an error.
+
+Fixes: 770c69f037c1 ("interconnect: Add debugfs test client")
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Link: https://lore.kernel.org/r/20251010151447.2289779-1-visitorckw@gmail.com
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/renesas/r8a7793-gose.dts | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/interconnect/debugfs-client.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/renesas/r8a7793-gose.dts b/arch/arm/boot/dts/renesas/r8a7793-gose.dts
-index 45b267ec26794..5c6928c941aca 100644
---- a/arch/arm/boot/dts/renesas/r8a7793-gose.dts
-+++ b/arch/arm/boot/dts/renesas/r8a7793-gose.dts
-@@ -373,7 +373,6 @@ adv7180_in: endpoint {
- 				port@3 {
- 					reg = <3>;
- 					adv7180_out: endpoint {
--						bus-width = <8>;
- 						remote-endpoint = <&vin1ep>;
- 					};
- 				};
+diff --git a/drivers/interconnect/debugfs-client.c b/drivers/interconnect/debugfs-client.c
+index bc3fd8a7b9eb4..778deeb4a7e8a 100644
+--- a/drivers/interconnect/debugfs-client.c
++++ b/drivers/interconnect/debugfs-client.c
+@@ -117,7 +117,12 @@ static int icc_commit_set(void *data, u64 val)
+ 
+ 	mutex_lock(&debugfs_lock);
+ 
+-	if (IS_ERR_OR_NULL(cur_path)) {
++	if (!cur_path) {
++		ret = -EINVAL;
++		goto out;
++	}
++
++	if (IS_ERR(cur_path)) {
+ 		ret = PTR_ERR(cur_path);
+ 		goto out;
+ 	}
 -- 
 2.51.0
 
