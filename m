@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A5C35FF58;
-	Tue, 16 Dec 2025 12:08:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF5635FF58;
+	Tue, 16 Dec 2025 12:08:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886880; cv=none; b=NfA0r8qJHqymx+mnqoPO2F8IZiKHJPg6PKBvPNr6S8ezU7ypBbT4hU6etPcyWe6tA1h6yIo6nWR/x3ywamvhyT0MpShC/l2QyVLVokq08Y4rH3U0WvPJN2SGhtvMJfT+qpJM2o5LZ7UY9p/YDFAfTwngslzL3ts9ZY+7VpIL1wY=
+	t=1765886883; cv=none; b=i9OeoAX9dleM5bHc55vIqR7RvxNVPwUXlM4Zke2nXurhgXcuzxxUwmHvABOiVsHhVn6vZNmzFsxDvRfhcObqu+gudh1e7jvoA1ujR7RtrewehhacwTIU1yh9ZReLY0IOT+Ii8D2eWY4TVxMReSd880HwYHKl+RviY4HmfSth2mU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886880; c=relaxed/simple;
-	bh=8JUVcza+tSbSqQiuSsVq+YJcR0KHijgE/6S6GH6Fexo=;
+	s=arc-20240116; t=1765886883; c=relaxed/simple;
+	bh=G9QZ7UBvRWfAOtAriJxyBQPAM/aV1PoSAdhWeaNMFzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r/FmqNh4UjAmsz44dxT5OQlFavuO3//XcW/a/9qRYNtCrdMxumLfGdVDzU3pT1duECRWdgWx+NyeCLN9I89e2qrMDnMiiOTsL9Fvio5wHW8yx05ykHnTBtMHLIbsKPdds8UUv6k0gvB3diNYcASasQPzKp4oKN9g1RtVn/qJmOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jf9ouohI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JIrgHDnzcXdXoKLzC7vD4GCfZ9AYVMlfF+9MHnKS7P4Cd5C8+TQEppALzARWohi2j9LkB+Sj+k76JomtD8WTn97qlxuq72uxXltpBR2V8zRpJefwSMYdOoaea8FzFZ1rxqiGYPqmP1eiCVPhDbH2bEA5hURneZwzG+1v+MMo2Hk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UrPH1nfX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jf9ouohI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA621C4CEF1;
-	Tue, 16 Dec 2025 12:07:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UrPH1nfX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F215C4CEF1;
+	Tue, 16 Dec 2025 12:08:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886880;
-	bh=8JUVcza+tSbSqQiuSsVq+YJcR0KHijgE/6S6GH6Fexo=;
+	s=korg; t=1765886883;
+	bh=G9QZ7UBvRWfAOtAriJxyBQPAM/aV1PoSAdhWeaNMFzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jf9ouohIA/PapTzFYpXv/pdz9I1g64NoKej6CRnQAmEIXp1wglTCqqMNsBc9WU3jS
-	 CgZ057w9k4BzIk5JLn1bvsqlAukkUXKXPe5bHPfwwzpLCIokJkYXdJQVd2K5brMrs9
-	 zvUQkJxZZcdkYP4qsgTKrMPyBSXhQ93Hqx8Yx6Vk=
+	b=UrPH1nfXL9EETRaH6E7BhZdYWq1KXwcG8fPWhsN3mO2mgJnUkIaDX/oXHslywbwLA
+	 FKT9vofQBYl7fV/fcRzZKPeeAnFb9m4dFguH2j+jV42bm9w2AZ7/Q+r8ZVKVxYi7Tj
+	 LL5YKn1mdKm/Awhb9nXlIOJZX09kuUHw913oM4s0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 028/614] clk: renesas: cpg-mssr: Add missing 1ms delay into reset toggle callback
-Date: Tue, 16 Dec 2025 12:06:35 +0100
-Message-ID: <20251216111402.328852442@linuxfoundation.org>
+Subject: [PATCH 6.18 029/614] clk: renesas: cpg-mssr: Read back reset registers to assure values latched
+Date: Tue, 16 Dec 2025 12:06:36 +0100
+Message-ID: <20251216111402.365162634@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -53,53 +54,119 @@ Content-Transfer-Encoding: 8bit
 
 From: Marek Vasut <marek.vasut+renesas@mailbox.org>
 
-[ Upstream commit 62abfd7bedc2b3d86d4209a4146f9d2b5ae21fab ]
+[ Upstream commit b91401af6c00ffab003698bfabd4c166df30748b ]
 
-R-Car V4H Reference Manual R19UH0186EJ0130 Rev.1.30 Apr. 21, 2025 page
-583 Figure 9.3.1(a) Software Reset flow (A) as well as flow (B) / (C)
-indicate after reset has been asserted by writing a matching reset bit
-into register SRCR, it is mandatory to wait 1ms.
+On R-Car V4H, the PCIEC controller DBI read would generate an SError in
+case the controller reset is released by writing SRSTCLR register first,
+and immediately afterward reading some PCIEC controller DBI register.
+The issue triggers in rcar_gen4_pcie_additional_common_init() on
+dw_pcie_readl_dbi(dw, PCIE_PORT_LANE_SKEW), which on V4H is the first
+read after reset_control_deassert(dw->core_rsts[DW_PCIE_PWR_RST].rstc).
 
-This 1ms delay is documented on R-Car V4H and V4M, it is currently
-unclear whether S4 is affected as well.  This patch does apply the extra
-delay on R-Car S4 as well.
+The reset controller which contains the SRSTCLR register and the PCIEC
+controller which contains the DBI register share the same root access
+bus, but the bus then splits into separate segments before reaching each
+IP.  Even if the SRSTCLR write access was posted on the bus before the
+DBI read access, it seems the DBI read access may reach the PCIEC
+controller before the SRSTCLR write completed, and trigger the SError.
 
-Fix the reset driver to respect the additional delay when toggling
-resets.  Drivers which use separate reset_control_(de)assert() must
-assure matching delay in their driver code.
+Mitigate the issue by adding a dummy SRSTCLR read, which assures the
+SRSTCLR write completes fully and is latched into the reset controller,
+before the PCIEC DBI read access can occur.
 
 Fixes: 0ab55cf18341 ("clk: renesas: cpg-mssr: Add support for R-Car V4H")
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
 Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20250918030552.331389-1-marek.vasut+renesas@mailbox.org
+Link: https://patch.msgid.link/20250922162113.113223-1-marek.vasut+renesas@mailbox.org
 Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/renesas-cpg-mssr.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/clk/renesas/renesas-cpg-mssr.c | 46 ++++++++++++--------------
+ 1 file changed, 21 insertions(+), 25 deletions(-)
 
 diff --git a/drivers/clk/renesas/renesas-cpg-mssr.c b/drivers/clk/renesas/renesas-cpg-mssr.c
-index de1cf7ba45b78..7063d896249ea 100644
+index 7063d896249ea..a0a68ec0490f7 100644
 --- a/drivers/clk/renesas/renesas-cpg-mssr.c
 +++ b/drivers/clk/renesas/renesas-cpg-mssr.c
-@@ -689,8 +689,15 @@ static int cpg_mssr_reset(struct reset_controller_dev *rcdev,
- 	/* Reset module */
- 	writel(bitmask, priv->pub.base0 + priv->reset_regs[reg]);
+@@ -676,18 +676,32 @@ static int __init cpg_mssr_add_clk_domain(struct device *dev,
  
--	/* Wait for at least one cycle of the RCLK clock (@ ca. 32 kHz) */
--	udelay(35);
-+	/*
-+	 * On R-Car Gen4, delay after SRCR has been written is 1ms.
-+	 * On older SoCs, delay after SRCR has been written is 35us
-+	 * (one cycle of the RCLK clock @ ca. 32 kHz).
-+	 */
-+	if (priv->reg_layout == CLK_REG_LAYOUT_RCAR_GEN4)
-+		usleep_range(1000, 2000);
-+	else
-+		usleep_range(35, 1000);
+ #define rcdev_to_priv(x)	container_of(x, struct cpg_mssr_priv, rcdev)
+ 
+-static int cpg_mssr_reset(struct reset_controller_dev *rcdev,
+-			  unsigned long id)
++static int cpg_mssr_reset_operate(struct reset_controller_dev *rcdev,
++				  const char *func, bool set, unsigned long id)
+ {
+ 	struct cpg_mssr_priv *priv = rcdev_to_priv(rcdev);
+ 	unsigned int reg = id / 32;
+ 	unsigned int bit = id % 32;
++	const u16 off = set ? priv->reset_regs[reg] : priv->reset_clear_regs[reg];
+ 	u32 bitmask = BIT(bit);
+ 
+-	dev_dbg(priv->dev, "reset %u%02u\n", reg, bit);
++	if (func)
++		dev_dbg(priv->dev, "%s %u%02u\n", func, reg, bit);
++
++	writel(bitmask, priv->pub.base0 + off);
++	readl(priv->pub.base0 + off);
++	barrier_data(priv->pub.base0 + off);
++
++	return 0;
++}
++
++static int cpg_mssr_reset(struct reset_controller_dev *rcdev,
++			  unsigned long id)
++{
++	struct cpg_mssr_priv *priv = rcdev_to_priv(rcdev);
+ 
+ 	/* Reset module */
+-	writel(bitmask, priv->pub.base0 + priv->reset_regs[reg]);
++	cpg_mssr_reset_operate(rcdev, "reset", true, id);
+ 
+ 	/*
+ 	 * On R-Car Gen4, delay after SRCR has been written is 1ms.
+@@ -700,36 +714,18 @@ static int cpg_mssr_reset(struct reset_controller_dev *rcdev,
+ 		usleep_range(35, 1000);
  
  	/* Release module from reset state */
- 	writel(bitmask, priv->pub.base0 + priv->reset_clear_regs[reg]);
+-	writel(bitmask, priv->pub.base0 + priv->reset_clear_regs[reg]);
+-
+-	return 0;
++	return cpg_mssr_reset_operate(rcdev, NULL, false, id);
+ }
+ 
+ static int cpg_mssr_assert(struct reset_controller_dev *rcdev, unsigned long id)
+ {
+-	struct cpg_mssr_priv *priv = rcdev_to_priv(rcdev);
+-	unsigned int reg = id / 32;
+-	unsigned int bit = id % 32;
+-	u32 bitmask = BIT(bit);
+-
+-	dev_dbg(priv->dev, "assert %u%02u\n", reg, bit);
+-
+-	writel(bitmask, priv->pub.base0 + priv->reset_regs[reg]);
+-	return 0;
++	return cpg_mssr_reset_operate(rcdev, "assert", true, id);
+ }
+ 
+ static int cpg_mssr_deassert(struct reset_controller_dev *rcdev,
+ 			     unsigned long id)
+ {
+-	struct cpg_mssr_priv *priv = rcdev_to_priv(rcdev);
+-	unsigned int reg = id / 32;
+-	unsigned int bit = id % 32;
+-	u32 bitmask = BIT(bit);
+-
+-	dev_dbg(priv->dev, "deassert %u%02u\n", reg, bit);
+-
+-	writel(bitmask, priv->pub.base0 + priv->reset_clear_regs[reg]);
+-	return 0;
++	return cpg_mssr_reset_operate(rcdev, "deassert", false, id);
+ }
+ 
+ static int cpg_mssr_status(struct reset_controller_dev *rcdev,
 -- 
 2.51.0
 
