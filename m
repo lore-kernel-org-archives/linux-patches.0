@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70D2B3451BF;
-	Tue, 16 Dec 2025 11:57:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D063451DB;
+	Tue, 16 Dec 2025 11:57:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886272; cv=none; b=HtCDJwdYUxXVSc+isRXMoKOY1D2Mawut8n8jsNBt4WlsfmfnB5lCiBVG4YhkDhRCojtC3eTGJR4hFnv3zR7TaWvx1SQxdm9dP+esRVaw86YJsjsn2q4YonA/cSflFzwfe3RRLhytRMMJbn+yBSAyIpe1esN0QZMatv0CaAOpBY0=
+	t=1765886275; cv=none; b=IDbeTYyMbcP7INSbamkA3w748neQOtgdoKBorejq5gRBsTsQ7xT8GUVCI3C/QnCsjDujxCFj3ar8kPc8sCV6K/YO7gne2r6tlzYHIq8wCPPsa+yq7UvaKe0w2wLQ18rdAxmhpcxEa/zXXCgeHrPuGlrV+MzHIUOTEzvQTi3c52g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886272; c=relaxed/simple;
-	bh=EyRCKv2NApV1PQLD6KgCY4F4cZu0xbRRWn1g6uBc1KM=;
+	s=arc-20240116; t=1765886275; c=relaxed/simple;
+	bh=pgQYHb19+GlOsnm6pkfnFiOrMzSn+GCKvIkTx6LdfN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iYcL87YBt1niL3FFvGw30zW809zhMrDQcLrlsLFKXZzeX39MwVE9U/uuHAyHdMOuSUxnu5ZH6iBhAHcOFGH/NT5Rn/xz4LeqcAuLHpkGBtRmX00bsk8KS87J9CedREkHdUmReWOYvCZWyiodtJqgtr5+Q2gwmv3W3/+3t6dW7uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LEBnaRy8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=grhRfVhr6RLoLMCPYNcByJ7M5/EqXGSfPOhC1KmIzJI2zZokegn7Q7qqWaNWwpS8x5c31tBX+EVkr5q88q8M3D/ARy9z8DaJ3xfPrYWpJ3yNYaDu6EOosqB8ju13xqFOKDU6QT6kUXEQqGFVmgDi4MsmeRqhuMUBMoUr1Wzlvlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ChmDTulN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LEBnaRy8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE14DC4CEF1;
-	Tue, 16 Dec 2025 11:57:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ChmDTulN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13EDAC4CEF1;
+	Tue, 16 Dec 2025 11:57:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886272;
-	bh=EyRCKv2NApV1PQLD6KgCY4F4cZu0xbRRWn1g6uBc1KM=;
+	s=korg; t=1765886275;
+	bh=pgQYHb19+GlOsnm6pkfnFiOrMzSn+GCKvIkTx6LdfN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LEBnaRy8iZZ9yjhs5aigBn1QkCxrWXaQscgKULUxvKEPs0iP1iZ8ptLehex5ScIwH
-	 ICTWd+g4J3uglu3NzMppxCtc5ix3h1LReuofKjDQnU5EIW+smfLHATOMGc/q8+w4Qa
-	 nOu8pvNG/Md+Xt7U/I1+lPKbrdvqY3+3MZCsJMtI=
+	b=ChmDTulNLm+UEzZgjF0rnaJXQjw9c9k6txDyzT2xwE5x+OhUgzcYnjyG8+FtYwYuX
+	 V7zwAgQXHmgvHLmLwsnjb2VuSFHjViPnneSL7qSHHGtvJFX0MepMnA/z3VbUBoz5CC
+	 UhWK7RlmswX9q/r5cLUjBndWNayp21Czq9/i55r8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akash Goel <akash.goel@arm.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Steven Price <steven.price@arm.com>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 355/507] drm/panthor: Avoid adding of kernel BOs to extobj list
-Date: Tue, 16 Dec 2025 12:13:16 +0100
-Message-ID: <20251216111358.318068712@linuxfoundation.org>
+Subject: [PATCH 6.17 356/507] clocksource/drivers/ralink: Fix resource leaks in init error path
+Date: Tue, 16 Dec 2025 12:13:17 +0100
+Message-ID: <20251216111358.354220705@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,62 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akash Goel <akash.goel@arm.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit ce04ec03a9c2c4f3e60e26f21311b25d5a478208 ]
+[ Upstream commit 2ba8e2aae1324704565a7d4d66f199d056c9e3c6 ]
 
-The kernel BOs unnecessarily got added to the external objects list
-of drm_gpuvm, when mapping to GPU, which would have resulted in few
-extra CPU cycles being spent at the time of job submission as
-drm_exec_until_all_locked() loop iterates over all external objects.
+The ralink_systick_init() function does not release all acquired resources
+on its error paths. If irq_of_parse_and_map() or a subsequent call fails,
+the previously created I/O memory mapping and IRQ mapping are leaked.
 
-Kernel BOs are private to a VM and so they share the dma_resv object of
-the dummy GEM object created for a VM. Use of DRM_EXEC_IGNORE_DUPLICATES
-flag ensured the recursive locking of the dummy GEM object was ignored.
-Also no extra space got allocated to add fences to the dma_resv object
-of dummy GEM object. So no other impact apart from few extra CPU cycles.
+Add goto-based error handling labels to ensure that all allocated
+resources are correctly freed.
 
-This commit sets the pointer to dma_resv object of GEM object of
-kernel BOs before they are mapped to GPU, to prevent them from
-being added to external objects list.
-
-v2: Add R-bs and fixes tags
-
-Fixes: 8a1cc07578bf ("drm/panthor: Add GEM logical block")
-Signed-off-by: Akash Goel <akash.goel@arm.com>
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Link: https://patch.msgid.link/20251120172118.2741724-1-akash.goel@arm.com
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+Fixes: 1f2acc5a8a0a ("MIPS: ralink: Add support for systick timer found on newer ralink SoC")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Link: https://patch.msgid.link/20251030090710.1603-1-vulab@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_gem.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/clocksource/timer-ralink.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_gem.c b/drivers/gpu/drm/panthor/panthor_gem.c
-index 6830a89a7c10b..aca09bc449fc1 100644
---- a/drivers/gpu/drm/panthor/panthor_gem.c
-+++ b/drivers/gpu/drm/panthor/panthor_gem.c
-@@ -145,6 +145,9 @@ panthor_kernel_bo_create(struct panthor_device *ptdev, struct panthor_vm *vm,
- 	bo = to_panthor_bo(&obj->base);
- 	kbo->obj = &obj->base;
- 	bo->flags = bo_flags;
-+	bo->exclusive_vm_root_gem = panthor_vm_root_gem(vm);
-+	drm_gem_object_get(bo->exclusive_vm_root_gem);
-+	bo->base.base.resv = bo->exclusive_vm_root_gem->resv;
+diff --git a/drivers/clocksource/timer-ralink.c b/drivers/clocksource/timer-ralink.c
+index 6ecdb4228f763..68434d9ed9107 100644
+--- a/drivers/clocksource/timer-ralink.c
++++ b/drivers/clocksource/timer-ralink.c
+@@ -130,14 +130,15 @@ static int __init ralink_systick_init(struct device_node *np)
+ 	systick.dev.irq = irq_of_parse_and_map(np, 0);
+ 	if (!systick.dev.irq) {
+ 		pr_err("%pOFn: request_irq failed", np);
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto err_iounmap;
+ 	}
  
- 	if (vm == panthor_fw_vm(ptdev))
- 		debug_flags |= PANTHOR_DEBUGFS_GEM_USAGE_FLAG_FW_MAPPED;
-@@ -168,9 +171,6 @@ panthor_kernel_bo_create(struct panthor_device *ptdev, struct panthor_vm *vm,
- 		goto err_free_va;
+ 	ret = clocksource_mmio_init(systick.membase + SYSTICK_COUNT, np->name,
+ 				    SYSTICK_FREQ, 301, 16,
+ 				    clocksource_mmio_readl_up);
+ 	if (ret)
+-		return ret;
++		goto err_free_irq;
  
- 	kbo->vm = panthor_vm_get(vm);
--	bo->exclusive_vm_root_gem = panthor_vm_root_gem(vm);
--	drm_gem_object_get(bo->exclusive_vm_root_gem);
--	bo->base.base.resv = bo->exclusive_vm_root_gem->resv;
- 	return kbo;
+ 	clockevents_register_device(&systick.dev);
  
- err_free_va:
+@@ -145,6 +146,12 @@ static int __init ralink_systick_init(struct device_node *np)
+ 			np, systick.dev.mult, systick.dev.shift);
+ 
+ 	return 0;
++
++err_free_irq:
++	irq_dispose_mapping(systick.dev.irq);
++err_iounmap:
++	iounmap(systick.membase);
++	return ret;
+ }
+ 
+ TIMER_OF_DECLARE(systick, "ralink,cevt-systick", ralink_systick_init);
 -- 
 2.51.0
 
