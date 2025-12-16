@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE11D2459D7;
-	Tue, 16 Dec 2025 11:19:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEFBC2459D7;
+	Tue, 16 Dec 2025 11:19:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765883965; cv=none; b=LNn5cS+6O9/hBWT8yj0Q5+pNCBcqVpi2b5u9W+4Fkyknox+DMaHdAEBcoQ8FKSxK67QC0gOwqVLRvj2QsQ1CZEbqLR3v8JDxulbxvKxZ+OF6X9CAbo7+OZd+giDIhpI3bsgzi6iIranv8cIw0o6UiaL/3edexVhwaGguihm/6Dk=
+	t=1765883969; cv=none; b=EmBn/VLDiOihQQ3YDySkxzsEfrpywLu1yy5dnDlCFeHECVAMZ2948MwgDYlJKOohV4cRMBXHxQwsK/9l/a6tUS2Zk3UzGUeOYoK2O/HVPLx6Xfu6/hLSjKwvU5aZRgCmeha5Pq48rP1juROhPYRKXQJjk+ULNaWp+6mANekrJbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765883965; c=relaxed/simple;
-	bh=Cyv2UlWQT255qyTQHiwNLh8cBfHfFJzCQ7sedmgSZGE=;
+	s=arc-20240116; t=1765883969; c=relaxed/simple;
+	bh=k7UqO9ZI0GcdJ6fzjxI1yzMXEZVkghOuSYeV1Wxm15w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F9OfjOMMXkhr4LQRm1iEkBupsdhsO9K5sFve6yYzIbZnX1aB1MtGiCBx/BXJQKIrmmSVYPbE+bi35HfmOP6IzSgsEAk4NlNh/8/15sfO/zD9JxM1Taz8DsWJdttGn0LetQLwE7+GjUTEseMQPjCO3VrdHLNa5j6irq4CcMwHtsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mijd0Awn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N2m6dP/fxEOpmaCEZGUZ5XC607HicsYlwyl9DyY+r+vKOIkwk4qlzCwUR9ozmrGmu8Ku6RKetIZy5WHjB2fcxvZi+4dYE0ov0smB4caliXbfThVvV4U3fCyvO1xMdcskHQRjXUFjZaFLP5nYUdSeylbsjzcPIWxQMFiyHjuoOeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JubuZG3S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mijd0Awn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43E22C4CEF1;
-	Tue, 16 Dec 2025 11:19:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JubuZG3S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54866C4CEF1;
+	Tue, 16 Dec 2025 11:19:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765883965;
-	bh=Cyv2UlWQT255qyTQHiwNLh8cBfHfFJzCQ7sedmgSZGE=;
+	s=korg; t=1765883968;
+	bh=k7UqO9ZI0GcdJ6fzjxI1yzMXEZVkghOuSYeV1Wxm15w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mijd0AwnlLv5KR32LPV680KWyan69m4FB/1qJHTzSGNggA1zFaEcWD1Iyu68R3Bw2
-	 c4inYzNrb6ZeZzZ6jX0Nj47ZdtoCFE+R+nagsIC+n7s/ciekjS77bQ05Yl5w4mC44Y
-	 KOExo0LA+Khdrm/A2rLoKwLrhlKefDJnq4tq860g=
+	b=JubuZG3SVTF4OX2nERSdGcut5Mvfhs0xv6POlLc7tSIgzkzxw80fngxudzHAB3Cmm
+	 swlqUiHG4YfgAqEgV36prfjW2GC4OYG/wSsomr4rNLErSIBU6Eh0aLd13g7XqMCgDR
+	 OxRrHRYbg9iy/owdicyXpYJKq3Bcp171SgLp4ZlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Peng Fan <peng.fan@nxp.com>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 051/354] arm64: dts: imx8mm-venice-gw72xx: remove unused sdhc1 pinctrl
-Date: Tue, 16 Dec 2025 12:10:18 +0100
-Message-ID: <20251216111322.765911134@linuxfoundation.org>
+Subject: [PATCH 6.12 052/354] arm64: dts: imx8mp-venice-gw702x: remove off-board uart
+Date: Tue, 16 Dec 2025 12:10:19 +0100
+Message-ID: <20251216111322.803557535@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -54,42 +54,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Tim Harvey <tharvey@gateworks.com>
 
-[ Upstream commit d949b8d12d6e8fa119bca10d3157cd42e810f6f7 ]
+[ Upstream commit effe98060f70eb96e142f656e750d6af275ceac3 ]
 
-The SDHC1 interface is not used on the imx8mm-venice-gw72xx. Remove the
-unused pinctrl_usdhc1 iomux node.
+UART1 and UART3 go to a connector for use on a baseboard and as such are
+defined in the baseboard device-trees. Remove them from the gw702x SOM
+device-tree.
 
-Fixes: 6f30b27c5ef5 ("arm64: dts: imx8mm: Add Gateworks i.MX 8M Mini Development Kits")
+Fixes: 0d5b288c2110 ("arm64: dts: freescale: Add imx8mp-venice-gw7905-2x")
 Signed-off-by: Tim Harvey <tharvey@gateworks.com>
 Reviewed-by: Peng Fan <peng.fan@nxp.com>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/freescale/imx8mm-venice-gw72xx.dtsi      | 11 -----------
- 1 file changed, 11 deletions(-)
+ .../dts/freescale/imx8mp-venice-gw702x.dtsi   | 28 -------------------
+ 1 file changed, 28 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mm-venice-gw72xx.dtsi b/arch/arm64/boot/dts/freescale/imx8mm-venice-gw72xx.dtsi
-index 752caa38eb03b..266038fbbef97 100644
---- a/arch/arm64/boot/dts/freescale/imx8mm-venice-gw72xx.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mm-venice-gw72xx.dtsi
-@@ -351,17 +351,6 @@ MX8MM_IOMUXC_UART4_TXD_UART4_DCE_TX	0x140
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-venice-gw702x.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-venice-gw702x.dtsi
+index 45c7082c9df71..e8688695df780 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-venice-gw702x.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-venice-gw702x.dtsi
+@@ -393,13 +393,6 @@ &i2c3 {
+ 	status = "okay";
+ };
+ 
+-/* off-board header */
+-&uart1 {
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&pinctrl_uart1>;
+-	status = "okay";
+-};
+-
+ /* console */
+ &uart2 {
+ 	pinctrl-names = "default";
+@@ -407,13 +400,6 @@ &uart2 {
+ 	status = "okay";
+ };
+ 
+-/* off-board header */
+-&uart3 {
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&pinctrl_uart3>;
+-	status = "okay";
+-};
+-
+ /* off-board */
+ &usdhc1 {
+ 	pinctrl-names = "default";
+@@ -516,13 +502,6 @@ MX8MP_IOMUXC_I2C3_SDA__GPIO5_IO19	0x400001c2
  		>;
  	};
  
--	pinctrl_usdhc1: usdhc1grp {
+-	pinctrl_uart1: uart1grp {
 -		fsl,pins = <
--			MX8MM_IOMUXC_SD1_CLK_USDHC1_CLK		0x190
--			MX8MM_IOMUXC_SD1_CMD_USDHC1_CMD		0x1d0
--			MX8MM_IOMUXC_SD1_DATA0_USDHC1_DATA0	0x1d0
--			MX8MM_IOMUXC_SD1_DATA1_USDHC1_DATA1	0x1d0
--			MX8MM_IOMUXC_SD1_DATA2_USDHC1_DATA2	0x1d0
--			MX8MM_IOMUXC_SD1_DATA3_USDHC1_DATA3	0x1d0
+-			MX8MP_IOMUXC_UART1_RXD__UART1_DCE_RX	0x140
+-			MX8MP_IOMUXC_UART1_TXD__UART1_DCE_TX	0x140
 -		>;
 -	};
 -
- 	pinctrl_usdhc2: usdhc2grp {
+ 	pinctrl_uart2: uart2grp {
  		fsl,pins = <
- 			MX8MM_IOMUXC_SD2_CLK_USDHC2_CLK		0x190
+ 			MX8MP_IOMUXC_UART2_RXD__UART2_DCE_RX	0x140
+@@ -530,13 +509,6 @@ MX8MP_IOMUXC_UART2_TXD__UART2_DCE_TX	0x140
+ 		>;
+ 	};
+ 
+-	pinctrl_uart3: uart3grp {
+-		fsl,pins = <
+-			MX8MP_IOMUXC_UART3_RXD__UART3_DCE_RX	0x140
+-			MX8MP_IOMUXC_UART3_TXD__UART3_DCE_TX	0x140
+-		>;
+-	};
+-
+ 	pinctrl_usdhc1: usdhc1grp {
+ 		fsl,pins = <
+ 			MX8MP_IOMUXC_SD1_CLK__USDHC1_CLK	0x190
 -- 
 2.51.0
 
