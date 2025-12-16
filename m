@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 268CC3659E5;
-	Tue, 16 Dec 2025 12:10:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C338735CB7D;
+	Tue, 16 Dec 2025 12:10:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887035; cv=none; b=ZhLN5dc3G+XsS7bvWbtJtRJRQNVll6UOay8KBTPUC2SfKn2rDPS992rC+FZINd9SiE0M2jg4FDJNhhSpzZNBuG+jNswx5rD5QoNw5plsgF5RbOtfqsiWFEN63lo7RY6AKglqLheGbBLpqlFRVfj4NwzRO0oJmyuA/jQGiPLKsGY=
+	t=1765887038; cv=none; b=f3ae/biYa7qYB5UCjwhRfB4YZGBWFnGhYtImH/fsMKr0yCnhvV3T62rIye/x6iZmXvj7QxkZo1LkcR1zOrdvSGNGhwNeACEU44Ook88WQnvK6cfhD0MzmxI5ILqMcIBpT6n/9z4RqLRcT1nkl6DCgmi7NpoJBwprcpmcQoT3sGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887035; c=relaxed/simple;
-	bh=4IiCX5V29VzA70ytlGfBvBHeiV2CY33zDJJBGwQ9djY=;
+	s=arc-20240116; t=1765887038; c=relaxed/simple;
+	bh=aKcBT3Kq/7ReCt+3kS1ZbtOaADtGRDgevpk3r5FD8a4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lr1g0+e6Hv9QDqPyMn7Tozcab7E5qjWmxnMBgT5KU1y4KTe6naPmKm1mp2sUGOae7iKyPlBsAEFPDTRUt3OtxeJHA6Ll9Y6NW4O1u18YQ1WNrP39V3rNmgXyEGfOCMibzgjZcl9t3Xr3uieCXN2mMShHKEvqcC1MN7670G3A6rQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EFctP0js; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SQ98lQ390Ezfv5XENhi+D0oLjurrmgmGe6E5KLIQNfaghiH/KDov6EuvnYP8jq6Fo1kgNoG9VMdxjPvAYdwHruwQFJVnxZgVjs78+qxT7p9oH4lqQE1TRk5yn4r3gZpcEVg3fwpc8xwhDRlBM5/RYxgWi2tpoMvJjHiK7nZsMEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PTd9L1jJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EFctP0js"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C014C4CEF1;
-	Tue, 16 Dec 2025 12:10:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PTd9L1jJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20C6BC4CEF1;
+	Tue, 16 Dec 2025 12:10:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887035;
-	bh=4IiCX5V29VzA70ytlGfBvBHeiV2CY33zDJJBGwQ9djY=;
+	s=korg; t=1765887038;
+	bh=aKcBT3Kq/7ReCt+3kS1ZbtOaADtGRDgevpk3r5FD8a4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EFctP0jsDXfMv/BY7/2Q+jZ/XFny3SAsgKeujFHQtVAPRe0NHmPNHqyJpheagBC6B
-	 P3whTSCmYU9adWJoEkv0kCVR5UxCHFByRw4li46FRLUMOR3kTp7mP42XuJSeNg1HFH
-	 5zVhh3i7p2vTpFYHpSb7V+T1uN9OtgbXxrqk+TEs=
+	b=PTd9L1jJjHQTmOeMv6iH/GV3e1dUYPqq3l13fwBjpY+TsjI4TZHgenKova3UYpBDa
+	 OJwb00nyfZNi8e3oimbbMdsqmXi5WOC7mNHotpsB6IVgb2EypVEOhmcDTUeoIQ1S2J
+	 FJ/Dsl/jOWRp65AYHEHPa59TGYJTUJaHlUhGcbHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randolph Sapp <rs@ti.com>,
-	Michael Walle <mwalle@kernel.org>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 108/614] arm64: dts: ti: k3-am62p: Fix memory ranges for GPU
-Date: Tue, 16 Dec 2025 12:07:55 +0100
-Message-ID: <20251216111405.249537449@linuxfoundation.org>
+Subject: [PATCH 6.18 109/614] firmware: imx: scu-irq: fix OF node leak in
+Date: Tue, 16 Dec 2025 12:07:56 +0100
+Message-ID: <20251216111405.285428754@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,38 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randolph Sapp <rs@ti.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 76546090b1726118cd6fb3db7159fc2a3fdda8a0 ]
+[ Upstream commit ee67247843a2b62d1473cfa4df300e69b5190ccf ]
 
-Update the memory region listed in the k3-am62p.dtsi for the BXS-4-64
-GPU to match the Main Memory Map described in the TRM [1].
+imx_scu_enable_general_irq_channel() calls of_parse_phandle_with_args(),
+but does not release the OF node reference. Add a of_node_put() call
+to release the reference.
 
-[1] https://www.ti.com/lit/ug/spruj83b/spruj83b.pdf
-
-Fixes: 29075cc09f43 ("arm64: dts: ti: Introduce AM62P5 family of SoCs")
-Signed-off-by: Randolph Sapp <rs@ti.com>
-Reviewed-by: Michael Walle <mwalle@kernel.org>
-Link: https://patch.msgid.link/20250919193341.707660-2-rs@ti.com
-Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Fixes: 851826c7566e ("firmware: imx: enable imx scu general irq function")
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am62p.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/firmware/imx/imx-scu-irq.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am62p.dtsi b/arch/arm64/boot/dts/ti/k3-am62p.dtsi
-index 75a15c368c11b..dd24c40c7965d 100644
---- a/arch/arm64/boot/dts/ti/k3-am62p.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-am62p.dtsi
-@@ -59,7 +59,7 @@ cbass_main: bus@f0000 {
- 			 <0x00 0x01000000 0x00 0x01000000 0x00 0x01b28400>, /* First peripheral window */
- 			 <0x00 0x08000000 0x00 0x08000000 0x00 0x00200000>, /* Main CPSW */
- 			 <0x00 0x0e000000 0x00 0x0e000000 0x00 0x01d20000>, /* Second peripheral window */
--			 <0x00 0x0fd00000 0x00 0x0fd00000 0x00 0x00020000>, /* GPU */
-+			 <0x00 0x0fd80000 0x00 0x0fd80000 0x00 0x00080000>, /* GPU */
- 			 <0x00 0x20000000 0x00 0x20000000 0x00 0x0a008000>, /* Third peripheral window */
- 			 <0x00 0x30040000 0x00 0x30040000 0x00 0x00080000>, /* PRUSS-M */
- 			 <0x00 0x30101000 0x00 0x30101000 0x00 0x00010100>, /* CSI window */
+diff --git a/drivers/firmware/imx/imx-scu-irq.c b/drivers/firmware/imx/imx-scu-irq.c
+index 6125cccc9ba79..f2b902e95b738 100644
+--- a/drivers/firmware/imx/imx-scu-irq.c
++++ b/drivers/firmware/imx/imx-scu-irq.c
+@@ -226,8 +226,10 @@ int imx_scu_enable_general_irq_channel(struct device *dev)
+ 	INIT_WORK(&imx_sc_irq_work, imx_scu_irq_work_handler);
+ 
+ 	if (!of_parse_phandle_with_args(dev->of_node, "mboxes",
+-				       "#mbox-cells", 0, &spec))
++				       "#mbox-cells", 0, &spec)) {
+ 		i = of_alias_get_id(spec.np, "mu");
++		of_node_put(spec.np);
++	}
+ 
+ 	/* use mu1 as general mu irq channel if failed */
+ 	if (i < 0)
 -- 
 2.51.0
 
