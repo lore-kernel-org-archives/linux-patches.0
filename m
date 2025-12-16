@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0923587BE;
-	Tue, 16 Dec 2025 12:03:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2BD3358D03;
+	Tue, 16 Dec 2025 12:03:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886636; cv=none; b=VRnK/5XfMfOZD22Rxy0gxnK5KQosJzotE5uvTeg5UcZm4KkCXtRWbuXnPfjFg34cBDA+Oex1HwthaOAgxxHDMV4+6x7LWsTyvWac6u0HOsXxEhpy3huMDNhlbj6i0BKNG92WvTquaOpku23SWEQFzm8dhqUsVXzcnbEbOeeaLaY=
+	t=1765886639; cv=none; b=GGmnB9LDgzt0ZTRSuWU9/KqVgGxU5SYutnSAiKO9Jufi061Lq40B7Sk++RhdEtKSICm/WEiF4OO2Kq2bIcK+MAUKniBNqytNNR7lIpQuGIlR9UWt04jAbnNDby+oEg84Ya8+GlAK8BLQPVRpdV265ZE+Ulb35Tth3PdxfIbFC8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886636; c=relaxed/simple;
-	bh=wVjAR5rNhMFCq2/yy68F/9eZvJ6Cu6fNQVMUfElONM0=;
+	s=arc-20240116; t=1765886639; c=relaxed/simple;
+	bh=1axajyM28XnPRYQLBVbhJFtDiSUc1GtgZrAy8z1yI4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I9QOdgI/a+m9nEVKm6SZpOzwFXIypHA9s5msRoZwg5bmOmZigjy7Jbn+kjKCeIRSx9x1KCf8YOXtOf4A3lvVeMbp5+Mc1oBX6HhjPpZ9xqo82r7PjVxftz7K0UmLBt/AROMugfo+ZkpRmvJG+yjE8ElEOCAKcnz8UScX5oNuuIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T3YE0qI7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eyOp1RZovZjHTkQIZs1665gk9XmI5sCxsGZAyrJ2BPWthsE2uY3dhyvKyc/Kih7424KDXL4YTHx46iCeT1+l/tm6VlXCVNwo/N6hy8AMfAjBRhwGc6RKMeMUF6o3U2+PSe1fp0RGFUW5W/m9KbIwWuKbQqv6WO2ysumCPdl0iWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FYZockUa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T3YE0qI7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2B1BC4CEF1;
-	Tue, 16 Dec 2025 12:03:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FYZockUa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30DDEC4CEF1;
+	Tue, 16 Dec 2025 12:03:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886636;
-	bh=wVjAR5rNhMFCq2/yy68F/9eZvJ6Cu6fNQVMUfElONM0=;
+	s=korg; t=1765886639;
+	bh=1axajyM28XnPRYQLBVbhJFtDiSUc1GtgZrAy8z1yI4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T3YE0qI7DWJzTx+PBHpS6Dzk/wXudzgqYBImGjgyd1UiSzvtaOOYh1r8QVbQ8HsyX
-	 Sda64gi3TK00NuP4fP1bS6mXX2ketgyHY54UPWoyGRwRgVVLyvL8wczHMM4MiUbcub
-	 Ltg8e7bRsU2L/IeBUkvvTcXBq+7FhIA9CEYNVJYE=
+	b=FYZockUaMU0vznqFAaNIgBrNLRLCN4XXAHmLofLxWLCZxeZZZIqX+KnWtt+jts5zq
+	 zt49o6ssed6QLdfmRZn85kCsr6T+W0y4weNyhprXAG0eeOuvpbqtc4Z5mRrg+lpYE3
+	 aC2Ez1JhLpoYUZLfm2p1b8whjKo88LgVK27pxJ34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+527a7e48a3d3d315d862@syzkaller.appspotmail.com,
-	Shaurya Rane <ssrane_b23@ee.vjti.ac.in>,
+	Israel Rukshin <israelr@nvidia.com>,
+	Max Gurtovoy <mgurtovoy@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Keith Busch <kbusch@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 462/507] block: fix memory leak in __blkdev_issue_zero_pages
-Date: Tue, 16 Dec 2025 12:15:03 +0100
-Message-ID: <20251216111402.184420576@linuxfoundation.org>
+Subject: [PATCH 6.17 463/507] nvme-auth: use kvfree() for memory allocated with kvcalloc()
+Date: Tue, 16 Dec 2025 12:15:04 +0100
+Message-ID: <20251216111402.220337361@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -53,53 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shaurya Rane <ssrane_b23@ee.vjti.ac.in>
+From: Israel Rukshin <israelr@nvidia.com>
 
-[ Upstream commit f7e3f852a42d7cd8f1af2c330d9d153e30c8adcf ]
+[ Upstream commit bb9f4cca7c031de6f0e85f7ba24abf0172829f85 ]
 
-Move the fatal signal check before bio_alloc() to prevent a memory
-leak when BLKDEV_ZERO_KILLABLE is set and a fatal signal is pending.
+Memory allocated by kvcalloc() may come from vmalloc or kmalloc,
+so use kvfree() instead of kfree() for proper deallocation.
 
-Previously, the bio was allocated before checking for a fatal signal.
-If a signal was pending, the code would break out of the loop without
-freeing or chaining the just-allocated bio, causing a memory leak.
-
-This matches the pattern already used in __blkdev_issue_write_zeroes()
-where the signal check precedes the allocation.
-
-Fixes: bf86bcdb4012 ("blk-lib: check for kill signal in ioctl BLKZEROOUT")
-Reported-by: syzbot+527a7e48a3d3d315d862@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=527a7e48a3d3d315d862
-Signed-off-by: Shaurya Rane <ssrane_b23@ee.vjti.ac.in>
-Reviewed-by: Keith Busch <kbusch@kernel.org>
-Tested-by: syzbot+527a7e48a3d3d315d862@syzkaller.appspotmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: aa36d711e945 ("nvme-auth: convert dhchap_auth_list to an array")
+Signed-off-by: Israel Rukshin <israelr@nvidia.com>
+Reviewed-by: Max Gurtovoy <mgurtovoy@nvidia.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-lib.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/nvme/host/auth.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/blk-lib.c b/block/blk-lib.c
-index 4c9f20a689f7b..8cb2987db786f 100644
---- a/block/blk-lib.c
-+++ b/block/blk-lib.c
-@@ -200,13 +200,13 @@ static void __blkdev_issue_zero_pages(struct block_device *bdev,
- 		unsigned int nr_vecs = __blkdev_sectors_to_bio_pages(nr_sects);
- 		struct bio *bio;
- 
--		bio = bio_alloc(bdev, nr_vecs, REQ_OP_WRITE, gfp_mask);
--		bio->bi_iter.bi_sector = sector;
--
- 		if ((flags & BLKDEV_ZERO_KILLABLE) &&
- 		    fatal_signal_pending(current))
- 			break;
- 
-+		bio = bio_alloc(bdev, nr_vecs, REQ_OP_WRITE, gfp_mask);
-+		bio->bi_iter.bi_sector = sector;
-+
- 		do {
- 			unsigned int len, added;
- 
+diff --git a/drivers/nvme/host/auth.c b/drivers/nvme/host/auth.c
+index a01178caf15bb..8f3ccb317e4de 100644
+--- a/drivers/nvme/host/auth.c
++++ b/drivers/nvme/host/auth.c
+@@ -1122,7 +1122,7 @@ void nvme_auth_free(struct nvme_ctrl *ctrl)
+ 	if (ctrl->dhchap_ctxs) {
+ 		for (i = 0; i < ctrl_max_dhchaps(ctrl); i++)
+ 			nvme_auth_free_dhchap(&ctrl->dhchap_ctxs[i]);
+-		kfree(ctrl->dhchap_ctxs);
++		kvfree(ctrl->dhchap_ctxs);
+ 	}
+ 	if (ctrl->host_key) {
+ 		nvme_auth_free_key(ctrl->host_key);
 -- 
 2.51.0
 
