@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0022736CE11;
-	Tue, 16 Dec 2025 12:26:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F4636D4E7;
+	Tue, 16 Dec 2025 12:26:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888013; cv=none; b=q5YRZd0MKwylnATgaFbKln5lGF7kcum469KdSNFZpfIYftAPhWOZLhwQqtzXWSwXrLOujby5c8lkmPAFuJvWnc7p5Ir1czjWURHY3MeSrQPFUFxeXsQ5D6XbnJzIEFGmSx1/IV/uyflTFCGEQbCF0l1/kxOSEolKWqRrdBTgeyo=
+	t=1765888016; cv=none; b=d9d7fpTdr/Sw128RiK4dom3pVd8+6GxlNHZepp1PuVNc4NcRveNl40AUkl7We0FlL+UMgiGdawuPz8Dudo2IzN5LiKlf7hm4G7Dk0wbl/6sFwXj7J+IXENDhlMrmtnydCC36XY95kqnvT5aQU4CcsxDX8QFCBgS87t6j0d0HRFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888013; c=relaxed/simple;
-	bh=Ubo7/g7X4eajzUPDdDHFr7y1aW082a34vUEFokxf6Gs=;
+	s=arc-20240116; t=1765888016; c=relaxed/simple;
+	bh=x3S/59zaeYEDO6HEzziMsxu6bWYDN7A2FEF5/Cjmgck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j7DTHjxCSgdjCRwdnmv9DPUFGG1IADwXJnvPIkZutdh/cZALYNwlVKnn0rcfx3Fo5mALY9MhBJ4pdTFvOCboaTpXzLYepIhJovxkgy6DBGZRfFWg000jZzQXaxOxkCE4CLGaDglYg6b4Qd8yO1qWBRAfkjuaD6FhOXju/6Ikj04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZdedDTtB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KQ3QQp98ehaJWEVuWFfB7YzwSVylug9r2a+b+TyvS5yZVHhBFji6ggWELWJceYCLcMLH8Mb/9L7UJsUf8zCA0rwCd2Q9zZRq477OB8NG8DDIn1d42yB7erFszxPSnMIqJMybYOd/1aOEE6/Fu4WoqUH9yYDS3w8TmnZf17YMPho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0EsKx0x5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZdedDTtB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6302CC4CEF1;
-	Tue, 16 Dec 2025 12:26:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0EsKx0x5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1DCAC4CEF1;
+	Tue, 16 Dec 2025 12:26:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888012;
-	bh=Ubo7/g7X4eajzUPDdDHFr7y1aW082a34vUEFokxf6Gs=;
+	s=korg; t=1765888016;
+	bh=x3S/59zaeYEDO6HEzziMsxu6bWYDN7A2FEF5/Cjmgck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZdedDTtB02AAdKpiLQT7pFMhdwIKoHnxhME+2zvHTH3yr+B01dskKuQMcLyK1Vfx+
-	 LnQ7h+D895wRLZBaVvnDbc+ElQec/9V3fpP3wpq+U185ISKp4zug6qV5vi9B4Se8WD
-	 7jTLrNv1zhQosw/56oFru8DRWiWB9Y3DMbg4Hs8M=
+	b=0EsKx0x5PqdFPDyrePAfWawf7tWUKj0MUWc3Iw8qooz460dYC/wWq+dOpmTeFFqW9
+	 P6Squ2iEd/7qf4POTjGp/hey3Ftp/YxAP9QFwRI4WTSbfqSFBr6Ti2PbKFJiZE3xya
+	 J5zNLBMPBMSirbroCX6ytRMcFcEz3vxMmehXGs1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Mentz <danielmentz@google.com>,
-	Ryan Huang <tzukui@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Pranjal Shrivastava <praan@google.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Will Deacon <will@kernel.org>,
+	Alan Maguire <alan.maguire@oracle.com>,
+	Song Liu <song@kernel.org>,
+	Quentin Monnet <qmo@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 405/614] iommu/arm-smmu-v3: Fix error check in arm_smmu_alloc_cd_tables
-Date: Tue, 16 Dec 2025 12:12:52 +0100
-Message-ID: <20251216111416.048846092@linuxfoundation.org>
+Subject: [PATCH 6.18 406/614] bpftool: Allow bpftool to build with openssl < 3
+Date: Tue, 16 Dec 2025 12:12:53 +0100
+Message-ID: <20251216111416.084488181@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -55,44 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Huang <tzukui@google.com>
+From: Alan Maguire <alan.maguire@oracle.com>
 
-[ Upstream commit 5941f0e0c1e0be03ebc15b461f64208f5250d3d9 ]
+[ Upstream commit 90ae54b4c7eca42d5ce006dd0a8cb0b5bfbf80d0 ]
 
-In arm_smmu_alloc_cd_tables(), the error check following the
-dma_alloc_coherent() for cd_table->l2.l1tab incorrectly tests
-cd_table->l2.l2ptrs.
+ERR_get_error_all()[1] is a openssl v3 API, so to make code
+compatible with openssl v1 utilize ERR_get_err_line_data
+instead.  Since openssl is already a build requirement for
+the kernel (minimum requirement openssl 1.0.0), this will
+allow bpftool to compile where opensslv3 is not available.
+Signing-related BPF selftests pass with openssl v1.
 
-This means an allocation failure for l1tab goes undetected, causing
-the function to return 0 (success) erroneously.
+[1] https://docs.openssl.org/3.4/man3/ERR_get_error/
 
-Correct the check to test cd_table->l2.l1tab.
-
-Fixes: e3b1be2e73db ("iommu/arm-smmu-v3: Reorganize struct arm_smmu_ctx_desc_cfg")
-Signed-off-by: Daniel Mentz <danielmentz@google.com>
-Signed-off-by: Ryan Huang <tzukui@google.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Pranjal Shrivastava <praan@google.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 40863f4d6ef2 ("bpftool: Add support for signing BPF programs")
+Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
+Acked-by: Song Liu <song@kernel.org>
+Acked-by: Quentin Monnet <qmo@kernel.org>
+Link: https://lore.kernel.org/r/20251120084754.640405-2-alan.maguire@oracle.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/bpf/bpftool/sign.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 2a8b46b948f05..9780f40ba3e65 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -1464,7 +1464,7 @@ static int arm_smmu_alloc_cd_tables(struct arm_smmu_master *master)
- 		cd_table->l2.l1tab = dma_alloc_coherent(smmu->dev, l1size,
- 							&cd_table->cdtab_dma,
- 							GFP_KERNEL);
--		if (!cd_table->l2.l2ptrs) {
-+		if (!cd_table->l2.l1tab) {
- 			ret = -ENOMEM;
- 			goto err_free_l2ptrs;
- 		}
+diff --git a/tools/bpf/bpftool/sign.c b/tools/bpf/bpftool/sign.c
+index b34f74d210e9c..f9b742f4bb104 100644
+--- a/tools/bpf/bpftool/sign.c
++++ b/tools/bpf/bpftool/sign.c
+@@ -28,6 +28,12 @@
+ 
+ #define OPEN_SSL_ERR_BUF_LEN 256
+ 
++/* Use deprecated in 3.0 ERR_get_error_line_data for openssl < 3 */
++#if !defined(OPENSSL_VERSION_MAJOR) || (OPENSSL_VERSION_MAJOR < 3)
++#define ERR_get_error_all(file, line, func, data, flags) \
++	ERR_get_error_line_data(file, line, data, flags)
++#endif
++
+ static void display_openssl_errors(int l)
+ {
+ 	char buf[OPEN_SSL_ERR_BUF_LEN];
 -- 
 2.51.0
 
