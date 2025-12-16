@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A713233EE;
-	Tue, 16 Dec 2025 11:20:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B807F33D6F6;
+	Tue, 16 Dec 2025 11:20:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884024; cv=none; b=h+bT01h850rZZmnfW0NDuQ40JwpJYmb+ibqBBHA8yH3Yp5U8iTkges8IYXRx20J4I3DYGYoFZ06ZhukTVgzsvWZw1fqLnJUM3QKeQGo7sOaS7z2C1vcjrvWM9t2sR2D54kH1Fg/h289hrS/V3UyfjJ+Wguutrq+jgW8MR1Gxke0=
+	t=1765884027; cv=none; b=B1F/rjNDuBL0WAa5x5PAk1rh1bqpu6I0soOYy99UqMleSyrpzHXjbnSS/VztFGbSjHAkEXCtB53pDkqERCAhfKEd2BdSQ+VBhTcHGw/kHeDHy2k+Hp/o85klSYxJKhCy/DHhbL4xAoG0jo0BxAUPpmqjESR0Zda7AJuPYlCMaHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884024; c=relaxed/simple;
-	bh=nrOBy62UfLKyao3ZbtZnJWYDlb8C5bHSDekGN6Dy/nc=;
+	s=arc-20240116; t=1765884027; c=relaxed/simple;
+	bh=b/2ZeT2tnyUJBcoJT4xiRTf+hI7RJ6K4gdrcECTB0YM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iR2OIYe0KtsEzAMCI5W/L17T4AKrefa6M1RIhgdAX5ZpGt3JXuZw7VVEKl/BV63O0MhIYZTy73bcNYlvZVm2wl5yW1ec0EgYL6+JFLnuzUTPmOLRDou6/Vn3oyPwWVuE6sSMwPXxULcub5wtpHTCOOvfSVrgJvVhBvv/+V9VgMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvMS5Wno; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mKUfMHc4/64zjuFI9gwhArGPtMEkq4WPII5Yl6aVm4OlnBkWZKkojYkqpj8Xvmd7/iDO/aP21Cr9i+Rm2TF79op8k2PWF24m2eeNKDU9Z/Jv4NlwwjQrHQZOCfW2p5745wp6Wd0JbuMFn5bYoCN0eS+d7BfKDBVGpVFzIGLQUcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zlh4UqoS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvMS5Wno"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF238C19424;
-	Tue, 16 Dec 2025 11:20:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zlh4UqoS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E19EFC4CEF5;
+	Tue, 16 Dec 2025 11:20:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884024;
-	bh=nrOBy62UfLKyao3ZbtZnJWYDlb8C5bHSDekGN6Dy/nc=;
+	s=korg; t=1765884027;
+	bh=b/2ZeT2tnyUJBcoJT4xiRTf+hI7RJ6K4gdrcECTB0YM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cvMS5Wno2fPQIlyiG0WnaLDw1AY+VsVpf+6YqpslZCAuqno1lz5vpHLVxseVPCfIJ
-	 ywM0+FJ3za4BAiefIvHkLMMjFSu4LFI3UYHolRApv5S4vdXlwSUSEDpU7HPG/IR3ms
-	 V5Kl+ZTOEE0pgoYGTp4daEqPp8HF1pO+pucCcACE=
+	b=Zlh4UqoSdknB7OpBzQvl1tE8UhO7ZRZKaYw1YAawBLbDEJBLoL+xq/yRQ0GNmGCsn
+	 Ao3cEQswyCHyu2bxs1gN8LuPZVVHffWvHTtX/ApxFpPHmsw0v2l9LN4kAbE+VV/n/n
+	 kqV2qiaJOdV1BmUwXBpJxAHHa5rFIyVoprMG5m7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ingo Franzki <ifranzki@linux.ibm.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 037/354] crypto: authenc - Correctly pass EINPROGRESS back up to the caller
-Date: Tue, 16 Dec 2025 12:10:04 +0100
-Message-ID: <20251216111322.259409481@linuxfoundation.org>
+Subject: [PATCH 6.12 028/354] wifi: ath11k: restore register window after global reset
+Date: Tue, 16 Dec 2025 12:09:55 +0100
+Message-ID: <20251216111321.930853971@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -52,200 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 
-[ Upstream commit 96feb73def02d175850daa0e7c2c90c876681b5c ]
+[ Upstream commit 596b911644cc19ecba0dbc9c92849fb59390e29a ]
 
-When authenc is invoked with MAY_BACKLOG, it needs to pass EINPROGRESS
-notifications back up to the caller when the underlying algorithm
-returns EBUSY synchronously.
+Hardware target implements an address space larger than that PCI BAR can
+map. In order to be able to access the whole target address space, the BAR
+space is split into 4 segments, of which the last 3, called windows, can
+be dynamically mapped to the desired area. This is achieved by updating
+window register with appropriate window value. Currently each time when
+accessing a register that beyond ATH11K_PCI_WINDOW_START, host calculates
+the window value and caches it after window update, this way next time
+when accessing a register falling in the same window, host knows that the
+window is already good hence no additional update needed.
 
-However, if the EBUSY comes from the second part of an authenc call,
-i.e., it is asynchronous, both the EBUSY and the subsequent EINPROGRESS
-notification must not be passed to the caller.
+However this mechanism breaks after global reset is triggered in
+ath11k_pci_soc_global_reset(), because with global reset hardware resets
+window register hence the window is not properly mapped any more. Current
+host does nothing about this, as a result a subsequent register access may
+not work as expected if it falls in a window same as before.
 
-Implement this by passing a mask to the function that starts the
-second half of authenc and using it to determine whether EBUSY
-and EINPROGRESS should be passed to the caller.
+Although there is no obvious issue seen now, better to fix it to avoid
+future problem. The fix is done by restoring the window register after
+global reset.
 
-This was a deficiency in the original implementation of authenc
-because it was not expected to be used with MAY_BACKLOG.
+Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
 
-Reported-by: Ingo Franzki <ifranzki@linux.ibm.com>
-Reported-by: Mikulas Patocka <mpatocka@redhat.com>
-Fixes: 180ce7e81030 ("crypto: authenc - Add EINPROGRESS check")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251014-ath11k-reset-window-cache-v1-1-b85271b111dd@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/authenc.c | 75 ++++++++++++++++++++++++++++++++----------------
- 1 file changed, 50 insertions(+), 25 deletions(-)
+ drivers/net/wireless/ath/ath11k/pci.c | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/crypto/authenc.c b/crypto/authenc.c
-index 3aaf3ab4e360f..d04068af9833e 100644
---- a/crypto/authenc.c
-+++ b/crypto/authenc.c
-@@ -39,7 +39,7 @@ struct authenc_request_ctx {
+diff --git a/drivers/net/wireless/ath/ath11k/pci.c b/drivers/net/wireless/ath/ath11k/pci.c
+index c1d576ff77faa..eee83eb6b2c3c 100644
+--- a/drivers/net/wireless/ath/ath11k/pci.c
++++ b/drivers/net/wireless/ath/ath11k/pci.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: BSD-3-Clause-Clear
+ /*
+  * Copyright (c) 2019-2020 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+  */
  
- static void authenc_request_complete(struct aead_request *req, int err)
- {
--	if (err != -EINPROGRESS)
-+	if (err != -EINPROGRESS && err != -EBUSY)
- 		aead_request_complete(req, err);
+ #include <linux/module.h>
+@@ -175,6 +175,19 @@ static inline void ath11k_pci_select_static_window(struct ath11k_pci *ab_pci)
+ 		  ab_pci->ab->mem + ATH11K_PCI_WINDOW_REG_ADDRESS);
  }
  
-@@ -109,27 +109,42 @@ static int crypto_authenc_setkey(struct crypto_aead *authenc, const u8 *key,
- 	return err;
- }
- 
--static void authenc_geniv_ahash_done(void *data, int err)
-+static void authenc_geniv_ahash_finish(struct aead_request *req)
- {
--	struct aead_request *req = data;
- 	struct crypto_aead *authenc = crypto_aead_reqtfm(req);
- 	struct aead_instance *inst = aead_alg_instance(authenc);
- 	struct authenc_instance_ctx *ictx = aead_instance_ctx(inst);
- 	struct authenc_request_ctx *areq_ctx = aead_request_ctx(req);
- 	struct ahash_request *ahreq = (void *)(areq_ctx->tail + ictx->reqoff);
- 
--	if (err)
--		goto out;
--
- 	scatterwalk_map_and_copy(ahreq->result, req->dst,
- 				 req->assoclen + req->cryptlen,
- 				 crypto_aead_authsize(authenc), 1);
-+}
- 
--out:
-+static void authenc_geniv_ahash_done(void *data, int err)
++static void ath11k_pci_restore_window(struct ath11k_base *ab)
 +{
-+	struct aead_request *req = data;
++	struct ath11k_pci *ab_pci = ath11k_pci_priv(ab);
 +
-+	if (!err)
-+		authenc_geniv_ahash_finish(req);
- 	aead_request_complete(req, err);
- }
- 
--static int crypto_authenc_genicv(struct aead_request *req, unsigned int flags)
-+/*
-+ * Used when the ahash request was invoked in the async callback context
-+ * of the previous skcipher request.  Eat any EINPROGRESS notifications.
-+ */
-+static void authenc_geniv_ahash_done2(void *data, int err)
-+{
-+	struct aead_request *req = data;
++	spin_lock_bh(&ab_pci->window_lock);
 +
-+	if (!err)
-+		authenc_geniv_ahash_finish(req);
-+	authenc_request_complete(req, err);
++	iowrite32(ATH11K_PCI_WINDOW_ENABLE_BIT | ab_pci->register_window,
++		  ab->mem + ATH11K_PCI_WINDOW_REG_ADDRESS);
++	ioread32(ab->mem + ATH11K_PCI_WINDOW_REG_ADDRESS);
++
++	spin_unlock_bh(&ab_pci->window_lock);
 +}
 +
-+static int crypto_authenc_genicv(struct aead_request *req, unsigned int mask)
+ static void ath11k_pci_soc_global_reset(struct ath11k_base *ab)
  {
- 	struct crypto_aead *authenc = crypto_aead_reqtfm(req);
- 	struct aead_instance *inst = aead_alg_instance(authenc);
-@@ -138,6 +153,7 @@ static int crypto_authenc_genicv(struct aead_request *req, unsigned int flags)
- 	struct crypto_ahash *auth = ctx->auth;
- 	struct authenc_request_ctx *areq_ctx = aead_request_ctx(req);
- 	struct ahash_request *ahreq = (void *)(areq_ctx->tail + ictx->reqoff);
-+	unsigned int flags = aead_request_flags(req) & ~mask;
- 	u8 *hash = areq_ctx->tail;
- 	int err;
- 
-@@ -145,7 +161,8 @@ static int crypto_authenc_genicv(struct aead_request *req, unsigned int flags)
- 	ahash_request_set_crypt(ahreq, req->dst, hash,
- 				req->assoclen + req->cryptlen);
- 	ahash_request_set_callback(ahreq, flags,
--				   authenc_geniv_ahash_done, req);
-+				   mask ? authenc_geniv_ahash_done2 :
-+					  authenc_geniv_ahash_done, req);
- 
- 	err = crypto_ahash_digest(ahreq);
- 	if (err)
-@@ -161,12 +178,11 @@ static void crypto_authenc_encrypt_done(void *data, int err)
- {
- 	struct aead_request *areq = data;
- 
--	if (err)
--		goto out;
--
--	err = crypto_authenc_genicv(areq, 0);
--
--out:
-+	if (err) {
-+		aead_request_complete(areq, err);
-+		return;
-+	}
-+	err = crypto_authenc_genicv(areq, CRYPTO_TFM_REQ_MAY_SLEEP);
- 	authenc_request_complete(areq, err);
- }
- 
-@@ -219,11 +235,18 @@ static int crypto_authenc_encrypt(struct aead_request *req)
- 	if (err)
- 		return err;
- 
--	return crypto_authenc_genicv(req, aead_request_flags(req));
-+	return crypto_authenc_genicv(req, 0);
-+}
+ 	u32 val, delay;
+@@ -199,6 +212,11 @@ static void ath11k_pci_soc_global_reset(struct ath11k_base *ab)
+ 	val = ath11k_pcic_read32(ab, PCIE_SOC_GLOBAL_RESET);
+ 	if (val == 0xffffffff)
+ 		ath11k_warn(ab, "link down error during global reset\n");
 +
-+static void authenc_decrypt_tail_done(void *data, int err)
-+{
-+	struct aead_request *req = data;
-+
-+	authenc_request_complete(req, err);
++	/* Restore window register as its content is cleared during
++	 * hardware global reset, such that it aligns with host cache.
++	 */
++	ath11k_pci_restore_window(ab);
  }
  
- static int crypto_authenc_decrypt_tail(struct aead_request *req,
--				       unsigned int flags)
-+				       unsigned int mask)
- {
- 	struct crypto_aead *authenc = crypto_aead_reqtfm(req);
- 	struct aead_instance *inst = aead_alg_instance(authenc);
-@@ -234,6 +257,7 @@ static int crypto_authenc_decrypt_tail(struct aead_request *req,
- 	struct skcipher_request *skreq = (void *)(areq_ctx->tail +
- 						  ictx->reqoff);
- 	unsigned int authsize = crypto_aead_authsize(authenc);
-+	unsigned int flags = aead_request_flags(req) & ~mask;
- 	u8 *ihash = ahreq->result + authsize;
- 	struct scatterlist *src, *dst;
- 
-@@ -250,7 +274,9 @@ static int crypto_authenc_decrypt_tail(struct aead_request *req,
- 
- 	skcipher_request_set_tfm(skreq, ctx->enc);
- 	skcipher_request_set_callback(skreq, flags,
--				      req->base.complete, req->base.data);
-+				      mask ? authenc_decrypt_tail_done :
-+					     req->base.complete,
-+				      mask ? req : req->base.data);
- 	skcipher_request_set_crypt(skreq, src, dst,
- 				   req->cryptlen - authsize, req->iv);
- 
-@@ -261,12 +287,11 @@ static void authenc_verify_ahash_done(void *data, int err)
- {
- 	struct aead_request *req = data;
- 
--	if (err)
--		goto out;
--
--	err = crypto_authenc_decrypt_tail(req, 0);
--
--out:
-+	if (err) {
-+		aead_request_complete(req, err);
-+		return;
-+	}
-+	err = crypto_authenc_decrypt_tail(req, CRYPTO_TFM_REQ_MAY_SLEEP);
- 	authenc_request_complete(req, err);
- }
- 
-@@ -293,7 +318,7 @@ static int crypto_authenc_decrypt(struct aead_request *req)
- 	if (err)
- 		return err;
- 
--	return crypto_authenc_decrypt_tail(req, aead_request_flags(req));
-+	return crypto_authenc_decrypt_tail(req, 0);
- }
- 
- static int crypto_authenc_init_tfm(struct crypto_aead *tfm)
+ static void ath11k_pci_clear_dbg_registers(struct ath11k_base *ab)
 -- 
 2.51.0
 
