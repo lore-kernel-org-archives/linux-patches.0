@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF670345CAA;
-	Tue, 16 Dec 2025 12:21:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBEC034DB64;
+	Tue, 16 Dec 2025 12:21:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887663; cv=none; b=sThn/e4s5AmOa7g65Nw4QJSV15Hh9pOD7ACBr/EbDYEw+vV2px0EVqRwZfLZr/q7TE/Vm/Y/LgKwjXX+3RDtQbuLINZxqk6PIUdFXw//4zKcEkkT1GAHP3OTnJctboXnrvO9JW9zC86DYUyme3B2EFOcILf7z68JugEeGj863rU=
+	t=1765887666; cv=none; b=s2Nxc9iHF2yIpd0NJNS1rRwIIiGLhtd5yXweS8ate/nqLlnuzkq7DNRi40J0BkNHVrx1bn0LCaQvvfXsXeoeZaQvbfB/yPDJ+tGcInxIt20nQap6jQMOy5Atzp/YOOzaDgv+V/a2t30bDGNZLFiUSByL8b5E8JQ0aqPeVO4mkMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887663; c=relaxed/simple;
-	bh=DPFvvmMq7UrAuURi44czb9DfP0d64ZH6ZsoWj6IqYGc=;
+	s=arc-20240116; t=1765887666; c=relaxed/simple;
+	bh=lqAMOTDTY4d8wx1GCP8OhMWBZheYsSAXg8mG6X9sXoc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PuZBNSmf4Zc275kLGlRevYfwuyK8eo0fiZqS90S91iYadTPLxOQknUH2Qj4ExMuH686h3YM63OcPb2i/pzdUJUV3jCeMhe5eabz63YR7WnZeLJgUMd0I8WSyj5sknBm+CBS6NpHwAZ0OAbpz/Xr63tnO3FQ7KvKSKFAHyRjPyaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RA8hRf5F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WxuDcMoirIkP8jVbJ0xa1uTQaQECb45ySGGYV7XFtm7LZcsosXaSsbH1TwyX1YlTcHYZhyUwzZA2qiP62e5PYzhx4fIrJ2SBxbCnfZX1fxwhN3DQx16jlX6lCNvyA8HEEl+n2IAR8sCse40GkDYO8yofdqNH/8oZbf4nI8EgNq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bQ2dvVem; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RA8hRf5F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31F9BC4CEF1;
-	Tue, 16 Dec 2025 12:21:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bQ2dvVem"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27949C4CEF1;
+	Tue, 16 Dec 2025 12:21:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887663;
-	bh=DPFvvmMq7UrAuURi44czb9DfP0d64ZH6ZsoWj6IqYGc=;
+	s=korg; t=1765887666;
+	bh=lqAMOTDTY4d8wx1GCP8OhMWBZheYsSAXg8mG6X9sXoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RA8hRf5F6djIq8ChGFMUd57HuTXBwgGM2S6jzKb9q7a3eDB1zD0oZYyr6DJwj3iVb
-	 Q+uNNcZnm0L7qMyKDPa2e/edOezBylhB8pLjehnRn/ET8Dpirhr1PrMxq18BZ18wmB
-	 0bOKPlhXLPtNBe4BeO/r8JjdGY2CuAU/Zs+sBhlY=
+	b=bQ2dvVemiZ5amkXSAndR4yOCvm4l6VR2x7DZtlpTSqL5XfjiW8bj6+4sb2bOjye0T
+	 v5MFlT5ttc5fnXUu/6a5VjWFUki/g+mL1reEgTFeKWIa6hZA6ClMTUUHuHYDP/ti34
+	 sC0RLorewlsCBfZI9mXzFvOAdij3g/fW5rTF0E7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 300/614] iio: core: Clean up device correctly on iio_device_alloc() failure
-Date: Tue, 16 Dec 2025 12:11:07 +0100
-Message-ID: <20251216111412.239275277@linuxfoundation.org>
+Subject: [PATCH 6.18 301/614] fuse_ctl_add_conn(): fix nlink breakage in case of early failure
+Date: Tue, 16 Dec 2025 12:11:08 +0100
+Message-ID: <20251216111412.275760078@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -46,58 +45,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit b0e6871415b25f5e84a79621834e3d0c9d4627a6 ]
+[ Upstream commit c460192aae197df1b4db1dca493c35ad529f1b64 ]
 
-Once we called device_initialize() we have to call put_device()
-on it. Refactor the code to make it in the right order.
+fuse_ctl_remove_conn() used to decrement the link count of root
+manually; that got subsumed by simple_recursive_removal(), but
+in case when subdirectory creation has failed the latter won't
+get called.
 
-Fixes: fe6f45f6ba22 ("iio: core: check return value when calling dev_set_name()")
-Fixes: 847ec80bbaa7 ("Staging: IIO: core support for device registration and management")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Just move the modification of parent's link count into
+fuse_ctl_add_dentry() to keep the things simple.  Allows to
+get rid of the nlink argument as well...
+
+Fixes: fcaac5b42768 "fuse_ctl: use simple_recursive_removal()"
+Acked-by: Miklos Szeredi <mszeredi@redhat.com>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/industrialio-core.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/fuse/control.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/iio/industrialio-core.c b/drivers/iio/industrialio-core.c
-index 93d6e5b101cf1..5d2f35cf18bc3 100644
---- a/drivers/iio/industrialio-core.c
-+++ b/drivers/iio/industrialio-core.c
-@@ -1697,11 +1697,6 @@ struct iio_dev *iio_device_alloc(struct device *parent, int sizeof_priv)
- 		ACCESS_PRIVATE(indio_dev, priv) = (char *)iio_dev_opaque +
- 			ALIGN(sizeof(*iio_dev_opaque), IIO_DMA_MINALIGN);
+diff --git a/fs/fuse/control.c b/fs/fuse/control.c
+index bb407705603c2..5247df896c5d0 100644
+--- a/fs/fuse/control.c
++++ b/fs/fuse/control.c
+@@ -205,8 +205,7 @@ static const struct file_operations fuse_conn_congestion_threshold_ops = {
  
--	indio_dev->dev.parent = parent;
--	indio_dev->dev.type = &iio_device_type;
--	indio_dev->dev.bus = &iio_bus_type;
--	device_initialize(&indio_dev->dev);
--
- 	INIT_LIST_HEAD(&iio_dev_opaque->channel_attr_list);
+ static struct dentry *fuse_ctl_add_dentry(struct dentry *parent,
+ 					  struct fuse_conn *fc,
+-					  const char *name,
+-					  int mode, int nlink,
++					  const char *name, int mode,
+ 					  const struct inode_operations *iop,
+ 					  const struct file_operations *fop)
+ {
+@@ -232,7 +231,10 @@ static struct dentry *fuse_ctl_add_dentry(struct dentry *parent,
+ 	if (iop)
+ 		inode->i_op = iop;
+ 	inode->i_fop = fop;
+-	set_nlink(inode, nlink);
++	if (S_ISDIR(mode)) {
++		inc_nlink(d_inode(parent));
++		inc_nlink(inode);
++	}
+ 	inode->i_private = fc;
+ 	d_add(dentry, inode);
  
- 	iio_dev_opaque->id = ida_alloc(&iio_ida, GFP_KERNEL);
-@@ -1727,6 +1722,11 @@ struct iio_dev *iio_device_alloc(struct device *parent, int sizeof_priv)
- 	mutex_init(&iio_dev_opaque->mlock);
- 	mutex_init(&iio_dev_opaque->info_exist_lock);
+@@ -252,22 +254,21 @@ int fuse_ctl_add_conn(struct fuse_conn *fc)
+ 		return 0;
  
-+	indio_dev->dev.parent = parent;
-+	indio_dev->dev.type = &iio_device_type;
-+	indio_dev->dev.bus = &iio_bus_type;
-+	device_initialize(&indio_dev->dev);
-+
- 	return indio_dev;
- }
- EXPORT_SYMBOL(iio_device_alloc);
+ 	parent = fuse_control_sb->s_root;
+-	inc_nlink(d_inode(parent));
+ 	sprintf(name, "%u", fc->dev);
+-	parent = fuse_ctl_add_dentry(parent, fc, name, S_IFDIR | 0500, 2,
++	parent = fuse_ctl_add_dentry(parent, fc, name, S_IFDIR | 0500,
+ 				     &simple_dir_inode_operations,
+ 				     &simple_dir_operations);
+ 	if (!parent)
+ 		goto err;
+ 
+-	if (!fuse_ctl_add_dentry(parent, fc, "waiting", S_IFREG | 0400, 1,
++	if (!fuse_ctl_add_dentry(parent, fc, "waiting", S_IFREG | 0400,
+ 				 NULL, &fuse_ctl_waiting_ops) ||
+-	    !fuse_ctl_add_dentry(parent, fc, "abort", S_IFREG | 0200, 1,
++	    !fuse_ctl_add_dentry(parent, fc, "abort", S_IFREG | 0200,
+ 				 NULL, &fuse_ctl_abort_ops) ||
+ 	    !fuse_ctl_add_dentry(parent, fc, "max_background", S_IFREG | 0600,
+-				 1, NULL, &fuse_conn_max_background_ops) ||
++				 NULL, &fuse_conn_max_background_ops) ||
+ 	    !fuse_ctl_add_dentry(parent, fc, "congestion_threshold",
+-				 S_IFREG | 0600, 1, NULL,
++				 S_IFREG | 0600, NULL,
+ 				 &fuse_conn_congestion_threshold_ops))
+ 		goto err;
+ 
 -- 
 2.51.0
 
