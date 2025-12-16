@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C1C3570C6;
-	Tue, 16 Dec 2025 12:02:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C71DD3570D9;
+	Tue, 16 Dec 2025 12:02:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886550; cv=none; b=m3QM/gNYEeE5DGxJrP2AreYAf7pzoTMrQm6590bTh7rNjVEPXBdbU1W3C/8M2AOXJf8njZvHSZ8c62Ve4utlf4eFwmJhzXHJX/JgvQE7uZYXGldrX8iAd2aHNnfI7ideRHsyAbNGSw3lxSvPUqbAJEuGpsCFzgM/vHCKlGL7cHc=
+	t=1765886552; cv=none; b=m45YGMKmf10scLN90v163UBqzKGA4iafrlLfkRlZtwrL4MYdZys2UbA9i7QtsKafIrcYMK2aYmC3rgvFcjvvBqR8lBQvc2HXvRjuxTQokQJ3Xdf11zq5XLmFKbE61q7pMYmnVvCL91edP5gmImQLdpWPqKGXqWdToaXekM/DVjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886550; c=relaxed/simple;
-	bh=36VYshdriOcE46Tx1LMjxHl3F0RddSQCDoLFep7w098=;
+	s=arc-20240116; t=1765886552; c=relaxed/simple;
+	bh=WuxkaZ5BcBBJwuvPAdGpj4CQeaiRPOT1zH3kEwwvOgY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pHpZzLBN2rk7/xYA2Rqy76Zigidw7zm43tsl4bGh3l3P9uIvkpFJS1PmLkk2r59TBr+yoTOaxvnURQTaffBM4MuHEYhBkykOG5+p1w1NdU6oGvR3x/cDglX+JtaiPJ0wrqjNyor8yxwQ5WZOLNldCQNU5fHy4qA3rOpCTk8WFf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ceSLbCIM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LctJvkmcFeMsMZCjFMguusXzE1/7KkDq7uoTVQct1hTIqhdLc+pD46mTl12B3IsRJL9p0G9fKG9ANlbueQ6lYzuzeuhA5YdD7TX2n0bmEgb6chmubpWAh7n3Q9WRnRmUpCBAR6N7Yz8hjnKhxZONPZBiU/knShZsGuw6hGkSG84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AR7IpqG5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ceSLbCIM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDDD1C16AAE;
-	Tue, 16 Dec 2025 12:02:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AR7IpqG5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1900FC4CEF1;
+	Tue, 16 Dec 2025 12:02:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886549;
-	bh=36VYshdriOcE46Tx1LMjxHl3F0RddSQCDoLFep7w098=;
+	s=korg; t=1765886552;
+	bh=WuxkaZ5BcBBJwuvPAdGpj4CQeaiRPOT1zH3kEwwvOgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ceSLbCIMgneJamJSPsjqhGuXoygbFjYn1rvIFVHW+TJh9++ZGXt2hySmpW3//W+Pi
-	 XwaPjz4RCrPa0y040CHghPu31sMOdSjxSvT/kPLIIq3WqT0OEpHWSXMQ3oqNqq94D1
-	 x2Su7AFCRfcJVUlw6yvf35+gySqwg82g1yDt3EG8=
+	b=AR7IpqG5uS38zDo69Cs9oFQBPNLFSziOiKGfDReSy9qn3w03fRhdP9pKG8Zb08677
+	 gydJj1udzL0gYO8x0c+597VAgTBk1RnQCQEXqqxtHutBmPc2r8jdSSlVe5jvSM4L0k
+	 bk7KxT7MQqxjuwZdJdg6CXQ99bjykgo4Q5Gc5+wo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	linux-cifs@vger.kernel.org,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	Steve French <stfrench@microsoft.com>,
+	Kathara Sasikumar <katharasasikumar007@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 470/507] cifs: Fix handling of a beyond-EOF DIO/unbuffered read over SMB2
-Date: Tue, 16 Dec 2025 12:15:11 +0100
-Message-ID: <20251216111402.472265965@linuxfoundation.org>
+Subject: [PATCH 6.17 471/507] docs: hwmon: fix link to g762 devicetree binding
+Date: Tue, 16 Dec 2025 12:15:12 +0100
+Message-ID: <20251216111402.508253360@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -56,55 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Kathara Sasikumar <katharasasikumar007@gmail.com>
 
-[ Upstream commit 4ae4dde6f34a4124c65468ae4fa1f915fb40f900 ]
+[ Upstream commit 08bfcf4ff9d39228150a757803fc02dffce84ab0 ]
 
-If a DIO read or an unbuffered read request extends beyond the EOF, the
-server will return a short read and a status code indicating that EOF was
-hit, which gets translated to -ENODATA.  Note that the client does not cap
-the request at i_size, but asks for the amount requested in case there's a
-race on the server with a third party.
+The devicetree binding for g762 was converted to YAML to match vendor
+prefix conventions. Update the reference accordingly.
 
-Now, on the client side, the request will get split into multiple
-subrequests if rsize is smaller than the full request size.  A subrequest
-that starts before or at the EOF and returns short data up to the EOF will
-be correctly handled, with the NETFS_SREQ_HIT_EOF flag being set,
-indicating to netfslib that we can't read more.
-
-If a subrequest, however, starts after the EOF and not at it, HIT_EOF will
-not be flagged, its error will be set to -ENODATA and it will be abandoned.
-This will cause the request as a whole to fail with -ENODATA.
-
-Fix this by setting NETFS_SREQ_HIT_EOF on any subrequest that lies beyond
-the EOF marker.
-
-Fixes: 1da29f2c39b6 ("netfs, cifs: Fix handling of short DIO read")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-cc: Shyam Prasad N <sprasad@microsoft.com>
-cc: linux-cifs@vger.kernel.org
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Kathara Sasikumar <katharasasikumar007@gmail.com>
+Link: https://lore.kernel.org/r/20251205215835.783273-1-katharasasikumar007@gmail.com
+Fixes: 3d8e25372417 ("dt-bindings: hwmon: g762: Convert to yaml schema")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2pdu.c | 2 +-
+ Documentation/hwmon/g762.rst | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
-index f925b2da76c1d..64fe2de662ff9 100644
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -4629,7 +4629,7 @@ smb2_readv_callback(struct mid_q_entry *mid)
- 	} else {
- 		size_t trans = rdata->subreq.transferred + rdata->got_bytes;
- 		if (trans < rdata->subreq.len &&
--		    rdata->subreq.start + trans == ictx->remote_i_size) {
-+		    rdata->subreq.start + trans >= ictx->remote_i_size) {
- 			__set_bit(NETFS_SREQ_HIT_EOF, &rdata->subreq.flags);
- 			rdata->result = 0;
- 		}
+diff --git a/Documentation/hwmon/g762.rst b/Documentation/hwmon/g762.rst
+index 0371b3365c48c..f224552a2d3cc 100644
+--- a/Documentation/hwmon/g762.rst
++++ b/Documentation/hwmon/g762.rst
+@@ -17,7 +17,7 @@ done via a userland daemon like fancontrol.
+ Note that those entries do not provide ways to setup the specific
+ hardware characteristics of the system (reference clock, pulses per
+ fan revolution, ...); Those can be modified via devicetree bindings
+-documented in Documentation/devicetree/bindings/hwmon/g762.txt or
++documented in Documentation/devicetree/bindings/hwmon/gmt,g762.yaml or
+ using a specific platform_data structure in board initialization
+ file (see include/linux/platform_data/g762.h).
+ 
 -- 
 2.51.0
 
