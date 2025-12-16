@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C2A34E75D;
-	Tue, 16 Dec 2025 11:46:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9FC34E76A;
+	Tue, 16 Dec 2025 11:46:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885603; cv=none; b=QAdCglrOuAwAbyVGovyh9G8z/RE7+t3m7HWUkR8bpooSnDbc9RoS1B/femQl6GtBgx7gfEwBYszlqvMeP4G4/tzGoWkucscWNtT2QlFdnEyEupZ0IlaohskO8hnxCIukqZ/99yrliIJoopDkwFmIKuqt/gScbPhjasLqAO8/sb0=
+	t=1765885606; cv=none; b=W2s9/u4T+gUvD+p8cXzTWIbUthiKXAvHNuGbIyi5BZuyP3xd57xjQ1DQ6FkAkmWPRkvQQ5eUZmTZhtcCCEQMDKAq3dVn5CShaALcmi7Pu54Pt3Dl9fIM75cBF/5DdYbC/jlbhnCw8dNsS0GbIug+I2+tOIl7BeXdXwJUMn6fwv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885603; c=relaxed/simple;
-	bh=S5w4xo/ogjz52YSVSfBC2K0YGxM+jz8mv6ou7UGDqhY=;
+	s=arc-20240116; t=1765885606; c=relaxed/simple;
+	bh=DywOI/VO29UZ0ppLlpYUYDu6qFWvyuNxp0TPJi2xOzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bXuRgcnn/IpCeodt4mLLIGPybt7lBf4dD57iRVbb0o6FeSOtpOy1uKfgxiia0ynMpyvcsN34oyE73BIQ0bvlKN2PlT9e4lqaX6uO9m7O8h7AYdQa/k9T/dJzkt+XaNQEuXuFJdV2jm18mbF0e9o9wMTSpX7hIiKDT7bSgdoZVEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2KqT8Opy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VzC2UKSrER0+/lE3tsVwnRsVB3GQ1Eu9to7NKFGwwTH/Fqkg3WTP0MwDuj75id+byRW3N4LJx0OzVk6auDNLIse8UKOr+UMz2dquClL62jz1KC2pHqXNum38gdzMqTjQTTApVz4Lpph8InpduC9D97SAPRh84YOaVmyehzFHgro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AeMbpKrY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2KqT8Opy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8799C4CEF1;
-	Tue, 16 Dec 2025 11:46:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AeMbpKrY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B67C4C4CEF1;
+	Tue, 16 Dec 2025 11:46:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885603;
-	bh=S5w4xo/ogjz52YSVSfBC2K0YGxM+jz8mv6ou7UGDqhY=;
+	s=korg; t=1765885606;
+	bh=DywOI/VO29UZ0ppLlpYUYDu6qFWvyuNxp0TPJi2xOzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2KqT8Opy9s8bJ7TdJ10gYEyEQ7bpykQSL1Y4PuaYiAj05h41NDfAETOMmSzxXtxCa
-	 VllkjbGn6rDWcFY+cwq2cXI1NUIThogYRJI1K/j6/9H1PRGf8OretR+iYaRuDqus+r
-	 G0pWpoNpgKwS/WAQ5Uhdh1bcqRNGIpx7Qn+FmV4g=
+	b=AeMbpKrYvc0zrNt4B3bt2a0b2BlkGyaZNv3nZs5PWYSr/Gdv0Hbdmz+cdk4fz2eTz
+	 0bSDjZPTBme4xe38xLl95DCe6qoT5RRh7QRMlEFeva/4f3CISliOT4/AqzELAbKhmH
+	 qZEyMRpD+E7rU8/HjETl/LXX7SMEJ9zGEkkpIADQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Maguire <alan.maguire@oracle.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 171/507] libbpf: Fix parsing of multi-split BTF
-Date: Tue, 16 Dec 2025 12:10:12 +0100
-Message-ID: <20251216111351.713300006@linuxfoundation.org>
+Subject: [PATCH 6.17 189/507] regulator: core: disable supply if enabling main regulator fails
+Date: Tue, 16 Dec 2025 12:10:30 +0100
+Message-ID: <20251216111352.359506713@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -51,49 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Maguire <alan.maguire@oracle.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit 4f596acc260e691a2e348f64230392f3472feea3 ]
+[ Upstream commit fb1ebb10468da414d57153ddebaab29c38ef1a78 ]
 
-When creating multi-split BTF we correctly set the start string offset
-to be the size of the base string section plus the base BTF start
-string offset; the latter is needed for multi-split BTF since the
-offset is non-zero there.
+For 'always-on' and 'boot-on' regulators, the set_machine_constraints()
+may enable supply before enabling the main regulator, however if the
+latter fails, the function returns with an error but the supply remains
+enabled.
 
-Unfortunately the BTF parsing case needed that logic and it was
-missed.
+When this happens, the regulator_register() function continues on the
+error path where it puts the supply regulator. Since enabling the supply
+is not balanced with a disable call, a warning similar to the following
+gets issued from _regulator_put():
 
-Fixes: 4e29128a9ace ("libbpf/btf: Fix string handling to support multi-split BTF")
-Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20251104203309.318429-2-alan.maguire@oracle.com
+    [    1.603889] WARNING: CPU: 2 PID: 44 at _regulator_put+0x8c/0xa0
+    [    1.603908] Modules linked in:
+    [    1.603926] CPU: 2 UID: 0 PID: 44 Comm: kworker/u16:3 Not tainted 6.18.0-rc4 #0 NONE
+    [    1.603938] Hardware name: Qualcomm Technologies, Inc. IPQ9574/AP-AL02-C7 (DT)
+    [    1.603945] Workqueue: async async_run_entry_fn
+    [    1.603958] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+    [    1.603967] pc : _regulator_put+0x8c/0xa0
+    [    1.603976] lr : _regulator_put+0x7c/0xa0
+    ...
+    [    1.604140] Call trace:
+    [    1.604145]  _regulator_put+0x8c/0xa0 (P)
+    [    1.604156]  regulator_register+0x2ec/0xbf0
+    [    1.604166]  devm_regulator_register+0x60/0xb0
+    [    1.604178]  rpm_reg_probe+0x120/0x208
+    [    1.604187]  platform_probe+0x64/0xa8
+    ...
+
+In order to avoid this, change the set_machine_constraints() function to
+disable the supply if enabling the main regulator fails.
+
+Fixes: 05f224ca6693 ("regulator: core: Clean enabling always-on regulators + their supplies")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Link: https://patch.msgid.link/20251107-regulator-disable-supply-v1-1-c95f0536f1b5@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/btf.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/regulator/core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/tools/lib/bpf/btf.c b/tools/lib/bpf/btf.c
-index 37682908cb0f3..ea9f3311bbac6 100644
---- a/tools/lib/bpf/btf.c
-+++ b/tools/lib/bpf/btf.c
-@@ -1062,7 +1062,7 @@ static struct btf *btf_new(const void *data, __u32 size, struct btf *base_btf, b
- 	if (base_btf) {
- 		btf->base_btf = base_btf;
- 		btf->start_id = btf__type_cnt(base_btf);
--		btf->start_str_off = base_btf->hdr->str_len;
-+		btf->start_str_off = base_btf->hdr->str_len + base_btf->start_str_off;
- 	}
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 554d83c4af0c1..80d3e7dbe4bc3 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -1618,6 +1618,8 @@ static int set_machine_constraints(struct regulator_dev *rdev)
+ 	 * and we have control then make sure it is enabled.
+ 	 */
+ 	if (rdev->constraints->always_on || rdev->constraints->boot_on) {
++		bool supply_enabled = false;
++
+ 		/* If we want to enable this regulator, make sure that we know
+ 		 * the supplying regulator.
+ 		 */
+@@ -1637,11 +1639,14 @@ static int set_machine_constraints(struct regulator_dev *rdev)
+ 				rdev->supply = NULL;
+ 				return ret;
+ 			}
++			supply_enabled = true;
+ 		}
  
- 	if (is_mmap) {
-@@ -5819,7 +5819,7 @@ void btf_set_base_btf(struct btf *btf, const struct btf *base_btf)
- {
- 	btf->base_btf = (struct btf *)base_btf;
- 	btf->start_id = btf__type_cnt(base_btf);
--	btf->start_str_off = base_btf->hdr->str_len;
-+	btf->start_str_off = base_btf->hdr->str_len + base_btf->start_str_off;
- }
+ 		ret = _regulator_do_enable(rdev);
+ 		if (ret < 0 && ret != -EINVAL) {
+ 			rdev_err(rdev, "failed to enable: %pe\n", ERR_PTR(ret));
++			if (supply_enabled)
++				regulator_disable(rdev->supply);
+ 			return ret;
+ 		}
  
- int btf__relocate(struct btf *btf, const struct btf *base_btf)
 -- 
 2.51.0
 
