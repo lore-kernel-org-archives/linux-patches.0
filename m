@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C20749C;
-	Tue, 16 Dec 2025 12:13:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD4D355802;
+	Tue, 16 Dec 2025 12:13:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887185; cv=none; b=rg6/CSQwlcO5Wt9UYY2OrZHwm8NlyAtoVrsy6VEA++UXaT/8yHqT0Ajn9ip9rZQJmKZJ95txpPq0rpzGgWJkltZtN4Sc5WAqXP3nKGoIJMdV4AF0N60GX/pHOCzbpTbCZ8GHN99IeVF7KfesoaScpS8va2dZR02PqUjeyMr9ysE=
+	t=1765887188; cv=none; b=jwiN9WcKoW1VeRSFYdfp9UBE8oAl2effg4gys6OkTn9me0JWp/AXc5Vvqv5mTT55Qt2AAws6Heb1W9JumabkZ4mjaR86wPgb873sUiPrHZDvEuPINaJGUQDp0WEtudfflla1Oq9iSlhbdQ1HkKuEwyiAJ71IsmouGEKtpFtKUnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887185; c=relaxed/simple;
-	bh=apt+mGEHvPBCCag+/kTv3DChvCf/i6wi1/4Kr3EBP8Y=;
+	s=arc-20240116; t=1765887188; c=relaxed/simple;
+	bh=WNLhLZgW1VUICaf21upFeqJHToOD3fkNMp/cwCYSOqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nGe1HVvgmrrcADNAdpD+Er4/SEhC0wkzXNmYSxmRWZJnIANImpcFmO773BBlrWXuJUCQG3Jrxw56ap3b0eAdizMcmtai9ktCiSqHXG4bAy6kbZznqwFqDY5F1vDckSqyV0k01XOKx0oG7kVpqQ2mrLYyxonuPApEmwJ+OqPr2/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MZ4MaIlj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=joHjzewPGbRSs3cVL4KTPxDrYzi3zpYQWkkjG3C9KV3dLOBqDFgL77lkrYB4TGh/S5K3tJ9j8HPwH40IEAcAiadQ72rHfrW4w4M54axpnu57DyjYJCFR3LC+JBLjZi/3MKY05bh8T2n39FseGGvvzse8445S1J9L/X6v0uReet8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YkSIAm7r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZ4MaIlj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1826C4CEF1;
-	Tue, 16 Dec 2025 12:13:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YkSIAm7r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C55CEC4CEF1;
+	Tue, 16 Dec 2025 12:13:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887185;
-	bh=apt+mGEHvPBCCag+/kTv3DChvCf/i6wi1/4Kr3EBP8Y=;
+	s=korg; t=1765887188;
+	bh=WNLhLZgW1VUICaf21upFeqJHToOD3fkNMp/cwCYSOqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MZ4MaIljLqT+yxuo20zbjOYX4cuGOXi/Zaj3eF9FeN59L/pgw5+bkUkpkTpLx6MGJ
-	 VU2AbCzNbq9klqS6h2ePSdXz8A3oGagM6AH+9k6JnCGfMZInSdgwkafYWskFduWslS
-	 lsrLqxBJBn+lI4ree8CI4I8YQQxqyMWZX0LpEYmU=
+	b=YkSIAm7rlhKElJsW6J42ZQndJ3/NktJRA3GpU2Ggv4N2NiFiO2GUZfb8ZLbCTYPK+
+	 McvOKLm8xVhGe47xwqtdvpyIAQPbOVGvnjgv8aHJrl4uuJrDBZe9h/u5ukW+seHLD4
+	 57JCZxdGEIbLslkEdBi00pcwlv823vMf1zwwyhrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomasz Rusinowicz <tomasz.rusinowicz@intel.com>,
-	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
-	Karol Wachowski <karol.wachowski@linux.intel.com>,
+	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 152/614] accel/ivpu: Fix race condition when unbinding BOs
-Date: Tue, 16 Dec 2025 12:08:39 +0100
-Message-ID: <20251216111406.841662090@linuxfoundation.org>
+Subject: [PATCH 6.18 153/614] pidfs: add missing PIDFD_INFO_SIZE_VER1
+Date: Tue, 16 Dec 2025 12:08:40 +0100
+Message-ID: <20251216111406.878228230@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,51 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomasz Rusinowicz <tomasz.rusinowicz@intel.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 00812636df370bedf4e44a0c81b86ea96bca8628 ]
+[ Upstream commit 4061c43a99772c66c378cfacaa71550ab3b35909 ]
 
-Fix 'Memory manager not clean during takedown' warning that occurs
-when ivpu_gem_bo_free() removes the BO from the BOs list before it
-gets unmapped. Then file_priv_unbind() triggers a warning in
-drm_mm_takedown() during context teardown.
+We grew struct pidfd_info not too long ago.
 
-Protect the unmapping sequence with bo_list_lock to ensure the BO is
-always fully unmapped when removed from the list. This ensures the BO
-is either fully unmapped at context teardown time or present on the
-list and unmapped by file_priv_unbind().
-
-Fixes: 48aea7f2a2ef ("accel/ivpu: Fix locking in ivpu_bo_remove_all_bos_from_context()")
-Signed-off-by: Tomasz Rusinowicz <tomasz.rusinowicz@intel.com>
-Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Signed-off-by: Karol Wachowski <karol.wachowski@linux.intel.com>
-Link: https://patch.msgid.link/20251029071451.184243-1-karol.wachowski@linux.intel.com
+Link: https://patch.msgid.link/20251028-work-coredump-signal-v1-3-ca449b7b7aa0@kernel.org
+Fixes: 1d8db6fd698d ("pidfs, coredump: add PIDFD_INFO_COREDUMP")
+Reviewed-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/ivpu/ivpu_gem.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/uapi/linux/pidfd.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/accel/ivpu/ivpu_gem.c b/drivers/accel/ivpu/ivpu_gem.c
-index a38e41f9c7123..fda0a18e6d639 100644
---- a/drivers/accel/ivpu/ivpu_gem.c
-+++ b/drivers/accel/ivpu/ivpu_gem.c
-@@ -314,7 +314,6 @@ static void ivpu_gem_bo_free(struct drm_gem_object *obj)
+diff --git a/include/uapi/linux/pidfd.h b/include/uapi/linux/pidfd.h
+index 957db425d459a..6ccbabd9a68d8 100644
+--- a/include/uapi/linux/pidfd.h
++++ b/include/uapi/linux/pidfd.h
+@@ -28,6 +28,7 @@
+ #define PIDFD_INFO_COREDUMP		(1UL << 4) /* Only returned if requested. */
  
- 	mutex_lock(&vdev->bo_list_lock);
- 	list_del(&bo->bo_list_node);
--	mutex_unlock(&vdev->bo_list_lock);
+ #define PIDFD_INFO_SIZE_VER0		64 /* sizeof first published struct */
++#define PIDFD_INFO_SIZE_VER1		72 /* sizeof second published struct */
  
- 	drm_WARN_ON(&vdev->drm, !drm_gem_is_imported(&bo->base.base) &&
- 		    !dma_resv_test_signaled(obj->resv, DMA_RESV_USAGE_READ));
-@@ -325,6 +324,8 @@ static void ivpu_gem_bo_free(struct drm_gem_object *obj)
- 	ivpu_bo_unbind_locked(bo);
- 	ivpu_bo_unlock(bo);
- 
-+	mutex_unlock(&vdev->bo_list_lock);
-+
- 	drm_WARN_ON(&vdev->drm, bo->mmu_mapped);
- 	drm_WARN_ON(&vdev->drm, bo->ctx);
- 
+ /*
+  * Values for @coredump_mask in pidfd_info.
 -- 
 2.51.0
 
