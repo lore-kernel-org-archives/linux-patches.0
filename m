@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98FC8341645;
-	Tue, 16 Dec 2025 11:23:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52ED341645;
+	Tue, 16 Dec 2025 11:23:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884185; cv=none; b=q8O06LGF2L1lMnw0Z8NgP6UAASSIbGsSjTJC/c8ksy9G48KBf1IGTMeUzHbO7sHQOx6uAUJcRhCyrMEX2SPMHbyp4TX3WboXr+vgv2nVKaLNoftxcRagID6jroyUMFOXoqCkPRUoZGGVerWrfzpgSqHqkBTFh/QPvBzBtv3YA7I=
+	t=1765884188; cv=none; b=cSXb31mG4b5V+he2KpAdqtGNVQUpA//n83YnZ4P+KSzP+xC51v9DAC72esJHjK+IVLsqmt5m8obV+7FGXfs93qC4Jzll25CFH1WC73WnLO8iVCwuz5hfs4IrY0zn2Ufr+OlF11cVLMzcOV8EURilgRDeWpWfEBUO87USVm3JKOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884185; c=relaxed/simple;
-	bh=cyVAnYmDIt/py3x+dWB1bx8Y+lCe68jIR6zJJd4RIrE=;
+	s=arc-20240116; t=1765884188; c=relaxed/simple;
+	bh=OZtmaAWQtsXjBAq0hNNu4aC+eD/Ynv0ot1XbXH2YqiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GslIKlKrZQeafAUv92Z1jhyAsKdOtH/Okg1gy6eqGTiN2yvCA2ws4KphHJ5OB7R8O6Pvw9LrTpnJFmReATes3hwe3S+ElxToWwzOSGsya41FP+XqQwPZA5roOp4LSQo++/8EaID60Fq99hbmLNKDY51hOQf0ucX3Fz7U3Hc8obY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QiMmMJhU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aq1p10RGl2odPTCoTqSgGet8xV+6xaPkLpkLdYJAjwhVpIl3Mi3ErxIEw4e23p7xUJ+WznLqwp8VKufBu3Aj6LHXQcLa14ZH2t1+Tdq6ADHUI4J/A12NoPIUcYjv37OEPZzFNXUIrumRkB3ZeLURMIcxBmDHvOG5xc92IsdaRP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VAQHj16A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QiMmMJhU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B255C4CEF1;
-	Tue, 16 Dec 2025 11:23:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VAQHj16A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CBBAC4CEF1;
+	Tue, 16 Dec 2025 11:23:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884185;
-	bh=cyVAnYmDIt/py3x+dWB1bx8Y+lCe68jIR6zJJd4RIrE=;
+	s=korg; t=1765884188;
+	bh=OZtmaAWQtsXjBAq0hNNu4aC+eD/Ynv0ot1XbXH2YqiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QiMmMJhUw3KEZ0XL7c8gBUTYrE7vjfx82WFo7F4TqM/MR0PiklxA70QdR+IUNKbH7
-	 16Dw/3l/HLd85Pn8YVjiExkV58uExIvfBh8DNweyUN9DRjVTy6GdbBoCmBObe1SFgp
-	 3isuR1hLJ7Kfzl5uAsfVFJk/nOMgjBhrloqmWFis=
+	b=VAQHj16ASGtawlkGob47yUKGzDYfdamH/3Shz6prg8Bmxx6lOfReuFxe1scsuFFBW
+	 xGwHGljQoUvVHxgVGyUWThKURWutZJ58yPd4aIq+fg17lfuljUr/u4/BKoBnMV/ged
+	 f020suLbejI2KfSM09fNAEtMs100yav+XUMDRfms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Maguire <alan.maguire@oracle.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 118/354] libbpf: Fix parsing of multi-split BTF
-Date: Tue, 16 Dec 2025 12:11:25 +0100
-Message-ID: <20251216111325.199049046@linuxfoundation.org>
+Subject: [PATCH 6.12 101/354] perf lock contention: Load kernel map before lookup
+Date: Tue, 16 Dec 2025 12:11:08 +0100
+Message-ID: <20251216111324.579909575@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -51,49 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Maguire <alan.maguire@oracle.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit 4f596acc260e691a2e348f64230392f3472feea3 ]
+[ Upstream commit 553d18c98a896094b99a01765b9698b204183d49 ]
 
-When creating multi-split BTF we correctly set the start string offset
-to be the size of the base string section plus the base BTF start
-string offset; the latter is needed for multi-split BTF since the
-offset is non-zero there.
+On some machines, it caused troubles when it tried to find kernel
+symbols.  I think it's because kernel modules and kallsyms are messed
+up during load and split.
 
-Unfortunately the BTF parsing case needed that logic and it was
-missed.
+Basically we want to make sure the kernel map is loaded and the code has
+it in the lock_contention_read().  But recently we added more lookups in
+the lock_contention_prepare() which is called before _read().
 
-Fixes: 4e29128a9ace ("libbpf/btf: Fix string handling to support multi-split BTF")
-Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20251104203309.318429-2-alan.maguire@oracle.com
+Also the kernel map (kallsyms) may not be the first one in the group
+like on ARM.  Let's use machine__kernel_map() rather than just loading
+the first map.
+
+Reviewed-by: Ian Rogers <irogers@google.com>
+Fixes: 688d2e8de231c54e ("perf lock contention: Add -l/--lock-addr option")
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/btf.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/util/bpf_lock_contention.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/lib/bpf/btf.c b/tools/lib/bpf/btf.c
-index b770702dab372..56935f86a6963 100644
---- a/tools/lib/bpf/btf.c
-+++ b/tools/lib/bpf/btf.c
-@@ -1046,7 +1046,7 @@ static struct btf *btf_new(const void *data, __u32 size, struct btf *base_btf)
- 	if (base_btf) {
- 		btf->base_btf = base_btf;
- 		btf->start_id = btf__type_cnt(base_btf);
--		btf->start_str_off = base_btf->hdr->str_len;
-+		btf->start_str_off = base_btf->hdr->str_len + base_btf->start_str_off;
+diff --git a/tools/perf/util/bpf_lock_contention.c b/tools/perf/util/bpf_lock_contention.c
+index 41a1ad0878951..a286e15b16a4e 100644
+--- a/tools/perf/util/bpf_lock_contention.c
++++ b/tools/perf/util/bpf_lock_contention.c
+@@ -26,6 +26,9 @@ int lock_contention_prepare(struct lock_contention *con)
+ 	struct evlist *evlist = con->evlist;
+ 	struct target *target = con->target;
+ 
++	/* make sure it loads the kernel map before lookup */
++	map__load(machine__kernel_map(con->machine));
++
+ 	skel = lock_contention_bpf__open();
+ 	if (!skel) {
+ 		pr_err("Failed to open lock-contention BPF skeleton\n");
+@@ -443,9 +446,6 @@ int lock_contention_read(struct lock_contention *con)
+ 		bpf_prog_test_run_opts(prog_fd, &opts);
  	}
  
- 	btf->raw_data = malloc(size);
-@@ -5504,7 +5504,7 @@ void btf_set_base_btf(struct btf *btf, const struct btf *base_btf)
- {
- 	btf->base_btf = (struct btf *)base_btf;
- 	btf->start_id = btf__type_cnt(base_btf);
--	btf->start_str_off = base_btf->hdr->str_len;
-+	btf->start_str_off = base_btf->hdr->str_len + base_btf->start_str_off;
- }
- 
- int btf__relocate(struct btf *btf, const struct btf *base_btf)
+-	/* make sure it loads the kernel map */
+-	maps__load_first(machine->kmaps);
+-
+ 	prev_key = NULL;
+ 	while (!bpf_map_get_next_key(fd, prev_key, &key)) {
+ 		s64 ls_key;
 -- 
 2.51.0
 
