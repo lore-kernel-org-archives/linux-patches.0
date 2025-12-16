@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CAE2376BD5;
-	Tue, 16 Dec 2025 12:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9FE636D512;
+	Tue, 16 Dec 2025 12:27:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888056; cv=none; b=QPwvaj/6d99ajmgkitE4HHmxIfJCDNLk00yJFA8O7CQsvgtEzWy5RcU4K3CCK69b4dfePxg8b0Djh9KEHOsoLjoGIC+P60GnboLwqOq3d/vqr4xYs9uV9FyYVUuS8nBqjona9SDYUHUyo3n4UxDBtJz0l3MCySflS27Jj6To+Zg=
+	t=1765888059; cv=none; b=NSaW+EQjNNKc2/4aN9IgAe/IWSK65Gcc1bDeN2QrBmurBZYQwY92IYqhI1QWazr8uyxbA3xJkcYx1I7uHElCmsU7znqQ0CSmhawnRe6l/i39mi60V7pko0yJk9pYo9OPqh1ZEQVBzQ43e3H6r8l0vAWNSmTRXdYfHLYdD/4Aez8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888056; c=relaxed/simple;
-	bh=kiAM5AHd90wdE80LiUWUrpGWLWsuGzFFhJJvZTt+bNU=;
+	s=arc-20240116; t=1765888059; c=relaxed/simple;
+	bh=7f228i3z3npAQl2rlL81PYGnLl7PGCzeUtU+rfjEwwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J2Xg15yHv0Sm0aLYb0l4zNzVr3VtxvN1vwFJd68/32qVvUTW/C+9RSCjpyALrwwt1FrmAJB7ORVVv8yLK65dBUBb5zkRzJeae5/YHKP3VFfVOrqUeV3daiVasM8Ugx/aN2vhn+uOObegwipn+ugAL+dlt4dIB4e+QTgXA8PGJ6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E4Br1Rw9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cM/rZEjR8b5hHQ4MVIZbuddBhq5sb5/uBVLxpr25EP58xhOnsfCrI0OJkCAOYkl6ZBhfRpKsJV2r7OdaVXXKs0nKsZIl/tQGYBZQuW9RxwEU5o3LaXutexOMJLKQtbfWrCBiMHwHH4DfxdNPc/du1pzx3sBcfgfCmk42G+zqQa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WA+eQv+F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E4Br1Rw9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 339DCC4CEF1;
-	Tue, 16 Dec 2025 12:27:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WA+eQv+F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57DD6C4CEF1;
+	Tue, 16 Dec 2025 12:27:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888055;
-	bh=kiAM5AHd90wdE80LiUWUrpGWLWsuGzFFhJJvZTt+bNU=;
+	s=korg; t=1765888058;
+	bh=7f228i3z3npAQl2rlL81PYGnLl7PGCzeUtU+rfjEwwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E4Br1Rw9HkfHihe1BjhuCNF0BxeyAwFmw6nPJ7evetc6/RPLRWqHpJOrLO8oIPk9r
-	 wFSiIOLNX7zp+nU3xpB58CQWYR7lG0x42xgISS+obZkj32oNf4ho0q9i9y1gAatXKG
-	 32gNeZf6KGrRQeJHyAdugsBdp0EApVOZIhLeHGlc=
+	b=WA+eQv+F0flF4ZhZ4u59mZvcMs/DEVJGhHUnediHBrbNXOJ1SRfSw2a89/mufbXnC
+	 UghUnTZZD7glPLU/wx+9V42T99OOggQBUEvRbz9SHLg5+9K2wugm6B5eUzOZ3svt4I
+	 VLBvWaI/ctJb8Sodt6bY0j6iJpiarXig5hn3Prog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 386/614] wifi: mt76: mt7996: Remove useless check in mt7996_msdu_page_get_from_cache()
-Date: Tue, 16 Dec 2025 12:12:33 +0100
-Message-ID: <20251216111415.354804015@linuxfoundation.org>
+Subject: [PATCH 6.18 387/614] Revert "wifi: mt76: mt792x: improve monitor interface handling"
+Date: Tue, 16 Dec 2025 12:12:34 +0100
+Message-ID: <20251216111415.390444593@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,38 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 2157e49892c5eae210b8fa6ee8672bd9d0ffa4b5 ]
+[ Upstream commit cdb2941a516cf06929293604e2e0f4c1d6f3541e ]
 
-Get rid of useless null-pointer check in mt7996_msdu_page_get_from_cache
-since we have already verfied the list is not empty.
+This reverts commit 55e95ce469d0c61041bae48b2ebb7fcbf6d1ba7f.
 
-Fixes: b1e58e137b616 ("wifi: mt76: mt7996: Introduce RRO MSDU callbacks")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/r/202510100155.MS0IXhzm-lkp@intel.com/
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20251014-mt7996_msdu_page_get_from_cache-remove-null-ptr-check-v1-1-fbeb7881e192@kernel.org
+mt792x drivers don't seem to support multi-radio devices yet.  At least
+they don't mess with `struct wiphy_radio` at the moment.
+
+Packet capturing on monitor interface doesn't work after the blamed patch:
+
+  tcpdump -i wls6mon -n -vvv
+
+Revert the NO_VIRTUAL_MONITOR feature for now to resolve the issue.
+
+Found by Linux Verification Center (linuxtesting.org).
+
+Fixes: 55e95ce469d0 ("wifi: mt76: mt792x: improve monitor interface handling")
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Link: https://patch.msgid.link/20251027111843.38975-1-pchelkin@ispras.ru
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mac.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt792x_core.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-index 9501def3e0e3e..284f2eea71e5b 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-@@ -1681,8 +1681,7 @@ mt7996_msdu_page_get_from_cache(struct mt7996_dev *dev)
- 	if (!list_empty(&dev->wed_rro.page_cache)) {
- 		p = list_first_entry(&dev->wed_rro.page_cache,
- 				     struct mt7996_msdu_page, list);
--		if (p)
--			list_del(&p->list);
-+		list_del(&p->list);
- 	}
+diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_core.c b/drivers/net/wireless/mediatek/mt76/mt792x_core.c
+index c0e56541a9547..9cad572c34a38 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt792x_core.c
++++ b/drivers/net/wireless/mediatek/mt76/mt792x_core.c
+@@ -688,7 +688,6 @@ int mt792x_init_wiphy(struct ieee80211_hw *hw)
+ 	ieee80211_hw_set(hw, SUPPORTS_DYNAMIC_PS);
+ 	ieee80211_hw_set(hw, SUPPORTS_VHT_EXT_NSS_BW);
+ 	ieee80211_hw_set(hw, CONNECTION_MONITOR);
+-	ieee80211_hw_set(hw, NO_VIRTUAL_MONITOR);
+ 	ieee80211_hw_set(hw, SUPPORTS_MULTI_BSSID);
+ 	ieee80211_hw_set(hw, SUPPORTS_ONLY_HE_MULTI_BSSID);
  
- 	spin_unlock(&dev->wed_rro.lock);
 -- 
 2.51.0
 
