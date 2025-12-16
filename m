@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F10357A5F;
-	Tue, 16 Dec 2025 12:03:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865373587A4;
+	Tue, 16 Dec 2025 12:03:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886626; cv=none; b=lPz9gef6dStj2nEPAAqyx+l85LMLq6ESazw0ewjhaJV9Z9++/65RFB7KteWdlNinKBonTeD87/RPce1cKEXXTmETWqj2tFQ6sSciNr60Aa2jOEgwGXbUbcyCebphOyFnsqSNku2g8raf3xwojoNyHGVaVrTLJEdLUZPyaP1zsjo=
+	t=1765886629; cv=none; b=OhWGu0CymZmhChcYDUbIsY0SCTZRDimilCuOb3BDYAnCfkJ7mPbU1cJ1G6qGoeXRkJ7n9RNJHSVcQ+r8PnnlfPpC1fltje2cnonHVu4PF+Kd5ulQF7pdN04PPK8DsHseoSwrUj+Cxbs9o+RlRu8wPdjsUT/TGUavg0el7R/J0YQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886626; c=relaxed/simple;
-	bh=zSnZg6DkODGvVWusaH8U4nEddqZfU7eTCMfYnFdw7Gg=;
+	s=arc-20240116; t=1765886629; c=relaxed/simple;
+	bh=M7elHLJd/lwesp9JTCXLzUd1LELlzkQfjSHigsgy0CU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ruPLqYhrEOsb4/B2KKhZBMgbUqeIx+PYi9Mi1s124yRmHGjY107qJaRdeWb6GRQAx46AEzzh25a5D4hel2UDCXquxx1qYbBvabmhoWaYxQTt4b8x91OGt/EzRpRLpMNXDaiFLSfdpkkCYwL2Hdy0Lf75y0XwTVBzGLDagw2o9iM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eptaNbOP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kjHzYnxn3A043+Y3+50R2fEHDKerDg1jdvebkkYZd9u1kjKK+n595cEmcFWDuZx3qidKJCpDVkCjbmLCDxh66OOdkpmPo01E/c7dmzkz+FAcD7gaCHF47ofX7YpF3jVqAey0mRrArfsxZBCVduSCXf4rVjWdJ338SWsOPW87Kzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WrZO+7VH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eptaNbOP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2671C4CEF1;
-	Tue, 16 Dec 2025 12:03:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WrZO+7VH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9443C4CEF1;
+	Tue, 16 Dec 2025 12:03:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886626;
-	bh=zSnZg6DkODGvVWusaH8U4nEddqZfU7eTCMfYnFdw7Gg=;
+	s=korg; t=1765886629;
+	bh=M7elHLJd/lwesp9JTCXLzUd1LELlzkQfjSHigsgy0CU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eptaNbOPSBnBurxlG3d34uaW7iDEBdDKG91xOHQRQ4liWLkPKfW2jMhJz+AXDZ7aN
-	 JHsFxtCoXvJMsMSP8ftXhA3mljfwtfBAw7kjIZFm0OUkn+NGDwa9VHdVt+vdeOy6R5
-	 vpEn6FuYYPxt7DJik9kTNLFd/0PUb3ep8Ajp/XOs=
+	b=WrZO+7VHpNKyQ57Lm5vqswQ4hGY+7+l6WC4323sJcjyWBxzwwgixOyq3+31jei3Zb
+	 Lk2WyWjH5tbrdoaX7xpowVWxtkpwNy2bWIOgUvZMydw2m33cGEIyzUbpcJkq2M6BqJ
+	 CdlRP0dU5RTnENVaViHCIv76dI3CaWeY/qitwtUI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Cong Zhang <cong.zhang@oss.qualcomm.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 491/507] efi/cper: align ARM CPER type with UEFI 2.9A/2.10 specs
-Date: Tue, 16 Dec 2025 12:15:32 +0100
-Message-ID: <20251216111403.228132379@linuxfoundation.org>
+Subject: [PATCH 6.17 460/507] blk-mq: Abort suspend when wakeup events are pending
+Date: Tue, 16 Dec 2025 12:15:01 +0100
+Message-ID: <20251216111402.112974071@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -53,228 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+From: Cong Zhang <cong.zhang@oss.qualcomm.com>
 
-[ Upstream commit 96b010536ee020e716d28d9b359a4bcd18800aeb ]
+[ Upstream commit c196bf43d706592d8801a7513603765080e495fb ]
 
-Up to UEFI spec 2.9, the type byte of CPER struct for ARM processor
-was defined simply as:
+During system suspend, wakeup capable IRQs for block device can be
+delayed, which can cause blk_mq_hctx_notify_offline() to hang
+indefinitely while waiting for pending request to complete.
+Skip the request waiting loop and abort suspend when wakeup events are
+pending to prevent the deadlock.
 
-Type at byte offset 4:
-
-	- Cache error
-	- TLB Error
-	- Bus Error
-	- Micro-architectural Error
-	All other values are reserved
-
-Yet, there was no information about how this would be encoded.
-
-Spec 2.9A errata corrected it by defining:
-
-	- Bit 1 - Cache Error
-	- Bit 2 - TLB Error
-	- Bit 3 - Bus Error
-	- Bit 4 - Micro-architectural Error
-	All other values are reserved
-
-That actually aligns with the values already defined on older
-versions at N.2.4.1. Generic Processor Error Section.
-
-Spec 2.10 also preserve the same encoding as 2.9A.
-
-Adjust CPER and GHES handling code for both generic and ARM
-processors to properly handle UEFI 2.9A and 2.10 encoding.
-
-Link: https://uefi.org/specs/UEFI/2.10/Apx_N_Common_Platform_Error_Record.html#arm-processor-error-information
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: bf0beec0607d ("blk-mq: drain I/O when all CPUs in a hctx are offline")
+Signed-off-by: Cong Zhang <cong.zhang@oss.qualcomm.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/apei/ghes.c        | 16 +++++++----
- drivers/firmware/efi/cper-arm.c | 50 ++++++++++++++++-----------------
- include/linux/cper.h            | 10 +++----
- 3 files changed, 39 insertions(+), 37 deletions(-)
+ block/blk-mq.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
-index 7fca0ede9ecc0..307dc7f62e525 100644
---- a/drivers/acpi/apei/ghes.c
-+++ b/drivers/acpi/apei/ghes.c
-@@ -22,6 +22,7 @@
- #include <linux/moduleparam.h>
- #include <linux/init.h>
- #include <linux/acpi.h>
-+#include <linux/bitfield.h>
- #include <linux/io.h>
- #include <linux/interrupt.h>
- #include <linux/timer.h>
-@@ -556,6 +557,7 @@ static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata,
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index 19f62b070ca9d..3e9f82c9a89d2 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -23,6 +23,7 @@
+ #include <linux/cache.h>
+ #include <linux/sched/topology.h>
+ #include <linux/sched/signal.h>
++#include <linux/suspend.h>
+ #include <linux/delay.h>
+ #include <linux/crash_dump.h>
+ #include <linux/prefetch.h>
+@@ -3721,6 +3722,7 @@ static int blk_mq_hctx_notify_offline(unsigned int cpu, struct hlist_node *node)
  {
- 	struct cper_sec_proc_arm *err = acpi_hest_get_payload(gdata);
- 	int flags = sync ? MF_ACTION_REQUIRED : 0;
-+	char error_type[120];
- 	bool queued = false;
- 	int sec_sev, i;
- 	char *p;
-@@ -568,9 +570,8 @@ static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata,
- 	p = (char *)(err + 1);
- 	for (i = 0; i < err->err_info_num; i++) {
- 		struct cper_arm_err_info *err_info = (struct cper_arm_err_info *)p;
--		bool is_cache = (err_info->type == CPER_ARM_CACHE_ERROR);
-+		bool is_cache = err_info->type & CPER_ARM_CACHE_ERROR;
- 		bool has_pa = (err_info->validation_bits & CPER_ARM_INFO_VALID_PHYSICAL_ADDR);
--		const char *error_type = "unknown error";
+ 	struct blk_mq_hw_ctx *hctx = hlist_entry_safe(node,
+ 			struct blk_mq_hw_ctx, cpuhp_online);
++	int ret = 0;
  
- 		/*
- 		 * The field (err_info->error_info & BIT(26)) is fixed to set to
-@@ -584,12 +585,15 @@ static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata,
- 			continue;
- 		}
- 
--		if (err_info->type < ARRAY_SIZE(cper_proc_error_type_strs))
--			error_type = cper_proc_error_type_strs[err_info->type];
-+		cper_bits_to_str(error_type, sizeof(error_type),
-+				 FIELD_GET(CPER_ARM_ERR_TYPE_MASK, err_info->type),
-+				 cper_proc_error_type_strs,
-+				 ARRAY_SIZE(cper_proc_error_type_strs));
- 
- 		pr_warn_ratelimited(FW_WARN GHES_PFX
--				    "Unhandled processor error type: %s\n",
--				    error_type);
-+				    "Unhandled processor error type 0x%02x: %s%s\n",
-+				    err_info->type, error_type,
-+				    (err_info->type & ~CPER_ARM_ERR_TYPE_MASK) ? " with reserved bit(s)" : "");
- 		p += err_info->length;
- 	}
- 
-diff --git a/drivers/firmware/efi/cper-arm.c b/drivers/firmware/efi/cper-arm.c
-index 6ff781e47147c..76542a53e2027 100644
---- a/drivers/firmware/efi/cper-arm.c
-+++ b/drivers/firmware/efi/cper-arm.c
-@@ -93,15 +93,11 @@ static void cper_print_arm_err_info(const char *pfx, u32 type,
- 	bool proc_context_corrupt, corrected, precise_pc, restartable_pc;
- 	bool time_out, access_mode;
- 
--	/* If the type is unknown, bail. */
--	if (type > CPER_ARM_MAX_TYPE)
--		return;
--
- 	/*
- 	 * Vendor type errors have error information values that are vendor
- 	 * specific.
+ 	if (blk_mq_hctx_has_online_cpu(hctx, cpu))
+ 		return 0;
+@@ -3741,12 +3743,24 @@ static int blk_mq_hctx_notify_offline(unsigned int cpu, struct hlist_node *node)
+ 	 * frozen and there are no requests.
  	 */
--	if (type == CPER_ARM_VENDOR_ERROR)
-+	if (type & CPER_ARM_VENDOR_ERROR)
- 		return;
- 
- 	if (error_info & CPER_ARM_ERR_VALID_TRANSACTION_TYPE) {
-@@ -116,43 +112,38 @@ static void cper_print_arm_err_info(const char *pfx, u32 type,
- 	if (error_info & CPER_ARM_ERR_VALID_OPERATION_TYPE) {
- 		op_type = ((error_info >> CPER_ARM_ERR_OPERATION_SHIFT)
- 			   & CPER_ARM_ERR_OPERATION_MASK);
--		switch (type) {
--		case CPER_ARM_CACHE_ERROR:
-+		if (type & CPER_ARM_CACHE_ERROR) {
- 			if (op_type < ARRAY_SIZE(arm_cache_err_op_strs)) {
--				printk("%soperation type: %s\n", pfx,
-+				printk("%scache error, operation type: %s\n", pfx,
- 				       arm_cache_err_op_strs[op_type]);
- 			}
--			break;
--		case CPER_ARM_TLB_ERROR:
+ 	if (percpu_ref_tryget(&hctx->queue->q_usage_counter)) {
+-		while (blk_mq_hctx_has_requests(hctx))
++		while (blk_mq_hctx_has_requests(hctx)) {
++			/*
++			 * The wakeup capable IRQ handler of block device is
++			 * not called during suspend. Skip the loop by checking
++			 * pm_wakeup_pending to prevent the deadlock and improve
++			 * suspend latency.
++			 */
++			if (pm_wakeup_pending()) {
++				clear_bit(BLK_MQ_S_INACTIVE, &hctx->state);
++				ret = -EBUSY;
++				break;
++			}
+ 			msleep(5);
 +		}
-+		if (type & CPER_ARM_TLB_ERROR) {
- 			if (op_type < ARRAY_SIZE(arm_tlb_err_op_strs)) {
--				printk("%soperation type: %s\n", pfx,
-+				printk("%sTLB error, operation type: %s\n", pfx,
- 				       arm_tlb_err_op_strs[op_type]);
- 			}
--			break;
--		case CPER_ARM_BUS_ERROR:
-+		}
-+		if (type & CPER_ARM_BUS_ERROR) {
- 			if (op_type < ARRAY_SIZE(arm_bus_err_op_strs)) {
--				printk("%soperation type: %s\n", pfx,
-+				printk("%sbus error, operation type: %s\n", pfx,
- 				       arm_bus_err_op_strs[op_type]);
- 			}
--			break;
- 		}
+ 		percpu_ref_put(&hctx->queue->q_usage_counter);
  	}
  
- 	if (error_info & CPER_ARM_ERR_VALID_LEVEL) {
- 		level = ((error_info >> CPER_ARM_ERR_LEVEL_SHIFT)
- 			 & CPER_ARM_ERR_LEVEL_MASK);
--		switch (type) {
--		case CPER_ARM_CACHE_ERROR:
-+		if (type & CPER_ARM_CACHE_ERROR)
- 			printk("%scache level: %d\n", pfx, level);
--			break;
--		case CPER_ARM_TLB_ERROR:
-+
-+		if (type & CPER_ARM_TLB_ERROR)
- 			printk("%sTLB level: %d\n", pfx, level);
--			break;
--		case CPER_ARM_BUS_ERROR:
-+
-+		if (type & CPER_ARM_BUS_ERROR)
- 			printk("%saffinity level at which the bus error occurred: %d\n",
- 			       pfx, level);
--			break;
--		}
- 	}
+-	return 0;
++	return ret;
+ }
  
- 	if (error_info & CPER_ARM_ERR_VALID_PROC_CONTEXT_CORRUPT) {
-@@ -241,6 +232,7 @@ void cper_print_proc_arm(const char *pfx,
- 	struct cper_arm_err_info *err_info;
- 	struct cper_arm_ctx_info *ctx_info;
- 	char newpfx[64], infopfx[ARRAY_SIZE(newpfx) + 1];
-+	char error_type[120];
- 
- 	printk("%sMIDR: 0x%016llx\n", pfx, proc->midr);
- 
-@@ -289,9 +281,15 @@ void cper_print_proc_arm(const char *pfx,
- 				       newpfx);
- 		}
- 
--		printk("%serror_type: %d, %s\n", newpfx, err_info->type,
--			err_info->type < ARRAY_SIZE(cper_proc_error_type_strs) ?
--			cper_proc_error_type_strs[err_info->type] : "unknown");
-+		cper_bits_to_str(error_type, sizeof(error_type),
-+				 FIELD_GET(CPER_ARM_ERR_TYPE_MASK, err_info->type),
-+				 cper_proc_error_type_strs,
-+				 ARRAY_SIZE(cper_proc_error_type_strs));
-+
-+		printk("%serror_type: 0x%02x: %s%s\n", newpfx, err_info->type,
-+		       error_type,
-+		       (err_info->type & ~CPER_ARM_ERR_TYPE_MASK) ? " with reserved bit(s)" : "");
-+
- 		if (err_info->validation_bits & CPER_ARM_INFO_VALID_ERR_INFO) {
- 			printk("%serror_info: 0x%016llx\n", newpfx,
- 			       err_info->error_info);
-diff --git a/include/linux/cper.h b/include/linux/cper.h
-index 58f40477c824e..5b1236d8c65bb 100644
---- a/include/linux/cper.h
-+++ b/include/linux/cper.h
-@@ -297,11 +297,11 @@ enum {
- #define CPER_ARM_INFO_FLAGS_PROPAGATED		BIT(2)
- #define CPER_ARM_INFO_FLAGS_OVERFLOW		BIT(3)
- 
--#define CPER_ARM_CACHE_ERROR			0
--#define CPER_ARM_TLB_ERROR			1
--#define CPER_ARM_BUS_ERROR			2
--#define CPER_ARM_VENDOR_ERROR			3
--#define CPER_ARM_MAX_TYPE			CPER_ARM_VENDOR_ERROR
-+#define CPER_ARM_ERR_TYPE_MASK			GENMASK(4,1)
-+#define CPER_ARM_CACHE_ERROR			BIT(1)
-+#define CPER_ARM_TLB_ERROR			BIT(2)
-+#define CPER_ARM_BUS_ERROR			BIT(3)
-+#define CPER_ARM_VENDOR_ERROR			BIT(4)
- 
- #define CPER_ARM_ERR_VALID_TRANSACTION_TYPE	BIT(0)
- #define CPER_ARM_ERR_VALID_OPERATION_TYPE	BIT(1)
+ /*
 -- 
 2.51.0
 
