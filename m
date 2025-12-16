@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A042A29B200;
-	Tue, 16 Dec 2025 11:36:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B703446A3;
+	Tue, 16 Dec 2025 11:36:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884995; cv=none; b=T0yrpLRXslaX7IYJtTFQub46MG1GL9/FAvJ/uOhowpBpqJNhuMOTCXbI3/LfQYOaeAac+KwjrDwCcK2eTx23z96pjp9KXeN+Qd+KA+R2uKBHt8c8S5uk6c+11358HlC6pBhGijzzUH6QtCliUGvtRfoD9rcZwe0UJJEXZahLE8o=
+	t=1765884998; cv=none; b=CqZ3my1HUSlGjfHBNKcT5FasS/08gtkmmQ9XasK2X7u9ENRbIWkK1ePXEkMmJUFdCdJKsA0zNm+NrBr6lQtJ4hTaOmLue02vY0RZkvEbEVG2f5lfzeraF2r/yGig/AAZS5z6bfh2zbpv+2YymMJ7sWEKP1W8Js74Oug5T98ygug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884995; c=relaxed/simple;
-	bh=PM87CcBqoNwqbuoBelAjD0R0OEpE5p7ewtTKuD7NeGc=;
+	s=arc-20240116; t=1765884998; c=relaxed/simple;
+	bh=QjKhx6c+jUU1iVIJMkVEfTs45JZ7dj1tkzCY2u+JBIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C9eoj9kF3x4CNi8eMCx5D+HDOPA/qudox7B9AaoJ7yb/jtRNs52DDlwy4Gi15fsEpZBcn+BO8JZFhPfysKkP2O4O53xw2jcmpW24vCEvOS9i7wtXuo4DQa0YGLhnj5SDekX6b+fbX51bd5m2KLnzCdXJh/Rs+61TMM25PthRCis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y5MNNZCJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KbViBhnaeP4sXCYhHQZH0yMGJg4zgMmsIvf1CviIEGfFWw98ZcLI1pG9C1KUNOJHyk5WW4zGs0WP0l5XPxIHY3xaB41Sh5KSoxyBpfh+wcRbCYCALAslRGG06t2OhDBLbKp9QTbWemKiLMmcOtCud1bXXv8lXUyxpL1sgNo1GnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YNjxgOw5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y5MNNZCJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 059CDC4CEF1;
-	Tue, 16 Dec 2025 11:36:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YNjxgOw5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D6BC4CEF5;
+	Tue, 16 Dec 2025 11:36:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884995;
-	bh=PM87CcBqoNwqbuoBelAjD0R0OEpE5p7ewtTKuD7NeGc=;
+	s=korg; t=1765884998;
+	bh=QjKhx6c+jUU1iVIJMkVEfTs45JZ7dj1tkzCY2u+JBIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y5MNNZCJ8FnZ33t4AFRju/UouZBU3VB+edyf7YBt9+13nZhVJv5BGP416mIvsDAOa
-	 W4QHteJzS6tJbhyeYXiTc9ZzRRxlkIImKU07dGr6lSB5qB+4vivvHgU48a71tqgwva
-	 jvB9lgQVj+vbb/Ehx7qY0Yfv67OzRy59dDg2pi2Y=
+	b=YNjxgOw5z9fioh1NzdYGiq7vmNamdC4OaUbCFqQ4PSuVuz1Odb0MyNtvDKaolexGe
+	 rtrKCM8Lp6HAMkTT5twWe/NbAEm+ZS5GBI/xrDIcKNhmtkijt5GOxadiWPn3QsGMeJ
+	 KyL9bfxHRX5420iAFinyupgnXm+MjSg7SthQG3TY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 354/354] ALSA: wavefront: Fix integer overflow in sample size validation
-Date: Tue, 16 Dec 2025 12:15:21 +0100
-Message-ID: <20251216111333.735361777@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Haotien Hsu <haotienh@nvidia.com>,
+	Wayne Chang <waynec@nvidia.com>
+Subject: [PATCH 6.12 350/354] usb: gadget: tegra-xudc: Always reinitialize data toggle when clear halt
+Date: Tue, 16 Dec 2025 12:15:17 +0100
+Message-ID: <20251216111333.589688153@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -50,39 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Haotien Hsu <haotienh@nvidia.com>
 
-commit 0c4a13ba88594fd4a27292853e736c6b4349823d upstream.
+commit 2585973c7f9ee31d21e5848c996fab2521fd383d upstream.
 
-The wavefront_send_sample() function has an integer overflow issue
-when validating sample size. The header->size field is u32 but gets
-cast to int for comparison with dev->freemem
+The driver previously skipped handling ClearFeature(ENDPOINT_HALT)
+when the endpoint was already not halted. This prevented the
+controller from resetting the data sequence number and reinitializing
+the endpoint state.
 
-Fix by using unsigned comparison to avoid integer overflow.
+According to USB 3.2 specification Rev. 1.1, section 9.4.5,
+ClearFeature(ENDPOINT_HALT) must always reset the data sequence and
+set the stream state machine to Disabled, regardless of whether the
+endpoint was halted.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Link: https://patch.msgid.link/SYBPR01MB7881B47789D1B060CE8BF4C3AFC2A@SYBPR01MB7881.ausprd01.prod.outlook.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Remove the early return so that ClearFeature(ENDPOINT_HALT) always
+resets the endpoint sequence state as required by the specification.
+
+Fixes: 49db427232fe ("usb: gadget: Add UDC driver for tegra XUSB device mode controller")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Haotien Hsu <haotienh@nvidia.com>
+Signed-off-by: Wayne Chang <waynec@nvidia.com>
+Link: https://patch.msgid.link/20251127033540.2287517-1-waynec@nvidia.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/isa/wavefront/wavefront_synth.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/udc/tegra-xudc.c |    6 ------
+ 1 file changed, 6 deletions(-)
 
---- a/sound/isa/wavefront/wavefront_synth.c
-+++ b/sound/isa/wavefront/wavefront_synth.c
-@@ -950,9 +950,9 @@ wavefront_send_sample (snd_wavefront_t *
- 	if (header->size) {
- 		dev->freemem = wavefront_freemem (dev);
+--- a/drivers/usb/gadget/udc/tegra-xudc.c
++++ b/drivers/usb/gadget/udc/tegra-xudc.c
+@@ -1554,12 +1554,6 @@ static int __tegra_xudc_ep_set_halt(stru
+ 		return -ENOTSUPP;
+ 	}
  
--		if (dev->freemem < (int)header->size) {
-+		if (dev->freemem < 0 || dev->freemem < header->size) {
- 			dev_err(dev->card->dev,
--				"insufficient memory to load %d byte sample.\n",
-+				"insufficient memory to load %u byte sample.\n",
- 				header->size);
- 			return -ENOMEM;
- 		}
+-	if (!!(xudc_readl(xudc, EP_HALT) & BIT(ep->index)) == halt) {
+-		dev_dbg(xudc->dev, "EP %u already %s\n", ep->index,
+-			halt ? "halted" : "not halted");
+-		return 0;
+-	}
+-
+ 	if (halt) {
+ 		ep_halt(xudc, ep->index);
+ 	} else {
 
 
