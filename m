@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5ECB350A0F;
-	Tue, 16 Dec 2025 12:24:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F88B34AAF4;
+	Tue, 16 Dec 2025 12:24:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887875; cv=none; b=Y6Bb0KuNvnEbdm93RalaA38HGTWYKTq2v2iWXU8nzJzmHmssIPsooPyqePA24YeaQKNxCaTUJHkA0aE1PRcR6w8bgEk18JPUjEceLsNcnbgnHqYqhJ8pCgks53z5UfCVnJEmkHtFM5iUAT6FhIn6RSl+oqyIvWNKhw1rfDZsuP4=
+	t=1765887879; cv=none; b=ETluIi1zq4Hu5LFGe4ZndZZmBk2jJHPPsR6Z8qSYP9OfrnsfldFDt/K2ymHA1mtuUaNsZoBY6PBc9botPkTcglcGCtulpYPVcp0SgnkCSV24j9h45R+YnTP0f66w5bKR/PsfeGN/iPfPdfCWAkfmFTOVe782dVE/7bCj+3BNP8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887875; c=relaxed/simple;
-	bh=lorCw/3s+Bhp4e9mDRVcb0SIdZCs9U0QTPLlstgh39I=;
+	s=arc-20240116; t=1765887879; c=relaxed/simple;
+	bh=cSnjclsOVAKcijX+3MfY8aSScdRP0uuYhPFd7frt1+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WbQdn44yRP9/G51JbhsYSOpILgLipI67MjmdaUssZuj02pSF2z5hqM05a+ZQ/kHBfbPGnaKzWTZYJx22DgCoePFtx63oO6ZiP0CPHsIWL3fPkWWC8K6aw4mJA/GFr15jzE1nvy10LTnCNRs5KeB/Kf/sbWVwMNTgmYLWSFFqeV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oZm/4V7i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VRPOH0CxEPtKsTq8faWe/0sikJuAshETZsP1tCXl5pPi0dJ7wWx1oz4kSKgpefrkenkFVSplNInPc5xM1VsP9xbwG3mNQurk73EzWNOh7gV8ZA8aPc/IY/yD/7BgkBw0y7CxgtLZYnVA/dO0t53EWjreou/cV88bxeo3wZXt1Dk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g/3pC6s8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oZm/4V7i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13110C16AAE;
-	Tue, 16 Dec 2025 12:24:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g/3pC6s8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AED3C4CEF1;
+	Tue, 16 Dec 2025 12:24:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887875;
-	bh=lorCw/3s+Bhp4e9mDRVcb0SIdZCs9U0QTPLlstgh39I=;
+	s=korg; t=1765887878;
+	bh=cSnjclsOVAKcijX+3MfY8aSScdRP0uuYhPFd7frt1+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oZm/4V7i+F8oYd1FV8liEASGazsgxjGk62pEf+WyLCsjy5n61jyyRVmRYv1R0XdT+
-	 IVmPJvstJZGBk+QjpHa4Ukppq2oaEUbipiZOazCE4JYwTnNAQTQEZyKeHWkrSpQNL/
-	 6tshevrHqtjsXuA0S5n+UfYjLndDxIyOj4cVz2hg=
+	b=g/3pC6s8/Qlw/XU3h2ODT1JrzP7PaI4rxY2CHn2vaNvKz1F+hj1w5RiB4+B/4s9LC
+	 t1P98fVnQ/tzFySMmf5hBMtdLl29NSnD4fiWSrgm4Pgoa7XG4kjK1MtZdYET1QRCaP
+	 HWcucadIzlr2aI2SJMBCON4RNyuBPjbVfMRj4qLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d8fd35fa6177afa8c92b@syzkaller.appspotmail.com,
-	Gopi Krishna Menon <krishnagopi487@gmail.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 365/614] usb: raw-gadget: cap raw_io transfer length to KMALLOC_MAX_SIZE
-Date: Tue, 16 Dec 2025 12:12:12 +0100
-Message-ID: <20251216111414.584790667@linuxfoundation.org>
+Subject: [PATCH 6.18 348/614] phy: rockchip: samsung-hdptx: Fix reported clock rate in high bpc mode
+Date: Tue, 16 Dec 2025 12:11:55 +0100
+Message-ID: <20251216111413.971569397@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,60 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gopi Krishna Menon <krishnagopi487@gmail.com>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit a5160af78be7fcf3ade6caab0a14e349560c96d7 ]
+[ Upstream commit 72126e9623e1696ea83c77ef6d0306a6263bdd6b ]
 
-The previous commit removed the PAGE_SIZE limit on transfer length of
-raw_io buffer in order to avoid any problems with emulating USB devices
-whose full configuration descriptor exceeds PAGE_SIZE in length. However
-this also removes the upperbound on user supplied length, allowing very
-large values to be passed to the allocator.
+When making use of the clock provider functionality, the output clock
+does normally match the TMDS character rate, which is what the PHY PLL
+gets configured to.
 
-syzbot on fuzzing the transfer length with very large value (1.81GB)
-results in kmalloc() to fall back to the page allocator, which triggers
-a kernel warning as the page allocator cannot handle allocations more
-than MAX_PAGE_ORDER/KMALLOC_MAX_SIZE.
+However, this is only applicable for default color depth of 8 bpc.  For
+higher depths, the output clock is further divided by the hardware
+according to the formula:
 
-Since there is no limit imposed on the size of buffer for both control
-and non control transfers, cap the raw_io transfer length to
-KMALLOC_MAX_SIZE and return -EINVAL for larger transfer length to
-prevent any warnings from the page allocator.
+  output_clock_rate = tmds_char_rate * 8 / bpc
 
-Fixes: 37b9dd0d114a ("usb: raw-gadget: do not limit transfer length")
-Tested-by: syzbot+d8fd35fa6177afa8c92b@syzkaller.appspotmail.com
-Reported-by: syzbot+d8fd35fa6177afa8c92b@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/68fc07a0.a70a0220.3bf6c6.01ab.GAE@google.com/
-Signed-off-by: Gopi Krishna Menon <krishnagopi487@gmail.com>
-Reviewed-by: Andrey Konovalov <andreyknvl@gmail.com>
-Link: https://patch.msgid.link/20251028165659.50962-1-krishnagopi487@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Since the existence of the clock divider wasn't taken into account when
+support for high bpc has been introduced, make the necessary adjustments
+to report the correct clock rate.
+
+Fixes: 9d0ec51d7c22 ("phy: rockchip: samsung-hdptx: Add high color depth management")
+Reported-by: Andy Yan <andy.yan@rock-chips.com>
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20251028-phy-hdptx-fixes-v1-1-ecc642a59d94@collabora.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/legacy/raw_gadget.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/usb/gadget/legacy/raw_gadget.c b/drivers/usb/gadget/legacy/raw_gadget.c
-index b71680c58de6c..46f343ba48b3d 100644
---- a/drivers/usb/gadget/legacy/raw_gadget.c
-+++ b/drivers/usb/gadget/legacy/raw_gadget.c
-@@ -40,6 +40,7 @@ MODULE_LICENSE("GPL");
+diff --git a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
+index 01bbf668e05ef..aee03e8655f66 100644
+--- a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
++++ b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
+@@ -1037,7 +1037,8 @@ static int rk_hdptx_ropll_tmds_cmn_config(struct rk_hdptx_phy *hdptx)
  
- static DEFINE_IDA(driver_id_numbers);
- #define DRIVER_DRIVER_NAME_LENGTH_MAX	32
-+#define USB_RAW_IO_LENGTH_MAX KMALLOC_MAX_SIZE
+ 	ret = rk_hdptx_post_enable_pll(hdptx);
+ 	if (!ret)
+-		hdptx->hw_rate = hdptx->hdmi_cfg.tmds_char_rate;
++		hdptx->hw_rate = DIV_ROUND_CLOSEST_ULL(hdptx->hdmi_cfg.tmds_char_rate * 8,
++						       hdptx->hdmi_cfg.bpc);
  
- #define RAW_EVENT_QUEUE_SIZE	16
+ 	return ret;
+ }
+@@ -1895,19 +1896,20 @@ static long rk_hdptx_phy_clk_round_rate(struct clk_hw *hw, unsigned long rate,
+ 	 * hence ensure rk_hdptx_phy_clk_set_rate() won't be invoked with
+ 	 * a different rate argument.
+ 	 */
+-	return hdptx->hdmi_cfg.tmds_char_rate;
++	return DIV_ROUND_CLOSEST_ULL(hdptx->hdmi_cfg.tmds_char_rate * 8, hdptx->hdmi_cfg.bpc);
+ }
  
-@@ -667,6 +668,8 @@ static void *raw_alloc_io_data(struct usb_raw_ep_io *io, void __user *ptr,
- 		return ERR_PTR(-EINVAL);
- 	if (!usb_raw_io_flags_valid(io->flags))
- 		return ERR_PTR(-EINVAL);
-+	if (io->length > USB_RAW_IO_LENGTH_MAX)
-+		return ERR_PTR(-EINVAL);
- 	if (get_from_user)
- 		data = memdup_user(ptr + sizeof(*io), io->length);
- 	else {
+ static int rk_hdptx_phy_clk_set_rate(struct clk_hw *hw, unsigned long rate,
+ 				     unsigned long parent_rate)
+ {
+ 	struct rk_hdptx_phy *hdptx = to_rk_hdptx_phy(hw);
++	unsigned long long tmds_rate = DIV_ROUND_CLOSEST_ULL(rate * hdptx->hdmi_cfg.bpc, 8);
+ 
+ 	/* Revert any unlikely TMDS char rate change since round_rate() */
+-	if (hdptx->hdmi_cfg.tmds_char_rate != rate) {
+-		dev_warn(hdptx->dev, "Reverting unexpected rate change from %lu to %llu\n",
+-			 rate, hdptx->hdmi_cfg.tmds_char_rate);
+-		hdptx->hdmi_cfg.tmds_char_rate = rate;
++	if (hdptx->hdmi_cfg.tmds_char_rate != tmds_rate) {
++		dev_warn(hdptx->dev, "Reverting unexpected rate change from %llu to %llu\n",
++			 tmds_rate, hdptx->hdmi_cfg.tmds_char_rate);
++		hdptx->hdmi_cfg.tmds_char_rate = tmds_rate;
+ 	}
+ 
+ 	/*
 -- 
 2.51.0
 
