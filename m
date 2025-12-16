@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3754C341069;
-	Tue, 16 Dec 2025 11:23:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2EC4341069;
+	Tue, 16 Dec 2025 11:23:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884221; cv=none; b=umqe4V/pizjoKh0wKQLjxF2pgOHO9ewP+pOxR9782gJysLJOp44ZKJqxS4iDfAY+kF26P94SdVMnsnAdjYoGQBsuenl5M2k1X26EOuUmQiDIwKjyK0VWbrmtziENZMNJczHofL4D8OGeZzcuZKPvankS+46ItDzLUOvwH2MJS6c=
+	t=1765884225; cv=none; b=kRXfwKJF0IePo0Kgx+StvTbEndNjtbBN5e39rAYaUsHxWIjuddXilmfOOSZunghO1rVC6JPiy3UGxHgUEcBvgsctgWFBsR2trUUpLe9Iyf/fDq6zjTb7VM7gsKaIi5AZlk4j0yt7LZ7nmk50u2NN5tA+axarkMHGruSOaqY3d0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884221; c=relaxed/simple;
-	bh=B7QpSf+zqVXPnSgZsAOpidHYhVjwbVk++Gwq0xtfrnc=;
+	s=arc-20240116; t=1765884225; c=relaxed/simple;
+	bh=VLkZde089fHq6pAtFLSLGxKG2bI9/LnzMpPSvEslX/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SOmUew3XV6AVy8Wty9AC2fHZyCi5BYz/jsMIMJaV3oi5h5G/IRa2lIrChzbPLWhI7X7u50+D2ap+YkKhYm+ke3kFwUpgP0BJbpvWbArYUcPjow61pLrzHfm/dhitzefsacV+d704tgqAYoSswLwE6kiCLUWXl4sYYzLzZ0K7XlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+UkwhhW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZKd9luFDTu2olHIo/jPAzxlnH9gS4o6fXzImwBPE10xGr0CBjletT42ufmg4jkrrhbPkck/QWRCWZQOTiSQaS9CHGSf5DtdKSOYMzXLUjR6DLTdN3D4lesPmuAZEDD809x2Rt0dT9fCARBHkg5peg9DZRu2njBu4tT0pveIx4g0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dcz5YkG0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+UkwhhW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62BE7C4CEF1;
-	Tue, 16 Dec 2025 11:23:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dcz5YkG0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E553C4CEF1;
+	Tue, 16 Dec 2025 11:23:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884220;
-	bh=B7QpSf+zqVXPnSgZsAOpidHYhVjwbVk++Gwq0xtfrnc=;
+	s=korg; t=1765884225;
+	bh=VLkZde089fHq6pAtFLSLGxKG2bI9/LnzMpPSvEslX/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m+UkwhhWZs0suGXam72+toAJYwbLldZOLIOkj66R0tHcNuLm0EsR1np7bp9neXd1Y
-	 ZwJEv8MwEbfpvgAmxkwc5JR/6yxfW/D52aVUfCY0L/rl0nI0kUd2ELbfbgaeTyFhkH
-	 3GDH6HSooXmJeQtpL7tCcO2aVQ3AOrNIDbUZn6fw=
+	b=Dcz5YkG0ZCX2L7NORYFOfAWfq7j7WdtZnFmiLz0f5+YH+aAQQJpXCJBT+ZuCsOfDc
+	 PU4lkVlviwmhZj6UfDp0GWMprHbMSGuSoGeFitG0fsC0T7Bmaz9wECejcXPvM3SpY3
+	 ezlev+lfcbKKGJruB6SaSly9BbEfnZxlRPJuFk8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 128/354] regulator: core: disable supply if enabling main regulator fails
-Date: Tue, 16 Dec 2025 12:11:35 +0100
-Message-ID: <20251216111325.560005626@linuxfoundation.org>
+Subject: [PATCH 6.12 102/354] perf record: skip synthesize event when open evsel failed
+Date: Tue, 16 Dec 2025 12:11:09 +0100
+Message-ID: <20251216111324.616194607@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -51,77 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Shuai Xue <xueshuai@linux.alibaba.com>
 
-[ Upstream commit fb1ebb10468da414d57153ddebaab29c38ef1a78 ]
+[ Upstream commit 163e5f2b96632b7fb2eaa965562aca0dbdf9f996 ]
 
-For 'always-on' and 'boot-on' regulators, the set_machine_constraints()
-may enable supply before enabling the main regulator, however if the
-latter fails, the function returns with an error but the supply remains
-enabled.
+When using perf record with the `--overwrite` option, a segmentation fault
+occurs if an event fails to open. For example:
 
-When this happens, the regulator_register() function continues on the
-error path where it puts the supply regulator. Since enabling the supply
-is not balanced with a disable call, a warning similar to the following
-gets issued from _regulator_put():
+  perf record -e cycles-ct -F 1000 -a --overwrite
+  Error:
+  cycles-ct:H: PMU Hardware doesn't support sampling/overflow-interrupts. Try 'perf stat'
+  perf: Segmentation fault
+      #0 0x6466b6 in dump_stack debug.c:366
+      #1 0x646729 in sighandler_dump_stack debug.c:378
+      #2 0x453fd1 in sigsegv_handler builtin-record.c:722
+      #3 0x7f8454e65090 in __restore_rt libc-2.32.so[54090]
+      #4 0x6c5671 in __perf_event__synthesize_id_index synthetic-events.c:1862
+      #5 0x6c5ac0 in perf_event__synthesize_id_index synthetic-events.c:1943
+      #6 0x458090 in record__synthesize builtin-record.c:2075
+      #7 0x45a85a in __cmd_record builtin-record.c:2888
+      #8 0x45deb6 in cmd_record builtin-record.c:4374
+      #9 0x4e5e33 in run_builtin perf.c:349
+      #10 0x4e60bf in handle_internal_command perf.c:401
+      #11 0x4e6215 in run_argv perf.c:448
+      #12 0x4e653a in main perf.c:555
+      #13 0x7f8454e4fa72 in __libc_start_main libc-2.32.so[3ea72]
+      #14 0x43a3ee in _start ??:0
 
-    [    1.603889] WARNING: CPU: 2 PID: 44 at _regulator_put+0x8c/0xa0
-    [    1.603908] Modules linked in:
-    [    1.603926] CPU: 2 UID: 0 PID: 44 Comm: kworker/u16:3 Not tainted 6.18.0-rc4 #0 NONE
-    [    1.603938] Hardware name: Qualcomm Technologies, Inc. IPQ9574/AP-AL02-C7 (DT)
-    [    1.603945] Workqueue: async async_run_entry_fn
-    [    1.603958] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-    [    1.603967] pc : _regulator_put+0x8c/0xa0
-    [    1.603976] lr : _regulator_put+0x7c/0xa0
-    ...
-    [    1.604140] Call trace:
-    [    1.604145]  _regulator_put+0x8c/0xa0 (P)
-    [    1.604156]  regulator_register+0x2ec/0xbf0
-    [    1.604166]  devm_regulator_register+0x60/0xb0
-    [    1.604178]  rpm_reg_probe+0x120/0x208
-    [    1.604187]  platform_probe+0x64/0xa8
-    ...
+The --overwrite option implies --tail-synthesize, which collects non-sample
+events reflecting the system status when recording finishes. However, when
+evsel opening fails (e.g., unsupported event 'cycles-ct'), session->evlist
+is not initialized and remains NULL. The code unconditionally calls
+record__synthesize() in the error path, which iterates through the NULL
+evlist pointer and causes a segfault.
 
-In order to avoid this, change the set_machine_constraints() function to
-disable the supply if enabling the main regulator fails.
+To fix it, move the record__synthesize() call inside the error check block, so
+it's only called when there was no error during recording, ensuring that evlist
+is properly initialized.
 
-Fixes: 05f224ca6693 ("regulator: core: Clean enabling always-on regulators + their supplies")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Link: https://patch.msgid.link/20251107-regulator-disable-supply-v1-1-c95f0536f1b5@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 4ea648aec019 ("perf record: Add --tail-synthesize option")
+Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ tools/perf/builtin-record.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index e7f2a8b659477..be9704d34c015 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -1593,6 +1593,8 @@ static int set_machine_constraints(struct regulator_dev *rdev)
- 	 * and we have control then make sure it is enabled.
- 	 */
- 	if (rdev->constraints->always_on || rdev->constraints->boot_on) {
-+		bool supply_enabled = false;
-+
- 		/* If we want to enable this regulator, make sure that we know
- 		 * the supplying regulator.
- 		 */
-@@ -1612,11 +1614,14 @@ static int set_machine_constraints(struct regulator_dev *rdev)
- 				rdev->supply = NULL;
- 				return ret;
- 			}
-+			supply_enabled = true;
- 		}
+diff --git a/tools/perf/builtin-record.c b/tools/perf/builtin-record.c
+index ab9035573a15e..e5578bd41d3bb 100644
+--- a/tools/perf/builtin-record.c
++++ b/tools/perf/builtin-record.c
+@@ -2832,11 +2832,11 @@ static int __cmd_record(struct record *rec, int argc, const char **argv)
+ 		rec->bytes_written += off_cpu_write(rec->session);
  
- 		ret = _regulator_do_enable(rdev);
- 		if (ret < 0 && ret != -EINVAL) {
- 			rdev_err(rdev, "failed to enable: %pe\n", ERR_PTR(ret));
-+			if (supply_enabled)
-+				regulator_disable(rdev->supply);
- 			return ret;
- 		}
+ 	record__read_lost_samples(rec);
+-	record__synthesize(rec, true);
+ 	/* this will be recalculated during process_buildids() */
+ 	rec->samples = 0;
  
+ 	if (!err) {
++		record__synthesize(rec, true);
+ 		if (!rec->timestamp_filename) {
+ 			record__finish_output(rec);
+ 		} else {
 -- 
 2.51.0
 
