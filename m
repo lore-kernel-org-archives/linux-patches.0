@@ -1,48 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E1033C189
-	for <patches@lists.linux.dev>; Wed, 17 Dec 2025 17:22:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B695350A35
+	for <patches@lists.linux.dev>; Wed, 17 Dec 2025 17:22:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765992165; cv=none; b=trgwp7uFb95bvbEoJudHQjwxeZ2E7lelMI5sg06txCGwS/5BvnBBM7D35kjjAVO/6HyumxSa+fQYfVZb7s2DQg69Px446vkQe2s+1K5OFTiTaXA1FtVX4WZddzt5sgIo8F6LHjHX6cXRqfhY0camAEEoSTBWi1UAINCFFvax4yc=
+	t=1765992167; cv=none; b=M254XBATBLdT6Yq9T2PoAPFCvxDONdxu8VBJg0uFPVB5XXsUfNpcKZ2wAHnNgWCnK3ooB2SmiqzCrcGUm1y8U4CF7ZYSsTgpV0I6nUV1kvWVKOQiWrzyhbaY1ltXLYxxp+XdjYrjCZzkH+D0qNOofBclJlyDuRmufrdN8BXX11c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765992165; c=relaxed/simple;
-	bh=XdRviwikQKdJO6sEyyulg3Vx1XTe05GcNwCCNywJcmw=;
+	s=arc-20240116; t=1765992167; c=relaxed/simple;
+	bh=jPHwp4YKJEadHkcqYXPD1A4NHC1lj2kucKhD7xZrTVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CqFuQ4NkwreTxFVeITVC5Tk66almsXgccHw3BXRIdT8BUz3HSA24AcMAus4M9q9YBPNwgTh5iZ03F5/8Ga4r8V5VvkL6GhLN5PdxDSz6lWmEx7WUy0xD0DUWUlW9loXAxKfQfTCNxRD0lzXabJTKf+XGVOiGRS2/hkdZ29sp5oI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=fail smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=auJzfKqw; arc=none smtp.client-ip=198.175.65.9
+	 MIME-Version; b=FIP10VVO0bSpRIrO7idVgb3MYQpgZIL/gWS4yZcFTbj2u6hMxySjiKuuZ32jsHZ5bTrjwoJrqELL9Tv+FvrHHypmyD6pCryVLINm0rP+bpoyTTJLEIehdb4aJypz2UhOKJiZ13PYKDCFXiEVv9O1LiuIbCr8FPIu6AJxhsFDFJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=fail smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=FDGs1aI7; arc=none smtp.client-ip=198.175.65.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="auJzfKqw"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="FDGs1aI7"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1765992147; x=1797528147;
+  t=1765992155; x=1797528155;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=XdRviwikQKdJO6sEyyulg3Vx1XTe05GcNwCCNywJcmw=;
-  b=auJzfKqwTiLbqhHYSwGd6VV1qdlZss3w+6zcY3dDd16gARVt6Ap/ga8S
-   Zn/shJhsYbHL3mZww80dbtnfTMm8ngdO5zcEjKiYdz5iYHlYwh28pQAc3
-   17laq36XVl10kjmxjER3bK/pFuMzJmnDj7DVJhZUv02/HIuppMuZ84G5/
-   IqRaFqcLOalXFPM6mdXYadAdC1TWlhiU7nKnMH9fXDr23eS4sKNIrY9vZ
-   hz9Cx4LAqM1PZK4D4Bg8BKOpf1b7iFiSKevOZtVI8oxV0ldXZoeo8jX0Z
-   /gz4cM8euhbGLJ1s5SnrUXvZ5DOt2XFyx7p1LtLPqiOsZlhMLFiBrQy9h
-   w==;
-X-CSE-ConnectionGUID: KnPwrS5eT/ygoTEKE+VC2w==
-X-CSE-MsgGUID: 6CEozurER4GTRnKZoUXXjw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11645"; a="90594828"
+  bh=jPHwp4YKJEadHkcqYXPD1A4NHC1lj2kucKhD7xZrTVE=;
+  b=FDGs1aI7ZhtK2eqNH6E9zI47bJjULflNHcbrwiXNp666jpKpuiuUmuMA
+   PslUwC3cPtR3VfaUIVGYwGdZI4qswi85pps3OOhkwazMAllKCSfDnWMvy
+   m8ue8G61LTz2hBG8yoa59T1PR7O/SBZuvEGTcwNDjZxeh+rh5AiM5IAUf
+   llxu0ARbptZ1ZiaQPSDJUGm4RPzu9Ti77DNDIEFQscm/Fa+yMvYh79RF1
+   O3AsdtDgHZuZi1GR132P8CX3Jrjd9DGf/pu+j52Qa8mI1Yc19bdFUzO/B
+   7teVVu8u4oIhdsvB9kR94ojlZ0ze5zh/VJfgf72/VUqA94jIY94bDU4zD
+   Q==;
+X-CSE-ConnectionGUID: 3PJe8+WYRe+cZJkjR/hHwQ==
+X-CSE-MsgGUID: kQNEO/OlSXKw9c0UJNALrg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11645"; a="90594861"
 X-IronPort-AV: E=Sophos;i="6.21,156,1763452800"; 
-   d="scan'208";a="90594828"
+   d="scan'208";a="90594861"
 Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Dec 2025 09:21:37 -0800
-X-CSE-ConnectionGUID: vEB1vaDATaGvj0kMZhAhTQ==
-X-CSE-MsgGUID: wgIRX0D3R2maunPGoEr9fw==
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Dec 2025 09:21:38 -0800
+X-CSE-ConnectionGUID: fBlg96yFRzSL8ZlXQMiAdw==
+X-CSE-MsgGUID: Fg50ZT+nRhGVGFdbDI3SLw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.21,156,1763452800"; 
-   d="scan'208";a="221748260"
+   d="scan'208";a="221748285"
 Received: from pgcooper-mobl3.ger.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.223.131])
-  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Dec 2025 09:21:36 -0800
+  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Dec 2025 09:21:37 -0800
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghuay@nvidia.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -57,9 +57,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v17 26/32] fs/resctrl: Move allocation/free of closid_num_dirty_rmid[]
-Date: Wed, 17 Dec 2025 09:21:13 -0800
-Message-ID: <20251217172121.12030-27-tony.luck@intel.com>
+Subject: [PATCH v17 31/32] x86/resctrl: Add debugfs files to show telemetry aggregator status
+Date: Wed, 17 Dec 2025 09:21:18 -0800
+Message-ID: <20251217172121.12030-32-tony.luck@intel.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251217172121.12030-1-tony.luck@intel.com>
 References: <20251217172121.12030-1-tony.luck@intel.com>
@@ -71,153 +71,163 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-closid_num_dirty_rmid[] and rmid_ptrs[] are allocated together during resctrl
-initialization and freed together during resctrl exit.
+Each telemetry aggregator provides three status registers at the top end of
+MMIO space after all the per-RMID per-event counters:
 
-Telemetry events are enumerated on resctrl mount so only at resctrl mount
-will the number of RMID supported by all monitoring resources and needed as
-size for rmid_ptrs[] be known.
+  data_loss_count: This counts the number of times that this aggregator
+  failed to accumulate a counter value supplied by a CPU core.
 
-Separate closid_num_dirty_rmid[] and rmid_ptrs[] allocation and free in
-preparation for rmid_ptrs[] to be allocated on resctrl mount.
+  data_loss_timestamp: This is a "timestamp" from a free running
+  25MHz uncore timer indicating when the most recent data loss occurred.
 
-Keep the rdtgroup_mutex protection around the allocation and free of
-closid_num_dirty_rmid[] as ARM needs this to guarantee memory ordering.
+  last_update_timestamp: Another 25MHz timestamp indicating when the
+  most recent counter update was successfully applied.
+
+Create files in /sys/kernel/debug/resctrl/info/PERF_PKG_MON/x86_64/ to display
+the value of each of these status registers for each aggregator in each enabled
+event group. The prefix for each file name describes the type of aggregator,
+the guid, which package it is located on, and an opaque instance number to
+provide a unique file name when there are multiple aggregators on a package.
+
+The suffix is one of the three strings listed above. An example name is:
+
+	energy_0x26696143_pkg0_agg2_data_loss_count
+
+These files are removed along with all other debugfs entries by the call to
+debugfs_remove_recursive() in resctrl_exit().
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
 ---
- fs/resctrl/monitor.c | 79 ++++++++++++++++++++++++++++----------------
- 1 file changed, 51 insertions(+), 28 deletions(-)
+ arch/x86/kernel/cpu/resctrl/internal.h  |  2 +
+ arch/x86/kernel/cpu/resctrl/core.c      |  2 +
+ arch/x86/kernel/cpu/resctrl/intel_aet.c | 60 +++++++++++++++++++++++++
+ 3 files changed, 64 insertions(+)
 
-diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
-index 8a4c2ae72740..bbf8c9037887 100644
---- a/fs/resctrl/monitor.c
-+++ b/fs/resctrl/monitor.c
-@@ -906,36 +906,14 @@ void mbm_setup_overflow_handler(struct rdt_l3_mon_domain *dom, unsigned long del
- static int dom_data_init(struct rdt_resource *r)
- {
- 	u32 idx_limit = resctrl_arch_system_num_rmid_idx();
--	u32 num_closid = resctrl_arch_get_num_closid(r);
- 	struct rmid_entry *entry = NULL;
- 	int err = 0, i;
- 	u32 idx;
+diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
+index df09091f7c6c..e538174fe193 100644
+--- a/arch/x86/kernel/cpu/resctrl/internal.h
++++ b/arch/x86/kernel/cpu/resctrl/internal.h
+@@ -236,6 +236,7 @@ void __exit intel_aet_exit(void);
+ int intel_aet_read_event(int domid, u32 rmid, void *arch_priv, u64 *val);
+ void intel_aet_mon_domain_setup(int cpu, int id, struct rdt_resource *r,
+ 				struct list_head *add_pos);
++void intel_aet_add_debugfs(void);
+ bool intel_aet_option(bool force_off, char *tok);
+ #else
+ static inline bool intel_aet_get_events(void) { return false; }
+@@ -247,6 +248,7 @@ static inline int intel_aet_read_event(int domid, u32 rmid, void *arch_priv, u64
  
- 	mutex_lock(&rdtgroup_mutex);
--	if (IS_ENABLED(CONFIG_RESCTRL_RMID_DEPENDS_ON_CLOSID)) {
--		u32 *tmp;
--
--		/*
--		 * If the architecture hasn't provided a sanitised value here,
--		 * this may result in larger arrays than necessary. Resctrl will
--		 * use a smaller system wide value based on the resources in
--		 * use.
--		 */
--		tmp = kcalloc(num_closid, sizeof(*tmp), GFP_KERNEL);
--		if (!tmp) {
--			err = -ENOMEM;
--			goto out_unlock;
--		}
--
--		closid_num_dirty_rmid = tmp;
--	}
+ static inline void intel_aet_mon_domain_setup(int cpu, int id, struct rdt_resource *r,
+ 					      struct list_head *add_pos) { }
++static inline void intel_aet_add_debugfs(void) { }
+ static inline bool intel_aet_option(bool force_off, char *tok) { return false; }
+ #endif
  
- 	rmid_ptrs = kcalloc(idx_limit, sizeof(struct rmid_entry), GFP_KERNEL);
- 	if (!rmid_ptrs) {
--		if (IS_ENABLED(CONFIG_RESCTRL_RMID_DEPENDS_ON_CLOSID)) {
--			kfree(closid_num_dirty_rmid);
--			closid_num_dirty_rmid = NULL;
--		}
- 		err = -ENOMEM;
- 		goto out_unlock;
- 	}
-@@ -971,11 +949,6 @@ static void dom_data_exit(struct rdt_resource *r)
- 	if (!r->mon_capable)
- 		goto out_unlock;
- 
--	if (IS_ENABLED(CONFIG_RESCTRL_RMID_DEPENDS_ON_CLOSID)) {
--		kfree(closid_num_dirty_rmid);
--		closid_num_dirty_rmid = NULL;
--	}
--
- 	kfree(rmid_ptrs);
- 	rmid_ptrs = NULL;
- 
-@@ -1814,6 +1787,45 @@ ssize_t mbm_L3_assignments_write(struct kernfs_open_file *of, char *buf,
- 	return ret ?: nbytes;
+diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+index 829633bc54e5..62e96aad060d 100644
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -788,6 +788,8 @@ void resctrl_arch_pre_mount(void)
+ 		domain_add_cpu_mon(cpu, r);
+ 	mutex_unlock(&domain_list_lock);
+ 	cpus_read_unlock();
++
++	intel_aet_add_debugfs();
  }
  
-+static int closid_num_dirty_rmid_alloc(struct rdt_resource *r)
+ enum {
+diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
+index 3ee51b05a297..ba5a64a74bd6 100644
+--- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
++++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
+@@ -15,8 +15,11 @@
+ #include <linux/compiler_types.h>
+ #include <linux/container_of.h>
+ #include <linux/cpumask.h>
++#include <linux/debugfs.h>
++#include <linux/dcache.h>
+ #include <linux/err.h>
+ #include <linux/errno.h>
++#include <linux/fs.h>
+ #include <linux/gfp_types.h>
+ #include <linux/init.h>
+ #include <linux/intel_pmt_features.h>
+@@ -29,6 +32,7 @@
+ #include <linux/resctrl.h>
+ #include <linux/resctrl_types.h>
+ #include <linux/slab.h>
++#include <linux/sprintf.h>
+ #include <linux/stddef.h>
+ #include <linux/topology.h>
+ #include <linux/types.h>
+@@ -227,6 +231,46 @@ static bool all_regions_have_sufficient_rmid(struct event_group *e, struct pmt_f
+ 	return true;
+ }
+ 
++static int status_read(void *priv, u64 *val)
 +{
-+	if (IS_ENABLED(CONFIG_RESCTRL_RMID_DEPENDS_ON_CLOSID)) {
-+		u32 num_closid = resctrl_arch_get_num_closid(r);
-+		u32 *tmp;
++	void __iomem *info = (void __iomem *)priv;
 +
-+		/* For ARM memory ordering access to closid_num_dirty_rmid */
-+		mutex_lock(&rdtgroup_mutex);
-+
-+		/*
-+		 * If the architecture hasn't provided a sanitised value here,
-+		 * this may result in larger arrays than necessary. Resctrl will
-+		 * use a smaller system wide value based on the resources in
-+		 * use.
-+		 */
-+		tmp = kcalloc(num_closid, sizeof(*tmp), GFP_KERNEL);
-+		if (!tmp) {
-+			mutex_unlock(&rdtgroup_mutex);
-+			return -ENOMEM;
-+		}
-+
-+		closid_num_dirty_rmid = tmp;
-+
-+		mutex_unlock(&rdtgroup_mutex);
-+	}
++	*val = readq(info);
 +
 +	return 0;
 +}
 +
-+static void closid_num_dirty_rmid_free(void)
++DEFINE_SIMPLE_ATTRIBUTE(status_fops, status_read, NULL, "%llu\n");
++
++static void make_status_files(struct dentry *dir, struct event_group *e, u8 pkg,
++			      int instance, void *info_end)
 +{
-+	if (IS_ENABLED(CONFIG_RESCTRL_RMID_DEPENDS_ON_CLOSID)) {
-+		mutex_lock(&rdtgroup_mutex);
-+		kfree(closid_num_dirty_rmid);
-+		closid_num_dirty_rmid = NULL;
-+		mutex_unlock(&rdtgroup_mutex);
++	char name[80];
++
++	sprintf(name, "%s_0x%x_pkg%u_agg%d_data_loss_count", e->pfname, e->guid, pkg, instance);
++	debugfs_create_file(name, 0400, dir, info_end - 24, &status_fops);
++
++	sprintf(name, "%s_0x%x_pkg%u_agg%d_data_loss_timestamp", e->pfname, e->guid, pkg, instance);
++	debugfs_create_file(name, 0400, dir, info_end - 16, &status_fops);
++
++	sprintf(name, "%s_0x%x_pkg%u_agg%d_last_update_timestamp", e->pfname, e->guid, pkg, instance);
++	debugfs_create_file(name, 0400, dir, info_end - 8, &status_fops);
++}
++
++static void create_debug_event_status_files(struct dentry *dir, struct event_group *e)
++{
++	struct pmt_feature_group *p = e->pfg;
++	void *info_end;
++
++	for (int i = 0; i < p->count; i++) {
++		if (!p->regions[i].addr)
++			continue;
++		info_end = (void __force *)p->regions[i].addr + e->mmio_size;
++		make_status_files(dir, e, p->regions[i].plat_info.package_id,
++				  i, info_end);
 +	}
 +}
 +
- /**
-  * resctrl_l3_mon_resource_init() - Initialise global monitoring structures.
-  *
-@@ -1834,10 +1846,16 @@ int resctrl_l3_mon_resource_init(void)
- 	if (!r->mon_capable)
- 		return 0;
- 
--	ret = dom_data_init(r);
-+	ret = closid_num_dirty_rmid_alloc(r);
- 	if (ret)
- 		return ret;
- 
-+	ret = dom_data_init(r);
-+	if (ret) {
-+		closid_num_dirty_rmid_free();
-+		return ret;
-+	}
-+
- 	if (resctrl_arch_is_evt_configurable(QOS_L3_MBM_TOTAL_EVENT_ID)) {
- 		mon_event_all[QOS_L3_MBM_TOTAL_EVENT_ID].configurable = true;
- 		resctrl_file_fflags_init("mbm_total_bytes_config",
-@@ -1880,5 +1898,10 @@ void resctrl_l3_mon_resource_exit(void)
+ static bool enable_events(struct event_group *e, struct pmt_feature_group *p)
  {
- 	struct rdt_resource *r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
- 
-+	if (!r->mon_capable)
+ 	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_PERF_PKG].r_resctrl;
+@@ -411,3 +455,19 @@ void intel_aet_mon_domain_setup(int cpu, int id, struct rdt_resource *r,
+ 		kfree(d);
+ 	}
+ }
++
++void intel_aet_add_debugfs(void)
++{
++	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_PERF_PKG].r_resctrl;
++	struct event_group **peg;
++	struct dentry *infodir;
++
++	infodir = resctrl_debugfs_mon_info_arch_mkdir(r);
++
++	if (IS_ERR_OR_NULL(infodir))
 +		return;
 +
-+	closid_num_dirty_rmid_free();
-+
- 	dom_data_exit(r);
- }
++	for_each_event_group(peg)
++		if ((*peg)->pfg)
++			create_debug_event_status_files(infodir, *peg);
++}
 -- 
 2.52.0
 
