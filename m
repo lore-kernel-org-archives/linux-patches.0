@@ -1,264 +1,306 @@
-Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010050.outbound.protection.outlook.com [52.101.46.50])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3934F34D3A1
-	for <patches@lists.linux.dev>; Wed, 17 Dec 2025 17:18:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.46.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765991883; cv=fail; b=ofDZFxceop4B6AFFJumH88h0p+j8TkhdKbyPMIdIE09g0bf9zJUAVS70QWH5uvMbWJ0mEqlwRX8mHKZ3T04HsKmKgXwsaENwXSRSPURnEHLb5MTi2bHlbQWXppIh1yfdj3Ga/ZOmplfY2qCUHSRvbmWqAXuFr+Kwq+ht3lOuyuk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765991883; c=relaxed/simple;
-	bh=tHcz3uh8O/ohZ8Eny5wkdAVBlH2kjapDVBZwMTNmOnA=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=bzT2EwPyKeAuhN0pyLfCbuf6bpIL2MYOqnep8VUYfjw8VrMrkHWSUXDOv54UQ+2UzRzVFIyZ+qMpK4YE42azoPE8qbnChs7DOXWN42WtJy3iN0sGyoBREPxHjGSAsdjmB23ld067Z/lN67zPCTMubg7ZMNLs5j3nYTdKUkcxEcc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=joaSFEwD; arc=fail smtp.client-ip=52.101.46.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 466712E0407
+	for <patches@lists.linux.dev>; Wed, 17 Dec 2025 17:21:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1765992104; cv=none; b=jt2120vZV4y8pmcj/IdyyVw+Mhux5ELljHQfAxqlm2OEPlbyGmU142+P8GSLM586vQJ4GVq8UdUYkSiYdaVUg/G0+fBHdYQtLfYEek/of3ssrSHP3u93Dth57I1gAbavw7qxxwvJZCecyZrvz5dvSVhYWYLP9W8qfT9cTTmZX0Q=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1765992104; c=relaxed/simple;
+	bh=vNxMPgiTI8YNCp3be4D1fR48JGHY9T9wYRjzb6U08GY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=SjLEXo4SiVDTZkdOH2VSFV0I9ESVOfnQUyAKqYW1rupbo4uYFyHfaQGbYQHRUnRQrRGUhkZnjcnctBVUulrnJkhlY8fon1hnowhzYDOrsodqendGV2hIErJ9UIFGa/z8O+/Q/I7v8kWLWQqYx4dP2C5QI10d49FaPDFDAbGViLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=fail smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ISinnwzo; arc=none smtp.client-ip=198.175.65.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="joaSFEwD"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=FtLRmeIKY3mh2IIFpJC4HOGZkLl3Un1dCWSmVn4aPLNSdXVZqhUMssb1wzxdezSgF3/Op5PahpwuaoAxtOHAXY3YzsjgfoLFi6JM/1RAFtY9u86PIcqiuBHgTiKYJjXzwObrBzbMJWJVaWVAm+nDMlDbVVzNMyKm8eAaKE0K2MOq4nTpyXxsVOgErChdD+kx4W90Djzy5Ym4Sj/dozd+cTtL3ub947lh7QI5gocDXYn7It2U5nYa6TV64+9TxnkIhhus0lNSPx3cgGrsZCciPRPNpMCWpeXbEXcAQTUsJM6tGyn72tHjOdqkc3BHds5dHntPqum2y25Nxh/FUkVIxw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QT7rp44nI2ZfICD4DHMX5PgzmHMk6j0twPMPery4lN0=;
- b=LLtsbhIqJOlcx6BZWHlk8Zrv9kSx8l3PqlZcr3LzXyZ492FShe2AHY7/AfmmfSJkrcw5Xf+tY4y90BFeVjtHFopnunEothLERfxfE/7hfQ/asa4ZMFhJ/qYycGiPIBg0WQpVef10m8v6+VqzkXTbeHStm+87fesWoeYau5J3CxRZIaUejvw4ZGz6lJnN5cHTuz3gpfe8hqmn/Upjk1ooYDoqYy/4/KeSe7pE30/sN3xixMrwXRXKkPdTx4eMX3DDYKwOU/SWZ9fFDcu5h8hLb5nbRe+DdmPimXi6Srp2TXvtv1RNZqr1qtmQu2WMayaumEe7EDmgk+oH+ikmKQYxBA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=QT7rp44nI2ZfICD4DHMX5PgzmHMk6j0twPMPery4lN0=;
- b=joaSFEwD+4pE2eMfY3AsDpwqr1s2NWZMNNWJEJEb21t95fBORhrCtPqLa4X/TyH6oQrBNVwSMygksnT3c2KXdSvhnk0+ozDuz4dkh7CDhP0b6wZ5JJUslzDg1hn22wcfWobO48PM8+o2E9bFpUlSCjf5ftAsrvDGAaMWqwPkIUw=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from IA0PPF9A76BB3A6.namprd12.prod.outlook.com
- (2603:10b6:20f:fc04::bdc) by PH7PR12MB7284.namprd12.prod.outlook.com
- (2603:10b6:510:20b::18) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9412.13; Wed, 17 Dec
- 2025 16:44:33 +0000
-Received: from IA0PPF9A76BB3A6.namprd12.prod.outlook.com
- ([fe80::8d61:56ca:a8ea:b2eb]) by IA0PPF9A76BB3A6.namprd12.prod.outlook.com
- ([fe80::8d61:56ca:a8ea:b2eb%8]) with mapi id 15.20.9434.001; Wed, 17 Dec 2025
- 16:44:32 +0000
-Message-ID: <0d137f81-b3c0-4468-9a33-e521c6790bff@amd.com>
-Date: Wed, 17 Dec 2025 10:44:29 -0600
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 00/32] x86,fs/resctrl telemetry monitoring
-To: "Luck, Tony" <tony.luck@intel.com>
-Cc: Fenghua Yu <fenghuay@nvidia.com>,
- Reinette Chatre <reinette.chatre@intel.com>,
- Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
- Peter Newman <peternewman@google.com>, James Morse <james.morse@arm.com>,
- Babu Moger <babu.moger@amd.com>, Drew Fustini <dfustini@baylibre.com>,
- Dave Martin <Dave.Martin@arm.com>, Chen Yu <yu.c.chen@intel.com>,
- x86@kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
-References: <20251029162118.40604-1-tony.luck@intel.com>
- <aQJkIqj--nHzUzUb@agluck-desk3>
- <9b0d336b-dd12-4e4a-b324-75734dbe6002@amd.com>
- <aUH5QZ7_7WCRWY3Y@agluck-desk3>
-Content-Language: en-US
-From: "Moger, Babu" <bmoger@amd.com>
-In-Reply-To: <aUH5QZ7_7WCRWY3Y@agluck-desk3>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: DM6PR03CA0011.namprd03.prod.outlook.com
- (2603:10b6:5:40::24) To IA0PPF9A76BB3A6.namprd12.prod.outlook.com
- (2603:10b6:20f:fc04::bdc)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ISinnwzo"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1765992098; x=1797528098;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=vNxMPgiTI8YNCp3be4D1fR48JGHY9T9wYRjzb6U08GY=;
+  b=ISinnwzozz3tOdhawK3zeho/Y2LrdgjdNU26xwzHLaAHwAG6dKpPpqRE
+   viLyEU5K109oFOhgchHN16qGamPX7P8F6zIJ0yIpDF3loLN8lg0cJgjCE
+   UXLalf28uwilyYpYYpbQzj70XtQcCAy/L5djQWTMqa0itoGwzOXFFsjo9
+   2MXk8kDLRhGiPVHxZSjFXUuACpxX97RFVJuZbFyQOH7Ld6jcM42gGhkEY
+   Eg4WBxHZXa8EZ7sWLokX1rvZEi2n49mmxl+IUIYnnOnpj3OKytY2azOJT
+   IUGCTGCcT5Z24cy1C07QTDn+8zzdZ2mKh60jTC09lVuh7YA6k+dllYNum
+   w==;
+X-CSE-ConnectionGUID: QZI0pOqXSe6250/EHjsP6Q==
+X-CSE-MsgGUID: LUApqItmSge6ktrVJZvGGg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11645"; a="90594611"
+X-IronPort-AV: E=Sophos;i="6.21,156,1763452800"; 
+   d="scan'208";a="90594611"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Dec 2025 09:21:32 -0800
+X-CSE-ConnectionGUID: FHYFNM8hRKavAEyKwQ2pPg==
+X-CSE-MsgGUID: ieWjnI0wRg2MWmd5c/X6HQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,156,1763452800"; 
+   d="scan'208";a="221748142"
+Received: from pgcooper-mobl3.ger.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.223.131])
+  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Dec 2025 09:21:31 -0800
+From: Tony Luck <tony.luck@intel.com>
+To: Fenghua Yu <fenghuay@nvidia.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>,
+	Chen Yu <yu.c.chen@intel.com>
+Cc: x86@kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH v17 00/32] x86,fs/resctrl telemetry monitoring
+Date: Wed, 17 Dec 2025 09:20:47 -0800
+Message-ID: <20251217172121.12030-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA0PPF9A76BB3A6:EE_|PH7PR12MB7284:EE_
-X-MS-Office365-Filtering-Correlation-Id: 13f10bfa-5c72-443a-cc02-08de3d8b8df2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|366016|1800799024;
-X-Microsoft-Antispam-Message-Info:
- =?utf-8?B?QzJwSU9WSkRmekowSXdJQ3VvcHdQenJQck9aRWJTR3ZFUDBrYVhWZmw4bnh3?=
- =?utf-8?B?dGFyMlAvOW1NZXR1UTcvWUZwQWdHZWljUkMzUEFmaTFUeVJvS1VPZFg0ZTdR?=
- =?utf-8?B?ZS9IT3pEWjVLTkZmb0VDZVc1TmlueXh1TzZRczFMTkw5ZEk5TVlzZU9FV3lY?=
- =?utf-8?B?cDViaUF5OXFJcUxFWFZ5SkkrOS9YYkpvbTFiVDR6OWthTXpCVmxRZFFIdlZB?=
- =?utf-8?B?YjZOQWcyckZJMFRTM0JJN29rQmI0WFcva3Fja3RoOWRSSkN3NWMwdmpKMkRk?=
- =?utf-8?B?andEMVQ4cWVOd3VmM1hSLzBOU3FwQmIxRjd2azBQTDUzZjd0Snh6QTBsNk9h?=
- =?utf-8?B?ODdjRndvM0l0MEg5ZkQ4bUJnQVN2S0VtQVZsQjVXb0pGWU9QQWMvVUZaTDFq?=
- =?utf-8?B?K292VjRZS0VkM2RHU20wMkVMZTIyOU1HbURwVEpoVW1vVXhXb05vMzlpK0xi?=
- =?utf-8?B?VVA5ekpVRS9aRmZQUEp6aExTQ2p0US9MVlNvRzBwa2lGU3B3U3Z6VlZZOVpH?=
- =?utf-8?B?NGdlUmNCa0haQmE0M3kzRzhUL0ZwZVo1N2J2b2tmR2FRUC9mNXZwZjBLS295?=
- =?utf-8?B?R054T0t1dkwxbllOY0pvbkVxZGx0SUR3UWJLOHJBWG1lNHM2MG9oNFVPK09o?=
- =?utf-8?B?VFZscWRyL0oyUmV0Y2R5NkxTaXM3WHovU3psR1RVQlZxbFB2cDFDdC83QVo2?=
- =?utf-8?B?dmF4MS9oTWhKZTZMNjFsU3Q2aGlkVm1OOGROZTdRdDhOdWxhYUpWaW9Kcldn?=
- =?utf-8?B?TEtlVmlkTmJ2SkJlUndUN0FRdy9JMThSV3kvY1cweERFcllMcHBiaTlpRFZr?=
- =?utf-8?B?cHIzQ3RKNjdqRjRZa2JzU3RBSUI1MmlmL0wrVUtPUDkrVzlrOEdYdGxNM1pm?=
- =?utf-8?B?Q0VaUGdGVXB2RGhHMHozMnNEb0dEaEordUhwd0FFZWNiQUlWeVlOeTkxWG11?=
- =?utf-8?B?ZElkUDRRMlhlaVhPSkZacGNyTjh4Vzd5YzVRNHJLamt3Yk5aWUNZVDBKQlFT?=
- =?utf-8?B?aUMyRXhrYlNYakQveXF1MWw5WDk2eklneVN5aTVEeS9YNEduMEZVUnFUdlZS?=
- =?utf-8?B?TkwyWnBRNEpWM1MvNmxzeGs4OXhoQ3BwTzBaUHdnRTlGdHVqTHVhUUE4ZU1B?=
- =?utf-8?B?Z2NOdWZqVW1rMEtqOVdQR3ZsaGs3TFNQMitZRllacGZ0a1Q1MDNaQU16alZN?=
- =?utf-8?B?VnF5YnNaSnJqK2RkUlRCSVVSc2FReVlRdDFGUkFlWTVIWk0zayswSWkzVlln?=
- =?utf-8?B?ZDR0N2VVelZDTGtlY0VjN29PdzNKb2J5aUFPdXc0MUhVNERZSDQvOXJjNUJk?=
- =?utf-8?B?UU1lL1E2djFLOEJzMTlwdTlDb2FlMGhFMlJweVNGQUlaY1RWM0M5bHQ5V3J1?=
- =?utf-8?B?TFNOZExmWXlTM2ovaGxLZ1Z4Z3BqbCtoaUFtN290cU9sTTd2MUxTSTNHNlFG?=
- =?utf-8?B?QlZoVXArZGpPT1FrdHBHZFJ4dmU1WmNaVHZpcHN4Q0Z3bGhkdUxQNHR5YUZy?=
- =?utf-8?B?cUt2UWNIK3RhMW9TNzI4NHhmTnJpNW5KNUM0eEV3ZFRnM1ZnL2p3U3A1YmlR?=
- =?utf-8?B?Z1UxTGVPbFloT015M3BjQjhENURycWRFV1hMdGQ4S3RQN0c4VzdxTExiUjRp?=
- =?utf-8?B?SkxKZjUvcmwvSWp1STh6ZFJWTkwrYTBnVnNGcWVabCtkQWZiLzU5Q0ZNb05M?=
- =?utf-8?B?cytWUVh0aTJ3U3JmNlU4QWQzTERBY2dyWFZ4UTlhRDExaWVLemJGSFo1VGZO?=
- =?utf-8?B?bU1JMVBLYy9rY2l1OXNSYUwrdGd1VWwzeVM1QTlCNklDR1pPd0xubkdwNG9k?=
- =?utf-8?B?SVcrc00wUE1Uc2xTUVRtWUh6alNnM2RLZWNOcjFpNVJsSFBtTUlxdktFWjV1?=
- =?utf-8?B?ejV6bmtnVDd6VTZXWVluNnB1ZnB1SnF6VnFhTFNSNTN1bEN3cm8vVW5TTGxp?=
- =?utf-8?B?b2ttdlJ5R04xMGZyUE53STFZeWd0K2hSUFNQbHpPUjZNYWFJY24yUEY4QUZl?=
- =?utf-8?B?Nlpjb3VmUkJBPT0=?=
-X-Forefront-Antispam-Report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA0PPF9A76BB3A6.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(366016)(1800799024);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
- =?utf-8?B?NmtsNjBJOGtZZndueTk5am1mcCtiNU9LREduY1JuY0o5VVZGdzJVZ3ZxK3ly?=
- =?utf-8?B?RUlnWUVoU2ZkaE51YTE1d2lEWUxyVkRhdzloUGpXUnNSZzJ3QWtuSUhuRlFC?=
- =?utf-8?B?YkdXdXhDYW5KT2N6WDBsdUZwbWxMemVrMWZlVlQwdVRBUzE2bXZPd2Urd1dS?=
- =?utf-8?B?b0R2MXR6amZ0ZFBNVWNxUGNhMmx1Z24zdHh5YTM5TUNkTGdUQ042WUVkTWM1?=
- =?utf-8?B?ZHQ2MHo1cGxQMUJFZW44ZEN6SDlTSmRkcEx0Z2VnMHIzNldVcUkzbXBxeFJF?=
- =?utf-8?B?RWdCb0ZFOC9tN0tRWTgyWUpucjZ2T2JmSE1icisxNWV1TldWNXhDUzM1UzFh?=
- =?utf-8?B?SFJLMU9CckFqeUZjL0piUWpvUWFucGhtUXgrZ0NoSDI4VHZWK1Bvb1o5UlNz?=
- =?utf-8?B?dmFrSEgrczVFQmtScG1TUVgwN0FKU0p3QjhtTWVabXBwTFUyV1RhREVMbmIy?=
- =?utf-8?B?RmZSYVNOT1RmNWdBeXBnWmdIUUZTempGeGJRZU94Sy8rcjJlMG0vZW5zVkt1?=
- =?utf-8?B?R1diejN1czg5YTcvdFdlU0lXZWwvWXc5b1F4bmRXbGliMTRidGtNWTZSMFl3?=
- =?utf-8?B?UzZLbDFsQkUzNXNKbWtHTkFpT0ZYL0ZlNHFNZzFJdTFwSnZ1RTJVNmFKZkNl?=
- =?utf-8?B?WEZDVWJWdXZTNG10bXZpcVdhWXNkVTlNK0hzaEgwMWtLN0ZJd0RnVjl4cHZI?=
- =?utf-8?B?R0lKUlVZM3JQZHdaY2YwbGEzWEdHRStiOTNuQkdvVjFhRHBkNzhMK2MvQ2d6?=
- =?utf-8?B?Z250b2NRbjYrYTVyUVN4MldIc0ZoY2hDVTBMbDF0YzRLVkRLelFONnVYM0NI?=
- =?utf-8?B?L1hyOVNXdENad0dRYlpsM1pSSERpYVZWY0p0NktCNjBFYUd5MFRORXU3OW83?=
- =?utf-8?B?OUYydlI5VEhCN2h2Z0VyRW8xSm01TzJTUTllZkxvaWhsNmZKQys0MWoreHEw?=
- =?utf-8?B?Mko4VWlXei9EY2thVzFuTjVTL04yTFJGdmFseEJ0dU5QMVZHcjVWVi9hMmtL?=
- =?utf-8?B?dHc2OUc3VExvVC9VakRzanY5S1FKczBxUW5EZ2JwTHpOWUFraTljeEZKS1hs?=
- =?utf-8?B?UjRlMTFMYlVWeERsUStrVnpiWDF3U0VXOHVGRkdHeDk1Y21lUGxERkw2WTh3?=
- =?utf-8?B?NUlMenVzWCt3MWpjSUswVStOZTRxTnlNSkp0dUNEbjZGRUZiNGc3RjhGM1dB?=
- =?utf-8?B?bXppenpWSXVkaGprdmdISkQyUGJVN0pWRzBKZjVpdFE0anpiYUpKTHM1Rjha?=
- =?utf-8?B?VW1oVkVpazJrRGJvRXp6MnhGZHdsNUJiRW1UekxQaXZ6V1RoWVVtWlRaeUdw?=
- =?utf-8?B?QkJ4b2hXTXJPclJOR0pCb2FPZzV3TEJGQkxHNG51eXJXV0JFeXJSTGpyak1V?=
- =?utf-8?B?ZFZhb3BwdWswZml2eHFoNTZlak5CZTdFL0d5a3BPK0JWY2NNZzBCaU1QNUQ1?=
- =?utf-8?B?YnhXbFUvWE5JZkpHM0x4NFFYTU4vSmtSVG83WHBGUDlYVmF5N1RsQlJVTDg1?=
- =?utf-8?B?RzNydHBGOHFDeE00MGt5cUJQY25uMStPVkVyQXhkdjVwbGRMc3VuVU9kejB4?=
- =?utf-8?B?R3ZTTiswY0NrZk9lN3pUYTlxY2JyTUlEVU5oSXFHTnZUU1lnMGJnb0d4bnNV?=
- =?utf-8?B?Z3lwUjBsaTJrZXNlRXl6Z2VubG95UTU1N1JDMEdIK3hOTTZ2MHEwVytNZitT?=
- =?utf-8?B?czhkWkNFMkxMQ0Jjc2dyMTBVNXJYajZ5eFpuUUFOUU8xVi9QNG4wOUZ0N1V0?=
- =?utf-8?B?MVRqVzlpTXVYMUJjaUZ3cS93alB3OTV3MXpJRGxaQ1ZsbUEyMHl1Y3FNWW9m?=
- =?utf-8?B?SWtaTW51WnpSYysrZEVvcTgwcExRS0VRNjFQTjhmQTRnSE9nNWdWUVF5QWxs?=
- =?utf-8?B?Q3Z3QTYrSXJ6TlU3ZldRQktrY3JXVEVVTXhyOGpiWkpNdHk1MUpiY0gwTU10?=
- =?utf-8?B?WWtsTEdPVi9iU0EwQjl1eVhNQ2doS05ENEdUeWE3YWVSRitDYWRWSTZEL2hJ?=
- =?utf-8?B?dVJVUUtUd0tLb0tvMHN4SlFQR1FSUDIxZXF2OGc4VzVHdmhZWTB1NVJmNFRP?=
- =?utf-8?B?cHNPUEcwVVE0RTdBamxoajVGUjFSR0d3RUxLQlROdEQ2cHR5bGZyWGdyNlE5?=
- =?utf-8?Q?6NNhGsQeV6gUlciUwUmO9SxZB?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 13f10bfa-5c72-443a-cc02-08de3d8b8df2
-X-MS-Exchange-CrossTenant-AuthSource: IA0PPF9A76BB3A6.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Dec 2025 16:44:32.7327
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: IGI38kfTNEYy41kwPf1ttRleCsu6IloCFFYj539U97GdOoLgod8ZAVDGzjBRgO6D
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7284
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi Tony,
+Patches based on Linus v6.19-rc1
 
-On 12/16/2025 6:28 PM, Luck, Tony wrote:
-> On Wed, Nov 05, 2025 at 09:33:56AM -0600, Moger, Babu wrote:
->> Hi Tony,
->>
->> On 10/29/2025 1:59 PM, Luck, Tony wrote:
->>> I took a stab at applying the AET patches on tob of Babu's v10
->>> SDCIAE series https://lore.kernel.org/all/cover.1761090859.git.babu.moger@amd.com/
->>>
->>> There are only a couple of easy to resolve conflicts.
->>>
->>> I pushed a branch with v6.18-rc3 + SDCIAE + AET here:
->>>
->>> git://git.kernel.org/pub/scm/linux/kernel/git/aegl/linux.git sdciae-aet
->>>
->>
->> I ran your code on my AMD system. It appears to be working fine.
->> I don't have the hardware that supports these features. It would be helpful
->> to list the resctrl interface files (files in info directory and files each
->> group) and give an example of how it looks in the system that supports these
->> features. It can be in cover letter or resctrl.rst file as well. It will
->> also help to review the code.
-> 
-> Reinette reminded me that I didn't provide the examples that I promised.
-> 
-> 
-> Here's what I plan to add to the v17 cover letter. Is this enough
-> detail?
-> 
-> -Tony
-> 
-> 
-> Examples:
-> --------
-> 
-> As with other resctrl monitoring features first create CTRL_MON or MON
-> directories and assign the tasks of interest to the group.
-> 
-> Energy events:
-> -------------
-> 
-> There are two events associated with energy consumption in the core.
-> The "core_energy" event reports out directly in Joules. To compute
-> power just take the difference between two samples and divide by the
-> time between them. E.g.
-> 
-> $ cat core_energy; sleep 10; cat core_energy
+Series available here:
+git://git.kernel.org/pub/scm/linux/kernel/git/aegl/linux.git rdt-aet-v17
 
-Please use the full path (/sys/fs/resctrl/test/mon_data/xx/<file_name>).
+Changes since v16 was posted here:
+https://lore.kernel.org/all/20251210231413.59102-1-tony.luck@intel.com/
 
-Otherwise looks good to me.
+Cover letter
+Added some examples for Babu
 
-Thanks
-Babu
+part 11
+Added Reinette RB tag
 
-> 94499439.510380
-> 94499607.019680
-> $ bc -q
-> scale=3
-> (94499607.019680 - 94499439.510380) / 10
-> 16.750
-> 
-> So 16.75 Watts in this example.
-> 
-> Note that different runs of the same workload may report different
-> energy consumption. This happens when cores shift to different
-> voltage/frequency profiles due to overall system load.
-> 
-> The "activity" event reports energy usage in a manner independent
-> of voltage and frequency. This may be useful for developers to
-> assess how modifications to a program (e.g. attaching to a library
-> optimized to use AVX instructions) affect energy consumption. So
-> read the "activity" at the start and end of program execution and
-> compute the difference.
-> 
-> Perf events:
-> -----------
-> 
-> The other telemetry events largely duplicate events available using
-> "perf", but avoid of reading the perf counters on every context switch.
-> This may be a significant improvement when monitoring highly multi-threaded
-> applications. E.g. to find the ratio of core cycles to reference cycles:
-> 
-> $ cat unhalted_core_cycles unhalted_ref_cycles
-> 1312249223146571
-> 1660157011698276
-> $ { run application here }
-> $ cat unhalted_core_cycles unhalted_ref_cycles
-> 1313573565617233
-> 1661511224019444
-> $ bc -q
-> scale = 3
-> (1661511224019444 - 1660157011698276) / (1313573565617233 - 1312249223146571)
-> 1.022
-> 
-> 
+part 19
+Update commit message to explain why it is safe to enable just some events
+within an event group.
+Added Reinette RB tag
+
+part 24
+Added Reinette RB tag
+
+part 25
+Drop unneeded local variable "ret" from all_regions_have_sufficient_rmid()
+Added Reinette RB tag
+
+part 32
+Added Reinette RB tag
+
+Background
+----------
+On Intel systems that support per-RMID telemetry monitoring each logical
+processor keeps a local count for various events. When the
+MSR_IA32_PQR_ASSOC.RMID value for the logical processor changes (or when a
+two millisecond counter expires) these event counts are transmitted to
+an event aggregator on the same package as the processor together with
+the current RMID value. The event counters are reset to zero to begin
+counting again.
+
+Each aggregator takes the incoming event counts and adds them to
+cumulative counts for each event for each RMID. Note that there can be
+multiple aggregators on each package with no architectural association
+between logical processors and an aggregator.
+
+All of these aggregated counters can be read by an operating system from
+the MMIO space of the Out Of Band Management Service Module (OOBMSM)
+device(s) on a system. Any counter can be read from any logical processor.
+
+Intel publishes details for each processor generation showing which
+events are counted by each logical processor and the offsets for each
+accumulated counter value within the MMIO space in XML files here:
+https://github.com/intel/Intel-PMT.
+
+For example there are two energy related telemetry events for the
+Clearwater Forest family of processors and the MMIO space looks like this:
+
+Offset  RMID    Event
+------  ----    -----
+0x0000  0       core_energy
+0x0008  0       activity
+0x0010  1       core_energy
+0x0018  1       activity
+...
+0x23F0  575     core_energy
+0x23F8  575     activity
+
+In addition the XML file provides the units (Joules for core_energy,
+Farads for activity) and the type of data (fixed-point binary with
+bit 63 used to indicate the data is valid, and the low 18 bits as a
+binary fraction).
+
+Finally, each XML file provides a 32-bit unique id (or guid) that is
+used as an index to find the correct XML description file for each
+telemetry implementation.
+
+The INTEL_PMT_TELEMETRY driver provides intel_pmt_get_regions_by_feature()
+to enumerate the aggregator instances (also referred to as "telemetry
+regions" in this series) on a platform. It provides:
+
+1) guid  - so resctrl can determine which events are supported
+2) MMIO base address of counters
+3) package id
+
+Resctrl accumulates counts from all aggregators on a package in order
+to provide a consistent user interface across processor generations.
+
+Directory structure for the telemetry events looks like this:
+
+$ tree /sys/fs/resctrl/mon_data/
+/sys/fs/resctrl/mon_data/
+mon_data
+├── mon_PERF_PKG_00
+│   ├── activity
+│   └── core_energy
+└── mon_PERF_PKG_01
+    ├── activity
+    └── core_energy
+
+Reading the "core_energy" file from some resctrl mon_data directory shows
+the cumulative energy (in Joules) used by all tasks that ran with the RMID
+associated with that directory on a given package. Note that "core_energy"
+reports only energy consumed by CPU cores (data processing units,
+L1/L2 caches, etc.). It does not include energy used in the "uncore"
+(L3 cache, on package devices, etc.), or used by memory or I/O devices.
+
+Examples:
+--------
+
+As with other resctrl monitoring features first create CTRL_MON or MON
+directories and assign the tasks of interest to the group.
+
+# mkdir /sys/fs/resctrl/aet_example
+# echo {list of PIDs} > /sys/fs/resctrl/aet_example/tasks
+
+For simplicity in this example, assume that these tasks have their
+affinity set to CPUs in the first socket. Set a shell variable to
+point to the mon_data directory for socket 0:
+
+$ dir=/sys/fs/resctrl/aet_example/mon_data/mon_PERF_PKG_00
+
+Energy events:
+-------------
+
+There are two events associated with energy consumption in the core.
+The "core_energy" event reports out directly in Joules. To compute
+power just take the difference between two samples and divide by the
+time between them. E.g.
+
+$ cat $dir/core_energy; sleep 10; cat $dir/core_energy
+94499439.510380
+94499607.019680
+$ bc -q
+scale=3
+(94499607.019680 - 94499439.510380) / 10
+16.750
+
+So 16.75 Watts in this example.
+
+Note that different runs of the same workload may report different
+energy consumption. This happens when cores shift to different
+voltage/frequency profiles due to overall system load.
+
+The "activity" event reports energy usage in a manner independent
+of voltage and frequency. This may be useful for developers to
+assess how modifications to a program (e.g. attaching to a library
+optimized to use AVX instructions) affect energy consumption. So
+read the "activity" at the start and end of program execution and
+compute the difference.
+
+Perf events:
+-----------
+
+The other telemetry events largely duplicate events available using
+"perf", but avoid reading the perf counters on every context switch.
+This may be a significant improvement when monitoring highly multi-threaded
+applications. E.g. to find the ratio of core cycles to reference cycles:
+
+$ cat $dir/unhalted_core_cycles $dir/unhalted_ref_cycles
+1312249223146571
+1660157011698276
+$ { run application here }
+$ cat $dir/unhalted_core_cycles $dir/unhalted_ref_cycles
+1313573565617233
+1661511224019444
+$ bc -q
+scale = 3
+(1661511224019444 - 1660157011698276) / (1313573565617233 - 1312249223146571)
+1.022
+
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+
+Tony Luck (32):
+  x86,fs/resctrl: Improve domain type checking
+  x86/resctrl: Move L3 initialization into new helper function
+  x86/resctrl: Refactor domain_remove_cpu_mon() ready for new domain
+    types
+  x86/resctrl: Clean up domain_remove_cpu_ctrl()
+  x86,fs/resctrl: Refactor domain create/remove using struct
+    rdt_domain_hdr
+  fs/resctrl: Split L3 dependent parts out of __mon_event_count()
+  x86,fs/resctrl: Use struct rdt_domain_hdr when reading counters
+  x86,fs/resctrl: Rename struct rdt_mon_domain and rdt_hw_mon_domain
+  x86,fs/resctrl: Rename some L3 specific functions
+  fs/resctrl: Make event details accessible to functions when reading
+    events
+  x86,fs/resctrl: Handle events that can be read from any CPU
+  x86,fs/resctrl: Support binary fixed point event counters
+  x86,fs/resctrl: Add an architectural hook called for each mount
+  x86,fs/resctrl: Add and initialize a resource for package scope
+    monitoring
+  fs/resctrl: Emphasize that L3 monitoring resource is required for
+    summing domains
+  x86/resctrl: Discover hardware telemetry events
+  x86,fs/resctrl: Fill in details of events for guid 0x26696143 and
+    0x26557651
+  x86,fs/resctrl: Add architectural event pointer
+  x86/resctrl: Find and enable usable telemetry events
+  x86/resctrl: Read telemetry events
+  fs/resctrl: Refactor mkdir_mondata_subdir()
+  fs/resctrl: Refactor rmdir_mondata_subdir_allrdtgrp()
+  x86,fs/resctrl: Handle domain creation/deletion for
+    RDT_RESOURCE_PERF_PKG
+  x86/resctrl: Add energy/perf choices to rdt boot option
+  x86/resctrl: Handle number of RMIDs supported by RDT_RESOURCE_PERF_PKG
+  fs/resctrl: Move allocation/free of closid_num_dirty_rmid[]
+  x86,fs/resctrl: Compute number of RMIDs as minimum across resources
+  fs/resctrl: Move RMID initialization to first mount
+  x86/resctrl: Enable RDT_RESOURCE_PERF_PKG
+  fs/resctrl: Provide interface to create architecture specific debugfs
+    area
+  x86/resctrl: Add debugfs files to show telemetry aggregator status
+  x86,fs/resctrl: Update documentation for telemetry events
+
+ .../admin-guide/kernel-parameters.txt         |   7 +-
+ Documentation/filesystems/resctrl.rst         | 101 +++-
+ include/linux/resctrl.h                       |  67 ++-
+ include/linux/resctrl_types.h                 |  11 +
+ arch/x86/kernel/cpu/resctrl/internal.h        |  48 +-
+ fs/resctrl/internal.h                         |  68 ++-
+ arch/x86/kernel/cpu/resctrl/core.c            | 230 ++++++---
+ arch/x86/kernel/cpu/resctrl/intel_aet.c       | 473 ++++++++++++++++++
+ arch/x86/kernel/cpu/resctrl/monitor.c         |  50 +-
+ fs/resctrl/ctrlmondata.c                      | 113 ++++-
+ fs/resctrl/monitor.c                          | 364 +++++++++-----
+ fs/resctrl/rdtgroup.c                         | 293 +++++++----
+ arch/x86/Kconfig                              |  13 +
+ arch/x86/kernel/cpu/resctrl/Makefile          |   1 +
+ 14 files changed, 1440 insertions(+), 399 deletions(-)
+ create mode 100644 arch/x86/kernel/cpu/resctrl/intel_aet.c
+
+
+base-commit: 8f0b4cce4481fb22653697cced8d0d04027cb1e8
+-- 
+2.52.0
 
