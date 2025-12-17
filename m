@@ -1,142 +1,120 @@
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35069285066
-	for <patches@lists.linux.dev>; Wed, 17 Dec 2025 07:40:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52ED8336ED1
+	for <patches@lists.linux.dev>; Wed, 17 Dec 2025 08:06:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765957238; cv=none; b=Xn9l9wsYWPnJZy3unuqVh/5MOyAvm29VpA6De0K+P2gBnBkZnbmD5Pu5r2hXjVodZVycMO8D76OOGuBTerc0U/6wenQOiJJeDzNbuZlHzdaQBcDqTZHNYTmvsLsvYbwiepIJW6sjVTm14JRN5kDkV8TQgWdltdJ41bCDw1qudoY=
+	t=1765958806; cv=none; b=DNFfcNpuGuzbnOGY55emo7rw+CfBeRAylDP9Socga4t14a+Mm2iN0UrtHsAKRAkoEEKYaDfGZOwbfUvUylT7nwcW3rx4JtNGvMZyEJkDNaZSPX5b8ioV+LeKIWJ6mvjw71fwY6SfWyR8FcyrG+LTZ6+wLHCrGyZkK1/FOkzvxZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765957238; c=relaxed/simple;
-	bh=fU099nj45X0tht7QIRvdYz8ExAJLyqmNMEoS52Por40=;
+	s=arc-20240116; t=1765958806; c=relaxed/simple;
+	bh=bq7BliE/NjEHPTcJ+hqfuLZ5dvCT2Zv4pztbvHrgXi4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jNGUNg1wJMU5AIb4yf8ZbH2rROCV+O9SMJGRMGRpZk1V4Zhs8joGte6Nz5KwKDfYS+kRFx+J7PKUFXxVCicAX5jUWR6OGBoDSziMg1RbvF7nGAFVxiLCyv/HRG7vaWvbiNRsmuW+Rs9fjzvPkGx1eVQ3PNkfCdDYlj05xT7w9jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in; spf=none smtp.mailfrom=rajagiritech.edu.in; dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b=WCNB8kI2; arc=none smtp.client-ip=209.85.218.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=rajagiritech.edu.in
+	 To:Cc:Content-Type; b=bxyBCrYlfD98uap1iGIrNRqu0lKAHp2mpJ3gxV5YYY+q9RLkF+AlqBql7NoRSBHlpsQDIjgU48LYbNwNR4DzDvnd6mYzT7GwbN4nb4Hp/QXy9LaMO19762I6B45/v0SANtVvbiACaf+XhNZJbuUOFek8muyOlpGF87GoNKLDe5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FaJM3QQh; arc=none smtp.client-ip=209.85.215.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b="WCNB8kI2"
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-b79d6a70fc8so956403866b.0
-        for <patches@lists.linux.dev>; Tue, 16 Dec 2025 23:40:36 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FaJM3QQh"
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-c06cb8004e8so4582171a12.0
+        for <patches@lists.linux.dev>; Wed, 17 Dec 2025 00:06:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rajagiritech-edu-in.20230601.gappssmtp.com; s=20230601; t=1765957235; x=1766562035; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1765958803; x=1766563603; darn=lists.linux.dev;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=d0gyntNuzpuZQ4YLwBZHoVwxkZh9qXD7dDqgmQ798Qc=;
-        b=WCNB8kI22wC72zQeT/N8rgeQdOUD7UNrl19IF0crTUKHXkVxpZDmH6dRmvylIExXGv
-         4p1sBaMx7ok7OX5xPRdo1Tz4WTjUadjJiRZZpxLnNAkTMoDeivhVpG6unRmIH/vce7+5
-         ir6TGkHz+5TZG5l3wlvQzLGkC6xemm0wuHuTjNPf5LDCsCaKY+X/mMWEq4GQyucbLH85
-         B8aDDU9Wq3AqAC+bbB4lbBe1Zheizr51iwLSf0myzGhHsYCPA0loWD9Jd5FrPEdHg7HX
-         cGN3wEO9ImN28IaJNj5XhhRrB3VctCdS2PZo7MWqtTmvqdcABgD3Brknz3zq3qNEWu81
-         /vFg==
+        bh=bdB/aSgFib9yNMnSjtnjVwQzHDWZlq9a/a2iwdeEH6I=;
+        b=FaJM3QQhzph3MolSMO7F54jBf2hIJfModjifQ3KsnYEliVEGGBbraxUvsHOrBEhzl/
+         iU3sUyUDo61ZN1/3MjjIMZza/bJkyCDclU5kQXzhrBPB/XreOMkpwkR4QaZEedojYKpm
+         Z/jQadJv2F8WZe5zfxA4v7Cy7xwkMNwk6FofiFZo4YHXi1UmEqLTrnhfmZwn0K+zKT3x
+         /SagCQ0jAYkOwO4mnUY0CqsPB6398AKxt7Kf47vL7MM+PSw9UCpB5ZrJk9hon0pr+VLv
+         GcNs+ZpdCnLw+gBFN+uC4aHV/Q1ZxcxwU1aBeNB0m2brN84LIQiSitbvht4EvhG8jlEg
+         T8Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765957235; x=1766562035;
+        d=1e100.net; s=20230601; t=1765958803; x=1766563603;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=d0gyntNuzpuZQ4YLwBZHoVwxkZh9qXD7dDqgmQ798Qc=;
-        b=klkTJIkwfbXUEbi09jx0wJ8//2jZUUryjuj1ENrrc2Pe3+l0IH/tGEQzyyYvfsqb2V
-         Zax7sjdxXCv05JGyizcPSYvIm5QqNQ300W4gd5KqKrwi6cUqXq+/0Cjr4Yj1/bPsyGN0
-         UNEvuy0jT4eR/hdr742YFFxif8QA8R1SboCNjCwv484uZHZ4T58l45DZhjuCYfWVwDNM
-         KvlW3GCnUj+46khf0XaVz5oXtvctnqKMmNhaidsKY10q3lGh8IRZ9/FD3II9ojx5Djf8
-         Fgm5qZCwnDo+WNasekjqVYns29Yth9tNkvGt7FBYdN5OK6JjW9OU+MdUb1lDw9YSipMj
-         ocvg==
-X-Forwarded-Encrypted: i=1; AJvYcCW4TMG8rlBHgiQ0ZgSqHPx66cgHsMWRo17gd1zamAp+oRvc60B+raAZs/ub9Sj9lj5YkvjK8RjE@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzf/SNLZYXBywQ2jdRZRclP6AjUeVi6QCX8w9xuOg24ZVO+uDPJ
-	JJcUDOVI3SKi0F7mgaqQBq6wiZYfXXMp+Gpa1Ifxc9sCxv23ynvzU9vAkwcWf0bDUHNo/Lsk3hB
-	a0ObHdUI7//E1jxWRiR6oVhWJiULU+FXWJomkZumFdw==
-X-Gm-Gg: AY/fxX7Y95s7kiAK0wwV9LMSv9edVHRBjXN3A4f2ZowLWZfrpIZR/s5xJorZpW/WvDS
-	aZ8anokX52ucgY+pmVmdkRsUj8WORvunWIdebLt0TdWFUcbeJPfcU3puXDm6IEMu+v5WcTH+5XY
-	YYeZSBi6MNvXQ30mtzzBe568XJo9G6lcZ+f6lVOobYcMbtjQPEVhrPjflNHBUViv0wPwiB+FFBl
-	IQlbptc1x+lBOMSVbu6hpnDuZ9TvkY2VxgjgAXnZm6C+gncd+Gnrf79m16jHea+HSID4Rw=
-X-Google-Smtp-Source: AGHT+IGRmTV0LqkvYsaR/Ni74+Dv9OY5BQXHZ5fquyjz6BfKca0DAU/hhccIkjejdxvyIWeabJqKfKwyVOohgaSWUKQ=
-X-Received: by 2002:a17:907:7e97:b0:b74:983b:4056 with SMTP id
- a640c23a62f3a-b7d235c8495mr1625314866b.8.1765957235313; Tue, 16 Dec 2025
- 23:40:35 -0800 (PST)
+        bh=bdB/aSgFib9yNMnSjtnjVwQzHDWZlq9a/a2iwdeEH6I=;
+        b=U7zE0AGUJkb7sX8nFT/JN0kFz/mv4kx80f4KG4nhnfkoZlt416TygS/jCDfErCeDST
+         OzayyYfS+o4bIrQR28M6PJtPo8wvM3DajVcwusDJHeU2Jy4tzUtL3RpZEuxA0Q3wfAak
+         11Jm+JnYMJ2ck3IbSYGvM1EgI02DV7JBdeJSlo1PIwo4xV6BZdmgNmZkpyjVe4oazrYU
+         CowZhW94lyBBypDyZ2yA1CTRyAODvE4Pk+B7mGCxVOAsq2v2NTxO+nYHd52TwmR6QEfo
+         2608xEMkT3li3xGfKGBDXw8Q0tllNVzOIFS/lr3KIGAZmdOFEEqOWIDSVLVjpTzpWz/b
+         TYfw==
+X-Forwarded-Encrypted: i=1; AJvYcCUQfKSWKq27ZBqjMDEYXFvttXp/VcWjNmPSq9J7bZQatMLgmvMaB5VlZLWEecBTe7okEdta3E+1@lists.linux.dev
+X-Gm-Message-State: AOJu0YxKdyRXbG47G/RzLIak4THfhtX1k+35VtuUyeWQSIVUfjOiIxqH
+	f/kxMzxSdbrnSAIGtbEjcIhJgkZlF6fphXFggVpUXiL72Hv85gZTWPujKeJCMveNU6cwPHUbTw+
+	rcJryEzAcHfkleJa0T5BcZy7XdxngYP0xhj8aFUBpeA==
+X-Gm-Gg: AY/fxX5Fl/Dr4+J0UFgV/Wf4NEKuxUk3EG0CpJ3WVRLhlqz/JPZRiizfe6J6md35M0H
+	x2TZJtOoRf1x8RHkHWhs3w1Qy4ogNm34+4/cF7B8fPofYBRzizVvbtF6zBpYdF0JSV/vK21hw9Y
+	aP3UC8pIPjIZzZSOF2prqWsLizRvvVDlb2Ps3U6J6WDUbeJ0Wv7NCWOJAjY7VedDG5U+fKBuFpg
+	fmyXfRK7f7Z3Vbug25YSz4N+O88SNTg8CdZTBmzD5tqo9z2c86WBrv0pDG1GRYMUndAYiHD6zE7
+	80j3IKX0wUmtIJNDOG4hZ9cgrtZN
+X-Google-Smtp-Source: AGHT+IETkt/jVd6uk/R3QClwG8B5S2yNELg/JhUbEoBFWBg/UTAAcaP0rqWFCRLlCLTgvIDR/ubLYtPnNiiQ7GZIBHk=
+X-Received: by 2002:a05:7300:d10f:b0:2ac:1bb1:68ed with SMTP id
+ 5a478bee46e88-2ac2f85e863mr12003914eec.9.1765958802517; Wed, 17 Dec 2025
+ 00:06:42 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251216111947.723989795@linuxfoundation.org>
-In-Reply-To: <20251216111947.723989795@linuxfoundation.org>
-From: Jeffrin Thalakkottoor <jeffrin@rajagiritech.edu.in>
-Date: Wed, 17 Dec 2025 13:09:57 +0530
-X-Gm-Features: AQt7F2o_ES9P9Gs-Tac9DwXIzKB8s5SKa6EGyWjFsp86EKYa3uiFWdhy2Knc8e8
-Message-ID: <CAG=yYwnv+EsEhOSUFFFGQYm6MXzDFzPKq=pp+wk2J5rvLupoQQ@mail.gmail.com>
-Subject: Re: [PATCH 6.17 000/506] 6.17.13-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
-	achill@achill.org, sr@sladewatkins.com
-Content-Type: multipart/mixed; boundary="000000000000b3507c064620f5c2"
-
---000000000000b3507c064620f5c2
+References: <20251216111401.280873349@linuxfoundation.org> <20251216195255.172999-1-naresh.kamboju@linaro.org>
+ <2025121719-degrading-drainpipe-fb2e@gregkh>
+In-Reply-To: <2025121719-degrading-drainpipe-fb2e@gregkh>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Wed, 17 Dec 2025 13:36:31 +0530
+X-Gm-Features: AQt7F2rN0pF4kAzdVPk6eazQcFQyu-jClKs6CdNRybqUHycKnrNF6TQT-vGyPj0
+Message-ID: <CA+G9fYvc==Vz83Kka7J84XHA-hhig0CKGHixRVBAzGDv-1BA7A@mail.gmail.com>
+Subject: Re: [PATCH 6.18 000/614] 6.18.2-rc1 review
+To: Greg KH <gregkh@linuxfoundation.org>
+Cc: achill@achill.org, akpm@linux-foundation.org, broonie@kernel.org, 
+	conor@kernel.org, f.fainelli@gmail.com, hargar@microsoft.com, 
+	jonathanh@nvidia.com, linux-kernel@vger.kernel.org, linux@roeck-us.net, 
+	lkft-triage@lists.linaro.org, patches@kernelci.org, patches@lists.linux.dev, 
+	pavel@denx.de, rwarsow@gmx.de, shuah@kernel.org, sr@sladewatkins.com, 
+	stable@vger.kernel.org, sudipm.mukherjee@gmail.com, 
+	torvalds@linux-foundation.org, dan.carpenter@linaro.org, nathan@kernel.org, 
+	llvm@lists.linux.dev, perex@perex.cz, lgirdwood@gmail.com, 
+	Linux Kernel Functional Testing <lkft@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 
-hello
+On Wed, 17 Dec 2025 at 12:00, Greg KH <gregkh@linuxfoundation.org> wrote:
+>
+> On Wed, Dec 17, 2025 at 01:22:55AM +0530, Naresh Kamboju wrote:
+> > I'm seeing the following allmodconfig and allyesconfig build
+> > failures on arm, arm64, riscv and x86_64.
+> >
+> > ## Build error
+> > sound/soc/codecs/nau8325.c:430:13: error: variable 'n2_max' is uninitialized when used here [-Werror,-Wuninitialized]
+> >   430 |                 *n2_sel = n2_max;
+> >       |                           ^~~~~~
+> > sound/soc/codecs/nau8325.c:389:52: note: initialize the variable 'n2_max' to silence this warning
+> >   389 |         int i, j, mclk, mclk_max, ratio, ratio_sel, n2_max;
+> >       |                                                           ^
+> >       |                                                            = 0
+> > sound/soc/codecs/nau8325.c:431:11: error: variable 'ratio_sel' is uninitialized when used here [-Werror,-Wuninitialized]
+> >   431 |                 ratio = ratio_sel;
+> >       |                         ^~~~~~~~~
+> > sound/soc/codecs/nau8325.c:389:44: note: initialize the variable 'ratio_sel' to silence this warning
+> >   389 |         int i, j, mclk, mclk_max, ratio, ratio_sel, n2_max;
+> >       |                                                   ^
+> >       |                                                    = 0
+> > 2 errors generated.
+> > make[6]: *** [scripts/Makefile.build:287: sound/soc/codecs/nau8325.o] Error 1
+> >
+> > First seen on 6.18.2-rc1
+> > Good: 6.18.1-rc1
+> > Bad:  6.18.2-rc1
+> >
+> > And these build regressions also seen on 6.17.13-rc2.
+>
+> Thanks, I'll go queue up the fix for this.
 
-Compiled and booted  6.17.13-rc2+
+This build regression is across the 6.18.2-rc1, 6.17.13-rc2 and 6.12.63-rc1.
 
-dmesg shows error...  file attached
+>
+> greg k-h
 
-As per dmidecode command.
-Version: AMD Ryzen 3 3250U with Radeon Graphics
-
-Processor Information
-        Socket Designation: FP5
-        Type: Central Processor
-        Family: Zen
-        Manufacturer: Advanced Micro Devices, Inc.
-        ID: 81 0F 81 00 FF FB 8B 17
-        Signature: Family 23, Model 24, Stepping 1
-
-Tested-by: Jeffrin Jose T <jeffrin@rajagiritech.edu.in>
-
---
-software engineer
-rajagiri school of engineering and technology
-
---000000000000b3507c064620f5c2
-Content-Type: text/plain; charset="US-ASCII"; name="error.txt"
-Content-Disposition: attachment; filename="error.txt"
-Content-Transfer-Encoding: base64
-Content-ID: <f_mj9p5x4q0>
-X-Attachment-Id: f_mj9p5x4q0
-
-WyAgIDIxLjk4MzM3M10gQlBGOiBbMTEzNjcwXSBJbnZhbGlkIG5hbWVfb2Zmc2V0OjIwNDEwNzYK
-WyAgIDIyLjE3MDUzN10gQlBGOiBbMTEzNjY2XSBJbnZhbGlkIG5hbWVfb2Zmc2V0OjIwNDEwNzYK
-WyAgIDIyLjYwNDM0NV0gQlBGOiBbMTEzNjg3XSBJbnZhbGlkIG5hbWVfb2Zmc2V0OjIwNDEyNzUK
-WyAgIDIyLjYwOTExN10gQlBGOiBbMTEzNjc2XSBJbnZhbGlkIG5hbWVfb2Zmc2V0OjIwNDExNDYK
-WyAgIDIyLjY3NjgxM10gQlBGOiBbMTEzNjc2XSBJbnZhbGlkIG5hbWVfb2Zmc2V0OjIwNDEyODAK
-WyAgIDIyLjY5MDE4NF0gQlBGOiBbMTEzNjY2XSBJbnZhbGlkIG5hbWVfb2Zmc2V0OjIwNDEwNzYK
-WyAgIDIyLjY5NzUwN10gQlBGOiBbMTEzNjcyXSBJbnZhbGlkIG5hbWVfb2Zmc2V0OjIwNDEyMTIK
-WyAgIDIzLjA4MDQ2NV0gQlBGOiBbMTEzNjY2XSBJbnZhbGlkIG5hbWVfb2Zmc2V0OjIwNDEwNzYK
-WyAgIDIzLjA5MDM3NF0gQlBGOiBbMTEzNjY2XSBJbnZhbGlkIG5hbWVfb2Zmc2V0OjIwNDEwNzYK
-WyAgIDIzLjIzNjE0NF0gQlBGOiBbMTEzNjY5XSBJbnZhbGlkIG5hbWVfb2Zmc2V0OjIwNDEwNzYK
-WyAgIDIzLjI0NjM2OV0gQlBGOiBbMTEzNjY2XSBJbnZhbGlkIG5hbWVfb2Zmc2V0OjIwNDEwNzYK
-WyAgIDIzLjI1MTA0N10gQlBGOiBbMTEzNjY5XSBJbnZhbGlkIG5hbWVfb2Zmc2V0OjIwNDEwNzYK
-WyAgIDIzLjMxMTE2Nl0gQlBGOiAJSW52YWxpZCBuYW1lX29mZnNldDoyMDQxMDc2ClsgICAyMy4z
-MTE4MDhdIEJQRjogWzExMzY2OV0gSW52YWxpZCBuYW1lX29mZnNldDoyMDQxMDc2ClsgICAyMy40
-MDYwMzRdIEJQRjogWzExMzY2Nl0gSW52YWxpZCBuYW1lX29mZnNldDoyMDQxMDc2ClsgICAyMy40
-NjQ5NjddIEJQRjogWzExMzY2OF0gSW52YWxpZCBuYW1lX29mZnNldDoyMDQxMDc2ClsgICAyMy41
-MzkxNDVdIEJQRjogCUludmFsaWQgbmFtZV9vZmZzZXQ6MjA0MTA3NgpbICAgMjMuNjgwMTg4XSBC
-UEY6IFsxMTM2NjZdIEludmFsaWQgbmFtZV9vZmZzZXQ6MjA0MTA3NgpbICAgMjMuNzI0OTcwXSBC
-UEY6IFsxMTM2NjZdIEludmFsaWQgbmFtZV9vZmZzZXQ6MjA0MTA3NgpbICAgMjMuODUzNDgzXSBC
-UEY6IFsxMTM2NjZdIEludmFsaWQgbmFtZV9vZmZzZXQ6MjA0MTA3NgpbICAgMjQuMjU2MDQ3XSBC
-UEY6IFsxMTM2NjZdIEludmFsaWQgbmFtZV9vZmZzZXQ6MjA0MTA3NgpbICAgMjQuNTU1MjQ0XSBC
-UEY6IFsxMTM2NjZdIEludmFsaWQgbmFtZV9vZmZzZXQ6MjA0MTA3NgpbICAgMjQuNjU0OTQ3XSBC
-UEY6IFsxMTM2NjZdIEludmFsaWQgbmFtZV9vZmZzZXQ6MjA0MTA3NgpbICAgMjQuODMwMTc0XSBC
-UEY6IFsxMTM2NjZdIEludmFsaWQgbmFtZV9vZmZzZXQ6MjA0MTA3NgpbICAgMjQuODQ0MDEwXSBC
-UEY6IFsxMTM2NjZdIEludmFsaWQgbmFtZV9vZmZzZXQ6MjA0MTA3NgpbICAgMjUuNTgyNDU0XSBC
-UEY6IFsxMTM2NjZdIEludmFsaWQgbmFtZV9vZmZzZXQ6MjA0MTA3NgpbICAgMjkuMjMzOTg5XSBC
-UEY6IFsxMTM2NzhdIEludmFsaWQgbmFtZV9vZmZzZXQ6MjA0MTMyOApbICAgMjkuMzExMTQ3XSBC
-UEY6IFsxMTM2NjZdIEludmFsaWQgbmFtZV9vZmZzZXQ6MjA0MTA3NgpbICAgMjkuMzMzOTU0XSBC
-UEY6IFsxMTM2NjZdIEludmFsaWQgbmFtZV9vZmZzZXQ6MjA0MTA3NgpbICAgMjkuNjQzMTc1XSBC
-UEY6IFsxMTM2NzBdIEludmFsaWQgbmFtZV9vZmZzZXQ6MjA0MTA3Ngo=
---000000000000b3507c064620f5c2--
+- Naresh
