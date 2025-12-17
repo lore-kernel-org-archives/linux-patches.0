@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC5A346AD1
-	for <patches@lists.linux.dev>; Wed, 17 Dec 2025 17:22:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F411B345CD5
+	for <patches@lists.linux.dev>; Wed, 17 Dec 2025 17:22:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765992132; cv=none; b=AhX5x5EQHLg1MAvFU50AoEGqmxZmUUGWWFUPlSaQvz/3edmqMDjqcl7nKA481oKfqC3WuK8EdCZUJf22zrMX/CK9VqjCLU63gG74dwpWrl9PUvLtWXCiEe7uY4cKPHhYj7I5YDLFm3Eaa17efdYDh/Y3SJ+HmNbUCMRzacoNxmA=
+	t=1765992137; cv=none; b=qbOg8cjP0cDQ/VfsHWRMfr4VLXvDPrqzfrjsZl1NClTp8QIztbvd95wmFSaHwfqM4grGIzBAovo2PklozsOW67WKrwalIVUBc/9ucJ5xZA/Z/lFkbDPotctHPxztWZ1Q7brx/6h288CDt4fQqSxGZUVGhfaYrhbn5OpMSNsSJfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765992132; c=relaxed/simple;
-	bh=w/evQdJKdtQj5a5B5iiiPmNURss9kEFQa1UDiwYaNv0=;
+	s=arc-20240116; t=1765992137; c=relaxed/simple;
+	bh=NUzrxcIBIRZI3HU4Hev0c7cmHfsuqLJPkLipgea+vfo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FEx+KGCmoTf41YrCt0STrqz1GjNOizWHVclxsu7h8ItkjIwXJu3dkpUx2YEwW+xtN2LMRdvvD9CIYlZHwcuI17NsNgYe4uNs9WnHZ7MxtZMPwtiOFT0GvlU6D6fZKopl7qH9y1TMBejhWwUv7QLGy+3o3wi+E5ghCaXKImc8/6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=fail smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=AJCkbP9J; arc=none smtp.client-ip=198.175.65.9
+	 MIME-Version; b=q5DZBNocfbb+kTWoRpg1zO5pHBaKQppqYQlap9DcxBi6UI+3UtFnbZgGpgDqwPhWQ9PDVatZr6Yg3feY0URDj6bJsFDz0pWSTmaWofkVFlQQw+XiaZIpm77tMKREH+QcqHVAKIu1HOL9tZe2LbiHtfto8DH1u9JT7k9VWgSZsk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=fail smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cSBcOg0U; arc=none smtp.client-ip=198.175.65.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="AJCkbP9J"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cSBcOg0U"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1765992126; x=1797528126;
+  t=1765992124; x=1797528124;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=w/evQdJKdtQj5a5B5iiiPmNURss9kEFQa1UDiwYaNv0=;
-  b=AJCkbP9JWwXI+ZA3ZpWxMSeT/OqLjmOI//Bericg9UVbRIKn/56gBb9f
-   Ldh/qanQUamllvD21ZNzqhXFcCv8vLfHf6kC2bgFkBR67Lo0bSiy/9yuR
-   cakJGGC05XJjsJVNNB6uEtgVtnjzo5aFuddI2OZ2CK8Le0eb2mIe0mb+Z
-   u7mkjfrSp9E1AhDEtCgHZoAbvTKXQS8PJKsHmuBsMN742TA+JjME9aIRA
-   rnR87Htd0UQyvd1O+V0fjn0BNwmdQjFCq6lxWCmd+8t6R9S0Ys2ubvfKc
-   I+2wAHkypKNKBD8P4b2cghobM1LD7R39rpXCELGgFG19Utcv8KN6o9O8E
-   w==;
-X-CSE-ConnectionGUID: qK/lQWEsS4+oky65ng8pTg==
-X-CSE-MsgGUID: S4bhzjV7TA2wIaaW3YEdwQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11645"; a="90594751"
+  bh=NUzrxcIBIRZI3HU4Hev0c7cmHfsuqLJPkLipgea+vfo=;
+  b=cSBcOg0Ux1rx4bwlRzLARtRG+LWZl+tmSDrdofsbwljBG3QSS/Huui7o
+   A3rEVLjo7ozBdNxDCiTzEelx3wC6L+p/EN9tAeM1bi/UVwC3yUUO/n6jI
+   xiAQeR6bhelPil/N8e0l2xPRMBYnGqedDmC4eKpTx9C1hqzq7MGgavDKD
+   upFqms7mqPxNg4+KWqO4Wtb1KniRIiey2J+H4qLRVvDqM9lwoUqkBj6Cx
+   QKPK159vT+S2cm1/Qh1R1yV5P/h9rg6kNKUQGFGlkXq9KLyyHxtBK9xpq
+   wBjMuuA/aGYX2Zj/HX5LSj3q/eCwbtHBjUYovgSnhtxSNZUdV8kJ8D+O2
+   A==;
+X-CSE-ConnectionGUID: zZsMSuH4SACQ9GPzwYjt6g==
+X-CSE-MsgGUID: oepbO8gYQkOGh9NsMJogHg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11645"; a="90594744"
 X-IronPort-AV: E=Sophos;i="6.21,156,1763452800"; 
-   d="scan'208";a="90594751"
+   d="scan'208";a="90594744"
 Received: from fmviesa002.fm.intel.com ([10.60.135.142])
   by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Dec 2025 09:21:35 -0800
-X-CSE-ConnectionGUID: 5o6Gkz4eQT6cM0NDlerFIQ==
-X-CSE-MsgGUID: DoATwRO/Snu/GslwrU8fiw==
+X-CSE-ConnectionGUID: W0IFXIVZQ6C8rBCkEfTCvg==
+X-CSE-MsgGUID: p0/XDBchTVSy/WkAXtyYqQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.21,156,1763452800"; 
-   d="scan'208";a="221748221"
+   d="scan'208";a="221748218"
 Received: from pgcooper-mobl3.ger.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.223.131])
   by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Dec 2025 09:21:34 -0800
 From: Tony Luck <tony.luck@intel.com>
@@ -57,9 +57,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v17 17/32] x86,fs/resctrl: Fill in details of events for guid 0x26696143 and 0x26557651
-Date: Wed, 17 Dec 2025 09:21:04 -0800
-Message-ID: <20251217172121.12030-18-tony.luck@intel.com>
+Subject: [PATCH v17 16/32] x86/resctrl: Discover hardware telemetry events
+Date: Wed, 17 Dec 2025 09:21:03 -0800
+Message-ID: <20251217172121.12030-17-tony.luck@intel.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251217172121.12030-1-tony.luck@intel.com>
 References: <20251217172121.12030-1-tony.luck@intel.com>
@@ -71,223 +71,266 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The telemetry event aggregators of the Intel Clearwater Forest CPU support
-two RMID-based feature types: "energy" with guid 0x26696143 [1], and "perf"
-with guid 0x26557651 [2].
+Each CPU collects data for telemetry events that it sends to the nearest
+telemetry event aggregator either when the value of MSR_IA32_PQR_ASSOC.RMID
+changes, or when a two millisecond timer expires.
 
-The event counter offsets in an aggregator's MMIO space are arranged in
-groups for each RMID.
+There is a feature type ("energy" or "perf"), guid, and MMIO region associated
+with each aggregator. This combination links to an XML description of the
+set of telemetry events tracked by the aggregator. XML files are published
+by Intel in a GitHub repository [1].
 
-E.g the "energy" counters for guid 0x26696143 are arranged like this:
+The telemetry event aggregators maintain per-RMID per-event counts of the
+total seen for all the CPUs. There may be multiple telemetry event aggregators
+per package.
 
-        MMIO offset:0x0000 Counter for RMID 0 PMT_EVENT_ENERGY
-        MMIO offset:0x0008 Counter for RMID 0 PMT_EVENT_ACTIVITY
-        MMIO offset:0x0010 Counter for RMID 1 PMT_EVENT_ENERGY
-        MMIO offset:0x0018 Counter for RMID 1 PMT_EVENT_ACTIVITY
-        ...
-        MMIO offset:0x23F0 Counter for RMID 575 PMT_EVENT_ENERGY
-        MMIO offset:0x23F8 Counter for RMID 575 PMT_EVENT_ACTIVITY
+There are separate sets of aggregators for each feature type. Aggregators
+in a set may have different guids. All aggregators with the same feature
+type and guid are symmetric keeping counts for the same set of events for
+the CPUs that provide data to them.
 
-After all counters there are three status registers that provide indications
-of how many times an aggregator was unable to process event counts, the time
-stamp for the most recent loss of data, and the time stamp of the most recent
-successful update.
+The XML file for each aggregator provides the following information:
+0) Feature type of the events ("perf" or "energy")
+1) Which telemetry events are tracked by the aggregator.
+2) The order in which the event counters appear for each RMID.
+3) The value type of each event counter (integer or fixed-point).
+4) The number of RMIDs supported.
+5) Which additional aggregator status registers are included.
+6) The total size of the MMIO region for an aggregator.
 
-	MMIO offset:0x2400 AGG_DATA_LOSS_COUNT
-	MMIO offset:0x2408 AGG_DATA_LOSS_TIMESTAMP
-	MMIO offset:0x2410 LAST_UPDATE_TIMESTAMP
+Introduce struct event_group that condenses the relevant information from
+an XML file. Hereafter an "event group" refers to a group of events of a
+particular feature type (event_group::pfname set to "energy" or "perf") with
+a particular guid.
 
-Define event_group structures for both of these aggregator types and define the
-events tracked by the aggregators in the file system code.
+Use event_group::pfname to determine the feature id needed to obtain the
+aggregator details. It will later be used in console messages and with the
+rdt= boot parameter.
 
-PMT_EVENT_ENERGY and PMT_EVENT_ACTIVITY are produced in fixed point
-format. File system code must output as floating point values.
+The INTEL_PMT_TELEMETRY driver enumerates support for telemetry events.
+This driver provides intel_pmt_get_regions_by_feature() to list all available
+telemetry event aggregators of a given feature type. The list includes the
+"guid", the base address in MMIO space for the region where the event counters
+are exposed, and the package id where the all the CPUs that report to this
+aggregator are located.
+
+Call INTEL_PMT_TELEMETRY's intel_pmt_get_regions_by_feature() for each event
+group to obtain a private copy of that event group's aggregator data. Duplicate
+the aggregator data between event groups that have the same feature type
+but different guid. Further processing on this private copy will be unique
+to the event group.
+
+Return the aggregator data to INTEL_PMT_TELEMETRY at resctrl exit time.
+
+resctrl will silently ignore unknown guid values.
+
+Add a new Kconfig option CONFIG_X86_CPU_RESCTRL_INTEL_AET for the Intel specific
+parts of telemetry code. This depends on the INTEL_PMT_TELEMETRY and INTEL_TPMI
+drivers being built-in to the kernel for enumeration of telemetry features.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
+Link: https://github.com/intel/Intel-PMT # [1]
 Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-Link: https://github.com/intel/Intel-PMT/blob/main/xml/CWF/OOBMSM/RMID-ENERGY/cwf_aggregator.xml # [1]
-Link: https://github.com/intel/Intel-PMT/blob/main/xml/CWF/OOBMSM/RMID-PERF/cwf_aggregator.xml # [2]
 ---
- include/linux/resctrl_types.h           | 11 +++++
- arch/x86/kernel/cpu/resctrl/intel_aet.c | 66 +++++++++++++++++++++++++
- fs/resctrl/monitor.c                    | 35 +++++++------
- 3 files changed, 97 insertions(+), 15 deletions(-)
+ arch/x86/kernel/cpu/resctrl/internal.h  |   8 ++
+ arch/x86/kernel/cpu/resctrl/core.c      |   5 ++
+ arch/x86/kernel/cpu/resctrl/intel_aet.c | 109 ++++++++++++++++++++++++
+ arch/x86/Kconfig                        |  13 +++
+ arch/x86/kernel/cpu/resctrl/Makefile    |   1 +
+ 5 files changed, 136 insertions(+)
+ create mode 100644 arch/x86/kernel/cpu/resctrl/intel_aet.c
 
-diff --git a/include/linux/resctrl_types.h b/include/linux/resctrl_types.h
-index acfe07860b34..a5f56faa18d2 100644
---- a/include/linux/resctrl_types.h
-+++ b/include/linux/resctrl_types.h
-@@ -50,6 +50,17 @@ enum resctrl_event_id {
- 	QOS_L3_MBM_TOTAL_EVENT_ID	= 0x02,
- 	QOS_L3_MBM_LOCAL_EVENT_ID	= 0x03,
+diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
+index 11d06995810e..f2e6e3577df0 100644
+--- a/arch/x86/kernel/cpu/resctrl/internal.h
++++ b/arch/x86/kernel/cpu/resctrl/internal.h
+@@ -222,4 +222,12 @@ void __init intel_rdt_mbm_apply_quirk(void);
+ void rdt_domain_reconfigure_cdp(struct rdt_resource *r);
+ void resctrl_arch_mbm_cntr_assign_set_one(struct rdt_resource *r);
  
-+	/* Intel Telemetry Events */
-+	PMT_EVENT_ENERGY,
-+	PMT_EVENT_ACTIVITY,
-+	PMT_EVENT_STALLS_LLC_HIT,
-+	PMT_EVENT_C1_RES,
-+	PMT_EVENT_UNHALTED_CORE_CYCLES,
-+	PMT_EVENT_STALLS_LLC_MISS,
-+	PMT_EVENT_AUTO_C6_RES,
-+	PMT_EVENT_UNHALTED_REF_CYCLES,
-+	PMT_EVENT_UOPS_RETIRED,
++#ifdef CONFIG_X86_CPU_RESCTRL_INTEL_AET
++bool intel_aet_get_events(void);
++void __exit intel_aet_exit(void);
++#else
++static inline bool intel_aet_get_events(void) { return false; }
++static inline void __exit intel_aet_exit(void) { }
++#endif
 +
- 	/* Must be the last */
- 	QOS_NUM_EVENTS,
- };
-diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-index 6e0d063cfc80..c7d08eb26395 100644
---- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
-+++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-@@ -11,15 +11,33 @@
+ #endif /* _ASM_X86_RESCTRL_INTERNAL_H */
+diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+index 986b1303efb9..88be77d5d20d 100644
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -743,6 +743,9 @@ void resctrl_arch_pre_mount(void)
  
- #define pr_fmt(fmt)   "resctrl: " fmt
- 
-+#include <linux/compiler_types.h>
- #include <linux/err.h>
- #include <linux/init.h>
- #include <linux/intel_pmt_features.h>
- #include <linux/intel_vsec.h>
- #include <linux/resctrl.h>
-+#include <linux/resctrl_types.h>
- #include <linux/stddef.h>
-+#include <linux/types.h>
- 
- #include "internal.h"
- 
-+/**
-+ * struct pmt_event - Telemetry event.
-+ * @id:		Resctrl event id.
-+ * @idx:	Counter index within each per-RMID block of counters.
-+ * @bin_bits:	Zero for integer valued events, else number bits in fraction
-+ *		part of fixed-point.
-+ */
-+struct pmt_event {
-+	enum resctrl_event_id	id;
-+	unsigned int		idx;
-+	unsigned int		bin_bits;
-+};
+ 	if (!atomic_try_cmpxchg(&only_once, &old, 1))
+ 		return;
 +
-+#define EVT(_id, _idx, _bits) { .id = _id, .idx = _idx, .bin_bits = _bits }
-+
- /**
-  * struct event_group - Events with the same feature type ("energy" or "perf") and guid.
-  * @pfname:		PMT feature name ("energy" or "perf") of this event group.
-@@ -29,14 +47,62 @@
-  *			data for all telemetry regions of type @pfname.
-  *			Valid if the system supports the event group,
-  *			NULL otherwise.
-+ * @guid:		Unique number per XML description file.
-+ * @mmio_size:		Number of bytes of MMIO registers for this group.
-+ * @num_events:		Number of events in this group.
-+ * @evts:		Array of event descriptors.
-  */
- struct event_group {
- 	/* Data fields for additional structures to manage this group. */
- 	const char			*pfname;
- 	struct pmt_feature_group	*pfg;
-+
-+	/* Remaining fields initialized from XML file. */
-+	u32				guid;
-+	size_t				mmio_size;
-+	unsigned int			num_events;
-+	struct pmt_event		evts[] __counted_by(num_events);
-+};
-+
-+#define XML_MMIO_SIZE(num_rmids, num_events, num_extra_status) \
-+		      (((num_rmids) * (num_events) + (num_extra_status)) * sizeof(u64))
-+
-+/*
-+ * Link: https://github.com/intel/Intel-PMT/blob/main/xml/CWF/OOBMSM/RMID-ENERGY/cwf_aggregator.xml
-+ */
-+static struct event_group energy_0x26696143 = {
-+	.pfname		= "energy",
-+	.guid		= 0x26696143,
-+	.mmio_size	= XML_MMIO_SIZE(576, 2, 3),
-+	.num_events	= 2,
-+	.evts		= {
-+		EVT(PMT_EVENT_ENERGY, 0, 18),
-+		EVT(PMT_EVENT_ACTIVITY, 1, 18),
-+	}
-+};
-+
-+/*
-+ * Link: https://github.com/intel/Intel-PMT/blob/main/xml/CWF/OOBMSM/RMID-PERF/cwf_aggregator.xml
-+ */
-+static struct event_group perf_0x26557651 = {
-+	.pfname		= "perf",
-+	.guid		= 0x26557651,
-+	.mmio_size	= XML_MMIO_SIZE(576, 7, 3),
-+	.num_events	= 7,
-+	.evts		= {
-+		EVT(PMT_EVENT_STALLS_LLC_HIT, 0, 0),
-+		EVT(PMT_EVENT_C1_RES, 1, 0),
-+		EVT(PMT_EVENT_UNHALTED_CORE_CYCLES, 2, 0),
-+		EVT(PMT_EVENT_STALLS_LLC_MISS, 3, 0),
-+		EVT(PMT_EVENT_AUTO_C6_RES, 4, 0),
-+		EVT(PMT_EVENT_UNHALTED_REF_CYCLES, 5, 0),
-+		EVT(PMT_EVENT_UOPS_RETIRED, 6, 0),
-+	}
- };
- 
- static struct event_group *known_event_groups[] = {
-+	&energy_0x26696143,
-+	&perf_0x26557651,
- };
- 
- #define for_each_event_group(_peg)						\
-diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
-index 844cf6875f60..9729acacdc19 100644
---- a/fs/resctrl/monitor.c
-+++ b/fs/resctrl/monitor.c
-@@ -965,27 +965,32 @@ static void dom_data_exit(struct rdt_resource *r)
- 	mutex_unlock(&rdtgroup_mutex);
++	if (!intel_aet_get_events())
++		return;
  }
  
-+#define MON_EVENT(_eventid, _name, _res, _fp)	\
-+	[_eventid] = {				\
-+	.name			= _name,	\
-+	.evtid			= _eventid,	\
-+	.rid			= _res,		\
-+	.is_floating_point	= _fp,		\
+ enum {
+@@ -1104,6 +1107,8 @@ late_initcall(resctrl_arch_late_init);
+ 
+ static void __exit resctrl_arch_exit(void)
+ {
++	intel_aet_exit();
++
+ 	cpuhp_remove_state(rdt_online);
+ 
+ 	resctrl_exit();
+diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
+new file mode 100644
+index 000000000000..6e0d063cfc80
+--- /dev/null
++++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
+@@ -0,0 +1,109 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * Resource Director Technology(RDT)
++ * - Intel Application Energy Telemetry
++ *
++ * Copyright (C) 2025 Intel Corporation
++ *
++ * Author:
++ *    Tony Luck <tony.luck@intel.com>
++ */
++
++#define pr_fmt(fmt)   "resctrl: " fmt
++
++#include <linux/err.h>
++#include <linux/init.h>
++#include <linux/intel_pmt_features.h>
++#include <linux/intel_vsec.h>
++#include <linux/resctrl.h>
++#include <linux/stddef.h>
++
++#include "internal.h"
++
++/**
++ * struct event_group - Events with the same feature type ("energy" or "perf") and guid.
++ * @pfname:		PMT feature name ("energy" or "perf") of this event group.
++ * @pfg:		Points to the aggregated telemetry space information
++ *			returned by the intel_pmt_get_regions_by_feature()
++ *			call to the INTEL_PMT_TELEMETRY driver that contains
++ *			data for all telemetry regions of type @pfname.
++ *			Valid if the system supports the event group,
++ *			NULL otherwise.
++ */
++struct event_group {
++	/* Data fields for additional structures to manage this group. */
++	const char			*pfname;
++	struct pmt_feature_group	*pfg;
++};
++
++static struct event_group *known_event_groups[] = {
++};
++
++#define for_each_event_group(_peg)						\
++	for (_peg = known_event_groups;						\
++	     _peg < &known_event_groups[ARRAY_SIZE(known_event_groups)];	\
++	     _peg++)
++
++/* Stub for now */
++static bool enable_events(struct event_group *e, struct pmt_feature_group *p)
++{
++	return false;
 +}
 +
- /*
-  * All available events. Architecture code marks the ones that
-  * are supported by a system using resctrl_enable_mon_event()
-  * to set .enabled.
-  */
- struct mon_evt mon_event_all[QOS_NUM_EVENTS] = {
--	[QOS_L3_OCCUP_EVENT_ID] = {
--		.name	= "llc_occupancy",
--		.evtid	= QOS_L3_OCCUP_EVENT_ID,
--		.rid	= RDT_RESOURCE_L3,
--	},
--	[QOS_L3_MBM_TOTAL_EVENT_ID] = {
--		.name	= "mbm_total_bytes",
--		.evtid	= QOS_L3_MBM_TOTAL_EVENT_ID,
--		.rid	= RDT_RESOURCE_L3,
--	},
--	[QOS_L3_MBM_LOCAL_EVENT_ID] = {
--		.name	= "mbm_local_bytes",
--		.evtid	= QOS_L3_MBM_LOCAL_EVENT_ID,
--		.rid	= RDT_RESOURCE_L3,
--	},
-+	MON_EVENT(QOS_L3_OCCUP_EVENT_ID,		"llc_occupancy",	RDT_RESOURCE_L3,	false),
-+	MON_EVENT(QOS_L3_MBM_TOTAL_EVENT_ID,		"mbm_total_bytes",	RDT_RESOURCE_L3,	false),
-+	MON_EVENT(QOS_L3_MBM_LOCAL_EVENT_ID,		"mbm_local_bytes",	RDT_RESOURCE_L3,	false),
-+	MON_EVENT(PMT_EVENT_ENERGY,			"core_energy",		RDT_RESOURCE_PERF_PKG,	true),
-+	MON_EVENT(PMT_EVENT_ACTIVITY,			"activity",		RDT_RESOURCE_PERF_PKG,	true),
-+	MON_EVENT(PMT_EVENT_STALLS_LLC_HIT,		"stalls_llc_hit",	RDT_RESOURCE_PERF_PKG,	false),
-+	MON_EVENT(PMT_EVENT_C1_RES,			"c1_res",		RDT_RESOURCE_PERF_PKG,	false),
-+	MON_EVENT(PMT_EVENT_UNHALTED_CORE_CYCLES,	"unhalted_core_cycles",	RDT_RESOURCE_PERF_PKG,	false),
-+	MON_EVENT(PMT_EVENT_STALLS_LLC_MISS,		"stalls_llc_miss",	RDT_RESOURCE_PERF_PKG,	false),
-+	MON_EVENT(PMT_EVENT_AUTO_C6_RES,		"c6_res",		RDT_RESOURCE_PERF_PKG,	false),
-+	MON_EVENT(PMT_EVENT_UNHALTED_REF_CYCLES,	"unhalted_ref_cycles",	RDT_RESOURCE_PERF_PKG,	false),
-+	MON_EVENT(PMT_EVENT_UOPS_RETIRED,		"uops_retired",		RDT_RESOURCE_PERF_PKG,	false),
- };
++static enum pmt_feature_id lookup_pfid(const char *pfname)
++{
++	if (!strcmp(pfname, "energy"))
++		return FEATURE_PER_RMID_ENERGY_TELEM;
++	else if (!strcmp(pfname, "perf"))
++		return FEATURE_PER_RMID_PERF_TELEM;
++
++	pr_warn("Unknown PMT feature name '%s'\n", pfname);
++
++	return FEATURE_INVALID;
++}
++
++/*
++ * Request a copy of struct pmt_feature_group for each event group. If there is
++ * one, the returned structure has an array of telemetry_region structures,
++ * each element of the array describes one telemetry aggregator. The
++ * telemetry aggregators may have different guids so obtain duplicate struct
++ * pmt_feature_group for event groups with same feature type but different
++ * guid. Post-processing ensures an event group can only use the telemetry
++ * aggregators that match its guid. An event group keeps a pointer to its
++ * struct pmt_feature_group to indicate that its events are successfully
++ * enabled.
++ */
++bool intel_aet_get_events(void)
++{
++	struct pmt_feature_group *p;
++	enum pmt_feature_id pfid;
++	struct event_group **peg;
++	bool ret = false;
++
++	for_each_event_group(peg) {
++		pfid = lookup_pfid((*peg)->pfname);
++		p = intel_pmt_get_regions_by_feature(pfid);
++		if (IS_ERR_OR_NULL(p))
++			continue;
++		if (enable_events(*peg, p)) {
++			(*peg)->pfg = p;
++			ret = true;
++		} else {
++			intel_pmt_put_feature_group(p);
++		}
++	}
++
++	return ret;
++}
++
++void __exit intel_aet_exit(void)
++{
++	struct event_group **peg;
++
++	for_each_event_group(peg) {
++		if ((*peg)->pfg) {
++			intel_pmt_put_feature_group((*peg)->pfg);
++			(*peg)->pfg = NULL;
++		}
++	}
++}
+diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
+index 80527299f859..0d874a92daed 100644
+--- a/arch/x86/Kconfig
++++ b/arch/x86/Kconfig
+@@ -540,6 +540,19 @@ config X86_CPU_RESCTRL
  
- void resctrl_enable_mon_event(enum resctrl_event_id eventid, bool any_cpu, unsigned int binary_bits)
+ 	  Say N if unsure.
+ 
++config X86_CPU_RESCTRL_INTEL_AET
++	bool "Intel Application Energy Telemetry"
++	depends on X86_CPU_RESCTRL && CPU_SUP_INTEL && INTEL_PMT_TELEMETRY=y && INTEL_TPMI=y
++	help
++	  Enable per-RMID telemetry events in resctrl.
++
++	  Intel feature that collects per-RMID execution data
++	  about energy consumption, measure of frequency independent
++	  activity and other performance metrics. Data is aggregated
++	  per package.
++
++	  Say N if unsure.
++
+ config X86_FRED
+ 	bool "Flexible Return and Event Delivery"
+ 	depends on X86_64
+diff --git a/arch/x86/kernel/cpu/resctrl/Makefile b/arch/x86/kernel/cpu/resctrl/Makefile
+index d8a04b195da2..273ddfa30836 100644
+--- a/arch/x86/kernel/cpu/resctrl/Makefile
++++ b/arch/x86/kernel/cpu/resctrl/Makefile
+@@ -1,6 +1,7 @@
+ # SPDX-License-Identifier: GPL-2.0
+ obj-$(CONFIG_X86_CPU_RESCTRL)		+= core.o rdtgroup.o monitor.o
+ obj-$(CONFIG_X86_CPU_RESCTRL)		+= ctrlmondata.o
++obj-$(CONFIG_X86_CPU_RESCTRL_INTEL_AET)	+= intel_aet.o
+ obj-$(CONFIG_RESCTRL_FS_PSEUDO_LOCK)	+= pseudo_lock.o
+ 
+ # To allow define_trace.h's recursive include:
 -- 
 2.52.0
 
