@@ -1,93 +1,205 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03ADA328617;
-	Wed, 17 Dec 2025 09:36:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C51A2BEFFB;
+	Wed, 17 Dec 2025 09:42:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765964203; cv=none; b=SfLzlZJ1c6XyC/KDGMNxzNim8DPQLs/njq+5YVm3hM70N3jwlN/F6/Vx2iVKfq2K5NFcIuwCPIrPea/H+lRPYcBRyYxowjobBlLtuinwclnjLseAgieZEdFGiEVNgtwT3LVHA9udzuH0CnS3erSrL6iTtPxjNqZlLC9e1gLMPy4=
+	t=1765964578; cv=none; b=tgmTXLIZbrFUSyF8Y3Eqm2g/sdO9Tn9S9RmZBGY8+Fj+exWwgmH4/np5nawiBN7FM2j9i+t2474HezLjPkE9Jkn5+T37iHKnY41wUU3OaaFVxJspFZeOUm6VwxdJ49QIwefTYAGdM/4xWixKk+1CoZ/Sm6kp/mleEyUpRRyKQBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765964203; c=relaxed/simple;
-	bh=Wyh7lCOHXtqEwjyPfQhU0ee7Yb5w1waZAnxgxQlNZrQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TDHOcxSTLSXpsGgUuykmiQ5H2dKwK/ddy3UCSm+V6eNB2T1J6JK/yBP69GmB/XOLg4Xe/qpXnfcPR5wZA62AypcKBXtu6FGQ+GTa5/Uly6RH4HoyJzdhUg/UNwaxWQPpN+xTRA3SFbovu6zXG54Xuv914/vTM96B2O2posiUgc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KAAu6qoO; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1765964578; c=relaxed/simple;
+	bh=STrvD8J20okz2S7mubYnGdCz/fGgovpVdE6Vgo0vRGE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jkkr5yjXulhAjzByrFPxbm8QgwSx5O3DJKZTfJviKXJY1/b+du+Dp4R04OIpgm6w4MVV9r6Adpo6d/8b8/CDjoWFG2qkkDzCT0xP72PfnwDXtieCeQ+mnPn1mJDnCYvuhTf8Jktuw1azU+dF85CiKauAYxfpuOntDFY/KPv/B9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bjBlE7VC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KAAu6qoO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6C1DC4CEF5;
-	Wed, 17 Dec 2025 09:36:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765964202;
-	bh=Wyh7lCOHXtqEwjyPfQhU0ee7Yb5w1waZAnxgxQlNZrQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=KAAu6qoOHLDeOltGzDvnDiWnu3cbtkEMVXt0DQm4MUDzVn3vL/Np6wqP6WLn43kgo
-	 ypksFQgQbYF2Q8Ic2QPMPRcakOaMA1SAvA8Rt4WBJ4u+KBT7NE9nbUfmNZPfIAaNzB
-	 tTrKD+j/Lxc0vY9CyCW48s4DfhmeopM5yS+dRT2I=
-Date: Wed, 17 Dec 2025 10:36:39 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Ronald Warsow <rwarsow@gmx.de>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, conor@kernel.org, hargar@microsoft.com,
-	broonie@kernel.org, achill@achill.org, sr@sladewatkins.com
-Subject: Re: [PATCH 6.18 000/614] 6.18.2-rc1 review
-Message-ID: <2025121708-chunk-sasquatch-284c@gregkh>
-References: <20251216111401.280873349@linuxfoundation.org>
- <1056aea9-1977-440e-9ad3-8a0b8b746288@gmx.de>
- <2025121714-gory-cornhusk-eb87@gregkh>
- <b72d4821-d3e6-4b29-96c8-6acb1fc916a8@gmx.de>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bjBlE7VC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 712F2C4CEF5;
+	Wed, 17 Dec 2025 09:42:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1765964577;
+	bh=STrvD8J20okz2S7mubYnGdCz/fGgovpVdE6Vgo0vRGE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=bjBlE7VC13WaxmgfK1sXplA0B0M58TxJsjS7FsDyGh7qs5CTI3BDmtTD32MQG0Eni
+	 29UqNJGJi3HaDfM2m5MKxPIcEfby+haJgIINX+VuMxqji2FoTC4Yyj3LEEP2WMhJnG
+	 pRPJyBKvVnvlzYO+EUlkaux9QKUMw/zoYJySZyGBHNmY/mAC6fI89IRTld46L2VRNM
+	 7jWIsxrtNYl68VA+6auB/n2Ah1/LzXyqDQPKWzERD9Xt9Hmpf+XYuuAjh5F1PET9u0
+	 ve+MZ7u3X+xN+c7iKvgv4JLDcs1YPfqi1tkcdIOuFy1jiZ8DZg8pZ1MnUFUp15Goj6
+	 n4wmUAAw43D+Q==
+Message-ID: <25751506-e4df-4ae3-9ea8-4b2800146ba2@kernel.org>
+Date: Wed, 17 Dec 2025 10:42:54 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b72d4821-d3e6-4b29-96c8-6acb1fc916a8@gmx.de>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.18 215/614] perf annotate: Fix build with NO_SLANG=1
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Tianyou Li <tianyou.li@intel.com>,
+ Namhyung Kim <namhyung@kernel.org>, Sasha Levin <sashal@kernel.org>
+References: <20251216111401.280873349@linuxfoundation.org>
+ <20251216111409.165603959@linuxfoundation.org>
+Content-Language: en-US
+From: Jiri Slaby <jirislaby@kernel.org>
+Autocrypt: addr=jirislaby@kernel.org; keydata=
+ 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
+In-Reply-To: <20251216111409.165603959@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed, Dec 17, 2025 at 09:27:49AM +0100, Ronald Warsow wrote:
-> On 17.12.25 06:47, Greg Kroah-Hartman wrote:
-> > On Tue, Dec 16, 2025 at 05:06:56PM +0100, Ronald Warsow wrote:
-> > > Hi
-> > > 
-> > > no regressions here on x86_64 (RKL, Intel 11th Gen. CPU), but *only* when
-> > > running GPU driver i915.
-> > > 
-> > > with GPU driver xe I get here:
-> > > 
-> > > [   14.391631] rfkill: input handler disabled
-> > > [   14.787149] ------------[ cut here ]------------
-> > > [   14.787153] refcount_t: underflow; use-after-free.
-> > > [   14.787167] WARNING: CPU: 10 PID: 2463 at lib/refcount.c:28
+On 16. 12. 25, 12:09, Greg Kroah-Hartman wrote:
+> 6.18-stable review patch.  If anyone has any objections, please let me know.
 > 
-> ....
+> ------------------
 > 
-> > > ====
-> > > 
-> > > If I did the bisect correct, bisect-log:
-> > > 
-> > > # status: waiting for both good and bad commits
-> > > # good: [25442251cbda7590d87d8203a8dc1ddf2c93de61] Linux 6.18.1
-> > > git bisect good 25442251cbda7590d87d8203a8dc1ddf2c93de61
-> > > # status: waiting for bad commit, 1 good commit known
-> > > # bad: [103c79e44ce7c81882928abab98b96517a8bce88] Linux 6.18.2-rc1
-> > > git bisect bad 103c79e44ce7c81882928abab98b96517a8bce88
-> > > # bad: [d32e7ccac8c6afc6a3a46fa4e7cdf0568ee919bd] drm/msm: Fix NULL pointer
-> > > dereference in crashstate_get_vm_logs()
-> > > git bisect bad d32e7ccac8c6afc6a3a46fa4e7cdf0568ee919bd
-> > 
-> > Is this also an issue with 6.19-rc1?  Are we missing something here?
-> > 
-> 6.19-rc1 is okay here
+> From: Namhyung Kim <namhyung@kernel.org>
+> 
+> [ Upstream commit 0e6c07a3c30cdc4509fc5e7dc490d4cc6e5c241a ]
+> 
+> The recent change for perf c2c annotate broke build without slang
+> support like below.
+> 
+>    builtin-annotate.c: In function 'hists__find_annotations':
+>    builtin-annotate.c:522:73: error: 'NO_ADDR' undeclared (first use in this function); did you mean 'NR_ADDR'?
+>      522 |                         key = hist_entry__tui_annotate(he, evsel, NULL, NO_ADDR);
+>          |                                                                         ^~~~~~~
+>          |                                                                         NR_ADDR
+>    builtin-annotate.c:522:73: note: each undeclared identifier is reported only once for each function it appears in
+> 
+>    builtin-annotate.c:522:31: error: too many arguments to function 'hist_entry__tui_annotate'
+>      522 |                         key = hist_entry__tui_annotate(he, evsel, NULL, NO_ADDR);
+>          |                               ^~~~~~~~~~~~~~~~~~~~~~~~
+>    In file included from util/sort.h:6,
+>                     from builtin-annotate.c:28:
+>    util/hist.h:756:19: note: declared here
+>      756 | static inline int hist_entry__tui_annotate(struct hist_entry *he __maybe_unused,
+>          |                   ^~~~~~~~~~~~~~~~~~~~~~~~
+> 
+> And I noticed that it missed to update the other side of #ifdef
+> HAVE_SLANG_SUPPORT.  Let's fix it.
+> 
+> Cc: Tianyou Li <tianyou.li@intel.com>
+> Fixes: cd3466cd2639783d ("perf c2c: Add annotation support to perf c2c report")
 
-Odd, as you aren't even running the driver that this commit points to,
-right?  You shouldn't be building it, so why does this show up as the
-"bad" commit id?
+That fixes line ^^^ appears to be wrong, as now I see:
+builtin-annotate.c: In function ‘hists__find_annotations’:
+builtin-annotate.c:522:10: error: too few arguments to function 
+‘hist_entry__tui_annotate’
+     key = hist_entry__tui_annotate(he, evsel, NULL);
+           ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from util/sort.h:6:0,
+                  from builtin-annotate.c:28:
+util/hist.h:757:19: note: declared here
+  static inline int hist_entry__tui_annotate(struct hist_entry *he 
+__maybe_unused,
+                    ^~~~~~~~~~~~~~~~~~~~~~~~
 
-totally confused,
 
-greg k-h
+
+
+Because in util/hist.h, we now have:
+int hist_entry__tui_annotate(struct hist_entry *he, struct evsel *evsel,
+                              struct hist_browser_timer *hbt);
+...
+static inline int hist_entry__tui_annotate(struct hist_entry *he 
+__maybe_unused,
+                                            struct evsel *evsel 
+__maybe_unused,
+                                            struct hist_browser_timer 
+*hbt __maybe_unused,
+                                            u64 al_addr __maybe_unused)
+{
+         return 0;
+}
+
+
+
+Was it meant to be
+Fixes: ad83f3b7155d perf c2c annotate: Start from the contention line
+?
+
+> Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>   tools/perf/util/hist.h | 8 ++++++--
+>   1 file changed, 6 insertions(+), 2 deletions(-)
+> 
+> diff --git a/tools/perf/util/hist.h b/tools/perf/util/hist.h
+> index c64005278687c..a4f244a046866 100644
+> --- a/tools/perf/util/hist.h
+> +++ b/tools/perf/util/hist.h
+> @@ -709,6 +709,8 @@ struct block_hist {
+>   	struct hist_entry	he;
+>   };
+>   
+> +#define NO_ADDR 0
+> +
+>   #ifdef HAVE_SLANG_SUPPORT
+>   #include "../ui/keysyms.h"
+>   void attr_to_script(char *buf, struct perf_event_attr *attr);
+> @@ -746,14 +748,16 @@ int evlist__tui_browse_hists(struct evlist *evlist __maybe_unused,
+>   static inline int __hist_entry__tui_annotate(struct hist_entry *he __maybe_unused,
+>   					     struct map_symbol *ms __maybe_unused,
+>   					     struct evsel *evsel __maybe_unused,
+> -					     struct hist_browser_timer *hbt __maybe_unused)
+> +					     struct hist_browser_timer *hbt __maybe_unused,
+> +					     u64 al_addr __maybe_unused)
+>   {
+>   	return 0;
+>   }
+>   
+>   static inline int hist_entry__tui_annotate(struct hist_entry *he __maybe_unused,
+>   					   struct evsel *evsel __maybe_unused,
+> -					   struct hist_browser_timer *hbt __maybe_unused)
+> +					   struct hist_browser_timer *hbt __maybe_unused,
+> +					   u64 al_addr __maybe_unused)
+>   {
+>   	return 0;
+>   }
+
+-- 
+js
+suse labs
+
