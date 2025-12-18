@@ -1,64 +1,97 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771F4339710;
-	Thu, 18 Dec 2025 12:57:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14C0263C8C;
+	Thu, 18 Dec 2025 17:52:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766062642; cv=none; b=tHSUysSHgkiIGCPVB6H32Adxy4n5cS4TQzb4PaBpd1JsR0+i+0IZR1Bnv6STSWxwbhHU6hkZxKrI6Ql7Yf83M7lIrLn4YN6gMBccgNs4TOCnwmiqdihb8h94SpD6METX6+6Cv7IanIWA0TDTdsJjmd1snilQDNLHnFAH02xI1tg=
+	t=1766080345; cv=none; b=ivAAWhSqHi8UQq/Aw2zbzitiQwtEV11h44Jf9T/DgwNRb4souhQsj0LAracV4P23jbyBS8j4+tIvg64PRUtLOCWl9EjAAXEcte+7bi7ik+tfPgdc/HgJQ8WF2eIt5rDpxAhK8mZ8hHsdSEygWmDLtEKJSWbRIiZ9SfN9e2YRd6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766062642; c=relaxed/simple;
-	bh=hnUYg1kyjZ/p73J0U3xmjMnitlshlxvaJXxPx7sPdB0=;
+	s=arc-20240116; t=1766080345; c=relaxed/simple;
+	bh=GjRj8GD9Ct5gFbZm6q4oGHIUirMQ9WFABQyjT5hk/8c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gLKxcxTZkjjREuwNm2Ez7lGEsomIfLe6hXkB6JqXfynnY/9cIB0KjXWB6CK8C6J4ybVZbWIgaXkRBXN7lb715M1DHtN5jLQNwZ6nF1bDk80xRgdaEJjgbKbUG62NpDT7KwlbKqWw79vI75qPnmpW6Asee1f103UjP0nxh4q0b+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oNvA5ZEh; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=cdn29/CG6HPedVn++6OkqG/gSHJgs902f/vQvJvpSlB2gMiQlun04zvKLpz0x2lJ9BrRKNxM2RV9/t/6zQbcIfxpIfAUAHZPDXjtI1uSrjCyjaAE1PkKgEtp2CCU79PcylDnY7RvmMfB9z4y1jmiETc4ovYjL+4rBWE+OQqYP6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kQBQJgmT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oNvA5ZEh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A563DC19421;
-	Thu, 18 Dec 2025 12:57:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1766062642;
-	bh=hnUYg1kyjZ/p73J0U3xmjMnitlshlxvaJXxPx7sPdB0=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kQBQJgmT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4A5CC4CEFB;
+	Thu, 18 Dec 2025 17:52:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1766080345;
+	bh=GjRj8GD9Ct5gFbZm6q4oGHIUirMQ9WFABQyjT5hk/8c=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=oNvA5ZEhAAdjuKHLJgTknwH+sjQrgydH+YvTxtkdyuXZ0uiss7dpmy4DNmgHRag9J
-	 j1MILBiG5Jn3btPOZYdyBIjEwgR7iAp6i4msBT2qsoBA9tZGGdv7juMjeWHG6O+ptt
-	 9EY8HFbh5V9IBQ7Ko+U6O5HiJCG5cSjZt1FNH+5A=
-Date: Thu, 18 Dec 2025 13:57:18 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Michael Kelley <mhklinux@outlook.com>
-Cc: "stable@vger.kernel.org" <stable@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	Tianyu Lan <tiala@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.17 248/507] Drivers: hv: Allocate encrypted buffers
- when requested
-Message-ID: <2025121811-theft-skillful-e47f@gregkh>
-References: <20251216111345.522190956@linuxfoundation.org>
- <20251216111354.479243388@linuxfoundation.org>
- <SN6PR02MB4157D6A6FF1F5037FAB1EE05D4AAA@SN6PR02MB4157.namprd02.prod.outlook.com>
+	b=kQBQJgmT/Mx2fvuJyG1dgT7PQ50moCTuiJkwykU7l8MLHoPXdfihZLmS7XhlBUaEd
+	 pcvXsvoBILIBD5Z+/ASRm8/wS7Xd+mpju6+XGKxzF+q7u56r6L/DMeVSL9Llo0OlAD
+	 FcylYfoziAht4aFfWGZmXJ3ZyTb3B4HFfTxvH9JbYKdsZUR3c+QgLO36UKBakR63mA
+	 cu1NeU/u3Qb7ViYyKS5atFmFttLWirxWiCet5sU4FBy4UH5lFikkwlekDfetRVwgZQ
+	 pKvEA5u/QJMnPnw6KwmC0OxoWP6MZWWMLEl2fBNRUMi/f9LEkylzxXhEtgbWTH/CHk
+	 QU9gjKcD220HA==
+Date: Thu, 18 Dec 2025 12:52:23 -0500
+From: Sasha Levin <sashal@kernel.org>
+To: Joanne Koong <joannelkoong@gmail.com>
+Cc: patches@lists.linux.dev, stable@vger.kernel.org,
+	syzbot@syzkaller.appspotmail.com, Brian Foster <bfoster@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Christian Brauner <brauner@kernel.org>, linux-xfs@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org
+Subject: Re: [PATCH AUTOSEL 6.18-6.6] iomap: adjust read range correctly for
+ non-block-aligned positions
+Message-ID: <aUQ_V2O7yDhT1ynN@laps>
+References: <20251203202839.819850-1-sashal@kernel.org>
+ <CAJnrk1aSf+bTiRE40BSM72y8p_0CZjeJ4AHF78QbxxPicmPMXw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Disposition: inline
-In-Reply-To: <SN6PR02MB4157D6A6FF1F5037FAB1EE05D4AAA@SN6PR02MB4157.namprd02.prod.outlook.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAJnrk1aSf+bTiRE40BSM72y8p_0CZjeJ4AHF78QbxxPicmPMXw@mail.gmail.com>
 
-On Tue, Dec 16, 2025 at 06:35:09PM +0000, Michael Kelley wrote:
-> From: Greg Kroah-Hartman <gregkh@linuxfoundation.org> Sent: Tuesday, December 16, 2025 3:11 AM
-> > 
-> > 6.17-stable review patch.  If anyone has any objections, please let me know.
-> 
-> I don't think this patch should be backported to any stable versions.
-> 
-> I see that it is flagged as a dependency for backporting 510164539f16 ("Drivers: hv:
-> Free msginfo when the buffer fails to decrypt"). 510164539f16 is indeed a bug fix,
-> but it's a minor "should never happen" memory leak, and I would be concerned
-> about the risk introduced by this patch being pulled out of the large-ish patch
-> series that implements a new feature.
+On Wed, Dec 03, 2025 at 03:07:12PM -0800, Joanne Koong wrote:
+>On Wed, Dec 3, 2025 at 12:28 PM Sasha Levin <sashal@kernel.org> wrote:
+>>
+>> From: Joanne Koong <joannelkoong@gmail.com>
+>>
+>> [ Upstream commit 7aa6bc3e8766990824f66ca76c19596ce10daf3e ]
+>>
+>> iomap_adjust_read_range() assumes that the position and length passed in
+>> are block-aligned. This is not always the case however, as shown in the
+>> syzbot generated case for erofs. This causes too many bytes to be
+>> skipped for uptodate blocks, which results in returning the incorrect
+>> position and length to read in. If all the blocks are uptodate, this
+>> underflows length and returns a position beyond the folio.
+>>
+>> Fix the calculation to also take into account the block offset when
+>> calculating how many bytes can be skipped for uptodate blocks.
+>>
+>> Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
+>> Tested-by: syzbot@syzkaller.appspotmail.com
+>> Reviewed-by: Brian Foster <bfoster@redhat.com>
+>> Reviewed-by: Christoph Hellwig <hch@lst.de>
+>> Signed-off-by: Christian Brauner <brauner@kernel.org>
+>> Signed-off-by: Sasha Levin <sashal@kernel.org>
+>> ---
+>>
+>> LLM Generated explanations, may be completely bogus:
+>>
+>> Now I have all the information needed for a comprehensive analysis. Let
+>> me compile my findings.
+>>
+>> ---
+>
+>I don't think any filesystems had repercussions from this. afaik only
+>inlined mappings are non-block-aligned and the underflow of length and
+>the overflow of position when added together offset each other when
+>determining how much to advance the iter for the next iteration. But I
+>have no objection to this being backported to stable. I think if this
+>gets backported, then we should also backport this one as well
+>(https://lore.kernel.org/linux-fsdevel/20251111193658.3495942-3-joannelkoong@gmail.com/).
 
-Now dropped, thanks.
+Sure, I'll grab that one too. Thanks!
 
-greg k-h
+-- 
+Thanks,
+Sasha
