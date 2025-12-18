@@ -1,75 +1,82 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1ECD284890;
-	Thu, 18 Dec 2025 11:25:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6065331986C;
+	Thu, 18 Dec 2025 11:38:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766057108; cv=none; b=i6z9u3FGmIdNIDSocE2knqMJxBonzrpwtYNS8lz07a3jV12G5euHbEAzH/BRLzcPTCj0FM1c/sp6BpVvKnx+zNvPkt6RL8KQ/4FIHXi+dFlulCwOfByDgVAPS4A9AUqX/nSR/Byq4dPD7fX7ccGlUaj7lEy5l8UkbSkZLOafY3o=
+	t=1766057908; cv=none; b=aOnPCSXJ3DgC7zak0efbRfQrVxnfXVDfecMiJwxXBNtXcKo1GOw7Xu+XM8Vo37IRRbWDvjCEFUX2JTNrSpHr06/8PRKv2i/et5iFtg/dL5dwMFFgL17ygsk3d169K8yEFaWCWJKPSgfKgwFYcK64CWPF84tWEz+dzIgSFT4RJnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766057108; c=relaxed/simple;
-	bh=tdW8fnXupCOSsN96mXMeTs2wlT6YThU2zVhoHzFQylM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X/cJM7mq9U/zlDmINkOWaFf8AL4tHeznp4XgXyNDMKcmVYglytILzKwHxirFCfhgFKx/iLLQlrcbRjO9tdK7y3OgwygFDBb9piP40BfCVz5MvyNutiYb1WMGDajhvD39j+XOBwhX8o+JJI3kFAquWiPViHGljaSUwoOUXHenRCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OTFcb/y4; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1766057908; c=relaxed/simple;
+	bh=yHqmtSCcycea5hP6Wq6y+hxz1wMxs1n6NwXVqG+4uFA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=delsHbVrk5E7ftP0LqklMCF80+DrdoX+L97G1p1jm6bSKnnv1moM1K6z6MlpmjUo4dfRnkvOYSpicLjtPYO/okKW6Y+DO2JGcFJTZq//X1bs9ID06JNj9nLKR/c+57SHYcwYLYeomnnnOCTxnLIdWCLTqAkrm3ZzA6E7AynaUxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Gzy4le77; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OTFcb/y4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCE73C4CEFB;
-	Thu, 18 Dec 2025 11:25:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1766057106;
-	bh=tdW8fnXupCOSsN96mXMeTs2wlT6YThU2zVhoHzFQylM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=OTFcb/y4kotOZN5iBp3ALKSPNpdIyZhmnZvgDWLO6vJeRgu65fPgcMKmG1DmQUSkN
-	 4KY0m2JnNCKghd1a7YvzcCymtBbgrKziuu/qJHcaA5zGnkVnery7agAyBQt4O4+mOM
-	 OOqAtoeLvrB65XrpA85X4Oe9RhFYzoj3cEBIc0QM=
-Date: Thu, 18 Dec 2025 12:25:03 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Jiri Slaby <jirislaby@kernel.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Thomas Richter <tmricht@linux.ibm.com>,
-	Ian Rogers <irogers@google.com>, Namhyung Kim <namhyung@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.18 280/614] perf vendor metrics s390: Avoid
- has_event(INSTRUCTIONS)
-Message-ID: <2025121839-outbreak-handed-29bf@gregkh>
-References: <20251216111401.280873349@linuxfoundation.org>
- <20251216111411.519418812@linuxfoundation.org>
- <4e90e4dc-e0d7-492f-a45f-30a53be3899b@kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Gzy4le77"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65C65C116B1;
+	Thu, 18 Dec 2025 11:38:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1766057907;
+	bh=yHqmtSCcycea5hP6Wq6y+hxz1wMxs1n6NwXVqG+4uFA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=Gzy4le77QekN+8o/RiaiPFux51AClVo2n3ax2U5HvgsjEjA2ytBOlghxhAv/2YyjJ
+	 KPkqDY6yaJpm3cmNu8LAIABg6CLud8rwRwywRQiKZKt01HqD4eEA2bmJiDbRRotWg7
+	 JgqEpu2o1BJJfc+lko9F1kqVuvflvcTZg7qNu8SUq+NtymAMI8zkR/aFRZZ8vceuIl
+	 R8EDksKiKVRkHjL61Ie3TB2Gz7ed2zN6OR8FAWquUaJDtk/mP4abwUu8iMRHSHHlBE
+	 W45RY4zfAPee00hOIu6T3UhwYNbgT2mn6lVgWPLBCeLH2LhXtRSjbHTUvuko19Nwu4
+	 /tIE/14TzbkdA==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: gregkh@linuxfoundation.org
+Cc: achill@achill.org,
+	akpm@linux-foundation.org,
+	broonie@kernel.org,
+	conor@kernel.org,
+	f.fainelli@gmail.com,
+	hargar@microsoft.com,
+	jonathanh@nvidia.com,
+	linux-kernel@vger.kernel.org,
+	linux@roeck-us.net,
+	lkft-triage@lists.linaro.org,
+	patches@kernelci.org,
+	patches@lists.linux.dev,
+	pavel@denx.de,
+	rwarsow@gmx.de,
+	shuah@kernel.org,
+	sr@sladewatkins.com,
+	stable@vger.kernel.org,
+	sudipm.mukherjee@gmail.com,
+	torvalds@linux-foundation.org,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: Re: [PATCH 6.12 000/354] 6.12.63-rc1 review
+Date: Thu, 18 Dec 2025 12:36:39 +0100
+Message-ID: <20251218113639.72199-1-ojeda@kernel.org>
+In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
+References: <20251216111320.896758933@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4e90e4dc-e0d7-492f-a45f-30a53be3899b@kernel.org>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Dec 18, 2025 at 07:16:06AM +0100, Jiri Slaby wrote:
-> On 16. 12. 25, 12:10, Greg Kroah-Hartman wrote:
-> > 6.18-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > ------------------
-> > 
-> > From: Ian Rogers <irogers@google.com>
-> > 
-> > [ Upstream commit c1932fb85af8e51ac9f6bd9947145b06c716106e ]
-> > 
-> > The instructions event is now provided in json meaning the has_event
-> > test always succeeds. Switch to using non-legacy event names in the
-> > affected metrics.
-> > 
-> > Reported-by: Thomas Richter <tmricht@linux.ibm.com>
-> > Closes: https://lore.kernel.org/linux-perf-users/3e80f453-f015-4f4f-93d3-8df6bb6b3c95@linux.ibm.com/
-> > Fixes: 0012e0fa221b ("perf jevents: Add legacy-hardware and legacy-cache json")
+On Tue, 16 Dec 2025 12:09:27 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.12.63 release.
+> There are 354 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Hmm, this ^^^ is also a 19-rc1 commit, not present in .18-stable. Why were
-> these patches added?
+> Responses should be made by Thu, 18 Dec 2025 11:12:22 +0000.
+> Anything received after that time might be too late.
 
-Ugh, let me go drop this and then verify _all_ of the commits in the
-tree are actually fixing something in the right branch.
+Boot-tested under QEMU for Rust x86_64, arm64 and riscv64; built-tested
+for loongarch64:
 
-thanks,
+Tested-by: Miguel Ojeda <ojeda@kernel.org>
 
-greg k-h
+Thanks!
+
+Cheers,
+Miguel
