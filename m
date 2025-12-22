@@ -1,149 +1,142 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from rtits2.realtek.com.tw (rtits2.realtek.com [211.75.126.72])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985911A23A0;
-	Fri, 19 Dec 2025 23:08:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60FD2252917;
+	Mon, 22 Dec 2025 01:54:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=211.75.126.72
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766185699; cv=none; b=X7IgWrIJCFwSr81mEoB8s98ZoKfg2sVNisLaqu40/RpVLdBDAr+7cI0xsWnwroY3MaLcQ86oPN7hahvjQ65VbCdQXUL2aIwYRcBvXVqmFRQWWLU3lcPgwJ/ObmQBuPIgQmvdj3RyPf5XLGe+dZ1UeeqLk+UrS80w1om83wPiaR0=
+	t=1766368471; cv=none; b=svAHPKEglLkKyLcQiPbZ/VehUhtnY4ZIQ8NLyK7KntXK17OlUM0ZiMF+UiYMINxes3fGfUwfzM1t98iat4kTSfzEx7vXQcprWz8suHPS6GLt3otyaWfOTDPMt+ofqxjnwYFNuXXoz6VUXJPXq1Lux/QaBhE2oL1rEmv4FHkY+74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766185699; c=relaxed/simple;
-	bh=tdOyM03s/jtraJEdSS4JdOUdLDcBDqG0Tljm9PeXS14=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=ZuQl1uRG0YnTPgSwPRVEeHUS7KV0DLTJ24QIr8OylCWFW6tMWNMhePkP3ro9y2r2aP30GslD2+69ZZnlmdVZcieAN7Xf7Z5JaoUXxBCM3rkj9e0OR+XzBeAcGbTkxQS4kBIvklF6J0obAqSXqcqaCO+TTegsJDIpxcSWWj8wOso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bbcFOd8h; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1766368471; c=relaxed/simple;
+	bh=YKx2OfNHpt0zU6PvEsKM9KHdD6zN7eSvvVs5a+tcpNw=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=cobHe6X4K0GAP1u3pHPv5bT+QnOJJ2nxhpJvbvKPQcgpPv8xtPq9gdZ6qj8rX9Sa9PZ+j7/5TEi1WAuA3Yl5WiOaKqX5q/0FFtU8ewBpd3DPdJMK/TKZYM2YfM/GzOPSdVhlfRpQ0hyYszzCKlivq+ogEpgk7EKEZG2MHVIeHwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=realtek.com; spf=pass smtp.mailfrom=realtek.com; dkim=pass (2048-bit key) header.d=realtek.com header.i=@realtek.com header.b=A9TM3HBM; arc=none smtp.client-ip=211.75.126.72
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=realtek.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=realtek.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bbcFOd8h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A1F8C4CEF1;
-	Fri, 19 Dec 2025 23:08:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766185698;
-	bh=tdOyM03s/jtraJEdSS4JdOUdLDcBDqG0Tljm9PeXS14=;
-	h=From:Date:Subject:To:Cc:From;
-	b=bbcFOd8htkE7S4BiJO+MThR/8vhNDfwopFI6Eu5KudZE7bpSrr7zSbZLTYxMdKvm3
-	 V+0NeHNPRkBRYyLiubpjAb66AnDGreh6qZHaTGdRq5AgD3dn6sYZc7UPRMEB4AtYb6
-	 DCHv9pEmLJYtMxlXGeKzHQIgc3N0AVTZDfqZd2tBN1pF75WtVxampDUfcaj3N9fTw5
-	 dsrK7Z7JlvnANiL9zo1t7knkEqrAbG9Gam+YdNRok2OpAe57ATfRBNb7sL3c4HuTMY
-	 KisrViE1oiRLqBS4SfRq6tUjOPrq1/wtsJIPYU8ZMVgJPscPLFJsPqdKcgF7S4ulO/
-	 Ui1HJHQ1QaXlQ==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Fri, 19 Dec 2025 16:08:08 -0700
-Subject: [PATCH] ASoC: rt1320: Change return type of rt1320_t0_load() to
+	dkim=pass (2048-bit key) header.d=realtek.com header.i=@realtek.com header.b="A9TM3HBM"
+X-SpamFilter-By: ArmorX SpamTrap 5.80 with qID 5BM1sCRp92481740, This message is accepted by code: ctloc85258
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=realtek.com; s=dkim;
+	t=1766368452; bh=YKx2OfNHpt0zU6PvEsKM9KHdD6zN7eSvvVs5a+tcpNw=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:MIME-Version;
+	b=A9TM3HBMb2Ph6Hogcxv6xTQc2+l/8h8/iDT2+1WLmdoX3MwBDP56NSHwofdhVFwwr
+	 qT0z0xoKtTb1d6ciPiuOuW1zoGiK60qeaZ1pPzwHmahVRpaaKRqHkUC23tuOsh1RTa
+	 T5ECdTy7raz8RhKoyO81uJNzmiKn0mae75CZkC7dIiL1QYagdv4qOA/aRXUsmvmwDh
+	 tA0OeSPUNcVHJWtjrS7vVToYktTiiFoIWJjqBoUT8LjoylJ03J3okms+Yx+XsoKvjV
+	 /beK84jmlpyAFG4NsrYHP0BuTBb4AOu9QrXx9jQPce2/9NYkeMC14oXOWaQemNEhce
+	 vmFX74HluX3FQ==
+Received: from mail.realtek.com (rtkexhmbs04.realtek.com.tw[10.21.1.54])
+	by rtits2.realtek.com.tw (8.15.2/3.21/5.94) with ESMTPS id 5BM1sCRp92481740
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Mon, 22 Dec 2025 09:54:12 +0800
+Received: from RTKEXHMBS06.realtek.com.tw (10.21.1.56) by
+ RTKEXHMBS04.realtek.com.tw (10.21.1.54) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.10; Mon, 22 Dec 2025 09:54:11 +0800
+Received: from RTKEXHMBS06.realtek.com.tw ([fe80::4cbd:6c6c:b92b:3913]) by
+ RTKEXHMBS06.realtek.com.tw ([fe80::4cbd:6c6c:b92b:3913%10]) with mapi id
+ 15.02.1748.010; Mon, 22 Dec 2025 09:54:11 +0800
+From: =?utf-8?B?U2h1bWluZyBb6IyD5pu46YqYXQ==?= <shumingf@realtek.com>
+To: Nathan Chancellor <nathan@kernel.org>, Mark Brown <broonie@kernel.org>,
+        Oder Chiou <oder_chiou@realtek.com>,
+        Liam Girdwood <lgirdwood@gmail.com>
+CC: "linux-sound@vger.kernel.org" <linux-sound@vger.kernel.org>,
+        "llvm@lists.linux.dev" <llvm@lists.linux.dev>,
+        "patches@lists.linux.dev"
+	<patches@lists.linux.dev>,
+        kernel test robot <lkp@intel.com>
+Subject: RE: [PATCH] ASoC: rt1320: Change return type of rt1320_t0_load() to
  void
+Thread-Topic: [PATCH] ASoC: rt1320: Change return type of rt1320_t0_load() to
+ void
+Thread-Index: AQHccTxglr1HitGJyUuPdztRa3DQ+7Us6Gpg
+Date: Mon, 22 Dec 2025 01:54:11 +0000
+Message-ID: <62281f7409064902bdacc4863e5aae60@realtek.com>
+References: <20251219-rt1320-sdw-avoid-uninit-ret-v1-1-faa3e250ebc4@kernel.org>
+In-Reply-To: <20251219-rt1320-sdw-avoid-uninit-ret-v1-1-faa3e250ebc4@kernel.org>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251219-rt1320-sdw-avoid-uninit-ret-v1-1-faa3e250ebc4@kernel.org>
-X-B4-Tracking: v=1; b=H4sIANfaRWkC/yXMMQ7CMAwF0KtUnrFUBypRroIYQvMLZkiRnRakq
- ncnwPiWt5LDFE6nZiXDoq5TrpBdQ8M95htYUzWFNnQSpGcrsg8te3pxXCZNPGfNWthQOMoRIyS
- mrj9QHZ6GUd+//Xz52+frA0P5lrRtHzhMBuR/AAAA
-X-Change-ID: 20251219-rt1320-sdw-avoid-uninit-ret-a18efe1ad594
-To: Mark Brown <broonie@kernel.org>, Shuming Fan <shumingf@realtek.com>, 
- Oder Chiou <oder_chiou@realtek.com>, Liam Girdwood <lgirdwood@gmail.com>
-Cc: linux-sound@vger.kernel.org, llvm@lists.linux.dev, 
- patches@lists.linux.dev, kernel test robot <lkp@intel.com>, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3632; i=nathan@kernel.org;
- h=from:subject:message-id; bh=tdOyM03s/jtraJEdSS4JdOUdLDcBDqG0Tljm9PeXS14=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDJmut+5vvKRSVJ9806JMepr4O5bwiYc/Kh9zT19lkXd+V
- u+U5YG6HaUsDGJcDLJiiizVj1WPGxrOOct449QkmDmsTCBDGLg4BWAizHYM/+xfNi+JLGK5ePxP
- y6Okp8mKc4sf8rBfayrQPmthV3JztwLD/5rJXyvvKsxQb7/3a2biotIvgvL/ezbl5zIXub3avGD
- Xe0YA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Clang warns (or errors with CONFIG_WERROR=y / W=e):
-
-  sound/soc/codecs/rt1320-sdw.c:1387:6: error: variable 'ret' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
-   1387 |         if (!fw_ready) {
-        |             ^~~~~~~~~
-  sound/soc/codecs/rt1320-sdw.c:1421:9: note: uninitialized use occurs here
-   1421 |         return ret;
-        |                ^~~
-  sound/soc/codecs/rt1320-sdw.c:1387:2: note: remove the 'if' if its condition is always false
-   1387 |         if (!fw_ready) {
-        |         ^~~~~~~~~~~~~~~~
-   1388 |                 dev_warn(dev, "%s, DSP FW is NOT ready\n", __func__);
-        |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   1389 |                 goto _exit_;
-        |                 ~~~~~~~~~~~~
-   1390 |         }
-        |         ~
-  sound/soc/codecs/rt1320-sdw.c:1366:9: note: initialize the variable 'ret' to silence this warning
-   1366 |         int ret;
-        |                ^
-        |                 = 0
-
-The return value of rt1320_t0_load() is never actually used, so it can
-just be eliminated altogether by returning void, clearing up the
-warning.
-
-Fixes: da1682d5e8b5 ("ASoC: rt1320: support calibration and temperature/r0 loading")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202512191711.wY6XU796-lkp@intel.com/
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- sound/soc/codecs/rt1320-sdw.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
-
-diff --git a/sound/soc/codecs/rt1320-sdw.c b/sound/soc/codecs/rt1320-sdw.c
-index 9447e742c672..85560455c3e3 100644
---- a/sound/soc/codecs/rt1320-sdw.c
-+++ b/sound/soc/codecs/rt1320-sdw.c
-@@ -1357,13 +1357,12 @@ static void rt1320_vab_preset(struct rt1320_sdw_priv *rt1320)
- 	}
- }
- 
--static int rt1320_t0_load(struct rt1320_sdw_priv *rt1320, unsigned int l_t0, unsigned int r_t0)
-+static void rt1320_t0_load(struct rt1320_sdw_priv *rt1320, unsigned int l_t0, unsigned int r_t0)
- {
- 	struct device *dev = &rt1320->sdw_slave->dev;
- 	unsigned int factor = (1 << 22), fw_ready;
- 	int l_t0_data[38], r_t0_data[38];
- 	unsigned int fw_status_addr;
--	int ret;
- 
- 	switch (rt1320->dev_id) {
- 	case RT1320_DEV_ID:
-@@ -1374,7 +1373,7 @@ static int rt1320_t0_load(struct rt1320_sdw_priv *rt1320, unsigned int l_t0, uns
- 		break;
- 	default:
- 		dev_err(dev, "%s: Unknown device ID %d\n", __func__, rt1320->dev_id);
--		return -EINVAL;
-+		return;
- 	}
- 
- 	regmap_write(rt1320->regmap,
-@@ -1399,8 +1398,7 @@ static int rt1320_t0_load(struct rt1320_sdw_priv *rt1320, unsigned int l_t0, uns
- 
- 	rt1320_fw_param_protocol(rt1320, RT1320_SET_PARAM, 3, &l_t0_data[0], sizeof(l_t0_data));
- 	rt1320_fw_param_protocol(rt1320, RT1320_SET_PARAM, 4, &r_t0_data[0], sizeof(r_t0_data));
--	ret = rt1320_check_fw_ready(rt1320);
--	if (ret < 0)
-+	if (rt1320_check_fw_ready(rt1320) < 0)
- 		dev_err(dev, "%s: Failed to set FW param 3,4!\n", __func__);
- 
- 	rt1320->temp_l_calib = l_t0;
-@@ -1417,8 +1415,6 @@ static int rt1320_t0_load(struct rt1320_sdw_priv *rt1320, unsigned int l_t0, uns
- 			SDW_SDCA_CTL(FUNC_NUM_AMP, RT1320_SDCA_ENT_PDE23,
- 				RT1320_SDCA_CTL_REQ_POWER_STATE, 0), 0x03);
- 	rt1320_pde_transition_delay(rt1320, FUNC_NUM_AMP, RT1320_SDCA_ENT_PDE23, 0x03);
--
--	return ret;
- }
- 
- static int rt1320_rae_load(struct rt1320_sdw_priv *rt1320)
-
----
-base-commit: a54fd483d0d5f5f620c48a29c98b013e59009a09
-change-id: 20251219-rt1320-sdw-avoid-uninit-ret-a18efe1ad594
-
-Best regards,
---  
-Nathan Chancellor <nathan@kernel.org>
-
+PiBDbGFuZyB3YXJucyAob3IgZXJyb3JzIHdpdGggQ09ORklHX1dFUlJPUj15IC8gVz1lKToNCj4g
+DQo+ICAgc291bmQvc29jL2NvZGVjcy9ydDEzMjAtc2R3LmM6MTM4Nzo2OiBlcnJvcjogdmFyaWFi
+bGUgJ3JldCcgaXMgdXNlZA0KPiB1bmluaXRpYWxpemVkIHdoZW5ldmVyICdpZicgY29uZGl0aW9u
+IGlzIHRydWUNCj4gWy1XZXJyb3IsLVdzb21ldGltZXMtdW5pbml0aWFsaXplZF0NCj4gICAgMTM4
+NyB8ICAgICAgICAgaWYgKCFmd19yZWFkeSkgew0KPiAgICAgICAgIHwgICAgICAgICAgICAgXn5+
+fn5+fn5+DQo+ICAgc291bmQvc29jL2NvZGVjcy9ydDEzMjAtc2R3LmM6MTQyMTo5OiBub3RlOiB1
+bmluaXRpYWxpemVkIHVzZSBvY2N1cnMgaGVyZQ0KPiAgICAxNDIxIHwgICAgICAgICByZXR1cm4g
+cmV0Ow0KPiAgICAgICAgIHwgICAgICAgICAgICAgICAgXn5+DQo+ICAgc291bmQvc29jL2NvZGVj
+cy9ydDEzMjAtc2R3LmM6MTM4NzoyOiBub3RlOiByZW1vdmUgdGhlICdpZicgaWYgaXRzIGNvbmRp
+dGlvbg0KPiBpcyBhbHdheXMgZmFsc2UNCj4gICAgMTM4NyB8ICAgICAgICAgaWYgKCFmd19yZWFk
+eSkgew0KPiAgICAgICAgIHwgICAgICAgICBefn5+fn5+fn5+fn5+fn5+DQo+ICAgIDEzODggfCAg
+ICAgICAgICAgICAgICAgZGV2X3dhcm4oZGV2LCAiJXMsIERTUCBGVyBpcyBOT1QgcmVhZHlcbiIs
+DQo+IF9fZnVuY19fKTsNCj4gICAgICAgICB8DQo+IH5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+
+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+DQo+ICAgIDEzODkgfCAgICAgICAgICAgICAgICAg
+Z290byBfZXhpdF87DQo+ICAgICAgICAgfCAgICAgICAgICAgICAgICAgfn5+fn5+fn5+fn5+DQo+
+ICAgIDEzOTAgfCAgICAgICAgIH0NCj4gICAgICAgICB8ICAgICAgICAgfg0KPiAgIHNvdW5kL3Nv
+Yy9jb2RlY3MvcnQxMzIwLXNkdy5jOjEzNjY6OTogbm90ZTogaW5pdGlhbGl6ZSB0aGUgdmFyaWFi
+bGUgJ3JldCcgdG8NCj4gc2lsZW5jZSB0aGlzIHdhcm5pbmcNCj4gICAgMTM2NiB8ICAgICAgICAg
+aW50IHJldDsNCj4gICAgICAgICB8ICAgICAgICAgICAgICAgIF4NCj4gICAgICAgICB8ICAgICAg
+ICAgICAgICAgICA9IDANCj4gDQo+IFRoZSByZXR1cm4gdmFsdWUgb2YgcnQxMzIwX3QwX2xvYWQo
+KSBpcyBuZXZlciBhY3R1YWxseSB1c2VkLCBzbyBpdCBjYW4ganVzdCBiZQ0KPiBlbGltaW5hdGVk
+IGFsdG9nZXRoZXIgYnkgcmV0dXJuaW5nIHZvaWQsIGNsZWFyaW5nIHVwIHRoZSB3YXJuaW5nLg0K
+PiANCj4gRml4ZXM6IGRhMTY4MmQ1ZThiNSAoIkFTb0M6IHJ0MTMyMDogc3VwcG9ydCBjYWxpYnJh
+dGlvbiBhbmQgdGVtcGVyYXR1cmUvcjANCj4gbG9hZGluZyIpDQo+IFJlcG9ydGVkLWJ5OiBrZXJu
+ZWwgdGVzdCByb2JvdCA8bGtwQGludGVsLmNvbT4NCj4gQ2xvc2VzOg0KPiBodHRwczovL2xvcmUu
+a2VybmVsLm9yZy9vZS1rYnVpbGQtYWxsLzIwMjUxMjE5MTcxMS53WTZYVTc5Ni1sa3BAaW50ZWwu
+Y29tLw0KPiBTaWduZWQtb2ZmLWJ5OiBOYXRoYW4gQ2hhbmNlbGxvciA8bmF0aGFuQGtlcm5lbC5v
+cmc+DQo+IC0tLQ0KPiAgc291bmQvc29jL2NvZGVjcy9ydDEzMjAtc2R3LmMgfCAxMCArKystLS0t
+LS0tDQo+ICAxIGZpbGUgY2hhbmdlZCwgMyBpbnNlcnRpb25zKCspLCA3IGRlbGV0aW9ucygtKQ0K
+PiANCj4gZGlmZiAtLWdpdCBhL3NvdW5kL3NvYy9jb2RlY3MvcnQxMzIwLXNkdy5jIGIvc291bmQv
+c29jL2NvZGVjcy9ydDEzMjAtc2R3LmMNCj4gaW5kZXggOTQ0N2U3NDJjNjcyLi44NTU2MDQ1NWMz
+ZTMgMTAwNjQ0DQo+IC0tLSBhL3NvdW5kL3NvYy9jb2RlY3MvcnQxMzIwLXNkdy5jDQo+ICsrKyBi
+L3NvdW5kL3NvYy9jb2RlY3MvcnQxMzIwLXNkdy5jDQo+IEBAIC0xMzU3LDEzICsxMzU3LDEyIEBA
+IHN0YXRpYyB2b2lkIHJ0MTMyMF92YWJfcHJlc2V0KHN0cnVjdA0KPiBydDEzMjBfc2R3X3ByaXYg
+KnJ0MTMyMCkNCj4gICAgICAgICB9DQo+ICB9DQo+IA0KPiAtc3RhdGljIGludCBydDEzMjBfdDBf
+bG9hZChzdHJ1Y3QgcnQxMzIwX3Nkd19wcml2ICpydDEzMjAsIHVuc2lnbmVkIGludCBsX3QwLA0K
+PiB1bnNpZ25lZCBpbnQgcl90MCkNCj4gK3N0YXRpYyB2b2lkIHJ0MTMyMF90MF9sb2FkKHN0cnVj
+dCBydDEzMjBfc2R3X3ByaXYgKnJ0MTMyMCwgdW5zaWduZWQgaW50DQo+ICtsX3QwLCB1bnNpZ25l
+ZCBpbnQgcl90MCkNCj4gIHsNCj4gICAgICAgICBzdHJ1Y3QgZGV2aWNlICpkZXYgPSAmcnQxMzIw
+LT5zZHdfc2xhdmUtPmRldjsNCj4gICAgICAgICB1bnNpZ25lZCBpbnQgZmFjdG9yID0gKDEgPDwg
+MjIpLCBmd19yZWFkeTsNCj4gICAgICAgICBpbnQgbF90MF9kYXRhWzM4XSwgcl90MF9kYXRhWzM4
+XTsNCj4gICAgICAgICB1bnNpZ25lZCBpbnQgZndfc3RhdHVzX2FkZHI7DQo+IC0gICAgICAgaW50
+IHJldDsNCj4gDQo+ICAgICAgICAgc3dpdGNoIChydDEzMjAtPmRldl9pZCkgew0KPiAgICAgICAg
+IGNhc2UgUlQxMzIwX0RFVl9JRDoNCj4gQEAgLTEzNzQsNyArMTM3Myw3IEBAIHN0YXRpYyBpbnQg
+cnQxMzIwX3QwX2xvYWQoc3RydWN0IHJ0MTMyMF9zZHdfcHJpdg0KPiAqcnQxMzIwLCB1bnNpZ25l
+ZCBpbnQgbF90MCwgdW5zDQo+ICAgICAgICAgICAgICAgICBicmVhazsNCj4gICAgICAgICBkZWZh
+dWx0Og0KPiAgICAgICAgICAgICAgICAgZGV2X2VycihkZXYsICIlczogVW5rbm93biBkZXZpY2Ug
+SUQgJWRcbiIsIF9fZnVuY19fLA0KPiBydDEzMjAtPmRldl9pZCk7DQo+IC0gICAgICAgICAgICAg
+ICByZXR1cm4gLUVJTlZBTDsNCj4gKyAgICAgICAgICAgICAgIHJldHVybjsNCj4gICAgICAgICB9
+DQo+IA0KPiAgICAgICAgIHJlZ21hcF93cml0ZShydDEzMjAtPnJlZ21hcCwNCj4gQEAgLTEzOTks
+OCArMTM5OCw3IEBAIHN0YXRpYyBpbnQgcnQxMzIwX3QwX2xvYWQoc3RydWN0IHJ0MTMyMF9zZHdf
+cHJpdg0KPiAqcnQxMzIwLCB1bnNpZ25lZCBpbnQgbF90MCwgdW5zDQo+IA0KPiAgICAgICAgIHJ0
+MTMyMF9md19wYXJhbV9wcm90b2NvbChydDEzMjAsIFJUMTMyMF9TRVRfUEFSQU0sIDMsDQo+ICZs
+X3QwX2RhdGFbMF0sIHNpemVvZihsX3QwX2RhdGEpKTsNCj4gICAgICAgICBydDEzMjBfZndfcGFy
+YW1fcHJvdG9jb2wocnQxMzIwLCBSVDEzMjBfU0VUX1BBUkFNLCA0LA0KPiAmcl90MF9kYXRhWzBd
+LCBzaXplb2Yocl90MF9kYXRhKSk7DQo+IC0gICAgICAgcmV0ID0gcnQxMzIwX2NoZWNrX2Z3X3Jl
+YWR5KHJ0MTMyMCk7DQo+IC0gICAgICAgaWYgKHJldCA8IDApDQo+ICsgICAgICAgaWYgKHJ0MTMy
+MF9jaGVja19md19yZWFkeShydDEzMjApIDwgMCkNCj4gICAgICAgICAgICAgICAgIGRldl9lcnIo
+ZGV2LCAiJXM6IEZhaWxlZCB0byBzZXQgRlcgcGFyYW0gMyw0IVxuIiwNCj4gX19mdW5jX18pOw0K
+PiANCj4gICAgICAgICBydDEzMjAtPnRlbXBfbF9jYWxpYiA9IGxfdDA7DQo+IEBAIC0xNDE3LDgg
+KzE0MTUsNiBAQCBzdGF0aWMgaW50IHJ0MTMyMF90MF9sb2FkKHN0cnVjdCBydDEzMjBfc2R3X3By
+aXYNCj4gKnJ0MTMyMCwgdW5zaWduZWQgaW50IGxfdDAsIHVucw0KPiAgICAgICAgICAgICAgICAg
+ICAgICAgICBTRFdfU0RDQV9DVEwoRlVOQ19OVU1fQU1QLA0KPiBSVDEzMjBfU0RDQV9FTlRfUERF
+MjMsDQo+IA0KPiBSVDEzMjBfU0RDQV9DVExfUkVRX1BPV0VSX1NUQVRFLCAwKSwgMHgwMyk7DQo+
+ICAgICAgICAgcnQxMzIwX3BkZV90cmFuc2l0aW9uX2RlbGF5KHJ0MTMyMCwgRlVOQ19OVU1fQU1Q
+LA0KPiBSVDEzMjBfU0RDQV9FTlRfUERFMjMsIDB4MDMpOw0KPiAtDQo+IC0gICAgICAgcmV0dXJu
+IHJldDsNCj4gIH0NCj4gDQo+ICBzdGF0aWMgaW50IHJ0MTMyMF9yYWVfbG9hZChzdHJ1Y3QgcnQx
+MzIwX3Nkd19wcml2ICpydDEzMjApDQo+IA0KPiAtLS0NCj4gYmFzZS1jb21taXQ6IGE1NGZkNDgz
+ZDBkNWY1ZjYyMGM0OGEyOWM5OGIwMTNlNTkwMDlhMDkNCj4gY2hhbmdlLWlkOiAyMDI1MTIxOS1y
+dDEzMjAtc2R3LWF2b2lkLXVuaW5pdC1yZXQtYTE4ZWZlMWFkNTk0DQo+IA0KPiBCZXN0IHJlZ2Fy
+ZHMsDQo+IC0tDQo+IE5hdGhhbiBDaGFuY2VsbG9yIDxuYXRoYW5Aa2VybmVsLm9yZz4NCg0KDQpB
+Y2tlZC1ieTogU2h1bWluZyBGYW4gPHNodW1pbmdmQHJlYWx0ZWsuY29tPg0KDQpUaGFua3MgZm9y
+IHRoaXMgcGF0Y2guDQoNCg==
