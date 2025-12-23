@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D487A3502B1;
-	Tue, 23 Dec 2025 10:05:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1BAC3502B6;
+	Tue, 23 Dec 2025 10:05:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766484324; cv=none; b=SohFHcy9h83tXCfFK6L70m4Vf8N9zha+c0gSN+iyInkVK0lJz7BkzKxCj+/P19txr1+DJANej+QJ4WtAhQdtMngXG5+2WyOlP2rezi1rRDe/+wLM3OR7TuDS5/nQRJB3FkLLzZWBnB3HAhE5qVKNa4JGmvhTtkqkkKWou/sLVcY=
+	t=1766484326; cv=none; b=BIADqMPcAmkyirBs84gAJcDXSSJUpnYM3RnNaod+m2FOUNeI2EWtWNW9ML6+YTxBBEMiJ3w6s+OhIHDTAep+ryoKbCI3OKRcbwnpCghjL7Wc6LSrdXab9HNcRe/UOQvyLPcD67js27nJLss8YwshnIa3voJbodJv4L5ZqdQyLaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766484324; c=relaxed/simple;
-	bh=/zYcG2xYSdYnuLSHKUx/IzmXhDPgwtNTHCfAvrduQQU=;
+	s=arc-20240116; t=1766484326; c=relaxed/simple;
+	bh=gqI9aLJ5vgEv/qPbuDXITGmQgMewjpAga/d828QbJvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OcsQdNHKjoeMG2IS3TUxGLEzb1bdDASesp7MiQvrIIAEcOG1scjO2oEMOyZFkemtakvD0ZymNQ1cjNnoKUCaVkGVCdytRS5RGsNgezIFPhuCFtUayMsVMUPmGUU00JVh3vTOrDN8ZmjPC31C52RGPuGK0z1zuYIO/R4/Qu5tAJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fKLFqC2U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dEOInRb9ZyGkFRV/C5Q6wYyJLn6lwEU6jmDkFagdgHNiUeK4SLUTAEXPaUOn5AzMlsPIpgXq2P6mfL89vNtN/Yt5EbpwMxEwKhCoSABEyBTpjVGHRlWUEUC4c589nYpt+PzeFEtyRX8u5ywqB7Q9uSfyDAxAp/6AoWIH5QUnk78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=opKpWlM3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fKLFqC2U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEDB3C19423;
-	Tue, 23 Dec 2025 10:05:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="opKpWlM3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA110C19421;
+	Tue, 23 Dec 2025 10:05:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766484322;
-	bh=/zYcG2xYSdYnuLSHKUx/IzmXhDPgwtNTHCfAvrduQQU=;
+	s=k20201202; t=1766484325;
+	bh=gqI9aLJ5vgEv/qPbuDXITGmQgMewjpAga/d828QbJvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fKLFqC2Uk/cCGXFRXMAn2Gzcw2zEpSryMzNseG+JvPxBF8EekqKOGdnG/KNk/s8/v
-	 HV4Y4xH1RZuMNpSqWtzbp5D1p4NZ3HMtz8kl1dGnfqkMmzAsxo8bNnfTs3Q4Kb3YuQ
-	 0fo0oiZxQGYse9MTDFSVEw6mrVUJg9J3MHYV2vOZ1Q+Ec7ixU5NGk4aJXwHAUsfOIS
-	 6z3ba3eJ5QoEmSPBLC9MnCHHm1EJ1Rj1v2tAGt/WCVSykxcD2rZRCXTdxbVOXzFVSt
-	 386BYtxKRVwG68h186xPxLf218r6+T+4G6tdkVYnTSXb9FG9Gdm4/N74J80viarGH5
-	 jxpDYjn7Vwgdg==
+	b=opKpWlM3qGE/sJfup6Cr7dzVmYrHbPINtm/LV/WLZr8l1WI2xrGS6QpD5PewlndAi
+	 QYTcuCAV2mM6rDLiH1AIWl4BVzsUpgrSX0Hg4Y5WpvK7Te0jYyuRw/osEKC0mi4o/N
+	 gjIc9rgEqxVqYvqh+aV0fgWoQTS/bmI1CKoj9yErdQWvLuHJexqHfkhoxe37eKKlwh
+	 RnB1bQ3iddJ/k7dW0O2bimuCvo104jWaXcGsLOiRmcX6+KVoqKO/CLNd73GxFbuUG5
+	 EYZYwrrvlhds+BVa9Lwkd23HO0//6xOhq2uSRwAsHDnBx02AsuKvYQnzNdPnPDKYJJ
+	 gQ2mGOVbq0sVw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Fei Shao <fshao@chromium.org>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Sumeet Pawnikar <sumeet4linux@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	linux-spi@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.18-6.12] spi: mt65xx: Use IRQF_ONESHOT with threaded IRQ
-Date: Tue, 23 Dec 2025 05:05:07 -0500
-Message-ID: <20251223100518.2383364-3-sashal@kernel.org>
+	rafael@kernel.org,
+	linux-pm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] powercap: fix race condition in register_control_type()
+Date: Tue, 23 Dec 2025 05:05:09 -0500
+Message-ID: <20251223100518.2383364-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251223100518.2383364-1-sashal@kernel.org>
 References: <20251223100518.2383364-1-sashal@kernel.org>
@@ -56,113 +52,113 @@ X-stable-base: Linux 6.18.2
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fei Shao <fshao@chromium.org>
+From: Sumeet Pawnikar <sumeet4linux@gmail.com>
 
-[ Upstream commit 8c04b77f87e6e321ae6acd28ce1de5553916153f ]
+[ Upstream commit 7bda1910c4bccd4b8d4726620bb3d6bbfb62286e ]
 
-This driver is migrated to use threaded IRQ since commit 5972eb05ca32
-("spi: spi-mt65xx: Use threaded interrupt for non-SPIMEM transfer"), and
-we almost always want to disable the interrupt line to avoid excess
-interrupts while the threaded handler is processing SPI transfer.
-Use IRQF_ONESHOT for that purpose.
+The device becomes visible to userspace via device_register()
+even before it fully initialized by idr_init(). If userspace
+or another thread tries to register a zone immediately after
+device_register(), the control_type_valid() will fail because
+the control_type is not yet in the list. The IDR is not yet
+initialized, so this race condition causes zone registration
+failure.
 
-In practice, we see MediaTek devices show SPI transfer timeout errors
-when communicating with ChromeOS EC in certain scenarios, and with
-IRQF_ONESHOT, the issue goes away.
+Move idr_init() and list addition before device_register()
+fix the race condition.
 
-Signed-off-by: Fei Shao <fshao@chromium.org>
-Link: https://patch.msgid.link/20251217101131.1975131-1-fshao@chromium.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sumeet Pawnikar <sumeet4linux@gmail.com>
+[ rjw: Subject adjustment, empty line added ]
+Link: https://patch.msgid.link/20251205190216.5032-1-sumeet4linux@gmail.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-### 4. SCOPE AND RISK ASSESSMENT
+This confirms the race condition mechanism:
 
-- **Lines changed:** 1 line
-- **Files touched:** 1 file
-- **Complexity:** Trivially low - just a flag change
-- **Risk:** Very low
+1. `control_type_valid()` walks `powercap_cntrl_list` to validate
+   control types (lines 329-345)
+2. Called at `powercap_register_zone()` entry (line 497)
+3. **Race window**: After `device_register()` but before
+   `list_add_tail()`, any zone registration fails because the
+   control_type isn't in the list yet
 
-The fix is:
-- **Obviously correct**: IRQF_ONESHOT is the documented standard for
-  threaded interrupts
-- **Small and contained**: One flag change
-- **Fixes a real bug**: Transfer timeout errors on real hardware
+### 8. FINAL ASSESSMENT
 
-Looking at the interrupt handler code:
-- `mtk_spi_interrupt` returns `IRQ_WAKE_THREAD` for non-SPIMEM transfers
-- Without IRQF_ONESHOT, the IRQ line stays enabled, allowing repeated
-  interrupts while the thread processes
-- This causes race conditions on `mdata->state` and transfer handling,
-  leading to timeouts
+| Criteria | Assessment |
+|----------|------------|
+| Fixes a real bug | ✅ Race condition causing zone registration failure
+|
+| Obviously correct | ✅ Classic init-before-publish pattern |
+| Small and contained | ✅ ~20 lines in one function |
+| No new features | ✅ Only reorders existing code |
+| No new APIs | ✅ No userspace-visible changes |
+| Low regression risk | ✅ Standard pattern, proper error handling |
+| Affects stable users | ✅ Powercap used on many Intel systems |
 
-### 5. USER IMPACT
+**Why this matters to stable users:**
+- Intel RAPL (Running Average Power Limit) uses powercap
+- Common on laptops and servers for power management
+- Race can cause power capping features to fail during boot/module load
+- This is an existing bug that has been present since powercap was
+  introduced
 
-- **Who is affected:** Users of MediaTek SPI devices, particularly
-  ChromeOS users with embedded controllers
-- **Severity:** Medium-High - SPI transfer timeouts can cause
-  significant functionality issues
-- **Real-world impact:** Confirmed on MediaTek devices communicating
-  with ChromeOS EC
+**Risk vs Benefit:**
+- **Benefit**: Fixes a real race that causes functional failures
+- **Risk**: Very low - the fix follows standard kernel patterns and adds
+  proper cleanup
+- **Trade-off**: Strongly favors backporting
 
-### 6. DEPENDENCY CHECK
+**Concerns:**
+- No dependencies on other commits
+- The change is self-contained and should apply cleanly to stable trees
+- The powercap subsystem has existed since kernel 3.11, so applicable to
+  all current stable trees
 
-The prerequisite commit `5972eb05ca32` ("spi: spi-mt65xx: Use threaded
-interrupt for non-SPIMEM transfer") was first included in **v6.12-rc1**.
-This means:
-- This fix is only applicable to 6.12.y stable trees and newer
-- Older stable trees (6.6.y, 6.1.y, 5.15.y) don't have the threaded IRQ
-  code, so this fix doesn't apply
-
-### 7. SUMMARY
-
-| Criterion | Assessment |
-|-----------|------------|
-| Fixes real bug | ✅ Yes - SPI transfer timeouts |
-| Obviously correct | ✅ Yes - standard pattern |
-| Small and contained | ✅ Yes - 1 line change |
-| Tested | ✅ Yes - real hardware testing |
-| Risk | ✅ Very low |
-| Dependencies | ✅ Clear - requires 5972eb05ca32 (v6.12+) |
-
-### Conclusion
-
-This commit is an excellent candidate for stable backporting:
-
-1. **Fixes a real, user-visible bug**: SPI transfer timeouts on MediaTek
-   hardware
-2. **Minimal change**: Single flag addition, no logic changes
-3. **Obviously correct**: IRQF_ONESHOT is the proper pattern for
-   threaded IRQs with hardirq handlers that return IRQ_WAKE_THREAD
-4. **Low risk**: Well-understood kernel mechanism with no side effects
-5. **Tested**: Confirmed to resolve the issue on real ChromeOS EC
-   hardware
-
-The only consideration is that this fix only applies to stable trees
-with kernel 6.12 or later (which contain the prerequisite threaded IRQ
-commit). For those trees, this is a straightforward, low-risk fix that
-resolves real hardware issues.
+The fix is small, surgical, obviously correct, and addresses a real race
+condition that can cause user-visible failures. It meets all stable
+kernel criteria.
 
 **YES**
 
- drivers/spi/spi-mt65xx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/powercap/powercap_sys.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/spi/spi-mt65xx.c b/drivers/spi/spi-mt65xx.c
-index 4b40985af1ea..90e5813cfdc3 100644
---- a/drivers/spi/spi-mt65xx.c
-+++ b/drivers/spi/spi-mt65xx.c
-@@ -1320,7 +1320,7 @@ static int mtk_spi_probe(struct platform_device *pdev)
+diff --git a/drivers/powercap/powercap_sys.c b/drivers/powercap/powercap_sys.c
+index 4112a0097338..d14b36b75189 100644
+--- a/drivers/powercap/powercap_sys.c
++++ b/drivers/powercap/powercap_sys.c
+@@ -625,17 +625,23 @@ struct powercap_control_type *powercap_register_control_type(
+ 	INIT_LIST_HEAD(&control_type->node);
+ 	control_type->dev.class = &powercap_class;
+ 	dev_set_name(&control_type->dev, "%s", name);
+-	result = device_register(&control_type->dev);
+-	if (result) {
+-		put_device(&control_type->dev);
+-		return ERR_PTR(result);
+-	}
+ 	idr_init(&control_type->idr);
  
- 	ret = devm_request_threaded_irq(dev, irq, mtk_spi_interrupt,
- 					mtk_spi_interrupt_thread,
--					IRQF_TRIGGER_NONE, dev_name(dev), host);
-+					IRQF_ONESHOT, dev_name(dev), host);
- 	if (ret)
- 		return dev_err_probe(dev, ret, "failed to register irq\n");
+ 	mutex_lock(&powercap_cntrl_list_lock);
+ 	list_add_tail(&control_type->node, &powercap_cntrl_list);
+ 	mutex_unlock(&powercap_cntrl_list_lock);
  
++	result = device_register(&control_type->dev);
++	if (result) {
++		mutex_lock(&powercap_cntrl_list_lock);
++		list_del(&control_type->node);
++		mutex_unlock(&powercap_cntrl_list_lock);
++
++		idr_destroy(&control_type->idr);
++		put_device(&control_type->dev);
++		return ERR_PTR(result);
++	}
++
+ 	return control_type;
+ }
+ EXPORT_SYMBOL_GPL(powercap_register_control_type);
 -- 
 2.51.0
 
