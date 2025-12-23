@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D828F35772A;
-	Tue, 23 Dec 2025 10:05:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EC4E352924;
+	Tue, 23 Dec 2025 10:05:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766484331; cv=none; b=eDYZkfLkw5sAFbnyVP7eGV6tHPwlSazisT2G3ls81GDaX4mqht5dK9vyKZld/kK76lt59d4aHUEwMS2+SSztczKtDBXchnb8s694OorxC/7gaO2njlQSw0vZPQAXD38yQQPYIX2EuBO+u+qvRAvo+UBk9LM2/HUZjZoPYRXl4Jo=
+	t=1766484333; cv=none; b=LivSXPMbye4d8CL/khgHvJmCtrG6jDoeA65r9u5JVxNyJJk1sbkGz+einrbZzAVc01yhb21szcw9Mf9Hg/u3Fs+vmej+wLzJSjRztfZS9Ou0MR9xRlNKs5YM0t+fd48ZSrrV74YXOenvPQleSlcK2mKOPSBtlYaP3jNq2CbY+vE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766484331; c=relaxed/simple;
-	bh=2bElGj6oTaVx916jVSsTwC8Pc7YB1+/6sP52v4v8qrk=;
+	s=arc-20240116; t=1766484333; c=relaxed/simple;
+	bh=rChsQHFgw6m4AUqVRNGMigRgwXT1SpYVc8ZHsa6pfPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q0YNBP6I51J12a8KLOYJLsnW4ZI5mrgcw1R4Z/B/ibjUYy/4b6B1bAUPHvD8ddMRYF9iV7Xgd+4iHt0mr4BPJVIp06Kjz+TkEhfAOkxNwQQQ3UO/JBeER9dowoxDMZ+gPncn0INzjLNX3R8b7+hB4lc8v1sPj2HifY5rHE1yx94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u9vNJBwB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=T0uLpiTKhkEPqgx9QRNvqjs5facDXI0CttKdhKxlC4oNV8yeCkPRrxNqy5ylT9j65XpJ/K8zqvGHIYiHrRm09zY8uoND1lHqPjnLFCEUBZ54p3AfNRLydPq2Im6SKzz2WQ9/Wu/kZH8y0T4j3heuGB3Is2F6m8W7CauZdyhQ7nM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kJ99A9Ku; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u9vNJBwB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4701C113D0;
-	Tue, 23 Dec 2025 10:05:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kJ99A9Ku"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1E40C19423;
+	Tue, 23 Dec 2025 10:05:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766484331;
-	bh=2bElGj6oTaVx916jVSsTwC8Pc7YB1+/6sP52v4v8qrk=;
+	s=k20201202; t=1766484332;
+	bh=rChsQHFgw6m4AUqVRNGMigRgwXT1SpYVc8ZHsa6pfPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u9vNJBwBzKlcs1iotQo3Aud3FwV5HGfV0d8l9NULIJwKEoT9uv4jcqrsuI0nvAfhc
-	 r9QwSemUJNubJhWdtT+COwO4ahleqdeXym5IAhephj+vWAZGwnMcbUNeJYjNc5qSGX
-	 ZdG/cIueWN6Stnsm/tUFB2d+//9SD1m3h6jTeRjZkDk/L+RaR32ruNve2RM+yIMyMp
-	 Ot7sbhrezOQ3l97MJyurlVbjRSB8X+PrtEnQo39bBjaX/DOoZK8qlBJl86D5Ig4lxe
-	 0pogJzbZfKB0VcKQSLIRpcWiNTiY/uTYPQG+dtif6Jhxuvt0OVq6kyH91YW0YshWAD
-	 1Xy4uT+wAgYkw==
+	b=kJ99A9KuwTC5fQZ6EjAdCGs84HTC5i4YYHYki/7Eg6kCBATcmERbV11VLax0m0H7l
+	 ve10lVUAbczWIJUhim/QaofUInnHMhA5KiCyUkb0S4XvFRBMjZIIHXuVuAeJNr7fIV
+	 A2YLQOd/IJh7j7jLI97/lFul5UNiO4JeI1jFSW/GZpD1bSLTUxKE0I2kMgKBOcnkhQ
+	 BZD+kaGi6avcP8zQE4qFk0vb2EoJEpdq9myLm0mp3YbQGzHUOMq6Zp9mJrTUw8khvD
+	 tK44ePIxSDHYZ4GoKG2D9Ky89NzPaIoP61gJHQblm6Ee+q3KZn+U52RGC3UmZrZ0WO
+	 KqWOAXZgEyGcA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Lizhi Hou <lizhi.hou@amd.com>,
+Cc: Brian Kocoloski <brian.kocoloski@amd.com>,
+	Philip Yang <Philip.Yang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mamin506@gmail.com,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.18] accel/amdxdna: Block running under a hypervisor
-Date: Tue, 23 Dec 2025 05:05:13 -0500
-Message-ID: <20251223100518.2383364-9-sashal@kernel.org>
+	Felix.Kuehling@amd.com,
+	amd-gfx@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.18-6.12] drm/amdkfd: Fix improper NULL termination of queue restore SMI event string
+Date: Tue, 23 Dec 2025 05:05:14 -0500
+Message-ID: <20251223100518.2383364-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251223100518.2383364-1-sashal@kernel.org>
 References: <20251223100518.2383364-1-sashal@kernel.org>
@@ -52,160 +53,104 @@ X-stable-base: Linux 6.18.2
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Mario Limonciello (AMD)" <superm1@kernel.org>
+From: Brian Kocoloski <brian.kocoloski@amd.com>
 
-[ Upstream commit 7bbf6d15e935abbb3d604c1fa157350e84a26f98 ]
+[ Upstream commit 969faea4e9d01787c58bab4d945f7ad82dad222d ]
 
-SVA support is required, which isn't configured by hypervisor
-solutions.
+Pass character "0" rather than NULL terminator to properly format
+queue restoration SMI events. Currently, the NULL terminator precedes
+the newline character that is intended to delineate separate events
+in the SMI event buffer, which can break userspace parsers.
 
-Closes: https://github.com/QubesOS/qubes-issues/issues/10275
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4656
-Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20251213054513.87925-1-superm1@kernel.org
-Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Brian Kocoloski <brian.kocoloski@amd.com>
+Reviewed-by: Philip Yang <Philip.Yang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 6e7143e5e6e21f9d5572e0390f7089e6d53edf3c)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Commit Analysis: accel/amdxdna: Block running under a hypervisor
+## Summary
 
-### 1. COMMIT MESSAGE ANALYSIS
+### Technical Analysis
 
-The commit message indicates this fix prevents the amdxdna driver from
-running under hypervisors because SVA (Shared Virtual Addressing)
-support is required but not configured in hypervisor solutions. Two bug
-tracker links are provided:
-- QubesOS issue #10275
-- freedesktop.org AMD issue #4656
-
-This shows real users are hitting this problem.
-
-### 2. CODE CHANGE ANALYSIS
-
-The change is minimal:
-
+**The Bug:** Commit 663b0f1e141d introduced a refactoring that changed
+the inline format string to use the `KFD_EVENT_FMT_QUEUE_RESTORE` macro.
+This macro is defined as:
 ```c
-+#include <asm/hypervisor.h>
-...
-+       if (!hypervisor_is_type(X86_HYPER_NATIVE)) {
-+               XDNA_ERR(xdna, "Running under hypervisor not
-supported");
-+               return -EINVAL;
-+       }
+#define KFD_EVENT_FMT_QUEUE_RESTORE(ns, pid, node, rescheduled)\
+                "%lld -%d %x %c\n", (ns), (pid), (node), (rescheduled)
 ```
 
-The fix adds an early check in `aie2_init()` that:
-1. Uses the well-established x86 hypervisor detection infrastructure
-2. If not running on bare metal (native), prints an error and returns
-   -EINVAL
-3. This happens before any resource allocation, making it a clean early-
-   exit
+The format specifier `%c` expects a **character**. The buggy code passes
+integer `0` (which is the NULL terminator 0x00). When printed with `%c`,
+this NULL byte terminates the string before the newline `\n` gets
+written, causing:
+- Malformed event strings in the SMI buffer
+- Userspace parsers expecting newline-delimited events to fail
 
-**The bug mechanism:** Without this check, when users run this driver in
-virtualized environments (QubesOS, etc.), the driver attempts to
-initialize but fails due to missing SVA support. This leads to confusing
-errors, potential crashes, or undefined behavior. The fix makes the
-driver fail gracefully with a clear message.
+**The Fix:** Change `0` to `'0'` (ASCII character 0x30 = 48) so the `%c`
+format prints the character "0" followed by the newline.
 
-### 3. CLASSIFICATION
+**Evidence the fix is correct:**
+1. The sibling function `kfd_smi_event_queue_restore_rescheduled`
+   correctly uses `'R'` (a character) for the same parameter
+2. The format specifier is `%c` which requires a character
+3. The original pre-refactoring code had no character parameter at all
+   (format was `"%lld -%d %x\n"`)
 
-This is a **bug fix** - specifically a "graceful failure" fix that
-prevents the driver from attempting an unsupported configuration. It
-does not add features; it blocks an unsupported environment with a clear
-error.
+### Stable Kernel Criteria Assessment
 
-### 4. SCOPE AND RISK ASSESSMENT
+| Criteria | Assessment |
+|----------|------------|
+| Obviously correct | ✅ Yes - format `%c` requires character, `'0'` vs
+`0` is clearly the fix |
+| Fixes real bug | ✅ Yes - breaks userspace parsers relying on newline-
+delimited events |
+| Important issue | ✅ Yes - affects userspace ABI/behavior |
+| Small and contained | ✅ Yes - 1 line, 1 file, single character change
+|
+| No new features | ✅ Correct - no new functionality |
+| Tested | ✅ Reviewed-by and cherry-picked from mainline |
 
-- **Lines changed:** 5 lines (1 include + 4 lines of logic)
-- **Files touched:** 1 file
-- **Complexity:** Very low - trivial conditional check
-- **Risk:** Very low - early return before any resource allocation
-- **Dependencies:** Uses `hypervisor_is_type()` and `X86_HYPER_NATIVE`
-  which have been in the kernel for years (x86 hypervisor detection is
-  mature infrastructure)
+### Risk Assessment
 
-### 5. USER IMPACT
+- **Risk:** Extremely low - the change is trivial and obviously correct
+- **Scope:** Only affects AMD GPU users using SMI event monitoring
+- **Regression potential:** None - this is restoring correct behavior
 
-- **Affected users:** Those running VMs (QubesOS, etc.) with AMD XDNA
-  hardware
-- **Severity without fix:** Confusing failures, crashes, or undefined
-  behavior when attempting to use the driver
-- **Severity with fix:** Clean error message explaining the limitation
+### Affected Versions
 
-The linked issues show this is a real problem users are encountering.
+The bug was introduced in commit 663b0f1e141d which landed in v6.12-rc1.
+This fix is relevant for the 6.12.y stable branch.
 
-### 6. STABILITY INDICATORS
+### Conclusion
 
-- Has `Reviewed-by:` from AMD engineer (Lizhi Hou)
-- Has real bug reports from multiple sources
-- Simple, obvious fix
-
-### 7. DEPENDENCY CHECK
-
-The amdxdna driver is relatively new (added around kernel 6.11-6.12). It
-exists in:
-- Recent mainline releases
-- Potentially only very recent stable trees (6.12.x if supported)
-
-The hypervisor detection APIs used (`hypervisor_is_type`,
-`X86_HYPER_NATIVE`) are stable and have existed for years.
-
-### 8. STABLE CRITERIA ASSESSMENT
-
-| Criterion | Assessment |
-|-----------|------------|
-| Obviously correct | ✅ Yes - trivial check |
-| Fixes real bug | ✅ Yes - prevents crashes in VMs |
-| Important issue | ✅ Yes - affects VM users |
-| Small/contained | ✅ Yes - 5 lines |
-| No new features | ✅ Yes - disables unsupported config |
-| Low risk | ✅ Yes - clean early return |
-
-### CONCLUSION
-
-This commit is appropriate for stable backporting. It's a small, low-
-risk fix that prevents the driver from running in unsupported
-virtualized environments where it would otherwise fail with confusing
-behavior or crashes. The fix is surgically precise - adding an early
-check with a clean error return.
-
-The stable maintainers will only apply this to kernel versions that
-contain the amdxdna driver (likely only very recent stable trees like
-6.12.x). The patch itself meets all stable criteria: obviously correct,
-fixes a real bug that users are hitting, small scope, and no new
-features.
+This is an ideal stable backport candidate: a small, obvious, low-risk
+fix for a user-visible bug that breaks userspace tools. The fix is
+trivial (single character), has clear evidence of correctness, and has
+been reviewed by AMD engineers. The commit message clearly explains the
+problem and the solution.
 
 **YES**
 
- drivers/accel/amdxdna/aie2_pci.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_smi_events.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/accel/amdxdna/aie2_pci.c b/drivers/accel/amdxdna/aie2_pci.c
-index 43f725e1a2d7..6e07793bbeac 100644
---- a/drivers/accel/amdxdna/aie2_pci.c
-+++ b/drivers/accel/amdxdna/aie2_pci.c
-@@ -17,6 +17,7 @@
- #include <linux/iopoll.h>
- #include <linux/pci.h>
- #include <linux/xarray.h>
-+#include <asm/hypervisor.h>
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_smi_events.c b/drivers/gpu/drm/amd/amdkfd/kfd_smi_events.c
+index a499449fcb06..d2bc169e84b0 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_smi_events.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_smi_events.c
+@@ -312,7 +312,7 @@ void kfd_smi_event_queue_restore(struct kfd_node *node, pid_t pid)
+ {
+ 	kfd_smi_event_add(pid, node, KFD_SMI_EVENT_QUEUE_RESTORE,
+ 			  KFD_EVENT_FMT_QUEUE_RESTORE(ktime_get_boottime_ns(), pid,
+-			  node->id, 0));
++			  node->id, '0'));
+ }
  
- #include "aie2_msg_priv.h"
- #include "aie2_pci.h"
-@@ -486,6 +487,11 @@ static int aie2_init(struct amdxdna_dev *xdna)
- 	unsigned long bars = 0;
- 	int i, nvec, ret;
- 
-+	if (!hypervisor_is_type(X86_HYPER_NATIVE)) {
-+		XDNA_ERR(xdna, "Running under hypervisor not supported");
-+		return -EINVAL;
-+	}
-+
- 	ndev = drmm_kzalloc(&xdna->ddev, sizeof(*ndev), GFP_KERNEL);
- 	if (!ndev)
- 		return -ENOMEM;
+ void kfd_smi_event_queue_restore_rescheduled(struct mm_struct *mm)
 -- 
 2.51.0
 
