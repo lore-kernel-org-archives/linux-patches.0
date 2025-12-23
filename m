@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7C60352931;
-	Tue, 23 Dec 2025 10:05:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D487A3502B1;
+	Tue, 23 Dec 2025 10:05:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766484324; cv=none; b=aqsdDXyQ4C8px2UfF5MlBVZTrADr+V+Wvm0lyyVb0Jou90cRY8CPHje0ga033YyVro4DgTSeC+Entw+Fy2SLLzArC9bhYNXfBO9hlZY5+H1hxTxYlggSggURa/cUKVglbmfEFflc1Y8ChMVDxVRcjiLNcXaZab9Y+k8H6nrNvHw=
+	t=1766484324; cv=none; b=SohFHcy9h83tXCfFK6L70m4Vf8N9zha+c0gSN+iyInkVK0lJz7BkzKxCj+/P19txr1+DJANej+QJ4WtAhQdtMngXG5+2WyOlP2rezi1rRDe/+wLM3OR7TuDS5/nQRJB3FkLLzZWBnB3HAhE5qVKNa4JGmvhTtkqkkKWou/sLVcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1766484324; c=relaxed/simple;
-	bh=QU3vKK3fAi+EkXtG1LRInpCrVPsy7c3PzEqqyr9a60o=;
+	bh=/zYcG2xYSdYnuLSHKUx/IzmXhDPgwtNTHCfAvrduQQU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IdA5SrtfkCxpHaa2QdK0WL+ezeYV6jyq85gDiAwkOeiUm7Le02L6YbnxAEFVEb9Ct5fo0jHeBtZ2M35m/HaSNBejmLOnPIxMYL1CMDHSTV7p745QAyoEZ9W5JX8zF/evHIa8plC1BbNabrwHTmA4TVzENjxWj0m3lkcB0UTEdN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kWaN7fW6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OcsQdNHKjoeMG2IS3TUxGLEzb1bdDASesp7MiQvrIIAEcOG1scjO2oEMOyZFkemtakvD0ZymNQ1cjNnoKUCaVkGVCdytRS5RGsNgezIFPhuCFtUayMsVMUPmGUU00JVh3vTOrDN8ZmjPC31C52RGPuGK0z1zuYIO/R4/Qu5tAJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fKLFqC2U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kWaN7fW6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E654C113D0;
-	Tue, 23 Dec 2025 10:05:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fKLFqC2U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEDB3C19423;
+	Tue, 23 Dec 2025 10:05:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766484324;
-	bh=QU3vKK3fAi+EkXtG1LRInpCrVPsy7c3PzEqqyr9a60o=;
+	s=k20201202; t=1766484322;
+	bh=/zYcG2xYSdYnuLSHKUx/IzmXhDPgwtNTHCfAvrduQQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kWaN7fW6DhGsHZ03v0aWutGIXIk0AnySLmLRRXy08kCQ5sLNxBbR8K7QccqCJgaHO
-	 pnmnU/UChzLpi3ly3m1cTygs1eSeFC1u+33Av7XTYHwKxpzFAjQbIa67wVTo4Nk7LD
-	 MbsfhwlUDIXUpVyOMKtAQwnh40FJ1KRsufMlUnPbv+2BBMnnvyznhSaUU0Urev364R
-	 WH7K8wa5OwdqGmzLo88/Xyw4MvAeR4oPbzvqeM4Ydiyc0/jU0MappC8LwZdKavtp8v
-	 WVXRlA6DiNYq7vTbW4wBpB0EDzWo8lZrnOtKPF7FZf/nuhpxwZk9smns9YgKl0TbJ0
-	 IB5IydwAqIlKQ==
+	b=fKLFqC2Uk/cCGXFRXMAn2Gzcw2zEpSryMzNseG+JvPxBF8EekqKOGdnG/KNk/s8/v
+	 HV4Y4xH1RZuMNpSqWtzbp5D1p4NZ3HMtz8kl1dGnfqkMmzAsxo8bNnfTs3Q4Kb3YuQ
+	 0fo0oiZxQGYse9MTDFSVEw6mrVUJg9J3MHYV2vOZ1Q+Ec7ixU5NGk4aJXwHAUsfOIS
+	 6z3ba3eJ5QoEmSPBLC9MnCHHm1EJ1Rj1v2tAGt/WCVSykxcD2rZRCXTdxbVOXzFVSt
+	 386BYtxKRVwG68h186xPxLf218r6+T+4G6tdkVYnTSXb9FG9Gdm4/N74J80viarGH5
+	 jxpDYjn7Vwgdg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	syzbot <syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+Cc: Fei Shao <fshao@chromium.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	robin@protonic.nl,
-	linux-can@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] can: j1939: make j1939_session_activate() fail if device is no longer registered
-Date: Tue, 23 Dec 2025 05:05:08 -0500
-Message-ID: <20251223100518.2383364-4-sashal@kernel.org>
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	linux-spi@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.18-6.12] spi: mt65xx: Use IRQF_ONESHOT with threaded IRQ
+Date: Tue, 23 Dec 2025 05:05:07 -0500
+Message-ID: <20251223100518.2383364-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251223100518.2383364-1-sashal@kernel.org>
 References: <20251223100518.2383364-1-sashal@kernel.org>
@@ -54,108 +56,113 @@ X-stable-base: Linux 6.18.2
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Fei Shao <fshao@chromium.org>
 
-[ Upstream commit 5d5602236f5db19e8b337a2cd87a90ace5ea776d ]
+[ Upstream commit 8c04b77f87e6e321ae6acd28ce1de5553916153f ]
 
-syzbot is still reporting
+This driver is migrated to use threaded IRQ since commit 5972eb05ca32
+("spi: spi-mt65xx: Use threaded interrupt for non-SPIMEM transfer"), and
+we almost always want to disable the interrupt line to avoid excess
+interrupts while the threaded handler is processing SPI transfer.
+Use IRQF_ONESHOT for that purpose.
 
-  unregister_netdevice: waiting for vcan0 to become free. Usage count = 2
+In practice, we see MediaTek devices show SPI transfer timeout errors
+when communicating with ChromeOS EC in certain scenarios, and with
+IRQF_ONESHOT, the issue goes away.
 
-even after commit 93a27b5891b8 ("can: j1939: add missing calls in
-NETDEV_UNREGISTER notification handler") was added. A debug printk() patch
-found that j1939_session_activate() can succeed even after
-j1939_cancel_active_session() from j1939_netdev_notify(NETDEV_UNREGISTER)
-has completed.
-
-Since j1939_cancel_active_session() is processed with the session list lock
-held, checking ndev->reg_state in j1939_session_activate() with the session
-list lock held can reliably close the race window.
-
-Reported-by: syzbot <syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=881d65229ca4f9ae8c84
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/b9653191-d479-4c8b-8536-1326d028db5c@I-love.SAKURA.ne.jp
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Fei Shao <fshao@chromium.org>
+Link: https://patch.msgid.link/20251217101131.1975131-1-fshao@chromium.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
----
+### 4. SCOPE AND RISK ASSESSMENT
 
-## FINAL ANALYSIS SUMMARY
+- **Lines changed:** 1 line
+- **Files touched:** 1 file
+- **Complexity:** Trivially low - just a flag change
+- **Risk:** Very low
 
-### What the commit fixes:
-A race condition in the CAN J1939 protocol driver where
-`j1939_session_activate()` can succeed even after
-`j1939_cancel_active_session()` from the NETDEV_UNREGISTER handler has
-completed. This leaves orphaned sessions with references to devices
-being unregistered, causing the "waiting for device to become free"
-hang.
+The fix is:
+- **Obviously correct**: IRQF_ONESHOT is the documented standard for
+  threaded interrupts
+- **Small and contained**: One flag change
+- **Fixes a real bug**: Transfer timeout errors on real hardware
 
-### Why it matters to stable users:
-- **System hang**: The bug can cause network device unregistration to
-  hang indefinitely
-- **Syzbot reproducible**: The bug was found by automated fuzzing,
-  meaning it's triggerable in practice
-- **CAN J1939 users**: Affects automotive and industrial systems using
-  the CAN J1939 protocol
+Looking at the interrupt handler code:
+- `mtk_spi_interrupt` returns `IRQ_WAKE_THREAD` for non-SPIMEM transfers
+- Without IRQF_ONESHOT, the IRQ line stays enabled, allowing repeated
+  interrupts while the thread processes
+- This causes race conditions on `mdata->state` and transfer handling,
+  leading to timeouts
 
-### Stable kernel rule compliance:
+### 5. USER IMPACT
+
+- **Who is affected:** Users of MediaTek SPI devices, particularly
+  ChromeOS users with embedded controllers
+- **Severity:** Medium-High - SPI transfer timeouts can cause
+  significant functionality issues
+- **Real-world impact:** Confirmed on MediaTek devices communicating
+  with ChromeOS EC
+
+### 6. DEPENDENCY CHECK
+
+The prerequisite commit `5972eb05ca32` ("spi: spi-mt65xx: Use threaded
+interrupt for non-SPIMEM transfer") was first included in **v6.12-rc1**.
+This means:
+- This fix is only applicable to 6.12.y stable trees and newer
+- Older stable trees (6.6.y, 6.1.y, 5.15.y) don't have the threaded IRQ
+  code, so this fix doesn't apply
+
+### 7. SUMMARY
 
 | Criterion | Assessment |
 |-----------|------------|
-| Obviously correct | ✅ Yes - simple check using established kernel
-pattern |
-| Fixes real bug | ✅ Yes - syzbot-reported hang |
-| Small and contained | ✅ Yes - 2 lines added, 1 file changed |
-| No new features | ✅ Correct - only adds error path |
-| Tested | ✅ Has Acked-by from maintainer |
+| Fixes real bug | ✅ Yes - SPI transfer timeouts |
+| Obviously correct | ✅ Yes - standard pattern |
+| Small and contained | ✅ Yes - 1 line change |
+| Tested | ✅ Yes - real hardware testing |
+| Risk | ✅ Very low |
+| Dependencies | ✅ Clear - requires 5972eb05ca32 (v6.12+) |
 
-### Risk assessment:
-- **Very low risk**: The change only adds a conditional check before
-  adding a session to the active list
-- **Uses established pattern**: `dev->reg_state != NETREG_REGISTERED` is
-  used throughout net/can/raw.c and other networking code
-- **Cannot break existing functionality**: Adds a new error return path
-  that's already properly handled (callers handle error returns)
+### Conclusion
 
-### Dependencies:
-- The fix is logically independent - it adds a safety check that works
-  regardless of other commits
-- The related commit 93a27b5891b8 is about a different part of the fix
-  (adding missing calls in the unregister handler)
-- Both commits are improvements to the same underlying issue but can be
-  applied separately
+This commit is an excellent candidate for stable backporting:
 
-### Conclusion:
-This is a textbook example of a good stable backport candidate:
-1. Fixes a real, user-visible bug (system hang)
-2. Minimal change (2 lines)
-3. Uses established kernel patterns
-4. Has proper subsystem maintainer review
-5. Low risk of regression
+1. **Fixes a real, user-visible bug**: SPI transfer timeouts on MediaTek
+   hardware
+2. **Minimal change**: Single flag addition, no logic changes
+3. **Obviously correct**: IRQF_ONESHOT is the proper pattern for
+   threaded IRQs with hardirq handlers that return IRQ_WAKE_THREAD
+4. **Low risk**: Well-understood kernel mechanism with no side effects
+5. **Tested**: Confirmed to resolve the issue on real ChromeOS EC
+   hardware
+
+The only consideration is that this fix only applies to stable trees
+with kernel 6.12 or later (which contain the prerequisite threaded IRQ
+commit). For those trees, this is a straightforward, low-risk fix that
+resolves real hardware issues.
 
 **YES**
 
- net/can/j1939/transport.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/spi/spi-mt65xx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/can/j1939/transport.c b/net/can/j1939/transport.c
-index fbf5c8001c9d..613a911dda10 100644
---- a/net/can/j1939/transport.c
-+++ b/net/can/j1939/transport.c
-@@ -1567,6 +1567,8 @@ int j1939_session_activate(struct j1939_session *session)
- 	if (active) {
- 		j1939_session_put(active);
- 		ret = -EAGAIN;
-+	} else if (priv->ndev->reg_state != NETREG_REGISTERED) {
-+		ret = -ENODEV;
- 	} else {
- 		WARN_ON_ONCE(session->state != J1939_SESSION_NEW);
- 		list_add_tail(&session->active_session_list_entry,
+diff --git a/drivers/spi/spi-mt65xx.c b/drivers/spi/spi-mt65xx.c
+index 4b40985af1ea..90e5813cfdc3 100644
+--- a/drivers/spi/spi-mt65xx.c
++++ b/drivers/spi/spi-mt65xx.c
+@@ -1320,7 +1320,7 @@ static int mtk_spi_probe(struct platform_device *pdev)
+ 
+ 	ret = devm_request_threaded_irq(dev, irq, mtk_spi_interrupt,
+ 					mtk_spi_interrupt_thread,
+-					IRQF_TRIGGER_NONE, dev_name(dev), host);
++					IRQF_ONESHOT, dev_name(dev), host);
+ 	if (ret)
+ 		return dev_err_probe(dev, ret, "failed to register irq\n");
+ 
 -- 
 2.51.0
 
