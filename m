@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E4A350D58;
-	Tue, 23 Dec 2025 10:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7C60352931;
+	Tue, 23 Dec 2025 10:05:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766484322; cv=none; b=OnxVEptcMSFqxlNovTb58oLJNStSLoVKeVgq6ME6Vvn8am2t610sAefMv+3KF2b5NaBbeVhJf24cRPfiVVcwWtfy1NVYXH663eMwQsrZI/iyRlIhOxYq4PlhnJ5wjMRUXk7jcibhbB6Y4MFphi73tJo31WkbqpoixTN8jGQ2xco=
+	t=1766484324; cv=none; b=aqsdDXyQ4C8px2UfF5MlBVZTrADr+V+Wvm0lyyVb0Jou90cRY8CPHje0ga033YyVro4DgTSeC+Entw+Fy2SLLzArC9bhYNXfBO9hlZY5+H1hxTxYlggSggURa/cUKVglbmfEFflc1Y8ChMVDxVRcjiLNcXaZab9Y+k8H6nrNvHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766484322; c=relaxed/simple;
-	bh=ZC3lK8Ir+YU2yV9VH4rrxpOsk7hVKGxbKcBXjjOgC8o=;
+	s=arc-20240116; t=1766484324; c=relaxed/simple;
+	bh=QU3vKK3fAi+EkXtG1LRInpCrVPsy7c3PzEqqyr9a60o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JcMt3cW0U+RfA32iJNXFSEJd4ebETyJ6nQxX7R8LVellS8bm/nbZIY5+RE/NgxyCt+dErMhYZrAt33ewY5s6KFZJnpB8raZAVjnOLdD9uwm74fH40LrRuO05IoUkS8nNUbhChW8kIKK/uCWgDB82xcZZaV3d81CE5bjLIu3zrEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QfxSmWa4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IdA5SrtfkCxpHaa2QdK0WL+ezeYV6jyq85gDiAwkOeiUm7Le02L6YbnxAEFVEb9Ct5fo0jHeBtZ2M35m/HaSNBejmLOnPIxMYL1CMDHSTV7p745QAyoEZ9W5JX8zF/evHIa8plC1BbNabrwHTmA4TVzENjxWj0m3lkcB0UTEdN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kWaN7fW6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QfxSmWa4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 981DCC19421;
-	Tue, 23 Dec 2025 10:05:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kWaN7fW6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E654C113D0;
+	Tue, 23 Dec 2025 10:05:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766484321;
-	bh=ZC3lK8Ir+YU2yV9VH4rrxpOsk7hVKGxbKcBXjjOgC8o=;
+	s=k20201202; t=1766484324;
+	bh=QU3vKK3fAi+EkXtG1LRInpCrVPsy7c3PzEqqyr9a60o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QfxSmWa43F6rgrmO3SJZbZl1dyKCkEXYrYneH5aaAGj/5tkFMFYd6nfF0KMkIhvX8
-	 9SWEbkjx5PPTgG1Wa1t4KDNu5i1i0lUD+SQU5vZGGCYv2+F20jYe9N3sTLUcA81BOs
-	 XfaW5OhVgKYKsuOn+VbD1F2xB+wTMsRt1bkrnE5wFtJIIyw8lyovsn5ffEegy3Bk4l
-	 lUErzd1Rm0SgsvWtSJGc2xfkQEyK7w0KWo0AdM2ntftkgVzR+sSo14SPc+tyeUt6SK
-	 E2yD0m38YXBpfIUdqeGJVGjMw1jIEml7DU+BRt8ylogHqecbPz3Nzj2mQn5nGA+0BW
-	 eqp3rt7/7+iCw==
+	b=kWaN7fW6DhGsHZ03v0aWutGIXIk0AnySLmLRRXy08kCQ5sLNxBbR8K7QccqCJgaHO
+	 pnmnU/UChzLpi3ly3m1cTygs1eSeFC1u+33Av7XTYHwKxpzFAjQbIa67wVTo4Nk7LD
+	 MbsfhwlUDIXUpVyOMKtAQwnh40FJ1KRsufMlUnPbv+2BBMnnvyznhSaUU0Urev364R
+	 WH7K8wa5OwdqGmzLo88/Xyw4MvAeR4oPbzvqeM4Ydiyc0/jU0MappC8LwZdKavtp8v
+	 WVXRlA6DiNYq7vTbW4wBpB0EDzWo8lZrnOtKPF7FZf/nuhpxwZk9smns9YgKl0TbJ0
+	 IB5IydwAqIlKQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Florian Westphal <fw@strlen.de>,
-	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>,
+Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	syzbot <syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>,
-	pablo@netfilter.org,
-	netfilter-devel@vger.kernel.org,
-	coreteam@netfilter.org
-Subject: [PATCH AUTOSEL 6.18-6.6] netfilter: nf_tables: avoid chain re-validation if possible
-Date: Tue, 23 Dec 2025 05:05:06 -0500
-Message-ID: <20251223100518.2383364-2-sashal@kernel.org>
+	robin@protonic.nl,
+	linux-can@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] can: j1939: make j1939_session_activate() fail if device is no longer registered
+Date: Tue, 23 Dec 2025 05:05:08 -0500
+Message-ID: <20251223100518.2383364-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251223100518.2383364-1-sashal@kernel.org>
 References: <20251223100518.2383364-1-sashal@kernel.org>
@@ -50,389 +51,111 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.2
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 8e1a1bc4f5a42747c08130b8242ebebd1210b32f ]
+[ Upstream commit 5d5602236f5db19e8b337a2cd87a90ace5ea776d ]
 
-Hamza Mahfooz reports cpu soft lock-ups in
-nft_chain_validate():
+syzbot is still reporting
 
- watchdog: BUG: soft lockup - CPU#1 stuck for 27s! [iptables-nft-re:37547]
-[..]
- RIP: 0010:nft_chain_validate+0xcb/0x110 [nf_tables]
-[..]
-  nft_immediate_validate+0x36/0x50 [nf_tables]
-  nft_chain_validate+0xc9/0x110 [nf_tables]
-  nft_immediate_validate+0x36/0x50 [nf_tables]
-  nft_chain_validate+0xc9/0x110 [nf_tables]
-  nft_immediate_validate+0x36/0x50 [nf_tables]
-  nft_chain_validate+0xc9/0x110 [nf_tables]
-  nft_immediate_validate+0x36/0x50 [nf_tables]
-  nft_chain_validate+0xc9/0x110 [nf_tables]
-  nft_immediate_validate+0x36/0x50 [nf_tables]
-  nft_chain_validate+0xc9/0x110 [nf_tables]
-  nft_immediate_validate+0x36/0x50 [nf_tables]
-  nft_chain_validate+0xc9/0x110 [nf_tables]
-  nft_table_validate+0x6b/0xb0 [nf_tables]
-  nf_tables_validate+0x8b/0xa0 [nf_tables]
-  nf_tables_commit+0x1df/0x1eb0 [nf_tables]
-[..]
+  unregister_netdevice: waiting for vcan0 to become free. Usage count = 2
 
-Currently nf_tables will traverse the entire table (chain graph), starting
-from the entry points (base chains), exploring all possible paths
-(chain jumps).  But there are cases where we could avoid revalidation.
+even after commit 93a27b5891b8 ("can: j1939: add missing calls in
+NETDEV_UNREGISTER notification handler") was added. A debug printk() patch
+found that j1939_session_activate() can succeed even after
+j1939_cancel_active_session() from j1939_netdev_notify(NETDEV_UNREGISTER)
+has completed.
 
-Consider:
-1  input -> j2 -> j3
-2  input -> j2 -> j3
-3  input -> j1 -> j2 -> j3
+Since j1939_cancel_active_session() is processed with the session list lock
+held, checking ndev->reg_state in j1939_session_activate() with the session
+list lock held can reliably close the race window.
 
-Then the second rule does not need to revalidate j2, and, by extension j3,
-because this was already checked during validation of the first rule.
-We need to validate it only for rule 3.
-
-This is needed because chain loop detection also ensures we do not exceed
-the jump stack: Just because we know that j2 is cycle free, its last jump
-might now exceed the allowed stack size.  We also need to update all
-reachable chains with the new largest observed call depth.
-
-Care has to be taken to revalidate even if the chain depth won't be an
-issue: chain validation also ensures that expressions are not called from
-invalid base chains.  For example, the masquerade expression can only be
-called from NAT postrouting base chains.
-
-Therefore we also need to keep record of the base chain context (type,
-hooknum) and revalidate if the chain becomes reachable from a different
-hook location.
-
-Reported-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
-Closes: https://lore.kernel.org/netfilter-devel/20251118221735.GA5477@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net/
-Tested-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Reported-by: syzbot <syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=881d65229ca4f9ae8c84
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/b9653191-d479-4c8b-8536-1326d028db5c@I-love.SAKURA.ne.jp
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Commit Analysis: netfilter: nf_tables: avoid chain re-validation if
-possible
+---
 
-### 1. COMMIT MESSAGE ANALYSIS
+## FINAL ANALYSIS SUMMARY
 
-**Bug Indicators:**
-- Reports CPU soft lock-ups in `nft_chain_validate()` - a serious
-  denial-of-service condition
-- Stack trace shows recursive validation causing 27+ second lockups
-- Has `Reported-by:` and `Tested-by:` tags from Hamza Mahfooz
-  (Microsoft)
-- Has `Closes:` link to lore.kernel.org bug report
+### What the commit fixes:
+A race condition in the CAN J1939 protocol driver where
+`j1939_session_activate()` can succeed even after
+`j1939_cancel_active_session()` from the NETDEV_UNREGISTER handler has
+completed. This leaves orphaned sessions with references to devices
+being unregistered, causing the "waiting for device to become free"
+hang.
 
-The commit explains that chain validation currently traverses the entire
-table graph, causing exponential complexity when chains are reachable
-through multiple paths. This is a clear performance/DoS bug, not a
-feature addition.
+### Why it matters to stable users:
+- **System hang**: The bug can cause network device unregistration to
+  hang indefinitely
+- **Syzbot reproducible**: The bug was found by automated fuzzing,
+  meaning it's triggerable in practice
+- **CAN J1939 users**: Affects automotive and industrial systems using
+  the CAN J1939 protocol
 
-### 2. CODE CHANGE ANALYSIS
+### Stable kernel rule compliance:
 
-**Changes to nf_tables.h:**
-- Adds new `struct nft_chain_validate_state` with hook_mask and depth
-  tracking
-- Adds `vstate` field to `struct nft_chain` for validation state caching
-- Changes `nft_chain_validate()` signature to allow chain modification
+| Criterion | Assessment |
+|-----------|------------|
+| Obviously correct | ✅ Yes - simple check using established kernel
+pattern |
+| Fixes real bug | ✅ Yes - syzbot-reported hang |
+| Small and contained | ✅ Yes - 2 lines added, 1 file changed |
+| No new features | ✅ Correct - only adds error path |
+| Tested | ✅ Has Acked-by from maintainer |
 
-**Changes to nf_tables_api.c:**
-- `nft_chain_vstate_valid()`: New function checking if chain is already
-  validated for current context
-- `nft_chain_vstate_update()`: Updates chain's validation state after
-  successful validation
-- `nft_chain_validate()`: Added early-exit when chain already validated,
-  added depth/base-chain checks
-- `nft_table_validate()`: Added cleanup loop to clear vstate after
-  validation completes
+### Risk assessment:
+- **Very low risk**: The change only adds a conditional check before
+  adding a session to the active list
+- **Uses established pattern**: `dev->reg_state != NETREG_REGISTERED` is
+  used throughout net/can/raw.c and other networking code
+- **Cannot break existing functionality**: Adds a new error return path
+  that's already properly handled (callers handle error returns)
 
-**The technical fix:** Implements memoization to avoid redundant chain
-validation. If a chain has already been validated at the current call
-depth and hook context, skip re-validation.
+### Dependencies:
+- The fix is logically independent - it adds a safety check that works
+  regardless of other commits
+- The related commit 93a27b5891b8 is about a different part of the fix
+  (adding missing calls in the unregister handler)
+- Both commits are improvements to the same underlying issue but can be
+  applied separately
 
-### 3. CLASSIFICATION
-
-This is a **bug fix** for a denial-of-service condition. While it adds
-new structures for state tracking, the purpose is purely to fix the
-exponential validation complexity causing soft lockups.
-
-### 4. SCOPE AND RISK ASSESSMENT
-
-**Size:** ~60 lines added across 2 files
-**Complexity:** Moderate - adds memoization logic with proper cleanup
-
-**Risks:**
-- Changes validation logic which is security-critical
-- If memoization is incorrect, could theoretically allow invalid chains
-  or block valid ones
-- New field in `struct nft_chain`
-
-**Mitigations:**
-- Well-structured with defensive checks (`WARN_ON_ONCE`, `BUILD_BUG_ON`)
-- Cleanup loop at end of `nft_table_validate()` ensures no stale state
-- vstate only used during control plane commit phase
-- Trusted author (Florian Westphal, netfilter maintainer)
-
-### 5. USER IMPACT
-
-**Severity: HIGH**
-- CPU soft lockups make the system unresponsive for 27+ seconds
-- Triggered by iptables-nft/nftables operations with complex rulesets
-- Affects any user managing firewalls with multiple jump paths between
-  chains
-- Could potentially be exploited for DoS if unprivileged users can
-  modify rules
-
-### 6. STABILITY INDICATORS
-
-- `Reported-by:` and `Tested-by:` from the same reporter confirms the
-  fix works
-- Author is a well-known netfilter maintainer
-- Clear technical explanation in commit message
-- The fix targets existing core netfilter code that exists in stable
-  trees
-
-### 7. DEPENDENCY CHECK
-
-Looking at the code, this doesn't appear to depend on other recent
-commits. It uses existing macros and structures (`nft_is_base_chain`,
-`nft_base_chain`, etc.) that should exist in stable kernels.
-
-### DECISION ANALYSIS
-
-**Pro-backport:**
-1. Fixes real user-reported DoS (CPU soft lockup for 27+ seconds)
-2. Tested by reporter, confirmed to resolve the issue
-3. Authored by trusted netfilter maintainer
-4. Netfilter is critical infrastructure - firewall lockups are serious
-5. The bug affects real-world complex rulesets
-
-**Against-backport:**
-1. Larger than typical stable patches (~60 lines)
-2. Adds new data structure and field
-3. Touches security-critical validation path
-4. Some complexity in the memoization logic
-
-### CONCLUSION
-
-Despite being larger than a typical stable fix, this commit addresses a
-**severe denial-of-service condition** (soft lockups) in critical
-firewall infrastructure. The 27+ second lockups render systems unusable
-and this has real user impact. The fix is well-designed with proper
-cleanup, tested by the reporter, and authored by a trusted netfilter
-maintainer. The stable kernel rules explicitly allow fixes for "serious
-crash, deadlock" issues - soft lockups fall into this category.
-
-The benefit (fixing DoS) significantly outweighs the risk, and the code
-quality/testing gives confidence in the fix's correctness.
+### Conclusion:
+This is a textbook example of a good stable backport candidate:
+1. Fixes a real, user-visible bug (system hang)
+2. Minimal change (2 lines)
+3. Uses established kernel patterns
+4. Has proper subsystem maintainer review
+5. Low risk of regression
 
 **YES**
 
- include/net/netfilter/nf_tables.h | 34 +++++++++++----
- net/netfilter/nf_tables_api.c     | 69 +++++++++++++++++++++++++++++--
- 2 files changed, 91 insertions(+), 12 deletions(-)
+ net/can/j1939/transport.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index fab7dc73f738..0e266c2d0e7f 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -1091,6 +1091,29 @@ struct nft_rule_blob {
- 		__attribute__((aligned(__alignof__(struct nft_rule_dp))));
- };
- 
-+enum nft_chain_types {
-+	NFT_CHAIN_T_DEFAULT = 0,
-+	NFT_CHAIN_T_ROUTE,
-+	NFT_CHAIN_T_NAT,
-+	NFT_CHAIN_T_MAX
-+};
-+
-+/**
-+ *	struct nft_chain_validate_state - validation state
-+ *
-+ *	If a chain is encountered again during table validation it is
-+ *	possible to avoid revalidation provided the calling context is
-+ *	compatible.  This structure stores relevant calling context of
-+ *	previous validations.
-+ *
-+ *	@hook_mask: the hook numbers and locations the chain is linked to
-+ *	@depth: the deepest call chain level the chain is linked to
-+ */
-+struct nft_chain_validate_state {
-+	u8			hook_mask[NFT_CHAIN_T_MAX];
-+	u8			depth;
-+};
-+
- /**
-  *	struct nft_chain - nf_tables chain
-  *
-@@ -1109,6 +1132,7 @@ struct nft_rule_blob {
-  *	@udlen: user data length
-  *	@udata: user data in the chain
-  *	@blob_next: rule blob pointer to the next in the chain
-+ *	@vstate: validation state
-  */
- struct nft_chain {
- 	struct nft_rule_blob		__rcu *blob_gen_0;
-@@ -1128,9 +1152,10 @@ struct nft_chain {
- 
- 	/* Only used during control plane commit phase: */
- 	struct nft_rule_blob		*blob_next;
-+	struct nft_chain_validate_state vstate;
- };
- 
--int nft_chain_validate(const struct nft_ctx *ctx, const struct nft_chain *chain);
-+int nft_chain_validate(const struct nft_ctx *ctx, struct nft_chain *chain);
- int nft_setelem_validate(const struct nft_ctx *ctx, struct nft_set *set,
- 			 const struct nft_set_iter *iter,
- 			 struct nft_elem_priv *elem_priv);
-@@ -1138,13 +1163,6 @@ int nft_set_catchall_validate(const struct nft_ctx *ctx, struct nft_set *set);
- int nf_tables_bind_chain(const struct nft_ctx *ctx, struct nft_chain *chain);
- void nf_tables_unbind_chain(const struct nft_ctx *ctx, struct nft_chain *chain);
- 
--enum nft_chain_types {
--	NFT_CHAIN_T_DEFAULT = 0,
--	NFT_CHAIN_T_ROUTE,
--	NFT_CHAIN_T_NAT,
--	NFT_CHAIN_T_MAX
--};
--
- /**
-  * 	struct nft_chain_type - nf_tables chain type info
-  *
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index eed434e0a970..7fbfa1e5d27c 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -123,6 +123,29 @@ static void nft_validate_state_update(struct nft_table *table, u8 new_validate_s
- 
- 	table->validate_state = new_validate_state;
- }
-+
-+static bool nft_chain_vstate_valid(const struct nft_ctx *ctx,
-+				   const struct nft_chain *chain)
-+{
-+	const struct nft_base_chain *base_chain;
-+	enum nft_chain_types type;
-+	u8 hooknum;
-+
-+	if (WARN_ON_ONCE(!nft_is_base_chain(ctx->chain)))
-+		return false;
-+
-+	base_chain = nft_base_chain(ctx->chain);
-+	hooknum = base_chain->ops.hooknum;
-+	type = base_chain->type->type;
-+
-+	/* chain is already validated for this call depth */
-+	if (chain->vstate.depth >= ctx->level &&
-+	    chain->vstate.hook_mask[type] & BIT(hooknum))
-+		return true;
-+
-+	return false;
-+}
-+
- static void nf_tables_trans_destroy_work(struct work_struct *w);
- 
- static void nft_trans_gc_work(struct work_struct *work);
-@@ -4079,6 +4102,29 @@ static void nf_tables_rule_release(const struct nft_ctx *ctx, struct nft_rule *r
- 	nf_tables_rule_destroy(ctx, rule);
- }
- 
-+static void nft_chain_vstate_update(const struct nft_ctx *ctx, struct nft_chain *chain)
-+{
-+	const struct nft_base_chain *base_chain;
-+	enum nft_chain_types type;
-+	u8 hooknum;
-+
-+	/* ctx->chain must hold the calling base chain. */
-+	if (WARN_ON_ONCE(!nft_is_base_chain(ctx->chain))) {
-+		memset(&chain->vstate, 0, sizeof(chain->vstate));
-+		return;
-+	}
-+
-+	base_chain = nft_base_chain(ctx->chain);
-+	hooknum = base_chain->ops.hooknum;
-+	type = base_chain->type->type;
-+
-+	BUILD_BUG_ON(BIT(NF_INET_NUMHOOKS) > U8_MAX);
-+
-+	chain->vstate.hook_mask[type] |= BIT(hooknum);
-+	if (chain->vstate.depth < ctx->level)
-+		chain->vstate.depth = ctx->level;
-+}
-+
- /** nft_chain_validate - loop detection and hook validation
-  *
-  * @ctx: context containing call depth and base chain
-@@ -4088,15 +4134,25 @@ static void nf_tables_rule_release(const struct nft_ctx *ctx, struct nft_rule *r
-  * and set lookups until either the jump limit is hit or all reachable
-  * chains have been validated.
-  */
--int nft_chain_validate(const struct nft_ctx *ctx, const struct nft_chain *chain)
-+int nft_chain_validate(const struct nft_ctx *ctx, struct nft_chain *chain)
- {
- 	struct nft_expr *expr, *last;
- 	struct nft_rule *rule;
- 	int err;
- 
-+	BUILD_BUG_ON(NFT_JUMP_STACK_SIZE > 255);
- 	if (ctx->level == NFT_JUMP_STACK_SIZE)
- 		return -EMLINK;
- 
-+	if (ctx->level > 0) {
-+		/* jumps to base chains are not allowed. */
-+		if (nft_is_base_chain(chain))
-+			return -ELOOP;
-+
-+		if (nft_chain_vstate_valid(ctx, chain))
-+			return 0;
-+	}
-+
- 	list_for_each_entry(rule, &chain->rules, list) {
- 		if (fatal_signal_pending(current))
- 			return -EINTR;
-@@ -4117,6 +4173,7 @@ int nft_chain_validate(const struct nft_ctx *ctx, const struct nft_chain *chain)
- 		}
- 	}
- 
-+	nft_chain_vstate_update(ctx, chain);
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(nft_chain_validate);
-@@ -4128,7 +4185,7 @@ static int nft_table_validate(struct net *net, const struct nft_table *table)
- 		.net	= net,
- 		.family	= table->family,
- 	};
--	int err;
-+	int err = 0;
- 
- 	list_for_each_entry(chain, &table->chains, list) {
- 		if (!nft_is_base_chain(chain))
-@@ -4137,12 +4194,16 @@ static int nft_table_validate(struct net *net, const struct nft_table *table)
- 		ctx.chain = chain;
- 		err = nft_chain_validate(&ctx, chain);
- 		if (err < 0)
--			return err;
-+			goto err;
- 
- 		cond_resched();
- 	}
- 
--	return 0;
-+err:
-+	list_for_each_entry(chain, &table->chains, list)
-+		memset(&chain->vstate, 0, sizeof(chain->vstate));
-+
-+	return err;
- }
- 
- int nft_setelem_validate(const struct nft_ctx *ctx, struct nft_set *set,
+diff --git a/net/can/j1939/transport.c b/net/can/j1939/transport.c
+index fbf5c8001c9d..613a911dda10 100644
+--- a/net/can/j1939/transport.c
++++ b/net/can/j1939/transport.c
+@@ -1567,6 +1567,8 @@ int j1939_session_activate(struct j1939_session *session)
+ 	if (active) {
+ 		j1939_session_put(active);
+ 		ret = -EAGAIN;
++	} else if (priv->ndev->reg_state != NETREG_REGISTERED) {
++		ret = -ENODEV;
+ 	} else {
+ 		WARN_ON_ONCE(session->state != J1939_SESSION_NEW);
+ 		list_add_tail(&session->active_session_list_entry,
 -- 
 2.51.0
 
