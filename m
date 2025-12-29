@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AC1524EF8C;
-	Mon, 29 Dec 2025 16:23:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D88B523C39A;
+	Mon, 29 Dec 2025 16:23:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025404; cv=none; b=pn1ckpawuyw7/G4kicwvqwt3aKEOfALSd7o7F1kxZ2MJ68rmrW9kYI7hONr4lOZTMjP13nO/epbgR4uIujjPMlr0SW7EYHvx3560xtJYXDlIaJxj5Ke7JpLgCKpVgkAnFqlH+BfUiQ07TPtVCaW6CDtZEzMKsr9/QRzQsuf0LZM=
+	t=1767025406; cv=none; b=Er7kxoqIARueoU0tT2NME/LiyNl5FjbhGYIEWo4SJSeaGSDu26AWlpS1UFmbkPtQq7h0scWAvLEaBcH1emmqiLkx8xroqHlB/LOORaOhMUBQiBEpCNl+jR+zeiHTY9ly+Ly+4MeyNmxjOh4orq0/wyQhz+PGJeUfoQnXMwVMirc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025404; c=relaxed/simple;
-	bh=rT0z660YVzNpveGMXPbsjsydVamGOA0Y5N/WicHXstQ=;
+	s=arc-20240116; t=1767025406; c=relaxed/simple;
+	bh=8exTCQPgDgepvB7kAw1BqJ/PcKKWt62WpQtar4mr1hs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dqdAZFIkYExRcPXiTEFoni0nAuJH1J06iwEaplBzinyzeBG4NVMweyE7hwZIzWV6G6ATbJS/KHLq4u3OFOM4P959tJhFa6wshPvRebSg92rCoXEudLNPOS/7kLQP6YANVeo5+DsQC0Lw2CnR0+4naH4rWXyAiiRO+s5/cJUVWbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AnYq/Gb1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k18JmQqh8LnfmUZaX19ZSbFD9Na6A9UykOCOK+61cIeQGUEO89a2bdaB41q6kN74qCg0HEJCBMg9OG0Z9cfwg/Gz5UU+6fMjBfYpsOYZ/7ebAAKAk5o+afucQRtHMdWvjZL6uXh+3TlMu3FUeCKiCoBvwuMbyyNegMMGxotqJMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=akGNo6kP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AnYq/Gb1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 964B5C4CEF7;
-	Mon, 29 Dec 2025 16:23:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="akGNo6kP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BE55C4CEF7;
+	Mon, 29 Dec 2025 16:23:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025404;
-	bh=rT0z660YVzNpveGMXPbsjsydVamGOA0Y5N/WicHXstQ=;
+	s=korg; t=1767025406;
+	bh=8exTCQPgDgepvB7kAw1BqJ/PcKKWt62WpQtar4mr1hs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AnYq/Gb1SnytcJgKkxMolTjSqW3EtrdusyTmYlt+wbErTBBgSM5wDPOQuFfd7vwlh
-	 Qw5W9XpDnw4gpxdm0nbPMmLR+yy6KjlEUAq25Px0yiyUj0bolyPVVt/xEhYq2Pi15l
-	 PlZWhtEztZbb6Ups5s/IheVZIhlxqNYV+4PIKTgw=
+	b=akGNo6kPYgvtjSPNS2ZNeNslhyj/Nt6pPwXW35ixfJUKayKyvrpRtEKXd52v/991C
+	 si6YtsAILABcBJh1bXMI83c6D37eGBRe2v4zyWHm6B9xdwFMp7k+lmXGDPH/UOybcF
+	 knbis9sOh7X0oJgySAQgaXe6MZTocwA7qFpvBOHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Changcheng <chenchangcheng@kylinos.cn>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 200/430] usb: usb-storage: No additional quirks need to be added to the EL-R12 optical drive.
-Date: Mon, 29 Dec 2025 17:10:02 +0100
-Message-ID: <20251229160731.713997626@linuxfoundation.org>
+Subject: [PATCH 6.18 169/430] ALSA: vxpocket: Fix resource leak in vxpocket_probe error path
+Date: Mon, 29 Dec 2025 17:09:31 +0100
+Message-ID: <20251229160730.582241633@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -50,62 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Changcheng <chenchangcheng@kylinos.cn>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 955a48a5353f4fe009704a9a4272a3adf627cd35 ]
+[ Upstream commit 2a03b40deacbd293ac9aed0f9b11197dad54fe5f ]
 
-The optical drive of EL-R12 has the same vid and pid as INIC-3069,
-as follows:
-T:  Bus=02 Lev=02 Prnt=02 Port=01 Cnt=01 Dev#=  3 Spd=5000 MxCh= 0
-D:  Ver= 3.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
-P:  Vendor=13fd ProdID=3940 Rev= 3.10
-S:  Manufacturer=HL-DT-ST
-S:  Product= DVD+-RW GT80N
-S:  SerialNumber=423349524E4E38303338323439202020
-C:* #Ifs= 1 Cfg#= 1 Atr=80 MxPwr=144mA
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=08(stor.) Sub=02 Prot=50 Driver=usb-storage
-E:  Ad=83(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=0a(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+When vxpocket_config() fails, vxpocket_probe() returns the error code
+directly without freeing the sound card resources allocated by
+snd_card_new(), which leads to a memory leak.
 
-This will result in the optical drive device also adding
-the quirks of US_FL_NO_ATA_1X. When performing an erase operation,
-it will fail, and the reason for the failure is as follows:
-[  388.967742] sr 5:0:0:0: [sr0] tag#0 Send: scmd 0x00000000d20c33a7
-[  388.967742] sr 5:0:0:0: [sr0] tag#0 CDB: ATA command pass through(12)/Blank a1 11 00 00 00 00 00 00 00 00 00 00
-[  388.967773] sr 5:0:0:0: [sr0] tag#0 Done: SUCCESS Result: hostbyte=DID_TARGET_FAILURE driverbyte=DRIVER_OK cmd_age=0s
-[  388.967773] sr 5:0:0:0: [sr0] tag#0 CDB: ATA command pass through(12)/Blank a1 11 00 00 00 00 00 00 00 00 00 00
-[  388.967803] sr 5:0:0:0: [sr0] tag#0 Sense Key : Illegal Request [current]
-[  388.967803] sr 5:0:0:0: [sr0] tag#0 Add. Sense: Invalid field in cdb
-[  388.967803] sr 5:0:0:0: [sr0] tag#0 scsi host busy 1 failed 0
-[  388.967803] sr 5:0:0:0: Notifying upper driver of completion (result 8100002)
-[  388.967834] sr 5:0:0:0: [sr0] tag#0 0 sectors total, 0 bytes done.
+Add proper error handling to free the sound card and clear the
+allocation bit when vxpocket_config() fails.
 
-For the EL-R12 standard optical drive, all operational commands
-and usage scenarios were tested without adding the IGNORE_RESIDUE quirks,
-and no issues were encountered. It can be reasonably concluded
-that removing the IGNORE_RESIDUE quirks has no impact.
-
-Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
-Link: https://patch.msgid.link/20251121064020.29332-1-chenchangcheng@kylinos.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 15b99ac17295 ("[PATCH] pcmcia: add return value to _config() functions")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20251215042652.695-1-vulab@iscas.ac.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/storage/unusual_uas.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pcmcia/vx/vxpocket.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/storage/unusual_uas.h b/drivers/usb/storage/unusual_uas.h
-index 1477e31d7763..b695f5ba9a40 100644
---- a/drivers/usb/storage/unusual_uas.h
-+++ b/drivers/usb/storage/unusual_uas.h
-@@ -98,7 +98,7 @@ UNUSUAL_DEV(0x125f, 0xa94a, 0x0160, 0x0160,
- 		US_FL_NO_ATA_1X),
+diff --git a/sound/pcmcia/vx/vxpocket.c b/sound/pcmcia/vx/vxpocket.c
+index 2e09f2a513a6..9a5c9aa8eec4 100644
+--- a/sound/pcmcia/vx/vxpocket.c
++++ b/sound/pcmcia/vx/vxpocket.c
+@@ -284,7 +284,13 @@ static int vxpocket_probe(struct pcmcia_device *p_dev)
  
- /* Reported-by: Benjamin Tissoires <benjamin.tissoires@redhat.com> */
--UNUSUAL_DEV(0x13fd, 0x3940, 0x0000, 0x9999,
-+UNUSUAL_DEV(0x13fd, 0x3940, 0x0309, 0x0309,
- 		"Initio Corporation",
- 		"INIC-3069",
- 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+ 	vxp->p_dev = p_dev;
+ 
+-	return vxpocket_config(p_dev);
++	err = vxpocket_config(p_dev);
++	if (err < 0) {
++		card_alloc &= ~(1 << i);
++		snd_card_free(card);
++		return err;
++	}
++	return 0;
+ }
+ 
+ static void vxpocket_detach(struct pcmcia_device *link)
 -- 
 2.51.0
 
