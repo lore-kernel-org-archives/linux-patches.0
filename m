@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF69F31ED83;
-	Mon, 29 Dec 2025 16:24:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005193191AC;
+	Mon, 29 Dec 2025 16:25:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025497; cv=none; b=r+VljCyoCtGqKMqWQgix4fb288SIaTUCWzniP2RZyFBFoVRRwzPmy9TXIdfx5UrDwgrE8AgMc9KHGwQhGzfvt6HjRxPoPx5ndcuZCO2M1ZE3IKdgrzZ7Vu/hMj3amJYkpyEeCKZoXuXjtxDq6nY979VM5WU2dCnRnybozDhbIDE=
+	t=1767025501; cv=none; b=TEOLziIP0NhKoZGTyMng0fIft8c/YAyfiqpHSJ2XRfxW0VWX3Pt9+qqMICKrleMh9COFD6QebaElwneMCOdLOZnCBwnYw/Tr16VLRabJgxaZ/ZLkiWbzG7GPvy8XuFV8qsMBcuAC6TTZoqqjI/2pX+xNawqGUMHKXdi40UQ6hVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025497; c=relaxed/simple;
-	bh=hNrcEPESMZa1tDwz5NWUnAbzMeg5BbBFqMySLg2wPbo=;
+	s=arc-20240116; t=1767025501; c=relaxed/simple;
+	bh=S55iQuSn+4yXVTqUncTaMYA4mgUDo3YFB8SrnnSvylA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BMNVnTi/4vK3Y4t9gaK+8zi74hf4NeHmT77Zg5Bnd3u2U0vJAIKD8Je/wYsxynPcPS8LFYecohPUMbeENIh4ht3yhVD5VegT4kSPPWeaGO3hAxM52+X+uRq/Z0GiEsfCnQmKQsNF8XfjlkmQF3DWM1zQmXiDrosLeh4oYU5V0oU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zSbyjmUj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aWmW7MaansHTQTOy/qTUDaJEEAY9prgEUpwAL2ieXwONGe/k7fAY1Dm2H20LNNdcWErjPXIAffwFP/+FvWbJg/I2O2v16u2HVpp4Pu5E3VtLrGMwJB2bo6OOpQ4KWJwKk8qiWkMgenq/ZbtdR5veT3BseBpbHu15uf9KAtkByC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VX3Kdwtl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zSbyjmUj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E5EC4CEF7;
-	Mon, 29 Dec 2025 16:24:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VX3Kdwtl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21F81C4CEF7;
+	Mon, 29 Dec 2025 16:24:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025497;
-	bh=hNrcEPESMZa1tDwz5NWUnAbzMeg5BbBFqMySLg2wPbo=;
+	s=korg; t=1767025500;
+	bh=S55iQuSn+4yXVTqUncTaMYA4mgUDo3YFB8SrnnSvylA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zSbyjmUjXTyUcztQBnY60OAh0I8yZ7D7cCCtK2DsBCNK5n5B2xmQNAUrpGOnvUAv4
-	 bgZGt0k6FkmvvesrWL7WF5ouyoca+5QkAJKMUdLrimCBH/VvAv0z6M7rNkPi+xIZPQ
-	 bPclNZLO/XFDilBAd61uc4dcAvbPB69RwI0EOAu0=
+	b=VX3KdwtldiiHKprZ1WDSXpaUfS0kuW8Ra4czDwtRiyC3vR0CDuE3U5Dm4WxDuRq5X
+	 ooqOHsruhVeEn4GXcsi9QlWyZkkLHuqV9Ezhf3XyJoQzL9Hy6YXS6Vx3sFDnXATW8r
+	 2U0H8WEcsq0w3phVB7OTREel8XvnrRI2RCqJu9I0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Righi <arighi@nvidia.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
+	Zqiang <qiang.zhang@linux.dev>,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.18 233/430] sched_ext: Factor out local_dsq_post_enq() from dispatch_enqueue()
-Date: Mon, 29 Dec 2025 17:10:35 +0100
-Message-ID: <20251229160732.927879290@linuxfoundation.org>
+Subject: [PATCH 6.18 234/430] sched_ext: Fix the memleak for sch->helper objects
+Date: Mon, 29 Dec 2025 17:10:36 +0100
+Message-ID: <20251229160732.965282900@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -51,75 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Zqiang <qiang.zhang@linux.dev>
 
-commit 530b6637c79e728d58f1d9b66bd4acf4b735b86d upstream.
+commit 517a44d18537ef8ab888f71197c80116c14cee0a upstream.
 
-Factor out local_dsq_post_enq() which performs post-enqueue handling for
-local DSQs - triggering resched_curr() if SCX_ENQ_PREEMPT is specified or if
-the current CPU is idle. No functional change.
+This commit use kthread_destroy_worker() to release sch->helper
+objects to fix the following kmemleak:
 
-This will be used by the next patch to fix move_local_task_to_local_dsq().
+unreferenced object 0xffff888121ec7b00 (size 128):
+  comm "scx_simple", pid 1197, jiffies 4295884415
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 ad 4e ad de  .............N..
+    ff ff ff ff 00 00 00 00 ff ff ff ff ff ff ff ff  ................
+  backtrace (crc 587b3352):
+    kmemleak_alloc+0x62/0xa0
+    __kmalloc_cache_noprof+0x28d/0x3e0
+    kthread_create_worker_on_node+0xd5/0x1f0
+    scx_enable.isra.210+0x6c2/0x25b0
+    bpf_scx_reg+0x12/0x20
+    bpf_struct_ops_link_create+0x2c3/0x3b0
+    __sys_bpf+0x3102/0x4b00
+    __x64_sys_bpf+0x79/0xc0
+    x64_sys_call+0x15d9/0x1dd0
+    do_syscall_64+0xf0/0x470
+    entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Cc: stable@vger.kernel.org # v6.12+
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Fixes: bff3b5aec1b7 ("sched_ext: Move disable machinery into scx_sched")
+Cc: stable@vger.kernel.org # v6.16+
+Signed-off-by: Zqiang <qiang.zhang@linux.dev>
 Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |   34 +++++++++++++++++++---------------
- 1 file changed, 19 insertions(+), 15 deletions(-)
+ kernel/sched/ext.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/kernel/sched/ext.c
 +++ b/kernel/sched/ext.c
-@@ -906,6 +906,22 @@ static void refill_task_slice_dfl(struct
- 	__scx_add_event(sch, SCX_EV_REFILL_SLICE_DFL, 1);
- }
+@@ -3512,7 +3512,7 @@ static void scx_sched_free_rcu_work(stru
+ 	int node;
  
-+static void local_dsq_post_enq(struct scx_dispatch_q *dsq, struct task_struct *p,
-+			       u64 enq_flags)
-+{
-+	struct rq *rq = container_of(dsq, struct rq, scx.local_dsq);
-+	bool preempt = false;
-+
-+	if ((enq_flags & SCX_ENQ_PREEMPT) && p != rq->curr &&
-+	    rq->curr->sched_class == &ext_sched_class) {
-+		rq->curr->scx.slice = 0;
-+		preempt = true;
-+	}
-+
-+	if (preempt || sched_class_above(&ext_sched_class, rq->curr->sched_class))
-+		resched_curr(rq);
-+}
-+
- static void dispatch_enqueue(struct scx_sched *sch, struct scx_dispatch_q *dsq,
- 			     struct task_struct *p, u64 enq_flags)
- {
-@@ -1003,22 +1019,10 @@ static void dispatch_enqueue(struct scx_
- 	if (enq_flags & SCX_ENQ_CLEAR_OPSS)
- 		atomic_long_set_release(&p->scx.ops_state, SCX_OPSS_NONE);
+ 	irq_work_sync(&sch->error_irq_work);
+-	kthread_stop(sch->helper->task);
++	kthread_destroy_worker(sch->helper);
  
--	if (is_local) {
--		struct rq *rq = container_of(dsq, struct rq, scx.local_dsq);
--		bool preempt = false;
--
--		if ((enq_flags & SCX_ENQ_PREEMPT) && p != rq->curr &&
--		    rq->curr->sched_class == &ext_sched_class) {
--			rq->curr->scx.slice = 0;
--			preempt = true;
--		}
--
--		if (preempt || sched_class_above(&ext_sched_class,
--						 rq->curr->sched_class))
--			resched_curr(rq);
--	} else {
-+	if (is_local)
-+		local_dsq_post_enq(dsq, p, enq_flags);
-+	else
- 		raw_spin_unlock(&dsq->lock);
--	}
- }
+ 	free_percpu(sch->pcpu);
  
- static void task_unlink_from_dsq(struct task_struct *p,
+@@ -4504,7 +4504,7 @@ static struct scx_sched *scx_alloc_and_a
+ 	return sch;
+ 
+ err_stop_helper:
+-	kthread_stop(sch->helper->task);
++	kthread_destroy_worker(sch->helper);
+ err_free_pcpu:
+ 	free_percpu(sch->pcpu);
+ err_free_gdsqs:
 
 
