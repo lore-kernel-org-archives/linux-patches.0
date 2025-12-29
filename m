@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C222331208;
-	Mon, 29 Dec 2025 16:19:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8886330D47;
+	Mon, 29 Dec 2025 16:19:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025147; cv=none; b=m4eqSo5yFKDOxXMD2NfIjtMmi11tD/G8PoQyndrytba0igxGZQOqHxA3fmxIMePEBbNOELiJYGzyx7Ctd4fBA1ysjkgMY8HaAucx6tmE5h+CaLTwHRVY6NnG6EVwqzFFOQw++S+YqNPKnTjZ9DGbxqabi5FuMnAU8/8CTd0OlFU=
+	t=1767025150; cv=none; b=HtaiE9U4t/l8kNm8E9QFew2L4eyNSw0OTjUB+suo2zqX9aWXUJMBEdMg+J/h5nI4JD1Ko0xeE+rVieSbjcnObVp+Yie/tYnRwRao6dUFmrWqE4kNEmv1c2LIrfB7jSEmosIGL2tUj24AmgtxKtzFtFBjiPSwK9nQ76vnrr5kQgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025147; c=relaxed/simple;
-	bh=/WcizgzHUlMZnHJJ41I0JdfsBf42GEdhsBad9gMgb60=;
+	s=arc-20240116; t=1767025150; c=relaxed/simple;
+	bh=Hj3VGpST1djQRQqD44meJv891baI0jN06SW5GZecmn8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NoUdyIpcTmjHKT9XNDMIyImdcbqVw3zOrK3sVOF5YkuVLYoIn0gY3mS+12TsJD4Kl53BkH2gNAJ5OOk4rLL45C4oL76NevgxBO0ztEeTlDUd8TNxTAQgW3890LsXSupCDxrbEPOyZ847hMSte54Zy1jadAyRreJhO9CiAcmF7yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EuifDfw8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AprUtVcHZ+p2GyjAKdWyG4YUkL7p1zvTxjupr3QC1mqyOli4UoB3dJvWK5mP2JWDsKTPwKmPA7SwMrtajNi8FtIYB79ThQKAmxpz/8koDJSOL6pFaM1pBNMmn1D+QpNANr4cEAYN/8bT+mK0LjHzZgFuEMSnduZSPY6826snkpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hy2jrCrj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EuifDfw8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53A54C4CEF7;
-	Mon, 29 Dec 2025 16:19:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hy2jrCrj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A93C4CEF7;
+	Mon, 29 Dec 2025 16:19:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025146;
-	bh=/WcizgzHUlMZnHJJ41I0JdfsBf42GEdhsBad9gMgb60=;
+	s=korg; t=1767025149;
+	bh=Hj3VGpST1djQRQqD44meJv891baI0jN06SW5GZecmn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EuifDfw8Q/+mrQF50huItmCUIJmieVRyJdUtbugvEqrljLlh02DADiQdcNoves+f5
-	 2FNlIyCwxXuVVMpZ34iKkZpgYFB5d1c0aw+SLne6UYTFGFYHRIp4akgYfvt5BUEU6u
-	 Su9s3uVSlXk5KL/Gnapdo3VvZ1xbqgPLoieBfUlU=
+	b=Hy2jrCrjhvnS8A7MTTujKilNEmyg7dd5O+NKk8MjO0/5A1nqAuwIJ9gqIxLW4Gv1+
+	 HnzkIHNYyQ3ZlBofvTk6lpzSiojwhtux3JyzGP3SRcM6gGQSS2/DwK43RS05R6bHp7
+	 V6yrOhR/rf/SPQVLzUN1eRVla+tL0w6JRQCIkco0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nilay Shroff <nilay@linux.ibm.com>,
 	Ming Lei <ming.lei@redhat.com>,
+	Yu Kuai <yukuai@fnnas.com>,
+	Nilay Shroff <nilay@linux.ibm.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 111/430] block: introduce alloc_sched_data and free_sched_data elevator methods
-Date: Mon, 29 Dec 2025 17:08:33 +0100
-Message-ID: <20251229160728.452529294@linuxfoundation.org>
+Subject: [PATCH 6.18 112/430] block: use {alloc|free}_sched data methods
+Date: Mon, 29 Dec 2025 17:08:34 +0100
+Message-ID: <20251229160728.489160359@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -54,77 +55,299 @@ Content-Transfer-Encoding: 8bit
 
 From: Nilay Shroff <nilay@linux.ibm.com>
 
-[ Upstream commit 61019afdf6ac17c8e8f9c42665aa1fa82f04a3e2 ]
+[ Upstream commit 0315476e78c050048e80f66334a310e5581b46bb ]
 
-The recent lockdep splat [1] highlights a potential deadlock risk
-involving ->elevator_lock and ->freeze_lock dependencies on -pcpu_alloc_
-mutex. The trace shows that the issue occurs when the Kyber scheduler
-allocates dynamic memory for its elevator data during initialization.
+The previous patch introduced ->alloc_sched_data and
+->free_sched_data methods. This patch builds upon that
+by now using these methods during elevator switch and
+nr_hw_queue update.
 
-To address this, introduce two new elevator operation callbacks:
-->alloc_sched_data and ->free_sched_data. The subsequent patch would
-build upon these newly introduced methods to suppress lockdep splat[1].
+It's also ensured that scheduler-specific data is
+allocated and freed through the new callbacks outside
+of the ->freeze_lock and ->elevator_lock locking contexts,
+thereby preventing any dependency on pcpu_alloc_mutex.
 
-[1] https://lore.kernel.org/all/CAGVVp+VNW4M-5DZMNoADp6o2VKFhi7KxWpTDkcnVyjO0=-D5+A@mail.gmail.com/
-
-Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
 Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Yu Kuai <yukuai@fnnas.com>
+Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Stable-dep-of: 9869d3a6fed3 ("block: fix race between wbt_enable_default and IO submission")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq-sched.h | 24 ++++++++++++++++++++++++
- block/elevator.h     |  2 ++
- 2 files changed, 26 insertions(+)
+ block/blk-mq-sched.c | 27 +++++++++++++++++++++------
+ block/blk-mq-sched.h |  5 ++++-
+ block/elevator.c     | 34 ++++++++++++++++++++++------------
+ block/elevator.h     |  4 +++-
+ 4 files changed, 50 insertions(+), 20 deletions(-)
 
+diff --git a/block/blk-mq-sched.c b/block/blk-mq-sched.c
+index 03ff16c49976..128f2be9d420 100644
+--- a/block/blk-mq-sched.c
++++ b/block/blk-mq-sched.c
+@@ -428,12 +428,17 @@ void blk_mq_free_sched_tags(struct elevator_tags *et,
+ }
+ 
+ void blk_mq_free_sched_res(struct elevator_resources *res,
++		struct elevator_type *type,
+ 		struct blk_mq_tag_set *set)
+ {
+ 	if (res->et) {
+ 		blk_mq_free_sched_tags(res->et, set);
+ 		res->et = NULL;
+ 	}
++	if (res->data) {
++		blk_mq_free_sched_data(type, res->data);
++		res->data = NULL;
++	}
+ }
+ 
+ void blk_mq_free_sched_res_batch(struct xarray *elv_tbl,
+@@ -458,7 +463,7 @@ void blk_mq_free_sched_res_batch(struct xarray *elv_tbl,
+ 				WARN_ON_ONCE(1);
+ 				continue;
+ 			}
+-			blk_mq_free_sched_res(&ctx->res, set);
++			blk_mq_free_sched_res(&ctx->res, ctx->type, set);
+ 		}
+ 	}
+ }
+@@ -541,7 +546,9 @@ struct elevator_tags *blk_mq_alloc_sched_tags(struct blk_mq_tag_set *set,
+ }
+ 
+ int blk_mq_alloc_sched_res(struct request_queue *q,
+-		struct elevator_resources *res, unsigned int nr_hw_queues)
++		struct elevator_type *type,
++		struct elevator_resources *res,
++		unsigned int nr_hw_queues)
+ {
+ 	struct blk_mq_tag_set *set = q->tag_set;
+ 
+@@ -550,6 +557,12 @@ int blk_mq_alloc_sched_res(struct request_queue *q,
+ 	if (!res->et)
+ 		return -ENOMEM;
+ 
++	res->data = blk_mq_alloc_sched_data(q, type);
++	if (IS_ERR(res->data)) {
++		blk_mq_free_sched_tags(res->et, set);
++		return -ENOMEM;
++	}
++
+ 	return 0;
+ }
+ 
+@@ -577,19 +590,21 @@ int blk_mq_alloc_sched_res_batch(struct xarray *elv_tbl,
+ 				goto out_unwind;
+ 			}
+ 
+-			ret = blk_mq_alloc_sched_res(q, &ctx->res,
+-					nr_hw_queues);
++			ret = blk_mq_alloc_sched_res(q, q->elevator->type,
++					&ctx->res, nr_hw_queues);
+ 			if (ret)
+ 				goto out_unwind;
+ 		}
+ 	}
+ 	return 0;
++
+ out_unwind:
+ 	list_for_each_entry_continue_reverse(q, &set->tag_list, tag_set_list) {
+ 		if (q->elevator) {
+ 			ctx = xa_load(elv_tbl, q->id);
+ 			if (ctx)
+-				blk_mq_free_sched_res(&ctx->res, set);
++				blk_mq_free_sched_res(&ctx->res,
++						ctx->type, set);
+ 		}
+ 	}
+ 	return ret;
+@@ -606,7 +621,7 @@ int blk_mq_init_sched(struct request_queue *q, struct elevator_type *e,
+ 	unsigned long i;
+ 	int ret;
+ 
+-	eq = elevator_alloc(q, e, et);
++	eq = elevator_alloc(q, e, res);
+ 	if (!eq)
+ 		return -ENOMEM;
+ 
 diff --git a/block/blk-mq-sched.h b/block/blk-mq-sched.h
-index 1f8e58dd4b49..4e1b86e85a8a 100644
+index 4e1b86e85a8a..02c40a72e959 100644
 --- a/block/blk-mq-sched.h
 +++ b/block/blk-mq-sched.h
-@@ -38,6 +38,30 @@ void blk_mq_free_sched_res(struct elevator_resources *res,
+@@ -26,7 +26,9 @@ void blk_mq_sched_free_rqs(struct request_queue *q);
+ struct elevator_tags *blk_mq_alloc_sched_tags(struct blk_mq_tag_set *set,
+ 		unsigned int nr_hw_queues, unsigned int nr_requests);
+ int blk_mq_alloc_sched_res(struct request_queue *q,
+-		struct elevator_resources *res, unsigned int nr_hw_queues);
++		struct elevator_type *type,
++		struct elevator_resources *res,
++		unsigned int nr_hw_queues);
+ int blk_mq_alloc_sched_res_batch(struct xarray *elv_tbl,
+ 		struct blk_mq_tag_set *set, unsigned int nr_hw_queues);
+ int blk_mq_alloc_sched_ctx_batch(struct xarray *elv_tbl,
+@@ -35,6 +37,7 @@ void blk_mq_free_sched_ctx_batch(struct xarray *elv_tbl);
+ void blk_mq_free_sched_tags(struct elevator_tags *et,
+ 		struct blk_mq_tag_set *set);
+ void blk_mq_free_sched_res(struct elevator_resources *res,
++		struct elevator_type *type,
  		struct blk_mq_tag_set *set);
  void blk_mq_free_sched_res_batch(struct xarray *et_table,
  		struct blk_mq_tag_set *set);
-+/*
-+ * blk_mq_alloc_sched_data() - Allocates scheduler specific data
-+ * Returns:
-+ *         - Pointer to allocated data on success
-+ *         - NULL if no allocation needed
-+ *         - ERR_PTR(-ENOMEM) in case of failure
-+ */
-+static inline void *blk_mq_alloc_sched_data(struct request_queue *q,
-+		struct elevator_type *e)
-+{
-+	void *sched_data;
-+
-+	if (!e || !e->ops.alloc_sched_data)
-+		return NULL;
-+
-+	sched_data = e->ops.alloc_sched_data(q);
-+	return (sched_data) ?: ERR_PTR(-ENOMEM);
-+}
-+
-+static inline void blk_mq_free_sched_data(struct elevator_type *e, void *data)
-+{
-+	if (e && e->ops.free_sched_data)
-+		e->ops.free_sched_data(data);
-+}
+diff --git a/block/elevator.c b/block/elevator.c
+index cbec292a4af5..5b37ef44f52d 100644
+--- a/block/elevator.c
++++ b/block/elevator.c
+@@ -121,7 +121,7 @@ static struct elevator_type *elevator_find_get(const char *name)
+ static const struct kobj_type elv_ktype;
  
- static inline void blk_mq_sched_restart(struct blk_mq_hw_ctx *hctx)
+ struct elevator_queue *elevator_alloc(struct request_queue *q,
+-		struct elevator_type *e, struct elevator_tags *et)
++		struct elevator_type *e, struct elevator_resources *res)
  {
+ 	struct elevator_queue *eq;
+ 
+@@ -134,7 +134,8 @@ struct elevator_queue *elevator_alloc(struct request_queue *q,
+ 	kobject_init(&eq->kobj, &elv_ktype);
+ 	mutex_init(&eq->sysfs_lock);
+ 	hash_init(eq->hash);
+-	eq->et = et;
++	eq->et = res->et;
++	eq->elevator_data = res->data;
+ 
+ 	return eq;
+ }
+@@ -617,7 +618,7 @@ static void elv_exit_and_release(struct elv_change_ctx *ctx,
+ 	mutex_unlock(&q->elevator_lock);
+ 	blk_mq_unfreeze_queue(q, memflags);
+ 	if (e) {
+-		blk_mq_free_sched_res(&ctx->res, q->tag_set);
++		blk_mq_free_sched_res(&ctx->res, ctx->type, q->tag_set);
+ 		kobject_put(&e->kobj);
+ 	}
+ }
+@@ -628,12 +629,15 @@ static int elevator_change_done(struct request_queue *q,
+ 	int ret = 0;
+ 
+ 	if (ctx->old) {
+-		struct elevator_resources res = {.et = ctx->old->et};
++		struct elevator_resources res = {
++			.et = ctx->old->et,
++			.data = ctx->old->elevator_data
++		};
+ 		bool enable_wbt = test_bit(ELEVATOR_FLAG_ENABLE_WBT_ON_EXIT,
+ 				&ctx->old->flags);
+ 
+ 		elv_unregister_queue(q, ctx->old);
+-		blk_mq_free_sched_res(&res, q->tag_set);
++		blk_mq_free_sched_res(&res, ctx->old->type, q->tag_set);
+ 		kobject_put(&ctx->old->kobj);
+ 		if (enable_wbt)
+ 			wbt_enable_default(q->disk);
+@@ -658,7 +662,8 @@ static int elevator_change(struct request_queue *q, struct elv_change_ctx *ctx)
+ 	lockdep_assert_held(&set->update_nr_hwq_lock);
+ 
+ 	if (strncmp(ctx->name, "none", 4)) {
+-		ret = blk_mq_alloc_sched_res(q, &ctx->res, set->nr_hw_queues);
++		ret = blk_mq_alloc_sched_res(q, ctx->type, &ctx->res,
++				set->nr_hw_queues);
+ 		if (ret)
+ 			return ret;
+ 	}
+@@ -681,11 +686,12 @@ static int elevator_change(struct request_queue *q, struct elv_change_ctx *ctx)
+ 	blk_mq_unfreeze_queue(q, memflags);
+ 	if (!ret)
+ 		ret = elevator_change_done(q, ctx);
++
+ 	/*
+ 	 * Free sched resource if it's allocated but we couldn't switch elevator.
+ 	 */
+ 	if (!ctx->new)
+-		blk_mq_free_sched_res(&ctx->res, set);
++		blk_mq_free_sched_res(&ctx->res, ctx->type, set);
+ 
+ 	return ret;
+ }
+@@ -711,11 +717,12 @@ void elv_update_nr_hw_queues(struct request_queue *q,
+ 	blk_mq_unfreeze_queue_nomemrestore(q);
+ 	if (!ret)
+ 		WARN_ON_ONCE(elevator_change_done(q, ctx));
++
+ 	/*
+ 	 * Free sched resource if it's allocated but we couldn't switch elevator.
+ 	 */
+ 	if (!ctx->new)
+-		blk_mq_free_sched_res(&ctx->res, set);
++		blk_mq_free_sched_res(&ctx->res, ctx->type, set);
+ }
+ 
+ /*
+@@ -729,7 +736,6 @@ void elevator_set_default(struct request_queue *q)
+ 		.no_uevent = true,
+ 	};
+ 	int err;
+-	struct elevator_type *e;
+ 
+ 	/* now we allow to switch elevator */
+ 	blk_queue_flag_clear(QUEUE_FLAG_NO_ELV_SWITCH, q);
+@@ -742,8 +748,8 @@ void elevator_set_default(struct request_queue *q)
+ 	 * have multiple queues or mq-deadline is not available, default
+ 	 * to "none".
+ 	 */
+-	e = elevator_find_get(ctx.name);
+-	if (!e)
++	ctx.type = elevator_find_get(ctx.name);
++	if (!ctx.type)
+ 		return;
+ 
+ 	if ((q->nr_hw_queues == 1 ||
+@@ -753,7 +759,7 @@ void elevator_set_default(struct request_queue *q)
+ 			pr_warn("\"%s\" elevator initialization, failed %d, falling back to \"none\"\n",
+ 					ctx.name, err);
+ 	}
+-	elevator_put(e);
++	elevator_put(ctx.type);
+ }
+ 
+ void elevator_set_none(struct request_queue *q)
+@@ -802,6 +808,7 @@ ssize_t elv_iosched_store(struct gendisk *disk, const char *buf,
+ 	ctx.name = strstrip(elevator_name);
+ 
+ 	elv_iosched_load_module(ctx.name);
++	ctx.type = elevator_find_get(ctx.name);
+ 
+ 	down_read(&set->update_nr_hwq_lock);
+ 	if (!blk_queue_no_elv_switch(q)) {
+@@ -812,6 +819,9 @@ ssize_t elv_iosched_store(struct gendisk *disk, const char *buf,
+ 		ret = -ENOENT;
+ 	}
+ 	up_read(&set->update_nr_hwq_lock);
++
++	if (ctx.type)
++		elevator_put(ctx.type);
+ 	return ret;
+ }
+ 
 diff --git a/block/elevator.h b/block/elevator.h
-index 621a63597249..e34043f6da26 100644
+index e34043f6da26..3ee1d494f48a 100644
 --- a/block/elevator.h
 +++ b/block/elevator.h
-@@ -58,6 +58,8 @@ struct elevator_mq_ops {
- 	int (*init_hctx)(struct blk_mq_hw_ctx *, unsigned int);
- 	void (*exit_hctx)(struct blk_mq_hw_ctx *, unsigned int);
- 	void (*depth_updated)(struct request_queue *);
-+	void *(*alloc_sched_data)(struct request_queue *);
-+	void (*free_sched_data)(void *);
+@@ -33,6 +33,8 @@ struct elevator_tags {
+ };
  
- 	bool (*allow_merge)(struct request_queue *, struct request *, struct bio *);
- 	bool (*bio_merge)(struct request_queue *, struct bio *, unsigned int);
+ struct elevator_resources {
++	/* holds elevator data */
++	void *data;
+ 	/* holds elevator tags */
+ 	struct elevator_tags *et;
+ };
+@@ -185,7 +187,7 @@ ssize_t elv_iosched_store(struct gendisk *disk, const char *page, size_t count);
+ 
+ extern bool elv_bio_merge_ok(struct request *, struct bio *);
+ struct elevator_queue *elevator_alloc(struct request_queue *,
+-		struct elevator_type *, struct elevator_tags *);
++		struct elevator_type *, struct elevator_resources *);
+ 
+ /*
+  * Helper functions.
 -- 
 2.51.0
 
