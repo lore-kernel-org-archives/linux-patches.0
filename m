@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE4932F75A;
-	Mon, 29 Dec 2025 16:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A591625B662;
+	Mon, 29 Dec 2025 16:24:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025483; cv=none; b=bzcgGDwXUNXapF6odzN7UWXPeY+QwiOER4hHljuUwbIMtHLzIqC0Hag1duQ7p2vfDVCyiRNZ1/qgZUDoTZCJkimw2fwN5WJUAt3sSAWG+g/KF95nqg0XXEExuakZ4sh/krc+DKMsN9E802mQp6Ev4SrrSoHoaOi1ZXvR6y3s1AM=
+	t=1767025488; cv=none; b=eUK2+56mOoGAD6QJoYcTN6Ft/E0UeIJKOwglqKglDbt9M6Odq+8fZg2erE7j4ABSzc5q+OnsORz2esWNyjjl++AKleHgFD1Y5uqPyp9CuinCHZcYIcuYM0d02/9YMNAxA72ZJjLzJHM4YEtcKLh4VW5Uvi6Lcek+DeQrAWvJyGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025483; c=relaxed/simple;
-	bh=VPCgSvQP5vHUT1kQBdJVS5WHcOu5O7ScbO9AZlDnPVQ=;
+	s=arc-20240116; t=1767025488; c=relaxed/simple;
+	bh=sG3xSJBHCLxYNe+yQ1jmP/NbHtOtHbAIfPzWBAl+T30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T3CR3tYG7GZwx8LaUW7gdSltNFh6vaTXMe8z6ON/2OIYRHpsTvWBsDxQWQiku0J128GyXofRSrYBe8HnR+md2O6obf+lGne0fW8af+Z/9ii0b7YBUwAW7pyZZj6/pSshyjYtyiumFiV9ffc+vjP/2gTYroN/Xg2Gg6KN5q2Erws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JHEtvG5i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sSr31m8D1qoM4bzXLjIJZ8JxNpvgBgas1Jd+amEfTIHT/iXLbvNE5C0Qr7ztNHmUjkNa64zT294hYV71PeLZ8l6Dti+/0+qwyxkFDiEHNSJR1k+d8jsqBpOQBZfYSkqNkQp3kKhqeVvks3XV5lub5/q7Wo1ed1gds9ZJMNrbj3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nlW8wKOK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JHEtvG5i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9BC0C4CEF7;
-	Mon, 29 Dec 2025 16:24:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlW8wKOK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9C98C4CEF7;
+	Mon, 29 Dec 2025 16:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025483;
-	bh=VPCgSvQP5vHUT1kQBdJVS5WHcOu5O7ScbO9AZlDnPVQ=;
+	s=korg; t=1767025486;
+	bh=sG3xSJBHCLxYNe+yQ1jmP/NbHtOtHbAIfPzWBAl+T30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JHEtvG5iRjaSSNa+eJ2WH8xxq93TYYp6edQCowEYzCUR9QYgSDw9m4+yDRG2sTcTx
-	 ogjnI4LMq58K3e9lt2FAJO5mzG8fGPdBoeFr3ypaMhFAUbXFuBzaLR14ojJjr7xmft
-	 m4o1gqvav0/OdNAttjQHZmxPKHYT9eCjXAamLs3A=
+	b=nlW8wKOKsTGNobI9PKu0DbJ7qnXugJMeBqNh7F4D8/JFw9i4QAk5L1sBTKA1/oILg
+	 LecDWwFG1LJWZRWSJbkU20xP6pgTV88YIk48ORpmIRvyrnOCEtCDYTSp1OevWFKbFG
+	 J4Osgn03OBW3355+WB2ONr4jfAFJjFB4lxhLhuC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+641eec6b7af1f62f2b99@syzkaller.appspotmail.com,
+	Tip ten Brink <tip@tenbrinkmeijs.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 229/430] io_uring/poll: correctly handle io_poll_add() return value on update
-Date: Mon, 29 Dec 2025 17:10:31 +0100
-Message-ID: <20251229160732.782774359@linuxfoundation.org>
+Subject: [PATCH 6.18 230/430] io_uring: fix min_wait wakeups for SQPOLL
+Date: Mon, 29 Dec 2025 17:10:32 +0100
+Message-ID: <20251229160732.818889985@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -52,51 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-commit 84230ad2d2afbf0c44c32967e525c0ad92e26b4e upstream.
+commit e15cb2200b934e507273510ba6bc747d5cde24a3 upstream.
 
-When the core of io_uring was updated to handle completions
-consistently and with fixed return codes, the POLL_REMOVE opcode
-with updates got slightly broken. If a POLL_ADD is pending and
-then POLL_REMOVE is used to update the events of that request, if that
-update causes the POLL_ADD to now trigger, then that completion is lost
-and a CQE is never posted.
+Using min_wait, two timeouts are given:
 
-Additionally, ensure that if an update does cause an existing POLL_ADD
-to complete, that the completion value isn't always overwritten with
--ECANCELED. For that case, whatever io_poll_add() set the value to
-should just be retained.
+1) The min_wait timeout, within which up to 'wait_nr' events are
+   waited for.
+2) The overall long timeout, which is entered if no events are generated
+   in the min_wait window.
 
+If the min_wait has expired, any event being posted must wake the task.
+For SQPOLL, that isn't the case, as it won't trigger the io_has_work()
+condition, as it will have already processed the task_work that happened
+when an event was posted. This causes any event to trigger post the
+min_wait to not always cause the waiting application to wakeup, and
+instead it will wait until the overall timeout has expired. This can be
+shown in a test case that has a 1 second min_wait, with a 5 second
+overall wait, even if an event triggers after 1.5 seconds:
+
+axboe@m2max-kvm /d/iouring-mre (master)> zig-out/bin/iouring
+info: MIN_TIMEOUT supported: true, features: 0x3ffff
+info: Testing: min_wait=1000ms, timeout=5s, wait_nr=4
+info: 1 cqes in 5000.2ms
+
+where the expected result should be:
+
+axboe@m2max-kvm /d/iouring-mre (master)> zig-out/bin/iouring
+info: MIN_TIMEOUT supported: true, features: 0x3ffff
+info: Testing: min_wait=1000ms, timeout=5s, wait_nr=4
+info: 1 cqes in 1500.3ms
+
+When the min_wait timeout triggers, reset the number of completions
+needed to wake the task. This should ensure that any future events will
+wake the task, regardless of how many events it originally wanted to
+wait for.
+
+Reported-by: Tip ten Brink <tip@tenbrinkmeijs.com>
 Cc: stable@vger.kernel.org
-Fixes: 97b388d70b53 ("io_uring: handle completions in the core")
-Reported-by: syzbot+641eec6b7af1f62f2b99@syzkaller.appspotmail.com
-Tested-by: syzbot+641eec6b7af1f62f2b99@syzkaller.appspotmail.com
+Fixes: 1100c4a2656d ("io_uring: add support for batch wait timeout")
+Link: https://github.com/axboe/liburing/issues/1477
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/poll.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ io_uring/io_uring.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/io_uring/poll.c
-+++ b/io_uring/poll.c
-@@ -936,12 +936,17 @@ int io_poll_remove(struct io_kiocb *req,
- 
- 		ret2 = io_poll_add(preq, issue_flags & ~IO_URING_F_UNLOCKED);
- 		/* successfully updated, don't complete poll request */
--		if (!ret2 || ret2 == -EIOCBQUEUED)
-+		if (ret2 == IOU_ISSUE_SKIP_COMPLETE)
- 			goto out;
-+		/* request completed as part of the update, complete it */
-+		else if (ret2 == IOU_COMPLETE)
-+			goto complete;
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -2551,6 +2551,9 @@ static enum hrtimer_restart io_cqring_mi
+ 			goto out_wake;
  	}
  
--	req_set_fail(preq);
- 	io_req_set_res(preq, -ECANCELED, 0);
-+complete:
-+	if (preq->cqe.res < 0)
-+		req_set_fail(preq);
- 	preq->io_task_work.func = io_req_task_complete;
- 	io_req_task_work_add(preq);
- out:
++	/* any generated CQE posted past this time should wake us up */
++	iowq->cq_tail = iowq->cq_min_tail;
++
+ 	hrtimer_update_function(&iowq->t, io_cqring_timer_wakeup);
+ 	hrtimer_set_expires(timer, iowq->timeout);
+ 	return HRTIMER_RESTART;
 
 
