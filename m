@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B50F330643;
-	Mon, 29 Dec 2025 16:18:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57183330B1F;
+	Mon, 29 Dec 2025 16:18:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025098; cv=none; b=jgb86y7w2Brz8vhlTtfe+UEUENnjYob7nqDYzyC0M8QV6BxvJABut6KtMHUEh9OJL3fTaE370obleLZW4mlmapgIx7qZxPbptLTmHtuvu4UVG6JSLLpJawiJlc3bW2wTjzCyVmo52yZjXvYFeQoMSK8ogisU//TiIrKQcAJRs/g=
+	t=1767025101; cv=none; b=KLrxDC/9EibGGE7hKhLcbQYIF9345RbjUeo6wXRYEX3RpNbba9lGOt5UXfhs/612WN4dWRFmiQLHujeAE8XaFa0i+P4U8gqU+d86j2hgAWr6n3eU4XJy3dhyxE3brjnXHChwHRJjMabJ7YLwD6seH2kvQ/MxuYYk+75OSAJwIas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025098; c=relaxed/simple;
-	bh=RR/denx28nJCd2N/YGQmwUDdx0J2o8hpiwuoBD55uT0=;
+	s=arc-20240116; t=1767025101; c=relaxed/simple;
+	bh=OoIdBPRQVihQ9IiqHz2NIs4MYIRDfURFliezr1lYmOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dNZj10zuOP8TjUDs7yWP6Z3GuOm0bnOmKfQ5NF79lN1ZcaKO9Mlc1XeOo7d2KAxZ7bRbLC9I3sl1Yw8w2yqwrGRxNZAwt6tdJlfsPW8bkWvoVrlqkXEgEdY3NwoTuDQAmlJsEMJC7lSfi1MCnvhgNwbsKKDXTe1y7WZc9bA5DMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kWGLq3nE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l2eMn9fDljDACXidhovROuswgvNnz/cfNxi/8mWf2B2UTL+uzwPYrW+ggGhfGciQGBRJZzYgFtiKJM0NcNmFLWsIOpUGJZo/rM/m9ZzSdDFgcSOvbCO5nlTTCtZUCpz/ocqnWv4ohpR8T1gGD6xiKxMs2y5XrBoWnC3859GORnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dytviOfB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kWGLq3nE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07419C116C6;
-	Mon, 29 Dec 2025 16:18:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dytviOfB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1544C116C6;
+	Mon, 29 Dec 2025 16:18:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025098;
-	bh=RR/denx28nJCd2N/YGQmwUDdx0J2o8hpiwuoBD55uT0=;
+	s=korg; t=1767025101;
+	bh=OoIdBPRQVihQ9IiqHz2NIs4MYIRDfURFliezr1lYmOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kWGLq3nExzSkKB67LmYAnJAcXjIJkp6jSPVxCVfBibzapHXmKTIHy/ZSePuOqeEvw
-	 6HjeQWEXGI3s/WG+kPpSgNjYx77nIzakotzlj98NOJz20Iu5/BAZAkt5kMjZTVVFgu
-	 jll68KWV9JJCOLoV9DqUuyAUZsnNc6glZLnd/DX8=
+	b=dytviOfBXP1JANa/iHFPWCkBwhHTilthk1sD7QLHKHd/5e1d4EfGNeTmyIvzKgGEW
+	 XBswEiCHoTBqQNq29nZ+l2Csa97C9IoU6zrS3XIynWgXR64D/PV6ocQZealqFbqpZY
+	 zJucp0C8h4uGaWd6zWDHW+0q2f95+NJ+zetwCoIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Shay Drori <shayd@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 092/430] net/mlx5: fw reset, clear reset requested on drain_fw_reset
-Date: Mon, 29 Dec 2025 17:08:14 +0100
-Message-ID: <20251229160727.747521536@linuxfoundation.org>
+Subject: [PATCH 6.18 062/430] net: phy: realtek: create rtl8211f_config_phy_eee() helper
+Date: Mon, 29 Dec 2025 17:07:44 +0100
+Message-ID: <20251229160726.648921583@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -53,43 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Moshe Shemesh <moshe@nvidia.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 89a898d63f6f588acf5c104c65c94a38b68c69a6 ]
+[ Upstream commit 4465ae435ddc0162d5033a543658449d53d46d08 ]
 
-drain_fw_reset() waits for ongoing firmware reset events and blocks new
-event handling, but does not clear the reset requested flag, and may
-keep sync reset polling.
+To simplify the rtl8211f_config_init() control flow and get rid of
+"early" returns for PHYs where the PHYCR2 register is absent, move the
+entire logic sub-block that deals with disabling PHY-mode EEE to a
+separate function. There, it is much more obvious what the early
+"return 0" skips, and it becomes more difficult to accidentally skip
+unintended stuff.
 
-To fix it, call mlx5_sync_reset_clear_reset_requested() to clear the
-flag, stop sync reset polling, and resume health polling, ensuring
-health issues are still detected after the firmware reset drain.
-
-Fixes: 16d42d313350 ("net/mlx5: Drain fw_reset when removing device")
-Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
-Reviewed-by: Shay Drori <shayd@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/1765284977-1363052-2-git-send-email-tariqt@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20251117234033.345679-7-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 4f0638b12451 ("net: phy: RTL8211FVD: Restore disabling of PHY-mode EEE")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/phy/realtek/realtek_main.c | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
-index 89e399606877b..33df0418e5754 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
-@@ -843,7 +843,8 @@ void mlx5_drain_fw_reset(struct mlx5_core_dev *dev)
- 	cancel_work_sync(&fw_reset->reset_reload_work);
- 	cancel_work_sync(&fw_reset->reset_now_work);
- 	cancel_work_sync(&fw_reset->reset_abort_work);
--	cancel_delayed_work(&fw_reset->reset_timeout_work);
-+	if (test_bit(MLX5_FW_RESET_FLAGS_RESET_REQUESTED, &fw_reset->reset_flags))
-+		mlx5_sync_reset_clear_reset_requested(dev, true);
+diff --git a/drivers/net/phy/realtek/realtek_main.c b/drivers/net/phy/realtek/realtek_main.c
+index 35f40bfdaf113..2c661346050f1 100644
+--- a/drivers/net/phy/realtek/realtek_main.c
++++ b/drivers/net/phy/realtek/realtek_main.c
+@@ -662,6 +662,17 @@ static int rtl8211f_config_aldps(struct phy_device *phydev)
+ 				mask, mask);
  }
  
- static const struct devlink_param mlx5_fw_reset_devlink_params[] = {
++static int rtl8211f_config_phy_eee(struct phy_device *phydev)
++{
++	/* RTL8211FVD has no PHYCR2 register */
++	if (phydev->drv->phy_id == RTL_8211FVD_PHYID)
++		return 0;
++
++	/* Disable PHY-mode EEE so LPI is passed to the MAC */
++	return phy_modify_paged(phydev, RTL8211F_PHYCR_PAGE, RTL8211F_PHYCR2,
++				RTL8211F_PHYCR2_PHY_EEE_ENABLE, 0);
++}
++
+ static int rtl8211f_config_init(struct phy_device *phydev)
+ {
+ 	struct device *dev = &phydev->mdio.dev;
+@@ -685,17 +696,7 @@ static int rtl8211f_config_init(struct phy_device *phydev)
+ 		return ret;
+ 	}
+ 
+-	/* RTL8211FVD has no PHYCR2 register */
+-	if (phydev->drv->phy_id == RTL_8211FVD_PHYID)
+-		return 0;
+-
+-	/* Disable PHY-mode EEE so LPI is passed to the MAC */
+-	ret = phy_modify_paged(phydev, RTL8211F_PHYCR_PAGE, RTL8211F_PHYCR2,
+-			       RTL8211F_PHYCR2_PHY_EEE_ENABLE, 0);
+-	if (ret)
+-		return ret;
+-
+-	return 0;
++	return rtl8211f_config_phy_eee(phydev);
+ }
+ 
+ static int rtl821x_suspend(struct phy_device *phydev)
 -- 
 2.51.0
 
