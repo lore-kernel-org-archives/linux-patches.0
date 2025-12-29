@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B0C63321A2;
-	Mon, 29 Dec 2025 16:30:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE2893321C9;
+	Mon, 29 Dec 2025 16:30:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025823; cv=none; b=SZEX37ea7AUNrjUVudw7bKIXYGuIqhI4C/RJ0xqoZ22Mi5FPKWVyI1rONO8YkxSDa2MfVJMOI1o6FcUT6ahV9D4UcNxpjNIjLaNla6fNwIAV8GyZRgsbgf5j44UVx8fl994Cnxq/lZZmnTATP9LG+iHfppA+fhzuvQY97YoVSs0=
+	t=1767025826; cv=none; b=Ey42WHUBXRxChNWmb6Q5GfJ7A9hyrttXOAGdwOA81iqPFiE/Me+cT6T7+HtIpyq8s6H0pFrpGQ7Z5qHlkl7i+xn97GNtigSnpeKSYVKXHvbyhEbXzwL7J+BActrzaeG4rUv3/gNIkjMU8Vagg7M3BvB7rupv9aCtkosqp36Exm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025823; c=relaxed/simple;
-	bh=sr2bFdQ/q5no1nlp+JfAT+JJb2G7EzbQNmAw75gYTbs=;
+	s=arc-20240116; t=1767025826; c=relaxed/simple;
+	bh=gB9Cd0bgR8E4VdFwZZd8unpJs51PrZyfQdEqYV0VAf8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GEAGzjLw4x/03VRqGI5EDrOYwsNVI33EPNxqxIhVUd3kr/jcPcLAYGuAKdDWv3h5kqbXFjdSK5/p4p8SwyyfWRQSqRPyu01Uahs57WsjlBZpBE/XZLiPbG3kJRRsF8yrE6J326lKulu0CgY8jseKKPmdlz42d9OaCzm/KLggIN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dEfb8vNE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NR8flhacQpUxqxhWzwA3ZmFmQrUkucCBhkfUc7Zh9OmcDtwCmbr+rqxJc6hQvdIMiMCX6RvcRa/KbhfGm71k7mz4i5B7yvOYfyepiyW9/7528j3fwYDdnGW4Cqvn9b43av1QpDvzO09Y5Xe4efotjN6IP2FhVGCrAK9rsUpr4AI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y4thpgYq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dEfb8vNE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89301C4CEF7;
-	Mon, 29 Dec 2025 16:30:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y4thpgYq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69FF7C4CEF7;
+	Mon, 29 Dec 2025 16:30:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025822;
-	bh=sr2bFdQ/q5no1nlp+JfAT+JJb2G7EzbQNmAw75gYTbs=;
+	s=korg; t=1767025825;
+	bh=gB9Cd0bgR8E4VdFwZZd8unpJs51PrZyfQdEqYV0VAf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dEfb8vNE2owdD3UdyjskraTkrUyd59C7WYnDq9eYgGY0T0skANZT7eKc7swIcJOrV
-	 P+UOXTLpxO0qzemFPHUS14qZhsGbuv3/ZV6BD0+8pwvyB4K8PUmBJTjrQu7MCAWJJI
-	 d7GfnkgTHshpGnKA0AOHAdgqr79KuePQzQlRuJm4=
+	b=Y4thpgYqBvndfAtafHVU9qDVKLzFQAHSxOCxqSreAW2rKjuJemMXMJafZyXj1ZqVq
+	 bgl1O1ci2DOICGyUQviBi/7xW/b3yrvgpyLembI1dQv6qJ5iS7N2b1Aeest1rgjTWM
+	 7HTHPmmbHnO4tZg0nnb43t/DNjr51h5f4WsckdEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+632cf32276a9a564188d@syzkaller.appspotmail.com,
-	Chao Yu <chao@kernel.org>,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.18 317/430] f2fs: invalidate dentry cache on failed whiteout creation
-Date: Mon, 29 Dec 2025 17:11:59 +0100
-Message-ID: <20251229160735.995453475@linuxfoundation.org>
+	Dai Ngo <dai.ngo@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.18 308/430] NFSD: use correct reservation type in nfsd4_scsi_fence_client
+Date: Mon, 29 Dec 2025 17:11:50 +0100
+Message-ID: <20251229160735.668385862@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -46,95 +45,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Dai Ngo <dai.ngo@oracle.com>
 
-commit d33f89b34aa313f50f9a512d58dd288999f246b0 upstream.
+commit 6f52063db9aabdaabea929b1e998af98c2e8d917 upstream.
 
-F2FS can mount filesystems with corrupted directory depth values that
-get runtime-clamped to MAX_DIR_HASH_DEPTH. When RENAME_WHITEOUT
-operations are performed on such directories, f2fs_rename performs
-directory modifications (updating target entry and deleting source
-entry) before attempting to add the whiteout entry via f2fs_add_link.
+The reservation type argument for the pr_preempt call should match the
+one used in nfsd4_block_get_device_info_scsi.
 
-If f2fs_add_link fails due to the corrupted directory structure, the
-function returns an error to VFS, but the partial directory
-modifications have already been committed to disk. VFS assumes the
-entire rename operation failed and does not update the dentry cache,
-leaving stale mappings.
-
-In the error path, VFS does not call d_move() to update the dentry
-cache. This results in new_dentry still pointing to the old inode
-(new_inode) which has already had its i_nlink decremented to zero.
-The stale cache causes subsequent operations to incorrectly reference
-the freed inode.
-
-This causes subsequent operations to use cached dentry information that
-no longer matches the on-disk state. When a second rename targets the
-same entry, VFS attempts to decrement i_nlink on the stale inode, which
-may already have i_nlink=0, triggering a WARNING in drop_nlink().
-
-Example sequence:
-1. First rename (RENAME_WHITEOUT): file2 → file1
-   - f2fs updates file1 entry on disk (points to inode 8)
-   - f2fs deletes file2 entry on disk
-   - f2fs_add_link(whiteout) fails (corrupted directory)
-   - Returns error to VFS
-   - VFS does not call d_move() due to error
-   - VFS cache still has: file1 → inode 7 (stale!)
-   - inode 7 has i_nlink=0 (already decremented)
-
-2. Second rename: file3 → file1
-   - VFS uses stale cache: file1 → inode 7
-   - Tries to drop_nlink on inode 7 (i_nlink already 0)
-   - WARNING in drop_nlink()
-
-Fix this by explicitly invalidating old_dentry and new_dentry when
-f2fs_add_link fails during whiteout creation. This forces VFS to
-refresh from disk on subsequent operations, ensuring cache consistency
-even when the rename partially succeeds.
-
-Reproducer:
-1. Mount F2FS image with corrupted i_current_depth
-2. renameat2(file2, file1, RENAME_WHITEOUT)
-3. renameat2(file3, file1, 0)
-4. System triggers WARNING in drop_nlink()
-
-Fixes: 7e01e7ad746b ("f2fs: support RENAME_WHITEOUT")
-Reported-by: syzbot+632cf32276a9a564188d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=632cf32276a9a564188d
-Suggested-by: Chao Yu <chao@kernel.org>
-Link: https://lore.kernel.org/all/20251022233349.102728-1-kartikey406@gmail.com/ [v1]
+Fixes: f99d4fbdae67 ("nfsd: add SCSI layout support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/namei.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/nfsd/blocklayout.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/f2fs/namei.c
-+++ b/fs/f2fs/namei.c
-@@ -1053,9 +1053,11 @@ static int f2fs_rename(struct mnt_idmap
- 	if (whiteout) {
- 		set_inode_flag(whiteout, FI_INC_LINK);
- 		err = f2fs_add_link(old_dentry, whiteout);
--		if (err)
-+		if (err) {
-+			d_invalidate(old_dentry);
-+			d_invalidate(new_dentry);
- 			goto put_out_dir;
--
-+		}
- 		spin_lock(&whiteout->i_lock);
- 		whiteout->i_state &= ~I_LINKABLE;
- 		spin_unlock(&whiteout->i_lock);
+--- a/fs/nfsd/blocklayout.c
++++ b/fs/nfsd/blocklayout.c
+@@ -344,7 +344,8 @@ nfsd4_scsi_fence_client(struct nfs4_layo
+ 	struct block_device *bdev = file->nf_file->f_path.mnt->mnt_sb->s_bdev;
+ 
+ 	bdev->bd_disk->fops->pr_ops->pr_preempt(bdev, NFSD_MDS_PR_KEY,
+-			nfsd4_scsi_pr_key(clp), 0, true);
++			nfsd4_scsi_pr_key(clp),
++			PR_EXCLUSIVE_ACCESS_REG_ONLY, true);
+ }
+ 
+ const struct nfsd4_layout_ops scsi_layout_ops = {
 
 
