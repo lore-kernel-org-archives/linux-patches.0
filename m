@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FEF931B111;
-	Mon, 29 Dec 2025 16:14:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8789022CBD9;
+	Mon, 29 Dec 2025 16:14:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767024889; cv=none; b=VF69GC7DdRQTkx1DUYhM+OJMK/vxHR3EVTo/BuWsIU3u+9GzkwL13dWKmDx/vH49LpuvKASfmOVZ9SWT08ymxGMBtYKSj+Sg0q+80leptwMbxzDR+ve3hh9tK4iu9yG/lZlZQ1GuB01fZLKHIu+vnknPbyMv+E0IV+eI5sRMsys=
+	t=1767024891; cv=none; b=cv7eoQFHiWpPi/1TydU+wPPd+d12JBbLt76IAZ7HHP4JX5T8syqZWUflayuiAaVrvLAX7ocrhyzpaCBH73KYYbnLt+MtAHpAf8YDw0vDsmLGmpoKFa2yem0PZEuDfS6WXe0iaVl+BKPj6WMPGgPAo3VcvjvactUphCZqkSfXelg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767024889; c=relaxed/simple;
-	bh=kXlEgGIe5wbeNPLuixyM8IC92fg7QcVRFnogiqH5JZg=;
+	s=arc-20240116; t=1767024891; c=relaxed/simple;
+	bh=hWnzF8SojRuVpg5fMastFwF9ghZmklXukBYoucT7ZjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SH+80URWCIh83fWv+JSmFNWRUBa+oIcN4pcFE3+7MLqtiVJgGD/XkMHgexBMsKdHus1mhF6SbficK9Ye/HnLXoWSddesqwskFargST2bmwPN+V8pcWyLeD+RqNowUHPwjbBC326Fb5gz+VnK8X2gBzCnec9GZXoSteXDP5BlUKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i6EZvJBx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K7mgXDRGPzkm4CJMjpi+14v6IoO4nUH5ZNfCHVq4AJQj3EKKRrKxlbQ67Oxav/BzmiEE62iFATQ10pfMKFPKShwsAw38EONv1smcZROyTRV/R5YZSCk1uwMdUWFKU+KsENRitRGo4btDRBhTduX1w67Z8KVwFBgeFid3vTVcMD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yKVuRpSV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i6EZvJBx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E54D3C4CEF7;
-	Mon, 29 Dec 2025 16:14:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yKVuRpSV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA7F4C4CEF7;
+	Mon, 29 Dec 2025 16:14:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767024888;
-	bh=kXlEgGIe5wbeNPLuixyM8IC92fg7QcVRFnogiqH5JZg=;
+	s=korg; t=1767024891;
+	bh=hWnzF8SojRuVpg5fMastFwF9ghZmklXukBYoucT7ZjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i6EZvJBxwIMNVJTuBbd305uLvREV9BjYr/qV5BrzYEhGtMKGRlm9SAPLyB2fZ8pNb
-	 7Zdw/8Qo+T0XeYgndBKGqvr//QCft/IB6Cb+ZUCjtT6xYRuE//X20USIL01yEtrKyo
-	 KtRxwfzITi/K5XtDpxXkjtwZvFb4lSMbgYY7hG0k=
+	b=yKVuRpSViG399gnC9fDuzgMLoKmi8OVskKce/za37K08wk8TezjHl4x9BN15p5pAK
+	 uyyUs6tt5giIMOvcZJJQP/Rlb1XJ6UEYkIxzCm0hCB4tgH+bpONvWDgqN/G5QyLc1N
+	 zcaFPm4n8eC4U4iO6n0N5kKfKzU1vnMeEm2GL+PM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Shuhao Fu <sfual@cse.ust.hk>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 002/430] btrfs: fix a potential path leak in print_data_reloc_error()
-Date: Mon, 29 Dec 2025 17:06:44 +0100
-Message-ID: <20251229160724.236586898@linuxfoundation.org>
+Subject: [PATCH 6.18 020/430] cpufreq: s5pv210: fix refcount leak
+Date: Mon, 29 Dec 2025 17:07:02 +0100
+Message-ID: <20251229160724.899373567@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -51,47 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Shuhao Fu <sfual@cse.ust.hk>
 
-[ Upstream commit 313ef70a9f0f637a09d9ef45222f5bdcf30a354b ]
+[ Upstream commit 2de5cb96060a1664880d65b120e59485a73588a8 ]
 
-Inside print_data_reloc_error(), if extent_from_logical() failed we
-return immediately.
+In function `s5pv210_cpu_init`, a possible refcount inconsistency has
+been identified, causing a resource leak.
 
-However there are the following cases where extent_from_logical() can
-return error but still holds a path:
+Why it is a bug:
+1. For every clk_get, there should be a matching clk_put on every
+successive error handling path.
+2. After calling `clk_get(dmc1_clk)`, variable `dmc1_clk` will not be
+freed even if any error happens.
 
-- btrfs_search_slot() returned 0
+How it is fixed: For every failed path, an extra goto label is added to
+ensure `dmc1_clk` will be freed regardlessly.
 
-- No backref item found in extent tree
-
-- No flags_ret provided
-  This is not possible in this call site though.
-
-So for the above two cases, we can return without releasing the path,
-causing extent buffer leaks.
-
-Fixes: b9a9a85059cd ("btrfs: output affected files when relocation fails")
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Shuhao Fu <sfual@cse.ust.hk>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/cpufreq/s5pv210-cpufreq.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 6282911e536f0..51401d586a7b6 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -256,6 +256,7 @@ static void print_data_reloc_error(const struct btrfs_inode *inode, u64 file_off
- 	if (ret < 0) {
- 		btrfs_err_rl(fs_info, "failed to lookup extent item for logical %llu: %d",
- 			     logical, ret);
-+		btrfs_release_path(&path);
- 		return;
+diff --git a/drivers/cpufreq/s5pv210-cpufreq.c b/drivers/cpufreq/s5pv210-cpufreq.c
+index 4215621deb3fe..ba8a1c96427a1 100644
+--- a/drivers/cpufreq/s5pv210-cpufreq.c
++++ b/drivers/cpufreq/s5pv210-cpufreq.c
+@@ -518,7 +518,7 @@ static int s5pv210_cpu_init(struct cpufreq_policy *policy)
+ 
+ 	if (policy->cpu != 0) {
+ 		ret = -EINVAL;
+-		goto out_dmc1;
++		goto out;
  	}
- 	eb = path.nodes[0];
+ 
+ 	/*
+@@ -530,7 +530,7 @@ static int s5pv210_cpu_init(struct cpufreq_policy *policy)
+ 	if ((mem_type != LPDDR) && (mem_type != LPDDR2)) {
+ 		pr_err("CPUFreq doesn't support this memory type\n");
+ 		ret = -EINVAL;
+-		goto out_dmc1;
++		goto out;
+ 	}
+ 
+ 	/* Find current refresh counter and frequency each DMC */
+@@ -544,6 +544,8 @@ static int s5pv210_cpu_init(struct cpufreq_policy *policy)
+ 	cpufreq_generic_init(policy, s5pv210_freq_table, 40000);
+ 	return 0;
+ 
++out:
++	clk_put(dmc1_clk);
+ out_dmc1:
+ 	clk_put(dmc0_clk);
+ out_dmc0:
 -- 
 2.51.0
 
