@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45164248F72;
-	Mon, 29 Dec 2025 16:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4265E1DB125;
+	Mon, 29 Dec 2025 16:16:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767024985; cv=none; b=P3+eR275QSeYbXNttN+LWEKQMhVWvwgttS6ufsxqfQxwC/UVeO1wkWdoG0XpB1E5QEhQmJfA32NPqmeRgSGszDTMb5vkfF1A69iZTD3Ak5yFrOp78WyjvFs+FT1ev8A5E1SWJvFPG7D0vHP8//vHDVfDHtemohM1h6gcnGkgOQU=
+	t=1767024988; cv=none; b=WQJb7VM8g+1DSQc0DNdcIuqKxrahC3AmoAquwpWkE6uwLHHPy+ipfsecy0wMlCbyN7uu4MEKsaE1pkMF/R6/G+AaDjDkHYNLAG0KKvJJ1Q2L4jvZdw5iIRV+Ngseh7bzBH0aufUb+O9EwBYF83RoEfLbQd2VhY2FU9SiET25cgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767024985; c=relaxed/simple;
-	bh=XajRUUjA8bZusK4wce3fXzxhIS7IgvUh4fyYM411gr8=;
+	s=arc-20240116; t=1767024988; c=relaxed/simple;
+	bh=TOSwGYWpbcPTK36blh5g4jyk1AZwVmNalhC6zm3vMzo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EcZXlmgnu8ng5SWPAUIieH5LTGnYJpw2fJtI7ewZoduDtDlX7JxsN0RPQ6Y+AOCNFXOOePMGdjK+zIlmlAiSFZzDBdNa/mMqblpOGr06/cR5yGmyL91pgzUobY4acxxjAX26wbebn+sX1m/maSBSSdYPvXYBlCc/6FZdSPR0k3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NnvPiGN6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AfzK7S/b/OXd+NcCRIRrETJ+BP31Tj6BjtkK96/At+pN0zNSAGJG5I8QiBCucvHEPdKK96sLat3SLGhAHuAJaa95CvckWhHOhYSdTC+zpaE4fiYt5eRDyIWIS1P10DIkjf1xH6oqyezY2pY+Md35UDS8FGP3MO8RyB4X5EwJoK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HNVayUwo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NnvPiGN6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0ACEC4CEF7;
-	Mon, 29 Dec 2025 16:16:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HNVayUwo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85A6C4CEF7;
+	Mon, 29 Dec 2025 16:16:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767024985;
-	bh=XajRUUjA8bZusK4wce3fXzxhIS7IgvUh4fyYM411gr8=;
+	s=korg; t=1767024988;
+	bh=TOSwGYWpbcPTK36blh5g4jyk1AZwVmNalhC6zm3vMzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NnvPiGN6wCz2AdCts5IMTLELAeGoW8Do61PM6eMdbSRRbvVE8nYlewxsyPPivY374
-	 /iAVCBllRqXfsBafARXRFXczxKA3VFWBtaARnNHuK0HWmyrMPCnMQyvK/e2w/WhScJ
-	 DtaUi2thWUv5kl0YnGndPH566qMVfORQdCJ+T2PI=
+	b=HNVayUwoULMaENUz1LRm+1bboeBKXWUmbaglJ4LjVkjN/02+qemwZnNYO7NPLOMHc
+	 wQmibEV1Bh3ThB0r3ElCEs6wSMY6BXaDzIgk5pTmTc0m9BNAPXu6l+U1XWjARxM+fV
+	 7VlNyb9yU4qcjRJlhhLKGjaWSl1vyzN7cF4cGz4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Zhang <starzhangzsd@gmail.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Wei Fang <wei.fang@nxp.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 052/430] gfs2: Fix use of bio_chain
-Date: Mon, 29 Dec 2025 17:07:34 +0100
-Message-ID: <20251229160726.283681845@linuxfoundation.org>
+Subject: [PATCH 6.18 053/430] net: fec: ERR007885 Workaround for XDP TX path
+Date: Mon, 29 Dec 2025 17:07:35 +0100
+Message-ID: <20251229160726.319965782@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -51,34 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit 8a157e0a0aa5143b5d94201508c0ca1bb8cfb941 ]
+[ Upstream commit e8e032cd24dda7cceaa27bc2eb627f82843f0466 ]
 
-In gfs2_chain_bio(), the call to bio_chain() has its arguments swapped.
-The result is leaked bios and incorrect synchronization (only the last
-bio will actually be waited for).  This code is only used during mount
-and filesystem thaw, so the bug normally won't be noticeable.
+The ERR007885 will lead to a TDAR race condition for mutliQ when the
+driver sets TDAR and the UDMA clears TDAR simultaneously or in a small
+window (2-4 cycles). And it will cause the udma_tx and udma_tx_arbiter
+state machines to hang. Therefore, the commit 53bb20d1faba ("net: fec:
+add variable reg_desc_active to speed things up") and the commit
+a179aad12bad ("net: fec: ERR007885 Workaround for conventional TX") have
+added the workaround to fix the potential issue for the conventional TX
+path. Similarly, the XDP TX path should also have the potential hang
+issue, so add the workaround for XDP TX path.
 
-Reported-by: Stephen Zhang <starzhangzsd@gmail.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Fixes: 6d6b39f180b8 ("net: fec: add initial XDP support")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Link: https://patch.msgid.link/20251128025915.2486943-1-wei.fang@nxp.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/lops.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/freescale/fec_main.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/gfs2/lops.c b/fs/gfs2/lops.c
-index 9c8c305a75c46..914d03f6c4e82 100644
---- a/fs/gfs2/lops.c
-+++ b/fs/gfs2/lops.c
-@@ -487,7 +487,7 @@ static struct bio *gfs2_chain_bio(struct bio *prev, unsigned int nr_iovecs)
- 	new = bio_alloc(prev->bi_bdev, nr_iovecs, prev->bi_opf, GFP_NOIO);
- 	bio_clone_blkg_association(new, prev);
- 	new->bi_iter.bi_sector = bio_end_sector(prev);
--	bio_chain(new, prev);
-+	bio_chain(prev, new);
- 	submit_bio(prev);
- 	return new;
+diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
+index 3222359ac15b7..e2b75d1970ae6 100644
+--- a/drivers/net/ethernet/freescale/fec_main.c
++++ b/drivers/net/ethernet/freescale/fec_main.c
+@@ -3948,7 +3948,12 @@ static int fec_enet_txq_xmit_frame(struct fec_enet_private *fep,
+ 	txq->bd.cur = bdp;
+ 
+ 	/* Trigger transmission start */
+-	writel(0, txq->bd.reg_desc_active);
++	if (!(fep->quirks & FEC_QUIRK_ERR007885) ||
++	    !readl(txq->bd.reg_desc_active) ||
++	    !readl(txq->bd.reg_desc_active) ||
++	    !readl(txq->bd.reg_desc_active) ||
++	    !readl(txq->bd.reg_desc_active))
++		writel(0, txq->bd.reg_desc_active);
+ 
+ 	return 0;
  }
 -- 
 2.51.0
