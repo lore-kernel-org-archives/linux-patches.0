@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 954F41B6D08;
-	Mon, 29 Dec 2025 16:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 703B9327BF3;
+	Mon, 29 Dec 2025 16:25:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025503; cv=none; b=b1fCadIGmq98CiAT5FXHg+udJ+LnFdBmKbUUfX3EPabP2hgk5/szQ3V/vPhymiOHI/rNzQrBRcuW0IPzRfzL2zJmikLaVRMQwggXacuTyt+nIkP88TRfKayB1L2K2MiK6Tp2ryJpBflXhTBpA1QbOjKuY8ZMH9PVa/1Dqp9b05U=
+	t=1767025506; cv=none; b=nQf46wgLdJxDma8NCh0N1bMA5tI6rxvVIsZPMuURIGabQEZjJm9aNyqqsakt/1UTXyH9zGCXJkf+uVRexbQclq5KDxxSTB6dK+B6f9mptEeibibnC2w96OhVnp7wGBNRBX5ZSsoE4R8aPmMtkiFrLkq0vkPbJQbHMyjUTYcY7Vo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025503; c=relaxed/simple;
-	bh=d9N7qF4Qtev3ICrbSvz7utvKr6+AF28B9VmoA6YSbiY=;
+	s=arc-20240116; t=1767025506; c=relaxed/simple;
+	bh=qJkZ5yRuEjAbXYXzFl7359hty8At24kFsetBejzpLqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FI3zCc9CrLpT3Zn2iafbrjUXBSKS7jaEJfGDdiw6Rzu9MsPYmF++b4VjgtV8xMw1eQ57sGHHPcYTl5V2tsO8B+G3TybPB07gDUMTnMLmxXryKZa3ab2+03Qty9AmKJemLC6YrHgXEkV9w3ZsZB6AVKjyiGHFBGoY43Jce9iAk+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0gq6GXAL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=txwg6q4WFLhHFShxiyRoQ1zBj285rmA0bvMQ5zO7DP1nJ38BSrieqSuPvpIs3Yd45ACB+fik+4d8n1NiYANVITWgUu1A0RwmosevLPtPzmS7iEaMEbY1XM/awyzhpdITg5IMZldABrPs/6F0QnJ5UcdIlV3Sgdubaj62MUcdY9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oYO3iAP+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0gq6GXAL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19099C4CEF7;
-	Mon, 29 Dec 2025 16:25:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oYO3iAP+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C19F2C4CEF7;
+	Mon, 29 Dec 2025 16:25:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025503;
-	bh=d9N7qF4Qtev3ICrbSvz7utvKr6+AF28B9VmoA6YSbiY=;
+	s=korg; t=1767025506;
+	bh=qJkZ5yRuEjAbXYXzFl7359hty8At24kFsetBejzpLqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0gq6GXALveCSN67NAPw3s6i61IOKywwTBniXi6rHXnZai6s53LOnhYSblRQQY2Y3X
-	 kgqojSNuPH48R9yx3pY9065X0k3Y7l0NmSQYyWkbjOC00Dx7lFIPQeLXLqJpHgaiEX
-	 TuBDFn6+lWzWXlqM4mjCy4IujhJdsoZICgYXrXJo=
+	b=oYO3iAP+ZzD6QWlUNKLwwxICW6rpxr3pnTsA5Jowan4hSxYvyQuE8iI/GdAx213dR
+	 0SIJUwsHjUrXNplbk/RilrIUkpLQzFHedUwl3lbCfNvd+MYShJb1peholF/EJ3M+6l
+	 T/j/tY4YVPMm+uYiXDlrqfZMVy2DAAgSRWWOJVj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.18 235/430] sched_ext: Fix bypass depth leak on scx_enable() failure
-Date: Mon, 29 Dec 2025 17:10:37 +0100
-Message-ID: <20251229160733.002512420@linuxfoundation.org>
+	Jinhui Guo <guojinhui.liam@bytedance.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 205/430] i2c: designware: Disable SMBus interrupts to prevent storms from mis-configured firmware
+Date: Mon, 29 Dec 2025 17:10:07 +0100
+Message-ID: <20251229160731.898799356@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -51,81 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Jinhui Guo <guojinhui.liam@bytedance.com>
 
-commit 9f769637a93fac81689b80df6855f545839cf999 upstream.
+[ Upstream commit d3429178ee51dd7155445d15a5ab87a45fae3c73 ]
 
-scx_enable() calls scx_bypass(true) to initialize in bypass mode and then
-scx_bypass(false) on success to exit. If scx_enable() fails during task
-initialization - e.g. scx_cgroup_init() or scx_init_task() returns an error -
-it jumps to err_disable while bypass is still active. scx_disable_workfn()
-then calls scx_bypass(true/false) for its own bypass, leaving the bypass depth
-at 1 instead of 0. This causes the system to remain permanently in bypass mode
-after a failed scx_enable().
+When probing the I2C master, disable SMBus interrupts to prevent
+storms caused by broken firmware mis-configuring IC_SMBUS=1; the
+handler never services them and a mis-configured SMBUS Master
+extend-clock timeout or SMBUS Slave extend-clock timeout can
+flood the CPU.
 
-Failures after task initialization is complete - e.g. scx_tryset_enable_state()
-at the end - already call scx_bypass(false) before reaching the error path and
-are not affected. This only affects a subset of failure modes.
-
-Fix it by tracking whether scx_enable() called scx_bypass(true) in a bool and
-having scx_disable_workfn() call an extra scx_bypass(false) to clear it. This
-is a temporary measure as the bypass depth will be moved into the sched
-instance, which will make this tracking unnecessary.
-
-Fixes: 8c2090c504e9 ("sched_ext: Initialize in bypass mode")
-Cc: stable@vger.kernel.org # v6.12+
-Reported-by: Chris Mason <clm@meta.com>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://lore.kernel.org/stable/286e6f7787a81239e1ce2989b52391ce%40kernel.org
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jinhui Guo <guojinhui.liam@bytedance.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20251021075714.3712-2-guojinhui.liam@bytedance.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/i2c/busses/i2c-designware-core.h   | 1 +
+ drivers/i2c/busses/i2c-designware-master.c | 7 +++++++
+ 2 files changed, 8 insertions(+)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -40,6 +40,13 @@ static bool scx_init_task_enabled;
- static bool scx_switching_all;
- DEFINE_STATIC_KEY_FALSE(__scx_switched_all);
+diff --git a/drivers/i2c/busses/i2c-designware-core.h b/drivers/i2c/busses/i2c-designware-core.h
+index 347843b4f5dd..436555543c79 100644
+--- a/drivers/i2c/busses/i2c-designware-core.h
++++ b/drivers/i2c/busses/i2c-designware-core.h
+@@ -78,6 +78,7 @@
+ #define DW_IC_TX_ABRT_SOURCE			0x80
+ #define DW_IC_ENABLE_STATUS			0x9c
+ #define DW_IC_CLR_RESTART_DET			0xa8
++#define DW_IC_SMBUS_INTR_MASK			0xcc
+ #define DW_IC_COMP_PARAM_1			0xf4
+ #define DW_IC_COMP_VERSION			0xf8
+ #define DW_IC_SDA_HOLD_MIN_VERS			0x3131312A /* "111*" == v1.11* */
+diff --git a/drivers/i2c/busses/i2c-designware-master.c b/drivers/i2c/busses/i2c-designware-master.c
+index 41e9b5ecad20..45bfca05bb30 100644
+--- a/drivers/i2c/busses/i2c-designware-master.c
++++ b/drivers/i2c/busses/i2c-designware-master.c
+@@ -220,6 +220,13 @@ static int i2c_dw_init_master(struct dw_i2c_dev *dev)
+ 	/* Disable the adapter */
+ 	__i2c_dw_disable(dev);
  
-+/*
-+ * Tracks whether scx_enable() called scx_bypass(true). Used to balance bypass
-+ * depth on enable failure. Will be removed when bypass depth is moved into the
-+ * sched instance.
-+ */
-+static bool scx_bypassed_for_enable;
++	/*
++	 * Mask SMBus interrupts to block storms from broken
++	 * firmware that leaves IC_SMBUS=1; the handler never
++	 * services them.
++	 */
++	regmap_write(dev->map, DW_IC_SMBUS_INTR_MASK, 0);
 +
- static atomic_long_t scx_nr_rejected = ATOMIC_LONG_INIT(0);
- static atomic_long_t scx_hotplug_seq = ATOMIC_LONG_INIT(0);
- 
-@@ -4051,6 +4058,11 @@ static void scx_disable_workfn(struct kt
- 	scx_dsp_max_batch = 0;
- 	free_kick_pseqs();
- 
-+	if (scx_bypassed_for_enable) {
-+		scx_bypassed_for_enable = false;
-+		scx_bypass(false);
-+	}
-+
- 	mutex_unlock(&scx_enable_mutex);
- 
- 	WARN_ON_ONCE(scx_set_enable_state(SCX_DISABLED) != SCX_DISABLING);
-@@ -4676,6 +4688,7 @@ static int scx_enable(struct sched_ext_o
- 	 * Init in bypass mode to guarantee forward progress.
- 	 */
- 	scx_bypass(true);
-+	scx_bypassed_for_enable = true;
- 
- 	for (i = SCX_OPI_NORMAL_BEGIN; i < SCX_OPI_NORMAL_END; i++)
- 		if (((void (**)(void))ops)[i])
-@@ -4780,6 +4793,7 @@ static int scx_enable(struct sched_ext_o
- 	scx_task_iter_stop(&sti);
- 	percpu_up_write(&scx_fork_rwsem);
- 
-+	scx_bypassed_for_enable = false;
- 	scx_bypass(false);
- 
- 	if (!scx_tryset_enable_state(SCX_ENABLED, SCX_ENABLING)) {
+ 	/* Write standard speed timing parameters */
+ 	regmap_write(dev->map, DW_IC_SS_SCL_HCNT, dev->ss_hcnt);
+ 	regmap_write(dev->map, DW_IC_SS_SCL_LCNT, dev->ss_lcnt);
+-- 
+2.51.0
+
 
 
