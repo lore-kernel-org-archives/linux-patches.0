@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A161B6D08;
-	Mon, 29 Dec 2025 16:25:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8D61B6D08;
+	Mon, 29 Dec 2025 16:25:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025515; cv=none; b=B49CBL66cLY4hfwQszu64ZB3DWPMVtwLUhYXTymLld+/a8iIlicnjxb+I5p+XAxpdvAny8WqWq9pIk+2NbzBo1nGgcEXZRn3AQM1E06dD6Ep+M5eDXrsLB+1rEAp6LNg/+EjCSc73ve6yHSsDaIO1/SUM8aT34iPHBCmZ50TKpg=
+	t=1767025517; cv=none; b=ji5jP72aEXZAHS/r5i8LlVmdYwwQuQ8urdP4K6qNxed3XbhWPLWBUuaA1ik+MCDZHqpgKdhucTbhigwysMJfmAtKtzw8laTPbhsmRhRLY3W7u3X7VjS8xy1gndL0Ss7gYWCQYMaGoBww6KvHBvB9aaSZ9qvcA6ZqtZ2PLfYq1Oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025515; c=relaxed/simple;
-	bh=vJHf1559DCgqP0SFzRg5wp+Cfock54JLl184doyW8VM=;
+	s=arc-20240116; t=1767025517; c=relaxed/simple;
+	bh=fehKGRhktbU2DRiqFYdZkFcjXJ4dJN4JeMRQKrdci/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dfJYohMZisWK3Nof74BqoZNYPtvOT/AyEHqWtxeq5MXwcENllz118mWArtkS/kmPq1qwkWvY0ugpHdgYvllzbeZGBCFR2D/94STHZIXgx3d39onAYbcjNMaMrtII/eUSxYxpcGHSttEz36Mt/e6t8ejNM4yjd9cHNVF4g3s2dIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DGT/MNkI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tw+RLJXlf6bMhaXfVJpc67l0zgZ5gfdc12jlAzhmPJEAQf+xk22/Yq0PNjmiQkL53dAsdhguuEgTWZ74c8kIgQnrhxedtAGy9t/e9SkiFG9LUgH8XN+u1rQoyJRsXbHYk9FnPWZVNsla1vaNy4KHP6OnZGXHRlFCuG10W+lOS0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XXqaF3K6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DGT/MNkI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A7D5C4CEF7;
-	Mon, 29 Dec 2025 16:25:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XXqaF3K6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13C31C4CEF7;
+	Mon, 29 Dec 2025 16:25:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025514;
-	bh=vJHf1559DCgqP0SFzRg5wp+Cfock54JLl184doyW8VM=;
+	s=korg; t=1767025517;
+	bh=fehKGRhktbU2DRiqFYdZkFcjXJ4dJN4JeMRQKrdci/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DGT/MNkIIIuRdStvcARjyaPDj+rR2vaKJ6dbmgdiZSur4E/dy1EZuZzZDJ8sJgDqw
-	 dIWWY9tBtYegFV2L7YrrHMGwdCczuheqvHBUnCfKet8H8PPOZj9O1/YKdSnxl39NXX
-	 Cziz9RKmRAEn6d9uOkbXIC39zOKUCCKbsj874ZmU=
+	b=XXqaF3K61Xi0w1HV6bQTWO232oqR+QEbltaJL5Rl/N5yEEoNSWOTTTDwqQIMqw4Ny
+	 byFuTvAnBepcmCnGdf9p8OTPtA+Fl//WKrkvAmDWkh+efp9cvMHfuxwqBPZJdRMbgj
+	 FX+4l3L/NMp+ZY7UrtNkxVacJYBDHod7MUG8/M7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Daniel Wagner <wagi@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Justin Tee <justintee8345@gmail.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 208/430] hwmon: (emc2305) fix device node refcount leak in error path
-Date: Mon, 29 Dec 2025 17:10:10 +0100
-Message-ID: <20251229160732.008157800@linuxfoundation.org>
+Subject: [PATCH 6.18 209/430] nvme-fabrics: add ENOKEY to no retry criteria for authentication failures
+Date: Mon, 29 Dec 2025 17:10:11 +0100
+Message-ID: <20251229160732.045107242@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -51,44 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Justin Tee <justintee8345@gmail.com>
 
-[ Upstream commit 4910da6b36b122db50a27fabf6ab7f8611b60bf8 ]
+[ Upstream commit 13989207ee29c40501e719512e8dc90768325895 ]
 
-The for_each_child_of_node() macro automatically manages device node
-reference counts during normal iteration. However, when breaking out
-of the loop early with return, the current iteration's node is not
-automatically released, leading to a reference count leak.
+With authentication, in addition to EKEYREJECTED there is also no point in
+retrying reconnects when status is ENOKEY.  Thus, add -ENOKEY as another
+criteria to determine when to stop retries.
 
-Fix this by adding of_node_put(child) before returning from the loop
-when emc2305_set_single_tz() fails.
-
-This issue could lead to memory leaks over multiple probe cycles.
-
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Link: https://lore.kernel.org/r/tencent_5CDC08544C901D5ECA270573D5AEE3117108@qq.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Cc: Daniel Wagner <wagi@kernel.org>
+Cc: Hannes Reinecke <hare@suse.de>
+Closes: https://lore.kernel.org/linux-nvme/20250829-nvme-fc-sync-v3-0-d69c87e63aee@kernel.org/
+Signed-off-by: Justin Tee <justintee8345@gmail.com>
+Tested-by: Daniel Wagner <wagi@kernel.org>
+Reviewed-by: Daniel Wagner <wagi@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/emc2305.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/nvme/host/fabrics.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/emc2305.c b/drivers/hwmon/emc2305.c
-index 60809289f816..84cb9b72cb6c 100644
---- a/drivers/hwmon/emc2305.c
-+++ b/drivers/hwmon/emc2305.c
-@@ -685,8 +685,10 @@ static int emc2305_probe(struct i2c_client *client)
- 			i = 0;
- 			for_each_child_of_node(dev->of_node, child) {
- 				ret = emc2305_set_single_tz(dev, child, i);
--				if (ret != 0)
-+				if (ret != 0) {
-+					of_node_put(child);
- 					return ret;
-+				}
- 				i++;
- 			}
- 		} else {
+diff --git a/drivers/nvme/host/fabrics.c b/drivers/nvme/host/fabrics.c
+index 2e58a7ce1090..55a8afd2efd5 100644
+--- a/drivers/nvme/host/fabrics.c
++++ b/drivers/nvme/host/fabrics.c
+@@ -592,7 +592,7 @@ bool nvmf_should_reconnect(struct nvme_ctrl *ctrl, int status)
+ 	if (status > 0 && (status & NVME_STATUS_DNR))
+ 		return false;
+ 
+-	if (status == -EKEYREJECTED)
++	if (status == -EKEYREJECTED || status == -ENOKEY)
+ 		return false;
+ 
+ 	if (ctrl->opts->max_reconnects == -1 ||
 -- 
 2.51.0
 
