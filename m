@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4768627E077;
-	Mon, 29 Dec 2025 16:24:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F22D3252917;
+	Mon, 29 Dec 2025 16:24:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025478; cv=none; b=PbhIPWPv/h1w4M9St0Nap6FIseF9N+xkF5QQKjDpDNHveOUy6CZjObzBwc2Xgk0at2Cv85Ngi9irwmCKZr/BPT+y7TFARGJa4I6Whk3Js1Gqz8cjs643GOWVuG0R5F+AsIo3Jn8obaAL+F3cMQEgH6huh83P89vQF0ngHNMFWXs=
+	t=1767025481; cv=none; b=ZGiWRJVT3m9caud7nvw1WqLfQuxn8aYM6eDYx4l9y+K/7K7WmE907LPcpfqNRPygKHisV5UpekKzzetAkpeSuBlwr8bmDwrqMRGj2rKFLmzpw71T0/8CkFQVQnQJEl8mx575F76JEP1oiv1HysBRNit9s7f2KE6B8eNLvEkyKWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025478; c=relaxed/simple;
-	bh=6Gfx2id8o969U4EBTdQDIcMMwP5UdHZc/Z9D041EbQ8=;
+	s=arc-20240116; t=1767025481; c=relaxed/simple;
+	bh=VfmN/saAm3t4V70gcs46dk1Du6n5od/m+b49JlR85Uo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rssmUduQoswRb8/h+CuvyHO8sseEE3K0aMuItCOJo7pYguNcJWwHfok+zgS5ObllqgzRyfhErEnexH1FEDrBVzUcSNrUyy1R8103bh1+4DAtZvLI7t2MiB1rmdVU+1X457jwIvRaxTyVo6aAotgDs7cf38YId8sbcIKKmXj1P5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PAq+EHw6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pjPxL10PZpDWw16/g4eGHCxk4ADDblf5HxE9XFPVaNURFiPnr3Gh2GyhOKjSaH2UUZKT7M92nwNkpOTJjaQv0s+xCwsQyl2vq4naPlBKXZORM9ewA+PenO2+KZ0MmMQfUFXP6x5dcoeHvlnTWOG1t1B5PO+yRg3zdztNcsOmtwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x1yP4egS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PAq+EHw6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B1EEC4CEF7;
-	Mon, 29 Dec 2025 16:24:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x1yP4egS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 186A5C4CEF7;
+	Mon, 29 Dec 2025 16:24:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025477;
-	bh=6Gfx2id8o969U4EBTdQDIcMMwP5UdHZc/Z9D041EbQ8=;
+	s=korg; t=1767025480;
+	bh=VfmN/saAm3t4V70gcs46dk1Du6n5od/m+b49JlR85Uo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PAq+EHw66meQhpazB1EQUgVYhmURkKlpkQl8UB3020BxiYMBI4VlvPHYAD2vPMats
-	 NZ6Puy7RyvD9I3ahH0GNGJd8R+sHO83pkHhPGLt9RO1RPdoQ0AwLP1sqv2fYsSRmoW
-	 QswtY9tq45fHS3GkVPyoWoycvP0fUhA3GDZ0Og28=
+	b=x1yP4egS3sgLmJQiZ2cfoil9n3gqXeWTeAJtRwm4qANm8dppljIC1Zlwj27zrhJo1
+	 K8F7xZt0UzlsqRK7csr0NAYLZR+5gLHXdkympCBz/NOacU/M5O4dll0helGd+i3Pae
+	 oxjxBpKQJnVLF0UJkBQWyjb+O41EQCmgOysAnOVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.18 227/430] KEYS: trusted: Fix a memory leak in tpm2_load_cmd
-Date: Mon, 29 Dec 2025 17:10:29 +0100
-Message-ID: <20251229160732.707894119@linuxfoundation.org>
+	Andrew Davis <afd@ti.com>,
+	Johan Hovold <johan@kernel.org>,
+	Stephen Boyd <sboyd@kernel.org>
+Subject: [PATCH 6.18 228/430] clk: keystone: syscon-clk: fix regmap leak on probe failure
+Date: Mon, 29 Dec 2025 17:10:30 +0100
+Message-ID: <20251229160732.745176870@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -49,50 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarkko Sakkinen <jarkko@kernel.org>
+From: Johan Hovold <johan@kernel.org>
 
-commit 62cd5d480b9762ce70d720a81fa5b373052ae05f upstream.
+commit 9c75986a298f121ed2c6599b05e51d9a34e77068 upstream.
 
-'tpm2_load_cmd' allocates a tempoary blob indirectly via 'tpm2_key_decode'
-but it is not freed in the failure paths. Address this by wrapping the blob
-into with a cleanup helper.
+The mmio regmap allocated during probe is never freed.
 
-Cc: stable@vger.kernel.org # v5.13+
-Fixes: f2219745250f ("security: keys: trusted: use ASN.1 TPM2 key format for the blobs")
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Switch to using the device managed allocator so that the regmap is
+released on probe failures (e.g. probe deferral) and on driver unbind.
+
+Fixes: a250cd4c1901 ("clk: keystone: syscon-clk: Do not use syscon helper to build regmap")
+Cc: stable@vger.kernel.org	# 6.15
+Cc: Andrew Davis <afd@ti.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/keys/trusted-keys/trusted_tpm2.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/clk/keystone/syscon-clk.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/security/keys/trusted-keys/trusted_tpm2.c
-+++ b/security/keys/trusted-keys/trusted_tpm2.c
-@@ -387,6 +387,7 @@ static int tpm2_load_cmd(struct tpm_chip
- 			 struct trusted_key_options *options,
- 			 u32 *blob_handle)
- {
-+	u8 *blob_ref __free(kfree) = NULL;
- 	struct tpm_buf buf;
- 	unsigned int private_len;
- 	unsigned int public_len;
-@@ -400,6 +401,9 @@ static int tpm2_load_cmd(struct tpm_chip
- 		/* old form */
- 		blob = payload->blob;
- 		payload->old_format = 1;
-+	} else {
-+		/* Bind for cleanup: */
-+		blob_ref = blob;
- 	}
+diff --git a/drivers/clk/keystone/syscon-clk.c b/drivers/clk/keystone/syscon-clk.c
+index c509929da854..ecf180a7949c 100644
+--- a/drivers/clk/keystone/syscon-clk.c
++++ b/drivers/clk/keystone/syscon-clk.c
+@@ -129,7 +129,7 @@ static int ti_syscon_gate_clk_probe(struct platform_device *pdev)
+ 	if (IS_ERR(base))
+ 		return PTR_ERR(base);
  
- 	/* new format carries keyhandle but old format doesn't */
-@@ -464,8 +468,6 @@ static int tpm2_load_cmd(struct tpm_chip
- 			(__be32 *) &buf.data[TPM_HEADER_SIZE]);
- 
- out:
--	if (blob != payload->blob)
--		kfree(blob);
- 	tpm_buf_destroy(&buf);
- 
- 	if (rc > 0)
+-	regmap = regmap_init_mmio(dev, base, &ti_syscon_regmap_cfg);
++	regmap = devm_regmap_init_mmio(dev, base, &ti_syscon_regmap_cfg);
+ 	if (IS_ERR(regmap))
+ 		return dev_err_probe(dev, PTR_ERR(regmap),
+ 				     "failed to get regmap\n");
+-- 
+2.52.0
+
 
 
