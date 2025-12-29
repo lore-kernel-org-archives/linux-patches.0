@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B5E32FA18;
-	Mon, 29 Dec 2025 16:17:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F6EC32FA2D;
+	Mon, 29 Dec 2025 16:17:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025064; cv=none; b=ZRNRKGJSrG/R5w78XZgt9i4T8fwUUuXtnUKiDmf6N3rcLR6Gaxft2hV4EQkBemWevTHM4Ra8JiSX3ZbhGCp7PSNuWFjUYic9+/uJDKTPeqkiwodKB1/lxIkPlvP/1Q900K9Sv0RwNHlju/gbrSdNysbG6fOSkvrYT+7a+6w3A+M=
+	t=1767025067; cv=none; b=kHnL/xmbEILPXwYAqiACyIXc6dwfCmTai77ekv5spMdBku3wchp/5cM46LtB+Jh4ixaUd6V6eZ/Alo3zwQ1zDyc4EshwAaoo4H10ic6g74TE2D8af5JmBJtIXIBrjol7Z/BhbncMQ1Tg7wXL6CfH+wLxLrAKVc3hNRqL6GBQptU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025064; c=relaxed/simple;
-	bh=nef9WbZxN2/NqgDIE3H5wtKqu2TkLr96OkjZ8x067vU=;
+	s=arc-20240116; t=1767025067; c=relaxed/simple;
+	bh=l/P1P4GTZmNLnjB6lCarPh3dbSepviW86/IZhV3uSqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G5rOTaT3VJalM/nvawiZVgPxJnFN9Hw+izbqlqDf7vNOpQNFIym8VtAmHuBZGdN/OmXB+ZLH6ikgUR6Djsd2lQs7Z73zaEMS7F6c274k1oTYL/jCvdgqjn3cYTL+4FlYvw+tBir41D+PrtKTZL0kwi/Kme3LKw/hSdGmtl5O5g0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CbMPzLIq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J1gaPxwF82myjhx74z76KSyT1VzuHTsHciY/wlWJMYy2xk0p5wL6MYWAj24z8KFECVqbkK5yGICeIAlM9fPEsWDc296Mae1fipEg+CfwgSHZKoIOzdcV+VjazBZx1IH7PAX0MKCj8kc+bpC4lkAvT5U//ng9/Yi6xCsNA9ODCkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g1Mibvqw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CbMPzLIq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1968C19421;
-	Mon, 29 Dec 2025 16:17:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g1Mibvqw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B611CC4CEF7;
+	Mon, 29 Dec 2025 16:17:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025064;
-	bh=nef9WbZxN2/NqgDIE3H5wtKqu2TkLr96OkjZ8x067vU=;
+	s=korg; t=1767025067;
+	bh=l/P1P4GTZmNLnjB6lCarPh3dbSepviW86/IZhV3uSqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CbMPzLIqua/r8or0wYViTAw71z9I/5Q3ulwp0yNHJt9/AwSL/8rfdKkdEhg1m+1Ie
-	 7+jlsMLEzqTHbR9ZUbnrSWEABKnqNwSBfSlcEe+MFMIPvEGPa8eHP5onLG9nBIhV4m
-	 9dxUbqg3lFd5/uwq2PaFoRAvH19CcBbm1QGXD+3w=
+	b=g1MibvqwNEGazil5RXsnRq73dbR8rSFbitCwZHWRd+qbVb+8tFVf6KcWBZjtMfMkd
+	 3Zm9VXIq8rlRfTXZbM3jxb2xvpU5OGR0DAzcqfeDzaae6OskiKiIfhTtAgYXLzul5i
+	 fh6TA8xo7NeKE1MsV2xFmqbSiAHq9QgVxUxrq+/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 081/430] selftests: netfilter: prefer xfail in case race wasnt triggered
-Date: Mon, 29 Dec 2025 17:08:03 +0100
-Message-ID: <20251229160727.345359047@linuxfoundation.org>
+Subject: [PATCH 6.18 082/430] caif: fix integer underflow in cffrml_receive()
+Date: Mon, 29 Dec 2025 17:08:04 +0100
+Message-ID: <20251229160727.381293564@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -51,63 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit b8a81b0ce539e021ac72825238aea1eb657000f0 ]
+[ Upstream commit 8a11ff0948b5ad09b71896b7ccc850625f9878d1 ]
 
-Jakub says: "We try to reserve SKIP for tests skipped because tool is
-missing in env, something isn't built into the kernel etc."
+The cffrml_receive() function extracts a length field from the packet
+header and, when FCS is disabled, subtracts 2 from this length without
+validating that len >= 2.
 
-use xfail, we can't force the race condition to appear at will
-so its expected that the test 'fails' occasionally.
+If an attacker sends a malicious packet with a length field of 0 or 1
+to an interface with FCS disabled, the subtraction causes an integer
+underflow.
 
-Fixes: 78a588363587 ("selftests: netfilter: add conntrack clash resolution test case")
-Reported-by: Jakub Kicinski <kuba@kernel.org>
-Closes: https://lore.kernel.org/netdev/20251206175647.5c32f419@kernel.org/
-Signed-off-by: Florian Westphal <fw@strlen.de>
+This can lead to memory exhaustion and kernel instability, potential
+information disclosure if padding contains uninitialized kernel memory.
+
+Fix this by validating that len >= 2 before performing the subtraction.
+
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Reported-by: Junrui Luo <moonafterrain@outlook.com>
+Fixes: b482cd2053e3 ("net-caif: add CAIF core protocol stack")
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/SYBPR01MB7881511122BAFEA8212A1608AFA6A@SYBPR01MB7881.ausprd01.prod.outlook.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/netfilter/conntrack_clash.sh | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ net/caif/cffrml.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/netfilter/conntrack_clash.sh b/tools/testing/selftests/net/netfilter/conntrack_clash.sh
-index 7fc6c5dbd5516..84b8eb12143ae 100755
---- a/tools/testing/selftests/net/netfilter/conntrack_clash.sh
-+++ b/tools/testing/selftests/net/netfilter/conntrack_clash.sh
-@@ -116,7 +116,7 @@ run_one_clash_test()
- 	# not a failure: clash resolution logic did not trigger.
- 	# With right timing, xmit completed sequentially and
- 	# no parallel insertion occurs.
--	return $ksft_skip
-+	return $ksft_xfail
- }
+diff --git a/net/caif/cffrml.c b/net/caif/cffrml.c
+index 6651a8dc62e04..d4d63586053ad 100644
+--- a/net/caif/cffrml.c
++++ b/net/caif/cffrml.c
+@@ -92,8 +92,15 @@ static int cffrml_receive(struct cflayer *layr, struct cfpkt *pkt)
+ 	len = le16_to_cpu(tmp);
  
- run_clash_test()
-@@ -133,12 +133,12 @@ run_clash_test()
- 		if [ $rv -eq 0 ];then
- 			echo "PASS: clash resolution test for $daddr:$dport on attempt $i"
- 			return 0
--		elif [ $rv -eq $ksft_skip ]; then
-+		elif [ $rv -eq $ksft_xfail ]; then
- 			softerr=1
- 		fi
- 	done
+ 	/* Subtract for FCS on length if FCS is not used. */
+-	if (!this->dofcs)
++	if (!this->dofcs) {
++		if (len < 2) {
++			++cffrml_rcv_error;
++			pr_err("Invalid frame length (%d)\n", len);
++			cfpkt_destroy(pkt);
++			return -EPROTO;
++		}
+ 		len -= 2;
++	}
  
--	[ $softerr -eq 1 ] && echo "SKIP: clash resolution for $daddr:$dport did not trigger"
-+	[ $softerr -eq 1 ] && echo "XFAIL: clash resolution for $daddr:$dport did not trigger"
- }
- 
- ip link add veth0 netns "$nsclient1" type veth peer name veth0 netns "$nsrouter"
-@@ -167,8 +167,7 @@ load_simple_ruleset "$nsclient2"
- run_clash_test "$nsclient2" "$nsclient2" 127.0.0.1 9001
- 
- if [ $clash_resolution_active -eq 0 ];then
--	[ "$ret" -eq 0 ] && ret=$ksft_skip
--	echo "SKIP: Clash resolution did not trigger"
-+	[ "$ret" -eq 0 ] && ret=$ksft_xfail
- fi
- 
- exit $ret
+ 	if (cfpkt_setlen(pkt, len) < 0) {
+ 		++cffrml_rcv_error;
 -- 
 2.51.0
 
