@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6F7F3314A9;
-	Mon, 29 Dec 2025 16:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AE9433120C;
+	Mon, 29 Dec 2025 16:19:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025191; cv=none; b=H8kIIcYYP+zKReDzyUkaGXVcaPj3Is82EeBd4NFdrMUyNa5HYKmADJlHTyM/DkxuEzjrHUAR9QC/HHrUGkIYmOHdbiH5mMLPMRNIBvUME99eVtH8ZGaC3muddf0tShwnCFJLTBaHDpw26j1tDy6RD7DGl4F1jQE9RUIxDMaLstk=
+	t=1767025194; cv=none; b=EKXg5u8xOlDSLIJiag4vD1fmrCiBSNoT5zuPV4qjf1TKbjOcyC0YL1ReoqnPJl9Dh3/rxDSXkZdmqGFyqsQ/L2iJub31BmvQJgci4Iunlb3JX5YPFQskVhP/4uMlpUaqaU39g/U9ZL7QjDTStzyXP8Jst0wcKIHIpLueCgmL5Kg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025191; c=relaxed/simple;
-	bh=UcAPgUvZp/TvKm8+iF8gitUNKbj0u2LE3z23JeL3fcU=;
+	s=arc-20240116; t=1767025194; c=relaxed/simple;
+	bh=OGoXzyorf4JPP8sT5JANLP3gdP1E7OoxM+QXKp+3bv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mfhepHuA4EEQ6E9KOWIN1EacGHGc3zE5wQzCWKUXqpRhLgx7Vqk37VoGAoul8Fz1vrYEVI7B/JYCPM7Gw0rTwWPRFNRqOdNCqMJvZLZTEYCD0C5gkRImX/NES6LU99GVLcsGO6L81/pz4BgjpzLL4px+1dae19vPxoikJ5wKnS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PDUpy7Gh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DKwfXhhmeG5LZtW3PdhNdQQh4tV7FYZTMalA6H4qFo4ZiWj+L4vfg1bToQW/kvXACatdHD+q2sWRrMuc3+XWaaP/Re1FlUQCTw33/JIg0RNlTTv40X8NqBKNRNEa7EuwlW3E4P9MkTe+CLR1NRYHOrf1VQ/9FHVXns/jOnui6No=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UxdGScMZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PDUpy7Gh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B7AEC4CEF7;
-	Mon, 29 Dec 2025 16:19:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UxdGScMZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0557FC4CEF7;
+	Mon, 29 Dec 2025 16:19:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025191;
-	bh=UcAPgUvZp/TvKm8+iF8gitUNKbj0u2LE3z23JeL3fcU=;
+	s=korg; t=1767025194;
+	bh=OGoXzyorf4JPP8sT5JANLP3gdP1E7OoxM+QXKp+3bv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PDUpy7GhlXAD2pU9cRtOXdY06YpaYSkeLtqZpI971Z5Y6KnORomGt0qP8FIdCJk3K
-	 VAYYp8a9skyg3SicotBYlvA3AWQ7eCW9suHPirm9xk/QqHrAnSn9fWMyv+rKIX5UMt
-	 XaY8AbaMJo4m5Deg/iN6Svutox8Gp+WHVDgke0j0=
+	b=UxdGScMZhrX5hrhlihbndhVAa9Ucu7xD1RY4YvULdAw6CqUGVc9OkrAyEIVwi7Azk
+	 SEjTUN0+ry6OAhZAuETLZa/mWl9ZV4tlXJ57nLZPBDjbkEpei4tD0zFQLMQSGjhui3
+	 JPRcPSkMP3BjHbQQKIitsvE9Mhd7GiwII6OvTv9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Martin Botka <martin.botka@somainline.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 125/430] MIPS: Fix a reference leak bug in ip22_check_gio()
-Date: Mon, 29 Dec 2025 17:08:47 +0100
-Message-ID: <20251229160728.966951662@linuxfoundation.org>
+Subject: [PATCH 6.18 126/430] drm/panel: sony-td4353-jdi: Enable prepare_prev_first
+Date: Mon, 29 Dec 2025 17:08:48 +0100
+Message-ID: <20251229160729.003501836@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -51,35 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Marijn Suijten <marijn.suijten@somainline.org>
 
-[ Upstream commit 680ad315caaa2860df411cb378bf3614d96c7648 ]
+[ Upstream commit 2b973ca48ff3ef1952091c8f988d7796781836c8 ]
 
-If gio_device_register fails, gio_dev_put() is required to
-drop the gio_dev device reference.
+The DSI host must be enabled before our prepare function can run, which
+has to send its init sequence over DSI.  Without enabling the host first
+the panel will not probe.
 
-Fixes: e84de0c61905 ("MIPS: GIO bus support for SGI IP22/28")
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: 9e15123eca79 ("drm/msm/dsi: Stop unconditionally powering up DSI hosts at modeset")
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Martin Botka <martin.botka@somainline.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20251130-sony-akari-fix-panel-v1-1-1d27c60a55f5@somainline.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/sgi-ip22/ip22-gio.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/panel/panel-sony-td4353-jdi.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/mips/sgi-ip22/ip22-gio.c b/arch/mips/sgi-ip22/ip22-gio.c
-index 5893ea4e382c..19b70928d6dc 100644
---- a/arch/mips/sgi-ip22/ip22-gio.c
-+++ b/arch/mips/sgi-ip22/ip22-gio.c
-@@ -372,7 +372,8 @@ static void ip22_check_gio(int slotno, unsigned long addr, int irq)
- 		gio_dev->resource.flags = IORESOURCE_MEM;
- 		gio_dev->irq = irq;
- 		dev_set_name(&gio_dev->dev, "%d", slotno);
--		gio_device_register(gio_dev);
-+		if (gio_device_register(gio_dev))
-+			gio_dev_put(gio_dev);
- 	} else
- 		printk(KERN_INFO "GIO: slot %d : Empty\n", slotno);
- }
+diff --git a/drivers/gpu/drm/panel/panel-sony-td4353-jdi.c b/drivers/gpu/drm/panel/panel-sony-td4353-jdi.c
+index 7c989b70ab51..a14c86c60d19 100644
+--- a/drivers/gpu/drm/panel/panel-sony-td4353-jdi.c
++++ b/drivers/gpu/drm/panel/panel-sony-td4353-jdi.c
+@@ -212,6 +212,8 @@ static int sony_td4353_jdi_probe(struct mipi_dsi_device *dsi)
+ 	if (ret)
+ 		return dev_err_probe(dev, ret, "Failed to get backlight\n");
+ 
++	ctx->panel.prepare_prev_first = true;
++
+ 	drm_panel_add(&ctx->panel);
+ 
+ 	ret = mipi_dsi_attach(dsi);
 -- 
 2.51.0
 
