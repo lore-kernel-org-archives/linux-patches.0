@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7FD133066C;
-	Mon, 29 Dec 2025 16:29:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67EDD33064F;
+	Mon, 29 Dec 2025 16:29:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025783; cv=none; b=DIxlWFAFfecZCxbOgyV/T45BPkzEma75Gu/wXgFSnOZAuqiJp6q5QQntLhnd4wNiOiFNip5f6t4Rd8Luh0Rsos4xWSl9o+DfjY2iCZ9U//kBCfVBu+c+aBU0Naxh1aCa5aNBAhzqAlQVQ7ON+O0Gd+dhffLSNTBG81mQkS0X3ww=
+	t=1767025786; cv=none; b=PfOt7E8trvq8w19edLoshSTsjPuyPMF+UtAlXmE1tX3TfzY3T50wHeilnJRhyFyse87am0CQ522jvCqFdCVepPwEbBIMLUWEqaEKJMAitSl0EjitmDgAhEBjRYZOEUwWqBYD0J4CuH5U/r+t9YHcGfO+aRNSSWrN1E8Z6bV9Q1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025783; c=relaxed/simple;
-	bh=EbjEIQ+xIOLBSBpVsUW/6Gvt3m1//ciVUzyzExee6QI=;
+	s=arc-20240116; t=1767025786; c=relaxed/simple;
+	bh=htZiGLh9+DoL00/QU08F37/GkRQpKXFETjWKueDsdik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZlFwlM4zehc0VhJD1DC6eo7DM9771vCytapFdatIEKCPUwckqFoVgZK8+CQMuQQxpoZ6BNE8bQVxZbFG3fJNA7ynyWbESnqJ3x1aDGasdBZEue5cKYkYNyo5RSZ8+RIQqK+MZWiNuSFK6y7mz5i6fOkiW/tcSSwF4HM0o+p7kGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EDclcTcb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CU3/BD9A3a3RtyYa0qh+SsOTrG/ffZqCVVCuf9m1JAQY16RmNaFWnX1isnQG6zYa/MKmpvP0gttoFTlcKhSqEJZWGRFS6iYj+7DelJs5Lv7SDlgCKo13Qq6Ek/nBlZ2APGNLKOQdivxElI4oE7qZSunFbtkXqCavYNJ+KAe2JRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kY74+3m1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EDclcTcb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33118C4CEF7;
-	Mon, 29 Dec 2025 16:29:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kY74+3m1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8402C4CEF7;
+	Mon, 29 Dec 2025 16:29:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025783;
-	bh=EbjEIQ+xIOLBSBpVsUW/6Gvt3m1//ciVUzyzExee6QI=;
+	s=korg; t=1767025786;
+	bh=htZiGLh9+DoL00/QU08F37/GkRQpKXFETjWKueDsdik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EDclcTcbF3h+U4XDxF1nlIpSoVi4ggJe/FD9ChBWMAyszSz5LU/EYOzXFgrwkApZF
-	 nz27WXMMEv5W5DEMBiVujmnUh4Gb1CKM3ldPyPZKTUNqZPIwOtmka6LDptr+HabXel
-	 UQADtlGIRHTi7kVW7weaaIOTbocGEL/8QPB/hWa4=
+	b=kY74+3m1CWg16uZfYQizoBadEzn0oGE+MtNhMIsUu4/KTrXzDbUxs0RSDUGbsPbh9
+	 kMrUjSwdlst2iWvEEMCUkI2CUm29psRq2BkvSeU97sRBnMHfITY5ET1poPadHHhSSE
+	 rl/H3cgQBdbBNezJ++RBElGeVMfAvD93XtG2ggTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dongsheng Yang <dongsheng.yang@linux.dev>,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Zheng Gu <cengku@gmail.com>
-Subject: [PATCH 6.18 335/430] dm-pcache: advance slot index before writing slot
-Date: Mon, 29 Dec 2025 17:12:17 +0100
-Message-ID: <20251229160736.654635845@linuxfoundation.org>
+	Vivian Wang <wangruikang@iscas.ac.cn>,
+	Eric Biggers <ebiggers@kernel.org>
+Subject: [PATCH 6.18 336/430] lib/crypto: riscv/chacha: Avoid s0/fp register
+Date: Mon, 29 Dec 2025 17:12:18 +0100
+Message-ID: <20251229160736.692298872@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -45,95 +44,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dongsheng Yang <dongsheng.yang@linux.dev>
+From: Vivian Wang <wangruikang@iscas.ac.cn>
 
-commit ebbb90344a7da2421e4b54668b94e81828b8b308 upstream.
+commit 43169328c7b4623b54b7713ec68479cebda5465f upstream.
 
-In dm-pcache, in order to ensure crash-consistency, a dual-copy scheme
-is used to alternately update metadata, and there is a slot index that
-records the current slot. However, in the write path the current
-implementation writes directly to the current slot indexed by slot
-index, and then advances the slot — which ends up overwriting the
-existing slot, violating the crash-consistency guarantee.
+In chacha_zvkb, avoid using the s0 register, which is the frame pointer,
+by reallocating KEY0 to t5. This makes stack traces available if e.g. a
+crash happens in chacha_zvkb.
 
-This patch fixes that behavior, preventing metadata from being
-overwritten incorrectly.
+No frame pointer maintenance is otherwise required since this is a leaf
+function.
 
-In addition, this patch add a missing pmem_wmb() after memcpy_flushcache().
-
-Signed-off-by: Dongsheng Yang <dongsheng.yang@linux.dev>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Reviewed-by: Zheng Gu <cengku@gmail.com>
-Cc: stable@vger.kernel.org	# 6.18
+Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+Fixes: bb54668837a0 ("crypto: riscv - add vector crypto accelerated ChaCha20")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20251202-riscv-chacha_zvkb-fp-v2-1-7bd00098c9dc@iscas.ac.cn
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-pcache/cache.c         |    8 ++++----
- drivers/md/dm-pcache/cache_segment.c |    8 ++++----
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ lib/crypto/riscv/chacha-riscv64-zvkb.S |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/md/dm-pcache/cache.c
-+++ b/drivers/md/dm-pcache/cache.c
-@@ -21,10 +21,10 @@ static void cache_info_write(struct pcac
- 	cache_info->header.crc = pcache_meta_crc(&cache_info->header,
- 						sizeof(struct pcache_cache_info));
+--- a/lib/crypto/riscv/chacha-riscv64-zvkb.S
++++ b/lib/crypto/riscv/chacha-riscv64-zvkb.S
+@@ -60,7 +60,8 @@
+ #define VL		t2
+ #define STRIDE		t3
+ #define ROUND_CTR	t4
+-#define KEY0		s0
++#define KEY0		t5
++// Avoid s0/fp to allow for unwinding
+ #define KEY1		s1
+ #define KEY2		s2
+ #define KEY3		s3
+@@ -143,7 +144,6 @@
+ // The updated 32-bit counter is written back to state->x[12] before returning.
+ SYM_FUNC_START(chacha_zvkb)
+ 	addi		sp, sp, -96
+-	sd		s0, 0(sp)
+ 	sd		s1, 8(sp)
+ 	sd		s2, 16(sp)
+ 	sd		s3, 24(sp)
+@@ -280,7 +280,6 @@ SYM_FUNC_START(chacha_zvkb)
+ 	bnez		NBLOCKS, .Lblock_loop
  
-+	cache->info_index = (cache->info_index + 1) % PCACHE_META_INDEX_MAX;
- 	memcpy_flushcache(get_cache_info_addr(cache), cache_info,
- 			sizeof(struct pcache_cache_info));
--
--	cache->info_index = (cache->info_index + 1) % PCACHE_META_INDEX_MAX;
-+	pmem_wmb();
- }
- 
- static void cache_info_init_default(struct pcache_cache *cache);
-@@ -93,10 +93,10 @@ void cache_pos_encode(struct pcache_cach
- 	pos_onmedia.header.seq = seq;
- 	pos_onmedia.header.crc = cache_pos_onmedia_crc(&pos_onmedia);
- 
-+	*index = (*index + 1) % PCACHE_META_INDEX_MAX;
-+
- 	memcpy_flushcache(pos_onmedia_addr, &pos_onmedia, sizeof(struct pcache_cache_pos_onmedia));
- 	pmem_wmb();
--
--	*index = (*index + 1) % PCACHE_META_INDEX_MAX;
- }
- 
- int cache_pos_decode(struct pcache_cache *cache,
---- a/drivers/md/dm-pcache/cache_segment.c
-+++ b/drivers/md/dm-pcache/cache_segment.c
-@@ -26,11 +26,11 @@ static void cache_seg_info_write(struct
- 	seg_info->header.seq++;
- 	seg_info->header.crc = pcache_meta_crc(&seg_info->header, sizeof(struct pcache_segment_info));
- 
-+	cache_seg->info_index = (cache_seg->info_index + 1) % PCACHE_META_INDEX_MAX;
-+
- 	seg_info_addr = get_seg_info_addr(cache_seg);
- 	memcpy_flushcache(seg_info_addr, seg_info, sizeof(struct pcache_segment_info));
- 	pmem_wmb();
--
--	cache_seg->info_index = (cache_seg->info_index + 1) % PCACHE_META_INDEX_MAX;
- 	mutex_unlock(&cache_seg->info_lock);
- }
- 
-@@ -129,10 +129,10 @@ static void cache_seg_ctrl_write(struct
- 	cache_seg_gen.header.crc = pcache_meta_crc(&cache_seg_gen.header,
- 						 sizeof(struct pcache_cache_seg_gen));
- 
-+	cache_seg->gen_index = (cache_seg->gen_index + 1) % PCACHE_META_INDEX_MAX;
-+
- 	memcpy_flushcache(get_cache_seg_gen_addr(cache_seg), &cache_seg_gen, sizeof(struct pcache_cache_seg_gen));
- 	pmem_wmb();
--
--	cache_seg->gen_index = (cache_seg->gen_index + 1) % PCACHE_META_INDEX_MAX;
- }
- 
- static void cache_seg_ctrl_init(struct pcache_cache_segment *cache_seg)
+ 	sw		COUNTER, 48(STATEP)
+-	ld		s0, 0(sp)
+ 	ld		s1, 8(sp)
+ 	ld		s2, 16(sp)
+ 	ld		s3, 24(sp)
 
 
