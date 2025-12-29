@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 797B83328EE;
-	Mon, 29 Dec 2025 16:30:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23BFA3321CA;
+	Mon, 29 Dec 2025 16:30:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025834; cv=none; b=RJvTCoH9F93tTqmBYsTd6VXcdlyjFZe4gIO3U6+ve+kpWG3f2yOsLfq5yKH2HnO4kUQKxutH9BrbG+WGl/qJaqKn6ANi68a9eAqhTzfJNKHnO4TVXA4iXIbEe2c80R8JRm++OKq8HQk0T+b7nvK0tPd6IwThQwVJb8dI/8hwTVc=
+	t=1767025837; cv=none; b=noIF14B5DqwwKxU6QkDqDDxHYZANr8yGgQeC7sEJ34zlzXYVB3ANNao0A0jt3ykyTTx5tI5F3kXD8iCG++j6kAJAU1QUFsK8dVb4TzJn575JTHnLjAYOlH4Bcvb8RkxLCGCASkyegSZvlXFEXkKFMOlq0YDuMSkliHd7G0ReqMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025834; c=relaxed/simple;
-	bh=OyjjQHMbqF2O7WO6S1msMmMEhwjCmUdSg/hVNTe05Tc=;
+	s=arc-20240116; t=1767025837; c=relaxed/simple;
+	bh=Kj2p07vfCbiYeBRMmTTJ9xanA4olI4QGT4g0cGQX8S0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GG+4ti2lQ2HqHmCAvZd7eIv3coUT/3XpUMmrD580s2oYP2rLPi4eNxRh8/7de7vNg6V0+c0523megCJDdXMzkuIo9HX8Q7ARbLPl4eotUxII6ehXhXKzNomJhRrzzNvRl8pNwLKAyLfTSLujj/xZY8RL7vtEPngEIJ4iEMqbUzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aUw2FXxZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uau9wkS1NPxdcj7RH9CaGnobVFG58CmgkWZfUbQGfpKDfhTTc1+ehVdPiuBBHEq6ATxFobDch/Xd5NnZDO8ky/OkwP5u/u7TWAqmG/UcHEXpGfxU+bxDF8b3pH4zJr94T2FA4nr5LBj0t+l3uXUFYJF7ytusrto75O9/VNk+wXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LKExWdTb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aUw2FXxZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA9FCC4CEF7;
-	Mon, 29 Dec 2025 16:30:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LKExWdTb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A36CAC4CEF7;
+	Mon, 29 Dec 2025 16:30:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025834;
-	bh=OyjjQHMbqF2O7WO6S1msMmMEhwjCmUdSg/hVNTe05Tc=;
+	s=korg; t=1767025837;
+	bh=Kj2p07vfCbiYeBRMmTTJ9xanA4olI4QGT4g0cGQX8S0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aUw2FXxZmV2HPC9YLRQPdjwXQ7x7uxBqi0XJKTrS0V7xHen5ov0RVImOdd7RmQXXr
-	 d3fz5oWHosjnofOOwFN1yAgIcy911MNwKHV0+IL0BoipJbauvHzsCmU6QnLyJY27d8
-	 68du5HDvVj74CldpYAv4xKsVipnS5u3ljC6LpL1c=
+	b=LKExWdTbmxekv1VR7weKkx4Itt1db2kltRB4tmy85cBRWmKi82PeK9yh9rAQeIS3l
+	 ZjLnOrKvI1ryWr8ILk20HoTJarRRq7nnNBnLhkGREb/qIoBSqECkYxn/fkYGJyd1v9
+	 Eo3DqFmm7zuM6GEW+WeXSm5fLZ41mnp2cHZA2Z+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
-	Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
 	Carlos Maiolino <cmaiolino@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 354/430] xfs: fix a memory leak in xfs_buf_item_init()
-Date: Mon, 29 Dec 2025 17:12:36 +0100
-Message-ID: <20251229160737.353458870@linuxfoundation.org>
+Subject: [PATCH 6.18 355/430] xfs: fix stupid compiler warning
+Date: Mon, 29 Dec 2025 17:12:37 +0100
+Message-ID: <20251229160737.391433537@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -46,39 +46,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit fc40459de82543b565ebc839dca8f7987f16f62e upstream.
+commit f06725052098d7b1133ac3846d693c383dc427a2 upstream.
 
-xfs_buf_item_get_format() may allocate memory for bip->bli_formats,
-free the memory in the error path.
+gcc 14.2 warns about:
 
-Fixes: c3d5f0c2fb85 ("xfs: complain if anyone tries to create a too-large buffer log item")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+xfs_attr_item.c: In function ‘xfs_attr_recover_work’:
+xfs_attr_item.c:785:9: warning: ‘ip’ may be used uninitialized [-Wmaybe-uninitialized]
+  785 |         xfs_trans_ijoin(tp, ip, 0);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~
+xfs_attr_item.c:740:42: note: ‘ip’ was declared here
+  740 |         struct xfs_inode                *ip;
+      |                                          ^~
+
+I think this is bogus since xfs_attri_recover_work either returns a real
+pointer having initialized ip or an ERR_PTR having not touched it, but
+the tools are smarter than me so let's just null-init the variable
+anyway.
+
+Cc: stable@vger.kernel.org # v6.8
+Fixes: e70fb328d52772 ("xfs: recreate work items when recovering intent items")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_buf_item.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/xfs/xfs_attr_item.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/xfs/xfs_buf_item.c
-+++ b/fs/xfs/xfs_buf_item.c
-@@ -896,6 +896,7 @@ xfs_buf_item_init(
- 		map_size = DIV_ROUND_UP(chunks, NBWORD);
- 
- 		if (map_size > XFS_BLF_DATAMAP_SIZE) {
-+			xfs_buf_item_free_format(bip);
- 			kmem_cache_free(xfs_buf_item_cache, bip);
- 			xfs_err(mp,
- 	"buffer item dirty bitmap (%u uints) too small to reflect %u bytes!",
+--- a/fs/xfs/xfs_attr_item.c
++++ b/fs/xfs/xfs_attr_item.c
+@@ -737,7 +737,7 @@ xfs_attr_recover_work(
+ 	struct xfs_attri_log_item	*attrip = ATTRI_ITEM(lip);
+ 	struct xfs_attr_intent		*attr;
+ 	struct xfs_mount		*mp = lip->li_log->l_mp;
+-	struct xfs_inode		*ip;
++	struct xfs_inode		*ip = NULL;
+ 	struct xfs_da_args		*args;
+ 	struct xfs_trans		*tp;
+ 	struct xfs_trans_res		resv;
 
 
