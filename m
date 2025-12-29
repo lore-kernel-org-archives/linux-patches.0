@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB0C79460;
-	Mon, 29 Dec 2025 16:22:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA09923D2B2;
+	Mon, 29 Dec 2025 16:22:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025372; cv=none; b=hGfSh1KRQBI190Hd3Y4hAAdFoYZSLe6sk1PYVLPPnCbqTw80oA360cEmwSRr5ZsOH6MmQ7OxQtzac5f95R9CiT83f3Y0zlpquWckT2caVLihk2iLb2zQSCjGj2rR093J19MTsgmPlR9xH/iBM+rs9C7jQn3DkGgBhDRLqTtopQo=
+	t=1767025375; cv=none; b=Uv5dspdeWmmBOH4mTkgiH1DpPpbiJz6um1p42QZiAwnPs29DO1urUF1moBt8AXU9/VvgaeAp2lNf/cocw3IWn3UVNaf7iWsT4cnWuBblCBlf6GStH7Fo+PGSQiS0R8TmW3TyTni3XLbXnS+3v6PqIyrorkPv9don3Ka20XVRc5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025372; c=relaxed/simple;
-	bh=xV+M1K7pfOC6AjB22gtJUF7yoDgR5IJrV2cU//fOZug=;
+	s=arc-20240116; t=1767025375; c=relaxed/simple;
+	bh=jf1eh2hrC04SwLj7hq7P3+CI82ohUuEE0twsEve7zDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o2kqd3M/RvE4j33sOrDykn28f+8IxGdxkO45Un5boyt+S2xSKzdriZJuLYYhRbWz1iWR/KqphOITjBwrB2rOXeVGW1xHrfq86fIwQMJ16q+1FH68D2PxtZdRbn/d2t8LZ+tC+sXgqzu5cYgGuZ7Z8QvzMKfYEkTaER/nVfAF0wY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IhtizOkq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WOzrdr8/sBDK1SE/cmyFGMva7aL+wiNM71TKmJJ9TLeRQSZLl/O8eBstDOnwOnOXiLxcr7vHOxxGJQmbouz9tPsQztByJWt/MD4U6c0st5YYBg5z76MIFDBDHRa8b8blXX7uQdf6TwIlUFPoFqIJKPX566M5nCUQKjhuj0OGqy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kyLyLToj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IhtizOkq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 659A1C4CEF7;
-	Mon, 29 Dec 2025 16:22:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kyLyLToj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 437DCC4CEF7;
+	Mon, 29 Dec 2025 16:22:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025372;
-	bh=xV+M1K7pfOC6AjB22gtJUF7yoDgR5IJrV2cU//fOZug=;
+	s=korg; t=1767025375;
+	bh=jf1eh2hrC04SwLj7hq7P3+CI82ohUuEE0twsEve7zDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IhtizOkqY2ky4eHcDrae08Dx06pd71Mbeib6Ze1uLuxia+T7rVHLyMbO80QKRxzu5
-	 9f+0iJ2L0wNh3PjRs4AQZY0BVj4K6TYosNcMbT2+r2plprs9757JiyKdSqv1FLEdV8
-	 Cjwrbra/v/fiT7e4OWkW4WrgGnDoyuN2eCGQ0r78=
+	b=kyLyLTojPDiJhzQ3j63qLAqMELWhWoyGU13NXRIKXbV37yt1jffWzT+G3edULcwXO
+	 V6Xiou01nxeLPVm/W4+mB8BxdAM/qsbjHsNVjahPDW/u08EonSJtGEzkDazdjLRR1z
+	 l8HyxRr8fwXfLX06mn7XW6o9EGr+wOiCxKGagMtw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernd Schubert <bschubert@ddn.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Li Qiang <liqiang01@kylinos.cn>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 190/430] fuse: Invalidate the page cache after FOPEN_DIRECT_IO write
-Date: Mon, 29 Dec 2025 17:09:52 +0100
-Message-ID: <20251229160731.348767704@linuxfoundation.org>
+Subject: [PATCH 6.18 191/430] via_wdt: fix critical boot hang due to unnamed resource allocation
+Date: Mon, 29 Dec 2025 17:09:53 +0100
+Message-ID: <20251229160731.385306289@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -51,43 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernd Schubert <bschubert@ddn.com>
+From: Li Qiang <liqiang01@kylinos.cn>
 
-[ Upstream commit b359af8275a982a458e8df6c6beab1415be1f795 ]
+[ Upstream commit 7aa31ee9ec92915926e74731378c009c9cc04928 ]
 
-generic_file_direct_write() also does this and has a large
-comment about.
+The VIA watchdog driver uses allocate_resource() to reserve a MMIO
+region for the watchdog control register. However, the allocated
+resource was not given a name, which causes the kernel resource tree
+to contain an entry marked as "<BAD>" under /proc/iomem on x86
+platforms.
 
-Reproducer here is xfstest's generic/209, which is exactly to
-have competing DIO write and cached IO read.
+During boot, this unnamed resource can lead to a critical hang because
+subsequent resource lookups and conflict checks fail to handle the
+invalid entry properly.
 
-Signed-off-by: Bernd Schubert <bschubert@ddn.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Signed-off-by: Li Qiang <liqiang01@kylinos.cn>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/file.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/watchdog/via_wdt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/fuse/file.c b/fs/fuse/file.c
-index c5c82b380791..bb4ecfd469a5 100644
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -1681,6 +1681,15 @@ ssize_t fuse_direct_io(struct fuse_io_priv *io, struct iov_iter *iter,
- 	if (res > 0)
- 		*ppos = pos;
+diff --git a/drivers/watchdog/via_wdt.c b/drivers/watchdog/via_wdt.c
+index d647923d68fe..f55576392651 100644
+--- a/drivers/watchdog/via_wdt.c
++++ b/drivers/watchdog/via_wdt.c
+@@ -165,6 +165,7 @@ static int wdt_probe(struct pci_dev *pdev,
+ 		dev_err(&pdev->dev, "cannot enable PCI device\n");
+ 		return -ENODEV;
+ 	}
++	wdt_res.name = "via_wdt";
  
-+	if (res > 0 && write && fopen_direct_io) {
-+		/*
-+		 * As in generic_file_direct_write(), invalidate after the
-+		 * write, to invalidate read-ahead cache that may have competed
-+		 * with the write.
-+		 */
-+		invalidate_inode_pages2_range(mapping, idx_from, idx_to);
-+	}
-+
- 	return res > 0 ? res : err;
- }
- EXPORT_SYMBOL_GPL(fuse_direct_io);
+ 	/*
+ 	 * Allocate a MMIO region which contains watchdog control register
 -- 
 2.51.0
 
