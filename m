@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B041327BF3;
-	Mon, 29 Dec 2025 16:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439E824EF8C;
+	Mon, 29 Dec 2025 16:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025673; cv=none; b=pbo2mf4cyo4Iv9Ohd7CYjY874apQFbhWGFr0w0LaFxee8c6WByuDbUFA1dlG+g1XqtUMc/WPQm5v5ZxDo56ecPgSjlXkx28Wgbkx9yx8nlUVw/Jhy7oqMq7OKuTkcRVEG5Z28e3X8r2DH2ZzoWo7h22vCPDdqk1o1Ed5TnMxzNY=
+	t=1767025676; cv=none; b=jLdAgCMHvE4IdEsuMfm2DbLKVKoP1Yrw4YHKL2ENuBt9caHxslPhKZIILVf5jLJJrtMboePREa2holKm6S2sFiw+d7IJJlIj8PHlIniJG9IQLAbWfkWEh0ig67dSPRbv39xEnG+mLaVCxl8mR3uMcqh9wr3RBr6jCdmfNAPf0s4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025673; c=relaxed/simple;
-	bh=JbIMtyrRwF1BvESZrvSoVaaYPf3Fn8BHJ5AtDgCTyJo=;
+	s=arc-20240116; t=1767025676; c=relaxed/simple;
+	bh=JksyVe/Lp9Rgm6TY0E16sOsx1BAyin/Dcjwhp/Q8RNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zcg4bd6ROIStpS2Lk+cbVgT9iyVuvA074JqnRa9KGskxC0kxrxsBQRnEIO1SzWhA4hkxHRLLYPmCG8pA7465jT9FVQZ8AVY3MxUHuNlconghlcoHlb7D1GJ46TIizqf/CUk9uYxpVx7cszeKFNFDYCr0qDSk1GTVqVm5k6miGYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=udCyB3lI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k7esCcR9WPCqOtK+bwnz95MNPh0XtGJI3NrTH2d9Jqd/FePtmcX0MqPSjEap56cjqboiX5FqJzUB4mJkUYXS5mHOdBegy5A4FUid8KUyZYbEtLca51YpWG50Y6lGVQIUsDVL0ht/C4EYLKOmFoDtcyiOo7WLvV6UWg7lcvOG0Ps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yWPOUnPk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="udCyB3lI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD159C4CEF7;
-	Mon, 29 Dec 2025 16:27:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yWPOUnPk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85261C4CEF7;
+	Mon, 29 Dec 2025 16:27:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025673;
-	bh=JbIMtyrRwF1BvESZrvSoVaaYPf3Fn8BHJ5AtDgCTyJo=;
+	s=korg; t=1767025675;
+	bh=JksyVe/Lp9Rgm6TY0E16sOsx1BAyin/Dcjwhp/Q8RNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=udCyB3lIqsGNxioDB6agJRkEKXSGH6LfmPhlmnJGFvn0NmsEOBbPIAU6P1NdCBM/T
-	 UuX4SrqfEvBdtcVNrOpL8s+X/mpIc7PksdAceug7wqNXLmZLRHrpZGAKJ4GM3HmzXX
-	 d3jCeyz1Ukh1CTm4SqekcrbdctV+ygdV8U0tk8vs=
+	b=yWPOUnPkLnsRc3fnF8j2kMp2Zfo5uclM51CKxmPSSPZm21mkZdw3trmNCrEzjFmcx
+	 D11iLRALcM2eQJHxmmT2+sdvGkGlEF9cLa9IKyAZXvkrD4iHX6ZG6WQqZMBOZkQjWd
+	 2yIQGHvWUNJMcMXEgkjgnYjVvjeBcLy9m7RzhAfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 6.18 296/430] dt-bindings: slimbus: fix warning from example
-Date: Mon, 29 Dec 2025 17:11:38 +0100
-Message-ID: <20251229160735.231712907@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>
+Subject: [PATCH 6.18 297/430] intel_th: Fix error handling in intel_th_output_open
+Date: Mon, 29 Dec 2025 17:11:39 +0100
+Message-ID: <20251229160735.268505900@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -52,78 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 4d4e746aa9f0f07261dcb41e4f51edb98723dcaa upstream.
+commit 6d5925b667e4ed9e77c8278cc215191d29454a3f upstream.
 
-Fix below warnings generated dt_bindings_check for examples in the
-bindings.
+intel_th_output_open() calls bus_find_device_by_devt() which
+internally increments the device reference count via get_device(), but
+this reference is not properly released in several error paths. When
+device driver is unavailable, file operations cannot be obtained, or
+the driver's open method fails, the function returns without calling
+put_device(), leading to a permanent device reference count leak. This
+prevents the device from being properly released and could cause
+resource exhaustion over time.
 
-Documentation/devicetree/bindings/slimbus/slimbus.example.dtb:
-slim@28080000 (qcom,slim-ngd-v1.5.0): 'audio-codec@1,0' does not match
-any of the regexes: '^pinctrl-[0-9]+$', '^slim@[0-9a-f]+$'
-        from schema $id:
-http://devicetree.org/schemas/slimbus/qcom,slim-ngd.yaml#
-Documentation/devicetree/bindings/slimbus/slimbus.example.dtb:
-slim@28080000 (qcom,slim-ngd-v1.5.0): #address-cells: 1 was expected
-        from schema $id:
-http://devicetree.org/schemas/slimbus/qcom,slim-ngd.yaml#
-Documentation/devicetree/bindings/slimbus/slimbus.example.dtb:
-slim@28080000 (qcom,slim-ngd-v1.5.0): 'dmas' is a required property
-        from schema $id:
-http://devicetree.org/schemas/slimbus/qcom,slim-ngd.yaml#
-Documentation/devicetree/bindings/slimbus/slimbus.example.dtb:
-slim@28080000 (qcom,slim-ngd-v1.5.0): 'dma-names' is a required
-property
-        from schema $id:
-http://devicetree.org/schemas/slimbus/qcom,slim-ngd.yaml#
+Found by code review.
 
-Fixes: 7cbba32a2d62 ("slimbus: qcom: remove unused qcom controller driver")
 Cc: stable <stable@kernel.org>
-Reported-by: Rob Herring <robh@kernel.org>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20251114110505.143105-1-srini@kernel.org
+Fixes: 39f4034693b7 ("intel_th: Add driver infrastructure for Intel(R) Trace Hub devices")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Link: https://patch.msgid.link/20251112091723.35963-1-make24@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../devicetree/bindings/slimbus/slimbus.yaml     | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/hwtracing/intel_th/core.c |   20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/slimbus/slimbus.yaml b/Documentation/devicetree/bindings/slimbus/slimbus.yaml
-index 89017d9cda10..5a941610ce4e 100644
---- a/Documentation/devicetree/bindings/slimbus/slimbus.yaml
-+++ b/Documentation/devicetree/bindings/slimbus/slimbus.yaml
-@@ -75,16 +75,22 @@ examples:
-         #size-cells = <1>;
-         ranges;
+--- a/drivers/hwtracing/intel_th/core.c
++++ b/drivers/hwtracing/intel_th/core.c
+@@ -810,13 +810,17 @@ static int intel_th_output_open(struct i
+ 	int err;
  
--        slim@28080000 {
-+        controller@28080000 {
-             compatible = "qcom,slim-ngd-v1.5.0";
-             reg = <0x091c0000 0x2c000>;
-             interrupts = <GIC_SPI 163 IRQ_TYPE_LEVEL_HIGH>;
--            #address-cells = <2>;
-+            dmas = <&slimbam 3>, <&slimbam 4>;
-+            dma-names = "rx", "tx";
-+            #address-cells = <1>;
-             #size-cells = <0>;
--
--            audio-codec@1,0 {
-+            slim@1 {
-+              reg = <1>;
-+              #address-cells = <2>;
-+              #size-cells = <0>;
-+              codec@1,0 {
-                 compatible = "slim217,1a0";
-                 reg = <1 0>;
-+              };
-             };
-+          };
-         };
--    };
--- 
-2.52.0
-
+ 	dev = bus_find_device_by_devt(&intel_th_bus, inode->i_rdev);
+-	if (!dev || !dev->driver)
+-		return -ENODEV;
++	if (!dev || !dev->driver) {
++		err = -ENODEV;
++		goto out_no_device;
++	}
+ 
+ 	thdrv = to_intel_th_driver(dev->driver);
+ 	fops = fops_get(thdrv->fops);
+-	if (!fops)
+-		return -ENODEV;
++	if (!fops) {
++		err = -ENODEV;
++		goto out_put_device;
++	}
+ 
+ 	replace_fops(file, fops);
+ 
+@@ -824,10 +828,16 @@ static int intel_th_output_open(struct i
+ 
+ 	if (file->f_op->open) {
+ 		err = file->f_op->open(inode, file);
+-		return err;
++		if (err)
++			goto out_put_device;
+ 	}
+ 
+ 	return 0;
++
++out_put_device:
++	put_device(dev);
++out_no_device:
++	return err;
+ }
+ 
+ static const struct file_operations intel_th_output_fops = {
 
 
