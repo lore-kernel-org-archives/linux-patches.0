@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01A93328F9;
-	Mon, 29 Dec 2025 16:31:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D12233343B;
+	Mon, 29 Dec 2025 16:31:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025882; cv=none; b=u5aNJHglrh2NW2alwfdEZMHO++nTsxYTsSSDLELWUNgA/DjvKDGboi0ypoU0mqq2YR6J/nph4QXGYb/BJydj8l9NgD/lBqAi3dsMaHZWir9tuFKgQgybKh5EPbOHNdIWMbs1MQPXV99JPZHB/9Ykjyc1HIJMW45689UVRR5Oxms=
+	t=1767025885; cv=none; b=ZgbXhhh6F40Hh0HuJbpo3RGikRRbsfm9z56crrb64fZ923BmXHxgI0hbBRONGeb9UL+W7kAutVuBBGU9S/emDYLF7VUX5J40r9Xv2o1yeLpRngMC3897fIe+naJpBm693SktEaA+Eehos+vKWln+X3JeN3aKvuRY86iwBFCt4kY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025882; c=relaxed/simple;
-	bh=xFuVAnIqpRu8v+vYORtigU7rx0/NAaWK7xks099hIkY=;
+	s=arc-20240116; t=1767025885; c=relaxed/simple;
+	bh=OMAKTWVuHyhoYAuxVbbasqVvne8cNmZYwUB0iIx0y8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bp/zpgxQtnZX1xBa/SWJbhr0RJ2vZSyzVsxEG2ZT4zeVVcDDboEIaVBvlqxmmKGhG8towDSXZyjNbA5efAvaTMjDj5rb2/gEVVE8OWAA35HaDhP8q4dvatMjicdkDEMnZ/L2VcDwkcm0KK4MsKfdq4sdpBnZLbJBDgP8nwzGlOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w23uUkQc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cyh5ZctjUMTsEXJw/Y/OKUSSqTfiDL+uIrW6YC+uZHGbKfn72Mg/XIF7AB5tVPr/EFftN3Bk97wCjENlC3cv5Co84YHysxA6+yUxzLq5iuAFUAhYwTKyleG23Rk6viNLAZxXoLFDP6LxwmWttU2QwB9tUkh92rfVPn4k1PBzEpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nV6GbGh2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w23uUkQc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A8E7C4CEF7;
-	Mon, 29 Dec 2025 16:31:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nV6GbGh2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDBC1C19421;
+	Mon, 29 Dec 2025 16:31:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025882;
-	bh=xFuVAnIqpRu8v+vYORtigU7rx0/NAaWK7xks099hIkY=;
+	s=korg; t=1767025885;
+	bh=OMAKTWVuHyhoYAuxVbbasqVvne8cNmZYwUB0iIx0y8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w23uUkQcv1P9MLeJIqk1CTR9TWLIqCn0o8bymQNQMRSNJ2hxgsdpfKEWFKR+QymLS
-	 ZLn9zF2KA2LWUl0QMkTxRBR6JDGWZcE+dKqHUueRo7iDJ48id0t5snxO+VI2Ap3Gqk
-	 Nz+N5NOuJlXhB77Hgr4iLEQE/sgcQFylmHe7EVWo=
+	b=nV6GbGh2JoHAWKUSMB9Pi18HsuAOWeAxMNma7FWflRoKRUQ90f/+01IAo4Kqjq0eT
+	 4rW938MvdcgghqlzHJXPC/pQc33guWbGOcCl+0vW8iPHFiSKlPBY9iWaS+oPd8vlWe
+	 53f0m4iF4fUUBc4vlEbQ5IfaJWab7P3JN9EfCuZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Antheas Kapenekakis <lkml@antheas.dev>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 370/430] ALSA: hda/realtek: Add Asus quirk for TAS amplifiers
-Date: Mon, 29 Dec 2025 17:12:52 +0100
-Message-ID: <20251229160737.941290712@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.18 371/430] NFSD: Clear TIME_DELEG in the suppattr_exclcreat bitmap
+Date: Mon, 29 Dec 2025 17:12:53 +0100
+Message-ID: <20251229160737.976882411@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -51,58 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antheas Kapenekakis <lkml@antheas.dev>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit f7cede182c963720edd1e5fb50ea4f1c7eafa30e upstream.
+commit ad3cbbb0c1892c48919727fcb8dec5965da8bacb upstream.
 
-By default, these devices use the quirk ALC294_FIXUP_ASUS_SPK. Not
-using it causes the headphone jack to stop working. Therefore,
-introduce a new quirk ALC287_FIXUP_TXNW2781_I2C_ASUS that binds
-to the TAS amplifier while using that quirk.
+>From RFC 8881:
 
-Cc: stable@kernel.org
-Fixes: 18a4895370a7 ("ALSA: hda/realtek: Add match for ASUS Xbox Ally projects")
-Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
-Link: https://patch.msgid.link/20251216211714.1116898-1-lkml@antheas.dev
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+5.8.1.14. Attribute 75: suppattr_exclcreat
+
+> The bit vector that would set all REQUIRED and RECOMMENDED
+> attributes that are supported by the EXCLUSIVE4_1 method of file
+> creation via the OPEN operation. The scope of this attribute
+> applies to all objects with a matching fsid.
+
+There's nothing in RFC 8881 that states that suppattr_exclcreat is
+or is not allowed to contain bits for attributes that are clear in
+the reported supported_attrs bitmask. But it doesn't make sense for
+an NFS server to indicate that it /doesn't/ implement an attribute,
+but then also indicate that clients /are/ allowed to set that
+attribute using OPEN(create) with EXCLUSIVE4_1.
+
+The FATTR4_WORD2_TIME_DELEG attributes are also not to be allowed
+for OPEN(create) with EXCLUSIVE4_1. It doesn't make sense to set
+a delegated timestamp on a new file.
+
+Fixes: 7e13f4f8d27d ("nfsd: handle delegated timestamps in SETATTR")
+Cc: stable@vger.kernel.org
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/hda/codecs/realtek/alc269.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ fs/nfsd/nfsd.h |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -3703,6 +3703,7 @@ enum {
- 	ALC295_FIXUP_DELL_TAS2781_I2C,
- 	ALC245_FIXUP_TAS2781_SPI_2,
- 	ALC287_FIXUP_TXNW2781_I2C,
-+	ALC287_FIXUP_TXNW2781_I2C_ASUS,
- 	ALC287_FIXUP_YOGA7_14ARB7_I2C,
- 	ALC245_FIXUP_HP_MUTE_LED_COEFBIT,
- 	ALC245_FIXUP_HP_MUTE_LED_V1_COEFBIT,
-@@ -5993,6 +5994,12 @@ static const struct hda_fixup alc269_fix
- 		.chained = true,
- 		.chain_id = ALC285_FIXUP_THINKPAD_HEADSET_JACK,
- 	},
-+	[ALC287_FIXUP_TXNW2781_I2C_ASUS] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = tas2781_fixup_txnw_i2c,
-+		.chained = true,
-+		.chain_id = ALC294_FIXUP_ASUS_SPK,
-+	},
- 	[ALC287_FIXUP_YOGA7_14ARB7_I2C] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = yoga7_14arb7_fixup_i2c,
-@@ -6736,8 +6743,8 @@ static const struct hda_quirk alc269_fix
- 	SND_PCI_QUIRK(0x1043, 0x12f0, "ASUS X541UV", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x1313, "Asus K42JZ", ALC269VB_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x1314, "ASUS GA605K", ALC285_FIXUP_ASUS_GA605K_HEADSET_MIC),
--	SND_PCI_QUIRK(0x1043, 0x1384, "ASUS RC73XA", ALC287_FIXUP_TXNW2781_I2C),
--	SND_PCI_QUIRK(0x1043, 0x1394, "ASUS RC73YA", ALC287_FIXUP_TXNW2781_I2C),
-+	SND_PCI_QUIRK(0x1043, 0x1384, "ASUS RC73XA", ALC287_FIXUP_TXNW2781_I2C_ASUS),
-+	SND_PCI_QUIRK(0x1043, 0x1394, "ASUS RC73YA", ALC287_FIXUP_TXNW2781_I2C_ASUS),
- 	SND_PCI_QUIRK(0x1043, 0x13b0, "ASUS Z550SA", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x1427, "Asus Zenbook UX31E", ALC269VB_FIXUP_ASUS_ZENBOOK),
- 	SND_PCI_QUIRK(0x1043, 0x1433, "ASUS GX650PY/PZ/PV/PU/PYV/PZV/PIV/PVV", ALC285_FIXUP_ASUS_I2C_HEADSET_MIC),
+--- a/fs/nfsd/nfsd.h
++++ b/fs/nfsd/nfsd.h
+@@ -547,8 +547,14 @@ static inline bool nfsd_attrs_supported(
+ #define NFSD_SUPPATTR_EXCLCREAT_WORD1 \
+ 	(NFSD_WRITEABLE_ATTRS_WORD1 & \
+ 	 ~(FATTR4_WORD1_TIME_ACCESS_SET | FATTR4_WORD1_TIME_MODIFY_SET))
++/*
++ * The FATTR4_WORD2_TIME_DELEG attributes are not to be allowed for
++ * OPEN(create) with EXCLUSIVE4_1. It doesn't make sense to set a
++ * delegated timestamp on a new file.
++ */
+ #define NFSD_SUPPATTR_EXCLCREAT_WORD2 \
+-	NFSD_WRITEABLE_ATTRS_WORD2
++	(NFSD_WRITEABLE_ATTRS_WORD2 & \
++	~(FATTR4_WORD2_TIME_DELEG_ACCESS | FATTR4_WORD2_TIME_DELEG_MODIFY))
+ 
+ extern int nfsd4_is_junction(struct dentry *dentry);
+ extern int register_cld_notifier(void);
 
 
