@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7D3A31283B;
-	Mon, 29 Dec 2025 16:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C7433344D;
+	Mon, 29 Dec 2025 16:32:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025977; cv=none; b=TlhvQWSS+ByYWfaZB1yp5/5IkyOiH1RLVt9eQOsRolKRjVxkfAdo+hEbOO1Dvd3rVie7fKgMWf4yz7dTWEJ6XQpiJeLS2e1vioNAyp4RkK7rIz2tExtuM/sQDgjek/F/CgUM8X1wy8YS5y+1+sDhnQWFQgFpF/JuB6TLzV3MR3w=
+	t=1767025979; cv=none; b=uyhKoZe3v0XJbCWHizLvnQtzkrPMjd7zhQNX/wgSlDrQz7gNt5As2tnq5jucNFBkiVoR/WBC7jmmMmwXsk9p8BvG1cu0rDIch07JHaqwtYUZSS4E5AyVOPU2DS+sH/t4QY7HqLbr1mXflV3RNJB2tWVt1wivtFio6LjNS3tYyEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025977; c=relaxed/simple;
-	bh=F061evHtvTkmfJGOFvItxyeJBH/o3kFXhb8iS2unBCI=;
+	s=arc-20240116; t=1767025979; c=relaxed/simple;
+	bh=C7wuZVi5VCs4QXsF1et9JnN5ef8qvbnRu24lnsED6Js=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W5WvTnwyiCnvrsdaqEy9Koot+CkesjzD8T/GCzVpUwcSDuJtJ7u5w0ZncPcSrv929g8u3dMuRuJQSWJ+JQWtiLR5ik5i5e9NQQ5j4Qh+tOqIdyn8LHCtgVz1eq8rbLq20CAWClgpj5Z6lTYUnaJX/q2Oxg/pV8KeGxOOwYmj4qo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2rt6iRRN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Om3g8kp7lQhze+7SiswbHIULruiIDe279t0l0fMjpoGn4VXnrDZxQMo5GDTYnIZ6VOMxcBIUB8uk4TM40LBmxskcWm7jGDuRNJsW0tFVfiPKD9YyE1hquaObLDhIDgfLMl1/2rQUQULZTa31BON5mdOmcG3PzPtMgzLBZzrr5lI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1nRYtQaZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2rt6iRRN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23544C4CEF7;
-	Mon, 29 Dec 2025 16:32:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1nRYtQaZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E17DEC4CEF7;
+	Mon, 29 Dec 2025 16:32:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025976;
-	bh=F061evHtvTkmfJGOFvItxyeJBH/o3kFXhb8iS2unBCI=;
+	s=korg; t=1767025979;
+	bh=C7wuZVi5VCs4QXsF1et9JnN5ef8qvbnRu24lnsED6Js=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2rt6iRRNrLQ+VED4iebnCV8bHtipwknuuhSNvErEC/BW0K2c/hGqEC3rjV25OUJ8c
-	 +6zCeuB4tIkvf4n4SOgt2NC5LIO3kQQykFStdHZW/K4/bP0UDVhvHjotwG12OUdYVx
-	 KpWCY1wId2EMxGBB439eWEXdligMEiuXmLNGJR4I=
+	b=1nRYtQaZqO6soVVnf9oDfR+CNDDcxyOQgKB83TYjizIqVV2++8wJiuYBScvLwSZBw
+	 U34pY8lw9ZXT8s919Id+guQI2UaGZTKr18W6sYF0j+sfWNXZOn8m+Ad2bpCyfwo8/7
+	 lyGg3T0vLLQPSlQEnsjAPCaWb9McEA4VvRgQEXfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 6.18 403/430] virtio: vdpa: Fix reference count leak in octep_sriov_enable()
-Date: Mon, 29 Dec 2025 17:13:25 +0100
-Message-ID: <20251229160739.144016714@linuxfoundation.org>
+	Raghavendra Rao Ananta <rananta@google.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Alex Williamson <alex@shazbot.org>
+Subject: [PATCH 6.18 404/430] vfio: Fix ksize arg while copying user struct in vfio_df_ioctl_bind_iommufd()
+Date: Mon, 29 Dec 2025 17:13:26 +0100
+Message-ID: <20251229160739.180367619@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -50,39 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Raghavendra Rao Ananta <rananta@google.com>
 
-commit b41ca62c0019de1321d75f2b2f274a28784a41ed upstream.
+commit 2f03f21fe7516902283b135de272d3c7b10672de upstream.
 
-pci_get_device() will increase the reference count for the returned
-pci_dev, and also decrease the reference count for the input parameter
-from if it is not NULL.
+For the cases where user includes a non-zero value in 'token_uuid_ptr'
+field of 'struct vfio_device_bind_iommufd', the copy_struct_from_user()
+in vfio_df_ioctl_bind_iommufd() fails with -E2BIG. For the 'minsz' passed,
+copy_struct_from_user() expects the newly introduced field to be zero-ed,
+which would be incorrect in this case.
 
-If we break the loop in  with 'vf_pdev' not NULL. We
-need to call pci_dev_put() to decrease the reference count.
+Fix this by passing the actual size of the kernel struct. If working
+with a newer userspace, copy_struct_from_user() would copy the
+'token_uuid_ptr' field, and if working with an old userspace, it would
+zero out this field, thus still retaining backward compatibility.
 
-Found via static anlaysis and this is similar to commit c508eb042d97
-("perf/x86/intel/uncore: Fix reference count leak in sad_cfg_iio_topology()")
-
-Fixes: 8b6c724cdab8 ("virtio: vdpa: vDPA driver for Marvell OCTEON DPU devices")
+Fixes: 86624ba3b522 ("vfio/pci: Do vf_token checks for VFIO_DEVICE_BIND_IOMMUFD")
 Cc: stable@vger.kernel.org
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20251027060737.33815-1-linmq006@gmail.com>
+Signed-off-by: Raghavendra Rao Ananta <rananta@google.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/20251031170603.2260022-2-rananta@google.com
+Signed-off-by: Alex Williamson <alex@shazbot.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vdpa/octeon_ep/octep_vdpa_main.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/vfio/device_cdev.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/vdpa/octeon_ep/octep_vdpa_main.c
-+++ b/drivers/vdpa/octeon_ep/octep_vdpa_main.c
-@@ -736,6 +736,7 @@ static int octep_sriov_enable(struct pci
- 		octep_vdpa_assign_barspace(vf_pdev, pdev, index);
- 		if (++index == num_vfs) {
- 			done = true;
-+			pci_dev_put(vf_pdev);
- 			break;
- 		}
- 	}
+--- a/drivers/vfio/device_cdev.c
++++ b/drivers/vfio/device_cdev.c
+@@ -99,7 +99,7 @@ long vfio_df_ioctl_bind_iommufd(struct v
+ 		return ret;
+ 	if (user_size < minsz)
+ 		return -EINVAL;
+-	ret = copy_struct_from_user(&bind, minsz, arg, user_size);
++	ret = copy_struct_from_user(&bind, sizeof(bind), arg, user_size);
+ 	if (ret)
+ 		return ret;
+ 
 
 
