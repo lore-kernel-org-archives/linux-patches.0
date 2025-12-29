@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 475F83314C5;
-	Mon, 29 Dec 2025 16:26:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B69633314C5;
+	Mon, 29 Dec 2025 16:26:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025567; cv=none; b=MR62LufCYvQWkSB/iZZzDaIP4bQk7F22jue23PEHm92kLYLvmToXBW4C7uxBX2gewZhxKpci+Rtz3EcVpuVrjWWBwAeHG60W85+L84N3zNvomIVFuZKk4EYxIAKWJxk99WRm+8X2wlCXeesfGK9rvVkIYmLfV5lfP5RyBdQXOoQ=
+	t=1767025568; cv=none; b=eSdQ2ZC//X/wQIZQ/cv8MGuCuS9Pa19vkkIW87Vn6bfgNJFMnVC1I3q2Q1mboPk2S43RLyT0+3PdSbLCbxYLx2BuDwlvDnVnjaNTzmuJIdC0a4KtHDkQY5sQ/OWZsB0A17egzKmWn6fjknNDfovkEJE33dXA+sHBVKInJpP3yPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025567; c=relaxed/simple;
-	bh=prxHzD6TedeN+GyKMEzx2HWrOgOe2tahJ43vBf74Dok=;
+	s=arc-20240116; t=1767025568; c=relaxed/simple;
+	bh=eSaqQaLWBXob68ghuQlf8vFtAwYQHzEkIdQZEoQIOWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WbIH2sxvRNgwZb8PyFBfV4PD/kiK5GRmorbGhK5SNpRL63JdYw0jm3GEBgq/8SGwF7VJneIl2ZTwLwBVfq0C6mAhqnoccxu5YJsLrxnmIwld3S0NWnKFZhPZPbt5YDbDhHeg/GdPs7fnbhqYtZWjfK/Ohblaoc3UDCMsfouPJFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S21hHu5m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bQ3ZkzmpPdFfHwUKbosPAOQ7OW9eLCfnnGgcUvq/Z7C/atbR1FOAI+Rhi4K7lUqlyWjhQFXY5WZR4LuM6Q860XHl30RXAK3vYo/1ScoiWArzVthEewKDQN9ZvDMFcebQd2qZn7JB3QvXOvBeUbHkObpb4pzmwHivwlJYLl57/ps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lLgvy9J2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S21hHu5m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A48C4CEF7;
-	Mon, 29 Dec 2025 16:26:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lLgvy9J2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40BA8C4CEF7;
+	Mon, 29 Dec 2025 16:26:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025565;
-	bh=prxHzD6TedeN+GyKMEzx2HWrOgOe2tahJ43vBf74Dok=;
+	s=korg; t=1767025568;
+	bh=eSaqQaLWBXob68ghuQlf8vFtAwYQHzEkIdQZEoQIOWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S21hHu5mr+WXHs5eCDudV9j5IN3/d/NQg7Zf+6zooLy+xoeBbSWdQdf7KfTkppUUq
-	 Mf/mci1H3NODdrAz9Uv+X2tWeIcSG7k264LqDx1szR/JAX51CUDo9fAxAurnkX4YXm
-	 8zdS9HJSJU+A/OGUU8fJOFSzOwxrkl4UykGUM008=
+	b=lLgvy9J2xgePru/cR3pLuqZeq5kDha42XiMVG33rHKu2jYxrxt7v9FTzLQWgUxAUz
+	 fvD0toyMxCKzvyIRJZ8PDZQTnvm4wmEzW27JioVWECkrzU3BfLfY45WswVhCo2SAf8
+	 6NMWjsrZC7L71MIKHqKZmkpTnAI/K/aE3gokf5zs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Ogness <john.ogness@linutronix.de>,
-	Petr Mladek <pmladek@suse.com>
-Subject: [PATCH 6.18 258/430] printk: Avoid irq_work for printk_deferred() on suspend
-Date: Mon, 29 Dec 2025 17:11:00 +0100
-Message-ID: <20251229160733.850770512@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.18 259/430] ext4: fix string copying in parse_apply_sb_mount_options()
+Date: Mon, 29 Dec 2025 17:11:01 +0100
+Message-ID: <20251229160733.886995727@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -50,50 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Ogness <john.ogness@linutronix.de>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit 66e7c1e0ee08cfb6db64f8f3f6e5a3cc930145c8 upstream.
+commit ee5a977b4e771cc181f39d504426dbd31ed701cc upstream.
 
-With commit ("printk: Avoid scheduling irq_work on suspend") the
-implementation of printk_get_console_flush_type() was modified to
-avoid offloading when irq_work should be blocked during suspend.
-Since printk uses the returned flush type to determine what
-flushing methods are used, this was thought to be sufficient for
-avoiding irq_work usage during the suspend phase.
+strscpy_pad() can't be used to copy a non-NUL-term string into a NUL-term
+string of possibly bigger size.  Commit 0efc5990bca5 ("string.h: Introduce
+memtostr() and memtostr_pad()") provides additional information in that
+regard.  So if this happens, the following warning is observed:
 
-However, vprintk_emit() implements a hack to support
-printk_deferred(). In this hack, the returned flush type is
-adjusted to make sure no legacy direct printing occurs when
-printk_deferred() was used.
+strnlen: detected buffer overflow: 65 byte read of buffer size 64
+WARNING: CPU: 0 PID: 28655 at lib/string_helpers.c:1032 __fortify_report+0x96/0xc0 lib/string_helpers.c:1032
+Modules linked in:
+CPU: 0 UID: 0 PID: 28655 Comm: syz-executor.3 Not tainted 6.12.54-syzkaller-00144-g5f0270f1ba00 #0
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+RIP: 0010:__fortify_report+0x96/0xc0 lib/string_helpers.c:1032
+Call Trace:
+ <TASK>
+ __fortify_panic+0x1f/0x30 lib/string_helpers.c:1039
+ strnlen include/linux/fortify-string.h:235 [inline]
+ sized_strscpy include/linux/fortify-string.h:309 [inline]
+ parse_apply_sb_mount_options fs/ext4/super.c:2504 [inline]
+ __ext4_fill_super fs/ext4/super.c:5261 [inline]
+ ext4_fill_super+0x3c35/0xad00 fs/ext4/super.c:5706
+ get_tree_bdev_flags+0x387/0x620 fs/super.c:1636
+ vfs_get_tree+0x93/0x380 fs/super.c:1814
+ do_new_mount fs/namespace.c:3553 [inline]
+ path_mount+0x6ae/0x1f70 fs/namespace.c:3880
+ do_mount fs/namespace.c:3893 [inline]
+ __do_sys_mount fs/namespace.c:4103 [inline]
+ __se_sys_mount fs/namespace.c:4080 [inline]
+ __x64_sys_mount+0x280/0x300 fs/namespace.c:4080
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0x64/0x140 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Because of this hack, the legacy offloading flushing method can
-still be used, causing irq_work to be queued when it should not
-be.
+Since userspace is expected to provide s_mount_opts field to be at most 63
+characters long with the ending byte being NUL-term, use a 64-byte buffer
+which matches the size of s_mount_opts, so that strscpy_pad() does its job
+properly.  Return with error if the user still managed to provide a
+non-NUL-term string here.
 
-Adjust the vprintk_emit() hack to also consider
-@console_irqwork_blocked so that legacy offloading will not be
-chosen when irq_work should be blocked.
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
 
-Link: https://lore.kernel.org/lkml/87fra90xv4.fsf@jogness.linutronix.de
-Signed-off-by: John Ogness <john.ogness@linutronix.de>
-Fixes: 26873e3e7f0c ("printk: Avoid scheduling irq_work on suspend")
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Signed-off-by: Petr Mladek <pmladek@suse.com>
+Fixes: 8ecb790ea8c3 ("ext4: avoid potential buffer over-read in parse_apply_sb_mount_options()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reviewed-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Message-ID: <20251101160430.222297-1-pchelkin@ispras.ru>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/printk/printk.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/super.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/kernel/printk/printk.c
-+++ b/kernel/printk/printk.c
-@@ -2393,7 +2393,7 @@ asmlinkage int vprintk_emit(int facility
- 	/* If called from the scheduler, we can not call up(). */
- 	if (level == LOGLEVEL_SCHED) {
- 		level = LOGLEVEL_DEFAULT;
--		ft.legacy_offload |= ft.legacy_direct;
-+		ft.legacy_offload |= ft.legacy_direct && !console_irqwork_blocked;
- 		ft.legacy_direct = false;
- 	}
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -2475,7 +2475,7 @@ static int parse_apply_sb_mount_options(
+ 					struct ext4_fs_context *m_ctx)
+ {
+ 	struct ext4_sb_info *sbi = EXT4_SB(sb);
+-	char s_mount_opts[65];
++	char s_mount_opts[64];
+ 	struct ext4_fs_context *s_ctx = NULL;
+ 	struct fs_context *fc = NULL;
+ 	int ret = -ENOMEM;
+@@ -2483,7 +2483,8 @@ static int parse_apply_sb_mount_options(
+ 	if (!sbi->s_es->s_mount_opts[0])
+ 		return 0;
  
+-	strscpy_pad(s_mount_opts, sbi->s_es->s_mount_opts);
++	if (strscpy_pad(s_mount_opts, sbi->s_es->s_mount_opts) < 0)
++		return -E2BIG;
+ 
+ 	fc = kzalloc(sizeof(struct fs_context), GFP_KERNEL);
+ 	if (!fc)
 
 
