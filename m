@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D8231B111;
-	Mon, 29 Dec 2025 16:14:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E34B31B111;
+	Mon, 29 Dec 2025 16:14:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767024896; cv=none; b=muX0CQuDMRME5PAKTD3j/ZIfKAr6Lw0Yn6oAX8s1BpbQv9w5uaJRSGiwzf5Z1tEl9gnVSOCGadQsi6xx4GEB7K0wEfgAw4+DBateCeYObkEvfVxINHcAFb+FwoHPFvDjT6fHXoCCwZ+onnk9/RVSLOiX72buRQKjLuAPTvxOWVA=
+	t=1767024899; cv=none; b=YQ9Cug7nndTaxrheQ6Mbg9J+k1rPgXte/GxQt7+EMbr7gsM51lnpLSIQaF0Z0/EqQ7ES3hJIHvO7GZ8DoIJ0Rrt2mpS1kaRe1+36DwsFICoqfL1GhCH0y3b4Sv/Sxj+tK/k5zV5WyoVFOj9DAJQTXoXleOaqO1S5DUuP3WLUkSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767024896; c=relaxed/simple;
-	bh=VFoh7lTddUnVEekA56QFc2IhA5VRyDJ1qHafTixegEE=;
+	s=arc-20240116; t=1767024899; c=relaxed/simple;
+	bh=QpHmL35HbN5vF8qyLfVMokCvevAy4iUbO/uI7T0Lss8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KJy9Z7ShTjoifURzxQS4G+jVCcldM5DFY+f83X+7+OBSXg+rySOtRJIHxHllxnyXthKkJPhAarIH3JkcgS2rwTA+PRH60WlQZxLVryEPc6ozdXPVz21IBIc2zGUVTfM8Yi2o0BioI+QZ2mATAHyPLhGztJxXrOFbTeeRMgel+FI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jX83p7cn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LshxMBqZr3IVLIcA+CO+HibV/BNGhJE1CUcZ0jPWQ8U5eslpfHkRCXLjcGvfx+F9sDzYMvOSSGjD6MUnlADsVpmuz2klxwYCOtt0kMN54Byate7dYJSEtC08/+1DuFVAKOEw42lWTuhCGbsUmE74+KQ3UagTmxyo8oQtbHgXK1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QiUYCmdI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jX83p7cn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AB51C4CEF7;
-	Mon, 29 Dec 2025 16:14:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QiUYCmdI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 187A5C4CEF7;
+	Mon, 29 Dec 2025 16:14:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767024896;
-	bh=VFoh7lTddUnVEekA56QFc2IhA5VRyDJ1qHafTixegEE=;
+	s=korg; t=1767024899;
+	bh=QpHmL35HbN5vF8qyLfVMokCvevAy4iUbO/uI7T0Lss8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jX83p7cnkQgM6r6e7zeatGdfAgSbVvlZCF0zpIJn8KXSsIGnuzc1p+swz3Gc+rtnS
-	 Q3vjxKgaRoYxZbylrql7uMbhPWFZAP28iFwg19PnPhiGeFkQ/qRIzsibRKIgIiXYWy
-	 mXWBgtPKd4v3m+kw/fGZYG/5lF/5ZjA2mEyWf2eU=
+	b=QiUYCmdIW4tu3g4tuWhVsojEQCXWqO9eINQFZlA0VdQnNh0KxY4rLGKC0LyFgGGfr
+	 GwyC3HfBZRzKTYfolPagsHv6cgo1bY4R+D/X5o7P0fvvndSiaAFY55sN/8L+LFRGEY
+	 ogJuIaCF08wMLQR87O44d3E7mc39GprTb4/1lySY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Mosnacek <omosnace@redhat.com>,
+	"T.J. Mercier" <tjmercier@google.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 003/430] bpf, arm64: Do not audit capability check in do_jit()
-Date: Mon, 29 Dec 2025 17:06:45 +0100
-Message-ID: <20251229160724.273019073@linuxfoundation.org>
+Subject: [PATCH 6.18 004/430] bpf: Fix truncated dmabuf iterator reads
+Date: Mon, 29 Dec 2025 17:06:46 +0100
+Message-ID: <20251229160724.309687108@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -51,54 +51,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ondrej Mosnacek <omosnace@redhat.com>
+From: T.J. Mercier <tjmercier@google.com>
 
-[ Upstream commit 189e5deb944a6f9c7992355d60bffd8ec2e54a9c ]
+[ Upstream commit 234483565dbb2b264fdd165927c89fbf3ecf4733 ]
 
-Analogically to the x86 commit 881a9c9cb785 ("bpf: Do not audit
-capability check in do_jit()"), change the capable() call to
-ns_capable_noaudit() in order to avoid spurious SELinux denials in audit
-log.
+If there is a large number (hundreds) of dmabufs allocated, the text
+output generated from dmabuf_iter_seq_show can exceed common user buffer
+sizes (e.g. PAGE_SIZE) necessitating multiple start/stop cycles to
+iterate through all dmabufs. However the dmabuf iterator currently
+returns NULL in dmabuf_iter_seq_start for all non-zero pos values, which
+results in the truncation of the output before all dmabufs are handled.
 
-The commit log from that commit applies here as well:
-"""
-The failure of this check only results in a security mitigation being
-applied, slightly affecting performance of the compiled BPF program. It
-doesn't result in a failed syscall, an thus auditing a failed LSM
-permission check for it is unwanted. For example with SELinux, it causes
-a denial to be reported for confined processes running as root, which
-tends to be flagged as a problem to be fixed in the policy. Yet
-dontauditing or allowing CAP_SYS_ADMIN to the domain may not be
-desirable, as it would allow/silence also other checks - either going
-against the principle of least privilege or making debugging potentially
-harder.
+After dma_buf_iter_begin / dma_buf_iter_next, the refcount of the buffer
+is elevated so that the BPF iterator program can run without holding any
+locks. When a stop occurs, instead of immediately dropping the reference
+on the buffer, stash a pointer to the buffer in seq->priv until
+either start is called or the iterator is released. This also enables
+the resumption of iteration without first walking through the list of
+dmabufs based on the pos value.
 
-Fix it by changing it from capable() to ns_capable_noaudit(), which
-instructs the LSMs to not audit the resulting denials.
-"""
-
-Fixes: f300769ead03 ("arm64: bpf: Only mitigate cBPF programs loaded by unprivileged users")
-Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
-Link: https://lore.kernel.org/r/20251204125916.441021-1-omosnace@redhat.com
+Fixes: 76ea95534995 ("bpf: Add dmabuf iterator")
+Signed-off-by: T.J. Mercier <tjmercier@google.com>
+Link: https://lore.kernel.org/r/20251204000348.1413593-1-tjmercier@google.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/net/bpf_jit_comp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/dmabuf_iter.c | 56 +++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 49 insertions(+), 7 deletions(-)
 
-diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
-index 0c9a50a1e73e7..0dfefeedfe56c 100644
---- a/arch/arm64/net/bpf_jit_comp.c
-+++ b/arch/arm64/net/bpf_jit_comp.c
-@@ -1004,7 +1004,7 @@ static void __maybe_unused build_bhb_mitigation(struct jit_ctx *ctx)
- 	    arm64_get_spectre_v2_state() == SPECTRE_VULNERABLE)
- 		return;
+diff --git a/kernel/bpf/dmabuf_iter.c b/kernel/bpf/dmabuf_iter.c
+index 4dd7ef7c145ca..cd500248abd95 100644
+--- a/kernel/bpf/dmabuf_iter.c
++++ b/kernel/bpf/dmabuf_iter.c
+@@ -6,10 +6,33 @@
+ #include <linux/kernel.h>
+ #include <linux/seq_file.h>
  
--	if (capable(CAP_SYS_ADMIN))
-+	if (ns_capable_noaudit(&init_user_ns, CAP_SYS_ADMIN))
- 		return;
++struct dmabuf_iter_priv {
++	/*
++	 * If this pointer is non-NULL, the buffer's refcount is elevated to
++	 * prevent destruction between stop/start. If reading is not resumed and
++	 * start is never called again, then dmabuf_iter_seq_fini drops the
++	 * reference when the iterator is released.
++	 */
++	struct dma_buf *dmabuf;
++};
++
+ static void *dmabuf_iter_seq_start(struct seq_file *seq, loff_t *pos)
+ {
+-	if (*pos)
+-		return NULL;
++	struct dmabuf_iter_priv *p = seq->private;
++
++	if (*pos) {
++		struct dma_buf *dmabuf = p->dmabuf;
++
++		if (!dmabuf)
++			return NULL;
++
++		/*
++		 * Always resume from where we stopped, regardless of the value
++		 * of pos.
++		 */
++		p->dmabuf = NULL;
++		return dmabuf;
++	}
  
- 	if (supports_clearbhb(SCOPE_SYSTEM)) {
+ 	return dma_buf_iter_begin();
+ }
+@@ -54,8 +77,11 @@ static void dmabuf_iter_seq_stop(struct seq_file *seq, void *v)
+ {
+ 	struct dma_buf *dmabuf = v;
+ 
+-	if (dmabuf)
+-		dma_buf_put(dmabuf);
++	if (dmabuf) {
++		struct dmabuf_iter_priv *p = seq->private;
++
++		p->dmabuf = dmabuf;
++	}
+ }
+ 
+ static const struct seq_operations dmabuf_iter_seq_ops = {
+@@ -71,11 +97,27 @@ static void bpf_iter_dmabuf_show_fdinfo(const struct bpf_iter_aux_info *aux,
+ 	seq_puts(seq, "dmabuf iter\n");
+ }
+ 
++static int dmabuf_iter_seq_init(void *priv, struct bpf_iter_aux_info *aux)
++{
++	struct dmabuf_iter_priv *p = (struct dmabuf_iter_priv *)priv;
++
++	p->dmabuf = NULL;
++	return 0;
++}
++
++static void dmabuf_iter_seq_fini(void *priv)
++{
++	struct dmabuf_iter_priv *p = (struct dmabuf_iter_priv *)priv;
++
++	if (p->dmabuf)
++		dma_buf_put(p->dmabuf);
++}
++
+ static const struct bpf_iter_seq_info dmabuf_iter_seq_info = {
+ 	.seq_ops		= &dmabuf_iter_seq_ops,
+-	.init_seq_private	= NULL,
+-	.fini_seq_private	= NULL,
+-	.seq_priv_size		= 0,
++	.init_seq_private	= dmabuf_iter_seq_init,
++	.fini_seq_private	= dmabuf_iter_seq_fini,
++	.seq_priv_size		= sizeof(struct dmabuf_iter_priv),
+ };
+ 
+ static struct bpf_iter_reg bpf_dmabuf_reg_info = {
 -- 
 2.51.0
 
