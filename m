@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25A2C33121F;
-	Mon, 29 Dec 2025 16:21:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D530F330B2A;
+	Mon, 29 Dec 2025 16:21:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025285; cv=none; b=mjhE7PRHOXUTnzU3JnzgW36p9tWo8eMU3Vl93ZlconlmfqqcCQyO0OUJ9OnIX0c8e3VPqOIAGmUh2vv2FFxhtmH+Lky27XFe5UC/UTmOayqjxFsDIiAUDPHuDyWRkVa28u96tAiUYjGvI56DwyOJaqU3EZzMP7MdfuIMnWdI/78=
+	t=1767025287; cv=none; b=DqNN06PMsJc+P832a25yi17WvNEKZd1JX0Y5gRptrx1kmSQwwcbk93CtcoKlm9SlUYHEE2/xr8jAUc5s2+8Xjwi9gjbq/z+as/GagqAQmmgMo8cvpaPInyfcsKS62xfcIh0DhTH9FlnIQpmTRYF+dol/XrYqG87/6z30Ihk3M6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025285; c=relaxed/simple;
-	bh=JrbYSg1sO6GI3PLi7g7gZnaFrHffUv66snvX5gHjAps=;
+	s=arc-20240116; t=1767025287; c=relaxed/simple;
+	bh=Q24UvHqexRt0vOvrNmFBb779AaHI8ttcJYzei96uy90=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kgy+bu4tD32/9XlWoq5VhTW+wK3JN+lYDMBqWfToGvM0Kc8uoss157KbWIXOgPIhhqqbd5tKo30JcjgrknJjy7y4VbLodWdpM9Ko/zml7e7FrwxNSCyAnw7lHzhjasFe6w7txbgeLAN2wtKIPij1N4ZMSI2QI/Odz+eN5oYrSQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=coLWpZe5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jpg7oGVXKkIcHcEGLxaX5RtSqr6w/NY0891P4GjHEpbmIswHyXPApFghk9nbL3LvkBHaRRQK+FxvyLfmg9WceilpFl3gCIt3IqfIQdzI+MvraTWbNJiv7upDbiGlVvSiAGVJHxbrhJB6G2/UqQGkICjoPvPmW+Xxyh4n20WNkGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HhgTnZxt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="coLWpZe5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5BAAC4CEF7;
-	Mon, 29 Dec 2025 16:21:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HhgTnZxt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60A84C4CEF7;
+	Mon, 29 Dec 2025 16:21:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025285;
-	bh=JrbYSg1sO6GI3PLi7g7gZnaFrHffUv66snvX5gHjAps=;
+	s=korg; t=1767025287;
+	bh=Q24UvHqexRt0vOvrNmFBb779AaHI8ttcJYzei96uy90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=coLWpZe5+pv/fDX+z2/Tp5b92cQdLxdRd/jrci5yPcvqVlYtPuMMYMEp7lt7iw9TY
-	 lcKT8uJP7A9aPOCMRiR8WCPnP5CciVJ/pGVOy8mtwflp3+YszRweJBiH5fsn6S7LSi
-	 mUSP83NG16KeNg3WzUWgbkJgC2Q8L2ZtNQ5Kthhc=
+	b=HhgTnZxti+2wCjfR5HKLAg4IFDCrk1bS6FLjXfl1BQRj9oecIh+plRRenEIcviw5B
+	 i8ZgKynEoRTJT9YHWRTsLyZl0ulUzsTy4qKqlOrB8VZimxdUlqOVbalujNLWv4o4+f
+	 K0C2ZqAy4wfH77Jh/SDkDM2XrR7A49iF7gLe8iGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Caleb Sander Mateos <csander@purestorage.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 132/430] ublk: add parameter `struct io_uring_cmd *` to ublk_prep_auto_buf_reg()
-Date: Mon, 29 Dec 2025 17:08:54 +0100
-Message-ID: <20251229160729.223327259@linuxfoundation.org>
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Sverdlin Alexander <alexander.sverdlin@siemens.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.18 159/430] spi: fsl-cpm: Check length parity before switching to 16 bit mode
+Date: Mon, 29 Dec 2025 17:09:21 +0100
+Message-ID: <20251229160730.213992014@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -52,75 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 3035b9b46b0611898babc0b96ede65790d3566f7 ]
+commit 1417927df8049a0194933861e9b098669a95c762 upstream.
 
-Add parameter `struct io_uring_cmd *` to ublk_prep_auto_buf_reg() and
-prepare for reusing this helper for the coming UBLK_BATCH_IO feature,
-which can fetch & commit one batch of io commands via single uring_cmd.
+Commit fc96ec826bce ("spi: fsl-cpm: Use 16 bit mode for large transfers
+with even size") failed to make sure that the size is really even
+before switching to 16 bit mode. Until recently the problem went
+unnoticed because kernfs uses a pre-allocated bounce buffer of size
+PAGE_SIZE for reading EEPROM.
 
-Reviewed-by: Caleb Sander Mateos <csander@purestorage.com>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: c258f5c4502c ("ublk: fix deadlock when reading partition table")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+But commit 8ad6249c51d0 ("eeprom: at25: convert to spi-mem API")
+introduced an additional dynamically allocated bounce buffer whose size
+is exactly the size of the transfer, leading to a buffer overrun in
+the fsl-cpm driver when that size is odd.
+
+Add the missing length parity verification and remain in 8 bit mode
+when the length is not even.
+
+Fixes: fc96ec826bce ("spi: fsl-cpm: Use 16 bit mode for large transfers with even size")
+Cc: stable@vger.kernel.org
+Closes: https://lore.kernel.org/all/638496dd-ec60-4e53-bad7-eb657f67d580@csgroup.eu/
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Reviewed-by: Sverdlin Alexander <alexander.sverdlin@siemens.com>
+Link: https://patch.msgid.link/3c4d81c3923c93f95ec56702a454744a4bad3cfc.1763627618.git.christophe.leroy@csgroup.eu
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/ublk_drv.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/spi/spi-fsl-spi.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index 359564c40cb5..599571634b7a 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -1242,11 +1242,12 @@ ublk_auto_buf_reg_fallback(const struct ublk_queue *ubq, struct ublk_io *io)
- }
- 
- static bool ublk_auto_buf_reg(const struct ublk_queue *ubq, struct request *req,
--			      struct ublk_io *io, unsigned int issue_flags)
-+			      struct ublk_io *io, struct io_uring_cmd *cmd,
-+			      unsigned int issue_flags)
- {
- 	int ret;
- 
--	ret = io_buffer_register_bvec(io->cmd, req, ublk_io_release,
-+	ret = io_buffer_register_bvec(cmd, req, ublk_io_release,
- 				      io->buf.index, issue_flags);
- 	if (ret) {
- 		if (io->buf.flags & UBLK_AUTO_BUF_REG_FALLBACK) {
-@@ -1258,18 +1259,19 @@ static bool ublk_auto_buf_reg(const struct ublk_queue *ubq, struct request *req,
+--- a/drivers/spi/spi-fsl-spi.c
++++ b/drivers/spi/spi-fsl-spi.c
+@@ -335,7 +335,7 @@ static int fsl_spi_prepare_message(struc
+ 			if (t->bits_per_word == 16 || t->bits_per_word == 32)
+ 				t->bits_per_word = 8; /* pretend its 8 bits */
+ 			if (t->bits_per_word == 8 && t->len >= 256 &&
+-			    (mpc8xxx_spi->flags & SPI_CPM1))
++			    !(t->len & 1) && (mpc8xxx_spi->flags & SPI_CPM1))
+ 				t->bits_per_word = 16;
+ 		}
  	}
- 
- 	io->task_registered_buffers = 1;
--	io->buf_ctx_handle = io_uring_cmd_ctx_handle(io->cmd);
-+	io->buf_ctx_handle = io_uring_cmd_ctx_handle(cmd);
- 	io->flags |= UBLK_IO_FLAG_AUTO_BUF_REG;
- 	return true;
- }
- 
- static bool ublk_prep_auto_buf_reg(struct ublk_queue *ubq,
- 				   struct request *req, struct ublk_io *io,
-+				   struct io_uring_cmd *cmd,
- 				   unsigned int issue_flags)
- {
- 	ublk_init_req_ref(ubq, io);
- 	if (ublk_support_auto_buf_reg(ubq) && ublk_rq_has_data(req))
--		return ublk_auto_buf_reg(ubq, req, io, issue_flags);
-+		return ublk_auto_buf_reg(ubq, req, io, cmd, issue_flags);
- 
- 	return true;
- }
-@@ -1344,7 +1346,7 @@ static void ublk_dispatch_req(struct ublk_queue *ubq,
- 	if (!ublk_start_io(ubq, req, io))
- 		return;
- 
--	if (ublk_prep_auto_buf_reg(ubq, req, io, issue_flags))
-+	if (ublk_prep_auto_buf_reg(ubq, req, io, io->cmd, issue_flags))
- 		ublk_complete_io_cmd(io, req, UBLK_IO_RES_OK, issue_flags);
- }
- 
--- 
-2.51.0
-
 
 
