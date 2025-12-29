@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1EC222560;
-	Mon, 29 Dec 2025 16:17:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BFA8319858;
+	Mon, 29 Dec 2025 16:17:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025050; cv=none; b=XnU3gRwNA86sOMU9hcN20bK5IkbugfuswOu98YRzW6ZuVU6R9qjBxrQrMa8SFbgQHynllMIYmNwrDy1Gqb4tXNU1NIteG6VhxHLnB82jJbIiI112lWHaiDQkfSpI7yNmWPpgYP50jqgkkLDMYMNIwOAUnFxamO/cM2OsiOPqcng=
+	t=1767025053; cv=none; b=YWMguFhT5CJ7ZvpPsSiPnlOAERcItHD2kwfZG8UuFRSUSto+5jdVHKNeYaeeEX5tNb+IAuJs216SF5BLdhwhYyH8+3jeszMkTsna0y7T/acB4WoYcYAxWv6BGt5rhk0DBtX5F3oASEJw4KU7gvWC2tIjPysJBIVxOoHNZ5FYSSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025050; c=relaxed/simple;
-	bh=nfuGNecyRvPjN0Pi9K8Ip1mAUY8Pqn5Avh1TceDCaBo=;
+	s=arc-20240116; t=1767025053; c=relaxed/simple;
+	bh=Nhj4gAULZ0N4U2RzaQ8slS+F3vHR8ruF+DmxqQEtx0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jjcw4GhDPJq70BZn3heS5ej95H5Z6TxsAqhQdkB/mDJVPOj151hmIFNMeF8jz50gJVHZLGhsqR9Szcbvp4JctKMcAD6JwLBMqXo5bA/4vrg8D9c/0Nn5Oer9iRTyoiIEsNBIBPYsn+4Wu3YbTRCLy8k5iUdyXCTimLPScn2C1AY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hJAQP5lO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rh7CEBuhLW42OEgKB6Ol3sLHTUiLfoEEdXyXEGVhAChFwUjF4vpgzGnF8TRV2641hR30z6KWtj2SWM+kj6svvEZTA9bNmCrQd0Fqw9qYWcJZmLcxgKFHailADc3mBlMoiKya+bxIa69yN6G1W3uhPugF0gQIos4JLFhJqsI0Q/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YlAV14wP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hJAQP5lO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDD04C4CEF7;
-	Mon, 29 Dec 2025 16:17:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YlAV14wP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCB75C4CEF7;
+	Mon, 29 Dec 2025 16:17:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025050;
-	bh=nfuGNecyRvPjN0Pi9K8Ip1mAUY8Pqn5Avh1TceDCaBo=;
+	s=korg; t=1767025053;
+	bh=Nhj4gAULZ0N4U2RzaQ8slS+F3vHR8ruF+DmxqQEtx0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hJAQP5lODc+6DcwD1XJNQ3FBDHIytradC0A++Cp6nnOlqa5bAN27PGqQaLFIi7Fc/
-	 TCdsqD9pz5DF7YZMyAp14lxEusTxlqzWP3SOaRvCJJnOJbFIX0gjL1jx5nurjQ9E71
-	 00SV3cXaEGEhyfWtqsgFloVZe2syL8qfjF1+FTFo=
+	b=YlAV14wPiPjQ4fMeJ2JZnJqcusuYT9magCbehX5/L45wVPQmo3LVZIWYLGWFXB+0V
+	 1SH7B7rYKss4j7MTrHBBMuBApBvYl8XOS16pTeBszd73mUH5V76zVTr627L5H9Xofs
+	 7mZpPyPxYmf5CZfKi636DUfQaq1x+kvfWxBYbROo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
+	Clark Wang <xiaoning.wang@nxp.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 077/430] inet: frags: add inet_frag_queue_flush()
-Date: Mon, 29 Dec 2025 17:07:59 +0100
-Message-ID: <20251229160727.198619172@linuxfoundation.org>
+Subject: [PATCH 6.18 060/430] net: phy: realtek: allow CLKOUT to be disabled on RTL8211F(D)(I)-VD-CG
+Date: Mon, 29 Dec 2025 17:07:42 +0100
+Message-ID: <20251229160726.576023642@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -51,94 +53,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 1231eec6994be29d6bb5c303dfa54731ed9fc0e6 ]
+[ Upstream commit e1a31c41bef678afe0d99b7f0dc3711a80c68447 ]
 
-Instead of exporting inet_frag_rbtree_purge() which requires that
-caller takes care of memory accounting, add a new helper. We will
-need to call it from a few places in the next patch.
+Add CLKOUT disable support for RTL8211F(D)(I)-VD-CG. Like with other PHY
+variants, this feature might be requested by customers when the clock
+output is not used, in order to reduce electromagnetic interference (EMI).
 
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20251207010942.1672972-3-kuba@kernel.org
+In the common driver, the CLKOUT configuration is done through PHYCR2.
+The RTL_8211FVD_PHYID is singled out as not having that register, and
+execution in rtl8211f_config_init() returns early after commit
+2c67301584f2 ("net: phy: realtek: Avoid PHYCR2 access if PHYCR2 not
+present").
+
+But actually CLKOUT is configured through a different register for this
+PHY. Instead of pretending this is PHYCR2 (which it is not), just add
+some code for modifying this register inside the rtl8211f_disable_clk_out()
+function, and move that outside the code portion that runs only if
+PHYCR2 exists.
+
+In practice this reorders the PHYCR2 writes to disable PHY-mode EEE and
+to disable the CLKOUT for the normal RTL8211F variants, but this should
+be perfectly fine.
+
+It was not noted that RTL8211F(D)(I)-VD-CG would need a genphy_soft_reset()
+call after disabling the CLKOUT. Despite that, we do it out of caution
+and for symmetry with the other RTL8211F models.
+
+Co-developed-by: Clark Wang <xiaoning.wang@nxp.com>
+Signed-off-by: Clark Wang <xiaoning.wang@nxp.com>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20251117234033.345679-5-vladimir.oltean@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 006a5035b495 ("inet: frags: flush pending skbs in fqdir_pre_exit()")
+Stable-dep-of: 4f0638b12451 ("net: phy: RTL8211FVD: Restore disabling of PHY-mode EEE")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/inet_frag.h  |  5 ++---
- net/ipv4/inet_fragment.c | 15 ++++++++++++---
- net/ipv4/ip_fragment.c   |  6 +-----
- 3 files changed, 15 insertions(+), 11 deletions(-)
+ drivers/net/phy/realtek/realtek_main.c | 31 ++++++++++++++++++--------
+ 1 file changed, 22 insertions(+), 9 deletions(-)
 
-diff --git a/include/net/inet_frag.h b/include/net/inet_frag.h
-index 0eccd9c3a883f..3ffaceee7bbc0 100644
---- a/include/net/inet_frag.h
-+++ b/include/net/inet_frag.h
-@@ -141,9 +141,8 @@ void inet_frag_kill(struct inet_frag_queue *q, int *refs);
- void inet_frag_destroy(struct inet_frag_queue *q);
- struct inet_frag_queue *inet_frag_find(struct fqdir *fqdir, void *key);
+diff --git a/drivers/net/phy/realtek/realtek_main.c b/drivers/net/phy/realtek/realtek_main.c
+index daf2457b378bf..f0348b92beec3 100644
+--- a/drivers/net/phy/realtek/realtek_main.c
++++ b/drivers/net/phy/realtek/realtek_main.c
+@@ -89,6 +89,14 @@
+ #define RTL8211F_LEDCR_MASK			GENMASK(4, 0)
+ #define RTL8211F_LEDCR_SHIFT			5
  
--/* Free all skbs in the queue; return the sum of their truesizes. */
--unsigned int inet_frag_rbtree_purge(struct rb_root *root,
--				    enum skb_drop_reason reason);
-+void inet_frag_queue_flush(struct inet_frag_queue *q,
-+			   enum skb_drop_reason reason);
- 
- static inline void inet_frag_putn(struct inet_frag_queue *q, int refs)
- {
-diff --git a/net/ipv4/inet_fragment.c b/net/ipv4/inet_fragment.c
-index 30f4fa50ee2d7..1bf969b5a1cb5 100644
---- a/net/ipv4/inet_fragment.c
-+++ b/net/ipv4/inet_fragment.c
-@@ -263,8 +263,8 @@ static void inet_frag_destroy_rcu(struct rcu_head *head)
- 	kmem_cache_free(f->frags_cachep, q);
- }
- 
--unsigned int inet_frag_rbtree_purge(struct rb_root *root,
--				    enum skb_drop_reason reason)
-+static unsigned int
-+inet_frag_rbtree_purge(struct rb_root *root, enum skb_drop_reason reason)
- {
- 	struct rb_node *p = rb_first(root);
- 	unsigned int sum = 0;
-@@ -284,7 +284,16 @@ unsigned int inet_frag_rbtree_purge(struct rb_root *root,
- 	}
- 	return sum;
- }
--EXPORT_SYMBOL(inet_frag_rbtree_purge);
++/* RTL8211F(D)(I)-VD-CG CLKOUT configuration is specified via magic values
++ * to undocumented register pages. The names here do not reflect the datasheet.
++ * Unlike other PHY models, CLKOUT configuration does not go through PHYCR2.
++ */
++#define RTL8211FVD_CLKOUT_PAGE			0xd05
++#define RTL8211FVD_CLKOUT_REG			0x11
++#define RTL8211FVD_CLKOUT_EN			BIT(8)
 +
-+void inet_frag_queue_flush(struct inet_frag_queue *q,
-+			   enum skb_drop_reason reason)
-+{
-+	unsigned int sum;
+ /* RTL8211F RGMII configuration */
+ #define RTL8211F_RGMII_PAGE			0xd08
+ 
+@@ -626,8 +634,13 @@ static int rtl8211f_config_clk_out(struct phy_device *phydev)
+ 	if (!priv->disable_clk_out)
+ 		return 0;
+ 
+-	ret = phy_modify_paged(phydev, RTL8211F_PHYCR_PAGE,
+-			       RTL8211F_PHYCR2, RTL8211F_CLKOUT_EN, 0);
++	if (phydev->drv->phy_id == RTL_8211FVD_PHYID)
++		ret = phy_modify_paged(phydev, RTL8211FVD_CLKOUT_PAGE,
++				       RTL8211FVD_CLKOUT_REG,
++				       RTL8211FVD_CLKOUT_EN, 0);
++	else
++		ret = phy_modify_paged(phydev, RTL8211F_PHYCR_PAGE,
++				       RTL8211F_PHYCR2, RTL8211F_CLKOUT_EN, 0);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -653,6 +666,13 @@ static int rtl8211f_config_init(struct phy_device *phydev)
+ 	if (ret)
+ 		return ret;
+ 
++	ret = rtl8211f_config_clk_out(phydev);
++	if (ret) {
++		dev_err(dev, "clkout configuration failed: %pe\n",
++			ERR_PTR(ret));
++		return ret;
++	}
 +
-+	sum = inet_frag_rbtree_purge(&q->rb_fragments, reason);
-+	sub_frag_mem_limit(q->fqdir, sum);
-+}
-+EXPORT_SYMBOL(inet_frag_queue_flush);
+ 	/* RTL8211FVD has no PHYCR2 register */
+ 	if (phydev->drv->phy_id == RTL_8211FVD_PHYID)
+ 		return 0;
+@@ -663,13 +683,6 @@ static int rtl8211f_config_init(struct phy_device *phydev)
+ 	if (ret)
+ 		return ret;
  
- void inet_frag_destroy(struct inet_frag_queue *q)
- {
-diff --git a/net/ipv4/ip_fragment.c b/net/ipv4/ip_fragment.c
-index d7bccdc9dc693..32f1c1a46ba72 100644
---- a/net/ipv4/ip_fragment.c
-+++ b/net/ipv4/ip_fragment.c
-@@ -240,14 +240,10 @@ static int ip_frag_too_far(struct ipq *qp)
- 
- static int ip_frag_reinit(struct ipq *qp)
- {
--	unsigned int sum_truesize = 0;
+-	ret = rtl8211f_config_clk_out(phydev);
+-	if (ret) {
+-		dev_err(dev, "clkout configuration failed: %pe\n",
+-			ERR_PTR(ret));
+-		return ret;
+-	}
 -
- 	if (!mod_timer_pending(&qp->q.timer, jiffies + qp->q.fqdir->timeout))
- 		return -ETIMEDOUT;
+ 	return 0;
+ }
  
--	sum_truesize = inet_frag_rbtree_purge(&qp->q.rb_fragments,
--					      SKB_DROP_REASON_FRAG_TOO_FAR);
--	sub_frag_mem_limit(qp->q.fqdir, sum_truesize);
-+	inet_frag_queue_flush(&qp->q, SKB_DROP_REASON_FRAG_TOO_FAR);
- 
- 	qp->q.flags = 0;
- 	qp->q.len = 0;
 -- 
 2.51.0
 
