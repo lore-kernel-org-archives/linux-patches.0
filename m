@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BFA8319858;
-	Mon, 29 Dec 2025 16:17:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B1C32B99B;
+	Mon, 29 Dec 2025 16:17:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025053; cv=none; b=YWMguFhT5CJ7ZvpPsSiPnlOAERcItHD2kwfZG8UuFRSUSto+5jdVHKNeYaeeEX5tNb+IAuJs216SF5BLdhwhYyH8+3jeszMkTsna0y7T/acB4WoYcYAxWv6BGt5rhk0DBtX5F3oASEJw4KU7gvWC2tIjPysJBIVxOoHNZ5FYSSE=
+	t=1767025056; cv=none; b=pEdM0Ga1ryL1uNSAyGdVmFOxcVI4XOvmdst2RuJpuRyOdkARpaMCT32blFDzRhaeciRd9mwFjHy/AOAEc5nVbhA1xlJF1ksl7+VzzXsTbgDoC7MesZiVd/c3l8+EDehvf6M/GRfRy0DtuJMQzgsad0WEkxpunuAfXTVkIkQr1bw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025053; c=relaxed/simple;
-	bh=Nhj4gAULZ0N4U2RzaQ8slS+F3vHR8ruF+DmxqQEtx0s=;
+	s=arc-20240116; t=1767025056; c=relaxed/simple;
+	bh=ybjlOOcbKc6+Hb/3VHQk4VXjajZ/UGqBjnYwDgfOoQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rh7CEBuhLW42OEgKB6Ol3sLHTUiLfoEEdXyXEGVhAChFwUjF4vpgzGnF8TRV2641hR30z6KWtj2SWM+kj6svvEZTA9bNmCrQd0Fqw9qYWcJZmLcxgKFHailADc3mBlMoiKya+bxIa69yN6G1W3uhPugF0gQIos4JLFhJqsI0Q/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YlAV14wP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rrAQnljetbigUm98sByG8bYhHrpB3g3fyBHy4cenimHvFVr/pUVz82ZnwWE7u9eZj5jDtjMdUYzDDicI9IrOXKyQ772YmKO+fLagrs9cURvEHVKvnS++HwxZbiaQMP81Q9FwtLAVbJR8aWKBhFF/t6WRb4nDnBSmj5C9M5sI5Rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F4HQrn07; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YlAV14wP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCB75C4CEF7;
-	Mon, 29 Dec 2025 16:17:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F4HQrn07"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 902B1C4CEF7;
+	Mon, 29 Dec 2025 16:17:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025053;
-	bh=Nhj4gAULZ0N4U2RzaQ8slS+F3vHR8ruF+DmxqQEtx0s=;
+	s=korg; t=1767025055;
+	bh=ybjlOOcbKc6+Hb/3VHQk4VXjajZ/UGqBjnYwDgfOoQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YlAV14wPiPjQ4fMeJ2JZnJqcusuYT9magCbehX5/L45wVPQmo3LVZIWYLGWFXB+0V
-	 1SH7B7rYKss4j7MTrHBBMuBApBvYl8XOS16pTeBszd73mUH5V76zVTr627L5H9Xofs
-	 7mZpPyPxYmf5CZfKi636DUfQaq1x+kvfWxBYbROo=
+	b=F4HQrn07gQ1ZWdZl5SAhgM3/YNRPw/AoGf0dIHrUIqVS3eKFzADkiUJonC2oqgDy3
+	 8sy1TgnTVduiYWqgVVYDF65ObawA+Ac+NYQ6OZpfK1O/Tt74Csypyszt5M7zEaI1Fw
+	 wtng9IIkQkY5HqhnUfi7hw62n9VpkIJ3inRkvCA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Clark Wang <xiaoning.wang@nxp.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 060/430] net: phy: realtek: allow CLKOUT to be disabled on RTL8211F(D)(I)-VD-CG
-Date: Mon, 29 Dec 2025 17:07:42 +0100
-Message-ID: <20251229160726.576023642@linuxfoundation.org>
+Subject: [PATCH 6.18 078/430] inet: frags: flush pending skbs in fqdir_pre_exit()
+Date: Mon, 29 Dec 2025 17:08:00 +0100
+Message-ID: <20251229160727.235327836@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -53,108 +51,183 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit e1a31c41bef678afe0d99b7f0dc3711a80c68447 ]
+[ Upstream commit 006a5035b495dec008805df249f92c22c89c3d2e ]
 
-Add CLKOUT disable support for RTL8211F(D)(I)-VD-CG. Like with other PHY
-variants, this feature might be requested by customers when the clock
-output is not used, in order to reduce electromagnetic interference (EMI).
+We have been seeing occasional deadlocks on pernet_ops_rwsem since
+September in NIPA. The stuck task was usually modprobe (often loading
+a driver like ipvlan), trying to take the lock as a Writer.
+lockdep does not track readers for rwsems so the read wasn't obvious
+from the reports.
 
-In the common driver, the CLKOUT configuration is done through PHYCR2.
-The RTL_8211FVD_PHYID is singled out as not having that register, and
-execution in rtl8211f_config_init() returns early after commit
-2c67301584f2 ("net: phy: realtek: Avoid PHYCR2 access if PHYCR2 not
-present").
+On closer inspection the Reader holding the lock was conntrack looping
+forever in nf_conntrack_cleanup_net_list(). Based on past experience
+with occasional NIPA crashes I looked thru the tests which run before
+the crash and noticed that the crash follows ip_defrag.sh. An immediate
+red flag. Scouring thru (de)fragmentation queues reveals skbs sitting
+around, holding conntrack references.
 
-But actually CLKOUT is configured through a different register for this
-PHY. Instead of pretending this is PHYCR2 (which it is not), just add
-some code for modifying this register inside the rtl8211f_disable_clk_out()
-function, and move that outside the code portion that runs only if
-PHYCR2 exists.
+The problem is that since conntrack depends on nf_defrag_ipv6,
+nf_defrag_ipv6 will load first. Since nf_defrag_ipv6 loads first its
+netns exit hooks run _after_ conntrack's netns exit hook.
 
-In practice this reorders the PHYCR2 writes to disable PHY-mode EEE and
-to disable the CLKOUT for the normal RTL8211F variants, but this should
-be perfectly fine.
+Flush all fragment queue SKBs during fqdir_pre_exit() to release
+conntrack references before conntrack cleanup runs. Also flush
+the queues in timer expiry handlers when they discover fqdir->dead
+is set, in case packet sneaks in while we're running the pre_exit
+flush.
 
-It was not noted that RTL8211F(D)(I)-VD-CG would need a genphy_soft_reset()
-call after disabling the CLKOUT. Despite that, we do it out of caution
-and for symmetry with the other RTL8211F models.
+The commit under Fixes is not exactly the culprit, but I think
+previously the timer firing would eventually unblock the spinning
+conntrack.
 
-Co-developed-by: Clark Wang <xiaoning.wang@nxp.com>
-Signed-off-by: Clark Wang <xiaoning.wang@nxp.com>
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20251117234033.345679-5-vladimir.oltean@nxp.com
+Fixes: d5dd88794a13 ("inet: fix various use-after-free in defrags units")
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20251207010942.1672972-4-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 4f0638b12451 ("net: phy: RTL8211FVD: Restore disabling of PHY-mode EEE")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/realtek/realtek_main.c | 31 ++++++++++++++++++--------
- 1 file changed, 22 insertions(+), 9 deletions(-)
+ include/net/inet_frag.h  | 13 +------------
+ include/net/ipv6_frag.h  |  9 ++++++---
+ net/ipv4/inet_fragment.c | 36 ++++++++++++++++++++++++++++++++++++
+ net/ipv4/ip_fragment.c   | 12 +++++++-----
+ 4 files changed, 50 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/net/phy/realtek/realtek_main.c b/drivers/net/phy/realtek/realtek_main.c
-index daf2457b378bf..f0348b92beec3 100644
---- a/drivers/net/phy/realtek/realtek_main.c
-+++ b/drivers/net/phy/realtek/realtek_main.c
-@@ -89,6 +89,14 @@
- #define RTL8211F_LEDCR_MASK			GENMASK(4, 0)
- #define RTL8211F_LEDCR_SHIFT			5
+diff --git a/include/net/inet_frag.h b/include/net/inet_frag.h
+index 3ffaceee7bbc0..365925c9d2628 100644
+--- a/include/net/inet_frag.h
++++ b/include/net/inet_frag.h
+@@ -123,18 +123,7 @@ void inet_frags_fini(struct inet_frags *);
  
-+/* RTL8211F(D)(I)-VD-CG CLKOUT configuration is specified via magic values
-+ * to undocumented register pages. The names here do not reflect the datasheet.
-+ * Unlike other PHY models, CLKOUT configuration does not go through PHYCR2.
-+ */
-+#define RTL8211FVD_CLKOUT_PAGE			0xd05
-+#define RTL8211FVD_CLKOUT_REG			0x11
-+#define RTL8211FVD_CLKOUT_EN			BIT(8)
-+
- /* RTL8211F RGMII configuration */
- #define RTL8211F_RGMII_PAGE			0xd08
+ int fqdir_init(struct fqdir **fqdirp, struct inet_frags *f, struct net *net);
  
-@@ -626,8 +634,13 @@ static int rtl8211f_config_clk_out(struct phy_device *phydev)
- 	if (!priv->disable_clk_out)
- 		return 0;
+-static inline void fqdir_pre_exit(struct fqdir *fqdir)
+-{
+-	/* Prevent creation of new frags.
+-	 * Pairs with READ_ONCE() in inet_frag_find().
+-	 */
+-	WRITE_ONCE(fqdir->high_thresh, 0);
+-
+-	/* Pairs with READ_ONCE() in inet_frag_kill(), ip_expire()
+-	 * and ip6frag_expire_frag_queue().
+-	 */
+-	WRITE_ONCE(fqdir->dead, true);
+-}
++void fqdir_pre_exit(struct fqdir *fqdir);
+ void fqdir_exit(struct fqdir *fqdir);
  
--	ret = phy_modify_paged(phydev, RTL8211F_PHYCR_PAGE,
--			       RTL8211F_PHYCR2, RTL8211F_CLKOUT_EN, 0);
-+	if (phydev->drv->phy_id == RTL_8211FVD_PHYID)
-+		ret = phy_modify_paged(phydev, RTL8211FVD_CLKOUT_PAGE,
-+				       RTL8211FVD_CLKOUT_REG,
-+				       RTL8211FVD_CLKOUT_EN, 0);
-+	else
-+		ret = phy_modify_paged(phydev, RTL8211F_PHYCR_PAGE,
-+				       RTL8211F_PHYCR2, RTL8211F_CLKOUT_EN, 0);
- 	if (ret)
- 		return ret;
+ void inet_frag_kill(struct inet_frag_queue *q, int *refs);
+diff --git a/include/net/ipv6_frag.h b/include/net/ipv6_frag.h
+index 38ef66826939e..41d9fc6965f9a 100644
+--- a/include/net/ipv6_frag.h
++++ b/include/net/ipv6_frag.h
+@@ -69,9 +69,6 @@ ip6frag_expire_frag_queue(struct net *net, struct frag_queue *fq)
+ 	int refs = 1;
  
-@@ -653,6 +666,13 @@ static int rtl8211f_config_init(struct phy_device *phydev)
- 	if (ret)
- 		return ret;
+ 	rcu_read_lock();
+-	/* Paired with the WRITE_ONCE() in fqdir_pre_exit(). */
+-	if (READ_ONCE(fq->q.fqdir->dead))
+-		goto out_rcu_unlock;
+ 	spin_lock(&fq->q.lock);
  
-+	ret = rtl8211f_config_clk_out(phydev);
-+	if (ret) {
-+		dev_err(dev, "clkout configuration failed: %pe\n",
-+			ERR_PTR(ret));
-+		return ret;
+ 	if (fq->q.flags & INET_FRAG_COMPLETE)
+@@ -80,6 +77,12 @@ ip6frag_expire_frag_queue(struct net *net, struct frag_queue *fq)
+ 	fq->q.flags |= INET_FRAG_DROP;
+ 	inet_frag_kill(&fq->q, &refs);
+ 
++	/* Paired with the WRITE_ONCE() in fqdir_pre_exit(). */
++	if (READ_ONCE(fq->q.fqdir->dead)) {
++		inet_frag_queue_flush(&fq->q, 0);
++		goto out;
 +	}
 +
- 	/* RTL8211FVD has no PHYCR2 register */
- 	if (phydev->drv->phy_id == RTL_8211FVD_PHYID)
- 		return 0;
-@@ -663,13 +683,6 @@ static int rtl8211f_config_init(struct phy_device *phydev)
- 	if (ret)
- 		return ret;
+ 	dev = dev_get_by_index_rcu(net, fq->iif);
+ 	if (!dev)
+ 		goto out;
+diff --git a/net/ipv4/inet_fragment.c b/net/ipv4/inet_fragment.c
+index 1bf969b5a1cb5..001ee5c4d962e 100644
+--- a/net/ipv4/inet_fragment.c
++++ b/net/ipv4/inet_fragment.c
+@@ -218,6 +218,41 @@ static int __init inet_frag_wq_init(void)
  
--	ret = rtl8211f_config_clk_out(phydev);
--	if (ret) {
--		dev_err(dev, "clkout configuration failed: %pe\n",
--			ERR_PTR(ret));
--		return ret;
--	}
--
- 	return 0;
+ pure_initcall(inet_frag_wq_init);
+ 
++void fqdir_pre_exit(struct fqdir *fqdir)
++{
++	struct inet_frag_queue *fq;
++	struct rhashtable_iter hti;
++
++	/* Prevent creation of new frags.
++	 * Pairs with READ_ONCE() in inet_frag_find().
++	 */
++	WRITE_ONCE(fqdir->high_thresh, 0);
++
++	/* Pairs with READ_ONCE() in inet_frag_kill(), ip_expire()
++	 * and ip6frag_expire_frag_queue().
++	 */
++	WRITE_ONCE(fqdir->dead, true);
++
++	rhashtable_walk_enter(&fqdir->rhashtable, &hti);
++	rhashtable_walk_start(&hti);
++
++	while ((fq = rhashtable_walk_next(&hti))) {
++		if (IS_ERR(fq)) {
++			if (PTR_ERR(fq) != -EAGAIN)
++				break;
++			continue;
++		}
++		spin_lock_bh(&fq->lock);
++		if (!(fq->flags & INET_FRAG_COMPLETE))
++			inet_frag_queue_flush(fq, 0);
++		spin_unlock_bh(&fq->lock);
++	}
++
++	rhashtable_walk_stop(&hti);
++	rhashtable_walk_exit(&hti);
++}
++EXPORT_SYMBOL(fqdir_pre_exit);
++
+ void fqdir_exit(struct fqdir *fqdir)
+ {
+ 	INIT_WORK(&fqdir->destroy_work, fqdir_work_fn);
+@@ -290,6 +325,7 @@ void inet_frag_queue_flush(struct inet_frag_queue *q,
+ {
+ 	unsigned int sum;
+ 
++	reason = reason ?: SKB_DROP_REASON_FRAG_REASM_TIMEOUT;
+ 	sum = inet_frag_rbtree_purge(&q->rb_fragments, reason);
+ 	sub_frag_mem_limit(q->fqdir, sum);
  }
+diff --git a/net/ipv4/ip_fragment.c b/net/ipv4/ip_fragment.c
+index 32f1c1a46ba72..56b0f738d2f27 100644
+--- a/net/ipv4/ip_fragment.c
++++ b/net/ipv4/ip_fragment.c
+@@ -134,11 +134,6 @@ static void ip_expire(struct timer_list *t)
+ 	net = qp->q.fqdir->net;
+ 
+ 	rcu_read_lock();
+-
+-	/* Paired with WRITE_ONCE() in fqdir_pre_exit(). */
+-	if (READ_ONCE(qp->q.fqdir->dead))
+-		goto out_rcu_unlock;
+-
+ 	spin_lock(&qp->q.lock);
+ 
+ 	if (qp->q.flags & INET_FRAG_COMPLETE)
+@@ -146,6 +141,13 @@ static void ip_expire(struct timer_list *t)
+ 
+ 	qp->q.flags |= INET_FRAG_DROP;
+ 	inet_frag_kill(&qp->q, &refs);
++
++	/* Paired with WRITE_ONCE() in fqdir_pre_exit(). */
++	if (READ_ONCE(qp->q.fqdir->dead)) {
++		inet_frag_queue_flush(&qp->q, 0);
++		goto out;
++	}
++
+ 	__IP_INC_STATS(net, IPSTATS_MIB_REASMFAILS);
+ 	__IP_INC_STATS(net, IPSTATS_MIB_REASMTIMEOUT);
  
 -- 
 2.51.0
