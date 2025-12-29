@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A6233066C;
-	Mon, 29 Dec 2025 16:29:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288EA33064F;
+	Mon, 29 Dec 2025 16:29:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025789; cv=none; b=XocOOwkNY4z8iJICcMzF0XHzYQjNdADpra/5ykKdA/zUPArFoEEwcYhn0dYr2T8Ksb10w5hGzErUzzSFzdY4UKveZH3V8jbAHHTgD+EMsNTFKacet1V3HNZNpfGYgm3gGebzoROD4kw3ecjQDU44vxPqvrH29bXBzpuX+2AMItw=
+	t=1767025792; cv=none; b=EjA6Wb6RghNM+RQc7zOUAkCzqFxZrzZcWF4ZvGVCq1S3PvDCGrsSMcqx0pZKIeoGss03WfMo6JpV0iaveshFJcaXLia8muB6Cl/PqkBCEf5xr5AgaT3YubgDn2UdEjNhKrFM/X4oboXG1k321FLc/cxE7dpcCV27BKY6MQJiyzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025789; c=relaxed/simple;
-	bh=0z0AwoEs7psMYX6+JRyozHKu/wRBETv0NhXktJeRCYI=;
+	s=arc-20240116; t=1767025792; c=relaxed/simple;
+	bh=/0Cc5hSvvW6ISYpSslGOaHor7aF2T5lE48NdxIAq2cw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o/YZB9A7ixMqLxX9BAze7k6ZjvmtYG3FL7CS9KPap8V6Q8hZCYLqlLjOC7pcTfgEXvTdQTR7qzwnSsjkVL1qUikxS1uAiXnnFQP4arazMpboGGJuGY3zsFwNRww08evNk5slNuornR7Bnt+OZPk3J9dJAel4/IS+TVMHVGWc/XQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SJGwEIIo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PigQDaDNRKegy+h8B8f5QI7vXlY0ryBSX863QewVlYflkAboerDPsgzMWxfLYlNmvdNU2IfgHsFOcNm3hQyl79XKC1LOueNUAfyPtJ9t2w1dF0Pu4Hwvat35eFFcSwwNCub54pb4Q85JQAn+pQ0oAkOtqYSLrbeBeDNnFbuc7XQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qq+FdrAP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SJGwEIIo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8E5BC4CEF7;
-	Mon, 29 Dec 2025 16:29:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qq+FdrAP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B4A4C4CEF7;
+	Mon, 29 Dec 2025 16:29:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025789;
-	bh=0z0AwoEs7psMYX6+JRyozHKu/wRBETv0NhXktJeRCYI=;
+	s=korg; t=1767025791;
+	bh=/0Cc5hSvvW6ISYpSslGOaHor7aF2T5lE48NdxIAq2cw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SJGwEIIof4MMg9wLu+emi552XEuhiAfXUHxHT5kG9S5HiiQiF/QLnD/JwO6EhU7Yj
-	 QVqnz8aaGruyJBQcQ08aI0Vcxtikwz3qxDiDypSFCqSls67s5Xh42oegbV+UrZ8t+M
-	 uhveTxF+c/C9RLdb6jNwZhxRR9OUc2HB5t4W1IB4=
+	b=Qq+FdrAPBwuDjVNIj8cAk6pYBDNPlEH+U8L6YEtDT7b4m2jvtRSg5EnvD1+ls1GyN
+	 aJ9TFdC1Xls0CZQBMRl3qK9/DGnkLoMwfP4mLW67ebMI1Fg+GQDyW93V12PNLE8vnG
+	 kWovKubKpYXBDAzN38SF5VtQ5Fd+NWFTGBWdq6c4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ziming zhang <ezrakiez@gmail.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Xiubo Li <xiubli@redhat.com>
-Subject: [PATCH 6.18 337/430] libceph: make decode_pool() more resilient against corrupted osdmaps
-Date: Mon, 29 Dec 2025 17:12:19 +0100
-Message-ID: <20251229160736.728500087@linuxfoundation.org>
+	Seunghwan Baek <sh8267.baek@samsung.com>,
+	Peter Wang <peter.wang@mediatek.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.18 311/430] scsi: ufs: core: Add ufshcd_update_evt_hist() for UFS suspend error
+Date: Mon, 29 Dec 2025 17:11:53 +0100
+Message-ID: <20251229160735.776530021@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -51,221 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Seunghwan Baek <sh8267.baek@samsung.com>
 
-commit 8c738512714e8c0aa18f8a10c072d5b01c83db39 upstream.
+commit c9f36f04a8a2725172cdf2b5e32363e4addcb14c upstream.
 
-If the osdmap is (maliciously) corrupted such that the encoded length
-of ceph_pg_pool envelope is less than what is expected for a particular
-encoding version, out-of-bounds reads may ensue because the only bounds
-check that is there is based on that length value.
+If UFS resume fails, the event history is updated in ufshcd_resume(), but
+there is no code anywhere to record UFS suspend. Therefore, add code to
+record UFS suspend error event history.
 
-This patch adds explicit bounds checks for each field that is decoded
-or skipped.
-
+Fixes: dd11376b9f1b ("scsi: ufs: Split the drivers/scsi/ufs directory")
 Cc: stable@vger.kernel.org
-Reported-by: ziming zhang <ezrakiez@gmail.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Xiubo Li <xiubli@redhat.com>
-Tested-by: ziming zhang <ezrakiez@gmail.com>
+Signed-off-by: Seunghwan Baek <sh8267.baek@samsung.com>
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Link: https://patch.msgid.link/20251210063854.1483899-2-sh8267.baek@samsung.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osdmap.c |  118 ++++++++++++++++++++++++------------------------------
- 1 file changed, 53 insertions(+), 65 deletions(-)
+ drivers/ufs/core/ufshcd.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/net/ceph/osdmap.c
-+++ b/net/ceph/osdmap.c
-@@ -806,51 +806,49 @@ static int decode_pool(void **p, void *e
- 	ceph_decode_need(p, end, len, bad);
- 	pool_end = *p + len;
- 
-+	ceph_decode_need(p, end, 4 + 4 + 4, bad);
- 	pi->type = ceph_decode_8(p);
- 	pi->size = ceph_decode_8(p);
- 	pi->crush_ruleset = ceph_decode_8(p);
- 	pi->object_hash = ceph_decode_8(p);
--
- 	pi->pg_num = ceph_decode_32(p);
- 	pi->pgp_num = ceph_decode_32(p);
- 
--	*p += 4 + 4;  /* skip lpg* */
--	*p += 4;      /* skip last_change */
--	*p += 8 + 4;  /* skip snap_seq, snap_epoch */
-+	/* lpg*, last_change, snap_seq, snap_epoch */
-+	ceph_decode_skip_n(p, end, 8 + 4 + 8 + 4, bad);
- 
- 	/* skip snaps */
--	num = ceph_decode_32(p);
-+	ceph_decode_32_safe(p, end, num, bad);
- 	while (num--) {
--		*p += 8;  /* snapid key */
--		*p += 1 + 1; /* versions */
--		len = ceph_decode_32(p);
--		*p += len;
-+		/* snapid key, pool snap (with versions) */
-+		ceph_decode_skip_n(p, end, 8 + 2, bad);
-+		ceph_decode_skip_string(p, end, bad);
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -10223,7 +10223,7 @@ static int ufshcd_suspend(struct ufs_hba
+ 	ret = ufshcd_setup_clocks(hba, false);
+ 	if (ret) {
+ 		ufshcd_enable_irq(hba);
+-		return ret;
++		goto out;
  	}
- 
--	/* skip removed_snaps */
--	num = ceph_decode_32(p);
--	*p += num * (8 + 8);
-+	/* removed_snaps */
-+	ceph_decode_skip_map(p, end, 64, 64, bad);
- 
-+	ceph_decode_need(p, end, 8 + 8 + 4, bad);
- 	*p += 8;  /* skip auid */
- 	pi->flags = ceph_decode_64(p);
- 	*p += 4;  /* skip crash_replay_interval */
- 
- 	if (ev >= 7)
--		pi->min_size = ceph_decode_8(p);
-+		ceph_decode_8_safe(p, end, pi->min_size, bad);
- 	else
- 		pi->min_size = pi->size - pi->size / 2;
- 
- 	if (ev >= 8)
--		*p += 8 + 8;  /* skip quota_max_* */
-+		/* quota_max_* */
-+		ceph_decode_skip_n(p, end, 8 + 8, bad);
- 
- 	if (ev >= 9) {
--		/* skip tiers */
--		num = ceph_decode_32(p);
--		*p += num * 8;
-+		/* tiers */
-+		ceph_decode_skip_set(p, end, 64, bad);
- 
-+		ceph_decode_need(p, end, 8 + 1 + 8 + 8, bad);
- 		*p += 8;  /* skip tier_of */
- 		*p += 1;  /* skip cache_mode */
--
- 		pi->read_tier = ceph_decode_64(p);
- 		pi->write_tier = ceph_decode_64(p);
- 	} else {
-@@ -858,86 +856,76 @@ static int decode_pool(void **p, void *e
- 		pi->write_tier = -1;
- 	}
- 
--	if (ev >= 10) {
--		/* skip properties */
--		num = ceph_decode_32(p);
--		while (num--) {
--			len = ceph_decode_32(p);
--			*p += len; /* key */
--			len = ceph_decode_32(p);
--			*p += len; /* val */
--		}
--	}
-+	if (ev >= 10)
-+		/* properties */
-+		ceph_decode_skip_map(p, end, string, string, bad);
- 
- 	if (ev >= 11) {
--		/* skip hit_set_params */
--		*p += 1 + 1; /* versions */
--		len = ceph_decode_32(p);
--		*p += len;
-+		/* hit_set_params (with versions) */
-+		ceph_decode_skip_n(p, end, 2, bad);
-+		ceph_decode_skip_string(p, end, bad);
- 
--		*p += 4; /* skip hit_set_period */
--		*p += 4; /* skip hit_set_count */
-+		/* hit_set_period, hit_set_count */
-+		ceph_decode_skip_n(p, end, 4 + 4, bad);
- 	}
- 
- 	if (ev >= 12)
--		*p += 4; /* skip stripe_width */
-+		/* stripe_width */
-+		ceph_decode_skip_32(p, end, bad);
- 
--	if (ev >= 13) {
--		*p += 8; /* skip target_max_bytes */
--		*p += 8; /* skip target_max_objects */
--		*p += 4; /* skip cache_target_dirty_ratio_micro */
--		*p += 4; /* skip cache_target_full_ratio_micro */
--		*p += 4; /* skip cache_min_flush_age */
--		*p += 4; /* skip cache_min_evict_age */
--	}
--
--	if (ev >=  14) {
--		/* skip erasure_code_profile */
--		len = ceph_decode_32(p);
--		*p += len;
--	}
-+	if (ev >= 13)
-+		/* target_max_*, cache_target_*, cache_min_* */
-+		ceph_decode_skip_n(p, end, 16 + 8 + 8, bad);
-+
-+	if (ev >= 14)
-+		/* erasure_code_profile */
-+		ceph_decode_skip_string(p, end, bad);
- 
- 	/*
- 	 * last_force_op_resend_preluminous, will be overridden if the
- 	 * map was encoded with RESEND_ON_SPLIT
- 	 */
- 	if (ev >= 15)
--		pi->last_force_request_resend = ceph_decode_32(p);
-+		ceph_decode_32_safe(p, end, pi->last_force_request_resend, bad);
- 	else
- 		pi->last_force_request_resend = 0;
- 
- 	if (ev >= 16)
--		*p += 4; /* skip min_read_recency_for_promote */
-+		/* min_read_recency_for_promote */
-+		ceph_decode_skip_32(p, end, bad);
- 
- 	if (ev >= 17)
--		*p += 8; /* skip expected_num_objects */
-+		/* expected_num_objects */
-+		ceph_decode_skip_64(p, end, bad);
- 
- 	if (ev >= 19)
--		*p += 4; /* skip cache_target_dirty_high_ratio_micro */
-+		/* cache_target_dirty_high_ratio_micro */
-+		ceph_decode_skip_32(p, end, bad);
- 
- 	if (ev >= 20)
--		*p += 4; /* skip min_write_recency_for_promote */
-+		/* min_write_recency_for_promote */
-+		ceph_decode_skip_32(p, end, bad);
- 
- 	if (ev >= 21)
--		*p += 1; /* skip use_gmt_hitset */
-+		/* use_gmt_hitset */
-+		ceph_decode_skip_8(p, end, bad);
- 
- 	if (ev >= 22)
--		*p += 1; /* skip fast_read */
-+		/* fast_read */
-+		ceph_decode_skip_8(p, end, bad);
- 
--	if (ev >= 23) {
--		*p += 4; /* skip hit_set_grade_decay_rate */
--		*p += 4; /* skip hit_set_search_last_n */
--	}
-+	if (ev >= 23)
-+		/* hit_set_grade_decay_rate, hit_set_search_last_n */
-+		ceph_decode_skip_n(p, end, 4 + 4, bad);
- 
- 	if (ev >= 24) {
--		/* skip opts */
--		*p += 1 + 1; /* versions */
--		len = ceph_decode_32(p);
--		*p += len;
-+		/* opts (with versions) */
-+		ceph_decode_skip_n(p, end, 2, bad);
-+		ceph_decode_skip_string(p, end, bad);
- 	}
- 
- 	if (ev >= 25)
--		pi->last_force_request_resend = ceph_decode_32(p);
-+		ceph_decode_32_safe(p, end, pi->last_force_request_resend, bad);
- 
- 	/* ignore the rest */
+ 	if (ufshcd_is_clkgating_allowed(hba)) {
+ 		hba->clk_gating.state = CLKS_OFF;
+@@ -10235,6 +10235,9 @@ static int ufshcd_suspend(struct ufs_hba
+ 	/* Put the host controller in low power mode if possible */
+ 	ufshcd_hba_vreg_set_lpm(hba);
+ 	ufshcd_pm_qos_update(hba, false);
++out:
++	if (ret)
++		ufshcd_update_evt_hist(hba, UFS_EVT_SUSPEND_ERR, (u32)ret);
+ 	return ret;
+ }
  
 
 
