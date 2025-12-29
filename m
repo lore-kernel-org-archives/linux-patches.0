@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF3233374A;
-	Mon, 29 Dec 2025 16:31:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35E16334690;
+	Mon, 29 Dec 2025 16:32:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025920; cv=none; b=sv5eUQX06XjoduCVGUr7HXFvsvkvrMkxpCses3Y++NJU+QeDHmjXf3U3SpazjyhAHZUm4UTEnIv01EOVS9eGWk5RWVTXMHbmBz6eG1tPDzGBoU3iGYxaqje6BD1XOjhWcnx634mLN31MyEVbMvHALyS/1aSelMk1Ib7X/asUmlE=
+	t=1767025922; cv=none; b=sca9C4UNkpljT0soTTxZypyxaWchMeIwyqb5b1+csakVZfHOaiBGneueP98HN3GxmK0f20tLwM3qu09DYKR0c47F43MXbi4pLSOouz0vAveKwGiuwXOn8pOBkP3/4qsr1kWQ+P1/7dIYZuYUecuR3BBe5LeLVHnFFIOAk4YTxAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025920; c=relaxed/simple;
-	bh=znjiqAKiOY8be9/9N7jYioaBxLrRIgrnSbCvnJihBt8=;
+	s=arc-20240116; t=1767025922; c=relaxed/simple;
+	bh=OJpSrXIlBJV+0LiDoXBdEqjqg2NMCCsINRgkYaCcNOU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M10hd1T8S79IYfNN0FEK24sNkbwKKdxJ7D+kS1fOW8r6LpaX3rdcUZFCFEfXv0pxI5A43Tr9C6Z1KjmA1dr+5m0+KQ9iZZ7673bhsK3uQ/ZYYvs/LmO8l1a0nU6EimRdsPEku+PSNh0OEdkYvn/Un7yHu6NzvSl1zAji0Xaz7ro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P47bbdHy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jdfDlY1bvpHBILx1IRBB3RMUqP52tmn4OkC92VEj/gv4JlCBJZGrTx9iuSSL1Xru1JGrTylRYvue1aHYBwwspCriQo6T/7IkSbTewc+FpidON6i9bVClCnAY33YYU/ppm6P9c+KT62OoRUAdmC4PfNFzRYLCaiMtMHipeloFQIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HumBFlIk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P47bbdHy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD66AC4CEF7;
-	Mon, 29 Dec 2025 16:31:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HumBFlIk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B034EC4CEF7;
+	Mon, 29 Dec 2025 16:32:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025919;
-	bh=znjiqAKiOY8be9/9N7jYioaBxLrRIgrnSbCvnJihBt8=;
+	s=korg; t=1767025922;
+	bh=OJpSrXIlBJV+0LiDoXBdEqjqg2NMCCsINRgkYaCcNOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P47bbdHyhvg2b2ZU/y9erCNUqdS81z+iMn3qesairXcNdH/FbC4iVivyQ8bBFVSJU
-	 PFaPODP85SgAXZQRdEJoeKTjYZEkIZ4K1huo8Xh0GQ2Wh5B1k/olX7UBneGNrMssds
-	 8Ud65yimPtHPDcKO94b4nEVFQQNqdfIxXZkqVkSw=
+	b=HumBFlIkaC3WOp9irK7sb2RZgBXVa6pYq2Unxex8IKPYaiUOwxWCGxxQgcJ/tMdyk
+	 sOFbFhs4UiKEF+BYPyUz4YCR9jlV6AJJZ4G4zGIvBwD5FEpbT/7124g3zTn8fhQM0l
+	 RU+dSiPqq86u3rjbcTfxF0sFa7wung35Fs6sGIfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Mammedov <imammedo@redhat.com>,
+	Jim Mattson <jmattson@google.com>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.18 352/430] KVM: x86: Apply runtime updates to current CPUID during KVM_SET_CPUID{,2}
-Date: Mon, 29 Dec 2025 17:12:34 +0100
-Message-ID: <20251229160737.280164584@linuxfoundation.org>
+Subject: [PATCH 6.18 343/430] KVM: SVM: Mark VMCB_NPT as dirty on nested VMRUN
+Date: Mon, 29 Dec 2025 17:12:25 +0100
+Message-ID: <20251229160736.951771689@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -50,53 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Jim Mattson <jmattson@google.com>
 
-commit e2b43fb25243d502ad36b07bab9de09f4b76fff9 upstream.
+commit 7c8b465a1c91f674655ea9cec5083744ec5f796a upstream.
 
-When handling KVM_SET_CPUID{,2}, do runtime CPUID updates on the vCPU's
-current CPUID (and caps) prior to swapping in the incoming CPUID state so
-that KVM doesn't lose pending updates if the incoming CPUID is rejected,
-and to prevent a false failure on the equality check.
+Mark the VMCB_NPT bit as dirty in nested_vmcb02_prepare_save()
+on every nested VMRUN.
 
-Note, runtime updates are unconditionally performed on the incoming/new
-CPUID (and associated caps), i.e. clearing the dirty flag won't negatively
-affect the new CPUID.
+If L1 changes the PAT MSR between two VMRUN instructions on the same
+L1 vCPU, the g_pat field in the associated vmcb02 will change, and the
+VMCB_NPT clean bit should be cleared.
 
-Fixes: 93da6af3ae56 ("KVM: x86: Defer runtime updates of dynamic CPUID bits until CPUID emulation")
-Reported-by: Igor Mammedov <imammedo@redhat.com>
-Closes: https://lore.kernel.org/all/20251128123202.68424a95@imammedo
+Fixes: 4bb170a5430b ("KVM: nSVM: do not mark all VMCB02 fields dirty on nested vmexit")
 Cc: stable@vger.kernel.org
-Acked-by: Igor Mammedov <imammedo@redhat.com>
-Tested-by: Igor Mammedov <imammedo@redhat.com>
-Link: https://patch.msgid.link/20251202015049.1167490-2-seanjc@google.com
+Signed-off-by: Jim Mattson <jmattson@google.com>
+Link: https://lore.kernel.org/r/20250922162935.621409-3-jmattson@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/cpuid.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ arch/x86/kvm/svm/nested.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/x86/kvm/cpuid.c
-+++ b/arch/x86/kvm/cpuid.c
-@@ -510,10 +510,17 @@ static int kvm_set_cpuid(struct kvm_vcpu
- 	int r;
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -613,6 +613,7 @@ static void nested_vmcb02_prepare_save(s
+ 	struct kvm_vcpu *vcpu = &svm->vcpu;
  
- 	/*
-+	 * Apply pending runtime CPUID updates to the current CPUID entries to
-+	 * avoid false positives due to mismatches on KVM-owned feature flags.
-+	 */
-+	if (vcpu->arch.cpuid_dynamic_bits_dirty)
-+		kvm_update_cpuid_runtime(vcpu);
-+
-+	/*
- 	 * Swap the existing (old) entries with the incoming (new) entries in
- 	 * order to massage the new entries, e.g. to account for dynamic bits
--	 * that KVM controls, without clobbering the current guest CPUID, which
--	 * KVM needs to preserve in order to unwind on failure.
-+	 * that KVM controls, without losing the current guest CPUID, which KVM
-+	 * needs to preserve in order to unwind on failure.
- 	 *
- 	 * Similarly, save the vCPU's current cpu_caps so that the capabilities
- 	 * can be updated alongside the CPUID entries when performing runtime
+ 	nested_vmcb02_compute_g_pat(svm);
++	vmcb_mark_dirty(vmcb02, VMCB_NPT);
+ 
+ 	/* Load the nested guest state */
+ 	if (svm->nested.vmcb12_gpa != svm->nested.last_vmcb12_gpa) {
 
 
