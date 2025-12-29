@@ -1,39 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B9A29460;
-	Mon, 29 Dec 2025 16:21:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1253202F65;
+	Mon, 29 Dec 2025 16:21:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025313; cv=none; b=oA2q/QL6VKDqgOaVffVWwHuktT/+/CismRmXcfPI8h/QJf9J2y31N9X3uUu01q1dx+60kYzvOWY28EhIuuY+PtFo5bwyND2O5nIp6xkRhkFG/bWrXSVnUtDbFIRDa26GUK4XHRl8x4gfHRYYKgB62YbJzPziuu9mEpSjwjmP25o=
+	t=1767025316; cv=none; b=TmBGE71MahQePb4glvoLf8qYdiSe0bqE5lf5/JtyJJjriLW/sQXi4EhXT6GowenIUlGfEA0Ob8be14JXB/Rbnr5b7UJdJjES7ONZqr7w7OHln6D8J2ZIFYuYfc9fIj+p/mQPA+iS0geEOFd1Jdbl+njr+W4qGp78NYbnNbUErSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025313; c=relaxed/simple;
-	bh=QddRe0mOK9OVHWc2fjpwUeZAcm6W9SeUj8SakfPg06M=;
+	s=arc-20240116; t=1767025316; c=relaxed/simple;
+	bh=uF6g+HK6kw/rlT7s3MqHXcLN2nCmEBa0tXkj4FQYYko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tmIOkfgq/xRfNd/YbPFQjIMrlsr6zJ0WYEFeIa88LPyD6/gJwINe6hnYj9Pq6trViRA18Wl3FV3ILpekGVKOKmq0jM/CFPRsXnTATYuYXLWxIsGR/p6iuXou8Au4FrTuME44QDaOgWJ7NuyDw7LPMNqn7SmPsVU3p4rIDhqUOxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zF6Ry1JR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uAePOo2EMXFMpqbGWRyY6G90nHYTpc+B+ZNIR+maCSKJB6u6kacseBlwZG3Bx8qTcDcWQ5pyWjWojI0Qnetp2J8uGTE4fuSPGW6FvIpm9behuV5VWXsrkwd0BPS+8l/1qw2u8tHw1a1wy00I7nJ7oORZIcvPShH4BL1wWhJwj3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0oS/majR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zF6Ry1JR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E7DAC4CEF7;
-	Mon, 29 Dec 2025 16:21:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0oS/majR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E350C4CEF7;
+	Mon, 29 Dec 2025 16:21:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025312;
-	bh=QddRe0mOK9OVHWc2fjpwUeZAcm6W9SeUj8SakfPg06M=;
+	s=korg; t=1767025315;
+	bh=uF6g+HK6kw/rlT7s3MqHXcLN2nCmEBa0tXkj4FQYYko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zF6Ry1JRsTpcgbFiJLT9mHNBDYhS+6tkbwbTWDmLIG3+QvtDrZ8o21yKMazrTpn2U
-	 hfQI9Y+XslWzZYsVzIrj3NGOu0CQVsfpv/g/gz/MOCben1CYAr2rYfSKQh0l+RE3Kf
-	 iKN4J8N+B9PXxhGPk+/qTXM9RaZ1yBiLEMWCvcpM=
+	b=0oS/majRqfqMX4slI3to7lOuzWy19a1/2USPYaIWG4pNw/7t2IXoQ4Wv1wO+co0O3
+	 cswjXlGQiejeiaZrBh55PeYlFuG0iSy3KARQNsgZUjjUHnx3BTXITmLK8p6bTcjkVH
+	 8kirYB9KAIcNFmYHDBqOFO7u54S/hBuZ6X0kSwfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Jack Wang <jinpu.wang@ionos.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Koen Koning <koen.koning@intel.com>,
+	Peter Senna Tschudin <peter.senna@linux.intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Michal Mrozek <michal.mrozek@intel.com>,
+	Carl Zhang <carl.zhang@intel.com>,
+	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
+	Lionel Landwerlin <lionel.g.landwerlin@intel.com>,
+	Ivan Briano <ivan.briano@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Ashutosh Dixit <ashutosh.dixit@intel.com>,
+	Shuicheng Lin <shuicheng.lin@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 136/430] block: rnbd-clt: Fix leaked ID in init_dev()
-Date: Mon, 29 Dec 2025 17:08:58 +0100
-Message-ID: <20251229160729.368719561@linuxfoundation.org>
+Subject: [PATCH 6.18 137/430] drm/xe: Limit num_syncs to prevent oversized allocations
+Date: Mon, 29 Dec 2025 17:08:59 +0100
+Message-ID: <20251229160729.404946677@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -46,67 +54,124 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Shuicheng Lin <shuicheng.lin@intel.com>
 
-[ Upstream commit c9b5645fd8ca10f310e41b07540f98e6a9720f40 ]
+[ Upstream commit 8e461304009135270e9ccf2d7e2dfe29daec9b60 ]
 
-If kstrdup() fails in init_dev(), then the newly allocated ID is lost.
+The exec and vm_bind ioctl allow userspace to specify an arbitrary
+num_syncs value. Without bounds checking, a very large num_syncs
+can force an excessively large allocation, leading to kernel warnings
+from the page allocator as below.
 
-Fixes: 64e8a6ece1a5 ("block/rnbd-clt: Dynamically alloc buffer for pathname & blk_symlink_name")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Acked-by: Jack Wang <jinpu.wang@ionos.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Introduce DRM_XE_MAX_SYNCS (set to 1024) and reject any request
+exceeding this limit.
+
+"
+------------[ cut here ]------------
+WARNING: CPU: 0 PID: 1217 at mm/page_alloc.c:5124 __alloc_frozen_pages_noprof+0x2f8/0x2180 mm/page_alloc.c:5124
+...
+Call Trace:
+ <TASK>
+ alloc_pages_mpol+0xe4/0x330 mm/mempolicy.c:2416
+ ___kmalloc_large_node+0xd8/0x110 mm/slub.c:4317
+ __kmalloc_large_node_noprof+0x18/0xe0 mm/slub.c:4348
+ __do_kmalloc_node mm/slub.c:4364 [inline]
+ __kmalloc_noprof+0x3d4/0x4b0 mm/slub.c:4388
+ kmalloc_noprof include/linux/slab.h:909 [inline]
+ kmalloc_array_noprof include/linux/slab.h:948 [inline]
+ xe_exec_ioctl+0xa47/0x1e70 drivers/gpu/drm/xe/xe_exec.c:158
+ drm_ioctl_kernel+0x1f1/0x3e0 drivers/gpu/drm/drm_ioctl.c:797
+ drm_ioctl+0x5e7/0xc50 drivers/gpu/drm/drm_ioctl.c:894
+ xe_drm_ioctl+0x10b/0x170 drivers/gpu/drm/xe/xe_device.c:224
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:598 [inline]
+ __se_sys_ioctl fs/ioctl.c:584 [inline]
+ __x64_sys_ioctl+0x18b/0x210 fs/ioctl.c:584
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xbb/0x380 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+...
+"
+
+v2: Add "Reported-by" and Cc stable kernels.
+v3: Change XE_MAX_SYNCS from 64 to 1024. (Matt & Ashutosh)
+v4: s/XE_MAX_SYNCS/DRM_XE_MAX_SYNCS/ (Matt)
+v5: Do the check at the top of the exec func. (Matt)
+
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Reported-by: Koen Koning <koen.koning@intel.com>
+Reported-by: Peter Senna Tschudin <peter.senna@linux.intel.com>
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/6450
+Cc: <stable@vger.kernel.org> # v6.12+
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Michal Mrozek <michal.mrozek@intel.com>
+Cc: Carl Zhang <carl.zhang@intel.com>
+Cc: José Roberto de Souza <jose.souza@intel.com>
+Cc: Lionel Landwerlin <lionel.g.landwerlin@intel.com>
+Cc: Ivan Briano <ivan.briano@intel.com>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Cc: Ashutosh Dixit <ashutosh.dixit@intel.com>
+Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patch.msgid.link/20251205234715.2476561-5-shuicheng.lin@intel.com
+(cherry picked from commit b07bac9bd708ec468cd1b8a5fe70ae2ac9b0a11c)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Stable-dep-of: f8dd66bfb4e1 ("drm/xe/oa: Limit num_syncs to prevent oversized allocations")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/rnbd/rnbd-clt.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/xe/xe_exec.c | 3 ++-
+ drivers/gpu/drm/xe/xe_vm.c   | 3 +++
+ include/uapi/drm/xe_drm.h    | 1 +
+ 3 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/rnbd/rnbd-clt.c b/drivers/block/rnbd/rnbd-clt.c
-index f1409e54010a..d1c354636315 100644
---- a/drivers/block/rnbd/rnbd-clt.c
-+++ b/drivers/block/rnbd/rnbd-clt.c
-@@ -1423,9 +1423,11 @@ static struct rnbd_clt_dev *init_dev(struct rnbd_clt_session *sess,
- 		goto out_alloc;
- 	}
+diff --git a/drivers/gpu/drm/xe/xe_exec.c b/drivers/gpu/drm/xe/xe_exec.c
+index a8ab363a8046..ca85f7c15fab 100644
+--- a/drivers/gpu/drm/xe/xe_exec.c
++++ b/drivers/gpu/drm/xe/xe_exec.c
+@@ -130,7 +130,8 @@ int xe_exec_ioctl(struct drm_device *dev, void *data, struct drm_file *file)
  
--	ret = ida_alloc_max(&index_ida, (1 << (MINORBITS - RNBD_PART_BITS)) - 1,
--			    GFP_KERNEL);
--	if (ret < 0) {
-+	dev->clt_device_id = ida_alloc_max(&index_ida,
-+					   (1 << (MINORBITS - RNBD_PART_BITS)) - 1,
-+					   GFP_KERNEL);
-+	if (dev->clt_device_id < 0) {
-+		ret = dev->clt_device_id;
- 		pr_err("Failed to initialize device '%s' from session %s, allocating idr failed, err: %d\n",
- 		       pathname, sess->sessname, ret);
- 		goto out_queues;
-@@ -1434,10 +1436,9 @@ static struct rnbd_clt_dev *init_dev(struct rnbd_clt_session *sess,
- 	dev->pathname = kstrdup(pathname, GFP_KERNEL);
- 	if (!dev->pathname) {
- 		ret = -ENOMEM;
--		goto out_queues;
-+		goto out_ida;
- 	}
+ 	if (XE_IOCTL_DBG(xe, args->extensions) ||
+ 	    XE_IOCTL_DBG(xe, args->pad[0] || args->pad[1] || args->pad[2]) ||
+-	    XE_IOCTL_DBG(xe, args->reserved[0] || args->reserved[1]))
++	    XE_IOCTL_DBG(xe, args->reserved[0] || args->reserved[1]) ||
++	    XE_IOCTL_DBG(xe, args->num_syncs > DRM_XE_MAX_SYNCS))
+ 		return -EINVAL;
  
--	dev->clt_device_id	= ret;
- 	dev->sess		= sess;
- 	dev->access_mode	= access_mode;
- 	dev->nr_poll_queues	= nr_poll_queues;
-@@ -1453,6 +1454,8 @@ static struct rnbd_clt_dev *init_dev(struct rnbd_clt_session *sess,
+ 	q = xe_exec_queue_lookup(xef, args->exec_queue_id);
+diff --git a/drivers/gpu/drm/xe/xe_vm.c b/drivers/gpu/drm/xe/xe_vm.c
+index cdd1dc540a59..f0f699baa9f6 100644
+--- a/drivers/gpu/drm/xe/xe_vm.c
++++ b/drivers/gpu/drm/xe/xe_vm.c
+@@ -3282,6 +3282,9 @@ static int vm_bind_ioctl_check_args(struct xe_device *xe, struct xe_vm *vm,
+ 	if (XE_IOCTL_DBG(xe, args->extensions))
+ 		return -EINVAL;
  
- 	return dev;
++	if (XE_IOCTL_DBG(xe, args->num_syncs > DRM_XE_MAX_SYNCS))
++		return -EINVAL;
++
+ 	if (args->num_binds > 1) {
+ 		u64 __user *bind_user =
+ 			u64_to_user_ptr(args->vector_of_binds);
+diff --git a/include/uapi/drm/xe_drm.h b/include/uapi/drm/xe_drm.h
+index 517489a7ec60..400555a8af18 100644
+--- a/include/uapi/drm/xe_drm.h
++++ b/include/uapi/drm/xe_drm.h
+@@ -1459,6 +1459,7 @@ struct drm_xe_exec {
+ 	/** @exec_queue_id: Exec queue ID for the batch buffer */
+ 	__u32 exec_queue_id;
  
-+out_ida:
-+	ida_free(&index_ida, dev->clt_device_id);
- out_queues:
- 	kfree(dev->hw_queues);
- out_alloc:
++#define DRM_XE_MAX_SYNCS 1024
+ 	/** @num_syncs: Amount of struct drm_xe_sync in array. */
+ 	__u32 num_syncs;
+ 
 -- 
 2.51.0
 
