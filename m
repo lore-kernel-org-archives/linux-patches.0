@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DADD832FA29;
-	Mon, 29 Dec 2025 16:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4758132FA29;
+	Mon, 29 Dec 2025 16:17:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025031; cv=none; b=JEB72jWH0mi7ef0iOhdvGbESwjCXATuapQJGrko9MV9jXhcp6ZvOBKF4Fakp5N6Ul8V6Orcu1WOPJShKRDjXzsOLokbLLbZjyky0cIJ69YmgnlpqhHxQHTDxaYJwB1YWo5hOvCRuDeOp0rQpRDJw06Z4sjinNPbvU/kQEnWydiA=
+	t=1767025033; cv=none; b=Ix64kHPx2eB+ZQxRWEjdl5xXSXrc5lP4QJwty8geI+yUf8dVqE+7IXAQMqgYDaueWhBq7HwNjdGP/Jg2BlALMbfS10pJt515bqJG1EoJEUmt+Oj3qas7CJRHTmKKEQ1li5FT9uWpjInCU89nvIATGD59GZS6lnZhimDgDsWAenA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025031; c=relaxed/simple;
-	bh=nvxt9PgqGKu8kDw2oWFhAQRFYKSlNZ+azB63whdz8BI=;
+	s=arc-20240116; t=1767025033; c=relaxed/simple;
+	bh=iqq2mI2VJE8clUR0dTk40jlFsryT4oHKerrBsBsyj70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qka9Lmz+yVfDEMUcNopcAsToNplQmBYsQkZWmAWy0Fl2KVoNfEt3YKN02Ns3gmzklpLprHba8La42+LGfFtgaocoDB1rPJa38BJvauU2ArVmKDL4ZbWO8kkgL+dSlrMqMLFqP2ur5mvrZOgXWDKF/JzLs1m3ez4VeKIT9OAL1EA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sfIgrix/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EX7IRV8e0PYZD3n0Zkl4Ye/bANieAUSzncHW3hauKc2+NjpkL7yFIYboN91NwTZK5v97mjy6Ec0tQJIGQTR48daZ3HUO+t8uhmkY/GWUUy76SllIg6aWlhFe34VTV527V+CvTLDa/px8zXQWnVA5HklMBwYts4SvHoFPe7Glh8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+YmQGIu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sfIgrix/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 047CEC4CEF7;
-	Mon, 29 Dec 2025 16:17:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+YmQGIu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C348FC4CEF7;
+	Mon, 29 Dec 2025 16:17:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025030;
-	bh=nvxt9PgqGKu8kDw2oWFhAQRFYKSlNZ+azB63whdz8BI=;
+	s=korg; t=1767025033;
+	bh=iqq2mI2VJE8clUR0dTk40jlFsryT4oHKerrBsBsyj70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sfIgrix/A9F97o5ItpMlHl3VAtUzt+FJiVnA1N3wyt6N3th+Oog53PfxWYiSP5HA0
-	 NM2Fkngq4tTDDWSouM96Mh8QkjA+kJ7Ye2tSUoHouACdzpo3aVwoFMbPu4YBoXCCe3
-	 Q75wvO7BAOrS5NxdAGU+/H1oPvbXlNVQfzHdEj8E=
+	b=m+YmQGIuopFL1k2kd4qXstqlC9kVhObvgnApwRkmxuhqOJ+M8wlkk1fMs7jgWMwc8
+	 8VgG5lbg3kXIGkffKwFA5NWywNovy0zoXvmPjF/jaPLxclXPE6YjPkNQjxNZqdCE8E
+	 k0KppffpfmPd2TNbpdDxgmo8CmBXu8pO6RhWpxuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junvy Yang <zhuque@tencent.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 070/430] net: openvswitch: fix middle attribute validation in push_nsh() action
-Date: Mon, 29 Dec 2025 17:07:52 +0100
-Message-ID: <20251229160726.941644777@linuxfoundation.org>
+Subject: [PATCH 6.18 071/430] net: ti: icssg-prueth: add PTP_1588_CLOCK_OPTIONAL dependency
+Date: Mon, 29 Dec 2025 17:07:53 +0100
+Message-ID: <20251229160726.979456134@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -53,109 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 5ace7ef87f059d68b5f50837ef3e8a1a4870c36e ]
+[ Upstream commit 9e7477a427449a8a3cd00c188e20a880e3d94638 ]
 
-The push_nsh() action structure looks like this:
+The new icssg-prueth driver needs the same dependency as the other parts
+that use the ptp-1588:
 
- OVS_ACTION_ATTR_PUSH_NSH(OVS_KEY_ATTR_NSH(OVS_NSH_KEY_ATTR_BASE,...))
+WARNING: unmet direct dependencies detected for TI_ICSS_IEP
+  Depends on [m]: NETDEVICES [=y] && ETHERNET [=y] && NET_VENDOR_TI [=y] && PTP_1588_CLOCK_OPTIONAL [=m] && TI_PRUSS [=y]
+  Selected by [y]:
+  - TI_PRUETH [=y] && NETDEVICES [=y] && ETHERNET [=y] && NET_VENDOR_TI [=y] && PRU_REMOTEPROC [=y] && NET_SWITCHDEV [=y]
 
-The outermost OVS_ACTION_ATTR_PUSH_NSH attribute is OK'ed by the
-nla_for_each_nested() inside __ovs_nla_copy_actions().  The innermost
-OVS_NSH_KEY_ATTR_BASE/MD1/MD2 are OK'ed by the nla_for_each_nested()
-inside nsh_key_put_from_nlattr().  But nothing checks if the attribute
-in the middle is OK.  We don't even check that this attribute is the
-OVS_KEY_ATTR_NSH.  We just do a double unwrap with a pair of nla_data()
-calls - first time directly while calling validate_push_nsh() and the
-second time as part of the nla_for_each_nested() macro, which isn't
-safe, potentially causing invalid memory access if the size of this
-attribute is incorrect.  The failure may not be noticed during
-validation due to larger netlink buffer, but cause trouble later during
-action execution where the buffer is allocated exactly to the size:
+Add the correct dependency on the two drivers missing it, and remove
+the pointless 'imply' in the process.
 
- BUG: KASAN: slab-out-of-bounds in nsh_hdr_from_nlattr+0x1dd/0x6a0 [openvswitch]
- Read of size 184 at addr ffff88816459a634 by task a.out/22624
-
- CPU: 8 UID: 0 PID: 22624 6.18.0-rc7+ #115 PREEMPT(voluntary)
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0x51/0x70
-  print_address_description.constprop.0+0x2c/0x390
-  kasan_report+0xdd/0x110
-  kasan_check_range+0x35/0x1b0
-  __asan_memcpy+0x20/0x60
-  nsh_hdr_from_nlattr+0x1dd/0x6a0 [openvswitch]
-  push_nsh+0x82/0x120 [openvswitch]
-  do_execute_actions+0x1405/0x2840 [openvswitch]
-  ovs_execute_actions+0xd5/0x3b0 [openvswitch]
-  ovs_packet_cmd_execute+0x949/0xdb0 [openvswitch]
-  genl_family_rcv_msg_doit+0x1d6/0x2b0
-  genl_family_rcv_msg+0x336/0x580
-  genl_rcv_msg+0x9f/0x130
-  netlink_rcv_skb+0x11f/0x370
-  genl_rcv+0x24/0x40
-  netlink_unicast+0x73e/0xaa0
-  netlink_sendmsg+0x744/0xbf0
-  __sys_sendto+0x3d6/0x450
-  do_syscall_64+0x79/0x2c0
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-  </TASK>
-
-Let's add some checks that the attribute is properly sized and it's
-the only one attribute inside the action.  Technically, there is no
-real reason for OVS_KEY_ATTR_NSH to be there, as we know that we're
-pushing an NSH header already, it just creates extra nesting, but
-that's how uAPI works today.  So, keeping as it is.
-
-Fixes: b2d0f5d5dc53 ("openvswitch: enable NSH support")
-Reported-by: Junvy Yang <zhuque@tencent.com>
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Acked-by: Eelco Chaudron echaudro@redhat.com
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20251204105334.900379-1-i.maximets@ovn.org
+Fixes: e654b85a693e ("net: ti: icssg-prueth: Add ICSSG Ethernet driver for AM65x SR1.0 platforms")
+Fixes: 511f6c1ae093 ("net: ti: icssm-prueth: Adds ICSSM Ethernet driver")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20251204100138.1034175-1-arnd@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/flow_netlink.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/ti/Kconfig | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/openvswitch/flow_netlink.c b/net/openvswitch/flow_netlink.c
-index 1cb4f97335d87..2d536901309ea 100644
---- a/net/openvswitch/flow_netlink.c
-+++ b/net/openvswitch/flow_netlink.c
-@@ -2802,13 +2802,20 @@ static int validate_and_copy_set_tun(const struct nlattr *attr,
- 	return err;
- }
- 
--static bool validate_push_nsh(const struct nlattr *attr, bool log)
-+static bool validate_push_nsh(const struct nlattr *a, bool log)
- {
-+	struct nlattr *nsh_key = nla_data(a);
- 	struct sw_flow_match match;
- 	struct sw_flow_key key;
- 
-+	/* There must be one and only one NSH header. */
-+	if (!nla_ok(nsh_key, nla_len(a)) ||
-+	    nla_total_size(nla_len(nsh_key)) != nla_len(a) ||
-+	    nla_type(nsh_key) != OVS_KEY_ATTR_NSH)
-+		return false;
-+
- 	ovs_match_init(&match, &key, true, NULL);
--	return !nsh_key_put_from_nlattr(attr, &match, false, true, log);
-+	return !nsh_key_put_from_nlattr(nsh_key, &match, false, true, log);
- }
- 
- /* Return false if there are any non-masked bits set.
-@@ -3389,7 +3396,7 @@ static int __ovs_nla_copy_actions(struct net *net, const struct nlattr *attr,
- 					return -EINVAL;
- 			}
- 			mac_proto = MAC_PROTO_NONE;
--			if (!validate_push_nsh(nla_data(a), log))
-+			if (!validate_push_nsh(a, log))
- 				return -EINVAL;
- 			break;
- 
+diff --git a/drivers/net/ethernet/ti/Kconfig b/drivers/net/ethernet/ti/Kconfig
+index a54d71155263c..fe5b2926d8ab0 100644
+--- a/drivers/net/ethernet/ti/Kconfig
++++ b/drivers/net/ethernet/ti/Kconfig
+@@ -209,6 +209,7 @@ config TI_ICSSG_PRUETH_SR1
+ 	depends on PRU_REMOTEPROC
+ 	depends on NET_SWITCHDEV
+ 	depends on ARCH_K3 && OF && TI_K3_UDMA_GLUE_LAYER
++	depends on PTP_1588_CLOCK_OPTIONAL
+ 	help
+ 	  Support dual Gigabit Ethernet ports over the ICSSG PRU Subsystem.
+ 	  This subsystem is available on the AM65 SR1.0 platform.
+@@ -234,7 +235,7 @@ config TI_PRUETH
+ 	depends on PRU_REMOTEPROC
+ 	depends on NET_SWITCHDEV
+ 	select TI_ICSS_IEP
+-	imply PTP_1588_CLOCK
++	depends on PTP_1588_CLOCK_OPTIONAL
+ 	help
+ 	  Some TI SoCs has Programmable Realtime Unit (PRU) cores which can
+ 	  support Single or Dual Ethernet ports with the help of firmware code
 -- 
 2.51.0
 
