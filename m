@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FCC2273803;
-	Mon, 29 Dec 2025 16:23:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6DF23D2B2;
+	Mon, 29 Dec 2025 16:23:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025418; cv=none; b=U/WYIxvbas/ltGD0Mz9dSWKjBz+nEyVT9NanbqJU0uterVDVMwaRUOeR8c63SWiH7crSI2TRr12onn+swDTi3RCQL9l3vfEMft5prInoLGbBLmAP3IDHKd3LZEzULAYL8x+R5REaPGBjWF5W8kXhyRalao6SLWwb6d6nzzISMgw=
+	t=1767025421; cv=none; b=KSmNnL3y6J82xYVBEOzECT0CpRS/4j/kXInX7dXuNLEzGARKMrrK1VNKtcReZTiCpCC4UIwjkvx7PMSO3yISkS35s7MGxC5AnF91Q1ZsiLscViv3C9Ym6cbNC3V4DmBGW5EbjuxrTepsMC1sSfw+JES5lS84CjC2DjqtF+hufS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025418; c=relaxed/simple;
-	bh=mFhm04rm2wys4ht9LxWBLLpcVSLlVFYyJcN9FGXGY2o=;
+	s=arc-20240116; t=1767025421; c=relaxed/simple;
+	bh=mgs4DOMN8w/1SW9mtg7brCjDdhXUPH1T58SO1wFyNMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KEQRK1wO8XeVX8TQ4J2BiEOL5Cv4/G/MGie8hsC4kJ0bDVLi0ITkW1oVf50wvELFuiSWC4ok5kicmSLbVV/WU18rIWQvGiJLt7gX4QXpC4xXLxpuP7OOFfbcsOlXNCRwGyywmcg3xv1jHz7wmZtBlLB3wcaSf/cpAKCwzbZL6TI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aHJQ+cLM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b6tvBIP3WVUdAIk7TPIqsyTIJ5/FyTpCHbA2nFJUKZy8FW+qqWh9jx0K/TWPWMlHZBxQMS/ulQLypeYN7/5idFVx78mhD2Mfluhr6LpUkHwhCw4STCbGrfT7PsWrrBSm2KnpQE255V7LZ1sK8niiR0yHOL0jOe2bl8Jm3Xv7wqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MEICeRr7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aHJQ+cLM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA638C116C6;
-	Mon, 29 Dec 2025 16:23:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MEICeRr7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91128C4CEF7;
+	Mon, 29 Dec 2025 16:23:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025418;
-	bh=mFhm04rm2wys4ht9LxWBLLpcVSLlVFYyJcN9FGXGY2o=;
+	s=korg; t=1767025420;
+	bh=mgs4DOMN8w/1SW9mtg7brCjDdhXUPH1T58SO1wFyNMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aHJQ+cLMmPvBW9MCvxJbLrIUdTnuJJzT/UuTz1C2T/+kq1+23WEiG2idVn7da9lpF
-	 saKsaiL0HQjXBsgn60mvqlkwN1CqObqrNHLIcFUY+4HM5ydZb9a87KXdSf9yLH1Ufb
-	 LMCiFeTfMrCONh1I+/UJgCMbdSIKFl/EwtGP0IuU=
+	b=MEICeRr7WUvvipfZ5F6VR6HIkKoNFiTEqPHRbIdvOK0nGPsVJGMs+NhTqqKtmAWqu
+	 AcIXGYyApLi4K2IPnt4r9cdbu+jKMFJfmh472U0NiCv+qt/qpNhkrfDTriGmv14Oev
+	 Z4c8Zn4N++HjkCDSUhBdxVNm8lkcT+DYQOLWNIbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+099461f8558eb0a1f4f3@syzkaller.appspotmail.com,
-	Shardul Bankar <shardul.b@mpiricsoftware.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Shuming Fan <shumingf@realtek.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 173/430] nfsd: fix memory leak in nfsd_create_serv error paths
-Date: Mon, 29 Dec 2025 17:09:35 +0100
-Message-ID: <20251229160730.727928821@linuxfoundation.org>
+Subject: [PATCH 6.18 174/430] ASoC: SDCA: support Q7.8 volume format
+Date: Mon, 29 Dec 2025 17:09:36 +0100
+Message-ID: <20251229160730.764474975@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -53,61 +52,216 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shardul Bankar <shardul.b@mpiricsoftware.com>
+From: Shuming Fan <shumingf@realtek.com>
 
-[ Upstream commit df8d829bba3adcf3cc744c01d933b6fd7cf06e91 ]
+[ Upstream commit 1b0f3f9ee41ee2bdd206667f85ea2aa36dfe6e69 ]
 
-When nfsd_create_serv() calls percpu_ref_init() to initialize
-nn->nfsd_net_ref, it allocates both a percpu reference counter
-and a percpu_ref_data structure (64 bytes). However, if the
-function fails later due to svc_create_pooled() returning NULL
-or svc_bind() returning an error, these allocations are not
-cleaned up, resulting in a memory leak.
+The SDCA specification uses Q7.8 volume format.
+This patch adds a field to indicate whether it is SDCA volume control
+and supports the volume settings.
 
-The leak manifests as:
-- Unreferenced percpu allocation (8 bytes per CPU)
-- Unreferenced percpu_ref_data structure (64 bytes)
-
-Fix this by adding percpu_ref_exit() calls in both error paths
-to properly clean up the percpu_ref_init() allocations.
-
-This patch fixes the percpu_ref leak in nfsd_create_serv() seen
-as an auxiliary leak in syzbot report 099461f8558eb0a1f4f3; the
-prepare_creds() and vsock-related leaks in the same report
-remain to be addressed separately.
-
-Reported-by: syzbot+099461f8558eb0a1f4f3@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?extid=099461f8558eb0a1f4f3
-Fixes: 47e988147f40 ("nfsd: add nfsd_serv_try_get and nfsd_serv_put")
-Signed-off-by: Shardul Bankar <shardul.b@mpiricsoftware.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Shuming Fan <shumingf@realtek.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20251106093335.1363237-1-shumingf@realtek.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 095d62114182 ("ASoC: ops: fix snd_soc_get_volsw for sx controls")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfssvc.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/sound/soc.h        |  1 +
+ sound/soc/sdca/sdca_asoc.c | 34 ++++++---------------
+ sound/soc/soc-ops.c        | 62 +++++++++++++++++++++++++++++++-------
+ 3 files changed, 61 insertions(+), 36 deletions(-)
 
-diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
-index 7057ddd7a0a8..32cc03a7e7be 100644
---- a/fs/nfsd/nfssvc.c
-+++ b/fs/nfsd/nfssvc.c
-@@ -633,12 +633,15 @@ int nfsd_create_serv(struct net *net)
- 	serv = svc_create_pooled(nfsd_programs, ARRAY_SIZE(nfsd_programs),
- 				 &nn->nfsd_svcstats,
- 				 nfsd_max_blksize, nfsd);
--	if (serv == NULL)
-+	if (serv == NULL) {
-+		percpu_ref_exit(&nn->nfsd_net_ref);
- 		return -ENOMEM;
-+	}
+diff --git a/include/sound/soc.h b/include/sound/soc.h
+index ddc508ff7b9b..a9c058b06ab4 100644
+--- a/include/sound/soc.h
++++ b/include/sound/soc.h
+@@ -1225,6 +1225,7 @@ struct soc_mixer_control {
+ 	unsigned int sign_bit;
+ 	unsigned int invert:1;
+ 	unsigned int autodisable:1;
++	unsigned int sdca_q78:1;
+ #ifdef CONFIG_SND_SOC_TOPOLOGY
+ 	struct snd_soc_dobj dobj;
+ #endif
+diff --git a/sound/soc/sdca/sdca_asoc.c b/sound/soc/sdca/sdca_asoc.c
+index c493ec530cc5..892b7c028fae 100644
+--- a/sound/soc/sdca/sdca_asoc.c
++++ b/sound/soc/sdca/sdca_asoc.c
+@@ -795,7 +795,6 @@ static int control_limit_kctl(struct device *dev,
+ 	struct sdca_control_range *range;
+ 	int min, max, step;
+ 	unsigned int *tlv;
+-	int shift;
  
- 	error = svc_bind(serv, net);
- 	if (error < 0) {
- 		svc_destroy(&serv);
-+		percpu_ref_exit(&nn->nfsd_net_ref);
- 		return error;
+ 	if (control->type != SDCA_CTL_DATATYPE_Q7P8DB)
+ 		return 0;
+@@ -814,37 +813,22 @@ static int control_limit_kctl(struct device *dev,
+ 	min = sign_extend32(min, control->nbits - 1);
+ 	max = sign_extend32(max, control->nbits - 1);
+ 
+-	/*
+-	 * FIXME: Only support power of 2 step sizes as this can be supported
+-	 * by a simple shift.
+-	 */
+-	if (hweight32(step) != 1) {
+-		dev_err(dev, "%s: %s: currently unsupported step size\n",
+-			entity->label, control->label);
+-		return -EINVAL;
+-	}
+-
+-	/*
+-	 * The SDCA volumes are in steps of 1/256th of a dB, a step down of
+-	 * 64 (shift of 6) gives 1/4dB. 1/4dB is the smallest unit that is also
+-	 * representable in the ALSA TLVs which are in 1/100ths of a dB.
+-	 */
+-	shift = max(ffs(step) - 1, 6);
+-
+ 	tlv = devm_kcalloc(dev, 4, sizeof(*tlv), GFP_KERNEL);
+ 	if (!tlv)
+ 		return -ENOMEM;
+ 
+-	tlv[0] = SNDRV_CTL_TLVT_DB_SCALE;
++	tlv[0] = SNDRV_CTL_TLVT_DB_MINMAX;
+ 	tlv[1] = 2 * sizeof(*tlv);
+ 	tlv[2] = (min * 100) >> 8;
+-	tlv[3] = ((1 << shift) * 100) >> 8;
++	tlv[3] = (max * 100) >> 8;
++
++	step = (step * 100) >> 8;
+ 
+-	mc->min = min >> shift;
+-	mc->max = max >> shift;
+-	mc->shift = shift;
+-	mc->rshift = shift;
+-	mc->sign_bit = 15 - shift;
++	mc->min = ((int)tlv[2] / step);
++	mc->max = ((int)tlv[3] / step);
++	mc->shift = step;
++	mc->sign_bit = 15;
++	mc->sdca_q78 = 1;
+ 
+ 	kctl->tlv.p = tlv;
+ 	kctl->access |= SNDRV_CTL_ELEM_ACCESS_TLV_READ;
+diff --git a/sound/soc/soc-ops.c b/sound/soc/soc-ops.c
+index d2b6fb8e0b6c..ce86978c158d 100644
+--- a/sound/soc/soc-ops.c
++++ b/sound/soc/soc-ops.c
+@@ -110,6 +110,36 @@ int snd_soc_put_enum_double(struct snd_kcontrol *kcontrol,
+ }
+ EXPORT_SYMBOL_GPL(snd_soc_put_enum_double);
+ 
++static int sdca_soc_q78_reg_to_ctl(struct soc_mixer_control *mc, unsigned int reg_val,
++				unsigned int mask, unsigned int shift, int max)
++{
++	int val = reg_val;
++
++	if (WARN_ON(!mc->shift))
++		return -EINVAL;
++
++	val = sign_extend32(val, mc->sign_bit);
++	val = (((val * 100) >> 8) / (int)mc->shift);
++	val -= mc->min;
++
++	return val & mask;
++}
++
++static unsigned int sdca_soc_q78_ctl_to_reg(struct soc_mixer_control *mc, int val,
++					 unsigned int mask, unsigned int shift, int max)
++{
++	unsigned int ret_val;
++	int reg_val;
++
++	if (WARN_ON(!mc->shift))
++		return -EINVAL;
++
++	reg_val = val + mc->min;
++	ret_val = (int)((reg_val * mc->shift) << 8) / 100;
++
++	return ret_val & mask;
++}
++
+ static int soc_mixer_reg_to_ctl(struct soc_mixer_control *mc, unsigned int reg_val,
+ 				unsigned int mask, unsigned int shift, int max)
+ {
+@@ -197,19 +227,27 @@ static int soc_put_volsw(struct snd_kcontrol *kcontrol,
+ 			 struct snd_ctl_elem_value *ucontrol,
+ 			 struct soc_mixer_control *mc, int mask, int max)
+ {
++	unsigned int (*ctl_to_reg)(struct soc_mixer_control *, int, unsigned int, unsigned int, int);
+ 	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
+ 	unsigned int val1, val_mask;
+ 	unsigned int val2 = 0;
+ 	bool double_r = false;
+ 	int ret;
+ 
++	if (mc->sdca_q78) {
++		ctl_to_reg = sdca_soc_q78_ctl_to_reg;
++		val_mask = mask;
++	} else {
++		ctl_to_reg = soc_mixer_ctl_to_reg;
++		val_mask = mask << mc->shift;
++	}
++
+ 	ret = soc_mixer_valid_ctl(mc, ucontrol->value.integer.value[0], max);
+ 	if (ret)
+ 		return ret;
+ 
+-	val1 = soc_mixer_ctl_to_reg(mc, ucontrol->value.integer.value[0],
++	val1 = ctl_to_reg(mc, ucontrol->value.integer.value[0],
+ 				    mask, mc->shift, max);
+-	val_mask = mask << mc->shift;
+ 
+ 	if (snd_soc_volsw_is_stereo(mc)) {
+ 		ret = soc_mixer_valid_ctl(mc, ucontrol->value.integer.value[1], max);
+@@ -217,14 +255,10 @@ static int soc_put_volsw(struct snd_kcontrol *kcontrol,
+ 			return ret;
+ 
+ 		if (mc->reg == mc->rreg) {
+-			val1 |= soc_mixer_ctl_to_reg(mc,
+-						     ucontrol->value.integer.value[1],
+-						     mask, mc->rshift, max);
++			val1 |= ctl_to_reg(mc, ucontrol->value.integer.value[1], mask, mc->rshift, max);
+ 			val_mask |= mask << mc->rshift;
+ 		} else {
+-			val2 = soc_mixer_ctl_to_reg(mc,
+-						    ucontrol->value.integer.value[1],
+-						    mask, mc->shift, max);
++			val2 = ctl_to_reg(mc, ucontrol->value.integer.value[1], mask, mc->shift, max);
+ 			double_r = true;
+ 		}
  	}
- 	spin_lock(&nfsd_notifier_lock);
+@@ -248,21 +282,27 @@ static int soc_get_volsw(struct snd_kcontrol *kcontrol,
+ 			 struct snd_ctl_elem_value *ucontrol,
+ 			 struct soc_mixer_control *mc, int mask, int max)
+ {
++	int (*reg_to_ctl)(struct soc_mixer_control *, unsigned int, unsigned int, unsigned int, int);
+ 	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
+ 	unsigned int reg_val;
+ 	int val;
+ 
++	if (mc->sdca_q78)
++		reg_to_ctl = sdca_soc_q78_reg_to_ctl;
++	else
++		reg_to_ctl = soc_mixer_reg_to_ctl;
++
+ 	reg_val = snd_soc_component_read(component, mc->reg);
+-	val = soc_mixer_reg_to_ctl(mc, reg_val, mask, mc->shift, max);
++	val = reg_to_ctl(mc, reg_val, mask, mc->shift, max);
+ 
+ 	ucontrol->value.integer.value[0] = val;
+ 
+ 	if (snd_soc_volsw_is_stereo(mc)) {
+ 		if (mc->reg == mc->rreg) {
+-			val = soc_mixer_reg_to_ctl(mc, reg_val, mask, mc->rshift, max);
++			val = reg_to_ctl(mc, reg_val, mask, mc->rshift, max);
+ 		} else {
+ 			reg_val = snd_soc_component_read(component, mc->rreg);
+-			val = soc_mixer_reg_to_ctl(mc, reg_val, mask, mc->shift, max);
++			val = reg_to_ctl(mc, reg_val, mask, mc->shift, max);
+ 		}
+ 
+ 		ucontrol->value.integer.value[1] = val;
 -- 
 2.51.0
 
