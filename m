@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 321DA330332;
-	Mon, 29 Dec 2025 16:15:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 139BB32FA16;
+	Mon, 29 Dec 2025 16:15:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767024951; cv=none; b=gt28JhmmFBis3OZIS6+uUJ35umAmTTibS7cVsBbDwlxsyFBUTu3ee0/CXwi9Sa+c+VY5AKh5l/10Llu0Z1Kx9mX85uaM/xMmRyQZnVizxgHSuerhO1waQAM1SkGuroNGUceIttrPvZsPuHCjTHLVu2mpvtPt5xDDECYjPoElFBU=
+	t=1767024954; cv=none; b=MykzZ7DYZji6DLjfNEMPoCowiNKkezaFQ6XWyhsklEjR1ljTyzYMc4p+d/+/C8miO4VJrEEo4NokMZyP9H2gOh4SSPlp5KQxCrVovAOeSYKO7iuM5zBInVchyWgSE5k/8UhQ257lCyKffDu9+Pi/qTRGZbo4jjHzGm3WJkGrvqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767024951; c=relaxed/simple;
-	bh=FN/oP63bEJeSbNMODkH1oVbu8omN075BSqVQZgssMNk=;
+	s=arc-20240116; t=1767024954; c=relaxed/simple;
+	bh=J6jwGLL+gsQYZwTSvwd0ou2ws7ZUMau+M9PgO8f0NR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JYMXyMtI+tFlQbf8oT3NIzBqVnjJAEPsgIiYcEgu+ReEtEcnxVtPy3QdyZQPxUNEloD8Lxp8RWBSmYxbAI5tx7a08xdlx++XObJrznPSZ52dx0DN+M8fjYQG5jBIq2ozXTsCZefR5hqc0Wz74YS+x97OXQqisYaUxjMLIb1Zf8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qF7jLNjO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JbHiPhiJv7uDtApX3pyu0YiZZI9qTq5CuC5q52lsz7M85B9FWLfJUAZgBuiy1vNrvvU2b13BuNSr/C6G4vftGlz7gNILOvwLJWEIRB/EnxIZtXlKlGsBLj1SoIgisa7KcmUlzEOQEjabi9cmS7waVSJokL9Fz5w/2m32YMerPGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Vd26iyI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qF7jLNjO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC1F0C4CEF7;
-	Mon, 29 Dec 2025 16:15:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Vd26iyI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70D7AC4CEF7;
+	Mon, 29 Dec 2025 16:15:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767024951;
-	bh=FN/oP63bEJeSbNMODkH1oVbu8omN075BSqVQZgssMNk=;
+	s=korg; t=1767024953;
+	bh=J6jwGLL+gsQYZwTSvwd0ou2ws7ZUMau+M9PgO8f0NR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qF7jLNjO+8wauqp4s3GRvYPsIncWpTdR60jgeUZaee50QadbmEKEWVSn05qPqL2OQ
-	 I0+QoYfEMR5TPwA4A5PDU6hk5ae+EPaP+haVYiPN/Sc9kLoVT4z5KTs6jmajOyH/d7
-	 PImhPT79v0HVdbahDHsbt2aHhtw5ivU6mn9Zn91U=
+	b=1Vd26iyIUZfu4XvaWe2QGtiphmSWpicQM5Qskgs54+5qJwrKghT3gx3BFh0QX5eV5
+	 kroZsaApvAC6/LxUFX6ztDZv54ZKCUxp3wGtleYnjeuYbB6ehhKlDuIIzVA0zdZ36C
+	 Z9w8jm+VYRjhfA9EjlC6vJZ/TAH6drgn7hkt/Oyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Liu <song@kernel.org>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Petr Mladek <pmladek@suse.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 024/430] livepatch: Match old_sympos 0 and 1 in klp_find_func()
-Date: Mon, 29 Dec 2025 17:07:06 +0100
-Message-ID: <20251229160725.048134773@linuxfoundation.org>
+Subject: [PATCH 6.18 042/430] gfs2: Fix "gfs2: Switch to wait_event in gfs2_quotad"
+Date: Mon, 29 Dec 2025 17:07:24 +0100
+Message-ID: <20251229160725.914881936@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -52,86 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Song Liu <song@kernel.org>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 139560e8b973402140cafeb68c656c1374bd4c20 ]
+[ Upstream commit dff1fb6d8b7abe5b1119fa060f5d6b3370bf10ac ]
 
-When there is only one function of the same name, old_sympos of 0 and 1
-are logically identical. Match them in klp_find_func().
+Commit e4a8b5481c59a ("gfs2: Switch to wait_event in gfs2_quotad") broke
+cyclic statfs syncing, so the numbers reported by "df" could easily get
+completely out of sync with reality.  Fix this by reverting part of
+commit e4a8b5481c59a for now.
 
-This is to avoid a corner case with different toolchain behavior.
+A follow-up commit will clean this code up later.
 
-In this specific issue, two versions of kpatch-build were used to
-build livepatch for the same kernel. One assigns old_sympos == 0 for
-unique local functions, the other assigns old_sympos == 1 for unique
-local functions. Both versions work fine by themselves. (PS: This
-behavior change was introduced in a downstream version of kpatch-build.
-This change does not exist in upstream kpatch-build.)
-
-However, during livepatch upgrade (with the replace flag set) from a
-patch built with one version of kpatch-build to the same fix built with
-the other version of kpatch-build, livepatching fails with errors like:
-
-[   14.218706] sysfs: cannot create duplicate filename 'xxx/somefunc,1'
-...
-[   14.219466] Call Trace:
-[   14.219468]  <TASK>
-[   14.219469]  dump_stack_lvl+0x47/0x60
-[   14.219474]  sysfs_warn_dup.cold+0x17/0x27
-[   14.219476]  sysfs_create_dir_ns+0x95/0xb0
-[   14.219479]  kobject_add_internal+0x9e/0x260
-[   14.219483]  kobject_add+0x68/0x80
-[   14.219485]  ? kstrdup+0x3c/0xa0
-[   14.219486]  klp_enable_patch+0x320/0x830
-[   14.219488]  patch_init+0x443/0x1000 [ccc_0_6]
-[   14.219491]  ? 0xffffffffa05eb000
-[   14.219492]  do_one_initcall+0x2e/0x190
-[   14.219494]  do_init_module+0x67/0x270
-[   14.219496]  init_module_from_file+0x75/0xa0
-[   14.219499]  idempotent_init_module+0x15a/0x240
-[   14.219501]  __x64_sys_finit_module+0x61/0xc0
-[   14.219503]  do_syscall_64+0x5b/0x160
-[   14.219505]  entry_SYSCALL_64_after_hwframe+0x4b/0x53
-[   14.219507] RIP: 0033:0x7f545a4bd96d
-...
-[   14.219516] kobject: kobject_add_internal failed for somefunc,1 with
-    -EEXIST, don't try to register things with the same name ...
-
-This happens because klp_find_func() thinks somefunc with old_sympos==0
-is not the same as somefunc with old_sympos==1, and klp_add_object_nops
-adds another xxx/func,1 to the list of functions to patch.
-
-Signed-off-by: Song Liu <song@kernel.org>
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
-[pmladek@suse.com: Fixed some typos.]
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Tested-by: Petr Mladek <pmladek@suse.com>
-Signed-off-by: Petr Mladek <pmladek@suse.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/livepatch/core.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/gfs2/quota.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/livepatch/core.c b/kernel/livepatch/core.c
-index 0e73fac55f8eb..4e7a5cbc40a91 100644
---- a/kernel/livepatch/core.c
-+++ b/kernel/livepatch/core.c
-@@ -88,8 +88,14 @@ static struct klp_func *klp_find_func(struct klp_object *obj,
- 	struct klp_func *func;
+diff --git a/fs/gfs2/quota.c b/fs/gfs2/quota.c
+index 2298e06797ac3..f2df01f801b81 100644
+--- a/fs/gfs2/quota.c
++++ b/fs/gfs2/quota.c
+@@ -1616,7 +1616,7 @@ int gfs2_quotad(void *data)
  
- 	klp_for_each_func(obj, func) {
-+		/*
-+		 * Besides identical old_sympos, also consider old_sympos
-+		 * of 0 and 1 are identical.
-+		 */
- 		if ((strcmp(old_func->old_name, func->old_name) == 0) &&
--		    (old_func->old_sympos == func->old_sympos)) {
-+		    ((old_func->old_sympos == func->old_sympos) ||
-+		     (old_func->old_sympos == 0 && func->old_sympos == 1) ||
-+		     (old_func->old_sympos == 1 && func->old_sympos == 0))) {
- 			return func;
- 		}
- 	}
+ 		t = min(quotad_timeo, statfs_timeo);
+ 
+-		t = wait_event_freezable_timeout(sdp->sd_quota_wait,
++		t -= wait_event_freezable_timeout(sdp->sd_quota_wait,
+ 				sdp->sd_statfs_force_sync ||
+ 				gfs2_withdrawing_or_withdrawn(sdp) ||
+ 				kthread_should_stop(),
 -- 
 2.51.0
 
