@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BCAB26FD9B;
-	Mon, 29 Dec 2025 16:19:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39390331208;
+	Mon, 29 Dec 2025 16:19:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025155; cv=none; b=AbPVEpqOnICMLGFQaO87buofiYox86vN9PPIX49gAmDVyFepmXn5SiMX+6IDttpRUzeAlkW/bk4nTcPU56kfJlEkM9kWeglVW/D87ENlHDf0P/VkqJu5tZwoQMSkByN6qM/dn+jBBJHOLRgFW05KtSU3J5j9JX4u7X5dApW7c5g=
+	t=1767025158; cv=none; b=tdToHjDhJchSi+h1Gty2Mf3Qt9xcPv0IJVWoceoVEiPPhnClDHxKagqjRfj3LuNFNPRdrY9tm5fR6ThAjp+de3YBhZYjoZP9mKd+P6sTbezrWtABJsHgBGfDP+SFx1ntkzyYUO4ZYb0o9gabKHOcIn+9n1k6FKOh2FJvJ6FQSI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025155; c=relaxed/simple;
-	bh=glrNPGt1xWwsgnzLai9RZBnLTSGId962mPvriugj7oY=;
+	s=arc-20240116; t=1767025158; c=relaxed/simple;
+	bh=+HbDTnKbsGppOHuqLxy4hWldvcJMm28lHe6CpGP6mY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NM4OFKCk7eEeWty3vfqykxNYl+yVz86pKdL228ETbMUolYHZJrvd5cNNFk8nAMg38D0ENg65AQAbffpVlAwcHf46mR4bMdBATCHh+uYY0kOldWjhiENMY7RBkhCJ66yeSgLQv4ARYYZJUlaA4vThTLwMkFTVXiaNCgI7sBWTNN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j8UZlkQS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hwe163g1gA+5iLNR7DTJOAuGD+sk4Je2j+FMK8f4G4Q8MtVX4r0F9/ojFXy0WtlQDtZJs3gYxt0QYDEITD9B4IG9b5A3xFVGGjWmVEj+vEhAHeqG0U8qh9DZr+5OqTLxZmlxQAS7rpD3z9y6Ke2sKkuW0m+iaprTInIpVdJ3Yb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OKs1hmTK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j8UZlkQS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7EF3C4CEF7;
-	Mon, 29 Dec 2025 16:19:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OKs1hmTK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE26EC4CEF7;
+	Mon, 29 Dec 2025 16:19:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025155;
-	bh=glrNPGt1xWwsgnzLai9RZBnLTSGId962mPvriugj7oY=;
+	s=korg; t=1767025158;
+	bh=+HbDTnKbsGppOHuqLxy4hWldvcJMm28lHe6CpGP6mY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j8UZlkQSNRiwefbkV6cMdbwEWg82GObjdYv0N8cf9ZlcONRZ+g53HyIo8tYQK9VIs
-	 3MWViZI0xnG3FslHN32zrOC0tTGatD0Abwetn7GvLTQQSlt6HiU/asd60xqwx8Qs7K
-	 1fRKFJJKarnx5d/SFiGq7ZXv/C3enj5cG72ZpnAw=
+	b=OKs1hmTKx/62mh9Nkrv3M3EkZ0tHO1VsvJ+IjdscQYCDsDg4gmPMz5x6hEpUdfhZy
+	 IO3hjBSPz2Zze7mjpoeIQ0LQJB4jHkmvYEIQSWfBpHgsM458ubzN9ak5fru/rnqqd8
+	 nhHmXW9w5T0siJthmY07S1JLZgmA/2QspHibABD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Yu Kuai <yukuai@fnnas.com>,
-	Guangwu Zhang <guazhang@redhat.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Prajna Rajendra Kumar <prajna.rajendrakumar@microchip.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 113/430] block: fix race between wbt_enable_default and IO submission
-Date: Mon, 29 Dec 2025 17:08:35 +0100
-Message-ID: <20251229160728.526082332@linuxfoundation.org>
+Subject: [PATCH 6.18 114/430] spi: microchip: rename driver file and internal identifiers
+Date: Mon, 29 Dec 2025 17:08:36 +0100
+Message-ID: <20251229160728.563094794@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -54,201 +52,619 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Prajna Rajendra Kumar <prajna.rajendrakumar@microchip.com>
 
-[ Upstream commit 9869d3a6fed381f3b98404e26e1afc75d680cbf9 ]
+[ Upstream commit 71c814e98696f2cd53e9e6cef7501c2d667d4c5a ]
 
-When wbt_enable_default() is moved out of queue freezing in elevator_change(),
-it can cause the wbt inflight counter to become negative (-1), leading to hung
-tasks in the writeback path. Tasks get stuck in wbt_wait() because the counter
-is in an inconsistent state.
+The spi-microchip-core.c driver provides support for the Microchip
+PolarFire SoC (MPFS) "hard" SPI controller. It was originally named
+"core" with the expectation that it might also cover Microchip's
+CoreSPI "soft" IP, but that never materialized.
 
-The issue occurs because wbt_enable_default() could race with IO submission,
-allowing the counter to be decremented before proper initialization. This manifests
-as:
+The CoreSPI IP cannot be supported by this driver because its register
+layout differs substantially from the MPFS SPI controller. In practice
+most of the code would need to be replaced to handle those differences
+so keeping the drivers separate is the simpler approach.
 
-  rq_wait[0]:
-    inflight:             -1
-    has_waiters:        True
+The file and internal symbols are renamed to reflect MPFS support and
+to free up "spi-microchip-core.c" for CoreSPI driver.
 
-rwb_enabled() checks the state, which can be updated exactly between wbt_wait()
-(rq_qos_throttle()) and wbt_track()(rq_qos_track()), then the inflight counter
-will become negative.
-
-And results in hung task warnings like:
-  task:kworker/u24:39 state:D stack:0 pid:14767
-  Call Trace:
-    rq_qos_wait+0xb4/0x150
-    wbt_wait+0xa9/0x100
-    __rq_qos_throttle+0x24/0x40
-    blk_mq_submit_bio+0x672/0x7b0
-    ...
-
-Fix this by:
-
-1. Splitting wbt_enable_default() into:
-   - __wbt_enable_default(): Returns true if wbt_init() should be called
-   - wbt_enable_default(): Wrapper for existing callers (no init)
-   - wbt_init_enable_default(): New function that checks and inits WBT
-
-2. Using wbt_init_enable_default() in blk_register_queue() to ensure
-   proper initialization during queue registration
-
-3. Move wbt_init() out of wbt_enable_default() which is only for enabling
-   disabled wbt from bfq and iocost, and wbt_init() isn't needed. Then the
-   original lock warning can be avoided.
-
-4. Removing the ELEVATOR_FLAG_ENABLE_WBT_ON_EXIT flag and its handling
-   code since it's no longer needed
-
-This ensures WBT is properly initialized before any IO can be submitted,
-preventing the counter from going negative.
-
-Cc: Nilay Shroff <nilay@linux.ibm.com>
-Cc: Yu Kuai <yukuai@fnnas.com>
-Cc: Guangwu Zhang <guazhang@redhat.com>
-Fixes: 78c271344b6f ("block: move wbt_enable_default() out of queue freezing from sched ->exit()")
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 9ac8d17694b6 ("spi: add support for microchip fpga spi controllers")
+Signed-off-by: Prajna Rajendra Kumar <prajna.rajendrakumar@microchip.com>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://patch.msgid.link/20251114104545.284765-2-prajna.rajendrakumar@microchip.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: a8a313612af7 ("spi: mpfs: Fix an error handling path in mpfs_spi_probe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bfq-iosched.c |  2 +-
- block/blk-sysfs.c   |  2 +-
- block/blk-wbt.c     | 20 ++++++++++++++++----
- block/blk-wbt.h     |  5 +++++
- block/elevator.c    |  4 ----
- block/elevator.h    |  1 -
- 6 files changed, 23 insertions(+), 11 deletions(-)
+ drivers/spi/Kconfig                           |  19 +-
+ drivers/spi/Makefile                          |   2 +-
+ .../spi/{spi-microchip-core.c => spi-mpfs.c}  | 207 +++++++++---------
+ 3 files changed, 115 insertions(+), 113 deletions(-)
+ rename drivers/spi/{spi-microchip-core.c => spi-mpfs.c} (68%)
 
-diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 4a8d3d96bfe4..6e54b1d3d8bc 100644
---- a/block/bfq-iosched.c
-+++ b/block/bfq-iosched.c
-@@ -7181,7 +7181,7 @@ static void bfq_exit_queue(struct elevator_queue *e)
+diff --git a/drivers/spi/Kconfig b/drivers/spi/Kconfig
+index 55675750182e..1872f9d54a5c 100644
+--- a/drivers/spi/Kconfig
++++ b/drivers/spi/Kconfig
+@@ -706,15 +706,6 @@ config SPI_MESON_SPIFC
+ 	  This enables master mode support for the SPIFC (SPI flash
+ 	  controller) available in Amlogic Meson SoCs.
  
- 	blk_stat_disable_accounting(bfqd->queue);
- 	blk_queue_flag_clear(QUEUE_FLAG_DISABLE_WBT_DEF, bfqd->queue);
--	set_bit(ELEVATOR_FLAG_ENABLE_WBT_ON_EXIT, &e->flags);
-+	wbt_enable_default(bfqd->queue->disk);
+-config SPI_MICROCHIP_CORE
+-	tristate "Microchip FPGA SPI controllers"
+-	depends on SPI_MASTER
+-	help
+-	  This enables the SPI driver for Microchip FPGA SPI controllers.
+-	  Say Y or M here if you want to use the "hard" controllers on
+-	  PolarFire SoC.
+-	  If built as a module, it will be called spi-microchip-core.
+-
+ config SPI_MICROCHIP_CORE_QSPI
+ 	tristate "Microchip FPGA QSPI controllers"
+ 	depends on SPI_MASTER
+@@ -871,6 +862,16 @@ config SPI_PL022
+ 	  controller. If you have an embedded system with an AMBA(R)
+ 	  bus and a PL022 controller, say Y or M here.
  
- 	kfree(bfqd);
- }
-diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
-index 76c47fe9b8d6..c0e4daaf9610 100644
---- a/block/blk-sysfs.c
-+++ b/block/blk-sysfs.c
-@@ -942,7 +942,7 @@ int blk_register_queue(struct gendisk *disk)
- 		elevator_set_default(q);
++config SPI_POLARFIRE_SOC
++
++	tristate "Microchip FPGA SPI controllers"
++	depends on SPI_MASTER && ARCH_MICROCHIP
++	help
++	  This enables the SPI driver for Microchip FPGA SPI controllers.
++	  Say Y or M here if you want to use the "hard" controllers on
++	  PolarFire SoC.
++	  If built as a module, it will be called spi-mpfs.
++
+ config SPI_PPC4xx
+ 	tristate "PPC4xx SPI Controller"
+ 	depends on PPC32 && 4xx
+diff --git a/drivers/spi/Makefile b/drivers/spi/Makefile
+index 8ff74a13faaa..1f7c06a3091d 100644
+--- a/drivers/spi/Makefile
++++ b/drivers/spi/Makefile
+@@ -86,7 +86,6 @@ obj-$(CONFIG_SPI_LOONGSON_PLATFORM)	+= spi-loongson-plat.o
+ obj-$(CONFIG_SPI_LP8841_RTC)		+= spi-lp8841-rtc.o
+ obj-$(CONFIG_SPI_MESON_SPICC)		+= spi-meson-spicc.o
+ obj-$(CONFIG_SPI_MESON_SPIFC)		+= spi-meson-spifc.o
+-obj-$(CONFIG_SPI_MICROCHIP_CORE)	+= spi-microchip-core.o
+ obj-$(CONFIG_SPI_MICROCHIP_CORE_QSPI)	+= spi-microchip-core-qspi.o
+ obj-$(CONFIG_SPI_MPC512x_PSC)		+= spi-mpc512x-psc.o
+ obj-$(CONFIG_SPI_MPC52xx_PSC)		+= spi-mpc52xx-psc.o
+@@ -97,6 +96,7 @@ obj-$(CONFIG_SPI_MTK_NOR)		+= spi-mtk-nor.o
+ obj-$(CONFIG_SPI_MTK_SNFI)		+= spi-mtk-snfi.o
+ obj-$(CONFIG_SPI_MXIC)			+= spi-mxic.o
+ obj-$(CONFIG_SPI_MXS)			+= spi-mxs.o
++obj-$(CONFIG_SPI_POLARFIRE_SOC)		+= spi-mpfs.o
+ obj-$(CONFIG_SPI_WPCM_FIU)		+= spi-wpcm-fiu.o
+ obj-$(CONFIG_SPI_NPCM_FIU)		+= spi-npcm-fiu.o
+ obj-$(CONFIG_SPI_NPCM_PSPI)		+= spi-npcm-pspi.o
+diff --git a/drivers/spi/spi-microchip-core.c b/drivers/spi/spi-mpfs.c
+similarity index 68%
+rename from drivers/spi/spi-microchip-core.c
+rename to drivers/spi/spi-mpfs.c
+index 9128b86c5366..9a14d1732a15 100644
+--- a/drivers/spi/spi-microchip-core.c
++++ b/drivers/spi/spi-mpfs.c
+@@ -99,7 +99,7 @@
+ #define REG_CTRL2		(0x48)
+ #define REG_FRAMESUP		(0x50)
  
- 	blk_queue_flag_set(QUEUE_FLAG_REGISTERED, q);
--	wbt_enable_default(disk);
-+	wbt_init_enable_default(disk);
+-struct mchp_corespi {
++struct mpfs_spi {
+ 	void __iomem *regs;
+ 	struct clk *clk;
+ 	const u8 *tx_buf;
+@@ -113,34 +113,34 @@ struct mchp_corespi {
+ 	int n_bytes;
+ };
  
- 	/* Now everything is ready and send out KOBJ_ADD uevent */
- 	kobject_uevent(&disk->queue_kobj, KOBJ_ADD);
-diff --git a/block/blk-wbt.c b/block/blk-wbt.c
-index eb8037bae0bd..0974875f77bd 100644
---- a/block/blk-wbt.c
-+++ b/block/blk-wbt.c
-@@ -699,7 +699,7 @@ static void wbt_requeue(struct rq_qos *rqos, struct request *rq)
- /*
-  * Enable wbt if defaults are configured that way
-  */
--void wbt_enable_default(struct gendisk *disk)
-+static bool __wbt_enable_default(struct gendisk *disk)
+-static inline u32 mchp_corespi_read(struct mchp_corespi *spi, unsigned int reg)
++static inline u32 mpfs_spi_read(struct mpfs_spi *spi, unsigned int reg)
  {
- 	struct request_queue *q = disk->queue;
- 	struct rq_qos *rqos;
-@@ -716,19 +716,31 @@ void wbt_enable_default(struct gendisk *disk)
- 		if (enable && RQWB(rqos)->enable_state == WBT_STATE_OFF_DEFAULT)
- 			RQWB(rqos)->enable_state = WBT_STATE_ON_DEFAULT;
- 		mutex_unlock(&disk->rqos_state_mutex);
--		return;
-+		return false;
+ 	return readl(spi->regs + reg);
+ }
+ 
+-static inline void mchp_corespi_write(struct mchp_corespi *spi, unsigned int reg, u32 val)
++static inline void mpfs_spi_write(struct mpfs_spi *spi, unsigned int reg, u32 val)
+ {
+ 	writel(val, spi->regs + reg);
+ }
+ 
+-static inline void mchp_corespi_disable(struct mchp_corespi *spi)
++static inline void mpfs_spi_disable(struct mpfs_spi *spi)
+ {
+-	u32 control = mchp_corespi_read(spi, REG_CONTROL);
++	u32 control = mpfs_spi_read(spi, REG_CONTROL);
+ 
+ 	control &= ~CONTROL_ENABLE;
+ 
+-	mchp_corespi_write(spi, REG_CONTROL, control);
++	mpfs_spi_write(spi, REG_CONTROL, control);
+ }
+ 
+-static inline void mchp_corespi_read_fifo(struct mchp_corespi *spi, int fifo_max)
++static inline void mpfs_spi_read_fifo(struct mpfs_spi *spi, int fifo_max)
+ {
+ 	for (int i = 0; i < fifo_max; i++) {
+ 		u32 data;
+ 
+-		while (mchp_corespi_read(spi, REG_STATUS) & STATUS_RXFIFO_EMPTY)
++		while (mpfs_spi_read(spi, REG_STATUS) & STATUS_RXFIFO_EMPTY)
+ 			;
+ 
+-		data = mchp_corespi_read(spi, REG_RX_DATA);
++		data = mpfs_spi_read(spi, REG_RX_DATA);
+ 
+ 		spi->rx_len -= spi->n_bytes;
+ 
+@@ -158,34 +158,34 @@ static inline void mchp_corespi_read_fifo(struct mchp_corespi *spi, int fifo_max
  	}
- 	mutex_unlock(&disk->rqos_state_mutex);
- 
- 	/* Queue not registered? Maybe shutting down... */
- 	if (!blk_queue_registered(q))
--		return;
-+		return false;
- 
- 	if (queue_is_mq(q) && enable)
--		wbt_init(disk);
-+		return true;
-+	return false;
-+}
-+
-+void wbt_enable_default(struct gendisk *disk)
-+{
-+	__wbt_enable_default(disk);
  }
- EXPORT_SYMBOL_GPL(wbt_enable_default);
  
-+void wbt_init_enable_default(struct gendisk *disk)
-+{
-+	if (__wbt_enable_default(disk))
-+		WARN_ON_ONCE(wbt_init(disk));
-+}
-+
- u64 wbt_default_latency_nsec(struct request_queue *q)
+-static void mchp_corespi_enable_ints(struct mchp_corespi *spi)
++static void mpfs_spi_enable_ints(struct mpfs_spi *spi)
  {
+-	u32 control = mchp_corespi_read(spi, REG_CONTROL);
++	u32 control = mpfs_spi_read(spi, REG_CONTROL);
+ 
+ 	control |= INT_ENABLE_MASK;
+-	mchp_corespi_write(spi, REG_CONTROL, control);
++	mpfs_spi_write(spi, REG_CONTROL, control);
+ }
+ 
+-static void mchp_corespi_disable_ints(struct mchp_corespi *spi)
++static void mpfs_spi_disable_ints(struct mpfs_spi *spi)
+ {
+-	u32 control = mchp_corespi_read(spi, REG_CONTROL);
++	u32 control = mpfs_spi_read(spi, REG_CONTROL);
+ 
+ 	control &= ~INT_ENABLE_MASK;
+-	mchp_corespi_write(spi, REG_CONTROL, control);
++	mpfs_spi_write(spi, REG_CONTROL, control);
+ }
+ 
+-static inline void mchp_corespi_set_xfer_size(struct mchp_corespi *spi, int len)
++static inline void mpfs_spi_set_xfer_size(struct mpfs_spi *spi, int len)
+ {
+ 	u32 control;
+ 	u32 lenpart;
+-	u32 frames = mchp_corespi_read(spi, REG_FRAMESUP);
++	u32 frames = mpfs_spi_read(spi, REG_FRAMESUP);
+ 
  	/*
-diff --git a/block/blk-wbt.h b/block/blk-wbt.h
-index e5fc653b9b76..925f22475738 100644
---- a/block/blk-wbt.h
-+++ b/block/blk-wbt.h
-@@ -5,6 +5,7 @@
- #ifdef CONFIG_BLK_WBT
- 
- int wbt_init(struct gendisk *disk);
-+void wbt_init_enable_default(struct gendisk *disk);
- void wbt_disable_default(struct gendisk *disk);
- void wbt_enable_default(struct gendisk *disk);
- 
-@@ -16,6 +17,10 @@ u64 wbt_default_latency_nsec(struct request_queue *);
- 
- #else
- 
-+static inline void wbt_init_enable_default(struct gendisk *disk)
-+{
-+}
-+
- static inline void wbt_disable_default(struct gendisk *disk)
- {
- }
-diff --git a/block/elevator.c b/block/elevator.c
-index 5b37ef44f52d..a2f8b2251dc6 100644
---- a/block/elevator.c
-+++ b/block/elevator.c
-@@ -633,14 +633,10 @@ static int elevator_change_done(struct request_queue *q,
- 			.et = ctx->old->et,
- 			.data = ctx->old->elevator_data
- 		};
--		bool enable_wbt = test_bit(ELEVATOR_FLAG_ENABLE_WBT_ON_EXIT,
--				&ctx->old->flags);
- 
- 		elv_unregister_queue(q, ctx->old);
- 		blk_mq_free_sched_res(&res, ctx->old->type, q->tag_set);
- 		kobject_put(&ctx->old->kobj);
--		if (enable_wbt)
--			wbt_enable_default(q->disk);
+ 	 * Writing to FRAMECNT in REG_CONTROL will reset the frame count, taking
+ 	 * a shortcut requires an explicit clear.
+ 	 */
+ 	if (frames == len) {
+-		mchp_corespi_write(spi, REG_COMMAND, COMMAND_CLRFRAMECNT);
++		mpfs_spi_write(spi, REG_COMMAND, COMMAND_CLRFRAMECNT);
+ 		return;
  	}
- 	if (ctx->new) {
- 		ret = elv_register_queue(q, ctx->new, !ctx->no_uevent);
-diff --git a/block/elevator.h b/block/elevator.h
-index 3ee1d494f48a..021726376042 100644
---- a/block/elevator.h
-+++ b/block/elevator.h
-@@ -156,7 +156,6 @@ struct elevator_queue
  
- #define ELEVATOR_FLAG_REGISTERED	0
- #define ELEVATOR_FLAG_DYING		1
--#define ELEVATOR_FLAG_ENABLE_WBT_ON_EXIT	2
+@@ -208,20 +208,20 @@ static inline void mchp_corespi_set_xfer_size(struct mchp_corespi *spi, int len)
+ 	 * that matches the documentation.
+ 	 */
+ 	lenpart = len & 0xffff;
+-	control = mchp_corespi_read(spi, REG_CONTROL);
++	control = mpfs_spi_read(spi, REG_CONTROL);
+ 	control &= ~CONTROL_FRAMECNT_MASK;
+ 	control |= lenpart << CONTROL_FRAMECNT_SHIFT;
+-	mchp_corespi_write(spi, REG_CONTROL, control);
+-	mchp_corespi_write(spi, REG_FRAMESUP, len);
++	mpfs_spi_write(spi, REG_CONTROL, control);
++	mpfs_spi_write(spi, REG_FRAMESUP, len);
+ }
  
- /*
-  * block elevator interface
+-static inline void mchp_corespi_write_fifo(struct mchp_corespi *spi, int fifo_max)
++static inline void mpfs_spi_write_fifo(struct mpfs_spi *spi, int fifo_max)
+ {
+ 	int i = 0;
+ 
+-	mchp_corespi_set_xfer_size(spi, fifo_max);
++	mpfs_spi_set_xfer_size(spi, fifo_max);
+ 
+-	while ((i < fifo_max) && !(mchp_corespi_read(spi, REG_STATUS) & STATUS_TXFIFO_FULL)) {
++	while ((i < fifo_max) && !(mpfs_spi_read(spi, REG_STATUS) & STATUS_TXFIFO_FULL)) {
+ 		u32 word;
+ 
+ 		if (spi->n_bytes == 4)
+@@ -231,7 +231,7 @@ static inline void mchp_corespi_write_fifo(struct mchp_corespi *spi, int fifo_ma
+ 		else
+ 			word = spi->tx_buf ? *spi->tx_buf : 0xaa;
+ 
+-		mchp_corespi_write(spi, REG_TX_DATA, word);
++		mpfs_spi_write(spi, REG_TX_DATA, word);
+ 		if (spi->tx_buf)
+ 			spi->tx_buf += spi->n_bytes;
+ 		i++;
+@@ -240,9 +240,9 @@ static inline void mchp_corespi_write_fifo(struct mchp_corespi *spi, int fifo_ma
+ 	spi->tx_len -= i * spi->n_bytes;
+ }
+ 
+-static inline void mchp_corespi_set_framesize(struct mchp_corespi *spi, int bt)
++static inline void mpfs_spi_set_framesize(struct mpfs_spi *spi, int bt)
+ {
+-	u32 frame_size = mchp_corespi_read(spi, REG_FRAME_SIZE);
++	u32 frame_size = mpfs_spi_read(spi, REG_FRAME_SIZE);
+ 	u32 control;
+ 
+ 	if ((frame_size & FRAME_SIZE_MASK) == bt)
+@@ -252,25 +252,25 @@ static inline void mchp_corespi_set_framesize(struct mchp_corespi *spi, int bt)
+ 	 * Disable the SPI controller. Writes to the frame size have
+ 	 * no effect when the controller is enabled.
+ 	 */
+-	control = mchp_corespi_read(spi, REG_CONTROL);
++	control = mpfs_spi_read(spi, REG_CONTROL);
+ 	control &= ~CONTROL_ENABLE;
+-	mchp_corespi_write(spi, REG_CONTROL, control);
++	mpfs_spi_write(spi, REG_CONTROL, control);
+ 
+-	mchp_corespi_write(spi, REG_FRAME_SIZE, bt);
++	mpfs_spi_write(spi, REG_FRAME_SIZE, bt);
+ 
+ 	control |= CONTROL_ENABLE;
+-	mchp_corespi_write(spi, REG_CONTROL, control);
++	mpfs_spi_write(spi, REG_CONTROL, control);
+ }
+ 
+-static void mchp_corespi_set_cs(struct spi_device *spi, bool disable)
++static void mpfs_spi_set_cs(struct spi_device *spi, bool disable)
+ {
+ 	u32 reg;
+-	struct mchp_corespi *corespi = spi_controller_get_devdata(spi->controller);
++	struct mpfs_spi *mspi = spi_controller_get_devdata(spi->controller);
+ 
+-	reg = mchp_corespi_read(corespi, REG_SLAVE_SELECT);
++	reg = mpfs_spi_read(mspi, REG_SLAVE_SELECT);
+ 	reg &= ~BIT(spi_get_chipselect(spi, 0));
+ 	reg |= !disable << spi_get_chipselect(spi, 0);
+-	corespi->pending_slave_select = reg;
++	mspi->pending_slave_select = reg;
+ 
+ 	/*
+ 	 * Only deassert chip select immediately. Writing to some registers
+@@ -281,12 +281,12 @@ static void mchp_corespi_set_cs(struct spi_device *spi, bool disable)
+ 	 * doesn't see any spurious clock transitions whilst CS is enabled.
+ 	 */
+ 	if (((spi->mode & SPI_CS_HIGH) == 0) == disable)
+-		mchp_corespi_write(corespi, REG_SLAVE_SELECT, reg);
++		mpfs_spi_write(mspi, REG_SLAVE_SELECT, reg);
+ }
+ 
+-static int mchp_corespi_setup(struct spi_device *spi)
++static int mpfs_spi_setup(struct spi_device *spi)
+ {
+-	struct mchp_corespi *corespi = spi_controller_get_devdata(spi->controller);
++	struct mpfs_spi *mspi = spi_controller_get_devdata(spi->controller);
+ 	u32 reg;
+ 
+ 	if (spi_is_csgpiod(spi))
+@@ -298,21 +298,21 @@ static int mchp_corespi_setup(struct spi_device *spi)
+ 	 * driving their select line low.
+ 	 */
+ 	if (spi->mode & SPI_CS_HIGH) {
+-		reg = mchp_corespi_read(corespi, REG_SLAVE_SELECT);
++		reg = mpfs_spi_read(mspi, REG_SLAVE_SELECT);
+ 		reg |= BIT(spi_get_chipselect(spi, 0));
+-		corespi->pending_slave_select = reg;
+-		mchp_corespi_write(corespi, REG_SLAVE_SELECT, reg);
++		mspi->pending_slave_select = reg;
++		mpfs_spi_write(mspi, REG_SLAVE_SELECT, reg);
+ 	}
+ 	return 0;
+ }
+ 
+-static void mchp_corespi_init(struct spi_controller *host, struct mchp_corespi *spi)
++static void mpfs_spi_init(struct spi_controller *host, struct mpfs_spi *spi)
+ {
+ 	unsigned long clk_hz;
+-	u32 control = mchp_corespi_read(spi, REG_CONTROL);
++	u32 control = mpfs_spi_read(spi, REG_CONTROL);
+ 
+ 	control &= ~CONTROL_ENABLE;
+-	mchp_corespi_write(spi, REG_CONTROL, control);
++	mpfs_spi_write(spi, REG_CONTROL, control);
+ 
+ 	control |= CONTROL_MASTER;
+ 	control &= ~CONTROL_MODE_MASK;
+@@ -328,15 +328,15 @@ static void mchp_corespi_init(struct spi_controller *host, struct mchp_corespi *
+ 	 */
+ 	control |= CONTROL_SPS | CONTROL_BIGFIFO;
+ 
+-	mchp_corespi_write(spi, REG_CONTROL, control);
++	mpfs_spi_write(spi, REG_CONTROL, control);
+ 
+-	mchp_corespi_set_framesize(spi, DEFAULT_FRAMESIZE);
++	mpfs_spi_set_framesize(spi, DEFAULT_FRAMESIZE);
+ 
+ 	/* max. possible spi clock rate is the apb clock rate */
+ 	clk_hz = clk_get_rate(spi->clk);
+ 	host->max_speed_hz = clk_hz;
+ 
+-	mchp_corespi_enable_ints(spi);
++	mpfs_spi_enable_ints(spi);
+ 
+ 	/*
+ 	 * It is required to enable direct mode, otherwise control over the chip
+@@ -344,34 +344,34 @@ static void mchp_corespi_init(struct spi_controller *host, struct mchp_corespi *
+ 	 * can deal with active high targets.
+ 	 */
+ 	spi->pending_slave_select = SSELOUT | SSEL_DIRECT;
+-	mchp_corespi_write(spi, REG_SLAVE_SELECT, spi->pending_slave_select);
++	mpfs_spi_write(spi, REG_SLAVE_SELECT, spi->pending_slave_select);
+ 
+-	control = mchp_corespi_read(spi, REG_CONTROL);
++	control = mpfs_spi_read(spi, REG_CONTROL);
+ 
+ 	control &= ~CONTROL_RESET;
+ 	control |= CONTROL_ENABLE;
+ 
+-	mchp_corespi_write(spi, REG_CONTROL, control);
++	mpfs_spi_write(spi, REG_CONTROL, control);
+ }
+ 
+-static inline void mchp_corespi_set_clk_gen(struct mchp_corespi *spi)
++static inline void mpfs_spi_set_clk_gen(struct mpfs_spi *spi)
+ {
+ 	u32 control;
+ 
+-	control = mchp_corespi_read(spi, REG_CONTROL);
++	control = mpfs_spi_read(spi, REG_CONTROL);
+ 	if (spi->clk_mode)
+ 		control |= CONTROL_CLKMODE;
+ 	else
+ 		control &= ~CONTROL_CLKMODE;
+ 
+-	mchp_corespi_write(spi, REG_CLK_GEN, spi->clk_gen);
+-	mchp_corespi_write(spi, REG_CONTROL, control);
++	mpfs_spi_write(spi, REG_CLK_GEN, spi->clk_gen);
++	mpfs_spi_write(spi, REG_CONTROL, control);
+ }
+ 
+-static inline void mchp_corespi_set_mode(struct mchp_corespi *spi, unsigned int mode)
++static inline void mpfs_spi_set_mode(struct mpfs_spi *spi, unsigned int mode)
+ {
+ 	u32 mode_val;
+-	u32 control = mchp_corespi_read(spi, REG_CONTROL);
++	u32 control = mpfs_spi_read(spi, REG_CONTROL);
+ 
+ 	switch (mode & SPI_MODE_X_MASK) {
+ 	case SPI_MODE_0:
+@@ -394,22 +394,22 @@ static inline void mchp_corespi_set_mode(struct mchp_corespi *spi, unsigned int
+ 	 */
+ 
+ 	control &= ~CONTROL_ENABLE;
+-	mchp_corespi_write(spi, REG_CONTROL, control);
++	mpfs_spi_write(spi, REG_CONTROL, control);
+ 
+ 	control &= ~(SPI_MODE_X_MASK << MODE_X_MASK_SHIFT);
+ 	control |= mode_val;
+ 
+-	mchp_corespi_write(spi, REG_CONTROL, control);
++	mpfs_spi_write(spi, REG_CONTROL, control);
+ 
+ 	control |= CONTROL_ENABLE;
+-	mchp_corespi_write(spi, REG_CONTROL, control);
++	mpfs_spi_write(spi, REG_CONTROL, control);
+ }
+ 
+-static irqreturn_t mchp_corespi_interrupt(int irq, void *dev_id)
++static irqreturn_t mpfs_spi_interrupt(int irq, void *dev_id)
+ {
+ 	struct spi_controller *host = dev_id;
+-	struct mchp_corespi *spi = spi_controller_get_devdata(host);
+-	u32 intfield = mchp_corespi_read(spi, REG_MIS) & 0xf;
++	struct mpfs_spi *spi = spi_controller_get_devdata(host);
++	u32 intfield = mpfs_spi_read(spi, REG_MIS) & 0xf;
+ 	bool finalise = false;
+ 
+ 	/* Interrupt line may be shared and not for us at all */
+@@ -417,7 +417,7 @@ static irqreturn_t mchp_corespi_interrupt(int irq, void *dev_id)
+ 		return IRQ_NONE;
+ 
+ 	if (intfield & INT_RX_CHANNEL_OVERFLOW) {
+-		mchp_corespi_write(spi, REG_INT_CLEAR, INT_RX_CHANNEL_OVERFLOW);
++		mpfs_spi_write(spi, REG_INT_CLEAR, INT_RX_CHANNEL_OVERFLOW);
+ 		finalise = true;
+ 		dev_err(&host->dev,
+ 			"%s: RX OVERFLOW: rxlen: %d, txlen: %d\n", __func__,
+@@ -425,7 +425,7 @@ static irqreturn_t mchp_corespi_interrupt(int irq, void *dev_id)
+ 	}
+ 
+ 	if (intfield & INT_TX_CHANNEL_UNDERRUN) {
+-		mchp_corespi_write(spi, REG_INT_CLEAR, INT_TX_CHANNEL_UNDERRUN);
++		mpfs_spi_write(spi, REG_INT_CLEAR, INT_TX_CHANNEL_UNDERRUN);
+ 		finalise = true;
+ 		dev_err(&host->dev,
+ 			"%s: TX UNDERFLOW: rxlen: %d, txlen: %d\n", __func__,
+@@ -438,8 +438,8 @@ static irqreturn_t mchp_corespi_interrupt(int irq, void *dev_id)
+ 	return IRQ_HANDLED;
+ }
+ 
+-static int mchp_corespi_calculate_clkgen(struct mchp_corespi *spi,
+-					 unsigned long target_hz)
++static int mpfs_spi_calculate_clkgen(struct mpfs_spi *spi,
++				     unsigned long target_hz)
+ {
+ 	unsigned long clk_hz, spi_hz, clk_gen;
+ 
+@@ -475,20 +475,20 @@ static int mchp_corespi_calculate_clkgen(struct mchp_corespi *spi,
+ 	return 0;
+ }
+ 
+-static int mchp_corespi_transfer_one(struct spi_controller *host,
+-				     struct spi_device *spi_dev,
+-				     struct spi_transfer *xfer)
++static int mpfs_spi_transfer_one(struct spi_controller *host,
++				 struct spi_device *spi_dev,
++				 struct spi_transfer *xfer)
+ {
+-	struct mchp_corespi *spi = spi_controller_get_devdata(host);
++	struct mpfs_spi *spi = spi_controller_get_devdata(host);
+ 	int ret;
+ 
+-	ret = mchp_corespi_calculate_clkgen(spi, (unsigned long)xfer->speed_hz);
++	ret = mpfs_spi_calculate_clkgen(spi, (unsigned long)xfer->speed_hz);
+ 	if (ret) {
+ 		dev_err(&host->dev, "failed to set clk_gen for target %u Hz\n", xfer->speed_hz);
+ 		return ret;
+ 	}
+ 
+-	mchp_corespi_set_clk_gen(spi);
++	mpfs_spi_set_clk_gen(spi);
+ 
+ 	spi->tx_buf = xfer->tx_buf;
+ 	spi->rx_buf = xfer->rx_buf;
+@@ -496,45 +496,46 @@ static int mchp_corespi_transfer_one(struct spi_controller *host,
+ 	spi->rx_len = xfer->len;
+ 	spi->n_bytes = roundup_pow_of_two(DIV_ROUND_UP(xfer->bits_per_word, BITS_PER_BYTE));
+ 
+-	mchp_corespi_set_framesize(spi, xfer->bits_per_word);
++	mpfs_spi_set_framesize(spi, xfer->bits_per_word);
+ 
+-	mchp_corespi_write(spi, REG_COMMAND, COMMAND_RXFIFORST | COMMAND_TXFIFORST);
++	mpfs_spi_write(spi, REG_COMMAND, COMMAND_RXFIFORST | COMMAND_TXFIFORST);
+ 
+-	mchp_corespi_write(spi, REG_SLAVE_SELECT, spi->pending_slave_select);
++	mpfs_spi_write(spi, REG_SLAVE_SELECT, spi->pending_slave_select);
+ 
+ 	while (spi->tx_len) {
+ 		int fifo_max = DIV_ROUND_UP(min(spi->tx_len, FIFO_DEPTH), spi->n_bytes);
+ 
+-		mchp_corespi_write_fifo(spi, fifo_max);
+-		mchp_corespi_read_fifo(spi, fifo_max);
++		mpfs_spi_write_fifo(spi, fifo_max);
++		mpfs_spi_read_fifo(spi, fifo_max);
+ 	}
+ 
+ 	spi_finalize_current_transfer(host);
+ 	return 1;
+ }
+ 
+-static int mchp_corespi_prepare_message(struct spi_controller *host,
+-					struct spi_message *msg)
++static int mpfs_spi_prepare_message(struct spi_controller *host,
++				    struct spi_message *msg)
+ {
+ 	struct spi_device *spi_dev = msg->spi;
+-	struct mchp_corespi *spi = spi_controller_get_devdata(host);
++	struct mpfs_spi *spi = spi_controller_get_devdata(host);
+ 
+-	mchp_corespi_set_mode(spi, spi_dev->mode);
++	mpfs_spi_set_mode(spi, spi_dev->mode);
+ 
+ 	return 0;
+ }
+ 
+-static int mchp_corespi_probe(struct platform_device *pdev)
++static int mpfs_spi_probe(struct platform_device *pdev)
+ {
+ 	struct spi_controller *host;
+-	struct mchp_corespi *spi;
++	struct mpfs_spi *spi;
+ 	struct resource *res;
+ 	u32 num_cs;
+ 	int ret = 0;
+ 
+ 	host = devm_spi_alloc_host(&pdev->dev, sizeof(*spi));
+ 	if (!host)
+-		return -ENOMEM;
++		return dev_err_probe(&pdev->dev, -ENOMEM,
++				     "unable to allocate host for SPI controller\n");
+ 
+ 	platform_set_drvdata(pdev, host);
+ 
+@@ -544,11 +545,11 @@ static int mchp_corespi_probe(struct platform_device *pdev)
+ 	host->num_chipselect = num_cs;
+ 	host->mode_bits = SPI_CPOL | SPI_CPHA | SPI_CS_HIGH;
+ 	host->use_gpio_descriptors = true;
+-	host->setup = mchp_corespi_setup;
++	host->setup = mpfs_spi_setup;
+ 	host->bits_per_word_mask = SPI_BPW_RANGE_MASK(1, 32);
+-	host->transfer_one = mchp_corespi_transfer_one;
+-	host->prepare_message = mchp_corespi_prepare_message;
+-	host->set_cs = mchp_corespi_set_cs;
++	host->transfer_one = mpfs_spi_transfer_one;
++	host->prepare_message = mpfs_spi_prepare_message;
++	host->set_cs = mpfs_spi_set_cs;
+ 	host->dev.of_node = pdev->dev.of_node;
+ 
+ 	spi = spi_controller_get_devdata(host);
+@@ -561,7 +562,7 @@ static int mchp_corespi_probe(struct platform_device *pdev)
+ 	if (spi->irq < 0)
+ 		return spi->irq;
+ 
+-	ret = devm_request_irq(&pdev->dev, spi->irq, mchp_corespi_interrupt,
++	ret = devm_request_irq(&pdev->dev, spi->irq, mpfs_spi_interrupt,
+ 			       IRQF_SHARED, dev_name(&pdev->dev), host);
+ 	if (ret)
+ 		return dev_err_probe(&pdev->dev, ret,
+@@ -572,11 +573,11 @@ static int mchp_corespi_probe(struct platform_device *pdev)
+ 		return dev_err_probe(&pdev->dev, PTR_ERR(spi->clk),
+ 				     "could not get clk\n");
+ 
+-	mchp_corespi_init(host, spi);
++	mpfs_spi_init(host, spi);
+ 
+ 	ret = devm_spi_register_controller(&pdev->dev, host);
+ 	if (ret) {
+-		mchp_corespi_disable(spi);
++		mpfs_spi_disable(spi);
+ 		return dev_err_probe(&pdev->dev, ret,
+ 				     "unable to register host for SPI controller\n");
+ 	}
+@@ -586,13 +587,13 @@ static int mchp_corespi_probe(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-static void mchp_corespi_remove(struct platform_device *pdev)
++static void mpfs_spi_remove(struct platform_device *pdev)
+ {
+ 	struct spi_controller *host  = platform_get_drvdata(pdev);
+-	struct mchp_corespi *spi = spi_controller_get_devdata(host);
++	struct mpfs_spi *spi = spi_controller_get_devdata(host);
+ 
+-	mchp_corespi_disable_ints(spi);
+-	mchp_corespi_disable(spi);
++	mpfs_spi_disable_ints(spi);
++	mpfs_spi_disable(spi);
+ }
+ 
+ #define MICROCHIP_SPI_PM_OPS (NULL)
+@@ -602,23 +603,23 @@ static void mchp_corespi_remove(struct platform_device *pdev)
+  */
+ 
+ #if defined(CONFIG_OF)
+-static const struct of_device_id mchp_corespi_dt_ids[] = {
++static const struct of_device_id mpfs_spi_dt_ids[] = {
+ 	{ .compatible = "microchip,mpfs-spi" },
+ 	{ /* sentinel */ }
+ };
+-MODULE_DEVICE_TABLE(of, mchp_corespi_dt_ids);
++MODULE_DEVICE_TABLE(of, mpfs_spi_dt_ids);
+ #endif
+ 
+-static struct platform_driver mchp_corespi_driver = {
+-	.probe = mchp_corespi_probe,
++static struct platform_driver mpfs_spi_driver = {
++	.probe = mpfs_spi_probe,
+ 	.driver = {
+-		.name = "microchip-corespi",
++		.name = "microchip-spi",
+ 		.pm = MICROCHIP_SPI_PM_OPS,
+-		.of_match_table = of_match_ptr(mchp_corespi_dt_ids),
++		.of_match_table = of_match_ptr(mpfs_spi_dt_ids),
+ 	},
+-	.remove = mchp_corespi_remove,
++	.remove = mpfs_spi_remove,
+ };
+-module_platform_driver(mchp_corespi_driver);
++module_platform_driver(mpfs_spi_driver);
+ MODULE_DESCRIPTION("Microchip coreSPI SPI controller driver");
+ MODULE_AUTHOR("Daire McNamara <daire.mcnamara@microchip.com>");
+ MODULE_AUTHOR("Conor Dooley <conor.dooley@microchip.com>");
 -- 
 2.51.0
 
