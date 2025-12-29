@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7F7332EAF;
-	Mon, 29 Dec 2025 16:30:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76413328FC;
+	Mon, 29 Dec 2025 16:31:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025859; cv=none; b=fhRVDO+klIkREW1rThiagbckYmLy1iWWlN81nRs9DVD2nZ0WxifgYWy2nOwpbRbawXBXwR1kblRTAK4NHdzu44jM3opl+W0n8n9VGnCm9A6N7Kwupb0MXvQRWrc9HdCqPcbZ4g5l0RX3zSL5ZYjJZVd8hFthDSNFULrvW2NBt2Q=
+	t=1767025862; cv=none; b=Hxo4M/v6Yvnh6hDZyTpXi84bjoSJ9Iyi1H3/u7d9lKZbCTgohAUFM/wHqU9Bap2d2Gus4jBZpqQkLcVmyZ1wqNW3ToYdUmNQGFOYI+Su1jG+5iv9P4GKJRqbm+Hox9bNDHpgEjeU5anCJcqAtICJABPzoWinQ0NHaRF1uY5eWLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025859; c=relaxed/simple;
-	bh=9yWTxMBMPRFnan4JmKrHp/v8JKwlt27P37WYX3KwEo8=;
+	s=arc-20240116; t=1767025862; c=relaxed/simple;
+	bh=mocyFMxobc6Ox/1/D/6GgWvHJ1uP7RHUih7dOU4BGdo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=btHN3Pu5YLIX6YsnFxI2bFF1mnz+sTvuxf37E/dNRX4+JLxFOISJL52tY0O+cKJCrS7gczb8sgCSwE0XTaLsPI4NmRU9tzWSdrP7LPU8a2SmA2r9lQMfqq/bDmUyljNv5aKHg+jGU30L4IxRb6/IMnHNtQZw9SemFMFl2VBZGxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=srISrcZP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uTNJHeyp/df9XQHtyGipWHGpXFdTUCfplDIaab8RhDFiPt+lTMwg1zdG9frXZChl51W4rnJ87DgOS6msRJcXmnVeP1qV5YT3ZxctJA4xTfUowKgWMF9wGk6UnY+jAG4uVP31DMk8q7anpQx+dIHG2ReAhM9GjHRMxEdBPcQAM/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DXUnIzka; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="srISrcZP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65BF5C19421;
-	Mon, 29 Dec 2025 16:30:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DXUnIzka"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41F05C4CEF7;
+	Mon, 29 Dec 2025 16:31:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025859;
-	bh=9yWTxMBMPRFnan4JmKrHp/v8JKwlt27P37WYX3KwEo8=;
+	s=korg; t=1767025862;
+	bh=mocyFMxobc6Ox/1/D/6GgWvHJ1uP7RHUih7dOU4BGdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=srISrcZPyy+IB+Duq4PUAoWpMDVO4OHfdNifTRaqPfpZSSrHo9K7Z5GbZHoazKk+I
-	 Ps4GOdjijzLyJIVf7oy4d6Po7mMQZyc4OftmV0cr3h1xRbO8xemZnC0/rj8rY8L2nv
-	 OXHFc1+RSHqWnOn8cPXUYiObv9nqkfBREB/JpGj0=
+	b=DXUnIzkazMj/JniLMAtZT33bqLnExoRoK3j3WzIPjCz8Xe1fH/go4w2OmAmU8EGqW
+	 bO9Lj644GZa7giis+P6KK0l25OAp8848oCj2kM5SlFjL2pz9q2zH1bGfyT3LIn94RL
+	 +tkk3IhRPRm6MKOhea2A5C4oH6iVOAMBUMIWKFgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matteo Rizzo <matteorizzo@google.com>,
-	Yosry Ahmed <yosry.ahmed@linux.dev>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.18 345/430] KVM: nSVM: Propagate SVM_EXIT_CR0_SEL_WRITE correctly for LMSW emulation
-Date: Mon, 29 Dec 2025 17:12:27 +0100
-Message-ID: <20251229160737.024525269@linuxfoundation.org>
+	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 363/430] r8169: fix RTL8117 Wake-on-Lan in DASH mode
+Date: Mon, 29 Dec 2025 17:12:45 +0100
+Message-ID: <20251229160737.688259502@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -52,65 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yosry Ahmed <yosry.ahmed@linux.dev>
+From: René Rebe <rene@exactco.de>
 
-commit 5674a76db0213f9db1e4d08e847ff649b46889c0 upstream.
+commit dd75c723ef566f7f009c047f47e0eee95fe348ab upstream.
 
-When emulating L2 instructions, svm_check_intercept() checks whether a
-write to CR0 should trigger a synthesized #VMEXIT with
-SVM_EXIT_CR0_SEL_WRITE. For MOV-to-CR0, SVM_EXIT_CR0_SEL_WRITE is only
-triggered if any bit other than CR0.MP and CR0.TS is updated. However,
-according to the APM (24593—Rev.  3.42—March 2024, Table 15-7):
+Wake-on-Lan does currently not work for r8169 in DASH mode, e.g. the
+ASUS Pro WS X570-ACE with RTL8168fp/RTL8117.
 
-  The LMSW instruction treats the selective CR0-write
-  intercept as a non-selective intercept (i.e., it intercepts
-  regardless of the value being written).
+Fix by not returning early in rtl_prepare_power_down when dash_enabled.
+While this fixes WoL, it still kills the OOB RTL8117 remote management
+BMC connection. Fix by not calling rtl8168_driver_stop if WoL is enabled.
 
-Skip checking the changed bits for x86_intercept_lmsw and always inject
-SVM_EXIT_CR0_SEL_WRITE.
-
-Fixes: cfec82cb7d31 ("KVM: SVM: Add intercept check for emulated cr accesses")
+Fixes: 065c27c184d6 ("r8169: phy power ops")
+Signed-off-by: René Rebe <rene@exactco.de>
 Cc: stable@vger.kernel.org
-Reported-by: Matteo Rizzo <matteorizzo@google.com>
-Signed-off-by: Yosry Ahmed <yosry.ahmed@linux.dev>
-Link: https://patch.msgid.link/20251024192918.3191141-3-yosry.ahmed@linux.dev
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
+Link: https://patch.msgid.link/20251202.194137.1647877804487085954.rene@exactco.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/svm.c |   18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/realtek/r8169_main.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -4553,20 +4553,20 @@ static int svm_check_intercept(struct kv
- 		if (info->intercept == x86_intercept_clts)
- 			break;
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -2669,9 +2669,6 @@ static void rtl_wol_enable_rx(struct rtl
  
--		cr0 = vcpu->arch.cr0 & ~SVM_CR0_SELECTIVE_MASK;
--		val = info->src_val  & ~SVM_CR0_SELECTIVE_MASK;
+ static void rtl_prepare_power_down(struct rtl8169_private *tp)
+ {
+-	if (tp->dash_enabled)
+-		return;
 -
-+		/* LMSW always triggers INTERCEPT_SELECTIVE_CR0 */
- 		if (info->intercept == x86_intercept_lmsw) {
--			cr0 &= 0xfUL;
--			val &= 0xfUL;
--			/* lmsw can't clear PE - catch this here */
--			if (cr0 & X86_CR0_PE)
--				val |= X86_CR0_PE;
-+			icpt_info.exit_code = SVM_EXIT_CR0_SEL_WRITE;
-+			break;
- 		}
+ 	if (tp->mac_version == RTL_GIGA_MAC_VER_32 ||
+ 	    tp->mac_version == RTL_GIGA_MAC_VER_33)
+ 		rtl_ephy_write(tp, 0x19, 0xff64);
+@@ -4807,7 +4804,7 @@ static void rtl8169_down(struct rtl8169_
+ 	rtl_disable_exit_l1(tp);
+ 	rtl_prepare_power_down(tp);
  
-+		/*
-+		 * MOV-to-CR0 only triggers INTERCEPT_SELECTIVE_CR0 if any bit
-+		 * other than SVM_CR0_SELECTIVE_MASK is changed.
-+		 */
-+		cr0 = vcpu->arch.cr0 & ~SVM_CR0_SELECTIVE_MASK;
-+		val = info->src_val  & ~SVM_CR0_SELECTIVE_MASK;
- 		if (cr0 ^ val)
- 			icpt_info.exit_code = SVM_EXIT_CR0_SEL_WRITE;
--
- 		break;
- 	}
- 	case SVM_EXIT_READ_DR0:
+-	if (tp->dash_type != RTL_DASH_NONE)
++	if (tp->dash_type != RTL_DASH_NONE && !tp->saved_wolopts)
+ 		rtl8168_driver_stop(tp);
+ }
+ 
 
 
