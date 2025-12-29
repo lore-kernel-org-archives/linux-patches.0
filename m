@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C567633469A;
-	Mon, 29 Dec 2025 16:32:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6969D334C29;
+	Mon, 29 Dec 2025 16:32:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025959; cv=none; b=pTI0nrqqL1ZYE3t2DBOZJg5i27AriZXjFBGKwmUbllqKTyniydFWaZ5thIWniLl6ZEPOLiLpqnJBgLe9H0g3cfnfk+eJXss0teTQgRVc3HXJejTm8p2OVOa1NOhVyzgMarddZk4wJP7RXOzJYi0Q5CGsE/gppv/8xww0GphD69I=
+	t=1767025962; cv=none; b=LW8VzJZ/ZSNtksQKaK9Tdm7dXZ8nPA1ZOQpEH66KL4TOvXnWWQLYZ4abExYbxAZ9mO/PzX5QyzEOnAzQNoDQQtSLBcJLTyDsgFRCDf3ik8lto3HRLRrOAevUZYnvjYoKCMdT3qb5Pnxuj6qOKhkARo8ApJjXoMjThuFd9bNSxwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025959; c=relaxed/simple;
-	bh=pON4bH/dRJ89OPqyUVIwZu+67OGxyBWJ9CTuLGrW+Rk=;
+	s=arc-20240116; t=1767025962; c=relaxed/simple;
+	bh=xMQ7qNpBYA7BfrMoXqDVqU53AYiwKPmzWiRfHC2em0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qG2VB3MXrx+ksWQdcIkeS/EWsQ0cgaYBWaF8rlbDuJHeXEU9VIYvRfXKD5ChHKIhDFZvURg0lbcoCwCNJCKJwpXCcbHyvgXSMUgEhadU+QY4crojJvgSI+pnpkE+6wgRc36NjI0anSFrQHzuIL6SQaguWXFo91TMdaTXoBetZhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a25VaQW9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JqGw20KMVnl1C23VcyYVvMN5AQqFxlGzE8rgDsrAEtHp//RL/wuxdGRSFzVu6NCyLG0I/kTkQXH1CU2zerajHmxUxbcgG88HznsU+GewBHj/MuvxXTdvi3X1HOBiW0T7YQZ+jTfUJga2MkNO+Igg6IoOAyL0il8an6Y+3lIr8Rw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k+YxgbxX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a25VaQW9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED948C16AAE;
-	Mon, 29 Dec 2025 16:32:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+YxgbxX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B38BFC4CEF7;
+	Mon, 29 Dec 2025 16:32:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025959;
-	bh=pON4bH/dRJ89OPqyUVIwZu+67OGxyBWJ9CTuLGrW+Rk=;
+	s=korg; t=1767025962;
+	bh=xMQ7qNpBYA7BfrMoXqDVqU53AYiwKPmzWiRfHC2em0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a25VaQW9aWr+JK8/R3ZjjCoQDQ3IHfHVTPUnOI4SIvyB17OpoW4M1CGfrQ85rr5Pz
-	 SvxAlPL67p5zzKcUVNrSABiVAwZ8HzuN5qQGU1S5znLGhhEPZvBehZgy8zjMEcUgtO
-	 sqC/fnNwNnc7np1ZIjnlCwUv1mNT5lQeK7J6Q5nc=
+	b=k+YxgbxXrgbjZeaIe2H4K3WgvL8+6GHTMeddD5J+0bXN6p+LjY6WAuIQSFiT1oapV
+	 jrm6g5edxpF3MfmKrm6smIDOqGZ9r9VgDZYfPYHMHxxNn5Mj/iICWuudN993WRasLW
+	 lgpEfaBE2pv0Ah4zKSe6sSG6KM1R6Xi4wioQJjHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shivani Agarwal <shivani.agarwal@broadcom.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.18 397/430] crypto: af_alg - zero initialize memory allocated via sock_kmalloc
-Date: Mon, 29 Dec 2025 17:13:19 +0100
-Message-ID: <20251229160738.925577809@linuxfoundation.org>
+Subject: [PATCH 6.18 398/430] crypto: caam - Add check for kcalloc() in test_len()
+Date: Mon, 29 Dec 2025 17:13:20 +0100
+Message-ID: <20251229160738.961767804@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -50,98 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivani Agarwal <shivani.agarwal@broadcom.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 6f6e309328d53a10c0fe1f77dec2db73373179b6 upstream.
+commit 7cf6e0b69b0d90ab042163e5bbddda0dfcf8b6a7 upstream.
 
-Several crypto user API contexts and requests allocated with
-sock_kmalloc() were left uninitialized, relying on callers to
-set fields explicitly. This resulted in the use of uninitialized
-data in certain error paths or when new fields are added in the
-future.
+As kcalloc() may fail, check its return value to avoid a NULL pointer
+dereference when passing the buffer to rng->read(). On allocation
+failure, log the error and return since test_len() returns void.
 
-The ACVP patches also contain two user-space interface files:
-algif_kpp.c and algif_akcipher.c. These too rely on proper
-initialization of their context structures.
-
-A particular issue has been observed with the newly added
-'inflight' variable introduced in af_alg_ctx by commit:
-
-  67b164a871af ("crypto: af_alg - Disallow multiple in-flight AIO requests")
-
-Because the context is not memset to zero after allocation,
-the inflight variable has contained garbage values. As a result,
-af_alg_alloc_areq() has incorrectly returned -EBUSY randomly when
-the garbage value was interpreted as true:
-
-  https://github.com/gregkh/linux/blame/master/crypto/af_alg.c#L1209
-
-The check directly tests ctx->inflight without explicitly
-comparing against true/false. Since inflight is only ever set to
-true or false later, an uninitialized value has triggered
--EBUSY failures. Zero-initializing memory allocated with
-sock_kmalloc() ensures inflight and other fields start in a known
-state, removing random issues caused by uninitialized data.
-
-Fixes: fe869cdb89c9 ("crypto: algif_hash - User-space interface for hash operations")
-Fixes: 5afdfd22e6ba ("crypto: algif_rng - add random number generator support")
-Fixes: 2d97591ef43d ("crypto: af_alg - consolidation of duplicate code")
-Fixes: 67b164a871af ("crypto: af_alg - Disallow multiple in-flight AIO requests")
+Fixes: 2be0d806e25e ("crypto: caam - add a test for the RNG")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/af_alg.c     |    5 ++---
- crypto/algif_hash.c |    3 +--
- crypto/algif_rng.c  |    3 +--
- 3 files changed, 4 insertions(+), 7 deletions(-)
+ drivers/crypto/caam/caamrng.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/crypto/af_alg.c
-+++ b/crypto/af_alg.c
-@@ -1212,15 +1212,14 @@ struct af_alg_async_req *af_alg_alloc_ar
- 	if (unlikely(!areq))
- 		return ERR_PTR(-ENOMEM);
+diff --git a/drivers/crypto/caam/caamrng.c b/drivers/crypto/caam/caamrng.c
+index b3d14a7f4dd1..0eb43c862516 100644
+--- a/drivers/crypto/caam/caamrng.c
++++ b/drivers/crypto/caam/caamrng.c
+@@ -181,7 +181,9 @@ static inline void test_len(struct hwrng *rng, size_t len, bool wait)
+ 	struct device *dev = ctx->ctrldev;
  
-+	memset(areq, 0, areqlen);
-+
- 	ctx->inflight = true;
+ 	buf = kcalloc(CAAM_RNG_MAX_FIFO_STORE_SIZE, sizeof(u8), GFP_KERNEL);
+-
++	if (!buf) {
++		return;
++	}
+ 	while (len > 0) {
+ 		read_len = rng->read(rng, buf, len, wait);
  
- 	areq->areqlen = areqlen;
- 	areq->sk = sk;
- 	areq->first_rsgl.sgl.sgt.sgl = areq->first_rsgl.sgl.sgl;
--	areq->last_rsgl = NULL;
- 	INIT_LIST_HEAD(&areq->rsgl_list);
--	areq->tsgl = NULL;
--	areq->tsgl_entries = 0;
- 
- 	return areq;
- }
---- a/crypto/algif_hash.c
-+++ b/crypto/algif_hash.c
-@@ -416,9 +416,8 @@ static int hash_accept_parent_nokey(void
- 	if (!ctx)
- 		return -ENOMEM;
- 
--	ctx->result = NULL;
-+	memset(ctx, 0, len);
- 	ctx->len = len;
--	ctx->more = false;
- 	crypto_init_wait(&ctx->wait);
- 
- 	ask->private = ctx;
---- a/crypto/algif_rng.c
-+++ b/crypto/algif_rng.c
-@@ -248,9 +248,8 @@ static int rng_accept_parent(void *priva
- 	if (!ctx)
- 		return -ENOMEM;
- 
-+	memset(ctx, 0, len);
- 	ctx->len = len;
--	ctx->addtl = NULL;
--	ctx->addtl_len = 0;
- 
- 	/*
- 	 * No seeding done at that point -- if multiple accepts are
+-- 
+2.52.0
+
 
 
