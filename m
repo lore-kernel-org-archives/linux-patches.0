@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F7C1B6D08;
-	Mon, 29 Dec 2025 16:26:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 223D5327BF3;
+	Mon, 29 Dec 2025 16:26:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025560; cv=none; b=CYueWAFqGSCxIAqHP2p7B2Vh40H9BapnUf3ev4YmSx38tpCMKPZ+rWxsQs8DTAuCuqcQhjxXiyYmPj/qaSNzPBAjBy4Q5XMyujWzfL0pfuMHw/JgRlvRYY5+6SNOv2W/R3tKUDSEix97e1Zx0Ri2i0GMO7Pbb8SWin0vgEzZXEA=
+	t=1767025563; cv=none; b=iW65eWI5DS1xaWw4gm2dGLt4jNKKnaD3VTUpVvnqNOPkIL2f5WheJALrWsRTN+D/jxvuwUXcjbO1VgO90o9mUAc8bkzNv9m+elHA7+BRojPLWtX8nkzIx6jXFfPabHXHh+8JNwM5PCuD3zk9pLQ9oOXDCkfZsLY48hBFYtf4cEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025560; c=relaxed/simple;
-	bh=k4vtdMUdUyNx4XNDlvHCd+cOY4VfsuXCdbEUALCacvA=;
+	s=arc-20240116; t=1767025563; c=relaxed/simple;
+	bh=1fIjVxeUakk1TvKiylrtvMUC7Bp5bV1xbGQ9gPM8jZ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DLbnNYsxjTeV7vQ4P10YCFBu7VNn8/GYlvKALCV7qcAP9+KDirbO3amAAbpvcPbXqONj7/3RFAGf36EssOvSNRncUaI7Yu/zlHNo6B8NPDX0/Bo9OgVpByPDlQF89F2DDSre5ph0KJ/naYFSKpTMuBzfEQEhyd2azGG6Mofte04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ElvEkhH6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hODwI3q8FOYNNweJ/o2uTzfV9nE9Cn7Rp3RKgQ4ssYCcyETtFnoTa9FCAsvXa6oKxj88i0828VAGE2jWuJQ+KyMXGyoUkwpAEMNRoAq1BeaC0KfWD4sbSkKgQQJGB6KGnunHtmLUh1RLYOw+KDWni7jEGq8XBaTZhwKjiWlMvRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rAR98hjk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ElvEkhH6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99362C116C6;
-	Mon, 29 Dec 2025 16:25:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rAR98hjk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E2CAC16AAE;
+	Mon, 29 Dec 2025 16:26:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025560;
-	bh=k4vtdMUdUyNx4XNDlvHCd+cOY4VfsuXCdbEUALCacvA=;
+	s=korg; t=1767025563;
+	bh=1fIjVxeUakk1TvKiylrtvMUC7Bp5bV1xbGQ9gPM8jZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ElvEkhH6xV5AJ2Rt01FYJ8CYTkQdR0kvRmJD5JoP//vAZqSVvRThZVKSp0bjhGfkk
-	 ZLTEXuMRjYcXm7SkM31sqpHsQu23bNS2twt7OQWDKimJjEpvuQBGPmwK2tBi74nx1M
-	 2XHie7MqeKX7LRKB+KiApvM9+gpDnRiKtODZs7Ic=
+	b=rAR98hjkWYpldhQ1d+DpFY0p90Lqe6AdyI1+At/4acHjyhA0POht9f29gcM215KJp
+	 AJ8uJz4rddXNTbRCZr82K8p0chuDtX2SimhB2z2QrbU5Ww5iLPWUajgn/Kg9hfdSfg
+	 24InKlfSLvJ5QsHRkpnIi9v/8uz8Apli+8a7/AQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.18 256/430] fs: PM: Fix reverse check in filesystems_freeze_callback()
-Date: Mon, 29 Dec 2025 17:10:58 +0100
-Message-ID: <20251229160733.776372640@linuxfoundation.org>
+	Petr Mladek <pmladek@suse.com>,
+	John Ogness <john.ogness@linutronix.de>,
+	Sherry Sun <sherry.sun@nxp.com>
+Subject: [PATCH 6.18 257/430] printk: Allow printk_trigger_flush() to flush all types
+Date: Mon, 29 Dec 2025 17:10:59 +0100
+Message-ID: <20251229160733.814070878@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -50,42 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: John Ogness <john.ogness@linutronix.de>
 
-commit 222047f68e8565c558728f792f6fef152a1d4d51 upstream.
+commit d01ff281bd9b1bfeac9ab98ec8a9ee41da900d5e upstream.
 
-The freeze_all_ptr check in filesystems_freeze_callback() introduced by
-commit a3f8f8662771 ("power: always freeze efivarfs") is reverse which
-quite confusingly causes all file systems to be frozen when
-filesystem_freeze_enabled is false.
+Currently printk_trigger_flush() only triggers legacy offloaded
+flushing, even if that may not be the appropriate method to flush
+for currently registered consoles. (The function predates the
+NBCON consoles.)
 
-On my systems it causes the WARN_ON_ONCE() in __set_task_frozen() to
-trigger, most likely due to an attempt to freeze a file system that is
-not ready for that.
+Since commit 6690d6b52726 ("printk: Add helper for flush type
+logic") there is printk_get_console_flush_type(), which also
+considers NBCON consoles and reports all the methods of flushing
+appropriate based on the system state and consoles available.
 
-Add a logical negation to the check in question to reverse it as
-appropriate.
+Update printk_trigger_flush() to use
+printk_get_console_flush_type() to appropriately flush registered
+consoles.
 
-Fixes: a3f8f8662771 ("power: always freeze efivarfs")
-Cc: 6.18+ <stable@vger.kernel.org> # 6.18+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/12788397.O9o76ZdvQC@rafael.j.wysocki
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Suggested-by: Petr Mladek <pmladek@suse.com>
+Signed-off-by: John Ogness <john.ogness@linutronix.de>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Link: https://lore.kernel.org/stable/20251113160351.113031-2-john.ogness%40linutronix.de
+Tested-by: Sherry Sun <sherry.sun@nxp.com>
+Link: https://patch.msgid.link/20251113160351.113031-2-john.ogness@linutronix.de
+Signed-off-by: Petr Mladek <pmladek@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/super.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/printk/nbcon.c  |    2 +-
+ kernel/printk/printk.c |   23 ++++++++++++++++++++++-
+ 2 files changed, 23 insertions(+), 2 deletions(-)
 
---- a/fs/super.c
-+++ b/fs/super.c
-@@ -1188,7 +1188,7 @@ static void filesystems_freeze_callback(
- 	if (!sb->s_op->freeze_fs && !sb->s_op->freeze_super)
- 		return;
+--- a/kernel/printk/nbcon.c
++++ b/kernel/printk/nbcon.c
+@@ -1856,7 +1856,7 @@ void nbcon_device_release(struct console
+ 			if (console_trylock())
+ 				console_unlock();
+ 		} else if (ft.legacy_offload) {
+-			printk_trigger_flush();
++			defer_console_output();
+ 		}
+ 	}
+ 	console_srcu_read_unlock(cookie);
+--- a/kernel/printk/printk.c
++++ b/kernel/printk/printk.c
+@@ -4595,9 +4595,30 @@ void defer_console_output(void)
+ 	__wake_up_klogd(PRINTK_PENDING_WAKEUP | PRINTK_PENDING_OUTPUT);
+ }
  
--	if (freeze_all_ptr && !(sb->s_type->fs_flags & FS_POWER_FREEZE))
-+	if (!freeze_all_ptr && !(sb->s_type->fs_flags & FS_POWER_FREEZE))
- 		return;
++/**
++ * printk_trigger_flush - Attempt to flush printk buffer to consoles.
++ *
++ * If possible, flush the printk buffer to all consoles in the caller's
++ * context. If offloading is available, trigger deferred printing.
++ *
++ * This is best effort. Depending on the system state, console states,
++ * and caller context, no actual flushing may result from this call.
++ */
+ void printk_trigger_flush(void)
+ {
+-	defer_console_output();
++	struct console_flush_type ft;
++
++	printk_get_console_flush_type(&ft);
++	if (ft.nbcon_atomic)
++		nbcon_atomic_flush_pending();
++	if (ft.nbcon_offload)
++		nbcon_kthreads_wake();
++	if (ft.legacy_direct) {
++		if (console_trylock())
++			console_unlock();
++	}
++	if (ft.legacy_offload)
++		defer_console_output();
+ }
  
- 	if (!get_active_super(sb))
+ int vprintk_deferred(const char *fmt, va_list args)
 
 
