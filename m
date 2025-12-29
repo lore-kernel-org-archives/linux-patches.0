@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9AF6331233;
-	Mon, 29 Dec 2025 16:19:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA851331234;
+	Mon, 29 Dec 2025 16:19:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025164; cv=none; b=hweyjecJyRHTpQNRv3fKUzjb2pTUAxL4MDHdOeuQD74kWXxHOQRL6k3OAPWf8ZaZRUDIUSwlM793PJoeax/LSreT4XYWOGPRUnfaRQucU3lQNvVySEfff6kGquh0iqQfIvzrsUQ31AxCwHQSTdppZgjeLcX2DYq2XmfCuAXeWBA=
+	t=1767025166; cv=none; b=qfHjhj6eKcfxKsHo3mlodYeOUFWlqEiC0aDFyKsFEB8j97i0pbmWVvWl6pVOMokqnqyTOVtHJI1Yj7xz+brcaS5bRyo/ifxmkmMUCm346JhzhVJasxPDNhEXsdhZcQ9ziNb0ROzKxpXz3VBYqwWRQus+YYQCoOsuGWLww4XU5mQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025164; c=relaxed/simple;
-	bh=+kNc5J0OfNhNWafIrugCTYW/lP69iVa83QO0SFRpaBA=;
+	s=arc-20240116; t=1767025166; c=relaxed/simple;
+	bh=Q+ILSGbJfr8aINzBFZI0bHY49sEIlsSEyfEGrUzd1qU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HmPMX840r+2gd5YOLCLp0h4P5I2Qds3xpUEW9fyus00ZcX8whJAWRczDg0F26D/e5rOcFYfz+hIYrps9npN4ZzxMS5nIftFVSdOxbweu78wVK2d9TAszBEjB0p8f2Hsy7l0+MDz/TZ/Fh/yCDH6n/fKz4AxZhK5RISopDQpZ/Kk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C5Kk/lB8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B6SMcttTkbzl58VdwKUPbLV0c5KFt+lHMU4jiwgt0fLMdQIcmHCxQPcgSa7+ll1GyZ1OPdvu4z/EZTPHBd8sNP+t17e/LPIWJ3x/J+ceM5WAcVKS6S1qDMyzsOM3QQbd0/QbPJ0uXKOdSVMargeZT5EAY/CHeGkQ8RbUWj3BRmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QNBLxxL6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C5Kk/lB8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FEE0C4CEF7;
-	Mon, 29 Dec 2025 16:19:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QNBLxxL6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44891C4CEF7;
+	Mon, 29 Dec 2025 16:19:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025163;
-	bh=+kNc5J0OfNhNWafIrugCTYW/lP69iVa83QO0SFRpaBA=;
+	s=korg; t=1767025166;
+	bh=Q+ILSGbJfr8aINzBFZI0bHY49sEIlsSEyfEGrUzd1qU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C5Kk/lB8UWLIlmFcIWEvpcUHK8UnjSwynUXRGIovB/hld1lwiycpkhMTKXy3r7xff
-	 19jBnVWVy72Zlx1GYuh86B9sx5ycGjfvA1xv2VuHXoi8ZJqK+hLipl7pB2fcJUIRJZ
-	 oikty9idRMRHeS0pOKsHCORS3PQ8Hp17Veae4KRI=
+	b=QNBLxxL6CBjA4J7M2zCyb9+z3HlLp5GbtGVPChw//ew3vmvp/F/bKqBUAbZvMvFbC
+	 3HqK26OzmFUghn3OBPBlLeXE9LN6qD1+MTxzyPETFK8G7eRoYmG238vYZ0f5ojZT82
+	 I2e9OsfastyUbDjh1oO0Z0BlPKdoMwxDr1I3MbgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Sergeev <denserg.edu@gmail.com>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 116/430] hwmon: (dell-smm) Limit fan multiplier to avoid overflow
-Date: Mon, 29 Dec 2025 17:08:38 +0100
-Message-ID: <20251229160728.636512730@linuxfoundation.org>
+Subject: [PATCH 6.18 117/430] hwmon: (ibmpex) fix use-after-free in high/low store
+Date: Mon, 29 Dec 2025 17:08:39 +0100
+Message-ID: <20251229160728.672837996@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -51,55 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis Sergeev <denserg.edu@gmail.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit 46c28bbbb150b80827e4bcbea231560af9d16854 ]
+[ Upstream commit 6946c726c3f4c36f0f049e6f97e88c510b15f65d ]
 
-The fan nominal speed returned by SMM is limited to 16 bits, but the
-driver allows the fan multiplier to be set via a module parameter.
+The ibmpex_high_low_store() function retrieves driver data using
+dev_get_drvdata() and uses it without validation. This creates a race
+condition where the sysfs callback can be invoked after the data
+structure is freed, leading to use-after-free.
 
-Clamp the computed fan multiplier so that fan_nominal_speed *
-i8k_fan_mult always fits into a signed 32-bit integer and refuse to
-initialize the driver if the value is too large.
+Fix by adding a NULL check after dev_get_drvdata(), and reordering
+operations in the deletion path to prevent TOCTOU.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 20bdeebc88269 ("hwmon: (dell-smm) Introduce helper function for data init")
-Signed-off-by: Denis Sergeev <denserg.edu@gmail.com>
-Link: https://lore.kernel.org/r/20251209063706.49008-1-denserg.edu@gmail.com
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Reported-by: Junrui Luo <moonafterrain@outlook.com>
+Fixes: 57c7c3a0fdea ("hwmon: IBM power meter driver")
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Link: https://lore.kernel.org/r/MEYPR01MB7886BE2F51BFE41875B74B60AFA0A@MEYPR01MB7886.ausprd01.prod.outlook.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/dell-smm-hwmon.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/hwmon/ibmpex.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/dell-smm-hwmon.c b/drivers/hwmon/dell-smm-hwmon.c
-index cbe1a74a3dee..f0e8a9bc0d0e 100644
---- a/drivers/hwmon/dell-smm-hwmon.c
-+++ b/drivers/hwmon/dell-smm-hwmon.c
-@@ -76,6 +76,9 @@
- #define DELL_SMM_NO_TEMP	10
- #define DELL_SMM_NO_FANS	4
+diff --git a/drivers/hwmon/ibmpex.c b/drivers/hwmon/ibmpex.c
+index 228c5f6c6f38..129f3a9e8fe9 100644
+--- a/drivers/hwmon/ibmpex.c
++++ b/drivers/hwmon/ibmpex.c
+@@ -277,6 +277,9 @@ static ssize_t ibmpex_high_low_store(struct device *dev,
+ {
+ 	struct ibmpex_bmc_data *data = dev_get_drvdata(dev);
  
-+/* limit fan multiplier to avoid overflow */
-+#define DELL_SMM_MAX_FAN_MULT (INT_MAX / U16_MAX)
++	if (!data)
++		return -ENODEV;
 +
- struct smm_regs {
- 	unsigned int eax;
- 	unsigned int ebx;
-@@ -1253,6 +1256,12 @@ static int dell_smm_init_data(struct device *dev, const struct dell_smm_ops *ops
- 	data->ops = ops;
- 	/* All options must not be 0 */
- 	data->i8k_fan_mult = fan_mult ? : I8K_FAN_MULT;
-+	if (data->i8k_fan_mult > DELL_SMM_MAX_FAN_MULT) {
-+		dev_err(dev,
-+			"fan multiplier %u is too large (max %u)\n",
-+			data->i8k_fan_mult, DELL_SMM_MAX_FAN_MULT);
-+		return -EINVAL;
-+	}
- 	data->i8k_fan_max = fan_max ? : I8K_FAN_HIGH;
- 	data->i8k_pwm_mult = DIV_ROUND_UP(255, data->i8k_fan_max);
+ 	ibmpex_reset_high_low_data(data);
  
+ 	return count;
+@@ -508,6 +511,9 @@ static void ibmpex_bmc_delete(struct ibmpex_bmc_data *data)
+ {
+ 	int i, j;
+ 
++	hwmon_device_unregister(data->hwmon_dev);
++	dev_set_drvdata(data->bmc_device, NULL);
++
+ 	device_remove_file(data->bmc_device,
+ 			   &sensor_dev_attr_reset_high_low.dev_attr);
+ 	device_remove_file(data->bmc_device, &dev_attr_name.attr);
+@@ -521,8 +527,7 @@ static void ibmpex_bmc_delete(struct ibmpex_bmc_data *data)
+ 		}
+ 
+ 	list_del(&data->list);
+-	dev_set_drvdata(data->bmc_device, NULL);
+-	hwmon_device_unregister(data->hwmon_dev);
++
+ 	ipmi_destroy_user(data->user);
+ 	kfree(data->sensors);
+ 	kfree(data);
 -- 
 2.51.0
 
