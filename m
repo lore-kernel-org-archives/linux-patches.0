@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E0DF331A7B;
-	Mon, 29 Dec 2025 16:30:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7F7332EAF;
+	Mon, 29 Dec 2025 16:30:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025857; cv=none; b=j4Oz9P2YXQQQwrsxmt71AY4nPga0olBoEVAQC5mP4rtjIAT676BPRaYfFdkZJJZwCmhou1GA6W0Qa7aikKCqYKPORJiOHvfpbP9WKtChiCEJ9FMn2BqyvXyw7WVUuKNLzW3aAWm7yTkUSyy3wyTkh28/8YVg29pYEgWOnzt/10M=
+	t=1767025859; cv=none; b=fhRVDO+klIkREW1rThiagbckYmLy1iWWlN81nRs9DVD2nZ0WxifgYWy2nOwpbRbawXBXwR1kblRTAK4NHdzu44jM3opl+W0n8n9VGnCm9A6N7Kwupb0MXvQRWrc9HdCqPcbZ4g5l0RX3zSL5ZYjJZVd8hFthDSNFULrvW2NBt2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025857; c=relaxed/simple;
-	bh=80Ttkt3Z6u/QazVLzrJTeV7Si+Dre+vK2cMx061dOKY=;
+	s=arc-20240116; t=1767025859; c=relaxed/simple;
+	bh=9yWTxMBMPRFnan4JmKrHp/v8JKwlt27P37WYX3KwEo8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hNN9hkeYmOxheFN7sc2JpIL9VilRlMpIdUOQtDLiaFSg7ehAbF81zqi6Pxl7KZesgycuW5LWVVFKM4074zufXDegPjUJsWjC9Xj9Znn9HF0fIqiZttkIialeCrIhZ1QRZ/kdciOZOrOvC9sEE69Xgshrkkkle0WOcbFeHICh5aY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uCqYLpt+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=btHN3Pu5YLIX6YsnFxI2bFF1mnz+sTvuxf37E/dNRX4+JLxFOISJL52tY0O+cKJCrS7gczb8sgCSwE0XTaLsPI4NmRU9tzWSdrP7LPU8a2SmA2r9lQMfqq/bDmUyljNv5aKHg+jGU30L4IxRb6/IMnHNtQZw9SemFMFl2VBZGxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=srISrcZP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uCqYLpt+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D45CC4CEF7;
-	Mon, 29 Dec 2025 16:30:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="srISrcZP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65BF5C19421;
+	Mon, 29 Dec 2025 16:30:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025857;
-	bh=80Ttkt3Z6u/QazVLzrJTeV7Si+Dre+vK2cMx061dOKY=;
+	s=korg; t=1767025859;
+	bh=9yWTxMBMPRFnan4JmKrHp/v8JKwlt27P37WYX3KwEo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uCqYLpt+cQ7nsn6NSg0jni5R+1tdazZ7A/4kfMLQjxg5Ai87KBGQHOUPskSIYRVoA
-	 oWcazndFJvP47PZ3vCR28bNoRecmG6ITvEKIblm1HfQOMhgEHAO4nAk1G4ob+2/zfl
-	 t0Xgv5VdrmBEsONYZcXS1+nq7i+raKd+17SzSUug=
+	b=srISrcZPyy+IB+Duq4PUAoWpMDVO4OHfdNifTRaqPfpZSSrHo9K7Z5GbZHoazKk+I
+	 Ps4GOdjijzLyJIVf7oy4d6Po7mMQZyc4OftmV0cr3h1xRbO8xemZnC0/rj8rY8L2nv
+	 OXHFc1+RSHqWnOn8cPXUYiObv9nqkfBREB/JpGj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Mirabile <cmirabil@redhat.com>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.18 362/430] lib/crypto: riscv: Add poly1305-core.S to .gitignore
-Date: Mon, 29 Dec 2025 17:12:44 +0100
-Message-ID: <20251229160737.651971167@linuxfoundation.org>
+	Matteo Rizzo <matteorizzo@google.com>,
+	Yosry Ahmed <yosry.ahmed@linux.dev>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.18 345/430] KVM: nSVM: Propagate SVM_EXIT_CR0_SEL_WRITE correctly for LMSW emulation
+Date: Mon, 29 Dec 2025 17:12:27 +0100
+Message-ID: <20251229160737.024525269@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -44,39 +45,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Charles Mirabile <cmirabil@redhat.com>
+From: Yosry Ahmed <yosry.ahmed@linux.dev>
 
-commit 5a0b1882506858b12cc77f0e2439a5f3c5052761 upstream.
+commit 5674a76db0213f9db1e4d08e847ff649b46889c0 upstream.
 
-poly1305-core.S is an auto-generated file, so it should be ignored.
+When emulating L2 instructions, svm_check_intercept() checks whether a
+write to CR0 should trigger a synthesized #VMEXIT with
+SVM_EXIT_CR0_SEL_WRITE. For MOV-to-CR0, SVM_EXIT_CR0_SEL_WRITE is only
+triggered if any bit other than CR0.MP and CR0.TS is updated. However,
+according to the APM (24593—Rev.  3.42—March 2024, Table 15-7):
 
-Fixes: bef9c7559869 ("lib/crypto: riscv/poly1305: Import OpenSSL/CRYPTOGAMS implementation")
+  The LMSW instruction treats the selective CR0-write
+  intercept as a non-selective intercept (i.e., it intercepts
+  regardless of the value being written).
+
+Skip checking the changed bits for x86_intercept_lmsw and always inject
+SVM_EXIT_CR0_SEL_WRITE.
+
+Fixes: cfec82cb7d31 ("KVM: SVM: Add intercept check for emulated cr accesses")
 Cc: stable@vger.kernel.org
-Signed-off-by: Charles Mirabile <cmirabil@redhat.com>
-Link: https://lore.kernel.org/r/20251212184717.133701-1-cmirabil@redhat.com
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Reported-by: Matteo Rizzo <matteorizzo@google.com>
+Signed-off-by: Yosry Ahmed <yosry.ahmed@linux.dev>
+Link: https://patch.msgid.link/20251024192918.3191141-3-yosry.ahmed@linux.dev
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/crypto/riscv/.gitignore | 2 ++
- 1 file changed, 2 insertions(+)
- create mode 100644 lib/crypto/riscv/.gitignore
+ arch/x86/kvm/svm/svm.c |   18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/lib/crypto/riscv/.gitignore b/lib/crypto/riscv/.gitignore
-new file mode 100644
-index 000000000000..0d47d4f21c6d
---- /dev/null
-+++ b/lib/crypto/riscv/.gitignore
-@@ -0,0 +1,2 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+poly1305-core.S
--- 
-2.52.0
-
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -4553,20 +4553,20 @@ static int svm_check_intercept(struct kv
+ 		if (info->intercept == x86_intercept_clts)
+ 			break;
+ 
+-		cr0 = vcpu->arch.cr0 & ~SVM_CR0_SELECTIVE_MASK;
+-		val = info->src_val  & ~SVM_CR0_SELECTIVE_MASK;
+-
++		/* LMSW always triggers INTERCEPT_SELECTIVE_CR0 */
+ 		if (info->intercept == x86_intercept_lmsw) {
+-			cr0 &= 0xfUL;
+-			val &= 0xfUL;
+-			/* lmsw can't clear PE - catch this here */
+-			if (cr0 & X86_CR0_PE)
+-				val |= X86_CR0_PE;
++			icpt_info.exit_code = SVM_EXIT_CR0_SEL_WRITE;
++			break;
+ 		}
+ 
++		/*
++		 * MOV-to-CR0 only triggers INTERCEPT_SELECTIVE_CR0 if any bit
++		 * other than SVM_CR0_SELECTIVE_MASK is changed.
++		 */
++		cr0 = vcpu->arch.cr0 & ~SVM_CR0_SELECTIVE_MASK;
++		val = info->src_val  & ~SVM_CR0_SELECTIVE_MASK;
+ 		if (cr0 ^ val)
+ 			icpt_info.exit_code = SVM_EXIT_CR0_SEL_WRITE;
+-
+ 		break;
+ 	}
+ 	case SVM_EXIT_READ_DR0:
 
 
