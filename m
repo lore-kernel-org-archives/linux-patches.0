@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E535C1B6D08;
-	Mon, 29 Dec 2025 16:26:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA82432AABB;
+	Mon, 29 Dec 2025 16:26:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025583; cv=none; b=m5OpQKzFPD4+5gDrGypMRS8DtITpcRX4LV31JKBZvwxVUnGf7OAanou8A+IID6e7BhyBd5LLLbRmw6gH8A2uzJG1jmuTHGTjoa3GZsKQNk1cw3IjElg+FbBbn+wK35lFd+HgGM1x9uuK5uAuRiwAX+Sx4fvAh0NHvZgXUW6v5mI=
+	t=1767025585; cv=none; b=GhT4kC75Xfx22tGLXYhRznk9guTPc/GJP2YTNqs8Ykliy5ThI7+RWnTwiDBYUvA3BFATxf5lKllIHThkG+AEEQLGeFa7yY9xfH9h/NvssH3JojIm0ZzJG7gKSuGZyps/3PrIvxd01o/jV5VBIJePam1BG5P29qWTZJBMUW69lFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025583; c=relaxed/simple;
-	bh=yRZB7GRIyrN49VA4xRezWwtkiFbTqUwso8NU4rPju30=;
+	s=arc-20240116; t=1767025585; c=relaxed/simple;
+	bh=fPt7c313BWybEFc3ue3bdX/Ab/8SGv5GjNYaEn26dh0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tO3BKA2WeQ4np8bL9i6Xn/E7sGiAjQDyb3HKCQ9g8Zu4Q9yBj0STZsyB4zRtanB3tSaydbpyLE6e1DxRUA9T8p2aCPT3WLilsJozro8PnMpsi239C2rMLGBrFY6mD1JMJMNqUUZBxgJyVVTHV81IiF7wuVDWaSHEp6Tf5XZSo8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xAR8t4l2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oilsjB8wz9FGn2wlQfHoGfvzxyeOQRpmsRjtC7T1aV5vmbdHHWGozwARHSDtAiF/A0ULcJW4n8txIIgzo0YBZYP2F91ZMNRud8y5f4WV94BhJ7l+A6sRTbIWGbF3atDo0GqL6YSwHdj+sdU0Scn7YgIalaGV9Wnabx15xdA6KlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aHOkBADU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xAR8t4l2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70F37C4CEF7;
-	Mon, 29 Dec 2025 16:26:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aHOkBADU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34F1CC4CEF7;
+	Mon, 29 Dec 2025 16:26:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025582;
-	bh=yRZB7GRIyrN49VA4xRezWwtkiFbTqUwso8NU4rPju30=;
+	s=korg; t=1767025585;
+	bh=fPt7c313BWybEFc3ue3bdX/Ab/8SGv5GjNYaEn26dh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xAR8t4l2rSMi6OHKRGxvaoN+on70znzK+pycbPoJta7HRZYjGStpA9BBoxuIfyTWZ
-	 OnTSl15HINTkhP31SYHdzsLL/V8vxXPf9hgXdwmBmvROXDc8aEDeOqO4ik2Y8OUJZ1
-	 b5euOXt1nwi3JGmEORZ8tewQEOr7sUBgmsXlesNw=
+	b=aHOkBADUgwQDTq/w/xzjxmPC8vGOA2XPh0js9i8GSrOTUkp39MnT5SPBXTNszOsRV
+	 YQJdq4jeTCCcEpLsPDBhJ5z9XWk+GyLzBVfvgblQviulPaiI9XbYfy2He+NHbzajg+
+	 Xs73B87XEdkQvJMo6ag/5SwpWy7wzS3ByaxcCEI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
+	syzbot+6e493c165d26d6fcbf72@syzkaller.appspotmail.com,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
 	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org
-Subject: [PATCH 6.18 264/430] ext4: align max orphan file size with e2fsprogs limit
-Date: Mon, 29 Dec 2025 17:11:06 +0100
-Message-ID: <20251229160734.068290203@linuxfoundation.org>
+Subject: [PATCH 6.18 265/430] jbd2: use a per-journal lock_class_key for jbd2_trans_commit_key
+Date: Mon, 29 Dec 2025 17:11:07 +0100
+Message-ID: <20251229160734.105223136@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -46,63 +47,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-commit 7c11c56eb32eae96893eebafdbe3decadefe88ad upstream.
+commit 524c3853831cf4f7e1db579e487c757c3065165c upstream.
 
-Kernel commit 0a6ce20c1564 ("ext4: verify orphan file size is not too big")
-limits the maximum supported orphan file size to 8 << 20.
+syzbot is reporting possibility of deadlock due to sharing lock_class_key
+for jbd2_handle across ext4 and ocfs2. But this is a false positive, for
+one disk partition can't have two filesystems at the same time.
 
-However, in e2fsprogs, the orphan file size is set to 32–512 filesystem
-blocks when creating a filesystem.
-
-With 64k block size, formatting an ext4 fs >32G gives an orphan file bigger
-than the kernel allows, so mount prints an error and fails:
-
-    EXT4-fs (vdb): orphan file too big: 8650752
-    EXT4-fs (vdb): mount failed
-
-To prevent this issue and allow previously created 64KB filesystems to
-mount, we updates the maximum allowed orphan file size in the kernel to
-512 filesystem blocks.
-
-Fixes: 0a6ce20c1564 ("ext4: verify orphan file size is not too big")
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reported-by: syzbot+6e493c165d26d6fcbf72@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=6e493c165d26d6fcbf72
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Tested-by: syzbot+6e493c165d26d6fcbf72@syzkaller.appspotmail.com
 Reviewed-by: Jan Kara <jack@suse.cz>
-Message-ID: <20251120134233.2994147-1-libaokun@huaweicloud.com>
+Message-ID: <987110fc-5470-457a-a218-d286a09dd82f@I-love.SAKURA.ne.jp>
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/orphan.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/jbd2/journal.c    |    6 ++++--
+ include/linux/jbd2.h |    6 ++++++
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/orphan.c
-+++ b/fs/ext4/orphan.c
-@@ -8,6 +8,8 @@
- #include "ext4.h"
- #include "ext4_jbd2.h"
- 
-+#define EXT4_MAX_ORPHAN_FILE_BLOCKS 512
-+
- static int ext4_orphan_file_add(handle_t *handle, struct inode *inode)
+--- a/fs/jbd2/journal.c
++++ b/fs/jbd2/journal.c
+@@ -1521,7 +1521,6 @@ static journal_t *journal_init_common(st
+ 			struct block_device *fs_dev,
+ 			unsigned long long start, int len, int blocksize)
  {
- 	int i, j, start;
-@@ -588,7 +590,7 @@ int ext4_init_orphan_info(struct super_b
- 	 * consuming absurd amounts of memory when pinning blocks of orphan
- 	 * file in memory.
+-	static struct lock_class_key jbd2_trans_commit_key;
+ 	journal_t *journal;
+ 	int err;
+ 	int n;
+@@ -1530,6 +1529,7 @@ static journal_t *journal_init_common(st
+ 	if (!journal)
+ 		return ERR_PTR(-ENOMEM);
+ 
++	lockdep_register_key(&journal->jbd2_trans_commit_key);
+ 	journal->j_blocksize = blocksize;
+ 	journal->j_dev = bdev;
+ 	journal->j_fs_dev = fs_dev;
+@@ -1560,7 +1560,7 @@ static journal_t *journal_init_common(st
+ 	journal->j_max_batch_time = 15000; /* 15ms */
+ 	atomic_set(&journal->j_reserved_credits, 0);
+ 	lockdep_init_map(&journal->j_trans_commit_map, "jbd2_handle",
+-			 &jbd2_trans_commit_key, 0);
++			 &journal->jbd2_trans_commit_key, 0);
+ 
+ 	/* The journal is marked for error until we succeed with recovery! */
+ 	journal->j_flags = JBD2_ABORT;
+@@ -1611,6 +1611,7 @@ err_cleanup:
+ 	kfree(journal->j_wbuf);
+ 	jbd2_journal_destroy_revoke(journal);
+ 	journal_fail_superblock(journal);
++	lockdep_unregister_key(&journal->jbd2_trans_commit_key);
+ 	kfree(journal);
+ 	return ERR_PTR(err);
+ }
+@@ -2187,6 +2188,7 @@ int jbd2_journal_destroy(journal_t *jour
+ 		jbd2_journal_destroy_revoke(journal);
+ 	kfree(journal->j_fc_wbuf);
+ 	kfree(journal->j_wbuf);
++	lockdep_unregister_key(&journal->jbd2_trans_commit_key);
+ 	kfree(journal);
+ 
+ 	return err;
+--- a/include/linux/jbd2.h
++++ b/include/linux/jbd2.h
+@@ -1253,6 +1253,12 @@ struct journal_s
  	 */
--	if (inode->i_size > 8 << 20) {
-+	if (inode->i_size > (EXT4_MAX_ORPHAN_FILE_BLOCKS << inode->i_blkbits)) {
- 		ext4_msg(sb, KERN_ERR, "orphan file too big: %llu",
- 			 (unsigned long long)inode->i_size);
- 		ret = -EFSCORRUPTED;
+ 	struct lockdep_map	j_trans_commit_map;
+ #endif
++	/**
++	 * @jbd2_trans_commit_key:
++	 *
++	 * "struct lock_class_key" for @j_trans_commit_map
++	 */
++	struct lock_class_key	jbd2_trans_commit_key;
+ 
+ 	/**
+ 	 * @j_fc_cleanup_callback:
 
 
