@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7CD264FBD;
-	Mon, 29 Dec 2025 16:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF42A332ECC;
+	Mon, 29 Dec 2025 16:33:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767026007; cv=none; b=Um6LNV2r+Tk3IXRrZB0TDc17hUO9rj8J7C7pqXQ50UdeZX+u4ZBpuWAFgPkZXInBbgwUvXdtVz6hH9vuSDj4yoBIKwjse21b+v5xWoRNI5d84Msvd6QDYcgNUXvFN5bUIf2eIrgTQj+5pdVvjHFdaUQzhS/40M2jX2Gkha7Nu8Q=
+	t=1767026011; cv=none; b=PjQHG6hGD/BzDw1nCxsByv8L+mG1Ashf8xSDTGAASYCFA1jFXqYrG4IuiGFWbXZDQ+jxQ86VoALL2OhWNTZDMW+sz8sTqUQ4DDUvkv8OvaVN5ROFve66ANRm0v4FBlbSAHFLVOLa6pWjHb+kTEiEmZSxMOIq8SKO/fsffPaGfhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767026007; c=relaxed/simple;
-	bh=X8Ns0LSm0WaIPXB5B70GOXsV3cllhVabIC2C4B+lQzg=;
+	s=arc-20240116; t=1767026011; c=relaxed/simple;
+	bh=O9bpsTyoiDQMyVsFe2okxWTAdAtz5ibEahAlnfilUt4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=krfT4n3CuqBYOMuNF7F6SgRwp9PJ71IEYhtScsSkhHfPOYVCzkvu/DXTNuI7CSX8eIFPWvPOQZsc1X6OCbOoPBFT/9Xwu1e2QxsLCuNIWTmp3i9zb/O3bvHDBtfgh6K8CRiwoQJ4pL5lnYNo13hNtr9m9VABUBuEEpf1y49By+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TBIGlOpF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n8Y9qsGW0sDqHzbX/v/Xgp9d7LSkOwK+QDjXzWpq3wevQoEc9JAgkoNVQ7X5Pyv91KkpMiDM5iq/I8vxxuKrT5bwjJNvGHxJKB8cS3c4klR4RwGbu0P+FJC3Ffo52Aosd7+d337+n16tnyEHFGlEdZ/vTS/jjU4W3nNkM4xyTLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YoxfsKwW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TBIGlOpF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B402C4CEF7;
-	Mon, 29 Dec 2025 16:33:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YoxfsKwW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14462C4CEF7;
+	Mon, 29 Dec 2025 16:33:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767026007;
-	bh=X8Ns0LSm0WaIPXB5B70GOXsV3cllhVabIC2C4B+lQzg=;
+	s=korg; t=1767026010;
+	bh=O9bpsTyoiDQMyVsFe2okxWTAdAtz5ibEahAlnfilUt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TBIGlOpF1odroOG4W4150Dhsbe2PlhoOZGiktqQk1xyRq58dWWHy30zF30TvLQ0Bv
-	 RDhen0cXp8diTRHMuRbwNFEzswYgPn4OBWUVPNP8vAk9tVI1mMOCBZJhW23pwNehSu
-	 Mepj/P8eUh6hTdKsHZamRWPaE8t1bUoLMuBg4I08=
+	b=YoxfsKwWG8TX9gHEhLCAnzRcNnF9Ltvk0WdLFkpG3kayAv2Y9Qzem2e4bEYN141hr
+	 zQIA/1FEJZuag1matALK6VZIIxpoB3O81yzsMrVg9sVZEhjKs1ojK5FZg4PBjHiN98
+	 G8rO1RLr3nQMOfT+fnF/929DK5hVoppN9lZKMvsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>
-Subject: [PATCH 6.18 381/430] s390/ipl: Clear SBP flag when bootprog is set
-Date: Mon, 29 Dec 2025 17:13:03 +0100
-Message-ID: <20251229160738.343628699@linuxfoundation.org>
+	WangYuli <wangyl5933@chinaunicom.cn>,
+	Wentao Guan <guanwentao@uniontech.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 6.18 382/430] gpio: regmap: Fix memleak in error path in gpio_regmap_register()
+Date: Mon, 29 Dec 2025 17:13:04 +0100
+Message-ID: <20251229160738.379850864@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -51,153 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Schnelle <svens@linux.ibm.com>
+From: Wentao Guan <guanwentao@uniontech.com>
 
-commit b1aa01d31249bd116b18c7f512d3e46b4b4ad83b upstream.
+commit 52721cfc78c76b09c66e092b52617006390ae96a upstream.
 
-With z16 a new flag 'search boot program' was introduced for
-list-directed IPL (SCSI, NVMe, ECKD DASD). If this flag is set,
-e.g. via selecting the "Automatic" value for the "Boot program
-selector" control on an HMC load panel, it is copied to the reipl
-structure from the initial ipl structure. When a user now sets a
-boot prog via sysfs, the flag is not cleared and the bootloader
-will again automatically select the boot program, ignoring user
-configuration.
+Call gpiochip_remove() to free the resources allocated by
+gpiochip_add_data() in error path.
 
-To avoid that, clear the SBP flag when a bootprog sysfs file is
-written.
-
-Cc: stable@vger.kernel.org
-Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: 553b75d4bfe9 ("gpio: regmap: Allow to allocate regmap-irq device")
+Fixes: ae495810cffe ("gpio: regmap: add the .fixed_direction_output configuration parameter")
+CC: stable@vger.kernel.org
+Co-developed-by: WangYuli <wangyl5933@chinaunicom.cn>
+Signed-off-by: WangYuli <wangyl5933@chinaunicom.cn>
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20251204101303.30353-1-guanwentao@uniontech.com
+[Bartosz: reworked the commit message]
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/include/uapi/asm/ipl.h |    1 
- arch/s390/kernel/ipl.c           |   48 +++++++++++++++++++++++++++++----------
- 2 files changed, 37 insertions(+), 12 deletions(-)
+ drivers/gpio/gpio-regmap.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/s390/include/uapi/asm/ipl.h
-+++ b/arch/s390/include/uapi/asm/ipl.h
-@@ -15,6 +15,7 @@ struct ipl_pl_hdr {
- #define IPL_PL_FLAG_IPLPS	0x80
- #define IPL_PL_FLAG_SIPL	0x40
- #define IPL_PL_FLAG_IPLSR	0x20
-+#define IPL_PL_FLAG_SBP		0x10
+--- a/drivers/gpio/gpio-regmap.c
++++ b/drivers/gpio/gpio-regmap.c
+@@ -328,7 +328,7 @@ struct gpio_regmap *gpio_regmap_register
+ 						 config->regmap_irq_line, config->regmap_irq_flags,
+ 						 0, config->regmap_irq_chip, &gpio->irq_chip_data);
+ 		if (ret)
+-			goto err_free_bitmap;
++			goto err_remove_gpiochip;
  
- /* IPL Parameter Block header */
- struct ipl_pb_hdr {
---- a/arch/s390/kernel/ipl.c
-+++ b/arch/s390/kernel/ipl.c
-@@ -262,6 +262,24 @@ static struct kobj_attribute sys_##_pref
- 			sys_##_prefix##_##_name##_show,			\
- 			sys_##_prefix##_##_name##_store)
- 
-+#define DEFINE_IPL_ATTR_BOOTPROG_RW(_prefix, _name, _fmt_out, _fmt_in, _hdr, _value)	\
-+	IPL_ATTR_SHOW_FN(_prefix, _name, _fmt_out, (unsigned long long) _value)		\
-+static ssize_t sys_##_prefix##_##_name##_store(struct kobject *kobj,			\
-+		struct kobj_attribute *attr,						\
-+		const char *buf, size_t len)						\
-+{											\
-+	unsigned long long value;							\
-+	if (sscanf(buf, _fmt_in, &value) != 1)						\
-+		return -EINVAL;								\
-+	(_value) = value;								\
-+	(_hdr).flags &= ~IPL_PL_FLAG_SBP;						\
-+	return len;									\
-+}											\
-+static struct kobj_attribute sys_##_prefix##_##_name##_attr =				\
-+	__ATTR(_name, 0644,								\
-+			sys_##_prefix##_##_name##_show,					\
-+			sys_##_prefix##_##_name##_store)
-+
- #define DEFINE_IPL_ATTR_STR_RW(_prefix, _name, _fmt_out, _fmt_in, _value)\
- IPL_ATTR_SHOW_FN(_prefix, _name, _fmt_out, _value)			\
- static ssize_t sys_##_prefix##_##_name##_store(struct kobject *kobj,	\
-@@ -818,12 +836,13 @@ DEFINE_IPL_ATTR_RW(reipl_fcp, wwpn, "0x%
- 		   reipl_block_fcp->fcp.wwpn);
- DEFINE_IPL_ATTR_RW(reipl_fcp, lun, "0x%016llx\n", "%llx\n",
- 		   reipl_block_fcp->fcp.lun);
--DEFINE_IPL_ATTR_RW(reipl_fcp, bootprog, "%lld\n", "%lld\n",
--		   reipl_block_fcp->fcp.bootprog);
- DEFINE_IPL_ATTR_RW(reipl_fcp, br_lba, "%lld\n", "%lld\n",
- 		   reipl_block_fcp->fcp.br_lba);
- DEFINE_IPL_ATTR_RW(reipl_fcp, device, "0.0.%04llx\n", "0.0.%llx\n",
- 		   reipl_block_fcp->fcp.devno);
-+DEFINE_IPL_ATTR_BOOTPROG_RW(reipl_fcp, bootprog, "%lld\n", "%lld\n",
-+			    reipl_block_fcp->hdr,
-+			    reipl_block_fcp->fcp.bootprog);
- 
- static void reipl_get_ascii_loadparm(char *loadparm,
- 				     struct ipl_parameter_block *ibp)
-@@ -942,10 +961,11 @@ DEFINE_IPL_ATTR_RW(reipl_nvme, fid, "0x%
- 		   reipl_block_nvme->nvme.fid);
- DEFINE_IPL_ATTR_RW(reipl_nvme, nsid, "0x%08llx\n", "%llx\n",
- 		   reipl_block_nvme->nvme.nsid);
--DEFINE_IPL_ATTR_RW(reipl_nvme, bootprog, "%lld\n", "%lld\n",
--		   reipl_block_nvme->nvme.bootprog);
- DEFINE_IPL_ATTR_RW(reipl_nvme, br_lba, "%lld\n", "%lld\n",
- 		   reipl_block_nvme->nvme.br_lba);
-+DEFINE_IPL_ATTR_BOOTPROG_RW(reipl_nvme, bootprog, "%lld\n", "%lld\n",
-+			    reipl_block_nvme->hdr,
-+			    reipl_block_nvme->nvme.bootprog);
- 
- static struct attribute *reipl_nvme_attrs[] = {
- 	&sys_reipl_nvme_fid_attr.attr,
-@@ -1038,8 +1058,9 @@ static const struct bin_attribute *const
- };
- 
- DEFINE_IPL_CCW_ATTR_RW(reipl_eckd, device, reipl_block_eckd->eckd);
--DEFINE_IPL_ATTR_RW(reipl_eckd, bootprog, "%lld\n", "%lld\n",
--		   reipl_block_eckd->eckd.bootprog);
-+DEFINE_IPL_ATTR_BOOTPROG_RW(reipl_eckd, bootprog, "%lld\n", "%lld\n",
-+			    reipl_block_eckd->hdr,
-+			    reipl_block_eckd->eckd.bootprog);
- 
- static struct attribute *reipl_eckd_attrs[] = {
- 	&sys_reipl_eckd_device_attr.attr,
-@@ -1567,12 +1588,13 @@ DEFINE_IPL_ATTR_RW(dump_fcp, wwpn, "0x%0
- 		   dump_block_fcp->fcp.wwpn);
- DEFINE_IPL_ATTR_RW(dump_fcp, lun, "0x%016llx\n", "%llx\n",
- 		   dump_block_fcp->fcp.lun);
--DEFINE_IPL_ATTR_RW(dump_fcp, bootprog, "%lld\n", "%lld\n",
--		   dump_block_fcp->fcp.bootprog);
- DEFINE_IPL_ATTR_RW(dump_fcp, br_lba, "%lld\n", "%lld\n",
- 		   dump_block_fcp->fcp.br_lba);
- DEFINE_IPL_ATTR_RW(dump_fcp, device, "0.0.%04llx\n", "0.0.%llx\n",
- 		   dump_block_fcp->fcp.devno);
-+DEFINE_IPL_ATTR_BOOTPROG_RW(dump_fcp, bootprog, "%lld\n", "%lld\n",
-+			    dump_block_fcp->hdr,
-+			    dump_block_fcp->fcp.bootprog);
- 
- DEFINE_IPL_ATTR_SCP_DATA_RW(dump_fcp, dump_block_fcp->hdr,
- 			    dump_block_fcp->fcp,
-@@ -1604,10 +1626,11 @@ DEFINE_IPL_ATTR_RW(dump_nvme, fid, "0x%0
- 		   dump_block_nvme->nvme.fid);
- DEFINE_IPL_ATTR_RW(dump_nvme, nsid, "0x%08llx\n", "%llx\n",
- 		   dump_block_nvme->nvme.nsid);
--DEFINE_IPL_ATTR_RW(dump_nvme, bootprog, "%lld\n", "%llx\n",
--		   dump_block_nvme->nvme.bootprog);
- DEFINE_IPL_ATTR_RW(dump_nvme, br_lba, "%lld\n", "%llx\n",
- 		   dump_block_nvme->nvme.br_lba);
-+DEFINE_IPL_ATTR_BOOTPROG_RW(dump_nvme, bootprog, "%lld\n", "%llx\n",
-+			    dump_block_nvme->hdr,
-+			    dump_block_nvme->nvme.bootprog);
- 
- DEFINE_IPL_ATTR_SCP_DATA_RW(dump_nvme, dump_block_nvme->hdr,
- 			    dump_block_nvme->nvme,
-@@ -1635,8 +1658,9 @@ static const struct attribute_group dump
- 
- /* ECKD dump device attributes */
- DEFINE_IPL_CCW_ATTR_RW(dump_eckd, device, dump_block_eckd->eckd);
--DEFINE_IPL_ATTR_RW(dump_eckd, bootprog, "%lld\n", "%llx\n",
--		   dump_block_eckd->eckd.bootprog);
-+DEFINE_IPL_ATTR_BOOTPROG_RW(dump_eckd, bootprog, "%lld\n", "%llx\n",
-+			    dump_block_eckd->hdr,
-+			    dump_block_eckd->eckd.bootprog);
- 
- IPL_ATTR_BR_CHR_SHOW_FN(dump, dump_block_eckd->eckd);
- IPL_ATTR_BR_CHR_STORE_FN(dump, dump_block_eckd->eckd);
+ 		irq_domain = regmap_irq_get_domain(gpio->irq_chip_data);
+ 	} else
 
 
