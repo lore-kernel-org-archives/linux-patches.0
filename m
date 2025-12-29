@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E1033123C;
-	Mon, 29 Dec 2025 16:19:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6F7F3314A9;
+	Mon, 29 Dec 2025 16:19:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025189; cv=none; b=sb96pO6HEuMg3Jt1nRxYVl+epoBq+/d9BezNdiVYb0VdOCrtgdMmFw5q9FTc37i1X50Y9P7cUc3cAH3xpZ4IUfSNI5SEZHjILGa7odWuqzDefP1VS/hls416OWY2e0db8vh53RKikRO9Xb/oBNCLqA0kgNsSUua27EHu1A/mHL4=
+	t=1767025191; cv=none; b=H8kIIcYYP+zKReDzyUkaGXVcaPj3Is82EeBd4NFdrMUyNa5HYKmADJlHTyM/DkxuEzjrHUAR9QC/HHrUGkIYmOHdbiH5mMLPMRNIBvUME99eVtH8ZGaC3muddf0tShwnCFJLTBaHDpw26j1tDy6RD7DGl4F1jQE9RUIxDMaLstk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025189; c=relaxed/simple;
-	bh=TV67Iyt3o2p8pSakJaeeDVipD33OwrJIiPB4iBJ/Bjw=;
+	s=arc-20240116; t=1767025191; c=relaxed/simple;
+	bh=UcAPgUvZp/TvKm8+iF8gitUNKbj0u2LE3z23JeL3fcU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UYMEXjNMFBUmWt1kao29JO/z4btw1r7cShqBSxX1eti9UFl6nJ1sP/+u4RVeYRYCmard3ZmB5BisEuqeT0fmlPfeDbaT7ATr4dg61ueMSpMbfyIshro3AM86phKQ81i5uUpcT78b5ADu+eUHS8ZxzaVI65tYUJtzl7vx7G3oFNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kIIVS6de; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mfhepHuA4EEQ6E9KOWIN1EacGHGc3zE5wQzCWKUXqpRhLgx7Vqk37VoGAoul8Fz1vrYEVI7B/JYCPM7Gw0rTwWPRFNRqOdNCqMJvZLZTEYCD0C5gkRImX/NES6LU99GVLcsGO6L81/pz4BgjpzLL4px+1dae19vPxoikJ5wKnS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PDUpy7Gh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kIIVS6de"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AE40C4CEF7;
-	Mon, 29 Dec 2025 16:19:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PDUpy7Gh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B7AEC4CEF7;
+	Mon, 29 Dec 2025 16:19:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025188;
-	bh=TV67Iyt3o2p8pSakJaeeDVipD33OwrJIiPB4iBJ/Bjw=;
+	s=korg; t=1767025191;
+	bh=UcAPgUvZp/TvKm8+iF8gitUNKbj0u2LE3z23JeL3fcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kIIVS6de8JI0sB1tU3vxMQ6RdE2+BrJPgqdtLXqmFxTFsK7gX3br7WJ4FY9bsIP6l
-	 Ycpq1Ks+SG8j6X/0JEa+Y9dSw/dRBZsNiYiP2cssnO0v535pqGtnqr/H9FHoIPtoa8
-	 TNmtYffcz4y4d0M+hINLNovBdgTqLxZMwDUTv5+g=
+	b=PDUpy7GhlXAD2pU9cRtOXdY06YpaYSkeLtqZpI971Z5Y6KnORomGt0qP8FIdCJk3K
+	 VAYYp8a9skyg3SicotBYlvA3AWQ7eCW9suHPirm9xk/QqHrAnSn9fWMyv+rKIX5UMt
+	 XaY8AbaMJo4m5Deg/iN6Svutox8Gp+WHVDgke0j0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Maslak <jan.maslak@intel.com>,
-	Jonathan Cavitt <jonathan.cavitt@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 124/430] drm/xe: Restore engine registers before restarting schedulers after GT reset
-Date: Mon, 29 Dec 2025 17:08:46 +0100
-Message-ID: <20251229160728.930132359@linuxfoundation.org>
+Subject: [PATCH 6.18 125/430] MIPS: Fix a reference leak bug in ip22_check_gio()
+Date: Mon, 29 Dec 2025 17:08:47 +0100
+Message-ID: <20251229160728.966951662@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -47,69 +45,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Maslak <jan.maslak@intel.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-[ Upstream commit eed5b815fa49c17d513202f54e980eb91955d3ed ]
+[ Upstream commit 680ad315caaa2860df411cb378bf3614d96c7648 ]
 
-During GT reset recovery in do_gt_restart(), xe_uc_start() was called
-before xe_reg_sr_apply_mmio() restored engine-specific registers. This
-created a race window where the scheduler could run jobs before hardware
-state was fully restored.
+If gio_device_register fails, gio_dev_put() is required to
+drop the gio_dev device reference.
 
-This caused failures in eudebug tests (xe_exec_sip_eudebug@breakpoint-
-waitsip-*) where TD_CTL register (containing TD_CTL_GLOBAL_DEBUG_ENABLE)
-wasn't restored before jobs started executing. Breakpoints would fail to
-trigger SIP entry because the debug enable bit wasn't set yet.
-
-Fix by moving xe_uc_start() after all MMIO register restoration,
-including engine registers and CCS mode configuration, ensuring all
-hardware state is fully restored before any jobs can be scheduled.
-
-Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
-Signed-off-by: Jan Maslak <jan.maslak@intel.com>
-Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20251210145618.169625-2-jan.maslak@intel.com
-(cherry picked from commit 825aed0328588b2837636c1c5a0c48795d724617)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Fixes: e84de0c61905 ("MIPS: GIO bus support for SGI IP22/28")
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_gt.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/mips/sgi-ip22/ip22-gio.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_gt.c b/drivers/gpu/drm/xe/xe_gt.c
-index 6d3db5e55d98..61bed3b04ded 100644
---- a/drivers/gpu/drm/xe/xe_gt.c
-+++ b/drivers/gpu/drm/xe/xe_gt.c
-@@ -784,9 +784,6 @@ static int do_gt_restart(struct xe_gt *gt)
- 		xe_gt_sriov_pf_init_hw(gt);
- 
- 	xe_mocs_init(gt);
--	err = xe_uc_start(&gt->uc);
--	if (err)
--		return err;
- 
- 	for_each_hw_engine(hwe, gt, id)
- 		xe_reg_sr_apply_mmio(&hwe->reg_sr, gt);
-@@ -794,6 +791,10 @@ static int do_gt_restart(struct xe_gt *gt)
- 	/* Get CCS mode in sync between sw/hw */
- 	xe_gt_apply_ccs_mode(gt);
- 
-+	err = xe_uc_start(&gt->uc);
-+	if (err)
-+		return err;
-+
- 	/* Restore GT freq to expected values */
- 	xe_gt_sanitize_freq(gt);
- 
+diff --git a/arch/mips/sgi-ip22/ip22-gio.c b/arch/mips/sgi-ip22/ip22-gio.c
+index 5893ea4e382c..19b70928d6dc 100644
+--- a/arch/mips/sgi-ip22/ip22-gio.c
++++ b/arch/mips/sgi-ip22/ip22-gio.c
+@@ -372,7 +372,8 @@ static void ip22_check_gio(int slotno, unsigned long addr, int irq)
+ 		gio_dev->resource.flags = IORESOURCE_MEM;
+ 		gio_dev->irq = irq;
+ 		dev_set_name(&gio_dev->dev, "%d", slotno);
+-		gio_device_register(gio_dev);
++		if (gio_device_register(gio_dev))
++			gio_dev_put(gio_dev);
+ 	} else
+ 		printk(KERN_INFO "GIO: slot %d : Empty\n", slotno);
+ }
 -- 
 2.51.0
 
