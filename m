@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D51A33066C;
-	Mon, 29 Dec 2025 16:29:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25CB8330D26;
+	Mon, 29 Dec 2025 16:29:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025775; cv=none; b=uNekLEV8JGbLoUqQaaYVo00tY2f7ccgGBRkIoRxpI2R58dp2ihQ4acHpfqXqWUTuA4IXXAa0GVS/9piMMldcfiHu28JAnnLN/SZcof12O+/QFYAsDjRfGJdzcKiboYJINikjzn8KvvB21g1cBE0jRkZopzsyw+hSr4MuUNkJ8tg=
+	t=1767025778; cv=none; b=M55AwpOTS2uylgCn2B31y9FT7JPzpSKI4xLrxKgME1srOf1y7OVMdFuLd3f9kk6f9lMticgS1fZJ7bJID0llTJpi9/DMfgwKFkUug17VcIPHD9aXS910S+j824IUVDrGQzhcchFdxaGNf9iTwPxZTQ0g4cuou2FKlGV/joyzBVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025775; c=relaxed/simple;
-	bh=aBX9AlHySrUGZGqRzYrkaI9zT33U1ELD16J+KQAb1jI=;
+	s=arc-20240116; t=1767025778; c=relaxed/simple;
+	bh=xptxw9V0KQuW403WYYif1avUSGH6nK4B08throh/PnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kFaU/5UF3NIg8L3/e4Lve0PebqVdRy7E/aWw5KanemcC2X2Ixbw6y7LaUaYSkUyqTAP9Yr30fWG0umCPHfdlmxKT2Tipm9S6dhbV2/9gL8GIBlvvHjLsIVzWx3T1/w+4SIxJKDT790ho+6TlmB5xGGz1nyFeJ/srikoHA4k7DOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qgIXLyOK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YMziVXQMFdF+fsZ82FFgzQ1Zphp5AZN7TcMiP6U47cTMXiQRr+GgnuyjOV3U0VAPix9oCEUmwOr86+VUpGG6eYSUcRRBKdJajNyoBixpxn+8oG8vd78I4G0BC3Nxd8PGthz5q34AO/335ml5Xvv+WgHr1mLN3kN0mVnS77EC/xU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2tD1DO0h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qgIXLyOK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9861C4CEF7;
-	Mon, 29 Dec 2025 16:29:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2tD1DO0h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1706C4CEF7;
+	Mon, 29 Dec 2025 16:29:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025775;
-	bh=aBX9AlHySrUGZGqRzYrkaI9zT33U1ELD16J+KQAb1jI=;
+	s=korg; t=1767025778;
+	bh=xptxw9V0KQuW403WYYif1avUSGH6nK4B08throh/PnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qgIXLyOKW0M7QRBBePVfzr3/y/tEGh2E4u0jLCaErhchuEyd5d/2xNWM2vjr7TUw4
-	 6fq5X96baCbQx4TMs7+JDB5EBl0cdRRFcELzfoPnUyfO7dAD8532XkNMD6XhjwK6kQ
-	 dDl5btvSiTWSKUo0ThOSERc97ilwkSOawOEVQe2M=
+	b=2tD1DO0hXqBMzFnST/KlGaXDSiYbPp4Txhyv7K0ho616Ck6ghIH9U/JYRk+GqVwwS
+	 a6bx3SdmHn2xcTSNqeVCXrNDQk4lFyFJlFn5p0Rgncvb3lQJldI8cl7Zf0ilnyNlCY
+	 uHJPpJ+Zu5vT+tP7r8yu29620LqgrrwBBaPSNQos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-	Wangao Wang <wangao.wang@oss.qualcomm.com>,
-	Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-	Bryan ODonoghue <bod@kernel.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 332/430] media: iris: Add sanity check for stop streaming
-Date: Mon, 29 Dec 2025 17:12:14 +0100
-Message-ID: <20251229160736.544949593@linuxfoundation.org>
+	Jiyuan Xie <xiejiyuan@vivo.com>,
+	Zhichi Lin <zhichi.lin@vivo.com>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Will Deacon <will@kernel.org>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Kees Cook <keescook@chromium.org>,
+	Marco Elver <elver@google.com>,
+	Yee Lee <yee.lee@mediatek.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 333/430] scs: fix a wrong parameter in __scs_magic
+Date: Mon, 29 Dec 2025 17:12:15 +0100
+Message-ID: <20251229160736.581658496@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -54,56 +57,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wangao Wang <wangao.wang@oss.qualcomm.com>
+From: Zhichi Lin <zhichi.lin@vivo.com>
 
-commit ad699fa78b59241c9d71a8cafb51525f3dab04d4 upstream.
+commit 08bd4c46d5e63b78e77f2605283874bbe868ab19 upstream.
 
-Add sanity check in iris_vb2_stop_streaming. If inst->state is
-already IRIS_INST_ERROR, we should skip the stream_off operation
-because it would still send packets to the firmware.
+__scs_magic() needs a 'void *' variable, but a 'struct task_struct *' is
+given.  'task_scs(tsk)' is the starting address of the task's shadow call
+stack, and '__scs_magic(task_scs(tsk))' is the end address of the task's
+shadow call stack.  Here should be '__scs_magic(task_scs(tsk))'.
 
-In iris_kill_session, inst->state is set to IRIS_INST_ERROR and
-session_close is executed, which will kfree(inst_hfi_gen2->packet).
-If stop_streaming is called afterward, it will cause a crash.
+The user-visible effect of this bug is that when CONFIG_DEBUG_STACK_USAGE
+is enabled, the shadow call stack usage checking function
+(scs_check_usage) would scan an incorrect memory range.  This could lead
+to:
 
-Fixes: 11712ce70f8e5 ("media: iris: implement vb2 streaming ops")
-Cc: stable@vger.kernel.org
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-Signed-off-by: Wangao Wang <wangao.wang@oss.qualcomm.com>
-Reviewed-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-[bod: remove qcom from patch title]
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+1. **Inaccurate stack usage reporting**: The function would calculate
+   wrong usage statistics for the shadow call stack, potentially showing
+   incorrect value in kmsg.
+
+2. **Potential kernel crash**: If the value of __scs_magic(tsk)is
+   greater than that of __scs_magic(task_scs(tsk)), the for loop may
+   access unmapped memory, potentially causing a kernel panic.  However,
+   this scenario is unlikely because task_struct is allocated via the slab
+   allocator (which typically returns lower addresses), while the shadow
+   call stack returned by task_scs(tsk) is allocated via vmalloc(which
+   typically returns higher addresses).
+
+However, since this is purely a debugging feature
+(CONFIG_DEBUG_STACK_USAGE), normal production systems should be not
+unaffected.  The bug only impacts developers and testers who are actively
+debugging stack usage with this configuration enabled.
+
+Link: https://lkml.kernel.org/r/20251011082222.12965-1-zhichi.lin@vivo.com
+Fixes: 5bbaf9d1fcb9 ("scs: Add support for stack usage debugging")
+Signed-off-by: Jiyuan Xie <xiejiyuan@vivo.com>
+Signed-off-by: Zhichi Lin <zhichi.lin@vivo.com>
+Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+Acked-by: Will Deacon <will@kernel.org>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Marco Elver <elver@google.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Yee Lee <yee.lee@mediatek.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/iris/iris_vb2.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ kernel/scs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/platform/qcom/iris/iris_vb2.c
-+++ b/drivers/media/platform/qcom/iris/iris_vb2.c
-@@ -231,6 +231,8 @@ void iris_vb2_stop_streaming(struct vb2_
+--- a/kernel/scs.c
++++ b/kernel/scs.c
+@@ -135,7 +135,7 @@ static void scs_check_usage(struct task_
+ 	if (!IS_ENABLED(CONFIG_DEBUG_STACK_USAGE))
  		return;
  
- 	mutex_lock(&inst->lock);
-+	if (inst->state == IRIS_INST_ERROR)
-+		goto exit;
- 
- 	if (!V4L2_TYPE_IS_OUTPUT(q->type) &&
- 	    !V4L2_TYPE_IS_CAPTURE(q->type))
-@@ -241,10 +243,10 @@ void iris_vb2_stop_streaming(struct vb2_
- 		goto exit;
- 
- exit:
--	iris_helper_buffers_done(inst, q->type, VB2_BUF_STATE_ERROR);
--	if (ret)
-+	if (ret) {
-+		iris_helper_buffers_done(inst, q->type, VB2_BUF_STATE_ERROR);
- 		iris_inst_change_state(inst, IRIS_INST_ERROR);
--
-+	}
- 	mutex_unlock(&inst->lock);
- }
- 
+-	for (p = task_scs(tsk); p < __scs_magic(tsk); ++p) {
++	for (p = task_scs(tsk); p < __scs_magic(task_scs(tsk)); ++p) {
+ 		if (!READ_ONCE_NOCHECK(*p))
+ 			break;
+ 		used += sizeof(*p);
 
 
