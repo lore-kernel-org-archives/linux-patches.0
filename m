@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A91133066C;
-	Mon, 29 Dec 2025 16:18:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E0C63A1E66;
+	Mon, 29 Dec 2025 16:18:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025135; cv=none; b=H8fl1iSk6XLRKRqRRPrL0LdtG/jkY+JRQTdqFk1rNJuqecNfVOP98M9MEpzZNwZVs9y+CoN/isvr73bNEM5RqfpQpm/S6xPNn63sRxHPvGLzK2BqvM7/6mwXMnYTGSGPFn55E4X19QfD15CfBk00WahtCm1IehsHpib3oq+Jdl0=
+	t=1767025138; cv=none; b=Ez96JK8trV7kJrGJu1+W90dyuno6yKG2cJJIPFBa3iCD3d4RovSnuk7IwBjMgU+QviVOW2oR+QmbX1ZqvF1KRJiQYNvUwN6XPIoo0XlYtoSpRkwTpH/cnNVBpsHyIjm7Jn3INRWbVvkGRFRA8mA2+fbmvaGuzhf+z57dJ0r679s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025135; c=relaxed/simple;
-	bh=4fYF1bepCQIrrJFuuKypvUUxuwuIoCZ3bOIZvDVNZrU=;
+	s=arc-20240116; t=1767025138; c=relaxed/simple;
+	bh=PHMEQKF3d4qnRcHQv65lD2CrAvHUr4ZkMWISqFHyrpI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cYFdLHkFOxtmX/rIV66cIVJu/0GINlwvWXp7256XXFSjDIs04DEd87Q1DRbJmJKwDhGYIb3SBsGGpagAvUvad2SQ1vcHU9HxkXnW7UQ9VdlGeihrS0DfHYgCLUovbgUK/lWnTfj8CAtNq49fZGJcewy8CllHKgkx3RpEF4v3Vrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gSVT4pQH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CAJ7HWuuB2om7gIMDEJBuxllodjGDaLhOVI7OS/wEIApGs7e0Up0Ta1gPhDOyX6QI3R9+ABB6fZLD2eGF+/KQMkRvWuUSB2UM3TZO82K1xNgvCBboOBtmLR9oLwCZWUhx/OAnxpGXzWQH/S0coBtxVQdUhVUglOhMFMW6/aen0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mr85PHBS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gSVT4pQH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAA21C4CEF7;
-	Mon, 29 Dec 2025 16:18:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mr85PHBS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80E31C4CEF7;
+	Mon, 29 Dec 2025 16:18:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025135;
-	bh=4fYF1bepCQIrrJFuuKypvUUxuwuIoCZ3bOIZvDVNZrU=;
+	s=korg; t=1767025137;
+	bh=PHMEQKF3d4qnRcHQv65lD2CrAvHUr4ZkMWISqFHyrpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gSVT4pQHGjwXasfRRM/ovvaAUpoF3uiqHKK4T+cIbpUIcELfmpwOWRAzG+0zlKmN0
-	 RAIY0R8oD0gTaw6F9uyczQ9wi+oQiP7/3CnxLG3hdG5NtUr2p2xBm4xGqXtuC7JJm5
-	 ZUh8OvzKsq/Y2VMvQAdGyW3opVgCFSjypbRfKRu0=
+	b=Mr85PHBSfwp0t7xgVBbFnJSQ8jlAt1t/7lD/HcaqIRonTJJjxg5n3Uav4Td14hgQI
+	 Z51e+lq+NBVX3DG503HUaSBtlJ8sCrKQ1nhUFUtFL/lTx6s6RzxtJTIptfoTZHRg+X
+	 BNOx7e/9lJm/XXdOjXQ3h6scK4EcpGxfGorErbR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
-	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 107/430] drm/tests: Handle EDEADLK in set_up_atomic_state()
-Date: Mon, 29 Dec 2025 17:08:29 +0100
-Message-ID: <20251229160728.306652386@linuxfoundation.org>
+Subject: [PATCH 6.18 108/430] selftests: ublk: fix overflow in ublk_queue_auto_zc_fallback()
+Date: Mon, 29 Dec 2025 17:08:30 +0100
+Message-ID: <20251229160728.342940562@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -45,107 +45,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: José Expósito <jose.exposito89@gmail.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit 526aafabd756cc56401b383d6ae554af3e21dcdd ]
+[ Upstream commit 9637fc3bdd10c8e073f71897bd35babbd21e9b29 ]
 
-Fedora/CentOS/RHEL CI is reporting intermittent failures while running
-the drm_validate_modeset test [1]:
+The functions ublk_queue_use_zc(), ublk_queue_use_auto_zc(), and
+ublk_queue_auto_zc_fallback() were returning int, but performing
+bitwise AND on q->flags which is __u64.
 
-    # drm_test_check_connector_changed_modeset: EXPECTATION FAILED at
-    # drivers/gpu/drm/tests/drm_atomic_state_test.c:162
-    Expected ret == 0, but
-        ret == -35 (0xffffffffffffffdd)
+When a flag bit is set in the upper 32 bits (beyond INT_MAX), the
+result of the bitwise AND operation could overflow when cast to int,
+leading to incorrect boolean evaluation.
 
-Change the set_up_atomic_state() helper function to return on error and
-restart the atomic sequence when the returned error is EDEADLK.
+For example, if UBLKS_Q_AUTO_BUF_REG_FALLBACK is 0x8000000000000000:
+  - (u64)flags & 0x8000000000000000 = 0x8000000000000000
+  - Cast to int: undefined behavior / incorrect value
+  - Used in if(): may evaluate incorrectly
 
-[1] https://s3.amazonaws.com/arr-cki-prod-trusted-artifacts/trusted-artifacts/2106744096/test_x86_64/11762450343/artifacts/jobwatch/logs/recipes/19797909/tasks/204139142/results/945095586/logs/dmesg.log
+Fix by:
+1. Changing return type from int to bool for semantic correctness
+2. Using !! to explicitly convert to boolean (0 or 1)
 
-Fixes: 73d934d7b6e3 ("drm/tests: Add test for drm_atomic_helper_commit_modeset_disables()")
-Closes: https://datawarehouse.cki-project.org/issue/4004
-Reviewed-by: Maxime Ripard <mripard@kernel.org>
-Signed-off-by: José Expósito <jose.exposito89@gmail.com>
-Link: https://patch.msgid.link/20251104102535.12212-2-jose.exposito89@gmail.com
+This ensures the functions return proper boolean values regardless
+of which bit position the flags occupy in the 64-bit field.
+
+Fixes: c3a6d48f86da ("selftests: ublk: remove ublk queue self-defined flags")
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tests/drm_atomic_state_test.c | 27 +++++++++++++++----
- 1 file changed, 22 insertions(+), 5 deletions(-)
+ tools/testing/selftests/ublk/kublk.h | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/tests/drm_atomic_state_test.c b/drivers/gpu/drm/tests/drm_atomic_state_test.c
-index 1e857d86574c..bc27f65b2823 100644
---- a/drivers/gpu/drm/tests/drm_atomic_state_test.c
-+++ b/drivers/gpu/drm/tests/drm_atomic_state_test.c
-@@ -156,24 +156,29 @@ static int set_up_atomic_state(struct kunit *test,
+diff --git a/tools/testing/selftests/ublk/kublk.h b/tools/testing/selftests/ublk/kublk.h
+index 5e55484fb0aa..1b8833a40064 100644
+--- a/tools/testing/selftests/ublk/kublk.h
++++ b/tools/testing/selftests/ublk/kublk.h
+@@ -393,19 +393,19 @@ static inline int ublk_completed_tgt_io(struct ublk_thread *t,
+ 	return --io->tgt_ios == 0;
+ }
  
- 	if (connector) {
- 		conn_state = drm_atomic_get_connector_state(state, connector);
--		KUNIT_ASSERT_NOT_ERR_OR_NULL(test, conn_state);
-+		if (IS_ERR(conn_state))
-+			return PTR_ERR(conn_state);
+-static inline int ublk_queue_use_zc(const struct ublk_queue *q)
++static inline bool ublk_queue_use_zc(const struct ublk_queue *q)
+ {
+-	return q->flags & UBLK_F_SUPPORT_ZERO_COPY;
++	return !!(q->flags & UBLK_F_SUPPORT_ZERO_COPY);
+ }
  
- 		ret = drm_atomic_set_crtc_for_connector(conn_state, crtc);
--		KUNIT_EXPECT_EQ(test, ret, 0);
-+		if (ret)
-+			return ret;
- 	}
+-static inline int ublk_queue_use_auto_zc(const struct ublk_queue *q)
++static inline bool ublk_queue_use_auto_zc(const struct ublk_queue *q)
+ {
+-	return q->flags & UBLK_F_AUTO_BUF_REG;
++	return !!(q->flags & UBLK_F_AUTO_BUF_REG);
+ }
  
- 	crtc_state = drm_atomic_get_crtc_state(state, crtc);
--	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, crtc_state);
-+	if (IS_ERR(crtc_state))
-+		return PTR_ERR(crtc_state);
+-static inline int ublk_queue_auto_zc_fallback(const struct ublk_queue *q)
++static inline bool ublk_queue_auto_zc_fallback(const struct ublk_queue *q)
+ {
+-	return q->flags & UBLKS_Q_AUTO_BUF_REG_FALLBACK;
++	return !!(q->flags & UBLKS_Q_AUTO_BUF_REG_FALLBACK);
+ }
  
- 	ret = drm_atomic_set_mode_for_crtc(crtc_state, &drm_atomic_test_mode);
--	KUNIT_EXPECT_EQ(test, ret, 0);
-+	if (ret)
-+		return ret;
- 
- 	crtc_state->enable = true;
- 	crtc_state->active = true;
- 
- 	if (connector) {
- 		ret = drm_atomic_commit(state);
--		KUNIT_ASSERT_EQ(test, ret, 0);
-+		if (ret)
-+			return ret;
- 	} else {
- 		// dummy connector mask
- 		crtc_state->connector_mask = DRM_TEST_CONN_0;
-@@ -206,7 +211,13 @@ static void drm_test_check_connector_changed_modeset(struct kunit *test)
- 	drm_modeset_acquire_init(&ctx, 0);
- 
- 	// first modeset to enable
-+retry_set_up:
- 	ret = set_up_atomic_state(test, priv, old_conn, &ctx);
-+	if (ret == -EDEADLK) {
-+		ret = drm_modeset_backoff(&ctx);
-+		if (!ret)
-+			goto retry_set_up;
-+	}
- 	KUNIT_ASSERT_EQ(test, ret, 0);
- 
- 	state = drm_kunit_helper_atomic_state_alloc(test, drm, &ctx);
-@@ -277,7 +288,13 @@ static void drm_test_check_valid_clones(struct kunit *test)
- 
- 	drm_modeset_acquire_init(&ctx, 0);
- 
-+retry_set_up:
- 	ret = set_up_atomic_state(test, priv, NULL, &ctx);
-+	if (ret == -EDEADLK) {
-+		ret = drm_modeset_backoff(&ctx);
-+		if (!ret)
-+			goto retry_set_up;
-+	}
- 	KUNIT_ASSERT_EQ(test, ret, 0);
- 
- 	state = drm_kunit_helper_atomic_state_alloc(test, drm, &ctx);
+ static inline int ublk_queue_no_buf(const struct ublk_queue *q)
 -- 
 2.51.0
 
