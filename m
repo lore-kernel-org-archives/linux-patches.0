@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD07331A45;
-	Mon, 29 Dec 2025 16:34:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A111331A45;
+	Mon, 29 Dec 2025 16:34:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767026067; cv=none; b=c6kSkF2So3a57l0jV+y7p564Tp2iMhsCEftbHk82dUSkDfhkuyNfvuSu153KFqCC1UhPyb1/QfjUzG0btYOeVDg5MB/ivSKgzX8tks/KYnsFbJkp2jlBAcNmtrm+/L8DKF6Vjn7pD87ZGpQQ/wEiJ7YcZgpv/UKRvWGztcKRhgY=
+	t=1767026069; cv=none; b=MjMoNA9I3HDouwztHle4Vvsuxuo5CGxZnClZ7Xn7BL5DnKPTkCBurcHU09AvXYO20h/cknNnD/OfNEXLFC+BMP7XxZ/Lw3ehwRXNxeCpK47rq+DeM4dUL6y/WE0+7pHkH3aHSdbjNWJ+Z46QVG8D4YgODTyD+YqNrVR8qFsrg9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767026067; c=relaxed/simple;
-	bh=PnfH1ZWCXfxD6MxOFS+HAs3hfJvmY1zLeuN9Up9qYHs=;
+	s=arc-20240116; t=1767026069; c=relaxed/simple;
+	bh=7ZSmbsUe7m44dRYZw2Qr7RQ+YSUOo8zJBqgTxcY2a/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rKOxoiJtrpEIOVgcsBS80opnt8oZvrGiKvez622KCRIozjmeZFZ1I9JdvxLe1ZAizhhN6EHRpjMOt434neDajW+kVUjg5tmizLLu9hC3YR8Vyph+zVPMo2d6848JT41a6WHOke8nkHA1Dedu+Q2mNtSNdoN4WAJJxdjdOHX4dbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UJj5Hg1S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A/4Z5JxcAtYzCtpwooLD420zVhFpPMMIquC3+hQzg0GRKnGQ7qOOh4LjZr2RNVjfSqT9jyxBzWDXFpBmVELIce24no7RVOJKfm/DftLPLtVyx9dGZoHx/vGNKzT4mq3dTQSgNz2Cf7iaEhi5abMKZVHdgL6NxkneHAu80dBMiYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P+gcfS2B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UJj5Hg1S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67B69C4CEF7;
-	Mon, 29 Dec 2025 16:34:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P+gcfS2B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F56C4CEF7;
+	Mon, 29 Dec 2025 16:34:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767026066;
-	bh=PnfH1ZWCXfxD6MxOFS+HAs3hfJvmY1zLeuN9Up9qYHs=;
+	s=korg; t=1767026069;
+	bh=7ZSmbsUe7m44dRYZw2Qr7RQ+YSUOo8zJBqgTxcY2a/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UJj5Hg1SXtvjSxZD7WhnzEbnOygkj/aY+MDdxiGVxQBVr9h9Uym6w2tPTHJUrEg8s
-	 WvCBpd2v5K1z4rPm2ZQ8Gs53xzrFbpVN4kSLfiz4Iy3vEhNePa4NKbKzcy32BEVVM0
-	 aN+GN9miJRHJitLcaC16xCRyfoBdjDn1Xj6doypc=
+	b=P+gcfS2B35YdIwJctadPRsUazjgRJjPOSlZGgnnGQBbF773YFS/E0f+arUs1Mgaw8
+	 FNaKUhsQ+vI//p8fdDmRnpYayC3O1UeCAe3+GaMzFv/C5wesbT9/Ms7yj9WAA5m4Jh
+	 8YY90gPntYMy2XzU6x9lJAyM8piUi/9ZU/r9Isbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.18 420/430] hwmon: (max6697) fix regmap leak on probe failure
-Date: Mon, 29 Dec 2025 17:13:42 +0100
-Message-ID: <20251229160739.767643530@linuxfoundation.org>
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.18 421/430] hwmon: (w83791d) Convert macros to functions to avoid TOCTOU
+Date: Mon, 29 Dec 2025 17:13:43 +0100
+Message-ID: <20251229160739.805458858@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -50,36 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Gui-Dong Han <hanguidong02@gmail.com>
 
-commit 02f0ad8e8de8cf5344f8f0fa26d9529b8339da47 upstream.
+commit 670d7ef945d3a84683594429aea6ab2cdfa5ceb4 upstream.
 
-The i2c regmap allocated during probe is never freed.
+The macro FAN_FROM_REG evaluates its arguments multiple times. When used
+in lockless contexts involving shared driver data, this leads to
+Time-of-Check to Time-of-Use (TOCTOU) race conditions, potentially
+causing divide-by-zero errors.
 
-Switch to using the device managed allocator so that the regmap is
-released on probe failures (e.g. probe deferral) and on driver unbind.
+Convert the macro to a static function. This guarantees that arguments
+are evaluated only once (pass-by-value), preventing the race
+conditions.
 
-Fixes: 3a2a8cc3fe24 ("hwmon: (max6697) Convert to use regmap")
-Cc: stable@vger.kernel.org	# 6.12
-Cc: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://lore.kernel.org/r/20251127134351.1585-1-johan@kernel.org
+Additionally, in store_fan_div, move the calculation of the minimum
+limit inside the update lock. This ensures that the read-modify-write
+sequence operates on consistent data.
+
+Adhere to the principle of minimal changes by only converting macros
+that evaluate arguments multiple times and are used in lockless
+contexts.
+
+Link: https://lore.kernel.org/all/CALbr=LYJ_ehtp53HXEVkSpYoub+XYSTU8Rg=o1xxMJ8=5z8B-g@mail.gmail.com/
+Fixes: 9873964d6eb2 ("[PATCH] HWMON: w83791d: New hardware monitoring driver for the Winbond W83791D")
+Cc: stable@vger.kernel.org
+Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Link: https://lore.kernel.org/r/20251202180105.12842-1-hanguidong02@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/max6697.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/w83791d.c |   17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
---- a/drivers/hwmon/max6697.c
-+++ b/drivers/hwmon/max6697.c
-@@ -548,7 +548,7 @@ static int max6697_probe(struct i2c_clie
- 	struct regmap *regmap;
- 	int err;
+--- a/drivers/hwmon/w83791d.c
++++ b/drivers/hwmon/w83791d.c
+@@ -218,9 +218,14 @@ static u8 fan_to_reg(long rpm, int div)
+ 	return clamp_val((1350000 + rpm * div / 2) / (rpm * div), 1, 254);
+ }
  
--	regmap = regmap_init_i2c(client, &max6697_regmap_config);
-+	regmap = devm_regmap_init_i2c(client, &max6697_regmap_config);
- 	if (IS_ERR(regmap))
- 		return PTR_ERR(regmap);
+-#define FAN_FROM_REG(val, div)	((val) == 0 ? -1 : \
+-				((val) == 255 ? 0 : \
+-					1350000 / ((val) * (div))))
++static int fan_from_reg(int val, int div)
++{
++	if (val == 0)
++		return -1;
++	if (val == 255)
++		return 0;
++	return 1350000 / (val * div);
++}
  
+ /* for temp1 which is 8-bit resolution, LSB = 1 degree Celsius */
+ #define TEMP1_FROM_REG(val)	((val) * 1000)
+@@ -521,7 +526,7 @@ static ssize_t show_##reg(struct device
+ 	struct w83791d_data *data = w83791d_update_device(dev); \
+ 	int nr = sensor_attr->index; \
+ 	return sprintf(buf, "%d\n", \
+-		FAN_FROM_REG(data->reg[nr], DIV_FROM_REG(data->fan_div[nr]))); \
++		fan_from_reg(data->reg[nr], DIV_FROM_REG(data->fan_div[nr]))); \
+ }
+ 
+ show_fan_reg(fan);
+@@ -585,10 +590,10 @@ static ssize_t store_fan_div(struct devi
+ 	if (err)
+ 		return err;
+ 
++	mutex_lock(&data->update_lock);
+ 	/* Save fan_min */
+-	min = FAN_FROM_REG(data->fan_min[nr], DIV_FROM_REG(data->fan_div[nr]));
++	min = fan_from_reg(data->fan_min[nr], DIV_FROM_REG(data->fan_div[nr]));
+ 
+-	mutex_lock(&data->update_lock);
+ 	data->fan_div[nr] = div_to_reg(nr, val);
+ 
+ 	switch (nr) {
 
 
