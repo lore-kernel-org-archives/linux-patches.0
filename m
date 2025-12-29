@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409053191A7;
-	Mon, 29 Dec 2025 16:29:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D6A4330B05;
+	Mon, 29 Dec 2025 16:29:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025758; cv=none; b=BZeZPAhXinPg9Xa7TjZS6+Zbw0hcnlxWViECtl8uxO9zWoNDaueaATrNVoUapbbYuh+YmFzrWBm0n1/piO5wOtbH857TiICiDyNkTK5MqKYOmWH8fdn34PZ5LPl8E8rsgSLUW56YgcT5zUsQQYeTmlZLMTOOPpaeCfkN80/7IPA=
+	t=1767025761; cv=none; b=HLlZ+lhFz0mJNb1AYr76PVEgNKm/xGmyW3N9FgwHoDUI9+bUwCmW9EYbS3q/AzfOm2RsXsMK2KSfSlmmxbNNMJ85Fg+YKAxHvwoup+aQQInIbT0bpugqQqrYymW1Orv0oHVX+FLQkIfi0xI3dEFVGXQuXLDl/kse4+tWmJjC1KM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025758; c=relaxed/simple;
-	bh=NygfxiMpL25ZqyE7DYbSiWBjNUMTMkH6ZCrWIoyUWxw=;
+	s=arc-20240116; t=1767025761; c=relaxed/simple;
+	bh=TUHzXw5wAwJBvCENSMD/6Zyu8FwJiqQ6nPRRUGbhx4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yl/ah0fNFRR08j9yrdxGqMTO3juH6sjLJsYMEWJ/MiZ3A3I6qj77kOzb9mGcyPnpnrV0GjrSswiUen2Elxh1LN5NTsxAVlpUY/dbKSbJZE/FM6DMFpUqWI0ARS8jANKOfJ24qsxGZnNAGD13SJ6GMATnF61SiiUOmJTYV2rX+X8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YZdpGOFB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bKQbuMhFPD3KClD2veIqNkK0qNnMf+W4vjI8Jh+5sdY/C5/+tBMGaknJNeahKXuqK2K+7+Mn1kX3X66axsL6rSmDzu0NtwKVswhQAVLsy+lP7bqkT1coJH1ifWAZ8pMm/9cwx4A3QtmgW0XZLEcLVI0Dv9Q7VdQ9dnN0PYjEPIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DiYjMXFN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YZdpGOFB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD4D5C4CEF7;
-	Mon, 29 Dec 2025 16:29:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DiYjMXFN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F927C4CEF7;
+	Mon, 29 Dec 2025 16:29:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025758;
-	bh=NygfxiMpL25ZqyE7DYbSiWBjNUMTMkH6ZCrWIoyUWxw=;
+	s=korg; t=1767025761;
+	bh=TUHzXw5wAwJBvCENSMD/6Zyu8FwJiqQ6nPRRUGbhx4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YZdpGOFBj1isF20mP7ufy8lQJJ9ZYfLrQgLqRv2CKvxhqO/U2eNkrcUN05sFbDyOE
-	 FGktJDnaRHXe96D0ITD98nywC640JzK1MOQEd86s2+WFZ78MkkDtlny/u22agjzvMP
-	 s0+do3e6y25rUkRfx2SHQfHDrQBRCkuQYe6Vns74=
+	b=DiYjMXFNRdIKq8FK/cZhqh2zXQS4T1cT7FH7nRqhx0euLZeEHd+VTLuwnwguUVpYw
+	 /RDGsdvUauev+yun/i9ClTSqf0LwdUHCURofgOPf7gyZpEAz7oemUcYqfAOVNMrHlA
+	 Wcdxne3b/wxHGMdQfI1u0cUVy7D2f1zgjdBCFiFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7a25305a76d872abcfa1@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 6.18 327/430] mm/slub: reset KASAN tag in defer_free() before accessing freed memory
-Date: Mon, 29 Dec 2025 17:12:09 +0100
-Message-ID: <20251229160736.364221355@linuxfoundation.org>
+	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.18 310/430] scsi: mpi3mr: Read missing IOCFacts flag for reply queue full overflow
+Date: Mon, 29 Dec 2025 17:11:52 +0100
+Message-ID: <20251229160735.741390479@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -52,51 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
 
-commit 53ca00a19d345197a37a1bf552e8d1e7b091666c upstream.
+commit d373163194982f43b92c552c138c29d9f0b79553 upstream.
 
-When CONFIG_SLUB_TINY is enabled, kfree_nolock() calls kasan_slab_free()
-before defer_free(). On ARM64 with MTE (Memory Tagging Extension),
-kasan_slab_free() poisons the memory and changes the tag from the
-original (e.g., 0xf3) to a poison tag (0xfe).
+The driver was not reading the MAX_REQ_PER_REPLY_QUEUE_LIMIT IOCFacts
+flag, so the reply-queue-full handling was never enabled, even on
+firmware that supports it. Reading this flag enables the feature and
+prevents reply queue overflow.
 
-When defer_free() then tries to write to the freed object to build the
-deferred free list via llist_add(), the pointer still has the old tag,
-causing a tag mismatch and triggering a KASAN use-after-free report:
-
-  BUG: KASAN: slab-use-after-free in defer_free+0x3c/0xbc mm/slub.c:6537
-  Write at addr f3f000000854f020 by task kworker/u8:6/983
-  Pointer tag: [f3], memory tag: [fe]
-
-Fix this by calling kasan_reset_tag() before accessing the freed memory.
-This is safe because defer_free() is part of the allocator itself and is
-expected to manipulate freed memory for bookkeeping purposes.
-
-Fixes: af92793e52c3 ("slab: Introduce kmalloc_nolock() and kfree_nolock().")
+Fixes: f08b24d82749 ("scsi: mpi3mr: Avoid reply queue full condition")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+7a25305a76d872abcfa1@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=7a25305a76d872abcfa1
-Tested-by: syzbot+7a25305a76d872abcfa1@syzkaller.appspotmail.com
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Acked-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20251210022024.3255826-1-kartikey406@gmail.com
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+Link: https://patch.msgid.link/20251211002929.22071-1-chandrakanth.patil@broadcom.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/slub.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/scsi/mpi3mr/mpi/mpi30_ioc.h |    1 +
+ drivers/scsi/mpi3mr/mpi3mr_fw.c     |    2 ++
+ 2 files changed, 3 insertions(+)
 
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -6509,6 +6509,8 @@ static void defer_free(struct kmem_cache
- 
- 	guard(preempt)();
- 
-+	head = kasan_reset_tag(head);
-+
- 	df = this_cpu_ptr(&defer_free_objects);
- 	if (llist_add(head + s->offset, &df->objects))
- 		irq_work_queue(&df->work);
+--- a/drivers/scsi/mpi3mr/mpi/mpi30_ioc.h
++++ b/drivers/scsi/mpi3mr/mpi/mpi30_ioc.h
+@@ -166,6 +166,7 @@ struct mpi3_ioc_facts_data {
+ #define MPI3_IOCFACTS_FLAGS_SIGNED_NVDATA_REQUIRED            (0x00010000)
+ #define MPI3_IOCFACTS_FLAGS_DMA_ADDRESS_WIDTH_MASK            (0x0000ff00)
+ #define MPI3_IOCFACTS_FLAGS_DMA_ADDRESS_WIDTH_SHIFT           (8)
++#define MPI3_IOCFACTS_FLAGS_MAX_REQ_PER_REPLY_QUEUE_LIMIT     (0x00000040)
+ #define MPI3_IOCFACTS_FLAGS_INITIAL_PORT_ENABLE_MASK          (0x00000030)
+ #define MPI3_IOCFACTS_FLAGS_INITIAL_PORT_ENABLE_SHIFT		(4)
+ #define MPI3_IOCFACTS_FLAGS_INITIAL_PORT_ENABLE_NOT_STARTED   (0x00000000)
+--- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+@@ -3158,6 +3158,8 @@ static void mpi3mr_process_factsdata(str
+ 	mrioc->facts.dma_mask = (facts_flags &
+ 	    MPI3_IOCFACTS_FLAGS_DMA_ADDRESS_WIDTH_MASK) >>
+ 	    MPI3_IOCFACTS_FLAGS_DMA_ADDRESS_WIDTH_SHIFT;
++	mrioc->facts.max_req_limit = (facts_flags &
++			MPI3_IOCFACTS_FLAGS_MAX_REQ_PER_REPLY_QUEUE_LIMIT);
+ 	mrioc->facts.protocol_flags = facts_data->protocol_flags;
+ 	mrioc->facts.mpi_version = le32_to_cpu(facts_data->mpi_version.word);
+ 	mrioc->facts.max_reqs = le16_to_cpu(facts_data->max_outstanding_requests);
 
 
