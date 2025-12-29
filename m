@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE251B6D08;
-	Mon, 29 Dec 2025 16:27:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35A61B6D08;
+	Mon, 29 Dec 2025 16:27:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025651; cv=none; b=dYBKvlngW5VWVo7fz5txFfJAvtyVV5zjiGkJXwPgkBKSsOuhtrCXjoX258dYwAp16YkEj2tyHtAxCP+2qneLLlMnBQlRVY8AH+Gjbc1YZk9EF/Yk6WfCn5BVv+VZMI5zI5DYl3SiGeV9xo8rB+pWzPGOPQmNKLlptQGpB/qlOxo=
+	t=1767025653; cv=none; b=mQlHXK9iztTgqq8jpY++2aqUnv9bRChF+6z0wrAbOmuoOjYBs1pJiYKwwnG8jEj2DUexyI4oqEf+qotGRNZ0F0X53skLyyg6yrGPb1Ndh411Mwxo6q0aL/2AxxtAW/n3DtAI7dIzKyLD710X/gy0SF3bCYyy32r3CiaI/Y2XQzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025651; c=relaxed/simple;
-	bh=lMYyOGya3xkdWTT6kbMgWLoE2zlb3Z6Z/mu/SapoeTg=;
+	s=arc-20240116; t=1767025653; c=relaxed/simple;
+	bh=uGAGuwpbZsajRTftSJaAjlmMETBppmD9gcVAMH4zVuA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bUF7Ie5Af/JGqJ99+UTXbcS28DdIyKuwdACZXF3Kki1Kihvkb6j9bqBn6lm4K+npgfjAhzc0So22ZAzHxeZDbjrKvHyN3nFAi9Q8G4vOi2D8vj61UBkd7eJ61aODREBba0PcLtQ/UbA3uUNRpIkoMi1ewoqwZsd9J8NG86NcANI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vrClYa/h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XIjoYzF/gi/dv5Rr5G3tLCCueML8IHE0lGlsDLwXrywx7Kmhx/K3kEBU4/vgiLQbw9IJUtmFV6PKGv+IKj5ycQch2yySgAvyX8d+xP4F46G3qDzMnCjUde1cScdMdmcNfP14tU+sYvIUdwMJyoNlktbFEYp3sApfmekmfIxRp1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bjOhyr5Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vrClYa/h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7429EC4CEF7;
-	Mon, 29 Dec 2025 16:27:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bjOhyr5Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ED1BC4CEF7;
+	Mon, 29 Dec 2025 16:27:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025650;
-	bh=lMYyOGya3xkdWTT6kbMgWLoE2zlb3Z6Z/mu/SapoeTg=;
+	s=korg; t=1767025653;
+	bh=uGAGuwpbZsajRTftSJaAjlmMETBppmD9gcVAMH4zVuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vrClYa/hpu0DRc55eL8W1Q86WL5LeJc08yfR6lTtUJFnZMFes2YcLlV3TkF++gGTF
-	 v7iWiHyZuP7JQRzJ8//Jm4M8LM1FPqHCBE0ifl0eTeMkWbfPr6KPFK1ATkI0gYDHvR
-	 7LyljoPY8F56ySNyEGrSXDRpclgaLTmDQmFztr1U=
+	b=bjOhyr5YaoIAIzXGnw+CN2Ks7l4ZLzRnvs6s17e0A/j4VGoUjkyR7Nr6Y8dhG/JF4
+	 CDnRNeRR3HRhMh/SA4mjNzlEK9g4V5dhifzNGZaYp8nG69kvaJSpmNYBt8AWwuYjCu
+	 ZdR089mUubQGZMdr5yAooCllCsiW4+BXaK0Jd3G4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ma Ke <make24@iscas.ac.cn>,
 	Johan Hovold <johan@kernel.org>,
 	Vladimir Zapolskiy <vz@mleia.com>
-Subject: [PATCH 6.18 289/430] usb: phy: isp1301: fix non-OF device reference imbalance
-Date: Mon, 29 Dec 2025 17:11:31 +0100
-Message-ID: <20251229160734.978958624@linuxfoundation.org>
+Subject: [PATCH 6.18 290/430] usb: gadget: lpc32xx_udc: fix clock imbalance in error path
+Date: Mon, 29 Dec 2025 17:11:32 +0100
+Message-ID: <20251229160735.015111030@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -53,46 +53,100 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit b4b64fda4d30a83a7f00e92a0c8a1d47699609f3 upstream.
+commit 782be79e4551550d7a82b1957fc0f7347e6d461f upstream.
 
-A recent change fixing a device reference leak in a UDC driver
-introduced a potential use-after-free in the non-OF case as the
-isp1301_get_client() helper only increases the reference count for the
-returned I2C device in the OF case.
+A recent change fixing a device reference leak introduced a clock
+imbalance by reusing an error path so that the clock may be disabled
+before having been enabled.
 
-Increment the reference count also for non-OF so that the caller can
-decrement it unconditionally.
+Note that the clock framework allows for passing in NULL clocks so there
+is no risk for a NULL pointer dereference.
 
-Note that this is inherently racy just as using the returned I2C device
-is since nothing is preventing the PHY driver from being unbound while
-in use.
+Also drop the bogus I2C client NULL check added by the offending commit
+as the pointer has already been verified to be non-NULL.
 
 Fixes: c84117912bdd ("USB: lpc32xx_udc: Fix error handling in probe")
 Cc: stable@vger.kernel.org
 Cc: Ma Ke <make24@iscas.ac.cn>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Reviewed-by: Vladimir Zapolskiy <vz@mleia.com>
-Link: https://patch.msgid.link/20251218153519.19453-3-johan@kernel.org
+Link: https://patch.msgid.link/20251218153519.19453-2-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/phy/phy-isp1301.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/udc/lpc32xx_udc.c |   20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
---- a/drivers/usb/phy/phy-isp1301.c
-+++ b/drivers/usb/phy/phy-isp1301.c
-@@ -149,7 +149,12 @@ struct i2c_client *isp1301_get_client(st
- 		return client;
+--- a/drivers/usb/gadget/udc/lpc32xx_udc.c
++++ b/drivers/usb/gadget/udc/lpc32xx_udc.c
+@@ -3020,7 +3020,7 @@ static int lpc32xx_udc_probe(struct plat
+ 	pdev->dev.dma_mask = &lpc32xx_usbd_dmamask;
+ 	retval = dma_set_coherent_mask(&pdev->dev, DMA_BIT_MASK(32));
+ 	if (retval)
+-		goto i2c_fail;
++		goto err_put_client;
  
- 	/* non-DT: only one ISP1301 chip supported */
--	return isp1301_i2c_client;
-+	if (isp1301_i2c_client) {
-+		get_device(&isp1301_i2c_client->dev);
-+		return isp1301_i2c_client;
-+	}
+ 	udc->board = &lpc32xx_usbddata;
+ 
+@@ -3040,7 +3040,7 @@ static int lpc32xx_udc_probe(struct plat
+ 		udc->udp_irq[i] = platform_get_irq(pdev, i);
+ 		if (udc->udp_irq[i] < 0) {
+ 			retval = udc->udp_irq[i];
+-			goto i2c_fail;
++			goto err_put_client;
+ 		}
+ 	}
+ 
+@@ -3048,7 +3048,7 @@ static int lpc32xx_udc_probe(struct plat
+ 	if (IS_ERR(udc->udp_baseaddr)) {
+ 		dev_err(udc->dev, "IO map failure\n");
+ 		retval = PTR_ERR(udc->udp_baseaddr);
+-		goto i2c_fail;
++		goto err_put_client;
+ 	}
+ 
+ 	/* Get USB device clock */
+@@ -3056,14 +3056,14 @@ static int lpc32xx_udc_probe(struct plat
+ 	if (IS_ERR(udc->usb_slv_clk)) {
+ 		dev_err(udc->dev, "failed to acquire USB device clock\n");
+ 		retval = PTR_ERR(udc->usb_slv_clk);
+-		goto i2c_fail;
++		goto err_put_client;
+ 	}
+ 
+ 	/* Enable USB device clock */
+ 	retval = clk_prepare_enable(udc->usb_slv_clk);
+ 	if (retval < 0) {
+ 		dev_err(udc->dev, "failed to start USB device clock\n");
+-		goto i2c_fail;
++		goto err_put_client;
+ 	}
+ 
+ 	/* Setup deferred workqueue data */
+@@ -3165,9 +3165,10 @@ dma_alloc_fail:
+ 	dma_free_coherent(&pdev->dev, UDCA_BUFF_SIZE,
+ 			  udc->udca_v_base, udc->udca_p_base);
+ i2c_fail:
+-	if (udc->isp1301_i2c_client)
+-		put_device(&udc->isp1301_i2c_client->dev);
+ 	clk_disable_unprepare(udc->usb_slv_clk);
++err_put_client:
++	put_device(&udc->isp1301_i2c_client->dev);
 +
-+	return NULL;
- }
- EXPORT_SYMBOL_GPL(isp1301_get_client);
+ 	dev_err(udc->dev, "%s probe failed, %d\n", driver_name, retval);
  
+ 	return retval;
+@@ -3195,10 +3196,9 @@ static void lpc32xx_udc_remove(struct pl
+ 	dma_free_coherent(&pdev->dev, UDCA_BUFF_SIZE,
+ 			  udc->udca_v_base, udc->udca_p_base);
+ 
+-	if (udc->isp1301_i2c_client)
+-		put_device(&udc->isp1301_i2c_client->dev);
+-
+ 	clk_disable_unprepare(udc->usb_slv_clk);
++
++	put_device(&udc->isp1301_i2c_client->dev);
+ }
+ 
+ #ifdef CONFIG_PM
 
 
