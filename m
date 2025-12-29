@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A1E2222CB;
-	Mon, 29 Dec 2025 16:23:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C244A23D2B2;
+	Mon, 29 Dec 2025 16:23:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025390; cv=none; b=pQLW5/JYKm9x8xvlRmv/eVAM75rvGb7y/N3NIrtFlYCmkaB7y6CYjrKzFhgMCZP+OM4605DluOHmwDWujzUG6JBBcKww5KIDnWP8cqnWDRQF+j3gSn7P0j4w8ihXsjW+hZRu/bofHYfddK/u14ioIqZA69BJsb77QsfZfuRTKYg=
+	t=1767025392; cv=none; b=CgZLllnczpfXkCDUlZcNo/dybzZ/8gg7Qkq14aqc5WOzHM4RHBSeLT0ehlO7oEeX7jj6dYhumomdw/yDoTr8tdCyhWb3f1ate0tOBs2yeJuc7qpPpb/uT1cFXHlu4Q1/jZgdVZ2995xZi3gsiH6wVKu7++hKK75olsnFyg2x0Lg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025390; c=relaxed/simple;
-	bh=hY0dXYB3DsF+bZGDs9jzT9BTueNbjeBv304omIn6T2c=;
+	s=arc-20240116; t=1767025392; c=relaxed/simple;
+	bh=V01O17WpuupC1GQoofWhOB5yWOWfqUgk9pJ+Ps6ICS4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ee4p6Eakg3Jg77VgKZKpASYavkky33kWvdYU/IgFZKCcpJq5i4Tw9Ht4nL0jSDkxcFhAf2ERE2Mr323pS4zgQJTV9HNbPHf3y2ep5Et+Ph+4e3jePPVaevwkM3Bym2XN+IVTdKvyhOp0pE2L8WlWPS3X/AyzU+SwDKtMdL51/Mc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qU1mjzli; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RpQ5kdv0xTdIPdhxDexs+nvDwUbFhX3UnDAo/0x78Bn6AM5rc7j6N2BBUHX9CCK5GMUAskl7mlB4Ob5wO2G9qW94Nmzf2sUnsaUEw5ZjeLqAy8+eC1jAM5ADGVcR8Goyl5KUoqLvbiB5+tg8EkrHRfVpjKZb5+SF0uF6ep6R67c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o3vBcGBW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qU1mjzli"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70F6FC4CEF7;
-	Mon, 29 Dec 2025 16:23:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o3vBcGBW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B550C4CEF7;
+	Mon, 29 Dec 2025 16:23:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025389;
-	bh=hY0dXYB3DsF+bZGDs9jzT9BTueNbjeBv304omIn6T2c=;
+	s=korg; t=1767025392;
+	bh=V01O17WpuupC1GQoofWhOB5yWOWfqUgk9pJ+Ps6ICS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qU1mjzliOxfFQOQ8rpwNMaaqyoMZ8rVGJt1YAemTSEEUFepzy6XcsKzI46ebcfduq
-	 4nge6Efl1TWY0Ymi76985BVpGUGA4iCp7bCwGxw33+O8Zs57itHo39tn2/tuoiSyMj
-	 Cwe1m4Fhjeew4M29rM1WcGpInOQ2vPujxPq4zlIw=
+	b=o3vBcGBW7FM7IQHGGXEoaVyOvXARR57Vl1b/rRWbUe6jiyUWhlkuq12A8qAFwJ762
+	 pT6vsqkSM03buVpIDAghfZVT23mA9gzlkJBJV8sqLN2e8SEtVcwtgRM/Y2MIRU+i9o
+	 DsbETDq8nYStRfRn7gqYRBdwZdnxASNbrI1BKsq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	syzbot+205ef33a3b636b4181fb@syzkaller.appspotmail.com,
+	Lizhi Xu <lizhi.xu@windriver.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 195/430] exfat: zero out post-EOF page cache on file extension
-Date: Mon, 29 Dec 2025 17:09:57 +0100
-Message-ID: <20251229160731.530428700@linuxfoundation.org>
+Subject: [PATCH 6.18 196/430] usbip: Fix locking bug in RT-enabled kernels
+Date: Mon, 29 Dec 2025 17:09:58 +0100
+Message-ID: <20251229160731.566564386@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -51,61 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuezhang Mo <Yuezhang.Mo@sony.com>
+From: Lizhi Xu <lizhi.xu@windriver.com>
 
-[ Upstream commit 4e163c39dd4e70fcdce948b8774d96e0482b4a11 ]
+[ Upstream commit 09bf21bf5249880f62fe759b53b14b4b52900c6c ]
 
-xfstests generic/363 was failing due to unzeroed post-EOF page
-cache that allowed mmap writes beyond EOF to become visible
-after file extension.
+Interrupts are disabled before entering usb_hcd_giveback_urb().
+A spinlock_t becomes a sleeping lock on PREEMPT_RT, so it cannot be
+acquired with disabled interrupts.
 
-For example, in following xfs_io sequence, 0x22 should not be
-written to the file but would become visible after the extension:
+Save the interrupt status and restore it after usb_hcd_giveback_urb().
 
-  xfs_io -f -t -c "pwrite -S 0x11 0 8" \
-    -c "mmap 0 4096" \
-    -c "mwrite -S 0x22 32 32" \
-    -c "munmap" \
-    -c "pwrite -S 0x33 512 32" \
-    $testfile
+syz reported:
+BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
+Call Trace:
+ dump_stack_lvl+0x189/0x250 lib/dump_stack.c:120
+ rt_spin_lock+0xc7/0x2c0 kernel/locking/spinlock_rt.c:57
+ spin_lock include/linux/spinlock_rt.h:44 [inline]
+ mon_bus_complete drivers/usb/mon/mon_main.c:134 [inline]
+ mon_complete+0x5c/0x200 drivers/usb/mon/mon_main.c:147
+ usbmon_urb_complete include/linux/usb/hcd.h:738 [inline]
+ __usb_hcd_giveback_urb+0x254/0x5e0 drivers/usb/core/hcd.c:1647
+ vhci_urb_enqueue+0xb4f/0xe70 drivers/usb/usbip/vhci_hcd.c:818
 
-This violates the expected behavior where writes beyond EOF via
-mmap should not persist after the file is extended. Instead, the
-extended region should contain zeros.
-
-Fix this by using truncate_pagecache() to truncate the page cache
-after the current EOF when extending the file.
-
-Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Reported-by: syzbot+205ef33a3b636b4181fb@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=205ef33a3b636b4181fb
+Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20250916014143.1439759-1-lizhi.xu@windriver.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/file.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/usbip/vhci_hcd.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/exfat/file.c b/fs/exfat/file.c
-index adc37b4d7fc2..536c8078f0c1 100644
---- a/fs/exfat/file.c
-+++ b/fs/exfat/file.c
-@@ -25,6 +25,8 @@ static int exfat_cont_expand(struct inode *inode, loff_t size)
- 	struct exfat_sb_info *sbi = EXFAT_SB(sb);
- 	struct exfat_chain clu;
+diff --git a/drivers/usb/usbip/vhci_hcd.c b/drivers/usb/usbip/vhci_hcd.c
+index 0d6c10a8490c..f7e405abe608 100644
+--- a/drivers/usb/usbip/vhci_hcd.c
++++ b/drivers/usb/usbip/vhci_hcd.c
+@@ -831,15 +831,15 @@ static int vhci_urb_enqueue(struct usb_hcd *hcd, struct urb *urb, gfp_t mem_flag
+ no_need_xmit:
+ 	usb_hcd_unlink_urb_from_ep(hcd, urb);
+ no_need_unlink:
+-	spin_unlock_irqrestore(&vhci->lock, flags);
+ 	if (!ret) {
+ 		/* usb_hcd_giveback_urb() should be called with
+ 		 * irqs disabled
+ 		 */
+-		local_irq_disable();
++		spin_unlock(&vhci->lock);
+ 		usb_hcd_giveback_urb(hcd, urb, urb->status);
+-		local_irq_enable();
++		spin_lock(&vhci->lock);
+ 	}
++	spin_unlock_irqrestore(&vhci->lock, flags);
+ 	return ret;
+ }
  
-+	truncate_pagecache(inode, i_size_read(inode));
-+
- 	ret = inode_newsize_ok(inode, size);
- 	if (ret)
- 		return ret;
-@@ -639,6 +641,9 @@ static ssize_t exfat_file_write_iter(struct kiocb *iocb, struct iov_iter *iter)
- 
- 	inode_lock(inode);
- 
-+	if (pos > i_size_read(inode))
-+		truncate_pagecache(inode, i_size_read(inode));
-+
- 	valid_size = ei->valid_size;
- 
- 	ret = generic_write_checks(iocb, iter);
 -- 
 2.51.0
 
