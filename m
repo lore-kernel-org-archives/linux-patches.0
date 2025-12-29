@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 840DD222560;
-	Mon, 29 Dec 2025 16:18:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46AE4330670;
+	Mon, 29 Dec 2025 16:18:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025081; cv=none; b=dsonaZKKB2Yt3Ets7PzYsBXEgF5jH49OEVZtnW4rktEKsy0SysgaepmXdxxGTK35QTuaxNurpyeOjv1NzalsdhVa2w437cR2ectFwB92uIjLl+IIp+xOieCPZOi2GIitVN53jMFcXHbJNcSzPrh6hgHFlxnQqvOABcDQAzOhYNk=
+	t=1767025084; cv=none; b=TR3JKZr0cN4TQ+dwnOgqWR+2pk0fmjXzpNMzP/PA3Uej48RedQL5/60+X7Nqfb7Wr/u/TAg++/FlnPL8YsbaeZgksw9HTgRMN373ctmvC/OngIhxd6o5stNg76tRo4Py7oSHf4NMZVNap9/wQbf8FkwWp3tWRci0LllwtoaVfQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025081; c=relaxed/simple;
-	bh=l53hEBknxNENuxjGo8nUWYM6yuerbb7LmPOeXbXxINc=;
+	s=arc-20240116; t=1767025084; c=relaxed/simple;
+	bh=JzMf9jVeISK6RrIdo8ygbgs+qX5eiWuMz3+pJR6VHs4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N78cjNOXFIeimVgqcqyNXj73Br+Fma/a78Hqq5JePEAkkuiKuzRc0EBaL7Vhu5YJppzZeNxFolTArLQ2b7nrsdQPFsL/bFl4SiJxqLJgbcbfqYKz4bqjtDmT0E0anqzCeSfP017m7DIr8VXuYQmOp0/bGoC5juBmqasnBot5vP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hvvuPSfm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f0zEl9/gfjf9y1asW9aVr/X2HVTicff0deAkz6AD+Y39rZLLYqUnLR5W0Wgu9/X48xNP0g50mv5XAKm+VpujGqUC0xN8q41YN9RXzNEYuZZOBEUItEj81UcZRfXJ/5t57YqJdvhgvU/jqc9uUejP5/9j5VB/WOCBNF0nK9yBa90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sjAJwCy4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hvvuPSfm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BEA8C116C6;
-	Mon, 29 Dec 2025 16:18:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sjAJwCy4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2338C4CEF7;
+	Mon, 29 Dec 2025 16:18:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025081;
-	bh=l53hEBknxNENuxjGo8nUWYM6yuerbb7LmPOeXbXxINc=;
+	s=korg; t=1767025084;
+	bh=JzMf9jVeISK6RrIdo8ygbgs+qX5eiWuMz3+pJR6VHs4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hvvuPSfm5R81H8Bw33m8aU04mo6K1VrTuLIZR+YRbp1f3uiGIER+eh8qj6+xMeTI9
-	 TGzhauz7DyD/hvy/Z7hCzmmVsvTM2g33I/bwVvUMawt5eHPF1DCBi0Xm3u9q7qy5OH
-	 9Kmk4zB9peuW5j58hV4Viq8NISCzqd33lYBnkj0g=
+	b=sjAJwCy4c8MrkTUxWbHagw848yoRZyTUeCGUplhE5XJ+8oIfqie2rB5rHNuOYol8x
+	 kXKx2BC9b8rH1WrcpmYA2/X9U2+pBpxTP9FnA3od4SPCosmSEfN4Us1zgPvK7slAat
+	 s/NGAPdbABtLk+DN57AN22xW93Qvl6Rvy7TBwyf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Chen <yiche@redhat.com>,
-	Florian Westphal <fw@strlen.de>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 087/430] selftests: netfilter: packetdrill: avoid failure on HZ=100 kernel
-Date: Mon, 29 Dec 2025 17:08:09 +0100
-Message-ID: <20251229160727.564016027@linuxfoundation.org>
+Subject: [PATCH 6.18 061/430] net: phy: realtek: eliminate priv->phycr1 variable
+Date: Mon, 29 Dec 2025 17:07:43 +0100
+Message-ID: <20251229160726.612368017@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -51,39 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit fec7b0795548b43e2c3c46e3143c34ef6070341c ]
+[ Upstream commit bb78b71faf60d11a15f07e3390fcfd31e5e523bb ]
 
-packetdrill --ip_version=ipv4 --mtu=1500 --tolerance_usecs=1000000 --non_fatal packet conntrack_syn_challenge_ack.pkt
-conntrack v1.4.8 (conntrack-tools): 1 flow entries have been shown.
-conntrack_syn_challenge_ack.pkt:32: error executing `conntrack -f $NFCT_IP_VERSION \
--L -p tcp --dport 8080 | grep UNREPLIED | grep -q SYN_SENT` command: non-zero status 1
+Previous changes have replaced the machine-level priv->phycr2 with a
+high-level priv->disable_clk_out. This created a discrepancy with
+priv->phycr1 which is resolved here, for uniformity.
 
-Affected kernel had CONFIG_HZ=100; reset packet was still sitting in
-backlog.
+One advantage of this new implementation is that we don't read
+priv->phycr1 in rtl821x_probe() if we're never going to modify it.
 
-Reported-by: Yi Chen <yiche@redhat.com>
-Fixes: a8a388c2aae4 ("selftests: netfilter: add packetdrill based conntrack tests")
-Signed-off-by: Florian Westphal <fw@strlen.de>
+We never test the positive return code from phy_modify_mmd_changed(), so
+we could just as well use phy_modify_mmd().
+
+I took the ALDPS feature description from commit d90db36a9e74 ("net:
+phy: realtek: add dt property to enable ALDPS mode") and transformed it
+into a function comment - the feature is sufficiently non-obvious to
+deserve that.
+
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20251117234033.345679-6-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 4f0638b12451 ("net: phy: RTL8211FVD: Restore disabling of PHY-mode EEE")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/netfilter/packetdrill/conntrack_syn_challenge_ack.pkt   | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/phy/realtek/realtek_main.c | 44 ++++++++++++++++----------
+ 1 file changed, 28 insertions(+), 16 deletions(-)
 
-diff --git a/tools/testing/selftests/net/netfilter/packetdrill/conntrack_syn_challenge_ack.pkt b/tools/testing/selftests/net/netfilter/packetdrill/conntrack_syn_challenge_ack.pkt
-index 3442cd29bc932..cdb3910af95b4 100644
---- a/tools/testing/selftests/net/netfilter/packetdrill/conntrack_syn_challenge_ack.pkt
-+++ b/tools/testing/selftests/net/netfilter/packetdrill/conntrack_syn_challenge_ack.pkt
-@@ -26,7 +26,7 @@
+diff --git a/drivers/net/phy/realtek/realtek_main.c b/drivers/net/phy/realtek/realtek_main.c
+index f0348b92beec3..35f40bfdaf113 100644
+--- a/drivers/net/phy/realtek/realtek_main.c
++++ b/drivers/net/phy/realtek/realtek_main.c
+@@ -174,7 +174,7 @@ MODULE_AUTHOR("Johnson Leung");
+ MODULE_LICENSE("GPL");
  
- +0.01 > R 643160523:643160523(0) win 0
+ struct rtl821x_priv {
+-	u16 phycr1;
++	bool enable_aldps;
+ 	bool disable_clk_out;
+ 	struct clk *clk;
+ 	/* rtl8211f */
+@@ -225,7 +225,6 @@ static int rtl821x_probe(struct phy_device *phydev)
+ {
+ 	struct device *dev = &phydev->mdio.dev;
+ 	struct rtl821x_priv *priv;
+-	int ret;
  
--+0.01 `conntrack -f $NFCT_IP_VERSION -L -p tcp --dport 8080 2>/dev/null | grep UNREPLIED | grep -q SYN_SENT`
-++0.1 `conntrack -f $NFCT_IP_VERSION -L -p tcp --dport 8080 2>/dev/null | grep UNREPLIED | grep -q SYN_SENT`
+ 	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
+ 	if (!priv)
+@@ -236,14 +235,8 @@ static int rtl821x_probe(struct phy_device *phydev)
+ 		return dev_err_probe(dev, PTR_ERR(priv->clk),
+ 				     "failed to get phy clock\n");
  
- // Must go through.
- +0.01 > S 0:0(0) win 65535 <mss 1460,sackOK,TS val 1 ecr 0,nop,wscale 8>
+-	ret = phy_read_paged(phydev, RTL8211F_PHYCR_PAGE, RTL8211F_PHYCR1);
+-	if (ret < 0)
+-		return ret;
+-
+-	priv->phycr1 = ret & (RTL8211F_ALDPS_PLL_OFF | RTL8211F_ALDPS_ENABLE | RTL8211F_ALDPS_XTAL_OFF);
+-	if (of_property_read_bool(dev->of_node, "realtek,aldps-enable"))
+-		priv->phycr1 |= RTL8211F_ALDPS_PLL_OFF | RTL8211F_ALDPS_ENABLE | RTL8211F_ALDPS_XTAL_OFF;
+-
++	priv->enable_aldps = of_property_read_bool(dev->of_node,
++						   "realtek,aldps-enable");
+ 	priv->disable_clk_out = of_property_read_bool(dev->of_node,
+ 						      "realtek,clkout-disable");
+ 
+@@ -647,17 +640,36 @@ static int rtl8211f_config_clk_out(struct phy_device *phydev)
+ 	return genphy_soft_reset(phydev);
+ }
+ 
+-static int rtl8211f_config_init(struct phy_device *phydev)
++/* Advance Link Down Power Saving (ALDPS) mode changes crystal/clock behaviour,
++ * which causes the RXC clock signal to stop for tens to hundreds of
++ * milliseconds.
++ *
++ * Some MACs need the RXC clock to support their internal RX logic, so ALDPS is
++ * only enabled based on an opt-in device tree property.
++ */
++static int rtl8211f_config_aldps(struct phy_device *phydev)
+ {
+ 	struct rtl821x_priv *priv = phydev->priv;
++	u16 mask = RTL8211F_ALDPS_PLL_OFF |
++		   RTL8211F_ALDPS_ENABLE |
++		   RTL8211F_ALDPS_XTAL_OFF;
++
++	/* The value is preserved if the device tree property is absent */
++	if (!priv->enable_aldps)
++		return 0;
++
++	return phy_modify_paged(phydev, RTL8211F_PHYCR_PAGE, RTL8211F_PHYCR1,
++				mask, mask);
++}
++
++static int rtl8211f_config_init(struct phy_device *phydev)
++{
+ 	struct device *dev = &phydev->mdio.dev;
+ 	int ret;
+ 
+-	ret = phy_modify_paged_changed(phydev, RTL8211F_PHYCR_PAGE, RTL8211F_PHYCR1,
+-				       RTL8211F_ALDPS_PLL_OFF | RTL8211F_ALDPS_ENABLE | RTL8211F_ALDPS_XTAL_OFF,
+-				       priv->phycr1);
+-	if (ret < 0) {
+-		dev_err(dev, "aldps mode  configuration failed: %pe\n",
++	ret = rtl8211f_config_aldps(phydev);
++	if (ret) {
++		dev_err(dev, "aldps mode configuration failed: %pe\n",
+ 			ERR_PTR(ret));
+ 		return ret;
+ 	}
 -- 
 2.51.0
 
