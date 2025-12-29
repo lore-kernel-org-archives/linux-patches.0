@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2516223C39A;
-	Mon, 29 Dec 2025 16:22:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B033E2222CB;
+	Mon, 29 Dec 2025 16:22:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025327; cv=none; b=hS/ODCAzS1ZUTNI6WyIR3J2OpGQPzRTz80goYP6y6BRwSvNFG2iR6BcghKPkN+i4M5o5skKvN+qdwkCWrAIe3zdwzYNjdGmdmzJl+Ys5menKSfSU7ENsRXr2VGee7qdWctIQxcHDJFcsxhuzzgo11x6uAIjRivT2J7fXf1T03qQ=
+	t=1767025327; cv=none; b=cIljUPXzQaISzZ/rlHkcz7KdzuYbu9P6F8BGhR5mbfUGPjnSOK+3C6NFVZ1fnNd5Mzb0k/ON6zA+VqexoSy8BX0JVDkO6GsuDbm8VCWdCTb8RKSdDGIvZH9Wkb1zbBZ4m5+WdIFWa0c/WjNctSqanprq03s/EXkIHJqPdd7bFC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1767025327; c=relaxed/simple;
-	bh=9S7FymlM62HlXvvLCZ5R6vfIXq8rXY01mduNL66bHto=;
+	bh=DF0FeAo3wYFF3pu4koczl8auHu371tUu1KT86bfLEaI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TjncWxjY1lui04GGldKdY3wHnQtKUyT7N1AQH+9v5aqRMxTFpA+oKEMgs/WWj2BnXa21z1N+bG9zrWrkQxn9J5UbcP7EMhjQMEss19G/GjUWACW5+l8nY3MZnR1nScqRFDUiUA/S3Kvp43CKhLUpZhfC9INK2q/x178ulHHJem4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ETE5fO6h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lETckAnQyWSLZbFDJApFfjF0LlRgDTL6d/vdcXa+06mulriWLbsNqSGzk6YD9ELxJqOFf+zYYwTptxB0yCMoACRqZlIJa92hym295BhSN/K7Hy0xlU5qGjGYkC4cT8qFkJ2dxvnLpoIorEbne4QBpnLu+W6cfXU2HubSsfmCoTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Psbj5vA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ETE5fO6h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A459FC116C6;
-	Mon, 29 Dec 2025 16:22:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Psbj5vA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA345C4CEF7;
+	Mon, 29 Dec 2025 16:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025327;
-	bh=9S7FymlM62HlXvvLCZ5R6vfIXq8rXY01mduNL66bHto=;
+	s=korg; t=1767025324;
+	bh=DF0FeAo3wYFF3pu4koczl8auHu371tUu1KT86bfLEaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ETE5fO6h5gAelh6ptCR24kUbEKK6GeWyceOx9C4JHKnCLL7dfcisuFqrExmszaFU5
-	 sJXrZbm7l/83Bclh+XONmt/52EE3bfahH/i6hpCLzV9MHxGiBPak5JsMrDlIeEQCrh
-	 75itGsWkp9YJ6nvO8F7GiZL0eFlhgZeLefhTuMRU=
+	b=2Psbj5vAowwknm0m2HcNLLCYL0mdHkds5JB0ZRjAN02VMQ6qkC128k9b4IDiyH4/i
+	 RXHISILrap5x6iuec3CAGo5H1cfQ9ssyIPxhMgQnvI2rucyTbw12nS2KyhFWOVimA9
+	 XqPQSDetpUR2fG+4D5wO24Hv0aNnPdIkSVdSELB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Binding <sbinding@opensource.cirrus.com>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>
-Subject: [PATCH 6.18 175/430] ASoC: ops: fix snd_soc_get_volsw for sx controls
-Date: Mon, 29 Dec 2025 17:09:37 +0100
-Message-ID: <20251229160730.801113869@linuxfoundation.org>
+	Yongxin Liu <yongxin.liu@windriver.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 166/430] x86/fpu: Fix FPU state core dump truncation on CPUs with no extended xfeatures
+Date: Mon, 29 Dec 2025 17:09:28 +0100
+Message-ID: <20251229160730.472646370@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -53,130 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Binding <sbinding@opensource.cirrus.com>
+From: Yongxin Liu <yongxin.liu@windriver.com>
 
-[ Upstream commit 095d621141826a2841dae85b52c784c147ea99d3 ]
+[ Upstream commit c8161e5304abb26e6c0bec6efc947992500fa6c5 ]
 
-SX controls are currently broken, since the clamp introduced in
-commit a0ce874cfaaa ("ASoC: ops: improve snd_soc_get_volsw") does not
-handle SX controls, for example where the min value in the clamp is
-greater than the max value in the clamp.
+Zero can be a valid value of num_records. For example, on Intel Atom x6425RE,
+only x87 and SSE are supported (features 0, 1), and fpu_user_cfg.max_features
+is 3. The for_each_extended_xfeature() loop only iterates feature 2, which is
+not enabled, so num_records = 0. This is valid and should not cause core dump
+failure.
 
-Add clamp parameter to prevent clamping in SX controls.
-The nature of SX controls mean that it wraps around 0, with a variable
-number of bits, therefore clamping the value becomes complicated and
-prone to error.
+The issue is that dump_xsave_layout_desc() returns 0 for both genuine errors
+(dump_emit() failure) and valid cases (no extended features). Use negative
+return values for errors and only abort on genuine failures.
 
-Fixes 35 kunit tests for soc_ops_test_access.
-
-Fixes: a0ce874cfaaa ("ASoC: ops: improve snd_soc_get_volsw")
-
-Co-developed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
-Tested-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20251216134938.788625-1-sbinding@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: ba386777a30b ("x86/elf: Add a new FPU buffer layout info to x86 core files")
+Signed-off-by: Yongxin Liu <yongxin.liu@windriver.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://patch.msgid.link/20251210000219.4094353-2-yongxin.liu@windriver.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-ops.c | 32 ++++++++++++++++++++------------
- 1 file changed, 20 insertions(+), 12 deletions(-)
+ arch/x86/kernel/fpu/xstate.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/soc-ops.c b/sound/soc/soc-ops.c
-index ce86978c158d..624e9269fc25 100644
---- a/sound/soc/soc-ops.c
-+++ b/sound/soc/soc-ops.c
-@@ -111,7 +111,8 @@ int snd_soc_put_enum_double(struct snd_kcontrol *kcontrol,
- EXPORT_SYMBOL_GPL(snd_soc_put_enum_double);
+diff --git a/arch/x86/kernel/fpu/xstate.c b/arch/x86/kernel/fpu/xstate.c
+index 28e4fd65c9da..5f54a207ace4 100644
+--- a/arch/x86/kernel/fpu/xstate.c
++++ b/arch/x86/kernel/fpu/xstate.c
+@@ -1945,7 +1945,7 @@ static int dump_xsave_layout_desc(struct coredump_params *cprm)
+ 		};
  
- static int sdca_soc_q78_reg_to_ctl(struct soc_mixer_control *mc, unsigned int reg_val,
--				unsigned int mask, unsigned int shift, int max)
-+				   unsigned int mask, unsigned int shift, int max,
-+				   bool sx)
- {
- 	int val = reg_val;
+ 		if (!dump_emit(cprm, &xc, sizeof(xc)))
+-			return 0;
++			return -1;
  
-@@ -141,20 +142,26 @@ static unsigned int sdca_soc_q78_ctl_to_reg(struct soc_mixer_control *mc, int va
- }
+ 		num_records++;
+ 	}
+@@ -1983,7 +1983,7 @@ int elf_coredump_extra_notes_write(struct coredump_params *cprm)
+ 		return 1;
  
- static int soc_mixer_reg_to_ctl(struct soc_mixer_control *mc, unsigned int reg_val,
--				unsigned int mask, unsigned int shift, int max)
-+				unsigned int mask, unsigned int shift, int max,
-+				bool sx)
- {
- 	int val = (reg_val >> shift) & mask;
+ 	num_records = dump_xsave_layout_desc(cprm);
+-	if (!num_records)
++	if (num_records < 0)
+ 		return 1;
  
- 	if (mc->sign_bit)
- 		val = sign_extend32(val, mc->sign_bit);
- 
--	val = clamp(val, mc->min, mc->max);
--	val -= mc->min;
-+	if (sx) {
-+		val -= mc->min; // SX controls intentionally can overflow here
-+		val = min_t(unsigned int, val & mask, max);
-+	} else {
-+		val = clamp(val, mc->min, mc->max);
-+		val -= mc->min;
-+	}
- 
- 	if (mc->invert)
- 		val = max - val;
- 
--	return val & mask;
-+	return val;
- }
- 
- static unsigned int soc_mixer_ctl_to_reg(struct soc_mixer_control *mc, int val,
-@@ -280,9 +287,10 @@ static int soc_put_volsw(struct snd_kcontrol *kcontrol,
- 
- static int soc_get_volsw(struct snd_kcontrol *kcontrol,
- 			 struct snd_ctl_elem_value *ucontrol,
--			 struct soc_mixer_control *mc, int mask, int max)
-+			 struct soc_mixer_control *mc, int mask, int max, bool sx)
- {
--	int (*reg_to_ctl)(struct soc_mixer_control *, unsigned int, unsigned int, unsigned int, int);
-+	int (*reg_to_ctl)(struct soc_mixer_control *, unsigned int, unsigned int,
-+			  unsigned int, int, bool);
- 	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
- 	unsigned int reg_val;
- 	int val;
-@@ -293,16 +301,16 @@ static int soc_get_volsw(struct snd_kcontrol *kcontrol,
- 		reg_to_ctl = soc_mixer_reg_to_ctl;
- 
- 	reg_val = snd_soc_component_read(component, mc->reg);
--	val = reg_to_ctl(mc, reg_val, mask, mc->shift, max);
-+	val = reg_to_ctl(mc, reg_val, mask, mc->shift, max, sx);
- 
- 	ucontrol->value.integer.value[0] = val;
- 
- 	if (snd_soc_volsw_is_stereo(mc)) {
- 		if (mc->reg == mc->rreg) {
--			val = reg_to_ctl(mc, reg_val, mask, mc->rshift, max);
-+			val = reg_to_ctl(mc, reg_val, mask, mc->rshift, max, sx);
- 		} else {
- 			reg_val = snd_soc_component_read(component, mc->rreg);
--			val = reg_to_ctl(mc, reg_val, mask, mc->shift, max);
-+			val = reg_to_ctl(mc, reg_val, mask, mc->shift, max, sx);
- 		}
- 
- 		ucontrol->value.integer.value[1] = val;
-@@ -371,7 +379,7 @@ int snd_soc_get_volsw(struct snd_kcontrol *kcontrol,
- 		(struct soc_mixer_control *)kcontrol->private_value;
- 	unsigned int mask = soc_mixer_mask(mc);
- 
--	return soc_get_volsw(kcontrol, ucontrol, mc, mask, mc->max - mc->min);
-+	return soc_get_volsw(kcontrol, ucontrol, mc, mask, mc->max - mc->min, false);
- }
- EXPORT_SYMBOL_GPL(snd_soc_get_volsw);
- 
-@@ -413,7 +421,7 @@ int snd_soc_get_volsw_sx(struct snd_kcontrol *kcontrol,
- 		(struct soc_mixer_control *)kcontrol->private_value;
- 	unsigned int mask = soc_mixer_sx_mask(mc);
- 
--	return soc_get_volsw(kcontrol, ucontrol, mc, mask, mc->max);
-+	return soc_get_volsw(kcontrol, ucontrol, mc, mask, mc->max, true);
- }
- EXPORT_SYMBOL_GPL(snd_soc_get_volsw_sx);
- 
+ 	/* Total size should be equal to the number of records */
 -- 
 2.51.0
 
