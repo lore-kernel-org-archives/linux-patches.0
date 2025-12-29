@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B69633314C5;
-	Mon, 29 Dec 2025 16:26:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985DB331A68;
+	Mon, 29 Dec 2025 16:26:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025568; cv=none; b=eSdQ2ZC//X/wQIZQ/cv8MGuCuS9Pa19vkkIW87Vn6bfgNJFMnVC1I3q2Q1mboPk2S43RLyT0+3PdSbLCbxYLx2BuDwlvDnVnjaNTzmuJIdC0a4KtHDkQY5sQ/OWZsB0A17egzKmWn6fjknNDfovkEJE33dXA+sHBVKInJpP3yPI=
+	t=1767025571; cv=none; b=NrBjW7rEtZmP5Iq7KJhnlr1MYIqGfL4nYnOw9hUGCl/2b7g2tSa+xbgHlN/BjSKtQ0GWHOus642dS/XhjSvHY3JTESDExXQn/A+LmPHL9/+54vvyueuZdZ+0aLhhqUROgp8o2v1mRjhgv2YDJ9K3yOFaMLFQvh5p1Lzml04aiPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025568; c=relaxed/simple;
-	bh=eSaqQaLWBXob68ghuQlf8vFtAwYQHzEkIdQZEoQIOWA=;
+	s=arc-20240116; t=1767025571; c=relaxed/simple;
+	bh=E/yIZD+Ar7D4K4yMHipDsDC6etY/VdmTqNwmsHbbeyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bQ3ZkzmpPdFfHwUKbosPAOQ7OW9eLCfnnGgcUvq/Z7C/atbR1FOAI+Rhi4K7lUqlyWjhQFXY5WZR4LuM6Q860XHl30RXAK3vYo/1ScoiWArzVthEewKDQN9ZvDMFcebQd2qZn7JB3QvXOvBeUbHkObpb4pzmwHivwlJYLl57/ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lLgvy9J2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nSJ+sXOxqhTcw47+OMOePZ6a25lXpoXdC1l0kA67E9J8X4pQ17nAoDCZRunee7HEge+hN9GfyR+wlGLGALqCrqFsFArmuHUq4LQvhTsf6qL1YsNGHUSaoJYEOwMXB502jmx0IIfNM+9Q3z4dzmUaBd6oFBq5GtBISc4mbd9s4DU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MzCy1E3n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lLgvy9J2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40BA8C4CEF7;
-	Mon, 29 Dec 2025 16:26:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MzCy1E3n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 211CEC4CEF7;
+	Mon, 29 Dec 2025 16:26:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025568;
-	bh=eSaqQaLWBXob68ghuQlf8vFtAwYQHzEkIdQZEoQIOWA=;
+	s=korg; t=1767025571;
+	bh=E/yIZD+Ar7D4K4yMHipDsDC6etY/VdmTqNwmsHbbeyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lLgvy9J2xgePru/cR3pLuqZeq5kDha42XiMVG33rHKu2jYxrxt7v9FTzLQWgUxAUz
-	 fvD0toyMxCKzvyIRJZ8PDZQTnvm4wmEzW27JioVWECkrzU3BfLfY45WswVhCo2SAf8
-	 6NMWjsrZC7L71MIKHqKZmkpTnAI/K/aE3gokf5zs=
+	b=MzCy1E3nnvnJXTi4hzwRcT9BdGA4VQPMUSDOMz6OkyGsP1pOpPOmPkrufJH3RdGHc
+	 kZuS1sRmg+HER+OlLEzURczJ2wI+hTrkAB9rNiPMvgX4iZGyEbLmWd1PlGDpa6IdWm
+	 EQDbKBeVhnOe03Rhr27T0C3OGJJ3hTsCAe/FHgFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,10 +30,11 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Fedor Pchelkin <pchelkin@ispras.ru>,
 	Baokun Li <libaokun1@huawei.com>,
 	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.18 259/430] ext4: fix string copying in parse_apply_sb_mount_options()
-Date: Mon, 29 Dec 2025 17:11:01 +0100
-Message-ID: <20251229160733.886995727@linuxfoundation.org>
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.18 260/430] ext4: check if mount_opts is NUL-terminated in ext4_ioctl_set_tune_sb()
+Date: Mon, 29 Dec 2025 17:11:02 +0100
+Message-ID: <20251229160733.923658130@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -54,79 +55,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit ee5a977b4e771cc181f39d504426dbd31ed701cc upstream.
+commit 3db63d2c2d1d1e78615dd742568c5a2d55291ad1 upstream.
 
-strscpy_pad() can't be used to copy a non-NUL-term string into a NUL-term
-string of possibly bigger size.  Commit 0efc5990bca5 ("string.h: Introduce
-memtostr() and memtostr_pad()") provides additional information in that
-regard.  So if this happens, the following warning is observed:
+params.mount_opts may come as potentially non-NUL-term string.  Userspace
+is expected to pass a NUL-term string.  Add an extra check to ensure this
+holds true.  Note that further code utilizes strscpy_pad() so this is just
+for proper informing the user of incorrect data being provided.
 
-strnlen: detected buffer overflow: 65 byte read of buffer size 64
-WARNING: CPU: 0 PID: 28655 at lib/string_helpers.c:1032 __fortify_report+0x96/0xc0 lib/string_helpers.c:1032
-Modules linked in:
-CPU: 0 UID: 0 PID: 28655 Comm: syz-executor.3 Not tainted 6.12.54-syzkaller-00144-g5f0270f1ba00 #0
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-RIP: 0010:__fortify_report+0x96/0xc0 lib/string_helpers.c:1032
-Call Trace:
- <TASK>
- __fortify_panic+0x1f/0x30 lib/string_helpers.c:1039
- strnlen include/linux/fortify-string.h:235 [inline]
- sized_strscpy include/linux/fortify-string.h:309 [inline]
- parse_apply_sb_mount_options fs/ext4/super.c:2504 [inline]
- __ext4_fill_super fs/ext4/super.c:5261 [inline]
- ext4_fill_super+0x3c35/0xad00 fs/ext4/super.c:5706
- get_tree_bdev_flags+0x387/0x620 fs/super.c:1636
- vfs_get_tree+0x93/0x380 fs/super.c:1814
- do_new_mount fs/namespace.c:3553 [inline]
- path_mount+0x6ae/0x1f70 fs/namespace.c:3880
- do_mount fs/namespace.c:3893 [inline]
- __do_sys_mount fs/namespace.c:4103 [inline]
- __se_sys_mount fs/namespace.c:4080 [inline]
- __x64_sys_mount+0x280/0x300 fs/namespace.c:4080
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x64/0x140 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+Found by Linux Verification Center (linuxtesting.org).
 
-Since userspace is expected to provide s_mount_opts field to be at most 63
-characters long with the ending byte being NUL-term, use a 64-byte buffer
-which matches the size of s_mount_opts, so that strscpy_pad() does its job
-properly.  Return with error if the user still managed to provide a
-non-NUL-term string here.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 8ecb790ea8c3 ("ext4: avoid potential buffer over-read in parse_apply_sb_mount_options()")
-Cc: stable@vger.kernel.org
 Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
 Reviewed-by: Baokun Li <libaokun1@huawei.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Message-ID: <20251101160430.222297-1-pchelkin@ispras.ru>
+Message-ID: <20251101160430.222297-2-pchelkin@ispras.ru>
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/super.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/ext4/ioctl.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -2475,7 +2475,7 @@ static int parse_apply_sb_mount_options(
- 					struct ext4_fs_context *m_ctx)
- {
- 	struct ext4_sb_info *sbi = EXT4_SB(sb);
--	char s_mount_opts[65];
-+	char s_mount_opts[64];
- 	struct ext4_fs_context *s_ctx = NULL;
- 	struct fs_context *fc = NULL;
- 	int ret = -ENOMEM;
-@@ -2483,7 +2483,8 @@ static int parse_apply_sb_mount_options(
- 	if (!sbi->s_es->s_mount_opts[0])
- 		return 0;
+--- a/fs/ext4/ioctl.c
++++ b/fs/ext4/ioctl.c
+@@ -1394,6 +1394,10 @@ static int ext4_ioctl_set_tune_sb(struct
+ 	if (copy_from_user(&params, in, sizeof(params)))
+ 		return -EFAULT;
  
--	strscpy_pad(s_mount_opts, sbi->s_es->s_mount_opts);
-+	if (strscpy_pad(s_mount_opts, sbi->s_es->s_mount_opts) < 0)
++	if (strnlen(params.mount_opts, sizeof(params.mount_opts)) ==
++	    sizeof(params.mount_opts))
 +		return -E2BIG;
++
+ 	if ((params.set_flags & ~TUNE_OPS_SUPPORTED) != 0)
+ 		return -EOPNOTSUPP;
  
- 	fc = kzalloc(sizeof(struct fs_context), GFP_KERNEL);
- 	if (!fc)
 
 
