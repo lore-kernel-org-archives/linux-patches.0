@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313C523D2B2;
-	Mon, 29 Dec 2025 16:25:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E9623D2B2;
+	Mon, 29 Dec 2025 16:25:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025509; cv=none; b=X52tZZfc/3OIckiTPDjwZuEPwIG8r79n68TB1rEkLgLGJ579jSFbxyVs6Nnw7VOfyMRrI6TsVYAiQp1Va9rqADME5TyTu5rGANPZMRzDVQYXCgOPpMpN56ZRuDlFwwH57O49fasdN9tK4FNZjNBjWkVVnsmvPZkUqNQZjQu9h/A=
+	t=1767025512; cv=none; b=Pt5SwGOdyZDVvjgQIthfBgkeEiG7ErbfJGFok5nnCHqYMk8S421NikKVfOcRypNyNgOZDyo/Gcz+XoSzNGxyQ+KE3OxSmOnrOg1AaxZXpWWLiFtzgwJsY3b2doBAKoI/74tx++/ObKspRii8ZLwC1WYpOtLHVWLWRv03MS8wIJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025509; c=relaxed/simple;
-	bh=bh6mJEnn6YKqDkaIi8qEqm7PbO8Amm2sbe/aHNB4YZU=;
+	s=arc-20240116; t=1767025512; c=relaxed/simple;
+	bh=sdRdRpQ2o+DvzHudSPyHr+DFG650jhLCi8coBbQQz1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QVg1yrh3kn1MAkpPFs8nF7fpPNDr8SOpG2Cfh3SJPcoSVWwk9vInxLRDnnoaco3XlrRO8Eouz0sMentvp8jZVgEMgrWwQYN+JrHWOd6r18IM3MWcPn+Cg7FY8GOzgKxulgaz1tjJLGbGGpqDycY4NTpNlGP0KHgvcCl9/DoNiME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UA6Q9r78; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ad65K8vOblIHTW3qcGpOXnX0JitoD/ABV7/Y/QrEOi+v8HJenW+jW9WO00eE4vrgluyalh8ZsWn9X7IBFvjefs79L7cb7c8aw77aDxjjjUgroHhiKFwVIyaD8L/D7fwjovwvPjA+gQLSiYjtlMulTzaWtSjdI1AFST9nGrFE+8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GXAfGZxV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UA6Q9r78"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A14F7C4CEF7;
-	Mon, 29 Dec 2025 16:25:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GXAfGZxV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79C14C4CEF7;
+	Mon, 29 Dec 2025 16:25:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025509;
-	bh=bh6mJEnn6YKqDkaIi8qEqm7PbO8Amm2sbe/aHNB4YZU=;
+	s=korg; t=1767025511;
+	bh=sdRdRpQ2o+DvzHudSPyHr+DFG650jhLCi8coBbQQz1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UA6Q9r78Fo+b+ZbcFi8kZGFdhdWYLJ5QcVhV+teyf9PfOECrOAVvrOubF8LAxUAFg
-	 JqFhJcYFFNmZ1+Z4kahjP8+tb2ezUxq/2vyZ3vLodI4IL7IV6UbG9NzmwFMrHwxkZ5
-	 ynYtgl0urkKzqAOkbcuMlFN0Co9UwKaIhqiQHELE=
+	b=GXAfGZxVcUgl7d2cT98C2eRy2UPIQrKmWzJMmVsBW/1M4AbKYKHDbfQ3uG3Srig8l
+	 Oe1MNIl8/RYuKkhubWuT8czXxB5LI/JDTM2Ov+TB85JuKjB8H1ND2Qo8oMJQ8abm7c
+	 Y8qwpk1218bmDPn7o6JOQkBdjbfx2XDNL24xsqmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Derek J. Clark" <derekjohn.clark@gmail.com>,
-	Armin Wolf <W_Armin@gmx.de>,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Justin Tee <justin.tee@broadcom.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Daniel Wagner <wagi@kernel.org>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 206/430] platform/x86: wmi-gamezone: Add Legion Go 2 Quirks
-Date: Mon, 29 Dec 2025 17:10:08 +0100
-Message-ID: <20251229160731.935579759@linuxfoundation.org>
+Subject: [PATCH 6.18 207/430] nvme-fc: dont hold rport lock when putting ctrl
+Date: Mon, 29 Dec 2025 17:10:09 +0100
+Message-ID: <20251229160731.971549966@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -47,59 +47,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Derek J. Clark <derekjohn.clark@gmail.com>
+From: Daniel Wagner <wagi@kernel.org>
 
-[ Upstream commit 55715d7ad5e772d621c3201da3895f250591bce8 ]
+[ Upstream commit b71cbcf7d170e51148d5467820ae8a72febcb651 ]
 
-Add Legion Go 2 SKU's to the Extreme Mode quirks table.
+nvme_fc_ctrl_put can acquire the rport lock when freeing the
+ctrl object:
 
-Signed-off-by: Derek J. Clark <derekjohn.clark@gmail.com>
-Reviewed-by: Armin Wolf <W_Armin@gmx.de>
-Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Link: https://patch.msgid.link/20251127151605.1018026-4-derekjohn.clark@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+nvme_fc_ctrl_put
+  nvme_fc_ctrl_free
+    spin_lock_irqsave(rport->lock)
+
+Thus we can't hold the rport lock when calling nvme_fc_ctrl_put.
+
+Justin suggested use the safe list iterator variant because
+nvme_fc_ctrl_put will also modify the rport->list.
+
+Cc: Justin Tee <justin.tee@broadcom.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Daniel Wagner <wagi@kernel.org>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/lenovo/wmi-gamezone.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ drivers/nvme/host/fc.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/lenovo/wmi-gamezone.c b/drivers/platform/x86/lenovo/wmi-gamezone.c
-index 0eb7fe8222f4..b26806b37d96 100644
---- a/drivers/platform/x86/lenovo/wmi-gamezone.c
-+++ b/drivers/platform/x86/lenovo/wmi-gamezone.c
-@@ -274,8 +274,23 @@ static const struct dmi_system_id fwbug_list[] = {
- 		},
- 		.driver_data = &quirk_no_extreme_bug,
- 	},
-+	{
-+		.ident = "Legion Go 8ASP2",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_VERSION, "Legion Go 8ASP2"),
-+		},
-+		.driver_data = &quirk_no_extreme_bug,
-+	},
-+	{
-+		.ident = "Legion Go 8AHP2",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_VERSION, "Legion Go 8AHP2"),
-+		},
-+		.driver_data = &quirk_no_extreme_bug,
-+	},
- 	{},
--
- };
+diff --git a/drivers/nvme/host/fc.c b/drivers/nvme/host/fc.c
+index 2c903729b0b9..8324230c5371 100644
+--- a/drivers/nvme/host/fc.c
++++ b/drivers/nvme/host/fc.c
+@@ -1468,14 +1468,14 @@ nvme_fc_match_disconn_ls(struct nvme_fc_rport *rport,
+ {
+ 	struct fcnvme_ls_disconnect_assoc_rqst *rqst =
+ 					&lsop->rqstbuf->rq_dis_assoc;
+-	struct nvme_fc_ctrl *ctrl, *ret = NULL;
++	struct nvme_fc_ctrl *ctrl, *tmp, *ret = NULL;
+ 	struct nvmefc_ls_rcv_op *oldls = NULL;
+ 	u64 association_id = be64_to_cpu(rqst->associd.association_id);
+ 	unsigned long flags;
  
- /**
+ 	spin_lock_irqsave(&rport->lock, flags);
+ 
+-	list_for_each_entry(ctrl, &rport->ctrl_list, ctrl_list) {
++	list_for_each_entry_safe(ctrl, tmp, &rport->ctrl_list, ctrl_list) {
+ 		if (!nvme_fc_ctrl_get(ctrl))
+ 			continue;
+ 		spin_lock(&ctrl->lock);
+@@ -1488,7 +1488,9 @@ nvme_fc_match_disconn_ls(struct nvme_fc_rport *rport,
+ 		if (ret)
+ 			/* leave the ctrl get reference */
+ 			break;
++		spin_unlock_irqrestore(&rport->lock, flags);
+ 		nvme_fc_ctrl_put(ctrl);
++		spin_lock_irqsave(&rport->lock, flags);
+ 	}
+ 
+ 	spin_unlock_irqrestore(&rport->lock, flags);
 -- 
 2.51.0
 
