@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F2233120C;
-	Mon, 29 Dec 2025 16:21:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25A2C33121F;
+	Mon, 29 Dec 2025 16:21:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025282; cv=none; b=m59Dwqfphm4zNk2YWqo9LyBnVq2I7ZAncgrN1wgrxcda4HfsHOjmyv2IFqV0xHmtOHPg1r/goqVmkiJUF/G5HmhRIWD9B+N2USY1qbz5JiJENox/oDr+e9jecGpJKRZhyBmLDGTPFl/bG5oY/xbaWJ9IdLA++mPdiMnsFU/N/2o=
+	t=1767025285; cv=none; b=mjhE7PRHOXUTnzU3JnzgW36p9tWo8eMU3Vl93ZlconlmfqqcCQyO0OUJ9OnIX0c8e3VPqOIAGmUh2vv2FFxhtmH+Lky27XFe5UC/UTmOayqjxFsDIiAUDPHuDyWRkVa28u96tAiUYjGvI56DwyOJaqU3EZzMP7MdfuIMnWdI/78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025282; c=relaxed/simple;
-	bh=gkt4NVLNFnQZjQd/PHUYc+t2CmKsofm6W76Z3eRRLdA=;
+	s=arc-20240116; t=1767025285; c=relaxed/simple;
+	bh=JrbYSg1sO6GI3PLi7g7gZnaFrHffUv66snvX5gHjAps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fZF95OexPAjDMIe4OSJaQUSbD8UN7jrpo9Mg1Gy3jnmldR/cnkOmMlkm4B3RlhclBPjHE0w+9Tsz1T+XrPrW6dadHgRqEdlff0rsGsSqv63gy2YOEfR7vDlJn/KbAtVjAne/9ccWTRcCG3dj1fm6FVEI0iB8wbqp2XJDQ6HlKhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w1cXthin; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kgy+bu4tD32/9XlWoq5VhTW+wK3JN+lYDMBqWfToGvM0Kc8uoss157KbWIXOgPIhhqqbd5tKo30JcjgrknJjy7y4VbLodWdpM9Ko/zml7e7FrwxNSCyAnw7lHzhjasFe6w7txbgeLAN2wtKIPij1N4ZMSI2QI/Odz+eN5oYrSQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=coLWpZe5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w1cXthin"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E22AEC4CEF7;
-	Mon, 29 Dec 2025 16:21:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="coLWpZe5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5BAAC4CEF7;
+	Mon, 29 Dec 2025 16:21:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025282;
-	bh=gkt4NVLNFnQZjQd/PHUYc+t2CmKsofm6W76Z3eRRLdA=;
+	s=korg; t=1767025285;
+	bh=JrbYSg1sO6GI3PLi7g7gZnaFrHffUv66snvX5gHjAps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w1cXthinuyGkdiC1bvL8io/KrYXEWNXqJF2VxvgUgu1tPZIxBgrUtvMzdeGw0qoX6
-	 cguOfIXXfIjXIPgkTs6pJi4YhffkefDIliZXn8tT9WQ1PrHfsJsMcX1GHStGlMBjbR
-	 Ql/BnwcAd2NWT+SHXjdnET/tKJ5cmJwH2SPxCvK0=
+	b=coLWpZe5+pv/fDX+z2/Tp5b92cQdLxdRd/jrci5yPcvqVlYtPuMMYMEp7lt7iw9TY
+	 lcKT8uJP7A9aPOCMRiR8WCPnP5CciVJ/pGVOy8mtwflp3+YszRweJBiH5fsn6S7LSi
+	 mUSP83NG16KeNg3WzUWgbkJgC2Q8L2ZtNQ5Kthhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengjie Zhang <zhangpengjie2@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.18 158/430] ACPI: CPPC: Fix missing PCC check for guaranteed_perf
-Date: Mon, 29 Dec 2025 17:09:20 +0100
-Message-ID: <20251229160730.175024212@linuxfoundation.org>
+	Caleb Sander Mateos <csander@purestorage.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 132/430] ublk: add parameter `struct io_uring_cmd *` to ublk_prep_auto_buf_reg()
+Date: Mon, 29 Dec 2025 17:08:54 +0100
+Message-ID: <20251229160729.223327259@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -50,40 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengjie Zhang <zhangpengjie2@huawei.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-commit 6ea3a44cef28add2d93b1ef119d84886cb1e3c9b upstream.
+[ Upstream commit 3035b9b46b0611898babc0b96ede65790d3566f7 ]
 
-The current implementation overlooks the 'guaranteed_perf'
-register in this check.
+Add parameter `struct io_uring_cmd *` to ublk_prep_auto_buf_reg() and
+prepare for reusing this helper for the coming UBLK_BATCH_IO feature,
+which can fetch & commit one batch of io commands via single uring_cmd.
 
-If the Guaranteed Performance register is located in the PCC
-subspace, the function currently attempts to read it without
-acquiring the lock and without sending the CMD_READ doorbell
-to the firmware. This can result in reading stale data.
-
-Fixes: 29523f095397 ("ACPI / CPPC: Add support for guaranteed performance")
-Signed-off-by: Pengjie Zhang <zhangpengjie2@huawei.com>
-Cc: 4.20+ <stable@vger.kernel.org> # 4.20+
-[ rjw: Subject and changelog edits ]
-Link: https://patch.msgid.link/20251210132227.1988380-1-zhangpengjie2@huawei.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Caleb Sander Mateos <csander@purestorage.com>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: c258f5c4502c ("ublk: fix deadlock when reading partition table")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/cppc_acpi.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/block/ublk_drv.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/drivers/acpi/cppc_acpi.c
-+++ b/drivers/acpi/cppc_acpi.c
-@@ -1366,7 +1366,8 @@ int cppc_get_perf_caps(int cpunum, struc
- 	/* Are any of the regs PCC ?*/
- 	if (CPC_IN_PCC(highest_reg) || CPC_IN_PCC(lowest_reg) ||
- 		CPC_IN_PCC(lowest_non_linear_reg) || CPC_IN_PCC(nominal_reg) ||
--		CPC_IN_PCC(low_freq_reg) || CPC_IN_PCC(nom_freq_reg)) {
-+		CPC_IN_PCC(low_freq_reg) || CPC_IN_PCC(nom_freq_reg) ||
-+		CPC_IN_PCC(guaranteed_reg)) {
- 		if (pcc_ss_id < 0) {
- 			pr_debug("Invalid pcc_ss_id\n");
- 			return -ENODEV;
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index 359564c40cb5..599571634b7a 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -1242,11 +1242,12 @@ ublk_auto_buf_reg_fallback(const struct ublk_queue *ubq, struct ublk_io *io)
+ }
+ 
+ static bool ublk_auto_buf_reg(const struct ublk_queue *ubq, struct request *req,
+-			      struct ublk_io *io, unsigned int issue_flags)
++			      struct ublk_io *io, struct io_uring_cmd *cmd,
++			      unsigned int issue_flags)
+ {
+ 	int ret;
+ 
+-	ret = io_buffer_register_bvec(io->cmd, req, ublk_io_release,
++	ret = io_buffer_register_bvec(cmd, req, ublk_io_release,
+ 				      io->buf.index, issue_flags);
+ 	if (ret) {
+ 		if (io->buf.flags & UBLK_AUTO_BUF_REG_FALLBACK) {
+@@ -1258,18 +1259,19 @@ static bool ublk_auto_buf_reg(const struct ublk_queue *ubq, struct request *req,
+ 	}
+ 
+ 	io->task_registered_buffers = 1;
+-	io->buf_ctx_handle = io_uring_cmd_ctx_handle(io->cmd);
++	io->buf_ctx_handle = io_uring_cmd_ctx_handle(cmd);
+ 	io->flags |= UBLK_IO_FLAG_AUTO_BUF_REG;
+ 	return true;
+ }
+ 
+ static bool ublk_prep_auto_buf_reg(struct ublk_queue *ubq,
+ 				   struct request *req, struct ublk_io *io,
++				   struct io_uring_cmd *cmd,
+ 				   unsigned int issue_flags)
+ {
+ 	ublk_init_req_ref(ubq, io);
+ 	if (ublk_support_auto_buf_reg(ubq) && ublk_rq_has_data(req))
+-		return ublk_auto_buf_reg(ubq, req, io, issue_flags);
++		return ublk_auto_buf_reg(ubq, req, io, cmd, issue_flags);
+ 
+ 	return true;
+ }
+@@ -1344,7 +1346,7 @@ static void ublk_dispatch_req(struct ublk_queue *ubq,
+ 	if (!ublk_start_io(ubq, req, io))
+ 		return;
+ 
+-	if (ublk_prep_auto_buf_reg(ubq, req, io, issue_flags))
++	if (ublk_prep_auto_buf_reg(ubq, req, io, io->cmd, issue_flags))
+ 		ublk_complete_io_cmd(io, req, UBLK_IO_RES_OK, issue_flags);
+ }
+ 
+-- 
+2.51.0
+
 
 
