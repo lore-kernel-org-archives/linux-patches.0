@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0A332B99B;
-	Mon, 29 Dec 2025 16:14:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFEF32ED2C;
+	Mon, 29 Dec 2025 16:14:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767024860; cv=none; b=HOaQsBp9uDxBmPq4hMKvGKmsRnqYbNwj+BpzeDePN14K2R+LAXVGCjxR/InyfDxpY2C+jicyF+3shtRpmEIGj14FFIJeCbW+fjZgBdpe2Ltaa/3YaXuEKd96XzR03vFOkoVIL4RVDVrEiGf9NwfFVNZdKGLIvexyDVnKUtDnJJ4=
+	t=1767024863; cv=none; b=kTPg2n7VxQY6R7wweLRR5hfmTD7z8CL+p5X7QuNFQYSYYO/qAvwQJ/10O75TuslI5ZviVhK0KqPNsMWbAGs/NMdo85z4sZwaFbWr4xYi/OCz+CwlXmJ5tsRyp3cXV9UDjnrgm+GqNaQ1EWv4U4b6oCcqIzaR49v6QEMenDQINBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767024860; c=relaxed/simple;
-	bh=LGavTELx2z3r9W1bdLdmCfH3fUqX3mEvrkuBXH6OX3o=;
+	s=arc-20240116; t=1767024863; c=relaxed/simple;
+	bh=aXucqmAZ0drJZcpbEv2Xy1V+4KrZXvRcgUYtJMQwPMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LaQ6MSEddj1faAJVzHrYHu5eFzxZIpkp138rwUcrKlMWI6f9V+Ii+Wnf2KGWN67H6pjKidXu6GU5WmVHHs+pe2ssUbBLfBh8NF27fOqNUiFQjbdc7KzOAvFjueuPjg5C2MIkbKks91ju43Hk3613Cbpng0Su+O5G/Gb7DcBxBWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2TIP9uba; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a1HXWstSyAYelS/I0Q5Xm60zBnePd0k5J2oJomn0KzyNWFcNpq1rbW44JmD7/3Sbizx/YRxEOebom2WhV2PSzCA7WIEa55OrtwVTp9RK5M1KG5wHFXeDu53RdCr504DPuosicOxrPNk92tFHTNg4cHO/SPeCkdOeIiKaa6yB1Uk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Czn1NwVD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2TIP9uba"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5D4EC4CEF7;
-	Mon, 29 Dec 2025 16:14:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Czn1NwVD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FC39C4CEF7;
+	Mon, 29 Dec 2025 16:14:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767024860;
-	bh=LGavTELx2z3r9W1bdLdmCfH3fUqX3mEvrkuBXH6OX3o=;
+	s=korg; t=1767024862;
+	bh=aXucqmAZ0drJZcpbEv2Xy1V+4KrZXvRcgUYtJMQwPMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2TIP9ubaHxxx1ES7I7/sb56dl9xf+CmsHUM2UZo6c1i1OD0z+VcBKLBTg6Hg63H5+
-	 7fYLySX6B0C8EeyaFWI3SjTvlrrLi0ywrGlS1DpIlJRZLjV0luYoVhnJofhK89kebG
-	 NixVCYjxifsRV5vRJlF1XKeZGdls2YzerGDGMbYU=
+	b=Czn1NwVD17o7JD+C7F8dFwvZzNVvfv2PAG0QBnWhybhgfbEEmm488cG5cG27+lBlT
+	 dEAhDSYvzah9Lv10T3GJYTo4YOyXHV+/j46B2JeTy6jFZPHWibd5EhTHsMsTwk+wsb
+	 s4agIiPkDm8rQB4Ci2wtpFzk6AVAVQntNqDSmiX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joanne Koong <joannelkoong@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
+	Pankaj Raghav <p.raghav@samsung.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 010/430] iomap: account for unaligned end offsets when truncating read range
-Date: Mon, 29 Dec 2025 17:06:52 +0100
-Message-ID: <20251229160724.530282649@linuxfoundation.org>
+Subject: [PATCH 6.18 011/430] scripts/faddr2line: Fix "Argument list too long" error
+Date: Mon, 29 Dec 2025 17:06:53 +0100
+Message-ID: <20251229160724.566947883@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -53,72 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joanne Koong <joannelkoong@gmail.com>
+From: Pankaj Raghav <p.raghav@samsung.com>
 
-[ Upstream commit 9d875e0eef8ec15b6b1da0cb9a0f8ed13efee89e ]
+[ Upstream commit ff5c0466486ba8d07ab2700380e8fd6d5344b4e9 ]
 
-The end position to start truncating from may be at an offset into a
-block, which under the current logic would result in overtruncation.
+The run_readelf() function reads the entire output of readelf into a
+single shell variable. For large object files with extensive debug
+information, the size of this variable can exceed the system's
+command-line argument length limit.
 
-Adjust the calculation to account for unaligned end offsets.
+When this variable is subsequently passed to sed via `echo "${out}"`, it
+triggers an "Argument list too long" error, causing the script to fail.
 
-Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
-Link: https://patch.msgid.link/20251111193658.3495942-3-joannelkoong@gmail.com
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fix this by redirecting the output of readelf to a temporary file
+instead of a variable. The sed commands are then modified to read from
+this file, avoiding the argument length limitation entirely.
+
+Signed-off-by: Pankaj Raghav <p.raghav@samsung.com>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/iomap/buffered-io.c | 22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ scripts/faddr2line | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
-index 1c95a0a7b302d..c0fa6acf19375 100644
---- a/fs/iomap/buffered-io.c
-+++ b/fs/iomap/buffered-io.c
-@@ -217,6 +217,22 @@ static void ifs_free(struct folio *folio)
- 	kfree(ifs);
+diff --git a/scripts/faddr2line b/scripts/faddr2line
+index 1fa6beef9f978..477b6d2aa3179 100755
+--- a/scripts/faddr2line
++++ b/scripts/faddr2line
+@@ -107,14 +107,19 @@ find_dir_prefix() {
+ 
+ run_readelf() {
+ 	local objfile=$1
+-	local out=$(${READELF} --file-header --section-headers --symbols --wide $objfile)
++	local tmpfile
++	tmpfile=$(mktemp)
++
++	${READELF} --file-header --section-headers --symbols --wide "$objfile" > "$tmpfile"
+ 
+ 	# This assumes that readelf first prints the file header, then the section headers, then the symbols.
+ 	# Note: It seems that GNU readelf does not prefix section headers with the "There are X section headers"
+ 	# line when multiple options are given, so let's also match with the "Section Headers:" line.
+-	ELF_FILEHEADER=$(echo "${out}" | sed -n '/There are [0-9]* section headers, starting at offset\|Section Headers:/q;p')
+-	ELF_SECHEADERS=$(echo "${out}" | sed -n '/There are [0-9]* section headers, starting at offset\|Section Headers:/,$p' | sed -n '/Symbol table .* contains [0-9]* entries:/q;p')
+-	ELF_SYMS=$(echo "${out}" | sed -n '/Symbol table .* contains [0-9]* entries:/,$p')
++	ELF_FILEHEADER=$(sed -n '/There are [0-9]* section headers, starting at offset\|Section Headers:/q;p' "$tmpfile")
++	ELF_SECHEADERS=$(sed -n '/There are [0-9]* section headers, starting at offset\|Section Headers:/,$p' "$tmpfile" | sed -n '/Symbol table .* contains [0-9]* entries:/q;p')
++	ELF_SYMS=$(sed -n '/Symbol table .* contains [0-9]* entries:/,$p' "$tmpfile")
++
++	rm -f -- "$tmpfile"
  }
  
-+/*
-+ * Calculate how many bytes to truncate based off the number of blocks to
-+ * truncate and the end position to start truncating from.
-+ */
-+static size_t iomap_bytes_to_truncate(loff_t end_pos, unsigned block_bits,
-+		unsigned blocks_truncated)
-+{
-+	unsigned block_size = 1 << block_bits;
-+	unsigned block_offset = end_pos & (block_size - 1);
-+
-+	if (!block_offset)
-+		return blocks_truncated << block_bits;
-+
-+	return ((blocks_truncated - 1) << block_bits) + block_offset;
-+}
-+
- /*
-  * Calculate the range inside the folio that we actually need to read.
-  */
-@@ -262,7 +278,8 @@ static void iomap_adjust_read_range(struct inode *inode, struct folio *folio,
- 		/* truncate len if we find any trailing uptodate block(s) */
- 		while (++i <= last) {
- 			if (ifs_block_is_uptodate(ifs, i)) {
--				plen -= (last - i + 1) * block_size;
-+				plen -= iomap_bytes_to_truncate(*pos + plen,
-+						block_bits, last - i + 1);
- 				last = i - 1;
- 				break;
- 			}
-@@ -278,7 +295,8 @@ static void iomap_adjust_read_range(struct inode *inode, struct folio *folio,
- 		unsigned end = offset_in_folio(folio, isize - 1) >> block_bits;
- 
- 		if (first <= end && last > end)
--			plen -= (last - end) * block_size;
-+			plen -= iomap_bytes_to_truncate(*pos + plen, block_bits,
-+					last - end);
- 	}
- 
- 	*offp = poff;
+ check_vmlinux() {
 -- 
 2.51.0
 
