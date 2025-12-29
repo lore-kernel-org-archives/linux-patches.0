@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7CDA3346BD;
-	Mon, 29 Dec 2025 16:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 720B2334C0A;
+	Mon, 29 Dec 2025 16:33:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767026024; cv=none; b=tl50gFNH2/YxbBDPUuU0xFQ6pYhJ16mMfsVMpLMXdsnOU45N+ZJ2eJhtIbpXdr/EhWP1peDKJ8Uu78YfYNDB/ugYm7fE7EVXKgUKn4vXTKEuxB55WQpO/vJLq7/RCCxbGBqQqnOCQd9sE6pcc/yIgFnUTimKgpFu78JzTT8cR90=
+	t=1767026027; cv=none; b=SL8QcuokqQq81eEYmrF/6U6footrDHNDzTNzDRvQlCq1C8C6N/6R3c7OijjybiRaAIfrTWdRs8pYFbSpLFmw/TFPAHMTQEPDwRAetFafizNpPvWY+KWbfPj6haOkOxWsgL0ZVSNdVNhuw+VT9EJbGRYMXABronVRHRBFTOZFQJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767026024; c=relaxed/simple;
-	bh=yMbIPaNGp0CtT5GNs4Ay90/hLvPzTs4xng70KveKV5E=;
+	s=arc-20240116; t=1767026027; c=relaxed/simple;
+	bh=X+Fp0aY5vsBp2Q4TcTUl/baqhRpdFb3Bw1gSqJ7oQh4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=alJFm4+yksl0vs2RwsWCDQwlLuasgBZKbRTaXo18m9Fr+2S8Exi7S21s7H6OJtTuB9AYdtmVKjdCLsCDcgnX80YRBrHl9W+PKYbG/UF4Fj9+Kvsbw7/YJHOWehcvsiRZm3tnJxBpUEqsPMV01PrEzzuOoNHf5pe87Xf0L//OMIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gMv0xVr3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=q/Ajwu/u1UNBsDwAaPliCiC6WSkv2P1r49zuCzEwMiyde5kLeJKK9583JX+wYU7S8Gz/YxGbBNODXNDUkOkhjRTHCsggFX0fp8sLKA/APcVZIKTI0m058wYjNPdCnmjwXVlOPJsP5gLVNBbtRgm6kX4220L2EnummOlR8pTmyT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o9Sd1Xk7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gMv0xVr3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FEF4C4CEF7;
-	Mon, 29 Dec 2025 16:33:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o9Sd1Xk7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2250C4CEF7;
+	Mon, 29 Dec 2025 16:33:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767026024;
-	bh=yMbIPaNGp0CtT5GNs4Ay90/hLvPzTs4xng70KveKV5E=;
+	s=korg; t=1767026027;
+	bh=X+Fp0aY5vsBp2Q4TcTUl/baqhRpdFb3Bw1gSqJ7oQh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gMv0xVr3z14sZ4vGdKHSZVrYOCHkMVTNyPheexDBF54LH1VHVvXUDBJgTtvMPh/tE
-	 /YIumHyQ1MJskRh1eM/9CWnw5SGw7wa6Qpu6eCYdI/j+MB7+q2eKmXtZMFy5BGioyJ
-	 k7BCLbl1vgVJRF4/kJiIdTSK4paqd0iNeewwDq6U=
+	b=o9Sd1Xk7TMdZt7MGo0C5UyOLl1e6GpQuf6lyriBuUa6yQmi4P9Qs10UqFDGxTjiRg
+	 N9CE0F919CuKcgCpdqhyzDIv0VuS4U/W94pbDI4Gio0185OVuz5Sc5ReDSVEZ4zRqE
+	 82o3iby4qP6w71RJZcnSy7AB8zwAZMEqKR9Vtagw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Rogers <linux@joshua.hu>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.18 377/430] SUNRPC: svcauth_gss: avoid NULL deref on zero length gss_token in gss_read_proxy_verf
-Date: Mon, 29 Dec 2025 17:12:59 +0100
-Message-ID: <20251229160738.193930532@linuxfoundation.org>
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>
+Subject: [PATCH 6.18 414/430] platform/x86: intel: chtwc_int33fe: dont dereference swnode args
+Date: Mon, 29 Dec 2025 17:13:36 +0100
+Message-ID: <20251229160739.548995897@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -44,42 +47,119 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joshua Rogers <linux@joshua.hu>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-commit d4b69a6186b215d2dc1ebcab965ed88e8d41768d upstream.
+commit 527250cd9092461f1beac3e4180a4481bffa01b5 upstream.
 
-A zero length gss_token results in pages == 0 and in_token->pages[0]
-is NULL. The code unconditionally evaluates
-page_address(in_token->pages[0]) for the initial memcpy, which can
-dereference NULL even when the copy length is 0. Guard the first
-memcpy so it only runs when length > 0.
+Members of struct software_node_ref_args should not be dereferenced
+directly but set using the provided macros. Commit d7cdbbc93c56
+("software node: allow referencing firmware nodes") changed the name of
+the software node member and caused a build failure. Remove all direct
+dereferences of the ref struct as a fix.
 
-Fixes: 5866efa8cbfb ("SUNRPC: Fix svcauth_gss_proxy_init()")
+However, this driver also seems to abuse the software node interface by
+waiting for a node with an arbitrary name "intel-xhci-usb-sw" to appear
+in the system before setting up the reference for the I2C device, while
+the actual software node already exists in the intel-xhci-usb-role-switch
+module and should be used to set up a static reference. Add a FIXME for
+a future improvement.
+
+Fixes: d7cdbbc93c56 ("software node: allow referencing firmware nodes")
+Fixes: 53c24c2932e5 ("platform/x86: intel_cht_int33fe: use inline reference properties")
 Cc: stable@vger.kernel.org
-Signed-off-by: Joshua Rogers <linux@joshua.hu>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Closes: https://lore.kernel.org/all/20251121111534.7cdbfe5c@canb.auug.org.au/
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Acked-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/auth_gss/svcauth_gss.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/platform/x86/intel/chtwc_int33fe.c |   29 ++++++++++++++++++++---------
+ 1 file changed, 20 insertions(+), 9 deletions(-)
 
---- a/net/sunrpc/auth_gss/svcauth_gss.c
-+++ b/net/sunrpc/auth_gss/svcauth_gss.c
-@@ -1083,7 +1083,8 @@ static int gss_read_proxy_verf(struct sv
+--- a/drivers/platform/x86/intel/chtwc_int33fe.c
++++ b/drivers/platform/x86/intel/chtwc_int33fe.c
+@@ -77,7 +77,7 @@ static const struct software_node max170
+  * software node.
+  */
+ static struct software_node_ref_args fusb302_mux_refs[] = {
+-	{ .node = NULL },
++	SOFTWARE_NODE_REFERENCE(NULL),
+ };
+ 
+ static const struct property_entry fusb302_properties[] = {
+@@ -190,11 +190,6 @@ static void cht_int33fe_remove_nodes(str
+ {
+ 	software_node_unregister_node_group(node_group);
+ 
+-	if (fusb302_mux_refs[0].node) {
+-		fwnode_handle_put(software_node_fwnode(fusb302_mux_refs[0].node));
+-		fusb302_mux_refs[0].node = NULL;
+-	}
+-
+ 	if (data->dp) {
+ 		data->dp->secondary = NULL;
+ 		fwnode_handle_put(data->dp);
+@@ -202,7 +197,15 @@ static void cht_int33fe_remove_nodes(str
+ 	}
+ }
+ 
+-static int cht_int33fe_add_nodes(struct cht_int33fe_data *data)
++static void cht_int33fe_put_swnode(void *data)
++{
++	struct fwnode_handle *fwnode = data;
++
++	fwnode_handle_put(fwnode);
++	fusb302_mux_refs[0] = SOFTWARE_NODE_REFERENCE(NULL);
++}
++
++static int cht_int33fe_add_nodes(struct device *dev, struct cht_int33fe_data *data)
+ {
+ 	const struct software_node *mux_ref_node;
+ 	int ret;
+@@ -212,17 +215,25 @@ static int cht_int33fe_add_nodes(struct
+ 	 * until the mux driver has created software node for the mux device.
+ 	 * It means we depend on the mux driver. This function will return
+ 	 * -EPROBE_DEFER until the mux device is registered.
++	 *
++	 * FIXME: the relevant software node exists in intel-xhci-usb-role-switch
++	 * and - if exported - could be used to set up a static reference.
+ 	 */
+ 	mux_ref_node = software_node_find_by_name(NULL, "intel-xhci-usb-sw");
+ 	if (!mux_ref_node)
+ 		return -EPROBE_DEFER;
+ 
++	ret = devm_add_action_or_reset(dev, cht_int33fe_put_swnode,
++				       software_node_fwnode(mux_ref_node));
++	if (ret)
++		return ret;
++
+ 	/*
+ 	 * Update node used in "usb-role-switch" property. Note that we
+ 	 * rely on software_node_register_node_group() to use the original
+ 	 * instance of properties instead of copying them.
+ 	 */
+-	fusb302_mux_refs[0].node = mux_ref_node;
++	fusb302_mux_refs[0] = SOFTWARE_NODE_REFERENCE(mux_ref_node);
+ 
+ 	ret = software_node_register_node_group(node_group);
+ 	if (ret)
+@@ -345,7 +356,7 @@ static int cht_int33fe_typec_probe(struc
+ 		return fusb302_irq;
  	}
  
- 	length = min_t(unsigned int, inlen, (char *)xdr->end - (char *)xdr->p);
--	memcpy(page_address(in_token->pages[0]), xdr->p, length);
-+	if (length)
-+		memcpy(page_address(in_token->pages[0]), xdr->p, length);
- 	inlen -= length;
+-	ret = cht_int33fe_add_nodes(data);
++	ret = cht_int33fe_add_nodes(dev, data);
+ 	if (ret)
+ 		return ret;
  
- 	to_offs = length;
 
 
