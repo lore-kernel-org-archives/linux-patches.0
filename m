@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700281B6D08;
-	Mon, 29 Dec 2025 16:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7D2224B1B;
+	Mon, 29 Dec 2025 16:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025554; cv=none; b=h4mPpVlhjFeqwIANkUT7lfR3tZNgCJGWfZ1nBdlSrJQHoYd7L2EiAEJsUGP+vJ+jR8jbsQAq/3oBRm8kymhmwgXwL7oz4nxFiXgyyYfLzGm+CERMTbrsBlzRq4BlGMKqKVRpP+q1pVGTeNL7/2vGK0oE8kObdMgyo8r5eb7lGR4=
+	t=1767025557; cv=none; b=CJ6dY3o1FJociCZdIriqodPzGEns4PCuj61Cpmv5dqqN0bGOUD5XTLyfR4hWFhMzuS0Qd+Zn3Yg83KQPfXZvEhNo50ZvVistVbpkdkO7OX92jPqdoD2zGHh0mNtIjHjlA6mWziT5jX8YdnIAVCUnCVcZn5zcxmlqVY84NGlfI30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025554; c=relaxed/simple;
-	bh=p7LlFNJA9y3c3EEhUFzwplMNHUYvaX9Lk//wiVyci+A=;
+	s=arc-20240116; t=1767025557; c=relaxed/simple;
+	bh=xFB9IFqFMSVpLW5N2GuJe9D043d1Ozi6L3CnviA64LA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rU1x7tE6oifHLbnQljPlegt3vTPV4rx1EbS4zV92T/0+X6qGdEc/xUU1Io2fLWbx2C6lq7I9AgUhVVwOWUzDG3jKQiFN7xsnDyhMLaPAbjhDCz7P7I0TQ87lqUf6DvqIj8Oi56U/NXyExjqx+HfOUUlPDhSfHkKAkO0YE4OKnQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q0Bx/ieN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EsrMbf08kb569JbMcvlxmZwZCMUgqWRrjs3lesN0sygLaTIoNObzQrrkN5yvIEHd74aboSjnI5oAWG1HKn7fqP4+/4W6tGkQN+8RiqXAuvZNloQ6wATWcx6npM7LxXoj24N0uoVyBPC7g5QumMbb0/cJghZ6EBbs9oV82hxsDPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hh6HBSnA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q0Bx/ieN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED58CC4CEF7;
-	Mon, 29 Dec 2025 16:25:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hh6HBSnA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6F8BC116C6;
+	Mon, 29 Dec 2025 16:25:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025554;
-	bh=p7LlFNJA9y3c3EEhUFzwplMNHUYvaX9Lk//wiVyci+A=;
+	s=korg; t=1767025557;
+	bh=xFB9IFqFMSVpLW5N2GuJe9D043d1Ozi6L3CnviA64LA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q0Bx/ieNWCPFOXndMggXuKrqDSOa52AkHnKq+NGKGWrzddxoMUZVBg1aRfP/epAI0
-	 OA56QajNPmyNrI88S/xfQaNawQ08O0GhLJ/QZmtRiXf26QRLe2Pudg3/BhPULxIbn+
-	 ffLDu92Z82BsKAe4UZS395WaIF8j+U/ZtLpy0rZg=
+	b=hh6HBSnAKty2CUzz1FBPExAulo+bixqxJMI9b5HkF6qI/u+p27V+wlDEn3FgYpiuG
+	 8WVsQEIirHJoXhIJ20bsbz/FBo5/VSVn4Df9uXbXTEPFNgjTXmgvav82epRfPNDSoC
+	 iu4zxyB7JuqgXmLqmu/p+KkA9ZO161yCE2xcsbjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lai Yi <yi1.lai@linux.intel.com>,
-	Jonathan McDowell <noodles@meta.com>,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Jarkko Sakkinen <jarkko.sakkinen@opinsys.com>
-Subject: [PATCH 6.18 255/430] tpm: Cap the number of PCR banks
-Date: Mon, 29 Dec 2025 17:10:57 +0100
-Message-ID: <20251229160733.739055390@linuxfoundation.org>
+	Sarthak Garg <sarthak.garg@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.18 238/430] mmc: sdhci-msm: Avoid early clock doubling during HS400 transition
+Date: Mon, 29 Dec 2025 17:10:40 +0100
+Message-ID: <20251229160733.113594504@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -52,99 +52,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarkko Sakkinen <jarkko.sakkinen@opinsys.com>
+From: Sarthak Garg <sarthak.garg@oss.qualcomm.com>
 
-commit faf07e611dfa464b201223a7253e9dc5ee0f3c9e upstream.
+commit b1f856b1727c2eaa4be2c6d7cd7a8ed052bbeb87 upstream.
 
-tpm2_get_pcr_allocation() does not cap any upper limit for the number of
-banks. Cap the limit to eight banks so that out of bounds values coming
-from external I/O cause on only limited harm.
+According to the hardware programming guide, the clock frequency must
+remain below 52MHz during the transition to HS400 mode.
 
-Cc: stable@vger.kernel.org # v5.10+
-Fixes: bcfff8384f6c ("tpm: dynamically allocate the allocated_banks array")
-Tested-by: Lai Yi <yi1.lai@linux.intel.com>
-Reviewed-by: Jonathan McDowell <noodles@meta.com>
-Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
-Signed-off-by: Jarkko Sakkinen <jarkko.sakkinen@opinsys.com>
+However,in the current implementation, the timing is set to HS400 (a
+DDR mode) before adjusting the clock. This causes the clock to double
+prematurely to 104MHz during the transition phase, violating the
+specification and potentially resulting in CRC errors or CMD timeouts.
+
+This change ensures that clock doubling is avoided during intermediate
+transitions and is applied only when the card requires a 200MHz clock
+for HS400 operation.
+
+Signed-off-by: Sarthak Garg <sarthak.garg@oss.qualcomm.com>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm-chip.c |    1 -
- drivers/char/tpm/tpm1-cmd.c |    5 -----
- drivers/char/tpm/tpm2-cmd.c |    8 +++-----
- include/linux/tpm.h         |    8 +++++---
- 4 files changed, 8 insertions(+), 14 deletions(-)
+ drivers/mmc/host/sdhci-msm.c |   27 +++++++++++++++------------
+ 1 file changed, 15 insertions(+), 12 deletions(-)
 
---- a/drivers/char/tpm/tpm-chip.c
-+++ b/drivers/char/tpm/tpm-chip.c
-@@ -282,7 +282,6 @@ static void tpm_dev_release(struct devic
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -344,41 +344,43 @@ static void sdhci_msm_v5_variant_writel_
+ 	writel_relaxed(val, host->ioaddr + offset);
+ }
  
- 	kfree(chip->work_space.context_buf);
- 	kfree(chip->work_space.session_buf);
--	kfree(chip->allocated_banks);
- #ifdef CONFIG_TCG_TPM2_HMAC
- 	kfree(chip->auth);
- #endif
---- a/drivers/char/tpm/tpm1-cmd.c
-+++ b/drivers/char/tpm/tpm1-cmd.c
-@@ -799,11 +799,6 @@ int tpm1_pm_suspend(struct tpm_chip *chi
-  */
- int tpm1_get_pcr_allocation(struct tpm_chip *chip)
+-static unsigned int msm_get_clock_mult_for_bus_mode(struct sdhci_host *host)
++static unsigned int msm_get_clock_mult_for_bus_mode(struct sdhci_host *host,
++						    unsigned int clock,
++						    unsigned int timing)
  {
--	chip->allocated_banks = kcalloc(1, sizeof(*chip->allocated_banks),
--					GFP_KERNEL);
--	if (!chip->allocated_banks)
--		return -ENOMEM;
--
- 	chip->allocated_banks[0].alg_id = TPM_ALG_SHA1;
- 	chip->allocated_banks[0].digest_size = hash_digest_size[HASH_ALGO_SHA1];
- 	chip->allocated_banks[0].crypto_id = HASH_ALGO_SHA1;
---- a/drivers/char/tpm/tpm2-cmd.c
-+++ b/drivers/char/tpm/tpm2-cmd.c
-@@ -538,11 +538,9 @@ ssize_t tpm2_get_pcr_allocation(struct t
+-	struct mmc_ios ios = host->mmc->ios;
+ 	/*
+ 	 * The SDHC requires internal clock frequency to be double the
+ 	 * actual clock that will be set for DDR mode. The controller
+ 	 * uses the faster clock(100/400MHz) for some of its parts and
+ 	 * send the actual required clock (50/200MHz) to the card.
+ 	 */
+-	if (ios.timing == MMC_TIMING_UHS_DDR50 ||
+-	    ios.timing == MMC_TIMING_MMC_DDR52 ||
+-	    ios.timing == MMC_TIMING_MMC_HS400 ||
++	if (timing == MMC_TIMING_UHS_DDR50 ||
++	    timing == MMC_TIMING_MMC_DDR52 ||
++	    (timing == MMC_TIMING_MMC_HS400 &&
++	    clock == MMC_HS200_MAX_DTR) ||
+ 	    host->flags & SDHCI_HS400_TUNING)
+ 		return 2;
+ 	return 1;
+ }
  
- 	nr_possible_banks = be32_to_cpup(
- 		(__be32 *)&buf.data[TPM_HEADER_SIZE + 5]);
--
--	chip->allocated_banks = kcalloc(nr_possible_banks,
--					sizeof(*chip->allocated_banks),
--					GFP_KERNEL);
--	if (!chip->allocated_banks) {
-+	if (nr_possible_banks > TPM2_MAX_PCR_BANKS) {
-+		pr_err("tpm: out of bank capacity: %u > %u\n",
-+		       nr_possible_banks, TPM2_MAX_PCR_BANKS);
- 		rc = -ENOMEM;
- 		goto out;
+ static void msm_set_clock_rate_for_bus_mode(struct sdhci_host *host,
+-					    unsigned int clock)
++					    unsigned int clock,
++					    unsigned int timing)
+ {
+ 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+ 	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+-	struct mmc_ios curr_ios = host->mmc->ios;
+ 	struct clk *core_clk = msm_host->bulk_clks[0].clk;
+ 	unsigned long achieved_rate;
+ 	unsigned int desired_rate;
+ 	unsigned int mult;
+ 	int rc;
+ 
+-	mult = msm_get_clock_mult_for_bus_mode(host);
++	mult = msm_get_clock_mult_for_bus_mode(host, clock, timing);
+ 	desired_rate = clock * mult;
+ 	rc = dev_pm_opp_set_rate(mmc_dev(host->mmc), desired_rate);
+ 	if (rc) {
+ 		pr_err("%s: Failed to set clock at rate %u at timing %d\n",
+-		       mmc_hostname(host->mmc), desired_rate, curr_ios.timing);
++		       mmc_hostname(host->mmc), desired_rate, timing);
+ 		return;
  	}
---- a/include/linux/tpm.h
-+++ b/include/linux/tpm.h
-@@ -26,7 +26,9 @@
- #include <crypto/aes.h>
  
- #define TPM_DIGEST_SIZE 20	/* Max TPM v1.2 PCR size */
--#define TPM_MAX_DIGEST_SIZE SHA512_DIGEST_SIZE
-+
-+#define TPM2_MAX_DIGEST_SIZE	SHA512_DIGEST_SIZE
-+#define TPM2_MAX_PCR_BANKS	8
+@@ -397,7 +399,7 @@ static void msm_set_clock_rate_for_bus_m
+ 	msm_host->clk_rate = desired_rate;
  
- struct tpm_chip;
- struct trusted_key_payload;
-@@ -68,7 +70,7 @@ enum tpm2_curves {
+ 	pr_debug("%s: Setting clock at rate %lu at timing %d\n",
+-		 mmc_hostname(host->mmc), achieved_rate, curr_ios.timing);
++		 mmc_hostname(host->mmc), achieved_rate, timing);
+ }
  
- struct tpm_digest {
- 	u16 alg_id;
--	u8 digest[TPM_MAX_DIGEST_SIZE];
-+	u8 digest[TPM2_MAX_DIGEST_SIZE];
- } __packed;
+ /* Platform specific tuning */
+@@ -1239,7 +1241,7 @@ static int sdhci_msm_execute_tuning(stru
+ 	 */
+ 	if (host->flags & SDHCI_HS400_TUNING) {
+ 		sdhci_msm_hc_select_mode(host);
+-		msm_set_clock_rate_for_bus_mode(host, ios.clock);
++		msm_set_clock_rate_for_bus_mode(host, ios.clock, ios.timing);
+ 		host->flags &= ~SDHCI_HS400_TUNING;
+ 	}
  
- struct tpm_bank_info {
-@@ -189,7 +191,7 @@ struct tpm_chip {
- 	unsigned int groups_cnt;
+@@ -1864,6 +1866,7 @@ static void sdhci_msm_set_clock(struct s
+ {
+ 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+ 	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
++	struct mmc_ios ios = host->mmc->ios;
  
- 	u32 nr_allocated_banks;
--	struct tpm_bank_info *allocated_banks;
-+	struct tpm_bank_info allocated_banks[TPM2_MAX_PCR_BANKS];
- #ifdef CONFIG_ACPI
- 	acpi_handle acpi_dev_handle;
- 	char ppi_version[TPM_PPI_VERSION_LEN + 1];
+ 	if (!clock) {
+ 		host->mmc->actual_clock = msm_host->clk_rate = 0;
+@@ -1872,7 +1875,7 @@ static void sdhci_msm_set_clock(struct s
+ 
+ 	sdhci_msm_hc_select_mode(host);
+ 
+-	msm_set_clock_rate_for_bus_mode(host, clock);
++	msm_set_clock_rate_for_bus_mode(host, ios.clock, ios.timing);
+ out:
+ 	__sdhci_msm_set_clock(host, clock);
+ }
 
 
