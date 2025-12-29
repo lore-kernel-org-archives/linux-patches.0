@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E992EDD52;
-	Mon, 29 Dec 2025 16:28:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BAEC24EF8C;
+	Mon, 29 Dec 2025 16:28:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025681; cv=none; b=tMAW7sKt1tAXJfQEubPaFy9JuWX0ICjJuXH6Bqi8mgu3nCdYGigtMPtpKGIFM4xTuaQ1WsfBVcZ6X2T6lQP3HZSWrlCzaV37n+0TQ3LmsK8R5jhHEkLApQrhGWgBW/Lk5Fbo6aCneh5xucFuwJgbaVxE9yL0OmSIcDsT28R2jkY=
+	t=1767025684; cv=none; b=JPPs/gEJ0LwJ9dvk/U/eLzSCJOUPKlpg8Kag86RlNirKOR+/jwzTmCJSlurnEGFjMJqiTuwR7ioxvtRWzLKqzXvQbOTG+tZgBT6pqpymzLPpHf26mUEiZmo7Wo6yF+joMgG2hYdSX5LADYgas6XIy/AF0MQ8VmbuRoAKEEygbqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025681; c=relaxed/simple;
-	bh=ivnR1iQinN/gDw3MFIV/6nm9zgbDn8zeoPMHWwQ0iY0=;
+	s=arc-20240116; t=1767025684; c=relaxed/simple;
+	bh=kaT1bGbt7OouUGJMIm440l2bkV1VCdhsY6qeOYapc24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o7/CUIKM19YpIbMOALSHFR8USxjjx2UUcYZzskj3APZABqT9UEdoQFwcdYCrQQt/SZuesmzNlVumpUasBHnohWN7iqZQRHqkAC6utFzHL3Ooe0XtMRJpMHJmwPxdB1HYRsq7KX/kFT4C8h5rp1t+DGPVc60WRStOj3RgCv8zciI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=paStVDuR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z/bDSZeBNzCKxHWPVkkKHhZTLfaZ04BChZSNI/PdJBtYks+cT8XDga7vySs1KJUGpULRFrzNc2PHpwHKAw+h10yV7Ot+2ezPl/WAE4pQI3hfz+XAUEE2geHnQxmMF589Ut8wp++ZMxYyQbPt+w7slUUsZ86qBSkScyWaNXO5fzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R3wpx66p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="paStVDuR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51060C4CEF7;
-	Mon, 29 Dec 2025 16:28:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R3wpx66p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 188D6C4CEF7;
+	Mon, 29 Dec 2025 16:28:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025681;
-	bh=ivnR1iQinN/gDw3MFIV/6nm9zgbDn8zeoPMHWwQ0iY0=;
+	s=korg; t=1767025684;
+	bh=kaT1bGbt7OouUGJMIm440l2bkV1VCdhsY6qeOYapc24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=paStVDuR8lBxBvJjG8FRkz0lX0RJR/3jpP/Z1VTYHXZzBmD5hWVpJYrBlVfrVKovw
-	 32KMynw3Y0fKP7Pk8nmYdV3pN3djaqa33PFQeZwjjlxrPfbDuxVphvHkhCTDOwZtC9
-	 Pga5tFKb34zIKkgqO48l7w2rY4RONommJzuX0g2I=
+	b=R3wpx66pAUu/X1rJYI3UfYobPlU6Vk5oCr49LPBWhdVIzBrJdo31qsdsyAwPQic07
+	 GaDjQICn9ZnT4bfZ8vf0stCYYuUh81Ndfau2Oz68mMOp+z+X5Wis2mhTaf9h0CRG6K
+	 lqhVEcJjqYVRHzHULPFhcJ3yCporqroH+8Y2jfgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Baoli Zhang <baoli.zhang@intel.com>,
-	Junxiao Chang <junxiao.chang@intel.com>,
-	Alexander Usyskin <alexander.usyskin@intel.com>
-Subject: [PATCH 6.18 299/430] mei: gsc: add dependency on Xe driver
-Date: Mon, 29 Dec 2025 17:11:41 +0100
-Message-ID: <20251229160735.341360228@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: [PATCH 6.18 300/430] serial: core: Restore sysfs fwnode information
+Date: Mon, 29 Dec 2025 17:11:42 +0100
+Message-ID: <20251229160735.377899732@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -52,34 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxiao Chang <junxiao.chang@intel.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit 5d92c3b41f0bddfa416130c6e1b424414f3d2acf upstream.
+commit 24ec03cc55126b7b3adf102f4b3d9f716532b329 upstream.
 
-INTEL_MEI_GSC depends on either i915 or Xe
-and can be present when either of above is present.
+The change that restores sysfs fwnode information does it only for OF cases.
+Update the fix to cover all possible types of fwnodes.
 
+Fixes: d36f0e9a0002 ("serial: core: restore of_node information in sysfs")
 Cc: stable <stable@kernel.org>
-Fixes: 87a4c85d3a3e ("drm/xe/gsc: add gsc device support")
-Tested-by: Baoli Zhang <baoli.zhang@intel.com>
-Signed-off-by: Junxiao Chang <junxiao.chang@intel.com>
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Link: https://patch.msgid.link/20251109153533.3179787-1-alexander.usyskin@intel.com
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20251127163650.2942075-1-andriy.shevchenko@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mei/Kconfig |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/serial_base_bus.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/misc/mei/Kconfig
-+++ b/drivers/misc/mei/Kconfig
-@@ -49,7 +49,7 @@ config INTEL_MEI_TXE
- config INTEL_MEI_GSC
- 	tristate "Intel MEI GSC embedded device"
- 	depends on INTEL_MEI_ME
--	depends on DRM_I915
-+	depends on DRM_I915 || DRM_XE
- 	help
- 	  Intel auxiliary driver for GSC devices embedded in Intel graphics devices.
+--- a/drivers/tty/serial/serial_base_bus.c
++++ b/drivers/tty/serial/serial_base_bus.c
+@@ -13,7 +13,7 @@
+ #include <linux/device.h>
+ #include <linux/idr.h>
+ #include <linux/module.h>
+-#include <linux/of.h>
++#include <linux/property.h>
+ #include <linux/serial_core.h>
+ #include <linux/slab.h>
+ #include <linux/spinlock.h>
+@@ -60,6 +60,7 @@ void serial_base_driver_unregister(struc
+ 	driver_unregister(driver);
+ }
+ 
++/* On failure the caller must put device @dev with put_device() */
+ static int serial_base_device_init(struct uart_port *port,
+ 				   struct device *dev,
+ 				   struct device *parent_dev,
+@@ -73,7 +74,8 @@ static int serial_base_device_init(struc
+ 	dev->parent = parent_dev;
+ 	dev->bus = &serial_base_bus_type;
+ 	dev->release = release;
+-	device_set_of_node_from_dev(dev, parent_dev);
++
++	device_set_node(dev, fwnode_handle_get(dev_fwnode(parent_dev)));
+ 
+ 	if (!serial_base_initialized) {
+ 		dev_dbg(port->dev, "uart_add_one_port() called before arch_initcall()?\n");
+@@ -94,7 +96,7 @@ static void serial_base_ctrl_release(str
+ {
+ 	struct serial_ctrl_device *ctrl_dev = to_serial_base_ctrl_device(dev);
+ 
+-	of_node_put(dev->of_node);
++	fwnode_handle_put(dev_fwnode(dev));
+ 	kfree(ctrl_dev);
+ }
+ 
+@@ -142,7 +144,7 @@ static void serial_base_port_release(str
+ {
+ 	struct serial_port_device *port_dev = to_serial_base_port_device(dev);
+ 
+-	of_node_put(dev->of_node);
++	fwnode_handle_put(dev_fwnode(dev));
+ 	kfree(port_dev);
+ }
  
 
 
