@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B55F347C6;
-	Mon, 29 Dec 2025 16:16:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71CD0330645;
+	Mon, 29 Dec 2025 16:16:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025013; cv=none; b=DJeDCdivIbiGhZT4eNvFFgFB3XxB2sftO4myn41L/Hf1h/nPqsrbuucBUZbAYfmVcymnReRM303QuKzZz+XsjojJeg34ZZZwQVrfOmj146oRm2X5VLUP282bDeUWNGcDW0ijC4WcjRqAtCc/Jtvd3U7TB4gRONiqOcKX4Si8+pY=
+	t=1767025016; cv=none; b=TTNDeJ6ebkPYBHgjhM6dIxOCN9PSN11zbMwXLBHFp8U/s/bLLiTqjsJE7OjHTBSqZCs/IUKBbGRR+vR3EyGxblmh0qGoyE1YIYj0i2ztTZUDW9RwA6/+X5u3O8VHsq+ZxBA+J+dPaqrLI1lx4y1okl1gcXfI756mNDMIIcNiJuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025013; c=relaxed/simple;
-	bh=tz6ymlzumdUMGJe/hYog/GOPj5snTItYjRz0DyLG3Vg=;
+	s=arc-20240116; t=1767025016; c=relaxed/simple;
+	bh=tRimAW41XQvUl1uXge3VRUsUDhRyrT7hQfS5eZtK/tU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KMLomNkBteT6b3D4HcirXmfC02n9KJDCgohz6o2rFqXl2Bum+Sk8/J99BsL6zYXu/n5eulEID6d0X9rvddiA53Mu8y1REvNP1kCvxuA44AEj0cYYacpiCeq4AP5GlMRdGgWzIoqwCt2xRFtVyM5izPiW4tOeeDxn+nrApFaIXyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HxJ/axSn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k6oQBlJZtBHgLr5qIlAL/orwxDIW1UgkAhXkoASfIzKuDxcFaxrVQb1elOKm0aUvTM99ElHp6hR9S80C5u4SqxCAPaAlJfvUlc7EYmXpwcouMQLYVpaNkqutv77bOUM7W3U90wDPKBGabqJebjURyliAl04NcT7VLQRqiMgIJ8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=grCgXUeI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HxJ/axSn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C42BC4CEF7;
-	Mon, 29 Dec 2025 16:16:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="grCgXUeI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA7EBC116C6;
+	Mon, 29 Dec 2025 16:16:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025013;
-	bh=tz6ymlzumdUMGJe/hYog/GOPj5snTItYjRz0DyLG3Vg=;
+	s=korg; t=1767025016;
+	bh=tRimAW41XQvUl1uXge3VRUsUDhRyrT7hQfS5eZtK/tU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HxJ/axSnUbMbKfRUvVZEBlz3+mfPg3UXvWDd2IXjwr5VK1jswQLQYNdbvWftgT1AE
-	 bZ6xm1GQgioSzg/zhhhpxLza3pvp4IM8clMfurpRYUnPhA2H2el9SlqmH4Gpt03Mng
-	 wkFBDRIvNh7G8/ohFvdk3AuD0B2SQDBf56pza5N8=
+	b=grCgXUeIzuwtAQ9L2D9yOnnfl1WhuhdGzzM+t/BMEjl0rDYlnQGEyPFvqHOv3ZYS+
+	 c+w8Utb8UOascUY84eUFobOdf5tSE+r4VMUIP7ppz49A+rfNapKrIg0N8npajMgvIU
+	 Vzkst4s9va6fFjmggyRhJDQGv3z4tYdOjhpgNhN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+005d2a9ecd9fbf525f6a@syzkaller.appspotmail.com,
-	Yang Chenzhi <yang.chenzhi@vivo.com>,
+	syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
 	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 030/430] hfsplus: fix missing hfs_bnode_get() in __hfs_bnode_create
-Date: Mon, 29 Dec 2025 17:07:12 +0100
-Message-ID: <20251229160725.269200462@linuxfoundation.org>
+Subject: [PATCH 6.18 031/430] hfsplus: Verify inode mode when loading from disk
+Date: Mon, 29 Dec 2025 17:07:13 +0100
+Message-ID: <20251229160725.305597947@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -52,89 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Chenzhi <yang.chenzhi@vivo.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 152af114287851583cf7e0abc10129941f19466a ]
+[ Upstream commit 005d4b0d33f6b4a23d382b7930f7a96b95b01f39 ]
 
-When sync() and link() are called concurrently, both threads may
-enter hfs_bnode_find() without finding the node in the hash table
-and proceed to create it.
+syzbot is reporting that S_IFMT bits of inode->i_mode can become bogus when
+the S_IFMT bits of the 16bits "mode" field loaded from disk are corrupted.
 
-Thread A:
-  hfsplus_write_inode()
-    -> hfsplus_write_system_inode()
-      -> hfs_btree_write()
-        -> hfs_bnode_find(tree, 0)
-          -> __hfs_bnode_create(tree, 0)
+According to [1], the permissions field was treated as reserved in Mac OS
+8 and 9. According to [2], the reserved field was explicitly initialized
+with 0, and that field must remain 0 as long as reserved. Therefore, when
+the "mode" field is not 0 (i.e. no longer reserved), the file must be
+S_IFDIR if dir == 1, and the file must be one of S_IFREG/S_IFLNK/S_IFCHR/
+S_IFBLK/S_IFIFO/S_IFSOCK if dir == 0.
 
-Thread B:
-  hfsplus_create_cat()
-    -> hfs_brec_insert()
-      -> hfs_bnode_split()
-        -> hfs_bmap_alloc()
-          -> hfs_bnode_find(tree, 0)
-            -> __hfs_bnode_create(tree, 0)
-
-In this case, thread A creates the bnode, sets refcnt=1, and hashes it.
-Thread B also tries to create the same bnode, notices it has already
-been inserted, drops its own instance, and uses the hashed one without
-getting the node.
-
-```
-
-	node2 = hfs_bnode_findhash(tree, cnid);
-	if (!node2) {                                 <- Thread A
-		hash = hfs_bnode_hash(cnid);
-		node->next_hash = tree->node_hash[hash];
-		tree->node_hash[hash] = node;
-		tree->node_hash_cnt++;
-	} else {                                      <- Thread B
-		spin_unlock(&tree->hash_lock);
-		kfree(node);
-		wait_event(node2->lock_wq,
-			!test_bit(HFS_BNODE_NEW, &node2->flags));
-		return node2;
-	}
-```
-
-However, hfs_bnode_find() requires each call to take a reference.
-Here both threads end up setting refcnt=1. When they later put the node,
-this triggers:
-
-BUG_ON(!atomic_read(&node->refcnt))
-
-In this scenario, Thread B in fact finds the node in the hash table
-rather than creating a new one, and thus must take a reference.
-
-Fix this by calling hfs_bnode_get() when reusing a bnode newly created by
-another thread to ensure the refcount is updated correctly.
-
-A similar bug was fixed in HFS long ago in commit
-a9dc087fd3c4 ("fix missing hfs_bnode_get() in __hfs_bnode_create")
-but the same issue remained in HFS+ until now.
-
-Reported-by: syzbot+005d2a9ecd9fbf525f6a@syzkaller.appspotmail.com
-Signed-off-by: Yang Chenzhi <yang.chenzhi@vivo.com>
+Reported-by: syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=895c23f6917da440ed0d
+Link: https://developer.apple.com/library/archive/technotes/tn/tn1150.html#HFSPlusPermissions [1]
+Link: https://developer.apple.com/library/archive/technotes/tn/tn1150.html#ReservedAndPadFields [2]
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/20250829093912.611853-1-yang.chenzhi@vivo.com
+Link: https://lore.kernel.org/r/04ded9f9-73fb-496c-bfa5-89c4f5d1d7bb@I-love.SAKURA.ne.jp
 Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfsplus/bnode.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/hfsplus/inode.c | 32 ++++++++++++++++++++++++++++----
+ 1 file changed, 28 insertions(+), 4 deletions(-)
 
-diff --git a/fs/hfsplus/bnode.c b/fs/hfsplus/bnode.c
-index edf7e27e1e375..482a6c5faa197 100644
---- a/fs/hfsplus/bnode.c
-+++ b/fs/hfsplus/bnode.c
-@@ -481,6 +481,7 @@ static struct hfs_bnode *__hfs_bnode_create(struct hfs_btree *tree, u32 cnid)
- 		tree->node_hash[hash] = node;
- 		tree->node_hash_cnt++;
- 	} else {
-+		hfs_bnode_get(node2);
- 		spin_unlock(&tree->hash_lock);
- 		kfree(node);
- 		wait_event(node2->lock_wq,
+diff --git a/fs/hfsplus/inode.c b/fs/hfsplus/inode.c
+index b51a411ecd237..e290e417ed3a7 100644
+--- a/fs/hfsplus/inode.c
++++ b/fs/hfsplus/inode.c
+@@ -180,13 +180,29 @@ const struct dentry_operations hfsplus_dentry_operations = {
+ 	.d_compare    = hfsplus_compare_dentry,
+ };
+ 
+-static void hfsplus_get_perms(struct inode *inode,
+-		struct hfsplus_perm *perms, int dir)
++static int hfsplus_get_perms(struct inode *inode,
++			     struct hfsplus_perm *perms, int dir)
+ {
+ 	struct hfsplus_sb_info *sbi = HFSPLUS_SB(inode->i_sb);
+ 	u16 mode;
+ 
+ 	mode = be16_to_cpu(perms->mode);
++	if (dir) {
++		if (mode && !S_ISDIR(mode))
++			goto bad_type;
++	} else if (mode) {
++		switch (mode & S_IFMT) {
++		case S_IFREG:
++		case S_IFLNK:
++		case S_IFCHR:
++		case S_IFBLK:
++		case S_IFIFO:
++		case S_IFSOCK:
++			break;
++		default:
++			goto bad_type;
++		}
++	}
+ 
+ 	i_uid_write(inode, be32_to_cpu(perms->owner));
+ 	if ((test_bit(HFSPLUS_SB_UID, &sbi->flags)) || (!i_uid_read(inode) && !mode))
+@@ -212,6 +228,10 @@ static void hfsplus_get_perms(struct inode *inode,
+ 		inode->i_flags |= S_APPEND;
+ 	else
+ 		inode->i_flags &= ~S_APPEND;
++	return 0;
++bad_type:
++	pr_err("invalid file type 0%04o for inode %lu\n", mode, inode->i_ino);
++	return -EIO;
+ }
+ 
+ static int hfsplus_file_open(struct inode *inode, struct file *file)
+@@ -516,7 +536,9 @@ int hfsplus_cat_read_inode(struct inode *inode, struct hfs_find_data *fd)
+ 		}
+ 		hfs_bnode_read(fd->bnode, &entry, fd->entryoffset,
+ 					sizeof(struct hfsplus_cat_folder));
+-		hfsplus_get_perms(inode, &folder->permissions, 1);
++		res = hfsplus_get_perms(inode, &folder->permissions, 1);
++		if (res)
++			goto out;
+ 		set_nlink(inode, 1);
+ 		inode->i_size = 2 + be32_to_cpu(folder->valence);
+ 		inode_set_atime_to_ts(inode, hfsp_mt2ut(folder->access_date));
+@@ -545,7 +567,9 @@ int hfsplus_cat_read_inode(struct inode *inode, struct hfs_find_data *fd)
+ 
+ 		hfsplus_inode_read_fork(inode, HFSPLUS_IS_RSRC(inode) ?
+ 					&file->rsrc_fork : &file->data_fork);
+-		hfsplus_get_perms(inode, &file->permissions, 0);
++		res = hfsplus_get_perms(inode, &file->permissions, 0);
++		if (res)
++			goto out;
+ 		set_nlink(inode, 1);
+ 		if (S_ISREG(inode->i_mode)) {
+ 			if (file->permissions.dev)
 -- 
 2.51.0
 
