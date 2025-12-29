@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A91724EF8C;
-	Mon, 29 Dec 2025 16:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 137921B6D08;
+	Mon, 29 Dec 2025 16:27:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025645; cv=none; b=Cq5v6wctMt1WeGAZI+y0OqV7TtAr5GVqeiArBdf2lFhQwAlNeVXhmLQ85X01yrx5+7yAFGPEJE0c5BiDjiukYtcO0WTn0aM0k03W7PzLzqFywnvADtmplRItdEaXfmWScdk234OxMUaygLE6vpG30SUkO2WYJSKnXtaPnQTTPEw=
+	t=1767025648; cv=none; b=nXoVZGD1Q7kR9xIHS1cNebIZ+B7zujQksHessL7H5R1vlXn+KyPR7ITnpDT/gao6OHUu1fKygdixwTWTUsSJWRLFBvNVj422tJqNlb5hbRjEV4HI/yRhBpFJ1qoq3xb+Sl+AKNaFFBBEzfCoPBlW2f5St4aUZEUpB7XMiwd1WI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025645; c=relaxed/simple;
-	bh=yVhtL0MP7hEPWmCl0pL0715iRsQH/O2bqZBSe4sjAHs=;
+	s=arc-20240116; t=1767025648; c=relaxed/simple;
+	bh=m0gFZW7/IfVHe3376zZveDBGAiMaTuDrRIkIJ9mHDFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XO0C7GltJkXMC9BRVCJZBRrOZAfBf4o+kbpXnJ70XQpgf/YX6kFczeGsrAoISvwgnVJc6TgKMiu4znCyljSEWNgTSJ04M7emadu6ga0BghmlphTpsKxpyNmFXkRozKCfKQWwJRHcB4bmhzG2brP0d3UmwaTi5KRZm6k4oKTSIOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kzNK74g/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gUl7wxJoeuLBwgYcVUT7Q1QxFYwfeUmJ5ZqoCeKRNFw4/EJBkKwE7F0zqZzLjpagJ78M2OCmcYKchPzScMArY4SZdKG3UbDkZbGB851Tm8P3O6MkyellntxjvjQL4R3grRfOsBnC0z7BJ0v4WE3SG0faeUkSFOfJ6pOCVzOM99s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gGQe1bSW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kzNK74g/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBBDCC4CEF7;
-	Mon, 29 Dec 2025 16:27:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gGQe1bSW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FC80C4CEF7;
+	Mon, 29 Dec 2025 16:27:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025645;
-	bh=yVhtL0MP7hEPWmCl0pL0715iRsQH/O2bqZBSe4sjAHs=;
+	s=korg; t=1767025647;
+	bh=m0gFZW7/IfVHe3376zZveDBGAiMaTuDrRIkIJ9mHDFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kzNK74g//a486RKTLeZfAF8Qj48XMKqxwqDRpQKePC7gE02iqqZ5hMbNCOGuhsO2b
-	 +sTvrkt0CupUnqX0BnyRabn0Mk+l8A4Bt/hSyozHJmaoXrIlkcgRmDa/zJ0R/dsJrv
-	 Z3VXk45fvY3spSb76oMLaFLdZ8lTIZVVXIpYF7zg=
+	b=gGQe1bSWKDe3ZzaLlSs1vsHhpRimF9Swx3DfXUX1uczFVOJJAzENy6ps62haaUtII
+	 Jb9+PWaiUBg4dCjGZZPxaBmlq8ouC5ycs2HAL4CmRUxwBd0fqtlW5C9WXUhVU6Dmr6
+	 j4us9L59FDxp1E27hIHR/DOdS5YdSlzh1P3Kp6gw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Ma Ke <make24@iscas.ac.cn>
-Subject: [PATCH 6.18 287/430] USB: lpc32xx_udc: Fix error handling in probe
-Date: Mon, 29 Dec 2025 17:11:29 +0100
-Message-ID: <20251229160734.907215580@linuxfoundation.org>
+	Duoming Zhou <duoming@zju.edu.cn>
+Subject: [PATCH 6.18 288/430] usb: phy: fsl-usb: Fix use-after-free in delayed work during device removal
+Date: Mon, 29 Dec 2025 17:11:30 +0100
+Message-ID: <20251229160734.943052298@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -50,100 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-commit c84117912bddd9e5d87e68daf182410c98181407 upstream.
+commit 41ca62e3e21e48c2903b3b45e232cf4f2ff7434f upstream.
 
-lpc32xx_udc_probe() acquires an i2c_client reference through
-isp1301_get_client() but fails to release it in both error handling
-paths and the normal removal path. This could result in a reference
-count leak for the I2C device, preventing proper cleanup and potentially
-leading to resource exhaustion. Add put_device() to release the
-reference in the probe failure path and in the remove function.
+The delayed work item otg_event is initialized in fsl_otg_conf() and
+scheduled under two conditions:
+1. When a host controller binds to the OTG controller.
+2. When the USB ID pin state changes (cable insertion/removal).
 
-Calling path: isp1301_get_client() -> of_find_i2c_device_by_node() ->
-i2c_find_device_by_fwnode(). As comments of i2c_find_device_by_fwnode()
-says, 'The user must call put_device(&client->dev) once done with the
-i2c client.'
+A race condition occurs when the device is removed via fsl_otg_remove():
+the fsl_otg instance may be freed while the delayed work is still pending
+or executing. This leads to use-after-free when the work function
+fsl_otg_event() accesses the already freed memory.
 
-Found by code review.
+The problematic scenario:
 
+(detach thread)            | (delayed work)
+fsl_otg_remove()           |
+  kfree(fsl_otg_dev) //FREE| fsl_otg_event()
+                           |   og = container_of(...) //USE
+                           |   og-> //USE
+
+Fix this by calling disable_delayed_work_sync() in fsl_otg_remove()
+before deallocating the fsl_otg structure. This ensures the delayed work
+is properly canceled and completes execution prior to memory deallocation.
+
+This bug was identified through static analysis.
+
+Fixes: 0807c500a1a6 ("USB: add Freescale USB OTG Transceiver driver")
 Cc: stable <stable@kernel.org>
-Fixes: 24a28e428351 ("USB: gadget driver for LPC32xx")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Link: https://patch.msgid.link/20251215020931.15324-1-make24@iscas.ac.cn
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Link: https://patch.msgid.link/20251205034831.12846-1-duoming@zju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/lpc32xx_udc.c |   21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ drivers/usb/phy/phy-fsl-usb.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/gadget/udc/lpc32xx_udc.c
-+++ b/drivers/usb/gadget/udc/lpc32xx_udc.c
-@@ -3020,7 +3020,7 @@ static int lpc32xx_udc_probe(struct plat
- 	pdev->dev.dma_mask = &lpc32xx_usbd_dmamask;
- 	retval = dma_set_coherent_mask(&pdev->dev, DMA_BIT_MASK(32));
- 	if (retval)
--		return retval;
-+		goto i2c_fail;
+--- a/drivers/usb/phy/phy-fsl-usb.c
++++ b/drivers/usb/phy/phy-fsl-usb.c
+@@ -988,6 +988,7 @@ static void fsl_otg_remove(struct platfo
+ {
+ 	struct fsl_usb2_platform_data *pdata = dev_get_platdata(&pdev->dev);
  
- 	udc->board = &lpc32xx_usbddata;
- 
-@@ -3038,28 +3038,32 @@ static int lpc32xx_udc_probe(struct plat
- 	/* Get IRQs */
- 	for (i = 0; i < 4; i++) {
- 		udc->udp_irq[i] = platform_get_irq(pdev, i);
--		if (udc->udp_irq[i] < 0)
--			return udc->udp_irq[i];
-+		if (udc->udp_irq[i] < 0) {
-+			retval = udc->udp_irq[i];
-+			goto i2c_fail;
-+		}
- 	}
- 
- 	udc->udp_baseaddr = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(udc->udp_baseaddr)) {
- 		dev_err(udc->dev, "IO map failure\n");
--		return PTR_ERR(udc->udp_baseaddr);
-+		retval = PTR_ERR(udc->udp_baseaddr);
-+		goto i2c_fail;
- 	}
- 
- 	/* Get USB device clock */
- 	udc->usb_slv_clk = devm_clk_get(&pdev->dev, NULL);
- 	if (IS_ERR(udc->usb_slv_clk)) {
- 		dev_err(udc->dev, "failed to acquire USB device clock\n");
--		return PTR_ERR(udc->usb_slv_clk);
-+		retval = PTR_ERR(udc->usb_slv_clk);
-+		goto i2c_fail;
- 	}
- 
- 	/* Enable USB device clock */
- 	retval = clk_prepare_enable(udc->usb_slv_clk);
- 	if (retval < 0) {
- 		dev_err(udc->dev, "failed to start USB device clock\n");
--		return retval;
-+		goto i2c_fail;
- 	}
- 
- 	/* Setup deferred workqueue data */
-@@ -3161,6 +3165,8 @@ dma_alloc_fail:
- 	dma_free_coherent(&pdev->dev, UDCA_BUFF_SIZE,
- 			  udc->udca_v_base, udc->udca_p_base);
- i2c_fail:
-+	if (udc->isp1301_i2c_client)
-+		put_device(&udc->isp1301_i2c_client->dev);
- 	clk_disable_unprepare(udc->usb_slv_clk);
- 	dev_err(udc->dev, "%s probe failed, %d\n", driver_name, retval);
- 
-@@ -3189,6 +3195,9 @@ static void lpc32xx_udc_remove(struct pl
- 	dma_free_coherent(&pdev->dev, UDCA_BUFF_SIZE,
- 			  udc->udca_v_base, udc->udca_p_base);
- 
-+	if (udc->isp1301_i2c_client)
-+		put_device(&udc->isp1301_i2c_client->dev);
-+
- 	clk_disable_unprepare(udc->usb_slv_clk);
- }
++	disable_delayed_work_sync(&fsl_otg_dev->otg_event);
+ 	usb_remove_phy(&fsl_otg_dev->phy);
+ 	free_irq(fsl_otg_dev->irq, fsl_otg_dev);
  
 
 
