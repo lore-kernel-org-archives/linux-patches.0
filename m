@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D742F26FD9B;
-	Mon, 29 Dec 2025 16:23:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 185242222CB;
+	Mon, 29 Dec 2025 16:23:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025435; cv=none; b=VTyCj/nvZH5yiEtWBcWRg584NSyyqPIxiZmrg15IRexOOQzLiGw5Q9mO2XLm2o9ZMW0tmKMQnIDUzYOqoMSbk6hQWgTMUkZhnViEqntoYVas8BlKMXOJgk8ZQKPA/FjgW48yPU8H5Iish3m6AolZxOXSnLDcQo4cKZLWMxQXFUY=
+	t=1767025438; cv=none; b=U2PNga+71rrVtS9+1pV1/RG2UJ3P1MgRTx+NtCOMz8YuKXftEcrfLY6AhsY/cvaTLzoCUSxR7bvhPF7VmMCwXuFAdiNQLvfZlERKE4hZzVmhcDRrGuGxpTpGhMHDxQuVAJTJ8u+z6OKPIGlL5Yx0baIvo/c++9A4cNE7roKrLcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025435; c=relaxed/simple;
-	bh=RaWk06xkj/tNCJK2pW+fEGZJw04eGe7WMPTfJYZy+Ko=;
+	s=arc-20240116; t=1767025438; c=relaxed/simple;
+	bh=dheCsTu0yyanaYCZgt0zrLoFJ+kz5no97/REEwo8iKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XAtx9G9JZDRoeBRCepGItXfPD8JV3VmMMrWTLjSlEMZPBW+whGdYcpq8drvFwL8fdzEEG9r4yB6eV402ljFPF7L70V3ffCevdP7BRyR6HFWgglHg/CvgIznbg1z20X05tw5r56d2n/6rYjYiEHYiO8z1oegrhuFqEh0AKLTKoRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jghuhbor; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rWU14cUzpzcIiVUPN1ZG+HMWTdmR+PFSh7q5PkCfBvAMZtFnZ5k4l6EKs6c68XliNthxtVDTHHiv6UyuTVFpLNsagaHTWR9NHLQVF2UH88YEUmLBth8csnK789jgATQMNMuj54ohJCjPWhDW17ZkT0t07qjDOF3hln93LBeYwXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fSZGBbuZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jghuhbor"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAEDAC4CEF7;
-	Mon, 29 Dec 2025 16:23:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fSZGBbuZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81D35C4CEF7;
+	Mon, 29 Dec 2025 16:23:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025435;
-	bh=RaWk06xkj/tNCJK2pW+fEGZJw04eGe7WMPTfJYZy+Ko=;
+	s=korg; t=1767025437;
+	bh=dheCsTu0yyanaYCZgt0zrLoFJ+kz5no97/REEwo8iKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jghuhborHBMGBwA2UmQtonSTUDMtE8D8IqpSgxGims/ZVXwIHlDhHdx4UPSDK9aYY
-	 jSXtngQu9J23Hq4uADtMbbOG4aYa3MLkOeiRGf2C8KP/csTu/1hxowqBTEA2k0eOtJ
-	 S/0WT2Nv5J409rRAbFlhi2ILlVl9MrX7+5LH0uww=
+	b=fSZGBbuZLynWntw9HEGEdGsxSg3w/QE0g27D6A6UW6mLF10glHRbb8+nDefdOU7eO
+	 3Urh+YPKE2kVexWWNlhLzy0+PQ9accLi5q2NXNK9scXrpErPyEERe6fMC4JOajI7cR
+	 hYFjVIt6U2n05WbVz7Qa1pPgNgtyjvI/Ev4+PV/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Garry <john.g.garry@oracle.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 213/430] scsi: scsi_debug: Fix atomic write enable module param description
-Date: Mon, 29 Dec 2025 17:10:15 +0100
-Message-ID: <20251229160732.191666047@linuxfoundation.org>
+Subject: [PATCH 6.18 214/430] drm/msm: adreno: fix deferencing ifpc_reglist when not declared
+Date: Mon, 29 Dec 2025 17:10:16 +0100
+Message-ID: <20251229160732.228457729@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -52,36 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Garry <john.g.garry@oracle.com>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit 1f7d6e2efeedd8f545d3e0e9bf338023bf4ea584 ]
+[ Upstream commit 129049d4fe22c998ae9fd1ec479fbb4ed5338c15 ]
 
-The atomic write enable module param is "atomic_wr", and not
-"atomic_write", so fix the module param description.
+On plaforms with an a7xx GPU not supporting IFPC, the ifpc_reglist
+if still deferenced in a7xx_patch_pwrup_reglist() which causes
+a kernel crash:
+Unable to handle kernel NULL pointer dereference at virtual address 0000000000000008
+...
+pc : a6xx_hw_init+0x155c/0x1e4c [msm]
+lr : a6xx_hw_init+0x9a8/0x1e4c [msm]
+...
+Call trace:
+  a6xx_hw_init+0x155c/0x1e4c [msm] (P)
+  msm_gpu_hw_init+0x58/0x88 [msm]
+  adreno_load_gpu+0x94/0x1fc [msm]
+  msm_open+0xe4/0xf4 [msm]
+  drm_file_alloc+0x1a0/0x2e4 [drm]
+  drm_client_init+0x7c/0x104 [drm]
+  drm_fbdev_client_setup+0x94/0xcf0 [drm_client_lib]
+  drm_client_setup+0xb4/0xd8 [drm_client_lib]
+  msm_drm_kms_post_init+0x2c/0x3c [msm]
+  msm_drm_init+0x1a4/0x228 [msm]
+  msm_drm_bind+0x30/0x3c [msm]
+...
 
-Fixes: 84f3a3c01d70 ("scsi: scsi_debug: Atomic write support")
-Signed-off-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20251211100651.9056-1-john.g.garry@oracle.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Check the validity of ifpc_reglist before deferencing the table
+to setup the register values.
+
+Fixes: a6a0157cc68e ("drm/msm/a6xx: Enable IFPC on Adreno X1-85")
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/688944/
+Message-ID: <20251117-topic-sm8x50-fix-a6xx-non-ifpc-v1-1-e4473cbf5903@linaro.org>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_debug.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index b2ab97be5db3..047d56d23bea 100644
---- a/drivers/scsi/scsi_debug.c
-+++ b/drivers/scsi/scsi_debug.c
-@@ -7410,7 +7410,7 @@ MODULE_PARM_DESC(lbprz,
- MODULE_PARM_DESC(lbpu, "enable LBP, support UNMAP command (def=0)");
- MODULE_PARM_DESC(lbpws, "enable LBP, support WRITE SAME(16) with UNMAP bit (def=0)");
- MODULE_PARM_DESC(lbpws10, "enable LBP, support WRITE SAME(10) with UNMAP bit (def=0)");
--MODULE_PARM_DESC(atomic_write, "enable ATOMIC WRITE support, support WRITE ATOMIC(16) (def=0)");
-+MODULE_PARM_DESC(atomic_wr, "enable ATOMIC WRITE support, support WRITE ATOMIC(16) (def=0)");
- MODULE_PARM_DESC(lowest_aligned, "lowest aligned lba (def=0)");
- MODULE_PARM_DESC(lun_format, "LUN format: 0->peripheral (def); 1 --> flat address method");
- MODULE_PARM_DESC(max_luns, "number of LUNs per target to simulate(def=1)");
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 6f7ed07670b1..d1eaa849b197 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -837,15 +837,17 @@ static void a7xx_patch_pwrup_reglist(struct msm_gpu *gpu)
+ 	lock->gpu_req = lock->cpu_req = lock->turn = 0;
+ 
+ 	reglist = adreno_gpu->info->a6xx->ifpc_reglist;
+-	lock->ifpc_list_len = reglist->count;
++	if (reglist) {
++		lock->ifpc_list_len = reglist->count;
+ 
+-	/*
+-	 * For each entry in each of the lists, write the offset and the current
+-	 * register value into the GPU buffer
+-	 */
+-	for (i = 0; i < reglist->count; i++) {
+-		*dest++ = reglist->regs[i];
+-		*dest++ = gpu_read(gpu, reglist->regs[i]);
++		/*
++		 * For each entry in each of the lists, write the offset and the current
++		 * register value into the GPU buffer
++		 */
++		for (i = 0; i < reglist->count; i++) {
++			*dest++ = reglist->regs[i];
++			*dest++ = gpu_read(gpu, reglist->regs[i]);
++		}
+ 	}
+ 
+ 	reglist = adreno_gpu->info->a6xx->pwrup_reglist;
 -- 
 2.51.0
 
