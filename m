@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E092D063E;
-	Mon, 29 Dec 2025 16:24:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B389B273803;
+	Mon, 29 Dec 2025 16:24:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025452; cv=none; b=AQZcmTo5/SZIKD4YKGIpouCFcSYtYV7LvHH8VocbRXYp03Xajk8ma1L3rTxB7bApTK76GjPBYuo4+KmwsvkUhgJZOmkkqV0OrAw52V3mVRfibm3TE7iD4TB4w3tyDIhkM+HG0tBA2YYn0nqssJnxed/S1XYP2i1Z8ooi1SSKWRg=
+	t=1767025454; cv=none; b=H+eRSI2V6XDjW3jwY2BKsdrcIEv/hmfsEvuiTKGpVlzXimcfNfZu58ab5Dz7cXFwbE52LeSsFXqdcWr1/D5D38FYYAyjUbtnzcJdvmrECZYSfyfAThDptVPKeOe1Lkg8JQcWczrCOUvtsvxCmOCIW8Tm2ZJSSQXzzCsM70EsYLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025452; c=relaxed/simple;
-	bh=q0xCDLt7JLjwDQDn3PGNNAL7Heih4lAxX1DT+c3u38E=;
+	s=arc-20240116; t=1767025454; c=relaxed/simple;
+	bh=9Zy3p3X6Kr9mGoP9bl4QCcp8QPRF3kS+lSDk4gdI0Fs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G3Ht7x4XW8HIOXnq/S0ovGpVH8G8V0AjUkxHgJK5li2ykPJ1CnmyVeC+zS3h7uWJcvbGFgfzJpkH+IdrmKHNOVoORwqlqXonMlJt4sgvJ46DLp/hoziN40w/P2xdwkuKgKoN1UifiC8xC6qDkfl83eS1DFVeEqpO7SLCf7N3A1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MdC0ODzH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VfTd2yZzjro5ZdJEyuORD4qrQD4FflasLQF79eUl5b8J7aNV9g1SxezJ51E+I8naDBwaaH7nTl35WOQjxGPp93muL1hDK77L+IA6LOyJSxKXED5GVH06d0CQ0r6cA/SgpvmXnavONheHRuQNagNNQirdmpc1x9fk5pBSZXGljyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CjqIAzjQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MdC0ODzH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69EEEC4CEF7;
-	Mon, 29 Dec 2025 16:24:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CjqIAzjQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ED50C4CEF7;
+	Mon, 29 Dec 2025 16:24:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025451;
-	bh=q0xCDLt7JLjwDQDn3PGNNAL7Heih4lAxX1DT+c3u38E=;
+	s=korg; t=1767025454;
+	bh=9Zy3p3X6Kr9mGoP9bl4QCcp8QPRF3kS+lSDk4gdI0Fs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MdC0ODzH2gV4+aLj56oTQPtjf4Arxdu6omLekRUbHByXLc7h6/5XYFKfDpeJ4m2X2
-	 cqegocEx1wOQSOoRZH6dtKeChHdR87vSrYdHtIfFM/qNYTl+PUlk8O1PlqUv9pPV1F
-	 MNlOsOuXpBoGrGmGv3NMt9G16Fz/6FOTbhls6h10=
+	b=CjqIAzjQpK2GH8fiKQ6FjJnxzx4CCpY/M+L6CKFxnOkubl11dxgXIfwzeq7G91lXE
+	 7+fxFaKu5GrcMFJSjx2Efn/tVQ/S5unNVqf0gY0XaVKDcOt+ElHPce2Fdz7HsnWpdA
+	 FO/XHOrrgZdGNV39y0mBX5f+/IpWW6jqhk+9QZ6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 219/430] cifs: Fix memory and information leak in smb3_reconfigure()
-Date: Mon, 29 Dec 2025 17:10:21 +0100
-Message-ID: <20251229160732.411671506@linuxfoundation.org>
+	Lyude Paul <lyude@redhat.com>,
+	Alice Ryhl <aliceryhl@google.com>
+Subject: [PATCH 6.18 220/430] rust/drm/gem: Fix missing header in `Object` rustdoc
+Date: Mon, 29 Dec 2025 17:10:22 +0100
+Message-ID: <20251229160732.448651778@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -52,42 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Lyude Paul <lyude@redhat.com>
 
-[ Upstream commit cb6d5aa9c0f10074f1ad056c3e2278ad2cc7ec8d ]
+commit e54ad0cd3673c93cdafda58505eaa81610fe3aef upstream.
 
-In smb3_reconfigure(), if smb3_sync_session_ctx_passwords() fails, the
-function returns immediately without freeing and erasing the newly
-allocated new_password and new_password2. This causes both a memory leak
-and a potential information leak.
+Invariants should be prefixed with a # to turn it into a header.
 
-Fix this by calling kfree_sensitive() on both password buffers before
-returning in this error case.
+There are no functional changes in this patch.
 
-Fixes: 0f0e357902957 ("cifs: during remount, make sure passwords are in sync")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: c284d3e42338 ("rust: drm: gem: Add GEM object abstraction")
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patch.msgid.link/20251107202603.465932-1-lyude@redhat.com
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/fs_context.c | 2 ++
- 1 file changed, 2 insertions(+)
+ rust/kernel/drm/gem/mod.rs |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/fs_context.c b/fs/smb/client/fs_context.c
-index 2a0d8b87bd8e..d8bd3cdc535d 100644
---- a/fs/smb/client/fs_context.c
-+++ b/fs/smb/client/fs_context.c
-@@ -1080,6 +1080,8 @@ static int smb3_reconfigure(struct fs_context *fc)
- 	rc = smb3_sync_session_ctx_passwords(cifs_sb, ses);
- 	if (rc) {
- 		mutex_unlock(&ses->session_mutex);
-+		kfree_sensitive(new_password);
-+		kfree_sensitive(new_password2);
- 		return rc;
- 	}
+--- a/rust/kernel/drm/gem/mod.rs
++++ b/rust/kernel/drm/gem/mod.rs
+@@ -184,7 +184,7 @@ impl<T: IntoGEMObject> BaseObject for T
  
--- 
-2.51.0
-
+ /// A base GEM object.
+ ///
+-/// Invariants
++/// # Invariants
+ ///
+ /// - `self.obj` is a valid instance of a `struct drm_gem_object`.
+ /// - `self.dev` is always a valid pointer to a `struct drm_device`.
 
 
