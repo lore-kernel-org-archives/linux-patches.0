@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB27B334690;
-	Mon, 29 Dec 2025 16:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A147C334C05;
+	Mon, 29 Dec 2025 16:32:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025927; cv=none; b=avkdNzixuDP2bhherqvDKIC6FLmxoJ10AEk0oys/GSbO5CUYyNZsyJfiA4cyqOgCiSTHT3Qx4d2BYbR9y4UPHaAbs8OfyqJ/OMKYFJsGkt7ueQ/FJB7C6paOcc30ULDI3vo7LJI6gGPQ+q6d2qzEGbRYHB197tHZ2l35wBn+6Zo=
+	t=1767025930; cv=none; b=gJ1Mf9FqaVjay9XVQaoZZLD0ICPn6yO+AhF54sBNZgza3WI3L4w17Civ0cqjcINiz2h7ujBTZFOp87CdeQQ6PuHIfJR43fyCkeU4F00oMOhB5dkG4xpAUnWAyYbB8cYEcT/PM5YC+BC4j06u9Eq3qKHou6R0mJIwQU4m0rtTuEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025927; c=relaxed/simple;
-	bh=4rGmNwHNHWjDeOfVju/irJtjUZgVY+FuuPV1gnG6/Y4=;
+	s=arc-20240116; t=1767025930; c=relaxed/simple;
+	bh=9jZgm4iGB5vfosgl2o6EkgENqy0vQmqTKzD9rgieH5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V5bws6uNy2pFmCzY2XvKzc3ki4kdODcU7Qaa/FajvUbr2hsW1P6OPQtpW2EjxA8UZewvRJJ+akl2LsBFI4g/qX3GjkpDt8dYf8M2cI7Mlqn4Xm/+Eny+e7pxGcwTLVQr8AnMa5wmV4r+gKk8uV1R3/lrlkriENy7+1YK2sX+wbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GME2avgU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u+iZmv86/dL5pEDvE4curQqcZtOchKKPNfTca2ercnNaXz3H+uxVLRNaWydkJwLwOgcebLZM6OgUp8CyIMwg5YO0sUzJF+B1bVBuwsoHOk7vDHdZJdwMZqPiEE/ONxA2UysByvHba5dMKXH45inIRZnaW9V4FIg5JKowYGBWVNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A+BlwFrk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GME2avgU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57BE5C4CEF7;
-	Mon, 29 Dec 2025 16:32:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A+BlwFrk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA0FC4CEF7;
+	Mon, 29 Dec 2025 16:32:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025927;
-	bh=4rGmNwHNHWjDeOfVju/irJtjUZgVY+FuuPV1gnG6/Y4=;
+	s=korg; t=1767025930;
+	bh=9jZgm4iGB5vfosgl2o6EkgENqy0vQmqTKzD9rgieH5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GME2avgU8up9DVRKJWYDsUPW74lOTT3Q7MXuoUPJUmK/aHgFw9GmJsP5v/BrY49UK
-	 5VvvuDJ5whY1+0vWmM3S9wZEYd6vVp+XrCmhGQdx0AVzYGXUfQm6foWhtpGKU4KIb+
-	 Kp5kykOErCOP6fcygHbI7iszm5tqf2TQUBwshYjE=
+	b=A+BlwFrkjh7cIPbR86l+u50EmYz7O3I9DavVixmFtJv9D6VaZ1D4anLSeFpjClCrK
+	 ddBHeB9+KViz90yCy1pR4sU43hyvbBc9HT3p3FOmnn5JuLdstbsg2jXdK6RYqXQKap
+	 +tkuEnR6uzlTVewMboYuUjKQbWsc2wE7w5SZGsw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ray Wu <ray.wu@amd.com>,
 	Chenyu Chen <chen-yu.chen@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.18 387/430] drm/amd/display: Fix scratch registers offsets for DCN35
-Date: Mon, 29 Dec 2025 17:13:09 +0100
-Message-ID: <20251229160738.562247493@linuxfoundation.org>
+Subject: [PATCH 6.18 388/430] drm/amd/display: Fix scratch registers offsets for DCN351
+Date: Mon, 29 Dec 2025 17:13:10 +0100
+Message-ID: <20251229160738.598531158@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -55,10 +55,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Ray Wu <ray.wu@amd.com>
 
-commit 69741d9ccc7222e6b6f138db67b012ecc0d72542 upstream.
+commit fd62aa13d3ee0f21c756a40a7c2f900f98992d6a upstream.
 
 [Why]
-Different platforms use differnet NBIO header files,
+Different platforms use different NBIO header files,
 causing display code to use differnt offset and read
 wrong accelerated status.
 
@@ -74,16 +74,16 @@ Signed-off-by: Ray Wu <ray.wu@amd.com>
 Signed-off-by: Chenyu Chen <chen-yu.chen@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 49a63bc8eda0304ba307f5ba68305f936174f72d)
+(cherry picked from commit 576e032e909c8a6bb3d907b4ef5f6abe0f644199)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/resource/dcn35/dcn35_resource.c |    8 ++++----
+ drivers/gpu/drm/amd/display/dc/resource/dcn351/dcn351_resource.c |    8 ++++----
  1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/resource/dcn35/dcn35_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/resource/dcn35/dcn35_resource.c
-@@ -203,12 +203,12 @@ enum dcn35_clk_src_array_id {
+--- a/drivers/gpu/drm/amd/display/dc/resource/dcn351/dcn351_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/resource/dcn351/dcn351_resource.c
+@@ -183,12 +183,12 @@ enum dcn351_clk_src_array_id {
  	NBIO_BASE_INNER(seg)
  
  #define NBIO_SR(reg_name)\
