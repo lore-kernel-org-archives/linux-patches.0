@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D780331A68;
-	Mon, 29 Dec 2025 16:26:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B58F31283B;
+	Mon, 29 Dec 2025 16:26:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025574; cv=none; b=hV8O1QRB7dpamrEInjmM2gkHVd/z/O6ynkI1FF6UXwJpqDdHbrz/0LtWbJVFqPzJOk9q6HhncuprXoKtGXAItlKYdpu/Ud55JM6cBpq1taSE9Is1z4xkEKcrcSxAEaA6yFhJGJDKnNlX6V3ILSHBmRSSKAb5bSoiTjc7+yAtwIY=
+	t=1767025577; cv=none; b=UIJzETc/opygs8A9vRTFjIB203H7gk/ERBdCDL4x+qGNvf/XLZixxL1x6PoRhyiGzqfaHRsby3vJrGTdXPYIQeHHmTYo08O84sAAUWfRHMwz5sQ6iYvSCbaY42K5s7bVjOiQahmwgyT7QvkA+BV+n1O3QMg96cDeOFSoEodXxHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025574; c=relaxed/simple;
-	bh=dKBL9UFgt8xGf60O388QABozsllI2grZt6ME2mR7GjA=;
+	s=arc-20240116; t=1767025577; c=relaxed/simple;
+	bh=IVDlaOqwKiB739oIKc3JJFjS9BrppUnRqH71iDUVxoE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G5nAYjYm0nvGnC/ZKN+UlF4Ot4W5FtHdxUIiTWY0k8zGYDWTBztUaNOfhqomnLsgiTCT6Y6jULrHWZF4/fFuEdY3wXJOw/XXTflyoAb6w86SFivLHHuOaUrVaaF3Z/4olu4CgYrCCcFO20RoEPes5EN/j3uZCR2ooTRiheOLd8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q3jGGhLw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M72RbScDW1b0pLfrI5jpzUG2gBPR/E6Jtjk/1so4QEmPBsV3wjyvRPRh7JfQkAoheTU5N4IuGQY3Yfxpo6QVzbnw5M14bICUjLLSluY7k/3aRlZRLVkM9movsnv1QihOtZFyxnR0G9ItTHfvcUTI9JFE1RJDKjr/23V9knvwllQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zWpEEA2m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q3jGGhLw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5EBAC4CEF7;
-	Mon, 29 Dec 2025 16:26:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zWpEEA2m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9226C4CEF7;
+	Mon, 29 Dec 2025 16:26:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025574;
-	bh=dKBL9UFgt8xGf60O388QABozsllI2grZt6ME2mR7GjA=;
+	s=korg; t=1767025577;
+	bh=IVDlaOqwKiB739oIKc3JJFjS9BrppUnRqH71iDUVxoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q3jGGhLwH8A2F4brH3GnLGawZLFplZ0CMNbycjAxNW5Lr/AyD9tL6PQt+H0aZ+nZq
-	 y5sDhFY87cj3lm6aayGeTTIGbFZYmFwzfu1iJPJdhVNrKkpoNSRF9+QRIyV+fX6ib+
-	 x/CigegB2jJTgQt5PgE7gnT1p0TK06goe/26Tvvc=
+	b=zWpEEA2mXdwVq55QzM1CzGWCmIULZujBpNu9c8eYXjEMmdV8W2I8P8t7IqbU7qtOf
+	 xmd0y4m1H8/HB0+Jj67zLJqNZJ3D8ic/7/3hSlWFASmpDgzozpFfCmXvC9XxKaULK1
+	 UyTj1cQRW6IuKWapaS+y/VUh1XifUOWF2eSw650Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Karina Yankevich <k.yankevich@omp.ru>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Haibo Chen <haibo.chen@nxp.com>,
 	Baokun Li <libaokun1@huawei.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.18 261/430] ext4: xattr: fix null pointer deref in ext4_raw_inode()
-Date: Mon, 29 Dec 2025 17:11:03 +0100
-Message-ID: <20251229160733.960032255@linuxfoundation.org>
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.18 262/430] ext4: clear i_state_flags when alloc inode
+Date: Mon, 29 Dec 2025 17:11:04 +0100
+Message-ID: <20251229160733.995890672@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -53,43 +54,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karina Yankevich <k.yankevich@omp.ru>
+From: Haibo Chen <haibo.chen@nxp.com>
 
-commit b97cb7d6a051aa6ebd57906df0e26e9e36c26d14 upstream.
+commit 4091c8206cfd2e3bb529ef260887296b90d9b6a2 upstream.
 
-If ext4_get_inode_loc() fails (e.g. if it returns -EFSCORRUPTED),
-iloc.bh will remain set to NULL. Since ext4_xattr_inode_dec_ref_all()
-lacks error checking, this will lead to a null pointer dereference
-in ext4_raw_inode(), called right after ext4_get_inode_loc().
+i_state_flags used on 32-bit archs, need to clear this flag when
+alloc inode.
+Find this issue when umount ext4, sometimes track the inode as orphan
+accidently, cause ext4 mesg dump.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: c8e008b60492 ("ext4: ignore xattrs past end")
-Cc: stable@kernel.org
-Signed-off-by: Karina Yankevich <k.yankevich@omp.ru>
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Fixes: acf943e9768e ("ext4: fix checks for orphan inodes")
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
 Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Message-ID: <20251022093253.3546296-1-k.yankevich@omp.ru>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Message-ID: <20251104-ext4-v1-1-73691a0800f9@nxp.com>
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/xattr.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/ext4/ialloc.c |    1 -
+ fs/ext4/inode.c  |    1 -
+ fs/ext4/super.c  |    1 +
+ 3 files changed, 1 insertion(+), 2 deletions(-)
 
---- a/fs/ext4/xattr.c
-+++ b/fs/ext4/xattr.c
-@@ -1174,7 +1174,11 @@ ext4_xattr_inode_dec_ref_all(handle_t *h
- 	if (block_csum)
- 		end = (void *)bh->b_data + bh->b_size;
- 	else {
--		ext4_get_inode_loc(parent, &iloc);
-+		err = ext4_get_inode_loc(parent, &iloc);
-+		if (err) {
-+			EXT4_ERROR_INODE(parent, "parent inode loc (error %d)", err);
-+			return;
-+		}
- 		end = (void *)ext4_raw_inode(&iloc) + EXT4_SB(parent->i_sb)->s_inode_size;
+--- a/fs/ext4/ialloc.c
++++ b/fs/ext4/ialloc.c
+@@ -1293,7 +1293,6 @@ got:
+ 		ei->i_csum_seed = ext4_chksum(csum, (__u8 *)&gen, sizeof(gen));
  	}
  
+-	ext4_clear_state_flags(ei); /* Only relevant on 32-bit archs */
+ 	ext4_set_inode_state(inode, EXT4_STATE_NEW);
+ 
+ 	ei->i_extra_isize = sbi->s_want_extra_isize;
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -5288,7 +5288,6 @@ struct inode *__ext4_iget(struct super_b
+ 	ei->i_projid = make_kprojid(&init_user_ns, i_projid);
+ 	set_nlink(inode, le16_to_cpu(raw_inode->i_links_count));
+ 
+-	ext4_clear_state_flags(ei);	/* Only relevant on 32-bit archs */
+ 	ei->i_inline_off = 0;
+ 	ei->i_dir_start_lookup = 0;
+ 	ei->i_dtime = le32_to_cpu(raw_inode->i_dtime);
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -1396,6 +1396,7 @@ static struct inode *ext4_alloc_inode(st
+ 
+ 	inode_set_iversion(&ei->vfs_inode, 1);
+ 	ei->i_flags = 0;
++	ext4_clear_state_flags(ei);	/* Only relevant on 32-bit archs */
+ 	spin_lock_init(&ei->i_raw_lock);
+ 	ei->i_prealloc_node = RB_ROOT;
+ 	atomic_set(&ei->i_prealloc_active, 0);
 
 
