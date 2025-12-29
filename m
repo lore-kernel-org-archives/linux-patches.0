@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E653A264FBD;
-	Mon, 29 Dec 2025 16:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7CD264FBD;
+	Mon, 29 Dec 2025 16:33:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767026005; cv=none; b=Sz/rvHKaH7xcNlIQQ3GhWT+xuQx0NAbBF4Phummase3KUPh0ekiWxPsNVe6i2XTnABu26vAINOoVJI50Z7SRFALURnOq8RnFd0HM0z8zABU4Gkx534GziM6prCnxmj4Dh5sy+8RZl1O/YJkEbIv3pTSKpG0NFMBB3GtRNH7Q+uw=
+	t=1767026007; cv=none; b=Um6LNV2r+Tk3IXRrZB0TDc17hUO9rj8J7C7pqXQ50UdeZX+u4ZBpuWAFgPkZXInBbgwUvXdtVz6hH9vuSDj4yoBIKwjse21b+v5xWoRNI5d84Msvd6QDYcgNUXvFN5bUIf2eIrgTQj+5pdVvjHFdaUQzhS/40M2jX2Gkha7Nu8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767026005; c=relaxed/simple;
-	bh=4FgrF0GD4z3z/1ZBVGpZLO3c65bsDMX8BzkuIxZD2xE=;
+	s=arc-20240116; t=1767026007; c=relaxed/simple;
+	bh=X8Ns0LSm0WaIPXB5B70GOXsV3cllhVabIC2C4B+lQzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CaR9xzn8y/VrISgQFG4eWTk+V52BvsCtf58x0PSqXTXbS7gNHFPTRBNHCR29tZ7eO9x4k+THQmJBG4CLA9W3Xa87xsfWU7ZEZExa8TE/KmoWltFAADyfQIEK/pWuG2o+/9y/r5BTm7TWnQcDlHyOKrgxQ+sFqSlqVka3i3F+z0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTBE9zP/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=krfT4n3CuqBYOMuNF7F6SgRwp9PJ71IEYhtScsSkhHfPOYVCzkvu/DXTNuI7CSX8eIFPWvPOQZsc1X6OCbOoPBFT/9Xwu1e2QxsLCuNIWTmp3i9zb/O3bvHDBtfgh6K8CRiwoQJ4pL5lnYNo13hNtr9m9VABUBuEEpf1y49By+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TBIGlOpF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTBE9zP/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D838C4CEF7;
-	Mon, 29 Dec 2025 16:33:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TBIGlOpF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B402C4CEF7;
+	Mon, 29 Dec 2025 16:33:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767026004;
-	bh=4FgrF0GD4z3z/1ZBVGpZLO3c65bsDMX8BzkuIxZD2xE=;
+	s=korg; t=1767026007;
+	bh=X8Ns0LSm0WaIPXB5B70GOXsV3cllhVabIC2C4B+lQzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bTBE9zP//ScLpR8R2QsnSIXvLR2C7OaZ0bxf4FsZ1WJ9xlljmMlkLRlr11wPrF29x
-	 sf/L3dakLO7WjGDWxWo6SuqPg/SPkWwbXMEHLEqQkeutXLBWiEAfrcv0JqrAvO1Srg
-	 GrxZLOyw/yqAyttEumbe1F+12WL/ygm4uCmRs64Y=
+	b=TBIGlOpF1odroOG4W4150Dhsbe2PlhoOZGiktqQk1xyRq58dWWHy30zF30TvLQ0Bv
+	 RDhen0cXp8diTRHMuRbwNFEzswYgPn4OBWUVPNP8vAk9tVI1mMOCBZJhW23pwNehSu
+	 Mepj/P8eUh6hTdKsHZamRWPaE8t1bUoLMuBg4I08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.18 412/430] rpmsg: glink: fix rpmsg device leak
-Date: Mon, 29 Dec 2025 17:13:34 +0100
-Message-ID: <20251229160739.476882175@linuxfoundation.org>
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>
+Subject: [PATCH 6.18 381/430] s390/ipl: Clear SBP flag when bootprog is set
+Date: Mon, 29 Dec 2025 17:13:03 +0100
+Message-ID: <20251229160738.343628699@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -52,83 +51,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Sven Schnelle <svens@linux.ibm.com>
 
-commit a53e356df548f6b0e82529ef3cc6070f42622189 upstream.
+commit b1aa01d31249bd116b18c7f512d3e46b4b4ad83b upstream.
 
-While testing rpmsg-char interface it was noticed that duplicate sysfs
-entries are getting created and below warning is noticed.
+With z16 a new flag 'search boot program' was introduced for
+list-directed IPL (SCSI, NVMe, ECKD DASD). If this flag is set,
+e.g. via selecting the "Automatic" value for the "Boot program
+selector" control on an HMC load panel, it is copied to the reipl
+structure from the initial ipl structure. When a user now sets a
+boot prog via sysfs, the flag is not cleared and the bootloader
+will again automatically select the boot program, ignoring user
+configuration.
 
-Reason for this is that we are leaking rpmsg device pointer, setting it
-null without actually unregistering device.
-Any further attempts to unregister fail because rpdev is NULL,
-resulting in a leak.
+To avoid that, clear the SBP flag when a bootprog sysfs file is
+written.
 
-Fix this by unregistering rpmsg device before removing its reference
-from rpmsg channel.
-
-sysfs: cannot create duplicate filename '/devices/platform/soc@0/3700000.remot
-eproc/remoteproc/remoteproc1/3700000.remoteproc:glink-edge/3700000.remoteproc:
-glink-edge.adsp_apps.-1.-1'
-[  114.115347] CPU: 0 UID: 0 PID: 9 Comm: kworker/0:0 Not
- tainted 6.16.0-rc4 #7 PREEMPT
-[  114.115355] Hardware name: Qualcomm Technologies, Inc. Robotics RB3gen2 (DT)
-[  114.115358] Workqueue: events qcom_glink_work
-[  114.115371] Call trace:8
-[  114.115374]  show_stack+0x18/0x24 (C)
-[  114.115382]  dump_stack_lvl+0x60/0x80
-[  114.115388]  dump_stack+0x18/0x24
-[  114.115393]  sysfs_warn_dup+0x64/0x80
-[  114.115402]  sysfs_create_dir_ns+0xf4/0x120
-[  114.115409]  kobject_add_internal+0x98/0x260
-[  114.115416]  kobject_add+0x9c/0x108
-[  114.115421]  device_add+0xc4/0x7a0
-[  114.115429]  rpmsg_register_device+0x5c/0xb0
-[  114.115434]  qcom_glink_work+0x4bc/0x820
-[  114.115438]  process_one_work+0x148/0x284
-[  114.115446]  worker_thread+0x2c4/0x3e0
-[  114.115452]  kthread+0x12c/0x204
-[  114.115457]  ret_from_fork+0x10/0x20
-[  114.115464] kobject: kobject_add_internal failed for 3700000.remoteproc:
-glink-edge.adsp_apps.-1.-1 with -EEXIST, don't try to register things with
-the same name in the same directory.
-[  114.250045] rpmsg 3700000.remoteproc:glink-edge.adsp_apps.-1.-1:
-device_add failed: -17
-
-Fixes: 835764ddd9af ("rpmsg: glink: Move the common glink protocol implementation to glink_native.c")
-Cc: Stable@vger.kernel.org
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250822100043.2604794-2-srinivas.kandagatla@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Cc: stable@vger.kernel.org
+Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rpmsg/qcom_glink_native.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/s390/include/uapi/asm/ipl.h |    1 
+ arch/s390/kernel/ipl.c           |   48 +++++++++++++++++++++++++++++----------
+ 2 files changed, 37 insertions(+), 12 deletions(-)
 
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -1399,6 +1399,7 @@ static void qcom_glink_destroy_ept(struc
- {
- 	struct glink_channel *channel = to_glink_channel(ept);
- 	struct qcom_glink *glink = channel->glink;
-+	struct rpmsg_channel_info chinfo;
- 	unsigned long flags;
+--- a/arch/s390/include/uapi/asm/ipl.h
++++ b/arch/s390/include/uapi/asm/ipl.h
+@@ -15,6 +15,7 @@ struct ipl_pl_hdr {
+ #define IPL_PL_FLAG_IPLPS	0x80
+ #define IPL_PL_FLAG_SIPL	0x40
+ #define IPL_PL_FLAG_IPLSR	0x20
++#define IPL_PL_FLAG_SBP		0x10
  
- 	spin_lock_irqsave(&channel->recv_lock, flags);
-@@ -1406,6 +1407,13 @@ static void qcom_glink_destroy_ept(struc
- 	spin_unlock_irqrestore(&channel->recv_lock, flags);
+ /* IPL Parameter Block header */
+ struct ipl_pb_hdr {
+--- a/arch/s390/kernel/ipl.c
++++ b/arch/s390/kernel/ipl.c
+@@ -262,6 +262,24 @@ static struct kobj_attribute sys_##_pref
+ 			sys_##_prefix##_##_name##_show,			\
+ 			sys_##_prefix##_##_name##_store)
  
- 	/* Decouple the potential rpdev from the channel */
-+	if (channel->rpdev) {
-+		strscpy_pad(chinfo.name, channel->name, sizeof(chinfo.name));
-+		chinfo.src = RPMSG_ADDR_ANY;
-+		chinfo.dst = RPMSG_ADDR_ANY;
++#define DEFINE_IPL_ATTR_BOOTPROG_RW(_prefix, _name, _fmt_out, _fmt_in, _hdr, _value)	\
++	IPL_ATTR_SHOW_FN(_prefix, _name, _fmt_out, (unsigned long long) _value)		\
++static ssize_t sys_##_prefix##_##_name##_store(struct kobject *kobj,			\
++		struct kobj_attribute *attr,						\
++		const char *buf, size_t len)						\
++{											\
++	unsigned long long value;							\
++	if (sscanf(buf, _fmt_in, &value) != 1)						\
++		return -EINVAL;								\
++	(_value) = value;								\
++	(_hdr).flags &= ~IPL_PL_FLAG_SBP;						\
++	return len;									\
++}											\
++static struct kobj_attribute sys_##_prefix##_##_name##_attr =				\
++	__ATTR(_name, 0644,								\
++			sys_##_prefix##_##_name##_show,					\
++			sys_##_prefix##_##_name##_store)
 +
-+		rpmsg_unregister_device(glink->dev, &chinfo);
-+	}
- 	channel->rpdev = NULL;
+ #define DEFINE_IPL_ATTR_STR_RW(_prefix, _name, _fmt_out, _fmt_in, _value)\
+ IPL_ATTR_SHOW_FN(_prefix, _name, _fmt_out, _value)			\
+ static ssize_t sys_##_prefix##_##_name##_store(struct kobject *kobj,	\
+@@ -818,12 +836,13 @@ DEFINE_IPL_ATTR_RW(reipl_fcp, wwpn, "0x%
+ 		   reipl_block_fcp->fcp.wwpn);
+ DEFINE_IPL_ATTR_RW(reipl_fcp, lun, "0x%016llx\n", "%llx\n",
+ 		   reipl_block_fcp->fcp.lun);
+-DEFINE_IPL_ATTR_RW(reipl_fcp, bootprog, "%lld\n", "%lld\n",
+-		   reipl_block_fcp->fcp.bootprog);
+ DEFINE_IPL_ATTR_RW(reipl_fcp, br_lba, "%lld\n", "%lld\n",
+ 		   reipl_block_fcp->fcp.br_lba);
+ DEFINE_IPL_ATTR_RW(reipl_fcp, device, "0.0.%04llx\n", "0.0.%llx\n",
+ 		   reipl_block_fcp->fcp.devno);
++DEFINE_IPL_ATTR_BOOTPROG_RW(reipl_fcp, bootprog, "%lld\n", "%lld\n",
++			    reipl_block_fcp->hdr,
++			    reipl_block_fcp->fcp.bootprog);
  
- 	qcom_glink_send_close_req(glink, channel);
+ static void reipl_get_ascii_loadparm(char *loadparm,
+ 				     struct ipl_parameter_block *ibp)
+@@ -942,10 +961,11 @@ DEFINE_IPL_ATTR_RW(reipl_nvme, fid, "0x%
+ 		   reipl_block_nvme->nvme.fid);
+ DEFINE_IPL_ATTR_RW(reipl_nvme, nsid, "0x%08llx\n", "%llx\n",
+ 		   reipl_block_nvme->nvme.nsid);
+-DEFINE_IPL_ATTR_RW(reipl_nvme, bootprog, "%lld\n", "%lld\n",
+-		   reipl_block_nvme->nvme.bootprog);
+ DEFINE_IPL_ATTR_RW(reipl_nvme, br_lba, "%lld\n", "%lld\n",
+ 		   reipl_block_nvme->nvme.br_lba);
++DEFINE_IPL_ATTR_BOOTPROG_RW(reipl_nvme, bootprog, "%lld\n", "%lld\n",
++			    reipl_block_nvme->hdr,
++			    reipl_block_nvme->nvme.bootprog);
+ 
+ static struct attribute *reipl_nvme_attrs[] = {
+ 	&sys_reipl_nvme_fid_attr.attr,
+@@ -1038,8 +1058,9 @@ static const struct bin_attribute *const
+ };
+ 
+ DEFINE_IPL_CCW_ATTR_RW(reipl_eckd, device, reipl_block_eckd->eckd);
+-DEFINE_IPL_ATTR_RW(reipl_eckd, bootprog, "%lld\n", "%lld\n",
+-		   reipl_block_eckd->eckd.bootprog);
++DEFINE_IPL_ATTR_BOOTPROG_RW(reipl_eckd, bootprog, "%lld\n", "%lld\n",
++			    reipl_block_eckd->hdr,
++			    reipl_block_eckd->eckd.bootprog);
+ 
+ static struct attribute *reipl_eckd_attrs[] = {
+ 	&sys_reipl_eckd_device_attr.attr,
+@@ -1567,12 +1588,13 @@ DEFINE_IPL_ATTR_RW(dump_fcp, wwpn, "0x%0
+ 		   dump_block_fcp->fcp.wwpn);
+ DEFINE_IPL_ATTR_RW(dump_fcp, lun, "0x%016llx\n", "%llx\n",
+ 		   dump_block_fcp->fcp.lun);
+-DEFINE_IPL_ATTR_RW(dump_fcp, bootprog, "%lld\n", "%lld\n",
+-		   dump_block_fcp->fcp.bootprog);
+ DEFINE_IPL_ATTR_RW(dump_fcp, br_lba, "%lld\n", "%lld\n",
+ 		   dump_block_fcp->fcp.br_lba);
+ DEFINE_IPL_ATTR_RW(dump_fcp, device, "0.0.%04llx\n", "0.0.%llx\n",
+ 		   dump_block_fcp->fcp.devno);
++DEFINE_IPL_ATTR_BOOTPROG_RW(dump_fcp, bootprog, "%lld\n", "%lld\n",
++			    dump_block_fcp->hdr,
++			    dump_block_fcp->fcp.bootprog);
+ 
+ DEFINE_IPL_ATTR_SCP_DATA_RW(dump_fcp, dump_block_fcp->hdr,
+ 			    dump_block_fcp->fcp,
+@@ -1604,10 +1626,11 @@ DEFINE_IPL_ATTR_RW(dump_nvme, fid, "0x%0
+ 		   dump_block_nvme->nvme.fid);
+ DEFINE_IPL_ATTR_RW(dump_nvme, nsid, "0x%08llx\n", "%llx\n",
+ 		   dump_block_nvme->nvme.nsid);
+-DEFINE_IPL_ATTR_RW(dump_nvme, bootprog, "%lld\n", "%llx\n",
+-		   dump_block_nvme->nvme.bootprog);
+ DEFINE_IPL_ATTR_RW(dump_nvme, br_lba, "%lld\n", "%llx\n",
+ 		   dump_block_nvme->nvme.br_lba);
++DEFINE_IPL_ATTR_BOOTPROG_RW(dump_nvme, bootprog, "%lld\n", "%llx\n",
++			    dump_block_nvme->hdr,
++			    dump_block_nvme->nvme.bootprog);
+ 
+ DEFINE_IPL_ATTR_SCP_DATA_RW(dump_nvme, dump_block_nvme->hdr,
+ 			    dump_block_nvme->nvme,
+@@ -1635,8 +1658,9 @@ static const struct attribute_group dump
+ 
+ /* ECKD dump device attributes */
+ DEFINE_IPL_CCW_ATTR_RW(dump_eckd, device, dump_block_eckd->eckd);
+-DEFINE_IPL_ATTR_RW(dump_eckd, bootprog, "%lld\n", "%llx\n",
+-		   dump_block_eckd->eckd.bootprog);
++DEFINE_IPL_ATTR_BOOTPROG_RW(dump_eckd, bootprog, "%lld\n", "%llx\n",
++			    dump_block_eckd->hdr,
++			    dump_block_eckd->eckd.bootprog);
+ 
+ IPL_ATTR_BR_CHR_SHOW_FN(dump, dump_block_eckd->eckd);
+ IPL_ATTR_BR_CHR_STORE_FN(dump, dump_block_eckd->eckd);
 
 
