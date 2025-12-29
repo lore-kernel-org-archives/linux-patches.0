@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B415331A53;
-	Mon, 29 Dec 2025 16:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1D4347C6;
+	Mon, 29 Dec 2025 16:26:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025594; cv=none; b=gqyp1GAhVFMt24vD54J+yMzR21JmFGYVj6jDitMdRN5zM9pK5f8NGzwKYvcHUZdza9QtvbKTy2pArtA3VcIrXnN3rcotRB3ueWCePzLRzOMgR4mTTF6shD18N4+m5cqWUiL7axn0tvO05RKzUwogoWwX2SOWdKhshwPaT6Ws58A=
+	t=1767025597; cv=none; b=gXfNZ7JmASYWDkwFdggNImOK97+LZ34F9wxV0LNT5EsJqNqqa/NoOI0Uaf5IAXBhddPNdofMWU48kOblK4EFCe+kIpXdQpv9JE4OFZdTloxEg9zxphhFHTr05qpu0h6Y/F71PKL73LdeBr2YA0frHvIhzUZtGbbjyy7Ud1VB+Jg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025594; c=relaxed/simple;
-	bh=zT52pLrnTbfeSeD4bqOKOP8FmsD2+qE4BOzdYHHQYNk=;
+	s=arc-20240116; t=1767025597; c=relaxed/simple;
+	bh=K7teBgJzB9An+urVMTHXZmFzGHsV5SeUQuaNMvT+qrk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=odzeByexZRg2FBHnayFNqw46M4mVobWyCGJZcHzoTVGVW4QFYVvuewebU2/4Yvmju7RMCn8/jSKsccshceIYfqN3+pITzSdTzzHd6vn/Agh7c9B6it0UYf2SYfjIA6hlLS/UjC0usIYKCfUsG8SQFbyYO7Pxh7p8FYUbUYDrgsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VuozroAp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nQJyyqTpXmqt+iPwpjx+YxFgCP5lFejh06aFKNT2hbgSHrdXazZRlwvsocppxx40t3K+uHmV+9VcYTH/RpPZEHQMMsCf7WrJOVKb5bjZDSfNC8XIXP7xXwJYb/QSuX752S08UpPVGCwGW7PiJD+hOQGwEhB63ciW6qGF4ooXeOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V2F16eOQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VuozroAp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD1E2C4CEF7;
-	Mon, 29 Dec 2025 16:26:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V2F16eOQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B6E0C4CEF7;
+	Mon, 29 Dec 2025 16:26:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025594;
-	bh=zT52pLrnTbfeSeD4bqOKOP8FmsD2+qE4BOzdYHHQYNk=;
+	s=korg; t=1767025596;
+	bh=K7teBgJzB9An+urVMTHXZmFzGHsV5SeUQuaNMvT+qrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VuozroAp37ntz57S9wpaBjnqZ0pjqUbshnJMsQ6UUtVsHFRaA1r6CuuZ/UDvjdnHu
-	 UmoH4YHFzpm0QpIvvBPk+0aPiImcdSEEAMeG5sCtGH0nBYNNwGgr6xvcZGJVejBK2D
-	 vJ9wMpamOhqxZdpufZWQAAnZ1nEEKGJcJLRaEvNY=
+	b=V2F16eOQRyIUw+I60i3GP3n7wDf/TxSsozXAfQQ/Lx4AUEpfKC6zgfHE4ywbQk0hG
+	 6AwMmuKRrEuJwcazsVqhH92fxHCtc12/0FyZBlcEmtwIzzDs/m3oOKyBQt6oo4Eu2a
+	 kev3Gvk65z5W8S/ZmhpEqbSXpp8I60Q2KSHmvQjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Ming Lei <ming.lei@redhat.com>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Martin Wilck <mwilck@suse.com>,
-	Benjamin Marzinski <bmarzins@redhat.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 267/430] block: Remove queue freezing from several sysfs store callbacks
-Date: Mon, 29 Dec 2025 17:11:09 +0100
-Message-ID: <20251229160734.177510098@linuxfoundation.org>
+	xu xin <xu.xin16@zte.com.cn>,
+	Stefan Roesch <shr@devkernel.io>,
+	David Hildenbrand <david@redhat.com>,
+	Jinjiang Tu <tujinjiang@huawei.com>,
+	Wang Yaxin <wang.yaxin@zte.com.cn>,
+	Yang Yang <yang.yang29@zte.com.cn>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 268/430] mm/ksm: fix exec/fork inheritance support for prctl
+Date: Mon, 29 Dec 2025 17:11:10 +0100
+Message-ID: <20251229160734.213792092@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -55,216 +55,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: xu xin <xu.xin16@zte.com.cn>
 
-commit 935a20d1bebf6236076785fac3ff81e3931834e9 upstream.
+commit 590c03ca6a3fbb114396673314e2aa483839608b upstream.
 
-Freezing the request queue from inside sysfs store callbacks may cause a
-deadlock in combination with the dm-multipath driver and the
-queue_if_no_path option. Additionally, freezing the request queue slows
-down system boot on systems where sysfs attributes are set synchronously.
+Patch series "ksm: fix exec/fork inheritance", v2.
 
-Fix this by removing the blk_mq_freeze_queue() / blk_mq_unfreeze_queue()
-calls from the store callbacks that do not strictly need these callbacks.
-Add the __data_racy annotation to request_queue.rq_timeout to suppress
-KCSAN data race reports about the rq_timeout reads.
+This series fixes exec/fork inheritance.  See the detailed description of
+the issue below.
 
-This patch may cause a small delay in applying the new settings.
 
-For all the attributes affected by this patch, I/O will complete
-correctly whether the old or the new value of the attribute is used.
+This patch (of 2):
 
-This patch affects the following sysfs attributes:
-* io_poll_delay
-* io_timeout
-* nomerges
-* read_ahead_kb
-* rq_affinity
+Background
+==========
 
-Here is an example of a deadlock triggered by running test srp/002
-if this patch is not applied:
+commit d7597f59d1d33 ("mm: add new api to enable ksm per process")
+introduced MMF_VM_MERGE_ANY for mm->flags, and allowed user to set it by
+prctl() so that the process's VMAs are forcibly scanned by ksmd.
 
-task:multipathd
-Call Trace:
- <TASK>
- __schedule+0x8c1/0x1bf0
- schedule+0xdd/0x270
- schedule_preempt_disabled+0x1c/0x30
- __mutex_lock+0xb89/0x1650
- mutex_lock_nested+0x1f/0x30
- dm_table_set_restrictions+0x823/0xdf0
- __bind+0x166/0x590
- dm_swap_table+0x2a7/0x490
- do_resume+0x1b1/0x610
- dev_suspend+0x55/0x1a0
- ctl_ioctl+0x3a5/0x7e0
- dm_ctl_ioctl+0x12/0x20
- __x64_sys_ioctl+0x127/0x1a0
- x64_sys_call+0xe2b/0x17d0
- do_syscall_64+0x96/0x3a0
- entry_SYSCALL_64_after_hwframe+0x4b/0x53
- </TASK>
-task:(udev-worker)
-Call Trace:
- <TASK>
- __schedule+0x8c1/0x1bf0
- schedule+0xdd/0x270
- blk_mq_freeze_queue_wait+0xf2/0x140
- blk_mq_freeze_queue_nomemsave+0x23/0x30
- queue_ra_store+0x14e/0x290
- queue_attr_store+0x23e/0x2c0
- sysfs_kf_write+0xde/0x140
- kernfs_fop_write_iter+0x3b2/0x630
- vfs_write+0x4fd/0x1390
- ksys_write+0xfd/0x230
- __x64_sys_write+0x76/0xc0
- x64_sys_call+0x276/0x17d0
- do_syscall_64+0x96/0x3a0
- entry_SYSCALL_64_after_hwframe+0x4b/0x53
- </TASK>
+Subsequently, the 3c6f33b7273a ("mm/ksm: support fork/exec for prctl")
+supported inheriting the MMF_VM_MERGE_ANY flag when a task calls execve().
 
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Ming Lei <ming.lei@redhat.com>
-Cc: Nilay Shroff <nilay@linux.ibm.com>
-Cc: Martin Wilck <mwilck@suse.com>
-Cc: Benjamin Marzinski <bmarzins@redhat.com>
-Cc: stable@vger.kernel.org
-Fixes: af2814149883 ("block: freeze the queue in queue_attr_store")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Finally, commit 3a9e567ca45fb ("mm/ksm: fix ksm exec support for prctl")
+fixed the issue that ksmd doesn't scan the mm_struct with MMF_VM_MERGE_ANY
+by adding the mm_slot to ksm_mm_head in __bprm_mm_init().
+
+Problem
+=======
+
+In some extreme scenarios, however, this inheritance of MMF_VM_MERGE_ANY
+during exec/fork can fail.  For example, when the scanning frequency of
+ksmd is tuned extremely high, a process carrying MMF_VM_MERGE_ANY may
+still fail to pass it to the newly exec'd process.  This happens because
+ksm_execve() is executed too early in the do_execve flow (prematurely
+adding the new mm_struct to the ksm_mm_slot list).
+
+As a result, before do_execve completes, ksmd may have already performed a
+scan and found that this new mm_struct has no VM_MERGEABLE VMAs, thus
+clearing its MMF_VM_MERGE_ANY flag.  Consequently, when the new program
+executes, the flag MMF_VM_MERGE_ANY inheritance missed.
+
+Root reason
+===========
+
+commit d7597f59d1d33 ("mm: add new api to enable ksm per process") clear
+the flag MMF_VM_MERGE_ANY when ksmd found no VM_MERGEABLE VMAs.
+
+Solution
+========
+
+Firstly, Don't clear MMF_VM_MERGE_ANY when ksmd found no VM_MERGEABLE
+VMAs, because perhaps their mm_struct has just been added to ksm_mm_slot
+list, and its process has not yet officially started running or has not
+yet performed mmap/brk to allocate anonymous VMAS.
+
+Secondly, recheck MMF_VM_MERGEABLE again if a process takes
+MMF_VM_MERGE_ANY, and create a mm_slot and join it into ksm_scan_list
+again.
+
+Link: https://lkml.kernel.org/r/20251007182504440BJgK8VXRHh8TD7IGSUIY4@zte.com.cn
+Link: https://lkml.kernel.org/r/20251007182821572h_SoFqYZXEP1mvWI4n9VL@zte.com.cn
+Fixes: 3c6f33b7273a ("mm/ksm: support fork/exec for prctl")
+Fixes: d7597f59d1d3 ("mm: add new api to enable ksm per process")
+Signed-off-by: xu xin <xu.xin16@zte.com.cn>
+Cc: Stefan Roesch <shr@devkernel.io>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Jinjiang Tu <tujinjiang@huawei.com>
+Cc: Wang Yaxin <wang.yaxin@zte.com.cn>
+Cc: Yang Yang <yang.yang29@zte.com.cn>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-sysfs.c      |   26 ++++++++------------------
- include/linux/blkdev.h |    2 +-
- 2 files changed, 9 insertions(+), 19 deletions(-)
+ include/linux/ksm.h |    4 ++--
+ mm/ksm.c            |   20 +++++++++++++++++---
+ 2 files changed, 19 insertions(+), 5 deletions(-)
 
---- a/block/blk-sysfs.c
-+++ b/block/blk-sysfs.c
-@@ -143,21 +143,22 @@ queue_ra_store(struct gendisk *disk, con
+--- a/include/linux/ksm.h
++++ b/include/linux/ksm.h
+@@ -17,7 +17,7 @@
+ #ifdef CONFIG_KSM
+ int ksm_madvise(struct vm_area_struct *vma, unsigned long start,
+ 		unsigned long end, int advice, vm_flags_t *vm_flags);
+-vm_flags_t ksm_vma_flags(const struct mm_struct *mm, const struct file *file,
++vm_flags_t ksm_vma_flags(struct mm_struct *mm, const struct file *file,
+ 			 vm_flags_t vm_flags);
+ int ksm_enable_merge_any(struct mm_struct *mm);
+ int ksm_disable_merge_any(struct mm_struct *mm);
+@@ -103,7 +103,7 @@ bool ksm_process_mergeable(struct mm_str
+ 
+ #else  /* !CONFIG_KSM */
+ 
+-static inline vm_flags_t ksm_vma_flags(const struct mm_struct *mm,
++static inline vm_flags_t ksm_vma_flags(struct mm_struct *mm,
+ 		const struct file *file, vm_flags_t vm_flags)
  {
- 	unsigned long ra_kb;
- 	ssize_t ret;
--	unsigned int memflags;
- 	struct request_queue *q = disk->queue;
+ 	return vm_flags;
+--- a/mm/ksm.c
++++ b/mm/ksm.c
+@@ -2712,8 +2712,14 @@ no_vmas:
+ 		spin_unlock(&ksm_mmlist_lock);
  
- 	ret = queue_var_store(&ra_kb, page, count);
- 	if (ret < 0)
- 		return ret;
- 	/*
--	 * ->ra_pages is protected by ->limits_lock because it is usually
--	 * calculated from the queue limits by queue_limits_commit_update.
-+	 * The ->ra_pages change below is protected by ->limits_lock because it
-+	 * is usually calculated from the queue limits by
-+	 * queue_limits_commit_update().
-+	 *
-+	 * bdi->ra_pages reads are not serialized against bdi->ra_pages writes.
-+	 * Use WRITE_ONCE() to write bdi->ra_pages once.
- 	 */
- 	mutex_lock(&q->limits_lock);
--	memflags = blk_mq_freeze_queue(q);
--	disk->bdi->ra_pages = ra_kb >> (PAGE_SHIFT - 10);
-+	WRITE_ONCE(disk->bdi->ra_pages, ra_kb >> (PAGE_SHIFT - 10));
- 	mutex_unlock(&q->limits_lock);
--	blk_mq_unfreeze_queue(q, memflags);
- 
- 	return ret;
- }
-@@ -375,21 +376,18 @@ static ssize_t queue_nomerges_store(stru
- 				    size_t count)
+ 		mm_slot_free(mm_slot_cache, mm_slot);
++		/*
++		 * Only clear MMF_VM_MERGEABLE. We must not clear
++		 * MMF_VM_MERGE_ANY, because for those MMF_VM_MERGE_ANY process,
++		 * perhaps their mm_struct has just been added to ksm_mm_slot
++		 * list, and its process has not yet officially started running
++		 * or has not yet performed mmap/brk to allocate anonymous VMAS.
++		 */
+ 		mm_flags_clear(MMF_VM_MERGEABLE, mm);
+-		mm_flags_clear(MMF_VM_MERGE_ANY, mm);
+ 		mmap_read_unlock(mm);
+ 		mmdrop(mm);
+ 	} else {
+@@ -2831,12 +2837,20 @@ static int __ksm_del_vma(struct vm_area_
+  *
+  * Returns: @vm_flags possibly updated to mark mergeable.
+  */
+-vm_flags_t ksm_vma_flags(const struct mm_struct *mm, const struct file *file,
++vm_flags_t ksm_vma_flags(struct mm_struct *mm, const struct file *file,
+ 			 vm_flags_t vm_flags)
  {
- 	unsigned long nm;
--	unsigned int memflags;
- 	struct request_queue *q = disk->queue;
- 	ssize_t ret = queue_var_store(&nm, page, count);
+ 	if (mm_flags_test(MMF_VM_MERGE_ANY, mm) &&
+-	    __ksm_should_add_vma(file, vm_flags))
++	    __ksm_should_add_vma(file, vm_flags)) {
+ 		vm_flags |= VM_MERGEABLE;
++		/*
++		 * Generally, the flags here always include MMF_VM_MERGEABLE.
++		 * However, in rare cases, this flag may be cleared by ksmd who
++		 * scans a cycle without finding any mergeable vma.
++		 */
++		if (unlikely(!mm_flags_test(MMF_VM_MERGEABLE, mm)))
++			__ksm_enter(mm);
++	}
  
- 	if (ret < 0)
- 		return ret;
- 
--	memflags = blk_mq_freeze_queue(q);
- 	blk_queue_flag_clear(QUEUE_FLAG_NOMERGES, q);
- 	blk_queue_flag_clear(QUEUE_FLAG_NOXMERGES, q);
- 	if (nm == 2)
- 		blk_queue_flag_set(QUEUE_FLAG_NOMERGES, q);
- 	else if (nm)
- 		blk_queue_flag_set(QUEUE_FLAG_NOXMERGES, q);
--	blk_mq_unfreeze_queue(q, memflags);
- 
- 	return ret;
+ 	return vm_flags;
  }
-@@ -409,7 +407,6 @@ queue_rq_affinity_store(struct gendisk *
- #ifdef CONFIG_SMP
- 	struct request_queue *q = disk->queue;
- 	unsigned long val;
--	unsigned int memflags;
- 
- 	ret = queue_var_store(&val, page, count);
- 	if (ret < 0)
-@@ -421,7 +418,6 @@ queue_rq_affinity_store(struct gendisk *
- 	 * are accessed individually using atomic test_bit operation. So we
- 	 * don't grab any lock while updating these flags.
- 	 */
--	memflags = blk_mq_freeze_queue(q);
- 	if (val == 2) {
- 		blk_queue_flag_set(QUEUE_FLAG_SAME_COMP, q);
- 		blk_queue_flag_set(QUEUE_FLAG_SAME_FORCE, q);
-@@ -432,7 +428,6 @@ queue_rq_affinity_store(struct gendisk *
- 		blk_queue_flag_clear(QUEUE_FLAG_SAME_COMP, q);
- 		blk_queue_flag_clear(QUEUE_FLAG_SAME_FORCE, q);
- 	}
--	blk_mq_unfreeze_queue(q, memflags);
- #endif
- 	return ret;
- }
-@@ -446,11 +441,9 @@ static ssize_t queue_poll_delay_store(st
- static ssize_t queue_poll_store(struct gendisk *disk, const char *page,
- 				size_t count)
- {
--	unsigned int memflags;
- 	ssize_t ret = count;
- 	struct request_queue *q = disk->queue;
- 
--	memflags = blk_mq_freeze_queue(q);
- 	if (!(q->limits.features & BLK_FEAT_POLL)) {
- 		ret = -EINVAL;
- 		goto out;
-@@ -459,7 +452,6 @@ static ssize_t queue_poll_store(struct g
- 	pr_info_ratelimited("writes to the poll attribute are ignored.\n");
- 	pr_info_ratelimited("please use driver specific parameters instead.\n");
- out:
--	blk_mq_unfreeze_queue(q, memflags);
- 	return ret;
- }
- 
-@@ -472,7 +464,7 @@ static ssize_t queue_io_timeout_show(str
- static ssize_t queue_io_timeout_store(struct gendisk *disk, const char *page,
- 				  size_t count)
- {
--	unsigned int val, memflags;
-+	unsigned int val;
- 	int err;
- 	struct request_queue *q = disk->queue;
- 
-@@ -480,9 +472,7 @@ static ssize_t queue_io_timeout_store(st
- 	if (err || val == 0)
- 		return -EINVAL;
- 
--	memflags = blk_mq_freeze_queue(q);
- 	blk_queue_rq_timeout(q, msecs_to_jiffies(val));
--	blk_mq_unfreeze_queue(q, memflags);
- 
- 	return count;
- }
---- a/include/linux/blkdev.h
-+++ b/include/linux/blkdev.h
-@@ -485,7 +485,7 @@ struct request_queue {
- 	 */
- 	unsigned long		queue_flags;
- 
--	unsigned int		rq_timeout;
-+	unsigned int __data_racy rq_timeout;
- 
- 	unsigned int		queue_depth;
- 
 
 
