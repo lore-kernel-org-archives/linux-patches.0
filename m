@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50C6B32FA3C;
-	Mon, 29 Dec 2025 16:28:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19CEB3191A7;
+	Mon, 29 Dec 2025 16:28:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025721; cv=none; b=ANn6dGQQNkD0w/edBzM4RaTObbVXiutisK5rtr0Th+IwTA9dfZkKS9Ok3rOM2om7pLs4OeFEI1ndRFTGAal8/GDHYqo5AG0b5wfgGAAiA1BHmvMRQz/R/yfCH22aDRzzDR8eiEDYj4x4exdZKIG1SfkvSFAv7OM9TuDq5BAhHzw=
+	t=1767025724; cv=none; b=pDA1dtvF4s7pPc8v2kXVGIhEQ/a5awXZwb9HWlYN3QwPALxOVbd6pRUL5Pp/r81KKBDmG0RF+s4XBfW1djVZcTnur8fmF+lONzzpYeslvfMWK76vcLeTN2JZEHkpFNrRQsU+l9K579v+aLc0Yc8R6ww/jorVc7YpMo/j3gjn7Hs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025721; c=relaxed/simple;
-	bh=nybeZXM+JMaH5NJwIQnb/309uUUiekUb6682YrV7lJA=;
+	s=arc-20240116; t=1767025724; c=relaxed/simple;
+	bh=hYxGOAoykxP55MUzs8A09ga8wXR+CFvvhu/Ketq8gtU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oWdtg6STJLAhYm3ZYx45TIXt6mkBSTW+J0i4ovTjR90RzcyMECp6pasYCfBIRqDxOyF+MbMyNwXuJ4zRLNMQ/rMx0cwOG7DkJFwA5UcoyotdC1wcsplurLe1TWtnmBzZRhGq3VrrHCaA3nkQqLZ8FnPL04GC3YFKx72ul6FkUQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rwoi8mzw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tWsK/dtSF0wejmCFrjr1mdaMrOEe/O2pgaonyaZ8nZfv0iUCMfh1WjEuKuULlwP8EFp43FcuNSdeESzDPv9mEAwlfpEq4KhNfgGnn33CK4EpXKUDaI8q0+1K3RkqISSIV+gtdyQU8WJQmYq1+Elbk04/3RBq7Icwufz++FfLXiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pGwkFVuD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rwoi8mzw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC4B7C4CEF7;
-	Mon, 29 Dec 2025 16:28:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pGwkFVuD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 966C7C4CEF7;
+	Mon, 29 Dec 2025 16:28:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025721;
-	bh=nybeZXM+JMaH5NJwIQnb/309uUUiekUb6682YrV7lJA=;
+	s=korg; t=1767025724;
+	bh=hYxGOAoykxP55MUzs8A09ga8wXR+CFvvhu/Ketq8gtU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rwoi8mzwIgMedgRGLO0WDIEFjGuWE7TnmcxBqw670vU7cwoXpewuNcdaRr4z6SmUo
-	 RvBtxWkOptlyamAkLw0S7JYrZfhR0nNoYnTuUuctl268GgpCs/OPqdGSuEEgxY5Dnk
-	 UU0B0B+s8FmRuMt2F7hYASnZA3YTQmpp8T4xCyEU=
+	b=pGwkFVuDQvFc4h0zbRen0sakfPEdMJZPEqq2P4zlIbw9lX3+3YnMyB96R3aI1/ld4
+	 er+bVyyFa1ZQPJECjMGqwzLafdKTJMcc5W0OeAVm4KKSfakoprXa2ZJga5sHOe6fnX
+	 epo8DsUK22f6HWgTrqVS9aFdSktTRKV+0cAl4mkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Changcheng <chenchangcheng@kylinos.cn>
-Subject: [PATCH 6.18 280/430] usb: usb-storage: Maintain minimal modifications to the bcdDevice range.
-Date: Mon, 29 Dec 2025 17:11:22 +0100
-Message-ID: <20251229160734.651390864@linuxfoundation.org>
+	Jeongjun Park <aha310510@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.18 281/430] media: dvb-usb: dtv5100: fix out-of-bounds in dtv5100_i2c_msg()
+Date: Mon, 29 Dec 2025 17:11:23 +0100
+Message-ID: <20251229160734.688092496@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -49,31 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Changcheng <chenchangcheng@kylinos.cn>
+From: Jeongjun Park <aha310510@gmail.com>
 
-commit 0831269b5f71594882accfceb02638124f88955d upstream.
+commit b91e6aafe8d356086cc621bc03e35ba2299e4788 upstream.
 
-We cannot determine which models require the NO_ATA_1X and
-IGNORE_RESIDUE quirks aside from the EL-R12 optical drive device.
+rlen value is a user-controlled value, but dtv5100_i2c_msg() does not
+check the size of the rlen value. Therefore, if it is set to a value
+larger than sizeof(st->data), an out-of-bounds vuln occurs for st->data.
 
-Fixes: 955a48a5353f ("usb: usb-storage: No additional quirks need to be added to the EL-R12 optical drive.")
-Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
-Link: https://patch.msgid.link/20251218012318.15978-1-chenchangcheng@kylinos.cn
+Therefore, we need to add proper range checking to prevent this vuln.
+
+Fixes: 60688d5e6e6e ("V4L/DVB (8735): dtv5100: replace dummy frontend by zl10353")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/storage/unusual_uas.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/usb/dvb-usb/dtv5100.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/usb/storage/unusual_uas.h
-+++ b/drivers/usb/storage/unusual_uas.h
-@@ -98,7 +98,7 @@ UNUSUAL_DEV(0x125f, 0xa94a, 0x0160, 0x01
- 		US_FL_NO_ATA_1X),
+--- a/drivers/media/usb/dvb-usb/dtv5100.c
++++ b/drivers/media/usb/dvb-usb/dtv5100.c
+@@ -55,6 +55,11 @@ static int dtv5100_i2c_msg(struct dvb_us
+ 	}
+ 	index = (addr << 8) + wbuf[0];
  
- /* Reported-by: Benjamin Tissoires <benjamin.tissoires@redhat.com> */
--UNUSUAL_DEV(0x13fd, 0x3940, 0x0309, 0x0309,
-+UNUSUAL_DEV(0x13fd, 0x3940, 0x0000, 0x0309,
- 		"Initio Corporation",
- 		"INIC-3069",
- 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
++	if (rlen > sizeof(st->data)) {
++		warn("rlen = %x is too big!\n", rlen);
++		return -EINVAL;
++	}
++
+ 	memcpy(st->data, rbuf, rlen);
+ 	msleep(1); /* avoid I2C errors */
+ 	return usb_control_msg(d->udev, pipe, request,
 
 
