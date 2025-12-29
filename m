@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905C723D2B2;
-	Mon, 29 Dec 2025 16:24:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A62062571BE;
+	Mon, 29 Dec 2025 16:24:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025460; cv=none; b=ImzbkD5OuPCqi097tqR8sLDRFw/I7unq7kx5ZcmHu9zzIYNj1CeTpqnbBCYFPSC9EU5azPLvZOe/eHszx7obqnJ+XXR/S6dGiHSM9z2zabHU/6mYZVr6JmzN8mo2I7yDImGc/Rvq4z+J6fNyRkdxKvq5bd5WbbbWPtZdFxDdQQQ=
+	t=1767025463; cv=none; b=eHEsSVRBPzX/s9FJhQlpbWb2k7wQl4Mx6T+0Gl/XUQalwUcebw5JbY27zVOsHI3x9jjrFjjAvxzZDmw35byh7ffuSPsgiwnfzbne3x2+aFODe7wGUBX6ylIfSrNzQB0wlEsM0txUfNUqn8KR8t0zjtmjGRTi4EVgg0OCKFjYTcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025460; c=relaxed/simple;
-	bh=xphKcEXnxFogSu0E0pkuo2BIVHofreM5L+pcBEYIOw8=;
+	s=arc-20240116; t=1767025463; c=relaxed/simple;
+	bh=ygWqS+4KBUzGAMu4TtFlWfkJIt51Ihs42Zgfo7VCd5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H93ViDe0VmH7b7Hd4VYRq2Okm+BcKJ8PIjYk2GJsjmUAnOQnECGomNaGU8pbJ37bizHRoyYn4KL0BNsJWQ//6HHN6GPw3/cveMH5oO8SOpRpLa6f0GIg6BOMIMFR3bZUxE/3SEpVXt9O2FI1GPra93PU1maeF4SR8d6vR6W0D0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ODjjZXSM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MJiGpxLxZNYEhsk2VAyiVCHqOtDosjZg6mcTlaZ4SPj6+hFh4v8GS80kZOz8dniB1r3gs+DZHBC/N6+R0vyvSxqK0QACs55fTHk5r8Qxd+L2Mqj+ktg9YOeT+ZpXCeI4vOHtYfajSKrgnqZ/VQ2VnCkq6zzKv8vDpMzYdCIHE6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lalkXEP/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ODjjZXSM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3D74C4CEF7;
-	Mon, 29 Dec 2025 16:24:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lalkXEP/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C14EFC4CEF7;
+	Mon, 29 Dec 2025 16:24:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025460;
-	bh=xphKcEXnxFogSu0E0pkuo2BIVHofreM5L+pcBEYIOw8=;
+	s=korg; t=1767025463;
+	bh=ygWqS+4KBUzGAMu4TtFlWfkJIt51Ihs42Zgfo7VCd5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ODjjZXSMwFSjXjxn0kCInxDzPG+7i7FIFp2fpMe0Lhm2feK5HUeHw/oGlZXAZ4XVH
-	 SJyam86euhUxSwmDsgCryqtaSZosz5300ETnWwKmmxIV4bSlo7so2NBSWqp0ibE9tA
-	 88Xqfk6CCV3N+odywJLU7Cal45gV6rF5oq59KWGk=
+	b=lalkXEP/AT5bExI+HG540HSf6SINDc1QHJ/c+OqXAfPoXQgWTFfi2mnMLwsNdNgxP
+	 wnwZQzofickXeIJduB384u5JzuTl3Q0jT9Lu3eSI0ZEpABPqjXj00dWriUXZPD1aRY
+	 6act8+T/4eNvQhBwJsDs1E95YY0Vqu4yI6zBAIO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	FUJITA Tomonori <fujita.tomonori@gmail.com>,
+	David Gow <davidgow@google.com>,
 	Alice Ryhl <aliceryhl@google.com>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.18 221/430] rust_binder: avoid mem::take on delivered_deaths
-Date: Mon, 29 Dec 2025 17:10:23 +0100
-Message-ID: <20251229160732.484635685@linuxfoundation.org>
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.18 222/430] rust: dma: add helpers for architectures without CONFIG_HAS_DMA
+Date: Mon, 29 Dec 2025 17:10:24 +0100
+Message-ID: <20251229160732.522001905@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -50,48 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Ryhl <aliceryhl@google.com>
+From: FUJITA Tomonori <fujita.tomonori@gmail.com>
 
-commit 6c37bebd8c926ad01ef157c0d123633a203e5c0d upstream.
+commit d8932355f8c5673106eca49abd142f8fe0c1fe8b upstream.
 
-Similar to the previous commit, List::remove is used on
-delivered_deaths, so do not use mem::take on it as that may result in
-violations of the List::remove safety requirements.
+Add dma_set_mask(), dma_set_coherent_mask(), dma_map_sgtable(), and
+dma_max_mapping_size() helpers to fix a build error when
+CONFIG_HAS_DMA is not enabled.
 
-I don't think this particular case can be triggered because it requires
-fd close to run in parallel with an ioctl on the same fd. But let's not
-tempt fate.
+Note that when CONFIG_HAS_DMA is enabled, they are included in both
+bindings_generated.rs and bindings_helpers_generated.rs. The former
+takes precedence so behavior remains unchanged in that case.
 
-Cc: stable@vger.kernel.org
-Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Acked-by: Miguel Ojeda <ojeda@kernel.org>
-Link: https://patch.msgid.link/20251111-binder-fix-list-remove-v1-2-8ed14a0da63d@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This fixes the following build error on UML:
+
+error[E0425]: cannot find function `dma_set_mask` in crate `bindings`
+     --> rust/kernel/dma.rs:46:38
+      |
+   46 |         to_result(unsafe { bindings::dma_set_mask(self.as_ref().as_raw(), mask.value()) })
+      |                                      ^^^^^^^^^^^^ help: a function with a similar name exists: `xa_set_mark`
+      |
+     ::: rust/bindings/bindings_generated.rs:24690:5
+      |
+24690 |     pub fn xa_set_mark(arg1: *mut xarray, index: ffi::c_ulong, arg2: xa_mark_t);
+      |     ---------------------------------------------------------------------------- similarly named function `xa_set_mark` defined here
+
+error[E0425]: cannot find function `dma_set_coherent_mask` in crate `bindings`
+     --> rust/kernel/dma.rs:63:38
+      |
+   63 |         to_result(unsafe { bindings::dma_set_coherent_mask(self.as_ref().as_raw(), mask.value()) })
+      |                                      ^^^^^^^^^^^^^^^^^^^^^ help: a function with a similar name exists: `dma_coherent_ok`
+      |
+     ::: rust/bindings/bindings_generated.rs:52745:5
+      |
+52745 |     pub fn dma_coherent_ok(dev: *mut device, phys: phys_addr_t, size: usize) -> bool_;
+      |     ---------------------------------------------------------------------------------- similarly named function `dma_coherent_ok` defined here
+
+error[E0425]: cannot find function `dma_map_sgtable` in crate `bindings`
+    --> rust/kernel/scatterlist.rs:212:23
+     |
+ 212 |               bindings::dma_map_sgtable(dev.as_raw(), sgt.as_ptr(), dir.into(), 0)
+     |                         ^^^^^^^^^^^^^^^ help: a function with a similar name exists: `dma_unmap_sgtable`
+     |
+    ::: rust/bindings/bindings_helpers_generated.rs:1351:5
+     |
+1351 | /     pub fn dma_unmap_sgtable(
+1352 | |         dev: *mut device,
+1353 | |         sgt: *mut sg_table,
+1354 | |         dir: dma_data_direction,
+1355 | |         attrs: ffi::c_ulong,
+1356 | |     );
+     | |______- similarly named function `dma_unmap_sgtable` defined here
+
+error[E0425]: cannot find function `dma_max_mapping_size` in crate `bindings`
+   --> rust/kernel/scatterlist.rs:356:52
+    |
+356 |         let max_segment = match unsafe { bindings::dma_max_mapping_size(dev.as_raw()) } {
+    |                                                    ^^^^^^^^^^^^^^^^^^^^ not found in `bindings`
+
+error: aborting due to 4 previous errors
+
+Cc: stable@vger.kernel.org # v6.17+
+Fixes: 101d66828a4ee ("rust: dma: add DMA addressing capabilities")
+Signed-off-by: FUJITA Tomonori <fujita.tomonori@gmail.com>
+Reviewed-by: David Gow <davidgow@google.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://patch.msgid.link/20251204160639.364936-1-fujita.tomonori@gmail.com
+[ Use relative paths in the error splat; add 'dma' prefix. - Danilo ]
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder/process.rs | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ rust/helpers/dma.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/drivers/android/binder/process.rs b/drivers/android/binder/process.rs
-index 27323070f30f..fd5dcdc8788c 100644
---- a/drivers/android/binder/process.rs
-+++ b/drivers/android/binder/process.rs
-@@ -1362,8 +1362,12 @@ fn deferred_release(self: Arc<Self>) {
-             work.into_arc().cancel();
-         }
- 
--        let delivered_deaths = take(&mut self.inner.lock().delivered_deaths);
--        drop(delivered_deaths);
-+        // Clear delivered_deaths list.
-+        //
-+        // Scope ensures that MutexGuard is dropped while executing the body.
-+        while let Some(delivered_death) = { self.inner.lock().delivered_deaths.pop_front() } {
-+            drop(delivered_death);
-+        }
- 
-         // Free any resources kept alive by allocated buffers.
-         let omapping = self.inner.lock().mapping.take();
+diff --git a/rust/helpers/dma.c b/rust/helpers/dma.c
+index 6e741c197242..2afa32c21c94 100644
+--- a/rust/helpers/dma.c
++++ b/rust/helpers/dma.c
+@@ -19,3 +19,24 @@ int rust_helper_dma_set_mask_and_coherent(struct device *dev, u64 mask)
+ {
+ 	return dma_set_mask_and_coherent(dev, mask);
+ }
++
++int rust_helper_dma_set_mask(struct device *dev, u64 mask)
++{
++	return dma_set_mask(dev, mask);
++}
++
++int rust_helper_dma_set_coherent_mask(struct device *dev, u64 mask)
++{
++	return dma_set_coherent_mask(dev, mask);
++}
++
++int rust_helper_dma_map_sgtable(struct device *dev, struct sg_table *sgt,
++				enum dma_data_direction dir, unsigned long attrs)
++{
++	return dma_map_sgtable(dev, sgt, dir, attrs);
++}
++
++size_t rust_helper_dma_max_mapping_size(struct device *dev)
++{
++	return dma_max_mapping_size(dev);
++}
 -- 
 2.52.0
 
