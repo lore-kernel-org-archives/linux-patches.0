@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52F873191BD;
-	Mon, 29 Dec 2025 16:26:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B415331A53;
+	Mon, 29 Dec 2025 16:26:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025591; cv=none; b=WwDHm4+uqr2nYLstXmgGpJ/q9IZSsJjfS5yKDixPBfCmD+NuduUeIPXGz88aSID/p9cmMJAcb2fcxDIjASJzw9HoqZdasoy0dxFIfe1DcAQGHD4l5LsXlhPniKdmylNa+m2KnAYEDIZt5nmdWhvX7h3rSEDATWaiTqYS6zhiOPA=
+	t=1767025594; cv=none; b=gqyp1GAhVFMt24vD54J+yMzR21JmFGYVj6jDitMdRN5zM9pK5f8NGzwKYvcHUZdza9QtvbKTy2pArtA3VcIrXnN3rcotRB3ueWCePzLRzOMgR4mTTF6shD18N4+m5cqWUiL7axn0tvO05RKzUwogoWwX2SOWdKhshwPaT6Ws58A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025591; c=relaxed/simple;
-	bh=XvRvFoeVHJFsA5maglyMgNvqKQQ45KZ/Ek3V84AB09k=;
+	s=arc-20240116; t=1767025594; c=relaxed/simple;
+	bh=zT52pLrnTbfeSeD4bqOKOP8FmsD2+qE4BOzdYHHQYNk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pPKwWYVc2pk4Au9z3PZZK48YmimltLWJ+4MS8Q+69px7FKV7tV7fE7UVawQwLTdC3xJW5SLjn/Cvmz5glPKc+23I3nU0/nu34+1Vkffbvc6FebgN6F8yeUhppdfk5+6giKjp4Sa32BK0/D8D+9TdZ4YmcP0nXjmmag8pCkZuE4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Arm/DpH7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=odzeByexZRg2FBHnayFNqw46M4mVobWyCGJZcHzoTVGVW4QFYVvuewebU2/4Yvmju7RMCn8/jSKsccshceIYfqN3+pITzSdTzzHd6vn/Agh7c9B6it0UYf2SYfjIA6hlLS/UjC0usIYKCfUsG8SQFbyYO7Pxh7p8FYUbUYDrgsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VuozroAp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Arm/DpH7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDE8FC4CEF7;
-	Mon, 29 Dec 2025 16:26:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VuozroAp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD1E2C4CEF7;
+	Mon, 29 Dec 2025 16:26:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025591;
-	bh=XvRvFoeVHJFsA5maglyMgNvqKQQ45KZ/Ek3V84AB09k=;
+	s=korg; t=1767025594;
+	bh=zT52pLrnTbfeSeD4bqOKOP8FmsD2+qE4BOzdYHHQYNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Arm/DpH7ImUtIDZGeHWjtIdPeNQykaEVgEmPpoNqSzCPpTD3y58DBLZMsqI93350m
-	 bp6cOwKLp/chB12U1fEHFqt5oWsjtDvoyPiLmdKp9iF2CmPWJWtNaXUQL4dPEucik7
-	 qsviK0z2zsYNewgoAXMPR115HiM5aME2Z9ny+v9Q=
+	b=VuozroAp37ntz57S9wpaBjnqZ0pjqUbshnJMsQ6UUtVsHFRaA1r6CuuZ/UDvjdnHu
+	 UmoH4YHFzpm0QpIvvBPk+0aPiImcdSEEAMeG5sCtGH0nBYNNwGgr6xvcZGJVejBK2D
+	 vJ9wMpamOhqxZdpufZWQAAnZ1nEEKGJcJLRaEvNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Byungchul Park <byungchul@sk.com>,
-	Jan Kara <jack@suse.cz>,
-	stable@kernel.org,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.18 266/430] jbd2: use a weaker annotation in journal handling
-Date: Mon, 29 Dec 2025 17:11:08 +0100
-Message-ID: <20251229160734.141551981@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Ming Lei <ming.lei@redhat.com>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Martin Wilck <mwilck@suse.com>,
+	Benjamin Marzinski <bmarzins@redhat.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 267/430] block: Remove queue freezing from several sysfs store callbacks
+Date: Mon, 29 Dec 2025 17:11:09 +0100
+Message-ID: <20251229160734.177510098@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -52,49 +55,216 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Byungchul Park <byungchul@sk.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-commit 40a71b53d5a6d4ea17e4d54b99b2ac03a7f5e783 upstream.
+commit 935a20d1bebf6236076785fac3ff81e3931834e9 upstream.
 
-jbd2 journal handling code doesn't want jbd2_might_wait_for_commit()
-to be placed between start_this_handle() and stop_this_handle().  So it
-marks the region with rwsem_acquire_read() and rwsem_release().
+Freezing the request queue from inside sysfs store callbacks may cause a
+deadlock in combination with the dm-multipath driver and the
+queue_if_no_path option. Additionally, freezing the request queue slows
+down system boot on systems where sysfs attributes are set synchronously.
 
-However, the annotation is too strong for that purpose.  We don't have
-to use more than try lock annotation for that.
+Fix this by removing the blk_mq_freeze_queue() / blk_mq_unfreeze_queue()
+calls from the store callbacks that do not strictly need these callbacks.
+Add the __data_racy annotation to request_queue.rq_timeout to suppress
+KCSAN data race reports about the rq_timeout reads.
 
-rwsem_acquire_read() implies:
+This patch may cause a small delay in applying the new settings.
 
-   1. might be a waiter on contention of the lock.
-   2. enter to the critical section of the lock.
+For all the attributes affected by this patch, I/O will complete
+correctly whether the old or the new value of the attribute is used.
 
-All we need in here is to act 2, not 1.  So trylock version of
-annotation is sufficient for that purpose.  Now that dept partially
-relies on lockdep annotaions, dept interpets rwsem_acquire_read() as a
-potential wait and might report a deadlock by the wait.
+This patch affects the following sysfs attributes:
+* io_poll_delay
+* io_timeout
+* nomerges
+* read_ahead_kb
+* rq_affinity
 
-Replace it with trylock version of annotation.
+Here is an example of a deadlock triggered by running test srp/002
+if this patch is not applied:
 
-Signed-off-by: Byungchul Park <byungchul@sk.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Cc: stable@kernel.org
-Message-ID: <20251024073940.1063-1-byungchul@sk.com>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+task:multipathd
+Call Trace:
+ <TASK>
+ __schedule+0x8c1/0x1bf0
+ schedule+0xdd/0x270
+ schedule_preempt_disabled+0x1c/0x30
+ __mutex_lock+0xb89/0x1650
+ mutex_lock_nested+0x1f/0x30
+ dm_table_set_restrictions+0x823/0xdf0
+ __bind+0x166/0x590
+ dm_swap_table+0x2a7/0x490
+ do_resume+0x1b1/0x610
+ dev_suspend+0x55/0x1a0
+ ctl_ioctl+0x3a5/0x7e0
+ dm_ctl_ioctl+0x12/0x20
+ __x64_sys_ioctl+0x127/0x1a0
+ x64_sys_call+0xe2b/0x17d0
+ do_syscall_64+0x96/0x3a0
+ entry_SYSCALL_64_after_hwframe+0x4b/0x53
+ </TASK>
+task:(udev-worker)
+Call Trace:
+ <TASK>
+ __schedule+0x8c1/0x1bf0
+ schedule+0xdd/0x270
+ blk_mq_freeze_queue_wait+0xf2/0x140
+ blk_mq_freeze_queue_nomemsave+0x23/0x30
+ queue_ra_store+0x14e/0x290
+ queue_attr_store+0x23e/0x2c0
+ sysfs_kf_write+0xde/0x140
+ kernfs_fop_write_iter+0x3b2/0x630
+ vfs_write+0x4fd/0x1390
+ ksys_write+0xfd/0x230
+ __x64_sys_write+0x76/0xc0
+ x64_sys_call+0x276/0x17d0
+ do_syscall_64+0x96/0x3a0
+ entry_SYSCALL_64_after_hwframe+0x4b/0x53
+ </TASK>
+
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Ming Lei <ming.lei@redhat.com>
+Cc: Nilay Shroff <nilay@linux.ibm.com>
+Cc: Martin Wilck <mwilck@suse.com>
+Cc: Benjamin Marzinski <bmarzins@redhat.com>
+Cc: stable@vger.kernel.org
+Fixes: af2814149883 ("block: freeze the queue in queue_attr_store")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jbd2/transaction.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/blk-sysfs.c      |   26 ++++++++------------------
+ include/linux/blkdev.h |    2 +-
+ 2 files changed, 9 insertions(+), 19 deletions(-)
 
---- a/fs/jbd2/transaction.c
-+++ b/fs/jbd2/transaction.c
-@@ -441,7 +441,7 @@ repeat:
- 	read_unlock(&journal->j_state_lock);
- 	current->journal_info = handle;
+--- a/block/blk-sysfs.c
++++ b/block/blk-sysfs.c
+@@ -143,21 +143,22 @@ queue_ra_store(struct gendisk *disk, con
+ {
+ 	unsigned long ra_kb;
+ 	ssize_t ret;
+-	unsigned int memflags;
+ 	struct request_queue *q = disk->queue;
  
--	rwsem_acquire_read(&journal->j_trans_commit_map, 0, 0, _THIS_IP_);
-+	rwsem_acquire_read(&journal->j_trans_commit_map, 0, 1, _THIS_IP_);
- 	jbd2_journal_free_transaction(new_transaction);
+ 	ret = queue_var_store(&ra_kb, page, count);
+ 	if (ret < 0)
+ 		return ret;
  	/*
- 	 * Ensure that no allocations done while the transaction is open are
+-	 * ->ra_pages is protected by ->limits_lock because it is usually
+-	 * calculated from the queue limits by queue_limits_commit_update.
++	 * The ->ra_pages change below is protected by ->limits_lock because it
++	 * is usually calculated from the queue limits by
++	 * queue_limits_commit_update().
++	 *
++	 * bdi->ra_pages reads are not serialized against bdi->ra_pages writes.
++	 * Use WRITE_ONCE() to write bdi->ra_pages once.
+ 	 */
+ 	mutex_lock(&q->limits_lock);
+-	memflags = blk_mq_freeze_queue(q);
+-	disk->bdi->ra_pages = ra_kb >> (PAGE_SHIFT - 10);
++	WRITE_ONCE(disk->bdi->ra_pages, ra_kb >> (PAGE_SHIFT - 10));
+ 	mutex_unlock(&q->limits_lock);
+-	blk_mq_unfreeze_queue(q, memflags);
+ 
+ 	return ret;
+ }
+@@ -375,21 +376,18 @@ static ssize_t queue_nomerges_store(stru
+ 				    size_t count)
+ {
+ 	unsigned long nm;
+-	unsigned int memflags;
+ 	struct request_queue *q = disk->queue;
+ 	ssize_t ret = queue_var_store(&nm, page, count);
+ 
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	memflags = blk_mq_freeze_queue(q);
+ 	blk_queue_flag_clear(QUEUE_FLAG_NOMERGES, q);
+ 	blk_queue_flag_clear(QUEUE_FLAG_NOXMERGES, q);
+ 	if (nm == 2)
+ 		blk_queue_flag_set(QUEUE_FLAG_NOMERGES, q);
+ 	else if (nm)
+ 		blk_queue_flag_set(QUEUE_FLAG_NOXMERGES, q);
+-	blk_mq_unfreeze_queue(q, memflags);
+ 
+ 	return ret;
+ }
+@@ -409,7 +407,6 @@ queue_rq_affinity_store(struct gendisk *
+ #ifdef CONFIG_SMP
+ 	struct request_queue *q = disk->queue;
+ 	unsigned long val;
+-	unsigned int memflags;
+ 
+ 	ret = queue_var_store(&val, page, count);
+ 	if (ret < 0)
+@@ -421,7 +418,6 @@ queue_rq_affinity_store(struct gendisk *
+ 	 * are accessed individually using atomic test_bit operation. So we
+ 	 * don't grab any lock while updating these flags.
+ 	 */
+-	memflags = blk_mq_freeze_queue(q);
+ 	if (val == 2) {
+ 		blk_queue_flag_set(QUEUE_FLAG_SAME_COMP, q);
+ 		blk_queue_flag_set(QUEUE_FLAG_SAME_FORCE, q);
+@@ -432,7 +428,6 @@ queue_rq_affinity_store(struct gendisk *
+ 		blk_queue_flag_clear(QUEUE_FLAG_SAME_COMP, q);
+ 		blk_queue_flag_clear(QUEUE_FLAG_SAME_FORCE, q);
+ 	}
+-	blk_mq_unfreeze_queue(q, memflags);
+ #endif
+ 	return ret;
+ }
+@@ -446,11 +441,9 @@ static ssize_t queue_poll_delay_store(st
+ static ssize_t queue_poll_store(struct gendisk *disk, const char *page,
+ 				size_t count)
+ {
+-	unsigned int memflags;
+ 	ssize_t ret = count;
+ 	struct request_queue *q = disk->queue;
+ 
+-	memflags = blk_mq_freeze_queue(q);
+ 	if (!(q->limits.features & BLK_FEAT_POLL)) {
+ 		ret = -EINVAL;
+ 		goto out;
+@@ -459,7 +452,6 @@ static ssize_t queue_poll_store(struct g
+ 	pr_info_ratelimited("writes to the poll attribute are ignored.\n");
+ 	pr_info_ratelimited("please use driver specific parameters instead.\n");
+ out:
+-	blk_mq_unfreeze_queue(q, memflags);
+ 	return ret;
+ }
+ 
+@@ -472,7 +464,7 @@ static ssize_t queue_io_timeout_show(str
+ static ssize_t queue_io_timeout_store(struct gendisk *disk, const char *page,
+ 				  size_t count)
+ {
+-	unsigned int val, memflags;
++	unsigned int val;
+ 	int err;
+ 	struct request_queue *q = disk->queue;
+ 
+@@ -480,9 +472,7 @@ static ssize_t queue_io_timeout_store(st
+ 	if (err || val == 0)
+ 		return -EINVAL;
+ 
+-	memflags = blk_mq_freeze_queue(q);
+ 	blk_queue_rq_timeout(q, msecs_to_jiffies(val));
+-	blk_mq_unfreeze_queue(q, memflags);
+ 
+ 	return count;
+ }
+--- a/include/linux/blkdev.h
++++ b/include/linux/blkdev.h
+@@ -485,7 +485,7 @@ struct request_queue {
+ 	 */
+ 	unsigned long		queue_flags;
+ 
+-	unsigned int		rq_timeout;
++	unsigned int __data_racy rq_timeout;
+ 
+ 	unsigned int		queue_depth;
+ 
 
 
