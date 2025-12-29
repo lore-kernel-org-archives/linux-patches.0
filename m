@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58EA924167F;
-	Mon, 29 Dec 2025 16:28:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F98532FA18;
+	Mon, 29 Dec 2025 16:28:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025704; cv=none; b=UaoNELEyHwCFx/swufG/HYeoCY4vciAjhzln8v2w6YZk+dc8Ho6Mk0HZTjon47lWK6KbKxgm0u1I+fQ0h9JJ8/EywfAXX7GbQxNahdojyVzVhoodDuU3JKiQ18sUVPgM6ThcjXriSKp4bSzU7KBU3s3bNxxRDlnWUr8QNHt/YMM=
+	t=1767025707; cv=none; b=LUlJFVoUqrHzqOIkAOnAx/bX0C0Uu2hfor1r7IrjPVo5CoGBH+k8o/QAI5tUXlRKktVLa3Dem3S1VoWOlSKjaaUChHhXass48V3qEJV8l+0BUYRX/9/Oh67Vpy7YdKZoRCJ/OPoWhE7/57jZJAPswYfr0BtFLLrxrioyXGpg8rk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025704; c=relaxed/simple;
-	bh=lcuSK/+MQcli74H1GwjCP17pWf8oe1/6n16AtV880UE=;
+	s=arc-20240116; t=1767025707; c=relaxed/simple;
+	bh=p7A63HB/BKvFxmlNHPvjelsdS8PF+GZcYhHSbIBH1kg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B6Zl3hByC8WYERxasyPuR5xmpQFPcrhfgEaO/lOzOX6aITacbknCF/I+YSrxDQ99/gmwTb7WFbk5+QxfZPHI0B0h7ASs1H+mcF89R35dN3vTxndpgf+legiCom/TIcbq0nsJymhoz2TxePthUNWeC8CYw3PemaqRe9ajSoTXRic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EMz+GC9I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e0Jzt1Qx+m9h5lL1FGT02zGdMjt8WkVf02LML+LdqBAJqBJL8TkaQTJ3s2VRA7iV5TnrghfUuwCUXLnbbaHdC9PXHmflBPeKYHIT2AnbLXnafszhH2RxC/dw/jSpxCOqKAt/onWRdjE7jZ5YK0vh8kGruAH5AYbptBZh7MH+Nic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bGvA0bBS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EMz+GC9I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE5C3C4CEF7;
-	Mon, 29 Dec 2025 16:28:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bGvA0bBS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B72FEC4CEF7;
+	Mon, 29 Dec 2025 16:28:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025704;
-	bh=lcuSK/+MQcli74H1GwjCP17pWf8oe1/6n16AtV880UE=;
+	s=korg; t=1767025707;
+	bh=p7A63HB/BKvFxmlNHPvjelsdS8PF+GZcYhHSbIBH1kg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EMz+GC9Ib4OQeGd8z2Qg+KNnI0cIP0Aa4AKK7AdwhR05jOgQiGl9/GjmTIpypA8p5
-	 zLQGWq7ZkHtTOtz6+K0VsWP87c6/Gkg4k790PMe+6UwwoHpDNJXnb1l89A30rn4Ph4
-	 L1t9XU5r/FIW24ZxXDcjLhRuBnmf9F1tq0/4wH2g=
+	b=bGvA0bBS5Xe4LhCleXEZVdXc7oYsq7RDmpEPajNioq2Lj7U5yNYeqUhAxNT9cFgKH
+	 CnIwjpUE6K/QAmah9XP4DtXy13/+LDd3Dzpx+eIu6sLmk2r83jMMOI2OeufBU/Pz+l
+	 VfrIL5GMCC2HHDvdaVU30jQ+RYN7FODcC/FA0asQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Battersby <tonyb@cybernetics.com>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.18 306/430] scsi: Revert "scsi: qla2xxx: Perform lockless command completion in abort path"
-Date: Mon, 29 Dec 2025 17:11:48 +0100
-Message-ID: <20251229160735.595831581@linuxfoundation.org>
+Subject: [PATCH 6.18 307/430] scsi: aic94xx: fix use-after-free in device removal path
+Date: Mon, 29 Dec 2025 17:11:49 +0100
+Message-ID: <20251229160735.632343756@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -50,92 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Battersby <tonyb@cybernetics.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit b57fbc88715b6d18f379463f48a15b560b087ffe upstream.
+commit f6ab594672d4cba08540919a4e6be2e202b60007 upstream.
 
-This reverts commit 0367076b0817d5c75dfb83001ce7ce5c64d803a9.
+The asd_pci_remove() function fails to synchronize with pending tasklets
+before freeing the asd_ha structure, leading to a potential
+use-after-free vulnerability.
 
-The commit being reverted added code to __qla2x00_abort_all_cmds() to
-call sp->done() without holding a spinlock.  But unlike the older code
-below it, this new code failed to check sp->cmd_type and just assumed
-TYPE_SRB, which results in a jump to an invalid pointer in target-mode
-with TYPE_TGT_CMD:
+When a device removal is triggered (via hot-unplug or module unload),
+race condition can occur.
 
-qla2xxx [0000:65:00.0]-d034:8: qla24xx_do_nack_work create sess success
-  0000000009f7a79b
-qla2xxx [0000:65:00.0]-5003:8: ISP System Error - mbx1=1ff5h mbx2=10h
-  mbx3=0h mbx4=0h mbx5=191h mbx6=0h mbx7=0h.
-qla2xxx [0000:65:00.0]-d01e:8: -> fwdump no buffer
-qla2xxx [0000:65:00.0]-f03a:8: qla_target(0): System error async event
-  0x8002 occurred
-qla2xxx [0000:65:00.0]-00af:8: Performing ISP error recovery -
-  ha=0000000058183fda.
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-PF: supervisor instruction fetch in kernel mode
-PF: error_code(0x0010) - not-present page
-PGD 0 P4D 0
-Oops: 0010 [#1] SMP
-CPU: 2 PID: 9446 Comm: qla2xxx_8_dpc Tainted: G           O       6.1.133 #1
-Hardware name: Supermicro Super Server/X11SPL-F, BIOS 4.2 12/15/2023
-RIP: 0010:0x0
-Code: Unable to access opcode bytes at 0xffffffffffffffd6.
-RSP: 0018:ffffc90001f93dc8 EFLAGS: 00010206
-RAX: 0000000000000282 RBX: 0000000000000355 RCX: ffff88810d16a000
-RDX: ffff88810dbadaa8 RSI: 0000000000080000 RDI: ffff888169dc38c0
-RBP: ffff888169dc38c0 R08: 0000000000000001 R09: 0000000000000045
-R10: ffffffffa034bdf0 R11: 0000000000000000 R12: ffff88810800bb40
-R13: 0000000000001aa8 R14: ffff888100136610 R15: ffff8881070f7400
-FS:  0000000000000000(0000) GS:ffff88bf80080000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: ffffffffffffffd6 CR3: 000000010c8ff006 CR4: 00000000003706e0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- ? __die+0x4d/0x8b
- ? page_fault_oops+0x91/0x180
- ? trace_buffer_unlock_commit_regs+0x38/0x1a0
- ? exc_page_fault+0x391/0x5e0
- ? asm_exc_page_fault+0x22/0x30
- __qla2x00_abort_all_cmds+0xcb/0x3e0 [qla2xxx_scst]
- qla2x00_abort_all_cmds+0x50/0x70 [qla2xxx_scst]
- qla2x00_abort_isp_cleanup+0x3b7/0x4b0 [qla2xxx_scst]
- qla2x00_abort_isp+0xfd/0x860 [qla2xxx_scst]
- qla2x00_do_dpc+0x581/0xa40 [qla2xxx_scst]
- kthread+0xa8/0xd0
- </TASK>
+The fix adds tasklet_kill() before freeing the asd_ha structure,
+ensuring all scheduled tasklets complete before cleanup proceeds.
 
-Then commit 4475afa2646d ("scsi: qla2xxx: Complete command early within
-lock") added the spinlock back, because not having the lock caused a
-race and a crash.  But qla2x00_abort_srb() in the switch below already
-checks for qla2x00_chip_is_down() and handles it the same way, so the
-code above the switch is now redundant and still buggy in target-mode.
-Remove it.
-
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Reported-by: Junrui Luo <moonafterrain@outlook.com>
+Fixes: 2908d778ab3e ("[SCSI] aic94xx: new driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tony Battersby <tonyb@cybernetics.com>
-Link: https://patch.msgid.link/3a8022dc-bcfd-4b01-9f9b-7a9ec61fa2a3@cybernetics.com
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Link: https://patch.msgid.link/ME2PR01MB3156AB7DCACA206C845FC7E8AFFDA@ME2PR01MB3156.ausprd01.prod.outlook.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_os.c |    6 ------
- 1 file changed, 6 deletions(-)
+ drivers/scsi/aic94xx/aic94xx_init.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/scsi/qla2xxx/qla_os.c
-+++ b/drivers/scsi/qla2xxx/qla_os.c
-@@ -1862,12 +1862,6 @@ __qla2x00_abort_all_cmds(struct qla_qpai
- 	for (cnt = 1; cnt < req->num_outstanding_cmds; cnt++) {
- 		sp = req->outstanding_cmds[cnt];
- 		if (sp) {
--			if (qla2x00_chip_is_down(vha)) {
--				req->outstanding_cmds[cnt] = NULL;
--				sp->done(sp, res);
--				continue;
--			}
--
- 			switch (sp->cmd_type) {
- 			case TYPE_SRB:
- 				qla2x00_abort_srb(qp, sp, res, &flags);
+--- a/drivers/scsi/aic94xx/aic94xx_init.c
++++ b/drivers/scsi/aic94xx/aic94xx_init.c
+@@ -882,6 +882,9 @@ static void asd_pci_remove(struct pci_de
+ 
+ 	asd_disable_ints(asd_ha);
+ 
++	/* Ensure all scheduled tasklets complete before freeing resources */
++	tasklet_kill(&asd_ha->seq.dl_tasklet);
++
+ 	asd_remove_dev_attrs(asd_ha);
+ 
+ 	/* XXX more here as needed */
 
 
