@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7C83A1E66;
-	Mon, 29 Dec 2025 16:26:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD871DB125;
+	Mon, 29 Dec 2025 16:26:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025600; cv=none; b=R5RN2P3J14/9+9/hQw+hzIkWbVmQChPVJsPuWi1N6/V9lyb07vJJdrU3dRtSJHggBO5oxA4YrmRbMJmYG/j/YjzFYfudNoZGgY3Hl/uRAz0pA1SpYgpqd0CBNcH8RN5moSNnhMSS0Z8uBWfi4j90VhaP5hIsjwOSa+PnhslTH6A=
+	t=1767025602; cv=none; b=OTeHegR/oCClFDkxbbQdb5/VVDaH9x7IKtZybtGkTx1pVjdL9BlEFK7/zQrm9TN0fUjkIom4edN2Gc+kSJ1oD8rSAzSw0RT4ZDTNd1wwS23BNTLkxFga3q7/jFC/+RPozQa3tzSi1OdeGE8wKwCnl0O2rsLqlcGX+t+qqRaq0EA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025600; c=relaxed/simple;
-	bh=YED8VIe6xSJEX1Kcq3hjDjVTexP3y0OissK+++5TJtc=;
+	s=arc-20240116; t=1767025602; c=relaxed/simple;
+	bh=57YKwT4hX+2UE4X5357OshAUqniWcVVFBHHLMiHu0GE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RNORZAOqYtvTFjvaVTvEjRTCCPxStaJ5LlI1B6d2tT9+Z0YATTIaM6+zB0P+rs8xnGeVFotmt2R5gcJ5LqhWrjcGWWmBsVijLHnhc4pj6qJESz671enwW7vVaKKO4wXt8WZrEZ/RsHPxfRJc3mkv7xlZzbCbTmXIWauY5DgWY6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=acAUVrYV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c89311CWwcgaWAsXJBBKefSoGE3yFqwRTu1SXA4e5q2V+c+RzP4YZUWtzq0KArKPt4xqV5TsKbsKH2R2GgUhqMduwTT1Y2haVN0xvB01UBpvTHec3Mx4PG8oX20XyocUmfMqJ+sDONryzwJ+2b60370aFm2ayQIq10B6hqKAEaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mgN9YHGC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="acAUVrYV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E917C4CEF7;
-	Mon, 29 Dec 2025 16:26:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mgN9YHGC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53640C4CEF7;
+	Mon, 29 Dec 2025 16:26:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025599;
-	bh=YED8VIe6xSJEX1Kcq3hjDjVTexP3y0OissK+++5TJtc=;
+	s=korg; t=1767025602;
+	bh=57YKwT4hX+2UE4X5357OshAUqniWcVVFBHHLMiHu0GE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=acAUVrYV3dCkHcaMfUN9BG7Jo0TDotkibjBmAP6Kn/fCsxZQCZup9Pff3W12sQ2K9
-	 tJC+z+8+7MNFzdz7Y3ilyYfzuqBsmeIcrvVIGvP4xqbc7JNW5HLR1ezmqJj50ssHh2
-	 mvaxA5Ezu/4GPrhckDd9Im0dkvqm5gBFyDVl2yMk=
+	b=mgN9YHGC7TZzMZKAKpqWnbsob0nJFCWYJz+hrlFkU6HZOo2zn2xEnHYTgrXDMVhc/
+	 DGLUGgoVV7qxyGsZYtXHdDdCJ4ZH/UttlqjZphKcE4WEtcm/caPbimBuP2nL8cpByi
+	 aH1GDIer5pAPFf7BywbnSxrYE2EBrzIx/hlC7qLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 269/430] media: v4l2-mem2mem: Fix outdated documentation
-Date: Mon, 29 Dec 2025 17:11:11 +0100
-Message-ID: <20251229160734.250179207@linuxfoundation.org>
+	Wei Yang <richard.weiyang@gmail.com>,
+	David Hildenbrand <david@redhat.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	Dev Jain <dev.jain@arm.com>,
+	Usama Arif <usamaarif642@gmail.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 270/430] mm/huge_memory: add pmd folio to ds_queue in do_huge_zero_wp_pmd()
+Date: Mon, 29 Dec 2025 17:11:12 +0100
+Message-ID: <20251229160734.286535112@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -50,37 +57,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+From: Wei Yang <richard.weiyang@gmail.com>
 
-commit 082b86919b7a94de01d849021b4da820a6cb89dc upstream.
+commit 2a1351cd4176ee1809b0900d386919d03b7652f8 upstream.
 
-Commit cbd9463da1b1 ("media: v4l2-mem2mem: Avoid calling .device_run in
-v4l2_m2m_job_finish") deferred calls to .device_run() to a work queue to
-avoid recursive calls when a job is finished right away from
-.device_run(). It failed to update the v4l2_m2m_job_finish()
-documentation that still states the function must not be called from
-.device_run(). Fix it.
+We add pmd folio into ds_queue on the first page fault in
+__do_huge_pmd_anonymous_page(), so that we can split it in case of memory
+pressure.  This should be the same for a pmd folio during wp page fault.
 
-Fixes: cbd9463da1b1 ("media: v4l2-mem2mem: Avoid calling .device_run in v4l2_m2m_job_finish")
-Cc: stable@vger.kernel.org
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Commit 1ced09e0331f ("mm: allocate THP on hugezeropage wp-fault") miss to
+add it to ds_queue, which means system may not reclaim enough memory in
+case of memory pressure even the pmd folio is under used.
+
+Move deferred_split_folio() into map_anon_folio_pmd() to make the pmd
+folio installation consistent.
+
+Link: https://lkml.kernel.org/r/20251008095453.18772-2-richard.weiyang@gmail.com
+Fixes: 1ced09e0331f ("mm: allocate THP on hugezeropage wp-fault")
+Signed-off-by: Wei Yang <richard.weiyang@gmail.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Acked-by: Usama Arif <usamaarif642@gmail.com>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/media/v4l2-mem2mem.h |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ mm/huge_memory.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/media/v4l2-mem2mem.h
-+++ b/include/media/v4l2-mem2mem.h
-@@ -192,8 +192,7 @@ void v4l2_m2m_try_schedule(struct v4l2_m
-  * other instances to take control of the device.
-  *
-  * This function has to be called only after &v4l2_m2m_ops->device_run
-- * callback has been called on the driver. To prevent recursion, it should
-- * not be called directly from the &v4l2_m2m_ops->device_run callback though.
-+ * callback has been called on the driver.
-  */
- void v4l2_m2m_job_finish(struct v4l2_m2m_dev *m2m_dev,
- 			 struct v4l2_m2m_ctx *m2m_ctx);
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -1233,6 +1233,7 @@ static void map_anon_folio_pmd(struct fo
+ 	count_vm_event(THP_FAULT_ALLOC);
+ 	count_mthp_stat(HPAGE_PMD_ORDER, MTHP_STAT_ANON_FAULT_ALLOC);
+ 	count_memcg_event_mm(vma->vm_mm, THP_FAULT_ALLOC);
++	deferred_split_folio(folio, false);
+ }
+ 
+ static vm_fault_t __do_huge_pmd_anonymous_page(struct vm_fault *vmf)
+@@ -1273,7 +1274,6 @@ static vm_fault_t __do_huge_pmd_anonymou
+ 		pgtable_trans_huge_deposit(vma->vm_mm, vmf->pmd, pgtable);
+ 		map_anon_folio_pmd(folio, vmf->pmd, vma, haddr);
+ 		mm_inc_nr_ptes(vma->vm_mm);
+-		deferred_split_folio(folio, false);
+ 		spin_unlock(vmf->ptl);
+ 	}
+ 
 
 
