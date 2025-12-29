@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B1E331A4C;
-	Mon, 29 Dec 2025 16:31:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F25F3314C0;
+	Mon, 29 Dec 2025 16:31:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025902; cv=none; b=qQkt23WxZNtlBd1/Anp8qCwkawWC6MIbQtPOEojsSDXcSzqT4a3BDqI1/jPrAPZCDXY7Y6jeFuQHwCAhiItrNB3FX59uVMxWk7DwKXh4eFN7gMevd3aPXMbmrnGy1uEtjonoN65w1UMWos3swbecrBjqr1IGjxG0cPCcQI7WIUE=
+	t=1767025905; cv=none; b=CFHhm2BbF4U2xF1SkIdodlb04s7DFF65n7ZG2ySxev3gNpt2rtXqcbfzf1hd/53oUv3qcf4OSi3eciIj+kZRdC8tPnKg0qjbS7kBl8+IYJL43Gc2v99TKLICMF2AfJgLUzqAjh8+RJamQTy2P20TPiP4269N7YfWpbWUeuQG3wU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025902; c=relaxed/simple;
-	bh=nbYjEBEnm7ETQJX2fao0tmEOAD8mwHIbV/jYAlCkMpg=;
+	s=arc-20240116; t=1767025905; c=relaxed/simple;
+	bh=uEqpNlfsNuC0h66dxAC3ohI1Notarjol9gSQ2hC9fxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fdTwr9dJJ1R8CveO5wk+yYpNI/cF0i/6YV09rxLy8FOFY+OL0mbp0tGpK0SjIQE6YCwgGCRfsenJVk5ERscKTQX1wYsO9vZarnHrGhGmFjGagE571AwT66y44OFUaV6Mn0tgQ7fvba9RNTAGjSsvzqIstcUdEIZKrxWBj5ytLcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gKM3sE+Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OsZqrod3H8nxl+aD+px02WI11gWFZufYnqy/tfokpEWfZqs/uGg1xvbSgZ9tbRNoW59o2sVSE7geudAu5gXEYjJK1Iwdxx2C/K7WisVucOQ2ik1dNQ9sS2hyqHx7y5Qg8/1Va0w8XC/xUSsUc1ucJAIGyesQ1QvtfPXRVfGruto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ilOIJ9Ii; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gKM3sE+Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4428C4CEF7;
-	Mon, 29 Dec 2025 16:31:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ilOIJ9Ii"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAEB4C4CEF7;
+	Mon, 29 Dec 2025 16:31:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025902;
-	bh=nbYjEBEnm7ETQJX2fao0tmEOAD8mwHIbV/jYAlCkMpg=;
+	s=korg; t=1767025905;
+	bh=uEqpNlfsNuC0h66dxAC3ohI1Notarjol9gSQ2hC9fxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gKM3sE+ZgqrbRJavj8367i9indh/jwdxk7JXsgbEoC0TgS2Iowzyypx+tr98bFigq
-	 3kg5goq6iLja6EVKNfnaxhUsxf4NuuZxjwxA0QtKzce39N2XcL4jemyHofpNGSbvXm
-	 ysjY1guG9jswSdljG2FIjcZYVWs7AXI7Gb5B2P7A=
+	b=ilOIJ9IimVMfnXe1zV0OpROlslbWQ1KnkVN0sHq+9ozSSUYl7dfCzzFFHUBMyvhX/
+	 ETNl1N2ycwSbUi8TgJJHvy5FB8mHjuRsCk/NGgwuI8sxUUuTi9mY2qeR8Hkt9sYSDU
+	 qyr6Yn0k9EFyx+TaWnmaNOpFnQpc8ge6gVN55mjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Rogers <linux@joshua.hu>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.18 376/430] svcrdma: use rc_pageoff for memcpy byte offset
-Date: Mon, 29 Dec 2025 17:12:58 +0100
-Message-ID: <20251229160738.158189766@linuxfoundation.org>
+	Matteo Rizzo <matteorizzo@google.com>,
+	Jim Mattson <jmattson@google.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.18 347/430] KVM: SVM: Mark VMCB_PERM_MAP as dirty on nested VMRUN
+Date: Mon, 29 Dec 2025 17:12:29 +0100
+Message-ID: <20251229160737.096961279@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -50,35 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joshua Rogers <linux@joshua.hu>
+From: Jim Mattson <jmattson@google.com>
 
-commit a8ee9099f30654917aa68f55d707b5627e1dbf77 upstream.
+commit 93c9e107386dbe1243287a5b14ceca894de372b9 upstream.
 
-svc_rdma_copy_inline_range added rc_curpage (page index) to the page
-base instead of the byte offset rc_pageoff. Use rc_pageoff so copies
-land within the current page.
+Mark the VMCB_PERM_MAP bit as dirty in nested_vmcb02_prepare_control()
+on every nested VMRUN.
 
-Found by ZeroPath (https://zeropath.com)
+If L1 changes MSR interception (INTERCEPT_MSR_PROT) between two VMRUN
+instructions on the same L1 vCPU, the msrpm_base_pa in the associated
+vmcb02 will change, and the VMCB_PERM_MAP clean bit should be cleared.
 
-Fixes: 8e122582680c ("svcrdma: Move svc_rdma_read_info::ri_pageno to struct svc_rdma_recv_ctxt")
+Fixes: 4bb170a5430b ("KVM: nSVM: do not mark all VMCB02 fields dirty on nested vmexit")
+Reported-by: Matteo Rizzo <matteorizzo@google.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Joshua Rogers <linux@joshua.hu>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Jim Mattson <jmattson@google.com>
+Link: https://lore.kernel.org/r/20250922162935.621409-2-jmattson@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_rw.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/svm/nested.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/sunrpc/xprtrdma/svc_rdma_rw.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_rw.c
-@@ -851,7 +851,7 @@ static int svc_rdma_copy_inline_range(st
- 			head->rc_page_count++;
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -752,6 +752,7 @@ static void nested_vmcb02_prepare_contro
+ 	vmcb02->control.nested_ctl = vmcb01->control.nested_ctl;
+ 	vmcb02->control.iopm_base_pa = vmcb01->control.iopm_base_pa;
+ 	vmcb02->control.msrpm_base_pa = vmcb01->control.msrpm_base_pa;
++	vmcb_mark_dirty(vmcb02, VMCB_PERM_MAP);
  
- 		dst = page_address(rqstp->rq_pages[head->rc_curpage]);
--		memcpy(dst + head->rc_curpage, src + offset, page_len);
-+		memcpy((unsigned char *)dst + head->rc_pageoff, src + offset, page_len);
- 
- 		head->rc_readbytes += page_len;
- 		head->rc_pageoff += page_len;
+ 	/*
+ 	 * Stash vmcb02's counter if the guest hasn't moved past the guilty
 
 
