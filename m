@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89E55347C6;
-	Mon, 29 Dec 2025 16:28:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 555C1347C6;
+	Mon, 29 Dec 2025 16:28:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025698; cv=none; b=gYJlDLD5ipkDkmY58AX2NGHOZ+OlSWdNON5E3hjiQtyE5tv+LYkE0oXxhm9lM8/NX7hwuhtUn7GnZEDJYXFNzHpJa9Bc1xDq6JYtLgv9kGJjMics+xdkg0Zvuhiqu1ezG3taol07hncJw6Ecs0UFZh/3W//FyWy/Q2Rf6VQvbng=
+	t=1767025701; cv=none; b=u8GVB9nFXEXh/aakvO6SfGrlt+R8apfx8IOsur23Qvy8eNdqmrzImAoJCz0gS6CPB4jaw1mSATP9wrWuxtO0xmXIiTERKj1lzUX4CfrYTKHprQELx26WTJXI/HGbUbMATgKblAe4+uFGdCgHO9mXSK8MNNSrwvHAUcWCFiELqs0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025698; c=relaxed/simple;
-	bh=sEdZBzZWE5kpNYZDr4JyqQ55ZC5z+uZnQwaayaFreEc=;
+	s=arc-20240116; t=1767025701; c=relaxed/simple;
+	bh=63/+nqtiOHuObLSjuWVx/EtDJLx6k5kxSvn/dy49RcQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qk1rti7drzXAhFoH9zgxtcQs03iqXUcpHSCyNoHDp2sdzXxNczUnzgtLYeqmdNlWaPiToVO0Gl0g0J4O0UeIF4g/7H7AcL4zkBvi6kxaxog18JM/MpBXUikFfr7h1HbnD7ZDdhFBQwLC2yXsM9q02jTKRJoDZrj4l+NUTDvRx+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MpeQB9Gh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ms8jds8gFEeFBz6t6a7Zg0w3JyUDqYrm1ULkUS4bpvkhURfl6x2V3Gbhad1FHTgaC6+0MuyZNG2gaNy/0yY3K11803/V2/Z7MSYpyrx3k1b3fRTdcY4Vm5xpx8ZFdV/AQDcfxd/T+BRBerqWOJScm3w4YsxB6je7sfcqp6XRO4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ww1kpckk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MpeQB9Gh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1332DC4CEF7;
-	Mon, 29 Dec 2025 16:28:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ww1kpckk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5CC3C4CEF7;
+	Mon, 29 Dec 2025 16:28:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025698;
-	bh=sEdZBzZWE5kpNYZDr4JyqQ55ZC5z+uZnQwaayaFreEc=;
+	s=korg; t=1767025701;
+	bh=63/+nqtiOHuObLSjuWVx/EtDJLx6k5kxSvn/dy49RcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MpeQB9GhMV+DQjcdz2AEMeGYdee+TrlHY1e8/MhvBkrY3jMDWa5LBxK4RbfXPv0hW
-	 EwifRNa+cIFQdCB1OcGv86LKhO1lWxqWHa99YSZCO+5mb7EEobTNSGXYaLJA7B4x+y
-	 +hQVbiT3/gjSBzdYS/sNRTe6s8VbNyYW+9Hxa7Hc=
+	b=ww1kpckk7mSappjjrp/euLrfn6CgQMuXOyej1yZV4o3MreAKnVpPRRmua9duoP/f9
+	 jJKdLGFY7SEnyXkqyOFjRJbWHepd8R8Y6wJTuIX09xF0OtmGBPzc4xsJj+OnC/RdAz
+	 7nbiHXh2NmWayGfVueFGQIGp1ouFvbF/LdgJ85WM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Christian Loehle <christian.loehle@arm.com>
-Subject: [PATCH 6.18 304/430] cpuidle: governors: teo: Drop misguided target residency check
-Date: Mon, 29 Dec 2025 17:11:46 +0100
-Message-ID: <20251229160735.522864833@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>
+Subject: [PATCH 6.18 305/430] cpufreq: nforce2: fix reference count leak in nforce2
+Date: Mon, 29 Dec 2025 17:11:47 +0100
+Message-ID: <20251229160735.559168438@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -50,55 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit a03b2011808ab02ccb7ab6b573b013b77fbb5921 upstream.
+commit 9600156bb99852c216a2128cdf9f114eb67c350f upstream.
 
-When the target residency of the current candidate idle state is
-greater than the expected time till the closest timer (the sleep
-length), it does not matter whether or not the tick has already been
-stopped or if it is going to be stopped.  The closest timer will
-trigger anyway at its due time, so if an idle state with target
-residency above the sleep length is selected, energy will be wasted
-and there may be excess latency.
+There are two reference count leaks in this driver:
 
-Of course, if the closest timer were canceled before it could trigger,
-a deeper idle state would be more suitable, but this is not expected
-to happen (generally speaking, hrtimers are not expected to be
-canceled as a rule).
+1. In nforce2_fsb_read(): pci_get_subsys() increases the reference count
+   of the PCI device, but pci_dev_put() is never called to release it,
+   thus leaking the reference.
 
-Accordingly, the teo_state_ok() check done in that case causes energy to
-be wasted more often than it allows any energy to be saved (if it allows
-any energy to be saved at all), so drop it and let the governor use the
-teo_find_shallower_state() return value as the new candidate idle state
-index.
+2. In nforce2_detect_chipset(): pci_get_subsys() gets a reference to the
+   nforce2_dev which is stored in a global variable, but the reference
+   is never released when the module is unloaded.
 
-Fixes: 21d28cd2fa5f ("cpuidle: teo: Do not call tick_nohz_get_sleep_length() upfront")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Christian Loehle <christian.loehle@arm.com>
-Tested-by: Christian Loehle <christian.loehle@arm.com>
-Link: https://patch.msgid.link/5955081.DvuYhMxLoT@rafael.j.wysocki
+Fix both by:
+- Adding pci_dev_put(nforce2_sub5) in nforce2_fsb_read() after reading
+  the configuration.
+- Adding pci_dev_put(nforce2_dev) in nforce2_exit() to release the
+  global device reference.
+
+Found via static analysis.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpuidle/governors/teo.c |    7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/cpufreq/cpufreq-nforce2.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/cpuidle/governors/teo.c
-+++ b/drivers/cpuidle/governors/teo.c
-@@ -458,11 +458,8 @@ static int teo_select(struct cpuidle_dri
- 	 * If the closest expected timer is before the target residency of the
- 	 * candidate state, a shallower one needs to be found.
- 	 */
--	if (drv->states[idx].target_residency_ns > duration_ns) {
--		i = teo_find_shallower_state(drv, dev, idx, duration_ns, false);
--		if (teo_state_ok(i, drv))
--			idx = i;
--	}
-+	if (drv->states[idx].target_residency_ns > duration_ns)
-+		idx = teo_find_shallower_state(drv, dev, idx, duration_ns, false);
+--- a/drivers/cpufreq/cpufreq-nforce2.c
++++ b/drivers/cpufreq/cpufreq-nforce2.c
+@@ -145,6 +145,8 @@ static unsigned int nforce2_fsb_read(int
+ 	pci_read_config_dword(nforce2_sub5, NFORCE2_BOOTFSB, &fsb);
+ 	fsb /= 1000000;
  
- 	/*
- 	 * If the selected state's target residency is below the tick length
++	pci_dev_put(nforce2_sub5);
++
+ 	/* Check if PLL register is already set */
+ 	pci_read_config_byte(nforce2_dev, NFORCE2_PLLENABLE, (u8 *)&temp);
+ 
+@@ -426,6 +428,7 @@ static int __init nforce2_init(void)
+ static void __exit nforce2_exit(void)
+ {
+ 	cpufreq_unregister_driver(&nforce2_driver);
++	pci_dev_put(nforce2_dev);
+ }
+ 
+ module_init(nforce2_init);
 
 
