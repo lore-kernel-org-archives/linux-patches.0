@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E8D330B11;
-	Mon, 29 Dec 2025 16:18:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B83C9330B0D;
+	Mon, 29 Dec 2025 16:18:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025090; cv=none; b=oYJMmFp+nrEQQDHsUgszmgCUMpw62aUQjuO+MnSkeJClx43tHXOKkZiioySeEwhLWluZNYM6agKy9bhwmqAEoHDautVsQVCkXKr1r+dmQm4dmxhB8EoThSx0ztOapUtOMNVvWBY4CMueqFVCoD/lJn5nlX2K2vkH86Nnv8oYHbQ=
+	t=1767025092; cv=none; b=ZUZIKqwsCqXI9d03fKMLWZ1dnzpiD1fH+qDcWITa0f0cwWyTX6qcB7WA6MfQ3kN0avzd2h1QQ5sXhf1H2QKRMbQ/1B4m/bUrZVuX8/MrAoBid5mgx3Bdq+LMoSxfzGfH5yBq9bz6j+u8EAeSvJb9z867nos3oGdUmi9SBlQcUtk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025090; c=relaxed/simple;
-	bh=fkLaRjiY9cHHMu9aEbwBKIo+EaVcfbc4Me+Rh6BEnic=;
+	s=arc-20240116; t=1767025092; c=relaxed/simple;
+	bh=+kA2ZdGg7iDLakVqlnMutKxFjzE7DxzTorz27cmHYbI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=McpKnogSaVm+PArvdQqyGcJrzYjFDVsPMLQ/I/ANrDnQvcRnROuEybbPMlTLPEMPrx0OwwmQsJB4j++dD+8Ns4/UutyP4IL80dRDcptn/vS8OfICkRxgWh9mjAT9le2r0XSll/Dl68/E89ILb8k/jIeqHu9WltCl8/O7CKC4OG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g0O3fEhX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ozb7An7c7YfMVf3Jz5ri87AAlpZMvCN2W3E+GWLI2pKgqm01Z80YF4ri3ZWy6kJfqVUZD7OkghEpWxHj7kYeSDyvpsnn3i8arOePgQKrBY4uvEMOg9fM6anqH11UbMlFm/8hRyaexdn2+iLAKeRTBV8LbqzYNA5yFZ6eErJeHnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N0KlzfU5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g0O3fEhX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E537C116C6;
-	Mon, 29 Dec 2025 16:18:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N0KlzfU5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4205CC19422;
+	Mon, 29 Dec 2025 16:18:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025089;
-	bh=fkLaRjiY9cHHMu9aEbwBKIo+EaVcfbc4Me+Rh6BEnic=;
+	s=korg; t=1767025092;
+	bh=+kA2ZdGg7iDLakVqlnMutKxFjzE7DxzTorz27cmHYbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g0O3fEhXlXsB3rdGVuaGcllDMDv0mVNw0sct1P3rc/+XGtJ+Lr25FNmONmNXl47v9
-	 bWbiTXyZnznjVV3O8q2b178nrpLbs7Iccv6gTa7+gFwyhc4nBxs8gZW1GtOc59lxeS
-	 h1XFrtxvifBLL9GI99t+bJHInBrKG0lu8NkIqC90=
+	b=N0KlzfU5AcoaRgZ0mE4cy4YjMDfC7xJvrXp+mXBma/ZjYboRrjQpbsV/02UGcqZMC
+	 N4fQGGkuDXyYjCQUS3oUY+oveS/IvCtsgsTAKLqtVPRXkTC/YvEx4lLcKI7LMZ1Ftu
+	 g8IfneIIVT63IBzlpLIo4V1+R+WGirY+q5xx6530=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samiullah Khawaja <skhawaja@google.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Yi Liu <yi.l.liu@intel.com>,
-	syzbot+57fdb0cf6a0c5d1f15a2@syzkaller.appspotmail.com,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 089/430] iommufd/selftest: Check for overflow in IOMMU_TEST_OP_ADD_RESERVED
-Date: Mon, 29 Dec 2025 17:08:11 +0100
-Message-ID: <20251229160727.636961887@linuxfoundation.org>
+Subject: [PATCH 6.18 090/430] can: j1939: make j1939_sk_bind() fail if device is no longer registered
+Date: Mon, 29 Dec 2025 17:08:12 +0100
+Message-ID: <20251229160727.673799049@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -54,55 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit e6a973af11135439de32ece3b9cbe3bfc043bea8 ]
+[ Upstream commit 46cea215dc9444ec32a76b1b6a9cb809e17b64d5 ]
 
-syzkaller found it could overflow math in the test infrastructure and
-cause a WARN_ON by corrupting the reserved interval tree. This only
-effects test kernels with CONFIG_IOMMUFD_TEST.
+There is a theoretical race window in j1939_sk_netdev_event_unregister()
+where two j1939_sk_bind() calls jump in between read_unlock_bh() and
+lock_sock().
 
-Validate the user input length in the test ioctl.
+The assumption jsk->priv == priv can fail if the first j1939_sk_bind()
+call once made jsk->priv == NULL due to failed j1939_local_ecu_get() call
+and the second j1939_sk_bind() call again made jsk->priv != NULL due to
+successful j1939_local_ecu_get() call.
 
-Fixes: f4b20bb34c83 ("iommufd: Add kernel support for testing iommufd")
-Link: https://patch.msgid.link/r/0-v1-cd99f6049ba5+51-iommufd_syz_add_resv_jgg@nvidia.com
-Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Tested-by: Yi Liu <yi.l.liu@intel.com>
-Reported-by: syzbot+57fdb0cf6a0c5d1f15a2@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/69368129.a70a0220.38f243.008f.GAE@google.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Since the socket lock is held by both j1939_sk_netdev_event_unregister()
+and j1939_sk_bind(), checking ndev->reg_state with the socket lock held can
+reliably make the second j1939_sk_bind() call fail (and close this race
+window).
+
+Fixes: 7fcbe5b2c6a4 ("can: j1939: implement NETDEV_UNREGISTER notification handler")
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/5732921e-247e-4957-a364-da74bd7031d7@I-love.SAKURA.ne.jp
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/iommufd/selftest.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/can/j1939/socket.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/iommu/iommufd/selftest.c b/drivers/iommu/iommufd/selftest.c
-index de178827a078a..dc0947aaac625 100644
---- a/drivers/iommu/iommufd/selftest.c
-+++ b/drivers/iommu/iommufd/selftest.c
-@@ -1257,14 +1257,20 @@ static int iommufd_test_add_reserved(struct iommufd_ucmd *ucmd,
- 				     unsigned int mockpt_id,
- 				     unsigned long start, size_t length)
- {
-+	unsigned long last;
- 	struct iommufd_ioas *ioas;
- 	int rc;
+diff --git a/net/can/j1939/socket.c b/net/can/j1939/socket.c
+index 88e7160d42489..e3ba2e9fc0e9b 100644
+--- a/net/can/j1939/socket.c
++++ b/net/can/j1939/socket.c
+@@ -482,6 +482,12 @@ static int j1939_sk_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 			goto out_release_sock;
+ 		}
  
-+	if (!length)
-+		return -EINVAL;
-+	if (check_add_overflow(start, length - 1, &last))
-+		return -EOVERFLOW;
++		if (ndev->reg_state != NETREG_REGISTERED) {
++			dev_put(ndev);
++			ret = -ENODEV;
++			goto out_release_sock;
++		}
 +
- 	ioas = iommufd_get_ioas(ucmd->ictx, mockpt_id);
- 	if (IS_ERR(ioas))
- 		return PTR_ERR(ioas);
- 	down_write(&ioas->iopt.iova_rwsem);
--	rc = iopt_reserve_iova(&ioas->iopt, start, start + length - 1, NULL);
-+	rc = iopt_reserve_iova(&ioas->iopt, start, last, NULL);
- 	up_write(&ioas->iopt.iova_rwsem);
- 	iommufd_put_object(ucmd->ictx, &ioas->obj);
- 	return rc;
+ 		can_ml = can_get_ml_priv(ndev);
+ 		if (!can_ml) {
+ 			dev_put(ndev);
 -- 
 2.51.0
 
