@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C684C3101BB;
-	Mon, 29 Dec 2025 16:15:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD8D831B111;
+	Mon, 29 Dec 2025 16:15:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767024903; cv=none; b=ESf1lI+PRB/jIc8wZFFaq7Rvyaba+rj85cAccg89ZM5d6E+3KUPwnA6nngJnpnYRgrLvC1kmKM0Ck+GSuLBQm6Yb+dA8vopoQrZtN/94aLKybQY+wSeVThz37X2qVdDieCiW/YWH78KbMCPgyyu2sX5rJd/DcMP7UJqTcBUjBTc=
+	t=1767024907; cv=none; b=VU1YPriL5Zi3gJSck8TW3mlvgyar6K0NsQcwl8l+F4592ZoVIR+rCs9tutw74IonAl+YPGlK0hYdfDCBWdJzlpDxDR1hzDns2QMYkv37HyJiaTqAd4vU18Poq9k+BmVfBmT3DfnFr8gjR+yOV6kN9ejvxiP4mMOscc9/+Y6jxMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767024903; c=relaxed/simple;
-	bh=WzcrJeMYg1GPqTfFmbyyRK+AWnFhLySP4esA3YfMCgE=;
+	s=arc-20240116; t=1767024907; c=relaxed/simple;
+	bh=QIbaps/kJ996/UoZwwcEzGseo5TjrOh/N197LVSqW/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ruOIibszU9WPi51Y88xdi5+xlvq7zSBtQF1ClZQTFdsXt727SSRopIRTazLFVHoyUcrLnOL7QaqakltpAZK7OBvkZ2v8oYAVLL7QiCUZrxGQ+v3R398EppCLB786fLwDUFezXMCTNNDVURyYfOJ5UZ0Us2MI2jZF46t8qSJHzx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EsnLwMSI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f0OftEZGcUAywwkMWT2OA7Z1Yy/QcgOgotcYExPfmtaii97zzSw05k028V/4gkXxY7eobmvReznOdJPa7Ylc6iuw8Q2aH776Ir6GRS0sMqrp59GBgDUhrtgJuHm/Z+cUJl5HD6AWoVn/F3qkFb9bAISQYj1lUEPqsdWMZFsTWeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lT4UVFE/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EsnLwMSI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E44FFC19421;
-	Mon, 29 Dec 2025 16:15:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lT4UVFE/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C17EEC4CEF7;
+	Mon, 29 Dec 2025 16:15:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767024902;
-	bh=WzcrJeMYg1GPqTfFmbyyRK+AWnFhLySP4esA3YfMCgE=;
+	s=korg; t=1767024905;
+	bh=QIbaps/kJ996/UoZwwcEzGseo5TjrOh/N197LVSqW/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EsnLwMSIe+9o0yk3NOAGQxTiGPCCVfqszdtBpGZOORlWpCKoL2H2t7bRww0PIsNk6
-	 4+W5Ov9DQvLFYIXjL+ZdHp62D/M3R9arUsrxsRjFxlDmvR4PS0c6LMaoZTwUUEvT4/
-	 bG/6wxsMeunOmbydrW5Pk1J+OX0B6o05wel6P+RU=
+	b=lT4UVFE/nYX/oltYIl7H2qkQNVsRKeU05E/m9cgVprzCMtqogQDo4JYjk3UQZlQgI
+	 TPt/PxdeRweQXn9PpBtleGYmWujOM6ajvbEo24ddg5ozX9jd8mj1xpItPOXKCARvQ1
+	 iJT1qh14f1Z4cN5A8AEfsT8gaUvYUcZPRYp64Qew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zesen Liu <ftyg@live.com>,
-	Peili Gao <gplhust955@gmail.com>,
-	Haoran Ni <haoran.ni.cs@gmail.com>,
-	Shuran Liu <electronlsr@gmail.com>,
-	Matt Bobrowski <mattbobrowski@google.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	syzbot+eadd98df8bceb15d7fed@syzkaller.appspotmail.com,
+	Qu Wenruo <wqu@suse.com>,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 005/430] bpf: Fix verifier assumptions of bpf_d_paths output buffer
-Date: Mon, 29 Dec 2025 17:06:47 +0100
-Message-ID: <20251229160724.346930168@linuxfoundation.org>
+Subject: [PATCH 6.18 006/430] btrfs: fix memory leak of fs_devices in degraded seed device path
+Date: Mon, 29 Dec 2025 17:06:48 +0100
+Message-ID: <20251229160724.383926080@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -55,58 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuran Liu <electronlsr@gmail.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-[ Upstream commit ac44dcc788b950606793e8f9690c30925f59df02 ]
+[ Upstream commit b57f2ddd28737db6ff0e9da8467f0ab9d707e997 ]
 
-Commit 37cce22dbd51 ("bpf: verifier: Refactor helper access type
-tracking") started distinguishing read vs write accesses performed by
-helpers.
+In open_seed_devices(), when find_fsid() fails and we're in DEGRADED
+mode, a new fs_devices is allocated via alloc_fs_devices() but is never
+added to the seed_list before returning. This contrasts with the normal
+path where fs_devices is properly added via list_add().
 
-The second argument of bpf_d_path() is a pointer to a buffer that the
-helper fills with the resulting path. However, its prototype currently
-uses ARG_PTR_TO_MEM without MEM_WRITE.
+If any error occurs later in read_one_dev() or btrfs_read_chunk_tree(),
+the cleanup code iterates seed_list to free seed devices, but this
+orphaned fs_devices is never found and never freed, causing a memory
+leak. Any devices allocated via add_missing_dev() and attached to this
+fs_devices are also leaked.
 
-Before 37cce22dbd51, helper accesses were conservatively treated as
-potential writes, so this mismatch did not cause issues. Since that
-commit, the verifier may incorrectly assume that the buffer contents
-are unchanged across the helper call and base its optimizations on this
-wrong assumption. This can lead to misbehaviour in BPF programs that
-read back the buffer, such as prefix comparisons on the returned path.
+Fix this by adding the newly allocated fs_devices to seed_list in the
+degraded path, consistent with the normal path.
 
-Fix this by marking the second argument of bpf_d_path() as
-ARG_PTR_TO_MEM | MEM_WRITE so that the verifier correctly models the
-write to the caller-provided buffer.
-
-Fixes: 37cce22dbd51 ("bpf: verifier: Refactor helper access type tracking")
-Co-developed-by: Zesen Liu <ftyg@live.com>
-Signed-off-by: Zesen Liu <ftyg@live.com>
-Co-developed-by: Peili Gao <gplhust955@gmail.com>
-Signed-off-by: Peili Gao <gplhust955@gmail.com>
-Co-developed-by: Haoran Ni <haoran.ni.cs@gmail.com>
-Signed-off-by: Haoran Ni <haoran.ni.cs@gmail.com>
-Signed-off-by: Shuran Liu <electronlsr@gmail.com>
-Reviewed-by: Matt Bobrowski <mattbobrowski@google.com>
-Link: https://lore.kernel.org/r/20251206141210.3148-2-electronlsr@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 5f37583569442 ("Btrfs: move the missing device to its own fs device list")
+Reported-by: syzbot+eadd98df8bceb15d7fed@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=eadd98df8bceb15d7fed
+Tested-by: syzbot+eadd98df8bceb15d7fed@syzkaller.appspotmail.com
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/bpf_trace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/volumes.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-index 4f87c16d915a0..49e0bdaa7a1bf 100644
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -965,7 +965,7 @@ static const struct bpf_func_proto bpf_d_path_proto = {
- 	.ret_type	= RET_INTEGER,
- 	.arg1_type	= ARG_PTR_TO_BTF_ID,
- 	.arg1_btf_id	= &bpf_d_path_btf_ids[0],
--	.arg2_type	= ARG_PTR_TO_MEM,
-+	.arg2_type	= ARG_PTR_TO_MEM | MEM_WRITE,
- 	.arg3_type	= ARG_CONST_SIZE_OR_ZERO,
- 	.allowed	= bpf_d_path_allowed,
- };
+diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
+index 2bec544d8ba30..48e717c105c35 100644
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -7178,6 +7178,7 @@ static struct btrfs_fs_devices *open_seed_devices(struct btrfs_fs_info *fs_info,
+ 
+ 		fs_devices->seeding = true;
+ 		fs_devices->opened = 1;
++		list_add(&fs_devices->seed_list, &fs_info->fs_devices->seed_list);
+ 		return fs_devices;
+ 	}
+ 
 -- 
 2.51.0
 
