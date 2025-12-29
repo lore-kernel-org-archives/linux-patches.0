@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5321C3328EE;
-	Mon, 29 Dec 2025 16:31:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F9B1332EA7;
+	Mon, 29 Dec 2025 16:31:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025871; cv=none; b=kHanz9H1vVR4aXAC3D1Lgsj/ElLkomjn4iWuyBQtZl879eLuZ6pKSj4h9r30tv2iDyQ1rgWfOeKd1DSaccp4nRlyEQtIXPoeoBqUjUMImkAp/3QLKMNUQxdPCvXk5ztc54zEjlXSTDQHsX+2JRunD+bB9xOjupQFpg3d07nghv4=
+	t=1767025874; cv=none; b=QP7RN3L7EUmy7g1LzNnoXDBnOJYw1SJCBBG7ksSGjeFSwItXl2gJF3MGYWCl6Y5AhORTCI8+pN8V3+8V1Ugh4L+uYaPOlUeOzVaR7y3j+13Hh4kni21BaJkZ6orxq72k+idkaWxzlGheVL6WqdrSVjcztcH2p5VyrmDqMZW5bNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025871; c=relaxed/simple;
-	bh=klyAlUq4GGa80t4zKC3Jwjb3nEIjIpmKSeQaCVP9uv0=;
+	s=arc-20240116; t=1767025874; c=relaxed/simple;
+	bh=YHVO2UomZyBPbLzP0JpukHR/5yGlQa3b58v+Iq4zx+E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a/2L64YYf4H4Bqp5Ss03WH7xxN/cXlBKs7DRVMMvimE5Owa6rSQwKqLCEcbCrnB0suYdn5uwmMt/1HSDwu9EAC6mx7V6wfh/5H9K4fpzs0/zAWFXCqMv1uCAq/stxcnsWUFD0FPqie78cF3P0hhKiP4sgnMBt1jBBBosMQHC+hc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r2nYYQSR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nGhdKuSLib4OSmpQDrOEX/gEKWSYlWxaQ8E5kjJFX5QSZxeAVZykMiiB1fS4idqZUrn2S0GKaYtJRRtOCfAWjLbgL1oSuRWrHxb6MB20yZ82NHFzLFcNU2zx2GRG7dqEplqUVMFfwzIlA+qsDpB/wfOLKsVe3dduoc3xgz6nq1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GkeCvlQC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r2nYYQSR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6D3AC4CEF7;
-	Mon, 29 Dec 2025 16:31:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GkeCvlQC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 915CAC4CEF7;
+	Mon, 29 Dec 2025 16:31:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025871;
-	bh=klyAlUq4GGa80t4zKC3Jwjb3nEIjIpmKSeQaCVP9uv0=;
+	s=korg; t=1767025873;
+	bh=YHVO2UomZyBPbLzP0JpukHR/5yGlQa3b58v+Iq4zx+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r2nYYQSRq3o/fZErg4V10/v8RM/L1Rjwy9OoMFFijaDZ5s1McmCTJEjQ4jcpm9Iht
-	 xFcT9hOq5xcsttMgI341PTDHvW2hMacFUJimriVb0b0EAonhby5dc9mbet6KOZuJe9
-	 NGoPv+9X9Kdyei0d9GJZh0XPREE1O8oFhGoH4egQ=
+	b=GkeCvlQCfOMlOsvFhVq8RME5QTaXZtexS2XzH/UsdjZLxI2c/kLlnjpQNfV1lhKFW
+	 RrwjnqUb8XC+h3WFjj3uqY0rW5o3QN7sjlbEHXcauFe0d0yfcslWaY0rkhwiZH+LMp
+	 PBQ2r5QTgdr5PR3YWt4wYq4P93CE7dTXgnmG7ImM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	caoping <caoping@cmss.chinamobile.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 366/430] net/handshake: restore destructor on submit failure
-Date: Mon, 29 Dec 2025 17:12:48 +0100
-Message-ID: <20251229160737.795909503@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.18 367/430] NFSD: Clear SECLABEL in the suppattr_exclcreat bitmap
+Date: Mon, 29 Dec 2025 17:12:49 +0100
+Message-ID: <20251229160737.831802281@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -51,36 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: caoping <caoping@cmss.chinamobile.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 6af2a01d65f89e73c1cbb9267f8880d83a88cee4 upstream.
+commit 27d17641cacfedd816789b75d342430f6b912bd2 upstream.
 
-handshake_req_submit() replaces sk->sk_destruct but never restores it when
-submission fails before the request is hashed. handshake_sk_destruct() then
-returns early and the original destructor never runs, leaking the socket.
-Restore sk_destruct on the error path.
+>From RFC 8881:
 
-Fixes: 3b3009ea8abb ("net/handshake: Create a NETLINK service for handling handshake requests")
-Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
+5.8.1.14. Attribute 75: suppattr_exclcreat
+
+> The bit vector that would set all REQUIRED and RECOMMENDED
+> attributes that are supported by the EXCLUSIVE4_1 method of file
+> creation via the OPEN operation. The scope of this attribute
+> applies to all objects with a matching fsid.
+
+There's nothing in RFC 8881 that states that suppattr_exclcreat is
+or is not allowed to contain bits for attributes that are clear in
+the reported supported_attrs bitmask. But it doesn't make sense for
+an NFS server to indicate that it /doesn't/ implement an attribute,
+but then also indicate that clients /are/ allowed to set that
+attribute using OPEN(create) with EXCLUSIVE4_1.
+
+Ensure that the SECURITY_LABEL and ACL bits are not set in the
+suppattr_exclcreat bitmask when they are also not set in the
+supported_attrs bitmask.
+
+Fixes: 8c18f2052e75 ("nfsd41: SUPPATTR_EXCLCREAT attribute")
 Cc: stable@vger.kernel.org
-Signed-off-by: caoping <caoping@cmss.chinamobile.com>
-Link: https://patch.msgid.link/20251204091058.1545151-1-caoping@cmss.chinamobile.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/handshake/request.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/nfsd/nfs4xdr.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/net/handshake/request.c
-+++ b/net/handshake/request.c
-@@ -276,6 +276,8 @@ int handshake_req_submit(struct socket *
- out_unlock:
- 	spin_unlock(&hn->hn_lock);
- out_err:
-+	/* Restore original destructor so socket teardown still runs on failure */
-+	req->hr_sk->sk_destruct = req->hr_odestruct;
- 	trace_handshake_submit_err(net, req, req->hr_sk, ret);
- 	handshake_req_destroy(req);
- 	return ret;
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -3375,6 +3375,11 @@ static __be32 nfsd4_encode_fattr4_suppat
+ 	u32 supp[3];
+ 
+ 	memcpy(supp, nfsd_suppattrs[resp->cstate.minorversion], sizeof(supp));
++	if (!IS_POSIXACL(d_inode(args->dentry)))
++		supp[0] &= ~FATTR4_WORD0_ACL;
++	if (!args->contextsupport)
++		supp[2] &= ~FATTR4_WORD2_SECURITY_LABEL;
++
+ 	supp[0] &= NFSD_SUPPATTR_EXCLCREAT_WORD0;
+ 	supp[1] &= NFSD_SUPPATTR_EXCLCREAT_WORD1;
+ 	supp[2] &= NFSD_SUPPATTR_EXCLCREAT_WORD2;
 
 
