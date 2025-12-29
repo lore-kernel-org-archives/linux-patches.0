@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71CD0330645;
-	Mon, 29 Dec 2025 16:16:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3448F347C6;
+	Mon, 29 Dec 2025 16:16:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025016; cv=none; b=TTNDeJ6ebkPYBHgjhM6dIxOCN9PSN11zbMwXLBHFp8U/s/bLLiTqjsJE7OjHTBSqZCs/IUKBbGRR+vR3EyGxblmh0qGoyE1YIYj0i2ztTZUDW9RwA6/+X5u3O8VHsq+ZxBA+J+dPaqrLI1lx4y1okl1gcXfI756mNDMIIcNiJuI=
+	t=1767025019; cv=none; b=XXmyOE3qzkpqUjGmXB8elBFWstNETSkqWqed1sHnDirnoql2vmCyGVUSWNU8YCtaNRpBx4bsECUs9BtECiAUr7Dr5Jx6E+oDNjQFMk8Rd/Ctp9AODhDDmyxHNl5Gpqc1Vy4yZWO0NRSRgSu12wn7bQbNgiiB6W314FpaTd8Njn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025016; c=relaxed/simple;
-	bh=tRimAW41XQvUl1uXge3VRUsUDhRyrT7hQfS5eZtK/tU=;
+	s=arc-20240116; t=1767025019; c=relaxed/simple;
+	bh=t2WJcB8DKxlpFu3EVynIepaEYkbE1STkeM5QviiXpgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k6oQBlJZtBHgLr5qIlAL/orwxDIW1UgkAhXkoASfIzKuDxcFaxrVQb1elOKm0aUvTM99ElHp6hR9S80C5u4SqxCAPaAlJfvUlc7EYmXpwcouMQLYVpaNkqutv77bOUM7W3U90wDPKBGabqJebjURyliAl04NcT7VLQRqiMgIJ8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=grCgXUeI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BP+hb/xfTCnSBE7T4+AlRhr1R531inb7+VqJZnHGWhn5+/AANgQcrnh1mDoYrjvVP8y+jVfZaXPuHdO9X6wnF7TPCUTQC/XY41OcnnUQ3AWiKBktlf45tlywMmuOQo3ZYL6bHyDCta3I2Dj6v4+RrYKgtfBVEoXNYgXaiwNIXxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DwWqOxAU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="grCgXUeI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA7EBC116C6;
-	Mon, 29 Dec 2025 16:16:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DwWqOxAU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0AB0C4CEF7;
+	Mon, 29 Dec 2025 16:16:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025016;
-	bh=tRimAW41XQvUl1uXge3VRUsUDhRyrT7hQfS5eZtK/tU=;
+	s=korg; t=1767025019;
+	bh=t2WJcB8DKxlpFu3EVynIepaEYkbE1STkeM5QviiXpgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=grCgXUeIzuwtAQ9L2D9yOnnfl1WhuhdGzzM+t/BMEjl0rDYlnQGEyPFvqHOv3ZYS+
-	 c+w8Utb8UOascUY84eUFobOdf5tSE+r4VMUIP7ppz49A+rfNapKrIg0N8npajMgvIU
-	 Vzkst4s9va6fFjmggyRhJDQGv3z4tYdOjhpgNhN4=
+	b=DwWqOxAUosbceIvHpJXPWKu+GrzilsaO7mCPllaGLkiohXI3aIcAxui9mkZk5ecqn
+	 IP9OjPMDFtQbJY1yp9ATO9JARwfwwSg9GtZzt2k5/u89IPzkwvgyYmXcTBKJOvVBc7
+	 KjKk7RduUXTOAGrrs+FkyJpEkFG9GJtdSqP65FfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Yu Peng <pengyu@kylinos.cn>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 031/430] hfsplus: Verify inode mode when loading from disk
-Date: Mon, 29 Dec 2025 17:07:13 +0100
-Message-ID: <20251229160725.305597947@linuxfoundation.org>
+Subject: [PATCH 6.18 022/430] x86/microcode: Mark early_parse_cmdline() as __init
+Date: Mon, 29 Dec 2025 17:07:04 +0100
+Message-ID: <20251229160724.972481427@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -52,103 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Yu Peng <pengyu@kylinos.cn>
 
-[ Upstream commit 005d4b0d33f6b4a23d382b7930f7a96b95b01f39 ]
+[ Upstream commit ca8313fd83399ea1d18e695c2ae9b259985c9e1f ]
 
-syzbot is reporting that S_IFMT bits of inode->i_mode can become bogus when
-the S_IFMT bits of the 16bits "mode" field loaded from disk are corrupted.
+Fix section mismatch warning reported by modpost:
 
-According to [1], the permissions field was treated as reserved in Mac OS
-8 and 9. According to [2], the reserved field was explicitly initialized
-with 0, and that field must remain 0 as long as reserved. Therefore, when
-the "mode" field is not 0 (i.e. no longer reserved), the file must be
-S_IFDIR if dir == 1, and the file must be one of S_IFREG/S_IFLNK/S_IFCHR/
-S_IFBLK/S_IFIFO/S_IFSOCK if dir == 0.
+  .text:early_parse_cmdline() -> .init.data:boot_command_line
 
-Reported-by: syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=895c23f6917da440ed0d
-Link: https://developer.apple.com/library/archive/technotes/tn/tn1150.html#HFSPlusPermissions [1]
-Link: https://developer.apple.com/library/archive/technotes/tn/tn1150.html#ReservedAndPadFields [2]
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/04ded9f9-73fb-496c-bfa5-89c4f5d1d7bb@I-love.SAKURA.ne.jp
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+The function early_parse_cmdline() is only called during init and accesses
+init data, so mark it __init to match its usage.
+
+  [ bp: This happens only when the toolchain fails to inline the function and
+    I haven't been able to reproduce it with any toolchain I'm using. Patch is
+    obviously correct regardless. ]
+
+Signed-off-by: Yu Peng <pengyu@kylinos.cn>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://patch.msgid.link/all/20251030123757.1410904-1-pengyu@kylinos.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfsplus/inode.c | 32 ++++++++++++++++++++++++++++----
- 1 file changed, 28 insertions(+), 4 deletions(-)
+ arch/x86/kernel/cpu/microcode/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/hfsplus/inode.c b/fs/hfsplus/inode.c
-index b51a411ecd237..e290e417ed3a7 100644
---- a/fs/hfsplus/inode.c
-+++ b/fs/hfsplus/inode.c
-@@ -180,13 +180,29 @@ const struct dentry_operations hfsplus_dentry_operations = {
- 	.d_compare    = hfsplus_compare_dentry,
- };
- 
--static void hfsplus_get_perms(struct inode *inode,
--		struct hfsplus_perm *perms, int dir)
-+static int hfsplus_get_perms(struct inode *inode,
-+			     struct hfsplus_perm *perms, int dir)
- {
- 	struct hfsplus_sb_info *sbi = HFSPLUS_SB(inode->i_sb);
- 	u16 mode;
- 
- 	mode = be16_to_cpu(perms->mode);
-+	if (dir) {
-+		if (mode && !S_ISDIR(mode))
-+			goto bad_type;
-+	} else if (mode) {
-+		switch (mode & S_IFMT) {
-+		case S_IFREG:
-+		case S_IFLNK:
-+		case S_IFCHR:
-+		case S_IFBLK:
-+		case S_IFIFO:
-+		case S_IFSOCK:
-+			break;
-+		default:
-+			goto bad_type;
-+		}
-+	}
- 
- 	i_uid_write(inode, be32_to_cpu(perms->owner));
- 	if ((test_bit(HFSPLUS_SB_UID, &sbi->flags)) || (!i_uid_read(inode) && !mode))
-@@ -212,6 +228,10 @@ static void hfsplus_get_perms(struct inode *inode,
- 		inode->i_flags |= S_APPEND;
- 	else
- 		inode->i_flags &= ~S_APPEND;
-+	return 0;
-+bad_type:
-+	pr_err("invalid file type 0%04o for inode %lu\n", mode, inode->i_ino);
-+	return -EIO;
+diff --git a/arch/x86/kernel/cpu/microcode/core.c b/arch/x86/kernel/cpu/microcode/core.c
+index f75c140906d00..539edd6d6dc8c 100644
+--- a/arch/x86/kernel/cpu/microcode/core.c
++++ b/arch/x86/kernel/cpu/microcode/core.c
+@@ -136,7 +136,7 @@ bool __init microcode_loader_disabled(void)
+ 	return dis_ucode_ldr;
  }
  
- static int hfsplus_file_open(struct inode *inode, struct file *file)
-@@ -516,7 +536,9 @@ int hfsplus_cat_read_inode(struct inode *inode, struct hfs_find_data *fd)
- 		}
- 		hfs_bnode_read(fd->bnode, &entry, fd->entryoffset,
- 					sizeof(struct hfsplus_cat_folder));
--		hfsplus_get_perms(inode, &folder->permissions, 1);
-+		res = hfsplus_get_perms(inode, &folder->permissions, 1);
-+		if (res)
-+			goto out;
- 		set_nlink(inode, 1);
- 		inode->i_size = 2 + be32_to_cpu(folder->valence);
- 		inode_set_atime_to_ts(inode, hfsp_mt2ut(folder->access_date));
-@@ -545,7 +567,9 @@ int hfsplus_cat_read_inode(struct inode *inode, struct hfs_find_data *fd)
- 
- 		hfsplus_inode_read_fork(inode, HFSPLUS_IS_RSRC(inode) ?
- 					&file->rsrc_fork : &file->data_fork);
--		hfsplus_get_perms(inode, &file->permissions, 0);
-+		res = hfsplus_get_perms(inode, &file->permissions, 0);
-+		if (res)
-+			goto out;
- 		set_nlink(inode, 1);
- 		if (S_ISREG(inode->i_mode)) {
- 			if (file->permissions.dev)
+-static void early_parse_cmdline(void)
++static void __init early_parse_cmdline(void)
+ {
+ 	char cmd_buf[64] = {};
+ 	char *s, *p = cmd_buf;
 -- 
 2.51.0
 
