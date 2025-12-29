@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CDE73346BD;
-	Mon, 29 Dec 2025 16:34:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C415333443;
+	Mon, 29 Dec 2025 16:34:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767026044; cv=none; b=CiWW0QnaHBsLk37ZtsHzsx0DOpMNnxucUtdmN2Zhnxdk+aXXY+cM4RyNPY06xPUDzUlpZzZ/TmDmA5oY/sb4oVtfj6l4uNhm8480US4Un6MiKZUzlv139p7XbByvTe4foNOa91qfPR+Jjjyjl0AkSn0ND2gigNeS2bKwnXNDQYQ=
+	t=1767026047; cv=none; b=gGlCvgFx6uidJj1TvUt8fYa1EXV7GNq29/RiCUc4k+V6w/+tCA3v8jDxdWDyDjjgzHJVomyqMqT6gtUgh5tsgCxq6idw4jQbwCvA0D5mKDbOiBUbJPt13J8MV+5DglLqECl9R5WH6ykwlNZXHfErvFLaLtQ0SE1w/P/mUG2lUB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767026044; c=relaxed/simple;
-	bh=ibi+Pf2i7YCM4i7tJL6b+U+ojseE33FxGVAg/2DlN6g=;
+	s=arc-20240116; t=1767026047; c=relaxed/simple;
+	bh=tFgW/LNUPsxv/geTt/gvQ6RZiEMhNEB4E7ku7lpzu0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QrUmEAJ75UjiGh3A+xUnqzdum1Lutpqye8NS3N4kWCA9NqSVjgcXxFxm9fIlDqDVDyCUsWLEQIsMxjqETkOQV4JLWBAJq7LCg2MKqKoc6qAv7zR6SLy6qEzNyaMIp+0cZfmYVIMtvNKtorw8I4/jI1u+NDBHxkjyt6SXoAh8AxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hJLLGWk7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ma2PvtsG9Z8FjEoNghTNs43qhSWWuJIjAWXi+D8mMCwH6XFxnBSXLHVtwYduYFG1JwjE0CchP9lhWP3g3S1n9MFAO2XCI5tgOVjMo31kyzTP4tcAyjMww+E/jRiK48CgvvFUReSwHEULqIcn6ZH/7NNsbc46sz4GD4Ss10tAf2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PyQlsSa/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hJLLGWk7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0336BC4CEF7;
-	Mon, 29 Dec 2025 16:34:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PyQlsSa/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAF11C4CEF7;
+	Mon, 29 Dec 2025 16:34:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767026044;
-	bh=ibi+Pf2i7YCM4i7tJL6b+U+ojseE33FxGVAg/2DlN6g=;
+	s=korg; t=1767026047;
+	bh=tFgW/LNUPsxv/geTt/gvQ6RZiEMhNEB4E7ku7lpzu0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hJLLGWk7bCl8YdpyHYeYu/2IeLW9+djxFqDvIaivPz5qEpShw55YmN+0HugN0VD7j
-	 iVT0g6i/zNUjuksNlp/vq/2oJp6480DFy5Vl4Zzw9mkTIVTQT/ksAcfXG7aDKkK1Lc
-	 Lm89zihPEyS2h/QAoeC7tCJtjuHOOMLm/bYfsoHQ=
+	b=PyQlsSa/WVlIK6Tiqrr///C9m82mzUwp9HM6IqNW9hUlDYDyhBfbunH2OcIHjj7o0
+	 xaye86P7cJnMi579aGMZiU21QVDnHCYK1X/KWgkqaDB2GUtoGk3sB8elXVZJSy+vrO
+	 Jgofce8Yl8tyZ6T1OGlCHbB9BBEhgR0PsF3PAArM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Joanne Koong <joannelkoong@gmail.com>,
-	Bernd Schubert <bschubert@ddn.com>,
+	Omar Sandoval <osandov@fb.com>,
 	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 6.18 428/430] fuse: fix io-uring list corruption for terminated non-committed requests
-Date: Mon, 29 Dec 2025 17:13:50 +0100
-Message-ID: <20251229160740.062173546@linuxfoundation.org>
+Subject: [PATCH 6.18 429/430] fuse: fix readahead reclaim deadlock
+Date: Mon, 29 Dec 2025 17:13:51 +0100
+Message-ID: <20251229160740.098058743@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -53,39 +53,114 @@ Content-Transfer-Encoding: 8bit
 
 From: Joanne Koong <joannelkoong@gmail.com>
 
-commit 95c39eef7c2b666026c69ab5b30471da94ea2874 upstream.
+commit bd5603eaae0aabf527bfb3ce1bb07e979ce5bd50 upstream.
 
-When a request is terminated before it has been committed, the request
-is not removed from the queue's list. This leaves a dangling list entry
-that leads to list corruption and use-after-free issues.
+Commit e26ee4efbc79 ("fuse: allocate ff->release_args only if release is
+needed") skips allocating ff->release_args if the server does not
+implement open. However in doing so, fuse_prepare_release() now skips
+grabbing the reference on the inode, which makes it possible for an
+inode to be evicted from the dcache while there are inflight readahead
+requests. This causes a deadlock if the server triggers reclaim while
+servicing the readahead request and reclaim attempts to evict the inode
+of the file being read ahead. Since the folio is locked during
+readahead, when reclaim evicts the fuse inode and fuse_evict_inode()
+attempts to remove all folios associated with the inode from the page
+cache (truncate_inode_pages_range()), reclaim will block forever waiting
+for the lock since readahead cannot relinquish the lock because it is
+itself blocked in reclaim:
 
-Remove the request from the queue's list for terminated non-committed
-requests.
+>>> stack_trace(1504735)
+ folio_wait_bit_common (mm/filemap.c:1308:4)
+ folio_lock (./include/linux/pagemap.h:1052:3)
+ truncate_inode_pages_range (mm/truncate.c:336:10)
+ fuse_evict_inode (fs/fuse/inode.c:161:2)
+ evict (fs/inode.c:704:3)
+ dentry_unlink_inode (fs/dcache.c:412:3)
+ __dentry_kill (fs/dcache.c:615:3)
+ shrink_kill (fs/dcache.c:1060:12)
+ shrink_dentry_list (fs/dcache.c:1087:3)
+ prune_dcache_sb (fs/dcache.c:1168:2)
+ super_cache_scan (fs/super.c:221:10)
+ do_shrink_slab (mm/shrinker.c:435:9)
+ shrink_slab (mm/shrinker.c:626:10)
+ shrink_node (mm/vmscan.c:5951:2)
+ shrink_zones (mm/vmscan.c:6195:3)
+ do_try_to_free_pages (mm/vmscan.c:6257:3)
+ do_swap_page (mm/memory.c:4136:11)
+ handle_pte_fault (mm/memory.c:5562:10)
+ handle_mm_fault (mm/memory.c:5870:9)
+ do_user_addr_fault (arch/x86/mm/fault.c:1338:10)
+ handle_page_fault (arch/x86/mm/fault.c:1481:3)
+ exc_page_fault (arch/x86/mm/fault.c:1539:2)
+ asm_exc_page_fault+0x22/0x27
 
-Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
-Fixes: c090c8abae4b ("fuse: Add io-uring sqe commit and fetch support")
+Fix this deadlock by allocating ff->release_args and grabbing the
+reference on the inode when preparing the file for release even if the
+server does not implement open. The inode reference will be dropped when
+the last reference on the fuse file is dropped (see fuse_file_put() ->
+fuse_release_end()).
+
+Fixes: e26ee4efbc79 ("fuse: allocate ff->release_args only if release is needed")
 Cc: stable@vger.kernel.org
-Reviewed-by: Bernd Schubert <bschubert@ddn.com>
+Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
+Reported-by: Omar Sandoval <osandov@fb.com>
 Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/dev_uring.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/fuse/file.c |   26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/fs/fuse/dev_uring.c b/fs/fuse/dev_uring.c
-index 0066c9c0a5d5..7760fe4e1f9e 100644
---- a/fs/fuse/dev_uring.c
-+++ b/fs/fuse/dev_uring.c
-@@ -86,6 +86,7 @@ static void fuse_uring_req_end(struct fuse_ring_ent *ent, struct fuse_req *req,
- 	lockdep_assert_not_held(&queue->lock);
- 	spin_lock(&queue->lock);
- 	ent->fuse_req = NULL;
-+	list_del_init(&req->list);
- 	if (test_bit(FR_BACKGROUND, &req->flags)) {
- 		queue->active_background--;
- 		spin_lock(&fc->bg_lock);
--- 
-2.52.0
-
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -110,7 +110,9 @@ static void fuse_file_put(struct fuse_fi
+ 			fuse_file_io_release(ff, ra->inode);
+ 
+ 		if (!args) {
+-			/* Do nothing when server does not implement 'open' */
++			/* Do nothing when server does not implement 'opendir' */
++		} else if (args->opcode == FUSE_RELEASE && ff->fm->fc->no_open) {
++			fuse_release_end(ff->fm, args, 0);
+ 		} else if (sync) {
+ 			fuse_simple_request(ff->fm, args);
+ 			fuse_release_end(ff->fm, args, 0);
+@@ -131,8 +133,17 @@ struct fuse_file *fuse_file_open(struct
+ 	struct fuse_file *ff;
+ 	int opcode = isdir ? FUSE_OPENDIR : FUSE_OPEN;
+ 	bool open = isdir ? !fc->no_opendir : !fc->no_open;
++	bool release = !isdir || open;
+ 
+-	ff = fuse_file_alloc(fm, open);
++	/*
++	 * ff->args->release_args still needs to be allocated (so we can hold an
++	 * inode reference while there are pending inflight file operations when
++	 * ->release() is called, see fuse_prepare_release()) even if
++	 * fc->no_open is set else it becomes possible for reclaim to deadlock
++	 * if while servicing the readahead request the server triggers reclaim
++	 * and reclaim evicts the inode of the file being read ahead.
++	 */
++	ff = fuse_file_alloc(fm, release);
+ 	if (!ff)
+ 		return ERR_PTR(-ENOMEM);
+ 
+@@ -152,13 +163,14 @@ struct fuse_file *fuse_file_open(struct
+ 			fuse_file_free(ff);
+ 			return ERR_PTR(err);
+ 		} else {
+-			/* No release needed */
+-			kfree(ff->args);
+-			ff->args = NULL;
+-			if (isdir)
++			if (isdir) {
++				/* No release needed */
++				kfree(ff->args);
++				ff->args = NULL;
+ 				fc->no_opendir = 1;
+-			else
++			} else {
+ 				fc->no_open = 1;
++			}
+ 		}
+ 	}
+ 
 
 
