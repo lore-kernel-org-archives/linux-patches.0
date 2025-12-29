@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6DF23D2B2;
-	Mon, 29 Dec 2025 16:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 143082749D2;
+	Mon, 29 Dec 2025 16:23:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025421; cv=none; b=KSmNnL3y6J82xYVBEOzECT0CpRS/4j/kXInX7dXuNLEzGARKMrrK1VNKtcReZTiCpCC4UIwjkvx7PMSO3yISkS35s7MGxC5AnF91Q1ZsiLscViv3C9Ym6cbNC3V4DmBGW5EbjuxrTepsMC1sSfw+JES5lS84CjC2DjqtF+hufS8=
+	t=1767025424; cv=none; b=c2w5TADrJbHbs+8QnYELuszOBbN+SfrQzAX50hfwdFdK4TImjUdJwm/2++4UCnuBfv28qsGNrHe+og+na5Y/KDqTA3M1HVhf77p8gwPs2xkRh7GZI/pK8SOel0QLnihf7d0NaewNuzNyKf5cG3g9cNrJ1SOVa9REiyJxNy6KUt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025421; c=relaxed/simple;
-	bh=mgs4DOMN8w/1SW9mtg7brCjDdhXUPH1T58SO1wFyNMA=;
+	s=arc-20240116; t=1767025424; c=relaxed/simple;
+	bh=3Sn/CXGObT3JFmtMH7B8tQ21yJ/Tvouvac64aiXl84U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b6tvBIP3WVUdAIk7TPIqsyTIJ5/FyTpCHbA2nFJUKZy8FW+qqWh9jx0K/TWPWMlHZBxQMS/ulQLypeYN7/5idFVx78mhD2Mfluhr6LpUkHwhCw4STCbGrfT7PsWrrBSm2KnpQE255V7LZ1sK8niiR0yHOL0jOe2bl8Jm3Xv7wqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MEICeRr7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LdefLHLtVwefBjdJ/OSoPc9RsZK2TFjzBqNdBhSSxSUBmx8/hLYhYQbkHozsHpWJmZAVoJ953ZCykCLbCYDZJi8DHiJHARBUSHCp5rquDAuT9fLrqRb1lZ3/DpxjS6iu4IjQqONvdz2GsTKK2mCHa7VkpVqI1OaEumopEoNeE3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=We4imbqD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MEICeRr7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91128C4CEF7;
-	Mon, 29 Dec 2025 16:23:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="We4imbqD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 738C8C19421;
+	Mon, 29 Dec 2025 16:23:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025420;
-	bh=mgs4DOMN8w/1SW9mtg7brCjDdhXUPH1T58SO1wFyNMA=;
+	s=korg; t=1767025423;
+	bh=3Sn/CXGObT3JFmtMH7B8tQ21yJ/Tvouvac64aiXl84U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MEICeRr7WUvvipfZ5F6VR6HIkKoNFiTEqPHRbIdvOK0nGPsVJGMs+NhTqqKtmAWqu
-	 AcIXGYyApLi4K2IPnt4r9cdbu+jKMFJfmh472U0NiCv+qt/qpNhkrfDTriGmv14Oev
-	 Z4c8Zn4N++HjkCDSUhBdxVNm8lkcT+DYQOLWNIbg=
+	b=We4imbqDziP53M5InMK1O6evsytHeGqHoe99k+gj0okSlnlttTC2CRVbbrALQLN1u
+	 GnHZIXa3HG9Cm3nIyrj3u/9Qj6EfrWSWA0TKX8yC6Qc4kLK7RDzK4x5Iqw/Y/Pwh/f
+	 IbmU71MbUcd5w3m/oGMXUvbx/1ZZjH6td56+490w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuming Fan <shumingf@realtek.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 174/430] ASoC: SDCA: support Q7.8 volume format
-Date: Mon, 29 Dec 2025 17:09:36 +0100
-Message-ID: <20251229160730.764474975@linuxfoundation.org>
+	Luigi Rizzo <lrizzo@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.18 165/430] x86/msi: Make irq_retrigger() functional for posted MSI
+Date: Mon, 29 Dec 2025 17:09:27 +0100
+Message-ID: <20251229160730.435135109@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -52,218 +50,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuming Fan <shumingf@realtek.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 1b0f3f9ee41ee2bdd206667f85ea2aa36dfe6e69 ]
+commit 0edc78b82bea85e1b2165d8e870a5c3535919695 upstream.
 
-The SDCA specification uses Q7.8 volume format.
-This patch adds a field to indicate whether it is SDCA volume control
-and supports the volume settings.
+Luigi reported that retriggering a posted MSI interrupt does not work
+correctly.
 
-Signed-off-by: Shuming Fan <shumingf@realtek.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20251106093335.1363237-1-shumingf@realtek.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 095d62114182 ("ASoC: ops: fix snd_soc_get_volsw for sx controls")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The reason is that the retrigger happens at the vector domain by sending an
+IPI to the actual vector on the target CPU. That works correctly exactly
+once because the posted MSI interrupt chip does not issue an EOI as that's
+only required for the posted MSI notification vector itself.
+
+As a consequence the vector becomes stale in the ISR, which not only
+affects this vector but also any lower priority vector in the affected
+APIC because the ISR bit is not cleared.
+
+Luigi proposed to set the vector in the remap PIR bitmap and raise the
+posted MSI notification vector. That works, but that still does not cure a
+related problem:
+
+  If there is ever a stray interrupt on such a vector, then the related
+  APIC ISR bit becomes stale due to the lack of EOI as described above.
+  Unlikely to happen, but if it happens it's not debuggable at all.
+
+So instead of playing games with the PIR, this can be actually solved
+for both cases by:
+
+ 1) Keeping track of the posted interrupt vector handler state
+
+ 2) Implementing a posted MSI specific irq_ack() callback which checks that
+    state. If the posted vector handler is inactive it issues an EOI,
+    otherwise it delegates that to the posted handler.
+
+This is correct versus affinity changes and concurrent events on the posted
+vector as the actual handler invocation is serialized through the interrupt
+descriptor lock.
+
+Fixes: ed1e48ea4370 ("iommu/vt-d: Enable posted mode for device MSIs")
+Reported-by: Luigi Rizzo <lrizzo@google.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Luigi Rizzo <lrizzo@google.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20251125214631.044440658@linutronix.de
+Closes: https://lore.kernel.org/lkml/20251124104836.3685533-1-lrizzo@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/sound/soc.h        |  1 +
- sound/soc/sdca/sdca_asoc.c | 34 ++++++---------------
- sound/soc/soc-ops.c        | 62 +++++++++++++++++++++++++++++++-------
- 3 files changed, 61 insertions(+), 36 deletions(-)
+ arch/x86/include/asm/irq_remapping.h |    7 +++++++
+ arch/x86/kernel/irq.c                |   23 +++++++++++++++++++++++
+ drivers/iommu/intel/irq_remapping.c  |    8 ++++----
+ 3 files changed, 34 insertions(+), 4 deletions(-)
 
-diff --git a/include/sound/soc.h b/include/sound/soc.h
-index ddc508ff7b9b..a9c058b06ab4 100644
---- a/include/sound/soc.h
-+++ b/include/sound/soc.h
-@@ -1225,6 +1225,7 @@ struct soc_mixer_control {
- 	unsigned int sign_bit;
- 	unsigned int invert:1;
- 	unsigned int autodisable:1;
-+	unsigned int sdca_q78:1;
- #ifdef CONFIG_SND_SOC_TOPOLOGY
- 	struct snd_soc_dobj dobj;
- #endif
-diff --git a/sound/soc/sdca/sdca_asoc.c b/sound/soc/sdca/sdca_asoc.c
-index c493ec530cc5..892b7c028fae 100644
---- a/sound/soc/sdca/sdca_asoc.c
-+++ b/sound/soc/sdca/sdca_asoc.c
-@@ -795,7 +795,6 @@ static int control_limit_kctl(struct device *dev,
- 	struct sdca_control_range *range;
- 	int min, max, step;
- 	unsigned int *tlv;
--	int shift;
- 
- 	if (control->type != SDCA_CTL_DATATYPE_Q7P8DB)
- 		return 0;
-@@ -814,37 +813,22 @@ static int control_limit_kctl(struct device *dev,
- 	min = sign_extend32(min, control->nbits - 1);
- 	max = sign_extend32(max, control->nbits - 1);
- 
--	/*
--	 * FIXME: Only support power of 2 step sizes as this can be supported
--	 * by a simple shift.
--	 */
--	if (hweight32(step) != 1) {
--		dev_err(dev, "%s: %s: currently unsupported step size\n",
--			entity->label, control->label);
--		return -EINVAL;
--	}
--
--	/*
--	 * The SDCA volumes are in steps of 1/256th of a dB, a step down of
--	 * 64 (shift of 6) gives 1/4dB. 1/4dB is the smallest unit that is also
--	 * representable in the ALSA TLVs which are in 1/100ths of a dB.
--	 */
--	shift = max(ffs(step) - 1, 6);
--
- 	tlv = devm_kcalloc(dev, 4, sizeof(*tlv), GFP_KERNEL);
- 	if (!tlv)
- 		return -ENOMEM;
- 
--	tlv[0] = SNDRV_CTL_TLVT_DB_SCALE;
-+	tlv[0] = SNDRV_CTL_TLVT_DB_MINMAX;
- 	tlv[1] = 2 * sizeof(*tlv);
- 	tlv[2] = (min * 100) >> 8;
--	tlv[3] = ((1 << shift) * 100) >> 8;
-+	tlv[3] = (max * 100) >> 8;
-+
-+	step = (step * 100) >> 8;
- 
--	mc->min = min >> shift;
--	mc->max = max >> shift;
--	mc->shift = shift;
--	mc->rshift = shift;
--	mc->sign_bit = 15 - shift;
-+	mc->min = ((int)tlv[2] / step);
-+	mc->max = ((int)tlv[3] / step);
-+	mc->shift = step;
-+	mc->sign_bit = 15;
-+	mc->sdca_q78 = 1;
- 
- 	kctl->tlv.p = tlv;
- 	kctl->access |= SNDRV_CTL_ELEM_ACCESS_TLV_READ;
-diff --git a/sound/soc/soc-ops.c b/sound/soc/soc-ops.c
-index d2b6fb8e0b6c..ce86978c158d 100644
---- a/sound/soc/soc-ops.c
-+++ b/sound/soc/soc-ops.c
-@@ -110,6 +110,36 @@ int snd_soc_put_enum_double(struct snd_kcontrol *kcontrol,
+--- a/arch/x86/include/asm/irq_remapping.h
++++ b/arch/x86/include/asm/irq_remapping.h
+@@ -87,4 +87,11 @@ static inline void panic_if_irq_remap(co
  }
- EXPORT_SYMBOL_GPL(snd_soc_put_enum_double);
  
-+static int sdca_soc_q78_reg_to_ctl(struct soc_mixer_control *mc, unsigned int reg_val,
-+				unsigned int mask, unsigned int shift, int max)
+ #endif /* CONFIG_IRQ_REMAP */
++
++#ifdef CONFIG_X86_POSTED_MSI
++void intel_ack_posted_msi_irq(struct irq_data *irqd);
++#else
++#define intel_ack_posted_msi_irq	NULL
++#endif
++
+ #endif /* __X86_IRQ_REMAPPING_H */
+--- a/arch/x86/kernel/irq.c
++++ b/arch/x86/kernel/irq.c
+@@ -396,6 +396,7 @@ DEFINE_IDTENTRY_SYSVEC_SIMPLE(sysvec_kvm
+ 
+ /* Posted Interrupt Descriptors for coalesced MSIs to be posted */
+ DEFINE_PER_CPU_ALIGNED(struct pi_desc, posted_msi_pi_desc);
++static DEFINE_PER_CPU_CACHE_HOT(bool, posted_msi_handler_active);
+ 
+ void intel_posted_msi_init(void)
+ {
+@@ -413,6 +414,25 @@ void intel_posted_msi_init(void)
+ 	this_cpu_write(posted_msi_pi_desc.ndst, destination);
+ }
+ 
++void intel_ack_posted_msi_irq(struct irq_data *irqd)
 +{
-+	int val = reg_val;
++	irq_move_irq(irqd);
 +
-+	if (WARN_ON(!mc->shift))
-+		return -EINVAL;
-+
-+	val = sign_extend32(val, mc->sign_bit);
-+	val = (((val * 100) >> 8) / (int)mc->shift);
-+	val -= mc->min;
-+
-+	return val & mask;
++	/*
++	 * Handle the rare case that irq_retrigger() raised the actual
++	 * assigned vector on the target CPU, which means that it was not
++	 * invoked via the posted MSI handler below. In that case APIC EOI
++	 * is required as otherwise the ISR entry becomes stale and lower
++	 * priority interrupts are never going to be delivered after that.
++	 *
++	 * If the posted handler invoked the device interrupt handler then
++	 * the EOI would be premature because it would acknowledge the
++	 * posted vector.
++	 */
++	if (unlikely(!__this_cpu_read(posted_msi_handler_active)))
++		apic_eoi();
 +}
 +
-+static unsigned int sdca_soc_q78_ctl_to_reg(struct soc_mixer_control *mc, int val,
-+					 unsigned int mask, unsigned int shift, int max)
-+{
-+	unsigned int ret_val;
-+	int reg_val;
-+
-+	if (WARN_ON(!mc->shift))
-+		return -EINVAL;
-+
-+	reg_val = val + mc->min;
-+	ret_val = (int)((reg_val * mc->shift) << 8) / 100;
-+
-+	return ret_val & mask;
-+}
-+
- static int soc_mixer_reg_to_ctl(struct soc_mixer_control *mc, unsigned int reg_val,
- 				unsigned int mask, unsigned int shift, int max)
+ static __always_inline bool handle_pending_pir(unsigned long *pir, struct pt_regs *regs)
  {
-@@ -197,19 +227,27 @@ static int soc_put_volsw(struct snd_kcontrol *kcontrol,
- 			 struct snd_ctl_elem_value *ucontrol,
- 			 struct soc_mixer_control *mc, int mask, int max)
- {
-+	unsigned int (*ctl_to_reg)(struct soc_mixer_control *, int, unsigned int, unsigned int, int);
- 	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
- 	unsigned int val1, val_mask;
- 	unsigned int val2 = 0;
- 	bool double_r = false;
- 	int ret;
+ 	unsigned long pir_copy[NR_PIR_WORDS];
+@@ -445,6 +465,8 @@ DEFINE_IDTENTRY_SYSVEC(sysvec_posted_msi
  
-+	if (mc->sdca_q78) {
-+		ctl_to_reg = sdca_soc_q78_ctl_to_reg;
-+		val_mask = mask;
-+	} else {
-+		ctl_to_reg = soc_mixer_ctl_to_reg;
-+		val_mask = mask << mc->shift;
-+	}
-+
- 	ret = soc_mixer_valid_ctl(mc, ucontrol->value.integer.value[0], max);
- 	if (ret)
- 		return ret;
+ 	pid = this_cpu_ptr(&posted_msi_pi_desc);
  
--	val1 = soc_mixer_ctl_to_reg(mc, ucontrol->value.integer.value[0],
-+	val1 = ctl_to_reg(mc, ucontrol->value.integer.value[0],
- 				    mask, mc->shift, max);
--	val_mask = mask << mc->shift;
++	/* Mark the handler active for intel_ack_posted_msi_irq() */
++	__this_cpu_write(posted_msi_handler_active, true);
+ 	inc_irq_stat(posted_msi_notification_count);
+ 	irq_enter();
  
- 	if (snd_soc_volsw_is_stereo(mc)) {
- 		ret = soc_mixer_valid_ctl(mc, ucontrol->value.integer.value[1], max);
-@@ -217,14 +255,10 @@ static int soc_put_volsw(struct snd_kcontrol *kcontrol,
- 			return ret;
+@@ -473,6 +495,7 @@ DEFINE_IDTENTRY_SYSVEC(sysvec_posted_msi
  
- 		if (mc->reg == mc->rreg) {
--			val1 |= soc_mixer_ctl_to_reg(mc,
--						     ucontrol->value.integer.value[1],
--						     mask, mc->rshift, max);
-+			val1 |= ctl_to_reg(mc, ucontrol->value.integer.value[1], mask, mc->rshift, max);
- 			val_mask |= mask << mc->rshift;
- 		} else {
--			val2 = soc_mixer_ctl_to_reg(mc,
--						    ucontrol->value.integer.value[1],
--						    mask, mc->shift, max);
-+			val2 = ctl_to_reg(mc, ucontrol->value.integer.value[1], mask, mc->shift, max);
- 			double_r = true;
- 		}
- 	}
-@@ -248,21 +282,27 @@ static int soc_get_volsw(struct snd_kcontrol *kcontrol,
- 			 struct snd_ctl_elem_value *ucontrol,
- 			 struct soc_mixer_control *mc, int mask, int max)
- {
-+	int (*reg_to_ctl)(struct soc_mixer_control *, unsigned int, unsigned int, unsigned int, int);
- 	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
- 	unsigned int reg_val;
- 	int val;
- 
-+	if (mc->sdca_q78)
-+		reg_to_ctl = sdca_soc_q78_reg_to_ctl;
-+	else
-+		reg_to_ctl = soc_mixer_reg_to_ctl;
-+
- 	reg_val = snd_soc_component_read(component, mc->reg);
--	val = soc_mixer_reg_to_ctl(mc, reg_val, mask, mc->shift, max);
-+	val = reg_to_ctl(mc, reg_val, mask, mc->shift, max);
- 
- 	ucontrol->value.integer.value[0] = val;
- 
- 	if (snd_soc_volsw_is_stereo(mc)) {
- 		if (mc->reg == mc->rreg) {
--			val = soc_mixer_reg_to_ctl(mc, reg_val, mask, mc->rshift, max);
-+			val = reg_to_ctl(mc, reg_val, mask, mc->rshift, max);
- 		} else {
- 			reg_val = snd_soc_component_read(component, mc->rreg);
--			val = soc_mixer_reg_to_ctl(mc, reg_val, mask, mc->shift, max);
-+			val = reg_to_ctl(mc, reg_val, mask, mc->shift, max);
- 		}
- 
- 		ucontrol->value.integer.value[1] = val;
--- 
-2.51.0
-
+ 	apic_eoi();
+ 	irq_exit();
++	__this_cpu_write(posted_msi_handler_active, false);
+ 	set_irq_regs(old_regs);
+ }
+ #endif /* X86_POSTED_MSI */
+--- a/drivers/iommu/intel/irq_remapping.c
++++ b/drivers/iommu/intel/irq_remapping.c
+@@ -1303,17 +1303,17 @@ static struct irq_chip intel_ir_chip = {
+  *	irq_enter();
+  *		handle_edge_irq()
+  *			irq_chip_ack_parent()
+- *				irq_move_irq(); // No EOI
++ *				intel_ack_posted_msi_irq(); // No EOI
+  *			handle_irq_event()
+  *				driver_handler()
+  *		handle_edge_irq()
+  *			irq_chip_ack_parent()
+- *				irq_move_irq(); // No EOI
++ *				intel_ack_posted_msi_irq(); // No EOI
+  *			handle_irq_event()
+  *				driver_handler()
+  *		handle_edge_irq()
+  *			irq_chip_ack_parent()
+- *				irq_move_irq(); // No EOI
++ *				intel_ack_posted_msi_irq(); // No EOI
+  *			handle_irq_event()
+  *				driver_handler()
+  *	apic_eoi()
+@@ -1322,7 +1322,7 @@ static struct irq_chip intel_ir_chip = {
+  */
+ static struct irq_chip intel_ir_chip_post_msi = {
+ 	.name			= "INTEL-IR-POST",
+-	.irq_ack		= irq_move_irq,
++	.irq_ack		= intel_ack_posted_msi_irq,
+ 	.irq_set_affinity	= intel_ir_set_affinity,
+ 	.irq_compose_msi_msg	= intel_ir_compose_msi_msg,
+ 	.irq_set_vcpu_affinity	= intel_ir_set_vcpu_affinity,
 
 
