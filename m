@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D1B347C6;
-	Mon, 29 Dec 2025 16:16:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B55F347C6;
+	Mon, 29 Dec 2025 16:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025010; cv=none; b=Gwvwi4wsSIcF3104pps1qg7woqUKegLe2wgdbpqcpObPaxTtmJcJmjcsT3Wz4RVHnwhQG+2fyrsjh7f5PJo2I5Xl76zR4Q7e0dgyCTb3eI5kT4KYUsxmWOTjU44mWYKu2I5qZPok1MpEUuk9E0N9JBy3fzMVdKVIUorBgCGRd0w=
+	t=1767025013; cv=none; b=DJeDCdivIbiGhZT4eNvFFgFB3XxB2sftO4myn41L/Hf1h/nPqsrbuucBUZbAYfmVcymnReRM303QuKzZz+XsjojJeg34ZZZwQVrfOmj146oRm2X5VLUP282bDeUWNGcDW0ijC4WcjRqAtCc/Jtvd3U7TB4gRONiqOcKX4Si8+pY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025010; c=relaxed/simple;
-	bh=bU5QnyOi+OgX+HxiYlRPqbdwcJNngANIwgva0PdD9+M=;
+	s=arc-20240116; t=1767025013; c=relaxed/simple;
+	bh=tz6ymlzumdUMGJe/hYog/GOPj5snTItYjRz0DyLG3Vg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jky3n6FGLVg72sjUda2ZONyejdqGMt7FLze2QAegsBE5MycFrRfIB40QBQ3x0PdkuTsxIjasmBEUu3ooMqabSh76lnbayECgiXT2TqXVPaELHgf5isPq7ZEsUWr1CBJ+2GHPpRxH0CSlBAqI3eczYnXksIg/y2QBqQ6m2F7dEaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1F7y4gfC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KMLomNkBteT6b3D4HcirXmfC02n9KJDCgohz6o2rFqXl2Bum+Sk8/J99BsL6zYXu/n5eulEID6d0X9rvddiA53Mu8y1REvNP1kCvxuA44AEj0cYYacpiCeq4AP5GlMRdGgWzIoqwCt2xRFtVyM5izPiW4tOeeDxn+nrApFaIXyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HxJ/axSn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1F7y4gfC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CDCEC4CEF7;
-	Mon, 29 Dec 2025 16:16:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HxJ/axSn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C42BC4CEF7;
+	Mon, 29 Dec 2025 16:16:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025010;
-	bh=bU5QnyOi+OgX+HxiYlRPqbdwcJNngANIwgva0PdD9+M=;
+	s=korg; t=1767025013;
+	bh=tz6ymlzumdUMGJe/hYog/GOPj5snTItYjRz0DyLG3Vg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1F7y4gfCAh4V7CeR4ba0vvw0YW1mPV3ci/UVDqUxCUR/MwJ823zq0a0jwC+Kenogu
-	 /+atKkbuQAAfK5tK77mF4biKX/AWKb/RvGmtiwcSbGU/Fz/imeyg3YBujZHDG8fdE7
-	 CMf/lwHeXMA/UfK+753I9XO6IxDRRbZowRwgBFKc=
+	b=HxJ/axSnUbMbKfRUvVZEBlz3+mfPg3UXvWDd2IXjwr5VK1jswQLQYNdbvWftgT1AE
+	 bZ6xm1GQgioSzg/zhhhpxLza3pvp4IM8clMfurpRYUnPhA2H2el9SlqmH4Gpt03Mng
+	 wkFBDRIvNh7G8/ohFvdk3AuD0B2SQDBf56pza5N8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+005d2a9ecd9fbf525f6a@syzkaller.appspotmail.com,
+	Yang Chenzhi <yang.chenzhi@vivo.com>,
 	Viacheslav Dubeyko <slava@dubeyko.com>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Yangtao Li <frank.li@vivo.com>,
-	linux-fsdevel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 029/430] hfsplus: fix volume corruption issue for generic/070
-Date: Mon, 29 Dec 2025 17:07:11 +0100
-Message-ID: <20251229160725.232300460@linuxfoundation.org>
+Subject: [PATCH 6.18 030/430] hfsplus: fix missing hfs_bnode_get() in __hfs_bnode_create
+Date: Mon, 29 Dec 2025 17:07:12 +0100
+Message-ID: <20251229160725.269200462@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -53,120 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viacheslav Dubeyko <slava@dubeyko.com>
+From: Yang Chenzhi <yang.chenzhi@vivo.com>
 
-[ Upstream commit ed490f36f439b877393c12a2113601e4145a5a56 ]
+[ Upstream commit 152af114287851583cf7e0abc10129941f19466a ]
 
-The xfstests' test-case generic/070 leaves HFS+ volume
-in corrupted state:
+When sync() and link() are called concurrently, both threads may
+enter hfs_bnode_find() without finding the node in the hash table
+and proceed to create it.
 
-sudo ./check generic/070
-FSTYP -- hfsplus
-PLATFORM -- Linux/x86_64 hfsplus-testing-0001 6.17.0-rc1+ #4 SMP PREEMPT_DYNAMIC Wed Oct 1 15:02:44 PDT 2025
-MKFS_OPTIONS -- /dev/loop51
-MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
+Thread A:
+  hfsplus_write_inode()
+    -> hfsplus_write_system_inode()
+      -> hfs_btree_write()
+        -> hfs_bnode_find(tree, 0)
+          -> __hfs_bnode_create(tree, 0)
 
-generic/070 _check_generic_filesystem: filesystem on /dev/loop50 is inconsistent
-(see xfstests-dev/results//generic/070.full for details)
+Thread B:
+  hfsplus_create_cat()
+    -> hfs_brec_insert()
+      -> hfs_bnode_split()
+        -> hfs_bmap_alloc()
+          -> hfs_bnode_find(tree, 0)
+            -> __hfs_bnode_create(tree, 0)
 
-Ran: generic/070
-Failures: generic/070
-Failed 1 of 1 tests
+In this case, thread A creates the bnode, sets refcnt=1, and hashes it.
+Thread B also tries to create the same bnode, notices it has already
+been inserted, drops its own instance, and uses the hashed one without
+getting the node.
 
-sudo fsck.hfsplus -d /dev/loop50
-** /dev/loop50
-Using cacheBlockSize=32K cacheTotalBlock=1024 cacheSize=32768K.
-Executing fsck_hfs (version 540.1-Linux).
-** Checking non-journaled HFS Plus Volume.
-The volume name is test
-** Checking extents overflow file.
-Unused node is not erased (node = 1)
-** Checking catalog file.
-** Checking multi-linked files.
-** Checking catalog hierarchy.
-** Checking extended attributes file.
-** Checking volume bitmap.
-** Checking volume information.
-Verify Status: VIStat = 0x0000, ABTStat = 0x0000 EBTStat = 0x0004
-CBTStat = 0x0000 CatStat = 0x00000000
-** Repairing volume.
-** Rechecking volume.
-** Checking non-journaled HFS Plus Volume.
-The volume name is test
-** Checking extents overflow file.
-** Checking catalog file.
-** Checking multi-linked files.
-** Checking catalog hierarchy.
-** Checking extended attributes file.
-** Checking volume bitmap.
-** Checking volume information.
-** The volume test was repaired successfully.
+```
 
-It is possible to see that fsck.hfsplus detected not
-erased and unused node for the case of extents overflow file.
-The HFS+ logic has special method that defines if the node
-should be erased:
+	node2 = hfs_bnode_findhash(tree, cnid);
+	if (!node2) {                                 <- Thread A
+		hash = hfs_bnode_hash(cnid);
+		node->next_hash = tree->node_hash[hash];
+		tree->node_hash[hash] = node;
+		tree->node_hash_cnt++;
+	} else {                                      <- Thread B
+		spin_unlock(&tree->hash_lock);
+		kfree(node);
+		wait_event(node2->lock_wq,
+			!test_bit(HFS_BNODE_NEW, &node2->flags));
+		return node2;
+	}
+```
 
-bool hfs_bnode_need_zeroout(struct hfs_btree *tree)
-{
-	struct super_block *sb = tree->inode->i_sb;
-	struct hfsplus_sb_info *sbi = HFSPLUS_SB(sb);
-	const u32 volume_attr = be32_to_cpu(sbi->s_vhdr->attributes);
+However, hfs_bnode_find() requires each call to take a reference.
+Here both threads end up setting refcnt=1. When they later put the node,
+this triggers:
 
-	return tree->cnid == HFSPLUS_CAT_CNID &&
-		volume_attr & HFSPLUS_VOL_UNUSED_NODE_FIX;
-}
+BUG_ON(!atomic_read(&node->refcnt))
 
-However, it is possible to see that this method works
-only for the case of catalog file. But debugging of the issue
-has shown that HFSPLUS_VOL_UNUSED_NODE_FIX attribute has been
-requested for the extents overflow file too:
+In this scenario, Thread B in fact finds the node in the hash table
+rather than creating a new one, and thus must take a reference.
 
-catalog file
-kernel: hfsplus: node 4, num_recs 0, flags 0x10
-kernel: hfsplus: tree->cnid 4, volume_attr 0x80000800
+Fix this by calling hfs_bnode_get() when reusing a bnode newly created by
+another thread to ensure the refcount is updated correctly.
 
-extents overflow file
-kernel: hfsplus: node 1, num_recs 0, flags 0x10
-kernel: hfsplus: tree->cnid 3, volume_attr 0x80000800
+A similar bug was fixed in HFS long ago in commit
+a9dc087fd3c4 ("fix missing hfs_bnode_get() in __hfs_bnode_create")
+but the same issue remained in HFS+ until now.
 
-This patch modifies the hfs_bnode_need_zeroout() by checking
-only volume_attr but not the b-tree ID because node zeroing
-can be requested for all HFS+ b-tree types.
-
-sudo ./check generic/070
-FSTYP         -- hfsplus
-PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 6.18.0-rc3+ #79 SMP PREEMPT_DYNAMIC Fri Oct 31 16:07:42 PDT 2025
-MKFS_OPTIONS  -- /dev/loop51
-MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
-
-generic/070 33s ...  34s
-Ran: generic/070
-Passed all 1 tests
-
+Reported-by: syzbot+005d2a9ecd9fbf525f6a@syzkaller.appspotmail.com
+Signed-off-by: Yang Chenzhi <yang.chenzhi@vivo.com>
 Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-cc: Yangtao Li <frank.li@vivo.com>
-cc: linux-fsdevel@vger.kernel.org
-Link: https://lore.kernel.org/r/20251101001229.247432-1-slava@dubeyko.com
+Link: https://lore.kernel.org/r/20250829093912.611853-1-yang.chenzhi@vivo.com
 Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfsplus/bnode.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/hfsplus/bnode.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/fs/hfsplus/bnode.c b/fs/hfsplus/bnode.c
-index 63e652ad1e0de..edf7e27e1e375 100644
+index edf7e27e1e375..482a6c5faa197 100644
 --- a/fs/hfsplus/bnode.c
 +++ b/fs/hfsplus/bnode.c
-@@ -704,6 +704,5 @@ bool hfs_bnode_need_zeroout(struct hfs_btree *tree)
- 	struct hfsplus_sb_info *sbi = HFSPLUS_SB(sb);
- 	const u32 volume_attr = be32_to_cpu(sbi->s_vhdr->attributes);
- 
--	return tree->cnid == HFSPLUS_CAT_CNID &&
--		volume_attr & HFSPLUS_VOL_UNUSED_NODE_FIX;
-+	return volume_attr & HFSPLUS_VOL_UNUSED_NODE_FIX;
- }
+@@ -481,6 +481,7 @@ static struct hfs_bnode *__hfs_bnode_create(struct hfs_btree *tree, u32 cnid)
+ 		tree->node_hash[hash] = node;
+ 		tree->node_hash_cnt++;
+ 	} else {
++		hfs_bnode_get(node2);
+ 		spin_unlock(&tree->hash_lock);
+ 		kfree(node);
+ 		wait_event(node2->lock_wq,
 -- 
 2.51.0
 
