@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80872330B31;
-	Mon, 29 Dec 2025 16:18:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809BA330B31;
+	Mon, 29 Dec 2025 16:18:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025115; cv=none; b=YfR/ndc0JEOIE+tGYYb/AJZIJUFhTcQhAD6WOOSl0VXl0NMMY6OYHmZWK+BvD4McS7ViysS1ReqgKexfw/3eVtZIBrHM2AN+DsnJzEcPoknWY2NbsfvNZWtTCNONEeKQRWFIFCZamg7apJPX4v0J8krPLpn48bkKRk6+IiPQtHU=
+	t=1767025118; cv=none; b=GoTem8DrtKbJuXecOAoWuTUXyTz53GOXs9VNVZwlQWHo9BvW7qWO2ti0U4TQ7h/x0rfOe1cmTcnIvSxV6E/8K1A6P0FupGNNDx/0IqzQhPIJFoBhr5euAtLbECOiZT9rKOWj9R97avnMTPTMpNwnhavRX8zzhplwZbgHw9xw48U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025115; c=relaxed/simple;
-	bh=nXOjy5VSPo/ei9d2XirIWDVkHUzjKE8SkIMybhrR5zE=;
+	s=arc-20240116; t=1767025118; c=relaxed/simple;
+	bh=01IJvh2EWZWRtq0UojtQ3QBfYBvLrLcZZDoCHzKpAxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T5t4KMDDe84x/FNbuySmix+yV15R3weTdWSHFs8fPQxGv+KhzY3dco4NSUICrXavgMNb9bZuvcOhcsLay3hTHEt48WtVH5jo1VBw1P/AX9R7MQ14vv26qDQUQ6BMvQvRnQpkwzAsU4SV9O3Die0USeRWER7p1OdIMB84tYGHXaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FAiJ5s5a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mlp9YOtcj/F2cyFDu341Cb/Hsn/7Gxh1W3X0eLEaYvBNWFDOk3usKpyQVPrb60Gxe8B3Z3rmoF4VeNAfq/btCzrgffuZPY4NZuIesIpJSid+ubdY3JiO78M6XQi+82mGxK6x/oynEWohkz8sWT30upvh7vko8kflQ85aYVbQ4cU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2keu2YQY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FAiJ5s5a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 098C7C4CEF7;
-	Mon, 29 Dec 2025 16:18:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2keu2YQY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D60CAC4CEF7;
+	Mon, 29 Dec 2025 16:18:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025115;
-	bh=nXOjy5VSPo/ei9d2XirIWDVkHUzjKE8SkIMybhrR5zE=;
+	s=korg; t=1767025118;
+	bh=01IJvh2EWZWRtq0UojtQ3QBfYBvLrLcZZDoCHzKpAxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FAiJ5s5aRBzW8C1q/La+/QmB4LWoAfuLylTxiH8dd/LauHqR22Cw+HlpdPDEI//xs
-	 q51imQ+gjYUleCAw/iE+qBmGxuYmL0nR7Tzj7HZ8tzI4l7nu7eTqILRzvR34ezTvGY
-	 7le0rPE011GZfPg0G/MvIUt418jgsSBsGLg1pBmw=
+	b=2keu2YQYSvWvTMxWzFQaX2MU9uDDDi7QQGdzHcYWI5DRndzuO94qQcN1jo9Af+Rt4
+	 FMfzmoeInko35++74HO6MFgHQXWQ8LIPhvEoQq7kRFV+f06ERsdUnMox1tQjikXMrb
+	 x+2UyvBagTbTIMJ69P8laayj/i3wI/r1N19bf9io=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 067/430] mlxsw: spectrum_router: Fix neighbour use-after-free
-Date: Mon, 29 Dec 2025 17:07:49 +0100
-Message-ID: <20251229160726.831239627@linuxfoundation.org>
+Subject: [PATCH 6.18 058/430] net: phy: realtek: eliminate priv->phycr2 variable
+Date: Mon, 29 Dec 2025 17:07:40 +0100
+Message-ID: <20251229160726.502973932@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -53,197 +51,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 8b0e69763ef948fb872a7767df4be665d18f5fd4 ]
+[ Upstream commit 27033d06917758d47162581da7e9de8004049dee ]
 
-We sometimes observe use-after-free when dereferencing a neighbour [1].
-The problem seems to be that the driver stores a pointer to the
-neighbour, but without holding a reference on it. A reference is only
-taken when the neighbour is used by a nexthop.
+The RTL8211F(D)(I)-VD-CG PHY also has support for disabling the CLKOUT,
+and we'd like to introduce the "realtek,clkout-disable" property for
+that.
 
-Fix by simplifying the reference counting scheme. Always take a
-reference when storing a neighbour pointer in a neighbour entry. Avoid
-taking a referencing when the neighbour is used by a nexthop as the
-neighbour entry associated with the nexthop already holds a reference.
+But it isn't done through the PHYCR2 register, and it becomes awkward to
+have the driver pretend that it is. So just replace the machine-level
+"u16 phycr2" variable with a logical "bool disable_clk_out", which
+scales better to the other PHY as well.
 
-Tested by running the test that uncovered the problem over 300 times.
-Without this patch the problem was reproduced after a handful of
-iterations.
+The change is a complete functional equivalent. Before, if the device
+tree property was absent, priv->phycr2 would contain the RTL8211F_CLKOUT_EN
+bit as read from hardware. Now, we don't save priv->phycr2, but we just
+don't call phy_modify_paged() on it. Also, we can simply call
+phy_modify_paged() with the "set" argument to 0.
 
-[1]
-BUG: KASAN: slab-use-after-free in mlxsw_sp_neigh_entry_update+0x2d4/0x310
-Read of size 8 at addr ffff88817f8e3420 by task ip/3929
-
-CPU: 3 UID: 0 PID: 3929 Comm: ip Not tainted 6.18.0-rc4-virtme-g36b21a067510 #3 PREEMPT(full)
-Hardware name: Nvidia SN5600/VMOD0013, BIOS 5.13 05/31/2023
-Call Trace:
- <TASK>
- dump_stack_lvl+0x6f/0xa0
- print_address_description.constprop.0+0x6e/0x300
- print_report+0xfc/0x1fb
- kasan_report+0xe4/0x110
- mlxsw_sp_neigh_entry_update+0x2d4/0x310
- mlxsw_sp_router_rif_gone_sync+0x35f/0x510
- mlxsw_sp_rif_destroy+0x1ea/0x730
- mlxsw_sp_inetaddr_port_vlan_event+0xa1/0x1b0
- __mlxsw_sp_inetaddr_lag_event+0xcc/0x130
- __mlxsw_sp_inetaddr_event+0xf5/0x3c0
- mlxsw_sp_router_netdevice_event+0x1015/0x1580
- notifier_call_chain+0xcc/0x150
- call_netdevice_notifiers_info+0x7e/0x100
- __netdev_upper_dev_unlink+0x10b/0x210
- netdev_upper_dev_unlink+0x79/0xa0
- vrf_del_slave+0x18/0x50
- do_set_master+0x146/0x7d0
- do_setlink.isra.0+0x9a0/0x2880
- rtnl_newlink+0x637/0xb20
- rtnetlink_rcv_msg+0x6fe/0xb90
- netlink_rcv_skb+0x123/0x380
- netlink_unicast+0x4a3/0x770
- netlink_sendmsg+0x75b/0xc90
- __sock_sendmsg+0xbe/0x160
- ____sys_sendmsg+0x5b2/0x7d0
- ___sys_sendmsg+0xfd/0x180
- __sys_sendmsg+0x124/0x1c0
- do_syscall_64+0xbb/0xfd0
- entry_SYSCALL_64_after_hwframe+0x4b/0x53
-[...]
-
-Allocated by task 109:
- kasan_save_stack+0x30/0x50
- kasan_save_track+0x14/0x30
- __kasan_kmalloc+0x7b/0x90
- __kmalloc_noprof+0x2c1/0x790
- neigh_alloc+0x6af/0x8f0
- ___neigh_create+0x63/0xe90
- mlxsw_sp_nexthop_neigh_init+0x430/0x7e0
- mlxsw_sp_nexthop_type_init+0x212/0x960
- mlxsw_sp_nexthop6_group_info_init.constprop.0+0x81f/0x1280
- mlxsw_sp_nexthop6_group_get+0x392/0x6a0
- mlxsw_sp_fib6_entry_create+0x46a/0xfd0
- mlxsw_sp_router_fib6_replace+0x1ed/0x5f0
- mlxsw_sp_router_fib6_event_work+0x10a/0x2a0
- process_one_work+0xd57/0x1390
- worker_thread+0x4d6/0xd40
- kthread+0x355/0x5b0
- ret_from_fork+0x1d4/0x270
- ret_from_fork_asm+0x11/0x20
-
-Freed by task 154:
- kasan_save_stack+0x30/0x50
- kasan_save_track+0x14/0x30
- __kasan_save_free_info+0x3b/0x60
- __kasan_slab_free+0x43/0x70
- kmem_cache_free_bulk.part.0+0x1eb/0x5e0
- kvfree_rcu_bulk+0x1f2/0x260
- kfree_rcu_work+0x130/0x1b0
- process_one_work+0xd57/0x1390
- worker_thread+0x4d6/0xd40
- kthread+0x355/0x5b0
- ret_from_fork+0x1d4/0x270
- ret_from_fork_asm+0x11/0x20
-
-Last potentially related work creation:
- kasan_save_stack+0x30/0x50
- kasan_record_aux_stack+0x8c/0xa0
- kvfree_call_rcu+0x93/0x5b0
- mlxsw_sp_router_neigh_event_work+0x67d/0x860
- process_one_work+0xd57/0x1390
- worker_thread+0x4d6/0xd40
- kthread+0x355/0x5b0
- ret_from_fork+0x1d4/0x270
- ret_from_fork_asm+0x11/0x20
-
-Fixes: 6cf3c971dc84 ("mlxsw: spectrum_router: Add private neigh table")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/92d75e21d95d163a41b5cea67a15cd33f547cba6.1764695650.git.petrm@nvidia.com
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20251117234033.345679-3-vladimir.oltean@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 4f0638b12451 ("net: phy: RTL8211FVD: Restore disabling of PHY-mode EEE")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlxsw/spectrum_router.c   | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/net/phy/realtek/realtek_main.c | 38 ++++++++++++++++----------
+ 1 file changed, 23 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
-index f4e9ecaeb104f..2d0e89bd2fb9c 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
-@@ -2265,6 +2265,7 @@ mlxsw_sp_neigh_entry_alloc(struct mlxsw_sp *mlxsw_sp, struct neighbour *n,
- 	if (!neigh_entry)
- 		return NULL;
+diff --git a/drivers/net/phy/realtek/realtek_main.c b/drivers/net/phy/realtek/realtek_main.c
+index b26f4d1c6bbfa..1625919a47be8 100644
+--- a/drivers/net/phy/realtek/realtek_main.c
++++ b/drivers/net/phy/realtek/realtek_main.c
+@@ -167,8 +167,8 @@ MODULE_LICENSE("GPL");
  
-+	neigh_hold(n);
- 	neigh_entry->key.n = n;
- 	neigh_entry->rif = rif;
- 	INIT_LIST_HEAD(&neigh_entry->nexthop_list);
-@@ -2274,6 +2275,7 @@ mlxsw_sp_neigh_entry_alloc(struct mlxsw_sp *mlxsw_sp, struct neighbour *n,
+ struct rtl821x_priv {
+ 	u16 phycr1;
+-	u16 phycr2;
+ 	bool has_phycr2;
++	bool disable_clk_out;
+ 	struct clk *clk;
+ 	/* rtl8211f */
+ 	u16 iner;
+@@ -239,15 +239,8 @@ static int rtl821x_probe(struct phy_device *phydev)
+ 		priv->phycr1 |= RTL8211F_ALDPS_PLL_OFF | RTL8211F_ALDPS_ENABLE | RTL8211F_ALDPS_XTAL_OFF;
  
- static void mlxsw_sp_neigh_entry_free(struct mlxsw_sp_neigh_entry *neigh_entry)
- {
-+	neigh_release(neigh_entry->key.n);
- 	kfree(neigh_entry);
- }
- 
-@@ -4320,6 +4322,8 @@ mlxsw_sp_nexthop_dead_neigh_replace(struct mlxsw_sp *mlxsw_sp,
- 	if (err)
- 		goto err_neigh_entry_insert;
- 
-+	neigh_release(old_n);
-+
- 	read_lock_bh(&n->lock);
- 	nud_state = n->nud_state;
- 	dead = n->dead;
-@@ -4328,14 +4332,10 @@ mlxsw_sp_nexthop_dead_neigh_replace(struct mlxsw_sp *mlxsw_sp,
- 
- 	list_for_each_entry(nh, &neigh_entry->nexthop_list,
- 			    neigh_list_node) {
--		neigh_release(old_n);
--		neigh_clone(n);
- 		__mlxsw_sp_nexthop_neigh_update(nh, !entry_connected);
- 		mlxsw_sp_nexthop_group_refresh(mlxsw_sp, nh->nhgi->nh_grp);
- 	}
- 
--	neigh_release(n);
+ 	priv->has_phycr2 = !(phy_id == RTL_8211FVD_PHYID);
+-	if (priv->has_phycr2) {
+-		ret = phy_read_paged(phydev, RTL8211F_PHYCR_PAGE, RTL8211F_PHYCR2);
+-		if (ret < 0)
+-			return ret;
 -
+-		priv->phycr2 = ret & RTL8211F_CLKOUT_EN;
+-		if (of_property_read_bool(dev->of_node, "realtek,clkout-disable"))
+-			priv->phycr2 &= ~RTL8211F_CLKOUT_EN;
+-	}
++	priv->disable_clk_out = of_property_read_bool(dev->of_node,
++						      "realtek,clkout-disable");
+ 
+ 	phydev->priv = priv;
+ 
+@@ -627,6 +620,23 @@ static int rtl8211f_config_rgmii_delay(struct phy_device *phydev)
  	return 0;
- 
- err_neigh_entry_insert:
-@@ -4428,6 +4428,11 @@ static int mlxsw_sp_nexthop_neigh_init(struct mlxsw_sp *mlxsw_sp,
- 		}
- 	}
- 
-+	/* Release the reference taken by neigh_lookup() / neigh_create() since
-+	 * neigh_entry already holds one.
-+	 */
-+	neigh_release(n);
-+
- 	/* If that is the first nexthop connected to that neigh, add to
- 	 * nexthop_neighs_list
- 	 */
-@@ -4454,11 +4459,9 @@ static void mlxsw_sp_nexthop_neigh_fini(struct mlxsw_sp *mlxsw_sp,
- 					struct mlxsw_sp_nexthop *nh)
- {
- 	struct mlxsw_sp_neigh_entry *neigh_entry = nh->neigh_entry;
--	struct neighbour *n;
- 
- 	if (!neigh_entry)
- 		return;
--	n = neigh_entry->key.n;
- 
- 	__mlxsw_sp_nexthop_neigh_update(nh, true);
- 	list_del(&nh->neigh_list_node);
-@@ -4472,8 +4475,6 @@ static void mlxsw_sp_nexthop_neigh_fini(struct mlxsw_sp *mlxsw_sp,
- 
- 	if (!neigh_entry->connected && list_empty(&neigh_entry->nexthop_list))
- 		mlxsw_sp_neigh_entry_destroy(mlxsw_sp, neigh_entry);
--
--	neigh_release(n);
  }
  
- static bool mlxsw_sp_ipip_netdev_ul_up(struct net_device *ol_dev)
++static int rtl8211f_config_clk_out(struct phy_device *phydev)
++{
++	struct rtl821x_priv *priv = phydev->priv;
++	int ret;
++
++	/* The value is preserved if the device tree property is absent */
++	if (!priv->disable_clk_out)
++		return 0;
++
++	ret = phy_modify_paged(phydev, RTL8211F_PHYCR_PAGE,
++			       RTL8211F_PHYCR2, RTL8211F_CLKOUT_EN, 0);
++	if (ret)
++		return ret;
++
++	return genphy_soft_reset(phydev);
++}
++
+ static int rtl8211f_config_init(struct phy_device *phydev)
+ {
+ 	struct rtl821x_priv *priv = phydev->priv;
+@@ -655,16 +665,14 @@ static int rtl8211f_config_init(struct phy_device *phydev)
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = phy_modify_paged(phydev, RTL8211F_PHYCR_PAGE,
+-			       RTL8211F_PHYCR2, RTL8211F_CLKOUT_EN,
+-			       priv->phycr2);
+-	if (ret < 0) {
++	ret = rtl8211f_config_clk_out(phydev);
++	if (ret) {
+ 		dev_err(dev, "clkout configuration failed: %pe\n",
+ 			ERR_PTR(ret));
+ 		return ret;
+ 	}
+ 
+-	return genphy_soft_reset(phydev);
++	return 0;
+ }
+ 
+ static int rtl821x_suspend(struct phy_device *phydev)
 -- 
 2.51.0
 
