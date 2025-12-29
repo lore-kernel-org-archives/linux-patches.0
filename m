@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35E16334690;
-	Mon, 29 Dec 2025 16:32:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D26332EA9;
+	Mon, 29 Dec 2025 16:32:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025922; cv=none; b=sca9C4UNkpljT0soTTxZypyxaWchMeIwyqb5b1+csakVZfHOaiBGneueP98HN3GxmK0f20tLwM3qu09DYKR0c47F43MXbi4pLSOouz0vAveKwGiuwXOn8pOBkP3/4qsr1kWQ+P1/7dIYZuYUecuR3BBe5LeLVHnFFIOAk4YTxAA=
+	t=1767025925; cv=none; b=WhXsuhdhD/5m9QRA28FSiw1xDU0armBixP14xsjZnZsAk1rIqc6oVRUdCRSza5dTsbbFoc38a6S5i8kFONmu1zTdfLkBk1F/Iqf9zIxNR5LBS7vwtBVYo2EpdsmPCZuqhPj2rStBLsHEJhY685hp2HJ+r7wthx76YdgltynNZnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025922; c=relaxed/simple;
-	bh=OJpSrXIlBJV+0LiDoXBdEqjqg2NMCCsINRgkYaCcNOU=;
+	s=arc-20240116; t=1767025925; c=relaxed/simple;
+	bh=3vtf5WN2VH/n4wDqe++MV2iLwpmyP2GHvxcVdmR9kbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jdfDlY1bvpHBILx1IRBB3RMUqP52tmn4OkC92VEj/gv4JlCBJZGrTx9iuSSL1Xru1JGrTylRYvue1aHYBwwspCriQo6T/7IkSbTewc+FpidON6i9bVClCnAY33YYU/ppm6P9c+KT62OoRUAdmC4PfNFzRYLCaiMtMHipeloFQIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HumBFlIk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YTYwlVLLVbjJfrzwk+3RVksLH6Ki3IVeTP50IJBI3x5y6bKqZGJhLiMuVfkfZK5dM++slbHVhTzvj2S+8+Y+xk9s08dmJ1BLGE+NxZvzxg5NZQFI1w4rhnAnCoh6gTVLOB9ZcPcDwQQaInuNXLQCMKc52BpaEZ2TOTE7X5xlwiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=muVt3iJH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HumBFlIk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B034EC4CEF7;
-	Mon, 29 Dec 2025 16:32:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="muVt3iJH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89DC3C4CEF7;
+	Mon, 29 Dec 2025 16:32:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025922;
-	bh=OJpSrXIlBJV+0LiDoXBdEqjqg2NMCCsINRgkYaCcNOU=;
+	s=korg; t=1767025924;
+	bh=3vtf5WN2VH/n4wDqe++MV2iLwpmyP2GHvxcVdmR9kbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HumBFlIkaC3WOp9irK7sb2RZgBXVa6pYq2Unxex8IKPYaiUOwxWCGxxQgcJ/tMdyk
-	 sOFbFhs4UiKEF+BYPyUz4YCR9jlV6AJJZ4G4zGIvBwD5FEpbT/7124g3zTn8fhQM0l
-	 RU+dSiPqq86u3rjbcTfxF0sFa7wung35Fs6sGIfM=
+	b=muVt3iJHUMOuRSbcwdBvjovo0i+8TRPt7ZgMqrCJXwcciOoo1D1CcuY7+WWxhatfz
+	 /2Q7MFOtQtIoClrQWcNe+dSlj1Y5TuGex2Rcd8ARszfOqKEOeD4WolSyeoQZ7Vro9p
+	 tC8EoX+Ras3JHSU0ZRlPGnICS51/Ucfzh3lEEWAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Mattson <jmattson@google.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.18 343/430] KVM: SVM: Mark VMCB_NPT as dirty on nested VMRUN
-Date: Mon, 29 Dec 2025 17:12:25 +0100
-Message-ID: <20251229160736.951771689@linuxfoundation.org>
+	Sachin P Bappalige <sachinpb@linux.ibm.com>,
+	Srikar Dronamraju <srikar@linux.ibm.com>,
+	"Nysal Jan K.A." <nysal@linux.ibm.com>,
+	Samir M <samir@linux.ibm.com>,
+	Sourabh Jain <sourabhjain@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.18 378/430] powerpc/kexec: Enable SMT before waking offline CPUs
+Date: Mon, 29 Dec 2025 17:13:00 +0100
+Message-ID: <20251229160738.229872549@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -50,36 +54,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jim Mattson <jmattson@google.com>
+From: Nysal Jan K.A. <nysal@linux.ibm.com>
 
-commit 7c8b465a1c91f674655ea9cec5083744ec5f796a upstream.
+commit c2296a1e42418556efbeb5636c4fa6aa6106713a upstream.
 
-Mark the VMCB_NPT bit as dirty in nested_vmcb02_prepare_save()
-on every nested VMRUN.
+If SMT is disabled or a partial SMT state is enabled, when a new kernel
+image is loaded for kexec, on reboot the following warning is observed:
 
-If L1 changes the PAT MSR between two VMRUN instructions on the same
-L1 vCPU, the g_pat field in the associated vmcb02 will change, and the
-VMCB_NPT clean bit should be cleared.
+kexec: Waking offline cpu 228.
+WARNING: CPU: 0 PID: 9062 at arch/powerpc/kexec/core_64.c:223 kexec_prepare_cpus+0x1b0/0x1bc
+[snip]
+ NIP kexec_prepare_cpus+0x1b0/0x1bc
+ LR  kexec_prepare_cpus+0x1a0/0x1bc
+ Call Trace:
+  kexec_prepare_cpus+0x1a0/0x1bc (unreliable)
+  default_machine_kexec+0x160/0x19c
+  machine_kexec+0x80/0x88
+  kernel_kexec+0xd0/0x118
+  __do_sys_reboot+0x210/0x2c4
+  system_call_exception+0x124/0x320
+  system_call_vectored_common+0x15c/0x2ec
 
-Fixes: 4bb170a5430b ("KVM: nSVM: do not mark all VMCB02 fields dirty on nested vmexit")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jim Mattson <jmattson@google.com>
-Link: https://lore.kernel.org/r/20250922162935.621409-3-jmattson@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+This occurs as add_cpu() fails due to cpu_bootable() returning false for
+CPUs that fail the cpu_smt_thread_allowed() check or non primary
+threads if SMT is disabled.
+
+Fix the issue by enabling SMT and resetting the number of SMT threads to
+the number of threads per core, before attempting to wake up all present
+CPUs.
+
+Fixes: 38253464bc82 ("cpu/SMT: Create topology_smt_thread_allowed()")
+Reported-by: Sachin P Bappalige <sachinpb@linux.ibm.com>
+Cc: stable@vger.kernel.org # v6.6+
+Reviewed-by: Srikar Dronamraju <srikar@linux.ibm.com>
+Signed-off-by: Nysal Jan K.A. <nysal@linux.ibm.com>
+Tested-by: Samir M <samir@linux.ibm.com>
+Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20251028105516.26258-1-nysal@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/nested.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/powerpc/kexec/core_64.c |   19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -613,6 +613,7 @@ static void nested_vmcb02_prepare_save(s
- 	struct kvm_vcpu *vcpu = &svm->vcpu;
+--- a/arch/powerpc/kexec/core_64.c
++++ b/arch/powerpc/kexec/core_64.c
+@@ -202,6 +202,23 @@ static void kexec_prepare_cpus_wait(int
+ 	mb();
+ }
  
- 	nested_vmcb02_compute_g_pat(svm);
-+	vmcb_mark_dirty(vmcb02, VMCB_NPT);
++
++/*
++ * The add_cpu() call in wake_offline_cpus() can fail as cpu_bootable()
++ * returns false for CPUs that fail the cpu_smt_thread_allowed() check
++ * or non primary threads if SMT is disabled. Re-enable SMT and set the
++ * number of SMT threads to threads per core.
++ */
++static void kexec_smt_reenable(void)
++{
++#if defined(CONFIG_SMP) && defined(CONFIG_HOTPLUG_SMT)
++	lock_device_hotplug();
++	cpu_smt_num_threads = threads_per_core;
++	cpu_smt_control = CPU_SMT_ENABLED;
++	unlock_device_hotplug();
++#endif
++}
++
+ /*
+  * We need to make sure each present CPU is online.  The next kernel will scan
+  * the device tree and assume primary threads are online and query secondary
+@@ -216,6 +233,8 @@ static void wake_offline_cpus(void)
+ {
+ 	int cpu = 0;
  
- 	/* Load the nested guest state */
- 	if (svm->nested.vmcb12_gpa != svm->nested.last_vmcb12_gpa) {
++	kexec_smt_reenable();
++
+ 	for_each_present_cpu(cpu) {
+ 		if (!cpu_online(cpu)) {
+ 			printk(KERN_INFO "kexec: Waking offline cpu %d.\n",
 
 
