@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36F879460;
-	Mon, 29 Dec 2025 16:23:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AC1524EF8C;
+	Mon, 29 Dec 2025 16:23:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025401; cv=none; b=blikTMwKVECJ5ez3IAFrlwBxAhUy13AeyxFeov9ysEUan0lbOBQ8REedLOVOIWmU1r3JulCO+AxkJfbbFp70g/fl1R1rA7hPz92RHZvKn9Em6fW3zH5QRiWV1ZcFOxPAwqdNuKXs+gc/Nvnn+D0szP2sVhhDPExntJWKaPoLB+s=
+	t=1767025404; cv=none; b=pn1ckpawuyw7/G4kicwvqwt3aKEOfALSd7o7F1kxZ2MJ68rmrW9kYI7hONr4lOZTMjP13nO/epbgR4uIujjPMlr0SW7EYHvx3560xtJYXDlIaJxj5Ke7JpLgCKpVgkAnFqlH+BfUiQ07TPtVCaW6CDtZEzMKsr9/QRzQsuf0LZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025401; c=relaxed/simple;
-	bh=3Xe+n9eOX3pi2181vSutm/vI5DndFh6heoPWwh6C5Io=;
+	s=arc-20240116; t=1767025404; c=relaxed/simple;
+	bh=rT0z660YVzNpveGMXPbsjsydVamGOA0Y5N/WicHXstQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UajJztS78GHmMKgRiKD4YTNgSe3T9jLbPMRxaC0ArgeeuWFzYZ+fbgpSyiOY8G1ny6aYC/xoobmAo7sOIplRETMMhjy0VKNTTkr15hMTB1sP0cULS1frNAVje3tHYGhwEydK6xF5eJOjaRVgB5JwjitGzySGwAFn4m5tsHFI2QE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1fdnZ5I4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dqdAZFIkYExRcPXiTEFoni0nAuJH1J06iwEaplBzinyzeBG4NVMweyE7hwZIzWV6G6ATbJS/KHLq4u3OFOM4P959tJhFa6wshPvRebSg92rCoXEudLNPOS/7kLQP6YANVeo5+DsQC0Lw2CnR0+4naH4rWXyAiiRO+s5/cJUVWbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AnYq/Gb1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1fdnZ5I4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BADE6C4CEF7;
-	Mon, 29 Dec 2025 16:23:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AnYq/Gb1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 964B5C4CEF7;
+	Mon, 29 Dec 2025 16:23:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025401;
-	bh=3Xe+n9eOX3pi2181vSutm/vI5DndFh6heoPWwh6C5Io=;
+	s=korg; t=1767025404;
+	bh=rT0z660YVzNpveGMXPbsjsydVamGOA0Y5N/WicHXstQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1fdnZ5I4bqz0lrRuDIlOVGTdY8jC8y9e0X5Ayh4Oj58O9jdunt+elr4ZUPsN3j3aJ
-	 j3qCJxgJb/sd7cyvTE6+Bi1qK5bhJglvQjfrofHD8vXAWyxaqk1sgFAsPOlw94W34+
-	 vUSQyYKpg2YyJ5H2IebVfFNHFwfSjvESePIwZRcI=
+	b=AnYq/Gb1SnytcJgKkxMolTjSqW3EtrdusyTmYlt+wbErTBBgSM5wDPOQuFfd7vwlh
+	 Qw5W9XpDnw4gpxdm0nbPMmLR+yy6KjlEUAq25Px0yiyUj0bolyPVVt/xEhYq2Pi15l
+	 PlZWhtEztZbb6Ups5s/IheVZIhlxqNYV+4PIKTgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongyu Xie <xiehongyu1@kylinos.cn>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Chen Changcheng <chenchangcheng@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 199/430] usb: xhci: limit run_graceperiod for only usb 3.0 devices
-Date: Mon, 29 Dec 2025 17:10:01 +0100
-Message-ID: <20251229160731.676832625@linuxfoundation.org>
+Subject: [PATCH 6.18 200/430] usb: usb-storage: No additional quirks need to be added to the EL-R12 optical drive.
+Date: Mon, 29 Dec 2025 17:10:02 +0100
+Message-ID: <20251229160731.713997626@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -51,80 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongyu Xie <xiehongyu1@kylinos.cn>
+From: Chen Changcheng <chenchangcheng@kylinos.cn>
 
-[ Upstream commit 8d34983720155b8f05de765f0183d9b0e1345cc0 ]
+[ Upstream commit 955a48a5353f4fe009704a9a4272a3adf627cd35 ]
 
-run_graceperiod blocks usb 2.0 devices from auto suspending after
-xhci_start for 500ms.
+The optical drive of EL-R12 has the same vid and pid as INIC-3069,
+as follows:
+T:  Bus=02 Lev=02 Prnt=02 Port=01 Cnt=01 Dev#=  3 Spd=5000 MxCh= 0
+D:  Ver= 3.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
+P:  Vendor=13fd ProdID=3940 Rev= 3.10
+S:  Manufacturer=HL-DT-ST
+S:  Product= DVD+-RW GT80N
+S:  SerialNumber=423349524E4E38303338323439202020
+C:* #Ifs= 1 Cfg#= 1 Atr=80 MxPwr=144mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=08(stor.) Sub=02 Prot=50 Driver=usb-storage
+E:  Ad=83(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=0a(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
 
-Log shows:
-[   13.387170] xhci_hub_control:1271: xhci-hcd PNP0D10:03: Get port status 7-1 read: 0x2a0, return 0x100
-[   13.387177] hub_event:5779: hub 7-0:1.0: state 7 ports 1 chg 0000 evt 0000
-[   13.387182] hub_suspend:3903: hub 7-0:1.0: hub_suspend
-[   13.387188] hcd_bus_suspend:2250: usb usb7: bus auto-suspend, wakeup 1
-[   13.387191] hcd_bus_suspend:2279: usb usb7: suspend raced with wakeup event
-[   13.387193] hcd_bus_resume:2303: usb usb7: usb auto-resume
-[   13.387296] hub_event:5779: hub 3-0:1.0: state 7 ports 1 chg 0000 evt 0000
-[   13.393343] handle_port_status:2034: xhci-hcd PNP0D10:02: handle_port_status: starting usb5 port polling.
-[   13.393353] xhci_hub_control:1271: xhci-hcd PNP0D10:02: Get port status 5-1 read: 0x206e1, return 0x10101
-[   13.400047] hub_suspend:3903: hub 3-0:1.0: hub_suspend
-[   13.403077] hub_resume:3948: hub 7-0:1.0: hub_resume
-[   13.403080] xhci_hub_control:1271: xhci-hcd PNP0D10:03: Get port status 7-1 read: 0x2a0, return 0x100
-[   13.403085] hub_event:5779: hub 7-0:1.0: state 7 ports 1 chg 0000 evt 0000
-[   13.403087] hub_suspend:3903: hub 7-0:1.0: hub_suspend
-[   13.403090] hcd_bus_suspend:2250: usb usb7: bus auto-suspend, wakeup 1
-[   13.403093] hcd_bus_suspend:2279: usb usb7: suspend raced with wakeup event
-[   13.403095] hcd_bus_resume:2303: usb usb7: usb auto-resume
-[   13.405002] handle_port_status:1913: xhci-hcd PNP0D10:04: Port change event, 9-1, id 1, portsc: 0x6e1
-[   13.405016] hub_activate:1169: usb usb5-port1: status 0101 change 0001
-[   13.405026] xhci_clear_port_change_bit:658: xhci-hcd PNP0D10:02: clear port1 connect change, portsc: 0x6e1
-[   13.413275] hcd_bus_suspend:2250: usb usb3: bus auto-suspend, wakeup 1
-[   13.419081] hub_resume:3948: hub 7-0:1.0: hub_resume
-[   13.419086] xhci_hub_control:1271: xhci-hcd PNP0D10:03: Get port status 7-1 read: 0x2a0, return 0x100
-[   13.419095] hub_event:5779: hub 7-0:1.0: state 7 ports 1 chg 0000 evt 0000
-[   13.419100] hub_suspend:3903: hub 7-0:1.0: hub_suspend
-[   13.419106] hcd_bus_suspend:2250: usb usb7: bus auto-suspend, wakeup 1
-[   13.419110] hcd_bus_suspend:2279: usb usb7: suspend raced with wakeup event
-[   13.419112] hcd_bus_resume:2303: usb usb7: usb auto-resume
-[   13.420455] handle_port_status:2034: xhci-hcd PNP0D10:04: handle_port_status: starting usb9 port polling.
-[   13.420493] handle_port_status:1913: xhci-hcd PNP0D10:05: Port change event, 10-1, id 1, portsc: 0x6e1
-[   13.425332] hcd_bus_suspend:2279: usb usb3: suspend raced with wakeup event
-[   13.431931] handle_port_status:2034: xhci-hcd PNP0D10:05: handle_port_status: starting usb10 port polling.
-[   13.435080] hub_resume:3948: hub 7-0:1.0: hub_resume
-[   13.435084] xhci_hub_control:1271: xhci-hcd PNP0D10:03: Get port status 7-1 read: 0x2a0, return 0x100
-[   13.435092] hub_event:5779: hub 7-0:1.0: state 7 ports 1 chg 0000 evt 0000
-[   13.435096] hub_suspend:3903: hub 7-0:1.0: hub_suspend
-[   13.435102] hcd_bus_suspend:2250: usb usb7: bus auto-suspend, wakeup 1
-[   13.435106] hcd_bus_suspend:2279: usb usb7: suspend raced with wakeup event
+This will result in the optical drive device also adding
+the quirks of US_FL_NO_ATA_1X. When performing an erase operation,
+it will fail, and the reason for the failure is as follows:
+[  388.967742] sr 5:0:0:0: [sr0] tag#0 Send: scmd 0x00000000d20c33a7
+[  388.967742] sr 5:0:0:0: [sr0] tag#0 CDB: ATA command pass through(12)/Blank a1 11 00 00 00 00 00 00 00 00 00 00
+[  388.967773] sr 5:0:0:0: [sr0] tag#0 Done: SUCCESS Result: hostbyte=DID_TARGET_FAILURE driverbyte=DRIVER_OK cmd_age=0s
+[  388.967773] sr 5:0:0:0: [sr0] tag#0 CDB: ATA command pass through(12)/Blank a1 11 00 00 00 00 00 00 00 00 00 00
+[  388.967803] sr 5:0:0:0: [sr0] tag#0 Sense Key : Illegal Request [current]
+[  388.967803] sr 5:0:0:0: [sr0] tag#0 Add. Sense: Invalid field in cdb
+[  388.967803] sr 5:0:0:0: [sr0] tag#0 scsi host busy 1 failed 0
+[  388.967803] sr 5:0:0:0: Notifying upper driver of completion (result 8100002)
+[  388.967834] sr 5:0:0:0: [sr0] tag#0 0 sectors total, 0 bytes done.
 
-usb7 and other usb 2.0 root hub were rapidly toggling between suspend
-and resume states. More, "suspend raced with wakeup event" confuses people.
+For the EL-R12 standard optical drive, all operational commands
+and usage scenarios were tested without adding the IGNORE_RESIDUE quirks,
+and no issues were encountered. It can be reasonably concluded
+that removing the IGNORE_RESIDUE quirks has no impact.
 
-So, limit run_graceperiod for only usb 3.0 devices
-
-Signed-off-by: Hongyu Xie <xiehongyu1@kylinos.cn>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20251119142417.2820519-2-mathias.nyman@linux.intel.com
+Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
+Link: https://patch.msgid.link/20251121064020.29332-1-chenchangcheng@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-hub.c | 2 +-
+ drivers/usb/storage/unusual_uas.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/host/xhci-hub.c b/drivers/usb/host/xhci-hub.c
-index b3a59ce1b3f4..5e1442e91743 100644
---- a/drivers/usb/host/xhci-hub.c
-+++ b/drivers/usb/host/xhci-hub.c
-@@ -1671,7 +1671,7 @@ int xhci_hub_status_data(struct usb_hcd *hcd, char *buf)
- 	 * SS devices are only visible to roothub after link training completes.
- 	 * Keep polling roothubs for a grace period after xHC start
- 	 */
--	if (xhci->run_graceperiod) {
-+	if (hcd->speed >= HCD_USB3 && xhci->run_graceperiod) {
- 		if (time_before(jiffies, xhci->run_graceperiod))
- 			status = 1;
- 		else
+diff --git a/drivers/usb/storage/unusual_uas.h b/drivers/usb/storage/unusual_uas.h
+index 1477e31d7763..b695f5ba9a40 100644
+--- a/drivers/usb/storage/unusual_uas.h
++++ b/drivers/usb/storage/unusual_uas.h
+@@ -98,7 +98,7 @@ UNUSUAL_DEV(0x125f, 0xa94a, 0x0160, 0x0160,
+ 		US_FL_NO_ATA_1X),
+ 
+ /* Reported-by: Benjamin Tissoires <benjamin.tissoires@redhat.com> */
+-UNUSUAL_DEV(0x13fd, 0x3940, 0x0000, 0x9999,
++UNUSUAL_DEV(0x13fd, 0x3940, 0x0309, 0x0309,
+ 		"Initio Corporation",
+ 		"INIC-3069",
+ 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
 -- 
 2.51.0
 
