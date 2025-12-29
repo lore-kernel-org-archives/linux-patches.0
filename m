@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5A833123A;
-	Mon, 29 Dec 2025 16:20:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5569133123A;
+	Mon, 29 Dec 2025 16:20:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025225; cv=none; b=f96OAB2JaN5LeJZ1RSCte6Jxhls2gP0MKhpx9dtS/xLkZre0BTcs2nd1h98WEv9vvwyzJ4V6xZ/qW7pXph1lKY6vC4HyH5GTr4oY/U8fos/t6hMRDwmYjNXBRyEiqK47vSVwNGf5DxSRHT1FO4rfRlpXzKYAC07nehqQrAu37rE=
+	t=1767025228; cv=none; b=IHmv56XeY+cdktO8LP3kRRqhkl1BDhgxUKQXp9Tw0YaJjThJ79XMWYIGZpAHyIb4wcpOloqVOeZJfDTzZkHb6SXMD50BYy2VeHxEhCATEaoW+LsApfcHmm2YSlk9yazxm51cXC3dtIe++Zvyjbn5dIRW/bSbP0Xe4CMR3uXYjiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025225; c=relaxed/simple;
-	bh=yrl2TaHWmfUDq2Fh6pRu8NnMuOtl0BbPx690NWWsPPM=;
+	s=arc-20240116; t=1767025228; c=relaxed/simple;
+	bh=Z++IWQpp5xHta4rJgND0/bIDQkn0OI6Tfl+/BqYR08Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ra3M6HjskQzYsdRfhB6mdC/IyojaRfqasBRyAjRMn4MxbKc2R3JnNK+eXdW5SMBffhhWlx3m9LuKAeHJb4bcvc1oYuQ5mbA/Q6yEpSyJZ+UEPKUM0d5bIzYc+Mnb4Vfym1AyfB1O0TczmMSz+9IY7Sdwb3zJ25z0IyHZQ4Y8JLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W9u5a5Of; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lx1euPoWZ3u+1H5msHptHnRI0rJM3jsNaC0zfV9Vst4C/F7iNt5SzsPI2IVh9rCO7XEMViJ+QY0cxvRmnIIpTUfSZeEa/zL6IdRlbOM6gBpeKCArKlDCfm/XeNIlC6krLPkDnc7dYc6qrGaZESm8R4Ycv4ssLknUD1EE2dw3EN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ag6qKycH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W9u5a5Of"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27030C4CEF7;
-	Mon, 29 Dec 2025 16:20:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ag6qKycH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D713BC4CEF7;
+	Mon, 29 Dec 2025 16:20:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025225;
-	bh=yrl2TaHWmfUDq2Fh6pRu8NnMuOtl0BbPx690NWWsPPM=;
+	s=korg; t=1767025228;
+	bh=Z++IWQpp5xHta4rJgND0/bIDQkn0OI6Tfl+/BqYR08Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W9u5a5OfbAv3WYMA5vN/n4oT/UAuhjdughbZtWHnU7lnLxMsGw6liLKmLFAvsV980
-	 O8jEB1836wo4bFqoSQo5oSD9S8ClwY0RhOk4d3rukhpBBFwqr4viriGpLpqKYAHAzm
-	 Jm7acdBRHe9sL0LGY+IcFaLB1MsqsEaK4GfEbnys=
+	b=ag6qKycHfduiewZbTduJri3GsKwrOQfb65obxUkTELCRAfeQfIU5M5WfRV8yAzS5B
+	 OTfYmssEu4jbWZglBINxvnVcWC2x05R9pzNQc+rWMic2IaujfRnNzbfwms+lX68lLI
+	 14B5Clj9Ht8kHIxWIt1VMAMCPZaz0GmZ2/2dU/W0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashutosh Dixit <ashutosh.dixit@intel.com>,
-	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Sairaj Kodilkar <sarunkod@amd.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 139/430] drm/xe/oa: Always set OAG_OAGLBCTXCTRL_COUNTER_RESUME
-Date: Mon, 29 Dec 2025 17:09:01 +0100
-Message-ID: <20251229160729.479571377@linuxfoundation.org>
+Subject: [PATCH 6.18 140/430] amd/iommu: Preserve domain ids inside the kdump kernel
+Date: Mon, 29 Dec 2025 17:09:02 +0100
+Message-ID: <20251229160729.515837413@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -46,53 +47,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ashutosh Dixit <ashutosh.dixit@intel.com>
+From: Sairaj Kodilkar <sarunkod@amd.com>
 
-[ Upstream commit 256edb267a9d0b5aef70e408e9fba4f930f9926e ]
+[ Upstream commit c2e8dc1222c2136e714d5d972dce7e64924e4ed8 ]
 
-Reports can be written out to the OA buffer using ways other than periodic
-sampling. These include mmio trigger and context switches. To support these
-use cases, when periodic sampling is not enabled,
-OAG_OAGLBCTXCTRL_COUNTER_RESUME must be set.
+Currently AMD IOMMU driver does not reserve domain ids programmed in the
+DTE while reusing the device table inside kdump kernel. This can cause
+reallocation of these domain ids for newer domains that are created by
+the kdump kernel, which can lead to potential IO_PAGE_FAULTs
 
-Fixes: 1db9a9dc90ae ("drm/xe/oa: OA stream initialization (OAG)")
-Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
-Reviewed-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
-Link: https://patch.msgid.link/20251205212613.826224-4-ashutosh.dixit@intel.com
-(cherry picked from commit 88d98e74adf3e20f678bb89581a5c3149fdbdeaa)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Hence reserve these ids inside pdom_ids.
+
+Fixes: 38e5f33ee359 ("iommu/amd: Reuse device table for kdump")
+Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
+Reported-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_oa.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/iommu/amd/init.c | 23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_oa.c b/drivers/gpu/drm/xe/xe_oa.c
-index 10047373e184..d0ceb67af83e 100644
---- a/drivers/gpu/drm/xe/xe_oa.c
-+++ b/drivers/gpu/drm/xe/xe_oa.c
-@@ -1104,11 +1104,12 @@ static int xe_oa_enable_metric_set(struct xe_oa_stream *stream)
- 			oag_buf_size_select(stream) |
- 			oag_configure_mmio_trigger(stream, true));
+diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+index f2991c11867c..14eb9de33ccb 100644
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -1136,9 +1136,13 @@ static void set_dte_bit(struct dev_table_entry *dte, u8 bit)
+ static bool __reuse_device_table(struct amd_iommu *iommu)
+ {
+ 	struct amd_iommu_pci_seg *pci_seg = iommu->pci_seg;
+-	u32 lo, hi, old_devtb_size;
++	struct dev_table_entry *old_dev_tbl_entry;
++	u32 lo, hi, old_devtb_size, devid;
+ 	phys_addr_t old_devtb_phys;
++	u16 dom_id;
++	bool dte_v;
+ 	u64 entry;
++	int ret;
  
--	xe_mmio_write32(mmio, __oa_regs(stream)->oa_ctx_ctrl, stream->periodic ?
--			(OAG_OAGLBCTXCTRL_COUNTER_RESUME |
-+	xe_mmio_write32(mmio, __oa_regs(stream)->oa_ctx_ctrl,
-+			OAG_OAGLBCTXCTRL_COUNTER_RESUME |
-+			(stream->periodic ?
- 			 OAG_OAGLBCTXCTRL_TIMER_ENABLE |
- 			 REG_FIELD_PREP(OAG_OAGLBCTXCTRL_TIMER_PERIOD_MASK,
--					stream->period_exponent)) : 0);
-+					 stream->period_exponent) : 0));
+ 	/* Each IOMMU use separate device table with the same size */
+ 	lo = readl(iommu->mmio_base + MMIO_DEV_TABLE_OFFSET);
+@@ -1173,6 +1177,23 @@ static bool __reuse_device_table(struct amd_iommu *iommu)
+ 		return false;
+ 	}
  
- 	/*
- 	 * Initialize Super Queue Internal Cnt Register
++	for (devid = 0; devid <= pci_seg->last_bdf; devid++) {
++		old_dev_tbl_entry = &pci_seg->old_dev_tbl_cpy[devid];
++		dte_v = FIELD_GET(DTE_FLAG_V, old_dev_tbl_entry->data[0]);
++		dom_id = FIELD_GET(DEV_DOMID_MASK, old_dev_tbl_entry->data[1]);
++
++		if (!dte_v || !dom_id)
++			continue;
++		/*
++		 * ID reservation can fail with -ENOSPC when there
++		 * are multiple devices present in the same domain,
++		 * hence check only for -ENOMEM.
++		 */
++		ret = ida_alloc_range(&pdom_ids, dom_id, dom_id, GFP_KERNEL);
++		if (ret == -ENOMEM)
++			return false;
++	}
++
+ 	return true;
+ }
+ 
 -- 
 2.51.0
 
