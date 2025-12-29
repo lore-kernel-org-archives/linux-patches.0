@@ -1,44 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25CB8330D26;
-	Mon, 29 Dec 2025 16:29:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E399B33066C;
+	Mon, 29 Dec 2025 16:29:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025778; cv=none; b=M55AwpOTS2uylgCn2B31y9FT7JPzpSKI4xLrxKgME1srOf1y7OVMdFuLd3f9kk6f9lMticgS1fZJ7bJID0llTJpi9/DMfgwKFkUug17VcIPHD9aXS910S+j824IUVDrGQzhcchFdxaGNf9iTwPxZTQ0g4cuou2FKlGV/joyzBVQ=
+	t=1767025781; cv=none; b=ZpctWXc0E47L8pRSPaJSrPDdBSC6xqyH5aktSjcVDbgK7ZMf7Gv/yRyYMrIxghPifkF9WzyQ/zQeRr5C6qIjyNTuU9MozNfBd0m2My7NB/mMZv4CP8/TuafQYpq+UyZHJHrchLunBXpBA6T5nsNTUx9z23HJ1z4wcr4LTc1WCLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025778; c=relaxed/simple;
-	bh=xptxw9V0KQuW403WYYif1avUSGH6nK4B08throh/PnM=;
+	s=arc-20240116; t=1767025781; c=relaxed/simple;
+	bh=YHCuyXfDXprSuYgLOmFelWTUFUahzQnk6BbMsLnpTEA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YMziVXQMFdF+fsZ82FFgzQ1Zphp5AZN7TcMiP6U47cTMXiQRr+GgnuyjOV3U0VAPix9oCEUmwOr86+VUpGG6eYSUcRRBKdJajNyoBixpxn+8oG8vd78I4G0BC3Nxd8PGthz5q34AO/335ml5Xvv+WgHr1mLN3kN0mVnS77EC/xU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2tD1DO0h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PbgKG4Buu+VfkvloURVhwoXt0bQ9IWJjE6J8zc+MkHGwm/wLFFMkpxOnZlxhGPFFpFblVZsCKiLVaPEJUhJfhrWaKfi/+fjjd/cTPcnVzYOdKaV+PTNEzFRSB46rjoB/U/k6kb+QOgcmmx45W7a+N8IeSq4KC6YrNfhZHs4ByDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jJGa131k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2tD1DO0h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1706C4CEF7;
-	Mon, 29 Dec 2025 16:29:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jJGa131k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D937C4CEF7;
+	Mon, 29 Dec 2025 16:29:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025778;
-	bh=xptxw9V0KQuW403WYYif1avUSGH6nK4B08throh/PnM=;
+	s=korg; t=1767025780;
+	bh=YHCuyXfDXprSuYgLOmFelWTUFUahzQnk6BbMsLnpTEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2tD1DO0hXqBMzFnST/KlGaXDSiYbPp4Txhyv7K0ho616Ck6ghIH9U/JYRk+GqVwwS
-	 a6bx3SdmHn2xcTSNqeVCXrNDQk4lFyFJlFn5p0Rgncvb3lQJldI8cl7Zf0ilnyNlCY
-	 uHJPpJ+Zu5vT+tP7r8yu29620LqgrrwBBaPSNQos=
+	b=jJGa131kxX3ahSA7IDsaORUEPFMgEyDurjuj6hMmlsR/zr5flg2HB1p1xJOVGg/zr
+	 HZlgqJf6PrXRYvpNDRNouOaul+ZwOBVf8w3qlyvEdbqULJ/S6Br0+HW4FtLgtcB1Ef
+	 bRmdcVV/EXARVKJCjL/RjwSHMncwauXf6FWohfdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiyuan Xie <xiejiyuan@vivo.com>,
-	Zhichi Lin <zhichi.lin@vivo.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Will Deacon <will@kernel.org>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Kees Cook <keescook@chromium.org>,
-	Marco Elver <elver@google.com>,
-	Yee Lee <yee.lee@mediatek.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 333/430] scs: fix a wrong parameter in __scs_magic
-Date: Mon, 29 Dec 2025 17:12:15 +0100
-Message-ID: <20251229160736.581658496@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.18 334/430] parisc: Do not reprogram affinitiy on ASP chip
+Date: Mon, 29 Dec 2025 17:12:16 +0100
+Message-ID: <20251229160736.617967301@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -57,65 +49,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhichi Lin <zhichi.lin@vivo.com>
+From: Helge Deller <deller@gmx.de>
 
-commit 08bd4c46d5e63b78e77f2605283874bbe868ab19 upstream.
+commit dca7da244349eef4d78527cafc0bf80816b261f5 upstream.
 
-__scs_magic() needs a 'void *' variable, but a 'struct task_struct *' is
-given.  'task_scs(tsk)' is the starting address of the task's shadow call
-stack, and '__scs_magic(task_scs(tsk))' is the end address of the task's
-shadow call stack.  Here should be '__scs_magic(task_scs(tsk))'.
+The ASP chip is a very old variant of the GSP chip and is used e.g. in
+HP 730 workstations. When trying to reprogram the affinity it will crash
+with a HPMC as the relevant registers don't seem to be at the usual
+location.  Let's avoid the crash by checking the sversion. Also note,
+that reprogramming isn't necessary either, as the HP730 is a just a
+single-CPU machine.
 
-The user-visible effect of this bug is that when CONFIG_DEBUG_STACK_USAGE
-is enabled, the shadow call stack usage checking function
-(scs_check_usage) would scan an incorrect memory range.  This could lead
-to:
-
-1. **Inaccurate stack usage reporting**: The function would calculate
-   wrong usage statistics for the shadow call stack, potentially showing
-   incorrect value in kmsg.
-
-2. **Potential kernel crash**: If the value of __scs_magic(tsk)is
-   greater than that of __scs_magic(task_scs(tsk)), the for loop may
-   access unmapped memory, potentially causing a kernel panic.  However,
-   this scenario is unlikely because task_struct is allocated via the slab
-   allocator (which typically returns lower addresses), while the shadow
-   call stack returned by task_scs(tsk) is allocated via vmalloc(which
-   typically returns higher addresses).
-
-However, since this is purely a debugging feature
-(CONFIG_DEBUG_STACK_USAGE), normal production systems should be not
-unaffected.  The bug only impacts developers and testers who are actively
-debugging stack usage with this configuration enabled.
-
-Link: https://lkml.kernel.org/r/20251011082222.12965-1-zhichi.lin@vivo.com
-Fixes: 5bbaf9d1fcb9 ("scs: Add support for stack usage debugging")
-Signed-off-by: Jiyuan Xie <xiejiyuan@vivo.com>
-Signed-off-by: Zhichi Lin <zhichi.lin@vivo.com>
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Acked-by: Will Deacon <will@kernel.org>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: Marco Elver <elver@google.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Yee Lee <yee.lee@mediatek.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/scs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/parisc/gsc.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/kernel/scs.c
-+++ b/kernel/scs.c
-@@ -135,7 +135,7 @@ static void scs_check_usage(struct task_
- 	if (!IS_ENABLED(CONFIG_DEBUG_STACK_USAGE))
- 		return;
+--- a/drivers/parisc/gsc.c
++++ b/drivers/parisc/gsc.c
+@@ -154,7 +154,9 @@ static int gsc_set_affinity_irq(struct i
+ 	gsc_dev->eim = ((u32) gsc_dev->gsc_irq.txn_addr) | gsc_dev->gsc_irq.txn_data;
  
--	for (p = task_scs(tsk); p < __scs_magic(tsk); ++p) {
-+	for (p = task_scs(tsk); p < __scs_magic(task_scs(tsk)); ++p) {
- 		if (!READ_ONCE_NOCHECK(*p))
- 			break;
- 		used += sizeof(*p);
+ 	/* switch IRQ's for devices below LASI/WAX to other CPU */
+-	gsc_writel(gsc_dev->eim, gsc_dev->hpa + OFFSET_IAR);
++	/* ASP chip (svers 0x70) does not support reprogramming */
++	if (gsc_dev->gsc->id.sversion != 0x70)
++		gsc_writel(gsc_dev->eim, gsc_dev->hpa + OFFSET_IAR);
+ 
+ 	irq_data_update_effective_affinity(d, &tmask);
+ 
 
 
