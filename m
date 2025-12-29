@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C20319858;
-	Mon, 29 Dec 2025 16:16:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45164248F72;
+	Mon, 29 Dec 2025 16:16:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767024982; cv=none; b=WLNvDLlcBKX5wUtGrnvWByUU8Ri3hYVakxqerRFLFSQY4NynywdXY+lEoYBbXRkWUNXKswxZ4rFhLDHzueB4aiZHSF3rFi7LlRWMtImcEdaB8NqzlIp9Iitm6yp2jf/kJqWjqNBLFzrY3+qVjWsupuVaGIDUaq4gwb8pYCDHv5A=
+	t=1767024985; cv=none; b=P3+eR275QSeYbXNttN+LWEKQMhVWvwgttS6ufsxqfQxwC/UVeO1wkWdoG0XpB1E5QEhQmJfA32NPqmeRgSGszDTMb5vkfF1A69iZTD3Ak5yFrOp78WyjvFs+FT1ev8A5E1SWJvFPG7D0vHP8//vHDVfDHtemohM1h6gcnGkgOQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767024982; c=relaxed/simple;
-	bh=xCWot3U2ZiH+qxK3lwDpPZxc5nybJFmHITChkuU/uqc=;
+	s=arc-20240116; t=1767024985; c=relaxed/simple;
+	bh=XajRUUjA8bZusK4wce3fXzxhIS7IgvUh4fyYM411gr8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rXhuxmokU75PPo6QukrRmvkilOcdti8F8i/z3AWxPxF0Xa2u8QrjxQUnp4LrTUzo0g3FxKJ5bKns18dplIcojJEWSkdSc2wVSf7ql/9eDMT2VJfRykE6nTNlsSdB5cX3cOfrZhBWlKoYtaUQTn8aivRohXPVyPMX8Ky1xzTEpZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZJQYmGd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EcZXlmgnu8ng5SWPAUIieH5LTGnYJpw2fJtI7ewZoduDtDlX7JxsN0RPQ6Y+AOCNFXOOePMGdjK+zIlmlAiSFZzDBdNa/mMqblpOGr06/cR5yGmyL91pgzUobY4acxxjAX26wbebn+sX1m/maSBSSdYPvXYBlCc/6FZdSPR0k3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NnvPiGN6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZJQYmGd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4645C4CEF7;
-	Mon, 29 Dec 2025 16:16:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NnvPiGN6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0ACEC4CEF7;
+	Mon, 29 Dec 2025 16:16:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767024982;
-	bh=xCWot3U2ZiH+qxK3lwDpPZxc5nybJFmHITChkuU/uqc=;
+	s=korg; t=1767024985;
+	bh=XajRUUjA8bZusK4wce3fXzxhIS7IgvUh4fyYM411gr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XZJQYmGdHimW1P9nz2E+NpIOqEjlxoZSwXnUHHyLzBzp+TUxcpNsVqk9DgyTrcFou
-	 KMDIABU7y42U/RHVJzj7JmrCKc3kZXAhZ2g3Ua0fM+rS1DsZgvRbTmngSlzgbYTGaU
-	 8sxLmEb28KqfyTX8Rb2cuRMyDHfcFD0L5ggT+Jzk=
+	b=NnvPiGN6wCz2AdCts5IMTLELAeGoW8Do61PM6eMdbSRRbvVE8nYlewxsyPPivY374
+	 /iAVCBllRqXfsBafARXRFXczxKA3VFWBtaARnNHuK0HWmyrMPCnMQyvK/e2w/WhScJ
+	 DtaUi2thWUv5kl0YnGndPH566qMVfORQdCJ+T2PI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Stephen Zhang <starzhangzsd@gmail.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 025/430] crypto: ccp - Add support for PCI device 0x115A
-Date: Mon, 29 Dec 2025 17:07:07 +0100
-Message-ID: <20251229160725.084951436@linuxfoundation.org>
+Subject: [PATCH 6.18 052/430] gfs2: Fix use of bio_chain
+Date: Mon, 29 Dec 2025 17:07:34 +0100
+Message-ID: <20251229160726.283681845@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -52,65 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello (AMD) <superm1@kernel.org>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 9fc6290117259a8dbf8247cb54559df62fd1550f ]
+[ Upstream commit 8a157e0a0aa5143b5d94201508c0ca1bb8cfb941 ]
 
-PCI device 0x115A is similar to pspv5, except it doesn't have platform
-access mailbox support.
+In gfs2_chain_bio(), the call to bio_chain() has its arguments swapped.
+The result is leaked bios and incorrect synchronization (only the last
+bio will actually be waited for).  This code is only used during mount
+and filesystem thaw, so the bug normally won't be noticeable.
 
-Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reported-by: Stephen Zhang <starzhangzsd@gmail.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccp/sp-pci.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ fs/gfs2/lops.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/ccp/sp-pci.c b/drivers/crypto/ccp/sp-pci.c
-index e7bb803912a6d..8891ceee1d7d0 100644
---- a/drivers/crypto/ccp/sp-pci.c
-+++ b/drivers/crypto/ccp/sp-pci.c
-@@ -459,6 +459,17 @@ static const struct psp_vdata pspv6 = {
- 	.intsts_reg             = 0x10514,	/* P2CMSG_INTSTS */
- };
- 
-+static const struct psp_vdata pspv7 = {
-+	.tee			= &teev2,
-+	.cmdresp_reg		= 0x10944,	/* C2PMSG_17 */
-+	.cmdbuff_addr_lo_reg	= 0x10948,	/* C2PMSG_18 */
-+	.cmdbuff_addr_hi_reg	= 0x1094c,	/* C2PMSG_19 */
-+	.bootloader_info_reg	= 0x109ec,	/* C2PMSG_59 */
-+	.feature_reg		= 0x109fc,	/* C2PMSG_63 */
-+	.inten_reg		= 0x10510,	/* P2CMSG_INTEN */
-+	.intsts_reg		= 0x10514,	/* P2CMSG_INTSTS */
-+};
-+
- #endif
- 
- static const struct sp_dev_vdata dev_vdata[] = {
-@@ -525,6 +536,13 @@ static const struct sp_dev_vdata dev_vdata[] = {
- 		.psp_vdata = &pspv6,
- #endif
- 	},
-+	{	/* 9 */
-+		.bar = 2,
-+#ifdef CONFIG_CRYPTO_DEV_SP_PSP
-+		.psp_vdata = &pspv7,
-+#endif
-+	},
-+
- };
- static const struct pci_device_id sp_pci_table[] = {
- 	{ PCI_VDEVICE(AMD, 0x1537), (kernel_ulong_t)&dev_vdata[0] },
-@@ -539,6 +557,7 @@ static const struct pci_device_id sp_pci_table[] = {
- 	{ PCI_VDEVICE(AMD, 0x17E0), (kernel_ulong_t)&dev_vdata[7] },
- 	{ PCI_VDEVICE(AMD, 0x156E), (kernel_ulong_t)&dev_vdata[8] },
- 	{ PCI_VDEVICE(AMD, 0x17D8), (kernel_ulong_t)&dev_vdata[8] },
-+	{ PCI_VDEVICE(AMD, 0x115A), (kernel_ulong_t)&dev_vdata[9] },
- 	/* Last entry must be zero */
- 	{ 0, }
- };
+diff --git a/fs/gfs2/lops.c b/fs/gfs2/lops.c
+index 9c8c305a75c46..914d03f6c4e82 100644
+--- a/fs/gfs2/lops.c
++++ b/fs/gfs2/lops.c
+@@ -487,7 +487,7 @@ static struct bio *gfs2_chain_bio(struct bio *prev, unsigned int nr_iovecs)
+ 	new = bio_alloc(prev->bi_bdev, nr_iovecs, prev->bi_opf, GFP_NOIO);
+ 	bio_clone_blkg_association(new, prev);
+ 	new->bi_iter.bi_sector = bio_end_sector(prev);
+-	bio_chain(new, prev);
++	bio_chain(prev, new);
+ 	submit_bio(prev);
+ 	return new;
+ }
 -- 
 2.51.0
 
