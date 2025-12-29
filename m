@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140E93191A7;
-	Mon, 29 Dec 2025 16:28:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE9C033031C;
+	Mon, 29 Dec 2025 16:28:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025710; cv=none; b=hIM/wbbHyQpd4xmE6/VyIxqp3cl8zsiF9w6d9MxTMip4ahHA6Rn2fLC23fVXHlVxXmyGc0wFZs5E4K3CRZkor92giOFrvnukWbaPNVnG8uAZrRrYBaKjpl2QPv0FG/mgah1xqItZuq+1qm2CsVfFXs0lOHGoHXhRjQVzajoHdbk=
+	t=1767025712; cv=none; b=Nutt98vQgDcP9cUIovCbsXS9v4+VlnFD6XGxkS7zPr5bNDNSdNZQjwlYrjX5tDcKconpnZldIc55NeqZlbZIDM5dYkHq4199lgdsgrY6D7ZC04zzAaD9KmuJdt9O+WUzXRAHDWzCnuJIdCLRBG8fGkrouimNAxHPjTxMjUX7I9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025710; c=relaxed/simple;
-	bh=X0G/swgpvbjbAjmnoFnlNycuZ5q/ZZyvhN/itsL0o7I=;
+	s=arc-20240116; t=1767025712; c=relaxed/simple;
+	bh=u3hAlIPVlbzBFt9ldasPfKMlE8oZHjTlmTiwBzUg2ao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mxob1WsyjkiNPfhU3ee+w2MLwf8LKeeiXpVgILkW1P0rly1CFGKE52KbV9rjzov1oR0TUEl8fkCEs0k7rI/t5+7fslzB1xwPJ6kbP0LNurj3xki1icIkhIXbYAAXGqprFw22pLpTCxvRwZXdZIaH4wGMYlWtFbOtBeQ/muKq8Tc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rnx0XOSM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WL9UJXjc1QcpQX3DE6y0coD1eLKFc0Sp2zM8RI7xlLfgq5yyu4EMscqBq2PjvaMdkVR6t/ebhvusZn/Fwnct+o78pL89jOcIfHa9VD7/B/DUC0+BqGElNll90McMq7/ka0fgmTMcn/hE9Vv53EkALM48ENIqgISAEQ40ZKkYaNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zSHs07BJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rnx0XOSM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DCD5C4CEF7;
-	Mon, 29 Dec 2025 16:28:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zSHs07BJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BCAFC4CEF7;
+	Mon, 29 Dec 2025 16:28:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025709;
-	bh=X0G/swgpvbjbAjmnoFnlNycuZ5q/ZZyvhN/itsL0o7I=;
+	s=korg; t=1767025712;
+	bh=u3hAlIPVlbzBFt9ldasPfKMlE8oZHjTlmTiwBzUg2ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rnx0XOSMvrpA/zdWtTXqHYQh4+xcJP92D8RYPMZVsHCbaUedKAqTHddReFv7Fb2CN
-	 +KO9NzLsXeGDVGR1uVe9hkKsASzV/4gxpMnsZBRH+Avrb4DIRZEgR2UHoE/+XUl1XX
-	 9XSlDV+LP0buM7/Os9PXA6aDG+lCuPzQskxhuC2Y=
+	b=zSHs07BJ5FloQR8kGnV441x6AnaRY10F27GXHmFlWMcNWR6H89kBDChuYQ2zAc0tD
+	 8Tv9+osqnO5Wbc+NQfzqfv+J2hQdwb5E8euuMJBdoGPuvKBtNQYwIxh/Jm/83OxaI5
+	 SYdcRR/wWCliHl6ZI14wd2RyOs0dnk/+21K60KzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mat Martineau <martineau@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 276/430] mptcp: pm: ignore unknown endpoint flags
-Date: Mon, 29 Dec 2025 17:11:18 +0100
-Message-ID: <20251229160734.506795270@linuxfoundation.org>
+Subject: [PATCH 6.18 277/430] selftests: mptcp: pm: ensure unknown flags are ignored
+Date: Mon, 29 Dec 2025 17:11:19 +0100
+Message-ID: <20251229160734.542730747@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -53,61 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 0ace3297a7301911e52d8195cb1006414897c859 upstream.
+commit 29f4801e9c8dfd12bdcb33b61a6ac479c7162bd7 upstream.
 
-Before this patch, the kernel was saving any flags set by the userspace,
-even unknown ones. This doesn't cause critical issues because the kernel
-is only looking at specific ones. But on the other hand, endpoints dumps
-could tell the userspace some recent flags seem to be supported on older
-kernel versions.
+This validates the previous commit: the userspace can set unknown flags
+-- the 7th bit is currently unused -- without errors, but only the
+supported ones are printed in the endpoints dumps.
 
-Instead, ignore all unknown flags when parsing them. By doing that, the
-userspace can continue to set unsupported flags, but it has a way to
-verify what is supported by the kernel.
-
-Note that it sounds better to continue accepting unsupported flags not
-to change the behaviour, but also that eases things on the userspace
-side by adding "optional" endpoint types only supported by newer kernel
-versions without having to deal with the different kernel versions.
-
-A note for the backports: there will be conflicts in mptcp.h on older
-versions not having the mentioned flags, the new line should still be
-added last, and the '5' needs to be adapted to have the same value as
-the last entry.
+The 'Fixes' tag here below is the same as the one from the previous
+commit: this patch here is not fixing anything wrong in the selftests,
+but it validates the previous fix for an issue introduced by this commit
+ID.
 
 Fixes: 01cacb00b35c ("mptcp: add netlink-based PM")
 Cc: stable@vger.kernel.org
 Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251205-net-mptcp-misc-fixes-6-19-rc1-v1-1-9e4781a6c1b8@kernel.org
+Link: https://patch.msgid.link/20251205-net-mptcp-misc-fixes-6-19-rc1-v1-2-9e4781a6c1b8@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/uapi/linux/mptcp.h |    1 +
- net/mptcp/pm_netlink.c     |    3 ++-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ tools/testing/selftests/net/mptcp/pm_netlink.sh |    4 ++++
+ tools/testing/selftests/net/mptcp/pm_nl_ctl.c   |   11 +++++++++++
+ 2 files changed, 15 insertions(+)
 
---- a/include/uapi/linux/mptcp.h
-+++ b/include/uapi/linux/mptcp.h
-@@ -40,6 +40,7 @@
- #define MPTCP_PM_ADDR_FLAG_FULLMESH		_BITUL(3)
- #define MPTCP_PM_ADDR_FLAG_IMPLICIT		_BITUL(4)
- #define MPTCP_PM_ADDR_FLAG_LAMINAR		_BITUL(5)
-+#define MPTCP_PM_ADDR_FLAGS_MASK		GENMASK(5, 0)
+--- a/tools/testing/selftests/net/mptcp/pm_netlink.sh
++++ b/tools/testing/selftests/net/mptcp/pm_netlink.sh
+@@ -192,6 +192,10 @@ check "show_endpoints" \
+ flush_endpoint
+ check "show_endpoints" "" "flush addrs"
  
- struct mptcp_info {
- 	__u8	mptcpi_subflows;
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -119,7 +119,8 @@ int mptcp_pm_parse_entry(struct nlattr *
- 	}
++add_endpoint 10.0.1.1 flags unknown
++check "show_endpoints" "$(format_endpoints "1,10.0.1.1")" "ignore unknown flags"
++flush_endpoint
++
+ set_limits 9 1 2>/dev/null
+ check "get_limits" "${default_limits}" "rcv addrs above hard limit"
  
- 	if (tb[MPTCP_PM_ADDR_ATTR_FLAGS])
--		entry->flags = nla_get_u32(tb[MPTCP_PM_ADDR_ATTR_FLAGS]);
-+		entry->flags = nla_get_u32(tb[MPTCP_PM_ADDR_ATTR_FLAGS]) &
-+			       MPTCP_PM_ADDR_FLAGS_MASK;
+--- a/tools/testing/selftests/net/mptcp/pm_nl_ctl.c
++++ b/tools/testing/selftests/net/mptcp/pm_nl_ctl.c
+@@ -24,6 +24,8 @@
+ #define IPPROTO_MPTCP 262
+ #endif
  
- 	if (tb[MPTCP_PM_ADDR_ATTR_PORT])
- 		entry->addr.port = htons(nla_get_u16(tb[MPTCP_PM_ADDR_ATTR_PORT]));
++#define MPTCP_PM_ADDR_FLAG_UNKNOWN _BITUL(7)
++
+ static void syntax(char *argv[])
+ {
+ 	fprintf(stderr, "%s add|ann|rem|csf|dsf|get|set|del|flush|dump|events|listen|accept [<args>]\n", argv[0]);
+@@ -836,6 +838,8 @@ int add_addr(int fd, int pm_family, int
+ 					flags |= MPTCP_PM_ADDR_FLAG_BACKUP;
+ 				else if (!strcmp(tok, "fullmesh"))
+ 					flags |= MPTCP_PM_ADDR_FLAG_FULLMESH;
++				else if (!strcmp(tok, "unknown"))
++					flags |= MPTCP_PM_ADDR_FLAG_UNKNOWN;
+ 				else
+ 					error(1, errno,
+ 					      "unknown flag %s", argv[arg]);
+@@ -1047,6 +1051,13 @@ static void print_addr(struct rtattr *at
+ 				if (flags)
+ 					printf(",");
+ 			}
++
++			if (flags & MPTCP_PM_ADDR_FLAG_UNKNOWN) {
++				printf("unknown");
++				flags &= ~MPTCP_PM_ADDR_FLAG_UNKNOWN;
++				if (flags)
++					printf(",");
++			}
+ 
+ 			/* bump unknown flags, if any */
+ 			if (flags)
 
 
