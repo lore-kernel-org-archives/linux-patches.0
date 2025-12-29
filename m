@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4D552E7F03;
-	Mon, 29 Dec 2025 16:15:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E414F32C929;
+	Mon, 29 Dec 2025 16:15:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767024934; cv=none; b=Rw5MckK0JnAnU+x3GNEb4iw8IVb+k6DYpurhU1pVYEl2PZRx1HA6s1c5DAtuc/k3GMYVHcjHJjGejfZizy8FuBt9AnMnCoYAyY0qLqk5IC3Aqcly1TbF6wAkdOKNjiO8BGNxOhaU3V1IqXt/ogAjRIakpCD54n7iXp5q8Ywek+o=
+	t=1767024937; cv=none; b=jcnX8yvW1C/ddonQL688CGz1ygCkf7LUZoiMpXcfW4tihWM9yC5yWWqDj1ePGrl7H57hKddtiqlmewJor4Y86aknxHaZ/ROdTlQ7b7x8+2m2E3F5ZCUpwePIT1KwcFK6B84JQ9ATKgccnAcf7h3oLWQRxSmm7ka1NmIbYciy+BA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767024934; c=relaxed/simple;
-	bh=kRbPnB+tSuZjl5lcwwV7ldMFwzH7WNn9IadGkY5qXcU=;
+	s=arc-20240116; t=1767024937; c=relaxed/simple;
+	bh=K9712T3Opmj9IvSENfSiP9as/mpODSPdqW4+zS/r1rg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aYcd04TfFTKLqQ3lBlEY4iPRdduaufMQiDzxPeY2AEtFLiF3I6IOMcZQNbmDAGaVHFKK8bST76xMIhJFxA4NG3hUt38QqGmKjA7KeZQ/emlGlLzgtpVthGYDTpdXD6L7pkGio2mT8bMD7+zD7l4bQyuI6wbosH5+2u3bPcsia+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TvZPnMG7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OJ2LihBmfLnZ5IryoaYX/xOAgNJIWCcCVoMQseFWRHOfIZQhjpvqtFCBxoSU4oemssEtATgqyGXIgZIlnuWKDABa1ueMJ8gNHegIdIYz5ahsuUNDNZ0PnrYzx7nFSs4Pm8XxuBR3Ce4qHhYD0tWL6FTwHd22HP6C61/NDUU36TE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bclRO69F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TvZPnMG7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BAE5C16AAE;
-	Mon, 29 Dec 2025 16:15:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bclRO69F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F50CC116C6;
+	Mon, 29 Dec 2025 16:15:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767024933;
-	bh=kRbPnB+tSuZjl5lcwwV7ldMFwzH7WNn9IadGkY5qXcU=;
+	s=korg; t=1767024936;
+	bh=K9712T3Opmj9IvSENfSiP9as/mpODSPdqW4+zS/r1rg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TvZPnMG7L/BXn5OFaWybA1irRjb6VmWsmA1baO3ZPydBx/cyfPfS7EK2ewfR9+K7u
-	 /kQ1gRlpYyo2nPQ6Pe9gpKyeLgfdWPDBZTIJP5kSDesZM72Pi7ZpdnkReI2mo6S54R
-	 sHDODyMu4zk3grPbnC9l8QcFEAa1dP6SOXS2XSV0=
+	b=bclRO69FrMJdPA9yf4zQ2pNL4GC82P6uXgb4ZbndhZjeoxjdq4eNRJJmcEFgU7FYI
+	 vQSmd9dPs8AbQ/T2wYc1AouJeVkHbtcv76nCctx4Yycp+CVCXLle0B3cEjfWM20dor
+	 8KPzzT7j2feJrpvr6SWoyxuW6c7LBj6QPs9OCTSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Quan Zhou <quan.zhou@mediatek.com>,
+	druth@chromium.org,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 036/430] wifi: cfg80211: use cfg80211_leave() in iftype change
-Date: Mon, 29 Dec 2025 17:07:18 +0100
-Message-ID: <20251229160725.695866168@linuxfoundation.org>
+Subject: [PATCH 6.18 037/430] wifi: mt76: mt792x: fix wifi init fail by setting MCU_RUNNING after CLC load
+Date: Mon, 29 Dec 2025 17:07:19 +0100
+Message-ID: <20251229160725.732320072@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -50,61 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Quan Zhou <quan.zhou@mediatek.com>
 
-[ Upstream commit 7a27b73943a70ee226fa125327101fb18e94701d ]
+[ Upstream commit 066f417be5fd8c7fe581c5550206364735dad7a3 ]
 
-When changing the interface type, all activity on the interface has
-to be stopped first. This was done independent of existing code in
-cfg80211_leave(), so didn't handle e.g. background radar detection.
-Use cfg80211_leave() to handle it the same way.
+Set the MT76_STATE_MCU_RUNNING bit only after mt7921_load_clc()
+has successfully completed. Previously, the MCU_RUNNING state
+was set before loading CLC, which could cause conflict between
+chip mcu_init retry and mac_reset flow, result in chip init fail
+and chip abnormal status. By moving the state set after CLC load,
+firmware initialization becomes robust and resolves init fail issue.
 
-Note that cfg80211_leave() behaves slightly differently for IBSS in
-wireless extensions, it won't send an event in that case. We could
-handle that, but since nl80211 was used to change the type, IBSS is
-rare, and wext is already a corner case, it doesn't seem worth it.
-
-Link: https://patch.msgid.link/20251121174021.922ef48ce007.I970c8514252ef8a864a7fbdab9591b71031dee03@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Quan Zhou <quan.zhou@mediatek.com>
+Reviewed-by: druth@chromium.org
+Link: https://patch.msgid.link/19ec8e4465142e774f17801025accd0ae2214092.1763465933.git.quan.zhou@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/util.c | 23 +----------------------
- 1 file changed, 1 insertion(+), 22 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7921/mcu.c | 2 +-
+ drivers/net/wireless/mediatek/mt76/mt7925/mcu.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/wireless/util.c b/net/wireless/util.c
-index 56724b33af045..4eb028ad16836 100644
---- a/net/wireless/util.c
-+++ b/net/wireless/util.c
-@@ -1203,28 +1203,7 @@ int cfg80211_change_iface(struct cfg80211_registered_device *rdev,
- 		dev->ieee80211_ptr->use_4addr = false;
- 		rdev_set_qos_map(rdev, dev, NULL);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
+index 86bd33b916a9d..edc1df3c071e5 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
+@@ -646,10 +646,10 @@ int mt7921_run_firmware(struct mt792x_dev *dev)
+ 	if (err)
+ 		return err;
  
--		switch (otype) {
--		case NL80211_IFTYPE_AP:
--		case NL80211_IFTYPE_P2P_GO:
--			cfg80211_stop_ap(rdev, dev, -1, true);
--			break;
--		case NL80211_IFTYPE_ADHOC:
--			cfg80211_leave_ibss(rdev, dev, false);
--			break;
--		case NL80211_IFTYPE_STATION:
--		case NL80211_IFTYPE_P2P_CLIENT:
--			cfg80211_disconnect(rdev, dev,
--					    WLAN_REASON_DEAUTH_LEAVING, true);
--			break;
--		case NL80211_IFTYPE_MESH_POINT:
--			/* mesh should be handled? */
--			break;
--		case NL80211_IFTYPE_OCB:
--			cfg80211_leave_ocb(rdev, dev);
--			break;
--		default:
--			break;
--		}
-+		cfg80211_leave(rdev, dev->ieee80211_ptr);
+-	set_bit(MT76_STATE_MCU_RUNNING, &dev->mphy.state);
+ 	err = mt7921_load_clc(dev, mt792x_ram_name(dev));
+ 	if (err)
+ 		return err;
++	set_bit(MT76_STATE_MCU_RUNNING, &dev->mphy.state);
  
- 		cfg80211_process_rdev_events(rdev);
- 		cfg80211_mlme_purge_registrations(dev->ieee80211_ptr);
+ 	return mt7921_mcu_fw_log_2_host(dev, 1);
+ }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
+index 8eda407e4135e..c12b71b71cfc7 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
+@@ -1003,10 +1003,10 @@ int mt7925_run_firmware(struct mt792x_dev *dev)
+ 	if (err)
+ 		return err;
+ 
+-	set_bit(MT76_STATE_MCU_RUNNING, &dev->mphy.state);
+ 	err = mt7925_load_clc(dev, mt792x_ram_name(dev));
+ 	if (err)
+ 		return err;
++	set_bit(MT76_STATE_MCU_RUNNING, &dev->mphy.state);
+ 
+ 	return mt7925_mcu_fw_log_2_host(dev, 1);
+ }
 -- 
 2.51.0
 
