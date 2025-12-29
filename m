@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF0231B111;
-	Mon, 29 Dec 2025 16:14:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18BB31B111;
+	Mon, 29 Dec 2025 16:14:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767024866; cv=none; b=dVE+it47UqKrBiqDmKmIqjgLrajFveBNMLKHP1kAXnrNSfRdk1fjIPXXT5yZL2SjNqtUTEFFt/8iR7zYdgz9ESBr6ojNVat1huUhmrtKVMzRoPYYD8AssGH3E8904TxbwQ5XpworfKxZjO/BGtV4aP5F141wCXINA867UVg5BUI=
+	t=1767024869; cv=none; b=Nvr2Cb39tu5t1tfUnscf7P1bDLaA2PQB+T27LrQuOgqNVcB4ms2Xnswgyx58PfY1zI1kLLs/gYd+2DwxMhZxYtAnisQSvOZU2v1VPOtX5avrjDKMnt6VNXXZLOC9pc1fJWITW5UdIPnegAvxtGm/4J6Dcylmdedo6D9+GU3d2+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767024866; c=relaxed/simple;
-	bh=3GetB/tAGeIfq7y1Mb/8zIjQnBSSWWghhSIB3bS1314=;
+	s=arc-20240116; t=1767024869; c=relaxed/simple;
+	bh=QsS5Zp2GwfObs3ikRa91jZVdznyvmZtdKS6ECwKNp+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vAPFVfqAF7YeInAb8eFhdjZkVFstOExuZBg+rMCJhvcOoF7wRjEtV8DzmOjkD3yFT3+KTbhnCzwP3yUQrWOGdMMiJGP9CVrpiso7WPizTpr2gMZZOS3T7+Z3gJzUxhtzzqBAIdw3ukZDWcdaO5HEy55R21pgdXaApbnynsWhN+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TYz1WQkc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m6vWh9fAPXi5Fa5kZ0Iz4S7gDdV/F4ZEQ/NzXHj4oVSiUQfJ5FPlFOy/QU+49R1GHpzKrimla0nADd9GNv1059QCXsWxgk0/cx/N3w7dTfa3DXuiPwZnpyfNyMeiY4qnnxTnHlMkhTdOSfeaRIk8u3ORz3FIh2cUnzJIsDKxzvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hr4/TxOd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TYz1WQkc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65471C4CEF7;
-	Mon, 29 Dec 2025 16:14:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hr4/TxOd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24BBEC4CEF7;
+	Mon, 29 Dec 2025 16:14:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767024865;
-	bh=3GetB/tAGeIfq7y1Mb/8zIjQnBSSWWghhSIB3bS1314=;
+	s=korg; t=1767024868;
+	bh=QsS5Zp2GwfObs3ikRa91jZVdznyvmZtdKS6ECwKNp+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TYz1WQkcO3hU4zpWvmSmYx9vVIGaVWy10bseodXX6Ac3Gstjr1AHRKmvrlxao6Yn1
-	 2a0fmXVRDr/mzYhUTXc4wnHRtNUQ+vG+HdOw8yD9wKc0nM+aFzkd0t76gE/uB4+33L
-	 R7Lacxj1FB/GkB7CADqRE13KOpNlZW8ifbfow97o=
+	b=hr4/TxOdiVaZJipVokdsCXkT9Oepg20mPXhWc0+mJVTru4nmnlJUCxhtxcmTBQsyv
+	 Rn+jOkkx+9awLvB5OGH6GrutmLpQkxq7BAUxgZCPE2ynECBVHn7apQVeB9HVUSl+s6
+	 Td/Jdjdaop8Um+m+ffdKoWR2Pbg+rF5Hj+CF36v0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	George Kennedy <george.kennedy@oracle.com>,
+	Doug Berger <opendmb@gmail.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 012/430] perf/x86/amd: Check event before enable to avoid GPF
-Date: Mon, 29 Dec 2025 17:06:54 +0100
-Message-ID: <20251229160724.603763316@linuxfoundation.org>
+Subject: [PATCH 6.18 013/430] sched/deadline: only set free_cpus for online runqueues
+Date: Mon, 29 Dec 2025 17:06:55 +0100
+Message-ID: <20251229160724.641080606@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -52,81 +51,186 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: George Kennedy <george.kennedy@oracle.com>
+From: Doug Berger <opendmb@gmail.com>
 
-[ Upstream commit 866cf36bfee4fba6a492d2dcc5133f857e3446b0 ]
+[ Upstream commit 382748c05e58a9f1935f5a653c352422375566ea ]
 
-On AMD machines cpuc->events[idx] can become NULL in a subtle race
-condition with NMI->throttle->x86_pmu_stop().
+Commit 16b269436b72 ("sched/deadline: Modify cpudl::free_cpus
+to reflect rd->online") introduced the cpudl_set/clear_freecpu
+functions to allow the cpu_dl::free_cpus mask to be manipulated
+by the deadline scheduler class rq_on/offline callbacks so the
+mask would also reflect this state.
 
-Check event for NULL in amd_pmu_enable_all() before enable to avoid a GPF.
-This appears to be an AMD only issue.
+Commit 9659e1eeee28 ("sched/deadline: Remove cpu_active_mask
+from cpudl_find()") removed the check of the cpu_active_mask to
+save some processing on the premise that the cpudl::free_cpus
+mask already reflected the runqueue online state.
 
-Syzkaller reported a GPF in amd_pmu_enable_all.
+Unfortunately, there are cases where it is possible for the
+cpudl_clear function to set the free_cpus bit for a CPU when the
+deadline runqueue is offline. When this occurs while a CPU is
+connected to the default root domain the flag may retain the bad
+state after the CPU has been unplugged. Later, a different CPU
+that is transitioning through the default root domain may push a
+deadline task to the powered down CPU when cpudl_find sees its
+free_cpus bit is set. If this happens the task will not have the
+opportunity to run.
 
-INFO: NMI handler (perf_event_nmi_handler) took too long to run: 13.143
-    msecs
-Oops: general protection fault, probably for non-canonical address
-    0xdffffc0000000034: 0000  PREEMPT SMP KASAN NOPTI
-KASAN: null-ptr-deref in range [0x00000000000001a0-0x00000000000001a7]
-CPU: 0 UID: 0 PID: 328415 Comm: repro_36674776 Not tainted 6.12.0-rc1-syzk
-RIP: 0010:x86_pmu_enable_event (arch/x86/events/perf_event.h:1195
-    arch/x86/events/core.c:1430)
-RSP: 0018:ffff888118009d60 EFLAGS: 00010012
-RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 0000000000000000
-RDX: 0000000000000034 RSI: 0000000000000000 RDI: 00000000000001a0
-RBP: 0000000000000001 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000000 R12: 0000000000000002
-R13: ffff88811802a440 R14: ffff88811802a240 R15: ffff8881132d8601
-FS:  00007f097dfaa700(0000) GS:ffff888118000000(0000) GS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00000000200001c0 CR3: 0000000103d56000 CR4: 00000000000006f0
-Call Trace:
- <IRQ>
-amd_pmu_enable_all (arch/x86/events/amd/core.c:760 (discriminator 2))
-x86_pmu_enable (arch/x86/events/core.c:1360)
-event_sched_out (kernel/events/core.c:1191 kernel/events/core.c:1186
-    kernel/events/core.c:2346)
-__perf_remove_from_context (kernel/events/core.c:2435)
-event_function (kernel/events/core.c:259)
-remote_function (kernel/events/core.c:92 (discriminator 1)
-    kernel/events/core.c:72 (discriminator 1))
-__flush_smp_call_function_queue (./arch/x86/include/asm/jump_label.h:27
-    ./include/linux/jump_label.h:207 ./include/trace/events/csd.h:64
-    kernel/smp.c:135 kernel/smp.c:540)
-__sysvec_call_function_single (./arch/x86/include/asm/jump_label.h:27
-    ./include/linux/jump_label.h:207
-    ./arch/x86/include/asm/trace/irq_vectors.h:99 arch/x86/kernel/smp.c:272)
-sysvec_call_function_single (arch/x86/kernel/smp.c:266 (discriminator 47)
-    arch/x86/kernel/smp.c:266 (discriminator 47))
- </IRQ>
+One example is outlined here:
+https://lore.kernel.org/lkml/20250110233010.2339521-1-opendmb@gmail.com
 
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: George Kennedy <george.kennedy@oracle.com>
+Another occurs when the last deadline task is migrated from a
+CPU that has an offlined runqueue. The dequeue_task member of
+the deadline scheduler class will eventually call cpudl_clear
+and set the free_cpus bit for the CPU.
+
+This commit modifies the cpudl_clear function to be aware of the
+online state of the deadline runqueue so that the free_cpus mask
+can be updated appropriately.
+
+It is no longer necessary to manage the mask outside of the
+cpudl_set/clear functions so the cpudl_set/clear_freecpu
+functions are removed. In addition, since the free_cpus mask is
+now only updated under the cpudl lock the code was changed to
+use the non-atomic __cpumask functions.
+
+Signed-off-by: Doug Berger <opendmb@gmail.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/amd/core.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ kernel/sched/cpudeadline.c | 34 +++++++++-------------------------
+ kernel/sched/cpudeadline.h |  4 +---
+ kernel/sched/deadline.c    |  8 ++++----
+ 3 files changed, 14 insertions(+), 32 deletions(-)
 
-diff --git a/arch/x86/events/amd/core.c b/arch/x86/events/amd/core.c
-index b20661b8621d1..8868f5f5379ba 100644
---- a/arch/x86/events/amd/core.c
-+++ b/arch/x86/events/amd/core.c
-@@ -763,7 +763,12 @@ static void amd_pmu_enable_all(int added)
- 		if (!test_bit(idx, cpuc->active_mask))
- 			continue;
- 
--		amd_pmu_enable_event(cpuc->events[idx]);
-+		/*
-+		 * FIXME: cpuc->events[idx] can become NULL in a subtle race
-+		 * condition with NMI->throttle->x86_pmu_stop().
-+		 */
-+		if (cpuc->events[idx])
-+			amd_pmu_enable_event(cpuc->events[idx]);
+diff --git a/kernel/sched/cpudeadline.c b/kernel/sched/cpudeadline.c
+index cdd740b3f7743..37b572cc8aca2 100644
+--- a/kernel/sched/cpudeadline.c
++++ b/kernel/sched/cpudeadline.c
+@@ -166,12 +166,13 @@ int cpudl_find(struct cpudl *cp, struct task_struct *p,
+  * cpudl_clear - remove a CPU from the cpudl max-heap
+  * @cp: the cpudl max-heap context
+  * @cpu: the target CPU
++ * @online: the online state of the deadline runqueue
+  *
+  * Notes: assumes cpu_rq(cpu)->lock is locked
+  *
+  * Returns: (void)
+  */
+-void cpudl_clear(struct cpudl *cp, int cpu)
++void cpudl_clear(struct cpudl *cp, int cpu, bool online)
+ {
+ 	int old_idx, new_cpu;
+ 	unsigned long flags;
+@@ -184,7 +185,7 @@ void cpudl_clear(struct cpudl *cp, int cpu)
+ 	if (old_idx == IDX_INVALID) {
+ 		/*
+ 		 * Nothing to remove if old_idx was invalid.
+-		 * This could happen if a rq_offline_dl is
++		 * This could happen if rq_online_dl or rq_offline_dl is
+ 		 * called for a CPU without -dl tasks running.
+ 		 */
+ 	} else {
+@@ -195,9 +196,12 @@ void cpudl_clear(struct cpudl *cp, int cpu)
+ 		cp->elements[new_cpu].idx = old_idx;
+ 		cp->elements[cpu].idx = IDX_INVALID;
+ 		cpudl_heapify(cp, old_idx);
+-
+-		cpumask_set_cpu(cpu, cp->free_cpus);
  	}
++	if (likely(online))
++		__cpumask_set_cpu(cpu, cp->free_cpus);
++	else
++		__cpumask_clear_cpu(cpu, cp->free_cpus);
++
+ 	raw_spin_unlock_irqrestore(&cp->lock, flags);
  }
  
+@@ -228,7 +232,7 @@ void cpudl_set(struct cpudl *cp, int cpu, u64 dl)
+ 		cp->elements[new_idx].cpu = cpu;
+ 		cp->elements[cpu].idx = new_idx;
+ 		cpudl_heapify_up(cp, new_idx);
+-		cpumask_clear_cpu(cpu, cp->free_cpus);
++		__cpumask_clear_cpu(cpu, cp->free_cpus);
+ 	} else {
+ 		cp->elements[old_idx].dl = dl;
+ 		cpudl_heapify(cp, old_idx);
+@@ -237,26 +241,6 @@ void cpudl_set(struct cpudl *cp, int cpu, u64 dl)
+ 	raw_spin_unlock_irqrestore(&cp->lock, flags);
+ }
+ 
+-/*
+- * cpudl_set_freecpu - Set the cpudl.free_cpus
+- * @cp: the cpudl max-heap context
+- * @cpu: rd attached CPU
+- */
+-void cpudl_set_freecpu(struct cpudl *cp, int cpu)
+-{
+-	cpumask_set_cpu(cpu, cp->free_cpus);
+-}
+-
+-/*
+- * cpudl_clear_freecpu - Clear the cpudl.free_cpus
+- * @cp: the cpudl max-heap context
+- * @cpu: rd attached CPU
+- */
+-void cpudl_clear_freecpu(struct cpudl *cp, int cpu)
+-{
+-	cpumask_clear_cpu(cpu, cp->free_cpus);
+-}
+-
+ /*
+  * cpudl_init - initialize the cpudl structure
+  * @cp: the cpudl max-heap context
+diff --git a/kernel/sched/cpudeadline.h b/kernel/sched/cpudeadline.h
+index 11c0f1faa7e11..d7699468eedd5 100644
+--- a/kernel/sched/cpudeadline.h
++++ b/kernel/sched/cpudeadline.h
+@@ -19,8 +19,6 @@ struct cpudl {
+ 
+ int  cpudl_find(struct cpudl *cp, struct task_struct *p, struct cpumask *later_mask);
+ void cpudl_set(struct cpudl *cp, int cpu, u64 dl);
+-void cpudl_clear(struct cpudl *cp, int cpu);
++void cpudl_clear(struct cpudl *cp, int cpu, bool online);
+ int  cpudl_init(struct cpudl *cp);
+-void cpudl_set_freecpu(struct cpudl *cp, int cpu);
+-void cpudl_clear_freecpu(struct cpudl *cp, int cpu);
+ void cpudl_cleanup(struct cpudl *cp);
+diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
+index 7b7671060bf9e..19b1a8b81c76c 100644
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -1811,7 +1811,7 @@ static void dec_dl_deadline(struct dl_rq *dl_rq, u64 deadline)
+ 	if (!dl_rq->dl_nr_running) {
+ 		dl_rq->earliest_dl.curr = 0;
+ 		dl_rq->earliest_dl.next = 0;
+-		cpudl_clear(&rq->rd->cpudl, rq->cpu);
++		cpudl_clear(&rq->rd->cpudl, rq->cpu, rq->online);
+ 		cpupri_set(&rq->rd->cpupri, rq->cpu, rq->rt.highest_prio.curr);
+ 	} else {
+ 		struct rb_node *leftmost = rb_first_cached(&dl_rq->root);
+@@ -2883,9 +2883,10 @@ static void rq_online_dl(struct rq *rq)
+ 	if (rq->dl.overloaded)
+ 		dl_set_overload(rq);
+ 
+-	cpudl_set_freecpu(&rq->rd->cpudl, rq->cpu);
+ 	if (rq->dl.dl_nr_running > 0)
+ 		cpudl_set(&rq->rd->cpudl, rq->cpu, rq->dl.earliest_dl.curr);
++	else
++		cpudl_clear(&rq->rd->cpudl, rq->cpu, true);
+ }
+ 
+ /* Assumes rq->lock is held */
+@@ -2894,8 +2895,7 @@ static void rq_offline_dl(struct rq *rq)
+ 	if (rq->dl.overloaded)
+ 		dl_clear_overload(rq);
+ 
+-	cpudl_clear(&rq->rd->cpudl, rq->cpu);
+-	cpudl_clear_freecpu(&rq->rd->cpudl, rq->cpu);
++	cpudl_clear(&rq->rd->cpudl, rq->cpu, false);
+ }
+ 
+ void __init init_sched_dl_class(void)
 -- 
 2.51.0
 
