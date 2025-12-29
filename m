@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7F7272E7C;
-	Mon, 29 Dec 2025 16:27:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6F23128BC;
+	Mon, 29 Dec 2025 16:27:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025623; cv=none; b=ErIzHNtTGE3wBP8KapjDc42Y/ehzvxtBAn9r9uqtps87DskPUTePF5VrQJgqBwRUuoN8hULoU5xd4m/4OlGWha70wPbvqja9R7Vcgb+vCLJTVPx9yW9rRCCEefKJWRW1VgwRxSOUbirZgixiAsNF+H3hORo+1eX9IAz7C2Bon5s=
+	t=1767025625; cv=none; b=kRGcCixtyJrPSdp4G31d/4RAIccQI3qAHQodPB2A2m20JI20f96PwCcS3opzSsndgPSUkOJXOucFajcrjXJMmQXCXiYKo6HN+LpYqVxSWjDDkszKteQSDkYivApllBNwOQ/WQwNDzVYXDofq3cKCliFO6/4Et2mybTbRJWskOIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025623; c=relaxed/simple;
-	bh=FAZTcTTWoxnoPmq5pJJ01q9TW63jxD//362lguat1d8=;
+	s=arc-20240116; t=1767025625; c=relaxed/simple;
+	bh=JPs6kp974DM+wmrH/DaeO7WdyTcrhrg5r8+AsCgADNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KHsVvX6zh1wzUMDnXPkxlxPBsSSIFn+9iUllO+rodEm2RRsbYS07Va116eXiO5Yw2NGzilYHL+juhEb0yoPv9OqraYXVl8zxesy5nAqOswnOHrbevTsv+6gw56m0UvmC1cK+4WpHDa4+mRMpHpwNvGDqOXuW4KK5NiMSdtWnAyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mmiGe7pz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eOAnF/1QJurBcUi9d+6Aa3zkMTks9X9j4AOotEL2wDq6c7sIKu1xSca464RvTcZT+H2gGpFH2P7B+YBVv9vEa3M8rYE9JU+WkpyLV7QixauPe3e+VSjYBWdmULZzRVqbklqJ/xGu2/ucNYNkCbipxUwaTyZLQoIG2vZrQqU7oHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M16UuCYH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mmiGe7pz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 688D7C4CEF7;
-	Mon, 29 Dec 2025 16:27:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M16UuCYH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36997C116C6;
+	Mon, 29 Dec 2025 16:27:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025622;
-	bh=FAZTcTTWoxnoPmq5pJJ01q9TW63jxD//362lguat1d8=;
+	s=korg; t=1767025625;
+	bh=JPs6kp974DM+wmrH/DaeO7WdyTcrhrg5r8+AsCgADNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mmiGe7pzDDJBIcojtVuCODkKuogUXw5kcokCmqxFzKTIzaQ4jue7gDHO8tbOAZHzg
-	 vXbPQIW/7a5vLgfYwGXOznud8KsKf1IWh1+uv8BS/ZLpOhVl1qRZdiBFxGn+4EHFPQ
-	 yp+4HPunkScJNHnx/RGDVhHxg759xv3G7K6rJCEQ=
+	b=M16UuCYH4N3rIkvQ2HcACCEFxn5wmCvpG+Nz76dMlQJ+aAfoyAs2Ej/eJWoer9mZg
+	 MqYKjXURbBBQPAl6gHOA+ZPG1mL3wnDAbqWnq8L0sXmxYuPWzVDfZA8h1/JnZrI7Fo
+	 3JeP3PphqDQUabrZKV95Ai5AHVPkKSacV4GNpM/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Sven Eckelmann (Plasma Cloud)" <se@simonwunderlich.de>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.18 245/430] wifi: mt76: Fix DTS power-limits on little endian systems
-Date: Mon, 29 Dec 2025 17:10:47 +0100
-Message-ID: <20251229160733.370012218@linuxfoundation.org>
+	Andrea Righi <arighi@nvidia.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 6.18 236/430] sched_ext: Fix missing post-enqueue handling in move_local_task_to_local_dsq()
+Date: Mon, 29 Dec 2025 17:10:38 +0100
+Message-ID: <20251229160733.039409122@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -50,134 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann (Plasma Cloud) <se@simonwunderlich.de>
+From: Tejun Heo <tj@kernel.org>
 
-commit 38b845e1f9e810869b0a0b69f202b877b7b7fb12 upstream.
+commit f5e1e5ec204da11fa87fdf006d451d80ce06e118 upstream.
 
-The power-limits for ru and mcs and stored in the devicetree as bytewise
-array (often with sizes which are not a multiple of 4). These arrays have a
-prefix which defines for how many modes a line is applied. This prefix is
-also only a byte - but the code still tried to fix the endianness of this
-byte with a be32 operation. As result, loading was mostly failing or was
-sending completely unexpected values to the firmware.
+move_local_task_to_local_dsq() is used when moving a task from a non-local
+DSQ to a local DSQ on the same CPU. It directly manipulates the local DSQ
+without going through dispatch_enqueue() and was missing the post-enqueue
+handling that triggers preemption when SCX_ENQ_PREEMPT is set or the idle
+task is running.
 
-Since the other rates are also stored in the devicetree as bytewise arrays,
-just drop the u32 access + be32_to_cpu conversion and directly access them
-as bytes arrays.
+The function is used by move_task_between_dsqs() which backs
+scx_bpf_dsq_move() and may be called while the CPU is busy.
 
-Cc: stable@vger.kernel.org
-Fixes: 22b980badc0f ("mt76: add functions for parsing rate power limits from DT")
-Fixes: a9627d992b5e ("mt76: extend DT rate power limits to support 11ax devices")
-Signed-off-by: Sven Eckelmann (Plasma Cloud) <se@simonwunderlich.de>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Add local_dsq_post_enq() call to move_local_task_to_local_dsq(). As the
+dispatch path doesn't need post-enqueue handling, add SCX_RQ_IN_BALANCE
+early exit to keep consume_dispatch_q() behavior unchanged and avoid
+triggering unnecessary resched when scx_bpf_dsq_move() is used from the
+dispatch path.
+
+Fixes: 4c30f5ce4f7a ("sched_ext: Implement scx_bpf_dispatch[_vtime]_from_dsq()")
+Cc: stable@vger.kernel.org # v6.12+
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/eeprom.c |   37 ++++++++++++++++++----------
- 1 file changed, 24 insertions(+), 13 deletions(-)
+ kernel/sched/ext.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/net/wireless/mediatek/mt76/eeprom.c
-+++ b/drivers/net/wireless/mediatek/mt76/eeprom.c
-@@ -253,6 +253,19 @@ mt76_get_of_array(struct device_node *np
- 	return prop->value;
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -919,6 +919,14 @@ static void local_dsq_post_enq(struct sc
+ 	struct rq *rq = container_of(dsq, struct rq, scx.local_dsq);
+ 	bool preempt = false;
+ 
++	/*
++	 * If @rq is in balance, the CPU is already vacant and looking for the
++	 * next task to run. No need to preempt or trigger resched after moving
++	 * @p into its local DSQ.
++	 */
++	if (rq->scx.flags & SCX_RQ_IN_BALANCE)
++		return;
++
+ 	if ((enq_flags & SCX_ENQ_PREEMPT) && p != rq->curr &&
+ 	    rq->curr->sched_class == &ext_sched_class) {
+ 		rq->curr->scx.slice = 0;
+@@ -1524,6 +1532,8 @@ static void move_local_task_to_local_dsq
+ 
+ 	dsq_mod_nr(dst_dsq, 1);
+ 	p->scx.dsq = dst_dsq;
++
++	local_dsq_post_enq(dst_dsq, p, enq_flags);
  }
  
-+static const s8 *
-+mt76_get_of_array_s8(struct device_node *np, char *name, size_t *len, int min)
-+{
-+	struct property *prop = of_find_property(np, name, NULL);
-+
-+	if (!prop || !prop->value || prop->length < min)
-+		return NULL;
-+
-+	*len = prop->length;
-+
-+	return prop->value;
-+}
-+
- struct device_node *
- mt76_find_channel_node(struct device_node *np, struct ieee80211_channel *chan)
- {
-@@ -294,7 +307,7 @@ mt76_get_txs_delta(struct device_node *n
- }
- 
- static void
--mt76_apply_array_limit(s8 *pwr, size_t pwr_len, const __be32 *data,
-+mt76_apply_array_limit(s8 *pwr, size_t pwr_len, const s8 *data,
- 		       s8 target_power, s8 nss_delta, s8 *max_power)
- {
- 	int i;
-@@ -303,15 +316,14 @@ mt76_apply_array_limit(s8 *pwr, size_t p
- 		return;
- 
- 	for (i = 0; i < pwr_len; i++) {
--		pwr[i] = min_t(s8, target_power,
--			       be32_to_cpu(data[i]) + nss_delta);
-+		pwr[i] = min_t(s8, target_power, data[i] + nss_delta);
- 		*max_power = max(*max_power, pwr[i]);
- 	}
- }
- 
- static void
- mt76_apply_multi_array_limit(s8 *pwr, size_t pwr_len, s8 pwr_num,
--			     const __be32 *data, size_t len, s8 target_power,
-+			     const s8 *data, size_t len, s8 target_power,
- 			     s8 nss_delta, s8 *max_power)
- {
- 	int i, cur;
-@@ -319,8 +331,7 @@ mt76_apply_multi_array_limit(s8 *pwr, si
- 	if (!data)
- 		return;
- 
--	len /= 4;
--	cur = be32_to_cpu(data[0]);
-+	cur = data[0];
- 	for (i = 0; i < pwr_num; i++) {
- 		if (len < pwr_len + 1)
- 			break;
-@@ -335,7 +346,7 @@ mt76_apply_multi_array_limit(s8 *pwr, si
- 		if (!len)
- 			break;
- 
--		cur = be32_to_cpu(data[0]);
-+		cur = data[0];
- 	}
- }
- 
-@@ -346,7 +357,7 @@ s8 mt76_get_rate_power_limits(struct mt7
- {
- 	struct mt76_dev *dev = phy->dev;
- 	struct device_node *np;
--	const __be32 *val;
-+	const s8 *val;
- 	char name[16];
- 	u32 mcs_rates = dev->drv->mcs_rates;
- 	u32 ru_rates = ARRAY_SIZE(dest->ru[0]);
-@@ -392,21 +403,21 @@ s8 mt76_get_rate_power_limits(struct mt7
- 
- 	txs_delta = mt76_get_txs_delta(np, hweight16(phy->chainmask));
- 
--	val = mt76_get_of_array(np, "rates-cck", &len, ARRAY_SIZE(dest->cck));
-+	val = mt76_get_of_array_s8(np, "rates-cck", &len, ARRAY_SIZE(dest->cck));
- 	mt76_apply_array_limit(dest->cck, ARRAY_SIZE(dest->cck), val,
- 			       target_power, txs_delta, &max_power);
- 
--	val = mt76_get_of_array(np, "rates-ofdm",
--				&len, ARRAY_SIZE(dest->ofdm));
-+	val = mt76_get_of_array_s8(np, "rates-ofdm",
-+				   &len, ARRAY_SIZE(dest->ofdm));
- 	mt76_apply_array_limit(dest->ofdm, ARRAY_SIZE(dest->ofdm), val,
- 			       target_power, txs_delta, &max_power);
- 
--	val = mt76_get_of_array(np, "rates-mcs", &len, mcs_rates + 1);
-+	val = mt76_get_of_array_s8(np, "rates-mcs", &len, mcs_rates + 1);
- 	mt76_apply_multi_array_limit(dest->mcs[0], ARRAY_SIZE(dest->mcs[0]),
- 				     ARRAY_SIZE(dest->mcs), val, len,
- 				     target_power, txs_delta, &max_power);
- 
--	val = mt76_get_of_array(np, "rates-ru", &len, ru_rates + 1);
-+	val = mt76_get_of_array_s8(np, "rates-ru", &len, ru_rates + 1);
- 	mt76_apply_multi_array_limit(dest->ru[0], ARRAY_SIZE(dest->ru[0]),
- 				     ARRAY_SIZE(dest->ru), val, len,
- 				     target_power, txs_delta, &max_power);
+ /**
 
 
