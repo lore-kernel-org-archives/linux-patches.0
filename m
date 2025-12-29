@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F7A3093C1;
-	Mon, 29 Dec 2025 16:21:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51143093C1;
+	Mon, 29 Dec 2025 16:21:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025271; cv=none; b=o3ziaGWYT46hxaBR61Uqq+STHBlo922CcR5FX/Gng/Xp6IIBQtfJoHSyZUNPVlqyXJufY/7QlDJ125FxjETAt5MsDy3Ai1lCebUcZMh32OW170VRd+MKSeTVG3fPOImFDBVkHxcSSgKmjWjVM1vQrR9wlmTPwjnNGQPeoF+vZKM=
+	t=1767025274; cv=none; b=mfYp7dyCJ5g36C2z9QiCbOreEvornUuWdngd5qCPCqleb7LrnSwbpAHtK/40bCXNiGWzTSBcASzJKOLq4zhe/DGgdYG8YmHUSObjhycl2M64NdPh03g6wce5kIEx66OYWxjihdvUNhHj5Qh3qpnOmHk0m9TJQLAGARZm+kHaS/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025271; c=relaxed/simple;
-	bh=GLq3ueTe19OxxOOywyXe9GSIVSCQ5/MEHnQvWq4YUPI=;
+	s=arc-20240116; t=1767025274; c=relaxed/simple;
+	bh=xvEv0EnRSX9o9GM6xnXRTF4pqIOyRhVpZZjMLxoNy7s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MEF8rrtH34WPhL7mWAEpT3T0d1gUwtSU0+BvWyzjIZ+NOFzjAehxncsXYtocGVIrUvPu7T48wh12wRKJgI63Ws81FkstKFh1LYlk6ZaN8lSS7AY4gxKUIEEqONB91BbnGVSXewwnl3ti0TCMiPN4WOCcTlniK6y7975IbBAkY18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uir5mZc+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HI1w/NPUmaKpiMsTT4GlpCIMtI0lUNTC8d2szGTx9r/l8K3DlxoMMbrNbCliMrJUG9iFoWrb5KyhjfSfonSSgpVRdmHX6Dv9/tgfmVTD5PS4mwnYE8+SEJTiChlAe9toe3GVrAdXwr3dOkdodJy65SA7NZ3PUnzjmZm36kd5nH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d3vXgqcY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uir5mZc+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D01C4CEF7;
-	Mon, 29 Dec 2025 16:21:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d3vXgqcY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ECCAC4CEF7;
+	Mon, 29 Dec 2025 16:21:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025271;
-	bh=GLq3ueTe19OxxOOywyXe9GSIVSCQ5/MEHnQvWq4YUPI=;
+	s=korg; t=1767025273;
+	bh=xvEv0EnRSX9o9GM6xnXRTF4pqIOyRhVpZZjMLxoNy7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uir5mZc+HpYMhIwH0NbcK8sxVEgHMPFkbgAp1WBlVbmdOlfDBN3B5a8JOOR14FxSc
-	 MX8JlUV3GVDoJbE2catC1/cGOIT7BRpmsXlZ7dy45jkmge/v08LDs7YmW679qXhjUK
-	 5WaI95rxj/WDMWiLP4Ks6KeOUDB+CsjlXXn9MBGk=
+	b=d3vXgqcYkIX/7SYw2A3JEGnd2AhR7xI1W4heeo8pw3JmUVKSqUfUFirIooqAmbPjc
+	 /v7k0ol7ucg8x7BiDiHzULsmWqirw/bImOzCKqmO8v7s9XkB4rH9Xv8t7CqkVCOz9X
+	 0NpxU19ORyfcN4GtlcjMlx2AX2P/iRw+LRcvmpWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.18 154/430] can: gs_usb: gs_can_open(): fix error handling
-Date: Mon, 29 Dec 2025 17:09:16 +0100
-Message-ID: <20251229160730.027347523@linuxfoundation.org>
+	Kartik Rajput <kkartik@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>
+Subject: [PATCH 6.18 155/430] soc/tegra: fuse: Do not register SoC device on ACPI boot
+Date: Mon, 29 Dec 2025 17:09:17 +0100
+Message-ID: <20251229160730.063900048@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -49,43 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Kartik Rajput <kkartik@nvidia.com>
 
-commit 3e54d3b4a8437b6783d4145c86962a2aa51022f3 upstream.
+commit c87f820bc4748fdd4d50969e8930cd88d1b61582 upstream.
 
-Commit 2603be9e8167 ("can: gs_usb: gs_can_open(): improve error handling")
-added missing error handling to the gs_can_open() function.
+On Tegra platforms using ACPI, the SMCCC driver already registers the
+SoC device. This makes the registration performed by the Tegra fuse
+driver redundant.
 
-The driver uses 2 USB anchors to track the allocated URBs: the TX URBs in
-struct gs_can::tx_submitted for each netdev and the RX URBs in struct
-gs_usb::rx_submitted for the USB device. gs_can_open() allocates the RX
-URBs, while TX URBs are allocated during gs_can_start_xmit().
+When booted via ACPI, skip registering the SoC device and suppress
+printing SKU information from the Tegra fuse driver, as this information
+is already provided by the SMCCC driver.
 
-The cleanup in gs_can_open() kills all anchored dev->tx_submitted
-URBs (which is not necessary since the netdev is not yet registered), but
-misses the parent->rx_submitted URBs.
-
-Fix the problem by killing the rx_submitted instead of the tx_submitted.
-
-Fixes: 2603be9e8167 ("can: gs_usb: gs_can_open(): improve error handling")
+Fixes: 972167c69080 ("soc/tegra: fuse: Add ACPI support for Tegra194 and Tegra234")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251210-gs_usb-fix-error-handling-v1-1-d6a5a03f10bb@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Kartik Rajput <kkartik@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/gs_usb.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/tegra/fuse/fuse-tegra.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/net/can/usb/gs_usb.c
-+++ b/drivers/net/can/usb/gs_usb.c
-@@ -1074,7 +1074,7 @@ out_usb_free_urb:
- 	usb_free_urb(urb);
- out_usb_kill_anchored_urbs:
- 	if (!parent->active_channels) {
--		usb_kill_anchored_urbs(&dev->tx_submitted);
-+		usb_kill_anchored_urbs(&parent->rx_submitted);
+--- a/drivers/soc/tegra/fuse/fuse-tegra.c
++++ b/drivers/soc/tegra/fuse/fuse-tegra.c
+@@ -182,8 +182,6 @@ static int tegra_fuse_probe(struct platf
+ 		}
  
- 		if (dev->feature & GS_CAN_FEATURE_HW_TIMESTAMP)
- 			gs_usb_timestamp_stop(parent);
+ 		fuse->soc->init(fuse);
+-		tegra_fuse_print_sku_info(&tegra_sku_info);
+-		tegra_soc_device_register();
+ 
+ 		err = tegra_fuse_add_lookups(fuse);
+ 		if (err)
 
 
