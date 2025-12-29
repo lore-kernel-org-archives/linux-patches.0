@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7DD933121F;
-	Mon, 29 Dec 2025 16:20:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 810CC330B2A;
+	Mon, 29 Dec 2025 16:20:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025242; cv=none; b=fbUg0a4DwVQTEr+qzvr68YPNdEmPX8/h1oiSb3YVodEQ+Mtz6jGlQ6DR/1Iw50Dj9OswwmXNGk8fReKxEGjqyEoCoZFq+1y1kV3oLlm+Fh4cVKyoIXe8prBFR2/+jSN7sGkk7lTzPSJ6XX+cN5Tb79wFd4EZFiTFjqD7MDtBdDc=
+	t=1767025245; cv=none; b=klsS0rw1s63y96l70V7pjDUsNe9PdGOGdjFQE4AyWG0SdJnYdkeKJ974/OP6TRA/yspMfW5I/1qsx4pXO1/tik+4Ylg8EoGYqS4HjxhbtvkibinrY15Sc3+WeDfruAwnxnrQ5lYdeCS2VDOeG+378TTN0MdCIXsddJ8Igy/S5DA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025242; c=relaxed/simple;
-	bh=3AzF/Xz9+sZXGE0Xd5v4uRegDUFPB/NE7ClkNWF7aOs=;
+	s=arc-20240116; t=1767025245; c=relaxed/simple;
+	bh=rapYqrrUWlnW1NYPdPcsFC6rk3vCpLiyhCAE0NNrGnQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yb1QBTLQun9PIE/bxPE0LLHZAj83pIv8UheHXWxjiestQKRygWY8uh2+6zcTHPhvjAkYc1Y5d9mujaCOIBlj+oGJXnYKvLDonGwVJrgixkhtAREd5/FZMaAvci7grCcXDIvAB6iJWzd0Oce+KA9BmbR0vswKeikiT4ySGDWZhEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mSP+owQI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lvVIH1sS1iAUCAwL8/ThzDUrvbNzMKuDZm1ilFrHcgKkgpQNOGuNefk4e35n9RTGw1qWSIORt8Ekz7Foo950bISA3Jq2WcPytb/QVtBVc5hmm7rYcts7l3CYC55/qjw+i9hG7xBJF9oS0XvngX65Y4uv7c3ISzKyWqzAgeu+dQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v0D0G466; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mSP+owQI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E95EC4CEF7;
-	Mon, 29 Dec 2025 16:20:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v0D0G466"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08460C4CEF7;
+	Mon, 29 Dec 2025 16:20:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025242;
-	bh=3AzF/Xz9+sZXGE0Xd5v4uRegDUFPB/NE7ClkNWF7aOs=;
+	s=korg; t=1767025245;
+	bh=rapYqrrUWlnW1NYPdPcsFC6rk3vCpLiyhCAE0NNrGnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mSP+owQIMjB6aqaMPMxY2QHVbv9dT5Uoe4WEhkRgfcCu+N90appCyyDlhfZ3DZpZX
-	 PZabThR5YO6cdX/Pmuvj9F4VGFV3UYZLdxD2aRb0G1sdHbYeDIZriaTU3DGBgQqlwH
-	 knhmhlhi9cEK+hqCjelmcwgTeKHYWE9u9SwyUWAA=
+	b=v0D0G4665EVnk2eybRpSp2d2MrO4fquIM5j38j2Xfgu75m0pMgnvRGK7Fn9++kN/S
+	 BvqY7yX9F28+YabPicrzppn4sNbDeXTxGDRy0Q8MFNdc61TbneWiMSdQP3VJLvgi76
+	 tywH2m27/UqLnXM4O2GMjcLY+u/nrF5XhWkltPAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roger <roger.andersen@protonmail.com>,
-	Stanislas Polu <spolu@dust.tt>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.18 145/430] ksmbd: fix buffer validation by including null terminator size in EA length
-Date: Mon, 29 Dec 2025 17:09:07 +0100
-Message-ID: <20251229160729.698706254@linuxfoundation.org>
+	Ping Cheng <ping.cheng@wacom.com>,
+	stable@kernel.org,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.18 146/430] HID: input: map HID_GD_Z to ABS_DISTANCE for stylus/pen
+Date: Mon, 29 Dec 2025 17:09:08 +0100
+Message-ID: <20251229160729.734979059@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -52,46 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Ping Cheng <pinglinux@gmail.com>
 
-commit 95d7a890e4b03e198836d49d699408fd1867cb55 upstream.
+commit 7953794f741e94d30df9dafaaa4c031c85b891d6 upstream.
 
-The smb2_set_ea function, which handles Extended Attributes (EA),
-was performing buffer validation checks that incorrectly omitted the size
-of the null terminating character (+1 byte) for EA Name.
-This patch fixes the issue by explicitly adding '+ 1' to EaNameLength where
-the null terminator is expected to be present in the buffer, ensuring
-the validation accurately reflects the total required buffer size.
+HID_GD_Z is mapped to ABS_Z for stylus and pen in hid-input.c. But HID_GD_Z
+should be used to report ABS_DISTANCE for stylus and pen as described at:
+Documentation/input/event-codes.rst#n226
 
-Cc: stable@vger.kernel.org
-Reported-by: Roger <roger.andersen@protonmail.com>
-Reported-by: Stanislas Polu <spolu@dust.tt>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+* ABS_DISTANCE:
+
+  - Used to describe the distance of a tool from an interaction surface. This
+    event should only be emitted while the tool is hovering, meaning in close
+    proximity of the device and while the value of the BTN_TOUCH code is 0. If
+    the input device may be used freely in three dimensions, consider ABS_Z
+    instead.
+  - BTN_TOOL_<name> should be set to 1 when the tool comes into detectable
+    proximity and set to 0 when the tool leaves detectable proximity.
+    BTN_TOOL_<name> signals the type of tool that is currently detected by the
+    hardware and is otherwise independent of ABS_DISTANCE and/or BTN_TOUCH.
+
+This patch makes the correct mapping. The ABS_DISTANCE is currently not mapped
+by any HID usage in hid-generic driver.
+
+Signed-off-by: Ping Cheng <ping.cheng@wacom.com>
+Cc: stable@kernel.org
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hid/hid-input.c |   18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -2373,7 +2373,7 @@ static int smb2_set_ea(struct smb2_ea_in
- 	int rc = 0;
- 	unsigned int next = 0;
+--- a/drivers/hid/hid-input.c
++++ b/drivers/hid/hid-input.c
+@@ -878,7 +878,7 @@ static void hidinput_configure_usage(str
  
--	if (buf_len < sizeof(struct smb2_ea_info) + eabuf->EaNameLength +
-+	if (buf_len < sizeof(struct smb2_ea_info) + eabuf->EaNameLength + 1 +
- 			le16_to_cpu(eabuf->EaValueLength))
- 		return -EINVAL;
- 
-@@ -2450,7 +2450,7 @@ next:
+ 		switch (usage->hid) {
+ 		/* These usage IDs map directly to the usage codes. */
+-		case HID_GD_X: case HID_GD_Y: case HID_GD_Z:
++		case HID_GD_X: case HID_GD_Y:
+ 		case HID_GD_RX: case HID_GD_RY: case HID_GD_RZ:
+ 			if (field->flags & HID_MAIN_ITEM_RELATIVE)
+ 				map_rel(usage->hid & 0xf);
+@@ -886,6 +886,22 @@ static void hidinput_configure_usage(str
+ 				map_abs_clear(usage->hid & 0xf);
  			break;
- 		}
  
--		if (buf_len < sizeof(struct smb2_ea_info) + eabuf->EaNameLength +
-+		if (buf_len < sizeof(struct smb2_ea_info) + eabuf->EaNameLength + 1 +
- 				le16_to_cpu(eabuf->EaValueLength)) {
- 			rc = -EINVAL;
- 			break;
++		case HID_GD_Z:
++			/* HID_GD_Z is mapped to ABS_DISTANCE for stylus/pen */
++			if (field->flags & HID_MAIN_ITEM_RELATIVE) {
++				map_rel(usage->hid & 0xf);
++			} else {
++				if (field->application == HID_DG_PEN ||
++				    field->physical == HID_DG_PEN ||
++				    field->logical == HID_DG_STYLUS ||
++				    field->physical == HID_DG_STYLUS ||
++				    field->application == HID_DG_DIGITIZER)
++					map_abs_clear(ABS_DISTANCE);
++				else
++					map_abs_clear(usage->hid & 0xf);
++			}
++			break;
++
+ 		case HID_GD_WHEEL:
+ 			if (field->flags & HID_MAIN_ITEM_RELATIVE) {
+ 				set_bit(REL_WHEEL, input->relbit);
 
 
