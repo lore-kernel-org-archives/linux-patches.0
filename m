@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5EB6222560;
-	Mon, 29 Dec 2025 16:17:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9146D3191A7;
+	Mon, 29 Dec 2025 16:17:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025044; cv=none; b=o6dCyAPThYLrO0QQEiAOioP+xWWjySs3I9dSVaqKWki1LD/4nhxGV08UCiYli/bLbNvPuIgbYUtZIGVCMrzOU5JBR5jXaipkqS8faydv8kSviBE3+mEyl2EEeEG88L2ttgNuDOtEGtIsSsSNvbdOEO/5bg2bF/Je2pCOL5srfWg=
+	t=1767025047; cv=none; b=aZAQjgW+3eqFQOzL1WqWpM5velDMyL3kwOnUXQSBjYf2YYEasPWNeky3wSiag1TgraGCHwNRaWHrE5/5oMiAhbp/uH2cQAHzuIjnsEbn48t/RJQk76T5NT97wrfoqMU6Qj52We81QhhmvGY75XXAzQv4+JDkqtxwfO0Loo/xeH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025044; c=relaxed/simple;
-	bh=iMl2jm0P5QSET3t//QRbRTrWh2j0Bfx44exy+ixfK54=;
+	s=arc-20240116; t=1767025047; c=relaxed/simple;
+	bh=WG0i29/HTO4qXUS72GTXVzAvs4HuE9DVs0BFDjXew3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=g3KMKQmD6LJU6s82nCNdonOl1vgzG+ophm84oI7JI+muKynluV5JPy2k4/ZUgX1DLKAsRpkHvsMwp1enZo7iiujqtr4ib3WYGLqqC7I+75g5tckbEWeK77YrnfSKAlgxohpho1AQsGUN+S9YoMOMNIhueRtyaayZn+g3Dq9TE4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yWHDGXnV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BAjcT28cgow8z0eSgEnDX/82ODjGvS0JRac7CpesW4ND472B8LwrpEdMbt7XCTL/xR+NMQwMh4oGi81T/Iyq/1MjdAt/7CcJ+1aJtyx0b3aTgPu8UFm8e1qW12bEVruFYV7g94Q1FaeQ84dc4oPMBiAQ7V3+no00M0em+R9NTpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q5I6vOxp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yWHDGXnV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D46FC4CEF7;
-	Mon, 29 Dec 2025 16:17:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q5I6vOxp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B4D3C4CEF7;
+	Mon, 29 Dec 2025 16:17:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025044;
-	bh=iMl2jm0P5QSET3t//QRbRTrWh2j0Bfx44exy+ixfK54=;
+	s=korg; t=1767025047;
+	bh=WG0i29/HTO4qXUS72GTXVzAvs4HuE9DVs0BFDjXew3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yWHDGXnV9Zq52iHpRXEZy0Www/MSjuv+vhY23d/bvlO9U74KfJS81i21aYbB6SUXL
-	 +NEOxnluJilWLg6mg4OLJtvcyGuxPzUdN6K9hieas9Ufw+sK+OrTVSFlw1bh8QKbgW
-	 6/grApC5peAb5Q/Rk60GLiRW0+e6dvAat36bR9AQ=
+	b=Q5I6vOxpLH6y7qJAa/11R52/mtdk+KFj/HLFiNAwYYONYEEJgmp0ziWfhJ1b/awne
+	 6VgDs3DjwrWYfs8bhQgx/HAN1wnKG0ZjrNGruk/F3SCEigM4xzBrx+T+hhgLyUEtRJ
+	 cPPVHHJ9HwBy0PGIww9vFqsIZ/h4zURwIXaDyt6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Wei <dw@davidwei.uk>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 075/430] selftests: net: tfo: Fix build warning
-Date: Mon, 29 Dec 2025 17:07:57 +0100
-Message-ID: <20251229160727.126113950@linuxfoundation.org>
+Subject: [PATCH 6.18 076/430] inet: frags: avoid theoretical race in ip_frag_reinit()
+Date: Mon, 29 Dec 2025 17:07:58 +0100
+Message-ID: <20251229160727.162129008@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -46,49 +45,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 91dc09a609d9443e6b34bdb355a18d579a95e132 ]
+[ Upstream commit 8ef522c8a59a048117f7e05eb5213043c02f986f ]
 
-Fix
+In ip_frag_reinit() we want to move the frag timeout timer into
+the future. If the timer fires in the meantime we inadvertently
+scheduled it again, and since the timer assumes a ref on frag_queue
+we need to acquire one to balance things out.
 
-tfo.c: In function ‘run_server’:
-tfo.c:84:9: warning: ignoring return value of ‘read’ declared with attribute ‘warn_unused_result’
+This is technically racy, we should have acquired the reference
+_before_ we touch the timer, it may fire again before we take the ref.
+Avoid this entire dance by using mod_timer_pending() which only modifies
+the timer if its pending (and which exists since Linux v2.6.30)
 
-by evaluating the return value from read() and displaying an error message
-if it reports an error.
+Note that this was the only place we ever took a ref on frag_queue
+since Eric's conversion to RCU. So we could potentially replace
+the whole refcnt field with an atomic flag and a bit more RCU.
 
-Fixes: c65b5bb2329e3 ("selftests: net: add passive TFO test binary")
-Cc: David Wei <dw@davidwei.uk>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://patch.msgid.link/20251205171010.515236-14-linux@roeck-us.net
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20251207010942.1672972-2-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/tfo.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/ipv4/inet_fragment.c | 4 +++-
+ net/ipv4/ip_fragment.c   | 4 +---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/net/tfo.c b/tools/testing/selftests/net/tfo.c
-index eb3cac5e583c9..8d82140f0f767 100644
---- a/tools/testing/selftests/net/tfo.c
-+++ b/tools/testing/selftests/net/tfo.c
-@@ -81,7 +81,8 @@ static void run_server(void)
- 	if (getsockopt(connfd, SOL_SOCKET, SO_INCOMING_NAPI_ID, &opt, &len) < 0)
- 		error(1, errno, "getsockopt(SO_INCOMING_NAPI_ID)");
+diff --git a/net/ipv4/inet_fragment.c b/net/ipv4/inet_fragment.c
+index 025895eb6ec59..30f4fa50ee2d7 100644
+--- a/net/ipv4/inet_fragment.c
++++ b/net/ipv4/inet_fragment.c
+@@ -327,7 +327,9 @@ static struct inet_frag_queue *inet_frag_alloc(struct fqdir *fqdir,
  
--	read(connfd, buf, 64);
-+	if (read(connfd, buf, 64) < 0)
-+		perror("read()");
- 	fprintf(outfile, "%d\n", opt);
+ 	timer_setup(&q->timer, f->frag_expire, 0);
+ 	spin_lock_init(&q->lock);
+-	/* One reference for the timer, one for the hash table. */
++	/* One reference for the timer, one for the hash table.
++	 * We never take any extra references, only decrement this field.
++	 */
+ 	refcount_set(&q->refcnt, 2);
  
- 	fclose(outfile);
+ 	return q;
+diff --git a/net/ipv4/ip_fragment.c b/net/ipv4/ip_fragment.c
+index f7012479713ba..d7bccdc9dc693 100644
+--- a/net/ipv4/ip_fragment.c
++++ b/net/ipv4/ip_fragment.c
+@@ -242,10 +242,8 @@ static int ip_frag_reinit(struct ipq *qp)
+ {
+ 	unsigned int sum_truesize = 0;
+ 
+-	if (!mod_timer(&qp->q.timer, jiffies + qp->q.fqdir->timeout)) {
+-		refcount_inc(&qp->q.refcnt);
++	if (!mod_timer_pending(&qp->q.timer, jiffies + qp->q.fqdir->timeout))
+ 		return -ETIMEDOUT;
+-	}
+ 
+ 	sum_truesize = inet_frag_rbtree_purge(&qp->q.rb_fragments,
+ 					      SKB_DROP_REASON_FRAG_TOO_FAR);
 -- 
 2.51.0
 
