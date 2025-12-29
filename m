@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 039C0330B25;
-	Mon, 29 Dec 2025 16:18:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D249F33066A;
+	Mon, 29 Dec 2025 16:18:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025107; cv=none; b=b1HxykxjZrNiVRofcKIRjF2CEVM7F3pRNBa8Zdp//VJoRMGGkXUO7FbZ1IeUcdJnJ8FAWQPmBFR2NjyNT8OeLL+2HYd4se6upZ6NCLcdN4eky95+sriTY9oac3ZLEd684RQPXe7+tXc8Q5E4I8YKLt94vU0oxvK1GDKFzrFe23I=
+	t=1767025109; cv=none; b=iO9d8ztI13SBRRdliAAS0DB7ZCffIDEqNyTI3ikijP2zDdvklk5vvT2v2ZXgsNTJY4biVod2En49V2KD4VbPYq+PQSSSrJviCquFTvJdAa/WlZK8xZfgC3Ya2hRlpxo65+Q2zaFUs6nRXRV5TwQ7xQd4Tr5LhnUPifPSFLmdVno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025107; c=relaxed/simple;
-	bh=d+xvMrZDc2VZJu33yYB9wkiEeoe7A1s3Ad/SUwZdtzA=;
+	s=arc-20240116; t=1767025109; c=relaxed/simple;
+	bh=tsLwUdn7JWuTcIZIs8ic6NC3BCDNXzS6ntZdl4DGhyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cwoRu/5as0byNP5QY5kLzciPp9yjD8+KWMpg5MO7VQt8LUZn0JxXeMMGs5zrOsDY7eV6Ev6NSPGaYKzT5RmQQ1k0Pf6sb0xJvKsIOjLJvo3JZDVRKF7go4Wv5MEvMD2s7NLUaiYyeL9pVx25XICq9HZWacqLidNI1c3/eNJvfvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HL8kpGYY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=smj0F+DpVMFmDrm7Co1VXBkHBz3r0o4poPT9gbNdj3zqgoKvqZv9pmUtqDbl9fEfUjsPiA3JC8OAfLdSmEVf3Nc6Pe1opEMbfRyd2+uPOC7MB+LR31p/nqmjJuCrFopLpYKQTEe7Tju0zvSiboF+MpnAWK9tSl64lEVxK4ZqgnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jqZjcYsK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HL8kpGYY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77974C4CEF7;
-	Mon, 29 Dec 2025 16:18:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jqZjcYsK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 572DDC4CEF7;
+	Mon, 29 Dec 2025 16:18:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025106;
-	bh=d+xvMrZDc2VZJu33yYB9wkiEeoe7A1s3Ad/SUwZdtzA=;
+	s=korg; t=1767025109;
+	bh=tsLwUdn7JWuTcIZIs8ic6NC3BCDNXzS6ntZdl4DGhyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HL8kpGYY4yQbvZtBXYDsCiRZRYBsepF8aq7Uard6NoDIly2Vi+AH8sLKbOhzb3oZw
-	 mdeMGAIH13spD3NfRYZXti0enkPTFuzRYBXWPdnkRX/l/OoeA76T26OAARPq4Fa0Wi
-	 7YW5DhtISXa5ZUpUSTHoIs+XZsyWVEIQLSz563kM=
+	b=jqZjcYsKZnuu9zPJ3JTef3g5c6hgbdOBp4C4D+up2rq6o0yue1KrMe+A4RXenNvTE
+	 ibcfHfLDOiKnwYzDQxDiUSLzZ/ZTmoRx7xXNXFstHDwHRsIhtB3PRyimoBGBVqFW4C
+	 cvYuFdtd4HEdE15HHI12zrapmKslWvDjC0pk/dVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Skorodumov <skorodumov.dmitry@huawei.com>,
+	Gerd Bayer <gbayer@linux.ibm.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 064/430] ipvlan: Ignore PACKET_LOOPBACK in handle_mode_l2()
-Date: Mon, 29 Dec 2025 17:07:46 +0100
-Message-ID: <20251229160726.721772022@linuxfoundation.org>
+Subject: [PATCH 6.18 065/430] net/mlx5: Fix double unregister of HCA_PORTS component
+Date: Mon, 29 Dec 2025 17:07:47 +0100
+Message-ID: <20251229160726.757624181@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -51,46 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Skorodumov <skorodumov.dmitry@huawei.com>
+From: Gerd Bayer <gbayer@linux.ibm.com>
 
-[ Upstream commit 0c57ff008a11f24f7f05fa760222692a00465fec ]
+[ Upstream commit 6a107cfe9c99a079e578a4c5eb70038101a3599f ]
 
-Packets with pkt_type == PACKET_LOOPBACK are captured by
-handle_frame() function, but they don't have L2 header.
-We should not process them in handle_mode_l2().
+Clear hca_devcom_comp in device's private data after unregistering it in
+LAG teardown. Otherwise a slightly lagging second pass through
+mlx5_unload_one() might try to unregister it again and trip over
+use-after-free.
 
-This doesn't affect old L2 functionality, since handling
-was anyway incorrect.
+On s390 almost all PCI level recovery events trigger two passes through
+mxl5_unload_one() - one through the poll_health() method and one through
+mlx5_pci_err_detected() as callback from generic PCI error recovery.
+While testing PCI error recovery paths with more kernel debug features
+enabled, this issue reproducibly led to kernel panics with the following
+call chain:
 
-Handle them the same way as in br_handle_frame():
-just pass the skb.
+ Unable to handle kernel pointer dereference in virtual kernel address space
+ Failing address: 6b6b6b6b6b6b6000 TEID: 6b6b6b6b6b6b6803 ESOP-2 FSI
+ Fault in home space mode while using kernel ASCE.
+ AS:00000000705c4007 R3:0000000000000024
+ Oops: 0038 ilc:3 [#1]SMP
 
-To observe invalid behaviour, just start "ping -b" on bcast address
-of port-interface.
+ CPU: 14 UID: 0 PID: 156 Comm: kmcheck Kdump: loaded Not tainted
+      6.18.0-20251130.rc7.git0.16131a59cab1.300.fc43.s390x+debug #1 PREEMPT
 
-Fixes: 2ad7bf363841 ("ipvlan: Initial check-in of the IPVLAN driver.")
-Signed-off-by: Dmitry Skorodumov <skorodumov.dmitry@huawei.com>
-Link: https://patch.msgid.link/20251202103906.4087675-1-skorodumov.dmitry@huawei.com
+ Krnl PSW : 0404e00180000000 0000020fc86aa1dc (__lock_acquire+0x5c/0x15f0)
+            R:0 T:1 IO:0 EX:0 Key:0 M:1 W:0 P:0 AS:3 CC:2 PM:0 RI:0 EA:3
+ Krnl GPRS: 0000000000000000 0000020f00000001 6b6b6b6b6b6b6c33 0000000000000000
+            0000000000000000 0000000000000000 0000000000000001 0000000000000000
+            0000000000000000 0000020fca28b820 0000000000000000 0000010a1ced8100
+            0000010a1ced8100 0000020fc9775068 0000018fce14f8b8 0000018fce14f7f8
+ Krnl Code: 0000020fc86aa1cc: e3b003400004        lg      %r11,832
+            0000020fc86aa1d2: a7840211           brc     8,0000020fc86aa5f4
+           *0000020fc86aa1d6: c09000df0b25       larl    %r9,0000020fca28b820
+           >0000020fc86aa1dc: d50790002000       clc     0(8,%r9),0(%r2)
+            0000020fc86aa1e2: a7840209           brc     8,0000020fc86aa5f4
+            0000020fc86aa1e6: c0e001100401       larl    %r14,0000020fca8aa9e8
+            0000020fc86aa1ec: c01000e25a00       larl    %r1,0000020fca2f55ec
+            0000020fc86aa1f2: a7eb00e8           aghi    %r14,232
+
+ Call Trace:
+  __lock_acquire+0x5c/0x15f0
+  lock_acquire.part.0+0xf8/0x270
+  lock_acquire+0xb0/0x1b0
+  down_write+0x5a/0x250
+  mlx5_detach_device+0x42/0x110 [mlx5_core]
+  mlx5_unload_one_devl_locked+0x50/0xc0 [mlx5_core]
+  mlx5_unload_one+0x42/0x60 [mlx5_core]
+  mlx5_pci_err_detected+0x94/0x150 [mlx5_core]
+  zpci_event_attempt_error_recovery+0xcc/0x388
+
+Fixes: 5a977b5833b7 ("net/mlx5: Lag, move devcom registration to LAG layer")
+Signed-off-by: Gerd Bayer <gbayer@linux.ibm.com>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Acked-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20251202-fix_lag-v1-1-59e8177ffce0@linux.ibm.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipvlan/ipvlan_core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ipvlan/ipvlan_core.c b/drivers/net/ipvlan/ipvlan_core.c
-index d7e3ddbcab6f4..baf2ef3bcd54b 100644
---- a/drivers/net/ipvlan/ipvlan_core.c
-+++ b/drivers/net/ipvlan/ipvlan_core.c
-@@ -737,6 +737,9 @@ static rx_handler_result_t ipvlan_handle_mode_l2(struct sk_buff **pskb,
- 	struct ethhdr *eth = eth_hdr(skb);
- 	rx_handler_result_t ret = RX_HANDLER_PASS;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+index 3db0387bf6dcb..8ec04a5f434dd 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+@@ -1413,6 +1413,7 @@ static int __mlx5_lag_dev_add_mdev(struct mlx5_core_dev *dev)
+ static void mlx5_lag_unregister_hca_devcom_comp(struct mlx5_core_dev *dev)
+ {
+ 	mlx5_devcom_unregister_component(dev->priv.hca_devcom_comp);
++	dev->priv.hca_devcom_comp = NULL;
+ }
  
-+	if (unlikely(skb->pkt_type == PACKET_LOOPBACK))
-+		return RX_HANDLER_PASS;
-+
- 	if (is_multicast_ether_addr(eth->h_dest)) {
- 		if (ipvlan_external_frame(skb, port)) {
- 			struct sk_buff *nskb = skb_clone(skb, GFP_ATOMIC);
+ static int mlx5_lag_register_hca_devcom_comp(struct mlx5_core_dev *dev)
 -- 
 2.51.0
 
