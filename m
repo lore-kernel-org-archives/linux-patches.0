@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E1D347C6;
-	Mon, 29 Dec 2025 16:28:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B40B347C6;
+	Mon, 29 Dec 2025 16:28:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025690; cv=none; b=tVKjLLjdf9OayDfD0XfuYgLfcO+N2yVAFv1nT8dkQTn8VRO7hi9Jxv6QIU0ZfB2pj5gfJZFUmbsgRY0NOuXWvE1vpQgRWKvfh5iKu4RQgrE14UtfMIVG03QAztTdYhPqFxLeMlK9qHM20Tm4trY/HQbQBdhfg7jivJoS45bzf6k=
+	t=1767025693; cv=none; b=dOnK2vpLX8UiQlZQrBqFcj9tuoCH+V6hNiX+XrhwRkcmfb4eypCEv6nzO4ZadzAhVDJVqk0/vkF1iohe7w9BoYyxbGveZGccbbNCFOctMIsPSJLO0rQZ1aJwKBzETEwtUaeWZcF9chossDWXy3kWSw6tNSMsQjn1PRVr4dspJVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025690; c=relaxed/simple;
-	bh=Z/JWr4oPLtV7pJum0E+pmy96tRRcWlti3xAcLlmwob4=;
+	s=arc-20240116; t=1767025693; c=relaxed/simple;
+	bh=7TutfBuyZBbzkEFVc4uwKBt1F1x8pnZnpI108fEqhoc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A9gXMAi+DqpLjiVmJm1n/VO7X+UCROrjWiDDTcETsw8kK6uQT7/LZWBBq8kPF1f0yqC0WGR0VyVrBRGLu0CjhSAuBExlqUNlTFbgsV9jOSDqgpsndZKtTUKdfrzwx2LQlLxYTHbQ7TM5yMFW4C9iG+KoKyDEG2dBUaCeW8iglIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=esKDEbEk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Me0tEmPmpYgBZ8+dykbF1fJVPbOT0CKraINYav9Y0acu63uqJGHvQYBbeKtd4CVBXqtVHs+jjaz+xk/HuAJpl9ikP12ThZgqrhyBqImEBymE1TPzWiM0bLubtUVz8DyXDy82ZuMOEe20b8/IpCuGBhZY3/4w6D/EUOv1Wv1/ucI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eteaHKYd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="esKDEbEk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADE21C4CEF7;
-	Mon, 29 Dec 2025 16:28:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eteaHKYd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A32C4CEF7;
+	Mon, 29 Dec 2025 16:28:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025690;
-	bh=Z/JWr4oPLtV7pJum0E+pmy96tRRcWlti3xAcLlmwob4=;
+	s=korg; t=1767025692;
+	bh=7TutfBuyZBbzkEFVc4uwKBt1F1x8pnZnpI108fEqhoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=esKDEbEkKDhzECo4rZLgb65H4K8/BRQAS3Li8yuBn1JHTzOv0biQ6WElnn8QxWZPs
-	 yCrHSAu073ClOJ7P3giryqNnIKjLB/aIuOZ+afxp1P5bCKGTBYpQwb5+1lTjOVNvhW
-	 O1qRCmbBWv58pHtWyiPGDUseLTm9BSqPCgiXF6rw=
+	b=eteaHKYdWABIeWSHrGAiVHAlMYAayXU1k0vMw7aXqWeX1amouZGVS1rqzMAFiqvs5
+	 EgmwJtken1Cwtk/tLBlgHPJC8boXQUN/Juh56KHlZrOWOUOT+vPcYEdHXBpNPfrmhy
+	 uyFRpg49MnT7eavYHwG8NR08GSbpXIrWDKMmwHpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Harry Yoo <harry.yoo@oracle.com>,
-	Daniel Gomez <da.gomez@samsung.com>,
-	Jon Hunter <jonathanh@nvidia.com>
-Subject: [PATCH 6.18 275/430] mm/slab: introduce kvfree_rcu_barrier_on_cache() for cache destruction
-Date: Mon, 29 Dec 2025 17:11:17 +0100
-Message-ID: <20251229160734.470519224@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Jakub Turek <jakub.turek@elsta.tech>
+Subject: [PATCH 6.18 302/430] serial: xilinx_uartps: fix rs485 delay_rts_after_send
+Date: Mon, 29 Dec 2025 17:11:44 +0100
+Message-ID: <20251229160735.449722786@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -52,253 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harry Yoo <harry.yoo@oracle.com>
+From: j.turek <jakub.turek@elsta.tech>
 
-commit 0f35040de59371ad542b915d7b91176c9910dadc upstream.
+commit 267ee93c417e685d9f8e079e41c70ba6ee4df5a5 upstream.
 
-Currently, kvfree_rcu_barrier() flushes RCU sheaves across all slab
-caches when a cache is destroyed. This is unnecessary; only the RCU
-sheaves belonging to the cache being destroyed need to be flushed.
+RTS line control with delay should be triggered when there is no more
+bytes in kfifo and hardware buffer is empty. Without this patch RTS
+control is scheduled right after feeding hardware buffer and this is too
+early.
 
-As suggested by Vlastimil Babka, introduce a weaker form of
-kvfree_rcu_barrier() that operates on a specific slab cache.
+RTS line may change state before hardware buffer is empty.
 
-Factor out flush_rcu_sheaves_on_cache() from flush_all_rcu_sheaves() and
-call it from flush_all_rcu_sheaves() and kvfree_rcu_barrier_on_cache().
+With this patch delayed RTS state change is triggered when function
+cdns_uart_handle_tx is called from cdns_uart_isr on
+CDNS_UART_IXR_TXEMPTY exactly when hardware completed transmission
 
-Call kvfree_rcu_barrier_on_cache() instead of kvfree_rcu_barrier() on
-cache destruction.
-
-The performance benefit is evaluated on a 12 core 24 threads AMD Ryzen
-5900X machine (1 socket), by loading slub_kunit module.
-
-Before:
-  Total calls: 19
-  Average latency (us): 18127
-  Total time (us): 344414
-
-After:
-  Total calls: 19
-  Average latency (us): 10066
-  Total time (us): 191264
-
-Two performance regression have been reported:
-  - stress module loader test's runtime increases by 50-60% (Daniel)
-  - internal graphics test's runtime on Tegra234 increases by 35% (Jon)
-
-They are fixed by this change.
-
-Suggested-by: Vlastimil Babka <vbabka@suse.cz>
-Fixes: ec66e0d59952 ("slab: add sheaf support for batching kfree_rcu() operations")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/linux-mm/1bda09da-93be-4737-aef0-d47f8c5c9301@suse.cz
-Reported-and-tested-by: Daniel Gomez <da.gomez@samsung.com>
-Closes: https://lore.kernel.org/linux-mm/0406562e-2066-4cf8-9902-b2b0616dd742@kernel.org
-Reported-and-tested-by: Jon Hunter <jonathanh@nvidia.com>
-Closes: https://lore.kernel.org/linux-mm/e988eff6-1287-425e-a06c-805af5bbf262@nvidia.com
-Signed-off-by: Harry Yoo <harry.yoo@oracle.com>
-Link: https://patch.msgid.link/20251207154148.117723-1-harry.yoo@oracle.com
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Fixes: fccc9d9233f9 ("tty: serial: uartps: Add rs485 support to uartps driver")
+Cc: stable <stable@kernel.org>
+Link: https://patch.msgid.link/20251221103221.1971125-1-jakub.turek@elsta.tech
+Signed-off-by: Jakub Turek  <jakub.turek@elsta.tech>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/slab.h |    7 ++++++
- mm/slab.h            |    1 
- mm/slab_common.c     |   52 +++++++++++++++++++++++++++++++++-------------
- mm/slub.c            |   57 +++++++++++++++++++++++++++------------------------
- 4 files changed, 76 insertions(+), 41 deletions(-)
+ drivers/tty/serial/xilinx_uartps.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/include/linux/slab.h
-+++ b/include/linux/slab.h
-@@ -1150,10 +1150,17 @@ static inline void kvfree_rcu_barrier(vo
- 	rcu_barrier();
- }
+--- a/drivers/tty/serial/xilinx_uartps.c
++++ b/drivers/tty/serial/xilinx_uartps.c
+@@ -430,10 +430,17 @@ static void cdns_uart_handle_tx(void *de
+ 	struct tty_port *tport = &port->state->port;
+ 	unsigned int numbytes;
+ 	unsigned char ch;
++	ktime_t rts_delay;
  
-+static inline void kvfree_rcu_barrier_on_cache(struct kmem_cache *s)
-+{
-+	rcu_barrier();
-+}
-+
- static inline void kfree_rcu_scheduler_running(void) { }
- #else
- void kvfree_rcu_barrier(void);
- 
-+void kvfree_rcu_barrier_on_cache(struct kmem_cache *s);
-+
- void kfree_rcu_scheduler_running(void);
- #endif
- 
---- a/mm/slab.h
-+++ b/mm/slab.h
-@@ -442,6 +442,7 @@ static inline bool is_kmalloc_normal(str
- 
- bool __kfree_rcu_sheaf(struct kmem_cache *s, void *obj);
- void flush_all_rcu_sheaves(void);
-+void flush_rcu_sheaves_on_cache(struct kmem_cache *s);
- 
- #define SLAB_CORE_FLAGS (SLAB_HWCACHE_ALIGN | SLAB_CACHE_DMA | \
- 			 SLAB_CACHE_DMA32 | SLAB_PANIC | \
---- a/mm/slab_common.c
-+++ b/mm/slab_common.c
-@@ -492,7 +492,7 @@ void kmem_cache_destroy(struct kmem_cach
+ 	if (kfifo_is_empty(&tport->xmit_fifo) || uart_tx_stopped(port)) {
+ 		/* Disable the TX Empty interrupt */
+ 		writel(CDNS_UART_IXR_TXEMPTY, port->membase + CDNS_UART_IDR);
++		/* Set RTS line after delay */
++		if (cdns_uart->port->rs485.flags & SER_RS485_ENABLED) {
++			cdns_uart->tx_timer.function = &cdns_rs485_rx_callback;
++			rts_delay = ns_to_ktime(cdns_calc_after_tx_delay(cdns_uart));
++			hrtimer_start(&cdns_uart->tx_timer, rts_delay, HRTIMER_MODE_REL);
++		}
  		return;
- 
- 	/* in-flight kfree_rcu()'s may include objects from our cache */
--	kvfree_rcu_barrier();
-+	kvfree_rcu_barrier_on_cache(s);
- 
- 	if (IS_ENABLED(CONFIG_SLUB_RCU_DEBUG) &&
- 	    (s->flags & SLAB_TYPESAFE_BY_RCU)) {
-@@ -2039,25 +2039,13 @@ unlock_return:
- }
- EXPORT_SYMBOL_GPL(kvfree_call_rcu);
- 
--/**
-- * kvfree_rcu_barrier - Wait until all in-flight kvfree_rcu() complete.
-- *
-- * Note that a single argument of kvfree_rcu() call has a slow path that
-- * triggers synchronize_rcu() following by freeing a pointer. It is done
-- * before the return from the function. Therefore for any single-argument
-- * call that will result in a kfree() to a cache that is to be destroyed
-- * during module exit, it is developer's responsibility to ensure that all
-- * such calls have returned before the call to kmem_cache_destroy().
-- */
--void kvfree_rcu_barrier(void)
-+static inline void __kvfree_rcu_barrier(void)
- {
- 	struct kfree_rcu_cpu_work *krwp;
- 	struct kfree_rcu_cpu *krcp;
- 	bool queued;
- 	int i, cpu;
- 
--	flush_all_rcu_sheaves();
--
- 	/*
- 	 * Firstly we detach objects and queue them over an RCU-batch
- 	 * for all CPUs. Finally queued works are flushed for each CPU.
-@@ -2119,8 +2107,43 @@ void kvfree_rcu_barrier(void)
- 		}
- 	}
- }
-+
-+/**
-+ * kvfree_rcu_barrier - Wait until all in-flight kvfree_rcu() complete.
-+ *
-+ * Note that a single argument of kvfree_rcu() call has a slow path that
-+ * triggers synchronize_rcu() following by freeing a pointer. It is done
-+ * before the return from the function. Therefore for any single-argument
-+ * call that will result in a kfree() to a cache that is to be destroyed
-+ * during module exit, it is developer's responsibility to ensure that all
-+ * such calls have returned before the call to kmem_cache_destroy().
-+ */
-+void kvfree_rcu_barrier(void)
-+{
-+	flush_all_rcu_sheaves();
-+	__kvfree_rcu_barrier();
-+}
- EXPORT_SYMBOL_GPL(kvfree_rcu_barrier);
- 
-+/**
-+ * kvfree_rcu_barrier_on_cache - Wait for in-flight kvfree_rcu() calls on a
-+ *                               specific slab cache.
-+ * @s: slab cache to wait for
-+ *
-+ * See the description of kvfree_rcu_barrier() for details.
-+ */
-+void kvfree_rcu_barrier_on_cache(struct kmem_cache *s)
-+{
-+	if (s->cpu_sheaves)
-+		flush_rcu_sheaves_on_cache(s);
-+	/*
-+	 * TODO: Introduce a version of __kvfree_rcu_barrier() that works
-+	 * on a specific slab cache.
-+	 */
-+	__kvfree_rcu_barrier();
-+}
-+EXPORT_SYMBOL_GPL(kvfree_rcu_barrier_on_cache);
-+
- static unsigned long
- kfree_rcu_shrink_count(struct shrinker *shrink, struct shrink_control *sc)
- {
-@@ -2216,4 +2239,3 @@ void __init kvfree_rcu_init(void)
- }
- 
- #endif /* CONFIG_KVFREE_RCU_BATCHED */
--
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -4118,42 +4118,47 @@ static void flush_rcu_sheaf(struct work_
- 
- 
- /* needed for kvfree_rcu_barrier() */
--void flush_all_rcu_sheaves(void)
-+void flush_rcu_sheaves_on_cache(struct kmem_cache *s)
- {
- 	struct slub_flush_work *sfw;
--	struct kmem_cache *s;
- 	unsigned int cpu;
- 
-+	mutex_lock(&flush_lock);
-+
-+	for_each_online_cpu(cpu) {
-+		sfw = &per_cpu(slub_flush, cpu);
-+
-+		/*
-+		 * we don't check if rcu_free sheaf exists - racing
-+		 * __kfree_rcu_sheaf() might have just removed it.
-+		 * by executing flush_rcu_sheaf() on the cpu we make
-+		 * sure the __kfree_rcu_sheaf() finished its call_rcu()
-+		 */
-+
-+		INIT_WORK(&sfw->work, flush_rcu_sheaf);
-+		sfw->s = s;
-+		queue_work_on(cpu, flushwq, &sfw->work);
-+	}
-+
-+	for_each_online_cpu(cpu) {
-+		sfw = &per_cpu(slub_flush, cpu);
-+		flush_work(&sfw->work);
-+	}
-+
-+	mutex_unlock(&flush_lock);
-+}
-+
-+void flush_all_rcu_sheaves(void)
-+{
-+	struct kmem_cache *s;
-+
- 	cpus_read_lock();
- 	mutex_lock(&slab_mutex);
- 
- 	list_for_each_entry(s, &slab_caches, list) {
- 		if (!s->cpu_sheaves)
- 			continue;
--
--		mutex_lock(&flush_lock);
--
--		for_each_online_cpu(cpu) {
--			sfw = &per_cpu(slub_flush, cpu);
--
--			/*
--			 * we don't check if rcu_free sheaf exists - racing
--			 * __kfree_rcu_sheaf() might have just removed it.
--			 * by executing flush_rcu_sheaf() on the cpu we make
--			 * sure the __kfree_rcu_sheaf() finished its call_rcu()
--			 */
--
--			INIT_WORK(&sfw->work, flush_rcu_sheaf);
--			sfw->s = s;
--			queue_work_on(cpu, flushwq, &sfw->work);
--		}
--
--		for_each_online_cpu(cpu) {
--			sfw = &per_cpu(slub_flush, cpu);
--			flush_work(&sfw->work);
--		}
--
--		mutex_unlock(&flush_lock);
-+		flush_rcu_sheaves_on_cache(s);
  	}
  
- 	mutex_unlock(&slab_mutex);
+@@ -450,13 +457,6 @@ static void cdns_uart_handle_tx(void *de
+ 
+ 	/* Enable the TX Empty interrupt */
+ 	writel(CDNS_UART_IXR_TXEMPTY, cdns_uart->port->membase + CDNS_UART_IER);
+-
+-	if (cdns_uart->port->rs485.flags & SER_RS485_ENABLED &&
+-	    (kfifo_is_empty(&tport->xmit_fifo) || uart_tx_stopped(port))) {
+-		hrtimer_update_function(&cdns_uart->tx_timer, cdns_rs485_rx_callback);
+-		hrtimer_start(&cdns_uart->tx_timer,
+-			      ns_to_ktime(cdns_calc_after_tx_delay(cdns_uart)), HRTIMER_MODE_REL);
+-	}
+ }
+ 
+ /**
 
 
