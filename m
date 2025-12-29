@@ -1,146 +1,124 @@
-Received: from canpmsgout06.his.huawei.com (canpmsgout06.his.huawei.com [113.46.200.221])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D940E136E3F
-	for <patches@lists.linux.dev>; Mon, 29 Dec 2025 07:32:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.221
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B70B222CBD9;
+	Mon, 29 Dec 2025 16:14:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766993580; cv=none; b=BpBxklRT47jjQPn3VmA70+PGuVw9IjDDJdy3roqMqRFSedAlWs5Mbhm7510jDZMmBLbiERpDSmssGMq6eg6GR8Zaghurk/VP3yehRUs8akngYCukJX/rZ3TO0oBHvEE23xDdJ4MEVV59JjctuUlLF9ox4LoPDbsqJYDjkEQJUu0=
+	t=1767024857; cv=none; b=gSPQBeu5T6A8AvVT/MbPQVUUq9qRJJJvqUImZAeG7hijpJTrx2i6xqH/zzibjr6LH6JktzWLGmtLoGxBV0u9ictoZcQvzDxsF9ZAIiUTEGHdLb6sNuOx1V/XitQ1X1KQzgEh0vdacTfwYmwFjbC9akBfXIabTOeivV5cKhUKbCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766993580; c=relaxed/simple;
-	bh=grslXluBhUU1Jq9fZpsa455kg7WzOUcmC7NrXdUtN28=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=OKXZ/CTcrdYyEcvqdhBH3P9/jkeqZ5xXuuAmXwH8VC0wlF341UTLHsgWD5PY1EtlThajnKktFxZPi6Zn2XFSX6iTfbq1pbzQ8zzYhAq+75qFG0KsS7cF20hyBtr9gKW8ekqR676T5w8Mo/bKdfX6poKgS/JmO84TW6F0899XwrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=Ix5KZeyE; arc=none smtp.client-ip=113.46.200.221
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	s=arc-20240116; t=1767024857; c=relaxed/simple;
+	bh=UdMXJ4UBAEAvdGghkwy2/RisPHrnXFv6tH9e+Op6Ngg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=CAwei7YFi9NpyVFn2ksgi+KGVosvSUKzZ/sf4ZX5Sq7V+1Semx/DjZPIvsJm+HX6/l29ppLe0Q+XE+EIk1e3glwi1d7z4iIp4ditim+pUHVX5huh6N+UQZwaUXWON0K0aCcSx1SMeM/4qvR98xVdZv233zHKrVrXNtY4iWXSKF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v+WdVXQ1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="Ix5KZeyE"
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=grslXluBhUU1Jq9fZpsa455kg7WzOUcmC7NrXdUtN28=;
-	b=Ix5KZeyEukn4reQwpVaRjCKEEpk5Y7fdX041sLWiiInWs2BwEU0V93dq7RAgEn5Vj6p7MA3MR
-	lpG5iIcf5XtIhBi0/RkWgt8uYnvcI/tEywPy0ewrxTlG/ix7ryC1Eg2i3NraFrsGPd/7Kg54t0w
-	M9CsiDpbdIO4PrnkSY9zStw=
-Received: from mail.maildlp.com (unknown [172.19.162.197])
-	by canpmsgout06.his.huawei.com (SkyGuard) with ESMTPS id 4dfnst2YwZzRhS4;
-	Mon, 29 Dec 2025 15:29:38 +0800 (CST)
-Received: from dggemv706-chm.china.huawei.com (unknown [10.3.19.33])
-	by mail.maildlp.com (Postfix) with ESMTPS id 9436F40363;
-	Mon, 29 Dec 2025 15:32:48 +0800 (CST)
-Received: from kwepemq100007.china.huawei.com (7.202.195.175) by
- dggemv706-chm.china.huawei.com (10.3.19.33) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Mon, 29 Dec 2025 15:32:48 +0800
-Received: from kwepemq100009.china.huawei.com (7.202.195.112) by
- kwepemq100007.china.huawei.com (7.202.195.175) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Mon, 29 Dec 2025 15:32:48 +0800
-Received: from kwepemq100009.china.huawei.com ([7.202.195.112]) by
- kwepemq100009.china.huawei.com ([7.202.195.112]) with mapi id 15.02.1544.011;
- Mon, 29 Dec 2025 15:32:48 +0800
-From: chenridong <chenridong@huawei.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "stable@vger.kernel.org"
-	<stable@vger.kernel.org>
-CC: "patches@lists.linux.dev" <patches@lists.linux.dev>, Waiman Long
-	<longman@redhat.com>, Tejun Heo <tj@kernel.org>, Sasha Levin
-	<sashal@kernel.org>
-Subject: =?gb2312?B?tPC4tDogW1BBVENIIDYuMTggMzU0LzYxNF0gY3B1c2V0OiBUcmVhdCBjcHVz?=
- =?gb2312?Q?ets_in_attaching_as_populated?=
-Thread-Topic: [PATCH 6.18 354/614] cpuset: Treat cpusets in attaching as
- populated
-Thread-Index: AQHcbocfiZsXl0zib0iLW7RNkhFAvrU4TPOw
-Date: Mon, 29 Dec 2025 07:32:47 +0000
-Message-ID: <cd70856e52d344d5ae668525e030a56a@huawei.com>
-References: <20251216111401.280873349@linuxfoundation.org>
- <20251216111414.188059104@linuxfoundation.org>
-In-Reply-To: <20251216111414.188059104@linuxfoundation.org>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v+WdVXQ1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC259C4CEF7;
+	Mon, 29 Dec 2025 16:14:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1767024857;
+	bh=UdMXJ4UBAEAvdGghkwy2/RisPHrnXFv6tH9e+Op6Ngg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=v+WdVXQ1m33Ukx59ZPIVA7JGx37IAZh9yOixTd34yZHpA8GsF/WTS2WLiD0j8OXUl
+	 mVEVxwh8vZb8BA2w/zB3Lt5/gQwsfoCXDNQhnu9fzB4ayLafljifwCMXZdgRLahFcX
+	 PqYNi7g/96SSPHWk6/cSZYCNteaiyMLXZ93qHgNg=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Vyacheslav Kovalevsky <slava.kovalevskiy.2014@gmail.com>,
+	Boris Burkov <boris@bur.io>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 001/430] btrfs: do not skip logging new dentries when logging a new name
+Date: Mon, 29 Dec 2025 17:06:43 +0100
+Message-ID: <20251229160724.199955913@linuxfoundation.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
+References: <20251229160724.139406961@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-DQoNCi0tLS0t08q8/tStvP4tLS0tLQ0Kt6K8/sjLOiBHcmVnIEtyb2FoLUhhcnRtYW4gPGdyZWdr
-aEBsaW51eGZvdW5kYXRpb24ub3JnPiANCreiy83KsbzkOiAyMDI1xOoxMtTCMTbI1SAxOToxMg0K
-ytW8/sjLOiBzdGFibGVAdmdlci5rZXJuZWwub3JnDQqzrcvNOiBHcmVnIEtyb2FoLUhhcnRtYW4g
-PGdyZWdraEBsaW51eGZvdW5kYXRpb24ub3JnPjsgcGF0Y2hlc0BsaXN0cy5saW51eC5kZXY7IGNo
-ZW5yaWRvbmcgPGNoZW5yaWRvbmdAaHVhd2VpLmNvbT47IFdhaW1hbiBMb25nIDxsb25nbWFuQHJl
-ZGhhdC5jb20+OyBUZWp1biBIZW8gPHRqQGtlcm5lbC5vcmc+OyBTYXNoYSBMZXZpbiA8c2FzaGFs
-QGtlcm5lbC5vcmc+DQrW98ziOiBbUEFUQ0ggNi4xOCAzNTQvNjE0XSBjcHVzZXQ6IFRyZWF0IGNw
-dXNldHMgaW4gYXR0YWNoaW5nIGFzIHBvcHVsYXRlZA0KDQo2LjE4LXN0YWJsZSByZXZpZXcgcGF0
-Y2guICBJZiBhbnlvbmUgaGFzIGFueSBvYmplY3Rpb25zLCBwbGVhc2UgbGV0IG1lIGtub3cuDQoN
-Ci0tLS0tLS0tLS0tLS0tLS0tLQ0KDQpGcm9tOiBDaGVuIFJpZG9uZyA8Y2hlbnJpZG9uZ0BodWF3
-ZWkuY29tPg0KDQpbIFVwc3RyZWFtIGNvbW1pdCBiMWJjYWVkMWUzOWE5ZTBkZmJlMzI0YTE1ZDJj
-YTQyNTNkZWRhMzE2IF0NCg0KQ3VycmVudGx5LCB0aGUgY2hlY2sgZm9yIHdoZXRoZXIgYSBwYXJ0
-aXRpb24gaXMgcG9wdWxhdGVkIGRvZXMgbm90IGFjY291bnQgZm9yIHRhc2tzIGluIHRoZSBjcHVz
-ZXQgb2YgYXR0YWNoaW5nLiBUaGlzIGlzIGEgY29ybmVyIGNhc2UgdGhhdCBjYW4gbGVhdmUgYSB0
-YXNrIHN0dWNrIGluIGEgcGFydGl0aW9uIHdpdGggbm8gZWZmZWN0aXZlIENQVXMuDQoNClRoZSBy
-YWNlIGNvbmRpdGlvbiBvY2N1cnMgYXMgZm9sbG93czoNCg0KY3B1MAkJCQljcHUxDQoJCQkJLy9j
-cHVzZXQgQSAgd2l0aCBjcHUgTg0KbWlncmF0ZSB0YXNrIHAgdG8gQQ0KY3B1c2V0X2Nhbl9hdHRh
-Y2gNCi8vIHdpdGggZWZmZWN0aXZlIGNwdXMNCi8vIGNoZWNrIG9rDQoNCi8vIGNwdXNldF9tdXRl
-eCBpcyBub3QgaGVsZAkvLyBjbGVhciBjcHVzZXQuY3B1cy5leGNsdXNpdmUNCgkJCQkvLyBtYWtp
-bmcgZWZmZWN0aXZlIGNwdXMgZW1wdHkNCgkJCQl1cGRhdGVfZXhjbHVzaXZlX2NwdW1hc2sNCgkJ
-CQkvLyB0YXNrc19ub2NwdV9lcnJvciBjaGVjayBvaw0KCQkJCS8vIGVtcHR5IGVmZmVjdGl2ZSBj
-cHVzLCBwYXJ0aXRpb24gdmFsaWQgY3B1c2V0X2F0dGFjaCAuLi4NCi8vIHRhc2sgcCBzdGF5cyBp
-biBBLCB3aXRoIG5vbi1lZmZlY3RpdmUgY3B1cy4NCg0KVG8gZml4IHRoaXMgaXNzdWUsIHRoaXMg
-cGF0Y2ggaW50cm9kdWNlcyBjc19pc19wb3B1bGF0ZWQsIHdoaWNoIGNvbnNpZGVycyB0YXNrcyBp
-biB0aGUgYXR0YWNoaW5nIGNwdXNldC4gVGhpcyBuZXcgaGVscGVyIGlzIHVzZWQgaW4gdmFsaWRh
-dGVfY2hhbmdlIGFuZCBwYXJ0aXRpb25faXNfcG9wdWxhdGVkLg0KDQpGaXhlczogZTJkNTk5MDBk
-OTM2ICgiY2dyb3VwL2NwdXNldDogQWxsb3cgbm8tdGFzayBwYXJ0aXRpb24gdG8gaGF2ZSBlbXB0
-eSBjcHVzZXQuY3B1cy5lZmZlY3RpdmUiKQ0KU2lnbmVkLW9mZi1ieTogQ2hlbiBSaWRvbmcgPGNo
-ZW5yaWRvbmdAaHVhd2VpLmNvbT4NClJldmlld2VkLWJ5OiBXYWltYW4gTG9uZyA8bG9uZ21hbkBy
-ZWRoYXQuY29tPg0KU2lnbmVkLW9mZi1ieTogVGVqdW4gSGVvIDx0akBrZXJuZWwub3JnPg0KU2ln
-bmVkLW9mZi1ieTogU2FzaGEgTGV2aW4gPHNhc2hhbEBrZXJuZWwub3JnPg0KLS0tDQoga2VybmVs
-L2Nncm91cC9jcHVzZXQuYyB8IDM1ICsrKysrKysrKysrKysrKysrKysrKysrKysrKy0tLS0tLS0t
-DQogMSBmaWxlIGNoYW5nZWQsIDI3IGluc2VydGlvbnMoKyksIDggZGVsZXRpb25zKC0pDQoNCmRp
-ZmYgLS1naXQgYS9rZXJuZWwvY2dyb3VwL2NwdXNldC5jIGIva2VybmVsL2Nncm91cC9jcHVzZXQu
-YyBpbmRleCA1MjQ2OGQyYzE3OGEzLi40ZGNkNjMzZmQ2ZGY1IDEwMDY0NA0KLS0tIGEva2VybmVs
-L2Nncm91cC9jcHVzZXQuYw0KKysrIGIva2VybmVsL2Nncm91cC9jcHVzZXQuYw0KQEAgLTM1Miw2
-ICszNTIsMTUgQEAgc3RhdGljIGlubGluZSBib29sIGlzX2luX3YyX21vZGUodm9pZCkNCiAJICAg
-ICAgKGNwdXNldF9jZ3JwX3N1YnN5cy5yb290LT5mbGFncyAmIENHUlBfUk9PVF9DUFVTRVRfVjJf
-TU9ERSk7ICB9DQogDQorc3RhdGljIGlubGluZSBib29sIGNwdXNldF9pc19wb3B1bGF0ZWQoc3Ry
-dWN0IGNwdXNldCAqY3MpIHsNCisJbG9ja2RlcF9hc3NlcnRfaGVsZCgmY3B1c2V0X211dGV4KTsN
-CisNCisJLyogQ3B1c2V0cyBpbiB0aGUgcHJvY2VzcyBvZiBhdHRhY2hpbmcgc2hvdWxkIGJlIGNv
-bnNpZGVyZWQgYXMgcG9wdWxhdGVkICovDQorCXJldHVybiBjZ3JvdXBfaXNfcG9wdWxhdGVkKGNz
-LT5jc3MuY2dyb3VwKSB8fA0KKwkJY3MtPmF0dGFjaF9pbl9wcm9ncmVzczsNCit9DQorDQogLyoq
-DQogICogcGFydGl0aW9uX2lzX3BvcHVsYXRlZCAtIGNoZWNrIGlmIHBhcnRpdGlvbiBoYXMgdGFz
-a3MNCiAgKiBAY3M6IHBhcnRpdGlvbiByb290IHRvIGJlIGNoZWNrZWQNCkBAIC0zNjQsMjEgKzM3
-MywzMSBAQCBzdGF0aWMgaW5saW5lIGJvb2wgaXNfaW5fdjJfbW9kZSh2b2lkKSAgc3RhdGljIGlu
-bGluZSBib29sIHBhcnRpdGlvbl9pc19wb3B1bGF0ZWQoc3RydWN0IGNwdXNldCAqY3MsDQogCQkJ
-CQkgIHN0cnVjdCBjcHVzZXQgKmV4Y2x1ZGVkX2NoaWxkKQ0KIHsNCi0Jc3RydWN0IGNncm91cF9z
-dWJzeXNfc3RhdGUgKmNzczsNCi0Jc3RydWN0IGNwdXNldCAqY2hpbGQ7DQorCXN0cnVjdCBjcHVz
-ZXQgKmNwOw0KKwlzdHJ1Y3QgY2dyb3VwX3N1YnN5c19zdGF0ZSAqcG9zX2NzczsNCiANCi0JaWYg
-KGNzLT5jc3MuY2dyb3VwLT5ucl9wb3B1bGF0ZWRfY3NldHMpDQorCS8qDQorCSAqIFdlIGNhbm5v
-dCBjYWxsIGNzX2lzX3BvcHVsYXRlZChjcykgZGlyZWN0bHksIGFzDQorCSAqIG5yX3BvcHVsYXRl
-ZF9kb21haW5fY2hpbGRyZW4gbWF5IGluY2x1ZGUgcG9wdWxhdGVkDQorCSAqIGNzZXRzIGZyb20g
-ZGVzY2VuZGFudHMgdGhhdCBhcmUgcGFydGl0aW9ucy4NCisJICovDQorCWlmIChjcy0+Y3NzLmNn
-cm91cC0+bnJfcG9wdWxhdGVkX2NzZXRzIHx8DQorCSAgICBjcy0+YXR0YWNoX2luX3Byb2dyZXNz
-KQ0KIAkJcmV0dXJuIHRydWU7DQogCWlmICghZXhjbHVkZWRfY2hpbGQgJiYgIWNzLT5ucl9zdWJw
-YXJ0cykNCiAJCXJldHVybiBjZ3JvdXBfaXNfcG9wdWxhdGVkKGNzLT5jc3MuY2dyb3VwKTsNCg0K
-DQpJIGNoZWNrZWQgdGhpcyBwYXRjaCwgQW5kIEkgZm91bmQgaGVyZSBzaG91bGQgYmUgJyBjcHVz
-ZXRfaXNfcG9wdWxhdGVkKGNzKScuDQoNCiAJcmN1X3JlYWRfbG9jaygpOw0KLQljcHVzZXRfZm9y
-X2VhY2hfY2hpbGQoY2hpbGQsIGNzcywgY3MpIHsNCi0JCWlmIChjaGlsZCA9PSBleGNsdWRlZF9j
-aGlsZCkNCisJY3B1c2V0X2Zvcl9lYWNoX2Rlc2NlbmRhbnRfcHJlKGNwLCBwb3NfY3NzLCBjcykg
-ew0KKwkJaWYgKGNwID09IGNzIHx8IGNwID09IGV4Y2x1ZGVkX2NoaWxkKQ0KIAkJCWNvbnRpbnVl
-Ow0KLQkJaWYgKGlzX3BhcnRpdGlvbl92YWxpZChjaGlsZCkpDQorDQorCQlpZiAoaXNfcGFydGl0
-aW9uX3ZhbGlkKGNwKSkgew0KKwkJCXBvc19jc3MgPSBjc3NfcmlnaHRtb3N0X2Rlc2NlbmRhbnQo
-cG9zX2Nzcyk7DQogCQkJY29udGludWU7DQotCQlpZiAoY2dyb3VwX2lzX3BvcHVsYXRlZChjaGls
-ZC0+Y3NzLmNncm91cCkpIHsNCisJCX0NCisNCisJCWlmIChjcHVzZXRfaXNfcG9wdWxhdGVkKGNw
-KSkgew0KIAkJCXJjdV9yZWFkX3VubG9jaygpOw0KIAkJCXJldHVybiB0cnVlOw0KIAkJfQ0KQEAg
-LTY2Myw3ICs2ODIsNyBAQCBzdGF0aWMgaW50IHZhbGlkYXRlX2NoYW5nZShzdHJ1Y3QgY3B1c2V0
-ICpjdXIsIHN0cnVjdCBjcHVzZXQgKnRyaWFsKQ0KIAkgKiBiZSBjaGFuZ2VkIHRvIGhhdmUgZW1w
-dHkgY3B1c19hbGxvd2VkIG9yIG1lbXNfYWxsb3dlZC4NCiAJICovDQogCXJldCA9IC1FTk9TUEM7
-DQotCWlmICgoY2dyb3VwX2lzX3BvcHVsYXRlZChjdXItPmNzcy5jZ3JvdXApIHx8IGN1ci0+YXR0
-YWNoX2luX3Byb2dyZXNzKSkgew0KKwlpZiAoY3B1c2V0X2lzX3BvcHVsYXRlZChjdXIpKSB7DQog
-CQlpZiAoIWNwdW1hc2tfZW1wdHkoY3VyLT5jcHVzX2FsbG93ZWQpICYmDQogCQkgICAgY3B1bWFz
-a19lbXB0eSh0cmlhbC0+Y3B1c19hbGxvd2VkKSkNCiAJCQlnb3RvIG91dDsNCi0tDQoyLjUxLjAN
-Cg0KDQoNCg==
+6.18-stable review patch.  If anyone has any objections, please let me know.
+
+------------------
+
+From: Filipe Manana <fdmanana@suse.com>
+
+[ Upstream commit 5630f7557de61264ccb4f031d4734a1a97eaed16 ]
+
+When we are logging a directory and the log context indicates that we
+are logging a new name for some other file (that is or was inside that
+directory), we skip logging the inodes for new dentries in the directory.
+
+This is ok most of the time, but if after the rename or link operation
+that triggered the logging of that directory, we have an explicit fsync
+of that directory without the directory inode being evicted and reloaded,
+we end up never logging the inodes for the new dentries that we found
+during the new name logging, as the next directory fsync will only process
+dentries that were added after the last time we logged the directory (we
+are doing an incremental directory logging).
+
+So make sure we always log new dentries for a directory even if we are
+in a context of logging a new name.
+
+We started skipping logging inodes for new dentries as of commit
+c48792c6ee7a ("btrfs: do not log new dentries when logging that a new name
+exists") and it was fine back then, because when logging a directory we
+always iterated over all the directory entries (for leaves changed in the
+current transaction) so a subsequent fsync would always log anything that
+was previously skipped while logging a directory when logging a new name
+(with btrfs_log_new_name()). But later support for incrementally logging
+a directory was added in commit dc2872247ec0 ("btrfs: keep track of the
+last logged keys when logging a directory"), to avoid checking all dir
+items every time we log a directory, so the check to skip dentry logging
+added in the first commit should have been removed when the incremental
+support for logging a directory was added.
+
+A test case for fstests will follow soon.
+
+Reported-by: Vyacheslav Kovalevsky <slava.kovalevskiy.2014@gmail.com>
+Link: https://lore.kernel.org/linux-btrfs/84c4e713-85d6-42b9-8dcf-0722ed26cb05@gmail.com/
+Fixes: dc2872247ec0 ("btrfs: keep track of the last logged keys when logging a directory")
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ fs/btrfs/tree-log.c | 8 --------
+ 1 file changed, 8 deletions(-)
+
+diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
+index 30f3c3b849c14..f55d886debe2f 100644
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -5872,14 +5872,6 @@ static int log_new_dir_dentries(struct btrfs_trans_handle *trans,
+ 	struct btrfs_inode *curr_inode = start_inode;
+ 	int ret = 0;
+ 
+-	/*
+-	 * If we are logging a new name, as part of a link or rename operation,
+-	 * don't bother logging new dentries, as we just want to log the names
+-	 * of an inode and that any new parents exist.
+-	 */
+-	if (ctx->logging_new_name)
+-		return 0;
+-
+ 	path = btrfs_alloc_path();
+ 	if (!path)
+ 		return -ENOMEM;
+-- 
+2.51.0
+
+
+
