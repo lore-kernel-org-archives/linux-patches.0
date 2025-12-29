@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A768330B2A;
-	Mon, 29 Dec 2025 16:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07698330B2A;
+	Mon, 29 Dec 2025 16:20:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025234; cv=none; b=Gd2GN3zWdCGjWPSVTzXUQXN1vTN7baK7k1r20d/6KfoNtTUYWlxomng7hH7nhwIzRpfpw2rZmnjc5MpUSWNYe/m5LiGnWK84DOpzxcVdYP3kGI9YOXmtf9kf9xqfjog+cSH67NfhSZI26+uFgbbtm53nFKsb1yMZa3d+pGA/w8U=
+	t=1767025237; cv=none; b=eUnC+VfyrWTDmCqjwmIWJlzjMaQskNyFOGoRnnqi8XuD9NDYwqeL0ZsLnTmHa0h5de45HlKARUyCpEMTjC8g8s+MFCjofkN6Ua6V7AVPWREWcZpZE+T+Dq2RNKIko+TErwI4eceKQLOalszqc2szR1b5XXbGVJbjlL98a1UD5Tw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025234; c=relaxed/simple;
-	bh=AjXtFuPk+MDeSQMvScDXsD70Tw+J/5buNVgewWii/Fc=;
+	s=arc-20240116; t=1767025237; c=relaxed/simple;
+	bh=NU9utE+WaoiDZUh+C/VhbYw2vmBaJUHIgElCvbhg9Gs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iifw5vUUuAmu7LR0ZdPIXMebZ7/5Vsj4zEMB7xr+ySAG2rO6s6FfFHgD9ABmvRaQnrha7ux5XFPZ5UTPNeOic192x8X4p+m/RokjgAqc7RVEOOEVHIHJkxSR3pe15Ph+IS+ZVWUaaQOS+sYfIMG/CriwpU4lfHZKXPa6n2Ogctk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2CISYdmJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IGWsf+DbX/t2dDDtvbeSfGrNeP4u26v2/cvoVkfiDiB4Z4ZR8MKvffqN318f/oBd4HFHMn+5c4g0SdbGxHuOb45RxuX80YrQQheMB3wPPTBAlRAX2VUvfXKlO/KwlhHAtsLz0PnBQbrQJ6LTsIHkDZze0the8oGNCNsPw9VxDrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eme6vX5O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2CISYdmJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95E08C4CEF7;
-	Mon, 29 Dec 2025 16:20:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eme6vX5O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82CD6C4CEF7;
+	Mon, 29 Dec 2025 16:20:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025234;
-	bh=AjXtFuPk+MDeSQMvScDXsD70Tw+J/5buNVgewWii/Fc=;
+	s=korg; t=1767025236;
+	bh=NU9utE+WaoiDZUh+C/VhbYw2vmBaJUHIgElCvbhg9Gs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2CISYdmJgOKtovpPz4vBhCYgyDMYV1tSgKXXENsiFC724sPzgWjfWyNxn1r8nYHzj
-	 U3B+QoPWcvr99YtEaqVugQAaYeyVDeTc4bK2OXsTdaOts9B1tPJ569BXh1gWuj0p6e
-	 Hf6ETR6xHDsvHqklxZ2/TgxXnODdIUBpXdhFGlec=
+	b=Eme6vX5O0iJ4jS7a6+joKVsXUFlK1PpJlbDtu9nzvKqmYIgWfIO2xkpNxif0GoF+c
+	 uy43yirI9ENeku1ndiwyuw0Ix0S58kV8lCch9gPjNC/kdjNJ+A/jXkrNqFzcQBsIX6
+	 YAiAWfVLiigF2qggYIQ2/SqaTiv4NlhEfIC0zbBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 142/430] hwmon: (ltc4282): Fix reset_history file permissions
-Date: Mon, 29 Dec 2025 17:09:04 +0100
-Message-ID: <20251229160729.588300914@linuxfoundation.org>
+	Qianchang Zhao <pioooooooooip@gmail.com>,
+	Zhitong Liu <liuzhitong1993@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.18 143/430] ksmbd: skip lock-range check on equal size to avoid size==0 underflow
+Date: Mon, 29 Dec 2025 17:09:05 +0100
+Message-ID: <20251229160729.624921528@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -45,68 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Qianchang Zhao <pioooooooooip@gmail.com>
 
-[ Upstream commit b3db91c3bfea69a6c6258fea508f25a59c0feb1a ]
+commit 5d510ac31626ed157d2182149559430350cf2104 upstream.
 
-The reset_history attributes are write only. Hence don't report them as
-readable just to return -EOPNOTSUPP later on.
+When size equals the current i_size (including 0), the code used to call
+check_lock_range(filp, i_size, size - 1, WRITE), which computes `size - 1`
+and can underflow for size==0. Skip the equal case.
 
-Fixes: cbc29538dbf7 ("hwmon: Add driver for LTC4282")
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20251219-ltc4282-fix-reset-history-v1-1-8eab974c124b@analog.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Reported-by: Qianchang Zhao <pioooooooooip@gmail.com>
+Reported-by: Zhitong Liu <liuzhitong1993@gmail.com>
+Signed-off-by: Qianchang Zhao <pioooooooooip@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/ltc4282.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ fs/smb/server/vfs.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/ltc4282.c b/drivers/hwmon/ltc4282.c
-index 1d664a2d7b3c..58c2d3a62432 100644
---- a/drivers/hwmon/ltc4282.c
-+++ b/drivers/hwmon/ltc4282.c
-@@ -1018,8 +1018,9 @@ static umode_t ltc4282_in_is_visible(const struct ltc4282_state *st, u32 attr)
- 	case hwmon_in_max:
- 	case hwmon_in_min:
- 	case hwmon_in_enable:
--	case hwmon_in_reset_history:
- 		return 0644;
-+	case hwmon_in_reset_history:
-+		return 0200;
- 	default:
+--- a/fs/smb/server/vfs.c
++++ b/fs/smb/server/vfs.c
+@@ -324,6 +324,9 @@ static int check_lock_range(struct file
+ 	struct file_lock_context *ctx = locks_inode_context(file_inode(filp));
+ 	int error = 0;
+ 
++	if (start == end)
++		return 0;
++
+ 	if (!ctx || list_empty_careful(&ctx->flc_posix))
  		return 0;
- 	}
-@@ -1038,8 +1039,9 @@ static umode_t ltc4282_curr_is_visible(u32 attr)
- 		return 0444;
- 	case hwmon_curr_max:
- 	case hwmon_curr_min:
--	case hwmon_curr_reset_history:
- 		return 0644;
-+	case hwmon_curr_reset_history:
-+		return 0200;
- 	default:
- 		return 0;
- 	}
-@@ -1057,8 +1059,9 @@ static umode_t ltc4282_power_is_visible(u32 attr)
- 		return 0444;
- 	case hwmon_power_max:
- 	case hwmon_power_min:
--	case hwmon_power_reset_history:
- 		return 0644;
-+	case hwmon_power_reset_history:
-+		return 0200;
- 	default:
- 		return 0;
- 	}
--- 
-2.51.0
-
+ 
+@@ -828,7 +831,7 @@ int ksmbd_vfs_truncate(struct ksmbd_work
+ 		if (size < inode->i_size) {
+ 			err = check_lock_range(filp, size,
+ 					       inode->i_size - 1, WRITE);
+-		} else {
++		} else if (size > inode->i_size) {
+ 			err = check_lock_range(filp, inode->i_size,
+ 					       size - 1, WRITE);
+ 		}
 
 
