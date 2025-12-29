@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1787F1DB125;
-	Mon, 29 Dec 2025 16:16:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD8D32FA0F;
+	Mon, 29 Dec 2025 16:16:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025005; cv=none; b=XVkO+wbmsky+J5innM1sVr1xHVy0MGsgcieN7FXXAUgbsETpndVuE/HXVmSqVQb4PnZ6vVCwXH7uSNuX94jvIIFDSFRIhZtkSmBJQQbL+Cny77D2P4gTTGiDbAYgqAxXEaPIb79DgRN+0NWQIL1J+p1f2aeFRfUlm6unWEZ//oM=
+	t=1767025007; cv=none; b=uKzQysO//NM+GX4cTtQ0nQ/5/JsMpPsmvdJy552nmmw6bTE/514uIHH0hSNUc1DXdpkdB4Ofg9BBl0pCbvgUoC+Hvx9vySfsNi5qB8dnS/AsKyKNowyKDPgtFb3MPUC64WrmVDeGESnHS/ylwtFJQVvMU4iP/eBKXSDbwIZmx04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025005; c=relaxed/simple;
-	bh=wtuniymkiPObmQrYuK4P2ZAYF6n2egFfDsqWncNPbvI=;
+	s=arc-20240116; t=1767025007; c=relaxed/simple;
+	bh=EjiVfx5drM+LZlgWS3vnHrH6Sc+usKyyvJ1WXzybjxU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KKwpZQYIDL31ool5ytDvjpjlA1Gj16U0lePVUtS2gO626SZZSQthgxVtEvI3U4nPlf2iT6hvKmbwxh4s+1gu6z7dJI18n5GIn2xgldVNhP1RnV7gPAfSIMQIAOcYIpsCaC9wYLZNW3+k9qwuvg17i4Gc0p/gTjSW8ZdsF/N5sso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jTHEslFU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rs2ehVgMKVXs0k8S9AP5Z1nB6zs0Y+9uRHYC+8QVuCfDCP1flSDCeBPp2lTQEbcf1bpD5fqpqXyACWc7bQCH3df5yqKGsybAW7i7oQJu6j/KAsXJ8okEchmvkLtObZGEWXvT9eJJNc8oKLXJro/C4jCAFamns2Mok365wtH8ePw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vNXsTHtf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jTHEslFU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 980A0C16AAE;
-	Mon, 29 Dec 2025 16:16:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vNXsTHtf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63AE1C4CEF7;
+	Mon, 29 Dec 2025 16:16:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025004;
-	bh=wtuniymkiPObmQrYuK4P2ZAYF6n2egFfDsqWncNPbvI=;
+	s=korg; t=1767025007;
+	bh=EjiVfx5drM+LZlgWS3vnHrH6Sc+usKyyvJ1WXzybjxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jTHEslFUfiX1zDaraWh/GjOaUxdcm232EXXNtm+wa0xhWpkQ3zacHdHE/GqHPbVPI
-	 pRJvERtVyGjjVIwANKTXv1QBDqiKSWdehOVxjEfcR5eLdF+AFGPF8l8UU/zIF+pnFR
-	 LvjUCym1eCzELJlGZ+nsFC0VRBphiQdqaepwHmBw=
+	b=vNXsTHtfcaFRCdFnUUXbnkB1R/TVXNxslewerW0giarNJOy3dY4+e92s5ZiWfQacr
+	 13aLY3HHAErgiUtkzR5Xg5oqwDgYhS8a1MbXkfvLIyxo8ay3eFxoh2ALvvk/cZhdb2
+	 Xw6q5Z1sbh5qE5Nzec5XWQKjBii5cfS7BwiARbVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Malyshev <mike.malyshev@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nsc@kernel.org>,
+	syzbot+f4f84b57a01d6b8364ad@syzkaller.appspotmail.com,
+	Pedro Demarchi Gomes <pedrodemargomes@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 027/430] kbuild: Use objtree for module signing key path
-Date: Mon, 29 Dec 2025 17:07:09 +0100
-Message-ID: <20251229160725.158104545@linuxfoundation.org>
+Subject: [PATCH 6.18 028/430] ntfs: set dummy blocksize to read boot_block when mounting
+Date: Mon, 29 Dec 2025 17:07:10 +0100
+Message-ID: <20251229160725.194617200@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -52,56 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Malyshev <mike.malyshev@gmail.com>
+From: Pedro Demarchi Gomes <pedrodemargomes@gmail.com>
 
-[ Upstream commit af61da281f52aba0c5b090bafb3a31c5739850ff ]
+[ Upstream commit d1693a7d5a38acf6424235a6070bcf5b186a360d ]
 
-When building out-of-tree modules with CONFIG_MODULE_SIG_FORCE=y,
-module signing fails because the private key path uses $(srctree)
-while the public key path uses $(objtree). Since signing keys are
-generated in the build directory during kernel compilation, both
-paths should use $(objtree) for consistency.
+When mounting, sb->s_blocksize is used to read the boot_block without
+being defined or validated. Set a dummy blocksize before attempting to
+read the boot_block.
 
-This causes SSL errors like:
-  SSL error:02001002:system library:fopen:No such file or directory
-  sign-file: /kernel-src/certs/signing_key.pem
+The issue can be triggered with the following syz reproducer:
 
-The issue occurs because:
-- sig-key uses: $(srctree)/certs/signing_key.pem (source tree)
-- cmd_sign uses: $(objtree)/certs/signing_key.x509 (build tree)
+  mkdirat(0xffffffffffffff9c, &(0x7f0000000080)='./file1\x00', 0x0)
+  r4 = openat$nullb(0xffffffffffffff9c, &(0x7f0000000040), 0x121403, 0x0)
+  ioctl$FS_IOC_SETFLAGS(r4, 0x40081271, &(0x7f0000000980)=0x4000)
+  mount(&(0x7f0000000140)=@nullb, &(0x7f0000000040)='./cgroup\x00',
+        &(0x7f0000000000)='ntfs3\x00', 0x2208004, 0x0)
+  syz_clone(0x88200200, 0x0, 0x0, 0x0, 0x0, 0x0)
 
-But both keys are generated in $(objtree) during the build.
+Here, the ioctl sets the bdev block size to 16384. During mount,
+get_tree_bdev_flags() calls sb_set_blocksize(sb, block_size(bdev)),
+but since block_size(bdev) > PAGE_SIZE, sb_set_blocksize() leaves
+sb->s_blocksize at zero.
 
-This complements commit 25ff08aa43e37 ("kbuild: Fix signing issue for
-external modules") which fixed the scripts path and public key path,
-but missed the private key path inconsistency.
+Later, ntfs_init_from_boot() attempts to read the boot_block while
+sb->s_blocksize is still zero, which triggers the bug.
 
-Fixes out-of-tree module signing for configurations with separate
-source and build directories (e.g., O=/kernel-out).
-
-Signed-off-by: Mikhail Malyshev <mike.malyshev@gmail.com>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Nicolas Schier <nsc@kernel.org>
-Link: https://patch.msgid.link/20251015163452.3754286-1-mike.malyshev@gmail.com
-Signed-off-by: Nicolas Schier <nsc@kernel.org>
+Reported-by: syzbot+f4f84b57a01d6b8364ad@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=f4f84b57a01d6b8364ad
+Signed-off-by: Pedro Demarchi Gomes <pedrodemargomes@gmail.com>
+[almaz.alexandrovich@paragon-software.com: changed comment style, added
+return value handling]
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/Makefile.modinst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ntfs3/super.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/scripts/Makefile.modinst b/scripts/Makefile.modinst
-index 1628198f3e830..9ba45e5b32b18 100644
---- a/scripts/Makefile.modinst
-+++ b/scripts/Makefile.modinst
-@@ -100,7 +100,7 @@ endif
- # Don't stop modules_install even if we can't sign external modules.
- #
- ifeq ($(filter pkcs11:%, $(CONFIG_MODULE_SIG_KEY)),)
--sig-key := $(if $(wildcard $(CONFIG_MODULE_SIG_KEY)),,$(srctree)/)$(CONFIG_MODULE_SIG_KEY)
-+sig-key := $(if $(wildcard $(CONFIG_MODULE_SIG_KEY)),,$(objtree)/)$(CONFIG_MODULE_SIG_KEY)
- else
- sig-key := $(CONFIG_MODULE_SIG_KEY)
- endif
+diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
+index ddff94c091b8c..e6c0908e27c29 100644
+--- a/fs/ntfs3/super.c
++++ b/fs/ntfs3/super.c
+@@ -933,6 +933,11 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
+ 
+ 	sbi->volume.blocks = dev_size >> PAGE_SHIFT;
+ 
++	/* Set dummy blocksize to read boot_block. */
++	if (!sb_min_blocksize(sb, PAGE_SIZE)) {
++		return -EINVAL;
++	}
++
+ read_boot:
+ 	bh = ntfs_bread(sb, boot_block);
+ 	if (!bh)
 -- 
 2.51.0
 
