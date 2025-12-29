@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B033E2222CB;
-	Mon, 29 Dec 2025 16:22:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2DDD2222CB;
+	Mon, 29 Dec 2025 16:22:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025327; cv=none; b=cIljUPXzQaISzZ/rlHkcz7KdzuYbu9P6F8BGhR5mbfUGPjnSOK+3C6NFVZ1fnNd5Mzb0k/ON6zA+VqexoSy8BX0JVDkO6GsuDbm8VCWdCTb8RKSdDGIvZH9Wkb1zbBZ4m5+WdIFWa0c/WjNctSqanprq03s/EXkIHJqPdd7bFC4=
+	t=1767025330; cv=none; b=ETz6uoVZXNxsJIm8PCS8jAmObWwDOC2ohRQrip6kzGTJJB2ej3RRSA9ijUOqBb7GMdtHPlcLeceAYVL4UFq64XXteO6bOWKwacX2RTtxMK5ULKSAEqfwOK8/xGctNwnxQyc6fnTLlK0+vvb0fxXL2rKL/wCM5AOGcLbwrS9/y98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025327; c=relaxed/simple;
-	bh=DF0FeAo3wYFF3pu4koczl8auHu371tUu1KT86bfLEaI=;
+	s=arc-20240116; t=1767025330; c=relaxed/simple;
+	bh=tgGSg42yH0BdPKMlpVuD3OMyNimZPvZttiW6lmVWJZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lETckAnQyWSLZbFDJApFfjF0LlRgDTL6d/vdcXa+06mulriWLbsNqSGzk6YD9ELxJqOFf+zYYwTptxB0yCMoACRqZlIJa92hym295BhSN/K7Hy0xlU5qGjGYkC4cT8qFkJ2dxvnLpoIorEbne4QBpnLu+W6cfXU2HubSsfmCoTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Psbj5vA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PRlTZG7lRLPVChkLFfu9M3sNuLCZIlmFlIWT/mQGqi2Sa9k3hTbCaGNhDDz31hjPVo/FXgQJUE2Rgbek7ZwHzILJufjmYl4f+LryrZkzTE7jqwMkYtQ9SaW1ngP//GuI0/qjMaLU/GDePU3wMwb8ZkfOzAeEV7hNNI4p2J7rLDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hBOmYdjJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Psbj5vA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA345C4CEF7;
-	Mon, 29 Dec 2025 16:22:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hBOmYdjJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AB76C4CEF7;
+	Mon, 29 Dec 2025 16:22:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025324;
-	bh=DF0FeAo3wYFF3pu4koczl8auHu371tUu1KT86bfLEaI=;
+	s=korg; t=1767025329;
+	bh=tgGSg42yH0BdPKMlpVuD3OMyNimZPvZttiW6lmVWJZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Psbj5vAowwknm0m2HcNLLCYL0mdHkds5JB0ZRjAN02VMQ6qkC128k9b4IDiyH4/i
-	 RXHISILrap5x6iuec3CAGo5H1cfQ9ssyIPxhMgQnvI2rucyTbw12nS2KyhFWOVimA9
-	 XqPQSDetpUR2fG+4D5wO24Hv0aNnPdIkSVdSELB0=
+	b=hBOmYdjJVWJwVwOmpV2b8kkm/ZOkgcD61D79TH4Ek+6rckaK0rVVDK9e9SOqlIBj0
+	 wCfHX7Emy77jB96IbUHYdhlXbuxTmqZmv5DEhOvzErlEpisuHHcygx8XjdS21riM1a
+	 dwdAvH7k6XRDX1htLpYBb7SeYUn53HH90kIxnOAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongxin Liu <yongxin.liu@windriver.com>,
-	Ingo Molnar <mingo@kernel.org>,
+	Jinhui Guo <guojinhui.liam@bytedance.com>,
+	Corey Minyard <corey@minyard.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 166/430] x86/fpu: Fix FPU state core dump truncation on CPUs with no extended xfeatures
-Date: Mon, 29 Dec 2025 17:09:28 +0100
-Message-ID: <20251229160730.472646370@linuxfoundation.org>
+Subject: [PATCH 6.18 176/430] ipmi: Fix the race between __scan_channels() and deliver_response()
+Date: Mon, 29 Dec 2025 17:09:38 +0100
+Message-ID: <20251229160730.837385555@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -51,51 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongxin Liu <yongxin.liu@windriver.com>
+From: Jinhui Guo <guojinhui.liam@bytedance.com>
 
-[ Upstream commit c8161e5304abb26e6c0bec6efc947992500fa6c5 ]
+[ Upstream commit 936750fdba4c45e13bbd17f261bb140dd55f5e93 ]
 
-Zero can be a valid value of num_records. For example, on Intel Atom x6425RE,
-only x87 and SSE are supported (features 0, 1), and fpu_user_cfg.max_features
-is 3. The for_each_extended_xfeature() loop only iterates feature 2, which is
-not enabled, so num_records = 0. This is valid and should not cause core dump
-failure.
+The race window between __scan_channels() and deliver_response() causes
+the parameters of some channels to be set to 0.
 
-The issue is that dump_xsave_layout_desc() returns 0 for both genuine errors
-(dump_emit() failure) and valid cases (no extended features). Use negative
-return values for errors and only abort on genuine failures.
+1.[CPUA] __scan_channels() issues an IPMI request and waits with
+         wait_event() until all channels have been scanned.
+         wait_event() internally calls might_sleep(), which might
+         yield the CPU. (Moreover, an interrupt can preempt
+         wait_event() and force the task to yield the CPU.)
+2.[CPUB] deliver_response() is invoked when the CPU receives the
+         IPMI response. After processing a IPMI response,
+         deliver_response() directly assigns intf->wchannels to
+         intf->channel_list and sets intf->channels_ready to true.
+         However, not all channels are actually ready for use.
+3.[CPUA] Since intf->channels_ready is already true, wait_event()
+         never enters __wait_event(). __scan_channels() immediately
+         clears intf->null_user_handler and exits.
+4.[CPUB] Once intf->null_user_handler is set to NULL, deliver_response()
+         ignores further IPMI responses, leaving the remaining
+	 channels zero-initialized and unusable.
 
-Fixes: ba386777a30b ("x86/elf: Add a new FPU buffer layout info to x86 core files")
-Signed-off-by: Yongxin Liu <yongxin.liu@windriver.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://patch.msgid.link/20251210000219.4094353-2-yongxin.liu@windriver.com
+CPUA                             CPUB
+-------------------------------  -----------------------------
+__scan_channels()
+ intf->null_user_handler
+       = channel_handler;
+ send_channel_info_cmd(intf,
+       0);
+ wait_event(intf->waitq,
+       intf->channels_ready);
+  do {
+   might_sleep();
+                                 deliver_response()
+                                  channel_handler()
+                                   intf->channel_list =
+				         intf->wchannels + set;
+                                   intf->channels_ready = true;
+                                   send_channel_info_cmd(intf,
+                                         intf->curr_channel);
+   if (condition)
+    break;
+   __wait_event(wq_head,
+          condition);
+  } while(0)
+ intf->null_user_handler
+       = NULL;
+                                 deliver_response()
+                                  if (!msg->user)
+                                   if (intf->null_user_handler)
+                                    rv = -EINVAL;
+                                  return rv;
+-------------------------------  -----------------------------
+
+Fix the race between __scan_channels() and deliver_response() by
+deferring both the assignment intf->channel_list = intf->wchannels
+and the flag intf->channels_ready = true until all channels have
+been successfully scanned or until the IPMI request has failed.
+
+Signed-off-by: Jinhui Guo <guojinhui.liam@bytedance.com>
+Message-ID: <20250930074239.2353-2-guojinhui.liam@bytedance.com>
+Signed-off-by: Corey Minyard <corey@minyard.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/fpu/xstate.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/char/ipmi/ipmi_msghandler.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/arch/x86/kernel/fpu/xstate.c b/arch/x86/kernel/fpu/xstate.c
-index 28e4fd65c9da..5f54a207ace4 100644
---- a/arch/x86/kernel/fpu/xstate.c
-+++ b/arch/x86/kernel/fpu/xstate.c
-@@ -1945,7 +1945,7 @@ static int dump_xsave_layout_desc(struct coredump_params *cprm)
- 		};
+diff --git a/drivers/char/ipmi/ipmi_msghandler.c b/drivers/char/ipmi/ipmi_msghandler.c
+index 3700ab4eba3e..d3f84deee451 100644
+--- a/drivers/char/ipmi/ipmi_msghandler.c
++++ b/drivers/char/ipmi/ipmi_msghandler.c
+@@ -3417,8 +3417,6 @@ channel_handler(struct ipmi_smi *intf, struct ipmi_recv_msg *msg)
+ 			intf->channels_ready = true;
+ 			wake_up(&intf->waitq);
+ 		} else {
+-			intf->channel_list = intf->wchannels + set;
+-			intf->channels_ready = true;
+ 			rv = send_channel_info_cmd(intf, intf->curr_channel);
+ 		}
  
- 		if (!dump_emit(cprm, &xc, sizeof(xc)))
--			return 0;
-+			return -1;
- 
- 		num_records++;
- 	}
-@@ -1983,7 +1983,7 @@ int elf_coredump_extra_notes_write(struct coredump_params *cprm)
- 		return 1;
- 
- 	num_records = dump_xsave_layout_desc(cprm);
--	if (!num_records)
-+	if (num_records < 0)
- 		return 1;
- 
- 	/* Total size should be equal to the number of records */
 -- 
 2.51.0
 
