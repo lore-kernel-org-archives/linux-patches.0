@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2779A2765C4;
-	Mon, 29 Dec 2025 16:24:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E092D063E;
+	Mon, 29 Dec 2025 16:24:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025449; cv=none; b=LIRbUa4QXh4wBRw9d/8kj4OTS5y7/rTjUuOOlHpPo2bGDu9we1nWnYqaCXiFgMMffRrOvWhXm7AMl3tKTQn1qXsHT4WEIK0FL2y8OyUAiYC5t460pjCWNOSRM3fQJrBvjGidk+wUIG7gKsjwwjM6hPgxXTF2gQHkQvmaURLMFX8=
+	t=1767025452; cv=none; b=AQZcmTo5/SZIKD4YKGIpouCFcSYtYV7LvHH8VocbRXYp03Xajk8ma1L3rTxB7bApTK76GjPBYuo4+KmwsvkUhgJZOmkkqV0OrAw52V3mVRfibm3TE7iD4TB4w3tyDIhkM+HG0tBA2YYn0nqssJnxed/S1XYP2i1Z8ooi1SSKWRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025449; c=relaxed/simple;
-	bh=6GS6aPDqkrlzXMnlpSP0CdtQaqoRtLZZfIQXcJIQqug=;
+	s=arc-20240116; t=1767025452; c=relaxed/simple;
+	bh=q0xCDLt7JLjwDQDn3PGNNAL7Heih4lAxX1DT+c3u38E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f3W8lOi/FAQr2SH/qll2/0Wtoja46NZ7e4+ia0Drvnc5rflILJiZOTaYSHxZizP4LRFPjMiSYZkAy6LMdeNnJnKErbrHeT10rD19D+G/Xi9moO9VK0itkZ7zLoSuuIqUejMidkxxW2tdqP2JT/21lyoh75gZgPUxJQ6fPV9EgY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nj+VxZMv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G3Ht7x4XW8HIOXnq/S0ovGpVH8G8V0AjUkxHgJK5li2ykPJ1CnmyVeC+zS3h7uWJcvbGFgfzJpkH+IdrmKHNOVoORwqlqXonMlJt4sgvJ46DLp/hoziN40w/P2xdwkuKgKoN1UifiC8xC6qDkfl83eS1DFVeEqpO7SLCf7N3A1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MdC0ODzH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nj+VxZMv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BBA9C4CEF7;
-	Mon, 29 Dec 2025 16:24:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MdC0ODzH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69EEEC4CEF7;
+	Mon, 29 Dec 2025 16:24:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025448;
-	bh=6GS6aPDqkrlzXMnlpSP0CdtQaqoRtLZZfIQXcJIQqug=;
+	s=korg; t=1767025451;
+	bh=q0xCDLt7JLjwDQDn3PGNNAL7Heih4lAxX1DT+c3u38E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nj+VxZMvomtUlYFalDUh79DDHdcGR8WKQhHpyWhd3KvAVUuA4GAg6oF2MqGKZ+V/6
-	 HFrHFtTWRTKVWYsB6QaMf+1bx+s6CwCHc9mHcLybt16/AE5Nhy+sOTc75doj9GNSO3
-	 4vgK3d5Kh2J9ogWOc3H1pVAnNrcOptX/LMo925Xs=
+	b=MdC0ODzH2gV4+aLj56oTQPtjf4Arxdu6omLekRUbHByXLc7h6/5XYFKfDpeJ4m2X2
+	 cqegocEx1wOQSOoRZH6dtKeChHdR87vSrYdHtIfFM/qNYTl+PUlk8O1PlqUv9pPV1F
+	 MNlOsOuXpBoGrGmGv3NMt9G16Fz/6FOTbhls6h10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stefanha@redhat.com,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 218/430] vhost/vsock: improve RCU read sections around vhost_vsock_get()
-Date: Mon, 29 Dec 2025 17:10:20 +0100
-Message-ID: <20251229160732.374640946@linuxfoundation.org>
+Subject: [PATCH 6.18 219/430] cifs: Fix memory and information leak in smb3_reconfigure()
+Date: Mon, 29 Dec 2025 17:10:21 +0100
+Message-ID: <20251229160732.411671506@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -53,134 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit d8ee3cfdc89b75dc059dc21c27bef2c1440f67eb ]
+[ Upstream commit cb6d5aa9c0f10074f1ad056c3e2278ad2cc7ec8d ]
 
-vhost_vsock_get() uses hash_for_each_possible_rcu() to find the
-`vhost_vsock` associated with the `guest_cid`. hash_for_each_possible_rcu()
-should only be called within an RCU read section, as mentioned in the
-following comment in include/linux/rculist.h:
+In smb3_reconfigure(), if smb3_sync_session_ctx_passwords() fails, the
+function returns immediately without freeing and erasing the newly
+allocated new_password and new_password2. This causes both a memory leak
+and a potential information leak.
 
-/**
- * hlist_for_each_entry_rcu - iterate over rcu list of given type
- * @pos:	the type * to use as a loop cursor.
- * @head:	the head for your list.
- * @member:	the name of the hlist_node within the struct.
- * @cond:	optional lockdep expression if called from non-RCU protection.
- *
- * This list-traversal primitive may safely run concurrently with
- * the _rcu list-mutation primitives such as hlist_add_head_rcu()
- * as long as the traversal is guarded by rcu_read_lock().
- */
+Fix this by calling kfree_sensitive() on both password buffers before
+returning in this error case.
 
-Currently, all calls to vhost_vsock_get() are between rcu_read_lock()
-and rcu_read_unlock() except for calls in vhost_vsock_set_cid() and
-vhost_vsock_reset_orphans(). In both cases, the current code is safe,
-but we can make improvements to make it more robust.
-
-About vhost_vsock_set_cid(), when building the kernel with
-CONFIG_PROVE_RCU_LIST enabled, we get the following RCU warning when the
-user space issues `ioctl(dev, VHOST_VSOCK_SET_GUEST_CID, ...)` :
-
-  WARNING: suspicious RCU usage
-  6.18.0-rc7 #62 Not tainted
-  -----------------------------
-  drivers/vhost/vsock.c:74 RCU-list traversed in non-reader section!!
-
-  other info that might help us debug this:
-
-  rcu_scheduler_active = 2, debug_locks = 1
-  1 lock held by rpc-libvirtd/3443:
-   #0: ffffffffc05032a8 (vhost_vsock_mutex){+.+.}-{4:4}, at: vhost_vsock_dev_ioctl+0x2ff/0x530 [vhost_vsock]
-
-  stack backtrace:
-  CPU: 2 UID: 0 PID: 3443 Comm: rpc-libvirtd Not tainted 6.18.0-rc7 #62 PREEMPT(none)
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-7.fc42 06/10/2025
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x75/0xb0
-   dump_stack+0x14/0x1a
-   lockdep_rcu_suspicious.cold+0x4e/0x97
-   vhost_vsock_get+0x8f/0xa0 [vhost_vsock]
-   vhost_vsock_dev_ioctl+0x307/0x530 [vhost_vsock]
-   __x64_sys_ioctl+0x4f2/0xa00
-   x64_sys_call+0xed0/0x1da0
-   do_syscall_64+0x73/0xfa0
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
-   ...
-   </TASK>
-
-This is not a real problem, because the vhost_vsock_get() caller, i.e.
-vhost_vsock_set_cid(), holds the `vhost_vsock_mutex` used by the hash
-table writers. Anyway, to prevent that warning, add lockdep_is_held()
-condition to hash_for_each_possible_rcu() to verify that either the
-caller is in an RCU read section or `vhost_vsock_mutex` is held when
-CONFIG_PROVE_RCU_LIST is enabled; and also clarify the comment for
-vhost_vsock_get() to better describe the locking requirements and the
-scope of the returned pointer validity.
-
-About vhost_vsock_reset_orphans(), currently this function is only
-called via vsock_for_each_connected_socket(), which holds the
-`vsock_table_lock` spinlock (which is also an RCU read-side critical
-section). However, add an explicit RCU read lock there to make the code
-more robust and explicit about the RCU requirements, and to prevent
-issues if the calling context changes in the future or if
-vhost_vsock_reset_orphans() is called from other contexts.
-
-Fixes: 834e772c8db0 ("vhost/vsock: fix use-after-free in network stack callers")
-Cc: stefanha@redhat.com
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-Id: <20251126133826.142496-1-sgarzare@redhat.com>
-Message-ID: <20251126210313.GA499503@fedora>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: 0f0e357902957 ("cifs: during remount, make sure passwords are in sync")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vsock.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ fs/smb/client/fs_context.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/vhost/vsock.c b/drivers/vhost/vsock.c
-index ae01457ea2cd..78cc66fbb3dd 100644
---- a/drivers/vhost/vsock.c
-+++ b/drivers/vhost/vsock.c
-@@ -64,14 +64,15 @@ static u32 vhost_transport_get_local_cid(void)
- 	return VHOST_VSOCK_DEFAULT_HOST_CID;
- }
+diff --git a/fs/smb/client/fs_context.c b/fs/smb/client/fs_context.c
+index 2a0d8b87bd8e..d8bd3cdc535d 100644
+--- a/fs/smb/client/fs_context.c
++++ b/fs/smb/client/fs_context.c
+@@ -1080,6 +1080,8 @@ static int smb3_reconfigure(struct fs_context *fc)
+ 	rc = smb3_sync_session_ctx_passwords(cifs_sb, ses);
+ 	if (rc) {
+ 		mutex_unlock(&ses->session_mutex);
++		kfree_sensitive(new_password);
++		kfree_sensitive(new_password2);
+ 		return rc;
+ 	}
  
--/* Callers that dereference the return value must hold vhost_vsock_mutex or the
-- * RCU read lock.
-+/* Callers must be in an RCU read section or hold the vhost_vsock_mutex.
-+ * The return value can only be dereferenced while within the section.
-  */
- static struct vhost_vsock *vhost_vsock_get(u32 guest_cid)
- {
- 	struct vhost_vsock *vsock;
- 
--	hash_for_each_possible_rcu(vhost_vsock_hash, vsock, hash, guest_cid) {
-+	hash_for_each_possible_rcu(vhost_vsock_hash, vsock, hash, guest_cid,
-+				   lockdep_is_held(&vhost_vsock_mutex)) {
- 		u32 other_cid = vsock->guest_cid;
- 
- 		/* Skip instances that have no CID yet */
-@@ -707,9 +708,15 @@ static void vhost_vsock_reset_orphans(struct sock *sk)
- 	 * executing.
- 	 */
- 
-+	rcu_read_lock();
-+
- 	/* If the peer is still valid, no need to reset connection */
--	if (vhost_vsock_get(vsk->remote_addr.svm_cid))
-+	if (vhost_vsock_get(vsk->remote_addr.svm_cid)) {
-+		rcu_read_unlock();
- 		return;
-+	}
-+
-+	rcu_read_unlock();
- 
- 	/* If the close timeout is pending, let it expire.  This avoids races
- 	 * with the timeout callback.
 -- 
 2.51.0
 
