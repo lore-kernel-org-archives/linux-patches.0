@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2BB931B111;
-	Mon, 29 Dec 2025 16:30:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6FE7212FB9;
+	Mon, 29 Dec 2025 16:30:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025809; cv=none; b=ruS+ESKuZPvtCHoJ7yNmQA6XioQpmM7ji9a0a7tJrw3C3LMHB5A6Duf6N8D6QXHk3A4MsOUUasUo7Z9eRZcAjCw3yrcqc/oUCrAH1kFfJAUrmrceE19LpvAcM//v9aMwJu5AUO/33aJ/Bc7mgplPVSnwREynC5s4DItcGtpR4yU=
+	t=1767025811; cv=none; b=kT9yeitXdzhUisyVkO9Maxf2LOS4Ve9ycy2oQ6EYAeWHBiT1C3Ib4xx4c78e9RkkCtx31Cu9N0Rpjev6vLx8eweGHK5LZ314ub52X1I09vyhCAuSy7oWdzTWwQDc5tuAEx7wXHxeUc8UtIsecorTUR8Nh2Vj1hknNSTHudE1PeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025809; c=relaxed/simple;
-	bh=z6iWhTFUFQ29d1qAC9sDYX/3dzU1diKfsqSuapA0/xE=;
+	s=arc-20240116; t=1767025811; c=relaxed/simple;
+	bh=CuVhanL/zSOFbAXVWydEgJfgN+CtK9XlwkS/e6HugFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dn9txm/B7ZnO0GUJJM70QkWfKlIiqd27VtsKRjGZxQFortm1rgGhQabedNPrUgBwekuAaVzhBeR9zE1A3B6EUB4dRfzhe4TN2xFGL8Zx4nCFKuqA/rX2dy57VC6wSkcJ5VPYE1sEusoYfhvSy1mXC6naHjOj5zee0lVNNUC7Jd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W/BseDG5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZtTCTGQpzr261U9ZDMGBAN2Em243xYWoHP1zKxdK8IoZz6TUgukcd8VEWJlQX37UDUqUrjhc50yfEkjhVagSUX74kmhk4Z9gf2zKMJfLP+3jG7fKSl/cNp3vXeenLBhc2scqzsN9Ph/drHXrk0z4ooXjf86+7Syo/cC7MiOT0W8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aX+uABoE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W/BseDG5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67AE9C4CEF7;
-	Mon, 29 Dec 2025 16:30:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aX+uABoE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3310BC4CEF7;
+	Mon, 29 Dec 2025 16:30:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025808;
-	bh=z6iWhTFUFQ29d1qAC9sDYX/3dzU1diKfsqSuapA0/xE=;
+	s=korg; t=1767025811;
+	bh=CuVhanL/zSOFbAXVWydEgJfgN+CtK9XlwkS/e6HugFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W/BseDG5TUdHKmvsKpCHZTXpJK8j8YktyB53lxtGHsRzRU98oTIdk3uNBauqimEgV
-	 Sc/IBWhjYOxpSnA9Tx4wHy/4CWfcEV6Y/hnp1ba5tawVckJt2MkMsOLVDbj+0vcPqt
-	 vn07nUrX+VUkxpK6wnDBy8rsstYAx+s5skt00qyM=
+	b=aX+uABoETBc3iK5UAN6UvGufkbJa6fycWdNXcGXLKR2nS67zkmwwvuWYYwA+yUAUi
+	 b6dNqEtCHAWmk/p3bMAIRNdNdAsQZEzQNpeHO/dSTpIqlvo/J7h3vmvRVF2odhuY8i
+	 pl/qFPC2lBDStyVZZre7Lo04AUp4duMyXzD5VmiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Jan Prusakowski <jprusakowski@google.com>,
+	"Bai, Shuangpeng" <sjb7183@psu.edu>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.18 312/430] f2fs: ensure node page reads complete before f2fs_put_super() finishes
-Date: Mon, 29 Dec 2025 17:11:54 +0100
-Message-ID: <20251229160735.812317518@linuxfoundation.org>
+Subject: [PATCH 6.18 313/430] f2fs: fix to avoid updating compression context during writeback
+Date: Mon, 29 Dec 2025 17:11:55 +0100
+Message-ID: <20251229160735.848738303@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -52,80 +52,159 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Prusakowski <jprusakowski@google.com>
+From: Chao Yu <chao@kernel.org>
 
-commit 297baa4aa263ff8f5b3d246ee16a660d76aa82c4 upstream.
+commit 10b591e7fb7cdc8c1e53e9c000dc0ef7069aaa76 upstream.
 
-Xfstests generic/335, generic/336 sometimes crash with the following message:
+Bai, Shuangpeng <sjb7183@psu.edu> reported a bug as below:
 
-F2FS-fs (dm-0): detect filesystem reference count leak during umount, type: 9, count: 1
-------------[ cut here ]------------
-kernel BUG at fs/f2fs/super.c:1939!
-Oops: invalid opcode: 0000 [#1] SMP NOPTI
-CPU: 1 UID: 0 PID: 609351 Comm: umount Tainted: G        W           6.17.0-rc5-xfstests-g9dd1835ecda5 #1 PREEMPT(none)
-Tainted: [W]=WARN
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-RIP: 0010:f2fs_put_super+0x3b3/0x3c0
+Oops: divide error: 0000 [#1] SMP KASAN PTI
+CPU: 0 UID: 0 PID: 11441 Comm: syz.0.46 Not tainted 6.17.0 #1 PREEMPT(full)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+RIP: 0010:f2fs_all_cluster_page_ready+0x106/0x550 fs/f2fs/compress.c:857
 Call Trace:
  <TASK>
- generic_shutdown_super+0x7e/0x190
- kill_block_super+0x1a/0x40
- kill_f2fs_super+0x9d/0x190
- deactivate_locked_super+0x30/0xb0
- cleanup_mnt+0xba/0x150
- task_work_run+0x5c/0xa0
- exit_to_user_mode_loop+0xb7/0xc0
- do_syscall_64+0x1ae/0x1c0
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
- </TASK>
----[ end trace 0000000000000000 ]---
+ f2fs_write_cache_pages fs/f2fs/data.c:3078 [inline]
+ __f2fs_write_data_pages fs/f2fs/data.c:3290 [inline]
+ f2fs_write_data_pages+0x1c19/0x3600 fs/f2fs/data.c:3317
+ do_writepages+0x38e/0x640 mm/page-writeback.c:2634
+ filemap_fdatawrite_wbc mm/filemap.c:386 [inline]
+ __filemap_fdatawrite_range mm/filemap.c:419 [inline]
+ file_write_and_wait_range+0x2ba/0x3e0 mm/filemap.c:794
+ f2fs_do_sync_file+0x6e6/0x1b00 fs/f2fs/file.c:294
+ generic_write_sync include/linux/fs.h:3043 [inline]
+ f2fs_file_write_iter+0x76e/0x2700 fs/f2fs/file.c:5259
+ new_sync_write fs/read_write.c:593 [inline]
+ vfs_write+0x7e9/0xe00 fs/read_write.c:686
+ ksys_write+0x19d/0x2d0 fs/read_write.c:738
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xf7/0x470 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-It appears that sometimes it is possible that f2fs_put_super() is called before
-all node page reads are completed.
-Adding a call to f2fs_wait_on_all_pages() for F2FS_RD_NODE fixes the problem.
+The bug was triggered w/ below race condition:
 
+fsync				setattr			ioctl
+- f2fs_do_sync_file
+ - file_write_and_wait_range
+  - f2fs_write_cache_pages
+  : inode is non-compressed
+  : cc.cluster_size =
+    F2FS_I(inode)->i_cluster_size = 0
+   - tag_pages_for_writeback
+				- f2fs_setattr
+				 - truncate_setsize
+				 - f2fs_truncate
+							- f2fs_fileattr_set
+							 - f2fs_setflags_common
+							  - set_compress_context
+							  : F2FS_I(inode)->i_cluster_size = 4
+							  : set_inode_flag(inode, FI_COMPRESSED_FILE)
+   - f2fs_compressed_file
+   : return true
+   - f2fs_all_cluster_page_ready
+   : "pgidx % cc->cluster_size" trigger dividing 0 issue
+
+Let's change as below to fix this issue:
+- introduce a new atomic type variable .writeback in structure f2fs_inode_info
+to track the number of threads which calling f2fs_write_cache_pages().
+- use .i_sem lock to protect .writeback update.
+- check .writeback before update compression context in f2fs_setflags_common()
+to avoid race w/ ->writepages.
+
+Fixes: 4c8ff7095bef ("f2fs: support data compression")
 Cc: stable@kernel.org
-Fixes: 20872584b8c0b ("f2fs: fix to drop all dirty meta/node pages during umount()")
-Signed-off-by: Jan Prusakowski <jprusakowski@google.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
+Reported-by: Bai, Shuangpeng <sjb7183@psu.edu>
+Tested-by: Bai, Shuangpeng <sjb7183@psu.edu>
+Closes: https://lore.kernel.org/lkml/44D8F7B3-68AD-425F-9915-65D27591F93F@psu.edu
+Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/super.c |   17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ fs/f2fs/data.c  |   17 +++++++++++++++++
+ fs/f2fs/f2fs.h  |    3 ++-
+ fs/f2fs/file.c  |    5 +++--
+ fs/f2fs/super.c |    1 +
+ 4 files changed, 23 insertions(+), 3 deletions(-)
 
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -1988,14 +1988,6 @@ static void f2fs_put_super(struct super_
- 		truncate_inode_pages_final(META_MAPPING(sbi));
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -3224,6 +3224,19 @@ static inline bool __should_serialize_io
+ 	return false;
+ }
+ 
++static inline void account_writeback(struct inode *inode, bool inc)
++{
++	if (!f2fs_sb_has_compression(F2FS_I_SB(inode)))
++		return;
++
++	f2fs_down_read(&F2FS_I(inode)->i_sem);
++	if (inc)
++		atomic_inc(&F2FS_I(inode)->writeback);
++	else
++		atomic_dec(&F2FS_I(inode)->writeback);
++	f2fs_up_read(&F2FS_I(inode)->i_sem);
++}
++
+ static int __f2fs_write_data_pages(struct address_space *mapping,
+ 						struct writeback_control *wbc,
+ 						enum iostat_type io_type)
+@@ -3269,10 +3282,14 @@ static int __f2fs_write_data_pages(struc
+ 		locked = true;
  	}
  
--	for (i = 0; i < NR_COUNT_TYPE; i++) {
--		if (!get_pages(sbi, i))
--			continue;
--		f2fs_err(sbi, "detect filesystem reference count leak during "
--			"umount, type: %d, count: %lld", i, get_pages(sbi, i));
--		f2fs_bug_on(sbi, 1);
--	}
--
- 	f2fs_bug_on(sbi, sbi->fsync_node_num);
- 
- 	f2fs_destroy_compress_inode(sbi);
-@@ -2006,6 +1998,15 @@ static void f2fs_put_super(struct super_
- 	iput(sbi->meta_inode);
- 	sbi->meta_inode = NULL;
- 
-+	/* Should check the page counts after dropping all node/meta pages */
-+	for (i = 0; i < NR_COUNT_TYPE; i++) {
-+		if (!get_pages(sbi, i))
-+			continue;
-+		f2fs_err(sbi, "detect filesystem reference count leak during "
-+			"umount, type: %d, count: %lld", i, get_pages(sbi, i));
-+		f2fs_bug_on(sbi, 1);
-+	}
++	account_writeback(inode, true);
 +
- 	/*
- 	 * iput() can update stat information, if f2fs_write_checkpoint()
- 	 * above failed with error.
+ 	blk_start_plug(&plug);
+ 	ret = f2fs_write_cache_pages(mapping, wbc, io_type);
+ 	blk_finish_plug(&plug);
+ 
++	account_writeback(inode, false);
++
+ 	if (locked)
+ 		mutex_unlock(&sbi->writepages);
+ 
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -948,6 +948,7 @@ struct f2fs_inode_info {
+ 	unsigned char i_compress_level;		/* compress level (lz4hc,zstd) */
+ 	unsigned char i_compress_flag;		/* compress flag */
+ 	unsigned int i_cluster_size;		/* cluster size */
++	atomic_t writeback;			/* count # of writeback thread */
+ 
+ 	unsigned int atomic_write_cnt;
+ 	loff_t original_i_size;		/* original i_size before atomic write */
+@@ -4675,7 +4676,7 @@ static inline bool f2fs_disable_compress
+ 		f2fs_up_write(&fi->i_sem);
+ 		return true;
+ 	}
+-	if (f2fs_is_mmap_file(inode) ||
++	if (f2fs_is_mmap_file(inode) || atomic_read(&fi->writeback) ||
+ 		(S_ISREG(inode->i_mode) && F2FS_HAS_BLOCKS(inode))) {
+ 		f2fs_up_write(&fi->i_sem);
+ 		return false;
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -2125,8 +2125,9 @@ static int f2fs_setflags_common(struct i
+ 
+ 			f2fs_down_write(&fi->i_sem);
+ 			if (!f2fs_may_compress(inode) ||
+-					(S_ISREG(inode->i_mode) &&
+-					F2FS_HAS_BLOCKS(inode))) {
++				atomic_read(&fi->writeback) ||
++				(S_ISREG(inode->i_mode) &&
++				F2FS_HAS_BLOCKS(inode))) {
+ 				f2fs_up_write(&fi->i_sem);
+ 				return -EINVAL;
+ 			}
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -1759,6 +1759,7 @@ static struct inode *f2fs_alloc_inode(st
+ 	atomic_set(&fi->dirty_pages, 0);
+ 	atomic_set(&fi->i_compr_blocks, 0);
+ 	atomic_set(&fi->open_count, 0);
++	atomic_set(&fi->writeback, 0);
+ 	init_f2fs_rwsem(&fi->i_sem);
+ 	spin_lock_init(&fi->i_size_lock);
+ 	INIT_LIST_HEAD(&fi->dirty_list);
 
 
