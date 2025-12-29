@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23570330324;
-	Mon, 29 Dec 2025 16:16:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C952D30FF1D;
+	Mon, 29 Dec 2025 16:16:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767024997; cv=none; b=OOB+lyG+9kcEr5eJfOiDkADIX6CkGwec+Hmt3Ri9cmhK14Zi1fd7oLzPUM3+/UIcmMdmahkix0awb9v67wqrZFVXaCnf2bbSp12GzVN4qrlfe2PSFMaO7Lyd45YmygLRB+7M1Qhbbjfh+gAdbMGdGXE14UFuWczXxf51qCeBGyA=
+	t=1767024999; cv=none; b=OWp5G0vhwSeA41P0hGJ7as+BrJV11978SYBkotd+7+vX9uqFa7MGiJBLy0VcRuPrL1Ahs0Ofh55IcvxIgAn3ezb8/TfK6GouOEQoyYON44cupH6PRf2fPCM/LonHz66wcvxcujcrCzVh230SPqgdMoy+Gltou9FKkniuCTK4LUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767024997; c=relaxed/simple;
-	bh=3jIeaNmYW2lPCSEwksX14/I7NWLijs0KJANhpZt7DvE=;
+	s=arc-20240116; t=1767024999; c=relaxed/simple;
+	bh=01F1d/8cRXzKd5Spf0157vdVzwXdqszgjSghZXzWU8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jXiKXyQ+ePunetBU2CF91t0619TkY31mfIr7/ptHW9bz7e6dizJve1i9mXHpBZvJwep6qbJoBfnKXy2TzWBKwWgx4jgZvIXECpMBM4dJCVHsQcAST9v4RGphlxEjBAAvZFBj2FsctD7Bv9ZesU7HgYH2HGuRCQenXYE2cK/rlgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wuZQT9Mj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cp0l22YgWUDNvqO14y35qE3NYmcr0qsKAIPnME56nywor8Aagz+I3dBk7IA2mqq9zRdanBTY7SOEPtktttScXQRPKV3zG6HSP5VLycoCektibVOfRh3GomWouNplQGFPQTr8IPlx7o/PLgq+GVsVscwtr6cG4JYk5cmn6Wvh9+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EeFPTEtC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wuZQT9Mj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ECA2C4CEF7;
-	Mon, 29 Dec 2025 16:16:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EeFPTEtC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15879C4CEF7;
+	Mon, 29 Dec 2025 16:16:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767024996;
-	bh=3jIeaNmYW2lPCSEwksX14/I7NWLijs0KJANhpZt7DvE=;
+	s=korg; t=1767024999;
+	bh=01F1d/8cRXzKd5Spf0157vdVzwXdqszgjSghZXzWU8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wuZQT9Mjj7EGz95scBlwmLYzonWDmfSEr6cJ1GIPYBwSaTs1HVLRy1Azi0kRU9ifX
-	 Y7iqni6XJqCMwHo/mR1MNeKhwDxzYSnvF/3EsAGXRcb0WIQPzyasI9Un6kyvFDKN5v
-	 czLL6fuJnba+vL/YPfo7yXbFVzcAnPMZ3RGIdCos=
+	b=EeFPTEtC9uw5qWkTc5OWUgvBvfh6PiNeM42NmdauEwMRcVTC4f6hSvEDVr58826Tw
+	 jYD8MmsWWVOtIRuW0Msf2LJM2ZeueIiYyRbHVFScJGDxVKGIM7+MHZ4hT1QG9tLfFy
+	 KaD/cUUJ0WcYdJW9jf6tU9lSkaDmgPLM7HCfXdoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Shay Drori <shayd@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Simon Horman <horms@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 056/430] net/mlx5: make enable_mpesw idempotent
-Date: Mon, 29 Dec 2025 17:07:38 +0100
-Message-ID: <20251229160726.429669155@linuxfoundation.org>
+Subject: [PATCH 6.18 057/430] net/mlx5e: Avoid unregistering PSP twice
+Date: Mon, 29 Dec 2025 17:07:39 +0100
+Message-ID: <20251229160726.466235719@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -54,56 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Moshe Shemesh <moshe@nvidia.com>
+From: Cosmin Ratiu <cratiu@nvidia.com>
 
-[ Upstream commit cd7671ef4cf2edf73cd2a3dca3a2f522a4525bf5 ]
+[ Upstream commit 35e93736f69963337912594eb3951ab320b77521 ]
 
-The enable_mpesw() function returns -EINVAL if ldev->mode is not
-MLX5_LAG_MODE_NONE. This means attempting to enable MPESW mode when it's
-already enabled will fail. In contrast, disable_mpesw() properly checks
-if the mode is MLX5_LAG_MODE_MPESW before proceeding, making it
-naturally idempotent and safe to call multiple times.
+PSP is unregistered twice in:
+_mlx5e_remove -> mlx5e_psp_unregister
+mlx5e_nic_cleanup -> mlx5e_psp_unregister
 
-Fix enable_mpesw() to return success if mpesw is already enabled.
+This leads to a refcount underflow in some conditions:
+------------[ cut here ]------------
+refcount_t: underflow; use-after-free.
+WARNING: CPU: 2 PID: 1694 at lib/refcount.c:28 refcount_warn_saturate+0xd8/0xe0
+[...]
+ mlx5e_psp_unregister+0x26/0x50 [mlx5_core]
+ mlx5e_nic_cleanup+0x26/0x90 [mlx5_core]
+ mlx5e_remove+0xe6/0x1f0 [mlx5_core]
+ auxiliary_bus_remove+0x18/0x30
+ device_release_driver_internal+0x194/0x1f0
+ bus_remove_device+0xc6/0x130
+ device_del+0x159/0x3c0
+ mlx5_rescan_drivers_locked+0xbc/0x2a0 [mlx5_core]
+[...]
 
-Fixes: a32327a3a02c ("net/mlx5: Lag, Control MultiPort E-Switch single FDB mode")
-Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
-Reviewed-by: Shay Drori <shayd@nvidia.com>
+Do not directly remove psp from the _mlx5e_remove path, the PSP cleanup
+happens as part of profile cleanup.
+
+Fixes: 89ee2d92f66c ("net/mlx5e: Support PSP offload functionality")
+Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/1764602008-1334866-2-git-send-email-tariqt@nvidia.com
+Link: https://patch.msgid.link/1764602008-1334866-3-git-send-email-tariqt@nvidia.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
-index aad52d3a90e68..2d86af8f0d9b8 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
-@@ -67,12 +67,19 @@ static int mlx5_mpesw_metadata_set(struct mlx5_lag *ldev)
- 
- static int enable_mpesw(struct mlx5_lag *ldev)
- {
--	int idx = mlx5_lag_get_dev_index_by_seq(ldev, MLX5_LAG_P1);
- 	struct mlx5_core_dev *dev0;
- 	int err;
-+	int idx;
- 	int i;
- 
--	if (idx < 0 || ldev->mode != MLX5_LAG_MODE_NONE)
-+	if (ldev->mode == MLX5_LAG_MODE_MPESW)
-+		return 0;
-+
-+	if (ldev->mode != MLX5_LAG_MODE_NONE)
-+		return -EINVAL;
-+
-+	idx = mlx5_lag_get_dev_index_by_seq(ldev, MLX5_LAG_P1);
-+	if (idx < 0)
- 		return -EINVAL;
- 
- 	dev0 = ldev->pf[idx].dev;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 5e17eae81f4b3..1545f9c008f49 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -6805,7 +6805,6 @@ static void _mlx5e_remove(struct auxiliary_device *adev)
+ 	 * is already unregistered before changing to NIC profile.
+ 	 */
+ 	if (priv->netdev->reg_state == NETREG_REGISTERED) {
+-		mlx5e_psp_unregister(priv);
+ 		unregister_netdev(priv->netdev);
+ 		_mlx5e_suspend(adev, false);
+ 	} else {
 -- 
 2.51.0
 
