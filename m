@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537A7330B2A;
-	Mon, 29 Dec 2025 16:21:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F7A3093C1;
+	Mon, 29 Dec 2025 16:21:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025268; cv=none; b=WDpOUjeJ30RtOYiI+STuY+XNEwo4UfQTK+qnp50WNg0Rjle+RWR/qZkCqo1pNdCrum8RZnlkiVLpWz0HVrbQho+9/ieY0RnOUNVLCXLuNhuVyn6IQ8BOlq5wl07TVO6+/kBnbB2TZT0hLOpLsgx9lpldYYZQtbYNmlx6WpxGGD4=
+	t=1767025271; cv=none; b=o3ziaGWYT46hxaBR61Uqq+STHBlo922CcR5FX/Gng/Xp6IIBQtfJoHSyZUNPVlqyXJufY/7QlDJ125FxjETAt5MsDy3Ai1lCebUcZMh32OW170VRd+MKSeTVG3fPOImFDBVkHxcSSgKmjWjVM1vQrR9wlmTPwjnNGQPeoF+vZKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025268; c=relaxed/simple;
-	bh=r6k3JHPr+OnDPZ4M5C39uWPIGfYpgm7qQRSdM59dMwk=;
+	s=arc-20240116; t=1767025271; c=relaxed/simple;
+	bh=GLq3ueTe19OxxOOywyXe9GSIVSCQ5/MEHnQvWq4YUPI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k0flXgJ/4FYf+xtf8fXY2K13e7HrGDN1izhPA36yEfQPfWCAlt5hhIE76oQnenRSRM5vIDufIBG+9+wwhACzl/WGFzVIOgBHe0Y45s+vFJvn+Boiblq6R5pDAesvvnZecoRO6Cdv4I54yU03oniBVWPv4Wnf/9ki08jTfDQuCFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=csFPyO4n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MEF8rrtH34WPhL7mWAEpT3T0d1gUwtSU0+BvWyzjIZ+NOFzjAehxncsXYtocGVIrUvPu7T48wh12wRKJgI63Ws81FkstKFh1LYlk6ZaN8lSS7AY4gxKUIEEqONB91BbnGVSXewwnl3ti0TCMiPN4WOCcTlniK6y7975IbBAkY18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uir5mZc+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="csFPyO4n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF5D9C4CEF7;
-	Mon, 29 Dec 2025 16:21:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uir5mZc+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D01C4CEF7;
+	Mon, 29 Dec 2025 16:21:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025268;
-	bh=r6k3JHPr+OnDPZ4M5C39uWPIGfYpgm7qQRSdM59dMwk=;
+	s=korg; t=1767025271;
+	bh=GLq3ueTe19OxxOOywyXe9GSIVSCQ5/MEHnQvWq4YUPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=csFPyO4nBc6qeHUIxRjPwZnQ7pn8u5hAq4TeLhziFFOP+8aqlrSE38haG9+2BpAj8
-	 1GuWRX4odzOUy4gWDnbqIKNoDxNcYUwNGRWdiZ/kYwTHYnn9LFuXCc5bRvA4f1vYsE
-	 cmkpQLnUdROiD1T5aJgdh1FAvJMnIQbeXl20csRM=
+	b=Uir5mZc+HpYMhIwH0NbcK8sxVEgHMPFkbgAp1WBlVbmdOlfDBN3B5a8JOOR14FxSc
+	 MX8JlUV3GVDoJbE2catC1/cGOIT7BRpmsXlZ7dy45jkmge/v08LDs7YmW679qXhjUK
+	 5WaI95rxj/WDMWiLP4Ks6KeOUDB+CsjlXXn9MBGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 153/430] xfs: dont leak a locked dquot when xfs_dquot_attach_buf fails
-Date: Mon, 29 Dec 2025 17:09:15 +0100
-Message-ID: <20251229160729.990155693@linuxfoundation.org>
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.18 154/430] can: gs_usb: gs_can_open(): fix error handling
+Date: Mon, 29 Dec 2025 17:09:16 +0100
+Message-ID: <20251229160730.027347523@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -53,47 +49,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-commit 204c8f77e8d4a3006f8abe40331f221a597ce608 upstream.
+commit 3e54d3b4a8437b6783d4145c86962a2aa51022f3 upstream.
 
-xfs_qm_quotacheck_dqadjust acquired the dquot through xfs_qm_dqget,
-which means it owns a reference and holds q_qlock.  Both need to
-be dropped on an error exit.
+Commit 2603be9e8167 ("can: gs_usb: gs_can_open(): improve error handling")
+added missing error handling to the gs_can_open() function.
 
-Cc: <stable@vger.kernel.org> # v6.13
-Fixes: ca378189fdfa ("xfs: convert quotacheck to attach dquot buffers")
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+The driver uses 2 USB anchors to track the allocated URBs: the TX URBs in
+struct gs_can::tx_submitted for each netdev and the RX URBs in struct
+gs_usb::rx_submitted for the USB device. gs_can_open() allocates the RX
+URBs, while TX URBs are allocated during gs_can_start_xmit().
+
+The cleanup in gs_can_open() kills all anchored dev->tx_submitted
+URBs (which is not necessary since the netdev is not yet registered), but
+misses the parent->rx_submitted URBs.
+
+Fix the problem by killing the rx_submitted instead of the tx_submitted.
+
+Fixes: 2603be9e8167 ("can: gs_usb: gs_can_open(): improve error handling")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20251210-gs_usb-fix-error-handling-v1-1-d6a5a03f10bb@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_qm.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/can/usb/gs_usb.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/xfs/xfs_qm.c
-+++ b/fs/xfs/xfs_qm.c
-@@ -1318,7 +1318,7 @@ xfs_qm_quotacheck_dqadjust(
+--- a/drivers/net/can/usb/gs_usb.c
++++ b/drivers/net/can/usb/gs_usb.c
+@@ -1074,7 +1074,7 @@ out_usb_free_urb:
+ 	usb_free_urb(urb);
+ out_usb_kill_anchored_urbs:
+ 	if (!parent->active_channels) {
+-		usb_kill_anchored_urbs(&dev->tx_submitted);
++		usb_kill_anchored_urbs(&parent->rx_submitted);
  
- 	error = xfs_dquot_attach_buf(NULL, dqp);
- 	if (error)
--		return error;
-+		goto out_unlock;
- 
- 	trace_xfs_dqadjust(dqp);
- 
-@@ -1348,8 +1348,9 @@ xfs_qm_quotacheck_dqadjust(
- 	}
- 
- 	dqp->q_flags |= XFS_DQFLAG_DIRTY;
-+out_unlock:
- 	xfs_qm_dqput(dqp);
--	return 0;
-+	return error;
- }
- 
- /*
+ 		if (dev->feature & GS_CAN_FEATURE_HW_TIMESTAMP)
+ 			gs_usb_timestamp_stop(parent);
 
 
