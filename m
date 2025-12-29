@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E399B33066C;
-	Mon, 29 Dec 2025 16:29:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7FD133066C;
+	Mon, 29 Dec 2025 16:29:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025781; cv=none; b=ZpctWXc0E47L8pRSPaJSrPDdBSC6xqyH5aktSjcVDbgK7ZMf7Gv/yRyYMrIxghPifkF9WzyQ/zQeRr5C6qIjyNTuU9MozNfBd0m2My7NB/mMZv4CP8/TuafQYpq+UyZHJHrchLunBXpBA6T5nsNTUx9z23HJ1z4wcr4LTc1WCLU=
+	t=1767025783; cv=none; b=DIxlWFAFfecZCxbOgyV/T45BPkzEma75Gu/wXgFSnOZAuqiJp6q5QQntLhnd4wNiOiFNip5f6t4Rd8Luh0Rsos4xWSl9o+DfjY2iCZ9U//kBCfVBu+c+aBU0Naxh1aCa5aNBAhzqAlQVQ7ON+O0Gd+dhffLSNTBG81mQkS0X3ww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025781; c=relaxed/simple;
-	bh=YHCuyXfDXprSuYgLOmFelWTUFUahzQnk6BbMsLnpTEA=;
+	s=arc-20240116; t=1767025783; c=relaxed/simple;
+	bh=EbjEIQ+xIOLBSBpVsUW/6Gvt3m1//ciVUzyzExee6QI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PbgKG4Buu+VfkvloURVhwoXt0bQ9IWJjE6J8zc+MkHGwm/wLFFMkpxOnZlxhGPFFpFblVZsCKiLVaPEJUhJfhrWaKfi/+fjjd/cTPcnVzYOdKaV+PTNEzFRSB46rjoB/U/k6kb+QOgcmmx45W7a+N8IeSq4KC6YrNfhZHs4ByDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jJGa131k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZlFwlM4zehc0VhJD1DC6eo7DM9771vCytapFdatIEKCPUwckqFoVgZK8+CQMuQQxpoZ6BNE8bQVxZbFG3fJNA7ynyWbESnqJ3x1aDGasdBZEue5cKYkYNyo5RSZ8+RIQqK+MZWiNuSFK6y7mz5i6fOkiW/tcSSwF4HM0o+p7kGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EDclcTcb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jJGa131k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D937C4CEF7;
-	Mon, 29 Dec 2025 16:29:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EDclcTcb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33118C4CEF7;
+	Mon, 29 Dec 2025 16:29:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025780;
-	bh=YHCuyXfDXprSuYgLOmFelWTUFUahzQnk6BbMsLnpTEA=;
+	s=korg; t=1767025783;
+	bh=EbjEIQ+xIOLBSBpVsUW/6Gvt3m1//ciVUzyzExee6QI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jJGa131kxX3ahSA7IDsaORUEPFMgEyDurjuj6hMmlsR/zr5flg2HB1p1xJOVGg/zr
-	 HZlgqJf6PrXRYvpNDRNouOaul+ZwOBVf8w3qlyvEdbqULJ/S6Br0+HW4FtLgtcB1Ef
-	 bRmdcVV/EXARVKJCjL/RjwSHMncwauXf6FWohfdQ=
+	b=EDclcTcbF3h+U4XDxF1nlIpSoVi4ggJe/FD9ChBWMAyszSz5LU/EYOzXFgrwkApZF
+	 nz27WXMMEv5W5DEMBiVujmnUh4Gb1CKM3ldPyPZKTUNqZPIwOtmka6LDptr+HabXel
+	 UQADtlGIRHTi7kVW7weaaIOTbocGEL/8QPB/hWa4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.18 334/430] parisc: Do not reprogram affinitiy on ASP chip
-Date: Mon, 29 Dec 2025 17:12:16 +0100
-Message-ID: <20251229160736.617967301@linuxfoundation.org>
+	Dongsheng Yang <dongsheng.yang@linux.dev>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Zheng Gu <cengku@gmail.com>
+Subject: [PATCH 6.18 335/430] dm-pcache: advance slot index before writing slot
+Date: Mon, 29 Dec 2025 17:12:17 +0100
+Message-ID: <20251229160736.654635845@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -43,42 +45,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Dongsheng Yang <dongsheng.yang@linux.dev>
 
-commit dca7da244349eef4d78527cafc0bf80816b261f5 upstream.
+commit ebbb90344a7da2421e4b54668b94e81828b8b308 upstream.
 
-The ASP chip is a very old variant of the GSP chip and is used e.g. in
-HP 730 workstations. When trying to reprogram the affinity it will crash
-with a HPMC as the relevant registers don't seem to be at the usual
-location.  Let's avoid the crash by checking the sversion. Also note,
-that reprogramming isn't necessary either, as the HP730 is a just a
-single-CPU machine.
+In dm-pcache, in order to ensure crash-consistency, a dual-copy scheme
+is used to alternately update metadata, and there is a slot index that
+records the current slot. However, in the write path the current
+implementation writes directly to the current slot indexed by slot
+index, and then advances the slot — which ends up overwriting the
+existing slot, violating the crash-consistency guarantee.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org
+This patch fixes that behavior, preventing metadata from being
+overwritten incorrectly.
+
+In addition, this patch add a missing pmem_wmb() after memcpy_flushcache().
+
+Signed-off-by: Dongsheng Yang <dongsheng.yang@linux.dev>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Reviewed-by: Zheng Gu <cengku@gmail.com>
+Cc: stable@vger.kernel.org	# 6.18
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/parisc/gsc.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/md/dm-pcache/cache.c         |    8 ++++----
+ drivers/md/dm-pcache/cache_segment.c |    8 ++++----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
---- a/drivers/parisc/gsc.c
-+++ b/drivers/parisc/gsc.c
-@@ -154,7 +154,9 @@ static int gsc_set_affinity_irq(struct i
- 	gsc_dev->eim = ((u32) gsc_dev->gsc_irq.txn_addr) | gsc_dev->gsc_irq.txn_data;
+--- a/drivers/md/dm-pcache/cache.c
++++ b/drivers/md/dm-pcache/cache.c
+@@ -21,10 +21,10 @@ static void cache_info_write(struct pcac
+ 	cache_info->header.crc = pcache_meta_crc(&cache_info->header,
+ 						sizeof(struct pcache_cache_info));
  
- 	/* switch IRQ's for devices below LASI/WAX to other CPU */
--	gsc_writel(gsc_dev->eim, gsc_dev->hpa + OFFSET_IAR);
-+	/* ASP chip (svers 0x70) does not support reprogramming */
-+	if (gsc_dev->gsc->id.sversion != 0x70)
-+		gsc_writel(gsc_dev->eim, gsc_dev->hpa + OFFSET_IAR);
++	cache->info_index = (cache->info_index + 1) % PCACHE_META_INDEX_MAX;
+ 	memcpy_flushcache(get_cache_info_addr(cache), cache_info,
+ 			sizeof(struct pcache_cache_info));
+-
+-	cache->info_index = (cache->info_index + 1) % PCACHE_META_INDEX_MAX;
++	pmem_wmb();
+ }
  
- 	irq_data_update_effective_affinity(d, &tmask);
+ static void cache_info_init_default(struct pcache_cache *cache);
+@@ -93,10 +93,10 @@ void cache_pos_encode(struct pcache_cach
+ 	pos_onmedia.header.seq = seq;
+ 	pos_onmedia.header.crc = cache_pos_onmedia_crc(&pos_onmedia);
  
++	*index = (*index + 1) % PCACHE_META_INDEX_MAX;
++
+ 	memcpy_flushcache(pos_onmedia_addr, &pos_onmedia, sizeof(struct pcache_cache_pos_onmedia));
+ 	pmem_wmb();
+-
+-	*index = (*index + 1) % PCACHE_META_INDEX_MAX;
+ }
+ 
+ int cache_pos_decode(struct pcache_cache *cache,
+--- a/drivers/md/dm-pcache/cache_segment.c
++++ b/drivers/md/dm-pcache/cache_segment.c
+@@ -26,11 +26,11 @@ static void cache_seg_info_write(struct
+ 	seg_info->header.seq++;
+ 	seg_info->header.crc = pcache_meta_crc(&seg_info->header, sizeof(struct pcache_segment_info));
+ 
++	cache_seg->info_index = (cache_seg->info_index + 1) % PCACHE_META_INDEX_MAX;
++
+ 	seg_info_addr = get_seg_info_addr(cache_seg);
+ 	memcpy_flushcache(seg_info_addr, seg_info, sizeof(struct pcache_segment_info));
+ 	pmem_wmb();
+-
+-	cache_seg->info_index = (cache_seg->info_index + 1) % PCACHE_META_INDEX_MAX;
+ 	mutex_unlock(&cache_seg->info_lock);
+ }
+ 
+@@ -129,10 +129,10 @@ static void cache_seg_ctrl_write(struct
+ 	cache_seg_gen.header.crc = pcache_meta_crc(&cache_seg_gen.header,
+ 						 sizeof(struct pcache_cache_seg_gen));
+ 
++	cache_seg->gen_index = (cache_seg->gen_index + 1) % PCACHE_META_INDEX_MAX;
++
+ 	memcpy_flushcache(get_cache_seg_gen_addr(cache_seg), &cache_seg_gen, sizeof(struct pcache_cache_seg_gen));
+ 	pmem_wmb();
+-
+-	cache_seg->gen_index = (cache_seg->gen_index + 1) % PCACHE_META_INDEX_MAX;
+ }
+ 
+ static void cache_seg_ctrl_init(struct pcache_cache_segment *cache_seg)
 
 
