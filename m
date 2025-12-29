@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76A89460;
-	Mon, 29 Dec 2025 16:22:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364F19460;
+	Mon, 29 Dec 2025 16:22:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025338; cv=none; b=ALNleKuwoF0yP9CukzLDhSP1/0GiRMn4DFW/QMpTqEWfJQJ1v14YLa3y51/arUPFphgZlm/hcydkiN6Dbe0uySIdrpMRuPyhBu72w0C3hIaAjbRnGgT2djrVLlUDgynbxzdXLCF8uw8WjivLD1c5cGEOT6IEL3E99Y67+xFnJao=
+	t=1767025341; cv=none; b=tBdNfellE4TzG/w0PefkI0QWeLFL/jy8yoscDL0/JtuaiaXol90H7/IcuAJ+U7ubOUrkrACdnR84avP5SUBefmZ/SwuMOV0hIt9fekqdRPzLaGe6x+9xwGnRrmOZJS9HbUBQd2j6SS2iCRT3GbkO+bkmhzkP932lsYrTUJF6DaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025338; c=relaxed/simple;
-	bh=9GFb3rVuTgh3Jmj9if29SRqaCYlCMzR5Kn0fa8hzDM0=;
+	s=arc-20240116; t=1767025341; c=relaxed/simple;
+	bh=+hq+90oqPmFW43dddgj9EpkZjiqgfnbgvJfEdescztU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nQUwb06PTOKxwf9XQaz4emlzMkz2SKU5DaWopzbN7wyQQ5U65RzL4dlTF4QNbYeSgRgh9ZNi1sm40nxzRVjxMgF3tZI71znTgTNma+TEpY4sMM/y9zk+Vm6xNpG+cknui+1tGm3qVvY0v1M2FoGPkIQxzYBD/mgGRN0iCRGYTPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KsnclN8A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LE5FnEznCDd2C74vVGwOKr74Z/H21yUPW4XA4/dvexJE1AUfXDY3BeRO8OOvywL0pOVsApAPNXDRw0kUCNkBN4NluzgYIVoNEsY5QlCBc9yQyUmB66fjPuBLo/m7FZitZT+HS3NqrDpVaoKN9jOWgrelfyMbdqLU8awVlYBEcUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hV2zwS6d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KsnclN8A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC096C4CEF7;
-	Mon, 29 Dec 2025 16:22:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hV2zwS6d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC6F8C4CEF7;
+	Mon, 29 Dec 2025 16:22:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025338;
-	bh=9GFb3rVuTgh3Jmj9if29SRqaCYlCMzR5Kn0fa8hzDM0=;
+	s=korg; t=1767025341;
+	bh=+hq+90oqPmFW43dddgj9EpkZjiqgfnbgvJfEdescztU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KsnclN8ABSVf0mHi3NhLU2u5OD+7HBzba+5xV9kOqDqfzsBHhPrtldmgvJ9AkJLyT
-	 Vp2XRzF8M9LDojWt3fTmQ6OYSeJ2hU8Tco9VEDCAjJeBodu8R8bSP0w3ZtROd/jnPx
-	 OT1yHjjkkchV25skzxEw7uXEhWBB0tyi2BwRKG2U=
+	b=hV2zwS6d8lxlE8x4prz9gc8qzXsezhlcCu6qssDViTY/i3eyUOpy5uKYY6BowmgUW
+	 BKiiBIzlmwtUmxAkp+DPh6q+w0FSLKqMrvsYMfY41mKlI5TNw1o6m5vx1PcRuAA3+L
+	 +qELiPilU6sLpgsOthsOMptBbrK+7kosUQVSbkv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 179/430] firmware: imx: scu-irq: Init workqueue before request mbox channel
-Date: Mon, 29 Dec 2025 17:09:41 +0100
-Message-ID: <20251229160730.946656399@linuxfoundation.org>
+Subject: [PATCH 6.18 180/430] um: init cpu_tasks[] earlier
+Date: Mon, 29 Dec 2025 17:09:42 +0100
+Message-ID: <20251229160730.982684817@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -52,44 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 81fb53feb66a3aefbf6fcab73bb8d06f5b0c54ad ]
+[ Upstream commit 7b5d4416964c07c902163822a30a622111172b01 ]
 
-With mailbox channel requested, there is possibility that interrupts may
-come in, so need to make sure the workqueue is initialized before
-the queue is scheduled by mailbox rx callback.
+This is currently done in uml_finishsetup(), but e.g. with
+KCOV enabled we'll crash because some init code can call
+into e.g. memparse(), which has coverage annotations, and
+then the checks in check_kcov_mode() crash because current
+is NULL.
 
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Simply initialize the cpu_tasks[] array statically, which
+fixes the crash. For the later SMP work, it seems to have
+not really caused any problems yet, but initialize all of
+the entries anyway.
+
+Link: https://patch.msgid.link/20250924113214.c76cd74d0583.I974f691ebb1a2b47915bd2b04cc38e5263b9447f@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/imx/imx-scu-irq.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/um/kernel/process.c | 4 +++-
+ arch/um/kernel/um_arch.c | 2 --
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/firmware/imx/imx-scu-irq.c b/drivers/firmware/imx/imx-scu-irq.c
-index f2b902e95b73..b9f6128d56f7 100644
---- a/drivers/firmware/imx/imx-scu-irq.c
-+++ b/drivers/firmware/imx/imx-scu-irq.c
-@@ -214,6 +214,8 @@ int imx_scu_enable_general_irq_channel(struct device *dev)
- 	cl->dev = dev;
- 	cl->rx_callback = imx_scu_irq_callback;
+diff --git a/arch/um/kernel/process.c b/arch/um/kernel/process.c
+index 9c9c66dc45f0..13d461712c99 100644
+--- a/arch/um/kernel/process.c
++++ b/arch/um/kernel/process.c
+@@ -43,7 +43,9 @@
+  * cares about its entry, so it's OK if another processor is modifying its
+  * entry.
+  */
+-struct task_struct *cpu_tasks[NR_CPUS];
++struct task_struct *cpu_tasks[NR_CPUS] = {
++	[0 ... NR_CPUS - 1] = &init_task,
++};
+ EXPORT_SYMBOL(cpu_tasks);
  
-+	INIT_WORK(&imx_sc_irq_work, imx_scu_irq_work_handler);
-+
- 	/* SCU general IRQ uses general interrupt channel 3 */
- 	ch = mbox_request_channel_byname(cl, "gip3");
- 	if (IS_ERR(ch)) {
-@@ -223,8 +225,6 @@ int imx_scu_enable_general_irq_channel(struct device *dev)
- 		return ret;
- 	}
+ void free_stack(unsigned long stack, int order)
+diff --git a/arch/um/kernel/um_arch.c b/arch/um/kernel/um_arch.c
+index cfbbbf8500c3..ed2f67848a50 100644
+--- a/arch/um/kernel/um_arch.c
++++ b/arch/um/kernel/um_arch.c
+@@ -239,8 +239,6 @@ static struct notifier_block panic_exit_notifier = {
  
--	INIT_WORK(&imx_sc_irq_work, imx_scu_irq_work_handler);
+ void uml_finishsetup(void)
+ {
+-	cpu_tasks[0] = &init_task;
 -
- 	if (!of_parse_phandle_with_args(dev->of_node, "mboxes",
- 				       "#mbox-cells", 0, &spec)) {
- 		i = of_alias_get_id(spec.np, "mu");
+ 	atomic_notifier_chain_register(&panic_notifier_list,
+ 				       &panic_exit_notifier);
+ 
 -- 
 2.51.0
 
