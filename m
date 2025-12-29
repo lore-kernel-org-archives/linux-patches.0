@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F22D3252917;
-	Mon, 29 Dec 2025 16:24:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE4932F75A;
+	Mon, 29 Dec 2025 16:24:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025481; cv=none; b=ZGiWRJVT3m9caud7nvw1WqLfQuxn8aYM6eDYx4l9y+K/7K7WmE907LPcpfqNRPygKHisV5UpekKzzetAkpeSuBlwr8bmDwrqMRGj2rKFLmzpw71T0/8CkFQVQnQJEl8mx575F76JEP1oiv1HysBRNit9s7f2KE6B8eNLvEkyKWk=
+	t=1767025483; cv=none; b=bzcgGDwXUNXapF6odzN7UWXPeY+QwiOER4hHljuUwbIMtHLzIqC0Hag1duQ7p2vfDVCyiRNZ1/qgZUDoTZCJkimw2fwN5WJUAt3sSAWG+g/KF95nqg0XXEExuakZ4sh/krc+DKMsN9E802mQp6Ev4SrrSoHoaOi1ZXvR6y3s1AM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025481; c=relaxed/simple;
-	bh=VfmN/saAm3t4V70gcs46dk1Du6n5od/m+b49JlR85Uo=;
+	s=arc-20240116; t=1767025483; c=relaxed/simple;
+	bh=VPCgSvQP5vHUT1kQBdJVS5WHcOu5O7ScbO9AZlDnPVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pjPxL10PZpDWw16/g4eGHCxk4ADDblf5HxE9XFPVaNURFiPnr3Gh2GyhOKjSaH2UUZKT7M92nwNkpOTJjaQv0s+xCwsQyl2vq4naPlBKXZORM9ewA+PenO2+KZ0MmMQfUFXP6x5dcoeHvlnTWOG1t1B5PO+yRg3zdztNcsOmtwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x1yP4egS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T3CR3tYG7GZwx8LaUW7gdSltNFh6vaTXMe8z6ON/2OIYRHpsTvWBsDxQWQiku0J128GyXofRSrYBe8HnR+md2O6obf+lGne0fW8af+Z/9ii0b7YBUwAW7pyZZj6/pSshyjYtyiumFiV9ffc+vjP/2gTYroN/Xg2Gg6KN5q2Erws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JHEtvG5i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x1yP4egS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 186A5C4CEF7;
-	Mon, 29 Dec 2025 16:24:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JHEtvG5i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9BC0C4CEF7;
+	Mon, 29 Dec 2025 16:24:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025480;
-	bh=VfmN/saAm3t4V70gcs46dk1Du6n5od/m+b49JlR85Uo=;
+	s=korg; t=1767025483;
+	bh=VPCgSvQP5vHUT1kQBdJVS5WHcOu5O7ScbO9AZlDnPVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x1yP4egS3sgLmJQiZ2cfoil9n3gqXeWTeAJtRwm4qANm8dppljIC1Zlwj27zrhJo1
-	 K8F7xZt0UzlsqRK7csr0NAYLZR+5gLHXdkympCBz/NOacU/M5O4dll0helGd+i3Pae
-	 oxjxBpKQJnVLF0UJkBQWyjb+O41EQCmgOysAnOVo=
+	b=JHEtvG5iRjaSSNa+eJ2WH8xxq93TYYp6edQCowEYzCUR9QYgSDw9m4+yDRG2sTcTx
+	 ogjnI4LMq58K3e9lt2FAJO5mzG8fGPdBoeFr3ypaMhFAUbXFuBzaLR14ojJjr7xmft
+	 m4o1gqvav0/OdNAttjQHZmxPKHYT9eCjXAamLs3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Davis <afd@ti.com>,
-	Johan Hovold <johan@kernel.org>,
-	Stephen Boyd <sboyd@kernel.org>
-Subject: [PATCH 6.18 228/430] clk: keystone: syscon-clk: fix regmap leak on probe failure
-Date: Mon, 29 Dec 2025 17:10:30 +0100
-Message-ID: <20251229160732.745176870@linuxfoundation.org>
+	syzbot+641eec6b7af1f62f2b99@syzkaller.appspotmail.com,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 229/430] io_uring/poll: correctly handle io_poll_add() return value on update
+Date: Mon, 29 Dec 2025 17:10:31 +0100
+Message-ID: <20251229160732.782774359@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -51,40 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 9c75986a298f121ed2c6599b05e51d9a34e77068 upstream.
+commit 84230ad2d2afbf0c44c32967e525c0ad92e26b4e upstream.
 
-The mmio regmap allocated during probe is never freed.
+When the core of io_uring was updated to handle completions
+consistently and with fixed return codes, the POLL_REMOVE opcode
+with updates got slightly broken. If a POLL_ADD is pending and
+then POLL_REMOVE is used to update the events of that request, if that
+update causes the POLL_ADD to now trigger, then that completion is lost
+and a CQE is never posted.
 
-Switch to using the device managed allocator so that the regmap is
-released on probe failures (e.g. probe deferral) and on driver unbind.
+Additionally, ensure that if an update does cause an existing POLL_ADD
+to complete, that the completion value isn't always overwritten with
+-ECANCELED. For that case, whatever io_poll_add() set the value to
+should just be retained.
 
-Fixes: a250cd4c1901 ("clk: keystone: syscon-clk: Do not use syscon helper to build regmap")
-Cc: stable@vger.kernel.org	# 6.15
-Cc: Andrew Davis <afd@ti.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 97b388d70b53 ("io_uring: handle completions in the core")
+Reported-by: syzbot+641eec6b7af1f62f2b99@syzkaller.appspotmail.com
+Tested-by: syzbot+641eec6b7af1f62f2b99@syzkaller.appspotmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/keystone/syscon-clk.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/poll.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/keystone/syscon-clk.c b/drivers/clk/keystone/syscon-clk.c
-index c509929da854..ecf180a7949c 100644
---- a/drivers/clk/keystone/syscon-clk.c
-+++ b/drivers/clk/keystone/syscon-clk.c
-@@ -129,7 +129,7 @@ static int ti_syscon_gate_clk_probe(struct platform_device *pdev)
- 	if (IS_ERR(base))
- 		return PTR_ERR(base);
+--- a/io_uring/poll.c
++++ b/io_uring/poll.c
+@@ -936,12 +936,17 @@ int io_poll_remove(struct io_kiocb *req,
  
--	regmap = regmap_init_mmio(dev, base, &ti_syscon_regmap_cfg);
-+	regmap = devm_regmap_init_mmio(dev, base, &ti_syscon_regmap_cfg);
- 	if (IS_ERR(regmap))
- 		return dev_err_probe(dev, PTR_ERR(regmap),
- 				     "failed to get regmap\n");
--- 
-2.52.0
-
+ 		ret2 = io_poll_add(preq, issue_flags & ~IO_URING_F_UNLOCKED);
+ 		/* successfully updated, don't complete poll request */
+-		if (!ret2 || ret2 == -EIOCBQUEUED)
++		if (ret2 == IOU_ISSUE_SKIP_COMPLETE)
+ 			goto out;
++		/* request completed as part of the update, complete it */
++		else if (ret2 == IOU_COMPLETE)
++			goto complete;
+ 	}
+ 
+-	req_set_fail(preq);
+ 	io_req_set_res(preq, -ECANCELED, 0);
++complete:
++	if (preq->cqe.res < 0)
++		req_set_fail(preq);
+ 	preq->io_task_work.func = io_req_task_complete;
+ 	io_req_task_work_add(preq);
+ out:
 
 
