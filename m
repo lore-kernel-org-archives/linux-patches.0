@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D290F332908;
-	Mon, 29 Dec 2025 16:31:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 912FB332EB8;
+	Mon, 29 Dec 2025 16:31:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025865; cv=none; b=j61FFZ2WZljStC85UlDyOjQ9sD3RtGy0rV1YbQujhCllhSrqF6vZu6jzdktNTIgfwXkmd4OdPvyLFfI15pt7xrSi0XcPYHYQ9lBnK2DA9BWKDWn2EK552bjHGn7em6bkYutXigE12ZimPXUdLIbFaPiMZsmHrlABwgFYJeRzlJc=
+	t=1767025868; cv=none; b=nOft9eBe4JY7aB9jEe1geLOn6VKugkuzX6rjpl/naRM8fHBTBRtw1FDPw5O58PWUoN5U54QMBg603ANPs8nwA7firTZESPdkG0WNqH0JaXNADBcX0ZaA6rZT9f1rYg0UoKjz0lu4huydNfxj4CZ84mc07wsIQjPeBSaThfzgwaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025865; c=relaxed/simple;
-	bh=NYOB8Li9P9XYW9c4F53VIoGQpqlaOtJQKhOIiOrO5DY=;
+	s=arc-20240116; t=1767025868; c=relaxed/simple;
+	bh=ub9yr0DkGj/P0LB+Fl5sjUJ0tzI+mnFYyLyeYlxiYdc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hHgahrRLdO+8swQ6vNBJuMZRgR/MyOIHynW4WtPTARINJ3C9wdmRORbu+cidIah9V9q+FiR7nVbrOL9Z6GmANX/y/7NMWejIAsesDUDUT31pFYvDRYsP16JViCHOipvYdok5a4fkN9qDLMpvG6Oh84ILCB/XkjE1QZQoshywjHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e/VXLT8t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B4OH0f6RdX3c58aS5YCNe4DObdNu4YAzHaOh7ma+Nm74MvIKZota9EyB8jpnXg5RzQ/i6RxqVV5k7pExJ+OcA2VK+BVN1/qlmwjqAQ43PdgxE0nmswrhgFpqnSSRmjJT7aRmJbGY6x5HoBPHx8Sk7wy6kxgQkYbN7J+sx+8U9ZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SvqzF7mY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e/VXLT8t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52B9FC4CEF7;
-	Mon, 29 Dec 2025 16:31:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SvqzF7mY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC17C4CEF7;
+	Mon, 29 Dec 2025 16:31:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025865;
-	bh=NYOB8Li9P9XYW9c4F53VIoGQpqlaOtJQKhOIiOrO5DY=;
+	s=korg; t=1767025868;
+	bh=ub9yr0DkGj/P0LB+Fl5sjUJ0tzI+mnFYyLyeYlxiYdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e/VXLT8takb8jQqTa4DB4kAQ+TiVoNmFyFZtTDwlL2WkdSGStqwUXd78++ZBrMKIu
-	 L2DPFPT5hP77W347vvpY3taflryfdXAHNt0gr1zGTg6Ti26eueJB1ncWjPjJCwlPLQ
-	 s71LIyk3c6YYLJLUJ7nVRSkuviG51meVFN5TR5Fc=
+	b=SvqzF7mYj/xBgYz146JA5EXGSZUBjXykC5FbX9d7GZXqXAdtMBJOdPYRmazEJDiAR
+	 VkZO2nKIq1ggeWu5RN+b9gp7SW7XppPQT1uUl6TE8/6FEnKBTP1fsmWKpKTYvDe+HF
+	 xNwmy6NkQAhxCmPiao2YfSge/7MTdmmL4tjwxG8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Dimitri Fedrau <dima.fedrau@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 364/430] net: phy: marvell-88q2xxx: Fix clamped value in mv88q2xxx_hwmon_write
-Date: Mon, 29 Dec 2025 17:12:46 +0100
-Message-ID: <20251229160737.724164850@linuxfoundation.org>
+	Sudheendra Raghav Neela <sneela@tugraz.at>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 6.18 365/430] fsnotify: do not generate ACCESS/MODIFY events on child for special files
+Date: Mon, 29 Dec 2025 17:12:47 +0100
+Message-ID: <20251229160737.760006986@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -52,36 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Amir Goldstein <amir73il@gmail.com>
 
-commit c4cdf7376271bce5714c06d79ec67759b18910eb upstream.
+commit 635bc4def026a24e071436f4f356ea08c0eed6ff upstream.
 
-The local variable 'val' was never clamped to -75000 or 180000 because
-the return value of clamp_val() was not used. Fix this by assigning the
-clamped value back to 'val', and use clamp() instead of clamp_val().
+inotify/fanotify do not allow users with no read access to a file to
+subscribe to events (e.g. IN_ACCESS/IN_MODIFY), but they do allow the
+same user to subscribe for watching events on children when the user
+has access to the parent directory (e.g. /dev).
 
-Cc: stable@vger.kernel.org
-Fixes: a557a92e6881 ("net: phy: marvell-88q2xxx: add support for temperature sensor")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Reviewed-by: Dimitri Fedrau <dima.fedrau@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20251202172743.453055-3-thorsten.blum@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Users with no read access to a file but with read access to its parent
+directory can still stat the file and see if it was accessed/modified
+via atime/mtime change.
+
+The same is not true for special files (e.g. /dev/null). Users will not
+generally observe atime/mtime changes when other users read/write to
+special files, only when someone sets atime/mtime via utimensat().
+
+Align fsnotify events with this stat behavior and do not generate
+ACCESS/MODIFY events to parent watchers on read/write of special files.
+The events are still generated to parent watchers on utimensat(). This
+closes some side-channels that could be possibly used for information
+exfiltration [1].
+
+[1] https://snee.la/pdf/pubs/file-notification-attacks.pdf
+
+Reported-by: Sudheendra Raghav Neela <sneela@tugraz.at>
+CC: stable@vger.kernel.org
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/marvell-88q2xxx.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/notify/fsnotify.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/net/phy/marvell-88q2xxx.c
-+++ b/drivers/net/phy/marvell-88q2xxx.c
-@@ -698,7 +698,7 @@ static int mv88q2xxx_hwmon_write(struct
- 
- 	switch (attr) {
- 	case hwmon_temp_max:
--		clamp_val(val, -75000, 180000);
-+		val = clamp(val, -75000, 180000);
- 		val = (val / 1000) + 75;
- 		val = FIELD_PREP(MDIO_MMD_PCS_MV_TEMP_SENSOR3_INT_THRESH_MASK,
- 				 val);
+--- a/fs/notify/fsnotify.c
++++ b/fs/notify/fsnotify.c
+@@ -270,8 +270,15 @@ int __fsnotify_parent(struct dentry *den
+ 	/*
+ 	 * Include parent/name in notification either if some notification
+ 	 * groups require parent info or the parent is interested in this event.
++	 * The parent interest in ACCESS/MODIFY events does not apply to special
++	 * files, where read/write are not on the filesystem of the parent and
++	 * events can provide an undesirable side-channel for information
++	 * exfiltration.
+ 	 */
+-	parent_interested = mask & p_mask & ALL_FSNOTIFY_EVENTS;
++	parent_interested = mask & p_mask & ALL_FSNOTIFY_EVENTS &&
++			    !(data_type == FSNOTIFY_EVENT_PATH &&
++			      d_is_special(dentry) &&
++			      (mask & (FS_ACCESS | FS_MODIFY)));
+ 	if (parent_needed || parent_interested) {
+ 		/* When notifying parent, child should be passed as data */
+ 		WARN_ON_ONCE(inode != fsnotify_data_inode(data, data_type));
 
 
