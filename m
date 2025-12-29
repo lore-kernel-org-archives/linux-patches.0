@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B572E331201;
-	Mon, 29 Dec 2025 16:21:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8966A33123C;
+	Mon, 29 Dec 2025 16:21:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025276; cv=none; b=hoNjl1QpOk7trSRpBVl/nOvzOmzPOMrdSKZIip5C8yb2p3qOwlWfyON1QLdiqLMEXv5adpUeaq4nyUYjQ91c7XwHjks73wKWfK8p8N9tozrQXN3YQ7NTWwYmhqn1Z0iX62XmDvRWKnQLLcezZpfFUetlLt8gW0caNyCISee2ax0=
+	t=1767025279; cv=none; b=Xn2TrjGQh7JH8qQawpIlNz0aG6dxYzJjtvqrDySjUZb9A9x4L5XqUBeGQdRjAN3DIt3vXA8VHywJLYeBJkhpvjAUCTIkTti1q4qYCL+M/oWlXG8SuCX1okdl4IIydyJ/jYSdKG9KDul59EO/dOnjQP7VmrfFeffOsNFydSn/ldg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025276; c=relaxed/simple;
-	bh=heRrRkGKEIylh7QAU1/eB3McfOJUIj8oyrzffCqQwGA=;
+	s=arc-20240116; t=1767025279; c=relaxed/simple;
+	bh=tN1AuMsXgfzznepoG2pFsWw93YPYT8RqjRjzB/dt6tk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HWqOm1mDEyORSZn7Tl4VUB9yd2rIHDfQ0hh5hJ8F+cmc/Oy+Af1nFVsBLovudqDtyPXGy7YPMOQ5DdQuVq8hLvfTXY/YuNyrZBvmEHt4dSroDSuXSwukjFYYMNyITH4WujMFSaUHIo7K1nW/zqzWCB/7MUkKxl+4mJhRX2slYbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IfAUud1U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hSzWAZisXsUSrFDfUl6iKikGUjZCeFA6C5Wk7KLPjIYwmpTf8bHfwkSVHin4rMffGpgfN8HYrr9ulus0Vc+nVwOR1utZVyOkvvQrAvibq4D3qJV7u9Oii7qmdGUhqUfrLFomXRagEAtMTpRikDe3MKuX+0z4bA6Sy0m+XlWr52Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QwXR2KKq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IfAUud1U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4224DC4CEF7;
-	Mon, 29 Dec 2025 16:21:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QwXR2KKq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13C26C4CEF7;
+	Mon, 29 Dec 2025 16:21:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025276;
-	bh=heRrRkGKEIylh7QAU1/eB3McfOJUIj8oyrzffCqQwGA=;
+	s=korg; t=1767025279;
+	bh=tN1AuMsXgfzznepoG2pFsWw93YPYT8RqjRjzB/dt6tk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IfAUud1UBl7U0yfd/N+kKOtimsMJZfldBo4+6fWVuvD+r+UkC+s0KAEXrMtQee8H5
-	 bKUE6LMBmFkP5/ebXi+7oddD7l+dSNsdyooc/pdbxtwpRSx9ZC25PGjdDaoADnmXww
-	 r9ewVhVn662+jvWM9af06sNWbKChJI4dcajLTEOc=
+	b=QwXR2KKq7vyijMpGb2VGqYAVHLq5/Y6BiWuGgG0grJtEnTRzXXG3B++RxkDlyR/Le
+	 J3rtknYJMaIx4cqX1diwPM7BJeWk3jCLROM0+X5oNKWR4wq0WSFp1H2H9wPUjQGuEV
+	 mRoR4WzFG5TvFTBxpphs26gy1/ODAXBu8KeUfChk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongxin Liu <yongxin.liu@windriver.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.18 156/430] platform/x86: intel_pmc_ipc: fix ACPI buffer memory leak
-Date: Mon, 29 Dec 2025 17:09:18 +0100
-Message-ID: <20251229160730.100438342@linuxfoundation.org>
+	Pengjie Zhang <zhangpengjie2@huawei.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	lihuisong@huawei.com,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.18 157/430] ACPI: PCC: Fix race condition by removing static qualifier
+Date: Mon, 29 Dec 2025 17:09:19 +0100
+Message-ID: <20251229160730.137487913@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -44,86 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yongxin Liu <yongxin.liu@windriver.com>
+From: Pengjie Zhang <zhangpengjie2@huawei.com>
 
-commit 611cf41ef6ac8301d23daadd8e78b013db0c5071 upstream.
+commit f103fa127c93016bcd89b05d8e11dc1a84f6990d upstream.
 
-The intel_pmc_ipc() function uses ACPI_ALLOCATE_BUFFER to allocate memory
-for the ACPI evaluation result but never frees it, causing a 192-byte
-memory leak on each call.
+Local variable 'ret' in acpi_pcc_address_space_setup() is currently
+declared as 'static'. This can lead to race conditions in a
+multithreaded environment.
 
-This leak is triggered during network interface initialization when the
-stmmac driver calls intel_mac_finish() -> intel_pmc_ipc().
+Remove the 'static' qualifier to ensure that 'ret' will be allocated
+directly on the stack as a local variable.
 
-  unreferenced object 0xffff96a848d6ea80 (size 192):
-    comm "dhcpcd", pid 541, jiffies 4294684345
-    hex dump (first 32 bytes):
-      04 00 00 00 05 00 00 00 98 ea d6 48 a8 96 ff ff  ...........H....
-      00 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00  ................
-    backtrace (crc b1564374):
-      kmemleak_alloc+0x2d/0x40
-      __kmalloc_noprof+0x2fa/0x730
-      acpi_ut_initialize_buffer+0x83/0xc0
-      acpi_evaluate_object+0x29a/0x2f0
-      intel_pmc_ipc+0xfd/0x170
-      intel_mac_finish+0x168/0x230
-      stmmac_mac_finish+0x3d/0x50
-      phylink_major_config+0x22b/0x5b0
-      phylink_mac_initial_config.constprop.0+0xf1/0x1b0
-      phylink_start+0x8e/0x210
-      __stmmac_open+0x12c/0x2b0
-      stmmac_open+0x23c/0x380
-      __dev_open+0x11d/0x2c0
-      __dev_change_flags+0x1d2/0x250
-      netif_change_flags+0x2b/0x70
-      dev_change_flags+0x40/0xb0
-
-Add __free(kfree) for ACPI object to properly release the allocated buffer.
-
-Cc: stable@vger.kernel.org
-Fixes: 7e2f7e25f6ff ("arch: x86: add IPC mailbox accessor function and add SoC register access")
-Signed-off-by: Yongxin Liu <yongxin.liu@windriver.com>
-Link: https://patch.msgid.link/20251128102437.3412891-2-yongxin.liu@windriver.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: a10b1c99e2dc ("ACPI: PCC: Setup PCC Opregion handler only if platform interrupt is available")
+Signed-off-by: Pengjie Zhang <zhangpengjie2@huawei.com>
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Acked-by: lihuisong@huawei.com
+Cc: 6.2+ <stable@vger.kernel.org> # 6.2+
+[ rjw: Changelog edits ]
+Link: https://patch.msgid.link/20251210132634.2050033-1-zhangpengjie2@huawei.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/platform_data/x86/intel_pmc_ipc.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/acpi/acpi_pcc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/platform_data/x86/intel_pmc_ipc.h
-+++ b/include/linux/platform_data/x86/intel_pmc_ipc.h
-@@ -9,6 +9,7 @@
- #ifndef INTEL_PMC_IPC_H
- #define INTEL_PMC_IPC_H
- #include <linux/acpi.h>
-+#include <linux/cleanup.h>
+--- a/drivers/acpi/acpi_pcc.c
++++ b/drivers/acpi/acpi_pcc.c
+@@ -52,7 +52,7 @@ acpi_pcc_address_space_setup(acpi_handle
+ 	struct pcc_data *data;
+ 	struct acpi_pcc_info *ctx = handler_context;
+ 	struct pcc_mbox_chan *pcc_chan;
+-	static acpi_status ret;
++	acpi_status ret;
  
- #define IPC_SOC_REGISTER_ACCESS			0xAA
- #define IPC_SOC_SUB_CMD_READ			0x00
-@@ -48,7 +49,6 @@ static inline int intel_pmc_ipc(struct p
- 		{.type = ACPI_TYPE_INTEGER,},
- 	};
- 	struct acpi_object_list arg_list = { PMC_IPCS_PARAM_COUNT, params };
--	union acpi_object *obj;
- 	int status;
- 
- 	if (!ipc_cmd || !rbuf)
-@@ -72,7 +72,7 @@ static inline int intel_pmc_ipc(struct p
- 	if (ACPI_FAILURE(status))
- 		return -ENODEV;
- 
--	obj = buffer.pointer;
-+	union acpi_object *obj __free(kfree) = buffer.pointer;
- 
- 	if (obj && obj->type == ACPI_TYPE_PACKAGE &&
- 	    obj->package.count == VALID_IPC_RESPONSE) {
+ 	data = kzalloc(sizeof(*data), GFP_KERNEL);
+ 	if (!data)
 
 
