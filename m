@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF79F3321C6;
-	Mon, 29 Dec 2025 16:30:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F88433121C;
+	Mon, 29 Dec 2025 16:30:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025842; cv=none; b=Uo64Fv41umFL8zhn5b9Fv5ve6/VMYNRthpppCOPQDpfS1usWvWSgIMM7bMSs4RebjhMZaOsIAIrJnHhlf9sI5bmFDMQImYUXVQBn91HOHVVfw1yDHg1d2OG7Wxq16YMoz5GmrKepOnnlGfwIbFwjpwFWxncmLbiZ9zpQO+V7aPA=
+	t=1767025845; cv=none; b=XWQIOmircaf2BhJELl6ariBA+Vkjah6sZbYPdQpFL6+6jhWLzHQ34md+sS0odYsBWqkrOqSvwZSmtAKUS6eWTkfrd1bx7jenxaE7tD5veP460LeH8+f7c4JbkX3kS+75/hkSBdq/6blsxfZk05oS67OxDa88OgiYKLBmPFT8XWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025842; c=relaxed/simple;
-	bh=KxfMAuiN4JMAKJAygFsC0A++LjmRjr/FXk7hsaffASY=;
+	s=arc-20240116; t=1767025845; c=relaxed/simple;
+	bh=4UBK82DwVJxMq74w+qcKKoB8oXMK+/aARC+agTCkSmY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CulBkyldnKy5OjRt9A296hHk+xnu3r+VRsTfy5OfNMvtdJjY7FADWGP3pAP4uhKdVBCL3U3uAjmSrcXpIJ8mtfm67rsUSjYe46i9chkSQlyS+CUu0x+8TtgIUZgyDJusqQUP8Q7WuX3+H9gx3v0XE8VpHlO36jjH56uXah0q/ww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XHO4KTkB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kexJGVu8sTMV/taiprH5WzliI01mA3XbmTFHQRFh+EwFcAcz7gdqh3sP6pRJdNpQpcMxo+uoMhnXP31nVgS8rFU42z79uow7Jwoe+Lf42C7AwOxMBtmGJGqyySoNJ541Nyib8OLQezWbSejUa6xVJerJaJLGYKu/g4hwcT5+rDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKjJUCv/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XHO4KTkB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51A2BC4CEF7;
-	Mon, 29 Dec 2025 16:30:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKjJUCv/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28A37C116C6;
+	Mon, 29 Dec 2025 16:30:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025842;
-	bh=KxfMAuiN4JMAKJAygFsC0A++LjmRjr/FXk7hsaffASY=;
+	s=korg; t=1767025845;
+	bh=4UBK82DwVJxMq74w+qcKKoB8oXMK+/aARC+agTCkSmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XHO4KTkBMtmLsDMN4IjXMkEdoTQGWpoHKvokkjF2lre0b8XBHoCviKQlFQ8eHmSy8
-	 m/GbpAon4E/n+TOZ0GHyDt+2Rpu2u4/s7H9LNwecoVB1IZGKoEewfeTuFBJjvGpb9m
-	 7obndXzGv6laFd0u9OPZaQ/HCXqGPWv3E7IwgazE=
+	b=iKjJUCv/t4OHCvH0VMG3c3Lh3axBjGeHokkuN8kA/j8IhFmJ9P909KfySMt3aLNaZ
+	 jIP0+1ExmfWAIoDKEURqXriIhDstf34aXg0aSr7qI09PYuY39FRHRvrFQN4y0j4JxX
+	 h8pRBoduBZJGITeH0rtizaL64aVNeeLn+LLWBOQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 357/430] xfs: fix a UAF problem in xattr repair
-Date: Mon, 29 Dec 2025 17:12:39 +0100
-Message-ID: <20251229160737.466281974@linuxfoundation.org>
+Subject: [PATCH 6.18 358/430] xfs: validate that zoned RT devices are zone aligned
+Date: Mon, 29 Dec 2025 17:12:40 +0100
+Message-ID: <20251229160737.502760219@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -51,42 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Christoph Hellwig <hch@lst.de>
 
-commit 5990fd756943836978ad184aac980e2b36ab7e01 upstream.
+commit 982d2616a2906113e433fdc0cfcc122f8d1bb60a upstream.
 
-The xchk_setup_xattr_buf function can allocate a new value buffer, which
-means that any reference to ab->value before the call could become a
-dangling pointer.  Fix this by moving an assignment to after the buffer
-setup.
+Garbage collection assumes all zones contain the full amount of blocks.
+Mkfs already ensures this happens, but make the kernel check it as well
+to avoid getting into trouble due to fuzzers or mkfs bugs.
 
-Cc: stable@vger.kernel.org # v6.10
-Fixes: e47dcf113ae348 ("xfs: repair extended attributes")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Fixes: 2167eaabe2fa ("xfs: define the zoned on-disk format")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Cc: stable@vger.kernel.org # v6.15
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/attr_repair.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/xfs/libxfs/xfs_sb.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/fs/xfs/scrub/attr_repair.c
-+++ b/fs/xfs/scrub/attr_repair.c
-@@ -333,7 +333,6 @@ xrep_xattr_salvage_remote_attr(
- 		.attr_filter		= ent->flags & XFS_ATTR_NSP_ONDISK_MASK,
- 		.namelen		= rentry->namelen,
- 		.name			= rentry->name,
--		.value			= ab->value,
- 		.valuelen		= be32_to_cpu(rentry->valuelen),
- 	};
- 	unsigned int			namesize;
-@@ -363,6 +362,7 @@ xrep_xattr_salvage_remote_attr(
- 		error = -EDEADLOCK;
- 	if (error)
- 		return error;
-+	args.value = ab->value;
+diff --git a/fs/xfs/libxfs/xfs_sb.c b/fs/xfs/libxfs/xfs_sb.c
+index cdd16dd805d7..94c272a2ae26 100644
+--- a/fs/xfs/libxfs/xfs_sb.c
++++ b/fs/xfs/libxfs/xfs_sb.c
+@@ -301,6 +301,21 @@ xfs_validate_rt_geometry(
+ 	    sbp->sb_rbmblocks != xfs_expected_rbmblocks(sbp))
+ 		return false;
  
- 	/* Look up the remote value and stash it for reconstruction. */
- 	error = xfs_attr3_leaf_getvalue(leaf_bp, &args);
++	if (xfs_sb_is_v5(sbp) &&
++	    (sbp->sb_features_incompat & XFS_SB_FEAT_INCOMPAT_ZONED)) {
++		uint32_t		mod;
++
++		/*
++		 * Zoned RT devices must be aligned to the RT group size,
++		 * because garbage collection assumes that all zones have the
++		 * same size to avoid insane complexity if that weren't the
++		 * case.
++		 */
++		div_u64_rem(sbp->sb_rextents, sbp->sb_rgextents, &mod);
++		if (mod)
++			return false;
++	}
++
+ 	return true;
+ }
+ 
+-- 
+2.52.0
+
 
 
