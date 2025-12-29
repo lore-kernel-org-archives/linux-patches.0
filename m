@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5886326FD9B;
-	Mon, 29 Dec 2025 16:19:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BCAB26FD9B;
+	Mon, 29 Dec 2025 16:19:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025152; cv=none; b=YCHot7c2pQcq4ZBxCy+anUVp4Z9veY9haTXFIihuRrj1glGLgQTGCJ+B44hS32tIo5vyLNmuUZb8d0SJ2VdsuqRUSENlu2CuckRj2s3X9iTIsfN4UaPX+qbYmDUqPA7oOzlBHCfCPUvd+vNXhF1X5SoHg0Dvf4tXfSiWHg4fUBk=
+	t=1767025155; cv=none; b=AbPVEpqOnICMLGFQaO87buofiYox86vN9PPIX49gAmDVyFepmXn5SiMX+6IDttpRUzeAlkW/bk4nTcPU56kfJlEkM9kWeglVW/D87ENlHDf0P/VkqJu5tZwoQMSkByN6qM/dn+jBBJHOLRgFW05KtSU3J5j9JX4u7X5dApW7c5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025152; c=relaxed/simple;
-	bh=vC1xv0vqB37V49oiWryjiDYvrAsL5EZAb4SlKmpfp8I=;
+	s=arc-20240116; t=1767025155; c=relaxed/simple;
+	bh=glrNPGt1xWwsgnzLai9RZBnLTSGId962mPvriugj7oY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B6Jx1fUoQYsEARZhby/5ZgXji93W9TRz4MgLWqbCSpelVEn6QtWntVvK6yRoLq4Dnwh/K9YSnR6JFqaXCH0SK1Ip60VDHapHrcfbGZkT0SrQv6ObcpvAV5geJvzBaZ1fcUtz/MAuhm5uEqAnB5Vnf3YRPiuxknoNSlCdtU+K3vA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XEAVUsQM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NM4OFKCk7eEeWty3vfqykxNYl+yVz86pKdL228ETbMUolYHZJrvd5cNNFk8nAMg38D0ENg65AQAbffpVlAwcHf46mR4bMdBATCHh+uYY0kOldWjhiENMY7RBkhCJ66yeSgLQv4ARYYZJUlaA4vThTLwMkFTVXiaNCgI7sBWTNN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j8UZlkQS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XEAVUsQM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B89C4CEF7;
-	Mon, 29 Dec 2025 16:19:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j8UZlkQS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7EF3C4CEF7;
+	Mon, 29 Dec 2025 16:19:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025152;
-	bh=vC1xv0vqB37V49oiWryjiDYvrAsL5EZAb4SlKmpfp8I=;
+	s=korg; t=1767025155;
+	bh=glrNPGt1xWwsgnzLai9RZBnLTSGId962mPvriugj7oY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XEAVUsQMrtSJsBcPFuIm1HR6U11Tw0ohT9c6DNo371aIIs3LiRSdPVxVN1fNQrLic
-	 5NSPyosWtwUt4ny1FzAKUsNKRkaHwyz53s3J0906O0yrDP+MUljYw0YWLyCDhL8rde
-	 hRLpqwudI3GN1hebLvBHLw/sOj5ZPQoiz0qEGhTs=
+	b=j8UZlkQSNRiwefbkV6cMdbwEWg82GObjdYv0N8cf9ZlcONRZ+g53HyIo8tYQK9VIs
+	 3MWViZI0xnG3FslHN32zrOC0tTGatD0Abwetn7GvLTQQSlt6HiU/asd60xqwx8Qs7K
+	 1fRKFJJKarnx5d/SFiGq7ZXv/C3enj5cG72ZpnAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Breno Leitao <leitao@debian.org>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Yu Kuai <yukuai@fnnas.com>,
+	Guangwu Zhang <guazhang@redhat.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 095/430] net/mlx5: fw_tracer, Handle escaped percent properly
-Date: Mon, 29 Dec 2025 17:08:17 +0100
-Message-ID: <20251229160727.858182063@linuxfoundation.org>
+Subject: [PATCH 6.18 113/430] block: fix race between wbt_enable_default and IO submission
+Date: Mon, 29 Dec 2025 17:08:35 +0100
+Message-ID: <20251229160728.526082332@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -54,82 +54,201 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shay Drory <shayd@nvidia.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit c0289f67f7d6a0dfba0e92cfe661a5c70c8c6e92 ]
+[ Upstream commit 9869d3a6fed381f3b98404e26e1afc75d680cbf9 ]
 
-The firmware tracer's format string validation and parameter counting
-did not properly handle escaped percent signs (%%). This caused
-fw_tracer to count more parameters when trace format strings contained
-literal percent characters.
+When wbt_enable_default() is moved out of queue freezing in elevator_change(),
+it can cause the wbt inflight counter to become negative (-1), leading to hung
+tasks in the writeback path. Tasks get stuck in wbt_wait() because the counter
+is in an inconsistent state.
 
-To fix it, allow %% to pass string validation and skip %% sequences when
-counting parameters since they represent literal percent signs rather
-than format specifiers.
+The issue occurs because wbt_enable_default() could race with IO submission,
+allowing the counter to be decremented before proper initialization. This manifests
+as:
 
-Fixes: 70dd6fdb8987 ("net/mlx5: FW tracer, parse traces and kernel tracing support")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reported-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Closes: https://lore.kernel.org/netdev/hanz6rzrb2bqbplryjrakvkbmv4y5jlmtthnvi3thg5slqvelp@t3s3erottr6s/
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/1765284977-1363052-5-git-send-email-tariqt@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+  rq_wait[0]:
+    inflight:             -1
+    has_waiters:        True
+
+rwb_enabled() checks the state, which can be updated exactly between wbt_wait()
+(rq_qos_throttle()) and wbt_track()(rq_qos_track()), then the inflight counter
+will become negative.
+
+And results in hung task warnings like:
+  task:kworker/u24:39 state:D stack:0 pid:14767
+  Call Trace:
+    rq_qos_wait+0xb4/0x150
+    wbt_wait+0xa9/0x100
+    __rq_qos_throttle+0x24/0x40
+    blk_mq_submit_bio+0x672/0x7b0
+    ...
+
+Fix this by:
+
+1. Splitting wbt_enable_default() into:
+   - __wbt_enable_default(): Returns true if wbt_init() should be called
+   - wbt_enable_default(): Wrapper for existing callers (no init)
+   - wbt_init_enable_default(): New function that checks and inits WBT
+
+2. Using wbt_init_enable_default() in blk_register_queue() to ensure
+   proper initialization during queue registration
+
+3. Move wbt_init() out of wbt_enable_default() which is only for enabling
+   disabled wbt from bfq and iocost, and wbt_init() isn't needed. Then the
+   original lock warning can be avoided.
+
+4. Removing the ELEVATOR_FLAG_ENABLE_WBT_ON_EXIT flag and its handling
+   code since it's no longer needed
+
+This ensures WBT is properly initialized before any IO can be submitted,
+preventing the counter from going negative.
+
+Cc: Nilay Shroff <nilay@linux.ibm.com>
+Cc: Yu Kuai <yukuai@fnnas.com>
+Cc: Guangwu Zhang <guazhang@redhat.com>
+Fixes: 78c271344b6f ("block: move wbt_enable_default() out of queue freezing from sched ->exit()")
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/diag/fw_tracer.c       | 20 +++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ block/bfq-iosched.c |  2 +-
+ block/blk-sysfs.c   |  2 +-
+ block/blk-wbt.c     | 20 ++++++++++++++++----
+ block/blk-wbt.h     |  5 +++++
+ block/elevator.c    |  4 ----
+ block/elevator.h    |  1 -
+ 6 files changed, 23 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-index 9c86c8c72d049..0b82a6a133d6c 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-@@ -368,11 +368,11 @@ static bool mlx5_is_valid_spec(const char *str)
- 	while (isdigit(*str) || *str == '#' || *str == '.' || *str == 'l')
- 		str++;
+diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
+index 4a8d3d96bfe4..6e54b1d3d8bc 100644
+--- a/block/bfq-iosched.c
++++ b/block/bfq-iosched.c
+@@ -7181,7 +7181,7 @@ static void bfq_exit_queue(struct elevator_queue *e)
  
--	/* Check if it's a valid integer/hex specifier:
-+	/* Check if it's a valid integer/hex specifier or %%:
- 	 * Valid formats: %x, %d, %i, %u, etc.
- 	 */
- 	if (*str != 'x' && *str != 'X' && *str != 'd' && *str != 'i' &&
--	    *str != 'u' && *str != 'c')
-+	    *str != 'u' && *str != 'c' && *str != '%')
- 		return false;
+ 	blk_stat_disable_accounting(bfqd->queue);
+ 	blk_queue_flag_clear(QUEUE_FLAG_DISABLE_WBT_DEF, bfqd->queue);
+-	set_bit(ELEVATOR_FLAG_ENABLE_WBT_ON_EXIT, &e->flags);
++	wbt_enable_default(bfqd->queue->disk);
  
- 	return true;
-@@ -390,7 +390,11 @@ static bool mlx5_tracer_validate_params(const char *str)
- 		if (!mlx5_is_valid_spec(substr + 1))
- 			return false;
+ 	kfree(bfqd);
+ }
+diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
+index 76c47fe9b8d6..c0e4daaf9610 100644
+--- a/block/blk-sysfs.c
++++ b/block/blk-sysfs.c
+@@ -942,7 +942,7 @@ int blk_register_queue(struct gendisk *disk)
+ 		elevator_set_default(q);
  
--		substr = strstr(substr + 1, PARAM_CHAR);
-+		if (*(substr + 1) == '%')
-+			substr = strstr(substr + 2, PARAM_CHAR);
-+		else
-+			substr = strstr(substr + 1, PARAM_CHAR);
+ 	blk_queue_flag_set(QUEUE_FLAG_REGISTERED, q);
+-	wbt_enable_default(disk);
++	wbt_init_enable_default(disk);
+ 
+ 	/* Now everything is ready and send out KOBJ_ADD uevent */
+ 	kobject_uevent(&disk->queue_kobj, KOBJ_ADD);
+diff --git a/block/blk-wbt.c b/block/blk-wbt.c
+index eb8037bae0bd..0974875f77bd 100644
+--- a/block/blk-wbt.c
++++ b/block/blk-wbt.c
+@@ -699,7 +699,7 @@ static void wbt_requeue(struct rq_qos *rqos, struct request *rq)
+ /*
+  * Enable wbt if defaults are configured that way
+  */
+-void wbt_enable_default(struct gendisk *disk)
++static bool __wbt_enable_default(struct gendisk *disk)
+ {
+ 	struct request_queue *q = disk->queue;
+ 	struct rq_qos *rqos;
+@@ -716,19 +716,31 @@ void wbt_enable_default(struct gendisk *disk)
+ 		if (enable && RQWB(rqos)->enable_state == WBT_STATE_OFF_DEFAULT)
+ 			RQWB(rqos)->enable_state = WBT_STATE_ON_DEFAULT;
+ 		mutex_unlock(&disk->rqos_state_mutex);
+-		return;
++		return false;
+ 	}
+ 	mutex_unlock(&disk->rqos_state_mutex);
+ 
+ 	/* Queue not registered? Maybe shutting down... */
+ 	if (!blk_queue_registered(q))
+-		return;
++		return false;
+ 
+ 	if (queue_is_mq(q) && enable)
+-		wbt_init(disk);
++		return true;
++	return false;
++}
 +
- 	}
++void wbt_enable_default(struct gendisk *disk)
++{
++	__wbt_enable_default(disk);
+ }
+ EXPORT_SYMBOL_GPL(wbt_enable_default);
  
- 	return true;
-@@ -469,11 +473,15 @@ static int mlx5_tracer_get_num_of_params(char *str)
- 		substr = strstr(pstr, VAL_PARM);
- 	}
++void wbt_init_enable_default(struct gendisk *disk)
++{
++	if (__wbt_enable_default(disk))
++		WARN_ON_ONCE(wbt_init(disk));
++}
++
+ u64 wbt_default_latency_nsec(struct request_queue *q)
+ {
+ 	/*
+diff --git a/block/blk-wbt.h b/block/blk-wbt.h
+index e5fc653b9b76..925f22475738 100644
+--- a/block/blk-wbt.h
++++ b/block/blk-wbt.h
+@@ -5,6 +5,7 @@
+ #ifdef CONFIG_BLK_WBT
  
--	/* count all the % characters */
-+	/* count all the % characters, but skip %% (escaped percent) */
- 	substr = strstr(str, PARAM_CHAR);
- 	while (substr) {
--		num_of_params += 1;
--		str = substr + 1;
-+		if (*(substr + 1) != '%') {
-+			num_of_params += 1;
-+			str = substr + 1;
-+		} else {
-+			str = substr + 2;
-+		}
- 		substr = strstr(str, PARAM_CHAR);
- 	}
+ int wbt_init(struct gendisk *disk);
++void wbt_init_enable_default(struct gendisk *disk);
+ void wbt_disable_default(struct gendisk *disk);
+ void wbt_enable_default(struct gendisk *disk);
  
+@@ -16,6 +17,10 @@ u64 wbt_default_latency_nsec(struct request_queue *);
+ 
+ #else
+ 
++static inline void wbt_init_enable_default(struct gendisk *disk)
++{
++}
++
+ static inline void wbt_disable_default(struct gendisk *disk)
+ {
+ }
+diff --git a/block/elevator.c b/block/elevator.c
+index 5b37ef44f52d..a2f8b2251dc6 100644
+--- a/block/elevator.c
++++ b/block/elevator.c
+@@ -633,14 +633,10 @@ static int elevator_change_done(struct request_queue *q,
+ 			.et = ctx->old->et,
+ 			.data = ctx->old->elevator_data
+ 		};
+-		bool enable_wbt = test_bit(ELEVATOR_FLAG_ENABLE_WBT_ON_EXIT,
+-				&ctx->old->flags);
+ 
+ 		elv_unregister_queue(q, ctx->old);
+ 		blk_mq_free_sched_res(&res, ctx->old->type, q->tag_set);
+ 		kobject_put(&ctx->old->kobj);
+-		if (enable_wbt)
+-			wbt_enable_default(q->disk);
+ 	}
+ 	if (ctx->new) {
+ 		ret = elv_register_queue(q, ctx->new, !ctx->no_uevent);
+diff --git a/block/elevator.h b/block/elevator.h
+index 3ee1d494f48a..021726376042 100644
+--- a/block/elevator.h
++++ b/block/elevator.h
+@@ -156,7 +156,6 @@ struct elevator_queue
+ 
+ #define ELEVATOR_FLAG_REGISTERED	0
+ #define ELEVATOR_FLAG_DYING		1
+-#define ELEVATOR_FLAG_ENABLE_WBT_ON_EXIT	2
+ 
+ /*
+  * block elevator interface
 -- 
 2.51.0
 
