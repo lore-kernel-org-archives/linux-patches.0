@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774CB33344D;
-	Mon, 29 Dec 2025 16:33:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C9F332ECC;
+	Mon, 29 Dec 2025 16:33:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767026013; cv=none; b=gGuXxctdr8aTMyxjAApDJtM1+yHpJCUIFBVS5guIH/mkG/ovIyvBswKsL/VOIUFzqeraOdWi6GgLt1FlvPYOxJIrIABXfZ12tphLJgLt1LYrHXGKeqqMRNyV4LHPQA7t5ki14XYGwtAFePxuNWMzjgZtA60ZcJinoEo3xkuBPyk=
+	t=1767026016; cv=none; b=eDwzaBZlR3mORqAGPF1Ex8DnIAa+E64Ck2jo4iUW0hdZ47daDASUdWWf/tNyxQ1smkogbXWw6ZdyNg2PYHZjS7niQMJTX7Qu0K73+Q94uqJ61C/mRZhZOvJDQBOP+jCR7JOHQ+Lifkb/+ALV06HHKHLgfP3UMrEv/xW7q5H53AA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767026013; c=relaxed/simple;
-	bh=MbO9KPYyDoqfRzjhWQ/YxvLX1rsX/mUM4gz3r7bfFBo=;
+	s=arc-20240116; t=1767026016; c=relaxed/simple;
+	bh=tmEX3SiO+uGMJJanQPYmaWfv/ItUL0+wcmeALGjGu5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tWpxaiYxgQ507X/ubg8SmZb59ddAq4TisEOV8wqQEha+SMAAJiHi7cgPx8wavOIftioCJm+hjMKKMUJcZ0WphfV05UfdvdxrqHm0yW10cFPe+BlwgjSsEKWMOInlUeSRxmwr2NGNJUro4oYndgEa++89v/yODA9vFWFN41Yqr/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n090fNbM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SR72i+MPxFTn1iimkG2DnaKj3m3+33h8gH1sDBFRzxzS1U1bYkNZIQbjxcDD2TNsakd9rfHH9sCX4BmR9F0xM/1zlWAECke5VsYCLcUXv2YLOGTAx00hVJze/hV6fP80hPd+fAjnNX3OW6qoMpUU2XZAp44XZMQeLfkkhfXETsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w3MzkeIW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n090fNbM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6FE9C4CEF7;
-	Mon, 29 Dec 2025 16:33:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w3MzkeIW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF3CEC4CEF7;
+	Mon, 29 Dec 2025 16:33:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767026013;
-	bh=MbO9KPYyDoqfRzjhWQ/YxvLX1rsX/mUM4gz3r7bfFBo=;
+	s=korg; t=1767026016;
+	bh=tmEX3SiO+uGMJJanQPYmaWfv/ItUL0+wcmeALGjGu5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n090fNbMd3cCxBDU4ekdfTlvWpTJ4xQXyNMni1zKkcRktCIRq3oDSFzJEjmv8bZJ1
-	 TbyczznTLxL+ivLPRZDavJVmtV/f8HywJGJiU6mXdUWP9T7SEVqRBcQd6QXHZRSydd
-	 3u1Oil89oaX4fx6UGTteBhAW4AJC5CXp4G1cxoOw=
+	b=w3MzkeIWKhoP9Nnjf7rJfOO5kPP359/gi6dAhjbLtZghfEjjzm2nghl735tjSEkGf
+	 uFsWfVvns75t++FPIjWSYmGNoTfcgUp5yHET8pLIzyA0L3LmpNGAuUc6StJZPprB7T
+	 t0A/WN99TbrguuPO6nizobAhj4CRNSz8eq3KRWc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Askar Safin <safinaskar@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.18 383/430] gpiolib: acpi: Add quirk for Dell Precision 7780
-Date: Mon, 29 Dec 2025 17:13:05 +0100
-Message-ID: <20251229160738.416311328@linuxfoundation.org>
+	Xi Ruoyao <xry111@xry111.site>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH 6.18 384/430] gpio: loongson: Switch 2K2000/3000 GPIO to BYTE_CTRL_MODE
+Date: Mon, 29 Dec 2025 17:13:06 +0100
+Message-ID: <20251229160738.452682162@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -51,56 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Askar Safin <safinaskar@gmail.com>
+From: Xi Ruoyao <xry111@xry111.site>
 
-commit 2d967310c49ed93ac11cef408a55ddf15c3dd52e upstream.
+commit dae9750105cf93ac1e156ef91f4beeb53bd64777 upstream.
 
-Dell Precision 7780 often wakes up on its own from suspend. Sometimes
-wake up happens immediately (i. e. within 7 seconds), sometimes it happens
-after, say, 30 minutes.
+The manuals of 2K2000 says both BIT_CTRL_MODE and BYTE_CTRL_MODE are
+supported but the latter is recommended.  Also on 2K3000, per the ACPI
+DSDT the GPIO controller is compatible with 2K2000, but it fails to
+operate GPIOs 62 and 63 (and maybe others) using BIT_CTRL_MODE.
+Using BYTE_CTRL_MODE also makes those 2K3000 GPIOs work.
 
-Fixes: 1796f808e4bb ("HID: i2c-hid: acpi: Stop setting wakeup_capable")
-Link: https://lore.kernel.org/linux-i2c/197ae95ffd8.dc819e60457077.7692120488609091556@zohomail.com/
+Fixes: 3feb70a61740 ("gpio: loongson: add more gpio chip support")
 Cc: stable@vger.kernel.org
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Askar Safin <safinaskar@gmail.com>
-Link: https://lore.kernel.org/r/20251206180414.3183334-2-safinaskar@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Xi Ruoyao <xry111@xry111.site>
+Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
+Link: https://lore.kernel.org/r/20251128075033.255821-1-xry111@xry111.site
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpiolib-acpi-quirks.c |   22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ drivers/gpio/gpio-loongson-64bit.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/gpio/gpiolib-acpi-quirks.c
-+++ b/drivers/gpio/gpiolib-acpi-quirks.c
-@@ -370,6 +370,28 @@ static const struct dmi_system_id gpioli
- 			.ignore_wake = "ASCP1A00:00@8",
- 		},
- 	},
-+	{
-+		/*
-+		 * Spurious wakeups, likely from touchpad controller
-+		 * Dell Precision 7780
-+		 * Found in BIOS 1.24.1
-+		 *
-+		 * Found in touchpad firmware, installed by Dell Touchpad Firmware Update Utility version 1160.4196.9, A01
-+		 * ( Dell-Touchpad-Firmware-Update-Utility_VYGNN_WIN64_1160.4196.9_A00.EXE ),
-+		 * released on 11 Jul 2024
-+		 *
-+		 * https://lore.kernel.org/linux-i2c/197ae95ffd8.dc819e60457077.7692120488609091556@zohomail.com/
-+		 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
-+			DMI_MATCH(DMI_PRODUCT_FAMILY, "Precision"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Precision 7780"),
-+			DMI_MATCH(DMI_BOARD_NAME, "0C6JVW"),
-+		},
-+		.driver_data = &(struct acpi_gpiolib_dmi_quirk) {
-+			.ignore_wake = "VEN_0488:00@355",
-+		},
-+	},
- 	{} /* Terminating entry */
+--- a/drivers/gpio/gpio-loongson-64bit.c
++++ b/drivers/gpio/gpio-loongson-64bit.c
+@@ -407,11 +407,11 @@ static const struct loongson_gpio_chip_d
+ 
+ static const struct loongson_gpio_chip_data loongson_gpio_ls2k2000_data1 = {
+ 	.label = "ls2k2000_gpio",
+-	.mode = BIT_CTRL_MODE,
+-	.conf_offset = 0x0,
+-	.in_offset = 0x20,
+-	.out_offset = 0x10,
+-	.inten_offset = 0x30,
++	.mode = BYTE_CTRL_MODE,
++	.conf_offset = 0x800,
++	.in_offset = 0xa00,
++	.out_offset = 0x900,
++	.inten_offset = 0xb00,
  };
  
+ static const struct loongson_gpio_chip_data loongson_gpio_ls2k2000_data2 = {
 
 
