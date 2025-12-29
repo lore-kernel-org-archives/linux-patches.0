@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 912FB332EB8;
-	Mon, 29 Dec 2025 16:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5321C3328EE;
+	Mon, 29 Dec 2025 16:31:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025868; cv=none; b=nOft9eBe4JY7aB9jEe1geLOn6VKugkuzX6rjpl/naRM8fHBTBRtw1FDPw5O58PWUoN5U54QMBg603ANPs8nwA7firTZESPdkG0WNqH0JaXNADBcX0ZaA6rZT9f1rYg0UoKjz0lu4huydNfxj4CZ84mc07wsIQjPeBSaThfzgwaw=
+	t=1767025871; cv=none; b=kHanz9H1vVR4aXAC3D1Lgsj/ElLkomjn4iWuyBQtZl879eLuZ6pKSj4h9r30tv2iDyQ1rgWfOeKd1DSaccp4nRlyEQtIXPoeoBqUjUMImkAp/3QLKMNUQxdPCvXk5ztc54zEjlXSTDQHsX+2JRunD+bB9xOjupQFpg3d07nghv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025868; c=relaxed/simple;
-	bh=ub9yr0DkGj/P0LB+Fl5sjUJ0tzI+mnFYyLyeYlxiYdc=;
+	s=arc-20240116; t=1767025871; c=relaxed/simple;
+	bh=klyAlUq4GGa80t4zKC3Jwjb3nEIjIpmKSeQaCVP9uv0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B4OH0f6RdX3c58aS5YCNe4DObdNu4YAzHaOh7ma+Nm74MvIKZota9EyB8jpnXg5RzQ/i6RxqVV5k7pExJ+OcA2VK+BVN1/qlmwjqAQ43PdgxE0nmswrhgFpqnSSRmjJT7aRmJbGY6x5HoBPHx8Sk7wy6kxgQkYbN7J+sx+8U9ZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SvqzF7mY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a/2L64YYf4H4Bqp5Ss03WH7xxN/cXlBKs7DRVMMvimE5Owa6rSQwKqLCEcbCrnB0suYdn5uwmMt/1HSDwu9EAC6mx7V6wfh/5H9K4fpzs0/zAWFXCqMv1uCAq/stxcnsWUFD0FPqie78cF3P0hhKiP4sgnMBt1jBBBosMQHC+hc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r2nYYQSR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SvqzF7mY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC17C4CEF7;
-	Mon, 29 Dec 2025 16:31:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r2nYYQSR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6D3AC4CEF7;
+	Mon, 29 Dec 2025 16:31:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025868;
-	bh=ub9yr0DkGj/P0LB+Fl5sjUJ0tzI+mnFYyLyeYlxiYdc=;
+	s=korg; t=1767025871;
+	bh=klyAlUq4GGa80t4zKC3Jwjb3nEIjIpmKSeQaCVP9uv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SvqzF7mYj/xBgYz146JA5EXGSZUBjXykC5FbX9d7GZXqXAdtMBJOdPYRmazEJDiAR
-	 VkZO2nKIq1ggeWu5RN+b9gp7SW7XppPQT1uUl6TE8/6FEnKBTP1fsmWKpKTYvDe+HF
-	 xNwmy6NkQAhxCmPiao2YfSge/7MTdmmL4tjwxG8Y=
+	b=r2nYYQSRq3o/fZErg4V10/v8RM/L1Rjwy9OoMFFijaDZ5s1McmCTJEjQ4jcpm9Iht
+	 xFcT9hOq5xcsttMgI341PTDHvW2hMacFUJimriVb0b0EAonhby5dc9mbet6KOZuJe9
+	 NGoPv+9X9Kdyei0d9GJZh0XPREE1O8oFhGoH4egQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudheendra Raghav Neela <sneela@tugraz.at>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.18 365/430] fsnotify: do not generate ACCESS/MODIFY events on child for special files
-Date: Mon, 29 Dec 2025 17:12:47 +0100
-Message-ID: <20251229160737.760006986@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>,
+	caoping <caoping@cmss.chinamobile.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 366/430] net/handshake: restore destructor on submit failure
+Date: Mon, 29 Dec 2025 17:12:48 +0100
+Message-ID: <20251229160737.795909503@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -51,58 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: caoping <caoping@cmss.chinamobile.com>
 
-commit 635bc4def026a24e071436f4f356ea08c0eed6ff upstream.
+commit 6af2a01d65f89e73c1cbb9267f8880d83a88cee4 upstream.
 
-inotify/fanotify do not allow users with no read access to a file to
-subscribe to events (e.g. IN_ACCESS/IN_MODIFY), but they do allow the
-same user to subscribe for watching events on children when the user
-has access to the parent directory (e.g. /dev).
+handshake_req_submit() replaces sk->sk_destruct but never restores it when
+submission fails before the request is hashed. handshake_sk_destruct() then
+returns early and the original destructor never runs, leaking the socket.
+Restore sk_destruct on the error path.
 
-Users with no read access to a file but with read access to its parent
-directory can still stat the file and see if it was accessed/modified
-via atime/mtime change.
-
-The same is not true for special files (e.g. /dev/null). Users will not
-generally observe atime/mtime changes when other users read/write to
-special files, only when someone sets atime/mtime via utimensat().
-
-Align fsnotify events with this stat behavior and do not generate
-ACCESS/MODIFY events to parent watchers on read/write of special files.
-The events are still generated to parent watchers on utimensat(). This
-closes some side-channels that could be possibly used for information
-exfiltration [1].
-
-[1] https://snee.la/pdf/pubs/file-notification-attacks.pdf
-
-Reported-by: Sudheendra Raghav Neela <sneela@tugraz.at>
-CC: stable@vger.kernel.org
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
+Fixes: 3b3009ea8abb ("net/handshake: Create a NETLINK service for handling handshake requests")
+Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: caoping <caoping@cmss.chinamobile.com>
+Link: https://patch.msgid.link/20251204091058.1545151-1-caoping@cmss.chinamobile.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/notify/fsnotify.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ net/handshake/request.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/notify/fsnotify.c
-+++ b/fs/notify/fsnotify.c
-@@ -270,8 +270,15 @@ int __fsnotify_parent(struct dentry *den
- 	/*
- 	 * Include parent/name in notification either if some notification
- 	 * groups require parent info or the parent is interested in this event.
-+	 * The parent interest in ACCESS/MODIFY events does not apply to special
-+	 * files, where read/write are not on the filesystem of the parent and
-+	 * events can provide an undesirable side-channel for information
-+	 * exfiltration.
- 	 */
--	parent_interested = mask & p_mask & ALL_FSNOTIFY_EVENTS;
-+	parent_interested = mask & p_mask & ALL_FSNOTIFY_EVENTS &&
-+			    !(data_type == FSNOTIFY_EVENT_PATH &&
-+			      d_is_special(dentry) &&
-+			      (mask & (FS_ACCESS | FS_MODIFY)));
- 	if (parent_needed || parent_interested) {
- 		/* When notifying parent, child should be passed as data */
- 		WARN_ON_ONCE(inode != fsnotify_data_inode(data, data_type));
+--- a/net/handshake/request.c
++++ b/net/handshake/request.c
+@@ -276,6 +276,8 @@ int handshake_req_submit(struct socket *
+ out_unlock:
+ 	spin_unlock(&hn->hn_lock);
+ out_err:
++	/* Restore original destructor so socket teardown still runs on failure */
++	req->hr_sk->sk_destruct = req->hr_odestruct;
+ 	trace_handshake_submit_err(net, req, req->hr_sk, ret);
+ 	handshake_req_destroy(req);
+ 	return ret;
 
 
