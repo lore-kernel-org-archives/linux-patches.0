@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D81D26FD9B;
-	Mon, 29 Dec 2025 16:20:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39FEF26FD9B;
+	Mon, 29 Dec 2025 16:20:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767025200; cv=none; b=f80NmnitBo6YvytaGmayV1dG14P/DBZtKaKssuOeZwfslIvynNf6VEcOUYnoxaRbsXBVBLrmNTRsuyHJmFIKttohA0638vubkjtGP4WIDp/37a4+jBFX/3/zL6sm33Cjq2MyPGzivIh8UAxYNdxGKcpnOD0ePcIDGjoh1nKyLlc=
+	t=1767025203; cv=none; b=XTcgbf5UgFDQ9xt+nLAG2wXDee56vUbywGXYaVS6FSgO308Whx71o92i5LbT4e2WmzUMFAPZpjkUDlok8rN4KJH576nv1gOJ1fxNZwWS+zoKy0ulGXuESjvYzDeEqsFMXds+DTytZ5GxsK4nNqn2td4gy3tFMfadRXTyVAMeItg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767025200; c=relaxed/simple;
-	bh=BrB8vFz4MbWv65ZTL4m2/5vmB/e5pMsbBFjPlLX8mng=;
+	s=arc-20240116; t=1767025203; c=relaxed/simple;
+	bh=qfWTQseO8pTETxvqM3j5zXImKPYm8HDZRNx9qMaaRSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HC8+n//ZY297RHnWdyG5UL5mz27waeqSZtY3XuK/wKPW0cLVTY6TR/P9oAfBB/eqbO4U3HcV2iNs3beO7DE0/HbrUPVNhKHXUCTqPTQPOChqGl4lI+E7dYrsqD/leR6rCQUo7BA1tus3SW9AkekGtmGLSNvu6EcV3Ow/5nck+Z8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iYKVL1lq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KUwBKppJ5kAxX2iZnNBOYMhMfiYeFjJ59/MFky3FuewWvyJEho9mEB0s4gbKX0VgYzBL7jlBOvbhsGKN9el7AKZz7KCMxSX82w9W/sOxKUB+qSQPtY4jPK8qkFdDUyfgQU3NMk/s+XLCTlzfTSvaARP62B9I81ZsoJy2ixrf5pA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dgt0qlg6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iYKVL1lq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F08C4CEF7;
-	Mon, 29 Dec 2025 16:19:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dgt0qlg6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF12C4CEF7;
+	Mon, 29 Dec 2025 16:20:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767025199;
-	bh=BrB8vFz4MbWv65ZTL4m2/5vmB/e5pMsbBFjPlLX8mng=;
+	s=korg; t=1767025202;
+	bh=qfWTQseO8pTETxvqM3j5zXImKPYm8HDZRNx9qMaaRSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iYKVL1lqjGQoqiuiOisJv/4MeWZ/T9RWs4Me1ArWQUnRxk0R2IyeSgfXpIUrVf/f+
-	 v2Xqn9xS3yxaXz6hZhWKPUHrIUnLHN0u74e5+ktMBBk7ERUiK289oWahEQHIdXRXKF
-	 8HvMAvkZq2f17xnTEIAFUuytvXAy5C2Nlm7n7W9M=
+	b=dgt0qlg6I8W4id+iEy9GEU84UqtM2QSWRR0aw49y5oOvTgcQXBW72EnBmPBkaGTX7
+	 TQisGXfW6V3rgKSLpnJ/gdksWDLL57Fz7sq99rIVzyjlYuVa5GtTTXG58kL+84XQ27
+	 YEbTnPDjTxrRTDyhEAOtUiq6hl77fr7DKyUMmRGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianpeng Chang <jianpeng.chang.cn@windriver.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	Jianbo Liu <jianbol@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 128/430] arm64: kdump: Fix elfcorehdr overlap caused by reserved memory processing reorder
-Date: Mon, 29 Dec 2025 17:08:50 +0100
-Message-ID: <20251229160729.076801064@linuxfoundation.org>
+Subject: [PATCH 6.18 097/430] net/mlx5e: Use ip6_dst_lookup instead of ipv6_dst_lookup_flow for MAC init
+Date: Mon, 29 Dec 2025 17:08:19 +0100
+Message-ID: <20251229160727.933288842@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
 References: <20251229160724.139406961@linuxfoundation.org>
@@ -51,63 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianpeng Chang <jianpeng.chang.cn@windriver.com>
+From: Jianbo Liu <jianbol@nvidia.com>
 
-[ Upstream commit 3e8ade58b71b48913d21b647b2089e03e81f117e ]
+[ Upstream commit e35d7da8dd9e55b37c3e8ab548f6793af0c2ab49 ]
 
-Commit 8a6e02d0c00e ("of: reserved_mem: Restructure how the reserved
-memory regions are processed") changed the processing order of reserved
-memory regions, causing elfcorehdr to overlap with dynamically allocated
-reserved memory regions during kdump kernel boot.
+Replace ipv6_stub->ipv6_dst_lookup_flow() with ip6_dst_lookup() in
+mlx5e_ipsec_init_macs() since IPsec transformations are not needed
+during Security Association setup - only basic routing information is
+required for nexthop MAC address resolution.
 
-The issue occurs because:
-1. kexec-tools allocates elfcorehdr in the last crashkernel reserved
-   memory region and passes it to the second kernel
-2. The problematic commit moved dynamic reserved memory allocation
-   (like bman-fbpr) to occur during fdt_scan_reserved_mem(), before
-   elfcorehdr reservation in fdt_reserve_elfcorehdr()
-3. bman-fbpr with 16MB alignment requirement can get allocated at
-   addresses that overlap with the elfcorehdr location
-4. When fdt_reserve_elfcorehdr() tries to reserve elfcorehdr memory,
-   overlap detection identifies the conflict and skips reservation
-5. kdump kernel fails with "Unable to handle kernel paging request"
-   because elfcorehdr memory is not properly reserved
+This resolves an issue where XfrmOutNoStates error counter would be
+incremented when xfrm policy is configured before xfrm state, as the
+IPsec-aware routing function would attempt policy checks during SA
+initialization.
 
-The boot log:
-Before 8a6e02d0c00e:
-  OF: fdt: Reserving 1 KiB of memory at 0xf4fff000 for elfcorehdr
-  OF: reserved mem: 0xf3000000..0xf3ffffff bman-fbpr
-
-After 8a6e02d0c00e:
-  OF: reserved mem: 0xf4000000..0xf4ffffff bman-fbpr
-  OF: fdt: elfcorehdr is overlapped
-
-Fix this by ensuring elfcorehdr reservation occurs before dynamic
-reserved memory allocation.
-
-Fixes: 8a6e02d0c00e ("of: reserved_mem: Restructure how the reserved memory regions are processed")
-Signed-off-by: Jianpeng Chang <jianpeng.chang.cn@windriver.com>
-Link: https://patch.msgid.link/20251205015934.700016-1-jianpeng.chang.cn@windriver.com
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Fixes: 71670f766b8f ("net/mlx5e: Support routed networks during IPsec MACs initialization")
+Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/1765284977-1363052-7-git-send-email-tariqt@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/fdt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/of/fdt.c b/drivers/of/fdt.c
-index fdaee4906836..3851ce244585 100644
---- a/drivers/of/fdt.c
-+++ b/drivers/of/fdt.c
-@@ -503,8 +503,8 @@ void __init early_init_fdt_scan_reserved_mem(void)
- 	if (!initial_boot_params)
- 		return;
- 
--	fdt_scan_reserved_mem();
- 	fdt_reserve_elfcorehdr();
-+	fdt_scan_reserved_mem();
- 
- 	/* Process header /memreserve/ fields */
- 	for (n = 0; ; n++) {
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
+index 35d9530037a65..6c79b9cea2efb 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
+@@ -342,9 +342,8 @@ static void mlx5e_ipsec_init_macs(struct mlx5e_ipsec_sa_entry *sa_entry,
+ 		rt_dst_entry = &rt->dst;
+ 		break;
+ 	case AF_INET6:
+-		rt_dst_entry = ipv6_stub->ipv6_dst_lookup_flow(
+-			dev_net(netdev), NULL, &fl6, NULL);
+-		if (IS_ERR(rt_dst_entry))
++		if (!IS_ENABLED(CONFIG_IPV6) ||
++		    ip6_dst_lookup(dev_net(netdev), NULL, &rt_dst_entry, &fl6))
+ 			goto neigh;
+ 		break;
+ 	default:
 -- 
 2.51.0
 
