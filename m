@@ -1,47 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C37D1221DAC;
-	Tue, 30 Dec 2025 13:23:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C383C2222B7;
+	Tue, 30 Dec 2025 13:23:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767100987; cv=none; b=uKKPwBfqyHMIykynngERpf0BnCY7Xde+2Xm2CtSNay1jwmZRgJjtMBSe83BGxoJPuqUsIO4SOiv4h5iriydhhgr6i5fY+ZV0+jheMn6xSiifH57tHbZzJcjrcND3xch/1bWqzD0/uxl5cP29D7WB2WQNO3BhiUupJkHbmaE8eEg=
+	t=1767100987; cv=none; b=EmHovyxKygts2r2CzPVNJMLp54sDOr5Sh5GVdGa3A3I/zsUDIYA2A5WrXKXwzX2BpuQZlXZ3+KB52kREEnWSk8rJ9z7UxeEt/nOxYSW1zpaw9aW4gHU1+zjizj9xeG+irK2BnsutCA4wjAsnyaZLFRZFIQ/cLzmhGz7NbKsirjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1767100987; c=relaxed/simple;
-	bh=rv2sKhmGE05VDEL1Ymi+TRJTNaAzFADUYTVidiG52HU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X498wvA+ePw/Bq7yIfIt4QM8Sj1a+rf6/ldYmDm4BH24faL1gUhrcantRs72cnFE1ScB9Fx3jTfIFT+l5fOvBRimxAOqKd5AGUzrnE+UbAj8t03xZW3w8yGs+H49lfiM4USdkb4mXLRzRsm43TV/m7sBlKdzyjUf9b8uwrM0cS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YTI2PcOR; arc=none smtp.client-ip=10.30.226.201
+	bh=fQ6bL8jYrSxzdgJbfHwUYCbaXfudgMkK9XnQe/sw4ug=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=bgiHWnxkxdDw7NyOe0HaYKF6ufvqYJRyNAPHRpgHlyrfGISITVX5UU3O8V8ViKtGLtlbSWt8pxdbQC1HGXj9RrSwFkYvlpFLzO6A0zTAEj7l1wXNwu6mZZWHDIYQv9yvveqROKe2E952R5e+793pkypZWoUSygdmOo5YvujTGRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XikhIr/T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YTI2PcOR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AD90C116C6;
-	Tue, 30 Dec 2025 13:23:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XikhIr/T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D87D5C4CEFB;
+	Tue, 30 Dec 2025 13:23:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767100987;
-	bh=rv2sKhmGE05VDEL1Ymi+TRJTNaAzFADUYTVidiG52HU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YTI2PcORwKT+wlrQCgBYZF34YoIrTYLVZZqQ3jYoA+u33Otvr8Mt938vv5XJVsigd
-	 nodQveVs8tv571WcS+hTT/pI56gm84H9miAitpQJunid7UcBsG1wPHihy/X054u2aL
-	 7zpnaGkh8gz15MImt2AfxSHh8NLJRD54ALvgadr/RlfJdSd8uwOyD5iko3HyCxDxgo
-	 89XurmCTrFTvAL80uuBv1JI4sHzzkU9nZPk0IJwYMcahcSqiC8quWkFBvbAhjBa/0r
-	 EVeJtPUdvFyyUGKrwpblXt5ZZmH//FRz4gcqXcY3Ic+1eLpCcVHEaRHKd/AWGemaTo
-	 7/UHe/2PXRT2g==
+	s=k20201202; t=1767100985;
+	bh=fQ6bL8jYrSxzdgJbfHwUYCbaXfudgMkK9XnQe/sw4ug=;
+	h=From:To:Cc:Subject:Date:From;
+	b=XikhIr/TZWfHaFNTggm8HY358cE/w+oIwKd/t/7PKyuw4//nvlrHVD98NklTd1FTc
+	 Mdi4MXMEVuWiqfHdW/1A8mAxttLTvwQrmNfCYMSZWX3p2aGXU9SsaoaF/GZnICCGJo
+	 yh5D/m05z/BNqiQXxIn7bpZ/Krs+myrRSY4Lp72422c81K7wX+9Z8oJHwYpP/OtMUo
+	 pyIU8AiZBbZajdhOGMyBuNyRw5Q9H6jjOxRlfKCWCQhIYoXECK51y7yaAYCZSGfSGM
+	 +IgFKksqFKLR43FPRw+542ng3eLjcodwpF05+hy1Il1xWhMyigRassxXB4MnXSpzp+
+	 PwFF23rVvn0cA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jussi Laako <jussi@sonarnerd.net>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Mateusz Litwin <mateusz.litwin@nokia.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	cryolitia@uniontech.com,
-	pav@iki.fi,
-	hulianqin@vivo.com,
-	roy.vegard.ovesen@gmail.com
-Subject: [PATCH AUTOSEL 6.18-6.6] ALSA: usb-audio: Update for native DSD support quirks
-Date: Tue, 30 Dec 2025 08:22:55 -0500
-Message-ID: <20251230132303.2194838-2-sashal@kernel.org>
+	linux-spi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.12] spi: cadence-quadspi: Prevent lost complete() call during indirect read
+Date: Tue, 30 Dec 2025 08:22:54 -0500
+Message-ID: <20251230132303.2194838-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251230132303.2194838-1-sashal@kernel.org>
-References: <20251230132303.2194838-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -51,170 +45,97 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.2
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jussi Laako <jussi@sonarnerd.net>
+From: Mateusz Litwin <mateusz.litwin@nokia.com>
 
-[ Upstream commit da3a7efff64ec0d63af4499eea3a46a2e13b5797 ]
+[ Upstream commit d67396c9d697041b385d70ff2fd59cb07ae167e8 ]
 
-Maintenance patch for native DSD support.
+A race condition exists between the read loop and IRQ `complete()` call.
+An interrupt could call the complete() between the inner loop and
+reinit_completion(), potentially losing the completion event and causing
+an unnecessary timeout. Moving reinit_completion() before the loop
+prevents this. A premature signal will only result in a spurious wakeup
+and another wait cycle, which is preferable to waiting for a timeout.
 
-Add set of missing device and vendor quirks; TEAC, Esoteric, Luxman and
-Musical Fidelity.
-
-Signed-off-by: Jussi Laako <jussi@sonarnerd.net>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20251211152224.1780782-1-jussi@sonarnerd.net
+Signed-off-by: Mateusz Litwin <mateusz.litwin@nokia.com>
+Link: https://patch.msgid.link/20251218-cqspi_indirect_read_improve-v2-1-396079972f2a@nokia.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Commit Analysis: ALSA: usb-audio: Update for native DSD support
-quirks
+### Summary
 
-### 1. COMMIT MESSAGE ANALYSIS
+**Pros for backporting:**
+1. ✅ Fixes a genuine race condition causing timeouts
+2. ✅ Small, surgical fix (< 10 lines changed)
+3. ✅ Logic is obviously correct and well-explained
+4. ✅ Low risk - worst case is benign spurious wakeup
+5. ✅ Reviewed by subsystem maintainer (Mark Brown)
+6. ✅ No dependencies on other commits
+7. ✅ Driver has been in the kernel since 2020, exists in all active
+   stable trees
+8. ✅ From a reputable source (Nokia) dealing with real hardware
 
-- **Subject:** "ALSA: usb-audio: Update for native DSD support quirks"
-- **Description:** "Maintenance patch" adding "missing device and vendor
-  quirks" for TEAC, Esoteric, Luxman, and Musical Fidelity audio devices
-- No crash/bug keywords, but no Cc: stable or Fixes: tag is expected for
-  commits under review
-- Proper sign-offs from author and maintainer (Takashi Iwai, the ALSA
-  maintainer)
+**Cons:**
+- None significant. The absence of explicit Fixes:/Cc: stable tags is
+  expected for commits under manual review.
 
-### 2. CODE CHANGE ANALYSIS
+### Risk vs Benefit
 
-The changes are purely **data table additions** to `sound/usb/quirks.c`:
+- **Risk**: Very low - the change is simple, localized, and
+  mathematically correct
+- **Benefit**: Prevents user-visible timeouts during SPI read operations
+  on affected hardware
 
-**Device-specific entries (3):**
-1. `0x0644:0x807d` - TEAC UD-507 (DSD DAC + timing quirks)
-2. `0x0644:0x806c` - Esoteric XD (DSD DAC + timing quirks)
-3. `0x3255:0x0000` - Luxman D-10X (DSD DAC + timing quirk)
-
-**Vendor-wide entry (1):**
-4. `0x2772` - Musical Fidelity devices (DSD_RAW quirk)
-
-**Quirk flags used:**
-- `QUIRK_FLAG_ITF_USB_DSD_DAC` - Device supports native DSD playback
-- `QUIRK_FLAG_CTL_MSG_DELAY` / `QUIRK_FLAG_IFACE_DELAY` - Timing
-  workarounds for device communication issues
-- `QUIRK_FLAG_DSD_RAW` - Raw DSD mode support
-
-### 3. CLASSIFICATION
-
-This is a **device ID and quirk addition** - explicitly listed as an
-allowed exception in stable kernel rules:
-
-> "NEW DEVICE IDs (Very Common): Adding PCI IDs, USB IDs, ACPI IDs, etc.
-to existing drivers"
-> "QUIRKS and WORKAROUNDS: Hardware-specific quirks for broken/buggy
-devices"
-
-The entries follow the exact same pattern as dozens of existing entries
-in the file.
-
-### 4. SCOPE AND RISK ASSESSMENT
-
-- **Lines changed:** ~8 lines added (4 entries)
-- **Files changed:** 1 file
-- **Complexity:** Trivial - pure data table additions
-- **Risk:** Extremely low
-  - Only affects devices matching specific USB vendor:product IDs
-  - No code logic changes whatsoever
-  - Cannot affect any other devices
-  - Uses pre-existing, well-tested quirk infrastructure
-
-### 5. USER IMPACT
-
-**Benefit:** Owners of these specific high-end audio DACs get:
-- Working native DSD playback
-- Proper device communication (timing quirks prevent USB control message
-  issues)
-
-**Without fix:** These DACs may experience:
-- DSD format not working
-- Audio glitches or communication failures due to missing timing delays
-
-**Scope:** Narrow (specific device owners only), but critical for those
-users.
-
-### 6. STABILITY INDICATORS
-
-- Signed off by Takashi Iwai (ALSA maintainer) - trusted subsystem
-  expert
-- Follows identical pattern to existing entries
-- Zero new code paths introduced
-
-### 7. DEPENDENCY CHECK
-
-- No dependencies on other commits
-- All quirk flags (`ITF_USB_DSD_DAC`, `CTL_MSG_DELAY`, `IFACE_DELAY`,
-  `DSD_RAW`) already exist in stable kernels
-- The quirk_flags_table infrastructure has existed for many kernel
-  versions
-
-### DECISION RATIONALE
-
-**This is a textbook stable backport candidate under the device ID/quirk
-exception:**
-
-1. **Meets stable criteria for exceptions:** Pure USB device ID and
-   quirk additions to existing driver infrastructure
-2. **Obviously correct:** Follows exact pattern of adjacent entries in
-   the file
-3. **Fixes real issue:** Enables hardware that users own to function
-   properly
-4. **Small and contained:** 8 lines of data-only changes in 1 file
-5. **No new features:** DSD support already exists; this just identifies
-   which devices can use it
-6. **Zero regression risk:** Only activates for specific USB IDs; cannot
-   affect other devices
-
-The timing quirks (`CTL_MSG_DELAY`, `IFACE_DELAY`) are particularly
-important as they fix actual device communication issues, not just
-feature enablement.
+This commit is an excellent candidate for stable backporting. It fixes a
+real race condition bug with a small, obvious, and low-risk change. The
+fix has been reviewed by the SPI maintainer and addresses real hardware
+issues without introducing new features or significant complexity.
 
 **YES**
 
- sound/usb/quirks.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/spi/spi-cadence-quadspi.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index 61bd61ffb1b2..94a8fdc9c6d3 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2230,6 +2230,12 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 	DEVICE_FLG(0x0644, 0x806b, /* TEAC UD-701 */
- 		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY |
- 		   QUIRK_FLAG_IFACE_DELAY),
-+	DEVICE_FLG(0x0644, 0x807d, /* TEAC UD-507 */
-+		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY |
-+		   QUIRK_FLAG_IFACE_DELAY),
-+	DEVICE_FLG(0x0644, 0x806c, /* Esoteric XD */
-+		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY |
-+		   QUIRK_FLAG_IFACE_DELAY),
- 	DEVICE_FLG(0x06f8, 0xb000, /* Hercules DJ Console (Windows Edition) */
- 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
- 	DEVICE_FLG(0x06f8, 0xd002, /* Hercules DJ Console (Macintosh Edition) */
-@@ -2388,6 +2394,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
- 	DEVICE_FLG(0x30be, 0x0101, /* Schiit Hel */
- 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
-+	DEVICE_FLG(0x3255, 0x0000, /* Luxman D-10X */
-+		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY),
- 	DEVICE_FLG(0x339b, 0x3a07, /* Synaptics HONOR USB-C HEADSET */
- 		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
- 	DEVICE_FLG(0x413c, 0xa506, /* Dell AE515 sound bar */
-@@ -2431,6 +2439,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_DSD_RAW),
- 	VENDOR_FLG(0x2622, /* IAG Limited devices */
- 		   QUIRK_FLAG_DSD_RAW),
-+	VENDOR_FLG(0x2772, /* Musical Fidelity devices */
-+		   QUIRK_FLAG_DSD_RAW),
- 	VENDOR_FLG(0x278b, /* Rotel? */
- 		   QUIRK_FLAG_DSD_RAW),
- 	VENDOR_FLG(0x292b, /* Gustard/Ess based devices */
+diff --git a/drivers/spi/spi-cadence-quadspi.c b/drivers/spi/spi-cadence-quadspi.c
+index af6d050da1c8..695dbf7142d1 100644
+--- a/drivers/spi/spi-cadence-quadspi.c
++++ b/drivers/spi/spi-cadence-quadspi.c
+@@ -769,6 +769,7 @@ static int cqspi_indirect_read_execute(struct cqspi_flash_pdata *f_pdata,
+ 	readl(reg_base + CQSPI_REG_INDIRECTRD); /* Flush posted write. */
+ 
+ 	while (remaining > 0) {
++		ret = 0;
+ 		if (use_irq &&
+ 		    !wait_for_completion_timeout(&cqspi->transfer_complete,
+ 						 msecs_to_jiffies(CQSPI_READ_TIMEOUT_MS)))
+@@ -781,6 +782,14 @@ static int cqspi_indirect_read_execute(struct cqspi_flash_pdata *f_pdata,
+ 		if (cqspi->slow_sram)
+ 			writel(0x0, reg_base + CQSPI_REG_IRQMASK);
+ 
++		/*
++		 * Prevent lost interrupt and race condition by reinitializing early.
++		 * A spurious wakeup and another wait cycle can occur here,
++		 * which is preferable to waiting until timeout if interrupt is lost.
++		 */
++		if (use_irq)
++			reinit_completion(&cqspi->transfer_complete);
++
+ 		bytes_to_read = cqspi_get_rd_sram_level(cqspi);
+ 
+ 		if (ret && bytes_to_read == 0) {
+@@ -813,7 +822,6 @@ static int cqspi_indirect_read_execute(struct cqspi_flash_pdata *f_pdata,
+ 		}
+ 
+ 		if (use_irq && remaining > 0) {
+-			reinit_completion(&cqspi->transfer_complete);
+ 			if (cqspi->slow_sram)
+ 				writel(CQSPI_REG_IRQ_WATERMARK, reg_base + CQSPI_REG_IRQMASK);
+ 		}
 -- 
 2.51.0
 
