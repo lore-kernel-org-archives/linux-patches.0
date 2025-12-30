@@ -1,41 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C383C2222B7;
-	Tue, 30 Dec 2025 13:23:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D932222B7;
+	Tue, 30 Dec 2025 13:23:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767100987; cv=none; b=EmHovyxKygts2r2CzPVNJMLp54sDOr5Sh5GVdGa3A3I/zsUDIYA2A5WrXKXwzX2BpuQZlXZ3+KB52kREEnWSk8rJ9z7UxeEt/nOxYSW1zpaw9aW4gHU1+zjizj9xeG+irK2BnsutCA4wjAsnyaZLFRZFIQ/cLzmhGz7NbKsirjs=
+	t=1767100989; cv=none; b=pO04slhCFQR6S5bqcer9tX80rIZ+YCz/lBMpd1U+wXahTtNgz5tdYYp3vNYJHdRqii/ltbc/JDur1FXignAjTQEzXZCeDjtkUmBXBHrhzywOhX/GAmV1rSpwglZA7YRdIoDjtStD8akXjgfrXOmQDo37BLy9qI5WYx4yKwmh3Ek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767100987; c=relaxed/simple;
-	bh=fQ6bL8jYrSxzdgJbfHwUYCbaXfudgMkK9XnQe/sw4ug=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=bgiHWnxkxdDw7NyOe0HaYKF6ufvqYJRyNAPHRpgHlyrfGISITVX5UU3O8V8ViKtGLtlbSWt8pxdbQC1HGXj9RrSwFkYvlpFLzO6A0zTAEj7l1wXNwu6mZZWHDIYQv9yvveqROKe2E952R5e+793pkypZWoUSygdmOo5YvujTGRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XikhIr/T; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1767100989; c=relaxed/simple;
+	bh=7geZIghIcY1yJz9R9cpVVLgWXJKY9cFBsUAacqWbWFk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=j/msLyMVVSN5VAUMG9m6uZbb3fNBX6YNPWsefbgYPrGX/5sBds+laQP7AEVkb6pdYSd/pGQ40jWrmy4p2xknqsui2W6egOd0RrB/yEttntW+ca8qob1XzuIcN+yFaXn/sgejCNF0ynG+7dACmIyc+XYjFFjideJg3r6DoId4sIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mWbk0UzZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XikhIr/T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D87D5C4CEFB;
-	Tue, 30 Dec 2025 13:23:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mWbk0UzZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C955C4CEFB;
+	Tue, 30 Dec 2025 13:23:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767100985;
-	bh=fQ6bL8jYrSxzdgJbfHwUYCbaXfudgMkK9XnQe/sw4ug=;
-	h=From:To:Cc:Subject:Date:From;
-	b=XikhIr/TZWfHaFNTggm8HY358cE/w+oIwKd/t/7PKyuw4//nvlrHVD98NklTd1FTc
-	 Mdi4MXMEVuWiqfHdW/1A8mAxttLTvwQrmNfCYMSZWX3p2aGXU9SsaoaF/GZnICCGJo
-	 yh5D/m05z/BNqiQXxIn7bpZ/Krs+myrRSY4Lp72422c81K7wX+9Z8oJHwYpP/OtMUo
-	 pyIU8AiZBbZajdhOGMyBuNyRw5Q9H6jjOxRlfKCWCQhIYoXECK51y7yaAYCZSGfSGM
-	 +IgFKksqFKLR43FPRw+542ng3eLjcodwpF05+hy1Il1xWhMyigRassxXB4MnXSpzp+
-	 PwFF23rVvn0cA==
+	s=k20201202; t=1767100989;
+	bh=7geZIghIcY1yJz9R9cpVVLgWXJKY9cFBsUAacqWbWFk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=mWbk0UzZyUXrI9xyZzuF34VXgw7PHElGDYrPo/q8mfM1Y3vI+iie3s83RD73ikpRl
+	 9U1BcLHdkEFGfRVKObtsCiLPAotrgVStlP+NHB8IIEoA1FTqfayV4Nlvm/a5Y06O7H
+	 AJEWETl+V6IDlf2VsHLLC60RzB6Ms5HxjaEiUMizRBKaMw24IHk3qmtI365czQd4EK
+	 u4r1HykJbTIhW7g6N/ABcOOYhCQivvAOFPgxHV1IeAIJHfVj4MYrvrlwqTzNFBycfr
+	 rbQ1GjiN5/ixXVM7xBCzgGRaczU3PHujgDfuwNJYCFdsCEgEOdNdF0jyxOpxIpFAy8
+	 X2M3k8O8rNqCQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mateusz Litwin <mateusz.litwin@nokia.com>,
+Cc: Andrew Elantsev <elantsew.andrew@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-spi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] spi: cadence-quadspi: Prevent lost complete() call during indirect read
-Date: Tue, 30 Dec 2025 08:22:54 -0500
-Message-ID: <20251230132303.2194838-1-sashal@kernel.org>
+	mario.limonciello@amd.com,
+	syed.sabakareem@amd.com,
+	yuzuru_10@proton.me,
+	keenplify@gmail.com,
+	queler@gmail.com,
+	talhah.peerbhai@gmail.com,
+	ravenblack@gmail.com,
+	santesegabriel@gmail.com,
+	alex.andries.aa@gmail.com
+Subject: [PATCH AUTOSEL 6.18-6.1] ASoC: amd: yc: Add quirk for Honor MagicBook X16 2025
+Date: Tue, 30 Dec 2025 08:22:56 -0500
+Message-ID: <20251230132303.2194838-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251230132303.2194838-1-sashal@kernel.org>
+References: <20251230132303.2194838-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -45,97 +56,141 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.2
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mateusz Litwin <mateusz.litwin@nokia.com>
+From: Andrew Elantsev <elantsew.andrew@gmail.com>
 
-[ Upstream commit d67396c9d697041b385d70ff2fd59cb07ae167e8 ]
+[ Upstream commit e2cb8ef0372665854fca6fa7b30b20dd35acffeb ]
 
-A race condition exists between the read loop and IRQ `complete()` call.
-An interrupt could call the complete() between the inner loop and
-reinit_completion(), potentially losing the completion event and causing
-an unnecessary timeout. Moving reinit_completion() before the loop
-prevents this. A premature signal will only result in a spurious wakeup
-and another wait cycle, which is preferable to waiting for a timeout.
+Add a DMI quirk for the Honor MagicBook X16 2025 laptop
+fixing the issue where the internal microphone was
+not detected.
 
-Signed-off-by: Mateusz Litwin <mateusz.litwin@nokia.com>
-Link: https://patch.msgid.link/20251218-cqspi_indirect_read_improve-v2-1-396079972f2a@nokia.com
+Signed-off-by: Andrew Elantsev <elantsew.andrew@gmail.com>
+Link: https://patch.msgid.link/20251210203800.142822-1-elantsew.andrew@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-### Summary
+Looking at this commit, I'll analyze it systematically to determine if
+it's appropriate for stable backporting.
 
-**Pros for backporting:**
-1. ✅ Fixes a genuine race condition causing timeouts
-2. ✅ Small, surgical fix (< 10 lines changed)
-3. ✅ Logic is obviously correct and well-explained
-4. ✅ Low risk - worst case is benign spurious wakeup
-5. ✅ Reviewed by subsystem maintainer (Mark Brown)
-6. ✅ No dependencies on other commits
-7. ✅ Driver has been in the kernel since 2020, exists in all active
-   stable trees
-8. ✅ From a reputable source (Nokia) dealing with real hardware
+## 1. COMMIT MESSAGE ANALYSIS
 
-**Cons:**
-- None significant. The absence of explicit Fixes:/Cc: stable tags is
-  expected for commits under manual review.
+- **Subject:** ASoC: amd: yc: Add quirk for Honor MagicBook X16 2025
+- **Problem:** Internal microphone not detected on this laptop model
+- **Solution:** Add a DMI quirk entry to enable proper audio detection
+- Has proper sign-offs from author and Mark Brown (ASoC maintainer)
 
-### Risk vs Benefit
+## 2. CODE CHANGE ANALYSIS
 
-- **Risk**: Very low - the change is simple, localized, and
-  mathematically correct
-- **Benefit**: Prevents user-visible timeouts during SPI read operations
-  on affected hardware
+The change is extremely simple - adding one new entry to the
+`yc_acp_quirk_table[]` DMI system identification table:
 
-This commit is an excellent candidate for stable backporting. It fixes a
-real race condition bug with a small, obvious, and low-risk change. The
-fix has been reviewed by the SPI maintainer and addresses real hardware
-issues without introducing new features or significant complexity.
+```c
+{
+    .driver_data = &acp6x_card,
+    .matches = {
+        DMI_MATCH(DMI_BOARD_VENDOR, "HONOR"),
+        DMI_MATCH(DMI_PRODUCT_NAME, "GOH-X"),
+    }
+},
+```
+
+This follows the **exact same pattern** as all other entries in this
+table (System76, MSI, etc.). No new code logic is introduced - it just
+adds a hardware identifier to an existing quirk mechanism.
+
+## 3. CLASSIFICATION
+
+This is a **hardware quirk/workaround** - one of the explicitly allowed
+exception categories for stable trees:
+- Adds DMI identification for a specific laptop model
+- Uses existing driver infrastructure (`acp6x_card`)
+- Enables hardware that would otherwise not function
+
+This is NOT:
+- A new feature
+- A new driver or API
+- Any kind of refactoring or cleanup
+
+## 4. SCOPE AND RISK ASSESSMENT
+
+- **Lines changed:** ~7 lines (one struct entry)
+- **Files touched:** 1 file
+- **Complexity:** Trivial
+- **Risk:** Extremely low
+  - Only affects Honor MagicBook X16 2025 laptops
+  - Cannot possibly break other systems
+  - If wrong, only that specific device is affected
+
+## 5. USER IMPACT
+
+- **Affected users:** Honor MagicBook X16 2025 laptop owners
+- **Bug severity:** Medium-high - internal microphone completely non-
+  functional
+- **Real-world impact:** Yes - this is a fix for actual shipping
+  hardware where a core feature (microphone) doesn't work
+
+Without this quirk, users cannot use video conferencing, voice
+recording, or any audio input on this laptop.
+
+## 6. STABILITY INDICATORS
+
+- Maintainer signed off (Mark Brown, ASoC maintainer)
+- Follows established pattern used by dozens of other entries in the
+  same file
+- The AMD YC audio driver has been stable for years
+
+## 7. DEPENDENCY CHECK
+
+- No dependencies on other commits
+- Uses existing `acp6x_card` structure that already exists in stable
+- The acp6x-mach.c driver has been in the kernel since 5.x series
+
+## CONCLUSION
+
+This commit is a textbook example of what **should** be backported to
+stable:
+
+1. **Obviously correct:** Simple table entry following existing pattern
+2. **Fixes a real bug:** Internal microphone doesn't work without it
+3. **Small and contained:** 7 lines, single file, no logic changes
+4. **No new features:** Just enables existing driver for new hardware
+5. **Zero risk to other systems:** Only affects one specific laptop
+   model
+6. **Falls under quirk exception:** Hardware quirks are explicitly
+   allowed in stable
+
+DMI quirk additions like this are routinely backported to stable trees
+because they provide significant user benefit (making hardware work)
+with essentially zero risk to existing functionality.
 
 **YES**
 
- drivers/spi/spi-cadence-quadspi.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/spi/spi-cadence-quadspi.c b/drivers/spi/spi-cadence-quadspi.c
-index af6d050da1c8..695dbf7142d1 100644
---- a/drivers/spi/spi-cadence-quadspi.c
-+++ b/drivers/spi/spi-cadence-quadspi.c
-@@ -769,6 +769,7 @@ static int cqspi_indirect_read_execute(struct cqspi_flash_pdata *f_pdata,
- 	readl(reg_base + CQSPI_REG_INDIRECTRD); /* Flush posted write. */
- 
- 	while (remaining > 0) {
-+		ret = 0;
- 		if (use_irq &&
- 		    !wait_for_completion_timeout(&cqspi->transfer_complete,
- 						 msecs_to_jiffies(CQSPI_READ_TIMEOUT_MS)))
-@@ -781,6 +782,14 @@ static int cqspi_indirect_read_execute(struct cqspi_flash_pdata *f_pdata,
- 		if (cqspi->slow_sram)
- 			writel(0x0, reg_base + CQSPI_REG_IRQMASK);
- 
-+		/*
-+		 * Prevent lost interrupt and race condition by reinitializing early.
-+		 * A spurious wakeup and another wait cycle can occur here,
-+		 * which is preferable to waiting until timeout if interrupt is lost.
-+		 */
-+		if (use_irq)
-+			reinit_completion(&cqspi->transfer_complete);
-+
- 		bytes_to_read = cqspi_get_rd_sram_level(cqspi);
- 
- 		if (ret && bytes_to_read == 0) {
-@@ -813,7 +822,6 @@ static int cqspi_indirect_read_execute(struct cqspi_flash_pdata *f_pdata,
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index f210a253da9f..bf4d9d336561 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -661,6 +661,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "Bravo 15 C7UCX"),
  		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "HONOR"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "GOH-X"),
++		}
++	},
+ 	{}
+ };
  
- 		if (use_irq && remaining > 0) {
--			reinit_completion(&cqspi->transfer_complete);
- 			if (cqspi->slow_sram)
- 				writel(CQSPI_REG_IRQ_WATERMARK, reg_base + CQSPI_REG_IRQMASK);
- 		}
 -- 
 2.51.0
 
