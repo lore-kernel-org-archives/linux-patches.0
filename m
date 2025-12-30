@@ -1,100 +1,141 @@
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A022882D3
-	for <patches@lists.linux.dev>; Tue, 30 Dec 2025 15:39:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2254F86277
+	for <patches@lists.linux.dev>; Tue, 30 Dec 2025 15:50:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767109151; cv=none; b=pAYfL8k9xr7fcfOFxGFfu4vfv2CvtlGoUaAs9Vibxih9qpu4fPoULmxh74lyvgl6/Uy1441DMUFVNoXpKuDBHOKKlnMN4aKruyIm14BAkhea8ACLVtcqDo2kwMvXtNBPPHXwsDd9Dkp/3lxF87P4zCUbWzRSkucgTGlApOqor/M=
+	t=1767109827; cv=none; b=GQEvfoVq2fGaWiP9yzzFNqzCr94zce3wgBKwLwYbxvmIbD194kxN0daAWPrJ4M1g3Nm1uyQxgDtZe4MZCm3YdU4kIPA8OPsl7oyqcQdO6H0AxahowSJ9/yCL7wTR+WEFKvHl1rublYSKgG1NxInB4pdxnpbbmgc81bdfWmUzdik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767109151; c=relaxed/simple;
-	bh=M+ghxDkyEnMAHLZK+xSgIQxY/DMIVo9Fki/cauWdV5o=;
+	s=arc-20240116; t=1767109827; c=relaxed/simple;
+	bh=buNYBa+G8qfLlUvBCR4ZFcvapW46f5DYot+jLhw9HoQ=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=R94Ufzw6pqLVRLNH6E1IKEneubTycxJelm+ns38TlmefHyWcDJ7Es4Alt/Az88xQf8zTiZOHMEHor4RPkijwINZeTPMnT+5bY//EOICkt4CV1PKHQsBZRWrmnj/J1vDAlmHY3OzCu8XrYGn+gx6Z8lUTVFQdftqT3T1ezR9aEDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in; spf=none smtp.mailfrom=rajagiritech.edu.in; dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b=BM85NQBk; arc=none smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=rajagiritech.edu.in
+	 To:Cc:Content-Type; b=oNyriGz/8bJhDCzxY85HwS+btd4iBoa11fADm2dJbQLXgcxQNDoqsKhF96qxDZz1A884V9Ph8F52krz6hvCm2bAGy1bMXa86iM+yku1d+9XUEc4saF1ZPNu2cVfdXoDGtkHylqwBiUrx6iN0nYQNic9lJSWhuXtrnE03jgu55d4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uud/8zHK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b="BM85NQBk"
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-64b921d9e67so14489276a12.3
-        for <patches@lists.linux.dev>; Tue, 30 Dec 2025 07:39:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rajagiritech-edu-in.20230601.gappssmtp.com; s=20230601; t=1767109148; x=1767713948; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=S/iGKYPy7kScRKALvoiJl5pQO0SCaWoFIYCUOvfEdec=;
-        b=BM85NQBk4KX9h/iahR8XuwAXL89X/DhvF/FK1Ezu6cKvN89rcr5izmuatGfQxfTwNE
-         uehoKrVxxJVdiUFHaef0OsexYA/3+ucPKd4RnfTW3vNeEqaqbb38AQsB9p91+QA67dKb
-         WddayR2sxucLhxWrCuMnkJKqhctoyweSfRb7gNk/bMtibhfIlJNoQU4ZhDXqYvGKXtET
-         iknQ3k6lqBn1zNEsaKh2gD759Gl1urnd0/lcv7Ei2lJdHGkkbNNphSYk5aSL4O+o0UEg
-         lTz/smLuSUmH0/p1hXL0zQgudpQCWS6/7hrIsNgIBG9+xrV2t9KkRH1OB4px602y2OV1
-         2rZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767109148; x=1767713948;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=S/iGKYPy7kScRKALvoiJl5pQO0SCaWoFIYCUOvfEdec=;
-        b=akVDBsGwnGKMssAUCXaQTbFPLZONnSPngaPxF8heT9z2an6J/TLU4jINWeNpCl+tv1
-         UNyQRwUcL3X7gHitHh9uXat4IQYRqnT5v8yvt9RWd436egXeeyqtqVkBrCFloAxsMb1t
-         H6khSiAooY/2lqjboB2ZKkW1cNRGp5cITLfBO7BDF4BNus2ZlaTMFlrl+voakXsLEX9N
-         vZyqnKXw8pKX9DaUZxH145H/zJCfHPFC1x5oKppDZoUlBduPPax7DvmzGxu7x7nr9NIy
-         0//COIOvo7x9/GwzSGKiCxDaxRbUO7LRv0W08TN1KKz2s6jsOc04p51zfnRJ04DHrQAj
-         SJYA==
-X-Forwarded-Encrypted: i=1; AJvYcCW7CLWupfzU9zKgh/KT2RqtUymceK+cOA5j+/vXwsZA5XDlfIK20cHPF4yWTINOmGHUiNH1yfXA@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxi48l0gwMXuaaMQFQT0gVvMxEWa0KXdRH2wNTkHeZPOacXRd+V
-	qloH+25vVinEccyGxKQzWJfrfZGI8d5NY/+GAwKv5rDEk3mHWTy7LMZO5t09kvf+30VIfLXgroU
-	JF4OMSYST1/Ky2GxxqLx9ITxnljc415KiQGx+tg3WBg==
-X-Gm-Gg: AY/fxX7TWldak2VG7D232k/ycG8CBkRy3Af1l4TTL3JfrCt60C1lowsSysOpmn6bNs1
-	eo96atwqndmOdBwf3w4iMhn/ywNBq1IuSX4OOS+1ApAIpKjf4rZVQ+1m1KW1z8cjJGWS5njiYz7
-	TReUa8gzeD4IStUHTG3M52rkd98vRGTwQsoYQ9xy/wF7l4kK5lNfu4/qoXBcORfg1tHl2LxbzcQ
-	KuqxZLmtPIOZyDd+K5DEe0zYq0JTk33utf6noCtu9Gi/JF6C4tP4ovyh62v260ITivs8Rw=
-X-Google-Smtp-Source: AGHT+IE0v+rA9dVO3MGjq7zMSf8k9fLsm2E/a0kpKY/MH2zvaTSMwm/I3yU75tbfYM+n/9OcaW714tZmTmzmtr97Y18=
-X-Received: by 2002:a17:906:7312:b0:b7a:1bde:a01a with SMTP id
- a640c23a62f3a-b803721826bmr3737689966b.62.1767109148361; Tue, 30 Dec 2025
- 07:39:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uud/8zHK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAF16C19422
+	for <patches@lists.linux.dev>; Tue, 30 Dec 2025 15:50:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767109826;
+	bh=buNYBa+G8qfLlUvBCR4ZFcvapW46f5DYot+jLhw9HoQ=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=uud/8zHKAy9vAmWpvkX9rbSTgMdpfHBrh6WLiprE9pI8hXsuIlJvKVSvybs77Fn8Y
+	 sUNNKqabH1O3AAdbTpPpjTZKBZ6V0IebRTaOqL2zluNQBKVnI/KyICHqazM4+tq8Al
+	 e7KrJX5C2v4quZN/1/fXqONBGLQD9e5pGrZWWuL4E2yUMn9tgr24TnxY0pGE54iQk3
+	 FNmaJE5Xh1NVQAEmCs/Ertn7U8sVHeyHuLWOeql2YdFDe2u0OwNx/yZ5U0KPz8j379
+	 t4oJxM3x8CAObxRNyV5UERTf1i+gfTxIHvgPsa8R+JAxSfQDAsS9oaFzAQxP4vVDon
+	 lgi7CNLA0cyfA==
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-7ade456b6abso8217355b3a.3
+        for <patches@lists.linux.dev>; Tue, 30 Dec 2025 07:50:26 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUbpnGM2R6flACR1tKqerljef6D/ZZcpd9tt4SVdfixujD4uJQKkAWnj2C+oEY8xSkE3HFDpBAr@lists.linux.dev
+X-Gm-Message-State: AOJu0YykjrGdOvQOrPJrpRaQoGw423PL8V6RrGOjm2yCHCbvW/XtV7UX
+	lDkNSQza1LNlHrZ1OZXRCCHGzxQUxlNiaxvH0bj5wdYjfCrybYd9Fo2Rx7Wrh8Bd9oLumMNWqHD
+	Z+9wNg903YLOJls4g+KAhrb8OPZeOuw==
+X-Google-Smtp-Source: AGHT+IEZjuJ741PMreIHh9uiPP3hb59AwPjPkgs6EZmokmEJmwSPfCMKsbUmse1x0DIpIk+dUrk59qVP/n9gj5/yiuc=
+X-Received: by 2002:a05:7022:b906:b0:11b:d4a8:d244 with SMTP id
+ a92af1059eb24-121722ab1e3mr21838218c88.16.1767109826287; Tue, 30 Dec 2025
+ 07:50:26 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251229160724.139406961@linuxfoundation.org>
-In-Reply-To: <20251229160724.139406961@linuxfoundation.org>
-From: Jeffrin Thalakkottoor <jeffrin@rajagiritech.edu.in>
-Date: Tue, 30 Dec 2025 21:08:31 +0530
-X-Gm-Features: AQt7F2pjknXX3DkMcbVdm_x3fyQaQnJrAsSZCVdPg3JITMjxzgdTkMkzQAK5ov8
-Message-ID: <CAG=yYwmqyTWtcoaosdkDpD79a1+gjyuKaZzRCokRkn1Y2VqxLQ@mail.gmail.com>
-Subject: Re: [PATCH 6.18 000/430] 6.18.3-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
-	achill@achill.org, sr@sladewatkins.com
+References: <20251125-drm-mediatek-hdmi-v2-wifpts-v1-1-a6c7582cf69a@kernel.org>
+In-Reply-To: <20251125-drm-mediatek-hdmi-v2-wifpts-v1-1-a6c7582cf69a@kernel.org>
+From: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Date: Tue, 30 Dec 2025 15:50:13 +0000
+X-Gmail-Original-Message-ID: <CAAOTY_-hGe-yWK-iSXDefEPJN9bc8A_r=kNirBAyHgCPhqoAvw@mail.gmail.com>
+X-Gm-Features: AQt7F2ole3Zhplk3q7hyGThFScP9pdJnuSD325W6WxvbLpbbWXRXwbGOdauOQ4Q
+Message-ID: <CAAOTY_-hGe-yWK-iSXDefEPJN9bc8A_r=kNirBAyHgCPhqoAvw@mail.gmail.com>
+Subject: Re: [PATCH] drm/mediatek: mtk_hdmi_v2: Fix return type of mtk_hdmi_v2_tmds_char_rate_valid()
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Chun-Kuang Hu <chunkuang.hu@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>, 
+	David Airlie <airlied@gmail.com>, Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>, CK Hu <ck.hu@mediatek.com>, 
+	dri-devel@lists.freedesktop.org, linux-mediatek@lists.infradead.org, 
+	linux-arm-kernel@lists.infradead.org, llvm@lists.linux.dev, 
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
- hello
+Hi, Nathan:
 
-Compiled and booted  6.18.3-rc1+
+Nathan Chancellor <nathan@kernel.org> =E6=96=BC 2025=E5=B9=B411=E6=9C=8825=
+=E6=97=A5=E9=80=B1=E4=BA=8C =E4=B8=8B=E5=8D=8810:14=E5=AF=AB=E9=81=93=EF=BC=
+=9A
+>
+> When building with -Wincompatible-function-pointer-types-strict, a
+> warning designed to catch kernel control flow integrity (kCFI) issues at
+> build time, there is an instance in the new HDMI v2 drm/mediatek code:
+>
+>   drivers/gpu/drm/mediatek/mtk_hdmi_v2.c:1331:31: error: incompatible fun=
+ction pointer types initializing 'enum drm_mode_status (*)(const struct drm=
+_bridge *, const struct drm_display_mode *, unsigned long long)' with an ex=
+pression of type 'int (const struct drm_bridge *, const struct drm_display_=
+mode *, unsigned long long)' [-Werror,-Wincompatible-function-pointer-types=
+-strict]
+>    1331 |         .hdmi_tmds_char_rate_valid =3D mtk_hdmi_v2_hdmi_tmds_ch=
+ar_rate_valid,
+>         |                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~~~~~~~~~~
+>
+> While 'int' and 'enum drm_mode_status' are ABI compatible, hence no
+> regular warning from -Wincompatible-function-pointer-types, the mismatch
+> will trigger a kCFI violation when mtk_hdmi_v2_tmds_char_rate_valid() is
+> called indirectly.
+>
+> Update the return type of mtk_hdmi_v2_tmds_char_rate_valid() to be 'enum
+> drm_mode_status' to clear up the warning and kCFI violation.
 
-No  typical new regressions   from dmesg.
+Applied to mediatek-drm-fixes [1], thanks.
 
-As per dmidecode command.
-Version: AMD Ryzen 3 3250U with Radeon Graphics
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/chunkuang.hu/linux.git/=
+log/?h=3Dmediatek-drm-fixes
 
-Processor Information
-        Socket Designation: FP5
-        Type: Central Processor
-        Family: Zen
-        Manufacturer: Advanced Micro Devices, Inc.
-        ID: 81 0F 81 00 FF FB 8B 17
-        Signature: Family 23, Model 24, Stepping 1
+Regards,
+Chun-Kuang.
 
-Tested-by: Jeffrin Jose T <jeffrin@rajagiritech.edu.in>
-
---
-software engineer
-rajagiri school of engineering and technology
+>
+> Fixes: 8d0f79886273 ("drm/mediatek: Introduce HDMI/DDC v2 for MT8195/MT81=
+88")
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+>  drivers/gpu/drm/mediatek/mtk_hdmi_v2.c | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/mediatek/mtk_hdmi_v2.c b/drivers/gpu/drm/med=
+iatek/mtk_hdmi_v2.c
+> index c272e1e74b7d..454b8b93b834 100644
+> --- a/drivers/gpu/drm/mediatek/mtk_hdmi_v2.c
+> +++ b/drivers/gpu/drm/mediatek/mtk_hdmi_v2.c
+> @@ -1120,9 +1120,10 @@ static void mtk_hdmi_v2_hpd_disable(struct drm_bri=
+dge *bridge)
+>         mtk_hdmi_v2_disable(hdmi);
+>  }
+>
+> -static int mtk_hdmi_v2_hdmi_tmds_char_rate_valid(const struct drm_bridge=
+ *bridge,
+> -                                                const struct drm_display=
+_mode *mode,
+> -                                                unsigned long long tmds_=
+rate)
+> +static enum drm_mode_status
+> +mtk_hdmi_v2_hdmi_tmds_char_rate_valid(const struct drm_bridge *bridge,
+> +                                     const struct drm_display_mode *mode=
+,
+> +                                     unsigned long long tmds_rate)
+>  {
+>         if (mode->clock < MTK_HDMI_V2_CLOCK_MIN)
+>                 return MODE_CLOCK_LOW;
+>
+> ---
+> base-commit: a846505a193d7492ad3531e33cacfca31e4bcdd1
+> change-id: 20251125-drm-mediatek-hdmi-v2-wifpts-d67b55175609
+>
+> Best regards,
+> --
+> Nathan Chancellor <nathan@kernel.org>
+>
