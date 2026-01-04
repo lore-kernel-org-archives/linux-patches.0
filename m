@@ -1,151 +1,86 @@
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EACF7274FDF
-	for <patches@lists.linux.dev>; Sat,  3 Jan 2026 06:26:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F654278E63
+	for <patches@lists.linux.dev>; Sun,  4 Jan 2026 06:15:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767421600; cv=none; b=PXnC6Z0ACrg8gwVF7kc4qdK/2Lg9qriC9MVBpBeG2++bDV0sHU1f9uQpGBr9XfjQag/T9iANJDnrSgYi7qzIOLMre8Gs37Z9cWIciDlbbAc27NnKXFVJ13tCbWZjkwuew7KHBX0zIzunnx+VbG+vppW//6mvxFMsAfzhtu9sXt4=
+	t=1767507309; cv=none; b=VJxfQvWZ4YmdDV9IPH910IRpSzXVRvi5aaw2PnaXfA7CTzkvkWvnpjLM6Cdyd5qre/bmVU3dShZ81L6bLQqbZdVzYBss99LllGE5Y83zfxPuh+rceeqHnJJRVQ/6FM1sEapVrfXaNNWxaJZ41c2MHcP/VTNTQB0DFFcRnilYx5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767421600; c=relaxed/simple;
-	bh=QD4XyFbtYqO8OoXqrboWLQysmvPoH2D2aMqalSm0Juk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cJNGuftn8y4mUtbKuCAd3uItASUusOn/NCnmszrJ+qLIGg0nhXbK9mKGaSNhMo7cCugHGW9Ikqef9lJl8ThEmSbiv1MEZTg96BRJP/AAQGRSji2ilxaNEkxlvtfvXXoZX4RFoFhIPECTylUo5ffMn/gDRx4MaCA5ZdRlKWmA0vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DaGVlbQG; arc=none smtp.client-ip=209.85.222.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1767507309; c=relaxed/simple;
+	bh=XW2494OGrflsXwD1svbIl8gYZ0Mbv6WvyGYDZVD+tO8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Xa9f26TMdHlPlfV6Mf/qWOnrWthj1iajr5Pj0aQeKDooYMe3+CcrEfgwFJPhwJ0AuYSTIgTygbWsatqtaVEpOTPBVetUqX5xnChmJdaGg/Y+2wCH8xkdyA1G0qpxMfqVDStYOsqi1aIn2DwtNRsNCh4efg6IFYm7K2fK3LohY5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=fryQUcYs; arc=none smtp.client-ip=65.109.113.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DaGVlbQG"
-Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-8b1e54aefc5so1135618785a.1
-        for <patches@lists.linux.dev>; Fri, 02 Jan 2026 22:26:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767421598; x=1768026398; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GzTUqaBjKErhA8u/T2FQL1WG9Tm1uXsr+21laEF71/k=;
-        b=DaGVlbQGUsJ2kZqw4BsGo886B6lBh38oVousz+ZqUrufucofe8bzAUgc5o5lwDkDtn
-         V7hHC13+zoTH8OncAvx2MPwt77dk/ufzI3G60T1L3hf53gvIlNqu3HWAGrtP7CxKcBNz
-         4cfVAI4sKJYSNC8xDQtjXtLfnP8iEe4NGB7id2+eQn0BamE+PONHOnukPdisdJtoZOvu
-         A2rtUQP1kHZPf2FPXPrt3kJ53aMnLUDJ0TxLNmdybTUANu+II1ldnoE4zzKkgOAiJwIK
-         1XKsGSoB1OU0f17M9IKvkvnuXLG4pTdLhueNWoRva3bSE0IzzWuSOaTTSkXw1pRB7ODv
-         kIzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767421598; x=1768026398;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=GzTUqaBjKErhA8u/T2FQL1WG9Tm1uXsr+21laEF71/k=;
-        b=c1uzaXrblD4HcFm2Sbgm7tWowcf55OfhTuw5hSK6WxzyQc0Nb/Spgi+bM5HYOp96cm
-         kU/Azh2Duh5lBDKeLT+m/kyRpq98Ra6ktqVc62fJQA650WQvhOAK2kBlrlly1LCvSsY7
-         7Jiz1ihq09TJczrRZKvb7jp57mOmlJDRRgPsg7bSrhuk4knuMPFT5mBjAlEaGRXxpeu0
-         PTP5QisucWHGuuFaE7/ZP/O0YrhcJqk5plUUc03FatDbtbomUjyyh5hehOW6BH2kqGLH
-         0jyB6gZcPyOJTwXcVxTkrdE93JaPpxXw24tRhNxfjxIfF1JihBMD1EiO8a2E6qdNBl+N
-         1Ejg==
-X-Forwarded-Encrypted: i=1; AJvYcCUkB8he3TBbgOLBnTeyfB1klQL0UbwexMpo0VC7YInzTR8XqoIKJBW2EBtSjyz6rdt0wPlmssXM@lists.linux.dev
-X-Gm-Message-State: AOJu0YwIlQC+asmUDsMwhA4vjxEHy9IIazWiKd7I4bya4/tkrML6aFIb
-	QfdzGN8N8j6oHAkhxLdCE1WzNuLqDh3iXDgLTvrOA2vUzlH+iky0aQ3qpXPWRYUvgPgZOpX6mGA
-	EV3nb/VhLElGhylnSppJd456TYyo6vYk=
-X-Gm-Gg: AY/fxX4iabd7/s0FdAM8Tsxw4vLhi7OGDzqS23/2XaxnzRwLfSkWqw+/G1xfZvLNscr
-	cmi+23/JUwVpmX1RojRNkqRQ1Vv0g+x3Hq7TSZo9RM8BLtKj//5LI/qaPDEPa2ngfKuMSeQqmRU
-	ME1nZN1evJZTgH0unfkRkReD7avYM6XLCgXgsWgNuChkTKG9o/6MmoWipsMZLR0u2n3SB3LVwdP
-	QDr64oFlHpa37iSe/tZPfE6WCLt4Cyjhtdmp55RQJyRk4lV3hjb7BLHgmnmlKj+SwT0VBDVC/C4
-	lx/gjA==
-X-Google-Smtp-Source: AGHT+IFaFIehM2CiM0gmEG+Na4SL0ej+sq5nHRE9bjtces3Vvr/kIlKB517060xRFmaeovwiWR7P9Cdthu4SqyN5SNo=
-X-Received: by 2002:ac8:6711:0:b0:4f1:b93d:fb5a with SMTP id
- d75a77b69052e-4f4b43de5dbmr429908471cf.7.1767421597647; Fri, 02 Jan 2026
- 22:26:37 -0800 (PST)
+	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="fryQUcYs"
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 2542B40E01A9;
+	Sun,  4 Jan 2026 06:15:04 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
+	header.d=alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id lPDjRQX8xBzJ; Sun,  4 Jan 2026 06:15:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
+	t=1767507300; bh=WYCHUhqquoisFvi090qiZpzCbJw9bxDo1d9PZoVD9Fs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fryQUcYsrmBffN0Nu+9kYJeVYuBxxtbsVkP2By9jogcezb6asTBhR73PBYo+80Bml
+	 eGrrJPdUyO5A3HCPt6XaYsjtPisbhtTPyZxR1gunIFyHhMvy+Zi97xbdA/DxsS6j75
+	 GlFj2R5ZYXHma4rBjmv3+fs+86nRBR4W3umIAV1UUBZdiwjc/8hmmD83Ukl7TLMyMj
+	 Tmkynipi8RfDUC5/OxrlQ4xQP3V6px5jdoAf05dbuKXC34+mg54zPxkxtdPeTUb4zu
+	 0gr4auej3CtlEsAixRAzketAK/ltWfo7prbeZ/U1Foi3nAnyv4Hl30bQWALapHtuHQ
+	 k+Eh2BLs1xioNQ0wh4d5xQ7GHa8kVT1SWy2kkkkBfT/fETquJvANmP9z2quTBFgLa9
+	 RIAGIpbTd2d5H4CmuluhAlkvbYQLbf7X6hw3hM4+sN4fz2gzi64dCPHZQDpW47ztnN
+	 6IOIriJyzxCIZVzjZIto+JRvs2NdTTl/u5qscwLopEh/wYcnryzU/t9GkaqraZaCX/
+	 MN/WxrbLGuBgABffNpB2pgW+zFKwRjCmwie9R/gofELeVBmRcNwPCHHVEIZaM3j1ae
+	 Cp7jcRec34Z9hlwYqyPOvLhV7oOhEoFRMa8+ctY2i91Fggdielq1vq7mdiIqn8V2Dl
+	 AhjEftk8AYG1nFFKkTNFmYCY=
+Received: from zn.tnic (pd953023b.dip0.t-ipconnect.de [217.83.2.59])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with UTF8SMTPSA id B95F240E0140;
+	Sun,  4 Jan 2026 06:14:46 +0000 (UTC)
+Date: Sun, 4 Jan 2026 07:14:45 +0100
+From: Borislav Petkov <bp@alien8.de>
+To: Reinette Chatre <reinette.chatre@intel.com>
+Cc: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghuay@nvidia.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>, Chen Yu <yu.c.chen@intel.com>,
+	"x86@kernel.org" <x86@kernel.org>, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH v17 00/32] x86,fs/resctrl telemetry monitoring
+Message-ID: <20260104061445.GBaVoFVad6sQQaapK1@fat_crate.local>
+References: <20251217172121.12030-1-tony.luck@intel.com>
+ <b085963b-5bcd-4859-9011-f31840929a1c@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251229160724.139406961@linuxfoundation.org> <20251229160726.283681845@linuxfoundation.org>
- <CANubcdVnWRkJ8x7zLGKih+uY0D0cE8jGmF_dx7+iDb5sgBWtQg@mail.gmail.com> <2026010240-certify-refined-7c02@gregkh>
-In-Reply-To: <2026010240-certify-refined-7c02@gregkh>
-From: Stephen Zhang <starzhangzsd@gmail.com>
-Date: Sat, 3 Jan 2026 14:26:01 +0800
-X-Gm-Features: AQt7F2p8hjCipjPSAJOhW80ofQZTg3x6YsPGRswI1qiJ6xQA2TC8ouImzh3I8jY
-Message-ID: <CANubcdW2z9AEdML4sV9XEXFeDUUzbt20istLuZ9s=zUoPvjDLQ@mail.gmail.com>
-Subject: Re: [PATCH 6.18 052/430] gfs2: Fix use of bio_chain
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	Andreas Gruenbacher <agruenba@redhat.com>, Sasha Levin <sashal@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <b085963b-5bcd-4859-9011-f31840929a1c@intel.com>
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org> =E4=BA=8E2026=E5=B9=B41=E6=
-=9C=882=E6=97=A5=E5=91=A8=E4=BA=94 14:49=E5=86=99=E9=81=93=EF=BC=9A
->
-> On Wed, Dec 31, 2025 at 07:54:45PM +0800, Stephen Zhang wrote:
-> > Greg Kroah-Hartman <gregkh@linuxfoundation.org> =E4=BA=8E2025=E5=B9=B41=
-2=E6=9C=8830=E6=97=A5=E5=91=A8=E4=BA=8C 00:16=E5=86=99=E9=81=93=EF=BC=9A
-> > >
-> > > 6.18-stable review patch.  If anyone has any objections, please let m=
-e know.
-> > >
-> > > ------------------
-> > >
-> > > From: Andreas Gruenbacher <agruenba@redhat.com>
-> > >
-> > > [ Upstream commit 8a157e0a0aa5143b5d94201508c0ca1bb8cfb941 ]
-> > >
-> > > In gfs2_chain_bio(), the call to bio_chain() has its arguments swappe=
-d.
-> > > The result is leaked bios and incorrect synchronization (only the las=
-t
-> > > bio will actually be waited for).  This code is only used during moun=
-t
-> > > and filesystem thaw, so the bug normally won't be noticeable.
-> > >
-> > > Reported-by: Stephen Zhang <starzhangzsd@gmail.com>
-> > > Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-> > > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > > ---
-> > >  fs/gfs2/lops.c | 2 +-
-> > >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > >
-> > > diff --git a/fs/gfs2/lops.c b/fs/gfs2/lops.c
-> > > index 9c8c305a75c46..914d03f6c4e82 100644
-> > > --- a/fs/gfs2/lops.c
-> > > +++ b/fs/gfs2/lops.c
-> > > @@ -487,7 +487,7 @@ static struct bio *gfs2_chain_bio(struct bio *pre=
-v, unsigned int nr_iovecs)
-> > >         new =3D bio_alloc(prev->bi_bdev, nr_iovecs, prev->bi_opf, GFP=
-_NOIO);
-> > >         bio_clone_blkg_association(new, prev);
-> > >         new->bi_iter.bi_sector =3D bio_end_sector(prev);
-> > > -       bio_chain(new, prev);
-> > > +       bio_chain(prev, new);
-> > >         submit_bio(prev);
-> > >         return new;
-> > >  }
-> > > --
-> >
-> > Hi Greg,
-> >
-> > I believe this patch should be excluded from the stable series. Please
-> > refer to the discussion in the linked thread, which clarifies the reaso=
-ning:
-> >
-> > https://lore.kernel.org/gfs2/tencent_B55495E8E88EEE66CC2C7A1E6FBC2FC16C=
-0A@qq.com/T/#mad18b8492e01daa939c7d958200802c9603b6c73
->
-> What exactly is the reasoning?  Why not just take these submitted
-> patches when they hit Linus's tree as well?
->
+On Wed, Dec 17, 2025 at 02:16:52PM -0800, Reinette Chatre wrote:
+> Dear x86 maintainers,
+> 
+> Could you please consider this series for inclusion when you find is most appropriate?
 
-My understanding is that this patch didn't actually fix anything and
-instead introduced a new bug by mistake. Since it was merged, a
-second patch had to be submitted to revert/correct the original "fix."
+Sure, lemme take a look.
 
-Therefore, for the stable series, the appropriate action is to simply
-drop this incorrect fix.
+Thx.
 
-Thanks,
-Shida
+-- 
+Regards/Gruss,
+    Boris.
 
-> thanks,
->
-> greg k-h
+https://people.kernel.org/tglx/notes-about-netiquette
