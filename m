@@ -1,111 +1,114 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDE9D313E00
-	for <patches@lists.linux.dev>; Mon,  5 Jan 2026 10:38:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87DC71EE033;
+	Mon,  5 Jan 2026 13:55:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767609527; cv=none; b=VXJqY1hesbg+XoVm+5uQOJ4OWsbV0lMvF8MJjjYADWIcO/rGCL5fKsro1sgIBEDNch4oHE5a+PG/Vb1irfnAkSXgrc7iijxbICulZkPS3OlvW9AgbNN93Jaajku8GcOaOF5It9KodXMpknxCOFHIkJGUIN6/EwwczwCrWEe3K8g=
+	t=1767621323; cv=none; b=JM+cH1w5P6Yrj8uV0q2RQHtTcuqbODYbuRTdKdBQ547m4iimRnOfbW0K/YkaH9eyOLTEB8Id2soJhNmiFRqjn4/WWzNFkTnmxbTCuD2aWbjcauP84XYrUDiKeF18AHiyn67SH7jYiKGcMCT+fCQso6PLxXUtie+lwXtHjxrRTbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767609527; c=relaxed/simple;
-	bh=KXLosAKj9WTZoqxb3cLCJTfmO0KCMCIscavgasNNB2Q=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ad5k9Dv2CzplUSJTpb6Dz1EyfB/4bykZaPPOVH5XitUNgc2rfGn7h17vsRyP26XfGjEwoZP1c1j/tYp/Yagbb7MGqXmIKGd3XCR2rWuUBpIgvuXYFPr18rT150zNFe2GN5XO/N5eN/C0tTWwy7C3RIPF/Ok7W1E8tjgiayGzJJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UPC7zf0z; arc=none smtp.client-ip=209.85.208.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1767621323; c=relaxed/simple;
+	bh=R3prR7NAkm/pmZYemezAYazX63wtmQSKkG62w/kXMDE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lsb1rRbBSODQ3Otiv570zzr0M83aIbhLT/73eLlPYKtarFltllGj8cmw17DcgYucFZQx3Ya+9omsN7L2KM55ySW3anWIE8SaZsQA3q+0blq0Ku+dDddGIgefaAZq23I4Yo+3qTK3kEym3BEicbHZShuTJh8qHKnFDGCtKHcd05U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O3UAcCP1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UPC7zf0z"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-64b8b5410a1so16138974a12.2
-        for <patches@lists.linux.dev>; Mon, 05 Jan 2026 02:38:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767609524; x=1768214324; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rpr1WOrht6j6ORsQatZtyLhRtfXLJi3Q8MSwGacBmmE=;
-        b=UPC7zf0zHbPdJXtOEfV0FvN4rFkFxEDcuP9jy3xMhYGpqHzcPX8H5IdqWM7h1Y/y/p
-         LAvxkvBhWSIDCtxy/OZf+CHZf+bgrVyJlcIMHgTTZlV7CBErSpzmbaBkLRRkScsfn6ET
-         dY0c6WJpvOcS6ZLlxfIwFyqmBqmCpx5fzkQPehe8zbQ4edeozVJVamn3JPCriq0Rdqcl
-         uA6+M883T/W71bRIoA0PuYR7U0Pp5roIzMYdohW514jownYuK/qLm8DNR3FjqJC1cF2e
-         qgOAsKiGw/8tE/yiPPCxsQZYl644JLZsF9wpm5hOrdM1FYnbGpcO0GvAG3nArJAIAQ5Q
-         IGfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767609524; x=1768214324;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=rpr1WOrht6j6ORsQatZtyLhRtfXLJi3Q8MSwGacBmmE=;
-        b=MJ3KbFJVSjzQ6qVlCTQ/EZJ9IXsSmza5kAE0HJ2wZThx8BBlHbqTdrsIPS8H6WSDdA
-         0LcFot/PkGlAWZviVIBYYAGCWMuG0UV0ydXtz5WbuL7YJnwkKIhxlNF6GL7brnYiDP9s
-         3nSF4c0Gxl34kVCemJOENufOw7HeQfvFD4WIZq6lTtioMxhf+jL72B52RfL4k31qnkzm
-         Mq/rfYFZlzmyDJZdC++2RMdKIkR5BsHJgq1+5jZR2eC3n2KWj2on/GMde7icwjFYGPFR
-         I1eVkz+5Mw/+RHfGM+4kmvjmrLnQfb1GMx2vAJxLsGeM9ts1l79dvC/kMDFQLMLvjDKI
-         ZYCA==
-X-Forwarded-Encrypted: i=1; AJvYcCV+oAhI7+jkFi2ltacFRnQis8bk5nX0DA8wXesu8OEwcy2mr7xRUUeS6AHbc3+7AlfD46paAU3H@lists.linux.dev
-X-Gm-Message-State: AOJu0YzJ4gw5bjuFrSLqu6gWaYU8I1pGp5QgdUw4BMiQjuDMPOiTu1II
-	Oj5hkm3wAvGnU4VCXx/bkNvFZqFZ8nQHusd6aHQKLoTlr77w84DJEdfGei2Uy5OBK0VQ2TpR5rn
-	C6lOXkKX1ozE/iQvGgNSuGTVRA8YfCZ8=
-X-Gm-Gg: AY/fxX6QBBEJC7VOBLMj57B9j6JtBkcvbhyYoym4PnZxg7phYTcLztmK3OJsVFSQM3K
-	OLGTdOMvH4ZdJpcGpNUmU2dXs/ewiL+8sGjOLUR9GM8lMVB1Fk7KnLim69hGRMdbzpi2YBK92S8
-	O+gfwFEADYQcJ3O/C1LrPz5iclgHY3T8M1Rtekiz9rZcQMDt1refoR60ORq+lY6KVhugIKxXT96
-	QHACzcnSxNW7xmSplags6ro0JJYr8V1Xymlv/vYKwmk+livkTo11fGxwwWid1ZNA180Yqsk
-X-Google-Smtp-Source: AGHT+IHve9mtUuYnBvwRtwl+XG1rrtZF7lTbS5cmb10zuaOisWC6Q5wRw7gN87SXZ2xj5LiVrwPD92wuBLz5gGcL/fA=
-X-Received: by 2002:a05:6402:51c9:b0:649:b200:afe9 with SMTP id
- 4fb4d7f45d1cf-64b8edd8b54mr44168355a12.27.1767609524051; Mon, 05 Jan 2026
- 02:38:44 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O3UAcCP1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9A05C116D0;
+	Mon,  5 Jan 2026 13:55:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1767621322;
+	bh=R3prR7NAkm/pmZYemezAYazX63wtmQSKkG62w/kXMDE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=O3UAcCP1534dpLzg8qmXWc5cdQtOo674VKbLWo/HU9KIQ+83VAQ4ZctLaqBpfLWvX
+	 2hvZJH0BCEu1Dj/fighKJJCA5yO6+KnWJViRgUmxZaiTGweeP0W57bosnXhNG69S4d
+	 cTZifnrIf+YiJ+/Mj0WiovaKbxcwi8K9zvCiDvcs=
+Date: Mon, 5 Jan 2026 14:55:19 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Stephen Zhang <starzhangzsd@gmail.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Andreas Gruenbacher <agruenba@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.18 052/430] gfs2: Fix use of bio_chain
+Message-ID: <2026010551-recite-vacant-01fd@gregkh>
+References: <20251229160724.139406961@linuxfoundation.org>
+ <20251229160726.283681845@linuxfoundation.org>
+ <CANubcdVnWRkJ8x7zLGKih+uY0D0cE8jGmF_dx7+iDb5sgBWtQg@mail.gmail.com>
+ <2026010240-certify-refined-7c02@gregkh>
+ <CANubcdW2z9AEdML4sV9XEXFeDUUzbt20istLuZ9s=zUoPvjDLQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251228063440.2623595-1-safinaskar@gmail.com> <20251228063440.2623595-2-safinaskar@gmail.com>
-In-Reply-To: <20251228063440.2623595-2-safinaskar@gmail.com>
-From: Magnus Lindholm <linmag7@gmail.com>
-Date: Mon, 5 Jan 2026 11:38:32 +0100
-X-Gm-Features: AQt7F2oW0pJ6x8V2KE_T8rhdE4-ywJ_uvZca_rX5x6NdgmoMtVTx5Rb8XUCp2AM
-Message-ID: <CA+=Fv5Ra7fFTd2wA77iM_6X7NooApfoMJX5z1j60cXex_uxm7w@mail.gmail.com>
-Subject: Re: [PATCH 1/1] alpha: trivial: remove ^L chars
-To: Askar Safin <safinaskar@gmail.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>, Matt Turner <mattst88@gmail.com>, 
-	linux-alpha@vger.kernel.org, kernel-janitors@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CANubcdW2z9AEdML4sV9XEXFeDUUzbt20istLuZ9s=zUoPvjDLQ@mail.gmail.com>
 
-On Sun, Dec 28, 2025 at 7:35=E2=80=AFAM Askar Safin <safinaskar@gmail.com> =
-wrote:
->
-> Remove ^L (a. k. a. \f a. k. a. form feed a. k. a. \x0c) from arch/alpha.
-> I'm attempting to write my own tool for parsing kernel code.
-> And these characters complicate this without giving any benefits.
->
-> Signed-off-by: Askar Safin <safinaskar@gmail.com>
-> ---
->  arch/alpha/kernel/core_cia.c      |  6 ++---
->  arch/alpha/kernel/core_irongate.c |  2 +-
->  arch/alpha/kernel/core_marvel.c   | 18 +++++++--------
->  arch/alpha/kernel/core_mcpcia.c   |  4 ++--
->  arch/alpha/kernel/core_polaris.c  |  2 +-
->  arch/alpha/kernel/core_t2.c       |  2 +-
->  arch/alpha/kernel/core_titan.c    | 10 ++++----
->  arch/alpha/kernel/core_tsunami.c  |  4 ++--
->  arch/alpha/kernel/err_common.c    |  4 ++--
->  arch/alpha/kernel/err_titan.c     |  2 +-
->  arch/alpha/kernel/pci_iommu.c     |  4 ++--
->  arch/alpha/kernel/smc37c669.c     | 38 +++++++++++++++----------------
->  arch/alpha/kernel/sys_marvel.c    |  4 ++--
->  arch/alpha/kernel/sys_titan.c     |  8 +++----
->  arch/alpha/kernel/time.c          | 10 ++++----
->  15 files changed, 59 insertions(+), 59 deletions(-)
->
+On Sat, Jan 03, 2026 at 02:26:01PM +0800, Stephen Zhang wrote:
+> Greg Kroah-Hartman <gregkh@linuxfoundation.org> 于2026年1月2日周五 14:49写道：
+> >
+> > On Wed, Dec 31, 2025 at 07:54:45PM +0800, Stephen Zhang wrote:
+> > > Greg Kroah-Hartman <gregkh@linuxfoundation.org> 于2025年12月30日周二 00:16写道：
+> > > >
+> > > > 6.18-stable review patch.  If anyone has any objections, please let me know.
+> > > >
+> > > > ------------------
+> > > >
+> > > > From: Andreas Gruenbacher <agruenba@redhat.com>
+> > > >
+> > > > [ Upstream commit 8a157e0a0aa5143b5d94201508c0ca1bb8cfb941 ]
+> > > >
+> > > > In gfs2_chain_bio(), the call to bio_chain() has its arguments swapped.
+> > > > The result is leaked bios and incorrect synchronization (only the last
+> > > > bio will actually be waited for).  This code is only used during mount
+> > > > and filesystem thaw, so the bug normally won't be noticeable.
+> > > >
+> > > > Reported-by: Stephen Zhang <starzhangzsd@gmail.com>
+> > > > Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+> > > > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> > > > ---
+> > > >  fs/gfs2/lops.c | 2 +-
+> > > >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > > >
+> > > > diff --git a/fs/gfs2/lops.c b/fs/gfs2/lops.c
+> > > > index 9c8c305a75c46..914d03f6c4e82 100644
+> > > > --- a/fs/gfs2/lops.c
+> > > > +++ b/fs/gfs2/lops.c
+> > > > @@ -487,7 +487,7 @@ static struct bio *gfs2_chain_bio(struct bio *prev, unsigned int nr_iovecs)
+> > > >         new = bio_alloc(prev->bi_bdev, nr_iovecs, prev->bi_opf, GFP_NOIO);
+> > > >         bio_clone_blkg_association(new, prev);
+> > > >         new->bi_iter.bi_sector = bio_end_sector(prev);
+> > > > -       bio_chain(new, prev);
+> > > > +       bio_chain(prev, new);
+> > > >         submit_bio(prev);
+> > > >         return new;
+> > > >  }
+> > > > --
+> > >
+> > > Hi Greg,
+> > >
+> > > I believe this patch should be excluded from the stable series. Please
+> > > refer to the discussion in the linked thread, which clarifies the reasoning:
+> > >
+> > > https://lore.kernel.org/gfs2/tencent_B55495E8E88EEE66CC2C7A1E6FBC2FC16C0A@qq.com/T/#mad18b8492e01daa939c7d958200802c9603b6c73
+> >
+> > What exactly is the reasoning?  Why not just take these submitted
+> > patches when they hit Linus's tree as well?
+> >
+> 
+> My understanding is that this patch didn't actually fix anything and
+> instead introduced a new bug by mistake. Since it was merged, a
+> second patch had to be submitted to revert/correct the original "fix."
+> 
+> Therefore, for the stable series, the appropriate action is to simply
+> drop this incorrect fix.
 
-Nice cleanup work.
+It's best to take the revert as well, to keep in sync, otherwise scripts
+will keep trying to apply the original.  What is the revert's git id?
 
-For a v2, please consider adjusting the commit message rationale away from
-personal tooling and towards general readability and editor/tool compatibil=
-ity.
-Otherwise this looks fine to me.
+thanks,
 
-Magnus
+greg k-h
