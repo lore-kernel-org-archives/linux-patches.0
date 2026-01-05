@@ -1,117 +1,111 @@
-Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B601EB5C2
-	for <patches@lists.linux.dev>; Mon,  5 Jan 2026 04:31:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDE9D313E00
+	for <patches@lists.linux.dev>; Mon,  5 Jan 2026 10:38:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767587523; cv=none; b=bAuHYZs95v0sZYZdgDX413eLStZnmLXUOntwIyTUCmkeKXIfJECaxxTf4VJPGFa3wWCilgiOrGTsSfLW3IYpy2kfoTMG6E6mwB7xJ5Ev9MlSNCi1CHFaQCbvzT45S/2to9t0Gjtszw0gTgywbjnqyRyO6iIcEGfIDwL7tg4KWgU=
+	t=1767609527; cv=none; b=VXJqY1hesbg+XoVm+5uQOJ4OWsbV0lMvF8MJjjYADWIcO/rGCL5fKsro1sgIBEDNch4oHE5a+PG/Vb1irfnAkSXgrc7iijxbICulZkPS3OlvW9AgbNN93Jaajku8GcOaOF5It9KodXMpknxCOFHIkJGUIN6/EwwczwCrWEe3K8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767587523; c=relaxed/simple;
-	bh=e4mNUTVMd3pbP2gaHBEUKskV1yFr7MQyVaNr9q7Kg0Q=;
+	s=arc-20240116; t=1767609527; c=relaxed/simple;
+	bh=KXLosAKj9WTZoqxb3cLCJTfmO0KCMCIscavgasNNB2Q=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HSKtUH/FW+V+NhXz3+LMjl48On/xtq7bqltuTpVHRfp16AOCBojiwJ2CeZawZHdG1V4TGMaSBasu2qFSRlZET0XQr6s8EQD6ouYbWVyfmSrOEO/MW3WNCOot7XNfUAtV4DZmULjA0iMlTt+4K34MWyOMm/Hu4QEJGK7+Cvkhrh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dzEtPQf9; arc=none smtp.client-ip=209.85.161.44
+	 To:Cc:Content-Type; b=Ad5k9Dv2CzplUSJTpb6Dz1EyfB/4bykZaPPOVH5XitUNgc2rfGn7h17vsRyP26XfGjEwoZP1c1j/tYp/Yagbb7MGqXmIKGd3XCR2rWuUBpIgvuXYFPr18rT150zNFe2GN5XO/N5eN/C0tTWwy7C3RIPF/Ok7W1E8tjgiayGzJJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UPC7zf0z; arc=none smtp.client-ip=209.85.208.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dzEtPQf9"
-Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-65b73eacdfcso2270279eaf.2
-        for <patches@lists.linux.dev>; Sun, 04 Jan 2026 20:31:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UPC7zf0z"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-64b8b5410a1so16138974a12.2
+        for <patches@lists.linux.dev>; Mon, 05 Jan 2026 02:38:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767587509; x=1768192309; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1767609524; x=1768214324; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=saUVAgEsyurYO5XeH99MQT53kwNGQ/V15cZ9Ga2UQbo=;
-        b=dzEtPQf9HNOz+ezkF1h2inHLRTyqFXoZ8ddFqhLgJwpRI8k9eBbkKV8wjY8w+Z+FQQ
-         9UCAO1uTCWay0jYCPXyDVYCfXrgJMlX9dc1ULzpjYuv3iermef55fu5pZfmaqKL8HPEb
-         gMU7Rf0nIIAEdzZ8HEqJvEwdJAWZaJbma7PIrr2lmC9/vDwFly4ImLTYvVIPF0Ms3EOz
-         +NgiZQr603sMDfS0qmG7TnHPV4u3ozah6hHQHuO+lLfwfTGY0c120q5DKJ6S6LSbXVbN
-         /U1Hug46mrBaelU4He/+c81u5q/qoi0OVSUKt/8AB4Ae4JqWNDj6hLdPAwWj6RqexxyC
-         L7Cw==
+        bh=rpr1WOrht6j6ORsQatZtyLhRtfXLJi3Q8MSwGacBmmE=;
+        b=UPC7zf0zHbPdJXtOEfV0FvN4rFkFxEDcuP9jy3xMhYGpqHzcPX8H5IdqWM7h1Y/y/p
+         LAvxkvBhWSIDCtxy/OZf+CHZf+bgrVyJlcIMHgTTZlV7CBErSpzmbaBkLRRkScsfn6ET
+         dY0c6WJpvOcS6ZLlxfIwFyqmBqmCpx5fzkQPehe8zbQ4edeozVJVamn3JPCriq0Rdqcl
+         uA6+M883T/W71bRIoA0PuYR7U0Pp5roIzMYdohW514jownYuK/qLm8DNR3FjqJC1cF2e
+         qgOAsKiGw/8tE/yiPPCxsQZYl644JLZsF9wpm5hOrdM1FYnbGpcO0GvAG3nArJAIAQ5Q
+         IGfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767587509; x=1768192309;
+        d=1e100.net; s=20230601; t=1767609524; x=1768214324;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=saUVAgEsyurYO5XeH99MQT53kwNGQ/V15cZ9Ga2UQbo=;
-        b=O0BQbcpRYvP8tuLkpk9MbTnc0naYWND7rdX8B7zlOtY5ZMHn094L4AkvyZuTASnLoY
-         eJAr7XzrGMv45RVa4X+TwULGiQY2VSqWnGkL1AwT9G5Nl1gHdIWgbv9+sOtbC/eTBcu4
-         PYRYaufT1i9nW5vC7aoqFS0/kRTmXS3IfhKB+v1tGmy8463tTpPnx1xC1UV769SdZ3f4
-         lGgfGYMIJjHS/D2KEYpl2mX4VLis5CxzPQOzim3+C5SsvFsOHh7RYWRQs7PpZ8zXuzHt
-         tyZAiIPdFOmjKES56zbxWbogLP47JjXFxXNBu3njLxSbbIPxDa5ZHVRdju0fBRnUWJcR
-         QjjA==
-X-Forwarded-Encrypted: i=1; AJvYcCUEwt9EtBPy6Ty2RMIy+Sr2+XCwhL9ZgYns6bq6dcJbulV+H934cxNWP1wgsagN1yZtEBGJamCK@lists.linux.dev
-X-Gm-Message-State: AOJu0YxooLqZ/B43ua05sl6gywmJv0tRw1HqA8IJNoBxLPfY+p5tlfds
-	apqJcr/Pw1z+LJI13TAnSSDmK3mEBf+yP0vCqBdaxIZGQOierkgnDOuE4gtA8KJbCDpPzixG4lh
-	bhrqLmRJ7z5lKznPhSt35OeXb2BZ6zAg=
-X-Gm-Gg: AY/fxX7ucQrtvXXzem31dEANzPZTef+XaGKH86KUTqqYn1aUOyeZpplWLEiBlXhbBAR
-	OXpYBU88woKuUgP55gJ7ryUxqv6Z0IIv9bEzSTIbD/+vAIuCegztUi5NM3T7dDsyrgPs+26ynvS
-	fdm02j3dg24rsqdnGa0fViWDOllFfgfTNdeaxcZoHf/ngS75rxiZ5XJHdCR+BHAMzj7tV0icZZ0
-	0Ep0ejf4MM6SmxhOZHEXPJKiRd7ZClzna2J4h/fZQADWU1wEuKmVnVp5odlUavD5nubD6E=
-X-Google-Smtp-Source: AGHT+IEBOFNjMVIcp+sMlVXjYpjBEZMMFX7+jPvUPM5+krXxGK7by8/Odk0UZPWbo60zUg8SgiWi2xJdtgeEwAt0Zqo=
-X-Received: by 2002:a4a:b789:0:b0:659:9a49:8e58 with SMTP id
- 006d021491bc7-65d0eaa85cfmr13980797eaf.40.1767587508671; Sun, 04 Jan 2026
- 20:31:48 -0800 (PST)
+        bh=rpr1WOrht6j6ORsQatZtyLhRtfXLJi3Q8MSwGacBmmE=;
+        b=MJ3KbFJVSjzQ6qVlCTQ/EZJ9IXsSmza5kAE0HJ2wZThx8BBlHbqTdrsIPS8H6WSDdA
+         0LcFot/PkGlAWZviVIBYYAGCWMuG0UV0ydXtz5WbuL7YJnwkKIhxlNF6GL7brnYiDP9s
+         3nSF4c0Gxl34kVCemJOENufOw7HeQfvFD4WIZq6lTtioMxhf+jL72B52RfL4k31qnkzm
+         Mq/rfYFZlzmyDJZdC++2RMdKIkR5BsHJgq1+5jZR2eC3n2KWj2on/GMde7icwjFYGPFR
+         I1eVkz+5Mw/+RHfGM+4kmvjmrLnQfb1GMx2vAJxLsGeM9ts1l79dvC/kMDFQLMLvjDKI
+         ZYCA==
+X-Forwarded-Encrypted: i=1; AJvYcCV+oAhI7+jkFi2ltacFRnQis8bk5nX0DA8wXesu8OEwcy2mr7xRUUeS6AHbc3+7AlfD46paAU3H@lists.linux.dev
+X-Gm-Message-State: AOJu0YzJ4gw5bjuFrSLqu6gWaYU8I1pGp5QgdUw4BMiQjuDMPOiTu1II
+	Oj5hkm3wAvGnU4VCXx/bkNvFZqFZ8nQHusd6aHQKLoTlr77w84DJEdfGei2Uy5OBK0VQ2TpR5rn
+	C6lOXkKX1ozE/iQvGgNSuGTVRA8YfCZ8=
+X-Gm-Gg: AY/fxX6QBBEJC7VOBLMj57B9j6JtBkcvbhyYoym4PnZxg7phYTcLztmK3OJsVFSQM3K
+	OLGTdOMvH4ZdJpcGpNUmU2dXs/ewiL+8sGjOLUR9GM8lMVB1Fk7KnLim69hGRMdbzpi2YBK92S8
+	O+gfwFEADYQcJ3O/C1LrPz5iclgHY3T8M1Rtekiz9rZcQMDt1refoR60ORq+lY6KVhugIKxXT96
+	QHACzcnSxNW7xmSplags6ro0JJYr8V1Xymlv/vYKwmk+livkTo11fGxwwWid1ZNA180Yqsk
+X-Google-Smtp-Source: AGHT+IHve9mtUuYnBvwRtwl+XG1rrtZF7lTbS5cmb10zuaOisWC6Q5wRw7gN87SXZ2xj5LiVrwPD92wuBLz5gGcL/fA=
+X-Received: by 2002:a05:6402:51c9:b0:649:b200:afe9 with SMTP id
+ 4fb4d7f45d1cf-64b8edd8b54mr44168355a12.27.1767609524051; Mon, 05 Jan 2026
+ 02:38:44 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251124151837.2184382-1-ojeda@kernel.org> <20251124151837.2184382-20-ojeda@kernel.org>
- <CAJ-ks9kSFp8CpyNr8zSKh6mniuXiYNrZCc8FC-8Z81GdbnaRog@mail.gmail.com>
-In-Reply-To: <CAJ-ks9kSFp8CpyNr8zSKh6mniuXiYNrZCc8FC-8Z81GdbnaRog@mail.gmail.com>
-From: Jesung Yang <y.j3ms.n@gmail.com>
-Date: Mon, 5 Jan 2026 13:31:37 +0900
-X-Gm-Features: AQt7F2qrKlVRmg6Qt0U99y98HY5qajxFqWZs4J8w3JjjhlpBLoCv1Y_qfJM799o
-Message-ID: <CA+tqQ4Kiypr8hZ8d9zRgjkoTDaXcszEm6U3k_OoJL=mhGd_kgw@mail.gmail.com>
-Subject: Re: [PATCH v2 19/20] rust: syn: enable support in kbuild
-To: Tamir Duberstein <tamird@gmail.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
-	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
-	linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev
+References: <20251228063440.2623595-1-safinaskar@gmail.com> <20251228063440.2623595-2-safinaskar@gmail.com>
+In-Reply-To: <20251228063440.2623595-2-safinaskar@gmail.com>
+From: Magnus Lindholm <linmag7@gmail.com>
+Date: Mon, 5 Jan 2026 11:38:32 +0100
+X-Gm-Features: AQt7F2oW0pJ6x8V2KE_T8rhdE4-ywJ_uvZca_rX5x6NdgmoMtVTx5Rb8XUCp2AM
+Message-ID: <CA+=Fv5Ra7fFTd2wA77iM_6X7NooApfoMJX5z1j60cXex_uxm7w@mail.gmail.com>
+Subject: Re: [PATCH 1/1] alpha: trivial: remove ^L chars
+To: Askar Safin <safinaskar@gmail.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>, Matt Turner <mattst88@gmail.com>, 
+	linux-alpha@vger.kernel.org, kernel-janitors@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jan 5, 2026 at 8:17=E2=80=AFAM Tamir Duberstein <tamird@gmail.com> =
+On Sun, Dec 28, 2025 at 7:35=E2=80=AFAM Askar Safin <safinaskar@gmail.com> =
 wrote:
-> On Mon, Nov 24, 2025 at 10:25=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> =
-wrote:
-[...]
-> > diff --git a/scripts/generate_rust_analyzer.py b/scripts/generate_rust_=
-analyzer.py
-> > index 4faf153ed2ee..5b6f7b8d6918 100755
-> > --- a/scripts/generate_rust_analyzer.py
-> > +++ b/scripts/generate_rust_analyzer.py
-> > @@ -100,6 +100,13 @@ def generate_crates(srctree, objtree, sysroot_src,=
- external_src, cfgs, core_edit
-> >          cfg=3Dcrates_cfgs["quote"],
-> >      )
-> >
-> > +    append_crate(
-> > +        "syn",
-> > +        srctree / "rust" / "syn" / "lib.rs",
-> > +        ["proc_macro", "proc_macro2", "quote"],
-> > +        cfg=3Dcrates_cfgs["syn"],
-> > +    )
 >
-> I think we need to add "std" here -- without it, navigating to methods
-> on e.g. Vec items defined in syn doesn't work (it does work with "std"
-> added).
+> Remove ^L (a. k. a. \f a. k. a. form feed a. k. a. \x0c) from arch/alpha.
+> I'm attempting to write my own tool for parsing kernel code.
+> And these characters complicate this without giving any benefits.
+>
+> Signed-off-by: Askar Safin <safinaskar@gmail.com>
+> ---
+>  arch/alpha/kernel/core_cia.c      |  6 ++---
+>  arch/alpha/kernel/core_irongate.c |  2 +-
+>  arch/alpha/kernel/core_marvel.c   | 18 +++++++--------
+>  arch/alpha/kernel/core_mcpcia.c   |  4 ++--
+>  arch/alpha/kernel/core_polaris.c  |  2 +-
+>  arch/alpha/kernel/core_t2.c       |  2 +-
+>  arch/alpha/kernel/core_titan.c    | 10 ++++----
+>  arch/alpha/kernel/core_tsunami.c  |  4 ++--
+>  arch/alpha/kernel/err_common.c    |  4 ++--
+>  arch/alpha/kernel/err_titan.c     |  2 +-
+>  arch/alpha/kernel/pci_iommu.c     |  4 ++--
+>  arch/alpha/kernel/smc37c669.c     | 38 +++++++++++++++----------------
+>  arch/alpha/kernel/sys_marvel.c    |  4 ++--
+>  arch/alpha/kernel/sys_titan.c     |  8 +++----
+>  arch/alpha/kernel/time.c          | 10 ++++----
+>  15 files changed, 59 insertions(+), 59 deletions(-)
+>
 
-This was handled in [1], but hasn't landed yet, probably due to lack of
-Reviewed-by or Tested-by tags. If anyone has a moment to take a look
-and provide some tags, it would be appreciated!
+Nice cleanup work.
 
-[1] https://lore.kernel.org/rust-for-linux/6dbdf6e1c1639ae381ca9ab7041f8472=
-8ffa2267.1764062688.git.y.j3ms.n@gmail.com/
+For a v2, please consider adjusting the commit message rationale away from
+personal tooling and towards general readability and editor/tool compatibil=
+ity.
+Otherwise this looks fine to me.
 
-Best regards,
-Jesung
+Magnus
