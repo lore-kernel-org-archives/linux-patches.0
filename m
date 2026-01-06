@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3BDB253932;
-	Tue,  6 Jan 2026 17:38:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9F623D291;
+	Tue,  6 Jan 2026 17:39:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721138; cv=none; b=nQq/Qk2jmj4LrFgT3SM1oRAyPfMhPTDwtErPU9Q1qqr80TnWDSxU/uDgDURv60ycmjkxSmOKsRblOc36UUd3BoNoY6S/+WXRFV6DQm+/4ezprrE3nrCkK980eioi2N//SuCYldaWDpLkiDgi/xyQgo4s43vB7b4NhaXzPSV/8j0=
+	t=1767721142; cv=none; b=b9jGK+zAcznB4J9WVo9l3zzNc6VLbLjxN/a2RUn/J7OZYtUW8u/CGYl+xPAU8kDOK3J/OiljN7uQm0dtlU2b9vMEP5O2T9qkW2aWimOglUDD4QKL8ExJtVRWD3DsU3MB3xA23287+BLJG31xos5WxR9HaowDrh+7lkdCmk5cHao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721138; c=relaxed/simple;
-	bh=AKnuqP4Xmi7y3yNvMwfW4pgO/917NGdBMeeNxRhbh5I=;
+	s=arc-20240116; t=1767721142; c=relaxed/simple;
+	bh=twFJA0yZP5HAkuKtanjKZKTigsWuIGLqTTrLlw9YJ6k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=byD+1BfCdCHtevkQaQ70oNSka/f0zHfwQpVoaIxhfkFT86ejM9PJJpRppq7uNTzLKRUTQM2tQPi+HqPY0BNwYSdgIagAXGa4BtMK+VWmznVTUze/Nqi+C4PHIvmlLspbuk8eic3uEoMPYcg7Io0EW3DwQwdCvMFNW6M2K04jjIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KcEoMNf/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eBS0XA7bO66H/mRxYpj0s6R3IYfyL4reBXTi7GWJcAfMVqlSK3i/q0chiKdSgin+MWJgn6MxoiJhhRa2dwDdD3c2jO0inR+8bAo3kIq+OLHXXCmu/VsnrC70aVOHCYhByFZuwxagBXyfhnPmqDYmw74XEt83hUrGjwXX2Z2ocIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2YnMhv7Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KcEoMNf/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 419D1C116C6;
-	Tue,  6 Jan 2026 17:38:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2YnMhv7Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B6C9C116C6;
+	Tue,  6 Jan 2026 17:39:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721138;
-	bh=AKnuqP4Xmi7y3yNvMwfW4pgO/917NGdBMeeNxRhbh5I=;
+	s=korg; t=1767721142;
+	bh=twFJA0yZP5HAkuKtanjKZKTigsWuIGLqTTrLlw9YJ6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KcEoMNf//20/0epJA/0TRscsl9ZrVrEWTmwjC8wMvR/9hTfa0128ETfssuosCejJx
-	 ZyxH6isKmsJxu9h+Lk/hSa5drOZLwhU0523Jcqnd7I/HHGNzbbnPQOekpn9j6sFWyz
-	 vqvxxg6Vm4nBc2PV3Kk1oFCE3g+oO5RKA/1cJGQ4=
+	b=2YnMhv7Q7qUrnvQCHFQxpxlIJEEpqMdNz7PfPXPcpyo5+4CWp4VTD/qlyMk16qebc
+	 yfWouAnbkcqLcqPvOzmqN0gsqDA0Vx0LdEN5oqBIAp7pivi/v0sF9BrdUDB+V8WQea
+	 0hFbDn/B9HXcNvZfzD5NewWVij3Q2nNqm3Z5l9Po=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
 	Simon Horman <horms@kernel.org>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 6.12 447/567] e1000: fix OOB in e1000_tbi_should_accept()
-Date: Tue,  6 Jan 2026 18:03:49 +0100
-Message-ID: <20260106170507.884783006@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 448/567] fjes: Add missing iounmap in fjes_hw_init()
+Date: Tue,  6 Jan 2026 18:03:50 +0100
+Message-ID: <20260106170507.921029599@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,123 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
 
-commit 9c72a5182ed92904d01057f208c390a303f00a0f upstream.
+commit 15ef641a0c6728d25a400df73922e80ab2cf029c upstream.
 
-In e1000_tbi_should_accept() we read the last byte of the frame via
-'data[length - 1]' to evaluate the TBI workaround. If the descriptor-
-reported length is zero or larger than the actual RX buffer size, this
-read goes out of bounds and can hit unrelated slab objects. The issue
-is observed from the NAPI receive path (e1000_clean_rx_irq):
+In error paths, add fjes_hw_iounmap() to release the
+resource acquired by fjes_hw_iomap(). Add a goto label
+to do so.
 
-==================================================================
-BUG: KASAN: slab-out-of-bounds in e1000_tbi_should_accept+0x610/0x790
-Read of size 1 at addr ffff888014114e54 by task sshd/363
-
-CPU: 0 PID: 363 Comm: sshd Not tainted 5.18.0-rc1 #1
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.12.0-59-gc9ba5276e321-prebuilt.qemu.org 04/01/2014
-Call Trace:
- <IRQ>
- dump_stack_lvl+0x5a/0x74
- print_address_description+0x7b/0x440
- print_report+0x101/0x200
- kasan_report+0xc1/0xf0
- e1000_tbi_should_accept+0x610/0x790
- e1000_clean_rx_irq+0xa8c/0x1110
- e1000_clean+0xde2/0x3c10
- __napi_poll+0x98/0x380
- net_rx_action+0x491/0xa20
- __do_softirq+0x2c9/0x61d
- do_softirq+0xd1/0x120
- </IRQ>
- <TASK>
- __local_bh_enable_ip+0xfe/0x130
- ip_finish_output2+0x7d5/0xb00
- __ip_queue_xmit+0xe24/0x1ab0
- __tcp_transmit_skb+0x1bcb/0x3340
- tcp_write_xmit+0x175d/0x6bd0
- __tcp_push_pending_frames+0x7b/0x280
- tcp_sendmsg_locked+0x2e4f/0x32d0
- tcp_sendmsg+0x24/0x40
- sock_write_iter+0x322/0x430
- vfs_write+0x56c/0xa60
- ksys_write+0xd1/0x190
- do_syscall_64+0x43/0x90
- entry_SYSCALL_64_after_hwframe+0x44/0xae
-RIP: 0033:0x7f511b476b10
-Code: 73 01 c3 48 8b 0d 88 d3 2b 00 f7 d8 64 89 01 48 83 c8 ff c3 66 0f 1f 44 00 00 83 3d f9 2b 2c 00 00 75 10 b8 01 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 31 c3 48 83 ec 08 e8 8e 9b 01 00 48 89 04 24
-RSP: 002b:00007ffc9211d4e8 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
-RAX: ffffffffffffffda RBX: 0000000000004024 RCX: 00007f511b476b10
-RDX: 0000000000004024 RSI: 0000559a9385962c RDI: 0000000000000003
-RBP: 0000559a9383a400 R08: fffffffffffffff0 R09: 0000000000004f00
-R10: 0000000000000070 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007ffc9211d57f R14: 0000559a9347bde7 R15: 0000000000000003
- </TASK>
-Allocated by task 1:
- __kasan_krealloc+0x131/0x1c0
- krealloc+0x90/0xc0
- add_sysfs_param+0xcb/0x8a0
- kernel_add_sysfs_param+0x81/0xd4
- param_sysfs_builtin+0x138/0x1a6
- param_sysfs_init+0x57/0x5b
- do_one_initcall+0x104/0x250
- do_initcall_level+0x102/0x132
- do_initcalls+0x46/0x74
- kernel_init_freeable+0x28f/0x393
- kernel_init+0x14/0x1a0
- ret_from_fork+0x22/0x30
-The buggy address belongs to the object at ffff888014114000
- which belongs to the cache kmalloc-2k of size 2048
-The buggy address is located 1620 bytes to the right of
- 2048-byte region [ffff888014114000, ffff888014114800]
-The buggy address belongs to the physical page:
-page:ffffea0000504400 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x14110
-head:ffffea0000504400 order:3 compound_mapcount:0 compound_pincount:0
-flags: 0x100000000010200(slab|head|node=0|zone=1)
-raw: 0100000000010200 0000000000000000 dead000000000001 ffff888013442000
-raw: 0000000000000000 0000000000080008 00000001ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-==================================================================
-
-This happens because the TBI check unconditionally dereferences the last
-byte without validating the reported length first:
-
-	u8 last_byte = *(data + length - 1);
-
-Fix by rejecting the frame early if the length is zero, or if it exceeds
-adapter->rx_buffer_len. This preserves the TBI workaround semantics for
-valid frames and prevents touching memory beyond the RX buffer.
-
-Fixes: 2037110c96d5 ("e1000: move tbi workaround code into helper function")
+Fixes: 8cdc3f6c5d22 ("fjes: Hardware initialization routine")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+Signed-off-by: Simon Horman <horms@kernel.org>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20251211073756.101824-1-lihaoxiang@isrc.iscas.ac.cn
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/e1000/e1000_main.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/net/fjes/fjes_hw.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/drivers/net/ethernet/intel/e1000/e1000_main.c
-+++ b/drivers/net/ethernet/intel/e1000/e1000_main.c
-@@ -4088,7 +4088,15 @@ static bool e1000_tbi_should_accept(stru
- 				    u32 length, const u8 *data)
- {
- 	struct e1000_hw *hw = &adapter->hw;
--	u8 last_byte = *(data + length - 1);
-+	u8 last_byte;
-+
-+	/* Guard against OOB on data[length - 1] */
-+	if (unlikely(!length))
-+		return false;
-+	/* Upper bound: length must not exceed rx_buffer_len */
-+	if (unlikely(length > adapter->rx_buffer_len))
-+		return false;
-+	last_byte = *(data + length - 1);
+--- a/drivers/net/fjes/fjes_hw.c
++++ b/drivers/net/fjes/fjes_hw.c
+@@ -334,7 +334,7 @@ int fjes_hw_init(struct fjes_hw *hw)
  
- 	if (TBI_ACCEPT(hw, status, errors, length, last_byte)) {
- 		unsigned long irq_flags;
+ 	ret = fjes_hw_reset(hw);
+ 	if (ret)
+-		return ret;
++		goto err_iounmap;
+ 
+ 	fjes_hw_set_irqmask(hw, REG_ICTL_MASK_ALL, true);
+ 
+@@ -347,8 +347,10 @@ int fjes_hw_init(struct fjes_hw *hw)
+ 	hw->max_epid = fjes_hw_get_max_epid(hw);
+ 	hw->my_epid = fjes_hw_get_my_epid(hw);
+ 
+-	if ((hw->max_epid == 0) || (hw->my_epid >= hw->max_epid))
+-		return -ENXIO;
++	if ((hw->max_epid == 0) || (hw->my_epid >= hw->max_epid)) {
++		ret = -ENXIO;
++		goto err_iounmap;
++	}
+ 
+ 	ret = fjes_hw_setup(hw);
+ 
+@@ -356,6 +358,10 @@ int fjes_hw_init(struct fjes_hw *hw)
+ 	hw->hw_info.trace_size = FJES_DEBUG_BUFFER_SIZE;
+ 
+ 	return ret;
++
++err_iounmap:
++	fjes_hw_iounmap(hw);
++	return ret;
+ }
+ 
+ void fjes_hw_exit(struct fjes_hw *hw)
 
 
