@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90FC73557E4;
-	Tue,  6 Jan 2026 17:25:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE193557EC;
+	Tue,  6 Jan 2026 17:25:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720351; cv=none; b=kGh0lkaPcCzkWhP1bmQ2S8HQoLmeFmDNpYpsN9BWfFtLhqYNUjWISKWHnQojvjojCdT6D23g73Ru9gnYi3BsXRZ1h4WiMD+SuqCz2hPxaAGhXcZ3X3ARZJ/VaPE0Pe1i7klcva1njl/XEr+Z4JAzW7+6JM0BWHGLNy9QTRUQkDA=
+	t=1767720355; cv=none; b=dGDMr2MWut/OgoIgQ9eqvR9J90v+8vbirXnyRpRXT0UJFiH8csM+bkHQ2emvNM7//NpijsQwA9cXChaItLxJg6omFMds+UlmsaOlOkDSpLyMMy6yqGEfbRMyJPnRUbKVZgTPq5VUhVotLYUrfViDxJ43mgTccudgmS1jyhcYiXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720351; c=relaxed/simple;
-	bh=Sc9pEojchzzuhIxlGDzcxUOA5ti03RhhsKrdN+Ngk3c=;
+	s=arc-20240116; t=1767720355; c=relaxed/simple;
+	bh=AOwdJ8SJvepWwIaOkOP/P6MP0LdIYPH/YxPRKhSMYB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qoaYTFmGtwGajz3RMKg3RMIu59V66zA1ayLIEgy3tDfk1N26OdMN42rmwVVb0VM/la9Cs6LqlvNGeXY1BDt+X8bgRqMGHVcEftym2uSP5lGXnVNqvabEuXe1e8hzZUkWeOSt4olsKYEIATjh4qh7DCKF/UKZU2kU3yxKVCgU+Yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFSsKKFn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KaT+xaL5Sp/kjV7HGw18M131SFaln/evzc3qtFc4l3A7ZzhPB4Ei+93QcptQ2+Y4HQWtnrSzvywfy2eZAyjwvJGfBteIgsCZGegkDkwr14+Kvl0Ssw3947Xv7io2BuszBgbHUTQ2yWzgvDUXX+DNH59KYpFBfPZSaupzjFLjAXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HSluox8v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFSsKKFn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F38DDC116C6;
-	Tue,  6 Jan 2026 17:25:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HSluox8v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 433E3C116C6;
+	Tue,  6 Jan 2026 17:25:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720351;
-	bh=Sc9pEojchzzuhIxlGDzcxUOA5ti03RhhsKrdN+Ngk3c=;
+	s=korg; t=1767720354;
+	bh=AOwdJ8SJvepWwIaOkOP/P6MP0LdIYPH/YxPRKhSMYB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZFSsKKFnKwXFuLK0PxfZDOUFi6E35swnSNJR/aXlzNXXpaojJtQWYlCV9iAJCyUkJ
-	 7vwBFprAML7mHFSPWMBsUeczspIBgakg823f+DgiFNf/p5WVQF724LlhuGw+aRBmYF
-	 uDTlNAa9YIlQIkiCoM8ygOZ0/w7WeiXJJQlFAv1A=
+	b=HSluox8vWi7G1Yjv7uK82w+6ITB5P3l+j0NSheuplhu/2oK5xqyiKwbWc2WpZtQo7
+	 EMdhjF1wE+PEVGDDxhFNdUE5BuTnqKeDWnUv61pNWg6J9YGX2QCHoYXyPVLQQvNdZ9
+	 OndLpbLs+6P3eDXhSzWdlXqCswTuRFYOeekmKhLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>
-Subject: [PATCH 6.12 177/567] mptcp: avoid deadlock on fallback while reinjecting
-Date: Tue,  6 Jan 2026 17:59:19 +0100
-Message-ID: <20260106170457.874330294@linuxfoundation.org>
+	Chen Changcheng <chenchangcheng@kylinos.cn>
+Subject: [PATCH 6.12 178/567] usb: usb-storage: Maintain minimal modifications to the bcdDevice range.
+Date: Tue,  6 Jan 2026 17:59:20 +0100
+Message-ID: <20260106170457.912887802@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,110 +49,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Chen Changcheng <chenchangcheng@kylinos.cn>
 
-commit ffb8c27b0539dd90262d1021488e7817fae57c42 upstream.
+commit 0831269b5f71594882accfceb02638124f88955d upstream.
 
-Jakub reported an MPTCP deadlock at fallback time:
+We cannot determine which models require the NO_ATA_1X and
+IGNORE_RESIDUE quirks aside from the EL-R12 optical drive device.
 
- WARNING: possible recursive locking detected
- 6.18.0-rc7-virtme #1 Not tainted
- --------------------------------------------
- mptcp_connect/20858 is trying to acquire lock:
- ff1100001da18b60 (&msk->fallback_lock){+.-.}-{3:3}, at: __mptcp_try_fallback+0xd8/0x280
-
- but task is already holding lock:
- ff1100001da18b60 (&msk->fallback_lock){+.-.}-{3:3}, at: __mptcp_retrans+0x352/0xaa0
-
- other info that might help us debug this:
-  Possible unsafe locking scenario:
-
-        CPU0
-        ----
-   lock(&msk->fallback_lock);
-   lock(&msk->fallback_lock);
-
-  *** DEADLOCK ***
-
-  May be due to missing lock nesting notation
-
- 3 locks held by mptcp_connect/20858:
-  #0: ff1100001da18290 (sk_lock-AF_INET){+.+.}-{0:0}, at: mptcp_sendmsg+0x114/0x1bc0
-  #1: ff1100001db40fd0 (k-sk_lock-AF_INET#2){+.+.}-{0:0}, at: __mptcp_retrans+0x2cb/0xaa0
-  #2: ff1100001da18b60 (&msk->fallback_lock){+.-.}-{3:3}, at: __mptcp_retrans+0x352/0xaa0
-
- stack backtrace:
- CPU: 0 UID: 0 PID: 20858 Comm: mptcp_connect Not tainted 6.18.0-rc7-virtme #1 PREEMPT(full)
- Hardware name: Bochs, BIOS Bochs 01/01/2011
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0x6f/0xa0
-  print_deadlock_bug.cold+0xc0/0xcd
-  validate_chain+0x2ff/0x5f0
-  __lock_acquire+0x34c/0x740
-  lock_acquire.part.0+0xbc/0x260
-  _raw_spin_lock_bh+0x38/0x50
-  __mptcp_try_fallback+0xd8/0x280
-  mptcp_sendmsg_frag+0x16c2/0x3050
-  __mptcp_retrans+0x421/0xaa0
-  mptcp_release_cb+0x5aa/0xa70
-  release_sock+0xab/0x1d0
-  mptcp_sendmsg+0xd5b/0x1bc0
-  sock_write_iter+0x281/0x4d0
-  new_sync_write+0x3c5/0x6f0
-  vfs_write+0x65e/0xbb0
-  ksys_write+0x17e/0x200
-  do_syscall_64+0xbb/0xfd0
-  entry_SYSCALL_64_after_hwframe+0x4b/0x53
- RIP: 0033:0x7fa5627cbc5e
- Code: 4d 89 d8 e8 14 bd 00 00 4c 8b 5d f8 41 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 11 c9 c3 0f 1f 80 00 00 00 00 48 8b 45 10 0f 05 <c9> c3 83 e2 39 83 fa 08 75 e7 e8 13 ff ff ff 0f 1f 00 f3 0f 1e fa
- RSP: 002b:00007fff1fe14700 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
- RAX: ffffffffffffffda RBX: 0000000000000005 RCX: 00007fa5627cbc5e
- RDX: 0000000000001f9c RSI: 00007fff1fe16984 RDI: 0000000000000005
- RBP: 00007fff1fe14710 R08: 0000000000000000 R09: 0000000000000000
- R10: 0000000000000000 R11: 0000000000000202 R12: 00007fff1fe16920
- R13: 0000000000002000 R14: 0000000000001f9c R15: 0000000000001f9c
-
-The packet scheduler could attempt a reinjection after receiving an
-MP_FAIL and before the infinite map has been transmitted, causing a
-deadlock since MPTCP needs to do the reinjection atomically from WRT
-fallback.
-
-Address the issue explicitly avoiding the reinjection in the critical
-scenario. Note that this is the only fallback critical section that
-could potentially send packets and hit the double-lock.
-
-Reported-by: Jakub Kicinski <kuba@kernel.org>
-Closes: https://netdev-ctrl.bots.linux.dev/logs/vmksft/mptcp-dbg/results/412720/1-mptcp-join-sh/stderr
-Fixes: f8a1d9b18c5e ("mptcp: make fallback action and fallback decision atomic")
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251205-net-mptcp-misc-fixes-6-19-rc1-v1-4-9e4781a6c1b8@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 955a48a5353f ("usb: usb-storage: No additional quirks need to be added to the EL-R12 optical drive.")
+Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
+Link: https://patch.msgid.link/20251218012318.15978-1-chenchangcheng@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/usb/storage/unusual_uas.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2749,10 +2749,13 @@ static void __mptcp_retrans(struct sock
+--- a/drivers/usb/storage/unusual_uas.h
++++ b/drivers/usb/storage/unusual_uas.h
+@@ -98,7 +98,7 @@ UNUSUAL_DEV(0x125f, 0xa94a, 0x0160, 0x01
+ 		US_FL_NO_ATA_1X),
  
- 			/*
- 			 * make the whole retrans decision, xmit, disallow
--			 * fallback atomic
-+			 * fallback atomic, note that we can't retrans even
-+			 * when an infinite fallback is in progress, i.e. new
-+			 * subflows are disallowed.
- 			 */
- 			spin_lock_bh(&msk->fallback_lock);
--			if (__mptcp_check_fallback(msk)) {
-+			if (__mptcp_check_fallback(msk) ||
-+			    !msk->allow_subflows) {
- 				spin_unlock_bh(&msk->fallback_lock);
- 				release_sock(ssk);
- 				goto clear_scheduled;
+ /* Reported-by: Benjamin Tissoires <benjamin.tissoires@redhat.com> */
+-UNUSUAL_DEV(0x13fd, 0x3940, 0x0309, 0x0309,
++UNUSUAL_DEV(0x13fd, 0x3940, 0x0000, 0x0309,
+ 		"Initio Corporation",
+ 		"INIC-3069",
+ 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
 
 
