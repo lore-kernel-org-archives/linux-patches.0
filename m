@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F52357A50;
-	Tue,  6 Jan 2026 17:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D852357A50;
+	Tue,  6 Jan 2026 17:57:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722234; cv=none; b=hiltLfScGEfV+yAgcL5MqDbqUcih5w12bY57X4OK+VvLJH/N0xn/XU1tYjD9i0ExcZmKXU0nDln60H8JbuxWKG7dShOCYJgEvudiVg33arJjWt0xl20jJNE2Ydh5V7JCOX+grryNvcW99BE4qpVD+qADdPlBXG5ptF91SXqZ9/k=
+	t=1767722238; cv=none; b=jNaLov6bl/wSoyrBupCSOtMU9isgPtJSB7uloqkR+Vd6tSjDlshBWG8kl2SHufs8UzeUb4cgkw5r3gZ2dsHbMtn6d2ySrgYndW1jrpF8cEZ1wqPZheBguVJdCvsTAYom7o/4VZ/Hti4N4j4dBe4TA7c7TW+J198v/EDPq4H3bTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722234; c=relaxed/simple;
-	bh=2Py3HI+5NQqJ5uKNgm3CyXgSkH9oTjwf7YUDqdp9PIg=;
+	s=arc-20240116; t=1767722238; c=relaxed/simple;
+	bh=jB+M/9c9HeOE5dSS+47yxLy1sr18QXl9JZRxxI5zK8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kPARvd2OXhYyvn5FzyywtAfrMMiZre348fCdSqko1lo5TqBavIcp8qprxc2bFuz1NEG17/rSuGlrhmSqSZQjj0W+y51q0Yv3l/qoUOoaXocSejYNcret7HI6qUJUkIXdvzsNpDMtEzWUjdK0rfvZ3m9Ck/o0m+XmrDvV52qNQyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UeKRoWHX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fgFQ0isrNqdfvR7Pf14tu28u26Jd+0BhC1lhl98d1on/2lat59jQ39+YN57IRAJPcHTkjI1cWG1hI/mjjCqeidshAH5eDFYF7AcPVyq5IUnAo7EsfU5QaWTY6/szTD1S38wkYqWgTl2h7QgXSTQemb9Dhc0j/kNb3+ZXe6GfTZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FQgr1Kwn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UeKRoWHX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C53DC116C6;
-	Tue,  6 Jan 2026 17:57:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FQgr1Kwn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8417AC116C6;
+	Tue,  6 Jan 2026 17:57:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722234;
-	bh=2Py3HI+5NQqJ5uKNgm3CyXgSkH9oTjwf7YUDqdp9PIg=;
+	s=korg; t=1767722238;
+	bh=jB+M/9c9HeOE5dSS+47yxLy1sr18QXl9JZRxxI5zK8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UeKRoWHXi1pjW32Vj2q+x1AqrgKLL5mxJAOG0zTOJR87uAFOFWDazrsB+6N0ANFos
-	 QhsstCw2TbOs3Y8vJxrF5yPZYU8yDZUlPFrhdfMaQukJ1XP1rXzbPRXCsZ6b0R4HU3
-	 zlTQINRwlloEyeju7Jw5KGrbpK9jALsOqN0dgyEw=
+	b=FQgr1Kwn9XAxIjmzZ1LycfeRaqduQlR+fgQqDLDkkyLMVRW5SDgBAsG2afNyIyO92
+	 VXXQ5E/79EIbFiPzU2yzwM+/fP69K4MtMTTTNzQisMc8BAJ947QV8MuhQzts4EUT7G
+	 o7rcYjMUE6v0rirnXLkRnQ/JttJoWulzJM/UGmKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuli Wang <wangyl5933@chinaunicom.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.18 196/312] LoongArch: Use __pmd()/__pte() for swap entry conversions
-Date: Tue,  6 Jan 2026 18:04:30 +0100
-Message-ID: <20260106170554.915673978@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 205/312] mm/damon/tests/core-kunit: handle allocation failures in damon_test_regions()
+Date: Tue,  6 Jan 2026 18:04:39 +0100
+Message-ID: <20260106170555.250111811@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -44,61 +47,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: WangYuli <wangyl5933@chinaunicom.cn>
+From: SeongJae Park <sj@kernel.org>
 
-commit 4a71df151e703b5e7e85b33369cee59ef2665e61 upstream.
+commit e16fdd4f754048d6e23c56bd8d920b71e41e3777 upstream.
 
-The __pmd() and __pte() helper macros provide the correct initialization
-syntax and abstraction for the pmd_t and pte_t types.
+damon_test_regions() is assuming all dynamic memory allocation in it will
+succeed.  Those are indeed likely in the real use cases since those
+allocations are too small to fail, but theoretically those could fail.  In
+the case, inappropriate memory access can happen.  Fix it by appropriately
+cleanup pre-allocated memory and skip the execution of the remaining tests
+in the failure cases.
 
-Use __pmd() to fix follow warning about __swp_entry_to_pmd() with gcc-15
-under specific configs [1] :
-
-  In file included from ./include/linux/pgtable.h:6,
-                   from ./include/linux/mm.h:31,
-                   from ./include/linux/pagemap.h:8,
-                   from arch/loongarch/mm/init.c:14:
-  ./include/linux/swapops.h: In function ‘swp_entry_to_pmd’:
-  ./arch/loongarch/include/asm/pgtable.h:302:34: error: missing braces around initializer [-Werror=missing-braces]
-    302 | #define __swp_entry_to_pmd(x)   ((pmd_t) { (x).val | _PAGE_HUGE })
-        |                                  ^
-  ./include/linux/swapops.h:559:16: note: in expansion of macro ‘__swp_entry_to_pmd’
-    559 |         return __swp_entry_to_pmd(arch_entry);
-        |                ^~~~~~~~~~~~~~~~~~
-  cc1: all warnings being treated as errors
-
-Also update __swp_entry_to_pte() to use __pte() for consistency.
-
-[1]. https://download.01.org/0day-ci/archive/20251119/202511190316.luI90kAo-lkp@intel.com/config
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Yuli Wang <wangyl5933@chinaunicom.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Link: https://lkml.kernel.org/r/20251101182021.74868-3-sj@kernel.org
+Fixes: 17ccae8bb5c9 ("mm/damon: add kunit tests")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: Brendan Higgins <brendan.higgins@linux.dev>
+Cc: David Gow <davidgow@google.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: <stable@vger.kernel.org>	[5.15+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/include/asm/pgtable.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/damon/tests/core-kunit.h |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/arch/loongarch/include/asm/pgtable.h
-+++ b/arch/loongarch/include/asm/pgtable.h
-@@ -297,9 +297,9 @@ static inline pte_t mk_swap_pte(unsigned
- #define __swp_offset(x)		((x).val >> 24)
- #define __swp_entry(type, offset) ((swp_entry_t) { pte_val(mk_swap_pte((type), (offset))) })
- #define __pte_to_swp_entry(pte) ((swp_entry_t) { pte_val(pte) })
--#define __swp_entry_to_pte(x)	((pte_t) { (x).val })
-+#define __swp_entry_to_pte(x)	__pte((x).val)
- #define __pmd_to_swp_entry(pmd) ((swp_entry_t) { pmd_val(pmd) })
--#define __swp_entry_to_pmd(x)	((pmd_t) { (x).val | _PAGE_HUGE })
-+#define __swp_entry_to_pmd(x)	__pmd((x).val | _PAGE_HUGE)
+--- a/mm/damon/tests/core-kunit.h
++++ b/mm/damon/tests/core-kunit.h
+@@ -20,11 +20,17 @@ static void damon_test_regions(struct ku
+ 	struct damon_target *t;
  
- static inline bool pte_swp_exclusive(pte_t pte)
- {
+ 	r = damon_new_region(1, 2);
++	if (!r)
++		kunit_skip(test, "region alloc fail");
+ 	KUNIT_EXPECT_EQ(test, 1ul, r->ar.start);
+ 	KUNIT_EXPECT_EQ(test, 2ul, r->ar.end);
+ 	KUNIT_EXPECT_EQ(test, 0u, r->nr_accesses);
+ 
+ 	t = damon_new_target();
++	if (!t) {
++		damon_free_region(r);
++		kunit_skip(test, "target alloc fail");
++	}
+ 	KUNIT_EXPECT_EQ(test, 0u, damon_nr_regions(t));
+ 
+ 	damon_add_region(r, t);
 
 
