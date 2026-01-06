@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60B035C1B6;
-	Tue,  6 Jan 2026 17:46:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B997F2F744F;
+	Tue,  6 Jan 2026 17:46:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721577; cv=none; b=D5H4IhaFMepwW0JZL7jUbFbGgUxE44IunhwW1U67+r0lz5qxSVyxrn+zgM5G2PggZpmRq2wI+/s1VUfEs1v7sqSzBxxZjm7ynGGqiuGlLdgVg3iRsD5Ybg7ldW62/ko/a4AYBpdk+efkBp3czj+cTcftDoZDCgzgitwu+GcRT6g=
+	t=1767721580; cv=none; b=lgVU2o+hU75iCmlIiyJBu+5YKNGZPxXj2gPUdK732u0N1vRrx2OkJyUW0xnwBQtY91TWXw4CaVO6xte2qQdDoZpQc23YeNW+GNy0h6Zmophzx+gWBTjZuN8DnDrOyM1QSioBw+xmQt+KiDfHXCWaofpLJZlGZPYi4lOPqOjiLj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721577; c=relaxed/simple;
-	bh=Tc8mSl7NoSMRcPFX76hgVR0VcYzEPBXK15ayYyKva4w=;
+	s=arc-20240116; t=1767721580; c=relaxed/simple;
+	bh=hN1vPZF3rCkXKJhF7/12iLtWEiYmY1bzy2P1fQUupkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JsSa76CcH24LcRcxTUq5v8R8C6rl0Z3GRg/K34oWOmC1VoaYbLJvPk9/jluZe5LarYUpKu33TMPy0OhHyKIaumnF9zgwxfMpJhXf0uJewMU1XFV7GPCzBN+RAmXeRGzbUEVSJeJuCM6AFz4raz/NEYrGmJjx7sKzhchrrLfOg4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LEirnHbL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fMl3gXVFXlgQBPNhCW33eQQRQ9cc98TmzHNN5KJ6kFf2tLh03gUko1R1BWS+oJlOKpf6H0Ry99Xr4+9HG9r+VbXpO7RgglLS3TEvSSd+HbEPeGhmsmjvbeN06Fhv3MIcC9oB4PI3WcYIPAueW/U3fHTAM3mkBPTVag3mFv0UIQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nk19CLjw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LEirnHbL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52079C116C6;
-	Tue,  6 Jan 2026 17:46:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nk19CLjw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7977C116C6;
+	Tue,  6 Jan 2026 17:46:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721576;
-	bh=Tc8mSl7NoSMRcPFX76hgVR0VcYzEPBXK15ayYyKva4w=;
+	s=korg; t=1767721580;
+	bh=hN1vPZF3rCkXKJhF7/12iLtWEiYmY1bzy2P1fQUupkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LEirnHbLiQuPOssUxFUY3TfK7wVjpmc2XHjHIBCv8uPdpQQxTJPu0VXFKhC1E1s9u
-	 cp2VUzVHIUmsXavlIz3YXgD1JPQ6I+YW7OV6b+dTC7lpiDF8O3XhFPezW5q1RhIEHh
-	 PifA5guDDGxQNvsq1pqshoyMsJPtxfcYbiJbqkeg=
+	b=Nk19CLjwUcnzJCSBI0z6yAqEuQKuazkyJmNOp88QpaS6DyBR3CTfviiscEQev5but
+	 SNpwK9+YTd2GRQ/ZxlCl4ylCAbmQ8Ef03XMGHfLxv2PpHycFB3P8wgVzbuMWXaKEDN
+	 2LHaH4DpOEzzMSkKFSvV/Vfod8rIKyVoqD1E6LRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Tiago=20Martins=20Ara=C3=BAjo?= <tiago.martins.araujo@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 010/312] drm/displayid: add quirk to ignore DisplayID checksum errors
-Date: Tue,  6 Jan 2026 18:01:24 +0100
-Message-ID: <20260106170548.225304295@linuxfoundation.org>
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.18 011/312] drm/amdgpu: dont attach the tlb fence for SI
+Date: Tue,  6 Jan 2026 18:01:25 +0100
+Message-ID: <20260106170548.261873817@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -53,134 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 83cbb4d33dc22b0ca1a4e85c6e892c9b729e28d4 ]
+commit eb296c09805ee37dd4ea520a7fb3ec157c31090f upstream.
 
-Add a mechanism for DisplayID specific quirks, and add the first quirk
-to ignore DisplayID section checksum errors.
+SI hardware doesn't support pasids, user mode queues, or
+KIQ/MES so there is no need for this.  Doing so results in
+a segfault as these callbacks are non-existent for SI.
 
-It would be quite inconvenient to pass existing EDID quirks from
-drm_edid.c for DisplayID parsing. Not all places doing DisplayID
-iteration have the quirks readily available, and would have to pass it
-in all places. Simply add a separate array of DisplayID specific EDID
-quirks. We do end up checking it every time we iterate DisplayID blocks,
-but hopefully the number of quirks remains small.
-
-There are a few laptop models with DisplayID checksum failures, leading
-to higher refresh rates only present in the DisplayID blocks being
-ignored. Add a quirk for the panel in the machines.
-
-Reported-by: Tiago Martins Araújo <tiago.martins.araujo@gmail.com>
-Closes: https://lore.kernel.org/r/CACRbrPGvLP5LANXuFi6z0S7XMbAG4X5y2YOLBDxfOVtfGGqiKQ@mail.gmail.com
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/14703
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Tested-by: Tiago Martins Araújo <tiago.martins.araujo@gmail.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/c04d81ae648c5f21b3f5b7953f924718051f2798.1761681968.git.jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4744
+Fixes: f3854e04b708 ("drm/amdgpu: attach tlb fence to the PTs update")
+Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 820b3d376e8a102c6aeab737ec6edebbbb710e04)
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_displayid.c          |   41 +++++++++++++++++++++++++++----
- drivers/gpu/drm/drm_displayid_internal.h |    2 +
- 2 files changed, 39 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/drm_displayid.c
-+++ b/drivers/gpu/drm/drm_displayid.c
-@@ -9,6 +9,34 @@
- #include "drm_crtc_internal.h"
- #include "drm_displayid_internal.h"
- 
-+enum {
-+	QUIRK_IGNORE_CHECKSUM,
-+};
-+
-+struct displayid_quirk {
-+	const struct drm_edid_ident ident;
-+	u8 quirks;
-+};
-+
-+static const struct displayid_quirk quirks[] = {
-+	{
-+		.ident = DRM_EDID_IDENT_INIT('C', 'S', 'O', 5142, "MNE007ZA1-5"),
-+		.quirks = BIT(QUIRK_IGNORE_CHECKSUM),
-+	},
-+};
-+
-+static u8 get_quirks(const struct drm_edid *drm_edid)
-+{
-+	int i;
-+
-+	for (i = 0; i < ARRAY_SIZE(quirks); i++) {
-+		if (drm_edid_match(drm_edid, &quirks[i].ident))
-+			return quirks[i].quirks;
-+	}
-+
-+	return 0;
-+}
-+
- static const struct displayid_header *
- displayid_get_header(const u8 *displayid, int length, int index)
- {
-@@ -23,7 +51,7 @@ displayid_get_header(const u8 *displayid
- }
- 
- static const struct displayid_header *
--validate_displayid(const u8 *displayid, int length, int idx)
-+validate_displayid(const u8 *displayid, int length, int idx, bool ignore_checksum)
- {
- 	int i, dispid_length;
- 	u8 csum = 0;
-@@ -41,8 +69,11 @@ validate_displayid(const u8 *displayid,
- 	for (i = 0; i < dispid_length; i++)
- 		csum += displayid[idx + i];
- 	if (csum) {
--		DRM_NOTE("DisplayID checksum invalid, remainder is %d\n", csum);
--		return ERR_PTR(-EINVAL);
-+		DRM_NOTE("DisplayID checksum invalid, remainder is %d%s\n", csum,
-+			 ignore_checksum ? " (ignoring)" : "");
-+
-+		if (!ignore_checksum)
-+			return ERR_PTR(-EINVAL);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -1066,7 +1066,9 @@ amdgpu_vm_tlb_flush(struct amdgpu_vm_upd
  	}
  
- 	return base;
-@@ -52,6 +83,7 @@ static const u8 *find_next_displayid_ext
- {
- 	const struct displayid_header *base;
- 	const u8 *displayid;
-+	bool ignore_checksum = iter->quirks & BIT(QUIRK_IGNORE_CHECKSUM);
+ 	/* Prepare a TLB flush fence to be attached to PTs */
+-	if (!params->unlocked) {
++	if (!params->unlocked &&
++	    /* SI doesn't support pasid or KIQ/MES */
++	    params->adev->family > AMDGPU_FAMILY_SI) {
+ 		amdgpu_vm_tlb_fence_create(params->adev, vm, fence);
  
- 	displayid = drm_edid_find_extension(iter->drm_edid, DISPLAYID_EXT, &iter->ext_index);
- 	if (!displayid)
-@@ -61,7 +93,7 @@ static const u8 *find_next_displayid_ext
- 	iter->length = EDID_LENGTH - 1;
- 	iter->idx = 1;
- 
--	base = validate_displayid(displayid, iter->length, iter->idx);
-+	base = validate_displayid(displayid, iter->length, iter->idx, ignore_checksum);
- 	if (IS_ERR(base))
- 		return NULL;
- 
-@@ -76,6 +108,7 @@ void displayid_iter_edid_begin(const str
- 	memset(iter, 0, sizeof(*iter));
- 
- 	iter->drm_edid = drm_edid;
-+	iter->quirks = get_quirks(drm_edid);
- }
- 
- static const struct displayid_block *
---- a/drivers/gpu/drm/drm_displayid_internal.h
-+++ b/drivers/gpu/drm/drm_displayid_internal.h
-@@ -167,6 +167,8 @@ struct displayid_iter {
- 
- 	u8 version;
- 	u8 primary_use;
-+
-+	u8 quirks;
- };
- 
- void displayid_iter_edid_begin(const struct drm_edid *drm_edid,
+ 		/* Makes sure no PD/PT is freed before the flush */
 
 
