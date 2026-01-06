@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38622D73B9;
-	Tue,  6 Jan 2026 17:40:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E1372D73B9;
+	Tue,  6 Jan 2026 17:40:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721222; cv=none; b=pt+CTzvDAHgnCZEoKA56vhkHV3N5D+F03djpLxjpRfRXMQV0un0K4/3Tp3mwICAYys/DHJkwJCr/7oejhu8ZubRbZxNmf8EDnUgTgpQkys2D6RFvZBM4kJQxqGFHkZpDTAaEZjbWtJ0ymnROnltADXQ02VzoVBy95nNMRkTLwRw=
+	t=1767721226; cv=none; b=PfTVfG3deFFT0ak0s8iZly8Q9l6d3EomaG2mwzVFA3wHrzMhW2+bM3/OXvOJBLDPRDwPVO4Kw7wb3putcODQSnhhhWnZVtRZsGjSDvFCvOG2TLF++IeWEA1XoLJFPljg5h8XO7rzc6SU9gUa+PI2x6G4jvlrL00loGIp9mUXTvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721222; c=relaxed/simple;
-	bh=cVxB0Tfbjr7fd6wjyG0V2TkwmD5ZMYluyRb0B4olA7o=;
+	s=arc-20240116; t=1767721226; c=relaxed/simple;
+	bh=WZZGxm0oNgqJbOfnNYSTVSZvf0hS7Bon3TfZHogulQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=J64REHXV/84lJnb0Z/DMgCIY5cxIHLkY313qxK9AbWYwtCMxrh+KstNhBhSbn63i3Gry15Tuqxkbnd2M1MF4ETG4u+MNnSsJEoOGJRExRJL3PJMb3fhy2wB3OHaZoAUJdC3VQ8kaav5w6hORBPskQCVbqqGgGdTl0ca3nOTqe4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2VCQolxR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SFvlRbbUKnt7Bs4AQb2mE3EHGeqv20Vs6HGKKtWBa7t6kWu/zcmA6f3/gibz85T69P3uUI7P4g6pA9wYfNGWr1T2D4U8VYOPszrR0xbp0h7aNPyNZFKmiSNE3FJzd1t8xVIQgFJkFirdBD/wnCwRwsYGVnenooSiZiUYnLgsG4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QUUctKiI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2VCQolxR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D695C116C6;
-	Tue,  6 Jan 2026 17:40:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QUUctKiI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BE37C116C6;
+	Tue,  6 Jan 2026 17:40:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721222;
-	bh=cVxB0Tfbjr7fd6wjyG0V2TkwmD5ZMYluyRb0B4olA7o=;
+	s=korg; t=1767721226;
+	bh=WZZGxm0oNgqJbOfnNYSTVSZvf0hS7Bon3TfZHogulQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2VCQolxRPj+TQ4Gv7wB6bRIXncUDRQEdle6oy0t+8Yu2eqgcwvyU3yeA4m0yAqeG3
-	 84zxpK+HsyoQgPXkDZrYmsuUra7JHUyYL7LK+B5EulCFLALKIYllDUXZzl/1VUpftL
-	 AX6dbGMzzFBIkv2DYEsUzKXjx1+rICRVsE9kDqjc=
+	b=QUUctKiI9YIfvEiuHAEjsblW7t6nARCpaCp+84pFmNPRAFAh76n6mF9TyCoGOHCJw
+	 svnx3WVMWX7W/xPl2Y7e342Tq8mCAjiZSDCCk3nTLJSMxTCrpnAOIKtgUVw184yEV3
+	 bxnOBXmw8ASwhz0G/KVZGU59WrPt5Ajvd6Z+/Jqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.12 473/567] drm/i915: Fix format string truncation warning
-Date: Tue,  6 Jan 2026 18:04:15 +0100
-Message-ID: <20260106170508.849974633@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Simon Richter <Simon.Richter@hogyros.de>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Shuicheng Lin <shuicheng.lin@intel.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
+Subject: [PATCH 6.12 474/567] drm/ttm: Avoid NULL pointer deref for evicted BOs
+Date: Tue,  6 Jan 2026 18:04:16 +0100
+Message-ID: <20260106170508.888496102@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,50 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Simon Richter <Simon.Richter@hogyros.de>
 
-commit 1c7f9e528f8f488b060b786bfb90b40540854db3 upstream.
+commit 491adc6a0f9903c32b05f284df1148de39e8e644 upstream.
 
-GCC notices that the 16-byte uabi_name field could theoretically be too
-small for the formatted string if the instance number exceeds 100.
+It is possible for a BO to exist that is not currently associated with a
+resource, e.g. because it has been evicted.
 
-So grow the field to 20 bytes.
+When devcoredump tries to read the contents of all BOs for dumping, we need
+to expect this as well -- in this case, ENODATA is recorded instead of the
+buffer contents.
 
-drivers/gpu/drm/i915/intel_memory_region.c: In function ‘intel_memory_region_create’:
-drivers/gpu/drm/i915/intel_memory_region.c:273:61: error: ‘%u’ directive output may be truncated writing between 1 and 5 bytes into a region of size between 3 and 11 [-Werror=format-truncation=]
-  273 |         snprintf(mem->uabi_name, sizeof(mem->uabi_name), "%s%u",
-      |                                                             ^~
-drivers/gpu/drm/i915/intel_memory_region.c:273:58: note: directive argument in the range [0, 65535]
-  273 |         snprintf(mem->uabi_name, sizeof(mem->uabi_name), "%s%u",
-      |                                                          ^~~~~~
-drivers/gpu/drm/i915/intel_memory_region.c:273:9: note: ‘snprintf’ output between 7 and 19 bytes into a destination of size 16
-  273 |         snprintf(mem->uabi_name, sizeof(mem->uabi_name), "%s%u",
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  274 |                  intel_memory_type_str(type), instance);
-      |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Fixes: 3b38d3515753 ("drm/i915: Add stable memory region names")
-Cc: <stable@vger.kernel.org> # v6.8+
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
-Link: https://lore.kernel.org/r/20251205113500.684286-2-ardb@kernel.org
-(cherry picked from commit 18476087f1a18dc279d200d934ad94fba1fb51d5)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Fixes: 7d08df5d0bd3 ("drm/ttm: Add ttm_bo_access")
+Fixes: 09ac4fcb3f25 ("drm/ttm: Implement vm_operations_struct.access v2")
+Cc: stable <stable@kernel.org>
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/6271
+Signed-off-by: Simon Richter <Simon.Richter@hogyros.de>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Shuicheng Lin <shuicheng.lin@intel.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patch.msgid.link/20251013161241.709916-1-Simon.Richter@hogyros.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/intel_memory_region.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/ttm/ttm_bo_vm.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/gpu/drm/i915/intel_memory_region.h
-+++ b/drivers/gpu/drm/i915/intel_memory_region.h
-@@ -72,7 +72,7 @@ struct intel_memory_region {
- 	u16 instance;
- 	enum intel_region_id id;
- 	char name[16];
--	char uabi_name[16];
-+	char uabi_name[20];
- 	bool private; /* not for userspace */
+--- a/drivers/gpu/drm/ttm/ttm_bo_vm.c
++++ b/drivers/gpu/drm/ttm/ttm_bo_vm.c
+@@ -421,6 +421,11 @@ int ttm_bo_vm_access(struct vm_area_stru
+ 	if (ret)
+ 		return ret;
  
- 	struct {
++	if (!bo->resource) {
++		ret = -ENODATA;
++		goto unlock;
++	}
++
+ 	switch (bo->resource->mem_type) {
+ 	case TTM_PL_SYSTEM:
+ 		fallthrough;
+@@ -435,6 +440,7 @@ int ttm_bo_vm_access(struct vm_area_stru
+ 			ret = -EIO;
+ 	}
+ 
++unlock:
+ 	ttm_bo_unreserve(bo);
+ 
+ 	return ret;
 
 
