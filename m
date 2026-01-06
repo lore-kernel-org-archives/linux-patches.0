@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C38AF284694;
-	Tue,  6 Jan 2026 17:15:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD791284694;
+	Tue,  6 Jan 2026 17:15:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719754; cv=none; b=U4RFPo7KsA2x6FcYK5u3KFD3i2qdtuDHEJhke6N/08BX2ImPUALLWuaehx8ZStyJxXQfbTQYbhEGmHf5v61JNnxgasKxM8ox7OItdGgrucxhyivpE4Y9DCpKZXC46MMEOQxNgvd6mFDG7GiY3vHt3JzNiI+CXYpKaAl7xuUD3jY=
+	t=1767719756; cv=none; b=A5MpbsBkOg3BfF7eMRSg93r0n+lUKSCnl6sn096qq8EFQ7jvemkQSriJIOccdVxu+mD4b4by/UL4S31O6zgf1E5zxW0Elh1F1qeMxXuIBQFxDiAc7sIZK8cFVJhYnO2UDdjqgoHnP9he4nYR4TSoaRyuLB+dVBmXAjfJQHg/+OQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719754; c=relaxed/simple;
-	bh=AqSsDoIabaK4a30pDEwE+dgf/Ksolsb5Hxy2uDtzSo8=;
+	s=arc-20240116; t=1767719756; c=relaxed/simple;
+	bh=ipV2Lxt7loP5oUsk6t8AnTlWi1eJZ7LlnLbHg0V/zDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qIbQeKOkAm8rDMRDJGUqs3Quse/0h5HIWBVqGcggDn7L01njbmi324vTQFbIJN5bC7AMKMhPagqoKnTlTQRkYyR3p6ptdctUKLyaDGfNvpjgtazB9oZS5msi3A1qEJk6qJcDujKy1mf3ZZpqh0xZW1hD7wRtUCPaPbOwL/0Xy2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nPuyAZ6B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PSHSVXu5zdg27H0LQltxK6vx8CTwmJneoo+2ioIcsRZpqEeMqxjBNbURCc4QNsWacNFNapvKyyRYTbchFbE+9Cl79QfiUhwie4klykOj6xDbDzZGi1ANj6tMbT0xAChptlHpgrF5DDlJSA3R6Nu50Tk3iF0iIzX8StLWgyydnV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R3k2J0Z+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nPuyAZ6B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2700C116C6;
-	Tue,  6 Jan 2026 17:15:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R3k2J0Z+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25204C116C6;
+	Tue,  6 Jan 2026 17:15:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719753;
-	bh=AqSsDoIabaK4a30pDEwE+dgf/Ksolsb5Hxy2uDtzSo8=;
+	s=korg; t=1767719756;
+	bh=ipV2Lxt7loP5oUsk6t8AnTlWi1eJZ7LlnLbHg0V/zDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nPuyAZ6BRHyCHmUcM/tgdtLzwQnaN/nUJ/du3JbrtN7Kwx+Ezx4bKTe33rOMNkiTi
-	 FSV0eQI5ykAHE5jHulz9DtLtEXC1oxCQCfXtyUCSTT96XEBxZ5TeiY1XZeCfxD0207
-	 9Zwf4VuFIOM7OyDeTCJkCIAsJ6fa/BB5D2mX77XU=
+	b=R3k2J0Z+UIuivf8SafLuffAHStdlim4k9zhazaPPwgKlJppE8z5sPSH0v+nj38M1b
+	 Y9RQWlpgIeS3MPQhTGTuYQhwJxZEiCAoYDWTr6h2PRHbVvlXfgfWUOSLRVJ7ISaPoH
+	 01AHAWTUm0o42V+k0RDFFvnnYCvoYz4J852wnjwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Ondrej Mosnacek <omosnace@redhat.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 029/567] wifi: cfg80211: stop radar detection in cfg80211_leave()
-Date: Tue,  6 Jan 2026 17:56:51 +0100
-Message-ID: <20260106170452.421267384@linuxfoundation.org>
+Subject: [PATCH 6.12 003/567] bpf, arm64: Do not audit capability check in do_jit()
+Date: Tue,  6 Jan 2026 17:56:25 +0100
+Message-ID: <20260106170451.468463022@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -50,83 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Ondrej Mosnacek <omosnace@redhat.com>
 
-[ Upstream commit 9f33477b9a31a1edfe2df9f1a0359cccb0e16b4c ]
+[ Upstream commit 189e5deb944a6f9c7992355d60bffd8ec2e54a9c ]
 
-If an interface is set down or, per the previous patch, changes
-type, radar detection for it should be cancelled. This is done
-for AP mode in mac80211 (somewhat needlessly, since cfg80211 can
-do it, but didn't until now), but wasn't handled for mesh, so if
-radar detection was started and then the interface set down or
-its type switched (the latter sometimes happning in the hwsim
-test 'mesh_peer_connected_dfs'), radar detection would be around
-with the interface unknown to the driver, later leading to some
-warnings around chanctx usage.
+Analogically to the x86 commit 881a9c9cb785 ("bpf: Do not audit
+capability check in do_jit()"), change the capable() call to
+ns_capable_noaudit() in order to avoid spurious SELinux denials in audit
+log.
 
-Link: https://patch.msgid.link/20251121174021.290120e419e3.I2a5650c9062e29c988992dd8ce0d8eb570d23267@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+The commit log from that commit applies here as well:
+"""
+The failure of this check only results in a security mitigation being
+applied, slightly affecting performance of the compiled BPF program. It
+doesn't result in a failed syscall, an thus auditing a failed LSM
+permission check for it is unwanted. For example with SELinux, it causes
+a denial to be reported for confined processes running as root, which
+tends to be flagged as a problem to be fixed in the policy. Yet
+dontauditing or allowing CAP_SYS_ADMIN to the domain may not be
+desirable, as it would allow/silence also other checks - either going
+against the principle of least privilege or making debugging potentially
+harder.
+
+Fix it by changing it from capable() to ns_capable_noaudit(), which
+instructs the LSMs to not audit the resulting denials.
+"""
+
+Fixes: f300769ead03 ("arm64: bpf: Only mitigate cBPF programs loaded by unprivileged users")
+Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
+Link: https://lore.kernel.org/r/20251204125916.441021-1-omosnace@redhat.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/core.c |  1 +
- net/wireless/core.h |  1 +
- net/wireless/mlme.c | 19 +++++++++++++++++++
- 3 files changed, 21 insertions(+)
+ arch/arm64/net/bpf_jit_comp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/wireless/core.c b/net/wireless/core.c
-index dc207a8986c7f..6bb8a7037d24d 100644
---- a/net/wireless/core.c
-+++ b/net/wireless/core.c
-@@ -1343,6 +1343,7 @@ void cfg80211_leave(struct cfg80211_registered_device *rdev,
+diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
+index ca6d002a6f137..82b57436f2f10 100644
+--- a/arch/arm64/net/bpf_jit_comp.c
++++ b/arch/arm64/net/bpf_jit_comp.c
+@@ -871,7 +871,7 @@ static void __maybe_unused build_bhb_mitigation(struct jit_ctx *ctx)
+ 	    arm64_get_spectre_v2_state() == SPECTRE_VULNERABLE)
+ 		return;
  
- 	cfg80211_pmsr_wdev_down(wdev);
+-	if (capable(CAP_SYS_ADMIN))
++	if (ns_capable_noaudit(&init_user_ns, CAP_SYS_ADMIN))
+ 		return;
  
-+	cfg80211_stop_radar_detection(wdev);
- 	cfg80211_stop_background_radar_detection(wdev);
- 
- 	switch (wdev->iftype) {
-diff --git a/net/wireless/core.h b/net/wireless/core.h
-index 3b3e3cd7027ac..d4b26cbe3342d 100644
---- a/net/wireless/core.h
-+++ b/net/wireless/core.h
-@@ -483,6 +483,7 @@ cfg80211_start_background_radar_detection(struct cfg80211_registered_device *rde
- 					  struct wireless_dev *wdev,
- 					  struct cfg80211_chan_def *chandef);
- 
-+void cfg80211_stop_radar_detection(struct wireless_dev *wdev);
- void cfg80211_stop_background_radar_detection(struct wireless_dev *wdev);
- 
- void cfg80211_background_cac_done_wk(struct work_struct *work);
-diff --git a/net/wireless/mlme.c b/net/wireless/mlme.c
-index d1a66410b9c55..26319522c7abc 100644
---- a/net/wireless/mlme.c
-+++ b/net/wireless/mlme.c
-@@ -1271,6 +1271,25 @@ cfg80211_start_background_radar_detection(struct cfg80211_registered_device *rde
- 	return 0;
- }
- 
-+void cfg80211_stop_radar_detection(struct wireless_dev *wdev)
-+{
-+	struct wiphy *wiphy = wdev->wiphy;
-+	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wiphy);
-+	int link_id;
-+
-+	for_each_valid_link(wdev, link_id) {
-+		struct cfg80211_chan_def chandef;
-+
-+		if (!wdev->links[link_id].cac_started)
-+			continue;
-+
-+		chandef = *wdev_chandef(wdev, link_id);
-+		rdev_end_cac(rdev, wdev->netdev, link_id);
-+		nl80211_radar_notify(rdev, &chandef, NL80211_RADAR_CAC_ABORTED,
-+				     wdev->netdev, GFP_KERNEL);
-+	}
-+}
-+
- void cfg80211_stop_background_radar_detection(struct wireless_dev *wdev)
- {
- 	struct wiphy *wiphy = wdev->wiphy;
+ 	if (supports_clearbhb(SCOPE_SYSTEM)) {
 -- 
 2.51.0
 
