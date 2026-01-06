@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C86B2355031;
-	Tue,  6 Jan 2026 17:49:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8108A3612C7;
+	Tue,  6 Jan 2026 17:49:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721785; cv=none; b=Xq5jKVFOZV2cKfRQmoa7MIouU04o9zb8cB2Lrglx7gQ8STon0GHgjwmO6Gtjy7ijPw7971Q2PYfqTfoOE0UTOZijcBLUKWm5o7xCFfTN1QcPBKjPDS9Ci3o8O0MiEYq4OvZPlamOKUmx6/oiwxCwzAJAmbSYofBFczNTVq30x9U=
+	t=1767721789; cv=none; b=O7AqOPUV5u4kLgNghKfzj+qimtYMH5BITwDdK+UidvOYcDAvkvLzFQi37IpPS5d523gYcIq3rFiYNpztUq+NgbK3aIYDBurdqt3cX5R2B53a8CEYAcLZvoYjiBXio9qbFQ5ReC+LANYy4e14yhcNeki6HvrWkGQxxBMxJHIUCHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721785; c=relaxed/simple;
-	bh=0uO3C6lU6IIyxRbUcj29L3/vmcWqWoeSCopVN1cegio=;
+	s=arc-20240116; t=1767721789; c=relaxed/simple;
+	bh=TOutcNPsYixcm4KYvSRdJBgcQunEdbwd3SeeKQ/xQM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gf2RHiufyZl78UoRCv86Z36/UDXmeEhWDuq4qH8XTBXqlGXE6rLgwfTLQ84dqR2mSSMtFsdgdRx0N9NiFFV82JJ3PFxD3BfJYNoXWs+b6dyYkPYGVi/6lYq2vYAbmRlipTqwyzaNTxFLQPHMH/UC1PxNmzCt58tEUolvNv8xnvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xsN1Toaj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m86t4Fz1hwF9UdBKZs5JTb4xqY5wlByHvmptPB/MbJHTWjilzOxe4LWc9JXJHR81th+/lJnGAHSnN4rXuNAlaKkEAWEzQ4x5c4assYleZz18MlJjsYETaD0pp/fxKZQhphOPCHrpxDAIobTgiwHWsWfThITU7rujXlp7RExA69k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hQUlAVe/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xsN1Toaj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 372B2C116C6;
-	Tue,  6 Jan 2026 17:49:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hQUlAVe/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94033C116C6;
+	Tue,  6 Jan 2026 17:49:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721785;
-	bh=0uO3C6lU6IIyxRbUcj29L3/vmcWqWoeSCopVN1cegio=;
+	s=korg; t=1767721789;
+	bh=TOutcNPsYixcm4KYvSRdJBgcQunEdbwd3SeeKQ/xQM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xsN1ToajgvoE3MQivLRfjZ1i+TTpSqGvJ7aAuc3kDGjD1s31HIqurCqOODeRL1eg+
-	 ZhuweRPIlSGjQdVCdqunhtFrT+/jd9ZS6O0jkIPiqFvc6YruuD8CwWBq4SA5PAaH3l
-	 dS5vltsIjPAJ9yDcNzoCH0gMDKfw/HJAfKsGpWFs=
+	b=hQUlAVe/O1raYbcOg7A0SAFI+KjmCZ/OHcINmOwzuo5p+4EFr7l4sZbhM14+JI5J9
+	 lRBZP0RQ+nH8CrSLK7E8k0LbrEYEN1WBy99ObH/Ng9zl1v5UrXKZAMI0NLp+eRgrD2
+	 +OO+T0oRzGtdsWXUoivMojFE7B4PF+J3WxYz9+0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kohei Enju <enjuk@amazon.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Tejun Heo <tj@kernel.org>,
+	syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Parav Pandit <parav@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 054/312] tools/sched_ext: fix scx_show_state.py for scx_root change
-Date: Tue,  6 Jan 2026 18:02:08 +0100
-Message-ID: <20260106170549.807342244@linuxfoundation.org>
+Subject: [PATCH 6.18 072/312] RDMA/core: always drop device refcount in ib_del_sub_device_and_put()
+Date: Tue,  6 Jan 2026 18:02:26 +0100
+Message-ID: <20260106170550.453061639@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -52,66 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kohei Enju <enjuk@amazon.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit f92ff79ba2640fc482bf2bfb5b42e33957f90caf ]
+[ Upstream commit fa3c411d21ebc26ffd175c7256c37cefa35020aa ]
 
-Commit 48e126777386 ("sched_ext: Introduce scx_sched") introduced
-scx_root and removed scx_ops, causing scx_show_state.py to fail when
-searching for the 'scx_ops' object. [1]
+Since nldev_deldev() (introduced by commit 060c642b2ab8 ("RDMA/nldev: Add
+support to add/delete a sub IB device through netlink") grabs a reference
+using ib_device_get_by_index() before calling ib_del_sub_device_and_put(),
+we need to drop that reference before returning -EOPNOTSUPP error.
 
-Fix by using 'scx_root' instead, with NULL pointer handling.
-
-[1]
- # drgn -s vmlinux ./tools/sched_ext/scx_show_state.py
- Traceback (most recent call last):
-   File "/root/.venv/bin/drgn", line 8, in <module>
-     sys.exit(_main())
-              ~~~~~^^
-   File "/root/.venv/lib64/python3.14/site-packages/drgn/cli.py", line 625, in _main
-     runpy.run_path(
-     ~~~~~~~~~~~~~~^
-         script_path, init_globals={"prog": prog}, run_name="__main__"
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-     )
-     ^
-   File "<frozen runpy>", line 287, in run_path
-   File "<frozen runpy>", line 98, in _run_module_code
-   File "<frozen runpy>", line 88, in _run_code
-   File "./tools/sched_ext/scx_show_state.py", line 30, in <module>
-     ops = prog['scx_ops']
-           ~~~~^^^^^^^^^^^
- _drgn.ObjectNotFoundError: could not find 'scx_ops'
-
-Fixes: 48e126777386 ("sched_ext: Introduce scx_sched")
-Signed-off-by: Kohei Enju <enjuk@amazon.com>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Reported-by: syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=881d65229ca4f9ae8c84
+Fixes: bca51197620a ("RDMA/core: Support IB sub device with type "SMI"")
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Link: https://patch.msgid.link/80749a85-cbe2-460c-8451-42516013f9fa@I-love.SAKURA.ne.jp
+Reviewed-by: Parav Pandit <parav@nvidia.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/sched_ext/scx_show_state.py | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/infiniband/core/device.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/sched_ext/scx_show_state.py b/tools/sched_ext/scx_show_state.py
-index 7cdcc6729ea4..aec4a4498140 100644
---- a/tools/sched_ext/scx_show_state.py
-+++ b/tools/sched_ext/scx_show_state.py
-@@ -27,10 +27,13 @@ def read_static_key(name):
- def state_str(state):
-     return prog['scx_enable_state_str'][state].string_().decode()
+diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
+index b4f3c835844a..e3ba236d7c09 100644
+--- a/drivers/infiniband/core/device.c
++++ b/drivers/infiniband/core/device.c
+@@ -2881,8 +2881,10 @@ int ib_del_sub_device_and_put(struct ib_device *sub)
+ {
+ 	struct ib_device *parent = sub->parent;
  
--ops = prog['scx_ops']
-+root = prog['scx_root']
- enable_state = read_atomic("scx_enable_state_var")
+-	if (!parent)
++	if (!parent) {
++		ib_device_put(sub);
+ 		return -EOPNOTSUPP;
++	}
  
--print(f'ops           : {ops.name.string_().decode()}')
-+if root:
-+    print(f'ops           : {root.ops.name.string_().decode()}')
-+else:
-+    print('ops           : ')
- print(f'enabled       : {read_static_key("__scx_enabled")}')
- print(f'switching_all : {read_int("scx_switching_all")}')
- print(f'switched_all  : {read_static_key("__scx_switched_all")}')
+ 	mutex_lock(&parent->subdev_lock);
+ 	list_del(&sub->subdev_list);
 -- 
 2.51.0
 
