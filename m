@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83182F619A;
-	Tue,  6 Jan 2026 17:29:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094162F619A;
+	Tue,  6 Jan 2026 17:29:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720554; cv=none; b=LG60SoIWH2cGL9DNR8Roy8a6XjoW6LIyZ73XsAAZYwQ6VtImBpvDwBc0fKTIm/O0Uq4Oh/2S/m27MvW2Uj4R44iBXdxNGtLhx81cgt7GAjYaDEo4mffYEf9/oUlmnrM3VXNt/rm+8Jp8LfqT+4jfezLRTxf7f1Usc48OBNRQSvQ=
+	t=1767720558; cv=none; b=Ky4xB+rfx4DqpO/o82xZpWaRjH8POaUDmJTwifRsJ45oeUOooXdxnR/sAHbXjPXHbgv70sPZWd9WRyjylXFiH0jZn+iZat1dOfNhMX6qlcKR4Uwt2MaA9atIoFEdtjJeyR7P4q6IAA40AGObNyxR4oIk+NODKStFqvAGGPwV54o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720554; c=relaxed/simple;
-	bh=TYG9vrLWbnhehEjdNf3TLzdDiH1VG9gUY4duOHEulmk=;
+	s=arc-20240116; t=1767720558; c=relaxed/simple;
+	bh=aVdQN2SsjahEBJugKFXYtIG5Ek8JifqiO8RCfZq2zyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JlXcZ9DWhhvJmk/Ci+7Amkp8QPwExj6e4gXPYXY53KBPWOEpcKzl4Vf104belCksgzRXhelwRojYjgCwTeztqOJRsSKViw2+ydOP3Tg4b4OfKAFSWBCLeVIDuP6hSXywSL3Edw888mcfiZD9Q4czxl4O66GXoFBe6TWruiILRLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KSa6Y6T1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DXszFlvMBsBEFdBw+N7RJXXxv1mHsk5YaiFMtjoLFRtqoLkMqi+GB2InMOixwqu1XYPaQpwnLmKT+YshZkU7jaHJhpg2mBQlktrdhsXpMZduEwFaDz6fRjh8zP1Oqzjqwbxk9kSiaB4Jakw+XCi3cH682HIXQleJ/Ul0xow/Ar4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2l6iiiuu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KSa6Y6T1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B2EBC116C6;
-	Tue,  6 Jan 2026 17:29:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2l6iiiuu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 674E1C116C6;
+	Tue,  6 Jan 2026 17:29:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720554;
-	bh=TYG9vrLWbnhehEjdNf3TLzdDiH1VG9gUY4duOHEulmk=;
+	s=korg; t=1767720557;
+	bh=aVdQN2SsjahEBJugKFXYtIG5Ek8JifqiO8RCfZq2zyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KSa6Y6T1Uh4C7+S/1Di2K3nKfruxjEW2U3a+4d/4LwYfgqUO8FI6UVWRY7fLCd+NV
-	 2muxDbCWDOgB0HMPHDS3CV57V1yiTWUTpdbM/XBuM6N0XmsN4UIEEQAqi8Rg4ZR+7m
-	 JdEGoTPjlncJemZDHEnk7mCSvamEjfuJd9qBeKaM=
+	b=2l6iiiuuCA58HFx7577ynU1pkvoT3ohaMO4o8SkCejMIZgpBC3Frmqf1B7+ja4YZC
+	 lqeD4drOUcCIXz+sppowvRZuSYOHhpuAJKM8BuX5a0dfeaexa0loStTF2GmLQf+Yeh
+	 wMLKkEoI1jjzqEkQpO8mpkcdVy5S7sQY5ZjNXlF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sachin P Bappalige <sachinpb@linux.ibm.com>,
-	Srikar Dronamraju <srikar@linux.ibm.com>,
-	"Nysal Jan K.A." <nysal@linux.ibm.com>,
-	Samir M <samir@linux.ibm.com>,
-	Sourabh Jain <sourabhjain@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.12 245/567] powerpc/kexec: Enable SMT before waking offline CPUs
-Date: Tue,  6 Jan 2026 18:00:27 +0100
-Message-ID: <20260106170500.377848985@linuxfoundation.org>
+	Shivani Agarwal <shivani.agarwal@broadcom.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.12 272/567] crypto: af_alg - zero initialize memory allocated via sock_kmalloc
+Date: Tue,  6 Jan 2026 18:00:54 +0100
+Message-ID: <20260106170501.389125561@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -54,83 +50,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nysal Jan K.A. <nysal@linux.ibm.com>
+From: Shivani Agarwal <shivani.agarwal@broadcom.com>
 
-commit c2296a1e42418556efbeb5636c4fa6aa6106713a upstream.
+commit 6f6e309328d53a10c0fe1f77dec2db73373179b6 upstream.
 
-If SMT is disabled or a partial SMT state is enabled, when a new kernel
-image is loaded for kexec, on reboot the following warning is observed:
+Several crypto user API contexts and requests allocated with
+sock_kmalloc() were left uninitialized, relying on callers to
+set fields explicitly. This resulted in the use of uninitialized
+data in certain error paths or when new fields are added in the
+future.
 
-kexec: Waking offline cpu 228.
-WARNING: CPU: 0 PID: 9062 at arch/powerpc/kexec/core_64.c:223 kexec_prepare_cpus+0x1b0/0x1bc
-[snip]
- NIP kexec_prepare_cpus+0x1b0/0x1bc
- LR  kexec_prepare_cpus+0x1a0/0x1bc
- Call Trace:
-  kexec_prepare_cpus+0x1a0/0x1bc (unreliable)
-  default_machine_kexec+0x160/0x19c
-  machine_kexec+0x80/0x88
-  kernel_kexec+0xd0/0x118
-  __do_sys_reboot+0x210/0x2c4
-  system_call_exception+0x124/0x320
-  system_call_vectored_common+0x15c/0x2ec
+The ACVP patches also contain two user-space interface files:
+algif_kpp.c and algif_akcipher.c. These too rely on proper
+initialization of their context structures.
 
-This occurs as add_cpu() fails due to cpu_bootable() returning false for
-CPUs that fail the cpu_smt_thread_allowed() check or non primary
-threads if SMT is disabled.
+A particular issue has been observed with the newly added
+'inflight' variable introduced in af_alg_ctx by commit:
 
-Fix the issue by enabling SMT and resetting the number of SMT threads to
-the number of threads per core, before attempting to wake up all present
-CPUs.
+  67b164a871af ("crypto: af_alg - Disallow multiple in-flight AIO requests")
 
-Fixes: 38253464bc82 ("cpu/SMT: Create topology_smt_thread_allowed()")
-Reported-by: Sachin P Bappalige <sachinpb@linux.ibm.com>
-Cc: stable@vger.kernel.org # v6.6+
-Reviewed-by: Srikar Dronamraju <srikar@linux.ibm.com>
-Signed-off-by: Nysal Jan K.A. <nysal@linux.ibm.com>
-Tested-by: Samir M <samir@linux.ibm.com>
-Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20251028105516.26258-1-nysal@linux.ibm.com
+Because the context is not memset to zero after allocation,
+the inflight variable has contained garbage values. As a result,
+af_alg_alloc_areq() has incorrectly returned -EBUSY randomly when
+the garbage value was interpreted as true:
+
+  https://github.com/gregkh/linux/blame/master/crypto/af_alg.c#L1209
+
+The check directly tests ctx->inflight without explicitly
+comparing against true/false. Since inflight is only ever set to
+true or false later, an uninitialized value has triggered
+-EBUSY failures. Zero-initializing memory allocated with
+sock_kmalloc() ensures inflight and other fields start in a known
+state, removing random issues caused by uninitialized data.
+
+Fixes: fe869cdb89c9 ("crypto: algif_hash - User-space interface for hash operations")
+Fixes: 5afdfd22e6ba ("crypto: algif_rng - add random number generator support")
+Fixes: 2d97591ef43d ("crypto: af_alg - consolidation of duplicate code")
+Fixes: 67b164a871af ("crypto: af_alg - Disallow multiple in-flight AIO requests")
+Cc: stable@vger.kernel.org
+Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kexec/core_64.c |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ crypto/af_alg.c     |    5 ++---
+ crypto/algif_hash.c |    3 +--
+ crypto/algif_rng.c  |    3 +--
+ 3 files changed, 4 insertions(+), 7 deletions(-)
 
---- a/arch/powerpc/kexec/core_64.c
-+++ b/arch/powerpc/kexec/core_64.c
-@@ -202,6 +202,23 @@ static void kexec_prepare_cpus_wait(int
- 	mb();
+--- a/crypto/af_alg.c
++++ b/crypto/af_alg.c
+@@ -1212,15 +1212,14 @@ struct af_alg_async_req *af_alg_alloc_ar
+ 	if (unlikely(!areq))
+ 		return ERR_PTR(-ENOMEM);
+ 
++	memset(areq, 0, areqlen);
++
+ 	ctx->inflight = true;
+ 
+ 	areq->areqlen = areqlen;
+ 	areq->sk = sk;
+ 	areq->first_rsgl.sgl.sgt.sgl = areq->first_rsgl.sgl.sgl;
+-	areq->last_rsgl = NULL;
+ 	INIT_LIST_HEAD(&areq->rsgl_list);
+-	areq->tsgl = NULL;
+-	areq->tsgl_entries = 0;
+ 
+ 	return areq;
  }
+--- a/crypto/algif_hash.c
++++ b/crypto/algif_hash.c
+@@ -416,9 +416,8 @@ static int hash_accept_parent_nokey(void
+ 	if (!ctx)
+ 		return -ENOMEM;
  
-+
-+/*
-+ * The add_cpu() call in wake_offline_cpus() can fail as cpu_bootable()
-+ * returns false for CPUs that fail the cpu_smt_thread_allowed() check
-+ * or non primary threads if SMT is disabled. Re-enable SMT and set the
-+ * number of SMT threads to threads per core.
-+ */
-+static void kexec_smt_reenable(void)
-+{
-+#if defined(CONFIG_SMP) && defined(CONFIG_HOTPLUG_SMT)
-+	lock_device_hotplug();
-+	cpu_smt_num_threads = threads_per_core;
-+	cpu_smt_control = CPU_SMT_ENABLED;
-+	unlock_device_hotplug();
-+#endif
-+}
-+
- /*
-  * We need to make sure each present CPU is online.  The next kernel will scan
-  * the device tree and assume primary threads are online and query secondary
-@@ -216,6 +233,8 @@ static void wake_offline_cpus(void)
- {
- 	int cpu = 0;
+-	ctx->result = NULL;
++	memset(ctx, 0, len);
+ 	ctx->len = len;
+-	ctx->more = false;
+ 	crypto_init_wait(&ctx->wait);
  
-+	kexec_smt_reenable();
-+
- 	for_each_present_cpu(cpu) {
- 		if (!cpu_online(cpu)) {
- 			printk(KERN_INFO "kexec: Waking offline cpu %d.\n",
+ 	ask->private = ctx;
+--- a/crypto/algif_rng.c
++++ b/crypto/algif_rng.c
+@@ -248,9 +248,8 @@ static int rng_accept_parent(void *priva
+ 	if (!ctx)
+ 		return -ENOMEM;
+ 
++	memset(ctx, 0, len);
+ 	ctx->len = len;
+-	ctx->addtl = NULL;
+-	ctx->addtl_len = 0;
+ 
+ 	/*
+ 	 * No seeding done at that point -- if multiple accepts are
 
 
