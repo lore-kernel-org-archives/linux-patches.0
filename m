@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A4C03659F9;
-	Tue,  6 Jan 2026 17:54:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2440D365A07;
+	Tue,  6 Jan 2026 17:54:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722040; cv=none; b=C+rp6tNEs5ujpy1hmv8bPJ1m5f1sotQgVa7b5qwSkUGrftM2+3XDQZulhpvJoqZ+EMBmnKhTundCejq3k5zl+N3TZlx4pdwStaVrQTMNjPmRbg84DrjSGbc3epAxfIfzHpvN5FM54JBvI9YaXFe0l1KtbfydnL/NjgkUt7q0yys=
+	t=1767722044; cv=none; b=W4UIvJVicYoRuE9GDjNwZk+wBbiDZDd+TpttPiLgR0KqJXC1w9xcWgiTk4yeLM0qqlSx7FMAn9TLN21+fjlV0aYcb2e1X5aQXFBpKr2RM9q+kDK6GcCzkc8G1x0hKvannVQojE2U1t24ST5Gv8U2psEMtwZa1/ll66DoGf8LV2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722040; c=relaxed/simple;
-	bh=x99aCFcnKjL7Y92UUMM1zPVDyqM3JvK/EWy+zGB3AtU=;
+	s=arc-20240116; t=1767722044; c=relaxed/simple;
+	bh=TFANEit/1pGIlUUJeAatSh6yiueoajHjmQLzuP1c76w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IgFZnC+sy6UQCaP8AYkHGZ7eABQ4c/1oGj4ei9ta2DBr6jNELkghx77SnwqJWGcf3NK1alDhBIaKCyuxqM9syuTL+HbLh0J6/fc2v4JyDVYP/NYq+sC0DX5yvRvDKhQv+16NDoDq6Zzh1jyTLOch8nA+5kZfTkmtJRqEAyHrIJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C2xLtw/Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aTOfX+5k1FaMoUdCHTyZjEFT1j/3ZXiXle6JIbhWOIks9Gt2Y3S92enMM2iqY0A973Uc1szDysbN9SmlINZ/UR0xppCEQr4okcgKs/mqVNw3IVbUOQhrG2bvvGyfes3EC/x8tO/9szyyu4N2eJaTN09lMFRPBhtlpSYEh/nF8yY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EViCDHuH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C2xLtw/Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9613C116C6;
-	Tue,  6 Jan 2026 17:53:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EViCDHuH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F2DDC116C6;
+	Tue,  6 Jan 2026 17:54:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722040;
-	bh=x99aCFcnKjL7Y92UUMM1zPVDyqM3JvK/EWy+zGB3AtU=;
+	s=korg; t=1767722043;
+	bh=TFANEit/1pGIlUUJeAatSh6yiueoajHjmQLzuP1c76w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C2xLtw/Ypz/OCtYJxWvCyyH9X0cYBHS3l6l/kJ3PJfCdRAAwMPJAGM0/wd5guKU7A
-	 uuaCD7R14ZK2pENnP1NWiMSPumNv9EyPbg5/IgFN7fJq6R0v5fssPUPV0tsQhftQHH
-	 wGADsv18fxFtVGpjxm/dH0/e3ReQT/wxaBHzjQX0=
+	b=EViCDHuH2MgMVUrc+Ixbz+BJIMChWROWzFfxGzC/ku+JUN2MCC2ZA5rFnH06y94aJ
+	 Ct2wDljTmwFr8Yldatut7WKiVVgpxDt5J2PouiElkyQdPEQPkapSp0t3IF+vBtmZFs
+	 6v50ogmIcA1LZa5yb8Mye85bA96MG3aZ64hxWGMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.18 147/312] arm64: dts: qcom: sm6350: Fix wrong order of freq-table-hz for UFS
-Date: Tue,  6 Jan 2026 18:03:41 +0100
-Message-ID: <20260106170553.159298290@linuxfoundation.org>
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.18 148/312] mtd: mtdpart: ignore error -ENOENT from parsers on subpartitions
+Date: Tue,  6 Jan 2026 18:03:42 +0100
+Message-ID: <20260106170553.195350696@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -52,48 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-commit ec9d588391761a08aab5eb4523a48ef3df2c910f upstream.
+commit 64ef5f454e167bb66cf70104f033c3d71e6ef9c0 upstream.
 
-During upstreaming the order of clocks was adjusted to match the
-upstream sort order, but mistakently freq-table-hz wasn't re-ordered
-with the new order.
+Commit 5c2f7727d437 ("mtd: mtdpart: check for subpartitions parsing
+result") introduced some kind of regression with parser on subpartitions
+where if a parser emits an error then the entire parsing process from the
+upper parser fails and partitions are deleted.
 
-Fix that by moving the entry for the ICE clk to the last place.
+Not checking for error in subpartitions was originally intended as
+special parser can emit error also in the case of the partition not
+correctly init (for example a wiped partition) or special case where the
+partition should be skipped due to some ENV variables externally
+provided (from bootloader for example)
 
-Fixes: 5a814af5fc22 ("arm64: dts: qcom: sm6350: Add UFS nodes")
+One example case is the TRX partition where, in the context of a wiped
+partition, returns a -ENOENT as the trx_magic is not found in the
+expected TRX header (as the partition is wiped)
+
+To better handle this and still keep some kind of error tracking (for
+example to catch -ENOMEM errors or -EINVAL errors), permit parser on
+subpartition to emit -ENOENT error, print a debug log and skip them
+accordingly.
+
+This results in giving better tracking of the status of the parser
+(instead of returning just 0, dropping any kind of signal that there is
+something wrong with the parser) and to some degree restore the original
+logic of the subpartitions parse.
+
+(worth to notice that some special partition might have all the special
+header present for the parser and declare 0 partition in it, this is why
+it would be wrong to simply return 0 in the case of a special partition
+that is NOT init for the scanning parser)
+
 Cc: stable@vger.kernel.org
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Link: https://lore.kernel.org/r/20251023-sm6350-ufs-things-v3-1-b68b74e29d35@fairphone.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 5c2f7727d437 ("mtd: mtdpart: check for subpartitions parsing result")
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sm6350.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mtd/mtdpart.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-index 14788d60faf0..0d2eb51ecc50 100644
---- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-@@ -1180,11 +1180,11 @@
- 				<0 0>,
- 				<0 0>,
- 				<37500000 150000000>,
--				<75000000 300000000>,
- 				<0 0>,
- 				<0 0>,
- 				<0 0>,
--				<0 0>;
-+				<0 0>,
-+				<75000000 300000000>;
+--- a/drivers/mtd/mtdpart.c
++++ b/drivers/mtd/mtdpart.c
+@@ -425,9 +425,12 @@ int add_mtd_partitions(struct mtd_info *
  
- 			status = "disabled";
- 		};
--- 
-2.52.0
-
+ 		mtd_add_partition_attrs(child);
+ 
+-		/* Look for subpartitions */
++		/* Look for subpartitions (skip if no maching parser found) */
+ 		ret = parse_mtd_partitions(child, parts[i].types, NULL);
+-		if (ret < 0) {
++		if (ret < 0 && ret == -ENOENT) {
++			pr_debug("Skip parsing subpartitions: %d\n", ret);
++			continue;
++		} else if (ret < 0) {
+ 			pr_err("Failed to parse subpartitions: %d\n", ret);
+ 			goto err_del_partitions;
+ 		}
 
 
