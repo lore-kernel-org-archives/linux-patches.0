@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2734E355024;
-	Tue,  6 Jan 2026 17:23:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4724E355034;
+	Tue,  6 Jan 2026 17:23:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720213; cv=none; b=gjI13TR6uD2Khz+19bYnLORduHZS1Ybu2DeGM1PHNiBIXgzYZPH/JpaLJUir7BLLkYWO+R2otIgEJkYdXPOicrV3U6it0dfoQkXtuWXCEd2kIR/3K30Tff7gYMtYlNv7B/oRL7nnNI2cR2V5HhsyqqORV12LFS4naiJgbJpEzkY=
+	t=1767720216; cv=none; b=MaT3HvOVnmFA5kJ7I/8snI7zWYKNjQgAvGvdWu1NkUV+0s3A0XJAfv0R/CgKxKMKu6+RXyftivxX43/g51GbKoCSlm/D/cNEh/hbSn626O7078dCW7kNKV0HQ9/sgo48BMG9RwfhDCNui002Ps0Lydnp9zEK+NVytlKNhVb8MJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720213; c=relaxed/simple;
-	bh=LY2AI6ZIQLCoJb8ydPBHHRcPUWqSUIgGFcamYxhsbIw=;
+	s=arc-20240116; t=1767720216; c=relaxed/simple;
+	bh=WlmwkoY6pgzzOc7ZUrzK4CMFK/2apJSwxuUcCd1Z5QE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OuF0G3ODq+ks0VPn4TEe+jK4Il3da19tgQLo/HqzEPS+2urlHLDYr8RP5jWfIwyYRmlbUq9Y+MHN+nG8EldSldiFXdEzMlYngGEbtnMFUkrHu8kNUYzkrMoi3gY72i6Zpz2OU8+sGP40TjPGKDpuehNsAYuun1t9Q9VH5J07SPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rM2n9SOQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZXGVLwocZoHT46y/92dBuDjwv+F7oyFNdPzPknRTgbguAm9+RkovPij7v+e/LrMlG9aOE7Csn4oen24UJF0FxTs5N4O4EzA1edSLBfS97qpyg4u5KYO/S0tRUpK60WzdnKWIzRUxjf7PVAFI7CvABI0nL8HqqJM6Umw+T+gxGVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VlOXgsNb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rM2n9SOQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90A05C16AAE;
-	Tue,  6 Jan 2026 17:23:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VlOXgsNb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7709C116C6;
+	Tue,  6 Jan 2026 17:23:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720213;
-	bh=LY2AI6ZIQLCoJb8ydPBHHRcPUWqSUIgGFcamYxhsbIw=;
+	s=korg; t=1767720216;
+	bh=WlmwkoY6pgzzOc7ZUrzK4CMFK/2apJSwxuUcCd1Z5QE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rM2n9SOQHAmdrwuRztE8r4ht29RNNQMEx/zL9gJm1YYq3+0tzY+7q8GvKQZoURTLi
-	 8bFyaCxo4UDQRiK2Djw6dtFJjVCVAsst0VgB7WNDzmZDYQFLR8UtP3rBZPUKB9jsSD
-	 jqpNeikMwd2SKZ6F6QUEEnbiDNVdh+Txb26whaug=
+	b=VlOXgsNbZsI2Ckh7svDBxzrnoKcrrkTJSm+Eihl4hSfDxp573QjQFC0+CwSEOpsOE
+	 YNKR05lAd3kYYmI1Ep30qPQkrAUkCEl6h54/ZGJkHaxCA+5PUFdBHwEj3oP+DOaWKZ
+	 Oed7LQONRraB8iZso6v7q8PHJzWMGVpjqqnuuutI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
+	stable@kernel.org,
+	Karina Yankevich <k.yankevich@omp.ru>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
 	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.12 167/567] ext4: fix string copying in parse_apply_sb_mount_options()
-Date: Tue,  6 Jan 2026 17:59:09 +0100
-Message-ID: <20260106170457.504395100@linuxfoundation.org>
+Subject: [PATCH 6.12 168/567] ext4: xattr: fix null pointer deref in ext4_raw_inode()
+Date: Tue,  6 Jan 2026 17:59:10 +0100
+Message-ID: <20260106170457.541287791@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,81 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Karina Yankevich <k.yankevich@omp.ru>
 
-commit ee5a977b4e771cc181f39d504426dbd31ed701cc upstream.
+commit b97cb7d6a051aa6ebd57906df0e26e9e36c26d14 upstream.
 
-strscpy_pad() can't be used to copy a non-NUL-term string into a NUL-term
-string of possibly bigger size.  Commit 0efc5990bca5 ("string.h: Introduce
-memtostr() and memtostr_pad()") provides additional information in that
-regard.  So if this happens, the following warning is observed:
+If ext4_get_inode_loc() fails (e.g. if it returns -EFSCORRUPTED),
+iloc.bh will remain set to NULL. Since ext4_xattr_inode_dec_ref_all()
+lacks error checking, this will lead to a null pointer dereference
+in ext4_raw_inode(), called right after ext4_get_inode_loc().
 
-strnlen: detected buffer overflow: 65 byte read of buffer size 64
-WARNING: CPU: 0 PID: 28655 at lib/string_helpers.c:1032 __fortify_report+0x96/0xc0 lib/string_helpers.c:1032
-Modules linked in:
-CPU: 0 UID: 0 PID: 28655 Comm: syz-executor.3 Not tainted 6.12.54-syzkaller-00144-g5f0270f1ba00 #0
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-RIP: 0010:__fortify_report+0x96/0xc0 lib/string_helpers.c:1032
-Call Trace:
- <TASK>
- __fortify_panic+0x1f/0x30 lib/string_helpers.c:1039
- strnlen include/linux/fortify-string.h:235 [inline]
- sized_strscpy include/linux/fortify-string.h:309 [inline]
- parse_apply_sb_mount_options fs/ext4/super.c:2504 [inline]
- __ext4_fill_super fs/ext4/super.c:5261 [inline]
- ext4_fill_super+0x3c35/0xad00 fs/ext4/super.c:5706
- get_tree_bdev_flags+0x387/0x620 fs/super.c:1636
- vfs_get_tree+0x93/0x380 fs/super.c:1814
- do_new_mount fs/namespace.c:3553 [inline]
- path_mount+0x6ae/0x1f70 fs/namespace.c:3880
- do_mount fs/namespace.c:3893 [inline]
- __do_sys_mount fs/namespace.c:4103 [inline]
- __se_sys_mount fs/namespace.c:4080 [inline]
- __x64_sys_mount+0x280/0x300 fs/namespace.c:4080
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x64/0x140 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Since userspace is expected to provide s_mount_opts field to be at most 63
-characters long with the ending byte being NUL-term, use a 64-byte buffer
-which matches the size of s_mount_opts, so that strscpy_pad() does its job
-properly.  Return with error if the user still managed to provide a
-non-NUL-term string here.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 8ecb790ea8c3 ("ext4: avoid potential buffer over-read in parse_apply_sb_mount_options()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Fixes: c8e008b60492 ("ext4: ignore xattrs past end")
+Cc: stable@kernel.org
+Signed-off-by: Karina Yankevich <k.yankevich@omp.ru>
+Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
 Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Message-ID: <20251101160430.222297-1-pchelkin@ispras.ru>
+Message-ID: <20251022093253.3546296-1-k.yankevich@omp.ru>
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/super.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/ext4/xattr.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -2493,7 +2493,7 @@ static int parse_apply_sb_mount_options(
- 					struct ext4_fs_context *m_ctx)
- {
- 	struct ext4_sb_info *sbi = EXT4_SB(sb);
--	char s_mount_opts[65];
-+	char s_mount_opts[64];
- 	struct ext4_fs_context *s_ctx = NULL;
- 	struct fs_context *fc = NULL;
- 	int ret = -ENOMEM;
-@@ -2501,7 +2501,8 @@ static int parse_apply_sb_mount_options(
- 	if (!sbi->s_es->s_mount_opts[0])
- 		return 0;
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -1174,7 +1174,11 @@ ext4_xattr_inode_dec_ref_all(handle_t *h
+ 	if (block_csum)
+ 		end = (void *)bh->b_data + bh->b_size;
+ 	else {
+-		ext4_get_inode_loc(parent, &iloc);
++		err = ext4_get_inode_loc(parent, &iloc);
++		if (err) {
++			EXT4_ERROR_INODE(parent, "parent inode loc (error %d)", err);
++			return;
++		}
+ 		end = (void *)ext4_raw_inode(&iloc) + EXT4_SB(parent->i_sb)->s_inode_size;
+ 	}
  
--	strscpy_pad(s_mount_opts, sbi->s_es->s_mount_opts);
-+	if (strscpy_pad(s_mount_opts, sbi->s_es->s_mount_opts) < 0)
-+		return -E2BIG;
- 
- 	fc = kzalloc(sizeof(struct fs_context), GFP_KERNEL);
- 	if (!fc)
 
 
