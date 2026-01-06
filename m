@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E7B636BCD0;
-	Tue,  6 Jan 2026 17:55:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8595B36BCD5;
+	Tue,  6 Jan 2026 17:55:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722154; cv=none; b=MwCtsfZkELLGKE584EasONzobUlS0aysus5/d+WNOoWtoLg7acpKvxSxE8etOSmNWn8vmgHgVF7jrhJFT9xiVtFkdiIXfeFdC73DHyi2HmPX2hktP6wpAMaIQ8MB8W4T0WaX97fU7BzuKKeKoz6f2cdMjFYO8tfJgiDs46vvZvk=
+	t=1767722157; cv=none; b=IInQIwbpbU289rD8an8WtEMt+9qVSMa0WkijROkezqYCCnWRTFuCFitpUEBm92as6CsiMnElm1SgnoPKqjHfOZtYa9ZTgi+/6L4MdUiUMDl17u/98iCec0dd45kfNki3WgTWKDCLwOALgdxJcdgRqUBv0ggeeQQV5FO4U2Kc1eg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722154; c=relaxed/simple;
-	bh=+iaU3anGvUJdV+lOGoyUh68ZmyfPHI4nBojUho009x0=;
+	s=arc-20240116; t=1767722157; c=relaxed/simple;
+	bh=gmVdUS9JlLzYl24Nk5xuYeqjX/TtfbY8+SBtlH9vAwg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=keJhtvrdnLUl39FX+kTXrSx8b/ZOlh4DC4AnKVgTGc0F1UAAD8T3J1LdGhLrsz1V+oWCrdxEsWlZwRiRkEsX6KQufOT/JCjjZCnUllyNVI2ZIETqBsqPEk8JVuNq3KXbZsJ76qK4QcNVeq5GunaZRCdgzazDYRL3EfxjZS4JIT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nwjBH31m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uqWBB9SYqukbAUeHnGxohp2huC9DIzZIKlkjeM1d+arreQY9XxAx7JSJxcdmyZedUweLSm5z5qexSdwi7ZczaD0OEKmIVt2uK0cmeS4UjBp4KI9oBAV64Q7zyh87wvRIEZKDwNG9kmwBBlBsMlaLgW/UGFPoQslqnq3EDqfHaPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QKtAnL30; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nwjBH31m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75271C116C6;
-	Tue,  6 Jan 2026 17:55:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QKtAnL30"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6EFDC116C6;
+	Tue,  6 Jan 2026 17:55:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722153;
-	bh=+iaU3anGvUJdV+lOGoyUh68ZmyfPHI4nBojUho009x0=;
+	s=korg; t=1767722157;
+	bh=gmVdUS9JlLzYl24Nk5xuYeqjX/TtfbY8+SBtlH9vAwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nwjBH31mXA/yAXJBYP8c4yULHU168s8+/jlFhz68KSCArvtkSQ4Tp27MqMZ69LRwj
-	 zCDM0TtTkA/glQG2BtC22DQ2DNxGWRjAj8mcxo32bAM13hglkt+/XsiS8v0hVk84ur
-	 4G0CTWL5BbBukCj88093txt1ov1wedx8v52gT9CQ=
+	b=QKtAnL304t4m7g3ti65G02IK31ZAdkBk2at0Bukb3ve7Gnsa3/sHQVB+evQ29rLpg
+	 UhabPMNNCg1l2ZMyF9Nl+h6s8Ee9Jca9eCeEFN7WjZl3f8RKc8o06XRKUdiqbibOgt
+	 QS4rf4FN6/9hupR9vNnLQuPfA72JPSZhtQ/Ww+d8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 181/312] media: verisilicon: Protect G2 HEVC decoder against invalid DPB index
-Date: Tue,  6 Jan 2026 18:04:15 +0100
-Message-ID: <20260106170554.377779364@linuxfoundation.org>
+Subject: [PATCH 6.18 182/312] media: videobuf2: Fix device reference leak in vb2_dc_alloc error path
+Date: Tue,  6 Jan 2026 18:04:16 +0100
+Message-ID: <20260106170554.412732005@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -51,60 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-commit 47825b1646a6a9eca0f90baa3d4f98947c2add96 upstream.
+commit 94de23a9aa487d7c1372efb161721d7949a177ae upstream.
 
-Fix the Hantro G2 HEVC decoder so that we use DPB index 0 whenever a
-ninvalid index is received from user space. This protects the hardware
-from doing faulty memory access which then leads to bus errors.
+In vb2_dc_alloc(), get_device() is called to increment the device
+reference count. However, if subsequent DMA allocation fails
+(vb2_dc_alloc_coherent or vb2_dc_alloc_non_coherent returns error),
+the function returns without calling put_device(), causing a device
+reference leak.
 
-To be noted that when a reference is missing, userspace such as GStreamer
-passes an invalid DPB index of 255. This issue was found by seeking to a
-CRA picture using GStreamer. The framework is currently missing the code
-to skip over RASL pictures placed after the CRA. This situation can also
-occur while doing live streaming over lossy transport.
+Add put_device() call in the error path before kfree() to properly
+release the device reference acquired earlier.
 
-Fixes: cb5dd5a0fa518 ("media: hantro: Introduce G2/HEVC decoder")
+Fixes: de27891f675e ("media: videobuf2: handle non-contiguous DMA allocations")
 Cc: stable@vger.kernel.org
-Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Reviewed-by: Marek Szyprowski <m.szyprowski@samsung.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/verisilicon/hantro_g2_hevc_dec.c |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/media/common/videobuf2/videobuf2-dma-contig.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/media/platform/verisilicon/hantro_g2_hevc_dec.c
-+++ b/drivers/media/platform/verisilicon/hantro_g2_hevc_dec.c
-@@ -283,6 +283,15 @@ static void set_params(struct hantro_ctx
- 	hantro_reg_write(vpu, &g2_apf_threshold, 8);
- }
+--- a/drivers/media/common/videobuf2/videobuf2-dma-contig.c
++++ b/drivers/media/common/videobuf2/videobuf2-dma-contig.c
+@@ -258,6 +258,7 @@ static void *vb2_dc_alloc(struct vb2_buf
  
-+static u32 get_dpb_index(const struct v4l2_ctrl_hevc_decode_params *decode_params,
-+			 const u32 index)
-+{
-+	if (index > decode_params->num_active_dpb_entries)
-+		return 0;
-+
-+	return index;
-+}
-+
- static void set_ref_pic_list(struct hantro_ctx *ctx)
- {
- 	const struct hantro_hevc_dec_ctrls *ctrls = &ctx->hevc_dec.ctrls;
-@@ -355,8 +364,10 @@ static void set_ref_pic_list(struct hant
- 		list1[j++] = list1[i++];
- 
- 	for (i = 0; i < V4L2_HEVC_DPB_ENTRIES_NUM_MAX; i++) {
--		hantro_reg_write(vpu, &ref_pic_regs0[i], list0[i]);
--		hantro_reg_write(vpu, &ref_pic_regs1[i], list1[i]);
-+		hantro_reg_write(vpu, &ref_pic_regs0[i],
-+				 get_dpb_index(decode_params, list0[i]));
-+		hantro_reg_write(vpu, &ref_pic_regs1[i],
-+				 get_dpb_index(decode_params, list1[i]));
+ 	if (ret) {
+ 		dev_err(dev, "dma alloc of size %lu failed\n", size);
++		put_device(buf->dev);
+ 		kfree(buf);
+ 		return ERR_PTR(-ENOMEM);
  	}
- }
- 
 
 
