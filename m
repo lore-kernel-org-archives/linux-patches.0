@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6858636D4FF;
-	Tue,  6 Jan 2026 17:59:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A0636CE1C;
+	Tue,  6 Jan 2026 17:59:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722357; cv=none; b=octqDizM/WQClOeEaTk8c21Zw6wUkmw0yraYhtlJDvG8ovFPAo148hQBNzUYGaGKx67Eg+AyoK4pr4gJG/WpLK5uWUSF1fQLc4Ko66lUwTp47ikEQ3m8vl30xqWq+PswDhoDyHiEem+tP8KwMySyAE/vD/+7C+lqf2yKROl16cc=
+	t=1767722360; cv=none; b=OnDg209zAZlVUPbqc7q8J9eoukhJ21HoSwVZFi2RM32NR6rK8styGVwucrzewmtvVaxXvtMVcGNIxICoYHPtM1kj7B+rnrOryvK+9rCsid5/DYIOHYpNoJ26l2Gha2DNaz8UZS3Vi2YpaopUJzryfC2VjrzjAFYDaoiZn5Rw19s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722357; c=relaxed/simple;
-	bh=u1uUKs+jrXIF0+bh/F5JFo2hOwqq9sH19EZDo0PyJlg=;
+	s=arc-20240116; t=1767722360; c=relaxed/simple;
+	bh=UD6+4ER9Ai5UoFB4vxt898ubugE5tDg3kSepWZqaWa0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K/F2M7oZ6XIhOZ4vav/FQ6iCC7B8ezEB+UtHSf+U8xVFin56iusSiaGiMfGJS8mNriS6x1OLSuVzHipM6FtzZvkG9Gf3PyRd3pGrUULuUbknqHOGe5b9Q3e1hDDJ5L1OLIr800OK7fGkP7Fl4kBhl5N83mOJ0eEaftSzAXmwn2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DqWQG5bR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AsKAY1YH1MLeQw4+rkY/qZjGl7hyJXfK3fslt7HqLKAI0rcSotf17NV4+CPxC+qafW2y7BM0uH/i4ZiNz7ssxKg3Dwx6/oxTcqy/OhnK0+WjCQ0bwu7YBEhgkiEk8r4BvwKsrgJOWUO3AGzTH3QeVY54rPsxoVfMUq+w3KhLKmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FCNR3yNF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DqWQG5bR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8247BC116C6;
-	Tue,  6 Jan 2026 17:59:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FCNR3yNF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00390C116C6;
+	Tue,  6 Jan 2026 17:59:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722357;
-	bh=u1uUKs+jrXIF0+bh/F5JFo2hOwqq9sH19EZDo0PyJlg=;
+	s=korg; t=1767722360;
+	bh=UD6+4ER9Ai5UoFB4vxt898ubugE5tDg3kSepWZqaWa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DqWQG5bReEBXZoIIAjidOs+ec38dTiNf6XSYFJHv1xF6Xt57DHFqeAu7TOcsFmT5+
-	 OhwnOrhrJimRTlzfyL0DoKDWME+7jnHkZUNpvIGAXhXBm0o967detkLOb55Il/UQpm
-	 eP8sHnmHOteiKL4Of7NdNwDSdr/PiW6KKrdXtjuk=
+	b=FCNR3yNF0YVYMIPIDkbyWe9LExKh3EopbUxds1lPvxFYnkJNZCCJ1IXCVBDJPidxk
+	 ak2JzJfTiaX4qckyQYayD5bpFXq1quUlETzGxTNRxGvwVgXyn1PL1++6W0Ag9+stKO
+	 RS0P3Yncsl/986yJo6Li6bP4y/8Oxugn1l4UAZ1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Frode Nordahl <fnordahl@ubuntu.com>,
 	Simon Horman <horms@kernel.org>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 6.18 241/312] e1000: fix OOB in e1000_tbi_should_accept()
-Date: Tue,  6 Jan 2026 18:05:15 +0100
-Message-ID: <20260106170556.569141614@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.18 242/312] erspan: Initialize options_len before referencing options.
+Date: Tue,  6 Jan 2026 18:05:16 +0100
+Message-ID: <20260106170556.605308089@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -52,123 +51,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Frode Nordahl <fnordahl@ubuntu.com>
 
-commit 9c72a5182ed92904d01057f208c390a303f00a0f upstream.
+commit 35ddf66c65eff93fff91406756ba273600bf61a3 upstream.
 
-In e1000_tbi_should_accept() we read the last byte of the frame via
-'data[length - 1]' to evaluate the TBI workaround. If the descriptor-
-reported length is zero or larger than the actual RX buffer size, this
-read goes out of bounds and can hit unrelated slab objects. The issue
-is observed from the NAPI receive path (e1000_clean_rx_irq):
+The struct ip_tunnel_info has a flexible array member named
+options that is protected by a counted_by(options_len)
+attribute.
 
-==================================================================
-BUG: KASAN: slab-out-of-bounds in e1000_tbi_should_accept+0x610/0x790
-Read of size 1 at addr ffff888014114e54 by task sshd/363
+The compiler will use this information to enforce runtime bounds
+checking deployed by FORTIFY_SOURCE string helpers.
 
-CPU: 0 PID: 363 Comm: sshd Not tainted 5.18.0-rc1 #1
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.12.0-59-gc9ba5276e321-prebuilt.qemu.org 04/01/2014
+As laid out in the GCC documentation, the counter must be
+initialized before the first reference to the flexible array
+member.
+
+After scanning through the files that use struct ip_tunnel_info
+and also refer to options or options_len, it appears the normal
+case is to use the ip_tunnel_info_opts_set() helper.
+
+Said helper would initialize options_len properly before copying
+data into options, however in the GRE ERSPAN code a partial
+update is done, preventing the use of the helper function.
+
+Before this change the handling of ERSPAN traffic in GRE tunnels
+would cause a kernel panic when the kernel is compiled with
+GCC 15+ and having FORTIFY_SOURCE configured:
+
+memcpy: detected buffer overflow: 4 byte write of buffer size 0
+
 Call Trace:
  <IRQ>
- dump_stack_lvl+0x5a/0x74
- print_address_description+0x7b/0x440
- print_report+0x101/0x200
- kasan_report+0xc1/0xf0
- e1000_tbi_should_accept+0x610/0x790
- e1000_clean_rx_irq+0xa8c/0x1110
- e1000_clean+0xde2/0x3c10
- __napi_poll+0x98/0x380
- net_rx_action+0x491/0xa20
- __do_softirq+0x2c9/0x61d
- do_softirq+0xd1/0x120
- </IRQ>
- <TASK>
- __local_bh_enable_ip+0xfe/0x130
- ip_finish_output2+0x7d5/0xb00
- __ip_queue_xmit+0xe24/0x1ab0
- __tcp_transmit_skb+0x1bcb/0x3340
- tcp_write_xmit+0x175d/0x6bd0
- __tcp_push_pending_frames+0x7b/0x280
- tcp_sendmsg_locked+0x2e4f/0x32d0
- tcp_sendmsg+0x24/0x40
- sock_write_iter+0x322/0x430
- vfs_write+0x56c/0xa60
- ksys_write+0xd1/0x190
- do_syscall_64+0x43/0x90
- entry_SYSCALL_64_after_hwframe+0x44/0xae
-RIP: 0033:0x7f511b476b10
-Code: 73 01 c3 48 8b 0d 88 d3 2b 00 f7 d8 64 89 01 48 83 c8 ff c3 66 0f 1f 44 00 00 83 3d f9 2b 2c 00 00 75 10 b8 01 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 31 c3 48 83 ec 08 e8 8e 9b 01 00 48 89 04 24
-RSP: 002b:00007ffc9211d4e8 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
-RAX: ffffffffffffffda RBX: 0000000000004024 RCX: 00007f511b476b10
-RDX: 0000000000004024 RSI: 0000559a9385962c RDI: 0000000000000003
-RBP: 0000559a9383a400 R08: fffffffffffffff0 R09: 0000000000004f00
-R10: 0000000000000070 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007ffc9211d57f R14: 0000559a9347bde7 R15: 0000000000000003
- </TASK>
-Allocated by task 1:
- __kasan_krealloc+0x131/0x1c0
- krealloc+0x90/0xc0
- add_sysfs_param+0xcb/0x8a0
- kernel_add_sysfs_param+0x81/0xd4
- param_sysfs_builtin+0x138/0x1a6
- param_sysfs_init+0x57/0x5b
- do_one_initcall+0x104/0x250
- do_initcall_level+0x102/0x132
- do_initcalls+0x46/0x74
- kernel_init_freeable+0x28f/0x393
- kernel_init+0x14/0x1a0
- ret_from_fork+0x22/0x30
-The buggy address belongs to the object at ffff888014114000
- which belongs to the cache kmalloc-2k of size 2048
-The buggy address is located 1620 bytes to the right of
- 2048-byte region [ffff888014114000, ffff888014114800]
-The buggy address belongs to the physical page:
-page:ffffea0000504400 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x14110
-head:ffffea0000504400 order:3 compound_mapcount:0 compound_pincount:0
-flags: 0x100000000010200(slab|head|node=0|zone=1)
-raw: 0100000000010200 0000000000000000 dead000000000001 ffff888013442000
-raw: 0000000000000000 0000000000080008 00000001ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-==================================================================
+ __fortify_panic+0xd/0xf
+ erspan_rcv.cold+0x68/0x83
+ ? ip_route_input_slow+0x816/0x9d0
+ gre_rcv+0x1b2/0x1c0
+ gre_rcv+0x8e/0x100
+ ? raw_v4_input+0x2a0/0x2b0
+ ip_protocol_deliver_rcu+0x1ea/0x210
+ ip_local_deliver_finish+0x86/0x110
+ ip_local_deliver+0x65/0x110
+ ? ip_rcv_finish_core+0xd6/0x360
+ ip_rcv+0x186/0x1a0
 
-This happens because the TBI check unconditionally dereferences the last
-byte without validating the reported length first:
-
-	u8 last_byte = *(data + length - 1);
-
-Fix by rejecting the frame early if the length is zero, or if it exceeds
-adapter->rx_buffer_len. This preserves the TBI workaround semantics for
-valid frames and prevents touching memory beyond the RX buffer.
-
-Fixes: 2037110c96d5 ("e1000: move tbi workaround code into helper function")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html#index-counted_005fby-variable-attribute
+Reported-at: https://launchpad.net/bugs/2129580
+Fixes: bb5e62f2d547 ("net: Add options as a flexible array to struct ip_tunnel_info")
+Signed-off-by: Frode Nordahl <fnordahl@ubuntu.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20251213101338.4693-1-fnordahl@ubuntu.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/e1000/e1000_main.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ net/ipv4/ip_gre.c  |    6 ++++--
+ net/ipv6/ip6_gre.c |    6 ++++--
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/net/ethernet/intel/e1000/e1000_main.c
-+++ b/drivers/net/ethernet/intel/e1000/e1000_main.c
-@@ -4094,7 +4094,15 @@ static bool e1000_tbi_should_accept(stru
- 				    u32 length, const u8 *data)
- {
- 	struct e1000_hw *hw = &adapter->hw;
--	u8 last_byte = *(data + length - 1);
-+	u8 last_byte;
-+
-+	/* Guard against OOB on data[length - 1] */
-+	if (unlikely(!length))
-+		return false;
-+	/* Upper bound: length must not exceed rx_buffer_len */
-+	if (unlikely(length > adapter->rx_buffer_len))
-+		return false;
-+	last_byte = *(data + length - 1);
+--- a/net/ipv4/ip_gre.c
++++ b/net/ipv4/ip_gre.c
+@@ -330,6 +330,10 @@ static int erspan_rcv(struct sk_buff *sk
+ 			if (!tun_dst)
+ 				return PACKET_REJECT;
  
- 	if (TBI_ACCEPT(hw, status, errors, length, last_byte)) {
- 		unsigned long irq_flags;
++			/* MUST set options_len before referencing options */
++			info = &tun_dst->u.tun_info;
++			info->options_len = sizeof(*md);
++
+ 			/* skb can be uncloned in __iptunnel_pull_header, so
+ 			 * old pkt_md is no longer valid and we need to reset
+ 			 * it
+@@ -344,10 +348,8 @@ static int erspan_rcv(struct sk_buff *sk
+ 			memcpy(md2, pkt_md, ver == 1 ? ERSPAN_V1_MDSIZE :
+ 						       ERSPAN_V2_MDSIZE);
+ 
+-			info = &tun_dst->u.tun_info;
+ 			__set_bit(IP_TUNNEL_ERSPAN_OPT_BIT,
+ 				  info->key.tun_flags);
+-			info->options_len = sizeof(*md);
+ 		}
+ 
+ 		skb_reset_mac_header(skb);
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -535,6 +535,10 @@ static int ip6erspan_rcv(struct sk_buff
+ 			if (!tun_dst)
+ 				return PACKET_REJECT;
+ 
++			/* MUST set options_len before referencing options */
++			info = &tun_dst->u.tun_info;
++			info->options_len = sizeof(*md);
++
+ 			/* skb can be uncloned in __iptunnel_pull_header, so
+ 			 * old pkt_md is no longer valid and we need to reset
+ 			 * it
+@@ -543,7 +547,6 @@ static int ip6erspan_rcv(struct sk_buff
+ 			     skb_network_header_len(skb);
+ 			pkt_md = (struct erspan_metadata *)(gh + gre_hdr_len +
+ 							    sizeof(*ershdr));
+-			info = &tun_dst->u.tun_info;
+ 			md = ip_tunnel_info_opts(info);
+ 			md->version = ver;
+ 			md2 = &md->u.md2;
+@@ -551,7 +554,6 @@ static int ip6erspan_rcv(struct sk_buff
+ 						       ERSPAN_V2_MDSIZE);
+ 			__set_bit(IP_TUNNEL_ERSPAN_OPT_BIT,
+ 				  info->key.tun_flags);
+-			info->options_len = sizeof(*md);
+ 
+ 			ip6_tnl_rcv(tunnel, skb, tpi, tun_dst, log_ecn_error);
+ 
 
 
