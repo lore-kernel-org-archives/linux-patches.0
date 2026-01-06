@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 963CE34C81B;
-	Tue,  6 Jan 2026 17:19:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB23A34C81B;
+	Tue,  6 Jan 2026 17:19:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719981; cv=none; b=FU2ZuCvHg6UsljuQuVMubOd38t0SOAArqxLpR2t0WIYO/yacYXdvhsEFcoossiOlac/hkIIcON+8cU/NaHENmsDewUZBUBnXNMQ/2K6VJIP8H2O6YyrpSoqwtFhD6pVV1P70Wn2tNK8BaRlbz0ueFRtDZ+XxrLQtcuwJ6QwSug4=
+	t=1767719984; cv=none; b=lRmHlWXAmELABlofK6Or7HfAY5SuuYabHSpjQAEdyaYd1uvJtggPv5sXrC/4KfcP2jowEPKnrD6Sc+lnFt4qO834NesYCuZj2sj0JFw06dp+QNebUS1zQpUYGfSq9sdMhX+D2mSsnLkqVOHBq/tmzPsi3Q6ZKYRqOA3H986XSjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719981; c=relaxed/simple;
-	bh=07KiBOwBrrKX8JthCjkNN0I9Q32G3O/sRoA/H1fQ/BA=;
+	s=arc-20240116; t=1767719984; c=relaxed/simple;
+	bh=MGq93dE9P3zfnhQfntVn9Ton66hNe54se/mqU9JFVzs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m++z+j1jXGloQ2RUzR7//I8UMXXctCbHOiHLKyj3NWdB5wkeXteZzf4lWo6/ZGJ4NB3QolAAz4I1LLbNf3sTW1zcfki1y7Al7TWMs5RPZCaUYmEAC3lsQCEuXGfuZIoUG/KgibHh9LJkAD8Z07uDt8Awvbx1yCIS8zpNQZyGj2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tHFzggoj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wj546uNyJedUUtR9+1GUoDcMfKsfgGitFmkt0oyAhuNbs/WMowmT2j5e0xvgbM3Mb0Jvdrxn+za1Lxg9uELqN8TyBtNEpdkKi+w3QmBvYOItHz9fTjCbe8rb8H42vx0sGNt671r8chdrRgqSfBlJBpx3dKg5VyowS7VFUzp/kyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JFNdhTkD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tHFzggoj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1816AC116C6;
-	Tue,  6 Jan 2026 17:19:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JFNdhTkD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B82AC116C6;
+	Tue,  6 Jan 2026 17:19:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719981;
-	bh=07KiBOwBrrKX8JthCjkNN0I9Q32G3O/sRoA/H1fQ/BA=;
+	s=korg; t=1767719984;
+	bh=MGq93dE9P3zfnhQfntVn9Ton66hNe54se/mqU9JFVzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tHFzggoj7FVjjCEISeEm9ZJOVuWUSODIqotE/8cksqJR8VAVVE7TwQhwZxydFAaNw
-	 byvuP2ThW/Yqr3s+d74SJcZJytOgucQx99/0yQoRotfKM92q2ga/8kB6qrffkEvUZo
-	 OOvWrmCV2ecoSMCYuphZ1W4bUXCnr9wQkRDhdSok=
+	b=JFNdhTkDLvZ9+my4EaZan2ZGwk6eiXa/lKkNb68A7JGNv0cFKaaVafKVwx3jQJAHt
+	 aYtyoDeHCzZ5p+lLmAvIlF7ZZezDk08bWLShqxjhdWQ8QfaRq79ddy6PTc6bLX3+Ot
+	 qbLpPOv6/vQO0AkzWoVQ7QMHuo2MVe130Y6BE8lc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junjie Cao <junjie.cao@intel.com>,
+	Minseong Kim <ii4gsp@gmail.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.12 097/567] Input: ti_am335x_tsc - fix off-by-one error in wire_order validation
-Date: Tue,  6 Jan 2026 17:57:59 +0100
-Message-ID: <20260106170454.916665300@linuxfoundation.org>
+Subject: [PATCH 6.12 098/567] Input: lkkbd - disable pending work before freeing device
+Date: Tue,  6 Jan 2026 17:58:00 +0100
+Message-ID: <20260106170454.953299452@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -50,38 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Minseong Kim <ii4gsp@gmail.com>
 
-commit 248d3a73a0167dce15ba100477c3e778c4787178 upstream.
+commit e58c88f0cb2d8ed89de78f6f17409d29cfab6c5c upstream.
 
-The current validation 'wire_order[i] > ARRAY_SIZE(config_pins)' allows
-wire_order[i] to equal ARRAY_SIZE(config_pins), which causes out-of-bounds
-access when used as index in 'config_pins[wire_order[i]]'.
+lkkbd_interrupt() schedules lk->tq via schedule_work(), and the work
+handler lkkbd_reinit() dereferences the lkkbd structure and its
+serio/input_dev fields.
 
-Since config_pins has 4 elements (indices 0-3), the valid range for
-wire_order should be 0-3. Fix the off-by-one error by using >= instead
-of > in the validation check.
+lkkbd_disconnect() and error paths in lkkbd_connect() free the lkkbd
+structure without preventing the reinit work from being queued again
+until serio_close() returns. This can allow the work handler to run
+after the structure has been freed, leading to a potential use-after-free.
 
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-Link: https://patch.msgid.link/20251114062817.852698-1-junjie.cao@intel.com
-Fixes: bb76dc09ddfc ("input: ti_am33x_tsc: Order of TSC wires, made configurable")
+Use disable_work_sync() instead of cancel_work_sync() to ensure the
+reinit work cannot be re-queued, and call it both in lkkbd_disconnect()
+and in lkkbd_connect() error paths after serio_open().
+
+Signed-off-by: Minseong Kim <ii4gsp@gmail.com>
 Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20251212052314.16139-1-ii4gsp@gmail.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/touchscreen/ti_am335x_tsc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/keyboard/lkkbd.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/input/touchscreen/ti_am335x_tsc.c
-+++ b/drivers/input/touchscreen/ti_am335x_tsc.c
-@@ -85,7 +85,7 @@ static int titsc_config_wires(struct tit
- 		wire_order[i] = ts_dev->config_inp[i] & 0x0F;
- 		if (WARN_ON(analog_line[i] > 7))
- 			return -EINVAL;
--		if (WARN_ON(wire_order[i] > ARRAY_SIZE(config_pins)))
-+		if (WARN_ON(wire_order[i] >= ARRAY_SIZE(config_pins)))
- 			return -EINVAL;
- 	}
+--- a/drivers/input/keyboard/lkkbd.c
++++ b/drivers/input/keyboard/lkkbd.c
+@@ -670,7 +670,8 @@ static int lkkbd_connect(struct serio *s
  
+ 	return 0;
+ 
+- fail3:	serio_close(serio);
++ fail3:	disable_work_sync(&lk->tq);
++	serio_close(serio);
+  fail2:	serio_set_drvdata(serio, NULL);
+  fail1:	input_free_device(input_dev);
+ 	kfree(lk);
+@@ -684,6 +685,8 @@ static void lkkbd_disconnect(struct seri
+ {
+ 	struct lkkbd *lk = serio_get_drvdata(serio);
+ 
++	disable_work_sync(&lk->tq);
++
+ 	input_get_device(lk->dev);
+ 	input_unregister_device(lk->dev);
+ 	serio_close(serio);
 
 
