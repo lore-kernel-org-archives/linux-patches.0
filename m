@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2130733EC;
-	Tue,  6 Jan 2026 17:31:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97AF3217F24;
+	Tue,  6 Jan 2026 17:31:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720696; cv=none; b=qkLgHupGKGsdI9G4x7UXxYoDGnOVr0bZGzecrC/uxILGe7xM2ye/qX++hbE7+OlUJaILHFpJqiUZCHZ4kRe/1CEx0Cc6Azl6SodhxH5+uDsu43EAjECgeRVuRovfzYjQOXEetP0Bwv5Jgwl06VHe5kmRQQhNdXJyDyjgcBUhp28=
+	t=1767720699; cv=none; b=ajT8WCQT2Aa2vyuOdwrA/dLvxorBdv+KkMEsXNwuxvjIeX68/oQkskQ9Ipp4N+0IaN23ymI4/MLAxb1zdmupXBluPwdW2sbBZfW0GlotdJ9ELo6gp/ny+bf6qpkA43JQWHQy9zkRy2p75OT/AiwzqCBaGJHalHltfUJh6cY76bA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720696; c=relaxed/simple;
-	bh=wzdgaHNZUYT996mbrW0HEUlI832hVgGva3uuXwK4qBg=;
+	s=arc-20240116; t=1767720699; c=relaxed/simple;
+	bh=jyvUvC3XLKtnZKFFtn/WfY7DiDRFD3Uj2McC5zKuOuk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DTbM0Y+8m3GIHbrz/WFlpPjoccLJ7VWA6fC6J5YkjQ1MJIUXnbyedY7hEtsCWN+0wF/NlntYJmRr8x2eTSB/qlW4r8hAzJGHwSNvM/UzzvpqprVS7XAnrMVYxLgn5LEHlJ6rRerVGAhGle4jHUiS3HLVHkhI/c84J4ADJVxX59I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wMUW859m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T47t/jd0LT4iRt0Q3suCfL1MyBzon1gfMknGTibItcn4CvTGqgIRWWV07Yd9NPYfH7j4n64t+yIFaV5WeEJcaSssATKntPLHJGImldXlPiwe+QfGCtpp4ylv8J1QLGp12KvqEnR/gJz0mfOzTYFXQmQMUH7hjuwZI2rZCVCQWdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ieDYy7ZU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wMUW859m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E1A2C116C6;
-	Tue,  6 Jan 2026 17:31:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ieDYy7ZU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69AAC116C6;
+	Tue,  6 Jan 2026 17:31:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720696;
-	bh=wzdgaHNZUYT996mbrW0HEUlI832hVgGva3uuXwK4qBg=;
+	s=korg; t=1767720699;
+	bh=jyvUvC3XLKtnZKFFtn/WfY7DiDRFD3Uj2McC5zKuOuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wMUW859mOcR9QKpjZuR80GBuNgNX6VRreQT75TY1ipgqayLMgZQABW06DZ+qwzehf
-	 yx0A47sKUohl6Yk2GDlqQEH1IZe9sBJQDOHmpI6FV1EQ4xBzGleSj8BaubpgyCSaVk
-	 0t+sIQZSQdcQOAwMVTpCG6PgXz8TcZ/dawuyS590=
+	b=ieDYy7ZUJ6RHNxoF+ycaPSOabch0e5fLNSCdsujtkDBq1icb+iCca1CtXtXPzqrmC
+	 FdpBxSdmcwWzxY7DtDlHMbtkq1Uv1NBUD9QmNA4vxTApX0crtnOuiAUN7RUHfLq5A3
+	 wAyIGSMAS68x7oL6o61GeY6odFk57JrsAdwijdpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Johan Hovold <johan@kernel.org>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 6.12 281/567] soc: amlogic: canvas: fix device leak on lookup
-Date: Tue,  6 Jan 2026 18:01:03 +0100
-Message-ID: <20260106170501.725993078@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.12 282/567] rpmsg: glink: fix rpmsg device leak
+Date: Tue,  6 Jan 2026 18:01:04 +0100
+Message-ID: <20260106170501.764896244@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,46 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-commit 32200f4828de9d7e6db379909898e718747f4e18 upstream.
+commit a53e356df548f6b0e82529ef3cc6070f42622189 upstream.
 
-Make sure to drop the reference taken to the canvas platform device when
-looking up its driver data.
+While testing rpmsg-char interface it was noticed that duplicate sysfs
+entries are getting created and below warning is noticed.
 
-Note that holding a reference to a device does not prevent its driver
-data from going away so there is no point in keeping the reference.
+Reason for this is that we are leaking rpmsg device pointer, setting it
+null without actually unregistering device.
+Any further attempts to unregister fail because rpdev is NULL,
+resulting in a leak.
 
-Also note that commit 28f851e6afa8 ("soc: amlogic: canvas: add missing
-put_device() call in meson_canvas_get()") fixed the leak in a lookup
-error path, but the reference is still leaking on success.
+Fix this by unregistering rpmsg device before removing its reference
+from rpmsg channel.
 
-Fixes: d4983983d987 ("soc: amlogic: add meson-canvas driver")
-Cc: stable@vger.kernel.org	# 4.20: 28f851e6afa8
-Cc: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://patch.msgid.link/20250926142454.5929-2-johan@kernel.org
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+sysfs: cannot create duplicate filename '/devices/platform/soc@0/3700000.remot
+eproc/remoteproc/remoteproc1/3700000.remoteproc:glink-edge/3700000.remoteproc:
+glink-edge.adsp_apps.-1.-1'
+[  114.115347] CPU: 0 UID: 0 PID: 9 Comm: kworker/0:0 Not
+ tainted 6.16.0-rc4 #7 PREEMPT
+[  114.115355] Hardware name: Qualcomm Technologies, Inc. Robotics RB3gen2 (DT)
+[  114.115358] Workqueue: events qcom_glink_work
+[  114.115371] Call trace:8
+[  114.115374]  show_stack+0x18/0x24 (C)
+[  114.115382]  dump_stack_lvl+0x60/0x80
+[  114.115388]  dump_stack+0x18/0x24
+[  114.115393]  sysfs_warn_dup+0x64/0x80
+[  114.115402]  sysfs_create_dir_ns+0xf4/0x120
+[  114.115409]  kobject_add_internal+0x98/0x260
+[  114.115416]  kobject_add+0x9c/0x108
+[  114.115421]  device_add+0xc4/0x7a0
+[  114.115429]  rpmsg_register_device+0x5c/0xb0
+[  114.115434]  qcom_glink_work+0x4bc/0x820
+[  114.115438]  process_one_work+0x148/0x284
+[  114.115446]  worker_thread+0x2c4/0x3e0
+[  114.115452]  kthread+0x12c/0x204
+[  114.115457]  ret_from_fork+0x10/0x20
+[  114.115464] kobject: kobject_add_internal failed for 3700000.remoteproc:
+glink-edge.adsp_apps.-1.-1 with -EEXIST, don't try to register things with
+the same name in the same directory.
+[  114.250045] rpmsg 3700000.remoteproc:glink-edge.adsp_apps.-1.-1:
+device_add failed: -17
+
+Fixes: 835764ddd9af ("rpmsg: glink: Move the common glink protocol implementation to glink_native.c")
+Cc: Stable@vger.kernel.org
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250822100043.2604794-2-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/amlogic/meson-canvas.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/rpmsg/qcom_glink_native.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/soc/amlogic/meson-canvas.c
-+++ b/drivers/soc/amlogic/meson-canvas.c
-@@ -73,10 +73,9 @@ struct meson_canvas *meson_canvas_get(st
- 	 * current state, this driver probe cannot return -EPROBE_DEFER
- 	 */
- 	canvas = dev_get_drvdata(&canvas_pdev->dev);
--	if (!canvas) {
--		put_device(&canvas_pdev->dev);
-+	put_device(&canvas_pdev->dev);
-+	if (!canvas)
- 		return ERR_PTR(-EINVAL);
--	}
+--- a/drivers/rpmsg/qcom_glink_native.c
++++ b/drivers/rpmsg/qcom_glink_native.c
+@@ -1399,6 +1399,7 @@ static void qcom_glink_destroy_ept(struc
+ {
+ 	struct glink_channel *channel = to_glink_channel(ept);
+ 	struct qcom_glink *glink = channel->glink;
++	struct rpmsg_channel_info chinfo;
+ 	unsigned long flags;
  
- 	return canvas;
- }
+ 	spin_lock_irqsave(&channel->recv_lock, flags);
+@@ -1406,6 +1407,13 @@ static void qcom_glink_destroy_ept(struc
+ 	spin_unlock_irqrestore(&channel->recv_lock, flags);
+ 
+ 	/* Decouple the potential rpdev from the channel */
++	if (channel->rpdev) {
++		strscpy_pad(chinfo.name, channel->name, sizeof(chinfo.name));
++		chinfo.src = RPMSG_ADDR_ANY;
++		chinfo.dst = RPMSG_ADDR_ANY;
++
++		rpmsg_unregister_device(glink->dev, &chinfo);
++	}
+ 	channel->rpdev = NULL;
+ 
+ 	qcom_glink_send_close_req(glink, channel);
 
 
