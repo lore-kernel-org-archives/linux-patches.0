@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90269846F;
-	Tue,  6 Jan 2026 17:36:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9DB1229B12;
+	Tue,  6 Jan 2026 17:36:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720999; cv=none; b=sqC7jzzLtWs2sD5YsKLf75kPI8Hf3F+IoAfumqAXhK79mEBraML9nhsyeJNzno5uzv2wgf+GW9ADzEbOCASUiv9IEBejKRwEi9EnkvNJCE5YIXuPY0X5B2vJbkUSE+0S+MhN8irmtQj0aKYET+TUEC9nRMnT9unZhEnf1D6xXzU=
+	t=1767721002; cv=none; b=A2fz4VCb636pTn5sByngBsJg6SwAIXDRkE8ScgZWghJCeUGbEv5wHLztfDZ3Q1zbsLsb3DQdg08gIf0LoZYRuaKz6O+rEojL9XuoVARUElKqTLVIUax46ra2t8A3Sr8eXWOhp41smq0gHtZIljHQA5DQu/Foe3s/G6QOrMns2sY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720999; c=relaxed/simple;
-	bh=k/6SnduiWUMW3qd5lItR6jV72y775RlLgay40QuviUI=;
+	s=arc-20240116; t=1767721002; c=relaxed/simple;
+	bh=55vX05IW+n7bGrPV0O0hefSQaqPa3oNYS2X8o7+RgBc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dEkIN0SJrhTQQBC73NJMeya8AkH+QI0mEb2vNeuokVjWlCv2R8TSUgtVsiRcWukWmlpBhc5W0uYODcLmd+ZB/tnf8MYGi75Xx8PCIDJRKnxflVf9UzuLJBJzcN3TglqodDC//yp0MRAU4RTAehDQm38ScfEx87SIrpNPZoTT5fE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sAW/cBQi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p0QU2jXb5SctnUZMIGuNHH4/bOg6JG+t5itjWgfpzy+xn+zsRf1NnqavRJa4q84Ydm/eaUoNjwwBPQvrfO4K+I4jVXS922w3eYLv/ktd6I5T/3sCoX4kBmjr9tmc5uyDqExV8jJaD0TT2mKUVxirLbCW9KtpLeDjw22mp7ESFVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X9QL3Ya1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sAW/cBQi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 086D1C116C6;
-	Tue,  6 Jan 2026 17:36:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X9QL3Ya1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 282B3C16AAE;
+	Tue,  6 Jan 2026 17:36:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720999;
-	bh=k/6SnduiWUMW3qd5lItR6jV72y775RlLgay40QuviUI=;
+	s=korg; t=1767721002;
+	bh=55vX05IW+n7bGrPV0O0hefSQaqPa3oNYS2X8o7+RgBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sAW/cBQiS7YmwLQ3T3Z2J9dB/alyuZIgenDSBKEnOEtZGKZ6WljSKKmpCgLf49uqD
-	 pmi85XBKJUiCRO22R23cLvoRiJAtDOwpQXw8Wi7VUroX0VHFwxt/lQSVq4ac/4CAa8
-	 Np1JpU6M0rB7Z+MC8aiICof5Hf7ZeRzdK0OxhSXs=
+	b=X9QL3Ya1rMKoiFw3IyNORfXl4CeJ0fFtGBvsqedY3rF+4lJxVfMdSYh83IpGIZOeG
+	 Z9xWGjUezRboz9BqCaW9ExUTgS30fuDq7nXQamG9ZfBOlYc8hg/SsOz7aJsBSv7u2O
+	 0/7RMnRUQLwShc/ZoJMDwniGRy+C9OFgGacWzJu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Sylwester Nawrocki <s.nawrocki@samsung.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 405/567] media: renesas: rcar_drif: fix device node reference leak in rcar_drif_bond_enabled
-Date: Tue,  6 Jan 2026 18:03:07 +0100
-Message-ID: <20260106170506.325503933@linuxfoundation.org>
+Subject: [PATCH 6.12 406/567] media: samsung: exynos4-is: fix potential ABBA deadlock on init
+Date: Tue,  6 Jan 2026 18:03:08 +0100
+Message-ID: <20260106170506.362165364@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,41 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-commit 445e1658894fd74eab7e53071fa16233887574ed upstream.
+commit 17dc8ccd6dd5ffe30aa9b0d36e2af1389344ce2b upstream.
 
-The function calls of_parse_phandle() which returns
-a device node with an incremented reference count. When the bonded device
-is not available, the function
-returns NULL without releasing the reference, causing a reference leak.
+v4l2_device_register_subdev_nodes() must called without taking
+media_dev->graph_mutex to avoid potential AB-BA deadlock on further
+subdevice driver initialization.
 
-Add of_node_put(np) to release the device node reference.
-The of_node_put function handles NULL pointers.
-
-Found through static analysis by reviewing the doc of of_parse_phandle()
-and cross-checking its usage patterns across the codebase.
-
-Fixes: 7625ee981af1 ("[media] media: platform: rcar_drif: Add DRIF support")
+Fixes: fa91f1056f17 ("[media] exynos4-is: Add support for asynchronous subdevices registration")
 Cc: stable@vger.kernel.org
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Acked-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/renesas/rcar_drif.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/platform/samsung/exynos4-is/media-dev.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/media/platform/renesas/rcar_drif.c
-+++ b/drivers/media/platform/renesas/rcar_drif.c
-@@ -1249,6 +1249,7 @@ static struct device_node *rcar_drif_bon
- 	if (np && of_device_is_available(np))
- 		return np;
+--- a/drivers/media/platform/samsung/exynos4-is/media-dev.c
++++ b/drivers/media/platform/samsung/exynos4-is/media-dev.c
+@@ -1410,12 +1410,14 @@ static int subdev_notifier_complete(stru
+ 	mutex_lock(&fmd->media_dev.graph_mutex);
  
-+	of_node_put(np);
- 	return NULL;
- }
+ 	ret = fimc_md_create_links(fmd);
+-	if (ret < 0)
+-		goto unlock;
++	if (ret < 0) {
++		mutex_unlock(&fmd->media_dev.graph_mutex);
++		return ret;
++	}
+ 
+-	ret = v4l2_device_register_subdev_nodes(&fmd->v4l2_dev);
+-unlock:
+ 	mutex_unlock(&fmd->media_dev.graph_mutex);
++
++	ret = v4l2_device_register_subdev_nodes(&fmd->v4l2_dev);
+ 	if (ret < 0)
+ 		return ret;
  
 
 
