@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1647828C871;
-	Tue,  6 Jan 2026 18:01:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF50224AF2;
+	Tue,  6 Jan 2026 18:01:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722492; cv=none; b=kkPEIIKXLtJx1/OZERE/11/GSBy40ucps0jW37Kkmula/Sq3Qps5ZXraTGD1O9iTfwUzvTYOSkblSVV/ODI4JKuv2k15hzaKQ0oBYPHvbof4YRf0S06qUgFybMdhh/kVsarVKxl9TZ40di6e0KU0Q+kdPpPKrfC5rdsPDw1d2y0=
+	t=1767722495; cv=none; b=DmdFMHfU4e69sD0aBUy/XYzY9cBNKHRhCVd9VcPOB6xnlbswGsitoETiPOoeZ7gX2rX37W3BWr4P1wX+i9gtpHvq0g8WiJLG2369Ips76HNaE5hB5RDY0JA1acwiKoN5HyEoXfKIYCL7/KHfik1gHewX5MJQ7W9dDcl5fNPm9mQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722492; c=relaxed/simple;
-	bh=P++wQaAAAljvdhjoTwHgRxGQYwCYZWNV7mABTNgWt58=;
+	s=arc-20240116; t=1767722495; c=relaxed/simple;
+	bh=Ioh3MfjA5eYhOZTZyJXnqtkD7toeBnvlqeqPubJ45f8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DI3Qosk3O40p3XS9gTWY/28H0eC02NOJSshRJd7D22BcfZ0xJb7cQLabB2jcr9OhYSKbNp+IN+8TNV3c45v/+rzQ8LxDkXk8GTjmyGpzoDeN79czru8HAfMGc44VnQG+uhX1Bvx+MFJYRnAuDNrSJIN5udgah1fCKae49/kT3GY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vUA1oJF8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ubzCnki2BuZ60UxW00Q8X606nXsi77Q1wemlcfSSrqTm/Q5V/uW4hCaDZnRHeYAqapKo5s5L40s3YQkJs+b41gtbGn4k2zAqJgsUPUqXjno/R9wf4wDOfSfH8dJYjUlrmKIvIhHRo0816RXaZohP1NIhKHiJsCeMvmCMcrX3vPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VlkQLOn7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vUA1oJF8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AC9EC116C6;
-	Tue,  6 Jan 2026 18:01:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VlkQLOn7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCAD6C116C6;
+	Tue,  6 Jan 2026 18:01:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722492;
-	bh=P++wQaAAAljvdhjoTwHgRxGQYwCYZWNV7mABTNgWt58=;
+	s=korg; t=1767722495;
+	bh=Ioh3MfjA5eYhOZTZyJXnqtkD7toeBnvlqeqPubJ45f8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vUA1oJF87L5SfOlB6iwQm86pB3SZpoZ9o2UTmH1VCktN42Ot8xSDykunOZyGwIOp9
-	 w21AIfhxSTHMfAIej3HpjuzQfeiOMPbGg+O4Zh/jiQfF71bC8aZCCd0AFVrzX6Et0D
-	 Jujq4vTfsPv1ZWEkjU7TSiuDy9HvP10WBi4V+tYM=
+	b=VlkQLOn7fXSRL+6mPDxZV74fxvt2NxSWBDivQFgd9uo6AsGTA3ytfv63qTvy/aAgf
+	 vrZCAlNk3tddwNq5H3O0gKVLpYP620wKzXlv2020YxiEaHPl/HKNrNed4P5mg9+Uo9
+	 PjP0Hc3/40IoBsoP/DkWZIMyIqKtlnyojXFj2f54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diederik de Haas <diederik@cknow-tech.com>,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Dang Huynh <dang.huynh@mainlining.org>,
-	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 6.18 281/312] drm/rockchip: vop2: Use OVL_LAYER_SEL configuration instead of use win_mask calculate used layers
-Date: Tue,  6 Jan 2026 18:05:55 +0100
-Message-ID: <20260106170558.018325424@linuxfoundation.org>
+	=?UTF-8?q?Jo=C3=A3o=20Paulo=20Gon=C3=A7alves?= <joao.goncalves@toradex.com>,
+	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>,
+	=?UTF-8?q?Herv=C3=A9=20Codina?= <herve.codina@bootlin.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Maxime Ripard <mripard@kernel.org>
+Subject: [PATCH 6.18 282/312] drm/bridge: ti-sn65dsi83: ignore PLL_UNLOCK errors
+Date: Tue,  6 Jan 2026 18:05:56 +0100
+Message-ID: <20260106170558.053868773@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -46,117 +47,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Yan <andy.yan@rock-chips.com>
+From: Luca Ceresoli <luca.ceresoli@bootlin.com>
 
-commit d3fe9aa495854f8d88c69c41a4b31e69424656ad upstream.
+commit 35e282c1868de3c9d15f9a8812cbb2e7da06b0c1 upstream.
 
-When there are multiple Video Ports, and only one of them is working
-(for example, VP1 is working while VP0 is not), in this case, the
-win_mask of VP0 is 0. However, we have already set the port mux for VP0
-according to vp0->nlayers, and at the same time, in the OVL_LAYER_SEL
-register, there are windows will also be assigned to layers which will
-map to the inactive VPs. In this situation, vp0->win_mask is zero as it
-now working, it is more reliable to calculate the used layers based on
-the configuration of the OVL_LAYER_SEL register.
+On hardware based on Toradex Verdin AM62 the recovery mechanism added by
+commit ad5c6ecef27e ("drm: bridge: ti-sn65dsi83: Add error recovery
+mechanism") has been reported [0] to make the display turn on and off and
+and the kernel logging "Unexpected link status 0x01".
 
-Note: as the configuration of OVL_LAYER_SEL is take effect when the
-vsync is come, so we use the value backup in vop2->old_layer_sel instead
-of read OVL_LAYER_SEL directly.
+According to the report, the error recovery mechanism is triggered by the
+PLL_UNLOCK error going active. Analysis suggested the board is unable to
+provide the correct DSI clock neede by the SN65DSI84, to which the TI
+SN65DSI84 reacts by raising the PLL_UNLOCK, while the display still works
+apparently without issues.
 
-Fixes: 3e89a8c68354 ("drm/rockchip: vop2: Fix the update of LAYER/PORT select registers when there are multi display output on rk3588/rk3568")
-Cc: stable@vger.kernel.org
-Reported-by: Diederik de Haas <diederik@cknow-tech.com>
-Closes: https://bugs.kde.org/show_bug.cgi?id=511274
-Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
-Tested-by: Dang Huynh <dang.huynh@mainlining.org>
-Tested-by: Diederik de Haas <diederik@cknow-tech.com>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20251112085024.2480111-1-andyshrk@163.com
+On other hardware, where all the clocks are within the components
+specifications, the PLL_UNLOCK bit does not trigger while the display is in
+normal use. It can trigger for e.g. electromagnetic interference, which is
+a transient event and exactly the reason why the error recovery mechanism
+has been implemented.
+
+Idelly the PLL_UNLOCK bit could be ignored when working out of
+specification, but this requires to detect in software whether it triggers
+because the device is working out of specification but visually correctly
+for the user or for good reasons (e.g. EMI, or even because working out of
+specifications but compromising the visual output).
+
+The ongoing analysis as of this writing [1][2] has not yet found a way for
+the driver to discriminate among the two cases. So as a temporary measure
+mask the PLL_UNLOCK error bit unconditionally.
+
+[0] https://lore.kernel.org/r/bhkn6hley4xrol5o3ytn343h4unkwsr26p6s6ltcwexnrsjsdx@mgkdf6ztow42
+[1] https://lore.kernel.org/all/b71e941c-fc8a-4ac1-9407-0fe7df73b412@gmail.com/
+[2] https://lore.kernel.org/all/20251125103900.31750-1-francesco@dolcini.it/
+
+Fixes: ad5c6ecef27e ("drm: bridge: ti-sn65dsi83: Add error recovery mechanism")
+Closes: https://lore.kernel.org/r/bhkn6hley4xrol5o3ytn343h4unkwsr26p6s6ltcwexnrsjsdx@mgkdf6ztow42
+Cc: stable@vger.kernel.org # 6.15+
+Reported-by: João Paulo Gonçalves <joao.goncalves@toradex.com>
+Tested-by: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
+Co-developed-by: Hervé Codina <herve.codina@bootlin.com>
+Signed-off-by: Hervé Codina <herve.codina@bootlin.com>
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Link: https://patch.msgid.link/20251127-drm-ti-sn65dsi83-ignore-pll-unlock-v1-1-8a03fdf562e9@bootlin.com
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_vop2_reg.c |   49 +++++++++++++++++++++++----
- 1 file changed, 42 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi83.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c
-@@ -1369,6 +1369,25 @@ static const struct vop2_regs_dump rk358
- 	},
- };
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi83.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
+@@ -429,7 +429,14 @@ static void sn65dsi83_handle_errors(stru
+ 	 */
  
-+/*
-+ * phys_id is used to identify a main window(Cluster Win/Smart Win, not
-+ * include the sub win of a cluster or the multi area) that can do overlay
-+ * in main overlay stage.
-+ */
-+static struct vop2_win *vop2_find_win_by_phys_id(struct vop2 *vop2, uint8_t phys_id)
-+{
-+	struct vop2_win *win;
-+	int i;
+ 	ret = regmap_read(ctx->regmap, REG_IRQ_STAT, &irq_stat);
+-	if (ret || irq_stat) {
 +
-+	for (i = 0; i < vop2->data->win_size; i++) {
-+		win = &vop2->win[i];
-+		if (win->data->phys_id == phys_id)
-+			return win;
-+	}
-+
-+	return NULL;
-+}
-+
- static unsigned long rk3568_set_intf_mux(struct vop2_video_port *vp, int id, u32 polflags)
- {
- 	struct vop2 *vop2 = vp->vop2;
-@@ -1842,15 +1861,31 @@ static void vop2_parse_alpha(struct vop2
- 	alpha->dst_alpha_ctrl.bits.factor_mode = ALPHA_SRC_INVERSE;
- }
- 
--static int vop2_find_start_mixer_id_for_vp(struct vop2 *vop2, u8 port_id)
-+static int vop2_find_start_mixer_id_for_vp(struct vop2_video_port *vp)
- {
--	struct vop2_video_port *vp;
--	int used_layer = 0;
-+	struct vop2 *vop2 = vp->vop2;
-+	struct vop2_win *win;
-+	u32 layer_sel = vop2->old_layer_sel;
-+	u32 used_layer = 0;
-+	unsigned long win_mask = vp->win_mask;
-+	unsigned long phys_id;
-+	bool match;
- 	int i;
- 
--	for (i = 0; i < port_id; i++) {
--		vp = &vop2->vps[i];
--		used_layer += hweight32(vp->win_mask);
-+	for (i = 0; i < 31; i += 4) {
-+		match = false;
-+		for_each_set_bit(phys_id, &win_mask, ROCKCHIP_VOP2_ESMART3) {
-+			win = vop2_find_win_by_phys_id(vop2, phys_id);
-+			if (win->data->layer_sel_id[vp->id] == ((layer_sel >> i) & 0xf)) {
-+				match = true;
-+				break;
-+			}
-+		}
-+
-+		if (!match)
-+			used_layer += 1;
-+		else
-+			break;
- 	}
- 
- 	return used_layer;
-@@ -1935,7 +1970,7 @@ static void vop2_setup_alpha(struct vop2
- 	u32 dst_global_alpha = DRM_BLEND_ALPHA_OPAQUE;
- 
- 	if (vop2->version <= VOP_VERSION_RK3588)
--		mixer_id = vop2_find_start_mixer_id_for_vp(vop2, vp->id);
-+		mixer_id = vop2_find_start_mixer_id_for_vp(vp);
- 	else
- 		mixer_id = 0;
- 
++	/*
++	 * Some hardware (Toradex Verdin AM62) is known to report the
++	 * PLL_UNLOCK error interrupt while working without visible
++	 * problems. In lack of a reliable way to discriminate such cases
++	 * from user-visible PLL_UNLOCK cases, ignore that bit entirely.
++	 */
++	if (ret || irq_stat & ~REG_IRQ_STAT_CHA_PLL_UNLOCK) {
+ 		/*
+ 		 * IRQ acknowledged is not always possible (the bridge can be in
+ 		 * a state where it doesn't answer anymore). To prevent an
+@@ -654,7 +661,7 @@ static void sn65dsi83_atomic_enable(stru
+ 	if (ctx->irq) {
+ 		/* Enable irq to detect errors */
+ 		regmap_write(ctx->regmap, REG_IRQ_GLOBAL, REG_IRQ_GLOBAL_IRQ_EN);
+-		regmap_write(ctx->regmap, REG_IRQ_EN, 0xff);
++		regmap_write(ctx->regmap, REG_IRQ_EN, 0xff & ~REG_IRQ_EN_CHA_PLL_UNLOCK_EN);
+ 	} else {
+ 		/* Use the polling task */
+ 		sn65dsi83_monitor_start(ctx);
 
 
