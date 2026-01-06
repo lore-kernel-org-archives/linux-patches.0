@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 321D827FD76;
-	Tue,  6 Jan 2026 17:52:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7576727FD76;
+	Tue,  6 Jan 2026 17:52:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721921; cv=none; b=fKNrU1CqQYlDcQ3oQ/HCTnUUNbnqXXDHqokFAvzg0lgEEzsFxvdL/7gVvECzJM4GeaTv+KEXE/aLIaQthYZAWfjAdmYjGaHXoGvvLURXXvMm4OWRk3DIpc6SLJ3ujZaxJ7nG500YL2Vh4I0zCmkoCzdoZVarRYUxA+gACWZEJz4=
+	t=1767721924; cv=none; b=mDQc27JbQyp08ww9I3ImLQ/v6NjIhvyNQNwHHM6GdR4x+9ySBgJoKWyhYL6MJVTyuSc7PfFu42Y9YOMz8g+6woVgDGx1oIp/2jQCTLDDlH/T6boagl7SxAi9+tNRt0jm9EDNBEc7R0Ok1zb44P9vflj63lgyhyYR4MlnFqYKEJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721921; c=relaxed/simple;
-	bh=wbh2g/vRprOay/v/OZItls6RkfvGg+X1c3DD/+9C1kk=;
+	s=arc-20240116; t=1767721924; c=relaxed/simple;
+	bh=IL7P2bFvjkKX6vSZFytsOIyhxZmgrUHUJHH2OAFHaYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=abQF1nEvIc/E2G1dqGJKn69zUcoy/2OYvC4fHHazcuOfqBJQTixDUJN0vqirpEdINuMuBRU0fRn0DkJOs4ATPtUr1zMyrorLiq8ZzcB8jTYdxFog01b3ztdhwzUnlSsR2XtCX+neX+R49WQ4cHNPU5tXJGehdtiX1vquTRY+OuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GQwYv7Zk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YBv/W+y/H7pcm7mrPJlNQ6a+ZxYt3KnnbBdLmSSVP9JRm9J3vq2HcSzb5fslY8knK49qTEJKtnrSLb6LiJgJS1VMnkxiWm5o4Plomx77MNF7ShLXrwF2DvVcJjkqkaz3i88ZQVl/+Y+knfYcXd6KR9/BJkR6b4nDZnFxWgC7jqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d/Pwa2k0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GQwYv7Zk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96893C116C6;
-	Tue,  6 Jan 2026 17:52:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d/Pwa2k0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D599FC116C6;
+	Tue,  6 Jan 2026 17:52:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721921;
-	bh=wbh2g/vRprOay/v/OZItls6RkfvGg+X1c3DD/+9C1kk=;
+	s=korg; t=1767721924;
+	bh=IL7P2bFvjkKX6vSZFytsOIyhxZmgrUHUJHH2OAFHaYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GQwYv7ZkpC7XlwHXuyu/0G9ncZI1skOB6ob2tRjLlulaMSGDvgII/3cBNTqoTX239
-	 Pcft+g82/hfboswEnpq6drIot9+8opOdgxtssEoGOUS5w0TNAu0gYNKoALoo8hjYFL
-	 DhYnwIzUr3oZvENUWl1eseWLSBhjFxy1GelG83KA=
+	b=d/Pwa2k08HTeYUnmuWqKzUTuJ+1/zwkR5mWHkaTH+ZVb7EqW/2WD1CJiUkPANz27l
+	 2s1PpH99zpwRjp1E2Wm/pHfo4YvxJS09VTL/NP1BpVogQ+90Ahcu0c+4/u05zCdnyS
+	 98g3ESelbrkI+D+TvANbi1FRSrtPE4BMAB9vvH5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
+	Magnus Damm <damm+renesas@opensource.se>,
 	Robin Murphy <robin.murphy@arm.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Johan Hovold <johan@kernel.org>,
 	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 6.18 111/312] iommu/exynos: fix device leak on of_xlate()
-Date: Tue,  6 Jan 2026 18:03:05 +0100
-Message-ID: <20260106170551.852518326@linuxfoundation.org>
+Subject: [PATCH 6.18 112/312] iommu/ipmmu-vmsa: fix device leak on of_xlate()
+Date: Tue,  6 Jan 2026 18:03:06 +0100
+Message-ID: <20260106170551.888268644@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -55,49 +54,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 05913cc43cb122f9afecdbe775115c058b906e1b upstream.
+commit 80aa518452c4aceb9459f9a8e3184db657d1b441 upstream.
 
 Make sure to drop the reference taken to the iommu platform device when
 looking up its driver data during of_xlate().
 
-Note that commit 1a26044954a6 ("iommu/exynos: add missing put_device()
-call in exynos_iommu_of_xlate()") fixed the leak in a couple of error
-paths, but the reference is still leaking on success.
-
-Fixes: aa759fd376fb ("iommu/exynos: Add callback for initializing devices from device tree")
-Cc: stable@vger.kernel.org	# 4.2: 1a26044954a6
-Cc: Yu Kuai <yukuai3@huawei.com>
+Fixes: 7b2d59611fef ("iommu/ipmmu-vmsa: Replace local utlb code with fwspec ids")
+Cc: stable@vger.kernel.org	# 4.14
+Cc: Magnus Damm <damm+renesas@opensource.se>
 Acked-by: Robin Murphy <robin.murphy@arm.com>
-Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/exynos-iommu.c |    9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/iommu/ipmmu-vmsa.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/iommu/exynos-iommu.c
-+++ b/drivers/iommu/exynos-iommu.c
-@@ -1446,17 +1446,14 @@ static int exynos_iommu_of_xlate(struct
- 		return -ENODEV;
+--- a/drivers/iommu/ipmmu-vmsa.c
++++ b/drivers/iommu/ipmmu-vmsa.c
+@@ -720,6 +720,8 @@ static int ipmmu_init_platform_device(st
  
- 	data = platform_get_drvdata(sysmmu);
--	if (!data) {
--		put_device(&sysmmu->dev);
-+	put_device(&sysmmu->dev);
-+	if (!data)
- 		return -ENODEV;
--	}
+ 	dev_iommu_priv_set(dev, platform_get_drvdata(ipmmu_pdev));
  
- 	if (!owner) {
- 		owner = kzalloc(sizeof(*owner), GFP_KERNEL);
--		if (!owner) {
--			put_device(&sysmmu->dev);
-+		if (!owner)
- 			return -ENOMEM;
--		}
++	put_device(&ipmmu_pdev->dev);
++
+ 	return 0;
+ }
  
- 		INIT_LIST_HEAD(&owner->controllers);
- 		mutex_init(&owner->rpm_lock);
 
 
