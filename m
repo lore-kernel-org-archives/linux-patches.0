@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535B533987D;
-	Tue,  6 Jan 2026 17:37:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F4233DEDF;
+	Tue,  6 Jan 2026 17:37:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721023; cv=none; b=tZ/QA/eAHbVBDRGgxMKAAHJQxNykSsXBpMfWeoWV4catA6QG35onSSbjX/K9TBGfojSNYCcEiJ+vvSHqHxt0oNOxXve0JssBg/b9pRD034MfDi8raxPL3JBahB3rnb1Icah4fGkLNFP3EUPqu/Dphrvh6K1YJ1yMWxcy+qN1ee8=
+	t=1767721026; cv=none; b=FKVOaONrpclq7PXXg5IguP0J3DXAQFk+9H9E7gEIWf4VQT1HmX6qlAqGRZ11F8kCo8XV5trfPTwgvLls8785GNpVCaQ7P6mDlhyKlIFT4cD1GMHPgPYhgFV+NDmlb8bwM+unBAW4go70nIz2mYAyvqIWzSMEmVYHCo38dQ1loe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721023; c=relaxed/simple;
-	bh=HomahYILYSnV+q/06P+i36ZuNuXu/wl+JHuEalVj9vI=;
+	s=arc-20240116; t=1767721026; c=relaxed/simple;
+	bh=fHl/v6Cix+XBUddxrAmLTHkjQJRqAIa6exq/ISI8eF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pMlBP8btnlgEwbI/z8863ZPQgUGXMKrsdBCl3vo3RujGHgpl88ckZ2nqTuQ6b7OVy3zEaRJY+yqlXIHSAsqcCzgZq6HIYrgISyAzkYHywzLcHJstLBDXuPTF2ZXmulJb2TfjoyEv1yQsrMHAx/BIJHlSb5WJg4s6077ZYtu0MLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BkAlwwqf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YSHOYcSOW2BXthXEkDhqtvNOZH4qcFOiVaLX08Thuem+6IIxoA5DP/UMTaeEeJp1iRUbUOEs/i47mxopB9+pQ4u1uYY5S46UlevlTGXlBzTsgUlCOkimC9CDgELTCLKxrkyHw58SuRbpnVqscrQSrzd57MrVv7RqgpZxaVy3FMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZB0ufoeW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BkAlwwqf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5D42C116C6;
-	Tue,  6 Jan 2026 17:37:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZB0ufoeW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06FBCC16AAE;
+	Tue,  6 Jan 2026 17:37:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721023;
-	bh=HomahYILYSnV+q/06P+i36ZuNuXu/wl+JHuEalVj9vI=;
+	s=korg; t=1767721026;
+	bh=fHl/v6Cix+XBUddxrAmLTHkjQJRqAIa6exq/ISI8eF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BkAlwwqf+dHyjhB9RzhD+IQ+EcWLV5INBDY2LkDBOC1MKnG2Xw4OW5u8V2mXQUVBE
-	 6EIWVzzu+KCI9AMFYL4fNIUoA6unUmTuThibaHG3naWnnLvE+N1yz+8Vomocbn8Z03
-	 WwARBO4RHvk+zCUkD3BlNQ08D6vS1BZwsXVO///0=
+	b=ZB0ufoeW1x5jHcTm3eLnfqHYe/zkgkQ0AfjaNb0lT+raVlCRpVeQu/qxRd0H/DG61
+	 VGY65aTzwC8PGGWCd9BQuTIaMA/5nJuIjPkKSgxM75vVqyPyvVlPAh2/zrOunl+6Mm
+	 BY4iTGGXKtuXaXEMRjbe87Jv5UzV8Q2ps1HpBbK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Qian <ming.qian@oss.nxp.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Duoming Zhou <duoming@zju.edu.cn>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 412/567] media: amphion: Cancel message work before releasing the VPU core
-Date: Tue,  6 Jan 2026 18:03:14 +0100
-Message-ID: <20260106170506.586079587@linuxfoundation.org>
+Subject: [PATCH 6.12 413/567] media: i2c: ADV7604: Remove redundant cancel_delayed_work in probe
+Date: Tue,  6 Jan 2026 18:03:15 +0100
+Message-ID: <20260106170506.623045957@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,44 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Qian <ming.qian@oss.nxp.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-commit ae246b0032146e352c4c06a7bf03cd3d5bcb2ecd upstream.
+commit 8f34f24355a607b98ecd9924837aab13c676eeca upstream.
 
-To avoid accessing the VPU register after release of the VPU core,
-cancel the message work and destroy the workqueue that handles the
-VPU message before release of the VPU core.
+The delayed_work delayed_work_enable_hotplug is initialized with
+INIT_DELAYED_WORK() in adv76xx_probe(), but it is never scheduled
+anywhere in the probe function.
 
-Fixes: 3cd084519c6f ("media: amphion: add vpu v4l2 m2m support")
+Calling cancel_delayed_work() on a work that has never been
+scheduled is redundant and unnecessary, as there is no pending
+work to cancel.
+
+Remove the redundant cancel_delayed_work() from error handling
+path and adjust the goto label accordingly to simplify the code
+and avoid potential confusion.
+
+Fixes: 54450f591c99 ("[media] adv7604: driver for the Analog Devices ADV7604 video decoder")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/amphion/vpu_v4l2.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/media/i2c/adv7604.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/media/platform/amphion/vpu_v4l2.c
-+++ b/drivers/media/platform/amphion/vpu_v4l2.c
-@@ -698,15 +698,15 @@ static int vpu_v4l2_release(struct vpu_i
- {
- 	vpu_trace(inst->vpu->dev, "%p\n", inst);
+--- a/drivers/media/i2c/adv7604.c
++++ b/drivers/media/i2c/adv7604.c
+@@ -3620,7 +3620,7 @@ static int adv76xx_probe(struct i2c_clie
+ 	err = media_entity_pads_init(&sd->entity, state->source_pad + 1,
+ 				state->pads);
+ 	if (err)
+-		goto err_work_queues;
++		goto err_i2c;
  
--	vpu_release_core(inst->core);
--	put_device(inst->dev);
--
- 	if (inst->workqueue) {
- 		cancel_work_sync(&inst->msg_work);
- 		destroy_workqueue(inst->workqueue);
- 		inst->workqueue = NULL;
- 	}
+ 	/* Configure regmaps */
+ 	err = configure_regmaps(state);
+@@ -3661,8 +3661,6 @@ static int adv76xx_probe(struct i2c_clie
  
-+	vpu_release_core(inst->core);
-+	put_device(inst->dev);
-+
- 	v4l2_ctrl_handler_free(&inst->ctrl_handler);
- 	mutex_destroy(&inst->lock);
- 
+ err_entity:
+ 	media_entity_cleanup(&sd->entity);
+-err_work_queues:
+-	cancel_delayed_work(&state->delayed_work_enable_hotplug);
+ err_i2c:
+ 	adv76xx_unregister_clients(state);
+ err_hdl:
 
 
