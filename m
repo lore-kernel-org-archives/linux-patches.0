@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B5134E747;
-	Tue,  6 Jan 2026 17:27:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 107AA2874E9;
+	Tue,  6 Jan 2026 17:27:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720453; cv=none; b=hXR0kii/ur2iUqsK5a19IkiAYbKCORC6sQKqmYaHgSkI9wnsVeoDzrhKyxKObNFOoKhrUUaK/PWYB5+Y6VxjFJ8XbWYjVzZDsGMfsWTtpheXCOkaJSpJRm/wPuM1AfTvLewcQqB9gBiLUXndZbtNGs40jdLZfw4W2vWkUa8XaPg=
+	t=1767720457; cv=none; b=L/rysI2RBSw2NB4j1VNDRrR3fB3NNT3/FBfB7hyp9xjT/ctie1QT+9n14ll584DSENK9e04QtNzKBHsF1N14Sob9KKGwgShHuCSgj2SCzX/j51/n3gUWbsPZ7deSlbgmbcE0j0y+cE6//Z8Bm7Qy1Vs2MyXFRrYNJEPsZyLfVy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720453; c=relaxed/simple;
-	bh=mjnD/iqAl6hR47feXgi1cnaCWXrcbrxkB7bekbm02Nw=;
+	s=arc-20240116; t=1767720457; c=relaxed/simple;
+	bh=lf2BA2khvc43yLxJ6SI7WQ0+Fpxs8JFAFpPCEy3qDJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RyKF5zG/R4bWK0rGI1bY5qDrqKYTXcUhR6pCmiUUtkFnscDQhduy6GCvewUPZxNrC/xeyYwa9c4TVBYWVwNs+RiaOS+6USbFnJH5XNDjBlHG0vCvU4sMgwKwcy8f8F88+fy991p5bflG7hhgUOcDKpNMDmcP6UTbnT/Vz82+J7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZqNSBRRL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nHu4uBEU3OvrC6v3aqvzU9ZcTjiiX1n0vhfRsvxDHYqk5z7x/Y//QafwGEjw32+njwvmM1eO/NhXvpP1300DnwNqK/C5rQzo2qXEejdnEP5s63JBKyn8sXCucm0j4uuPbMTgiuWRRhrP7KLJlKxjZOS8Zmk2q6ciRof/k/FhT88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pPjwgMVs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZqNSBRRL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A660C116C6;
-	Tue,  6 Jan 2026 17:27:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pPjwgMVs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FD01C116C6;
+	Tue,  6 Jan 2026 17:27:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720453;
-	bh=mjnD/iqAl6hR47feXgi1cnaCWXrcbrxkB7bekbm02Nw=;
+	s=korg; t=1767720456;
+	bh=lf2BA2khvc43yLxJ6SI7WQ0+Fpxs8JFAFpPCEy3qDJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZqNSBRRL/MVx/Y/h+oAv3lCirDcviKUFHhfkEs302rjxLygSt5cyGh9SLUfLV084K
-	 zE1OMyfdYsoc9DuMSbHNV5YJHkubPTaAtDkb4jN9qRTCB+Y+Vn+Ss0X/Ua5Eh2y56g
-	 nAfa4i736DjD6xYbh/ndHmJAVV1Zmth98HV/TDCw=
+	b=pPjwgMVsrT8RqLL9rCdTk1GX45a4yNugKVJGNS20/+yeu8R2b5GGlRffEODSHpa9J
+	 QVdeABjT+s/umJSaO5+dfv9Sqp0i87HzeKRHij/rQGUhfR6iJSMlzM3egeiSj4tWCP
+	 m6ll9jgliD39nYy7MRUI5nNxn6ocvv7D6bL97AJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Aur=C3=A9lien=20Couderc?= <aurelien.couderc2002@gmail.com>,
-	Roland Mainz <roland.mainz@nrubsig.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.12 240/567] NFSD: NFSv4 file creation neglects setting ACL
-Date: Tue,  6 Jan 2026 18:00:22 +0100
-Message-ID: <20260106170500.194832625@linuxfoundation.org>
+Subject: [PATCH 6.12 241/567] nfsd: Mark variable __maybe_unused to avoid W=1 build break
+Date: Tue,  6 Jan 2026 18:00:23 +0100
+Message-ID: <20260106170500.232397701@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -45,55 +44,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit 913f7cf77bf14c13cfea70e89bcb6d0b22239562 upstream.
+commit ebae102897e760e9e6bc625f701dd666b2163bd1 upstream.
 
-An NFSv4 client that sets an ACL with a named principal during file
-creation retrieves the ACL afterwards, and finds that it is only a
-default ACL (based on the mode bits) and not the ACL that was
-requested during file creation. This violates RFC 8881 section
-6.4.1.3: "the ACL attribute is set as given".
+Clang is not happy about set but (in some cases) unused variable:
 
-The issue occurs in nfsd_create_setattr(), which calls
-nfsd_attrs_valid() to determine whether to call nfsd_setattr().
-However, nfsd_attrs_valid() checks only for iattr changes and
-security labels, but not POSIX ACLs. When only an ACL is present,
-the function returns false, nfsd_setattr() is skipped, and the
-POSIX ACL is never applied to the inode.
+fs/nfsd/export.c:1027:17: error: variable 'inode' set but not used [-Werror,-Wunused-but-set-variable]
 
-Subsequently, when the client retrieves the ACL, the server finds
-no POSIX ACL on the inode and returns one generated from the file's
-mode bits rather than returning the originally-specified ACL.
+since it's used as a parameter to dprintk() which might be configured
+a no-op. To avoid uglifying code with the specific ifdeffery just mark
+the variable __maybe_unused.
 
-Reported-by: Aurélien Couderc <aurelien.couderc2002@gmail.com>
-Fixes: c0cbe70742f4 ("NFSD: add posix ACLs to struct nfsd_attrs")
-Cc: Roland Mainz <roland.mainz@nrubsig.org>
+The commit [1], which introduced this behaviour, is quite old and hence
+the Fixes tag points to the first of the Git era.
+
+Link: https://git.kernel.org/pub/scm/linux/kernel/git/history/history.git/commit/?id=0431923fb7a1 [1]
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/vfs.h |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/nfsd/export.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nfsd/vfs.h
-+++ b/fs/nfsd/vfs.h
-@@ -67,7 +67,8 @@ static inline bool nfsd_attrs_valid(stru
- 	struct iattr *iap = attrs->na_iattr;
- 
- 	return (iap->ia_valid || (attrs->na_seclabel &&
--		attrs->na_seclabel->len));
-+		attrs->na_seclabel->len) ||
-+		attrs->na_pacl || attrs->na_dpacl);
- }
- 
- __be32		nfserrno (int errno);
+--- a/fs/nfsd/export.c
++++ b/fs/nfsd/export.c
+@@ -1017,7 +1017,7 @@ exp_rootfh(struct net *net, struct auth_
+ {
+ 	struct svc_export	*exp;
+ 	struct path		path;
+-	struct inode		*inode;
++	struct inode		*inode __maybe_unused;
+ 	struct svc_fh		fh;
+ 	int			err;
+ 	struct nfsd_net		*nn = net_generic(net, nfsd_net_id);
 
 
