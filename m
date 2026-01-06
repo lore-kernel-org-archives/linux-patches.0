@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97AF3217F24;
-	Tue,  6 Jan 2026 17:31:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC1333EC;
+	Tue,  6 Jan 2026 17:31:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720699; cv=none; b=ajT8WCQT2Aa2vyuOdwrA/dLvxorBdv+KkMEsXNwuxvjIeX68/oQkskQ9Ipp4N+0IaN23ymI4/MLAxb1zdmupXBluPwdW2sbBZfW0GlotdJ9ELo6gp/ny+bf6qpkA43JQWHQy9zkRy2p75OT/AiwzqCBaGJHalHltfUJh6cY76bA=
+	t=1767720702; cv=none; b=QMOW0460g47o67kGzYuveN0whjVITP/RmtcV6z8GmX8SNceajXxj31dL46+87medMf9qcxHt5GWBJ1oRNhyBBh0aif8w8bT0rgpy3lUOawZbOHq+cMluxZxy+JYFnWpgthHwrKsm4lgbotPCSviqWB4Q4Eb7B40hhIiOdF38uto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720699; c=relaxed/simple;
-	bh=jyvUvC3XLKtnZKFFtn/WfY7DiDRFD3Uj2McC5zKuOuk=;
+	s=arc-20240116; t=1767720702; c=relaxed/simple;
+	bh=AP0o99L61aK5Do+4xpT79Ts6rqMwXNK9c9ujBDr9ksA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T47t/jd0LT4iRt0Q3suCfL1MyBzon1gfMknGTibItcn4CvTGqgIRWWV07Yd9NPYfH7j4n64t+yIFaV5WeEJcaSssATKntPLHJGImldXlPiwe+QfGCtpp4ylv8J1QLGp12KvqEnR/gJz0mfOzTYFXQmQMUH7hjuwZI2rZCVCQWdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ieDYy7ZU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gDaZz5k5p4Rb7aRDYJgT/gFKzJkpOnBRPcDzJh8mGz6Dy317N2tUSoReJXNdBlxooRMFybuLBXa3WWPPJpurJRO+FS/5mmQWY7gRsPerELJggQ7zEJkGsDRO1USW5P50JYiTZI8kTGWMreac5W3FIsAXYfdq8M3xDU+KpwOhw3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0h1iClTj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ieDYy7ZU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69AAC116C6;
-	Tue,  6 Jan 2026 17:31:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0h1iClTj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08056C116C6;
+	Tue,  6 Jan 2026 17:31:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720699;
-	bh=jyvUvC3XLKtnZKFFtn/WfY7DiDRFD3Uj2McC5zKuOuk=;
+	s=korg; t=1767720702;
+	bh=AP0o99L61aK5Do+4xpT79Ts6rqMwXNK9c9ujBDr9ksA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ieDYy7ZUJ6RHNxoF+ycaPSOabch0e5fLNSCdsujtkDBq1icb+iCca1CtXtXPzqrmC
-	 FdpBxSdmcwWzxY7DtDlHMbtkq1Uv1NBUD9QmNA4vxTApX0crtnOuiAUN7RUHfLq5A3
-	 wAyIGSMAS68x7oL6o61GeY6odFk57JrsAdwijdpM=
+	b=0h1iClTjabom7dZNM1RKFtcFyXd6bITONEhZqi0n559ZGJB2v/W9pJHz2Ar/n1MUS
+	 OnAJFj89BJ8JWXBFIF0Tq1x309tQRC5rYfymxdAa17eYDe+zLNnzuPnTeTrcLJzH4X
+	 aejYdhNFC717N2F8QoVHHYlCgHzIMb4QAfI5qNQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.12 282/567] rpmsg: glink: fix rpmsg device leak
-Date: Tue,  6 Jan 2026 18:01:04 +0100
-Message-ID: <20260106170501.764896244@linuxfoundation.org>
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>
+Subject: [PATCH 6.12 283/567] platform/x86: intel: chtwc_int33fe: dont dereference swnode args
+Date: Tue,  6 Jan 2026 18:01:05 +0100
+Message-ID: <20260106170501.801592166@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -46,89 +47,119 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-commit a53e356df548f6b0e82529ef3cc6070f42622189 upstream.
+commit 527250cd9092461f1beac3e4180a4481bffa01b5 upstream.
 
-While testing rpmsg-char interface it was noticed that duplicate sysfs
-entries are getting created and below warning is noticed.
+Members of struct software_node_ref_args should not be dereferenced
+directly but set using the provided macros. Commit d7cdbbc93c56
+("software node: allow referencing firmware nodes") changed the name of
+the software node member and caused a build failure. Remove all direct
+dereferences of the ref struct as a fix.
 
-Reason for this is that we are leaking rpmsg device pointer, setting it
-null without actually unregistering device.
-Any further attempts to unregister fail because rpdev is NULL,
-resulting in a leak.
+However, this driver also seems to abuse the software node interface by
+waiting for a node with an arbitrary name "intel-xhci-usb-sw" to appear
+in the system before setting up the reference for the I2C device, while
+the actual software node already exists in the intel-xhci-usb-role-switch
+module and should be used to set up a static reference. Add a FIXME for
+a future improvement.
 
-Fix this by unregistering rpmsg device before removing its reference
-from rpmsg channel.
-
-sysfs: cannot create duplicate filename '/devices/platform/soc@0/3700000.remot
-eproc/remoteproc/remoteproc1/3700000.remoteproc:glink-edge/3700000.remoteproc:
-glink-edge.adsp_apps.-1.-1'
-[  114.115347] CPU: 0 UID: 0 PID: 9 Comm: kworker/0:0 Not
- tainted 6.16.0-rc4 #7 PREEMPT
-[  114.115355] Hardware name: Qualcomm Technologies, Inc. Robotics RB3gen2 (DT)
-[  114.115358] Workqueue: events qcom_glink_work
-[  114.115371] Call trace:8
-[  114.115374]  show_stack+0x18/0x24 (C)
-[  114.115382]  dump_stack_lvl+0x60/0x80
-[  114.115388]  dump_stack+0x18/0x24
-[  114.115393]  sysfs_warn_dup+0x64/0x80
-[  114.115402]  sysfs_create_dir_ns+0xf4/0x120
-[  114.115409]  kobject_add_internal+0x98/0x260
-[  114.115416]  kobject_add+0x9c/0x108
-[  114.115421]  device_add+0xc4/0x7a0
-[  114.115429]  rpmsg_register_device+0x5c/0xb0
-[  114.115434]  qcom_glink_work+0x4bc/0x820
-[  114.115438]  process_one_work+0x148/0x284
-[  114.115446]  worker_thread+0x2c4/0x3e0
-[  114.115452]  kthread+0x12c/0x204
-[  114.115457]  ret_from_fork+0x10/0x20
-[  114.115464] kobject: kobject_add_internal failed for 3700000.remoteproc:
-glink-edge.adsp_apps.-1.-1 with -EEXIST, don't try to register things with
-the same name in the same directory.
-[  114.250045] rpmsg 3700000.remoteproc:glink-edge.adsp_apps.-1.-1:
-device_add failed: -17
-
-Fixes: 835764ddd9af ("rpmsg: glink: Move the common glink protocol implementation to glink_native.c")
-Cc: Stable@vger.kernel.org
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250822100043.2604794-2-srinivas.kandagatla@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: d7cdbbc93c56 ("software node: allow referencing firmware nodes")
+Fixes: 53c24c2932e5 ("platform/x86: intel_cht_int33fe: use inline reference properties")
+Cc: stable@vger.kernel.org
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Closes: https://lore.kernel.org/all/20251121111534.7cdbfe5c@canb.auug.org.au/
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Acked-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rpmsg/qcom_glink_native.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/platform/x86/intel/chtwc_int33fe.c |   29 ++++++++++++++++++++---------
+ 1 file changed, 20 insertions(+), 9 deletions(-)
 
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -1399,6 +1399,7 @@ static void qcom_glink_destroy_ept(struc
+--- a/drivers/platform/x86/intel/chtwc_int33fe.c
++++ b/drivers/platform/x86/intel/chtwc_int33fe.c
+@@ -77,7 +77,7 @@ static const struct software_node max170
+  * software node.
+  */
+ static struct software_node_ref_args fusb302_mux_refs[] = {
+-	{ .node = NULL },
++	SOFTWARE_NODE_REFERENCE(NULL),
+ };
+ 
+ static const struct property_entry fusb302_properties[] = {
+@@ -190,11 +190,6 @@ static void cht_int33fe_remove_nodes(str
  {
- 	struct glink_channel *channel = to_glink_channel(ept);
- 	struct qcom_glink *glink = channel->glink;
-+	struct rpmsg_channel_info chinfo;
- 	unsigned long flags;
+ 	software_node_unregister_node_group(node_group);
  
- 	spin_lock_irqsave(&channel->recv_lock, flags);
-@@ -1406,6 +1407,13 @@ static void qcom_glink_destroy_ept(struc
- 	spin_unlock_irqrestore(&channel->recv_lock, flags);
+-	if (fusb302_mux_refs[0].node) {
+-		fwnode_handle_put(software_node_fwnode(fusb302_mux_refs[0].node));
+-		fusb302_mux_refs[0].node = NULL;
+-	}
+-
+ 	if (data->dp) {
+ 		data->dp->secondary = NULL;
+ 		fwnode_handle_put(data->dp);
+@@ -202,7 +197,15 @@ static void cht_int33fe_remove_nodes(str
+ 	}
+ }
  
- 	/* Decouple the potential rpdev from the channel */
-+	if (channel->rpdev) {
-+		strscpy_pad(chinfo.name, channel->name, sizeof(chinfo.name));
-+		chinfo.src = RPMSG_ADDR_ANY;
-+		chinfo.dst = RPMSG_ADDR_ANY;
+-static int cht_int33fe_add_nodes(struct cht_int33fe_data *data)
++static void cht_int33fe_put_swnode(void *data)
++{
++	struct fwnode_handle *fwnode = data;
 +
-+		rpmsg_unregister_device(glink->dev, &chinfo);
-+	}
- 	channel->rpdev = NULL;
++	fwnode_handle_put(fwnode);
++	fusb302_mux_refs[0] = SOFTWARE_NODE_REFERENCE(NULL);
++}
++
++static int cht_int33fe_add_nodes(struct device *dev, struct cht_int33fe_data *data)
+ {
+ 	const struct software_node *mux_ref_node;
+ 	int ret;
+@@ -212,17 +215,25 @@ static int cht_int33fe_add_nodes(struct
+ 	 * until the mux driver has created software node for the mux device.
+ 	 * It means we depend on the mux driver. This function will return
+ 	 * -EPROBE_DEFER until the mux device is registered.
++	 *
++	 * FIXME: the relevant software node exists in intel-xhci-usb-role-switch
++	 * and - if exported - could be used to set up a static reference.
+ 	 */
+ 	mux_ref_node = software_node_find_by_name(NULL, "intel-xhci-usb-sw");
+ 	if (!mux_ref_node)
+ 		return -EPROBE_DEFER;
  
- 	qcom_glink_send_close_req(glink, channel);
++	ret = devm_add_action_or_reset(dev, cht_int33fe_put_swnode,
++				       software_node_fwnode(mux_ref_node));
++	if (ret)
++		return ret;
++
+ 	/*
+ 	 * Update node used in "usb-role-switch" property. Note that we
+ 	 * rely on software_node_register_node_group() to use the original
+ 	 * instance of properties instead of copying them.
+ 	 */
+-	fusb302_mux_refs[0].node = mux_ref_node;
++	fusb302_mux_refs[0] = SOFTWARE_NODE_REFERENCE(mux_ref_node);
+ 
+ 	ret = software_node_register_node_group(node_group);
+ 	if (ret)
+@@ -345,7 +356,7 @@ static int cht_int33fe_typec_probe(struc
+ 		return fusb302_irq;
+ 	}
+ 
+-	ret = cht_int33fe_add_nodes(data);
++	ret = cht_int33fe_add_nodes(dev, data);
+ 	if (ret)
+ 		return ret;
+ 
 
 
