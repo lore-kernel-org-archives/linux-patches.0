@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7A83446D2;
-	Tue,  6 Jan 2026 17:39:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4DE21A92F;
+	Tue,  6 Jan 2026 17:39:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721195; cv=none; b=In8gaz+5UHSOzNMjLQL1plP7TCTHbPlO8gIfW2JThO0x8L/FW78zAcW7Q+LLDvL+PpFZBNIR1EHfH+hgYlp5GvKP0EoMSGHQNSd0vJgmUp3d2jztDyw6hocmBw2G/AaHWjnqonxEBnNx3c67osPQGpPYv+UYVL6Gsiv/X1JPNtA=
+	t=1767721199; cv=none; b=EgPG8snvjrGE+JYyfJbwgLHKyvxJN5V98ery3ajh9z9Jx8cZJGlm3q5HbKYyXH4DX3Idzg/lXEPvkghaIjkgmDOmlKOmH6JN5hVA8DMvbpLeuQUjqZzL2Y6uRcpg3HszIxXnjW/g/f/B2CFJzo+d8qcKRpKhoydkBcwW9bMBoQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721195; c=relaxed/simple;
-	bh=BL9LuOiDAjEEc11KjZ6M+cRcyPqyL01xya6YyQ6lkRI=;
+	s=arc-20240116; t=1767721199; c=relaxed/simple;
+	bh=NDiFgdGxDqq4oGopDEqPZ685eOGHa4IhLmrFgRSEg7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Erm/RYJV5ZUDk/UEhaUnjodX2Rm7TpTr36yMX+8NGfQhMqnuvG00lrZAGNPE5uwp+kAFvtos7tJ1wl3v9TdHg1yzJBp8avKqEGvBAU6YBq6Ij7bAncwuU2nnXWhfpy8zWkwFwbW4BIn8Q4uDwA9FyB7LeV0v8Vy55ZvDikVie5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xp5AGz84; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TR/jbP6GiKzB13vCvfURYUZPpmhWTtUfuFn3DwS6wK92b1OdlTg+P2fwL1xNp3iUPMb1Q6rr08ZbNlA7bUW76qS7Fj+reHBD+8M0/ChoEdEth5kW4c/iFfsC0VLd0xsDsjLa/ZnqP0qJvFnLwiicNedO7EC5bbye/RvzWbXrvnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tBHsDzOr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xp5AGz84"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F25B7C116C6;
-	Tue,  6 Jan 2026 17:39:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tBHsDzOr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B306C116C6;
+	Tue,  6 Jan 2026 17:39:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721195;
-	bh=BL9LuOiDAjEEc11KjZ6M+cRcyPqyL01xya6YyQ6lkRI=;
+	s=korg; t=1767721198;
+	bh=NDiFgdGxDqq4oGopDEqPZ685eOGHa4IhLmrFgRSEg7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xp5AGz84U6g1DRhekuj3ihzgXigy9BMFs/gSHe2Xxij4rynfImzwXHJl979hIGi1t
-	 mHm24UYw2jKFwbk+iTd37ENw97Ant9nPXrmFXdt5KKqpiuDgketdUpgI2mn7zWY0CL
-	 Kz7EtP6rAqvf+va2ugWDrqXQU9VaVlIaXhl/NuPs=
+	b=tBHsDzOrdrSBHdfFnWem+WXAI9M817IlbAUYeIMUHnjmkBbDJpdBnk8NLxfrUUKUW
+	 qkYAi9Pbrd8fgrwpc/0JnmQ3Mp3M5dm87zeRqANRhYXtutPl+8VH1OIQbtd9GorKl5
+	 HvExMgytbUtcyFKTPdQ/8SVWP1x60rSETST2P/wI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	Sanjay Yadav <sanjay.kumar.yadav@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>
-Subject: [PATCH 6.12 465/567] drm/xe/oa: Fix potential UAF in xe_oa_add_config_ioctl()
-Date: Tue,  6 Jan 2026 18:04:07 +0100
-Message-ID: <20260106170508.549988237@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	Markus Schneider-Pargmann <msp@baylibre.com>,
+	CK Hu <ck.hu@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Subject: [PATCH 6.12 466/567] drm/mediatek: Fix device node reference leak in mtk_dp_dt_parse()
+Date: Tue,  6 Jan 2026 18:04:08 +0100
+Message-ID: <20260106170508.588683985@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -45,62 +46,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sanjay Yadav <sanjay.kumar.yadav@intel.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit dcb171931954c51a1a7250d558f02b8f36570783 upstream.
+commit a846505a193d7492ad3531e33cacfca31e4bcdd1 upstream.
 
-In xe_oa_add_config_ioctl(), we accessed oa_config->id after dropping
-metrics_lock. Since this lock protects the lifetime of oa_config, an
-attacker could guess the id and call xe_oa_remove_config_ioctl() with
-perfect timing, freeing oa_config before we dereference it, leading to
-a potential use-after-free.
+The function mtk_dp_dt_parse() calls of_graph_get_endpoint_by_regs()
+to get the endpoint device node, but fails to call of_node_put() to release
+the reference when the function returns. This results in a device node
+reference leak.
 
-Fix this by caching the id in a local variable while holding the lock.
+Fix this by adding the missing of_node_put() call before returning from
+the function.
 
-v2: (Matt A)
-- Dropped mutex_unlock(&oa->metrics_lock) ordering change from
-  xe_oa_remove_config_ioctl()
+Found via static analysis and code review.
 
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/6614
-Fixes: cdf02fe1a94a7 ("drm/xe/oa/uapi: Add/remove OA config perf ops")
-Cc: <stable@vger.kernel.org> # v6.11+
-Suggested-by: Matthew Auld <matthew.auld@intel.com>
-Signed-off-by: Sanjay Yadav <sanjay.kumar.yadav@intel.com>
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Link: https://patch.msgid.link/20251118114859.3379952-2-sanjay.kumar.yadav@intel.com
-(cherry picked from commit 28aeaed130e8e587fd1b73b6d66ca41ccc5a1a31)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Fixes: f70ac097a2cf ("drm/mediatek: Add MT8195 Embedded DisplayPort driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Reviewed-by: Markus Schneider-Pargmann <msp@baylibre.com>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20251029072307.10955-1-linmq006@gmail.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_oa.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_dp.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/xe/xe_oa.c
-+++ b/drivers/gpu/drm/xe/xe_oa.c
-@@ -2378,11 +2378,13 @@ int xe_oa_add_config_ioctl(struct drm_de
- 		goto sysfs_err;
- 	}
- 
--	mutex_unlock(&oa->metrics_lock);
-+	id = oa_config->id;
-+
-+	drm_dbg(&oa->xe->drm, "Added config %s id=%i\n", oa_config->uuid, id);
- 
--	drm_dbg(&oa->xe->drm, "Added config %s id=%i\n", oa_config->uuid, oa_config->id);
-+	mutex_unlock(&oa->metrics_lock);
- 
--	return oa_config->id;
-+	return id;
- 
- sysfs_err:
- 	mutex_unlock(&oa->metrics_lock);
+--- a/drivers/gpu/drm/mediatek/mtk_dp.c
++++ b/drivers/gpu/drm/mediatek/mtk_dp.c
+@@ -2067,6 +2067,7 @@ static int mtk_dp_dt_parse(struct mtk_dp
+ 	endpoint = of_graph_get_endpoint_by_regs(pdev->dev.of_node, 1, -1);
+ 	len = of_property_count_elems_of_size(endpoint,
+ 					      "data-lanes", sizeof(u32));
++	of_node_put(endpoint);
+ 	if (len < 0 || len > 4 || len == 3) {
+ 		dev_err(dev, "invalid data lane size: %d\n", len);
+ 		return -EINVAL;
 
 
