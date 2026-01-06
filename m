@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2037035F8D3;
-	Tue,  6 Jan 2026 17:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9346E35F8D3;
+	Tue,  6 Jan 2026 17:48:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721709; cv=none; b=Sbvsj8HnS7GgJ/w/33xOtd9M0uF7fkMDfEofEjoB3oYdPPHkQBtpYi2Z09TXnyBDvYR+xzWuVRO1jRgyqpl7yC+YFcSyMFgjDIP1JT8AL3aRnGVZqOmR3WDRtvzyEvNbxhyT2kubMr9lxfOFVmEloggP+VPmu190l2vlg4+6ScM=
+	t=1767721712; cv=none; b=OAzkWJvad5WGLUAxAiNLLFrfdhBD4yO548slsro4w3KaDunQmE2QceRgvj1hx7Vg1XCk/kpwpyb96hou8YJXofD3Z20/nlyHVCr2uUt5PkzLEWTw9Z2J2SHv3n7p+hFjah8kr7/JDwZjHMVP1p/0rIvSrgZuxQnqAVYbPilLsRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721709; c=relaxed/simple;
-	bh=sajxAa95S3oQLraWLwCERTyVAYWDAoLajdSNmYCRK78=;
+	s=arc-20240116; t=1767721712; c=relaxed/simple;
+	bh=rKm3ELVF+T9csxG6Svcba3i3W6mYHsrPkD0aRAhIZeo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JVcaaSYwmRV1EYZhkBlKDK5mig8BiIjm9Kiu7VVVhvKV5NvT0SWIo4z98lQ2tYpeHxpOrJkcC5nMFOiu6oeL2GIbEyq/dVd5omrxuvonviEsIoTetMeeRxDl/jUKfud9B5GtfUHQxfygCFa9s07sPxKpt21YzhgigrwfY1NzpP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1bjnJ8uy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dfJsKxOlTfpSCbbzcE9ioZZcfTvlmj3cuXIoRAEAPiCXVQVqEl2w1OzFAvYqWCo9yk4LAP4b5kybqnEWOjMzsEJCA7TvkyUVJ8Jt9I2RF7udGUNOcfK2+7uRWOmlgBqNwQWS7FTy6TxJb/CtbZHbI58MOeDNDQyLSbbD+CCv32w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vARrdjvK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1bjnJ8uy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82AC2C116C6;
-	Tue,  6 Jan 2026 17:48:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vARrdjvK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04760C116C6;
+	Tue,  6 Jan 2026 17:48:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721709;
-	bh=sajxAa95S3oQLraWLwCERTyVAYWDAoLajdSNmYCRK78=;
+	s=korg; t=1767721712;
+	bh=rKm3ELVF+T9csxG6Svcba3i3W6mYHsrPkD0aRAhIZeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1bjnJ8uyuSxS2xDbHV2S+AbngrlSgLkcnBYMMZVXsBpKmRvdNbbAKJXlcVNbX6aV9
-	 fxpbS458s1M24fX6F729ZnroKSXM6M3MDeJVLLlwt/ICq3YkrpB4yaeqNiZdxpyWzp
-	 Llq8lQHmIPS80jse72nfAkkjsH++UIDaEY9YhDiY=
+	b=vARrdjvKyAZYICJMOut3nl6FURp0L5MQcX0YMozhG5koOaEkS9fJJ9a+152hR4eql
+	 yI+0dGkpQ2+DSBi8IDhUEHilEQ6+r39aCRyxkt5/fk9RkKuEgpmRtGbVBg4vaCc5gW
+	 G2rhomhzx+VHPxo1Er1TJyP3pSagUnZOkijnbaNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rajashekar Hudumula <rajashekar.hudumula@broadcom.com>,
-	Vikas Gupta <vikas.gupta@broadcom.com>,
-	Bhargava Chenna Marreddy <bhargava.marreddy@broadcom.com>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 047/312] bng_en: update module description
-Date: Tue,  6 Jan 2026 18:02:01 +0100
-Message-ID: <20260106170549.558220342@linuxfoundation.org>
+Subject: [PATCH 6.18 048/312] net: dsa: b53: skip multicast entries for fdb_dump()
+Date: Tue,  6 Jan 2026 18:02:02 +0100
+Message-ID: <20260106170549.593349415@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -53,75 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rajashekar Hudumula <rajashekar.hudumula@broadcom.com>
+From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit d5dc28305143f126dc3d8da21e1ad75865b194e2 ]
+[ Upstream commit d42bce414d1c5c0b536758466a1f63ac358e613c ]
 
-The Broadcom BCM57708/800G NIC family is branded as ThorUltra.
-Update the driver description accordingly.
+port_fdb_dump() is supposed to only add fdb entries, but we iterate over
+the full ARL table, which also includes multicast entries.
 
-Fixes: 74715c4ab0fa0 ("bng_en: Add PCI interface")
-Signed-off-by: Rajashekar Hudumula <rajashekar.hudumula@broadcom.com>
-Reviewed-by: Vikas Gupta <vikas.gupta@broadcom.com>
-Reviewed-by: Bhargava Chenna Marreddy <bhargava.marreddy@broadcom.com>
-Link: https://patch.msgid.link/20251217104748.3004706-1-rajashekar.hudumula@broadcom.com
+So check if the entry is a multicast entry before passing it on to the
+callback().
+
+Additionally, the port of those entries is a bitmask, not a port number,
+so any included entries would have even be for the wrong port.
+
+Fixes: 1da6df85c6fb ("net: dsa: b53: Implement ARL add/del/dump operations")
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20251217205756.172123-1-jonas.gorski@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/Kconfig          | 8 ++++----
- drivers/net/ethernet/broadcom/bnge/bnge.h      | 2 +-
- drivers/net/ethernet/broadcom/bnge/bnge_core.c | 2 +-
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/net/dsa/b53/b53_common.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/Kconfig b/drivers/net/ethernet/broadcom/Kconfig
-index 9fdef874f5ca..fe15d684990f 100644
---- a/drivers/net/ethernet/broadcom/Kconfig
-+++ b/drivers/net/ethernet/broadcom/Kconfig
-@@ -254,14 +254,14 @@ config BNXT_HWMON
- 	  devices, via the hwmon sysfs interface.
+diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
+index 62cafced758e..7d6ec2eb7c75 100644
+--- a/drivers/net/dsa/b53/b53_common.c
++++ b/drivers/net/dsa/b53/b53_common.c
+@@ -2155,6 +2155,9 @@ static int b53_fdb_copy(int port, const struct b53_arl_entry *ent,
+ 	if (!ent->is_valid)
+ 		return 0;
  
- config BNGE
--	tristate "Broadcom Ethernet device support"
-+	tristate "Broadcom ThorUltra Ethernet device support"
- 	depends on PCI
- 	select NET_DEVLINK
- 	select PAGE_POOL
- 	help
--	  This driver supports Broadcom 50/100/200/400/800 gigabit Ethernet cards.
--	  The module will be called bng_en. To compile this driver as a module,
--	  choose M here.
-+	  This driver supports Broadcom ThorUltra 50/100/200/400/800 gigabit
-+	  Ethernet cards. The module will be called bng_en. To compile this
-+	  driver as a module, choose M here.
++	if (is_multicast_ether_addr(ent->mac))
++		return 0;
++
+ 	if (port != ent->port)
+ 		return 0;
  
- config BCMASP
- 	tristate "Broadcom ASP 2.0 Ethernet support"
-diff --git a/drivers/net/ethernet/broadcom/bnge/bnge.h b/drivers/net/ethernet/broadcom/bnge/bnge.h
-index 7aed5f81cd51..0c154995d9ab 100644
---- a/drivers/net/ethernet/broadcom/bnge/bnge.h
-+++ b/drivers/net/ethernet/broadcom/bnge/bnge.h
-@@ -5,7 +5,7 @@
- #define _BNGE_H_
- 
- #define DRV_NAME	"bng_en"
--#define DRV_SUMMARY	"Broadcom 800G Ethernet Linux Driver"
-+#define DRV_SUMMARY	"Broadcom ThorUltra NIC Ethernet Driver"
- 
- #include <linux/etherdevice.h>
- #include <linux/bnxt/hsi.h>
-diff --git a/drivers/net/ethernet/broadcom/bnge/bnge_core.c b/drivers/net/ethernet/broadcom/bnge/bnge_core.c
-index 2c72dd34d50d..312a9db4d75d 100644
---- a/drivers/net/ethernet/broadcom/bnge/bnge_core.c
-+++ b/drivers/net/ethernet/broadcom/bnge/bnge_core.c
-@@ -19,7 +19,7 @@ char bnge_driver_name[] = DRV_NAME;
- static const struct {
- 	char *name;
- } board_info[] = {
--	[BCM57708] = { "Broadcom BCM57708 50Gb/100Gb/200Gb/400Gb/800Gb Ethernet" },
-+	[BCM57708] = { "Broadcom BCM57708 ThorUltra 50Gb/100Gb/200Gb/400Gb/800Gb Ethernet" },
- };
- 
- static const struct pci_device_id bnge_pci_tbl[] = {
 -- 
 2.51.0
 
