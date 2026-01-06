@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F90342523;
-	Tue,  6 Jan 2026 17:30:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0215D33C18C;
+	Tue,  6 Jan 2026 17:30:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720608; cv=none; b=cDlGoRjv/vkGsF+EqIrFuxxbwZoM/Im+NQz8XTXpkb5dj5hrw4E+V9k60IJ/WzTnUDlJaDy33ecCKgjLd/Io6yDFLAZ0PK3fp5ucqvWyA7FT5KvlNTV4xasJRJ1pKHbqtM73kaU1p8lXZK3hpC3ZL9YDuiSNMG31I/1NoVCgIso=
+	t=1767720612; cv=none; b=RrDKhwvp+Yz1YILQNdfcOTFKHzmmRrdrGZKaEOsrRjVQpQc/kuCmv+p3S95FK8f4jhaftlfWJE4QEI/+qXF2dH1sYYNU+BmIBVCCKf2fuJc0oAcM5VVTheZoMrsn7zZAqo0ky+TjYi+Gz/bDl7MyHIKF1c9IL2Emve0dD7td7Uw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720608; c=relaxed/simple;
-	bh=mwnXmbiBFdyUtbm1W0LglupQlb38MWVfGpd0NdlqAKY=;
+	s=arc-20240116; t=1767720612; c=relaxed/simple;
+	bh=C/midlt9gN99fhrx5QhXnB8sDlBofmh8Q4FgCC8Bnq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XxZ/iRZBpz0jlXPqVeS8Kf28fIPu00vLeFLW2y/SzcmArCUZia0zVzNqpkM+WkuqHj4kADmEp7ZAZ5EHRgvauxv+eeQoAcdjPZ1DSNoyxGGD+9rfxPryds2fn5ZcGKkOmFxKn+X4N8ZfMjibzfYgcoWtU8t6osSINkasewmJqwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K/6p4BnR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rhv3ASqxEcZ63+/VNLHFo3ETSf2amBz3UUv01G3mMOi9LEJho2oF9gDBruhiun0lUqSbj32xK+nLRvy2a7skzWaieXiJye+6ir10ZpG16Q7lhe4u9iIWHxwU3o70y72HigUD6Ntub1mkWBsNGdAIfDqA60R2I/2xSSd9O9yV5H8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B5jftEQ6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K/6p4BnR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4A37C116C6;
-	Tue,  6 Jan 2026 17:30:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B5jftEQ6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 630DAC16AAE;
+	Tue,  6 Jan 2026 17:30:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720608;
-	bh=mwnXmbiBFdyUtbm1W0LglupQlb38MWVfGpd0NdlqAKY=;
+	s=korg; t=1767720611;
+	bh=C/midlt9gN99fhrx5QhXnB8sDlBofmh8Q4FgCC8Bnq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K/6p4BnRnpwWWhum7H7CPrSgT8hqA6l7aL/UN4o61Kf/SgJn5FjfUou8mHfrkP8p3
-	 TAgfRexrdWuf2dgldOS9CeDyTV9Apfmpgsezp2oViRoODHfc74sbxT35OzJkjGjj2M
-	 cXl4NSOAf8Nahw2uvnlE9YIS+uEelVHm5up949OU=
+	b=B5jftEQ6Z3oO2AGtuzSA8SZ4IBwcCRjsFG3fMfoo8eWYdVR4g28Ekt3GJ50vyMTru
+	 Vgn/V/LTIC9HIeCDMRcZU2UqWQSebTqn3PCFt2aV14OkaHlUcF/sGwbqw7UCN8F3yg
+	 ONtSl8mN3oYgDr5ejQKjOJxaDmgom3zSY40aan+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <hanguidong02@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.12 289/567] hwmon: (w83l786ng) Convert macros to functions to avoid TOCTOU
-Date: Tue,  6 Jan 2026 18:01:11 +0100
-Message-ID: <20260106170502.024270796@linuxfoundation.org>
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Subject: [PATCH 6.12 290/567] ARM: dts: microchip: sama5d2: fix spi flexcom fifo size to 32
+Date: Tue,  6 Jan 2026 18:01:12 +0100
+Message-ID: <20260106170502.060463331@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -50,93 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gui-Dong Han <hanguidong02@gmail.com>
+From: Nicolas Ferre <nicolas.ferre@microchip.com>
 
-commit 07272e883fc61574b8367d44de48917f622cdd83 upstream.
+commit 7d5864dc5d5ea6a35983dd05295fb17f2f2f44ce upstream.
 
-The macros FAN_FROM_REG and TEMP_FROM_REG evaluate their arguments
-multiple times. When used in lockless contexts involving shared driver
-data, this causes Time-of-Check to Time-of-Use (TOCTOU) race
-conditions.
+Unlike standalone spi peripherals, on sama5d2, the flexcom spi have fifo
+size of 32 data. Fix flexcom/spi nodes where this property is wrong.
 
-Convert the macros to static functions. This guarantees that arguments
-are evaluated only once (pass-by-value), preventing the race
-conditions.
-
-Adhere to the principle of minimal changes by only converting macros
-that evaluate arguments multiple times and are used in lockless
-contexts.
-
-Link: https://lore.kernel.org/all/CALbr=LYJ_ehtp53HXEVkSpYoub+XYSTU8Rg=o1xxMJ8=5z8B-g@mail.gmail.com/
-Fixes: 85f03bccd6e0 ("hwmon: Add support for Winbond W83L786NG/NR")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
-Link: https://lore.kernel.org/r/20251128123816.3670-1-hanguidong02@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 6b9a3584c7ed ("ARM: dts: at91: sama5d2: Add missing flexcom definitions")
+Cc: stable@vger.kernel.org # 5.8+
+Signed-off-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Link: https://lore.kernel.org/r/20251114140225.30372-1-nicolas.ferre@microchip.com
+Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/w83l786ng.c |   26 ++++++++++++++++++--------
- 1 file changed, 18 insertions(+), 8 deletions(-)
+ arch/arm/boot/dts/microchip/sama5d2.dtsi |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/hwmon/w83l786ng.c
-+++ b/drivers/hwmon/w83l786ng.c
-@@ -76,15 +76,25 @@ FAN_TO_REG(long rpm, int div)
- 	return clamp_val((1350000 + rpm * div / 2) / (rpm * div), 1, 254);
- }
+--- a/arch/arm/boot/dts/microchip/sama5d2.dtsi
++++ b/arch/arm/boot/dts/microchip/sama5d2.dtsi
+@@ -568,7 +568,7 @@
+ 						 AT91_XDMAC_DT_PER_IF(1) |
+ 						 AT91_XDMAC_DT_PERID(12))>;
+ 					dma-names = "tx", "rx";
+-					atmel,fifo-size = <16>;
++					atmel,fifo-size = <32>;
+ 					status = "disabled";
+ 				};
  
--#define FAN_FROM_REG(val, div)	((val) == 0   ? -1 : \
--				((val) == 255 ? 0 : \
--				1350000 / ((val) * (div))))
-+static int fan_from_reg(int val, int div)
-+{
-+	if (val == 0)
-+		return -1;
-+	if (val == 255)
-+		return 0;
-+	return 1350000 / (val * div);
-+}
+@@ -639,7 +639,7 @@
+ 						 AT91_XDMAC_DT_PER_IF(1) |
+ 						 AT91_XDMAC_DT_PERID(14))>;
+ 					dma-names = "tx", "rx";
+-					atmel,fifo-size = <16>;
++					atmel,fifo-size = <32>;
+ 					status = "disabled";
+ 				};
  
- /* for temp */
- #define TEMP_TO_REG(val)	(clamp_val(((val) < 0 ? (val) + 0x100 * 1000 \
- 						      : (val)) / 1000, 0, 0xff))
--#define TEMP_FROM_REG(val)	(((val) & 0x80 ? \
--				  (val) - 0x100 : (val)) * 1000)
-+
-+static int temp_from_reg(int val)
-+{
-+	if (val & 0x80)
-+		return (val - 0x100) * 1000;
-+	return val * 1000;
-+}
+@@ -851,7 +851,7 @@
+ 						 AT91_XDMAC_DT_PER_IF(1) |
+ 						 AT91_XDMAC_DT_PERID(16))>;
+ 					dma-names = "tx", "rx";
+-					atmel,fifo-size = <16>;
++					atmel,fifo-size = <32>;
+ 					status = "disabled";
+ 				};
  
- /*
-  * The analog voltage inputs have 8mV LSB. Since the sysfs output is
-@@ -280,7 +290,7 @@ static ssize_t show_##reg(struct device
- 	int nr = to_sensor_dev_attr(attr)->index; \
- 	struct w83l786ng_data *data = w83l786ng_update_device(dev); \
- 	return sprintf(buf, "%d\n", \
--		FAN_FROM_REG(data->reg[nr], DIV_FROM_REG(data->fan_div[nr]))); \
-+		fan_from_reg(data->reg[nr], DIV_FROM_REG(data->fan_div[nr]))); \
- }
+@@ -922,7 +922,7 @@
+ 						 AT91_XDMAC_DT_PER_IF(1) |
+ 						 AT91_XDMAC_DT_PERID(18))>;
+ 					dma-names = "tx", "rx";
+-					atmel,fifo-size = <16>;
++					atmel,fifo-size = <32>;
+ 					status = "disabled";
+ 				};
  
- show_fan_reg(fan);
-@@ -347,7 +357,7 @@ store_fan_div(struct device *dev, struct
+@@ -994,7 +994,7 @@
+ 						 AT91_XDMAC_DT_PER_IF(1) |
+ 						 AT91_XDMAC_DT_PERID(20))>;
+ 					dma-names = "tx", "rx";
+-					atmel,fifo-size = <16>;
++					atmel,fifo-size = <32>;
+ 					status = "disabled";
+ 				};
  
- 	/* Save fan_min */
- 	mutex_lock(&data->update_lock);
--	min = FAN_FROM_REG(data->fan_min[nr], DIV_FROM_REG(data->fan_div[nr]));
-+	min = fan_from_reg(data->fan_min[nr], DIV_FROM_REG(data->fan_div[nr]));
- 
- 	data->fan_div[nr] = DIV_TO_REG(val);
- 
-@@ -409,7 +419,7 @@ show_temp(struct device *dev, struct dev
- 	int nr = sensor_attr->nr;
- 	int index = sensor_attr->index;
- 	struct w83l786ng_data *data = w83l786ng_update_device(dev);
--	return sprintf(buf, "%d\n", TEMP_FROM_REG(data->temp[nr][index]));
-+	return sprintf(buf, "%d\n", temp_from_reg(data->temp[nr][index]));
- }
- 
- static ssize_t
 
 
