@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D48E19258E;
-	Tue,  6 Jan 2026 17:17:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B99023EA8A;
+	Tue,  6 Jan 2026 17:17:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719825; cv=none; b=M1qlDKek0C3BU3E1RetNhvEpKCG1Ix2soppJLIx0BXn0zKiEZ3AKva+xIVKSKcg+x9KmWe0xG9RMb1CPavZjoDZadsO0x9uZMFW6ZWZZS0ONSLqWikE7feUjIQDzkxfRVnuNoWwPmXX8n3paIUz0QBTTWVa6M3dVS87+iEhdo9U=
+	t=1767719828; cv=none; b=uE9A5ziB7fBDc0lRc5q20uAKT9cX5sFgjr7gq0eTXj91ywrTXRNhE3SF8mx28rGPqmduXpFcCyN81DbqHPaAb3JY6jQ5Rk/I6KVwtBzmN/QUOJvUp/89ZXLOP0VQgvjwuwOCi4TCYeOSzfkLB8ZEZwrpiYVPylyn69DHW4+QtNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719825; c=relaxed/simple;
-	bh=GelFoTVlYnZ9LRVYc3oLAdjzjDNJkstGIqbHbHB7W5w=;
+	s=arc-20240116; t=1767719828; c=relaxed/simple;
+	bh=craBEdLI2GmStOuyF909cL7+jY4NRZQtdYw63VsLGEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EUwkUao3NFUNcBxDGdGKLlttt2JIuAeGhCwvk3WwgpY5s798Lcj00pXq80wq5mhEKYFvakgIzeYc8wDd2S5nsVYR+ogZvlfmeFcHvGPIqnwDEnLuUlZ+hSCoL7zZgyrdpA50aBTEwariDupM0ePOi+GRULeack5yq0k/WmeO+6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gmOsRA0Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e3XenAPpeGbdhLwtDEe+4FsLEeZqWuYVCbTR4dd6Jn7fYZfZggxrj903kJqv4guEiTarKh7BLNTlvBg/Yk780u4z4VzIY6OIGALOwEIeD8ioXXw9eKm4A3yXfAkhcvASBU4xOeAMKwdnVC9xm1kkJGPMa3C510HshdqfHaa5D24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ccZDiAZl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gmOsRA0Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A03FBC19423;
-	Tue,  6 Jan 2026 17:17:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ccZDiAZl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1034C116C6;
+	Tue,  6 Jan 2026 17:17:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719825;
-	bh=GelFoTVlYnZ9LRVYc3oLAdjzjDNJkstGIqbHbHB7W5w=;
+	s=korg; t=1767719828;
+	bh=craBEdLI2GmStOuyF909cL7+jY4NRZQtdYw63VsLGEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gmOsRA0ZNJtfBskFpvAA69iZecp2GqQXdybDZyOxhp24oDOKM3MGO1B1P6+zkda+R
-	 RO6ODsIrmUDKCel90jfeCY8du5xlZbwYym1bTmpTq/dhCiBdF2QKTdab3jHT+gxvGq
-	 iXIVMfvY4xhBi/CjiuOsFHpZNP1FjeAhLza/0VfI=
+	b=ccZDiAZlpqsUWoMT3ZB4gaZKjstyNBpcVzBGaqK/ZUDU7T/Cwzx4zRn5icMMNewPt
+	 dFxluyStcd7EKZtCwKog9EP759KSq3eFx5SOFdS0mn4FBToOfNu/rlL9KHPdIQvgtt
+	 UZ4UuTm1TB8osQ0/dPGuIhNGE5fnEr4z5HkASpRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
+	Pavel Dubovitsky <pdubovitsky@meta.com>,
+	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 051/567] mlxsw: spectrum_mr: Fix use-after-free when updating multicast route stats
-Date: Tue,  6 Jan 2026 17:57:13 +0100
-Message-ID: <20260106170453.226443486@linuxfoundation.org>
+Subject: [PATCH 6.12 052/567] bnxt_en: Fix XDP_TX path
+Date: Tue,  6 Jan 2026 17:57:14 +0100
+Message-ID: <20260106170453.263334847@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -53,93 +56,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Michael Chan <michael.chan@broadcom.com>
 
-[ Upstream commit 8ac1dacec458f55f871f7153242ed6ab60373b90 ]
+[ Upstream commit 0373d5c387f24de749cc22e694a14b3a7c7eb515 ]
 
-Cited commit added a dedicated mutex (instead of RTNL) to protect the
-multicast route list, so that it will not change while the driver
-periodically traverses it in order to update the kernel about multicast
-route stats that were queried from the device.
+For XDP_TX action in bnxt_rx_xdp(), clearing of the event flags is not
+correct.  __bnxt_poll_work() -> bnxt_rx_pkt() -> bnxt_rx_xdp() may be
+looping within NAPI and some event flags may be set in earlier
+iterations.  In particular, if BNXT_TX_EVENT is set earlier indicating
+some XDP_TX packets are ready and pending, it will be cleared if it is
+XDP_TX action again.  Normally, we will set BNXT_TX_EVENT again when we
+successfully call __bnxt_xmit_xdp().  But if the TX ring has no more
+room, the flag will not be set.  This will cause the TX producer to be
+ahead but the driver will not hit the TX doorbell.
 
-One instance of list entry deletion (during route replace) was missed
-and it can result in a use-after-free [1].
+For multi-buf XDP_TX, there is no need to clear the event flags and set
+BNXT_AGG_EVENT.  The BNXT_AGG_EVENT flag should have been set earlier in
+bnxt_rx_pkt().
 
-Fix by acquiring the mutex before deleting the entry from the list and
-releasing it afterwards.
+The visible symptom of this is that the RX ring associated with the
+TX XDP ring will eventually become empty and all packets will be dropped.
+Because this condition will cause the driver to not refill the RX ring
+seeing that the TX ring has forever pending XDP_TX packets.
 
-[1]
-BUG: KASAN: slab-use-after-free in mlxsw_sp_mr_stats_update+0x4a5/0x540 drivers/net/ethernet/mellanox/mlxsw/spectrum_mr.c:1006 [mlxsw_spectrum]
-Read of size 8 at addr ffff8881523c2fa8 by task kworker/2:5/22043
+The fix is to only clear BNXT_RX_EVENT when we have successfully
+called __bnxt_xmit_xdp().
 
-CPU: 2 UID: 0 PID: 22043 Comm: kworker/2:5 Not tainted 6.18.0-rc1-custom-g1a3d6d7cd014 #1 PREEMPT(full)
-Hardware name: Mellanox Technologies Ltd. MSN2010/SA002610, BIOS 5.6.5 08/24/2017
-Workqueue: mlxsw_core mlxsw_sp_mr_stats_update [mlxsw_spectrum]
-Call Trace:
- <TASK>
- dump_stack_lvl+0xba/0x110
- print_report+0x174/0x4f5
- kasan_report+0xdf/0x110
- mlxsw_sp_mr_stats_update+0x4a5/0x540 drivers/net/ethernet/mellanox/mlxsw/spectrum_mr.c:1006 [mlxsw_spectrum]
- process_one_work+0x9cc/0x18e0
- worker_thread+0x5df/0xe40
- kthread+0x3b8/0x730
- ret_from_fork+0x3e9/0x560
- ret_from_fork_asm+0x1a/0x30
- </TASK>
-
-Allocated by task 29933:
- kasan_save_stack+0x30/0x50
- kasan_save_track+0x14/0x30
- __kasan_kmalloc+0x8f/0xa0
- mlxsw_sp_mr_route_add+0xd8/0x4770 [mlxsw_spectrum]
- mlxsw_sp_router_fibmr_event_work+0x371/0xad0 drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c:7965 [mlxsw_spectrum]
- process_one_work+0x9cc/0x18e0
- worker_thread+0x5df/0xe40
- kthread+0x3b8/0x730
- ret_from_fork+0x3e9/0x560
- ret_from_fork_asm+0x1a/0x30
-
-Freed by task 29933:
- kasan_save_stack+0x30/0x50
- kasan_save_track+0x14/0x30
- __kasan_save_free_info+0x3b/0x70
- __kasan_slab_free+0x43/0x70
- kfree+0x14e/0x700
- mlxsw_sp_mr_route_add+0x2dea/0x4770 drivers/net/ethernet/mellanox/mlxsw/spectrum_mr.c:444 [mlxsw_spectrum]
- mlxsw_sp_router_fibmr_event_work+0x371/0xad0 drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c:7965 [mlxsw_spectrum]
- process_one_work+0x9cc/0x18e0
- worker_thread+0x5df/0xe40
- kthread+0x3b8/0x730
- ret_from_fork+0x3e9/0x560
- ret_from_fork_asm+0x1a/0x30
-
-Fixes: f38656d06725 ("mlxsw: spectrum_mr: Protect multicast route list with a lock")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/f996feecfd59fde297964bfc85040b6d83ec6089.1764695650.git.petrm@nvidia.com
+Fixes: 7f0a168b0441 ("bnxt_en: Add completion ring pointer in TX and RX ring structures")
+Reported-by: Pavel Dubovitsky <pdubovitsky@meta.com>
+Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20251203003024.2246699-1-michael.chan@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/spectrum_mr.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_mr.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_mr.c
-index 5afe6b155ef0d..81935f87bfcd7 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_mr.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_mr.c
-@@ -440,7 +440,9 @@ int mlxsw_sp_mr_route_add(struct mlxsw_sp_mr_table *mr_table,
- 		rhashtable_remove_fast(&mr_table->route_ht,
- 				       &mr_orig_route->ht_node,
- 				       mlxsw_sp_mr_route_ht_params);
-+		mutex_lock(&mr_table->route_list_lock);
- 		list_del(&mr_orig_route->node);
-+		mutex_unlock(&mr_table->route_list_lock);
- 		mlxsw_sp_mr_route_destroy(mr_table, mr_orig_route);
- 	}
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
+index 844812bd65363..fa3c6515cc4d6 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
+@@ -268,13 +268,11 @@ bool bnxt_rx_xdp(struct bnxt *bp, struct bnxt_rx_ring_info *rxr, u16 cons,
+ 	case XDP_TX:
+ 		rx_buf = &rxr->rx_buf_ring[cons];
+ 		mapping = rx_buf->mapping - bp->rx_dma_offset;
+-		*event &= BNXT_TX_CMP_EVENT;
  
+ 		if (unlikely(xdp_buff_has_frags(xdp))) {
+ 			struct skb_shared_info *sinfo = xdp_get_shared_info_from_buff(xdp);
+ 
+ 			tx_needed += sinfo->nr_frags;
+-			*event = BNXT_AGG_EVENT;
+ 		}
+ 
+ 		if (tx_avail < tx_needed) {
+@@ -287,6 +285,7 @@ bool bnxt_rx_xdp(struct bnxt *bp, struct bnxt_rx_ring_info *rxr, u16 cons,
+ 		dma_sync_single_for_device(&pdev->dev, mapping + offset, *len,
+ 					   bp->rx_dir);
+ 
++		*event &= ~BNXT_RX_EVENT;
+ 		*event |= BNXT_TX_EVENT;
+ 		__bnxt_xmit_xdp(bp, txr, mapping + offset, *len,
+ 				NEXT_RX(rxr->rx_prod), xdp);
 -- 
 2.51.0
 
