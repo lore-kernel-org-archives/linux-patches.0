@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC90E1DF965;
-	Tue,  6 Jan 2026 17:56:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2CD1DF965;
+	Tue,  6 Jan 2026 17:56:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722202; cv=none; b=kNukMUCAp294E/LlqolZB5Gp9cXT3c/vmM07lNcDtAr1COcwj5hHpyxDNkpzVWyolbPH8E1CwPr0IDM9+BKv1KbA7AIEBAblM+cHOXJc0+fpuw1ittjSEMEr6at2ZP2Gpm61Tc0soFHdv0Om4eZ10Dn7vJZ3YUlITTrXD+46MgI=
+	t=1767722206; cv=none; b=JVw9YIRd0tbajvQjsvh/wqtewzslZ4ypNgZzt7WZOnXhYA3WxdAXXYv+0DnvtW1ru3BrMut6tRSngwZv8J5ASbjRO0XiDAd9TldsujKyqg/uEv+QnCeTvo+Q1Uvwro1N82xXvZHF+1Qwzm0RvrqxCClvsxoOmEOq2yWv4Um+r5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722202; c=relaxed/simple;
-	bh=NEqmGtvI8PGmcIHp2JfRdlVqZYKv4U3+ZcpE2k+wim4=;
+	s=arc-20240116; t=1767722206; c=relaxed/simple;
+	bh=veHRAwMoWI3dtoEyE9Q7trsTMfkmGmaQeu/PcSymCFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G8o2ixEXWvYbTXXoFpYx7q7v9fU75F773ybhjNZ1pNfBTaDBYB0YIuYksFTdQn23IhzDs67hJHaoGKJIsTX4f7u175tPU+XumS2XextapaTiqnEa+57ujeVzYGxY3dJPpcjiROwKhcCDqKjeep2PhI1CBawPqMrTdOF9pkXyKcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q8Xm0ArZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uUuaEv8oDHAbqQAVusBx/BehOzcF6qgSGqDXgYhQq2TAUO0H9qZcAj1In80tCHoRjAd5QJv0gcmbRnAh6ypl2xlXbSK4CuL7ShJxqeyUaGyxHxbYCuF2O+tTtdT1UhFD+I10i6g9j4/vNwKnDfy9wAqEQwHrRugkZe22jSLys/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i1Q2fs76; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q8Xm0ArZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2A5FC16AAE;
-	Tue,  6 Jan 2026 17:56:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i1Q2fs76"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2DB6C116C6;
+	Tue,  6 Jan 2026 17:56:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722202;
-	bh=NEqmGtvI8PGmcIHp2JfRdlVqZYKv4U3+ZcpE2k+wim4=;
+	s=korg; t=1767722206;
+	bh=veHRAwMoWI3dtoEyE9Q7trsTMfkmGmaQeu/PcSymCFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q8Xm0ArZTk8I6YKbTz6XRyL46NmFBbtjc0C0WArLPZLnkR1meFBbbvgRS78o/+6Og
-	 2+qggJi+7vjeX15stIX60cDxZX05EY1qK+zyGAagIlwsGNY3Z1/zuFtxKkuYNKn1p9
-	 thn8YqtQfe4dmx6WlQOScG9EI+KksCitwYzB74OY=
+	b=i1Q2fs767KAQJrjehb7bbgZ1zMzD/MFvEI1JkeeZDbymmqP0yG4hZzPAj4XFc+nTl
+	 jaJ+JpzFVzqZc2BTVg+qjqcUXW7km2f06dWmwbK93+e0RNk4VpZ5Fw0IClUCxlGctV
+	 3SZgbb9cQQD7qKVNMw0vOf//3R7WoAkATOTMnK/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiang Ma <maqianga@uniontech.com>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.18 193/312] LoongArch: Correct the calculation logic of thread_count
-Date: Tue,  6 Jan 2026 18:04:27 +0100
-Message-ID: <20260106170554.808736263@linuxfoundation.org>
+Subject: [PATCH 6.18 194/312] LoongArch: Fix arch_dup_task_struct() for CONFIG_RANDSTRUCT
+Date: Tue,  6 Jan 2026 18:04:28 +0100
+Message-ID: <20260106170554.844496690@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -50,49 +49,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiang Ma <maqianga@uniontech.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit 1de0ae21f136efa6c5d8a4d3e07b7d1ca39c750f upstream.
+commit a91b446e359aa96cc2655318789fd37441337415 upstream.
 
-For thread_count, the current calculation method has a maximum of 255,
-which may not be sufficient in the future. Therefore, we are correcting
-it now.
+Now the optimized version of arch_dup_task_struct() for LoongArch
+assumes 'thread' is the last member of 'task_struct'. But this is
+not true if CONFIG_RANDSTRUCT is enabled after Linux-6.16.
 
-Reference: SMBIOS Specification, 7.5 Processor Information (Type 4)[1]
+So fix the arch_dup_task_struct() function for CONFIG_RANDSTRUCT by
+copying the whole 'task_struct'.
 
-[1]: https://www.dmtf.org/sites/default/files/standards/documents/DSP0134_3.9.0.pdf
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Qiang Ma <maqianga@uniontech.com>
+Cc: stable@vger.kernel.org   # 6.16+
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/setup.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ arch/loongarch/kernel/process.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/arch/loongarch/kernel/setup.c
-+++ b/arch/loongarch/kernel/setup.c
-@@ -56,6 +56,7 @@
- #define SMBIOS_FREQLOW_MASK		0xFF
- #define SMBIOS_CORE_PACKAGE_OFFSET	0x23
- #define SMBIOS_THREAD_PACKAGE_OFFSET	0x25
-+#define SMBIOS_THREAD_PACKAGE_2_OFFSET	0x2E
- #define LOONGSON_EFI_ENABLE		(1 << 3)
+--- a/arch/loongarch/kernel/process.c
++++ b/arch/loongarch/kernel/process.c
+@@ -130,6 +130,11 @@ int arch_dup_task_struct(struct task_str
  
- unsigned long fw_arg0, fw_arg1, fw_arg2;
-@@ -126,7 +127,12 @@ static void __init parse_cpu_table(const
- 	cpu_clock_freq = freq_temp * 1000000;
+ 	preempt_enable();
  
- 	loongson_sysconf.cpuname = (void *)dmi_string_parse(dm, dmi_data[16]);
--	loongson_sysconf.cores_per_package = *(dmi_data + SMBIOS_THREAD_PACKAGE_OFFSET);
-+	loongson_sysconf.cores_per_package = *(u8 *)(dmi_data + SMBIOS_THREAD_PACKAGE_OFFSET);
-+	if (dm->length >= 0x30 && loongson_sysconf.cores_per_package == 0xff) {
-+		/* SMBIOS 3.0+ has ThreadCount2 for more than 255 threads */
-+		loongson_sysconf.cores_per_package =
-+					  *(u16 *)(dmi_data + SMBIOS_THREAD_PACKAGE_2_OFFSET);
++	if (IS_ENABLED(CONFIG_RANDSTRUCT)) {
++		memcpy(dst, src, sizeof(struct task_struct));
++		return 0;
 +	}
- 
- 	pr_info("CpuClock = %llu\n", cpu_clock_freq);
- }
++
+ 	if (!used_math())
+ 		memcpy(dst, src, offsetof(struct task_struct, thread.fpu.fpr));
+ 	else
 
 
