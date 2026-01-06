@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66AA347FD0;
-	Tue,  6 Jan 2026 17:18:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B4E347FC0;
+	Tue,  6 Jan 2026 17:18:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719884; cv=none; b=N+nyqBgY5fbvGS+3Is+Teh6vNkjGOq0o+50hMFFiiza+5I7Pjao5xhhkEZkhWkwb4jKviREqco2etbIAXoyz+W9ps0Yc2MEGAX45fMEvvQ6v3D7EYD4n/dUiJCHX5MNgIF0ASlEs0xLintnxyYrtC/8FzeAotcvTAJqKvYaMqN4=
+	t=1767719888; cv=none; b=McbRWz51awRXME0iS/ajeuc/KcISSA6iV+bmPftNEquT6E8TpjGO+vGjRe0SHbymw6lxi63pflAVJBlcxdLRdjmtZMbdufIao87oxCMLHHBsFdOT4Ia/3iGpWtou9xtmwS2t41ORf+cC3YuTE7mQXzGGqpWqG4BwO/3qgs9o1HU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719884; c=relaxed/simple;
-	bh=dDt7IDTu5F1hqNeCwPp0BATHDU4OavLjJ4O5+H4X3ec=;
+	s=arc-20240116; t=1767719888; c=relaxed/simple;
+	bh=j24mjhn9o45cXfCoW7OW+8nFeI8t6mWTW9yBG1R04IU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O5XzSJvi5DRiNi3pHg+1/eBAtPQY0Ro0a3CeQI+y3CgBnBuTNHd3WUTYfhbbhsAtToEpUgfSvOU89yu+u1RhqyMwgYcDTJD9Bg4SkOiFFXYbkwDK5hkoTi5Cr4TeyaQAAWjE1kON2NchzY+7r6qU96w6pris18SZG9XzMyKv8HY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XRG/9XW/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AbpdImg0KY5X8sezjxdfSZPk4LH3b8Rd4g6H3+NBZnkvY/CLBSviU9Gy2O9FcmzSlh1bHsf4lewg+EzD5LLikYQdRyd5e7z2gD/e2LmCM4i+FMHsb/l6mQYQ1wairRi9+ia2IB12gtvjH2Yx0oif4rqTGdXj0kKB7JbMERNH8A8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LU1CGNVb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XRG/9XW/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CB90C116C6;
-	Tue,  6 Jan 2026 17:18:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LU1CGNVb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A65EC116C6;
+	Tue,  6 Jan 2026 17:18:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719884;
-	bh=dDt7IDTu5F1hqNeCwPp0BATHDU4OavLjJ4O5+H4X3ec=;
+	s=korg; t=1767719887;
+	bh=j24mjhn9o45cXfCoW7OW+8nFeI8t6mWTW9yBG1R04IU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XRG/9XW/OctSGv1Qg10BIEVO0I2qTkn8EQ3jJtrS2yFTqmvhI4k8YTf11C9z5TmX2
-	 m6yTqYTBOvUQGfxSvulv0oUR5ZMiqU/A5Ad8YKkYpflxQAp/S7Wly3BjJ36i2ffi9r
-	 oiczLN/eUIwycvQBKCZHaLRMaNSogIvg3NM9u9rU=
+	b=LU1CGNVbMIaXy9VVJHuSstrXlH6WGAEufa0Sg1yoEqEHSKcjWGLalCruh0C3+I9f8
+	 p2BMCyXz1EivzSeksVLVej6tBN1wx3Si9GAmhKMLvX7DacmK6lNJdHYrHLEgLQl4zy
+	 4BeLum94gNWn6noLav+4bdR+ch263C4644Ty6HDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 037/567] ksmbd: fix use-after-free in ksmbd_tree_connect_put under concurrency
-Date: Tue,  6 Jan 2026 17:56:59 +0100
-Message-ID: <20260106170452.712061082@linuxfoundation.org>
+Subject: [PATCH 6.12 038/567] ksmbd: vfs: fix race on m_flags in vfs_cache
+Date: Tue,  6 Jan 2026 17:57:00 +0100
+Message-ID: <20260106170452.748069369@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -53,104 +53,188 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Qianchang Zhao <pioooooooooip@gmail.com>
 
-[ Upstream commit b39a1833cc4a2755b02603eec3a71a85e9dff926 ]
+[ Upstream commit 991f8a79db99b14c48d20d2052c82d65b9186cad ]
 
-Under high concurrency, A tree-connection object (tcon) is freed on
-a disconnect path while another path still holds a reference and later
-executes *_put()/write on it.
+ksmbd maintains delete-on-close and pending-delete state in
+ksmbd_inode->m_flags. In vfs_cache.c this field is accessed under
+inconsistent locking: some paths read and modify m_flags under
+ci->m_lock while others do so without taking the lock at all.
+
+Examples:
+
+ - ksmbd_query_inode_status() and __ksmbd_inode_close() use
+   ci->m_lock when checking or updating m_flags.
+ - ksmbd_inode_pending_delete(), ksmbd_set_inode_pending_delete(),
+   ksmbd_clear_inode_pending_delete() and ksmbd_fd_set_delete_on_close()
+   used to read and modify m_flags without ci->m_lock.
+
+This creates a potential data race on m_flags when multiple threads
+open, close and delete the same file concurrently. In the worst case
+delete-on-close and pending-delete bits can be lost or observed in an
+inconsistent state, leading to confusing delete semantics (files that
+stay on disk after delete-on-close, or files that disappear while still
+in use).
+
+Fix it by:
+
+ - Making ksmbd_query_inode_status() look at m_flags under ci->m_lock
+   after dropping inode_hash_lock.
+ - Adding ci->m_lock protection to all helpers that read or modify
+   m_flags (ksmbd_inode_pending_delete(), ksmbd_set_inode_pending_delete(),
+   ksmbd_clear_inode_pending_delete(), ksmbd_fd_set_delete_on_close()).
+ - Keeping the existing ci->m_lock protection in __ksmbd_inode_close(),
+   and moving the actual unlink/xattr removal outside the lock.
+
+This unifies the locking around m_flags and removes the data race while
+preserving the existing delete-on-close behaviour.
 
 Reported-by: Qianchang Zhao <pioooooooooip@gmail.com>
 Reported-by: Zhitong Liu <liuzhitong1993@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Qianchang Zhao <pioooooooooip@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/mgmt/tree_connect.c | 18 ++++--------------
- fs/smb/server/mgmt/tree_connect.h |  1 -
- fs/smb/server/smb2pdu.c           |  3 ---
- 3 files changed, 4 insertions(+), 18 deletions(-)
+ fs/smb/server/vfs_cache.c | 88 +++++++++++++++++++++++++++------------
+ 1 file changed, 62 insertions(+), 26 deletions(-)
 
-diff --git a/fs/smb/server/mgmt/tree_connect.c b/fs/smb/server/mgmt/tree_connect.c
-index ecfc575086712..d3483d9c757c7 100644
---- a/fs/smb/server/mgmt/tree_connect.c
-+++ b/fs/smb/server/mgmt/tree_connect.c
-@@ -78,7 +78,6 @@ ksmbd_tree_conn_connect(struct ksmbd_work *work, const char *share_name)
- 	tree_conn->t_state = TREE_NEW;
- 	status.tree_conn = tree_conn;
- 	atomic_set(&tree_conn->refcount, 1);
--	init_waitqueue_head(&tree_conn->refcount_q);
+diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
+index dfed6fce89049..6ef116585af64 100644
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -112,40 +112,62 @@ int ksmbd_query_inode_status(struct dentry *dentry)
  
- 	ret = xa_err(xa_store(&sess->tree_conns, tree_conn->id, tree_conn,
- 			      KSMBD_DEFAULT_GFP));
-@@ -100,14 +99,8 @@ ksmbd_tree_conn_connect(struct ksmbd_work *work, const char *share_name)
- 
- void ksmbd_tree_connect_put(struct ksmbd_tree_connect *tcon)
- {
--	/*
--	 * Checking waitqueue to releasing tree connect on
--	 * tree disconnect. waitqueue_active is safe because it
--	 * uses atomic operation for condition.
--	 */
--	if (!atomic_dec_return(&tcon->refcount) &&
--	    waitqueue_active(&tcon->refcount_q))
--		wake_up(&tcon->refcount_q);
-+	if (atomic_dec_and_test(&tcon->refcount))
-+		kfree(tcon);
- }
- 
- int ksmbd_tree_conn_disconnect(struct ksmbd_session *sess,
-@@ -119,14 +112,11 @@ int ksmbd_tree_conn_disconnect(struct ksmbd_session *sess,
- 	xa_erase(&sess->tree_conns, tree_conn->id);
- 	write_unlock(&sess->tree_conns_lock);
- 
--	if (!atomic_dec_and_test(&tree_conn->refcount))
--		wait_event(tree_conn->refcount_q,
--			   atomic_read(&tree_conn->refcount) == 0);
--
- 	ret = ksmbd_ipc_tree_disconnect_request(sess->id, tree_conn->id);
- 	ksmbd_release_tree_conn_id(sess, tree_conn->id);
- 	ksmbd_share_config_put(tree_conn->share_conf);
--	kfree(tree_conn);
-+	if (atomic_dec_and_test(&tree_conn->refcount))
-+		kfree(tree_conn);
+ 	read_lock(&inode_hash_lock);
+ 	ci = __ksmbd_inode_lookup(dentry);
+-	if (ci) {
+-		ret = KSMBD_INODE_STATUS_OK;
+-		if (ci->m_flags & (S_DEL_PENDING | S_DEL_ON_CLS))
+-			ret = KSMBD_INODE_STATUS_PENDING_DELETE;
+-		atomic_dec(&ci->m_count);
+-	}
+ 	read_unlock(&inode_hash_lock);
++	if (!ci)
++		return ret;
++
++	down_read(&ci->m_lock);
++	if (ci->m_flags & (S_DEL_PENDING | S_DEL_ON_CLS))
++		ret = KSMBD_INODE_STATUS_PENDING_DELETE;
++	else
++		ret = KSMBD_INODE_STATUS_OK;
++	up_read(&ci->m_lock);
++
++	atomic_dec(&ci->m_count);
  	return ret;
  }
  
-diff --git a/fs/smb/server/mgmt/tree_connect.h b/fs/smb/server/mgmt/tree_connect.h
-index a42cdd0510411..f0023d86716f2 100644
---- a/fs/smb/server/mgmt/tree_connect.h
-+++ b/fs/smb/server/mgmt/tree_connect.h
-@@ -33,7 +33,6 @@ struct ksmbd_tree_connect {
- 	int				maximal_access;
- 	bool				posix_extensions;
- 	atomic_t			refcount;
--	wait_queue_head_t		refcount_q;
- 	unsigned int			t_state;
- };
+ bool ksmbd_inode_pending_delete(struct ksmbd_file *fp)
+ {
+-	return (fp->f_ci->m_flags & (S_DEL_PENDING | S_DEL_ON_CLS));
++	struct ksmbd_inode *ci = fp->f_ci;
++	int ret;
++
++	down_read(&ci->m_lock);
++	ret = (ci->m_flags & (S_DEL_PENDING | S_DEL_ON_CLS));
++	up_read(&ci->m_lock);
++
++	return ret;
+ }
  
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index d9e28191c267e..b32df37da70d4 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -2190,7 +2190,6 @@ int smb2_tree_disconnect(struct ksmbd_work *work)
- 		goto err_out;
+ void ksmbd_set_inode_pending_delete(struct ksmbd_file *fp)
+ {
+-	fp->f_ci->m_flags |= S_DEL_PENDING;
++	struct ksmbd_inode *ci = fp->f_ci;
++
++	down_write(&ci->m_lock);
++	ci->m_flags |= S_DEL_PENDING;
++	up_write(&ci->m_lock);
+ }
+ 
+ void ksmbd_clear_inode_pending_delete(struct ksmbd_file *fp)
+ {
+-	fp->f_ci->m_flags &= ~S_DEL_PENDING;
++	struct ksmbd_inode *ci = fp->f_ci;
++
++	down_write(&ci->m_lock);
++	ci->m_flags &= ~S_DEL_PENDING;
++	up_write(&ci->m_lock);
+ }
+ 
+ void ksmbd_fd_set_delete_on_close(struct ksmbd_file *fp,
+ 				  int file_info)
+ {
+-	if (ksmbd_stream_fd(fp)) {
+-		fp->f_ci->m_flags |= S_DEL_ON_CLS_STREAM;
+-		return;
+-	}
++	struct ksmbd_inode *ci = fp->f_ci;
+ 
+-	fp->f_ci->m_flags |= S_DEL_ON_CLS;
++	down_write(&ci->m_lock);
++	if (ksmbd_stream_fd(fp))
++		ci->m_flags |= S_DEL_ON_CLS_STREAM;
++	else
++		ci->m_flags |= S_DEL_ON_CLS;
++	up_write(&ci->m_lock);
+ }
+ 
+ static void ksmbd_inode_hash(struct ksmbd_inode *ci)
+@@ -257,27 +279,41 @@ static void __ksmbd_inode_close(struct ksmbd_file *fp)
+ 	struct file *filp;
+ 
+ 	filp = fp->filp;
+-	if (ksmbd_stream_fd(fp) && (ci->m_flags & S_DEL_ON_CLS_STREAM)) {
+-		ci->m_flags &= ~S_DEL_ON_CLS_STREAM;
+-		err = ksmbd_vfs_remove_xattr(file_mnt_idmap(filp),
+-					     &filp->f_path,
+-					     fp->stream.name,
+-					     true);
+-		if (err)
+-			pr_err("remove xattr failed : %s\n",
+-			       fp->stream.name);
++
++	if (ksmbd_stream_fd(fp)) {
++		bool remove_stream_xattr = false;
++
++		down_write(&ci->m_lock);
++		if (ci->m_flags & S_DEL_ON_CLS_STREAM) {
++			ci->m_flags &= ~S_DEL_ON_CLS_STREAM;
++			remove_stream_xattr = true;
++		}
++		up_write(&ci->m_lock);
++
++		if (remove_stream_xattr) {
++			err = ksmbd_vfs_remove_xattr(file_mnt_idmap(filp),
++						     &filp->f_path,
++						     fp->stream.name,
++						     true);
++			if (err)
++				pr_err("remove xattr failed : %s\n",
++				       fp->stream.name);
++		}
  	}
  
--	WARN_ON_ONCE(atomic_dec_and_test(&tcon->refcount));
- 	tcon->t_state = TREE_DISCONNECTED;
- 	write_unlock(&sess->tree_conns_lock);
+ 	if (atomic_dec_and_test(&ci->m_count)) {
++		bool do_unlink = false;
++
+ 		down_write(&ci->m_lock);
+ 		if (ci->m_flags & (S_DEL_ON_CLS | S_DEL_PENDING)) {
+ 			ci->m_flags &= ~(S_DEL_ON_CLS | S_DEL_PENDING);
+-			up_write(&ci->m_lock);
+-			ksmbd_vfs_unlink(filp);
+-			down_write(&ci->m_lock);
++			do_unlink = true;
+ 		}
+ 		up_write(&ci->m_lock);
  
-@@ -2200,8 +2199,6 @@ int smb2_tree_disconnect(struct ksmbd_work *work)
- 		goto err_out;
++		if (do_unlink)
++			ksmbd_vfs_unlink(filp);
++
+ 		ksmbd_inode_free(ci);
  	}
- 
--	work->tcon = NULL;
--
- 	rsp->StructureSize = cpu_to_le16(4);
- 	err = ksmbd_iov_pin_rsp(work, rsp,
- 				sizeof(struct smb2_tree_disconnect_rsp));
+ }
 -- 
 2.51.0
 
