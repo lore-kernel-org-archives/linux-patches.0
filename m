@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E602D73B9;
-	Tue,  6 Jan 2026 17:40:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA6AC2DF13B;
+	Tue,  6 Jan 2026 17:40:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721229; cv=none; b=eH6wdivrkHcsAO2uJlmwzUoVaUcG9WzJ3gZdeUc4h2APpNhKu8Bs9VV/UjT+s8sMTUrLDWVZE6ZxLzGZORsqyEKpPUZOSB+4vW0n7dy9V7eNl9J24pe/1ybFlVzfT3rWweo9DANa2Z45zT8Nf88flcVwT14O50lPkPe7d1k8BLQ=
+	t=1767721233; cv=none; b=SQUSFP9Ld0L229oeSSYrhp4S6IDpdfXAQBXy47CZDhy8aUiP37gvP8BeEWqLm5ai7YGoFG79i8frDq4abI7o5risuU4OkyX0aAiKvp/62ctH+yoj9XQanE38G0AFoVv9diOCd1MnncoO3HorCnZFU4AbpWWlAe/AfqGfy07Stp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721229; c=relaxed/simple;
-	bh=IJfNp7p/56k5O3ywbh28aaMq+717n+nNcbPE5UUfTtU=;
+	s=arc-20240116; t=1767721233; c=relaxed/simple;
+	bh=jUx37cv3Qeb04lO6JdMmyZkoRG5/x8I3iwSuTN305ns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=m70L36mEuK1oZvOiB/zBIHYsr1yoMgs+gI4EVTwWLg4oKX+7wpOcf18e8bN8ExXIQ+0djzSq/0s8g1SqhYBEoXt4UQSSXIszUIWQKg1C7fXT1lwCmiFAnjjkyQmauuuNsvS0Q1yZ/AgqMVqBFela0fiJRVmX0p2rdfK+l1Mla4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iew/ePQT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=C5zoNeVAvIgNdVGpOYRHxa+7Z43nR6wY8sbNHXcn65xh2eAE5nBfwXghc8jsn5F7EDwpZAZxEdzgHfdL0YAS7r0AfK7OGhTZXfzSDMHIBfrattesAUR1nVhkd5HtlWI+mFcb98jrRpRDuPbZN9+5Dg10DX72S86Ce/mZBe2RiyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CYjkCzla; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iew/ePQT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7882C16AAE;
-	Tue,  6 Jan 2026 17:40:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CYjkCzla"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A17FC116C6;
+	Tue,  6 Jan 2026 17:40:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721229;
-	bh=IJfNp7p/56k5O3ywbh28aaMq+717n+nNcbPE5UUfTtU=;
+	s=korg; t=1767721232;
+	bh=jUx37cv3Qeb04lO6JdMmyZkoRG5/x8I3iwSuTN305ns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iew/ePQT3BAjLF7WiBRE1OIxx/BcgeHdD0JImyXmbjpr6xB5Ph49d4KhbNDVVXLmS
-	 VSbD4g6XCux14sSceRKp+oNV0aGBjUqGoEsLhDY2fdLAw48Ba7e5ova+3/zKkRvgS5
-	 7SfBMLDhL3wxDg9J2mokXkSrAa6AYpTGPqDM2sMg=
+	b=CYjkCzlaM0EQw40/gaPXGRjV/ES+/TPnnOP/WZaFyc0njg915V/GLFnHZeCNz9FXF
+	 KtCjVW9ZI32ep4gybNTlbjW1hgpS+xrgx3bR/OcWVvFzt9rPF1l2gyTv9+8VSyeHgw
+	 UxO2GlxQNzWmaHBxejhml4Wlk4a+17CAyl2t7kV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 457/567] drm/amdgpu/gmc12: add amdgpu_vm_handle_fault() handling
-Date: Tue,  6 Jan 2026 18:03:59 +0100
-Message-ID: <20260106170508.251782268@linuxfoundation.org>
+	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
+	stable@kernel.org,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH 6.12 475/567] drm/mgag200: Fix big-endian support
+Date: Tue,  6 Jan 2026 18:04:17 +0100
+Message-ID: <20260106170508.924707707@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,64 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: René Rebe <rene@exactco.de>
 
-commit ff28ff98db6a8eeb469e02fb8bd1647b353232a9 upstream.
+commit 6cb31fba137d45e682ce455b8ea364f44d5d4f98 upstream.
 
-We need to call amdgpu_vm_handle_fault() on page fault
-on all gfx9 and newer parts to properly update the
-page tables, not just for recoverable page faults.
+Unlike the original, deleted Matrox mga driver, the new mgag200 driver
+has the XRGB frame-buffer byte swapped on big-endian "RISC"
+systems. Fix by enabling byte swapping "PowerPC" OPMODE for any
+__BIG_ENDIAN config.
 
-Cc: stable@vger.kernel.org
-Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 414c45310625 ("mgag200: initial g200se driver (v2)")
+Signed-off-by: René Rebe <rene@exactco.de>
+Cc: stable@kernel.org
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patch.msgid.link/20251208.141827.965103015954471168.rene@exactco.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gmc_v12_0.c |   27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ drivers/gpu/drm/mgag200/mgag200_mode.c |   25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/gmc_v12_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gmc_v12_0.c
-@@ -91,6 +91,8 @@ static int gmc_v12_0_process_interrupt(s
- 				       struct amdgpu_iv_entry *entry)
- {
- 	struct amdgpu_vmhub *hub;
-+	bool retry_fault = !!(entry->src_data[1] & 0x80);
-+	bool write_fault = !!(entry->src_data[1] & 0x20);
- 	uint32_t status = 0;
- 	u64 addr;
+--- a/drivers/gpu/drm/mgag200/mgag200_mode.c
++++ b/drivers/gpu/drm/mgag200/mgag200_mode.c
+@@ -175,6 +175,30 @@ static void mgag200_set_startadd(struct
+ 	WREG_ECRT(0x00, crtcext0);
+ }
  
-@@ -102,6 +104,31 @@ static int gmc_v12_0_process_interrupt(s
- 	else
- 		hub = &adev->vmhub[AMDGPU_GFXHUB(0)];
- 
-+	if (retry_fault) {
-+		/* Returning 1 here also prevents sending the IV to the KFD */
++/*
++ * Set the opmode for the hardware swapper for Big-Endian processor
++ * support for the frame buffer aperture and DMAWIN space.
++ */
++static void mgag200_set_datasiz(struct mga_device *mdev, u32 format)
++{
++#if defined(__BIG_ENDIAN)
++	u32 opmode = RREG32(MGAREG_OPMODE);
 +
-+		/* Process it only if it's the first fault for this address */
-+		if (entry->ih != &adev->irq.ih_soft &&
-+		    amdgpu_gmc_filter_faults(adev, entry->ih, addr, entry->pasid,
-+					     entry->timestamp))
-+			return 1;
++	opmode &= ~(GENMASK(17, 16) | GENMASK(9, 8) | GENMASK(3, 2));
 +
-+		/* Delegate it to a different ring if the hardware hasn't
-+		 * already done it.
-+		 */
-+		if (entry->ih == &adev->irq.ih) {
-+			amdgpu_irq_delegate(adev, entry, 8);
-+			return 1;
-+		}
-+
-+		/* Try to handle the recoverable page faults by filling page
-+		 * tables
-+		 */
-+		if (amdgpu_vm_handle_fault(adev, entry->pasid, 0, 0, addr,
-+					   entry->timestamp, write_fault))
-+			return 1;
++	/* Big-endian byte-swapping */
++	switch (format) {
++	case DRM_FORMAT_RGB565:
++		opmode |= 0x10100;
++		break;
++	case DRM_FORMAT_XRGB8888:
++		opmode |= 0x20200;
++		break;
 +	}
++	WREG32(MGAREG_OPMODE, opmode);
++#endif
++}
 +
- 	if (!amdgpu_sriov_vf(adev)) {
- 		/*
- 		 * Issue a dummy read to wait for the status register to
+ void mgag200_init_registers(struct mga_device *mdev)
+ {
+ 	u8 crtc11, misc;
+@@ -510,6 +534,7 @@ void mgag200_primary_plane_helper_atomic
+ 	struct drm_atomic_helper_damage_iter iter;
+ 	struct drm_rect damage;
+ 
++	mgag200_set_datasiz(mdev, fb->format->format);
+ 	drm_atomic_helper_damage_iter_init(&iter, old_plane_state, plane_state);
+ 	drm_atomic_for_each_plane_damage(&iter, &damage) {
+ 		mgag200_handle_damage(mdev, shadow_plane_state->data, fb, &damage);
 
 
