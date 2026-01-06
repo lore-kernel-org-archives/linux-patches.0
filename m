@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A28B3644AB;
-	Tue,  6 Jan 2026 17:51:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7583F1F8BD6;
+	Tue,  6 Jan 2026 17:51:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721891; cv=none; b=nSf4UdQ5qmyeTk9bSuE5leb7/8LjMXH2YXeRGX9nxBCc9IMQQSLSsOwb7aoQA29JBAdD6yrjnNVWdb1kbDi6pVCeqnZrj6lpRvXwjj1ysisYJesnzG8dKXC/tejyukiZLIdC50hBLDEXHlpToZNHKphS+8Zg+dW3f2wUoykshTE=
+	t=1767721894; cv=none; b=FJQm40RX0parbIeiU3nBN7u6mDz4xvPdU1dgcbju/hSl8lELH351jrEOQUmvccYX7se5fCZEdXM/ecQnxKEgRZci5+fIgNM7/cmWrbVL5T2Ddmwdd5WSyxV6I0jzo2JpmxUi6gOgjNxfcmZSWm/NTjVFRUMlEfW0GApNJPmwhhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721891; c=relaxed/simple;
-	bh=+DXKa9FnmeHaJUbyMURM7UvFNToVzEoeI6URpV1eB0E=;
+	s=arc-20240116; t=1767721894; c=relaxed/simple;
+	bh=shVoZCI5avjlqkvwPWcwL9e+5NKd4zBMAZwXy5vAIXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LZC0VftCLzkIWi0IB8S0ad2ZWMyRnDVVr9pYWlsCHChXPLmYCZGNvMZaqTPdc7LM9YRV+4OThaTeayXmbEnz0gDMlqIWqgitPPb3MWdrNtELTX8YsNvQZQbVIUGToCj9XB81OdM6q3xfObBa/gCFE1UYqWXxa3BP+MR2QfaGsR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gOOesTVl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O4jV6KJ7JHrfaeHCzchocQVrD/Ih8KFcDlTqQkvznldHeGABhefQw3q8yIl6xtYf+RFPXTAUDuhyuufsjBwAlSsMY6dPbQdlXOtyUU4HzYkvgxnmx+KorMd06/kAn8mSBtBXCXvGY75qoCnDT0xPcd58K5g1Ip/T/bnkQrfhmko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gSvWjROg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gOOesTVl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CCD7C116C6;
-	Tue,  6 Jan 2026 17:51:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gSvWjROg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D299AC19423;
+	Tue,  6 Jan 2026 17:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721891;
-	bh=+DXKa9FnmeHaJUbyMURM7UvFNToVzEoeI6URpV1eB0E=;
+	s=korg; t=1767721894;
+	bh=shVoZCI5avjlqkvwPWcwL9e+5NKd4zBMAZwXy5vAIXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gOOesTVlmi/JjP3eCK084NXd51aAV7sn8Ice18bbLJzr6cNSIk2HZLvNri0DbO0nt
-	 l8nbYJ9mmjwhjoaRLrfbwN0Nn4zIoJCGfYVgXAoNDTMLApFpsm5UQ836uPDyBIZgTh
-	 8ycW+TtQGXX8HhORDX2wjaJItyNMuPoWziq5baXs=
+	b=gSvWjROgC+tHmCkTxXNMF7rasGyVnl6Gh2CJ0eqw3Gp++i0fzSwCy9DGSriRUl1WZ
+	 4xw8py94Y5P3oQykVzpiPia/kEqmVhRi3AFhO2Gp7uc6ICTutotaUHokxaI5L+q6qi
+	 gB7qbK2dm6mjJAQf92XI7bpRKaMl1vZjdKyKX3l8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 103/312] ASoC: codecs: Fix error handling in pm4125 audio codec driver
-Date: Tue,  6 Jan 2026 18:02:57 +0100
-Message-ID: <20260106170551.563857762@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Alexey Klimov <alexey.klimov@linaro.org>
+Subject: [PATCH 6.18 104/312] ASoC: qcom: q6apm-dai: set flags to reflect correct operation of appl_ptr
+Date: Tue,  6 Jan 2026 18:02:58 +0100
+Message-ID: <20260106170551.599415961@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -51,96 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-commit 2196e8172bee2002e9baaa0d02b2f9f2dd213949 upstream.
+commit 950a4e5788fc7dc6e8e93614a7d4d0449c39fb8d upstream.
 
-pm4125_bind() acquires references through pm4125_sdw_device_get() but
-fails to release them in error paths and during normal unbind
-operations. This could result in reference count leaks, preventing
-proper cleanup and potentially causing resource exhaustion over
-multiple bind/unbind cycles.
+Driver does not expect the appl_ptr to move backward and requires
+explict sync. Make sure that the userspace does not do appl_ptr rewinds
+by specifying the correct flags in pcm_info.
 
-Calling path: pm4125_sdw_device_get() -> bus_find_device_by_of_node()
--> bus_find_device() -> get_device.
+Without this patch, the result could be a forever loop as current logic assumes
+that appl_ptr can only move forward.
 
-Found by code review.
-
-Cc: stable@vger.kernel.org
-Fixes: 8ad529484937 ("ASoC: codecs: add new pm4125 audio codec driver")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251116033716.29369-1-make24@iscas.ac.cn
+Fixes: 3d4a4411aa8b ("ASoC: q6apm-dai: schedule all available frames to avoid dsp under-runs")
+Cc: Stable@vger.kernel.org
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Tested-by: Alexey Klimov <alexey.klimov@linaro.org> # RB5, RB3
+Link: https://patch.msgid.link/20251023102444.88158-2-srinivas.kandagatla@oss.qualcomm.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/pm4125.c |   21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ sound/soc/qcom/qdsp6/q6apm-dai.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/sound/soc/codecs/pm4125.c
-+++ b/sound/soc/codecs/pm4125.c
-@@ -1549,6 +1549,10 @@ static int pm4125_bind(struct device *de
- 	struct device_link *devlink;
- 	int ret;
- 
-+	/* Initialize device pointers to NULL for safe cleanup */
-+	pm4125->rxdev = NULL;
-+	pm4125->txdev = NULL;
-+
- 	/* Give the soundwire subdevices some more time to settle */
- 	usleep_range(15000, 15010);
- 
-@@ -1572,7 +1576,7 @@ static int pm4125_bind(struct device *de
- 	if (!pm4125->txdev) {
- 		dev_err(dev, "could not find txslave with matching of node\n");
- 		ret = -EINVAL;
--		goto error_unbind_all;
-+		goto error_put_rx;
- 	}
- 
- 	pm4125->sdw_priv[AIF1_CAP] = dev_get_drvdata(pm4125->txdev);
-@@ -1582,7 +1586,7 @@ static int pm4125_bind(struct device *de
- 	if (!pm4125->tx_sdw_dev) {
- 		dev_err(dev, "could not get txslave with matching of dev\n");
- 		ret = -EINVAL;
--		goto error_unbind_all;
-+		goto error_put_tx;
- 	}
- 
- 	/*
-@@ -1594,7 +1598,7 @@ static int pm4125_bind(struct device *de
- 	if (!devlink) {
- 		dev_err(dev, "Could not devlink TX and RX\n");
- 		ret = -EINVAL;
--		goto error_unbind_all;
-+		goto error_put_tx;
- 	}
- 
- 	devlink = device_link_add(dev, pm4125->txdev,
-@@ -1648,6 +1652,10 @@ link_remove_dev_tx:
- 	device_link_remove(dev, pm4125->txdev);
- link_remove_rx_tx:
- 	device_link_remove(pm4125->rxdev, pm4125->txdev);
-+error_put_tx:
-+	put_device(pm4125->txdev);
-+error_put_rx:
-+	put_device(pm4125->rxdev);
- error_unbind_all:
- 	component_unbind_all(dev, pm4125);
- 	return ret;
-@@ -1663,6 +1671,13 @@ static void pm4125_unbind(struct device
- 	device_link_remove(dev, pm4125->txdev);
- 	device_link_remove(dev, pm4125->rxdev);
- 	device_link_remove(pm4125->rxdev, pm4125->txdev);
-+
-+	/* Release device references acquired in bind */
-+	if (pm4125->txdev)
-+		put_device(pm4125->txdev);
-+	if (pm4125->rxdev)
-+		put_device(pm4125->rxdev);
-+
- 	component_unbind_all(dev, pm4125);
- }
- 
+--- a/sound/soc/qcom/qdsp6/q6apm-dai.c
++++ b/sound/soc/qcom/qdsp6/q6apm-dai.c
+@@ -86,6 +86,7 @@ static const struct snd_pcm_hardware q6a
+ 	.info =                 (SNDRV_PCM_INFO_MMAP | SNDRV_PCM_INFO_BLOCK_TRANSFER |
+ 				 SNDRV_PCM_INFO_MMAP_VALID | SNDRV_PCM_INFO_INTERLEAVED |
+ 				 SNDRV_PCM_INFO_PAUSE | SNDRV_PCM_INFO_RESUME |
++				 SNDRV_PCM_INFO_NO_REWINDS | SNDRV_PCM_INFO_SYNC_APPLPTR |
+ 				 SNDRV_PCM_INFO_BATCH),
+ 	.formats =              (SNDRV_PCM_FMTBIT_S16_LE | SNDRV_PCM_FMTBIT_S24_LE),
+ 	.rates =                SNDRV_PCM_RATE_8000_48000,
+@@ -105,6 +106,7 @@ static const struct snd_pcm_hardware q6a
+ 	.info =                 (SNDRV_PCM_INFO_MMAP | SNDRV_PCM_INFO_BLOCK_TRANSFER |
+ 				 SNDRV_PCM_INFO_MMAP_VALID | SNDRV_PCM_INFO_INTERLEAVED |
+ 				 SNDRV_PCM_INFO_PAUSE | SNDRV_PCM_INFO_RESUME |
++				 SNDRV_PCM_INFO_NO_REWINDS | SNDRV_PCM_INFO_SYNC_APPLPTR |
+ 				 SNDRV_PCM_INFO_BATCH),
+ 	.formats =              (SNDRV_PCM_FMTBIT_S16_LE | SNDRV_PCM_FMTBIT_S24_LE),
+ 	.rates =                SNDRV_PCM_RATE_8000_192000,
 
 
