@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64611355038;
-	Tue,  6 Jan 2026 17:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93D1A355024;
+	Tue,  6 Jan 2026 17:23:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720229; cv=none; b=SvFlMhvy6angxesR2MiTQmRwZQuU6zl9g1BGb8c0XFEX1IdbxuifWOIvBGlVuXtv6nHJtvJDnnPKio/33r3PGOfPg7wwSDzoGOmZi/aZME3KyKYrHhBMxmJf946UhxasCRKOJ7nPlpxqfi3gfmsvfN2M8vWwjXHMKV77um8xPXw=
+	t=1767720232; cv=none; b=JFv+9dprks5PR9KT24nRuD5XOC9GUxwftZ1A1XHyyQPp28XAtpIAe/bFjpQqGsyukGvmwz1KH+avj5aOC854EAO5TVr5gK5HuKpIKtSzTmZxaGxtzVxvAkmDtxf8J5TR/B7dCN3pJlPuQPGuqD19HwzxrERSS6LxifniBCEyVP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720229; c=relaxed/simple;
-	bh=W9N/05+OeaePNmXkIrcodGy3zwmQIye/pwa6eqV3uVA=;
+	s=arc-20240116; t=1767720232; c=relaxed/simple;
+	bh=ESZwAcv1LlGh+4SiselkyIIJWrqR+5NX1VOpEArAUhg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nu2VPBXcKnLgAH102LT8qTTNCyyhBMePPG0IMDlQe9khHQTRv6qy+TQyK8TdoNa/4+1ISkcNTARUwv3eXuEmBAxjZYGEIggIL4RZ9QlZKLAmCI3XwTdgmJEU1QS7n8YGPSUIr9nzgfxFc8p69qHri9EvHMFdybRgyljE0T2ERxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=feExvPzh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lfb7LnRzytWB0OzN1Vk0xS6Yd+d2URXlAIgFxWhUvk5uBGCsrcR7yRRztgkWkgYQsyPw/bARVBhmhYYnf2TbpvnjSj6S+BAYv86MvmtfyOCbXL0fB7mggiOZkGaBtXXj5uPqhrHZV3MaBStcHUUW6LRE6qfxdq6RANrWEHGJfnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P02S7Sxs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="feExvPzh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD2EEC116C6;
-	Tue,  6 Jan 2026 17:23:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P02S7Sxs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CF36C16AAE;
+	Tue,  6 Jan 2026 17:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720229;
-	bh=W9N/05+OeaePNmXkIrcodGy3zwmQIye/pwa6eqV3uVA=;
+	s=korg; t=1767720232;
+	bh=ESZwAcv1LlGh+4SiselkyIIJWrqR+5NX1VOpEArAUhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=feExvPzh+tk59FAlsXCjDDGjyYrlxkZ0vGd4p5o2T9NdvAfA4WRC1HGZsy1SOB/n+
-	 McnhB8aguLxVQ+jhc8CtUyA0Lo9m7M7i4riQd8Za+/KKSZwYUMjmoArmrTM/vxSTld
-	 7tayeBRcPvJUA2hsP4rHBs+FqFw+VdbhP9Vduiw0=
+	b=P02S7Sxsyo0AELwakPGZMx9a7Jju1XdDWQrcz3Tt8srhay6xAiUgTo5GLKfrU2wyc
+	 bAcqdiNuT+HnpXaY93Qi6D1Bk9QMuW3pTVyMWye1Oi4mX6TraCcckHny9jfwOXj+1U
+	 78V17pIJ2Vv0rcCKijzWQKlBHgsMxcKTBg5X4xZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenhua Lin <Wenhua.Lin@unisoc.com>,
-	Cixi Geng <cixi.geng@linux.dev>,
+	Ingo Molnar <mingo@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 141/567] serial: sprd: Return -EPROBE_DEFER when uart clock is not ready
-Date: Tue,  6 Jan 2026 17:58:43 +0100
-Message-ID: <20260106170456.541387868@linuxfoundation.org>
+Subject: [PATCH 6.12 142/567] libperf cpumap: Fix perf_cpu_map__max for an empty/NULL map
+Date: Tue,  6 Jan 2026 17:58:44 +0100
+Message-ID: <20260106170456.579215292@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,61 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenhua Lin <Wenhua.Lin@unisoc.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 29e8a0c587e328ed458380a45d6028adf64d7487 ]
+[ Upstream commit a0a4173631bfcfd3520192c0a61cf911d6a52c3a ]
 
-In sprd_clk_init(), when devm_clk_get() returns -EPROBE_DEFER
-for either uart or source clock, we should propagate the
-error instead of just warning and continuing with NULL clocks.
+Passing an empty map to perf_cpu_map__max triggered a SEGV. Explicitly
+test for the empty map.
 
-Currently the driver only emits a warning when clock acquisition
-fails and proceeds with NULL clock pointers. This can lead to
-issues later when the clocks are actually needed. More importantly,
-when the clock provider is not ready yet and returns -EPROBE_DEFER,
-we should return this error to allow deferred probing.
-
-This change adds explicit checks for -EPROBE_DEFER after both:
-1. devm_clk_get(uport->dev, uart)
-2. devm_clk_get(uport->dev, source)
-
-When -EPROBE_DEFER is encountered, the function now returns
--EPROBE_DEFER to let the driver framework retry probing
-later when the clock dependencies are resolved.
-
-Signed-off-by: Wenhua Lin <Wenhua.Lin@unisoc.com>
-Link: https://patch.msgid.link/20251022030840.956589-1-Wenhua.Lin@unisoc.com
-Reviewed-by: Cixi Geng <cixi.geng@linux.dev>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Ingo Molnar <mingo@kernel.org>
+Closes: https://lore.kernel.org/linux-perf-users/aSwt7yzFjVJCEmVp@gmail.com/
+Tested-by: Ingo Molnar <mingo@kernel.org>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Tested-by: Thomas Richter <tmricht@linux.ibm.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sprd_serial.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/lib/perf/cpumap.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/tty/serial/sprd_serial.c b/drivers/tty/serial/sprd_serial.c
-index 3fc54cc02a1f..c575c38b513d 100644
---- a/drivers/tty/serial/sprd_serial.c
-+++ b/drivers/tty/serial/sprd_serial.c
-@@ -1109,6 +1109,9 @@ static int sprd_clk_init(struct uart_port *uport)
+diff --git a/tools/lib/perf/cpumap.c b/tools/lib/perf/cpumap.c
+index cae799ad44e1..e5938b91199f 100644
+--- a/tools/lib/perf/cpumap.c
++++ b/tools/lib/perf/cpumap.c
+@@ -409,10 +409,12 @@ struct perf_cpu perf_cpu_map__max(const struct perf_cpu_map *map)
+ 		.cpu = -1
+ 	};
  
- 	clk_uart = devm_clk_get(uport->dev, "uart");
- 	if (IS_ERR(clk_uart)) {
-+		if (PTR_ERR(clk_uart) == -EPROBE_DEFER)
-+			return -EPROBE_DEFER;
+-	// cpu_map__trim_new() qsort()s it, cpu_map__default_new() sorts it as well.
+-	return __perf_cpu_map__nr(map) > 0
+-		? __perf_cpu_map__cpu(map, __perf_cpu_map__nr(map) - 1)
+-		: result;
++	if (!map)
++		return result;
 +
- 		dev_warn(uport->dev, "uart%d can't get uart clock\n",
- 			 uport->line);
- 		clk_uart = NULL;
-@@ -1116,6 +1119,9 @@ static int sprd_clk_init(struct uart_port *uport)
++	// The CPUs are always sorted and nr is always > 0 as 0 length map is
++	// encoded as NULL.
++	return __perf_cpu_map__cpu(map, __perf_cpu_map__nr(map) - 1);
+ }
  
- 	clk_parent = devm_clk_get(uport->dev, "source");
- 	if (IS_ERR(clk_parent)) {
-+		if (PTR_ERR(clk_parent) == -EPROBE_DEFER)
-+			return -EPROBE_DEFER;
-+
- 		dev_warn(uport->dev, "uart%d can't get source clock\n",
- 			 uport->line);
- 		clk_parent = NULL;
+ /** Is 'b' a subset of 'a'. */
 -- 
 2.51.0
 
