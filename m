@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 734D533993;
-	Tue,  6 Jan 2026 17:33:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B785E33993;
+	Tue,  6 Jan 2026 17:33:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720820; cv=none; b=imzCqB5Q+/gJw/Sgrldk1iX4iHgVWxIKgZExga2VwGLOYeyqwSVmbXgt49nzyQZO7hmCs1hB/8jcjpm5awZC1fzO2VBR6lgwDuwfS8+haNLwPWQAhadowNl9vSR8hHI3urpEEgslnmrPjBZPuq3DWo6J4Q/1oKf7id19IwwI618=
+	t=1767720823; cv=none; b=DJhY1g3XngkKR8UFoRT+T2rqv1QkhgoGJA7+Oo8xn5suz34ph8ivssneXikzYq4aOKrFq3+vosMhPvhbaKiqZtNzB8lt4WObqasYFlnBpJuBvbkr6rimZOZotLV9ouLMn0RVMEHlYDbmB1iQ7ssQqV3kGF1fCFpC5PsA1IIyFok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720820; c=relaxed/simple;
-	bh=fR2tI5DlXmvcpxAVOwbd38QmwmdbWTLt0HP4ALeDono=;
+	s=arc-20240116; t=1767720823; c=relaxed/simple;
+	bh=fMwuRpYVeD3m4B4AIhRDZgVH1FbTfrPQw7+3+Mh6wYA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C+lzyosNREZfQFoY8dNyLdIz66Pk/QEr6NFlIQlQI7Ltayi2CF+ibm/6lDTJrQcm3RXmmV4TbwGruFvACHcQI+wCBc5OEb2OKmiuRdAwxuks+KIA0qwQMhg4QXgCUTvL5/Ie41ltzq1pQDxifOBvYyA/wMmTyak+zpHDZmkx/j4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pCq3FYmL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LXjSX6L/npryZD4qc17CP2hFHdFZdBiuMowtoRhlPNeYqwmBrT8tdcQ/Gu5SwU8zRO6Zr/kSiqrWDfQKoDdpjp8PIXUfPqi0W8faqyK/h3n11wgtYqsrsDeETFZhfJejxyXaxqC5W89W2rvwVJUmPRcgPywJ6G/kPrWCpllPtzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x1nzlPEk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pCq3FYmL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F277FC116C6;
-	Tue,  6 Jan 2026 17:33:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x1nzlPEk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42ECCC116C6;
+	Tue,  6 Jan 2026 17:33:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720820;
-	bh=fR2tI5DlXmvcpxAVOwbd38QmwmdbWTLt0HP4ALeDono=;
+	s=korg; t=1767720823;
+	bh=fMwuRpYVeD3m4B4AIhRDZgVH1FbTfrPQw7+3+Mh6wYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pCq3FYmLzoGnsQd1lm01nKvMoSuUuI0Hi8lXU4fcd+97CfFLdOERynNH2NrpIsLiI
-	 45IP0eRFTmJjhSNYN3s4tq5W16ypzQhOWk4MWS+8m1w2ASskZtIlzPcWPn5mdf6Vw7
-	 WazDXBcciNwG9gfxcFZuz0TpRkwLs8OL2I7N58Zc=
+	b=x1nzlPEkSeOqjjQdj2c5U56r97SUEFFjEq1w+iZOYYP7SD6MCYAtjLi2s3PGj0oVZ
+	 p2ghy3vDjxktkQkwAY5e84CiqFzSK9qf4cenuvK3I6X07/589QBjgs+foEURBCAwYt
+	 5LHyEMR7DMg+wxTAu2A2m5POEhGfycij4GbXy06g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas De Schampheleire <thomas.de_schampheleire@nokia.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	Nicolas Schier <nsc@kernel.org>,
+	syzbot+3d43c9066a5b54902232@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 319/567] kbuild: fix compilation of dtb specified on command-line without make rule
-Date: Tue,  6 Jan 2026 18:01:41 +0100
-Message-ID: <20260106170503.126178958@linuxfoundation.org>
+Subject: [PATCH 6.12 320/567] net: usb: asix: validate PHY address before use
+Date: Tue,  6 Jan 2026 18:01:42 +0100
+Message-ID: <20260106170503.162887749@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -53,86 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas De Schampheleire <thomas.de_schampheleire@nokia.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-[ Upstream commit b08fc4d0ec2466558f6d5511434efdfabbddf2a6 ]
+[ Upstream commit a1e077a3f76eea0dc671ed6792e7d543946227e8 ]
 
-Since commit e7e2941300d2 ("kbuild: split device tree build rules into
-scripts/Makefile.dtbs"), it is no longer possible to compile a device tree
-blob that is not specified in a make rule
-like:
-    dtb-$(CONFIG_FOO) += foo.dtb
+The ASIX driver reads the PHY address from the USB device via
+asix_read_phy_addr(). A malicious or faulty device can return an
+invalid address (>= PHY_MAX_ADDR), which causes a warning in
+mdiobus_get_phy():
 
-Before the mentioned commit, one could copy a dts file to e.g.
-arch/arm64/boot/dts/ (or a new subdirectory) and then convert it to a dtb
-file using:
-    make ARCH=arm64 foo.dtb
+  addr 207 out of range
+  WARNING: drivers/net/phy/mdio_bus.c:76
 
-In this scenario, both 'dtb-y' and 'dtb-' are empty, and the inclusion of
-scripts/Makefile.dtbs relies on 'targets' to contain the MAKECMDGOALS. The
-value of 'targets', however, is only final later in the code.
+Validate the PHY address in asix_read_phy_addr() and remove the
+now-redundant check in ax88172a.c.
 
-Move the conditional include of scripts/Makefile.dtbs down to where the
-value of 'targets' is final. Since Makefile.dtbs updates 'always-y' which is
-used as a prerequisite in the build rule, the build rule also needs to move
-down.
-
-Fixes: e7e2941300d2 ("kbuild: split device tree build rules into scripts/Makefile.dtbs")
-Signed-off-by: Thomas De Schampheleire <thomas.de_schampheleire@nokia.com>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
-Link: https://patch.msgid.link/20251126100017.1162330-1-thomas.de_schampheleire@nokia.com
-Signed-off-by: Nicolas Schier <nsc@kernel.org>
+Reported-by: syzbot+3d43c9066a5b54902232@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=3d43c9066a5b54902232
+Tested-by: syzbot+3d43c9066a5b54902232@syzkaller.appspotmail.com
+Fixes: 7e88b11a862a ("net: usb: asix: refactor asix_read_phy_addr() and handle errors on return")
+Link: https://lore.kernel.org/all/20251217085057.270704-1-kartikey406@gmail.com/T/ [v1]
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20251218011156.276824-1-kartikey406@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/Makefile.build | 26 ++++++++++++++------------
- 1 file changed, 14 insertions(+), 12 deletions(-)
+ drivers/net/usb/asix_common.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/scripts/Makefile.build b/scripts/Makefile.build
-index 2c5c1a214f3b..6e07023b5442 100644
---- a/scripts/Makefile.build
-+++ b/scripts/Makefile.build
-@@ -449,18 +449,6 @@ ifneq ($(userprogs),)
- include $(srctree)/scripts/Makefile.userprogs
- endif
+diff --git a/drivers/net/usb/asix_common.c b/drivers/net/usb/asix_common.c
+index 7fd763917ae2..6ab3486072cb 100644
+--- a/drivers/net/usb/asix_common.c
++++ b/drivers/net/usb/asix_common.c
+@@ -335,6 +335,11 @@ int asix_read_phy_addr(struct usbnet *dev, bool internal)
+ 	offset = (internal ? 1 : 0);
+ 	ret = buf[offset];
  
--ifneq ($(need-dtbslist)$(dtb-y)$(dtb-)$(filter %.dtb %.dtb.o %.dtbo.o,$(targets)),)
--include $(srctree)/scripts/Makefile.dtbs
--endif
--
--# Build
--# ---------------------------------------------------------------------------
--
--$(obj)/: $(if $(KBUILD_BUILTIN), $(targets-for-builtin)) \
--	 $(if $(KBUILD_MODULES), $(targets-for-modules)) \
--	 $(subdir-ym) $(always-y)
--	@:
--
- # Single targets
- # ---------------------------------------------------------------------------
++	if (ret >= PHY_MAX_ADDR) {
++		netdev_err(dev->net, "invalid PHY address: %d\n", ret);
++		return -ENODEV;
++	}
++
+ 	netdev_dbg(dev->net, "%s PHY address 0x%x\n",
+ 		   internal ? "internal" : "external", ret);
  
-@@ -490,6 +478,20 @@ FORCE:
- targets += $(filter-out $(single-subdir-goals), $(MAKECMDGOALS))
- targets := $(filter-out $(PHONY), $(targets))
- 
-+# Now that targets is fully known, include dtb rules if needed
-+ifneq ($(need-dtbslist)$(dtb-y)$(dtb-)$(filter %.dtb %.dtb.o %.dtbo.o,$(targets)),)
-+include $(srctree)/scripts/Makefile.dtbs
-+endif
-+
-+# Build
-+# Needs to be after the include of Makefile.dtbs, which updates always-y
-+# ---------------------------------------------------------------------------
-+
-+$(obj)/: $(if $(KBUILD_BUILTIN), $(targets-for-builtin)) \
-+	 $(if $(KBUILD_MODULES), $(targets-for-modules)) \
-+	 $(subdir-ym) $(always-y)
-+	@:
-+
- # Read all saved command lines and dependencies for the $(targets) we
- # may be building above, using $(if_changed{,_dep}). As an
- # optimization, we don't need to read them if the target does not
 -- 
 2.51.0
 
