@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5902935BDC0;
-	Tue,  6 Jan 2026 17:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBE2735C1AE;
+	Tue,  6 Jan 2026 17:46:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721560; cv=none; b=n262p2ku6WB2B7rFGL2obo3G+MeaOw2O+9CMxCw/Fw87YOwWmUuhh9KwttXO2EGleYqiGuCxY5hX7LpU9TMEfyDaJlCrGm0y3/nKuw3REn+f935b0cbQ+SusS0TFrEZOEubaeiTd3u1PKnXG5Q5dspNHbOKnPSweh1uez9HYhtg=
+	t=1767721563; cv=none; b=S8oYIGrIemCg5BgIo4WDKWBSF4HEQFHLveZ8CA2Ifd5aXxOnObdMs6rGoGdWsWpIwXbmj8n3ILyRO/1g6kmYSed7N9iyj6LLVGjLeApyc8Q255sWJW5NkPZbkU6xXt/EQMnQA88k9j4vTcQljfvHwFkqfMcg9pNl1dyVIvmGZeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721560; c=relaxed/simple;
-	bh=X+oTosNNNm1/NHh6gGLqc1TNu2vzxBbhAM8jsv/2NHY=;
+	s=arc-20240116; t=1767721563; c=relaxed/simple;
+	bh=cMLUsIgpdySYd2Vr0cQoh9mAAnD7p29+zQwaQLKN9KM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PXZ+JXWi2jX7XQeTpRfhXWSYMf1VakaQWD07qtvcb4Jxr06vSlK416SQhB+pOz169ViEGf02idHkcqot3ie47md3WB3zuDeukBfisZIfJmqBfaE2cpbKfEMJps5x8JT/jwkjbL7FPxHoHf6WdNPCcvFOi4JGNnpeuYrYRwgpJHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HiD48bvS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PPXvlvov9s1ZPJqCbqvp2d73+mjLKpSWQTySGrp8FdwFb8Yp+XQ+9MgVvUoIshz3SofMRfWRQezkgf5q8SL6TnAaqv2HWFLx/AzzrqJw2/f2P9d+Ybi3dJEP2Gxq9H2l85SzOVHWIEyQzQ7BZecPQS1I3mZo/Vp1M02mN0lqidI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2EJZHuif; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HiD48bvS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3272C116C6;
-	Tue,  6 Jan 2026 17:45:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2EJZHuif"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 037E4C116C6;
+	Tue,  6 Jan 2026 17:46:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721560;
-	bh=X+oTosNNNm1/NHh6gGLqc1TNu2vzxBbhAM8jsv/2NHY=;
+	s=korg; t=1767721563;
+	bh=cMLUsIgpdySYd2Vr0cQoh9mAAnD7p29+zQwaQLKN9KM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HiD48bvSj3kh6nRmqn+Em8sxO9zMcjTxvcInxmclNwL6vQBYNVhB7c9YbdR7AEpsF
-	 HtTW+K6FsdGFLROnUjk7z71j8lEN3rhvr+AUerfCz1WOybtgyEBTRcGexk3CIbdgED
-	 DS1XAFRB57A/GOWcdZzE8fJmFP+oLNrTKJGgBATo=
+	b=2EJZHuifXbj23eIyDKT9osdvysL6glg4UgcDU6gmy+x3giJQvZJk4uVOPzkY8txt3
+	 R3A1HWH53jZ6VCiHQ4Pq+n21gfcCveWbmwKEXbH+0VmyZPIaXut6Yo6H31oKvAxbdQ
+	 GPy1uik+RLY6odoPF4E/8aoLQcaw+2eJ5lnRrLTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@google.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 565/567] mm/damon/tests/vaddr-kunit: handle alloc failures on damon_do_test_apply_three_regions()
-Date: Tue,  6 Jan 2026 18:05:47 +0100
-Message-ID: <20260106170512.336588743@linuxfoundation.org>
+	syzbot+a2b9a4ed0d61b1efb3f5@syzkaller.appspotmail.com,
+	Christoph Hellwig <hch@lst.de>,
+	Dave Chinner <dchinner@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.12 566/567] iomap: allocate s_dio_done_wq for async reads as well
+Date: Tue,  6 Jan 2026 18:05:48 +0100
+Message-ID: <20260106170512.373761031@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -53,47 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Christoph Hellwig <hch@lst.de>
 
-commit 2b22d0fcc6320ba29b2122434c1d2f0785fb0a25 upstream.
+commit 7fd8720dff2d9c70cf5a1a13b7513af01952ec02 upstream.
 
-damon_do_test_apply_three_regions() is assuming all dynamic memory
-allocation in it will succeed.  Those are indeed likely in the real use
-cases since those allocations are too small to fail, but theoretically
-those could fail.  In the case, inappropriate memory access can happen.
-Fix it by appropriately cleanup pre-allocated memory and skip the
-execution of the remaining tests in the failure cases.
+Since commit 222f2c7c6d14 ("iomap: always run error completions in user
+context"), read error completions are deferred to s_dio_done_wq.  This
+means the workqueue also needs to be allocated for async reads.
 
-Link: https://lkml.kernel.org/r/20251101182021.74868-18-sj@kernel.org
-Fixes: 17ccae8bb5c9 ("mm/damon: add kunit tests")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>
-Cc: David Gow <davidgow@google.com>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: <stable@vger.kernel.org>	[5.15+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: SeongJae Park <sj@kernel.org>
+Fixes: 222f2c7c6d14 ("iomap: always run error completions in user context")
+Reported-by: syzbot+a2b9a4ed0d61b1efb3f5@syzkaller.appspotmail.com
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20251124140013.902853-1-hch@lst.de
+Tested-by: syzbot+a2b9a4ed0d61b1efb3f5@syzkaller.appspotmail.com
+Reviewed-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/tests/vaddr-kunit.h |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/iomap/direct-io.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/mm/damon/tests/vaddr-kunit.h
-+++ b/mm/damon/tests/vaddr-kunit.h
-@@ -136,8 +136,14 @@ static void damon_do_test_apply_three_re
- 	int i;
+--- a/fs/iomap/direct-io.c
++++ b/fs/iomap/direct-io.c
+@@ -674,12 +674,12 @@ __iomap_dio_rw(struct kiocb *iocb, struc
+ 			}
+ 			goto out_free_dio;
+ 		}
++	}
  
- 	t = damon_new_target();
-+	if (!t)
-+		kunit_skip(test, "target alloc fail");
- 	for (i = 0; i < nr_regions / 2; i++) {
- 		r = damon_new_region(regions[i * 2], regions[i * 2 + 1]);
-+		if (!r) {
-+			damon_destroy_target(t);
-+			kunit_skip(test, "region alloc fail");
-+		}
- 		damon_add_region(r, t);
+-		if (!wait_for_completion && !inode->i_sb->s_dio_done_wq) {
+-			ret = sb_init_dio_done_wq(inode->i_sb);
+-			if (ret < 0)
+-				goto out_free_dio;
+-		}
++	if (!wait_for_completion && !inode->i_sb->s_dio_done_wq) {
++		ret = sb_init_dio_done_wq(inode->i_sb);
++		if (ret < 0)
++			goto out_free_dio;
  	}
  
+ 	inode_dio_begin(inode);
 
 
