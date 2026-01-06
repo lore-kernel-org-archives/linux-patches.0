@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDBB93019AA;
-	Tue,  6 Jan 2026 17:52:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC462FB630;
+	Tue,  6 Jan 2026 17:52:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721941; cv=none; b=XeyZcYvwCl6bmPgDNVBcuZR0ZGX/mheg7ejHzLaeI+y+llup5adjuGx1sUa8/pnPF3HosJoD11TzhwHzqgGqyksxOtbQbKl3tnQJXCZRDgfZaktQsKjdluHt+JVRqEqpQgkCJxoocMn/djx1V+6koOyHTj0RLLg0OgdyaKuJitM=
+	t=1767721945; cv=none; b=gLR4yGKVSUwPIrpYqWX1yEh2qGhR9AnWBUfKrNa8+ANwLzaHV/xZZ6M/NyteVkn8E6Nk1STOieBEzAfPQIvbMel34Wrd23ToofRFSxFBJAiRvkMVRVusI1qgh7D+VrcwQgnRUWhxxw02XLcchDK3Mcly3ZSyTuULYyZWTEsrPN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721941; c=relaxed/simple;
-	bh=5Ce0nVvdrgOmw5ZpV2zrYzzirdV2Kx4HHUMLiSDN0Hs=;
+	s=arc-20240116; t=1767721945; c=relaxed/simple;
+	bh=LuTewjhgpMj3o8wiAd4UqIQX+CbLjGEDfkGnNX1ku8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KySWkYAMzGRPZFaZXdSYRR2pIO8R+yKc6F+oXzsmsTUpLXC8QrUOGpyBmQCo+a8PcyRLhFAljKCyrd9V9oM91nTR7s6aKoCPOa2/85v8hVFEIHyIGS+5YUti/qhmJ8Q023Mkk0c+lWgB3gln8qj9aTn0v7ZfuMYPI2IJ+ohzVnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2rH4TE/u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UYw4CM8cp1aM0ifgdQJnF/ZyC1aQ3yePQ2rUinEeJCz0EvNPN/AGutJjCIoVq6pQGhuikTgGCY2D7PWgr6hlnc0UoLharfG7p/L+AE2+2foKN8h+34Buhsks/ljIHKNm+cTtneCdGzCVh7re2rCh/hX73WOvu/Nu7vyix1fWdJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vUPfX34e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2rH4TE/u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3015FC116C6;
-	Tue,  6 Jan 2026 17:52:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vUPfX34e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4180C116C6;
+	Tue,  6 Jan 2026 17:52:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721941;
-	bh=5Ce0nVvdrgOmw5ZpV2zrYzzirdV2Kx4HHUMLiSDN0Hs=;
+	s=korg; t=1767721945;
+	bh=LuTewjhgpMj3o8wiAd4UqIQX+CbLjGEDfkGnNX1ku8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2rH4TE/uRch4CtUosTNKzCGp4FxfY8EO/6e7Ac4GC6ltRn3IaQtHGE0JYa62VKU0c
-	 maM0p53BttG37iBL8DdUQvSF3fSG0Gkx2j3X4AVJ6yPSy5km4+Zd+yPSCLQSrg+qgE
-	 WWdcgPQYDU0FesCFo8D02OcG5poWzFhOZTPxsMvc=
+	b=vUPfX34e3arn/27EZWnERyzXKq7m24EVutZ7lrMnry0cJf6JJPGaxXKdr1v/ee2wz
+	 EG2cv32pSMjwpip3g1DYZ4CVmBS8r4QH+v7osjGzK2v7dZtLpxkvaOmCZZIbAnJz7W
+	 KoQEOUbUjz/ckGe88ZdWI2zy7Ydam+Obxej/mvH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Robin Murphy <robin.murphy@arm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Johan Hovold <johan@kernel.org>,
-	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 6.18 117/312] iommu/qcom: fix device leak on of_xlate()
-Date: Tue,  6 Jan 2026 18:03:11 +0100
-Message-ID: <20260106170552.074955838@linuxfoundation.org>
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.18 091/312] ASoC: codecs: wcd939x: fix regmap leak on probe failure
+Date: Tue,  6 Jan 2026 18:02:45 +0100
+Message-ID: <20260106170551.125670690@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -55,58 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 6a3908ce56e6879920b44ef136252b2f0c954194 upstream.
+commit 86dc090f737953f16f8dc60c546ae7854690d4f6 upstream.
 
-Make sure to drop the reference taken to the iommu platform device when
-looking up its driver data during of_xlate().
+The soundwire regmap that may be allocated during probe is not freed on
+late probe failures.
 
-Note that commit e2eae09939a8 ("iommu/qcom: add missing put_device()
-call in qcom_iommu_of_xlate()") fixed the leak in a couple of error
-paths, but the reference is still leaking on success and late failures.
+Add the missing error handling.
 
-Fixes: 0ae349a0f33f ("iommu/qcom: Add qcom_iommu")
-Cc: stable@vger.kernel.org	# 4.14: e2eae09939a8
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>
-Cc: Yu Kuai <yukuai3@huawei.com>
-Acked-by: Robin Murphy <robin.murphy@arm.com>
+Fixes: be2af391cea0 ("ASoC: codecs: Add WCD939x Soundwire devices driver")
+Cc: stable@vger.kernel.org	# 6.9
+Cc: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Link: https://patch.msgid.link/20251127135057.2216-1-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/arm/arm-smmu/qcom_iommu.c |   10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ sound/soc/codecs/wcd939x-sdw.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-+++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-@@ -565,14 +565,14 @@ static int qcom_iommu_of_xlate(struct de
+--- a/sound/soc/codecs/wcd939x-sdw.c
++++ b/sound/soc/codecs/wcd939x-sdw.c
+@@ -1400,12 +1400,18 @@ static int wcd9390_probe(struct sdw_slav
  
- 	qcom_iommu = platform_get_drvdata(iommu_pdev);
+ 	ret = component_add(dev, &wcd_sdw_component_ops);
+ 	if (ret)
+-		return ret;
++		goto err_free_regmap;
  
-+	put_device(&iommu_pdev->dev);
+ 	/* Set suspended until aggregate device is bind */
+ 	pm_runtime_set_suspended(dev);
+ 
+ 	return 0;
 +
- 	/* make sure the asid specified in dt is valid, so we don't have
- 	 * to sanity check this elsewhere:
- 	 */
- 	if (WARN_ON(asid > qcom_iommu->max_asid) ||
--	    WARN_ON(qcom_iommu->ctxs[asid] == NULL)) {
--		put_device(&iommu_pdev->dev);
-+	    WARN_ON(qcom_iommu->ctxs[asid] == NULL))
- 		return -EINVAL;
--	}
++err_free_regmap:
++	if (wcd->regmap)
++		regmap_exit(wcd->regmap);
++
++	return ret;
+ }
  
- 	if (!dev_iommu_priv_get(dev)) {
- 		dev_iommu_priv_set(dev, qcom_iommu);
-@@ -581,10 +581,8 @@ static int qcom_iommu_of_xlate(struct de
- 		 * multiple different iommu devices.  Multiple context
- 		 * banks are ok, but multiple devices are not:
- 		 */
--		if (WARN_ON(qcom_iommu != dev_iommu_priv_get(dev))) {
--			put_device(&iommu_pdev->dev);
-+		if (WARN_ON(qcom_iommu != dev_iommu_priv_get(dev)))
- 			return -EINVAL;
--		}
- 	}
- 
- 	return iommu_fwspec_add_ids(dev, &asid, 1);
+ static int wcd9390_remove(struct sdw_slave *pdev)
 
 
