@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A91E354ACD;
-	Tue,  6 Jan 2026 17:22:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0F53354AEE;
+	Tue,  6 Jan 2026 17:22:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720175; cv=none; b=qwAhdutzFL5dLqkDGbVt07HjKCCIbN9zGcEGKFhMPU+u/JKWS25+7a6+I86A7OOvlELYu6SJXzLskkqSMbezyuQUiyES/SK7NrsW8jYKsVYVPaeTbkRFL3olN6l/7Oieqhmgm0jgGI68DHjI32EFWiEdw0ytHHY4B5wKAaJ8cFQ=
+	t=1767720178; cv=none; b=ldDSi1ZZB92YFvE/CU5XFksEbwGu/23lb3VUbNzcvGHMByJdjKHCWJ1+4/P878P+gvbDBlqrXaUWpd77xQryXRoJk4Isrfi9ge4owzFDUum5BZcLCyzh+wU+h5a0O7tfVNsXcTP48LeOHY9EnDzv/tkabs5kqaMxXsZzFUIglEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720175; c=relaxed/simple;
-	bh=WHIB2yPP3IYuWuqIwY6Gbv+DTGfwKLghrWY76oMM5Y8=;
+	s=arc-20240116; t=1767720178; c=relaxed/simple;
+	bh=VqvCLcn3LJeDLSmWqfw8/kniQb9wTvn+A3Zw7V/ucGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LIacztKZoWmxUiNNFubCu7njKIgB0r0un4KRtFJufGfrWvBIAH49BHH9tSBJ2hLwfl2+0bl0dCvicVwbCWsXfZ0aWcyOJOLV4roRVLNNrkV4Y5iOAUd+NzEP8su977qRF5dO3EwtMT24YQD7JEoOVx/42/Eh+9YYwrUS97NpFqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CseQWhxM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WCXJhdTsps5hnusU41VPDwVllbhsSdfDdkzYD24NIqEq+b2wuWQdS9uwcsMzenxNBWZb5xO3iq5uhBW4S3TfyxYCfjFUtq9HeQHMqS0jJlhRCXGhlqyFfSXvFoHstXpV3+zzgNLwS8KdJtrc9b2+cLUeRkKPu3kppdaDWlg4014=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SuFe+raC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CseQWhxM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDBD2C116C6;
-	Tue,  6 Jan 2026 17:22:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SuFe+raC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27F76C116C6;
+	Tue,  6 Jan 2026 17:22:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720175;
-	bh=WHIB2yPP3IYuWuqIwY6Gbv+DTGfwKLghrWY76oMM5Y8=;
+	s=korg; t=1767720178;
+	bh=VqvCLcn3LJeDLSmWqfw8/kniQb9wTvn+A3Zw7V/ucGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CseQWhxMI02YALC1TCfnra/KhRqW+hOWHglVlCc7N5x//1zGVZMDxuKZ8YXjjoPkS
-	 WfIyOWwpAp1Vlx5P2dUXRaGRb9d/pQnWetuVx413Qb2dE8cBL+5TIfzh1p4tJ1M6u0
-	 N2+t9ILC5RppJYwcW2ko3AgVXam3F1WrpSKdBanA=
+	b=SuFe+raC9G+tqcC1/kWhEiFXbk3zETF4ISUKPlU+l88ETdWrrsHj3h26edpBWWz8L
+	 EQQlwrcWwfFxHOD0VoQPdzN/XRLADVbY8B1R+4kaIPom5/hw31LiYmEZ4XqNKGuF9b
+	 vlGcNikXdHy4yU4wRSQugGBomfUwpqo6Q7kCDUTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sarthak Garg <sarthak.garg@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.12 156/567] mmc: sdhci-msm: Avoid early clock doubling during HS400 transition
-Date: Tue,  6 Jan 2026 17:58:58 +0100
-Message-ID: <20260106170457.100695057@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.12 157/567] perf: arm_cspmu: fix error handling in arm_cspmu_impl_unregister()
+Date: Tue,  6 Jan 2026 17:58:59 +0100
+Message-ID: <20260106170457.136929442@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,121 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sarthak Garg <sarthak.garg@oss.qualcomm.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit b1f856b1727c2eaa4be2c6d7cd7a8ed052bbeb87 upstream.
+commit 970e1e41805f0bd49dc234330a9390f4708d097d upstream.
 
-According to the hardware programming guide, the clock frequency must
-remain below 52MHz during the transition to HS400 mode.
+driver_find_device() calls get_device() to increment the reference
+count once a matching device is found. device_release_driver()
+releases the driver, but it does not decrease the reference count that
+was incremented by driver_find_device(). At the end of the loop, there
+is no put_device() to balance the reference count. To avoid reference
+count leakage, add put_device() to decrease the reference count.
 
-However,in the current implementation, the timing is set to HS400 (a
-DDR mode) before adjusting the clock. This causes the clock to double
-prematurely to 104MHz during the transition phase, violating the
-specification and potentially resulting in CRC errors or CMD timeouts.
+Found by code review.
 
-This change ensures that clock doubling is avoided during intermediate
-transitions and is applied only when the card requires a 200MHz clock
-for HS400 operation.
-
-Signed-off-by: Sarthak Garg <sarthak.garg@oss.qualcomm.com>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: bfc653aa89cb ("perf: arm_cspmu: Separate Arm and vendor module")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-msm.c |   27 +++++++++++++++------------
- 1 file changed, 15 insertions(+), 12 deletions(-)
+ drivers/perf/arm_cspmu/arm_cspmu.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -344,41 +344,43 @@ static void sdhci_msm_v5_variant_writel_
- 	writel_relaxed(val, host->ioaddr + offset);
- }
+--- a/drivers/perf/arm_cspmu/arm_cspmu.c
++++ b/drivers/perf/arm_cspmu/arm_cspmu.c
+@@ -1412,8 +1412,10 @@ void arm_cspmu_impl_unregister(const str
  
--static unsigned int msm_get_clock_mult_for_bus_mode(struct sdhci_host *host)
-+static unsigned int msm_get_clock_mult_for_bus_mode(struct sdhci_host *host,
-+						    unsigned int clock,
-+						    unsigned int timing)
- {
--	struct mmc_ios ios = host->mmc->ios;
- 	/*
- 	 * The SDHC requires internal clock frequency to be double the
- 	 * actual clock that will be set for DDR mode. The controller
- 	 * uses the faster clock(100/400MHz) for some of its parts and
- 	 * send the actual required clock (50/200MHz) to the card.
- 	 */
--	if (ios.timing == MMC_TIMING_UHS_DDR50 ||
--	    ios.timing == MMC_TIMING_MMC_DDR52 ||
--	    ios.timing == MMC_TIMING_MMC_HS400 ||
-+	if (timing == MMC_TIMING_UHS_DDR50 ||
-+	    timing == MMC_TIMING_MMC_DDR52 ||
-+	    (timing == MMC_TIMING_MMC_HS400 &&
-+	    clock == MMC_HS200_MAX_DTR) ||
- 	    host->flags & SDHCI_HS400_TUNING)
- 		return 2;
- 	return 1;
- }
+ 	/* Unbind the driver from all matching backend devices. */
+ 	while ((dev = driver_find_device(&arm_cspmu_driver.driver, NULL,
+-			match, arm_cspmu_match_device)))
++			match, arm_cspmu_match_device))) {
+ 		device_release_driver(dev);
++		put_device(dev);
++	}
  
- static void msm_set_clock_rate_for_bus_mode(struct sdhci_host *host,
--					    unsigned int clock)
-+					    unsigned int clock,
-+					    unsigned int timing)
- {
- 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
- 	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
--	struct mmc_ios curr_ios = host->mmc->ios;
- 	struct clk *core_clk = msm_host->bulk_clks[0].clk;
- 	unsigned long achieved_rate;
- 	unsigned int desired_rate;
- 	unsigned int mult;
- 	int rc;
+ 	mutex_lock(&arm_cspmu_lock);
  
--	mult = msm_get_clock_mult_for_bus_mode(host);
-+	mult = msm_get_clock_mult_for_bus_mode(host, clock, timing);
- 	desired_rate = clock * mult;
- 	rc = dev_pm_opp_set_rate(mmc_dev(host->mmc), desired_rate);
- 	if (rc) {
- 		pr_err("%s: Failed to set clock at rate %u at timing %d\n",
--		       mmc_hostname(host->mmc), desired_rate, curr_ios.timing);
-+		       mmc_hostname(host->mmc), desired_rate, timing);
- 		return;
- 	}
- 
-@@ -397,7 +399,7 @@ static void msm_set_clock_rate_for_bus_m
- 	msm_host->clk_rate = desired_rate;
- 
- 	pr_debug("%s: Setting clock at rate %lu at timing %d\n",
--		 mmc_hostname(host->mmc), achieved_rate, curr_ios.timing);
-+		 mmc_hostname(host->mmc), achieved_rate, timing);
- }
- 
- /* Platform specific tuning */
-@@ -1239,7 +1241,7 @@ static int sdhci_msm_execute_tuning(stru
- 	 */
- 	if (host->flags & SDHCI_HS400_TUNING) {
- 		sdhci_msm_hc_select_mode(host);
--		msm_set_clock_rate_for_bus_mode(host, ios.clock);
-+		msm_set_clock_rate_for_bus_mode(host, ios.clock, ios.timing);
- 		host->flags &= ~SDHCI_HS400_TUNING;
- 	}
- 
-@@ -1864,6 +1866,7 @@ static void sdhci_msm_set_clock(struct s
- {
- 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
- 	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
-+	struct mmc_ios ios = host->mmc->ios;
- 
- 	if (!clock) {
- 		host->mmc->actual_clock = msm_host->clk_rate = 0;
-@@ -1872,7 +1875,7 @@ static void sdhci_msm_set_clock(struct s
- 
- 	sdhci_msm_hc_select_mode(host);
- 
--	msm_set_clock_rate_for_bus_mode(host, clock);
-+	msm_set_clock_rate_for_bus_mode(host, ios.clock, ios.timing);
- out:
- 	__sdhci_msm_set_clock(host, clock);
- }
 
 
