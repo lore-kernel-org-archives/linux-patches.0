@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD791284694;
-	Tue,  6 Jan 2026 17:15:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF7D346E5F;
+	Tue,  6 Jan 2026 17:15:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719756; cv=none; b=A5MpbsBkOg3BfF7eMRSg93r0n+lUKSCnl6sn096qq8EFQ7jvemkQSriJIOccdVxu+mD4b4by/UL4S31O6zgf1E5zxW0Elh1F1qeMxXuIBQFxDiAc7sIZK8cFVJhYnO2UDdjqgoHnP9he4nYR4TSoaRyuLB+dVBmXAjfJQHg/+OQ=
+	t=1767719760; cv=none; b=CpStuCV+lDh7hYwMAbF6PAQB7XoOFK06H39sk2kEODMmB0vyGeItbrJEuzieOXyb7VtSE7o7BdxlO/77lnfsAxFPVq6IO/cSeGLqqoafHH/Wiiy3hj+FGOcGER8MbYYi5AxMWaaJF3erv23hqs3me8d6VL27G1ZE9duvFyZrD0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719756; c=relaxed/simple;
-	bh=ipV2Lxt7loP5oUsk6t8AnTlWi1eJZ7LlnLbHg0V/zDY=;
+	s=arc-20240116; t=1767719760; c=relaxed/simple;
+	bh=DQZYEr1PMUQXhmo6kHnx61Wh3pyT4LFuOOZFrErrGK4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PSHSVXu5zdg27H0LQltxK6vx8CTwmJneoo+2ioIcsRZpqEeMqxjBNbURCc4QNsWacNFNapvKyyRYTbchFbE+9Cl79QfiUhwie4klykOj6xDbDzZGi1ANj6tMbT0xAChptlHpgrF5DDlJSA3R6Nu50Tk3iF0iIzX8StLWgyydnV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R3k2J0Z+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cKDdkCdvRX8VID0avxnsimls8Ye9xWfSvJFJr7L1jziFcHS0GQqF0zj5z89n7FN3aBRF8XaZwBlj9kfIiC5XTVviveU+U+FKmPXTSdwPJTvTvPMdaZybq44cy/u4FKpxj59w2nxbH6gTCAJ8/HNWBqnDHONZuucRMNdEC1k5FiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mzQC48ca; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R3k2J0Z+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25204C116C6;
-	Tue,  6 Jan 2026 17:15:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mzQC48ca"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 575FFC116C6;
+	Tue,  6 Jan 2026 17:15:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719756;
-	bh=ipV2Lxt7loP5oUsk6t8AnTlWi1eJZ7LlnLbHg0V/zDY=;
+	s=korg; t=1767719759;
+	bh=DQZYEr1PMUQXhmo6kHnx61Wh3pyT4LFuOOZFrErrGK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R3k2J0Z+UIuivf8SafLuffAHStdlim4k9zhazaPPwgKlJppE8z5sPSH0v+nj38M1b
-	 Y9RQWlpgIeS3MPQhTGTuYQhwJxZEiCAoYDWTr6h2PRHbVvlXfgfWUOSLRVJ7ISaPoH
-	 01AHAWTUm0o42V+k0RDFFvnnYCvoYz4J852wnjwI=
+	b=mzQC48capmcCABgUrprjRHpr2WcbeqojT7/p50v82w6dlHxQ4OBHFEovJpwHbPqd6
+	 FwxckeovqMlryZ+X+PBwHpaquL4pMvGlPr/nhjztsMsioDGGAb7Kmf1UHYhiiT7/lT
+	 lkQGUagTjouP/sip6ESCQxhrQlo0mh1eWK1AKx1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Mosnacek <omosnace@redhat.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 003/567] bpf, arm64: Do not audit capability check in do_jit()
-Date: Tue,  6 Jan 2026 17:56:25 +0100
-Message-ID: <20260106170451.468463022@linuxfoundation.org>
+Subject: [PATCH 6.12 030/567] wifi: cfg80211: use cfg80211_leave() in iftype change
+Date: Tue,  6 Jan 2026 17:56:52 +0100
+Message-ID: <20260106170452.457159461@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,54 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ondrej Mosnacek <omosnace@redhat.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 189e5deb944a6f9c7992355d60bffd8ec2e54a9c ]
+[ Upstream commit 7a27b73943a70ee226fa125327101fb18e94701d ]
 
-Analogically to the x86 commit 881a9c9cb785 ("bpf: Do not audit
-capability check in do_jit()"), change the capable() call to
-ns_capable_noaudit() in order to avoid spurious SELinux denials in audit
-log.
+When changing the interface type, all activity on the interface has
+to be stopped first. This was done independent of existing code in
+cfg80211_leave(), so didn't handle e.g. background radar detection.
+Use cfg80211_leave() to handle it the same way.
 
-The commit log from that commit applies here as well:
-"""
-The failure of this check only results in a security mitigation being
-applied, slightly affecting performance of the compiled BPF program. It
-doesn't result in a failed syscall, an thus auditing a failed LSM
-permission check for it is unwanted. For example with SELinux, it causes
-a denial to be reported for confined processes running as root, which
-tends to be flagged as a problem to be fixed in the policy. Yet
-dontauditing or allowing CAP_SYS_ADMIN to the domain may not be
-desirable, as it would allow/silence also other checks - either going
-against the principle of least privilege or making debugging potentially
-harder.
+Note that cfg80211_leave() behaves slightly differently for IBSS in
+wireless extensions, it won't send an event in that case. We could
+handle that, but since nl80211 was used to change the type, IBSS is
+rare, and wext is already a corner case, it doesn't seem worth it.
 
-Fix it by changing it from capable() to ns_capable_noaudit(), which
-instructs the LSMs to not audit the resulting denials.
-"""
-
-Fixes: f300769ead03 ("arm64: bpf: Only mitigate cBPF programs loaded by unprivileged users")
-Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
-Link: https://lore.kernel.org/r/20251204125916.441021-1-omosnace@redhat.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20251121174021.922ef48ce007.I970c8514252ef8a864a7fbdab9591b71031dee03@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/net/bpf_jit_comp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/wireless/util.c | 23 +----------------------
+ 1 file changed, 1 insertion(+), 22 deletions(-)
 
-diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
-index ca6d002a6f137..82b57436f2f10 100644
---- a/arch/arm64/net/bpf_jit_comp.c
-+++ b/arch/arm64/net/bpf_jit_comp.c
-@@ -871,7 +871,7 @@ static void __maybe_unused build_bhb_mitigation(struct jit_ctx *ctx)
- 	    arm64_get_spectre_v2_state() == SPECTRE_VULNERABLE)
- 		return;
+diff --git a/net/wireless/util.c b/net/wireless/util.c
+index b115489a846f8..6aff651a9b68d 100644
+--- a/net/wireless/util.c
++++ b/net/wireless/util.c
+@@ -1230,28 +1230,7 @@ int cfg80211_change_iface(struct cfg80211_registered_device *rdev,
+ 		dev->ieee80211_ptr->use_4addr = false;
+ 		rdev_set_qos_map(rdev, dev, NULL);
  
--	if (capable(CAP_SYS_ADMIN))
-+	if (ns_capable_noaudit(&init_user_ns, CAP_SYS_ADMIN))
- 		return;
+-		switch (otype) {
+-		case NL80211_IFTYPE_AP:
+-		case NL80211_IFTYPE_P2P_GO:
+-			cfg80211_stop_ap(rdev, dev, -1, true);
+-			break;
+-		case NL80211_IFTYPE_ADHOC:
+-			cfg80211_leave_ibss(rdev, dev, false);
+-			break;
+-		case NL80211_IFTYPE_STATION:
+-		case NL80211_IFTYPE_P2P_CLIENT:
+-			cfg80211_disconnect(rdev, dev,
+-					    WLAN_REASON_DEAUTH_LEAVING, true);
+-			break;
+-		case NL80211_IFTYPE_MESH_POINT:
+-			/* mesh should be handled? */
+-			break;
+-		case NL80211_IFTYPE_OCB:
+-			cfg80211_leave_ocb(rdev, dev);
+-			break;
+-		default:
+-			break;
+-		}
++		cfg80211_leave(rdev, dev->ieee80211_ptr);
  
- 	if (supports_clearbhb(SCOPE_SYSTEM)) {
+ 		cfg80211_process_rdev_events(rdev);
+ 		cfg80211_mlme_purge_registrations(dev->ieee80211_ptr);
 -- 
 2.51.0
 
