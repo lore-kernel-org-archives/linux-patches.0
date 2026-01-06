@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A893349AFA;
-	Tue,  6 Jan 2026 17:18:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19B2F349B03;
+	Tue,  6 Jan 2026 17:18:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719913; cv=none; b=fsvGWYl3qsZj0fwjsOWNiKwDjMy8g6z0u2FJG5kqUgfvPY6S2TuK1Z9tA8bwJHNP2V2lkqpa78P9kwIUgc5fq41PQyAkvSQr3yRMNBPL5ZuVf46O6KaBYHhlMiM8YIQRPwegB5QNoJksJhMpH9igEJDDQyM+oUMrqFHSpVZbWfs=
+	t=1767719917; cv=none; b=KkCRM04UYG1zRMhmKbiTtJM2Tqu4Ibye/sEZiP9RktTh/7xWYVnYBCj2YkvlptRLKouxltCIAKXVFwtl39oHtlcrmWV01wpl8f0zVdVlYAn+JvDnLSuLyFqT7e3npDYK5lgDRuo9c7jMTKKT+KeTH67miXGQ1ji4H+Xg0bfMSUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719913; c=relaxed/simple;
-	bh=h1p6wF8Rg7h9CPAqditkrVWDgu1IRcB7XbBN4/XZFX8=;
+	s=arc-20240116; t=1767719917; c=relaxed/simple;
+	bh=f0Gut2S9tgDX9LBIk1U7dQLsbPjmauIP/jqrF9C1bn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q+4J1q3JsuEPHnrC3G0GzBa2ubiSQKolYEAxpM530PGB3RTBb1fySQgh18djo6P1uC0hxwDy8Xks30AGeqfE5mnecq8FBmserU9vC90jNzVWHJ0SwKHOEvni6Ja21XHmmDyic97X22NlOKmNDwVBK81xR5HeP71dT8VbGauNEzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YBbqfcMJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nabmbve7T2Pqu+D5k4PG38UjqtQgLhiebsAtReoA893jBPk/jm4jh6m93n5MLGjpZZ0b+ot/ttM5nHySziVMEgZ0gVBcVXr9WFRrH3R+LBoS75H3BuALVUDCxu7thmh8TYL0D+nOAKTTUGdcByYF4wdvAoQzL7smNzFh/qscf/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aawQ3Jp0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YBbqfcMJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD82FC116C6;
-	Tue,  6 Jan 2026 17:18:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aawQ3Jp0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F348C116C6;
+	Tue,  6 Jan 2026 17:18:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719913;
-	bh=h1p6wF8Rg7h9CPAqditkrVWDgu1IRcB7XbBN4/XZFX8=;
+	s=korg; t=1767719916;
+	bh=f0Gut2S9tgDX9LBIk1U7dQLsbPjmauIP/jqrF9C1bn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YBbqfcMJaQaQnneiMXEIbramN9/9asuqg9KSQ7RGW0OkztQOMAKG6wBq62ncezvqh
-	 lF9RIaUyeA/9rBdlT2/ug4K1N2M0cSt0ebVMNTg7dfAgq2WghS/pYR77OFOOPdG3CZ
-	 Wzb4WKUCJfrGSjsei3fMvkmTBfiTem6VwDg8kx04=
+	b=aawQ3Jp0Pb54yEC9n60L5sw6kzbr0l8r7b25K5ttuPrjnjIxjQAn3oMGyaigT755/
+	 7RvlfOpix3oA7Yo01Bc4sRtTIHXWsL+p69Xc4wnrrv0d8lQI1DoOHKcs3qhU/HUdv1
+	 QLVE4wiziD28wE1rr0LZ0WhQWyBc9KFgy/0PateQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
+	Alexey Simakov <bigalex934@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 079/567] hwmon: (ibmpex) fix use-after-free in high/low store
-Date: Tue,  6 Jan 2026 17:57:41 +0100
-Message-ID: <20260106170454.254350669@linuxfoundation.org>
+Subject: [PATCH 6.12 080/567] hwmon: (tmp401) fix overflow caused by default conversion rate value
+Date: Tue,  6 Jan 2026 17:57:42 +0100
+Message-ID: <20260106170454.291066340@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,63 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Alexey Simakov <bigalex934@gmail.com>
 
-[ Upstream commit 6946c726c3f4c36f0f049e6f97e88c510b15f65d ]
+[ Upstream commit 82f2aab35a1ab2e1460de06ef04c726460aed51c ]
 
-The ibmpex_high_low_store() function retrieves driver data using
-dev_get_drvdata() and uses it without validation. This creates a race
-condition where the sysfs callback can be invoked after the data
-structure is freed, leading to use-after-free.
+The driver computes conversion intervals using the formula:
 
-Fix by adding a NULL check after dev_get_drvdata(), and reordering
-operations in the deletion path to prevent TOCTOU.
+    interval = (1 << (7 - rate)) * 125ms
 
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Reported-by: Junrui Luo <moonafterrain@outlook.com>
-Fixes: 57c7c3a0fdea ("hwmon: IBM power meter driver")
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Link: https://lore.kernel.org/r/MEYPR01MB7886BE2F51BFE41875B74B60AFA0A@MEYPR01MB7886.ausprd01.prod.outlook.com
+where 'rate' is the sensor's conversion rate register value. According to
+the datasheet, the power-on reset value of this register is 0x8, which
+could be assigned to the register, after handling i2c general call.
+Using this default value causes a result greater than the bit width of
+left operand and an undefined behaviour in the calculation above, since
+shifting by values larger than the bit width is undefined behaviour as
+per C language standard.
+
+Limit the maximum usable 'rate' value to 7 to prevent undefined
+behaviour in calculations.
+
+Found by Linux Verification Center (linuxtesting.org) with Svace.
+
+Note (groeck):
+    This does not matter in practice unless someone overwrites the chip
+    configuration from outside the driver while the driver is loaded.
+    The conversion time register is initialized with a value of 5 (500ms)
+    when the driver is loaded, and the driver never writes a bad value.
+
+Fixes: ca53e7640de7 ("hwmon: (tmp401) Convert to _info API")
+Signed-off-by: Alexey Simakov <bigalex934@gmail.com>
+Link: https://lore.kernel.org/r/20251211164342.6291-1-bigalex934@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/ibmpex.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/hwmon/tmp401.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/ibmpex.c b/drivers/hwmon/ibmpex.c
-index 228c5f6c6f38..129f3a9e8fe9 100644
---- a/drivers/hwmon/ibmpex.c
-+++ b/drivers/hwmon/ibmpex.c
-@@ -277,6 +277,9 @@ static ssize_t ibmpex_high_low_store(struct device *dev,
- {
- 	struct ibmpex_bmc_data *data = dev_get_drvdata(dev);
- 
-+	if (!data)
-+		return -ENODEV;
-+
- 	ibmpex_reset_high_low_data(data);
- 
- 	return count;
-@@ -508,6 +511,9 @@ static void ibmpex_bmc_delete(struct ibmpex_bmc_data *data)
- {
- 	int i, j;
- 
-+	hwmon_device_unregister(data->hwmon_dev);
-+	dev_set_drvdata(data->bmc_device, NULL);
-+
- 	device_remove_file(data->bmc_device,
- 			   &sensor_dev_attr_reset_high_low.dev_attr);
- 	device_remove_file(data->bmc_device, &dev_attr_name.attr);
-@@ -521,8 +527,7 @@ static void ibmpex_bmc_delete(struct ibmpex_bmc_data *data)
- 		}
- 
- 	list_del(&data->list);
--	dev_set_drvdata(data->bmc_device, NULL);
--	hwmon_device_unregister(data->hwmon_dev);
-+
- 	ipmi_destroy_user(data->user);
- 	kfree(data->sensors);
- 	kfree(data);
+diff --git a/drivers/hwmon/tmp401.c b/drivers/hwmon/tmp401.c
+index 02c5a3bb1071..84aaf817144c 100644
+--- a/drivers/hwmon/tmp401.c
++++ b/drivers/hwmon/tmp401.c
+@@ -401,7 +401,7 @@ static int tmp401_chip_read(struct device *dev, u32 attr, int channel, long *val
+ 		ret = regmap_read(data->regmap, TMP401_CONVERSION_RATE, &regval);
+ 		if (ret < 0)
+ 			return ret;
+-		*val = (1 << (7 - regval)) * 125;
++		*val = (1 << (7 - min(regval, 7))) * 125;
+ 		break;
+ 	case hwmon_chip_temp_reset_history:
+ 		*val = 0;
 -- 
 2.51.0
 
