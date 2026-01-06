@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2DE366551;
-	Tue,  6 Jan 2026 18:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213B430595C;
+	Tue,  6 Jan 2026 18:00:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722438; cv=none; b=l3CBPdOdSbibnOHUgmvC4RV7rbKbPKVBWs2b8mk/s831v1+iAxOhHFDrUiLRRluhEuimo+bf96u3We8zeKX2cpyjdfGGYL/5SmGYsidVEYs/h3pZLb5Ir3P9natH4dQADlrjxW7uyuLPM5mizPqteJCp+UWqvgBp9sx32vgCDqc=
+	t=1767722442; cv=none; b=IGoZyOX/JqjD7XtwWJNIUORIYqYLhwTWnFqx+C6RuL4SvMgI71NDh3GtdxuINEy2RYrGTPhVk2tEXvnuwS0E9yr6IF748u9rTtmZOu/sHREahJJx+zFdM8FR5vRwf9y7JMNvBBDOPT8Ro9gqputG/7F3TPTFyEvhQZQeVHrfKz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722438; c=relaxed/simple;
-	bh=WfQArtvYuCYGbpdTK+oQog2PoT0RGJbC8xqbE+NhavM=;
+	s=arc-20240116; t=1767722442; c=relaxed/simple;
+	bh=/UD+DLte2UOUGqd4PHiNbBwU0EGBBIs17IXvbYD+Qbg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=maNvZr4N20r4+ueckaALyFoSVCJjBoEi3J8JSSqa4onTBqOnwwr0xfChb7yPIxjKe9k2cSgkKYn3oSrg6P4T0OXbk/O2avFbVJyVGG0aiScQY5MNN86dSecUM1c3pnAWlMPwTWOZrVCAiEkcfMKS8HxR7FgS18zTXCm6yj9xmiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U252y3DH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=InWWzjQLZXNFbjb21hIraNtXzr27X246KI0PhY1jsI/q8iNItWp6jKl/gQ3JqF4XxrNda5zUzY9BmjKwlwhV2oGQ+XB/sQ2fS0kYQ9kKQvVuFdwgChvKTApAdZHCPj+O8gCceXisOecZmGaw9Don6usHd1CAVwROWvKtLETKg2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ODjhPtQk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U252y3DH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 473DEC116C6;
-	Tue,  6 Jan 2026 18:00:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ODjhPtQk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AEE5C116C6;
+	Tue,  6 Jan 2026 18:00:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722438;
-	bh=WfQArtvYuCYGbpdTK+oQog2PoT0RGJbC8xqbE+NhavM=;
+	s=korg; t=1767722442;
+	bh=/UD+DLte2UOUGqd4PHiNbBwU0EGBBIs17IXvbYD+Qbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U252y3DHGbFcgJfRMdWHQfciTUJM68/8rVSXHpuLO7sZa628z/pT2IX6iYa59CsqL
-	 6EiE/MbKAFv7hB/AredUbgrAKYCRCQ0oB3e4K93bt17F28OyvZ93qVdnigatWeID85
-	 /4/m4tOV2vLMS4lmam6j/3F5ooFgqizaLYDBDNgs=
+	b=ODjhPtQk8PWevKJrncHvEJ6oRzL+fJkFjkeHgQFim27S+ZjV1fm5jDpQQsNc2jo+Q
+	 Xk8VocmJmA9o5jCUHwfHItKSVTXoCGUPfjoU3F0HkCC0jsTCAS1Uz5RcU+m86oqB++
+	 SAaWF21rXjrEUbn0cTofJKiMLCM2qE6dVUYvKWqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Natalie Vock <natalie.vock@gmx.de>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 263/312] drm/amdgpu/gmc12: add amdgpu_vm_handle_fault() handling
-Date: Tue,  6 Jan 2026 18:05:37 +0100
-Message-ID: <20260106170557.361430085@linuxfoundation.org>
+Subject: [PATCH 6.18 264/312] drm/amdgpu: Forward VMID reservation errors
+Date: Tue,  6 Jan 2026 18:05:38 +0100
+Message-ID: <20260106170557.396775615@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -51,64 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Natalie Vock <natalie.vock@gmx.de>
 
-commit ff28ff98db6a8eeb469e02fb8bd1647b353232a9 upstream.
+commit 8defb4f081a5feccc3ea8372d0c7af3522124e1f upstream.
 
-We need to call amdgpu_vm_handle_fault() on page fault
-on all gfx9 and newer parts to properly update the
-page tables, not just for recoverable page faults.
+Otherwise userspace may be fooled into believing it has a reserved VMID
+when in reality it doesn't, ultimately leading to GPU hangs when SPM is
+used.
 
+Fixes: 80e709ee6ecc ("drm/amdgpu: add option params to enforce process isolation between graphics and compute")
 Cc: stable@vger.kernel.org
-Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Natalie Vock <natalie.vock@gmx.de>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gmc_v12_0.c |   27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/gmc_v12_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gmc_v12_0.c
-@@ -91,6 +91,8 @@ static int gmc_v12_0_process_interrupt(s
- 				       struct amdgpu_iv_entry *entry)
- {
- 	struct amdgpu_vmhub *hub;
-+	bool retry_fault = !!(entry->src_data[1] & 0x80);
-+	bool write_fault = !!(entry->src_data[1] & 0x20);
- 	uint32_t status = 0;
- 	u64 addr;
- 
-@@ -102,6 +104,31 @@ static int gmc_v12_0_process_interrupt(s
- 	else
- 		hub = &adev->vmhub[AMDGPU_GFXHUB(0)];
- 
-+	if (retry_fault) {
-+		/* Returning 1 here also prevents sending the IV to the KFD */
-+
-+		/* Process it only if it's the first fault for this address */
-+		if (entry->ih != &adev->irq.ih_soft &&
-+		    amdgpu_gmc_filter_faults(adev, entry->ih, addr, entry->pasid,
-+					     entry->timestamp))
-+			return 1;
-+
-+		/* Delegate it to a different ring if the hardware hasn't
-+		 * already done it.
-+		 */
-+		if (entry->ih == &adev->irq.ih) {
-+			amdgpu_irq_delegate(adev, entry, 8);
-+			return 1;
-+		}
-+
-+		/* Try to handle the recoverable page faults by filling page
-+		 * tables
-+		 */
-+		if (amdgpu_vm_handle_fault(adev, entry->pasid, 0, 0, addr,
-+					   entry->timestamp, write_fault))
-+			return 1;
-+	}
-+
- 	if (!amdgpu_sriov_vf(adev)) {
- 		/*
- 		 * Issue a dummy read to wait for the status register to
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -2910,8 +2910,7 @@ int amdgpu_vm_ioctl(struct drm_device *d
+ 	switch (args->in.op) {
+ 	case AMDGPU_VM_OP_RESERVE_VMID:
+ 		/* We only have requirement to reserve vmid from gfxhub */
+-		amdgpu_vmid_alloc_reserved(adev, vm, AMDGPU_GFXHUB(0));
+-		break;
++		return amdgpu_vmid_alloc_reserved(adev, vm, AMDGPU_GFXHUB(0));
+ 	case AMDGPU_VM_OP_UNRESERVE_VMID:
+ 		amdgpu_vmid_free_reserved(adev, vm, AMDGPU_GFXHUB(0));
+ 		break;
 
 
