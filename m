@@ -1,47 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76826200C2;
-	Tue,  6 Jan 2026 17:38:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6849200C2;
+	Tue,  6 Jan 2026 17:38:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721106; cv=none; b=WD702Umonqro3BdbFdzxfBolRN4xbSlipW/SthdcKiSd9xzLIu54yV/wH4Ca0p4rsQCO4Yc/cTPe4HPyuJwCf327VcMVy9nmo37dWTpSjctRKqUFHHEcvcOWo38g5iMx+E+sSaoJ2WOx8GjeuLSeOQ1kx8ndHa1qQFh6nvF1jZE=
+	t=1767721109; cv=none; b=SxzFhoVmvFvPlgWL1d8BEYQicnl4dCSYgi4CXaP5qduk0aLhu8CrVrKjOwLGqq3TwnQGtSldYaWo8xF4ROuxys97GsWAWu5vTEVJ6IJxDaLqGvpY/2FDtBB1rsYAdUu9rIN2N1VORuYf6jebcXESPfMig5j3py02+9+mqhOZWec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721106; c=relaxed/simple;
-	bh=l0QCNuB51Onui1cPB5IOZBJw+P23gJmgFhThMptxfMk=;
+	s=arc-20240116; t=1767721109; c=relaxed/simple;
+	bh=OTe5l9+vr8D1jTYk6nZTvgCAVmiJiWezhawRAIqitd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TqZ/uUrTRt7N5VLDWVfZEYNcRBH49HdrHp8nhgZEzVPjtb45i17uj0c+zKe3yD4e5Z3W4h8MpRe8At2OIZsivRiNHB13vgrwIKt/oZ0g5pq2lvxfTVWW1MLUWsLigFgYvBV5OkyYe+3miT6ftBBesU7Kowos8wD3fKRBD2BJZr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2qRkOs0e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XV7zECrSgM25dygTK6Bu8lDsLIJQu5gWWuvscraaM4cdAJt09NcYxYEfanhE8TLzCDed/ZVnDP2a6jMc1gVIiKsOz8qmvy0O5Md2T06ze8NhcJm5RUzpxFvEPtzuRx3pv4/fwbbs0fkuZ+y19nhP77wTn+yQW665Rtj+t7xgNzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hTTXGcnj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2qRkOs0e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C29BDC116C6;
-	Tue,  6 Jan 2026 17:38:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hTTXGcnj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43D9DC116C6;
+	Tue,  6 Jan 2026 17:38:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721106;
-	bh=l0QCNuB51Onui1cPB5IOZBJw+P23gJmgFhThMptxfMk=;
+	s=korg; t=1767721109;
+	bh=OTe5l9+vr8D1jTYk6nZTvgCAVmiJiWezhawRAIqitd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2qRkOs0e2g7oteUBRRvXa0/VQDmkuLVfutsfrT9eDkvqBE6ezVrBOaivyYxAKmr8M
-	 Ers78JJ527HcPjRrbbFeE9dVTQF+NYOz9Yy+QefEa83qKXlpleGijE4QdXVFk5dz9Q
-	 r2GIiGXqVLMHCxHrewmJOU+qPk1H1V2AdEfvf+/0=
+	b=hTTXGcnjq2Brkl1cqAwcRXRNE/f9N9KhfPadVwzFI0WmW0LEKOQ1tzD5P5/qzF23o
+	 y3/vSg8rigfb+aT4qUfaX2gTIsemA7ZpPyaKkdNTksEWaOHcQTRI1dqwP+m75UJaiQ
+	 44zaVKzrMAAEDwtiK9jYl5n9D8T0hBc2tnWz/Gn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Dmitriy Vyukov <dvyukov@google.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Kees Cook <kees@kernel.org>,
-	Marco Elver <elver@google.com>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	SeongJae Park <sj@kernel.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 438/567] kasan: unpoison vms[area] addresses with a common tag
-Date: Tue,  6 Jan 2026 18:03:40 +0100
-Message-ID: <20260106170507.555281768@linuxfoundation.org>
+Subject: [PATCH 6.12 421/567] mm/damon/tests/sysfs-kunit: handle alloc failures on damon_sysfs_test_add_targets()
+Date: Tue,  6 Jan 2026 18:03:23 +0100
+Message-ID: <20260106170506.914477222@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -60,85 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>
+From: SeongJae Park <sj@kernel.org>
 
-commit 6a0e5b333842cf65d6f4e4f0a2a4386504802515 upstream.
+commit 7d808bf13943f4c6a6142400bffe14267f6dc997 upstream.
 
-A KASAN tag mismatch, possibly causing a kernel panic, can be observed on
-systems with a tag-based KASAN enabled and with multiple NUMA nodes.  It
-was reported on arm64 and reproduced on x86.  It can be explained in the
-following points:
+damon_sysfs_test_add_targets() is assuming all dynamic memory allocation
+in it will succeed.  Those are indeed likely in the real use cases since
+those allocations are too small to fail, but theoretically those could
+fail.  In the case, inappropriate memory access can happen.  Fix it by
+appropriately cleanup pre-allocated memory and skip the execution of the
+remaining tests in the failure cases.
 
-1. There can be more than one virtual memory chunk.
-2. Chunk's base address has a tag.
-3. The base address points at the first chunk and thus inherits
-   the tag of the first chunk.
-4. The subsequent chunks will be accessed with the tag from the
-   first chunk.
-5. Thus, the subsequent chunks need to have their tag set to
-   match that of the first chunk.
-
-Use the new vmalloc flag that disables random tag assignment in
-__kasan_unpoison_vmalloc() - pass the same random tag to all the
-vm_structs by tagging the pointers before they go inside
-__kasan_unpoison_vmalloc().  Assigning a common tag resolves the pcpu
-chunk address mismatch.
-
-[akpm@linux-foundation.org: use WARN_ON_ONCE(), per Andrey]
-  Link: https://lkml.kernel.org/r/CA+fCnZeuGdKSEm11oGT6FS71_vGq1vjq-xY36kxVdFvwmag2ZQ@mail.gmail.com
-[maciej.wieczor-retman@intel.com: remove unneeded pr_warn()]
-  Link: https://lkml.kernel.org/r/919897daaaa3c982a27762a2ee038769ad033991.1764945396.git.m.wieczorretman@pm.me
-Link: https://lkml.kernel.org/r/873821114a9f722ffb5d6702b94782e902883fdf.1764874575.git.m.wieczorretman@pm.me
-Fixes: 1d96320f8d53 ("kasan, vmalloc: add vmalloc tagging for SW_TAGS")
-Signed-off-by: Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>
-Reviewed-by: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: Danilo Krummrich <dakr@kernel.org>
-Cc: Dmitriy Vyukov <dvyukov@google.com>
-Cc: Jiayuan Chen <jiayuan.chen@linux.dev>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Marco Elver <elver@google.com>
-Cc: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
-Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
-Cc: <stable@vger.kernel.org>	[6.1+]
+Link: https://lkml.kernel.org/r/20251101182021.74868-21-sj@kernel.org
+Fixes: b8ee5575f763 ("mm/damon/sysfs-test: add a unit test for damon_sysfs_set_targets()")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: Brendan Higgins <brendan.higgins@linux.dev>
+Cc: David Gow <davidgow@google.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: <stable@vger.kernel.org>	[6.7+]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kasan/common.c |   21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ mm/damon/tests/sysfs-kunit.h | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
---- a/mm/kasan/common.c
-+++ b/mm/kasan/common.c
-@@ -568,11 +568,26 @@ void __kasan_unpoison_vmap_areas(struct
- 	unsigned long size;
- 	void *addr;
- 	int area;
-+	u8 tag;
+diff --git a/mm/damon/tests/sysfs-kunit.h b/mm/damon/tests/sysfs-kunit.h
+index 7b5c7b307da9..ce7218469f20 100644
+--- a/mm/damon/tests/sysfs-kunit.h
++++ b/mm/damon/tests/sysfs-kunit.h
+@@ -45,16 +45,41 @@ static void damon_sysfs_test_add_targets(struct kunit *test)
+ 	struct damon_ctx *ctx;
  
--	for (area = 0 ; area < nr_vms ; area++) {
-+	/*
-+	 * If KASAN_VMALLOC_KEEP_TAG was set at this point, all vms[] pointers
-+	 * would be unpoisoned with the KASAN_TAG_KERNEL which would disable
-+	 * KASAN checks down the line.
-+	 */
-+	if (WARN_ON_ONCE(flags & KASAN_VMALLOC_KEEP_TAG))
-+		return;
+ 	sysfs_targets = damon_sysfs_targets_alloc();
++	if (!sysfs_targets)
++		kunit_skip(test, "sysfs_targets alloc fail");
+ 	sysfs_targets->nr = 1;
+ 	sysfs_targets->targets_arr = kmalloc_array(1,
+ 			sizeof(*sysfs_targets->targets_arr), GFP_KERNEL);
++	if (!sysfs_targets->targets_arr) {
++		kfree(sysfs_targets);
++		kunit_skip(test, "targets_arr alloc fail");
++	}
+ 
+ 	sysfs_target = damon_sysfs_target_alloc();
++	if (!sysfs_target) {
++		kfree(sysfs_targets->targets_arr);
++		kfree(sysfs_targets);
++		kunit_skip(test, "sysfs_target alloc fail");
++	}
+ 	sysfs_target->pid = __damon_sysfs_test_get_any_pid(12, 100);
+ 	sysfs_target->regions = damon_sysfs_regions_alloc();
++	if (!sysfs_target->regions) {
++		kfree(sysfs_targets->targets_arr);
++		kfree(sysfs_targets);
++		kfree(sysfs_target);
++		kunit_skip(test, "sysfs_regions alloc fail");
++	}
 +
-+	size = vms[0]->size;
-+	addr = vms[0]->addr;
-+	vms[0]->addr = __kasan_unpoison_vmalloc(addr, size, flags);
-+	tag = get_tag(vms[0]->addr);
-+
-+	for (area = 1 ; area < nr_vms ; area++) {
- 		size = vms[area]->size;
--		addr = vms[area]->addr;
--		vms[area]->addr = __kasan_unpoison_vmalloc(addr, size, flags);
-+		addr = set_tag(vms[area]->addr, tag);
-+		vms[area]->addr =
-+			__kasan_unpoison_vmalloc(addr, size, flags | KASAN_VMALLOC_KEEP_TAG);
- 	}
- }
- #endif
+ 	sysfs_targets->targets_arr[0] = sysfs_target;
+ 
+ 	ctx = damon_new_ctx();
++	if (!ctx) {
++		kfree(sysfs_targets->targets_arr);
++		kfree(sysfs_targets);
++		kfree(sysfs_target);
++		kfree(sysfs_target->regions);
++		kunit_skip(test, "ctx alloc fail");
++	}
+ 
+ 	damon_sysfs_add_targets(ctx, sysfs_targets);
+ 	KUNIT_EXPECT_EQ(test, 1u, nr_damon_targets(ctx));
+-- 
+2.52.0
+
 
 
