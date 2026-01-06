@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A353587DA;
-	Tue,  6 Jan 2026 17:45:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 925C83590B9;
+	Tue,  6 Jan 2026 17:45:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721540; cv=none; b=MckgYEfPaR+y1AFg0ttvEB3u1goc/C0laFKKCxQyb4QUfCmp64R6BAFXKFvZ5OZeVohhlG4Ku9H+MbVZ/oePd4GlztrcZBcBRrg8ZtMHc2Q9ntB/MrNsem7F3ng6fGZ8lM+ZMHoj2w9ZfxKaUSDOQOd1k4fQfqDxSKOopFCW8MM=
+	t=1767721543; cv=none; b=pbT0asb1PMaLJAGEIV2Pdmn/WvVIboQP60K876nLFRhKsoOp4q07Z1dxJJ2CXDVct5o6tYGwdSJaQelwWM6ubPkStaeiwBRWDsguav+ZvVNpWctW4wW87l33LjIGFk7XTlIDXOCqEH+iSwsvTMTsJBh/6ZSOx16GIVDZaLsPc1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721540; c=relaxed/simple;
-	bh=3KPkF0nfD8NmX24I30ToKbOZExnfGnoENM6AI0r+GVE=;
+	s=arc-20240116; t=1767721543; c=relaxed/simple;
+	bh=X6w1RNtIf7D/y+Ip4BG8RuIKzociJEUxHUVZN65zR5M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DOwVi/H4pI/RaaPZS0PYi+7LM5REsBPbxk7F8eqNDHhegkxzkEhUEJrkln/a7WU7g5G2ZHFo1dweGo+IOu6sr4Wk3Db5bqlB3U3EGd61UIoi4Avr2XDveFYoN8hrr+Ell13jjQRqYQkzcym1065hAb8YDKJlaprCamO1txU+ODU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yfAsMYf1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=naTrA9H2Httqk30v5WgP6Y7PWIi+KA8Q3lwC5NoLmD4Jvos5wG9QKKxa392KSbvRZrLM2cPUjBdxdGqn+YJ9mxuVOp88qe8IxPEZ1p+rdSFIPEnwMRyy49tR3B9MeeB0+q6IOPyNPTxiZnxiNxji49Zu9qP2bLyIgt6pWhNg5jU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mRm654Z/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yfAsMYf1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A67DBC16AAE;
-	Tue,  6 Jan 2026 17:45:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mRm654Z/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E78DAC16AAE;
+	Tue,  6 Jan 2026 17:45:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721540;
-	bh=3KPkF0nfD8NmX24I30ToKbOZExnfGnoENM6AI0r+GVE=;
+	s=korg; t=1767721543;
+	bh=X6w1RNtIf7D/y+Ip4BG8RuIKzociJEUxHUVZN65zR5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yfAsMYf1Z3Ap/par2Zjj3cz7e9z/j24UcOJmtVh4Dcw105zRyGhhkSErQntEcDdV0
-	 RJEIXdKmWJ2pu93rLPvYNv2Sc2GvfGDwbnXTbnfsFaJTyfb9hAid/gkf8TvdsqoPrb
-	 s1UFGnyWuqe7icDZ9Pc1GuF1eU1LlSv3Sp5dO+HU=
+	b=mRm654Z/iPCTIfzHeuHQe1zplLcj66HvLct6Wmn8+YH3YDsewfE4WeV0I2wZrLLIP
+	 wNs0OZDxlRoDT5e6eKhmPxW1JGOOfHcYO6aqWPvlEp1R+DCFreJPwhkHDEmHqP/5sU
+	 DHWeKNJAmZCfXLlUfq4y6x/HY6/TEJmgOSg4/j6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quan Zhou <quan.zhou@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
-	Jan Kiszka <jan.kiszka@siemens.com>
-Subject: [PATCH 6.12 534/567] wifi: mt76: mt7925: fix the unfinished command of regd_notifier before suspend
-Date: Tue,  6 Jan 2026 18:05:16 +0100
-Message-ID: <20260106170511.151675023@linuxfoundation.org>
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Steven Price <steven.price@arm.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Subject: [PATCH 6.12 525/567] drm/panthor: Flush shmem writes before mapping buffers CPU-uncached
+Date: Tue,  6 Jan 2026 18:05:07 +0100
+Message-ID: <20260106170510.811846047@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,60 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quan Zhou <quan.zhou@mediatek.com>
+From: Boris Brezillon <boris.brezillon@collabora.com>
 
-[ Upstream commit 1b97fc8443aea01922560de9f24a6383e6eb6ae8 ]
+[ Upstream commit 576c930e5e7dcb937648490611a83f1bf0171048 ]
 
-Before entering suspend, we need to ensure that all MCU command are
-completed. In some cases, such as with regd_notifier, there is a
-chance that CLC commands, will be executed before suspend.
+The shmem layer zeroes out the new pages using cached mappings, and if
+we don't CPU-flush we might leave dirty cachelines behind, leading to
+potential data leaks and/or asynchronous buffer corruption when dirty
+cachelines are evicted.
 
-Signed-off-by: Quan Zhou <quan.zhou@mediatek.com>
-Link: https://patch.msgid.link/3af7b4e5bf7437832b016e32743657d1d55b1f9d.1735910288.git.quan.zhou@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+Fixes: 8a1cc07578bf ("drm/panthor: Add GEM logical block")
+Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Signed-off-by: Steven Price <steven.price@arm.com>
+Link: https://patch.msgid.link/20251107171214.1186299-1-boris.brezillon@collabora.com
+[Harshit: Resolve conflicts due to missing commit: fe69a3918084
+("drm/panthor: Fix UAF in panthor_gem_create_with_handle() debugfs
+code") in 6.12.y]
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/init.c |    4 ++++
- drivers/net/wireless/mediatek/mt76/mt7925/pci.c  |    3 +++
- 2 files changed, 7 insertions(+)
+ drivers/gpu/drm/panthor/panthor_gem.c |   18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7925/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/init.c
-@@ -81,11 +81,14 @@ mt7925_regd_notifier(struct wiphy *wiphy
- 	mdev->region = req->dfs_region;
- 	dev->country_ie_env = req->country_ie_env;
+--- a/drivers/gpu/drm/panthor/panthor_gem.c
++++ b/drivers/gpu/drm/panthor/panthor_gem.c
+@@ -214,6 +214,23 @@ panthor_gem_create_with_handle(struct dr
+ 		bo->base.base.resv = bo->exclusive_vm_root_gem->resv;
+ 	}
  
-+	dev->regd_in_progress = true;
- 	mt792x_mutex_acquire(dev);
- 	mt7925_mcu_set_clc(dev, req->alpha2, req->country_ie_env);
- 	mt7925_mcu_set_channel_domain(hw->priv);
- 	mt7925_set_tx_sar_pwr(hw, NULL);
- 	mt792x_mutex_release(dev);
-+	dev->regd_in_progress = false;
-+	wake_up(&dev->wait);
- }
- 
- static void mt7925_mac_init_basic_rates(struct mt792x_dev *dev)
-@@ -235,6 +238,7 @@ int mt7925_register_device(struct mt792x
- 	spin_lock_init(&dev->pm.wake.lock);
- 	mutex_init(&dev->pm.mutex);
- 	init_waitqueue_head(&dev->pm.wait);
-+	init_waitqueue_head(&dev->wait);
- 	spin_lock_init(&dev->pm.txq_lock);
- 	INIT_DELAYED_WORK(&dev->mphy.mac_work, mt792x_mac_work);
- 	INIT_DELAYED_WORK(&dev->phy.scan_work, mt7925_scan_work);
---- a/drivers/net/wireless/mediatek/mt76/mt7925/pci.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/pci.c
-@@ -455,6 +455,9 @@ static int mt7925_pci_suspend(struct dev
- 	if (err < 0)
- 		goto restore_suspend;
- 
-+	wait_event_timeout(dev->wait,
-+			   !dev->regd_in_progress, 5 * HZ);
++	/* If this is a write-combine mapping, we query the sgt to force a CPU
++	 * cache flush (dma_map_sgtable() is called when the sgt is created).
++	 * This ensures the zero-ing is visible to any uncached mapping created
++	 * by vmap/mmap.
++	 * FIXME: Ideally this should be done when pages are allocated, not at
++	 * BO creation time.
++	 */
++	if (shmem->map_wc) {
++		struct sg_table *sgt;
 +
- 	/* always enable deep sleep during suspend to reduce
- 	 * power consumption
- 	 */
++		sgt = drm_gem_shmem_get_pages_sgt(shmem);
++		if (IS_ERR(sgt)) {
++			ret = PTR_ERR(sgt);
++			goto out_put_gem;
++		}
++	}
++
+ 	/*
+ 	 * Allocate an id of idr table where the obj is registered
+ 	 * and handle has the id what user can see.
+@@ -222,6 +239,7 @@ panthor_gem_create_with_handle(struct dr
+ 	if (!ret)
+ 		*size = bo->base.base.size;
+ 
++out_put_gem:
+ 	/* drop reference from allocate - handle holds it now. */
+ 	drm_gem_object_put(&shmem->base);
+ 
 
 
