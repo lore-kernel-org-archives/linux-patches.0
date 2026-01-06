@@ -1,48 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC42E36D4F8;
-	Tue,  6 Jan 2026 17:59:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB85C36D4F3;
+	Tue,  6 Jan 2026 17:59:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722351; cv=none; b=j35xH01+I9EosLgFdaodO/0RLeQ1urRR3KGF9Ln4FbNc/EtufXrEe3SoYovIEscryxI9tpTVPauJRsQ3vQu4gwNF4o8ybe/vJbDLVpSa1c6kgtnF9cOHnWlYS3VhWgnsRg0ALqNXSjbaDXyB7nKfBXf6oiwQLUkcg8Mvt+45hUI=
+	t=1767722353; cv=none; b=pfwIGlpDGHclMHYszTr/RxHkURupE7SWQyyxQYOaEC+eRZWs7ImcxLDeXi6KylxvXjxtdyMhkqPjzYbNyfm11W3PDsr/NE6l7+eGhzb7ojL4PfxiL59nP3jAw9ABDOcSQzB5G0gxCefk2YYGl/kn5ll4P2HdrVkjx5c9svBvh1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722351; c=relaxed/simple;
-	bh=UiP6IQDaqpkjud7nVAfuMxgnz4iwUHZeMvCOhmSY/9o=;
+	s=arc-20240116; t=1767722353; c=relaxed/simple;
+	bh=NS6993T35nN7SdvJhOF5O/RKc+kiMT9eWCkJy/Xn1Lg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IJjTsxQWpCocrMT1z30zmq7aoK+Mit8cPZdDy61wnXFTrSRZDGOy/xr2GUjLWygi0g2QVsO84NtjIsGpVlLZKaeHST8MH62UwcAXGrdawOl8TRzC/Uv+PysiSZZFLPpK8tJFYt4oSZYCGHm0W0eIfpGdz4jooeJSAkTdxtLLvC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CpTTL9cF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KiVkQaysDU2YFMjF1/JtyQXix5O4+YeKVXo/czbFzm7C/fGkKBpFMrI2hGJ88guNovLlRip7u0Ai6OzLlZ7pl5sjpC20t8flctHsqtDVsHi6p14Rtigo2v7VTiDPBYDHWiRbP9iikB0qinLXtOg6uu+vgg40Vv0VhW+aSUGpgbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zATKyLWd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CpTTL9cF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED6EC116C6;
-	Tue,  6 Jan 2026 17:59:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zATKyLWd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ACC1C116C6;
+	Tue,  6 Jan 2026 17:59:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722350;
-	bh=UiP6IQDaqpkjud7nVAfuMxgnz4iwUHZeMvCOhmSY/9o=;
+	s=korg; t=1767722353;
+	bh=NS6993T35nN7SdvJhOF5O/RKc+kiMT9eWCkJy/Xn1Lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CpTTL9cFjcouej3uWBHGLAs3bXo/NxhWXnZKGSL6RC+4tfCdG8os53wBnAdnkhJsM
-	 BiKSM2h1RNrMNBQ/STJ0UP0au4fl/MmftIDYA+dUvspc5KlXRUZTTS+9aUxoDQAghl
-	 2TdEzxy2hU4z+BWHEg2qbrHyKJpJ0LBc39Iy/Jv4=
+	b=zATKyLWdeMZheZEmHUQpd2S3Jy0uOeUCNghzcAlEWn1TYzFmnEieCAeH6bUb+XDh/
+	 Hw96W/3ZZsvuEd9DyvrEeppRHgwmuzDiuDP0Lmo87RLqUO5994OByoHi5CRS8COY8L
+	 wmaG4qbN1aeOuYfNIf6+m3S/I0xaJILT4OxwurA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bijan Tabatabai <bijan311@gmail.com>,
-	"David Hildenbrand (Red Hat)" <david@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shivank Garg <shivankg@amd.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Kairui Song <ryncsn@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 231/312] mm: consider non-anon swap cache folios in folio_expected_ref_count()
-Date: Tue,  6 Jan 2026 18:05:05 +0100
-Message-ID: <20260106170556.209086043@linuxfoundation.org>
+	Jouni Malinen <jouni.malinen@oss.qualcomm.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.18 240/312] wifi: mac80211: Discard Beacon frames to non-broadcast address
+Date: Tue,  6 Jan 2026 18:05:14 +0100
+Message-ID: <20260106170556.533182937@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -61,116 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bijan Tabatabai <bijan311@gmail.com>
+From: Jouni Malinen <jouni.malinen@oss.qualcomm.com>
 
-commit f183663901f21fe0fba8bd31ae894bc529709ee0 upstream.
+commit 193d18f60588e95d62e0f82b6a53893e5f2f19f8 upstream.
 
-Currently, folio_expected_ref_count() only adds references for the swap
-cache if the folio is anonymous.  However, according to the comment above
-the definition of PG_swapcache in enum pageflags, shmem folios can also
-have PG_swapcache set.  This patch makes sure references for the swap
-cache are added if folio_test_swapcache(folio) is true.
+Beacon frames are required to be sent to the broadcast address, see IEEE
+Std 802.11-2020, 11.1.3.1 ("The Address 1 field of the Beacon .. frame
+shall be set to the broadcast address"). A unicast Beacon frame might be
+used as a targeted attack to get one of the associated STAs to do
+something (e.g., using CSA to move it to another channel). As such, it
+is better have strict filtering for this on the received side and
+discard all Beacon frames that are sent to an unexpected address.
 
-This issue was found when trying to hot-unplug memory in a QEMU/KVM
-virtual machine.  When initiating hot-unplug when most of the guest memory
-is allocated, hot-unplug hangs partway through removal due to migration
-failures.  The following message would be printed several times, and would
-be printed again about every five seconds:
+This is even more important for cases where beacon protection is used.
+The current implementation in mac80211 is correctly discarding unicast
+Beacon frames if the Protected Frame bit in the Frame Control field is
+set to 0. However, if that bit is set to 1, the logic used for checking
+for configured BIGTK(s) does not actually work. If the driver does not
+have logic for dropping unicast Beacon frames with Protected Frame bit
+1, these frames would be accepted in mac80211 processing as valid Beacon
+frames even though they are not protected. This would allow beacon
+protection to be bypassed. While the logic for checking beacon
+protection could be extended to cover this corner case, a more generic
+check for discard all Beacon frames based on A1=unicast address covers
+this without needing additional changes.
 
-[   49.641309] migrating pfn b12f25 failed ret:7
-[   49.641310] page: refcount:2 mapcount:0 mapping:0000000033bd8fe2 index:0x7f404d925 pfn:0xb12f25
-[   49.641311] aops:swap_aops
-[   49.641313] flags: 0x300000000030508(uptodate|active|owner_priv_1|reclaim|swapbacked|node=0|zone=3)
-[   49.641314] raw: 0300000000030508 ffffed312c4bc908 ffffed312c4bc9c8 0000000000000000
-[   49.641315] raw: 00000007f404d925 00000000000c823b 00000002ffffffff 0000000000000000
-[   49.641315] page dumped because: migration failure
+Address all these issues by dropping received Beacon frames if they are
+sent to a non-broadcast address.
 
-When debugging this, I found that these migration failures were due to
-__migrate_folio() returning -EAGAIN for a small set of folios because the
-expected reference count it calculates via folio_expected_ref_count() is
-one less than the actual reference count of the folios.  Furthermore, all
-of the affected folios were not anonymous, but had the PG_swapcache flag
-set, inspiring this patch.  After applying this patch, the memory
-hot-unplug behaves as expected.
-
-I tested this on a machine running Ubuntu 24.04 with kernel version
-6.8.0-90-generic and 64GB of memory.  The guest VM is managed by libvirt
-and runs Ubuntu 24.04 with kernel version 6.18 (though the head of the
-mm-unstable branch as a Dec 16, 2025 was also tested and behaves the same)
-and 48GB of memory.  The libvirt XML definition for the VM can be found at
-[1].  CONFIG_MHP_DEFAULT_ONLINE_TYPE_ONLINE_MOVABLE is set in the guest
-kernel so the hot-pluggable memory is automatically onlined.
-
-Below are the steps to reproduce this behavior:
-
-1) Define and start and virtual machine
-  host$ virsh -c qemu:///system define ./test_vm.xml # test_vm.xml from [1]
-  host$ virsh -c qemu:///system start test_vm
-
-2) Setup swap in the guest
-  guest$ sudo fallocate -l 32G /swapfile
-  guest$ sudo chmod 0600 /swapfile
-  guest$ sudo mkswap /swapfile
-  guest$ sudo swapon /swapfile
-
-3) Use alloc_data [2] to allocate most of the remaining guest memory
-  guest$ ./alloc_data 45
-
-4) In a separate guest terminal, monitor the amount of used memory
-  guest$ watch -n1 free -h
-
-5) When alloc_data has finished allocating, initiate the memory
-hot-unplug using the provided xml file [3]
-  host$ virsh -c qemu:///system detach-device test_vm ./remove.xml --live
-
-After initiating the memory hot-unplug, you should see the amount of
-available memory in the guest decrease, and the amount of used swap data
-increase.  If everything works as expected, when all of the memory is
-unplugged, there should be around 8.5-9GB of data in swap.  If the
-unplugging is unsuccessful, the amount of used swap data will settle below
-that.  If that happens, you should be able to see log messages in dmesg
-similar to the one posted above.
-
-Link: https://lkml.kernel.org/r/20251216200727.2360228-1-bijan311@gmail.com
-Link: https://github.com/BijanT/linux_patch_files/blob/main/test_vm.xml [1]
-Link: https://github.com/BijanT/linux_patch_files/blob/main/alloc_data.c [2]
-Link: https://github.com/BijanT/linux_patch_files/blob/main/remove.xml [3]
-Fixes: 86ebd50224c0 ("mm: add folio_expected_ref_count() for reference count calculation")
-Signed-off-by: Bijan Tabatabai <bijan311@gmail.com>
-Acked-by: David Hildenbrand (Red Hat) <david@kernel.org>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Shivank Garg <shivankg@amd.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: Kairui Song <ryncsn@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: af2d14b01c32 ("mac80211: Beacon protection using the new BIGTK (STA)")
+Signed-off-by: Jouni Malinen <jouni.malinen@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251215151134.104501-1-jouni.malinen@oss.qualcomm.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/mm.h |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/mac80211/rx.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/include/linux/mm.h
-+++ b/include/linux/mm.h
-@@ -2272,10 +2272,10 @@ static inline int folio_expected_ref_cou
- 	if (WARN_ON_ONCE(page_has_type(&folio->page) && !folio_test_hugetlb(folio)))
- 		return 0;
+--- a/net/mac80211/rx.c
++++ b/net/mac80211/rx.c
+@@ -3428,6 +3428,11 @@ ieee80211_rx_h_mgmt_check(struct ieee802
+ 	    rx->skb->len < IEEE80211_MIN_ACTION_SIZE)
+ 		return RX_DROP_U_RUNT_ACTION;
  
--	if (folio_test_anon(folio)) {
--		/* One reference per page from the swapcache. */
--		ref_count += folio_test_swapcache(folio) << order;
--	} else {
-+	/* One reference per page from the swapcache. */
-+	ref_count += folio_test_swapcache(folio) << order;
++	/* Drop non-broadcast Beacon frames */
++	if (ieee80211_is_beacon(mgmt->frame_control) &&
++	    !is_broadcast_ether_addr(mgmt->da))
++		return RX_DROP;
 +
-+	if (!folio_test_anon(folio)) {
- 		/* One reference per page from the pagecache. */
- 		ref_count += !!folio->mapping << order;
- 		/* One reference from PG_private. */
+ 	if (rx->sdata->vif.type == NL80211_IFTYPE_AP &&
+ 	    ieee80211_is_beacon(mgmt->frame_control) &&
+ 	    !(rx->flags & IEEE80211_RX_BEACON_REPORTED)) {
 
 
