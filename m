@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 012EB36D51C;
-	Tue,  6 Jan 2026 17:59:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B5C4376BD3;
+	Tue,  6 Jan 2026 17:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722392; cv=none; b=nk/GKMsDOxTcfZiLSJh8JWKz6wY55j8PaF8g0QjWqHeIfDrVaEcS5NuiVT8E0qbbOmnwtz2F+3kBxiTvtOOBzQXf2M87J1VggoUCMbBTxlC7XifvNFIZLWrNqkPaVKd9DoILimlXjlC0xtnzJvl2o2y5VF3bl4NIFqKh227BNi8=
+	t=1767722395; cv=none; b=O+wzrSOnlNuFn59L+c4T0rqjlLp1RG7Nl5MVxn81BujMj6YLBKjCUUymRGVYILv2nExSj7nwr3yppEZId0Mv2qpg4ragESy/mdYSNLC9Y7UawW5PkGfGx7uCVLLgzmvMNza5PGp3odw8AygPAqBAHtDOXytGw906x/j+Rxoa3jI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722392; c=relaxed/simple;
-	bh=5SqM0PuscAmXQpy2KR778QvJoTml+N0Y9t0qij1V7Zc=;
+	s=arc-20240116; t=1767722395; c=relaxed/simple;
+	bh=724lZXmaHDp0+o68yJu+33hnDFFg7smiD1rxxX0rCyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hASUpbzHfbFYvEshtyJm7uzkzLjuUfjzc7MGR6NuGJpl77nKMKUp0SuRfdyhJXWnF7ng2k8lIQcPf0faOoCjP578n0IeQnw4WjRBU8dvHRcCCyQUFEMOVNOhSheCOMV7LO+cdDCQz22bFKjxHOdfgtn1RnP5j3nOr66ze+LtiHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2gYiwH+m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l+NH+oi4ZLv+mgwONFLUX/8vSx+dtYXCNW9uv6pPOtjdhOYTQnjtghrBEM6Yg8YZhJrnG8utziNUvF38L4hHgUeNTSSa4GO6LSC1XNsZO3eXnns1p3jwv5IfuJOQMVBnqoupvyR8e1GqUer7fgaPivBUSOOcnYJouXcy5hRH1gk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Au1BlfSI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2gYiwH+m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23384C116C6;
-	Tue,  6 Jan 2026 17:59:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Au1BlfSI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EB03C19423;
+	Tue,  6 Jan 2026 17:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722391;
-	bh=5SqM0PuscAmXQpy2KR778QvJoTml+N0Y9t0qij1V7Zc=;
+	s=korg; t=1767722395;
+	bh=724lZXmaHDp0+o68yJu+33hnDFFg7smiD1rxxX0rCyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2gYiwH+mhLMqociLzppLnqIxPjUdp1hYYEje88sYbbF65WvBkBZA/YHU0gaKgxHQI
-	 +2GbeJA4YDLE7eFtaAAo6K+6T4y3kRqBYAeSo0eDF0+IXiXhax5Bga7K+WDBhFcXnG
-	 hlmMWkdMhK4nlkLPlIxQrZV9rkjL/dOdjpKTq76c=
+	b=Au1BlfSI3nGPYukQ46Uf92dFXpo+H4aSchSYyy633Baz/nwdjyBzLqwOv5fweh3CP
+	 Q3rrLtApTAafKgEml2NXM5jx+zDPStAuNsDtcyMwC5QkhWyXqsm4FBvY8YvN0dHHRv
+	 /yv2tjscmP9aYdszkR1Vzi2s31CkxXGkBCkdk0gY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenghao Duan <duanchenghao@kylinos.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.18 250/312] LoongArch: BPF: Adjust the jump offset of tail calls
-Date: Tue,  6 Jan 2026 18:05:24 +0100
-Message-ID: <20260106170556.893504306@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.18 251/312] nfsd: fix nfsd_file reference leak in nfsd4_add_rdaccess_to_wrdeleg()
+Date: Tue,  6 Jan 2026 18:05:25 +0100
+Message-ID: <20260106170556.929269283@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -50,39 +50,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenghao Duan <duanchenghao@kylinos.cn>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 61319d15a56093358c6822d30659fe2941f589f1 upstream.
+commit 8072e34e1387d03102b788677d491e2bcceef6f5 upstream.
 
-Call the next bpf prog and skip the first instruction of TCC
-initialization.
+nfsd4_add_rdaccess_to_wrdeleg() unconditionally overwrites
+fp->fi_fds[O_RDONLY] with a newly acquired nfsd_file. However, if
+the client already has a SHARE_ACCESS_READ open from a previous OPEN
+operation, this action overwrites the existing pointer without
+releasing its reference, orphaning the previous reference.
 
-A total of 7 instructions are skipped:
-'move t0, ra'			1 inst
-'move_imm + jirl'		5 inst
-'addid REG_TCC, zero, 0'	1 inst
+Additionally, the function originally stored the same nfsd_file
+pointer in both fp->fi_fds[O_RDONLY] and fp->fi_rdeleg_file with
+only a single reference. When put_deleg_file() runs, it clears
+fi_rdeleg_file and calls nfs4_file_put_access() to release the file.
 
-Relevant test cases: the tailcalls test item in selftests/bpf.
+However, nfs4_file_put_access() only releases fi_fds[O_RDONLY] when
+the fi_access[O_RDONLY] counter drops to zero. If another READ open
+exists on the file, the counter remains elevated and the nfsd_file
+reference from the delegation is never released. This potentially
+causes open conflicts on that file.
 
+Then, on server shutdown, these leaks cause __nfsd_file_cache_purge()
+to encounter files with an elevated reference count that cannot be
+cleaned up, ultimately triggering a BUG() in kmem_cache_destroy()
+because there are still nfsd_file objects allocated in that cache.
+
+Fixes: e7a8ebc305f2 ("NFSD: Offer write delegation for OPEN with OPEN4_SHARE_ACCESS_WRITE")
 Cc: stable@vger.kernel.org
-Fixes: 677e6123e3d2 ("LoongArch: BPF: Disable trampoline for kernel module function trace")
-Signed-off-by: Chenghao Duan <duanchenghao@kylinos.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/net/bpf_jit.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/nfs4state.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/arch/loongarch/net/bpf_jit.c
-+++ b/arch/loongarch/net/bpf_jit.c
-@@ -239,7 +239,7 @@ static void __build_epilogue(struct jit_
- 		 * Call the next bpf prog and skip the first instruction
- 		 * of TCC initialization.
- 		 */
--		emit_insn(ctx, jirl, LOONGARCH_GPR_ZERO, LOONGARCH_GPR_T3, 6);
-+		emit_insn(ctx, jirl, LOONGARCH_GPR_ZERO, LOONGARCH_GPR_T3, 7);
- 	}
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -1218,8 +1218,10 @@ static void put_deleg_file(struct nfs4_f
+ 
+ 	if (nf)
+ 		nfsd_file_put(nf);
+-	if (rnf)
++	if (rnf) {
++		nfsd_file_put(rnf);
+ 		nfs4_file_put_access(fp, NFS4_SHARE_ACCESS_READ);
++	}
  }
  
+ static void nfsd4_finalize_deleg_timestamps(struct nfs4_delegation *dp, struct file *f)
+@@ -6253,10 +6255,14 @@ nfsd4_add_rdaccess_to_wrdeleg(struct svc
+ 		fp = stp->st_stid.sc_file;
+ 		spin_lock(&fp->fi_lock);
+ 		__nfs4_file_get_access(fp, NFS4_SHARE_ACCESS_READ);
+-		fp = stp->st_stid.sc_file;
+-		fp->fi_fds[O_RDONLY] = nf;
+-		fp->fi_rdeleg_file = nf;
++		if (!fp->fi_fds[O_RDONLY]) {
++			fp->fi_fds[O_RDONLY] = nf;
++			nf = NULL;
++		}
++		fp->fi_rdeleg_file = nfsd_file_get(fp->fi_fds[O_RDONLY]);
+ 		spin_unlock(&fp->fi_lock);
++		if (nf)
++			nfsd_file_put(nf);
+ 	}
+ 	return true;
+ }
 
 
