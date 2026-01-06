@@ -1,48 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A21366547;
-	Tue,  6 Jan 2026 18:00:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70F9530595C;
+	Tue,  6 Jan 2026 18:00:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722445; cv=none; b=dL8T6681j9HD2noENEg//K0YIIJQGtUDYDt9tE8j+QW9X7XUzkrBiPpMl1VwW6nSgwQZD02Olq4ghF9AITEmAjnU0Fliz+icCYWacvqtE/eMDqGiZyJv/P6j07AtKBnG+p2oIDyS1XCuMZRPlL3epcGW6Tz+0GrUYk5XvHLV+hg=
+	t=1767722448; cv=none; b=bn5/AYBvMbKbLhu9ht0EAolihzKKPCkMBqCjrET6DNn+EILWrgweVfLs6+TgOKU0IDyMSIxECU/8qc7iZFebMCUzLIi/awFO4H8db+8wprf4R7j6G0E5j4E/a3g6QOrEu42kzOdPOSzf/VwlIy5KRNpkNVYMryL+5L2CD1ra4g0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722445; c=relaxed/simple;
-	bh=faMirbnbp2OFdmYjAj6DwcLp1cwBawYPqeqNTUIDCDw=;
+	s=arc-20240116; t=1767722448; c=relaxed/simple;
+	bh=V6TvJTbC0eoe+0esIF8e7TtRZIHyXhicWKRXevDqLvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bcxdUuZjuh6T4lsbYz4/jVAkJou20sa5rRxTVzDLFUZ1pLN/Nw9jkqL3noazV/2AcE+rikq1Ut80XcjKcwncSEepVl3OpiY/zevVN+E4w2apkTTYdZQAM+ub6IZQwMPmELVEEv8uop3olNwsSRwraC4Pc7dKZDdRLg3K1sb3DkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GBS/G5jW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B1KRl+Ty1U928uPDFKMDRM4BQryFdHRYgRJbcqgq3hezQWUHDxnYfVupW9feKP6R3p7o56TGWDBnjG5vw51PQDKnDHsHFRXMJv3/PoATUWOFRcPFi2j+3v9u3y9o3C73NBCItjAGHVEwqpL7yviOwaBLHUNDZOaPlZKwHQ071uI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kykYsHbe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GBS/G5jW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C625C16AAE;
-	Tue,  6 Jan 2026 18:00:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kykYsHbe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D42B9C16AAE;
+	Tue,  6 Jan 2026 18:00:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722445;
-	bh=faMirbnbp2OFdmYjAj6DwcLp1cwBawYPqeqNTUIDCDw=;
+	s=korg; t=1767722448;
+	bh=V6TvJTbC0eoe+0esIF8e7TtRZIHyXhicWKRXevDqLvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GBS/G5jWY4LS5pGVFGBgbCPJNHPS8piKMUjQP0uNVbwdlnvte93YNxjB2TJCoKYDa
-	 Tb8Euv5b4P7iPskxTZu+h36WOlzFjwf8PEjlPa1evkxXFMg+wzkJ9jUkow6ZN/apZT
-	 E0WITYfkhVVFBdXv1y3DLApNxkPbfCTYFeTQOh3A=
+	b=kykYsHbeWfHXDrHZ/NttI1skwZVBQmFr6g+JdIfrvUl7nex+2KvieQiWPeqog+c2j
+	 s8TRnt88sRTELgrrWT6EW7mE6RN51n7ZY4V1WPwDIfnJPGWcZWbvJWHGhNCZiiEtNI
+	 yhs2hGbf81HYomwpu9sTLl8PcItsb6dmtwv75J5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wake Liu <wakel@google.com>,
-	Peter Xu <peterx@redhat.com>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 234/312] selftests/mm: fix thread state check in uffd-unit-tests
-Date: Tue,  6 Jan 2026 18:05:08 +0100
-Message-ID: <20260106170556.316818434@linuxfoundation.org>
+	Youling Tang <tangyouling@kylinos.cn>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Chenghao Duan <duanchenghao@kylinos.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.18 235/312] samples/ftrace: Adjust LoongArch register restore order in direct calls
+Date: Tue,  6 Jan 2026 18:05:09 +0100
+Message-ID: <20260106170556.353647844@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -61,66 +52,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wake Liu <wakel@google.com>
+From: Chenghao Duan <duanchenghao@kylinos.cn>
 
-commit 632b874d59a36caf829ab5790dafb90f9b350fd6 upstream.
+commit bb85d206be208bbf834883e948125a35ac59993a upstream.
 
-In the thread_state_get() function, the logic to find the thread's state
-character was using `sizeof(header) - 1` to calculate the offset from the
-"State:\t" string.
+Ensure that in the ftrace direct call logic, the CPU register state
+(with ra = parent return address) is restored to the correct state after
+the execution of the custom trampoline function and before returning to
+the traced function. Additionally, guarantee the correctness of the jump
+logic for jr t0 (traced function address).
 
-The `header` variable is a `const char *` pointer.  `sizeof()` on a
-pointer returns the size of the pointer itself, not the length of the
-string literal it points to.  This makes the code's behavior dependent on
-the architecture's pointer size.
-
-This bug was identified on a 32-bit ARM build (`gsi_tv_arm`) for Android,
-running on an ARMv8-based device, compiled with Clang 19.0.1.
-
-On this 32-bit architecture, `sizeof(char *)` is 4.  The expression
-`sizeof(header) - 1` resulted in an incorrect offset of 3, causing the
-test to read the wrong character from `/proc/[tid]/status` and fail.
-
-On 64-bit architectures, `sizeof(char *)` is 8, so the expression
-coincidentally evaluates to 7, which matches the length of "State:\t".
-This is why the bug likely remained hidden on 64-bit builds.
-
-To fix this and make the code portable and correct across all
-architectures, this patch replaces `sizeof(header) - 1` with
-`strlen(header)`.  The `strlen()` function correctly calculates the
-string's length, ensuring the correct offset is always used.
-
-Link: https://lkml.kernel.org/r/20251210091408.3781445-1-wakel@google.com
-Fixes: f60b6634cd88 ("mm/selftests: add a test to verify mmap_changing race with -EAGAIN")
-Signed-off-by: Wake Liu <wakel@google.com>
-Acked-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Cc: Bill Wendling <morbo@google.com>
-Cc: Justin Stitt <justinstitt@google.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: 9cdc3b6a299c ("LoongArch: ftrace: Add direct call support")
+Reported-by: Youling Tang <tangyouling@kylinos.cn>
+Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Chenghao Duan <duanchenghao@kylinos.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mm/uffd-unit-tests.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ samples/ftrace/ftrace-direct-modify.c       |    8 ++++----
+ samples/ftrace/ftrace-direct-multi-modify.c |    8 ++++----
+ samples/ftrace/ftrace-direct-multi.c        |    4 ++--
+ samples/ftrace/ftrace-direct-too.c          |    4 ++--
+ samples/ftrace/ftrace-direct.c              |    4 ++--
+ 5 files changed, 14 insertions(+), 14 deletions(-)
 
---- a/tools/testing/selftests/mm/uffd-unit-tests.c
-+++ b/tools/testing/selftests/mm/uffd-unit-tests.c
-@@ -1317,7 +1317,7 @@ static thread_state thread_state_get(pid
- 		p = strstr(tmp, header);
- 		if (p) {
- 			/* For example, "State:\tD (disk sleep)" */
--			c = *(p + sizeof(header) - 1);
-+			c = *(p + strlen(header));
- 			return c == 'D' ?
- 			    THR_STATE_UNINTERRUPTIBLE : THR_STATE_UNKNOWN;
- 		}
+--- a/samples/ftrace/ftrace-direct-modify.c
++++ b/samples/ftrace/ftrace-direct-modify.c
+@@ -176,8 +176,8 @@ asm (
+ "	st.d	$t0, $sp, 0\n"
+ "	st.d	$ra, $sp, 8\n"
+ "	bl	my_direct_func1\n"
+-"	ld.d	$t0, $sp, 0\n"
+-"	ld.d	$ra, $sp, 8\n"
++"	ld.d	$ra, $sp, 0\n"
++"	ld.d	$t0, $sp, 8\n"
+ "	addi.d	$sp, $sp, 16\n"
+ "	jr	$t0\n"
+ "	.size		my_tramp1, .-my_tramp1\n"
+@@ -189,8 +189,8 @@ asm (
+ "	st.d	$t0, $sp, 0\n"
+ "	st.d	$ra, $sp, 8\n"
+ "	bl	my_direct_func2\n"
+-"	ld.d	$t0, $sp, 0\n"
+-"	ld.d	$ra, $sp, 8\n"
++"	ld.d	$ra, $sp, 0\n"
++"	ld.d	$t0, $sp, 8\n"
+ "	addi.d	$sp, $sp, 16\n"
+ "	jr	$t0\n"
+ "	.size		my_tramp2, .-my_tramp2\n"
+--- a/samples/ftrace/ftrace-direct-multi-modify.c
++++ b/samples/ftrace/ftrace-direct-multi-modify.c
+@@ -199,8 +199,8 @@ asm (
+ "	move	$a0, $t0\n"
+ "	bl	my_direct_func1\n"
+ "	ld.d	$a0, $sp, 0\n"
+-"	ld.d	$t0, $sp, 8\n"
+-"	ld.d	$ra, $sp, 16\n"
++"	ld.d	$ra, $sp, 8\n"
++"	ld.d	$t0, $sp, 16\n"
+ "	addi.d	$sp, $sp, 32\n"
+ "	jr	$t0\n"
+ "	.size		my_tramp1, .-my_tramp1\n"
+@@ -215,8 +215,8 @@ asm (
+ "	move	$a0, $t0\n"
+ "	bl	my_direct_func2\n"
+ "	ld.d	$a0, $sp, 0\n"
+-"	ld.d	$t0, $sp, 8\n"
+-"	ld.d	$ra, $sp, 16\n"
++"	ld.d	$ra, $sp, 8\n"
++"	ld.d	$t0, $sp, 16\n"
+ "	addi.d	$sp, $sp, 32\n"
+ "	jr	$t0\n"
+ "	.size		my_tramp2, .-my_tramp2\n"
+--- a/samples/ftrace/ftrace-direct-multi.c
++++ b/samples/ftrace/ftrace-direct-multi.c
+@@ -131,8 +131,8 @@ asm (
+ "	move	$a0, $t0\n"
+ "	bl	my_direct_func\n"
+ "	ld.d	$a0, $sp, 0\n"
+-"	ld.d	$t0, $sp, 8\n"
+-"	ld.d	$ra, $sp, 16\n"
++"	ld.d	$ra, $sp, 8\n"
++"	ld.d	$t0, $sp, 16\n"
+ "	addi.d	$sp, $sp, 32\n"
+ "	jr	$t0\n"
+ "	.size		my_tramp, .-my_tramp\n"
+--- a/samples/ftrace/ftrace-direct-too.c
++++ b/samples/ftrace/ftrace-direct-too.c
+@@ -143,8 +143,8 @@ asm (
+ "	ld.d	$a0, $sp, 0\n"
+ "	ld.d	$a1, $sp, 8\n"
+ "	ld.d	$a2, $sp, 16\n"
+-"	ld.d	$t0, $sp, 24\n"
+-"	ld.d	$ra, $sp, 32\n"
++"	ld.d	$ra, $sp, 24\n"
++"	ld.d	$t0, $sp, 32\n"
+ "	addi.d	$sp, $sp, 48\n"
+ "	jr	$t0\n"
+ "	.size		my_tramp, .-my_tramp\n"
+--- a/samples/ftrace/ftrace-direct.c
++++ b/samples/ftrace/ftrace-direct.c
+@@ -124,8 +124,8 @@ asm (
+ "	st.d	$ra, $sp, 16\n"
+ "	bl	my_direct_func\n"
+ "	ld.d	$a0, $sp, 0\n"
+-"	ld.d	$t0, $sp, 8\n"
+-"	ld.d	$ra, $sp, 16\n"
++"	ld.d	$ra, $sp, 8\n"
++"	ld.d	$t0, $sp, 16\n"
+ "	addi.d	$sp, $sp, 32\n"
+ "	jr	$t0\n"
+ "	.size		my_tramp, .-my_tramp\n"
 
 
