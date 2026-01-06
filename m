@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E7934C99D;
-	Tue,  6 Jan 2026 17:19:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAFAE34C991;
+	Tue,  6 Jan 2026 17:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719998; cv=none; b=b45m2uKdh1UonH90SG8V9MvSTQpXHzUFHh1GQyc/eNUFoy5cKCFVEWdWyR6p6sNxZR2ty5gdDxiyxg4tD/6FYFYDxg8Wla2uK3GIKqxqN4MQxToOmR5hYvtdXYjuyUPIe9QXEHOZLHlDnUKGhCCvQFW+eez5TfSo+ow4y0ep2WQ=
+	t=1767720001; cv=none; b=HBh/swOPuBsIEBVXRhO0//PtD7lXZW3oIWg6QjCRW/9A6K4GOH13teWEoauA73E2729lr3apc86Y/sCW3qZZqWK111GA/vhubxzuSrP6g6Vc7OfiJbDWXHX+h1a/Ktdu81cHVy6ycEXaYH4rU8SJAsEKUqJZvxeigR6z1DtrlRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719998; c=relaxed/simple;
-	bh=E4/AYNcTThlAb5/zUaY3k43372pyZPFYJeYYhyaiOrI=;
+	s=arc-20240116; t=1767720001; c=relaxed/simple;
+	bh=8v8QBBI8o7I6benE2A32h87TzXuVuELAiLpppZ4/kDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dYHAYqaWNo29DIXrqyqXEIlanRYkUsSGDfKOL5/5yIYVfTlIugZci0bFus0Q8zRb/68SFiiB8Zgg9o9oXo4SvINXU/Q2phKeTU21C1ii9oUgmMLoYRo20HFp1nkdmOfrV+MCmM4x97je3bivVVoAzm5LYbSSg0FOJ6UElvigYZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=giV/gO7O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DuiNXquAcnDjwUj6adBuEgZO9qHDZjHZhvX4kVaaR7+FrLcHx9Z7LiW7JjBG6eii96K48jjU+hMjhLRgRIOz+rk2C+qY8HWup+H3MF2NmraYO8p/+Opd3zQW98iIFALaioxTkRM2KQ5Bbuj7trXD4julY5TE5wBhWJLR8d74YAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MP2L5b+Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="giV/gO7O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95FA8C116C6;
-	Tue,  6 Jan 2026 17:19:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MP2L5b+Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DABA6C116C6;
+	Tue,  6 Jan 2026 17:20:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719998;
-	bh=E4/AYNcTThlAb5/zUaY3k43372pyZPFYJeYYhyaiOrI=;
+	s=korg; t=1767720001;
+	bh=8v8QBBI8o7I6benE2A32h87TzXuVuELAiLpppZ4/kDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=giV/gO7OWqSTOrOwqgML7unepcZb8sao1eY8aZBifhBC0BT4PDzGC08Lqcj5Nl/Ko
-	 0q5oEy/W87YUdbJ70SCFbyEqUXNNeSnjXbBYnafHIu/5LFo0blIcHE2w4A7HKB3me8
-	 Pp0W6hfSTMmKDxdu2oK3IkJEtmSn2JCfEZYfCq8g=
+	b=MP2L5b+QLr0X0B5aFmpTjM71ZccC6YIFqxZgnkq5vPqr1anpaEyoVAZghyi6/PIs7
+	 pBXD80ZHsOlfYbxM6Y7z6b4y1sZ9l4UdRqeoGxcFJO5vClTisMelsDLu7/qrUhmMpt
+	 jEeGKcbnQtaKw8kf+CQMycwL3JMLM4P33VIhV0BE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Shay Drory <shayd@nvidia.com>,
-	Breno Leitao <leitao@debian.org>,
+	Mateusz Berezecki <mberezecki@nvidia.com>,
 	Moshe Shemesh <moshe@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 071/567] net/mlx5: fw_tracer, Handle escaped percent properly
-Date: Tue,  6 Jan 2026 17:57:33 +0100
-Message-ID: <20260106170453.961189157@linuxfoundation.org>
+Subject: [PATCH 6.12 072/567] net/mlx5: Serialize firmware reset with devlink
+Date: Tue,  6 Jan 2026 17:57:34 +0100
+Message-ID: <20260106170453.998200605@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -56,80 +56,205 @@ Content-Transfer-Encoding: 8bit
 
 From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit c0289f67f7d6a0dfba0e92cfe661a5c70c8c6e92 ]
+[ Upstream commit 367e501f8b095eca08d2eb0ba4ccea5b5e82c169 ]
 
-The firmware tracer's format string validation and parameter counting
-did not properly handle escaped percent signs (%%). This caused
-fw_tracer to count more parameters when trace format strings contained
-literal percent characters.
+The firmware reset mechanism can be triggered by asynchronous events,
+which may race with other devlink operations like devlink reload or
+devlink dev eswitch set, potentially leading to inconsistent states.
 
-To fix it, allow %% to pass string validation and skip %% sequences when
-counting parameters since they represent literal percent signs rather
-than format specifiers.
+This patch addresses the race by using the devl_lock to serialize the
+firmware reset against other devlink operations. When a reset is
+requested, the driver attempts to acquire the lock. If successful, it
+sets a flag to block devlink reload or eswitch changes, ACKs the reset
+to firmware and then releases the lock. If the lock is already held by
+another operation, the driver NACKs the firmware reset request,
+indicating that the reset cannot proceed.
 
-Fixes: 70dd6fdb8987 ("net/mlx5: FW tracer, parse traces and kernel tracing support")
+Firmware reset does not keep the devl_lock and instead uses an internal
+firmware reset bit. This is because firmware resets can be triggered by
+asynchronous events, and processed in different threads. It is illegal
+and unsafe to acquire a lock in one thread and attempt to release it in
+another, as lock ownership is intrinsically thread-specific.
+
+This change ensures that firmware resets and other devlink operations
+are mutually exclusive during the critical reset request phase,
+preventing race conditions.
+
+Fixes: 38b9f903f22b ("net/mlx5: Handle sync reset request event")
 Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reported-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Mateusz Berezecki <mberezecki@nvidia.com>
 Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Closes: https://lore.kernel.org/netdev/hanz6rzrb2bqbplryjrakvkbmv4y5jlmtthnvi3thg5slqvelp@t3s3erottr6s/
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/1765284977-1363052-5-git-send-email-tariqt@nvidia.com
+Link: https://patch.msgid.link/1765284977-1363052-6-git-send-email-tariqt@nvidia.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/diag/fw_tracer.c       | 20 +++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ .../net/ethernet/mellanox/mlx5/core/devlink.c |  5 +++
+ .../mellanox/mlx5/core/eswitch_offloads.c     |  6 +++
+ .../ethernet/mellanox/mlx5/core/fw_reset.c    | 45 +++++++++++++++++--
+ .../ethernet/mellanox/mlx5/core/fw_reset.h    |  1 +
+ 4 files changed, 53 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-index 9c86c8c72d049..0b82a6a133d6c 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-@@ -368,11 +368,11 @@ static bool mlx5_is_valid_spec(const char *str)
- 	while (isdigit(*str) || *str == '#' || *str == '.' || *str == 'l')
- 		str++;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/devlink.c b/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
+index 511b3ba245420..e9d49afc31db5 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
+@@ -143,6 +143,11 @@ static int mlx5_devlink_reload_down(struct devlink *devlink, bool netns_change,
+ 	struct pci_dev *pdev = dev->pdev;
+ 	int ret = 0;
  
--	/* Check if it's a valid integer/hex specifier:
-+	/* Check if it's a valid integer/hex specifier or %%:
- 	 * Valid formats: %x, %d, %i, %u, etc.
- 	 */
- 	if (*str != 'x' && *str != 'X' && *str != 'd' && *str != 'i' &&
--	    *str != 'u' && *str != 'c')
-+	    *str != 'u' && *str != 'c' && *str != '%')
- 		return false;
- 
- 	return true;
-@@ -390,7 +390,11 @@ static bool mlx5_tracer_validate_params(const char *str)
- 		if (!mlx5_is_valid_spec(substr + 1))
- 			return false;
- 
--		substr = strstr(substr + 1, PARAM_CHAR);
-+		if (*(substr + 1) == '%')
-+			substr = strstr(substr + 2, PARAM_CHAR);
-+		else
-+			substr = strstr(substr + 1, PARAM_CHAR);
++	if (mlx5_fw_reset_in_progress(dev)) {
++		NL_SET_ERR_MSG_MOD(extack, "Can't reload during firmware reset");
++		return -EBUSY;
++	}
 +
- 	}
+ 	if (mlx5_dev_is_lightweight(dev)) {
+ 		if (action != DEVLINK_RELOAD_ACTION_DRIVER_REINIT)
+ 			return -EOPNOTSUPP;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+index 558962423521c..f4cb3e78d0651 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+@@ -52,6 +52,7 @@
+ #include "devlink.h"
+ #include "lag/lag.h"
+ #include "en/tc/post_meter.h"
++#include "fw_reset.h"
  
- 	return true;
-@@ -469,11 +473,15 @@ static int mlx5_tracer_get_num_of_params(char *str)
- 		substr = strstr(pstr, VAL_PARM);
- 	}
+ /* There are two match-all miss flows, one for unicast dst mac and
+  * one for multicast.
+@@ -3731,6 +3732,11 @@ int mlx5_devlink_eswitch_mode_set(struct devlink *devlink, u16 mode,
+ 	if (IS_ERR(esw))
+ 		return PTR_ERR(esw);
  
--	/* count all the % characters */
-+	/* count all the % characters, but skip %% (escaped percent) */
- 	substr = strstr(str, PARAM_CHAR);
- 	while (substr) {
--		num_of_params += 1;
--		str = substr + 1;
-+		if (*(substr + 1) != '%') {
-+			num_of_params += 1;
-+			str = substr + 1;
-+		} else {
-+			str = substr + 2;
-+		}
- 		substr = strstr(str, PARAM_CHAR);
- 	}
++	if (mlx5_fw_reset_in_progress(esw->dev)) {
++		NL_SET_ERR_MSG_MOD(extack, "Can't change eswitch mode during firmware reset");
++		return -EBUSY;
++	}
++
+ 	if (esw_mode_from_devlink(mode, &mlx5_mode))
+ 		return -EINVAL;
  
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
+index ad4d17a243de9..1411513da66b2 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
+@@ -15,6 +15,7 @@ enum {
+ 	MLX5_FW_RESET_FLAGS_DROP_NEW_REQUESTS,
+ 	MLX5_FW_RESET_FLAGS_RELOAD_REQUIRED,
+ 	MLX5_FW_RESET_FLAGS_UNLOAD_EVENT,
++	MLX5_FW_RESET_FLAGS_RESET_IN_PROGRESS,
+ };
+ 
+ struct mlx5_fw_reset {
+@@ -126,6 +127,16 @@ int mlx5_fw_reset_query(struct mlx5_core_dev *dev, u8 *reset_level, u8 *reset_ty
+ 	return mlx5_reg_mfrl_query(dev, reset_level, reset_type, NULL, NULL);
+ }
+ 
++bool mlx5_fw_reset_in_progress(struct mlx5_core_dev *dev)
++{
++	struct mlx5_fw_reset *fw_reset = dev->priv.fw_reset;
++
++	if (!fw_reset)
++		return false;
++
++	return test_bit(MLX5_FW_RESET_FLAGS_RESET_IN_PROGRESS, &fw_reset->reset_flags);
++}
++
+ static int mlx5_fw_reset_get_reset_method(struct mlx5_core_dev *dev,
+ 					  u8 *reset_method)
+ {
+@@ -241,6 +252,8 @@ static void mlx5_fw_reset_complete_reload(struct mlx5_core_dev *dev)
+ 							BIT(DEVLINK_RELOAD_ACTION_FW_ACTIVATE));
+ 		devl_unlock(devlink);
+ 	}
++
++	clear_bit(MLX5_FW_RESET_FLAGS_RESET_IN_PROGRESS, &fw_reset->reset_flags);
+ }
+ 
+ static void mlx5_stop_sync_reset_poll(struct mlx5_core_dev *dev)
+@@ -456,27 +469,48 @@ static void mlx5_sync_reset_request_event(struct work_struct *work)
+ 	struct mlx5_fw_reset *fw_reset = container_of(work, struct mlx5_fw_reset,
+ 						      reset_request_work);
+ 	struct mlx5_core_dev *dev = fw_reset->dev;
++	bool nack_request = false;
++	struct devlink *devlink;
+ 	int err;
+ 
+ 	err = mlx5_fw_reset_get_reset_method(dev, &fw_reset->reset_method);
+-	if (err)
++	if (err) {
++		nack_request = true;
+ 		mlx5_core_warn(dev, "Failed reading MFRL, err %d\n", err);
++	} else if (!mlx5_is_reset_now_capable(dev, fw_reset->reset_method) ||
++		   test_bit(MLX5_FW_RESET_FLAGS_NACK_RESET_REQUEST,
++			    &fw_reset->reset_flags)) {
++		nack_request = true;
++	}
+ 
+-	if (err || test_bit(MLX5_FW_RESET_FLAGS_NACK_RESET_REQUEST, &fw_reset->reset_flags) ||
+-	    !mlx5_is_reset_now_capable(dev, fw_reset->reset_method)) {
++	devlink = priv_to_devlink(dev);
++	/* For external resets, try to acquire devl_lock. Skip if devlink reset is
++	 * pending (lock already held)
++	 */
++	if (nack_request ||
++	    (!test_bit(MLX5_FW_RESET_FLAGS_PENDING_COMP,
++		       &fw_reset->reset_flags) &&
++	     !devl_trylock(devlink))) {
+ 		err = mlx5_fw_reset_set_reset_sync_nack(dev);
+ 		mlx5_core_warn(dev, "PCI Sync FW Update Reset Nack %s",
+ 			       err ? "Failed" : "Sent");
+ 		return;
+ 	}
++
+ 	if (mlx5_sync_reset_set_reset_requested(dev))
+-		return;
++		goto unlock;
++
++	set_bit(MLX5_FW_RESET_FLAGS_RESET_IN_PROGRESS, &fw_reset->reset_flags);
+ 
+ 	err = mlx5_fw_reset_set_reset_sync_ack(dev);
+ 	if (err)
+ 		mlx5_core_warn(dev, "PCI Sync FW Update Reset Ack Failed. Error code: %d\n", err);
+ 	else
+ 		mlx5_core_warn(dev, "PCI Sync FW Update Reset Ack. Device reset is expected.\n");
++
++unlock:
++	if (!test_bit(MLX5_FW_RESET_FLAGS_PENDING_COMP, &fw_reset->reset_flags))
++		devl_unlock(devlink);
+ }
+ 
+ static int mlx5_pci_link_toggle(struct mlx5_core_dev *dev, u16 dev_id)
+@@ -710,6 +744,8 @@ static void mlx5_sync_reset_abort_event(struct work_struct *work)
+ 
+ 	if (mlx5_sync_reset_clear_reset_requested(dev, true))
+ 		return;
++
++	clear_bit(MLX5_FW_RESET_FLAGS_RESET_IN_PROGRESS, &fw_reset->reset_flags);
+ 	mlx5_core_warn(dev, "PCI Sync FW Update Reset Aborted.\n");
+ }
+ 
+@@ -746,6 +782,7 @@ static void mlx5_sync_reset_timeout_work(struct work_struct *work)
+ 
+ 	if (mlx5_sync_reset_clear_reset_requested(dev, true))
+ 		return;
++	clear_bit(MLX5_FW_RESET_FLAGS_RESET_IN_PROGRESS, &fw_reset->reset_flags);
+ 	mlx5_core_warn(dev, "PCI Sync FW Update Reset Timeout.\n");
+ }
+ 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.h b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.h
+index d5b28525c960d..2d96b2adc1cdf 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.h
+@@ -10,6 +10,7 @@ int mlx5_fw_reset_query(struct mlx5_core_dev *dev, u8 *reset_level, u8 *reset_ty
+ int mlx5_fw_reset_set_reset_sync(struct mlx5_core_dev *dev, u8 reset_type_sel,
+ 				 struct netlink_ext_ack *extack);
+ int mlx5_fw_reset_set_live_patch(struct mlx5_core_dev *dev);
++bool mlx5_fw_reset_in_progress(struct mlx5_core_dev *dev);
+ 
+ int mlx5_fw_reset_wait_reset_done(struct mlx5_core_dev *dev);
+ void mlx5_sync_reset_unload_flow(struct mlx5_core_dev *dev, bool locked);
 -- 
 2.51.0
 
