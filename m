@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB7B3624DD;
-	Tue,  6 Jan 2026 17:50:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5FA2363C50;
+	Tue,  6 Jan 2026 17:50:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721830; cv=none; b=FfL7KXKB/U7SPZk5JW3Lqa2NRaR5H7gGHKHAX2DgByN7ULd4kRLsSv7njAJZh7y1DVPSxuksQMU2IB/+gWEHFyYPSG+1ueQK6LianPPZ5BOEZmrzmYKqV+ln8kxWWffQSXgFfZaw/3M+9eldQilV8G0KN2fxu7hzGXKlPZGPU+g=
+	t=1767721834; cv=none; b=KcU9ejkI+/2qhhPwPAeC607AZNBzOL80Uj9E1/6QX13rgEHHsLYht90z0TTSFi1RZbzwd0qO5i5gwuqrLCHiWPNwJz1fjbLgWYwSwyVv8guS3wlli0Ok8kemY83NftqsWqgal8NhIp1R2XfVrZTWCUp/8sXu2mzoggY+5sLUBz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721830; c=relaxed/simple;
-	bh=pxS7IxNKlzHA6KXjkfs4oGbVeCCaSMcTJfcH0UxtLGs=;
+	s=arc-20240116; t=1767721834; c=relaxed/simple;
+	bh=OxlhnbOmN8u0vbqZrSsbJc4uT1QpiWJ//kMeMvOSSs0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oZ8sHBEMXN+vU0lmQWRpeAB9wijxuvzQO1Pu2JHUJ6Bmjyyj/v+FSANoMbQhZ1u+obPFiMLaKL64t8AIFGbIyjSvil7KCcu8NpjIc+4Lmxmx8+seahDPP02fIeaMoJU+bsj98HfVJ6CUW9i19Z1HVs+e6snG9eLfu1Y/rw+BFIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aBbltGNT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gV497GVLcQuu9TCRDssvl6tldrIlgnBycUl3tMd4rqZCgZjF8qIMeGG2TgdZAYCmrYDU2FvO1L84oNlT1UDLQHsRs8zRRFbJNe75hJJrNgDp+WaLftYBIeI0yabhk1Q7Byz89bFpFvBug6DFHw3pRqV0MXgaPgCL4RMhNZyaico=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bXbfn7F9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aBbltGNT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D786BC16AAE;
-	Tue,  6 Jan 2026 17:50:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bXbfn7F9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A94FC116C6;
+	Tue,  6 Jan 2026 17:50:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721830;
-	bh=pxS7IxNKlzHA6KXjkfs4oGbVeCCaSMcTJfcH0UxtLGs=;
+	s=korg; t=1767721833;
+	bh=OxlhnbOmN8u0vbqZrSsbJc4uT1QpiWJ//kMeMvOSSs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aBbltGNTNPckhtlvUCCoOnCLx+0uHkb4TPDqHkjxEaSIMXMhmwHXPScD55Q5Y2zSl
-	 xZmx2XiSmZJcGZZFcjxsj9r94CNaBwBkoxticlrYAQdgUV0a3PExg5vbJ2GSkVZZbB
-	 Lhy3bS+hcbu4ZQEtQCf8BlgDfgjTv3JZgsS3S2Co=
+	b=bXbfn7F9yls6xf6RnyYVnEOE/wYII1hSApJZNHeuqvf2yWjWNlFq9vAWl6xCrkGQT
+	 1+7LqgL3zNJ2xlr7SWFM9adLcfIqY1+iTQEGpJ/B54wwyrwtcn8xQf4+sxELkq5II2
+	 Q8VGTd+fFSaZUkBMXBKzzbSbOwZQNmKEuAsEoIxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Li Zhijian <lizhijian@fujitsu.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 083/312] ksmbd: Fix memory leak in get_file_all_info()
-Date: Tue,  6 Jan 2026 18:02:37 +0100
-Message-ID: <20260106170550.840365693@linuxfoundation.org>
+Subject: [PATCH 6.18 084/312] IB/rxe: Fix missing umem_odp->umem_mutex unlock on error path
+Date: Tue,  6 Jan 2026 18:02:38 +0100
+Message-ID: <20260106170550.878405946@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -52,41 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Li Zhijian <lizhijian@fujitsu.com>
 
-[ Upstream commit 0c56693b06a68476ba113db6347e7897475f9e4c ]
+[ Upstream commit 3c68cf68233e556e0102f45b69f7448908dc1f44 ]
 
-In get_file_all_info(), if vfs_getattr() fails, the function returns
-immediately without freeing the allocated filename, leading to a memory
-leak.
+rxe_odp_map_range_and_lock() must release umem_odp->umem_mutex when an
+error occurs, including cases where rxe_check_pagefault() fails.
 
-Fix this by freeing the filename before returning in this error case.
-
-Fixes: 5614c8c487f6a ("ksmbd: replace generic_fillattr with vfs_getattr")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 2fae67ab63db ("RDMA/rxe: Add support for Send/Recv/Write/Read with ODP")
+Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+Link: https://patch.msgid.link/20251226094112.3042583-1-lizhijian@fujitsu.com
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 4 +++-
+ drivers/infiniband/sw/rxe/rxe_odp.c | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 6a94cda0927d..2b59c282cda5 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -4933,8 +4933,10 @@ static int get_file_all_info(struct ksmbd_work *work,
+diff --git a/drivers/infiniband/sw/rxe/rxe_odp.c b/drivers/infiniband/sw/rxe/rxe_odp.c
+index f58e3ec6252f..4d4e3b324dd2 100644
+--- a/drivers/infiniband/sw/rxe/rxe_odp.c
++++ b/drivers/infiniband/sw/rxe/rxe_odp.c
+@@ -179,8 +179,10 @@ static int rxe_odp_map_range_and_lock(struct rxe_mr *mr, u64 iova, int length, u
+ 			return err;
  
- 	ret = vfs_getattr(&fp->filp->f_path, &stat, STATX_BASIC_STATS,
- 			  AT_STATX_SYNC_AS_STAT);
--	if (ret)
-+	if (ret) {
-+		kfree(filename);
- 		return ret;
-+	}
+ 		need_fault = rxe_check_pagefault(umem_odp, iova, length);
+-		if (need_fault)
++		if (need_fault) {
++			mutex_unlock(&umem_odp->umem_mutex);
+ 			return -EFAULT;
++		}
+ 	}
  
- 	ksmbd_debug(SMB, "filename = %s\n", filename);
- 	delete_pending = ksmbd_inode_pending_delete(fp);
+ 	return 0;
 -- 
 2.51.0
 
