@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8E6355053;
-	Tue,  6 Jan 2026 17:24:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B02BA35505D;
+	Tue,  6 Jan 2026 17:24:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720279; cv=none; b=mlwYzDm4HFiHpM0Lywvmr0yTVKvfP7ZgQEGD7F5WneGW2viSmGXHh/yefdELbv8KjkNJpiwTiL05k4r0aoI1xlqAIeE4YzbrrUIoqhFsXwUJmlfGnmIQU8+lSHzHfKzZ5Dvk8ORtHpGl7/58rfa7gJjXVd1Waztrw9Rh8Lp80N8=
+	t=1767720282; cv=none; b=BME6UIyvi88WjhrRNPKRlJ7wwsKF7mw87Z+nWwbb6B547h0QQHsBSPZRnNPzSoPW7zwcuTtW8FpG07uHd7HXjpGh/PRHj2BEhmKJHr6d+KR04vTj/edXQDHtojsT2s1k4hBqsMUFvSynRIRr5rd6/l02VTnH9X/ESRg6dNmsTu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720279; c=relaxed/simple;
-	bh=+ykNsfLG+oY8XfwmP0gPox5CpXbQykrfHLEq6wUAI9I=;
+	s=arc-20240116; t=1767720282; c=relaxed/simple;
+	bh=CotsII0B3htusyeRr7G8ziTKBO4HHU7ngY0U+k5v5Q4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M6VUiAdxq5iR9yxXBDaEo1lYKEcMUBJEoGw+7Li2fp+hyMVIO9jKA0ASHZQ1UrHCabisy6hxKiSZiYGf0dwfDnwrJ+PHSULTiYuKzOzS+mtxapOMktwlr9r5aH4NjFPyfeRcPoHQj7WP9AhDl/MwQvRnn2ETA6yWKQ4/Ir38uBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WqOWgFzV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UYZjiDj7w22LYZx/a8F2Wd00Ev4l0qrLq7Obl2kLMyqIBOsrBk6l5Oin3QDVnvU6VPC0mctC6SCbAjwEzP4FOnCqTYrYIQ/PojpJUxQxboRqvVwjrIWarKvHUeAoKttz2TK15+l8Axlrym14BDBdoVUW9HIsApVdt6fTeFVpTew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gMiuBJAi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WqOWgFzV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95320C116C6;
-	Tue,  6 Jan 2026 17:24:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gMiuBJAi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 133FAC116C6;
+	Tue,  6 Jan 2026 17:24:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720279;
-	bh=+ykNsfLG+oY8XfwmP0gPox5CpXbQykrfHLEq6wUAI9I=;
+	s=korg; t=1767720282;
+	bh=CotsII0B3htusyeRr7G8ziTKBO4HHU7ngY0U+k5v5Q4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WqOWgFzVDnZsNbY3ui/UsBg8cnXBq4CxmR7+m3xkr3v3feu41nWQUuUEgvQuopegj
-	 qyrN+F26vje1DRkcCh2SqmfEJICaKD+q3LP68goqLztIp+m/NKhmC7lCQj8aPCGs6a
-	 X6cybIYUyPBx+EE+fyp84tJqFR8ZVHp2d6srZK1Q=
+	b=gMiuBJAipnwZLWXvE5BhItHrICTI46T8Rhqvl57Xy3F/btpbUn/QasVTsiiOf9HRK
+	 uT6ZHk7yQCG+HVohQxGlDECHcZJAF9sCYZ7iafKTJPRhlflmJJ6l/QlFjb912p5hcJ
+	 o6tvsmAOK6J//lN50pkZ6XlZsbHtS9aI8LcD1gHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Udipto Goswami <udipto.goswami@oss.qualcomm.com>
-Subject: [PATCH 6.12 189/567] usb: dwc3: keep susphy enabled during exit to avoid controller faults
-Date: Tue,  6 Jan 2026 17:59:31 +0100
-Message-ID: <20260106170458.319450367@linuxfoundation.org>
+	Haoxiang Li <haoxiang_li2024@163.com>
+Subject: [PATCH 6.12 190/567] usb: renesas_usbhs: Fix a resource leak in usbhs_pipe_malloc()
+Date: Tue,  6 Jan 2026 17:59:32 +0100
+Message-ID: <20260106170458.356266106@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,53 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Udipto Goswami <udipto.goswami@oss.qualcomm.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit e1003aa7ec9eccdde4c926bd64ef42816ad55f25 upstream.
+commit 36cc7e09df9e43db21b46519b740145410dd9f4a upstream.
 
-On some platforms, switching USB roles from host to device can trigger
-controller faults due to premature PHY power-down. This occurs when the
-PHY is disabled too early during teardown, causing synchronization
-issues between the PHY and controller.
+usbhsp_get_pipe() set pipe's flags to IS_USED. In error paths,
+usbhsp_put_pipe() is required to clear pipe's flags to prevent
+pipe exhaustion.
 
-Keep susphy enabled during dwc3_host_exit() and dwc3_gadget_exit()
-ensures the PHY remains in a low-power state capable of handling
-required commands during role switch.
-
+Fixes: f1407d5c6624 ("usb: renesas_usbhs: Add Renesas USBHS common code")
 Cc: stable <stable@kernel.org>
-Fixes: 6d735722063a ("usb: dwc3: core: Prevent phy suspend during init")
-Suggested-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Udipto Goswami <udipto.goswami@oss.qualcomm.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://patch.msgid.link/20251126054221.120638-1-udipto.goswami@oss.qualcomm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Link: https://patch.msgid.link/20251204132129.109234-1-haoxiang_li2024@163.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/gadget.c |    2 +-
- drivers/usb/dwc3/host.c   |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/renesas_usbhs/pipe.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -4793,7 +4793,7 @@ void dwc3_gadget_exit(struct dwc3 *dwc)
- 	if (!dwc->gadget)
- 		return;
+--- a/drivers/usb/renesas_usbhs/pipe.c
++++ b/drivers/usb/renesas_usbhs/pipe.c
+@@ -713,11 +713,13 @@ struct usbhs_pipe *usbhs_pipe_malloc(str
+ 	/* make sure pipe is not busy */
+ 	ret = usbhsp_pipe_barrier(pipe);
+ 	if (ret < 0) {
++		usbhsp_put_pipe(pipe);
+ 		dev_err(dev, "pipe setup failed %d\n", usbhs_pipe_number(pipe));
+ 		return NULL;
+ 	}
  
--	dwc3_enable_susphy(dwc, false);
-+	dwc3_enable_susphy(dwc, true);
- 	usb_del_gadget(dwc->gadget);
- 	dwc3_gadget_free_endpoints(dwc);
- 	usb_put_gadget(dwc->gadget);
---- a/drivers/usb/dwc3/host.c
-+++ b/drivers/usb/dwc3/host.c
-@@ -223,7 +223,7 @@ void dwc3_host_exit(struct dwc3 *dwc)
- 	if (dwc->sys_wakeup)
- 		device_init_wakeup(&dwc->xhci->dev, false);
- 
--	dwc3_enable_susphy(dwc, false);
-+	dwc3_enable_susphy(dwc, true);
- 	platform_device_unregister(dwc->xhci);
- 	dwc->xhci = NULL;
- }
+ 	if (usbhsp_setup_pipecfg(pipe, is_host, dir_in, &pipecfg)) {
++		usbhsp_put_pipe(pipe);
+ 		dev_err(dev, "can't setup pipe\n");
+ 		return NULL;
+ 	}
 
 
