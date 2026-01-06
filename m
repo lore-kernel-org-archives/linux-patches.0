@@ -1,110 +1,131 @@
-Received: from mail-oa1-f66.google.com (mail-oa1-f66.google.com [209.85.160.66])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 790002D46A2
-	for <patches@lists.linux.dev>; Tue,  6 Jan 2026 22:56:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E3982E542C;
+	Tue,  6 Jan 2026 23:08:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767740185; cv=none; b=PN6qIYfBvkRhCSR0Dqbk03oxPuSe8V+UVJggZiOt3E3DSkWDX180LE6qUqMMXSOkakXkMlGK+uyVwTSdqv0v2YiUSRTrwECXSd0CJxhoEYHNcwhPcApip4qXz4qNuoPclLh6R6SZGw4hxvUMPLth+SaWzT9k9llG0++N0TgN9iw=
+	t=1767740908; cv=none; b=BLu6krurSy8F0cvjStQeImXsABYVVg00mjYeTankMNLKJtNL3yk1DAtoARyujzYPkitOPFA3FVhkJ78B1a1kWlGXL5/9mO76Ci4lipXmDB+4I+GL9DUF1EFIaENYTTtlR117c70vyoAysdXtzslkzyg8e6+yjRicDaD9K6Pn4xs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767740185; c=relaxed/simple;
-	bh=A+XSURg7K9EwgUvytmexG4/kwwx+ACrDpqBOoY2K9QE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HXxJ/T2AqXpwlx4zcKPuqSrHXzPOrRSyO85QW2+YjQF/+5M7BghIV4WCP+TsvKeMyllFf+Ec02oack07/cHkmV9+PjOR2axcrMiHWL7G8CIbatQFU841OII3GZskSP8hRcpIb5G20FO8g74gXL64qnbsewWDmlrzcIdNfjiwY1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UnqC4gVK; arc=none smtp.client-ip=209.85.160.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+	s=arc-20240116; t=1767740908; c=relaxed/simple;
+	bh=R3l3xQR8S+p5FfGlYDNe7OCmr++dx0zddIaH8n9qDPg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=jbsNYfXDNkt49Y9kRKRn4BfiuWEGQ+EapCKKCnXuipM2Ql3mnqF8X16TRP6j1PqRmdgD0i5FEX8qU7bQMRMCo6YZ1bytAmDF4Avf3T9d7OHtn0uD0WIf9ywcOIPYcaZr4aiS4KooDmtJaPFshKZSExlytyu2kcs587itz6wt58E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=txifPGy6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UnqC4gVK"
-Received: by mail-oa1-f66.google.com with SMTP id 586e51a60fabf-3ece54945d9so621354fac.0
-        for <patches@lists.linux.dev>; Tue, 06 Jan 2026 14:56:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1767740182; x=1768344982; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rlEgTGvQwC//J0kCOTtW9TufRYi3qibIbd/C3rGyaPU=;
-        b=UnqC4gVKnRFHy/4xYQ0TXovypONUEhqedDS3zIgVI4J7d/avK9dQsE47VgmvYcYRjI
-         9/ubh87fmvE8AhHE7ui6gdgRwTmklgeaf8ORVizQZBCUG0Qbqq1SWW/IUKuA5Ap8fyDM
-         qN1A+b21xWpZyA7kWyl84T0KorMuswmJsRUDU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767740182; x=1768344982;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rlEgTGvQwC//J0kCOTtW9TufRYi3qibIbd/C3rGyaPU=;
-        b=XPwxTudJqR5dfB+VTTKwSmsMhC6/y1tHkRJjlKrE8OdXbrOUIoP2+2XC9fVLRsQGHQ
-         gUa7dq3Q/b1m1yAeOdlDbnKlBOLhNVP9K4V3EftxuPjcXjkOk53wq3KDet+h5yCwONEE
-         xT2M2axLlimcqaLA6GYBnRfOxbDdQtCdf+0rFhVSm+iyrAHVzoGRMapXO3XHEF7nKlDK
-         eTy1QUXKyud+hde2UtDzWVomlIDcxPS8ekBwvqW60Qguea140nBHcoEzAnFR7j/JQ7Rv
-         we8UDbsPP71gf/t25Z8ffm9vZ6LYwypqtNxeRehVuttfoXyeS9w4iEuUpf5RTX7l/71q
-         Pc3g==
-X-Gm-Message-State: AOJu0Yzn07NZY63E9tByCeX097JdhaJ1CV1+AWEujEkiokSWUpw5RHTN
-	N211aKrjBDT5q9ypgLnbj58GSVtUGPdXUbNEWod1phvHboSnDjL1wDITQgG7RGY6g54=
-X-Gm-Gg: AY/fxX5FXZLu0anx0zrv58utNGuJRtK9Q7ndTI8oipxNxtozOtaRmYmFFTV/LipuXdG
-	oGD+6HhQTC10g44VmlUKv25ekNFWVPNjB9TBPYFRakpoqGyddt7gnjK9bNpS2h+bGzry9X8H12/
-	umlQNq/221RCT4fo8DwAI6Yy1j6Z2qv8DLgqqZBevwESke+K1DFXOwLsI1Van+TIUTVOXIJwUMs
-	3CTWS2dDooQgJ7B1Nd6EVVPAuHxKOwtvKBAN8T7oUGg0nWbe6SRZ3d6ZMk+PhjLl3X/lMCHZbp+
-	Pyqx7SADO7RVBTq+ExceON6xsSGjaPFYb1wpIN7sh+Y+khLRX5kBJmxkHu+U45G2v/Q7i/QXttx
-	B0uPYCGP6IBzZdRx7rX4kL+40QoeJIHr54w0SJJ4L+wVSuUtsfm42m8QaUPlFC+JkE8YIfbFWZB
-	AyDFuSRrYRJXUy5vg81uyPLNk=
-X-Google-Smtp-Source: AGHT+IFAuV1BxuoZwVQSFSBXE5zpDFi9jBI42cEVmFxkFCru49vqQ7tHYN9dkhTgJRw8CjbAd0tKDQ==
-X-Received: by 2002:a05:6871:739c:b0:3f1:664f:e8db with SMTP id 586e51a60fabf-3ffc09fa492mr292992fac.23.1767740182243;
-        Tue, 06 Jan 2026 14:56:22 -0800 (PST)
-Received: from [192.168.1.14] ([38.175.187.108])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-3ffa50ecb58sm2056089fac.18.2026.01.06.14.56.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Jan 2026 14:56:21 -0800 (PST)
-Message-ID: <51c18a00-2ac6-46b0-be9b-b7b1587a382b@linuxfoundation.org>
-Date: Tue, 6 Jan 2026 15:56:20 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="txifPGy6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7048C116C6;
+	Tue,  6 Jan 2026 23:08:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767740907;
+	bh=R3l3xQR8S+p5FfGlYDNe7OCmr++dx0zddIaH8n9qDPg=;
+	h=From:Date:Subject:To:Cc:From;
+	b=txifPGy6Q4SPHxre+P05qT/izjVZYGN8Aenv5kfhT/ja0W2DuPyxpKdYrCsT2svbI
+	 ewNoNpEkNh8A5oXKGAaGdcLzXnl9+LFQHHFihcpuOezuPnmjSNGUsV/EdXkSFKJ6fs
+	 wnaYvOZU7Cpsmu2iKAo42T93ryW8CRSsSzicMluDeuWV5WXAieSlALCOKgy36Kkqeq
+	 1UiI67G34nqMzroocQzhpehiJBt6ZpweweB/uOwYihb50AZnQy3jVVm5sjjizM7ECH
+	 A/mjs50Ms4ppTJbPq6Cts/bcI8WqiUPoeNia1dwALeS4OvwUZ8x1yAHbtHOsT4EC1S
+	 yyqmEg5wQazng==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 06 Jan 2026 16:08:18 -0700
+Subject: [PATCH] ALSA: pcm: Revert bufs move in
+ snd_pcm_xfern_frames_ioctl()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.12 000/567] 6.12.64-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com,
- Shuah Khan <skhan@linuxfoundation.org>
-References: <20260106170451.332875001@linuxfoundation.org>
-Content-Language: en-US
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20260106-pcm_native-revert-var-move-free-for-old-clang-v1-1-06a03693423d@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAOGVXWkC/yWNUQrCMBBEr1L224W01Wq9ShFZk61G2qRsYhBK7
+ +6qPwMPZuatkFg8JzhXKwgXn3wMCvWuAvugcGf0Thka03SmNh0udr4Gyr4wap8lYyHBOSqPwhp
+ RME4O7aRrJOrpuHf9oW1PoJ+L8OjfP99w+XN63Z5s81cC2/YBWH3W/JEAAAA=
+X-Change-ID: 20260106-pcm_native-revert-var-move-free-for-old-clang-aa9a74d95338
+To: Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>
+Cc: Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, 
+ Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, 
+ linux-sound@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
+ kernel test robot <lkp@intel.com>, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3042; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=R3l3xQR8S+p5FfGlYDNe7OCmr++dx0zddIaH8n9qDPg=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDJmxU18+Lm9Y0qtx8PoqjdVpwWphvtfXvnCbkpSpFrdxZ
+ bpH67f9HaUsDGJcDLJiiizVj1WPGxrOOct449QkmDmsTCBDGLg4BWAizW2MDO2y3Un8eR6q3RKx
+ ei//n9so6HYv5bLt3JPn2TtcH7BXajP8zxXknh+q9qvD4Zv+Kbl0u/a7pT6BgbwiQa09gSXcMmv
+ YAA==
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On 1/6/26 09:56, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.12.64 release.
-> There are 567 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 08 Jan 2026 17:03:16 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.64-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-> 
+When building with clang older than 17 targeting architectures that use
+asm goto for their get_user() and put_user(), such as arm64, after
+commit f3d233daf011 ("ALSA: pcm: Relax __free() variable declarations"),
+there are bogus errors around skipping over a variable declared with the
+cleanup attribute:
 
-Compiled and booted on my test system. No dmesg regressions.
+  sound/core/pcm_native.c:3308:6: error: cannot jump from this asm goto statement to one of its possible targets
+          if (put_user(result, &_xfern->result))
+              ^
+  ...
+  arch/arm64/include/asm/uaccess.h:298:2: note: expanded from macro '__put_mem_asm'
+          asm goto(
+          ^
+  sound/core/pcm_native.c:3295:6: note: possible target of asm goto statement
+          if (put_user(0, &_xfern->result))
+              ^
+  ...
+  sound/core/pcm_native.c:3300:8: note: jump exits scope of variable with __attribute__((cleanup))
+          void *bufs __free(kfree) =
+                ^
 
-Tested-by: Shuah Khan <skhan@linuxfoundation.org>
+clang-17 fixed a bug in clang's jump scope checker [1] where all labels
+in a function were checked as valid targets for all asm goto instances
+in a function, regardless of whether they were actual targets in a
+paricular asm goto's provided list of labels.
 
-thanks,
--- Shuah
+To workaround this, revert the change done to
+snd_pcm_xfern_frames_ioctl() by commit f3d233daf011 ("ALSA: pcm: Relax
+__free() variable declarations") to avoid a variable declared with
+cleanup from existing between multiple uses of asm goto. There are no
+other uses of cleanup in this function so there should be low risk from
+moving this variable back to the top of the function.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1886 [1]
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202512190802.i4Jzbcsl-lkp@intel.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ sound/core/pcm_native.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
+index 4352c0a40f8d..30ace7112c27 100644
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -3286,6 +3286,7 @@ static int snd_pcm_xfern_frames_ioctl(struct snd_pcm_substream *substream,
+ {
+ 	struct snd_xfern xfern;
+ 	struct snd_pcm_runtime *runtime = substream->runtime;
++	void *bufs __free(kfree) = NULL;
+ 	snd_pcm_sframes_t result;
+ 
+ 	if (runtime->state == SNDRV_PCM_STATE_OPEN)
+@@ -3297,8 +3298,7 @@ static int snd_pcm_xfern_frames_ioctl(struct snd_pcm_substream *substream,
+ 	if (copy_from_user(&xfern, _xfern, sizeof(xfern)))
+ 		return -EFAULT;
+ 
+-	void *bufs __free(kfree) =
+-		memdup_array_user(xfern.bufs, runtime->channels, sizeof(void *));
++	bufs = memdup_array_user(xfern.bufs, runtime->channels, sizeof(void *));
+ 	if (IS_ERR(bufs))
+ 		return PTR_ERR(bufs);
+ 	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
+
+---
+base-commit: 94968fc3009d4bd7e7e1300abd7037f3dde585ed
+change-id: 20260106-pcm_native-revert-var-move-free-for-old-clang-aa9a74d95338
+
+Best regards,
+--  
+Nathan Chancellor <nathan@kernel.org>
+
