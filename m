@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F62D2D8762;
-	Tue,  6 Jan 2026 17:33:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A7B2D948A;
+	Tue,  6 Jan 2026 17:33:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720791; cv=none; b=CSx1nfx3a74Aef5f0NfFfqmPoELnkFl3HpKm+mhXJfNyLEhPS7F/otyKmugjE/+BTQOHZ8kawPHhQ5y3P8BOu2ZwQ2+yiO3NGWzLuIsNlUb3yaf/iL8QMUfyIeVNnn+XeEVhRO0hy4/b8RUUDE7joT+S/qiM5PUd3kqOhlj+XzE=
+	t=1767720794; cv=none; b=ciykY4EbLg4SUHzJlhYVYAps7vstKGjPJWNCYSRE4DyAnq80Fm+HB6x8dyVQ7FuQJqIU5iNxhoNVRQmMHqrPX6Sb+QetV1py4dITOluep6xMSANSqx7KGQD2FpmlaWU6T89+BtBzu3BiYOswsc53sWDOdJmmShizKEcp31Q7TNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720791; c=relaxed/simple;
-	bh=2HqYaLeSNaHg+jIE3VPHyvZv7RgcdD2wzabG/FQ93E4=;
+	s=arc-20240116; t=1767720794; c=relaxed/simple;
+	bh=cijmrRb8TJXO93/5TUX+59GG+Gwuit++chylVjNdK9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I7KkWJmk+Z0TUiJFmnkbIFfS9P8fNmN+ygrLQyfWPF05f2+fhe9dCAsOKXR+JkegC4siFNCKIN4uABY+RoTwPJsCBcshizKsHgkD60/e3+8FOsXCKnp7Sj6t7ftjNhj3Aby4tUIhfA5apMT0FmtsU0mzVFMq8gfg+Gt43hhlXL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=brJYuvbi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jdy22hjGzIzATdsL9/snP3Jrv4wRUJpXX3VOtnLNHQnEKFnCXyBA4C/NYhbxB1RmDTcqZ17kUOtrDFsPTrSldHnPkGKglcnnry6Ol1sDCLph+Rm260psP6VL4owBSSsK+ib5F7oY3uS0aJixqSuL5zULTNcxqLSwCezAJYyF2Gk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vXf9Lo01; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="brJYuvbi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 958D7C116C6;
-	Tue,  6 Jan 2026 17:33:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vXf9Lo01"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7C51C116C6;
+	Tue,  6 Jan 2026 17:33:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720791;
-	bh=2HqYaLeSNaHg+jIE3VPHyvZv7RgcdD2wzabG/FQ93E4=;
+	s=korg; t=1767720794;
+	bh=cijmrRb8TJXO93/5TUX+59GG+Gwuit++chylVjNdK9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=brJYuvbiZmBObSgTqAJBhQxMa1jZwinnYohBHJm59C72QNppXf/oigr1f/nxtZIbt
-	 dQGrUovDdtdAQDaYd/nFik+FUwQhxZdmdr1h/nXUGTZrdGZsx9r+asuO9Jb6Mkt0aY
-	 W3zfm0TG2wNaNcKLjJZJW9ZceSI+/vo07lKhE1uo=
+	b=vXf9Lo01Q1djjZkTVarstolvump/Qt7PvGuEaZSZKO7kiMODOuD3VIrfnYhNHKkSg
+	 at1bo/yvJgpIlSRoFxvhici/y/qhKLvoU8rcyVNRcNifTbAykmmCgQuIJxu/EqJAj2
+	 aVSkHrFcFFcqRCNAzNBb1Tt6FNuy4xAqu8XXWOBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Zhang <cong.zhang@oss.qualcomm.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Alexey Skidanov <alexey.skidanov@intel.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 342/567] blk-mq: skip CPU offline notify on unmapped hctx
-Date: Tue,  6 Jan 2026 18:02:04 +0100
-Message-ID: <20260106170503.978357162@linuxfoundation.org>
+Subject: [PATCH 6.12 316/567] genalloc.h: fix htmldocs warning
+Date: Tue,  6 Jan 2026 18:01:38 +0100
+Message-ID: <20260106170503.017804002@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,37 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Zhang <cong.zhang@oss.qualcomm.com>
+From: Andrew Morton <akpm@linux-foundation.org>
 
-[ Upstream commit 10845a105bbcb030647a729f1716c2309da71d33 ]
+[ Upstream commit 5393802c94e0ab1295c04c94c57bcb00222d4674 ]
 
-If an hctx has no software ctx mapped, blk_mq_map_swqueue() never
-allocates tags and leaves hctx->tags NULL. The CPU hotplug offline
-notifier can still run for that hctx, return early since hctx cannot
-hold any requests.
+WARNING: include/linux/genalloc.h:52 function parameter 'start_addr' not described in 'genpool_algo_t'
 
-Signed-off-by: Cong Zhang <cong.zhang@oss.qualcomm.com>
-Fixes: bf0beec0607d ("blk-mq: drain I/O when all CPUs in a hctx are offline")
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 52fbf1134d47 ("lib/genalloc.c: fix allocation of aligned buffer from non-aligned chunk")
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Closes: https://lkml.kernel.org/r/20251127130624.563597e3@canb.auug.org.au
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Tested-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Alexey Skidanov <alexey.skidanov@intel.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/genalloc.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index db72779760d5..1891863dcba1 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -3658,7 +3658,7 @@ static int blk_mq_hctx_notify_offline(unsigned int cpu, struct hlist_node *node)
- 			struct blk_mq_hw_ctx, cpuhp_online);
- 	int ret = 0;
- 
--	if (blk_mq_hctx_has_online_cpu(hctx, cpu))
-+	if (!hctx->nr_ctx || blk_mq_hctx_has_online_cpu(hctx, cpu))
- 		return 0;
- 
- 	/*
+diff --git a/include/linux/genalloc.h b/include/linux/genalloc.h
+index 0bd581003cd5..60de63e46b33 100644
+--- a/include/linux/genalloc.h
++++ b/include/linux/genalloc.h
+@@ -44,6 +44,7 @@ struct gen_pool;
+  * @nr: The number of zeroed bits we're looking for
+  * @data: optional additional data used by the callback
+  * @pool: the pool being allocated from
++ * @start_addr: start address of memory chunk
+  */
+ typedef unsigned long (*genpool_algo_t)(unsigned long *map,
+ 			unsigned long size,
 -- 
 2.51.0
 
