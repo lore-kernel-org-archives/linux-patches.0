@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE0A8346A10;
-	Tue,  6 Jan 2026 17:15:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1862634679C;
+	Tue,  6 Jan 2026 17:15:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719721; cv=none; b=ZHAY4df3Fv5/1SLxaX4+Oc1rxDWNth2KB3UigssqdPpjCkDfqeEO6wMle/W/qnAiH+2REpvu0Jhc9jzxFlHtmFVLgI2VsHYypbhlLexjPfyIDO05Jrngiwc+slCFjQjB5SNbow+zV3uxtf8HBaxUFrSdUu5zz6jrR8NvQKqYjzI=
+	t=1767719724; cv=none; b=A8nKO4jWWjoNnBdn5LRCiuQBuwcaFJWMxLtDinwRmLusna1En5z652co1XMMdnIsVm9R9dpfmwuv8JQLitAC/9QsrlL3nW0pqg4hYCBmnu6CtHgvNrm8Zen4aNjQL8hYyR4D0RiJFeJRqn0WR22ZBhNMU2HeVYGNQKFup710P3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719721; c=relaxed/simple;
-	bh=9zu4IQR3wN7/Xj47hUhuQImCBKREN8tnuY5gZfVbDnQ=;
+	s=arc-20240116; t=1767719724; c=relaxed/simple;
+	bh=kLQOaamVBlocJ8A7n225Htr2sPyD2TSY/EAaoaTY7sg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bIQrpZECBCFSQBTkaOFs+2dg7eK13a6Gq1Th9eRxE1D8vF4tYj+hWUQWC0Hq9P1OWiiQdJ598w/P4Lk726QGUAYBDOTabnlheHRw2nXvdEOeQnHhGkF0EV8n60JFh7L9Jiz6kKKoaShgTcUpoO+mrsAPMux1KH/DxGn3vI0wxVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jLrxYDqs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TjJLheqFZYVwK8GOLS0wUzcn7D+l1k+K+pZslTgCaEhKjnXYiIMCutuc0EidfJV7euSC8zQxjO6rS5kImPsuq19zL6mKaiATZPEY/4R2ZA/4Crcz3kX76bc1E98zfggdRv9hO2p/ib6OHaHAvsCm0GIrkuxSdOjdPqTJJIntmqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QYbRUKHb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jLrxYDqs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3D9EC16AAE;
-	Tue,  6 Jan 2026 17:15:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QYbRUKHb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42623C116C6;
+	Tue,  6 Jan 2026 17:15:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719720;
-	bh=9zu4IQR3wN7/Xj47hUhuQImCBKREN8tnuY5gZfVbDnQ=;
+	s=korg; t=1767719723;
+	bh=kLQOaamVBlocJ8A7n225Htr2sPyD2TSY/EAaoaTY7sg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jLrxYDqswuA6hyBOaLVjcReGiFulvMRjAOzBzJLaLkY3rQDjksKuUDn8+kpSTnBKP
-	 OzkL+RnqqQiup4aPjeviwpPP+WRiuUpVYxtOqDkdDqlEPRQv8BIAoe18k0xvBt5INI
-	 dc7pKfqZlasxZhhlqK1suGR48Xw1A7/oWpACue4A=
+	b=QYbRUKHbkSCqcqTpeoA80dCA7XqhEcVA3G7InyiDl2vfQuXmoy83E/7TLRUjsnnfO
+	 +13sxTMhIGp4tw/AKNfzirIo9DFEUeIGPxmb7qndH11+aqurUkdp1IEr822RO4pItl
+	 MFIsLkdBkceKFy8G18SJ6EvraVLNR1hph/Ij7TQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 002/567] btrfs: fix a potential path leak in print_data_reloc_error()
-Date: Tue,  6 Jan 2026 17:56:24 +0100
-Message-ID: <20260106170451.432906762@linuxfoundation.org>
+Subject: [PATCH 6.12 020/567] fs/ntfs3: Support timestamps prior to epoch
+Date: Tue,  6 Jan 2026 17:56:42 +0100
+Message-ID: <20260106170452.089768440@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,47 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 313ef70a9f0f637a09d9ef45222f5bdcf30a354b ]
+[ Upstream commit 5180138604323895b5c291eca6aa7c20be494ade ]
 
-Inside print_data_reloc_error(), if extent_from_logical() failed we
-return immediately.
+Before it used an unsigned 64-bit type, which prevented proper handling
+of timestamps earlier than 1970-01-01. Switch to a signed 64-bit type to
+support pre-epoch timestamps. The issue was caught by xfstests.
 
-However there are the following cases where extent_from_logical() can
-return error but still holds a path:
-
-- btrfs_search_slot() returned 0
-
-- No backref item found in extent tree
-
-- No flags_ret provided
-  This is not possible in this call site though.
-
-So for the above two cases, we can return without releasing the path,
-causing extent buffer leaks.
-
-Fixes: b9a9a85059cd ("btrfs: output affected files when relocation fails")
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ntfs3/ntfs_fs.h | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 01a1b979b717f..ce13b0ec978ed 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -253,6 +253,7 @@ static void print_data_reloc_error(const struct btrfs_inode *inode, u64 file_off
- 	if (ret < 0) {
- 		btrfs_err_rl(fs_info, "failed to lookup extent item for logical %llu: %d",
- 			     logical, ret);
-+		btrfs_release_path(&path);
- 		return;
- 	}
- 	eb = path.nodes[0];
+diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
+index ff7f241a25b24..a1040060b081f 100644
+--- a/fs/ntfs3/ntfs_fs.h
++++ b/fs/ntfs3/ntfs_fs.h
+@@ -980,11 +980,12 @@ static inline __le64 kernel2nt(const struct timespec64 *ts)
+  */
+ static inline void nt2kernel(const __le64 tm, struct timespec64 *ts)
+ {
+-	u64 t = le64_to_cpu(tm) - _100ns2seconds * SecondsToStartOf1970;
++	s32 t32;
++	/* use signed 64 bit to support timestamps prior to epoch. xfstest 258. */
++	s64 t = le64_to_cpu(tm) - _100ns2seconds * SecondsToStartOf1970;
+ 
+-	// WARNING: do_div changes its first argument(!)
+-	ts->tv_nsec = do_div(t, _100ns2seconds) * 100;
+-	ts->tv_sec = t;
++	ts->tv_sec = div_s64_rem(t, _100ns2seconds, &t32);
++	ts->tv_nsec = t32 * 100;
+ }
+ 
+ static inline struct ntfs_sb_info *ntfs_sb(struct super_block *sb)
 -- 
 2.51.0
 
