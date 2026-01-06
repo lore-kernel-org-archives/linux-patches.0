@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BED1366565;
-	Tue,  6 Jan 2026 17:54:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9038136656C;
+	Tue,  6 Jan 2026 17:54:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722074; cv=none; b=GR+oYuPUiQ/sxeXRWtOlijavwgrVJUuD9HiUcY6RIT63m6+PDMwOtrnxSLrN+d276dL3AlfJOAz5rThrgrgIO1Tr8qdSRhGbaKuDDQuOKTMXBnV+dbCXWd/8jYTYUfoJDX0ewS3sLKZjQp7dz6/AhrAIAVDBlHmayEna6kBMspo=
+	t=1767722077; cv=none; b=PYLuJnBnUBTW81Md7V72UWYNbGpbmQITNRsn92wo0wQs+Ge2eI64gL5trxaFtjE5KlsYP6U7bK40t1fyoLHfxT1JWTzxEvxJJ/R+5xJnHK+vpcsFgzRwLI2rlgsOWbZPppaUok2rCB97bDVBb8YdfPss+RKXvb/5VyitZHimueA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722074; c=relaxed/simple;
-	bh=Gy9ukPMZbjMgDptHkw1DLoKV5+Cobd8ul05zJeCsWL0=;
+	s=arc-20240116; t=1767722077; c=relaxed/simple;
+	bh=hWd5qBAi5COEslctk6xrRvFG3EAvR7d+aQetzu3fKUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sZgi+0+VqL1XczNXYi1yIxyU8jD45WbWRDn9l0vBe5y7lfbLX13f0PeJYXOWawzzUmYd6A4qwW2Ti5XBaVeCL3+dTr7gzAjSi79tJLOXC+jEMNa3C2PtZyXKa0dBroYqCWVPidfKfj+krVg+AA9O+eNGePkOMX05B+cxil9qKiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZcPNjUA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F77E/J2/QhmFvoKC/3NvRLvQNY2CcOi8NwqCSkv+1xS3AgdA9FpqzuQVqAR8R2ZiDU1+irDQbNp1LrOjurJNBbTf8+1BvV2YcN7fC5o1HvHxJu9GIp1lsAFQXR+19iXCHQAJa5n/bboE2R+L4gp31062nF7T76zug1MTBvHgEhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yIMLi+Rz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZcPNjUA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9371FC116C6;
-	Tue,  6 Jan 2026 17:54:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yIMLi+Rz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0F3AC16AAE;
+	Tue,  6 Jan 2026 17:54:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722074;
-	bh=Gy9ukPMZbjMgDptHkw1DLoKV5+Cobd8ul05zJeCsWL0=;
+	s=korg; t=1767722077;
+	bh=hWd5qBAi5COEslctk6xrRvFG3EAvR7d+aQetzu3fKUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sZcPNjUAqflWSjMiyjOzXZrGnwEK3xiWDgP8+aMuuieqs32k+w3tTiilPoj0Zidm7
-	 K9qvadLQvGgzTn1VrXXkNQwvJ24q8ZH9btTOmJ1sqnIkvrkMZMAgaM62lMmTb0D864
-	 4r5UrNK5/DguMXwvcmxxSqEZeagKXBV+W6dyxlmI=
+	b=yIMLi+Rz3AdG78+u4R7S2SqpFg4C6Iy0RvzvolioH+IAzKNqN09oIcGXUWErdGDlS
+	 PGEZTwo/YR4Vgr3cLJzgShOB1bAAi4Bfe098Pd5DMsDYcwdrTvqVE/7aUYjXA6Vw3W
+	 YKKaroytSHpxNHbOVvU2SEQpL/zC0HZEvYESRXCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Niklas Cassel <cassel@kernel.org>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.18 156/312] nvmet: pci-epf: move DMA initialization to EPC init callback
-Date: Tue,  6 Jan 2026 18:03:50 +0100
-Message-ID: <20260106170553.481123399@linuxfoundation.org>
+	Sven Schnelle <svens@stackframe.org>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.18 157/312] parisc: entry.S: fix space adjustment on interruption for 64-bit userspace
+Date: Tue,  6 Jan 2026 18:03:51 +0100
+Message-ID: <20260106170553.517057966@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -52,56 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+From: Sven Schnelle <svens@stackframe.org>
 
-commit 511b3b644e28d9b66e32515a74c57ff599e89035 upstream.
+commit 1aa4524c0c1b54842c4c0a370171d11b12d0709b upstream.
 
-For DMA initialization to work across all EPC drivers, the DMA
-initialization has to be done in the .init() callback.
+In wide mode, the IASQ contain the upper part of the GVA
+during interruption. This needs to be reversed before
+the space is used - otherwise it contains parts of IAOQ.
+See Page 2-13 "Processing Resources / Interruption Instruction
+Address Queues" in the Parisc 2.0 Architecture Manual page 2-13
+for an explanation.
 
-This is because not all EPC drivers will have a refclock (which is often
-needed to access registers of a DMA controller embedded in a PCIe
-controller) at the time the .bind() callback is called.
+The IAOQ/IASQ space_adjust was skipped for other interruptions
+than itlb misses. However, the code in handle_interruption()
+checks whether iasq[0] contains a valid space. Due to the not
+masked out bits this match failed and the process was killed.
 
-However, all EPC drivers are guaranteed to have a refclock by the time
-the .init() callback is called.
+Also add space_adjust for IAOQ1/IASQ1 so ptregs contains sane values.
 
-Thus, move the DMA initialization to the .init() callback.
-
-This change was already done for other EPF drivers in
-commit 60bd3e039aa2 ("PCI: endpoint: pci-epf-{mhi/test}: Move DMA
-initialization to EPC init callback").
-
-Cc: stable@vger.kernel.org
-Fixes: 0faa0fe6f90e ("nvmet: New NVMe PCI endpoint function target driver")
-Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Sven Schnelle <svens@stackframe.org>
+Cc: stable@vger.kernel.org # v6.0+
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/pci-epf.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/parisc/kernel/entry.S |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/nvme/target/pci-epf.c
-+++ b/drivers/nvme/target/pci-epf.c
-@@ -2325,6 +2325,8 @@ static int nvmet_pci_epf_epc_init(struct
- 		return ret;
- 	}
+--- a/arch/parisc/kernel/entry.S
++++ b/arch/parisc/kernel/entry.S
+@@ -1059,8 +1059,6 @@ ENTRY_CFI(intr_save)		/* for os_hpmc */
+ 	STREG           %r17, PT_IOR(%r29)
  
-+	nvmet_pci_epf_init_dma(nvme_epf);
-+
- 	/* Set device ID, class, etc. */
- 	epf->header->vendorid = ctrl->tctrl->subsys->vendor_id;
- 	epf->header->subsys_vendor_id = ctrl->tctrl->subsys->subsys_vendor_id;
-@@ -2422,8 +2424,6 @@ static int nvmet_pci_epf_bind(struct pci
- 	if (ret)
- 		return ret;
- 
--	nvmet_pci_epf_init_dma(nvme_epf);
+ #if defined(CONFIG_64BIT)
+-	b,n		intr_save2
 -
- 	return 0;
- }
- 
+ skip_save_ior:
+ 	/* We have a itlb miss, and when executing code above 4 Gb on ILP64, we
+ 	 * need to adjust iasq/iaoq here in the same way we adjusted isr/ior
+@@ -1069,10 +1067,17 @@ skip_save_ior:
+ 	bb,COND(>=),n	%r8,PSW_W_BIT,intr_save2
+ 	LDREG		PT_IASQ0(%r29), %r16
+ 	LDREG		PT_IAOQ0(%r29), %r17
+-	/* adjust iasq/iaoq */
++	/* adjust iasq0/iaoq0 */
+ 	space_adjust	%r16,%r17,%r1
+ 	STREG           %r16, PT_IASQ0(%r29)
+ 	STREG           %r17, PT_IAOQ0(%r29)
++
++	LDREG		PT_IASQ1(%r29), %r16
++	LDREG		PT_IAOQ1(%r29), %r17
++	/* adjust iasq1/iaoq1 */
++	space_adjust	%r16,%r17,%r1
++	STREG           %r16, PT_IASQ1(%r29)
++	STREG           %r17, PT_IAOQ1(%r29)
+ #else
+ skip_save_ior:
+ #endif
 
 
