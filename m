@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D22D347BB8;
-	Tue,  6 Jan 2026 17:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA0F347BCB;
+	Tue,  6 Jan 2026 17:16:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719786; cv=none; b=B8yMLv0+BuNudQysgns025g8NtKseCbFbBgqUFOR5+53+GU6VRSIruvX9D5r3Tf5g4dd28e6gQvBx+IREDE8SoPDGaamMh2wYyMThywkRBaZ66LHyB6OfAUNYYwWvw8N1F/nZWFe/q/yI4hLcv4eDMP8eCqNAGRSUNi1w87MKbg=
+	t=1767719789; cv=none; b=o1dW2cax+4TVEa23RuBI8JFa1o0Dg/XR+YDJ8fjq7KEyu7Y6nbLUSrkMsJis3mJefDxKHsGgyoyMiTBqmNpeNZDlo7S9OBSfg5FGzIsXdsD2dp75T7wYF4Flye5HPHgy/1drfMXx5Rw10j8f5eYWa3HOBTW41n2OQXz4O8MQhx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719786; c=relaxed/simple;
-	bh=SAyI67ABSwPfcV48Oorr/fJ9BueuICbvSHvqHfNJ3II=;
+	s=arc-20240116; t=1767719789; c=relaxed/simple;
+	bh=aA77rem3ittOXDyqT2/nyLUCiQNdKTtgyAKtAIDg610=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RAVKAqj2Kb9BJK8mtnCFWJ1bkXTTeGj3nfDaXiOt292nT9tRSrejuFKPh8HtG4n5Fr1mMvlPmoJXmFtxy7/AYP69Ez5psNd/NU1XexaxKP8wMPJSowzGtDKOjP2CoEKYIGCSPS4B9kiWZN4fsNPhd28Rh9mxXFpFMTynVZErxIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z7zdC2YV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lpru9sFcEi1c+qshUL+uj9MFxFFRuUD7ROTg/pnNx6UwDCLn9LTV2mpRh2nnwYxuXVhu/R1VAPDoA7GCe6Hz57gSGk3ysHH7OAWLHDeCoMxCdwxebZYKCnuDtvjFfwzpms334Eqzxi9+Qb0VXogJlAts8w/428pn9gK0WOZbvc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qCZOBSyY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z7zdC2YV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 692F0C116C6;
-	Tue,  6 Jan 2026 17:16:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qCZOBSyY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9517CC116C6;
+	Tue,  6 Jan 2026 17:16:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719785;
-	bh=SAyI67ABSwPfcV48Oorr/fJ9BueuICbvSHvqHfNJ3II=;
+	s=korg; t=1767719789;
+	bh=aA77rem3ittOXDyqT2/nyLUCiQNdKTtgyAKtAIDg610=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z7zdC2YVB3bNdJ2IG0jbpcsLwfDAA0v0iJbKkR3WY2wg4Xi0TDS8uUPoi7L10G4Nm
-	 uy00ErehzGxNtCNPeVOqEGiVPVd6M7fqjXqD0c+7OQTZ88e9H0qVVz2USnxSPBEIRD
-	 4jtr8v3Qa0+fhMk0+4xaM8yMH9KN1xin0Go4gnqY=
+	b=qCZOBSyYRiPLaDVhdXd5TBd2D6qWSO+Crxo5Lc8OgKCsJv4SfAuQM7+yPLKwdUTmv
+	 zl2jm6VuMOblsynxqOa3E83dIpjSasSzBrX81/lcw6aC3tegLDUGpTTcPV7/JwZd6W
+	 bRsCbGt7+Yn+Yy34w9Z0eDjNRhb3Hsgk6JEMjf4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Hans de Goede <hansg@kernel.org>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Chris Lu <chris.lu@mediatek.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 032/567] wifi: brcmfmac: Add DMI nvram filename quirk for Acer A1 840 tablet
-Date: Tue,  6 Jan 2026 17:56:54 +0100
-Message-ID: <20260106170452.530113636@linuxfoundation.org>
+Subject: [PATCH 6.12 041/567] Bluetooth: btusb: MT7920: Add VID/PID 0489/e135
+Date: Tue,  6 Jan 2026 17:57:03 +0100
+Message-ID: <20260106170452.861090483@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,59 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hansg@kernel.org>
+From: Chris Lu <chris.lu@mediatek.com>
 
-[ Upstream commit a8e5a110c0c38e08e5dd66356cd1156e91cf88e1 ]
+[ Upstream commit c126f98c011f5796ba118ef2093122d02809d30d ]
 
-The Acer A1 840 tablet contains quite generic names in the sys_vendor and
-product_name DMI strings, without this patch brcmfmac will try to load:
-brcmfmac43340-sdio.Insyde-BayTrail.txt as nvram file which is a bit
-too generic.
+Add VID 0489 & PID e135 for MediaTek MT7920 USB Bluetooth chip.
 
-Add a DMI quirk so that a unique and clearly identifiable nvram file name
-is used on the Acer A1 840 tablet.
+The information in /sys/kernel/debug/usb/devices about the Bluetooth
+device is listed as the below.
 
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Signed-off-by: Hans de Goede <hansg@kernel.org>
-Link: https://patch.msgid.link/20251103100314.353826-1-hansg@kernel.org
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+T:  Bus=06 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0489 ProdID=e135 Rev= 1.00
+S:  Manufacturer=MediaTek Inc.
+S:  Product=Wireless_Device
+S:  SerialNumber=000000000
+C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
+A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
+I:  If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
+
+Signed-off-by: Chris Lu <chris.lu@mediatek.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/broadcom/brcm80211/brcmfmac/dmi.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/dmi.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/dmi.c
-index c3a602197662b..abe7f6501e5ed 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/dmi.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/dmi.c
-@@ -24,6 +24,10 @@ static const struct brcmf_dmi_data acepc_t8_data = {
- 	BRCM_CC_4345_CHIP_ID, 6, "acepc-t8"
- };
- 
-+static const struct brcmf_dmi_data acer_a1_840_data = {
-+	BRCM_CC_43340_CHIP_ID, 2, "acer-a1-840"
-+};
-+
- /* The Chuwi Hi8 Pro uses the same Ampak AP6212 module as the Chuwi Vi8 Plus
-  * and the nvram for the Vi8 Plus is already in linux-firmware, so use that.
-  */
-@@ -91,6 +95,16 @@ static const struct dmi_system_id dmi_platform_data[] = {
- 		},
- 		.driver_data = (void *)&acepc_t8_data,
- 	},
-+	{
-+		/* Acer Iconia One 8 A1-840 (non FHD version) */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Insyde"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "BayTrail"),
-+			/* Above strings are too generic also match BIOS date */
-+			DMI_MATCH(DMI_BIOS_DATE, "04/01/2014"),
-+		},
-+		.driver_data = (void *)&acer_a1_840_data,
-+	},
- 	{
- 		/* Chuwi Hi8 Pro with D2D3_Hi8Pro.233 BIOS */
- 		.matches = {
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 9dc3a50c5e833..78dc9012c5d75 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -611,6 +611,8 @@ static const struct usb_device_id quirks_table[] = {
+ 	/* Additional MediaTek MT7920 Bluetooth devices */
+ 	{ USB_DEVICE(0x0489, 0xe134), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0489, 0xe135), .driver_info = BTUSB_MEDIATEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3620), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3621), .driver_info = BTUSB_MEDIATEK |
 -- 
 2.51.0
 
