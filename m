@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 107AA2874E9;
-	Tue,  6 Jan 2026 17:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5411F34EEEE;
+	Tue,  6 Jan 2026 17:27:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720457; cv=none; b=L/rysI2RBSw2NB4j1VNDRrR3fB3NNT3/FBfB7hyp9xjT/ctie1QT+9n14ll584DSENK9e04QtNzKBHsF1N14Sob9KKGwgShHuCSgj2SCzX/j51/n3gUWbsPZ7deSlbgmbcE0j0y+cE6//Z8Bm7Qy1Vs2MyXFRrYNJEPsZyLfVy8=
+	t=1767720460; cv=none; b=Oh3+caHh3pZaK9Re1jVhJ9nGBfIIDdrsOYUtXBdDaHPBgCURiJRH2etgjxbeIBZAHJNUrwg4B3BKSrqiu2zCrsdbP4yw1dzsHM/kWCDLNH5Z2s2N0OZm+Ja3Civbbl8bQQFYtFa8tq32xjSLKiejyfoK9Z9p7eZUl4ncniasPvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720457; c=relaxed/simple;
-	bh=lf2BA2khvc43yLxJ6SI7WQ0+Fpxs8JFAFpPCEy3qDJY=;
+	s=arc-20240116; t=1767720460; c=relaxed/simple;
+	bh=kAc/DvJ8ADYHlVvgnTi9GZlJcMTvmqjD21imr2avACg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nHu4uBEU3OvrC6v3aqvzU9ZcTjiiX1n0vhfRsvxDHYqk5z7x/Y//QafwGEjw32+njwvmM1eO/NhXvpP1300DnwNqK/C5rQzo2qXEejdnEP5s63JBKyn8sXCucm0j4uuPbMTgiuWRRhrP7KLJlKxjZOS8Zmk2q6ciRof/k/FhT88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pPjwgMVs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BiLddZjxhpquoriIVIdsH8JsirkArtU/OktTyApdI3EEnW8v+KxkSKNRFPB2sdFog4XrdrmlvAcl4Z3ttjjbruam4dhcBT2L0myDRGnV6L3tCVCXT2IDnjnSD+U+qkulNB8UjKuuc9B/XEgEYWrrC+22AJLnxSvob1mfZyVOwPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AdyyRSHj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pPjwgMVs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FD01C116C6;
-	Tue,  6 Jan 2026 17:27:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AdyyRSHj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFFBCC16AAE;
+	Tue,  6 Jan 2026 17:27:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720456;
-	bh=lf2BA2khvc43yLxJ6SI7WQ0+Fpxs8JFAFpPCEy3qDJY=;
+	s=korg; t=1767720460;
+	bh=kAc/DvJ8ADYHlVvgnTi9GZlJcMTvmqjD21imr2avACg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pPjwgMVsrT8RqLL9rCdTk1GX45a4yNugKVJGNS20/+yeu8R2b5GGlRffEODSHpa9J
-	 QVdeABjT+s/umJSaO5+dfv9Sqp0i87HzeKRHij/rQGUhfR6iJSMlzM3egeiSj4tWCP
-	 m6ll9jgliD39nYy7MRUI5nNxn6ocvv7D6bL97AJI=
+	b=AdyyRSHjlnKfB/LV5gc9+dpdpcyG/miVW7ZIVYZlWbXRMKHGP+TMEUpZf7w+o3A76
+	 tAZzBdcEQAiNKYlpEy0Jf+RPoS5PkDRQqwtUWGBook4LtqLYFIt3kT3ibeGJBfXAyz
+	 EchLK5BSrLivKEKiOPgKX0tWF/qsIbVZ4vCkub4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.12 241/567] nfsd: Mark variable __maybe_unused to avoid W=1 build break
-Date: Tue,  6 Jan 2026 18:00:23 +0100
-Message-ID: <20260106170500.232397701@linuxfoundation.org>
+	Alexander Potapenko <glider@google.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.12 211/567] KVM: Disallow toggling KVM_MEM_GUEST_MEMFD on an existing memslot
+Date: Tue,  6 Jan 2026 17:59:53 +0100
+Message-ID: <20260106170459.127664389@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -50,41 +50,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit ebae102897e760e9e6bc625f701dd666b2163bd1 upstream.
+commit 9935df5333aa503a18de5071f53762b65c783c4c upstream.
 
-Clang is not happy about set but (in some cases) unused variable:
+Reject attempts to disable KVM_MEM_GUEST_MEMFD on a memslot that was
+initially created with a guest_memfd binding, as KVM doesn't support
+toggling KVM_MEM_GUEST_MEMFD on existing memslots.  KVM prevents enabling
+KVM_MEM_GUEST_MEMFD, but doesn't prevent clearing the flag.
 
-fs/nfsd/export.c:1027:17: error: variable 'inode' set but not used [-Werror,-Wunused-but-set-variable]
+Failure to reject the new memslot results in a use-after-free due to KVM
+not unbinding from the guest_memfd instance.  Unbinding on a FLAGS_ONLY
+change is easy enough, and can/will be done as a hardening measure (in
+anticipation of KVM supporting dirty logging on guest_memfd at some point),
+but fixing the use-after-free would only address the immediate symptom.
 
-since it's used as a parameter to dprintk() which might be configured
-a no-op. To avoid uglifying code with the specific ifdeffery just mark
-the variable __maybe_unused.
+  ==================================================================
+  BUG: KASAN: slab-use-after-free in kvm_gmem_release+0x362/0x400 [kvm]
+  Write of size 8 at addr ffff8881111ae908 by task repro/745
 
-The commit [1], which introduced this behaviour, is quite old and hence
-the Fixes tag points to the first of the Git era.
+  CPU: 7 UID: 1000 PID: 745 Comm: repro Not tainted 6.18.0-rc6-115d5de2eef3-next-kasan #3 NONE
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x51/0x60
+   print_report+0xcb/0x5c0
+   kasan_report+0xb4/0xe0
+   kvm_gmem_release+0x362/0x400 [kvm]
+   __fput+0x2fa/0x9d0
+   task_work_run+0x12c/0x200
+   do_exit+0x6ae/0x2100
+   do_group_exit+0xa8/0x230
+   __x64_sys_exit_group+0x3a/0x50
+   x64_sys_call+0x737/0x740
+   do_syscall_64+0x5b/0x900
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+  RIP: 0033:0x7f581f2eac31
+   </TASK>
 
-Link: https://git.kernel.org/pub/scm/linux/kernel/git/history/history.git/commit/?id=0431923fb7a1 [1]
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+  Allocated by task 745 on cpu 6 at 9.746971s:
+   kasan_save_stack+0x20/0x40
+   kasan_save_track+0x13/0x50
+   __kasan_kmalloc+0x77/0x90
+   kvm_set_memory_region.part.0+0x652/0x1110 [kvm]
+   kvm_vm_ioctl+0x14b0/0x3290 [kvm]
+   __x64_sys_ioctl+0x129/0x1a0
+   do_syscall_64+0x5b/0x900
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+  Freed by task 745 on cpu 6 at 9.747467s:
+   kasan_save_stack+0x20/0x40
+   kasan_save_track+0x13/0x50
+   __kasan_save_free_info+0x37/0x50
+   __kasan_slab_free+0x3b/0x60
+   kfree+0xf5/0x440
+   kvm_set_memslot+0x3c2/0x1160 [kvm]
+   kvm_set_memory_region.part.0+0x86a/0x1110 [kvm]
+   kvm_vm_ioctl+0x14b0/0x3290 [kvm]
+   __x64_sys_ioctl+0x129/0x1a0
+   do_syscall_64+0x5b/0x900
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+Reported-by: Alexander Potapenko <glider@google.com>
+Fixes: a7800aa80ea4 ("KVM: Add KVM_CREATE_GUEST_MEMFD ioctl() for guest-specific backing memory")
 Cc: stable@vger.kernel.org
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://patch.msgid.link/20251202020334.1171351-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/export.c |    2 +-
+ virt/kvm/kvm_main.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nfsd/export.c
-+++ b/fs/nfsd/export.c
-@@ -1017,7 +1017,7 @@ exp_rootfh(struct net *net, struct auth_
- {
- 	struct svc_export	*exp;
- 	struct path		path;
--	struct inode		*inode;
-+	struct inode		*inode __maybe_unused;
- 	struct svc_fh		fh;
- 	int			err;
- 	struct nfsd_net		*nn = net_generic(net, nfsd_net_id);
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -2062,7 +2062,7 @@ int __kvm_set_memory_region(struct kvm *
+ 			return -EINVAL;
+ 		if ((mem->userspace_addr != old->userspace_addr) ||
+ 		    (npages != old->npages) ||
+-		    ((mem->flags ^ old->flags) & KVM_MEM_READONLY))
++		    ((mem->flags ^ old->flags) & (KVM_MEM_READONLY | KVM_MEM_GUEST_MEMFD)))
+ 			return -EINVAL;
+ 
+ 		if (base_gfn != old->base_gfn)
 
 
