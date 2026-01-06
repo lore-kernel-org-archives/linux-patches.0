@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DCA826E6F2;
-	Tue,  6 Jan 2026 17:32:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 841BF27B4FB;
+	Tue,  6 Jan 2026 17:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720774; cv=none; b=hPJfWFYNhK+H7WuJL5G/I4QkNg8O5Wr5kVgqG8o2ZLuhaVfiOuV2+ktugHMdQcjAsGcElMO1HPY4XI7l3Euq1giyLsScpMkJiHLawIhdbcORgV7XPzjEvBVmoeU9CYstfkIB27o0VFW0cHHICAJLgs6xQXKK89XCg5AWktuL5Jg=
+	t=1767720777; cv=none; b=DqSyUPuKcEOYoPn3UxcPrQJPG9a8fA8ZzU6RHRfbk1BLD5r8L1gpNHS8jRZDL35RJ4niWmLl0uy9iqsoCPF4mPdHpCEPftZ9Jemu0x0y9chEij+G12rgc180c3Yz2H2TnUc9EMqwXbI2EjnBlszTuGa7uJs9QemtrlcYP/AxzA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720774; c=relaxed/simple;
-	bh=K17Ud0/hn7c9lvTKMHh4TlZ1YiVwgooU6OK8R6whzKg=;
+	s=arc-20240116; t=1767720777; c=relaxed/simple;
+	bh=345rOKNXwOPSVOY2fzMGlA11lOcrE1/XCEhGboho2JU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XyjkJCtsWOnFCEX++6Xc3kUf7pReScFMXp3aaAQhMWhRvzjimVw02Dpy4kCaL2wbM+13XFB5gZiaPbjqRPxUao2YC7sNRGPr8gvi3PVecG4CSqw+dOkpkUPbECKYf4iEL0nwDI0UWneft7R/njvyInrfOZfqWxd5+vFhLeffhKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o7Cr8gGv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZSE2jukeipaPTGw4ubyi1v8555vAV1Gxi8xPVrrHopLU3II1wywXEZWwSdTF/BcrxRtvHNfKVbPz1SX76z+kZnYziwvfJJ2CLi1ydRwUBIPYMcF+KrfAPHncMHWGsw1QTNzOjKhnwKItxlbltEfyC6dUOijEZUr3UC9xVvICIw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ftFOBYWn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o7Cr8gGv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F67BC116C6;
-	Tue,  6 Jan 2026 17:32:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ftFOBYWn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C02EEC116C6;
+	Tue,  6 Jan 2026 17:32:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720774;
-	bh=K17Ud0/hn7c9lvTKMHh4TlZ1YiVwgooU6OK8R6whzKg=;
+	s=korg; t=1767720777;
+	bh=345rOKNXwOPSVOY2fzMGlA11lOcrE1/XCEhGboho2JU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o7Cr8gGvTxCGbAJG4Q3z05Y4YJ+IY+RB/Flb7i9o4DjlARwjAMosPnwnaI7kkEPET
-	 1ZPRDUtYjQCfT2RjRn9NuH/wUgFoEVbB1DoYHoxJhGm3AB3Z86WesmPRWa0oNXXJGo
-	 W5Q/gFdTd10zJCcFQRhx6kCgA5V2Pvo0PMn7IwVI=
+	b=ftFOBYWnpT8CnkYMFvDFqjWXrz4ndOTrJ/zkSWKdUgdIejstATcxfVQ7Rim2pMbTY
+	 58USxMcCC4VKiq72eXlaRG1Y6tKTI6W0Zilj+ZaKSedyo2NCigGXYu7qU6jAvXOEjc
+	 BjU9irj6LI6DQkMmWhVvv9CxfdkvzBX6AdjvsShQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Li Nan <linan122@huawei.com>,
+	Tuo Li <islituo@gmail.com>,
+	Xiao Ni <xni@redhat.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
 	Yu Kuai <yukuai@fnnas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 337/567] md: Fix static checker warning in analyze_sbs
-Date: Tue,  6 Jan 2026 18:01:59 +0100
-Message-ID: <20260106170503.796392265@linuxfoundation.org>
+Subject: [PATCH 6.12 338/567] md/raid5: fix possible null-pointer dereferences in raid5_store_group_thread_cnt()
+Date: Tue,  6 Jan 2026 18:02:00 +0100
+Message-ID: <20260106170503.832627020@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,51 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Nan <linan122@huawei.com>
+From: Tuo Li <islituo@gmail.com>
 
-[ Upstream commit 00f6c1b4d15d35fadb7f34768a1831c81aaa8936 ]
+[ Upstream commit 7ad6ef91d8745d04aff9cce7bdbc6320d8e05fe9 ]
 
-The following warn is reported:
+The variable mddev->private is first assigned to conf and then checked:
 
- drivers/md/md.c:3912 analyze_sbs()
- warn: iterator 'i' not incremented
+  conf = mddev->private;
+  if (!conf) ...
 
-Fixes: d8730f0cf4ef ("md: Remove deprecated CONFIG_MD_MULTIPATH")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/linux-raid/7e2e95ce-3740-09d8-a561-af6bfb767f18@huaweicloud.com/T/#t
-Signed-off-by: Li Nan <linan122@huawei.com>
-Link: https://lore.kernel.org/linux-raid/20251215124412.4015572-1-linan666@huaweicloud.com
+If conf is NULL, then mddev->private is also NULL. In this case,
+null-pointer dereferences can occur when calling raid5_quiesce():
+
+  raid5_quiesce(mddev, true);
+  raid5_quiesce(mddev, false);
+
+since mddev->private is assigned to conf again in raid5_quiesce(), and conf
+is dereferenced in several places, for example:
+
+  conf->quiesce = 0;
+  wake_up(&conf->wait_for_quiescent);
+
+To fix this issue, the function should unlock mddev and return before
+invoking raid5_quiesce() when conf is NULL, following the existing pattern
+in raid5_change_consistency_policy().
+
+Fixes: fa1944bbe622 ("md/raid5: Wait sync io to finish before changing group cnt")
+Signed-off-by: Tuo Li <islituo@gmail.com>
+Reviewed-by: Xiao Ni <xni@redhat.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Link: https://lore.kernel.org/linux-raid/20251225130326.67780-1-islituo@gmail.com
 Signed-off-by: Yu Kuai <yukuai@fnnas.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/md/raid5.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 5c39246c467e..26056d53f40c 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -3729,7 +3729,6 @@ static struct md_rdev *md_import_device(dev_t newdev, int super_format, int supe
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index 8e5ccca3b68b..7262b77a8e02 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -7181,12 +7181,14 @@ raid5_store_group_thread_cnt(struct mddev *mddev, const char *page, size_t len)
+ 	err = mddev_suspend_and_lock(mddev);
+ 	if (err)
+ 		return err;
++	conf = mddev->private;
++	if (!conf) {
++		mddev_unlock_and_resume(mddev);
++		return -ENODEV;
++	}
+ 	raid5_quiesce(mddev, true);
  
- static int analyze_sbs(struct mddev *mddev)
- {
--	int i;
- 	struct md_rdev *rdev, *freshest, *tmp;
- 
- 	freshest = NULL;
-@@ -3756,11 +3755,9 @@ static int analyze_sbs(struct mddev *mddev)
- 	super_types[mddev->major_version].
- 		validate_super(mddev, NULL/*freshest*/, freshest);
- 
--	i = 0;
- 	rdev_for_each_safe(rdev, tmp, mddev) {
- 		if (mddev->max_disks &&
--		    (rdev->desc_nr >= mddev->max_disks ||
--		     i > mddev->max_disks)) {
-+		    rdev->desc_nr >= mddev->max_disks) {
- 			pr_warn("md: %s: %pg: only %d devices permitted\n",
- 				mdname(mddev), rdev->bdev,
- 				mddev->max_disks);
+-	conf = mddev->private;
+-	if (!conf)
+-		err = -ENODEV;
+-	else if (new != conf->worker_cnt_per_group) {
++	if (new != conf->worker_cnt_per_group) {
+ 		old_groups = conf->worker_groups;
+ 		if (old_groups)
+ 			flush_workqueue(raid5_wq);
 -- 
 2.51.0
 
