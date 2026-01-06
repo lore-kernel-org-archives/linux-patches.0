@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C91101DF965;
-	Tue,  6 Jan 2026 17:56:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4975C27FD75;
+	Tue,  6 Jan 2026 17:56:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722194; cv=none; b=UvkwUAUdUUaRBpv8rSQyG8JkvnkhTjOEQI6+BIG0lsKV6Vj+0DkNvmrXdQ8Pu+4SJP6KpbdyikXLDdfqqIRyqP1KF3k+jdgCHyb4IaBElOk6QadAdxARYUWlmPqGOsjgUWLjdXe/45gnEHzj4CeC7wjFcpFG3TrivaLnKWebrJU=
+	t=1767722198; cv=none; b=pMRS1au/Z8TLCtHwe9dx6B7LsUq7RQ3nysmww82oEmbJcF8QhVv4eO0z0j+SkUI4GZ1xPfARoYwHoo3Xc5K/sU4zudCBUafQplbSoC6SVn5bKZQsvcl5qS9lm91UZkGg3pP717QSBvPCTD8SIrMcTaBq709TM9QooTDfO5LS/uo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722194; c=relaxed/simple;
-	bh=WnCM7KXuk/QYHYIUuRwSlpc8r37qGUHObVm4rwMr9AA=;
+	s=arc-20240116; t=1767722198; c=relaxed/simple;
+	bh=LtT0WtP57uAogqhLYsvM5dogc1Q/0modqaasJNPNp/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oZ61ATpJMa/fNrNmZ7YXeByclTtnjQPmyHWho0F0du5ZUtg402R0syvnen5C/avZvVrmbGBdYjeJFarsn4uusAclxIiTsZYzonZux4WgVyLhyfjhwK7uSotbsKxsTuSmcpZDlZDbQO1hUVi/Y/PTQEcYt3/Aq8e4LTUjDhJsjUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VxVUXpGb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cDQbwSjBvERfh+djs2a2dhDYskiYie7vphgBLftFQqqURA0gN6ga775KQI5YSDo5S9Ko9QVwz8UWEN1fV2gFGAshwBEaZELHjgHyJONvqxkcVcpvlD00TKTp8sqF5DzasY1hLLfh+/ayJ/1xJcr8poq7jNd2thWqYFXuH0Xknuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IRApZBGJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VxVUXpGb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37219C116C6;
-	Tue,  6 Jan 2026 17:56:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IRApZBGJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8AECC116C6;
+	Tue,  6 Jan 2026 17:56:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722194;
-	bh=WnCM7KXuk/QYHYIUuRwSlpc8r37qGUHObVm4rwMr9AA=;
+	s=korg; t=1767722198;
+	bh=LtT0WtP57uAogqhLYsvM5dogc1Q/0modqaasJNPNp/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VxVUXpGbz6hjHxuQ/FQEKuUm1+YF7306lBw/ExcIea4vq9Up/Tt0n7czRctt06snH
-	 MYgo40xt9H6clq+dnmZt2c5Vo/UqqTDYJxRzKnHyzHDu/hfxeFunr/2ExpHhgs8NpU
-	 tULJT/YKGserZezovb/CXEcI8oXJwPcifIs3DU7A=
+	b=IRApZBGJFNUR1NcdI7uRhit2RHgqp0wphfkCe4qPyJI5rZjdtUzGigSLFNV1gCplA
+	 ybtV7Jzor40G1NQyQzKbBxMx+zZyzTSF76dfxmaFCcD3YTqQlpWetywSrpznBzE2Wd
+	 MgSoKb9zimEY4uvrSMOxjS3rMH+FeqW6hTwIb8ns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 191/312] media: mediatek: vcodec: Fix a reference leak in mtk_vcodec_fw_vpu_init()
-Date: Tue,  6 Jan 2026 18:04:25 +0100
-Message-ID: <20260106170554.738360579@linuxfoundation.org>
+	Tianrui Zhao <zhaotianrui@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.18 192/312] LoongArch: Add new PCI ID for pci_fixup_vgadev()
+Date: Tue,  6 Jan 2026 18:04:26 +0100
+Message-ID: <20260106170554.773471101@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -53,42 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit cdd0f118ef87db8a664fb5ea366fd1766d2df1cd upstream.
+commit bf3fa8f232a1eec8d7b88dcd9e925e60f04f018d upstream.
 
-vpu_get_plat_device() increases the reference count of the returned
-platform device. However, when devm_kzalloc() fails, the reference
-is not released, causing a reference leak.
+Loongson-2K3000 has a new PCI ID (0x7a46) for its display controller,
+Add it for pci_fixup_vgadev() since we prefer a discrete graphics card
+as default boot device if present.
 
-Fix this by calling put_device() on fw_pdev->dev before returning
-on the error path.
-
-Fixes: e25a89f743b1 ("media: mtk-vcodec: potential dereference of null pointer")
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Tianrui Zhao <zhaotianrui@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/mediatek/vcodec/common/mtk_vcodec_fw_vpu.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/loongarch/pci/pci.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/media/platform/mediatek/vcodec/common/mtk_vcodec_fw_vpu.c
-+++ b/drivers/media/platform/mediatek/vcodec/common/mtk_vcodec_fw_vpu.c
-@@ -119,8 +119,10 @@ struct mtk_vcodec_fw *mtk_vcodec_fw_vpu_
- 		vpu_wdt_reg_handler(fw_pdev, mtk_vcodec_vpu_reset_enc_handler, priv, rst_id);
+--- a/arch/loongarch/pci/pci.c
++++ b/arch/loongarch/pci/pci.c
+@@ -14,6 +14,7 @@
+ #define PCI_DEVICE_ID_LOONGSON_HOST     0x7a00
+ #define PCI_DEVICE_ID_LOONGSON_DC1      0x7a06
+ #define PCI_DEVICE_ID_LOONGSON_DC2      0x7a36
++#define PCI_DEVICE_ID_LOONGSON_DC3      0x7a46
  
- 	fw = devm_kzalloc(&plat_dev->dev, sizeof(*fw), GFP_KERNEL);
--	if (!fw)
-+	if (!fw) {
-+		put_device(&fw_pdev->dev);
- 		return ERR_PTR(-ENOMEM);
-+	}
- 	fw->type = VPU;
- 	fw->ops = &mtk_vcodec_vpu_msg;
- 	fw->pdev = fw_pdev;
+ int raw_pci_read(unsigned int domain, unsigned int bus, unsigned int devfn,
+ 						int reg, int len, u32 *val)
+@@ -97,3 +98,4 @@ static void pci_fixup_vgadev(struct pci_
+ }
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_DC1, pci_fixup_vgadev);
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_DC2, pci_fixup_vgadev);
++DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_DC3, pci_fixup_vgadev);
 
 
