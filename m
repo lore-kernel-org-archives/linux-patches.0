@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED4F136404F;
-	Tue,  6 Jan 2026 17:51:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66296322B93;
+	Tue,  6 Jan 2026 17:51:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721878; cv=none; b=DZiizY8bA7JnbK1jzsD/dj8Up/uPo+d7DtZnECLUcs1BhfB9eOq3XhkeaQFSpWxQJ0juqvacPzK5GzvxaUV+LsU0zMCxg8WsmxQKUjS6ncitT26ASIX3+tIFlIw0N4Uh7flAcSjGnYipCjclyZVUk29KlS8msR0U1soMtNv9eQQ=
+	t=1767721881; cv=none; b=lVvH/6FTrgnxz31Fxc4OwugA5kk6P4XoeoQVwk7/Gqdli0eeR9IznbB1xw/b9Mpvm5vjrFoPvD6xFAGq6paTw6a4/T8v+kTKFQ7IEvMfjvlcuoz9yV7O8IeFM+jGo+WM9WHKqIdO0UPqzmSkqyv46b2JpGAvroxCI4AUttHoz1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721878; c=relaxed/simple;
-	bh=d8NhDNuvcU7UvQ1ZbrI++JMzxoMGDAwKESubkgWDXS8=;
+	s=arc-20240116; t=1767721881; c=relaxed/simple;
+	bh=4pAiceHPcFShYBvjZC2uQcVwZTZEiljNjWtsl1FAebw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GRpob2Upw2ixlkvVHZ86yab+1NbYmp4ty+VSf3IOhoGvtA+urux3vEF+UQTdSE81A5bP2jByaZDnhUC6p1lvdUEOvVABR6gJcNnXmLQ2ZzRzRyz8zzxy6ZGqjLnD6P8jHW5UbAS0TR53Bycplm/DsiN6A36WMwVna1QJAyY+V98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N32XcBLT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ofKtsUP/r3hYyHLB15sIcjLbtREXL2HSplCAlpupCEsYUeY9NuZ/FZ/YQxkhYQ+n7x2EBuPt62hIdWiuLvGFFk/lR95M7UyNUk2VCLjmBABpr+NE6apC6hh/d+tOvqqN7gNh8EqRYxPCeAOdWUECVHl+q4v7gQy22w+HcS75eZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fpAUthbM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N32XcBLT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16493C116C6;
-	Tue,  6 Jan 2026 17:51:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fpAUthbM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70EE0C116C6;
+	Tue,  6 Jan 2026 17:51:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721877;
-	bh=d8NhDNuvcU7UvQ1ZbrI++JMzxoMGDAwKESubkgWDXS8=;
+	s=korg; t=1767721880;
+	bh=4pAiceHPcFShYBvjZC2uQcVwZTZEiljNjWtsl1FAebw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N32XcBLTN3MZSVfn7TYfBt/j+NyS8Bzr0LD2kukL5qBXyjmZ8KaRcCNmrG0fGt40h
-	 TgdvrZQv9JCMmBJMUJXFsZdjHQL2wtvMHZKDDkgb/CuaMhMHTJwsLpfM0jisDYi4+J
-	 FxDcFlGuPlVP/uUQZcrcPgZDLWSdOSeBThS9Ivmo=
+	b=fpAUthbMOHLe3ulf35dWBvIgSZe7iYPtSJ3GiAvlZcgCGJ9cpa1C7y6qRsvRVDqrV
+	 G7FWu2xg+j9QvWcZ8Qbvu2YaiuBJBgXNo9vP5Lpa/iE3yeFPBSxTO735Bj2dLF5DqG
+	 a/zd0oXi8Tip8dyvgLuklgNpnUebQjMNhs0VKZL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Stable@vger.kernel.org,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 099/312] ASoC: codecs: pm4125: Remove irq_chip on component unbind
-Date: Tue,  6 Jan 2026 18:02:53 +0100
-Message-ID: <20260106170551.421254757@linuxfoundation.org>
+Subject: [PATCH 6.18 100/312] ASoC: codecs: lpass-tx-macro: fix SM6115 support
+Date: Tue,  6 Jan 2026 18:02:54 +0100
+Message-ID: <20260106170551.456428239@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -50,36 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-commit e65b871c9b5af9265aefc5b8cd34993586d93aab upstream.
+commit 7c63b5a8ed972a2c8c03d984f6a43349007cea93 upstream.
 
-Component bind uses devm_regmap_add_irq_chip() to add IRQ chip, so it
-will be removed only during driver unbind, not component unbind.
-A component unbind-bind cycle for the same Linux device lifetime would
-result in two chips added.  Fix this by manually removing the IRQ chip
-during component unbind.
+SM6115 does have soundwire controller in tx. For some reason
+we ended up with this incorrect patch.
 
-Fixes: 8ad529484937 ("ASoC: codecs: add new pm4125 audio codec driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://patch.msgid.link/20251023-asoc-regmap-irq-chip-v1-2-17ad32680913@linaro.org
+Fix this by adding the flag to reflect this in SoC data.
+
+Fixes: 510c46884299 ("ASoC: codecs: lpass-tx-macro: Add SM6115 support")
+Cc: Stable@vger.kernel.org
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251031120703.590201-2-srinivas.kandagatla@oss.qualcomm.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/pm4125.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/codecs/lpass-tx-macro.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/sound/soc/codecs/pm4125.c
-+++ b/sound/soc/codecs/pm4125.c
-@@ -1658,6 +1658,8 @@ static void pm4125_unbind(struct device
- 	struct pm4125_priv *pm4125 = dev_get_drvdata(dev);
+--- a/sound/soc/codecs/lpass-tx-macro.c
++++ b/sound/soc/codecs/lpass-tx-macro.c
+@@ -2473,7 +2473,8 @@ static const struct tx_macro_data lpass_
+ };
  
- 	snd_soc_unregister_component(dev);
-+	devm_regmap_del_irq_chip(dev, irq_find_mapping(pm4125->virq, 0),
-+				 pm4125->irq_chip);
- 	device_link_remove(dev, pm4125->txdev);
- 	device_link_remove(dev, pm4125->rxdev);
- 	device_link_remove(pm4125->rxdev, pm4125->txdev);
+ static const struct tx_macro_data lpass_ver_10_sm6115 = {
+-	.flags			= LPASS_MACRO_FLAG_HAS_NPL_CLOCK,
++	.flags			= LPASS_MACRO_FLAG_HAS_NPL_CLOCK |
++				  LPASS_MACRO_FLAG_RESET_SWR,
+ 	.ver			= LPASS_VER_10_0_0,
+ 	.extra_widgets		= tx_macro_dapm_widgets_v9_2,
+ 	.extra_widgets_num	= ARRAY_SIZE(tx_macro_dapm_widgets_v9_2),
 
 
