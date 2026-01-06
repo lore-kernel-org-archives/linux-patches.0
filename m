@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41014363C50;
-	Tue,  6 Jan 2026 17:50:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D993364029;
+	Tue,  6 Jan 2026 17:50:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721841; cv=none; b=mhCcSRcYw9LZQ8KIAbkQoNJrdkjchZtmvWxHayY3bp0bilpaYdPVwmTP5W+738sHoLiPuyR3nWncCoQxyIevxdXqjFmJAU1zcyNzDHg7J1wXdvHeyulbF0ZxnKNfHl9gC60SKEBqgvPegLR6amyqShEQRQHbprpHPELHK57wR34=
+	t=1767721844; cv=none; b=eUVXmfhx3JP5PTF9bZ5S12ymSXejgf12SZb5C8Koota/VsMrCSuzR/6m5KZ1XnSR68s+C4kIFvuLmFlVSo9S2afZmQx+st2v8N7Ey/SrG0tHrjyYrvYD83a24GJ10h4h3C2fcwR6IsGPeFE+CVfqdBn9TsHcdil/6mnHMF8nssU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721841; c=relaxed/simple;
-	bh=cTEtGOK/YgxJEtMeck09tHtdMOtMuyxnl9H2v2zl1Zc=;
+	s=arc-20240116; t=1767721844; c=relaxed/simple;
+	bh=lrfUfSNsVYEdvWy5Dy+Ip7fe58lc2uQBO+vDU5RXpZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J/eb3GzzbrRqv0SChN1f6JoPH2GwPE4rivELgIbKcGjLw8NC4Fshvx7cTJaEALdLPpwZXsEyYeg2SQ5GuQyF65OHAdZsLCTDVw1RHoGRwQclIYSJ37saSQlTLvnw/YQhv9xEmcFkTLfqEoxFxiubGQngK91Jv0Qr8m9hWK59PO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mf5K7/0e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BhIbF06TAukvTSaOJaV/GUKBw6Aj69bIsuYp1VCH7g2Rlm0IMS8xRsOIxXPYf5ypADY0LujOhzHPOQiAB9F5PYAa78nyLHXN3vG56JCgXFFKvhkD3Sli+wZPpIOtseGwix+yqRWkmZCQIPYBU9eIiDqws70W4+VeqNLnQRzhW0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GMIwGfPG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mf5K7/0e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 343DAC116C6;
-	Tue,  6 Jan 2026 17:50:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GMIwGfPG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE03FC116C6;
+	Tue,  6 Jan 2026 17:50:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721841;
-	bh=cTEtGOK/YgxJEtMeck09tHtdMOtMuyxnl9H2v2zl1Zc=;
+	s=korg; t=1767721844;
+	bh=lrfUfSNsVYEdvWy5Dy+Ip7fe58lc2uQBO+vDU5RXpZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mf5K7/0eqdeqMAmzmhVrfAfne1bWOi5/YvDk5Hqs5sjIhtAZtgiyXsw6NpkYKDcij
-	 nUrHElKGzCtDibRJJq3XMG5Hn6BGB+tPf+64k0EsnG3siW/4esSS0M1AmUEsYfUAqm
-	 wB9tF8bzImZ3kVsB3KQvi1Lm1fWcv0lD8ZPvf1BQ=
+	b=GMIwGfPG9LPD918V7j2waCzZEvSidhd2ZCJgH29+4J70hjQS5pceHTZcuRKfrR3mM
+	 EycJN/cmVt9xOHdPhhHu9myHu1xsF3dOgKqSG+VshYqdTFEmlZlP0hEjmE8DK4NSrO
+	 PdWQkBSyO6bHQxfXGrA/P2grFbUN5Lzi40IL4nAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Cong Zhang <cong.zhang@oss.qualcomm.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 086/312] RDMA/bnxt_re: fix dma_free_coherent() pointer
-Date: Tue,  6 Jan 2026 18:02:40 +0100
-Message-ID: <20260106170550.950196480@linuxfoundation.org>
+Subject: [PATCH 6.18 087/312] blk-mq: skip CPU offline notify on unmapped hctx
+Date: Tue,  6 Jan 2026 18:02:41 +0100
+Message-ID: <20260106170550.985280882@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -51,38 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Cong Zhang <cong.zhang@oss.qualcomm.com>
 
-[ Upstream commit fcd431a9627f272b4c0bec445eba365fe2232a94 ]
+[ Upstream commit 10845a105bbcb030647a729f1716c2309da71d33 ]
 
-The dma_alloc_coherent() allocates a dma-mapped buffer, pbl->pg_arr[i].
-The dma_free_coherent() should pass the same buffer to
-dma_free_coherent() and not page-aligned.
+If an hctx has no software ctx mapped, blk_mq_map_swqueue() never
+allocates tags and leaves hctx->tags NULL. The CPU hotplug offline
+notifier can still run for that hctx, return early since hctx cannot
+hold any requests.
 
-Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Link: https://patch.msgid.link/20251230085121.8023-2-fourier.thomas@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Cong Zhang <cong.zhang@oss.qualcomm.com>
+Fixes: bf0beec0607d ("blk-mq: drain I/O when all CPUs in a hctx are offline")
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_res.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ block/blk-mq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.c b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-index d5c12a51aa43..4d674a3aee1a 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_res.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-@@ -64,9 +64,7 @@ static void __free_pbl(struct bnxt_qplib_res *res, struct bnxt_qplib_pbl *pbl,
- 		for (i = 0; i < pbl->pg_count; i++) {
- 			if (pbl->pg_arr[i])
- 				dma_free_coherent(&pdev->dev, pbl->pg_size,
--						  (void *)((unsigned long)
--						   pbl->pg_arr[i] &
--						  PAGE_MASK),
-+						  pbl->pg_arr[i],
- 						  pbl->pg_map_arr[i]);
- 			else
- 				dev_warn(&pdev->dev,
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index ea5f948af7a4..a03f52ab87d6 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -3710,7 +3710,7 @@ static int blk_mq_hctx_notify_offline(unsigned int cpu, struct hlist_node *node)
+ 			struct blk_mq_hw_ctx, cpuhp_online);
+ 	int ret = 0;
+ 
+-	if (blk_mq_hctx_has_online_cpu(hctx, cpu))
++	if (!hctx->nr_ctx || blk_mq_hctx_has_online_cpu(hctx, cpu))
+ 		return 0;
+ 
+ 	/*
 -- 
 2.51.0
 
