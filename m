@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC1333EC;
-	Tue,  6 Jan 2026 17:31:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94C595695;
+	Tue,  6 Jan 2026 17:31:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720702; cv=none; b=QMOW0460g47o67kGzYuveN0whjVITP/RmtcV6z8GmX8SNceajXxj31dL46+87medMf9qcxHt5GWBJ1oRNhyBBh0aif8w8bT0rgpy3lUOawZbOHq+cMluxZxy+JYFnWpgthHwrKsm4lgbotPCSviqWB4Q4Eb7B40hhIiOdF38uto=
+	t=1767720706; cv=none; b=PRwTiky4QE+B24r1Fg/ABZk5906+LVoYB+IE8BtmwBvs3+z8TwCJ5PmCjXTmZrbFfvCm0C4yGyKDnBkJbLlnVLF0KaFTVJlhFHpUAWa+7UoR1gDr+Skuc2lNRShw7IpF1gp4W1IS57DAwO7+cTFSR33ThKVJY+8qfOsijhkccV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720702; c=relaxed/simple;
-	bh=AP0o99L61aK5Do+4xpT79Ts6rqMwXNK9c9ujBDr9ksA=;
+	s=arc-20240116; t=1767720706; c=relaxed/simple;
+	bh=/Xt9PdgjELG6ROqyWbEq3eqTnq7akhuQ/7mtJkEABos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gDaZz5k5p4Rb7aRDYJgT/gFKzJkpOnBRPcDzJh8mGz6Dy317N2tUSoReJXNdBlxooRMFybuLBXa3WWPPJpurJRO+FS/5mmQWY7gRsPerELJggQ7zEJkGsDRO1USW5P50JYiTZI8kTGWMreac5W3FIsAXYfdq8M3xDU+KpwOhw3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0h1iClTj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kaugttocoYGY8YEUD8AIgmzC2UnqLrapvI1tmD7i+CnZ9pO4JacvqLMYPhY4djr0UTlazYlpts1h1lygtKD50Bec3Rn5cin3W+6lfAQaTzpfEzqpq8xbYT0yqCBCWe1lenfFIfwArg+BlSLDQguWeQfqaPpIsybZm6dH/qt+j5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rU6oBDZP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0h1iClTj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08056C116C6;
-	Tue,  6 Jan 2026 17:31:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rU6oBDZP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62987C116C6;
+	Tue,  6 Jan 2026 17:31:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720702;
-	bh=AP0o99L61aK5Do+4xpT79Ts6rqMwXNK9c9ujBDr9ksA=;
+	s=korg; t=1767720705;
+	bh=/Xt9PdgjELG6ROqyWbEq3eqTnq7akhuQ/7mtJkEABos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0h1iClTjabom7dZNM1RKFtcFyXd6bITONEhZqi0n559ZGJB2v/W9pJHz2Ar/n1MUS
-	 OnAJFj89BJ8JWXBFIF0Tq1x309tQRC5rYfymxdAa17eYDe+zLNnzuPnTeTrcLJzH4X
-	 aejYdhNFC717N2F8QoVHHYlCgHzIMb4QAfI5qNQs=
+	b=rU6oBDZPgLxhXEDLX9EemGGkkhdkz8hpV6uVitFaX4VpuVkWLYs/50QTwY23qRKqH
+	 /tN4vY4rwI2bLFzPn6llrF4hQmh+wkYtZbpvc5YBZrLaXdmlyKisz50dyJxXcEWn+q
+	 lGkOpxnPdAxFo4Q/ZYdivKlaz5Y4RWT/aEpUIKVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>
-Subject: [PATCH 6.12 283/567] platform/x86: intel: chtwc_int33fe: dont dereference swnode args
-Date: Tue,  6 Jan 2026 18:01:05 +0100
-Message-ID: <20260106170501.801592166@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.12 284/567] i2c: amd-mp2: fix reference leak in MP2 PCI device
+Date: Tue,  6 Jan 2026 18:01:06 +0100
+Message-ID: <20260106170501.837929200@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -47,119 +44,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 527250cd9092461f1beac3e4180a4481bffa01b5 upstream.
+commit a6ee6aac66fb394b7f6e6187c73bdcd873f2d139 upstream.
 
-Members of struct software_node_ref_args should not be dereferenced
-directly but set using the provided macros. Commit d7cdbbc93c56
-("software node: allow referencing firmware nodes") changed the name of
-the software node member and caused a build failure. Remove all direct
-dereferences of the ref struct as a fix.
+In i2c_amd_probe(), amd_mp2_find_device() utilizes
+driver_find_next_device() which internally calls driver_find_device()
+to locate the matching device. driver_find_device() increments the
+reference count of the found device by calling get_device(), but
+amd_mp2_find_device() fails to call put_device() to decrement the
+reference count before returning. This results in a reference count
+leak of the PCI device each time i2c_amd_probe() is executed, which
+may prevent the device from being properly released and cause a memory
+leak.
 
-However, this driver also seems to abuse the software node interface by
-waiting for a node with an arbitrary name "intel-xhci-usb-sw" to appear
-in the system before setting up the reference for the I2C device, while
-the actual software node already exists in the intel-xhci-usb-role-switch
-module and should be used to set up a static reference. Add a FIXME for
-a future improvement.
+Found by code review.
 
-Fixes: d7cdbbc93c56 ("software node: allow referencing firmware nodes")
-Fixes: 53c24c2932e5 ("platform/x86: intel_cht_int33fe: use inline reference properties")
 Cc: stable@vger.kernel.org
-Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Closes: https://lore.kernel.org/all/20251121111534.7cdbfe5c@canb.auug.org.au/
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Acked-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+Fixes: 529766e0a011 ("i2c: Add drivers for the AMD PCIe MP2 I2C controller")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20251022095402.8846-1-make24@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/chtwc_int33fe.c |   29 ++++++++++++++++++++---------
- 1 file changed, 20 insertions(+), 9 deletions(-)
+ drivers/i2c/busses/i2c-amd-mp2-pci.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/platform/x86/intel/chtwc_int33fe.c
-+++ b/drivers/platform/x86/intel/chtwc_int33fe.c
-@@ -77,7 +77,7 @@ static const struct software_node max170
-  * software node.
-  */
- static struct software_node_ref_args fusb302_mux_refs[] = {
--	{ .node = NULL },
-+	SOFTWARE_NODE_REFERENCE(NULL),
- };
- 
- static const struct property_entry fusb302_properties[] = {
-@@ -190,11 +190,6 @@ static void cht_int33fe_remove_nodes(str
+--- a/drivers/i2c/busses/i2c-amd-mp2-pci.c
++++ b/drivers/i2c/busses/i2c-amd-mp2-pci.c
+@@ -461,13 +461,16 @@ struct amd_mp2_dev *amd_mp2_find_device(
  {
- 	software_node_unregister_node_group(node_group);
+ 	struct device *dev;
+ 	struct pci_dev *pci_dev;
++	struct amd_mp2_dev *mp2_dev;
  
--	if (fusb302_mux_refs[0].node) {
--		fwnode_handle_put(software_node_fwnode(fusb302_mux_refs[0].node));
--		fusb302_mux_refs[0].node = NULL;
--	}
--
- 	if (data->dp) {
- 		data->dp->secondary = NULL;
- 		fwnode_handle_put(data->dp);
-@@ -202,7 +197,15 @@ static void cht_int33fe_remove_nodes(str
- 	}
+ 	dev = driver_find_next_device(&amd_mp2_pci_driver.driver, NULL);
+ 	if (!dev)
+ 		return NULL;
+ 
+ 	pci_dev = to_pci_dev(dev);
+-	return (struct amd_mp2_dev *)pci_get_drvdata(pci_dev);
++	mp2_dev = (struct amd_mp2_dev *)pci_get_drvdata(pci_dev);
++	put_device(dev);
++	return mp2_dev;
  }
- 
--static int cht_int33fe_add_nodes(struct cht_int33fe_data *data)
-+static void cht_int33fe_put_swnode(void *data)
-+{
-+	struct fwnode_handle *fwnode = data;
-+
-+	fwnode_handle_put(fwnode);
-+	fusb302_mux_refs[0] = SOFTWARE_NODE_REFERENCE(NULL);
-+}
-+
-+static int cht_int33fe_add_nodes(struct device *dev, struct cht_int33fe_data *data)
- {
- 	const struct software_node *mux_ref_node;
- 	int ret;
-@@ -212,17 +215,25 @@ static int cht_int33fe_add_nodes(struct
- 	 * until the mux driver has created software node for the mux device.
- 	 * It means we depend on the mux driver. This function will return
- 	 * -EPROBE_DEFER until the mux device is registered.
-+	 *
-+	 * FIXME: the relevant software node exists in intel-xhci-usb-role-switch
-+	 * and - if exported - could be used to set up a static reference.
- 	 */
- 	mux_ref_node = software_node_find_by_name(NULL, "intel-xhci-usb-sw");
- 	if (!mux_ref_node)
- 		return -EPROBE_DEFER;
- 
-+	ret = devm_add_action_or_reset(dev, cht_int33fe_put_swnode,
-+				       software_node_fwnode(mux_ref_node));
-+	if (ret)
-+		return ret;
-+
- 	/*
- 	 * Update node used in "usb-role-switch" property. Note that we
- 	 * rely on software_node_register_node_group() to use the original
- 	 * instance of properties instead of copying them.
- 	 */
--	fusb302_mux_refs[0].node = mux_ref_node;
-+	fusb302_mux_refs[0] = SOFTWARE_NODE_REFERENCE(mux_ref_node);
- 
- 	ret = software_node_register_node_group(node_group);
- 	if (ret)
-@@ -345,7 +356,7 @@ static int cht_int33fe_typec_probe(struc
- 		return fusb302_irq;
- 	}
- 
--	ret = cht_int33fe_add_nodes(data);
-+	ret = cht_int33fe_add_nodes(dev, data);
- 	if (ret)
- 		return ret;
+ EXPORT_SYMBOL_GPL(amd_mp2_find_device);
  
 
 
