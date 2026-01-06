@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADAB5155389;
-	Tue,  6 Jan 2026 17:30:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 020D22222AC;
+	Tue,  6 Jan 2026 17:31:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720659; cv=none; b=mikX9sOrCQ7zzryD2dDaprCuBH9C1bXOxMmo9rO4PSpRewQm9j9PhEHonFxiIncZrl/MmdVb14n/Fp/hKERXiNlaRTrLLs9Y4KxAxS80OQEuf2ll6EnO28bzcOVueWkSsYjWYFb4h3berWNmA59x0QKlFXhBBhlBZBQaqY5CdyM=
+	t=1767720663; cv=none; b=H8F3/Q/p/J6reqyUAtQZevtNKp6zjWrHx7/65DOlSqpQnBpoB7DnvWP5aocpdW2Zn0PZosXWzrKkBL+glyue1L3CbyGfQsb8HKwLLFYWXSQIJOF2TaxO0pCz5KMMQO3ZrsUqb8kMF/HBrEIlhDN+MFqNIDw/8Tv96gimxL6s3dw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720659; c=relaxed/simple;
-	bh=w9Dzo4FmYr/nWZb/VYVEG81U13eZuiPvhm45FeuiD/g=;
+	s=arc-20240116; t=1767720663; c=relaxed/simple;
+	bh=z06EowQbYbJnXGOjLBBqNVBqlUh07xeBQQVHDXJJSEc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YNRAe5RJZVMIcZx3oTNqzOM7Uae0L297NljIxut77Ilj4xhxUmVADlG3E51BWIfHwh+CzcZtOyAnu24Eya/NPnZndbO7jrA61c9nm2CG3eMf4yqZkOydezUdVo6MxXOFjkM3+AuDCr9MB15qW3/y/KGu8bB9f5+AkxG1zShyDjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1nAv/YqB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EcP6iZpmkMFP9ESVuRd3d4K0jVk5NP+BQZlqUKllXf+RDRcY/1UJbgFAzY5Op8UBP02/5rXag9ACaO6KivcbWuNQQB7Big9v66OxPWzWLVHF/Ko5UBMc2XtA/fCnN4406m8LAXT7vlWrb3KdTypnygkZUq6Y5pwfi5JSpPlVTKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aRIXovlX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1nAv/YqB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E565C116C6;
-	Tue,  6 Jan 2026 17:30:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aRIXovlX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 629A7C116C6;
+	Tue,  6 Jan 2026 17:31:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720659;
-	bh=w9Dzo4FmYr/nWZb/VYVEG81U13eZuiPvhm45FeuiD/g=;
+	s=korg; t=1767720662;
+	bh=z06EowQbYbJnXGOjLBBqNVBqlUh07xeBQQVHDXJJSEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1nAv/YqBsV/fX7tRxKS6aec/p75ffybIzI3AKMRuuAQw8Ut20GH6MbRqX0ve+SAyH
-	 EfI9P+QcJq8WSwj9K+BX4+UJhorMRPknKlc4mKZdQhfqZG3zWvv1dKNOvYSOSrhQuc
-	 jsm+IyFPzcONRHXKhtrUTvazTqwDqUSa2TmbyHW8=
+	b=aRIXovlXRGbmSki3+4HMv1qScZvbMzjNtVHBR8vNN7OexuPxKOIFu80qeKmHIwGz+
+	 xTiHR6mE6bmp5FIAhUZ4q0gFkhqPPlInBPs9EF93jY+9OA9jdbZx62bwDq+SmBIrss
+	 gVSrgPCH6r5+MjTykuQsuffOXhyBrR9owamEzANE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Pinsonneault-Thibeault <rpthibeault@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Jacky Chou <jacky_chou@aspeedtech.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 303/567] Bluetooth: btusb: revert use of devm_kzalloc in btusb
-Date: Tue,  6 Jan 2026 18:01:25 +0100
-Message-ID: <20260106170502.540152739@linuxfoundation.org>
+Subject: [PATCH 6.12 304/567] net: mdio: aspeed: add dummy read to avoid read-after-write issue
+Date: Tue,  6 Jan 2026 18:01:26 +0100
+Message-ID: <20260106170502.576590182@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,87 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raphael Pinsonneault-Thibeault <rpthibeault@gmail.com>
+From: Jacky Chou <jacky_chou@aspeedtech.com>
 
-[ Upstream commit 252714f1e8bdd542025b16321c790458014d6880 ]
+[ Upstream commit d1a1a4bade4b20c0858d0b2f81d2611de055f675 ]
 
-This reverts commit 98921dbd00c4e ("Bluetooth: Use devm_kzalloc in
-btusb.c file").
+The Aspeed MDIO controller may return incorrect data when a read operation
+follows immediately after a write. Due to a controller bug, the subsequent
+read can latch stale data, causing the polling logic to terminate earlier
+than expected.
 
-In btusb_probe(), we use devm_kzalloc() to allocate the btusb data. This
-ties the lifetime of all the btusb data to the binding of a driver to
-one interface, INTF. In a driver that binds to other interfaces, ISOC
-and DIAG, this is an accident waiting to happen.
+To work around this hardware issue, insert a dummy read after each write
+operation. This ensures that the next actual read returns the correct
+data and prevents premature polling exit.
 
-The issue is revealed in btusb_disconnect(), where calling
-usb_driver_release_interface(&btusb_driver, data->intf) will have devm
-free the data that is also being used by the other interfaces of the
-driver that may not be released yet.
+This workaround has been verified to stabilize MDIO transactions on
+affected Aspeed platforms.
 
-To fix this, revert the use of devm and go back to freeing memory
-explicitly.
-
-Fixes: 98921dbd00c4e ("Bluetooth: Use devm_kzalloc in btusb.c file")
-Signed-off-by: Raphael Pinsonneault-Thibeault <rpthibeault@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: f160e99462c6 ("net: phy: Add mdio-aspeed")
+Signed-off-by: Jacky Chou <jacky_chou@aspeedtech.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20251211-aspeed_mdio_add_dummy_read-v3-1-382868869004@aspeedtech.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/net/mdio/mdio-aspeed.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index fc7b3e02f14b..603ff13d9f7c 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -3835,7 +3835,7 @@ static int btusb_probe(struct usb_interface *intf,
- 			return -ENODEV;
- 	}
+diff --git a/drivers/net/mdio/mdio-aspeed.c b/drivers/net/mdio/mdio-aspeed.c
+index c2170650415c..4f2bd20cdc05 100644
+--- a/drivers/net/mdio/mdio-aspeed.c
++++ b/drivers/net/mdio/mdio-aspeed.c
+@@ -63,6 +63,13 @@ static int aspeed_mdio_op(struct mii_bus *bus, u8 st, u8 op, u8 phyad, u8 regad,
  
--	data = devm_kzalloc(&intf->dev, sizeof(*data), GFP_KERNEL);
-+	data = kzalloc(sizeof(*data), GFP_KERNEL);
- 	if (!data)
- 		return -ENOMEM;
+ 	iowrite32(ctrl, ctx->base + ASPEED_MDIO_CTRL);
  
-@@ -3858,8 +3858,10 @@ static int btusb_probe(struct usb_interface *intf,
- 		}
- 	}
- 
--	if (!data->intr_ep || !data->bulk_tx_ep || !data->bulk_rx_ep)
-+	if (!data->intr_ep || !data->bulk_tx_ep || !data->bulk_rx_ep) {
-+		kfree(data);
- 		return -ENODEV;
-+	}
- 
- 	if (id->driver_info & BTUSB_AMP) {
- 		data->cmdreq_type = USB_TYPE_CLASS | 0x01;
-@@ -3914,8 +3916,10 @@ static int btusb_probe(struct usb_interface *intf,
- 	data->recv_acl = hci_recv_frame;
- 
- 	hdev = hci_alloc_dev_priv(priv_size);
--	if (!hdev)
-+	if (!hdev) {
-+		kfree(data);
- 		return -ENOMEM;
-+	}
- 
- 	hdev->bus = HCI_USB;
- 	hci_set_drvdata(hdev, data);
-@@ -4187,6 +4191,7 @@ static int btusb_probe(struct usb_interface *intf,
- 	if (data->reset_gpio)
- 		gpiod_put(data->reset_gpio);
- 	hci_free_dev(hdev);
-+	kfree(data);
- 	return err;
- }
- 
-@@ -4235,6 +4240,7 @@ static void btusb_disconnect(struct usb_interface *intf)
- 	}
- 
- 	hci_free_dev(hdev);
-+	kfree(data);
- }
- 
- #ifdef CONFIG_PM
++	/* Workaround for read-after-write issue.
++	 * The controller may return stale data if a read follows immediately
++	 * after a write. A dummy read forces the hardware to update its
++	 * internal state, ensuring that the next real read returns correct data.
++	 */
++	ioread32(ctx->base + ASPEED_MDIO_CTRL);
++
+ 	return readl_poll_timeout(ctx->base + ASPEED_MDIO_CTRL, ctrl,
+ 				!(ctrl & ASPEED_MDIO_CTRL_FIRE),
+ 				ASPEED_MDIO_INTERVAL_US,
 -- 
 2.51.0
 
