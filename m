@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37E72EFD95;
-	Tue,  6 Jan 2026 17:42:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE462EFD95;
+	Tue,  6 Jan 2026 17:42:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721360; cv=none; b=LvoDON/kzflZ8lZFOMsqI9RAHD8EfRiWN6tRwRFl5QD93e42klXB9pSOODhIk4IRIGB5K2GtgTtGpMa+C6y3cM4nYFKRkFg1XK75zKU7LeYCEHfnh1zIhowemvIANzX0myQIjNjVXVTBGKc8+7I6h5gmijPM33C37K6d2CJSdF4=
+	t=1767721364; cv=none; b=Zp6ps+r+EY3F5s1ZhedZyxOZwzBjicPx3efWTS0kvTasiyVVCqAdS0zJlzb0s4gwf2NyVa5OF3GwhvDBf8HLTMr/78nDZ3GpXedKx7m2IEEsy3kRm/bWWaSd8wAFVuL92tF8K4sZIgUX9Z2gu0G5yRvyaqB2jEch9PAtwh4RF3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721360; c=relaxed/simple;
-	bh=o7/WF1J1+a8NDcPt0CONJ2IVHU9cYCgY7XdPnMqP6sE=;
+	s=arc-20240116; t=1767721364; c=relaxed/simple;
+	bh=JXFdKQraY6aCxwV9jqwiudGKrFeTKaqMhQ1PAIROh2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kHViSC7Psu/gCTw4ha6Bku5KeK+JjbFFr4kzNp7eZAyEmB6M/Vx9A7RFCGL1f673suwz6ce9kTcuRs5fSaeDleEXHVt9OeEO81aUE/d8FTlUb0xUrfEE25sur9ntGo22Jse4TW0ClsyczCM7W/N/f0BCWlTP03eJXrpOYxr3tQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cEJpgmH+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ylg1iDRFf4VOto1tTSjqqfNPXP6w98rBNidYfr7ux54O9auPYjhuceTb9sjxxzXbIkCs06pCcCpxH69ztsqCn7Fh8lMWz7AdZ+wEu3bcykTYZBzkMf4ARWSJ7Ym7kjT5cUiyO7nFBsQrJdHd4YYaPpsZhOMVO5kL9nRUZMPtgNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wFArCcqT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cEJpgmH+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43BF4C116C6;
-	Tue,  6 Jan 2026 17:42:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wFArCcqT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C6C7C116C6;
+	Tue,  6 Jan 2026 17:42:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721360;
-	bh=o7/WF1J1+a8NDcPt0CONJ2IVHU9cYCgY7XdPnMqP6sE=;
+	s=korg; t=1767721363;
+	bh=JXFdKQraY6aCxwV9jqwiudGKrFeTKaqMhQ1PAIROh2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cEJpgmH+uTuMT8oytKBnw0TALkJ/jF871Pr+1yf6kHCZsjsVw9HzMD+sDK9crkt9U
-	 1cdeTzMsPbF3Sl7aW7l7dH1blxWohSPCVTluIGhKO3ywY6yWhqgqvI73wpBOFHWNZq
-	 lGNABqsBgUHLBbJd6Wh2OSVzgz5oZD89fHgQTxnM=
+	b=wFArCcqTyg5DrDkY9YF9KLEpCID8HUVcn7HvGDUchuwVWwDUbBymGpUwzFh6xoEn+
+	 wOC1wnbKiFqIqOSm57KEnlx5VAgjmLBVSL+hJuRYo6dhduUfblzCFQI0sZs8dlUk85
+	 hv5NBN7ToLxQxphZwcJjQbMoElPAJqBFpG0MnHvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 513/567] f2fs: add timeout in f2fs_enable_checkpoint()
-Date: Tue,  6 Jan 2026 18:04:55 +0100
-Message-ID: <20260106170510.353936461@linuxfoundation.org>
+Subject: [PATCH 6.12 514/567] f2fs: dump more information for f2fs_{enable,disable}_checkpoint()
+Date: Tue,  6 Jan 2026 18:04:56 +0100
+Message-ID: <20260106170510.392108172@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -53,12 +53,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 4bc347779698b5e67e1514bab105c2c083e55502 ]
+[ Upstream commit 80b6d1d2535a343e43d658777a46f1ebce8f3413 ]
 
-During f2fs_enable_checkpoint() in remount(), if we flush a large
-amount of dirty pages into slow device, it may take long time which
-will block write IO, let's add a timeout machanism during dirty
-pages flush to avoid long time block in f2fs_enable_checkpoint().
+Changes as below:
+- print more logs for f2fs_{enable,disable}_checkpoint()
+- account and dump time stats for f2fs_enable_checkpoint()
 
 Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
@@ -66,68 +65,56 @@ Stable-dep-of: be112e7449a6 ("f2fs: fix to propagate error from f2fs_enable_chec
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/f2fs.h  |    2 ++
- fs/f2fs/super.c |   21 +++++++++++++++------
- 2 files changed, 17 insertions(+), 6 deletions(-)
+ fs/f2fs/super.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -249,6 +249,7 @@ enum {
- #define DEF_CP_INTERVAL			60	/* 60 secs */
- #define DEF_IDLE_INTERVAL		5	/* 5 secs */
- #define DEF_DISABLE_INTERVAL		5	/* 5 secs */
-+#define DEF_ENABLE_INTERVAL		16	/* 16 secs */
- #define DEF_DISABLE_QUICK_INTERVAL	1	/* 1 secs */
- #define DEF_UMOUNT_DISCARD_TIMEOUT	5	/* 5 secs */
- 
-@@ -1351,6 +1352,7 @@ enum {
- 	DISCARD_TIME,
- 	GC_TIME,
- 	DISABLE_TIME,
-+	ENABLE_TIME,
- 	UMOUNT_DISCARD_TIMEOUT,
- 	MAX_TIME,
- };
 --- a/fs/f2fs/super.c
 +++ b/fs/f2fs/super.c
-@@ -2283,16 +2283,24 @@ restore_flag:
+@@ -2278,15 +2278,24 @@ out_unlock:
+ restore_flag:
+ 	sbi->gc_mode = gc_mode;
+ 	sbi->sb->s_flags = s_flags;	/* Restore SB_RDONLY status */
++	f2fs_info(sbi, "f2fs_disable_checkpoint() finish, err:%d", err);
+ 	return err;
+ }
  
  static void f2fs_enable_checkpoint(struct f2fs_sb_info *sbi)
  {
--	int retry = DEFAULT_RETRY_IO_COUNT;
-+	unsigned int nr_pages = get_pages(sbi, F2FS_DIRTY_DATA) / 16;
+ 	unsigned int nr_pages = get_pages(sbi, F2FS_DIRTY_DATA) / 16;
++	long long start, writeback, end;
 +
-+	f2fs_update_time(sbi, ENABLE_TIME);
- 
- 	/* we should flush all the data to keep data consistency */
--	do {
--		sync_inodes_sb(sbi->sb);
-+	while (get_pages(sbi, F2FS_DIRTY_DATA)) {
-+		writeback_inodes_sb_nr(sbi->sb, nr_pages, WB_REASON_SYNC);
- 		f2fs_io_schedule_timeout(DEFAULT_IO_TIMEOUT);
--	} while (get_pages(sbi, F2FS_DIRTY_DATA) && retry--);
- 
--	if (unlikely(retry < 0))
--		f2fs_warn(sbi, "checkpoint=enable has some unwritten data.");
-+		if (f2fs_time_over(sbi, ENABLE_TIME))
-+			break;
-+	}
-+
-+	sync_inodes_sb(sbi->sb);
-+
-+	if (unlikely(get_pages(sbi, F2FS_DIRTY_DATA)))
-+		f2fs_warn(sbi, "checkpoint=enable has some unwritten data: %lld",
++	f2fs_info(sbi, "f2fs_enable_checkpoint() starts, meta: %lld, node: %lld, data: %lld",
++					get_pages(sbi, F2FS_DIRTY_META),
++					get_pages(sbi, F2FS_DIRTY_NODES),
 +					get_pages(sbi, F2FS_DIRTY_DATA));
  
- 	f2fs_down_write(&sbi->gc_lock);
- 	f2fs_dirty_to_prefree(sbi);
-@@ -3868,6 +3876,7 @@ static void init_sb_info(struct f2fs_sb_
- 	sbi->interval_time[DISCARD_TIME] = DEF_IDLE_INTERVAL;
- 	sbi->interval_time[GC_TIME] = DEF_IDLE_INTERVAL;
- 	sbi->interval_time[DISABLE_TIME] = DEF_DISABLE_INTERVAL;
-+	sbi->interval_time[ENABLE_TIME] = DEF_ENABLE_INTERVAL;
- 	sbi->interval_time[UMOUNT_DISCARD_TIMEOUT] =
- 				DEF_UMOUNT_DISCARD_TIMEOUT;
- 	clear_sbi_flag(sbi, SBI_NEED_FSCK);
+ 	f2fs_update_time(sbi, ENABLE_TIME);
+ 
++	start = ktime_get();
++
+ 	/* we should flush all the data to keep data consistency */
+ 	while (get_pages(sbi, F2FS_DIRTY_DATA)) {
+ 		writeback_inodes_sb_nr(sbi->sb, nr_pages, WB_REASON_SYNC);
+@@ -2295,6 +2304,7 @@ static void f2fs_enable_checkpoint(struc
+ 		if (f2fs_time_over(sbi, ENABLE_TIME))
+ 			break;
+ 	}
++	writeback = ktime_get();
+ 
+ 	sync_inodes_sb(sbi->sb);
+ 
+@@ -2313,6 +2323,12 @@ static void f2fs_enable_checkpoint(struc
+ 
+ 	/* Let's ensure there's no pending checkpoint anymore */
+ 	f2fs_flush_ckpt_thread(sbi);
++
++	end = ktime_get();
++
++	f2fs_info(sbi, "f2fs_enable_checkpoint() finishes, writeback:%llu, sync:%llu",
++					ktime_ms_delta(writeback, start),
++					ktime_ms_delta(end, writeback));
+ }
+ 
+ static int f2fs_remount(struct super_block *sb, int *flags, char *data)
 
 
