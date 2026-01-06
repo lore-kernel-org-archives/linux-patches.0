@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 966272C11DB;
-	Tue,  6 Jan 2026 17:32:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B880B2BE7B2;
+	Tue,  6 Jan 2026 17:32:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720726; cv=none; b=SNRYadBrWS1BE5fK7EwIemFmpr9OtkGNBhu1VgkkOediMCmT1vSGuflX21WAiY9CbDbLakfyhxjfGbMMeW09vYBNu5C9XqNupbJ9cJEJEXNWFzPPa87FMh0i6QHredU1am1kn65HI25gF7JTdJSog9Mz+/UtSTOa+sVyeKZ/D9A=
+	t=1767720729; cv=none; b=Yyn3uKl4qujQFycEGctvrfijAwUVEtnDdrOUVvkQ/6eXkQkrEKwU3b5rjuPAfcW5Mj5dlv81x95XyFCRxBDOuIIY2b/M2jHwnuYHQ9pcaJwT1OwITmfKBFslwtqt93s111LgJJQ73HRsRtd40V+jTNQJ9rR+PFyGivo7mwz4RqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720726; c=relaxed/simple;
-	bh=sbaV0KszweiVghWly93uShqjJRFEuJsR3JS0ZgQ3utk=;
+	s=arc-20240116; t=1767720729; c=relaxed/simple;
+	bh=aC/o7d/8HJuZEuue4ZYNmLXfYtePW+f+R5KIJxNCNOE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gk7kd0ncZBoecUt4Nrj1rshwH2gimc9dTcyHmCp+sR+e9be96B/PEr66D5csYw+BuZB0yQKQOE6krTl6+6khKqqCPqmItEDo2IM7lhR9YeRshGhsy5ubUBpzVSj0N3V3A6ePzc6ujaqrYDVnb5AfA6RaICmvNxh07oX8A52Yhtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MXpaRiAi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OQkllLeKFVGpApDX1nY+eXr2HVNF/HqP/OGCz2qBnOyJQd7+RgS2zCKIJf1Fv74/4M0PPz3vTPdyv4WWSXTCqooCmuwDCaUKsS9dgmCyjtUkgPO8tOmre2f03v45Zk2Xor1/pp82osBJoHQ81lwPpFTGicpc7obKXsNO5T7tW/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N3pZvcC3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MXpaRiAi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C279CC16AAE;
-	Tue,  6 Jan 2026 17:32:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N3pZvcC3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26DC6C116C6;
+	Tue,  6 Jan 2026 17:32:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720726;
-	bh=sbaV0KszweiVghWly93uShqjJRFEuJsR3JS0ZgQ3utk=;
+	s=korg; t=1767720729;
+	bh=aC/o7d/8HJuZEuue4ZYNmLXfYtePW+f+R5KIJxNCNOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MXpaRiAixLRS4SJx9yLxZcmrTxINy+nxIG/XMy1h540DR2f2B7PLbMFMpylu8yOyh
-	 bNtivsTBlldCPPed88N/o6N63r4ij0pPplSPuhkW+PLoGPJKkUtqCZttLCvqPJI5jZ
-	 qKq3F9f6+86w9XSRsV4lwsNOndKDyzbFVxeZBHmk=
+	b=N3pZvcC34CY+fnp85+dFUv7QSMCK6cAQQUUiIVtSvTmV/h47JkTSEsSACOnn4C8Dq
+	 WURdUJEB4M8IFZMsxK+29DsX9zA5A5kg5Lba0EoRCoxsHgBEYk5J4h4mtcZwSMN13Z
+	 qdfKjZs1siyLY8AFFY0k2KtwtBez781hJ7R+8WIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anshumali Gaur <agaur@marvell.com>,
+	Wei Fang <wei.fang@nxp.com>,
+	Hariprasad Kelam <hkelam@marvell.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 324/567] octeontx2-pf: fix "UBSAN: shift-out-of-bounds error"
-Date: Tue,  6 Jan 2026 18:01:46 +0100
-Message-ID: <20260106170503.309320296@linuxfoundation.org>
+Subject: [PATCH 6.12 325/567] net: stmmac: fix the crash issue for zero copy XDP_TX action
+Date: Tue,  6 Jan 2026 18:01:47 +0100
+Message-ID: <20260106170503.347014661@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,43 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anshumali Gaur <agaur@marvell.com>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit 85f4b0c650d9f9db10bda8d3acfa1af83bf78cf7 ]
+[ Upstream commit a48e232210009be50591fdea8ba7c07b0f566a13 ]
 
-This patch ensures that the RX ring size (rx_pending) is not
-set below the permitted length. This avoids UBSAN
-shift-out-of-bounds errors when users passes small or zero
-ring sizes via ethtool -G.
+There is a crash issue when running zero copy XDP_TX action, the crash
+log is shown below.
 
-Fixes: d45d8979840d ("octeontx2-pf: Add basic ethtool support")
-Signed-off-by: Anshumali Gaur <agaur@marvell.com>
-Link: https://patch.msgid.link/20251219062226.524844-1-agaur@marvell.com
+[  216.122464] Unable to handle kernel paging request at virtual address fffeffff80000000
+[  216.187524] Internal error: Oops: 0000000096000144 [#1]  SMP
+[  216.301694] Call trace:
+[  216.304130]  dcache_clean_poc+0x20/0x38 (P)
+[  216.308308]  __dma_sync_single_for_device+0x1bc/0x1e0
+[  216.313351]  stmmac_xdp_xmit_xdpf+0x354/0x400
+[  216.317701]  __stmmac_xdp_run_prog+0x164/0x368
+[  216.322139]  stmmac_napi_poll_rxtx+0xba8/0xf00
+[  216.326576]  __napi_poll+0x40/0x218
+[  216.408054] Kernel panic - not syncing: Oops: Fatal exception in interrupt
+
+For XDP_TX action, the xdp_buff is converted to xdp_frame by
+xdp_convert_buff_to_frame(). The memory type of the resulting xdp_frame
+depends on the memory type of the xdp_buff. For page pool based xdp_buff
+it produces xdp_frame with memory type MEM_TYPE_PAGE_POOL. For zero copy
+XSK pool based xdp_buff it produces xdp_frame with memory type
+MEM_TYPE_PAGE_ORDER0. However, stmmac_xdp_xmit_back() does not check the
+memory type and always uses the page pool type, this leads to invalid
+mappings and causes the crash. Therefore, check the xdp_buff memory type
+in stmmac_xdp_xmit_back() to fix this issue.
+
+Fixes: bba2556efad6 ("net: stmmac: Enable RX via AF_XDP zero-copy")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Hariprasad Kelam <hkelam@marvell.com>
+Link: https://patch.msgid.link/20251204071332.1907111-1-wei.fang@nxp.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c   | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c
-index 5197ce816581..cc6a63e2573f 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c
-@@ -432,6 +432,14 @@ static int otx2_set_ringparam(struct net_device *netdev,
- 	 */
- 	if (rx_count < pfvf->hw.rq_skid)
- 		rx_count =  pfvf->hw.rq_skid;
-+
-+	if (ring->rx_pending < 16) {
-+		netdev_err(netdev,
-+			   "rx ring size %u invalid, min is 16\n",
-+			   ring->rx_pending);
-+		return -EINVAL;
-+	}
-+
- 	rx_count = Q_COUNT(Q_SIZE(rx_count, 3));
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index ce35a6f12679..112287a6e9ab 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -87,6 +87,7 @@ MODULE_PARM_DESC(phyaddr, "Physical device address");
+ #define STMMAC_XDP_CONSUMED	BIT(0)
+ #define STMMAC_XDP_TX		BIT(1)
+ #define STMMAC_XDP_REDIRECT	BIT(2)
++#define STMMAC_XSK_CONSUMED	BIT(3)
  
- 	/* Due pipelining impact minimum 2000 unused SQ CQE's
+ static int flow_ctrl = FLOW_AUTO;
+ module_param(flow_ctrl, int, 0644);
+@@ -4998,6 +4999,7 @@ static int stmmac_xdp_get_tx_queue(struct stmmac_priv *priv,
+ static int stmmac_xdp_xmit_back(struct stmmac_priv *priv,
+ 				struct xdp_buff *xdp)
+ {
++	bool zc = !!(xdp->rxq->mem.type == MEM_TYPE_XSK_BUFF_POOL);
+ 	struct xdp_frame *xdpf = xdp_convert_buff_to_frame(xdp);
+ 	int cpu = smp_processor_id();
+ 	struct netdev_queue *nq;
+@@ -5014,9 +5016,18 @@ static int stmmac_xdp_xmit_back(struct stmmac_priv *priv,
+ 	/* Avoids TX time-out as we are sharing with slow path */
+ 	txq_trans_cond_update(nq);
+ 
+-	res = stmmac_xdp_xmit_xdpf(priv, queue, xdpf, false);
+-	if (res == STMMAC_XDP_TX)
++	/* For zero copy XDP_TX action, dma_map is true */
++	res = stmmac_xdp_xmit_xdpf(priv, queue, xdpf, zc);
++	if (res == STMMAC_XDP_TX) {
+ 		stmmac_flush_tx_descriptors(priv, queue);
++	} else if (res == STMMAC_XDP_CONSUMED && zc) {
++		/* xdp has been freed by xdp_convert_buff_to_frame(),
++		 * no need to call xsk_buff_free() again, so return
++		 * STMMAC_XSK_CONSUMED.
++		 */
++		res = STMMAC_XSK_CONSUMED;
++		xdp_return_frame(xdpf);
++	}
+ 
+ 	__netif_tx_unlock(nq);
+ 
+@@ -5366,6 +5377,8 @@ static int stmmac_rx_zc(struct stmmac_priv *priv, int limit, u32 queue)
+ 			break;
+ 		case STMMAC_XDP_CONSUMED:
+ 			xsk_buff_free(buf->xdp);
++			fallthrough;
++		case STMMAC_XSK_CONSUMED:
+ 			rx_dropped++;
+ 			break;
+ 		case STMMAC_XDP_TX:
 -- 
 2.51.0
 
