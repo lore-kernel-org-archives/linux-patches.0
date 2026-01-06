@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA4A2F659C;
-	Tue,  6 Jan 2026 17:34:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322A3226165;
+	Tue,  6 Jan 2026 17:34:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720883; cv=none; b=HIdcvxbbeuLivytEBQ3hVVgmR9PgFaa+nCviBUJtAqu+DAVeMGnYII7H2Q+h8pZeoiG9CZkQLrtQs9Nj9rsXCFw1rno9L+ut+pHQxVe0gh5En/OUnjI1D5DA9JdQQRY6SDQg40beNHj2PNhqYluQElElaowvsEEgXf8tKBHwwfA=
+	t=1767720887; cv=none; b=O3Djzd1G93vJUB8TUQ30y5XcGid1hFBvO56npnBRyLHdl4aCzZysjlFCUNdTd+Mp56D3wyomFE40l/ZH4ZAQmAxYXOGgglrm9B+FRf3ss2OylfX/MA7SD7d57ZFUdn3+LOiYZGhrEDOKIHcp4df+vz/fVcyLIKaNj5dpS+0Fq10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720883; c=relaxed/simple;
-	bh=RzQPAN5v2WnkHIFbcmLLzYmC7s+czEcoJfA2HrAT/0I=;
+	s=arc-20240116; t=1767720887; c=relaxed/simple;
+	bh=0qe2lM03JLsZImP4SsBzSuknm6p74//1Igts2YoR1zw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pwnhwaI9GZcAuW72Wbrum171uVEenTgHkNSaW9IyeqmlAoaC6+dr3tUokGpKt3XTNqtNn9ok+eVxN4xH5xuGVrSYIT1zkxd3gWhpbQH2GaZzyYlYmOwEn4zQUWjysrY1y6yL789B1mY13Qmp/yt9cVRG2Y5i5g6K74kBR32UKx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mflsUeGH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s1D8J8+DNuqV/XvF1kXiQ7WkKpGvbiKm0iLabFSEveHNy4RnbnEK4BnhY0hAODCh5d31g24gMxTE98hro/t8K9rzYZdkuVIt14OJKbjhmfDvsMfM0WqR2R3qAL1C9CXfS0r+fguQfYOCVXdc3woDj7cZOtXSWGyp02dclrZbXr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K8SG3Zv2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mflsUeGH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFBEFC116C6;
-	Tue,  6 Jan 2026 17:34:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K8SG3Zv2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C277C116C6;
+	Tue,  6 Jan 2026 17:34:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720883;
-	bh=RzQPAN5v2WnkHIFbcmLLzYmC7s+czEcoJfA2HrAT/0I=;
+	s=korg; t=1767720886;
+	bh=0qe2lM03JLsZImP4SsBzSuknm6p74//1Igts2YoR1zw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mflsUeGHIikQ5G5vwiSHBGjCWq4Ur+FvbsIA2/9uDBbNMOBLCZFDXM6xgOIO39Vhn
-	 qChon8t7vanA56+ibJ/JKF5VqNDKvbwSxMLwaCyovOnJBhWi974yvaX9Zs6ttdUzfB
-	 GqnjHTsNeGxJD5yi+MsmvR2DJTv5LxCvVXv+L+tk=
+	b=K8SG3Zv2yalg+jfqDl0li6kmtNceAoWLVGKqL8BYyIQy3kS00Pli4UHcn00XZXsHb
+	 pnsCRLYm7TsYSCnTB/4MqZq4XTE7r7pdFzFfzU4MvcfJ/jYgEORy0R1V2Hryu32eTN
+	 u6DMxHnbkvi5ErzJx8XQLzGBw5eAiCzFL1yORJLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>
-Subject: [PATCH 6.12 370/567] PCI/PM: Reinstate clearing state_saved in legacy and !PM codepaths
-Date: Tue,  6 Jan 2026 18:02:32 +0100
-Message-ID: <20260106170505.028643393@linuxfoundation.org>
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Yemike Abhilash Chandra <y-abhilashchandra@ti.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>
+Subject: [PATCH 6.12 371/567] arm64: dts: ti: k3-j721e-sk: Fix pinmux for pin Y1 used by power regulator
+Date: Tue,  6 Jan 2026 18:02:33 +0100
+Message-ID: <20260106170505.066430637@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,88 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Siddharth Vadapalli <s-vadapalli@ti.com>
 
-commit 894f475f88e06c0f352c829849560790dbdedbe5 upstream.
+commit 51f89c488f2ecc020f82bfedd77482584ce8027a upstream.
 
-When a PCI device is suspended, it is normally the PCI core's job to save
-Config Space and put the device into a low power state.  However drivers
-are allowed to assume these responsibilities.  When they do, the PCI core
-can tell by looking at the state_saved flag in struct pci_dev:  The flag
-is cleared before commencing the suspend sequence and it is set when
-pci_save_state() is called.  If the PCI core finds the flag set late in
-the suspend sequence, it refrains from calling pci_save_state() itself.
+The SoC pin Y1 is incorrectly defined in the WKUP Pinmux device-tree node
+(pinctrl@4301c000) leading to the following silent failure:
 
-But there are two corner cases where the PCI core neglects to clear the
-flag before commencing the suspend sequence:
+    pinctrl-single 4301c000.pinctrl: mux offset out of range: 0x1dc (0x178)
 
-* If a driver has legacy PCI PM callbacks, pci_legacy_suspend() neglects
-  to clear the flag.  The (stale) flag is subsequently queried by
-  pci_legacy_suspend() itself and pci_legacy_suspend_late().
+According to the datasheet for the J721E SoC [0], the pin Y1 belongs to the
+MAIN Pinmux device-tree node (pinctrl@11c000). This is confirmed by the
+address of the pinmux register for it on page 142 of the datasheet which is
+0x00011C1DC.
 
-* If a device has no driver or its driver has no PCI PM callbacks,
-  pci_pm_freeze() neglects to clear the flag.  The (stale) flag is
-  subsequently queried by pci_pm_freeze_noirq().
+Hence fix it.
 
-The flag may be set prior to suspend if the device went through error
-recovery:  Drivers commonly invoke pci_restore_state() + pci_save_state()
-to restore Config Space after reset.
+[0]: https://www.ti.com/lit/ds/symlink/tda4vm.pdf
 
-The flag may also be set if drivers call pci_save_state() on probe to
-allow for recovery from subsequent errors.
-
-The result is that pci_legacy_suspend_late() and pci_pm_freeze_noirq()
-don't call pci_save_state() and so the state that will be restored on
-resume is the one recorded on last error recovery or on probe, not the one
-that the device had on suspend.  If the two states happen to be identical,
-there's no problem.
-
-Reinstate clearing the flag in pci_legacy_suspend() and pci_pm_freeze().
-The two functions used to do that until commit 4b77b0a2ba27 ("PCI: Clear
-saved_state after the state has been restored") deemed it unnecessary
-because it assumed that it's sufficient to clear the flag on resume in
-pci_restore_state().  The commit seemingly did not take into account that
-pci_save_state() and pci_restore_state() are not only used by power
-management code, but also for error recovery.
-
-Devices without driver or whose driver has no PCI PM callbacks may be in
-runtime suspend when pci_pm_freeze() is called.  Their state has already
-been saved, so don't clear the flag to skip a pointless pci_save_state()
-in pci_pm_freeze_noirq().
-
-None of the drivers with legacy PCI PM callbacks seem to use runtime PM,
-so clear the flag unconditionally in their case.
-
-Fixes: 4b77b0a2ba27 ("PCI: Clear saved_state after the state has been restored")
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Cc: stable@vger.kernel.org # v2.6.32+
-Link: https://patch.msgid.link/094f2aad64418710daf0940112abe5a0afdc6bce.1763483367.git.lukas@wunner.de
+Fixes: 97b67cc102dc ("arm64: dts: ti: k3-j721e-sk: Add DT nodes for power regulators")
+Cc: stable@vger.kernel.org
+Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Reviewed-by: Yemike Abhilash Chandra <y-abhilashchandra@ti.com>
+Link: https://patch.msgid.link/20251119160148.2752616-1-s-vadapalli@ti.com
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci-driver.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/boot/dts/ti/k3-j721e-sk.dts |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/pci/pci-driver.c
-+++ b/drivers/pci/pci-driver.c
-@@ -635,6 +635,8 @@ static int pci_legacy_suspend(struct dev
- 	struct pci_dev *pci_dev = to_pci_dev(dev);
- 	struct pci_driver *drv = pci_dev->driver;
- 
-+	pci_dev->state_saved = false;
+--- a/arch/arm64/boot/dts/ti/k3-j721e-sk.dts
++++ b/arch/arm64/boot/dts/ti/k3-j721e-sk.dts
+@@ -572,6 +572,12 @@
+ 			J721E_IOPAD(0x234, PIN_INPUT, 7) /* (U3) EXT_REFCLK1.GPIO1_12 */
+ 		>;
+ 	};
 +
- 	if (drv && drv->suspend) {
- 		pci_power_t prev = pci_dev->current_state;
- 		int error;
-@@ -1039,6 +1041,8 @@ static int pci_pm_freeze(struct device *
++	vdd_sd_dv_pins_default: vdd-sd-dv-default-pins {
++		pinctrl-single,pins = <
++			J721E_IOPAD(0x1dc, PIN_OUTPUT, 7) /* (Y1) SPI1_CLK.GPIO0_118 */
++		>;
++	};
+ };
  
- 	if (!pm) {
- 		pci_pm_default_suspend(pci_dev);
-+		if (!pm_runtime_suspended(dev))
-+			pci_dev->state_saved = false;
- 		return 0;
- 	}
+ &wkup_pmx0 {
+@@ -633,12 +639,6 @@
+ 		>;
+ 	};
  
+-	vdd_sd_dv_pins_default: vdd-sd-dv-default-pins {
+-		pinctrl-single,pins = <
+-			J721E_IOPAD(0x1dc, PIN_OUTPUT, 7) /* (Y1) SPI1_CLK.GPIO0_118 */
+-		>;
+-	};
+-
+ 	wkup_uart0_pins_default: wkup-uart0-default-pins {
+ 		pinctrl-single,pins = <
+ 			J721E_WKUP_IOPAD(0xa0, PIN_INPUT, 0) /* (J29) WKUP_UART0_RXD */
 
 
