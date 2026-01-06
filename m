@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B785E33993;
-	Tue,  6 Jan 2026 17:33:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA662DF13B;
+	Tue,  6 Jan 2026 17:33:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720823; cv=none; b=DJhY1g3XngkKR8UFoRT+T2rqv1QkhgoGJA7+Oo8xn5suz34ph8ivssneXikzYq4aOKrFq3+vosMhPvhbaKiqZtNzB8lt4WObqasYFlnBpJuBvbkr6rimZOZotLV9ouLMn0RVMEHlYDbmB1iQ7ssQqV3kGF1fCFpC5PsA1IIyFok=
+	t=1767720827; cv=none; b=Ooe6iUgpMkXXi/elxnwMRmR3OXUmBKb6V2YaO/jGKOgM4RVIUM/qS//jw7p17xJEwI56rsoHB99wsUi6oowcQZEzkMiJRUEBGBghjcMy5Ykk9U96d3wNn1V6OgNfilwoAgMIbXuQssVyV0DFcgf9kUXDTZVkw/v+l9WsiJ5wn1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720823; c=relaxed/simple;
-	bh=fMwuRpYVeD3m4B4AIhRDZgVH1FbTfrPQw7+3+Mh6wYA=;
+	s=arc-20240116; t=1767720827; c=relaxed/simple;
+	bh=AUlTrlVy1qIm/yceaOEKpy5feyPTn+D7ePA+Y9OJt5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LXjSX6L/npryZD4qc17CP2hFHdFZdBiuMowtoRhlPNeYqwmBrT8tdcQ/Gu5SwU8zRO6Zr/kSiqrWDfQKoDdpjp8PIXUfPqi0W8faqyK/h3n11wgtYqsrsDeETFZhfJejxyXaxqC5W89W2rvwVJUmPRcgPywJ6G/kPrWCpllPtzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x1nzlPEk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aoc7yBFX8JCD58tSoHMNyUcks0olijp6civY0LjSGgQHPkYaL0a2Vge7vnmEA+ahnv9yXWRroVB3gy2lbEs1udCJDewqv6VvW3HSZ1hC6B0QGJBI3lg0RruxVeGUTY0JpgOcewUYiyCIJcuYTda3zoALNTaNK/Fzl/K/WBdR9Ow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZVwjnNQY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x1nzlPEk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42ECCC116C6;
-	Tue,  6 Jan 2026 17:33:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZVwjnNQY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F65FC116C6;
+	Tue,  6 Jan 2026 17:33:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720823;
-	bh=fMwuRpYVeD3m4B4AIhRDZgVH1FbTfrPQw7+3+Mh6wYA=;
+	s=korg; t=1767720826;
+	bh=AUlTrlVy1qIm/yceaOEKpy5feyPTn+D7ePA+Y9OJt5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x1nzlPEkSeOqjjQdj2c5U56r97SUEFFjEq1w+iZOYYP7SD6MCYAtjLi2s3PGj0oVZ
-	 p2ghy3vDjxktkQkwAY5e84CiqFzSK9qf4cenuvK3I6X07/589QBjgs+foEURBCAwYt
-	 5LHyEMR7DMg+wxTAu2A2m5POEhGfycij4GbXy06g=
+	b=ZVwjnNQYj8f/Un8OMJAp0Khsu0hLRX8N46T6s38sv0/+14g8/T/dK75jGqPPuwEHb
+	 H9L0sTBLBp0iwGfTCkq/iVVCpOUN2FieHEgihR6+UV2xWOQlCNWQ2bn8UctTZCz6SG
+	 CXPAn+QWYv1LG6bRMfYXjbcy0/ki7Se0BGPL35to=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3d43c9066a5b54902232@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 320/567] net: usb: asix: validate PHY address before use
-Date: Tue,  6 Jan 2026 18:01:42 +0100
-Message-ID: <20260106170503.162887749@linuxfoundation.org>
+Subject: [PATCH 6.12 321/567] net: bridge: Describe @tunnel_hash member in net_bridge_vlan_group struct
+Date: Tue,  6 Jan 2026 18:01:43 +0100
+Message-ID: <20260106170503.200238965@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -53,51 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Bagas Sanjaya <bagasdotme@gmail.com>
 
-[ Upstream commit a1e077a3f76eea0dc671ed6792e7d543946227e8 ]
+[ Upstream commit f79f9b7ace1713e4b83888c385f5f55519dfb687 ]
 
-The ASIX driver reads the PHY address from the USB device via
-asix_read_phy_addr(). A malicious or faulty device can return an
-invalid address (>= PHY_MAX_ADDR), which causes a warning in
-mdiobus_get_phy():
+Sphinx reports kernel-doc warning:
 
-  addr 207 out of range
-  WARNING: drivers/net/phy/mdio_bus.c:76
+WARNING: ./net/bridge/br_private.h:267 struct member 'tunnel_hash' not described in 'net_bridge_vlan_group'
 
-Validate the PHY address in asix_read_phy_addr() and remove the
-now-redundant check in ax88172a.c.
+Fix it by describing @tunnel_hash member.
 
-Reported-by: syzbot+3d43c9066a5b54902232@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=3d43c9066a5b54902232
-Tested-by: syzbot+3d43c9066a5b54902232@syzkaller.appspotmail.com
-Fixes: 7e88b11a862a ("net: usb: asix: refactor asix_read_phy_addr() and handle errors on return")
-Link: https://lore.kernel.org/all/20251217085057.270704-1-kartikey406@gmail.com/T/ [v1]
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20251218011156.276824-1-kartikey406@gmail.com
+Fixes: efa5356b0d9753 ("bridge: per vlan dst_metadata netlink support")
+Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20251218042936.24175-2-bagasdotme@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/asix_common.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/bridge/br_private.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/usb/asix_common.c b/drivers/net/usb/asix_common.c
-index 7fd763917ae2..6ab3486072cb 100644
---- a/drivers/net/usb/asix_common.c
-+++ b/drivers/net/usb/asix_common.c
-@@ -335,6 +335,11 @@ int asix_read_phy_addr(struct usbnet *dev, bool internal)
- 	offset = (internal ? 1 : 0);
- 	ret = buf[offset];
- 
-+	if (ret >= PHY_MAX_ADDR) {
-+		netdev_err(dev->net, "invalid PHY address: %d\n", ret);
-+		return -ENODEV;
-+	}
-+
- 	netdev_dbg(dev->net, "%s PHY address 0x%x\n",
- 		   internal ? "internal" : "external", ret);
- 
+diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
+index 741b0b8c4bab..a2e59108a5dc 100644
+--- a/net/bridge/br_private.h
++++ b/net/bridge/br_private.h
+@@ -247,6 +247,7 @@ struct net_bridge_vlan {
+  * struct net_bridge_vlan_group
+  *
+  * @vlan_hash: VLAN entry rhashtable
++ * @tunnel_hash: Hash table to map from tunnel key ID (e.g. VXLAN VNI) to VLAN
+  * @vlan_list: sorted VLAN entry list
+  * @num_vlans: number of total VLAN entries
+  * @pvid: PVID VLAN id
 -- 
 2.51.0
 
