@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0983B3644D3;
-	Tue,  6 Jan 2026 17:53:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB473644AD;
+	Tue,  6 Jan 2026 17:53:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721995; cv=none; b=AoWnRiYBTqyrVFl2QGyFVtoQijYkLjdKAUUXBrjPfSsf4kizGw2hgfr5uGc0tlt8O15HoIzyvtYQgAWFtbiHGspN22NZ465lCPK/H40xM8N8yjrCabJKDPM6naCBgZ2ZShXEZm20+szXLuIPMHKQXj85M/3YJj7ffGpfNmqsG5E=
+	t=1767721998; cv=none; b=NCSLnMgRmVE2lxn7haFUZqFki7jNCBJSi2HVGkFbmX720bntGO9w1kgEmBlp+tL4hFTve4wSPbFtSOIuzQxVpEMFAnzwPPNC9Ou2hRCT5iEMuxwjZfIjETPQemAmdIu1WHeEoxqHa6g/k/YZFGBKqWRzHaQXFl3vhpv/O75zvHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721995; c=relaxed/simple;
-	bh=6CRbCd0VsynY3kDu5U7l7MK8MZ9ceQtQqfM5KMk0SDc=;
+	s=arc-20240116; t=1767721998; c=relaxed/simple;
+	bh=XVzXjp6MIcmlH0MLNfWRPm7PvYwcQQHL2607KVqqACg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XN2SQbAXm8GN4fKKDhFi0VQIvJcygJN1TCIl6aqDLXzTmG7S2G/Z/XJ5Lygf1mnINnkLaOR7BLcQm3QzvFb09yO/2tCNEHOtaQeyDk5h2IEyiMIg+9JuWdSms10SOa9onrbGULVN6DtTvVb1IR3oz6/vKm5+DX2cuOtSXjjuy/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ragE++K2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aerPk+EKqzGgap2GDSfTX8QEOxB4pQ5PVXJQ5Nxu1Ude5Uolppc5FdkJ9IykZjEbUwmlscNuqfPD6AT2hXPo3mtsc3hnHHWnxI+5AQ7MnCWUy0q6VnEgX4asIFZJL7ptr4RTINXLfW8PQDdmNoeN2+ibeatobTa0pQtrvhDN5Nc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ey3BOpSL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ragE++K2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BF92C19423;
-	Tue,  6 Jan 2026 17:53:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ey3BOpSL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEE82C16AAE;
+	Tue,  6 Jan 2026 17:53:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721994;
-	bh=6CRbCd0VsynY3kDu5U7l7MK8MZ9ceQtQqfM5KMk0SDc=;
+	s=korg; t=1767721998;
+	bh=XVzXjp6MIcmlH0MLNfWRPm7PvYwcQQHL2607KVqqACg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ragE++K2JDvpVhqKx1HrRGH0tg6mhtQztoTcpf7elaRl4WaiWZhxBqFUPDDCw+KQ1
-	 kHXMr/JZGmSWj0gz0vJXDDxf9Y9+nC+mcVGRZTZlhIcDEwhzDMkFf780BAQSd4+G9Y
-	 BWWD3gi5tzq07k+Buv6szuM3SaZ4Tw8P4yL8+JP0=
+	b=ey3BOpSL5NhK95vDFcaJDPI6sC5uTwhYg4p4AK+JvK/TER91Lq9WscGxY4W+0hoFC
+	 rx8BP7N8d3CydWqAW2i6EzVcdCUesT/AKtQg4mjzHGpJsaw9zdyJ18ryxrOEzStWjL
+	 rBe1q2W4NtdkUF7kVQwnszBPwhRoAo/S9MNJIl3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Hitz <christian.hitz@bbv.ch>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.18 134/312] leds: leds-lp50xx: Enable chip before any communication
-Date: Tue,  6 Jan 2026 18:03:28 +0100
-Message-ID: <20260106170552.690756865@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 135/312] block: Clear BLK_ZONE_WPLUG_PLUGGED when aborting plugged BIOs
+Date: Tue,  6 Jan 2026 18:03:29 +0100
+Message-ID: <20260106170552.726236025@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -44,154 +46,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Hitz <christian.hitz@bbv.ch>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit 434959618c47efe9e5f2e20f4a850caac4f6b823 upstream.
+commit 552c1149af7ac0cffab6fccd13feeaf816dd1f53 upstream.
 
-If a GPIO is used to control the chip's enable pin, it needs to be pulled
-high before any i2c communication is attempted.
+Commit fe0418eb9bd6 ("block: Prevent potential deadlocks in zone write
+plug error recovery") added a WARN check in disk_put_zone_wplug() to
+verify that when the last reference to a zone write plug is dropped,
+this zone write plug does not have the BLK_ZONE_WPLUG_PLUGGED flag set,
+that is, that it is not plugged.
 
-Currently, the enable GPIO handling is not correct.
+However, the function disk_zone_wplug_abort(), which is called for zone
+reset and zone finish operations, does not clear this flag after
+emptying a zone write plug BIO list. This can result in the
+disk_put_zone_wplug() warning to trigger if the user (erroneously as
+that is bad pratcice) issues zone reset or zone finish operations while
+the target zone still has plugged BIOs.
 
-Assume the enable GPIO is low when the probe function is entered. In this
-case the device is in SHUTDOWN mode and does not react to i2c commands.
+Modify disk_put_zone_wplug() to clear the BLK_ZONE_WPLUG_PLUGGED flag.
+And while at it, also add a lockdep annotation to ensure that this
+function is called with the zone write plug spinlock held.
 
-During probe the following sequence happens:
- 1. The call to lp50xx_reset() on line 548 has no effect as i2c is not
-    possible yet.
- 2. Then - on line 552 - lp50xx_enable_disable() is called. As
-    "priv->enable_gpio“ has not yet been initialized, setting the GPIO has
-    no effect. Also the i2c enable command is not executed as the device
-    is still in SHUTDOWN.
- 3. On line 556 the call to lp50xx_probe_dt() finally parses the rest of
-    the DT and the configured priv->enable_gpio is set up.
-
-As a result the device is still in SHUTDOWN mode and not ready for
-operation.
-
-Split lp50xx_enable_disable() into distinct enable and disable functions
-to enforce correct ordering between enable_gpio manipulations and i2c
-commands.
-Read enable_gpio configuration from DT before attempting to manipulate
-enable_gpio.
-Add delays to observe correct wait timing after manipulating enable_gpio
-and before any i2c communication.
-
+Fixes: fe0418eb9bd6 ("block: Prevent potential deadlocks in zone write plug error recovery")
 Cc: stable@vger.kernel.org
-Fixes: 242b81170fb8 ("leds: lp50xx: Add the LP50XX family of the RGB LED driver")
-Signed-off-by: Christian Hitz <christian.hitz@bbv.ch>
-Link: https://patch.msgid.link/20251028155141.1603193-1-christian@klarinett.li
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/leds/leds-lp50xx.c |   55 ++++++++++++++++++++++++++++++++-------------
- 1 file changed, 40 insertions(+), 15 deletions(-)
+ block/blk-zoned.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/leds/leds-lp50xx.c
-+++ b/drivers/leds/leds-lp50xx.c
-@@ -50,6 +50,12 @@
- 
- #define LP50XX_SW_RESET		0xff
- #define LP50XX_CHIP_EN		BIT(6)
-+#define LP50XX_CHIP_DISABLE	0x00
-+#define LP50XX_START_TIME_US	500
-+#define LP50XX_RESET_TIME_US	3
-+
-+#define LP50XX_EN_GPIO_LOW	0
-+#define LP50XX_EN_GPIO_HIGH	1
- 
- /* There are 3 LED outputs per bank */
- #define LP50XX_LEDS_PER_MODULE	3
-@@ -369,19 +375,42 @@ static int lp50xx_reset(struct lp50xx *p
- 	return regmap_write(priv->regmap, priv->chip_info->reset_reg, LP50XX_SW_RESET);
- }
- 
--static int lp50xx_enable_disable(struct lp50xx *priv, int enable_disable)
-+static int lp50xx_enable(struct lp50xx *priv)
+--- a/block/blk-zoned.c
++++ b/block/blk-zoned.c
+@@ -616,6 +616,8 @@ static void disk_zone_wplug_abort(struct
  {
- 	int ret;
+ 	struct bio *bio;
  
--	ret = gpiod_direction_output(priv->enable_gpio, enable_disable);
-+	if (priv->enable_gpio) {
-+		ret = gpiod_direction_output(priv->enable_gpio, LP50XX_EN_GPIO_HIGH);
-+		if (ret)
-+			return ret;
++	lockdep_assert_held(&zwplug->lock);
 +
-+		udelay(LP50XX_START_TIME_US);
-+	}
-+
-+	ret = lp50xx_reset(priv);
- 	if (ret)
- 		return ret;
+ 	if (bio_list_empty(&zwplug->bio_list))
+ 		return;
  
--	if (enable_disable)
--		return regmap_write(priv->regmap, LP50XX_DEV_CFG0, LP50XX_CHIP_EN);
--	else
--		return regmap_write(priv->regmap, LP50XX_DEV_CFG0, 0);
-+	return regmap_write(priv->regmap, LP50XX_DEV_CFG0, LP50XX_CHIP_EN);
-+}
- 
-+static int lp50xx_disable(struct lp50xx *priv)
-+{
-+	int ret;
+@@ -623,6 +625,8 @@ static void disk_zone_wplug_abort(struct
+ 			    zwplug->disk->disk_name, zwplug->zone_no);
+ 	while ((bio = bio_list_pop(&zwplug->bio_list)))
+ 		blk_zone_wplug_bio_io_error(zwplug, bio);
 +
-+	ret = regmap_write(priv->regmap, LP50XX_DEV_CFG0, LP50XX_CHIP_DISABLE);
-+	if (ret)
-+		return ret;
-+
-+	if (priv->enable_gpio) {
-+		ret = gpiod_direction_output(priv->enable_gpio, LP50XX_EN_GPIO_LOW);
-+		if (ret)
-+			return ret;
-+
-+		udelay(LP50XX_RESET_TIME_US);
-+	}
-+
-+	return 0;
++	zwplug->flags &= ~BLK_ZONE_WPLUG_PLUGGED;
  }
  
- static int lp50xx_probe_leds(struct fwnode_handle *child, struct lp50xx *priv,
-@@ -445,6 +474,10 @@ static int lp50xx_probe_dt(struct lp50xx
- 		return dev_err_probe(priv->dev, PTR_ERR(priv->enable_gpio),
- 				     "Failed to get enable GPIO\n");
- 
-+	ret = lp50xx_enable(priv);
-+	if (ret)
-+		return ret;
-+
- 	priv->regulator = devm_regulator_get(priv->dev, "vled");
- 	if (IS_ERR(priv->regulator))
- 		priv->regulator = NULL;
-@@ -545,14 +578,6 @@ static int lp50xx_probe(struct i2c_clien
- 		return ret;
- 	}
- 
--	ret = lp50xx_reset(led);
--	if (ret)
--		return ret;
--
--	ret = lp50xx_enable_disable(led, 1);
--	if (ret)
--		return ret;
--
- 	return lp50xx_probe_dt(led);
- }
- 
-@@ -561,7 +586,7 @@ static void lp50xx_remove(struct i2c_cli
- 	struct lp50xx *led = i2c_get_clientdata(client);
- 	int ret;
- 
--	ret = lp50xx_enable_disable(led, 0);
-+	ret = lp50xx_disable(led);
- 	if (ret)
- 		dev_err(led->dev, "Failed to disable chip\n");
- 
+ /*
 
 
