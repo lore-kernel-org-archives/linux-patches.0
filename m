@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD3B364E8A;
-	Tue,  6 Jan 2026 17:53:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99C1364E89;
+	Tue,  6 Jan 2026 17:53:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722018; cv=none; b=AuGaC+BJUOB5TyZNOfy7Ih/AcO9+NqPURaLBxfba4UExayh6mSfQnoA/z1P2aqYAG4+zwTHQQ5iJmIlACsrjIRdpdFVQmSuQab5jSawO92WjAslDPuNC18cHM98T5DJXh4MKPAlGqY7NAnfsWzc3cH067hYp7EySqX/UCXdzWFo=
+	t=1767722021; cv=none; b=RhZaXdmefbnNXmr770WvlawwFKqLREEEKiGFqGW5Zlg0Dc7ZGZXSXatJNjbkxP1PiM9j+HWJmn0gQ1Dwxs2fx5+RvAop/R2rBZcpeRvNMjw5OHaFiXq7IYpmVpNa46YFhefBb9Y1Chrj6K/1Tj2pUiwGgmYO9Cb/JJU+agM+3ZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722018; c=relaxed/simple;
-	bh=LjqGYdtBmr44cS2zsVNxKOp7suAuwKxsgqRYhs2ogOk=;
+	s=arc-20240116; t=1767722021; c=relaxed/simple;
+	bh=MjkhwzmADecJFBFrgKe20EiSuyX85L14oVtepKkopws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TzXsiF8JCVRFWnkxDTgLlaRSEW+eBj+A1XktIhSURKoRRnh9sbl1emN6aRRMLUdr4KyLlK0a+3ZX5+4eg8je/qskq9NGrjixE3h9Pd1tBFkVjNw/0v22v0ya8kEpYQIlq+JIC02036DmGCDSEpC6q3Z9j44Dnpkq5KyH4skrqds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dv+dskxl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=folKq7wuTRgnqxYsSZngNWyW6WwTyaR6GU24wHIaJfn4fiC9iuQ1RK6dEMAdOLm/tZpF6ve5AtQ1Weefa92HQo4QJNAgZAaHt6t+Sl/n4nmnfo3qG0H/Kkn0pNbbFQHSAU84btVp6UraLBSetaJ+y0PbUW5DB3Rs1LsvGnI6La0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hEI2pUNr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dv+dskxl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11362C116C6;
-	Tue,  6 Jan 2026 17:53:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hEI2pUNr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5506CC116C6;
+	Tue,  6 Jan 2026 17:53:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722017;
-	bh=LjqGYdtBmr44cS2zsVNxKOp7suAuwKxsgqRYhs2ogOk=;
+	s=korg; t=1767722020;
+	bh=MjkhwzmADecJFBFrgKe20EiSuyX85L14oVtepKkopws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dv+dskxltoEYnBA2WHkp3b0dxpbP2/fRHHKJffg+qstgdiLO8N0HoGJQLj8KytFJv
-	 /CvzKU+bJgrjOPVqIrBNNVOlkGM0OnTGkPuz8+VuXdLUzIr1QyucCWH7kTUxs1ToFc
-	 YZx6WyYQwCtA8y5SLMgp/Or2gbw+05yhHM0o7BSQ=
+	b=hEI2pUNrQdg7FeIPS2SLrxA1+QK2yciaNUCeYkmfJDWeRFMx5SQHeoT4oFhvG5O3X
+	 9Ka9mFt3zP9nmyOt9tokMRCNcn0A/+C5CXiJ5B18sJ4wrzK9JxuYvDMQgSkeVhL6pV
+	 A33TRs+61C+utzqpgoIHu2YEJMn9K3Uxa5JVPo9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.18 141/312] mfd: max77620: Fix potential IRQ chip conflict when probing two devices
-Date: Tue,  6 Jan 2026 18:03:35 +0100
-Message-ID: <20260106170552.943475713@linuxfoundation.org>
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Patrice Chotard <patrice.chotard@foss.st.com>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.18 142/312] media: rc: st_rc: Fix reset control resource leak
+Date: Tue,  6 Jan 2026 18:03:36 +0100
+Message-ID: <20260106170552.979508019@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -50,81 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-commit 2bac49bad1f3553cc3b3bfb22cc194e9bd9e8427 upstream.
+commit 1240abf4b71f632f0117b056e22488e4d9808938 upstream.
 
-MAX77620 is most likely always a single device on the board, however
-nothing stops board designers to have two of them, thus same device
-driver could probe twice. Or user could manually try to probing second
-time.
+The driver calls reset_control_get_optional_exclusive() but never calls
+reset_control_put() in error paths or in the remove function. This causes
+a resource leak when probe fails after successfully acquiring the reset
+control, or when the driver is unloaded.
 
-Device driver is not ready for that case, because it allocates
-statically 'struct regmap_irq_chip' as non-const and stores during
-probe in 'irq_drv_data' member a pointer to per-probe state
-container ('struct max77620_chip').  devm_regmap_add_irq_chip() does not
-make a copy of 'struct regmap_irq_chip' but store the pointer.
+Switch to devm_reset_control_get_optional_exclusive() to automatically
+manage the reset control resource.
 
-Second probe - either successful or failure - would overwrite the
-'irq_drv_data' from previous device probe, so interrupts would be
-executed in a wrong context.
-
+Fixes: a4b80242d046 ("media: st-rc: explicitly request exclusive reset control")
 Cc: stable@vger.kernel.org
-Fixes: 3df140d11c6d ("mfd: max77620: Mask/unmask interrupt before/after servicing it")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://patch.msgid.link/20251023101939.67991-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Reviewed-by: Patrice Chotard <patrice.chotard@foss.st.com>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mfd/max77620.c |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/media/rc/st_rc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mfd/max77620.c
-+++ b/drivers/mfd/max77620.c
-@@ -254,7 +254,7 @@ static int max77620_irq_global_unmask(vo
- 	return ret;
- }
+--- a/drivers/media/rc/st_rc.c
++++ b/drivers/media/rc/st_rc.c
+@@ -284,7 +284,7 @@ static int st_rc_probe(struct platform_d
+ 	else
+ 		rc_dev->rx_base = rc_dev->base;
  
--static struct regmap_irq_chip max77620_top_irq_chip = {
-+static const struct regmap_irq_chip max77620_top_irq_chip = {
- 	.name = "max77620-top",
- 	.irqs = max77620_top_irqs,
- 	.num_irqs = ARRAY_SIZE(max77620_top_irqs),
-@@ -498,6 +498,7 @@ static int max77620_probe(struct i2c_cli
- 	const struct i2c_device_id *id = i2c_client_get_device_id(client);
- 	const struct regmap_config *rmap_config;
- 	struct max77620_chip *chip;
-+	struct regmap_irq_chip *chip_desc;
- 	const struct mfd_cell *mfd_cells;
- 	int n_mfd_cells;
- 	bool pm_off;
-@@ -508,6 +509,14 @@ static int max77620_probe(struct i2c_cli
- 		return -ENOMEM;
- 
- 	i2c_set_clientdata(client, chip);
-+
-+	chip_desc = devm_kmemdup(&client->dev, &max77620_top_irq_chip,
-+				 sizeof(max77620_top_irq_chip),
-+				 GFP_KERNEL);
-+	if (!chip_desc)
-+		return -ENOMEM;
-+	chip_desc->irq_drv_data = chip;
-+
- 	chip->dev = &client->dev;
- 	chip->chip_irq = client->irq;
- 	chip->chip_id = (enum max77620_chip_id)id->driver_data;
-@@ -544,11 +553,9 @@ static int max77620_probe(struct i2c_cli
- 	if (ret < 0)
- 		return ret;
- 
--	max77620_top_irq_chip.irq_drv_data = chip;
- 	ret = devm_regmap_add_irq_chip(chip->dev, chip->rmap, client->irq,
- 				       IRQF_ONESHOT | IRQF_SHARED, 0,
--				       &max77620_top_irq_chip,
--				       &chip->top_irq_data);
-+				       chip_desc, &chip->top_irq_data);
- 	if (ret < 0) {
- 		dev_err(chip->dev, "Failed to add regmap irq: %d\n", ret);
- 		return ret;
+-	rc_dev->rstc = reset_control_get_optional_exclusive(dev, NULL);
++	rc_dev->rstc = devm_reset_control_get_optional_exclusive(dev, NULL);
+ 	if (IS_ERR(rc_dev->rstc)) {
+ 		ret = PTR_ERR(rc_dev->rstc);
+ 		goto err;
 
 
