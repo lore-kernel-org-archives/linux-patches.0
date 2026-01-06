@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E973469F4;
-	Tue,  6 Jan 2026 17:15:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 570901E1DFC;
+	Tue,  6 Jan 2026 17:15:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719740; cv=none; b=WjA+Jwzhvy0DZTpcUBuqEfhGRQPTB9hgvZkm58K+Oic63dfufpHsrCKDD/xASH9sEN/5ZhwLGM8nKkCfYATdrHmbSi+Khlw5/Il1pCzVYPvxJOKYcLGWp6+OIY3xx47PJk8ws/6du9rzhKkcSG0K8cRZGC0V6TBrxxhMdwmXD8Q=
+	t=1767719743; cv=none; b=MzbLLGdsqhRdcR1DkJY1OBtRBG0L6+Gd+VcJAKja3+20FB6oLgu2Th6UrpCsExvIoJaPJRzMfenpak14qRQ1Kfn4gRcqa7oT1ViLW6/OwS27wuwCOflVYPkb3z+JrgXDzNa3PWhR/amMpNwl6muQ/igtMwu+4v0oA+hN4QrR2TU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719740; c=relaxed/simple;
-	bh=I49u675v/DTJ6indxa0+pAButgA95wn06VMi/q/UJb4=;
+	s=arc-20240116; t=1767719743; c=relaxed/simple;
+	bh=56nz4koZNm7oM9usyerUds65rIvzF/xRICm7Fh8zq2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PNLwvSv4lU3gtfMeWJziF0DDJR2Jaf7V2eab7nL1QT9XXjLaiO1JCy0S3DbfP5cVAJ9m19NyEAyEzpaoBqE4/lGgF0IO2LStv9Qesq6oZHgwYWx3b5kCml8dOXBD7GRwdae4DNyCSSq6Y3bJlfK9o3yZnZKQRUXgX1FCvkm6qho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T8Tg54D7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=elvDPah9DPhE+cAHPpub1A5koV6WSDzWJBx5nQxGKxGMXz0/U/CamDGPgyHQ0YkI1nhdluU+pT+qWPWFeGZmSisVnMDmItcciRl0iPtj9tTuFRWqZKp4Yfj6AlmDccf035ABEnkr3g7JJbOemi+fdV9WcENotSSmsSlXg1KJvuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cSH3KXTK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T8Tg54D7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2DB7C116C6;
-	Tue,  6 Jan 2026 17:15:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cSH3KXTK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE1CAC116C6;
+	Tue,  6 Jan 2026 17:15:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719740;
-	bh=I49u675v/DTJ6indxa0+pAButgA95wn06VMi/q/UJb4=;
+	s=korg; t=1767719743;
+	bh=56nz4koZNm7oM9usyerUds65rIvzF/xRICm7Fh8zq2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T8Tg54D7vVajo/xz3XjK2JK5Kc6AgltrPcF2yjRYuYJrWBI08R6rf4TLrwVPllE4q
-	 sFxey4ZjbSgdZ2n8ctGUinGziVbIuWGY2L+2He2NDnGouNAq1LHSO40IfMsZEF4frc
-	 aXm5FErPN9pWTcGmbG1qdIJfPXoLj9TSdQqsBZzc=
+	b=cSH3KXTKn5/ICyA/u+UuZDz+2AJ1a+HBb/jsoRFOOY1U41YSPfh2JRGHy2oJJ+MRN
+	 ZDGhOLExfNYAZslLDt1JxEtZVphXZ6g4HIgNWhOrV4DlP88dRAkn22Ex2P3ps5WO9S
+	 auBiNdzhwJtvc6yKssBHVW1VornwkM4jl3rBfc5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
 	Viacheslav Dubeyko <slava@dubeyko.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Yangtao Li <frank.li@vivo.com>,
+	linux-fsdevel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 025/567] hfsplus: Verify inode mode when loading from disk
-Date: Tue,  6 Jan 2026 17:56:47 +0100
-Message-ID: <20260106170452.276115038@linuxfoundation.org>
+Subject: [PATCH 6.12 026/567] hfsplus: fix volume corruption issue for generic/073
+Date: Tue,  6 Jan 2026 17:56:48 +0100
+Message-ID: <20260106170452.313191826@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,103 +53,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Viacheslav Dubeyko <slava@dubeyko.com>
 
-[ Upstream commit 005d4b0d33f6b4a23d382b7930f7a96b95b01f39 ]
+[ Upstream commit 24e17a29cf7537f0947f26a50f85319abd723c6c ]
 
-syzbot is reporting that S_IFMT bits of inode->i_mode can become bogus when
-the S_IFMT bits of the 16bits "mode" field loaded from disk are corrupted.
+The xfstests' test-case generic/073 leaves HFS+ volume
+in corrupted state:
 
-According to [1], the permissions field was treated as reserved in Mac OS
-8 and 9. According to [2], the reserved field was explicitly initialized
-with 0, and that field must remain 0 as long as reserved. Therefore, when
-the "mode" field is not 0 (i.e. no longer reserved), the file must be
-S_IFDIR if dir == 1, and the file must be one of S_IFREG/S_IFLNK/S_IFCHR/
-S_IFBLK/S_IFIFO/S_IFSOCK if dir == 0.
+sudo ./check generic/073
+FSTYP -- hfsplus
+PLATFORM -- Linux/x86_64 hfsplus-testing-0001 6.17.0-rc1+ #4 SMP PREEMPT_DYNAMIC Wed Oct 1 15:02:44 PDT 2025
+MKFS_OPTIONS -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
 
-Reported-by: syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=895c23f6917da440ed0d
-Link: https://developer.apple.com/library/archive/technotes/tn/tn1150.html#HFSPlusPermissions [1]
-Link: https://developer.apple.com/library/archive/technotes/tn/tn1150.html#ReservedAndPadFields [2]
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+generic/073 _check_generic_filesystem: filesystem on /dev/loop51 is inconsistent
+(see XFSTESTS-2/xfstests-dev/results//generic/073.full for details)
+
+Ran: generic/073
+Failures: generic/073
+Failed 1 of 1 tests
+
+sudo fsck.hfsplus -d /dev/loop51
+** /dev/loop51
+Using cacheBlockSize=32K cacheTotalBlock=1024 cacheSize=32768K.
+Executing fsck_hfs (version 540.1-Linux).
+** Checking non-journaled HFS Plus Volume.
+The volume name is untitled
+** Checking extents overflow file.
+** Checking catalog file.
+** Checking multi-linked files.
+** Checking catalog hierarchy.
+Invalid directory item count
+(It should be 1 instead of 0)
+** Checking extended attributes file.
+** Checking volume bitmap.
+** Checking volume information.
+Verify Status: VIStat = 0x0000, ABTStat = 0x0000 EBTStat = 0x0000
+CBTStat = 0x0000 CatStat = 0x00004000
+** Repairing volume.
+** Rechecking volume.
+** Checking non-journaled HFS Plus Volume.
+The volume name is untitled
+** Checking extents overflow file.
+** Checking catalog file.
+** Checking multi-linked files.
+** Checking catalog hierarchy.
+** Checking extended attributes file.
+** Checking volume bitmap.
+** Checking volume information.
+** The volume untitled was repaired successfully.
+
+The test is doing these steps on final phase:
+
+mv $SCRATCH_MNT/testdir_1/bar $SCRATCH_MNT/testdir_2/bar
+$XFS_IO_PROG -c "fsync" $SCRATCH_MNT/testdir_1
+$XFS_IO_PROG -c "fsync" $SCRATCH_MNT/foo
+
+So, we move file bar from testdir_1 into testdir_2 folder. It means that HFS+
+logic decrements the number of entries in testdir_1 and increments number of
+entries in testdir_2. Finally, we do fsync only for testdir_1 and foo but not
+for testdir_2. As a result, this is the reason why fsck.hfsplus detects the
+volume corruption afterwards.
+
+This patch fixes the issue by means of adding the
+hfsplus_cat_write_inode() call for old_dir and new_dir in
+hfsplus_rename() after the successful ending of
+hfsplus_rename_cat(). This method makes modification of in-core
+inode objects for old_dir and new_dir but it doesn't save these
+modifications in Catalog File's entries. It was expected that
+hfsplus_write_inode() will save these modifications afterwards.
+However, because generic/073 does fsync only for testdir_1 and foo
+then testdir_2 modification hasn't beed saved into Catalog File's
+entry and it was flushed without this modification. And it was
+detected by fsck.hfsplus. Now, hfsplus_rename() stores in Catalog
+File all modified entries and correct state of Catalog File will
+be flushed during hfsplus_file_fsync() call. Finally, it makes
+fsck.hfsplus happy.
+
+sudo ./check generic/073
+FSTYP         -- hfsplus
+PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 6.18.0-rc3+ #93 SMP PREEMPT_DYNAMIC Wed Nov 12 14:37:49 PST 2025
+MKFS_OPTIONS  -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
+
+generic/073 32s ...  32s
+Ran: generic/073
+Passed all 1 tests
+
 Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/04ded9f9-73fb-496c-bfa5-89c4f5d1d7bb@I-love.SAKURA.ne.jp
+cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+cc: Yangtao Li <frank.li@vivo.com>
+cc: linux-fsdevel@vger.kernel.org
+Link: https://lore.kernel.org/r/20251112232522.814038-1-slava@dubeyko.com
 Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfsplus/inode.c | 32 ++++++++++++++++++++++++++++----
- 1 file changed, 28 insertions(+), 4 deletions(-)
+ fs/hfsplus/dir.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/hfsplus/inode.c b/fs/hfsplus/inode.c
-index c85b5802ec0f9..2d68c52f894f9 100644
---- a/fs/hfsplus/inode.c
-+++ b/fs/hfsplus/inode.c
-@@ -178,13 +178,29 @@ const struct dentry_operations hfsplus_dentry_operations = {
- 	.d_compare    = hfsplus_compare_dentry,
- };
- 
--static void hfsplus_get_perms(struct inode *inode,
--		struct hfsplus_perm *perms, int dir)
-+static int hfsplus_get_perms(struct inode *inode,
-+			     struct hfsplus_perm *perms, int dir)
- {
- 	struct hfsplus_sb_info *sbi = HFSPLUS_SB(inode->i_sb);
- 	u16 mode;
- 
- 	mode = be16_to_cpu(perms->mode);
-+	if (dir) {
-+		if (mode && !S_ISDIR(mode))
-+			goto bad_type;
-+	} else if (mode) {
-+		switch (mode & S_IFMT) {
-+		case S_IFREG:
-+		case S_IFLNK:
-+		case S_IFCHR:
-+		case S_IFBLK:
-+		case S_IFIFO:
-+		case S_IFSOCK:
-+			break;
-+		default:
-+			goto bad_type;
-+		}
+diff --git a/fs/hfsplus/dir.c b/fs/hfsplus/dir.c
+index f5c4b3e31a1c2..33154c720a4e9 100644
+--- a/fs/hfsplus/dir.c
++++ b/fs/hfsplus/dir.c
+@@ -552,8 +552,13 @@ static int hfsplus_rename(struct mnt_idmap *idmap,
+ 	res = hfsplus_rename_cat((u32)(unsigned long)old_dentry->d_fsdata,
+ 				 old_dir, &old_dentry->d_name,
+ 				 new_dir, &new_dentry->d_name);
+-	if (!res)
++	if (!res) {
+ 		new_dentry->d_fsdata = old_dentry->d_fsdata;
++
++		res = hfsplus_cat_write_inode(old_dir);
++		if (!res)
++			res = hfsplus_cat_write_inode(new_dir);
 +	}
- 
- 	i_uid_write(inode, be32_to_cpu(perms->owner));
- 	if ((test_bit(HFSPLUS_SB_UID, &sbi->flags)) || (!i_uid_read(inode) && !mode))
-@@ -210,6 +226,10 @@ static void hfsplus_get_perms(struct inode *inode,
- 		inode->i_flags |= S_APPEND;
- 	else
- 		inode->i_flags &= ~S_APPEND;
-+	return 0;
-+bad_type:
-+	pr_err("invalid file type 0%04o for inode %lu\n", mode, inode->i_ino);
-+	return -EIO;
+ 	return res;
  }
  
- static int hfsplus_file_open(struct inode *inode, struct file *file)
-@@ -514,7 +534,9 @@ int hfsplus_cat_read_inode(struct inode *inode, struct hfs_find_data *fd)
- 		}
- 		hfs_bnode_read(fd->bnode, &entry, fd->entryoffset,
- 					sizeof(struct hfsplus_cat_folder));
--		hfsplus_get_perms(inode, &folder->permissions, 1);
-+		res = hfsplus_get_perms(inode, &folder->permissions, 1);
-+		if (res)
-+			goto out;
- 		set_nlink(inode, 1);
- 		inode->i_size = 2 + be32_to_cpu(folder->valence);
- 		inode_set_atime_to_ts(inode, hfsp_mt2ut(folder->access_date));
-@@ -543,7 +565,9 @@ int hfsplus_cat_read_inode(struct inode *inode, struct hfs_find_data *fd)
- 
- 		hfsplus_inode_read_fork(inode, HFSPLUS_IS_RSRC(inode) ?
- 					&file->rsrc_fork : &file->data_fork);
--		hfsplus_get_perms(inode, &file->permissions, 0);
-+		res = hfsplus_get_perms(inode, &file->permissions, 0);
-+		if (res)
-+			goto out;
- 		set_nlink(inode, 1);
- 		if (S_ISREG(inode->i_mode)) {
- 			if (file->permissions.dev)
 -- 
 2.51.0
 
