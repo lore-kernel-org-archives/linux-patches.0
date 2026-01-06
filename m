@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F97E352FAD;
-	Tue,  6 Jan 2026 17:22:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4ECC352FBF;
+	Tue,  6 Jan 2026 17:22:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720165; cv=none; b=gdOeNeLZAFQ6k1eZL2WJSblAAEBoQ8Fw4NSWAYSjx8UOZvLq+pl3K2EiAYyI5JATMkjwuJxLdq4cDsjiVt30Bpnqn/CSeuPfD45yXgQkVVCe4XQUNN97Fzrq98WzXBOfG+F3UxS46lhiDD4V82b4iVHsGl8sy4TtlPeRXPiQeXs=
+	t=1767720168; cv=none; b=QKbWRGzReXwPvqUL33PEOamAtmdF3JS3ALya/qCk44BXHzdyqt5AGXhpmx+fhLTzeBvLEVtMaWyXpS/Lec6LyTvR4xL22ATwZCd3bVKJVZrAFxcRP20jl/QqeLFXtywYxCr/fPPy11n1SG3mRroTxknReDlZgAHAMCap8UAxkfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720165; c=relaxed/simple;
-	bh=nuJjIv9rOBFrcO/FfCmdnbqaKL0QxnM3xptqZqplF9Y=;
+	s=arc-20240116; t=1767720168; c=relaxed/simple;
+	bh=T1eY8XcvOWlZ4TQNPOCcSMyK8qdY60zx6pct342lrxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IZ6njtfPl7jWgTGNa9W4TWva0DosZg7wJLgHYBRxdLSMzBafggL39eS2KCOVc1FHSNmOjfdLGQAdYN4CI0WvxcLUHOP+NvFFudLPwKY6oTgB9TFf8dhHYtef0m10/lYXsVw0zlVtg1jodF125b7FPQcKoR9voONZYgRL/Yz+UZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YM+CWzOo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gSlCHXH+ilbNgXXsX5CB4k0vA3rB4DTMxt9hnAWMn8fpvbTmya2xpgwcC+KzHTQilZDkAuLQ9UBkq7SXbDO3S+Iold3FpqM8vdRTa1aS2nOrCmlTwE9zk0aO6no5iYu8mZiCDN4s9m4bvHcZtyLaChz4dTk2MnjZdETOILmzDn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NwXhLrWL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YM+CWzOo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4F99C116C6;
-	Tue,  6 Jan 2026 17:22:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NwXhLrWL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34124C116C6;
+	Tue,  6 Jan 2026 17:22:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720165;
-	bh=nuJjIv9rOBFrcO/FfCmdnbqaKL0QxnM3xptqZqplF9Y=;
+	s=korg; t=1767720168;
+	bh=T1eY8XcvOWlZ4TQNPOCcSMyK8qdY60zx6pct342lrxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YM+CWzOoteh9g+In7J+T1HllzmHZlzlXSVn4mWF7HxNEGaH9LoKoH3GTB9zkCm0ps
-	 6TVqRGLPKeEiU8jDj1fmpkI87jD+m2tFiUMI37trhqpwtvA9sGUnPOzI5jZAcyl7Gd
-	 8tRIT6udfdz7EYYCpSLFI/mdPe89F0qs2chbeQXE=
+	b=NwXhLrWL4cdFIqavICsVK91j9n+Ne+dyTacXwl6oNO7TP60xSuQJbMtKZbbLxrMRP
+	 aZ6FKm/gXVkuYUL8+8nb3L3MDTqDHZNRYMlPrRl94GfM1sNzM/fX13zBK/YxFtA9oD
+	 kOTzyQQ8VpqpcVLlyuyz5nf0FGfadDldUU4C9Lds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+00e61c43eb5e4740438f@syzkaller.appspotmail.com,
-	Prithvi Tambewagh <activprithvi@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 154/567] io_uring: fix filename leak in __io_openat_prep()
-Date: Tue,  6 Jan 2026 17:58:56 +0100
-Message-ID: <20260106170457.024930980@linuxfoundation.org>
+	Avadhut Naik <avadhut.naik@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 6.12 155/567] x86/mce: Do not clear banks poll bit in mce_poll_banks on AMD SMCA systems
+Date: Tue,  6 Jan 2026 17:58:57 +0100
+Message-ID: <20260106170457.061615082@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,49 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prithvi Tambewagh <activprithvi@gmail.com>
+From: Avadhut Naik <avadhut.naik@amd.com>
 
-commit b14fad555302a2104948feaff70503b64c80ac01 upstream.
+commit d7ac083f095d894a0b8ac0573516bfd035e6b25a upstream.
 
- __io_openat_prep() allocates a struct filename using getname(). However,
-for the condition of the file being installed in the fixed file table as
-well as having O_CLOEXEC flag set, the function returns early. At that
-point, the request doesn't have REQ_F_NEED_CLEANUP flag set. Due to this,
-the memory for the newly allocated struct filename is not cleaned up,
-causing a memory leak.
+Currently, when a CMCI storm detected on a Machine Check bank, subsides, the
+bank's corresponding bit in the mce_poll_banks per-CPU variable is cleared
+unconditionally by cmci_storm_end().
 
-Fix this by setting the REQ_F_NEED_CLEANUP for the request just after the
-successful getname() call, so that when the request is torn down, the
-filename will be cleaned up, along with other resources needing cleanup.
+On AMD SMCA systems, this essentially disables polling on that particular bank
+on that CPU. Consequently, any subsequent correctable errors or storms will not
+be logged.
 
-Reported-by: syzbot+00e61c43eb5e4740438f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=00e61c43eb5e4740438f
-Tested-by: syzbot+00e61c43eb5e4740438f@syzkaller.appspotmail.com
+Since AMD SMCA systems allow banks to be managed by both polling and
+interrupts, the polling banks bitmap for a CPU, i.e., mce_poll_banks, should
+not be modified when a storm subsides.
+
+Fixes: 7eae17c4add5 ("x86/mce: Add per-bank CMCI storm mitigation")
+Signed-off-by: Avadhut Naik <avadhut.naik@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
 Cc: stable@vger.kernel.org
-Signed-off-by: Prithvi Tambewagh <activprithvi@gmail.com>
-Fixes: b9445598d8c6 ("io_uring: openat directly into fixed fd table")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://patch.msgid.link/20251121190542.2447913-2-avadhut.naik@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/openclose.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/cpu/mce/threshold.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/io_uring/openclose.c
-+++ b/io_uring/openclose.c
-@@ -70,13 +70,13 @@ static int __io_openat_prep(struct io_ki
- 		open->filename = NULL;
- 		return ret;
- 	}
-+	req->flags |= REQ_F_NEED_CLEANUP;
+--- a/arch/x86/kernel/cpu/mce/threshold.c
++++ b/arch/x86/kernel/cpu/mce/threshold.c
+@@ -85,7 +85,8 @@ void cmci_storm_end(unsigned int bank)
+ {
+ 	struct mca_storm_desc *storm = this_cpu_ptr(&storm_desc);
  
- 	open->file_slot = READ_ONCE(sqe->file_index);
- 	if (open->file_slot && (open->how.flags & O_CLOEXEC))
- 		return -EINVAL;
+-	__clear_bit(bank, this_cpu_ptr(mce_poll_banks));
++	if (!mce_flags.amd_threshold)
++		__clear_bit(bank, this_cpu_ptr(mce_poll_banks));
+ 	storm->banks[bank].history = 0;
+ 	storm->banks[bank].in_storm_mode = false;
  
- 	open->nofile = rlimit(RLIMIT_NOFILE);
--	req->flags |= REQ_F_NEED_CLEANUP;
- 	if (io_openat_force_async(open))
- 		req->flags |= REQ_F_FORCE_ASYNC;
- 	return 0;
 
 
