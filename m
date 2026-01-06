@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3F234A78B;
-	Tue,  6 Jan 2026 17:19:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92DC934AAE0;
+	Tue,  6 Jan 2026 17:19:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719942; cv=none; b=D9atHS3Yh05yeezvyV2zw4WMAt/K4wVD3gi6BOs8jAO0HBXjvY/JL65cHNCxMFGkgSReMr517uNvlqYQvahGa8GUdqZ61Z6PgoE+ktCAutRAU0bBbCRhsuNL5FBVr4/JQ/q2wQvz2D0R6aOZYiXv2BVETYjBBcnb94yyMZlky68=
+	t=1767719945; cv=none; b=m3VOrB7TuR5Nwnz2lAKoW9tBXhYA8yxsdrrAcmKtAGBKlx20ZIr2ppyRJaJt/Z4LCje+sxH77jepE0XztHGxsOBJB+QR+NBh+j3zZWrdBpxYFfE0OYUvpkFc9Oeg4AQxtv3b3DCBeaYIJGWKXjuluqf1+XzKYfQzz+um/MlYY4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719942; c=relaxed/simple;
-	bh=PjAulDDmX6FCDbv95LIw4ABEdgEJmD+tHmTNB956U7A=;
+	s=arc-20240116; t=1767719945; c=relaxed/simple;
+	bh=5E7DTdy2Oh3cJXpIX+Fpqx0J0KJtnrzdOGADIfsauCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PY1Jpor21tFsXWn0aS3V2Y4iDtuLndjgrOSy6Cyq05zX9+xr9OqOFYUi1T+SZfh2uAF80V9y6fnySOe+wocs/9blG1293rYIn+jB4lzyQHPq30neNnbZx/8+SE9j5PG+duz4IHA8Wrckk727hwvgXNGzxzxKsu3XHLBQxEzA8S0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GYNdHAco; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZZcnvow4Sfz4Hh5O7lbrkAFqsNdncB4l8a572RRgMUyxqYTx1QFkecmw3QTKhStLXdNuBlUC37e66NxGVg1vFhEMdHBTIoDJ0RukV33vbRtlU3g2q1lZmjX8c2IXbPqQQU36u18HbE0WzZGMajQi8LFaC9dIwjZGVRzKY1lFPzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L8rw2FIS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GYNdHAco"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12522C116C6;
-	Tue,  6 Jan 2026 17:19:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L8rw2FIS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AE91C116C6;
+	Tue,  6 Jan 2026 17:19:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719942;
-	bh=PjAulDDmX6FCDbv95LIw4ABEdgEJmD+tHmTNB956U7A=;
+	s=korg; t=1767719945;
+	bh=5E7DTdy2Oh3cJXpIX+Fpqx0J0KJtnrzdOGADIfsauCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GYNdHAcoO5KtHD/GWEOfUcNyUEqHwdfiYB46mUgTERP8Qg+89CcLL+DpLLBHgHzoV
-	 M++oYny9ux24cBy/HT0+xE5pVxIhWCskSVRCE7QDKPPR+u/2Td7Kc5oqGU8BUiLENs
-	 uIO3DEZJb6sXnBSXolcRUYzpbVcFwy6ZAiXSAIdo=
+	b=L8rw2FISvtrLSEHV4HxlWX4b/jNfnvqrN+P0pNobnZwNJMMXn+28ezD4kbPUGma6j
+	 te5E0x4FgwKXY8cjwNN9rPj4d9igPEmwRqdoHR1LuQS+LuTwmajOAkWzXFOtoouoV3
+	 T6CyRqhOUf9olfVPelVDe3MrHKoposOjCp/Tj37c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianpeng Chang <jianpeng.chang.cn@windriver.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	Anurag Dutta <a-dutta@ti.com>,
+	Nishanth Menon <nm@ti.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 087/567] arm64: kdump: Fix elfcorehdr overlap caused by reserved memory processing reorder
-Date: Tue,  6 Jan 2026 17:57:49 +0100
-Message-ID: <20260106170454.549107002@linuxfoundation.org>
+Subject: [PATCH 6.12 088/567] spi: cadence-quadspi: Fix clock disable on probe failure path
+Date: Tue,  6 Jan 2026 17:57:50 +0100
+Message-ID: <20260106170454.584972309@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,63 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianpeng Chang <jianpeng.chang.cn@windriver.com>
+From: Anurag Dutta <a-dutta@ti.com>
 
-[ Upstream commit 3e8ade58b71b48913d21b647b2089e03e81f117e ]
+[ Upstream commit 1889dd2081975ce1f6275b06cdebaa8d154847a9 ]
 
-Commit 8a6e02d0c00e ("of: reserved_mem: Restructure how the reserved
-memory regions are processed") changed the processing order of reserved
-memory regions, causing elfcorehdr to overlap with dynamically allocated
-reserved memory regions during kdump kernel boot.
+When cqspi_request_mmap_dma() returns -EPROBE_DEFER after runtime PM
+is enabled, the error path calls clk_disable_unprepare() on an already
+disabled clock, causing an imbalance.
 
-The issue occurs because:
-1. kexec-tools allocates elfcorehdr in the last crashkernel reserved
-   memory region and passes it to the second kernel
-2. The problematic commit moved dynamic reserved memory allocation
-   (like bman-fbpr) to occur during fdt_scan_reserved_mem(), before
-   elfcorehdr reservation in fdt_reserve_elfcorehdr()
-3. bman-fbpr with 16MB alignment requirement can get allocated at
-   addresses that overlap with the elfcorehdr location
-4. When fdt_reserve_elfcorehdr() tries to reserve elfcorehdr memory,
-   overlap detection identifies the conflict and skips reservation
-5. kdump kernel fails with "Unable to handle kernel paging request"
-   because elfcorehdr memory is not properly reserved
+Use pm_runtime_get_sync() to increment the usage counter and resume the
+device. This prevents runtime_suspend() from being invoked and causing
+a double clock disable.
 
-The boot log:
-Before 8a6e02d0c00e:
-  OF: fdt: Reserving 1 KiB of memory at 0xf4fff000 for elfcorehdr
-  OF: reserved mem: 0xf3000000..0xf3ffffff bman-fbpr
-
-After 8a6e02d0c00e:
-  OF: reserved mem: 0xf4000000..0xf4ffffff bman-fbpr
-  OF: fdt: elfcorehdr is overlapped
-
-Fix this by ensuring elfcorehdr reservation occurs before dynamic
-reserved memory allocation.
-
-Fixes: 8a6e02d0c00e ("of: reserved_mem: Restructure how the reserved memory regions are processed")
-Signed-off-by: Jianpeng Chang <jianpeng.chang.cn@windriver.com>
-Link: https://patch.msgid.link/20251205015934.700016-1-jianpeng.chang.cn@windriver.com
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Fixes: 140623410536 ("mtd: spi-nor: Add driver for Cadence Quad SPI Flash Controller")
+Signed-off-by: Anurag Dutta <a-dutta@ti.com>
+Tested-by: Nishanth Menon <nm@ti.com>
+Link: https://patch.msgid.link/20251212072312.2711806-3-a-dutta@ti.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/fdt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-cadence-quadspi.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/of/fdt.c b/drivers/of/fdt.c
-index 8c80f4dc8b3f..0940955d3701 100644
---- a/drivers/of/fdt.c
-+++ b/drivers/of/fdt.c
-@@ -501,8 +501,8 @@ void __init early_init_fdt_scan_reserved_mem(void)
- 	if (!initial_boot_params)
- 		return;
- 
--	fdt_scan_reserved_mem();
- 	fdt_reserve_elfcorehdr();
-+	fdt_scan_reserved_mem();
- 
- 	/* Process header /memreserve/ fields */
- 	for (n = 0; ; n++) {
+diff --git a/drivers/spi/spi-cadence-quadspi.c b/drivers/spi/spi-cadence-quadspi.c
+index 06e43b184d85..aca3681d32ea 100644
+--- a/drivers/spi/spi-cadence-quadspi.c
++++ b/drivers/spi/spi-cadence-quadspi.c
+@@ -1959,7 +1959,9 @@ static int cqspi_probe(struct platform_device *pdev)
+ probe_reset_failed:
+ 	if (cqspi->is_jh7110)
+ 		cqspi_jh7110_disable_clk(pdev, cqspi);
+-	clk_disable_unprepare(cqspi->clk);
++
++	if (pm_runtime_get_sync(&pdev->dev) >= 0)
++		clk_disable_unprepare(cqspi->clk);
+ probe_clk_failed:
+ 	return ret;
+ }
 -- 
 2.51.0
 
