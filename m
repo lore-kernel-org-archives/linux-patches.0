@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C35F134F472;
-	Tue,  6 Jan 2026 17:44:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3888134DB78;
+	Tue,  6 Jan 2026 17:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721460; cv=none; b=JPgeFkyOz0WM+qX+bZQnYSsiAyJOK30RrhXPNM69xVboIdeNWGYU/vI5d4SiFc7KA2XiOZHX3mKB61uUCiKeBoSCp2RJd+OIQEt8uXBhMHfiFZfwJgHBUccmieRJiWmr3ULOrsSkU37+/s6Cs7ahzAF0XPHGylAZqzjlX/vYqYw=
+	t=1767721464; cv=none; b=FHmF6ix3hyZjptFxfVkz5rIwsiMCVL4ltioQE2YnEnIYVEFSNDc1Ig35BL3kqdXPbXU2ds8Zcxn/hUooIXVhDXWqdvbB9rPLqsZ8TJWctGg6po9OBvjiywPZQ5f8D1Wzdck2ByoM/8xv0tPL61ivWXzbTxp+WAziFC4aKlKRkps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721460; c=relaxed/simple;
-	bh=3ulBRMi2VptLQZQQqUDVls+Vc3vTqlvk+v9vMB7oats=;
+	s=arc-20240116; t=1767721464; c=relaxed/simple;
+	bh=nkqGSrkeTK9+TteHN5H9pBqlj3pOLN2wVWRIoRCdlKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eaWcLzs7spg5ngzBnml688Xcq93mONgkeALi573AeAEwR7ghRQ9vDxiGeVSKOSkMU1cV1gOxf/I6Pcu3PbaZ1h95ZkTZG+4zS2tb41OnG9elnG94K7Z1rj/T5fHXPnfQA6M51mEpZ7Si5xMR+3qCEeV58XtGadVqrgqlQUwGIbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rH6WcXVd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=okYkDNcy/SqIrocAwCbp7wvN9v6dSfGxsmQ39O0MRCBJbS1GphhtD6Y9EO7ZyrU7Isqfya0s2uWJsK6Ng6fmBjaeiRDlG1HUSPUgqDC20LXcEx6NqzPEq0YgML25K9WaXhmX2p4YvRTfpt6l/gxO+vb/fQofqO3vB1xS3rZm7yU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UPDveSz9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rH6WcXVd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC52AC19425;
-	Tue,  6 Jan 2026 17:44:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UPDveSz9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DBF4C16AAE;
+	Tue,  6 Jan 2026 17:44:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721460;
-	bh=3ulBRMi2VptLQZQQqUDVls+Vc3vTqlvk+v9vMB7oats=;
+	s=korg; t=1767721464;
+	bh=nkqGSrkeTK9+TteHN5H9pBqlj3pOLN2wVWRIoRCdlKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rH6WcXVdh/9GbV76qvmkWhfzv/UJBB/9v6lkXkRmopRDQ82iKsPzNFr77ybUy5YLP
-	 2X8tWbTNBY0mRN3Fu8zRWkaKK05v+k3nfiXz4iVPT5Kg2gNkKkgkgna2OVtWt9NXH3
-	 FoaGF9/+bqBJcNjyHY1tvahG1PeocYSubWMQY6Xg=
+	b=UPDveSz9Kw/bnxlGqNDPFyfBGdbm+xF8QzDRQ7oI9apJHD/Rt/bwOA6473VRlJy3p
+	 m2fDz8BeMN0JgkU7ukbM+mgVFV9sJcCK10U7o8bFR/1IM1u09m5MbBzP+EHG1VJ+Fh
+	 CprlhWBYTh1QyVIfxBd9pjXxoAxefHjVS0e2dBaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Hay <joshua.a.hay@intel.com>,
-	Madhu Chittim <madhu.chittim@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Samuel Salin <Samuel.salin@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 6.12 544/567] idpf: remove obsolete stashing code
-Date: Tue,  6 Jan 2026 18:05:26 +0100
-Message-ID: <20260106170511.533037659@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Subject: [PATCH 6.12 527/567] ipv6: adopt dst_dev() helper
+Date: Tue,  6 Jan 2026 18:05:09 +0100
+Message-ID: <20260106170510.887935860@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -53,663 +52,505 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joshua Hay <joshua.a.hay@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 6c4e68480238274f84aa50d54da0d9e262df6284 ]
+[ Upstream commit 1caf27297215a5241f9bfc9c07336349d9034ee3 ]
 
-Changes from original commit:
-- Adjusted idpf_tx_queue assert size to align with 6.12 struct definition
+Use the new helper as a step to deal with potential dst->dev races.
 
-With the new Tx buffer management scheme, there is no need for all of
-the stashing mechanisms, the hash table, the reserve buffer stack, etc.
-Remove all of that.
-
-Signed-off-by: Joshua Hay <joshua.a.hay@intel.com>
-Reviewed-by: Madhu Chittim <madhu.chittim@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Samuel Salin <Samuel.salin@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250630121934.3399505-9-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[Harshit: Backport to 6.12.y, pulled this is a prerequisite]
+Stable-dep-of: 99a2ace61b21 ("net: use dst_dev_rcu() in sk_setup_caps()")
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf_txrx.c |  309 +---------------------------
- drivers/net/ethernet/intel/idpf/idpf_txrx.h |   47 ----
- 2 files changed, 22 insertions(+), 334 deletions(-)
+ include/net/ip6_route.h          |    4 ++--
+ net/ipv6/exthdrs.c               |    2 +-
+ net/ipv6/icmp.c                  |    4 +++-
+ net/ipv6/ila/ila_lwt.c           |    2 +-
+ net/ipv6/ioam6_iptunnel.c        |    4 ++--
+ net/ipv6/ip6_gre.c               |    8 +++++---
+ net/ipv6/ip6_output.c            |   19 ++++++++++---------
+ net/ipv6/ip6_tunnel.c            |    4 ++--
+ net/ipv6/ip6_udp_tunnel.c        |    2 +-
+ net/ipv6/ip6_vti.c               |    2 +-
+ net/ipv6/ndisc.c                 |    6 ++++--
+ net/ipv6/netfilter/nf_dup_ipv6.c |    2 +-
+ net/ipv6/output_core.c           |    2 +-
+ net/ipv6/route.c                 |   20 ++++++++++++--------
+ net/ipv6/rpl_iptunnel.c          |    4 ++--
+ net/ipv6/seg6_iptunnel.c         |   20 +++++++++++---------
+ net/ipv6/seg6_local.c            |    2 +-
+ 17 files changed, 60 insertions(+), 47 deletions(-)
 
---- a/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-@@ -7,13 +7,7 @@
- #include "idpf.h"
- #include "idpf_virtchnl.h"
+--- a/include/net/ip6_route.h
++++ b/include/net/ip6_route.h
+@@ -274,7 +274,7 @@ static inline unsigned int ip6_skb_dst_m
+ 	unsigned int mtu;
  
--struct idpf_tx_stash {
--	struct hlist_node hlist;
--	struct libeth_sqe buf;
--};
--
- #define idpf_tx_buf_next(buf)		(*(u32 *)&(buf)->priv)
--#define idpf_tx_buf_compl_tag(buf)	(*(u32 *)&(buf)->priv)
- LIBETH_SQE_CHECK_PRIV(u32);
+ 	if (np && READ_ONCE(np->pmtudisc) >= IPV6_PMTUDISC_PROBE) {
+-		mtu = READ_ONCE(dst->dev->mtu);
++		mtu = READ_ONCE(dst_dev(dst)->mtu);
+ 		mtu -= lwtunnel_headroom(dst->lwtstate, mtu);
+ 	} else {
+ 		mtu = dst_mtu(dst);
+@@ -337,7 +337,7 @@ static inline unsigned int ip6_dst_mtu_m
  
- /**
-@@ -40,36 +34,6 @@ static bool idpf_chk_linearize(const str
- }
- 
- /**
-- * idpf_buf_lifo_push - push a buffer pointer onto stack
-- * @stack: pointer to stack struct
-- * @buf: pointer to buf to push
-- *
-- * Returns 0 on success, negative on failure
-- **/
--static int idpf_buf_lifo_push(struct idpf_buf_lifo *stack,
--			      struct idpf_tx_stash *buf)
--{
--	if (unlikely(stack->top == stack->size))
--		return -ENOSPC;
--
--	stack->bufs[stack->top++] = buf;
--
--	return 0;
--}
--
--/**
-- * idpf_buf_lifo_pop - pop a buffer pointer from stack
-- * @stack: pointer to stack struct
-- **/
--static struct idpf_tx_stash *idpf_buf_lifo_pop(struct idpf_buf_lifo *stack)
--{
--	if (unlikely(!stack->top))
--		return NULL;
--
--	return stack->bufs[--stack->top];
--}
--
--/**
-  * idpf_tx_timeout - Respond to a Tx Hang
-  * @netdev: network interface device structure
-  * @txqueue: TX queue
-@@ -97,14 +61,11 @@ void idpf_tx_timeout(struct net_device *
- static void idpf_tx_buf_rel_all(struct idpf_tx_queue *txq)
+ 	mtu = IPV6_MIN_MTU;
+ 	rcu_read_lock();
+-	idev = __in6_dev_get(dst->dev);
++	idev = __in6_dev_get(dst_dev(dst));
+ 	if (idev)
+ 		mtu = READ_ONCE(idev->cnf.mtu6);
+ 	rcu_read_unlock();
+--- a/net/ipv6/exthdrs.c
++++ b/net/ipv6/exthdrs.c
+@@ -306,7 +306,7 @@ static int ipv6_destopt_rcv(struct sk_bu
+ 	if (!pskb_may_pull(skb, skb_transport_offset(skb) + 8) ||
+ 	    !pskb_may_pull(skb, (skb_transport_offset(skb) +
+ 				 ((skb_transport_header(skb)[1] + 1) << 3)))) {
+-		__IP6_INC_STATS(dev_net(dst->dev), idev,
++		__IP6_INC_STATS(dev_net(dst_dev(dst)), idev,
+ 				IPSTATS_MIB_INHDRERRORS);
+ fail_and_free:
+ 		kfree_skb(skb);
+--- a/net/ipv6/icmp.c
++++ b/net/ipv6/icmp.c
+@@ -196,6 +196,7 @@ static bool icmpv6_xrlim_allow(struct so
+ 			       struct flowi6 *fl6, bool apply_ratelimit)
  {
- 	struct libeth_sq_napi_stats ss = { };
--	struct idpf_buf_lifo *buf_stack;
--	struct idpf_tx_stash *stash;
- 	struct libeth_cq_pp cp = {
- 		.dev	= txq->dev,
- 		.ss	= &ss,
- 	};
--	struct hlist_node *tmp;
--	u32 i, tag;
-+	u32 i;
+ 	struct net *net = sock_net(sk);
++	struct net_device *dev;
+ 	struct dst_entry *dst;
+ 	bool res = false;
  
- 	/* Buffers already cleared, nothing to do */
- 	if (!txq->tx_buf)
-@@ -116,33 +77,6 @@ static void idpf_tx_buf_rel_all(struct i
- 
- 	kfree(txq->tx_buf);
- 	txq->tx_buf = NULL;
--
--	if (!idpf_queue_has(FLOW_SCH_EN, txq))
--		return;
--
--	buf_stack = &txq->stash->buf_stack;
--	if (!buf_stack->bufs)
--		return;
--
--	/*
--	 * If a Tx timeout occurred, there are potentially still bufs in the
--	 * hash table, free them here.
--	 */
--	hash_for_each_safe(txq->stash->sched_buf_hash, tag, tmp, stash,
--			   hlist) {
--		if (!stash)
--			continue;
--
--		libeth_tx_complete(&stash->buf, &cp);
--		hash_del(&stash->hlist);
--		idpf_buf_lifo_push(buf_stack, stash);
--	}
--
--	for (i = 0; i < buf_stack->size; i++)
--		kfree(buf_stack->bufs[i]);
--
--	kfree(buf_stack->bufs);
--	buf_stack->bufs = NULL;
- }
- 
- /**
-@@ -218,9 +152,6 @@ static void idpf_tx_desc_rel_all(struct
-  */
- static int idpf_tx_buf_alloc_all(struct idpf_tx_queue *tx_q)
- {
--	struct idpf_buf_lifo *buf_stack;
--	int i;
--
- 	/* Allocate book keeping buffers only. Buffers to be supplied to HW
- 	 * are allocated by kernel network stack and received as part of skb
+@@ -208,10 +209,11 @@ static bool icmpv6_xrlim_allow(struct so
+ 	 * this lookup should be more aggressive (not longer than timeout).
  	 */
-@@ -233,29 +164,6 @@ static int idpf_tx_buf_alloc_all(struct
- 	if (!tx_q->tx_buf)
- 		return -ENOMEM;
- 
--	if (!idpf_queue_has(FLOW_SCH_EN, tx_q))
--		return 0;
--
--	buf_stack = &tx_q->stash->buf_stack;
--
--	/* Initialize tx buf stack for out-of-order completions if
--	 * flow scheduling offload is enabled
--	 */
--	buf_stack->bufs = kcalloc(tx_q->desc_count, sizeof(*buf_stack->bufs),
--				  GFP_KERNEL);
--	if (!buf_stack->bufs)
--		return -ENOMEM;
--
--	buf_stack->size = tx_q->desc_count;
--	buf_stack->top = tx_q->desc_count;
--
--	for (i = 0; i < tx_q->desc_count; i++) {
--		buf_stack->bufs[i] = kzalloc(sizeof(*buf_stack->bufs[i]),
--					     GFP_KERNEL);
--		if (!buf_stack->bufs[i])
--			return -ENOMEM;
--	}
--
- 	return 0;
- }
- 
-@@ -369,8 +277,6 @@ static int idpf_tx_desc_alloc_all(struct
- 	for (i = 0; i < vport->num_txq_grp; i++) {
- 		for (j = 0; j < vport->txq_grps[i].num_txq; j++) {
- 			struct idpf_tx_queue *txq = vport->txq_grps[i].txqs[j];
--			u8 gen_bits = 0;
--			u16 bufidx_mask;
- 
- 			err = idpf_tx_desc_alloc(vport, txq);
- 			if (err) {
-@@ -379,34 +285,6 @@ static int idpf_tx_desc_alloc_all(struct
- 					i);
- 				goto err_out;
- 			}
--
--			if (!idpf_is_queue_model_split(vport->txq_model))
--				continue;
--
--			txq->compl_tag_cur_gen = 0;
--
--			/* Determine the number of bits in the bufid
--			 * mask and add one to get the start of the
--			 * generation bits
--			 */
--			bufidx_mask = txq->desc_count - 1;
--			while (bufidx_mask >> 1) {
--				txq->compl_tag_gen_s++;
--				bufidx_mask = bufidx_mask >> 1;
--			}
--			txq->compl_tag_gen_s++;
--
--			gen_bits = IDPF_TX_SPLITQ_COMPL_TAG_WIDTH -
--							txq->compl_tag_gen_s;
--			txq->compl_tag_gen_max = GETMAXVAL(gen_bits);
--
--			/* Set bufid mask based on location of first
--			 * gen bit; it cannot simply be the descriptor
--			 * ring size-1 since we can have size values
--			 * where not all of those bits are set.
--			 */
--			txq->compl_tag_bufid_m =
--				GETMAXVAL(txq->compl_tag_gen_s);
- 		}
- 
- 		if (!idpf_is_queue_model_split(vport->txq_model))
-@@ -1061,9 +939,6 @@ static void idpf_txq_group_rel(struct id
- 
- 		kfree(txq_grp->complq);
- 		txq_grp->complq = NULL;
--
--		if (flow_sch_en)
--			kfree(txq_grp->stashes);
- 	}
- 	kfree(vport->txq_grps);
- 	vport->txq_grps = NULL;
-@@ -1416,7 +1291,6 @@ static int idpf_txq_group_alloc(struct i
- 	for (i = 0; i < vport->num_txq_grp; i++) {
- 		struct idpf_txq_group *tx_qgrp = &vport->txq_grps[i];
- 		struct idpf_adapter *adapter = vport->adapter;
--		struct idpf_txq_stash *stashes;
- 		int j;
- 
- 		tx_qgrp->vport = vport;
-@@ -1429,15 +1303,6 @@ static int idpf_txq_group_alloc(struct i
- 				goto err_alloc;
- 		}
- 
--		if (split && flow_sch_en) {
--			stashes = kcalloc(num_txq, sizeof(*stashes),
--					  GFP_KERNEL);
--			if (!stashes)
--				goto err_alloc;
--
--			tx_qgrp->stashes = stashes;
--		}
--
- 		for (j = 0; j < tx_qgrp->num_txq; j++) {
- 			struct idpf_tx_queue *q = tx_qgrp->txqs[j];
- 
-@@ -1457,11 +1322,6 @@ static int idpf_txq_group_alloc(struct i
- 			if (!flow_sch_en)
- 				continue;
- 
--			if (split) {
--				q->stash = &stashes[j];
--				hash_init(q->stash->sched_buf_hash);
--			}
--
- 			idpf_queue_set(FLOW_SCH_EN, q);
- 
- 			q->refillq = kzalloc(sizeof(*q->refillq), GFP_KERNEL);
-@@ -1719,82 +1579,6 @@ static void idpf_tx_handle_sw_marker(str
- 	wake_up(&vport->sw_marker_wq);
- }
- 
--/**
-- * idpf_tx_clean_stashed_bufs - clean bufs that were stored for
-- * out of order completions
-- * @txq: queue to clean
-- * @compl_tag: completion tag of packet to clean (from completion descriptor)
-- * @cleaned: pointer to stats struct to track cleaned packets/bytes
-- * @budget: Used to determine if we are in netpoll
-- */
--static void idpf_tx_clean_stashed_bufs(struct idpf_tx_queue *txq,
--				       u16 compl_tag,
--				       struct libeth_sq_napi_stats *cleaned,
--				       int budget)
--{
--	struct idpf_tx_stash *stash;
--	struct hlist_node *tmp_buf;
--	struct libeth_cq_pp cp = {
--		.dev	= txq->dev,
--		.ss	= cleaned,
--		.napi	= budget,
--	};
--
--	/* Buffer completion */
--	hash_for_each_possible_safe(txq->stash->sched_buf_hash, stash, tmp_buf,
--				    hlist, compl_tag) {
--		if (unlikely(idpf_tx_buf_compl_tag(&stash->buf) != compl_tag))
--			continue;
--
--		hash_del(&stash->hlist);
--		libeth_tx_complete(&stash->buf, &cp);
--
--		/* Push shadow buf back onto stack */
--		idpf_buf_lifo_push(&txq->stash->buf_stack, stash);
--	}
--}
--
--/**
-- * idpf_stash_flow_sch_buffers - store buffer parameters info to be freed at a
-- * later time (only relevant for flow scheduling mode)
-- * @txq: Tx queue to clean
-- * @tx_buf: buffer to store
-- */
--static int idpf_stash_flow_sch_buffers(struct idpf_tx_queue *txq,
--				       struct idpf_tx_buf *tx_buf)
--{
--	struct idpf_tx_stash *stash;
--
--	if (unlikely(tx_buf->type <= LIBETH_SQE_CTX))
--		return 0;
--
--	stash = idpf_buf_lifo_pop(&txq->stash->buf_stack);
--	if (unlikely(!stash)) {
--		net_err_ratelimited("%s: No out-of-order TX buffers left!\n",
--				    netdev_name(txq->netdev));
--
--		return -ENOMEM;
--	}
--
--	/* Store buffer params in shadow buffer */
--	stash->buf.skb = tx_buf->skb;
--	stash->buf.bytes = tx_buf->bytes;
--	stash->buf.packets = tx_buf->packets;
--	stash->buf.type = tx_buf->type;
--	stash->buf.nr_frags = tx_buf->nr_frags;
--	dma_unmap_addr_set(&stash->buf, dma, dma_unmap_addr(tx_buf, dma));
--	dma_unmap_len_set(&stash->buf, len, dma_unmap_len(tx_buf, len));
--	idpf_tx_buf_compl_tag(&stash->buf) = idpf_tx_buf_compl_tag(tx_buf);
--
--	/* Add buffer to buf_hash table to be freed later */
--	hash_add(txq->stash->sched_buf_hash, &stash->hlist,
--		 idpf_tx_buf_compl_tag(&stash->buf));
--
--	tx_buf->type = LIBETH_SQE_EMPTY;
--
--	return 0;
--}
--
- #define idpf_tx_splitq_clean_bump_ntc(txq, ntc, desc, buf)	\
- do {								\
- 	if (unlikely(++(ntc) == (txq)->desc_count)) {		\
-@@ -1822,14 +1606,8 @@ do {								\
-  * Separate packet completion events will be reported on the completion queue,
-  * and the buffers will be cleaned separately. The stats are not updated from
-  * this function when using flow-based scheduling.
-- *
-- * Furthermore, in flow scheduling mode, check to make sure there are enough
-- * reserve buffers to stash the packet. If there are not, return early, which
-- * will leave next_to_clean pointing to the packet that failed to be stashed.
-- *
-- * Return: false in the scenario above, true otherwise.
-  */
--static bool idpf_tx_splitq_clean(struct idpf_tx_queue *tx_q, u16 end,
-+static void idpf_tx_splitq_clean(struct idpf_tx_queue *tx_q, u16 end,
- 				 int napi_budget,
- 				 struct libeth_sq_napi_stats *cleaned,
- 				 bool descs_only)
-@@ -1843,12 +1621,11 @@ static bool idpf_tx_splitq_clean(struct
- 		.napi	= napi_budget,
- 	};
- 	struct idpf_tx_buf *tx_buf;
--	bool clean_complete = true;
- 
- 	if (descs_only) {
- 		/* Bump ring index to mark as cleaned. */
- 		tx_q->next_to_clean = end;
--		return true;
-+		return;
- 	}
- 
- 	tx_desc = &tx_q->flex_tx[ntc];
-@@ -1869,53 +1646,24 @@ static bool idpf_tx_splitq_clean(struct
- 			break;
- 
- 		eop_idx = tx_buf->rs_idx;
-+		libeth_tx_complete(tx_buf, &cp);
- 
--		if (descs_only) {
--			if (IDPF_TX_BUF_RSV_UNUSED(tx_q) < tx_buf->nr_frags) {
--				clean_complete = false;
--				goto tx_splitq_clean_out;
--			}
--
--			idpf_stash_flow_sch_buffers(tx_q, tx_buf);
-+		/* unmap remaining buffers */
-+		while (ntc != eop_idx) {
-+			idpf_tx_splitq_clean_bump_ntc(tx_q, ntc,
-+						      tx_desc, tx_buf);
- 
--			while (ntc != eop_idx) {
--				idpf_tx_splitq_clean_bump_ntc(tx_q, ntc,
--							      tx_desc, tx_buf);
--				idpf_stash_flow_sch_buffers(tx_q, tx_buf);
--			}
--		} else {
-+			/* unmap any remaining paged data */
- 			libeth_tx_complete(tx_buf, &cp);
--
--			/* unmap remaining buffers */
--			while (ntc != eop_idx) {
--				idpf_tx_splitq_clean_bump_ntc(tx_q, ntc,
--							      tx_desc, tx_buf);
--
--				/* unmap any remaining paged data */
--				libeth_tx_complete(tx_buf, &cp);
--			}
- 		}
- 
- fetch_next_txq_desc:
- 		idpf_tx_splitq_clean_bump_ntc(tx_q, ntc, tx_desc, tx_buf);
- 	}
- 
--tx_splitq_clean_out:
- 	tx_q->next_to_clean = ntc;
--
--	return clean_complete;
- }
- 
--#define idpf_tx_clean_buf_ring_bump_ntc(txq, ntc, buf)	\
--do {							\
--	(buf)++;					\
--	(ntc)++;					\
--	if (unlikely((ntc) == (txq)->desc_count)) {	\
--		buf = (txq)->tx_buf;			\
--		ntc = 0;				\
--	}						\
--} while (0)
--
- /**
-  * idpf_tx_clean_bufs - clean flow scheduling TX queue buffers
-  * @txq: queue to clean
-@@ -1926,7 +1674,7 @@ do {							\
-  * Clean all buffers associated with the packet starting at buf_id. Returns the
-  * byte/segment count for the cleaned packet.
-  */
--static bool idpf_tx_clean_bufs(struct idpf_tx_queue *txq, u32 buf_id,
-+static void idpf_tx_clean_bufs(struct idpf_tx_queue *txq, u32 buf_id,
- 			       struct libeth_sq_napi_stats *cleaned,
- 			       int budget)
- {
-@@ -1950,8 +1698,6 @@ static bool idpf_tx_clean_bufs(struct id
- 		libeth_tx_complete(tx_buf, &cp);
- 		idpf_post_buf_refill(txq->refillq, buf_id);
- 	}
--
--	return true;
- }
- 
- /**
-@@ -1970,22 +1716,17 @@ static void idpf_tx_handle_rs_completion
- 					 struct libeth_sq_napi_stats *cleaned,
- 					 int budget)
- {
--	u16 compl_tag;
-+	/* RS completion contains queue head for queue based scheduling or
-+	 * completion tag for flow based scheduling.
-+	 */
-+	u16 rs_compl_val = le16_to_cpu(desc->q_head_compl_tag.q_head);
- 
- 	if (!idpf_queue_has(FLOW_SCH_EN, txq)) {
--		u16 head = le16_to_cpu(desc->q_head_compl_tag.q_head);
--
--		idpf_tx_splitq_clean(txq, head, budget, cleaned, false);
-+		idpf_tx_splitq_clean(txq, rs_compl_val, budget, cleaned, false);
- 		return;
- 	}
- 
--	compl_tag = le16_to_cpu(desc->q_head_compl_tag.compl_tag);
--
--	/* If we didn't clean anything on the ring, this packet must be
--	 * in the hash table. Go clean it there.
--	 */
--	if (!idpf_tx_clean_bufs(txq, compl_tag, cleaned, budget))
--		idpf_tx_clean_stashed_bufs(txq, compl_tag, cleaned, budget);
-+	idpf_tx_clean_bufs(txq, rs_compl_val, cleaned, budget);
- }
- 
- /**
-@@ -2102,8 +1843,7 @@ fetch_next_desc:
- 		/* Update BQL */
- 		nq = netdev_get_tx_queue(tx_q->netdev, tx_q->idx);
- 
--		dont_wake = !complq_ok || IDPF_TX_BUF_RSV_LOW(tx_q) ||
--			    np->state != __IDPF_VPORT_UP ||
-+		dont_wake = !complq_ok || np->state != __IDPF_VPORT_UP ||
- 			    !netif_carrier_ok(tx_q->netdev);
- 		/* Check if the TXQ needs to and can be restarted */
- 		__netif_txq_completed_wake(nq, tx_q->cleaned_pkts, tx_q->cleaned_bytes,
-@@ -2174,7 +1914,6 @@ static int idpf_txq_has_room(struct idpf
- 	if (IDPF_DESC_UNUSED(tx_q) < descs_needed ||
- 	    IDPF_TX_COMPLQ_PENDING(tx_q->txq_grp) >
- 		IDPF_TX_COMPLQ_OVERFLOW_THRESH(tx_q->txq_grp->complq) ||
--	    IDPF_TX_BUF_RSV_LOW(tx_q) ||
- 	    idpf_tx_splitq_get_free_bufs(tx_q->refillq) < bufs_needed)
- 		return 0;
- 	return 1;
-@@ -2298,10 +2037,8 @@ static unsigned int idpf_tx_splitq_bump_
- {
- 	ntu++;
- 
--	if (ntu == txq->desc_count) {
-+	if (ntu == txq->desc_count)
- 		ntu = 0;
--		txq->compl_tag_cur_gen = IDPF_TX_ADJ_COMPL_TAG_GEN(txq);
--	}
- 
- 	return ntu;
- }
-@@ -2483,8 +2220,6 @@ static void idpf_tx_splitq_map(struct id
- 			if (unlikely(++i == tx_q->desc_count)) {
- 				tx_desc = &tx_q->flex_tx[0];
- 				i = 0;
--				tx_q->compl_tag_cur_gen =
--					IDPF_TX_ADJ_COMPL_TAG_GEN(tx_q);
- 			} else {
- 				tx_desc++;
- 			}
-@@ -2515,7 +2250,6 @@ static void idpf_tx_splitq_map(struct id
- 		if (unlikely(++i == tx_q->desc_count)) {
- 			tx_desc = &tx_q->flex_tx[0];
- 			i = 0;
--			tx_q->compl_tag_cur_gen = IDPF_TX_ADJ_COMPL_TAG_GEN(tx_q);
- 		} else {
- 			tx_desc++;
- 		}
-@@ -2771,10 +2505,9 @@ static netdev_tx_t idpf_tx_splitq_frame(
- 
- 		tx_params.dtype = IDPF_TX_DESC_DTYPE_FLEX_FLOW_SCHE;
- 		tx_params.eop_cmd = IDPF_TXD_FLEX_FLOW_CMD_EOP;
--		/* Set the RE bit to catch any packets that may have not been
--		 * stashed during RS completion cleaning. MIN_GAP is set to
--		 * MIN_RING size to ensure it will be set at least once each
--		 * time around the ring.
-+		/* Set the RE bit to periodically "clean" the descriptor ring.
-+		 * MIN_GAP is set to MIN_RING size to ensure it will be set at
-+		 * least once each time around the ring.
+ 	dst = ip6_route_output(net, sk, fl6);
++	dev = dst_dev(dst);
+ 	if (dst->error) {
+ 		IP6_INC_STATS(net, ip6_dst_idev(dst),
+ 			      IPSTATS_MIB_OUTNOROUTES);
+-	} else if (dst->dev && (dst->dev->flags&IFF_LOOPBACK)) {
++	} else if (dev && (dev->flags & IFF_LOOPBACK)) {
+ 		res = true;
+ 	} else {
+ 		struct rt6_info *rt = dst_rt6_info(dst);
+--- a/net/ipv6/ila/ila_lwt.c
++++ b/net/ipv6/ila/ila_lwt.c
+@@ -70,7 +70,7 @@ static int ila_output(struct net *net, s
  		 */
- 		if (idpf_tx_splitq_need_re(tx_q)) {
- 			tx_params.eop_cmd |= IDPF_TXD_FLEX_FLOW_CMD_RE;
---- a/drivers/net/ethernet/intel/idpf/idpf_txrx.h
-+++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.h
-@@ -117,10 +117,6 @@ do {								\
- 	((((txq)->next_to_clean > (txq)->next_to_use) ? 0 : (txq)->desc_count) + \
- 	(txq)->next_to_clean - (txq)->next_to_use - 1)
  
--#define IDPF_TX_BUF_RSV_UNUSED(txq)	((txq)->stash->buf_stack.top)
--#define IDPF_TX_BUF_RSV_LOW(txq)	(IDPF_TX_BUF_RSV_UNUSED(txq) < \
--					 (txq)->desc_count >> 2)
+ 		memset(&fl6, 0, sizeof(fl6));
+-		fl6.flowi6_oif = orig_dst->dev->ifindex;
++		fl6.flowi6_oif = dst_dev(orig_dst)->ifindex;
+ 		fl6.flowi6_iif = LOOPBACK_IFINDEX;
+ 		fl6.daddr = *rt6_nexthop(dst_rt6_info(orig_dst),
+ 					 &ip6h->daddr);
+--- a/net/ipv6/ioam6_iptunnel.c
++++ b/net/ipv6/ioam6_iptunnel.c
+@@ -328,7 +328,7 @@ static int ioam6_do_encap(struct net *ne
+ 	if (has_tunsrc)
+ 		memcpy(&hdr->saddr, tunsrc, sizeof(*tunsrc));
+ 	else
+-		ipv6_dev_get_saddr(net, dst->dev, &hdr->daddr,
++		ipv6_dev_get_saddr(net, dst_dev(dst), &hdr->daddr,
+ 				   IPV6_PREFER_SRC_PUBLIC, &hdr->saddr);
+ 
+ 	skb_postpush_rcsum(skb, hdr, len);
+@@ -417,7 +417,7 @@ do_encap:
+ 			local_bh_enable();
+ 		}
+ 
+-		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
++		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst_dev(dst)));
+ 		if (unlikely(err))
+ 			goto drop;
+ 	}
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -1084,9 +1084,11 @@ static netdev_tx_t ip6erspan_tunnel_xmit
+ 			 htonl(atomic_fetch_inc(&t->o_seqno)));
+ 
+ 	/* TooBig packet may have updated dst->dev's mtu */
+-	if (!t->parms.collect_md && dst && dst_mtu(dst) > dst->dev->mtu)
+-		dst->ops->update_pmtu(dst, NULL, skb, dst->dev->mtu, false);
 -
- #define IDPF_TX_COMPLQ_OVERFLOW_THRESH(txcq)	((txcq)->desc_count >> 1)
- /* Determine the absolute number of completions pending, i.e. the number of
-  * completions that are expected to arrive on the TX completion queue.
-@@ -130,12 +126,6 @@ do {								\
- 	0 : U32_MAX) + \
- 	(txq)->num_completions_pending - (txq)->complq->num_completions)
- 
--#define IDPF_TX_SPLITQ_COMPL_TAG_WIDTH	16
--/* Adjust the generation for the completion tag and wrap if necessary */
--#define IDPF_TX_ADJ_COMPL_TAG_GEN(txq) \
--	((++(txq)->compl_tag_cur_gen) >= (txq)->compl_tag_gen_max ? \
--	0 : (txq)->compl_tag_cur_gen)
++	if (!t->parms.collect_md && dst) {
++		mtu = READ_ONCE(dst_dev(dst)->mtu);
++		if (dst_mtu(dst) > mtu)
++			dst->ops->update_pmtu(dst, NULL, skb, mtu, false);
++	}
+ 	err = ip6_tnl_xmit(skb, dev, dsfield, &fl6, encap_limit, &mtu,
+ 			   NEXTHDR_GRE);
+ 	if (err != 0) {
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -60,7 +60,7 @@
+ static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *skb)
+ {
+ 	struct dst_entry *dst = skb_dst(skb);
+-	struct net_device *dev = dst->dev;
++	struct net_device *dev = dst_dev(dst);
+ 	struct inet6_dev *idev = ip6_dst_idev(dst);
+ 	unsigned int hh_len = LL_RESERVED_SPACE(dev);
+ 	const struct in6_addr *daddr, *nexthop;
+@@ -271,7 +271,7 @@ int ip6_xmit(const struct sock *sk, stru
+ 	const struct ipv6_pinfo *np = inet6_sk(sk);
+ 	struct in6_addr *first_hop = &fl6->daddr;
+ 	struct dst_entry *dst = skb_dst(skb);
+-	struct net_device *dev = dst->dev;
++	struct net_device *dev = dst_dev(dst);
+ 	struct inet6_dev *idev = ip6_dst_idev(dst);
+ 	struct hop_jumbo_hdr *hop_jumbo;
+ 	int hoplen = sizeof(*hop_jumbo);
+@@ -503,7 +503,8 @@ int ip6_forward(struct sk_buff *skb)
+ 	struct dst_entry *dst = skb_dst(skb);
+ 	struct ipv6hdr *hdr = ipv6_hdr(skb);
+ 	struct inet6_skb_parm *opt = IP6CB(skb);
+-	struct net *net = dev_net(dst->dev);
++	struct net *net = dev_net(dst_dev(dst));
++	struct net_device *dev;
+ 	struct inet6_dev *idev;
+ 	SKB_DR(reason);
+ 	u32 mtu;
+@@ -591,12 +592,12 @@ int ip6_forward(struct sk_buff *skb)
+ 		goto drop;
+ 	}
+ 	dst = skb_dst(skb);
 -
- #define IDPF_TXBUF_NULL			U32_MAX
++	dev = dst_dev(dst);
+ 	/* IPv6 specs say nothing about it, but it is clear that we cannot
+ 	   send redirects to source routed frames.
+ 	   We don't send redirects to frames decapsulated from IPsec.
+ 	 */
+-	if (IP6CB(skb)->iif == dst->dev->ifindex &&
++	if (IP6CB(skb)->iif == dev->ifindex &&
+ 	    opt->srcrt == 0 && !skb_sec_path(skb)) {
+ 		struct in6_addr *target = NULL;
+ 		struct inet_peer *peer;
+@@ -644,7 +645,7 @@ int ip6_forward(struct sk_buff *skb)
  
- #define IDPF_TXD_LAST_DESC_CMD (IDPF_TX_DESC_CMD_EOP | IDPF_TX_DESC_CMD_RS)
-@@ -153,18 +143,6 @@ union idpf_tx_flex_desc {
- #define idpf_tx_buf libeth_sqe
+ 	if (ip6_pkt_too_big(skb, mtu)) {
+ 		/* Again, force OUTPUT device used as source address */
+-		skb->dev = dst->dev;
++		skb->dev = dev;
+ 		icmpv6_send(skb, ICMPV6_PKT_TOOBIG, 0, mtu);
+ 		__IP6_INC_STATS(net, idev, IPSTATS_MIB_INTOOBIGERRORS);
+ 		__IP6_INC_STATS(net, ip6_dst_idev(dst),
+@@ -653,7 +654,7 @@ int ip6_forward(struct sk_buff *skb)
+ 		return -EMSGSIZE;
+ 	}
  
- /**
-- * struct idpf_buf_lifo - LIFO for managing OOO completions
-- * @top: Used to know how many buffers are left
-- * @size: Total size of LIFO
-- * @bufs: Backing array
-- */
--struct idpf_buf_lifo {
--	u16 top;
--	u16 size;
--	struct idpf_tx_stash **bufs;
--};
--
--/**
-  * struct idpf_tx_offload_params - Offload parameters for a given packet
-  * @tx_flags: Feature flags enabled for this packet
-  * @hdr_offsets: Offset parameter for single queue model
-@@ -492,17 +470,6 @@ struct idpf_tx_queue_stats {
- #define IDPF_DIM_DEFAULT_PROFILE_IX		1
+-	if (skb_cow(skb, dst->dev->hard_header_len)) {
++	if (skb_cow(skb, dev->hard_header_len)) {
+ 		__IP6_INC_STATS(net, ip6_dst_idev(dst),
+ 				IPSTATS_MIB_OUTDISCARDS);
+ 		goto drop;
+@@ -666,7 +667,7 @@ int ip6_forward(struct sk_buff *skb)
+ 	hdr->hop_limit--;
  
- /**
-- * struct idpf_txq_stash - Tx buffer stash for Flow-based scheduling mode
-- * @buf_stack: Stack of empty buffers to store buffer info for out of order
-- *	       buffer completions. See struct idpf_buf_lifo
-- * @sched_buf_hash: Hash table to store buffers
-- */
--struct idpf_txq_stash {
--	struct idpf_buf_lifo buf_stack;
--	DECLARE_HASHTABLE(sched_buf_hash, 12);
--} ____cacheline_aligned;
--
--/**
-  * struct idpf_rx_queue - software structure representing a receive queue
-  * @rx: universal receive descriptor array
-  * @single_buf: buffer descriptor array in singleq
-@@ -644,11 +611,7 @@ libeth_cacheline_set_assert(struct idpf_
-  *		   only once at the end of the cleaning routine.
-  * @clean_budget: singleq only, queue cleaning budget
-  * @cleaned_pkts: Number of packets cleaned for the above said case
-- * @stash: Tx buffer stash for Flow-based scheduling mode
-  * @refillq: Pointer to refill queue
-- * @compl_tag_bufid_m: Completion tag buffer id mask
-- * @compl_tag_cur_gen: Used to keep track of current completion tag generation
-- * @compl_tag_gen_max: To determine when compl_tag_cur_gen should be reset
-  * @stats_sync: See struct u64_stats_sync
-  * @q_stats: See union idpf_tx_queue_stats
-  * @q_id: Queue id
-@@ -677,7 +640,6 @@ struct idpf_tx_queue {
- 	u16 desc_count;
+ 	return NF_HOOK(NFPROTO_IPV6, NF_INET_FORWARD,
+-		       net, NULL, skb, skb->dev, dst->dev,
++		       net, NULL, skb, skb->dev, dev,
+ 		       ip6_forward_finish);
  
- 	u16 tx_min_pkt_len;
--	u16 compl_tag_gen_s;
+ error:
+@@ -1093,7 +1094,7 @@ static struct dst_entry *ip6_sk_dst_chec
+ #ifdef CONFIG_IPV6_SUBTREES
+ 	    ip6_rt_check(&rt->rt6i_src, &fl6->saddr, np->saddr_cache) ||
+ #endif
+-	   (fl6->flowi6_oif && fl6->flowi6_oif != dst->dev->ifindex)) {
++	   (fl6->flowi6_oif && fl6->flowi6_oif != dst_dev(dst)->ifindex)) {
+ 		dst_release(dst);
+ 		dst = NULL;
+ 	}
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -1179,7 +1179,7 @@ route_lookup:
+ 		ndst = dst;
+ 	}
  
- 	struct net_device *netdev;
- 	__cacheline_group_end_aligned(read_mostly);
-@@ -694,13 +656,8 @@ struct idpf_tx_queue {
- 	};
- 	u16 cleaned_pkts;
+-	tdev = dst->dev;
++	tdev = dst_dev(dst);
  
--	struct idpf_txq_stash *stash;
- 	struct idpf_sw_queue *refillq;
+ 	if (tdev == dev) {
+ 		DEV_STATS_INC(dev, collisions);
+@@ -1255,7 +1255,7 @@ route_lookup:
+ 	/* Calculate max headroom for all the headers and adjust
+ 	 * needed_headroom if necessary.
+ 	 */
+-	max_headroom = LL_RESERVED_SPACE(dst->dev) + sizeof(struct ipv6hdr)
++	max_headroom = LL_RESERVED_SPACE(tdev) + sizeof(struct ipv6hdr)
+ 			+ dst->header_len + t->hlen;
+ 	ip_tunnel_adj_headroom(dev, max_headroom);
  
--	u16 compl_tag_bufid_m;
--	u16 compl_tag_cur_gen;
--	u16 compl_tag_gen_max;
--
- 	struct u64_stats_sync stats_sync;
- 	struct idpf_tx_queue_stats q_stats;
- 	__cacheline_group_end_aligned(read_write);
-@@ -715,7 +672,7 @@ struct idpf_tx_queue {
- 	__cacheline_group_end_aligned(cold);
- };
- libeth_cacheline_set_assert(struct idpf_tx_queue, 64,
--			    96 + sizeof(struct u64_stats_sync),
-+			    80 + sizeof(struct u64_stats_sync),
- 			    32);
+--- a/net/ipv6/ip6_udp_tunnel.c
++++ b/net/ipv6/ip6_udp_tunnel.c
+@@ -168,7 +168,7 @@ struct dst_entry *udp_tunnel6_dst_lookup
+ 		netdev_dbg(dev, "no route to %pI6\n", &fl6.daddr);
+ 		return ERR_PTR(-ENETUNREACH);
+ 	}
+-	if (dst->dev == dev) { /* is this necessary? */
++	if (dst_dev(dst) == dev) { /* is this necessary? */
+ 		netdev_dbg(dev, "circular route to %pI6\n", &fl6.daddr);
+ 		dst_release(dst);
+ 		return ERR_PTR(-ELOOP);
+--- a/net/ipv6/ip6_vti.c
++++ b/net/ipv6/ip6_vti.c
+@@ -497,7 +497,7 @@ vti6_xmit(struct sk_buff *skb, struct ne
+ 			      (const struct in6_addr *)&x->id.daddr))
+ 		goto tx_err_link_failure;
  
- /**
-@@ -926,7 +883,6 @@ struct idpf_rxq_group {
-  * @vport: Vport back pointer
-  * @num_txq: Number of TX queues associated
-  * @txqs: Array of TX queue pointers
-- * @stashes: array of OOO stashes for the queues
-  * @complq: Associated completion queue pointer, split queue only
-  * @num_completions_pending: Total number of completions pending for the
-  *			     completion queue, acculumated for all TX queues
-@@ -941,7 +897,6 @@ struct idpf_txq_group {
+-	tdev = dst->dev;
++	tdev = dst_dev(dst);
  
- 	u16 num_txq;
- 	struct idpf_tx_queue *txqs[IDPF_LARGE_MAX_Q];
--	struct idpf_txq_stash *stashes;
+ 	if (tdev == dev) {
+ 		DEV_STATS_INC(dev, collisions);
+--- a/net/ipv6/ndisc.c
++++ b/net/ipv6/ndisc.c
+@@ -473,6 +473,7 @@ void ndisc_send_skb(struct sk_buff *skb,
+ {
+ 	struct icmp6hdr *icmp6h = icmp6_hdr(skb);
+ 	struct dst_entry *dst = skb_dst(skb);
++	struct net_device *dev;
+ 	struct inet6_dev *idev;
+ 	struct net *net;
+ 	struct sock *sk;
+@@ -507,11 +508,12 @@ void ndisc_send_skb(struct sk_buff *skb,
  
- 	struct idpf_compl_queue *complq;
+ 	ip6_nd_hdr(skb, saddr, daddr, READ_ONCE(inet6_sk(sk)->hop_limit), skb->len);
  
+-	idev = __in6_dev_get(dst->dev);
++	dev = dst_dev(dst);
++	idev = __in6_dev_get(dev);
+ 	IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTREQUESTS);
+ 
+ 	err = NF_HOOK(NFPROTO_IPV6, NF_INET_LOCAL_OUT,
+-		      net, sk, skb, NULL, dst->dev,
++		      net, sk, skb, NULL, dev,
+ 		      dst_output);
+ 	if (!err) {
+ 		ICMP6MSGOUT_INC_STATS(net, idev, type);
+--- a/net/ipv6/netfilter/nf_dup_ipv6.c
++++ b/net/ipv6/netfilter/nf_dup_ipv6.c
+@@ -38,7 +38,7 @@ static bool nf_dup_ipv6_route(struct net
+ 	}
+ 	skb_dst_drop(skb);
+ 	skb_dst_set(skb, dst);
+-	skb->dev      = dst->dev;
++	skb->dev      = dst_dev(dst);
+ 	skb->protocol = htons(ETH_P_IPV6);
+ 
+ 	return true;
+--- a/net/ipv6/output_core.c
++++ b/net/ipv6/output_core.c
+@@ -105,7 +105,7 @@ int ip6_dst_hoplimit(struct dst_entry *d
+ {
+ 	int hoplimit = dst_metric_raw(dst, RTAX_HOPLIMIT);
+ 	if (hoplimit == 0) {
+-		struct net_device *dev = dst->dev;
++		struct net_device *dev = dst_dev(dst);
+ 		struct inet6_dev *idev;
+ 
+ 		rcu_read_lock();
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -228,13 +228,13 @@ static struct neighbour *ip6_dst_neigh_l
+ 	const struct rt6_info *rt = dst_rt6_info(dst);
+ 
+ 	return ip6_neigh_lookup(rt6_nexthop(rt, &in6addr_any),
+-				dst->dev, skb, daddr);
++				dst_dev(dst), skb, daddr);
+ }
+ 
+ static void ip6_confirm_neigh(const struct dst_entry *dst, const void *daddr)
+ {
+ 	const struct rt6_info *rt = dst_rt6_info(dst);
+-	struct net_device *dev = dst->dev;
++	struct net_device *dev = dst_dev(dst);
+ 
+ 	daddr = choose_neigh_daddr(rt6_nexthop(rt, &in6addr_any), NULL, daddr);
+ 	if (!daddr)
+@@ -2945,7 +2945,7 @@ static void __ip6_rt_update_pmtu(struct
+ 
+ 		if (res.f6i->nh) {
+ 			struct fib6_nh_match_arg arg = {
+-				.dev = dst->dev,
++				.dev = dst_dev(dst),
+ 				.gw = &rt6->rt6i_gateway,
+ 			};
+ 
+@@ -3240,7 +3240,7 @@ EXPORT_SYMBOL_GPL(ip6_sk_redirect);
+ 
+ static unsigned int ip6_default_advmss(const struct dst_entry *dst)
+ {
+-	struct net_device *dev = dst->dev;
++	struct net_device *dev = dst_dev(dst);
+ 	unsigned int mtu = dst_mtu(dst);
+ 	struct net *net;
+ 
+@@ -4264,7 +4264,7 @@ static void rt6_do_redirect(struct dst_e
+ 
+ 	if (res.f6i->nh) {
+ 		struct fib6_nh_match_arg arg = {
+-			.dev = dst->dev,
++			.dev = dst_dev(dst),
+ 			.gw = &rt->rt6i_gateway,
+ 		};
+ 
+@@ -4551,13 +4551,14 @@ int ipv6_route_ioctl(struct net *net, un
+ static int ip6_pkt_drop(struct sk_buff *skb, u8 code, int ipstats_mib_noroutes)
+ {
+ 	struct dst_entry *dst = skb_dst(skb);
+-	struct net *net = dev_net(dst->dev);
++	struct net_device *dev = dst_dev(dst);
++	struct net *net = dev_net(dev);
+ 	struct inet6_dev *idev;
+ 	SKB_DR(reason);
+ 	int type;
+ 
+ 	if (netif_is_l3_master(skb->dev) ||
+-	    dst->dev == net->loopback_dev)
++	    dev == net->loopback_dev)
+ 		idev = __in6_dev_get_safely(dev_get_by_index_rcu(net, IP6CB(skb)->iif));
+ 	else
+ 		idev = ip6_dst_idev(dst);
+@@ -5775,11 +5776,14 @@ static int rt6_fill_node(struct net *net
+ 	 * each as a nexthop within RTA_MULTIPATH.
+ 	 */
+ 	if (rt6) {
++		struct net_device *dev;
++
+ 		if (rt6_flags & RTF_GATEWAY &&
+ 		    nla_put_in6_addr(skb, RTA_GATEWAY, &rt6->rt6i_gateway))
+ 			goto nla_put_failure;
+ 
+-		if (dst->dev && nla_put_u32(skb, RTA_OIF, dst->dev->ifindex))
++		dev = dst_dev(dst);
++		if (dev && nla_put_u32(skb, RTA_OIF, dev->ifindex))
+ 			goto nla_put_failure;
+ 
+ 		if (dst->lwtstate &&
+--- a/net/ipv6/rpl_iptunnel.c
++++ b/net/ipv6/rpl_iptunnel.c
+@@ -242,7 +242,7 @@ static int rpl_output(struct net *net, s
+ 			local_bh_enable();
+ 		}
+ 
+-		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
++		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst_dev(dst)));
+ 		if (unlikely(err))
+ 			goto drop;
+ 	}
+@@ -297,7 +297,7 @@ static int rpl_input(struct sk_buff *skb
+ 			local_bh_enable();
+ 		}
+ 
+-		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
++		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst_dev(dst)));
+ 		if (unlikely(err))
+ 			goto drop;
+ 	} else {
+--- a/net/ipv6/seg6_iptunnel.c
++++ b/net/ipv6/seg6_iptunnel.c
+@@ -128,7 +128,8 @@ static int __seg6_do_srh_encap(struct sk
+ 			       int proto, struct dst_entry *cache_dst)
+ {
+ 	struct dst_entry *dst = skb_dst(skb);
+-	struct net *net = dev_net(dst->dev);
++	struct net_device *dev = dst_dev(dst);
++	struct net *net = dev_net(dev);
+ 	struct ipv6hdr *hdr, *inner_hdr;
+ 	struct ipv6_sr_hdr *isrh;
+ 	int hdrlen, tot_len, err;
+@@ -181,7 +182,7 @@ static int __seg6_do_srh_encap(struct sk
+ 	isrh->nexthdr = proto;
+ 
+ 	hdr->daddr = isrh->segments[isrh->first_segment];
+-	set_tun_src(net, dst->dev, &hdr->daddr, &hdr->saddr);
++	set_tun_src(net, dev, &hdr->daddr, &hdr->saddr);
+ 
+ #ifdef CONFIG_IPV6_SEG6_HMAC
+ 	if (sr_has_hmac(isrh)) {
+@@ -212,7 +213,8 @@ static int seg6_do_srh_encap_red(struct
+ {
+ 	__u8 first_seg = osrh->first_segment;
+ 	struct dst_entry *dst = skb_dst(skb);
+-	struct net *net = dev_net(dst->dev);
++	struct net_device *dev = dst_dev(dst);
++	struct net *net = dev_net(dev);
+ 	struct ipv6hdr *hdr, *inner_hdr;
+ 	int hdrlen = ipv6_optlen(osrh);
+ 	int red_tlv_offset, tlv_offset;
+@@ -270,7 +272,7 @@ static int seg6_do_srh_encap_red(struct
+ 	if (skip_srh) {
+ 		hdr->nexthdr = proto;
+ 
+-		set_tun_src(net, dst->dev, &hdr->daddr, &hdr->saddr);
++		set_tun_src(net, dev, &hdr->daddr, &hdr->saddr);
+ 		goto out;
+ 	}
+ 
+@@ -306,7 +308,7 @@ static int seg6_do_srh_encap_red(struct
+ 
+ srcaddr:
+ 	isrh->nexthdr = proto;
+-	set_tun_src(net, dst->dev, &hdr->daddr, &hdr->saddr);
++	set_tun_src(net, dev, &hdr->daddr, &hdr->saddr);
+ 
+ #ifdef CONFIG_IPV6_SEG6_HMAC
+ 	if (unlikely(!skip_srh && sr_has_hmac(isrh))) {
+@@ -507,7 +509,7 @@ static int seg6_input_core(struct net *n
+ 			local_bh_enable();
+ 		}
+ 
+-		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
++		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst_dev(dst)));
+ 		if (unlikely(err))
+ 			goto drop;
+ 	} else {
+@@ -518,7 +520,7 @@ static int seg6_input_core(struct net *n
+ 	if (static_branch_unlikely(&nf_hooks_lwtunnel_enabled))
+ 		return NF_HOOK(NFPROTO_IPV6, NF_INET_LOCAL_OUT,
+ 			       dev_net(skb->dev), NULL, skb, NULL,
+-			       skb_dst(skb)->dev, seg6_input_finish);
++			       skb_dst_dev(skb), seg6_input_finish);
+ 
+ 	return seg6_input_finish(dev_net(skb->dev), NULL, skb);
+ drop:
+@@ -593,7 +595,7 @@ static int seg6_output_core(struct net *
+ 			local_bh_enable();
+ 		}
+ 
+-		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
++		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst_dev(dst)));
+ 		if (unlikely(err))
+ 			goto drop;
+ 	}
+@@ -603,7 +605,7 @@ static int seg6_output_core(struct net *
+ 
+ 	if (static_branch_unlikely(&nf_hooks_lwtunnel_enabled))
+ 		return NF_HOOK(NFPROTO_IPV6, NF_INET_LOCAL_OUT, net, sk, skb,
+-			       NULL, skb_dst(skb)->dev, dst_output);
++			       NULL, dst_dev(dst), dst_output);
+ 
+ 	return dst_output(net, sk, skb);
+ drop:
+--- a/net/ipv6/seg6_local.c
++++ b/net/ipv6/seg6_local.c
+@@ -310,7 +310,7 @@ seg6_lookup_any_nexthop(struct sk_buff *
+ 	if (!local_delivery)
+ 		dev_flags |= IFF_LOOPBACK;
+ 
+-	if (dst && (dst->dev->flags & dev_flags) && !dst->error) {
++	if (dst && (dst_dev(dst)->flags & dev_flags) && !dst->error) {
+ 		dst_release(dst);
+ 		dst = NULL;
+ 	}
 
 
