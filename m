@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7AD833BBDF;
-	Tue,  6 Jan 2026 17:36:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 485234A35;
+	Tue,  6 Jan 2026 17:36:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720993; cv=none; b=tzr8ZzvnceRNwfp0HqLm8ZRCdDP/KPu0KMD/qcWu7VvXcawkQf04M1Qx/gxl91+Fr4XJNUKk7mlScVd08wcIoOh9CmzVCJ/vxqOGgV94v/o4MJXM8kJYBKPcC4YccAm3ms+iiDxB2rCg7YMUeBmInSXL2X+siW5SKAAkyzA8qRE=
+	t=1767720996; cv=none; b=pkEjzmXF/e7BCu5dhBkufipDEtLdHJgAs2nq1d8LH+z22/tQbRJS7lhgI/UieSDuihfwuuK5J5Ics3iz+UDuGlqpJ15R04lVHrhfqSU5UVGm2vLTZWs88bFSYC3jM+NN4SEGLIA1t8gVl4yyyb6lMZrJRc6tbw6cCE79UVgN79o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720993; c=relaxed/simple;
-	bh=VDUYqLUALCPDY7DM8HBmyK3IMnw7YEzIj2PCqpO3eCk=;
+	s=arc-20240116; t=1767720996; c=relaxed/simple;
+	bh=4ZoVoprKO36lPFe93BBx2ZI7nUoVqwrQa5od930/VBM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EQB+nMTK2LhXRg6bfWYYyLzTy2JFsobvOs3vRegIj5NcxzwJ4YZJqujbcdvY0ujjipbfdWjmm+2EMnA83iDE+mnpjNnQwOx3ZUCLk06GFhv1eItiBvFfAAVEArdQ03vNTVDUdzVcw2GTYmFKSxtJnRKOOYf4PKjue+foOX+78jM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RMHQE9Y7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QOCl5P6COFS3LGQ/o9VGYtPQtevve3dh7hbo+AAF4apHbqkD1/KMGmpWZ0VgrEet80tFvsEamda7sVThiI+6H/6yG2CCzWTvUwWDjdaGktOoIRJQSeQo9wdj8IeSV1DwUjmcuciqvhn/h5r4X+mwAzheZ4K2h/tsJG1vQVRxVKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2uyR/i+t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RMHQE9Y7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52FCFC116C6;
-	Tue,  6 Jan 2026 17:36:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2uyR/i+t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEB78C116C6;
+	Tue,  6 Jan 2026 17:36:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720992;
-	bh=VDUYqLUALCPDY7DM8HBmyK3IMnw7YEzIj2PCqpO3eCk=;
+	s=korg; t=1767720996;
+	bh=4ZoVoprKO36lPFe93BBx2ZI7nUoVqwrQa5od930/VBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RMHQE9Y7ABm+kJJOG7D+Nxbf8yMYTuq4TX5DVrkNe0Cu12SMsc1OUm2ellUUuQ5PP
-	 mihbQ7FhmW3i39zLrZetl6/lotBnfb9BKWLKGF6ZSa7oxEYVUrWo6XQxA51cdlBJ4P
-	 SpCTTa0i+uI91kCzaO2X8husme2Vi9aWDa3spTd4=
+	b=2uyR/i+tQnBJyhnzCReVXPZVn6HslmzZS2Q46rbu2fyi0Ts62XXa63Qe8W1VXsXPE
+	 AhRYo76R7HtXnJtrWZ3OTIyFmJZqONtpVh6tz69yk+vmV+gCJOqWk8So36FIJJA5M5
+	 8o+ZEzjmu3h36Bzq6LZh5ZDNhCAIXddXlKUDywVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Michael Walle <mwalle@kernel.org>,
-	Pratyush Yadav <pratyush@kernel.org>
-Subject: [PATCH 6.12 386/567] mtd: spi-nor: winbond: Add support for W25Q01NWxxIM chips
-Date: Tue,  6 Jan 2026 18:02:48 +0100
-Message-ID: <20260106170505.621921123@linuxfoundation.org>
+	Moudy Ho <moudy.ho@mediatek.com>,
+	Johan Hovold <johan@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.12 404/567] media: platform: mtk-mdp3: fix device leaks at probe
+Date: Tue,  6 Jan 2026 18:03:06 +0100
+Message-ID: <20260106170506.287266243@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,35 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit a607e676c8b9258eabc3fc88f45bcd70ea178b41 upstream.
+commit 8f6f3aa21517ef34d50808af0c572e69580dca20 upstream.
 
-These chips must be described as none of the block protection
-information are discoverable. This chip supports 4 bits plus the
-top/bottom addressing capability to identify the protected blocks.
+Make sure to drop the references taken when looking up the subsys
+devices during probe on probe failure (e.g. probe deferral) and on
+driver unbind.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Reviewed-by: Michael Walle <mwalle@kernel.org>
-Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
+Similarly, drop the SCP device reference after retrieving its platform
+data during probe to avoid leaking it.
+
+Note that holding a reference to a device does not prevent its driver
+data from going away.
+
+Fixes: 61890ccaefaf ("media: platform: mtk-mdp3: add MediaTek MDP3 driver")
+Cc: stable@vger.kernel.org	# 6.1
+Cc: Moudy Ho <moudy.ho@mediatek.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/spi-nor/winbond.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/drivers/mtd/spi-nor/winbond.c
-+++ b/drivers/mtd/spi-nor/winbond.c
-@@ -258,6 +258,10 @@ static const struct flash_info winbond_n
- 		/* W25Q01NWxxIQ */
- 		.id = SNOR_ID(0xef, 0x60, 0x21),
- 		.flags = SPI_NOR_HAS_LOCK | SPI_NOR_HAS_TB | SPI_NOR_TB_SR_BIT6 | SPI_NOR_4BIT_BP,
-+	}, {
-+		/* W25Q01NWxxIM */
-+		.id = SNOR_ID(0xef, 0x80, 0x21),
-+		.flags = SPI_NOR_HAS_LOCK | SPI_NOR_HAS_TB | SPI_NOR_TB_SR_BIT6 | SPI_NOR_4BIT_BP,
- 	},
- };
+--- a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c
++++ b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c
+@@ -176,10 +176,18 @@ void mdp_video_device_release(struct vid
+ 	kfree(mdp);
+ }
  
++static void mdp_put_device(void *_dev)
++{
++	struct device *dev = _dev;
++
++	put_device(dev);
++}
++
+ static int mdp_mm_subsys_deploy(struct mdp_dev *mdp, enum mdp_infra_id id)
+ {
+ 	struct platform_device *mm_pdev = NULL;
+ 	struct device **dev;
++	int ret;
+ 	int i;
+ 
+ 	if (!mdp)
+@@ -213,6 +221,11 @@ static int mdp_mm_subsys_deploy(struct m
+ 		if (WARN_ON(!mm_pdev))
+ 			return -ENODEV;
+ 
++		ret = devm_add_action_or_reset(&mdp->pdev->dev, mdp_put_device,
++					       &mm_pdev->dev);
++		if (ret)
++			return ret;
++
+ 		*dev = &mm_pdev->dev;
+ 	}
+ 
+@@ -298,6 +311,7 @@ static int mdp_probe(struct platform_dev
+ 			goto err_destroy_clock_wq;
+ 		}
+ 		mdp->scp = platform_get_drvdata(mm_pdev);
++		put_device(&mm_pdev->dev);
+ 	}
+ 
+ 	mdp->rproc_handle = scp_get_rproc(mdp->scp);
 
 
