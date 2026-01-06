@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 141942FE579;
-	Tue,  6 Jan 2026 17:34:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D4662FE579;
+	Tue,  6 Jan 2026 17:35:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720897; cv=none; b=McS3B3fOaH/nOyAr7KTpGu1Vh7Kk0fJW+bATL2eYFzaSHMO6+x7CwomU2nFUnPJ0KvCBwOwLZdgUUWmJT7M1hYgZPPpu1MY16KCKDtMMItVlYvzAM1hkpSgkXPMC51URQcEutd7UeksmgHmyKwnoY/TR4yBsYY/0/qlhRc+OL5Q=
+	t=1767720900; cv=none; b=u/TZMDh3SR9HFosClymUEhDbkJ9iR44E8IhE6oVbHKsyiaayz2j4gC5rh1qgCZA50wIetMSkpFmCTx1TlybiiGZh86UwVh8z5VJRRnKv3sf2gwYEgC2RlQk808Jork7lRCfxz9P15JpslgZa9HgNovSlD01nmjKl9aymXdRUBSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720897; c=relaxed/simple;
-	bh=XEFNPQFVdFA4PXkYscyCrLqyZOaawpxKyb8NsEa9DeU=;
+	s=arc-20240116; t=1767720900; c=relaxed/simple;
+	bh=SM02JunPFkHiQ9s2xUDDuG2risSt71K5ZOXvQpzNtAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VF3T1SNwARTKySQy6x3C1IhUL4/XDUsj1+/1hKouoK7I8CZ695tm/LGl7xPqJXF3U16H8qIz01+WUjkIIqqaKFjODBbN47/a3movnEAxM+CpfwOFhWCzO9t27nc+UA2vaJ0tKg/z0UCrLyG+tPM7a9k12QCgfsLcPW0JdZ1DTEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cOG6a7Pf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o9bQDNHKAOvA/3DKZXYHBFhhqubGWnQDKYlBXSmjkkkMSaz0qpU1xJSCGsZslGIntm1rWKmkqJ7Okb+xSeJq8q5hsbGKXPhflgeQmUqJ/yjFGvbVGOg3LLZCcbFNGESoT/7WyNAFX8yEuHz1E3qDkug5wUAahh8balRzuvNSzaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=amYEjG/7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOG6a7Pf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46993C116C6;
-	Tue,  6 Jan 2026 17:34:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="amYEjG/7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDEB9C116C6;
+	Tue,  6 Jan 2026 17:34:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720896;
-	bh=XEFNPQFVdFA4PXkYscyCrLqyZOaawpxKyb8NsEa9DeU=;
+	s=korg; t=1767720900;
+	bh=SM02JunPFkHiQ9s2xUDDuG2risSt71K5ZOXvQpzNtAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cOG6a7PfNQYZxBmWMXvj9N9jUXrSimECeAv8/INzBMJFWga/2sHOL545kJ14vyC3D
-	 PwSYu3Kd53NVOomwtYRpVdqnHzvlCHEipE1qQvs2qzA6OaUAw/66VItORPueWaE5sw
-	 v5XcSAmxzdd4sxsqTnRj2ssllRE7FUZoiBnYwRKM=
+	b=amYEjG/7BQJNDmmmXDB4BYL2+Z82m6gUBua3V88tQZX5YyXrXCAo42m/t24dh6w9h
+	 PV9+TGE8H2oJd9bgcDqvLUALOeJf7zzMQgmWdmxoKi9oycnutYKWBdvaMnhyPIB1uo
+	 eZaxceCMOVwn39CEpaeoi/Ba37AwRSQIKN/zIFGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Christian Hitz <christian.hitz@bbv.ch>,
+	Jacek Anaszewski <jacek.anaszewski@gmail.com>,
 	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.12 374/567] leds: leds-cros_ec: Skip LEDs without color components
-Date: Tue,  6 Jan 2026 18:02:36 +0100
-Message-ID: <20260106170505.177618604@linuxfoundation.org>
+Subject: [PATCH 6.12 375/567] leds: leds-lp50xx: Allow LED 0 to be added to module bank
+Date: Tue,  6 Jan 2026 18:02:37 +0100
+Message-ID: <20260106170505.213658169@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -44,66 +45,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Christian Hitz <christian.hitz@bbv.ch>
 
-commit 4dbf066d965cd3299fb396f1375d10423c9c625c upstream.
+commit 26fe74d598c32e7bc6f150edfc4aa43e1bee55db upstream.
 
-A user reports that on their Lenovo Corsola Magneton with EC firmware
-steelix-15194.270.0 the driver probe fails with EINVAL. It turns out
-that the power LED does not contain any color components as indicated
-by the following "ectool led power query" output:
+led_banks contains LED module number(s) that should be grouped into the
+module bank. led_banks is 0-initialized.
+By checking the led_banks entries for 0, un-set entries are detected.
+But a 0-entry also indicates that LED module 0 should be grouped into the
+module bank.
 
-Brightness range for LED 1:
-        red     : 0x0
-        green   : 0x0
-        blue    : 0x0
-        yellow  : 0x0
-        white   : 0x0
-        amber   : 0x0
-
-The LED also does not react to commands sent manually through ectool and
-is generally non-functional.
-
-Instead of failing the probe for all LEDs managed by the EC when one
-without color components is encountered, silently skip those.
+By only iterating over the available entries no check for unused entries
+is required and LED module 0 can be added to bank.
 
 Cc: stable@vger.kernel.org
-Fixes: 8d6ce6f3ec9d ("leds: Add ChromeOS EC driver")
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://patch.msgid.link/20251028-cros_ec-leds-no-colors-v1-1-ebe13a02022a@weissschuh.net
+Fixes: 242b81170fb8 ("leds: lp50xx: Add the LP50XX family of the RGB LED driver")
+Signed-off-by: Christian Hitz <christian.hitz@bbv.ch>
+Reviewed-by: Jacek Anaszewski <jacek.anaszewski@gmail.com>
+Link: https://patch.msgid.link/20251008123222.1117331-1-christian@klarinett.li
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/leds/leds-cros_ec.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/leds/leds-lp50xx.c |   10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
---- a/drivers/leds/leds-cros_ec.c
-+++ b/drivers/leds/leds-cros_ec.c
-@@ -155,9 +155,6 @@ static int cros_ec_led_count_subleds(str
- 		}
- 	}
- 
--	if (!num_subleds)
--		return -EINVAL;
--
- 	*max_brightness = common_range;
- 	return num_subleds;
+--- a/drivers/leds/leds-lp50xx.c
++++ b/drivers/leds/leds-lp50xx.c
+@@ -343,17 +343,15 @@ out:
+ 	return ret;
  }
-@@ -202,6 +199,8 @@ static int cros_ec_led_probe_one(struct
- 						&priv->led_mc_cdev.led_cdev.max_brightness);
- 	if (num_subleds < 0)
- 		return num_subleds;
-+	if (num_subleds == 0)
-+		return 0; /* LED without any colors, skip */
  
- 	priv->cros_ec = cros_ec;
- 	priv->led_id = id;
+-static int lp50xx_set_banks(struct lp50xx *priv, u32 led_banks[])
++static int lp50xx_set_banks(struct lp50xx *priv, u32 led_banks[], int num_leds)
+ {
+ 	u8 led_config_lo, led_config_hi;
+ 	u32 bank_enable_mask = 0;
+ 	int ret;
+ 	int i;
+ 
+-	for (i = 0; i < priv->chip_info->max_modules; i++) {
+-		if (led_banks[i])
+-			bank_enable_mask |= (1 << led_banks[i]);
+-	}
++	for (i = 0; i < num_leds; i++)
++		bank_enable_mask |= (1 << led_banks[i]);
+ 
+ 	led_config_lo = bank_enable_mask;
+ 	led_config_hi = bank_enable_mask >> 8;
+@@ -407,7 +405,7 @@ static int lp50xx_probe_leds(struct fwno
+ 			return ret;
+ 		}
+ 
+-		ret = lp50xx_set_banks(priv, led_banks);
++		ret = lp50xx_set_banks(priv, led_banks, num_leds);
+ 		if (ret) {
+ 			dev_err(priv->dev, "Cannot setup banked LEDs\n");
+ 			return ret;
 
 
