@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3820346E6B;
-	Tue,  6 Jan 2026 17:16:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147F0346A15;
+	Tue,  6 Jan 2026 17:16:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719775; cv=none; b=MXftL7FonFGXZCFEyYllXdE8L4Kzd+8Dmt0GFIH0BCAsxo0dvd8vI+U5REbZFxHV1IQkl7Rh70xscR9JAEIs7oF9nzAeqG3bNfrOq+mDt+1U6FT602h39CralZ5DlknDba9KD1FwsRfeOabo65mJX2HzDPNLlA4PaaiaR+RKHDU=
+	t=1767719779; cv=none; b=pBnLQxtzHVP7C/IDGC5QSUUc6olrkVXjyKhkqJqqu3D3cCIv/HOSD6u6Fo2RH/2HIz3rcnW0N9gEUQEXtLcN1MdLV6PoCUnRm42Uh0LNQJ64j9YmoJ4MDHf+LsW5EN9QkmjcauLxVCj69acDcOBR8a+Az91x4sU9z9eAfInZwVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719775; c=relaxed/simple;
-	bh=EAsGrYDNYs+ejpY2X8FkkhCy43ArdKGI0/1fnjMQdis=;
+	s=arc-20240116; t=1767719779; c=relaxed/simple;
+	bh=idQskkhpolMgsUehQOdHgcabVfmY/I3FW8ieraSX95g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IPU5f0a1x5+mC0Belql0s5vB+fABEIXr730sOEdf4b+lS2mKVKK+PrwGzkxIGy/yamADNxCzSO/3UQCXpj0pOQb6mPfdKrRxEjUOcQjwrpoaXY45ftbeUZBa/6pmYIZdYtwogvwFEiEgpWmcIg9F5Pypng63Q5+u21hsLAFkytc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rkLceOUZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hDR9mKHFwJued0JmtNrJIdioQ+c1wKk1wwxrAf7b1uQkxiH5HmNQ2ibd3+PRcf/56eiRaPfPs1nECehSHg9AQRoEElz6U9FYIVRngJujkho7eqXfd1UUdUhOpP0Qj0MuiNo7fEVPD2/IXaEmVPyK5JD66dLa1dXAI+L7uyxy3Qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WTNBVr9p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rkLceOUZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47618C116C6;
-	Tue,  6 Jan 2026 17:16:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WTNBVr9p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73463C116C6;
+	Tue,  6 Jan 2026 17:16:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719775;
-	bh=EAsGrYDNYs+ejpY2X8FkkhCy43ArdKGI0/1fnjMQdis=;
+	s=korg; t=1767719778;
+	bh=idQskkhpolMgsUehQOdHgcabVfmY/I3FW8ieraSX95g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rkLceOUZtxvJJd6igcVhNbEDRWIdsVyC1m6vTn2zeNtnKLsZ6RYMjyXD7QkH4DEkx
-	 L1WmPdaY6S1cmvHdTmCwp9K1X5YyiiM4BkOlgxcAp4UFUHvkKYCPR7+K0C5/YZ0xnW
-	 5Y6Ge8eZK/0L80I1OqtNG/fb2un7LQ4ua97wOdN4=
+	b=WTNBVr9pKdIZ6Oy4jeIlujxhTBTOiw1pEnnbDivcv52JMh+lRuRUqSSpjTFsf4S7g
+	 AaK4PXGUeF2u6uV49CZ07TMeK6HS+rYkQ1dUOV3FaW54V1xqcZfsg0++PYELHp5s+l
+	 ua2sLxTLHVDCpwS4AG+BpOw5vGvhscEtVhrEHL7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pankaj Raghav <p.raghav@samsung.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
+	syzkaller <syzkaller@googlegroups.com>,
+	George Kennedy <george.kennedy@oracle.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 008/567] scripts/faddr2line: Fix "Argument list too long" error
-Date: Tue,  6 Jan 2026 17:56:30 +0100
-Message-ID: <20260106170451.651358612@linuxfoundation.org>
+Subject: [PATCH 6.12 009/567] perf/x86/amd: Check event before enable to avoid GPF
+Date: Tue,  6 Jan 2026 17:56:31 +0100
+Message-ID: <20260106170451.687711386@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,57 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pankaj Raghav <p.raghav@samsung.com>
+From: George Kennedy <george.kennedy@oracle.com>
 
-[ Upstream commit ff5c0466486ba8d07ab2700380e8fd6d5344b4e9 ]
+[ Upstream commit 866cf36bfee4fba6a492d2dcc5133f857e3446b0 ]
 
-The run_readelf() function reads the entire output of readelf into a
-single shell variable. For large object files with extensive debug
-information, the size of this variable can exceed the system's
-command-line argument length limit.
+On AMD machines cpuc->events[idx] can become NULL in a subtle race
+condition with NMI->throttle->x86_pmu_stop().
 
-When this variable is subsequently passed to sed via `echo "${out}"`, it
-triggers an "Argument list too long" error, causing the script to fail.
+Check event for NULL in amd_pmu_enable_all() before enable to avoid a GPF.
+This appears to be an AMD only issue.
 
-Fix this by redirecting the output of readelf to a temporary file
-instead of a variable. The sed commands are then modified to read from
-this file, avoiding the argument length limitation entirely.
+Syzkaller reported a GPF in amd_pmu_enable_all.
 
-Signed-off-by: Pankaj Raghav <p.raghav@samsung.com>
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+INFO: NMI handler (perf_event_nmi_handler) took too long to run: 13.143
+    msecs
+Oops: general protection fault, probably for non-canonical address
+    0xdffffc0000000034: 0000  PREEMPT SMP KASAN NOPTI
+KASAN: null-ptr-deref in range [0x00000000000001a0-0x00000000000001a7]
+CPU: 0 UID: 0 PID: 328415 Comm: repro_36674776 Not tainted 6.12.0-rc1-syzk
+RIP: 0010:x86_pmu_enable_event (arch/x86/events/perf_event.h:1195
+    arch/x86/events/core.c:1430)
+RSP: 0018:ffff888118009d60 EFLAGS: 00010012
+RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 0000000000000000
+RDX: 0000000000000034 RSI: 0000000000000000 RDI: 00000000000001a0
+RBP: 0000000000000001 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000000 R12: 0000000000000002
+R13: ffff88811802a440 R14: ffff88811802a240 R15: ffff8881132d8601
+FS:  00007f097dfaa700(0000) GS:ffff888118000000(0000) GS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00000000200001c0 CR3: 0000000103d56000 CR4: 00000000000006f0
+Call Trace:
+ <IRQ>
+amd_pmu_enable_all (arch/x86/events/amd/core.c:760 (discriminator 2))
+x86_pmu_enable (arch/x86/events/core.c:1360)
+event_sched_out (kernel/events/core.c:1191 kernel/events/core.c:1186
+    kernel/events/core.c:2346)
+__perf_remove_from_context (kernel/events/core.c:2435)
+event_function (kernel/events/core.c:259)
+remote_function (kernel/events/core.c:92 (discriminator 1)
+    kernel/events/core.c:72 (discriminator 1))
+__flush_smp_call_function_queue (./arch/x86/include/asm/jump_label.h:27
+    ./include/linux/jump_label.h:207 ./include/trace/events/csd.h:64
+    kernel/smp.c:135 kernel/smp.c:540)
+__sysvec_call_function_single (./arch/x86/include/asm/jump_label.h:27
+    ./include/linux/jump_label.h:207
+    ./arch/x86/include/asm/trace/irq_vectors.h:99 arch/x86/kernel/smp.c:272)
+sysvec_call_function_single (arch/x86/kernel/smp.c:266 (discriminator 47)
+    arch/x86/kernel/smp.c:266 (discriminator 47))
+ </IRQ>
+
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: George Kennedy <george.kennedy@oracle.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/faddr2line | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ arch/x86/events/amd/core.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/scripts/faddr2line b/scripts/faddr2line
-index 1fa6beef9f978..477b6d2aa3179 100755
---- a/scripts/faddr2line
-+++ b/scripts/faddr2line
-@@ -107,14 +107,19 @@ find_dir_prefix() {
+diff --git a/arch/x86/events/amd/core.c b/arch/x86/events/amd/core.c
+index b4a1a2576510e..36d28edf7a535 100644
+--- a/arch/x86/events/amd/core.c
++++ b/arch/x86/events/amd/core.c
+@@ -762,7 +762,12 @@ static void amd_pmu_enable_all(int added)
+ 		if (!test_bit(idx, cpuc->active_mask))
+ 			continue;
  
- run_readelf() {
- 	local objfile=$1
--	local out=$(${READELF} --file-header --section-headers --symbols --wide $objfile)
-+	local tmpfile
-+	tmpfile=$(mktemp)
-+
-+	${READELF} --file-header --section-headers --symbols --wide "$objfile" > "$tmpfile"
- 
- 	# This assumes that readelf first prints the file header, then the section headers, then the symbols.
- 	# Note: It seems that GNU readelf does not prefix section headers with the "There are X section headers"
- 	# line when multiple options are given, so let's also match with the "Section Headers:" line.
--	ELF_FILEHEADER=$(echo "${out}" | sed -n '/There are [0-9]* section headers, starting at offset\|Section Headers:/q;p')
--	ELF_SECHEADERS=$(echo "${out}" | sed -n '/There are [0-9]* section headers, starting at offset\|Section Headers:/,$p' | sed -n '/Symbol table .* contains [0-9]* entries:/q;p')
--	ELF_SYMS=$(echo "${out}" | sed -n '/Symbol table .* contains [0-9]* entries:/,$p')
-+	ELF_FILEHEADER=$(sed -n '/There are [0-9]* section headers, starting at offset\|Section Headers:/q;p' "$tmpfile")
-+	ELF_SECHEADERS=$(sed -n '/There are [0-9]* section headers, starting at offset\|Section Headers:/,$p' "$tmpfile" | sed -n '/Symbol table .* contains [0-9]* entries:/q;p')
-+	ELF_SYMS=$(sed -n '/Symbol table .* contains [0-9]* entries:/,$p' "$tmpfile")
-+
-+	rm -f -- "$tmpfile"
+-		amd_pmu_enable_event(cpuc->events[idx]);
++		/*
++		 * FIXME: cpuc->events[idx] can become NULL in a subtle race
++		 * condition with NMI->throttle->x86_pmu_stop().
++		 */
++		if (cpuc->events[idx])
++			amd_pmu_enable_event(cpuc->events[idx]);
+ 	}
  }
  
- check_vmlinux() {
 -- 
 2.51.0
 
