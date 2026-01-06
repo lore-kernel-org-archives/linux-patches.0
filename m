@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2488A2EA171;
-	Tue,  6 Jan 2026 17:42:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EDBD28C037;
+	Tue,  6 Jan 2026 17:42:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721337; cv=none; b=GeTFhkDIndt1auRMbCZWdKZXPzv79KyyHFo4XrIz7KpNuutGHiC3xVu2wXpYH7BvCyINi9+q8qbrsoyKjKw47PYZs527D0aBgtcX/ennp3q1qa54LvwRQ2UhP+pA3aPyEYQJGpIw0gkXmeD9pn2lDBejELGWld0F5PKpHnC7xyI=
+	t=1767721340; cv=none; b=T476iCHqoDmEbKCANd6e/iyn/v5puy+0ADVObQoSCd/QNK5sJSsaTa/gUQcJ+kFkNQEua5XwTi0gbZESSawyD8VS71656YGOLX0w64d0uj5o0ip5NwviuNkEI7C8hshXf0W2Oz4r8s8h3fdsKY7AgpXprbbsSRLqqrFsUXsQXCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721337; c=relaxed/simple;
-	bh=h4+cHfwvGOzaPawKeKElfo/DzAszG6Qq79vKK7bu2dY=;
+	s=arc-20240116; t=1767721340; c=relaxed/simple;
+	bh=V+WdBlq/4yQ1MZrEmrEuQmzzLjWfy4YRY0UiHwZhyV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JX5B0fgAJ31lD2AdVLY6xwc8FkLE7MmtovLSzrPgHzpguTobLAd9S6gZImJjmpXqxLu3gC4MYwFyc2gZDHo6zv+vah3i2Jet+WZKDIBbsaiiTGMWT8MVSjYQgoFmT2DRx57Lc1HOQv2jbjlw85RabVNv8ZQ5nNDNjCbDcLJkY54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ifKGd1cq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dac4NqZSbuMybs+peYJJCpjTpqDlE1IFRA0o5OPeBAw9LNCenO5MZKpLQwO26H5LL2CRhbsh3E5PV43R5s+HljwHfV0TISDHSWcjhrY1bXtTQ/J7suvdgjWr7D8n+XBQ/Fgr+eaGFdtqbhupt6NFeV3VO9FZyRyT+igprLKtzxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=twHjGEeV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ifKGd1cq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CF4FC116C6;
-	Tue,  6 Jan 2026 17:42:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="twHjGEeV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2DDBC116C6;
+	Tue,  6 Jan 2026 17:42:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721337;
-	bh=h4+cHfwvGOzaPawKeKElfo/DzAszG6Qq79vKK7bu2dY=;
+	s=korg; t=1767721340;
+	bh=V+WdBlq/4yQ1MZrEmrEuQmzzLjWfy4YRY0UiHwZhyV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ifKGd1cq2HeMp2UaxlEzaeK5/rHLlh4qH6vzeYdufSEOFr+xfasyI3pYGI+YWbLJ7
-	 dYxkDHKMU/XRe3ZAUATQyj6FGR9ieQmArxsHKhIqk2uUzrIFq0TIomWBJbANKncrh0
-	 nEs6u5dYMwmPLmnU2U3+erMXaHHaFP3gyPfOs2NM=
+	b=twHjGEeVRdCFJVX/lh8q9/2Pa2JA4yVFtlnn/eYQJJcAkrwWDKvVYV0pNeYCn4XXJ
+	 A96p9Nyez/oDi1sxlzwODULgNWhW0d0Ny+61JpDuQPF9OVv12HcwzNQlrki8QImQi2
+	 xedmgtqbnxv56Znz8xsOFs2R8oLhNb0tqP/ji4c0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Righi <arighi@nvidia.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Tejun Heo <tj@kernel.org>,
+	=?UTF-8?q?Tiago=20Martins=20Ara=C3=BAjo?= <tiago.martins.araujo@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 507/567] sched_ext: Fix missing post-enqueue handling in move_local_task_to_local_dsq()
-Date: Tue,  6 Jan 2026 18:04:49 +0100
-Message-ID: <20260106170510.128934956@linuxfoundation.org>
+Subject: [PATCH 6.12 508/567] drm/displayid: add quirk to ignore DisplayID checksum errors
+Date: Tue,  6 Jan 2026 18:04:50 +0100
+Message-ID: <20260106170510.166684060@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -46,67 +46,141 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit f5e1e5ec204da11fa87fdf006d451d80ce06e118 ]
+[ Upstream commit 83cbb4d33dc22b0ca1a4e85c6e892c9b729e28d4 ]
 
-move_local_task_to_local_dsq() is used when moving a task from a non-local
-DSQ to a local DSQ on the same CPU. It directly manipulates the local DSQ
-without going through dispatch_enqueue() and was missing the post-enqueue
-handling that triggers preemption when SCX_ENQ_PREEMPT is set or the idle
-task is running.
+Add a mechanism for DisplayID specific quirks, and add the first quirk
+to ignore DisplayID section checksum errors.
 
-The function is used by move_task_between_dsqs() which backs
-scx_bpf_dsq_move() and may be called while the CPU is busy.
+It would be quite inconvenient to pass existing EDID quirks from
+drm_edid.c for DisplayID parsing. Not all places doing DisplayID
+iteration have the quirks readily available, and would have to pass it
+in all places. Simply add a separate array of DisplayID specific EDID
+quirks. We do end up checking it every time we iterate DisplayID blocks,
+but hopefully the number of quirks remains small.
 
-Add local_dsq_post_enq() call to move_local_task_to_local_dsq(). As the
-dispatch path doesn't need post-enqueue handling, add SCX_RQ_IN_BALANCE
-early exit to keep consume_dispatch_q() behavior unchanged and avoid
-triggering unnecessary resched when scx_bpf_dsq_move() is used from the
-dispatch path.
+There are a few laptop models with DisplayID checksum failures, leading
+to higher refresh rates only present in the DisplayID blocks being
+ignored. Add a quirk for the panel in the machines.
 
-Fixes: 4c30f5ce4f7a ("sched_ext: Implement scx_bpf_dispatch[_vtime]_from_dsq()")
-Cc: stable@vger.kernel.org # v6.12+
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Reported-by: Tiago Martins Araújo <tiago.martins.araujo@gmail.com>
+Closes: https://lore.kernel.org/r/CACRbrPGvLP5LANXuFi6z0S7XMbAG4X5y2YOLBDxfOVtfGGqiKQ@mail.gmail.com
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/14703
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Tested-by: Tiago Martins Araújo <tiago.martins.araujo@gmail.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/c04d81ae648c5f21b3f5b7953f924718051f2798.1761681968.git.jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/drm_displayid.c          |   41 +++++++++++++++++++++++++++----
+ drivers/gpu/drm/drm_displayid_internal.h |    2 +
+ 2 files changed, 39 insertions(+), 4 deletions(-)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -1682,6 +1682,14 @@ static void local_dsq_post_enq(struct sc
- 	struct rq *rq = container_of(dsq, struct rq, scx.local_dsq);
- 	bool preempt = false;
+--- a/drivers/gpu/drm/drm_displayid.c
++++ b/drivers/gpu/drm/drm_displayid.c
+@@ -9,6 +9,34 @@
+ #include "drm_crtc_internal.h"
+ #include "drm_displayid_internal.h"
  
-+	/*
-+	 * If @rq is in balance, the CPU is already vacant and looking for the
-+	 * next task to run. No need to preempt or trigger resched after moving
-+	 * @p into its local DSQ.
-+	 */
-+	if (rq->scx.flags & SCX_RQ_IN_BALANCE)
-+		return;
++enum {
++	QUIRK_IGNORE_CHECKSUM,
++};
 +
- 	if ((enq_flags & SCX_ENQ_PREEMPT) && p != rq->curr &&
- 	    rq->curr->sched_class == &ext_sched_class) {
- 		rq->curr->scx.slice = 0;
-@@ -2259,6 +2267,8 @@ static void move_local_task_to_local_dsq
- 
- 	dsq_mod_nr(dst_dsq, 1);
- 	p->scx.dsq = dst_dsq;
++struct displayid_quirk {
++	const struct drm_edid_ident ident;
++	u8 quirks;
++};
 +
-+	local_dsq_post_enq(dst_dsq, p, enq_flags);
++static const struct displayid_quirk quirks[] = {
++	{
++		.ident = DRM_EDID_IDENT_INIT('C', 'S', 'O', 5142, "MNE007ZA1-5"),
++		.quirks = BIT(QUIRK_IGNORE_CHECKSUM),
++	},
++};
++
++static u8 get_quirks(const struct drm_edid *drm_edid)
++{
++	int i;
++
++	for (i = 0; i < ARRAY_SIZE(quirks); i++) {
++		if (drm_edid_match(drm_edid, &quirks[i].ident))
++			return quirks[i].quirks;
++	}
++
++	return 0;
++}
++
+ static const struct displayid_header *
+ displayid_get_header(const u8 *displayid, int length, int index)
+ {
+@@ -23,7 +51,7 @@ displayid_get_header(const u8 *displayid
  }
  
- #ifdef CONFIG_SMP
+ static const struct displayid_header *
+-validate_displayid(const u8 *displayid, int length, int idx)
++validate_displayid(const u8 *displayid, int length, int idx, bool ignore_checksum)
+ {
+ 	int i, dispid_length;
+ 	u8 csum = 0;
+@@ -41,8 +69,11 @@ validate_displayid(const u8 *displayid,
+ 	for (i = 0; i < dispid_length; i++)
+ 		csum += displayid[idx + i];
+ 	if (csum) {
+-		DRM_NOTE("DisplayID checksum invalid, remainder is %d\n", csum);
+-		return ERR_PTR(-EINVAL);
++		DRM_NOTE("DisplayID checksum invalid, remainder is %d%s\n", csum,
++			 ignore_checksum ? " (ignoring)" : "");
++
++		if (!ignore_checksum)
++			return ERR_PTR(-EINVAL);
+ 	}
+ 
+ 	return base;
+@@ -52,6 +83,7 @@ static const u8 *find_next_displayid_ext
+ {
+ 	const struct displayid_header *base;
+ 	const u8 *displayid;
++	bool ignore_checksum = iter->quirks & BIT(QUIRK_IGNORE_CHECKSUM);
+ 
+ 	displayid = drm_edid_find_extension(iter->drm_edid, DISPLAYID_EXT, &iter->ext_index);
+ 	if (!displayid)
+@@ -61,7 +93,7 @@ static const u8 *find_next_displayid_ext
+ 	iter->length = EDID_LENGTH - 1;
+ 	iter->idx = 1;
+ 
+-	base = validate_displayid(displayid, iter->length, iter->idx);
++	base = validate_displayid(displayid, iter->length, iter->idx, ignore_checksum);
+ 	if (IS_ERR(base))
+ 		return NULL;
+ 
+@@ -76,6 +108,7 @@ void displayid_iter_edid_begin(const str
+ 	memset(iter, 0, sizeof(*iter));
+ 
+ 	iter->drm_edid = drm_edid;
++	iter->quirks = get_quirks(drm_edid);
+ }
+ 
+ static const struct displayid_block *
+--- a/drivers/gpu/drm/drm_displayid_internal.h
++++ b/drivers/gpu/drm/drm_displayid_internal.h
+@@ -154,6 +154,8 @@ struct displayid_iter {
+ 
+ 	u8 version;
+ 	u8 primary_use;
++
++	u8 quirks;
+ };
+ 
+ void displayid_iter_edid_begin(const struct drm_edid *drm_edid,
 
 
