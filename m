@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F59C3557FD;
-	Tue,  6 Jan 2026 17:28:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4413A355045;
+	Tue,  6 Jan 2026 17:28:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720497; cv=none; b=lkXW8LShGQJ5LvhvR1jsag5qww15i9A7tS8qOuDhYXzVGDn/ak/wGWFuOLgpPNaqt1m+ryrdauyy5r+ihXZgkL3ctmHonGTq5urURXUxQETUIaDwQsphumeolGAq9l8brHV1f6tQqycX+XYdzFp7EX/QCoHDp9D1sATOralxKNI=
+	t=1767720500; cv=none; b=BxNbm70ID/NVfseCnm9avYnNB7CqENgep2NATBhHBbJsL2a/lzNoangyfLTDzfCIvUJZAAcvpj3iH2SvXOjTEV6jqG/blBCCWD09710od7LGUfalbTtbanD5rixeSLVfArLLoqOPG41aq6kDHmepFQu2E0zCDD6XFZr2A0oC4qo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720497; c=relaxed/simple;
-	bh=UJXWtjbEXhKyTuCHoIM53o+1QD/7JOteW+GiZi7GVqU=;
+	s=arc-20240116; t=1767720500; c=relaxed/simple;
+	bh=mN+hM/PVxQc7qZR9/X85Uiql9ZnR+gHshc+6VepGAhk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dsP0i7CE6ey83OmEEgNkfDFrJSv3Pv1PGk58+r31sckZHwLIwcFNHArf4baL4JF9lL6iDEcZiDOf83ZQpMnwhcTBZhwV6c6Zs+l3hi3DI3Fio6ZOtCjbuXZO3DhPfciBVLRZP3EcsdUdvkaDVN1i5Tv6MrsAUUbDd5S5obKK8hE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y2fBSiDT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PJwJdLicR2zt3brUO03DwaCVItUelGoy9vcu0PoU7zugF4LswnirZYYgnrRqv6YuSlYPTfB5TBtfk4gXO9ms3XNt9joK9EQ6n9RvD/nxTtWxYcBuu3PcO+V51RlCrFa9Z42fKRd1HhwJBmJYNy1pQqIfOpMJOtzAcQEmfWJFuGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IUYpvc/O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y2fBSiDT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65C9DC116C6;
-	Tue,  6 Jan 2026 17:28:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IUYpvc/O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7B9CC116C6;
+	Tue,  6 Jan 2026 17:28:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720496;
-	bh=UJXWtjbEXhKyTuCHoIM53o+1QD/7JOteW+GiZi7GVqU=;
+	s=korg; t=1767720500;
+	bh=mN+hM/PVxQc7qZR9/X85Uiql9ZnR+gHshc+6VepGAhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y2fBSiDTYZpGOBrv7usDTweecApJmdePZ627/gE6aA5O6p+6yX7wjRdjuLSBfgF9r
-	 2DxocC3BA8kETSu5FpIlfgFA9R5OqMuh+4JFAhbnZjBQvLKSUQ5gUuFq0K/mT+m826
-	 bLi/O5Fvii5kAez2SQrXwe9tFcV1Q0yXNxNSNsxE=
+	b=IUYpvc/O+npvBZsLM6xAqn3vfZhZpYrvbufbQHnpVKCE9G4QKhTvhdB/UWBQfN0SE
+	 fwtMr2YP46Mtts1fFOIErjCQHGwz0YLEHt1vQ+h0YAeMlPCC/Z+cgKXlgnGXGuzYIj
+	 Ou2OiRGL5cIYPENHPhXb1T6hEMntiDzBx0OawX0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Tiago=20Martins=20Ara=C3=BAjo?= <tiago.martins.araujo@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.12 255/567] drm/displayid: pass iter to drm_find_displayid_extension()
-Date: Tue,  6 Jan 2026 18:00:37 +0100
-Message-ID: <20260106170500.746482636@linuxfoundation.org>
+	Denis Arefev <arefev@swemel.ru>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 256/567] ALSA: hda: cs35l41: Fix NULL pointer dereference in cs35l41_hda_read_acpi()
+Date: Tue,  6 Jan 2026 18:00:38 +0100
+Message-ID: <20260106170500.783027798@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -45,81 +46,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Denis Arefev <arefev@swemel.ru>
 
-commit 520f37c30992fd0c212a34fbe99c062b7a3dc52e upstream.
+[ Upstream commit c34b04cc6178f33c08331568c7fd25c5b9a39f66 ]
 
-It's more convenient to pass iter than a handful of its members to
-drm_find_displayid_extension(), especially as we're about to add another
-member.
+The acpi_get_first_physical_node() function can return NULL, in which
+case the get_device() function also returns NULL, but this value is
+then dereferenced without checking,so add a check to prevent a crash.
 
-Rename the function find_next_displayid_extension() while at it, to be
-more descriptive.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Cc: Tiago Martins Araújo <tiago.martins.araujo@gmail.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Tested-by: Tiago Martins Araújo <tiago.martins.araujo@gmail.com>
+Fixes: 7b2f3eb492da ("ALSA: hda: cs35l41: Add support for CS35L41 in HDA systems")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/3837ae7f095e77a082ac2422ce2fac96c4f9373d.1761681968.git.jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Denis Arefev <arefev@swemel.ru>
+Reviewed-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20251202101338.11437-1-arefev@swemel.ru
+[ sound/hda/codecs/side-codecs/ -> sound/pci/hda/ ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_displayid.c |   19 +++++++------------
- 1 file changed, 7 insertions(+), 12 deletions(-)
+ sound/pci/hda/cs35l41_hda.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/drm_displayid.c
-+++ b/drivers/gpu/drm/drm_displayid.c
-@@ -48,26 +48,24 @@ validate_displayid(const u8 *displayid,
- 	return base;
- }
+--- a/sound/pci/hda/cs35l41_hda.c
++++ b/sound/pci/hda/cs35l41_hda.c
+@@ -1865,6 +1865,8 @@ static int cs35l41_hda_read_acpi(struct
  
--static const u8 *drm_find_displayid_extension(const struct drm_edid *drm_edid,
--					      int *length, int *idx,
--					      int *ext_index)
-+static const u8 *find_next_displayid_extension(struct displayid_iter *iter)
- {
- 	const struct displayid_header *base;
- 	const u8 *displayid;
+ 	cs35l41->dacpi = adev;
+ 	physdev = get_device(acpi_get_first_physical_node(adev));
++	if (!physdev)
++		return -ENODEV;
  
--	displayid = drm_edid_find_extension(drm_edid, DISPLAYID_EXT, ext_index);
-+	displayid = drm_edid_find_extension(iter->drm_edid, DISPLAYID_EXT, &iter->ext_index);
- 	if (!displayid)
- 		return NULL;
- 
- 	/* EDID extensions block checksum isn't for us */
--	*length = EDID_LENGTH - 1;
--	*idx = 1;
-+	iter->length = EDID_LENGTH - 1;
-+	iter->idx = 1;
- 
--	base = validate_displayid(displayid, *length, *idx);
-+	base = validate_displayid(displayid, iter->length, iter->idx);
- 	if (IS_ERR(base))
- 		return NULL;
- 
--	*length = *idx + sizeof(*base) + base->bytes;
-+	iter->length = iter->idx + sizeof(*base) + base->bytes;
- 
- 	return displayid;
- }
-@@ -126,10 +124,7 @@ __displayid_iter_next(struct displayid_i
- 		/* The first section we encounter is the base section */
- 		bool base_section = !iter->section;
- 
--		iter->section = drm_find_displayid_extension(iter->drm_edid,
--							     &iter->length,
--							     &iter->idx,
--							     &iter->ext_index);
-+		iter->section = find_next_displayid_extension(iter);
- 		if (!iter->section) {
- 			iter->drm_edid = NULL;
- 			return NULL;
+ 	sub = acpi_get_subsystem_id(ACPI_HANDLE(physdev));
+ 	if (IS_ERR(sub))
 
 
