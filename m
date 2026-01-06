@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4DD355042;
-	Tue,  6 Jan 2026 17:24:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF08333D514;
+	Tue,  6 Jan 2026 17:24:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720295; cv=none; b=lcn0Kuod3U9OmKTvXXP6c0wqPt9oZ/HRtSuv3Cfgk3Cqf29ElBK8wuA0hTG40+HD995To2s6iG0+ROz7hIZAKiQADGpbWjNLmKlF1wOpzVXPXydH7KdWGmQ44CH39G3P+KJgOdV+fd8BR4HTWK93yT/aJcKIvN3w6oZSQ7tUQhA=
+	t=1767720299; cv=none; b=WfJ2TcMak+E8U75383bWfJnie60JU12S8RvnSTjYdWoGYsjjhPcafy18Xz5CFuVokdNjqxK16Z1jZhMtHmsoKE6DfDRfYRvM+6J7lHF6M6cUesS+0nySVsBquXRFmXwQHNSqyggBg8AjAOz+WqAlhDODg2LQmUyb7ps7P0UWgvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720295; c=relaxed/simple;
-	bh=tNOUCJzX6HOKjCQifLvTqCZgvbtbyBTtdrEZT4t4+VQ=;
+	s=arc-20240116; t=1767720299; c=relaxed/simple;
+	bh=IKpTUXxV/tKR2spUcx/rxnzQu2c8R3n5v/tXWFK4tyg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lkt/I5LsyPuu79M+zhqmLb4D41Rx78Zxsl4EyxfjYqNL9GSCnuDpfKh2a7QH+6plOUr8gPojeAAvBw+JxB3gAVLBSAcGma17Ew524XttpEO02dHaNxkcuGPLysf9Pour5Rocgdp8Fa1r4tTzVOBi95aaPybZHU3vPjsHstDCUis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SdwPX+Yw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lm80SvlCM4l8frjnnN9hF/15ZLWVWp+zjBrCW6gX1zOoz/LnAkTilytvisfUUDHv01V8F2MU6vmd72EPSVchFA/KuOH5fFl8uWK/Qzb/Kk7mkHZZHzLJOitJkDgkJl1qZOksXMTeOixhdwdAav+YNAHTVgUxb8Jg9wstxUYK6N8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jM5nowKB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SdwPX+Yw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10661C116C6;
-	Tue,  6 Jan 2026 17:24:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jM5nowKB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59AABC116C6;
+	Tue,  6 Jan 2026 17:24:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720295;
-	bh=tNOUCJzX6HOKjCQifLvTqCZgvbtbyBTtdrEZT4t4+VQ=;
+	s=korg; t=1767720298;
+	bh=IKpTUXxV/tKR2spUcx/rxnzQu2c8R3n5v/tXWFK4tyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SdwPX+YwQMylYPI0RDhvp8/dHYqFwONlM6bpvYkf55leuABiLWXZTmtW4G1iq+BCb
-	 2wo7pTvrOFi8m/BUlP+E+c1LgkouB0HT60jpQcgYlgIcqHlOy6LF3n+RLX92e2lL5C
-	 PuEuQQgm1xlg3YjCKk32qPyPTxlmJWJonTQODOAA=
+	b=jM5nowKBT3oGwAQA7sQhjD9kD5s37OVQo5n9sAcCvPCatbWnN4yKYMpBJUbLNoN0N
+	 SoGS0cvjJGZL6p/qQ2hrRg9BCanflDNjmAxiwOZtM+qg52y2XzLFsX6+sm1r/qIevl
+	 Ini3j7vzLnRMh45uArm36S/CSH3KWe4onwP/q/1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Baoli Zhang <baoli.zhang@intel.com>,
-	Junxiao Chang <junxiao.chang@intel.com>,
-	Alexander Usyskin <alexander.usyskin@intel.com>
-Subject: [PATCH 6.12 193/567] mei: gsc: add dependency on Xe driver
-Date: Tue,  6 Jan 2026 17:59:35 +0100
-Message-ID: <20260106170458.465809445@linuxfoundation.org>
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Subject: [PATCH 6.12 194/567] serial: sh-sci: Check that the DMA cookie is valid
+Date: Tue,  6 Jan 2026 17:59:36 +0100
+Message-ID: <20260106170458.503047813@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,34 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxiao Chang <junxiao.chang@intel.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-commit 5d92c3b41f0bddfa416130c6e1b424414f3d2acf upstream.
+commit c3ca8a0aac832fe8047608bb2ae2cca314c6d717 upstream.
 
-INTEL_MEI_GSC depends on either i915 or Xe
-and can be present when either of above is present.
+The driver updates struct sci_port::tx_cookie to zero right before the TX
+work is scheduled, or to -EINVAL when DMA is disabled.
+dma_async_is_complete(), called through dma_cookie_status() (and possibly
+through dmaengine_tx_status()), considers cookies valid only if they have
+values greater than or equal to 1.
 
+Passing zero or -EINVAL to dmaengine_tx_status() before any TX DMA
+transfer has started leads to an incorrect TX status being reported, as the
+cookie is invalid for the DMA subsystem. This may cause long wait times
+when the serial device is opened for configuration before any TX activity
+has occurred.
+
+Check that the TX cookie is valid before passing it to
+dmaengine_tx_status().
+
+Fixes: 7cc0e0a43a91 ("serial: sh-sci: Check if TX data was written to device in .tx_empty()")
 Cc: stable <stable@kernel.org>
-Fixes: 87a4c85d3a3e ("drm/xe/gsc: add gsc device support")
-Tested-by: Baoli Zhang <baoli.zhang@intel.com>
-Signed-off-by: Junxiao Chang <junxiao.chang@intel.com>
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Link: https://patch.msgid.link/20251109153533.3179787-1-alexander.usyskin@intel.com
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://patch.msgid.link/20251217135759.402015-1-claudiu.beznea.uj@bp.renesas.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mei/Kconfig |    2 +-
+ drivers/tty/serial/sh-sci.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/misc/mei/Kconfig
-+++ b/drivers/misc/mei/Kconfig
-@@ -49,7 +49,7 @@ config INTEL_MEI_TXE
- config INTEL_MEI_GSC
- 	tristate "Intel MEI GSC embedded device"
- 	depends on INTEL_MEI_ME
--	depends on DRM_I915
-+	depends on DRM_I915 || DRM_XE
- 	help
- 	  Intel auxiliary driver for GSC devices embedded in Intel graphics devices.
+--- a/drivers/tty/serial/sh-sci.c
++++ b/drivers/tty/serial/sh-sci.c
+@@ -1761,7 +1761,7 @@ static void sci_dma_check_tx_occurred(st
+ 	struct dma_tx_state state;
+ 	enum dma_status status;
  
+-	if (!s->chan_tx)
++	if (!s->chan_tx || s->cookie_tx <= 0)
+ 		return;
+ 
+ 	status = dmaengine_tx_status(s->chan_tx, s->cookie_tx, &state);
 
 
