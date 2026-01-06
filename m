@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B418F21A92F;
-	Tue,  6 Jan 2026 17:16:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB04919258E;
+	Tue,  6 Jan 2026 17:17:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719818; cv=none; b=OW6bZ701dD+iLLHIUIoAaAo4XFL0QPYQ9RS8fSHvCQ80A4Pda57UZWH9nNB0PkYtMHxX/rs9ktjr651MW9ZkKUea+TxbbIDvxtawTNqna3u4/FuB784cdlk7CRqPrINvyaIDLue7sAnozCp/8TuN5vBo3Bor+3x2jPkkf85Kr4s=
+	t=1767719822; cv=none; b=OV4guVPwm+JP8RrfZa+qblUHrkcStb44dix4WnhaGbWZLEvJB/kr5KqDzjXZkXOs8CxmkEw770DYnFT4LWf1p8wGVs8u5CZWJW9RSEc9WZpvibHo/yoROklxA7jybPIz6DR0c8gdpQ5H8asZu5AFIPMEAa9F/lp0VWT6+E5QPfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719818; c=relaxed/simple;
-	bh=aQTxToNLKuG9mGzWKHeLUN8RlBOG4KAUZvoKrEwd3bk=;
+	s=arc-20240116; t=1767719822; c=relaxed/simple;
+	bh=hhyZ2KMsl3LFTWivDFwyvkzV3dSg6ozrPM+zWyn3bOE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Syva18uvbR7vE0TfKBPeGdO4qQRHcyNCF0a2yA13NdlhoBBJ5r0Sv6V8dnuS6GWDxSvBwWXmt3FPdTecGg/gpULmkeCw3MT/JLspFde486TuUw+uxLEk8EXlJUWw0ujAgPZTcz6r1gFaXXldPez70HaVhyiJ0NmpJ1As2YkgcZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bzpwFStY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LDHEmbEXX5hO2fuZNNmbJSFwVgXa+DMLMlZIXQ10xWC3i3EwdvI9ph2YiyaDfBBzH/QVVLzW3HHFP2cHThs2z4AVRbK1rBNs17raPdDBEXumvtjcH4bR0oAoWpA+duN9aQKrXeMzRyiiPCkE2Yu4r2vpOPd2Gb/Lzid7Lwycrgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tIMGgz7J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bzpwFStY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B966C116C6;
-	Tue,  6 Jan 2026 17:16:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tIMGgz7J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C079C116C6;
+	Tue,  6 Jan 2026 17:17:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719818;
-	bh=aQTxToNLKuG9mGzWKHeLUN8RlBOG4KAUZvoKrEwd3bk=;
+	s=korg; t=1767719821;
+	bh=hhyZ2KMsl3LFTWivDFwyvkzV3dSg6ozrPM+zWyn3bOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bzpwFStYTheVAhGDeZL276RD0iAuRtijv/MPi64TDVomKPy4XetFPQK3uyffrQzql
-	 FxC40S9lNJN9aFMhRbJ4Pco3D6ABK1SLYL5RcABaqK3PayF9RAiCgvtMD/wL/1xTMW
-	 GbsOwFfoF+GrT8WEt1v7pCehlJ2pUoGqlU7IQij4=
+	b=tIMGgz7J+8zdNincY8o1aZORzGm7It7U9gSJtKraTEqgEk7oSGa8n7XpyvWSmchzr
+	 lwKKgTCijAcDhRxFWGt8QezNs5yYQ1AYGpvUpYgaZxbvT8yiLg21mHP/d7+hfhh+8Z
+	 6ZhZ7HC9oHxxdjwYKeF6XDUHnL3xsu7bdU12r8Qw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 050/567] mlxsw: spectrum_router: Fix neighbour use-after-free
-Date: Tue,  6 Jan 2026 17:57:12 +0100
-Message-ID: <20260106170453.190311791@linuxfoundation.org>
+Subject: [PATCH 6.12 033/567] btrfs: scrub: always update btrfs_scrub_progress::last_physical
+Date: Tue,  6 Jan 2026 17:56:55 +0100
+Message-ID: <20260106170452.566436630@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -53,197 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 8b0e69763ef948fb872a7767df4be665d18f5fd4 ]
+[ Upstream commit 54df8b80cc63aa0f22c4590cad11542731ed43ff ]
 
-We sometimes observe use-after-free when dereferencing a neighbour [1].
-The problem seems to be that the driver stores a pointer to the
-neighbour, but without holding a reference on it. A reference is only
-taken when the neighbour is used by a nexthop.
+[BUG]
+When a scrub failed immediately without any byte scrubbed, the returned
+btrfs_scrub_progress::last_physical will always be 0, even if there is a
+non-zero @start passed into btrfs_scrub_dev() for resume cases.
 
-Fix by simplifying the reference counting scheme. Always take a
-reference when storing a neighbour pointer in a neighbour entry. Avoid
-taking a referencing when the neighbour is used by a nexthop as the
-neighbour entry associated with the nexthop already holds a reference.
+This will reset the progress and make later scrub resume start from the
+beginning.
 
-Tested by running the test that uncovered the problem over 300 times.
-Without this patch the problem was reproduced after a handful of
-iterations.
+[CAUSE]
+The function btrfs_scrub_dev() accepts a @progress parameter to copy its
+updated progress to the caller, there are cases where we either don't
+touch progress::last_physical at all or copy 0 into last_physical:
 
-[1]
-BUG: KASAN: slab-use-after-free in mlxsw_sp_neigh_entry_update+0x2d4/0x310
-Read of size 8 at addr ffff88817f8e3420 by task ip/3929
+- last_physical not updated at all
+  If some error happened before scrubbing any super block or chunk, we
+  will not copy the progress, leaving the @last_physical untouched.
 
-CPU: 3 UID: 0 PID: 3929 Comm: ip Not tainted 6.18.0-rc4-virtme-g36b21a067510 #3 PREEMPT(full)
-Hardware name: Nvidia SN5600/VMOD0013, BIOS 5.13 05/31/2023
-Call Trace:
- <TASK>
- dump_stack_lvl+0x6f/0xa0
- print_address_description.constprop.0+0x6e/0x300
- print_report+0xfc/0x1fb
- kasan_report+0xe4/0x110
- mlxsw_sp_neigh_entry_update+0x2d4/0x310
- mlxsw_sp_router_rif_gone_sync+0x35f/0x510
- mlxsw_sp_rif_destroy+0x1ea/0x730
- mlxsw_sp_inetaddr_port_vlan_event+0xa1/0x1b0
- __mlxsw_sp_inetaddr_lag_event+0xcc/0x130
- __mlxsw_sp_inetaddr_event+0xf5/0x3c0
- mlxsw_sp_router_netdevice_event+0x1015/0x1580
- notifier_call_chain+0xcc/0x150
- call_netdevice_notifiers_info+0x7e/0x100
- __netdev_upper_dev_unlink+0x10b/0x210
- netdev_upper_dev_unlink+0x79/0xa0
- vrf_del_slave+0x18/0x50
- do_set_master+0x146/0x7d0
- do_setlink.isra.0+0x9a0/0x2880
- rtnl_newlink+0x637/0xb20
- rtnetlink_rcv_msg+0x6fe/0xb90
- netlink_rcv_skb+0x123/0x380
- netlink_unicast+0x4a3/0x770
- netlink_sendmsg+0x75b/0xc90
- __sock_sendmsg+0xbe/0x160
- ____sys_sendmsg+0x5b2/0x7d0
- ___sys_sendmsg+0xfd/0x180
- __sys_sendmsg+0x124/0x1c0
- do_syscall_64+0xbb/0xfd0
- entry_SYSCALL_64_after_hwframe+0x4b/0x53
-[...]
+  E.g. failed to allocate @sctx, scrubbing a missing device or even
+  there is already a running scrub and so on.
 
-Allocated by task 109:
- kasan_save_stack+0x30/0x50
- kasan_save_track+0x14/0x30
- __kasan_kmalloc+0x7b/0x90
- __kmalloc_noprof+0x2c1/0x790
- neigh_alloc+0x6af/0x8f0
- ___neigh_create+0x63/0xe90
- mlxsw_sp_nexthop_neigh_init+0x430/0x7e0
- mlxsw_sp_nexthop_type_init+0x212/0x960
- mlxsw_sp_nexthop6_group_info_init.constprop.0+0x81f/0x1280
- mlxsw_sp_nexthop6_group_get+0x392/0x6a0
- mlxsw_sp_fib6_entry_create+0x46a/0xfd0
- mlxsw_sp_router_fib6_replace+0x1ed/0x5f0
- mlxsw_sp_router_fib6_event_work+0x10a/0x2a0
- process_one_work+0xd57/0x1390
- worker_thread+0x4d6/0xd40
- kthread+0x355/0x5b0
- ret_from_fork+0x1d4/0x270
- ret_from_fork_asm+0x11/0x20
+  All those cases won't touch @progress at all, resulting the
+  last_physical untouched and will be left as 0 for most cases.
 
-Freed by task 154:
- kasan_save_stack+0x30/0x50
- kasan_save_track+0x14/0x30
- __kasan_save_free_info+0x3b/0x60
- __kasan_slab_free+0x43/0x70
- kmem_cache_free_bulk.part.0+0x1eb/0x5e0
- kvfree_rcu_bulk+0x1f2/0x260
- kfree_rcu_work+0x130/0x1b0
- process_one_work+0xd57/0x1390
- worker_thread+0x4d6/0xd40
- kthread+0x355/0x5b0
- ret_from_fork+0x1d4/0x270
- ret_from_fork_asm+0x11/0x20
+- Error out before scrubbing any bytes
+  In those case we allocated @sctx, and sctx->stat.last_physical is all
+  zero (initialized by kvzalloc()).
+  Unfortunately some critical errors happened during
+  scrub_enumerate_chunks() or scrub_supers() before any stripe is really
+  scrubbed.
 
-Last potentially related work creation:
- kasan_save_stack+0x30/0x50
- kasan_record_aux_stack+0x8c/0xa0
- kvfree_call_rcu+0x93/0x5b0
- mlxsw_sp_router_neigh_event_work+0x67d/0x860
- process_one_work+0xd57/0x1390
- worker_thread+0x4d6/0xd40
- kthread+0x355/0x5b0
- ret_from_fork+0x1d4/0x270
- ret_from_fork_asm+0x11/0x20
+  In that case although we will copy sctx->stat back to @progress, since
+  no byte is really scrubbed, last_physical will be overwritten to 0.
 
-Fixes: 6cf3c971dc84 ("mlxsw: spectrum_router: Add private neigh table")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/92d75e21d95d163a41b5cea67a15cd33f547cba6.1764695650.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[FIX]
+Make sure the parameter @progress always has its @last_physical member
+updated to @start parameter inside btrfs_scrub_dev().
+
+At the very beginning of the function, set @progress->last_physical to
+@start, so that even if we error out without doing progress copying,
+last_physical is still at @start.
+
+Then after we got @sctx allocated, set sctx->stat.last_physical to
+@start, this will make sure even if we didn't get any byte scrubbed, at
+the progress copying stage the @last_physical is not left as zero.
+
+This should resolve the resume progress reset problem.
+
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlxsw/spectrum_router.c   | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ fs/btrfs/scrub.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
-index 4ab58cb1ab7f4..7066bc5612c62 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
-@@ -2265,6 +2265,7 @@ mlxsw_sp_neigh_entry_alloc(struct mlxsw_sp *mlxsw_sp, struct neighbour *n,
- 	if (!neigh_entry)
- 		return NULL;
+diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
+index 9f811ea604f71..3cbb9f22d3944 100644
+--- a/fs/btrfs/scrub.c
++++ b/fs/btrfs/scrub.c
+@@ -2943,6 +2943,10 @@ int btrfs_scrub_dev(struct btrfs_fs_info *fs_info, u64 devid, u64 start,
+ 	unsigned int nofs_flag;
+ 	bool need_commit = false;
  
-+	neigh_hold(n);
- 	neigh_entry->key.n = n;
- 	neigh_entry->rif = rif;
- 	INIT_LIST_HEAD(&neigh_entry->nexthop_list);
-@@ -2274,6 +2275,7 @@ mlxsw_sp_neigh_entry_alloc(struct mlxsw_sp *mlxsw_sp, struct neighbour *n,
- 
- static void mlxsw_sp_neigh_entry_free(struct mlxsw_sp_neigh_entry *neigh_entry)
- {
-+	neigh_release(neigh_entry->key.n);
- 	kfree(neigh_entry);
- }
- 
-@@ -4320,6 +4322,8 @@ mlxsw_sp_nexthop_dead_neigh_replace(struct mlxsw_sp *mlxsw_sp,
- 	if (err)
- 		goto err_neigh_entry_insert;
- 
-+	neigh_release(old_n);
++	/* Set the basic fallback @last_physical before we got a sctx. */
++	if (progress)
++		progress->last_physical = start;
 +
- 	read_lock_bh(&n->lock);
- 	nud_state = n->nud_state;
- 	dead = n->dead;
-@@ -4328,14 +4332,10 @@ mlxsw_sp_nexthop_dead_neigh_replace(struct mlxsw_sp *mlxsw_sp,
+ 	if (btrfs_fs_closing(fs_info))
+ 		return -EAGAIN;
  
- 	list_for_each_entry(nh, &neigh_entry->nexthop_list,
- 			    neigh_list_node) {
--		neigh_release(old_n);
--		neigh_clone(n);
- 		__mlxsw_sp_nexthop_neigh_update(nh, !entry_connected);
- 		mlxsw_sp_nexthop_group_refresh(mlxsw_sp, nh->nhgi->nh_grp);
- 	}
+@@ -2961,6 +2965,7 @@ int btrfs_scrub_dev(struct btrfs_fs_info *fs_info, u64 devid, u64 start,
+ 	sctx = scrub_setup_ctx(fs_info, is_dev_replace);
+ 	if (IS_ERR(sctx))
+ 		return PTR_ERR(sctx);
++	sctx->stat.last_physical = start;
  
--	neigh_release(n);
--
- 	return 0;
- 
- err_neigh_entry_insert:
-@@ -4428,6 +4428,11 @@ static int mlxsw_sp_nexthop_neigh_init(struct mlxsw_sp *mlxsw_sp,
- 		}
- 	}
- 
-+	/* Release the reference taken by neigh_lookup() / neigh_create() since
-+	 * neigh_entry already holds one.
-+	 */
-+	neigh_release(n);
-+
- 	/* If that is the first nexthop connected to that neigh, add to
- 	 * nexthop_neighs_list
- 	 */
-@@ -4454,11 +4459,9 @@ static void mlxsw_sp_nexthop_neigh_fini(struct mlxsw_sp *mlxsw_sp,
- 					struct mlxsw_sp_nexthop *nh)
- {
- 	struct mlxsw_sp_neigh_entry *neigh_entry = nh->neigh_entry;
--	struct neighbour *n;
- 
- 	if (!neigh_entry)
- 		return;
--	n = neigh_entry->key.n;
- 
- 	__mlxsw_sp_nexthop_neigh_update(nh, true);
- 	list_del(&nh->neigh_list_node);
-@@ -4472,8 +4475,6 @@ static void mlxsw_sp_nexthop_neigh_fini(struct mlxsw_sp *mlxsw_sp,
- 
- 	if (!neigh_entry->connected && list_empty(&neigh_entry->nexthop_list))
- 		mlxsw_sp_neigh_entry_destroy(mlxsw_sp, neigh_entry);
--
--	neigh_release(n);
- }
- 
- static bool mlxsw_sp_ipip_netdev_ul_up(struct net_device *ol_dev)
+ 	ret = scrub_workers_get(fs_info);
+ 	if (ret)
 -- 
 2.51.0
 
