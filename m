@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C7692FE076;
-	Tue,  6 Jan 2026 17:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0142FF147;
+	Tue,  6 Jan 2026 17:35:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720903; cv=none; b=cCkHBV+8VVWiOMG5HZyAL4eOa6a49K5+jH3GTgU7e38BtdMP4IWwNefNwylJG/sYXX3vJeh04amky8UDD3YWIxjtMGlSfa4KJ7rjK9gdpZjItweNg8J65r2qO7USbIouEs69NzOKlBncjB3hLc8SM+m8IP2Fll/TFBTnYc83x60=
+	t=1767720907; cv=none; b=OyPnUYrd3YwPblpyCGtPpRX/Fdl5ouMffdT17bkzec91Jjs4Ixgln5O7KMoEfzNIQK+OLlcTA9qJKGpNVbNPphoPR6SVhUN5+WdG2mk2+/nvRBUg3F2yMbHIyqgq4pqFrgphgzBqpPkIda9enUlOCnp2AIK5S1/E4QfbuNSjmCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720903; c=relaxed/simple;
-	bh=J0M6THuPidHZSq/hndcr6yNWZbrDw10ioJrpzqT2A0Y=;
+	s=arc-20240116; t=1767720907; c=relaxed/simple;
+	bh=8p58U1HDMZ7DBc42nSmV7JLppAxwF2O/m7BYTeTX6fc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rKQ38WszBwfeBrl42gAP27AbFDYo6BEiicAGOz1n4xewTPiw52ve7iE7eHIpb1gs0EWDHK3GN+paRMT1xgycEKgxy2IceWHVJDwHSYI6Y9kyN8PRQ7W3AABG+fH2of8tvy/uSCgnaWTPtGnsY001USO/YWrf0M9KcEnLmSyFLIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z5b3Oczy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lWkmewm/Lgh0X51eg1V97+4DmvzqiSHbhnZuNeu1B/keyl0drnLuB1u//b80mP6hmFL+0ZeYzYvIS2S5TT+mBwkkKxP2LQJBiCRrIIcmeveE9E8+dKjtMUqMOVEezsL+nVLduhOJjjvhUoGPtlxNb88jRboesKKBVctAvQZ5EjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2tUIg6IV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z5b3Oczy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10E8FC116C6;
-	Tue,  6 Jan 2026 17:35:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2tUIg6IV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67622C116C6;
+	Tue,  6 Jan 2026 17:35:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720903;
-	bh=J0M6THuPidHZSq/hndcr6yNWZbrDw10ioJrpzqT2A0Y=;
+	s=korg; t=1767720906;
+	bh=8p58U1HDMZ7DBc42nSmV7JLppAxwF2O/m7BYTeTX6fc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z5b3Oczyz82hE0sL7oOEDGMB5SDQB2ClPVocASkIlXy9/Ff3jzF7ewaPKFOSgcp8C
-	 OamM390CSEO7diouDMrwc7lNtzQ5ktFotOx2I0w7NpPJsTXqLtulppW+FGnNhoS0JB
-	 aWgFRxHpfbUAsRorFaG9KImf7FS4vY5rIxFCLJyI=
+	b=2tUIg6IVWmvYBDz6HQOg33AX0/dA5kOPIGlDrD1nlrMG77wo7pfH4hC/26/ubkqUl
+	 4YPEnv57nfug9vQmZdK+Vaqp/Gzj4waBmTiYuFqCAEogd4T1Xt2DISxxJLo+RP6slM
+	 n6kGZKy8gSIKGhJOaAgdqilK33rD+3GXOl3/LPcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christian Hitz <christian.hitz@bbv.ch>,
 	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.12 376/567] leds: leds-lp50xx: LP5009 supports 3 modules for a total of 9 LEDs
-Date: Tue,  6 Jan 2026 18:02:38 +0100
-Message-ID: <20260106170505.249797594@linuxfoundation.org>
+Subject: [PATCH 6.12 377/567] leds: leds-lp50xx: Enable chip before any communication
+Date: Tue,  6 Jan 2026 18:02:39 +0100
+Message-ID: <20260106170505.287170641@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -44,6 +44,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -52,30 +53,145 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Hitz <christian.hitz@bbv.ch>
 
-commit 5246e3673eeeccb4f5bf4f42375dd495d465ac15 upstream.
+commit 434959618c47efe9e5f2e20f4a850caac4f6b823 upstream.
 
-LP5009 supports 9 LED outputs that are grouped into 3 modules.
+If a GPIO is used to control the chip's enable pin, it needs to be pulled
+high before any i2c communication is attempted.
+
+Currently, the enable GPIO handling is not correct.
+
+Assume the enable GPIO is low when the probe function is entered. In this
+case the device is in SHUTDOWN mode and does not react to i2c commands.
+
+During probe the following sequence happens:
+ 1. The call to lp50xx_reset() on line 548 has no effect as i2c is not
+    possible yet.
+ 2. Then - on line 552 - lp50xx_enable_disable() is called. As
+    "priv->enable_gpio“ has not yet been initialized, setting the GPIO has
+    no effect. Also the i2c enable command is not executed as the device
+    is still in SHUTDOWN.
+ 3. On line 556 the call to lp50xx_probe_dt() finally parses the rest of
+    the DT and the configured priv->enable_gpio is set up.
+
+As a result the device is still in SHUTDOWN mode and not ready for
+operation.
+
+Split lp50xx_enable_disable() into distinct enable and disable functions
+to enforce correct ordering between enable_gpio manipulations and i2c
+commands.
+Read enable_gpio configuration from DT before attempting to manipulate
+enable_gpio.
+Add delays to observe correct wait timing after manipulating enable_gpio
+and before any i2c communication.
 
 Cc: stable@vger.kernel.org
 Fixes: 242b81170fb8 ("leds: lp50xx: Add the LP50XX family of the RGB LED driver")
 Signed-off-by: Christian Hitz <christian.hitz@bbv.ch>
-Link: https://patch.msgid.link/20251022063305.972190-1-christian@klarinett.li
+Link: https://patch.msgid.link/20251028155141.1603193-1-christian@klarinett.li
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/leds/leds-lp50xx.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/leds/leds-lp50xx.c |   55 ++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 40 insertions(+), 15 deletions(-)
 
 --- a/drivers/leds/leds-lp50xx.c
 +++ b/drivers/leds/leds-lp50xx.c
-@@ -56,7 +56,7 @@
+@@ -52,6 +52,12 @@
+ 
+ #define LP50XX_SW_RESET		0xff
+ #define LP50XX_CHIP_EN		BIT(6)
++#define LP50XX_CHIP_DISABLE	0x00
++#define LP50XX_START_TIME_US	500
++#define LP50XX_RESET_TIME_US	3
++
++#define LP50XX_EN_GPIO_LOW	0
++#define LP50XX_EN_GPIO_HIGH	1
+ 
  /* There are 3 LED outputs per bank */
  #define LP50XX_LEDS_PER_MODULE	3
+@@ -371,19 +377,42 @@ static int lp50xx_reset(struct lp50xx *p
+ 	return regmap_write(priv->regmap, priv->chip_info->reset_reg, LP50XX_SW_RESET);
+ }
  
--#define LP5009_MAX_LED_MODULES	2
-+#define LP5009_MAX_LED_MODULES	3
- #define LP5012_MAX_LED_MODULES	4
- #define LP5018_MAX_LED_MODULES	6
- #define LP5024_MAX_LED_MODULES	8
+-static int lp50xx_enable_disable(struct lp50xx *priv, int enable_disable)
++static int lp50xx_enable(struct lp50xx *priv)
+ {
+ 	int ret;
+ 
+-	ret = gpiod_direction_output(priv->enable_gpio, enable_disable);
++	if (priv->enable_gpio) {
++		ret = gpiod_direction_output(priv->enable_gpio, LP50XX_EN_GPIO_HIGH);
++		if (ret)
++			return ret;
++
++		udelay(LP50XX_START_TIME_US);
++	}
++
++	ret = lp50xx_reset(priv);
+ 	if (ret)
+ 		return ret;
+ 
+-	if (enable_disable)
+-		return regmap_write(priv->regmap, LP50XX_DEV_CFG0, LP50XX_CHIP_EN);
+-	else
+-		return regmap_write(priv->regmap, LP50XX_DEV_CFG0, 0);
++	return regmap_write(priv->regmap, LP50XX_DEV_CFG0, LP50XX_CHIP_EN);
++}
+ 
++static int lp50xx_disable(struct lp50xx *priv)
++{
++	int ret;
++
++	ret = regmap_write(priv->regmap, LP50XX_DEV_CFG0, LP50XX_CHIP_DISABLE);
++	if (ret)
++		return ret;
++
++	if (priv->enable_gpio) {
++		ret = gpiod_direction_output(priv->enable_gpio, LP50XX_EN_GPIO_LOW);
++		if (ret)
++			return ret;
++
++		udelay(LP50XX_RESET_TIME_US);
++	}
++
++	return 0;
+ }
+ 
+ static int lp50xx_probe_leds(struct fwnode_handle *child, struct lp50xx *priv,
+@@ -448,6 +477,10 @@ static int lp50xx_probe_dt(struct lp50xx
+ 		return dev_err_probe(priv->dev, PTR_ERR(priv->enable_gpio),
+ 				     "Failed to get enable GPIO\n");
+ 
++	ret = lp50xx_enable(priv);
++	if (ret)
++		return ret;
++
+ 	priv->regulator = devm_regulator_get(priv->dev, "vled");
+ 	if (IS_ERR(priv->regulator))
+ 		priv->regulator = NULL;
+@@ -554,14 +587,6 @@ static int lp50xx_probe(struct i2c_clien
+ 		return ret;
+ 	}
+ 
+-	ret = lp50xx_reset(led);
+-	if (ret)
+-		return ret;
+-
+-	ret = lp50xx_enable_disable(led, 1);
+-	if (ret)
+-		return ret;
+-
+ 	return lp50xx_probe_dt(led);
+ }
+ 
+@@ -570,7 +595,7 @@ static void lp50xx_remove(struct i2c_cli
+ 	struct lp50xx *led = i2c_get_clientdata(client);
+ 	int ret;
+ 
+-	ret = lp50xx_enable_disable(led, 0);
++	ret = lp50xx_disable(led);
+ 	if (ret)
+ 		dev_err(led->dev, "Failed to disable chip\n");
+ 
 
 
