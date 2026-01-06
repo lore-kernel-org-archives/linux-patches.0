@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B2D2D839B;
-	Tue,  6 Jan 2026 17:34:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA4A2F659C;
+	Tue,  6 Jan 2026 17:34:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720880; cv=none; b=gYtvQ+8VAWKBLvOs4ETZfNFzDBj3Wwfay5Ixb1ES7Dks+qWyGGgvKN/Sbd0jwmTP0f0PEYgEwbUte8QsaZcuCe8uf/qplZ02wCuYZhoWvQjOFRX7dPLCf6w9iGOQ/2fYlSKk26xferv0wFPH2+KJkipYe/HK3mV97XxRJNvTlbc=
+	t=1767720883; cv=none; b=HIdcvxbbeuLivytEBQ3hVVgmR9PgFaa+nCviBUJtAqu+DAVeMGnYII7H2Q+h8pZeoiG9CZkQLrtQs9Nj9rsXCFw1rno9L+ut+pHQxVe0gh5En/OUnjI1D5DA9JdQQRY6SDQg40beNHj2PNhqYluQElElaowvsEEgXf8tKBHwwfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720880; c=relaxed/simple;
-	bh=Mj/8vridAY/MrysGrd39HOn9yM6nonty8mbrxdpbndY=;
+	s=arc-20240116; t=1767720883; c=relaxed/simple;
+	bh=RzQPAN5v2WnkHIFbcmLLzYmC7s+czEcoJfA2HrAT/0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tlRlmgLzFIgqrq5s4cLBv4uRAVUhK5A74l5utLF/+WGyKqBwfH8kQTL5BJv3uX27iJshb9v81m7v1cgljXLaLIKwu1lTUgsA7whf2GGJgZLOf0M17tNk7ALG74wacAcitNd4IpDj8qX+E7W3siArrlgVDi7cPb7Y6LhFrHFRRm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HrnZKKSO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pwnhwaI9GZcAuW72Wbrum171uVEenTgHkNSaW9IyeqmlAoaC6+dr3tUokGpKt3XTNqtNn9ok+eVxN4xH5xuGVrSYIT1zkxd3gWhpbQH2GaZzyYlYmOwEn4zQUWjysrY1y6yL789B1mY13Qmp/yt9cVRG2Y5i5g6K74kBR32UKx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mflsUeGH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HrnZKKSO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AB18C16AAE;
-	Tue,  6 Jan 2026 17:34:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mflsUeGH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFBEFC116C6;
+	Tue,  6 Jan 2026 17:34:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720880;
-	bh=Mj/8vridAY/MrysGrd39HOn9yM6nonty8mbrxdpbndY=;
+	s=korg; t=1767720883;
+	bh=RzQPAN5v2WnkHIFbcmLLzYmC7s+czEcoJfA2HrAT/0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HrnZKKSOye9+gGgwm6A/rHm5pt66acJNUfx4E56PzhsBL8XfPBbj6bhAylJrePtiO
-	 O30ad3t2UeBHXavNJ1KgHvL/RjJVN8iG7p778GuDAb/+WlBJDJE+7IskNp9Mo/ZvKc
-	 Nuqp0grbEGnVsSEAf1324kgc2tdgEUnakhojF9Lc=
+	b=mflsUeGHIikQ5G5vwiSHBGjCWq4Ur+FvbsIA2/9uDBbNMOBLCZFDXM6xgOIO39Vhn
+	 qChon8t7vanA56+ibJ/JKF5VqNDKvbwSxMLwaCyovOnJBhWi974yvaX9Zs6ttdUzfB
+	 GqnjHTsNeGxJD5yi+MsmvR2DJTv5LxCvVXv+L+tk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wang.yaxin@zte.com.cn,
-	mhiramat@kernel.org,
-	mark.rutland@arm.com,
-	mathieu.desnoyers@efficios.com,
-	zhang.run@zte.com.cn,
-	yang.yang29@zte.com.cn,
-	Shengming Hu <hu.shengming@zte.com.cn>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.12 369/567] fgraph: Check ftrace_pids_enabled on registration for early filtering
-Date: Tue,  6 Jan 2026 18:02:31 +0100
-Message-ID: <20260106170504.991306646@linuxfoundation.org>
+	Lukas Wunner <lukas@wunner.de>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>
+Subject: [PATCH 6.12 370/567] PCI/PM: Reinstate clearing state_saved in legacy and !PM codepaths
+Date: Tue,  6 Jan 2026 18:02:32 +0100
+Message-ID: <20260106170505.028643393@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -56,54 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengming Hu <hu.shengming@zte.com.cn>
+From: Lukas Wunner <lukas@wunner.de>
 
-commit 1650a1b6cb1ae6cb99bb4fce21b30ebdf9fc238e upstream.
+commit 894f475f88e06c0f352c829849560790dbdedbe5 upstream.
 
-When registering ftrace_graph, check if ftrace_pids_enabled is active.
-If enabled, assign entryfunc to fgraph_pid_func to ensure filtering
-is performed before executing the saved original entry function.
+When a PCI device is suspended, it is normally the PCI core's job to save
+Config Space and put the device into a low power state.  However drivers
+are allowed to assume these responsibilities.  When they do, the PCI core
+can tell by looking at the state_saved flag in struct pci_dev:  The flag
+is cleared before commencing the suspend sequence and it is set when
+pci_save_state() is called.  If the PCI core finds the flag set late in
+the suspend sequence, it refrains from calling pci_save_state() itself.
 
-Cc: stable@vger.kernel.org
-Cc: <wang.yaxin@zte.com.cn>
-Cc: <mhiramat@kernel.org>
-Cc: <mark.rutland@arm.com>
-Cc: <mathieu.desnoyers@efficios.com>
-Cc: <zhang.run@zte.com.cn>
-Cc: <yang.yang29@zte.com.cn>
-Link: https://patch.msgid.link/20251126173331679XGVF98NLhyLJRdtNkVZ6w@zte.com.cn
-Fixes: df3ec5da6a1e7 ("function_graph: Add pid tracing back to function graph tracer")
-Signed-off-by: Shengming Hu <hu.shengming@zte.com.cn>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+But there are two corner cases where the PCI core neglects to clear the
+flag before commencing the suspend sequence:
+
+* If a driver has legacy PCI PM callbacks, pci_legacy_suspend() neglects
+  to clear the flag.  The (stale) flag is subsequently queried by
+  pci_legacy_suspend() itself and pci_legacy_suspend_late().
+
+* If a device has no driver or its driver has no PCI PM callbacks,
+  pci_pm_freeze() neglects to clear the flag.  The (stale) flag is
+  subsequently queried by pci_pm_freeze_noirq().
+
+The flag may be set prior to suspend if the device went through error
+recovery:  Drivers commonly invoke pci_restore_state() + pci_save_state()
+to restore Config Space after reset.
+
+The flag may also be set if drivers call pci_save_state() on probe to
+allow for recovery from subsequent errors.
+
+The result is that pci_legacy_suspend_late() and pci_pm_freeze_noirq()
+don't call pci_save_state() and so the state that will be restored on
+resume is the one recorded on last error recovery or on probe, not the one
+that the device had on suspend.  If the two states happen to be identical,
+there's no problem.
+
+Reinstate clearing the flag in pci_legacy_suspend() and pci_pm_freeze().
+The two functions used to do that until commit 4b77b0a2ba27 ("PCI: Clear
+saved_state after the state has been restored") deemed it unnecessary
+because it assumed that it's sufficient to clear the flag on resume in
+pci_restore_state().  The commit seemingly did not take into account that
+pci_save_state() and pci_restore_state() are not only used by power
+management code, but also for error recovery.
+
+Devices without driver or whose driver has no PCI PM callbacks may be in
+runtime suspend when pci_pm_freeze() is called.  Their state has already
+been saved, so don't clear the flag to skip a pointless pci_save_state()
+in pci_pm_freeze_noirq().
+
+None of the drivers with legacy PCI PM callbacks seem to use runtime PM,
+so clear the flag unconditionally in their case.
+
+Fixes: 4b77b0a2ba27 ("PCI: Clear saved_state after the state has been restored")
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
+Cc: stable@vger.kernel.org # v2.6.32+
+Link: https://patch.msgid.link/094f2aad64418710daf0940112abe5a0afdc6bce.1763483367.git.lukas@wunner.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/fgraph.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/pci/pci-driver.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/kernel/trace/fgraph.c
-+++ b/kernel/trace/fgraph.c
-@@ -1286,6 +1286,13 @@ int register_ftrace_graph(struct fgraph_
+--- a/drivers/pci/pci-driver.c
++++ b/drivers/pci/pci-driver.c
+@@ -635,6 +635,8 @@ static int pci_legacy_suspend(struct dev
+ 	struct pci_dev *pci_dev = to_pci_dev(dev);
+ 	struct pci_driver *drv = pci_dev->driver;
  
- 	ftrace_graph_active++;
- 
-+	/* Always save the function, and reset at unregistering */
-+	gops->saved_func = gops->entryfunc;
-+#ifdef CONFIG_DYNAMIC_FTRACE
-+	if (ftrace_pids_enabled(&gops->ops))
-+		gops->entryfunc = fgraph_pid_func;
-+#endif
++	pci_dev->state_saved = false;
 +
- 	if (ftrace_graph_active == 2)
- 		ftrace_graph_disable_direct(true);
+ 	if (drv && drv->suspend) {
+ 		pci_power_t prev = pci_dev->current_state;
+ 		int error;
+@@ -1039,6 +1041,8 @@ static int pci_pm_freeze(struct device *
  
-@@ -1305,8 +1312,6 @@ int register_ftrace_graph(struct fgraph_
- 	} else {
- 		init_task_vars(gops->idx);
+ 	if (!pm) {
+ 		pci_pm_default_suspend(pci_dev);
++		if (!pm_runtime_suspended(dev))
++			pci_dev->state_saved = false;
+ 		return 0;
  	}
--	/* Always save the function, and reset at unregistering */
--	gops->saved_func = gops->entryfunc;
  
- 	ret = ftrace_startup_subops(&graph_ops, &gops->ops, command);
- 	if (!ret)
 
 
