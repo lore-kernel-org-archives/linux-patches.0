@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E64FD345CA2;
-	Tue,  6 Jan 2026 17:15:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551F3346784;
+	Tue,  6 Jan 2026 17:15:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719714; cv=none; b=AYiq0BdkdllFg3Ls4nid+FM0Jccui1u1NynAYVODFxC3QiO3g/t+Cy3UIVaqQgsFmjBF9dFI+iFNMh06yliM8UTYkASPl8sdNV87P8M5DUjthuA/LXC2VzM+0OVRTt5Nw7+aOOdFWSOOhSqmZh+rum3HTmkE/Tml0ZptvErWrMc=
+	t=1767719717; cv=none; b=tK78Fglm00aYARsK/bMOYNxV/xcN7wjzFgjLK6Ig4PFPKoM1DJcbbUbtCDrg9xIO297l1pDMfQeQGzRep0+GC4un/8lqe82ofFeFNrRaK/edE4WLY4Hc+FPgBjNxvUqLezb1mo4B5qIUSSbL20Fd3zten2pkGTvweDduTQL5YWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719714; c=relaxed/simple;
-	bh=lg/2+RcJDfEQ9u9Q8AuMbBeugRGIGslzK5bvnNzhRDc=;
+	s=arc-20240116; t=1767719717; c=relaxed/simple;
+	bh=BmDFnffO65VasTxyMNxEgDWRg6f9TojbYKc3sKRNvVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F0KPpMZkonpbAH/AILjKrSVHnYGHczRsIpIOBeXxChHBEYSdHS6BjgPK4Cn/lXcvkkhkPYDmgXbf97bc2sxFBzSIRCP2WHkSss8p6ZADKC6b0fayHZ1Eguw+IPuUAkVHOvZoQxQISeG4pt1B6JP4uJuBjLJb4mZ6lu8Ul+jxbvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WLH6BJwR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TVUz41lfO04b8gR8zZpp3oX+/oHiMenrd7TYmEQMvk/LEpnXcAGwSFsUJbLC8qfUA/4h5zBPU2gbE3cesQE7Td9dYwu4GdAlaGNHByaljUIUNbVByz395FOUTGbMdi5Jj/P5FqxFqF5tnfRVJmPwQqlkDewa/Foazvezm6hUddw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTEA2S5u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WLH6BJwR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55BE3C16AAE;
-	Tue,  6 Jan 2026 17:15:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTEA2S5u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87D18C116C6;
+	Tue,  6 Jan 2026 17:15:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719713;
-	bh=lg/2+RcJDfEQ9u9Q8AuMbBeugRGIGslzK5bvnNzhRDc=;
+	s=korg; t=1767719717;
+	bh=BmDFnffO65VasTxyMNxEgDWRg6f9TojbYKc3sKRNvVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WLH6BJwRpXqQcqIo7B0RMn5rf7S+Kz4FgbaDEYz99eIcW2nz01dxSBDa1z24kAHCQ
-	 Qxmc5xwg6GSZXbTXTcbOwxE2mEjJ/xZI9oFRewS4AWSmPuFb1EPHB2uqVvSZ2/xKLu
-	 lr71N5HBI4FEn8FmVJpUClvrpdeq5CUaPLSFn3Ss=
+	b=bTEA2S5u5q6uEaORuVk3TJRqMO6ZtC1YWO2U/lYeelDDA1RvwwrDdqIS+owXxh/R0
+	 1HDRDnREgxD/KJ0586UVw22DoDewCxdoNLh4LusX0r4+in8e0QbTWE8OPeHfdEk0n3
+	 dMpLIjXTKw0AkVjGxCW30MWzjB72jSWOUSuuY+1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Loehle <christian.loehle@arm.com>,
-	Aboorva Devarajan <aboorvad@linux.ibm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Song Liu <song@kernel.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Petr Mladek <pmladek@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 018/567] cpuidle: menu: Use residency threshold in polling state override decisions
-Date: Tue,  6 Jan 2026 17:56:40 +0100
-Message-ID: <20260106170452.016564717@linuxfoundation.org>
+Subject: [PATCH 6.12 019/567] livepatch: Match old_sympos 0 and 1 in klp_find_func()
+Date: Tue,  6 Jan 2026 17:56:41 +0100
+Message-ID: <20260106170452.053168290@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,96 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aboorva Devarajan <aboorvad@linux.ibm.com>
+From: Song Liu <song@kernel.org>
 
-[ Upstream commit 07d815701274d156ad8c7c088a52e01642156fb8 ]
+[ Upstream commit 139560e8b973402140cafeb68c656c1374bd4c20 ]
 
-On virtualized PowerPC (pseries) systems, where only one polling state
-(Snooze) and one deep state (CEDE) are available, selecting CEDE when
-the predicted idle duration is less than the target residency of CEDE
-state can hurt performance. In such cases, the entry/exit overhead of
-CEDE outweighs the power savings, leading to unnecessary state
-transitions and higher latency.
+When there is only one function of the same name, old_sympos of 0 and 1
+are logically identical. Match them in klp_find_func().
 
-Menu governor currently contains a special-case rule that prioritizes
-the first non-polling state over polling, even when its target residency
-is much longer than the predicted idle duration. On PowerPC/pseries,
-where the gap between the polling state (Snooze) and the first non-polling
-state (CEDE) is large, this behavior causes performance regressions.
+This is to avoid a corner case with different toolchain behavior.
 
-Refine that special case by adding an extra requirement: the first
-non-polling state can only be chosen if its target residency is below
-the defined RESIDENCY_THRESHOLD_NS. If this condition is not satisfied,
-polling is allowed instead, avoiding suboptimal non-polling state
-entries.
+In this specific issue, two versions of kpatch-build were used to
+build livepatch for the same kernel. One assigns old_sympos == 0 for
+unique local functions, the other assigns old_sympos == 1 for unique
+local functions. Both versions work fine by themselves. (PS: This
+behavior change was introduced in a downstream version of kpatch-build.
+This change does not exist in upstream kpatch-build.)
 
-This change is limited to the single special-case rule for the first
-non-polling state. The general non-polling state selection logic in the
-menu governor remains unchanged.
+However, during livepatch upgrade (with the replace flag set) from a
+patch built with one version of kpatch-build to the same fix built with
+the other version of kpatch-build, livepatching fails with errors like:
 
-Performance improvement observed with pgbench on PowerPC (pseries)
-system:
-+---------------------------+------------+------------+------------+
-| Metric                    | Baseline   | Patched    | Change (%) |
-+---------------------------+------------+------------+------------+
-| Transactions/sec (TPS)    | 495,210    | 536,982    | +8.45%     |
-| Avg latency (ms)          | 0.163      | 0.150      | -7.98%     |
-+---------------------------+------------+------------+------------+
+[   14.218706] sysfs: cannot create duplicate filename 'xxx/somefunc,1'
+...
+[   14.219466] Call Trace:
+[   14.219468]  <TASK>
+[   14.219469]  dump_stack_lvl+0x47/0x60
+[   14.219474]  sysfs_warn_dup.cold+0x17/0x27
+[   14.219476]  sysfs_create_dir_ns+0x95/0xb0
+[   14.219479]  kobject_add_internal+0x9e/0x260
+[   14.219483]  kobject_add+0x68/0x80
+[   14.219485]  ? kstrdup+0x3c/0xa0
+[   14.219486]  klp_enable_patch+0x320/0x830
+[   14.219488]  patch_init+0x443/0x1000 [ccc_0_6]
+[   14.219491]  ? 0xffffffffa05eb000
+[   14.219492]  do_one_initcall+0x2e/0x190
+[   14.219494]  do_init_module+0x67/0x270
+[   14.219496]  init_module_from_file+0x75/0xa0
+[   14.219499]  idempotent_init_module+0x15a/0x240
+[   14.219501]  __x64_sys_finit_module+0x61/0xc0
+[   14.219503]  do_syscall_64+0x5b/0x160
+[   14.219505]  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+[   14.219507] RIP: 0033:0x7f545a4bd96d
+...
+[   14.219516] kobject: kobject_add_internal failed for somefunc,1 with
+    -EEXIST, don't try to register things with the same name ...
 
-CPUIdle state usage:
-+--------------+--------------+-------------+
-| Metric       | Baseline     | Patched     |
-+--------------+--------------+-------------+
-| Total usage  | 12,735,820   | 13,918,442  |
-| Above usage  | 11,401,520   | 1,598,210   |
-| Below usage  | 20,145       | 702,395     |
-+--------------+--------------+-------------+
+This happens because klp_find_func() thinks somefunc with old_sympos==0
+is not the same as somefunc with old_sympos==1, and klp_add_object_nops
+adds another xxx/func,1 to the list of functions to patch.
 
-Above/Total and Below/Total usage percentages:
-+------------------------+-----------+---------+
-| Metric                 | Baseline  | Patched |
-+------------------------+-----------+---------+
-| Above % (Above/Total)  | 89.56%    | 11.49%  |
-| Below % (Below/Total)  | 0.16%     | 5.05%   |
-| Total cpuidle miss (%) | 89.72%    | 16.54%  |
-+------------------------+-----------+---------+
-
-The results indicate that restricting CEDE selection to cases where
-its residency matches the predicted idle time reduces mispredictions,
-lowers unnecessary state transitions, and improves overall throughput.
-
-Reviewed-by: Christian Loehle <christian.loehle@arm.com>
-Signed-off-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
-[ rjw: Changelog edits, rebase ]
-Link: https://patch.msgid.link/20251006013954.17972-1-aboorvad@linux.ibm.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
+[pmladek@suse.com: Fixed some typos.]
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Tested-by: Petr Mladek <pmladek@suse.com>
+Signed-off-by: Petr Mladek <pmladek@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpuidle/governors/menu.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ kernel/livepatch/core.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/cpuidle/governors/menu.c b/drivers/cpuidle/governors/menu.c
-index 9069c36a491d5..3be761961f1be 100644
---- a/drivers/cpuidle/governors/menu.c
-+++ b/drivers/cpuidle/governors/menu.c
-@@ -323,12 +323,13 @@ static int menu_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
- 		}
+diff --git a/kernel/livepatch/core.c b/kernel/livepatch/core.c
+index 3c21c31796db0..077e078032e05 100644
+--- a/kernel/livepatch/core.c
++++ b/kernel/livepatch/core.c
+@@ -90,8 +90,14 @@ static struct klp_func *klp_find_func(struct klp_object *obj,
+ 	struct klp_func *func;
  
- 		/*
--		 * Use a physical idle state, not busy polling, unless a timer
--		 * is going to trigger soon enough or the exit latency of the
--		 * idle state in question is greater than the predicted idle
--		 * duration.
-+		 * Use a physical idle state instead of busy polling so long as
-+		 * its target residency is below the residency threshold, its
-+		 * exit latency is not greater than the predicted idle duration,
-+		 * and the next timer doesn't expire soon.
- 		 */
- 		if ((drv->states[idx].flags & CPUIDLE_FLAG_POLLING) &&
-+		    s->target_residency_ns < RESIDENCY_THRESHOLD_NS &&
- 		    s->target_residency_ns <= data->next_timer_ns &&
- 		    s->exit_latency_ns <= predicted_ns) {
- 			predicted_ns = s->target_residency_ns;
+ 	klp_for_each_func(obj, func) {
++		/*
++		 * Besides identical old_sympos, also consider old_sympos
++		 * of 0 and 1 are identical.
++		 */
+ 		if ((strcmp(old_func->old_name, func->old_name) == 0) &&
+-		    (old_func->old_sympos == func->old_sympos)) {
++		    ((old_func->old_sympos == func->old_sympos) ||
++		     (old_func->old_sympos == 0 && func->old_sympos == 1) ||
++		     (old_func->old_sympos == 1 && func->old_sympos == 0))) {
+ 			return func;
+ 		}
+ 	}
 -- 
 2.51.0
 
