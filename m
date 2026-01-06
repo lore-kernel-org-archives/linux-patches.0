@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EE5535FF49;
-	Tue,  6 Jan 2026 17:48:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9A0355031;
+	Tue,  6 Jan 2026 17:48:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721731; cv=none; b=TNDP9ikAqJ7naAejkMjw10rTYCEXsUtqX39W4wNjIS6Pb2mCVhH1GBgB48osAnSbN1UPEDRk3iVrW1etb1Hc6gHRHGwDGpDtdk8/RsDgIuqwdavJEDJGs8jz4asTMa2VHZm6xsnp2W5K+QNFIBVds8GNLkaYvUHXN+gznEl7mNQ=
+	t=1767721735; cv=none; b=b2Nx7rQkU+5TXTxGQiygvZz5KBzTLzu1JeyVSqd1FRZnETlscgekVDG5zUrK+fwYL6/Zv3kbbPCvTfa55/RUc67FP5SucB4KnggIiEf/+7886AhlE8oVNYPRHnJQBnOEhD0kHnuzLcstsGaSqJBhqKPdvJtnSyyCgBD/RuDsLSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721731; c=relaxed/simple;
-	bh=PaZNuwEYoD9YfjngvFax7qXaIJKezUT1SiYMHrBypRA=;
+	s=arc-20240116; t=1767721735; c=relaxed/simple;
+	bh=vYn3ynUR7in8BZNwQs5E0TPvx+FNugQLuNwAcYAx/Ro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VgoyICRMRteWx6DAMDQ3Wf/krOwn8sK4PEF+8OLBe3mK3vaByHrf/fcMVSBuOhuL7qJmvaPyDigQclyv4CDluKEWcMbsRCiLVJ/VOthyjJXmALWb0x59mfL5gSkZRhVtQaj/WRd5guxtRPG6uJtKJCwrkyIyDDohYfAXoiHUpHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ekBZb1bW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XjZeI5w7wbDypD3QOhm2I1P0Y1GD40TnrQitppecsUYBj2FwQfwCqi0cy0Q5JZjXLHDQTXoYO/d1o8bD/rPS5hjI5HGqYessmkVw6gd1nGMZ31JqOj2tkEbjnuhk8LXz8/qPLXW7ZQPJ9noEPygG3FjVnm8nzBMCirL8LE3yXJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LBmU0KnG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ekBZb1bW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E50EC116C6;
-	Tue,  6 Jan 2026 17:48:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LBmU0KnG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DC60C116C6;
+	Tue,  6 Jan 2026 17:48:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721731;
-	bh=PaZNuwEYoD9YfjngvFax7qXaIJKezUT1SiYMHrBypRA=;
+	s=korg; t=1767721734;
+	bh=vYn3ynUR7in8BZNwQs5E0TPvx+FNugQLuNwAcYAx/Ro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ekBZb1bWNQTAkfUbnrfpRi/USYx2sR/pMPsL0C0haL9WWJY+OmAG9peUQ43x5fa7Z
-	 +zpAoxDsiAgobttdarFCQxeEcmdbbPDOaQJ/q2Zfp0++TNnyNUxLAT6W0UlyQMkAHf
-	 GTlqPxA03GSPbNXSUFkwrjtqM/BpoUQeVddubeQM=
+	b=LBmU0KnG4AWbCjlkaLmmlbx/wTOZZs1KH4bMMBExQBaAB4NdV01iEKbYXGv6jpsUV
+	 nmT1T6jM+R0GnpBI/adMMqEd0O9TYRplZlN0GdosRksIHDApfIfdpGJxZUpBOvsk5z
+	 m1OE9bDnWM94FFjWI25gsLgSfHjhlM7MQycy+vsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiumei Mu <xmu@redhat.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 023/312] crypto: seqiv - Do not use req->iv after crypto_aead_encrypt
-Date: Tue,  6 Jan 2026 18:01:37 +0100
-Message-ID: <20260106170548.694350356@linuxfoundation.org>
+Subject: [PATCH 6.18 024/312] Bluetooth: MGMT: report BIS capability flags in supported settings
+Date: Tue,  6 Jan 2026 18:01:38 +0100
+Message-ID: <20260106170548.730768810@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -52,59 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 50fdb78b7c0bcc550910ef69c0984e751cac72fa ]
+[ Upstream commit 348240e5fa901d3d4ba8dffa0e2ba9fc7aba93ab ]
 
-As soon as crypto_aead_encrypt is called, the underlying request
-may be freed by an asynchronous completion.  Thus dereferencing
-req->iv after it returns is invalid.
+MGMT_SETTING_ISO_BROADCASTER and MGMT_SETTING_ISO_RECEIVER flags are
+missing from supported_settings although they are in current_settings.
 
-Instead of checking req->iv against info, create a new variable
-unaligned_info and use it for that purpose instead.
+Report them also in supported_settings to be consistent.
 
-Fixes: 0a270321dbf9 ("[CRYPTO] seqiv: Add Sequence Number IV Generator")
-Reported-by: Xiumei Mu <xmu@redhat.com>
-Reported-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: ae7533613133 ("Bluetooth: Check for ISO support in controller")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/seqiv.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ net/bluetooth/mgmt.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/crypto/seqiv.c b/crypto/seqiv.c
-index 2bae99e33526..678bb4145d78 100644
---- a/crypto/seqiv.c
-+++ b/crypto/seqiv.c
-@@ -50,6 +50,7 @@ static int seqiv_aead_encrypt(struct aead_request *req)
- 	struct aead_geniv_ctx *ctx = crypto_aead_ctx(geniv);
- 	struct aead_request *subreq = aead_request_ctx(req);
- 	crypto_completion_t compl;
-+	bool unaligned_info;
- 	void *data;
- 	u8 *info;
- 	unsigned int ivsize = 8;
-@@ -68,8 +69,9 @@ static int seqiv_aead_encrypt(struct aead_request *req)
- 		memcpy_sglist(req->dst, req->src,
- 			      req->assoclen + req->cryptlen);
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 262bf984d2aa..211951eb832a 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -849,6 +849,12 @@ static u32 get_supported_settings(struct hci_dev *hdev)
+ 	if (cis_peripheral_capable(hdev))
+ 		settings |= MGMT_SETTING_CIS_PERIPHERAL;
  
--	if (unlikely(!IS_ALIGNED((unsigned long)info,
--				 crypto_aead_alignmask(geniv) + 1))) {
-+	unaligned_info = !IS_ALIGNED((unsigned long)info,
-+				     crypto_aead_alignmask(geniv) + 1);
-+	if (unlikely(unaligned_info)) {
- 		info = kmemdup(req->iv, ivsize, req->base.flags &
- 			       CRYPTO_TFM_REQ_MAY_SLEEP ? GFP_KERNEL :
- 			       GFP_ATOMIC);
-@@ -89,7 +91,7 @@ static int seqiv_aead_encrypt(struct aead_request *req)
- 	scatterwalk_map_and_copy(info, req->dst, req->assoclen, ivsize, 1);
++	if (bis_capable(hdev))
++		settings |= MGMT_SETTING_ISO_BROADCASTER;
++
++	if (sync_recv_capable(hdev))
++		settings |= MGMT_SETTING_ISO_SYNC_RECEIVER;
++
+ 	if (ll_privacy_capable(hdev))
+ 		settings |= MGMT_SETTING_LL_PRIVACY;
  
- 	err = crypto_aead_encrypt(subreq);
--	if (unlikely(info != req->iv))
-+	if (unlikely(unaligned_info))
- 		seqiv_aead_encrypt_complete2(req, err);
- 	return err;
- }
 -- 
 2.51.0
 
