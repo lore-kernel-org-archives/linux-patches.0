@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D0634CFC9;
-	Tue,  6 Jan 2026 17:20:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5DEB34CFCF;
+	Tue,  6 Jan 2026 17:20:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720011; cv=none; b=GnKga+par8NslyoEePPLrPzvNBdZMGxJm2Cg+4fJ4FoMLzjcgCnMOZGSFRQeE4PBNPu/2yIVS+sMri7ai5ikbXuAFDb3koezlidH2U4muzTTnMHiVC6J1CdfoVqCPT0159EGPTfYCttikdneT7HJKI+GgPlMI2XjHXlYSE0yBXc=
+	t=1767720014; cv=none; b=hdpwrhffDnW3F2TBSvd+Yep/+rqgulJuUO7XwTSRG4hUbBckD/BxH+HW54GmtHqrhmFKldQEETGQLgwLNUt2YXqMqNgZ9EMOliyZsxx4AfGs5v45u4TlkEzyv1kPXfMCULqOlwKBlcHXEHQepNNrZefTqTueU3FcwBkgHIaBJN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720011; c=relaxed/simple;
-	bh=8C/UJ1AZiTpHs5m4AJUN4QpH3nainP+YaNs3cypuQkY=;
+	s=arc-20240116; t=1767720014; c=relaxed/simple;
+	bh=QdYHl8AIsPIh0gUhrRkGwDUG5QuSWkwSOZaqALpFav0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r55bobMPnMF96fIucoW3Zu/UiFLV+cof0KDPyamVF3M61zgx1M7/81VNb0MpW5oIIfK4JVyOx9g0EGs0VcNhsnxk0M9+Ih89bSJG68f/p6JGBT0QtsATmqpGhCguKeFie/hknhINlemCl6tpxUtH0H+gGVIqc3ZkYf707oV95uI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yYTGYuEd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZV3L2DABZ2a+FTXSxw/C5h9p8wEfaoE8MvZJrI8HPBwbKEXWYYNiStc5VlWWH7IuJrjgFueVcSGiuKFJ665v8OC6btDIRIjz7hlwb35nlZm5Zfl0kPTr5vPJIMblT+n1r90eFvj9TikxCTFvOkGtaKQPEaSze2AXDMHOKDau55I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OeM4HfKt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yYTGYuEd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 088A7C116C6;
-	Tue,  6 Jan 2026 17:20:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OeM4HfKt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F5EBC116C6;
+	Tue,  6 Jan 2026 17:20:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720011;
-	bh=8C/UJ1AZiTpHs5m4AJUN4QpH3nainP+YaNs3cypuQkY=;
+	s=korg; t=1767720014;
+	bh=QdYHl8AIsPIh0gUhrRkGwDUG5QuSWkwSOZaqALpFav0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yYTGYuEdHV+dp+b02l/Y51pkj991t5kEyZ2cQrnjoSZ+scgGSR2QEC7uREjqUKQFq
-	 q4NU5EyFX3WMGaNedBRY2sdkkXf+JQHv9p6cXSd15KTWBN/Hqt7FrwU631IycRNlUL
-	 zjvykuIy/ls7KZoJaiZqoXhdtFnT+OBcZith7bU4=
+	b=OeM4HfKtqPIHNkFW2qaHwjqfgScOQPkwSyTap47Fn3kPR8+rgXbYBarwhAxF9jNX7
+	 6Jk+Z+eEYVViHb1PX8Rx7BC3rldeGdyR4AGI9SagcUEprNDSSWX5LWuOmJ+WE770xV
+	 Nod43eqfTarkE+eQXO8AIUAFjV3aZ6OMCV17hVFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Shen <shenjian15@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Yi Liu <yi.l.liu@intel.com>,
+	syzbot+57fdb0cf6a0c5d1f15a2@syzkaller.appspotmail.com,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 075/567] net: hns3: using the num_tqps in the vf driver to apply for resources
-Date: Tue,  6 Jan 2026 17:57:37 +0100
-Message-ID: <20260106170454.109180293@linuxfoundation.org>
+Subject: [PATCH 6.12 066/567] iommufd/selftest: Check for overflow in IOMMU_TEST_OP_ADD_RESERVED
+Date: Tue,  6 Jan 2026 17:57:28 +0100
+Message-ID: <20260106170453.779631456@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -53,50 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jian Shen <shenjian15@huawei.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit c2a16269742e176fccdd0ef9c016a233491a49ad ]
+[ Upstream commit e6a973af11135439de32ece3b9cbe3bfc043bea8 ]
 
-Currently, hdev->htqp is allocated using hdev->num_tqps, and kinfo->tqp
-is allocated using kinfo->num_tqps. However, kinfo->num_tqps is set to
-min(new_tqps, hdev->num_tqps);  Therefore, kinfo->num_tqps may be smaller
-than hdev->num_tqps, which causes some hdev->htqp[i] to remain
-uninitialized in hclgevf_knic_setup().
+syzkaller found it could overflow math in the test infrastructure and
+cause a WARN_ON by corrupting the reserved interval tree. This only
+effects test kernels with CONFIG_IOMMUFD_TEST.
 
-Thus, this patch allocates hdev->htqp and kinfo->tqp using hdev->num_tqps,
-ensuring that the lengths of hdev->htqp and kinfo->tqp are consistent
-and that all elements are properly initialized.
+Validate the user input length in the test ioctl.
 
-Fixes: e2cb1dec9779 ("net: hns3: Add HNS3 VF HCL(Hardware Compatibility Layer) Support")
-Signed-off-by: Jian Shen <shenjian15@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20251211023737.2327018-2-shaojijie@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: f4b20bb34c83 ("iommufd: Add kernel support for testing iommufd")
+Link: https://patch.msgid.link/r/0-v1-cd99f6049ba5+51-iommufd_syz_add_resv_jgg@nvidia.com
+Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Tested-by: Yi Liu <yi.l.liu@intel.com>
+Reported-by: syzbot+57fdb0cf6a0c5d1f15a2@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/69368129.a70a0220.38f243.008f.GAE@google.com
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iommu/iommufd/selftest.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-index e8573358309ca..0bf8fc7e6b3a8 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-@@ -370,12 +370,12 @@ static int hclgevf_knic_setup(struct hclgevf_dev *hdev)
- 	new_tqps = kinfo->rss_size * num_tc;
- 	kinfo->num_tqps = min(new_tqps, hdev->num_tqps);
+diff --git a/drivers/iommu/iommufd/selftest.c b/drivers/iommu/iommufd/selftest.c
+index 540437be168a0..aed260d4a93cc 100644
+--- a/drivers/iommu/iommufd/selftest.c
++++ b/drivers/iommu/iommufd/selftest.c
+@@ -836,14 +836,20 @@ static int iommufd_test_add_reserved(struct iommufd_ucmd *ucmd,
+ 				     unsigned int mockpt_id,
+ 				     unsigned long start, size_t length)
+ {
++	unsigned long last;
+ 	struct iommufd_ioas *ioas;
+ 	int rc;
  
--	kinfo->tqp = devm_kcalloc(&hdev->pdev->dev, kinfo->num_tqps,
-+	kinfo->tqp = devm_kcalloc(&hdev->pdev->dev, hdev->num_tqps,
- 				  sizeof(struct hnae3_queue *), GFP_KERNEL);
- 	if (!kinfo->tqp)
- 		return -ENOMEM;
- 
--	for (i = 0; i < kinfo->num_tqps; i++) {
-+	for (i = 0; i < hdev->num_tqps; i++) {
- 		hdev->htqp[i].q.handle = &hdev->nic;
- 		hdev->htqp[i].q.tqp_index = i;
- 		kinfo->tqp[i] = &hdev->htqp[i].q;
++	if (!length)
++		return -EINVAL;
++	if (check_add_overflow(start, length - 1, &last))
++		return -EOVERFLOW;
++
+ 	ioas = iommufd_get_ioas(ucmd->ictx, mockpt_id);
+ 	if (IS_ERR(ioas))
+ 		return PTR_ERR(ioas);
+ 	down_write(&ioas->iopt.iova_rwsem);
+-	rc = iopt_reserve_iova(&ioas->iopt, start, start + length - 1, NULL);
++	rc = iopt_reserve_iova(&ioas->iopt, start, last, NULL);
+ 	up_write(&ioas->iopt.iova_rwsem);
+ 	iommufd_put_object(ucmd->ictx, &ioas->obj);
+ 	return rc;
 -- 
 2.51.0
 
