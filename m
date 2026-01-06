@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0A834DB46;
-	Tue,  6 Jan 2026 17:21:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C7234DB55;
+	Tue,  6 Jan 2026 17:21:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720064; cv=none; b=hk/u/xN8PjIzt07tV9GxLkAEBulhQhdL9Ozs5/T/52VOCxU4+hdylAnSqtgnK/7xsgdJc/zlaR0Op4tQ5YtbtaKI3tj0QMoQLKkL1V64NE5z4LNouGzcIBk4Y4MXgoVTvmHo4Pe+18LXlQ5jpmu5oUyzta7A+5yskeKMG6AmMo8=
+	t=1767720068; cv=none; b=EvCQQH8AV2CGtSahN1ehwRSj12MM1HhOS5GBs8nRxxNQrr799+ZnIlOJv8axv2wsPQr9MyB0vhBBWsSdIiGO5BnMDzmOLszSlRcM1o37c0U7tV1gwxgHI9duUFyQ2G7xqtsYbqnzMeySnfMq/v4NyOP1nQWI33Mve59NAWNQQ1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720064; c=relaxed/simple;
-	bh=DcPvuEoB6K8eOkPQa+D8IjCPAPuULBtBmipdocwYDuY=;
+	s=arc-20240116; t=1767720068; c=relaxed/simple;
+	bh=Xovx4kNs7ol7RdnIEb14KN1x8/yx+vzuQqPQzxtgYvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=doc+w9VN4OGCb71wEVayhYT1zJLnTbYqknlEYGKU2P3/JugIKeVpVj5EPrHx8BGfwTE74jO0hNP9HcRRrBEKw42gSoqxNbJfe+582H+C8K8w55+PS2Jw+EgkCk8bei/d7B8iKjpq9f9zVf5ib/j6zoiFXXMXuPLQKd3DcuPbi8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jbAp+a7v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fQkORfw6Ru6a9r5vkXEqGgIQ0wICAXm2dAXePkITCKhd39zeWdDFQ351IbfANaCBswQMfiIp+XCqjE5onZGKZKlQkww8O4o6vSmd/MK/hKls/Jp9iAv7w1oQofUzcF1HMSXjD91bZoMtqnh2q6k0wnkjahzoJ5BkDA9FUxVhg6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iu4FHoGB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jbAp+a7v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D190BC116C6;
-	Tue,  6 Jan 2026 17:21:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iu4FHoGB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55754C116C6;
+	Tue,  6 Jan 2026 17:21:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720064;
-	bh=DcPvuEoB6K8eOkPQa+D8IjCPAPuULBtBmipdocwYDuY=;
+	s=korg; t=1767720067;
+	bh=Xovx4kNs7ol7RdnIEb14KN1x8/yx+vzuQqPQzxtgYvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jbAp+a7vnITAm9A/xPLQrxjSCVWgX1uojKJsRyy7czTGePxr7x8u6Y9wqALEhidyt
-	 i+qgEBOyC4//eoLoF5ZgrwGDygPhsd5p+i8vaNAVKW56GpROPRsTAOoxilIR/Ksxi3
-	 LCvOQBUWCx4D+gsnhjAZfFnM/5533KIdiNqXLnh4=
+	b=iu4FHoGBakAa8EdLnYA58V9ekLXaBYB5TzlNrOdMvSCZERkOkKhikyzg4YdKvYFYB
+	 y7OYqsdHGGIs5n739SuBm5+tT1A3GAXMQtXy5b+9ojT0jiFnG+mlASjKzUw4JiEScm
+	 fSWs8xoY8gm09JE0s39arLkT0jRhKLwsZVgw6t9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Schiffer <matthias.schiffer@tq-group.com>,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Kevin Hilman <khilman@baylibre.com>,
+	Scott Benesh <scott.benesh@microchip.com>,
+	Scott Teel <scott.teel@microchip.com>,
+	Mike McGowen <mike.mcgowen@microchip.com>,
+	David Strahan <David.Strahan@microchip.com>,
+	Don Brace <don.brace@microchip.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 123/567] ti-sysc: allow OMAP2 and OMAP4 timers to be reserved on AM33xx
-Date: Tue,  6 Jan 2026 17:58:25 +0100
-Message-ID: <20260106170455.878041654@linuxfoundation.org>
+Subject: [PATCH 6.12 124/567] scsi: smartpqi: Add support for Hurray Data new controller PCI device
+Date: Tue,  6 Jan 2026 17:58:26 +0100
+Message-ID: <20260106170455.918051464@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,62 +55,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Schiffer <matthias.schiffer@tq-group.com>
+From: David Strahan <David.Strahan@microchip.com>
 
-[ Upstream commit 3f61783920504b2cf99330b372d82914bb004d8e ]
+[ Upstream commit 48e6b7e708029cea451e53a8c16fc8c16039ecdc ]
 
-am33xx.dtsi has the same clock setup as am35xx.dtsi, setting
-ti,no-reset-on-init and ti,no-idle on timer1_target and timer2_target,
-so AM33 needs the same workaround as AM35 to avoid ti-sysc probe
-failing on certain target modules.
+Add support for new Hurray Data controller.
 
-Signed-off-by: Matthias Schiffer <matthias.schiffer@tq-group.com>
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Link: https://lore.kernel.org/r/20250825131114.2206804-1-alexander.stein@ew.tq-group.com
-Signed-off-by: Kevin Hilman <khilman@baylibre.com>
+All entries are in HEX.
+
+Add PCI IDs for Hurray Data controllers:
+                                         VID  / DID  / SVID / SDID
+                                         ----   ----   ----   ----
+                                         9005   028f   207d   4840
+
+Reviewed-by: Scott Benesh <scott.benesh@microchip.com>
+Reviewed-by: Scott Teel <scott.teel@microchip.com>
+Reviewed-by: Mike McGowen <mike.mcgowen@microchip.com>
+Signed-off-by: David Strahan <David.Strahan@microchip.com>
+Signed-off-by: Don Brace <don.brace@microchip.com>
+Link: https://patch.msgid.link/20251106163823.786828-4-don.brace@microchip.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/ti-sysc.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/scsi/smartpqi/smartpqi_init.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
-index f715c8d28129..27149eb29afb 100644
---- a/drivers/bus/ti-sysc.c
-+++ b/drivers/bus/ti-sysc.c
-@@ -48,6 +48,7 @@ enum sysc_soc {
- 	SOC_UNKNOWN,
- 	SOC_2420,
- 	SOC_2430,
-+	SOC_AM33,
- 	SOC_3430,
- 	SOC_AM35,
- 	SOC_3630,
-@@ -2896,6 +2897,7 @@ static void ti_sysc_idle(struct work_struct *work)
- static const struct soc_device_attribute sysc_soc_match[] = {
- 	SOC_FLAG("OMAP242*", SOC_2420),
- 	SOC_FLAG("OMAP243*", SOC_2430),
-+	SOC_FLAG("AM33*", SOC_AM33),
- 	SOC_FLAG("AM35*", SOC_AM35),
- 	SOC_FLAG("OMAP3[45]*", SOC_3430),
- 	SOC_FLAG("OMAP3[67]*", SOC_3630),
-@@ -3101,10 +3103,15 @@ static int sysc_check_active_timer(struct sysc *ddata)
- 	 * can be dropped if we stop supporting old beagleboard revisions
- 	 * A to B4 at some point.
- 	 */
--	if (sysc_soc->soc == SOC_3430 || sysc_soc->soc == SOC_AM35)
-+	switch (sysc_soc->soc) {
-+	case SOC_AM33:
-+	case SOC_3430:
-+	case SOC_AM35:
- 		error = -ENXIO;
--	else
-+		break;
-+	default:
- 		error = -EBUSY;
-+	}
- 
- 	if ((ddata->cfg.quirks & SYSC_QUIRK_NO_RESET_ON_INIT) &&
- 	    (ddata->cfg.quirks & SYSC_QUIRK_NO_IDLE))
+diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
+index 018f5428a07d..f0fb22e4117e 100644
+--- a/drivers/scsi/smartpqi/smartpqi_init.c
++++ b/drivers/scsi/smartpqi/smartpqi_init.c
+@@ -10091,6 +10091,10 @@ static const struct pci_device_id pqi_pci_id_table[] = {
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       0x207d, 0x4240)
+ 	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x207d, 0x4840)
++	},
+ 	{
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       PCI_VENDOR_ID_ADVANTECH, 0x8312)
 -- 
 2.51.0
 
