@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 008F033F8A0;
-	Tue,  6 Jan 2026 17:14:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D42633D6C5;
+	Tue,  6 Jan 2026 17:14:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719684; cv=none; b=hpE00czmvTgQ6mxtOSygjzMXBbBUo9D9h7KhwBX6RUrRz/q74CvdZSiduKL2Y+lhYXDX+eMfa++2CzFTdHYog9Py333ODjO0GN9yWky8T/CUN5EqeKXG+AStnEJP2uvKTmrRLwxv2tOA7wGpqym2ZH0hOvGsWMjzeNpvcnzcsLA=
+	t=1767719687; cv=none; b=nepOHdDjWM4luE8aTbyulsRlz2cB5EDWyTHN1PPw/PPTsICv5vaSqSYbYobz11nNWteDUmKLUihq2WJVSqzxYVEA1fp8pxJ5saxo6BwzGwwaFZPhj9Ok1zNDVz4Dsx8VkSapZ68PR4r5cwKb8hHPFdd3vqiU8aSk+Q5ji1WvNMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719684; c=relaxed/simple;
-	bh=g07DO8jQYqI0244wH3YhnM26vGxFCQlvv/6qLe0VulM=;
+	s=arc-20240116; t=1767719687; c=relaxed/simple;
+	bh=yZfwATBIWvcpfcXeJNjmorefaH2UDR0XkiWA5yTV8Tw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u5Zdjwo4mxwIyLA4NGe+Y2FtwyB3Xq4ioaDm8Xc3jvD6z1hfCaJAG7TisHbADqFfOZRKvKMVCilNZ1U0yOGG3Kdo3WQjVpKRNRTVqJg4KBrM7vse8oHwGe31VtYNgkL30DdSlEHghNh/WGTKqD04fFMlkmK71uVq69alBPSuNvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZpMnJdJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FW6FMDCtnTmz7HmUHTLQ5CujhShbipl1mLf1JLuJkLw3Xdv2WFnhN0z2zxgfEhJPV26GJhrqHEQ2gjtjG9uNjgVdKhEHAB4BqMZYazVl8uzMCJWmioVPO2A6H9TLdsBlHyTsDKU2iBDtd44lx69N0veBV2auvfqkCxXPQfAECIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MD7aMrHD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZpMnJdJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F5FC116C6;
-	Tue,  6 Jan 2026 17:14:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MD7aMrHD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63C6DC116C6;
+	Tue,  6 Jan 2026 17:14:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719683;
-	bh=g07DO8jQYqI0244wH3YhnM26vGxFCQlvv/6qLe0VulM=;
+	s=korg; t=1767719686;
+	bh=yZfwATBIWvcpfcXeJNjmorefaH2UDR0XkiWA5yTV8Tw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jZpMnJdJ0corrN2z76lus//0wx8Zzf0Q1PGBn37Txyk1mNvRDxnBqkSMBSs3Sdc98
-	 9P1YegVdO0qbLi0PQFoG6lEBhoCVNll+zTfnKxn8vybZ//F6G2mSWDJCbXh6o5EoaD
-	 peF0U5HJqUYHVp6l62GYHAHoDpub+oRcpIsMNPkQ=
+	b=MD7aMrHDl0Bv8ojfuiefIpe6Q4gPKEaGmBDR2ryPixd7kd9ng9nN0+4lH6hLOWs0a
+	 gnhjJG6NUdPmQRgHKnEaALXLHD0IX+18faofFXigpgdjz7RkvwuQr5I0qgrzrR4v33
+	 nKtWPSOTiQyjAcQVDgmWMOdjm8UHYqL4qKKOqDRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vyacheslav Kovalevsky <slava.kovalevskiy.2014@gmail.com>,
-	Boris Burkov <boris@bur.io>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Doug Berger <opendmb@gmail.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 001/567] btrfs: do not skip logging new dentries when logging a new name
-Date: Tue,  6 Jan 2026 17:56:23 +0100
-Message-ID: <20260106170451.395993144@linuxfoundation.org>
+Subject: [PATCH 6.12 010/567] sched/deadline: only set free_cpus for online runqueues
+Date: Tue,  6 Jan 2026 17:56:32 +0100
+Message-ID: <20260106170451.724173299@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -53,70 +51,187 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Doug Berger <opendmb@gmail.com>
 
-[ Upstream commit 5630f7557de61264ccb4f031d4734a1a97eaed16 ]
+[ Upstream commit 382748c05e58a9f1935f5a653c352422375566ea ]
 
-When we are logging a directory and the log context indicates that we
-are logging a new name for some other file (that is or was inside that
-directory), we skip logging the inodes for new dentries in the directory.
+Commit 16b269436b72 ("sched/deadline: Modify cpudl::free_cpus
+to reflect rd->online") introduced the cpudl_set/clear_freecpu
+functions to allow the cpu_dl::free_cpus mask to be manipulated
+by the deadline scheduler class rq_on/offline callbacks so the
+mask would also reflect this state.
 
-This is ok most of the time, but if after the rename or link operation
-that triggered the logging of that directory, we have an explicit fsync
-of that directory without the directory inode being evicted and reloaded,
-we end up never logging the inodes for the new dentries that we found
-during the new name logging, as the next directory fsync will only process
-dentries that were added after the last time we logged the directory (we
-are doing an incremental directory logging).
+Commit 9659e1eeee28 ("sched/deadline: Remove cpu_active_mask
+from cpudl_find()") removed the check of the cpu_active_mask to
+save some processing on the premise that the cpudl::free_cpus
+mask already reflected the runqueue online state.
 
-So make sure we always log new dentries for a directory even if we are
-in a context of logging a new name.
+Unfortunately, there are cases where it is possible for the
+cpudl_clear function to set the free_cpus bit for a CPU when the
+deadline runqueue is offline. When this occurs while a CPU is
+connected to the default root domain the flag may retain the bad
+state after the CPU has been unplugged. Later, a different CPU
+that is transitioning through the default root domain may push a
+deadline task to the powered down CPU when cpudl_find sees its
+free_cpus bit is set. If this happens the task will not have the
+opportunity to run.
 
-We started skipping logging inodes for new dentries as of commit
-c48792c6ee7a ("btrfs: do not log new dentries when logging that a new name
-exists") and it was fine back then, because when logging a directory we
-always iterated over all the directory entries (for leaves changed in the
-current transaction) so a subsequent fsync would always log anything that
-was previously skipped while logging a directory when logging a new name
-(with btrfs_log_new_name()). But later support for incrementally logging
-a directory was added in commit dc2872247ec0 ("btrfs: keep track of the
-last logged keys when logging a directory"), to avoid checking all dir
-items every time we log a directory, so the check to skip dentry logging
-added in the first commit should have been removed when the incremental
-support for logging a directory was added.
+One example is outlined here:
+https://lore.kernel.org/lkml/20250110233010.2339521-1-opendmb@gmail.com
 
-A test case for fstests will follow soon.
+Another occurs when the last deadline task is migrated from a
+CPU that has an offlined runqueue. The dequeue_task member of
+the deadline scheduler class will eventually call cpudl_clear
+and set the free_cpus bit for the CPU.
 
-Reported-by: Vyacheslav Kovalevsky <slava.kovalevskiy.2014@gmail.com>
-Link: https://lore.kernel.org/linux-btrfs/84c4e713-85d6-42b9-8dcf-0722ed26cb05@gmail.com/
-Fixes: dc2872247ec0 ("btrfs: keep track of the last logged keys when logging a directory")
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+This commit modifies the cpudl_clear function to be aware of the
+online state of the deadline runqueue so that the free_cpus mask
+can be updated appropriately.
+
+It is no longer necessary to manage the mask outside of the
+cpudl_set/clear functions so the cpudl_set/clear_freecpu
+functions are removed. In addition, since the free_cpus mask is
+now only updated under the cpudl lock the code was changed to
+use the non-atomic __cpumask functions.
+
+Signed-off-by: Doug Berger <opendmb@gmail.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/tree-log.c | 8 --------
- 1 file changed, 8 deletions(-)
+ kernel/sched/cpudeadline.c | 34 +++++++++-------------------------
+ kernel/sched/cpudeadline.h |  4 +---
+ kernel/sched/deadline.c    |  8 ++++----
+ 3 files changed, 14 insertions(+), 32 deletions(-)
 
-diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
-index 609f221d4c309..25ab8f3af56c8 100644
---- a/fs/btrfs/tree-log.c
-+++ b/fs/btrfs/tree-log.c
-@@ -5556,14 +5556,6 @@ static int log_new_dir_dentries(struct btrfs_trans_handle *trans,
- 	struct btrfs_inode *curr_inode = start_inode;
- 	int ret = 0;
- 
--	/*
--	 * If we are logging a new name, as part of a link or rename operation,
--	 * don't bother logging new dentries, as we just want to log the names
--	 * of an inode and that any new parents exist.
--	 */
--	if (ctx->logging_new_name)
--		return 0;
+diff --git a/kernel/sched/cpudeadline.c b/kernel/sched/cpudeadline.c
+index 95baa12a10293..59d7b4f48c086 100644
+--- a/kernel/sched/cpudeadline.c
++++ b/kernel/sched/cpudeadline.c
+@@ -165,12 +165,13 @@ int cpudl_find(struct cpudl *cp, struct task_struct *p,
+  * cpudl_clear - remove a CPU from the cpudl max-heap
+  * @cp: the cpudl max-heap context
+  * @cpu: the target CPU
++ * @online: the online state of the deadline runqueue
+  *
+  * Notes: assumes cpu_rq(cpu)->lock is locked
+  *
+  * Returns: (void)
+  */
+-void cpudl_clear(struct cpudl *cp, int cpu)
++void cpudl_clear(struct cpudl *cp, int cpu, bool online)
+ {
+ 	int old_idx, new_cpu;
+ 	unsigned long flags;
+@@ -183,7 +184,7 @@ void cpudl_clear(struct cpudl *cp, int cpu)
+ 	if (old_idx == IDX_INVALID) {
+ 		/*
+ 		 * Nothing to remove if old_idx was invalid.
+-		 * This could happen if a rq_offline_dl is
++		 * This could happen if rq_online_dl or rq_offline_dl is
+ 		 * called for a CPU without -dl tasks running.
+ 		 */
+ 	} else {
+@@ -194,9 +195,12 @@ void cpudl_clear(struct cpudl *cp, int cpu)
+ 		cp->elements[new_cpu].idx = old_idx;
+ 		cp->elements[cpu].idx = IDX_INVALID;
+ 		cpudl_heapify(cp, old_idx);
 -
- 	path = btrfs_alloc_path();
- 	if (!path)
- 		return -ENOMEM;
+-		cpumask_set_cpu(cpu, cp->free_cpus);
+ 	}
++	if (likely(online))
++		__cpumask_set_cpu(cpu, cp->free_cpus);
++	else
++		__cpumask_clear_cpu(cpu, cp->free_cpus);
++
+ 	raw_spin_unlock_irqrestore(&cp->lock, flags);
+ }
+ 
+@@ -227,7 +231,7 @@ void cpudl_set(struct cpudl *cp, int cpu, u64 dl)
+ 		cp->elements[new_idx].cpu = cpu;
+ 		cp->elements[cpu].idx = new_idx;
+ 		cpudl_heapify_up(cp, new_idx);
+-		cpumask_clear_cpu(cpu, cp->free_cpus);
++		__cpumask_clear_cpu(cpu, cp->free_cpus);
+ 	} else {
+ 		cp->elements[old_idx].dl = dl;
+ 		cpudl_heapify(cp, old_idx);
+@@ -236,26 +240,6 @@ void cpudl_set(struct cpudl *cp, int cpu, u64 dl)
+ 	raw_spin_unlock_irqrestore(&cp->lock, flags);
+ }
+ 
+-/*
+- * cpudl_set_freecpu - Set the cpudl.free_cpus
+- * @cp: the cpudl max-heap context
+- * @cpu: rd attached CPU
+- */
+-void cpudl_set_freecpu(struct cpudl *cp, int cpu)
+-{
+-	cpumask_set_cpu(cpu, cp->free_cpus);
+-}
+-
+-/*
+- * cpudl_clear_freecpu - Clear the cpudl.free_cpus
+- * @cp: the cpudl max-heap context
+- * @cpu: rd attached CPU
+- */
+-void cpudl_clear_freecpu(struct cpudl *cp, int cpu)
+-{
+-	cpumask_clear_cpu(cpu, cp->free_cpus);
+-}
+-
+ /*
+  * cpudl_init - initialize the cpudl structure
+  * @cp: the cpudl max-heap context
+diff --git a/kernel/sched/cpudeadline.h b/kernel/sched/cpudeadline.h
+index 0adeda93b5fb5..ecff718d94aea 100644
+--- a/kernel/sched/cpudeadline.h
++++ b/kernel/sched/cpudeadline.h
+@@ -18,9 +18,7 @@ struct cpudl {
+ #ifdef CONFIG_SMP
+ int  cpudl_find(struct cpudl *cp, struct task_struct *p, struct cpumask *later_mask);
+ void cpudl_set(struct cpudl *cp, int cpu, u64 dl);
+-void cpudl_clear(struct cpudl *cp, int cpu);
++void cpudl_clear(struct cpudl *cp, int cpu, bool online);
+ int  cpudl_init(struct cpudl *cp);
+-void cpudl_set_freecpu(struct cpudl *cp, int cpu);
+-void cpudl_clear_freecpu(struct cpudl *cp, int cpu);
+ void cpudl_cleanup(struct cpudl *cp);
+ #endif /* CONFIG_SMP */
+diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
+index 6ec66fef3f91e..abd0fb2d839c1 100644
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -1852,7 +1852,7 @@ static void dec_dl_deadline(struct dl_rq *dl_rq, u64 deadline)
+ 	if (!dl_rq->dl_nr_running) {
+ 		dl_rq->earliest_dl.curr = 0;
+ 		dl_rq->earliest_dl.next = 0;
+-		cpudl_clear(&rq->rd->cpudl, rq->cpu);
++		cpudl_clear(&rq->rd->cpudl, rq->cpu, rq->online);
+ 		cpupri_set(&rq->rd->cpupri, rq->cpu, rq->rt.highest_prio.curr);
+ 	} else {
+ 		struct rb_node *leftmost = rb_first_cached(&dl_rq->root);
+@@ -2950,9 +2950,10 @@ static void rq_online_dl(struct rq *rq)
+ 	if (rq->dl.overloaded)
+ 		dl_set_overload(rq);
+ 
+-	cpudl_set_freecpu(&rq->rd->cpudl, rq->cpu);
+ 	if (rq->dl.dl_nr_running > 0)
+ 		cpudl_set(&rq->rd->cpudl, rq->cpu, rq->dl.earliest_dl.curr);
++	else
++		cpudl_clear(&rq->rd->cpudl, rq->cpu, true);
+ }
+ 
+ /* Assumes rq->lock is held */
+@@ -2961,8 +2962,7 @@ static void rq_offline_dl(struct rq *rq)
+ 	if (rq->dl.overloaded)
+ 		dl_clear_overload(rq);
+ 
+-	cpudl_clear(&rq->rd->cpudl, rq->cpu);
+-	cpudl_clear_freecpu(&rq->rd->cpudl, rq->cpu);
++	cpudl_clear(&rq->rd->cpudl, rq->cpu, false);
+ }
+ 
+ void __init init_sched_dl_class(void)
 -- 
 2.51.0
 
