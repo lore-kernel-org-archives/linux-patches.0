@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D64135C1AE;
-	Tue,  6 Jan 2026 17:46:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD68735CB65;
+	Tue,  6 Jan 2026 17:46:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721590; cv=none; b=ZgmS3p+wbVqRMkqaB7zl1fqWXUQar9S4MGF9Z+JjB/GIaZFmcQOJMPo6xAlOBs1TSH6k8KWngaby41bv4SH/zR2FJbCSuvBUGWrICGSpeJdrMF1KWO6L8CkvYQ4NNviAZsrrUsJAdlajdqloQu5URXKENefXObycpqaAXpWGCMA=
+	t=1767721594; cv=none; b=gC3aoY+VgpxfgzIIP2yCs8lvlem+NstO7cNjGMd8ht5Cj2AU0h7xGp8Zy62116r3Efgi/bgibU4kINwuyd8t0wnlhDP29t7TA7XBulEG7HUCejI9trs+MKXxj05m5gzrsuT4eG/s0MGm0gj6EGJHD2yIAlom8YOf3G0GZ8WDwao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721590; c=relaxed/simple;
-	bh=J0bVmtJHd4wCItknnjkMYv6Ir2v3P1UIXZSWR5+pnsI=;
+	s=arc-20240116; t=1767721594; c=relaxed/simple;
+	bh=UyzgdVq4H1FUIh8a3DuyUPvnbeEge2EDoJayOI/0Xew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t+A14b6geqbhAR4N7rzbobFynz7L1lvpX30GubUsCYZrSr0trsWwojomzrMbeAXEY6JnBZPTjjW8sZXZitlaz8nDkLYFX6pkrTt1JU8hIlTMI5CxpjMTMmNkoLQq8Q+L3PCurOFmg6TbkYHQfTOP712uaql4+nZfoV0y5Nscbh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vfWpT85X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=brMUHhyau5YK8TldKzd+epCXkLpZkAnoXGXtsUrLA28VeyUf7MgLkuKF/sfmu12DRAkMlqPVnRrnwNxaOcJoO9nST6VB7PPh8zLowBZdiS08fQwB3v+befvlkHRr2Xy2/5HUSMvkhNrrp51jaLtKpXm9zh1hDMkSNN7QHZ6kH8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wI3lln0d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfWpT85X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0B2DC116C6;
-	Tue,  6 Jan 2026 17:46:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wI3lln0d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51BE3C116C6;
+	Tue,  6 Jan 2026 17:46:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721590;
-	bh=J0bVmtJHd4wCItknnjkMYv6Ir2v3P1UIXZSWR5+pnsI=;
+	s=korg; t=1767721593;
+	bh=UyzgdVq4H1FUIh8a3DuyUPvnbeEge2EDoJayOI/0Xew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vfWpT85XDGKY286baDaPKCqTbvubK6eIm6AZupy8EEiKrp1/FXti7ivLBstTLxLOQ
-	 iI9SXV/O/ni7qJfJvgihOCtfzXrnLkzfUQKCy6JxsEjTVQtLgC5cnWF5/y108JGZNc
-	 UwGwaxgYsy9CghLoPxJv0KeNx+Ki3bsmpbJlIs/M=
+	b=wI3lln0dIx80/q5uRIZzKBjvs6TPuVkTN0z8Pjjl+u5yZYcGpVbHRq+MFzyc7N7vQ
+	 K9u/zDMxNfNDmN6V2LtoWO5cwhZtqqU5uTKtW3atxz1+Vr81LmqyrlK8NCaOfJkx/n
+	 Grk0SK0/hZn5mzC9be5Qvw8KnUauO+VTnVqM5X6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Aloka Dixit <aloka.dixit@oss.qualcomm.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 014/312] wifi: cfg80211: sme: store capped length in __cfg80211_connect_result()
-Date: Tue,  6 Jan 2026 18:01:28 +0100
-Message-ID: <20260106170548.369678556@linuxfoundation.org>
+Subject: [PATCH 6.18 015/312] wifi: mac80211: do not use old MBSSID elements
+Date: Tue,  6 Jan 2026 18:01:29 +0100
+Message-ID: <20260106170548.405574603@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -51,35 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Aloka Dixit <aloka.dixit@oss.qualcomm.com>
 
-[ Upstream commit 2b77b9551d1184cb5af8271ff350e6e2c1b3db0d ]
+[ Upstream commit a519be2f5d958c5804f2cfd68f1f384291271fab ]
 
-The QGenie AI code review tool says we should store the capped length to
-wdev->u.client.ssid_len.  The AI is correct.
+When userspace brings down and deletes a non-transmitted profile,
+it is expected to send a new updated Beacon template for the
+transmitted profile of that multiple BSSID (MBSSID) group which
+does not include the removed profile in MBSSID element. This
+update comes via NL80211_CMD_SET_BEACON.
 
-Fixes: 62b635dcd69c ("wifi: cfg80211: sme: cap SSID length in __cfg80211_connect_result()")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/aTAbp5RleyH_lnZE@stanley.mountain
+Such updates work well as long as the group continues to have at
+least one non-transmitted profile as NL80211_ATTR_MBSSID_ELEMS
+is included in the new Beacon template.
+
+But when the last non-trasmitted profile is removed, it still
+gets included in Beacon templates sent to driver. This happens
+because when no MBSSID elements are sent by the userspace,
+ieee80211_assign_beacon() ends up using the element stored from
+earlier Beacon template.
+
+Do not copy old MBSSID elements, instead userspace should always
+include these when applicable.
+
+Fixes: 2b3171c6fe0a ("mac80211: MBSSID beacon handling in AP mode")
+Signed-off-by: Aloka Dixit <aloka.dixit@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251215174656.2866319-2-aloka.dixit@oss.qualcomm.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/sme.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/cfg.c | 10 ----------
+ 1 file changed, 10 deletions(-)
 
-diff --git a/net/wireless/sme.c b/net/wireless/sme.c
-index 3a028ff287fb..4e629ca305bc 100644
---- a/net/wireless/sme.c
-+++ b/net/wireless/sme.c
-@@ -910,7 +910,7 @@ void __cfg80211_connect_result(struct net_device *dev,
+diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
+index c52b0456039d..e18df59951a8 100644
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -1328,7 +1328,6 @@ ieee80211_assign_beacon(struct ieee80211_sub_if_data *sdata,
  
- 			ssid_len = min(ssid->datalen, IEEE80211_MAX_SSID_LEN);
- 			memcpy(wdev->u.client.ssid, ssid->data, ssid_len);
--			wdev->u.client.ssid_len = ssid->datalen;
-+			wdev->u.client.ssid_len = ssid_len;
- 			break;
+ 	size = sizeof(*new) + new_head_len + new_tail_len;
+ 
+-	/* new or old multiple BSSID elements? */
+ 	if (params->mbssid_ies) {
+ 		mbssid = params->mbssid_ies;
+ 		size += struct_size(new->mbssid_ies, elem, mbssid->cnt);
+@@ -1338,15 +1337,6 @@ ieee80211_assign_beacon(struct ieee80211_sub_if_data *sdata,
  		}
- 		rcu_read_unlock();
+ 		size += ieee80211_get_mbssid_beacon_len(mbssid, rnr,
+ 							mbssid->cnt);
+-	} else if (old && old->mbssid_ies) {
+-		mbssid = old->mbssid_ies;
+-		size += struct_size(new->mbssid_ies, elem, mbssid->cnt);
+-		if (old && old->rnr_ies) {
+-			rnr = old->rnr_ies;
+-			size += struct_size(new->rnr_ies, elem, rnr->cnt);
+-		}
+-		size += ieee80211_get_mbssid_beacon_len(mbssid, rnr,
+-							mbssid->cnt);
+ 	}
+ 
+ 	new = kzalloc(size, GFP_KERNEL);
 -- 
 2.51.0
 
