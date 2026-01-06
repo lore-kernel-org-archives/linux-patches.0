@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C632B35F8B3;
-	Tue,  6 Jan 2026 17:48:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2787035F8B3;
+	Tue,  6 Jan 2026 17:48:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721698; cv=none; b=LyvFmaBzgZCRdGnDCcuh5FBGsakDMwQRBLuLQxaXGSLvt0QG9wTnbtSYF4PB8+9/XKjpwS3hF5LLKYhNAdsI4eTU8QyTwiWfz2ejbzQLuOhnOqlPWFH/xsmBhh4VIxE9CD8qVekMa4KCNOyme8V4pqLjhAcEKqBxWjNwehTtCgo=
+	t=1767721702; cv=none; b=awXh3dWL0mr7+N8MDrgzjHc+wKNLqwSQbJTxztfdFZZdr0jvjhGM36UAOKS29noaKP/zDShDok3uiCo+WW3K6engj535q2lGS4v8WdsrljghnWjubbMqWRfJ4Mc4X4BMi7xYIz9cAB3yHi75/xj+luYYUG+0duzRlG6NH88syuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721698; c=relaxed/simple;
-	bh=EhDw1F9p58xrlFLKOYa1+LH2SSYndJUjIsbkRrHef1M=;
+	s=arc-20240116; t=1767721702; c=relaxed/simple;
+	bh=qzl8hK9Qmh3dfkG8ME3O1rmQprQUCW6nbHltUUMaO8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OCkop2OuoNLHeQNVj2xsV4Ioq0oJVS/F1B1lOoWvAl3EozWr5zWhs0hltePsGRY/TSu1FLsZ54KeBH/Sfbam9K+JgRFoNG770SSfl5wfrXaC0CLsjr15ugiQxw35qOj5dqi5WejKUOiBbhm+ybL2RrJmHh4ihncpPsaDoYZJ96Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jEjybaB4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gmsmoNMOL6nav9qfoOZd6OAI+/6fP4IMXJV+Lsx/DnGdSYNNrVVGLqHf6WyKhrWOInfuqmf8sIOWT/ZXXW0s5CHXr8CDcizxLIvVvGvDRaeMGz8M/FId0EFF8VMCUIIPvIZa3fnrb0/36LhvOy7vhLi4mPA4hnpdlbuB/fEwWy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zQ9TgZDG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jEjybaB4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 321DCC116C6;
-	Tue,  6 Jan 2026 17:48:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zQ9TgZDG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C2D7C116C6;
+	Tue,  6 Jan 2026 17:48:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721698;
-	bh=EhDw1F9p58xrlFLKOYa1+LH2SSYndJUjIsbkRrHef1M=;
+	s=korg; t=1767721702;
+	bh=qzl8hK9Qmh3dfkG8ME3O1rmQprQUCW6nbHltUUMaO8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jEjybaB4Fhu2bmLK/zeQWs686mvpBluEUON6BT9jfb7R36cqX18AMyK0/n3WwHgCq
-	 S7H/AqIeyoA8hGW2YQ3MiI6BtsrZ16xjAOlUn+iTqxURrobnYDGJ8tdcsujD704XFS
-	 x1hcicbx95XM4wyQpaDFKdVvBYk5Y4ulhIdsRFmg=
+	b=zQ9TgZDGJtKm1R5JsgmdVIV/AmFzy45R/413VMc3WGuNqjaCLDheEPA+heTsm0g7U
+	 yNSPX6nvA12Szsdg0plpNG6K1rR7qABNXeFucEDb3lwV+mueKBPKxFb/LjLblDVZGo
+	 11euHiOgy/QR3lU5GPYGHUSRJlCQiBpfWTZ51V3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Alexey Skidanov <alexey.skidanov@intel.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 045/312] genalloc.h: fix htmldocs warning
-Date: Tue,  6 Jan 2026 18:01:59 +0100
-Message-ID: <20260106170549.487253353@linuxfoundation.org>
+Subject: [PATCH 6.18 046/312] firewire: nosy: Fix dma_free_coherent() size
+Date: Tue,  6 Jan 2026 18:02:00 +0100
+Message-ID: <20260106170549.523131790@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -53,36 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Morton <akpm@linux-foundation.org>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 5393802c94e0ab1295c04c94c57bcb00222d4674 ]
+[ Upstream commit c48c0fd0e19684b6ecdb4108a429e3a4e73f5e21 ]
 
-WARNING: include/linux/genalloc.h:52 function parameter 'start_addr' not described in 'genpool_algo_t'
+It looks like the buffer allocated and mapped in add_card() is done
+with size RCV_BUFFER_SIZE which is 16 KB and 4KB.
 
-Fixes: 52fbf1134d47 ("lib/genalloc.c: fix allocation of aligned buffer from non-aligned chunk")
-Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Closes: https://lkml.kernel.org/r/20251127130624.563597e3@canb.auug.org.au
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Tested-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Alexey Skidanov <alexey.skidanov@intel.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 286468210d83 ("firewire: new driver: nosy - IEEE 1394 traffic sniffer")
+Co-developed-by: Thomas Fourier <fourier.thomas@gmail.com>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Co-developed-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://lore.kernel.org/r/20251216165420.38355-2-fourier.thomas@gmail.com
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/genalloc.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/firewire/nosy.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/include/linux/genalloc.h b/include/linux/genalloc.h
-index 0bd581003cd5..60de63e46b33 100644
---- a/include/linux/genalloc.h
-+++ b/include/linux/genalloc.h
-@@ -44,6 +44,7 @@ struct gen_pool;
-  * @nr: The number of zeroed bits we're looking for
-  * @data: optional additional data used by the callback
-  * @pool: the pool being allocated from
-+ * @start_addr: start address of memory chunk
-  */
- typedef unsigned long (*genpool_algo_t)(unsigned long *map,
- 			unsigned long size,
+diff --git a/drivers/firewire/nosy.c b/drivers/firewire/nosy.c
+index ea31ac7ac1ca..e59053738a43 100644
+--- a/drivers/firewire/nosy.c
++++ b/drivers/firewire/nosy.c
+@@ -36,6 +36,8 @@
+ 
+ static char driver_name[] = KBUILD_MODNAME;
+ 
++#define RCV_BUFFER_SIZE (16 * 1024)
++
+ /* this is the physical layout of a PCL, its size is 128 bytes */
+ struct pcl {
+ 	__le32 next;
+@@ -517,16 +519,14 @@ remove_card(struct pci_dev *dev)
+ 			  lynx->rcv_start_pcl, lynx->rcv_start_pcl_bus);
+ 	dma_free_coherent(&lynx->pci_device->dev, sizeof(struct pcl),
+ 			  lynx->rcv_pcl, lynx->rcv_pcl_bus);
+-	dma_free_coherent(&lynx->pci_device->dev, PAGE_SIZE, lynx->rcv_buffer,
+-			  lynx->rcv_buffer_bus);
++	dma_free_coherent(&lynx->pci_device->dev, RCV_BUFFER_SIZE,
++			  lynx->rcv_buffer, lynx->rcv_buffer_bus);
+ 
+ 	iounmap(lynx->registers);
+ 	pci_disable_device(dev);
+ 	lynx_put(lynx);
+ }
+ 
+-#define RCV_BUFFER_SIZE (16 * 1024)
+-
+ static int
+ add_card(struct pci_dev *dev, const struct pci_device_id *unused)
+ {
+@@ -680,7 +680,7 @@ add_card(struct pci_dev *dev, const struct pci_device_id *unused)
+ 		dma_free_coherent(&lynx->pci_device->dev, sizeof(struct pcl),
+ 				  lynx->rcv_pcl, lynx->rcv_pcl_bus);
+ 	if (lynx->rcv_buffer)
+-		dma_free_coherent(&lynx->pci_device->dev, PAGE_SIZE,
++		dma_free_coherent(&lynx->pci_device->dev, RCV_BUFFER_SIZE,
+ 				  lynx->rcv_buffer, lynx->rcv_buffer_bus);
+ 	iounmap(lynx->registers);
+ 
 -- 
 2.51.0
 
