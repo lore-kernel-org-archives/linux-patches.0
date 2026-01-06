@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7CF635FF65;
-	Tue,  6 Jan 2026 17:49:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB19D35FF65;
+	Tue,  6 Jan 2026 17:49:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721762; cv=none; b=nupl6il/moCOGa8ByoUmCnaT5v+KmNm7o4YeDcjYGGqzourj7OogWw4w+qHlAgQP9j8FyBlsS4c8ydYgJswBGqw8xEAEuRdwaYUztt/B9K1JFh778hKy9f0PHJnVAD/fX+jdhuUzrVG80x8g/s1m/A+bObRRMK1fOKE44RrFSZA=
+	t=1767721766; cv=none; b=SPAK3mygU+bqUxwNfvTj6uEDUXJrB4tQKGMenfuKIzEJHHh4DBhYyeBOYQI3JeNVC4u3aE1G9uIR9OgI2yfesupt/FaSmL0JlkMOn0NJgP6JlCPmBfki/4GW+aINms3e5qcOS6Gyz7Fsv3RGDIdFwQbDpUa8uMmnTsMd9c3klgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721762; c=relaxed/simple;
-	bh=jIhr2SHWjYcEiunZs8qhtq+LW+E7qv4BP7PlKE6B94Y=;
+	s=arc-20240116; t=1767721766; c=relaxed/simple;
+	bh=ap9mCTBbXrB9TrGejOzecdnRN/sLQ88i73ofSyVfuFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jWX1PQ59LmrMFQo3aBhOeCBFTLYR1vi68rDso60x1KTqgcaIANNyvCEse3J6bmRYEjOTtAhKIzFlvaLEWYebuf1xXx3sdGM9889Q5UnDrhZj+plVHVnkS13O7ZdCNeBHa+jC4lWBwFKe80rjVvn+54O3RFn0v6v7dT8sZe5cc3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LqkgbzIl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DsiXH5s5lodg9c8g8nBqtu6owhgbytSC1CcFPT57x/mbMd2e79ekcxI7nJ5tCArQEjeFX2IXMSTsgvegSmD1uBBcYfMhOjBKCYTI70uztloMAsmXvOZ/lUKsbAXdVh7+EddbebuaHoWFp1IwV4IZBryBmomycflJ0o+z6cqSMGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LWiSnywI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LqkgbzIl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16ADAC116C6;
-	Tue,  6 Jan 2026 17:49:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LWiSnywI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A4DCC116C6;
+	Tue,  6 Jan 2026 17:49:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721762;
-	bh=jIhr2SHWjYcEiunZs8qhtq+LW+E7qv4BP7PlKE6B94Y=;
+	s=korg; t=1767721765;
+	bh=ap9mCTBbXrB9TrGejOzecdnRN/sLQ88i73ofSyVfuFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LqkgbzIl+y4l2E9qblWtQ+esfjuIA52EiAW5YIq7rlGjYXZpBfl+PcEmfz95w2Rep
-	 n3pgqzYaCe2phGrChgexQ3q+lja98jStSLka3SZ+NQEUnn7lFzXOYHg3j/a9mEGWDh
-	 IOeMWRijwNL6hg5bqXrG1bwmfO52t9aTkE2zqywY=
+	b=LWiSnywI+Ho5tyZbA3eqiDGFglYu3HDZHWaO1Hy7ONLRUovFtfwETFHYsg4oeTY5j
+	 5o9P0ANVOzh+7RDKx/XIWSGPdM65jRqeq1qKP6ZogkE0sAnrJLTIpA1nY+B2rnWuCQ
+	 TtiSKzAn2aEAK2bTESzD8SMK6igrNrDmZmNLRy8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Arnd Bergmann <arnd@arndb.de>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Jacob Moroni <jmoroni@google.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 065/312] RDMA/ucma: Fix rdma_ucm_query_ib_service_resp struct padding
-Date: Tue,  6 Jan 2026 18:02:19 +0100
-Message-ID: <20260106170550.202395748@linuxfoundation.org>
+Subject: [PATCH 6.18 066/312] RDMA/irdma: Fix irdma_alloc_ucontext_resp padding
+Date: Tue,  6 Jan 2026 18:02:20 +0100
+Message-ID: <20260106170550.238576483@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -53,56 +55,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 2dc675f614850b80deab7cf6d12902636ed8a7f4 ]
+[ Upstream commit d95e99a74eaf35c070f5939295331e5d7857c723 ]
 
-On a few 32-bit architectures, the newly added ib_user_service_rec
-structure is not 64-bit aligned the way it is on most regular ones.
+A recent commit modified struct irdma_alloc_ucontext_resp by adding a
+member with implicit padding in front of it, though this does not change
+the offset of the data members other than m68k. Reported by
+scripts/check-uapi.sh:
 
-Add explicit padding into the rdma_ucm_query_ib_service_resp and
-rdma_ucm_resolve_ib_service structures that embed it, so that the layout
-is compatible across all of them.
+==== ABI differences detected in include/rdma/irdma-abi.h from 1dd7bde2e91c -> HEAD ====
+    [C] 'struct irdma_alloc_ucontext_resp' changed:
+      type size changed from 704 to 640 (in bits)
+      1 data member deletion:
+        '__u8 rsvd3[2]', at offset 640 (in bits) at irdma-abi.h:61:1
+      1 data member insertion:
+        '__u8 revd3[2]', at offset 592 (in bits) at irdma-abi.h:60:1
 
-This is an ABI change on i386, aligning it with x86_64 and the other
-64-bit architectures to avoid having to use a compat ioctl handler.
+Change the size back to the previous version, and remove the implicit
+padding by making it explicit and matching what x86-64 would do by placing
+max_hw_srq_quanta member into a naturally aligned location.
 
-Fixes: 810f874eda8e ("RDMA/ucma: Support query resolved service records")
-Link: https://patch.msgid.link/r/20251208133311.313977-1-arnd@kernel.org
+Fixes: 563e1feb5f6e ("RDMA/irdma: Add SRQ support")
+Link: https://patch.msgid.link/r/20251208133849.315451-1-arnd@kernel.org
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Tested-by: Jacob Moroni <jmoroni@google.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/rdma/rdma_user_cm.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/uapi/rdma/irdma-abi.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/uapi/rdma/rdma_user_cm.h b/include/uapi/rdma/rdma_user_cm.h
-index 5ded174687ee..838f8d460256 100644
---- a/include/uapi/rdma/rdma_user_cm.h
-+++ b/include/uapi/rdma/rdma_user_cm.h
-@@ -192,6 +192,7 @@ struct rdma_ucm_query_path_resp {
- 
- struct rdma_ucm_query_ib_service_resp {
- 	__u32 num_service_recs;
-+	__u32 reserved;
- 	struct ib_user_service_rec recs[];
+diff --git a/include/uapi/rdma/irdma-abi.h b/include/uapi/rdma/irdma-abi.h
+index f7788d33376b..36f20802bcc8 100644
+--- a/include/uapi/rdma/irdma-abi.h
++++ b/include/uapi/rdma/irdma-abi.h
+@@ -57,8 +57,8 @@ struct irdma_alloc_ucontext_resp {
+ 	__u8 rsvd2;
+ 	__aligned_u64 comp_mask;
+ 	__u16 min_hw_wq_size;
++	__u8 revd3[2];
+ 	__u32 max_hw_srq_quanta;
+-	__u8 rsvd3[2];
  };
  
-@@ -354,7 +355,7 @@ enum {
- 
- #define RDMA_USER_CM_IB_SERVICE_NAME_SIZE 64
- struct rdma_ucm_ib_service {
--	__u64 service_id;
-+	__aligned_u64 service_id;
- 	__u8  service_name[RDMA_USER_CM_IB_SERVICE_NAME_SIZE];
- 	__u32 flags;
- 	__u32 reserved;
-@@ -362,6 +363,7 @@ struct rdma_ucm_ib_service {
- 
- struct rdma_ucm_resolve_ib_service {
- 	__u32 id;
-+	__u32 reserved;
- 	struct rdma_ucm_ib_service ibs;
- };
- 
+ struct irdma_alloc_pd_resp {
 -- 
 2.51.0
 
