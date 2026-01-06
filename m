@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC76F37C0ED;
-	Tue,  6 Jan 2026 18:00:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C3C355808;
+	Tue,  6 Jan 2026 18:00:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722409; cv=none; b=kTzAdNmUUzFCTZYIKM1ufrn9TSugGNsO2Md83ve0ZS/LELl8qLUMOScJlP/26JvQmHXmpbR5Tv0CnRI3VqZqbEpl14WDrTUWm7+Dh6faB0pvy7y9D3mhk2vpMBJZcNXXJNw72K+67JtHS74nKGbRhrz8d8T+tCvMMgNw/VOPw8M=
+	t=1767722412; cv=none; b=XGrQwyWJuCKcm2xAPfnwLy26FooU2ALho2niuyEjjDKdhXqMKpnlo8M1qV1S/4UWCu0bFnFjns98CyI2xg5oX2sBlTy0dqwiTIEt1rg6hPrrAsoCyIAu64kT8ZEIKczHrmL4+6EbGfE+FMvh1lKkBdlIhcOu8JCZ7KMOnk+TGi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722409; c=relaxed/simple;
-	bh=jhrRqkE79vArfRMplbw3IlwnAdC7C+bvuqq1ueJnaQI=;
+	s=arc-20240116; t=1767722412; c=relaxed/simple;
+	bh=yCoA5Plbh6dN32fULhNFX6sKpbyIECbwOAM+nTPoUP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bdBN0zmM3dJG04ur1llxwh0sD1gOUxgTrXVdoXmgOpGJbzt6hgfPktz9v5CbxDHWN0s0h/FRBdze0wKS7FC76OfGTONEDkMs31bQ46+q5QKsdbLBnwKMJ/8M2dj/BwThKtnEY1HPmuh0auqkxLWL85o6Lcmja5BBx3IPLPg/CS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a6Cz2Htj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kfyd8gKMGK5EpkFA7ZF2koLL/p6nY9G9lWs81CAtIK+wapY1ib1+d3wZRIM1EsYEBkgkgrjzrnpI21phTZab72SBJBBCsyqfAQnoswfwpG+ZTK8sMduz0Oz1IYKBVmOQB671zqDuW1Nz+gOsW8SY5Sb8IL9UIVfZ03gd0loUPpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ti6la8bu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a6Cz2Htj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C010C116C6;
-	Tue,  6 Jan 2026 18:00:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ti6la8bu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FB55C116C6;
+	Tue,  6 Jan 2026 18:00:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722408;
-	bh=jhrRqkE79vArfRMplbw3IlwnAdC7C+bvuqq1ueJnaQI=;
+	s=korg; t=1767722412;
+	bh=yCoA5Plbh6dN32fULhNFX6sKpbyIECbwOAM+nTPoUP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a6Cz2Htjtigh4SKwmIg4cRcZ4DHeH5XIDirYt6cn/6H1zJ8FSrIEoHtT84puV7MDk
-	 J6NlN4oH/tk0BT0S40ou6KK4mI8XO3yjudhr5s+sg258YoHcfAtTv6/Er+lKeM99MZ
-	 hRZ/La1hOJLhL5QsJXLVVujzirI3JaCXqdhmN95E=
+	b=ti6la8bughr/DzlzbAXztLkDRZ1BIds12IvYvVehA0BSP9VreD06W+741sXgmXu/I
+	 zAF/WSfvgSnAVUS+kUQaTxVHIor+YS9fzsooGfIUNeXOcPVbjI9YlETX7YAp4lwBjp
+	 6U+3slZ4LJEK5cLLgHnr/qlBaYlJFAXKhM1YDsa8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Daniel Golle <daniel@makrotopia.org>,
-	Andrew Lunn <andrew@lunn.ch>,
+	syzbot+4ef89409a235d804c6c2@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 255/312] net: phy: mediatek: fix nvmem cell reference leak in mt798x_phy_calibration
-Date: Tue,  6 Jan 2026 18:05:29 +0100
-Message-ID: <20260106170557.073478686@linuxfoundation.org>
+Subject: [PATCH 6.18 256/312] net: nfc: fix deadlock between nfc_unregister_device and rfkill_fop_write
+Date: Tue,  6 Jan 2026 18:05:30 +0100
+Message-ID: <20260106170557.109326993@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -52,42 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-commit 1e5a541420b8c6d87d88eb50b6b978cdeafee1c9 upstream.
+commit 1ab526d97a57e44d26fadcc0e9adeb9c0c0182f5 upstream.
 
-When nvmem_cell_read() fails in mt798x_phy_calibration(), the function
-returns without calling nvmem_cell_put(), leaking the cell reference.
+A deadlock can occur between nfc_unregister_device() and rfkill_fop_write()
+due to lock ordering inversion between device_lock and rfkill_global_mutex.
 
-Move nvmem_cell_put() right after nvmem_cell_read() to ensure the cell
-reference is always released regardless of the read result.
+The problematic lock order is:
 
-Found via static analysis and code review.
+Thread A (rfkill_fop_write):
+  rfkill_fop_write()
+    mutex_lock(&rfkill_global_mutex)
+      rfkill_set_block()
+        nfc_rfkill_set_block()
+          nfc_dev_down()
+            device_lock(&dev->dev)    <- waits for device_lock
 
-Fixes: 98c485eaf509 ("net: phy: add driver for MediaTek SoC built-in GE PHYs")
+Thread B (nfc_unregister_device):
+  nfc_unregister_device()
+    device_lock(&dev->dev)
+      rfkill_unregister()
+        mutex_lock(&rfkill_global_mutex)  <- waits for rfkill_global_mutex
+
+This creates a classic ABBA deadlock scenario.
+
+Fix this by moving rfkill_unregister() and rfkill_destroy() outside the
+device_lock critical section. Store the rfkill pointer in a local variable
+before releasing the lock, then call rfkill_unregister() after releasing
+device_lock.
+
+This change is safe because rfkill_fop_write() holds rfkill_global_mutex
+while calling the rfkill callbacks, and rfkill_unregister() also acquires
+rfkill_global_mutex before cleanup. Therefore, rfkill_unregister() will
+wait for any ongoing callback to complete before proceeding, and
+device_del() is only called after rfkill_unregister() returns, preventing
+any use-after-free.
+
+The similar lock ordering in nfc_register_device() (device_lock ->
+rfkill_global_mutex via rfkill_register) is safe because during
+registration the device is not yet in rfkill_list, so no concurrent
+rfkill operations can occur on this device.
+
+Fixes: 3e3b5dfcd16a ("NFC: reorder the logic in nfc_{un,}register_device")
 Cc: stable@vger.kernel.org
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Reviewed-by: Daniel Golle <daniel@makrotopia.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20251211081313.2368460-1-linmq006@gmail.com
+Reported-by: syzbot+4ef89409a235d804c6c2@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=4ef89409a235d804c6c2
+Link: https://lore.kernel.org/all/20251217054908.178907-1-kartikey406@gmail.com/T/ [v1]
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251218012355.279940-1-kartikey406@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/mediatek/mtk-ge-soc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/nfc/core.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/net/phy/mediatek/mtk-ge-soc.c
-+++ b/drivers/net/phy/mediatek/mtk-ge-soc.c
-@@ -1167,9 +1167,9 @@ static int mt798x_phy_calibration(struct
+--- a/net/nfc/core.c
++++ b/net/nfc/core.c
+@@ -1154,6 +1154,7 @@ EXPORT_SYMBOL(nfc_register_device);
+ void nfc_unregister_device(struct nfc_dev *dev)
+ {
+ 	int rc;
++	struct rfkill *rfk = NULL;
+ 
+ 	pr_debug("dev_name=%s\n", dev_name(&dev->dev));
+ 
+@@ -1164,13 +1165,17 @@ void nfc_unregister_device(struct nfc_de
+ 
+ 	device_lock(&dev->dev);
+ 	if (dev->rfkill) {
+-		rfkill_unregister(dev->rfkill);
+-		rfkill_destroy(dev->rfkill);
++		rfk = dev->rfkill;
+ 		dev->rfkill = NULL;
  	}
+ 	dev->shutting_down = true;
+ 	device_unlock(&dev->dev);
  
- 	buf = (u32 *)nvmem_cell_read(cell, &len);
-+	nvmem_cell_put(cell);
- 	if (IS_ERR(buf))
- 		return PTR_ERR(buf);
--	nvmem_cell_put(cell);
- 
- 	if (!buf[0] || !buf[1] || !buf[2] || !buf[3] || len < 4 * sizeof(u32)) {
- 		phydev_err(phydev, "invalid efuse data\n");
++	if (rfk) {
++		rfkill_unregister(rfk);
++		rfkill_destroy(rfk);
++	}
++
+ 	if (dev->ops->check_presence) {
+ 		timer_delete_sync(&dev->check_pres_timer);
+ 		cancel_work_sync(&dev->check_pres_work);
 
 
