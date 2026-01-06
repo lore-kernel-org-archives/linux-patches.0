@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3888134DB78;
-	Tue,  6 Jan 2026 17:44:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DEDE34FF40;
+	Tue,  6 Jan 2026 17:44:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721464; cv=none; b=FHmF6ix3hyZjptFxfVkz5rIwsiMCVL4ltioQE2YnEnIYVEFSNDc1Ig35BL3kqdXPbXU2ds8Zcxn/hUooIXVhDXWqdvbB9rPLqsZ8TJWctGg6po9OBvjiywPZQ5f8D1Wzdck2ByoM/8xv0tPL61ivWXzbTxp+WAziFC4aKlKRkps=
+	t=1767721468; cv=none; b=QE4R2aZTPM/yeiVSX11CNWZLxjeTLMwy8MeP+oIS3InGllAKcx/c5yMiB0+JPMgM7QeUa2j02bHrzFSwnwSAKTbuGwwpxYT4kx1oG0/V5qbUJAiuWL9wV0vs+G5j8kKw29+djZeegP2jvS5v6TfqRDCt6MNV41RnfAd7eDXTFes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721464; c=relaxed/simple;
-	bh=nkqGSrkeTK9+TteHN5H9pBqlj3pOLN2wVWRIoRCdlKU=;
+	s=arc-20240116; t=1767721468; c=relaxed/simple;
+	bh=Ir7i5+7IqPZ/Hi7aHzxI+YZOffxC5+nKC3Yse+bnG5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=okYkDNcy/SqIrocAwCbp7wvN9v6dSfGxsmQ39O0MRCBJbS1GphhtD6Y9EO7ZyrU7Isqfya0s2uWJsK6Ng6fmBjaeiRDlG1HUSPUgqDC20LXcEx6NqzPEq0YgML25K9WaXhmX2p4YvRTfpt6l/gxO+vb/fQofqO3vB1xS3rZm7yU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UPDveSz9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U/ebNTS+7AWp7RPJQmsfOSFScuIaxJ4MnRWxRgjCEC+9jOvlhTnxJo9ZrNR/ApogkAKfMMmmWk8W9maFwNMNk3VJ+K8FDIKZBtYmjB+Aj5agpeQzqrAUM7RN8ZcetDNOR0L6bp9U2GyiUZg7S7WCaOLaNQS8pIplmjpfnfC56Ms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wRBNpBdZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UPDveSz9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DBF4C16AAE;
-	Tue,  6 Jan 2026 17:44:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wRBNpBdZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D0F8C19423;
+	Tue,  6 Jan 2026 17:44:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721464;
-	bh=nkqGSrkeTK9+TteHN5H9pBqlj3pOLN2wVWRIoRCdlKU=;
+	s=korg; t=1767721467;
+	bh=Ir7i5+7IqPZ/Hi7aHzxI+YZOffxC5+nKC3Yse+bnG5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UPDveSz9Kw/bnxlGqNDPFyfBGdbm+xF8QzDRQ7oI9apJHD/Rt/bwOA6473VRlJy3p
-	 m2fDz8BeMN0JgkU7ukbM+mgVFV9sJcCK10U7o8bFR/1IM1u09m5MbBzP+EHG1VJ+Fh
-	 CprlhWBYTh1QyVIfxBd9pjXxoAxefHjVS0e2dBaM=
+	b=wRBNpBdZCipA2JNte/0e4e8/5c9dwaKhw9+F67kKMbQc5qKUfLJN0jzkmgEMY/xRW
+	 3UMipSNi9HgrewdAIoC5qgMG+tkOo+V4RF/mi0MkD3F+5KSCjrBGDEeZY4TDk/aPoY
+	 QGrl4ziPYILqDnkQPT8eff2ljfJhvp39bC3QHWSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: [PATCH 6.12 527/567] ipv6: adopt dst_dev() helper
-Date: Tue,  6 Jan 2026 18:05:09 +0100
-Message-ID: <20260106170510.887935860@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.12 545/567] hrtimers: Make hrtimer_update_function() less expensive
+Date: Tue,  6 Jan 2026 18:05:27 +0100
+Message-ID: <20260106170511.570743684@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,505 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 1caf27297215a5241f9bfc9c07336349d9034ee3 ]
+commit 2ea97b76d6712bfb0408e5b81ffd7bc4551d3153 upstream.
 
-Use the new helper as a step to deal with potential dst->dev races.
+The sanity checks in hrtimer_update_function() are expensive for high
+frequency usage like in the io/uring code due to locking.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250630121934.3399505-9-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[Harshit: Backport to 6.12.y, pulled this is a prerequisite]
-Stable-dep-of: 99a2ace61b21 ("net: use dst_dev_rcu() in sk_setup_caps()")
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Hide the sanity checks behind CONFIG_PROVE_LOCKING, which has a decent
+chance to be enabled on a regular basis for testing.
+
+Fixes: 8f02e3563bb5 ("hrtimers: Introduce hrtimer_update_function()")
+Reported-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/87ikpllali.ffs@tglx
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/ip6_route.h          |    4 ++--
- net/ipv6/exthdrs.c               |    2 +-
- net/ipv6/icmp.c                  |    4 +++-
- net/ipv6/ila/ila_lwt.c           |    2 +-
- net/ipv6/ioam6_iptunnel.c        |    4 ++--
- net/ipv6/ip6_gre.c               |    8 +++++---
- net/ipv6/ip6_output.c            |   19 ++++++++++---------
- net/ipv6/ip6_tunnel.c            |    4 ++--
- net/ipv6/ip6_udp_tunnel.c        |    2 +-
- net/ipv6/ip6_vti.c               |    2 +-
- net/ipv6/ndisc.c                 |    6 ++++--
- net/ipv6/netfilter/nf_dup_ipv6.c |    2 +-
- net/ipv6/output_core.c           |    2 +-
- net/ipv6/route.c                 |   20 ++++++++++++--------
- net/ipv6/rpl_iptunnel.c          |    4 ++--
- net/ipv6/seg6_iptunnel.c         |   20 +++++++++++---------
- net/ipv6/seg6_local.c            |    2 +-
- 17 files changed, 60 insertions(+), 47 deletions(-)
+ include/linux/hrtimer.h |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/include/net/ip6_route.h
-+++ b/include/net/ip6_route.h
-@@ -274,7 +274,7 @@ static inline unsigned int ip6_skb_dst_m
- 	unsigned int mtu;
- 
- 	if (np && READ_ONCE(np->pmtudisc) >= IPV6_PMTUDISC_PROBE) {
--		mtu = READ_ONCE(dst->dev->mtu);
-+		mtu = READ_ONCE(dst_dev(dst)->mtu);
- 		mtu -= lwtunnel_headroom(dst->lwtstate, mtu);
- 	} else {
- 		mtu = dst_mtu(dst);
-@@ -337,7 +337,7 @@ static inline unsigned int ip6_dst_mtu_m
- 
- 	mtu = IPV6_MIN_MTU;
- 	rcu_read_lock();
--	idev = __in6_dev_get(dst->dev);
-+	idev = __in6_dev_get(dst_dev(dst));
- 	if (idev)
- 		mtu = READ_ONCE(idev->cnf.mtu6);
- 	rcu_read_unlock();
---- a/net/ipv6/exthdrs.c
-+++ b/net/ipv6/exthdrs.c
-@@ -306,7 +306,7 @@ static int ipv6_destopt_rcv(struct sk_bu
- 	if (!pskb_may_pull(skb, skb_transport_offset(skb) + 8) ||
- 	    !pskb_may_pull(skb, (skb_transport_offset(skb) +
- 				 ((skb_transport_header(skb)[1] + 1) << 3)))) {
--		__IP6_INC_STATS(dev_net(dst->dev), idev,
-+		__IP6_INC_STATS(dev_net(dst_dev(dst)), idev,
- 				IPSTATS_MIB_INHDRERRORS);
- fail_and_free:
- 		kfree_skb(skb);
---- a/net/ipv6/icmp.c
-+++ b/net/ipv6/icmp.c
-@@ -196,6 +196,7 @@ static bool icmpv6_xrlim_allow(struct so
- 			       struct flowi6 *fl6, bool apply_ratelimit)
+--- a/include/linux/hrtimer.h
++++ b/include/linux/hrtimer.h
+@@ -348,6 +348,7 @@ static inline int hrtimer_callback_runni
+ static inline void hrtimer_update_function(struct hrtimer *timer,
+ 					   enum hrtimer_restart (*function)(struct hrtimer *))
  {
- 	struct net *net = sock_net(sk);
-+	struct net_device *dev;
- 	struct dst_entry *dst;
- 	bool res = false;
++#ifdef CONFIG_PROVE_LOCKING
+ 	guard(raw_spinlock_irqsave)(&timer->base->cpu_base->lock);
  
-@@ -208,10 +209,11 @@ static bool icmpv6_xrlim_allow(struct so
- 	 * this lookup should be more aggressive (not longer than timeout).
- 	 */
- 	dst = ip6_route_output(net, sk, fl6);
-+	dev = dst_dev(dst);
- 	if (dst->error) {
- 		IP6_INC_STATS(net, ip6_dst_idev(dst),
- 			      IPSTATS_MIB_OUTNOROUTES);
--	} else if (dst->dev && (dst->dev->flags&IFF_LOOPBACK)) {
-+	} else if (dev && (dev->flags & IFF_LOOPBACK)) {
- 		res = true;
- 	} else {
- 		struct rt6_info *rt = dst_rt6_info(dst);
---- a/net/ipv6/ila/ila_lwt.c
-+++ b/net/ipv6/ila/ila_lwt.c
-@@ -70,7 +70,7 @@ static int ila_output(struct net *net, s
- 		 */
+ 	if (WARN_ON_ONCE(hrtimer_is_queued(timer)))
+@@ -355,7 +356,7 @@ static inline void hrtimer_update_functi
  
- 		memset(&fl6, 0, sizeof(fl6));
--		fl6.flowi6_oif = orig_dst->dev->ifindex;
-+		fl6.flowi6_oif = dst_dev(orig_dst)->ifindex;
- 		fl6.flowi6_iif = LOOPBACK_IFINDEX;
- 		fl6.daddr = *rt6_nexthop(dst_rt6_info(orig_dst),
- 					 &ip6h->daddr);
---- a/net/ipv6/ioam6_iptunnel.c
-+++ b/net/ipv6/ioam6_iptunnel.c
-@@ -328,7 +328,7 @@ static int ioam6_do_encap(struct net *ne
- 	if (has_tunsrc)
- 		memcpy(&hdr->saddr, tunsrc, sizeof(*tunsrc));
- 	else
--		ipv6_dev_get_saddr(net, dst->dev, &hdr->daddr,
-+		ipv6_dev_get_saddr(net, dst_dev(dst), &hdr->daddr,
- 				   IPV6_PREFER_SRC_PUBLIC, &hdr->saddr);
- 
- 	skb_postpush_rcsum(skb, hdr, len);
-@@ -417,7 +417,7 @@ do_encap:
- 			local_bh_enable();
- 		}
- 
--		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
-+		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst_dev(dst)));
- 		if (unlikely(err))
- 			goto drop;
- 	}
---- a/net/ipv6/ip6_gre.c
-+++ b/net/ipv6/ip6_gre.c
-@@ -1084,9 +1084,11 @@ static netdev_tx_t ip6erspan_tunnel_xmit
- 			 htonl(atomic_fetch_inc(&t->o_seqno)));
- 
- 	/* TooBig packet may have updated dst->dev's mtu */
--	if (!t->parms.collect_md && dst && dst_mtu(dst) > dst->dev->mtu)
--		dst->ops->update_pmtu(dst, NULL, skb, dst->dev->mtu, false);
+ 	if (WARN_ON_ONCE(!function))
+ 		return;
 -
-+	if (!t->parms.collect_md && dst) {
-+		mtu = READ_ONCE(dst_dev(dst)->mtu);
-+		if (dst_mtu(dst) > mtu)
-+			dst->ops->update_pmtu(dst, NULL, skb, mtu, false);
-+	}
- 	err = ip6_tnl_xmit(skb, dev, dsfield, &fl6, encap_limit, &mtu,
- 			   NEXTHDR_GRE);
- 	if (err != 0) {
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -60,7 +60,7 @@
- static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *skb)
- {
- 	struct dst_entry *dst = skb_dst(skb);
--	struct net_device *dev = dst->dev;
-+	struct net_device *dev = dst_dev(dst);
- 	struct inet6_dev *idev = ip6_dst_idev(dst);
- 	unsigned int hh_len = LL_RESERVED_SPACE(dev);
- 	const struct in6_addr *daddr, *nexthop;
-@@ -271,7 +271,7 @@ int ip6_xmit(const struct sock *sk, stru
- 	const struct ipv6_pinfo *np = inet6_sk(sk);
- 	struct in6_addr *first_hop = &fl6->daddr;
- 	struct dst_entry *dst = skb_dst(skb);
--	struct net_device *dev = dst->dev;
-+	struct net_device *dev = dst_dev(dst);
- 	struct inet6_dev *idev = ip6_dst_idev(dst);
- 	struct hop_jumbo_hdr *hop_jumbo;
- 	int hoplen = sizeof(*hop_jumbo);
-@@ -503,7 +503,8 @@ int ip6_forward(struct sk_buff *skb)
- 	struct dst_entry *dst = skb_dst(skb);
- 	struct ipv6hdr *hdr = ipv6_hdr(skb);
- 	struct inet6_skb_parm *opt = IP6CB(skb);
--	struct net *net = dev_net(dst->dev);
-+	struct net *net = dev_net(dst_dev(dst));
-+	struct net_device *dev;
- 	struct inet6_dev *idev;
- 	SKB_DR(reason);
- 	u32 mtu;
-@@ -591,12 +592,12 @@ int ip6_forward(struct sk_buff *skb)
- 		goto drop;
- 	}
- 	dst = skb_dst(skb);
--
-+	dev = dst_dev(dst);
- 	/* IPv6 specs say nothing about it, but it is clear that we cannot
- 	   send redirects to source routed frames.
- 	   We don't send redirects to frames decapsulated from IPsec.
- 	 */
--	if (IP6CB(skb)->iif == dst->dev->ifindex &&
-+	if (IP6CB(skb)->iif == dev->ifindex &&
- 	    opt->srcrt == 0 && !skb_sec_path(skb)) {
- 		struct in6_addr *target = NULL;
- 		struct inet_peer *peer;
-@@ -644,7 +645,7 @@ int ip6_forward(struct sk_buff *skb)
- 
- 	if (ip6_pkt_too_big(skb, mtu)) {
- 		/* Again, force OUTPUT device used as source address */
--		skb->dev = dst->dev;
-+		skb->dev = dev;
- 		icmpv6_send(skb, ICMPV6_PKT_TOOBIG, 0, mtu);
- 		__IP6_INC_STATS(net, idev, IPSTATS_MIB_INTOOBIGERRORS);
- 		__IP6_INC_STATS(net, ip6_dst_idev(dst),
-@@ -653,7 +654,7 @@ int ip6_forward(struct sk_buff *skb)
- 		return -EMSGSIZE;
- 	}
- 
--	if (skb_cow(skb, dst->dev->hard_header_len)) {
-+	if (skb_cow(skb, dev->hard_header_len)) {
- 		__IP6_INC_STATS(net, ip6_dst_idev(dst),
- 				IPSTATS_MIB_OUTDISCARDS);
- 		goto drop;
-@@ -666,7 +667,7 @@ int ip6_forward(struct sk_buff *skb)
- 	hdr->hop_limit--;
- 
- 	return NF_HOOK(NFPROTO_IPV6, NF_INET_FORWARD,
--		       net, NULL, skb, skb->dev, dst->dev,
-+		       net, NULL, skb, skb->dev, dev,
- 		       ip6_forward_finish);
- 
- error:
-@@ -1093,7 +1094,7 @@ static struct dst_entry *ip6_sk_dst_chec
- #ifdef CONFIG_IPV6_SUBTREES
- 	    ip6_rt_check(&rt->rt6i_src, &fl6->saddr, np->saddr_cache) ||
- #endif
--	   (fl6->flowi6_oif && fl6->flowi6_oif != dst->dev->ifindex)) {
-+	   (fl6->flowi6_oif && fl6->flowi6_oif != dst_dev(dst)->ifindex)) {
- 		dst_release(dst);
- 		dst = NULL;
- 	}
---- a/net/ipv6/ip6_tunnel.c
-+++ b/net/ipv6/ip6_tunnel.c
-@@ -1179,7 +1179,7 @@ route_lookup:
- 		ndst = dst;
- 	}
- 
--	tdev = dst->dev;
-+	tdev = dst_dev(dst);
- 
- 	if (tdev == dev) {
- 		DEV_STATS_INC(dev, collisions);
-@@ -1255,7 +1255,7 @@ route_lookup:
- 	/* Calculate max headroom for all the headers and adjust
- 	 * needed_headroom if necessary.
- 	 */
--	max_headroom = LL_RESERVED_SPACE(dst->dev) + sizeof(struct ipv6hdr)
-+	max_headroom = LL_RESERVED_SPACE(tdev) + sizeof(struct ipv6hdr)
- 			+ dst->header_len + t->hlen;
- 	ip_tunnel_adj_headroom(dev, max_headroom);
- 
---- a/net/ipv6/ip6_udp_tunnel.c
-+++ b/net/ipv6/ip6_udp_tunnel.c
-@@ -168,7 +168,7 @@ struct dst_entry *udp_tunnel6_dst_lookup
- 		netdev_dbg(dev, "no route to %pI6\n", &fl6.daddr);
- 		return ERR_PTR(-ENETUNREACH);
- 	}
--	if (dst->dev == dev) { /* is this necessary? */
-+	if (dst_dev(dst) == dev) { /* is this necessary? */
- 		netdev_dbg(dev, "circular route to %pI6\n", &fl6.daddr);
- 		dst_release(dst);
- 		return ERR_PTR(-ELOOP);
---- a/net/ipv6/ip6_vti.c
-+++ b/net/ipv6/ip6_vti.c
-@@ -497,7 +497,7 @@ vti6_xmit(struct sk_buff *skb, struct ne
- 			      (const struct in6_addr *)&x->id.daddr))
- 		goto tx_err_link_failure;
- 
--	tdev = dst->dev;
-+	tdev = dst_dev(dst);
- 
- 	if (tdev == dev) {
- 		DEV_STATS_INC(dev, collisions);
---- a/net/ipv6/ndisc.c
-+++ b/net/ipv6/ndisc.c
-@@ -473,6 +473,7 @@ void ndisc_send_skb(struct sk_buff *skb,
- {
- 	struct icmp6hdr *icmp6h = icmp6_hdr(skb);
- 	struct dst_entry *dst = skb_dst(skb);
-+	struct net_device *dev;
- 	struct inet6_dev *idev;
- 	struct net *net;
- 	struct sock *sk;
-@@ -507,11 +508,12 @@ void ndisc_send_skb(struct sk_buff *skb,
- 
- 	ip6_nd_hdr(skb, saddr, daddr, READ_ONCE(inet6_sk(sk)->hop_limit), skb->len);
- 
--	idev = __in6_dev_get(dst->dev);
-+	dev = dst_dev(dst);
-+	idev = __in6_dev_get(dev);
- 	IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTREQUESTS);
- 
- 	err = NF_HOOK(NFPROTO_IPV6, NF_INET_LOCAL_OUT,
--		      net, sk, skb, NULL, dst->dev,
-+		      net, sk, skb, NULL, dev,
- 		      dst_output);
- 	if (!err) {
- 		ICMP6MSGOUT_INC_STATS(net, idev, type);
---- a/net/ipv6/netfilter/nf_dup_ipv6.c
-+++ b/net/ipv6/netfilter/nf_dup_ipv6.c
-@@ -38,7 +38,7 @@ static bool nf_dup_ipv6_route(struct net
- 	}
- 	skb_dst_drop(skb);
- 	skb_dst_set(skb, dst);
--	skb->dev      = dst->dev;
-+	skb->dev      = dst_dev(dst);
- 	skb->protocol = htons(ETH_P_IPV6);
- 
- 	return true;
---- a/net/ipv6/output_core.c
-+++ b/net/ipv6/output_core.c
-@@ -105,7 +105,7 @@ int ip6_dst_hoplimit(struct dst_entry *d
- {
- 	int hoplimit = dst_metric_raw(dst, RTAX_HOPLIMIT);
- 	if (hoplimit == 0) {
--		struct net_device *dev = dst->dev;
-+		struct net_device *dev = dst_dev(dst);
- 		struct inet6_dev *idev;
- 
- 		rcu_read_lock();
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -228,13 +228,13 @@ static struct neighbour *ip6_dst_neigh_l
- 	const struct rt6_info *rt = dst_rt6_info(dst);
- 
- 	return ip6_neigh_lookup(rt6_nexthop(rt, &in6addr_any),
--				dst->dev, skb, daddr);
-+				dst_dev(dst), skb, daddr);
++#endif
+ 	timer->function = function;
  }
  
- static void ip6_confirm_neigh(const struct dst_entry *dst, const void *daddr)
- {
- 	const struct rt6_info *rt = dst_rt6_info(dst);
--	struct net_device *dev = dst->dev;
-+	struct net_device *dev = dst_dev(dst);
- 
- 	daddr = choose_neigh_daddr(rt6_nexthop(rt, &in6addr_any), NULL, daddr);
- 	if (!daddr)
-@@ -2945,7 +2945,7 @@ static void __ip6_rt_update_pmtu(struct
- 
- 		if (res.f6i->nh) {
- 			struct fib6_nh_match_arg arg = {
--				.dev = dst->dev,
-+				.dev = dst_dev(dst),
- 				.gw = &rt6->rt6i_gateway,
- 			};
- 
-@@ -3240,7 +3240,7 @@ EXPORT_SYMBOL_GPL(ip6_sk_redirect);
- 
- static unsigned int ip6_default_advmss(const struct dst_entry *dst)
- {
--	struct net_device *dev = dst->dev;
-+	struct net_device *dev = dst_dev(dst);
- 	unsigned int mtu = dst_mtu(dst);
- 	struct net *net;
- 
-@@ -4264,7 +4264,7 @@ static void rt6_do_redirect(struct dst_e
- 
- 	if (res.f6i->nh) {
- 		struct fib6_nh_match_arg arg = {
--			.dev = dst->dev,
-+			.dev = dst_dev(dst),
- 			.gw = &rt->rt6i_gateway,
- 		};
- 
-@@ -4551,13 +4551,14 @@ int ipv6_route_ioctl(struct net *net, un
- static int ip6_pkt_drop(struct sk_buff *skb, u8 code, int ipstats_mib_noroutes)
- {
- 	struct dst_entry *dst = skb_dst(skb);
--	struct net *net = dev_net(dst->dev);
-+	struct net_device *dev = dst_dev(dst);
-+	struct net *net = dev_net(dev);
- 	struct inet6_dev *idev;
- 	SKB_DR(reason);
- 	int type;
- 
- 	if (netif_is_l3_master(skb->dev) ||
--	    dst->dev == net->loopback_dev)
-+	    dev == net->loopback_dev)
- 		idev = __in6_dev_get_safely(dev_get_by_index_rcu(net, IP6CB(skb)->iif));
- 	else
- 		idev = ip6_dst_idev(dst);
-@@ -5775,11 +5776,14 @@ static int rt6_fill_node(struct net *net
- 	 * each as a nexthop within RTA_MULTIPATH.
- 	 */
- 	if (rt6) {
-+		struct net_device *dev;
-+
- 		if (rt6_flags & RTF_GATEWAY &&
- 		    nla_put_in6_addr(skb, RTA_GATEWAY, &rt6->rt6i_gateway))
- 			goto nla_put_failure;
- 
--		if (dst->dev && nla_put_u32(skb, RTA_OIF, dst->dev->ifindex))
-+		dev = dst_dev(dst);
-+		if (dev && nla_put_u32(skb, RTA_OIF, dev->ifindex))
- 			goto nla_put_failure;
- 
- 		if (dst->lwtstate &&
---- a/net/ipv6/rpl_iptunnel.c
-+++ b/net/ipv6/rpl_iptunnel.c
-@@ -242,7 +242,7 @@ static int rpl_output(struct net *net, s
- 			local_bh_enable();
- 		}
- 
--		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
-+		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst_dev(dst)));
- 		if (unlikely(err))
- 			goto drop;
- 	}
-@@ -297,7 +297,7 @@ static int rpl_input(struct sk_buff *skb
- 			local_bh_enable();
- 		}
- 
--		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
-+		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst_dev(dst)));
- 		if (unlikely(err))
- 			goto drop;
- 	} else {
---- a/net/ipv6/seg6_iptunnel.c
-+++ b/net/ipv6/seg6_iptunnel.c
-@@ -128,7 +128,8 @@ static int __seg6_do_srh_encap(struct sk
- 			       int proto, struct dst_entry *cache_dst)
- {
- 	struct dst_entry *dst = skb_dst(skb);
--	struct net *net = dev_net(dst->dev);
-+	struct net_device *dev = dst_dev(dst);
-+	struct net *net = dev_net(dev);
- 	struct ipv6hdr *hdr, *inner_hdr;
- 	struct ipv6_sr_hdr *isrh;
- 	int hdrlen, tot_len, err;
-@@ -181,7 +182,7 @@ static int __seg6_do_srh_encap(struct sk
- 	isrh->nexthdr = proto;
- 
- 	hdr->daddr = isrh->segments[isrh->first_segment];
--	set_tun_src(net, dst->dev, &hdr->daddr, &hdr->saddr);
-+	set_tun_src(net, dev, &hdr->daddr, &hdr->saddr);
- 
- #ifdef CONFIG_IPV6_SEG6_HMAC
- 	if (sr_has_hmac(isrh)) {
-@@ -212,7 +213,8 @@ static int seg6_do_srh_encap_red(struct
- {
- 	__u8 first_seg = osrh->first_segment;
- 	struct dst_entry *dst = skb_dst(skb);
--	struct net *net = dev_net(dst->dev);
-+	struct net_device *dev = dst_dev(dst);
-+	struct net *net = dev_net(dev);
- 	struct ipv6hdr *hdr, *inner_hdr;
- 	int hdrlen = ipv6_optlen(osrh);
- 	int red_tlv_offset, tlv_offset;
-@@ -270,7 +272,7 @@ static int seg6_do_srh_encap_red(struct
- 	if (skip_srh) {
- 		hdr->nexthdr = proto;
- 
--		set_tun_src(net, dst->dev, &hdr->daddr, &hdr->saddr);
-+		set_tun_src(net, dev, &hdr->daddr, &hdr->saddr);
- 		goto out;
- 	}
- 
-@@ -306,7 +308,7 @@ static int seg6_do_srh_encap_red(struct
- 
- srcaddr:
- 	isrh->nexthdr = proto;
--	set_tun_src(net, dst->dev, &hdr->daddr, &hdr->saddr);
-+	set_tun_src(net, dev, &hdr->daddr, &hdr->saddr);
- 
- #ifdef CONFIG_IPV6_SEG6_HMAC
- 	if (unlikely(!skip_srh && sr_has_hmac(isrh))) {
-@@ -507,7 +509,7 @@ static int seg6_input_core(struct net *n
- 			local_bh_enable();
- 		}
- 
--		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
-+		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst_dev(dst)));
- 		if (unlikely(err))
- 			goto drop;
- 	} else {
-@@ -518,7 +520,7 @@ static int seg6_input_core(struct net *n
- 	if (static_branch_unlikely(&nf_hooks_lwtunnel_enabled))
- 		return NF_HOOK(NFPROTO_IPV6, NF_INET_LOCAL_OUT,
- 			       dev_net(skb->dev), NULL, skb, NULL,
--			       skb_dst(skb)->dev, seg6_input_finish);
-+			       skb_dst_dev(skb), seg6_input_finish);
- 
- 	return seg6_input_finish(dev_net(skb->dev), NULL, skb);
- drop:
-@@ -593,7 +595,7 @@ static int seg6_output_core(struct net *
- 			local_bh_enable();
- 		}
- 
--		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
-+		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst_dev(dst)));
- 		if (unlikely(err))
- 			goto drop;
- 	}
-@@ -603,7 +605,7 @@ static int seg6_output_core(struct net *
- 
- 	if (static_branch_unlikely(&nf_hooks_lwtunnel_enabled))
- 		return NF_HOOK(NFPROTO_IPV6, NF_INET_LOCAL_OUT, net, sk, skb,
--			       NULL, skb_dst(skb)->dev, dst_output);
-+			       NULL, dst_dev(dst), dst_output);
- 
- 	return dst_output(net, sk, skb);
- drop:
---- a/net/ipv6/seg6_local.c
-+++ b/net/ipv6/seg6_local.c
-@@ -310,7 +310,7 @@ seg6_lookup_any_nexthop(struct sk_buff *
- 	if (!local_delivery)
- 		dev_flags |= IFF_LOOPBACK;
- 
--	if (dst && (dst->dev->flags & dev_flags) && !dst->error) {
-+	if (dst && (dst_dev(dst)->flags & dev_flags) && !dst->error) {
- 		dst_release(dst);
- 		dst = NULL;
- 	}
 
 
