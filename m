@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D26C7347FD1;
-	Tue,  6 Jan 2026 17:17:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3738C348875;
+	Tue,  6 Jan 2026 17:18:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719878; cv=none; b=tbTiYMCuJcqkWu+nrAjPk/GzShI56Dmw2N/ybJmN9gMzvny/idp3jKjUEoms+7M41xnAZoHkZOPVcK3ly37JTqeA/rkaZlrPKYgy2qrXvurT4+LkRS7TeF52qQXLdE0CgptpAw2mPrno7obr8a+q2j5Voy096fQiUUjR33t9HTI=
+	t=1767719882; cv=none; b=Z6xMgaz+4HIr/OaG10/zvb06KJFKSlWUt7lJKhyXNq6vuhN713n+DBZzQotBY230evXklKro2Nhb2rpQcz16wLnruHaa9msoKcz8LwxafMTdSfpWGmxcVbXmRbzhdh63IKkFZYweEIdaitM1Mk9ZO3MErEulH6M3fvapCVTAf78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719878; c=relaxed/simple;
-	bh=4Yx0hI+ZMGaS/p9K12sk7E4W5UJMZE0Xu0EyuyaY95k=;
+	s=arc-20240116; t=1767719882; c=relaxed/simple;
+	bh=radEEhl6lmmfS39ndYA12aTfFqhZiZFUlo1RffYh4NU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZRDbb3gfWq9eWn7JFiy1at6C4DnADy9gGwmGjf0YOQs2W+W9WDjn2SXmmiBOnr1iP/o89jOfPjB7ZIDOgh4Ee+2+dzlx7DG3eXHCknQRDcZOTJoOyRL07v+qgmYP7aJ3r5l65QQBYeQL3BQoNd2KuAY6a4njQUcW4novoiGv9E0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0uGL/D4t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eacaGv8wQIL9GC6/Ser0XltTBRceAk8uz/QH8Mx7qYWCOsgWFHzrMV0pV2kwkiVIcDr4CaeSkMlz0SChBoDZet9+0gnhx9lSihMiad/VSMhMT90alw9bgzNnNuRdRldkBzMGRWf1oJXDsVLDfe2rtNKIeaM/qasaOKR8+IBhbDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rYGVvRE0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0uGL/D4t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 293EAC116C6;
-	Tue,  6 Jan 2026 17:17:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rYGVvRE0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4632EC116C6;
+	Tue,  6 Jan 2026 17:18:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719878;
-	bh=4Yx0hI+ZMGaS/p9K12sk7E4W5UJMZE0Xu0EyuyaY95k=;
+	s=korg; t=1767719881;
+	bh=radEEhl6lmmfS39ndYA12aTfFqhZiZFUlo1RffYh4NU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0uGL/D4ttfYdVJy9z7qM6L5IYcQPoubOLJhmWXrpPoIj6vpa4Pvxw8AAjhErQ4ogB
-	 WKG6+Ln8BWn4lEPDpqZl9HTIS7SWgYhDFrQXuxzHftZEUWKgFeQIhFAUiA6TXvDsAO
-	 vE9gjVM3TjzfYDfl7tGeeP3Px+Z9KF3qXSNEi9T4=
+	b=rYGVvRE0ygNG+fPqJRf+P+FFclra1Wd2PHyoGoaV1k193Ox3izXdSOkCgI5FHKAK+
+	 czUwlTOLJyBGMPHwEL7NR/nvKSrBJlDA9dBjAPEguNkwIgKHEvwkuCfzXVuAWB3U5G
+	 U43TMZdin9+iuQUByv5m3Dj82/iykwKno8NkIsjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 035/567] gfs2: Fix "gfs2: Switch to wait_event in gfs2_quotad"
-Date: Tue,  6 Jan 2026 17:56:57 +0100
-Message-ID: <20260106170452.640634687@linuxfoundation.org>
+Subject: [PATCH 6.12 036/567] smb/server: fix return value of smb2_ioctl()
+Date: Tue,  6 Jan 2026 17:56:58 +0100
+Message-ID: <20260106170452.675969408@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -50,36 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
 
-[ Upstream commit dff1fb6d8b7abe5b1119fa060f5d6b3370bf10ac ]
+[ Upstream commit 269df046c1e15ab34fa26fd90db9381f022a0963 ]
 
-Commit e4a8b5481c59a ("gfs2: Switch to wait_event in gfs2_quotad") broke
-cyclic statfs syncing, so the numbers reported by "df" could easily get
-completely out of sync with reality.  Fix this by reverting part of
-commit e4a8b5481c59a for now.
+__process_request() will not print error messages if smb2_ioctl()
+always returns 0.
 
-A follow-up commit will clean this code up later.
+Fix this by returning the correct value at the end of function.
 
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/quota.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/fs/gfs2/quota.c b/fs/gfs2/quota.c
-index 2e6bc77f4f81c..642584265a6f4 100644
---- a/fs/gfs2/quota.c
-+++ b/fs/gfs2/quota.c
-@@ -1617,7 +1617,7 @@ int gfs2_quotad(void *data)
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index cd42d25812661..d9e28191c267e 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -8107,7 +8107,7 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 		id = req->VolatileFileId;
  
- 		t = min(quotad_timeo, statfs_timeo);
+ 	if (req->Flags != cpu_to_le32(SMB2_0_IOCTL_IS_FSCTL)) {
+-		rsp->hdr.Status = STATUS_NOT_SUPPORTED;
++		ret = -EOPNOTSUPP;
+ 		goto out;
+ 	}
  
--		t = wait_event_freezable_timeout(sdp->sd_quota_wait,
-+		t -= wait_event_freezable_timeout(sdp->sd_quota_wait,
- 				sdp->sd_statfs_force_sync ||
- 				gfs2_withdrawing_or_withdrawn(sdp) ||
- 				kthread_should_stop(),
+@@ -8127,8 +8127,9 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 	case FSCTL_DFS_GET_REFERRALS:
+ 	case FSCTL_DFS_GET_REFERRALS_EX:
+ 		/* Not support DFS yet */
++		ret = -EOPNOTSUPP;
+ 		rsp->hdr.Status = STATUS_FS_DRIVER_REQUIRED;
+-		goto out;
++		goto out2;
+ 	case FSCTL_CREATE_OR_GET_OBJECT_ID:
+ 	{
+ 		struct file_object_buf_type1_ioctl_rsp *obj_buf;
+@@ -8418,8 +8419,10 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 		rsp->hdr.Status = STATUS_BUFFER_TOO_SMALL;
+ 	else if (ret < 0 || rsp->hdr.Status == 0)
+ 		rsp->hdr.Status = STATUS_INVALID_PARAMETER;
++
++out2:
+ 	smb2_set_err_rsp(work);
+-	return 0;
++	return ret;
+ }
+ 
+ /**
 -- 
 2.51.0
 
