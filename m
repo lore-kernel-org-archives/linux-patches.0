@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F4233DEDF;
-	Tue,  6 Jan 2026 17:37:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C14AE280327;
+	Tue,  6 Jan 2026 17:37:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721026; cv=none; b=FKVOaONrpclq7PXXg5IguP0J3DXAQFk+9H9E7gEIWf4VQT1HmX6qlAqGRZ11F8kCo8XV5trfPTwgvLls8785GNpVCaQ7P6mDlhyKlIFT4cD1GMHPgPYhgFV+NDmlb8bwM+unBAW4go70nIz2mYAyvqIWzSMEmVYHCo38dQ1loe4=
+	t=1767721029; cv=none; b=P60GQJSWhuyKTuiXuUkL+xDNxa/fM8NK2PQ3FFnR66VKyRpd1fmGdLk5SZ9oPq4nlR4UYLL0YirWQkG6uuABp0+6xTmffXLaTWYX739xwOMw69TZsXNJe6P9/1qFASZfHhPBSNK5prA9TQa0Pj2hAyc73+xef+GsIxgX4rjRecQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721026; c=relaxed/simple;
-	bh=fHl/v6Cix+XBUddxrAmLTHkjQJRqAIa6exq/ISI8eF0=;
+	s=arc-20240116; t=1767721029; c=relaxed/simple;
+	bh=4dagcf/ImojDKwavont0DygMhYP1D4gKJaWcXipjeZ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YSHOYcSOW2BXthXEkDhqtvNOZH4qcFOiVaLX08Thuem+6IIxoA5DP/UMTaeEeJp1iRUbUOEs/i47mxopB9+pQ4u1uYY5S46UlevlTGXlBzTsgUlCOkimC9CDgELTCLKxrkyHw58SuRbpnVqscrQSrzd57MrVv7RqgpZxaVy3FMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZB0ufoeW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jqXXDiuXA4HYxpq2hr3S7qtj02hcNRVmTXCMVqwWfgcvcxDenUW43lbLrn4YgS2i9TMsRNpKsmIh9jObJ2Chha2zOA29ctzY2dxHh+h81XcXwLQTk2I1MHuXc8rxj9MURYV3U4khT6fR9uus2azR66dv25YaYUvVWKK6Tt2p1/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X5P0GsPH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZB0ufoeW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06FBCC16AAE;
-	Tue,  6 Jan 2026 17:37:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X5P0GsPH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31047C16AAE;
+	Tue,  6 Jan 2026 17:37:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721026;
-	bh=fHl/v6Cix+XBUddxrAmLTHkjQJRqAIa6exq/ISI8eF0=;
+	s=korg; t=1767721029;
+	bh=4dagcf/ImojDKwavont0DygMhYP1D4gKJaWcXipjeZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZB0ufoeW1x5jHcTm3eLnfqHYe/zkgkQ0AfjaNb0lT+raVlCRpVeQu/qxRd0H/DG61
-	 VGY65aTzwC8PGGWCd9BQuTIaMA/5nJuIjPkKSgxM75vVqyPyvVlPAh2/zrOunl+6Mm
-	 BY4iTGGXKtuXaXEMRjbe87Jv5UzV8Q2ps1HpBbK4=
+	b=X5P0GsPHR0iqCj65JVGUuISzQD5PT1zKp+6RzFB7KqcetzU3kO2WJb6e3kNdgG32U
+	 q7M+bkkU9AkBjwTSfzZ52zeMkLjhiJTmaao16CFlEcABrAz0Zt8xPu5e1SVKEv9lWT
+	 NzPiG7QLxI7fI0NZWoEssO5IWx6qOsDTVpFWmOuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 413/567] media: i2c: ADV7604: Remove redundant cancel_delayed_work in probe
-Date: Tue,  6 Jan 2026 18:03:15 +0100
-Message-ID: <20260106170506.623045957@linuxfoundation.org>
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Michael Walle <mwalle@kernel.org>,
+	Pratyush Yadav <pratyush@kernel.org>
+Subject: [PATCH 6.12 387/567] mtd: spi-nor: winbond: Add support for W25Q02NWxxIM chips
+Date: Tue,  6 Jan 2026 18:02:49 +0100
+Message-ID: <20260106170505.658311885@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -50,50 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-commit 8f34f24355a607b98ecd9924837aab13c676eeca upstream.
+commit 71c239348d9fbdb1f0d6f36013f1697cc06c3e9c upstream.
 
-The delayed_work delayed_work_enable_hotplug is initialized with
-INIT_DELAYED_WORK() in adv76xx_probe(), but it is never scheduled
-anywhere in the probe function.
+These chips must be described as none of the block protection
+information are discoverable. This chip supports 4 bits plus the
+top/bottom addressing capability to identify the protected blocks.
 
-Calling cancel_delayed_work() on a work that has never been
-scheduled is redundant and unnecessary, as there is no pending
-work to cancel.
-
-Remove the redundant cancel_delayed_work() from error handling
-path and adjust the goto label accordingly to simplify the code
-and avoid potential confusion.
-
-Fixes: 54450f591c99 ("[media] adv7604: driver for the Analog Devices ADV7604 video decoder")
 Cc: stable@vger.kernel.org
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Michael Walle <mwalle@kernel.org>
+Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/adv7604.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/mtd/spi-nor/winbond.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/media/i2c/adv7604.c
-+++ b/drivers/media/i2c/adv7604.c
-@@ -3620,7 +3620,7 @@ static int adv76xx_probe(struct i2c_clie
- 	err = media_entity_pads_init(&sd->entity, state->source_pad + 1,
- 				state->pads);
- 	if (err)
--		goto err_work_queues;
-+		goto err_i2c;
+--- a/drivers/mtd/spi-nor/winbond.c
++++ b/drivers/mtd/spi-nor/winbond.c
+@@ -262,6 +262,10 @@ static const struct flash_info winbond_n
+ 		/* W25Q01NWxxIM */
+ 		.id = SNOR_ID(0xef, 0x80, 0x21),
+ 		.flags = SPI_NOR_HAS_LOCK | SPI_NOR_HAS_TB | SPI_NOR_TB_SR_BIT6 | SPI_NOR_4BIT_BP,
++	}, {
++		/* W25Q02NWxxIM */
++		.id = SNOR_ID(0xef, 0x80, 0x22),
++		.flags = SPI_NOR_HAS_LOCK | SPI_NOR_HAS_TB | SPI_NOR_TB_SR_BIT6 | SPI_NOR_4BIT_BP,
+ 	},
+ };
  
- 	/* Configure regmaps */
- 	err = configure_regmaps(state);
-@@ -3661,8 +3661,6 @@ static int adv76xx_probe(struct i2c_clie
- 
- err_entity:
- 	media_entity_cleanup(&sd->entity);
--err_work_queues:
--	cancel_delayed_work(&state->delayed_work_enable_hotplug);
- err_i2c:
- 	adv76xx_unregister_clients(state);
- err_hdl:
 
 
