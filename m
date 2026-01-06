@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 268A93559DA;
-	Tue,  6 Jan 2026 17:28:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F4F3559C4;
+	Tue,  6 Jan 2026 17:29:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720538; cv=none; b=atEVfKDnw443B5PVR38pGeQNOLx9+RUiecqz7KGYafhuLr3Hzm1k6AdVycHEshsceOf/HqJ7n1eT0Ujk3jbflUUmvQWXkUSCT+QDNaq+aTm5dQlByGQcRMj18msm02cQGJpDsroSjolF282biQArTNlFDinwgxiVEd3v3bfVJEo=
+	t=1767720541; cv=none; b=VgPOU8xHvgQQvlkfcL7iGjMPwtanuHhqI/7+gvzgUVt9hTslhIaQDOq+94+5A5QBp4761aMukqv4Swc5aNJHSvij01dDiQJtR6BbPUE69FfGvurnlUnWS7HQp9sDiTTGsFOeGgijtaP4d3TmHjhmG/JIfgR/HuJARz+d/CSjWcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720538; c=relaxed/simple;
-	bh=/zTLd2zUbhN8RQJbsyRU5m+vSF5tsrm9uNESN7ItS1M=;
+	s=arc-20240116; t=1767720541; c=relaxed/simple;
+	bh=nVFlFoWB3q0UvBe0P90YrnZWpKD6A6FmAocBzjmZr6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BvHp2HOpv/x+5ZkJwJ+GEwYX9KiIywNFS0SqWY6p3N8tmLjWP6fGWOvUPMmQVORgb8Pr2+cV+Ir15NzKF6+CCPCxfxGlWmH9uFym+ZjgRgnWKQCBCFECiMTox/VaH4uu9kL/jreiOSixpqg9oSZt81FGbqKXHMzZ8jfZuRGJp60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cz/4EyHC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AASULiqHgkR4vVSPgwc5sTmVmAhxNs415yTfEIVwJbqzHvAJQv7tpGfkn+zfsstjBe1QIP1mUlUtEZ6SwY5njjG+MnylHQ0V3bz6d4EDgBCzh8U4wJlnlIufHS0KJxiUEmReaQTrOCWfXV5zqL5lhiQJKlXvLejPU3kf30+akvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v1ljI4dI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cz/4EyHC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C904C116C6;
-	Tue,  6 Jan 2026 17:28:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v1ljI4dI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF161C116C6;
+	Tue,  6 Jan 2026 17:29:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720538;
-	bh=/zTLd2zUbhN8RQJbsyRU5m+vSF5tsrm9uNESN7ItS1M=;
+	s=korg; t=1767720541;
+	bh=nVFlFoWB3q0UvBe0P90YrnZWpKD6A6FmAocBzjmZr6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cz/4EyHC/SHXKZwUyGxI9Lg5zAAWQ6vr5f/rS5Y1siVLwF7Hm7B4hQblUVL65Agz8
-	 7detItKjm1iqEw1sWk/w5xuft9lrt0p+9xQunubrycLiC642yuRYlWpwxmIs8FCzlE
-	 /LEX5msr0QmMZW4hEg2hLsxFNRgZ54QK3eqGgx24=
+	b=v1ljI4dImssQZVE066WcGhX0cFGCXU9Y8is9JQeOGXYjYVEX2cv+JWPEPGhFjRXLC
+	 jV8dMOWskNUco8SKHPRJhOqFpJ47MNhZuz8ZMqcIzio3xTO+gXeOVGzTeHhb/6ROcf
+	 bRktTCs65Qecl1D0FObgLXJ9BwGoqKZKXL8su4N0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Manivannan Sadhasivam <mani@kernel.org>,
 	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 6.12 267/567] dt-bindings: PCI: qcom,pcie-sm8150: Add missing required power-domains and resets
-Date: Tue,  6 Jan 2026 18:00:49 +0100
-Message-ID: <20260106170501.200977995@linuxfoundation.org>
+Subject: [PATCH 6.12 268/567] dt-bindings: PCI: qcom,pcie-sm8250: Add missing required power-domains and resets
+Date: Tue,  6 Jan 2026 18:00:50 +0100
+Message-ID: <20260106170501.239087537@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -53,27 +53,27 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 31cb432b62fb796e0c1084542ba39311d2f716d5 upstream.
+commit 2620c6bcd8c141b79ff2afe95dc814dfab644f63 upstream.
 
-Commit 51bc04d5b49d ("dt-bindings: PCI: qcom,pcie-sm8150: Move SM8150 to
+Commit 4891b66185c1 ("dt-bindings: PCI: qcom,pcie-sm8250: Move SM8250 to
 dedicated schema") move the device schema to separate file, but it
 missed a "if:not:...then:" clause in the original binding which was
 requiring power-domains and resets for this particular chip.
 
-Fixes: 51bc04d5b49d ("dt-bindings: PCI: qcom,pcie-sm8150: Move SM8150 to dedicated schema")
+Fixes: 4891b66185c1 ("dt-bindings: PCI: qcom,pcie-sm8250: Move SM8250 to dedicated schema")
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251030-dt-bindings-pci-qcom-fixes-power-domains-v2-4-28c1f11599fe@linaro.org
+Link: https://patch.msgid.link/20251030-dt-bindings-pci-qcom-fixes-power-domains-v2-5-28c1f11599fe@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/pci/qcom,pcie-sm8150.yaml |    5 +++++
+ Documentation/devicetree/bindings/pci/qcom,pcie-sm8250.yaml |    5 +++++
  1 file changed, 5 insertions(+)
 
---- a/Documentation/devicetree/bindings/pci/qcom,pcie-sm8150.yaml
-+++ b/Documentation/devicetree/bindings/pci/qcom,pcie-sm8150.yaml
-@@ -69,6 +69,11 @@ properties:
+--- a/Documentation/devicetree/bindings/pci/qcom,pcie-sm8250.yaml
++++ b/Documentation/devicetree/bindings/pci/qcom,pcie-sm8250.yaml
+@@ -81,6 +81,11 @@ properties:
      items:
        - const: pci
  
