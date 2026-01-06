@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8108A3612C7;
-	Tue,  6 Jan 2026 17:49:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE233612D1;
+	Tue,  6 Jan 2026 17:49:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721789; cv=none; b=O7AqOPUV5u4kLgNghKfzj+qimtYMH5BITwDdK+UidvOYcDAvkvLzFQi37IpPS5d523gYcIq3rFiYNpztUq+NgbK3aIYDBurdqt3cX5R2B53a8CEYAcLZvoYjiBXio9qbFQ5ReC+LANYy4e14yhcNeki6HvrWkGQxxBMxJHIUCHc=
+	t=1767721793; cv=none; b=czDT6Nbp7iOkuSduyiY6lzh1xUxzf0QRYLN9BoevqHwc10dTnqKcwg8zJAY9Dg+ikWdFu9j/BimCsUpCvUG5xqbQtj4DAQ4M6AAsyJVY9JxvZGq0KDORK091WmzsFuaDE7+7M0FBe1iLyLefHc72uoFSBD1v90mCiBybSg3/FFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721789; c=relaxed/simple;
-	bh=TOutcNPsYixcm4KYvSRdJBgcQunEdbwd3SeeKQ/xQM4=;
+	s=arc-20240116; t=1767721793; c=relaxed/simple;
+	bh=1ddhespBC1FIh718LYpECfFzvxtIA4PGXdLaX8eBdIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m86t4Fz1hwF9UdBKZs5JTb4xqY5wlByHvmptPB/MbJHTWjilzOxe4LWc9JXJHR81th+/lJnGAHSnN4rXuNAlaKkEAWEzQ4x5c4assYleZz18MlJjsYETaD0pp/fxKZQhphOPCHrpxDAIobTgiwHWsWfThITU7rujXlp7RExA69k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hQUlAVe/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GrfFbmD9pVlX1bf3AyojCBzpOUsdrNLUBX3KFADFoHaquCxXAk62RhwDxF5dSxS401xLrxbN4WzblAlvlKypFs0oXnlBk7K13luAsJkYJ+t/ClyrPOeNaFEJVo2lG5KuQ/1Yzw9p1r2c8lCMlNt0f4czIA4rwgOfiAfR1J6K4z4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ycN/eHid; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hQUlAVe/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94033C116C6;
-	Tue,  6 Jan 2026 17:49:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ycN/eHid"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16CFFC116C6;
+	Tue,  6 Jan 2026 17:49:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721789;
-	bh=TOutcNPsYixcm4KYvSRdJBgcQunEdbwd3SeeKQ/xQM4=;
+	s=korg; t=1767721792;
+	bh=1ddhespBC1FIh718LYpECfFzvxtIA4PGXdLaX8eBdIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hQUlAVe/O1raYbcOg7A0SAFI+KjmCZ/OHcINmOwzuo5p+4EFr7l4sZbhM14+JI5J9
-	 lRBZP0RQ+nH8CrSLK7E8k0LbrEYEN1WBy99ObH/Ng9zl1v5UrXKZAMI0NLp+eRgrD2
-	 +OO+T0oRzGtdsWXUoivMojFE7B4PF+J3WxYz9+0c=
+	b=ycN/eHid9i8epYkmFDTAhFMEQApfrb1WFc2x72rBXus49gILwWfBSYwxdcY+Dt1df
+	 6e+JQgBD85EpWCpLGqo6eKdpf9F3e+maIRIHBBaXEGSQd/nBkMPLx22KGwUL10c8mv
+	 jdheIzQXmph/voUiSAOakJKf32UGaytazVwoYaOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Parav Pandit <parav@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 072/312] RDMA/core: always drop device refcount in ib_del_sub_device_and_put()
-Date: Tue,  6 Jan 2026 18:02:26 +0100
-Message-ID: <20260106170550.453061639@linuxfoundation.org>
+Subject: [PATCH 6.18 073/312] drm/gem-shmem: Fix the MODULE_LICENSE() string
+Date: Tue,  6 Jan 2026 18:02:27 +0100
+Message-ID: <20260106170550.487828033@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -53,43 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit fa3c411d21ebc26ffd175c7256c37cefa35020aa ]
+[ Upstream commit 3fbd97618f49e07e05aad96510e5f2ed22d68809 ]
 
-Since nldev_deldev() (introduced by commit 060c642b2ab8 ("RDMA/nldev: Add
-support to add/delete a sub IB device through netlink") grabs a reference
-using ib_device_get_by_index() before calling ib_del_sub_device_and_put(),
-we need to drop that reference before returning -EOPNOTSUPP error.
+Replace the bogus "GPL v2" with "GPL" as MODULE_LICNSE() string. The
+value does not declare the module's exact license, but only lets the
+module loader test whether the module is Free Software or not.
 
-Reported-by: syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=881d65229ca4f9ae8c84
-Fixes: bca51197620a ("RDMA/core: Support IB sub device with type "SMI"")
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Link: https://patch.msgid.link/80749a85-cbe2-460c-8451-42516013f9fa@I-love.SAKURA.ne.jp
-Reviewed-by: Parav Pandit <parav@nvidia.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+See commit bf7fbeeae6db ("module: Cure the MODULE_LICENSE "GPL" vs.
+"GPL v2" bogosity") in the details of the issue. The fix is to use
+"GPL" for all modules under any variant of the GPL.
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Fixes: 4b2b5e142ff4 ("drm: Move GEM memory managers into modules")
+Link: https://patch.msgid.link/20251209140141.94407-3-tzimmermann@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/device.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/drm_gem_shmem_helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
-index b4f3c835844a..e3ba236d7c09 100644
---- a/drivers/infiniband/core/device.c
-+++ b/drivers/infiniband/core/device.c
-@@ -2881,8 +2881,10 @@ int ib_del_sub_device_and_put(struct ib_device *sub)
- {
- 	struct ib_device *parent = sub->parent;
+diff --git a/drivers/gpu/drm/drm_gem_shmem_helper.c b/drivers/gpu/drm/drm_gem_shmem_helper.c
+index 5d1349c34afd..365b5737ca2c 100644
+--- a/drivers/gpu/drm/drm_gem_shmem_helper.c
++++ b/drivers/gpu/drm/drm_gem_shmem_helper.c
+@@ -863,4 +863,4 @@ EXPORT_SYMBOL_GPL(drm_gem_shmem_prime_import_no_map);
  
--	if (!parent)
-+	if (!parent) {
-+		ib_device_put(sub);
- 		return -EOPNOTSUPP;
-+	}
- 
- 	mutex_lock(&parent->subdev_lock);
- 	list_del(&sub->subdev_list);
+ MODULE_DESCRIPTION("DRM SHMEM memory-management helpers");
+ MODULE_IMPORT_NS("DMA_BUF");
+-MODULE_LICENSE("GPL v2");
++MODULE_LICENSE("GPL");
 -- 
 2.51.0
 
