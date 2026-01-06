@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99CAD34FF44;
-	Tue,  6 Jan 2026 17:21:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CC0534FF66;
+	Tue,  6 Jan 2026 17:22:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720118; cv=none; b=Np6o+4+moFaXzAhskjg/XjTconL/3C8d+Wbur/O7XwnQPST6aYnhQ8jRZCbiulxY3sQVeGoXvBkAz34QyrBfJK2G15f2X1Ygu4mHOXaMAXRzeFseXFG875GAcbcoDdcYbQ02eRaDOvhElFs8pZ8mtSbQ0vZJgAUizYO0WIClfRA=
+	t=1767720122; cv=none; b=pV0n6EhElaxeIv7reltctYAcdjPu6MO1hGnHc+mjgWjwTYaMS+4bfTVQRGMTkeZnF6LzlNidjq/OcHuTMMUwBSYE0eSW0Im83hiqrywNHKSWTAFB2jJVqzsx9c8iO4ePdp9BQ06cui+AZQbp1vS0/AnFAlT8aFrw6CEAJGUSqRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720118; c=relaxed/simple;
-	bh=MBYC10UpzAwOtbHOBb5e1KZwevOytXUU7fuD7zv5qqo=;
+	s=arc-20240116; t=1767720122; c=relaxed/simple;
+	bh=hxia4oB1gKOFCFUracMyOs3zog3WqjNk4Uq5TDVgv6M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jVYZQPh/GPhhgfL/N87R9ZDPNT/HjilypgkCNBJHJ9xpXX4aAv3MpeohHPm+Ig7d3cbPnmzLouR6ZwS9u+0eX4fsTf1EMG7E0F3Bh0AbZg0krS9NcaAzgfscATtI0R8P4Fh/u5uFtlMpVvNEShLqbDTMKmWjQMh4qqjl7alP0qs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+0VHP0m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yq+BtttMsSezWVmgBFwNd+P0n5mSLoVWW2h5v9+mX5DxsS44RPA6cWjVBWC8qYklnqWCZh508IUk0bxbn7ysstBR3cMHoACGizSC7yYyQ/rVzxBNoaA9YpO58bjRl1/OtHHLDO2PF8a56bIdajcD3trlYUkjM/UYMginNOugXC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cyFNod5y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+0VHP0m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF769C116C6;
-	Tue,  6 Jan 2026 17:21:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cyFNod5y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EFBBC116C6;
+	Tue,  6 Jan 2026 17:22:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720118;
-	bh=MBYC10UpzAwOtbHOBb5e1KZwevOytXUU7fuD7zv5qqo=;
+	s=korg; t=1767720122;
+	bh=hxia4oB1gKOFCFUracMyOs3zog3WqjNk4Uq5TDVgv6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m+0VHP0mKw4q+/MbvX1YQ7YavvdgmutNtNzXEhTmlzZgqc7BCn3ObJxTNWJHCZ5ji
-	 z5C3Zoc4K9bJ5PEK8OnKlF4kiNwDCtIvMqO9WHq+7jgDmgvfu0H14/Zo9x2NoZ2VlQ
-	 vsQE82N7N8ZDSIfQoGN+oQJe3B78+PF7k9iQFfjk=
+	b=cyFNod5yfcEEJ+JaBGcUI9n6MSAPEIkZv4XfGffP+zVCTSPDC23sUY+UAHGJ25KOG
+	 n5ZJnLgTz8zIxwoeE+Pk5wX89qMxdoqTp2qhtYUa6ege+MlacB1R1JOzqCb5aCTQjG
+	 oE1FJZ1FNPigMdujemE8rqp/2IA5/U+Kkc557f04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@bvger.kernel.org,
-	Jared Kangas <jkangas@redhat.com>,
-	Haibo Chen <haibo.chen@nxp.com>,
+	Sai Krishna Potthuri <sai.krishna.potthuri@amd.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.12 107/567] mmc: sdhci-esdhc-imx: add alternate ARCH_S32 dependency to Kconfig
-Date: Tue,  6 Jan 2026 17:58:09 +0100
-Message-ID: <20260106170455.288158002@linuxfoundation.org>
+Subject: [PATCH 6.12 108/567] mmc: sdhci-of-arasan: Increase CD stable timeout to 2 seconds
+Date: Tue,  6 Jan 2026 17:58:10 +0100
+Message-ID: <20260106170455.324239907@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,43 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jared Kangas <jkangas@redhat.com>
+From: Sai Krishna Potthuri <sai.krishna.potthuri@amd.com>
 
-commit d3ecb12e2e04ce53c95f933c462f2d8b150b965b upstream.
+commit a9c4c9085ec8ce3ce01be21b75184789e74f5f19 upstream.
 
-MMC_SDHCI_ESDHC_IMX requires ARCH_MXC despite also being used on
-ARCH_S32, which results in unmet dependencies when compiling strictly
-for ARCH_S32. Resolve this by adding ARCH_S32 as an alternative to
-ARCH_MXC in the driver's dependencies.
+On Xilinx/AMD platforms, the CD stable bit take slightly longer than
+one second(about an additional 100ms) to assert after a host
+controller reset. Although no functional failure observed with the
+existing one second delay but to ensure reliable initialization, increase
+the CD stable timeout to 2 seconds.
 
-Fixes: 5c4f00627c9a ("mmc: sdhci-esdhc-imx: add NXP S32G2 support")
-Cc: stable@bvger.kernel.org
-Signed-off-by: Jared Kangas <jkangas@redhat.com>
-Reviewed-by: Haibo Chen <haibo.chen@nxp.com>
+Fixes: e251709aaddb ("mmc: sdhci-of-arasan: Ensure CD logic stabilization before power-up")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sai Krishna Potthuri <sai.krishna.potthuri@amd.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/Kconfig |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mmc/host/sdhci-of-arasan.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mmc/host/Kconfig
-+++ b/drivers/mmc/host/Kconfig
-@@ -291,14 +291,14 @@ config MMC_SDHCI_ESDHC_MCF
+--- a/drivers/mmc/host/sdhci-of-arasan.c
++++ b/drivers/mmc/host/sdhci-of-arasan.c
+@@ -99,7 +99,7 @@
+ #define HIWORD_UPDATE(val, mask, shift) \
+ 		((val) << (shift) | (mask) << ((shift) + 16))
  
- config MMC_SDHCI_ESDHC_IMX
- 	tristate "SDHCI support for the Freescale eSDHC/uSDHC i.MX controller"
--	depends on ARCH_MXC || COMPILE_TEST
-+	depends on ARCH_MXC || ARCH_S32 || COMPILE_TEST
- 	depends on MMC_SDHCI_PLTFM
- 	depends on OF
- 	select MMC_SDHCI_IO_ACCESSORS
- 	select MMC_CQHCI
- 	help
- 	  This selects the Freescale eSDHC/uSDHC controller support
--	  found on i.MX25, i.MX35 i.MX5x and i.MX6x.
-+	  found on i.MX25, i.MX35, i.MX5x, i.MX6x, and S32G.
+-#define CD_STABLE_TIMEOUT_US		1000000
++#define CD_STABLE_TIMEOUT_US		2000000
+ #define CD_STABLE_MAX_SLEEP_US		10
  
- 	  If you have a controller with this interface, say Y or M here.
- 
+ /**
 
 
