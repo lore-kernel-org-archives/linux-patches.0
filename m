@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF49C35F8B9;
-	Tue,  6 Jan 2026 17:48:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B892F35F8BD;
+	Tue,  6 Jan 2026 17:48:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721685; cv=none; b=phrA2rJ+QqfDY7hFBrsHbyIEtj3r2suL3dySMMOvaHem1d6U2d28WhXXFJqrYHfEm+6cJwqd70yI4dJ3VouVVon5CC9MnGUMyHQVg4lz4DTDYClmn6mejWRlH6PD1aREmbTNGDUVX0jxQoVh8beMz2rac4MxXdHaYb45cqgD2cs=
+	t=1767721688; cv=none; b=GrnX9aJdNCanTd9PJuXzBtXl7VwzOSlAyY3txGgupivLjpWv/VccU0ruOyfYEDdx382Ii96wQRmU6cQegYab9DK1PVWp8lJqg6KOex74IaAuag0wOnzp1zWm3rnPD+1YL091Fgt11tjXdlRs8BsiMm2CNaVtfuPKDNZ0bWPkxRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721685; c=relaxed/simple;
-	bh=tR+JaiTv3XOVIdZR2/7kSoUA7+3NRqwD4ETnXla0Y1Y=;
+	s=arc-20240116; t=1767721688; c=relaxed/simple;
+	bh=SsjFMIs0Q/wInrEdmOAxeG5YoFQHv7Ccr2o6MUttAZ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XRAunzVV6lOWgYyNlXn4c+MSKUuA5nS7CZEVQO/M89H9mnFamYyd8H4aVhfSCo9EKevke/ILpgtxwY0Q8GGNkp6oNeZHpC/gHaOyGCtNGusugLGVtirOPJSYY7xHJxVc6KILK0px5MsKGb+d/jE+y0jwTPXWZaaxRs3ALAM9sJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dy8WI8ml; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=En8Ubg11PETz5GiBHZ9RKsMWuRPwFVDe529TRDNYw829x2oah3bC4p7vX54j0yGXdZbI0anhlp8uttkxJWK2ohgWaBLBGR4bnVr+2KtH+GEwnv48VZO/7jBNkkkR6svwXyarZH/VjQHxJGIs4NP/AB5zENbm7lXVDll4CCifeEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZTm9Y2jR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dy8WI8ml"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4B3BC116C6;
-	Tue,  6 Jan 2026 17:48:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZTm9Y2jR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 262FBC116C6;
+	Tue,  6 Jan 2026 17:48:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721685;
-	bh=tR+JaiTv3XOVIdZR2/7kSoUA7+3NRqwD4ETnXla0Y1Y=;
+	s=korg; t=1767721688;
+	bh=SsjFMIs0Q/wInrEdmOAxeG5YoFQHv7Ccr2o6MUttAZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dy8WI8mlj0Cr1J/CmcYQBk20YIt5SwKEt3KxkZdah8fhdy6N3mt+lLLTyS3szo0/H
-	 uiiaWNgoOc83G9urGeUUlDG8KWnmW5wwxW6Ymd3SjKLBXZIWJQCF/X1PqgXm0/Xrg5
-	 9w0AJucjpLhzEqowgsGRwOI2tNiXUx+k7ML/ih6o=
+	b=ZTm9Y2jREidiM+C0S5EIAOwaNUFu39L16ms7leQ83ehqoIe2XhIuedrlQ7foetGf4
+	 ogdKbEk5M8JLLtl9jt9zUkHv2RMVmzBxKm58gpsPm1zT9JiMwDyBzyxB4kyBtNKalD
+	 xomYq9pM1OV6HPV/C4a3wWaAD4iSWWyBV/2uXLkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Alice C. Munduruca" <alice.munduruca@canonical.com>,
-	Cengiz Can <cengiz.can@canonical.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 041/312] selftests: net: fix "buffer overflow detected" for tap.c
-Date: Tue,  6 Jan 2026 18:01:55 +0100
-Message-ID: <20260106170549.342809372@linuxfoundation.org>
+Subject: [PATCH 6.18 042/312] net: wangxun: move PHYLINK dependency
+Date: Tue,  6 Jan 2026 18:01:56 +0100
+Message-ID: <20260106170549.378476221@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -53,95 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice C. Munduruca <alice.munduruca@canonical.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 472c5dd6b95c02b3e5d7395acf542150e91165e7 ]
+[ Upstream commit b94f11af9d9201426f4d6c8a753493fd58d6ac16 ]
 
-When the selftest 'tap.c' is compiled with '-D_FORTIFY_SOURCE=3',
-the strcpy() in rtattr_add_strsz() is replaced with a checked
-version which causes the test to consistently fail when compiled
-with toolchains for which this option is enabled by default.
+The LIBWX library code is what calls into phylink, so any user of
+it has to select CONFIG_PHYLINK at the moment, with NGBEVF missing this:
 
- TAP version 13
- 1..3
- # Starting 3 tests from 1 test cases.
- #  RUN           tap.test_packet_valid_udp_gso ...
- *** buffer overflow detected ***: terminated
- # test_packet_valid_udp_gso: Test terminated by assertion
- #          FAIL  tap.test_packet_valid_udp_gso
- not ok 1 tap.test_packet_valid_udp_gso
- #  RUN           tap.test_packet_valid_udp_csum ...
- *** buffer overflow detected ***: terminated
- # test_packet_valid_udp_csum: Test terminated by assertion
- #          FAIL  tap.test_packet_valid_udp_csum
- not ok 2 tap.test_packet_valid_udp_csum
- #  RUN           tap.test_packet_crash_tap_invalid_eth_proto ...
- *** buffer overflow detected ***: terminated
- # test_packet_crash_tap_invalid_eth_proto: Test terminated by assertion
- #          FAIL  tap.test_packet_crash_tap_invalid_eth_proto
- not ok 3 tap.test_packet_crash_tap_invalid_eth_proto
- # FAILED: 0 / 3 tests passed.
- # Totals: pass:0 fail:3 xfail:0 xpass:0 skip:0 error:0
+x86_64-linux-ld: drivers/net/ethernet/wangxun/libwx/wx_ethtool.o: in function `wx_nway_reset':
+wx_ethtool.c:(.text+0x613): undefined reference to `phylink_ethtool_nway_reset'
+x86_64-linux-ld: drivers/net/ethernet/wangxun/libwx/wx_ethtool.o: in function `wx_get_link_ksettings':
+wx_ethtool.c:(.text+0x62b): undefined reference to `phylink_ethtool_ksettings_get'
+x86_64-linux-ld: drivers/net/ethernet/wangxun/libwx/wx_ethtool.o: in function `wx_set_link_ksettings':
+wx_ethtool.c:(.text+0x643): undefined reference to `phylink_ethtool_ksettings_set'
+x86_64-linux-ld: drivers/net/ethernet/wangxun/libwx/wx_ethtool.o: in function `wx_get_pauseparam':
+wx_ethtool.c:(.text+0x65b): undefined reference to `phylink_ethtool_get_pauseparam'
+x86_64-linux-ld: drivers/net/ethernet/wangxun/libwx/wx_ethtool.o: in function `wx_set_pauseparam':
+wx_ethtool.c:(.text+0x677): undefined reference to `phylink_ethtool_set_pauseparam'
 
-A buffer overflow is detected by the fortified glibc __strcpy_chk()
-since the __builtin_object_size() of `RTA_DATA(rta)` is incorrectly
-reported as 1, even though there is ample space in its bounding
-buffer `req`.
+Add the 'select PHYLINK' line in the libwx option directly so this will
+always be enabled for all current and future wangxun drivers, and remove
+the now duplicate lines.
 
-Additionally, given that IFLA_IFNAME also expects a null-terminated
-string, callers of rtaddr_add_str{,sz}() could simply use the
-rtaddr_add_strsz() variant. (which has been renamed to remove the
-trailing `sz`) memset() has been used for this function since it
-is unchecked and thus circumvents the issue discussed in the
-previous paragraph.
-
-Fixes: 2e64fe4624d1 ("selftests: add few test cases for tap driver")
-Signed-off-by: Alice C. Munduruca <alice.munduruca@canonical.com>
-Reviewed-by: Cengiz Can <cengiz.can@canonical.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20251216170641.250494-1-alice.munduruca@canonical.com
+Fixes: a0008a3658a3 ("net: wangxun: add ngbevf build")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20251216213547.115026-1-arnd@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/tap.c | 16 +++++-----------
- 1 file changed, 5 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/wangxun/Kconfig | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/net/tap.c b/tools/testing/selftests/net/tap.c
-index 247c3b3ac1c9..51a209014f1c 100644
---- a/tools/testing/selftests/net/tap.c
-+++ b/tools/testing/selftests/net/tap.c
-@@ -56,18 +56,12 @@ static void rtattr_end(struct nlmsghdr *nh, struct rtattr *attr)
- static struct rtattr *rtattr_add_str(struct nlmsghdr *nh, unsigned short type,
- 				     const char *s)
- {
--	struct rtattr *rta = rtattr_add(nh, type, strlen(s));
-+	unsigned int strsz = strlen(s) + 1;
-+	struct rtattr *rta;
+diff --git a/drivers/net/ethernet/wangxun/Kconfig b/drivers/net/ethernet/wangxun/Kconfig
+index d138dea7d208..ec278f99d295 100644
+--- a/drivers/net/ethernet/wangxun/Kconfig
++++ b/drivers/net/ethernet/wangxun/Kconfig
+@@ -21,6 +21,7 @@ config LIBWX
+ 	depends on PTP_1588_CLOCK_OPTIONAL
+ 	select PAGE_POOL
+ 	select DIMLIB
++	select PHYLINK
+ 	help
+ 	Common library for Wangxun(R) Ethernet drivers.
  
--	memcpy(RTA_DATA(rta), s, strlen(s));
--	return rta;
--}
--
--static struct rtattr *rtattr_add_strsz(struct nlmsghdr *nh, unsigned short type,
--				       const char *s)
--{
--	struct rtattr *rta = rtattr_add(nh, type, strlen(s) + 1);
-+	rta = rtattr_add(nh, type, strsz);
- 
--	strcpy(RTA_DATA(rta), s);
-+	memcpy(RTA_DATA(rta), s, strsz);
- 	return rta;
- }
- 
-@@ -119,7 +113,7 @@ static int dev_create(const char *dev, const char *link_type,
- 
- 	link_info = rtattr_begin(&req.nh, IFLA_LINKINFO);
- 
--	rtattr_add_strsz(&req.nh, IFLA_INFO_KIND, link_type);
-+	rtattr_add_str(&req.nh, IFLA_INFO_KIND, link_type);
- 
- 	if (fill_info_data) {
- 		info_data = rtattr_begin(&req.nh, IFLA_INFO_DATA);
+@@ -29,7 +30,6 @@ config NGBE
+ 	depends on PCI
+ 	depends on PTP_1588_CLOCK_OPTIONAL
+ 	select LIBWX
+-	select PHYLINK
+ 	help
+ 	  This driver supports Wangxun(R) GbE PCI Express family of
+ 	  adapters.
+@@ -48,7 +48,6 @@ config TXGBE
+ 	depends on PTP_1588_CLOCK_OPTIONAL
+ 	select MARVELL_10G_PHY
+ 	select REGMAP
+-	select PHYLINK
+ 	select HWMON if TXGBE=y
+ 	select SFP
+ 	select GPIOLIB
+@@ -71,7 +70,6 @@ config TXGBEVF
+ 	depends on PCI_MSI
+ 	depends on PTP_1588_CLOCK_OPTIONAL
+ 	select LIBWX
+-	select PHYLINK
+ 	help
+ 	  This driver supports virtual functions for SP1000A, WX1820AL,
+ 	  WX5XXX, WX5XXXAL.
 -- 
 2.51.0
 
