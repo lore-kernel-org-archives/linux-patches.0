@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE8327FD76;
-	Tue,  6 Jan 2026 17:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3826423F42D;
+	Tue,  6 Jan 2026 17:51:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721911; cv=none; b=bj09RfUS4mSmJoaUCu/OKXiW9ydoEfTztCMcqZdavaYMYLHuTMZqHc+49lKlhy5Bx/n1qfqPq1Sf2ku+QECc184gp//3RUJoGLGb8GeOEIMcXFnJA204vqvPaVZ9b24q+nSM+5ZLKxqokW0dh38YZPhdGghAIdNegI7H6BHguQc=
+	t=1767721914; cv=none; b=EkmKLJ6xD5it+lvoj9a4jcTkIuPNUcT3CLZdQA8lhrEEYxmY9GUbx8/QYpp7qLVN9IlVECSpKXeQbM37Mtj8hHGMmt0RAHj51Ec5R3A7xTNLBQ803pTLqUroYUCxWAR5UWsQL5exbSlZwyyf6AfxapBsqrCCMVzTwzvj1U0ayGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721911; c=relaxed/simple;
-	bh=tIaNnqo3B9LA6GciclTAb/oFmk5583TJESCSCjtHs9c=;
+	s=arc-20240116; t=1767721914; c=relaxed/simple;
+	bh=1yMZ/442irs62YVRl4oOMjEFKk550rE4r6Ww6FwZJB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EIWOyFUxOw0nhYRWf8U4qoHayyTWlOXbGUNCiebWwqrG85OE+9dgJeDH2RcCcR9Qdx0F+HsTBa/dMl99mQbN1+xbUsxZJhWuxkOaQEXYjMhDqFUlKilC23l4xRJDbgyxpYeZ1FjS0ahML6E+ELncYD067GvpG7PYXb0/HYY5Hg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ndSZOmrQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qEY/nuIn6onSCqboaByIaC4cId1CelcQ8kfpFTwxso3Y8bHZf7Yk7Ei3wmH3qEKMP0dFCfz/rQWGGccODlN3xRQh/srOI9bJNbuQMtApohdlOurtG6GLMIbkrrQTrC9d8d2B+JeQ9NUWn3bns5xuv45S02fvKsbNM0oeO9GipAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CzChU7db; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ndSZOmrQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A971C116C6;
-	Tue,  6 Jan 2026 17:51:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CzChU7db"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BD53C116C6;
+	Tue,  6 Jan 2026 17:51:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721910;
-	bh=tIaNnqo3B9LA6GciclTAb/oFmk5583TJESCSCjtHs9c=;
+	s=korg; t=1767721914;
+	bh=1yMZ/442irs62YVRl4oOMjEFKk550rE4r6Ww6FwZJB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ndSZOmrQ84YRhQWWtufliL9+ujeXs27H/7pmGfnGncv7GDMfSS7LA11b39iHwbn9/
-	 mAgqDRu0fudfi82/MXltu0yCc+ZOqg1YdwLl98yKniDBXScrkgosNVZbLZu2rbT5b2
-	 GYjdUsxuHf5m5af5XbwWPa9VpFzYuGCYjQBW+Ej8=
+	b=CzChU7dbvOZT0uPm47j6lZAv6veMADCjAnm1SeC0gYMXbr8XELD3Iyypx2+Tgtfcu
+	 wVDc3g1xJF2AL6BkDmD5QTV5QvXozTO5bTnblBigH67UQy+ikASyGnGyJ9eyA20B0o
+	 MhWSrFuA/hu+cNPBqvVKQilhwUSCQwy1S9NdE/S4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jinhui Guo <guojinhui.liam@bytedance.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
 	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 6.18 108/312] iommu/amd: Fix pci_segment memleak in alloc_pci_segment()
-Date: Tue,  6 Jan 2026 18:03:02 +0100
-Message-ID: <20260106170551.744408958@linuxfoundation.org>
+Subject: [PATCH 6.18 109/312] iommu/amd: Propagate the error code returned by __modify_irte_ga() in modify_irte_ga()
+Date: Tue,  6 Jan 2026 18:03:03 +0100
+Message-ID: <20260106170551.779300441@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -52,49 +53,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Jinhui Guo <guojinhui.liam@bytedance.com>
 
-commit 75ba146c2674ba49ed8a222c67f9abfb4a4f2a4f upstream.
+commit 2381a1b40be4b286062fb3cf67dd7f005692aa2a upstream.
 
-Fix a memory leak of struct amd_iommu_pci_segment in alloc_pci_segment()
-when system memory (or contiguous memory) is insufficient.
+The return type of __modify_irte_ga() is int, but modify_irte_ga()
+treats it as a bool. Casting the int to bool discards the error code.
 
-Fixes: 04230c119930 ("iommu/amd: Introduce per PCI segment device table")
-Fixes: eda797a27795 ("iommu/amd: Introduce per PCI segment rlookup table")
-Fixes: 99fc4ac3d297 ("iommu/amd: Introduce per PCI segment alias_table")
+To fix the issue, change the type of ret to int in modify_irte_ga().
+
+Fixes: 57cdb720eaa5 ("iommu/amd: Do not flush IRTE when only updating isRun and destination fields")
 Cc: stable@vger.kernel.org
 Signed-off-by: Jinhui Guo <guojinhui.liam@bytedance.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/amd/init.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/iommu/amd/iommu.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -1731,13 +1731,22 @@ static struct amd_iommu_pci_seg *__init
- 	list_add_tail(&pci_seg->list, &amd_iommu_pci_seg_list);
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -3354,7 +3354,7 @@ static int __modify_irte_ga(struct amd_i
+ static int modify_irte_ga(struct amd_iommu *iommu, u16 devid, int index,
+ 			  struct irte_ga *irte)
+ {
+-	bool ret;
++	int ret;
  
- 	if (alloc_dev_table(pci_seg))
--		return NULL;
-+		goto err_free_pci_seg;
- 	if (alloc_alias_table(pci_seg))
--		return NULL;
-+		goto err_free_dev_table;
- 	if (alloc_rlookup_table(pci_seg))
--		return NULL;
-+		goto err_free_alias_table;
- 
- 	return pci_seg;
-+
-+err_free_alias_table:
-+	free_alias_table(pci_seg);
-+err_free_dev_table:
-+	free_dev_table(pci_seg);
-+err_free_pci_seg:
-+	list_del(&pci_seg->list);
-+	kfree(pci_seg);
-+	return NULL;
- }
- 
- static struct amd_iommu_pci_seg *__init get_pci_segment(u16 id,
+ 	ret = __modify_irte_ga(iommu, devid, index, irte);
+ 	if (ret)
 
 
