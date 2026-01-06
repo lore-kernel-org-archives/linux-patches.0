@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B2B34EF0A;
-	Tue,  6 Jan 2026 17:21:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9CD05695;
+	Tue,  6 Jan 2026 17:21:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720091; cv=none; b=FV1dB/XQD4VJ/p259jl2P4M7XyEDeRuW57x/Vx4aUGQfbERYIs6sGoWIWayKUAu7iD7M+n5POg3a03xCZbvVI8YevkyCtJDNqhmG4EX9LKfgp7xTIBzSWU9M0p2c183dxd5kug684HfFrb3cRgDIRJqzqPsgwqN9joMKR4SVvZs=
+	t=1767720094; cv=none; b=OV/eeMx6CQ9MRcXNmzlAHDKlolemL/VTq1XVGUE1YVM49HphI0yf4Tilzx3u9peHDInmHSEQdxuaPYob8eeP8rkgUEBoU/3BS1MILz7hqm5B5RIbSLqW5Nfuprdllr7LyOI4VXLAV1AY6855KPSZe2WuIwFSPZ0uMOui9UHJrz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720091; c=relaxed/simple;
-	bh=H/AK4q6H7s2pFIwbnoanw8gnvQ6wgOcs+QgFxnxdLUk=;
+	s=arc-20240116; t=1767720094; c=relaxed/simple;
+	bh=VStiWvXOD/rc5G22zIGjZVIbVYi00ErqO0pCRMzsGyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=poL3sSWk+tC1NPZrE4bmRPlF5DT9S6TZy+JuLQ3or/iWoTawDj9bd1Sd4e6U/IXRI9RjC3STGkE3w+zL8zCflElDJP3o2jpkwE1eAQ+NaTeT4CoCAHi9rnZKJLKSrEO4ZLsUt9/DCL/kFK6SZXAjLscoKfr7PLMCJ6ZYPDanchY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oWzoUWmB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LSRUAXa8wa8Gv588UPxf3MXusMKzNSBTwKxiI5NJbolOuIdo+NhnHn0EslVFQoHo2u4YkcbSoCbq8LpmQ3H5dsmVs5CiSljJBEKLKu37KuVuhvXHV0SsS72K/IknI5RDHEDbBqBTEObt0s4fl/hkQGL4wzv4nInlm2JoqHmQi5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hpZbGpvG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oWzoUWmB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2A8CC16AAE;
-	Tue,  6 Jan 2026 17:21:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hpZbGpvG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29B4BC116C6;
+	Tue,  6 Jan 2026 17:21:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720091;
-	bh=H/AK4q6H7s2pFIwbnoanw8gnvQ6wgOcs+QgFxnxdLUk=;
+	s=korg; t=1767720094;
+	bh=VStiWvXOD/rc5G22zIGjZVIbVYi00ErqO0pCRMzsGyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oWzoUWmBg4AcNt5Ebq9TnIjMksxYdmIcoMXi4LBTxqlJZk1y7jL9hyFYKELXRJAYE
-	 b/X/wfjvTsSgrZB2aluKaVb4QbRfDZVqEitTTGJHAZ+jxi2l6a4WDd/FbtgcwwGmiM
-	 IZ12EOzec8bCJJRpcSD4X4zDs1QN9AMqCjRxtwxY=
+	b=hpZbGpvGjxfs/FI8kIvew6P7Q9W3n2r0wEgZ+L7Gsc2vf8msd5gP1PIcP4u/khXgr
+	 nF/I3nijKZQ6x4F335Fj7DM7g29cIb6+i7YliE7MWz7BMhDhYc+5fIwDmwWRYvFUIF
+	 xMeqDwKg4X/H8zz+Y8sOzgtrczFjkk2Hew/a+qxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengjie Zhang <zhangpengjie2@huawei.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	lihuisong@huawei.com,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.12 104/567] ACPI: PCC: Fix race condition by removing static qualifier
-Date: Tue,  6 Jan 2026 17:58:06 +0100
-Message-ID: <20260106170455.175392367@linuxfoundation.org>
+	Bernd Schubert <bschubert@ddn.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 131/567] fuse: Invalidate the page cache after FOPEN_DIRECT_IO write
+Date: Tue,  6 Jan 2026 17:58:33 +0100
+Message-ID: <20260106170456.174372885@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,40 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengjie Zhang <zhangpengjie2@huawei.com>
+From: Bernd Schubert <bschubert@ddn.com>
 
-commit f103fa127c93016bcd89b05d8e11dc1a84f6990d upstream.
+[ Upstream commit b359af8275a982a458e8df6c6beab1415be1f795 ]
 
-Local variable 'ret' in acpi_pcc_address_space_setup() is currently
-declared as 'static'. This can lead to race conditions in a
-multithreaded environment.
+generic_file_direct_write() also does this and has a large
+comment about.
 
-Remove the 'static' qualifier to ensure that 'ret' will be allocated
-directly on the stack as a local variable.
+Reproducer here is xfstest's generic/209, which is exactly to
+have competing DIO write and cached IO read.
 
-Fixes: a10b1c99e2dc ("ACPI: PCC: Setup PCC Opregion handler only if platform interrupt is available")
-Signed-off-by: Pengjie Zhang <zhangpengjie2@huawei.com>
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Acked-by: lihuisong@huawei.com
-Cc: 6.2+ <stable@vger.kernel.org> # 6.2+
-[ rjw: Changelog edits ]
-Link: https://patch.msgid.link/20251210132634.2050033-1-zhangpengjie2@huawei.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Bernd Schubert <bschubert@ddn.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_pcc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/fuse/file.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/acpi/acpi_pcc.c
-+++ b/drivers/acpi/acpi_pcc.c
-@@ -53,7 +53,7 @@ acpi_pcc_address_space_setup(acpi_handle
- 	struct pcc_data *data;
- 	struct acpi_pcc_info *ctx = handler_context;
- 	struct pcc_mbox_chan *pcc_chan;
--	static acpi_status ret;
-+	acpi_status ret;
+diff --git a/fs/fuse/file.c b/fs/fuse/file.c
+index ec1b235df91d..4c5cf2d116d2 100644
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -1656,6 +1656,15 @@ ssize_t fuse_direct_io(struct fuse_io_priv *io, struct iov_iter *iter,
+ 	if (res > 0)
+ 		*ppos = pos;
  
- 	data = kzalloc(sizeof(*data), GFP_KERNEL);
- 	if (!data)
++	if (res > 0 && write && fopen_direct_io) {
++		/*
++		 * As in generic_file_direct_write(), invalidate after the
++		 * write, to invalidate read-ahead cache that may have competed
++		 * with the write.
++		 */
++		invalidate_inode_pages2_range(mapping, idx_from, idx_to);
++	}
++
+ 	return res > 0 ? res : err;
+ }
+ EXPORT_SYMBOL_GPL(fuse_direct_io);
+-- 
+2.51.0
+
 
 
