@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7298433EC;
-	Tue,  6 Jan 2026 17:31:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163015695;
+	Tue,  6 Jan 2026 17:31:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720709; cv=none; b=Cw1HeN9+xBEBr44WeRbsrkFa0ZlsfzfbLjQ7XP3XrgF48TRy3GYuk3dejWveii8KNDhVGlbvebHbWbMOgXv6jrJiKGbi1tooCvfoigh2oHYd/mSv1fvyJnWzNqfsSbG4T+AfsSvdyED6wB9KF0gV+ap3vcW2EnkjbXXoCrVBMQg=
+	t=1767720713; cv=none; b=iIi598OPQqjyuYUrLTvX9tQ6HBh2Riy8KmdpUhka49dLtNGQmtVChjkpI6zkXR+durPqWJrCMLWPGwj7K96dnZdG5aFIW4/KUsm/jNzG6SeNDwNcHqwUqgTah+9Y023qWqyhTM803cBd50rdv9iiqug4xo2A6+T8XdLPmKxmOcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720709; c=relaxed/simple;
-	bh=P9qZ50A7HYIZnsTXw0SO9VTyHr2COprpqCLxd/Tenpk=;
+	s=arc-20240116; t=1767720713; c=relaxed/simple;
+	bh=XeveiZBsCGxIL8S3/B/fezq4PUv8CGn7k69DBt7YUsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GrS4308gscOYn+IGE+EMUO3ZeDqB2oi4mPpvxGBUNVCCqEhmQdpeaPCZPk8AfsxDRGJeuAIhshioaff2FIgLatIdd9inY4IZh1hKGtRCK86JsKOyUPR/Ybjd/q9be932EajYm10mdtsc3JRcFsizouz0VCV29Lhei8uQQXiGTLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CaQRnViO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kl3Rgf6hqhdQbrAigF/JGzc7/96CqIR3sdyopD3wU+R+mkOBtV3bR+9+j9up5tG7rF7ou2Ti+bQoDJw7ribhSHJ9Fk1UMOZ5Bg8sa9McGl+fS370fs6tGMpsD3XkvX0HeJb9M3VAeS5wvHYi5mwv0CViPPyK1BpSH9d9shc5riY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mlh/BB1J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CaQRnViO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9D21C116C6;
-	Tue,  6 Jan 2026 17:31:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mlh/BB1J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4582BC116C6;
+	Tue,  6 Jan 2026 17:31:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720709;
-	bh=P9qZ50A7HYIZnsTXw0SO9VTyHr2COprpqCLxd/Tenpk=;
+	s=korg; t=1767720712;
+	bh=XeveiZBsCGxIL8S3/B/fezq4PUv8CGn7k69DBt7YUsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CaQRnViOPyHKawUD1jXT56urOJ31ToRan2DeJN2qnRDt9P/Tw3XWbFawXFSzB2031
-	 Bi9JgiyFD5Yb97cXRCD1g2d76mcXK1P/cPV+2XVBObNdhUxy/CsANymsYDbXkXup2+
-	 eOS9We/K3c/wcQhsNia+VjgKUHTFlJuq4I3Ern54=
+	b=Mlh/BB1J2P8ztKWYsvCFtQi0mR8pAezJ/x/MHbqRZndAYT2+kwSltYipVhsJDuZov
+	 bWpU5daE4YV8ehe8ufR/Z40tbCXwrNP4UZovQbCD5DwpmJbPXa6s46BvpVeyvOavLQ
+	 msrP0xZWpOa3zkpCIf+uqMA2ZDBe6CCW+T8O+gG8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Georgi Djakov <djakov@kernel.org>,
-	Lakshmi Sowjanya D <quic_laksd@quicinc.com>
-Subject: [PATCH 6.12 285/567] interconnect: qcom: sdx75: Drop QPIC interconnect and BCM nodes
-Date: Tue,  6 Jan 2026 18:01:07 +0100
-Message-ID: <20260106170501.874208622@linuxfoundation.org>
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.12 286/567] hwmon: (max16065) Use local variable to avoid TOCTOU
+Date: Tue,  6 Jan 2026 18:01:08 +0100
+Message-ID: <20260106170501.912385994@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -53,119 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+From: Gui-Dong Han <hanguidong02@gmail.com>
 
-commit 295f58fdccd05b2d6da1f4a4f81952ccb565c4dc upstream.
+commit b8d5acdcf525f44e521ca4ef51dce4dac403dab4 upstream.
 
-As like other SDX SoCs, SDX75 SoC's QPIC BCM resource was modeled as a
-RPMh clock in clk-rpmh driver. However, for SDX75, this resource was also
-described as an interconnect and BCM node mistakenly. It is incorrect to
-describe the same resource in two different providers, as it will lead to
-votes from clients overriding each other.
+In max16065_current_show, data->curr_sense is read twice: once for the
+error check and again for the calculation. Since
+i2c_smbus_read_byte_data returns negative error codes on failure, if the
+data changes to an error code between the check and the use, ADC_TO_CURR
+results in an incorrect calculation.
 
-Hence, drop the QPIC interconnect and BCM nodes and let the clients use
-clk-rpmh driver to vote for this resource.
+Read data->curr_sense into a local variable to ensure consistency. Note
+that data->curr_gain is constant and safe to access directly.
 
-Without this change, the NAND driver fails to probe on SDX75, as the
-interconnect sync state disables the QPIC nodes as there were no clients
-voting for this ICC resource. However, the NAND driver had already voted
-for this BCM resource through the clk-rpmh driver. Since both votes come
-from Linux, RPMh was unable to distinguish between these two and ends up
-disabling the QPIC resource during sync state.
+This aligns max16065_current_show with max16065_input_show, which
+already uses a local variable for the same reason.
 
+Link: https://lore.kernel.org/all/CALbr=LYJ_ehtp53HXEVkSpYoub+XYSTU8Rg=o1xxMJ8=5z8B-g@mail.gmail.com/
+Fixes: f5bae2642e3d ("hwmon: Driver for MAX16065 System Manager and compatibles")
 Cc: stable@vger.kernel.org
-Fixes: 3642b4e5cbfe ("interconnect: qcom: Add SDX75 interconnect provider driver")
-Signed-off-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
-[mani: dropped the reference to bcm_qp0, reworded description]
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Tested-by: Lakshmi Sowjanya D <quic_laksd@quicinc.com>  # on SDX75
-Link: https://lore.kernel.org/r/20250926-sdx75-icc-v2-1-20d6820e455c@oss.qualcomm.com
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Link: https://lore.kernel.org/r/20251128124709.3876-1-hanguidong02@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/interconnect/qcom/sdx75.c |   26 --------------------------
- drivers/interconnect/qcom/sdx75.h |    2 --
- 2 files changed, 28 deletions(-)
+ drivers/hwmon/max16065.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/interconnect/qcom/sdx75.c
-+++ b/drivers/interconnect/qcom/sdx75.c
-@@ -16,15 +16,6 @@
- #include "icc-rpmh.h"
- #include "sdx75.h"
+--- a/drivers/hwmon/max16065.c
++++ b/drivers/hwmon/max16065.c
+@@ -216,12 +216,13 @@ static ssize_t max16065_current_show(str
+ 				     struct device_attribute *da, char *buf)
+ {
+ 	struct max16065_data *data = max16065_update_device(dev);
++	int curr_sense = data->curr_sense;
  
--static struct qcom_icc_node qpic_core_master = {
--	.name = "qpic_core_master",
--	.id = SDX75_MASTER_QPIC_CORE,
--	.channels = 1,
--	.buswidth = 4,
--	.num_links = 1,
--	.links = { SDX75_SLAVE_QPIC_CORE },
--};
--
- static struct qcom_icc_node qup0_core_master = {
- 	.name = "qup0_core_master",
- 	.id = SDX75_MASTER_QUP_CORE_0,
-@@ -375,14 +366,6 @@ static struct qcom_icc_node xm_usb3 = {
- 	.links = { SDX75_SLAVE_A1NOC_CFG },
- };
+-	if (unlikely(data->curr_sense < 0))
+-		return data->curr_sense;
++	if (unlikely(curr_sense < 0))
++		return curr_sense;
  
--static struct qcom_icc_node qpic_core_slave = {
--	.name = "qpic_core_slave",
--	.id = SDX75_SLAVE_QPIC_CORE,
--	.channels = 1,
--	.buswidth = 4,
--	.num_links = 0,
--};
--
- static struct qcom_icc_node qup0_core_slave = {
- 	.name = "qup0_core_slave",
- 	.id = SDX75_SLAVE_QUP_CORE_0,
-@@ -831,12 +814,6 @@ static struct qcom_icc_bcm bcm_mc0 = {
- 	.nodes = { &ebi },
- };
+ 	return sysfs_emit(buf, "%d\n",
+-			  ADC_TO_CURR(data->curr_sense, data->curr_gain));
++			  ADC_TO_CURR(curr_sense, data->curr_gain));
+ }
  
--static struct qcom_icc_bcm bcm_qp0 = {
--	.name = "QP0",
--	.num_nodes = 1,
--	.nodes = { &qpic_core_slave },
--};
--
- static struct qcom_icc_bcm bcm_qup0 = {
- 	.name = "QUP0",
- 	.keepalive = true,
-@@ -898,14 +875,11 @@ static struct qcom_icc_bcm bcm_sn4 = {
- };
- 
- static struct qcom_icc_bcm * const clk_virt_bcms[] = {
--	&bcm_qp0,
- 	&bcm_qup0,
- };
- 
- static struct qcom_icc_node * const clk_virt_nodes[] = {
--	[MASTER_QPIC_CORE] = &qpic_core_master,
- 	[MASTER_QUP_CORE_0] = &qup0_core_master,
--	[SLAVE_QPIC_CORE] = &qpic_core_slave,
- 	[SLAVE_QUP_CORE_0] = &qup0_core_slave,
- };
- 
---- a/drivers/interconnect/qcom/sdx75.h
-+++ b/drivers/interconnect/qcom/sdx75.h
-@@ -33,7 +33,6 @@
- #define SDX75_MASTER_QDSS_ETR			24
- #define SDX75_MASTER_QDSS_ETR_1			25
- #define SDX75_MASTER_QPIC			26
--#define SDX75_MASTER_QPIC_CORE			27
- #define SDX75_MASTER_QUP_0			28
- #define SDX75_MASTER_QUP_CORE_0			29
- #define SDX75_MASTER_SDCC_1			30
-@@ -76,7 +75,6 @@
- #define SDX75_SLAVE_QDSS_CFG			67
- #define SDX75_SLAVE_QDSS_STM			68
- #define SDX75_SLAVE_QPIC			69
--#define SDX75_SLAVE_QPIC_CORE			70
- #define SDX75_SLAVE_QUP_0			71
- #define SDX75_SLAVE_QUP_CORE_0			72
- #define SDX75_SLAVE_SDCC_1			73
+ static ssize_t max16065_limit_store(struct device *dev,
 
 
