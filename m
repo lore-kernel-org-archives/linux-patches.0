@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CEB832ED2F;
-	Tue,  6 Jan 2026 17:52:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E4A2FFDF9;
+	Tue,  6 Jan 2026 17:52:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721948; cv=none; b=ZEITqRW3LiyoGMdvAH8n4jVZtoVtQrlv7ZLgqzbiYDJuwk78wGmi1nV+EKqiY5chReXv/PTs7VBuRGqofQn9uOd0G0bnEDL5mKk6ts4UCMYQsQ44kHeOcIpAdxdZHdK5AfuTGXKkGBlbv277SrrCY16MWThG0B5zj6dtxJyoIG8=
+	t=1767721952; cv=none; b=Z+oQas0wIZWyhgloS4oXKQyk8yfx7IN3x+c0KiPfaBgsPZqyWyvGSLcYJd3MRXhVxV6SmjY0Le9Rr/boQweN3V+iMWEOtVmcLgPrz5tZgrhtSgajqXpQuL+YqhtuKXed+ZRoTje7OKydzgxF3AoBwvJqlbkMTjCEI3sPcAtX+rI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721948; c=relaxed/simple;
-	bh=OMV9meG4eqQL/wFkV4mXhcJxg1UPlFkKIQAzozJpGT8=;
+	s=arc-20240116; t=1767721952; c=relaxed/simple;
+	bh=bzh7EXS+KtbrYbaaRGBwb49ZYBee+WgXpaN5eQmy2TY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rQAvSEzdMM9dFJ4VsoJooyjuptNIyOPo+kdNtt6Ju+pEmyLUZa33oFpfngfnUqTmCI75f8As7vn7Fb4dg6/dus9BWGXnDzxNF27Uxm0XSNcOLJqZjatoxUITE65z7Crsw56t8SXCQ9GjdeHNl3/tZWpm75pEcHoDWKMlVqqviuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1J7B9rUj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l2uiYzKkTAYpNZ8jVfaO74Cw4I0P1ph1Le5OnlMWrf7kyhfAT5104Lz4I60QsbfXLt4/Xs/eYTP+k/b8TyGxPPZPvnHv7kQmOfaQL++Un3uV0Jbp2IIwz/y6DcVi36o/qpmNJ38HMVVEkMU+Cvyz6u/vhuReyfgAEuWyPkKPyRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=twSZHj2n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1J7B9rUj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C404C116C6;
-	Tue,  6 Jan 2026 17:52:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="twSZHj2n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82EEDC116C6;
+	Tue,  6 Jan 2026 17:52:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721948;
-	bh=OMV9meG4eqQL/wFkV4mXhcJxg1UPlFkKIQAzozJpGT8=;
+	s=korg; t=1767721952;
+	bh=bzh7EXS+KtbrYbaaRGBwb49ZYBee+WgXpaN5eQmy2TY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1J7B9rUjYd1ydN/c0RPX2mikFLtZ0QeN5oSdk0qj54nySaqscct/RrG+WD8OaO+yA
-	 b2FEa/vW4Uke47PNnGwanXm6KIP8H+Wlv+0TCXs9Bpj1cWC/EavrdPe5qIoPIYaOJ4
-	 HFCoqBtLL8Tc+jrU87w/2wxpS+hO3TMx6oY8uK7I=
+	b=twSZHj2n3Pk4Kk+4qTYRXl47MaWVlYtwANCw7pCG4Cd0slEnhWGAmcvT81/5+jT+m
+	 rufa3zKbA7zSQLmi3J1NpP1fj52PwJKbT0NBybezOWkKPgcUL6sh2fkawtKLwXYmMd
+	 o48a1mRzIzlwmjoWyFrvxSzjZUWph2PaucsIR7Zg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
+	Miaoqian Lin <linmq006@gmail.com>,
 	Robin Murphy <robin.murphy@arm.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Johan Hovold <johan@kernel.org>,
 	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 6.18 118/312] iommu/sun50i: fix device leak on of_xlate()
-Date: Tue,  6 Jan 2026 18:03:12 +0100
-Message-ID: <20260106170552.112385635@linuxfoundation.org>
+Subject: [PATCH 6.18 119/312] iommu/tegra: fix device leak on probe_device()
+Date: Tue,  6 Jan 2026 18:03:13 +0100
+Message-ID: <20260106170552.149033096@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -54,32 +55,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit f916109bf53864605d10bf6f4215afa023a80406 upstream.
+commit c08934a61201db8f1d1c66fcc63fb2eb526b656d upstream.
 
 Make sure to drop the reference taken to the iommu platform device when
-looking up its driver data during of_xlate().
+looking up its driver data during probe_device().
 
-Fixes: 4100b8c229b3 ("iommu: Add Allwinner H6 IOMMU driver")
-Cc: stable@vger.kernel.org	# 5.8
-Cc: Maxime Ripard <mripard@kernel.org>
+Note that commit 9826e393e4a8 ("iommu/tegra-smmu: Fix missing
+put_device() call in tegra_smmu_find") fixed the leak in an error path,
+but the reference is still leaking on success.
+
+Fixes: 891846516317 ("memory: Add NVIDIA Tegra memory controller support")
+Cc: stable@vger.kernel.org	# 3.19: 9826e393e4a8
+Cc: Miaoqian Lin <linmq006@gmail.com>
 Acked-by: Robin Murphy <robin.murphy@arm.com>
+Acked-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/sun50i-iommu.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iommu/tegra-smmu.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/iommu/sun50i-iommu.c
-+++ b/drivers/iommu/sun50i-iommu.c
-@@ -839,6 +839,8 @@ static int sun50i_iommu_of_xlate(struct
+--- a/drivers/iommu/tegra-smmu.c
++++ b/drivers/iommu/tegra-smmu.c
+@@ -830,10 +830,9 @@ static struct tegra_smmu *tegra_smmu_fin
+ 		return NULL;
  
- 	dev_iommu_priv_set(dev, platform_get_drvdata(iommu_pdev));
+ 	mc = platform_get_drvdata(pdev);
+-	if (!mc) {
+-		put_device(&pdev->dev);
++	put_device(&pdev->dev);
++	if (!mc)
+ 		return NULL;
+-	}
  
-+	put_device(&iommu_pdev->dev);
-+
- 	return iommu_fwspec_add_ids(dev, &id, 1);
+ 	return mc->smmu;
  }
- 
 
 
