@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 570901E1DFC;
-	Tue,  6 Jan 2026 17:15:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F693322B93;
+	Tue,  6 Jan 2026 17:15:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719743; cv=none; b=MzbLLGdsqhRdcR1DkJY1OBtRBG0L6+Gd+VcJAKja3+20FB6oLgu2Th6UrpCsExvIoJaPJRzMfenpak14qRQ1Kfn4gRcqa7oT1ViLW6/OwS27wuwCOflVYPkb3z+JrgXDzNa3PWhR/amMpNwl6muQ/igtMwu+4v0oA+hN4QrR2TU=
+	t=1767719748; cv=none; b=UxvXtv/ZFgs/8QsdbQLtKp6d218LQsVthghSckZCPZmCvBWJB7P48yjDERSLwNx+dgwaheOO4mzY7wAV00KMDLwf1m9GK9hdsBpUKeMPdz6B+nhGfDjSt6J4kPq9WUgqegbSq1TRrzUz9KZK7uHb3H2ddMb1O8MUl/SxVOJBbx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719743; c=relaxed/simple;
-	bh=56nz4koZNm7oM9usyerUds65rIvzF/xRICm7Fh8zq2Y=;
+	s=arc-20240116; t=1767719748; c=relaxed/simple;
+	bh=V2maSuC8HR8PvlPAY2iNTMkKt/o8r69vs8M8HJh+QUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=elvDPah9DPhE+cAHPpub1A5koV6WSDzWJBx5nQxGKxGMXz0/U/CamDGPgyHQ0YkI1nhdluU+pT+qWPWFeGZmSisVnMDmItcciRl0iPtj9tTuFRWqZKp4Yfj6AlmDccf035ABEnkr3g7JJbOemi+fdV9WcENotSSmsSlXg1KJvuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cSH3KXTK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XnvqfoYrZ2MO8QqpLQLTTJv16DXleoSmbWoP5QrW7vBQBhneElN3W74QDqLqllrUqvTiiQ+efU81g4flkfs/tAz7K/zQpoyJnyTU1zpdv/xuU/WdaY7a0KWqeazEUOg6aeNtxk+Mo+VOBpJ99kTMdv7HqFk8jzVKWmgVKJ2nFoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xA0jRWaa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cSH3KXTK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE1CAC116C6;
-	Tue,  6 Jan 2026 17:15:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xA0jRWaa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B724C16AAE;
+	Tue,  6 Jan 2026 17:15:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719743;
-	bh=56nz4koZNm7oM9usyerUds65rIvzF/xRICm7Fh8zq2Y=;
+	s=korg; t=1767719746;
+	bh=V2maSuC8HR8PvlPAY2iNTMkKt/o8r69vs8M8HJh+QUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cSH3KXTKn5/ICyA/u+UuZDz+2AJ1a+HBb/jsoRFOOY1U41YSPfh2JRGHy2oJJ+MRN
-	 ZDGhOLExfNYAZslLDt1JxEtZVphXZ6g4HIgNWhOrV4DlP88dRAkn22Ex2P3ps5WO9S
-	 auBiNdzhwJtvc6yKssBHVW1VornwkM4jl3rBfc5I=
+	b=xA0jRWaa/BfyJvME2UWG1XRkjMIaLDJWxne+84JCNitfedcW2Pu8aUgEcgcFCRfVB
+	 exkbYMZYZ9cDrzFtpnAjWRw5GxuzbABVA3BI1MyC6ekJhsdW9DYi3EJ1rHd5/DtJ/d
+	 e1sCkAk9YUDUg0bkVrGZdKW8GY5psQYc2WtfJzpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Yangtao Li <frank.li@vivo.com>,
-	linux-fsdevel@vger.kernel.org,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 026/567] hfsplus: fix volume corruption issue for generic/073
-Date: Tue,  6 Jan 2026 17:56:48 +0100
-Message-ID: <20260106170452.313191826@linuxfoundation.org>
+Subject: [PATCH 6.12 027/567] fs/ntfs3: check for shutdown in fsync
+Date: Tue,  6 Jan 2026 17:56:49 +0100
+Message-ID: <20260106170452.349410891@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -53,123 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viacheslav Dubeyko <slava@dubeyko.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 24e17a29cf7537f0947f26a50f85319abd723c6c ]
+[ Upstream commit 1b2ae190ea43bebb8c73d21f076addc8a8c71849 ]
 
-The xfstests' test-case generic/073 leaves HFS+ volume
-in corrupted state:
+Ensure fsync() returns -EIO when the ntfs3 filesystem is in forced
+shutdown, instead of silently succeeding via generic_file_fsync().
 
-sudo ./check generic/073
-FSTYP -- hfsplus
-PLATFORM -- Linux/x86_64 hfsplus-testing-0001 6.17.0-rc1+ #4 SMP PREEMPT_DYNAMIC Wed Oct 1 15:02:44 PDT 2025
-MKFS_OPTIONS -- /dev/loop51
-MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
-
-generic/073 _check_generic_filesystem: filesystem on /dev/loop51 is inconsistent
-(see XFSTESTS-2/xfstests-dev/results//generic/073.full for details)
-
-Ran: generic/073
-Failures: generic/073
-Failed 1 of 1 tests
-
-sudo fsck.hfsplus -d /dev/loop51
-** /dev/loop51
-Using cacheBlockSize=32K cacheTotalBlock=1024 cacheSize=32768K.
-Executing fsck_hfs (version 540.1-Linux).
-** Checking non-journaled HFS Plus Volume.
-The volume name is untitled
-** Checking extents overflow file.
-** Checking catalog file.
-** Checking multi-linked files.
-** Checking catalog hierarchy.
-Invalid directory item count
-(It should be 1 instead of 0)
-** Checking extended attributes file.
-** Checking volume bitmap.
-** Checking volume information.
-Verify Status: VIStat = 0x0000, ABTStat = 0x0000 EBTStat = 0x0000
-CBTStat = 0x0000 CatStat = 0x00004000
-** Repairing volume.
-** Rechecking volume.
-** Checking non-journaled HFS Plus Volume.
-The volume name is untitled
-** Checking extents overflow file.
-** Checking catalog file.
-** Checking multi-linked files.
-** Checking catalog hierarchy.
-** Checking extended attributes file.
-** Checking volume bitmap.
-** Checking volume information.
-** The volume untitled was repaired successfully.
-
-The test is doing these steps on final phase:
-
-mv $SCRATCH_MNT/testdir_1/bar $SCRATCH_MNT/testdir_2/bar
-$XFS_IO_PROG -c "fsync" $SCRATCH_MNT/testdir_1
-$XFS_IO_PROG -c "fsync" $SCRATCH_MNT/foo
-
-So, we move file bar from testdir_1 into testdir_2 folder. It means that HFS+
-logic decrements the number of entries in testdir_1 and increments number of
-entries in testdir_2. Finally, we do fsync only for testdir_1 and foo but not
-for testdir_2. As a result, this is the reason why fsck.hfsplus detects the
-volume corruption afterwards.
-
-This patch fixes the issue by means of adding the
-hfsplus_cat_write_inode() call for old_dir and new_dir in
-hfsplus_rename() after the successful ending of
-hfsplus_rename_cat(). This method makes modification of in-core
-inode objects for old_dir and new_dir but it doesn't save these
-modifications in Catalog File's entries. It was expected that
-hfsplus_write_inode() will save these modifications afterwards.
-However, because generic/073 does fsync only for testdir_1 and foo
-then testdir_2 modification hasn't beed saved into Catalog File's
-entry and it was flushed without this modification. And it was
-detected by fsck.hfsplus. Now, hfsplus_rename() stores in Catalog
-File all modified entries and correct state of Catalog File will
-be flushed during hfsplus_file_fsync() call. Finally, it makes
-fsck.hfsplus happy.
-
-sudo ./check generic/073
-FSTYP         -- hfsplus
-PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 6.18.0-rc3+ #93 SMP PREEMPT_DYNAMIC Wed Nov 12 14:37:49 PST 2025
-MKFS_OPTIONS  -- /dev/loop51
-MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
-
-generic/073 32s ...  32s
-Ran: generic/073
-Passed all 1 tests
-
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-cc: Yangtao Li <frank.li@vivo.com>
-cc: linux-fsdevel@vger.kernel.org
-Link: https://lore.kernel.org/r/20251112232522.814038-1-slava@dubeyko.com
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfsplus/dir.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/ntfs3/file.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/fs/hfsplus/dir.c b/fs/hfsplus/dir.c
-index f5c4b3e31a1c2..33154c720a4e9 100644
---- a/fs/hfsplus/dir.c
-+++ b/fs/hfsplus/dir.c
-@@ -552,8 +552,13 @@ static int hfsplus_rename(struct mnt_idmap *idmap,
- 	res = hfsplus_rename_cat((u32)(unsigned long)old_dentry->d_fsdata,
- 				 old_dir, &old_dentry->d_name,
- 				 new_dir, &new_dentry->d_name);
--	if (!res)
-+	if (!res) {
- 		new_dentry->d_fsdata = old_dentry->d_fsdata;
-+
-+		res = hfsplus_cat_write_inode(old_dir);
-+		if (!res)
-+			res = hfsplus_cat_write_inode(new_dir);
-+	}
- 	return res;
+diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
+index 902dc8ba878ef..f1122ac5be622 100644
+--- a/fs/ntfs3/file.c
++++ b/fs/ntfs3/file.c
+@@ -1396,6 +1396,18 @@ static ssize_t ntfs_file_splice_write(struct pipe_inode_info *pipe,
+ 	return iter_file_splice_write(pipe, file, ppos, len, flags);
  }
  
++/*
++ * ntfs_file_fsync - file_operations::fsync
++ */
++static int ntfs_file_fsync(struct file *file, loff_t start, loff_t end, int datasync)
++{
++	struct inode *inode = file_inode(file);
++	if (unlikely(ntfs3_forced_shutdown(inode->i_sb)))
++		return -EIO;
++
++	return generic_file_fsync(file, start, end, datasync);
++}
++
+ // clang-format off
+ const struct inode_operations ntfs_file_inode_operations = {
+ 	.getattr	= ntfs_getattr,
+@@ -1420,7 +1432,7 @@ const struct file_operations ntfs_file_operations = {
+ 	.splice_write	= ntfs_file_splice_write,
+ 	.mmap		= ntfs_file_mmap,
+ 	.open		= ntfs_file_open,
+-	.fsync		= generic_file_fsync,
++	.fsync		= ntfs_file_fsync,
+ 	.fallocate	= ntfs_fallocate,
+ 	.release	= ntfs_file_release,
+ };
 -- 
 2.51.0
 
