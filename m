@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF28303CB6;
-	Tue,  6 Jan 2026 17:35:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5B73019BA;
+	Tue,  6 Jan 2026 17:35:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720934; cv=none; b=n1mheHFGz5MGPH0A5FYzXSZ/c0E3ZHVfUWa0B6winL5zLTWwcJG5AlboK1BRyAUuxX5ycaZ1MGIMWx7UUT90zFnkDwJ4Pi8/E0pIe/Y20imv4hl0AoKZWvvKY0kIYNO2mrx3+YaWeF/NauXOG9x3ane7lw6Dkdn7G+E9Gq/gTfo=
+	t=1767720936; cv=none; b=T3mQ5ea1XbEOaHgw1pShyPrkqJlQVVXvFsOSSSSY21e1kfc45p4cRbq8pS0DvLcVesxexQ1YkKvjDNX3xBN3twuZAVp9IMPrY0DR5aJF+8kPUNMJmBmVaO60sFM6uCGDd3aBT4Kx7PRIYJxwqOWlZy4Qc8a1PWX06/V7S0dxt04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720934; c=relaxed/simple;
-	bh=ovpVKps7ARTbg43rPewdsOcymPEj9Q3aPJVo+vnIahY=;
+	s=arc-20240116; t=1767720936; c=relaxed/simple;
+	bh=9OvqG662a2rv5ibefo1XrrVF06NRJzfj1gDGWtDmu7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fkkjATl/JKxJWRHwULT27hzrG5B2h+b0LapgG7ffL5CDqUeDb7eObj4XS0WkF/3X2LZIem4e4OXuxS2Heyhr0/GjSV+rJsXDre+QngvoPxjlRNrtSMszuebY9Txm9VOXh0syV3gioTC0RhKduu84OA7gER/guZn0h8SX5VcDhZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GjFd//Lx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D6Xrmmtwrz5U6pGZT/gSERHbbBUFdb7ws5c/hag5Fa+4ooky8iHtEQSvuJfjRAl5mrM+Xkm311ASSFa1xKYK80iqvZjyi1X+aaelELQYYUjYOV2zpxwa2UprmEBe7wNsHk38/ND1Tmij15ys6FthKSDv1M/vaU4qN+8BP7CUSHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f7lGRhhq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GjFd//Lx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 043F9C116C6;
-	Tue,  6 Jan 2026 17:35:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f7lGRhhq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 444C5C116C6;
+	Tue,  6 Jan 2026 17:35:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720933;
-	bh=ovpVKps7ARTbg43rPewdsOcymPEj9Q3aPJVo+vnIahY=;
+	s=korg; t=1767720936;
+	bh=9OvqG662a2rv5ibefo1XrrVF06NRJzfj1gDGWtDmu7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GjFd//LxmTkY27xzdjhPpAwSiDdOMxhSDz/ybI+e4hJiS3j9xK5twlt/IecwSpMPS
-	 BJPWSzwg3PfIIUyTpmnb1kx4UCeinvLXwMzZEO3GrKyl4Ou889/oQeXQUxfalnVaCj
-	 2HPO79ywtmFGVJ4E2eu+YjBO2z7V7My3KkNv8kf4=
+	b=f7lGRhhqB/C89rSjqblKwSWWDsYYuezHiFpUD7ADc3NyhXE9xnR9jyV1AeekNNx8z
+	 +iMJ6H+hegsw36U/6oMduN+zvqjE7J0lzhDNU8OvNO59mHfhh8mvnZwexkVj6LuO64
+	 memCXjPeOcMsGe1H5B6tF1x/cSWTuG2vrJbrz8Wg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Stable@vger.kernel.org,
-	Martino Facchin <m.facchin@arduino.cc>,
 	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
 	Mark Brown <broonie@kernel.org>,
 	Alexey Klimov <alexey.klimov@linaro.org>
-Subject: [PATCH 6.12 352/567] ASoC: qcom: q6adm: the the copp device only during last instance
-Date: Tue,  6 Jan 2026 18:02:14 +0100
-Message-ID: <20260106170504.354353573@linuxfoundation.org>
+Subject: [PATCH 6.12 353/567] ASoC: qcom: qdsp6: q6asm-dai: set 10 ms period and buffer alignment.
+Date: Tue,  6 Jan 2026 18:02:15 +0100
+Message-ID: <20260106170504.392495995@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -55,221 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-commit 74cc4f3ea4e99262ba0d619c6a4ee33e2cd47f65 upstream.
+commit 81c53b52de21b8d5a3de55ebd06b6bf188bf7efd upstream.
 
-A matching Common object post processing instance is normally resused
-across multiple streams. However currently we close this on DSP
-even though there is a refcount on this copp object, this can result in
-below error.
+DSP expects the periods to be aligned to fragment sizes, currently
+setting up to hw constriants on periods bytes is not going to work
+correctly as we can endup with periods sizes aligned to 32 bytes however
+not aligned to fragment size.
 
-q6routing ab00000.remoteproc:glink-edge:apr:service@8:routing: Found Matching Copp 0x0
-qcom-q6adm aprsvc:service:4:8: cmd = 0x10325 return error = 0x2
-q6routing ab00000.remoteproc:glink-edge:apr:service@8:routing: DSP returned error[2]
-q6routing ab00000.remoteproc:glink-edge:apr:service@8:routing: Found Matching Copp 0x0
-qcom-q6adm aprsvc:service:4:8: cmd = 0x10325 return error = 0x2
-q6routing ab00000.remoteproc:glink-edge:apr:service@8:routing: DSP returned error[2]
-qcom-q6adm aprsvc:service:4:8: cmd = 0x10327 return error = 0x2
-qcom-q6adm aprsvc:service:4:8: DSP returned error[2]
-qcom-q6adm aprsvc:service:4:8: Failed to close copp -22
-qcom-q6adm aprsvc:service:4:8: cmd = 0x10327 return error = 0x2
-qcom-q6adm aprsvc:service:4:8: DSP returned error[2]
-qcom-q6adm aprsvc:service:4:8: Failed to close copp -22
+Update the constriants to use fragment size, and also set at step of
+10ms for period size to accommodate DSP requirements of 10ms latency.
 
-Fix this by addressing moving the adm_close to copp_kref destructor
-callback.
-
-Fixes: 7b20b2be51e1 ("ASoC: qdsp6: q6adm: Add q6adm driver")
+Fixes: 2a9e92d371db ("ASoC: qdsp6: q6asm: Add q6asm dai driver")
 Cc: Stable@vger.kernel.org
-Reported-by: Martino Facchin <m.facchin@arduino.cc>
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 Tested-by: Alexey Klimov <alexey.klimov@linaro.org> # RB5, RB3
-Link: https://patch.msgid.link/20251023102444.88158-3-srinivas.kandagatla@oss.qualcomm.com
+Link: https://patch.msgid.link/20251023102444.88158-4-srinivas.kandagatla@oss.qualcomm.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/qdsp6/q6adm.c |  146 ++++++++++++++++++++-----------------------
- 1 file changed, 71 insertions(+), 75 deletions(-)
+ sound/soc/qcom/qdsp6/q6asm-dai.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/sound/soc/qcom/qdsp6/q6adm.c
-+++ b/sound/soc/qcom/qdsp6/q6adm.c
-@@ -109,11 +109,75 @@ static struct q6copp *q6adm_find_copp(st
+--- a/sound/soc/qcom/qdsp6/q6asm-dai.c
++++ b/sound/soc/qcom/qdsp6/q6asm-dai.c
+@@ -403,13 +403,13 @@ static int q6asm_dai_open(struct snd_soc
+ 	}
  
- }
- 
-+static int q6adm_apr_send_copp_pkt(struct q6adm *adm, struct q6copp *copp,
-+				   struct apr_pkt *pkt, uint32_t rsp_opcode)
-+{
-+	struct device *dev = adm->dev;
-+	uint32_t opcode = pkt->hdr.opcode;
-+	int ret;
-+
-+	mutex_lock(&adm->lock);
-+	copp->result.opcode = 0;
-+	copp->result.status = 0;
-+	ret = apr_send_pkt(adm->apr, pkt);
-+	if (ret < 0) {
-+		dev_err(dev, "Failed to send APR packet\n");
-+		ret = -EINVAL;
-+		goto err;
-+	}
-+
-+	/* Wait for the callback with copp id */
-+	if (rsp_opcode)
-+		ret = wait_event_timeout(copp->wait,
-+					 (copp->result.opcode == opcode) ||
-+					 (copp->result.opcode == rsp_opcode),
-+					 msecs_to_jiffies(TIMEOUT_MS));
-+	else
-+		ret = wait_event_timeout(copp->wait,
-+					 (copp->result.opcode == opcode),
-+					 msecs_to_jiffies(TIMEOUT_MS));
-+
-+	if (!ret) {
-+		dev_err(dev, "ADM copp cmd timedout\n");
-+		ret = -ETIMEDOUT;
-+	} else if (copp->result.status > 0) {
-+		dev_err(dev, "DSP returned error[%d]\n",
-+			copp->result.status);
-+		ret = -EINVAL;
-+	}
-+
-+err:
-+	mutex_unlock(&adm->lock);
-+	return ret;
-+}
-+
-+static int q6adm_device_close(struct q6adm *adm, struct q6copp *copp,
-+			      int port_id, int copp_idx)
-+{
-+	struct apr_pkt close;
-+
-+	close.hdr.hdr_field = APR_HDR_FIELD(APR_MSG_TYPE_SEQ_CMD,
-+					APR_HDR_LEN(APR_HDR_SIZE),
-+					APR_PKT_VER);
-+	close.hdr.pkt_size = sizeof(close);
-+	close.hdr.src_port = port_id;
-+	close.hdr.dest_port = copp->id;
-+	close.hdr.token = port_id << 16 | copp_idx;
-+	close.hdr.opcode = ADM_CMD_DEVICE_CLOSE_V5;
-+
-+	return q6adm_apr_send_copp_pkt(adm, copp, &close, 0);
-+}
-+
- static void q6adm_free_copp(struct kref *ref)
- {
- 	struct q6copp *c = container_of(ref, struct q6copp, refcount);
- 	struct q6adm *adm = c->adm;
- 	unsigned long flags;
-+	int ret;
-+
-+	ret = q6adm_device_close(adm, c, c->afe_port, c->copp_idx);
-+	if (ret < 0)
-+		dev_err(adm->dev, "Failed to close copp %d\n", ret);
- 
- 	spin_lock_irqsave(&adm->copps_list_lock, flags);
- 	clear_bit(c->copp_idx, &adm->copp_bitmap[c->afe_port]);
-@@ -155,13 +219,13 @@ static int q6adm_callback(struct apr_dev
- 		switch (result->opcode) {
- 		case ADM_CMD_DEVICE_OPEN_V5:
- 		case ADM_CMD_DEVICE_CLOSE_V5:
--			copp = q6adm_find_copp(adm, port_idx, copp_idx);
--			if (!copp)
--				return 0;
--
--			copp->result = *result;
--			wake_up(&copp->wait);
--			kref_put(&copp->refcount, q6adm_free_copp);
-+			list_for_each_entry(copp, &adm->copps_list, node) {
-+				if ((port_idx == copp->afe_port) && (copp_idx == copp->copp_idx)) {
-+					copp->result = *result;
-+					wake_up(&copp->wait);
-+					break;
-+				}
-+			}
- 			break;
- 		case ADM_CMD_MATRIX_MAP_ROUTINGS_V5:
- 			adm->result = *result;
-@@ -234,65 +298,6 @@ static struct q6copp *q6adm_alloc_copp(s
- 	return c;
- }
- 
--static int q6adm_apr_send_copp_pkt(struct q6adm *adm, struct q6copp *copp,
--				   struct apr_pkt *pkt, uint32_t rsp_opcode)
--{
--	struct device *dev = adm->dev;
--	uint32_t opcode = pkt->hdr.opcode;
--	int ret;
--
--	mutex_lock(&adm->lock);
--	copp->result.opcode = 0;
--	copp->result.status = 0;
--	ret = apr_send_pkt(adm->apr, pkt);
--	if (ret < 0) {
--		dev_err(dev, "Failed to send APR packet\n");
--		ret = -EINVAL;
--		goto err;
--	}
--
--	/* Wait for the callback with copp id */
--	if (rsp_opcode)
--		ret = wait_event_timeout(copp->wait,
--					 (copp->result.opcode == opcode) ||
--					 (copp->result.opcode == rsp_opcode),
--					 msecs_to_jiffies(TIMEOUT_MS));
--	else
--		ret = wait_event_timeout(copp->wait,
--					 (copp->result.opcode == opcode),
--					 msecs_to_jiffies(TIMEOUT_MS));
--
--	if (!ret) {
--		dev_err(dev, "ADM copp cmd timedout\n");
--		ret = -ETIMEDOUT;
--	} else if (copp->result.status > 0) {
--		dev_err(dev, "DSP returned error[%d]\n",
--			copp->result.status);
--		ret = -EINVAL;
--	}
--
--err:
--	mutex_unlock(&adm->lock);
--	return ret;
--}
--
--static int q6adm_device_close(struct q6adm *adm, struct q6copp *copp,
--			      int port_id, int copp_idx)
--{
--	struct apr_pkt close;
--
--	close.hdr.hdr_field = APR_HDR_FIELD(APR_MSG_TYPE_SEQ_CMD,
--					APR_HDR_LEN(APR_HDR_SIZE),
--					APR_PKT_VER);
--	close.hdr.pkt_size = sizeof(close);
--	close.hdr.src_port = port_id;
--	close.hdr.dest_port = copp->id;
--	close.hdr.token = port_id << 16 | copp_idx;
--	close.hdr.opcode = ADM_CMD_DEVICE_CLOSE_V5;
--
--	return q6adm_apr_send_copp_pkt(adm, copp, &close, 0);
--}
--
- static struct q6copp *q6adm_find_matching_copp(struct q6adm *adm,
- 					       int port_id, int topology,
- 					       int mode, int rate,
-@@ -567,15 +572,6 @@ EXPORT_SYMBOL_GPL(q6adm_matrix_map);
-  */
- int q6adm_close(struct device *dev, struct q6copp *copp)
- {
--	struct q6adm *adm = dev_get_drvdata(dev->parent);
--	int ret = 0;
--
--	ret = q6adm_device_close(adm, copp, copp->afe_port, copp->copp_idx);
--	if (ret < 0) {
--		dev_err(adm->dev, "Failed to close copp %d\n", ret);
--		return ret;
--	}
--
- 	kref_put(&copp->refcount, q6adm_free_copp);
- 
- 	return 0;
+ 	ret = snd_pcm_hw_constraint_step(runtime, 0,
+-		SNDRV_PCM_HW_PARAM_PERIOD_BYTES, 32);
++		SNDRV_PCM_HW_PARAM_PERIOD_SIZE, 480);
+ 	if (ret < 0) {
+ 		dev_err(dev, "constraint for period bytes step ret = %d\n",
+ 								ret);
+ 	}
+ 	ret = snd_pcm_hw_constraint_step(runtime, 0,
+-		SNDRV_PCM_HW_PARAM_BUFFER_BYTES, 32);
++		SNDRV_PCM_HW_PARAM_BUFFER_SIZE, 480);
+ 	if (ret < 0) {
+ 		dev_err(dev, "constraint for buffer bytes step ret = %d\n",
+ 								ret);
 
 
