@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C7936C0D4;
-	Tue,  6 Jan 2026 17:58:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1691636C0C9;
+	Tue,  6 Jan 2026 17:58:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722289; cv=none; b=cPA8HC+zvov7fwZFs9Et+I8uIeVP1SxG/0xzt1f2X1ZvVVB6/rcFJ1uB4KTEFCF6Yv9FTyaT/KHRQYI4QDJmjFfWI9q2TQ6gSMRKM2igizSXgUqlfEoVQ5qXwwbEpHvGjszQhqgsZCeBs9vSPM+YWdg6vXZ3FueXCP7AF/ZwB5g=
+	t=1767722292; cv=none; b=cmrWH2Dqh0Hn3yP22KKjR3o+wwym0UTwK/Z4+eyobUAtS9D2N8U1HF8SQJVUamtqg3Qy92x7qyTTrpTTPlC3byUZYJ+bH7d5mL262gVATPCks6eyg4HBBwdyUJyE4GCRv5B3CWGe/DE7AQetVZG2ZiYz6huWcdHbQhTk/eqoJKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722289; c=relaxed/simple;
-	bh=h1aj4nzhbQz8xZt5sSTSiSoOPgdq/wk5IPoiVGKjB/4=;
+	s=arc-20240116; t=1767722292; c=relaxed/simple;
+	bh=bEJxCyaaRy6F7sujwd+9QlYdSAwcmk2Ts73IEh0pmr4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mhEsNt8QF13UI8f9xonzVR6o1qhD2BziN7v1wgBDSxnQcRayM5lEGKnFCxUDSMxikkU1mUGIsYPTmIvilLMxZTuSLFG+GKIUIWE6ODYiEzUqrZcsDQsLJjXY7QvoRydbJkzs+XwseCrI0VGVJxWfSsigpfrA7SDSwUzzjxJI4Hc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=omGtPVjP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HucvyOmb+icrp4faZD+7xYgEGVcvZNDxFulv9wRLPh2NLIfjjAsdcZJyZDetmOsWwAlfbiEnYvl3u6KHaKXBWGjCACACe8TfeYyDtENRlkEDfkEmKc4hsRFUWEHcNzGtbtEmOtrDtHtD/LzJn3GuVfAMvysyYJDpZel9N/4wVSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iydos4QZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="omGtPVjP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D879DC16AAE;
-	Tue,  6 Jan 2026 17:58:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iydos4QZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED5DC116C6;
+	Tue,  6 Jan 2026 17:58:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722289;
-	bh=h1aj4nzhbQz8xZt5sSTSiSoOPgdq/wk5IPoiVGKjB/4=;
+	s=korg; t=1767722292;
+	bh=bEJxCyaaRy6F7sujwd+9QlYdSAwcmk2Ts73IEh0pmr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=omGtPVjPwZuyi8iu81aIPQ/uQjjYaTwphpJxVWqqE/Zyq2TZ9z+Q188VUVHx2fL47
-	 2fqQ1cQMF35CUl0SoVEum9qEr5ofULvBOUYIG+XjpfS6B14jyFJDzxm4zawv3oAHWl
-	 TqIpVo/ps6lrYAa2930x77aA67zL10+L8oCt72X4=
+	b=Iydos4QZvx2doWvpL39yBLM0vZcP+++LH39sNqbFVvqLU2aOamIl0n1ERlRaw1WsU
+	 GV7Vldz6BOgDpyv0FUR/Yy3EeEu15AGr4y4x4WZjIwa4htSfiAQ4D+kx/dUlppenEk
+	 HbEHl68pnYRBrLBjdpp6sKBjV4Yc629R/axw/k94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Orth <ju.orth@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Willem de Bruijn <willemb@google.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 219/312] af_unix: dont post cmsg for SO_INQ unless explicitly asked for
-Date: Tue,  6 Jan 2026 18:04:53 +0100
-Message-ID: <20260106170555.765641919@linuxfoundation.org>
+	"H. Peter Anvin (Intel)" <hpa@zytor.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 6.18 220/312] compiler_types.h: add "auto" as a macro for "__auto_type"
+Date: Tue,  6 Jan 2026 18:04:54 +0100
+Message-ID: <20260106170555.802158421@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -52,72 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: H. Peter Anvin <hpa@zytor.com>
 
-commit 4d1442979e4a53b9457ce1e373e187e1511ff688 upstream.
+commit 2fb6915fa22dc5524d704afba58a13305dd9f533 upstream.
 
-A previous commit added SO_INQ support for AF_UNIX (SOCK_STREAM), but it
-posts a SCM_INQ cmsg even if just msg->msg_get_inq is set. This is
-incorrect, as ->msg_get_inq is just the caller asking for the remainder
-to be passed back in msg->msg_inq, it has nothing to do with cmsg. The
-original commit states that this is done to make sockets
-io_uring-friendly", but it's actually incorrect as io_uring doesn't use
-cmsg headers internally at all, and it's actively wrong as this means
-that cmsg's are always posted if someone does recvmsg via io_uring.
+"auto" was defined as a keyword back in the K&R days, but as a storage
+type specifier.  No one ever used it, since it was and is the default
+storage type for local variables.
 
-Fix that up by only posting a cmsg if u->recvmsg_inq is set.
+C++11 recycled the keyword to allow a type to be declared based on the
+type of an initializer.  This was finally adopted into standard C in
+C23.
 
-Additionally, mirror how TCP handles inquiry handling in that it should
-only be done for a successful return. This makes the logic for the two
-identical.
+gcc and clang provide the "__auto_type" alias keyword as an extension
+for pre-C23, however, there is no reason to pollute the bulk of the
+source base with this temporary keyword; instead define "auto" as a
+macro unless the compiler is running in C23+ mode.
 
-Cc: stable@vger.kernel.org
-Fixes: df30285b3670 ("af_unix: Introduce SO_INQ.")
-Reported-by: Julian Orth <ju.orth@gmail.com>
-Link: https://github.com/axboe/liburing/issues/1509
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/07adc0c2-2c3b-4d08-8af1-1c466a40b6a8@kernel.dk
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+This macro is added in <linux/compiler_types.h> because that header is
+included in some of the tools headers, wheres <linux/compiler.h> is
+not as it has a bunch of very kernel-specific things in it.
+
+[ Cc: stable to reduce potential backporting burden. ]
+
+Signed-off-by: H. Peter Anvin (Intel) <hpa@zytor.com>
+Acked-by: Miguel Ojeda <ojeda@kernel.org>
+Cc: <stable@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/unix/af_unix.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ include/linux/compiler_types.h |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -2929,6 +2929,7 @@ static int unix_stream_read_generic(stru
- 	unsigned int last_len;
- 	struct unix_sock *u;
- 	int copied = 0;
-+	bool do_cmsg;
- 	int err = 0;
- 	long timeo;
- 	int target;
-@@ -2954,6 +2955,9 @@ static int unix_stream_read_generic(stru
+--- a/include/linux/compiler_types.h
++++ b/include/linux/compiler_types.h
+@@ -14,6 +14,19 @@
+ #ifndef __ASSEMBLY__
  
- 	u = unix_sk(sk);
- 
-+	do_cmsg = READ_ONCE(u->recvmsg_inq);
-+	if (do_cmsg)
-+		msg->msg_get_inq = 1;
- redo:
- 	/* Lock the socket to prevent queue disordering
- 	 * while sleeps in memcpy_tomsg
-@@ -3113,10 +3117,11 @@ unlock:
- 	if (msg) {
- 		scm_recv_unix(sock, msg, &scm, flags);
- 
--		if (READ_ONCE(u->recvmsg_inq) || msg->msg_get_inq) {
-+		if (msg->msg_get_inq && (copied ?: err) >= 0) {
- 			msg->msg_inq = READ_ONCE(u->inq_len);
--			put_cmsg(msg, SOL_SOCKET, SCM_INQ,
--				 sizeof(msg->msg_inq), &msg->msg_inq);
-+			if (do_cmsg)
-+				put_cmsg(msg, SOL_SOCKET, SCM_INQ,
-+					 sizeof(msg->msg_inq), &msg->msg_inq);
- 		}
- 	} else {
- 		scm_destroy(&scm);
+ /*
++ * C23 introduces "auto" as a standard way to define type-inferred
++ * variables, but "auto" has been a (useless) keyword even since K&R C,
++ * so it has always been "namespace reserved."
++ *
++ * Until at some future time we require C23 support, we need the gcc
++ * extension __auto_type, but there is no reason to put that elsewhere
++ * in the source code.
++ */
++#if __STDC_VERSION__ < 202311L
++# define auto __auto_type
++#endif
++
++/*
+  * Skipped when running bindgen due to a libclang issue;
+  * see https://github.com/rust-lang/rust-bindgen/issues/2244.
+  */
 
 
