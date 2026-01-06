@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11AE835503F;
-	Tue,  6 Jan 2026 17:24:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 611AE355042;
+	Tue,  6 Jan 2026 17:24:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720266; cv=none; b=mYP8ZBTL6hSdJyyTtiSd3pjKmkRhkK0MBx7OtyqRHqn2Z/la+rDEQEyiFWdpIxvtde66zOApkYDy3fEj1l9I8I0by87d6Q+qWllQvcPdRbzE0ejCSp0TMi0PZShru3AGEsYpz5R2GeQmEOjxKwA7U/lDh5yE18f17S3+a4ejx9M=
+	t=1767720269; cv=none; b=UFq5hJbZDntXmgFe2sOMiKxFXQc+/DIghWGj57rMwL8LLLPDl320fv0DUQHdqxPuOa4UDJVu9tHfuk5eRYcuxIl2HjPzrpyhspjkF3GWm/MVmeOntIh935k9TecTAlAytHR90ZXVebFzzaP0jHMm7iOcDirKVREiyOpgbp1KYH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720266; c=relaxed/simple;
-	bh=sjQTya3zhyfiG+dAPH32PdDc40xX9tVHUg1KeABOgb8=;
+	s=arc-20240116; t=1767720269; c=relaxed/simple;
+	bh=0wTd1CDYRw2ZT1Bpcj5qCIK9/96/Skp6g39Jw5GqsdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UXcoeVnyQ4LYeEu74YTQytUqvTsZ6utBvJGuO0mphM+rcmZfpPuYyFzGKiijrGm1O2P6PB8O9mpqWR3vOwnGIb1bgMJuqMIQZ9lQx8kTcFg10isWNd+HycXY9r0445NApa+2bmAHu2+mMGET+r5wezZwcKHD3Zn3uExpCLT6IDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XCpUC1Ot; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LO1+861xo9LO5lSJwj6nlFeo36+GAoxcydUJm0k9+RDOPZuTwbpQOePjnWlTHSItgX3lw91dMd+mstSdEP7unbqmdGRHWhXOXUqBu0ehs7yMr5yYMJpgQ4t1V/PtZ8q6cblylm3RrY9WcgXb/V9c20biwpNTSvU6XMyt2qq2J/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hnq8pdgV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XCpUC1Ot"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7878EC116C6;
-	Tue,  6 Jan 2026 17:24:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hnq8pdgV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD0BDC116C6;
+	Tue,  6 Jan 2026 17:24:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720265;
-	bh=sjQTya3zhyfiG+dAPH32PdDc40xX9tVHUg1KeABOgb8=;
+	s=korg; t=1767720269;
+	bh=0wTd1CDYRw2ZT1Bpcj5qCIK9/96/Skp6g39Jw5GqsdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XCpUC1OtQUeOYhiMc5iPYra+LbG5HfNUDdEJ2hXKOD+y3RN5Ti4ouT1Y5cNwe3Pul
-	 MBUzYx1seF/jsLgPqFKrpf7TlB4EAQB0oY2iWvr0hVr8QgzIbZ654GQQjRnDAA9mqB
-	 dBAJGP9emGOnBhST3XWaR/WbySBhGMOEHak28PNI=
+	b=hnq8pdgVIB7KHZKnSXf/8iN6kcQiUg+Fqx7epuzojxms1cOd4xQs9VhLTmilhNJ9J
+	 xY1miZ88TqLwNSq9u8b0NZOLX5znlHKOqycMme9S9kIT2lgZ3+WXZtYyL0l9omMKbo
+	 TtAYV5l8XyN2WoPg4mM8U2Zb8NYhp3YqObR0JojI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Duoming Zhou <duoming@zju.edu.cn>
-Subject: [PATCH 6.12 185/567] usb: phy: fsl-usb: Fix use-after-free in delayed work during device removal
-Date: Tue,  6 Jan 2026 17:59:27 +0100
-Message-ID: <20260106170458.172868650@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Johan Hovold <johan@kernel.org>,
+	Vladimir Zapolskiy <vz@mleia.com>
+Subject: [PATCH 6.12 186/567] usb: phy: isp1301: fix non-OF device reference imbalance
+Date: Tue,  6 Jan 2026 17:59:28 +0100
+Message-ID: <20260106170458.209071205@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -50,52 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Johan Hovold <johan@kernel.org>
 
-commit 41ca62e3e21e48c2903b3b45e232cf4f2ff7434f upstream.
+commit b4b64fda4d30a83a7f00e92a0c8a1d47699609f3 upstream.
 
-The delayed work item otg_event is initialized in fsl_otg_conf() and
-scheduled under two conditions:
-1. When a host controller binds to the OTG controller.
-2. When the USB ID pin state changes (cable insertion/removal).
+A recent change fixing a device reference leak in a UDC driver
+introduced a potential use-after-free in the non-OF case as the
+isp1301_get_client() helper only increases the reference count for the
+returned I2C device in the OF case.
 
-A race condition occurs when the device is removed via fsl_otg_remove():
-the fsl_otg instance may be freed while the delayed work is still pending
-or executing. This leads to use-after-free when the work function
-fsl_otg_event() accesses the already freed memory.
+Increment the reference count also for non-OF so that the caller can
+decrement it unconditionally.
 
-The problematic scenario:
+Note that this is inherently racy just as using the returned I2C device
+is since nothing is preventing the PHY driver from being unbound while
+in use.
 
-(detach thread)            | (delayed work)
-fsl_otg_remove()           |
-  kfree(fsl_otg_dev) //FREE| fsl_otg_event()
-                           |   og = container_of(...) //USE
-                           |   og-> //USE
-
-Fix this by calling disable_delayed_work_sync() in fsl_otg_remove()
-before deallocating the fsl_otg structure. This ensures the delayed work
-is properly canceled and completes execution prior to memory deallocation.
-
-This bug was identified through static analysis.
-
-Fixes: 0807c500a1a6 ("USB: add Freescale USB OTG Transceiver driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Link: https://patch.msgid.link/20251205034831.12846-1-duoming@zju.edu.cn
+Fixes: c84117912bdd ("USB: lpc32xx_udc: Fix error handling in probe")
+Cc: stable@vger.kernel.org
+Cc: Ma Ke <make24@iscas.ac.cn>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Vladimir Zapolskiy <vz@mleia.com>
+Link: https://patch.msgid.link/20251218153519.19453-3-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/phy/phy-fsl-usb.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/phy/phy-isp1301.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/phy/phy-fsl-usb.c
-+++ b/drivers/usb/phy/phy-fsl-usb.c
-@@ -987,6 +987,7 @@ static void fsl_otg_remove(struct platfo
- {
- 	struct fsl_usb2_platform_data *pdata = dev_get_platdata(&pdev->dev);
+--- a/drivers/usb/phy/phy-isp1301.c
++++ b/drivers/usb/phy/phy-isp1301.c
+@@ -149,7 +149,12 @@ struct i2c_client *isp1301_get_client(st
+ 		return client;
  
-+	disable_delayed_work_sync(&fsl_otg_dev->otg_event);
- 	usb_remove_phy(&fsl_otg_dev->phy);
- 	free_irq(fsl_otg_dev->irq, fsl_otg_dev);
+ 	/* non-DT: only one ISP1301 chip supported */
+-	return isp1301_i2c_client;
++	if (isp1301_i2c_client) {
++		get_device(&isp1301_i2c_client->dev);
++		return isp1301_i2c_client;
++	}
++
++	return NULL;
+ }
+ EXPORT_SYMBOL_GPL(isp1301_get_client);
  
 
 
