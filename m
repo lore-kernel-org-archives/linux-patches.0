@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB23A34C81B;
-	Tue,  6 Jan 2026 17:19:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288B834C9A1;
+	Tue,  6 Jan 2026 17:19:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719984; cv=none; b=lRmHlWXAmELABlofK6Or7HfAY5SuuYabHSpjQAEdyaYd1uvJtggPv5sXrC/4KfcP2jowEPKnrD6Sc+lnFt4qO834NesYCuZj2sj0JFw06dp+QNebUS1zQpUYGfSq9sdMhX+D2mSsnLkqVOHBq/tmzPsi3Q6ZKYRqOA3H986XSjA=
+	t=1767719988; cv=none; b=RuZbnuH/gIzdzPVOBaRbDtndsswtJkLfhMVyw1SwWDgDr8xPzCOkvi+Tye8A1CCqUp4G17rDPG42uxUzlp26PRs8ThRmf2w9WSqmFsGvThfZ5L19TT4XT1A2FbHq/X1QaDeu1pwxGIMr39yzVcVp5nkPlc3+tsyAski+pCDUOb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719984; c=relaxed/simple;
-	bh=MGq93dE9P3zfnhQfntVn9Ton66hNe54se/mqU9JFVzs=;
+	s=arc-20240116; t=1767719988; c=relaxed/simple;
+	bh=zIbYNmd2fS4Y6UViDAur1tjKxrOlvXLeS9mZJkOIXdU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wj546uNyJedUUtR9+1GUoDcMfKsfgGitFmkt0oyAhuNbs/WMowmT2j5e0xvgbM3Mb0Jvdrxn+za1Lxg9uELqN8TyBtNEpdkKi+w3QmBvYOItHz9fTjCbe8rb8H42vx0sGNt671r8chdrRgqSfBlJBpx3dKg5VyowS7VFUzp/kyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JFNdhTkD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SOLjFq8rylhAS5dohm5AT5t0j+wG5uGbsCaCECkeiHF3EAb3gIYUPOVAiU369JrVNzWYE6QKVZrzlAnGerDpaIfjebzIEQ/ieqFRUgaYxlAWu01ARw7SNf1qZzaYavAWycU45V3fNu6JMAdHOuxlR2E6uZ/Z6FWPfzlCgwRiIBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IU9PZvsK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JFNdhTkD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B82AC116C6;
-	Tue,  6 Jan 2026 17:19:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IU9PZvsK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F19DC116C6;
+	Tue,  6 Jan 2026 17:19:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719984;
-	bh=MGq93dE9P3zfnhQfntVn9Ton66hNe54se/mqU9JFVzs=;
+	s=korg; t=1767719988;
+	bh=zIbYNmd2fS4Y6UViDAur1tjKxrOlvXLeS9mZJkOIXdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JFNdhTkDLvZ9+my4EaZan2ZGwk6eiXa/lKkNb68A7JGNv0cFKaaVafKVwx3jQJAHt
-	 aYtyoDeHCzZ5p+lLmAvIlF7ZZezDk08bWLShqxjhdWQ8QfaRq79ddy6PTc6bLX3+Ot
-	 qbLpPOv6/vQO0AkzWoVQ7QMHuo2MVe130Y6BE8lc=
+	b=IU9PZvsK7dYhIQWYgG8Fk0LK3B8EZjHuLW54j+P3HJdBHJMTJhCKKPSaCXHYyQiRA
+	 TpttqK8G0SYtUtL6MTsDEFpDDQhVFoeIXmnQPunu8S8h1K36EprDmJSfnymExjQgJZ
+	 9WwYWuvEZ9AIVGev7Suv3RnbTxAgJJHAgu+YGyKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minseong Kim <ii4gsp@gmail.com>,
+	stable@kernel.org,
+	Duoming Zhou <duoming@zju.edu.cn>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.12 098/567] Input: lkkbd - disable pending work before freeing device
-Date: Tue,  6 Jan 2026 17:58:00 +0100
-Message-ID: <20260106170454.953299452@linuxfoundation.org>
+Subject: [PATCH 6.12 099/567] Input: alps - fix use-after-free bugs caused by dev3_register_work
+Date: Tue,  6 Jan 2026 17:58:01 +0100
+Message-ID: <20260106170454.991275545@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -50,52 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Minseong Kim <ii4gsp@gmail.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-commit e58c88f0cb2d8ed89de78f6f17409d29cfab6c5c upstream.
+commit bf40644ef8c8a288742fa45580897ed0e0289474 upstream.
 
-lkkbd_interrupt() schedules lk->tq via schedule_work(), and the work
-handler lkkbd_reinit() dereferences the lkkbd structure and its
-serio/input_dev fields.
+The dev3_register_work delayed work item is initialized within
+alps_reconnect() and scheduled upon receipt of the first bare
+PS/2 packet from an external PS/2 device connected to the ALPS
+touchpad. During device detachment, the original implementation
+calls flush_workqueue() in psmouse_disconnect() to ensure
+completion of dev3_register_work. However, the flush_workqueue()
+in psmouse_disconnect() only blocks and waits for work items that
+were already queued to the workqueue prior to its invocation. Any
+work items submitted after flush_workqueue() is called are not
+included in the set of tasks that the flush operation awaits.
+This means that after flush_workqueue() has finished executing,
+the dev3_register_work could still be scheduled. Although the
+psmouse state is set to PSMOUSE_CMD_MODE in psmouse_disconnect(),
+the scheduling of dev3_register_work remains unaffected.
 
-lkkbd_disconnect() and error paths in lkkbd_connect() free the lkkbd
-structure without preventing the reinit work from being queued again
-until serio_close() returns. This can allow the work handler to run
-after the structure has been freed, leading to a potential use-after-free.
+The race condition can occur as follows:
 
-Use disable_work_sync() instead of cancel_work_sync() to ensure the
-reinit work cannot be re-queued, and call it both in lkkbd_disconnect()
-and in lkkbd_connect() error paths after serio_open().
+CPU 0 (cleanup path)     | CPU 1 (delayed work)
+psmouse_disconnect()     |
+  psmouse_set_state()    |
+  flush_workqueue()      | alps_report_bare_ps2_packet()
+  alps_disconnect()      |   psmouse_queue_work()
+    kfree(priv); // FREE | alps_register_bare_ps2_mouse()
+                         |   priv = container_of(work...); // USE
+                         |   priv->dev3 // USE
 
-Signed-off-by: Minseong Kim <ii4gsp@gmail.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251212052314.16139-1-ii4gsp@gmail.com
+Add disable_delayed_work_sync() in alps_disconnect() to ensure
+that dev3_register_work is properly canceled and prevented from
+executing after the alps_data structure has been deallocated.
+
+This bug is identified by static analysis.
+
+Fixes: 04aae283ba6a ("Input: ALPS - do not mix trackstick and external PS/2 mouse data")
+Cc: stable@kernel.org
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Link: https://patch.msgid.link/b57b0a9ccca51a3f06be141bfc02b9ffe69d1845.1765939397.git.duoming@zju.edu.cn
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/lkkbd.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/input/mouse/alps.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/input/keyboard/lkkbd.c
-+++ b/drivers/input/keyboard/lkkbd.c
-@@ -670,7 +670,8 @@ static int lkkbd_connect(struct serio *s
+--- a/drivers/input/mouse/alps.c
++++ b/drivers/input/mouse/alps.c
+@@ -2977,6 +2977,7 @@ static void alps_disconnect(struct psmou
  
- 	return 0;
- 
-- fail3:	serio_close(serio);
-+ fail3:	disable_work_sync(&lk->tq);
-+	serio_close(serio);
-  fail2:	serio_set_drvdata(serio, NULL);
-  fail1:	input_free_device(input_dev);
- 	kfree(lk);
-@@ -684,6 +685,8 @@ static void lkkbd_disconnect(struct seri
- {
- 	struct lkkbd *lk = serio_get_drvdata(serio);
- 
-+	disable_work_sync(&lk->tq);
-+
- 	input_get_device(lk->dev);
- 	input_unregister_device(lk->dev);
- 	serio_close(serio);
+ 	psmouse_reset(psmouse);
+ 	timer_shutdown_sync(&priv->timer);
++	disable_delayed_work_sync(&priv->dev3_register_work);
+ 	if (priv->dev2)
+ 		input_unregister_device(priv->dev2);
+ 	if (!IS_ERR_OR_NULL(priv->dev3))
 
 
