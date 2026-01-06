@@ -1,37 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A55C0366DA4;
-	Tue,  6 Jan 2026 18:01:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C40366DA5;
+	Tue,  6 Jan 2026 18:01:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722461; cv=none; b=ccFS2CItgFsVZS3HV8dN8W9zefyjVrOJwMvavcimxOKhWIc0sfH6esBwyGKnrdZ4qE+BYjVsKobzB0tKD6q2IiEdgcCeIINSKeOruqjUF7/oMlt92ktArzhrkvIOkMfnXLP0bbqJwDS7isiUISf60tp+RJFltNLfxjTv+5WgoPI=
+	t=1767722465; cv=none; b=QYNdDNq1jnohk8jA+/AVSuAJLTWKNsE6VwEDmyXjPoT62DzxaCobEWv95gT89jOyoQAyjjKwwNY/IAqhscwy/z9qAqndhedgW1nx1Y6aTanxYurImE05buEBjNK9s36rdmouKuTqCxCijN/joiTm/xuidBgMN6ShWEkMnk8pAfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722461; c=relaxed/simple;
-	bh=bnXMXYLv+j9Y+vDckM0skJcSdKy980I4HzSFOAWEQ0w=;
+	s=arc-20240116; t=1767722465; c=relaxed/simple;
+	bh=jKeszfPuwpU6XzhYXckzDXCyeYl0EaFDg4xYSdAYhnE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Mzzg2h1Qa5FKGffAHMcOdSF5wtbUjw9/tkieBUvLUfTYX5i5nXy2kCrV4DiBzC74xS4Vvo8L9l9SWF+FsZZRzrNtZdA3K16jXO0iRqqlv0mvy61Qmq+29cLcUKrVdMz+1C9us+TlespgZSELf+q535g8J1PONdNyAgHruce+lBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GQetIvYN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Orc3fQYEOcFjWrlKv7mL1O92K/tblnc47NyHABlRneX9AiIpZoNiggTb/4Hig6sJ1HrqU0bsSx1Q2fM3qvjZTQEudbP5ltUTqiWop2zukEo6ScDTJWOq/mrZOw8Oh8X1vaWKVd0NB9JJgxWtPyhWDX5BZXLJRvP0UhM8p074TZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=La4pMcb8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GQetIvYN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13694C116C6;
-	Tue,  6 Jan 2026 18:01:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="La4pMcb8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59F77C116C6;
+	Tue,  6 Jan 2026 18:01:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722461;
-	bh=bnXMXYLv+j9Y+vDckM0skJcSdKy980I4HzSFOAWEQ0w=;
+	s=korg; t=1767722464;
+	bh=jKeszfPuwpU6XzhYXckzDXCyeYl0EaFDg4xYSdAYhnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GQetIvYNCOcBDcoSJyQIAc+kXCX94ED0ts30HNuq8///l4sbgFJR4CbcCBpXrYMMy
-	 Vxvm5d/xZlTveHJEEo5Gs7ArRCeeRVVYQAEejfTd8oqSWVyJFRJeYRRZeoxkJ7/ZcE
-	 //Lj5dgD9fYl7aKleFgxdG2e78AxqRms75y8EzC8=
+	b=La4pMcb8cJbsPCAjhomTzaoZpF9jpACC2upW8hWkr5422e9g4ENI50mzKHXGWYqxz
+	 Cf3VJ6hBH+UVBlsVunZye91UdhCcSmjyuz8otfwGaMFEsMB8KOPQ7qhyMMfUkwSB7+
+	 PSPGhMB0f1VTZbFqTQ3ASjMkM2Fh/svY3lyNF4Iw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.18 239/312] wifi: iwlwifi: Fix firmware version handling
-Date: Tue,  6 Jan 2026 18:05:13 +0100
-Message-ID: <20260106170556.497656558@linuxfoundation.org>
+	Ran Xiaokai <ran.xiaokai@zte.com.cn>,
+	Michal Hocko <mhocko@suse.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Brendan Jackman <jackmanb@google.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Marco Elver <elver@google.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 230/312] mm/page_owner: fix memory leak in page_owner_stack_fops->release()
+Date: Tue,  6 Jan 2026 18:05:04 +0100
+Message-ID: <20260106170556.173097317@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -44,66 +52,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Ran Xiaokai <ran.xiaokai@zte.com.cn>
 
-commit ca5898222914f399797cea1aeb0ce77109ca2e62 upstream.
+commit a76a5ae2c6c645005672c2caf2d49361c6f2500f upstream.
 
-On my system the arithmetic done on the firmware numbers
-results in a negative number, but since the types are
-unsigned it gets interpreted as a large positive number.
+The page_owner_stack_fops->open() callback invokes seq_open_private(),
+therefore its corresponding ->release() callback must call
+seq_release_private().  Otherwise it will cause a memory leak of struct
+stack_print_ctx.
 
-The end result is that the firmware gets rejected and wifi
-is defunct.
-
-Switch to signed types to handle this case correctly.
-
-iwlwifi 0000:0c:00.0: Driver unable to support your firmware API. Driver supports FW core 4294967294..2, firmware is 2.
-iwlwifi 0000:0c:00.0: Direct firmware load for iwlwifi-5000-4.ucode failed with error -2
-iwlwifi 0000:0c:00.0: Direct firmware load for iwlwifi-5000-3.ucode failed with error -2
-iwlwifi 0000:0c:00.0: Direct firmware load for iwlwifi-5000-2.ucode failed with error -2
-iwlwifi 0000:0c:00.0: Direct firmware load for iwlwifi-5000-1.ucode failed with error -2
-iwlwifi 0000:0c:00.0: no suitable firmware found!
-iwlwifi 0000:0c:00.0: minimum version required: iwlwifi-5000-1
-iwlwifi 0000:0c:00.0: maximum version supported: iwlwifi-5000-5
-iwlwifi 0000:0c:00.0: check git://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git
-
-Cc: stable@vger.kernel.org
-Fixes: 5f708cccde9d ("wifi: iwlwifi: add a new FW file numbering scheme")
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220805
-Link: https://patch.msgid.link/20251113222852.15896-1-ville.syrjala@linux.intel.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://lkml.kernel.org/r/20251219074232.136482-1-ranxiaokai627@163.com
+Fixes: 765973a09803 ("mm,page_owner: display all stacks and their count")
+Signed-off-by: Ran Xiaokai <ran.xiaokai@zte.com.cn>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Acked-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Brendan Jackman <jackmanb@google.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Marco Elver <elver@google.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/iwl-drv.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/page_owner.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
-@@ -1599,7 +1599,7 @@ static void _iwl_op_mode_stop(struct iwl
-  */
- static void iwl_req_fw_callback(const struct firmware *ucode_raw, void *context)
- {
--	unsigned int min_core, max_core, loaded_core;
-+	int min_core, max_core, loaded_core;
- 	struct iwl_drv *drv = context;
- 	struct iwl_fw *fw = &drv->fw;
- 	const struct iwl_ucode_header *ucode;
-@@ -1678,7 +1678,7 @@ static void iwl_req_fw_callback(const st
- 	if (loaded_core < min_core || loaded_core > max_core) {
- 		IWL_ERR(drv,
- 			"Driver unable to support your firmware API. "
--			"Driver supports FW core %u..%u, firmware is %u.\n",
-+			"Driver supports FW core %d..%d, firmware is %d.\n",
- 			min_core, max_core, loaded_core);
- 		goto try_again;
- 	}
+--- a/mm/page_owner.c
++++ b/mm/page_owner.c
+@@ -936,7 +936,7 @@ static const struct file_operations page
+ 	.open		= page_owner_stack_open,
+ 	.read		= seq_read,
+ 	.llseek		= seq_lseek,
+-	.release	= seq_release,
++	.release	= seq_release_private,
+ };
+ 
+ static int page_owner_threshold_get(void *data, u64 *val)
 
 
