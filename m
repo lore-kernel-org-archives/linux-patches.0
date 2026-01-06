@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26C4636B048;
-	Tue,  6 Jan 2026 17:55:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52CB836B048;
+	Tue,  6 Jan 2026 17:55:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722137; cv=none; b=rseuQXDjYBRgnYAit42VJSNk7KaXhW02UeQS70EUiJ23g3kCoaBVA700Azr5ikagrWSzf4PD+wsEV5l15jnYyWUPYXl/mupWlciauA/VEYNd6eMCg2ZTxYnXzw8UuLhAGK6QkS/nHxhlccvPBMHiXAckl7t1lH2oVpyVjGIm3xo=
+	t=1767722140; cv=none; b=MDvL9IOiXx1c+3qwbjZM8eAQlzdVrzdJ0kWYCNYRMDBMg6AOs5/nX60NMx/bsHlrSHPTOz9z3+u/zNtdep4dJpzwSpOF2yhhTVhnLzHMlIwjRQLoLdFgI7x8A7lVj8mRUIao9BWPaS1+LYSbDf/IGnQU04jZqaSq1kCBV8h9HU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722137; c=relaxed/simple;
-	bh=DGhg08Ybi4/65iEm2DizkD7p6UrLXHAzGuEB4s2AZwQ=;
+	s=arc-20240116; t=1767722140; c=relaxed/simple;
+	bh=ZOIZ+VQdw5m0oOPUt8vj74U0Emr9hleBf/vr5LorPt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ETZUJfmBRMx0kk59GdYWcRaszFKfbL6Qn68LBCYFXykek/H8zEl9Ll6iZz+ZDWHEMBd+YJ4t5FSASmme9HQqUSyd1ATOoMklpN4V7xB4bhDbVkB4SHCydGfAEJZx/khBOd1RIeh8el5pHU8bEWTArAatj7y7njy6NyscC57dJ/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nV/RyA6K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rs5jwtP9ISthA1qOncu3NeETlbAjpRMr1zJHzqBUF16uj2crd90Fo49TevLpio+o6jGtfqSFYB8fz3j8I7sp3Kr8WFPhVJUWyGi6b3J2L7sW44B2me+FMAIb6qSKKSOlZLIpOneFFU8AKR9Bv4/y502yjkxX4B1SgjSi91mFr7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vP9GpqZm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nV/RyA6K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2E9CC116C6;
-	Tue,  6 Jan 2026 17:55:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vP9GpqZm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD79FC116C6;
+	Tue,  6 Jan 2026 17:55:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722137;
-	bh=DGhg08Ybi4/65iEm2DizkD7p6UrLXHAzGuEB4s2AZwQ=;
+	s=korg; t=1767722140;
+	bh=ZOIZ+VQdw5m0oOPUt8vj74U0Emr9hleBf/vr5LorPt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nV/RyA6K95p5MeWX5+iE4K30Lj4RAONVgMnSBfGbhtIVPLGu+16n4fu62YlKR2u8h
-	 acd09BVotvyNr2MUmkRSfOsQ8iG75ca7E2FDUIwjY6mdABFmfuH2tUOBaTJC9MeUjS
-	 R4pNKH68tkKvY5rhhleeh4pAIJMShrHjgeQ+jvW0=
+	b=vP9GpqZmVd6++ccR6JLP6OO7S+Oz83t0rl022U4eIJF7OP+SuiaUJI3InE0DoC3/E
+	 kG1nsz4XKObzNWwrYfLZwzBcFjFHicOq072tVChhqAu4GrPtwEwHajVSmHvgfDV/Dp
+	 2tVVeBYK9r8rzBgKiegSw6wYmF8LtzvSyuHp9hdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moudy Ho <moudy.ho@mediatek.com>,
-	Johan Hovold <johan@kernel.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 177/312] media: platform: mtk-mdp3: fix device leaks at probe
-Date: Tue,  6 Jan 2026 18:04:11 +0100
-Message-ID: <20260106170554.236028053@linuxfoundation.org>
+Subject: [PATCH 6.18 178/312] media: renesas: rcar_drif: fix device node reference leak in rcar_drif_bond_enabled
+Date: Tue,  6 Jan 2026 18:04:12 +0100
+Message-ID: <20260106170554.272963723@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -53,72 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit 8f6f3aa21517ef34d50808af0c572e69580dca20 upstream.
+commit 445e1658894fd74eab7e53071fa16233887574ed upstream.
 
-Make sure to drop the references taken when looking up the subsys
-devices during probe on probe failure (e.g. probe deferral) and on
-driver unbind.
+The function calls of_parse_phandle() which returns
+a device node with an incremented reference count. When the bonded device
+is not available, the function
+returns NULL without releasing the reference, causing a reference leak.
 
-Similarly, drop the SCP device reference after retrieving its platform
-data during probe to avoid leaking it.
+Add of_node_put(np) to release the device node reference.
+The of_node_put function handles NULL pointers.
 
-Note that holding a reference to a device does not prevent its driver
-data from going away.
+Found through static analysis by reviewing the doc of of_parse_phandle()
+and cross-checking its usage patterns across the codebase.
 
-Fixes: 61890ccaefaf ("media: platform: mtk-mdp3: add MediaTek MDP3 driver")
-Cc: stable@vger.kernel.org	# 6.1
-Cc: Moudy Ho <moudy.ho@mediatek.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Fixes: 7625ee981af1 ("[media] media: platform: rcar_drif: Add DRIF support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/media/platform/renesas/rcar_drif.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c
-+++ b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c
-@@ -157,10 +157,18 @@ void mdp_video_device_release(struct vid
- 	kfree(mdp);
+--- a/drivers/media/platform/renesas/rcar_drif.c
++++ b/drivers/media/platform/renesas/rcar_drif.c
+@@ -1246,6 +1246,7 @@ static struct device_node *rcar_drif_bon
+ 	if (np && of_device_is_available(np))
+ 		return np;
+ 
++	of_node_put(np);
+ 	return NULL;
  }
  
-+static void mdp_put_device(void *_dev)
-+{
-+	struct device *dev = _dev;
-+
-+	put_device(dev);
-+}
-+
- static int mdp_mm_subsys_deploy(struct mdp_dev *mdp, enum mdp_infra_id id)
- {
- 	struct platform_device *mm_pdev = NULL;
- 	struct device **dev;
-+	int ret;
- 	int i;
- 
- 	if (!mdp)
-@@ -194,6 +202,11 @@ static int mdp_mm_subsys_deploy(struct m
- 		if (WARN_ON(!mm_pdev))
- 			return -ENODEV;
- 
-+		ret = devm_add_action_or_reset(&mdp->pdev->dev, mdp_put_device,
-+					       &mm_pdev->dev);
-+		if (ret)
-+			return ret;
-+
- 		*dev = &mm_pdev->dev;
- 	}
- 
-@@ -279,6 +292,7 @@ static int mdp_probe(struct platform_dev
- 			goto err_destroy_clock_wq;
- 		}
- 		mdp->scp = platform_get_drvdata(mm_pdev);
-+		put_device(&mm_pdev->dev);
- 	}
- 
- 	mdp->rproc_handle = scp_get_rproc(mdp->scp);
 
 
