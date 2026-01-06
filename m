@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7960D3559CA;
-	Tue,  6 Jan 2026 17:28:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A79B3559CB;
+	Tue,  6 Jan 2026 17:28:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720522; cv=none; b=gulLe87c++0+eZ0ue0PDwZ9D9ykh6RQFD24D/cz7wYkXDTZMxmLj9Xsht0dDDCwQ0ZQwMu0mfBxcTO124/yH2I3xlmRyRr9IPipcNofgzfs2mLJ81J7YAnUOD8UCB4ICLctjb09rrrWNlAUP1Kny5nLVCkNJvqmjyscOsrWPovg=
+	t=1767720525; cv=none; b=n1ymEdM9U2OGx6ns0ljjUGn5qOvl6XUHrUJSueb2s0GE/Ir+NADtf9b35mx6VxL3qTHt23jDqQEyXDCjroIzREtglCD+5hKfrLK3NkOqcZj2mGYL5k+XxBlZ37G0eRWjtqryAq+ii038i+iWETWK1fu/q89yJJiqtTMPl4QwYMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720522; c=relaxed/simple;
-	bh=fgKu7fMEcV5ICjFxas5iah3/A7QukH+/cXi9uI/anSI=;
+	s=arc-20240116; t=1767720525; c=relaxed/simple;
+	bh=pXUcPGi1ZEg4maFofxEIEWbHhgztEL6Fjjrl+T47dho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r/RzW39QhbsDGO8AAo4KkByd0Xi3lZeYcGICsG52rr8XJpwgVzVqRig+eo8EpsR/RsuNXWHP2ozORQZ/U6ym2hLi+mcD52S4ReWgm/NZ7LEi4dXL/2I/e+eyN1/n4ezy2RQlhW+S0p4H04j87uX5MA6Apfhmkni3C1kCJuWi5pU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ynZ+Le2Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K2/dxl3CG230LuB55q3o5qMVQTYy46LJFsvFCF0YBZft/BKHdn8mADcWQIpmf8HG4K2Z5c6ehC1X4UNYIE8wXDIXBGx3H6uWeuWC/ApHwCmj/hQ7YLDXqGGK7r+DXRYU+fjNy6rxtJP1rXpKng6fXRKOEx33bYFLwaB01ZHJem4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ho1tqZmI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ynZ+Le2Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E975DC116C6;
-	Tue,  6 Jan 2026 17:28:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ho1tqZmI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E62BC116C6;
+	Tue,  6 Jan 2026 17:28:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720522;
-	bh=fgKu7fMEcV5ICjFxas5iah3/A7QukH+/cXi9uI/anSI=;
+	s=korg; t=1767720525;
+	bh=pXUcPGi1ZEg4maFofxEIEWbHhgztEL6Fjjrl+T47dho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ynZ+Le2QpSOMhbpQ+fd+rtfkR/KQklIqG5NxExZoiEzzbFfvBQ0xcJkcNcMYNv6xm
-	 GanpCvWPSOAUfb1DUQSkvDL7STGsdcTuJAI9rZb122oYW3JrStMI+TfKf+fCFnF6nq
-	 e6P9e8kXPhBU7c86ZoDhG5YVR+c1wIJGog9zp0lc=
+	b=ho1tqZmITDo57tgJR1CY/lDZsXpiRpxRNuN/tTLsKEvKXZBsXcOeoSiAO3UzRwxXI
+	 QxxJ7f8gxexNYvJ6k+iMygLgCKR7kTFrphjr5UGa7S4rVaUzjTeL6cANpM2lrjTz6j
+	 sJKu/GQCSiX5jczq6oDLr/fzzDRD/gtJo7e33kYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
+	Leo Yan <leo.yan@arm.com>,
 	Ahmed Genidi <ahmed.genidi@arm.com>,
+	Mark Rutland <mark.rutland@arm.com>,
 	Ben Horgan <ben.horgan@arm.com>,
 	Catalin Marinas <catalin.marinas@arm.com>,
-	Leo Yan <leo.yan@arm.com>,
 	Marc Zyngier <maz@kernel.org>,
 	Oliver Upton <oliver.upton@linux.dev>,
 	Will Deacon <will@kernel.org>,
 	Wei-Lin Chang <weilin.chang@arm.com>
-Subject: [PATCH 6.12 262/567] KVM: arm64: Initialize HCR_EL2.E2H early
-Date: Tue,  6 Jan 2026 18:00:44 +0100
-Message-ID: <20260106170501.013523726@linuxfoundation.org>
+Subject: [PATCH 6.12 263/567] KVM: arm64: Initialize SCTLR_EL1 in __kvm_hyp_init_cpu()
+Date: Tue,  6 Jan 2026 18:00:45 +0100
+Message-ID: <20260106170501.053095138@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -57,39 +57,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Ahmed Genidi <ahmed.genidi@arm.com>
 
-[ Upstream commit 7a68b55ff39b0a1638acb1694c185d49f6077a0d ]
+[ Upstream commit 3855a7b91d42ebf3513b7ccffc44807274978b3d ]
 
-On CPUs without FEAT_E2H0, HCR_EL2.E2H is RES1, but may reset to an
-UNKNOWN value out of reset and consequently may not read as 1 unless it
-has been explicitly initialized.
+When KVM is in protected mode, host calls to PSCI are proxied via EL2,
+and cold entries from CPU_ON, CPU_SUSPEND, and SYSTEM_SUSPEND bounce
+through __kvm_hyp_init_cpu() at EL2 before entering the host kernel's
+entry point at EL1. While __kvm_hyp_init_cpu() initializes SPSR_EL2 for
+the exception return to EL1, it does not initialize SCTLR_EL1.
 
-We handled this for the head.S boot code in commits:
+Due to this, it's possible to enter EL1 with SCTLR_EL1 in an UNKNOWN
+state. In practice this has been seen to result in kernel crashes after
+CPU_ON as a result of SCTLR_EL1.M being 1 in violation of the initial
+core configuration specified by PSCI.
 
-  3944382fa6f22b54 ("arm64: Treat HCR_EL2.E2H as RES1 when ID_AA64MMFR4_EL1.E2H0 is negative")
-  b3320142f3db9b3f ("arm64: Fix early handling of FEAT_E2H0 not being implemented")
+Fix this by initializing SCTLR_EL1 for cold entry to the host kernel.
+As it's necessary to write to SCTLR_EL12 in VHE mode, this
+initialization is moved into __kvm_host_psci_cpu_entry() where we can
+use write_sysreg_el1().
 
-Unfortunately, we forgot to apply a similar fix to the KVM PSCI entry
-points used when relaying CPU_ON, CPU_SUSPEND, and SYSTEM SUSPEND. When
-KVM is entered via these entry points, the value of HCR_EL2.E2H may be
-consumed before it has been initialized (e.g. by the 'init_el2_state'
-macro).
+The remnants of the '__init_el2_nvhe_prepare_eret' macro are folded into
+its only caller, as this is clearer than having the macro.
 
-Initialize HCR_EL2.E2H early in these paths such that it can be consumed
-reliably. The existing code in head.S is factored out into a new
-'init_el2_hcr' macro, and this is used in the __kvm_hyp_init_cpu()
-function common to all the relevant PSCI entry points.
-
-For clarity, I've tweaked the assembly used to check whether
-ID_AA64MMFR4_EL1.E2H0 is negative. The bitfield is extracted as a signed
-value, and this is checked with a signed-greater-or-equal (GE) comparison.
-
-As the hyp code will reconfigure HCR_EL2 later in ___kvm_hyp_init(), all
-bits other than E2H are initialized to zero in __kvm_hyp_init_cpu().
-
-Fixes: 3944382fa6f22b54 ("arm64: Treat HCR_EL2.E2H as RES1 when ID_AA64MMFR4_EL1.E2H0 is negative")
-Fixes: b3320142f3db9b3f ("arm64: Fix early handling of FEAT_E2H0 not being implemented")
+Fixes: cdf367192766ad11 ("KVM: arm64: Intercept host's CPU_ON SMCs")
+Reported-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: Ahmed Genidi <ahmed.genidi@arm.com>
+[ Mark: clarify commit message, handle E2H, move to C, remove macro ]
 Signed-off-by: Mark Rutland <mark.rutland@arm.com>
 Cc: Ahmed Genidi <ahmed.genidi@arm.com>
 Cc: Ben Horgan <ben.horgan@arm.com>
@@ -98,105 +92,66 @@ Cc: Leo Yan <leo.yan@arm.com>
 Cc: Marc Zyngier <maz@kernel.org>
 Cc: Oliver Upton <oliver.upton@linux.dev>
 Cc: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20250227180526.1204723-2-mark.rutland@arm.com
-[maz: fixed LT->GE thinko]
+Reviewed-by: Leo Yan <leo.yan@arm.com>
+Link: https://lore.kernel.org/r/20250227180526.1204723-3-mark.rutland@arm.com
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Wei-Lin Chang <weilin.chang@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/el2_setup.h |   26 ++++++++++++++++++++++++++
- arch/arm64/kernel/head.S           |   19 +------------------
- arch/arm64/kvm/hyp/nvhe/hyp-init.S |    8 +++++++-
- 3 files changed, 34 insertions(+), 19 deletions(-)
+ arch/arm64/include/asm/el2_setup.h   |    5 -----
+ arch/arm64/kernel/head.S             |    3 ++-
+ arch/arm64/kvm/hyp/nvhe/hyp-init.S   |    2 --
+ arch/arm64/kvm/hyp/nvhe/psci-relay.c |    3 +++
+ 4 files changed, 5 insertions(+), 8 deletions(-)
 
 --- a/arch/arm64/include/asm/el2_setup.h
 +++ b/arch/arm64/include/asm/el2_setup.h
-@@ -16,6 +16,32 @@
- #include <asm/sysreg.h>
- #include <linux/irqchip/arm-gic-v3.h>
+@@ -265,11 +265,6 @@
+ .Lskip_fgt2_\@:
+ .endm
  
-+.macro init_el2_hcr	val
-+	mov_q	x0, \val
-+
-+	/*
-+	 * Compliant CPUs advertise their VHE-onlyness with
-+	 * ID_AA64MMFR4_EL1.E2H0 < 0. On such CPUs HCR_EL2.E2H is RES1, but it
-+	 * can reset into an UNKNOWN state and might not read as 1 until it has
-+	 * been initialized explicitly.
-+	 *
-+	 * Fruity CPUs seem to have HCR_EL2.E2H set to RAO/WI, but
-+	 * don't advertise it (they predate this relaxation).
-+	 *
-+	 * Initalize HCR_EL2.E2H so that later code can rely upon HCR_EL2.E2H
-+	 * indicating whether the CPU is running in E2H mode.
-+	 */
-+	mrs_s	x1, SYS_ID_AA64MMFR4_EL1
-+	sbfx	x1, x1, #ID_AA64MMFR4_EL1_E2H0_SHIFT, #ID_AA64MMFR4_EL1_E2H0_WIDTH
-+	cmp	x1, #0
-+	b.ge	.LnVHE_\@
-+
-+	orr	x0, x0, #HCR_E2H
-+.LnVHE_\@:
-+	msr	hcr_el2, x0
-+	isb
-+.endm
-+
- .macro __init_el2_sctlr
- 	mov_q	x0, INIT_SCTLR_EL2_MMU_OFF
- 	msr	sctlr_el2, x0
+-.macro __init_el2_nvhe_prepare_eret
+-	mov	x0, #INIT_PSTATE_EL1
+-	msr	spsr_el2, x0
+-.endm
+-
+ /**
+  * Initialize EL2 registers to sane values. This should be called early on all
+  * cores that were booted in EL2. Note that everything gets initialised as
 --- a/arch/arm64/kernel/head.S
 +++ b/arch/arm64/kernel/head.S
-@@ -295,25 +295,8 @@ SYM_INNER_LABEL(init_el2, SYM_L_LOCAL)
- 	msr	sctlr_el2, x0
- 	isb
- 0:
--	mov_q	x0, HCR_HOST_NVHE_FLAGS
--
--	/*
--	 * Compliant CPUs advertise their VHE-onlyness with
--	 * ID_AA64MMFR4_EL1.E2H0 < 0. HCR_EL2.E2H can be
--	 * RES1 in that case. Publish the E2H bit early so that
--	 * it can be picked up by the init_el2_state macro.
--	 *
--	 * Fruity CPUs seem to have HCR_EL2.E2H set to RAO/WI, but
--	 * don't advertise it (they predate this relaxation).
--	 */
--	mrs_s	x1, SYS_ID_AA64MMFR4_EL1
--	tbz	x1, #(ID_AA64MMFR4_EL1_E2H0_SHIFT + ID_AA64MMFR4_EL1_E2H0_WIDTH - 1), 1f
--
--	orr	x0, x0, #HCR_E2H
--1:
--	msr	hcr_el2, x0
--	isb
+@@ -319,7 +319,8 @@ SYM_INNER_LABEL(init_el2, SYM_L_LOCAL)
+ 	msr	sctlr_el1, x1
+ 	mov	x2, xzr
+ 3:
+-	__init_el2_nvhe_prepare_eret
++	mov	x0, #INIT_PSTATE_EL1
++	msr	spsr_el2, x0
  
-+	init_el2_hcr	HCR_HOST_NVHE_FLAGS
- 	init_el2_state
- 
- 	/* Hypervisor stub */
+ 	mov	w0, #BOOT_CPU_MODE_EL2
+ 	orr	x0, x0, x2
 --- a/arch/arm64/kvm/hyp/nvhe/hyp-init.S
 +++ b/arch/arm64/kvm/hyp/nvhe/hyp-init.S
-@@ -73,8 +73,12 @@ __do_hyp_init:
- 	eret
- SYM_CODE_END(__kvm_hyp_init)
+@@ -214,8 +214,6 @@ SYM_CODE_START_LOCAL(__kvm_hyp_init_cpu)
  
-+/*
-+ * Initialize EL2 CPU state to sane values.
-+ *
-+ * HCR_EL2.E2H must have been initialized already.
-+ */
- SYM_CODE_START_LOCAL(__kvm_init_el2_state)
--	/* Initialize EL2 CPU state to sane values. */
- 	init_el2_state				// Clobbers x0..x2
- 	finalise_el2_state
- 	ret
-@@ -206,6 +210,8 @@ SYM_CODE_START_LOCAL(__kvm_hyp_init_cpu)
- 
- 2:	msr	SPsel, #1			// We want to use SP_EL{1,2}
- 
-+	init_el2_hcr	0
-+
  	bl	__kvm_init_el2_state
  
- 	__init_el2_nvhe_prepare_eret
+-	__init_el2_nvhe_prepare_eret
+-
+ 	/* Enable MMU, set vectors and stack. */
+ 	mov	x0, x28
+ 	bl	___kvm_hyp_init			// Clobbers x0..x2
+--- a/arch/arm64/kvm/hyp/nvhe/psci-relay.c
++++ b/arch/arm64/kvm/hyp/nvhe/psci-relay.c
+@@ -218,6 +218,9 @@ asmlinkage void __noreturn __kvm_host_ps
+ 	if (is_cpu_on)
+ 		release_boot_args(boot_args);
+ 
++	write_sysreg_el1(INIT_SCTLR_EL1_MMU_OFF, SYS_SCTLR);
++	write_sysreg(INIT_PSTATE_EL1, SPSR_EL2);
++
+ 	__host_enter(host_ctxt);
+ }
+ 
 
 
