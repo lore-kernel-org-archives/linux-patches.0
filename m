@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F0AB2749D5;
-	Tue,  6 Jan 2026 17:46:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73C12224B15;
+	Tue,  6 Jan 2026 17:46:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721597; cv=none; b=HDXHVbg2zmSEkVKJfJPXZx7QuNQNtl9aIVM5VrnfHK2/8wOdwyayRy1gcrqOmwmH/1aleALp3LxToqbUOGHFencdV3XzpdRn3Rpnf7msTYho3zkU1Kd+CLek63t+c+AgU+C/amyDNRvnfitx0nEwU/fYsG3Wh8WcjAEarDvc8zs=
+	t=1767721600; cv=none; b=MEREuzHg/oYCHOvWKyHim2YYx7BS6g8y4+8A5zE6mc5oAMXq+8LuLAu4f5cgI3veHQjYPIUSl/hb/IMmQPAE+Q00tsn6z8idSyg3QzvsHZ7SoGcYvCxJJ+bmde+jjb3fk4HfgOHQBAgY9WR/vONAmPI1on9kL9NL3frhMW7Y4hA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721597; c=relaxed/simple;
-	bh=J4QeRzuXO3Vwn9QO+opyhfZPGybutp7jYZ3s3cR8tyc=;
+	s=arc-20240116; t=1767721600; c=relaxed/simple;
+	bh=7KlFOj2H1Muak6/stiqHPnXb355GcSoD/Qq7p+bZYQU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rNt4mdfNUcuMuH7z48dGir9qmgnigZCXN2zAi+7V78L1GwcesmoyHdpsZLtxDF+ET3frPYFHEukccnchtvBiGG7rIOR1gEGJfW5LlgKwLCNSP+1ouCHexEZkNHaLVYJyjnSR4CgdN8v2wimpamiY6EU94XJRcoWJjB+so2P1kBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WFe5s0t/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KZl6fnMIHwXaYDIlwkCY3IJ3UsDTZmoBUcbkwfE2WiN0NOrk2UN/AiWAcqnaUbRPBoVkWc+Lm9Q9NJ+q6rXQxjbqUP9ZDvy7V474rNO1R6ah/pqShjrBELj0hK9POcxgXQNkSOsQkfJ40mDdkM2XAENK6jpTajyKJs0hPp4/8UM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MVA4lri2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WFe5s0t/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A575C116C6;
-	Tue,  6 Jan 2026 17:46:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MVA4lri2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D955C116C6;
+	Tue,  6 Jan 2026 17:46:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721596;
-	bh=J4QeRzuXO3Vwn9QO+opyhfZPGybutp7jYZ3s3cR8tyc=;
+	s=korg; t=1767721600;
+	bh=7KlFOj2H1Muak6/stiqHPnXb355GcSoD/Qq7p+bZYQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WFe5s0t/v1Iydk/7b7y6Y8TEy3iofBHdNwuP9goDw1tMvPOR9YAM3+BJh10URpTA7
-	 tQjtHCvd9H8g6AA/LIgGl1OHR9AQCO89Z7F+QzGdabzfiP/ln3aaBTZ+ionkJ1peDV
-	 S6ayFIlRJKs1FqzZyYj5qYblCrJdaOVgf8FYZ1AA=
+	b=MVA4lri2WQ5wN3Rtf523D7SXLb5oFlH57EyZDy3YPuwp4qge2fRGMSOcf/3G+nHLB
+	 mgN2A3cRhjGhhsCsrbm7aiJFItPWsZBcKoOAxfSvAdNdLjkRk7kgVLJ8CM8/amJLuf
+	 2hO9IJFLa/7DJJE3KzXfCUJy3scRtrmvX8LoE0uE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Liang Jie <liangjie@lixiang.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 016/312] sched_ext: fix uninitialized ret on alloc_percpu() failure
-Date: Tue,  6 Jan 2026 18:01:30 +0100
-Message-ID: <20260106170548.441766288@linuxfoundation.org>
+	Alexandre Courbot <acourbot@nvidia.com>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Subject: [PATCH 6.18 002/312] drm: nova: depend on CONFIG_64BIT
+Date: Tue,  6 Jan 2026 18:01:16 +0100
+Message-ID: <20260106170547.928444007@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -55,53 +52,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liang Jie <liangjie@lixiang.com>
+From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit b0101ccb5b4641885f30fecc352ef891ed06e083 ]
+commit ba1b40ed0e34bab597fd90d4c4e9f7397f878c8f upstream.
 
-Smatch reported:
+nova-core already depends on CONFIG_64BIT, hence also depend on
+CONFIG_64BIT for nova-drm.
 
-  kernel/sched/ext.c:5332 scx_alloc_and_add_sched() warn: passing zero to 'ERR_PTR'
-
-In scx_alloc_and_add_sched(), the alloc_percpu() failure path jumps to
-err_free_gdsqs without initializing @ret. That can lead to returning
-ERR_PTR(0), which violates the ERR_PTR() convention and confuses
-callers.
-
-Set @ret to -ENOMEM before jumping to the error path when
-alloc_percpu() fails.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/r/202512141601.yAXDAeA9-lkp@intel.com/
-Reported-by: Dan Carpenter <error27@gmail.com>
-Fixes: c201ea1578d3 ("sched_ext: Move event_stats_cpu into scx_sched")
-Signed-off-by: Liang Jie <liangjie@lixiang.com>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
+Reviewed-by: John Hubbard <jhubbard@nvidia.com>
+Link: https://patch.msgid.link/20251028110058.340320-1-dakr@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Cc: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/nova/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 6139263afd59..31eda2a56920 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -4508,8 +4508,10 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops)
- 	}
- 
- 	sch->pcpu = alloc_percpu(struct scx_sched_pcpu);
--	if (!sch->pcpu)
-+	if (!sch->pcpu) {
-+		ret = -ENOMEM;
- 		goto err_free_gdsqs;
-+	}
- 
- 	sch->helper = kthread_run_worker(0, "sched_ext_helper");
- 	if (IS_ERR(sch->helper)) {
--- 
-2.51.0
-
+--- a/drivers/gpu/drm/nova/Kconfig
++++ b/drivers/gpu/drm/nova/Kconfig
+@@ -1,5 +1,6 @@
+ config DRM_NOVA
+ 	tristate "Nova DRM driver"
++	depends on 64BIT
+ 	depends on DRM=y
+ 	depends on PCI
+ 	depends on RUST
 
 
