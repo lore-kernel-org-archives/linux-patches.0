@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29DA3227BA4;
-	Tue,  6 Jan 2026 17:36:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F5F250BEC;
+	Tue,  6 Jan 2026 17:36:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721006; cv=none; b=OS+oOlsLZjlNDyhtMt5xaYr0j9p0HP6jPU5QlVW6ZrTbYA3JF50CEVIh+RWFvf6dq9xCDlS2InRPFr4RvlCA4MIpKberEE4b/oP8bKuM99Pv3hokFD67kROmBZ1Sf5vxeNQWjvEMPLtgWyYeWRr8WaVsLyUIDUU98H8RQjeiorc=
+	t=1767721009; cv=none; b=LzQxf9YM9IpqcbFgKTXbci9PIrA/B/7Qf5i3U1nKxNIJCd37Mwp5hfkOO6UZV0Pivsj2A1Nf/a3ANYWbahmSgiVIJvSLoGLyeVpH2h2SV2hPHQyTMGWV9SGYXcT6wSceGTZawu26zqUiKC0fJWn1Agh7QB0Me/dQHpG8o7MmmmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721006; c=relaxed/simple;
-	bh=UU0tGsOcP6MQrHwD/Mal1Sa2snVM1Ef5kUt1q1hAlIU=;
+	s=arc-20240116; t=1767721009; c=relaxed/simple;
+	bh=EJ4dAAOCZfQ32WT66H9SVujacPWzx7Pflr82yRvC1Dc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iAQPjAugw/DZeNmXe1meBv9unrM8f8Kng0iI0tTXEMIZmbWw57+NF+v50EdCe4AsO46i4geIC9aGgrNSRs4HA6X3SzMHuXHX+aRkcLMA4ZwM5cxfJNl8MogWJ5EMzJjB9/0/V2zx/HZHwMXH/s2tENh0attqRXLNUQ1RvjRF+qs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qy3nV9nB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UP5Ybs989sO5BpsPqnCp4Ko/g5W+wZIXZwSf1U+h8F285B61E3md/mQZhN1xgy4P/z0HxJLrvuMyIlclfGqQ5VuWOatjtcNzbZDRv6AZ4sG+XNjQxD4HB6JwsipknuRKczh12f5F80rTH0ODJp6ZtS03yHy18WZHLwjlcRdZSRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qPDVrtJh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qy3nV9nB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 871A4C16AAE;
-	Tue,  6 Jan 2026 17:36:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qPDVrtJh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E199BC116C6;
+	Tue,  6 Jan 2026 17:36:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721006;
-	bh=UU0tGsOcP6MQrHwD/Mal1Sa2snVM1Ef5kUt1q1hAlIU=;
+	s=korg; t=1767721009;
+	bh=EJ4dAAOCZfQ32WT66H9SVujacPWzx7Pflr82yRvC1Dc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qy3nV9nBPGpKqas0/YUYN3HGyCN9Bf9vDGjjqV0cdRu7p1WwFWQPqZUw04yh0CnXI
-	 SrT6Fz78wb2ybLdJ9n8xWK4bSGdEBX1v3R2tdiL4fv5JpvZdpBHdzouNPg9mn6QeEY
-	 3eNWfXrJDi07zgmZttlR5Anmgr0ANdgs10N2Q5r8=
+	b=qPDVrtJhQKAFIQfBznEfitf95gAobkeEKXra/IS12+ubnx8KyPRpPT7YoWQPa8vjh
+	 sY4bBR6tGbZBTPMxUG2xuMglfG8MmHe4TEDCrf63QgXsQ28tgSdGjCXjpiY8CkyyqP
+	 Yy6JlRxWCb1MVwTB/xEX96z9Sz3hXJEAeHxWvLJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 407/567] media: TDA1997x: Remove redundant cancel_delayed_work in probe
-Date: Tue,  6 Jan 2026 18:03:09 +0100
-Message-ID: <20260106170506.398214420@linuxfoundation.org>
+Subject: [PATCH 6.12 408/567] media: verisilicon: Protect G2 HEVC decoder against invalid DPB index
+Date: Tue,  6 Jan 2026 18:03:10 +0100
+Message-ID: <20260106170506.435357019@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -50,38 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 
-commit 29de195ca39fc2ac0af6fd45522994df9f431f80 upstream.
+commit 47825b1646a6a9eca0f90baa3d4f98947c2add96 upstream.
 
-The delayed_work delayed_work_enable_hpd is initialized with
-INIT_DELAYED_WORK(), but it is never scheduled in tda1997x_probe().
+Fix the Hantro G2 HEVC decoder so that we use DPB index 0 whenever a
+ninvalid index is received from user space. This protects the hardware
+from doing faulty memory access which then leads to bus errors.
 
-Calling cancel_delayed_work() on a work that has never been
-scheduled is redundant and unnecessary, as there is no pending
-work to cancel.
+To be noted that when a reference is missing, userspace such as GStreamer
+passes an invalid DPB index of 255. This issue was found by seeking to a
+CRA picture using GStreamer. The framework is currently missing the code
+to skip over RASL pictures placed after the CRA. This situation can also
+occur while doing live streaming over lossy transport.
 
-Remove the redundant cancel_delayed_work() from error handling
-path in tda1997x_probe() to avoid potential confusion.
-
-Fixes: 9ac0038db9a7 ("media: i2c: Add TDA1997x HDMI receiver driver")
+Fixes: cb5dd5a0fa518 ("media: hantro: Introduce G2/HEVC decoder")
 Cc: stable@vger.kernel.org
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/tda1997x.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/media/platform/verisilicon/hantro_g2_hevc_dec.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/drivers/media/i2c/tda1997x.c
-+++ b/drivers/media/i2c/tda1997x.c
-@@ -2798,7 +2798,6 @@ err_free_media:
- err_free_handler:
- 	v4l2_ctrl_handler_free(&state->hdl);
- err_free_mutex:
--	cancel_delayed_work(&state->delayed_work_enable_hpd);
- 	mutex_destroy(&state->page_lock);
- 	mutex_destroy(&state->lock);
- 	tda1997x_set_power(state, 0);
+--- a/drivers/media/platform/verisilicon/hantro_g2_hevc_dec.c
++++ b/drivers/media/platform/verisilicon/hantro_g2_hevc_dec.c
+@@ -283,6 +283,15 @@ static void set_params(struct hantro_ctx
+ 	hantro_reg_write(vpu, &g2_apf_threshold, 8);
+ }
+ 
++static u32 get_dpb_index(const struct v4l2_ctrl_hevc_decode_params *decode_params,
++			 const u32 index)
++{
++	if (index > decode_params->num_active_dpb_entries)
++		return 0;
++
++	return index;
++}
++
+ static void set_ref_pic_list(struct hantro_ctx *ctx)
+ {
+ 	const struct hantro_hevc_dec_ctrls *ctrls = &ctx->hevc_dec.ctrls;
+@@ -355,8 +364,10 @@ static void set_ref_pic_list(struct hant
+ 		list1[j++] = list1[i++];
+ 
+ 	for (i = 0; i < V4L2_HEVC_DPB_ENTRIES_NUM_MAX; i++) {
+-		hantro_reg_write(vpu, &ref_pic_regs0[i], list0[i]);
+-		hantro_reg_write(vpu, &ref_pic_regs1[i], list1[i]);
++		hantro_reg_write(vpu, &ref_pic_regs0[i],
++				 get_dpb_index(decode_params, list0[i]));
++		hantro_reg_write(vpu, &ref_pic_regs1[i],
++				 get_dpb_index(decode_params, list1[i]));
+ 	}
+ }
+ 
 
 
