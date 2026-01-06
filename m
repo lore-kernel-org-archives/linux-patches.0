@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A97832DF719;
-	Tue,  6 Jan 2026 17:33:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5FFC2DF706;
+	Tue,  6 Jan 2026 17:33:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720836; cv=none; b=ebfDpKubNOCvz9rYGtKqvCc1HEXWJfSpkf+Z/u3LCn2So2vii+hGw3RSrQIuDS9y7S+dj56+8xpqCbcGQT4/f8aCjeubIJA/mO+7MtO2+WK762cEqQ+4cepWZqDqXPPGIr0qxPd3DsRVRe23YP/TDkJWOeZTRuBIHcF4zoi4q+s=
+	t=1767720839; cv=none; b=YgCWHiPwF/9APmCqCVAlokhFXELSkgckf3qhNpZv5Z2SrWPRuvNKiNXv960xkzcaK6T94vT+rw/IWRqT6I+XOt1fsJlnh062f5mS5D+NAJbXIwbGTO1yQe0W1RxW84LqUyyoVzjBhtHLv8P6DQuQaLsVLzB+roTPxfcxsLfqx/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720836; c=relaxed/simple;
-	bh=+opZzcdkGsAMQ74+Ns/QaOMQz7J8o4lhfGlTpI6Dric=;
+	s=arc-20240116; t=1767720839; c=relaxed/simple;
+	bh=znqa0kIFnFuHCa4LEs3dohwppL4PCHSLCexdxlqkqFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jtOMf0CtBh0QnQB7+Y5BywtiJ4sWAl/K3C0aeZ86Xf5sQYyJO6QvPXU69vMbMCaRN5aK0msSIIhy1yA31/rxtoWGR+gxaKZhILIIGhJDVm7vU8x3kC9ccwJRtcSfvqE5vtOokw8zhT664Eh41tBFvBqhyjfai79SjGWTAKACVHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FOm4IlmP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sMnhQAIs3k/KwN/JVyg5/kC8jQIuPAeF0Pt5q60t/I8Bn12xFCQCe1ivX9qq/k1yXfMGhOjx1uDIbHzPeG7buuxtfkj3H0Voq4dkEE7sZy5+Mwp1/ishdaZYeGwBI+n9b5U1rSf8LKtMdVVQFDNx/AsNc40wu+lByzP7NMici/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y0hiRJcj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FOm4IlmP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 124D0C116C6;
-	Tue,  6 Jan 2026 17:33:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y0hiRJcj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2465DC16AAE;
+	Tue,  6 Jan 2026 17:33:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720836;
-	bh=+opZzcdkGsAMQ74+Ns/QaOMQz7J8o4lhfGlTpI6Dric=;
+	s=korg; t=1767720839;
+	bh=znqa0kIFnFuHCa4LEs3dohwppL4PCHSLCexdxlqkqFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FOm4IlmPeewx/eCdBeeVdkJuknQh2yD6dP+sxGdTta7WjowMGzuJq+Fk4OUHKmOd1
-	 6O0fzOP2S++UiWaRjeM1xP+twIk7AWr5LFyrUsNS5t/1xSG24ztcEx/0Gpjx5rmgPb
-	 AUhtlSmZljU4twjt2hJGAGyNWf4Y9WB9et46mvjo=
+	b=Y0hiRJcjZg9XXTPBn2js4KS23dWCknUJs/SW+gvfWYlT4t7+dx8lfd6poYFXcXkQx
+	 ftjwjXyLS9+x+0y3wWyHQ6e3Tpcqjwx0mOcg0JwPvXYuMEHCXTfOwr3koALWrR1iKx
+	 aG8pIo+gPQZ53/ubb5p3sr/J+Crt0rBcvPaoSFRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 349/567] ASoC: codecs: lpass-tx-macro: fix SM6115 support
-Date: Tue,  6 Jan 2026 18:02:11 +0100
-Message-ID: <20260106170504.240333376@linuxfoundation.org>
+	Magnus Damm <damm+renesas@opensource.se>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Johan Hovold <johan@kernel.org>,
+	Joerg Roedel <joerg.roedel@amd.com>
+Subject: [PATCH 6.12 358/567] iommu/ipmmu-vmsa: fix device leak on of_xlate()
+Date: Tue,  6 Jan 2026 18:02:20 +0100
+Message-ID: <20260106170504.578657603@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,36 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 7c63b5a8ed972a2c8c03d984f6a43349007cea93 upstream.
+commit 80aa518452c4aceb9459f9a8e3184db657d1b441 upstream.
 
-SM6115 does have soundwire controller in tx. For some reason
-we ended up with this incorrect patch.
+Make sure to drop the reference taken to the iommu platform device when
+looking up its driver data during of_xlate().
 
-Fix this by adding the flag to reflect this in SoC data.
-
-Fixes: 510c46884299 ("ASoC: codecs: lpass-tx-macro: Add SM6115 support")
-Cc: Stable@vger.kernel.org
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251031120703.590201-2-srinivas.kandagatla@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 7b2d59611fef ("iommu/ipmmu-vmsa: Replace local utlb code with fwspec ids")
+Cc: stable@vger.kernel.org	# 4.14
+Cc: Magnus Damm <damm+renesas@opensource.se>
+Acked-by: Robin Murphy <robin.murphy@arm.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/lpass-tx-macro.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/iommu/ipmmu-vmsa.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/sound/soc/codecs/lpass-tx-macro.c
-+++ b/sound/soc/codecs/lpass-tx-macro.c
-@@ -2474,7 +2474,8 @@ static const struct tx_macro_data lpass_
- };
+--- a/drivers/iommu/ipmmu-vmsa.c
++++ b/drivers/iommu/ipmmu-vmsa.c
+@@ -719,6 +719,8 @@ static int ipmmu_init_platform_device(st
  
- static const struct tx_macro_data lpass_ver_10_sm6115 = {
--	.flags			= LPASS_MACRO_FLAG_HAS_NPL_CLOCK,
-+	.flags			= LPASS_MACRO_FLAG_HAS_NPL_CLOCK |
-+				  LPASS_MACRO_FLAG_RESET_SWR,
- 	.ver			= LPASS_VER_10_0_0,
- 	.extra_widgets		= tx_macro_dapm_widgets_v9_2,
- 	.extra_widgets_num	= ARRAY_SIZE(tx_macro_dapm_widgets_v9_2),
+ 	dev_iommu_priv_set(dev, platform_get_drvdata(ipmmu_pdev));
+ 
++	put_device(&ipmmu_pdev->dev);
++
+ 	return 0;
+ }
+ 
 
 
