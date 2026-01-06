@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67880355024;
-	Tue,  6 Jan 2026 17:23:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2734E355024;
+	Tue,  6 Jan 2026 17:23:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720210; cv=none; b=Pu8lKZbZYwMqIGKkCl0uI6LA1IgkUnvdYtddnlsMM8bdiPTLzJm95CJkxhe/DL65uWs7E9rYuXbGXyCGizDG9cLturxDy2k97yegTF47frzqtsItlxpVzcHoP9kAsYgwyLb7u9izys1BR2kEYFfePqI7RH2Xl/XHgR3aSgvA0U4=
+	t=1767720213; cv=none; b=gjI13TR6uD2Khz+19bYnLORduHZS1Ybu2DeGM1PHNiBIXgzYZPH/JpaLJUir7BLLkYWO+R2otIgEJkYdXPOicrV3U6it0dfoQkXtuWXCEd2kIR/3K30Tff7gYMtYlNv7B/oRL7nnNI2cR2V5HhsyqqORV12LFS4naiJgbJpEzkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720210; c=relaxed/simple;
-	bh=XONHfJYZaf8ipkFMoPIZQ8rjxjedR+uUABysHMdPk58=;
+	s=arc-20240116; t=1767720213; c=relaxed/simple;
+	bh=LY2AI6ZIQLCoJb8ydPBHHRcPUWqSUIgGFcamYxhsbIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P9pK8LkS6SMPvb126vmkgwzBIEf38WIs99b5n9MjvQRkNL/rjNcNn+a/4qx8dM2Su+0Rm5vVDnmVf1zpN1SyBCO8jyX+enoaNHKwalif5YQBYhgyQlgNANQG9tkCZUOlz3iHOiqs4cziLzeFzm22xu3slzgCk4An/OLaWpHAuWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OWgB2aWR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OuF0G3ODq+ks0VPn4TEe+jK4Il3da19tgQLo/HqzEPS+2urlHLDYr8RP5jWfIwyYRmlbUq9Y+MHN+nG8EldSldiFXdEzMlYngGEbtnMFUkrHu8kNUYzkrMoi3gY72i6Zpz2OU8+sGP40TjPGKDpuehNsAYuun1t9Q9VH5J07SPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rM2n9SOQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OWgB2aWR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DF43C19423;
-	Tue,  6 Jan 2026 17:23:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rM2n9SOQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90A05C16AAE;
+	Tue,  6 Jan 2026 17:23:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720209;
-	bh=XONHfJYZaf8ipkFMoPIZQ8rjxjedR+uUABysHMdPk58=;
+	s=korg; t=1767720213;
+	bh=LY2AI6ZIQLCoJb8ydPBHHRcPUWqSUIgGFcamYxhsbIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OWgB2aWRQKEW6cPTcAxnEzCID2TpWsKIhwnBJwrnksFznNXY3jxOWw5lgc4WhQ316
-	 cwCh7xnZ0SaOHthgL0ezvyD4xSZ1kHvDwJYLmV2ZeumiBdfE/ZAuezY18n3RwblzeJ
-	 yZgIFdN4oByLNDx9SIKWg0NGo4OWO/f3kUjWZMJ4=
+	b=rM2n9SOQHAmdrwuRztE8r4ht29RNNQMEx/zL9gJm1YYq3+0tzY+7q8GvKQZoURTLi
+	 8bFyaCxo4UDQRiK2Djw6dtFJjVCVAsst0VgB7WNDzmZDYQFLR8UtP3rBZPUKB9jsSD
+	 jqpNeikMwd2SKZ6F6QUEEnbiDNVdh+Txb26whaug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lai Yi <yi1.lai@linux.intel.com>,
-	Jonathan McDowell <noodles@meta.com>,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Jarkko Sakkinen <jarkko.sakkinen@opinsys.com>
-Subject: [PATCH 6.12 166/567] tpm: Cap the number of PCR banks
-Date: Tue,  6 Jan 2026 17:59:08 +0100
-Message-ID: <20260106170457.466752035@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.12 167/567] ext4: fix string copying in parse_apply_sb_mount_options()
+Date: Tue,  6 Jan 2026 17:59:09 +0100
+Message-ID: <20260106170457.504395100@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,99 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarkko Sakkinen <jarkko.sakkinen@opinsys.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit faf07e611dfa464b201223a7253e9dc5ee0f3c9e upstream.
+commit ee5a977b4e771cc181f39d504426dbd31ed701cc upstream.
 
-tpm2_get_pcr_allocation() does not cap any upper limit for the number of
-banks. Cap the limit to eight banks so that out of bounds values coming
-from external I/O cause on only limited harm.
+strscpy_pad() can't be used to copy a non-NUL-term string into a NUL-term
+string of possibly bigger size.  Commit 0efc5990bca5 ("string.h: Introduce
+memtostr() and memtostr_pad()") provides additional information in that
+regard.  So if this happens, the following warning is observed:
 
-Cc: stable@vger.kernel.org # v5.10+
-Fixes: bcfff8384f6c ("tpm: dynamically allocate the allocated_banks array")
-Tested-by: Lai Yi <yi1.lai@linux.intel.com>
-Reviewed-by: Jonathan McDowell <noodles@meta.com>
-Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
-Signed-off-by: Jarkko Sakkinen <jarkko.sakkinen@opinsys.com>
+strnlen: detected buffer overflow: 65 byte read of buffer size 64
+WARNING: CPU: 0 PID: 28655 at lib/string_helpers.c:1032 __fortify_report+0x96/0xc0 lib/string_helpers.c:1032
+Modules linked in:
+CPU: 0 UID: 0 PID: 28655 Comm: syz-executor.3 Not tainted 6.12.54-syzkaller-00144-g5f0270f1ba00 #0
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+RIP: 0010:__fortify_report+0x96/0xc0 lib/string_helpers.c:1032
+Call Trace:
+ <TASK>
+ __fortify_panic+0x1f/0x30 lib/string_helpers.c:1039
+ strnlen include/linux/fortify-string.h:235 [inline]
+ sized_strscpy include/linux/fortify-string.h:309 [inline]
+ parse_apply_sb_mount_options fs/ext4/super.c:2504 [inline]
+ __ext4_fill_super fs/ext4/super.c:5261 [inline]
+ ext4_fill_super+0x3c35/0xad00 fs/ext4/super.c:5706
+ get_tree_bdev_flags+0x387/0x620 fs/super.c:1636
+ vfs_get_tree+0x93/0x380 fs/super.c:1814
+ do_new_mount fs/namespace.c:3553 [inline]
+ path_mount+0x6ae/0x1f70 fs/namespace.c:3880
+ do_mount fs/namespace.c:3893 [inline]
+ __do_sys_mount fs/namespace.c:4103 [inline]
+ __se_sys_mount fs/namespace.c:4080 [inline]
+ __x64_sys_mount+0x280/0x300 fs/namespace.c:4080
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0x64/0x140 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+Since userspace is expected to provide s_mount_opts field to be at most 63
+characters long with the ending byte being NUL-term, use a 64-byte buffer
+which matches the size of s_mount_opts, so that strscpy_pad() does its job
+properly.  Return with error if the user still managed to provide a
+non-NUL-term string here.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: 8ecb790ea8c3 ("ext4: avoid potential buffer over-read in parse_apply_sb_mount_options()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reviewed-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Message-ID: <20251101160430.222297-1-pchelkin@ispras.ru>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm-chip.c |    1 -
- drivers/char/tpm/tpm1-cmd.c |    5 -----
- drivers/char/tpm/tpm2-cmd.c |    8 +++-----
- include/linux/tpm.h         |    8 +++++---
- 4 files changed, 8 insertions(+), 14 deletions(-)
+ fs/ext4/super.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/char/tpm/tpm-chip.c
-+++ b/drivers/char/tpm/tpm-chip.c
-@@ -282,7 +282,6 @@ static void tpm_dev_release(struct devic
- 
- 	kfree(chip->work_space.context_buf);
- 	kfree(chip->work_space.session_buf);
--	kfree(chip->allocated_banks);
- #ifdef CONFIG_TCG_TPM2_HMAC
- 	kfree(chip->auth);
- #endif
---- a/drivers/char/tpm/tpm1-cmd.c
-+++ b/drivers/char/tpm/tpm1-cmd.c
-@@ -799,11 +799,6 @@ int tpm1_pm_suspend(struct tpm_chip *chi
-  */
- int tpm1_get_pcr_allocation(struct tpm_chip *chip)
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -2493,7 +2493,7 @@ static int parse_apply_sb_mount_options(
+ 					struct ext4_fs_context *m_ctx)
  {
--	chip->allocated_banks = kcalloc(1, sizeof(*chip->allocated_banks),
--					GFP_KERNEL);
--	if (!chip->allocated_banks)
--		return -ENOMEM;
--
- 	chip->allocated_banks[0].alg_id = TPM_ALG_SHA1;
- 	chip->allocated_banks[0].digest_size = hash_digest_size[HASH_ALGO_SHA1];
- 	chip->allocated_banks[0].crypto_id = HASH_ALGO_SHA1;
---- a/drivers/char/tpm/tpm2-cmd.c
-+++ b/drivers/char/tpm/tpm2-cmd.c
-@@ -602,11 +602,9 @@ ssize_t tpm2_get_pcr_allocation(struct t
+ 	struct ext4_sb_info *sbi = EXT4_SB(sb);
+-	char s_mount_opts[65];
++	char s_mount_opts[64];
+ 	struct ext4_fs_context *s_ctx = NULL;
+ 	struct fs_context *fc = NULL;
+ 	int ret = -ENOMEM;
+@@ -2501,7 +2501,8 @@ static int parse_apply_sb_mount_options(
+ 	if (!sbi->s_es->s_mount_opts[0])
+ 		return 0;
  
- 	nr_possible_banks = be32_to_cpup(
- 		(__be32 *)&buf.data[TPM_HEADER_SIZE + 5]);
--
--	chip->allocated_banks = kcalloc(nr_possible_banks,
--					sizeof(*chip->allocated_banks),
--					GFP_KERNEL);
--	if (!chip->allocated_banks) {
-+	if (nr_possible_banks > TPM2_MAX_PCR_BANKS) {
-+		pr_err("tpm: out of bank capacity: %u > %u\n",
-+		       nr_possible_banks, TPM2_MAX_PCR_BANKS);
- 		rc = -ENOMEM;
- 		goto out;
- 	}
---- a/include/linux/tpm.h
-+++ b/include/linux/tpm.h
-@@ -26,7 +26,9 @@
- #include <crypto/aes.h>
+-	strscpy_pad(s_mount_opts, sbi->s_es->s_mount_opts);
++	if (strscpy_pad(s_mount_opts, sbi->s_es->s_mount_opts) < 0)
++		return -E2BIG;
  
- #define TPM_DIGEST_SIZE 20	/* Max TPM v1.2 PCR size */
--#define TPM_MAX_DIGEST_SIZE SHA512_DIGEST_SIZE
-+
-+#define TPM2_MAX_DIGEST_SIZE	SHA512_DIGEST_SIZE
-+#define TPM2_MAX_PCR_BANKS	8
- 
- struct tpm_chip;
- struct trusted_key_payload;
-@@ -68,7 +70,7 @@ enum tpm2_curves {
- 
- struct tpm_digest {
- 	u16 alg_id;
--	u8 digest[TPM_MAX_DIGEST_SIZE];
-+	u8 digest[TPM2_MAX_DIGEST_SIZE];
- } __packed;
- 
- struct tpm_bank_info {
-@@ -188,7 +190,7 @@ struct tpm_chip {
- 	unsigned int groups_cnt;
- 
- 	u32 nr_allocated_banks;
--	struct tpm_bank_info *allocated_banks;
-+	struct tpm_bank_info allocated_banks[TPM2_MAX_PCR_BANKS];
- #ifdef CONFIG_ACPI
- 	acpi_handle acpi_dev_handle;
- 	char ppi_version[TPM_PPI_VERSION_LEN + 1];
+ 	fc = kzalloc(sizeof(struct fs_context), GFP_KERNEL);
+ 	if (!fc)
 
 
