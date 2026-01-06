@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4DAF346A07;
-	Tue,  6 Jan 2026 17:15:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5111346A02;
+	Tue,  6 Jan 2026 17:15:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719731; cv=none; b=XQ05DzD3x8n44xSwKewthA8R/Q5BDb3kg3tZ9oEmEoE12KqzWNgWHvzVQjYQATbsMgikZbbjdq9V42EXSZcfsyeBK4231+Np7CvG3NQASUzv+wSBlgK3wTjtUMjKORzqAOrtBTylyql5qgueqDeUUzuirL/rV2pb1TC/605HEA0=
+	t=1767719733; cv=none; b=GP2CIGDdnd0RwBfLiuT8unfUTv+jZLptitIO4tmsgRYeblGg4EPlPV1ztX8kjE0D9fshplC9B8GjTtmDgX7GP+vVUpWdBwtV3cMBnBQ5jI7vxENYcCmbVMlGG2OqJp7zpiZcWBwSL7Fk4f/frpUA64DJYw+y0wvDj1+BS6JNYa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719731; c=relaxed/simple;
-	bh=lX7o+KZWL6/awuoc/5wv1j5ty+1/q9L90gYfN9hjJAw=;
+	s=arc-20240116; t=1767719733; c=relaxed/simple;
+	bh=z7pLaBvDOAtavpOMoNnJuRBYl8uMSN+IiSJjlbmgRJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nkLpo1oJWSo7LpLL5ZMYugsHh78BhCmMF2Qlgzc9qskoAueW4j4e8BG9svEJbJ1P/Whe+BgpJb2xHDTpGO8+/Bsl5AzzBS8VK3b/oJHA5bkkwg1vrFsBGuXdsQLy7sDoy6Ps9IRbzMhDMGAZwheJ9TqivSn/Lb7HKoLOFOXj+tQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QNel0K+R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J7dOfvpOAWDWofi1D6+kbVPrGl3S1GXo1nVy9dHN0ngrw4mMSwzboCu8uUHDGLP5EBZXFs0xPVoP7KbHgjpbVyOJS0n544zo0um2gEsr899mdRlHAVLC6OSolS99Yht7BFp4kOS2YM3hvd5L1baD0UxT8RsEPI6FZR0b9/TVbTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=orDQ8a2x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QNel0K+R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A05CC116C6;
-	Tue,  6 Jan 2026 17:15:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="orDQ8a2x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33F74C19424;
+	Tue,  6 Jan 2026 17:15:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719730;
-	bh=lX7o+KZWL6/awuoc/5wv1j5ty+1/q9L90gYfN9hjJAw=;
+	s=korg; t=1767719733;
+	bh=z7pLaBvDOAtavpOMoNnJuRBYl8uMSN+IiSJjlbmgRJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QNel0K+REbIiSo2vun07eXuAr9zWzT7vcXDS+jXLA7MWvJB3+bZsZkyXM2PmCLgPH
-	 deZbjnsTTwMv/iIhiGlCQZh4BiYDibuCHDSlh3nrzlDvNcJPHHtwOEitXGREqE2jBu
-	 334TWv7H/FyhldQ592S7Nw0Mx/fPoSrUFbTE1d0Y=
+	b=orDQ8a2xZ0MG0utJJl1D5YiB8wmDorg/dVIE1pdqDPzqUnOjT9ZetyX019UEgxebD
+	 gEGFBXEYwSEAXjfdpqzG9Osn8QXZT4QuOwc57GIWgbin41ehOT/Wd/9eYUwwT1FWRD
+	 hsUPy2SYnDxBDcMRsnVkz+F7E0zSo84T2wsA5FiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f4f84b57a01d6b8364ad@syzkaller.appspotmail.com,
-	Pedro Demarchi Gomes <pedrodemargomes@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Yangtao Li <frank.li@vivo.com>,
+	linux-fsdevel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 022/567] ntfs: set dummy blocksize to read boot_block when mounting
-Date: Tue,  6 Jan 2026 17:56:44 +0100
-Message-ID: <20260106170452.164883042@linuxfoundation.org>
+Subject: [PATCH 6.12 023/567] hfsplus: fix volume corruption issue for generic/070
+Date: Tue,  6 Jan 2026 17:56:45 +0100
+Message-ID: <20260106170452.201746842@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,58 +53,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Demarchi Gomes <pedrodemargomes@gmail.com>
+From: Viacheslav Dubeyko <slava@dubeyko.com>
 
-[ Upstream commit d1693a7d5a38acf6424235a6070bcf5b186a360d ]
+[ Upstream commit ed490f36f439b877393c12a2113601e4145a5a56 ]
 
-When mounting, sb->s_blocksize is used to read the boot_block without
-being defined or validated. Set a dummy blocksize before attempting to
-read the boot_block.
+The xfstests' test-case generic/070 leaves HFS+ volume
+in corrupted state:
 
-The issue can be triggered with the following syz reproducer:
+sudo ./check generic/070
+FSTYP -- hfsplus
+PLATFORM -- Linux/x86_64 hfsplus-testing-0001 6.17.0-rc1+ #4 SMP PREEMPT_DYNAMIC Wed Oct 1 15:02:44 PDT 2025
+MKFS_OPTIONS -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
 
-  mkdirat(0xffffffffffffff9c, &(0x7f0000000080)='./file1\x00', 0x0)
-  r4 = openat$nullb(0xffffffffffffff9c, &(0x7f0000000040), 0x121403, 0x0)
-  ioctl$FS_IOC_SETFLAGS(r4, 0x40081271, &(0x7f0000000980)=0x4000)
-  mount(&(0x7f0000000140)=@nullb, &(0x7f0000000040)='./cgroup\x00',
-        &(0x7f0000000000)='ntfs3\x00', 0x2208004, 0x0)
-  syz_clone(0x88200200, 0x0, 0x0, 0x0, 0x0, 0x0)
+generic/070 _check_generic_filesystem: filesystem on /dev/loop50 is inconsistent
+(see xfstests-dev/results//generic/070.full for details)
 
-Here, the ioctl sets the bdev block size to 16384. During mount,
-get_tree_bdev_flags() calls sb_set_blocksize(sb, block_size(bdev)),
-but since block_size(bdev) > PAGE_SIZE, sb_set_blocksize() leaves
-sb->s_blocksize at zero.
+Ran: generic/070
+Failures: generic/070
+Failed 1 of 1 tests
 
-Later, ntfs_init_from_boot() attempts to read the boot_block while
-sb->s_blocksize is still zero, which triggers the bug.
+sudo fsck.hfsplus -d /dev/loop50
+** /dev/loop50
+Using cacheBlockSize=32K cacheTotalBlock=1024 cacheSize=32768K.
+Executing fsck_hfs (version 540.1-Linux).
+** Checking non-journaled HFS Plus Volume.
+The volume name is test
+** Checking extents overflow file.
+Unused node is not erased (node = 1)
+** Checking catalog file.
+** Checking multi-linked files.
+** Checking catalog hierarchy.
+** Checking extended attributes file.
+** Checking volume bitmap.
+** Checking volume information.
+Verify Status: VIStat = 0x0000, ABTStat = 0x0000 EBTStat = 0x0004
+CBTStat = 0x0000 CatStat = 0x00000000
+** Repairing volume.
+** Rechecking volume.
+** Checking non-journaled HFS Plus Volume.
+The volume name is test
+** Checking extents overflow file.
+** Checking catalog file.
+** Checking multi-linked files.
+** Checking catalog hierarchy.
+** Checking extended attributes file.
+** Checking volume bitmap.
+** Checking volume information.
+** The volume test was repaired successfully.
 
-Reported-by: syzbot+f4f84b57a01d6b8364ad@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=f4f84b57a01d6b8364ad
-Signed-off-by: Pedro Demarchi Gomes <pedrodemargomes@gmail.com>
-[almaz.alexandrovich@paragon-software.com: changed comment style, added
-return value handling]
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+It is possible to see that fsck.hfsplus detected not
+erased and unused node for the case of extents overflow file.
+The HFS+ logic has special method that defines if the node
+should be erased:
+
+bool hfs_bnode_need_zeroout(struct hfs_btree *tree)
+{
+	struct super_block *sb = tree->inode->i_sb;
+	struct hfsplus_sb_info *sbi = HFSPLUS_SB(sb);
+	const u32 volume_attr = be32_to_cpu(sbi->s_vhdr->attributes);
+
+	return tree->cnid == HFSPLUS_CAT_CNID &&
+		volume_attr & HFSPLUS_VOL_UNUSED_NODE_FIX;
+}
+
+However, it is possible to see that this method works
+only for the case of catalog file. But debugging of the issue
+has shown that HFSPLUS_VOL_UNUSED_NODE_FIX attribute has been
+requested for the extents overflow file too:
+
+catalog file
+kernel: hfsplus: node 4, num_recs 0, flags 0x10
+kernel: hfsplus: tree->cnid 4, volume_attr 0x80000800
+
+extents overflow file
+kernel: hfsplus: node 1, num_recs 0, flags 0x10
+kernel: hfsplus: tree->cnid 3, volume_attr 0x80000800
+
+This patch modifies the hfs_bnode_need_zeroout() by checking
+only volume_attr but not the b-tree ID because node zeroing
+can be requested for all HFS+ b-tree types.
+
+sudo ./check generic/070
+FSTYP         -- hfsplus
+PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 6.18.0-rc3+ #79 SMP PREEMPT_DYNAMIC Fri Oct 31 16:07:42 PDT 2025
+MKFS_OPTIONS  -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
+
+generic/070 33s ...  34s
+Ran: generic/070
+Passed all 1 tests
+
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+cc: Yangtao Li <frank.li@vivo.com>
+cc: linux-fsdevel@vger.kernel.org
+Link: https://lore.kernel.org/r/20251101001229.247432-1-slava@dubeyko.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/super.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/hfsplus/bnode.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
-index 6a0f6b0a3ab2a..89d126c155c7d 100644
---- a/fs/ntfs3/super.c
-+++ b/fs/ntfs3/super.c
-@@ -892,6 +892,11 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
+diff --git a/fs/hfsplus/bnode.c b/fs/hfsplus/bnode.c
+index 407d5152eb411..aa095e6fb20e8 100644
+--- a/fs/hfsplus/bnode.c
++++ b/fs/hfsplus/bnode.c
+@@ -704,6 +704,5 @@ bool hfs_bnode_need_zeroout(struct hfs_btree *tree)
+ 	struct hfsplus_sb_info *sbi = HFSPLUS_SB(sb);
+ 	const u32 volume_attr = be32_to_cpu(sbi->s_vhdr->attributes);
  
- 	sbi->volume.blocks = dev_size >> PAGE_SHIFT;
- 
-+	/* Set dummy blocksize to read boot_block. */
-+	if (!sb_min_blocksize(sb, PAGE_SIZE)) {
-+		return -EINVAL;
-+	}
-+
- read_boot:
- 	bh = ntfs_bread(sb, boot_block);
- 	if (!bh)
+-	return tree->cnid == HFSPLUS_CAT_CNID &&
+-		volume_attr & HFSPLUS_VOL_UNUSED_NODE_FIX;
++	return volume_attr & HFSPLUS_VOL_UNUSED_NODE_FIX;
+ }
 -- 
 2.51.0
 
