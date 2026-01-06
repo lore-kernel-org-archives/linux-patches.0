@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6729E3491F5;
-	Tue,  6 Jan 2026 17:18:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2CD83491F5;
+	Tue,  6 Jan 2026 17:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719897; cv=none; b=Ynr1iVi6wk2OLXCAd6RkgHJM3gQZpBWJke0NWa5zQpHM1pfTRBIs6svB5PQDymlARHWFxehZHReZpXOEG9o5sCm8gxrE4rC4O/hAzy1kvNA76mWk0F6Y9zcdM2Z1jwQPM4f0DnMnfrg5BUYoPGZwYswZmW+FgAEOqlejhuo2n0g=
+	t=1767719900; cv=none; b=eSftbY2itnY2pkWrf8dOEG8eBpQGS0yTdtQKh0833dznFEjJgT3Vmn0Wo2FIIwm+OIT7e5KbgZyjFXb7epRlg5ey14DUA2TRr4NXmGC2926UjrNqi7d8+ZX/D63+P6toVmRhxICHvAO84YdrJ2YulYUZCi0nSGk0L1h+KzGOH40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719897; c=relaxed/simple;
-	bh=Z/l/CVk3mglW/kuSdO5S2izJxApvLzKxlbL1tJiKDkY=;
+	s=arc-20240116; t=1767719900; c=relaxed/simple;
+	bh=ag3d2WH7sk/I/nNPtBUlZz0WbpV3z/fAQaTsdt7gCW4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TMhPv5A17P/Qqcrm2jubYf+IDqmyPUnw5eMaRUlJTfuqHjHzASIKx8qatzYOc1fnYv1BZ7tPRH5O1aYufdyJT2Q/1xJPOkc1Ok9p5HKWyv0K2nIMDtwCouXxwDf+CxFWotJUfqs4vJ9t22mrIT1JZGHhsT7sXkv03AXXea3IH/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BJ/37OsP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a08345/Qp2whKECh3AGpiHbRwzmqre0hczNaJDbMpx0/D0w+Ng0IcLxixVBAwlAMF+eFLrvv8DCoAQ2XRVjpBqyCflfTuXxFBwsSa7KKLk/K1bhi8O2vQlZouLy8v103VZjzz67pcglRmtoupHvnwKaZeTByVl044bckF56osKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wUp/bB3Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BJ/37OsP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E57A3C116C6;
-	Tue,  6 Jan 2026 17:18:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wUp/bB3Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35C84C116C6;
+	Tue,  6 Jan 2026 17:18:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719897;
-	bh=Z/l/CVk3mglW/kuSdO5S2izJxApvLzKxlbL1tJiKDkY=;
+	s=korg; t=1767719900;
+	bh=ag3d2WH7sk/I/nNPtBUlZz0WbpV3z/fAQaTsdt7gCW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BJ/37OsPwI5F008DRj4PcblqiTO6ICt3NTtyFCt0wkqZ2Ra9lReisx3WW3Q5yNRgi
-	 X8tR0lecGlkQ6utPnbAI5uIbVAergkcXimxscKewUR8PDYf77MHZehIYudqptbRETb
-	 hM+KdjrK7HHpzV9fXzF3s+OYcZHEY57umhihd/pc=
+	b=wUp/bB3QkQgtFArbbFUJUsoJSB+KoUXzdlmOed9vb6csu9gCYHlqrbf6U6bgCyLRo
+	 AUHh9uzOoYggd8inc1+aNX3dmT8+2b0xngeuLfpOJgMvG+UW+oOBXSmebwE9cfu95V
+	 wkgeT4JIMcH2bmA1nj1WY5h+m4eCSUGE/ec39n8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quan Zhou <quan.zhou@mediatek.com>,
-	druth@chromium.org,
-	Felix Fietkau <nbd@nbd.name>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Gal Pressman <gal@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 031/567] wifi: mt76: mt792x: fix wifi init fail by setting MCU_RUNNING after CLC load
-Date: Tue,  6 Jan 2026 17:56:53 +0100
-Message-ID: <20260106170452.493302835@linuxfoundation.org>
+Subject: [PATCH 6.12 067/567] ethtool: Avoid overflowing userspace buffer on stats query
+Date: Tue,  6 Jan 2026 17:57:29 +0100
+Message-ID: <20260106170453.815487534@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,59 +53,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quan Zhou <quan.zhou@mediatek.com>
+From: Gal Pressman <gal@nvidia.com>
 
-[ Upstream commit 066f417be5fd8c7fe581c5550206364735dad7a3 ]
+[ Upstream commit 7b07be1ff1cb6c49869910518650e8d0abc7d25f ]
 
-Set the MT76_STATE_MCU_RUNNING bit only after mt7921_load_clc()
-has successfully completed. Previously, the MCU_RUNNING state
-was set before loading CLC, which could cause conflict between
-chip mcu_init retry and mac_reset flow, result in chip init fail
-and chip abnormal status. By moving the state set after CLC load,
-firmware initialization becomes robust and resolves init fail issue.
+The ethtool -S command operates across three ioctl calls:
+ETHTOOL_GSSET_INFO for the size, ETHTOOL_GSTRINGS for the names, and
+ETHTOOL_GSTATS for the values.
 
-Signed-off-by: Quan Zhou <quan.zhou@mediatek.com>
-Reviewed-by: druth@chromium.org
-Link: https://patch.msgid.link/19ec8e4465142e774f17801025accd0ae2214092.1763465933.git.quan.zhou@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+If the number of stats changes between these calls (e.g., due to device
+reconfiguration), userspace's buffer allocation will be incorrect,
+potentially leading to buffer overflow.
+
+Drivers are generally expected to maintain stable stat counts, but some
+drivers (e.g., mlx5, bnx2x, bna, ksz884x) use dynamic counters, making
+this scenario possible.
+
+Some drivers try to handle this internally:
+- bnad_get_ethtool_stats() returns early in case stats.n_stats is not
+  equal to the driver's stats count.
+- micrel/ksz884x also makes sure not to write anything beyond
+  stats.n_stats and overflow the buffer.
+
+However, both use stats.n_stats which is already assigned with the value
+returned from get_sset_count(), hence won't solve the issue described
+here.
+
+Change ethtool_get_strings(), ethtool_get_stats(),
+ethtool_get_phy_stats() to not return anything in case of a mismatch
+between userspace's size and get_sset_size(), to prevent buffer
+overflow.
+The returned n_stats value will be equal to zero, to reflect that
+nothing has been returned.
+
+This could result in one of two cases when using upstream ethtool,
+depending on when the size change is detected:
+1. When detected in ethtool_get_strings():
+    # ethtool -S eth2
+    no stats available
+
+2. When detected in get stats, all stats will be reported as zero.
+
+Both cases are presumably transient, and a subsequent ethtool call
+should succeed.
+
+Other than the overflow avoidance, these two cases are very evident (no
+output/cleared stats), which is arguably better than presenting
+incorrect/shifted stats.
+I also considered returning an error instead of a "silent" response, but
+that seems more destructive towards userspace apps.
+
+Notes:
+- This patch does not claim to fix the inherent race, it only makes sure
+  that we do not overflow the userspace buffer, and makes for a more
+  predictable behavior.
+
+- RTNL lock is held during each ioctl, the race window exists between
+  the separate ioctl calls when the lock is released.
+
+- Userspace ethtool always fills stats.n_stats, but it is likely that
+  these stats ioctls are implemented in other userspace applications
+  which might not fill it. The added code checks that it's not zero,
+  to prevent any regressions.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Gal Pressman <gal@nvidia.com>
+Link: https://patch.msgid.link/20251208121901.3203692-1-gal@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/mcu.c | 2 +-
- drivers/net/wireless/mediatek/mt76/mt7925/mcu.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/ethtool/ioctl.c | 30 ++++++++++++++++++++++++------
+ 1 file changed, 24 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
-index 02c1de8620a7f..8d3f3c8b1a889 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
-@@ -637,10 +637,10 @@ int mt7921_run_firmware(struct mt792x_dev *dev)
- 	if (err)
- 		return err;
+diff --git a/net/ethtool/ioctl.c b/net/ethtool/ioctl.c
+index 8b9692c35e706..67fba88f60984 100644
+--- a/net/ethtool/ioctl.c
++++ b/net/ethtool/ioctl.c
+@@ -2231,7 +2231,10 @@ static int ethtool_get_strings(struct net_device *dev, void __user *useraddr)
+ 		return -ENOMEM;
+ 	WARN_ON_ONCE(!ret);
  
--	set_bit(MT76_STATE_MCU_RUNNING, &dev->mphy.state);
- 	err = mt7921_load_clc(dev, mt792x_ram_name(dev));
- 	if (err)
- 		return err;
-+	set_bit(MT76_STATE_MCU_RUNNING, &dev->mphy.state);
+-	gstrings.len = ret;
++	if (gstrings.len && gstrings.len != ret)
++		gstrings.len = 0;
++	else
++		gstrings.len = ret;
  
- 	return mt7921_mcu_fw_log_2_host(dev, 1);
- }
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-index e42b4f0abbe7a..c42b3b376f77e 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-@@ -958,10 +958,10 @@ int mt7925_run_firmware(struct mt792x_dev *dev)
- 	if (err)
- 		return err;
+ 	if (gstrings.len) {
+ 		data = vzalloc(array_size(gstrings.len, ETH_GSTRING_LEN));
+@@ -2353,10 +2356,13 @@ static int ethtool_get_stats(struct net_device *dev, void __user *useraddr)
+ 	if (copy_from_user(&stats, useraddr, sizeof(stats)))
+ 		return -EFAULT;
  
--	set_bit(MT76_STATE_MCU_RUNNING, &dev->mphy.state);
- 	err = mt7925_load_clc(dev, mt792x_ram_name(dev));
- 	if (err)
- 		return err;
-+	set_bit(MT76_STATE_MCU_RUNNING, &dev->mphy.state);
+-	stats.n_stats = n_stats;
++	if (stats.n_stats && stats.n_stats != n_stats)
++		stats.n_stats = 0;
++	else
++		stats.n_stats = n_stats;
  
- 	return mt7925_mcu_fw_log_2_host(dev, 1);
- }
+-	if (n_stats) {
+-		data = vzalloc(array_size(n_stats, sizeof(u64)));
++	if (stats.n_stats) {
++		data = vzalloc(array_size(stats.n_stats, sizeof(u64)));
+ 		if (!data)
+ 			return -ENOMEM;
+ 		ops->get_ethtool_stats(dev, &stats, data);
+@@ -2368,7 +2374,9 @@ static int ethtool_get_stats(struct net_device *dev, void __user *useraddr)
+ 	if (copy_to_user(useraddr, &stats, sizeof(stats)))
+ 		goto out;
+ 	useraddr += sizeof(stats);
+-	if (n_stats && copy_to_user(useraddr, data, array_size(n_stats, sizeof(u64))))
++	if (stats.n_stats &&
++	    copy_to_user(useraddr, data,
++			 array_size(stats.n_stats, sizeof(u64))))
+ 		goto out;
+ 	ret = 0;
+ 
+@@ -2404,6 +2412,10 @@ static int ethtool_get_phy_stats_phydev(struct phy_device *phydev,
+ 		return -EOPNOTSUPP;
+ 
+ 	n_stats = phy_ops->get_sset_count(phydev);
++	if (stats->n_stats && stats->n_stats != n_stats) {
++		stats->n_stats = 0;
++		return 0;
++	}
+ 
+ 	ret = ethtool_vzalloc_stats_array(n_stats, data);
+ 	if (ret)
+@@ -2424,6 +2436,10 @@ static int ethtool_get_phy_stats_ethtool(struct net_device *dev,
+ 		return -EOPNOTSUPP;
+ 
+ 	n_stats = ops->get_sset_count(dev, ETH_SS_PHY_STATS);
++	if (stats->n_stats && stats->n_stats != n_stats) {
++		stats->n_stats = 0;
++		return 0;
++	}
+ 
+ 	ret = ethtool_vzalloc_stats_array(n_stats, data);
+ 	if (ret)
+@@ -2460,7 +2476,9 @@ static int ethtool_get_phy_stats(struct net_device *dev, void __user *useraddr)
+ 	}
+ 
+ 	useraddr += sizeof(stats);
+-	if (copy_to_user(useraddr, data, array_size(stats.n_stats, sizeof(u64))))
++	if (stats.n_stats &&
++	    copy_to_user(useraddr, data,
++			 array_size(stats.n_stats, sizeof(u64))))
+ 		ret = -EFAULT;
+ 
+  out:
 -- 
 2.51.0
 
