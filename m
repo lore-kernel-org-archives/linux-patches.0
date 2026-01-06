@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4687719309C;
-	Tue,  6 Jan 2026 18:01:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F34B319309C;
+	Tue,  6 Jan 2026 18:01:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722482; cv=none; b=ma8l/hqGeVTswrOw7K9umnekv7cVHCFih/vB2WdDwaZD/iOL4YYIzOFjSK+7hQaYUsLh13YPopMPw+yYZv6ek8Nedeo5RQcAs/UiQPaHzOebNflOAWNWrhzkLSjC565YaW/MdvwbwyF7QEdP1CJVBPGDhId6lT33R60LjEeAA5s=
+	t=1767722486; cv=none; b=c25IibxLgDiMHmhuKLwp5Bw742jHPYNhb55vBqUfjiLZsth1J3dABzd8+q83rEfDj+J3PPXEFmaLCfKLqVKxXBkAXNCUf68wV0PTJLWq9351rbACrpU+PZdreG1ICPPP18Tf9GbNmtq0F6qRKcq1RL9pO40H0vEYMjUDJr/unug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722482; c=relaxed/simple;
-	bh=wpxUZDEupvhEYR3iS430ScSiNOwLGNntw2XjzV1Qv4U=;
+	s=arc-20240116; t=1767722486; c=relaxed/simple;
+	bh=fnYey1QyOgdydJ/2JdkgsVz9fm0PN6Geq3RPHttz66M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XJDoWSleezw60e+a+q8Cn1ftzK4/6F2jhlZfbG7MCT2SrCEcBULAdel3DJiKpNm9kLoPqOLoNLDY0lNPDHO3HwAbWsUgcrcsYEInphzqu1Kl/bj2KLa+XljqwxCbj2ObTBTC0WjNPULRYtrw616qG6Jh1SmjO2bHLGug+8ebWk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y2/id5of; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bBmam8VEcEjRP+M7m9y3izMq2bKz49l6XVcXRFxK7MASLGtc3anqvPXzRgVUZZzGT8cNmIR0tHTQLD3YS69xidzNA4nwcvbySLdVsoIqAvWNG3nUZEcFQbMG9FSzKQIfjTq36bG6ldpVbGIaaDcHSs+GfgxFHQPDsVEHp0CHP0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z8e+TOwd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y2/id5of"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D50BC116C6;
-	Tue,  6 Jan 2026 18:01:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z8e+TOwd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A052C116C6;
+	Tue,  6 Jan 2026 18:01:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722482;
-	bh=wpxUZDEupvhEYR3iS430ScSiNOwLGNntw2XjzV1Qv4U=;
+	s=korg; t=1767722485;
+	bh=fnYey1QyOgdydJ/2JdkgsVz9fm0PN6Geq3RPHttz66M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y2/id5ofZrlOwR9paxJLgncrk4vccymqzduse9C2U0RZGBFHyPc2FYCUm6WCjVFeu
-	 FBgRfi5rQL0tFy8gsGBnkiVPt98Rf9WMu3jPTOMc4W9fwrz2hDKxHrRt0KYlvtGVQ0
-	 ayJz8+HrpE3Jp3rQ/J/DYjd7wH0r8D+Lbv1Z/BBY=
+	b=Z8e+TOwdbQIH6lUN+mpv9EtyOuFocEmnScpLc4TFIDfI05bUZriv35xnSB2wzvYxk
+	 Yb4D1eGrbgiPfTe098I24xKKyB5dz9qs8QVvCgFcGcRu+ss34ChUuJJqPqNVlUHtU8
+	 3CIXnL6RnqQyv/edt/yxx1Rva/G99OxoyibzHrXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jie Qiu <jie.qiu@mediatek.com>,
+	"Nancy.Lin" <nancy.lin@mediatek.com>,
 	Johan Hovold <johan@kernel.org>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Chun-Kuang Hu <chunkuang.hu@kernel.org>
-Subject: [PATCH 6.18 278/312] drm/mediatek: mtk_hdmi: Fix probe device leaks
-Date: Tue,  6 Jan 2026 18:05:52 +0100
-Message-ID: <20260106170557.908158150@linuxfoundation.org>
+Subject: [PATCH 6.18 279/312] drm/mediatek: ovl_adaptor: Fix probe device leaks
+Date: Tue,  6 Jan 2026 18:05:53 +0100
+Message-ID: <20260106170557.945287218@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -54,61 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 9545bae5c8acd5a47af7add606718d94578bd838 upstream.
+commit e0f44f74ed6313e50b38eb39a2c7f210ae208db2 upstream.
 
-Make sure to drop the references to the DDC adapter and CEC device
-taken during probe on probe failure (e.g. probe deferral) and on driver
-unbind.
+Make sure to drop the references taken to the component devices by
+of_find_device_by_node() during probe on probe failure (e.g. probe
+deferral) and on driver unbind.
 
-Fixes: 8f83f26891e1 ("drm/mediatek: Add HDMI support")
-Cc: stable@vger.kernel.org	# 4.8
-Cc: Jie Qiu <jie.qiu@mediatek.com>
+Fixes: 453c3364632a ("drm/mediatek: Add ovl_adaptor support for MT8195")
+Cc: stable@vger.kernel.org	# 6.4
+Cc: Nancy.Lin <nancy.lin@mediatek.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20250923152340.18234-5-johan@kernel.org/
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20250923152340.18234-6-johan@kernel.org/
 Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/mediatek/mtk_hdmi.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/gpu/drm/mediatek/mtk_disp_ovl_adaptor.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/gpu/drm/mediatek/mtk_hdmi.c
-+++ b/drivers/gpu/drm/mediatek/mtk_hdmi.c
-@@ -1345,6 +1345,13 @@ static const struct drm_bridge_funcs mtk
- 	.edid_read = mtk_hdmi_bridge_edid_read,
- };
+--- a/drivers/gpu/drm/mediatek/mtk_disp_ovl_adaptor.c
++++ b/drivers/gpu/drm/mediatek/mtk_disp_ovl_adaptor.c
+@@ -527,6 +527,13 @@ bool mtk_ovl_adaptor_is_comp_present(str
+ 	       type == OVL_ADAPTOR_TYPE_PADDING;
+ }
  
-+static void mtk_hdmi_put_device(void *_dev)
++static void ovl_adaptor_put_device(void *_dev)
 +{
 +	struct device *dev = _dev;
 +
 +	put_device(dev);
 +}
 +
- static int mtk_hdmi_get_cec_dev(struct mtk_hdmi *hdmi, struct device *dev, struct device_node *np)
+ static int ovl_adaptor_comp_init(struct device *dev, struct component_match **match)
  {
- 	struct platform_device *cec_pdev;
-@@ -1369,6 +1376,10 @@ static int mtk_hdmi_get_cec_dev(struct m
- 	}
- 	of_node_put(cec_np);
+ 	struct mtk_disp_ovl_adaptor *priv = dev_get_drvdata(dev);
+@@ -560,6 +567,11 @@ static int ovl_adaptor_comp_init(struct
+ 		if (!comp_pdev)
+ 			return -EPROBE_DEFER;
  
-+	ret = devm_add_action_or_reset(dev, mtk_hdmi_put_device, &cec_pdev->dev);
-+	if (ret)
-+		return ret;
++		ret = devm_add_action_or_reset(dev, ovl_adaptor_put_device,
++					       &comp_pdev->dev);
++		if (ret)
++			return ret;
 +
- 	/*
- 	 * The mediatek,syscon-hdmi property contains a phandle link to the
- 	 * MMSYS_CONFIG device and the register offset of the HDMI_SYS_CFG
-@@ -1423,6 +1434,10 @@ static int mtk_hdmi_dt_parse_pdata(struc
- 	if (!hdmi->ddc_adpt)
- 		return dev_err_probe(dev, -EINVAL, "Failed to get ddc i2c adapter by node\n");
+ 		priv->ovl_adaptor_comp[id] = &comp_pdev->dev;
  
-+	ret = devm_add_action_or_reset(dev, mtk_hdmi_put_device, &hdmi->ddc_adpt->dev);
-+	if (ret)
-+		return ret;
-+
- 	ret = mtk_hdmi_get_cec_dev(hdmi, dev, np);
- 	if (ret)
- 		return ret;
+ 		drm_of_component_match_add(dev, match, component_compare_of, node);
 
 
