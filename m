@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F693322B93;
-	Tue,  6 Jan 2026 17:15:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CFFD322B93;
+	Tue,  6 Jan 2026 17:15:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719748; cv=none; b=UxvXtv/ZFgs/8QsdbQLtKp6d218LQsVthghSckZCPZmCvBWJB7P48yjDERSLwNx+dgwaheOO4mzY7wAV00KMDLwf1m9GK9hdsBpUKeMPdz6B+nhGfDjSt6J4kPq9WUgqegbSq1TRrzUz9KZK7uHb3H2ddMb1O8MUl/SxVOJBbx0=
+	t=1767719750; cv=none; b=U0JQQ5V0dG671JfpOg0XdMRg0GmsrcQaKhCH5HQ5gUSmQTXtMOg4LXZ1e+QAYrrTqmEmJuKaDYNhAPzVBRU8LXW4cSJgyx4JkJCEk6VeTT3w9xB5509P191aE3OUN6lAiyAXZ/Qrm/m3BzG+VaUBJJcJ6kl6HLmBRssK3sZwBnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719748; c=relaxed/simple;
-	bh=V2maSuC8HR8PvlPAY2iNTMkKt/o8r69vs8M8HJh+QUo=;
+	s=arc-20240116; t=1767719750; c=relaxed/simple;
+	bh=xbezwoH4BVh0Jte/KTroAUKkYSDpVuuyDbtJhdY6L4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XnvqfoYrZ2MO8QqpLQLTTJv16DXleoSmbWoP5QrW7vBQBhneElN3W74QDqLqllrUqvTiiQ+efU81g4flkfs/tAz7K/zQpoyJnyTU1zpdv/xuU/WdaY7a0KWqeazEUOg6aeNtxk+Mo+VOBpJ99kTMdv7HqFk8jzVKWmgVKJ2nFoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xA0jRWaa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CXuaw5bxdPnbgaw3HKWpKAk8ZMxwEtvdXkUWAcPFLEtGpLkZRpthfCfORrJLipF0KsTbp3Zdfl3RmbKNwH9ZPw99jj4EpxyizDCpD07eNyKEIGGUGmkt18393kB0fvcWmfbwQrRCawpS+BtANFR1zviQcnWEJ36Oo3jTDNrnmeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G/BAO8oI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xA0jRWaa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B724C16AAE;
-	Tue,  6 Jan 2026 17:15:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G/BAO8oI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90AFFC116C6;
+	Tue,  6 Jan 2026 17:15:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719746;
-	bh=V2maSuC8HR8PvlPAY2iNTMkKt/o8r69vs8M8HJh+QUo=;
+	s=korg; t=1767719750;
+	bh=xbezwoH4BVh0Jte/KTroAUKkYSDpVuuyDbtJhdY6L4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xA0jRWaa/BfyJvME2UWG1XRkjMIaLDJWxne+84JCNitfedcW2Pu8aUgEcgcFCRfVB
-	 exkbYMZYZ9cDrzFtpnAjWRw5GxuzbABVA3BI1MyC6ekJhsdW9DYi3EJ1rHd5/DtJ/d
-	 e1sCkAk9YUDUg0bkVrGZdKW8GY5psQYc2WtfJzpo=
+	b=G/BAO8oIUMFNMPVy+WVEDLJSiN0gl1chCgQtLhwRScQoxCSmyRboxJ1ecqdWEG8V6
+	 3e8MeKDPiZzc0LHLIUJxdOLtkyiS6upOdEt6QbfR+8v+umQkqXv2vmHu0VX3Dm8jiE
+	 pVO9pHYOJM7G62QitP7Qdi4gkuawtkqxkD09MCOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 027/567] fs/ntfs3: check for shutdown in fsync
-Date: Tue,  6 Jan 2026 17:56:49 +0100
-Message-ID: <20260106170452.349410891@linuxfoundation.org>
+Subject: [PATCH 6.12 028/567] wifi: rtl8xxxu: Fix HT40 channel config for RTL8192CU, RTL8723AU
+Date: Tue,  6 Jan 2026 17:56:50 +0100
+Message-ID: <20260106170452.384863461@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -50,51 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit 1b2ae190ea43bebb8c73d21f076addc8a8c71849 ]
+[ Upstream commit 5511ba3de434892e5ef3594d6eabbd12b1629356 ]
 
-Ensure fsync() returns -EIO when the ntfs3 filesystem is in forced
-shutdown, instead of silently succeeding via generic_file_fsync().
+Flip the response rate subchannel. It was backwards, causing low
+speeds when using 40 MHz channel width. "iw dev ... station dump"
+showed a low RX rate, 11M or less.
 
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Also fix the channel width field of RF6052_REG_MODE_AG.
+
+Tested only with RTL8192CU, but these settings are identical for
+RTL8723AU.
+
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/1f46571d-855b-43e1-8bfc-abacceb96043@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/file.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtl8xxxu/core.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
-index 902dc8ba878ef..f1122ac5be622 100644
---- a/fs/ntfs3/file.c
-+++ b/fs/ntfs3/file.c
-@@ -1396,6 +1396,18 @@ static ssize_t ntfs_file_splice_write(struct pipe_inode_info *pipe,
- 	return iter_file_splice_write(pipe, file, ppos, len, flags);
- }
+diff --git a/drivers/net/wireless/realtek/rtl8xxxu/core.c b/drivers/net/wireless/realtek/rtl8xxxu/core.c
+index 260f720550134..b517df2db6d75 100644
+--- a/drivers/net/wireless/realtek/rtl8xxxu/core.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/core.c
+@@ -1252,7 +1252,7 @@ void rtl8xxxu_gen1_config_channel(struct ieee80211_hw *hw)
+ 		opmode &= ~BW_OPMODE_20MHZ;
+ 		rtl8xxxu_write8(priv, REG_BW_OPMODE, opmode);
+ 		rsr &= ~RSR_RSC_BANDWIDTH_40M;
+-		if (sec_ch_above)
++		if (!sec_ch_above)
+ 			rsr |= RSR_RSC_UPPER_SUB_CHANNEL;
+ 		else
+ 			rsr |= RSR_RSC_LOWER_SUB_CHANNEL;
+@@ -1321,9 +1321,8 @@ void rtl8xxxu_gen1_config_channel(struct ieee80211_hw *hw)
  
-+/*
-+ * ntfs_file_fsync - file_operations::fsync
-+ */
-+static int ntfs_file_fsync(struct file *file, loff_t start, loff_t end, int datasync)
-+{
-+	struct inode *inode = file_inode(file);
-+	if (unlikely(ntfs3_forced_shutdown(inode->i_sb)))
-+		return -EIO;
-+
-+	return generic_file_fsync(file, start, end, datasync);
-+}
-+
- // clang-format off
- const struct inode_operations ntfs_file_inode_operations = {
- 	.getattr	= ntfs_getattr,
-@@ -1420,7 +1432,7 @@ const struct file_operations ntfs_file_operations = {
- 	.splice_write	= ntfs_file_splice_write,
- 	.mmap		= ntfs_file_mmap,
- 	.open		= ntfs_file_open,
--	.fsync		= generic_file_fsync,
-+	.fsync		= ntfs_file_fsync,
- 	.fallocate	= ntfs_fallocate,
- 	.release	= ntfs_file_release,
- };
+ 	for (i = RF_A; i < priv->rf_paths; i++) {
+ 		val32 = rtl8xxxu_read_rfreg(priv, i, RF6052_REG_MODE_AG);
+-		if (hw->conf.chandef.width == NL80211_CHAN_WIDTH_40)
+-			val32 &= ~MODE_AG_CHANNEL_20MHZ;
+-		else
++		val32 &= ~MODE_AG_BW_MASK;
++		if (hw->conf.chandef.width != NL80211_CHAN_WIDTH_40)
+ 			val32 |= MODE_AG_CHANNEL_20MHZ;
+ 		rtl8xxxu_write_rfreg(priv, i, RF6052_REG_MODE_AG, val32);
+ 	}
 -- 
 2.51.0
 
