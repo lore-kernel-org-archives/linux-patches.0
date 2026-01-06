@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322A3226165;
-	Tue,  6 Jan 2026 17:34:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AE492FBE1F;
+	Tue,  6 Jan 2026 17:34:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720887; cv=none; b=O3Djzd1G93vJUB8TUQ30y5XcGid1hFBvO56npnBRyLHdl4aCzZysjlFCUNdTd+Mp56D3wyomFE40l/ZH4ZAQmAxYXOGgglrm9B+FRf3ss2OylfX/MA7SD7d57ZFUdn3+LOiYZGhrEDOKIHcp4df+vz/fVcyLIKaNj5dpS+0Fq10=
+	t=1767720890; cv=none; b=F0aW4V1wMtbYm5b2NZ4GKabHt4y39Ia642f5UO+7eLfbydiajQrA289oFGmdeH8WiteeLze3sfvGrW/UodbJuX/N7Ez9pzrDUZEwaRCBGi0zmitUkNqIJCZho9zwL3BbQtIeUpCZNXFMneqEm8pYcJfyxPVucviMhxIQzRV9QFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720887; c=relaxed/simple;
-	bh=0qe2lM03JLsZImP4SsBzSuknm6p74//1Igts2YoR1zw=;
+	s=arc-20240116; t=1767720890; c=relaxed/simple;
+	bh=Rp89FZuUUCx7peeVyb+Ne/syn4gx1C8WtVNg7I2FkVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s1D8J8+DNuqV/XvF1kXiQ7WkKpGvbiKm0iLabFSEveHNy4RnbnEK4BnhY0hAODCh5d31g24gMxTE98hro/t8K9rzYZdkuVIt14OJKbjhmfDvsMfM0WqR2R3qAL1C9CXfS0r+fguQfYOCVXdc3woDj7cZOtXSWGyp02dclrZbXr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K8SG3Zv2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R8zaYZbPTgbzu/gqQprrc/qyQCKSb9Aabt5lU115O+BdN9Rs+Zximjac4KdUjGpCXXscjEPa5SD7LBZeU/IJmyJTC6ZASRnYaM9wqV0L/ScQG1tCkwfcwxrxfaGvx1tFLNJikBmxZR9efLJW8OYStL3wdf+T/nWQ9OIVveE2svw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CtFH1nYL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K8SG3Zv2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C277C116C6;
-	Tue,  6 Jan 2026 17:34:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CtFH1nYL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FA47C116C6;
+	Tue,  6 Jan 2026 17:34:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720886;
-	bh=0qe2lM03JLsZImP4SsBzSuknm6p74//1Igts2YoR1zw=;
+	s=korg; t=1767720890;
+	bh=Rp89FZuUUCx7peeVyb+Ne/syn4gx1C8WtVNg7I2FkVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K8SG3Zv2yalg+jfqDl0li6kmtNceAoWLVGKqL8BYyIQy3kS00Pli4UHcn00XZXsHb
-	 pnsCRLYm7TsYSCnTB/4MqZq4XTE7r7pdFzFfzU4MvcfJ/jYgEORy0R1V2Hryu32eTN
-	 u6DMxHnbkvi5ErzJx8XQLzGBw5eAiCzFL1yORJLg=
+	b=CtFH1nYLDWcNYRTrqlv2EkpmB/Y3Vx+tmXc94MA3ZmcBr7nO61zjjr9B/lQhgGpsP
+	 xN//8m7Qbs7X7tHI0t5Um9xKD34A2VnlxWCLnJQuCvtMAagtUXfPL9R1kImvH3Ldk4
+	 fku7Apcb9xhXpDD0dbFF2uea3AQlCKXTazK1V4vo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Yemike Abhilash Chandra <y-abhilashchandra@ti.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>
-Subject: [PATCH 6.12 371/567] arm64: dts: ti: k3-j721e-sk: Fix pinmux for pin Y1 used by power regulator
-Date: Tue,  6 Jan 2026 18:02:33 +0100
-Message-ID: <20260106170505.066430637@linuxfoundation.org>
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Dave Vasilevsky <dave@vasilevsky.ca>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.12 372/567] powerpc, mm: Fix mprotect on book3s 32-bit
+Date: Tue,  6 Jan 2026 18:02:34 +0100
+Message-ID: <20260106170505.103539556@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,62 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: Dave Vasilevsky <dave@vasilevsky.ca>
 
-commit 51f89c488f2ecc020f82bfedd77482584ce8027a upstream.
+commit 78fc63ffa7813e33681839bb33826c24195f0eb7 upstream.
 
-The SoC pin Y1 is incorrectly defined in the WKUP Pinmux device-tree node
-(pinctrl@4301c000) leading to the following silent failure:
+On 32-bit book3s with hash-MMUs, tlb_flush() was a no-op. This was
+unnoticed because all uses until recently were for unmaps, and thus
+handled by __tlb_remove_tlb_entry().
 
-    pinctrl-single 4301c000.pinctrl: mux offset out of range: 0x1dc (0x178)
+After commit 4a18419f71cd ("mm/mprotect: use mmu_gather") in kernel 5.19,
+tlb_gather_mmu() started being used for mprotect as well. This caused
+mprotect to simply not work on these machines:
 
-According to the datasheet for the J721E SoC [0], the pin Y1 belongs to the
-MAIN Pinmux device-tree node (pinctrl@11c000). This is confirmed by the
-address of the pinmux register for it on page 142 of the datasheet which is
-0x00011C1DC.
+  int *ptr = mmap(NULL, 4096, PROT_READ|PROT_WRITE,
+                  MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
+  *ptr = 1; // force HPTE to be created
+  mprotect(ptr, 4096, PROT_READ);
+  *ptr = 2; // should segfault, but succeeds
 
-Hence fix it.
+Fixed by making tlb_flush() actually flush TLB pages. This finally
+agrees with the behaviour of boot3s64's tlb_flush().
 
-[0]: https://www.ti.com/lit/ds/symlink/tda4vm.pdf
-
-Fixes: 97b67cc102dc ("arm64: dts: ti: k3-j721e-sk: Add DT nodes for power regulators")
+Fixes: 4a18419f71cd ("mm/mprotect: use mmu_gather")
 Cc: stable@vger.kernel.org
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Reviewed-by: Yemike Abhilash Chandra <y-abhilashchandra@ti.com>
-Link: https://patch.msgid.link/20251119160148.2752616-1-s-vadapalli@ti.com
-Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Dave Vasilevsky <dave@vasilevsky.ca>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20251116-vasi-mprotect-g3-v3-1-59a9bd33ba00@vasilevsky.ca
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/ti/k3-j721e-sk.dts |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/powerpc/include/asm/book3s/32/tlbflush.h |    5 ++++-
+ arch/powerpc/mm/book3s32/tlb.c                |    9 +++++++++
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/ti/k3-j721e-sk.dts
-+++ b/arch/arm64/boot/dts/ti/k3-j721e-sk.dts
-@@ -572,6 +572,12 @@
- 			J721E_IOPAD(0x234, PIN_INPUT, 7) /* (U3) EXT_REFCLK1.GPIO1_12 */
- 		>;
- 	};
+--- a/arch/powerpc/include/asm/book3s/32/tlbflush.h
++++ b/arch/powerpc/include/asm/book3s/32/tlbflush.h
+@@ -11,6 +11,7 @@
+ void hash__flush_tlb_mm(struct mm_struct *mm);
+ void hash__flush_tlb_page(struct vm_area_struct *vma, unsigned long vmaddr);
+ void hash__flush_range(struct mm_struct *mm, unsigned long start, unsigned long end);
++void hash__flush_gather(struct mmu_gather *tlb);
+ 
+ #ifdef CONFIG_SMP
+ void _tlbie(unsigned long address);
+@@ -29,7 +30,9 @@ void _tlbia(void);
+ static inline void tlb_flush(struct mmu_gather *tlb)
+ {
+ 	/* 603 needs to flush the whole TLB here since it doesn't use a hash table. */
+-	if (!mmu_has_feature(MMU_FTR_HPTE_TABLE))
++	if (mmu_has_feature(MMU_FTR_HPTE_TABLE))
++		hash__flush_gather(tlb);
++	else
+ 		_tlbia();
+ }
+ 
+--- a/arch/powerpc/mm/book3s32/tlb.c
++++ b/arch/powerpc/mm/book3s32/tlb.c
+@@ -105,3 +105,12 @@ void hash__flush_tlb_page(struct vm_area
+ 		flush_hash_pages(mm->context.id, vmaddr, pmd_val(*pmd), 1);
+ }
+ EXPORT_SYMBOL(hash__flush_tlb_page);
 +
-+	vdd_sd_dv_pins_default: vdd-sd-dv-default-pins {
-+		pinctrl-single,pins = <
-+			J721E_IOPAD(0x1dc, PIN_OUTPUT, 7) /* (Y1) SPI1_CLK.GPIO0_118 */
-+		>;
-+	};
- };
- 
- &wkup_pmx0 {
-@@ -633,12 +639,6 @@
- 		>;
- 	};
- 
--	vdd_sd_dv_pins_default: vdd-sd-dv-default-pins {
--		pinctrl-single,pins = <
--			J721E_IOPAD(0x1dc, PIN_OUTPUT, 7) /* (Y1) SPI1_CLK.GPIO0_118 */
--		>;
--	};
--
- 	wkup_uart0_pins_default: wkup-uart0-default-pins {
- 		pinctrl-single,pins = <
- 			J721E_WKUP_IOPAD(0xa0, PIN_INPUT, 0) /* (J29) WKUP_UART0_RXD */
++void hash__flush_gather(struct mmu_gather *tlb)
++{
++	if (tlb->fullmm || tlb->need_flush_all)
++		hash__flush_tlb_mm(tlb->mm);
++	else
++		hash__flush_range(tlb->mm, tlb->start, tlb->end);
++}
++EXPORT_SYMBOL(hash__flush_gather);
 
 
