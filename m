@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAFAE34C991;
-	Tue,  6 Jan 2026 17:20:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2036C34CFB9;
+	Tue,  6 Jan 2026 17:20:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720001; cv=none; b=HBh/swOPuBsIEBVXRhO0//PtD7lXZW3oIWg6QjCRW/9A6K4GOH13teWEoauA73E2729lr3apc86Y/sCW3qZZqWK111GA/vhubxzuSrP6g6Vc7OfiJbDWXHX+h1a/Ktdu81cHVy6ycEXaYH4rU8SJAsEKUqJZvxeigR6z1DtrlRE=
+	t=1767720008; cv=none; b=tQ7ca1DWEjAFfEmjb2z8aNA4hp4wnyWKTlBP35yR8r00vWN4zTEehJ6mzkjCxXh7kItiGw7eGZm2KPCvlZeKHQTELHkUVjJ//YrivUgUoKgF+ZEmebsoMVAXbhlwPddJrmroO329fpUNpa3pLjJoFM5YL0T7P7NiqBtzgW8L6Sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720001; c=relaxed/simple;
-	bh=8v8QBBI8o7I6benE2A32h87TzXuVuELAiLpppZ4/kDE=;
+	s=arc-20240116; t=1767720008; c=relaxed/simple;
+	bh=F4Z1C8g37HJwgLeKIwjwKOG1cfmi2DYmFxSUUSlMIGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DuiNXquAcnDjwUj6adBuEgZO9qHDZjHZhvX4kVaaR7+FrLcHx9Z7LiW7JjBG6eii96K48jjU+hMjhLRgRIOz+rk2C+qY8HWup+H3MF2NmraYO8p/+Opd3zQW98iIFALaioxTkRM2KQ5Bbuj7trXD4julY5TE5wBhWJLR8d74YAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MP2L5b+Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F8xpVOaRL5AMserjqau0Pesht48rdK/TIAEgAHLBfuBBrWwTDk9+oFH0J8Mm+L7Hk6gr3p5ysUj9hHuTwhqi9NEl/So0ticaHDJ+Wd8Psl0NNmTp562h+hztgAPyeVGpPKiISsks8evN1eDqCwKH2gfyWDo3xLdUi9ZutNNPj9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wrt9yRoG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MP2L5b+Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DABA6C116C6;
-	Tue,  6 Jan 2026 17:20:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wrt9yRoG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FDDDC19423;
+	Tue,  6 Jan 2026 17:20:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720001;
-	bh=8v8QBBI8o7I6benE2A32h87TzXuVuELAiLpppZ4/kDE=;
+	s=korg; t=1767720008;
+	bh=F4Z1C8g37HJwgLeKIwjwKOG1cfmi2DYmFxSUUSlMIGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MP2L5b+QLr0X0B5aFmpTjM71ZccC6YIFqxZgnkq5vPqr1anpaEyoVAZghyi6/PIs7
-	 pBXD80ZHsOlfYbxM6Y7z6b4y1sZ9l4UdRqeoGxcFJO5vClTisMelsDLu7/qrUhmMpt
-	 jEeGKcbnQtaKw8kf+CQMycwL3JMLM4P33VIhV0BE=
+	b=wrt9yRoG4ozXC6bfYMp3KF+TdG3fQBxOJ5XO6w+Egu4a+E3ZbWXRpIedsX01bhCmi
+	 d/cCWSvBhl2OgVPbXkwaC+mJbQOk5rqDY0U8l3ICvNlDyHX0PJoGB6Y3gE8QbgEGcj
+	 BCczopyvG15ODYloxpzGuHuDt9AP98HUERlKMIyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Mateusz Berezecki <mberezecki@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Wei Fang <wei.fang@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Hariprasad Kelam <hkelam@marvell.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 072/567] net/mlx5: Serialize firmware reset with devlink
-Date: Tue,  6 Jan 2026 17:57:34 +0100
-Message-ID: <20260106170453.998200605@linuxfoundation.org>
+Subject: [PATCH 6.12 074/567] net: enetc: do not transmit redirected XDP frames when the link is down
+Date: Tue,  6 Jan 2026 17:57:36 +0100
+Message-ID: <20260106170454.071502549@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -54,207 +54,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shay Drory <shayd@nvidia.com>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit 367e501f8b095eca08d2eb0ba4ccea5b5e82c169 ]
+[ Upstream commit 2939203ffee818f1e5ebd60bbb85a174d63aab9c ]
 
-The firmware reset mechanism can be triggered by asynchronous events,
-which may race with other devlink operations like devlink reload or
-devlink dev eswitch set, potentially leading to inconsistent states.
+In the current implementation, the enetc_xdp_xmit() always transmits
+redirected XDP frames even if the link is down, but the frames cannot
+be transmitted from TX BD rings when the link is down, so the frames
+are still kept in the TX BD rings. If the XDP program is uninstalled,
+users will see the following warning logs.
 
-This patch addresses the race by using the devl_lock to serialize the
-firmware reset against other devlink operations. When a reset is
-requested, the driver attempts to acquire the lock. If successful, it
-sets a flag to block devlink reload or eswitch changes, ACKs the reset
-to firmware and then releases the lock. If the lock is already held by
-another operation, the driver NACKs the firmware reset request,
-indicating that the reset cannot proceed.
+fsl_enetc 0000:00:00.0 eno0: timeout for tx ring #6 clear
 
-Firmware reset does not keep the devl_lock and instead uses an internal
-firmware reset bit. This is because firmware resets can be triggered by
-asynchronous events, and processed in different threads. It is illegal
-and unsafe to acquire a lock in one thread and attempt to release it in
-another, as lock ownership is intrinsically thread-specific.
+More worse, the TX BD ring cannot work properly anymore, because the
+HW PIR and CIR are not equal after the re-initialization of the TX
+BD ring. At this point, the BDs between CIR and PIR are invalid,
+which will cause a hardware malfunction.
 
-This change ensures that firmware resets and other devlink operations
-are mutually exclusive during the critical reset request phase,
-preventing race conditions.
+Another reason is that there is internal context in the ring prefetch
+logic that will retain the state from the first incarnation of the ring
+and continue prefetching from the stale location when we re-initialize
+the ring. The internal context is only reset by an FLR. That is to say,
+for LS1028A ENETC, software cannot set the HW CIR and PIR when
+initializing the TX BD ring.
 
-Fixes: 38b9f903f22b ("net/mlx5: Handle sync reset request event")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Mateusz Berezecki <mberezecki@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/1765284977-1363052-6-git-send-email-tariqt@nvidia.com
+It does not make sense to transmit redirected XDP frames when the link is
+down. Add a link status check to prevent transmission in this condition.
+This fixes part of the issue, but more complex cases remain. For example,
+the TX BD ring may still contain unsent frames when the link goes down.
+Those situations require additional patches, which will build on this
+one.
+
+Fixes: 9d2b68cc108d ("net: enetc: add support for XDP_REDIRECT")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Hariprasad Kelam <hkelam@marvell.com>
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20251211020919.121113-1-wei.fang@nxp.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/devlink.c |  5 +++
- .../mellanox/mlx5/core/eswitch_offloads.c     |  6 +++
- .../ethernet/mellanox/mlx5/core/fw_reset.c    | 45 +++++++++++++++++--
- .../ethernet/mellanox/mlx5/core/fw_reset.h    |  1 +
- 4 files changed, 53 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/freescale/enetc/enetc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/devlink.c b/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
-index 511b3ba245420..e9d49afc31db5 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
-@@ -143,6 +143,11 @@ static int mlx5_devlink_reload_down(struct devlink *devlink, bool netns_change,
- 	struct pci_dev *pdev = dev->pdev;
- 	int ret = 0;
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
+index 749b65aab14a9..c58e44144c2fa 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc.c
+@@ -1429,7 +1429,8 @@ int enetc_xdp_xmit(struct net_device *ndev, int num_frames,
+ 	int xdp_tx_bd_cnt, i, k;
+ 	int xdp_tx_frm_cnt = 0;
  
-+	if (mlx5_fw_reset_in_progress(dev)) {
-+		NL_SET_ERR_MSG_MOD(extack, "Can't reload during firmware reset");
-+		return -EBUSY;
-+	}
-+
- 	if (mlx5_dev_is_lightweight(dev)) {
- 		if (action != DEVLINK_RELOAD_ACTION_DRIVER_REINIT)
- 			return -EOPNOTSUPP;
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-index 558962423521c..f4cb3e78d0651 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-@@ -52,6 +52,7 @@
- #include "devlink.h"
- #include "lag/lag.h"
- #include "en/tc/post_meter.h"
-+#include "fw_reset.h"
+-	if (unlikely(test_bit(ENETC_TX_DOWN, &priv->flags)))
++	if (unlikely(test_bit(ENETC_TX_DOWN, &priv->flags) ||
++		     !netif_carrier_ok(ndev)))
+ 		return -ENETDOWN;
  
- /* There are two match-all miss flows, one for unicast dst mac and
-  * one for multicast.
-@@ -3731,6 +3732,11 @@ int mlx5_devlink_eswitch_mode_set(struct devlink *devlink, u16 mode,
- 	if (IS_ERR(esw))
- 		return PTR_ERR(esw);
- 
-+	if (mlx5_fw_reset_in_progress(esw->dev)) {
-+		NL_SET_ERR_MSG_MOD(extack, "Can't change eswitch mode during firmware reset");
-+		return -EBUSY;
-+	}
-+
- 	if (esw_mode_from_devlink(mode, &mlx5_mode))
- 		return -EINVAL;
- 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
-index ad4d17a243de9..1411513da66b2 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
-@@ -15,6 +15,7 @@ enum {
- 	MLX5_FW_RESET_FLAGS_DROP_NEW_REQUESTS,
- 	MLX5_FW_RESET_FLAGS_RELOAD_REQUIRED,
- 	MLX5_FW_RESET_FLAGS_UNLOAD_EVENT,
-+	MLX5_FW_RESET_FLAGS_RESET_IN_PROGRESS,
- };
- 
- struct mlx5_fw_reset {
-@@ -126,6 +127,16 @@ int mlx5_fw_reset_query(struct mlx5_core_dev *dev, u8 *reset_level, u8 *reset_ty
- 	return mlx5_reg_mfrl_query(dev, reset_level, reset_type, NULL, NULL);
- }
- 
-+bool mlx5_fw_reset_in_progress(struct mlx5_core_dev *dev)
-+{
-+	struct mlx5_fw_reset *fw_reset = dev->priv.fw_reset;
-+
-+	if (!fw_reset)
-+		return false;
-+
-+	return test_bit(MLX5_FW_RESET_FLAGS_RESET_IN_PROGRESS, &fw_reset->reset_flags);
-+}
-+
- static int mlx5_fw_reset_get_reset_method(struct mlx5_core_dev *dev,
- 					  u8 *reset_method)
- {
-@@ -241,6 +252,8 @@ static void mlx5_fw_reset_complete_reload(struct mlx5_core_dev *dev)
- 							BIT(DEVLINK_RELOAD_ACTION_FW_ACTIVATE));
- 		devl_unlock(devlink);
- 	}
-+
-+	clear_bit(MLX5_FW_RESET_FLAGS_RESET_IN_PROGRESS, &fw_reset->reset_flags);
- }
- 
- static void mlx5_stop_sync_reset_poll(struct mlx5_core_dev *dev)
-@@ -456,27 +469,48 @@ static void mlx5_sync_reset_request_event(struct work_struct *work)
- 	struct mlx5_fw_reset *fw_reset = container_of(work, struct mlx5_fw_reset,
- 						      reset_request_work);
- 	struct mlx5_core_dev *dev = fw_reset->dev;
-+	bool nack_request = false;
-+	struct devlink *devlink;
- 	int err;
- 
- 	err = mlx5_fw_reset_get_reset_method(dev, &fw_reset->reset_method);
--	if (err)
-+	if (err) {
-+		nack_request = true;
- 		mlx5_core_warn(dev, "Failed reading MFRL, err %d\n", err);
-+	} else if (!mlx5_is_reset_now_capable(dev, fw_reset->reset_method) ||
-+		   test_bit(MLX5_FW_RESET_FLAGS_NACK_RESET_REQUEST,
-+			    &fw_reset->reset_flags)) {
-+		nack_request = true;
-+	}
- 
--	if (err || test_bit(MLX5_FW_RESET_FLAGS_NACK_RESET_REQUEST, &fw_reset->reset_flags) ||
--	    !mlx5_is_reset_now_capable(dev, fw_reset->reset_method)) {
-+	devlink = priv_to_devlink(dev);
-+	/* For external resets, try to acquire devl_lock. Skip if devlink reset is
-+	 * pending (lock already held)
-+	 */
-+	if (nack_request ||
-+	    (!test_bit(MLX5_FW_RESET_FLAGS_PENDING_COMP,
-+		       &fw_reset->reset_flags) &&
-+	     !devl_trylock(devlink))) {
- 		err = mlx5_fw_reset_set_reset_sync_nack(dev);
- 		mlx5_core_warn(dev, "PCI Sync FW Update Reset Nack %s",
- 			       err ? "Failed" : "Sent");
- 		return;
- 	}
-+
- 	if (mlx5_sync_reset_set_reset_requested(dev))
--		return;
-+		goto unlock;
-+
-+	set_bit(MLX5_FW_RESET_FLAGS_RESET_IN_PROGRESS, &fw_reset->reset_flags);
- 
- 	err = mlx5_fw_reset_set_reset_sync_ack(dev);
- 	if (err)
- 		mlx5_core_warn(dev, "PCI Sync FW Update Reset Ack Failed. Error code: %d\n", err);
- 	else
- 		mlx5_core_warn(dev, "PCI Sync FW Update Reset Ack. Device reset is expected.\n");
-+
-+unlock:
-+	if (!test_bit(MLX5_FW_RESET_FLAGS_PENDING_COMP, &fw_reset->reset_flags))
-+		devl_unlock(devlink);
- }
- 
- static int mlx5_pci_link_toggle(struct mlx5_core_dev *dev, u16 dev_id)
-@@ -710,6 +744,8 @@ static void mlx5_sync_reset_abort_event(struct work_struct *work)
- 
- 	if (mlx5_sync_reset_clear_reset_requested(dev, true))
- 		return;
-+
-+	clear_bit(MLX5_FW_RESET_FLAGS_RESET_IN_PROGRESS, &fw_reset->reset_flags);
- 	mlx5_core_warn(dev, "PCI Sync FW Update Reset Aborted.\n");
- }
- 
-@@ -746,6 +782,7 @@ static void mlx5_sync_reset_timeout_work(struct work_struct *work)
- 
- 	if (mlx5_sync_reset_clear_reset_requested(dev, true))
- 		return;
-+	clear_bit(MLX5_FW_RESET_FLAGS_RESET_IN_PROGRESS, &fw_reset->reset_flags);
- 	mlx5_core_warn(dev, "PCI Sync FW Update Reset Timeout.\n");
- }
- 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.h b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.h
-index d5b28525c960d..2d96b2adc1cdf 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.h
-@@ -10,6 +10,7 @@ int mlx5_fw_reset_query(struct mlx5_core_dev *dev, u8 *reset_level, u8 *reset_ty
- int mlx5_fw_reset_set_reset_sync(struct mlx5_core_dev *dev, u8 reset_type_sel,
- 				 struct netlink_ext_ack *extack);
- int mlx5_fw_reset_set_live_patch(struct mlx5_core_dev *dev);
-+bool mlx5_fw_reset_in_progress(struct mlx5_core_dev *dev);
- 
- int mlx5_fw_reset_wait_reset_done(struct mlx5_core_dev *dev);
- void mlx5_sync_reset_unload_flow(struct mlx5_core_dev *dev, bool locked);
+ 	enetc_lock_mdio();
 -- 
 2.51.0
 
