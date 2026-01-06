@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EEB43559DB;
-	Tue,  6 Jan 2026 17:28:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7960D3559CA;
+	Tue,  6 Jan 2026 17:28:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720519; cv=none; b=ClnAUVXR8HkkDK6nH9rHOnmKxsP69UZ2p+GlQqq3ClwxCCipqjLOYtUUsbwJYFlbCqp4PNePzhj1jLhqnUGKUr/x/GhiesJp9vWfNLxc9r7VYxRRSsAJanjPtJEpjbqvfRhdobW3fsR7xXS/yxt5o1y5I/Y9/xYptMGxZVF+MEo=
+	t=1767720522; cv=none; b=gulLe87c++0+eZ0ue0PDwZ9D9ykh6RQFD24D/cz7wYkXDTZMxmLj9Xsht0dDDCwQ0ZQwMu0mfBxcTO124/yH2I3xlmRyRr9IPipcNofgzfs2mLJ81J7YAnUOD8UCB4ICLctjb09rrrWNlAUP1Kny5nLVCkNJvqmjyscOsrWPovg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720519; c=relaxed/simple;
-	bh=RpF04C8CeEfBTc/civPBvJWNWekb6YI0jsNefNH+x/I=;
+	s=arc-20240116; t=1767720522; c=relaxed/simple;
+	bh=fgKu7fMEcV5ICjFxas5iah3/A7QukH+/cXi9uI/anSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EEuIwk6R8JOVBrYaSMnXNj5feiM+AOHUAXkp2IbXs4Qe8cypuiZZOYUEcM5FuQA6TzUq9f+RZ47O53VZYWiqMY5RCFgLMW594gvirTiN6hXVE2xCFuTTwM/3Peta8oDHArMMmHlCAEnHkTo105Fw5HxeO5Qmjpicq2oKuxTQ9TQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QP7O6JR9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r/RzW39QhbsDGO8AAo4KkByd0Xi3lZeYcGICsG52rr8XJpwgVzVqRig+eo8EpsR/RsuNXWHP2ozORQZ/U6ym2hLi+mcD52S4ReWgm/NZ7LEi4dXL/2I/e+eyN1/n4ezy2RQlhW+S0p4H04j87uX5MA6Apfhmkni3C1kCJuWi5pU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ynZ+Le2Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QP7O6JR9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB38FC16AAE;
-	Tue,  6 Jan 2026 17:28:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ynZ+Le2Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E975DC116C6;
+	Tue,  6 Jan 2026 17:28:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720519;
-	bh=RpF04C8CeEfBTc/civPBvJWNWekb6YI0jsNefNH+x/I=;
+	s=korg; t=1767720522;
+	bh=fgKu7fMEcV5ICjFxas5iah3/A7QukH+/cXi9uI/anSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QP7O6JR9WSFaENp1rZa6c05gPAbA3FEVBTaLcMhvL1/8H/kEp3Rbv/QXjiH+BZTdo
-	 fxCPwjlecDeHJht4muC/ibo3EAF8D/eEpK9H3qtUm9PFAkJsxxp62OxwPfCvt2J0aW
-	 aBoESFl4+8njuTMmMphPMFnOVsykmNMsfAKNX1nM=
+	b=ynZ+Le2QpSOMhbpQ+fd+rtfkR/KQklIqG5NxExZoiEzzbFfvBQ0xcJkcNcMYNv6xm
+	 GanpCvWPSOAUfb1DUQSkvDL7STGsdcTuJAI9rZb122oYW3JrStMI+TfKf+fCFnF6nq
+	 e6P9e8kXPhBU7c86ZoDhG5YVR+c1wIJGog9zp0lc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Rogers <linux@joshua.hu>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.12 244/567] SUNRPC: svcauth_gss: avoid NULL deref on zero length gss_token in gss_read_proxy_verf
-Date: Tue,  6 Jan 2026 18:00:26 +0100
-Message-ID: <20260106170500.340897765@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Ahmed Genidi <ahmed.genidi@arm.com>,
+	Ben Horgan <ben.horgan@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Leo Yan <leo.yan@arm.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>,
+	Will Deacon <will@kernel.org>,
+	Wei-Lin Chang <weilin.chang@arm.com>
+Subject: [PATCH 6.12 262/567] KVM: arm64: Initialize HCR_EL2.E2H early
+Date: Tue,  6 Jan 2026 18:00:44 +0100
+Message-ID: <20260106170501.013523726@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -50,36 +57,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joshua Rogers <linux@joshua.hu>
+From: Mark Rutland <mark.rutland@arm.com>
 
-commit d4b69a6186b215d2dc1ebcab965ed88e8d41768d upstream.
+[ Upstream commit 7a68b55ff39b0a1638acb1694c185d49f6077a0d ]
 
-A zero length gss_token results in pages == 0 and in_token->pages[0]
-is NULL. The code unconditionally evaluates
-page_address(in_token->pages[0]) for the initial memcpy, which can
-dereference NULL even when the copy length is 0. Guard the first
-memcpy so it only runs when length > 0.
+On CPUs without FEAT_E2H0, HCR_EL2.E2H is RES1, but may reset to an
+UNKNOWN value out of reset and consequently may not read as 1 unless it
+has been explicitly initialized.
 
-Fixes: 5866efa8cbfb ("SUNRPC: Fix svcauth_gss_proxy_init()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Joshua Rogers <linux@joshua.hu>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+We handled this for the head.S boot code in commits:
+
+  3944382fa6f22b54 ("arm64: Treat HCR_EL2.E2H as RES1 when ID_AA64MMFR4_EL1.E2H0 is negative")
+  b3320142f3db9b3f ("arm64: Fix early handling of FEAT_E2H0 not being implemented")
+
+Unfortunately, we forgot to apply a similar fix to the KVM PSCI entry
+points used when relaying CPU_ON, CPU_SUSPEND, and SYSTEM SUSPEND. When
+KVM is entered via these entry points, the value of HCR_EL2.E2H may be
+consumed before it has been initialized (e.g. by the 'init_el2_state'
+macro).
+
+Initialize HCR_EL2.E2H early in these paths such that it can be consumed
+reliably. The existing code in head.S is factored out into a new
+'init_el2_hcr' macro, and this is used in the __kvm_hyp_init_cpu()
+function common to all the relevant PSCI entry points.
+
+For clarity, I've tweaked the assembly used to check whether
+ID_AA64MMFR4_EL1.E2H0 is negative. The bitfield is extracted as a signed
+value, and this is checked with a signed-greater-or-equal (GE) comparison.
+
+As the hyp code will reconfigure HCR_EL2 later in ___kvm_hyp_init(), all
+bits other than E2H are initialized to zero in __kvm_hyp_init_cpu().
+
+Fixes: 3944382fa6f22b54 ("arm64: Treat HCR_EL2.E2H as RES1 when ID_AA64MMFR4_EL1.E2H0 is negative")
+Fixes: b3320142f3db9b3f ("arm64: Fix early handling of FEAT_E2H0 not being implemented")
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Ahmed Genidi <ahmed.genidi@arm.com>
+Cc: Ben Horgan <ben.horgan@arm.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Leo Yan <leo.yan@arm.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Oliver Upton <oliver.upton@linux.dev>
+Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20250227180526.1204723-2-mark.rutland@arm.com
+[maz: fixed LT->GE thinko]
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Wei-Lin Chang <weilin.chang@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/auth_gss/svcauth_gss.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/include/asm/el2_setup.h |   26 ++++++++++++++++++++++++++
+ arch/arm64/kernel/head.S           |   19 +------------------
+ arch/arm64/kvm/hyp/nvhe/hyp-init.S |    8 +++++++-
+ 3 files changed, 34 insertions(+), 19 deletions(-)
 
---- a/net/sunrpc/auth_gss/svcauth_gss.c
-+++ b/net/sunrpc/auth_gss/svcauth_gss.c
-@@ -1083,7 +1083,8 @@ static int gss_read_proxy_verf(struct sv
- 	}
+--- a/arch/arm64/include/asm/el2_setup.h
++++ b/arch/arm64/include/asm/el2_setup.h
+@@ -16,6 +16,32 @@
+ #include <asm/sysreg.h>
+ #include <linux/irqchip/arm-gic-v3.h>
  
- 	length = min_t(unsigned int, inlen, (char *)xdr->end - (char *)xdr->p);
--	memcpy(page_address(in_token->pages[0]), xdr->p, length);
-+	if (length)
-+		memcpy(page_address(in_token->pages[0]), xdr->p, length);
- 	inlen -= length;
++.macro init_el2_hcr	val
++	mov_q	x0, \val
++
++	/*
++	 * Compliant CPUs advertise their VHE-onlyness with
++	 * ID_AA64MMFR4_EL1.E2H0 < 0. On such CPUs HCR_EL2.E2H is RES1, but it
++	 * can reset into an UNKNOWN state and might not read as 1 until it has
++	 * been initialized explicitly.
++	 *
++	 * Fruity CPUs seem to have HCR_EL2.E2H set to RAO/WI, but
++	 * don't advertise it (they predate this relaxation).
++	 *
++	 * Initalize HCR_EL2.E2H so that later code can rely upon HCR_EL2.E2H
++	 * indicating whether the CPU is running in E2H mode.
++	 */
++	mrs_s	x1, SYS_ID_AA64MMFR4_EL1
++	sbfx	x1, x1, #ID_AA64MMFR4_EL1_E2H0_SHIFT, #ID_AA64MMFR4_EL1_E2H0_WIDTH
++	cmp	x1, #0
++	b.ge	.LnVHE_\@
++
++	orr	x0, x0, #HCR_E2H
++.LnVHE_\@:
++	msr	hcr_el2, x0
++	isb
++.endm
++
+ .macro __init_el2_sctlr
+ 	mov_q	x0, INIT_SCTLR_EL2_MMU_OFF
+ 	msr	sctlr_el2, x0
+--- a/arch/arm64/kernel/head.S
++++ b/arch/arm64/kernel/head.S
+@@ -295,25 +295,8 @@ SYM_INNER_LABEL(init_el2, SYM_L_LOCAL)
+ 	msr	sctlr_el2, x0
+ 	isb
+ 0:
+-	mov_q	x0, HCR_HOST_NVHE_FLAGS
+-
+-	/*
+-	 * Compliant CPUs advertise their VHE-onlyness with
+-	 * ID_AA64MMFR4_EL1.E2H0 < 0. HCR_EL2.E2H can be
+-	 * RES1 in that case. Publish the E2H bit early so that
+-	 * it can be picked up by the init_el2_state macro.
+-	 *
+-	 * Fruity CPUs seem to have HCR_EL2.E2H set to RAO/WI, but
+-	 * don't advertise it (they predate this relaxation).
+-	 */
+-	mrs_s	x1, SYS_ID_AA64MMFR4_EL1
+-	tbz	x1, #(ID_AA64MMFR4_EL1_E2H0_SHIFT + ID_AA64MMFR4_EL1_E2H0_WIDTH - 1), 1f
+-
+-	orr	x0, x0, #HCR_E2H
+-1:
+-	msr	hcr_el2, x0
+-	isb
  
- 	to_offs = length;
++	init_el2_hcr	HCR_HOST_NVHE_FLAGS
+ 	init_el2_state
+ 
+ 	/* Hypervisor stub */
+--- a/arch/arm64/kvm/hyp/nvhe/hyp-init.S
++++ b/arch/arm64/kvm/hyp/nvhe/hyp-init.S
+@@ -73,8 +73,12 @@ __do_hyp_init:
+ 	eret
+ SYM_CODE_END(__kvm_hyp_init)
+ 
++/*
++ * Initialize EL2 CPU state to sane values.
++ *
++ * HCR_EL2.E2H must have been initialized already.
++ */
+ SYM_CODE_START_LOCAL(__kvm_init_el2_state)
+-	/* Initialize EL2 CPU state to sane values. */
+ 	init_el2_state				// Clobbers x0..x2
+ 	finalise_el2_state
+ 	ret
+@@ -206,6 +210,8 @@ SYM_CODE_START_LOCAL(__kvm_hyp_init_cpu)
+ 
+ 2:	msr	SPsel, #1			// We want to use SP_EL{1,2}
+ 
++	init_el2_hcr	0
++
+ 	bl	__kvm_init_el2_state
+ 
+ 	__init_el2_nvhe_prepare_eret
 
 
