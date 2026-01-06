@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C13B1DA55;
-	Tue,  6 Jan 2026 17:16:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD43A23EA8A;
+	Tue,  6 Jan 2026 17:16:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719802; cv=none; b=An5MvyHqJnr9FHDlEYR1SK+CXgB8WgBLd18U0rDkulkCCGhiA87c81Kdp7qXxmL0ffVZ2CDee+q6DGYBd74zRttzIwwUZB2Wo0o/GsfD4oerpMsdqLL4WPJj9ekYwGi2b3hN4XqFiAFLs2k7m6i/sCCz3xwVEc+Kh9eMXs/Vnew=
+	t=1767719805; cv=none; b=XxzoemEbZfiUULsgz5ZTX5qbSxoJl58bkMM2u0dy04vRV7jqGwgWod0tNNpXwDEvJQ2kqgAVB7tAdkZizcJD1BMxFEf2C0OacFDY7hUo9AS7nAVX57vGZUpqkKD7gOzglrCSwv2VAnw+dEcg3cZLBGJ6bp0ZQk/CbL0rgTmetl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719802; c=relaxed/simple;
-	bh=lP3x7Kv44HcLAjhdfFo1d5WKLyAAfY2XPbxSprKxkiQ=;
+	s=arc-20240116; t=1767719805; c=relaxed/simple;
+	bh=/aObFD+RR6UvW0Q4/MKunIZlGJ+nRyZAbX7ODXHm3l4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=st74ayYE52qVi7rx6V8uCdm6FL4O+WFauIx6tpoAAikQAfDbmEbULm+GR/RZnN920h5SvivB+JylgiUMsqfWOJWSh/WbQ+ifXPWcobpGr1QnQNTW9zSW8+wW+bKzii4Nhs2qcbZAkiV0CVj7xaUBZ+ci6ipZCYGalkgF7AwDOjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Inp9tvOx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eecWgnWXcbZDKNg/QUo8pb46rACtKXAYgFWmcR1Inn9cLt9d4XLqgZaeBGWXnm/s2mcgC7OfnlUXZThq5nlsb3msPFUEkzIxjh24T1zk/XkNk6xpZcrrXtRHYZh5Q4TCA82glXEXNl+PIW8UmrtrFiJpohqJ0tzE/lRE08AqtXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oEObd2oP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Inp9tvOx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85DFC116C6;
-	Tue,  6 Jan 2026 17:16:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oEObd2oP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2FA2C116C6;
+	Tue,  6 Jan 2026 17:16:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719802;
-	bh=lP3x7Kv44HcLAjhdfFo1d5WKLyAAfY2XPbxSprKxkiQ=;
+	s=korg; t=1767719805;
+	bh=/aObFD+RR6UvW0Q4/MKunIZlGJ+nRyZAbX7ODXHm3l4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Inp9tvOxsUiJONA/jhdjyzT/YHfD2WCOXejTykTlFDmgrsyyDPg+4kUXcCTCra8c8
-	 xxnbGnxwcmZ8TUIuH53+0RSr3Jx7XnSIGZOCOw3sTprZzy8QNFHtXfFQ/i0A3fooEE
-	 1A8Wxu2cboeAUXf6YNwgyzIkCuHVgdLYDCHIEoNw=
+	b=oEObd2oPRt1thryxeeTKMQkiER0WgQ34ikBW93lAKNkH21A3SvSpLCgziJf33S76w
+	 TyS+Knq5FHzlBDPzztak1oTesKWENRSBDWIo0FRjs/cO0OELMXwYy6oKJZBDuIXZ3c
+	 QVbohS2Zdyam01pJ6k4qiwL3hxZ82gsXbOth4YMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
+	syzbot+d7abc36bbbb6d7d40b58@syzkaller.appspotmail.com,
+	Wang Liang <wangliang74@huawei.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 045/567] net: fec: ERR007885 Workaround for XDP TX path
-Date: Tue,  6 Jan 2026 17:57:07 +0100
-Message-ID: <20260106170453.008033407@linuxfoundation.org>
+Subject: [PATCH 6.12 046/567] netrom: Fix memory leak in nr_sendmsg()
+Date: Tue,  6 Jan 2026 17:57:08 +0100
+Message-ID: <20260106170453.044496000@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,47 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Wang Liang <wangliang74@huawei.com>
 
-[ Upstream commit e8e032cd24dda7cceaa27bc2eb627f82843f0466 ]
+[ Upstream commit 613d12dd794e078be8ff3cf6b62a6b9acf7f4619 ]
 
-The ERR007885 will lead to a TDAR race condition for mutliQ when the
-driver sets TDAR and the UDMA clears TDAR simultaneously or in a small
-window (2-4 cycles). And it will cause the udma_tx and udma_tx_arbiter
-state machines to hang. Therefore, the commit 53bb20d1faba ("net: fec:
-add variable reg_desc_active to speed things up") and the commit
-a179aad12bad ("net: fec: ERR007885 Workaround for conventional TX") have
-added the workaround to fix the potential issue for the conventional TX
-path. Similarly, the XDP TX path should also have the potential hang
-issue, so add the workaround for XDP TX path.
+syzbot reported a memory leak [1].
 
-Fixes: 6d6b39f180b8 ("net: fec: add initial XDP support")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Link: https://patch.msgid.link/20251128025915.2486943-1-wei.fang@nxp.com
+When function sock_alloc_send_skb() return NULL in nr_output(), the
+original skb is not freed, which was allocated in nr_sendmsg(). Fix this
+by freeing it before return.
+
+[1]
+BUG: memory leak
+unreferenced object 0xffff888129f35500 (size 240):
+  comm "syz.0.17", pid 6119, jiffies 4294944652
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 10 52 28 81 88 ff ff  ..........R(....
+  backtrace (crc 1456a3e4):
+    kmemleak_alloc_recursive include/linux/kmemleak.h:44 [inline]
+    slab_post_alloc_hook mm/slub.c:4983 [inline]
+    slab_alloc_node mm/slub.c:5288 [inline]
+    kmem_cache_alloc_node_noprof+0x36f/0x5e0 mm/slub.c:5340
+    __alloc_skb+0x203/0x240 net/core/skbuff.c:660
+    alloc_skb include/linux/skbuff.h:1383 [inline]
+    alloc_skb_with_frags+0x69/0x3f0 net/core/skbuff.c:6671
+    sock_alloc_send_pskb+0x379/0x3e0 net/core/sock.c:2965
+    sock_alloc_send_skb include/net/sock.h:1859 [inline]
+    nr_sendmsg+0x287/0x450 net/netrom/af_netrom.c:1105
+    sock_sendmsg_nosec net/socket.c:727 [inline]
+    __sock_sendmsg net/socket.c:742 [inline]
+    sock_write_iter+0x293/0x2a0 net/socket.c:1195
+    new_sync_write fs/read_write.c:593 [inline]
+    vfs_write+0x45d/0x710 fs/read_write.c:686
+    ksys_write+0x143/0x170 fs/read_write.c:738
+    do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+    do_syscall_64+0xa4/0xfa0 arch/x86/entry/syscall_64.c:94
+    entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Reported-by: syzbot+d7abc36bbbb6d7d40b58@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d7abc36bbbb6d7d40b58
+Tested-by: syzbot+d7abc36bbbb6d7d40b58@syzkaller.appspotmail.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Wang Liang <wangliang74@huawei.com>
+Link: https://patch.msgid.link/20251129041315.1550766-1-wangliang74@huawei.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_main.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/netrom/nr_out.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index d1800868c2e01..9018a7d3864fd 100644
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -3934,7 +3934,12 @@ static int fec_enet_txq_xmit_frame(struct fec_enet_private *fep,
- 	txq->bd.cur = bdp;
+diff --git a/net/netrom/nr_out.c b/net/netrom/nr_out.c
+index 5e531394a724b..2b3cbceb0b52d 100644
+--- a/net/netrom/nr_out.c
++++ b/net/netrom/nr_out.c
+@@ -43,8 +43,10 @@ void nr_output(struct sock *sk, struct sk_buff *skb)
+ 		frontlen = skb_headroom(skb);
  
- 	/* Trigger transmission start */
--	writel(0, txq->bd.reg_desc_active);
-+	if (!(fep->quirks & FEC_QUIRK_ERR007885) ||
-+	    !readl(txq->bd.reg_desc_active) ||
-+	    !readl(txq->bd.reg_desc_active) ||
-+	    !readl(txq->bd.reg_desc_active) ||
-+	    !readl(txq->bd.reg_desc_active))
-+		writel(0, txq->bd.reg_desc_active);
+ 		while (skb->len > 0) {
+-			if ((skbn = sock_alloc_send_skb(sk, frontlen + NR_MAX_PACKET_SIZE, 0, &err)) == NULL)
++			if ((skbn = sock_alloc_send_skb(sk, frontlen + NR_MAX_PACKET_SIZE, 0, &err)) == NULL) {
++				kfree_skb(skb);
+ 				return;
++			}
  
- 	return 0;
- }
+ 			skb_reserve(skbn, frontlen);
+ 
 -- 
 2.51.0
 
