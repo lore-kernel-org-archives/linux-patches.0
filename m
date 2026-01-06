@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B43E27874F;
-	Tue,  6 Jan 2026 17:41:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4197A258CDF;
+	Tue,  6 Jan 2026 17:41:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721307; cv=none; b=kyPmfaoh7lXgY15CRYIwdiwA4gp4YiiqCW4U4xgcC7u+LkNWIF0zE3n2ybHm/rQhkz8jXgHSzFpHQCp70zPlJ/J1J1myMeZgSVd39DkQQA8Dkne1TcVeNiLNoNEtHBG2vGTfn/NxpIOsTefatHB7j+gpWVmburjNu2eBNGTcNTI=
+	t=1767721310; cv=none; b=oMe4MosNZQvmwWGVty3FXzUQ1uKD9LKOMNakezttS7cWBQdDuUugwPT2nZQxwggkGV5rg2VW0geARHzBOKoj1hLwjU4ReOTWy9gZM8I1nftIyEbkSntmAAMy1MtEMAD6Att9juh/fFwG4/EoRth1lgVVQz6GKcSckwGs1hlwRLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721307; c=relaxed/simple;
-	bh=b+EZ3NzPNua5Q+SZbKD78D71UhKnd7C9oQIRL5fZ4Kc=;
+	s=arc-20240116; t=1767721310; c=relaxed/simple;
+	bh=5CAaJfAGFsUQTd8s/AvSZrFSA7xPrMDmMTZRUDwzk/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MyFW78eqxhTr7POkFyYi2+SiI9ouGMBeNFrof/nF2aMMharjz0kHSlBq540uzCVqEYPL43cK+Bylyjp39QIQ+NjUEJYeFyU0t72wqT4lcLOwQ2CheBZLwNaKk5Y5A7i1y7Xt32gJPjaJMTm/88mm4oEOJluhVsiFdm126Ss8H0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v9Kjuikj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=usEyXm/bkGfrjgrGGoSH2f4actYguSvswe4laNovBBIU6eBU7CVYJtyAIUtYUBlkNVmmNCs/lmngB56OFUkOS136aGy8rfl88Ds9M2quFstWb0YDqfz+6kYI1KahZHbfidpGdVnxw6ziSu2hLuOyxmBs1n5x7Dar7vaKKkG9mZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k88Idbz6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v9Kjuikj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E54BC116C6;
-	Tue,  6 Jan 2026 17:41:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k88Idbz6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD604C116C6;
+	Tue,  6 Jan 2026 17:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721306;
-	bh=b+EZ3NzPNua5Q+SZbKD78D71UhKnd7C9oQIRL5fZ4Kc=;
+	s=korg; t=1767721310;
+	bh=5CAaJfAGFsUQTd8s/AvSZrFSA7xPrMDmMTZRUDwzk/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v9KjuikjYMSAK/G6dmInt3zC07ttF5UJYquFGabRV5aEpRaRtR3dMJoAA9mbEnFx8
-	 J7NHgL5q39V4HwFPHFvQFRSmytBnRbQ1i/s5Cl+JZDrQTUVt/7a+Bmx5gD/GUM9rFQ
-	 vxX26nPGMhfVAZEsDxcAWOLwaVVhzitlC8auuPjY=
+	b=k88Idbz65mkVuW1cfNMOzeN1CQlSNWy3jhlS0zm2sTc8ES8F8qDpQW5E/7QA7U18/
+	 o5LeC3nQL4Z2xxOFqZqZy2vfZYbtAf+4DpU3fKpe47HLcUjHNhox3DKDBsulKY5sY+
+	 jdlAIxcNYsfuW0YC3d4fE/r5WAtCS5EggA1hREu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Hao <kexin.hao@windriver.com>,
-	Xiaolei Wang <xiaolei.wang@windriver.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 455/567] net: macb: Relocate mog_init_rings() callback from macb_mac_link_up() to macb_open()
-Date: Tue,  6 Jan 2026 18:03:57 +0100
-Message-ID: <20260106170508.177614700@linuxfoundation.org>
+	Ye Bin <yebin10@huawei.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 491/567] jbd2: fix the inconsistency between checksum and data in memory for journal sb
+Date: Tue,  6 Jan 2026 18:04:33 +0100
+Message-ID: <20260106170509.525594214@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,170 +55,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaolei Wang <xiaolei.wang@windriver.com>
+From: Ye Bin <yebin10@huawei.com>
 
-commit 99537d5c476cada9cf75aef9fa75579a31faadb9 upstream.
+[ Upstream commit 6abfe107894af7e8ce3a2e120c619d81ee764ad5 ]
 
-In the non-RT kernel, local_bh_disable() merely disables preemption,
-whereas it maps to an actual spin lock in the RT kernel. Consequently,
-when attempting to refill RX buffers via netdev_alloc_skb() in
-macb_mac_link_up(), a deadlock scenario arises as follows:
+Copying the file system while it is mounted as read-only results in
+a mount failure:
+[~]# mkfs.ext4 -F /dev/sdc
+[~]# mount /dev/sdc -o ro /mnt/test
+[~]# dd if=/dev/sdc of=/dev/sda bs=1M
+[~]# mount /dev/sda /mnt/test1
+[ 1094.849826] JBD2: journal checksum error
+[ 1094.850927] EXT4-fs (sda): Could not load journal inode
+mount: mount /dev/sda on /mnt/test1 failed: Bad message
 
-   WARNING: possible circular locking dependency detected
-   6.18.0-08691-g2061f18ad76e #39 Not tainted
-   ------------------------------------------------------
-   kworker/0:0/8 is trying to acquire lock:
-   ffff00080369bbe0 (&bp->lock){+.+.}-{3:3}, at: macb_start_xmit+0x808/0xb7c
+The process described above is just an abstracted way I came up with to
+reproduce the issue. In the actual scenario, the file system was mounted
+read-only and then copied while it was still mounted. It was found that
+the mount operation failed. The user intended to verify the data or use
+it as a backup, and this action was performed during a version upgrade.
+Above issue may happen as follows:
+ext4_fill_super
+ set_journal_csum_feature_set(sb)
+  if (ext4_has_metadata_csum(sb))
+   incompat = JBD2_FEATURE_INCOMPAT_CSUM_V3;
+  if (test_opt(sb, JOURNAL_CHECKSUM)
+   jbd2_journal_set_features(sbi->s_journal, compat, 0, incompat);
+    lock_buffer(journal->j_sb_buffer);
+    sb->s_feature_incompat  |= cpu_to_be32(incompat);
+    //The data in the journal sb was modified, but the checksum was not
+      updated, so the data remaining in memory has a mismatch between the
+      data and the checksum.
+    unlock_buffer(journal->j_sb_buffer);
 
-   but task is already holding lock:
-   ffff000803698e58 (&queue->tx_ptr_lock){+...}-{3:3}, at: macb_start_xmit
-   +0x148/0xb7c
+In this case, the journal sb copied over is in a state where the checksum
+and data are inconsistent, so mounting fails.
+To solve the above issue, update the checksum in memory after modifying
+the journal sb.
 
-   which lock already depends on the new lock.
-
-   the existing dependency chain (in reverse order) is:
-
-   -> #3 (&queue->tx_ptr_lock){+...}-{3:3}:
-          rt_spin_lock+0x50/0x1f0
-          macb_start_xmit+0x148/0xb7c
-          dev_hard_start_xmit+0x94/0x284
-          sch_direct_xmit+0x8c/0x37c
-          __dev_queue_xmit+0x708/0x1120
-          neigh_resolve_output+0x148/0x28c
-          ip6_finish_output2+0x2c0/0xb2c
-          __ip6_finish_output+0x114/0x308
-          ip6_output+0xc4/0x4a4
-          mld_sendpack+0x220/0x68c
-          mld_ifc_work+0x2a8/0x4f4
-          process_one_work+0x20c/0x5f8
-          worker_thread+0x1b0/0x35c
-          kthread+0x144/0x200
-          ret_from_fork+0x10/0x20
-
-   -> #2 (_xmit_ETHER#2){+...}-{3:3}:
-          rt_spin_lock+0x50/0x1f0
-          sch_direct_xmit+0x11c/0x37c
-          __dev_queue_xmit+0x708/0x1120
-          neigh_resolve_output+0x148/0x28c
-          ip6_finish_output2+0x2c0/0xb2c
-          __ip6_finish_output+0x114/0x308
-          ip6_output+0xc4/0x4a4
-          mld_sendpack+0x220/0x68c
-          mld_ifc_work+0x2a8/0x4f4
-          process_one_work+0x20c/0x5f8
-          worker_thread+0x1b0/0x35c
-          kthread+0x144/0x200
-          ret_from_fork+0x10/0x20
-
-   -> #1 ((softirq_ctrl.lock)){+.+.}-{3:3}:
-          lock_release+0x250/0x348
-          __local_bh_enable_ip+0x7c/0x240
-          __netdev_alloc_skb+0x1b4/0x1d8
-          gem_rx_refill+0xdc/0x240
-          gem_init_rings+0xb4/0x108
-          macb_mac_link_up+0x9c/0x2b4
-          phylink_resolve+0x170/0x614
-          process_one_work+0x20c/0x5f8
-          worker_thread+0x1b0/0x35c
-          kthread+0x144/0x200
-          ret_from_fork+0x10/0x20
-
-   -> #0 (&bp->lock){+.+.}-{3:3}:
-          __lock_acquire+0x15a8/0x2084
-          lock_acquire+0x1cc/0x350
-          rt_spin_lock+0x50/0x1f0
-          macb_start_xmit+0x808/0xb7c
-          dev_hard_start_xmit+0x94/0x284
-          sch_direct_xmit+0x8c/0x37c
-          __dev_queue_xmit+0x708/0x1120
-          neigh_resolve_output+0x148/0x28c
-          ip6_finish_output2+0x2c0/0xb2c
-          __ip6_finish_output+0x114/0x308
-          ip6_output+0xc4/0x4a4
-          mld_sendpack+0x220/0x68c
-          mld_ifc_work+0x2a8/0x4f4
-          process_one_work+0x20c/0x5f8
-          worker_thread+0x1b0/0x35c
-          kthread+0x144/0x200
-          ret_from_fork+0x10/0x20
-
-   other info that might help us debug this:
-
-   Chain exists of:
-     &bp->lock --> _xmit_ETHER#2 --> &queue->tx_ptr_lock
-
-    Possible unsafe locking scenario:
-
-          CPU0                    CPU1
-          ----                    ----
-     lock(&queue->tx_ptr_lock);
-                                  lock(_xmit_ETHER#2);
-                                  lock(&queue->tx_ptr_lock);
-     lock(&bp->lock);
-
-    *** DEADLOCK ***
-
-   Call trace:
-    show_stack+0x18/0x24 (C)
-    dump_stack_lvl+0xa0/0xf0
-    dump_stack+0x18/0x24
-    print_circular_bug+0x28c/0x370
-    check_noncircular+0x198/0x1ac
-    __lock_acquire+0x15a8/0x2084
-    lock_acquire+0x1cc/0x350
-    rt_spin_lock+0x50/0x1f0
-    macb_start_xmit+0x808/0xb7c
-    dev_hard_start_xmit+0x94/0x284
-    sch_direct_xmit+0x8c/0x37c
-    __dev_queue_xmit+0x708/0x1120
-    neigh_resolve_output+0x148/0x28c
-    ip6_finish_output2+0x2c0/0xb2c
-    __ip6_finish_output+0x114/0x308
-    ip6_output+0xc4/0x4a4
-    mld_sendpack+0x220/0x68c
-    mld_ifc_work+0x2a8/0x4f4
-    process_one_work+0x20c/0x5f8
-    worker_thread+0x1b0/0x35c
-    kthread+0x144/0x200
-    ret_from_fork+0x10/0x20
-
-Notably, invoking the mog_init_rings() callback upon link establishment
-is unnecessary. Instead, we can exclusively call mog_init_rings() within
-the ndo_open() callback. This adjustment resolves the deadlock issue.
-Furthermore, since MACB_CAPS_MACB_IS_EMAC cases do not use mog_init_rings()
-when opening the network interface via at91ether_open(), moving
-mog_init_rings() to macb_open() also eliminates the MACB_CAPS_MACB_IS_EMAC
-check.
-
-Fixes: 633e98a711ac ("net: macb: use resolved link config in mac_link_up()")
-Cc: stable@vger.kernel.org
-Suggested-by: Kevin Hao <kexin.hao@windriver.com>
-Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
-Link: https://patch.msgid.link/20251222015624.1994551-1-xiaolei.wang@windriver.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 4fd5ea43bc11 ("jbd2: checksum journal superblock")
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Reviewed-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Message-ID: <20251103010123.3753631-1-yebin@huaweicloud.com>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
+[ jbd2_superblock_csum() also takes a journal param ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/jbd2/journal.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -759,7 +759,6 @@ static void macb_mac_link_up(struct phyl
- 		/* Initialize rings & buffers as clearing MACB_BIT(TE) in link down
- 		 * cleared the pipeline and control registers.
- 		 */
--		bp->macbgem_ops.mog_init_rings(bp);
- 		macb_init_buffers(bp);
+--- a/fs/jbd2/journal.c
++++ b/fs/jbd2/journal.c
+@@ -2375,6 +2375,12 @@ int jbd2_journal_set_features(journal_t
+ 	sb->s_feature_compat    |= cpu_to_be32(compat);
+ 	sb->s_feature_ro_compat |= cpu_to_be32(ro);
+ 	sb->s_feature_incompat  |= cpu_to_be32(incompat);
++	/*
++	 * Update the checksum now so that it is valid even for read-only
++	 * filesystems where jbd2_write_superblock() doesn't get called.
++	 */
++	if (jbd2_journal_has_csum_v2or3(journal))
++		sb->s_checksum = jbd2_superblock_csum(journal, sb);
+ 	unlock_buffer(journal->j_sb_buffer);
+ 	jbd2_journal_init_transaction_limits(journal);
  
- 		for (q = 0, queue = bp->queues; q < bp->num_queues; ++q, ++queue)
-@@ -2985,6 +2984,8 @@ static int macb_open(struct net_device *
- 		goto pm_exit;
- 	}
+@@ -2404,9 +2410,17 @@ void jbd2_journal_clear_features(journal
  
-+	bp->macbgem_ops.mog_init_rings(bp);
-+
- 	for (q = 0, queue = bp->queues; q < bp->num_queues; ++q, ++queue) {
- 		napi_enable(&queue->napi_rx);
- 		napi_enable(&queue->napi_tx);
+ 	sb = journal->j_superblock;
+ 
++	lock_buffer(journal->j_sb_buffer);
+ 	sb->s_feature_compat    &= ~cpu_to_be32(compat);
+ 	sb->s_feature_ro_compat &= ~cpu_to_be32(ro);
+ 	sb->s_feature_incompat  &= ~cpu_to_be32(incompat);
++	/*
++	 * Update the checksum now so that it is valid even for read-only
++	 * filesystems where jbd2_write_superblock() doesn't get called.
++	 */
++	if (jbd2_journal_has_csum_v2or3(journal))
++		sb->s_checksum = jbd2_superblock_csum(journal, sb);
++	unlock_buffer(journal->j_sb_buffer);
+ 	jbd2_journal_init_transaction_limits(journal);
+ }
+ EXPORT_SYMBOL(jbd2_journal_clear_features);
 
 
