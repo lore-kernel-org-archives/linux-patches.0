@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A54F737C0F1;
-	Tue,  6 Jan 2026 18:00:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3908376BFD;
+	Tue,  6 Jan 2026 18:00:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722422; cv=none; b=eXYf/+iJkKJSQQoXM1Sg+yrIp4ALsoxVUBMOyKv49xbYPi9spJVTkvxBLQrShV7GSsVbDAVCHkE55eeIXc2u1bvpasGtDUvEagCHZp5OYp0eg0YrdVrndxrznE5BHiTfOdK7qG9GhRNo4N0/VZpZDLtYo6YKMKEmLta7ING62VQ=
+	t=1767722425; cv=none; b=duc/J5q6qQSuvqUZv7V3pKcS2ALgmTl9hU/273o11TkCBeJe4XtSpl10i3GS/0k+4Kgn25J3uZMiWqPKnwWUg/2SSJvieJSWrA1vKItihyyWdJhxAtDt/yJGyZlpwZD6gc1Whk9GPKwDCa5m+j1eoc4YsRtrl8FJFYAtmixwzHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722422; c=relaxed/simple;
-	bh=4gjwQtybU/qSbUy4oTDHBnYSZp0oxOh0/xsarn58ITA=;
+	s=arc-20240116; t=1767722425; c=relaxed/simple;
+	bh=GuEAsQQHza2ph64jAzU8/uYFIKSpqyn/VBuRebTaRrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lSDaMXknnihAMsuJorrTWKovKVeLsioihloDM+EcIjWHNnMr65nhJ6MZt9dcBnAGI9+VpM+4VVHXbPWIHPUlGj7+E8Z0FAmqEZDS3DPhfvnQAL7Tvbn+oifxiONXgqTR1su4vmcHbDnf1PT3qjs1FlUhDMPiHe9HVIkp+IjYjgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eqar1War; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TiZ7wvfzTC+WtaTlcGV/CWuAarK/+iglP4GJru8RpFJq8KBjIjyHVbUU+Tg9GpaKrHE4H032bVqqpTII2be6yjQAn6epyKmSz+C2QDA1xmPM9A0EMJ0bNQhuVNrWyqVb1zGD1ebQtekiDxgNWA1g33MaIVzfSCmjOXG/uzik0zg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z+HXyhUP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eqar1War"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B861CC116C6;
-	Tue,  6 Jan 2026 18:00:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z+HXyhUP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21CF5C116C6;
+	Tue,  6 Jan 2026 18:00:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722422;
-	bh=4gjwQtybU/qSbUy4oTDHBnYSZp0oxOh0/xsarn58ITA=;
+	s=korg; t=1767722425;
+	bh=GuEAsQQHza2ph64jAzU8/uYFIKSpqyn/VBuRebTaRrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eqar1WarR7I541c2QHtdYwtT+/XBmS2MS/9EB6sxdYzQz1jc123wKWwVcJgfcMO6b
-	 JNhM2flvRteFffp91UgkHtVnbDA6DXoFp3frFZjIlE30jDfLFBqQJKFk0Er9auTJG0
-	 0FqAastwgaG6uC6oP0VajcqfnUaEvlKYR927xJGA=
+	b=Z+HXyhUP2z9nqgLzPff50V5eOCw56zr3kz8cZNeWeClyg2DGL9Dg8JTxNzHGXsJ/F
+	 dE/cuEGnNWGGXvDm3OK969pEnrvZj5XxNnKLpn7v/uYk98ZeXJKOPoL0g67ww+4AwD
+	 VQsSw+Fg4rE3FIN1wQx/rW/zaupyJCWtK9UWb4t8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kurt Borja <kuurtb@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.18 259/312] platform/x86: alienware-wmi-wmax: Add support for new Area-51 laptops
-Date: Tue,  6 Jan 2026 18:05:33 +0100
-Message-ID: <20260106170557.217769497@linuxfoundation.org>
+	Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
+	Chongxi Zhao <zhaochongxi2019@email.szu.edu.cn>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 233/312] tools/mm/page_owner_sort: fix timestamp comparison for stable sorting
+Date: Tue,  6 Jan 2026 18:05:07 +0100
+Message-ID: <20260106170556.280239111@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -44,53 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kurt Borja <kuurtb@gmail.com>
+From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
 
-commit 433f7744cb302ac22800dc0cd50494319ce64ba0 upstream.
+commit 7013803444dd3bbbe28fd3360c084cec3057c554 upstream.
 
-Add AWCC support for new Alienware Area-51 laptops.
+The ternary operator in compare_ts() returns 1 when timestamps are equal,
+causing unstable sorting behavior. Replace with explicit three-way
+comparison that returns 0 for equal timestamps, ensuring stable qsort
+ordering and consistent output.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Kurt Borja <kuurtb@gmail.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://patch.msgid.link/20251205-area-51-v1-1-d2cb13530851@gmail.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lkml.kernel.org/r/20251209044552.3396468-1-kaushlendra.kumar@intel.com
+Fixes: 8f9c447e2e2b ("tools/vm/page_owner_sort.c: support sorting pid and time")
+Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+Cc: Chongxi Zhao <zhaochongxi2019@email.szu.edu.cn>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/dell/alienware-wmi-wmax.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ tools/mm/page_owner_sort.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/platform/x86/dell/alienware-wmi-wmax.c
-+++ b/drivers/platform/x86/dell/alienware-wmi-wmax.c
-@@ -90,6 +90,22 @@ static struct awcc_quirks empty_quirks;
+--- a/tools/mm/page_owner_sort.c
++++ b/tools/mm/page_owner_sort.c
+@@ -183,7 +183,11 @@ static int compare_ts(const void *p1, co
+ {
+ 	const struct block_list *l1 = p1, *l2 = p2;
  
- static const struct dmi_system_id awcc_dmi_table[] __initconst = {
- 	{
-+		.ident = "Alienware 16 Area-51",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Alienware"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Alienware 16 Area-51"),
-+		},
-+		.driver_data = &g_series_quirks,
-+	},
-+	{
-+		.ident = "Alienware 18 Area-51",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Alienware"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Alienware 18 Area-51"),
-+		},
-+		.driver_data = &g_series_quirks,
-+	},
-+	{
- 		.ident = "Alienware 16 Aurora",
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "Alienware"),
+-	return l1->ts_nsec < l2->ts_nsec ? -1 : 1;
++	if (l1->ts_nsec < l2->ts_nsec)
++		return -1;
++	if (l1->ts_nsec > l2->ts_nsec)
++		return 1;
++	return 0;
+ }
+ 
+ static int compare_cull_condition(const void *p1, const void *p2)
 
 
