@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5B73019BA;
-	Tue,  6 Jan 2026 17:35:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEBD7303C88;
+	Tue,  6 Jan 2026 17:35:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720936; cv=none; b=T3mQ5ea1XbEOaHgw1pShyPrkqJlQVVXvFsOSSSSY21e1kfc45p4cRbq8pS0DvLcVesxexQ1YkKvjDNX3xBN3twuZAVp9IMPrY0DR5aJF+8kPUNMJmBmVaO60sFM6uCGDd3aBT4Kx7PRIYJxwqOWlZy4Qc8a1PWX06/V7S0dxt04=
+	t=1767720940; cv=none; b=OqNG6hr7wMOEFZ0rCiTs1mj9MdzR5VB1NiPX9z36FxPZKMw0pVSPVMAzIK9RaF7Ddnp6TSdfeDUwZPEM65gZsdGtMsIoeyHYkiPrCN2AKYv/DV6KOP7uLaXqwXtelxjvD8kv7PSaPwLWUFyAyw91LF+8PygI5G04jUxlioohjsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720936; c=relaxed/simple;
-	bh=9OvqG662a2rv5ibefo1XrrVF06NRJzfj1gDGWtDmu7k=;
+	s=arc-20240116; t=1767720940; c=relaxed/simple;
+	bh=+wL4LRoY5MdAh4wBwBRf/Ud1E5oru4de98FOpMSjaFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D6Xrmmtwrz5U6pGZT/gSERHbbBUFdb7ws5c/hag5Fa+4ooky8iHtEQSvuJfjRAl5mrM+Xkm311ASSFa1xKYK80iqvZjyi1X+aaelELQYYUjYOV2zpxwa2UprmEBe7wNsHk38/ND1Tmij15ys6FthKSDv1M/vaU4qN+8BP7CUSHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f7lGRhhq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aub4/meZrgIVgAZEBl+IU9IE9j8VgT3IbsI02APIi29st+SLkh/aT9yx9v5uSuKy2oBruceDU9pOvB2rG3E/e2uTFGgz9mR1q8yi9Y2r0FrVrK6HFxaPEkmKiSCZRGQOHCXFoCxNqHvUz11EJwvS0H/aLCIzhJHe5Y5yOFkcdm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l3pt3dvq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f7lGRhhq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 444C5C116C6;
-	Tue,  6 Jan 2026 17:35:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l3pt3dvq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78A74C116C6;
+	Tue,  6 Jan 2026 17:35:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720936;
-	bh=9OvqG662a2rv5ibefo1XrrVF06NRJzfj1gDGWtDmu7k=;
+	s=korg; t=1767720939;
+	bh=+wL4LRoY5MdAh4wBwBRf/Ud1E5oru4de98FOpMSjaFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f7lGRhhqB/C89rSjqblKwSWWDsYYuezHiFpUD7ADc3NyhXE9xnR9jyV1AeekNNx8z
-	 +iMJ6H+hegsw36U/6oMduN+zvqjE7J0lzhDNU8OvNO59mHfhh8mvnZwexkVj6LuO64
-	 memCXjPeOcMsGe1H5B6tF1x/cSWTuG2vrJbrz8Wg=
+	b=l3pt3dvqWC7Z9RZFAghdt0PezfJEwlJ+qKt6KxUhNeNG/07qO+URxy7qmCq4wcuRg
+	 IiHYlc1gs5EntqhgyMgMv2eZCaGrSXo1YifvLttCtiizAbF/Cnj5RccUKrpdm5Ax73
+	 fypWl7U++aUANZ0tezPD83M1yz8+PLVL6WUnhBTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
-	Alexey Klimov <alexey.klimov@linaro.org>
-Subject: [PATCH 6.12 353/567] ASoC: qcom: qdsp6: q6asm-dai: set 10 ms period and buffer alignment.
-Date: Tue,  6 Jan 2026 18:02:15 +0100
-Message-ID: <20260106170504.392495995@linuxfoundation.org>
+	Jinhui Guo <guojinhui.liam@bytedance.com>,
+	Joerg Roedel <joerg.roedel@amd.com>
+Subject: [PATCH 6.12 354/567] iommu/amd: Fix pci_segment memleak in alloc_pci_segment()
+Date: Tue,  6 Jan 2026 18:02:16 +0100
+Message-ID: <20260106170504.429735842@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,46 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Jinhui Guo <guojinhui.liam@bytedance.com>
 
-commit 81c53b52de21b8d5a3de55ebd06b6bf188bf7efd upstream.
+commit 75ba146c2674ba49ed8a222c67f9abfb4a4f2a4f upstream.
 
-DSP expects the periods to be aligned to fragment sizes, currently
-setting up to hw constriants on periods bytes is not going to work
-correctly as we can endup with periods sizes aligned to 32 bytes however
-not aligned to fragment size.
+Fix a memory leak of struct amd_iommu_pci_segment in alloc_pci_segment()
+when system memory (or contiguous memory) is insufficient.
 
-Update the constriants to use fragment size, and also set at step of
-10ms for period size to accommodate DSP requirements of 10ms latency.
-
-Fixes: 2a9e92d371db ("ASoC: qdsp6: q6asm: Add q6asm dai driver")
-Cc: Stable@vger.kernel.org
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Tested-by: Alexey Klimov <alexey.klimov@linaro.org> # RB5, RB3
-Link: https://patch.msgid.link/20251023102444.88158-4-srinivas.kandagatla@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 04230c119930 ("iommu/amd: Introduce per PCI segment device table")
+Fixes: eda797a27795 ("iommu/amd: Introduce per PCI segment rlookup table")
+Fixes: 99fc4ac3d297 ("iommu/amd: Introduce per PCI segment alias_table")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jinhui Guo <guojinhui.liam@bytedance.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/qdsp6/q6asm-dai.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iommu/amd/init.c |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
---- a/sound/soc/qcom/qdsp6/q6asm-dai.c
-+++ b/sound/soc/qcom/qdsp6/q6asm-dai.c
-@@ -403,13 +403,13 @@ static int q6asm_dai_open(struct snd_soc
- 	}
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -1602,13 +1602,22 @@ static struct amd_iommu_pci_seg *__init
+ 	list_add_tail(&pci_seg->list, &amd_iommu_pci_seg_list);
  
- 	ret = snd_pcm_hw_constraint_step(runtime, 0,
--		SNDRV_PCM_HW_PARAM_PERIOD_BYTES, 32);
-+		SNDRV_PCM_HW_PARAM_PERIOD_SIZE, 480);
- 	if (ret < 0) {
- 		dev_err(dev, "constraint for period bytes step ret = %d\n",
- 								ret);
- 	}
- 	ret = snd_pcm_hw_constraint_step(runtime, 0,
--		SNDRV_PCM_HW_PARAM_BUFFER_BYTES, 32);
-+		SNDRV_PCM_HW_PARAM_BUFFER_SIZE, 480);
- 	if (ret < 0) {
- 		dev_err(dev, "constraint for buffer bytes step ret = %d\n",
- 								ret);
+ 	if (alloc_dev_table(pci_seg))
+-		return NULL;
++		goto err_free_pci_seg;
+ 	if (alloc_alias_table(pci_seg))
+-		return NULL;
++		goto err_free_dev_table;
+ 	if (alloc_rlookup_table(pci_seg))
+-		return NULL;
++		goto err_free_alias_table;
+ 
+ 	return pci_seg;
++
++err_free_alias_table:
++	free_alias_table(pci_seg);
++err_free_dev_table:
++	free_dev_table(pci_seg);
++err_free_pci_seg:
++	list_del(&pci_seg->list);
++	kfree(pci_seg);
++	return NULL;
+ }
+ 
+ static struct amd_iommu_pci_seg *__init get_pci_segment(u16 id,
 
 
