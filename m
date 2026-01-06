@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E3C29B77C;
-	Tue,  6 Jan 2026 17:40:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E28DC29B77C;
+	Tue,  6 Jan 2026 17:40:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721249; cv=none; b=aMjsdQZVmG9fZJO48hCNBJGkAeXNG+b8k7WqYdAfdM7qtUJYobiT3/9gWyQf93klyTgKGZIXMgj9ph7CQslEqVCMeXqIsSWHVzW511efaOXodQGHHIWykwWTfau1cl/yWpqpjqhnGZB4LImdjBSXunEno9ROZ6xAw3pvZyYyCsw=
+	t=1767721253; cv=none; b=DvLhRxnr63RVcuncHozZASMU16ONRS5RjmzDAVMtpmiBYrHwlqnW6weckNp4KnmVDt8xnT5n/Mfs0C04tYS8blyhAylN3qRiz95uS+DkMyU6ik2jW43AdXVvwTfFq7rjUAu+KH4wTIKHoKE8uc9DEvAp4iXqXuKRtqIXqGBLUz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721249; c=relaxed/simple;
-	bh=gUCcFPzjtCkWjnybB19KD1tmWNSqbq0kGup2E/RaWDo=;
+	s=arc-20240116; t=1767721253; c=relaxed/simple;
+	bh=DlFtsyrMrojiysFWXYDHM8s1jumxzrA9xMN7XvGZ3Yc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Kq+4AMG0+uSwY7EAxN2SEeqGdUNUQBy+YZtyRpvL4UVDkeXM/gtPK+xx9aHGFsb3lwsJ6iZp7R+b4cBZDggcXbw0WlZ5fW40+y8x+8vyjSbBydMFRNb32A8NtttsprQi40ediOZJoAcHPI9BTcKvNTlKGMasa8wtYFlpTI/V5nU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zyys5oN+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OLE/oKb6nP+heP9YzIKYqL10LuKafqiLik6LHV5L/cZm0kyfUkO58xuAbM/yf4H9QzVX9QzD4ZSrpOxS4MOr09e7WCnzFPOGMpxO6UClEPW9cFDhd4Oq0HAXViA588Rg5CAe1bbrqJaCX0DFGXwV/aVpySZVKsco8vBWyGjaLN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zY2rHSKo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zyys5oN+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DB54C116C6;
-	Tue,  6 Jan 2026 17:40:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zY2rHSKo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 514EDC116C6;
+	Tue,  6 Jan 2026 17:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721249;
-	bh=gUCcFPzjtCkWjnybB19KD1tmWNSqbq0kGup2E/RaWDo=;
+	s=korg; t=1767721252;
+	bh=DlFtsyrMrojiysFWXYDHM8s1jumxzrA9xMN7XvGZ3Yc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zyys5oN+eKYWwaY8K4MWKllmWcNsczNaSyKQgdd1e/IX5xhd9lfmM4OApek9kqeTe
-	 98bLj+ReVzZ4OshvD/quWQh1K9C7mtbkDO4DwlDImGKvy9xytGcDG846Z7ncEpqkAH
-	 /W9VsTU2mT/OhbvvrcprX1SD5G2XGycSJwVEkEMM=
+	b=zY2rHSKos/WuuR32DqumTfppA8cqULEHzahJHPhbQq48mgUeT7K3Ohgb0KVJ9FyAz
+	 CPVbzGu91SZyGdadEdm7aEAz9Co+IE3lHLMI6As7Xus6HgXiE8WDfiLGkkmJocdGVi
+	 BqztVCF39lOuGHYWps8P7n7Ws9mbjAObPDOj98dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>
-Subject: [PATCH 6.12 480/567] drm/xe: Drop preempt-fences when destroying imported dma-bufs.
-Date: Tue,  6 Jan 2026 18:04:22 +0100
-Message-ID: <20260106170509.111241052@linuxfoundation.org>
+	Nikolay Kuratov <kniv@yandex-team.ru>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: [PATCH 6.12 481/567] drm/msm/dpu: Add missing NULL pointer check for pingpong interface
+Date: Tue,  6 Jan 2026 18:04:23 +0100
+Message-ID: <20260106170509.149395154@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -44,95 +44,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+From: Nikolay Kuratov <kniv@yandex-team.ru>
 
-commit fe3ccd24138fd391ae8e32289d492c85f67770fc upstream.
+commit 88733a0b64872357e5ecd82b7488121503cb9cc6 upstream.
 
-When imported dma-bufs are destroyed, TTM is not fully
-individualizing the dma-resv, but it *is* copying the fences that
-need to be waited for before declaring idle. So in the case where
-the bo->resv != bo->_resv we can still drop the preempt-fences, but
-make sure we do that on bo->_resv which contains the fence-pointer
-copy.
+It is checked almost always in dpu_encoder_phys_wb_setup_ctl(), but in a
+single place the check is missing.
+Also use convenient locals instead of phys_enc->* where available.
 
-In the case where the copying fails, bo->_resv will typically not
-contain any fences pointers at all, so there will be nothing to
-drop. In that case, TTM would have ensured all fences that would
-have been copied are signaled, including any remaining preempt
-fences.
-
-Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
-Fixes: fa0af721bd1f ("drm/ttm: test private resv obj on release/destroy")
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: <stable@vger.kernel.org> # v6.16+
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Tested-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20251217093441.5073-1-thomas.hellstrom@linux.intel.com
-(cherry picked from commit 425fe550fb513b567bd6d01f397d274092a9c274)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Cc: stable@vger.kernel.org
+Fixes: d7d0e73f7de33 ("drm/msm/dpu: introduce the dpu_encoder_phys_* for writeback")
+Signed-off-by: Nikolay Kuratov <kniv@yandex-team.ru>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/693860/
+Link: https://lore.kernel.org/r/20251211093630.171014-1-kniv@yandex-team.ru
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_bo.c |   15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c |   10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_bo.c
-+++ b/drivers/gpu/drm/xe/xe_bo.c
-@@ -1041,7 +1041,7 @@ static bool xe_ttm_bo_lock_in_destructor
- 	 * always succeed here, as long as we hold the lru lock.
- 	 */
- 	spin_lock(&ttm_bo->bdev->lru_lock);
--	locked = dma_resv_trylock(ttm_bo->base.resv);
-+	locked = dma_resv_trylock(&ttm_bo->base._resv);
- 	spin_unlock(&ttm_bo->bdev->lru_lock);
- 	xe_assert(xe, locked);
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+@@ -243,14 +243,12 @@ static void dpu_encoder_phys_wb_setup_ct
+ 		if (hw_cdm)
+ 			intf_cfg.cdm = hw_cdm->idx;
  
-@@ -1061,13 +1061,6 @@ static void xe_ttm_bo_release_notify(str
- 	bo = ttm_to_xe_bo(ttm_bo);
- 	xe_assert(xe_bo_device(bo), !(bo->created && kref_read(&ttm_bo->base.refcount)));
+-		if (phys_enc->hw_pp->merge_3d && phys_enc->hw_pp->merge_3d->ops.setup_3d_mode)
+-			phys_enc->hw_pp->merge_3d->ops.setup_3d_mode(phys_enc->hw_pp->merge_3d,
+-					mode_3d);
++		if (hw_pp && hw_pp->merge_3d && hw_pp->merge_3d->ops.setup_3d_mode)
++			hw_pp->merge_3d->ops.setup_3d_mode(hw_pp->merge_3d, mode_3d);
  
--	/*
--	 * Corner case where TTM fails to allocate memory and this BOs resv
--	 * still points the VMs resv
--	 */
--	if (ttm_bo->base.resv != &ttm_bo->base._resv)
--		return;
--
- 	if (!xe_ttm_bo_lock_in_destructor(ttm_bo))
- 		return;
+ 		/* setup which pp blk will connect to this wb */
+-		if (hw_pp && phys_enc->hw_wb->ops.bind_pingpong_blk)
+-			phys_enc->hw_wb->ops.bind_pingpong_blk(phys_enc->hw_wb,
+-					phys_enc->hw_pp->idx);
++		if (hw_pp && hw_wb->ops.bind_pingpong_blk)
++			hw_wb->ops.bind_pingpong_blk(hw_wb, hw_pp->idx);
  
-@@ -1077,14 +1070,14 @@ static void xe_ttm_bo_release_notify(str
- 	 * TODO: Don't do this for external bos once we scrub them after
- 	 * unbind.
- 	 */
--	dma_resv_for_each_fence(&cursor, ttm_bo->base.resv,
-+	dma_resv_for_each_fence(&cursor, &ttm_bo->base._resv,
- 				DMA_RESV_USAGE_BOOKKEEP, fence) {
- 		if (xe_fence_is_xe_preempt(fence) &&
- 		    !dma_fence_is_signaled(fence)) {
- 			if (!replacement)
- 				replacement = dma_fence_get_stub();
- 
--			dma_resv_replace_fences(ttm_bo->base.resv,
-+			dma_resv_replace_fences(&ttm_bo->base._resv,
- 						fence->context,
- 						replacement,
- 						DMA_RESV_USAGE_BOOKKEEP);
-@@ -1092,7 +1085,7 @@ static void xe_ttm_bo_release_notify(str
- 	}
- 	dma_fence_put(replacement);
- 
--	dma_resv_unlock(ttm_bo->base.resv);
-+	dma_resv_unlock(&ttm_bo->base._resv);
- }
- 
- static void xe_ttm_bo_delete_mem_notify(struct ttm_buffer_object *ttm_bo)
+ 		phys_enc->hw_ctl->ops.setup_intf_cfg(phys_enc->hw_ctl, &intf_cfg);
+ 	} else if (phys_enc->hw_ctl && phys_enc->hw_ctl->ops.setup_intf_cfg) {
 
 
