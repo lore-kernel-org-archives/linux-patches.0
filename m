@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C07F934D4E4;
-	Tue,  6 Jan 2026 17:56:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7641834D4E4;
+	Tue,  6 Jan 2026 17:57:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722217; cv=none; b=g80t4w2TYQ1aMcLfdc7ZqyInBgSZlkPt3ZKbjQVmtCOsvZdC3XaNJEP2riDQPVrqhQ5MbTJh/u7A28HJi3vodX9NyORzMWDf/OLBCLQzciOw6YdpvUIwAFzOG35QIS7yb0KOxuqFHnoJbQkn4GPQxSbnxywW9GQcfUEwNbyX920=
+	t=1767722221; cv=none; b=V5jTy+5K6lekuXFQG/0DbKI3ECHFjUk7PtLdZ2wokgiGPWfRy2OdNM+22CG7X2O7KjoiAjQnVTUR4KoK34XyHoEHsEY1iuDEEtQ29BHb9tFx90FMx05uU3SF0/CNIdtTV4ZLuw1tKjEDJeWC/em1G58JdVdxUF8GmBqsN++KbHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722217; c=relaxed/simple;
-	bh=sp85bRDzhYYWzn/l+zVQ/dojH7DZ569LH9GhmnwvWBc=;
+	s=arc-20240116; t=1767722221; c=relaxed/simple;
+	bh=tMiWbtS2/Z4bJgrpBMNB8LLIm+wM4GZSESv1oA598ZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A3CJb+dSRP8poibniiNhocL4wcL75uayLUlTuQYeBAkI2e4viEBrVh0tNn/Bxq7GvRYs9u2K6WjwCGsHTSvkNU211sNYdwPEHm1P2/jhbg9n+4wq4/EthxlWMQJayrbUo7i8jDAOrdouw9OWDVSZNDG0Y1HTdFeFVfOVzW/7Z7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TvWWpE+T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tv46gF3lrqKmmwipjB7mqlbfWcuqBuHoCIsGfhq2PC8cSuPsMyd+zI4ADaSASnTGd75W2/H6+rnRwljjpa3F/tLjvl4vzj/rHSKtSIY8wcb5qyczfq3m8UCiTcN/a7Al/6mehLdUWWUKTtEpJke286XnIejTqAozmYB2rXBL1SM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U2OlAzqz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TvWWpE+T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F4183C116C6;
-	Tue,  6 Jan 2026 17:56:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U2OlAzqz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5D68C116C6;
+	Tue,  6 Jan 2026 17:57:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722217;
-	bh=sp85bRDzhYYWzn/l+zVQ/dojH7DZ569LH9GhmnwvWBc=;
+	s=korg; t=1767722221;
+	bh=tMiWbtS2/Z4bJgrpBMNB8LLIm+wM4GZSESv1oA598ZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TvWWpE+TVZmz7OwdPUjEADmoNd5wmZk5XAL6HvPXWQcE03704ca50dzTQ/TUwz5Ch
-	 iUh/X+xu38g7KwFH3doR0mcTswxw2m4Tcq92MpyMkr5xkWR39DMkQYamH/AurizOE/
-	 cyQkqbcL/jadAaDc8RPE6gUL0NEbS8e7K5ewZIGs=
+	b=U2OlAzqz86BgaOEOZZK8X+tprPZR5nmAyhzcxElRJTbl2ZYh++AQ9PVgtVJWxNQdO
+	 WLdW9J72v3gz/tYsxA+Cd0iwGKhC6CJ9f91U1fCNQVZrpgguGg0Eo8EIq65HJ2KvHS
+	 VcOmV991YJe8t/69tZ/3/az5U8QnDnWdzPKj4Fw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Abramov <i.abramov@mt-integration.ru>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 165/312] media: adv7842: Avoid possible out-of-bounds array accesses in adv7842_cp_log_status()
-Date: Tue,  6 Jan 2026 18:03:59 +0100
-Message-ID: <20260106170553.803684814@linuxfoundation.org>
+	Mahesh Rao <mahesh.rao@altera.com>,
+	Matthew Gerlach <matthew.gerlach@altera.com>,
+	Dinh Nguyen <dinguyen@kernel.org>
+Subject: [PATCH 6.18 166/312] firmware: stratix10-svc: Add mutex in stratix10 memory management
+Date: Tue,  6 Jan 2026 18:04:00 +0100
+Message-ID: <20260106170553.839762719@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -50,57 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Abramov <i.abramov@mt-integration.ru>
+From: Mahesh Rao <mahesh.rao@altera.com>
 
-commit 8163419e3e05d71dcfa8fb49c8fdf8d76908fe51 upstream.
+commit 85f96cbbbc67b59652b2c1ec394b8ddc0ddf1b0b upstream.
 
-It's possible for cp_read() and hdmi_read() to return -EIO. Those
-values are further used as indexes for accessing arrays.
+Add mutex lock to stratix10_svc_allocate_memory and
+stratix10_svc_free_memory for thread safety. This prevents race
+conditions and ensures proper synchronization during memory operations.
+This is required for parallel communication with the Stratix10 service
+channel.
 
-Fix that by checking return values where it's needed.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: a89bcd4c6c20 ("[media] adv7842: add new video decoder driver")
+Fixes: 7ca5ce896524f ("firmware: add Intel Stratix10 service layer driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ivan Abramov <i.abramov@mt-integration.ru>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Mahesh Rao <mahesh.rao@altera.com>
+Reviewed-by: Matthew Gerlach <matthew.gerlach@altera.com>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/adv7842.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/firmware/stratix10-svc.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/media/i2c/adv7842.c
-+++ b/drivers/media/i2c/adv7842.c
-@@ -2699,6 +2699,7 @@ static int adv7842_cp_log_status(struct
- 	/* CP block */
- 	struct adv7842_state *state = to_state(sd);
- 	struct v4l2_dv_timings timings;
-+	int temp;
- 	u8 reg_io_0x02 = io_read(sd, 0x02);
- 	u8 reg_io_0x21 = io_read(sd, 0x21);
- 	u8 reg_rep_0x77 = rep_read(sd, 0x77);
-@@ -2821,8 +2822,9 @@ static int adv7842_cp_log_status(struct
- 		  (((reg_io_0x02 >> 2) & 0x01) ^ (reg_io_0x02 & 0x01)) ?
- 			"(16-235)" : "(0-255)",
- 		  (reg_io_0x02 & 0x08) ? "enabled" : "disabled");
-+	temp = cp_read(sd, 0xf4) >> 4;
- 	v4l2_info(sd, "Color space conversion: %s\n",
--		  csc_coeff_sel_rb[cp_read(sd, 0xf4) >> 4]);
-+		  temp < 0 ? "" : csc_coeff_sel_rb[temp]);
+--- a/drivers/firmware/stratix10-svc.c
++++ b/drivers/firmware/stratix10-svc.c
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0
+ /*
+  * Copyright (C) 2017-2018, Intel Corporation
++ * Copyright (C) 2025, Altera Corporation
+  */
  
- 	if (!is_digital_input(sd))
- 		return 0;
-@@ -2852,8 +2854,9 @@ static int adv7842_cp_log_status(struct
- 			hdmi_read(sd, 0x5f));
- 	v4l2_info(sd, "AV Mute: %s\n",
- 			(hdmi_read(sd, 0x04) & 0x40) ? "on" : "off");
-+	temp = hdmi_read(sd, 0x0b) >> 6;
- 	v4l2_info(sd, "Deep color mode: %s\n",
--			deep_color_mode_txt[hdmi_read(sd, 0x0b) >> 6]);
-+			temp < 0 ? "" : deep_color_mode_txt[temp]);
+ #include <linux/completion.h>
+@@ -176,6 +177,12 @@ static LIST_HEAD(svc_ctrl);
+ static LIST_HEAD(svc_data_mem);
  
- 	adv7842_log_infoframes(sd);
+ /**
++ * svc_mem_lock protects access to the svc_data_mem list for
++ * concurrent multi-client operations
++ */
++static DEFINE_MUTEX(svc_mem_lock);
++
++/**
+  * svc_pa_to_va() - translate physical address to virtual address
+  * @addr: to be translated physical address
+  *
+@@ -187,6 +194,7 @@ static void *svc_pa_to_va(unsigned long
+ 	struct stratix10_svc_data_mem *pmem;
  
+ 	pr_debug("claim back P-addr=0x%016x\n", (unsigned int)addr);
++	guard(mutex)(&svc_mem_lock);
+ 	list_for_each_entry(pmem, &svc_data_mem, node)
+ 		if (pmem->paddr == addr)
+ 			return pmem->vaddr;
+@@ -993,6 +1001,7 @@ int stratix10_svc_send(struct stratix10_
+ 			p_data->flag = ct->flags;
+ 		}
+ 	} else {
++		guard(mutex)(&svc_mem_lock);
+ 		list_for_each_entry(p_mem, &svc_data_mem, node)
+ 			if (p_mem->vaddr == p_msg->payload) {
+ 				p_data->paddr = p_mem->paddr;
+@@ -1075,6 +1084,7 @@ void *stratix10_svc_allocate_memory(stru
+ 	if (!pmem)
+ 		return ERR_PTR(-ENOMEM);
+ 
++	guard(mutex)(&svc_mem_lock);
+ 	va = gen_pool_alloc(genpool, s);
+ 	if (!va)
+ 		return ERR_PTR(-ENOMEM);
+@@ -1103,6 +1113,7 @@ EXPORT_SYMBOL_GPL(stratix10_svc_allocate
+ void stratix10_svc_free_memory(struct stratix10_svc_chan *chan, void *kaddr)
+ {
+ 	struct stratix10_svc_data_mem *pmem;
++	guard(mutex)(&svc_mem_lock);
+ 
+ 	list_for_each_entry(pmem, &svc_data_mem, node)
+ 		if (pmem->vaddr == kaddr) {
 
 
