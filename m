@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3612929B8FE;
-	Tue,  6 Jan 2026 17:34:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF5EF2F3C19;
+	Tue,  6 Jan 2026 17:34:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720873; cv=none; b=SRjdVd2grX8578nscJ1GC7zOjOHWWZZ1ll6tCee4qnbgBGOwegacwy1gfAFmm4Msk6ooLav19YD0Qa2Be9fezggEW7G+C47wuxfzqDxc2OW7Gz/A++nGfVhr4DDyOVVyBtpcmD/NgpKD8HSwb5WgoCStYxR+txq4815GJRosbhs=
+	t=1767720876; cv=none; b=YGlWEfqUNkFKfP7Sf2u8sqiKeLoS/989rfp0d9IcI636EOTxeJV9bVWRex9qT9Re4p6NnwNm/imX3EJJmrC/WyMKcMNkGNjanPHM2QylqI2wKHoPtwh3LQazGg/HTsWCZM5bQKv6GE/OkDzFh2+1Xy/5B6RwersOTDHebLAo0lg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720873; c=relaxed/simple;
-	bh=+wsiNCV5HkvC2gYMwyGkUf8rCaUbg809YnFg1PeZBoM=;
+	s=arc-20240116; t=1767720876; c=relaxed/simple;
+	bh=13G6bRBOfYZh9lqXFcxrqiMo93MglwmpeunW1SntUx8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jnU51AIgg/O9Df/YssoEZj8r5VBzci08ibu9I87HUYBkuxkLYxBNtu36TQH5FpIKUS+vsQsCBZs0owZG5dXdTmaHdeBJTh/MPGcwhRScaZ9JVRYSe74MvXekrRMCWZFwNLlRq/fVhL0YLQVDZDT+DtKd4Gr/KtduS1YYNsgq/M0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OG4923Gn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M4foZxZqxKOaojXnxJl5avgWVf+xrxdMoz94cBlnhzjclcG3H7c6H4XQIFtIMs8q5rVLajWo4LyC7Xi0PJKgST9yYfB26c1wM1j20yrLpg0iHNWDyPSaa9pMhJWRGP1r1FbZYDFalb30fUu6HElrq0ccAlUvmC5haIUdPdpxcEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cqxvKnhR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OG4923Gn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C04EC116C6;
-	Tue,  6 Jan 2026 17:34:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cqxvKnhR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D731C19425;
+	Tue,  6 Jan 2026 17:34:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720873;
-	bh=+wsiNCV5HkvC2gYMwyGkUf8rCaUbg809YnFg1PeZBoM=;
+	s=korg; t=1767720876;
+	bh=13G6bRBOfYZh9lqXFcxrqiMo93MglwmpeunW1SntUx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OG4923GnUYV0Ms5TJlLSKKLjQZnuDh8XqRQbAa1c5RNXrNBVDYz5BkRwQyv+5m+jU
-	 jxLZiEgQ0FXlX5AR7NyQZHBAyAxMoDmlXQ90xsJX3Ve/b6eaMRT7euHKCtXjodxhI+
-	 VBzvtTD4lER4VeMxK0ET2H9so8pAJDdezoU4eurQ=
+	b=cqxvKnhRPi8oQ31mCPno4FgVKcGY0cDu/uKSpJfxYIxY/KESA4HMSvDjPqqDWcAJH
+	 Bv0KYdRe/c6CNkAkpg8onOsFk4K78YQ4dTXIG449k+KhqdVEbQ30eyDexez/5C7Rmy
+	 DaVXmBgzzSPgiK62m2WbWxtStAig+GsNMCTRbADY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
-	Alexey Klimov <alexey.klimov@linaro.org>
-Subject: [PATCH 6.12 350/567] ASoC: qcom: q6apm-dai: set flags to reflect correct operation of appl_ptr
-Date: Tue,  6 Jan 2026 18:02:12 +0100
-Message-ID: <20260106170504.276957968@linuxfoundation.org>
+	wang.yaxin@zte.com.cn,
+	mhiramat@kernel.org,
+	mark.rutland@arm.com,
+	mathieu.desnoyers@efficios.com,
+	zhang.run@zte.com.cn,
+	yang.yang29@zte.com.cn,
+	Shengming Hu <hu.shengming@zte.com.cn>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.12 368/567] fgraph: Initialize ftrace_ops->private for function graph ops
+Date: Tue,  6 Jan 2026 18:02:30 +0100
+Message-ID: <20260106170504.954826214@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,45 +56,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Shengming Hu <hu.shengming@zte.com.cn>
 
-commit 950a4e5788fc7dc6e8e93614a7d4d0449c39fb8d upstream.
+commit b5d6d3f73d0bac4a7e3a061372f6da166fc6ee5c upstream.
 
-Driver does not expect the appl_ptr to move backward and requires
-explict sync. Make sure that the userspace does not do appl_ptr rewinds
-by specifying the correct flags in pcm_info.
+The ftrace_pids_enabled(op) check relies on op->private being properly
+initialized, but fgraph_ops's underlying ftrace_ops->private was left
+uninitialized. This caused ftrace_pids_enabled() to always return false,
+effectively disabling PID filtering for function graph tracing.
 
-Without this patch, the result could be a forever loop as current logic assumes
-that appl_ptr can only move forward.
+Fix this by copying src_ops->private to dst_ops->private in
+fgraph_init_ops(), ensuring PID filter state is correctly propagated.
 
-Fixes: 3d4a4411aa8b ("ASoC: q6apm-dai: schedule all available frames to avoid dsp under-runs")
-Cc: Stable@vger.kernel.org
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Tested-by: Alexey Klimov <alexey.klimov@linaro.org> # RB5, RB3
-Link: https://patch.msgid.link/20251023102444.88158-2-srinivas.kandagatla@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: stable@vger.kernel.org
+Cc: <wang.yaxin@zte.com.cn>
+Cc: <mhiramat@kernel.org>
+Cc: <mark.rutland@arm.com>
+Cc: <mathieu.desnoyers@efficios.com>
+Cc: <zhang.run@zte.com.cn>
+Cc: <yang.yang29@zte.com.cn>
+Fixes: c132be2c4fcc1 ("function_graph: Have the instances use their own ftrace_ops for filtering")
+Link: https://patch.msgid.link/20251126172926004y3hC8QyU4WFOjBkU_UxLC@zte.com.cn
+Signed-off-by: Shengming Hu <hu.shengming@zte.com.cn>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/qdsp6/q6apm-dai.c |    2 ++
- 1 file changed, 2 insertions(+)
+ kernel/trace/fgraph.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/soc/qcom/qdsp6/q6apm-dai.c
-+++ b/sound/soc/qcom/qdsp6/q6apm-dai.c
-@@ -85,6 +85,7 @@ static const struct snd_pcm_hardware q6a
- 	.info =                 (SNDRV_PCM_INFO_MMAP | SNDRV_PCM_INFO_BLOCK_TRANSFER |
- 				 SNDRV_PCM_INFO_MMAP_VALID | SNDRV_PCM_INFO_INTERLEAVED |
- 				 SNDRV_PCM_INFO_PAUSE | SNDRV_PCM_INFO_RESUME |
-+				 SNDRV_PCM_INFO_NO_REWINDS | SNDRV_PCM_INFO_SYNC_APPLPTR |
- 				 SNDRV_PCM_INFO_BATCH),
- 	.formats =              (SNDRV_PCM_FMTBIT_S16_LE | SNDRV_PCM_FMTBIT_S24_LE),
- 	.rates =                SNDRV_PCM_RATE_8000_48000,
-@@ -104,6 +105,7 @@ static const struct snd_pcm_hardware q6a
- 	.info =                 (SNDRV_PCM_INFO_MMAP | SNDRV_PCM_INFO_BLOCK_TRANSFER |
- 				 SNDRV_PCM_INFO_MMAP_VALID | SNDRV_PCM_INFO_INTERLEAVED |
- 				 SNDRV_PCM_INFO_PAUSE | SNDRV_PCM_INFO_RESUME |
-+				 SNDRV_PCM_INFO_NO_REWINDS | SNDRV_PCM_INFO_SYNC_APPLPTR |
- 				 SNDRV_PCM_INFO_BATCH),
- 	.formats =              (SNDRV_PCM_FMTBIT_S16_LE | SNDRV_PCM_FMTBIT_S24_LE),
- 	.rates =                SNDRV_PCM_RATE_8000_192000,
+--- a/kernel/trace/fgraph.c
++++ b/kernel/trace/fgraph.c
+@@ -943,6 +943,7 @@ void fgraph_init_ops(struct ftrace_ops *
+ 		mutex_init(&dst_ops->local_hash.regex_lock);
+ 		INIT_LIST_HEAD(&dst_ops->subop_list);
+ 		dst_ops->flags |= FTRACE_OPS_FL_INITIALIZED;
++		dst_ops->private = src_ops->private;
+ 	}
+ #endif
+ }
 
 
