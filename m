@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B99023EA8A;
-	Tue,  6 Jan 2026 17:17:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0925338586;
+	Tue,  6 Jan 2026 17:17:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719828; cv=none; b=uE9A5ziB7fBDc0lRc5q20uAKT9cX5sFgjr7gq0eTXj91ywrTXRNhE3SF8mx28rGPqmduXpFcCyN81DbqHPaAb3JY6jQ5Rk/I6KVwtBzmN/QUOJvUp/89ZXLOP0VQgvjwuwOCi4TCYeOSzfkLB8ZEZwrpiYVPylyn69DHW4+QtNs=
+	t=1767719832; cv=none; b=NmAXg2fRhYNpcn3zpdvfce9UdNu72Wiy7akV8D58PubFHb4OwJ05G7n7WlvtEsCgUR4rQ5wUSHedldnn3s03F0gmZm39cagXt8vSCefUtIe2o/u0WuNNZUHQcfqFaxtX/wJMnS/64rB4NJdlBzebmo7WV9l8cQX7XpxU5oE03RU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719828; c=relaxed/simple;
-	bh=craBEdLI2GmStOuyF909cL7+jY4NRZQtdYw63VsLGEw=;
+	s=arc-20240116; t=1767719832; c=relaxed/simple;
+	bh=YOkBM3PwfOoXERWeCyxjshfpYwsK8tWZHdbZWPBYGyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e3XenAPpeGbdhLwtDEe+4FsLEeZqWuYVCbTR4dd6Jn7fYZfZggxrj903kJqv4guEiTarKh7BLNTlvBg/Yk780u4z4VzIY6OIGALOwEIeD8ioXXw9eKm4A3yXfAkhcvASBU4xOeAMKwdnVC9xm1kkJGPMa3C510HshdqfHaa5D24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ccZDiAZl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XjfoUd5w99hnmwHYNstwJ/ppag4psZCzA9Mxf79HBonRFTUsUezjQugaqG+D4prv8ELXTZWeefa3GgeUm9Y+BB8c3DuZjLs5kSLTATxc34AeCTTbLXFDZ3wqqlxAbhH/6Ni3tPsovkusizeca8ROdSPpcI6dFbYR49DKg6mmPJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ylr2tykr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ccZDiAZl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1034C116C6;
-	Tue,  6 Jan 2026 17:17:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ylr2tykr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18493C116C6;
+	Tue,  6 Jan 2026 17:17:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719828;
-	bh=craBEdLI2GmStOuyF909cL7+jY4NRZQtdYw63VsLGEw=;
+	s=korg; t=1767719831;
+	bh=YOkBM3PwfOoXERWeCyxjshfpYwsK8tWZHdbZWPBYGyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ccZDiAZlpqsUWoMT3ZB4gaZKjstyNBpcVzBGaqK/ZUDU7T/Cwzx4zRn5icMMNewPt
-	 dFxluyStcd7EKZtCwKog9EP759KSq3eFx5SOFdS0mn4FBToOfNu/rlL9KHPdIQvgtt
-	 UZ4UuTm1TB8osQ0/dPGuIhNGE5fnEr4z5HkASpRg=
+	b=Ylr2tykrCsVS0jm4ILdHKvFiNM8j3G8waQ7ix6ehkjWcN1sYkkwklxNipFxDziLRj
+	 nkdOUQudaTWqvb2swk0ecJyreIuqmOrSjers0VBb8OZr2KVknKDz+7ocuHALMCivvp
+	 uLhBsYa21PjfoZTlWkw2JW1DBXGO4gKl+DE/QpKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Dubovitsky <pdubovitsky@meta.com>,
-	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	Junvy Yang <zhuque@tencent.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Aaron Conole <aconole@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 052/567] bnxt_en: Fix XDP_TX path
-Date: Tue,  6 Jan 2026 17:57:14 +0100
-Message-ID: <20260106170453.263334847@linuxfoundation.org>
+Subject: [PATCH 6.12 053/567] net: openvswitch: fix middle attribute validation in push_nsh() action
+Date: Tue,  6 Jan 2026 17:57:15 +0100
+Message-ID: <20260106170453.300383986@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -56,72 +53,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Chan <michael.chan@broadcom.com>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-[ Upstream commit 0373d5c387f24de749cc22e694a14b3a7c7eb515 ]
+[ Upstream commit 5ace7ef87f059d68b5f50837ef3e8a1a4870c36e ]
 
-For XDP_TX action in bnxt_rx_xdp(), clearing of the event flags is not
-correct.  __bnxt_poll_work() -> bnxt_rx_pkt() -> bnxt_rx_xdp() may be
-looping within NAPI and some event flags may be set in earlier
-iterations.  In particular, if BNXT_TX_EVENT is set earlier indicating
-some XDP_TX packets are ready and pending, it will be cleared if it is
-XDP_TX action again.  Normally, we will set BNXT_TX_EVENT again when we
-successfully call __bnxt_xmit_xdp().  But if the TX ring has no more
-room, the flag will not be set.  This will cause the TX producer to be
-ahead but the driver will not hit the TX doorbell.
+The push_nsh() action structure looks like this:
 
-For multi-buf XDP_TX, there is no need to clear the event flags and set
-BNXT_AGG_EVENT.  The BNXT_AGG_EVENT flag should have been set earlier in
-bnxt_rx_pkt().
+ OVS_ACTION_ATTR_PUSH_NSH(OVS_KEY_ATTR_NSH(OVS_NSH_KEY_ATTR_BASE,...))
 
-The visible symptom of this is that the RX ring associated with the
-TX XDP ring will eventually become empty and all packets will be dropped.
-Because this condition will cause the driver to not refill the RX ring
-seeing that the TX ring has forever pending XDP_TX packets.
+The outermost OVS_ACTION_ATTR_PUSH_NSH attribute is OK'ed by the
+nla_for_each_nested() inside __ovs_nla_copy_actions().  The innermost
+OVS_NSH_KEY_ATTR_BASE/MD1/MD2 are OK'ed by the nla_for_each_nested()
+inside nsh_key_put_from_nlattr().  But nothing checks if the attribute
+in the middle is OK.  We don't even check that this attribute is the
+OVS_KEY_ATTR_NSH.  We just do a double unwrap with a pair of nla_data()
+calls - first time directly while calling validate_push_nsh() and the
+second time as part of the nla_for_each_nested() macro, which isn't
+safe, potentially causing invalid memory access if the size of this
+attribute is incorrect.  The failure may not be noticed during
+validation due to larger netlink buffer, but cause trouble later during
+action execution where the buffer is allocated exactly to the size:
 
-The fix is to only clear BNXT_RX_EVENT when we have successfully
-called __bnxt_xmit_xdp().
+ BUG: KASAN: slab-out-of-bounds in nsh_hdr_from_nlattr+0x1dd/0x6a0 [openvswitch]
+ Read of size 184 at addr ffff88816459a634 by task a.out/22624
 
-Fixes: 7f0a168b0441 ("bnxt_en: Add completion ring pointer in TX and RX ring structures")
-Reported-by: Pavel Dubovitsky <pdubovitsky@meta.com>
-Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20251203003024.2246699-1-michael.chan@broadcom.com
+ CPU: 8 UID: 0 PID: 22624 6.18.0-rc7+ #115 PREEMPT(voluntary)
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0x51/0x70
+  print_address_description.constprop.0+0x2c/0x390
+  kasan_report+0xdd/0x110
+  kasan_check_range+0x35/0x1b0
+  __asan_memcpy+0x20/0x60
+  nsh_hdr_from_nlattr+0x1dd/0x6a0 [openvswitch]
+  push_nsh+0x82/0x120 [openvswitch]
+  do_execute_actions+0x1405/0x2840 [openvswitch]
+  ovs_execute_actions+0xd5/0x3b0 [openvswitch]
+  ovs_packet_cmd_execute+0x949/0xdb0 [openvswitch]
+  genl_family_rcv_msg_doit+0x1d6/0x2b0
+  genl_family_rcv_msg+0x336/0x580
+  genl_rcv_msg+0x9f/0x130
+  netlink_rcv_skb+0x11f/0x370
+  genl_rcv+0x24/0x40
+  netlink_unicast+0x73e/0xaa0
+  netlink_sendmsg+0x744/0xbf0
+  __sys_sendto+0x3d6/0x450
+  do_syscall_64+0x79/0x2c0
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  </TASK>
+
+Let's add some checks that the attribute is properly sized and it's
+the only one attribute inside the action.  Technically, there is no
+real reason for OVS_KEY_ATTR_NSH to be there, as we know that we're
+pushing an NSH header already, it just creates extra nesting, but
+that's how uAPI works today.  So, keeping as it is.
+
+Fixes: b2d0f5d5dc53 ("openvswitch: enable NSH support")
+Reported-by: Junvy Yang <zhuque@tencent.com>
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Acked-by: Eelco Chaudron echaudro@redhat.com
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/20251204105334.900379-1-i.maximets@ovn.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/openvswitch/flow_netlink.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-index 844812bd65363..fa3c6515cc4d6 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-@@ -268,13 +268,11 @@ bool bnxt_rx_xdp(struct bnxt *bp, struct bnxt_rx_ring_info *rxr, u16 cons,
- 	case XDP_TX:
- 		rx_buf = &rxr->rx_buf_ring[cons];
- 		mapping = rx_buf->mapping - bp->rx_dma_offset;
--		*event &= BNXT_TX_CMP_EVENT;
+diff --git a/net/openvswitch/flow_netlink.c b/net/openvswitch/flow_netlink.c
+index e3359e15aa2e4..7d5490ea23e1d 100644
+--- a/net/openvswitch/flow_netlink.c
++++ b/net/openvswitch/flow_netlink.c
+@@ -2802,13 +2802,20 @@ static int validate_and_copy_set_tun(const struct nlattr *attr,
+ 	return err;
+ }
  
- 		if (unlikely(xdp_buff_has_frags(xdp))) {
- 			struct skb_shared_info *sinfo = xdp_get_shared_info_from_buff(xdp);
+-static bool validate_push_nsh(const struct nlattr *attr, bool log)
++static bool validate_push_nsh(const struct nlattr *a, bool log)
+ {
++	struct nlattr *nsh_key = nla_data(a);
+ 	struct sw_flow_match match;
+ 	struct sw_flow_key key;
  
- 			tx_needed += sinfo->nr_frags;
--			*event = BNXT_AGG_EVENT;
- 		}
++	/* There must be one and only one NSH header. */
++	if (!nla_ok(nsh_key, nla_len(a)) ||
++	    nla_total_size(nla_len(nsh_key)) != nla_len(a) ||
++	    nla_type(nsh_key) != OVS_KEY_ATTR_NSH)
++		return false;
++
+ 	ovs_match_init(&match, &key, true, NULL);
+-	return !nsh_key_put_from_nlattr(attr, &match, false, true, log);
++	return !nsh_key_put_from_nlattr(nsh_key, &match, false, true, log);
+ }
  
- 		if (tx_avail < tx_needed) {
-@@ -287,6 +285,7 @@ bool bnxt_rx_xdp(struct bnxt *bp, struct bnxt_rx_ring_info *rxr, u16 cons,
- 		dma_sync_single_for_device(&pdev->dev, mapping + offset, *len,
- 					   bp->rx_dir);
+ /* Return false if there are any non-masked bits set.
+@@ -3388,7 +3395,7 @@ static int __ovs_nla_copy_actions(struct net *net, const struct nlattr *attr,
+ 					return -EINVAL;
+ 			}
+ 			mac_proto = MAC_PROTO_NONE;
+-			if (!validate_push_nsh(nla_data(a), log))
++			if (!validate_push_nsh(a, log))
+ 				return -EINVAL;
+ 			break;
  
-+		*event &= ~BNXT_RX_EVENT;
- 		*event |= BNXT_TX_EVENT;
- 		__bnxt_xmit_xdp(bp, txr, mapping + offset, *len,
- 				NEXT_RX(rxr->rx_prod), xdp);
 -- 
 2.51.0
 
