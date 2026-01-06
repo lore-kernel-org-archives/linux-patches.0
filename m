@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49787348899;
-	Tue,  6 Jan 2026 17:18:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6729E3491F5;
+	Tue,  6 Jan 2026 17:18:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719894; cv=none; b=GSyv2gm+106N4sb+raQLWkXKyaZr0RwraDr0tXxLTplWUN6jWh5iD6nCp/tgXZ5GmzQ3PtJ7KyuuVH90UP6s0Mt0YG6mgC/Y2+hmsMV4UZyR0UtLpJFqVhwL2j1yNtWiIY68Z3B45BxaMi2drcPfhKZyEo7TPIUd/AsyXHvUgd4=
+	t=1767719897; cv=none; b=Ynr1iVi6wk2OLXCAd6RkgHJM3gQZpBWJke0NWa5zQpHM1pfTRBIs6svB5PQDymlARHWFxehZHReZpXOEG9o5sCm8gxrE4rC4O/hAzy1kvNA76mWk0F6Y9zcdM2Z1jwQPM4f0DnMnfrg5BUYoPGZwYswZmW+FgAEOqlejhuo2n0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719894; c=relaxed/simple;
-	bh=J9XkiMD0r5eKtzhSuyUMoUl5R1a8XijA+p4cLpHJDsc=;
+	s=arc-20240116; t=1767719897; c=relaxed/simple;
+	bh=Z/l/CVk3mglW/kuSdO5S2izJxApvLzKxlbL1tJiKDkY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GRasRIBtLTYCzm5lCbpbLGvBXBcbsc05iN76PPqwbZYyvKO9Ee9vtIa1Y0tds5Rj6I8QTPoMc/RwmP2+xwxtUZTAsnMiF1IpF9As7zKjXaK+P1S3L6Jf+6fy9UiAvTgtNMZgudUVU0gKOQeVOmxBPlBUNA4oH6dWfW2evkGGg5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oo2ntJP1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TMhPv5A17P/Qqcrm2jubYf+IDqmyPUnw5eMaRUlJTfuqHjHzASIKx8qatzYOc1fnYv1BZ7tPRH5O1aYufdyJT2Q/1xJPOkc1Ok9p5HKWyv0K2nIMDtwCouXxwDf+CxFWotJUfqs4vJ9t22mrIT1JZGHhsT7sXkv03AXXea3IH/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BJ/37OsP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oo2ntJP1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDBECC116C6;
-	Tue,  6 Jan 2026 17:18:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BJ/37OsP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E57A3C116C6;
+	Tue,  6 Jan 2026 17:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719894;
-	bh=J9XkiMD0r5eKtzhSuyUMoUl5R1a8XijA+p4cLpHJDsc=;
+	s=korg; t=1767719897;
+	bh=Z/l/CVk3mglW/kuSdO5S2izJxApvLzKxlbL1tJiKDkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oo2ntJP1b+chC58focZQRr7BwxDUuV99WLbv5Qf0DltocieAt9RRhgLYmywNw9k6B
-	 fg98Qd8aSiSfDdjEgKEIT3rluHzv0pJk9juT5imTGww/dhCFlXfbTnn0P5dW9qJWt5
-	 EQOTROesVY34UIlg5pUN8fcTcChYtF8P63jHmDv8=
+	b=BJ/37OsPwI5F008DRj4PcblqiTO6ICt3NTtyFCt0wkqZ2Ra9lReisx3WW3Q5yNRgi
+	 X8tR0lecGlkQ6utPnbAI5uIbVAergkcXimxscKewUR8PDYf77MHZehIYudqptbRETb
+	 hM+KdjrK7HHpzV9fXzF3s+OYcZHEY57umhihd/pc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Lu <chris.lu@mediatek.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Quan Zhou <quan.zhou@mediatek.com>,
+	druth@chromium.org,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 040/567] Bluetooth: btusb: MT7922: Add VID/PID 0489/e170
-Date: Tue,  6 Jan 2026 17:57:02 +0100
-Message-ID: <20260106170452.824970388@linuxfoundation.org>
+Subject: [PATCH 6.12 031/567] wifi: mt76: mt792x: fix wifi init fail by setting MCU_RUNNING after CLC load
+Date: Tue,  6 Jan 2026 17:56:53 +0100
+Message-ID: <20260106170452.493302835@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,76 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Lu <chris.lu@mediatek.com>
+From: Quan Zhou <quan.zhou@mediatek.com>
 
-[ Upstream commit 5a6700a31c953af9a17a7e2681335f31d922614d ]
+[ Upstream commit 066f417be5fd8c7fe581c5550206364735dad7a3 ]
 
-Add VID 0489 & PID e170 for MediaTek MT7922 USB Bluetooth chip.
+Set the MT76_STATE_MCU_RUNNING bit only after mt7921_load_clc()
+has successfully completed. Previously, the MCU_RUNNING state
+was set before loading CLC, which could cause conflict between
+chip mcu_init retry and mac_reset flow, result in chip init fail
+and chip abnormal status. By moving the state set after CLC load,
+firmware initialization becomes robust and resolves init fail issue.
 
-The information in /sys/kernel/debug/usb/devices about the Bluetooth
-device is listed as the below.
-
-T:  Bus=06 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0489 ProdID=e170 Rev= 1.00
-S:  Manufacturer=MediaTek Inc.
-S:  Product=Wireless_Device
-S:  SerialNumber=000000000
-C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
-A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
-E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
-E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
-I:  If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
-E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
-E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
-
-Signed-off-by: Chris Lu <chris.lu@mediatek.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Quan Zhou <quan.zhou@mediatek.com>
+Reviewed-by: druth@chromium.org
+Link: https://patch.msgid.link/19ec8e4465142e774f17801025accd0ae2214092.1763465933.git.quan.zhou@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7921/mcu.c | 2 +-
+ drivers/net/wireless/mediatek/mt76/mt7925/mcu.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 479b98befdc5f..9dc3a50c5e833 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -673,6 +673,8 @@ static const struct usb_device_id quirks_table[] = {
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x0489, 0xe153), .driver_info = BTUSB_MEDIATEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe170), .driver_info = BTUSB_MEDIATEK |
-+						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x04ca, 0x3804), .driver_info = BTUSB_MEDIATEK |
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x04ca, 0x38e4), .driver_info = BTUSB_MEDIATEK |
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
+index 02c1de8620a7f..8d3f3c8b1a889 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
+@@ -637,10 +637,10 @@ int mt7921_run_firmware(struct mt792x_dev *dev)
+ 	if (err)
+ 		return err;
+ 
+-	set_bit(MT76_STATE_MCU_RUNNING, &dev->mphy.state);
+ 	err = mt7921_load_clc(dev, mt792x_ram_name(dev));
+ 	if (err)
+ 		return err;
++	set_bit(MT76_STATE_MCU_RUNNING, &dev->mphy.state);
+ 
+ 	return mt7921_mcu_fw_log_2_host(dev, 1);
+ }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
+index e42b4f0abbe7a..c42b3b376f77e 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
+@@ -958,10 +958,10 @@ int mt7925_run_firmware(struct mt792x_dev *dev)
+ 	if (err)
+ 		return err;
+ 
+-	set_bit(MT76_STATE_MCU_RUNNING, &dev->mphy.state);
+ 	err = mt7925_load_clc(dev, mt792x_ram_name(dev));
+ 	if (err)
+ 		return err;
++	set_bit(MT76_STATE_MCU_RUNNING, &dev->mphy.state);
+ 
+ 	return mt7925_mcu_fw_log_2_host(dev, 1);
+ }
 -- 
 2.51.0
 
