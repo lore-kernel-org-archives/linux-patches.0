@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04CC236B048;
-	Tue,  6 Jan 2026 17:55:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26C4636B048;
+	Tue,  6 Jan 2026 17:55:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722134; cv=none; b=gnGnK5wzEUZG8Pi8VElgQ1tYGx+uZfw9ypiN96GZx4oMue0rn7mMKDoKNmQ+JVFT2yb7xC0jtfUhjWTOR+Wu9anpPO0AGJwz5purjjt/h3TQ4+HcSQPPe9dh+xwdqfXUsUCiOE2O1rjM+ZFtZ4qPtmcylYSRTz+R/adAQW/DT7A=
+	t=1767722137; cv=none; b=rseuQXDjYBRgnYAit42VJSNk7KaXhW02UeQS70EUiJ23g3kCoaBVA700Azr5ikagrWSzf4PD+wsEV5l15jnYyWUPYXl/mupWlciauA/VEYNd6eMCg2ZTxYnXzw8UuLhAGK6QkS/nHxhlccvPBMHiXAckl7t1lH2oVpyVjGIm3xo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722134; c=relaxed/simple;
-	bh=t2+n0P6vQ1Zx8BC2Iq36gF8Yz7zxDDyHq6b0qwRy/8I=;
+	s=arc-20240116; t=1767722137; c=relaxed/simple;
+	bh=DGhg08Ybi4/65iEm2DizkD7p6UrLXHAzGuEB4s2AZwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hqf+GyBX5Kd4mYaDtuS+Ei17L38D/gz3FMoSTBSS0xI7LGSvS+8rNSmW0eOKkDPlS+ffDHo0q9rkvYBkz1CfIymiK0nHRNVyF0y0jQGQku/nQSmGZqdQt6GUoyQbAE9LjaMQGaUKx0DE0wDPpLXvy7ImjT7S8pABXKRFmmC2oV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=elMKlnXF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ETZUJfmBRMx0kk59GdYWcRaszFKfbL6Qn68LBCYFXykek/H8zEl9Ll6iZz+ZDWHEMBd+YJ4t5FSASmme9HQqUSyd1ATOoMklpN4V7xB4bhDbVkB4SHCydGfAEJZx/khBOd1RIeh8el5pHU8bEWTArAatj7y7njy6NyscC57dJ/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nV/RyA6K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="elMKlnXF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A3F9C116C6;
-	Tue,  6 Jan 2026 17:55:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nV/RyA6K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2E9CC116C6;
+	Tue,  6 Jan 2026 17:55:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722133;
-	bh=t2+n0P6vQ1Zx8BC2Iq36gF8Yz7zxDDyHq6b0qwRy/8I=;
+	s=korg; t=1767722137;
+	bh=DGhg08Ybi4/65iEm2DizkD7p6UrLXHAzGuEB4s2AZwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=elMKlnXF/bW2wA0nzpV0NXuwJxSJ3ii5KB7sq54nau7H25zrnrQbjZ4Xph/nsLl77
-	 j6OeMSPAB+qKo9GseDv2/hqPo+d4yPRuqc5i9aUkAjaPKg74R0HFnmkCHh90i0+aUn
-	 zf6I96PNHBOo2+5A5KfdKP8zAPDiB1rV12AUI55A=
+	b=nV/RyA6K95p5MeWX5+iE4K30Lj4RAONVgMnSBfGbhtIVPLGu+16n4fu62YlKR2u8h
+	 acd09BVotvyNr2MUmkRSfOsQ8iG75ca7E2FDUIwjY6mdABFmfuH2tUOBaTJC9MeUjS
+	 R4pNKH68tkKvY5rhhleeh4pAIJMShrHjgeQ+jvW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Abramov <i.abramov@mt-integration.ru>,
+	Moudy Ho <moudy.ho@mediatek.com>,
+	Johan Hovold <johan@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 176/312] media: msp3400: Avoid possible out-of-bounds array accesses in msp3400c_thread()
-Date: Tue,  6 Jan 2026 18:04:10 +0100
-Message-ID: <20260106170554.200287695@linuxfoundation.org>
+Subject: [PATCH 6.18 177/312] media: platform: mtk-mdp3: fix device leaks at probe
+Date: Tue,  6 Jan 2026 18:04:11 +0100
+Message-ID: <20260106170554.236028053@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -50,39 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Abramov <i.abramov@mt-integration.ru>
+From: Johan Hovold <johan@kernel.org>
 
-commit d2bceb2e20e783d57e739c71e4e50b4b9f4a3953 upstream.
+commit 8f6f3aa21517ef34d50808af0c572e69580dca20 upstream.
 
-It's possible for max1 to remain -1 if msp_read() always fail. This
-variable is further used as index for accessing arrays.
+Make sure to drop the references taken when looking up the subsys
+devices during probe on probe failure (e.g. probe deferral) and on
+driver unbind.
 
-Fix that by checking max1 prior to array accesses.
+Similarly, drop the SCP device reference after retrieving its platform
+data during probe to avoid leaking it.
 
-It seems that restart is the preferable action in case of out-of-bounds
-value.
+Note that holding a reference to a device does not prevent its driver
+data from going away.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 8a4b275f9c19 ("V4L/DVB (3427): audmode and rxsubchans fixes (VIDIOC_G/S_TUNER)")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ivan Abramov <i.abramov@mt-integration.ru>
+Fixes: 61890ccaefaf ("media: platform: mtk-mdp3: add MediaTek MDP3 driver")
+Cc: stable@vger.kernel.org	# 6.1
+Cc: Moudy Ho <moudy.ho@mediatek.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/msp3400-kthreads.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/drivers/media/i2c/msp3400-kthreads.c
-+++ b/drivers/media/i2c/msp3400-kthreads.c
-@@ -596,6 +596,8 @@ restart:
- 				"carrier2 val: %5d / %s\n", val, cd[i].name);
- 		}
+--- a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c
++++ b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c
+@@ -157,10 +157,18 @@ void mdp_video_device_release(struct vid
+ 	kfree(mdp);
+ }
  
-+		if (max1 < 0 || max1 > 3)
-+			goto restart;
- 		/* program the msp3400 according to the results */
- 		state->main = msp3400c_carrier_detect_main[max1].cdo;
- 		switch (max1) {
++static void mdp_put_device(void *_dev)
++{
++	struct device *dev = _dev;
++
++	put_device(dev);
++}
++
+ static int mdp_mm_subsys_deploy(struct mdp_dev *mdp, enum mdp_infra_id id)
+ {
+ 	struct platform_device *mm_pdev = NULL;
+ 	struct device **dev;
++	int ret;
+ 	int i;
+ 
+ 	if (!mdp)
+@@ -194,6 +202,11 @@ static int mdp_mm_subsys_deploy(struct m
+ 		if (WARN_ON(!mm_pdev))
+ 			return -ENODEV;
+ 
++		ret = devm_add_action_or_reset(&mdp->pdev->dev, mdp_put_device,
++					       &mm_pdev->dev);
++		if (ret)
++			return ret;
++
+ 		*dev = &mm_pdev->dev;
+ 	}
+ 
+@@ -279,6 +292,7 @@ static int mdp_probe(struct platform_dev
+ 			goto err_destroy_clock_wq;
+ 		}
+ 		mdp->scp = platform_get_drvdata(mm_pdev);
++		put_device(&mm_pdev->dev);
+ 	}
+ 
+ 	mdp->rproc_handle = scp_get_rproc(mdp->scp);
 
 
