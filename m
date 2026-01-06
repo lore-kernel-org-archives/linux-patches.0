@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C3D61DF751;
-	Tue,  6 Jan 2026 17:38:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D25832264AA;
+	Tue,  6 Jan 2026 17:38:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721093; cv=none; b=nndRkNJzT5Xdb37ARrslXaQsvFPODeLKQpw2Stvl8V0o3Y3BC74DXAQA4Ot1rbkuDs/IDCjWMuTqiKt9UoSxBV331bPC+IBfmAsfEvV8RwSWMRsfW6IKBJfxXNF6fI1TQAN45MSCkubHtCD97PhCDKaQg5DoLRp5knDjgl/wLiU=
+	t=1767721096; cv=none; b=qHd5608BODfYJXJtqJEokG2EZ4OmbxFylDtjQT7TKFj/D22/8A/0iZgZsbjzQJ55DGXM4m7v2ehHqepeUswrawzw7euabbrtS6rOkoFyj3vbGhYsK1hxhpqdWKANs4xgcOzQ9iTp3JD6GN/KgFpuhWM5v9EH2mdHzkPJMc2Uq2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721093; c=relaxed/simple;
-	bh=jthzbdAAY8gCNj5FigBEyWafYsDgI+EfBvU9ggJksko=;
+	s=arc-20240116; t=1767721096; c=relaxed/simple;
+	bh=QXwwKGMZEu8oydY082jgYrvByMIDMrRaIwx76IDAmlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OflqF82D9icOO/SbY66vEChN0jREY4mb3zcjxwjMq8VJKItbmJIkYKemXLVDbgJ5dV8SzCqotAe+4tu62kkkbvZFvw+93a4PIzYdV1NgIciH+gUxg/mSpzoDp9TdTpGiQvg2UWtWQr+cLopxEVi+wNRn6zDMt6dwUBRCDYFDNrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ry+Oc6Zo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=reMXc2CQZf9VFV03reTK8rlGmuIXjHVnPPxvjiQhew8P4ffs6BE63i76dMq/E/E7nTxsKqsK7v3JFeHryL7DYhV5aQ87DLjwDxY6xq6Pmsd3gfZ4XkpMdmeINSvMubuTRBoTFbbR1A9Pt9vb2SlS8HtMXvIKo9zgcu/VL8fKp8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XwshiF4Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ry+Oc6Zo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 914C2C116C6;
-	Tue,  6 Jan 2026 17:38:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XwshiF4Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2AF8C116C6;
+	Tue,  6 Jan 2026 17:38:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721093;
-	bh=jthzbdAAY8gCNj5FigBEyWafYsDgI+EfBvU9ggJksko=;
+	s=korg; t=1767721096;
+	bh=QXwwKGMZEu8oydY082jgYrvByMIDMrRaIwx76IDAmlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ry+Oc6ZozezqCtG0LWM4J5RIwGBsgADUDLEHtCwhnkf9tVlYiM7XFwVnsXUqQs/QC
-	 j58XbVAjy58Emtst7SuTcjkD+fQvYFiyQxZCwRtadhC6vZEAuq8VBss8wE35QLmNeI
-	 nar9+6PAZ+v6Fd5O7CM4ufDqGTKb2X2cf5l5kytA=
+	b=XwshiF4YgjLiJPMPGh/Lf7Z1D1rqdnnIUjk2RtAVNDWFpEfWN77yyqBTz+1RShKzg
+	 5dV+rXZTrEJKYN3z9bwk5NJw4yp92pcStFZrPt4MCwbkgmAzQSvMzGhtoxvgDkyQer
+	 yXYZfKZRkYxMyHDtsfOgpOaQno2AsGAsX6ZyJgms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Frank Li <Frank.Li@nxp.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.12 434/567] pmdomain: imx: Fix reference count leak in imx_gpc_probe()
-Date: Tue,  6 Jan 2026 18:03:36 +0100
-Message-ID: <20260106170507.407126503@linuxfoundation.org>
+	"H. Peter Anvin (Intel)" <hpa@zytor.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 6.12 435/567] compiler_types.h: add "auto" as a macro for "__auto_type"
+Date: Tue,  6 Jan 2026 18:03:37 +0100
+Message-ID: <20260106170507.444053363@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,44 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: H. Peter Anvin <hpa@zytor.com>
 
-commit 73cb5f6eafb0ac7aea8cdeb8ff12981aa741d8fb upstream.
+commit 2fb6915fa22dc5524d704afba58a13305dd9f533 upstream.
 
-of_get_child_by_name() returns a node pointer with refcount incremented.
-Use the __free() attribute to manage the pgc_node reference, ensuring
-automatic of_node_put() cleanup when pgc_node goes out of scope.
+"auto" was defined as a keyword back in the K&R days, but as a storage
+type specifier.  No one ever used it, since it was and is the default
+storage type for local variables.
 
-This eliminates the need for explicit error handling paths and avoids
-reference count leaks.
+C++11 recycled the keyword to allow a type to be declared based on the
+type of an initializer.  This was finally adopted into standard C in
+C23.
 
-Fixes: 721cabf6c660 ("soc: imx: move PGC handling to a new GPC driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+gcc and clang provide the "__auto_type" alias keyword as an extension
+for pre-C23, however, there is no reason to pollute the bulk of the
+source base with this temporary keyword; instead define "auto" as a
+macro unless the compiler is running in C23+ mode.
+
+This macro is added in <linux/compiler_types.h> because that header is
+included in some of the tools headers, wheres <linux/compiler.h> is
+not as it has a bunch of very kernel-specific things in it.
+
+[ Cc: stable to reduce potential backporting burden. ]
+
+Signed-off-by: H. Peter Anvin (Intel) <hpa@zytor.com>
+Acked-by: Miguel Ojeda <ojeda@kernel.org>
+Cc: <stable@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/imx/gpc.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ include/linux/compiler_types.h |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/drivers/pmdomain/imx/gpc.c
-+++ b/drivers/pmdomain/imx/gpc.c
-@@ -403,13 +403,12 @@ clk_err:
- static int imx_gpc_probe(struct platform_device *pdev)
- {
- 	const struct imx_gpc_dt_data *of_id_data = device_get_match_data(&pdev->dev);
--	struct device_node *pgc_node;
-+	struct device_node *pgc_node __free(device_node)
-+		= of_get_child_by_name(pdev->dev.of_node, "pgc");
- 	struct regmap *regmap;
- 	void __iomem *base;
- 	int ret;
+--- a/include/linux/compiler_types.h
++++ b/include/linux/compiler_types.h
+@@ -14,6 +14,19 @@
+ #ifndef __ASSEMBLY__
  
--	pgc_node = of_get_child_by_name(pdev->dev.of_node, "pgc");
--
- 	/* bail out if DT too old and doesn't provide the necessary info */
- 	if (!of_property_read_bool(pdev->dev.of_node, "#power-domain-cells") &&
- 	    !pgc_node)
+ /*
++ * C23 introduces "auto" as a standard way to define type-inferred
++ * variables, but "auto" has been a (useless) keyword even since K&R C,
++ * so it has always been "namespace reserved."
++ *
++ * Until at some future time we require C23 support, we need the gcc
++ * extension __auto_type, but there is no reason to put that elsewhere
++ * in the source code.
++ */
++#if __STDC_VERSION__ < 202311L
++# define auto __auto_type
++#endif
++
++/*
+  * Skipped when running bindgen due to a libclang issue;
+  * see https://github.com/rust-lang/rust-bindgen/issues/2244.
+  */
 
 
