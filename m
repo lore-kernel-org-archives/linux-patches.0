@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869883016E5;
-	Tue,  6 Jan 2026 17:45:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE75355817;
+	Tue,  6 Jan 2026 17:45:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721519; cv=none; b=BGdeK3McDJ9xGcogLvySzqm3Q6HrzTo2uTcYj+ADxJr8+aPxVWNsCItps6NTIJxU8BiQ4DJGtBfeuyIqFL0mNB8AQJ/5ueQwRISqtgzWWgcLP+wLBDn8Rsa1biiLrUqdk2m3gV8yoC7Vh1QjcTZJTbUZ7DCdvTGVkoUgg6Hi2IA=
+	t=1767721523; cv=none; b=oWOOu/FNT9BWqKqzs09ZiCLkuGUpjLt6/XmlRyD9P8S7JRaniuBiKwVJu6qK0ji5vNzhhspLdhnQ4mWMJxmYx5VssZawzQtMYt3hyytCuAwlt0Y8E+Q1c3vMOY1PyPueVWfCiusSWl43MelDotNNd59GHDL3A1EVzNz2dlTUTn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721519; c=relaxed/simple;
-	bh=qMlUb3TXj2TRCMh6uljErXMye0aUvB3o8z9mR3U0DHk=;
+	s=arc-20240116; t=1767721523; c=relaxed/simple;
+	bh=Y4u+EkoUASIgPTs36oyPfCQ3UuqYxRtIz+5oj24e5g0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PyWsve93CdvlwgUlLd3IcypQ6S9qlMvJ9yrqFV0OOlT0hualTOY+/J2V9mAPMm15c0r7eNZfXau7Hp++5MyHfVYJ9vnzOgheB6JgUJUTCNxe8qpE5ICGr8BSpS6UqM2WIDZApGfBvC7z0EfhVhAN1HPJtDzdp7aaF74mHF+u/a8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u+jMCkX5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SpHNoPGSqssMbh0fMJ6diJv4aqGn0c8FV4RY/1Enq+ntJaArwCJ20MupMg/FSdNZEwHZG7lOPMM1ahHXD7NMWF3dU8eH8ACBavbs8VYcZgQsCyIfhW/oiifUw2vp8/34laiEw09ZYu6P+XwxQoX1q0gXIiw3UnBXMkyxx7q5gXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gqk6TKPc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+jMCkX5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F3FEC116C6;
-	Tue,  6 Jan 2026 17:45:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gqk6TKPc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41B67C116C6;
+	Tue,  6 Jan 2026 17:45:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721519;
-	bh=qMlUb3TXj2TRCMh6uljErXMye0aUvB3o8z9mR3U0DHk=;
+	s=korg; t=1767721522;
+	bh=Y4u+EkoUASIgPTs36oyPfCQ3UuqYxRtIz+5oj24e5g0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u+jMCkX5waFBmS+1jDXajN1/G5yRRzPX0bILbOiyJBICg/Xh1EHn2/CsXRnT+xoZx
-	 AwO+T93bTswsQ3hckkAelNRDQjJeFM3Y0buM4WxwJ2IFzNgB32Cuvklkd8pMQzYAuw
-	 /CbeLLgRcLAgR9l3uoAJvP8bWjPynf3V8KDgON1c=
+	b=gqk6TKPc7dVRTqR4e949oc4ECwQwSRe8tdbZNcPlK4qpOMljmeenfgin+FusgeTAa
+	 /l1EXQU613XUsog/RK1BKZD5DXxJ4I9HwzOP0TkMeiWlNOl3It+8ClcDl06Ab/TzCv
+	 BdD+QePrxvDLfZBwXuayqmmY4Fe5kjBrlgDBXUVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Qian <ming.qian@oss.nxp.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Sebastian Fricke <sebastian.fricke@collabora.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 559/567] media: amphion: Add a frame flush mode for decoder
-Date: Tue,  6 Jan 2026 18:05:41 +0100
-Message-ID: <20260106170512.105229061@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	Zqiang <qiang.zhang@linux.dev>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Subject: [PATCH 6.12 529/567] usbnet: Fix using smp_processor_id() in preemptible code warnings
+Date: Tue,  6 Jan 2026 18:05:11 +0100
+Message-ID: <20260106170510.964268694@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -53,61 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Qian <ming.qian@oss.nxp.com>
+From: Zqiang <qiang.zhang@linux.dev>
 
-[ Upstream commit 9ea16ba6eaf93f25f61855751f71e2e701709ddf ]
+[ Upstream commit 327cd4b68b4398b6c24f10eb2b2533ffbfc10185 ]
 
-By default the amphion decoder will pre-parse 3 frames before starting
-to decode the first frame. Alternatively, a block of flush padding data
-can be appended to the frame, which will ensure that the decoder can
-start decoding immediately after parsing the flush padding data, thus
-potentially reducing decoding latency.
+Syzbot reported the following warning:
 
-This mode was previously only enabled, when the display delay was set to
-0. Allow the user to manually toggle the use of that mode via a module
-parameter called low_latency, which enables the mode without
-changing the display order.
+BUG: using smp_processor_id() in preemptible [00000000] code: dhcpcd/2879
+caller is usbnet_skb_return+0x74/0x490 drivers/net/usb/usbnet.c:331
+CPU: 1 UID: 0 PID: 2879 Comm: dhcpcd Not tainted 6.15.0-rc4-syzkaller-00098-g615dca38c2ea #0 PREEMPT(voluntary)
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x16c/0x1f0 lib/dump_stack.c:120
+ check_preemption_disabled+0xd0/0xe0 lib/smp_processor_id.c:49
+ usbnet_skb_return+0x74/0x490 drivers/net/usb/usbnet.c:331
+ usbnet_resume_rx+0x4b/0x170 drivers/net/usb/usbnet.c:708
+ usbnet_change_mtu+0x1be/0x220 drivers/net/usb/usbnet.c:417
+ __dev_set_mtu net/core/dev.c:9443 [inline]
+ netif_set_mtu_ext+0x369/0x5c0 net/core/dev.c:9496
+ netif_set_mtu+0xb0/0x160 net/core/dev.c:9520
+ dev_set_mtu+0xae/0x170 net/core/dev_api.c:247
+ dev_ifsioc+0xa31/0x18d0 net/core/dev_ioctl.c:572
+ dev_ioctl+0x223/0x10e0 net/core/dev_ioctl.c:821
+ sock_do_ioctl+0x19d/0x280 net/socket.c:1204
+ sock_ioctl+0x42f/0x6a0 net/socket.c:1311
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:906 [inline]
+ __se_sys_ioctl fs/ioctl.c:892 [inline]
+ __x64_sys_ioctl+0x190/0x200 fs/ioctl.c:892
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xcd/0x260 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Stable-dep-of: 634c2cd17bd0 ("media: amphion: Remove vpu_vb_is_codecconfig")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+For historical and portability reasons, the netif_rx() is usually
+run in the softirq or interrupt context, this commit therefore add
+local_bh_disable/enable() protection in the usbnet_resume_rx().
+
+Fixes: 43daa96b166c ("usbnet: Stop RX Q on MTU change")
+Link: https://syzkaller.appspot.com/bug?id=81f55dfa587ee544baaaa5a359a060512228c1e1
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Zqiang <qiang.zhang@linux.dev>
+Link: https://patch.msgid.link/20251011070518.7095-1-qiang.zhang@linux.dev
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[Harshit: Resolved conflicts due to missing commit: 2c04d279e857 ("net:
+usb: Convert tasklet API to new bottom half workqueue mechanism") in
+6.12.y]
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/amphion/vpu_malone.c |   14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/net/usb/usbnet.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/media/platform/amphion/vpu_malone.c
-+++ b/drivers/media/platform/amphion/vpu_malone.c
-@@ -25,6 +25,10 @@
- #include "vpu_imx8q.h"
- #include "vpu_malone.h"
+--- a/drivers/net/usb/usbnet.c
++++ b/drivers/net/usb/usbnet.c
+@@ -702,6 +702,7 @@ void usbnet_resume_rx(struct usbnet *dev
+ 	struct sk_buff *skb;
+ 	int num = 0;
  
-+static bool low_latency;
-+module_param(low_latency, bool, 0644);
-+MODULE_PARM_DESC(low_latency, "Set low latency frame flush mode: 0 (disable) or 1 (enable)");
-+
- #define CMD_SIZE			25600
- #define MSG_SIZE			25600
- #define CODEC_SIZE			0x1000
-@@ -1562,7 +1566,15 @@ static int vpu_malone_input_frame_data(s
++	local_bh_disable();
+ 	clear_bit(EVENT_RX_PAUSED, &dev->flags);
  
- 	vpu_malone_update_wptr(str_buf, wptr);
+ 	while ((skb = skb_dequeue(&dev->rxq_pause)) != NULL) {
+@@ -710,6 +711,7 @@ void usbnet_resume_rx(struct usbnet *dev
+ 	}
  
--	if (disp_imm && !vpu_vb_is_codecconfig(vbuf)) {
-+	/*
-+	 * Enable the low latency flush mode if display delay is set to 0
-+	 * or the low latency frame flush mode if it is set to 1.
-+	 * The low latency flush mode requires some padding data to be appended to each frame,
-+	 * but there must not be any padding data between the sequence header and the frame.
-+	 * This module is currently only supported for the H264 and HEVC formats,
-+	 * for other formats, vpu_malone_add_scode() will return 0.
-+	 */
-+	if ((disp_imm || low_latency) && !vpu_vb_is_codecconfig(vbuf)) {
- 		ret = vpu_malone_add_scode(inst->core->iface,
- 					   inst->id,
- 					   &inst->stream_buffer,
+ 	tasklet_schedule(&dev->bh);
++	local_bh_enable();
+ 
+ 	netif_dbg(dev, rx_status, dev->net,
+ 		  "paused rx queue disabled, %d skbs requeued\n", num);
 
 
