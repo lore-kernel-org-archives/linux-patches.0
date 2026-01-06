@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C8234A785;
-	Tue,  6 Jan 2026 17:18:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F7E34A789;
+	Tue,  6 Jan 2026 17:18:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719933; cv=none; b=Crg+xvUk1dmfVMvN56M5bm77FlrpaLh9A4xRQpDoiPv8VSuZ0GsrcJTVoW46kAssHAYIoLuIFfNCczk14j3grN5P8XBhtvt+bJ818juOf+fITUOrn5cQrgq5V817k3TCLstmwLTNZI2O6mYKEBinEY/FmY0M9k1ilPtxJ8WXXow=
+	t=1767719936; cv=none; b=YHmUNplkYBjdOsektsYuHbmmtaMLPYnwLNv8KlaxkO2ArxiXeIvWbLsNv0hGa3UQoRclTjrnLQvp9IWwOFfwtjCYDv4UgWE8fVOFscHTXo2dYR/u3uAoJNdo0CQulaU4CLC2/WPfXbfxU2cOSLGipUfefkx98l/2x3zxRRSZIg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719933; c=relaxed/simple;
-	bh=DRdZU67tRc3uH3d4zMNYcYIr9TWe1a48qlaEkWGi2j4=;
+	s=arc-20240116; t=1767719936; c=relaxed/simple;
+	bh=JDaLb8lgKcJqbtyFq18/gG7IkVuFA4LLcOxdrDQZMQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sdoSnnbP3Yk6un6RNKOESokSF+Al5g5fRIMA/PQYRQdyrjHGpl4opyvLRDQp5i4KyB6qPwhCorQvoTbx7V9xjX58qMNa71of1FrPucPIU0vF8VcY9nt1TR2oAbdsVt9C6HQ3U1aBALPyTzcd8wlkFKSsqpOmowIyEcsu7LrRBN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tH18hY45; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aC3w3TnRVQne9TIE8AgzMzllivWMAAINyWqkJ+HzuqdWp+lwsnz3qPN/3vlpRfGOP26/t+1Qt5+6GhHPBhHkc9esmOOOhYVB7KlEvuKYHyQB2xk/NiaFundqwdsTdstOJU7wwH+hKun1UH6eSGq7fbHuXHuIE8gzv4z00BsRQK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wA3umiGF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tH18hY45"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB7D9C116C6;
-	Tue,  6 Jan 2026 17:18:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wA3umiGF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2053C116C6;
+	Tue,  6 Jan 2026 17:18:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719933;
-	bh=DRdZU67tRc3uH3d4zMNYcYIr9TWe1a48qlaEkWGi2j4=;
+	s=korg; t=1767719936;
+	bh=JDaLb8lgKcJqbtyFq18/gG7IkVuFA4LLcOxdrDQZMQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tH18hY45FI6GGFiG1OjHyhMbAtDea4WrCwah8E7VGHFhi4T6Y8fBw5keeK6hatGYk
-	 rYKQgBH8Z3mM9d5EZprwpbmlY+Zbu62ua55ycTZX7TLCP6UF4QMuzoTnlfFOyvy7fa
-	 0tESdog69iJwsujX0Gh/2pBxIs73K4AQaly7zRcM=
+	b=wA3umiGFVrBU2lS/TGLy7SQYNME3o7Ktb4Ef71X99Bo+N9mR6zeKhdito+4m2ThzN
+	 0AUCU+x80JR03S52ymDiYdLiL5sn6rUuBYrv3JpXcXHlI5KlmKMnBO2diPkasKvnHR
+	 CftPYKltBBUCcRLSEP8cz/ezlI8mErdGjuyTOf4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Gerst <brgerst@gmail.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Juergen Gross <jgross@suse.com>,
-	Sohil Mehta <sohil.mehta@intel.com>,
-	Andy Lutomirski <luto@kernel.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Josh Poimboeuf <jpoimboe@redhat.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Shay Drori <shayd@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 085/567] x86/xen: Move Xen upcall handler
-Date: Tue,  6 Jan 2026 17:57:47 +0100
-Message-ID: <20260106170454.474273408@linuxfoundation.org>
+Subject: [PATCH 6.12 068/567] net/mlx5: fw reset, clear reset requested on drain_fw_reset
+Date: Tue,  6 Jan 2026 17:57:30 +0100
+Message-ID: <20260106170453.851863957@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -57,211 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Gerst <brgerst@gmail.com>
+From: Moshe Shemesh <moshe@nvidia.com>
 
-[ Upstream commit 1ab7b5ed44ba9bce581e225f40219b793bc779d6 ]
+[ Upstream commit 89a898d63f6f588acf5c104c65c94a38b68c69a6 ]
 
-Move the upcall handler to Xen-specific files.
+drain_fw_reset() waits for ongoing firmware reset events and blocks new
+event handling, but does not clear the reset requested flag, and may
+keep sync reset polling.
 
-No functional changes.
+To fix it, call mlx5_sync_reset_clear_reset_requested() to clear the
+flag, stop sync reset polling, and resume health polling, ensuring
+health issues are still detected after the firmware reset drain.
 
-Signed-off-by: Brian Gerst <brgerst@gmail.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Reviewed-by: Sohil Mehta <sohil.mehta@intel.com>
-Cc: Andy Lutomirski <luto@kernel.org>
-Cc: H. Peter Anvin <hpa@zytor.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Josh Poimboeuf <jpoimboe@redhat.com>
-Link: https://lore.kernel.org/r/20250314151220.862768-2-brgerst@gmail.com
-Stable-dep-of: e5aff444e3a7 ("x86/xen: Fix sparse warning in enlighten_pv.c")
+Fixes: 16d42d313350 ("net/mlx5: Drain fw_reset when removing device")
+Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Shay Drori <shayd@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/1765284977-1363052-2-git-send-email-tariqt@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/entry/common.c     | 72 -------------------------------------
- arch/x86/xen/enlighten_pv.c | 69 +++++++++++++++++++++++++++++++++++
- 2 files changed, 69 insertions(+), 72 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/entry/common.c b/arch/x86/entry/common.c
-index 51efd2da4d7f..7b9321c48a90 100644
---- a/arch/x86/entry/common.c
-+++ b/arch/x86/entry/common.c
-@@ -21,11 +21,6 @@
- #include <linux/uaccess.h>
- #include <linux/init.h>
- 
--#ifdef CONFIG_XEN_PV
--#include <xen/xen-ops.h>
--#include <xen/events.h>
--#endif
--
- #include <asm/apic.h>
- #include <asm/desc.h>
- #include <asm/traps.h>
-@@ -454,70 +449,3 @@ SYSCALL_DEFINE0(ni_syscall)
- {
- 	return -ENOSYS;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
+index 35d2fe08c0fb5..ad4d17a243de9 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
+@@ -832,7 +832,8 @@ void mlx5_drain_fw_reset(struct mlx5_core_dev *dev)
+ 	cancel_work_sync(&fw_reset->reset_reload_work);
+ 	cancel_work_sync(&fw_reset->reset_now_work);
+ 	cancel_work_sync(&fw_reset->reset_abort_work);
+-	cancel_delayed_work(&fw_reset->reset_timeout_work);
++	if (test_bit(MLX5_FW_RESET_FLAGS_RESET_REQUESTED, &fw_reset->reset_flags))
++		mlx5_sync_reset_clear_reset_requested(dev, true);
  }
--
--#ifdef CONFIG_XEN_PV
--#ifndef CONFIG_PREEMPTION
--/*
-- * Some hypercalls issued by the toolstack can take many 10s of
-- * seconds. Allow tasks running hypercalls via the privcmd driver to
-- * be voluntarily preempted even if full kernel preemption is
-- * disabled.
-- *
-- * Such preemptible hypercalls are bracketed by
-- * xen_preemptible_hcall_begin() and xen_preemptible_hcall_end()
-- * calls.
-- */
--DEFINE_PER_CPU(bool, xen_in_preemptible_hcall);
--EXPORT_SYMBOL_GPL(xen_in_preemptible_hcall);
--
--/*
-- * In case of scheduling the flag must be cleared and restored after
-- * returning from schedule as the task might move to a different CPU.
-- */
--static __always_inline bool get_and_clear_inhcall(void)
--{
--	bool inhcall = __this_cpu_read(xen_in_preemptible_hcall);
--
--	__this_cpu_write(xen_in_preemptible_hcall, false);
--	return inhcall;
--}
--
--static __always_inline void restore_inhcall(bool inhcall)
--{
--	__this_cpu_write(xen_in_preemptible_hcall, inhcall);
--}
--#else
--static __always_inline bool get_and_clear_inhcall(void) { return false; }
--static __always_inline void restore_inhcall(bool inhcall) { }
--#endif
--
--static void __xen_pv_evtchn_do_upcall(struct pt_regs *regs)
--{
--	struct pt_regs *old_regs = set_irq_regs(regs);
--
--	inc_irq_stat(irq_hv_callback_count);
--
--	xen_evtchn_do_upcall();
--
--	set_irq_regs(old_regs);
--}
--
--__visible noinstr void xen_pv_evtchn_do_upcall(struct pt_regs *regs)
--{
--	irqentry_state_t state = irqentry_enter(regs);
--	bool inhcall;
--
--	instrumentation_begin();
--	run_sysvec_on_irqstack_cond(__xen_pv_evtchn_do_upcall, regs);
--
--	inhcall = get_and_clear_inhcall();
--	if (inhcall && !WARN_ON_ONCE(state.exit_rcu)) {
--		irqentry_exit_cond_resched();
--		instrumentation_end();
--		restore_inhcall(inhcall);
--	} else {
--		instrumentation_end();
--		irqentry_exit(regs, state);
--	}
--}
--#endif /* CONFIG_XEN_PV */
-diff --git a/arch/x86/xen/enlighten_pv.c b/arch/x86/xen/enlighten_pv.c
-index e033d5594265..6e9d1b287f8e 100644
---- a/arch/x86/xen/enlighten_pv.c
-+++ b/arch/x86/xen/enlighten_pv.c
-@@ -72,6 +72,7 @@
- #include <asm/mwait.h>
- #include <asm/pci_x86.h>
- #include <asm/cpu.h>
-+#include <asm/irq_stack.h>
- #ifdef CONFIG_X86_IOPL_IOPERM
- #include <asm/io_bitmap.h>
- #endif
-@@ -93,6 +94,44 @@ void *xen_initial_gdt;
- static int xen_cpu_up_prepare_pv(unsigned int cpu);
- static int xen_cpu_dead_pv(unsigned int cpu);
  
-+#ifndef CONFIG_PREEMPTION
-+/*
-+ * Some hypercalls issued by the toolstack can take many 10s of
-+ * seconds. Allow tasks running hypercalls via the privcmd driver to
-+ * be voluntarily preempted even if full kernel preemption is
-+ * disabled.
-+ *
-+ * Such preemptible hypercalls are bracketed by
-+ * xen_preemptible_hcall_begin() and xen_preemptible_hcall_end()
-+ * calls.
-+ */
-+DEFINE_PER_CPU(bool, xen_in_preemptible_hcall);
-+EXPORT_SYMBOL_GPL(xen_in_preemptible_hcall);
-+
-+/*
-+ * In case of scheduling the flag must be cleared and restored after
-+ * returning from schedule as the task might move to a different CPU.
-+ */
-+static __always_inline bool get_and_clear_inhcall(void)
-+{
-+	bool inhcall = __this_cpu_read(xen_in_preemptible_hcall);
-+
-+	__this_cpu_write(xen_in_preemptible_hcall, false);
-+	return inhcall;
-+}
-+
-+static __always_inline void restore_inhcall(bool inhcall)
-+{
-+	__this_cpu_write(xen_in_preemptible_hcall, inhcall);
-+}
-+
-+#else
-+
-+static __always_inline bool get_and_clear_inhcall(void) { return false; }
-+static __always_inline void restore_inhcall(bool inhcall) { }
-+
-+#endif
-+
- struct tls_descs {
- 	struct desc_struct desc[3];
- };
-@@ -686,6 +725,36 @@ DEFINE_IDTENTRY_RAW(xenpv_exc_machine_check)
- }
- #endif
- 
-+static void __xen_pv_evtchn_do_upcall(struct pt_regs *regs)
-+{
-+	struct pt_regs *old_regs = set_irq_regs(regs);
-+
-+	inc_irq_stat(irq_hv_callback_count);
-+
-+	xen_evtchn_do_upcall();
-+
-+	set_irq_regs(old_regs);
-+}
-+
-+__visible noinstr void xen_pv_evtchn_do_upcall(struct pt_regs *regs)
-+{
-+	irqentry_state_t state = irqentry_enter(regs);
-+	bool inhcall;
-+
-+	instrumentation_begin();
-+	run_sysvec_on_irqstack_cond(__xen_pv_evtchn_do_upcall, regs);
-+
-+	inhcall = get_and_clear_inhcall();
-+	if (inhcall && !WARN_ON_ONCE(state.exit_rcu)) {
-+		irqentry_exit_cond_resched();
-+		instrumentation_end();
-+		restore_inhcall(inhcall);
-+	} else {
-+		instrumentation_end();
-+		irqentry_exit(regs, state);
-+	}
-+}
-+
- struct trap_array_entry {
- 	void (*orig)(void);
- 	void (*xen)(void);
+ static const struct devlink_param mlx5_fw_reset_devlink_params[] = {
 -- 
 2.51.0
 
