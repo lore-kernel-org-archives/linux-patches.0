@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D5BF3659E6;
-	Tue,  6 Jan 2026 17:53:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A4C03659F9;
+	Tue,  6 Jan 2026 17:54:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722037; cv=none; b=tWa1NPP2lNQuR2V4cb6hJ4obumCDYDFCx1qeO+lco0yVQ/wDnG/vUxLqPa1duhwYId2JZFq/8QHZxY+CUBK9SV6sGZnUCh6hJc+X05msk1UrF+BDOckg56wvBLkeVxd/FdzYzgXhdZG1lkya9Lqa1sSy5Z/MUHX2whXkTYMr900=
+	t=1767722040; cv=none; b=C+rp6tNEs5ujpy1hmv8bPJ1m5f1sotQgVa7b5qwSkUGrftM2+3XDQZulhpvJoqZ+EMBmnKhTundCejq3k5zl+N3TZlx4pdwStaVrQTMNjPmRbg84DrjSGbc3epAxfIfzHpvN5FM54JBvI9YaXFe0l1KtbfydnL/NjgkUt7q0yys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722037; c=relaxed/simple;
-	bh=zPWQRRaxgDk+oFD2Zvpf+UGfQUbiedFO6J1ToT3UpX4=;
+	s=arc-20240116; t=1767722040; c=relaxed/simple;
+	bh=x99aCFcnKjL7Y92UUMM1zPVDyqM3JvK/EWy+zGB3AtU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qXY9UJgO22ULG+q1gL45CBNNtX3PnlmwIS8z4+2Rul9WBJ1f+VzO99rfmc6nOjuMVNZDFzfFazc3sEZVR3Ex8cuhmaSAKqCPUtxZIgdbYdPm9efnC2InQulC2RhOkE7LWhkv2wvY7uGf0vB0EAgRD101o47hAxcusUrvSQ2bHYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l69pQ82d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IgFZnC+sy6UQCaP8AYkHGZ7eABQ4c/1oGj4ei9ta2DBr6jNELkghx77SnwqJWGcf3NK1alDhBIaKCyuxqM9syuTL+HbLh0J6/fc2v4JyDVYP/NYq+sC0DX5yvRvDKhQv+16NDoDq6Zzh1jyTLOch8nA+5kZfTkmtJRqEAyHrIJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C2xLtw/Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l69pQ82d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABB33C116C6;
-	Tue,  6 Jan 2026 17:53:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C2xLtw/Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9613C116C6;
+	Tue,  6 Jan 2026 17:53:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722037;
-	bh=zPWQRRaxgDk+oFD2Zvpf+UGfQUbiedFO6J1ToT3UpX4=;
+	s=korg; t=1767722040;
+	bh=x99aCFcnKjL7Y92UUMM1zPVDyqM3JvK/EWy+zGB3AtU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l69pQ82d6FM0+lbmrF6tosxhDkn4OZDfp4ZDqi73sLFQXXrDYUwz556Ohyq7RpNJG
-	 2c3QUR6kdAPYMoTz4XJziVEg8D9TDM2bzIugMTHbibjqtxCxtJl3SP+wxg+2B9LmY9
-	 TT6FfTvPIN8S4B+chehVksxyhZ0p/BG4BHQneFJg=
+	b=C2xLtw/Ypz/OCtYJxWvCyyH9X0cYBHS3l6l/kJ3PJfCdRAAwMPJAGM0/wd5guKU7A
+	 uuaCD7R14ZK2pENnP1NWiMSPumNv9EyPbg5/IgFN7fJq6R0v5fssPUPV0tsQhftQHH
+	 wGADsv18fxFtVGpjxm/dH0/e3ReQT/wxaBHzjQX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>
-Subject: [PATCH 6.18 146/312] arm64: dts: st: Add memory-region-names property for stm32mp257f-ev1
-Date: Tue,  6 Jan 2026 18:03:40 +0100
-Message-ID: <20260106170553.123297574@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.18 147/312] arm64: dts: qcom: sm6350: Fix wrong order of freq-table-hz for UFS
+Date: Tue,  6 Jan 2026 18:03:41 +0100
+Message-ID: <20260106170553.159298290@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -50,39 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrice Chotard <patrice.chotard@foss.st.com>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-commit 22f0ae971cf5536349521853737d3e06203286d8 upstream.
+commit ec9d588391761a08aab5eb4523a48ef3df2c910f upstream.
 
-In order to set the AMCR register, which configures the
-memory-region split between ospi1 and ospi2, we need to
-identify the ospi instance.
+During upstreaming the order of clocks was adjusted to match the
+upstream sort order, but mistakently freq-table-hz wasn't re-ordered
+with the new order.
 
-By using memory-region-names, it allows to identify the
-ospi instance this memory-region belongs to.
+Fix that by moving the entry for the ICE clk to the last place.
 
-Fixes: cad2492de91c ("arm64: dts: st: Add SPI NOR flash support on stm32mp257f-ev1 board")
-Signed-off-by: Patrice Chotard <patrice.chotard@foss.st.com>
+Fixes: 5a814af5fc22 ("arm64: dts: qcom: sm6350: Add UFS nodes")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20251031-upstream_fix_dts_omm-v4-1-e4a059a50074@foss.st.com
-Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Link: https://lore.kernel.org/r/20251023-sm6350-ufs-things-v3-1-b68b74e29d35@fairphone.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/st/stm32mp257f-ev1.dts | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/sm6350.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/st/stm32mp257f-ev1.dts b/arch/arm64/boot/dts/st/stm32mp257f-ev1.dts
-index 6e165073f732..bb6d6393d2e4 100644
---- a/arch/arm64/boot/dts/st/stm32mp257f-ev1.dts
-+++ b/arch/arm64/boot/dts/st/stm32mp257f-ev1.dts
-@@ -266,6 +266,7 @@
+diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+index 14788d60faf0..0d2eb51ecc50 100644
+--- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+@@ -1180,11 +1180,11 @@
+ 				<0 0>,
+ 				<0 0>,
+ 				<37500000 150000000>,
+-				<75000000 300000000>,
+ 				<0 0>,
+ 				<0 0>,
+ 				<0 0>,
+-				<0 0>;
++				<0 0>,
++				<75000000 300000000>;
  
- &ommanager {
- 	memory-region = <&mm_ospi1>;
-+	memory-region-names = "ospi1";
- 	pinctrl-0 = <&ospi_port1_clk_pins_a
- 		     &ospi_port1_io03_pins_a
- 		     &ospi_port1_cs0_pins_a>;
+ 			status = "disabled";
+ 		};
 -- 
 2.52.0
 
