@@ -1,203 +1,145 @@
-Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013033.outbound.protection.outlook.com [40.93.196.33])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6214334D91B;
-	Tue,  6 Jan 2026 19:22:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.196.33
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767727345; cv=fail; b=VkcTCyfK17r60IJ0sv33TV3UKevsquAH37X/tK6po9zIS2zPehiRrWj+/+h7i3xhBEzzoVhW75Ir8hxJ01nSTT2fmTinde3TfAcevHmKAe3S7QyF7ZpVQjCq91ldTi6Uo7FCTwSkgdjRgt/twotS+N9nZ9xHnH2x5Yu4CcQft3E=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767727345; c=relaxed/simple;
-	bh=AeOE6nDnl2yCCDILXCvd5yK7DroI7kAaErYyS7t8piw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=dJieoi6nkO+Jn5SNgCe45GvtXckD/7QGOijXC9ioAcvx+wH6xYA9ferF1W1BJ9UP3g1aq1sgQSdjEYw36era/fqgPhXWdngL/86qEKOuFiIw5+Y8I403MS2uM3UbjF2ngAQWH9XBTrpaofxLPVfwYwI2A0W8gJ+TBv7RA2QzY18=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=pks5peI4; arc=fail smtp.client-ip=40.93.196.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9EAD34C991
+	for <patches@lists.linux.dev>; Tue,  6 Jan 2026 19:24:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1767727449; cv=none; b=MtZi4YUn0OsBY7KPzR0Jf56Ye29V82gAi1Z5n6LXS/IvFLbhfPaxpc+BoxY+r5Tex7xYWCHxo3auYaizfM7NcfgcgTA5kC7RdLvbjBwB2lbb9ZL4MyOhK6keXH5dq0vkdgsI9ZHCAwB348PUYH6b+6TECznavkOKeqGS4DGK69w=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1767727449; c=relaxed/simple;
+	bh=W5ID3OY7yfWGGgbtnZevjVWj3uINdDq2sxdewYF9kdo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ilRuaEYJnIcGhM4mwM8HlP9kll9FQp5emJGvVAg/H1KT99XNbkUT0cs9e8RcKAvNCqh/a8TlbPqtFCjfCL9T2N1s+X+Ag55LmZuAza698gsEPlNRY4scJjagKsLh0D3RnI9PxcWJ/DCuTx50Qab7t35d58Eo9pIdLu0Pqf3s+NU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b=HlvG106v; arc=none smtp.client-ip=212.227.15.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="pks5peI4"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=oXv/mUabuzsPSFHeozd9uAuH6hy6CJlKHcgKCdcAmX/9mD4rDaM1PAPnLQVUai+t/BjQcG0E8J/ulm5IdJP3wPZQ8aa7wsUWOduQUK4xvSLX3lfa7LdyuLAsgXgv/0nTTjA66P43XzEBKjfY1aANYDVNhaVkYm34poWEMInKGi13tIpg1u2P0F2u1rBuAInxWqu51vPAeEvQ9jHd4zl0mpA18C/V+aJR2dD90L3FoOHavFElnz+FebmncJCMesPXCJ3PsFFZmsB1RS9UuMQ79J8iTCNVV/HwW5hGiusrfxYYIv/YlfEMtX5nLAFCyvHNT6ACVCMB4+2Qnm5FTehDsQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5WbktUqC8t0Lht8l8Ib3AoVtmBZZrGFbis2W0DkjI5U=;
- b=QX68+PNWxiLdSQMMZDJtmS0DxtlS5g+rj8HF59WY42qVjx5bb05lRx2tw2VlJdpff4izrfY2OHYA1tMlETVfDG9fOgxx9jJ8g5a7i/TH/UkgMpsgHM+iW6lP62qFreLAys5WSBTBogKMMPq8IPPzbRgaTIB1GRDtFriTrZBZNubwCFaXBcbwCSahD13Osk4J6gI3cfBDxCf66z1r0XXg1RSIk3DriUTXOvCSCtIANAcWRxDDTb+BwyQzRC3Oc5XzfTcr0m64WB5zTNUw+FatDpAbWvGCaE8v3DitPgUrWtZWePqWPbNx+ge3UD+mDR0xg4UWDD43KhK847lELLd5+g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5WbktUqC8t0Lht8l8Ib3AoVtmBZZrGFbis2W0DkjI5U=;
- b=pks5peI4JH9iTQwlTs2eONnzlAYPV5poQ6KLaNFSN1yDEyNbt9RHoXQ8lS+gnpmWlKfgbA4w/keMYfJeHQMTm5r8Hl/QjISNnA880wP38QmI60oTUDygpvmK/PBX53d7cfoTANNl2KHlFG+8loZqLBuFgR0rwhlg+Bazy1YUhsW5ZeRyb/MqssbrhGle0mt2Jqdm7uJIB8g/u8bpTCXMUGQAiTW9s/zv+sm7CnwUFpDbRe4zYZy0ECE0HCt8S7aVBKDPOjjRtKqLqfJdTLzaAG73HfjDPjM243Y0yss/VQyi6yaiSyMc2sB8264FCKu8yu1jqsNlCLfE1nEhzuZOtA==
-Received: from IA1PR12MB6209.namprd12.prod.outlook.com (2603:10b6:208:3e7::22)
- by CH3PR12MB8484.namprd12.prod.outlook.com (2603:10b6:610:158::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9478.4; Tue, 6 Jan
- 2026 19:22:21 +0000
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by IA1PR12MB6209.namprd12.prod.outlook.com (2603:10b6:208:3e7::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9499.2; Tue, 6 Jan
- 2026 19:22:15 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::1b59:c8a2:4c00:8a2c]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::1b59:c8a2:4c00:8a2c%3]) with mapi id 15.20.9499.002; Tue, 6 Jan 2026
- 19:22:15 +0000
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: iommu@lists.linux.dev,
-	Joerg Roedel <joro@8bytes.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>
-Cc: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Joerg Roedel <joerg.roedel@amd.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	kernel test robot <lkp@intel.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	patches@lists.linux.dev,
-	Samiullah Khawaja <skhawaja@google.com>
-Subject: [PATCH rc 3/3] iommufd/selftest: Prevent module/builtin conflicts in kconfig
-Date: Tue,  6 Jan 2026 15:22:12 -0400
-Message-ID: <3-v1-946859fdf97e+1bc-iommupt_kconfig_jgg@nvidia.com>
-In-Reply-To: <0-v1-946859fdf97e+1bc-iommupt_kconfig_jgg@nvidia.com>
-References:
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: BLAP220CA0026.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:208:32c::31) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b="HlvG106v"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1767727445; x=1768332245; i=rwarsow@gmx.de;
+	bh=W5ID3OY7yfWGGgbtnZevjVWj3uINdDq2sxdewYF9kdo=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=HlvG106vxbrtaOXjlyARPCkKKeBhRFzXyZTHuDDBOUMTFAlgKPgrCHfqoHYAfjDH
+	 6MREgqKH/tRq5ovwdZSF47hEfJn5DvZfOMdJ4g/ebt2xnclQb56qjTUd3jaCZy41u
+	 KxZC0mr6/0NFT8CbIshXfgmu6JMQMKt9fkkmxryrVcnLVAEYOfmG/A7CjtB1Ck0On
+	 VyNwmyVMqkD27YYrYZLNGBoRcseH78b/lJTQD95KwVPnHgkqxzK5qockEPYgwrWVX
+	 pyVKIh9c0isqfhZtiFKK8QOe8G9H5V3pGkgq/V9FN+iskc9wTxC8D32Rw+cnRYxTS
+	 AhgDNtPraasNlgkKwQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.200.20] ([46.142.32.44]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MbAcs-1wALca3Tg0-00hmVF; Tue, 06
+ Jan 2026 20:24:04 +0100
+Message-ID: <5a21cec9-ba96-44a9-8c3b-6fbcbdb3cac7@gmx.de>
+Date: Tue, 6 Jan 2026 20:24:02 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic:
-	LV8PR12MB9620:EE_|IA1PR12MB6209:EE_|CH3PR12MB8484:EE_
-X-MS-Office365-Filtering-Correlation-Id: c0b70786-436c-407c-1930-08de4d58e5d3
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|376014|366016|1800799024;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?0WkDIa4zKhc5R5/VRW5RKhfKHzUb/S4MflwMtV3tptBen1KIn2IkTtSGyoFb?=
- =?us-ascii?Q?b/FxDsAL4HWLbD2mrlvt/s7dKiBGXlNyXiBfF917GxonJGA29yk0GcHGkTot?=
- =?us-ascii?Q?L7eOylaDNu+G29phSrUgDlhCNW512eHYJRoJsjucosixA9UvZ2e8ymcQNoZR?=
- =?us-ascii?Q?nHFSf0lP3kMtshlpAyUZMKEe8x2e75Y0QHmpKlTVqDXHsAnANbVDfvsstpjd?=
- =?us-ascii?Q?/qo/bP6qxHacULMqq76U30MmaUFgWW2S3kdiI3ljo+wXyKUEcSCSKhMn/mCc?=
- =?us-ascii?Q?yiJ0Mrdmdy+ndx0UltKqxiuWn34HWdSEHPj43bgBjwvulhvhCLpraK9akTLS?=
- =?us-ascii?Q?IIB2uKR919U+JswagD9f0pyh1wX+KueYnV0zlKmUyYTwRaoEKmqvVHY7mUpC?=
- =?us-ascii?Q?otMMJk7dLhZ18FIBmRgDqODh/JnYc0tYdJDY+NJ3YJos9WjbduzVuFRMEwmN?=
- =?us-ascii?Q?hX3ZvCUnQ/B/WTfMsKZUjEASTmFOC6Bv9bRNYHnMVGQgDIXyNNLzGpPEXPkW?=
- =?us-ascii?Q?KCOsxOIIzlbh9iq93Gc55jU1kiNaINePDEFfna6GCjLEW8m2ET8/sbXGcFDL?=
- =?us-ascii?Q?e3Yaxgp3ImnuZqFgoDVs+KvuxWSjjZBmBwu9ncRk4NUmqhVWXp+mOycla3nQ?=
- =?us-ascii?Q?een1XPCTZJxxedPX2uxqFXfQQRArs7Ksqa+nVbbWUihYVOJqA1XUTL5OOuG6?=
- =?us-ascii?Q?li+zlTexxnMSgmvfjAdDwql52xclGgCuXD2teEpNLfN6VLDzMPC3ibgfHx+i?=
- =?us-ascii?Q?z31CKdPIxzo87c2Yg3zFW7FK/mHq8GVTrwqy7SHpwV4PtTtxnoaaS6BSRE5o?=
- =?us-ascii?Q?t68g7pTNdNn0ZgEp2cdRuI/0S1eleh3G9ktkLRmmPdhXvJD2pHXMwUo7xHTn?=
- =?us-ascii?Q?6UJQPTuzK5K0W6ZB49j7KRnLnbew8yjewGZQufj0zKFgePGlOXK2YNsUu+nH?=
- =?us-ascii?Q?tnH7dmKIJN1t/4suGw20glomV2IaKwrYwETkKzUcpxIHW0FZjUzq1r0igYBA?=
- =?us-ascii?Q?9NJWM3bkH/f5R5qfMoTUe3YQDhjLJPEQ8fDSM7uq+1Lxlwv949ev55YPXnFD?=
- =?us-ascii?Q?K/auR+O1aXDS3PV8QyxYZL9DQa70ULSEJ2oKrYGy+iNC8/+MFndCkIyobDH3?=
- =?us-ascii?Q?zB2ZFMPKwDJjoGWupfJv82laWSBzeutoUqcSO1dxooWRqphtpHIASQzt6KDr?=
- =?us-ascii?Q?PB16mCqyV3KDlvlo/qD+CmYSuaTrmMSaMWaSQawBRAxvuWKc533ztUFQ4bk8?=
- =?us-ascii?Q?OiToKYqhjuIYm6uMg0anmGsIu224v4UL8wYqti2ZfQPW6Ia0E7NT3ZI3NTfu?=
- =?us-ascii?Q?9lFVtXgup/vwWh2wjq/6XbjgVunu68Dze1YGHP8VZojkgRne4sWFiYf+xzri?=
- =?us-ascii?Q?dPFaphMABbr/Wch0PIjELLALqyh4pciMz5TmWel/XyJKtu1wVIGpvBjBLlh6?=
- =?us-ascii?Q?ZhGLOFBCp52WhzWtYEn4Ybvmt8skFmZw?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA1PR12MB6209.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(366016)(1800799024);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?aJOevE/q+8J2gVFd/TzmIgvWOqT60XUC5/kXZxoqtNs68LQCZ804kAnh2trK?=
- =?us-ascii?Q?rJaRR6vJdqr0htaCNKaOTEJW0/iSIlu7l8V/AyiUR6vh+/XclKer6s2mOwuo?=
- =?us-ascii?Q?eu5XbL/cTBms5maiVww/7GzKL/71roFVLppmkDi1nFgOycTGA9w9WUhhdr4v?=
- =?us-ascii?Q?ZGpILojbuOtFfRZrB42XJ+WTqWNvUR6uDR+dHnQA7PBgXv3JG2EwxcpPb2fV?=
- =?us-ascii?Q?4dQb51Ob8FH8LF/S/wl+Les1X8D2OIAP6n5gVLg3CC3/4aptlCbKLAxcqNQe?=
- =?us-ascii?Q?XtDY6BXGzCGt8iVFzzQ8eAuUjC1QmWeE6jPt4g7xmK4RsypZNu6UiCQTECdn?=
- =?us-ascii?Q?yubumYDBwCjCb1m6RquwryS/67mfx0L9sdOjxD2CD8m2lIoy8Lg02Nr/uqgX?=
- =?us-ascii?Q?8aZZbO1rbZOoabIE7N7myFqhgXOz3AcT3iLNdRw5N55M3BYHKypS4CCkiIH5?=
- =?us-ascii?Q?zx6611efe2+2j6Fc/HDnT4nXhTkKkB+kwRJf+wWYcaKdEXsC/YLlDa6UXW//?=
- =?us-ascii?Q?hqd/FKgcuz0HMCv9FkIw8LCK9KgCpE1/6o76yGvu8g+aGcgmpfyi5SWAgenw?=
- =?us-ascii?Q?OnxiOfYjrtU4L4t5kzYw1BWLhf0D1kHO0IHCrd8/BN3x/1/YWTVjtu3j4v7A?=
- =?us-ascii?Q?63tjUvp20uoROtY2WNqBSoXGFRz2VhV2SZe1VqH1xDhaWVzRCb8gjjL5YFgr?=
- =?us-ascii?Q?UQ31Ki0yCR1gIXuGuFvDOM/m74jhUmYTVFtSRJdXCsquiETK1le62AKXPhHV?=
- =?us-ascii?Q?OBoys3gfgIcnerkxL0hfjVVxWwvoWE+wxvBWcQKe7tqk4hdB1HGznlHUopfo?=
- =?us-ascii?Q?xIQV8G1pumrzIuebfktXseb0yozorGXhkV6u14CdwqDIICAOFj4LGFrqvAfV?=
- =?us-ascii?Q?KGs7wey1/JWjvI/PHIjlGI9/Ps375Lzrqp5JuC9GSZPUsMzFMiZO+shA9+lm?=
- =?us-ascii?Q?M1CcuMlTQmiJxgpvYsh68ugz4+p1QZDjKYFIr25QQcpSDbqR+uV9X2MxgAL+?=
- =?us-ascii?Q?QXAcOo1D6mYWzpyckkUcljtyCRZYeYTWq9LtuglHg38hEK9Gvp9QpOsDGKG1?=
- =?us-ascii?Q?HoXwxxaUa8uA+AWPrkHYP7EwHTcec2zoEgVPOlrknQXEtVw0XVnUfmLwFlFX?=
- =?us-ascii?Q?0kybzR3C5//D1UN7zdyrAnYT1of6o+5/A/ib4U7LQh3Cr9uLdHNdo9ARJD8X?=
- =?us-ascii?Q?IisnrQ/VPRN+aPmfuPrKyuuNv5jshxy8Ofjn+wic3lhTlsNEKR9TBPhqAUZ1?=
- =?us-ascii?Q?JdQrTDerzVRbuNso3Avx+VRqePH7FG1KxDb/McafYxOWAf/J6CeAZZe8WkID?=
- =?us-ascii?Q?4nnetEcxPuVQ80Tq6acYSSXcG4NxcAn/bMIKZll2lvTTSa/cBQOyhmOTssA6?=
- =?us-ascii?Q?dR06Qq6AVkYu7++O3n2j43nKxeempMvXHttLmX3l6//Pj5OKgjAfF/iq2NN7?=
- =?us-ascii?Q?60TTOMvb5Y34Z+fEP2yrbBJnbjq6+O/MnScnMW101lzhjuLq6QAaXoThXyGE?=
- =?us-ascii?Q?ZcY8vpR3w45DsOH+hI1qJKe/BnnYAgm0Svc1VU7/bZjuw3l6JfbbIC3RP9fm?=
- =?us-ascii?Q?pJSGSVx7lWuyPinpLjVZ5j0ziqMHkm/VLWuyf0PmiFE7s2Xt7p7//FQPDQFd?=
- =?us-ascii?Q?0n60+te3bw4W1uMG/zNuFebvpsX2a/jxajm6T/VgMxP8civfco9Ft4Ho2wCk?=
- =?us-ascii?Q?xHrIaIMMlgKyQtm8YSm//UGvziEjfZxPaCRYfTI/lg+l11VKn4E+eOlV6tOo?=
- =?us-ascii?Q?3+enD83Hdg=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c0b70786-436c-407c-1930-08de4d58e5d3
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jan 2026 19:22:14.3204
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: fMnCoxq81vMsm178RYpUWXMxFkrjUGn9e2RDWOMI3TPMpq1FRgUagDNGMXmnDiui
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8484
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.18 000/312] 6.18.4-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+ sr@sladewatkins.com
+References: <20260106170547.832845344@linuxfoundation.org>
+From: Ronald Warsow <rwarsow@gmx.de>
+Content-Language: de-DE, en-US
+In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:UQU1wfmzWcPx2lNx6Ysk7TfZpAQS4N0xy3YZNJkzlQHQmS0n2Qn
+ sym0EgJVgwsk9W+rtDbEubqlN0FZbXiG1ikB/LEgXoDzRhphL77SvUj1JvNc07m/9OwAEt9
+ PWxAAXoR9G1UTIQn4oPNJfMXAZdcwYPjKaR2Wx2y+F8t5oKaiLd7RAYDEod/XqeGE5e5uiQ
+ lKKCAl3r5tVpvfszNsS4Q==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:e9mqlgHfYoo=;zMUpMow7nmyGwZY856NjpFn02sq
+ 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
+ ie40KsWnC+NENzc5bRTW/xtxkU=
 
-The selftest now depends on the AMDv1 page table, however the selftest
-kconfig itself is just an sub-option of the main IOMMUFD module kconfig.
+Hi
 
-This means it cannot be modular and so kconfig allowed a modular
-IOMMU_PT_AMDV1 with a built in IOMMUFD. This causes link failures:
+no regressions here on x86_64 (RKL, Intel 11th Gen. CPU)
 
-   ld: vmlinux.o: in function `mock_domain_alloc_pgtable.isra.0':
-   selftest.c:(.text+0x12e8ad3): undefined reference to `pt_iommu_amdv1_init'
-   ld: vmlinux.o: in function `BSWAP_SHUFB_CTL':
-   sha1-avx2-asm.o:(.rodata+0xaa36a8): undefined reference to `pt_iommu_amdv1_read_and_clear_dirty'
-   ld: sha1-avx2-asm.o:(.rodata+0xaa36f0): undefined reference to `pt_iommu_amdv1_map_pages'
-   ld: sha1-avx2-asm.o:(.rodata+0xaa36f8): undefined reference to `pt_iommu_amdv1_unmap_pages'
-   ld: sha1-avx2-asm.o:(.rodata+0xaa3720): undefined reference to `pt_iommu_amdv1_iova_to_phys'
+Thanks
 
-Adjust the kconfig to disable IOMMUFD_TEST if IOMMU_PT_AMDV1 is incompatible.
-
-Fixes: e93d5945ed5b ("iommufd: Change the selftest to use iommupt instead of xarray")
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202512210135.freQWpxa-lkp@intel.com/
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
----
- drivers/iommu/iommufd/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-Arnd, I think the above kbuild report is matching what you were reporting, I
-was able to test this with those instructions.
-
-diff --git a/drivers/iommu/iommufd/Kconfig b/drivers/iommu/iommufd/Kconfig
-index 7e41e3ccea7587..455bac0351f289 100644
---- a/drivers/iommu/iommufd/Kconfig
-+++ b/drivers/iommu/iommufd/Kconfig
-@@ -41,7 +41,7 @@ config IOMMUFD_TEST
- 	depends on DEBUG_KERNEL
- 	depends on FAULT_INJECTION
- 	depends on RUNTIME_TESTING_MENU
--	depends on IOMMU_PT_AMDV1
-+	depends on IOMMU_PT_AMDV1=y || IOMMUFD=IOMMU_PT_AMDV1
- 	select DMA_SHARED_BUFFER
- 	select IOMMUFD_DRIVER
- 	default n
--- 
-2.43.0
-
+Tested-by: Ronald Warsow <rwarsow@gmx.de>
