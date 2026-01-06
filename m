@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E89D134CFD6;
-	Tue,  6 Jan 2026 17:28:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CCF934F466;
+	Tue,  6 Jan 2026 17:28:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720484; cv=none; b=KJciMJ5buXe+O9D5G1h8HC99kq1VTxEcIwVjPHCXBQuYkrX2dvmpRzOD8zqlUEFmb3wPWNOo0KhN+ZI0J4OtqLxx23I9zqvpRaAUYOGw16EtQec2T47kSiwvN5Tl6VYEhpaxFUkBhhOTpJSWJk560RPLR93zAYHPOtcciLi6AYo=
+	t=1767720487; cv=none; b=qs8ttHlG06e1JHlsCKXrilnfCcWBSiOUeEzxq53I4TTT3Bdsa8YrCDrPJvzBYwFfgenh7DJgpqL5eQZGrUOuw9yAb8e4rmS7NEAWjz4pI3mfWJWP1zOJmpraIKsbPtoenVP4d1GGFERUwDRHid8K9AXgqXQsHnga3gpPZUlDlQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720484; c=relaxed/simple;
-	bh=Ldt1GJ18TmkIoNIhTPPk6vmtYI0lvQLJ85IZ38UBNO4=;
+	s=arc-20240116; t=1767720487; c=relaxed/simple;
+	bh=z5jCHRXehiBTHyf0l2rz0tIR7E9QFSYay91R9jl81wo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TD1sU8c2LcDJZVZ2nSPRYQ+grGWVD4rE8lIcsiW6M2jyUEk+wLj3kCUgbcoxrvaVl0W5uccJPR9y6fsbcL/1A3DACdYVOPIF5W9o8xDMrTOfAp/gIjwsPecNT8gBZhfPqkybA2TBOO+dQLwpnleTSN1YfPDi+1x65CNHHVOZTVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=znJCbD71; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZgP/HdRb9ewCpAIu3iReSyZf6YSPKuhNqXoVNqH5kkTLUrmAfuf+qkq7cyF6rqx49RZdzedUpXH22zy6KS0gdE9h15WFGJz9BkGL5p+V+K7uYRwLYebIE47+5NH4ybCVIdlvXJPwiOBARO/qxeFScrigzqXhcboJkJtq6wn0nZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vuTx6knt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="znJCbD71"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48E32C116C6;
-	Tue,  6 Jan 2026 17:28:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vuTx6knt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF3A9C116C6;
+	Tue,  6 Jan 2026 17:28:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720483;
-	bh=Ldt1GJ18TmkIoNIhTPPk6vmtYI0lvQLJ85IZ38UBNO4=;
+	s=korg; t=1767720487;
+	bh=z5jCHRXehiBTHyf0l2rz0tIR7E9QFSYay91R9jl81wo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=znJCbD71LeJq4RcvpDhz4VV565YQPRMnLMzxqj7FBFVTmylsRMcU5W4b2awo448C+
-	 0kgMLb/2fg+tbhfGecDxcj/mSEHs4V9hVVbnXrmeTes7RGIb0MPtT1bcEBLEDvjRdI
-	 t2EQvxmmhu+gE0UouUHbgboWxVP3blnb7skkUB18=
+	b=vuTx6kntuDZhjOYGrINUwzSjufVwfIaAjldJ9+KaGUymUSqOcukuJ+LPLjPVp/erA
+	 hSsnLfIEC6uPietHCJChF4SCZjA+mcFhbkerTughmBLEU7cwLCw/7IUD2O6r2YjljM
+	 id1XAVYQcdn+P7Op5q00hjxmA77dATBKoxNyvH8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Rogers <linux@joshua.hu>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.12 243/567] svcrdma: use rc_pageoff for memcpy byte offset
-Date: Tue,  6 Jan 2026 18:00:25 +0100
-Message-ID: <20260106170500.304811729@linuxfoundation.org>
+	Harry Wentland <harry.wentland@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 252/567] drm/amd/display: Use GFP_ATOMIC in dc_create_plane_state()
+Date: Tue,  6 Jan 2026 18:00:34 +0100
+Message-ID: <20260106170500.636700141@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -50,35 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joshua Rogers <linux@joshua.hu>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit a8ee9099f30654917aa68f55d707b5627e1dbf77 upstream.
+commit 3c41114dcdabb7b25f5bc33273c6db9c7af7f4a7 upstream.
 
-svc_rdma_copy_inline_range added rc_curpage (page index) to the page
-base instead of the byte offset rc_pageoff. Use rc_pageoff so copies
-land within the current page.
+This can get called from an atomic context.
 
-Found by ZeroPath (https://zeropath.com)
-
-Fixes: 8e122582680c ("svcrdma: Move svc_rdma_read_info::ri_pageno to struct svc_rdma_recv_ctxt")
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4470
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 8acdad9344cc7b4e7bc01f0dfea80093eb3768db)
 Cc: stable@vger.kernel.org
-Signed-off-by: Joshua Rogers <linux@joshua.hu>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_rw.c |    2 +-
+ drivers/gpu/drm/amd/display/dc/core/dc_surface.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/sunrpc/xprtrdma/svc_rdma_rw.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_rw.c
-@@ -851,7 +851,7 @@ static int svc_rdma_copy_inline_range(st
- 			head->rc_page_count++;
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_surface.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_surface.c
+@@ -93,7 +93,7 @@ void enable_surface_flip_reporting(struc
+ struct dc_plane_state *dc_create_plane_state(const struct dc *dc)
+ {
+ 	struct dc_plane_state *plane_state = kvzalloc(sizeof(*plane_state),
+-							GFP_KERNEL);
++							GFP_ATOMIC);
  
- 		dst = page_address(rqstp->rq_pages[head->rc_curpage]);
--		memcpy(dst + head->rc_curpage, src + offset, page_len);
-+		memcpy((unsigned char *)dst + head->rc_pageoff, src + offset, page_len);
- 
- 		head->rc_readbytes += page_len;
- 		head->rc_pageoff += page_len;
+ 	if (NULL == plane_state)
+ 		return NULL;
 
 
