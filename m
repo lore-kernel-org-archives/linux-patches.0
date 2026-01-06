@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB30F3559C0;
-	Tue,  6 Jan 2026 17:29:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 424033559CC;
+	Tue,  6 Jan 2026 17:29:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720564; cv=none; b=jquCFhhdI6MAqDA6mpcU2+mnpn7ABJI2X6i3FdDdIW/aXXZc6Piu3VkbVqI+u0jGcbVqc5gEHtrebzKsqW2iJe1KqpRi2bmDRsPgcLbfUuXB6kKsrbdZK/Yk50XhHS9NQKqRfvOl+S4Ils8uUAi67rSuLFl5DeL7DwHuwOaoA34=
+	t=1767720568; cv=none; b=WOD3EPS81gsp4PTd5mu3oUbDpv/HgYN1xl/WH868mHiqczqWjaFRSoSn/nQp/NV46QUwyFHlAd7JaCahSunKjFtBffBU6pDJ5JwzodIv43fNk9mUk5qonwpel1pboA8zlSmDXQNyM4DSEL+a3kBiZm1yS4SbcPBvEFuHJfZFfo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720564; c=relaxed/simple;
-	bh=F7VdJXcNIbIl1mfo/wYoUtwF6krQOhTn7Crifgbl+i4=;
+	s=arc-20240116; t=1767720568; c=relaxed/simple;
+	bh=6je1NnD7zp3qczJgxtZB9dKELkuhQQfS9Yn0XW1wOUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QmlkMAzBtSDYxT61sX/A/3QO4fCR6+UXeFUqyWFnO1E8CFaGKL+wWu9nU5UyWKP8NjDDQONOcMXMBnYWxnxmqDzOfZzt96IHkrrxT0PMhCjzi1zwDLjaTAnk/EK9dZPaOEeXadQBTEGMjGx4LxmGBsX//ET+aECOZd6K767ye30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BYh93WnT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=elownaqM7U9neRGXLAJCz1HgoXXN/zPT9Jy8rIGtHn5lYiTXX2NwMADBMLv4UhIRo7YFc74/bH7CIbtht0VwLPRqtbqoxOcriDAcBxZH5wsV0OCNCWdbaZI2iFxQp7JOsYtGe+EhWRUBqjW/cJjflHIhrg8SdHuPKWbNtEeLHEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i2xk0UI6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BYh93WnT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AEEDC116C6;
-	Tue,  6 Jan 2026 17:29:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i2xk0UI6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6647C116C6;
+	Tue,  6 Jan 2026 17:29:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720564;
-	bh=F7VdJXcNIbIl1mfo/wYoUtwF6krQOhTn7Crifgbl+i4=;
+	s=korg; t=1767720568;
+	bh=6je1NnD7zp3qczJgxtZB9dKELkuhQQfS9Yn0XW1wOUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BYh93WnTYRyCVFGGjMZN5XvFbROXgBQioYLAaVSeUTxMuqDq0HuY+KKIpeyvRfvn2
-	 yRe2CwukUOX2hgORWfajEL/VOt/2yeNXLHDQ9ghIPUuauIrJc6YHZ6P/WPhK5Ttgov
-	 G7+bXWcaDS1p6Jw84fWOK9GnRM6gYalVvo6ivbXI=
+	b=i2xk0UI64P/kVbSd2v61BH5CkWjEOtvsqxp93fREpxj3N7J6ZvVDASAhexs82MygR
+	 FzJMQkKPsuQ/AeXLhbyzVdg1BKaoN8VhlNikvJnDDRzSZw02XRm1+EdrA7kTFR/EAr
+	 if/f3X+cYrNKE448ifZhM3lP0JPvXdCPQCgCPcjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Thierry Reding <treding@nvidia.com>
-Subject: [PATCH 6.12 274/567] amba: tegra-ahb: Fix device leak on SMMU enable
-Date: Tue,  6 Jan 2026 18:00:56 +0100
-Message-ID: <20260106170501.462205895@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 6.12 275/567] virtio: vdpa: Fix reference count leak in octep_sriov_enable()
+Date: Tue,  6 Jan 2026 18:00:57 +0100
+Message-ID: <20260106170501.499486223@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -50,34 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit 500e1368e46928f4b2259612dcabb6999afae2a6 upstream.
+commit b41ca62c0019de1321d75f2b2f274a28784a41ed upstream.
 
-Make sure to drop the reference taken to the AHB platform device when
-looking up its driver data while enabling the SMMU.
+pci_get_device() will increase the reference count for the returned
+pci_dev, and also decrease the reference count for the input parameter
+from if it is not NULL.
 
-Note that holding a reference to a device does not prevent its driver
-data from going away.
+If we break the loop in  with 'vf_pdev' not NULL. We
+need to call pci_dev_put() to decrease the reference count.
 
-Fixes: 89c788bab1f0 ("ARM: tegra: Add SMMU enabler in AHB")
-Cc: stable@vger.kernel.org	# 3.5
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Found via static anlaysis and this is similar to commit c508eb042d97
+("perf/x86/intel/uncore: Fix reference count leak in sad_cfg_iio_topology()")
+
+Fixes: 8b6c724cdab8 ("virtio: vdpa: vDPA driver for Marvell OCTEON DPU devices")
+Cc: stable@vger.kernel.org
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20251027060737.33815-1-linmq006@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/amba/tegra-ahb.c |    1 +
+ drivers/vdpa/octeon_ep/octep_vdpa_main.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/amba/tegra-ahb.c
-+++ b/drivers/amba/tegra-ahb.c
-@@ -144,6 +144,7 @@ int tegra_ahb_enable_smmu(struct device_
- 	if (!dev)
- 		return -EPROBE_DEFER;
- 	ahb = dev_get_drvdata(dev);
-+	put_device(dev);
- 	val = gizmo_readl(ahb, AHB_ARBITRATION_XBAR_CTRL);
- 	val |= AHB_ARBITRATION_XBAR_CTRL_SMMU_INIT_DONE;
- 	gizmo_writel(ahb, val, AHB_ARBITRATION_XBAR_CTRL);
+--- a/drivers/vdpa/octeon_ep/octep_vdpa_main.c
++++ b/drivers/vdpa/octeon_ep/octep_vdpa_main.c
+@@ -692,6 +692,7 @@ static int octep_sriov_enable(struct pci
+ 		octep_vdpa_assign_barspace(vf_pdev, pdev, index);
+ 		if (++index == num_vfs) {
+ 			done = true;
++			pci_dev_put(vf_pdev);
+ 			break;
+ 		}
+ 	}
 
 
