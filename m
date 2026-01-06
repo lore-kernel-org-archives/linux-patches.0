@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF7D346E5F;
-	Tue,  6 Jan 2026 17:15:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F084346FA4;
+	Tue,  6 Jan 2026 17:16:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719760; cv=none; b=CpStuCV+lDh7hYwMAbF6PAQB7XoOFK06H39sk2kEODMmB0vyGeItbrJEuzieOXyb7VtSE7o7BdxlO/77lnfsAxFPVq6IO/cSeGLqqoafHH/Wiiy3hj+FGOcGER8MbYYi5AxMWaaJF3erv23hqs3me8d6VL27G1ZE9duvFyZrD0g=
+	t=1767719763; cv=none; b=mYh+kthers+VEhfA6k+e9uG9KVGQF8RS7p7aapEwEQmi3QG+kYdoHeKOSLG5BF6aPztCthb94jCG+d+aKyEtGmO8329KLdMOXLIEjxIeGy6wdKibhyxKOaRXzfEgJtUgiMq7HACyqisYkGWv5zNvhhEgRkMz7F/fEdlUxgrWR1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719760; c=relaxed/simple;
-	bh=DQZYEr1PMUQXhmo6kHnx61Wh3pyT4LFuOOZFrErrGK4=;
+	s=arc-20240116; t=1767719763; c=relaxed/simple;
+	bh=KRWSfFNdTVpiwMw0C/H1DHpEb8/daeL/FPNHCLhQDjc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cKDdkCdvRX8VID0avxnsimls8Ye9xWfSvJFJr7L1jziFcHS0GQqF0zj5z89n7FN3aBRF8XaZwBlj9kfIiC5XTVviveU+U+FKmPXTSdwPJTvTvPMdaZybq44cy/u4FKpxj59w2nxbH6gTCAJ8/HNWBqnDHONZuucRMNdEC1k5FiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mzQC48ca; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f3ON03sEV96x63fZI1etsnDY9+kWUwtCsefozINRQjtoYuYkntSeR8R0g3o9XHQ+F3iareGT1aC/agBjX3ZCW5+83FctCX8238ECmn8j8UMSuthePv0QQPTqIwq+3xzr+6nKDWL1/cYK20DVUzLp9vM9J0/gfYoZk5Ut3U/fba0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mpkXYzNw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mzQC48ca"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 575FFC116C6;
-	Tue,  6 Jan 2026 17:15:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mpkXYzNw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72BEEC116C6;
+	Tue,  6 Jan 2026 17:16:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719759;
-	bh=DQZYEr1PMUQXhmo6kHnx61Wh3pyT4LFuOOZFrErrGK4=;
+	s=korg; t=1767719762;
+	bh=KRWSfFNdTVpiwMw0C/H1DHpEb8/daeL/FPNHCLhQDjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mzQC48capmcCABgUrprjRHpr2WcbeqojT7/p50v82w6dlHxQ4OBHFEovJpwHbPqd6
-	 FwxckeovqMlryZ+X+PBwHpaquL4pMvGlPr/nhjztsMsioDGGAb7Kmf1UHYhiiT7/lT
-	 lkQGUagTjouP/sip6ESCQxhrQlo0mh1eWK1AKx1c=
+	b=mpkXYzNw7GRemcJm06Rp7sSkMXuDSh99OlSWBrSAS/drr0n0XGiJl20BgEVhSYhcL
+	 qfacjadf4IAf027dBfYhwCzGq3jPpxHWhZrQLIozi3jamDj6bF9xKjUkkq+M/Iv6PX
+	 38KNoSxLmzzKO+g+EyO42Elkxe/v2nulo35ZM2B4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	syzbot+eadd98df8bceb15d7fed@syzkaller.appspotmail.com,
+	Qu Wenruo <wqu@suse.com>,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 030/567] wifi: cfg80211: use cfg80211_leave() in iftype change
-Date: Tue,  6 Jan 2026 17:56:52 +0100
-Message-ID: <20260106170452.457159461@linuxfoundation.org>
+Subject: [PATCH 6.12 004/567] btrfs: fix memory leak of fs_devices in degraded seed device path
+Date: Tue,  6 Jan 2026 17:56:26 +0100
+Message-ID: <20260106170451.504439478@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -50,61 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-[ Upstream commit 7a27b73943a70ee226fa125327101fb18e94701d ]
+[ Upstream commit b57f2ddd28737db6ff0e9da8467f0ab9d707e997 ]
 
-When changing the interface type, all activity on the interface has
-to be stopped first. This was done independent of existing code in
-cfg80211_leave(), so didn't handle e.g. background radar detection.
-Use cfg80211_leave() to handle it the same way.
+In open_seed_devices(), when find_fsid() fails and we're in DEGRADED
+mode, a new fs_devices is allocated via alloc_fs_devices() but is never
+added to the seed_list before returning. This contrasts with the normal
+path where fs_devices is properly added via list_add().
 
-Note that cfg80211_leave() behaves slightly differently for IBSS in
-wireless extensions, it won't send an event in that case. We could
-handle that, but since nl80211 was used to change the type, IBSS is
-rare, and wext is already a corner case, it doesn't seem worth it.
+If any error occurs later in read_one_dev() or btrfs_read_chunk_tree(),
+the cleanup code iterates seed_list to free seed devices, but this
+orphaned fs_devices is never found and never freed, causing a memory
+leak. Any devices allocated via add_missing_dev() and attached to this
+fs_devices are also leaked.
 
-Link: https://patch.msgid.link/20251121174021.922ef48ce007.I970c8514252ef8a864a7fbdab9591b71031dee03@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fix this by adding the newly allocated fs_devices to seed_list in the
+degraded path, consistent with the normal path.
+
+Fixes: 5f37583569442 ("Btrfs: move the missing device to its own fs device list")
+Reported-by: syzbot+eadd98df8bceb15d7fed@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=eadd98df8bceb15d7fed
+Tested-by: syzbot+eadd98df8bceb15d7fed@syzkaller.appspotmail.com
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/util.c | 23 +----------------------
- 1 file changed, 1 insertion(+), 22 deletions(-)
+ fs/btrfs/volumes.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/wireless/util.c b/net/wireless/util.c
-index b115489a846f8..6aff651a9b68d 100644
---- a/net/wireless/util.c
-+++ b/net/wireless/util.c
-@@ -1230,28 +1230,7 @@ int cfg80211_change_iface(struct cfg80211_registered_device *rdev,
- 		dev->ieee80211_ptr->use_4addr = false;
- 		rdev_set_qos_map(rdev, dev, NULL);
+diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
+index ce991a8390466..9c6e96f630132 100644
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -7071,6 +7071,7 @@ static struct btrfs_fs_devices *open_seed_devices(struct btrfs_fs_info *fs_info,
  
--		switch (otype) {
--		case NL80211_IFTYPE_AP:
--		case NL80211_IFTYPE_P2P_GO:
--			cfg80211_stop_ap(rdev, dev, -1, true);
--			break;
--		case NL80211_IFTYPE_ADHOC:
--			cfg80211_leave_ibss(rdev, dev, false);
--			break;
--		case NL80211_IFTYPE_STATION:
--		case NL80211_IFTYPE_P2P_CLIENT:
--			cfg80211_disconnect(rdev, dev,
--					    WLAN_REASON_DEAUTH_LEAVING, true);
--			break;
--		case NL80211_IFTYPE_MESH_POINT:
--			/* mesh should be handled? */
--			break;
--		case NL80211_IFTYPE_OCB:
--			cfg80211_leave_ocb(rdev, dev);
--			break;
--		default:
--			break;
--		}
-+		cfg80211_leave(rdev, dev->ieee80211_ptr);
+ 		fs_devices->seeding = true;
+ 		fs_devices->opened = 1;
++		list_add(&fs_devices->seed_list, &fs_info->fs_devices->seed_list);
+ 		return fs_devices;
+ 	}
  
- 		cfg80211_process_rdev_events(rdev);
- 		cfg80211_mlme_purge_registrations(dev->ieee80211_ptr);
 -- 
 2.51.0
 
