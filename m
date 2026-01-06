@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A282773E5;
-	Tue,  6 Jan 2026 17:31:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FF6C224B04;
+	Tue,  6 Jan 2026 17:32:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720719; cv=none; b=fjn/Bm429/5bFlPilV2Is4pfeMVV+VoAaFCAZoEFRHt2p1zK4OMVP5Hz69JsThQuFbvBcnVaxnl/qnagf5XumQEUa+E7AsczFnhTXLg47gcRFS6MzCngYc3GSLO8j9cC8p2AsayZ+jMySq1fntKOEZR7oNUj9S5VYQya8w+KbkY=
+	t=1767720723; cv=none; b=aox+ka97m/IFrXlcVAH5GAeqEBAJNUKT+sYjFB1L7ZOYQZMPJ/zg2cPH1m4L/WetMwrbSj8DBse7i+v4mKOWT6yPoHiIaH/4ALuiYXrM6htEmCZmjOwQ8iqb/cc8iJ/n+VHrIT41jr4KA1bWcqtImgBJWK36WMMWeu8Om15uFPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720719; c=relaxed/simple;
-	bh=3FnSlG2C63ecpNzidA6vPpUEx7y2gR02zgcc6skTRLo=;
+	s=arc-20240116; t=1767720723; c=relaxed/simple;
+	bh=UZmzT2IlVg1XzQwa8ob83YBi3OJFUvgpbi0AoCe4x4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ScN/MQhHGdF0y9KWdH5Di+aURr+qYYix3nqm+ZaKs2ICzP6uj8lGIWhs6NUz/HBVk9ORmchJIGZGZvvtWg/9xRZ85ke2rrZmSBBmoYmFtrciIXVICLy9IF8W8UO6ryLrOd0MdQWYUWOyvM1RJi8HaxJNIWH6veY1AK5GoOaJUGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R+wV18g1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cAFCMwZbxnzpOHU0BCGkNZIczAJC0Zo771A8/lhOIwtnzkexEI57N4/ZrdPBWV1S1mjARbofRz3yXYf3LNcabJ3QYcIfXGvN1QduupJUMMoHuqH2IQutMESo7Y8pmdFTeJQytc/ifrlVi+5XOU7gxcvgF+/hqaPDPRm4I0ydtDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O1MVQWRs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R+wV18g1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23D87C116C6;
-	Tue,  6 Jan 2026 17:31:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O1MVQWRs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B094C116C6;
+	Tue,  6 Jan 2026 17:32:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720719;
-	bh=3FnSlG2C63ecpNzidA6vPpUEx7y2gR02zgcc6skTRLo=;
+	s=korg; t=1767720723;
+	bh=UZmzT2IlVg1XzQwa8ob83YBi3OJFUvgpbi0AoCe4x4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R+wV18g1ErVM2QsD/B2kBIF5ipSSR20A7B7FEQg3ZU1Y0yj0Z9pr2vp9dcpfUv9oc
-	 bzZZFy9UBruY60It0NBYBii4iOSGQ6yyCp//34y00lF+PjbtBEj3sMdzVtkGW7C7a4
-	 oQaWsiTX86zVrQPx55Kg8dvq5/svCSKLHWl5360I=
+	b=O1MVQWRsXHQ69O6KBrGOpKfmdsRGDFJ1FbYFPV/kdWj9vq8hMfbo5GhcvDcn6glcE
+	 Vw8KPTU/x9bkck6uBkk0jKZJIolOeUj/WcqH+UVInlIzOS/yjegiqhZPUWGeuOyZmM
+	 HwGDH0B8rwrSuJWeFdox6qTbCvU3GuZJNeai3z98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Alice C. Munduruca" <alice.munduruca@canonical.com>,
-	Cengiz Can <cengiz.can@canonical.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 314/567] selftests: net: fix "buffer overflow detected" for tap.c
-Date: Tue,  6 Jan 2026 18:01:36 +0100
-Message-ID: <20260106170502.944266431@linuxfoundation.org>
+Subject: [PATCH 6.12 323/567] platform/x86: hp-bioscfg: Fix out-of-bounds array access in ACPI package parsing
+Date: Tue,  6 Jan 2026 18:01:45 +0100
+Message-ID: <20260106170503.272593325@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -47,101 +46,130 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alice C. Munduruca <alice.munduruca@canonical.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit 472c5dd6b95c02b3e5d7395acf542150e91165e7 ]
+[ Upstream commit e44c42c830b7ab36e3a3a86321c619f24def5206 ]
 
-When the selftest 'tap.c' is compiled with '-D_FORTIFY_SOURCE=3',
-the strcpy() in rtattr_add_strsz() is replaced with a checked
-version which causes the test to consistently fail when compiled
-with toolchains for which this option is enabled by default.
+The hp_populate_*_elements_from_package() functions in the hp-bioscfg
+driver contain out-of-bounds array access vulnerabilities.
 
- TAP version 13
- 1..3
- # Starting 3 tests from 1 test cases.
- #  RUN           tap.test_packet_valid_udp_gso ...
- *** buffer overflow detected ***: terminated
- # test_packet_valid_udp_gso: Test terminated by assertion
- #          FAIL  tap.test_packet_valid_udp_gso
- not ok 1 tap.test_packet_valid_udp_gso
- #  RUN           tap.test_packet_valid_udp_csum ...
- *** buffer overflow detected ***: terminated
- # test_packet_valid_udp_csum: Test terminated by assertion
- #          FAIL  tap.test_packet_valid_udp_csum
- not ok 2 tap.test_packet_valid_udp_csum
- #  RUN           tap.test_packet_crash_tap_invalid_eth_proto ...
- *** buffer overflow detected ***: terminated
- # test_packet_crash_tap_invalid_eth_proto: Test terminated by assertion
- #          FAIL  tap.test_packet_crash_tap_invalid_eth_proto
- not ok 3 tap.test_packet_crash_tap_invalid_eth_proto
- # FAILED: 0 / 3 tests passed.
- # Totals: pass:0 fail:3 xfail:0 xpass:0 skip:0 error:0
+These functions parse ACPI packages into internal data structures using
+a for loop with index variable 'elem' that iterates through
+enum_obj/integer_obj/order_obj/password_obj/string_obj arrays.
 
-A buffer overflow is detected by the fortified glibc __strcpy_chk()
-since the __builtin_object_size() of `RTA_DATA(rta)` is incorrectly
-reported as 1, even though there is ample space in its bounding
-buffer `req`.
+When processing multi-element fields like PREREQUISITES and
+ENUM_POSSIBLE_VALUES, these functions read multiple consecutive array
+elements using expressions like 'enum_obj[elem + reqs]' and
+'enum_obj[elem + pos_values]' within nested loops.
 
-Additionally, given that IFLA_IFNAME also expects a null-terminated
-string, callers of rtaddr_add_str{,sz}() could simply use the
-rtaddr_add_strsz() variant. (which has been renamed to remove the
-trailing `sz`) memset() has been used for this function since it
-is unchecked and thus circumvents the issue discussed in the
-previous paragraph.
+The bug is that the bounds check only validated elem, but did not consider
+the additional offset when accessing elem + reqs or elem + pos_values.
 
-Fixes: 2e64fe4624d1 ("selftests: add few test cases for tap driver")
-Signed-off-by: Alice C. Munduruca <alice.munduruca@canonical.com>
-Reviewed-by: Cengiz Can <cengiz.can@canonical.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20251216170641.250494-1-alice.munduruca@canonical.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The fix changes the bounds check to validate the actual accessed index.
+
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Reported-by: Junrui Luo <moonafterrain@outlook.com>
+Fixes: e6c7b3e15559 ("platform/x86: hp-bioscfg: string-attributes")
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Link: https://patch.msgid.link/SYBPR01MB788173D7DD4EA2CB6383683DAFB0A@SYBPR01MB7881.ausprd01.prod.outlook.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/tap.c | 16 +++++-----------
- 1 file changed, 5 insertions(+), 11 deletions(-)
+ drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c       | 4 ++--
+ drivers/platform/x86/hp/hp-bioscfg/int-attributes.c        | 2 +-
+ drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c | 5 +++++
+ drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c  | 5 +++++
+ drivers/platform/x86/hp/hp-bioscfg/string-attributes.c     | 2 +-
+ 5 files changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/net/tap.c b/tools/testing/selftests/net/tap.c
-index 247c3b3ac1c9..51a209014f1c 100644
---- a/tools/testing/selftests/net/tap.c
-+++ b/tools/testing/selftests/net/tap.c
-@@ -56,18 +56,12 @@ static void rtattr_end(struct nlmsghdr *nh, struct rtattr *attr)
- static struct rtattr *rtattr_add_str(struct nlmsghdr *nh, unsigned short type,
- 				     const char *s)
- {
--	struct rtattr *rta = rtattr_add(nh, type, strlen(s));
-+	unsigned int strsz = strlen(s) + 1;
-+	struct rtattr *rta;
+diff --git a/drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c
+index c50ad5880503..f346aad8e9d8 100644
+--- a/drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c
+@@ -207,7 +207,7 @@ static int hp_populate_enumeration_elements_from_package(union acpi_object *enum
+ 		case PREREQUISITES:
+ 			size = min_t(u32, enum_data->common.prerequisites_size, MAX_PREREQUISITES_SIZE);
+ 			for (reqs = 0; reqs < size; reqs++) {
+-				if (elem >= enum_obj_count) {
++				if (elem + reqs >= enum_obj_count) {
+ 					pr_err("Error enum-objects package is too small\n");
+ 					return -EINVAL;
+ 				}
+@@ -255,7 +255,7 @@ static int hp_populate_enumeration_elements_from_package(union acpi_object *enum
  
--	memcpy(RTA_DATA(rta), s, strlen(s));
--	return rta;
--}
--
--static struct rtattr *rtattr_add_strsz(struct nlmsghdr *nh, unsigned short type,
--				       const char *s)
--{
--	struct rtattr *rta = rtattr_add(nh, type, strlen(s) + 1);
-+	rta = rtattr_add(nh, type, strsz);
+ 			for (pos_values = 0; pos_values < size && pos_values < MAX_VALUES_SIZE;
+ 			     pos_values++) {
+-				if (elem >= enum_obj_count) {
++				if (elem + pos_values >= enum_obj_count) {
+ 					pr_err("Error enum-objects package is too small\n");
+ 					return -EINVAL;
+ 				}
+diff --git a/drivers/platform/x86/hp/hp-bioscfg/int-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/int-attributes.c
+index 6c7f4d5fa9cb..63b1fda2be4e 100644
+--- a/drivers/platform/x86/hp/hp-bioscfg/int-attributes.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/int-attributes.c
+@@ -227,7 +227,7 @@ static int hp_populate_integer_elements_from_package(union acpi_object *integer_
+ 			size = min_t(u32, integer_data->common.prerequisites_size, MAX_PREREQUISITES_SIZE);
  
--	strcpy(RTA_DATA(rta), s);
-+	memcpy(RTA_DATA(rta), s, strsz);
- 	return rta;
- }
+ 			for (reqs = 0; reqs < size; reqs++) {
+-				if (elem >= integer_obj_count) {
++				if (elem + reqs >= integer_obj_count) {
+ 					pr_err("Error elem-objects package is too small\n");
+ 					return -EINVAL;
+ 				}
+diff --git a/drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c
+index c6e57bb9d8b7..6a31f47ce3f5 100644
+--- a/drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c
+@@ -216,6 +216,11 @@ static int hp_populate_ordered_list_elements_from_package(union acpi_object *ord
+ 			size = min_t(u32, ordered_list_data->common.prerequisites_size,
+ 				     MAX_PREREQUISITES_SIZE);
+ 			for (reqs = 0; reqs < size; reqs++) {
++				if (elem + reqs >= order_obj_count) {
++					pr_err("Error elem-objects package is too small\n");
++					return -EINVAL;
++				}
++
+ 				ret = hp_convert_hexstr_to_str(order_obj[elem + reqs].string.pointer,
+ 							       order_obj[elem + reqs].string.length,
+ 							       &str_value, &value_len);
+diff --git a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
+index 35936c05e45b..a5c457d06b9c 100644
+--- a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
+@@ -303,6 +303,11 @@ static int hp_populate_password_elements_from_package(union acpi_object *passwor
+ 				     MAX_PREREQUISITES_SIZE);
  
-@@ -119,7 +113,7 @@ static int dev_create(const char *dev, const char *link_type,
+ 			for (reqs = 0; reqs < size; reqs++) {
++				if (elem + reqs >= password_obj_count) {
++					pr_err("Error elem-objects package is too small\n");
++					return -EINVAL;
++				}
++
+ 				ret = hp_convert_hexstr_to_str(password_obj[elem + reqs].string.pointer,
+ 							       password_obj[elem + reqs].string.length,
+ 							       &str_value, &value_len);
+diff --git a/drivers/platform/x86/hp/hp-bioscfg/string-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/string-attributes.c
+index 27758b779b2d..7b885d25650c 100644
+--- a/drivers/platform/x86/hp/hp-bioscfg/string-attributes.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/string-attributes.c
+@@ -217,7 +217,7 @@ static int hp_populate_string_elements_from_package(union acpi_object *string_ob
+ 				     MAX_PREREQUISITES_SIZE);
  
- 	link_info = rtattr_begin(&req.nh, IFLA_LINKINFO);
- 
--	rtattr_add_strsz(&req.nh, IFLA_INFO_KIND, link_type);
-+	rtattr_add_str(&req.nh, IFLA_INFO_KIND, link_type);
- 
- 	if (fill_info_data) {
- 		info_data = rtattr_begin(&req.nh, IFLA_INFO_DATA);
+ 			for (reqs = 0; reqs < size; reqs++) {
+-				if (elem >= string_obj_count) {
++				if (elem + reqs >= string_obj_count) {
+ 					pr_err("Error elem-objects package is too small\n");
+ 					return -EINVAL;
+ 				}
 -- 
 2.51.0
 
