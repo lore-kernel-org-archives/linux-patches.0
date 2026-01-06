@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EFF8355031;
-	Tue,  6 Jan 2026 17:48:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2408355031;
+	Tue,  6 Jan 2026 17:48:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721722; cv=none; b=bntyaFWb0YZ00wTX/gTEQJgsToqdIlN6XOCEfSUvQ7O+0/N2wv4Fz4uNxuNmt5rkj3R30+KBv4AXEEN9SxTLkZQinHeW6qBj09eAeE2xQS6SQ85eIGYpP7UauOtMOvXAGQa87ISf8XZqwH7A+iwdpCpNIllc1459N2j963GvKco=
+	t=1767721725; cv=none; b=cBvmfJ7COcyhYaUKbeEWo8pojIN7Hc4v79TB/JzOmwric1rhjncll1P4y3b+CYQxmeCbPVfrzJPEFw3lg/3mPR0g5qZeu9EkgJ8rB8/ajFf874OvtC0KM41tfV9Jh0+x5hgg4VFoyf3CkbyiU2ZQDZBq4ra06+lPkvQZ/q+SP6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721722; c=relaxed/simple;
-	bh=ciZsVo4fL67vM4yuiR3DFLcph5s+IXz36GJDCR8BlTc=;
+	s=arc-20240116; t=1767721725; c=relaxed/simple;
+	bh=Q4FB2rKKdgfd9JXTp3QKNK1YaPqRgQdPgPKbpZrRpzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wy+NzY9hUu+69GPhcOOwGEG8R+KF/cL3iVadRYCn/2VGOWA4pbxVSaAMeIszc0+3MgQV2/O6LZ795RB0oR31y7ZQQdIlqZ616oNAAyijvxaap5/Sqm4wBo/C+dx2PTTErDidd1JYzYvb3qaPiK9EbbRprIjhnseygw8b+eU/I6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xYwcno3r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rVafXpufUZvNm5baD3uzSVc1OWK1YWOG15PF9sfY+qY0aZr1wirShQ7CmFoG/PlNBiEBlGJgwpo0LOWw4+uTidWsv7FRg4m5lbL1AWw6IHYoVUOtvqqTwT72So/evhRH4unfR6x+y11CQ8Lhb7iTGEFb9TAaWOSWl8rh5wci2fw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LIOaMX+h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xYwcno3r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DCB7C16AAE;
-	Tue,  6 Jan 2026 17:48:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LIOaMX+h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CB1DC116C6;
+	Tue,  6 Jan 2026 17:48:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721721;
-	bh=ciZsVo4fL67vM4yuiR3DFLcph5s+IXz36GJDCR8BlTc=;
+	s=korg; t=1767721724;
+	bh=Q4FB2rKKdgfd9JXTp3QKNK1YaPqRgQdPgPKbpZrRpzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xYwcno3rat6bRMXpl58Sn9i4y2wxlH3q9U9dXie6VCl1lLOGDEvvARTpRO6mPd8K1
-	 vy+elkrtEfnWdxJ8yqdBF/YMDsnuTCpmLFchhXTBV4aVgmtZTvf7NVmKnKIZVl+hqD
-	 5FNeK5gTnAfNq1VWSf3MTQ5k+8RN4CfWtL8P5YbY=
+	b=LIOaMX+heojKAeKTcjWeMUOoIP9I3zOvUUo2Bfsrvgq39ha42W6crkTQvaebcWr6J
+	 NEBB92XoJihq/FKH66uj/RF54U7865v3oBBa7McowDr6eqj16QrkgbWZJJ4nmKBTvW
+	 dCTHfxepr5uoScuwTYugpiDS2dN5Z2oxNRox5Vp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Brian Vazquez <brianvv@google.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Samuel Salin <Samuel.salin@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 051/312] net: mdio: rtl9300: use scoped for loops
-Date: Tue,  6 Jan 2026 18:02:05 +0100
-Message-ID: <20260106170549.700641987@linuxfoundation.org>
+Subject: [PATCH 6.18 021/312] idpf: reduce mbx_task schedule delay to 300us
+Date: Tue,  6 Jan 2026 18:01:35 +0100
+Message-ID: <20260106170548.621982886@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -51,60 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Brian Vazquez <brianvv@google.com>
 
-[ Upstream commit a4f800c4487dc5d6fcc28da89c7cc3c187ccc731 ]
+[ Upstream commit b3d6bbae1d6d5638a4ab702ab195476787cde857 ]
 
-Currently in the return path, fwnode_handle_put calls are missing. Just use
-_scoped to avoid the issue.
+During the IDPF init phase, the mailbox runs in poll mode until it is
+configured to properly handle interrupts. The previous delay of 300ms is
+excessively long for the mailbox polling mechanism, which causes a slow
+initialization of ~2s:
 
-Fixes: 24e31e474769 ("net: mdio: Add RTL9300 MDIO driver")
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Link: https://patch.msgid.link/20251217210153.14641-1-rosenp@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+echo 0000:06:12.4 > /sys/bus/pci/drivers/idpf/bind
+
+[   52.444239] idpf 0000:06:12.4: enabling device (0000 -> 0002)
+[   52.485005] idpf 0000:06:12.4: Device HW Reset initiated
+[   54.177181] idpf 0000:06:12.4: PTP init failed, err=-EOPNOTSUPP
+[   54.206177] idpf 0000:06:12.4: Minimum RX descriptor support not provided, using the default
+[   54.206182] idpf 0000:06:12.4: Minimum TX descriptor support not provided, using the default
+
+Changing the delay to 300us avoids the delays during the initial mailbox
+transactions, making the init phase much faster:
+
+[   83.342590] idpf 0000:06:12.4: enabling device (0000 -> 0002)
+[   83.384402] idpf 0000:06:12.4: Device HW Reset initiated
+[   83.518323] idpf 0000:06:12.4: PTP init failed, err=-EOPNOTSUPP
+[   83.547430] idpf 0000:06:12.4: Minimum RX descriptor support not provided, using the default
+[   83.547435] idpf 0000:06:12.4: Minimum TX descriptor support not provided, using the default
+
+Fixes: 4930fbf419a7 ("idpf: add core init and interrupt request")
+Signed-off-by: Brian Vazquez <brianvv@google.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Samuel Salin <Samuel.salin@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/mdio/mdio-realtek-rtl9300.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/intel/idpf/idpf_lib.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/mdio/mdio-realtek-rtl9300.c b/drivers/net/mdio/mdio-realtek-rtl9300.c
-index 33694c3ff9a7..405a07075dd1 100644
---- a/drivers/net/mdio/mdio-realtek-rtl9300.c
-+++ b/drivers/net/mdio/mdio-realtek-rtl9300.c
-@@ -354,7 +354,6 @@ static int rtl9300_mdiobus_probe_one(struct device *dev, struct rtl9300_mdio_pri
- 				     struct fwnode_handle *node)
- {
- 	struct rtl9300_mdio_chan *chan;
--	struct fwnode_handle *child;
- 	struct mii_bus *bus;
- 	u32 mdio_bus;
- 	int err;
-@@ -371,7 +370,7 @@ static int rtl9300_mdiobus_probe_one(struct device *dev, struct rtl9300_mdio_pri
- 	 * compatible = "ethernet-phy-ieee802.3-c45". This does mean we can't
- 	 * support both c45 and c22 on the same MDIO bus.
- 	 */
--	fwnode_for_each_child_node(node, child)
-+	fwnode_for_each_child_node_scoped(node, child)
- 		if (fwnode_device_is_compatible(child, "ethernet-phy-ieee802.3-c45"))
- 			priv->smi_bus_is_c45[mdio_bus] = true;
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_lib.c b/drivers/net/ethernet/intel/idpf/idpf_lib.c
+index 8a941f0fb048..aaafe40f5eaf 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_lib.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_lib.c
+@@ -1271,7 +1271,7 @@ void idpf_mbx_task(struct work_struct *work)
+ 		idpf_mb_irq_enable(adapter);
+ 	else
+ 		queue_delayed_work(adapter->mbx_wq, &adapter->mbx_task,
+-				   msecs_to_jiffies(300));
++				   usecs_to_jiffies(300));
  
-@@ -409,7 +408,6 @@ static int rtl9300_mdiobus_map_ports(struct device *dev)
- {
- 	struct rtl9300_mdio_priv *priv = dev_get_drvdata(dev);
- 	struct device *parent = dev->parent;
--	struct fwnode_handle *port;
- 	int err;
- 
- 	struct fwnode_handle *ports __free(fwnode_handle) =
-@@ -418,7 +416,7 @@ static int rtl9300_mdiobus_map_ports(struct device *dev)
- 		return dev_err_probe(dev, -EINVAL, "%pfwP missing ethernet-ports\n",
- 				     dev_fwnode(parent));
- 
--	fwnode_for_each_child_node(ports, port) {
-+	fwnode_for_each_child_node_scoped(ports, port) {
- 		struct device_node *mdio_dn;
- 		u32 addr;
- 		u32 bus;
+ 	idpf_recv_mb_msg(adapter);
+ }
 -- 
 2.51.0
 
