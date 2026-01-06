@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E7B3644AD;
-	Tue,  6 Jan 2026 17:53:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78EA33644AD;
+	Tue,  6 Jan 2026 17:53:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722008; cv=none; b=vGXInAQkkzBvoWtnei1nOYycGnYUugvly3OkZIW5teX2ndCZFA9PhKQ4Jk+gObCNSFuARQdCSRpBQbeshhuwRZXgHax2pfsLdz6wT08X3h7Ii1GZoGrxGKGmRyiqGUDUB4QZu0HQ3NNgqOHuYMf7sybzxWSMqe0EE5WbXNe2S0c=
+	t=1767722011; cv=none; b=QKbDzM5sDMaKsCDkBgK6T3fuKOXtpUtW2zb5MOja0gQ9b8m8SazdJ1VPKAL1QnkcuIBWKTr/Bqwpc58mX7SIa51M31qoiOJ7Bvq3VlEgAfAArE3tbXKkhA1z1hYSkzxs4N6OncUTvooNDIN+KndsD5Nuj0TDlOb/b58Wk4RG0c8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722008; c=relaxed/simple;
-	bh=n8dTy3x2arQrjRywRtPNJ82lXfOl+kCQkEYsu3nQLK8=;
+	s=arc-20240116; t=1767722011; c=relaxed/simple;
+	bh=AxGiPyJg10AcZns44Utoku0frjkckQ8FiVy0Y4KkC9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P3dDaNtdZS50xw8Tt9AfXpHSWVih2IV2UqKQhZpG/+byq6s6FyPsYTv+6rgqveFx4ETjewTKMAMrpptCh1fX3QknpNYasIT8VKtnZJQ5HL8CooXg73Z8WZfd/6o2Z8equ6wKjW0gaeWM3qSMOrQqXAITIKaWv/4FEHseGxB9+s0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gur4pw7t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Us06elWUnR2HpPqoXsEBbMe3O/gu+fyxjEeU9O310yRZ0FmI04UyLdZ3MeDQ0coEIvw0BDfdgVPEE++CHJiMIpJBRRz7e4DPl6KZqIDoM6Tdxz7uNQTjuJ3mO6qt57ytWjLrF7uZbDH6tiKeS0Pvt1G5Y+1NnRXPMefSAeqdncc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cLpuVHcb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gur4pw7t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8757BC116C6;
-	Tue,  6 Jan 2026 17:53:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cLpuVHcb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2B02C16AAE;
+	Tue,  6 Jan 2026 17:53:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722008;
-	bh=n8dTy3x2arQrjRywRtPNJ82lXfOl+kCQkEYsu3nQLK8=;
+	s=korg; t=1767722011;
+	bh=AxGiPyJg10AcZns44Utoku0frjkckQ8FiVy0Y4KkC9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gur4pw7thSPlY3bmOPITSrn1MVQTpCbPbrowv5nb4C1AQz3/WLrHisoPg8cwkflcu
-	 xFnONNGUtvF8blK+Eea83G9oWZusQ0/y6zj4aXRaZv6Z5BXTvXxjmOJ116DIO5U42L
-	 /Qs0nv0u30xsyoW2JUfZjqyzZT9/UJSLwBZyOxxs=
+	b=cLpuVHcbjQQG2KV9nhet750hHKwqWq+MrXVGKfTuG+P/MMdSZx2hxlVEAXiVk2VCC
+	 TxDWWE7SFLWh+BS2xh0Xyn82RVwi+0F+LGxl3XgHdv1rsAzPE/2g7FPpEPUdo4EEuQ
+	 Jm+FqPamIXGviAJOY2CHyyLXbY20NojrE/2G+730=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Imran Shaik <imran.shaik@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.18 138/312] clk: qcom: Fix SM_VIDEOCC_6350 dependencies
-Date: Tue,  6 Jan 2026 18:03:32 +0100
-Message-ID: <20260106170552.834814578@linuxfoundation.org>
+Subject: [PATCH 6.18 139/312] clk: qcom: Fix dependencies of QCS_{DISP,GPU,VIDEO}CC_615
+Date: Tue,  6 Jan 2026 18:03:33 +0100
+Message-ID: <20260106170552.870977524@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -54,43 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Nathan Chancellor <nathan@kernel.org>
 
-commit f0691a3f7558d33b5b4a900e8312613fbe4afb9d upstream.
+commit 7ec1ba01ae37897f0ecf6ab0c980378cb8a2f388 upstream.
 
-It is possible to select CONFIG_SM_GCC_6350 when targeting ARCH=arm,
-causing a Kconfig warning when selecting CONFIG_SM_GCC_6350 without
-its dependencies, CONFIG_ARM64 or CONFIG_COMPILE_TEST.
+It is possible to select CONFIG_QCS_{DISP,GPU,VIDEO}CC_615 when
+targeting ARCH=arm, causing a Kconfig warning when selecting
+CONFIG_QCS_GCC_615 without its dependencies, CONFIG_ARM64 or
+CONFIG_COMPILE_TEST.
 
-  WARNING: unmet direct dependencies detected for SM_GCC_6350
+  WARNING: unmet direct dependencies detected for QCS_GCC_615
     Depends on [n]: COMMON_CLK [=y] && COMMON_CLK_QCOM [=m] && (ARM64 || COMPILE_TEST [=n])
     Selected by [m]:
-    - SM_VIDEOCC_6350 [=m] && COMMON_CLK [=y] && COMMON_CLK_QCOM [=m]
+    - QCS_DISPCC_615 [=m] && COMMON_CLK [=y] && COMMON_CLK_QCOM [=m]
+    - QCS_GPUCC_615 [=m] && COMMON_CLK [=y] && COMMON_CLK_QCOM [=m]
+    - QCS_VIDEOCC_615 [=m] && COMMON_CLK [=y] && COMMON_CLK_QCOM [=m]
 
-Add the same dependency to clear up the warning.
+Add the same dependency to these configurations to clear up the
+warnings.
 
 Cc: stable@vger.kernel.org
-Fixes: 720b1e8f2004 ("clk: qcom: Add video clock controller driver for SM6350")
+Fixes: 9b47105f5434 ("clk: qcom: dispcc-qcs615: Add QCS615 display clock controller driver")
+Fixes: f4b5b40805ab ("clk: qcom: gpucc-qcs615: Add QCS615 graphics clock controller driver")
+Fixes: f6a8abe0cc16 ("clk: qcom: videocc-qcs615: Add QCS615 video clock controller driver")
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Reviewed-by: Imran Shaik <imran.shaik@oss.qualcomm.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250930-clk-qcom-kconfig-fixes-arm-v1-1-15ae1ae9ec9f@kernel.org
+Link: https://lore.kernel.org/r/20250930-clk-qcom-kconfig-fixes-arm-v1-2-15ae1ae9ec9f@kernel.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/clk/qcom/Kconfig | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-index 78a303842613..ec7d1a9b578e 100644
+index ec7d1a9b578e..6fef0bfc1773 100644
 --- a/drivers/clk/qcom/Kconfig
 +++ b/drivers/clk/qcom/Kconfig
-@@ -1448,6 +1448,7 @@ config SA_VIDEOCC_8775P
+@@ -531,6 +531,7 @@ config QCM_DISPCC_2290
  
- config SM_VIDEOCC_6350
- 	tristate "SM6350 Video Clock Controller"
+ config QCS_DISPCC_615
+ 	tristate "QCS615 Display Clock Controller"
 +	depends on ARM64 || COMPILE_TEST
- 	select SM_GCC_6350
- 	select QCOM_GDSC
+ 	select QCS_GCC_615
  	help
+ 	  Support for the display clock controller on Qualcomm Technologies, Inc
+@@ -586,6 +587,7 @@ config QCS_GCC_615
+ 
+ config QCS_GPUCC_615
+ 	tristate "QCS615 Graphics clock controller"
++	depends on ARM64 || COMPILE_TEST
+ 	select QCS_GCC_615
+ 	help
+ 	  Support for the graphics clock controller on QCS615 devices.
+@@ -594,6 +596,7 @@ config QCS_GPUCC_615
+ 
+ config QCS_VIDEOCC_615
+ 	tristate "QCS615 Video Clock Controller"
++	depends on ARM64 || COMPILE_TEST
+ 	select QCS_GCC_615
+ 	help
+ 	  Support for the video clock controller on QCS615 devices.
 -- 
 2.52.0
 
