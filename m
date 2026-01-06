@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3D13644AD;
-	Tue,  6 Jan 2026 17:53:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD3B364E8A;
+	Tue,  6 Jan 2026 17:53:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722014; cv=none; b=pA9TZXz9Msq8/XfdW+qpa/4uiEPVwKZLFOHFrsQERtFqzRffs0m9cUxW10XlG7YOzw8+XDuFcyu/8UicH1GC5M4K5XDN2u87P7o+E252liSFtVzYCh/UXWaNw3T4Qmd07x1GttyZQKoP5RQ2z+zckjLdDM2DQI48jFkmZBmGn1s=
+	t=1767722018; cv=none; b=AuGaC+BJUOB5TyZNOfy7Ih/AcO9+NqPURaLBxfba4UExayh6mSfQnoA/z1P2aqYAG4+zwTHQQ5iJmIlACsrjIRdpdFVQmSuQab5jSawO92WjAslDPuNC18cHM98T5DJXh4MKPAlGqY7NAnfsWzc3cH067hYp7EySqX/UCXdzWFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722014; c=relaxed/simple;
-	bh=7/3bJL4vdnCaxqwQK1HtezW2nINNZCcVFSEvn2nXjs4=;
+	s=arc-20240116; t=1767722018; c=relaxed/simple;
+	bh=LjqGYdtBmr44cS2zsVNxKOp7suAuwKxsgqRYhs2ogOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ChdVXFQjNucxrlWN7/U58scJpJHvqJMNxa/2QGnkqPnewL1nKw+2YRgzqp9Hb7SxwYaViNEQ2pTpeVnDyDfonlELomSKdogZ3BlHn+4oT+2rN86ABwzBDS0kaZm0+sPGLnogDFefaV9i0yNgwae5TOGBYdYvLdjrRRtKwtEXOZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PdvEN4TR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TzXsiF8JCVRFWnkxDTgLlaRSEW+eBj+A1XktIhSURKoRRnh9sbl1emN6aRRMLUdr4KyLlK0a+3ZX5+4eg8je/qskq9NGrjixE3h9Pd1tBFkVjNw/0v22v0ya8kEpYQIlq+JIC02036DmGCDSEpC6q3Z9j44Dnpkq5KyH4skrqds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dv+dskxl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PdvEN4TR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D189DC116C6;
-	Tue,  6 Jan 2026 17:53:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dv+dskxl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11362C116C6;
+	Tue,  6 Jan 2026 17:53:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722014;
-	bh=7/3bJL4vdnCaxqwQK1HtezW2nINNZCcVFSEvn2nXjs4=;
+	s=korg; t=1767722017;
+	bh=LjqGYdtBmr44cS2zsVNxKOp7suAuwKxsgqRYhs2ogOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PdvEN4TR7+dUIFd+2z0Jge287pcwx7r6GemcUYmUsa5Qpy9mGiwEER/HSgNj5LaOt
-	 HmDZ8bUY5kyXs0S5odRoOPCCPci9HFtWFgoM9Ij3AygvAeXd4WbwbS1XfQZ92MllH7
-	 EiVgVjE7jX1EmdoxmHhUh0GKbsX9hwtgTjVA1GJ4=
+	b=Dv+dskxltoEYnBA2WHkp3b0dxpbP2/fRHHKJffg+qstgdiLO8N0HoGJQLj8KytFJv
+	 /CvzKU+bJgrjOPVqIrBNNVOlkGM0OnTGkPuz8+VuXdLUzIr1QyucCWH7kTUxs1ToFc
+	 YZx6WyYQwCtA8y5SLMgp/Or2gbw+05yhHM0o7BSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.18 140/312] mfd: altera-sysmgr: Fix device leak on sysmgr regmap lookup
-Date: Tue,  6 Jan 2026 18:03:34 +0100
-Message-ID: <20260106170552.906748071@linuxfoundation.org>
+Subject: [PATCH 6.18 141/312] mfd: max77620: Fix potential IRQ chip conflict when probing two devices
+Date: Tue,  6 Jan 2026 18:03:35 +0100
+Message-ID: <20260106170552.943475713@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -50,35 +50,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit ccb7cd3218e48665f3c7e19eede0da5f069c323d upstream.
+commit 2bac49bad1f3553cc3b3bfb22cc194e9bd9e8427 upstream.
 
-Make sure to drop the reference taken to the sysmgr platform device when
-retrieving its driver data.
+MAX77620 is most likely always a single device on the board, however
+nothing stops board designers to have two of them, thus same device
+driver could probe twice. Or user could manually try to probing second
+time.
 
-Note that holding a reference to a device does not prevent its driver
-data from going away.
+Device driver is not ready for that case, because it allocates
+statically 'struct regmap_irq_chip' as non-const and stores during
+probe in 'irq_drv_data' member a pointer to per-probe state
+container ('struct max77620_chip').  devm_regmap_add_irq_chip() does not
+make a copy of 'struct regmap_irq_chip' but store the pointer.
 
-Fixes: f36e789a1f8d ("mfd: altera-sysmgr: Add SOCFPGA System Manager")
-Cc: stable@vger.kernel.org	# 5.2
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Second probe - either successful or failure - would overwrite the
+'irq_drv_data' from previous device probe, so interrupts would be
+executed in a wrong context.
+
+Cc: stable@vger.kernel.org
+Fixes: 3df140d11c6d ("mfd: max77620: Mask/unmask interrupt before/after servicing it")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://patch.msgid.link/20251023101939.67991-2-krzysztof.kozlowski@linaro.org
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mfd/altera-sysmgr.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mfd/max77620.c |   15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
---- a/drivers/mfd/altera-sysmgr.c
-+++ b/drivers/mfd/altera-sysmgr.c
-@@ -117,6 +117,8 @@ struct regmap *altr_sysmgr_regmap_lookup
- 
- 	sysmgr = dev_get_drvdata(dev);
- 
-+	put_device(dev);
-+
- 	return sysmgr->regmap;
+--- a/drivers/mfd/max77620.c
++++ b/drivers/mfd/max77620.c
+@@ -254,7 +254,7 @@ static int max77620_irq_global_unmask(vo
+ 	return ret;
  }
- EXPORT_SYMBOL_GPL(altr_sysmgr_regmap_lookup_by_phandle);
+ 
+-static struct regmap_irq_chip max77620_top_irq_chip = {
++static const struct regmap_irq_chip max77620_top_irq_chip = {
+ 	.name = "max77620-top",
+ 	.irqs = max77620_top_irqs,
+ 	.num_irqs = ARRAY_SIZE(max77620_top_irqs),
+@@ -498,6 +498,7 @@ static int max77620_probe(struct i2c_cli
+ 	const struct i2c_device_id *id = i2c_client_get_device_id(client);
+ 	const struct regmap_config *rmap_config;
+ 	struct max77620_chip *chip;
++	struct regmap_irq_chip *chip_desc;
+ 	const struct mfd_cell *mfd_cells;
+ 	int n_mfd_cells;
+ 	bool pm_off;
+@@ -508,6 +509,14 @@ static int max77620_probe(struct i2c_cli
+ 		return -ENOMEM;
+ 
+ 	i2c_set_clientdata(client, chip);
++
++	chip_desc = devm_kmemdup(&client->dev, &max77620_top_irq_chip,
++				 sizeof(max77620_top_irq_chip),
++				 GFP_KERNEL);
++	if (!chip_desc)
++		return -ENOMEM;
++	chip_desc->irq_drv_data = chip;
++
+ 	chip->dev = &client->dev;
+ 	chip->chip_irq = client->irq;
+ 	chip->chip_id = (enum max77620_chip_id)id->driver_data;
+@@ -544,11 +553,9 @@ static int max77620_probe(struct i2c_cli
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	max77620_top_irq_chip.irq_drv_data = chip;
+ 	ret = devm_regmap_add_irq_chip(chip->dev, chip->rmap, client->irq,
+ 				       IRQF_ONESHOT | IRQF_SHARED, 0,
+-				       &max77620_top_irq_chip,
+-				       &chip->top_irq_data);
++				       chip_desc, &chip->top_irq_data);
+ 	if (ret < 0) {
+ 		dev_err(chip->dev, "Failed to add regmap irq: %d\n", ret);
+ 		return ret;
 
 
