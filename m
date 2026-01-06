@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FC936B048;
-	Tue,  6 Jan 2026 17:55:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308E136B048;
+	Tue,  6 Jan 2026 17:55:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722143; cv=none; b=tjzYIM8AiBo8q0DE2TCZ21iA+hYnRIjErb2bP+9WsNMwrI66quM6CDZMoS1ksxMZlD7PfbqexcQC2YXYnJzeLLEa2NMDAXyoXGvu+fVTME9FGcYv2RCiktr/Y4pg4hqGqH9KgTPuebveyqqI991RbhEOsh1N097jxos/PDA2tI0=
+	t=1767722147; cv=none; b=a060+mN9Oy1J+BKawxp3OfY8I2C19z6M6Edbc02R4oH6Ka8bZXr3N5atje+irRt88SBsPlUvJ7VmLaI/tCDKUAIzOIca35lwNjumb/GAak5mf22GBUPd2umc6rKTuFE24dMdOs6cBOsUaV+2Xe7ff0pmcnvCWOk4RyczvIqmYo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722143; c=relaxed/simple;
-	bh=43ZkreO2TA02QfvzlZ5UJ2U8G9ZNMRi+aj900q6EUNU=;
+	s=arc-20240116; t=1767722147; c=relaxed/simple;
+	bh=KtaKvMJt/WmOPxuEwiChmZpsw3MFLaF15YXm3yA6bdc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jBeWuKUckQaiI08cMAVeiB/qgVbm1Mxf0lyJk4PCNpLUgIOl9UyEwHybjXAFZnCimtYOLBNIByEa248vwV/HZQ8CVH2U28V2g6/fxiEoFX2cLokurgU97S8u/dxQ/qxk2NfTLg0JL7lVUkUOuc03SwucSuwkDpicMSHHzp9ZrOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PQCudE2B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WrsttPf3FF64PPj7me2fb+Te3Rfe0DHCuvA61hqQVnAD9m+pSBH3FTZEhjtuECac30riZ7qBe91ZwqGTTSwhleD9c57OKnDczwH2q40uyKkX3HpB2qgeRZ37j7Xa9DGJJCG6jTw686IohedSLR8zwECNjQlagsVraGGoNYmT4E0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b8UcF45H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PQCudE2B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FDDFC116C6;
-	Tue,  6 Jan 2026 17:55:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b8UcF45H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E68C116C6;
+	Tue,  6 Jan 2026 17:55:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722143;
-	bh=43ZkreO2TA02QfvzlZ5UJ2U8G9ZNMRi+aj900q6EUNU=;
+	s=korg; t=1767722147;
+	bh=KtaKvMJt/WmOPxuEwiChmZpsw3MFLaF15YXm3yA6bdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PQCudE2BFFkY5rCrS6hHyUXGpdxp+uWAWOf7B0zWbknGq3U2aBXe+wEMIbUpQq1pk
-	 p9UwV3VXVJfUgBEFbCaocOf575JrNvVNUu31A8lkXTkkC1GMwqg+aBIvUDbdz9qanN
-	 Gy18Sxt7WXiDEMDmsdgQOkFfKdCDgyypb37EC8/w=
+	b=b8UcF45HtPz5FYpJc33EspUkoSf5UtaXVwXYkh6moRbuQBniNuiBnDP/xkL+Vj3SY
+	 IF2Z87sE94ZRZ29ayULV2HIHYGy5spwaGsM7bs89hDIha4tySr2/do05MnwgQOqclB
+	 60YwmBScwYUDO9pgwYIPlVjjyOYiBAT1c8Ss2iJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Sandipan Das <sandipan.das@amd.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>
-Subject: [PATCH 6.18 161/312] perf/x86/amd/uncore: Fix the return value of amd_uncore_df_event_init() on error
-Date: Tue,  6 Jan 2026 18:03:55 +0100
-Message-ID: <20260106170553.661971273@linuxfoundation.org>
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.18 179/312] media: samsung: exynos4-is: fix potential ABBA deadlock on init
+Date: Tue,  6 Jan 2026 18:04:13 +0100
+Message-ID: <20260106170554.307987556@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -52,45 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sandipan Das <sandipan.das@amd.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-commit 01439286514ce9d13b8123f8ec3717d7135ff1d6 upstream.
+commit 17dc8ccd6dd5ffe30aa9b0d36e2af1389344ce2b upstream.
 
-If amd_uncore_event_init() fails, return an error irrespective of the
-pmu_version. Setting hwc->config should be safe even if there is an
-error so use this opportunity to simplify the code.
+v4l2_device_register_subdev_nodes() must called without taking
+media_dev->graph_mutex to avoid potential AB-BA deadlock on further
+subdevice driver initialization.
 
-Closes: https://lore.kernel.org/all/aTaI0ci3vZ44lmBn@stanley.mountain/
-
-Fixes: d6389d3ccc13 ("perf/x86/amd/uncore: Refactor uncore management")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
+Fixes: fa91f1056f17 ("[media] exynos4-is: Add support for asynchronous subdevices registration")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/076935e23a70335d33bd6e23308b75ae0ad35ba2.1765268667.git.sandipan.das@amd.com
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Acked-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/amd/uncore.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/media/platform/samsung/exynos4-is/media-dev.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/arch/x86/events/amd/uncore.c
-+++ b/arch/x86/events/amd/uncore.c
-@@ -656,14 +656,11 @@ static int amd_uncore_df_event_init(stru
- 	struct hw_perf_event *hwc = &event->hw;
- 	int ret = amd_uncore_event_init(event);
+--- a/drivers/media/platform/samsung/exynos4-is/media-dev.c
++++ b/drivers/media/platform/samsung/exynos4-is/media-dev.c
+@@ -1399,12 +1399,14 @@ static int subdev_notifier_complete(stru
+ 	mutex_lock(&fmd->media_dev.graph_mutex);
  
--	if (ret || pmu_version < 2)
--		return ret;
--
- 	hwc->config = event->attr.config &
- 		      (pmu_version >= 2 ? AMD64_PERFMON_V2_RAW_EVENT_MASK_NB :
- 					  AMD64_RAW_EVENT_MASK_NB);
+ 	ret = fimc_md_create_links(fmd);
+-	if (ret < 0)
+-		goto unlock;
++	if (ret < 0) {
++		mutex_unlock(&fmd->media_dev.graph_mutex);
++		return ret;
++	}
  
--	return 0;
-+	return ret;
- }
+-	ret = v4l2_device_register_subdev_nodes(&fmd->v4l2_dev);
+-unlock:
+ 	mutex_unlock(&fmd->media_dev.graph_mutex);
++
++	ret = v4l2_device_register_subdev_nodes(&fmd->v4l2_dev);
+ 	if (ret < 0)
+ 		return ret;
  
- static int amd_uncore_df_add(struct perf_event *event, int flags)
 
 
