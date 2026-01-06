@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C119354ACC;
-	Tue,  6 Jan 2026 17:22:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A91E354ACD;
+	Tue,  6 Jan 2026 17:22:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720172; cv=none; b=p+MxcVAL2vvmyYht6x+ddBRttGmOvCGH1FMEtoBBObYpTisF8vJK1+5jSRIsKdMpkyI9nsCydB0ETgLhRKHbcy7TiWHCAZeALicDVKAdIAwLOm3UPrlXqHRKBpCXPGGyoOiLsh1AyUz+a5XCa//9LIvl5gEOsQsM4JsS0BkN0yA=
+	t=1767720175; cv=none; b=qwAhdutzFL5dLqkDGbVt07HjKCCIbN9zGcEGKFhMPU+u/JKWS25+7a6+I86A7OOvlELYu6SJXzLskkqSMbezyuQUiyES/SK7NrsW8jYKsVYVPaeTbkRFL3olN6l/7Oieqhmgm0jgGI68DHjI32EFWiEdw0ytHHY4B5wKAaJ8cFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720172; c=relaxed/simple;
-	bh=3rN71iMgzjzk4aVD0T10VdKAbkNRc0gjVTqO6pJm/gw=;
+	s=arc-20240116; t=1767720175; c=relaxed/simple;
+	bh=WHIB2yPP3IYuWuqIwY6Gbv+DTGfwKLghrWY76oMM5Y8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=owZ7oabn49nh6cUmXtFBkoDYSsIL2c3ZN0iu73x84o3SGPdQLxBiMjeISngjYLTsR0HrBRHu8eIlUah1dPUIJLbyv2VujtRLzXJ1RVCSh6YzUr++JrjtcqTxmFQgExZ87YbZJ/Jsp+xCbhzwalgHRQg+QMCa5iBx/52UnoQlzHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g85A8zCN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LIacztKZoWmxUiNNFubCu7njKIgB0r0un4KRtFJufGfrWvBIAH49BHH9tSBJ2hLwfl2+0bl0dCvicVwbCWsXfZ0aWcyOJOLV4roRVLNNrkV4Y5iOAUd+NzEP8su977qRF5dO3EwtMT24YQD7JEoOVx/42/Eh+9YYwrUS97NpFqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CseQWhxM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g85A8zCN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A79E1C116C6;
-	Tue,  6 Jan 2026 17:22:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CseQWhxM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDBD2C116C6;
+	Tue,  6 Jan 2026 17:22:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720172;
-	bh=3rN71iMgzjzk4aVD0T10VdKAbkNRc0gjVTqO6pJm/gw=;
+	s=korg; t=1767720175;
+	bh=WHIB2yPP3IYuWuqIwY6Gbv+DTGfwKLghrWY76oMM5Y8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g85A8zCN6MYQaVWD8e8i6xFVf58beMpKtkZCDt9Zwpgf2ksLKpUOnmojRpCBItth+
-	 BJHQ8aO7fW0Dp4lBfqOMn8Hn30Ic67nDPsBbIpGHcMa5FrbtE4BaaQjbFYfnWhIdZ6
-	 Z5KSrtK5izFNeh58D9hVaqPqi/TcISalVBDvqQdI=
+	b=CseQWhxMI02YALC1TCfnra/KhRqW+hOWHglVlCc7N5x//1zGVZMDxuKZ8YXjjoPkS
+	 WfIyOWwpAp1Vlx5P2dUXRaGRb9d/pQnWetuVx413Qb2dE8cBL+5TIfzh1p4tJ1M6u0
+	 N2+t9ILC5RppJYwcW2ko3AgVXam3F1WrpSKdBanA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 138/567] iio: adc: ti_am335x_adc: Limit step_avg to valid range for gcc complains
-Date: Tue,  6 Jan 2026 17:58:40 +0100
-Message-ID: <20260106170456.431832290@linuxfoundation.org>
+	Sarthak Garg <sarthak.garg@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.12 156/567] mmc: sdhci-msm: Avoid early clock doubling during HS400 transition
+Date: Tue,  6 Jan 2026 17:58:58 +0100
+Message-ID: <20260106170457.100695057@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,48 +52,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Sarthak Garg <sarthak.garg@oss.qualcomm.com>
 
-[ Upstream commit c9fb952360d0c78bbe98239bd6b702f05c2dbb31 ]
+commit b1f856b1727c2eaa4be2c6d7cd7a8ed052bbeb87 upstream.
 
-FIELD_PREP() checks that a value fits into the available bitfield, add a
-check for step_avg to fix gcc complains.
+According to the hardware programming guide, the clock frequency must
+remain below 52MHz during the transition to HS400 mode.
 
-which gcc complains about:
-  drivers/iio/adc/ti_am335x_adc.c: In function 'tiadc_step_config':
-  include/linux/compiler_types.h:572:38: error: call to
-'__compiletime_assert_491' declared with attribute error: FIELD_PREP: value
-too large for the field include/linux/mfd/ti_am335x_tscadc.h:58:29: note:
-in expansion of macro 'FIELD_PREP'
-    #define STEPCONFIG_AVG(val) FIELD_PREP(GENMASK(4, 2), (val))
-                                ^~~~~~~~~~
-drivers/iio/adc/ti_am335x_adc.c:127:17: note: in expansion of macro 'STEPCONFIG_AVG'
-	stepconfig = STEPCONFIG_AVG(ffs(adc_dev->step_avg[i]) - 1)
+However,in the current implementation, the timing is set to HS400 (a
+DDR mode) before adjusting the clock. This causes the clock to double
+prematurely to 104MHz during the transition phase, violating the
+specification and potentially resulting in CRC errors or CMD timeouts.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202510102117.Jqxrw1vF-lkp@intel.com/
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This change ensures that clock doubling is avoided during intermediate
+transitions and is applied only when the card requires a 200MHz clock
+for HS400 operation.
+
+Signed-off-by: Sarthak Garg <sarthak.garg@oss.qualcomm.com>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ti_am335x_adc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/sdhci-msm.c |   27 +++++++++++++++------------
+ 1 file changed, 15 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/iio/adc/ti_am335x_adc.c b/drivers/iio/adc/ti_am335x_adc.c
-index 426e3c9f88a1..205d1f103b3c 100644
---- a/drivers/iio/adc/ti_am335x_adc.c
-+++ b/drivers/iio/adc/ti_am335x_adc.c
-@@ -123,7 +123,7 @@ static void tiadc_step_config(struct iio_dev *indio_dev)
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -344,41 +344,43 @@ static void sdhci_msm_v5_variant_writel_
+ 	writel_relaxed(val, host->ioaddr + offset);
+ }
  
- 		chan = adc_dev->channel_line[i];
+-static unsigned int msm_get_clock_mult_for_bus_mode(struct sdhci_host *host)
++static unsigned int msm_get_clock_mult_for_bus_mode(struct sdhci_host *host,
++						    unsigned int clock,
++						    unsigned int timing)
+ {
+-	struct mmc_ios ios = host->mmc->ios;
+ 	/*
+ 	 * The SDHC requires internal clock frequency to be double the
+ 	 * actual clock that will be set for DDR mode. The controller
+ 	 * uses the faster clock(100/400MHz) for some of its parts and
+ 	 * send the actual required clock (50/200MHz) to the card.
+ 	 */
+-	if (ios.timing == MMC_TIMING_UHS_DDR50 ||
+-	    ios.timing == MMC_TIMING_MMC_DDR52 ||
+-	    ios.timing == MMC_TIMING_MMC_HS400 ||
++	if (timing == MMC_TIMING_UHS_DDR50 ||
++	    timing == MMC_TIMING_MMC_DDR52 ||
++	    (timing == MMC_TIMING_MMC_HS400 &&
++	    clock == MMC_HS200_MAX_DTR) ||
+ 	    host->flags & SDHCI_HS400_TUNING)
+ 		return 2;
+ 	return 1;
+ }
  
--		if (adc_dev->step_avg[i])
-+		if (adc_dev->step_avg[i] && adc_dev->step_avg[i] <= STEPCONFIG_AVG_16)
- 			stepconfig = STEPCONFIG_AVG(ffs(adc_dev->step_avg[i]) - 1) |
- 				     STEPCONFIG_FIFO1;
- 		else
--- 
-2.51.0
-
+ static void msm_set_clock_rate_for_bus_mode(struct sdhci_host *host,
+-					    unsigned int clock)
++					    unsigned int clock,
++					    unsigned int timing)
+ {
+ 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+ 	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+-	struct mmc_ios curr_ios = host->mmc->ios;
+ 	struct clk *core_clk = msm_host->bulk_clks[0].clk;
+ 	unsigned long achieved_rate;
+ 	unsigned int desired_rate;
+ 	unsigned int mult;
+ 	int rc;
+ 
+-	mult = msm_get_clock_mult_for_bus_mode(host);
++	mult = msm_get_clock_mult_for_bus_mode(host, clock, timing);
+ 	desired_rate = clock * mult;
+ 	rc = dev_pm_opp_set_rate(mmc_dev(host->mmc), desired_rate);
+ 	if (rc) {
+ 		pr_err("%s: Failed to set clock at rate %u at timing %d\n",
+-		       mmc_hostname(host->mmc), desired_rate, curr_ios.timing);
++		       mmc_hostname(host->mmc), desired_rate, timing);
+ 		return;
+ 	}
+ 
+@@ -397,7 +399,7 @@ static void msm_set_clock_rate_for_bus_m
+ 	msm_host->clk_rate = desired_rate;
+ 
+ 	pr_debug("%s: Setting clock at rate %lu at timing %d\n",
+-		 mmc_hostname(host->mmc), achieved_rate, curr_ios.timing);
++		 mmc_hostname(host->mmc), achieved_rate, timing);
+ }
+ 
+ /* Platform specific tuning */
+@@ -1239,7 +1241,7 @@ static int sdhci_msm_execute_tuning(stru
+ 	 */
+ 	if (host->flags & SDHCI_HS400_TUNING) {
+ 		sdhci_msm_hc_select_mode(host);
+-		msm_set_clock_rate_for_bus_mode(host, ios.clock);
++		msm_set_clock_rate_for_bus_mode(host, ios.clock, ios.timing);
+ 		host->flags &= ~SDHCI_HS400_TUNING;
+ 	}
+ 
+@@ -1864,6 +1866,7 @@ static void sdhci_msm_set_clock(struct s
+ {
+ 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+ 	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
++	struct mmc_ios ios = host->mmc->ios;
+ 
+ 	if (!clock) {
+ 		host->mmc->actual_clock = msm_host->clk_rate = 0;
+@@ -1872,7 +1875,7 @@ static void sdhci_msm_set_clock(struct s
+ 
+ 	sdhci_msm_hc_select_mode(host);
+ 
+-	msm_set_clock_rate_for_bus_mode(host, clock);
++	msm_set_clock_rate_for_bus_mode(host, ios.clock, ios.timing);
+ out:
+ 	__sdhci_msm_set_clock(host, clock);
+ }
 
 
