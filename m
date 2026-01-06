@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5C02C1595;
-	Tue,  6 Jan 2026 17:46:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D64135C1AE;
+	Tue,  6 Jan 2026 17:46:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721587; cv=none; b=iG3HtYl86J4EC3Err2FcRrZjIA4rtQJXQ/hHWFqU9Xg+W9auYmwMB51G3fAMOcHWUqQvXMKj6ZQVU5E3KEhtc1VoDitwYjRK+RK6yn8Ja86Xi9NzNfCznjB6qtOFG8ASEmrjPSevLxYLWhZ5xv/eZbcx6OsetCQkEttITJJb1VU=
+	t=1767721590; cv=none; b=ZgmS3p+wbVqRMkqaB7zl1fqWXUQar9S4MGF9Z+JjB/GIaZFmcQOJMPo6xAlOBs1TSH6k8KWngaby41bv4SH/zR2FJbCSuvBUGWrICGSpeJdrMF1KWO6L8CkvYQ4NNviAZsrrUsJAdlajdqloQu5URXKENefXObycpqaAXpWGCMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721587; c=relaxed/simple;
-	bh=Tu+Zj78WEgJYj5sUJVedW8QY+lKnnJ2AGxHE6sOEmk4=;
+	s=arc-20240116; t=1767721590; c=relaxed/simple;
+	bh=J0bVmtJHd4wCItknnjkMYv6Ir2v3P1UIXZSWR5+pnsI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DTpzbnM73HIdhZZvMqaBeZbQ3OnlnCcv7cxM4aN348dlgYXH67vaNSNymBPykyWdWPQOOTr4Q4DZsGOJfWlrI8HqiBKRC2yJer7+biAzGPZQPYUFeH3IVGCrp02Jsmmu0CiYsaYP//9002v6214IXHac6HU+KanX4MHNIwUD8Qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c3ejMmew; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t+A14b6geqbhAR4N7rzbobFynz7L1lvpX30GubUsCYZrSr0trsWwojomzrMbeAXEY6JnBZPTjjW8sZXZitlaz8nDkLYFX6pkrTt1JU8hIlTMI5CxpjMTMmNkoLQq8Q+L3PCurOFmg6TbkYHQfTOP712uaql4+nZfoV0y5Nscbh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vfWpT85X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c3ejMmew"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F58C116C6;
-	Tue,  6 Jan 2026 17:46:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfWpT85X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0B2DC116C6;
+	Tue,  6 Jan 2026 17:46:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721586;
-	bh=Tu+Zj78WEgJYj5sUJVedW8QY+lKnnJ2AGxHE6sOEmk4=;
+	s=korg; t=1767721590;
+	bh=J0bVmtJHd4wCItknnjkMYv6Ir2v3P1UIXZSWR5+pnsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c3ejMmewXyvee4dbRzuNQ9TjDc5tAhRtMgZJdfm15shRQl+GGg4bHF3p2/6P9790m
-	 z+VEOLEJjPf0Q8WzdNcgFDetyxMuf8WbUYFztiipdfnsI9GFQpyUU/ad4BuPtqY58q
-	 DfFiQxaYOWtXIPZp9Ec6ItBgqEUma+KqR+hsI4Mg=
+	b=vfWpT85XDGKY286baDaPKCqTbvubK6eIm6AZupy8EEiKrp1/FXti7ivLBstTLxLOQ
+	 iI9SXV/O/ni7qJfJvgihOCtfzXrnLkzfUQKCy6JxsEjTVQtLgC5cnWF5/y108JGZNc
+	 UwGwaxgYsy9CghLoPxJv0KeNx+Ki3bsmpbJlIs/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Morning Star <alexbestoso@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 013/312] wifi: rtlwifi: 8192cu: fix tid out of range in rtl92cu_tx_fill_desc()
-Date: Tue,  6 Jan 2026 18:01:27 +0100
-Message-ID: <20260106170548.333868369@linuxfoundation.org>
+Subject: [PATCH 6.18 014/312] wifi: cfg80211: sme: store capped length in __cfg80211_connect_result()
+Date: Tue,  6 Jan 2026 18:01:28 +0100
+Message-ID: <20260106170548.369678556@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -51,40 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Morning Star <alexbestoso@gmail.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit dd39edb445f07400e748da967a07d5dca5c5f96e ]
+[ Upstream commit 2b77b9551d1184cb5af8271ff350e6e2c1b3db0d ]
 
-TID getting from ieee80211_get_tid() might be out of range of array size
-of sta_entry->tids[], so check TID is less than MAX_TID_COUNT. Othwerwise,
-UBSAN warn:
+The QGenie AI code review tool says we should store the capped length to
+wdev->u.client.ssid_len.  The AI is correct.
 
- UBSAN: array-index-out-of-bounds in drivers/net/wireless/realtek/rtlwifi/rtl8192cu/trx.c:514:30
- index 10 is out of range for type 'rtl_tid_data [9]'
-
-Fixes: 8ca4cdef9329 ("wifi: rtlwifi: rtl8192cu: Fix TX aggregation")
-Signed-off-by: Morning Star <alexbestoso@gmail.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/1764232628-13625-1-git-send-email-pkshih@realtek.com
+Fixes: 62b635dcd69c ("wifi: cfg80211: sme: cap SSID length in __cfg80211_connect_result()")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/aTAbp5RleyH_lnZE@stanley.mountain
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/rtl8192cu/trx.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/wireless/sme.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8192cu/trx.c b/drivers/net/wireless/realtek/rtlwifi/rtl8192cu/trx.c
-index aa702ba7c9f5..d6c35e8d02a5 100644
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8192cu/trx.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192cu/trx.c
-@@ -511,7 +511,8 @@ void rtl92cu_tx_fill_desc(struct ieee80211_hw *hw,
- 	if (sta) {
- 		sta_entry = (struct rtl_sta_info *)sta->drv_priv;
- 		tid = ieee80211_get_tid(hdr);
--		agg_state = sta_entry->tids[tid].agg.agg_state;
-+		if (tid < MAX_TID_COUNT)
-+			agg_state = sta_entry->tids[tid].agg.agg_state;
- 		ampdu_density = sta->deflink.ht_cap.ampdu_density;
- 	}
+diff --git a/net/wireless/sme.c b/net/wireless/sme.c
+index 3a028ff287fb..4e629ca305bc 100644
+--- a/net/wireless/sme.c
++++ b/net/wireless/sme.c
+@@ -910,7 +910,7 @@ void __cfg80211_connect_result(struct net_device *dev,
  
+ 			ssid_len = min(ssid->datalen, IEEE80211_MAX_SSID_LEN);
+ 			memcpy(wdev->u.client.ssid, ssid->data, ssid_len);
+-			wdev->u.client.ssid_len = ssid->datalen;
++			wdev->u.client.ssid_len = ssid_len;
+ 			break;
+ 		}
+ 		rcu_read_unlock();
 -- 
 2.51.0
 
