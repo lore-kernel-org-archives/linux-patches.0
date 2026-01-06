@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2CD83491F5;
-	Tue,  6 Jan 2026 17:18:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46795349AE8;
+	Tue,  6 Jan 2026 17:18:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719900; cv=none; b=eSftbY2itnY2pkWrf8dOEG8eBpQGS0yTdtQKh0833dznFEjJgT3Vmn0Wo2FIIwm+OIT7e5KbgZyjFXb7epRlg5ey14DUA2TRr4NXmGC2926UjrNqi7d8+ZX/D63+P6toVmRhxICHvAO84YdrJ2YulYUZCi0nSGk0L1h+KzGOH40=
+	t=1767719904; cv=none; b=u5fqgnbpzQfr4FrGRJu9OI6MRMF7WDimvHaM5OrLC+GyOLo2yqpFd6YzcSNbnxtnfAHo3egnCFJb762rt4It2iFGcayficIemG1I9dVNNc0U21J9trkYfJkYVimSXbdIXvsAk3MgF8eB0wwrfNpOG0/2vzawXHwdLKZMXvkREqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719900; c=relaxed/simple;
-	bh=ag3d2WH7sk/I/nNPtBUlZz0WbpV3z/fAQaTsdt7gCW4=;
+	s=arc-20240116; t=1767719904; c=relaxed/simple;
+	bh=v9gvtYahj3Z1bxMZzhvd43UA0GJ1Xf2qV1Ha4fH1nJM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a08345/Qp2whKECh3AGpiHbRwzmqre0hczNaJDbMpx0/D0w+Ng0IcLxixVBAwlAMF+eFLrvv8DCoAQ2XRVjpBqyCflfTuXxFBwsSa7KKLk/K1bhi8O2vQlZouLy8v103VZjzz67pcglRmtoupHvnwKaZeTByVl044bckF56osKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wUp/bB3Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BT/Q/vGnfWDprsrD8OfeRbVi/PYTPVurQrhs8A/uvLjdHg3bW+nq8/1IGjboH9PALprCTv4T34S2ING9IL2qHOc8Agh7j1SlXl8vXsa1kCtUaYZyVmkgRX7f2nFVD+BeS9vT1xbHwm34rE6btRz3WkzPCjvt5ZjNCV3YPzrvjfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kea0D7kM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wUp/bB3Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35C84C116C6;
-	Tue,  6 Jan 2026 17:18:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kea0D7kM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 615DDC116C6;
+	Tue,  6 Jan 2026 17:18:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719900;
-	bh=ag3d2WH7sk/I/nNPtBUlZz0WbpV3z/fAQaTsdt7gCW4=;
+	s=korg; t=1767719903;
+	bh=v9gvtYahj3Z1bxMZzhvd43UA0GJ1Xf2qV1Ha4fH1nJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wUp/bB3QkQgtFArbbFUJUsoJSB+KoUXzdlmOed9vb6csu9gCYHlqrbf6U6bgCyLRo
-	 AUHh9uzOoYggd8inc1+aNX3dmT8+2b0xngeuLfpOJgMvG+UW+oOBXSmebwE9cfu95V
-	 wkgeT4JIMcH2bmA1nj1WY5h+m4eCSUGE/ec39n8o=
+	b=kea0D7kMLzjVLmZ2OdAdaZXy4KDGOhAWCPZHnn1JwzuvkPpIhfpDBj13bxD9uFNKc
+	 ZSVPcb8u4Id5R52Bz2llxL8lLPnA3jCBTAnV0Wmnx8+Ai57OHrhrE+y5VeyDLP1Zx8
+	 i4zZ6/YHVxsIun0A13t02Ama6kVuH9slZTzlvt3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Gal Pressman <gal@nvidia.com>,
+	Jian Shen <shenjian15@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Simon Horman <horms@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 067/567] ethtool: Avoid overflowing userspace buffer on stats query
-Date: Tue,  6 Jan 2026 17:57:29 +0100
-Message-ID: <20260106170453.815487534@linuxfoundation.org>
+Subject: [PATCH 6.12 076/567] net: hns3: using the num_tqps to check whether tqp_index is out of range when vf get ring info from mbx
+Date: Tue,  6 Jan 2026 17:57:38 +0100
+Message-ID: <20260106170454.145614977@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -53,157 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gal Pressman <gal@nvidia.com>
+From: Jian Shen <shenjian15@huawei.com>
 
-[ Upstream commit 7b07be1ff1cb6c49869910518650e8d0abc7d25f ]
+[ Upstream commit d180c11aa8a6fa735f9ac2c72c61364a9afc2ba7 ]
 
-The ethtool -S command operates across three ioctl calls:
-ETHTOOL_GSSET_INFO for the size, ETHTOOL_GSTRINGS for the names, and
-ETHTOOL_GSTATS for the values.
+Currently, rss_size = num_tqps / tc_num. If tc_num is 1, then num_tqps
+equals rss_size. However, if the tc_num is greater than 1, then rss_size
+will be less than num_tqps, causing the tqp_index check for subsequent TCs
+using rss_size to always fail.
 
-If the number of stats changes between these calls (e.g., due to device
-reconfiguration), userspace's buffer allocation will be incorrect,
-potentially leading to buffer overflow.
+This patch uses the num_tqps to check whether tqp_index is out of range,
+instead of rss_size.
 
-Drivers are generally expected to maintain stable stat counts, but some
-drivers (e.g., mlx5, bnx2x, bna, ksz884x) use dynamic counters, making
-this scenario possible.
-
-Some drivers try to handle this internally:
-- bnad_get_ethtool_stats() returns early in case stats.n_stats is not
-  equal to the driver's stats count.
-- micrel/ksz884x also makes sure not to write anything beyond
-  stats.n_stats and overflow the buffer.
-
-However, both use stats.n_stats which is already assigned with the value
-returned from get_sset_count(), hence won't solve the issue described
-here.
-
-Change ethtool_get_strings(), ethtool_get_stats(),
-ethtool_get_phy_stats() to not return anything in case of a mismatch
-between userspace's size and get_sset_size(), to prevent buffer
-overflow.
-The returned n_stats value will be equal to zero, to reflect that
-nothing has been returned.
-
-This could result in one of two cases when using upstream ethtool,
-depending on when the size change is detected:
-1. When detected in ethtool_get_strings():
-    # ethtool -S eth2
-    no stats available
-
-2. When detected in get stats, all stats will be reported as zero.
-
-Both cases are presumably transient, and a subsequent ethtool call
-should succeed.
-
-Other than the overflow avoidance, these two cases are very evident (no
-output/cleared stats), which is arguably better than presenting
-incorrect/shifted stats.
-I also considered returning an error instead of a "silent" response, but
-that seems more destructive towards userspace apps.
-
-Notes:
-- This patch does not claim to fix the inherent race, it only makes sure
-  that we do not overflow the userspace buffer, and makes for a more
-  predictable behavior.
-
-- RTNL lock is held during each ioctl, the race window exists between
-  the separate ioctl calls when the lock is released.
-
-- Userspace ethtool always fills stats.n_stats, but it is likely that
-  these stats ioctls are implemented in other userspace applications
-  which might not fill it. The added code checks that it's not zero,
-  to prevent any regressions.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Gal Pressman <gal@nvidia.com>
-Link: https://patch.msgid.link/20251208121901.3203692-1-gal@nvidia.com
+Fixes: 326334aad024 ("net: hns3: add a check for tqp_index in hclge_get_ring_chain_from_mbx()")
+Signed-off-by: Jian Shen <shenjian15@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20251211023737.2327018-3-shaojijie@huawei.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/ioctl.c | 30 ++++++++++++++++++++++++------
- 1 file changed, 24 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ethtool/ioctl.c b/net/ethtool/ioctl.c
-index 8b9692c35e706..67fba88f60984 100644
---- a/net/ethtool/ioctl.c
-+++ b/net/ethtool/ioctl.c
-@@ -2231,7 +2231,10 @@ static int ethtool_get_strings(struct net_device *dev, void __user *useraddr)
- 		return -ENOMEM;
- 	WARN_ON_ONCE(!ret);
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c
+index 59c863306657f..9eab095d784bd 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c
+@@ -193,10 +193,10 @@ static int hclge_get_ring_chain_from_mbx(
+ 		return -EINVAL;
  
--	gstrings.len = ret;
-+	if (gstrings.len && gstrings.len != ret)
-+		gstrings.len = 0;
-+	else
-+		gstrings.len = ret;
- 
- 	if (gstrings.len) {
- 		data = vzalloc(array_size(gstrings.len, ETH_GSTRING_LEN));
-@@ -2353,10 +2356,13 @@ static int ethtool_get_stats(struct net_device *dev, void __user *useraddr)
- 	if (copy_from_user(&stats, useraddr, sizeof(stats)))
- 		return -EFAULT;
- 
--	stats.n_stats = n_stats;
-+	if (stats.n_stats && stats.n_stats != n_stats)
-+		stats.n_stats = 0;
-+	else
-+		stats.n_stats = n_stats;
- 
--	if (n_stats) {
--		data = vzalloc(array_size(n_stats, sizeof(u64)));
-+	if (stats.n_stats) {
-+		data = vzalloc(array_size(stats.n_stats, sizeof(u64)));
- 		if (!data)
- 			return -ENOMEM;
- 		ops->get_ethtool_stats(dev, &stats, data);
-@@ -2368,7 +2374,9 @@ static int ethtool_get_stats(struct net_device *dev, void __user *useraddr)
- 	if (copy_to_user(useraddr, &stats, sizeof(stats)))
- 		goto out;
- 	useraddr += sizeof(stats);
--	if (n_stats && copy_to_user(useraddr, data, array_size(n_stats, sizeof(u64))))
-+	if (stats.n_stats &&
-+	    copy_to_user(useraddr, data,
-+			 array_size(stats.n_stats, sizeof(u64))))
- 		goto out;
- 	ret = 0;
- 
-@@ -2404,6 +2412,10 @@ static int ethtool_get_phy_stats_phydev(struct phy_device *phydev,
- 		return -EOPNOTSUPP;
- 
- 	n_stats = phy_ops->get_sset_count(phydev);
-+	if (stats->n_stats && stats->n_stats != n_stats) {
-+		stats->n_stats = 0;
-+		return 0;
-+	}
- 
- 	ret = ethtool_vzalloc_stats_array(n_stats, data);
- 	if (ret)
-@@ -2424,6 +2436,10 @@ static int ethtool_get_phy_stats_ethtool(struct net_device *dev,
- 		return -EOPNOTSUPP;
- 
- 	n_stats = ops->get_sset_count(dev, ETH_SS_PHY_STATS);
-+	if (stats->n_stats && stats->n_stats != n_stats) {
-+		stats->n_stats = 0;
-+		return 0;
-+	}
- 
- 	ret = ethtool_vzalloc_stats_array(n_stats, data);
- 	if (ret)
-@@ -2460,7 +2476,9 @@ static int ethtool_get_phy_stats(struct net_device *dev, void __user *useraddr)
+ 	for (i = 0; i < ring_num; i++) {
+-		if (req->msg.param[i].tqp_index >= vport->nic.kinfo.rss_size) {
++		if (req->msg.param[i].tqp_index >= vport->nic.kinfo.num_tqps) {
+ 			dev_err(&hdev->pdev->dev, "tqp index(%u) is out of range(0-%u)\n",
+ 				req->msg.param[i].tqp_index,
+-				vport->nic.kinfo.rss_size - 1U);
++				vport->nic.kinfo.num_tqps - 1U);
+ 			return -EINVAL;
+ 		}
  	}
- 
- 	useraddr += sizeof(stats);
--	if (copy_to_user(useraddr, data, array_size(stats.n_stats, sizeof(u64))))
-+	if (stats.n_stats &&
-+	    copy_to_user(useraddr, data,
-+			 array_size(stats.n_stats, sizeof(u64))))
- 		ret = -EFAULT;
- 
-  out:
 -- 
 2.51.0
 
