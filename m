@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F64629B77C;
-	Tue,  6 Jan 2026 17:32:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC34026E6F2;
+	Tue,  6 Jan 2026 17:32:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720760; cv=none; b=nPkharNSNDzBQiwBMAJP4jFQCEsscxp6pe/vt9YwUBU+Bf8LEt4Xw2sldQ4X0NDUqJsgbxjZqjnQQNRGD+n6yGpGgz4NytdTlBTxhg6ABI5S8pxoKJ5X/X8PjwJAoAHZ+JRGnw7g7sjKhTAGngl8+b1z0o5gL8pQASVex+wthVo=
+	t=1767720764; cv=none; b=mz4+uRr5f8AfI9vGGCjn/tMdD64u7AtQRX4KaCLKsqGyfAvcgVysIe4dfrkSdgpsYBixo9BkPW2t5RlvcmVeW1IXnct8rQjAH+FpRddJP3orkuDLxFGcvGsIY6VLWxHSQc3ns0oTV5mre4xmcfWXC/yEp1BQoR///UNUad2w1aU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720760; c=relaxed/simple;
-	bh=2QqoQhBL1DUdYa8PVLC/SGB15lV4xbFlyIl5oHCXZ3g=;
+	s=arc-20240116; t=1767720764; c=relaxed/simple;
+	bh=ot7H3TL/zRGwKAshhUmzUbfZUFWshln/kz9XTi/TIuE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e+57SH/yKfdURCXBmS7JlXX3+s1Gkp6dcq1AU6Fas0QIE3209mdurB8guJTVbj5eeyT795ejgRBzwNKn3wFgRz8zmT+4aMVH/ZQmBBQnCpRNyEZCchKtZ3dfkDJdSKJEOYcyvIGKZHAd7YImO3Q72HbL5W+rn783fjofh8m5/D4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jwwJZ7m8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QsUO7zTmNJxAYwAJzUqH2+G/YaiFlJ+6WXcaN5o0WkLy5Pj+4Gd7dMGrwUnMVjJlDfvX7G52eF9K1nI49MjDekMO0riKSgV+W9C9LTj3szuth7IE3K6XdMOaWBtgK7iVUInqkho5vf61nnqJdV+xKGPRCvPYtOa7ylxLJ9dyAvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWITg+zS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jwwJZ7m8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F312CC116C6;
-	Tue,  6 Jan 2026 17:32:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWITg+zS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BCD2C116C6;
+	Tue,  6 Jan 2026 17:32:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720760;
-	bh=2QqoQhBL1DUdYa8PVLC/SGB15lV4xbFlyIl5oHCXZ3g=;
+	s=korg; t=1767720763;
+	bh=ot7H3TL/zRGwKAshhUmzUbfZUFWshln/kz9XTi/TIuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jwwJZ7m8sIqU7X0Jk0rFINTsQSN2XAvwGyRX5OK99lgvmwZ0VxdHBBGVhxY8KXs7x
-	 Z5nK7YE1oAAUUhypbKcWqO3qfpi5Z19hVjJ4WuAxSeQqqmBMxtfYwh6TIu/LnrN8/A
-	 Y6BilnVDUzaxhT8ti/rKIBWF3ef9N3qrkeN2YNk0=
+	b=dWITg+zSkfA/LjI5sVf1oeYduv0Jhvtt1KtENqPY4dc/YIKIwrYXgbC3suuRSSiDe
+	 Z4gwIAmDrqDocZYH+pNiqX/le7kjXc+KuJ4jZneBR3IvsWhoT9d9ToN5e5CX7OQvPT
+	 pDJsGayXF7jdxKzpM6pDWGWxzfFLpqTArJ8DkiGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Parav Pandit <parav@nvidia.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 333/567] RDMA/bnxt_re: Fix incorrect BAR check in bnxt_qplib_map_creq_db()
-Date: Tue,  6 Jan 2026 18:01:55 +0100
-Message-ID: <20260106170503.650197505@linuxfoundation.org>
+Subject: [PATCH 6.12 334/567] RDMA/core: always drop device refcount in ib_del_sub_device_and_put()
+Date: Tue,  6 Jan 2026 18:01:56 +0100
+Message-ID: <20260106170503.686277951@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,43 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 145a417a39d7efbc881f52e829817376972b278c ]
+[ Upstream commit fa3c411d21ebc26ffd175c7256c37cefa35020aa ]
 
-RCFW_COMM_CONS_PCI_BAR_REGION is defined as BAR 2, so checking
-!creq_db->reg.bar_id is incorrect and always false.
+Since nldev_deldev() (introduced by commit 060c642b2ab8 ("RDMA/nldev: Add
+support to add/delete a sub IB device through netlink") grabs a reference
+using ib_device_get_by_index() before calling ib_del_sub_device_and_put(),
+we need to drop that reference before returning -EOPNOTSUPP error.
 
-pci_resource_start() returns the BAR base address, and a value of 0
-indicates that the BAR is unassigned. Update the condition to test
-bar_base == 0 instead.
-
-This ensures the driver detects and logs an error for an unassigned
-RCFW communication BAR.
-
-Fixes: cee0c7bba486 ("RDMA/bnxt_re: Refactor command queue management code")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Link: https://patch.msgid.link/20251217100158.752504-1-alok.a.tiwari@oracle.com
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Reported-by: syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=881d65229ca4f9ae8c84
+Fixes: bca51197620a ("RDMA/core: Support IB sub device with type "SMI"")
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Link: https://patch.msgid.link/80749a85-cbe2-460c-8451-42516013f9fa@I-love.SAKURA.ne.jp
+Reviewed-by: Parav Pandit <parav@nvidia.com>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_rcfw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/core/device.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-index 7a099580ca8b..38ded4687122 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-@@ -1117,7 +1117,7 @@ static int bnxt_qplib_map_creq_db(struct bnxt_qplib_rcfw *rcfw, u32 reg_offt)
- 	creq_db->dbinfo.flags = 0;
- 	creq_db->reg.bar_id = RCFW_COMM_CONS_PCI_BAR_REGION;
- 	creq_db->reg.bar_base = pci_resource_start(pdev, creq_db->reg.bar_id);
--	if (!creq_db->reg.bar_id)
-+	if (!creq_db->reg.bar_base)
- 		dev_err(&pdev->dev,
- 			"QPLIB: CREQ BAR region %d resc start is 0!",
- 			creq_db->reg.bar_id);
+diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
+index df2aa15a5bc9..bbc131737378 100644
+--- a/drivers/infiniband/core/device.c
++++ b/drivers/infiniband/core/device.c
+@@ -2823,8 +2823,10 @@ int ib_del_sub_device_and_put(struct ib_device *sub)
+ {
+ 	struct ib_device *parent = sub->parent;
+ 
+-	if (!parent)
++	if (!parent) {
++		ib_device_put(sub);
+ 		return -EOPNOTSUPP;
++	}
+ 
+ 	mutex_lock(&parent->subdev_lock);
+ 	list_del(&sub->subdev_list);
 -- 
 2.51.0
 
