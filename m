@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F06352927;
-	Tue,  6 Jan 2026 17:44:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95AF835295E;
+	Tue,  6 Jan 2026 17:44:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721481; cv=none; b=KPrE3HOshQI9GZXXRF0iJk1nCQ6hyd9NqXe7ZLEq9VK1IBEdtS9b0PuAhhNJqSIFPJepPrKWoBpFwOOxLVgVR6TOj9HtS34mcV61pboqZTa9dJZOYtnOxFs3h/uNRx5AnsRy6ZsvQVKyn4uvB07pESvGUWSFBXrAE9+ZDpgW7aE=
+	t=1767721484; cv=none; b=CpfCCITI0JBW4su4Y7hFm0XMWaadsATQocacplnFKn3nMDcTfnwlEI7r8Eg5Od9y4RPrTvoEpSf9PeGitcQaQeCUyA2//z+kdMD5GKFPbvVdX/7I34LqZfTYdt3WG+gQBk+Hxcw7dTuR5va7eTtP0WdR5vsIo95Dw/XxFmet2qs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721481; c=relaxed/simple;
-	bh=osA5yX1bWY8l80jJOqNpCvDewHoWuMl2i7Ldrr4mlmU=;
+	s=arc-20240116; t=1767721484; c=relaxed/simple;
+	bh=briJ6xLuXwDRII0bmWbBleOgI6EA7P76gxKaAvUiVFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gTRdPBHQlhOJ8BLi01zMkMjlp8NmUjZqro1tbfTx9A6hfI4WWpOnuq3HWQln8J4Wbw8C5i35a2Jbr7MH804ZuSyciRImmyQzWOmqpiHkp5ykTpjJ0qpxglY8E7DBpub8TX/oz2+uYOIllniKGUPqfMHayKIbQRnAmcsr2ZicOdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XpR3jMDM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=clbCqEFL954aQsiRGKTj6OmiQ41hUfQcSuGHrS2BwpXzZUq2qMV0xCjYRLqOvpPgVrp4xLBFLuiv+VGVuslpCQq3/P2KGCzsJlbQgR23on64AYxX4RGDO/qSkGDFGDnbJl6NvtcFPJ9p+NYW7DVroPGA+PZRlLMC33wFwqkM/mU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ybEuiqAX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XpR3jMDM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75470C19424;
-	Tue,  6 Jan 2026 17:44:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ybEuiqAX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA162C2BC9E;
+	Tue,  6 Jan 2026 17:44:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721481;
-	bh=osA5yX1bWY8l80jJOqNpCvDewHoWuMl2i7Ldrr4mlmU=;
+	s=korg; t=1767721484;
+	bh=briJ6xLuXwDRII0bmWbBleOgI6EA7P76gxKaAvUiVFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XpR3jMDMz5shYvdz82hl9JviaM/HsL0zGMFt68UBGUuOOAv7MG58YrOAbHXoHviZ0
-	 HP6yLfiluhWl9H/zd1BTTlp3IIHcRQxkv/GpZUrjr0XHXPucbJmVUHrRqFvEXY0n0t
-	 F94H7LvAnqN+BikqlK0m6fFUFExZD8Uo7N4XAAPo=
+	b=ybEuiqAX4HlIZ6tA1iN+QhJBUdqNEBVjNwR2nRuB/VXc9bStnSAx/dcXaO2M1k+Fn
+	 9X3dn+bl60d7QmiL6eMIyKW1UpGoB1w4LqshR07T+Axd/MATKK91HpQDlBE0iNtrcB
+	 6HFKRAgtQ6sVVdVCRTTnoYRNz4KkJE8GEnN2iTmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	shumingf@realtek.com,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 549/567] soundwire: stream: extend sdw_alloc_stream() to take type parameter
-Date: Tue,  6 Jan 2026 18:05:31 +0100
-Message-ID: <20260106170511.719559355@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Stable@vger.kernel.org,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Steev Klimaszewski <threeway@gmail.com>
+Subject: [PATCH 6.12 550/567] ASoC: qcom: sdw: fix memory leak for sdw_stream_runtime
+Date: Tue,  6 Jan 2026 18:05:32 +0100
+Message-ID: <20260106170511.757667327@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -50,107 +48,252 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-[ Upstream commit dc90bbefa792031d89fe2af9ad4a6febd6be96a9 ]
+[ Upstream commit bcba17279327c6e85dee6a97014dc642e2dc93cc ]
 
-In the existing definition of sdw_stream_runtime, the 'type' member is
-never set and defaults to PCM. To prepare for the BPT/BRA support, we
-need to special-case streams and make use of the 'type'.
+For some reason we endedup allocating sdw_stream_runtime for every cpu dai,
+this has two issues.
+1. we never set snd_soc_dai_set_stream for non soundwire dai, which
+   means there is no way that we can free this, resulting in memory leak
+2. startup and shutdown callbacks can be called without
+   hw_params callback called. This combination results in memory leak
+because machine driver sruntime array pointer is only set in hw_params
+callback.
 
-No functional change for now, the implicit PCM type is now explicit.
+Fix this by
+ 1. adding a helper function to get sdw_runtime for substream
+which can be used by shutdown callback to get hold of sruntime to free.
+ 2. only allocate sdw_runtime for soundwire dais.
 
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Tested-by: shumingf@realtek.com
-Link: https://lore.kernel.org/r/20250227140615.8147-5-yung-chuan.liao@linux.intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Stable-dep-of: bcba17279327 ("ASoC: qcom: sdw: fix memory leak for sdw_stream_runtime")
+Fixes: d32bac9cb09c ("ASoC: qcom: Add helper for allocating Soundwire stream runtime")
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Stable@vger.kernel.org
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Tested-by: Steev Klimaszewski <threeway@gmail.com> # Thinkpad X13s
+Link: https://patch.msgid.link/20251022143349.1081513-2-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/driver-api/soundwire/stream.rst |    2 +-
- drivers/soundwire/stream.c                    |    6 ++++--
- include/linux/soundwire/sdw.h                 |    2 +-
- sound/soc/qcom/sdw.c                          |    2 +-
- 4 files changed, 7 insertions(+), 5 deletions(-)
+ sound/soc/qcom/sc7280.c   |    2 
+ sound/soc/qcom/sc8280xp.c |    2 
+ sound/soc/qcom/sdw.c      |  105 +++++++++++++++++++++++++---------------------
+ sound/soc/qcom/sdw.h      |    1 
+ sound/soc/qcom/sm8250.c   |    2 
+ sound/soc/qcom/x1e80100.c |    2 
+ 6 files changed, 64 insertions(+), 50 deletions(-)
 
---- a/Documentation/driver-api/soundwire/stream.rst
-+++ b/Documentation/driver-api/soundwire/stream.rst
-@@ -291,7 +291,7 @@ per stream. From ASoC DPCM framework, th
+--- a/sound/soc/qcom/sc7280.c
++++ b/sound/soc/qcom/sc7280.c
+@@ -317,7 +317,7 @@ static void sc7280_snd_shutdown(struct s
+ 	struct snd_soc_card *card = rtd->card;
+ 	struct sc7280_snd_data *data = snd_soc_card_get_drvdata(card);
+ 	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
+-	struct sdw_stream_runtime *sruntime = data->sruntime[cpu_dai->id];
++	struct sdw_stream_runtime *sruntime = qcom_snd_sdw_get_stream(substream);
  
- .. code-block:: c
+ 	switch (cpu_dai->id) {
+ 	case MI2S_PRIMARY:
+--- a/sound/soc/qcom/sc8280xp.c
++++ b/sound/soc/qcom/sc8280xp.c
+@@ -69,7 +69,7 @@ static void sc8280xp_snd_shutdown(struct
+ 	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+ 	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
+ 	struct sc8280xp_snd_data *pdata = snd_soc_card_get_drvdata(rtd->card);
+-	struct sdw_stream_runtime *sruntime = pdata->sruntime[cpu_dai->id];
++	struct sdw_stream_runtime *sruntime = qcom_snd_sdw_get_stream(substream);
  
--  int sdw_alloc_stream(char * stream_name);
-+  int sdw_alloc_stream(char * stream_name, enum sdw_stream_type type);
- 
- The SoundWire core provides a sdw_startup_stream() helper function,
- typically called during a dailink .startup() callback, which performs
---- a/drivers/soundwire/stream.c
-+++ b/drivers/soundwire/stream.c
-@@ -1744,12 +1744,13 @@ static int set_stream(struct snd_pcm_sub
-  * sdw_alloc_stream() - Allocate and return stream runtime
-  *
-  * @stream_name: SoundWire stream name
-+ * @type: stream type (could be PCM ,PDM or BPT)
-  *
-  * Allocates a SoundWire stream runtime instance.
-  * sdw_alloc_stream should be called only once per stream. Typically
-  * invoked from ALSA/ASoC machine/platform driver.
-  */
--struct sdw_stream_runtime *sdw_alloc_stream(const char *stream_name)
-+struct sdw_stream_runtime *sdw_alloc_stream(const char *stream_name, enum sdw_stream_type type)
- {
- 	struct sdw_stream_runtime *stream;
- 
-@@ -1761,6 +1762,7 @@ struct sdw_stream_runtime *sdw_alloc_str
- 	INIT_LIST_HEAD(&stream->master_list);
- 	stream->state = SDW_STREAM_ALLOCATED;
- 	stream->m_rt_count = 0;
-+	stream->type = type;
- 
- 	return stream;
- }
-@@ -1789,7 +1791,7 @@ int sdw_startup_stream(void *sdw_substre
- 	if (!name)
- 		return -ENOMEM;
- 
--	sdw_stream = sdw_alloc_stream(name);
-+	sdw_stream = sdw_alloc_stream(name, SDW_STREAM_PCM);
- 	if (!sdw_stream) {
- 		dev_err(rtd->dev, "alloc stream failed for substream DAI %s\n", substream->name);
- 		ret = -ENOMEM;
---- a/include/linux/soundwire/sdw.h
-+++ b/include/linux/soundwire/sdw.h
-@@ -1024,7 +1024,7 @@ struct sdw_stream_runtime {
- 	int m_rt_count;
- };
- 
--struct sdw_stream_runtime *sdw_alloc_stream(const char *stream_name);
-+struct sdw_stream_runtime *sdw_alloc_stream(const char *stream_name, enum sdw_stream_type type);
- void sdw_release_stream(struct sdw_stream_runtime *stream);
- 
- int sdw_compute_params(struct sdw_bus *bus);
+ 	pdata->sruntime[cpu_dai->id] = NULL;
+ 	sdw_release_stream(sruntime);
 --- a/sound/soc/qcom/sdw.c
 +++ b/sound/soc/qcom/sdw.c
-@@ -27,7 +27,7 @@ int qcom_snd_sdw_startup(struct snd_pcm_
+@@ -7,6 +7,37 @@
+ #include <sound/soc.h>
+ #include "sdw.h"
+ 
++static bool qcom_snd_is_sdw_dai(int id)
++{
++	switch (id) {
++	case WSA_CODEC_DMA_RX_0:
++	case WSA_CODEC_DMA_TX_0:
++	case WSA_CODEC_DMA_RX_1:
++	case WSA_CODEC_DMA_TX_1:
++	case WSA_CODEC_DMA_TX_2:
++	case RX_CODEC_DMA_RX_0:
++	case TX_CODEC_DMA_TX_0:
++	case RX_CODEC_DMA_RX_1:
++	case TX_CODEC_DMA_TX_1:
++	case RX_CODEC_DMA_RX_2:
++	case TX_CODEC_DMA_TX_2:
++	case RX_CODEC_DMA_RX_3:
++	case TX_CODEC_DMA_TX_3:
++	case RX_CODEC_DMA_RX_4:
++	case TX_CODEC_DMA_TX_4:
++	case RX_CODEC_DMA_RX_5:
++	case TX_CODEC_DMA_TX_5:
++	case RX_CODEC_DMA_RX_6:
++	case RX_CODEC_DMA_RX_7:
++	case SLIMBUS_0_RX...SLIMBUS_6_TX:
++		return true;
++	default:
++		break;
++	}
++
++	return false;
++}
++
+ /**
+  * qcom_snd_sdw_startup() - Helper to start Soundwire stream for SoC audio card
+  * @substream: The PCM substream from audio, as passed to snd_soc_ops->startup()
+@@ -27,6 +58,9 @@ int qcom_snd_sdw_startup(struct snd_pcm_
  	struct snd_soc_dai *codec_dai;
  	int ret, i;
  
--	sruntime = sdw_alloc_stream(cpu_dai->name);
-+	sruntime = sdw_alloc_stream(cpu_dai->name, SDW_STREAM_PCM);
++	if (!qcom_snd_is_sdw_dai(cpu_dai->id))
++		return 0;
++
+ 	sruntime = sdw_alloc_stream(cpu_dai->name, SDW_STREAM_PCM);
  	if (!sruntime)
  		return -ENOMEM;
+@@ -61,19 +95,8 @@ int qcom_snd_sdw_prepare(struct snd_pcm_
+ 	if (!sruntime)
+ 		return 0;
  
+-	switch (cpu_dai->id) {
+-	case WSA_CODEC_DMA_RX_0:
+-	case WSA_CODEC_DMA_RX_1:
+-	case RX_CODEC_DMA_RX_0:
+-	case RX_CODEC_DMA_RX_1:
+-	case TX_CODEC_DMA_TX_0:
+-	case TX_CODEC_DMA_TX_1:
+-	case TX_CODEC_DMA_TX_2:
+-	case TX_CODEC_DMA_TX_3:
+-		break;
+-	default:
++	if (!qcom_snd_is_sdw_dai(cpu_dai->id))
+ 		return 0;
+-	}
+ 
+ 	if (*stream_prepared)
+ 		return 0;
+@@ -101,9 +124,7 @@ int qcom_snd_sdw_prepare(struct snd_pcm_
+ }
+ EXPORT_SYMBOL_GPL(qcom_snd_sdw_prepare);
+ 
+-int qcom_snd_sdw_hw_params(struct snd_pcm_substream *substream,
+-			   struct snd_pcm_hw_params *params,
+-			   struct sdw_stream_runtime **psruntime)
++struct sdw_stream_runtime *qcom_snd_sdw_get_stream(struct snd_pcm_substream *substream)
+ {
+ 	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+ 	struct snd_soc_dai *codec_dai;
+@@ -111,21 +132,23 @@ int qcom_snd_sdw_hw_params(struct snd_pc
+ 	struct sdw_stream_runtime *sruntime;
+ 	int i;
+ 
+-	switch (cpu_dai->id) {
+-	case WSA_CODEC_DMA_RX_0:
+-	case RX_CODEC_DMA_RX_0:
+-	case RX_CODEC_DMA_RX_1:
+-	case TX_CODEC_DMA_TX_0:
+-	case TX_CODEC_DMA_TX_1:
+-	case TX_CODEC_DMA_TX_2:
+-	case TX_CODEC_DMA_TX_3:
+-		for_each_rtd_codec_dais(rtd, i, codec_dai) {
+-			sruntime = snd_soc_dai_get_stream(codec_dai, substream->stream);
+-			if (sruntime != ERR_PTR(-ENOTSUPP))
+-				*psruntime = sruntime;
+-		}
+-		break;
++	if (!qcom_snd_is_sdw_dai(cpu_dai->id))
++		return NULL;
++
++	for_each_rtd_codec_dais(rtd, i, codec_dai) {
++		sruntime = snd_soc_dai_get_stream(codec_dai, substream->stream);
++		if (sruntime != ERR_PTR(-ENOTSUPP))
++			return sruntime;
+ 	}
++	return NULL;
++}
++EXPORT_SYMBOL_GPL(qcom_snd_sdw_get_stream);
++
++int qcom_snd_sdw_hw_params(struct snd_pcm_substream *substream,
++			   struct snd_pcm_hw_params *params,
++			   struct sdw_stream_runtime **psruntime)
++{
++	*psruntime = qcom_snd_sdw_get_stream(substream);
+ 
+ 	return 0;
+ 
+@@ -138,23 +161,13 @@ int qcom_snd_sdw_hw_free(struct snd_pcm_
+ 	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+ 	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
+ 
+-	switch (cpu_dai->id) {
+-	case WSA_CODEC_DMA_RX_0:
+-	case WSA_CODEC_DMA_RX_1:
+-	case RX_CODEC_DMA_RX_0:
+-	case RX_CODEC_DMA_RX_1:
+-	case TX_CODEC_DMA_TX_0:
+-	case TX_CODEC_DMA_TX_1:
+-	case TX_CODEC_DMA_TX_2:
+-	case TX_CODEC_DMA_TX_3:
+-		if (sruntime && *stream_prepared) {
+-			sdw_disable_stream(sruntime);
+-			sdw_deprepare_stream(sruntime);
+-			*stream_prepared = false;
+-		}
+-		break;
+-	default:
+-		break;
++	if (!qcom_snd_is_sdw_dai(cpu_dai->id))
++		return 0;
++
++	if (sruntime && *stream_prepared) {
++		sdw_disable_stream(sruntime);
++		sdw_deprepare_stream(sruntime);
++		*stream_prepared = false;
+ 	}
+ 
+ 	return 0;
+--- a/sound/soc/qcom/sdw.h
++++ b/sound/soc/qcom/sdw.h
+@@ -10,6 +10,7 @@ int qcom_snd_sdw_startup(struct snd_pcm_
+ int qcom_snd_sdw_prepare(struct snd_pcm_substream *substream,
+ 			 struct sdw_stream_runtime *runtime,
+ 			 bool *stream_prepared);
++struct sdw_stream_runtime *qcom_snd_sdw_get_stream(struct snd_pcm_substream *stream);
+ int qcom_snd_sdw_hw_params(struct snd_pcm_substream *substream,
+ 			   struct snd_pcm_hw_params *params,
+ 			   struct sdw_stream_runtime **psruntime);
+--- a/sound/soc/qcom/sm8250.c
++++ b/sound/soc/qcom/sm8250.c
+@@ -86,7 +86,7 @@ static void sm2450_snd_shutdown(struct s
+ 	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+ 	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
+ 	struct sm8250_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
+-	struct sdw_stream_runtime *sruntime = data->sruntime[cpu_dai->id];
++	struct sdw_stream_runtime *sruntime = qcom_snd_sdw_get_stream(substream);
+ 
+ 	data->sruntime[cpu_dai->id] = NULL;
+ 	sdw_release_stream(sruntime);
+--- a/sound/soc/qcom/x1e80100.c
++++ b/sound/soc/qcom/x1e80100.c
+@@ -55,7 +55,7 @@ static void x1e80100_snd_shutdown(struct
+ 	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+ 	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
+ 	struct x1e80100_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
+-	struct sdw_stream_runtime *sruntime = data->sruntime[cpu_dai->id];
++	struct sdw_stream_runtime *sruntime = qcom_snd_sdw_get_stream(substream);
+ 
+ 	data->sruntime[cpu_dai->id] = NULL;
+ 	sdw_release_stream(sruntime);
 
 
