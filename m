@@ -1,38 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D25832264AA;
-	Tue,  6 Jan 2026 17:38:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD5BC257844;
+	Tue,  6 Jan 2026 17:38:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721096; cv=none; b=qHd5608BODfYJXJtqJEokG2EZ4OmbxFylDtjQT7TKFj/D22/8A/0iZgZsbjzQJ55DGXM4m7v2ehHqepeUswrawzw7euabbrtS6rOkoFyj3vbGhYsK1hxhpqdWKANs4xgcOzQ9iTp3JD6GN/KgFpuhWM5v9EH2mdHzkPJMc2Uq2U=
+	t=1767721099; cv=none; b=Rs9lBQSPZbgiKSEfaKtvQEoPv3ro09clXlZO5bS8Zsesskx6bnt+0ulkjuifFW7xctVM9N9nADt7EvW9y8iZy0syS6YGOzNtDTQ9+WrQpXwsUQBYr0Z4ctxhN11P4ZiotF+zgSnlOvLX1P/IT1iM7EUWABXQzxNsVvrla7wboNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721096; c=relaxed/simple;
-	bh=QXwwKGMZEu8oydY082jgYrvByMIDMrRaIwx76IDAmlI=;
+	s=arc-20240116; t=1767721099; c=relaxed/simple;
+	bh=Cre2eVPRm8nT6BESNLYAkVcJB/qDtM2NUwmyMWsrztA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=reMXc2CQZf9VFV03reTK8rlGmuIXjHVnPPxvjiQhew8P4ffs6BE63i76dMq/E/E7nTxsKqsK7v3JFeHryL7DYhV5aQ87DLjwDxY6xq6Pmsd3gfZ4XkpMdmeINSvMubuTRBoTFbbR1A9Pt9vb2SlS8HtMXvIKo9zgcu/VL8fKp8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XwshiF4Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PFyUTqSegkPCJGtcVYCK8ILZ3Pll6WEtPc8lSy3qQrInKpUqMBPcug2fPiCub4Q7xxAHRcXoUPf1OdoE2oB+EnLuzPoju3FnRhmQUXyoi70FK/KtR7tfUy86O+QaIE89mD+VuvSqMw66AeC8oJVRq+qs5SI1p8VlOpEPtQc01MY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G/Jqa7F0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XwshiF4Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2AF8C116C6;
-	Tue,  6 Jan 2026 17:38:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G/Jqa7F0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDC97C116C6;
+	Tue,  6 Jan 2026 17:38:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721096;
-	bh=QXwwKGMZEu8oydY082jgYrvByMIDMrRaIwx76IDAmlI=;
+	s=korg; t=1767721099;
+	bh=Cre2eVPRm8nT6BESNLYAkVcJB/qDtM2NUwmyMWsrztA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XwshiF4YgjLiJPMPGh/Lf7Z1D1rqdnnIUjk2RtAVNDWFpEfWN77yyqBTz+1RShKzg
-	 5dV+rXZTrEJKYN3z9bwk5NJw4yp92pcStFZrPt4MCwbkgmAzQSvMzGhtoxvgDkyQer
-	 yXYZfKZRkYxMyHDtsfOgpOaQno2AsGAsX6ZyJgms=
+	b=G/Jqa7F0Gv6FM7qvYOPPAHCfdITAQfqIBvdb6+89xZfxMc+0hBcxHDdxRLVJy77R2
+	 JBYx4A3pidGBio8iFU7XNjdZAvFJmws0UHW2wO0B4mkO4lZ8z50IPSf1hhIEiBcATZ
+	 8MHAHn0gM3gaKI0MPVfMwXvNYzLrbrzPeqKnY0Nc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"H. Peter Anvin (Intel)" <hpa@zytor.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 6.12 435/567] compiler_types.h: add "auto" as a macro for "__auto_type"
-Date: Tue,  6 Jan 2026 18:03:37 +0100
-Message-ID: <20260106170507.444053363@linuxfoundation.org>
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	syzbot+997752115a851cb0cf36@syzkaller.appspotmail.com,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Dmitriy Vyukov <dvyukov@google.com>,
+	Kees Cook <kees@kernel.org>,
+	Marco Elver <elver@google.com>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 436/567] mm/kasan: fix incorrect unpoisoning in vrealloc for KASAN
+Date: Tue,  6 Jan 2026 18:03:38 +0100
+Message-ID: <20260106170507.480596524@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,58 +61,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: H. Peter Anvin <hpa@zytor.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-commit 2fb6915fa22dc5524d704afba58a13305dd9f533 upstream.
+commit 007f5da43b3d0ecff972e2616062b8da1f862f5e upstream.
 
-"auto" was defined as a keyword back in the K&R days, but as a storage
-type specifier.  No one ever used it, since it was and is the default
-storage type for local variables.
+Patch series "kasan: vmalloc: Fixes for the percpu allocator and
+vrealloc", v3.
 
-C++11 recycled the keyword to allow a type to be declared based on the
-type of an initializer.  This was finally adopted into standard C in
-C23.
+Patches fix two issues related to KASAN and vmalloc.
 
-gcc and clang provide the "__auto_type" alias keyword as an extension
-for pre-C23, however, there is no reason to pollute the bulk of the
-source base with this temporary keyword; instead define "auto" as a
-macro unless the compiler is running in C23+ mode.
+The first one, a KASAN tag mismatch, possibly resulting in a kernel panic,
+can be observed on systems with a tag-based KASAN enabled and with
+multiple NUMA nodes.  Initially it was only noticed on x86 [1] but later a
+similar issue was also reported on arm64 [2].
 
-This macro is added in <linux/compiler_types.h> because that header is
-included in some of the tools headers, wheres <linux/compiler.h> is
-not as it has a bunch of very kernel-specific things in it.
+Specifically the problem is related to how vm_structs interact with
+pcpu_chunks - both when they are allocated, assigned and when pcpu_chunk
+addresses are derived.
 
-[ Cc: stable to reduce potential backporting burden. ]
+When vm_structs are allocated they are unpoisoned, each with a different
+random tag, if vmalloc support is enabled along the KASAN mode.  Later
+when first pcpu chunk is allocated it gets its 'base_addr' field set to
+the first allocated vm_struct.  With that it inherits that vm_struct's
+tag.
 
-Signed-off-by: H. Peter Anvin (Intel) <hpa@zytor.com>
-Acked-by: Miguel Ojeda <ojeda@kernel.org>
-Cc: <stable@kernel.org>
+When pcpu_chunk addresses are later derived (by pcpu_chunk_addr(), for
+example in pcpu_alloc_noprof()) the base_addr field is used and offsets
+are added to it.  If the initial conditions are satisfied then some of the
+offsets will point into memory allocated with a different vm_struct.  So
+while the lower bits will get accurately derived the tag bits in the top
+of the pointer won't match the shadow memory contents.
+
+The solution (proposed at v2 of the x86 KASAN series [3]) is to unpoison
+the vm_structs with the same tag when allocating them for the per cpu
+allocator (in pcpu_get_vm_areas()).
+
+The second one reported by syzkaller [4] is related to vrealloc and
+happens because of random tag generation when unpoisoning memory without
+allocating new pages.  This breaks shadow memory tracking and needs to
+reuse the existing tag instead of generating a new one.  At the same time
+an inconsistency in used flags is corrected.
+
+
+This patch (of 3):
+
+Syzkaller reported a memory out-of-bounds bug [4].  This patch fixes two
+issues:
+
+1. In vrealloc the KASAN_VMALLOC_VM_ALLOC flag is missing when
+   unpoisoning the extended region. This flag is required to correctly
+   associate the allocation with KASAN's vmalloc tracking.
+
+   Note: In contrast, vzalloc (via __vmalloc_node_range_noprof)
+   explicitly sets KASAN_VMALLOC_VM_ALLOC and calls
+   kasan_unpoison_vmalloc() with it.  vrealloc must behave consistently --
+   especially when reusing existing vmalloc regions -- to ensure KASAN can
+   track allocations correctly.
+
+2. When vrealloc reuses an existing vmalloc region (without allocating
+   new pages) KASAN generates a new tag, which breaks tag-based memory
+   access tracking.
+
+Introduce KASAN_VMALLOC_KEEP_TAG, a new KASAN flag that allows reusing the
+tag already attached to the pointer, ensuring consistent tag behavior
+during reallocation.
+
+Pass KASAN_VMALLOC_KEEP_TAG and KASAN_VMALLOC_VM_ALLOC to the
+kasan_unpoison_vmalloc inside vrealloc_node_align_noprof().
+
+Link: https://lkml.kernel.org/r/cover.1765978969.git.m.wieczorretman@pm.me
+Link: https://lkml.kernel.org/r/38dece0a4074c43e48150d1e242f8242c73bf1a5.1764874575.git.m.wieczorretman@pm.me
+Link: https://lore.kernel.org/all/e7e04692866d02e6d3b32bb43b998e5d17092ba4.1738686764.git.maciej.wieczor-retman@intel.com/ [1]
+Link: https://lore.kernel.org/all/aMUrW1Znp1GEj7St@MiWiFi-R3L-srv/ [2]
+Link: https://lore.kernel.org/all/CAPAsAGxDRv_uFeMYu9TwhBVWHCCtkSxoWY4xmFB_vowMbi8raw@mail.gmail.com/ [3]
+Link: https://syzkaller.appspot.com/bug?extid=997752115a851cb0cf36 [4]
+Fixes: a0309faf1cb0 ("mm: vmalloc: support more granular vrealloc() sizing")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Co-developed-by: Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>
+Signed-off-by: Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>
+Reported-by: syzbot+997752115a851cb0cf36@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/68e243a2.050a0220.1696c6.007d.GAE@google.com/T/
+Reviewed-by: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Danilo Krummrich <dakr@kernel.org>
+Cc: Dmitriy Vyukov <dvyukov@google.com>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Marco Elver <elver@google.com>
+Cc: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
+Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/compiler_types.h |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ include/linux/kasan.h |    1 +
+ mm/kasan/hw_tags.c    |    2 +-
+ mm/kasan/shadow.c     |    4 +++-
+ mm/vmalloc.c          |    4 +++-
+ 4 files changed, 8 insertions(+), 3 deletions(-)
 
---- a/include/linux/compiler_types.h
-+++ b/include/linux/compiler_types.h
-@@ -14,6 +14,19 @@
- #ifndef __ASSEMBLY__
+--- a/include/linux/kasan.h
++++ b/include/linux/kasan.h
+@@ -28,6 +28,7 @@ typedef unsigned int __bitwise kasan_vma
+ #define KASAN_VMALLOC_INIT		((__force kasan_vmalloc_flags_t)0x01u)
+ #define KASAN_VMALLOC_VM_ALLOC		((__force kasan_vmalloc_flags_t)0x02u)
+ #define KASAN_VMALLOC_PROT_NORMAL	((__force kasan_vmalloc_flags_t)0x04u)
++#define KASAN_VMALLOC_KEEP_TAG		((__force kasan_vmalloc_flags_t)0x08u)
  
- /*
-+ * C23 introduces "auto" as a standard way to define type-inferred
-+ * variables, but "auto" has been a (useless) keyword even since K&R C,
-+ * so it has always been "namespace reserved."
-+ *
-+ * Until at some future time we require C23 support, we need the gcc
-+ * extension __auto_type, but there is no reason to put that elsewhere
-+ * in the source code.
-+ */
-+#if __STDC_VERSION__ < 202311L
-+# define auto __auto_type
-+#endif
+ #define KASAN_VMALLOC_PAGE_RANGE 0x1 /* Apply exsiting page range */
+ #define KASAN_VMALLOC_TLB_FLUSH  0x2 /* TLB flush */
+--- a/mm/kasan/hw_tags.c
++++ b/mm/kasan/hw_tags.c
+@@ -345,7 +345,7 @@ void *__kasan_unpoison_vmalloc(const voi
+ 		return (void *)start;
+ 	}
+ 
+-	tag = kasan_random_tag();
++	tag = (flags & KASAN_VMALLOC_KEEP_TAG) ? get_tag(start) : kasan_random_tag();
+ 	start = set_tag(start, tag);
+ 
+ 	/* Unpoison and initialize memory up to size. */
+--- a/mm/kasan/shadow.c
++++ b/mm/kasan/shadow.c
+@@ -561,7 +561,9 @@ void *__kasan_unpoison_vmalloc(const voi
+ 	    !(flags & KASAN_VMALLOC_PROT_NORMAL))
+ 		return (void *)start;
+ 
+-	start = set_tag(start, kasan_random_tag());
++	if (unlikely(!(flags & KASAN_VMALLOC_KEEP_TAG)))
++		start = set_tag(start, kasan_random_tag());
 +
-+/*
-  * Skipped when running bindgen due to a libclang issue;
-  * see https://github.com/rust-lang/rust-bindgen/issues/2244.
-  */
+ 	kasan_unpoison(start, size, false);
+ 	return (void *)start;
+ }
+--- a/mm/vmalloc.c
++++ b/mm/vmalloc.c
+@@ -4118,7 +4118,9 @@ void *vrealloc_noprof(const void *p, siz
+ 	 */
+ 	if (size <= alloced_size) {
+ 		kasan_unpoison_vmalloc(p + old_size, size - old_size,
+-				       KASAN_VMALLOC_PROT_NORMAL);
++				       KASAN_VMALLOC_PROT_NORMAL |
++				       KASAN_VMALLOC_VM_ALLOC |
++				       KASAN_VMALLOC_KEEP_TAG);
+ 		/*
+ 		 * No need to zero memory here, as unused memory will have
+ 		 * already been zeroed at initial allocation time or during
 
 
