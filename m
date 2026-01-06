@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551F3346784;
-	Tue,  6 Jan 2026 17:15:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE0A8346A10;
+	Tue,  6 Jan 2026 17:15:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719717; cv=none; b=tK78Fglm00aYARsK/bMOYNxV/xcN7wjzFgjLK6Ig4PFPKoM1DJcbbUbtCDrg9xIO297l1pDMfQeQGzRep0+GC4un/8lqe82ofFeFNrRaK/edE4WLY4Hc+FPgBjNxvUqLezb1mo4B5qIUSSbL20Fd3zten2pkGTvweDduTQL5YWc=
+	t=1767719721; cv=none; b=ZHAY4df3Fv5/1SLxaX4+Oc1rxDWNth2KB3UigssqdPpjCkDfqeEO6wMle/W/qnAiH+2REpvu0Jhc9jzxFlHtmFVLgI2VsHYypbhlLexjPfyIDO05Jrngiwc+slCFjQjB5SNbow+zV3uxtf8HBaxUFrSdUu5zz6jrR8NvQKqYjzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719717; c=relaxed/simple;
-	bh=BmDFnffO65VasTxyMNxEgDWRg6f9TojbYKc3sKRNvVQ=;
+	s=arc-20240116; t=1767719721; c=relaxed/simple;
+	bh=9zu4IQR3wN7/Xj47hUhuQImCBKREN8tnuY5gZfVbDnQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TVUz41lfO04b8gR8zZpp3oX+/oHiMenrd7TYmEQMvk/LEpnXcAGwSFsUJbLC8qfUA/4h5zBPU2gbE3cesQE7Td9dYwu4GdAlaGNHByaljUIUNbVByz395FOUTGbMdi5Jj/P5FqxFqF5tnfRVJmPwQqlkDewa/Foazvezm6hUddw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTEA2S5u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bIQrpZECBCFSQBTkaOFs+2dg7eK13a6Gq1Th9eRxE1D8vF4tYj+hWUQWC0Hq9P1OWiiQdJ598w/P4Lk726QGUAYBDOTabnlheHRw2nXvdEOeQnHhGkF0EV8n60JFh7L9Jiz6kKKoaShgTcUpoO+mrsAPMux1KH/DxGn3vI0wxVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jLrxYDqs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTEA2S5u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87D18C116C6;
-	Tue,  6 Jan 2026 17:15:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jLrxYDqs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3D9EC16AAE;
+	Tue,  6 Jan 2026 17:15:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719717;
-	bh=BmDFnffO65VasTxyMNxEgDWRg6f9TojbYKc3sKRNvVQ=;
+	s=korg; t=1767719720;
+	bh=9zu4IQR3wN7/Xj47hUhuQImCBKREN8tnuY5gZfVbDnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bTEA2S5u5q6uEaORuVk3TJRqMO6ZtC1YWO2U/lYeelDDA1RvwwrDdqIS+owXxh/R0
-	 1HDRDnREgxD/KJ0586UVw22DoDewCxdoNLh4LusX0r4+in8e0QbTWE8OPeHfdEk0n3
-	 dMpLIjXTKw0AkVjGxCW30MWzjB72jSWOUSuuY+1E=
+	b=jLrxYDqswuA6hyBOaLVjcReGiFulvMRjAOzBzJLaLkY3rQDjksKuUDn8+kpSTnBKP
+	 OzkL+RnqqQiup4aPjeviwpPP+WRiuUpVYxtOqDkdDqlEPRQv8BIAoe18k0xvBt5INI
+	 dc7pKfqZlasxZhhlqK1suGR48Xw1A7/oWpACue4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Liu <song@kernel.org>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Petr Mladek <pmladek@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 019/567] livepatch: Match old_sympos 0 and 1 in klp_find_func()
-Date: Tue,  6 Jan 2026 17:56:41 +0100
-Message-ID: <20260106170452.053168290@linuxfoundation.org>
+Subject: [PATCH 6.12 002/567] btrfs: fix a potential path leak in print_data_reloc_error()
+Date: Tue,  6 Jan 2026 17:56:24 +0100
+Message-ID: <20260106170451.432906762@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,86 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Song Liu <song@kernel.org>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 139560e8b973402140cafeb68c656c1374bd4c20 ]
+[ Upstream commit 313ef70a9f0f637a09d9ef45222f5bdcf30a354b ]
 
-When there is only one function of the same name, old_sympos of 0 and 1
-are logically identical. Match them in klp_find_func().
+Inside print_data_reloc_error(), if extent_from_logical() failed we
+return immediately.
 
-This is to avoid a corner case with different toolchain behavior.
+However there are the following cases where extent_from_logical() can
+return error but still holds a path:
 
-In this specific issue, two versions of kpatch-build were used to
-build livepatch for the same kernel. One assigns old_sympos == 0 for
-unique local functions, the other assigns old_sympos == 1 for unique
-local functions. Both versions work fine by themselves. (PS: This
-behavior change was introduced in a downstream version of kpatch-build.
-This change does not exist in upstream kpatch-build.)
+- btrfs_search_slot() returned 0
 
-However, during livepatch upgrade (with the replace flag set) from a
-patch built with one version of kpatch-build to the same fix built with
-the other version of kpatch-build, livepatching fails with errors like:
+- No backref item found in extent tree
 
-[   14.218706] sysfs: cannot create duplicate filename 'xxx/somefunc,1'
-...
-[   14.219466] Call Trace:
-[   14.219468]  <TASK>
-[   14.219469]  dump_stack_lvl+0x47/0x60
-[   14.219474]  sysfs_warn_dup.cold+0x17/0x27
-[   14.219476]  sysfs_create_dir_ns+0x95/0xb0
-[   14.219479]  kobject_add_internal+0x9e/0x260
-[   14.219483]  kobject_add+0x68/0x80
-[   14.219485]  ? kstrdup+0x3c/0xa0
-[   14.219486]  klp_enable_patch+0x320/0x830
-[   14.219488]  patch_init+0x443/0x1000 [ccc_0_6]
-[   14.219491]  ? 0xffffffffa05eb000
-[   14.219492]  do_one_initcall+0x2e/0x190
-[   14.219494]  do_init_module+0x67/0x270
-[   14.219496]  init_module_from_file+0x75/0xa0
-[   14.219499]  idempotent_init_module+0x15a/0x240
-[   14.219501]  __x64_sys_finit_module+0x61/0xc0
-[   14.219503]  do_syscall_64+0x5b/0x160
-[   14.219505]  entry_SYSCALL_64_after_hwframe+0x4b/0x53
-[   14.219507] RIP: 0033:0x7f545a4bd96d
-...
-[   14.219516] kobject: kobject_add_internal failed for somefunc,1 with
-    -EEXIST, don't try to register things with the same name ...
+- No flags_ret provided
+  This is not possible in this call site though.
 
-This happens because klp_find_func() thinks somefunc with old_sympos==0
-is not the same as somefunc with old_sympos==1, and klp_add_object_nops
-adds another xxx/func,1 to the list of functions to patch.
+So for the above two cases, we can return without releasing the path,
+causing extent buffer leaks.
 
-Signed-off-by: Song Liu <song@kernel.org>
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
-[pmladek@suse.com: Fixed some typos.]
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Tested-by: Petr Mladek <pmladek@suse.com>
-Signed-off-by: Petr Mladek <pmladek@suse.com>
+Fixes: b9a9a85059cd ("btrfs: output affected files when relocation fails")
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/livepatch/core.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/btrfs/inode.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/livepatch/core.c b/kernel/livepatch/core.c
-index 3c21c31796db0..077e078032e05 100644
---- a/kernel/livepatch/core.c
-+++ b/kernel/livepatch/core.c
-@@ -90,8 +90,14 @@ static struct klp_func *klp_find_func(struct klp_object *obj,
- 	struct klp_func *func;
- 
- 	klp_for_each_func(obj, func) {
-+		/*
-+		 * Besides identical old_sympos, also consider old_sympos
-+		 * of 0 and 1 are identical.
-+		 */
- 		if ((strcmp(old_func->old_name, func->old_name) == 0) &&
--		    (old_func->old_sympos == func->old_sympos)) {
-+		    ((old_func->old_sympos == func->old_sympos) ||
-+		     (old_func->old_sympos == 0 && func->old_sympos == 1) ||
-+		     (old_func->old_sympos == 1 && func->old_sympos == 0))) {
- 			return func;
- 		}
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index 01a1b979b717f..ce13b0ec978ed 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -253,6 +253,7 @@ static void print_data_reloc_error(const struct btrfs_inode *inode, u64 file_off
+ 	if (ret < 0) {
+ 		btrfs_err_rl(fs_info, "failed to lookup extent item for logical %llu: %d",
+ 			     logical, ret);
++		btrfs_release_path(&path);
+ 		return;
  	}
+ 	eb = path.nodes[0];
 -- 
 2.51.0
 
