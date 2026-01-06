@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C07533993;
-	Tue,  6 Jan 2026 17:33:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A97832DF719;
+	Tue,  6 Jan 2026 17:33:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720833; cv=none; b=kzDsW35nJbk/dX110sCwQJEtRrf3bkTE/A0YvEPMYr9ytfiaa/jn/kukELa9ZebvKK8GWe8aUGhWQ2nETZgGMnwHa/OQC93AQGndYOXow3IyF2uz012RNRG89hWCSTSgA5UN2//YD7CQCqhDwE1zqokoRUy1NBLsO+WR8IbvuFM=
+	t=1767720836; cv=none; b=ebfDpKubNOCvz9rYGtKqvCc1HEXWJfSpkf+Z/u3LCn2So2vii+hGw3RSrQIuDS9y7S+dj56+8xpqCbcGQT4/f8aCjeubIJA/mO+7MtO2+WK762cEqQ+4cepWZqDqXPPGIr0qxPd3DsRVRe23YP/TDkJWOeZTRuBIHcF4zoi4q+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720833; c=relaxed/simple;
-	bh=68X1AQZApyjLvXTSFbLCUItAP+9uiEEFjYuAHpU8ja8=;
+	s=arc-20240116; t=1767720836; c=relaxed/simple;
+	bh=+opZzcdkGsAMQ74+Ns/QaOMQz7J8o4lhfGlTpI6Dric=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OFmDJ7+bEcdTMHkRgksyBj39ohAFhXy4ZhEgPd0Z6VOgSRsg2DOwfRBkvIuvJh73G/pKufNDWn9nUBO6k+9tXMZohdFdy/PLY2feKYWsYuzpJIAbhJDlQKPFizuFKjD5rB/jrEHHlJZvHzYZ+rMb93LOFzOBko/Zle+JHFoIurg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qd2sjGff; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jtOMf0CtBh0QnQB7+Y5BywtiJ4sWAl/K3C0aeZ86Xf5sQYyJO6QvPXU69vMbMCaRN5aK0msSIIhy1yA31/rxtoWGR+gxaKZhILIIGhJDVm7vU8x3kC9ccwJRtcSfvqE5vtOokw8zhT664Eh41tBFvBqhyjfai79SjGWTAKACVHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FOm4IlmP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qd2sjGff"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBBAFC116C6;
-	Tue,  6 Jan 2026 17:33:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FOm4IlmP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 124D0C116C6;
+	Tue,  6 Jan 2026 17:33:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720833;
-	bh=68X1AQZApyjLvXTSFbLCUItAP+9uiEEFjYuAHpU8ja8=;
+	s=korg; t=1767720836;
+	bh=+opZzcdkGsAMQ74+Ns/QaOMQz7J8o4lhfGlTpI6Dric=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qd2sjGffl/y6Qp7CkolLxds/7Z3ajQgRGXUbNS7325tENquFM4cYdvjB2zIzl5w5R
-	 BmA/n3//z6AGf9D9aN9NV/aJfm/kwsExr2j70sYXx/cZwUxBo9NW7B5vb5BY6P4fOv
-	 ED7lXYhC7p1qMXuF15oKGpXYYQTgmyEUB1yZJI+g=
+	b=FOm4IlmPeewx/eCdBeeVdkJuknQh2yD6dP+sxGdTta7WjowMGzuJq+Fk4OUHKmOd1
+	 6O0fzOP2S++UiWaRjeM1xP+twIk7AWr5LFyrUsNS5t/1xSG24ztcEx/0Gpjx5rmgPb
+	 AUhtlSmZljU4twjt2hJGAGyNWf4Y9WB9et46mvjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8dd915c7cb0490fc8c52@syzkaller.appspotmail.com,
-	Deepakkumar Karn <dkarn@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 313/567] net: usb: rtl8150: fix memory leak on usb_submit_urb() failure
-Date: Tue,  6 Jan 2026 18:01:35 +0100
-Message-ID: <20260106170502.906310568@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 349/567] ASoC: codecs: lpass-tx-macro: fix SM6115 support
+Date: Tue,  6 Jan 2026 18:02:11 +0100
+Message-ID: <20260106170504.240333376@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,47 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepakkumar Karn <dkarn@redhat.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-[ Upstream commit 12cab1191d9890097171156d06bfa8d31f1e39c8 ]
+commit 7c63b5a8ed972a2c8c03d984f6a43349007cea93 upstream.
 
-In async_set_registers(), when usb_submit_urb() fails, the allocated
-  async_req structure and URB are not freed, causing a memory leak.
+SM6115 does have soundwire controller in tx. For some reason
+we ended up with this incorrect patch.
 
-  The completion callback async_set_reg_cb() is responsible for freeing
-  these allocations, but it is only called after the URB is successfully
-  submitted and completes (successfully or with error). If submission
-  fails, the callback never runs and the memory is leaked.
+Fix this by adding the flag to reflect this in SoC data.
 
-  Fix this by freeing both the URB and the request structure in the error
-  path when usb_submit_urb() fails.
-
-Reported-by: syzbot+8dd915c7cb0490fc8c52@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=8dd915c7cb0490fc8c52
-Fixes: 4d12997a9bb3 ("drivers: net: usb: rtl8150: concurrent URB bugfix")
-Signed-off-by: Deepakkumar Karn <dkarn@redhat.com>
-Link: https://patch.msgid.link/20251216151304.59865-2-dkarn@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 510c46884299 ("ASoC: codecs: lpass-tx-macro: Add SM6115 support")
+Cc: Stable@vger.kernel.org
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251031120703.590201-2-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/rtl8150.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/codecs/lpass-tx-macro.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/rtl8150.c b/drivers/net/usb/rtl8150.c
-index 278e6cb6f4d9..e40b0669d9f4 100644
---- a/drivers/net/usb/rtl8150.c
-+++ b/drivers/net/usb/rtl8150.c
-@@ -211,6 +211,8 @@ static int async_set_registers(rtl8150_t *dev, u16 indx, u16 size, u16 reg)
- 		if (res == -ENODEV)
- 			netif_device_detach(dev->netdev);
- 		dev_err(&dev->udev->dev, "%s failed with %d\n", __func__, res);
-+		kfree(req);
-+		usb_free_urb(async_urb);
- 	}
- 	return res;
- }
--- 
-2.51.0
-
+--- a/sound/soc/codecs/lpass-tx-macro.c
++++ b/sound/soc/codecs/lpass-tx-macro.c
+@@ -2474,7 +2474,8 @@ static const struct tx_macro_data lpass_
+ };
+ 
+ static const struct tx_macro_data lpass_ver_10_sm6115 = {
+-	.flags			= LPASS_MACRO_FLAG_HAS_NPL_CLOCK,
++	.flags			= LPASS_MACRO_FLAG_HAS_NPL_CLOCK |
++				  LPASS_MACRO_FLAG_RESET_SWR,
+ 	.ver			= LPASS_VER_10_0_0,
+ 	.extra_widgets		= tx_macro_dapm_widgets_v9_2,
+ 	.extra_widgets_num	= ARRAY_SIZE(tx_macro_dapm_widgets_v9_2),
 
 
