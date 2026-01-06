@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9F623D291;
-	Tue,  6 Jan 2026 17:39:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C3BB253932;
+	Tue,  6 Jan 2026 17:39:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721142; cv=none; b=b9jGK+zAcznB4J9WVo9l3zzNc6VLbLjxN/a2RUn/J7OZYtUW8u/CGYl+xPAU8kDOK3J/OiljN7uQm0dtlU2b9vMEP5O2T9qkW2aWimOglUDD4QKL8ExJtVRWD3DsU3MB3xA23287+BLJG31xos5WxR9HaowDrh+7lkdCmk5cHao=
+	t=1767721145; cv=none; b=J7HGmqCUk5kHaL0XixszbXfRDwF90zY2evqsSq7lhXR00SoJsz9Q2uPwjFCbWQc5O2gimwP4I2Wri1nJS1wrLA6tI8Ng8xDyI6JEAcnbfzk3k/Gv3NkwlFiwUtRSNPccOJZ/Cg0Oyko2OxgSUduBk1aoRDFgNYZwvUcFurjjyhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721142; c=relaxed/simple;
-	bh=twFJA0yZP5HAkuKtanjKZKTigsWuIGLqTTrLlw9YJ6k=;
+	s=arc-20240116; t=1767721145; c=relaxed/simple;
+	bh=5ktCHSDr3yyrTr+7oD70/uyEvsagYlBWeyMlx4rX/ws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eBS0XA7bO66H/mRxYpj0s6R3IYfyL4reBXTi7GWJcAfMVqlSK3i/q0chiKdSgin+MWJgn6MxoiJhhRa2dwDdD3c2jO0inR+8bAo3kIq+OLHXXCmu/VsnrC70aVOHCYhByFZuwxagBXyfhnPmqDYmw74XEt83hUrGjwXX2Z2ocIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2YnMhv7Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fGA1IIInSkX3z8UaJsbPJ7Tkbp4LLfC0f0EjqHs8WEYKfx7v5+TO2Vle+p39GOKE5U1ZDqsX9+9ukErYasghME/pyZX58qmseiuzfS3h7L6sd6rl9iIKz1XAwRVPm+2qGZONR09KKAZ6skkCViR0ZJ0Q+KF4s6dkRs6fOp2N6/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rrx7zYri; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2YnMhv7Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B6C9C116C6;
-	Tue,  6 Jan 2026 17:39:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rrx7zYri"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05884C116C6;
+	Tue,  6 Jan 2026 17:39:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721142;
-	bh=twFJA0yZP5HAkuKtanjKZKTigsWuIGLqTTrLlw9YJ6k=;
+	s=korg; t=1767721145;
+	bh=5ktCHSDr3yyrTr+7oD70/uyEvsagYlBWeyMlx4rX/ws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2YnMhv7Q7qUrnvQCHFQxpxlIJEEpqMdNz7PfPXPcpyo5+4CWp4VTD/qlyMk16qebc
-	 yfWouAnbkcqLcqPvOzmqN0gsqDA0Vx0LdEN5oqBIAp7pivi/v0sF9BrdUDB+V8WQea
-	 0hFbDn/B9HXcNvZfzD5NewWVij3Q2nNqm3Z5l9Po=
+	b=Rrx7zYrifERWghbExIXmLeLMMalWIl87cf8eLc4P4dctN4EkU+rXbFUhvRlz+MTFK
+	 uGiAwzM9wODLdA0YA2ZxL4MZPjlT24EibE2GL0yBpFlybYCNLDGVYewZYlz/tohunM
+	 tiaL4SFF1nRCiQoY5S1PGqYnfjKZvT2VwrkMoTvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 448/567] fjes: Add missing iounmap in fjes_hw_init()
-Date: Tue,  6 Jan 2026 18:03:50 +0100
-Message-ID: <20260106170507.921029599@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 422/567] mm/damon/tests/vaddr-kunit: handle alloc failures in damon_test_split_evenly_fail()
+Date: Tue,  6 Jan 2026 18:03:24 +0100
+Message-ID: <20260106170506.951759549@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,60 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: SeongJae Park <sj@kernel.org>
 
-commit 15ef641a0c6728d25a400df73922e80ab2cf029c upstream.
+commit 7890e5b5bb6e386155c6e755fe70e0cdcc77f18e upstream.
 
-In error paths, add fjes_hw_iounmap() to release the
-resource acquired by fjes_hw_iomap(). Add a goto label
-to do so.
+damon_test_split_evenly_fail() is assuming all dynamic memory allocation
+in it will succeed.  Those are indeed likely in the real use cases since
+those allocations are too small to fail, but theoretically those could
+fail.  In the case, inappropriate memory access can happen.  Fix it by
+appropriately cleanup pre-allocated memory and skip the execution of the
+remaining tests in the failure cases.
 
-Fixes: 8cdc3f6c5d22 ("fjes: Hardware initialization routine")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
-Signed-off-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20251211073756.101824-1-lihaoxiang@isrc.iscas.ac.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lkml.kernel.org/r/20251101182021.74868-19-sj@kernel.org
+Fixes: 17ccae8bb5c9 ("mm/damon: add kunit tests")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: Brendan Higgins <brendan.higgins@linux.dev>
+Cc: David Gow <davidgow@google.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: <stable@vger.kernel.org>	[5.15+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/fjes/fjes_hw.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ mm/damon/tests/vaddr-kunit.h |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/drivers/net/fjes/fjes_hw.c
-+++ b/drivers/net/fjes/fjes_hw.c
-@@ -334,7 +334,7 @@ int fjes_hw_init(struct fjes_hw *hw)
- 
- 	ret = fjes_hw_reset(hw);
- 	if (ret)
--		return ret;
-+		goto err_iounmap;
- 
- 	fjes_hw_set_irqmask(hw, REG_ICTL_MASK_ALL, true);
- 
-@@ -347,8 +347,10 @@ int fjes_hw_init(struct fjes_hw *hw)
- 	hw->max_epid = fjes_hw_get_max_epid(hw);
- 	hw->my_epid = fjes_hw_get_my_epid(hw);
- 
--	if ((hw->max_epid == 0) || (hw->my_epid >= hw->max_epid))
--		return -ENXIO;
-+	if ((hw->max_epid == 0) || (hw->my_epid >= hw->max_epid)) {
-+		ret = -ENXIO;
-+		goto err_iounmap;
+--- a/mm/damon/tests/vaddr-kunit.h
++++ b/mm/damon/tests/vaddr-kunit.h
+@@ -250,7 +250,16 @@ static void damon_test_split_evenly_fail
+ 		unsigned long start, unsigned long end, unsigned int nr_pieces)
+ {
+ 	struct damon_target *t = damon_new_target();
+-	struct damon_region *r = damon_new_region(start, end);
++	struct damon_region *r;
++
++	if (!t)
++		kunit_skip(test, "target alloc fail");
++
++	r = damon_new_region(start, end);
++	if (!r) {
++		damon_free_target(t);
++		kunit_skip(test, "region alloc fail");
 +	}
  
- 	ret = fjes_hw_setup(hw);
- 
-@@ -356,6 +358,10 @@ int fjes_hw_init(struct fjes_hw *hw)
- 	hw->hw_info.trace_size = FJES_DEBUG_BUFFER_SIZE;
- 
- 	return ret;
-+
-+err_iounmap:
-+	fjes_hw_iounmap(hw);
-+	return ret;
- }
- 
- void fjes_hw_exit(struct fjes_hw *hw)
+ 	damon_add_region(r, t);
+ 	KUNIT_EXPECT_EQ(test,
 
 
