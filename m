@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D45352F9F;
-	Tue,  6 Jan 2026 17:22:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F97E352FAD;
+	Tue,  6 Jan 2026 17:22:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720162; cv=none; b=EOXiZBiYfCe0r+WO2Sn93rGaiaV8N1UFex1mfIikTnPddIF0YOklTufBd4RftAP0GuGUrma2d+zW9Mx8UnEEIWdPdMoM432UEP81d2bM3AIAw+CYvWybIbuhWj7W8pdRM9vcnk5BVlPW4wohvBAfTPC1MiJPP3Z3FxrF340I+Ks=
+	t=1767720165; cv=none; b=gdOeNeLZAFQ6k1eZL2WJSblAAEBoQ8Fw4NSWAYSjx8UOZvLq+pl3K2EiAYyI5JATMkjwuJxLdq4cDsjiVt30Bpnqn/CSeuPfD45yXgQkVVCe4XQUNN97Fzrq98WzXBOfG+F3UxS46lhiDD4V82b4iVHsGl8sy4TtlPeRXPiQeXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720162; c=relaxed/simple;
-	bh=IbUiwtpKbFwPUacDT8Hgveuuoxj2AXtiv51/jyHU7xY=;
+	s=arc-20240116; t=1767720165; c=relaxed/simple;
+	bh=nuJjIv9rOBFrcO/FfCmdnbqaKL0QxnM3xptqZqplF9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HTqFwwNY+eDPyCenWKtXUYKB00x47PV++1k0Jner2/13ykboo3GkK6qGkRLCUUFgDzjnB/5s2fqMXmHtz7AeE4yEvaH/QNjuupUypPGFhgWTT6sjrStn6MLlmy9Wf+Lr23MYdoVHJOB5umt305g2OiLo0zxoETK8vWlekI1w8bQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P8XvCr3T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IZ6njtfPl7jWgTGNa9W4TWva0DosZg7wJLgHYBRxdLSMzBafggL39eS2KCOVc1FHSNmOjfdLGQAdYN4CI0WvxcLUHOP+NvFFudLPwKY6oTgB9TFf8dhHYtef0m10/lYXsVw0zlVtg1jodF125b7FPQcKoR9voONZYgRL/Yz+UZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YM+CWzOo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P8XvCr3T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7A5DC116C6;
-	Tue,  6 Jan 2026 17:22:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YM+CWzOo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4F99C116C6;
+	Tue,  6 Jan 2026 17:22:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720162;
-	bh=IbUiwtpKbFwPUacDT8Hgveuuoxj2AXtiv51/jyHU7xY=;
+	s=korg; t=1767720165;
+	bh=nuJjIv9rOBFrcO/FfCmdnbqaKL0QxnM3xptqZqplF9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P8XvCr3TFF33YGYXLLki2hThOxrbKautZmAq9NPrMp9wNX59nNnS8urGlq3S/FbH+
-	 LMCgSeTV6v1JDO0kGiJze2YSy4UJDbUUGsfKN9ttm6NKX2Yd3535m4LFyHyAU63xYo
-	 W+i6JTto2f7qQSouGUKy8mnKpmxIeRpIoO911ZT4=
+	b=YM+CWzOoteh9g+In7J+T1HllzmHZlzlXSVn4mWF7HxNEGaH9LoKoH3GTB9zkCm0ps
+	 6TVqRGLPKeEiU8jDj1fmpkI87jD+m2tFiUMI37trhqpwtvA9sGUnPOzI5jZAcyl7Gd
+	 8tRIT6udfdz7EYYCpSLFI/mdPe89F0qs2chbeQXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.12 153/567] KEYS: trusted: Fix a memory leak in tpm2_load_cmd
-Date: Tue,  6 Jan 2026 17:58:55 +0100
-Message-ID: <20260106170456.986501772@linuxfoundation.org>
+	syzbot+00e61c43eb5e4740438f@syzkaller.appspotmail.com,
+	Prithvi Tambewagh <activprithvi@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 154/567] io_uring: fix filename leak in __io_openat_prep()
+Date: Tue,  6 Jan 2026 17:58:56 +0100
+Message-ID: <20260106170457.024930980@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -49,50 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarkko Sakkinen <jarkko@kernel.org>
+From: Prithvi Tambewagh <activprithvi@gmail.com>
 
-commit 62cd5d480b9762ce70d720a81fa5b373052ae05f upstream.
+commit b14fad555302a2104948feaff70503b64c80ac01 upstream.
 
-'tpm2_load_cmd' allocates a tempoary blob indirectly via 'tpm2_key_decode'
-but it is not freed in the failure paths. Address this by wrapping the blob
-into with a cleanup helper.
+ __io_openat_prep() allocates a struct filename using getname(). However,
+for the condition of the file being installed in the fixed file table as
+well as having O_CLOEXEC flag set, the function returns early. At that
+point, the request doesn't have REQ_F_NEED_CLEANUP flag set. Due to this,
+the memory for the newly allocated struct filename is not cleaned up,
+causing a memory leak.
 
-Cc: stable@vger.kernel.org # v5.13+
-Fixes: f2219745250f ("security: keys: trusted: use ASN.1 TPM2 key format for the blobs")
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Fix this by setting the REQ_F_NEED_CLEANUP for the request just after the
+successful getname() call, so that when the request is torn down, the
+filename will be cleaned up, along with other resources needing cleanup.
+
+Reported-by: syzbot+00e61c43eb5e4740438f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=00e61c43eb5e4740438f
+Tested-by: syzbot+00e61c43eb5e4740438f@syzkaller.appspotmail.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Prithvi Tambewagh <activprithvi@gmail.com>
+Fixes: b9445598d8c6 ("io_uring: openat directly into fixed fd table")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/keys/trusted-keys/trusted_tpm2.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ io_uring/openclose.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/security/keys/trusted-keys/trusted_tpm2.c
-+++ b/security/keys/trusted-keys/trusted_tpm2.c
-@@ -387,6 +387,7 @@ static int tpm2_load_cmd(struct tpm_chip
- 			 struct trusted_key_options *options,
- 			 u32 *blob_handle)
- {
-+	u8 *blob_ref __free(kfree) = NULL;
- 	struct tpm_buf buf;
- 	unsigned int private_len;
- 	unsigned int public_len;
-@@ -400,6 +401,9 @@ static int tpm2_load_cmd(struct tpm_chip
- 		/* old form */
- 		blob = payload->blob;
- 		payload->old_format = 1;
-+	} else {
-+		/* Bind for cleanup: */
-+		blob_ref = blob;
+--- a/io_uring/openclose.c
++++ b/io_uring/openclose.c
+@@ -70,13 +70,13 @@ static int __io_openat_prep(struct io_ki
+ 		open->filename = NULL;
+ 		return ret;
  	}
++	req->flags |= REQ_F_NEED_CLEANUP;
  
- 	/* new format carries keyhandle but old format doesn't */
-@@ -464,8 +468,6 @@ static int tpm2_load_cmd(struct tpm_chip
- 			(__be32 *) &buf.data[TPM_HEADER_SIZE]);
+ 	open->file_slot = READ_ONCE(sqe->file_index);
+ 	if (open->file_slot && (open->how.flags & O_CLOEXEC))
+ 		return -EINVAL;
  
- out:
--	if (blob != payload->blob)
--		kfree(blob);
- 	tpm_buf_destroy(&buf);
- 
- 	if (rc > 0)
+ 	open->nofile = rlimit(RLIMIT_NOFILE);
+-	req->flags |= REQ_F_NEED_CLEANUP;
+ 	if (io_openat_force_async(open))
+ 		req->flags |= REQ_F_FORCE_ASYNC;
+ 	return 0;
 
 
