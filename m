@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B2D836402C;
-	Tue,  6 Jan 2026 17:50:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D781C36402B;
+	Tue,  6 Jan 2026 17:50:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721851; cv=none; b=s6wAXn4nqevPteRXBs7REc+mXT0yhLKBUkhNx/NWXYmJHoGyA2oPD1++2Ngf1piyCxZRbWMGoOCkVQ64qD4qQXa674pwckIugS/1MNIEAqNsR2jjjfActoFdMf+hiX1Xt0YNjeieWFDLFif8tfo+VCV1Smu9tsM6t4bbxQT4+bc=
+	t=1767721854; cv=none; b=bOi7f/AMK1XOluuKjNYnFfWuLEt9ADT6gyEP0vI6Icnz2NMtu4G9nvN/VT23++tH5HIYX2XQu9EqbcYZLEt0f1ifq1CGV+7/xtKNcXYiZsQByGf6K/DjvSgBlO1OMfOKdwdSxopVfsI1OiqXbInjL9cyXeA2CQSzBJRClCVVtL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721851; c=relaxed/simple;
-	bh=vjYYqYIrgWDoub5Xa/gjxihIlrLYt4Jvl8HKcWHc3Dg=;
+	s=arc-20240116; t=1767721854; c=relaxed/simple;
+	bh=Trv2bRl8k75w/wdo95I91PJ4FMqq65qZZSEtbYy1kZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CQAPQxLZsw64cGkrOHxaSkPwlPKnWa39utwwOlPdiTYgm1/k84bFstBatZjS4edzvTpS7iNDABJI6o6fuozyK6Ssd2hdCOht26ZAwij+kC3X9bjs8cVzaTdGPHhATNsLfkyWFcFxVZBN2TmV08AkNYQDZPfzRCLK5kTu8A3ltoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S9M9+4jN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OJ0gjbcLqkvmMGoTPwcOGhdhiat9BB8euaC20ATcb3WfLVk6zDFqaShL6CVpDolps1S7jhN51S+mm8R1FOhu8oKD2QdVjv+sua2Ha+Bth0woQOn60IHJZYd2akqCpR5gCaB65MxGLuG+LMccPXPftPdfUflw1CNamWeGpWOM3Jw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RoQqF98h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S9M9+4jN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A30D7C116C6;
-	Tue,  6 Jan 2026 17:50:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RoQqF98h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B6A2C116C6;
+	Tue,  6 Jan 2026 17:50:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721851;
-	bh=vjYYqYIrgWDoub5Xa/gjxihIlrLYt4Jvl8HKcWHc3Dg=;
+	s=korg; t=1767721854;
+	bh=Trv2bRl8k75w/wdo95I91PJ4FMqq65qZZSEtbYy1kZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S9M9+4jNWzsyk1Jc23RuF9KA3AhhSU9U1UCdLPmwhAHRASN1JpcIqybdM5p9cHTDt
-	 finWrI+Uxuva8chbR8iNK9eyYJ/+ccfnZOPK1YatP/vB1EUHkl6GkLqB0HGt5UyniD
-	 nxp8Tx3QuY+5AGTTaAh9KYJzoyuLbNMw5aqqnA3c=
+	b=RoQqF98h5UDdKx0EHHQCqitKAT7mF2bxu2pZad2B8/lM3V271tVvJuYgW7xoVkO9D
+	 LYu9OZ/LyEl4umv4Y0iKBCNpcHKmD0Bm2JSxEjsAdOHZLFQwILCSUWUvgdfZWPpmdq
+	 tq8WCHV16w74JaTYKv3Idt46wvTgx7evVPFK3Wx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Anshumali Gaur <agaur@marvell.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 057/312] platform/x86/intel/pmt/discovery: use valid device pointer in dev_err_probe
-Date: Tue,  6 Jan 2026 18:02:11 +0100
-Message-ID: <20260106170549.913852023@linuxfoundation.org>
+Subject: [PATCH 6.18 058/312] octeontx2-pf: fix "UBSAN: shift-out-of-bounds error"
+Date: Tue,  6 Jan 2026 18:02:12 +0100
+Message-ID: <20260106170549.951284119@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -45,52 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Anshumali Gaur <agaur@marvell.com>
 
-[ Upstream commit 66e245db16f0175af656cd812b6dc1a5e1f7b80a ]
+[ Upstream commit 85f4b0c650d9f9db10bda8d3acfa1af83bf78cf7 ]
 
-The PMT feature probe creates a child device with device_create().
-If device creation fail, the code pass priv->dev (which is an ERR_PTR)
-to dev_err_probe(), which is not a valid device pointer.
+This patch ensures that the RX ring size (rx_pending) is not
+set below the permitted length. This avoids UBSAN
+shift-out-of-bounds errors when users passes small or zero
+ring sizes via ethtool -G.
 
-This patch change the dev_err_probe() call to use the parent auxiliary
-device (&auxdev->dev) and update the error message to reference the
-parent device name. It ensure correct error reporting and avoid
-passing an invalid device pointer.
-
-Fixes: d9a078809356 ("platform/x86/intel/pmt: Add PMT Discovery driver")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Link: https://patch.msgid.link/20251224095133.115678-1-alok.a.tiwari@oracle.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: d45d8979840d ("octeontx2-pf: Add basic ethtool support")
+Signed-off-by: Anshumali Gaur <agaur@marvell.com>
+Link: https://patch.msgid.link/20251219062226.524844-1-agaur@marvell.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/pmt/discovery.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/platform/x86/intel/pmt/discovery.c b/drivers/platform/x86/intel/pmt/discovery.c
-index 9c5b4d0e1fae..e500aa327d23 100644
---- a/drivers/platform/x86/intel/pmt/discovery.c
-+++ b/drivers/platform/x86/intel/pmt/discovery.c
-@@ -548,9 +548,9 @@ static int pmt_features_probe(struct auxiliary_device *auxdev, const struct auxi
- 	priv->dev = device_create(&intel_pmt_class, &auxdev->dev, MKDEV(0, 0), priv,
- 				  "%s-%s", "features", dev_name(priv->parent));
- 	if (IS_ERR(priv->dev))
--		return dev_err_probe(priv->dev, PTR_ERR(priv->dev),
-+		return dev_err_probe(&auxdev->dev, PTR_ERR(priv->dev),
- 				     "Could not create %s-%s device node\n",
--				     "features", dev_name(priv->dev));
-+				     "features", dev_name(priv->parent));
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c
+index b90e23dc49de..b6449f0a9e7d 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c
+@@ -418,6 +418,14 @@ static int otx2_set_ringparam(struct net_device *netdev,
+ 	 */
+ 	if (rx_count < pfvf->hw.rq_skid)
+ 		rx_count =  pfvf->hw.rq_skid;
++
++	if (ring->rx_pending < 16) {
++		netdev_err(netdev,
++			   "rx ring size %u invalid, min is 16\n",
++			   ring->rx_pending);
++		return -EINVAL;
++	}
++
+ 	rx_count = Q_COUNT(Q_SIZE(rx_count, 3));
  
- 	/* Initialize each feature */
- 	for (i = 0; i < ivdev->num_resources; i++) {
+ 	/* Due pipelining impact minimum 2000 unused SQ CQE's
 -- 
 2.51.0
 
