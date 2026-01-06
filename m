@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B824C35CBA5;
-	Tue,  6 Jan 2026 17:47:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3165835CB76;
+	Tue,  6 Jan 2026 17:47:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721641; cv=none; b=sQQsJJhYEZ80wc+2HeDpUEf9xYcArh8fn7D6P1bpnvu7KDcs+GTOkR19T85FQmII/Djx816zNFNMbOrSF4hA+MKj8ERB9VTzFijH8cBnlxJmiJGWk1jGbrTarS2xPiYDTZxcwUlGl5rdxS4YZsMmzSQ8Lpj/MhB3WANc4FWdasY=
+	t=1767721645; cv=none; b=VRBzP0BSGV2crj8RAUC2jU/0aExtrx/gyslO6h9odl1bzhSQb+hMZNIiA1SI4u+KgvkPP/70xhafVwSAIjBcMmpikLf5m4z/jeZMp/hrnie1JQXs/+rCyqX5xGbBrmFicpGgBBaHzVExwCHCZN4i/257LngPk9qgieqwCbnltUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721641; c=relaxed/simple;
-	bh=H5zCa7lZZ2Vq+L3biwRnIlCygK+Hwr/lucznge3WBfA=;
+	s=arc-20240116; t=1767721645; c=relaxed/simple;
+	bh=KSMn+YEtoWChojJlKFlWaeJaeXuKa5MuHGkRHpVfymQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gYOS2ZDKQxumY3t3t5AtU7nzyUar7gVCDL0FBSQPV6NhEfV2CW6X8AeDfdIsTMrHD1xYz0+lsmru0kqOqQl46kB5xjCpRSURX72qlIjXnXrGDz/Xyg/inQxtSARHblXY9m+RSkqFlY4yjeduwbdL+bwxc7VriemR7zVKDhbWNy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c+vWBwTx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hvqc1csP94h786UY4bHJzgK+Vfua3d+U0rGzeLkCny89NGnjOm+2gtOCjsOvzv8TkZgMdMGZZ33IeBHwir8bxlyL4sZ0MTUdwy5TNdz2a+JlpMs/NDTByCOj2oihDr9kEunVZdNPoGMJgEUToG/vkNbUzIxw73nJjXiQZdPucjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kHl3W3kf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c+vWBwTx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E81CFC116C6;
-	Tue,  6 Jan 2026 17:47:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kHl3W3kf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D9DAC116C6;
+	Tue,  6 Jan 2026 17:47:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721641;
-	bh=H5zCa7lZZ2Vq+L3biwRnIlCygK+Hwr/lucznge3WBfA=;
+	s=korg; t=1767721644;
+	bh=KSMn+YEtoWChojJlKFlWaeJaeXuKa5MuHGkRHpVfymQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c+vWBwTxL+fRwtpBG8q1LHKgtUpqhuFsf42giyFthD0SMNN99xCAbs62Mwx8AvvlC
-	 B9BnS+LWCu4OoScu0Re8msM1zoIcN5q+jtYR0I83BK62DxuH2XOr6JZ7EBmfdtfgSv
-	 9d2NeV5j9WEB8iAX5ruQ8wQyA9KbVuN/+3aIII+4=
+	b=kHl3W3kf/7ALY1jA0AeokeGj5pGxUYPfmRmE0kM4UygzA4rG9t2cgrvU/H8VjHne9
+	 3VSuAdFxb2HDiZQNBujezls6IgpXZ01+3plb/zp9DrP2GNZUGWH22uJAvkVM/69fgR
+	 6GK7nribfFdtpn7L32pEpYg7Qv+JXwijwoyNBQew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Lawrence <joe.lawrence@redhat.com>,
-	Jan Stancek <jstancek@redhat.com>,
-	"Justin M. Forbes" <jforbes@fedoraproject.org>,
-	"Naveen N Rao (AMD)" <naveen@kernel.org>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Shravan Kumar Ramani <shravankr@nvidia.com>,
+	David Thompson <davthompson@nvidia.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 029/312] powerpc/tools: drop `-o pipefail` in gcc check scripts
-Date: Tue,  6 Jan 2026 18:01:43 +0100
-Message-ID: <20260106170548.911574554@linuxfoundation.org>
+Subject: [PATCH 6.18 030/312] platform/mellanox: mlxbf-pmc: Remove trailing whitespaces from event names
+Date: Tue,  6 Jan 2026 18:01:44 +0100
+Message-ID: <20260106170548.947335282@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -49,58 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Stancek <jstancek@redhat.com>
+From: Shravan Kumar Ramani <shravankr@nvidia.com>
 
-[ Upstream commit f1164534ad62f0cc247d99650b07bd59ad2a49fd ]
+[ Upstream commit f13bce715d1600698310a4a7832f6a52499d5395 ]
 
-Fixes: 0f71dcfb4aef ("powerpc/ftrace: Add support for -fpatchable-function-entry")
-Fixes: b71c9ffb1405 ("powerpc: Add arch/powerpc/tools directory")
-Reported-by: Joe Lawrence <joe.lawrence@redhat.com>
-Acked-by: Joe Lawrence <joe.lawrence@redhat.com>
-Signed-off-by: Jan Stancek <jstancek@redhat.com>
-Fixes: 8c50b72a3b4f ("powerpc/ftrace: Add Kconfig & Make glue for mprofile-kernel")
-Fixes: abba759796f9 ("powerpc/kbuild: move -mprofile-kernel check to Kconfig")
-Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
-Reviewed-by: Naveen N Rao (AMD) <naveen@kernel.org>
-Reviewed-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/cc6cdd116c3ad9d990df21f13c6d8e8a83815bbd.1758641374.git.jstancek@redhat.com
+Some event names have trailing whitespaces at the end which causes programming
+of counters using the name for these specific events to fail and hence need to
+be removed.
+
+Fixes: 423c3361855c ("platform/mellanox: mlxbf-pmc: Add support for BlueField-3")
+Signed-off-by: Shravan Kumar Ramani <shravankr@nvidia.com>
+Reviewed-by: David Thompson <davthompson@nvidia.com>
+Link: https://patch.msgid.link/065cbae0717dcc1169681c4dbb1a6e050b8574b3.1766059953.git.shravankr@nvidia.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/tools/gcc-check-fpatchable-function-entry.sh | 1 -
- arch/powerpc/tools/gcc-check-mprofile-kernel.sh           | 1 -
- 2 files changed, 2 deletions(-)
+ drivers/platform/mellanox/mlxbf-pmc.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/arch/powerpc/tools/gcc-check-fpatchable-function-entry.sh b/arch/powerpc/tools/gcc-check-fpatchable-function-entry.sh
-index 06706903503b..baed467a016b 100755
---- a/arch/powerpc/tools/gcc-check-fpatchable-function-entry.sh
-+++ b/arch/powerpc/tools/gcc-check-fpatchable-function-entry.sh
-@@ -2,7 +2,6 @@
- # SPDX-License-Identifier: GPL-2.0
- 
- set -e
--set -o pipefail
- 
- # To debug, uncomment the following line
- # set -x
-diff --git a/arch/powerpc/tools/gcc-check-mprofile-kernel.sh b/arch/powerpc/tools/gcc-check-mprofile-kernel.sh
-index 73e331e7660e..6193b0ed0c77 100755
---- a/arch/powerpc/tools/gcc-check-mprofile-kernel.sh
-+++ b/arch/powerpc/tools/gcc-check-mprofile-kernel.sh
-@@ -2,7 +2,6 @@
- # SPDX-License-Identifier: GPL-2.0
- 
- set -e
--set -o pipefail
- 
- # To debug, uncomment the following line
- # set -x
+diff --git a/drivers/platform/mellanox/mlxbf-pmc.c b/drivers/platform/mellanox/mlxbf-pmc.c
+index 16a2fd9fdd9b..5ec1ad471696 100644
+--- a/drivers/platform/mellanox/mlxbf-pmc.c
++++ b/drivers/platform/mellanox/mlxbf-pmc.c
+@@ -801,18 +801,18 @@ static const struct mlxbf_pmc_events mlxbf_pmc_llt_miss_events[] = {
+ 	{11, "GDC_MISS_MACHINE_CHI_TXDAT"},
+ 	{12, "GDC_MISS_MACHINE_CHI_RXDAT"},
+ 	{13, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC0_0"},
+-	{14, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC0_1 "},
++	{14, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC0_1"},
+ 	{15, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC0_2"},
+-	{16, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC0_3 "},
+-	{17, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC1_0 "},
+-	{18, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC1_1 "},
+-	{19, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC1_2 "},
+-	{20, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC1_3 "},
++	{16, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC0_3"},
++	{17, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC1_0"},
++	{18, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC1_1"},
++	{19, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC1_2"},
++	{20, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC1_3"},
+ 	{21, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC_DONE0_0"},
+ 	{22, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC_DONE0_1"},
+ 	{23, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC_DONE0_2"},
+ 	{24, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC_DONE0_3"},
+-	{25, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC_DONE1_0 "},
++	{25, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC_DONE1_0"},
+ 	{26, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC_DONE1_1"},
+ 	{27, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC_DONE1_2"},
+ 	{28, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC_DONE1_3"},
 -- 
 2.51.0
 
