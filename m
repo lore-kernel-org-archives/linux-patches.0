@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414D334EF13;
-	Tue,  6 Jan 2026 17:27:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B953557F9;
+	Tue,  6 Jan 2026 17:27:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720470; cv=none; b=XQqIhn4VPcNoIrLB6+Ewpx3kic3lfMooJWFh4B0rmQI5dLvgto+OWIhHwm6RwGEcnr8s5kXf4GLH3qr7eq1VfC1hmcfe1U+QKRZq2LjPmL6l+de+5iZGuhEPv4MZiLZJEkUAYFdy5FwI2VgH25gI9NzjiCCLACK5WwyAFhG8VJM=
+	t=1767720473; cv=none; b=CScpfvmoTF3xH/f00BfnjvRAu/JpAqtpDeJGvJ/2xWT5QuDzjUUzFy0228Ix8BTiUmejKa4cMnbGVdOgPZ/v9MaGGOheXpPniNRJDiP6XDfk3HVw5GT3xmR8fwx6KBUCXEUP0r0fmr2TEkAAp/ELXWBXBvUUkzpj+LnVxRbl1OI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720470; c=relaxed/simple;
-	bh=DQf4TeCKtAESopSrdqqeqJdcSe0wbgfGyO7vv2p/cnM=;
+	s=arc-20240116; t=1767720473; c=relaxed/simple;
+	bh=AyuB7l9dARyy+yTf+bWRJSUZpD/TKtJg8zrDFL2hjL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CZ+Spk4uD39g/FDPoj6q5tb0VnqGe1EE8UMd6mbM5goHBQMus4v6MV2aiuKRaMMoeCr+yUL4egFhlppOfncdj/DjSIu43r70B4bUszgWMMFDv9uHrkcaS668i764vrWyt+0Z+X7ZgXTxqyEXAnZB9ezoU0AMPrd4e2Ki07y7j+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y5BxiwOv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TGVyfM4g2EvW0IqOH4WnxKkXKJZVp0IW92iA6Yi6Jv/ivHHgTgT5/jpAWTw1h6NL4VNcw8gq5S+Dee4AK5X1BaESAgcxAbwDgevZBj5z8VBoqO4uF2F9VxGtUFY/+9kAUsQE2C6jjCUwXRUtYwDWNwY8UHvTycIced9DBy4ZoBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zV88tNDo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y5BxiwOv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A855AC116C6;
-	Tue,  6 Jan 2026 17:27:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zV88tNDo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C24EEC116C6;
+	Tue,  6 Jan 2026 17:27:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720470;
-	bh=DQf4TeCKtAESopSrdqqeqJdcSe0wbgfGyO7vv2p/cnM=;
+	s=korg; t=1767720473;
+	bh=AyuB7l9dARyy+yTf+bWRJSUZpD/TKtJg8zrDFL2hjL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y5BxiwOvWZlKX8z9Je1OoXCepT5fl+Ltc4HGToVhmskQoN3MF9rX7aY1JCLwSX71L
-	 oPdyYKX1irsAYiQNG/QbfSt+ZhyUHL8fkQpJWUNcGuouo+R6cYpDDjjfCVT50tJeHR
-	 6cqpCPwOCe2VcU4fqcDQvSb52NBcl3M5sVCodwWQ=
+	b=zV88tNDoOOULfbveLnf13dK2HzUXSGV4+KEEpQOSlkRMJNeAE3frDDZgE4UIDFdS0
+	 GCkcVw5NjG/UGFIsm0IapExlcN1Mj2BIDlsmzZBbkH+aT1UrX9WTqPSDsYR6O9aaE9
+	 xd68Q4lflb1p8SNWixtws8ShifE2HJ/5NyqJ0oQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Levitsky <mlevitsk@redhat.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.12 214/567] KVM: x86: Dont clear async #PF queue when CR0.PG is disabled (e.g. on #SMI)
-Date: Tue,  6 Jan 2026 17:59:56 +0100
-Message-ID: <20260106170459.235079450@linuxfoundation.org>
+	Tzung-Bi Shih <tzungbi@kernel.org>
+Subject: [PATCH 6.12 215/567] platform/chrome: cros_ec_ishtp: Fix UAF after unbinding driver
+Date: Tue,  6 Jan 2026 17:59:57 +0100
+Message-ID: <20260106170459.271541853@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -50,105 +49,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxim Levitsky <mlevitsk@redhat.com>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-commit ab4e41eb9fabd4607304fa7cfe8ec9c0bd8e1552 upstream.
+commit 944edca81e7aea15f83cf9a13a6ab67f711e8abd upstream.
 
-Fix an interaction between SMM and PV asynchronous #PFs where an #SMI can
-cause KVM to drop an async #PF ready event, and thus result in guest tasks
-becoming permanently stuck due to the task that encountered the #PF never
-being resumed.  Specifically, don't clear the completion queue when paging
-is disabled, and re-check for completed async #PFs if/when paging is
-enabled.
+After unbinding the driver, another kthread `cros_ec_console_log_work`
+is still accessing the device, resulting an UAF and crash.
 
-Prior to commit 2635b5c4a0e4 ("KVM: x86: interrupt based APF 'page ready'
-event delivery"), flushing the APF queue without notifying the guest of
-completed APF requests when paging is disabled was "necessary", in that
-delivering a #PF to the guest when paging is disabled would likely confuse
-and/or crash the guest.  And presumably the original async #PF development
-assumed that a guest would only disable paging when there was no intent to
-ever re-enable paging.
+The driver doesn't unregister the EC device in .remove() which should
+shutdown sub-devices synchronously.  Fix it.
 
-That assumption fails in several scenarios, most visibly on an emulated
-SMI, as entering SMM always disables CR0.PG (i.e. initially runs with
-paging disabled).  When the SMM handler eventually executes RSM, the
-interrupted paging-enabled is restored, and the async #PF event is lost.
-
-Similarly, invoking firmware, e.g. via EFI runtime calls, might require a
-transition through paging modes and thus also disable paging with valid
-entries in the competion queue.
-
-To avoid dropping completion events, drop the "clear" entirely, and handle
-paging-enable transitions in the same way KVM already handles APIC
-enable/disable events: if a vCPU's APIC is disabled, APF completion events
-are not kept pending and not injected while APIC is disabled.  Once a
-vCPU's APIC is re-enabled, KVM raises KVM_REQ_APF_READY so that the vCPU
-recognizes any pending pending #APF ready events.
-
-Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
+Fixes: 26a14267aff2 ("platform/chrome: Add ChromeOS EC ISHTP driver")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251015033258.50974-4-mlevitsk@redhat.com
-[sean: rework changelog to call out #PF injection, drop "real mode"
-       references, expand the code comment]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Link: https://lore.kernel.org/r/20251031033900.3577394-1-tzungbi@kernel.org
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/x86.c |   25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ drivers/platform/chrome/cros_ec_ishtp.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -1035,6 +1035,13 @@ bool kvm_require_dr(struct kvm_vcpu *vcp
+--- a/drivers/platform/chrome/cros_ec_ishtp.c
++++ b/drivers/platform/chrome/cros_ec_ishtp.c
+@@ -671,6 +671,7 @@ static void cros_ec_ishtp_remove(struct
+ 
+ 	cancel_work_sync(&client_data->work_ishtp_reset);
+ 	cancel_work_sync(&client_data->work_ec_evt);
++	cros_ec_unregister(client_data->ec_dev);
+ 	cros_ish_deinit(cros_ish_cl);
+ 	ishtp_put_device(cl_device);
  }
- EXPORT_SYMBOL_GPL(kvm_require_dr);
- 
-+static bool kvm_pv_async_pf_enabled(struct kvm_vcpu *vcpu)
-+{
-+	u64 mask = KVM_ASYNC_PF_ENABLED | KVM_ASYNC_PF_DELIVERY_AS_INT;
-+
-+	return (vcpu->arch.apf.msr_en_val & mask) == mask;
-+}
-+
- static inline u64 pdptr_rsvd_bits(struct kvm_vcpu *vcpu)
- {
- 	return vcpu->arch.reserved_gpa_bits | rsvd_bits(5, 8) | rsvd_bits(1, 2);
-@@ -1127,15 +1134,20 @@ void kvm_post_set_cr0(struct kvm_vcpu *v
- 	}
- 
- 	if ((cr0 ^ old_cr0) & X86_CR0_PG) {
--		kvm_clear_async_pf_completion_queue(vcpu);
--		kvm_async_pf_hash_reset(vcpu);
--
- 		/*
- 		 * Clearing CR0.PG is defined to flush the TLB from the guest's
- 		 * perspective.
- 		 */
- 		if (!(cr0 & X86_CR0_PG))
- 			kvm_make_request(KVM_REQ_TLB_FLUSH_GUEST, vcpu);
-+		/*
-+		 * Check for async #PF completion events when enabling paging,
-+		 * as the vCPU may have previously encountered async #PFs (it's
-+		 * entirely legal for the guest to toggle paging on/off without
-+		 * waiting for the async #PF queue to drain).
-+		 */
-+		else if (kvm_pv_async_pf_enabled(vcpu))
-+			kvm_make_request(KVM_REQ_APF_READY, vcpu);
- 	}
- 
- 	if ((cr0 ^ old_cr0) & KVM_MMU_CR0_ROLE_BITS)
-@@ -3539,13 +3551,6 @@ static int set_msr_mce(struct kvm_vcpu *
- 	return 0;
- }
- 
--static inline bool kvm_pv_async_pf_enabled(struct kvm_vcpu *vcpu)
--{
--	u64 mask = KVM_ASYNC_PF_ENABLED | KVM_ASYNC_PF_DELIVERY_AS_INT;
--
--	return (vcpu->arch.apf.msr_en_val & mask) == mask;
--}
--
- static int kvm_pv_enable_async_pf(struct kvm_vcpu *vcpu, u64 data)
- {
- 	gpa_t gpa = data & ~0x3f;
 
 
