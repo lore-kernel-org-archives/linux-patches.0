@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEEEC350D57;
-	Tue,  6 Jan 2026 17:22:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8342635293D;
+	Tue,  6 Jan 2026 17:22:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720146; cv=none; b=CD2TF1J+JyxM0+73IFWUcjJJKtsw5I3zQxc76hIGOLvWFssNUlum6YYVy8i9w8L6UFVLwo+YvjvUXPWrbpNzKCXmmAdcIDCvS9/gAFqb5quySCSo4W1M0Q8KDimw1+sZQxM7kLab0PpEqUkJTfWkAp8QXWr5zWAVFswyXBNSBeY=
+	t=1767720149; cv=none; b=jK/4NdObLC68COPOsaDPz3xVrDElRPJ/jE4gKSDhIWVU2EvmvwyNgDAKAME2LQXC86ABgMMSJr2tYfP488RirarZ/8r82/sIj69CtDX5iEd9ZxiPwppdMimUk6jcshVNGY0aE5/jtznjkWwlkm3upEJrMrmopXp7ouPwpKhkjP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720146; c=relaxed/simple;
-	bh=5RG7QYKMOP2EROVwI1Tn9QlCP3GvUgTym/P/XCbvM9U=;
+	s=arc-20240116; t=1767720149; c=relaxed/simple;
+	bh=PPPs8Z+kI3sh2hj8vRoEhWhnzspjsPz2NMiHso5UinE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YGyjltq940LzU+SgV5OwsohSBw2PAzYfQEzglTwu1PsCNGnU54wEoZy7WAPUNDv4ebVwZ8OL29B0dfUBoafowJFb+tzsORQwrkokp/0aou48XLtehAGNLKlh6Fbc/v/tK5QC1MOENRthrefieYOg3bKor33mI6t/uE6lTMn17XE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gzu/6ezG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jW9//JIaJpk6ZWhPnjdGer4OPKxCbAnUvljS72VFKivZ3MZJdqfeh6jl/ZTUqzHGaKA+XJG2g1+LBVZwQ7Ppaek8/HQBX+qzC1SK42ClxQecGXWsLDBkPtBqwXOZxD/udqjZaWEQakPXz8VW1rzK1qVZvCJL5I7Kp5YN5KNBSuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VwbF8lVu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gzu/6ezG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BE6DC116C6;
-	Tue,  6 Jan 2026 17:22:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VwbF8lVu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8FC7C116C6;
+	Tue,  6 Jan 2026 17:22:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720145;
-	bh=5RG7QYKMOP2EROVwI1Tn9QlCP3GvUgTym/P/XCbvM9U=;
+	s=korg; t=1767720149;
+	bh=PPPs8Z+kI3sh2hj8vRoEhWhnzspjsPz2NMiHso5UinE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gzu/6ezGeW+v80Z4cq6nO3VsaT7x4DDkHzIujfAHxyxzvBH8SOqKNS5iTeNEC2DOe
-	 0GoA/K3tpecoNL1NKCqc1eBaz3MxMCMQ1KOkbOGZY/5Rgss38C7RfN1IJ+IylS/JKx
-	 rq+IJF2Jv1Y20W3Jm+JhGWRHLaV9PNIbxlOhljIo=
+	b=VwbF8lVu0EW91l4GETlMvzUt3JF9OBoxszdaHe2dCSxQXtwdPnzfmvgbVv0uFSTsy
+	 EnJBkLZPblfa0uNk9ifHKDr/SmqoC5GoNctKeen/9Uizkv+ijZc3dSssjmL2WBDY9I
+	 /Vlfa6O3SD98moOFRWr3cuuheezvbwKaN4nyI4yI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	John Garry <john.g.garry@oracle.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 148/567] MIPS: ftrace: Fix memory corruption when kernel is located beyond 32 bits
-Date: Tue,  6 Jan 2026 17:58:50 +0100
-Message-ID: <20260106170456.800950888@linuxfoundation.org>
+Subject: [PATCH 6.12 149/567] scsi: scsi_debug: Fix atomic write enable module param description
+Date: Tue,  6 Jan 2026 17:58:51 +0100
+Message-ID: <20260106170456.837468271@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,80 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory CLEMENT <gregory.clement@bootlin.com>
+From: John Garry <john.g.garry@oracle.com>
 
-[ Upstream commit 36dac9a3dda1f2bae343191bc16b910c603cac25 ]
+[ Upstream commit 1f7d6e2efeedd8f545d3e0e9bf338023bf4ea584 ]
 
-Since commit e424054000878 ("MIPS: Tracing: Reduce the overhead of
-dynamic Function Tracer"), the macro UASM_i_LA_mostly has been used,
-and this macro can generate more than 2 instructions. At the same
-time, the code in ftrace assumes that no more than 2 instructions can
-be generated, which is why it stores them in an int[2] array. However,
-as previously noted, the macro UASM_i_LA_mostly (and now UASM_i_LA)
-causes a buffer overflow when _mcount is beyond 32 bits. This leads to
-corruption of the variables located in the __read_mostly section.
+The atomic write enable module param is "atomic_wr", and not
+"atomic_write", so fix the module param description.
 
-This corruption was observed because the variable
-__cpu_primary_thread_mask was corrupted, causing a hang very early
-during boot.
-
-This fix prevents the corruption by avoiding the generation of
-instructions if they could exceed 2 instructions in
-length. Fortunately, insn_la_mcount is only used if the instrumented
-code is located outside the kernel code section, so dynamic ftrace can
-still be used, albeit in a more limited scope. This is still
-preferable to corrupting memory and/or crashing the kernel.
-
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: 84f3a3c01d70 ("scsi: scsi_debug: Atomic write support")
+Signed-off-by: John Garry <john.g.garry@oracle.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20251211100651.9056-1-john.g.garry@oracle.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/kernel/ftrace.c | 25 +++++++++++++++++++++----
- 1 file changed, 21 insertions(+), 4 deletions(-)
+ drivers/scsi/scsi_debug.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/mips/kernel/ftrace.c b/arch/mips/kernel/ftrace.c
-index f39e85fd58fa..b15615b28569 100644
---- a/arch/mips/kernel/ftrace.c
-+++ b/arch/mips/kernel/ftrace.c
-@@ -54,10 +54,20 @@ static inline void ftrace_dyn_arch_init_insns(void)
- 	u32 *buf;
- 	unsigned int v1;
- 
--	/* la v1, _mcount */
--	v1 = 3;
--	buf = (u32 *)&insn_la_mcount[0];
--	UASM_i_LA(&buf, v1, MCOUNT_ADDR);
-+	/* If we are not in compat space, the number of generated
-+	 * instructions will exceed the maximum expected limit of 2.
-+	 * To prevent buffer overflow, we avoid generating them.
-+	 * insn_la_mcount will not be used later in ftrace_make_call.
-+	 */
-+	if (uasm_in_compat_space_p(MCOUNT_ADDR)) {
-+		/* la v1, _mcount */
-+		v1 = 3;
-+		buf = (u32 *)&insn_la_mcount[0];
-+		UASM_i_LA(&buf, v1, MCOUNT_ADDR);
-+	} else {
-+		pr_warn("ftrace: mcount address beyond 32 bits is not supported (%lX)\n",
-+			MCOUNT_ADDR);
-+	}
- 
- 	/* jal (ftrace_caller + 8), jump over the first two instruction */
- 	buf = (u32 *)&insn_jal_ftrace_caller;
-@@ -189,6 +199,13 @@ int ftrace_make_call(struct dyn_ftrace *rec, unsigned long addr)
- 	unsigned int new;
- 	unsigned long ip = rec->ip;
- 
-+	/* When the code to patch does not belong to the kernel code
-+	 * space, we must use insn_la_mcount. However, if MCOUNT_ADDR
-+	 * is not in compat space, insn_la_mcount is not usable.
-+	 */
-+	if (!core_kernel_text(ip) && !uasm_in_compat_space_p(MCOUNT_ADDR))
-+		return -EFAULT;
-+
- 	new = core_kernel_text(ip) ? insn_jal_ftrace_caller : insn_la_mcount[0];
- 
- #ifdef CONFIG_64BIT
+diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
+index 89a2aaccdcfc..dfe38d34d051 100644
+--- a/drivers/scsi/scsi_debug.c
++++ b/drivers/scsi/scsi_debug.c
+@@ -6716,7 +6716,7 @@ MODULE_PARM_DESC(lbprz,
+ MODULE_PARM_DESC(lbpu, "enable LBP, support UNMAP command (def=0)");
+ MODULE_PARM_DESC(lbpws, "enable LBP, support WRITE SAME(16) with UNMAP bit (def=0)");
+ MODULE_PARM_DESC(lbpws10, "enable LBP, support WRITE SAME(10) with UNMAP bit (def=0)");
+-MODULE_PARM_DESC(atomic_write, "enable ATOMIC WRITE support, support WRITE ATOMIC(16) (def=0)");
++MODULE_PARM_DESC(atomic_wr, "enable ATOMIC WRITE support, support WRITE ATOMIC(16) (def=0)");
+ MODULE_PARM_DESC(lowest_aligned, "lowest aligned lba (def=0)");
+ MODULE_PARM_DESC(lun_format, "LUN format: 0->peripheral (def); 1 --> flat address method");
+ MODULE_PARM_DESC(max_luns, "number of LUNs per target to simulate(def=1)");
 -- 
 2.51.0
 
