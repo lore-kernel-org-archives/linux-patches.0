@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ECC833B971;
-	Tue,  6 Jan 2026 17:36:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7AD833BBDF;
+	Tue,  6 Jan 2026 17:36:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720989; cv=none; b=gFT3GamIx/xROe/RzdHpjql+xrgooSpCoGjoYQAb1OOSW26QXX5G+bmzbtpLec4OzROOYqbwCjDlAdGHcJIS1b3hnJUbjTR9J4bvR7L6GSdfeCKH8YD9/+7sw6FJ16ntxzqZRMo2ZaaRV68xpFgtl5xD8v4okvswrZ3JkCGTtW0=
+	t=1767720993; cv=none; b=tzr8ZzvnceRNwfp0HqLm8ZRCdDP/KPu0KMD/qcWu7VvXcawkQf04M1Qx/gxl91+Fr4XJNUKk7mlScVd08wcIoOh9CmzVCJ/vxqOGgV94v/o4MJXM8kJYBKPcC4YccAm3ms+iiDxB2rCg7YMUeBmInSXL2X+siW5SKAAkyzA8qRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720989; c=relaxed/simple;
-	bh=YtrwdEBsWo+dZXqUfXhgAmdmkEYffBfxkGAhjIvzHWY=;
+	s=arc-20240116; t=1767720993; c=relaxed/simple;
+	bh=VDUYqLUALCPDY7DM8HBmyK3IMnw7YEzIj2PCqpO3eCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dQ8jDZHUSm/TPlgLQdaalBSgWNa3rTSGczV0vw4uhmG2haHDklhcgG5UvKKeGUm1o8khttpiuugLZLDUF3oDNl04tjCSxIU08ANvpstBaFDz6k2AdBqYgBK5+9aUh3+y3r3I7zTNG1O8kqgHqfQWfx5ApokvzHjH6kK8rzsrrkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fs+pcGnW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EQB+nMTK2LhXRg6bfWYYyLzTy2JFsobvOs3vRegIj5NcxzwJ4YZJqujbcdvY0ujjipbfdWjmm+2EMnA83iDE+mnpjNnQwOx3ZUCLk06GFhv1eItiBvFfAAVEArdQ03vNTVDUdzVcw2GTYmFKSxtJnRKOOYf4PKjue+foOX+78jM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RMHQE9Y7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fs+pcGnW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D29B3C116C6;
-	Tue,  6 Jan 2026 17:36:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RMHQE9Y7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52FCFC116C6;
+	Tue,  6 Jan 2026 17:36:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720989;
-	bh=YtrwdEBsWo+dZXqUfXhgAmdmkEYffBfxkGAhjIvzHWY=;
+	s=korg; t=1767720992;
+	bh=VDUYqLUALCPDY7DM8HBmyK3IMnw7YEzIj2PCqpO3eCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fs+pcGnWz5579tfkPdk0z9R53rieXxpzIisCwUMT8YctTZ1yLACl/F4PniZY5BuW6
-	 oCZ1fUz+Njihi4hbS1AyrMHeZSqA4RYEo/5AcX6+IvtXPQRCLD6O0FX/cj6Vs8tVp1
-	 /bVVWXK7ZaZTgiYn3zsNyeJM2ZSVbKzd6O2KOZvY=
+	b=RMHQE9Y7ABm+kJJOG7D+Nxbf8yMYTuq4TX5DVrkNe0Cu12SMsc1OUm2ellUUuQ5PP
+	 mihbQ7FhmW3i39zLrZetl6/lotBnfb9BKWLKGF6ZSa7oxEYVUrWo6XQxA51cdlBJ4P
+	 SpCTTa0i+uI91kCzaO2X8husme2Vi9aWDa3spTd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Abramov <i.abramov@mt-integration.ru>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 403/567] media: msp3400: Avoid possible out-of-bounds array accesses in msp3400c_thread()
-Date: Tue,  6 Jan 2026 18:03:05 +0100
-Message-ID: <20260106170506.251385406@linuxfoundation.org>
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Michael Walle <mwalle@kernel.org>,
+	Pratyush Yadav <pratyush@kernel.org>
+Subject: [PATCH 6.12 386/567] mtd: spi-nor: winbond: Add support for W25Q01NWxxIM chips
+Date: Tue,  6 Jan 2026 18:02:48 +0100
+Message-ID: <20260106170505.621921123@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -50,39 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Abramov <i.abramov@mt-integration.ru>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-commit d2bceb2e20e783d57e739c71e4e50b4b9f4a3953 upstream.
+commit a607e676c8b9258eabc3fc88f45bcd70ea178b41 upstream.
 
-It's possible for max1 to remain -1 if msp_read() always fail. This
-variable is further used as index for accessing arrays.
+These chips must be described as none of the block protection
+information are discoverable. This chip supports 4 bits plus the
+top/bottom addressing capability to identify the protected blocks.
 
-Fix that by checking max1 prior to array accesses.
-
-It seems that restart is the preferable action in case of out-of-bounds
-value.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 8a4b275f9c19 ("V4L/DVB (3427): audmode and rxsubchans fixes (VIDIOC_G/S_TUNER)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ivan Abramov <i.abramov@mt-integration.ru>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Michael Walle <mwalle@kernel.org>
+Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/msp3400-kthreads.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mtd/spi-nor/winbond.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/media/i2c/msp3400-kthreads.c
-+++ b/drivers/media/i2c/msp3400-kthreads.c
-@@ -596,6 +596,8 @@ restart:
- 				"carrier2 val: %5d / %s\n", val, cd[i].name);
- 		}
+--- a/drivers/mtd/spi-nor/winbond.c
++++ b/drivers/mtd/spi-nor/winbond.c
+@@ -258,6 +258,10 @@ static const struct flash_info winbond_n
+ 		/* W25Q01NWxxIQ */
+ 		.id = SNOR_ID(0xef, 0x60, 0x21),
+ 		.flags = SPI_NOR_HAS_LOCK | SPI_NOR_HAS_TB | SPI_NOR_TB_SR_BIT6 | SPI_NOR_4BIT_BP,
++	}, {
++		/* W25Q01NWxxIM */
++		.id = SNOR_ID(0xef, 0x80, 0x21),
++		.flags = SPI_NOR_HAS_LOCK | SPI_NOR_HAS_TB | SPI_NOR_TB_SR_BIT6 | SPI_NOR_4BIT_BP,
+ 	},
+ };
  
-+		if (max1 < 0 || max1 > 3)
-+			goto restart;
- 		/* program the msp3400 according to the results */
- 		state->main = msp3400c_carrier_detect_main[max1].cdo;
- 		switch (max1) {
 
 
