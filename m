@@ -1,41 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5DEB34CFCF;
-	Tue,  6 Jan 2026 17:20:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EEAF34CFC9;
+	Tue,  6 Jan 2026 17:20:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720014; cv=none; b=hdpwrhffDnW3F2TBSvd+Yep/+rqgulJuUO7XwTSRG4hUbBckD/BxH+HW54GmtHqrhmFKldQEETGQLgwLNUt2YXqMqNgZ9EMOliyZsxx4AfGs5v45u4TlkEzyv1kPXfMCULqOlwKBlcHXEHQepNNrZefTqTueU3FcwBkgHIaBJN4=
+	t=1767720018; cv=none; b=eBdQkhDETNuV1D7zBiAkVHH2zQZSEljwHUX+aXIRaXMT6sitKNs59w9K957bnt/1uVbE5q4SHC0Tqa7nyrpj01tpgJOGKsZaz0E+7EC1A5+CLSAg+Iqo+szWOFNiqTIXt5ZJ7QzKpDacRqzkym5uEUOuxaT9B6g+5n38Rao8FNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720014; c=relaxed/simple;
-	bh=QdYHl8AIsPIh0gUhrRkGwDUG5QuSWkwSOZaqALpFav0=;
+	s=arc-20240116; t=1767720018; c=relaxed/simple;
+	bh=RoWILjF+wzYTZnJ3KBx72UAPcAk1NN+egl7/ers5zeQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZV3L2DABZ2a+FTXSxw/C5h9p8wEfaoE8MvZJrI8HPBwbKEXWYYNiStc5VlWWH7IuJrjgFueVcSGiuKFJ665v8OC6btDIRIjz7hlwb35nlZm5Zfl0kPTr5vPJIMblT+n1r90eFvj9TikxCTFvOkGtaKQPEaSze2AXDMHOKDau55I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OeM4HfKt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tiiGs5oBtUAlPS7oGtVbaa9UooLg3HKBHevIsva6kdwu6gZLOsTz93zdJJ37nc1cDcFkI2f1u5NZFeMnBfWlokNED+o+wTIojzL0h30jObRopQntUjLYAurxCTo5YmF/CKj+MQxXccbZ5Ph6Wbwg7NNXXDtqBeKHCq5SyhTo/0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CPhqWfTS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OeM4HfKt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F5EBC116C6;
-	Tue,  6 Jan 2026 17:20:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CPhqWfTS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4229BC116C6;
+	Tue,  6 Jan 2026 17:20:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720014;
-	bh=QdYHl8AIsPIh0gUhrRkGwDUG5QuSWkwSOZaqALpFav0=;
+	s=korg; t=1767720017;
+	bh=RoWILjF+wzYTZnJ3KBx72UAPcAk1NN+egl7/ers5zeQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OeM4HfKtqPIHNkFW2qaHwjqfgScOQPkwSyTap47Fn3kPR8+rgXbYBarwhAxF9jNX7
-	 6Jk+Z+eEYVViHb1PX8Rx7BC3rldeGdyR4AGI9SagcUEprNDSSWX5LWuOmJ+WE770xV
-	 Nod43eqfTarkE+eQXO8AIUAFjV3aZ6OMCV17hVFs=
+	b=CPhqWfTSVB3vD8sHoCCtYfGRpDHEWS6DcP8MF7Ry9gNCDohA+WKt9XYKfh7qJ5GA6
+	 SXz8wPF8+urVobmb2WTrDgRIPU6/LF+1uPlh/jR0m8SVegcdRSBvEkzh2KIGE3EI5u
+	 pn0T367XghMeFf75MUN+YoBDooeFjDKBmhv3epks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samiullah Khawaja <skhawaja@google.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Yi Liu <yi.l.liu@intel.com>,
-	syzbot+57fdb0cf6a0c5d1f15a2@syzkaller.appspotmail.com,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 066/567] iommufd/selftest: Check for overflow in IOMMU_TEST_OP_ADD_RESERVED
-Date: Tue,  6 Jan 2026 17:57:28 +0100
-Message-ID: <20260106170453.779631456@linuxfoundation.org>
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.12 102/567] can: gs_usb: gs_can_open(): fix error handling
+Date: Tue,  6 Jan 2026 17:58:04 +0100
+Message-ID: <20260106170455.102659029@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -54,57 +49,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit e6a973af11135439de32ece3b9cbe3bfc043bea8 ]
+commit 3e54d3b4a8437b6783d4145c86962a2aa51022f3 upstream.
 
-syzkaller found it could overflow math in the test infrastructure and
-cause a WARN_ON by corrupting the reserved interval tree. This only
-effects test kernels with CONFIG_IOMMUFD_TEST.
+Commit 2603be9e8167 ("can: gs_usb: gs_can_open(): improve error handling")
+added missing error handling to the gs_can_open() function.
 
-Validate the user input length in the test ioctl.
+The driver uses 2 USB anchors to track the allocated URBs: the TX URBs in
+struct gs_can::tx_submitted for each netdev and the RX URBs in struct
+gs_usb::rx_submitted for the USB device. gs_can_open() allocates the RX
+URBs, while TX URBs are allocated during gs_can_start_xmit().
 
-Fixes: f4b20bb34c83 ("iommufd: Add kernel support for testing iommufd")
-Link: https://patch.msgid.link/r/0-v1-cd99f6049ba5+51-iommufd_syz_add_resv_jgg@nvidia.com
-Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Tested-by: Yi Liu <yi.l.liu@intel.com>
-Reported-by: syzbot+57fdb0cf6a0c5d1f15a2@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/69368129.a70a0220.38f243.008f.GAE@google.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The cleanup in gs_can_open() kills all anchored dev->tx_submitted
+URBs (which is not necessary since the netdev is not yet registered), but
+misses the parent->rx_submitted URBs.
+
+Fix the problem by killing the rx_submitted instead of the tx_submitted.
+
+Fixes: 2603be9e8167 ("can: gs_usb: gs_can_open(): improve error handling")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20251210-gs_usb-fix-error-handling-v1-1-d6a5a03f10bb@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/iommufd/selftest.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/can/usb/gs_usb.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/iommufd/selftest.c b/drivers/iommu/iommufd/selftest.c
-index 540437be168a0..aed260d4a93cc 100644
---- a/drivers/iommu/iommufd/selftest.c
-+++ b/drivers/iommu/iommufd/selftest.c
-@@ -836,14 +836,20 @@ static int iommufd_test_add_reserved(struct iommufd_ucmd *ucmd,
- 				     unsigned int mockpt_id,
- 				     unsigned long start, size_t length)
- {
-+	unsigned long last;
- 	struct iommufd_ioas *ioas;
- 	int rc;
+--- a/drivers/net/can/usb/gs_usb.c
++++ b/drivers/net/can/usb/gs_usb.c
+@@ -1071,7 +1071,7 @@ out_usb_free_urb:
+ 	usb_free_urb(urb);
+ out_usb_kill_anchored_urbs:
+ 	if (!parent->active_channels) {
+-		usb_kill_anchored_urbs(&dev->tx_submitted);
++		usb_kill_anchored_urbs(&parent->rx_submitted);
  
-+	if (!length)
-+		return -EINVAL;
-+	if (check_add_overflow(start, length - 1, &last))
-+		return -EOVERFLOW;
-+
- 	ioas = iommufd_get_ioas(ucmd->ictx, mockpt_id);
- 	if (IS_ERR(ioas))
- 		return PTR_ERR(ioas);
- 	down_write(&ioas->iopt.iova_rwsem);
--	rc = iopt_reserve_iova(&ioas->iopt, start, start + length - 1, NULL);
-+	rc = iopt_reserve_iova(&ioas->iopt, start, last, NULL);
- 	up_write(&ioas->iopt.iova_rwsem);
- 	iommufd_put_object(ucmd->ictx, &ioas->obj);
- 	return rc;
--- 
-2.51.0
-
+ 		if (dev->feature & GS_CAN_FEATURE_HW_TIMESTAMP)
+ 			gs_usb_timestamp_stop(parent);
 
 
