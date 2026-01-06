@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAA11352F8F;
-	Tue,  6 Jan 2026 17:24:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1A3355034;
+	Tue,  6 Jan 2026 17:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720243; cv=none; b=SK8HrnwRrGqacunPympAaLEci19PwxnMYYM3ss21G9ogIuRIBI8P8UD7cnrD7tJicdndhi+PvP1TQGN2TFE1BMDn6bswokGj7meq0092Q4wQftL55JFxcF91UKScZTMyVQn+WAlqOTTMa3wEqEKlurNqakT2a4XCzFCZ703l4Z8=
+	t=1767720246; cv=none; b=K1wk5vh1qPB/VZurWzsBj+jHu6NzANvOjeQlL3QMtwlXwl61RvGnZ894WuOURTqYiOGomGUJ+pACwP8Wg3dVjbhbDRdEP8+JOxVkErawO8CjHrF2FpUuB/Qqd4PY8147vmkh4kT6jFTOyuZRPmggxjQ9SV4Jw1Co5/qpP5P7eOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720243; c=relaxed/simple;
-	bh=Q2S0B43sZEqJppGUVnEt1hTomTip1ViwmZA3JvA8mDY=;
+	s=arc-20240116; t=1767720246; c=relaxed/simple;
+	bh=bYJ/TXLKu2Cvt4T/u1YOPuC5lffSP0wYibKO7TsRBjY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t68IwW33gm5nSwVoyn/91eaSSr6GwW0iqJkQ7lSn31SRvlxTM+fYT540GdVlTGK5cTwT7+Uwu4E0oAjl+Jqbn/f3RlgqLPGHDCOjEkM+UuANSMy3UnUp6MTKTK6NLC3FcU+6madRgFxO+zoB33FzB9Lemjx7QuaLvP4a2fIgyGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wV3X70IE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XhlsqfrZfMUw9ShM/edFEU71xd15nMtg/3H+KlBvpPCZ/QN07JLnFLCOtCrjUlpfHjY1HhQ1W/PLjuLHZ7ZSq7QLxzTjD7Tp/VDJEz7UwVfR2/uBlIXw42lV35+ooMgzEIPqHHgmFo/f2swLq63YoVZ7Tia7qellNSaiPu/h7HU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=omPxgU8b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wV3X70IE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12006C16AAE;
-	Tue,  6 Jan 2026 17:24:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="omPxgU8b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 338D9C116C6;
+	Tue,  6 Jan 2026 17:24:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720242;
-	bh=Q2S0B43sZEqJppGUVnEt1hTomTip1ViwmZA3JvA8mDY=;
+	s=korg; t=1767720245;
+	bh=bYJ/TXLKu2Cvt4T/u1YOPuC5lffSP0wYibKO7TsRBjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wV3X70IEKsb30tcecqzFYz7wrGjhKik19U03O18/w0ZOPsVY2XpluLsKnEMz+4dYI
-	 STzNyZuKIEmPRwvvi1a2KW9X9DmmfmmYi5MNib8ww9O1VdHABL7QaPDK7PlRcsQGU/
-	 X2JRLMCxwjLDboS9eXx9SxJEB5ydzj2GNrFbHv5g=
+	b=omPxgU8bhBeJD4/4WTTg92D5S3miGTWTr7fHwEPfSBGas8MDIbrSdft/J4CaR2Nxp
+	 /bpF2YphXx6oj4AkirRspbKLoVnrqB3fa1cmpPPFOWrTHMYsLhumaFYmBDETNmHM44
+	 93aFY5a/Sex1AhkYg55TjjE2fSpIHMFD7Iw0yB2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Tee <justin.tee@broadcom.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Daniel Wagner <wagi@kernel.org>,
-	Keith Busch <kbusch@kernel.org>,
+	syzbot+205ef33a3b636b4181fb@syzkaller.appspotmail.com,
+	Lizhi Xu <lizhi.xu@windriver.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 145/567] nvme-fc: dont hold rport lock when putting ctrl
-Date: Tue,  6 Jan 2026 17:58:47 +0100
-Message-ID: <20260106170456.688007414@linuxfoundation.org>
+Subject: [PATCH 6.12 136/567] usbip: Fix locking bug in RT-enabled kernels
+Date: Tue,  6 Jan 2026 17:58:38 +0100
+Message-ID: <20260106170456.356586821@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -53,62 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Wagner <wagi@kernel.org>
+From: Lizhi Xu <lizhi.xu@windriver.com>
 
-[ Upstream commit b71cbcf7d170e51148d5467820ae8a72febcb651 ]
+[ Upstream commit 09bf21bf5249880f62fe759b53b14b4b52900c6c ]
 
-nvme_fc_ctrl_put can acquire the rport lock when freeing the
-ctrl object:
+Interrupts are disabled before entering usb_hcd_giveback_urb().
+A spinlock_t becomes a sleeping lock on PREEMPT_RT, so it cannot be
+acquired with disabled interrupts.
 
-nvme_fc_ctrl_put
-  nvme_fc_ctrl_free
-    spin_lock_irqsave(rport->lock)
+Save the interrupt status and restore it after usb_hcd_giveback_urb().
 
-Thus we can't hold the rport lock when calling nvme_fc_ctrl_put.
+syz reported:
+BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
+Call Trace:
+ dump_stack_lvl+0x189/0x250 lib/dump_stack.c:120
+ rt_spin_lock+0xc7/0x2c0 kernel/locking/spinlock_rt.c:57
+ spin_lock include/linux/spinlock_rt.h:44 [inline]
+ mon_bus_complete drivers/usb/mon/mon_main.c:134 [inline]
+ mon_complete+0x5c/0x200 drivers/usb/mon/mon_main.c:147
+ usbmon_urb_complete include/linux/usb/hcd.h:738 [inline]
+ __usb_hcd_giveback_urb+0x254/0x5e0 drivers/usb/core/hcd.c:1647
+ vhci_urb_enqueue+0xb4f/0xe70 drivers/usb/usbip/vhci_hcd.c:818
 
-Justin suggested use the safe list iterator variant because
-nvme_fc_ctrl_put will also modify the rport->list.
-
-Cc: Justin Tee <justin.tee@broadcom.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Daniel Wagner <wagi@kernel.org>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reported-by: syzbot+205ef33a3b636b4181fb@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=205ef33a3b636b4181fb
+Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20250916014143.1439759-1-lizhi.xu@windriver.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/fc.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/usb/usbip/vhci_hcd.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/nvme/host/fc.c b/drivers/nvme/host/fc.c
-index d01bd3c300fa..3d90ace0b537 100644
---- a/drivers/nvme/host/fc.c
-+++ b/drivers/nvme/host/fc.c
-@@ -1462,14 +1462,14 @@ nvme_fc_match_disconn_ls(struct nvme_fc_rport *rport,
- {
- 	struct fcnvme_ls_disconnect_assoc_rqst *rqst =
- 					&lsop->rqstbuf->rq_dis_assoc;
--	struct nvme_fc_ctrl *ctrl, *ret = NULL;
-+	struct nvme_fc_ctrl *ctrl, *tmp, *ret = NULL;
- 	struct nvmefc_ls_rcv_op *oldls = NULL;
- 	u64 association_id = be64_to_cpu(rqst->associd.association_id);
- 	unsigned long flags;
- 
- 	spin_lock_irqsave(&rport->lock, flags);
- 
--	list_for_each_entry(ctrl, &rport->ctrl_list, ctrl_list) {
-+	list_for_each_entry_safe(ctrl, tmp, &rport->ctrl_list, ctrl_list) {
- 		if (!nvme_fc_ctrl_get(ctrl))
- 			continue;
- 		spin_lock(&ctrl->lock);
-@@ -1482,7 +1482,9 @@ nvme_fc_match_disconn_ls(struct nvme_fc_rport *rport,
- 		if (ret)
- 			/* leave the ctrl get reference */
- 			break;
-+		spin_unlock_irqrestore(&rport->lock, flags);
- 		nvme_fc_ctrl_put(ctrl);
-+		spin_lock_irqsave(&rport->lock, flags);
+diff --git a/drivers/usb/usbip/vhci_hcd.c b/drivers/usb/usbip/vhci_hcd.c
+index a793e30d46b7..f67b4d33a0ab 100644
+--- a/drivers/usb/usbip/vhci_hcd.c
++++ b/drivers/usb/usbip/vhci_hcd.c
+@@ -830,15 +830,15 @@ static int vhci_urb_enqueue(struct usb_hcd *hcd, struct urb *urb, gfp_t mem_flag
+ no_need_xmit:
+ 	usb_hcd_unlink_urb_from_ep(hcd, urb);
+ no_need_unlink:
+-	spin_unlock_irqrestore(&vhci->lock, flags);
+ 	if (!ret) {
+ 		/* usb_hcd_giveback_urb() should be called with
+ 		 * irqs disabled
+ 		 */
+-		local_irq_disable();
++		spin_unlock(&vhci->lock);
+ 		usb_hcd_giveback_urb(hcd, urb, urb->status);
+-		local_irq_enable();
++		spin_lock(&vhci->lock);
  	}
++	spin_unlock_irqrestore(&vhci->lock, flags);
+ 	return ret;
+ }
  
- 	spin_unlock_irqrestore(&rport->lock, flags);
 -- 
 2.51.0
 
