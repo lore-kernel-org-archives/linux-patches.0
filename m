@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B3D33A010;
-	Tue,  6 Jan 2026 17:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 262EC33A03D;
+	Tue,  6 Jan 2026 17:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721968; cv=none; b=KHYT+wMZODqFNH6hC/xo6jHBQCOvD2pFq2hrNYJa5C2xYyu9ecYe0AbvZqrqIoenKIBfDsasLK1aBVjWe+10YCXCMKDe/HZG6s9qlRG/CKUrj7XR/q287o0AtOgYzNqM1/RRP+3vufTiNPqeglouDy3OecGuV6ZPWVHg6SzlCbE=
+	t=1767721972; cv=none; b=ERQd+SLYchLD6MAHI3IPfHzyhItHfRoZG4InNLl/ezOwzGxjkqBuMtQeiz1/Xbn1947M66Rc1hK/vQszYk5b+1g0IzQQlC8dtiWWNfOr+c3pSBIJK6Yd8axYlJCc3Ow4bpPSv+mLlBXJnevS4tHzFOpfG6ss7doT1PPMT8TZDmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721968; c=relaxed/simple;
-	bh=ALBhjqwqDlqDTvQUlK1iOs5oWIbKaNQD/epe4TNzeio=;
+	s=arc-20240116; t=1767721972; c=relaxed/simple;
+	bh=DYEtICDm/baqQJTMiU4ZHDPh0KDSihCPXlKqNZt4eH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ChnsXH3B/w35z+AyYhgdJi3Wf+BbcronwIO/LzQf5xISYRhKCiAMLO6K5WUXXylU0+/2ho3bsA7Kc/he+wYVnCJ2k85fW92uPhbKWs7m3aO2H0VGQnkhwS3W12qMQwFZf/qFEH+JXGVK3lwE5IMzr8CUFHJglxBH3cCpJxRL350=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1q8LZ084; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ozrq/1GDNQfESx+ebKBNi0ZV+YEZMW1y5XT0KAqhRWbXPNC5bgpGU2XTP4vST17Ls0kzusCwoInGd9Vay9cnTII1CC80PJqA575FLuUDOCbLvKuw9lk8PVTWSfDA0tihHE1jtjTu+meDV0oTvwwr4mz+5Sdvp+huNJZHWIIJsxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ook/FznK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1q8LZ084"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE224C116C6;
-	Tue,  6 Jan 2026 17:52:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ook/FznK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F9EAC16AAE;
+	Tue,  6 Jan 2026 17:52:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721968;
-	bh=ALBhjqwqDlqDTvQUlK1iOs5oWIbKaNQD/epe4TNzeio=;
+	s=korg; t=1767721971;
+	bh=DYEtICDm/baqQJTMiU4ZHDPh0KDSihCPXlKqNZt4eH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1q8LZ084x5a9hqUCtRQE0c0B7YYBUy9TIAzeT8wtTaFWq+6ld62+GONXTYHo63mbs
-	 AW1oSIWF5/Nkl292OlNFJ51Zr6Z0LDWwfzBjJkoUh1nJ2stT1E1K2Uh2ZYggk1KuiJ
-	 1FuBXyf6fQ66tcy+I29ds+QaVOW7fwVvn4vPxEyM=
+	b=ook/FznKEY87tgpLd1wBpkdkN4bbfhHVrD/AstA4Z+MdW7pTDuFWZ+DGV91zQn0tU
+	 IshOY4Yo8RTaZeqKzccyLVmB5qnimNCnJ3JBUI7BtZRMiAMNzoZ4WgbNLZrjPZZI5R
+	 jsItrO0w5/w06KWb+0SWqrodEScP+EUQJHulxcxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Johan Hovold <johan@kernel.org>,
 	olivier moysan <olivier.moysan@foss.st.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 093/312] ASoC: stm32: sai: fix clk prepare imbalance on probe failure
-Date: Tue,  6 Jan 2026 18:02:47 +0100
-Message-ID: <20260106170551.198912464@linuxfoundation.org>
+Subject: [PATCH 6.18 094/312] ASoC: stm32: sai: fix OF node leak on probe
+Date: Tue,  6 Jan 2026 18:02:48 +0100
+Message-ID: <20260106170551.240042036@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -54,87 +54,143 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 312ec2f0d9d1a5656f76d770bbf1d967e9289aa7 upstream.
+commit 23261f0de09427367e99f39f588e31e2856a690e upstream.
 
-Make sure to unprepare the parent clock also on probe failures (e.g.
-probe deferral).
+The reference taken to the sync provider OF node when probing the
+platform device is currently only dropped if the set_sync() callback
+fails during DAI probe.
 
-Fixes: a14bf98c045b ("ASoC: stm32: sai: fix possible circular locking")
-Cc: stable@vger.kernel.org	# 5.5
+Make sure to drop the reference on platform probe failures (e.g. probe
+deferral) and on driver unbind.
+
+This also avoids a potential use-after-free in case the DAI is ever
+reprobed without first rebinding the platform driver.
+
+Fixes: 5914d285f6b7 ("ASoC: stm32: sai: Add synchronization support")
+Fixes: d4180b4c02e7 ("ASoC: stm32: sai: fix set_sync service")
 Cc: Olivier Moysan <olivier.moysan@st.com>
+Cc: stable@vger.kernel.org      # 4.16: d4180b4c02e7
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Reviewed-by: olivier moysan <olivier.moysan@foss.st.com>
-Link: https://patch.msgid.link/20251124104908.15754-3-johan@kernel.org
+Link: https://patch.msgid.link/20251124104908.15754-4-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/stm/stm32_sai_sub.c |   28 +++++++++++++++++++++-------
- 1 file changed, 21 insertions(+), 7 deletions(-)
+ sound/soc/stm/stm32_sai.c     |   12 +++---------
+ sound/soc/stm/stm32_sai_sub.c |   23 ++++++++++++++++-------
+ 2 files changed, 19 insertions(+), 16 deletions(-)
 
+--- a/sound/soc/stm/stm32_sai.c
++++ b/sound/soc/stm/stm32_sai.c
+@@ -138,7 +138,6 @@ static int stm32_sai_set_sync(struct stm
+ 	if (!pdev) {
+ 		dev_err(&sai_client->pdev->dev,
+ 			"Device not found for node %pOFn\n", np_provider);
+-		of_node_put(np_provider);
+ 		return -ENODEV;
+ 	}
+ 
+@@ -147,21 +146,16 @@ static int stm32_sai_set_sync(struct stm
+ 	if (!sai_provider) {
+ 		dev_err(&sai_client->pdev->dev,
+ 			"SAI sync provider data not found\n");
+-		ret = -EINVAL;
+-		goto error;
++		return -EINVAL;
+ 	}
+ 
+ 	/* Configure sync client */
+ 	ret = stm32_sai_sync_conf_client(sai_client, synci);
+ 	if (ret < 0)
+-		goto error;
++		return ret;
+ 
+ 	/* Configure sync provider */
+-	ret = stm32_sai_sync_conf_provider(sai_provider, synco);
+-
+-error:
+-	of_node_put(np_provider);
+-	return ret;
++	return stm32_sai_sync_conf_provider(sai_provider, synco);
+ }
+ 
+ static int stm32_sai_get_parent_clk(struct stm32_sai_data *sai)
 --- a/sound/soc/stm/stm32_sai_sub.c
 +++ b/sound/soc/stm/stm32_sai_sub.c
-@@ -1634,14 +1634,21 @@ static int stm32_sai_sub_parse_of(struct
- 	if (of_property_present(np, "#clock-cells")) {
- 		ret = stm32_sai_add_mclk_provider(sai);
- 		if (ret < 0)
--			return ret;
-+			goto err_unprepare_pclk;
- 	} else {
- 		sai->sai_mclk = devm_clk_get_optional(&pdev->dev, "MCLK");
--		if (IS_ERR(sai->sai_mclk))
--			return PTR_ERR(sai->sai_mclk);
-+		if (IS_ERR(sai->sai_mclk)) {
-+			ret = PTR_ERR(sai->sai_mclk);
-+			goto err_unprepare_pclk;
-+		}
- 	}
+@@ -1586,7 +1586,8 @@ static int stm32_sai_sub_parse_of(struct
+ 				dev_err(&pdev->dev,
+ 					"External synchro not supported\n");
+ 				of_node_put(args.np);
+-				return -EINVAL;
++				ret = -EINVAL;
++				goto err_put_sync_provider;
+ 			}
+ 			sai->sync = SAI_SYNC_EXTERNAL;
  
- 	return 0;
-+
-+err_unprepare_pclk:
-+	clk_unprepare(sai->pdata->pclk);
-+
-+	return ret;
- }
+@@ -1595,7 +1596,8 @@ static int stm32_sai_sub_parse_of(struct
+ 			    (sai->synci > (SAI_GCR_SYNCIN_MAX + 1))) {
+ 				dev_err(&pdev->dev, "Wrong SAI index\n");
+ 				of_node_put(args.np);
+-				return -EINVAL;
++				ret = -EINVAL;
++				goto err_put_sync_provider;
+ 			}
  
- static int stm32_sai_sub_probe(struct platform_device *pdev)
-@@ -1688,26 +1695,33 @@ static int stm32_sai_sub_probe(struct pl
- 			       IRQF_SHARED, dev_name(&pdev->dev), sai);
- 	if (ret) {
- 		dev_err(&pdev->dev, "IRQ request returned %d\n", ret);
--		return ret;
-+		goto err_unprepare_pclk;
- 	}
+ 			if (of_property_match_string(args.np, "compatible",
+@@ -1609,7 +1611,8 @@ static int stm32_sai_sub_parse_of(struct
+ 			if (!sai->synco) {
+ 				dev_err(&pdev->dev, "Unknown SAI sub-block\n");
+ 				of_node_put(args.np);
+-				return -EINVAL;
++				ret = -EINVAL;
++				goto err_put_sync_provider;
+ 			}
+ 		}
  
- 	if (STM_SAI_PROTOCOL_IS_SPDIF(sai))
- 		conf = &stm32_sai_pcm_config_spdif;
+@@ -1619,13 +1622,15 @@ static int stm32_sai_sub_parse_of(struct
  
- 	ret = snd_dmaengine_pcm_register(&pdev->dev, conf, 0);
--	if (ret)
--		return dev_err_probe(&pdev->dev, ret, "Could not register pcm dma\n");
-+	if (ret) {
-+		ret = dev_err_probe(&pdev->dev, ret, "Could not register pcm dma\n");
-+		goto err_unprepare_pclk;
+ 	of_node_put(args.np);
+ 	sai->sai_ck = devm_clk_get(&pdev->dev, "sai_ck");
+-	if (IS_ERR(sai->sai_ck))
+-		return dev_err_probe(&pdev->dev, PTR_ERR(sai->sai_ck),
+-				     "Missing kernel clock sai_ck\n");
++	if (IS_ERR(sai->sai_ck)) {
++		ret = dev_err_probe(&pdev->dev, PTR_ERR(sai->sai_ck),
++				    "Missing kernel clock sai_ck\n");
++		goto err_put_sync_provider;
 +	}
  
- 	ret = snd_soc_register_component(&pdev->dev, &stm32_component,
- 					 &sai->cpu_dai_drv, 1);
- 	if (ret) {
- 		snd_dmaengine_pcm_unregister(&pdev->dev);
+ 	ret = clk_prepare(sai->pdata->pclk);
+ 	if (ret < 0)
 -		return ret;
-+		goto err_unprepare_pclk;
- 	}
++		goto err_put_sync_provider;
  
- 	pm_runtime_enable(&pdev->dev);
+ 	if (STM_SAI_IS_F4(sai->pdata))
+ 		return 0;
+@@ -1647,6 +1652,8 @@ static int stm32_sai_sub_parse_of(struct
  
- 	return 0;
-+
-+err_unprepare_pclk:
-+	clk_unprepare(sai->pdata->pclk);
-+
-+	return ret;
+ err_unprepare_pclk:
+ 	clk_unprepare(sai->pdata->pclk);
++err_put_sync_provider:
++	of_node_put(sai->np_sync_provider);
+ 
+ 	return ret;
+ }
+@@ -1720,6 +1727,7 @@ static int stm32_sai_sub_probe(struct pl
+ 
+ err_unprepare_pclk:
+ 	clk_unprepare(sai->pdata->pclk);
++	of_node_put(sai->np_sync_provider);
+ 
+ 	return ret;
+ }
+@@ -1732,6 +1740,7 @@ static void stm32_sai_sub_remove(struct
+ 	snd_dmaengine_pcm_unregister(&pdev->dev);
+ 	snd_soc_unregister_component(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
++	of_node_put(sai->np_sync_provider);
  }
  
- static void stm32_sai_sub_remove(struct platform_device *pdev)
+ static int stm32_sai_sub_suspend(struct device *dev)
 
 
