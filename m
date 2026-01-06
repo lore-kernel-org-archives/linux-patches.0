@@ -1,39 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70F9530595C;
-	Tue,  6 Jan 2026 18:00:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA47365A13;
+	Tue,  6 Jan 2026 18:00:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722448; cv=none; b=bn5/AYBvMbKbLhu9ht0EAolihzKKPCkMBqCjrET6DNn+EILWrgweVfLs6+TgOKU0IDyMSIxECU/8qc7iZFebMCUzLIi/awFO4H8db+8wprf4R7j6G0E5j4E/a3g6QOrEu42kzOdPOSzf/VwlIy5KRNpkNVYMryL+5L2CD1ra4g0=
+	t=1767722452; cv=none; b=mpk7OToFICpayJBnfOjiJIcd3hANdRMRz2vBBm61PTpmqRLlPZTy04RsclvVbHHHsXDRMeXntaWYBvbMsTX8Qu64cq7rZRv/kghaWFpYEbl9GYeeMRSMFj/jR965FnyuH4nybwKvkJoBYv5Sq4DL1Jrsc5adqyCpAk4VQtaII5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722448; c=relaxed/simple;
-	bh=V6TvJTbC0eoe+0esIF8e7TtRZIHyXhicWKRXevDqLvE=;
+	s=arc-20240116; t=1767722452; c=relaxed/simple;
+	bh=M0RIIYhJdHrRbn3iDp443SBow7UdBtVIKXn0nEuMMVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B1KRl+Ty1U928uPDFKMDRM4BQryFdHRYgRJbcqgq3hezQWUHDxnYfVupW9feKP6R3p7o56TGWDBnjG5vw51PQDKnDHsHFRXMJv3/PoATUWOFRcPFi2j+3v9u3y9o3C73NBCItjAGHVEwqpL7yviOwaBLHUNDZOaPlZKwHQ071uI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kykYsHbe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qZVDMEf6HLe22HLizic/ZEPZHfp6yMjaiMb+6N0yShHxkZsCwv0gx9xyYHEIUFnN1FlgcZJJ7++HD7bi8jrUPF1utET27sSMALBk4q4Ch5nnP5eSAa2bSw4L9Z2UfaL/WIQdXBiph/IY7A2U4Vhe+c6Tp8l/FKbzQMnK8GJty1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HrEC5bBJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kykYsHbe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D42B9C16AAE;
-	Tue,  6 Jan 2026 18:00:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HrEC5bBJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FA24C116C6;
+	Tue,  6 Jan 2026 18:00:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722448;
-	bh=V6TvJTbC0eoe+0esIF8e7TtRZIHyXhicWKRXevDqLvE=;
+	s=korg; t=1767722451;
+	bh=M0RIIYhJdHrRbn3iDp443SBow7UdBtVIKXn0nEuMMVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kykYsHbeWfHXDrHZ/NttI1skwZVBQmFr6g+JdIfrvUl7nex+2KvieQiWPeqog+c2j
-	 s8TRnt88sRTELgrrWT6EW7mE6RN51n7ZY4V1WPwDIfnJPGWcZWbvJWHGhNCZiiEtNI
-	 yhs2hGbf81HYomwpu9sTLl8PcItsb6dmtwv75J5o=
+	b=HrEC5bBJ3TLx0vLq1uq48E0kfZqtVG8j/Qlpfu3+KMjBrZyCAorDSbNzP/Eg/EhCK
+	 gvNozP5FG9tissWSUgh+HYGFjx2pqZrEi1Ipta6QZgeAkcAfVhwDnHXViBFxPH/Aiy
+	 2AdCmjyHPmrAZ2FFNv5RjMKqSdhEy65pK/WgZii8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youling Tang <tangyouling@kylinos.cn>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Chenghao Duan <duanchenghao@kylinos.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.18 235/312] samples/ftrace: Adjust LoongArch register restore order in direct calls
-Date: Tue,  6 Jan 2026 18:05:09 +0100
-Message-ID: <20260106170556.353647844@linuxfoundation.org>
+	Alice Ryhl <aliceryhl@google.com>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Gary Guo <gary@garyguo.net>,
+	Daniel Almeida <daniel.almeida@collabora.com>,
+	Andrew Ballance <andrewjballance@gmail.com>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Trevor Gross <tmgross@umich.edu>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 236/312] rust: maple_tree: rcu_read_lock() in destructor to silence lockdep
+Date: Tue,  6 Jan 2026 18:05:10 +0100
+Message-ID: <20260106170556.389683809@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -46,123 +55,110 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chenghao Duan <duanchenghao@kylinos.cn>
+From: Alice Ryhl <aliceryhl@google.com>
 
-commit bb85d206be208bbf834883e948125a35ac59993a upstream.
+commit 6558749ef3405c143711cbdc67ec88cbc1582d91 upstream.
 
-Ensure that in the ftrace direct call logic, the CPU register state
-(with ra = parent return address) is restored to the correct state after
-the execution of the custom trampoline function and before returning to
-the traced function. Additionally, guarantee the correctness of the jump
-logic for jr t0 (traced function address).
+When running the Rust maple tree kunit tests with lockdep, you may trigger
+a warning that looks like this:
 
-Cc: stable@vger.kernel.org
-Fixes: 9cdc3b6a299c ("LoongArch: ftrace: Add direct call support")
-Reported-by: Youling Tang <tangyouling@kylinos.cn>
-Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Chenghao Duan <duanchenghao@kylinos.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+	lib/maple_tree.c:780 suspicious rcu_dereference_check() usage!
+
+	other info that might help us debug this:
+
+	rcu_scheduler_active = 2, debug_locks = 1
+	no locks held by kunit_try_catch/344.
+
+	stack backtrace:
+	CPU: 3 UID: 0 PID: 344 Comm: kunit_try_catch Tainted: G                 N  6.19.0-rc1+ #2 NONE
+	Tainted: [N]=TEST
+	Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
+	Call Trace:
+	 <TASK>
+	 dump_stack_lvl+0x71/0x90
+	 lockdep_rcu_suspicious+0x150/0x190
+	 mas_start+0x104/0x150
+	 mas_find+0x179/0x240
+	 _RINvNtCs5QSdWC790r4_4core3ptr13drop_in_placeINtNtCs1cdwasc6FUb_6kernel10maple_tree9MapleTreeINtNtNtBL_5alloc4kbox3BoxlNtNtB1x_9allocator7KmallocEEECsgxAQYCfdR72_25doctests_kernel_generated+0xaf/0x130
+	 rust_doctest_kernel_maple_tree_rs_0+0x600/0x6b0
+	 ? lock_release+0xeb/0x2a0
+	 ? kunit_try_catch_run+0x210/0x210
+	 kunit_try_run_case+0x74/0x160
+	 ? kunit_try_catch_run+0x210/0x210
+	 kunit_generic_run_threadfn_adapter+0x12/0x30
+	 kthread+0x21c/0x230
+	 ? __do_trace_sched_kthread_stop_ret+0x40/0x40
+	 ret_from_fork+0x16c/0x270
+	 ? __do_trace_sched_kthread_stop_ret+0x40/0x40
+	 ret_from_fork_asm+0x11/0x20
+	 </TASK>
+
+This is because the destructor of maple tree calls mas_find() without
+taking rcu_read_lock() or the spinlock.  Doing that is actually ok in this
+case since the destructor has exclusive access to the entire maple tree,
+but it triggers a lockdep warning.  To fix that, take the rcu read lock.
+
+In the future, it's possible that memory reclaim could gain a feature
+where it reallocates entries in maple trees even if no user-code is
+touching it.  If that feature is added, then this use of rcu read lock
+would become load-bearing, so I did not make it conditional on lockdep.
+
+We have to repeatedly take and release rcu because the destructor of T
+might perform operations that sleep.
+
+Link: https://lkml.kernel.org/r/20251217-maple-drop-rcu-v1-1-702af063573f@google.com
+Fixes: da939ef4c494 ("rust: maple_tree: add MapleTree")
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Reported-by: Andreas Hindborg <a.hindborg@kernel.org>
+Closes: https://rust-for-linux.zulipchat.com/#narrow/channel/x/topic/x/near/564215108
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Reviewed-by: Daniel Almeida <daniel.almeida@collabora.com>
+Cc: Andrew Ballance <andrewjballance@gmail.com>
+Cc: Björn Roy Baron <bjorn3_gh@protonmail.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>
+Cc: Danilo Krummrich <dakr@kernel.org>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Miguel Ojeda <ojeda@kernel.org>
+Cc: Trevor Gross <tmgross@umich.edu>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- samples/ftrace/ftrace-direct-modify.c       |    8 ++++----
- samples/ftrace/ftrace-direct-multi-modify.c |    8 ++++----
- samples/ftrace/ftrace-direct-multi.c        |    4 ++--
- samples/ftrace/ftrace-direct-too.c          |    4 ++--
- samples/ftrace/ftrace-direct.c              |    4 ++--
- 5 files changed, 14 insertions(+), 14 deletions(-)
+ rust/kernel/maple_tree.rs | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/samples/ftrace/ftrace-direct-modify.c
-+++ b/samples/ftrace/ftrace-direct-modify.c
-@@ -176,8 +176,8 @@ asm (
- "	st.d	$t0, $sp, 0\n"
- "	st.d	$ra, $sp, 8\n"
- "	bl	my_direct_func1\n"
--"	ld.d	$t0, $sp, 0\n"
--"	ld.d	$ra, $sp, 8\n"
-+"	ld.d	$ra, $sp, 0\n"
-+"	ld.d	$t0, $sp, 8\n"
- "	addi.d	$sp, $sp, 16\n"
- "	jr	$t0\n"
- "	.size		my_tramp1, .-my_tramp1\n"
-@@ -189,8 +189,8 @@ asm (
- "	st.d	$t0, $sp, 0\n"
- "	st.d	$ra, $sp, 8\n"
- "	bl	my_direct_func2\n"
--"	ld.d	$t0, $sp, 0\n"
--"	ld.d	$ra, $sp, 8\n"
-+"	ld.d	$ra, $sp, 0\n"
-+"	ld.d	$t0, $sp, 8\n"
- "	addi.d	$sp, $sp, 16\n"
- "	jr	$t0\n"
- "	.size		my_tramp2, .-my_tramp2\n"
---- a/samples/ftrace/ftrace-direct-multi-modify.c
-+++ b/samples/ftrace/ftrace-direct-multi-modify.c
-@@ -199,8 +199,8 @@ asm (
- "	move	$a0, $t0\n"
- "	bl	my_direct_func1\n"
- "	ld.d	$a0, $sp, 0\n"
--"	ld.d	$t0, $sp, 8\n"
--"	ld.d	$ra, $sp, 16\n"
-+"	ld.d	$ra, $sp, 8\n"
-+"	ld.d	$t0, $sp, 16\n"
- "	addi.d	$sp, $sp, 32\n"
- "	jr	$t0\n"
- "	.size		my_tramp1, .-my_tramp1\n"
-@@ -215,8 +215,8 @@ asm (
- "	move	$a0, $t0\n"
- "	bl	my_direct_func2\n"
- "	ld.d	$a0, $sp, 0\n"
--"	ld.d	$t0, $sp, 8\n"
--"	ld.d	$ra, $sp, 16\n"
-+"	ld.d	$ra, $sp, 8\n"
-+"	ld.d	$t0, $sp, 16\n"
- "	addi.d	$sp, $sp, 32\n"
- "	jr	$t0\n"
- "	.size		my_tramp2, .-my_tramp2\n"
---- a/samples/ftrace/ftrace-direct-multi.c
-+++ b/samples/ftrace/ftrace-direct-multi.c
-@@ -131,8 +131,8 @@ asm (
- "	move	$a0, $t0\n"
- "	bl	my_direct_func\n"
- "	ld.d	$a0, $sp, 0\n"
--"	ld.d	$t0, $sp, 8\n"
--"	ld.d	$ra, $sp, 16\n"
-+"	ld.d	$ra, $sp, 8\n"
-+"	ld.d	$t0, $sp, 16\n"
- "	addi.d	$sp, $sp, 32\n"
- "	jr	$t0\n"
- "	.size		my_tramp, .-my_tramp\n"
---- a/samples/ftrace/ftrace-direct-too.c
-+++ b/samples/ftrace/ftrace-direct-too.c
-@@ -143,8 +143,8 @@ asm (
- "	ld.d	$a0, $sp, 0\n"
- "	ld.d	$a1, $sp, 8\n"
- "	ld.d	$a2, $sp, 16\n"
--"	ld.d	$t0, $sp, 24\n"
--"	ld.d	$ra, $sp, 32\n"
-+"	ld.d	$ra, $sp, 24\n"
-+"	ld.d	$t0, $sp, 32\n"
- "	addi.d	$sp, $sp, 48\n"
- "	jr	$t0\n"
- "	.size		my_tramp, .-my_tramp\n"
---- a/samples/ftrace/ftrace-direct.c
-+++ b/samples/ftrace/ftrace-direct.c
-@@ -124,8 +124,8 @@ asm (
- "	st.d	$ra, $sp, 16\n"
- "	bl	my_direct_func\n"
- "	ld.d	$a0, $sp, 0\n"
--"	ld.d	$t0, $sp, 8\n"
--"	ld.d	$ra, $sp, 16\n"
-+"	ld.d	$ra, $sp, 8\n"
-+"	ld.d	$t0, $sp, 16\n"
- "	addi.d	$sp, $sp, 32\n"
- "	jr	$t0\n"
- "	.size		my_tramp, .-my_tramp\n"
+diff --git a/rust/kernel/maple_tree.rs b/rust/kernel/maple_tree.rs
+index e72eec56bf57..265d6396a78a 100644
+--- a/rust/kernel/maple_tree.rs
++++ b/rust/kernel/maple_tree.rs
+@@ -265,7 +265,16 @@ impl<T: ForeignOwnable> MapleTree<T> {
+         loop {
+             // This uses the raw accessor because we're destroying pointers without removing them
+             // from the maple tree, which is only valid because this is the destructor.
+-            let ptr = ma_state.mas_find_raw(usize::MAX);
++            //
++            // Take the rcu lock because mas_find_raw() requires that you hold either the spinlock
++            // or the rcu read lock. This is only really required if memory reclaim might
++            // reallocate entries in the tree, as we otherwise have exclusive access. That feature
++            // doesn't exist yet, so for now, taking the rcu lock only serves the purpose of
++            // silencing lockdep.
++            let ptr = {
++                let _rcu = kernel::sync::rcu::Guard::new();
++                ma_state.mas_find_raw(usize::MAX)
++            };
+             if ptr.is_null() {
+                 break;
+             }
+-- 
+2.52.0
+
 
 
