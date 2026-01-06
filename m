@@ -1,38 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E5F36C599;
-	Tue,  6 Jan 2026 17:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7751B36C0C9;
+	Tue,  6 Jan 2026 17:58:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722295; cv=none; b=J6KvCSY+9f35WOh9beFfnICFZA/tPcCCglRF7+I15Lj7d3CHOI6e592bkEvva0wsYJEzaCSiJBT5VbRcjs6ebbRNQ8S3uKF/wijh5bJyqZFoM9QwbM0Kn4kE+416m37/+ApV8IMm5JBYynFtdVmRHyekO2JrEd5i3GR6G2nIaTM=
+	t=1767722298; cv=none; b=E4KcW2BxdftHJsNltNBX8NKm5Tt6smJ1OyTFelWt/SehJwiaoBgalYYWoX8UlUSXxGS+38Yw1wfGYhu1qT1h1DH31FeHLI2u0s86RtqcukePWznU+lKLx5dBPakoPg1LrFUMMFyNWqvFmhI5u4Ep+2yB4+/rWMA5872332jv2QU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722295; c=relaxed/simple;
-	bh=xjlDGSCqsG7YVSZudVHc7CopNUYKAGELv9d4ZdPoRWk=;
+	s=arc-20240116; t=1767722298; c=relaxed/simple;
+	bh=Ko7sdh2fqb4SMVP9qNgXfCrrLFZ5KAGG4opbts4wpEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tig35AUiNboY1kriGHiA1tlesXS580j6pyxKgt9+7VtYGrD+ItxFo+XcQiw1auOq8fKe0N/PhEaJsluy98W/AyY01wzy33ZMSuKXFEqJw/ReYrxhaHwe+EexjRN1QSNuGRU98LH4b5Dy+mj6RO4Jofpfazzi7iRtG5/+MqxgIwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BCm9aMN9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=syyoMNTqvxhglT0pSxxzNCAKEFRd/BpozqPmjQgcc8cA8xjzreQwZCAGqdjOpM8bX1UtSmIq3RPCzGyERAzBykhgU65zhkmGOv0VCvGNjvTGRc7KBXK8pD5nPwJTMjodc5hySHz+VJbwrI/oEH96ZjgJ6o5zwSi3B0/8+FfSgE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HVAHeiRP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BCm9aMN9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD48EC116C6;
-	Tue,  6 Jan 2026 17:58:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HVAHeiRP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B81D3C116C6;
+	Tue,  6 Jan 2026 17:58:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722295;
-	bh=xjlDGSCqsG7YVSZudVHc7CopNUYKAGELv9d4ZdPoRWk=;
+	s=korg; t=1767722298;
+	bh=Ko7sdh2fqb4SMVP9qNgXfCrrLFZ5KAGG4opbts4wpEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BCm9aMN9P+PVRJCMfMdxFQt4ulF8I4F38KHk+vA1YwjWBNQ2bOldTEAflaEdAym/0
-	 5xdIjjcDNeDhg4+iavj6gcMOKAzCVIYIdU59HUR2cmYMEBQ2vIqNf2PG+6Z+LySunA
-	 9P8j2I8bBfNO0cB6kiXfuOgDDDKx39Ubr8llsEK4=
+	b=HVAHeiRP6De5jmGTRqQxMymoehHU5ohLLMVxQUsv2RRO+b7K9ALZKxiCJvKrVywrm
+	 ZQzxvhCxfcrUw1HNBmNWIj9QUQtXYGDy/gx0jJqnwxE0g8ReriRKAR3OhuR1YJLxcQ
+	 BsNDQxOt405GGOS3udFf51lKgnTvblmBPqLyRhpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0ff6b771b4f7a5bce83b@syzkaller.appspotmail.com,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>
-Subject: [PATCH 6.18 221/312] mptcp: fallback earlier on simult connection
-Date: Tue,  6 Jan 2026 18:04:55 +0100
-Message-ID: <20260106170555.838200616@linuxfoundation.org>
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	syzbot+997752115a851cb0cf36@syzkaller.appspotmail.com,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Dmitriy Vyukov <dvyukov@google.com>,
+	Kees Cook <kees@kernel.org>,
+	Marco Elver <elver@google.com>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 222/312] mm/kasan: fix incorrect unpoisoning in vrealloc for KASAN
+Date: Tue,  6 Jan 2026 18:04:56 +0100
+Message-ID: <20260106170555.874187592@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -51,142 +61,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-commit 71154bbe49423128c1c8577b6576de1ed6836830 upstream.
+commit 007f5da43b3d0ecff972e2616062b8da1f862f5e upstream.
 
-Syzkaller reports a simult-connect race leading to inconsistent fallback
-status:
+Patch series "kasan: vmalloc: Fixes for the percpu allocator and
+vrealloc", v3.
 
-  WARNING: CPU: 3 PID: 33 at net/mptcp/subflow.c:1515 subflow_data_ready+0x40b/0x7c0 net/mptcp/subflow.c:1515
-  Modules linked in:
-  CPU: 3 UID: 0 PID: 33 Comm: ksoftirqd/3 Not tainted syzkaller #0 PREEMPT(full)
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
-  RIP: 0010:subflow_data_ready+0x40b/0x7c0 net/mptcp/subflow.c:1515
-  Code: 89 ee e8 78 61 3c f6 40 84 ed 75 21 e8 8e 66 3c f6 44 89 fe bf 07 00 00 00 e8 c1 61 3c f6 41 83 ff 07 74 09 e8 76 66 3c f6 90 <0f> 0b 90 e8 6d 66 3c f6 48 89 df e8 e5 ad ff ff 31 ff 89 c5 89 c6
-  RSP: 0018:ffffc900006cf338 EFLAGS: 00010246
-  RAX: 0000000000000000 RBX: ffff888031acd100 RCX: ffffffff8b7f2abf
-  RDX: ffff88801e6ea440 RSI: ffffffff8b7f2aca RDI: 0000000000000005
-  RBP: 0000000000000000 R08: 0000000000000005 R09: 0000000000000007
-  R10: 0000000000000004 R11: 0000000000002c10 R12: ffff88802ba69900
-  R13: 1ffff920000d9e67 R14: ffff888046f81800 R15: 0000000000000004
-  FS:  0000000000000000(0000) GS:ffff8880d69bc000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 0000560fc0ca1670 CR3: 0000000032c3a000 CR4: 0000000000352ef0
-  Call Trace:
-   <TASK>
-   tcp_data_queue+0x13b0/0x4f90 net/ipv4/tcp_input.c:5197
-   tcp_rcv_state_process+0xfdf/0x4ec0 net/ipv4/tcp_input.c:6922
-   tcp_v6_do_rcv+0x492/0x1740 net/ipv6/tcp_ipv6.c:1672
-   tcp_v6_rcv+0x2976/0x41e0 net/ipv6/tcp_ipv6.c:1918
-   ip6_protocol_deliver_rcu+0x188/0x1520 net/ipv6/ip6_input.c:438
-   ip6_input_finish+0x1e4/0x4b0 net/ipv6/ip6_input.c:489
-   NF_HOOK include/linux/netfilter.h:318 [inline]
-   NF_HOOK include/linux/netfilter.h:312 [inline]
-   ip6_input+0x105/0x2f0 net/ipv6/ip6_input.c:500
-   dst_input include/net/dst.h:471 [inline]
-   ip6_rcv_finish net/ipv6/ip6_input.c:79 [inline]
-   NF_HOOK include/linux/netfilter.h:318 [inline]
-   NF_HOOK include/linux/netfilter.h:312 [inline]
-   ipv6_rcv+0x264/0x650 net/ipv6/ip6_input.c:311
-   __netif_receive_skb_one_core+0x12d/0x1e0 net/core/dev.c:5979
-   __netif_receive_skb+0x1d/0x160 net/core/dev.c:6092
-   process_backlog+0x442/0x15e0 net/core/dev.c:6444
-   __napi_poll.constprop.0+0xba/0x550 net/core/dev.c:7494
-   napi_poll net/core/dev.c:7557 [inline]
-   net_rx_action+0xa9f/0xfe0 net/core/dev.c:7684
-   handle_softirqs+0x216/0x8e0 kernel/softirq.c:579
-   run_ksoftirqd kernel/softirq.c:968 [inline]
-   run_ksoftirqd+0x3a/0x60 kernel/softirq.c:960
-   smpboot_thread_fn+0x3f7/0xae0 kernel/smpboot.c:160
-   kthread+0x3c2/0x780 kernel/kthread.c:463
-   ret_from_fork+0x5d7/0x6f0 arch/x86/kernel/process.c:148
-   ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
-   </TASK>
+Patches fix two issues related to KASAN and vmalloc.
 
-The TCP subflow can process the simult-connect syn-ack packet after
-transitioning to TCP_FIN1 state, bypassing the MPTCP fallback check,
-as the sk_state_change() callback is not invoked for * -> FIN_WAIT1
-transitions.
+The first one, a KASAN tag mismatch, possibly resulting in a kernel panic,
+can be observed on systems with a tag-based KASAN enabled and with
+multiple NUMA nodes.  Initially it was only noticed on x86 [1] but later a
+similar issue was also reported on arm64 [2].
 
-That will move the msk socket to an inconsistent status and the next
-incoming data will hit the reported splat.
+Specifically the problem is related to how vm_structs interact with
+pcpu_chunks - both when they are allocated, assigned and when pcpu_chunk
+addresses are derived.
 
-Close the race moving the simult-fallback check at the earliest possible
-stage - that is at syn-ack generation time.
+When vm_structs are allocated they are unpoisoned, each with a different
+random tag, if vmalloc support is enabled along the KASAN mode.  Later
+when first pcpu chunk is allocated it gets its 'base_addr' field set to
+the first allocated vm_struct.  With that it inherits that vm_struct's
+tag.
 
-About the fixes tags: [2] was supposed to also fix this issue introduced
-by [3]. [1] is required as a dependence: it was not explicitly marked as
-a fix, but it is one and it has already been backported before [3]. In
-other words, this commit should be backported up to [3], including [2]
-and [1] if that's not already there.
+When pcpu_chunk addresses are later derived (by pcpu_chunk_addr(), for
+example in pcpu_alloc_noprof()) the base_addr field is used and offsets
+are added to it.  If the initial conditions are satisfied then some of the
+offsets will point into memory allocated with a different vm_struct.  So
+while the lower bits will get accurately derived the tag bits in the top
+of the pointer won't match the shadow memory contents.
 
-Fixes: 23e89e8ee7be ("tcp: Don't drop SYN+ACK for simultaneous connect().") [1]
-Fixes: 4fd19a307016 ("mptcp: fix inconsistent state on fastopen race") [2]
-Fixes: 1e777f39b4d7 ("mptcp: add MSG_FASTOPEN sendmsg flag support") [3]
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+0ff6b771b4f7a5bce83b@syzkaller.appspotmail.com
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/586
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251212-net-mptcp-subflow_data_ready-warn-v1-1-d1f9fd1c36c8@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The solution (proposed at v2 of the x86 KASAN series [3]) is to unpoison
+the vm_structs with the same tag when allocating them for the per cpu
+allocator (in pcpu_get_vm_areas()).
+
+The second one reported by syzkaller [4] is related to vrealloc and
+happens because of random tag generation when unpoisoning memory without
+allocating new pages.  This breaks shadow memory tracking and needs to
+reuse the existing tag instead of generating a new one.  At the same time
+an inconsistency in used flags is corrected.
+
+
+This patch (of 3):
+
+Syzkaller reported a memory out-of-bounds bug [4].  This patch fixes two
+issues:
+
+1. In vrealloc the KASAN_VMALLOC_VM_ALLOC flag is missing when
+   unpoisoning the extended region. This flag is required to correctly
+   associate the allocation with KASAN's vmalloc tracking.
+
+   Note: In contrast, vzalloc (via __vmalloc_node_range_noprof)
+   explicitly sets KASAN_VMALLOC_VM_ALLOC and calls
+   kasan_unpoison_vmalloc() with it.  vrealloc must behave consistently --
+   especially when reusing existing vmalloc regions -- to ensure KASAN can
+   track allocations correctly.
+
+2. When vrealloc reuses an existing vmalloc region (without allocating
+   new pages) KASAN generates a new tag, which breaks tag-based memory
+   access tracking.
+
+Introduce KASAN_VMALLOC_KEEP_TAG, a new KASAN flag that allows reusing the
+tag already attached to the pointer, ensuring consistent tag behavior
+during reallocation.
+
+Pass KASAN_VMALLOC_KEEP_TAG and KASAN_VMALLOC_VM_ALLOC to the
+kasan_unpoison_vmalloc inside vrealloc_node_align_noprof().
+
+Link: https://lkml.kernel.org/r/cover.1765978969.git.m.wieczorretman@pm.me
+Link: https://lkml.kernel.org/r/38dece0a4074c43e48150d1e242f8242c73bf1a5.1764874575.git.m.wieczorretman@pm.me
+Link: https://lore.kernel.org/all/e7e04692866d02e6d3b32bb43b998e5d17092ba4.1738686764.git.maciej.wieczor-retman@intel.com/ [1]
+Link: https://lore.kernel.org/all/aMUrW1Znp1GEj7St@MiWiFi-R3L-srv/ [2]
+Link: https://lore.kernel.org/all/CAPAsAGxDRv_uFeMYu9TwhBVWHCCtkSxoWY4xmFB_vowMbi8raw@mail.gmail.com/ [3]
+Link: https://syzkaller.appspot.com/bug?extid=997752115a851cb0cf36 [4]
+Fixes: a0309faf1cb0 ("mm: vmalloc: support more granular vrealloc() sizing")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Co-developed-by: Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>
+Signed-off-by: Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>
+Reported-by: syzbot+997752115a851cb0cf36@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/68e243a2.050a0220.1696c6.007d.GAE@google.com/T/
+Reviewed-by: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Danilo Krummrich <dakr@kernel.org>
+Cc: Dmitriy Vyukov <dvyukov@google.com>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Marco Elver <elver@google.com>
+Cc: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
+Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/options.c  |   10 ++++++++++
- net/mptcp/protocol.h |    6 ++----
- net/mptcp/subflow.c  |    6 ------
- 3 files changed, 12 insertions(+), 10 deletions(-)
+ include/linux/kasan.h |    1 +
+ mm/kasan/hw_tags.c    |    2 +-
+ mm/kasan/shadow.c     |    4 +++-
+ mm/vmalloc.c          |    4 +++-
+ 4 files changed, 8 insertions(+), 3 deletions(-)
 
---- a/net/mptcp/options.c
-+++ b/net/mptcp/options.c
-@@ -408,6 +408,16 @@ bool mptcp_syn_options(struct sock *sk,
- 	 */
- 	subflow->snd_isn = TCP_SKB_CB(skb)->end_seq;
- 	if (subflow->request_mptcp) {
-+		if (unlikely(subflow_simultaneous_connect(sk))) {
-+			WARN_ON_ONCE(!mptcp_try_fallback(sk, MPTCP_MIB_SIMULTCONNFALLBACK));
-+
-+			/* Ensure mptcp_finish_connect() will not process the
-+			 * MPC handshake.
-+			 */
-+			subflow->request_mptcp = 0;
-+			return false;
-+		}
-+
- 		opts->suboptions = OPTION_MPTCP_MPC_SYN;
- 		opts->csum_reqd = mptcp_is_checksum_enabled(sock_net(sk));
- 		opts->allow_join_id0 = mptcp_allow_join_id0(sock_net(sk));
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -1293,10 +1293,8 @@ static inline bool subflow_simultaneous_
- {
- 	struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(sk);
+--- a/include/linux/kasan.h
++++ b/include/linux/kasan.h
+@@ -28,6 +28,7 @@ typedef unsigned int __bitwise kasan_vma
+ #define KASAN_VMALLOC_INIT		((__force kasan_vmalloc_flags_t)0x01u)
+ #define KASAN_VMALLOC_VM_ALLOC		((__force kasan_vmalloc_flags_t)0x02u)
+ #define KASAN_VMALLOC_PROT_NORMAL	((__force kasan_vmalloc_flags_t)0x04u)
++#define KASAN_VMALLOC_KEEP_TAG		((__force kasan_vmalloc_flags_t)0x08u)
  
--	return (1 << sk->sk_state) &
--	       (TCPF_ESTABLISHED | TCPF_FIN_WAIT1 | TCPF_FIN_WAIT2 | TCPF_CLOSING) &&
--	       is_active_ssk(subflow) &&
--	       !subflow->conn_finished;
-+	/* Note that the sk state implies !subflow->conn_finished. */
-+	return sk->sk_state == TCP_SYN_RECV && is_active_ssk(subflow);
+ #define KASAN_VMALLOC_PAGE_RANGE 0x1 /* Apply exsiting page range */
+ #define KASAN_VMALLOC_TLB_FLUSH  0x2 /* TLB flush */
+--- a/mm/kasan/hw_tags.c
++++ b/mm/kasan/hw_tags.c
+@@ -361,7 +361,7 @@ void *__kasan_unpoison_vmalloc(const voi
+ 		return (void *)start;
+ 	}
+ 
+-	tag = kasan_random_tag();
++	tag = (flags & KASAN_VMALLOC_KEEP_TAG) ? get_tag(start) : kasan_random_tag();
+ 	start = set_tag(start, tag);
+ 
+ 	/* Unpoison and initialize memory up to size. */
+--- a/mm/kasan/shadow.c
++++ b/mm/kasan/shadow.c
+@@ -648,7 +648,9 @@ void *__kasan_unpoison_vmalloc(const voi
+ 	    !(flags & KASAN_VMALLOC_PROT_NORMAL))
+ 		return (void *)start;
+ 
+-	start = set_tag(start, kasan_random_tag());
++	if (unlikely(!(flags & KASAN_VMALLOC_KEEP_TAG)))
++		start = set_tag(start, kasan_random_tag());
++
+ 	kasan_unpoison(start, size, false);
+ 	return (void *)start;
  }
- 
- #ifdef CONFIG_SYN_COOKIES
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -1856,12 +1856,6 @@ static void subflow_state_change(struct
- 
- 	__subflow_state_change(sk);
- 
--	if (subflow_simultaneous_connect(sk)) {
--		WARN_ON_ONCE(!mptcp_try_fallback(sk, MPTCP_MIB_SIMULTCONNFALLBACK));
--		subflow->conn_finished = 1;
--		mptcp_propagate_state(parent, sk, subflow, NULL);
--	}
--
- 	/* as recvmsg() does not acquire the subflow socket for ssk selection
- 	 * a fin packet carrying a DSS can be unnoticed if we don't trigger
- 	 * the data available machinery here.
+--- a/mm/vmalloc.c
++++ b/mm/vmalloc.c
+@@ -4176,7 +4176,9 @@ void *vrealloc_node_align_noprof(const v
+ 	 */
+ 	if (size <= alloced_size) {
+ 		kasan_unpoison_vmalloc(p + old_size, size - old_size,
+-				       KASAN_VMALLOC_PROT_NORMAL);
++				       KASAN_VMALLOC_PROT_NORMAL |
++				       KASAN_VMALLOC_VM_ALLOC |
++				       KASAN_VMALLOC_KEEP_TAG);
+ 		/*
+ 		 * No need to zero memory here, as unused memory will have
+ 		 * already been zeroed at initial allocation time or during
 
 
