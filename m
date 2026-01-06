@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639573612DE;
-	Tue,  6 Jan 2026 17:50:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522743612E0;
+	Tue,  6 Jan 2026 17:50:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721817; cv=none; b=ZHLiz/ea5Cr20cRZ4ZVw/VoC2gN5oFEkipz+iH+Xp/IE8y1FGKNnu/QXhlJRVDBQhGlAtRKE017fQxxWnkfn4HHG/l2keniP/ydItMDA7GeEeHkPF+qWNVSG80/qlA84EvObKO/cQAFgFt7CB8XsWyAcg5Lwlu3RXQSQdNQAhII=
+	t=1767721820; cv=none; b=np/qTfHRNhFViV7JG4w7B7DEb5i57jOqQFulPBBZalAjNSy2+6D+GcKjC6VTqbhoJ3NAQFp6qOCa72CJBmrWCsvtLHGODVpetZWCAYrkhhnj/qDrnjZ06/dMJtokZiE/YGFk+RDgbk4KV+vcCWy1vQzCko7MQacG3NGQLvBO3n8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721817; c=relaxed/simple;
-	bh=Ruq1Mm1Ex1xsM+Le6sf7/8QRIzX3WjdsAX/3zdlrXvc=;
+	s=arc-20240116; t=1767721820; c=relaxed/simple;
+	bh=8Lie3ZOdtXw+3O6VeD0Bx4nwtKZlYiWzFNN6oxi/wO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bIJToXgHre8qxfuXFfsc4Q3z1QTzOMBP23miFYM8XmEhUE66RFCKOiVO49G+sfs0fZDZKw7cJaiMeAZfkCjPTBfhEYmn9Ac5gzec3tyZSLp3ubKUfYkEqqq9yR871Xy53HsuuelZZt2w0sNj+sPXYg5LL+f85FxNwj10rQXjBe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sg0O4WVE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sVEss2FcPbC/YQv3IjezyHrPLN3U9d1UZiWNNQwkV1pOfOJmXQn1MLcpkRgJpRe3fltssrKJhRbhm0XbaSDe+1YKzoryqmDONjjDFsvi8S1Kye1+2AbL2M+Xcx4UigoRJJ57Cck+etCXMITGg40KAV575v8ypTplyJFlKjIvmFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AbRuBv+g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sg0O4WVE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70D56C116C6;
-	Tue,  6 Jan 2026 17:50:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AbRuBv+g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C54AAC116C6;
+	Tue,  6 Jan 2026 17:50:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721816;
-	bh=Ruq1Mm1Ex1xsM+Le6sf7/8QRIzX3WjdsAX/3zdlrXvc=;
+	s=korg; t=1767721820;
+	bh=8Lie3ZOdtXw+3O6VeD0Bx4nwtKZlYiWzFNN6oxi/wO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sg0O4WVEbY8iei+gcoQze1xfkeMuL35kJhWUnTVc3a7swSKnApSZhRb5bZDhDnyCR
-	 9HxbsIBkOMdqsnr7DH8PaP7KmaF2r+PTQmRQDw6anlNNTNZMXEaOZC82oaSy/rX+oo
-	 8PwKnTtkjnkl2GeeMH6aS6XWBUCF3Dly3zmjna2I=
+	b=AbRuBv+g9uG96VG7Ya7BV8X95AnyknSfVORcqhHMZtthfa01e0ereEwib98EsMvs8
+	 ceZ8V6kQrNjR90rzkTVV3yhlNpwnHCpgQjpdPFnb8eMmK3o0U9JizrVzclAC2MrXJR
+	 G4M5EMG7V0ZZF6RrdN9F/1kujQB5TEfWqDbz/z9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Caleb Sander Mateos <csander@purestorage.com>,
+	Yoav Cohen <yoav@nvidia.com>,
 	Ming Lei <ming.lei@redhat.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 080/312] ublk: implement NUMA-aware memory allocation
-Date: Tue,  6 Jan 2026 18:02:34 +0100
-Message-ID: <20260106170550.734129844@linuxfoundation.org>
+Subject: [PATCH 6.18 081/312] ublk: scan partition in async way
+Date: Tue,  6 Jan 2026 18:02:35 +0100
+Message-ID: <20260106170550.769429235@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -54,209 +55,115 @@ Content-Transfer-Encoding: 8bit
 
 From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit 529d4d6327880e5c60f4e0def39b3faaa7954e54 ]
+[ Upstream commit 7fc4da6a304bdcd3de14fc946dc2c19437a9cc5a ]
 
-Implement NUMA-friendly memory allocation for ublk driver to improve
-performance on multi-socket systems.
+Implement async partition scan to avoid IO hang when reading partition
+tables. Similar to nvme_partition_scan_work(), partition scanning is
+deferred to a work queue to prevent deadlocks.
 
-This commit includes the following changes:
+When partition scan happens synchronously during add_disk(), IO errors
+can cause the partition scan to wait while holding ub->mutex, which
+can deadlock with other operations that need the mutex.
 
-1. Rename __queues to queues, dropping the __ prefix since the field is
-   now accessed directly throughout the codebase rather than only through
-   the ublk_get_queue() helper.
-
-2. Remove the queue_size field from struct ublk_device as it is no longer
-   needed.
-
-3. Move queue allocation and deallocation into ublk_init_queue() and
-   ublk_deinit_queue() respectively, improving encapsulation. This
-   simplifies ublk_init_queues() and ublk_deinit_queues() to just
-   iterate and call the per-queue functions.
-
-4. Add ublk_get_queue_numa_node() helper function to determine the
-   appropriate NUMA node for a queue by finding the first CPU mapped
-   to that queue via tag_set.map[HCTX_TYPE_DEFAULT].mq_map[] and
-   converting it to a NUMA node using cpu_to_node(). This function is
-   called internally by ublk_init_queue() to determine the allocation
-   node.
-
-5. Allocate each queue structure on its local NUMA node using
-   kvzalloc_node() in ublk_init_queue().
-
-6. Allocate the I/O command buffer on the same NUMA node using
-   alloc_pages_node().
-
-This reduces memory access latency on multi-socket NUMA systems by
-ensuring each queue's data structures are local to the CPUs that
-access them.
+Changes:
+- Add partition_scan_work to ublk_device structure
+- Implement ublk_partition_scan_work() to perform async scan
+- Always suppress sync partition scan during add_disk()
+- Schedule async work after add_disk() for trusted daemons
+- Add flush_work() in ublk_stop_dev() before grabbing ub->mutex
 
 Reviewed-by: Caleb Sander Mateos <csander@purestorage.com>
+Reported-by: Yoav Cohen <yoav@nvidia.com>
+Closes: https://lore.kernel.org/linux-block/DM4PR12MB63280C5637917C071C2F0D65A9A8A@DM4PR12MB6328.namprd12.prod.outlook.com/
+Fixes: 71f28f3136af ("ublk_drv: add io_uring based userspace block driver")
 Signed-off-by: Ming Lei <ming.lei@redhat.com>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 7fc4da6a304b ("ublk: scan partition in async way")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 84 +++++++++++++++++++++++++---------------
- 1 file changed, 53 insertions(+), 31 deletions(-)
+ drivers/block/ublk_drv.c | 35 ++++++++++++++++++++++++++++++++---
+ 1 file changed, 32 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index d8079ea8f8ca..796035891888 100644
+index 796035891888..23aba73d24dc 100644
 --- a/drivers/block/ublk_drv.c
 +++ b/drivers/block/ublk_drv.c
-@@ -210,9 +210,6 @@ struct ublk_queue {
- struct ublk_device {
- 	struct gendisk		*ub_disk;
- 
--	char	*__queues;
--
--	unsigned int	queue_size;
- 	struct ublksrv_ctrl_dev_info	dev_info;
- 
- 	struct blk_mq_tag_set	tag_set;
-@@ -240,6 +237,8 @@ struct ublk_device {
+@@ -237,6 +237,7 @@ struct ublk_device {
  	bool canceling;
  	pid_t 	ublksrv_tgid;
  	struct delayed_work	exit_work;
-+
-+	struct ublk_queue       *queues[];
++	struct work_struct	partition_scan_work;
+ 
+ 	struct ublk_queue       *queues[];
  };
+@@ -254,6 +255,20 @@ static inline struct request *__ublk_check_and_get_req(struct ublk_device *ub,
+ 		u16 q_id, u16 tag, struct ublk_io *io, size_t offset);
+ static inline unsigned int ublk_req_build_flags(struct request *req);
  
- /* header of ublk_params */
-@@ -782,7 +781,7 @@ static noinline void ublk_put_device(struct ublk_device *ub)
- static inline struct ublk_queue *ublk_get_queue(struct ublk_device *dev,
- 		int qid)
- {
--       return (struct ublk_queue *)&(dev->__queues[qid * dev->queue_size]);
-+	return dev->queues[qid];
- }
- 
- static inline bool ublk_rq_has_data(const struct request *rq)
-@@ -2713,9 +2712,13 @@ static const struct file_operations ublk_ch_fops = {
- 
- static void ublk_deinit_queue(struct ublk_device *ub, int q_id)
- {
--	int size = ublk_queue_cmd_buf_size(ub);
--	struct ublk_queue *ubq = ublk_get_queue(ub, q_id);
--	int i;
-+	struct ublk_queue *ubq = ub->queues[q_id];
-+	int size, i;
++static void ublk_partition_scan_work(struct work_struct *work)
++{
++	struct ublk_device *ub =
++		container_of(work, struct ublk_device, partition_scan_work);
 +
-+	if (!ubq)
++	if (WARN_ON_ONCE(!test_and_clear_bit(GD_SUPPRESS_PART_SCAN,
++					     &ub->ub_disk->state)))
 +		return;
 +
-+	size = ublk_queue_cmd_buf_size(ub);
- 
- 	for (i = 0; i < ubq->q_depth; i++) {
- 		struct ublk_io *io = &ubq->ios[i];
-@@ -2727,57 +2730,76 @@ static void ublk_deinit_queue(struct ublk_device *ub, int q_id)
- 
- 	if (ubq->io_cmd_buf)
- 		free_pages((unsigned long)ubq->io_cmd_buf, get_order(size));
-+
-+	kvfree(ubq);
-+	ub->queues[q_id] = NULL;
++	mutex_lock(&ub->ub_disk->open_mutex);
++	bdev_disk_changed(ub->ub_disk, false);
++	mutex_unlock(&ub->ub_disk->open_mutex);
 +}
 +
-+static int ublk_get_queue_numa_node(struct ublk_device *ub, int q_id)
-+{
-+	unsigned int cpu;
-+
-+	/* Find first CPU mapped to this queue */
-+	for_each_possible_cpu(cpu) {
-+		if (ub->tag_set.map[HCTX_TYPE_DEFAULT].mq_map[cpu] == q_id)
-+			return cpu_to_node(cpu);
-+	}
-+
-+	return NUMA_NO_NODE;
+ static inline struct ublksrv_io_desc *
+ ublk_get_iod(const struct ublk_queue *ubq, unsigned tag)
+ {
+@@ -2092,6 +2107,7 @@ static void ublk_stop_dev(struct ublk_device *ub)
+ 	mutex_lock(&ub->mutex);
+ 	ublk_stop_dev_unlocked(ub);
+ 	mutex_unlock(&ub->mutex);
++	flush_work(&ub->partition_scan_work);
+ 	ublk_cancel_dev(ub);
  }
  
- static int ublk_init_queue(struct ublk_device *ub, int q_id)
- {
--	struct ublk_queue *ubq = ublk_get_queue(ub, q_id);
-+	int depth = ub->dev_info.queue_depth;
-+	int ubq_size = sizeof(struct ublk_queue) + depth * sizeof(struct ublk_io);
- 	gfp_t gfp_flags = GFP_KERNEL | __GFP_ZERO;
--	void *ptr;
-+	struct ublk_queue *ubq;
-+	struct page *page;
-+	int numa_node;
- 	int size;
+@@ -3023,9 +3039,17 @@ static int ublk_ctrl_start_dev(struct ublk_device *ub,
  
-+	/* Determine NUMA node based on queue's CPU affinity */
-+	numa_node = ublk_get_queue_numa_node(ub, q_id);
+ 	ublk_apply_params(ub);
+ 
+-	/* don't probe partitions if any daemon task is un-trusted */
+-	if (ub->unprivileged_daemons)
+-		set_bit(GD_SUPPRESS_PART_SCAN, &disk->state);
++	/*
++	 * Suppress partition scan to avoid potential IO hang.
++	 *
++	 * If ublk server error occurs during partition scan, the IO may
++	 * wait while holding ub->mutex, which can deadlock with other
++	 * operations that need the mutex. Defer partition scan to async
++	 * work.
++	 * For unprivileged daemons, keep GD_SUPPRESS_PART_SCAN set
++	 * permanently.
++	 */
++	set_bit(GD_SUPPRESS_PART_SCAN, &disk->state);
+ 
+ 	ublk_get_device(ub);
+ 	ub->dev_info.state = UBLK_S_DEV_LIVE;
+@@ -3042,6 +3066,10 @@ static int ublk_ctrl_start_dev(struct ublk_device *ub,
+ 
+ 	set_bit(UB_STATE_USED, &ub->state);
+ 
++	/* Schedule async partition scan for trusted daemons */
++	if (!ub->unprivileged_daemons)
++		schedule_work(&ub->partition_scan_work);
 +
-+	/* Allocate queue structure on local NUMA node */
-+	ubq = kvzalloc_node(ubq_size, GFP_KERNEL, numa_node);
-+	if (!ubq)
-+		return -ENOMEM;
-+
- 	spin_lock_init(&ubq->cancel_lock);
- 	ubq->flags = ub->dev_info.flags;
- 	ubq->q_id = q_id;
--	ubq->q_depth = ub->dev_info.queue_depth;
-+	ubq->q_depth = depth;
- 	size = ublk_queue_cmd_buf_size(ub);
- 
--	ptr = (void *) __get_free_pages(gfp_flags, get_order(size));
--	if (!ptr)
-+	/* Allocate I/O command buffer on local NUMA node */
-+	page = alloc_pages_node(numa_node, gfp_flags, get_order(size));
-+	if (!page) {
-+		kvfree(ubq);
- 		return -ENOMEM;
-+	}
-+	ubq->io_cmd_buf = page_address(page);
- 
--	ubq->io_cmd_buf = ptr;
-+	ub->queues[q_id] = ubq;
- 	ubq->dev = ub;
- 	return 0;
- }
- 
- static void ublk_deinit_queues(struct ublk_device *ub)
- {
--	int nr_queues = ub->dev_info.nr_hw_queues;
- 	int i;
- 
--	if (!ub->__queues)
--		return;
--
--	for (i = 0; i < nr_queues; i++)
-+	for (i = 0; i < ub->dev_info.nr_hw_queues; i++)
- 		ublk_deinit_queue(ub, i);
--	kvfree(ub->__queues);
- }
- 
- static int ublk_init_queues(struct ublk_device *ub)
- {
--	int nr_queues = ub->dev_info.nr_hw_queues;
--	int depth = ub->dev_info.queue_depth;
--	int ubq_size = sizeof(struct ublk_queue) + depth * sizeof(struct ublk_io);
--	int i, ret = -ENOMEM;
-+	int i, ret;
- 
--	ub->queue_size = ubq_size;
--	ub->__queues = kvcalloc(nr_queues, ubq_size, GFP_KERNEL);
--	if (!ub->__queues)
--		return ret;
--
--	for (i = 0; i < nr_queues; i++) {
--		if (ublk_init_queue(ub, i))
-+	for (i = 0; i < ub->dev_info.nr_hw_queues; i++) {
-+		ret = ublk_init_queue(ub, i);
-+		if (ret)
- 			goto fail;
- 	}
- 
-@@ -3179,7 +3201,7 @@ static int ublk_ctrl_add_dev(const struct ublksrv_ctrl_cmd *header)
- 		goto out_unlock;
- 
- 	ret = -ENOMEM;
--	ub = kzalloc(sizeof(*ub), GFP_KERNEL);
-+	ub = kzalloc(struct_size(ub, queues, info.nr_hw_queues), GFP_KERNEL);
- 	if (!ub)
- 		goto out_unlock;
+ out_put_cdev:
+ 	if (ret) {
+ 		ublk_detach_disk(ub);
+@@ -3207,6 +3235,7 @@ static int ublk_ctrl_add_dev(const struct ublksrv_ctrl_cmd *header)
  	mutex_init(&ub->mutex);
+ 	spin_lock_init(&ub->lock);
+ 	mutex_init(&ub->cancel_mutex);
++	INIT_WORK(&ub->partition_scan_work, ublk_partition_scan_work);
+ 
+ 	ret = ublk_alloc_dev_number(ub, header->dev_id);
+ 	if (ret < 0)
 -- 
 2.51.0
 
