@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288B834C9A1;
-	Tue,  6 Jan 2026 17:19:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F7F34C9A1;
+	Tue,  6 Jan 2026 17:19:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719988; cv=none; b=RuZbnuH/gIzdzPVOBaRbDtndsswtJkLfhMVyw1SwWDgDr8xPzCOkvi+Tye8A1CCqUp4G17rDPG42uxUzlp26PRs8ThRmf2w9WSqmFsGvThfZ5L19TT4XT1A2FbHq/X1QaDeu1pwxGIMr39yzVcVp5nkPlc3+tsyAski+pCDUOb4=
+	t=1767719991; cv=none; b=NS0pMk2QiEB7c88Da7z0Gql6iKkPNbdc4KviGfxwQ+hX4DjePStxdLpiilsJl8ovyN3nb/cStb0vpL5hi//6426CrqbE4vSpqhl29tEXZoqwtEJIcm34uDOrnZXYdJ2pD+ID3D7dAaH3E8eEj4Mu2beuXHm5sbx8HYjcaPs8HSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719988; c=relaxed/simple;
-	bh=zIbYNmd2fS4Y6UViDAur1tjKxrOlvXLeS9mZJkOIXdU=;
+	s=arc-20240116; t=1767719991; c=relaxed/simple;
+	bh=5pIwRzWNV0Yq6YPi/nW0ZcyjH6VeMgvYA6Idu+oMr7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SOLjFq8rylhAS5dohm5AT5t0j+wG5uGbsCaCECkeiHF3EAb3gIYUPOVAiU369JrVNzWYE6QKVZrzlAnGerDpaIfjebzIEQ/ieqFRUgaYxlAWu01ARw7SNf1qZzaYavAWycU45V3fNu6JMAdHOuxlR2E6uZ/Z6FWPfzlCgwRiIBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IU9PZvsK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fQeNIFx5zctPCHe0TA/in3VHv20GI+nEh3yl4EzNdgk7hgzo/MrjPBKbYzUr6unvfvaTO4rmaA26X0JZ19FDkwQFvDHTLX0LG/n62oNGZu5oIZTopHGLww6+IvnNu0gJRmH4JUsr+JFv6xhxO7j5CKc/qMIGZDsN7aa/dnS+cZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aTLkYNmu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IU9PZvsK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F19DC116C6;
-	Tue,  6 Jan 2026 17:19:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aTLkYNmu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1003C116C6;
+	Tue,  6 Jan 2026 17:19:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719988;
-	bh=zIbYNmd2fS4Y6UViDAur1tjKxrOlvXLeS9mZJkOIXdU=;
+	s=korg; t=1767719991;
+	bh=5pIwRzWNV0Yq6YPi/nW0ZcyjH6VeMgvYA6Idu+oMr7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IU9PZvsK7dYhIQWYgG8Fk0LK3B8EZjHuLW54j+P3HJdBHJMTJhCKKPSaCXHYyQiRA
-	 TpttqK8G0SYtUtL6MTsDEFpDDQhVFoeIXmnQPunu8S8h1K36EprDmJSfnymExjQgJZ
-	 9WwYWuvEZ9AIVGev7Suv3RnbTxAgJJHAgu+YGyKQ=
+	b=aTLkYNmuMisBLcgGyPXowl7GOD97Xp4VPxr/I2Ce+/c4ADYmlssqEEwZg/r+tpbYR
+	 Epvs4esOD5V5Evyi+3MoCUhC/qg2xuf3bzUqG9J5a3b+NkpjziMBrimtyeHrMxOhOe
+	 EzzrlhxXaxya5608YPinZfVfI/Aa8ffC8evA5wB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Duoming Zhou <duoming@zju.edu.cn>,
+	Christoffer Sandberg <cs@tuxedo.de>,
+	Werner Sembach <wse@tuxedocomputers.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.12 099/567] Input: alps - fix use-after-free bugs caused by dev3_register_work
-Date: Tue,  6 Jan 2026 17:58:01 +0100
-Message-ID: <20260106170454.991275545@linuxfoundation.org>
+Subject: [PATCH 6.12 100/567] Input: i8042 - add TUXEDO InfinityBook Max Gen10 AMD to i8042 quirk table
+Date: Tue,  6 Jan 2026 17:58:02 +0100
+Message-ID: <20260106170455.028137365@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,61 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Christoffer Sandberg <cs@tuxedo.de>
 
-commit bf40644ef8c8a288742fa45580897ed0e0289474 upstream.
+commit aed3716db7fff74919cc5775ca3a80c8bb246489 upstream.
 
-The dev3_register_work delayed work item is initialized within
-alps_reconnect() and scheduled upon receipt of the first bare
-PS/2 packet from an external PS/2 device connected to the ALPS
-touchpad. During device detachment, the original implementation
-calls flush_workqueue() in psmouse_disconnect() to ensure
-completion of dev3_register_work. However, the flush_workqueue()
-in psmouse_disconnect() only blocks and waits for work items that
-were already queued to the workqueue prior to its invocation. Any
-work items submitted after flush_workqueue() is called are not
-included in the set of tasks that the flush operation awaits.
-This means that after flush_workqueue() has finished executing,
-the dev3_register_work could still be scheduled. Although the
-psmouse state is set to PSMOUSE_CMD_MODE in psmouse_disconnect(),
-the scheduling of dev3_register_work remains unaffected.
+The device occasionally wakes up from suspend with missing input on the
+internal keyboard and the following suspend attempt results in an instant
+wake-up. The quirks fix both issues for this device.
 
-The race condition can occur as follows:
-
-CPU 0 (cleanup path)     | CPU 1 (delayed work)
-psmouse_disconnect()     |
-  psmouse_set_state()    |
-  flush_workqueue()      | alps_report_bare_ps2_packet()
-  alps_disconnect()      |   psmouse_queue_work()
-    kfree(priv); // FREE | alps_register_bare_ps2_mouse()
-                         |   priv = container_of(work...); // USE
-                         |   priv->dev3 // USE
-
-Add disable_delayed_work_sync() in alps_disconnect() to ensure
-that dev3_register_work is properly canceled and prevented from
-executing after the alps_data structure has been deallocated.
-
-This bug is identified by static analysis.
-
-Fixes: 04aae283ba6a ("Input: ALPS - do not mix trackstick and external PS/2 mouse data")
-Cc: stable@kernel.org
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Link: https://patch.msgid.link/b57b0a9ccca51a3f06be141bfc02b9ffe69d1845.1765939397.git.duoming@zju.edu.cn
+Signed-off-by: Christoffer Sandberg <cs@tuxedo.de>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20251124203336.64072-1-wse@tuxedocomputers.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/alps.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/input/serio/i8042-acpipnpio.h |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/input/mouse/alps.c
-+++ b/drivers/input/mouse/alps.c
-@@ -2977,6 +2977,7 @@ static void alps_disconnect(struct psmou
- 
- 	psmouse_reset(psmouse);
- 	timer_shutdown_sync(&priv->timer);
-+	disable_delayed_work_sync(&priv->dev3_register_work);
- 	if (priv->dev2)
- 		input_unregister_device(priv->dev2);
- 	if (!IS_ERR_OR_NULL(priv->dev3))
+--- a/drivers/input/serio/i8042-acpipnpio.h
++++ b/drivers/input/serio/i8042-acpipnpio.h
+@@ -1169,6 +1169,13 @@ static const struct dmi_system_id i8042_
+ 		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
+ 					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
+ 	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "X5KK45xS_X5SP45xS"),
++		},
++		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
++					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
++	},
+ 	/*
+ 	 * A lot of modern Clevo barebones have touchpad and/or keyboard issues
+ 	 * after suspend fixable with the forcenorestore quirk.
 
 
