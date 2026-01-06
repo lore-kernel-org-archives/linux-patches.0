@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033D834CFD6;
-	Tue,  6 Jan 2026 17:20:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3450B34CFDC;
+	Tue,  6 Jan 2026 17:20:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720021; cv=none; b=PMRw+HI6GTtFaXkLzlHoDdBOnsIsYfoSLNsMQkCykKpkvhtbNy3D0y2JU0JT2H5/+BC9WkNxAvZ9vBAKHyX2PEcBYHAMYXprG1o26kvrM7DqPeVWnyEqBwaqfrgaochehWKuLmurVNijLrXjj7LbJX2K5ZjrPrvv6t2sJrI4mow=
+	t=1767720024; cv=none; b=NQpHs5pCTv8WdwN8Mlonu0od1RETwQqIBv7EWXFsgo6RnR+OqFqmhpsm2aHjHsr7nRWoEhYQQg+uIkB6F1n8sqXRNZyG9WNeq8tOMtxzfIJzp5C7hobZuNA9KgL610bHb9RoDr5I5r006MqJqQi8XoaVGGcjBZH6W8BO78MdYO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720021; c=relaxed/simple;
-	bh=dD3+Hs54T1oHQiGFq7qokp2Rpv1DcDqHYfE4rE1xNPM=;
+	s=arc-20240116; t=1767720024; c=relaxed/simple;
+	bh=CVYIoF8+wabA/BFK2n+AE3L+vFzk8N1BdOx8BIqgz48=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u0FxnQniVEQT6UBj51BDts1oUi1sY4MkPmZOh0poZ+hp+rEHbVrGuj6Rs9am0fHshpbx2uAs3gDbFnfbU28tjDazp2s+Jld1YR86iU4tji7Sk5Ky5IDNMSaJtfZIpHiAAo+TeC9VdGMaoqAOk19pEaG6H3vOiI4n30BpdnBdePA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c/KyXoZx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TXJD3Da5vXRkJKlblpEeV4PkCGKJD28KncMcIpoWb9ZRyRmPpRVxH8lo+SXw0RajssYQzfilLqugBxztM2ap1ZWc6+LYm8laUafXSyHt1AJcz7dFiUGn1b+mJJEciGgp3r6uSgvzmT8LI7k5VWDoBxFI2Ml/owHyB/LVWhKndxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CPYswXqS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c/KyXoZx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C603C116C6;
-	Tue,  6 Jan 2026 17:20:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CPYswXqS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97D83C116C6;
+	Tue,  6 Jan 2026 17:20:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720020;
-	bh=dD3+Hs54T1oHQiGFq7qokp2Rpv1DcDqHYfE4rE1xNPM=;
+	s=korg; t=1767720024;
+	bh=CVYIoF8+wabA/BFK2n+AE3L+vFzk8N1BdOx8BIqgz48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c/KyXoZxPj4Cnw1J5ptY7GT6TCAl7u4KomSFDl8W52dVcOB3dfqN8ulW4bmyNnyc/
-	 8AuqLpIjKd6/4DnYxVOafntLN8jnkGxFsOAfIZtjPY4iQRgj6CSPPT9IC2tugXnbAK
-	 ZvfFUL/ZrL/HS3DaEJVD9X56RZeyGV40w+vV00Uk=
+	b=CPYswXqSrgs1yOmV8886M4ohYuZWPvLLQzh/qcL3B1glV4hHR0Yf/px9607LGo/a/
+	 cNwPrMs9RZQucxyWPt61V9k5e7cCJT21QAaNtfRKqcKWFiDKnsyPaZUdCyrmp+xo8J
+	 F7w7h1dpiEz5hZ0RY574aSpf/XCdA34DkQpONP1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongxin Liu <yongxin.liu@windriver.com>,
-	Ingo Molnar <mingo@kernel.org>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 111/567] x86/fpu: Fix FPU state core dump truncation on CPUs with no extended xfeatures
-Date: Tue,  6 Jan 2026 17:58:13 +0100
-Message-ID: <20260106170455.435476784@linuxfoundation.org>
+Subject: [PATCH 6.12 112/567] ALSA: vxpocket: Fix resource leak in vxpocket_probe error path
+Date: Tue,  6 Jan 2026 17:58:14 +0100
+Message-ID: <20260106170455.471903387@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,51 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongxin Liu <yongxin.liu@windriver.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit c8161e5304abb26e6c0bec6efc947992500fa6c5 ]
+[ Upstream commit 2a03b40deacbd293ac9aed0f9b11197dad54fe5f ]
 
-Zero can be a valid value of num_records. For example, on Intel Atom x6425RE,
-only x87 and SSE are supported (features 0, 1), and fpu_user_cfg.max_features
-is 3. The for_each_extended_xfeature() loop only iterates feature 2, which is
-not enabled, so num_records = 0. This is valid and should not cause core dump
-failure.
+When vxpocket_config() fails, vxpocket_probe() returns the error code
+directly without freeing the sound card resources allocated by
+snd_card_new(), which leads to a memory leak.
 
-The issue is that dump_xsave_layout_desc() returns 0 for both genuine errors
-(dump_emit() failure) and valid cases (no extended features). Use negative
-return values for errors and only abort on genuine failures.
+Add proper error handling to free the sound card and clear the
+allocation bit when vxpocket_config() fails.
 
-Fixes: ba386777a30b ("x86/elf: Add a new FPU buffer layout info to x86 core files")
-Signed-off-by: Yongxin Liu <yongxin.liu@windriver.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://patch.msgid.link/20251210000219.4094353-2-yongxin.liu@windriver.com
+Fixes: 15b99ac17295 ("[PATCH] pcmcia: add return value to _config() functions")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20251215042652.695-1-vulab@iscas.ac.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/fpu/xstate.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/pcmcia/vx/vxpocket.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/fpu/xstate.c b/arch/x86/kernel/fpu/xstate.c
-index 22abb5ee0cf2..aacb59c4a35c 100644
---- a/arch/x86/kernel/fpu/xstate.c
-+++ b/arch/x86/kernel/fpu/xstate.c
-@@ -1879,7 +1879,7 @@ static int dump_xsave_layout_desc(struct coredump_params *cprm)
- 		};
+diff --git a/sound/pcmcia/vx/vxpocket.c b/sound/pcmcia/vx/vxpocket.c
+index d2d5f64d63b4..e1f5b8cfeef0 100644
+--- a/sound/pcmcia/vx/vxpocket.c
++++ b/sound/pcmcia/vx/vxpocket.c
+@@ -284,7 +284,13 @@ static int vxpocket_probe(struct pcmcia_device *p_dev)
  
- 		if (!dump_emit(cprm, &xc, sizeof(xc)))
--			return 0;
-+			return -1;
+ 	vxp->p_dev = p_dev;
  
- 		num_records++;
- 	}
-@@ -1917,7 +1917,7 @@ int elf_coredump_extra_notes_write(struct coredump_params *cprm)
- 		return 1;
+-	return vxpocket_config(p_dev);
++	err = vxpocket_config(p_dev);
++	if (err < 0) {
++		card_alloc &= ~(1 << i);
++		snd_card_free(card);
++		return err;
++	}
++	return 0;
+ }
  
- 	num_records = dump_xsave_layout_desc(cprm);
--	if (!num_records)
-+	if (num_records < 0)
- 		return 1;
- 
- 	/* Total size should be equal to the number of records */
+ static void vxpocket_detach(struct pcmcia_device *link)
 -- 
 2.51.0
 
