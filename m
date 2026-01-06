@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BDAC36A01B;
-	Tue,  6 Jan 2026 17:59:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB4AA36D51D;
+	Tue,  6 Jan 2026 17:59:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722375; cv=none; b=FwqRXD+ceyrc90YKp/yVm5iOQs8GHBqJJ6yDHKgmKtF/0BId2xz9L5u5cT18+n1/UYpMdCVj89nlKttPY2FUQzNMwj7XF6HBWQTwjbNfkkmwwm7giBB6srm9vIbgx9wPBhhoZwpb1bcmSDhrrogfEGPgbRtW1meox+FYv+qx/IQ=
+	t=1767722378; cv=none; b=touqLbWHOgURxWsQAAF6XmKYxJR8YsOdCq9ed4de8gj5SMDfEok/5s+lhyLYxmD4uPq38QFPjDtsVz8EqG16ess4uGu5lp4mujChi+wxkMiKvK2kNpHmlCYYB/88dcJYAXtT1TT1frTZmysV7DFqqRUnDgyNFWqwebGVTub6p04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722375; c=relaxed/simple;
-	bh=6DHn/Ry/HvxKA3GaTkY2tfNp8JRDS/J/WuFdBQJyDxc=;
+	s=arc-20240116; t=1767722378; c=relaxed/simple;
+	bh=uPXaqtXP10YTk/JppKOADjSTnxGJ20voo/e+1pSFArM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O1TLr/y32Mafs/Nrij/YKhdeQO6216mOtND2maxPIO/zKB2wk3zEi205T/r3GeE30t9EetoWOiNh4BMnAGq4oQS3lv7eSnJHIe4E/jLrWSkb5ujXAmy7HlBv/NQRVZGTA7Gjw7WbUnKWygyr1IAy2fdV1IiY+/9VmPgRvEnTzTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OzSaix36; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hFeYB0yL9aan8hiRN7Z3AhTMWMvhe+mq+uBgkHja1paTLoW9Z1JV7rHLJdzX09+xq4FYqYTHQdo6dGWpj4g3rVLTFSDCAv0upnMhFaVtAzQlWvrUOhd2OZtcK0G5IUxDD46VqwlkwfFS4IHp+cbt4si7SmdinGGKhKoN4qb7VJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yzVyKMLO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OzSaix36"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23985C116C6;
-	Tue,  6 Jan 2026 17:59:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yzVyKMLO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C4C1C116C6;
+	Tue,  6 Jan 2026 17:59:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722374;
-	bh=6DHn/Ry/HvxKA3GaTkY2tfNp8JRDS/J/WuFdBQJyDxc=;
+	s=korg; t=1767722377;
+	bh=uPXaqtXP10YTk/JppKOADjSTnxGJ20voo/e+1pSFArM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OzSaix36N6I9o/NkEyGG96y/erK1iVfMmEflb6ZIcBoKf3he6F7egZkx+B1udmybL
-	 cXE74wdS9z8uj0LDQMb7zgzKKjVG3g1JBbrBh8O7KErb+pUL1gP7WEenZnL5YCer12
-	 9Na0tja2PALzf8/w6/5nP5uqarlkCF/OJ3EmgQk4=
+	b=yzVyKMLORErCy/g/G3pc37OC4yGN9XINUBojqO7Ten0YwAwkHg+KRkN92qPQj0GLC
+	 a18AxyGx6EcnWXdGyzS2pJItAq00NGLPhK1lnfYKfpq34VgtLm80d/Dp2tioq+p2Eq
+	 XnGUALl2QmN45TnJY3PATdKNVcR5sawrgpyT7O9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Hengqi Chen <hengqi.chen@gmail.com>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.18 246/312] LoongArch: BPF: Zero-extend bpf_tail_call() index
-Date: Tue,  6 Jan 2026 18:05:20 +0100
-Message-ID: <20260106170556.749777939@linuxfoundation.org>
+Subject: [PATCH 6.18 247/312] LoongArch: BPF: Sign extend kfunc call arguments
+Date: Tue,  6 Jan 2026 18:05:21 +0100
+Message-ID: <20260106170556.785233169@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -52,14 +52,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Hengqi Chen <hengqi.chen@gmail.com>
 
-commit eb71f5c433e1c6dff089b315881dec40a88a7baf upstream.
+commit 3f5a238f24d7b75f9efe324d3539ad388f58536e upstream.
 
-The bpf_tail_call() index should be treated as a u32 value. Let's
-zero-extend it to avoid calling wrong BPF progs. See similar fixes
-for x86 [1]) and arm64 ([2]) for more details.
-
-  [1]: https://github.com/torvalds/linux/commit/90caccdd8cc0215705f18b92771b449b01e2474a
-  [2]: https://github.com/torvalds/linux/commit/16338a9b3ac30740d49f5dfed81bac0ffa53b9c7
+The kfunc calls are native calls so they should follow LoongArch calling
+conventions. Sign extend its arguments properly to avoid kernel panic.
+This is done by adding a new emit_abi_ext() helper. The emit_abi_ext()
+helper performs extension in place meaning a value already store in the
+target register (Note: this is different from the existing sign_extend()
+helper and thus we can't reuse it).
 
 Cc: stable@vger.kernel.org
 Fixes: 5dc615520c4d ("LoongArch: Add BPF JIT support")
@@ -67,19 +67,69 @@ Signed-off-by: Hengqi Chen <hengqi.chen@gmail.com>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/net/bpf_jit.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/loongarch/net/bpf_jit.c |   16 ++++++++++++++++
+ arch/loongarch/net/bpf_jit.h |   26 ++++++++++++++++++++++++++
+ 2 files changed, 42 insertions(+)
 
 --- a/arch/loongarch/net/bpf_jit.c
 +++ b/arch/loongarch/net/bpf_jit.c
-@@ -280,6 +280,8 @@ static int emit_bpf_tail_call(struct jit
- 	 *	 goto out;
- 	 */
- 	tc_ninsn = insn ? ctx->offset[insn+1] - ctx->offset[insn] : ctx->offset[0];
-+	emit_zext_32(ctx, a2, true);
+@@ -952,6 +952,22 @@ static int build_insn(const struct bpf_i
+ 			emit_insn(ctx, ldd, REG_TCC, LOONGARCH_GPR_SP, tcc_ptr_off);
+ 		}
+ 
++		if (insn->src_reg == BPF_PSEUDO_KFUNC_CALL) {
++			const struct btf_func_model *m;
++			int i;
 +
- 	off = offsetof(struct bpf_array, map.max_entries);
- 	emit_insn(ctx, ldwu, t1, a1, off);
- 	/* bgeu $a2, $t1, jmp_offset */
++			m = bpf_jit_find_kfunc_model(ctx->prog, insn);
++			if (!m)
++				return -EINVAL;
++
++			for (i = 0; i < m->nr_args; i++) {
++				u8 reg = regmap[BPF_REG_1 + i];
++				bool sign = m->arg_flags[i] & BTF_FMODEL_SIGNED_ARG;
++
++				emit_abi_ext(ctx, reg, m->arg_size[i], sign);
++			}
++		}
++
+ 		move_addr(ctx, t1, func_addr);
+ 		emit_insn(ctx, jirl, LOONGARCH_GPR_RA, t1, 0);
+ 
+--- a/arch/loongarch/net/bpf_jit.h
++++ b/arch/loongarch/net/bpf_jit.h
+@@ -88,6 +88,32 @@ static inline void emit_sext_32(struct j
+ 	emit_insn(ctx, addiw, reg, reg, 0);
+ }
+ 
++/* Emit proper extension according to ABI requirements.
++ * Note that it requires a value of size `size` already resides in register `reg`.
++ */
++static inline void emit_abi_ext(struct jit_ctx *ctx, int reg, u8 size, bool sign)
++{
++	/* ABI requires unsigned char/short to be zero-extended */
++	if (!sign && (size == 1 || size == 2))
++		return;
++
++	switch (size) {
++	case 1:
++		emit_insn(ctx, extwb, reg, reg);
++		break;
++	case 2:
++		emit_insn(ctx, extwh, reg, reg);
++		break;
++	case 4:
++		emit_insn(ctx, addiw, reg, reg, 0);
++		break;
++	case 8:
++		break;
++	default:
++		pr_warn("bpf_jit: invalid size %d for extension\n", size);
++	}
++}
++
+ static inline void move_addr(struct jit_ctx *ctx, enum loongarch_gpr rd, u64 addr)
+ {
+ 	u64 imm_11_0, imm_31_12, imm_51_32, imm_63_52;
 
 
