@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0727A34D3B1;
-	Tue,  6 Jan 2026 17:20:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2507834D3B9;
+	Tue,  6 Jan 2026 17:20:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720044; cv=none; b=kgzPOvgoDgxoIjZzBF5TXJhMSslM1MfPKDrqGqOm34+KS8b1A4U4hxZ5lpUx0TF7IyVMYasfFy6LD/i1Fckm22j7OJRJCe6qfuL4d6eriyEKrAtYSX0DGOwgoOZvWmtT2vLTlNcjQ9FsvDwdcOm4W2/yyjgaXi/chc6MWswozEc=
+	t=1767720047; cv=none; b=s46N2NcIgh9RIP/NCOQYrtfG0HQ09gbDd6/VyW4MYpaIRCaGTd0Mt+y5sd76la1NQecj7zLnfa1i+eiI8PP1zHOOGBYqAemSXJs2T42s2TnZC/rmdALHtR/t3Nff5EB5YEKD69LCkN1oJeD/IbN98bU+MVQ3OaTt2Z5U35ARjcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720044; c=relaxed/simple;
-	bh=qans7hAB2rWX44ZzffgppZbRAXmg+/5XLGsTX1NhCwg=;
+	s=arc-20240116; t=1767720047; c=relaxed/simple;
+	bh=z1PS1wS8GTkgGDyhpZtoHmygKqiD0TxuyBkwoK2DwNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c55Z7ZPVoY0BYcNHRTacrJ2cY0g1pxmPztKS53BdCIfTIqpPfyrZ+1ttkJMJbC1EImxeuMgJ/XRM+yA8eCf8NyzKPK+RJ1N4Uwx63m8C8R5uGHYREWJkgaj4n5uR3QbGarE7SehvUQWtK42/hwguwdBIa+jdPUOUHG5KzNPtjX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xbC+v7Kr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Isdfpkv7h4ZenzHQNlzmzvwk+472f9QFNkMj4nJXoXW61lsA4SMkvnYFDXt59SMFuOkbHCW6UTxwfdArO56KOTaHsjsiF7XjQQ8cBonslC4cDyOMQOhdlcTMGoZxU871AdGFuxYeq/5oi2yaOCKI/sy7pF8HQd8JhQjMfO4ia8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G90tqYyU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xbC+v7Kr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E7C6C116C6;
-	Tue,  6 Jan 2026 17:20:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G90tqYyU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2424C116C6;
+	Tue,  6 Jan 2026 17:20:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720043;
-	bh=qans7hAB2rWX44ZzffgppZbRAXmg+/5XLGsTX1NhCwg=;
+	s=korg; t=1767720047;
+	bh=z1PS1wS8GTkgGDyhpZtoHmygKqiD0TxuyBkwoK2DwNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xbC+v7Kre8NWMgKjdrgXQ2yDfl5n+taTNSKe91eHbmQqJ1BIAh31btN00jeDPeMeK
-	 dwvzV3an45UmGPP6pLt2xadAf0HLY9xWWe5qQ3F9SZOw8BU7qqoGc8teao4rfKb136
-	 aeBhdmUenomUsGj3gFb7UOdMtcCmtgPhS+hOGK2g=
+	b=G90tqYyUXoweDH3eJCNo26+fNFXit1KzHMNZgZxcACPVPGrGQwJEhLZx65PL3OUff
+	 NDU/HjWq9+5+iXH7la4yodIITZLFS+epbe047rOLzbXiFJb7uW/cZ5eJqTwcPUtFXk
+	 nNHSX5V7V415McN+qJ41piBRkDqhTC2CvyE+6Pkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+099461f8558eb0a1f4f3@syzkaller.appspotmail.com,
-	Shardul Bankar <shardul.b@mpiricsoftware.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Jinhui Guo <guojinhui.liam@bytedance.com>,
+	Corey Minyard <corey@minyard.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 118/567] nfsd: fix memory leak in nfsd_create_serv error paths
-Date: Tue,  6 Jan 2026 17:58:20 +0100
-Message-ID: <20260106170455.694088661@linuxfoundation.org>
+Subject: [PATCH 6.12 119/567] ipmi: Fix the race between __scan_channels() and deliver_response()
+Date: Tue,  6 Jan 2026 17:58:21 +0100
+Message-ID: <20260106170455.731795405@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -53,62 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shardul Bankar <shardul.b@mpiricsoftware.com>
+From: Jinhui Guo <guojinhui.liam@bytedance.com>
 
-[ Upstream commit df8d829bba3adcf3cc744c01d933b6fd7cf06e91 ]
+[ Upstream commit 936750fdba4c45e13bbd17f261bb140dd55f5e93 ]
 
-When nfsd_create_serv() calls percpu_ref_init() to initialize
-nn->nfsd_net_ref, it allocates both a percpu reference counter
-and a percpu_ref_data structure (64 bytes). However, if the
-function fails later due to svc_create_pooled() returning NULL
-or svc_bind() returning an error, these allocations are not
-cleaned up, resulting in a memory leak.
+The race window between __scan_channels() and deliver_response() causes
+the parameters of some channels to be set to 0.
 
-The leak manifests as:
-- Unreferenced percpu allocation (8 bytes per CPU)
-- Unreferenced percpu_ref_data structure (64 bytes)
+1.[CPUA] __scan_channels() issues an IPMI request and waits with
+         wait_event() until all channels have been scanned.
+         wait_event() internally calls might_sleep(), which might
+         yield the CPU. (Moreover, an interrupt can preempt
+         wait_event() and force the task to yield the CPU.)
+2.[CPUB] deliver_response() is invoked when the CPU receives the
+         IPMI response. After processing a IPMI response,
+         deliver_response() directly assigns intf->wchannels to
+         intf->channel_list and sets intf->channels_ready to true.
+         However, not all channels are actually ready for use.
+3.[CPUA] Since intf->channels_ready is already true, wait_event()
+         never enters __wait_event(). __scan_channels() immediately
+         clears intf->null_user_handler and exits.
+4.[CPUB] Once intf->null_user_handler is set to NULL, deliver_response()
+         ignores further IPMI responses, leaving the remaining
+	 channels zero-initialized and unusable.
 
-Fix this by adding percpu_ref_exit() calls in both error paths
-to properly clean up the percpu_ref_init() allocations.
+CPUA                             CPUB
+-------------------------------  -----------------------------
+__scan_channels()
+ intf->null_user_handler
+       = channel_handler;
+ send_channel_info_cmd(intf,
+       0);
+ wait_event(intf->waitq,
+       intf->channels_ready);
+  do {
+   might_sleep();
+                                 deliver_response()
+                                  channel_handler()
+                                   intf->channel_list =
+				         intf->wchannels + set;
+                                   intf->channels_ready = true;
+                                   send_channel_info_cmd(intf,
+                                         intf->curr_channel);
+   if (condition)
+    break;
+   __wait_event(wq_head,
+          condition);
+  } while(0)
+ intf->null_user_handler
+       = NULL;
+                                 deliver_response()
+                                  if (!msg->user)
+                                   if (intf->null_user_handler)
+                                    rv = -EINVAL;
+                                  return rv;
+-------------------------------  -----------------------------
 
-This patch fixes the percpu_ref leak in nfsd_create_serv() seen
-as an auxiliary leak in syzbot report 099461f8558eb0a1f4f3; the
-prepare_creds() and vsock-related leaks in the same report
-remain to be addressed separately.
+Fix the race between __scan_channels() and deliver_response() by
+deferring both the assignment intf->channel_list = intf->wchannels
+and the flag intf->channels_ready = true until all channels have
+been successfully scanned or until the IPMI request has failed.
 
-Reported-by: syzbot+099461f8558eb0a1f4f3@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?extid=099461f8558eb0a1f4f3
-Fixes: 47e988147f40 ("nfsd: add nfsd_serv_try_get and nfsd_serv_put")
-Signed-off-by: Shardul Bankar <shardul.b@mpiricsoftware.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Jinhui Guo <guojinhui.liam@bytedance.com>
+Message-ID: <20250930074239.2353-2-guojinhui.liam@bytedance.com>
+Signed-off-by: Corey Minyard <corey@minyard.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfssvc.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/char/ipmi/ipmi_msghandler.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
-index 571a6ae90833..cc185c00e309 100644
---- a/fs/nfsd/nfssvc.c
-+++ b/fs/nfsd/nfssvc.c
-@@ -667,13 +667,16 @@ int nfsd_create_serv(struct net *net)
- 	serv = svc_create_pooled(nfsd_programs, ARRAY_SIZE(nfsd_programs),
- 				 &nn->nfsd_svcstats,
- 				 nfsd_max_blksize, nfsd);
--	if (serv == NULL)
-+	if (serv == NULL) {
-+		percpu_ref_exit(&nn->nfsd_net_ref);
- 		return -ENOMEM;
-+	}
+diff --git a/drivers/char/ipmi/ipmi_msghandler.c b/drivers/char/ipmi/ipmi_msghandler.c
+index 99fe01321971..29106325aba7 100644
+--- a/drivers/char/ipmi/ipmi_msghandler.c
++++ b/drivers/char/ipmi/ipmi_msghandler.c
+@@ -3414,8 +3414,6 @@ channel_handler(struct ipmi_smi *intf, struct ipmi_recv_msg *msg)
+ 			intf->channels_ready = true;
+ 			wake_up(&intf->waitq);
+ 		} else {
+-			intf->channel_list = intf->wchannels + set;
+-			intf->channels_ready = true;
+ 			rv = send_channel_info_cmd(intf, intf->curr_channel);
+ 		}
  
- 	serv->sv_maxconn = nn->max_connections;
- 	error = svc_bind(serv, net);
- 	if (error < 0) {
- 		svc_destroy(&serv);
-+		percpu_ref_exit(&nn->nfsd_net_ref);
- 		return error;
- 	}
- 	spin_lock(&nfsd_notifier_lock);
 -- 
 2.51.0
 
