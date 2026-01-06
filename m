@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163015695;
-	Tue,  6 Jan 2026 17:31:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A85A29B793;
+	Tue,  6 Jan 2026 17:31:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720713; cv=none; b=iIi598OPQqjyuYUrLTvX9tQ6HBh2Riy8KmdpUhka49dLtNGQmtVChjkpI6zkXR+durPqWJrCMLWPGwj7K96dnZdG5aFIW4/KUsm/jNzG6SeNDwNcHqwUqgTah+9Y023qWqyhTM803cBd50rdv9iiqug4xo2A6+T8XdLPmKxmOcA=
+	t=1767720716; cv=none; b=iYvOEe1gAy1AV9F6SeeswB4OghZFMG+t7kb8fJ6rxHT1uSaxOPWt5/OmzCy53xrjyqI42KSlRIxiUJgV+r7xsY1YSh9MC7KbKoYKRsrGLS6ImOpmZsrc6bjf3/ZVOx5MLH6czuPWNlWoZ5V4X0NVlhY3V3aPSrEYfb5VFVDHsxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720713; c=relaxed/simple;
-	bh=XeveiZBsCGxIL8S3/B/fezq4PUv8CGn7k69DBt7YUsg=;
+	s=arc-20240116; t=1767720716; c=relaxed/simple;
+	bh=DpMN6pnLc6ZE7WDJI9wkpxPKCEGiX+mmWlgLs5B2gew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kl3Rgf6hqhdQbrAigF/JGzc7/96CqIR3sdyopD3wU+R+mkOBtV3bR+9+j9up5tG7rF7ou2Ti+bQoDJw7ribhSHJ9Fk1UMOZ5Bg8sa9McGl+fS370fs6tGMpsD3XkvX0HeJb9M3VAeS5wvHYi5mwv0CViPPyK1BpSH9d9shc5riY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mlh/BB1J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=URue+sJUDMXWq2WOsvmvigGEsHVzymt/cQRIz/ZZEI3x7vB2CCOwTR+nbbVRsLcIKxOlIbxyPsDHvd96Es5cN2v3ulTcdMHtaQje7UXp7jP/p09glHPHhmo+b5daCTGDlAQc163IUGSgBHzteAvg4Am0PTyzeDPtS9M8h7Enobk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KKPb7YF1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mlh/BB1J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4582BC116C6;
-	Tue,  6 Jan 2026 17:31:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KKPb7YF1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA130C19424;
+	Tue,  6 Jan 2026 17:31:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720712;
-	bh=XeveiZBsCGxIL8S3/B/fezq4PUv8CGn7k69DBt7YUsg=;
+	s=korg; t=1767720716;
+	bh=DpMN6pnLc6ZE7WDJI9wkpxPKCEGiX+mmWlgLs5B2gew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mlh/BB1J2P8ztKWYsvCFtQi0mR8pAezJ/x/MHbqRZndAYT2+kwSltYipVhsJDuZov
-	 bWpU5daE4YV8ehe8ufR/Z40tbCXwrNP4UZovQbCD5DwpmJbPXa6s46BvpVeyvOavLQ
-	 msrP0xZWpOa3zkpCIf+uqMA2ZDBe6CCW+T8O+gG8=
+	b=KKPb7YF1afOFQvooDqX9e87D6d65ETEeVC7dE+tOZ+MtKax0dgTMGrvGEEAqfgqnD
+	 TqC0hrHNJdfbY03b35LZhL9Mz8nAq36IovEkEe65IX2jiLb2xcE6jWISqQfRvWdcXn
+	 Du6jr7Jo2zLYfSPGC0vyZfafaUbxjKaR8Lyff/lU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <hanguidong02@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.12 286/567] hwmon: (max16065) Use local variable to avoid TOCTOU
-Date: Tue,  6 Jan 2026 18:01:08 +0100
-Message-ID: <20260106170501.912385994@linuxfoundation.org>
+	Peter Griffin <peter.griffin@linaro.org>,
+	Johan Hovold <johan@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>
+Subject: [PATCH 6.12 277/567] soc: samsung: exynos-pmu: fix device leak on regmap lookup
+Date: Tue,  6 Jan 2026 18:00:59 +0100
+Message-ID: <20260106170501.573001955@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -50,51 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gui-Dong Han <hanguidong02@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit b8d5acdcf525f44e521ca4ef51dce4dac403dab4 upstream.
+commit 990eb9a8eb4540ab90c7b34bb07b87ff13881cad upstream.
 
-In max16065_current_show, data->curr_sense is read twice: once for the
-error check and again for the calculation. Since
-i2c_smbus_read_byte_data returns negative error codes on failure, if the
-data changes to an error code between the check and the use, ADC_TO_CURR
-results in an incorrect calculation.
+Make sure to drop the reference taken when looking up the PMU device and
+its regmap.
 
-Read data->curr_sense into a local variable to ensure consistency. Note
-that data->curr_gain is constant and safe to access directly.
+Note that holding a reference to a device does not prevent its regmap
+from going away so there is no point in keeping the reference.
 
-This aligns max16065_current_show with max16065_input_show, which
-already uses a local variable for the same reason.
-
-Link: https://lore.kernel.org/all/CALbr=LYJ_ehtp53HXEVkSpYoub+XYSTU8Rg=o1xxMJ8=5z8B-g@mail.gmail.com/
-Fixes: f5bae2642e3d ("hwmon: Driver for MAX16065 System Manager and compatibles")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
-Link: https://lore.kernel.org/r/20251128124709.3876-1-hanguidong02@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 0b7c6075022c ("soc: samsung: exynos-pmu: Add regmap support for SoCs that protect PMU regs")
+Cc: stable@vger.kernel.org	# 6.9
+Cc: Peter Griffin <peter.griffin@linaro.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20251121121852.16825-1-johan@kernel.org
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/max16065.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/soc/samsung/exynos-pmu.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/hwmon/max16065.c
-+++ b/drivers/hwmon/max16065.c
-@@ -216,12 +216,13 @@ static ssize_t max16065_current_show(str
- 				     struct device_attribute *da, char *buf)
- {
- 	struct max16065_data *data = max16065_update_device(dev);
-+	int curr_sense = data->curr_sense;
+--- a/drivers/soc/samsung/exynos-pmu.c
++++ b/drivers/soc/samsung/exynos-pmu.c
+@@ -322,6 +322,8 @@ struct regmap *exynos_get_pmu_regmap_by_
+ 	if (!dev)
+ 		return ERR_PTR(-EPROBE_DEFER);
  
--	if (unlikely(data->curr_sense < 0))
--		return data->curr_sense;
-+	if (unlikely(curr_sense < 0))
-+		return curr_sense;
- 
- 	return sysfs_emit(buf, "%d\n",
--			  ADC_TO_CURR(data->curr_sense, data->curr_gain));
-+			  ADC_TO_CURR(curr_sense, data->curr_gain));
++	put_device(dev);
++
+ 	return syscon_node_to_regmap(pmu_np);
  }
- 
- static ssize_t max16065_limit_store(struct device *dev,
+ EXPORT_SYMBOL_GPL(exynos_get_pmu_regmap_by_phandle);
 
 
