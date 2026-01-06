@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DAF21773D;
-	Tue,  6 Jan 2026 17:31:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F061027F754;
+	Tue,  6 Jan 2026 17:31:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720689; cv=none; b=Jgli0L5HscY9IQPgp/9eZqpKrvGXsvrKNOm8MLZfBAwoqTqwsdZhRYQRZ8f4rJN6vO1d/8rlWthGlBUp41EC4f+opQ+m7/AsKP/3XP2NGllg5jkDgrVSihgZRo6vVWvTEABO6D8ktRKgyYpUawThpaYSIEWcPWlUEPKPEUIceEs=
+	t=1767720693; cv=none; b=dciduRIswTMRhEWz0up2BbAnO/ijMYrIOFbe9KJkZ2gnPCuLOVmKaZY1k1GEIxsEeCGgdDEHcR5NtkZa/T9M2+Px4UR0ZrTds28WSaA/d52+5+TV++UyBZRW0IdfLNyQNkmXFiDivC4qTDqm4CCfqpDhqo67y8+sfQpF4nfHZ1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720689; c=relaxed/simple;
-	bh=3U+hFKLvzchIxaBzCCn9wmleXZ60OJabWHO73oyWK9o=;
+	s=arc-20240116; t=1767720693; c=relaxed/simple;
+	bh=UnpzAm7g1jJIcaWC7gBCswZ2g9XpPf0bN3Ve8IKlqMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jpBBm90mth5ODuXvF14zZgXhRBdGxLgJPJgCq5lkKCGHxZvqkoPXGxiV1rbomufyXpYz2vWmmFsn2wfdJQsi1a2prXNrdEtB3DLobi7QEy8JvR4nYfArg4etmdZ1fF8dJ4Wloav1YzXwuV289bhyvDtNJmN17NMnGVIsOMgm8Jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=To/5Yxe7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZonddjMDfuYnCOYKJddyXmqon3+5GYBvJLdZU1Rq2hjEXCVD8Xl7uCwFCuP/CfiyGf5rc9H/vLNR3YJV6TcFa8vnFKS4gujeJaeqayQLnyVmENoVIFkHuhAGQ9OxpnyyR69iM15qtGcl36rPnlEXZA9gt2WEsLS5CxVTHESbpEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CiP9z71h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="To/5Yxe7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35FD4C116C6;
-	Tue,  6 Jan 2026 17:31:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CiP9z71h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64B9FC116C6;
+	Tue,  6 Jan 2026 17:31:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720689;
-	bh=3U+hFKLvzchIxaBzCCn9wmleXZ60OJabWHO73oyWK9o=;
+	s=korg; t=1767720692;
+	bh=UnpzAm7g1jJIcaWC7gBCswZ2g9XpPf0bN3Ve8IKlqMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=To/5Yxe7wgUE0VdK4qLeYn/E4ujjtzvDn3OBg33ywi8vohfYMkBeEW2a7Ka2L3T/s
-	 VUkzSZM2V6Vl7NZUp+bgYcIcF0KWIexN7Uwx+ZUNGH8xS+iMQz+4S1CyeusnAW6qru
-	 XkDdlag5F0RMhrNFu7AsgVqE8qI9kCe2DceX3wGE=
+	b=CiP9z71ho9FHrDfEBkEDNBDMjB38RFmhZ/XQYkVha3o1gZp9P2BZ3PhGukOZDxukR
+	 Lh+lYgQGp3j+3mGs6ibFw+wfN+fYSzkClrbZ1J9CHpJ5BrXhbF3R+ssDn+syGjL2t7
+	 Tq5pdzJIp1hb568Api+KKiWe8ElDp/crKcxffiOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Raju Rangoju <Raju.Rangoju@amd.com>,
+	Simon Horman <horms@kernel.org>,
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 311/567] net: dsa: fix missing put_device() in dsa_tree_find_first_conduit()
-Date: Tue,  6 Jan 2026 18:01:33 +0100
-Message-ID: <20260106170502.832841196@linuxfoundation.org>
+Subject: [PATCH 6.12 312/567] amd-xgbe: reset retries and mode on RX adapt failures
+Date: Tue,  6 Jan 2026 18:01:34 +0100
+Message-ID: <20260106170502.869247439@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,100 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Raju Rangoju <Raju.Rangoju@amd.com>
 
-[ Upstream commit a9f96dc59b4a50ffbf86158f315e115969172d48 ]
+[ Upstream commit df60c332caf95d70f967aeace826e7e2f0847361 ]
 
-of_find_net_device_by_node() searches net devices by their /sys/class/net/,
-entry. It is documented in its kernel-doc that:
+During the stress tests, early RX adaptation handshakes can fail, such
+as missing the RX_ADAPT ACK or not receiving a coefficient update before
+block lock is established. Continuing to retry RX adaptation in this
+state is often ineffective if the current mode selection is not viable.
 
- * If successful, returns a pointer to the net_device with the embedded
- * struct device refcount incremented by one, or NULL on failure. The
- * refcount must be dropped when done with the net_device.
+Resetting the RX adaptation retry counter when an RX_ADAPT request fails
+to receive ACK or a coefficient update prior to block lock, and clearing
+mode_set so the next bring-up performs a fresh mode selection rather
+than looping on a likely invalid configuration.
 
-We are missing a put_device(&conduit->dev) which we could place at the
-end of dsa_tree_find_first_conduit(). But to explain why calling
-put_device() right away is safe is the same as to explain why the chosen
-solution is different.
-
-The code is very poorly split: dsa_tree_find_first_conduit() was first
-introduced in commit 95f510d0b792 ("net: dsa: allow the DSA master to be
-seen and changed through rtnetlink") but was first used several commits
-later, in commit acc43b7bf52a ("net: dsa: allow masters to join a LAG").
-
-Assume there is a switch with 2 CPU ports and 2 conduits, eno2 and eno3.
-When we create a LAG (bonding or team device) and place eno2 and eno3
-beneath it, we create a 3rd conduit (the LAG device itself), but this is
-slightly different than the first two.
-
-Namely, the cpu_dp->conduit pointer of the CPU ports does not change,
-and remains pointing towards the physical Ethernet controllers which are
-now LAG ports. Only 2 things change:
-- the LAG device has a dev->dsa_ptr which marks it as a DSA conduit
-- dsa_port_to_conduit(user port) finds the LAG and not the physical
-  conduit, because of the dp->cpu_port_in_lag bit being set.
-
-When the LAG device is destroyed, dsa_tree_migrate_ports_from_lag_conduit()
-is called and this is where dsa_tree_find_first_conduit() kicks in.
-
-This is the logical mistake and the reason why introducing code in one
-patch and using it from another is bad practice. I didn't realize that I
-don't have to call of_find_net_device_by_node() again; the cpu_dp->conduit
-association was never undone, and is still available for direct (re)use.
-There's only one concern - maybe the conduit disappeared in the
-meantime, but the netdev_hold() call we made during dsa_port_parse_cpu()
-(see previous change) ensures that this was not the case.
-
-Therefore, fixing the code means reimplementing it in the simplest way.
-
-I am blaming the time of use, since this is what "git blame" would show
-if we were to monitor for the conduit's kobject's refcount remaining
-elevated instead of being freed.
-
-Tested on the NXP LS1028A, using the steps from
-Documentation/networking/dsa/configuration.rst section "Affinity of user
-ports to CPU ports", followed by (extra prints added by me):
-
-$ ip link del bond0
-mscc_felix 0000:00:00.5 swp3: Link is Down
-bond0 (unregistering): (slave eno2): Releasing backup interface
-fsl_enetc 0000:00:00.2 eno2: Link is Down
-mscc_felix 0000:00:00.5 swp0: bond0 disappeared, migrating to eno2
-mscc_felix 0000:00:00.5 swp1: bond0 disappeared, migrating to eno2
-mscc_felix 0000:00:00.5 swp2: bond0 disappeared, migrating to eno2
-mscc_felix 0000:00:00.5 swp3: bond0 disappeared, migrating to eno2
-
-Fixes: acc43b7bf52a ("net: dsa: allow masters to join a LAG")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20251215150236.3931670-2-vladimir.oltean@nxp.com
+Fixes: 4f3b20bfbb75 ("amd-xgbe: add support for rx-adaptation")
+Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Link: https://patch.msgid.link/20251215151728.311713-1-Raju.Rangoju@amd.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dsa/dsa.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/dsa/dsa.c b/net/dsa/dsa.c
-index ac3a252969cb..97599e0d5a1d 100644
---- a/net/dsa/dsa.c
-+++ b/net/dsa/dsa.c
-@@ -366,16 +366,10 @@ static struct dsa_port *dsa_tree_find_first_cpu(struct dsa_switch_tree *dst)
- 
- struct net_device *dsa_tree_find_first_conduit(struct dsa_switch_tree *dst)
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
+index 32e633d11348..6d2c401bb246 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
+@@ -2036,6 +2036,7 @@ static void xgbe_set_rx_adap_mode(struct xgbe_prv_data *pdata,
  {
--	struct device_node *ethernet;
--	struct net_device *conduit;
- 	struct dsa_port *cpu_dp;
+ 	if (pdata->rx_adapt_retries++ >= MAX_RX_ADAPT_RETRIES) {
+ 		pdata->rx_adapt_retries = 0;
++		pdata->mode_set = false;
+ 		return;
+ 	}
  
- 	cpu_dp = dsa_tree_find_first_cpu(dst);
--	ethernet = of_parse_phandle(cpu_dp->dn, "ethernet", 0);
--	conduit = of_find_net_device_by_node(ethernet);
--	of_node_put(ethernet);
--
--	return conduit;
-+	return cpu_dp->conduit;
- }
- 
- /* Assign the default CPU port (the first one in the tree) to all ports of the
+@@ -2082,6 +2083,7 @@ static void xgbe_rx_adaptation(struct xgbe_prv_data *pdata)
+ 		 */
+ 		netif_dbg(pdata, link, pdata->netdev, "Block_lock done");
+ 		pdata->rx_adapt_done = true;
++		pdata->rx_adapt_retries = 0;
+ 		pdata->mode_set = false;
+ 		return;
+ 	}
 -- 
 2.51.0
 
