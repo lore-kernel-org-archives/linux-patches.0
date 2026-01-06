@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA75327C19;
-	Tue,  6 Jan 2026 18:02:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ECB03559C4;
+	Tue,  6 Jan 2026 18:02:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722538; cv=none; b=bNdtdcipo4Zxk8dTjh57SKrg/qwVJzFRVt8bCXqbK8xgb6HU+8tELbgJhhWyWpu+ry2FwXKDIAGxXqTxfyph4lDkbylbkdtXKaK3FMdJN8XDp28Udoa9rp2wh1yWK3E3PYcD9CBwT6Sl0GE+yBSgwJl4rOpAHfmcTeguDaG4FjM=
+	t=1767722542; cv=none; b=nzIbztjbIliAWq678x0nzYFFVsDnDvDEb6g1sJX9Yygm2ShVUNJeZqI8CEhK71UioPRa+UuHQBG1xzzTVDI8QZEu/CElCCM6m9K2Dss/sjDa5qF/cWO0QZdcJn95GS0aKhWn3mTAJrwf3FevTK3h9uOZ04VEk+lYqcfawB0dlus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722538; c=relaxed/simple;
-	bh=4Bg00wOdEOI5Oi3rbWlLIO1RqlV4Dx8lJP63q/XIe+c=;
+	s=arc-20240116; t=1767722542; c=relaxed/simple;
+	bh=2GRUWnoBu+POPtjH1/15m5iZdBlkuMLKQcAuwPvgj1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZWItPDz7kjpaX7qshFjrnXopEq0KSMfICFPhkS3aZPavIBxyq2l58D0Zge1Vaw9Wf+CSIpeHKS0N03EXCHRqORBrSH9QCfYhwAdoCjyYrcpigicKI/CUeqV9l6MtQ/skprBIf/9YrP4ROhHsL/PZfA4DElldAfHtxG3KscHObYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oV8Vrwp3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dp180PoYkyERQS3MQvmOJaWEo/UgjJENAC38OFjGKFTnYBf6q99ZOoD+gk4vHfKcHsA7M1NCpevqBHRzNrg9ZA1XSPukQxIcfRbiTL122IA2TpQF2uMBmlgxAhNhF0y4lq+o/PbDrUrL04kJyJSXUqu6ErKA2tZzzZBcfdBtxHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AnMocbJ8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oV8Vrwp3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F163BC116C6;
-	Tue,  6 Jan 2026 18:02:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AnMocbJ8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74A2FC116C6;
+	Tue,  6 Jan 2026 18:02:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722538;
-	bh=4Bg00wOdEOI5Oi3rbWlLIO1RqlV4Dx8lJP63q/XIe+c=;
+	s=korg; t=1767722541;
+	bh=2GRUWnoBu+POPtjH1/15m5iZdBlkuMLKQcAuwPvgj1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oV8Vrwp31z0ieDL7RxrZv2x6Wpqw1cQfUQLDoSg7ZCX5lmFcKlZ5udAWJqrWjtE7h
-	 CkAo/IDOHP5TNYN0bfbPKUWJ/g6ANJgupUSCtWSS7jGTYxLkcdlp4Z5JcyAS2JX0RA
-	 M7zEdlqn6SB2clnFxy8OAWP5SkHQX96IclOfXgzk=
+	b=AnMocbJ83loDiHblVOaQcwRFRGiHbm4od4mgCDfyx6UXimSLuIonSDFFpE6ddSR6g
+	 VCYIDOxu/hjvoa/jtHhG9kMOBRYGW/xn+YZbyln+9o6zmIt7d5WkqxnD2vBQqCz3R+
+	 DP4t4rm07ULFJJOcgY+Zy/kydIMASMsxcRJQRFts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Senna Tschudin <peter.senna@linux.intel.com>,
-	Ashutosh Dixit <ashutosh.dixit@intel.com>,
-	Harish Chegondi <harish.chegondi@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>
-Subject: [PATCH 6.18 294/312] drm/xe/eustall: Disallow 0 EU stall property values
-Date: Tue,  6 Jan 2026 18:06:08 +0100
-Message-ID: <20260106170558.491508407@linuxfoundation.org>
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>
+Subject: [PATCH 6.18 268/312] drm/msm/a6xx: Fix out of bound IO access in a6xx_get_gmu_registers
+Date: Tue,  6 Jan 2026 18:05:42 +0100
+Message-ID: <20260106170557.540416401@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -46,43 +45,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ashutosh Dixit <ashutosh.dixit@intel.com>
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 
-commit 3767ca4166ad42fa9e34269efeaf9f15995cd92d upstream.
+commit 779b68a5bf2764c8ed3aa800e41ba0d5d007e1e7 upstream.
 
-An EU stall property value of 0 is invalid and will cause a NPD.
+REG_A6XX_GMU_AO_AHB_FENCE_CTRL register falls under GMU's register
+range. So, use gmu_write() routines to write to this register.
 
-Reported-by: Peter Senna Tschudin <peter.senna@linux.intel.com>
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/6453
-Fixes: 1537ec85ebd7 ("drm/xe/uapi: Introduce API for EU stall sampling")
+Fixes: 1707add81551 ("drm/msm/a6xx: Add a6xx gpu state")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
-Reviewed-by: Harish Chegondi <harish.chegondi@intel.com>
-Link: https://patch.msgid.link/20251212061850.1565459-4-ashutosh.dixit@intel.com
-(cherry picked from commit 5bf763e908bf795da4ad538d21c1ec41f8021f76)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/688993/
+Message-ID: <20251118-kaana-gpu-support-v4-1-86eeb8e93fb6@oss.qualcomm.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_eu_stall.c |    2 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/xe/xe_eu_stall.c
-+++ b/drivers/gpu/drm/xe/xe_eu_stall.c
-@@ -290,7 +290,7 @@ static int xe_eu_stall_user_ext_set_prop
- 		return -EFAULT;
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+@@ -1255,7 +1255,7 @@ static void a6xx_get_gmu_registers(struc
+ 		return;
  
- 	if (XE_IOCTL_DBG(xe, ext.property >= ARRAY_SIZE(xe_set_eu_stall_property_funcs)) ||
--	    XE_IOCTL_DBG(xe, ext.pad))
-+	    XE_IOCTL_DBG(xe, !ext.property) || XE_IOCTL_DBG(xe, ext.pad))
- 		return -EINVAL;
+ 	/* Set the fence to ALLOW mode so we can access the registers */
+-	gpu_write(gpu, REG_A6XX_GMU_AO_AHB_FENCE_CTRL, 0);
++	gmu_write(&a6xx_gpu->gmu, REG_A6XX_GMU_AO_AHB_FENCE_CTRL, 0);
  
- 	idx = array_index_nospec(ext.property, ARRAY_SIZE(xe_set_eu_stall_property_funcs));
+ 	_a6xx_get_gmu_registers(gpu, a6xx_state, &a6xx_gmu_reglist[2],
+ 		&a6xx_state->gmu_registers[3], false);
 
 
