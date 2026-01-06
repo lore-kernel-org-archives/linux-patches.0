@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0F22366546;
-	Tue,  6 Jan 2026 18:00:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2DE366551;
+	Tue,  6 Jan 2026 18:00:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722435; cv=none; b=K5qPtw7KJJu7BYH2AoHHtZT+ZWVS/UyHXexv8jMaxUi0OmmOv5qJd4RNXts/GjAVHO+FS/5P0++49mJwuo7mxhUOo+GOwAV0zzpBEnYOTxF1tjOVwhmMPdTI39k7Q1p7kvookEwn3u56OBW+rdetdDx3znrpyYT1wS6TPW+rQFY=
+	t=1767722438; cv=none; b=l3CBPdOdSbibnOHUgmvC4RV7rbKbPKVBWs2b8mk/s831v1+iAxOhHFDrUiLRRluhEuimo+bf96u3We8zeKX2cpyjdfGGYL/5SmGYsidVEYs/h3pZLb5Ir3P9natH4dQADlrjxW7uyuLPM5mizPqteJCp+UWqvgBp9sx32vgCDqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722435; c=relaxed/simple;
-	bh=sB4W9KaDS4WKxbqvoTEHYOdVlrBrA/bRD1VXqiWGk4k=;
+	s=arc-20240116; t=1767722438; c=relaxed/simple;
+	bh=WfQArtvYuCYGbpdTK+oQog2PoT0RGJbC8xqbE+NhavM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ABci4AuslF2rNTbW+3J4jk4vIkjB4IHpu+tzeV0HVxTJh6dX4F7FqnJ1sgaDqP8F83aunWRi7Ch1076W7SFqkn3IF9ilGjjU1T4gVACad7adMFCfiS5EWf2qaTGTX2l0LK3NuL97VqWEtigb+JIspdmOykn84tfJuNakdQaZa+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YwzIPkHD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=maNvZr4N20r4+ueckaALyFoSVCJjBoEi3J8JSSqa4onTBqOnwwr0xfChb7yPIxjKe9k2cSgkKYn3oSrg6P4T0OXbk/O2avFbVJyVGG0aiScQY5MNN86dSecUM1c3pnAWlMPwTWOZrVCAiEkcfMKS8HxR7FgS18zTXCm6yj9xmiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U252y3DH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YwzIPkHD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14FC0C116C6;
-	Tue,  6 Jan 2026 18:00:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U252y3DH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 473DEC116C6;
+	Tue,  6 Jan 2026 18:00:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722435;
-	bh=sB4W9KaDS4WKxbqvoTEHYOdVlrBrA/bRD1VXqiWGk4k=;
+	s=korg; t=1767722438;
+	bh=WfQArtvYuCYGbpdTK+oQog2PoT0RGJbC8xqbE+NhavM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YwzIPkHD+LYbUiG2+hTIT2D/xDxS7JLFm827K2/84osQGoyRuuRFFVv2mi4UMAvYA
-	 683ntjWSBEBZn+3THp/Itus6hCJ7u17AuKeO63nT7SvzQTNvWfrNDvdwMuLlJoEYZd
-	 /w0GIiWdXpfeqntbs4mzujEtrkj2mikU+jTWYtM0=
+	b=U252y3DHGbFcgJfRMdWHQfciTUJM68/8rVSXHpuLO7sZa628z/pT2IX6iYa59CsqL
+	 6EiE/MbKAFv7hB/AredUbgrAKYCRCQ0oB3e4K93bt17F28OyvZ93qVdnigatWeID85
+	 /4/m4tOV2vLMS4lmam6j/3F5ooFgqizaLYDBDNgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Konstantin <answer2019@yandex.ru>,
-	Matthew Schwartz <matthew.schwartz@linux.dev>
-Subject: [PATCH 6.18 262/312] Revert "drm/amd: Skip power ungate during suspend for VPE"
-Date: Tue,  6 Jan 2026 18:05:36 +0100
-Message-ID: <20260106170557.325676747@linuxfoundation.org>
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.18 263/312] drm/amdgpu/gmc12: add amdgpu_vm_handle_fault() handling
+Date: Tue,  6 Jan 2026 18:05:37 +0100
+Message-ID: <20260106170557.361430085@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -46,57 +44,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello (AMD) <superm1@kernel.org>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 3925683515e93844be204381d2d5a1df5de34f31 upstream.
+commit ff28ff98db6a8eeb469e02fb8bd1647b353232a9 upstream.
 
-Skipping power ungate exposed some scenarios that will fail
-like below:
+We need to call amdgpu_vm_handle_fault() on page fault
+on all gfx9 and newer parts to properly update the
+page tables, not just for recoverable page faults.
 
-```
-amdgpu: Register(0) [regVPEC_QUEUE_RESET_REQ] failed to reach value 0x00000000 != 0x00000001n
-amdgpu 0000:c1:00.0: amdgpu: VPE queue reset failed
-...
-amdgpu: [drm] *ERROR* wait_for_completion_timeout timeout!
-```
-
-The underlying s2idle issue that prompted this commit is going to
-be fixed in BIOS.
-This reverts commit 2a6c826cfeedd7714611ac115371a959ead55bda.
-
-Fixes: 2a6c826cfeed ("drm/amd: Skip power ungate during suspend for VPE")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reported-by: Konstantin <answer2019@yandex.ru>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220812
-Reported-by: Matthew Schwartz <matthew.schwartz@linux.dev>
+Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gmc_v12_0.c |   27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -3416,11 +3416,10 @@ int amdgpu_device_set_pg_state(struct am
- 		    (adev->ip_blocks[i].version->type == AMD_IP_BLOCK_TYPE_GFX ||
- 		     adev->ip_blocks[i].version->type == AMD_IP_BLOCK_TYPE_SDMA))
- 			continue;
--		/* skip CG for VCE/UVD/VPE, it's handled specially */
-+		/* skip CG for VCE/UVD, it's handled specially */
- 		if (adev->ip_blocks[i].version->type != AMD_IP_BLOCK_TYPE_UVD &&
- 		    adev->ip_blocks[i].version->type != AMD_IP_BLOCK_TYPE_VCE &&
- 		    adev->ip_blocks[i].version->type != AMD_IP_BLOCK_TYPE_VCN &&
--		    adev->ip_blocks[i].version->type != AMD_IP_BLOCK_TYPE_VPE &&
- 		    adev->ip_blocks[i].version->type != AMD_IP_BLOCK_TYPE_JPEG &&
- 		    adev->ip_blocks[i].version->funcs->set_powergating_state) {
- 			/* enable powergating to save power */
+--- a/drivers/gpu/drm/amd/amdgpu/gmc_v12_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gmc_v12_0.c
+@@ -91,6 +91,8 @@ static int gmc_v12_0_process_interrupt(s
+ 				       struct amdgpu_iv_entry *entry)
+ {
+ 	struct amdgpu_vmhub *hub;
++	bool retry_fault = !!(entry->src_data[1] & 0x80);
++	bool write_fault = !!(entry->src_data[1] & 0x20);
+ 	uint32_t status = 0;
+ 	u64 addr;
+ 
+@@ -102,6 +104,31 @@ static int gmc_v12_0_process_interrupt(s
+ 	else
+ 		hub = &adev->vmhub[AMDGPU_GFXHUB(0)];
+ 
++	if (retry_fault) {
++		/* Returning 1 here also prevents sending the IV to the KFD */
++
++		/* Process it only if it's the first fault for this address */
++		if (entry->ih != &adev->irq.ih_soft &&
++		    amdgpu_gmc_filter_faults(adev, entry->ih, addr, entry->pasid,
++					     entry->timestamp))
++			return 1;
++
++		/* Delegate it to a different ring if the hardware hasn't
++		 * already done it.
++		 */
++		if (entry->ih == &adev->irq.ih) {
++			amdgpu_irq_delegate(adev, entry, 8);
++			return 1;
++		}
++
++		/* Try to handle the recoverable page faults by filling page
++		 * tables
++		 */
++		if (amdgpu_vm_handle_fault(adev, entry->pasid, 0, 0, addr,
++					   entry->timestamp, write_fault))
++			return 1;
++	}
++
+ 	if (!amdgpu_sriov_vf(adev)) {
+ 		/*
+ 		 * Issue a dummy read to wait for the status register to
 
 
