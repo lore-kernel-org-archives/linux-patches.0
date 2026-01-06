@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC34026E6F2;
-	Tue,  6 Jan 2026 17:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554EC26E6F2;
+	Tue,  6 Jan 2026 17:32:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720764; cv=none; b=mz4+uRr5f8AfI9vGGCjn/tMdD64u7AtQRX4KaCLKsqGyfAvcgVysIe4dfrkSdgpsYBixo9BkPW2t5RlvcmVeW1IXnct8rQjAH+FpRddJP3orkuDLxFGcvGsIY6VLWxHSQc3ns0oTV5mre4xmcfWXC/yEp1BQoR///UNUad2w1aU=
+	t=1767720767; cv=none; b=Rrn/UNPzlT+KttddFmszdXs5YYXcUhC84C8FT46fTgVVMjZnO/iC7l4tMqA+TT804hyVOpKBwroAOpt/fYK+XON7Iw6uAqDm+6O7suCuQy/dFHjE4bzaFhNscpTI69TqpoIXHhd9z+0628HE3vTT0335E+NFSBStqpCq6IYgmtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720764; c=relaxed/simple;
-	bh=ot7H3TL/zRGwKAshhUmzUbfZUFWshln/kz9XTi/TIuE=;
+	s=arc-20240116; t=1767720767; c=relaxed/simple;
+	bh=88MiveTsqZPAORNc6U6VyJ3RHxYQ65ecVqCGYRVxePs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QsUO7zTmNJxAYwAJzUqH2+G/YaiFlJ+6WXcaN5o0WkLy5Pj+4Gd7dMGrwUnMVjJlDfvX7G52eF9K1nI49MjDekMO0riKSgV+W9C9LTj3szuth7IE3K6XdMOaWBtgK7iVUInqkho5vf61nnqJdV+xKGPRCvPYtOa7ylxLJ9dyAvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWITg+zS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EtyaXxziwomJUofmGqH32vbZd41zzJf7Pa4KByMILlMPN4IcwKoxAjADQzEnL0zT5zMJS14hDEojFl/QFYiJbCEHrsOCM5l+8p8IpiwuZGrCzQjYyLST2Wrwg1FkxoEAune1Eo5GFa2teTp3T+8Dit/TMAAswjeNq+R5ljeHPNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LjTzdFCa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWITg+zS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BCD2C116C6;
-	Tue,  6 Jan 2026 17:32:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LjTzdFCa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA3F1C116C6;
+	Tue,  6 Jan 2026 17:32:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720763;
-	bh=ot7H3TL/zRGwKAshhUmzUbfZUFWshln/kz9XTi/TIuE=;
+	s=korg; t=1767720767;
+	bh=88MiveTsqZPAORNc6U6VyJ3RHxYQ65ecVqCGYRVxePs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dWITg+zSkfA/LjI5sVf1oeYduv0Jhvtt1KtENqPY4dc/YIKIwrYXgbC3suuRSSiDe
-	 Z4gwIAmDrqDocZYH+pNiqX/le7kjXc+KuJ4jZneBR3IvsWhoT9d9ToN5e5CX7OQvPT
-	 pDJsGayXF7jdxKzpM6pDWGWxzfFLpqTArJ8DkiGg=
+	b=LjTzdFCac/NrU8cmjRxWA/6XslDqgeMIaKrWB9bS6PKOAFzVQvM1hnMln8nchDEj2
+	 4VpoLcjtk0+OI5EF5HxdPPeRAlQzg/5hWEqqsRsizJ5J3TficGmebl4q2Pl5Iw2jLM
+	 Wgr/0fvg953XpN198SOl1ebZ90nmRoBAUSakz8P4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Parav Pandit <parav@nvidia.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 334/567] RDMA/core: always drop device refcount in ib_del_sub_device_and_put()
-Date: Tue,  6 Jan 2026 18:01:56 +0100
-Message-ID: <20260106170503.686277951@linuxfoundation.org>
+Subject: [PATCH 6.12 335/567] RDMA/bnxt_re: Fix IB_SEND_IP_CSUM handling in post_send
+Date: Tue,  6 Jan 2026 18:01:57 +0100
+Message-ID: <20260106170503.723262760@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -53,43 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit fa3c411d21ebc26ffd175c7256c37cefa35020aa ]
+[ Upstream commit f01765a2361323e78e3d91b1cb1d5527a83c5cf7 ]
 
-Since nldev_deldev() (introduced by commit 060c642b2ab8 ("RDMA/nldev: Add
-support to add/delete a sub IB device through netlink") grabs a reference
-using ib_device_get_by_index() before calling ib_del_sub_device_and_put(),
-we need to drop that reference before returning -EOPNOTSUPP error.
+The bnxt_re SEND path checks wr->send_flags to enable features such as
+IP checksum offload. However, send_flags is a bitmask and may contain
+multiple flags (e.g. IB_SEND_SIGNALED | IB_SEND_IP_CSUM), while the
+existing code uses a switch() statement that only matches when
+send_flags is exactly IB_SEND_IP_CSUM.
 
-Reported-by: syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=881d65229ca4f9ae8c84
-Fixes: bca51197620a ("RDMA/core: Support IB sub device with type "SMI"")
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Link: https://patch.msgid.link/80749a85-cbe2-460c-8451-42516013f9fa@I-love.SAKURA.ne.jp
-Reviewed-by: Parav Pandit <parav@nvidia.com>
+As a result, checksum offload is not enabled when additional SEND
+flags are present.
+
+Replace the switch() with a bitmask test:
+
+    if (wr->send_flags & IB_SEND_IP_CSUM)
+
+This ensures IP checksum offload is enabled correctly when multiple
+SEND flags are used.
+
+Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Link: https://patch.msgid.link/20251219093308.2415620-1-alok.a.tiwari@oracle.com
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/device.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
-index df2aa15a5bc9..bbc131737378 100644
---- a/drivers/infiniband/core/device.c
-+++ b/drivers/infiniband/core/device.c
-@@ -2823,8 +2823,10 @@ int ib_del_sub_device_and_put(struct ib_device *sub)
- {
- 	struct ib_device *parent = sub->parent;
- 
--	if (!parent)
-+	if (!parent) {
-+		ib_device_put(sub);
- 		return -EOPNOTSUPP;
-+	}
- 
- 	mutex_lock(&parent->subdev_lock);
- 	list_del(&sub->subdev_list);
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+index c2abf2bb8026..c1587845f280 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+@@ -2823,14 +2823,9 @@ int bnxt_re_post_send(struct ib_qp *ib_qp, const struct ib_send_wr *wr,
+ 				wqe.rawqp1.lflags |=
+ 					SQ_SEND_RAWETH_QP1_LFLAGS_ROCE_CRC;
+ 			}
+-			switch (wr->send_flags) {
+-			case IB_SEND_IP_CSUM:
++			if (wr->send_flags & IB_SEND_IP_CSUM)
+ 				wqe.rawqp1.lflags |=
+ 					SQ_SEND_RAWETH_QP1_LFLAGS_IP_CHKSUM;
+-				break;
+-			default:
+-				break;
+-			}
+ 			fallthrough;
+ 		case IB_WR_SEND_WITH_INV:
+ 			rc = bnxt_re_build_send_wqe(qp, wr, &wqe);
 -- 
 2.51.0
 
