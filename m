@@ -1,39 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C14D62E1C63;
-	Tue,  6 Jan 2026 17:46:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE0B2D23A6;
+	Tue,  6 Jan 2026 17:46:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721613; cv=none; b=j46WjlqIHblTrVfAFG2VWBq/ibnGgGlLbLJkJWuhruWqlCNJlwtOnSf9lbeBCFj1AvgCbdo9c6MoieqIipqrF8GGT4WSiLjofGbOH/3esBcvCQO6y0wf7cSxDZ/vSss3kFKnOq7/2UltMwkuMjSVFhxLXkd7YpO9iD5B4p0/b58=
+	t=1767721617; cv=none; b=R+LGltMeqOy/15bo9L4DVriOyk+V0pMOUYfMoE0w91wE9e4Rd5pYj+TtXeZ1F5IDmn5hCM9VltABvCh1zUK9Z5TJFm3hwxsUP7yKiCo/qS2yshoO8ih55DEDwnj+hgJSpHchYQYRFIhcsVsvsjqzLAhoOLkBe81+0tvY0mXlVLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721613; c=relaxed/simple;
-	bh=RTJHEFa2TrQ93qSzMdELueRlF8bYmL6PtbL1trPGOWw=;
+	s=arc-20240116; t=1767721617; c=relaxed/simple;
+	bh=/AB9+2nOEi0ZxhrXLJuqxhJbSITYy0dg3z2y/2R2mjY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wey9PfyJfkLzbz+xU71BGJs5jDgpJcxmQ1o3eNarVjAx5LeIQK3+AOtd8neBLjLclKDiItJx7bfnSvmdS0SUmf+3G4ri9yFVBWSBNNKhC79DtkHJ9X1GO9BKW3tT68tY9tCOVzEr4WMK78GP1ZP1FgWRgZ8algJ0gRnV9FHY4T8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kZmIBK6Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ia2Dn/m+FpuBVGR+nx1H8I/rlGp15YpI+yQCMT7oGmnAUHzE2agTRXqiKbtSGNTtQ8MwDQn8fHZzgwThmMmiIzGe7BOeEObryxu7sRQR0RpQehQFtiYmYqKakkfAdLjScGV2SfEG7qr201/0MUSFKk8IFjEkV6jhWGH12lOzWO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gG2GMWCV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kZmIBK6Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 307F5C116C6;
-	Tue,  6 Jan 2026 17:46:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gG2GMWCV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B224C116C6;
+	Tue,  6 Jan 2026 17:46:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721613;
-	bh=RTJHEFa2TrQ93qSzMdELueRlF8bYmL6PtbL1trPGOWw=;
+	s=korg; t=1767721617;
+	bh=/AB9+2nOEi0ZxhrXLJuqxhJbSITYy0dg3z2y/2R2mjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kZmIBK6QnmvFnukRFCRsnLAfKlQujbbSIKw3hTbjeAli4AVCpY+DXtqdZT69YNBkT
-	 kx/slU+jI5GNTJBahoykL9JzVjwNwIWkRgvp1AhRPX2aLgJR99v9gRle9xi0UyRLRe
-	 im4krv2sRj9/Uhc4Hj28zgZrNUBmKZ61yAE6EWUs=
+	b=gG2GMWCVu7h0NdpEjWBKJ+d5NWE9slwu3jDRnID7yXY+Aonbr1c0FALzj7Pi44+3Y
+	 N8U1YX9a1M8EWTdSCz1I9XOzrwBZoZ614zQYD2r5lIAChSJ0lSeKxvId827GNhnqFp
+	 zzigl3Q9Farvm5oB4mxA9533ATU2rIGloHDQ45F4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zqiang <qiang.zhang@linux.dev>,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>,
+	Wei Yang <richard.weiyang@gmail.com>,
+	Zi Yan <ziy@nvidia.com>,
+	"David Hildenbrand (Red Hat)" <david@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <baohua@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Nico Pache <npache@redhat.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 006/312] sched_ext: Fix incorrect sched_class settings for per-cpu migration tasks
-Date: Tue,  6 Jan 2026 18:01:20 +0100
-Message-ID: <20260106170548.071330598@linuxfoundation.org>
+Subject: [PATCH 6.18 007/312] mm/huge_memory: merge uniform_split_supported() and non_uniform_split_supported()
+Date: Tue,  6 Jan 2026 18:01:21 +0100
+Message-ID: <20260106170548.116358213@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -52,102 +61,183 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zqiang <qiang.zhang@linux.dev>
+From: Wei Yang <richard.weiyang@gmail.com>
 
-[ Upstream commit 1dd6c84f1c544e552848a8968599220bd464e338 ]
+[ Upstream commit 8a0e4bdddd1c998b894d879a1d22f1e745606215 ]
 
-When loading the ebpf scheduler, the tasks in the scx_tasks list will
-be traversed and invoke __setscheduler_class() to get new sched_class.
-however, this would also incorrectly set the per-cpu migration
-task's->sched_class to rt_sched_class, even after unload, the per-cpu
-migration task's->sched_class remains sched_rt_class.
+uniform_split_supported() and non_uniform_split_supported() share
+significantly similar logic.
 
-The log for this issue is as follows:
+The only functional difference is that uniform_split_supported() includes
+an additional check on the requested @new_order.
 
-./scx_rustland --stats 1
-[  199.245639][  T630] sched_ext: "rustland" does not implement cgroup cpu.weight
-[  199.269213][  T630] sched_ext: BPF scheduler "rustland" enabled
-04:25:09 [INFO] RustLand scheduler attached
+The reason for this check comes from the following two aspects:
 
-bpftrace -e 'iter:task /strcontains(ctx->task->comm, "migration")/
-{ printf("%s:%d->%pS\n", ctx->task->comm, ctx->task->pid, ctx->task->sched_class); }'
-Attaching 1 probe...
-migration/0:24->rt_sched_class+0x0/0xe0
-migration/1:27->rt_sched_class+0x0/0xe0
-migration/2:33->rt_sched_class+0x0/0xe0
-migration/3:39->rt_sched_class+0x0/0xe0
-migration/4:45->rt_sched_class+0x0/0xe0
-migration/5:52->rt_sched_class+0x0/0xe0
-migration/6:58->rt_sched_class+0x0/0xe0
-migration/7:64->rt_sched_class+0x0/0xe0
+  * some file system or swap cache just supports order-0 folio
+  * the behavioral difference between uniform/non-uniform split
 
-sched_ext: BPF scheduler "rustland" disabled (unregistered from user space)
-EXIT: unregistered from user space
-04:25:21 [INFO] Unregister RustLand scheduler
+The behavioral difference between uniform split and non-uniform:
 
-bpftrace -e 'iter:task /strcontains(ctx->task->comm, "migration")/
-{ printf("%s:%d->%pS\n", ctx->task->comm, ctx->task->pid, ctx->task->sched_class); }'
-Attaching 1 probe...
-migration/0:24->rt_sched_class+0x0/0xe0
-migration/1:27->rt_sched_class+0x0/0xe0
-migration/2:33->rt_sched_class+0x0/0xe0
-migration/3:39->rt_sched_class+0x0/0xe0
-migration/4:45->rt_sched_class+0x0/0xe0
-migration/5:52->rt_sched_class+0x0/0xe0
-migration/6:58->rt_sched_class+0x0/0xe0
-migration/7:64->rt_sched_class+0x0/0xe0
+  * uniform split splits folio directly to @new_order
+  * non-uniform split creates after-split folios with orders from
+    folio_order(folio) - 1 to new_order.
 
-This commit therefore generate a new scx_setscheduler_class() and
-add check for stop_sched_class to replace __setscheduler_class().
+This means for non-uniform split or !new_order split we should check the
+file system and swap cache respectively.
 
-Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
-Cc: stable@vger.kernel.org # v6.12+
-Signed-off-by: Zqiang <qiang.zhang@linux.dev>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-[ Adjust context ]
+This commit unifies the logic and merge the two functions into a single
+combined helper, removing redundant code and simplifying the split
+support checking mechanism.
+
+Link: https://lkml.kernel.org/r/20251106034155.21398-3-richard.weiyang@gmail.com
+Fixes: c010d47f107f ("mm: thp: split huge page to any lower order pages")
+Signed-off-by: Wei Yang <richard.weiyang@gmail.com>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: "David Hildenbrand (Red Hat)" <david@kernel.org>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Nico Pache <npache@redhat.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ split_type => uniform_split and replaced SPLIT_TYPE_NON_UNIFORM checks ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ include/linux/huge_mm.h |    8 ++---
+ mm/huge_memory.c        |   71 ++++++++++++++++++++----------------------------
+ 2 files changed, 33 insertions(+), 46 deletions(-)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -210,6 +210,14 @@ static struct scx_dispatch_q *find_user_
- 	return rhashtable_lookup_fast(&sch->dsq_hash, &dsq_id, dsq_hash_params);
+--- a/include/linux/huge_mm.h
++++ b/include/linux/huge_mm.h
+@@ -369,10 +369,8 @@ int split_huge_page_to_list_to_order(str
+ 		unsigned int new_order);
+ int min_order_for_split(struct folio *folio);
+ int split_folio_to_list(struct folio *folio, struct list_head *list);
+-bool uniform_split_supported(struct folio *folio, unsigned int new_order,
+-		bool warns);
+-bool non_uniform_split_supported(struct folio *folio, unsigned int new_order,
+-		bool warns);
++bool folio_split_supported(struct folio *folio, unsigned int new_order,
++		bool uniform_split, bool warns);
+ int folio_split(struct folio *folio, unsigned int new_order, struct page *page,
+ 		struct list_head *list);
+ /*
+@@ -392,7 +390,7 @@ int folio_split(struct folio *folio, uns
+ static inline int try_folio_split_to_order(struct folio *folio,
+ 		struct page *page, unsigned int new_order)
+ {
+-	if (!non_uniform_split_supported(folio, new_order, /* warns= */ false))
++	if (!folio_split_supported(folio, new_order, false, /* warns= */ false))
+ 		return split_huge_page_to_list_to_order(&folio->page, NULL,
+ 				new_order);
+ 	return folio_split(folio, new_order, page, NULL);
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -3515,8 +3515,8 @@ static int __split_unmapped_folio(struct
+ 	return ret;
  }
  
-+static const struct sched_class *scx_setscheduler_class(struct task_struct *p)
-+{
-+	if (p->sched_class == &stop_sched_class)
-+		return &stop_sched_class;
-+
-+	return __setscheduler_class(p->policy, p->prio);
-+}
-+
- /*
-  * scx_kf_mask enforcement. Some kfuncs can only be called from specific SCX
-  * ops. When invoking SCX ops, SCX_CALL_OP[_RET]() should be used to indicate
-@@ -3994,8 +4002,7 @@ static void scx_disable_workfn(struct kt
- 	scx_task_iter_start(&sti);
- 	while ((p = scx_task_iter_next_locked(&sti))) {
- 		const struct sched_class *old_class = p->sched_class;
--		const struct sched_class *new_class =
--			__setscheduler_class(p->policy, p->prio);
-+		const struct sched_class *new_class = scx_setscheduler_class(p);
- 		struct sched_enq_and_set_ctx ctx;
+-bool non_uniform_split_supported(struct folio *folio, unsigned int new_order,
+-		bool warns)
++bool folio_split_supported(struct folio *folio, unsigned int new_order,
++		bool uniform_split, bool warns)
+ {
+ 	if (folio_test_anon(folio)) {
+ 		/* order-1 is not supported for anonymous THP. */
+@@ -3524,48 +3524,41 @@ bool non_uniform_split_supported(struct
+ 				"Cannot split to order-1 folio");
+ 		if (new_order == 1)
+ 			return false;
+-	} else if (IS_ENABLED(CONFIG_READ_ONLY_THP_FOR_FS) &&
+-	    !mapping_large_folio_support(folio->mapping)) {
+-		/*
+-		 * No split if the file system does not support large folio.
+-		 * Note that we might still have THPs in such mappings due to
+-		 * CONFIG_READ_ONLY_THP_FOR_FS. But in that case, the mapping
+-		 * does not actually support large folios properly.
+-		 */
+-		VM_WARN_ONCE(warns,
+-			"Cannot split file folio to non-0 order");
+-		return false;
+-	}
+-
+-	/* Only swapping a whole PMD-mapped folio is supported */
+-	if (folio_test_swapcache(folio)) {
+-		VM_WARN_ONCE(warns,
+-			"Cannot split swapcache folio to non-0 order");
+-		return false;
+-	}
+-
+-	return true;
+-}
+-
+-/* See comments in non_uniform_split_supported() */
+-bool uniform_split_supported(struct folio *folio, unsigned int new_order,
+-		bool warns)
+-{
+-	if (folio_test_anon(folio)) {
+-		VM_WARN_ONCE(warns && new_order == 1,
+-				"Cannot split to order-1 folio");
+-		if (new_order == 1)
+-			return false;
+-	} else  if (new_order) {
++	} else if (!uniform_split || new_order) {
+ 		if (IS_ENABLED(CONFIG_READ_ONLY_THP_FOR_FS) &&
+ 		    !mapping_large_folio_support(folio->mapping)) {
++			/*
++			 * We can always split a folio down to a single page
++			 * (new_order == 0) uniformly.
++			 *
++			 * For any other scenario
++			 *   a) uniform split targeting a large folio
++			 *      (new_order > 0)
++			 *   b) any non-uniform split
++			 * we must confirm that the file system supports large
++			 * folios.
++			 *
++			 * Note that we might still have THPs in such
++			 * mappings, which is created from khugepaged when
++			 * CONFIG_READ_ONLY_THP_FOR_FS is enabled. But in that
++			 * case, the mapping does not actually support large
++			 * folios properly.
++			 */
+ 			VM_WARN_ONCE(warns,
+ 				"Cannot split file folio to non-0 order");
+ 			return false;
+ 		}
+ 	}
  
- 		if (old_class != new_class && p->se.sched_delayed)
-@@ -4779,8 +4786,7 @@ static int scx_enable(struct sched_ext_o
- 	scx_task_iter_start(&sti);
- 	while ((p = scx_task_iter_next_locked(&sti))) {
- 		const struct sched_class *old_class = p->sched_class;
--		const struct sched_class *new_class =
--			__setscheduler_class(p->policy, p->prio);
-+		const struct sched_class *new_class = scx_setscheduler_class(p);
- 		struct sched_enq_and_set_ctx ctx;
+-	if (new_order && folio_test_swapcache(folio)) {
++	/*
++	 * swapcache folio could only be split to order 0
++	 *
++	 * non-uniform split creates after-split folios with orders from
++	 * folio_order(folio) - 1 to new_order, making it not suitable for any
++	 * swapcache folio split. Only uniform split to order-0 can be used
++	 * here.
++	 */
++	if ((!uniform_split || new_order) && folio_test_swapcache(folio)) {
+ 		VM_WARN_ONCE(warns,
+ 			"Cannot split swapcache folio to non-0 order");
+ 		return false;
+@@ -3632,11 +3625,7 @@ static int __folio_split(struct folio *f
+ 	if (new_order >= folio_order(folio))
+ 		return -EINVAL;
  
- 		if (!tryget_task_struct(p))
+-	if (uniform_split && !uniform_split_supported(folio, new_order, true))
+-		return -EINVAL;
+-
+-	if (!uniform_split &&
+-	    !non_uniform_split_supported(folio, new_order, true))
++	if (!folio_split_supported(folio, new_order, uniform_split, /* warn = */ true))
+ 		return -EINVAL;
+ 
+ 	is_hzp = is_huge_zero_folio(folio);
 
 
