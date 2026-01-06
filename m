@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1783644C6;
-	Tue,  6 Jan 2026 17:53:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA593644AD;
+	Tue,  6 Jan 2026 17:53:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721981; cv=none; b=JaqFccrBkoh63ZxI9CDo7iubP7t4QQyPpOkIGfL4L2aD7KshDM4rW0pMUPw3hCBb0OiB8xLCWkNDFCSNrgozTSmXd+8wdgvvMCXiHBad0O8DDbZ5QyEIlhBgjb7nYpj/E/hIXG6CqIOitRIjpL5PNjM/3mcmydjfvBFtnCq6I5s=
+	t=1767721984; cv=none; b=FU0cRt1YvO2uINpUed6NaJ8PZA90sKmG6Y7dVddZqTuIttswpSxJKryrNR+M+uuicRh98DDqnPHincQgHMMscv5NcOU8x1kxgQNzIWlh4Uq5TLyNvkj9FBow9zeaTArnc8NwdnDWUoCQj8lfWHC751khVoZ4zSSpNCAi4Z+snxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721981; c=relaxed/simple;
-	bh=ADcnMSTJrPNPHujjBsuRalkCVYN94H/ElPsV4Kg85lM=;
+	s=arc-20240116; t=1767721984; c=relaxed/simple;
+	bh=Xa/tDtHAqJTNq86yD35E3MFZbHXMJO0zjqdv3bwoJ3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sWEy0lOr/YUBQwbJXBjxoqcwRZ0VqdW7cOp7zJ9bIiQ7aW0RuRgSb1aGyksbu699nb2QxgSs/UJ8yX129vrCpsLLtfG77aizceBDXDjIYkZQ/sFg3sRE+IvIjraU3kGcRmYhOcsF6x1C0S0EFV06uOfVITomKm5tO+sSqoyv3+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hOqbfi9O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OkQQz7rRXxIi8UGxgx0RuHnQo4i3obj13fF4E2aLd4H+DrEoP4vWii71i1GVYvCPbHC792v+w/Iowvwt27zqKAKTyvUvTp/XSxG+730C1Uvjkbhn6IlU+CzY7DaHe6JdWTdFln0YL9ccARWfnnSa5TgIwqqPW7lJZ6CYWHBcv3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WUKS9ldc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hOqbfi9O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E07EFC19424;
-	Tue,  6 Jan 2026 17:53:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUKS9ldc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FB27C116C6;
+	Tue,  6 Jan 2026 17:53:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721981;
-	bh=ADcnMSTJrPNPHujjBsuRalkCVYN94H/ElPsV4Kg85lM=;
+	s=korg; t=1767721984;
+	bh=Xa/tDtHAqJTNq86yD35E3MFZbHXMJO0zjqdv3bwoJ3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hOqbfi9ORDNT0zcA3FP5+VhH85UMBfzH4mRfdleLV8PDEta09PkFu1jegs/qcS957
-	 Km3GoeCyF2/JyeGDwu+eR5dEqCExS4Ip4UVVcJfsBnpHQ7q2Zxtun3qlxSqY74lBst
-	 wXfUS7uAmshXEE+Gz131vFiN3UT3XhL3PxA/Gd9A=
+	b=WUKS9ldcMUSLBM8WLeeoqczaMnIWzYFJHbhQgcHeerPpmISO9swmKEFbHMb4GA/yi
+	 eqhtvwPWJ58OhogA+9hSdE6ou47/YYPv1REDRVk00p0UuPBvIIl247Zgkhdx+ZkjcY
+	 BPozV7w1Acb3JgcLzuXR7PchMSWVMSrsXpE/6PBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	David Heidelberg <david@ixit.cz>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 097/312] ASoC: codecs: wcd937x: Fix error handling in wcd937x codec driver
-Date: Tue,  6 Jan 2026 18:02:51 +0100
-Message-ID: <20260106170551.349625202@linuxfoundation.org>
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Yipeng Zou <zouyipeng@huawei.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 088/312] selftests/ftrace: traceonoff_triggers: strip off names
+Date: Tue,  6 Jan 2026 18:02:42 +0100
+Message-ID: <20260106170551.020275805@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -51,140 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Yipeng Zou <zouyipeng@huawei.com>
 
-commit 578ccfe344c5f421c2c6343b872995b397ffd3ff upstream.
+[ Upstream commit b889b4fb4cbea3ca7eb9814075d6a51936394bd9 ]
 
-In wcd937x_bind(), the driver calls of_sdw_find_device_by_node() to
-obtain references to RX and TX SoundWire devices, which increment the
-device reference counts. However, the corresponding put_device() are
-missing in both the error paths and the normal unbind path in
-wcd937x_unbind().
+The func_traceonoff_triggers.tc sometimes goes to fail
+on my board, Kunpeng-920.
 
-Add proper error handling with put_device() calls in all error paths
-of wcd937x_bind() and ensure devices are released in wcd937x_unbind().
+[root@localhost]# ./ftracetest ./test.d/ftrace/func_traceonoff_triggers.tc -l fail.log
+=== Ftrace unit tests ===
+[1] ftrace - test for function traceon/off triggers     [FAIL]
+[2] (instance)  ftrace - test for function traceon/off triggers [UNSUPPORTED]
 
-Found by code review.
+I look up the log, and it shows that the md5sum is different between csum1 and csum2.
 
-Cc: stable@vger.kernel.org
-Fixes: 772ed12bd04e ("ASoC: codecs: wcdxxxx: use of_sdw_find_device_by_node helper")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Reviewed-by: David Heidelberg <david@ixit.cz>
-Link: https://patch.msgid.link/20251116061623.11830-1-make24@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+++ cnt=611
+++ sleep .1
++++ cnt_trace
++++ grep -v '^#' trace
++++ wc -l
+++ cnt2=611
+++ '[' 611 -ne 611 ']'
++++ cat tracing_on
+++ on=0
+++ '[' 0 '!=' 0 ']'
++++ md5sum trace
+++ csum1='76896aa74362fff66a6a5f3cf8a8a500  trace'
+++ sleep .1
++++ md5sum trace
+++ csum2='ee8625a21c058818fc26e45c1ed3f6de  trace'
+++ '[' '76896aa74362fff66a6a5f3cf8a8a500  trace' '!=' 'ee8625a21c058818fc26e45c1ed3f6de  trace' ']'
+++ fail 'Tracing file is still changing'
+++ echo Tracing file is still changing
+Tracing file is still changing
+++ exit_fail
+++ exit 1
+
+So I directly dump the trace file before md5sum, the diff shows that:
+
+[root@localhost]# diff trace_1.log trace_2.log -y --suppress-common-lines
+dockerd-12285   [036] d.... 18385.510290: sched_stat | <...>-12285   [036] d.... 18385.510290: sched_stat
+dockerd-12285   [036] d.... 18385.510291: sched_swit | <...>-12285   [036] d.... 18385.510291: sched_swit
+<...>-740       [044] d.... 18385.602859: sched_stat | kworker/44:1-740 [044] d.... 18385.602859: sched_stat
+<...>-740       [044] d.... 18385.602860: sched_swit | kworker/44:1-740 [044] d.... 18385.602860: sched_swit
+
+And we can see that <...> filed be filled with names.
+
+We can strip off the names there to fix that.
+
+After strip off the names:
+
+kworker/u257:0-12 [019] d..2.  2528.758910: sched_stat | -12 [019] d..2.  2528.758910: sched_stat_runtime: comm=k
+kworker/u257:0-12 [019] d..2.  2528.758912: sched_swit | -12 [019] d..2.  2528.758912: sched_switch: prev_comm=kw
+<idle>-0          [000] d.s5.  2528.762318: sched_waki | -0  [000] d.s5.  2528.762318: sched_waking: comm=sshd pi
+<idle>-0          [037] dNh2.  2528.762326: sched_wake | -0  [037] dNh2.  2528.762326: sched_wakeup: comm=sshd pi
+<idle>-0          [037] d..2.  2528.762334: sched_swit | -0  [037] d..2.  2528.762334: sched_switch: prev_comm=sw
+
+Link: https://lore.kernel.org/r/20230818013226.2182299-1-zouyipeng@huawei.com
+Fixes: d87b29179aa0 ("selftests: ftrace: Use md5sum to take less time of checking logs")
+Suggested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Yipeng Zou <zouyipeng@huawei.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wcd937x.c |   43 ++++++++++++++++++++++++++++++++++---------
- 1 file changed, 34 insertions(+), 9 deletions(-)
+ .../ftrace/test.d/ftrace/func_traceonoff_triggers.tc         | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/sound/soc/codecs/wcd937x.c
-+++ b/sound/soc/codecs/wcd937x.c
-@@ -2748,7 +2748,8 @@ static int wcd937x_bind(struct device *d
- 	wcd937x->rxdev = of_sdw_find_device_by_node(wcd937x->rxnode);
- 	if (!wcd937x->rxdev) {
- 		dev_err(dev, "could not find slave with matching of node\n");
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto err_component_unbind;
- 	}
+diff --git a/tools/testing/selftests/ftrace/test.d/ftrace/func_traceonoff_triggers.tc b/tools/testing/selftests/ftrace/test.d/ftrace/func_traceonoff_triggers.tc
+index aee22289536b..1b57771dbfdf 100644
+--- a/tools/testing/selftests/ftrace/test.d/ftrace/func_traceonoff_triggers.tc
++++ b/tools/testing/selftests/ftrace/test.d/ftrace/func_traceonoff_triggers.tc
+@@ -90,9 +90,10 @@ if [ $on != "0" ]; then
+     fail "Tracing is not off"
+ fi
  
- 	wcd937x->sdw_priv[AIF1_PB] = dev_get_drvdata(wcd937x->rxdev);
-@@ -2757,7 +2758,8 @@ static int wcd937x_bind(struct device *d
- 	wcd937x->txdev = of_sdw_find_device_by_node(wcd937x->txnode);
- 	if (!wcd937x->txdev) {
- 		dev_err(dev, "could not find txslave with matching of node\n");
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto err_put_rxdev;
- 	}
+-csum1=`md5sum trace`
++# Cannot rely on names being around as they are only cached, strip them
++csum1=`cat trace | sed -e 's/^ *[^ ]*\(-[0-9][0-9]*\)/\1/' | md5sum`
+ sleep $SLEEP_TIME
+-csum2=`md5sum trace`
++csum2=`cat trace | sed -e 's/^ *[^ ]*\(-[0-9][0-9]*\)/\1/' | md5sum`
  
- 	wcd937x->sdw_priv[AIF1_CAP] = dev_get_drvdata(wcd937x->txdev);
-@@ -2765,7 +2767,8 @@ static int wcd937x_bind(struct device *d
- 	wcd937x->tx_sdw_dev = dev_to_sdw_dev(wcd937x->txdev);
- 	if (!wcd937x->tx_sdw_dev) {
- 		dev_err(dev, "could not get txslave with matching of dev\n");
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto err_put_txdev;
- 	}
- 
- 	/*
-@@ -2775,31 +2778,35 @@ static int wcd937x_bind(struct device *d
- 	if (!device_link_add(wcd937x->rxdev, wcd937x->txdev,
- 			     DL_FLAG_STATELESS | DL_FLAG_PM_RUNTIME)) {
- 		dev_err(dev, "Could not devlink TX and RX\n");
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto err_put_txdev;
- 	}
- 
- 	if (!device_link_add(dev, wcd937x->txdev,
- 			     DL_FLAG_STATELESS | DL_FLAG_PM_RUNTIME)) {
- 		dev_err(dev, "Could not devlink WCD and TX\n");
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto err_remove_link1;
- 	}
- 
- 	if (!device_link_add(dev, wcd937x->rxdev,
- 			     DL_FLAG_STATELESS | DL_FLAG_PM_RUNTIME)) {
- 		dev_err(dev, "Could not devlink WCD and RX\n");
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto err_remove_link2;
- 	}
- 
- 	wcd937x->regmap = wcd937x->sdw_priv[AIF1_CAP]->regmap;
- 	if (!wcd937x->regmap) {
- 		dev_err(dev, "could not get TX device regmap\n");
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto err_remove_link3;
- 	}
- 
- 	ret = wcd937x_irq_init(wcd937x, dev);
- 	if (ret) {
- 		dev_err(dev, "IRQ init failed: %d\n", ret);
--		return ret;
-+		goto err_remove_link3;
- 	}
- 
- 	wcd937x->sdw_priv[AIF1_PB]->slave_irq = wcd937x->virq;
-@@ -2809,9 +2816,25 @@ static int wcd937x_bind(struct device *d
- 
- 	ret = snd_soc_register_component(dev, &soc_codec_dev_wcd937x,
- 					 wcd937x_dais, ARRAY_SIZE(wcd937x_dais));
--	if (ret)
-+	if (ret) {
- 		dev_err(dev, "Codec registration failed\n");
-+		goto err_remove_link3;
-+	}
-+
-+	return ret;
- 
-+err_remove_link3:
-+	device_link_remove(dev, wcd937x->rxdev);
-+err_remove_link2:
-+	device_link_remove(dev, wcd937x->txdev);
-+err_remove_link1:
-+	device_link_remove(wcd937x->rxdev, wcd937x->txdev);
-+err_put_txdev:
-+	put_device(wcd937x->txdev);
-+err_put_rxdev:
-+	put_device(wcd937x->rxdev);
-+err_component_unbind:
-+	component_unbind_all(dev, wcd937x);
- 	return ret;
- }
- 
-@@ -2825,6 +2848,8 @@ static void wcd937x_unbind(struct device
- 	device_link_remove(wcd937x->rxdev, wcd937x->txdev);
- 	component_unbind_all(dev, wcd937x);
- 	mutex_destroy(&wcd937x->micb_lock);
-+	put_device(wcd937x->txdev);
-+	put_device(wcd937x->rxdev);
- }
- 
- static const struct component_master_ops wcd937x_comp_ops = {
+ if [ "$csum1" != "$csum2" ]; then
+     fail "Tracing file is still changing"
+-- 
+2.51.0
+
 
 
