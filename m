@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1862634679C;
-	Tue,  6 Jan 2026 17:15:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 254CD346A02;
+	Tue,  6 Jan 2026 17:15:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719724; cv=none; b=A8nKO4jWWjoNnBdn5LRCiuQBuwcaFJWMxLtDinwRmLusna1En5z652co1XMMdnIsVm9R9dpfmwuv8JQLitAC/9QsrlL3nW0pqg4hYCBmnu6CtHgvNrm8Zen4aNjQL8hYyR4D0RiJFeJRqn0WR22ZBhNMU2HeVYGNQKFup710P3Y=
+	t=1767719727; cv=none; b=TmQ2D3nqfFEhbodLucHY+sV8ZS7CDcl1TgwoaZZICYvqDoMzUoinwHQp8LsghKD4qvKNoIEBx07F/Ay6p0rQqxa4RGvWiY64zQ9LzrJex4l1E4G+lNyPQUtFci5kNNN+YYJQPKzXMK4KHgywX6EkdA7672bInys27KxZrv5fQzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719724; c=relaxed/simple;
-	bh=kLQOaamVBlocJ8A7n225Htr2sPyD2TSY/EAaoaTY7sg=;
+	s=arc-20240116; t=1767719727; c=relaxed/simple;
+	bh=JVha160GrdinOkGQm+QbY8eYql8v/7Z0x5IWFw4d/EE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TjJLheqFZYVwK8GOLS0wUzcn7D+l1k+K+pZslTgCaEhKjnXYiIMCutuc0EidfJV7euSC8zQxjO6rS5kImPsuq19zL6mKaiATZPEY/4R2ZA/4Crcz3kX76bc1E98zfggdRv9hO2p/ib6OHaHAvsCm0GIrkuxSdOjdPqTJJIntmqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QYbRUKHb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UDuZe4Fil+EUD/gLGcSVTGf6WmB6Ln2QsmSSMbjZ/aK190/+T4z3LG7VqvAK+NNGw35+NLiC1B3KWYC3GYhjwMIIC4UCl2jyiDRH2yLGXuMOtTAMaar0QQNNbcGtUD6+WvWyKzxVje3zC7s6GZtw0OlJPipd5Y+6QN+BMCRooAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IdYhNcRq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QYbRUKHb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42623C116C6;
-	Tue,  6 Jan 2026 17:15:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IdYhNcRq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0DD6C19424;
+	Tue,  6 Jan 2026 17:15:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719723;
-	bh=kLQOaamVBlocJ8A7n225Htr2sPyD2TSY/EAaoaTY7sg=;
+	s=korg; t=1767719727;
+	bh=JVha160GrdinOkGQm+QbY8eYql8v/7Z0x5IWFw4d/EE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QYbRUKHbkSCqcqTpeoA80dCA7XqhEcVA3G7InyiDl2vfQuXmoy83E/7TLRUjsnnfO
-	 +13sxTMhIGp4tw/AKNfzirIo9DFEUeIGPxmb7qndH11+aqurUkdp1IEr822RO4pItl
-	 MFIsLkdBkceKFy8G18SJ6EvraVLNR1hph/Ij7TQI=
+	b=IdYhNcRqjOeVboSOociESKlDGThjtwPnpJs50ehRC+G97TyVuoctuXcfAw4dYv965
+	 S5B/nFmzfp4YXKHoU1wnMVbrzwCVOuyDgEeAPxeWmA4XEgQmXb9qGVlZQHBV2FG24b
+	 rBA+1jBfmR3jk+BwHgxDQFUzg071RZrE6b7l2fqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Mikhail Malyshev <mike.malyshev@gmail.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nsc@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 020/567] fs/ntfs3: Support timestamps prior to epoch
-Date: Tue,  6 Jan 2026 17:56:42 +0100
-Message-ID: <20260106170452.089768440@linuxfoundation.org>
+Subject: [PATCH 6.12 021/567] kbuild: Use objtree for module signing key path
+Date: Tue,  6 Jan 2026 17:56:43 +0100
+Message-ID: <20260106170452.128689037@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -50,41 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Mikhail Malyshev <mike.malyshev@gmail.com>
 
-[ Upstream commit 5180138604323895b5c291eca6aa7c20be494ade ]
+[ Upstream commit af61da281f52aba0c5b090bafb3a31c5739850ff ]
 
-Before it used an unsigned 64-bit type, which prevented proper handling
-of timestamps earlier than 1970-01-01. Switch to a signed 64-bit type to
-support pre-epoch timestamps. The issue was caught by xfstests.
+When building out-of-tree modules with CONFIG_MODULE_SIG_FORCE=y,
+module signing fails because the private key path uses $(srctree)
+while the public key path uses $(objtree). Since signing keys are
+generated in the build directory during kernel compilation, both
+paths should use $(objtree) for consistency.
 
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+This causes SSL errors like:
+  SSL error:02001002:system library:fopen:No such file or directory
+  sign-file: /kernel-src/certs/signing_key.pem
+
+The issue occurs because:
+- sig-key uses: $(srctree)/certs/signing_key.pem (source tree)
+- cmd_sign uses: $(objtree)/certs/signing_key.x509 (build tree)
+
+But both keys are generated in $(objtree) during the build.
+
+This complements commit 25ff08aa43e37 ("kbuild: Fix signing issue for
+external modules") which fixed the scripts path and public key path,
+but missed the private key path inconsistency.
+
+Fixes out-of-tree module signing for configurations with separate
+source and build directories (e.g., O=/kernel-out).
+
+Signed-off-by: Mikhail Malyshev <mike.malyshev@gmail.com>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Nicolas Schier <nsc@kernel.org>
+Link: https://patch.msgid.link/20251015163452.3754286-1-mike.malyshev@gmail.com
+Signed-off-by: Nicolas Schier <nsc@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/ntfs_fs.h | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ scripts/Makefile.modinst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
-index ff7f241a25b24..a1040060b081f 100644
---- a/fs/ntfs3/ntfs_fs.h
-+++ b/fs/ntfs3/ntfs_fs.h
-@@ -980,11 +980,12 @@ static inline __le64 kernel2nt(const struct timespec64 *ts)
-  */
- static inline void nt2kernel(const __le64 tm, struct timespec64 *ts)
- {
--	u64 t = le64_to_cpu(tm) - _100ns2seconds * SecondsToStartOf1970;
-+	s32 t32;
-+	/* use signed 64 bit to support timestamps prior to epoch. xfstest 258. */
-+	s64 t = le64_to_cpu(tm) - _100ns2seconds * SecondsToStartOf1970;
- 
--	// WARNING: do_div changes its first argument(!)
--	ts->tv_nsec = do_div(t, _100ns2seconds) * 100;
--	ts->tv_sec = t;
-+	ts->tv_sec = div_s64_rem(t, _100ns2seconds, &t32);
-+	ts->tv_nsec = t32 * 100;
- }
- 
- static inline struct ntfs_sb_info *ntfs_sb(struct super_block *sb)
+diff --git a/scripts/Makefile.modinst b/scripts/Makefile.modinst
+index d977209431898..5dd52788a042a 100644
+--- a/scripts/Makefile.modinst
++++ b/scripts/Makefile.modinst
+@@ -100,7 +100,7 @@ endif
+ # Don't stop modules_install even if we can't sign external modules.
+ #
+ ifeq ($(filter pkcs11:%, $(CONFIG_MODULE_SIG_KEY)),)
+-sig-key := $(if $(wildcard $(CONFIG_MODULE_SIG_KEY)),,$(srctree)/)$(CONFIG_MODULE_SIG_KEY)
++sig-key := $(if $(wildcard $(CONFIG_MODULE_SIG_KEY)),,$(objtree)/)$(CONFIG_MODULE_SIG_KEY)
+ else
+ sig-key := $(CONFIG_MODULE_SIG_KEY)
+ endif
 -- 
 2.51.0
 
