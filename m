@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80ED3288C2D;
-	Tue,  6 Jan 2026 17:38:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C658621B196;
+	Tue,  6 Jan 2026 17:38:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721125; cv=none; b=ut2ZfgfiwUYoTEZcxc41tb/Afiz3KPgyaBBshF2aH8QuoSw1K/ZLdxi/WFAyoDnHH5ocLNRYIctGWpKUBAMsca0IrQwLYgTXaIaGVJczCa49xsGXkfc3ZnIPWXz+xKY/0pnxMpEJ48GtCU84VFgSUCVFndFJE049HOUHCJxGNy8=
+	t=1767721128; cv=none; b=jUJn8vAxbib0H6XyMa+gJ9ohLDXjJ22H50uZgwt7Z/zgrmijAgD8iBFdaG/nnvnDQ2SYxNgt1mVGYO9OPTB38a8yuIItOMVzX/D4H6ZaFI6HeCO+43VUZWzfpEpj+WK1AY99KCpZ5gDfxgDcffp8v3YKIVXwYGHxlCYJuKgu9Fc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721125; c=relaxed/simple;
-	bh=Uv69icqC686xl+Cd06KSq/wj3meEfc3KbMjtOGa12Es=;
+	s=arc-20240116; t=1767721128; c=relaxed/simple;
+	bh=y2qZBTBJ16kbZOtPZgHvzyNrGOnKpXYtKsaOudMDAeI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mWP6MI18Jjqzmi0JcK/VK+EC3gGkiqjuPmBmglRfPAAWeisduBptz3/WmOFCX9UNfbDtWUKh6PSBli07ERhQCGLZ51Tx5gQgkJ21LN0zRfwu+z4VJpk9NZ8O9A74yJVS1GBpyVGaQALZnMgIodTk2a7cJErRsU3RwIpqKBvMDCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GuAz6oir; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W1EptRHXis7petSGiOlAC3wQ7s8qBM0Vb30bdNV9Sy1jfTcWH+O8yGTqOu52Vb+PdvrCZSNZ03H6vagxLCh6N8FAJwO+PuywMishUFykZME0qQjkq0KbH2zevJaq7eOXvaEPTeTnSdrF8IiGhB6fXMMjz9s2skbLdJLIC9b+Kzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rYLXd1qD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GuAz6oir"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E88EEC116C6;
-	Tue,  6 Jan 2026 17:38:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rYLXd1qD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35D3CC116C6;
+	Tue,  6 Jan 2026 17:38:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721125;
-	bh=Uv69icqC686xl+Cd06KSq/wj3meEfc3KbMjtOGa12Es=;
+	s=korg; t=1767721128;
+	bh=y2qZBTBJ16kbZOtPZgHvzyNrGOnKpXYtKsaOudMDAeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GuAz6oiruENSwcD4Wlyyz1bylT+UE7mEiUcWvKDl8O2pn71zrFb8tgxzfhmFPSa9W
-	 QNLLyn8GUagRI++mIcvKNygmVQFP+6DCvj4hQgdupGBJ1KFlotaBXemBrd7j15MIDL
-	 G/3tGvl0SEZQG5we6qjNfYTlbOkbdnqUd5y8C48I=
+	b=rYLXd1qDninV6jTlQpwt+JAJ7SmJ4KwR5paBq1gxB4c3E1ePdtV0OH8ZIkZ0mlS9Z
+	 JdvNaBZni/v4so2zAMUktUqLjs0Ssob7YiYZLuMaZAdAbLfMkqEvo0r2CZAWnkoo4k
+	 XL7oziw1b/XvJrHU8OAP2dxm+S1uJ9SCa7YAmgyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
-	Chongxi Zhao <zhaochongxi2019@email.szu.edu.cn>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 443/567] tools/mm/page_owner_sort: fix timestamp comparison for stable sorting
-Date: Tue,  6 Jan 2026 18:03:45 +0100
-Message-ID: <20260106170507.738633375@linuxfoundation.org>
+	Youling Tang <tangyouling@kylinos.cn>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Chenghao Duan <duanchenghao@kylinos.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.12 444/567] samples/ftrace: Adjust LoongArch register restore order in direct calls
+Date: Tue,  6 Jan 2026 18:03:46 +0100
+Message-ID: <20260106170507.775416706@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,40 +52,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+From: Chenghao Duan <duanchenghao@kylinos.cn>
 
-commit 7013803444dd3bbbe28fd3360c084cec3057c554 upstream.
+commit bb85d206be208bbf834883e948125a35ac59993a upstream.
 
-The ternary operator in compare_ts() returns 1 when timestamps are equal,
-causing unstable sorting behavior. Replace with explicit three-way
-comparison that returns 0 for equal timestamps, ensuring stable qsort
-ordering and consistent output.
+Ensure that in the ftrace direct call logic, the CPU register state
+(with ra = parent return address) is restored to the correct state after
+the execution of the custom trampoline function and before returning to
+the traced function. Additionally, guarantee the correctness of the jump
+logic for jr t0 (traced function address).
 
-Link: https://lkml.kernel.org/r/20251209044552.3396468-1-kaushlendra.kumar@intel.com
-Fixes: 8f9c447e2e2b ("tools/vm/page_owner_sort.c: support sorting pid and time")
-Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
-Cc: Chongxi Zhao <zhaochongxi2019@email.szu.edu.cn>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: 9cdc3b6a299c ("LoongArch: ftrace: Add direct call support")
+Reported-by: Youling Tang <tangyouling@kylinos.cn>
+Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Chenghao Duan <duanchenghao@kylinos.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/mm/page_owner_sort.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ samples/ftrace/ftrace-direct-modify.c       |    8 ++++----
+ samples/ftrace/ftrace-direct-multi-modify.c |    8 ++++----
+ samples/ftrace/ftrace-direct-multi.c        |    4 ++--
+ samples/ftrace/ftrace-direct-too.c          |    4 ++--
+ samples/ftrace/ftrace-direct.c              |    4 ++--
+ 5 files changed, 14 insertions(+), 14 deletions(-)
 
---- a/tools/mm/page_owner_sort.c
-+++ b/tools/mm/page_owner_sort.c
-@@ -183,7 +183,11 @@ static int compare_ts(const void *p1, co
- {
- 	const struct block_list *l1 = p1, *l2 = p2;
- 
--	return l1->ts_nsec < l2->ts_nsec ? -1 : 1;
-+	if (l1->ts_nsec < l2->ts_nsec)
-+		return -1;
-+	if (l1->ts_nsec > l2->ts_nsec)
-+		return 1;
-+	return 0;
- }
- 
- static int compare_cull_condition(const void *p1, const void *p2)
+--- a/samples/ftrace/ftrace-direct-modify.c
++++ b/samples/ftrace/ftrace-direct-modify.c
+@@ -176,8 +176,8 @@ asm (
+ "	st.d	$t0, $sp, 0\n"
+ "	st.d	$ra, $sp, 8\n"
+ "	bl	my_direct_func1\n"
+-"	ld.d	$t0, $sp, 0\n"
+-"	ld.d	$ra, $sp, 8\n"
++"	ld.d	$ra, $sp, 0\n"
++"	ld.d	$t0, $sp, 8\n"
+ "	addi.d	$sp, $sp, 16\n"
+ "	jr	$t0\n"
+ "	.size		my_tramp1, .-my_tramp1\n"
+@@ -189,8 +189,8 @@ asm (
+ "	st.d	$t0, $sp, 0\n"
+ "	st.d	$ra, $sp, 8\n"
+ "	bl	my_direct_func2\n"
+-"	ld.d	$t0, $sp, 0\n"
+-"	ld.d	$ra, $sp, 8\n"
++"	ld.d	$ra, $sp, 0\n"
++"	ld.d	$t0, $sp, 8\n"
+ "	addi.d	$sp, $sp, 16\n"
+ "	jr	$t0\n"
+ "	.size		my_tramp2, .-my_tramp2\n"
+--- a/samples/ftrace/ftrace-direct-multi-modify.c
++++ b/samples/ftrace/ftrace-direct-multi-modify.c
+@@ -199,8 +199,8 @@ asm (
+ "	move	$a0, $t0\n"
+ "	bl	my_direct_func1\n"
+ "	ld.d	$a0, $sp, 0\n"
+-"	ld.d	$t0, $sp, 8\n"
+-"	ld.d	$ra, $sp, 16\n"
++"	ld.d	$ra, $sp, 8\n"
++"	ld.d	$t0, $sp, 16\n"
+ "	addi.d	$sp, $sp, 32\n"
+ "	jr	$t0\n"
+ "	.size		my_tramp1, .-my_tramp1\n"
+@@ -215,8 +215,8 @@ asm (
+ "	move	$a0, $t0\n"
+ "	bl	my_direct_func2\n"
+ "	ld.d	$a0, $sp, 0\n"
+-"	ld.d	$t0, $sp, 8\n"
+-"	ld.d	$ra, $sp, 16\n"
++"	ld.d	$ra, $sp, 8\n"
++"	ld.d	$t0, $sp, 16\n"
+ "	addi.d	$sp, $sp, 32\n"
+ "	jr	$t0\n"
+ "	.size		my_tramp2, .-my_tramp2\n"
+--- a/samples/ftrace/ftrace-direct-multi.c
++++ b/samples/ftrace/ftrace-direct-multi.c
+@@ -131,8 +131,8 @@ asm (
+ "	move	$a0, $t0\n"
+ "	bl	my_direct_func\n"
+ "	ld.d	$a0, $sp, 0\n"
+-"	ld.d	$t0, $sp, 8\n"
+-"	ld.d	$ra, $sp, 16\n"
++"	ld.d	$ra, $sp, 8\n"
++"	ld.d	$t0, $sp, 16\n"
+ "	addi.d	$sp, $sp, 32\n"
+ "	jr	$t0\n"
+ "	.size		my_tramp, .-my_tramp\n"
+--- a/samples/ftrace/ftrace-direct-too.c
++++ b/samples/ftrace/ftrace-direct-too.c
+@@ -143,8 +143,8 @@ asm (
+ "	ld.d	$a0, $sp, 0\n"
+ "	ld.d	$a1, $sp, 8\n"
+ "	ld.d	$a2, $sp, 16\n"
+-"	ld.d	$t0, $sp, 24\n"
+-"	ld.d	$ra, $sp, 32\n"
++"	ld.d	$ra, $sp, 24\n"
++"	ld.d	$t0, $sp, 32\n"
+ "	addi.d	$sp, $sp, 48\n"
+ "	jr	$t0\n"
+ "	.size		my_tramp, .-my_tramp\n"
+--- a/samples/ftrace/ftrace-direct.c
++++ b/samples/ftrace/ftrace-direct.c
+@@ -124,8 +124,8 @@ asm (
+ "	st.d	$ra, $sp, 16\n"
+ "	bl	my_direct_func\n"
+ "	ld.d	$a0, $sp, 0\n"
+-"	ld.d	$t0, $sp, 8\n"
+-"	ld.d	$ra, $sp, 16\n"
++"	ld.d	$ra, $sp, 8\n"
++"	ld.d	$t0, $sp, 16\n"
+ "	addi.d	$sp, $sp, 32\n"
+ "	jr	$t0\n"
+ "	.size		my_tramp, .-my_tramp\n"
 
 
