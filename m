@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31EC2337B9B;
-	Tue,  6 Jan 2026 17:30:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F90342523;
+	Tue,  6 Jan 2026 17:30:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720605; cv=none; b=fZi2u0FYztuGWLjo4Wqbfe4c7W3mrReNyVG1k2dQS7ht3t1rDmMFTi7aOkQ9SGYv4e2cAR9h/etrDVfo0MX+kRcP6w85Vb3LtHKW/aB+ngsfsEKh9IPcKlxfFynSCZ8AJyfyRph1JwaK90l5IrFC2j1DX8i803b0y2WGrj7+zzc=
+	t=1767720608; cv=none; b=cDlGoRjv/vkGsF+EqIrFuxxbwZoM/Im+NQz8XTXpkb5dj5hrw4E+V9k60IJ/WzTnUDlJaDy33ecCKgjLd/Io6yDFLAZ0PK3fp5ucqvWyA7FT5KvlNTV4xasJRJ1pKHbqtM73kaU1p8lXZK3hpC3ZL9YDuiSNMG31I/1NoVCgIso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720605; c=relaxed/simple;
-	bh=/oQL6SiRYir4lslS3yafDRk9rx9AdPQntHgbePaMHBo=;
+	s=arc-20240116; t=1767720608; c=relaxed/simple;
+	bh=mwnXmbiBFdyUtbm1W0LglupQlb38MWVfGpd0NdlqAKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HmXE4UlitoWVwNhxQL78gBOTt+kArokTT4+jvZGvVjqGXPNjeYjIWw4g9puU1oE14F7k/1fejkKwb4lIopHuedeRepGWuqHu6brNKJ1ibTVDhDHmIC3vrjeMoukNT2ouNpzm3PMgoxDTCvCvYGk61bDNuos89R36SZ3iCEksmdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FGdmXZwi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XxZ/iRZBpz0jlXPqVeS8Kf28fIPu00vLeFLW2y/SzcmArCUZia0zVzNqpkM+WkuqHj4kADmEp7ZAZ5EHRgvauxv+eeQoAcdjPZ1DSNoyxGGD+9rfxPryds2fn5ZcGKkOmFxKn+X4N8ZfMjibzfYgcoWtU8t6osSINkasewmJqwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K/6p4BnR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FGdmXZwi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C52C19424;
-	Tue,  6 Jan 2026 17:30:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K/6p4BnR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4A37C116C6;
+	Tue,  6 Jan 2026 17:30:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720605;
-	bh=/oQL6SiRYir4lslS3yafDRk9rx9AdPQntHgbePaMHBo=;
+	s=korg; t=1767720608;
+	bh=mwnXmbiBFdyUtbm1W0LglupQlb38MWVfGpd0NdlqAKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FGdmXZwiIqQgyohd5+w04IU3q4X/J85IuA8kenwxm96jfMKmrHSnrkbltRlt5OJhI
-	 eEGZ7HO0xnpmW++HtZTM9M8OiK0NeMREtPsr5F/qTljYZj9Sk7GBEywiKRbDyT0mFA
-	 1qeyv9ng/hHQvWFaIyCFrU5gms2b50js8MEuLDu4=
+	b=K/6p4BnRnpwWWhum7H7CPrSgT8hqA6l7aL/UN4o61Kf/SgJn5FjfUou8mHfrkP8p3
+	 TAgfRexrdWuf2dgldOS9CeDyTV9Apfmpgsezp2oViRoODHfc74sbxT35OzJkjGjj2M
+	 cXl4NSOAf8Nahw2uvnlE9YIS+uEelVHm5up949OU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Gui-Dong Han <hanguidong02@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.12 288/567] hwmon: (w83791d) Convert macros to functions to avoid TOCTOU
-Date: Tue,  6 Jan 2026 18:01:10 +0100
-Message-ID: <20260106170501.987380356@linuxfoundation.org>
+Subject: [PATCH 6.12 289/567] hwmon: (w83l786ng) Convert macros to functions to avoid TOCTOU
+Date: Tue,  6 Jan 2026 18:01:11 +0100
+Message-ID: <20260106170502.024270796@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,45 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Gui-Dong Han <hanguidong02@gmail.com>
 
-commit 670d7ef945d3a84683594429aea6ab2cdfa5ceb4 upstream.
+commit 07272e883fc61574b8367d44de48917f622cdd83 upstream.
 
-The macro FAN_FROM_REG evaluates its arguments multiple times. When used
-in lockless contexts involving shared driver data, this leads to
-Time-of-Check to Time-of-Use (TOCTOU) race conditions, potentially
-causing divide-by-zero errors.
-
-Convert the macro to a static function. This guarantees that arguments
-are evaluated only once (pass-by-value), preventing the race
+The macros FAN_FROM_REG and TEMP_FROM_REG evaluate their arguments
+multiple times. When used in lockless contexts involving shared driver
+data, this causes Time-of-Check to Time-of-Use (TOCTOU) race
 conditions.
 
-Additionally, in store_fan_div, move the calculation of the minimum
-limit inside the update lock. This ensures that the read-modify-write
-sequence operates on consistent data.
+Convert the macros to static functions. This guarantees that arguments
+are evaluated only once (pass-by-value), preventing the race
+conditions.
 
 Adhere to the principle of minimal changes by only converting macros
 that evaluate arguments multiple times and are used in lockless
 contexts.
 
 Link: https://lore.kernel.org/all/CALbr=LYJ_ehtp53HXEVkSpYoub+XYSTU8Rg=o1xxMJ8=5z8B-g@mail.gmail.com/
-Fixes: 9873964d6eb2 ("[PATCH] HWMON: w83791d: New hardware monitoring driver for the Winbond W83791D")
+Fixes: 85f03bccd6e0 ("hwmon: Add support for Winbond W83L786NG/NR")
 Cc: stable@vger.kernel.org
 Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
-Link: https://lore.kernel.org/r/20251202180105.12842-1-hanguidong02@gmail.com
+Link: https://lore.kernel.org/r/20251128123816.3670-1-hanguidong02@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/w83791d.c |   17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/hwmon/w83l786ng.c |   26 ++++++++++++++++++--------
+ 1 file changed, 18 insertions(+), 8 deletions(-)
 
---- a/drivers/hwmon/w83791d.c
-+++ b/drivers/hwmon/w83791d.c
-@@ -218,9 +218,14 @@ static u8 fan_to_reg(long rpm, int div)
+--- a/drivers/hwmon/w83l786ng.c
++++ b/drivers/hwmon/w83l786ng.c
+@@ -76,15 +76,25 @@ FAN_TO_REG(long rpm, int div)
  	return clamp_val((1350000 + rpm * div / 2) / (rpm * div), 1, 254);
  }
  
--#define FAN_FROM_REG(val, div)	((val) == 0 ? -1 : \
+-#define FAN_FROM_REG(val, div)	((val) == 0   ? -1 : \
 -				((val) == 255 ? 0 : \
--					1350000 / ((val) * (div))))
+-				1350000 / ((val) * (div))))
 +static int fan_from_reg(int val, int div)
 +{
 +	if (val == 0)
@@ -100,29 +96,47 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 +	return 1350000 / (val * div);
 +}
  
- /* for temp1 which is 8-bit resolution, LSB = 1 degree Celsius */
- #define TEMP1_FROM_REG(val)	((val) * 1000)
-@@ -521,7 +526,7 @@ static ssize_t show_##reg(struct device
- 	struct w83791d_data *data = w83791d_update_device(dev); \
- 	int nr = sensor_attr->index; \
+ /* for temp */
+ #define TEMP_TO_REG(val)	(clamp_val(((val) < 0 ? (val) + 0x100 * 1000 \
+ 						      : (val)) / 1000, 0, 0xff))
+-#define TEMP_FROM_REG(val)	(((val) & 0x80 ? \
+-				  (val) - 0x100 : (val)) * 1000)
++
++static int temp_from_reg(int val)
++{
++	if (val & 0x80)
++		return (val - 0x100) * 1000;
++	return val * 1000;
++}
+ 
+ /*
+  * The analog voltage inputs have 8mV LSB. Since the sysfs output is
+@@ -280,7 +290,7 @@ static ssize_t show_##reg(struct device
+ 	int nr = to_sensor_dev_attr(attr)->index; \
+ 	struct w83l786ng_data *data = w83l786ng_update_device(dev); \
  	return sprintf(buf, "%d\n", \
 -		FAN_FROM_REG(data->reg[nr], DIV_FROM_REG(data->fan_div[nr]))); \
 +		fan_from_reg(data->reg[nr], DIV_FROM_REG(data->fan_div[nr]))); \
  }
  
  show_fan_reg(fan);
-@@ -585,10 +590,10 @@ static ssize_t store_fan_div(struct devi
- 	if (err)
- 		return err;
+@@ -347,7 +357,7 @@ store_fan_div(struct device *dev, struct
  
-+	mutex_lock(&data->update_lock);
  	/* Save fan_min */
+ 	mutex_lock(&data->update_lock);
 -	min = FAN_FROM_REG(data->fan_min[nr], DIV_FROM_REG(data->fan_div[nr]));
 +	min = fan_from_reg(data->fan_min[nr], DIV_FROM_REG(data->fan_div[nr]));
  
--	mutex_lock(&data->update_lock);
- 	data->fan_div[nr] = div_to_reg(nr, val);
+ 	data->fan_div[nr] = DIV_TO_REG(val);
  
- 	switch (nr) {
+@@ -409,7 +419,7 @@ show_temp(struct device *dev, struct dev
+ 	int nr = sensor_attr->nr;
+ 	int index = sensor_attr->index;
+ 	struct w83l786ng_data *data = w83l786ng_update_device(dev);
+-	return sprintf(buf, "%d\n", TEMP_FROM_REG(data->temp[nr][index]));
++	return sprintf(buf, "%d\n", temp_from_reg(data->temp[nr][index]));
+ }
+ 
+ static ssize_t
 
 
