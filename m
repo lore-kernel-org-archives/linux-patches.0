@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 519F629BD9A;
-	Tue,  6 Jan 2026 17:36:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1659C338593;
+	Tue,  6 Jan 2026 17:36:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720972; cv=none; b=JrbBypCZktcetfwQQxa9pYlyDnMih4fe4hl5dcnrkYqbKDhgdQApG3cKELySoDVJak/Di+6cHIpe06n4XkUUbSX9Spg4g4lEFJZ8hqIO0+IcwYes3SjTX50KXbZJoRxH+NsaJU07nxdpZdvkMOzrY3WoSB+P1N+LnHc5LZM+aQw=
+	t=1767720976; cv=none; b=vB+FfyK7xGHhzR4bPLfxp6WWMSJ/byFa4diSgV3aACXs9zPsqOIoidLBnrYRL9BUJtvfTmO0gDIignObIVPO8lvVHcw1urYu8HErCmrJ+5QpGxdbDqxIRJr4VKTcXhutHmGCeXv8nHmViLqnVBZqdSryDIkJXL2/vOf+bZg8/cs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720972; c=relaxed/simple;
-	bh=fS8Y+kj2XeVN/0GzJtDbZaCthbeF+qK1gkuTA0tGsSU=;
+	s=arc-20240116; t=1767720976; c=relaxed/simple;
+	bh=MXV9GbzeUSzHlftvFqXtnQM3et9ve1wGNu/sQ4KTz6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oLYQ0utlHoNI5VSQ2BKKM/ugMKL3ufmuRPPstRbnGuzTSsURMzW74//DMtKu3MNsPVTnYJeYUCvZcuzYDCAEqdUhyFlX0qnNmcElj473bJJK0CL+Y0+PBnvCKSvicuckjhHw6YgXmJgKyEulfj7uQvCHmJ/kL2mMIVGKbcrYxCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Xjivdd5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aUR69IwkrVqPFZntBj/kT1UrfWgpU6zI7xE36GdIUoDWf93PxVuIuyMKd4qSgL434B9Hu/tlcWwEFZBZedDT9AoH3keOWwnHrrWc2gWavOZkrNdticr4170Rn5elPMCCKD6HU3Ob6HFtuQE90raU965Oy8bjqU3WTERzC0ljjyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lZCKNVwa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Xjivdd5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF52C116C6;
-	Tue,  6 Jan 2026 17:36:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZCKNVwa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2204EC116C6;
+	Tue,  6 Jan 2026 17:36:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720972;
-	bh=fS8Y+kj2XeVN/0GzJtDbZaCthbeF+qK1gkuTA0tGsSU=;
+	s=korg; t=1767720975;
+	bh=MXV9GbzeUSzHlftvFqXtnQM3et9ve1wGNu/sQ4KTz6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Xjivdd5uscn9qgcRaIt/Xaw8CqYGIFs9rKqsU654UrEAXFXwgjfhv1GQBUmbT5up
-	 NAxg46ZZSVk3aHHBiPcbrNysXkqJoRAu2onDA3pgyiENJLnomIZYAbxkCgwfvw9+fp
-	 upwA/iATva3Fy8gxIadIxricZP1UUejud8g5mcPQ=
+	b=lZCKNVwao8ez/Dnj7D1uYoj0mj0hIN6BMRK5cc9olzBfa0i3Uz/UQTR0tmvH+vm1H
+	 zjcHv1JW6aePFs6l8OJYeIrpgrmEyWSuwrVcFSSyX6MPC7WAmiMQLL2qMwmpPwrseH
+	 3XisVwI9Q4r7Sv6CJfL+NLwuLs+pQ35PII3lGRoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>
-Subject: [PATCH 6.12 398/567] dm-bufio: align write boundary on physical block size
-Date: Tue,  6 Jan 2026 18:03:00 +0100
-Message-ID: <20260106170506.062815974@linuxfoundation.org>
+	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.12 399/567] fbdev: gbefb: fix to use physical address instead of dma address
+Date: Tue,  6 Jan 2026 18:03:01 +0100
+Message-ID: <20260106170506.101349362@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -44,59 +44,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Rene Rebe <rene@exactco.de>
 
-commit d0ac06ae53be0cdb61f5fe6b62d25d3317c51657 upstream.
+commit e3f44742bbb10537fe53d83d20dea2a7c167674d upstream.
 
-There may be devices with physical block size larger than 4k.
+While debuggigng why X would not start on mips64 Sgi/O2 I found the
+phys adress being off. Turns out the gbefb passed the internal
+dma_addr as phys. May be broken pre git history. Fix by converting
+dma_to_phys.
 
-If dm-bufio sends I/O that is not aligned on physical block size,
-performance is degraded.
-
-The 4k minimum alignment limit is there because some SSDs report logical
-and physical block size 512 despite having 4k internally - so dm-bufio
-shouldn't send I/Os not aligned on 4k boundary, because they perform
-badly (the SSD does read-modify-write for them).
-
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Reported-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
-Cc: stable@vger.kernel.org
+Signed-off-by: René Rebe <rene@exactco.de>
+Cc: <stable@vger.kernel.org> # v4.0+
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-bufio.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/video/fbdev/gbefb.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/md/dm-bufio.c
-+++ b/drivers/md/dm-bufio.c
-@@ -1375,7 +1375,7 @@ static void submit_io(struct dm_buffer *
- {
- 	unsigned int n_sectors;
- 	sector_t sector;
--	unsigned int offset, end;
-+	unsigned int offset, end, align;
+--- a/drivers/video/fbdev/gbefb.c
++++ b/drivers/video/fbdev/gbefb.c
+@@ -12,6 +12,7 @@
+ #include <linux/delay.h>
+ #include <linux/platform_device.h>
+ #include <linux/dma-mapping.h>
++#include <linux/dma-direct.h>
+ #include <linux/errno.h>
+ #include <linux/gfp.h>
+ #include <linux/fb.h>
+@@ -65,7 +66,7 @@ struct gbefb_par {
+ static unsigned int gbe_mem_size = CONFIG_FB_GBE_MEM * 1024*1024;
+ static void *gbe_mem;
+ static dma_addr_t gbe_dma_addr;
+-static unsigned long gbe_mem_phys;
++static phys_addr_t gbe_mem_phys;
  
- 	b->end_io = end_io;
+ static struct {
+ 	uint16_t *cpu;
+@@ -1183,7 +1184,7 @@ static int gbefb_probe(struct platform_d
+ 			goto out_release_mem_region;
+ 		}
  
-@@ -1389,9 +1389,11 @@ static void submit_io(struct dm_buffer *
- 			b->c->write_callback(b);
- 		offset = b->write_start;
- 		end = b->write_end;
--		offset &= -DM_BUFIO_WRITE_ALIGN;
--		end += DM_BUFIO_WRITE_ALIGN - 1;
--		end &= -DM_BUFIO_WRITE_ALIGN;
-+		align = max(DM_BUFIO_WRITE_ALIGN,
-+			bdev_physical_block_size(b->c->bdev));
-+		offset &= -align;
-+		end += align - 1;
-+		end &= -align;
- 		if (unlikely(end > b->c->block_size))
- 			end = b->c->block_size;
+-		gbe_mem_phys = (unsigned long) gbe_dma_addr;
++		gbe_mem_phys = dma_to_phys(&p_dev->dev, gbe_dma_addr);
+ 	}
  
+ 	par = info->par;
 
 
