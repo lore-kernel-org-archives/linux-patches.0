@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600A1218E91;
-	Tue,  6 Jan 2026 17:16:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 336172877E8;
+	Tue,  6 Jan 2026 17:16:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719812; cv=none; b=Y5Sp0KV3Tuw03SoYCWgEcpz27aY9Pz3T+TphoS8CFKE981bxrKrmXrbmxL5+/YmOx7nzOqTsf1r/eMqUn8h64B0sPEHpFxyjxfYOyaYMWLBeXVGA/AALOA/K88v922DUqlnjikuNVqhenJ8sGqqampRZmOEQVX+6zjnWSfKNmIU=
+	t=1767719815; cv=none; b=ZPouoiKVQWC9S8lptsAKm93M8eNZ/BpFmkJWL2WGo94tl11kp0kXqPEBi/dJjG4eENf4c3CoMpfNG/TNo9yFxt6ceF8ebAmfPe6jYe3YYwM+R1QgTWMQ6xiRpUrD9P5Wm13EnHjm9j/jRVKxPmMeRz07ZVil3h4j94XbuN5NKyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719812; c=relaxed/simple;
-	bh=41sNM0I36C2R7+8ka4kNAuYp0VIqup63KmCSe71P3tA=;
+	s=arc-20240116; t=1767719815; c=relaxed/simple;
+	bh=di1cPp4ztq0tAEPuFdVZ39xGEDEXh46U9WZmkNDEqEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b3yHNasa5jJZmAzitEf6XjyXL4QGA6UrsBebkBwI9VcTIpvamw3IKYg2MhfX0dE0F1fANgK5qUVwSp/Tu08Y2ZbgWVarS5Ic2o49nA2zvHHSJVoMlfLhpFEYBiJwHmpDVPVPrPdLIvJtyJTwq+bMM5VTiXh25JsKjRiCkaGbbxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KDc/Q7Rj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h2QucohENIE7MS4bbBNEOgGgw2Z+bU/FhoKp1T3f2O+DGU8iPG84hwMwRJ1dOejWgmdlT8tkcI82PFxHCasCrNYgckLRrBfAYBceIrKfDzRS8WZd8Ugo4iA7dBNzMfCtDmbV4IFw/CUIFtl+z+lU/cfoWu+NKcyNYNvagdrC+tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bhiOpAw6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KDc/Q7Rj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B4EC116C6;
-	Tue,  6 Jan 2026 17:16:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bhiOpAw6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 967A9C16AAE;
+	Tue,  6 Jan 2026 17:16:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719812;
-	bh=41sNM0I36C2R7+8ka4kNAuYp0VIqup63KmCSe71P3tA=;
+	s=korg; t=1767719815;
+	bh=di1cPp4ztq0tAEPuFdVZ39xGEDEXh46U9WZmkNDEqEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KDc/Q7RjKdekpr0ddOMJT6sTp50Th55H+pskZ1ytaGI3O4pvweMoZHsdRl13087ra
-	 c/+FjKZ+MtZTT7wooA2h77E9kVvisfqJWjSypac8qa7sjvPJixDOY+GSCJcWsNItwg
-	 bz5EY7Mv/aZsEvFPcLPROkHEfstFCu+KnPIpj7H4=
+	b=bhiOpAw6GqQXiA1rhf8ENiZDp0mWxFfYefJzdZmvhGv/PkWmAjpnhcv33aqzsC4Q2
+	 NarlgR80yfcRsW/o/et9o4daZkp24q6MIQdEoHgd28FmLrznHK0xzfV80d6abYpQQo
+	 qSuQq9zHbfveBorQDLsUtz0nV82m7f9/1IoWONAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Skorodumov <skorodumov.dmitry@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 048/567] ipvlan: Ignore PACKET_LOOPBACK in handle_mode_l2()
-Date: Tue,  6 Jan 2026 17:57:10 +0100
-Message-ID: <20260106170453.116744411@linuxfoundation.org>
+Subject: [PATCH 6.12 049/567] mlxsw: spectrum_router: Fix possible neighbour reference count leak
+Date: Tue,  6 Jan 2026 17:57:11 +0100
+Message-ID: <20260106170453.153366511@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,46 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Skorodumov <skorodumov.dmitry@huawei.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 0c57ff008a11f24f7f05fa760222692a00465fec ]
+[ Upstream commit b6b638bda240395dff49a87403b2e32493e56d2a ]
 
-Packets with pkt_type == PACKET_LOOPBACK are captured by
-handle_frame() function, but they don't have L2 header.
-We should not process them in handle_mode_l2().
+mlxsw_sp_router_schedule_work() takes a reference on a neighbour,
+expecting a work item to release it later on. However, we might fail to
+schedule the work item, in which case the neighbour reference count will
+be leaked.
 
-This doesn't affect old L2 functionality, since handling
-was anyway incorrect.
+Fix by taking the reference just before scheduling the work item. Note
+that mlxsw_sp_router_schedule_work() can receive a NULL neighbour
+pointer, but neigh_clone() handles that correctly.
 
-Handle them the same way as in br_handle_frame():
-just pass the skb.
+Spotted during code review, did not actually observe the reference count
+leak.
 
-To observe invalid behaviour, just start "ping -b" on bcast address
-of port-interface.
-
-Fixes: 2ad7bf363841 ("ipvlan: Initial check-in of the IPVLAN driver.")
-Signed-off-by: Dmitry Skorodumov <skorodumov.dmitry@huawei.com>
-Link: https://patch.msgid.link/20251202103906.4087675-1-skorodumov.dmitry@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 151b89f6025a ("mlxsw: spectrum_router: Reuse work neighbor initialization in work scheduler")
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/ec2934ae4aca187a8d8c9329a08ce93cca411378.1764695650.git.petrm@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipvlan/ipvlan_core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ipvlan/ipvlan_core.c b/drivers/net/ipvlan/ipvlan_core.c
-index ca62188a317ad..83bd65a227709 100644
---- a/drivers/net/ipvlan/ipvlan_core.c
-+++ b/drivers/net/ipvlan/ipvlan_core.c
-@@ -737,6 +737,9 @@ static rx_handler_result_t ipvlan_handle_mode_l2(struct sk_buff **pskb,
- 	struct ethhdr *eth = eth_hdr(skb);
- 	rx_handler_result_t ret = RX_HANDLER_PASS;
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
+index 511cd92e0e3e7..4ab58cb1ab7f4 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
+@@ -2858,6 +2858,11 @@ static int mlxsw_sp_router_schedule_work(struct net *net,
+ 	if (!net_work)
+ 		return NOTIFY_BAD;
  
-+	if (unlikely(skb->pkt_type == PACKET_LOOPBACK))
-+		return RX_HANDLER_PASS;
++	/* Take a reference to ensure the neighbour won't be destructed until
++	 * we drop the reference in the work item.
++	 */
++	neigh_clone(n);
 +
- 	if (is_multicast_ether_addr(eth->h_dest)) {
- 		if (ipvlan_external_frame(skb, port)) {
- 			struct sk_buff *nskb = skb_clone(skb, GFP_ATOMIC);
+ 	INIT_WORK(&net_work->work, cb);
+ 	net_work->mlxsw_sp = router->mlxsw_sp;
+ 	net_work->n = n;
+@@ -2881,11 +2886,6 @@ static int mlxsw_sp_router_schedule_neigh_work(struct mlxsw_sp_router *router,
+ 	struct net *net;
+ 
+ 	net = neigh_parms_net(n->parms);
+-
+-	/* Take a reference to ensure the neighbour won't be destructed until we
+-	 * drop the reference in delayed work.
+-	 */
+-	neigh_clone(n);
+ 	return mlxsw_sp_router_schedule_work(net, router, n,
+ 					     mlxsw_sp_router_neigh_event_work);
+ }
 -- 
 2.51.0
 
