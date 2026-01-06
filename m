@@ -1,36 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B953557F9;
-	Tue,  6 Jan 2026 17:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8217434F26F;
+	Tue,  6 Jan 2026 17:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720473; cv=none; b=CScpfvmoTF3xH/f00BfnjvRAu/JpAqtpDeJGvJ/2xWT5QuDzjUUzFy0228Ix8BTiUmejKa4cMnbGVdOgPZ/v9MaGGOheXpPniNRJDiP6XDfk3HVw5GT3xmR8fwx6KBUCXEUP0r0fmr2TEkAAp/ELXWBXBvUUkzpj+LnVxRbl1OI=
+	t=1767720476; cv=none; b=CurbBlmPozJiNyhbVHjWhusj8chD7fQiG3N2pdfxhnJ3MWA4j0xDbF4+Nle7MPKDoG1tTHCa/ntcFQ5aHJc1YmVdayevi36vIejeDoDNrnpypVFr9pkynk0K4mEVdqA6TQmuV9rl4YpjiKcSSOUaklWpbnRecGxlJ6OvINTPAdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720473; c=relaxed/simple;
-	bh=AyuB7l9dARyy+yTf+bWRJSUZpD/TKtJg8zrDFL2hjL0=;
+	s=arc-20240116; t=1767720476; c=relaxed/simple;
+	bh=T5aG74A9XegOwx2SK/JYSN+yjU3WPgx3ECd44X8Xf7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TGVyfM4g2EvW0IqOH4WnxKkXKJZVp0IW92iA6Yi6Jv/ivHHgTgT5/jpAWTw1h6NL4VNcw8gq5S+Dee4AK5X1BaESAgcxAbwDgevZBj5z8VBoqO4uF2F9VxGtUFY/+9kAUsQE2C6jjCUwXRUtYwDWNwY8UHvTycIced9DBy4ZoBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zV88tNDo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rWZchU1eKj4jHxVz03p6rTWyTZYXdvDfGe+BBD67e5ftOmNyBuvAeMZHvM5GWWPG8O5n8asodMxVRNGs4iGoC3iblrJFZZb09prjjGerRHMUBWkjXRqb2dXEQtayVtDw4Excs17myWH0H9gSyOsqiFSkuRkMTsTp32W61uYpaac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Umzxl2HF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zV88tNDo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C24EEC116C6;
-	Tue,  6 Jan 2026 17:27:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Umzxl2HF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 089D9C116C6;
+	Tue,  6 Jan 2026 17:27:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720473;
-	bh=AyuB7l9dARyy+yTf+bWRJSUZpD/TKtJg8zrDFL2hjL0=;
+	s=korg; t=1767720476;
+	bh=T5aG74A9XegOwx2SK/JYSN+yjU3WPgx3ECd44X8Xf7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zV88tNDoOOULfbveLnf13dK2HzUXSGV4+KEEpQOSlkRMJNeAE3frDDZgE4UIDFdS0
-	 GCkcVw5NjG/UGFIsm0IapExlcN1Mj2BIDlsmzZBbkH+aT1UrX9WTqPSDsYR6O9aaE9
-	 xd68Q4lflb1p8SNWixtws8ShifE2HJ/5NyqJ0oQs=
+	b=Umzxl2HFXDSww2qpm/EcLq39fVdXMVgwDhg/vY9fIGsrmEZOtEmGP7vcfyexIWUPe
+	 qfOW0a3SBaC6W8n2gB3nzwnGuzUYKYG11fbuOVfoU2U9wcNAhS9epeGyb+IFXzmgwS
+	 Gns7TnFgm07+8fJ+oL8nO/HkBUu/eevLoJruvqZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tzung-Bi Shih <tzungbi@kernel.org>
-Subject: [PATCH 6.12 215/567] platform/chrome: cros_ec_ishtp: Fix UAF after unbinding driver
-Date: Tue,  6 Jan 2026 17:59:57 +0100
-Message-ID: <20260106170459.271541853@linuxfoundation.org>
+	Jiyuan Xie <xiejiyuan@vivo.com>,
+	Zhichi Lin <zhichi.lin@vivo.com>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Will Deacon <will@kernel.org>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Kees Cook <keescook@chromium.org>,
+	Marco Elver <elver@google.com>,
+	Yee Lee <yee.lee@mediatek.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 216/567] scs: fix a wrong parameter in __scs_magic
+Date: Tue,  6 Jan 2026 17:59:58 +0100
+Message-ID: <20260106170459.307864917@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -49,34 +57,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Zhichi Lin <zhichi.lin@vivo.com>
 
-commit 944edca81e7aea15f83cf9a13a6ab67f711e8abd upstream.
+commit 08bd4c46d5e63b78e77f2605283874bbe868ab19 upstream.
 
-After unbinding the driver, another kthread `cros_ec_console_log_work`
-is still accessing the device, resulting an UAF and crash.
+__scs_magic() needs a 'void *' variable, but a 'struct task_struct *' is
+given.  'task_scs(tsk)' is the starting address of the task's shadow call
+stack, and '__scs_magic(task_scs(tsk))' is the end address of the task's
+shadow call stack.  Here should be '__scs_magic(task_scs(tsk))'.
 
-The driver doesn't unregister the EC device in .remove() which should
-shutdown sub-devices synchronously.  Fix it.
+The user-visible effect of this bug is that when CONFIG_DEBUG_STACK_USAGE
+is enabled, the shadow call stack usage checking function
+(scs_check_usage) would scan an incorrect memory range.  This could lead
+to:
 
-Fixes: 26a14267aff2 ("platform/chrome: Add ChromeOS EC ISHTP driver")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20251031033900.3577394-1-tzungbi@kernel.org
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+1. **Inaccurate stack usage reporting**: The function would calculate
+   wrong usage statistics for the shadow call stack, potentially showing
+   incorrect value in kmsg.
+
+2. **Potential kernel crash**: If the value of __scs_magic(tsk)is
+   greater than that of __scs_magic(task_scs(tsk)), the for loop may
+   access unmapped memory, potentially causing a kernel panic.  However,
+   this scenario is unlikely because task_struct is allocated via the slab
+   allocator (which typically returns lower addresses), while the shadow
+   call stack returned by task_scs(tsk) is allocated via vmalloc(which
+   typically returns higher addresses).
+
+However, since this is purely a debugging feature
+(CONFIG_DEBUG_STACK_USAGE), normal production systems should be not
+unaffected.  The bug only impacts developers and testers who are actively
+debugging stack usage with this configuration enabled.
+
+Link: https://lkml.kernel.org/r/20251011082222.12965-1-zhichi.lin@vivo.com
+Fixes: 5bbaf9d1fcb9 ("scs: Add support for stack usage debugging")
+Signed-off-by: Jiyuan Xie <xiejiyuan@vivo.com>
+Signed-off-by: Zhichi Lin <zhichi.lin@vivo.com>
+Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+Acked-by: Will Deacon <will@kernel.org>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Marco Elver <elver@google.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Yee Lee <yee.lee@mediatek.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/chrome/cros_ec_ishtp.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/scs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/platform/chrome/cros_ec_ishtp.c
-+++ b/drivers/platform/chrome/cros_ec_ishtp.c
-@@ -671,6 +671,7 @@ static void cros_ec_ishtp_remove(struct
+--- a/kernel/scs.c
++++ b/kernel/scs.c
+@@ -135,7 +135,7 @@ static void scs_check_usage(struct task_
+ 	if (!IS_ENABLED(CONFIG_DEBUG_STACK_USAGE))
+ 		return;
  
- 	cancel_work_sync(&client_data->work_ishtp_reset);
- 	cancel_work_sync(&client_data->work_ec_evt);
-+	cros_ec_unregister(client_data->ec_dev);
- 	cros_ish_deinit(cros_ish_cl);
- 	ishtp_put_device(cl_device);
- }
+-	for (p = task_scs(tsk); p < __scs_magic(tsk); ++p) {
++	for (p = task_scs(tsk); p < __scs_magic(task_scs(tsk)); ++p) {
+ 		if (!READ_ONCE_NOCHECK(*p))
+ 			break;
+ 		used += sizeof(*p);
 
 
