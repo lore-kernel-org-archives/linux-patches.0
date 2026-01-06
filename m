@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C36634D386;
-	Tue,  6 Jan 2026 17:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1783644C6;
+	Tue,  6 Jan 2026 17:53:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721978; cv=none; b=RrtG8prqchKohFdqpgWTdzyqXA/famSQQE5DTCFnggFEnShyxhzVTEyNoPnWwcc815jqk5eFknOsin6CpPM3yjlz8NNPD/wt/5TuhU+3cDBt/veLKFl79CQK0dDJbKnYY1u1f/1it8pS/+oWUYz1ZOdQ7rJv5f4hKrgLh3Eq8p0=
+	t=1767721981; cv=none; b=JaqFccrBkoh63ZxI9CDo7iubP7t4QQyPpOkIGfL4L2aD7KshDM4rW0pMUPw3hCBb0OiB8xLCWkNDFCSNrgozTSmXd+8wdgvvMCXiHBad0O8DDbZ5QyEIlhBgjb7nYpj/E/hIXG6CqIOitRIjpL5PNjM/3mcmydjfvBFtnCq6I5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721978; c=relaxed/simple;
-	bh=BMV9X3h26yNpzJmRb9CrF5PBu2mnqxvUrBk8eSt1vF0=;
+	s=arc-20240116; t=1767721981; c=relaxed/simple;
+	bh=ADcnMSTJrPNPHujjBsuRalkCVYN94H/ElPsV4Kg85lM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CLpDDVfo7IgqsXU+opUqjYedcZx5uUYFFCATFdgxpK6Mphl05BtTGQJii3YlmZn/vLzyWD9d1omEUbaXqOEmiFrBxkiQv1pjFgbfoGalRK8MfjHh41wO6sJD1X6TIl/2tRucMmtCMPOKIITeS+OC4u2wJhAn+T5ig4Xp22GaKts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V8WUzR0x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sWEy0lOr/YUBQwbJXBjxoqcwRZ0VqdW7cOp7zJ9bIiQ7aW0RuRgSb1aGyksbu699nb2QxgSs/UJ8yX129vrCpsLLtfG77aizceBDXDjIYkZQ/sFg3sRE+IvIjraU3kGcRmYhOcsF6x1C0S0EFV06uOfVITomKm5tO+sSqoyv3+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hOqbfi9O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V8WUzR0x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C636C16AAE;
-	Tue,  6 Jan 2026 17:52:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hOqbfi9O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E07EFC19424;
+	Tue,  6 Jan 2026 17:53:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721978;
-	bh=BMV9X3h26yNpzJmRb9CrF5PBu2mnqxvUrBk8eSt1vF0=;
+	s=korg; t=1767721981;
+	bh=ADcnMSTJrPNPHujjBsuRalkCVYN94H/ElPsV4Kg85lM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V8WUzR0xmc8GOoJSrpbbyC82wnQqAfClqYFaOXGgD4IJGO5ygQ3y3nlylsnxnScjI
-	 1UOg/9bKGn2Ah95d0dKspL0qT/Gg5UDhj4f2SiGtJ7knzbW212E7Kgmpb9lhnY+mgP
-	 IwCFNasCnlaNBZbV872JZrlYeGIPKSOxhdgCj+EA=
+	b=hOqbfi9ORDNT0zcA3FP5+VhH85UMBfzH4mRfdleLV8PDEta09PkFu1jegs/qcS957
+	 Km3GoeCyF2/JyeGDwu+eR5dEqCExS4Ip4UVVcJfsBnpHQ7q2Zxtun3qlxSqY74lBst
+	 wXfUS7uAmshXEE+Gz131vFiN3UT3XhL3PxA/Gd9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
+	Ma Ke <make24@iscas.ac.cn>,
+	David Heidelberg <david@ixit.cz>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 096/312] ASoC: renesas: rz-ssi: Fix rz_ssi_priv::hw_params_cache::sample_width
-Date: Tue,  6 Jan 2026 18:02:50 +0100
-Message-ID: <20260106170551.314249083@linuxfoundation.org>
+Subject: [PATCH 6.18 097/312] ASoC: codecs: wcd937x: Fix error handling in wcd937x codec driver
+Date: Tue,  6 Jan 2026 18:02:51 +0100
+Message-ID: <20260106170551.349625202@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -52,85 +51,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 2bae7beda19f3b2dc6ab2062c94df19c27923712 upstream.
+commit 578ccfe344c5f421c2c6343b872995b397ffd3ff upstream.
 
-The strm->sample_width is not filled during rz_ssi_dai_hw_params(). This
-wrong value is used for caching sample_width in struct hw_params_cache.
-Fix this issue by replacing 'strm->sample_width'->'params_width(params)'
-in rz_ssi_dai_hw_params(). After this drop the variable sample_width
-from struct rz_ssi_stream as it is unused.
+In wcd937x_bind(), the driver calls of_sdw_find_device_by_node() to
+obtain references to RX and TX SoundWire devices, which increment the
+device reference counts. However, the corresponding put_device() are
+missing in both the error paths and the normal unbind path in
+wcd937x_unbind().
 
-Cc: stable@kernel.org
-Fixes: 4f8cd05a4305 ("ASoC: sh: rz-ssi: Add full duplex support")
-Reviewed-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://patch.msgid.link/20251114073709.4376-3-biju.das.jz@bp.renesas.com
+Add proper error handling with put_device() calls in all error paths
+of wcd937x_bind() and ensure devices are released in wcd937x_unbind().
+
+Found by code review.
+
+Cc: stable@vger.kernel.org
+Fixes: 772ed12bd04e ("ASoC: codecs: wcdxxxx: use of_sdw_find_device_by_node helper")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Reviewed-by: David Heidelberg <david@ixit.cz>
+Link: https://patch.msgid.link/20251116061623.11830-1-make24@iscas.ac.cn
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/renesas/rz-ssi.c |   13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+ sound/soc/codecs/wcd937x.c |   43 ++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 34 insertions(+), 9 deletions(-)
 
---- a/sound/soc/renesas/rz-ssi.c
-+++ b/sound/soc/renesas/rz-ssi.c
-@@ -13,6 +13,7 @@
- #include <linux/module.h>
- #include <linux/pm_runtime.h>
- #include <linux/reset.h>
-+#include <sound/pcm_params.h>
- #include <sound/soc.h>
- 
- /* REGISTER OFFSET */
-@@ -87,7 +88,6 @@ struct rz_ssi_stream {
- 	int dma_buffer_pos;	/* The address for the next DMA descriptor */
- 	int completed_dma_buf_pos; /* The address of the last completed DMA descriptor. */
- 	int period_counter;	/* for keeping track of periods transferred */
--	int sample_width;
- 	int buffer_pos;		/* current frame position in the buffer */
- 	int running;		/* 0=stopped, 1=running */
- 
-@@ -217,10 +217,7 @@ static inline bool rz_ssi_is_stream_runn
- static void rz_ssi_stream_init(struct rz_ssi_stream *strm,
- 			       struct snd_pcm_substream *substream)
- {
--	struct snd_pcm_runtime *runtime = substream->runtime;
--
- 	rz_ssi_set_substream(strm, substream);
--	strm->sample_width = samples_to_bytes(runtime, 1);
- 	strm->dma_buffer_pos = 0;
- 	strm->completed_dma_buf_pos = 0;
- 	strm->period_counter = 0;
-@@ -978,9 +975,9 @@ static int rz_ssi_dai_hw_params(struct s
- 				struct snd_soc_dai *dai)
- {
- 	struct rz_ssi_priv *ssi = snd_soc_dai_get_drvdata(dai);
--	struct rz_ssi_stream *strm = rz_ssi_stream_get(ssi, substream);
- 	unsigned int sample_bits = hw_param_interval(params,
- 					SNDRV_PCM_HW_PARAM_SAMPLE_BITS)->min;
-+	unsigned int sample_width = params_width(params);
- 	unsigned int channels = params_channels(params);
- 	unsigned int rate = params_rate(params);
- 	int ret;
-@@ -999,16 +996,14 @@ static int rz_ssi_dai_hw_params(struct s
- 
- 	if (rz_ssi_is_stream_running(&ssi->playback) ||
- 	    rz_ssi_is_stream_running(&ssi->capture)) {
--		if (rz_ssi_is_valid_hw_params(ssi, rate, channels,
--					      strm->sample_width, sample_bits))
-+		if (rz_ssi_is_valid_hw_params(ssi, rate, channels, sample_width, sample_bits))
- 			return 0;
- 
- 		dev_err(ssi->dev, "Full duplex needs same HW params\n");
- 		return -EINVAL;
+--- a/sound/soc/codecs/wcd937x.c
++++ b/sound/soc/codecs/wcd937x.c
+@@ -2748,7 +2748,8 @@ static int wcd937x_bind(struct device *d
+ 	wcd937x->rxdev = of_sdw_find_device_by_node(wcd937x->rxnode);
+ 	if (!wcd937x->rxdev) {
+ 		dev_err(dev, "could not find slave with matching of node\n");
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto err_component_unbind;
  	}
  
--	rz_ssi_cache_hw_params(ssi, rate, channels, strm->sample_width,
--			       sample_bits);
-+	rz_ssi_cache_hw_params(ssi, rate, channels, sample_width, sample_bits);
+ 	wcd937x->sdw_priv[AIF1_PB] = dev_get_drvdata(wcd937x->rxdev);
+@@ -2757,7 +2758,8 @@ static int wcd937x_bind(struct device *d
+ 	wcd937x->txdev = of_sdw_find_device_by_node(wcd937x->txnode);
+ 	if (!wcd937x->txdev) {
+ 		dev_err(dev, "could not find txslave with matching of node\n");
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto err_put_rxdev;
+ 	}
  
- 	ret = rz_ssi_swreset(ssi);
- 	if (ret)
+ 	wcd937x->sdw_priv[AIF1_CAP] = dev_get_drvdata(wcd937x->txdev);
+@@ -2765,7 +2767,8 @@ static int wcd937x_bind(struct device *d
+ 	wcd937x->tx_sdw_dev = dev_to_sdw_dev(wcd937x->txdev);
+ 	if (!wcd937x->tx_sdw_dev) {
+ 		dev_err(dev, "could not get txslave with matching of dev\n");
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto err_put_txdev;
+ 	}
+ 
+ 	/*
+@@ -2775,31 +2778,35 @@ static int wcd937x_bind(struct device *d
+ 	if (!device_link_add(wcd937x->rxdev, wcd937x->txdev,
+ 			     DL_FLAG_STATELESS | DL_FLAG_PM_RUNTIME)) {
+ 		dev_err(dev, "Could not devlink TX and RX\n");
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto err_put_txdev;
+ 	}
+ 
+ 	if (!device_link_add(dev, wcd937x->txdev,
+ 			     DL_FLAG_STATELESS | DL_FLAG_PM_RUNTIME)) {
+ 		dev_err(dev, "Could not devlink WCD and TX\n");
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto err_remove_link1;
+ 	}
+ 
+ 	if (!device_link_add(dev, wcd937x->rxdev,
+ 			     DL_FLAG_STATELESS | DL_FLAG_PM_RUNTIME)) {
+ 		dev_err(dev, "Could not devlink WCD and RX\n");
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto err_remove_link2;
+ 	}
+ 
+ 	wcd937x->regmap = wcd937x->sdw_priv[AIF1_CAP]->regmap;
+ 	if (!wcd937x->regmap) {
+ 		dev_err(dev, "could not get TX device regmap\n");
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto err_remove_link3;
+ 	}
+ 
+ 	ret = wcd937x_irq_init(wcd937x, dev);
+ 	if (ret) {
+ 		dev_err(dev, "IRQ init failed: %d\n", ret);
+-		return ret;
++		goto err_remove_link3;
+ 	}
+ 
+ 	wcd937x->sdw_priv[AIF1_PB]->slave_irq = wcd937x->virq;
+@@ -2809,9 +2816,25 @@ static int wcd937x_bind(struct device *d
+ 
+ 	ret = snd_soc_register_component(dev, &soc_codec_dev_wcd937x,
+ 					 wcd937x_dais, ARRAY_SIZE(wcd937x_dais));
+-	if (ret)
++	if (ret) {
+ 		dev_err(dev, "Codec registration failed\n");
++		goto err_remove_link3;
++	}
++
++	return ret;
+ 
++err_remove_link3:
++	device_link_remove(dev, wcd937x->rxdev);
++err_remove_link2:
++	device_link_remove(dev, wcd937x->txdev);
++err_remove_link1:
++	device_link_remove(wcd937x->rxdev, wcd937x->txdev);
++err_put_txdev:
++	put_device(wcd937x->txdev);
++err_put_rxdev:
++	put_device(wcd937x->rxdev);
++err_component_unbind:
++	component_unbind_all(dev, wcd937x);
+ 	return ret;
+ }
+ 
+@@ -2825,6 +2848,8 @@ static void wcd937x_unbind(struct device
+ 	device_link_remove(wcd937x->rxdev, wcd937x->txdev);
+ 	component_unbind_all(dev, wcd937x);
+ 	mutex_destroy(&wcd937x->micb_lock);
++	put_device(wcd937x->txdev);
++	put_device(wcd937x->rxdev);
+ }
+ 
+ static const struct component_master_ops wcd937x_comp_ops = {
 
 
