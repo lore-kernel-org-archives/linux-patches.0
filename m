@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1FEA346E57;
-	Tue,  6 Jan 2026 17:43:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0274E26E6F2;
+	Tue,  6 Jan 2026 17:43:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721420; cv=none; b=HYS09PwU8ExXuqFB+yi9ks67GupQrEOtpFpZfdIFBZmgWao2AmmtH5G53tF1PG4uGeEIgXFvvLzokziPcTJSvoAxMuVJs/YvJuy/KTjB2I7/Z6mM2WCCZ2lSp4Jaj3oD0wxFMzNlZxHr7G99EX3IoaFPeXctf/C06+ssxzXMlC4=
+	t=1767721424; cv=none; b=JH4DNaxVL062NXGj9lmeFmVNiz9rS2k2pQmT2JsWP+9LOiDNeTT3MId/p7OVPfMBPHpvdZuCq7Un5vitQprb/9vM5jllrl9z3LDmLSU1PiAdagzZHKOmUYtNpldVt6psgFWW4V/hxdR4mIlEVq4G39eLFqktSRabUsvoUeupbN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721420; c=relaxed/simple;
-	bh=j4IVjUKPavKuifwiMpQ96sJ1yubQQF8i7Dxjt2BAENI=;
+	s=arc-20240116; t=1767721424; c=relaxed/simple;
+	bh=BhRCOohn4hbHUeuaWiV1DDl7OMz1rjfz2almXtCLIhY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LSQKbjtzaGSE/ax+eG/BGKYXruhcVZTbIHZbHH4CEXn1zzEaVChH7K2sPfeSVZR8GMctx6373zxirovQmSmaA7Ncjq2EJF7zLQTgvk8V+FWXs/UPQDa2Slzoy1wZO2E0ZhmkkD7q8dtIlb8GjjQzZZze0WouvGzOLUSShVY0064=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bOJO6bDJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cR9K6OqefeVh3JTq1qAS0xJOJT+6z5ywRAP2JXfi0lC0XKK+o1Z60mTHODQhtRdCePg6WF5op/leIW9vji7nKUteOmesi2kQR1dgHpxRTzxBZhysrQgSMalRcVLiApMHSWvhOM5ZQwN4adoI4d1cO588LoHq8My0oVIbSu7PYQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hAOtyseQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bOJO6bDJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA882C16AAE;
-	Tue,  6 Jan 2026 17:43:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hAOtyseQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 235F9C19425;
+	Tue,  6 Jan 2026 17:43:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721420;
-	bh=j4IVjUKPavKuifwiMpQ96sJ1yubQQF8i7Dxjt2BAENI=;
+	s=korg; t=1767721423;
+	bh=BhRCOohn4hbHUeuaWiV1DDl7OMz1rjfz2almXtCLIhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bOJO6bDJjMot6f7dZ4X56pU08/gzoZh7bx+3BRnnaXVJY5w/2K1v2WynhoNyV6hWu
-	 H3DfJ+QlynpP83FU+rHalboJMU/7dmZ+4m23wVXnHxSFZwdEvPAHqb/hOmOyE+seeF
-	 zmzy5Sy0PDMM2YUYlaRVnLGOPmdX1PW3PPCGAXhg=
+	b=hAOtyseQ6YqLp78u1CeEHn8UZ/992WrcJpHtwgbxVqepAIQoE3d60qO2K5EixnQrf
+	 N7ZhVUohMiv5Ccmu11DEUHmYWhl0Nlus84bNjEY2EYfLNktFkKhi7kkbKNkI9UW49H
+	 uctpTusDCuIii0ubBgo/NHmxYk/I/7vpNy7B4e/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Zqiang <qiang.zhang@linux.dev>,
+	Andrea Righi <arighi@nvidia.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 499/567] serial: core: Restore sysfs fwnode information
-Date: Tue,  6 Jan 2026 18:04:41 +0100
-Message-ID: <20260106170509.826051068@linuxfoundation.org>
+Subject: [PATCH 6.12 490/567] sched_ext: Fix incorrect sched_class settings for per-cpu migration tasks
+Date: Tue,  6 Jan 2026 18:04:32 +0100
+Message-ID: <20260106170509.488341378@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,70 +52,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Zqiang <qiang.zhang@linux.dev>
 
-[ Upstream commit 24ec03cc55126b7b3adf102f4b3d9f716532b329 ]
+[ Upstream commit 1dd6c84f1c544e552848a8968599220bd464e338 ]
 
-The change that restores sysfs fwnode information does it only for OF cases.
-Update the fix to cover all possible types of fwnodes.
+When loading the ebpf scheduler, the tasks in the scx_tasks list will
+be traversed and invoke __setscheduler_class() to get new sched_class.
+however, this would also incorrectly set the per-cpu migration
+task's->sched_class to rt_sched_class, even after unload, the per-cpu
+migration task's->sched_class remains sched_rt_class.
 
-Fixes: d36f0e9a0002 ("serial: core: restore of_node information in sysfs")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20251127163650.2942075-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The log for this issue is as follows:
+
+./scx_rustland --stats 1
+[  199.245639][  T630] sched_ext: "rustland" does not implement cgroup cpu.weight
+[  199.269213][  T630] sched_ext: BPF scheduler "rustland" enabled
+04:25:09 [INFO] RustLand scheduler attached
+
+bpftrace -e 'iter:task /strcontains(ctx->task->comm, "migration")/
+{ printf("%s:%d->%pS\n", ctx->task->comm, ctx->task->pid, ctx->task->sched_class); }'
+Attaching 1 probe...
+migration/0:24->rt_sched_class+0x0/0xe0
+migration/1:27->rt_sched_class+0x0/0xe0
+migration/2:33->rt_sched_class+0x0/0xe0
+migration/3:39->rt_sched_class+0x0/0xe0
+migration/4:45->rt_sched_class+0x0/0xe0
+migration/5:52->rt_sched_class+0x0/0xe0
+migration/6:58->rt_sched_class+0x0/0xe0
+migration/7:64->rt_sched_class+0x0/0xe0
+
+sched_ext: BPF scheduler "rustland" disabled (unregistered from user space)
+EXIT: unregistered from user space
+04:25:21 [INFO] Unregister RustLand scheduler
+
+bpftrace -e 'iter:task /strcontains(ctx->task->comm, "migration")/
+{ printf("%s:%d->%pS\n", ctx->task->comm, ctx->task->pid, ctx->task->sched_class); }'
+Attaching 1 probe...
+migration/0:24->rt_sched_class+0x0/0xe0
+migration/1:27->rt_sched_class+0x0/0xe0
+migration/2:33->rt_sched_class+0x0/0xe0
+migration/3:39->rt_sched_class+0x0/0xe0
+migration/4:45->rt_sched_class+0x0/0xe0
+migration/5:52->rt_sched_class+0x0/0xe0
+migration/6:58->rt_sched_class+0x0/0xe0
+migration/7:64->rt_sched_class+0x0/0xe0
+
+This commit therefore generate a new scx_setscheduler_class() and
+add check for stop_sched_class to replace __setscheduler_class().
+
+Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
+Cc: stable@vger.kernel.org # v6.12+
+Signed-off-by: Zqiang <qiang.zhang@linux.dev>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/serial_base_bus.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ kernel/sched/ext.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/drivers/tty/serial/serial_base_bus.c
-+++ b/drivers/tty/serial/serial_base_bus.c
-@@ -13,7 +13,7 @@
- #include <linux/device.h>
- #include <linux/idr.h>
- #include <linux/module.h>
--#include <linux/of.h>
-+#include <linux/property.h>
- #include <linux/serial_core.h>
- #include <linux/slab.h>
- #include <linux/spinlock.h>
-@@ -60,6 +60,7 @@ void serial_base_driver_unregister(struc
- 	driver_unregister(driver);
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -1057,6 +1057,14 @@ static struct scx_dispatch_q *find_user_
+ 	return rhashtable_lookup_fast(&dsq_hash, &dsq_id, dsq_hash_params);
  }
  
-+/* On failure the caller must put device @dev with put_device() */
- static int serial_base_device_init(struct uart_port *port,
- 				   struct device *dev,
- 				   struct device *parent_dev,
-@@ -73,7 +74,8 @@ static int serial_base_device_init(struc
- 	dev->parent = parent_dev;
- 	dev->bus = &serial_base_bus_type;
- 	dev->release = release;
--	device_set_of_node_from_dev(dev, parent_dev);
++static const struct sched_class *scx_setscheduler_class(struct task_struct *p)
++{
++	if (p->sched_class == &stop_sched_class)
++		return &stop_sched_class;
 +
-+	device_set_node(dev, fwnode_handle_get(dev_fwnode(parent_dev)));
++	return __setscheduler_class(p->policy, p->prio);
++}
++
+ /*
+  * scx_kf_mask enforcement. Some kfuncs can only be called from specific SCX
+  * ops. When invoking SCX ops, SCX_CALL_OP[_RET]() should be used to indicate
+@@ -4653,8 +4661,7 @@ static void scx_ops_disable_workfn(struc
+ 	scx_task_iter_start(&sti);
+ 	while ((p = scx_task_iter_next_locked(&sti))) {
+ 		const struct sched_class *old_class = p->sched_class;
+-		const struct sched_class *new_class =
+-			__setscheduler_class(p->policy, p->prio);
++		const struct sched_class *new_class = scx_setscheduler_class(p);
+ 		struct sched_enq_and_set_ctx ctx;
  
- 	if (!serial_base_initialized) {
- 		dev_dbg(port->dev, "uart_add_one_port() called before arch_initcall()?\n");
-@@ -94,7 +96,7 @@ static void serial_base_ctrl_release(str
- {
- 	struct serial_ctrl_device *ctrl_dev = to_serial_base_ctrl_device(dev);
+ 		if (old_class != new_class && p->se.sched_delayed)
+@@ -5368,8 +5375,7 @@ static int scx_ops_enable(struct sched_e
+ 	scx_task_iter_start(&sti);
+ 	while ((p = scx_task_iter_next_locked(&sti))) {
+ 		const struct sched_class *old_class = p->sched_class;
+-		const struct sched_class *new_class =
+-			__setscheduler_class(p->policy, p->prio);
++		const struct sched_class *new_class = scx_setscheduler_class(p);
+ 		struct sched_enq_and_set_ctx ctx;
  
--	of_node_put(dev->of_node);
-+	fwnode_handle_put(dev_fwnode(dev));
- 	kfree(ctrl_dev);
- }
- 
-@@ -142,7 +144,7 @@ static void serial_base_port_release(str
- {
- 	struct serial_port_device *port_dev = to_serial_base_port_device(dev);
- 
--	of_node_put(dev->of_node);
-+	fwnode_handle_put(dev_fwnode(dev));
- 	kfree(port_dev);
- }
- 
+ 		if (!tryget_task_struct(p))
 
 
