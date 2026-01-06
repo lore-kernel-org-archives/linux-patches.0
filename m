@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8342635293D;
-	Tue,  6 Jan 2026 17:22:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EAB735294E;
+	Tue,  6 Jan 2026 17:22:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720149; cv=none; b=jK/4NdObLC68COPOsaDPz3xVrDElRPJ/jE4gKSDhIWVU2EvmvwyNgDAKAME2LQXC86ABgMMSJr2tYfP488RirarZ/8r82/sIj69CtDX5iEd9ZxiPwppdMimUk6jcshVNGY0aE5/jtznjkWwlkm3upEJrMrmopXp7ouPwpKhkjP0=
+	t=1767720152; cv=none; b=Qtdk6aMxENHPBBmDMK99FKDeVqQ0/Oh/iMwJ6MLwbRhvBFhtEMV9GiXpyQFkCuOdlx2ygIjFSzzkG6nwvm1hVf3OQePN6nNUR22vie9ABhxWmz7l5T6DPrekGl+2COBnYns65q1/yVCilehRrvikC5I2rfsSirG3ISStxy0AAzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720149; c=relaxed/simple;
-	bh=PPPs8Z+kI3sh2hj8vRoEhWhnzspjsPz2NMiHso5UinE=;
+	s=arc-20240116; t=1767720152; c=relaxed/simple;
+	bh=3mLt6X7/OZLuJWOs4po0sajLREm7Cdd8UT9bFuVDYsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jW9//JIaJpk6ZWhPnjdGer4OPKxCbAnUvljS72VFKivZ3MZJdqfeh6jl/ZTUqzHGaKA+XJG2g1+LBVZwQ7Ppaek8/HQBX+qzC1SK42ClxQecGXWsLDBkPtBqwXOZxD/udqjZaWEQakPXz8VW1rzK1qVZvCJL5I7Kp5YN5KNBSuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VwbF8lVu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hmae7c6d4TV2+G0i2156EswGW7yHZHTjhCSDHgj3Nbk7Pco3sNyNyeP4LHnHXB/fqqrI4DQF6x7xZyxBV73AHXnFNfJ8CZPD1jf8SBCYDiMy+3h8Sk3erxX5tmhjuyVgOQzAXbnTV6hel+3MN5ZKjOa8pONmtfk2nqHfsq6K/vY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WfCbazbe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VwbF8lVu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8FC7C116C6;
-	Tue,  6 Jan 2026 17:22:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WfCbazbe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21A26C116C6;
+	Tue,  6 Jan 2026 17:22:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720149;
-	bh=PPPs8Z+kI3sh2hj8vRoEhWhnzspjsPz2NMiHso5UinE=;
+	s=korg; t=1767720152;
+	bh=3mLt6X7/OZLuJWOs4po0sajLREm7Cdd8UT9bFuVDYsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VwbF8lVu0EW91l4GETlMvzUt3JF9OBoxszdaHe2dCSxQXtwdPnzfmvgbVv0uFSTsy
-	 EnJBkLZPblfa0uNk9ifHKDr/SmqoC5GoNctKeen/9Uizkv+ijZc3dSssjmL2WBDY9I
-	 /Vlfa6O3SD98moOFRWr3cuuheezvbwKaN4nyI4yI=
+	b=WfCbazbel1x3HwE4nnAhxeBaqya/+jPpA4GIHCJr4/pzAe1FjwmoopA0IV+SIzyG+
+	 vmsrNTGvQo0HBAQdcUYGVRr2bdt62degX3+yRa0AIXxuD5rnbcagfgseqbdisD/TMa
+	 xi2CmyCnOuEK53okwoshulKD3C43uSZkY96oKtrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Garry <john.g.garry@oracle.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 149/567] scsi: scsi_debug: Fix atomic write enable module param description
-Date: Tue,  6 Jan 2026 17:58:51 +0100
-Message-ID: <20260106170456.837468271@linuxfoundation.org>
+Subject: [PATCH 6.12 150/567] block: rnbd-clt: Fix signedness bug in init_dev()
+Date: Tue,  6 Jan 2026 17:58:52 +0100
+Message-ID: <20260106170456.873692755@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,36 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Garry <john.g.garry@oracle.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 1f7d6e2efeedd8f545d3e0e9bf338023bf4ea584 ]
+[ Upstream commit 1ddb815fdfd45613c32e9bd1f7137428f298e541 ]
 
-The atomic write enable module param is "atomic_wr", and not
-"atomic_write", so fix the module param description.
+The "dev->clt_device_id" variable is set using ida_alloc_max() which
+returns an int and in particular it returns negative error codes.
+Change the type from u32 to int to fix the error checking.
 
-Fixes: 84f3a3c01d70 ("scsi: scsi_debug: Atomic write support")
-Signed-off-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20251211100651.9056-1-john.g.garry@oracle.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: c9b5645fd8ca ("block: rnbd-clt: Fix leaked ID in init_dev()")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_debug.c | 2 +-
+ drivers/block/rnbd/rnbd-clt.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index 89a2aaccdcfc..dfe38d34d051 100644
---- a/drivers/scsi/scsi_debug.c
-+++ b/drivers/scsi/scsi_debug.c
-@@ -6716,7 +6716,7 @@ MODULE_PARM_DESC(lbprz,
- MODULE_PARM_DESC(lbpu, "enable LBP, support UNMAP command (def=0)");
- MODULE_PARM_DESC(lbpws, "enable LBP, support WRITE SAME(16) with UNMAP bit (def=0)");
- MODULE_PARM_DESC(lbpws10, "enable LBP, support WRITE SAME(10) with UNMAP bit (def=0)");
--MODULE_PARM_DESC(atomic_write, "enable ATOMIC WRITE support, support WRITE ATOMIC(16) (def=0)");
-+MODULE_PARM_DESC(atomic_wr, "enable ATOMIC WRITE support, support WRITE ATOMIC(16) (def=0)");
- MODULE_PARM_DESC(lowest_aligned, "lowest aligned lba (def=0)");
- MODULE_PARM_DESC(lun_format, "LUN format: 0->peripheral (def); 1 --> flat address method");
- MODULE_PARM_DESC(max_luns, "number of LUNs per target to simulate(def=1)");
+diff --git a/drivers/block/rnbd/rnbd-clt.h b/drivers/block/rnbd/rnbd-clt.h
+index a48e040abe63..fbc1ed766025 100644
+--- a/drivers/block/rnbd/rnbd-clt.h
++++ b/drivers/block/rnbd/rnbd-clt.h
+@@ -112,7 +112,7 @@ struct rnbd_clt_dev {
+ 	struct rnbd_queue	*hw_queues;
+ 	u32			device_id;
+ 	/* local Idr index - used to track minor number allocations. */
+-	u32			clt_device_id;
++	int			clt_device_id;
+ 	struct mutex		lock;
+ 	enum rnbd_clt_dev_state	dev_state;
+ 	refcount_t		refcount;
 -- 
 2.51.0
 
