@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C74234EF00;
-	Tue,  6 Jan 2026 17:21:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5BF834EF11;
+	Tue,  6 Jan 2026 17:21:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720084; cv=none; b=DCwY8JV0AEoItv8C4X5DpLDWH0eO0Yj1GYlB+vYyBvEzDV0mMDac5w5XDBmDUMZE6bsuwTZx7lPQh5oUVLVb7VIxNd6NvfDwygnr41RcRnu5ab4/mIDIYNY0JLmX9OiKq8YdmkLvSuufvc04tamuDPvvhA6f12O+UTHjtStxJps=
+	t=1767720088; cv=none; b=bwBfZtWtx/GrjDdwAR7EFB/C32fQHRNgIzVd+p7XHeVXISlo2nYkTOYOIHCHhxDZJNNccPLX+q75W3I7GBxuT9kGOOs4Yhsnj2G4rlMZub52C9V29vSgeBE6aXIbYeeMs8WAsX5zWtwKCQ5N4TiXgFnAv0gbaf70U8lEXf6nnk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720084; c=relaxed/simple;
-	bh=Sob3AN0l6Pex+RKnVDtE19JRD1/Bo+/N9K9TKDDxxfs=;
+	s=arc-20240116; t=1767720088; c=relaxed/simple;
+	bh=dd6+9r/3EufCPWDAfCUPm9kkBsjjEzoWl6dj38G3tAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W0c99KAdUTJefKJq0k5LR0c3+4MqN6rvUM0WfVszUq3n29hG61upnAvcdkgkuOl6X857+ZOICmbgpbK5TymFvmN3O+p5A1LZyh6b6OVgvDdRk0n1YOyO3BukzgHPLCY47khGnWIIq3mmTfRl6gzpXadKRQJy5pPRZt4BA0iWuRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hVcUvbfo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MgKwhysZGeHvFnrxs4rb/X5Kpk78toaFzcv6SHg35KtWczTKJNp1MA55wd+cr80zXpr3OSUU5RrgrG+wWFMx+q5vZkp8KLaqZjHc+qCuhz4oLDVZJLXWu+LnJNx8xO/yw7Xkqps9kjKKtAq2+SIfeD5FmLMAXVA3zhUdJEofWgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UpTGaB8b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hVcUvbfo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A603C116C6;
-	Tue,  6 Jan 2026 17:21:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UpTGaB8b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 631B2C2BC9E;
+	Tue,  6 Jan 2026 17:21:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720084;
-	bh=Sob3AN0l6Pex+RKnVDtE19JRD1/Bo+/N9K9TKDDxxfs=;
+	s=korg; t=1767720087;
+	bh=dd6+9r/3EufCPWDAfCUPm9kkBsjjEzoWl6dj38G3tAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hVcUvbfof1UR24hT8Gciz/mhlMP4HgnInqAcOxwQ7/Y6eMbzRY2My8U7w/Ue5tLqp
-	 pGDlbqoXEXCxJEqYwZn5aZVq6W4aSkTEu+Tajc+3pLBJXkqgJ1GuflnLXXS1ES/vTn
-	 g2ZS1TfVBcjDDOSNQjpKnyhFOHN1bsQyo5XFIwZ4=
+	b=UpTGaB8bYeXIc5+ej2x4ohZz4eG7NU1xUhYgzq+rx5pDw1/j0fsDLzF/Y0aCJZeAN
+	 jW+EerigXKk0OZDFl3O23yin20Sg1KqDeZNxTrMcSAa92e3MtzXDhExhIbMN3qyY//
+	 OiUNo+N2O8iisnRygtF/hBzf3VHI7xAXXtLKeZLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Battersby <tonyb@cybernetics.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Bernd Schubert <bschubert@ddn.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 129/567] scsi: qla2xxx: Use reinit_completion on mbx_intr_comp
-Date: Tue,  6 Jan 2026 17:58:31 +0100
-Message-ID: <20260106170456.101973737@linuxfoundation.org>
+Subject: [PATCH 6.12 130/567] fuse: Always flush the page cache before FOPEN_DIRECT_IO write
+Date: Tue,  6 Jan 2026 17:58:32 +0100
+Message-ID: <20260106170456.137807784@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,43 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Battersby <tonyb@cybernetics.com>
+From: Bernd Schubert <bschubert@ddn.com>
 
-[ Upstream commit 957aa5974989fba4ae4f807ebcb27f12796edd4d ]
+[ Upstream commit 1ce120dcefc056ce8af2486cebbb77a458aad4c3 ]
 
-If a mailbox command completes immediately after
-wait_for_completion_timeout() times out, ha->mbx_intr_comp could be left
-in an inconsistent state, causing the next mailbox command not to wait
-for the hardware.  Fix by reinitializing the completion before use.
+This was done as condition on direct_io_allow_mmap, but I believe
+this is not right, as a file might be open two times - once with
+write-back enabled another time with FOPEN_DIRECT_IO.
 
-Signed-off-by: Tony Battersby <tonyb@cybernetics.com>
-Link: https://patch.msgid.link/11b6485e-0bfd-4784-8f99-c06a196dad94@cybernetics.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Bernd Schubert <bschubert@ddn.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_mbx.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/fuse/file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_mbx.c b/drivers/scsi/qla2xxx/qla_mbx.c
-index 13b6cb1b93ac..41435e98092a 100644
---- a/drivers/scsi/qla2xxx/qla_mbx.c
-+++ b/drivers/scsi/qla2xxx/qla_mbx.c
-@@ -253,6 +253,7 @@ qla2x00_mailbox_command(scsi_qla_host_t *vha, mbx_cmd_t *mcp)
- 	/* Issue set host interrupt command to send cmd out. */
- 	ha->flags.mbox_int = 0;
- 	clear_bit(MBX_INTERRUPT, &ha->mbx_cmd_flags);
-+	reinit_completion(&ha->mbx_intr_comp);
+diff --git a/fs/fuse/file.c b/fs/fuse/file.c
+index a8218a3bc0b4..ec1b235df91d 100644
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -1582,7 +1582,7 @@ ssize_t fuse_direct_io(struct fuse_io_priv *io, struct iov_iter *iter,
+ 	if (!ia)
+ 		return -ENOMEM;
  
- 	/* Unlock mbx registers and wait for interrupt */
- 	ql_dbg(ql_dbg_mbx, vha, 0x100f,
-@@ -279,6 +280,7 @@ qla2x00_mailbox_command(scsi_qla_host_t *vha, mbx_cmd_t *mcp)
- 			    "cmd=%x Timeout.\n", command);
- 			spin_lock_irqsave(&ha->hardware_lock, flags);
- 			clear_bit(MBX_INTR_WAIT, &ha->mbx_cmd_flags);
-+			reinit_completion(&ha->mbx_intr_comp);
- 			spin_unlock_irqrestore(&ha->hardware_lock, flags);
- 
- 			if (chip_reset != ha->chip_reset) {
+-	if (fopen_direct_io && fc->direct_io_allow_mmap) {
++	if (fopen_direct_io) {
+ 		res = filemap_write_and_wait_range(mapping, pos, pos + count - 1);
+ 		if (res) {
+ 			fuse_io_free(ia);
 -- 
 2.51.0
 
