@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C5E35E550;
-	Tue,  6 Jan 2026 17:47:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3117935E55B;
+	Tue,  6 Jan 2026 17:48:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721678; cv=none; b=gZYBd8K6ny39vtB5JP4EyT6WrRCpEHNwYV8JxPI+lb3iNnCZtM3zjXDcwkituq8zUuTydIH3XLUtfjhfq2Du+AQj9RrxXgJuOY8qk9pbjvmntlQQCD2e/1wRbvTTjcMsSYGQ1Mnsl/uuwCCyluq4SMys0B0GtSMgcBuRN6SzqKE=
+	t=1767721682; cv=none; b=GWdkO+Oyq1UaHUPS+uy/NApr9BIKvwdGDq0qUMaLQp73aCvKGS+X22RhAsKSdXvupbVTVJ3/f6z4O9BsgcF4BAMYiTu6z4PWG3h10qJluOsZoDkFdeBmU6gfL2IEcbnVbAKROQZkInLokZO7yF8ofFdTjl/SXP3KpXTW6kh3cgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721678; c=relaxed/simple;
-	bh=5wzrzI8Oz9MpefXG7x0Q/1wN4vMeXfke9hC5TCfTwLk=;
+	s=arc-20240116; t=1767721682; c=relaxed/simple;
+	bh=7bQ82fr5e/tc0PQ3Iz8p1Ki2KCSH21xZ48nOXq65l+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T/oJWdrsdSlo2+rOdDrN011QMVJ7yEBCkxRkBRyd9K3Zf17cIxUGQ9BSEdY5wZhcji6RQY3FMsvc2y1kcsyIvrcpKEuc+vo+2VQ+tXJpdGbzF234kK8Yc8pfgigg1nf+OFcIc73Z0YRwy9S9GRuwu+Oki/2xu7yj+ORFIGstDh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2mJqprsQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SbzDvly1O+aSo5uKLCYlzKgnCphRUQ2qLkyy5AQR8cWeN2OiewBqUexd5ZfpjeofpZdnEnpqJgLXuIDCFSpX8OIZPIl0aIrhKxXMrLm0x1+X0qW5IO8657Wm1jlXpMR3pVyBGVNB2x+itg8JIH8e6xZyXQoJHsI2xS9HmdLuVTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wqITe5oM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2mJqprsQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0524AC116C6;
-	Tue,  6 Jan 2026 17:47:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wqITe5oM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95C9DC116C6;
+	Tue,  6 Jan 2026 17:48:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721678;
-	bh=5wzrzI8Oz9MpefXG7x0Q/1wN4vMeXfke9hC5TCfTwLk=;
+	s=korg; t=1767721682;
+	bh=7bQ82fr5e/tc0PQ3Iz8p1Ki2KCSH21xZ48nOXq65l+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2mJqprsQXx1rgR09z+5aX/hXCBJsAgBUtnWv61Roo0vX9ZpRIhIfTFDbIa0YI7BCR
-	 yjdPciNNDlb2PnC9uFhoO4QOO0Ob3jVBT3WgUaZ0LqBVK5rdzXRFwAh8nIujnbFKEQ
-	 z0+y6AnIBJTNc+LiZLoNWboC54M+HvmZpjmfCZt8=
+	b=wqITe5oMfMjvmGAztlG665P+n6MI7C4mBNWTiP7Xfb3TfWqCPRUeXdXjCVDYFMavH
+	 XeE1cflOrAEqmAqAnc41qbYXgY0lak1AEQRdAi8EUSj9do0Lzpz5U3VMs3hiL4z7P/
+	 wWvV3i6wzEoc0aPRe7/FRXm9e9zzWIoPYV8a9eQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Zahka <daniel.zahka@gmail.com>,
+	syzbot+8dd915c7cb0490fc8c52@syzkaller.appspotmail.com,
+	Deepakkumar Karn <dkarn@redhat.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 039/312] selftests: drv-net: psp: fix test names in ipver_test_builder()
-Date: Tue,  6 Jan 2026 18:01:53 +0100
-Message-ID: <20260106170549.269321220@linuxfoundation.org>
+Subject: [PATCH 6.18 040/312] net: usb: rtl8150: fix memory leak on usb_submit_urb() failure
+Date: Tue,  6 Jan 2026 18:01:54 +0100
+Message-ID: <20260106170549.305548385@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -51,38 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Zahka <daniel.zahka@gmail.com>
+From: Deepakkumar Karn <dkarn@redhat.com>
 
-[ Upstream commit f0e5126f5e55d4939784ff61b0b7e9f9636d787d ]
+[ Upstream commit 12cab1191d9890097171156d06bfa8d31f1e39c8 ]
 
-test_case will only take on the formatted name after being
-called. This does not work with the way ksft_run() currently
-works. Assign the name after the test_case is created.
+In async_set_registers(), when usb_submit_urb() fails, the allocated
+  async_req structure and URB are not freed, causing a memory leak.
 
-Fixes: 81236c74dba6 ("selftests: drv-net: psp: add test for auto-adjusting TCP MSS")
-Signed-off-by: Daniel Zahka <daniel.zahka@gmail.com>
-Link: https://patch.msgid.link/20251216-psp-test-fix-v1-2-3b5a6dde186f@gmail.com
+  The completion callback async_set_reg_cb() is responsible for freeing
+  these allocations, but it is only called after the URB is successfully
+  submitted and completes (successfully or with error). If submission
+  fails, the callback never runs and the memory is leaked.
+
+  Fix this by freeing both the URB and the request structure in the error
+  path when usb_submit_urb() fails.
+
+Reported-by: syzbot+8dd915c7cb0490fc8c52@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=8dd915c7cb0490fc8c52
+Fixes: 4d12997a9bb3 ("drivers: net: usb: rtl8150: concurrent URB bugfix")
+Signed-off-by: Deepakkumar Karn <dkarn@redhat.com>
+Link: https://patch.msgid.link/20251216151304.59865-2-dkarn@redhat.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/drivers/net/psp.py | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/usb/rtl8150.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/drivers/net/psp.py b/tools/testing/selftests/drivers/net/psp.py
-index 827e04cc8423..473573e216e3 100755
---- a/tools/testing/selftests/drivers/net/psp.py
-+++ b/tools/testing/selftests/drivers/net/psp.py
-@@ -570,8 +570,9 @@ def ipver_test_builder(name, test_func, ipver):
-     """Build test cases for each IP version"""
-     def test_case(cfg):
-         cfg.require_ipver(ipver)
--        test_case.__name__ = f"{name}_ip{ipver}"
-         test_func(cfg, ipver)
-+
-+    test_case.__name__ = f"{name}_ip{ipver}"
-     return test_case
- 
- 
+diff --git a/drivers/net/usb/rtl8150.c b/drivers/net/usb/rtl8150.c
+index 278e6cb6f4d9..e40b0669d9f4 100644
+--- a/drivers/net/usb/rtl8150.c
++++ b/drivers/net/usb/rtl8150.c
+@@ -211,6 +211,8 @@ static int async_set_registers(rtl8150_t *dev, u16 indx, u16 size, u16 reg)
+ 		if (res == -ENODEV)
+ 			netif_device_detach(dev->netdev);
+ 		dev_err(&dev->udev->dev, "%s failed with %d\n", __func__, res);
++		kfree(req);
++		usb_free_urb(async_urb);
+ 	}
+ 	return res;
+ }
 -- 
 2.51.0
 
