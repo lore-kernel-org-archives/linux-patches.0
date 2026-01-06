@@ -1,220 +1,260 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3421622097
-	for <patches@lists.linux.dev>; Mon,  5 Jan 2026 20:15:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.14
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767644147; cv=fail; b=izPAPm1gGMxIiD0SpHwnZtQQUqXEoxt7QXbe1D0o2emeKro+yoj+brcAcP88MQkFgc91bo56LCjGRfAco5EriJy0rI6JjKwYiXMAcVdCQFOqVS0GyJLVJ5QMPG3i32Slx5HoJ2OQFEw6F4y/EOVd7BHXBe4sQz7JojQqWb1Ajy0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767644147; c=relaxed/simple;
-	bh=iRq0J440dgt2gz6qPASxq2fkOVjQNM6YsfrrNOyz9Gc=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=amCM4KXDu7bbpAxpxY/VwH50Pa2cBFvuxMND2dgvTtTX0z6JVgW8zKSr7Wiv5zBQlg7CZpkDqozChzPCg6gkdFD8m3zBRngG9msGtrz8yUOYNijWI/n+8EhKIKOEjR+m1m6h8YEqCgE7vVQF3HgoxHRjtj3dWU74zWbyCANtthc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=nUr777CB; arc=fail smtp.client-ip=192.198.163.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88CB5308F32
+	for <patches@lists.linux.dev>; Tue,  6 Jan 2026 09:46:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1767692786; cv=none; b=AW4Xjw1O+KZG3gyVml1nTj/xspO1bs/7sSk/VnoQZHWXsNbJk0ljJKaYQBx1+0qc1ec0QrJkP3fiDOX8+4/xYsPf9DvHKpicPs0hev4Cj0LJEczWsXHL2e7Bdq4Pg+1pWu0Yo3Vqyu2AAEWYO3sDf4GccU/ckiWjRPBTl8XSCJk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1767692786; c=relaxed/simple;
+	bh=a4pCkGrO8NHaFUsy0JV7PE7ELAOTbmXkWYg7O8l4NKc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BtYmmgebo+DPaoasxS90/CPWPtEcr7X4k2KDOYFCZwQrdWDUKBLHiyecTYaHXIs1t+43OF21jRVHswP8A884pmItnqnjvkiwmHlq/chXMjxUt/Lw58Gl9rFaS1rQf99fFX8dmAgiwh7sTvf/igiccRA49pNZZMXu7nAK3MZq4wI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GzQBG29b; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="nUr777CB"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1767644145; x=1799180145;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=iRq0J440dgt2gz6qPASxq2fkOVjQNM6YsfrrNOyz9Gc=;
-  b=nUr777CBmYZgpPRIm3GLgLpAhS/xd73jdiwAtiTx/aApsidNEhsuUcnr
-   k/tBlIZlNTtI0jUm6npPHOO6LRgSbf1n7/dIlzJ1wV2rIj6jk0Mh/UlDk
-   g1tFasbrdrilAqX9VbfbJKeZ2p5FVPx4kA0sw2GmDsqemUZtqhXEU6lQE
-   fIIy9scOKLysOYzCZat/W2GYCH4u3EdE0lakFruVV7Y+YAJmtkFfnL7zW
-   doLd/e/XifNrcEvt+XNfnL6Pl7Unc/rgBj8pV032yKMqOhM7hT5R3mYKy
-   Kwzv8WVKVxC/aRNPGL5q9yXfWPGy9kTq1fjM06jC0unI5OPY1TnVhkAQN
-   w==;
-X-CSE-ConnectionGUID: u1QvXAT5SKaBowlwy0LS8A==
-X-CSE-MsgGUID: FIrjkw/EStSysmzJFGQSWw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11662"; a="69056067"
-X-IronPort-AV: E=Sophos;i="6.21,204,1763452800"; 
-   d="scan'208";a="69056067"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jan 2026 12:15:44 -0800
-X-CSE-ConnectionGUID: 0KmNK6oPRX6Kbql6auav7A==
-X-CSE-MsgGUID: BwjGfiKvSPK5Q90RF73erw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,204,1763452800"; 
-   d="scan'208";a="207507220"
-Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
-  by orviesa005.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jan 2026 12:15:44 -0800
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.29; Mon, 5 Jan 2026 12:15:43 -0800
-Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.29 via Frontend Transport; Mon, 5 Jan 2026 12:15:43 -0800
-Received: from SN4PR0501CU005.outbound.protection.outlook.com (40.93.194.14)
- by edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.29; Mon, 5 Jan 2026 12:15:38 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=mCHwsj9dz5nOKitorGzQ4gXpe3Woiqktu//CqhlXW004Lt/SG4cXapUn08NGDwOU4P2vMrPYZkR5zQTCiFK9Iobf78GZ6jOUqhCg03YA9YAClP7Lba/hKXl83/7jN6yHDFs5F8P3+Ju0qUpiqYjSW8Cqz4bCBHYsKgmIxX0WZPilpSay9m3pA/Bo/cL7w5NNd8BsILTKmvI9N6AB1dV+OZuCqlRu2YHhfHrvBIwMgx1KfCmZnYJl5jN22fAOcZLQlVToXD2uTo62nLTsMKgf46cvb7kpQe3RW/zsFYJNbkM/H3Ca1uoWXiHWNlx/gzh3WVPTErEebvH3dWbF0eWSFw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=iRq0J440dgt2gz6qPASxq2fkOVjQNM6YsfrrNOyz9Gc=;
- b=FkVGmuCOPKIl6RRuNMPZyB7czjXJJtDE23yop/TruXgYgOT0YLcM2k+4gogiP29s0C8lzjiScQjPNg0fcDZ6Vd3FpTf/hYat1Whe8XWiDlV/viVOw9U5GJ5VdUMH4gPd8Fk7ly20NdURytDriIqfqXTi0cMHfbSJcV3GZaWQg3FfljvPl6SuTTEtiezV6iJUz6si4qnv3Tatddo/yB3GkAPnUWMIMwm71wD5zxF3aOBqyAS5DIRgmjJ3kUP2oheXhAhoQkwp7SsofOSYswY9FRpOqL/TyLueJD+ElfRLQTFVdU6lHUz83otaYX0BrYkpIxfdhqPPzrlgtfYYumcV6Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com (2603:10b6:a03:48a::9)
- by CYYPR11MB8305.namprd11.prod.outlook.com (2603:10b6:930:c1::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9478.4; Mon, 5 Jan
- 2026 20:15:35 +0000
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::3454:2577:75f2:60a6]) by SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::3454:2577:75f2:60a6%3]) with mapi id 15.20.9478.004; Mon, 5 Jan 2026
- 20:15:35 +0000
-From: "Luck, Tony" <tony.luck@intel.com>
-To: Borislav Petkov <bp@alien8.de>, "Chatre, Reinette"
-	<reinette.chatre@intel.com>
-CC: Fenghua Yu <fenghuay@nvidia.com>, "Wieczor-Retman, Maciej"
-	<maciej.wieczor-retman@intel.com>, Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>, "Drew
- Fustini" <dfustini@baylibre.com>, Dave Martin <Dave.Martin@arm.com>, "Chen,
- Yu C" <yu.c.chen@intel.com>, "x86@kernel.org" <x86@kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: RE: [PATCH v17 13/32] x86,fs/resctrl: Add an architectural hook
- called for each mount
-Thread-Topic: [PATCH v17 13/32] x86,fs/resctrl: Add an architectural hook
- called for each mount
-Thread-Index: AQHcb3meeV5DFUqPs0KzzVX1okMZoLVEENWAgAAGO4CAAAcDgIAAAUnw
-Date: Mon, 5 Jan 2026 20:15:35 +0000
-Message-ID: <SJ1PR11MB60837B0B18CA663282190AE8FC86A@SJ1PR11MB6083.namprd11.prod.outlook.com>
-References: <20251217172121.12030-1-tony.luck@intel.com>
- <20251217172121.12030-14-tony.luck@intel.com>
- <20260105191711.GBaVwON5nZn-uO6Sqg@fat_crate.local>
- <aVwTcX7V_HN2j6SW@agluck-desk3>
- <20260105200435.GCaVwZU2gFV3LhJnMR@fat_crate.local>
-In-Reply-To: <20260105200435.GCaVwZU2gFV3LhJnMR@fat_crate.local>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ1PR11MB6083:EE_|CYYPR11MB8305:EE_
-x-ms-office365-filtering-correlation-id: 6f8c0006-75bd-4f50-28b0-08de4c972fba
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|376014|7416014|366016|1800799024|38070700021;
-x-microsoft-antispam-message-info: =?utf-8?B?NFRNdC9hU1Vva29jakp6U0tYdTlwbHlJcE5Qa0dObGoyK3pzdFB5QVR0Z1FX?=
- =?utf-8?B?Z1ZWNU51N20zZkQ0a1FHU1A3YnBBbHZPbFVFSEVEbDJFekxLYnBGM2xCaXgv?=
- =?utf-8?B?bmFWR2M1ZGtxd01EbHcwaWQ0K1RMV0VvT0JqWllqTXNjS05oajdUZkFuUTJI?=
- =?utf-8?B?b0NDTGZIbmlqREhLcmFWWTZHYXRnZUd2Q2ZUQmtZUEFBU1plR01hSDVFbnNE?=
- =?utf-8?B?NEdqaGhsV1ZIYldpVkN4M0lsVHczMlpVYjZtN2kyQjBIenhBTWxxRXZNNGwz?=
- =?utf-8?B?VVJLUjdVYVB1K0ZmWDdFZXRpYUYrV0tpTkxkSlNkOXFPS0h5OERjdTRVOURO?=
- =?utf-8?B?SGR2UUs4NUNSclpnd0tZTWx6dFRFL00vUGVjcUtBWU1EVjBuMUNyOUlrUXFH?=
- =?utf-8?B?RUZRS2o0SjJRelVyQjBpL0M3YW9wTlo4SEQ1Zm1CUmpIVXlBSkhoTDdjNGpW?=
- =?utf-8?B?ZHQvNkhBcnRIRXIrdnVOQzc0QmJUUFpJdFBTZGRHZTF4YkxKZm9TQzRaQTIz?=
- =?utf-8?B?eTFXZE9sNWJkUWkxancyNis5blVLNktURjZybjZYQktLRmZiL2hFT2Z1UlBW?=
- =?utf-8?B?TFZVaStOSWp3SVhYeTFiV3pNTEFHQUs0bWlxTjFsU3N0NE95ZjNBekxGdHJK?=
- =?utf-8?B?cnpqVEg4RTJxb04reXFBL3kyNzlsUWtpS29DY09JVUg3K3NNS2NyWE93b0RN?=
- =?utf-8?B?YmFUbE5DL1NZUGQveDQ1aGNVb05HNnQ0b3R3Nkw5MGZvY1dscEFhYjJKQXJG?=
- =?utf-8?B?QTE0RFcyd3dCQUFNZFUzZTVBOFZYZmw1WnlWTkVuQ3ZFUi9ybWIyUktQT2lT?=
- =?utf-8?B?VDgyUWR5OHkwYk1LTGN1ZUZLL1laQUFwejRicmFaaGg0Y0pwdTRwSU1hdWh1?=
- =?utf-8?B?NUh6N01mSzdZc0hKT3N6dE50aEpOdjNnNHgyTGZYSnQwZ3NqTXBTZWFmYW80?=
- =?utf-8?B?Q1lNaWtlcDlqS0YxOVB5RHZTRFVKMER6UEs2QjBGL0l3MkpRSVM0QXhPSnJr?=
- =?utf-8?B?eVo2cjBqUHBWNW5zMFNhWkFOTS9qVTVGSVZ3Qkp5aFVsMnZFZGp2TkkrNEN5?=
- =?utf-8?B?ZHFnVHJJaW8xd1Fzalg0Q0kraTl2Z0F0d0VKcmhSMmhabnZrcmNFYVZLRmFO?=
- =?utf-8?B?N3lUK3BzTWtMbi9wQWJ4SXdPUC80NFdpMGRJQkhVbHJwRmlBaDB1R0VrRllS?=
- =?utf-8?B?cXdMK3M0SkcybENBUzJyemV6NUN0bnlETEYyMlpQa2hyQyswUVk4NllndEM2?=
- =?utf-8?B?NGtGUVVJUkw5b3c1Tzh5NENkOTZraTZ1R0lDY2FLWkFON1lwVlF5RzZERDRJ?=
- =?utf-8?B?dXhmQ1dycGZ2TW16dko4cEZ2UnlBa2J3MGhPanNVUlNRc0lsVjliUDNibXhk?=
- =?utf-8?B?UThLQzc1Z1NtSzFtcE45Q3Jqd2pkOG9nbVNnbFZEam9uK3JOL1lHeGxrOWFP?=
- =?utf-8?B?RUxlOXc0a0tKTU02amdqVHpXbFRicDdHc2F2azk3UEZSRjR4YkwrQ1AvbzZJ?=
- =?utf-8?B?eW9xZFIvaE1RdXIvQUoxYTJiUTV4eVZNTEhwRXFuR1ZIQmN0K25qaE1Ma3Z0?=
- =?utf-8?B?aTJmSjRRUVNDTkpOM0U5RWswb0FRa2JTYjBpeVJ3b2xkV293djhWVjJGZ0Nj?=
- =?utf-8?B?TXZQb2FOVFJmSWM2NWhNaHlORHlyazFJdWt2b1RxaG0wUU5KVEg4cm9DNytu?=
- =?utf-8?B?RXFvVjc3SzFOcmpMQ2lBU3BCTVlyYnVsekVJMk12aEpBbTdqd1g5b25xT1Vj?=
- =?utf-8?B?ZFN4NG5NVmRJSGZNbXFKc04yYkFva1doWWZ3czlLUGJSZ1gwZXhiWTduTEdV?=
- =?utf-8?B?Nmp4ejlsalFsZGVrNlphRyt4UWJaRGI0T3Nua3NhYUd5U1N2TDdxNGVHcHkw?=
- =?utf-8?B?ZzRRSTVLM1JZZFpTNFZ4U1U3MmVHUHF5YWhsRjk4dDY2TTZrUWpHSjBiNUZs?=
- =?utf-8?B?a1BQVlBzbi9xQVU0Ri9uS3Joc3JOYis5QVc0a29QZkdrTU1PUisyTm9KNE9m?=
- =?utf-8?B?L09CMWVYQWJaSGtxUzJMZEhpQ0lObERaOXQ1RXp1aDFvRkpIcmlUUkhqd2NS?=
- =?utf-8?Q?IaQ1Ff?=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR11MB6083.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(366016)(1800799024)(38070700021);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?WXo1MzBMT3ZzWE1xZTlMekF0YjArOW1kUnNleDcvMnZLYTBpbjNNeWdmMFhJ?=
- =?utf-8?B?R3ZIS29DcHk3MGZXZUIxbkVFaUFQR0FLSWp5MEtINGZLS2JMYTYvVWZkSzJv?=
- =?utf-8?B?bkNOZkFmckxlVjlxdWJZTlFpNlRDbU9iNGYvZDZmczU3VHZ1NjJCZUl2Vmpj?=
- =?utf-8?B?cVowM2VEcXUxbWtrdVFPTkJGU2VtS1pPQjB1SVhjcUhMRllvU0dSUnYvSm5M?=
- =?utf-8?B?SWcyQVZJa0RzdjJuU3NqL29ENHBGZzU2Wk1tSlVndXY4bE1oQ3Q3YUJvaEhk?=
- =?utf-8?B?bVM0WWx2RmNnQktMUzhZYytXUGVFdU91OHhoUG1ZSkYvTTdrM01aVmhpUkxD?=
- =?utf-8?B?Zm9mZG1Xbk5oaWJMbVN1UXl2WVEzV0NKQ29iamEzZ09oZ3R1bk5oZFZUOUdO?=
- =?utf-8?B?WFBLOUdET1dET0pkUTkzWk5qa2g3ZFNGM0VxYlI0RTlvOHdYRlhBUmo3bWNV?=
- =?utf-8?B?Q3VxOVphMFhZYm82MDJuY25zL2R2V2hzcjRVTnZpTkFMaUlxcUdSMlFmZVdG?=
- =?utf-8?B?ZkNVVEdvNkhUY2w5Umd2YTlyQUxqRis0MGVHZnlJbU10ckhXV1A4K3R6aEVX?=
- =?utf-8?B?all5c0ZxbER1clRUYlg2Zzl3a1cvampBcXRWM3V5S3F0VitpNnZRMXUrcEV4?=
- =?utf-8?B?R1ZOenRpem9TWXJqTXp6ekFvdXF5c3FaOHpUaHQ3QzlPbWtoOGo0a09uRDkr?=
- =?utf-8?B?R3Y4enBNMDZkV0h2RVdTdjJMSEExR3doSmxSK0x4TnRiT2VYSlJEVTJBN01N?=
- =?utf-8?B?TGNNM2thYU52L1pYUDIrR2h5bVRIam1JSGl6K0xYYXFiSHlZVmsvYnFadlUv?=
- =?utf-8?B?clBwUTRYbHNUNDVMREVCUGxCVUxPNUh4eE5XWGtWeUhvRjNqL2ptdjlXKzJu?=
- =?utf-8?B?KzJSL2JsN2FFeFFZR0pTQ3pQS0JVQ3hRZXMwOUZoNlZnaC9YZ1hVb1MzOGJJ?=
- =?utf-8?B?VnBtWUI2ekR2N2ZhR1ByNlFwdHYxZW9wd0hXRTkrcitnL2tjUjk0cWh0bXUv?=
- =?utf-8?B?b1Z0OVUzR3Jya0dIWm1RR2lIa2JjaHBOMGNJWWRjZ3l0Mkk2WHErRkljVzZn?=
- =?utf-8?B?bzlPajFsM2tPUFdRNEwwRWozT1QrM2wxS2FzcmJIRXBQbGNQSE5wZW1saDF1?=
- =?utf-8?B?Y2tidHdSUkRDUklhMi9IZTZsTlFZYnBBTjErOUQ1NEMvMU9TVWlwY2xSaWNy?=
- =?utf-8?B?T1VlUk9zbXF5azJVWkdxVXIvaVpZazlXeCtmY3B1SVROMlVoTVhkU3dMUlhz?=
- =?utf-8?B?emM3RW1HNWRQeHBhN2x5TUUvdlhTQ1hldnRNWjdDNERlMWpNMEp1c21uM3Ri?=
- =?utf-8?B?ZEFRL0FaSkF5bTJkZzdCb0c2K09tSzZSbHVaTG5kOFZ3aGdlc3NFWWVsamtJ?=
- =?utf-8?B?Rjk5ektZTmxGOFNTaExxZWlOa2Q5aWhVZERqN0E4K2ZaZnFJM1o3U0NjWHYv?=
- =?utf-8?B?eUNhNEd2WDZpbE1Wa0JGM3MyZmJwUTI4ZERKNGFDeThrMWgvYzRuV1BVLzEz?=
- =?utf-8?B?OHhzOTRKSnBSQXcwa1k4N1diM2NLWmIzV29INUxuSjVhU1hjU2wrakhCTUsr?=
- =?utf-8?B?UDRxT3lDTjdNZnoxaUthcHY1ZDg3QjNlQ0FBeEV6eTRkcUpqYWRKQytzcU9r?=
- =?utf-8?B?bmRDRG1wREJZcEN3d2pkQXVvbkRyRWZ3UENXcmhjbDBxcjNtd2xHVjduSENF?=
- =?utf-8?B?TjRmUVNUK2tHOTY0bEhycGFUVy9uOVdGYjNtSVpiV1RVT1R2VkNJemg5VDA2?=
- =?utf-8?B?UGY4eFgzZnZJSEV6WHZNS3NyVS82RnR2NS9NMlNMMjBJek1HZVFIYVJWZElh?=
- =?utf-8?B?TG5mdVZ4RG5CaS82Ym1vZi9ZeW9vRG9yNmo0MmNGTkNJNUZET1Y3VGlkT1JW?=
- =?utf-8?B?UVBnd3A1QkZFaTA1cWl3WDdXWWtMUjR0TXhRQ2RERWxnV3VMdVhLbTBYK0k1?=
- =?utf-8?B?THV5OUR6c2QxR2tYUnF4Mmd0c2d1emV4UFBoT0tIalQ3UWxBSDNabVB1MTA5?=
- =?utf-8?B?VUlEMDJTOHZpell3NDJzSnJHTW4wbVNrM0ljcUlNdGVUQm9RS1RtV1plVFNk?=
- =?utf-8?B?c2N3UTc3eEh1WXRUaEFDU1E5eGtlMnRMTitIRUJRd29acVQ3V1dnTWYyd1dN?=
- =?utf-8?B?Q3c4ZnpPR2h2dk1qd2NmYnVoY3FOTEtGRWF2ZzlENW01VlNqdXNuOGxVOHhC?=
- =?utf-8?B?NWN6OHJFdmxrRGFBN0RZTWk2NXhhUWowQ0doK25OUVpXa1NPbE5OQkxWTUVz?=
- =?utf-8?B?aTVHZkx3Rk5OVXIvTTU1MVZkZ3JWRlBGTUUyRllGbHNzSFdSanFKcGc2L25a?=
- =?utf-8?Q?JXXpr2Wyd9zeM+4E3h?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GzQBG29b"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2a08ced9a36so1452135ad.2
+        for <patches@lists.linux.dev>; Tue, 06 Jan 2026 01:46:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1767692784; x=1768297584; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IWHtzRLOB0gsaHyHpcyCg2Z+qiKJnnvo9pUwckRF/cQ=;
+        b=GzQBG29btwO1LCzAc6dBgM0bs1WK5xFYnWJDFz7x+cdYcu0kHQHaWT8KTUJJl4ROjm
+         43N34UcSDZsrOpI8etvUnYbwxOk21XdvoPt+Crc49aiWq2ErfIZMI5AajDmHqWbIKDYM
+         jwqsmPyY9xQUlyCtOFiI+MQtaGs2Yo5eQgFLlqys17bQEPINuJ3QtIC9hTBHmQoiXmsS
+         SlRpFJMgrCci0LlR/Qe6nNKcAEbDlgMedC84A8wtbfvPmJDb4gnFWWT5Xby3wbhe0VY5
+         tgdDovIkSzyOoq/QnI3x4f96IOkp7q/zgSUj6yON5GuM5d9Zjv1a2YBCM8OihtSvInwJ
+         1ZKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767692784; x=1768297584;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=IWHtzRLOB0gsaHyHpcyCg2Z+qiKJnnvo9pUwckRF/cQ=;
+        b=UMp6KD6xo4f0mK5GsNoSdSTqwt8ylHmqH1DYmXwDzJnRtpgpr229P0oRyLjNFu3kE0
+         2W0X4Lu/DaK67eXiFt5ASxAlDvta49fc8yJqEkDXIr1q8aELzD0wxuR+viSPWU8gbmX5
+         hXqTIpWpkLgxa47k6wBeNxDtQdgxy36hbEw1dzgXtfryvxCJ3F8dCx9yJsg6zKmoLfZo
+         AvBr7gQe4n2Qr69TPKkRhUEuYTZDwKdHT6qHCDh/gw6e31IHlhIbjLmxTQZCl9HmLhVH
+         HblgY4eZtwbh0gwnxP+tepywbTexkZYoLZOSU20vxcYHdX/XW3X++HMXb7guh3QgVygI
+         LYgQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXl4YZO8jwku0ZwEyTOEWz7D0DR9RWQjr01CQEooXklU+BEtsoB8wp1mOi+D/QSb4MeM8FmLm8G@lists.linux.dev
+X-Gm-Message-State: AOJu0YyP+BZzy2kBlAp0AavaVfsarb939GwBU8IsAVs82eeUPl4D1IHb
+	7M5x2x2ePPtDzNA/aJ23y8ymBhvVTLEhaFLx8RQRllLUDfWGN/E5+3k2YM64nf6sUNCAfjHSiK6
+	+Lsnd8pQp8p7p89iMveANLAHoRYHrEkI=
+X-Gm-Gg: AY/fxX76ZN9GbxjHmsyAm4F9cz5FKnvNeAm5Chb9lrOi5/JnOJRmqmkuKisx+NF90jz
+	Jx24L46NjvFDOlES3vTSLgLL5AXOFP+IiB3HHzy7X4tsLAl8XRQz2FBTmEwhSCSezpxRWJPMEEB
+	xNe6zRRyuU5dAFBORZEhCAu/9nOipiGJcE64PLdnmPBTaON1Ya2aHIQnVCLEZkyKheObWpM7LMl
+	tXJcQpsqJRQ8YAfwMdt9k+h5TTGKDYnFrBkUC1q1vc7wHEFxivVEpUVueoQ5H43UkVLFFWJD61O
+	0tlkjqfkWT07OZMfevm8p4btKQknB+bwRHF/SPoxJFjTXIZZOREPF2Bq9g0qTyW3pnuNB1NJxw3
+	J8nSCJ1OIuw4JqIpFWcYgFa4=
+X-Google-Smtp-Source: AGHT+IGZErVvI2lseGufu+xoWWNjTS0IFbizNSmxMqu9oLAFKR3RnErmOEmLfl72C07T7Y1HDw+wgqib0Cgql4LAiO8=
+X-Received: by 2002:a05:7301:168d:b0:2ae:5a24:249 with SMTP id
+ 5a478bee46e88-2b16f6f82c7mr1043614eec.0.1767692783667; Tue, 06 Jan 2026
+ 01:46:23 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PR11MB6083.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6f8c0006-75bd-4f50-28b0-08de4c972fba
-X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Jan 2026 20:15:35.7480
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: YaE19lzL4/hnkZCn2cRPpGDi6rmdhDZUdf4i4IHkORpdL4At0ZU/YpDo0OekNwh6nzdbv2csA91fQSWguke/LQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYYPR11MB8305
-X-OriginatorOrg: intel.com
+References: <20251201000949.1626363-1-ojeda@kernel.org> <aS3seTNRum3ZXMom@yury>
+ <CANiq72=1ipov2pV9pSQwGh9WMA4NvQRV_cBCO0hhChVg=c-Njw@mail.gmail.com>
+ <aS7aHIJbi3DlaUcc@google.com> <aS8w4FHhIVQUFTEY@yury>
+In-Reply-To: <aS8w4FHhIVQUFTEY@yury>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Tue, 6 Jan 2026 10:46:11 +0100
+X-Gm-Features: AQt7F2psBYaPyhcfhcRa6tt3cVf1oYBAyJ1lA0eLnUOSmBK-lRIafwteRgzLfLI
+Message-ID: <CANiq72m9fQ=W4yjrAQWE5j+eBpPY7xetPjsHRdXfjYmmohj8FQ@mail.gmail.com>
+Subject: Re: [PATCH] rust: id_pool: fix example
+To: Yury Norov <yury.norov@gmail.com>
+Cc: Alice Ryhl <aliceryhl@google.com>, Miguel Ojeda <ojeda@kernel.org>, Burak Emir <bqe@google.com>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Trevor Gross <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-PiBPaywgaWYgaXQgd29ya3MgYW5kIHBhc3NlcyB0ZXN0aW5nLCBJIGNvdWxkIHdhaXQgZm9yIHlv
-dSB0byBzZW5kIG1lIGFuIHVwZGF0ZWQNCj4gcGF0Y2ggYW5kIGRyb3AgdGhpcyBvbmUuDQoNCkJ1
-aWxkaW5nIGFuZCB0ZXN0aW5nIG5vdy4NCg0KUmVpbmV0dGU6IFdoZW4gb3JpZ2luYWxseSBkZXZl
-bG9waW5nIHRoaXMgeW91IHN1Z2dlc3RlZCB0aGF0IHJkdF9nZXRfdHJlZSgpDQpzaG91bGQgY2Fs
-bCByZXNjdHJsX2FyY2hfcHJlX21vdW50KCkgb24gKmV2ZXJ5KiBtb3VudCAodG8gbWFrZSBpdCBn
-ZW5lcmFsbHkNCnVzZWZ1bCBzaG91bGQgZnV0dXJlIGNoYW5nZXMgbmVlZCBzb21ldGhpbmcgdG8g
-YmUgZG9uZSBpbiBhcmNoaXRlY3R1cmUgY29kZQ0Kb24gZWFjaCBtb3VudCkuDQoNClRoYXQgZmxl
-eGliaWxpdHkgaXNuJ3QgbmVlZGVkIGZvciBlbnVtZXJhdGluZyB0ZWxlbWV0cnkgZXZlbnRzLiBC
-b3Jpcycgc3VnZ2VzdGlvbg0KdG8gdXNlIERPX09OQ0VfU0xFRVBBQkxFKCkgd291bGQgcmV2ZXJ0
-IHRvIHdoYXQgSSBoYWQgaW4gc29tZSBlYXJsaWVyDQp2ZXJzaW9uIHdoZXJlIHJkdF9nZXRfdHJl
-ZSgpIG9ubHkgY2FsbHMgdGhpcyBob29rIG9uIGZpcnN0IG1vdW50Lg0KDQpBcmUgeW91IE9LIHdp
-dGggdGhpcz8gT3IgZG8geW91IHN0aWxsIHRoaW5rIHRoYXQgdGhlIGhvb2sgc2hvdWxkIGJlIGNh
-bGxlZCBvbg0KZXZlcnkgbW91bnQ/DQoNCi1Ub255DQo=
+On Tue, Dec 2, 2025 at 7:33=E2=80=AFPM Yury Norov <yury.norov@gmail.com> wr=
+ote:
+>
+> No. Maintainers are not handy testers at your convenience.
+
+It definitely is your responsibility to test your tree. This is basic stuff=
+.
+
+And I am not sure what you are trying to imply here with your words in
+your reply, but I personally find your message and its tone borderline
+unacceptable. I was actually trying to help you, so it is doubly
+annoying to get such a reply, to be honest.
+
+I will reply to a few things below to keep the record straight now
+that LPC is over and I had the chance to talk about this to a few
+people.
+
+> Don't be sorry, it's not your fault. The problem is that bearing
+> tests smeared among comments is a terrible idea, and now you reap
+> the benefits of someone else's bad design.
+>
+> (Did I warn about it? Yes I did.)
+
+They are not comments: they are _documentation_, which is different,
+not just conceptually, but also technically. From that idea, the rest
+follows quite easily.
+
+They are also not tests in the sense of "we write tests like this" --
+they are primarily *examples*,  which are a fundamental part of the
+documentation. They are not supposed to replace tests.
+
+And it is important to understand that those examples would be there
+*anyway* whether we compiled them or not. The fact that we actually
+can not just build but runtime test them within KUnit is a very good
+thing, because it ensures that the examples that developers wrote are
+actually true *and remain true* even across refactoring/time.
+
+That is, the examples will always reflect the reality of the API, the
+asserts will always represent the true return values of the API, there
+will be no typos of all kinds when typing the examples, and so on and
+so forth.
+
+Regardless of all that, other (non-Rust) maintainers do want to have doctes=
+ts.
+
+So, no, doctests are staying, and we are writing more of them, not
+less. In fact, new APIs should come with examples unless there is a
+good reason not to.
+
+> The other problem is that Miguel replied in great details about how
+> well rust process is designed,
+
+The point was not to tell you about how "well designed" anything is
+"in great detail", and I am not sure if you are sarcastically saying
+this.
+
+I simply gave you a link to our docs and suggested you could have a
+similar field in the `MAINTAINERS` file, because in my experience
+(which you can easily check in the mailing list) people actually do
+write and test doctests.
+
+As I said, I was just trying to help.
+
+> and even attached an external link,
+> but didn't answer my question: how to enable rustdoc by default?
+
+I *did* answer your question, and pretty directly:
+
+  1) I explained it was not a `rustdoc` target issue.
+
+  2) I explained the Kconfig should not be enabled by default.
+
+Now, it is clear that you are still quite confused about what failed
+and that you didn't take the time to read into the link I provided, or
+the docs, or the Kconfig option I mentioned.
+
+So from your point of view, since you thought this was a different
+topic, I guess you could have thought "Miguel is talking to me about
+unrelated things". That is fine, but you can always say it politely,
+and I would have tried to clear the confusion again.
+
+> I followed this link by the way. It doesn't mention that rustdoc step
+> is mandatory. It doesn't provide steps for careful testing.
+
+It does (both) and I quote:
+
+    When submitting changes to tests, including #[test]s, Kselftests
+and examples inside Rust code documentation (i.e. "doctests", which
+are transformed into KUnit tests), please test them.
+
+You are just confusing the issue. This is about *testing*, not about
+`rustdoc`, as I already explained in my previous message, so you read
+the wrong bullet point.
+
+It even clarifies what doctests are and even links to the "Testing" in
+the kernel tree which is a page dedicated to explain this.
+
+Even if you missed that, I even explicitly told you in my previous
+message the Kconfig option you had to enable.
+
+Even if the docs were wrong or may be improved, your message is just
+not a productive way to engage.
+
+> Does it sound like:
+>
+>         Rustdoc is a MANDATORY step! You MUST run rustdoc every single
+>         time, otherwise the build will get BROKEN. Even if you don't
+>         touch comments!
+
+Yes, it does very explicitly explain the mandatory steps. No, they are
+not comments. No, this is not about the `rustdoc` target. See above
+for the quotes.
+
+> No, it does not. So, I wasted an hour just to find nothing. But there
+
+Yes, it does. And you didn't have to "find" anything. I *explicitly
+told you* the Kconfig you needed in my previous message.
+
+> It's good that I started receiving such a traffic at all. But it's
+> especially good because I was on my way to submit a PR to Linus, and
+> that hour saved me a broken request. Andrew Morton on the previous
+> cycle wasn't that lucky, didn't he?
+
+What do you mean? Where do you want to go with this? Please speak
+clearly here -- veiled comments aren't useful nor polite.
+
+> 2. I will stop taking any rust patches unless the author explicitly
+>    mentions that he ran rustdoc on them.
+
+Submitters are definitely supposed to test their code, just like for
+any other code. And as a maintainer you are the one that decides what
+is "good enough" etc.
+
+But everyone misses things from time to time, sometimes authors are
+newcomers, sometimes they may not have their full testing setup
+nearby, etc., so you as a maintainer still need to test it anyway.
+
+That is the point -- both submitters and maintainers are supposed to
+work in tandem and double-check the other side, since anyone can miss
+things.
+
+To me, it sounds like just because you don't like doctests, you are
+going to ask *everyone else* to do the testing for you, which
+personally doesn't sound acceptable to me, to be honest.
+
+I also find it a bit amusing, because you told me "Maintainers are not
+handy testers at your convenience": To me, it sounds like *you* are
+the one asking others to test your branch for you.
+
+> 3. I encourage rust community to spend this cycle on reviewing the
+>    development and submitting process. You guys decided to sprinkle
+>    compilable code across the comments, and you advocate it. Now
+>    please find a way for everyone to compile your comments (huh)
+>    during a routine development. And please make that knowledge
+>    very sound.
+
+No. You don't get to blame others here. I am always happy to "review
+the process" to improve it, but this issue has nothing to do with
+that.
+
+The process is quite clear, has been documented/followed/discussed for
+a long time, and other subsystems and maintainers take advantage of
+the feature and use it extensively.
+
+It is obviously fine to not know about something (nobody can read
+everything), but that doesn't mean you get to pass the buck and to
+change how it all works just because you don't like doctests unless
+you convince everyone using the feature that they shouldn't use it
+anymore.
+
+And it seems you also ignored from my message why the doctests are not
+built in every config (which is very much done on purpose), and
+instead keep pushing for it, which is not useful and is not going to
+go anywhere.
+
+Cheers,
+Miguel
