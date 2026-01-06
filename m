@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364BF225A3B;
-	Tue,  6 Jan 2026 17:37:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B1E7225A3B;
+	Tue,  6 Jan 2026 17:37:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721064; cv=none; b=KGqMi+bxzsfqNoNyY5luaqI74zrnAJgBFhfXreZGxT03+TDuXFjQb2tHBE670D8AsOS1suSKdB9o9YK5i03F73L2VZ98DG3ACRRe9UwHWVxSMM0gG75TJiRFfO+IE4Xy/jLA0XwySuZZ+iTwpAK7D4lCiih02hobgajit+erWpk=
+	t=1767721067; cv=none; b=cYts3lqBIGpSmdUpDZG/OlAtSLsB61WsQhV/42U0Zi6RzG5mOCdtN8fRrTnIdqnPYIr1t0eAN21Jzt21+wm/T9A0rHQIUsHK9T2ADgxiH18+yBGoAW2aXYg6aFmxCpoj+1Edkj8CraNS2Em+sZOuidP7FbP1rz6PMUJ8/XXHaNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721064; c=relaxed/simple;
-	bh=EcneMUXGOo9eCjKwkMvYJiXmepLfIF5EvIxOFKC4Wzg=;
+	s=arc-20240116; t=1767721067; c=relaxed/simple;
+	bh=8V81BwuHmz4IakOAZcI6bSMMQxACn9z4nYpmi5ggJAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mgzuhl55ho9VPiKLf0Hhv/vlD2sKgGQYwVWEcg1y61o2QZU8QhH6dGohPYaTmPTVEmUi8Kq0vQk44sVaLFxsYSdI1MWqwA71LoG7UbmGVXD0XuEgxb2ydru5/AmXZYrplKLoHXf80vArQ2GoLSo+TgAAihuOStfapqWeazW2JjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iaVqjf05; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jtqAmEP+d4jVmjKuHgIwpPSYpIk6x6ZTxfPTPB/uAbnNP0OOmc0cs2fMfDkfcgep6sAjWY+V4soBBrs+rbahnZkfn7nB+0I8Z3rqB/+5J6P1kdjhXPORJQP2RKO6JnZpB28lVFfNALo8yw+m0wRAHihNqdhZ12KmgAHn93HFQ8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e0lk2GiI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iaVqjf05"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F81BC116C6;
-	Tue,  6 Jan 2026 17:37:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e0lk2GiI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15143C116C6;
+	Tue,  6 Jan 2026 17:37:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721064;
-	bh=EcneMUXGOo9eCjKwkMvYJiXmepLfIF5EvIxOFKC4Wzg=;
+	s=korg; t=1767721067;
+	bh=8V81BwuHmz4IakOAZcI6bSMMQxACn9z4nYpmi5ggJAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iaVqjf05YgioxvrQnrHI4r7M0tW1Tkwjxe7zwwJaDPGs74KS99g5KQeFPudRLzjPB
-	 qq5k79NKfCMyzfkmwHxXuflJlzgP2FsGSWB/Z4MOK5TG79xVyXWC83PU2Q5FoyzAkr
-	 8JtjRStzVa33uCMtM9Xf4B0mx8hnBpTBHVrywtD4=
+	b=e0lk2GiItswsEwtjm7vEZiqafA/S9ZqT1gfelpsRG3LKn/PXHkKhpohJVuN+v/Wse
+	 +kHhk60Hdq5Bji5SuqV0yIO50TsBT9wgPG/2Ck2i7sstSW8YYkp0VTZRb9MIaP2gDi
+	 7DiPoLSxDw88a0iOPPavN7/NG6YdM3FBmXrsleZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schnelle <svens@stackframe.org>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.12 392/567] parisc: entry: set W bit for !compat tasks in syscall_restore_rfi()
-Date: Tue,  6 Jan 2026 18:02:54 +0100
-Message-ID: <20260106170505.842450598@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Sandipan Das <sandipan.das@amd.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>
+Subject: [PATCH 6.12 393/567] perf/x86/amd/uncore: Fix the return value of amd_uncore_df_event_init() on error
+Date: Tue,  6 Jan 2026 18:02:55 +0100
+Message-ID: <20260106170505.879254617@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -50,58 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Schnelle <svens@stackframe.org>
+From: Sandipan Das <sandipan.das@amd.com>
 
-commit 5fb1d3ce3e74a4530042795e1e065422295f1371 upstream.
+commit 01439286514ce9d13b8123f8ec3717d7135ff1d6 upstream.
 
-When the kernel leaves to userspace via syscall_restore_rfi(), the
-W bit is not set in the new PSW. This doesn't cause any problems
-because there's no 64 bit userspace for parisc. Simple static binaries
-are usually loaded at addresses way below the 32 bit limit so the W bit
-doesn't matter.
+If amd_uncore_event_init() fails, return an error irrespective of the
+pmu_version. Setting hwc->config should be safe even if there is an
+error so use this opportunity to simplify the code.
 
-Fix this by setting the W bit when TIF_32BIT is not set.
+Closes: https://lore.kernel.org/all/aTaI0ci3vZ44lmBn@stanley.mountain/
 
-Signed-off-by: Sven Schnelle <svens@stackframe.org>
+Fixes: d6389d3ccc13 ("perf/x86/amd/uncore: Refactor uncore management")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Sandipan Das <sandipan.das@amd.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
+Link: https://patch.msgid.link/076935e23a70335d33bd6e23308b75ae0ad35ba2.1765268667.git.sandipan.das@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/asm-offsets.c |    2 ++
- arch/parisc/kernel/entry.S       |    5 ++++-
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ arch/x86/events/amd/uncore.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/arch/parisc/kernel/asm-offsets.c
-+++ b/arch/parisc/kernel/asm-offsets.c
-@@ -258,6 +258,8 @@ int main(void)
- 	BLANK();
- 	DEFINE(TIF_BLOCKSTEP_PA_BIT, 31-TIF_BLOCKSTEP);
- 	DEFINE(TIF_SINGLESTEP_PA_BIT, 31-TIF_SINGLESTEP);
-+	DEFINE(TIF_32BIT_PA_BIT, 31-TIF_32BIT);
-+
- 	BLANK();
- 	DEFINE(ASM_PMD_SHIFT, PMD_SHIFT);
- 	DEFINE(ASM_PGDIR_SHIFT, PGDIR_SHIFT);
---- a/arch/parisc/kernel/entry.S
-+++ b/arch/parisc/kernel/entry.S
-@@ -1846,6 +1846,10 @@ syscall_restore_rfi:
- 	extru,= %r19,TIF_BLOCKSTEP_PA_BIT,1,%r0
- 	depi	-1,7,1,%r20			   /* T bit */
+--- a/arch/x86/events/amd/uncore.c
++++ b/arch/x86/events/amd/uncore.c
+@@ -595,14 +595,11 @@ static int amd_uncore_df_event_init(stru
+ 	struct hw_perf_event *hwc = &event->hw;
+ 	int ret = amd_uncore_event_init(event);
  
-+#ifdef CONFIG_64BIT
-+	extru,<> %r19,TIF_32BIT_PA_BIT,1,%r0
-+	depi	-1,4,1,%r20			   /* W bit */
-+#endif
- 	STREG	%r20,TASK_PT_PSW(%r1)
+-	if (ret || pmu_version < 2)
+-		return ret;
+-
+ 	hwc->config = event->attr.config &
+ 		      (pmu_version >= 2 ? AMD64_PERFMON_V2_RAW_EVENT_MASK_NB :
+ 					  AMD64_RAW_EVENT_MASK_NB);
  
- 	/* Always store space registers, since sr3 can be changed (e.g. fork) */
-@@ -1859,7 +1863,6 @@ syscall_restore_rfi:
- 	STREG   %r25,TASK_PT_IASQ0(%r1)
- 	STREG   %r25,TASK_PT_IASQ1(%r1)
+-	return 0;
++	return ret;
+ }
  
--	/* XXX W bit??? */
- 	/* Now if old D bit is clear, it means we didn't save all registers
- 	 * on syscall entry, so do that now.  This only happens on TRACEME
- 	 * calls, or if someone attached to us while we were on a syscall.
+ static int amd_uncore_df_add(struct perf_event *event, int flags)
 
 
