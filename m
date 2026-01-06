@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFAD034CFC8;
-	Tue,  6 Jan 2026 17:20:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DACCB34D395;
+	Tue,  6 Jan 2026 17:20:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720027; cv=none; b=Y+xViMgc11P3K4Tde1pDtYH5StZAVnF0ygvcxSYbF/XDuUieF79scyZLGb4TeboFKfu8QPQ/RsuewG5z3EDl8gQ7rF/HBqG20AjkSTopVM7sCkvZBDE9EH6hZWl8q09oCLokxncwDbwuaC/pq48KS0h7Ds/+YYEMGCUE4jZYbtc=
+	t=1767720031; cv=none; b=BL71kdctmvi6FqEGbLtbB4hJnyRi4jOHfRf4MaBZnJMpz3a78nLRFUiXlhh+dYZbX3Zztlem2Muc/RKTfH7V/cCOYerpNAgaLoRG3G7X+XVigLWUWUFG9X9bTK68EPXJ9qe1zYdft4quNiMC2TZYtZAfENvSyvDjPoPrFUKPQ3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720027; c=relaxed/simple;
-	bh=Y7TJsESkqZVpEJduGoBDEDtNKO+NyPNNTT6CQcKstOs=;
+	s=arc-20240116; t=1767720031; c=relaxed/simple;
+	bh=MDgpE+Dq10LkGLP+s7Xz1Xh42qA8ojki9LJDAMWF4Bg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mhbRLrbulyduNcEfPdrFILH9RTaMdoHcDPBjsUEpa0Aubei57jR5/y98I5Pj8JuaXL6/Te5P0UqxbCI3ckzTr3hVmpNU3Xcm/ZIJVH/7hhY5GdTpbBQ2IE6R9BdzaChD2lA0oEU304ML7OiGjjtOfgDwMGEpLoVB23nK8sc76JY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UIDKUsY6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uGSGN6AS44sLVgau2Phzmgu86NABmNfgXfMnTVe9gutOEH/ob35st2afBqEdlIzazim4rlwkhBmDzvP79rTRmwY3Tce/okB91IOnRZdcRi1RiPLuq4CNmVyqz6vlC7LpZy4TXKLYpacaZfjK6SSpaZBkbhsgABXghAC+0XBjkkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PMh/BZ4C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UIDKUsY6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D804CC116C6;
-	Tue,  6 Jan 2026 17:20:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PMh/BZ4C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 445D0C116C6;
+	Tue,  6 Jan 2026 17:20:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720027;
-	bh=Y7TJsESkqZVpEJduGoBDEDtNKO+NyPNNTT6CQcKstOs=;
+	s=korg; t=1767720030;
+	bh=MDgpE+Dq10LkGLP+s7Xz1Xh42qA8ojki9LJDAMWF4Bg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UIDKUsY6utx9cRrghWDa/RaIc64/3LMl4Yew8cUipk8fAtGKj5+2YyP6ETnO+WEs5
-	 sQNaBgOHzKoyUsdZ5wIlBq/ofSc57P2DKzV+dz/hnuRvNgpnT4BoHLxTAvDKot7Vfb
-	 mJ2pSitZUYg5kIPyTVISwLfM+M4fGySvyrsN25N0=
+	b=PMh/BZ4CJQhtQsOXfT2UTlGgT8sjPS9aCwIlCmPjMIq5rD4mWyMD/eU3cF0EdiqUq
+	 K3gF55GZMnXordYfBc7Yw6BuiCor1YJnHxYxkq3Val5tMdq0qdLfXwq/mx6/MxK1a5
+	 /jeTVCYDzIh0dhsC4GMzvgjd3hO4ZpPm/czXg8Ao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"DARKNAVY (@DarkNavyOrg)" <vr@darknavy.com>,
+	Shipei Qu <qu@darknavy.com>,
 	Takashi Iwai <tiwai@suse.de>,
-	Haotian Zhang <vulab@iscas.ac.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 113/567] ALSA: pcmcia: Fix resource leak in snd_pdacf_probe error path
-Date: Tue,  6 Jan 2026 17:58:15 +0100
-Message-ID: <20260106170455.509892359@linuxfoundation.org>
+Subject: [PATCH 6.12 114/567] ALSA: usb-mixer: us16x08: validate meter packet indices
+Date: Tue,  6 Jan 2026 17:58:16 +0100
+Message-ID: <20260106170455.548717426@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,46 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Shipei Qu <qu@darknavy.com>
 
-[ Upstream commit 5032347c04ba7ff9ba878f262e075d745c06a2a8 ]
+[ Upstream commit 5526c1c6ba1d0913c7dfcbbd6fe1744ea7c55f1e ]
 
-When pdacf_config() fails, snd_pdacf_probe() returns the error code
-directly without freeing the sound card resources allocated by
-snd_card_new(), which leads to a memory leak.
+get_meter_levels_from_urb() parses the 64-byte meter packets sent by
+the device and fills the per-channel arrays meter_level[],
+comp_level[] and master_level[] in struct snd_us16x08_meter_store.
 
-Add proper error handling to free the sound card and clear the card
-list entry when pdacf_config() fails.
+Currently the function derives the channel index directly from the
+meter packet (MUB2(meter_urb, s) - 1) and uses it to index those
+arrays without validating the range. If the packet contains a
+negative or out-of-range channel number, the driver may write past
+the end of these arrays.
 
-Fixes: 15b99ac17295 ("[PATCH] pcmcia: add return value to _config() functions")
-Suggested-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20251215090433.211-1-vulab@iscas.ac.cn
+Introduce a local channel variable and validate it before updating the
+arrays. We reject negative indices, limit meter_level[] and
+comp_level[] to SND_US16X08_MAX_CHANNELS, and guard master_level[]
+updates with ARRAY_SIZE(master_level).
+
+Fixes: d2bb390a2081 ("ALSA: usb-audio: Tascam US-16x08 DSP mixer quirk")
+Reported-by: DARKNAVY (@DarkNavyOrg) <vr@darknavy.com>
+Closes: https://lore.kernel.org/tencent_21C112743C44C1A2517FF219@qq.com
+Signed-off-by: Shipei Qu <qu@darknavy.com>
+Link: https://patch.msgid.link/20251217024630.59576-1-qu@darknavy.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pcmcia/pdaudiocf/pdaudiocf.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ sound/usb/mixer_us16x08.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/sound/pcmcia/pdaudiocf/pdaudiocf.c b/sound/pcmcia/pdaudiocf/pdaudiocf.c
-index 494460746614..7531e89e35da 100644
---- a/sound/pcmcia/pdaudiocf/pdaudiocf.c
-+++ b/sound/pcmcia/pdaudiocf/pdaudiocf.c
-@@ -131,7 +131,13 @@ static int snd_pdacf_probe(struct pcmcia_device *link)
- 	link->config_index = 1;
- 	link->config_regs = PRESENT_OPTION;
+diff --git a/sound/usb/mixer_us16x08.c b/sound/usb/mixer_us16x08.c
+index 20ac32635f1f..d05cb54de788 100644
+--- a/sound/usb/mixer_us16x08.c
++++ b/sound/usb/mixer_us16x08.c
+@@ -656,17 +656,25 @@ static void get_meter_levels_from_urb(int s,
+ 	u8 *meter_urb)
+ {
+ 	int val = MUC2(meter_urb, s) + (MUC3(meter_urb, s) << 8);
++	int ch = MUB2(meter_urb, s) - 1;
++
++	if (ch < 0)
++		return;
  
--	return pdacf_config(link);
-+	err = pdacf_config(link);
-+	if (err < 0) {
-+		card_list[i] = NULL;
-+		snd_card_free(card);
-+		return err;
+ 	if (MUA0(meter_urb, s) == 0x61 && MUA1(meter_urb, s) == 0x02 &&
+ 		MUA2(meter_urb, s) == 0x04 && MUB0(meter_urb, s) == 0x62) {
+-		if (MUC0(meter_urb, s) == 0x72)
+-			store->meter_level[MUB2(meter_urb, s) - 1] = val;
+-		if (MUC0(meter_urb, s) == 0xb2)
+-			store->comp_level[MUB2(meter_urb, s) - 1] = val;
++		if (ch < SND_US16X08_MAX_CHANNELS) {
++			if (MUC0(meter_urb, s) == 0x72)
++				store->meter_level[ch] = val;
++			if (MUC0(meter_urb, s) == 0xb2)
++				store->comp_level[ch] = val;
++		}
+ 	}
+ 	if (MUA0(meter_urb, s) == 0x61 && MUA1(meter_urb, s) == 0x02 &&
+-		MUA2(meter_urb, s) == 0x02 && MUB0(meter_urb, s) == 0x62)
+-		store->master_level[MUB2(meter_urb, s) - 1] = val;
++		MUA2(meter_urb, s) == 0x02 && MUB0(meter_urb, s) == 0x62) {
++		if (ch < ARRAY_SIZE(store->master_level))
++			store->master_level[ch] = val;
 +	}
-+	return 0;
  }
  
- 
+ /* Function to retrieve current meter values from the device.
 -- 
 2.51.0
 
