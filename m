@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7AA52D73B9;
-	Tue,  6 Jan 2026 17:40:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49AD22D73B9;
+	Tue,  6 Jan 2026 17:40:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721212; cv=none; b=hhyWtAqN1Q9mUhgFmr8cjJi8g8Q2/U6snoF+JaoUr1HeUpM2rMRBq6HJMT2GqTA1C3le5YqAUkY3+kg1FRdTui4Ridv2cNGmBuy2Qa6g2WD8C9Y7fEu53E8o8ycBZhWqu1zxY+cM4GxcP+2UPemUwVLWcTEFrPScBjrgcPrDNjk=
+	t=1767721216; cv=none; b=Y66u7T8u2/Dar3c1lRjqecVAfhTDkd84vVMuY9ql3sFW58wBlBqhhOoHykiDqAMGxkch6psckRMawzqBEg2KEMylefuMVLkjssLRy+yVcSaF5HhKEJkuSRRlYAMgrD1r5o+E9G4sfnp+4W4tidEia4HZlOfsF6q1B0+I4Zmzesw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721212; c=relaxed/simple;
-	bh=X2A8Zv6qUaN/0WHBsfGz+TigYEvkLc+bxGZ5PsCERzs=;
+	s=arc-20240116; t=1767721216; c=relaxed/simple;
+	bh=0wuhMG1OIY7x+Q/YzFEQXWE6XYDWMYlxd6BgrSlW6Ic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rZEUd/zfPQa+bthdr2y9azjGAyPy6ORVEE32iZhcQPd6Ij++XzHuQ8EBI0qXYamjxm8Tj4BVA4lIl+qnX1pqQzpZrLvqRrqUWFA7LoBOi+QZnY9yd2oaxXvll5TxgHmtoYHpsSzYbupN+6PcsDmAyI74Ks90SyiZ1qb3awSH73c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NK2gCV3G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KexKW+wTqPMHeR6RnZ4axI8HXzM24MjDwCEJ91GPfM5TPmF0ymJEAApCUVH3GG5X8FEJoxRT1ljGDgdhVux9zn65J1SFZ5yvzfoEhY0sY+Ulu3lw4CXGTKbiqyFj6PJ7R5V/cuM7QP2uXfbyPaEEef0RIMGitvso0RCk45cG70U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cavIzn+T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NK2gCV3G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 192D8C116C6;
-	Tue,  6 Jan 2026 17:40:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cavIzn+T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59540C19423;
+	Tue,  6 Jan 2026 17:40:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721212;
-	bh=X2A8Zv6qUaN/0WHBsfGz+TigYEvkLc+bxGZ5PsCERzs=;
+	s=korg; t=1767721215;
+	bh=0wuhMG1OIY7x+Q/YzFEQXWE6XYDWMYlxd6BgrSlW6Ic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NK2gCV3Gcvs4psDRfBMjOfJU9NXeMrK1T2GULusGXF0VE9xAVFWuiAyHF7uNtqR1E
-	 zq0mDEaLkasTuCy4h4k/E/xbResWth9ucwYiww3oOeCVPJPN3m4lnHdfZF9uQLciXQ
-	 vCb9KHQvjH+JONFOkG6RamrmsD/bpEY3oMOLkt+g=
+	b=cavIzn+TJLKdvoUm4NBhU5RK3W37W/rGw5zFHe3scUx2IJjmzNezxSJenXJxPmTcp
+	 OuUddGgi82vzv66bIDUDs+/dayvM2WZx2fCVsDQvDaMS2HPspOEffim663E52HFfDo
+	 GNIuyy5ztahGmMb8hgEx2HwQ6wMfQs+mRDeSNZ+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kent Russell <kent.russell@amd.com>,
+	Jonathan Kim <jonathan.kim@amd.com>,
 	Mario Limonciello <mario.limonciello@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 470/567] drm/amdkfd: Export the cwsr_size and ctl_stack_size to userspace
-Date: Tue,  6 Jan 2026 18:04:12 +0100
-Message-ID: <20260106170508.738528089@linuxfoundation.org>
+Subject: [PATCH 6.12 471/567] drm/amdkfd: bump minimum vgpr size for gfx1151
+Date: Tue,  6 Jan 2026 18:04:13 +0100
+Message-ID: <20260106170508.775781097@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,34 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Jonathan Kim <jonathan.kim@amd.com>
 
-commit 8fc2796dea6f1210e1a01573961d5836a7ce531e upstream.
+commit cf326449637a566ba98fb82c47d46cd479608c88 upstream.
 
-This is important for userspace to avoid hardcoding VGPR size.
+GFX1151 has 1.5x the number of available physical VGPRs per SIMD.
+Bump total memory availability for acquire checks on queue creation.
 
-Reviewed-by: Kent Russell <kent.russell@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Jonathan Kim <jonathan.kim@amd.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 71776e0965f9f730af19c5f548827f2a7c91f5a8)
+(cherry picked from commit b42f3bf9536c9b710fd1d4deb7d1b0dc819dc72d)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_topology.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_queue.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
-@@ -509,6 +509,10 @@ static ssize_t node_show(struct kobject
- 			      dev->node_props.num_sdma_queues_per_engine);
- 	sysfs_show_32bit_prop(buffer, offs, "num_cp_queues",
- 			      dev->node_props.num_cp_queues);
-+	sysfs_show_32bit_prop(buffer, offs, "cwsr_size",
-+			      dev->node_props.cwsr_size);
-+	sysfs_show_32bit_prop(buffer, offs, "ctl_stack_size",
-+			      dev->node_props.ctl_stack_size);
- 
- 	if (dev->gpu) {
- 		log_max_watch_addr =
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_queue.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_queue.c
+@@ -408,6 +408,7 @@ static u32 kfd_get_vgpr_size_per_cu(u32
+ 		vgpr_size = 0x80000;
+ 	else if (gfxv == 110000 ||		/* GFX_VERSION_PLUM_BONITO */
+ 		 gfxv == 110001 ||		/* GFX_VERSION_WHEAT_NAS */
++		 gfxv == 110501 ||		/* GFX_VERSION_GFX1151 */
+ 		 gfxv == 120000 ||		/* GFX_VERSION_GFX1200 */
+ 		 gfxv == 120001)		/* GFX_VERSION_GFX1201 */
+ 		vgpr_size = 0x60000;
 
 
