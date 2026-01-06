@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2312338904;
-	Tue,  6 Jan 2026 17:43:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1FEA346E57;
+	Tue,  6 Jan 2026 17:43:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721417; cv=none; b=eDK2qD/yq4rb/oBtFlk0xtxyfAMKG1NHUJvBLq+sYjoq5BIqQEgBrEU2hC5QyGyuYfaEwpvV46yrJGvMvzH7sAofC1ufQBQNrvJM9T7EQOry1Of0wcYaJTAvQFFiI0w+3RoynohvkIKuw7zKMyRVr30Zc4D0KvCFeIGezZY4Cb4=
+	t=1767721420; cv=none; b=HYS09PwU8ExXuqFB+yi9ks67GupQrEOtpFpZfdIFBZmgWao2AmmtH5G53tF1PG4uGeEIgXFvvLzokziPcTJSvoAxMuVJs/YvJuy/KTjB2I7/Z6mM2WCCZ2lSp4Jaj3oD0wxFMzNlZxHr7G99EX3IoaFPeXctf/C06+ssxzXMlC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721417; c=relaxed/simple;
-	bh=HuJGAzGuA9GSuuIN3Kug9YepwTSVbe4aKc6DQS2CS/E=;
+	s=arc-20240116; t=1767721420; c=relaxed/simple;
+	bh=j4IVjUKPavKuifwiMpQ96sJ1yubQQF8i7Dxjt2BAENI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jGsslY/Z0MC/GHWxhCG8S9Qwcvir15Zn+WjphCWEvrJzy2rDjZGC/8yXpi72q8Mgft3n+ToEmV4UgUl1Qx0h6SJJYWZvXX/qDkmO94wVs/JB1X4v85QPLaDZOEHhGH8U4btQ2oovviu1BK70fMhUmuCQvgUs73V3ZRvUzIwbv2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kW+5hm+r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LSQKbjtzaGSE/ax+eG/BGKYXruhcVZTbIHZbHH4CEXn1zzEaVChH7K2sPfeSVZR8GMctx6373zxirovQmSmaA7Ncjq2EJF7zLQTgvk8V+FWXs/UPQDa2Slzoy1wZO2E0ZhmkkD7q8dtIlb8GjjQzZZze0WouvGzOLUSShVY0064=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bOJO6bDJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kW+5hm+r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C419AC19423;
-	Tue,  6 Jan 2026 17:43:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bOJO6bDJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA882C16AAE;
+	Tue,  6 Jan 2026 17:43:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721417;
-	bh=HuJGAzGuA9GSuuIN3Kug9YepwTSVbe4aKc6DQS2CS/E=;
+	s=korg; t=1767721420;
+	bh=j4IVjUKPavKuifwiMpQ96sJ1yubQQF8i7Dxjt2BAENI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kW+5hm+rFV4OqvuueRhVAXyxc6Gdu/zjHsxhA5yJdwDJxqhVFD7nRX+CF1YSsPFA5
-	 e392p2myTIvlvwozD/iLy2ctc9zEelulk368ZL/EPbFvMuUqMT5DGompWOB3jfAZxo
-	 GSnsR3d3ReuZzv+Fg7SvbcsexPjqfx5NBfT8Nz+o=
+	b=bOJO6bDJjMot6f7dZ4X56pU08/gzoZh7bx+3BRnnaXVJY5w/2K1v2WynhoNyV6hWu
+	 H3DfJ+QlynpP83FU+rHalboJMU/7dmZ+4m23wVXnHxSFZwdEvPAHqb/hOmOyE+seeF
+	 zmzy5Sy0PDMM2YUYlaRVnLGOPmdX1PW3PPCGAXhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aidan Stewart <astewart@tektelic.com>,
-	Johan Hovold <johan@kernel.org>,
+	stable <stable@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 498/567] serial: core: fix OF node leak
-Date: Tue,  6 Jan 2026 18:04:40 +0100
-Message-ID: <20260106170509.787870547@linuxfoundation.org>
+Subject: [PATCH 6.12 499/567] serial: core: Restore sysfs fwnode information
+Date: Tue,  6 Jan 2026 18:04:41 +0100
+Message-ID: <20260106170509.826051068@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,48 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 273cc3406c8d4e830ed45967c70d08d20ca1380e ]
+[ Upstream commit 24ec03cc55126b7b3adf102f4b3d9f716532b329 ]
 
-Make sure to drop the OF node reference taken when initialising the
-control and port devices when the devices are later released.
+The change that restores sysfs fwnode information does it only for OF cases.
+Update the fix to cover all possible types of fwnodes.
 
 Fixes: d36f0e9a0002 ("serial: core: restore of_node information in sysfs")
-Cc: Aidan Stewart <astewart@tektelic.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://lore.kernel.org/r/20250708085817.16070-1-johan@kernel.org
+Cc: stable <stable@kernel.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20251127163650.2942075-1-andriy.shevchenko@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 24ec03cc5512 ("serial: core: Restore sysfs fwnode information")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/serial_base_bus.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/tty/serial/serial_base_bus.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
 --- a/drivers/tty/serial/serial_base_bus.c
 +++ b/drivers/tty/serial/serial_base_bus.c
-@@ -13,6 +13,7 @@
+@@ -13,7 +13,7 @@
  #include <linux/device.h>
  #include <linux/idr.h>
  #include <linux/module.h>
-+#include <linux/of.h>
+-#include <linux/of.h>
++#include <linux/property.h>
  #include <linux/serial_core.h>
  #include <linux/slab.h>
  #include <linux/spinlock.h>
-@@ -93,6 +94,7 @@ static void serial_base_ctrl_release(str
+@@ -60,6 +60,7 @@ void serial_base_driver_unregister(struc
+ 	driver_unregister(driver);
+ }
+ 
++/* On failure the caller must put device @dev with put_device() */
+ static int serial_base_device_init(struct uart_port *port,
+ 				   struct device *dev,
+ 				   struct device *parent_dev,
+@@ -73,7 +74,8 @@ static int serial_base_device_init(struc
+ 	dev->parent = parent_dev;
+ 	dev->bus = &serial_base_bus_type;
+ 	dev->release = release;
+-	device_set_of_node_from_dev(dev, parent_dev);
++
++	device_set_node(dev, fwnode_handle_get(dev_fwnode(parent_dev)));
+ 
+ 	if (!serial_base_initialized) {
+ 		dev_dbg(port->dev, "uart_add_one_port() called before arch_initcall()?\n");
+@@ -94,7 +96,7 @@ static void serial_base_ctrl_release(str
  {
  	struct serial_ctrl_device *ctrl_dev = to_serial_base_ctrl_device(dev);
  
-+	of_node_put(dev->of_node);
+-	of_node_put(dev->of_node);
++	fwnode_handle_put(dev_fwnode(dev));
  	kfree(ctrl_dev);
  }
  
-@@ -140,6 +142,7 @@ static void serial_base_port_release(str
+@@ -142,7 +144,7 @@ static void serial_base_port_release(str
  {
  	struct serial_port_device *port_dev = to_serial_base_port_device(dev);
  
-+	of_node_put(dev->of_node);
+-	of_node_put(dev->of_node);
++	fwnode_handle_put(dev_fwnode(dev));
  	kfree(port_dev);
  }
  
