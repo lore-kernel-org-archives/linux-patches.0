@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B1C7352FB6;
-	Tue,  6 Jan 2026 17:44:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A68354AE4;
+	Tue,  6 Jan 2026 17:44:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721488; cv=none; b=iapTCECnEdpvc7r+B+NsRz9zUSnKCU4lzvP1pqdwezL2llW/PftWulBFw1MqRcU0541gIIE0YRp4HdJE1BTEfYdDanvpFMsqUjd8G2bIbaBu9PVwp4z9ly4DOunb6MtXd+iW7Ik2snDEj2zyO1kdtNwTcZXQ1avK37Wi3DnhTaY=
+	t=1767721491; cv=none; b=uYvXK4h9JkDQftNfKj8lRA4ScLfYu6iRw2vKzJA7vMVQ5xqW/Op2MpC/weClaXAt9fGsGbymlxuT9il+MeP/A+kPgp7BpcyZogKpAz6CMae6U/rsDV80cbJbAAcMmKMlCxLOdfK5d+v95zQj+01ytd37DSW1Er0+b9JVy37m8Rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721488; c=relaxed/simple;
-	bh=3opyZ+hVVVMN+f3pKd7dXCcp1i8teKGhR1AEuG4+ukM=;
+	s=arc-20240116; t=1767721491; c=relaxed/simple;
+	bh=ygCZjV//JrGC4++Yx8rpSusKyXD/n8yPVPjGxlcmPL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eZ+G2L5yqewpsGKQUu9aHyVYgi6lj9CE1bdxl7Mdj76uklTKxH9SeVNnmsOYsGPfV9zNIZNFRz63rw2aJyu0xh+XHkwKzi/7L4FgNCXbJCkTUzlUk2M+eP804/tJnb8ZTrFOTFoBN53QTqNVSQPCrCRpYKXjr5rpzM5+Hm9GYrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M0F+Fo8J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fumsK7XUA+taBcMWDkoa79DfWhden2kwt+ROUUQaSn2jZZGtoKPGCN7Eyzsuw05vCepj+jr04mUJ6K6SVTjUt3n7PoKT7dCLg/shNZ74BwiSfck+Ijxy9yK3dzA0BSoZTSGBC48P9uSuNQaVFUyoTkneuApeSSLWbi0Sm8YGQFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UMp1sekY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M0F+Fo8J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72F75C116C6;
-	Tue,  6 Jan 2026 17:44:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UMp1sekY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDED7C116C6;
+	Tue,  6 Jan 2026 17:44:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721488;
-	bh=3opyZ+hVVVMN+f3pKd7dXCcp1i8teKGhR1AEuG4+ukM=;
+	s=korg; t=1767721491;
+	bh=ygCZjV//JrGC4++Yx8rpSusKyXD/n8yPVPjGxlcmPL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M0F+Fo8JEjBSV8peph/pUvSqW7MdnQBT711cV7j4gFmxfeYK/uFX/ex7s8zEYaNEb
-	 cYreKrQVhJ+ERGgaCQoL7XSjAHac8d3ZsoKZ5uAKi/Hmh53PG0Ln2lRb3dXGxzN2hu
-	 KF0e3LCebuIduItnKNvAbHrNthkPRE4FBGpSxf2I=
+	b=UMp1sekYK+nEVVFQKwg+D5fdSMIqRH5WvJlB4mHxeY2qlLFLMJhEoAn6SIa3yYRS5
+	 FpQMniu7f9Q+C1SbCZlKHrdkv1agWeRpCOueezEqK7Dw1THXN7owm4wFRUJknvzJZE
+	 EOzMCGlmJWFAYvERWdMiGgJBf9HvqA9cjdDqn7eE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	Stanimir Varbanov <svarbanov@suse.de>,
+	Florian Fainelil <florian.fainelli@broadcom.com>,
+	Jim Quinlan <james.quinlan@broadcom.com>,
+	"Ivan T. Ivanov" <iivanov@suse.de>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 551/567] ASoC: renesas: rz-ssi: Fix rz_ssi_priv::hw_params_cache::sample_width
-Date: Tue,  6 Jan 2026 18:05:33 +0100
-Message-ID: <20260106170511.795959568@linuxfoundation.org>
+Subject: [PATCH 6.12 552/567] PCI: brcmstb: Reuse pcie_cfg_data structure
+Date: Tue,  6 Jan 2026 18:05:34 +0100
+Message-ID: <20260106170511.833785780@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -47,92 +48,265 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Stanimir Varbanov <svarbanov@suse.de>
 
-[ Upstream commit 2bae7beda19f3b2dc6ab2062c94df19c27923712 ]
+[ Upstream commit 10dbedad3c8188ce8b68559d43b7aaee7dafba25 ]
 
-The strm->sample_width is not filled during rz_ssi_dai_hw_params(). This
-wrong value is used for caching sample_width in struct hw_params_cache.
-Fix this issue by replacing 'strm->sample_width'->'params_width(params)'
-in rz_ssi_dai_hw_params(). After this drop the variable sample_width
-from struct rz_ssi_stream as it is unused.
+Instead of copying fields from the pcie_cfg_data structure to
+brcm_pcie, reference it directly.
 
-Cc: stable@kernel.org
-Fixes: 4f8cd05a4305 ("ASoC: sh: rz-ssi: Add full duplex support")
-Reviewed-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://patch.msgid.link/20251114073709.4376-3-biju.das.jz@bp.renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Stanimir Varbanov <svarbanov@suse.de>
+Reviewed-by: Florian Fainelil <florian.fainelli@broadcom.com>
+Reviewed-by: Jim Quinlan <james.quinlan@broadcom.com>
+Tested-by: Ivan T. Ivanov <iivanov@suse.de>
+Link: https://lore.kernel.org/r/20250224083559.47645-6-svarbanov@suse.de
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Stable-dep-of: 9583f9d22991 ("PCI: brcmstb: Fix disabling L0s capability")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sh/rz-ssi.c |   13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+ drivers/pci/controller/pcie-brcmstb.c |   72 +++++++++++++++-------------------
+ 1 file changed, 32 insertions(+), 40 deletions(-)
 
---- a/sound/soc/sh/rz-ssi.c
-+++ b/sound/soc/sh/rz-ssi.c
-@@ -12,6 +12,7 @@
- #include <linux/module.h>
- #include <linux/pm_runtime.h>
- #include <linux/reset.h>
-+#include <sound/pcm_params.h>
- #include <sound/soc.h>
+--- a/drivers/pci/controller/pcie-brcmstb.c
++++ b/drivers/pci/controller/pcie-brcmstb.c
+@@ -191,11 +191,11 @@
+ #define SSC_STATUS_PLL_LOCK_MASK	0x800
+ #define PCIE_BRCM_MAX_MEMC		3
  
- /* REGISTER OFFSET */
-@@ -85,7 +86,6 @@ struct rz_ssi_stream {
- 	int fifo_sample_size;	/* sample capacity of SSI FIFO */
- 	int dma_buffer_pos;	/* The address for the next DMA descriptor */
- 	int period_counter;	/* for keeping track of periods transferred */
--	int sample_width;
- 	int buffer_pos;		/* current frame position in the buffer */
- 	int running;		/* 0=stopped, 1=running */
+-#define IDX_ADDR(pcie)			((pcie)->reg_offsets[EXT_CFG_INDEX])
+-#define DATA_ADDR(pcie)			((pcie)->reg_offsets[EXT_CFG_DATA])
+-#define PCIE_RGR1_SW_INIT_1(pcie)	((pcie)->reg_offsets[RGR1_SW_INIT_1])
+-#define HARD_DEBUG(pcie)		((pcie)->reg_offsets[PCIE_HARD_DEBUG])
+-#define INTR2_CPU_BASE(pcie)		((pcie)->reg_offsets[PCIE_INTR2_CPU_BASE])
++#define IDX_ADDR(pcie)			((pcie)->cfg->offsets[EXT_CFG_INDEX])
++#define DATA_ADDR(pcie)			((pcie)->cfg->offsets[EXT_CFG_DATA])
++#define PCIE_RGR1_SW_INIT_1(pcie)	((pcie)->cfg->offsets[RGR1_SW_INIT_1])
++#define HARD_DEBUG(pcie)		((pcie)->cfg->offsets[PCIE_HARD_DEBUG])
++#define INTR2_CPU_BASE(pcie)		((pcie)->cfg->offsets[PCIE_INTR2_CPU_BASE])
  
-@@ -231,10 +231,7 @@ static inline bool rz_ssi_is_stream_runn
- static void rz_ssi_stream_init(struct rz_ssi_stream *strm,
- 			       struct snd_pcm_substream *substream)
+ /* Rescal registers */
+ #define PCIE_DVT_PMU_PCIE_PHY_CTRL				0xc700
+@@ -276,8 +276,6 @@ struct brcm_pcie {
+ 	int			gen;
+ 	u64			msi_target_addr;
+ 	struct brcm_msi		*msi;
+-	const int		*reg_offsets;
+-	enum pcie_soc_base	soc_base;
+ 	struct reset_control	*rescal;
+ 	struct reset_control	*perst_reset;
+ 	struct reset_control	*bridge_reset;
+@@ -285,17 +283,14 @@ struct brcm_pcie {
+ 	int			num_memc;
+ 	u64			memc_size[PCIE_BRCM_MAX_MEMC];
+ 	u32			hw_rev;
+-	int			(*perst_set)(struct brcm_pcie *pcie, u32 val);
+-	int			(*bridge_sw_init_set)(struct brcm_pcie *pcie, u32 val);
+ 	struct subdev_regulators *sr;
+ 	bool			ep_wakeup_capable;
+-	bool			has_phy;
+-	u8			num_inbound_wins;
++	const struct pcie_cfg_data	*cfg;
+ };
+ 
+ static inline bool is_bmips(const struct brcm_pcie *pcie)
  {
--	struct snd_pcm_runtime *runtime = substream->runtime;
--
- 	rz_ssi_set_substream(strm, substream);
--	strm->sample_width = samples_to_bytes(runtime, 1);
- 	strm->dma_buffer_pos = 0;
- 	strm->period_counter = 0;
- 	strm->buffer_pos = 0;
-@@ -960,9 +957,9 @@ static int rz_ssi_dai_hw_params(struct s
- 				struct snd_soc_dai *dai)
- {
- 	struct rz_ssi_priv *ssi = snd_soc_dai_get_drvdata(dai);
--	struct rz_ssi_stream *strm = rz_ssi_stream_get(ssi, substream);
- 	unsigned int sample_bits = hw_param_interval(params,
- 					SNDRV_PCM_HW_PARAM_SAMPLE_BITS)->min;
-+	unsigned int sample_width = params_width(params);
- 	unsigned int channels = params_channels(params);
- 	unsigned int rate = params_rate(params);
+-	return pcie->soc_base == BCM7435 || pcie->soc_base == BCM7425;
++	return pcie->cfg->soc_base == BCM7435 || pcie->cfg->soc_base == BCM7425;
+ }
  
-@@ -980,16 +977,14 @@ static int rz_ssi_dai_hw_params(struct s
+ /*
+@@ -855,7 +850,7 @@ static int brcm_pcie_get_inbound_wins(st
+ 	 * security considerations, and is not implemented in our modern
+ 	 * SoCs.
+ 	 */
+-	if (pcie->soc_base != BCM7712)
++	if (pcie->cfg->soc_base != BCM7712)
+ 		add_inbound_win(b++, &n, 0, 0, 0);
  
- 	if (rz_ssi_is_stream_running(&ssi->playback) ||
- 	    rz_ssi_is_stream_running(&ssi->capture)) {
--		if (rz_ssi_is_valid_hw_params(ssi, rate, channels,
--					      strm->sample_width, sample_bits))
-+		if (rz_ssi_is_valid_hw_params(ssi, rate, channels, sample_width, sample_bits))
- 			return 0;
+ 	resource_list_for_each_entry(entry, &bridge->dma_ranges) {
+@@ -872,10 +867,10 @@ static int brcm_pcie_get_inbound_wins(st
+ 		 * That being said, each BARs size must still be a power of
+ 		 * two.
+ 		 */
+-		if (pcie->soc_base == BCM7712)
++		if (pcie->cfg->soc_base == BCM7712)
+ 			add_inbound_win(b++, &n, size, cpu_start, pcie_start);
  
- 		dev_err(ssi->dev, "Full duplex needs same HW params\n");
- 		return -EINVAL;
+-		if (n > pcie->num_inbound_wins)
++		if (n > pcie->cfg->num_inbound_wins)
+ 			break;
  	}
  
--	rz_ssi_cache_hw_params(ssi, rate, channels, strm->sample_width,
--			       sample_bits);
-+	rz_ssi_cache_hw_params(ssi, rate, channels, sample_width, sample_bits);
+@@ -889,7 +884,7 @@ static int brcm_pcie_get_inbound_wins(st
+ 	 * that enables multiple memory controllers.  As such, it can return
+ 	 * now w/o doing special configuration.
+ 	 */
+-	if (pcie->soc_base == BCM7712)
++	if (pcie->cfg->soc_base == BCM7712)
+ 		return n;
  
- 	return rz_ssi_clk_setup(ssi, rate, channels);
+ 	ret = of_property_read_variable_u64_array(pcie->np, "brcm,scb-sizes", pcie->memc_size, 1,
+@@ -1012,7 +1007,7 @@ static void set_inbound_win_registers(st
+ 		 * 7712:
+ 		 *     All of their BARs need to be set.
+ 		 */
+-		if (pcie->soc_base == BCM7712) {
++		if (pcie->cfg->soc_base == BCM7712) {
+ 			/* BUS remap register settings */
+ 			reg_offset = brcm_ubus_reg_offset(i);
+ 			tmp = lower_32_bits(cpu_addr) & ~0xfff;
+@@ -1036,15 +1031,15 @@ static int brcm_pcie_setup(struct brcm_p
+ 	int memc, ret;
+ 
+ 	/* Reset the bridge */
+-	ret = pcie->bridge_sw_init_set(pcie, 1);
++	ret = pcie->cfg->bridge_sw_init_set(pcie, 1);
+ 	if (ret)
+ 		return ret;
+ 
+ 	/* Ensure that PERST# is asserted; some bootloaders may deassert it. */
+-	if (pcie->soc_base == BCM2711) {
+-		ret = pcie->perst_set(pcie, 1);
++	if (pcie->cfg->soc_base == BCM2711) {
++		ret = pcie->cfg->perst_set(pcie, 1);
+ 		if (ret) {
+-			pcie->bridge_sw_init_set(pcie, 0);
++			pcie->cfg->bridge_sw_init_set(pcie, 0);
+ 			return ret;
+ 		}
+ 	}
+@@ -1052,7 +1047,7 @@ static int brcm_pcie_setup(struct brcm_p
+ 	usleep_range(100, 200);
+ 
+ 	/* Take the bridge out of reset */
+-	ret = pcie->bridge_sw_init_set(pcie, 0);
++	ret = pcie->cfg->bridge_sw_init_set(pcie, 0);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -1072,9 +1067,9 @@ static int brcm_pcie_setup(struct brcm_p
+ 	 */
+ 	if (is_bmips(pcie))
+ 		burst = 0x1; /* 256 bytes */
+-	else if (pcie->soc_base == BCM2711)
++	else if (pcie->cfg->soc_base == BCM2711)
+ 		burst = 0x0; /* 128 bytes */
+-	else if (pcie->soc_base == BCM7278)
++	else if (pcie->cfg->soc_base == BCM7278)
+ 		burst = 0x3; /* 512 bytes */
+ 	else
+ 		burst = 0x2; /* 512 bytes */
+@@ -1199,7 +1194,7 @@ static void brcm_extend_rbus_timeout(str
+ 	u32 timeout_us = 4000000; /* 4 seconds, our setting for L1SS */
+ 
+ 	/* 7712 does not have this (RGR1) timer */
+-	if (pcie->soc_base == BCM7712)
++	if (pcie->cfg->soc_base == BCM7712)
+ 		return;
+ 
+ 	/* Each unit in timeout register is 1/216,000,000 seconds */
+@@ -1281,7 +1276,7 @@ static int brcm_pcie_start_link(struct b
+ 		brcm_pcie_set_gen(pcie, pcie->gen);
+ 
+ 	/* Unassert the fundamental reset */
+-	ret = pcie->perst_set(pcie, 0);
++	ret = pcie->cfg->perst_set(pcie, 0);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -1465,12 +1460,12 @@ static int brcm_phy_cntl(struct brcm_pci
+ 
+ static inline int brcm_phy_start(struct brcm_pcie *pcie)
+ {
+-	return pcie->has_phy ? brcm_phy_cntl(pcie, 1) : 0;
++	return pcie->cfg->has_phy ? brcm_phy_cntl(pcie, 1) : 0;
  }
+ 
+ static inline int brcm_phy_stop(struct brcm_pcie *pcie)
+ {
+-	return pcie->has_phy ? brcm_phy_cntl(pcie, 0) : 0;
++	return pcie->cfg->has_phy ? brcm_phy_cntl(pcie, 0) : 0;
+ }
+ 
+ static int brcm_pcie_turn_off(struct brcm_pcie *pcie)
+@@ -1481,7 +1476,7 @@ static int brcm_pcie_turn_off(struct brc
+ 	if (brcm_pcie_link_up(pcie))
+ 		brcm_pcie_enter_l23(pcie);
+ 	/* Assert fundamental reset */
+-	ret = pcie->perst_set(pcie, 1);
++	ret = pcie->cfg->perst_set(pcie, 1);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -1496,7 +1491,7 @@ static int brcm_pcie_turn_off(struct brc
+ 	writel(tmp, base + HARD_DEBUG(pcie));
+ 
+ 	/* Shutdown PCIe bridge */
+-	ret = pcie->bridge_sw_init_set(pcie, 1);
++	ret = pcie->cfg->bridge_sw_init_set(pcie, 1);
+ 
+ 	return ret;
+ }
+@@ -1584,7 +1579,7 @@ static int brcm_pcie_resume_noirq(struct
+ 		goto err_reset;
+ 
+ 	/* Take bridge out of reset so we can access the SERDES reg */
+-	pcie->bridge_sw_init_set(pcie, 0);
++	pcie->cfg->bridge_sw_init_set(pcie, 0);
+ 
+ 	/* SERDES_IDDQ = 0 */
+ 	tmp = readl(base + HARD_DEBUG(pcie));
+@@ -1805,12 +1800,7 @@ static int brcm_pcie_probe(struct platfo
+ 	pcie = pci_host_bridge_priv(bridge);
+ 	pcie->dev = &pdev->dev;
+ 	pcie->np = np;
+-	pcie->reg_offsets = data->offsets;
+-	pcie->soc_base = data->soc_base;
+-	pcie->perst_set = data->perst_set;
+-	pcie->bridge_sw_init_set = data->bridge_sw_init_set;
+-	pcie->has_phy = data->has_phy;
+-	pcie->num_inbound_wins = data->num_inbound_wins;
++	pcie->cfg = data;
+ 
+ 	pcie->base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(pcie->base))
+@@ -1845,7 +1835,7 @@ static int brcm_pcie_probe(struct platfo
+ 	if (ret)
+ 		return dev_err_probe(&pdev->dev, ret, "could not enable clock\n");
+ 
+-	pcie->bridge_sw_init_set(pcie, 0);
++	pcie->cfg->bridge_sw_init_set(pcie, 0);
+ 
+ 	if (pcie->swinit_reset) {
+ 		ret = reset_control_assert(pcie->swinit_reset);
+@@ -1884,7 +1874,8 @@ static int brcm_pcie_probe(struct platfo
+ 		goto fail;
+ 
+ 	pcie->hw_rev = readl(pcie->base + PCIE_MISC_REVISION);
+-	if (pcie->soc_base == BCM4908 && pcie->hw_rev >= BRCM_PCIE_HW_REV_3_20) {
++	if (pcie->cfg->soc_base == BCM4908 &&
++	    pcie->hw_rev >= BRCM_PCIE_HW_REV_3_20) {
+ 		dev_err(pcie->dev, "hardware revision with unsupported PERST# setup\n");
+ 		ret = -ENODEV;
+ 		goto fail;
+@@ -1904,7 +1895,8 @@ static int brcm_pcie_probe(struct platfo
+ 		}
+ 	}
+ 
+-	bridge->ops = pcie->soc_base == BCM7425 ? &brcm7425_pcie_ops : &brcm_pcie_ops;
++	bridge->ops = pcie->cfg->soc_base == BCM7425 ?
++				&brcm7425_pcie_ops : &brcm_pcie_ops;
+ 	bridge->sysdata = pcie;
+ 
+ 	platform_set_drvdata(pdev, pcie);
 
 
