@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DACCB34D395;
-	Tue,  6 Jan 2026 17:20:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 806F534D3A3;
+	Tue,  6 Jan 2026 17:20:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720031; cv=none; b=BL71kdctmvi6FqEGbLtbB4hJnyRi4jOHfRf4MaBZnJMpz3a78nLRFUiXlhh+dYZbX3Zztlem2Muc/RKTfH7V/cCOYerpNAgaLoRG3G7X+XVigLWUWUFG9X9bTK68EPXJ9qe1zYdft4quNiMC2TZYtZAfENvSyvDjPoPrFUKPQ3I=
+	t=1767720034; cv=none; b=lkZrcz7bki8Aj+a+AW+/IAB1TS+5VJR5ZX4B6+qOHy7eo/h1/8cPCJKeAZVOMcOyCgM8AqHq6CjCewlRbhGoDKjbQu0A+q4G1NYLuixTNClXLNgVWYl5o1twgfZBIri28OiJ32Cn3skUI5MdH8qUzv5PVKn0a/DSJOudZjvOWDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720031; c=relaxed/simple;
-	bh=MDgpE+Dq10LkGLP+s7Xz1Xh42qA8ojki9LJDAMWF4Bg=;
+	s=arc-20240116; t=1767720034; c=relaxed/simple;
+	bh=ZgMKPSiVFLZihJQoQH4Ih5Msh9f3/NX64iIkq9ZzxQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uGSGN6AS44sLVgau2Phzmgu86NABmNfgXfMnTVe9gutOEH/ob35st2afBqEdlIzazim4rlwkhBmDzvP79rTRmwY3Tce/okB91IOnRZdcRi1RiPLuq4CNmVyqz6vlC7LpZy4TXKLYpacaZfjK6SSpaZBkbhsgABXghAC+0XBjkkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PMh/BZ4C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AAF6yTWide/BNo4Ol+aQnmN8fx8rMaU2i4qafbns8oJsKb9UTE5k+kNB4xVz61HARNRJA4TXknc82kS4hzWZtNJGlWeeCtFEfcS0+2kgHWsmB+qitlsUjO+Qlv/DnomJpmyjPjjEDZ9Who1f3T0aiJJOsiMyTThqgGfgAOMxfs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HzRsKV1n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PMh/BZ4C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 445D0C116C6;
-	Tue,  6 Jan 2026 17:20:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HzRsKV1n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87ED6C116C6;
+	Tue,  6 Jan 2026 17:20:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720030;
-	bh=MDgpE+Dq10LkGLP+s7Xz1Xh42qA8ojki9LJDAMWF4Bg=;
+	s=korg; t=1767720034;
+	bh=ZgMKPSiVFLZihJQoQH4Ih5Msh9f3/NX64iIkq9ZzxQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PMh/BZ4CJQhtQsOXfT2UTlGgT8sjPS9aCwIlCmPjMIq5rD4mWyMD/eU3cF0EdiqUq
-	 K3gF55GZMnXordYfBc7Yw6BuiCor1YJnHxYxkq3Val5tMdq0qdLfXwq/mx6/MxK1a5
-	 /jeTVCYDzIh0dhsC4GMzvgjd3hO4ZpPm/czXg8Ao=
+	b=HzRsKV1nBt59IRDuGexSjfmGEg9rm3/K5ZR81eksjkE5HYZg87i4WB2+VE6A8/xwB
+	 QbSbyRZ5/EI/GVj5jXklW3OsXIOmAQgxhFVQxmdaj518bpxSlrEOJF/++imSEJicKV
+	 kEZXD8qkcN+S1r/ARbPvUMyToWiDR3RHqKvcn+yU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"DARKNAVY (@DarkNavyOrg)" <vr@darknavy.com>,
-	Shipei Qu <qu@darknavy.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 114/567] ALSA: usb-mixer: us16x08: validate meter packet indices
-Date: Tue,  6 Jan 2026 17:58:16 +0100
-Message-ID: <20260106170455.548717426@linuxfoundation.org>
+Subject: [PATCH 6.12 115/567] ASoC: ak4458: remove the reset operation in probe and remove
+Date: Tue,  6 Jan 2026 17:58:17 +0100
+Message-ID: <20260106170455.585577296@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,72 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shipei Qu <qu@darknavy.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit 5526c1c6ba1d0913c7dfcbbd6fe1744ea7c55f1e ]
+[ Upstream commit 00b960a83c764208b0623089eb70af3685e3906f ]
 
-get_meter_levels_from_urb() parses the 64-byte meter packets sent by
-the device and fills the per-channel arrays meter_level[],
-comp_level[] and master_level[] in struct snd_us16x08_meter_store.
+The reset_control handler has the reference count for usage, as there is
+reset operation in runtime suspend and resume, then reset operation in
+probe() would cause the reference count of reset not balanced.
 
-Currently the function derives the channel index directly from the
-meter packet (MUB2(meter_urb, s) - 1) and uses it to index those
-arrays without validating the range. If the packet contains a
-negative or out-of-range channel number, the driver may write past
-the end of these arrays.
+Previously add reset operation in probe and remove is to fix the compile
+issue with !CONFIG_PM, as the driver has been update to use
+RUNTIME_PM_OPS(), so that change can be reverted.
 
-Introduce a local channel variable and validate it before updating the
-arrays. We reject negative indices, limit meter_level[] and
-comp_level[] to SND_US16X08_MAX_CHANNELS, and guard master_level[]
-updates with ARRAY_SIZE(master_level).
-
-Fixes: d2bb390a2081 ("ALSA: usb-audio: Tascam US-16x08 DSP mixer quirk")
-Reported-by: DARKNAVY (@DarkNavyOrg) <vr@darknavy.com>
-Closes: https://lore.kernel.org/tencent_21C112743C44C1A2517FF219@qq.com
-Signed-off-by: Shipei Qu <qu@darknavy.com>
-Link: https://patch.msgid.link/20251217024630.59576-1-qu@darknavy.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 1e0dff741b0a ("ASoC: ak4458: remove "reset-gpios" property handler")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://patch.msgid.link/20251216070201.358477-1-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_us16x08.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ sound/soc/codecs/ak4458.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/sound/usb/mixer_us16x08.c b/sound/usb/mixer_us16x08.c
-index 20ac32635f1f..d05cb54de788 100644
---- a/sound/usb/mixer_us16x08.c
-+++ b/sound/usb/mixer_us16x08.c
-@@ -656,17 +656,25 @@ static void get_meter_levels_from_urb(int s,
- 	u8 *meter_urb)
- {
- 	int val = MUC2(meter_urb, s) + (MUC3(meter_urb, s) << 8);
-+	int ch = MUB2(meter_urb, s) - 1;
-+
-+	if (ch < 0)
-+		return;
+diff --git a/sound/soc/codecs/ak4458.c b/sound/soc/codecs/ak4458.c
+index fb1ab335a4c1..e2e12dbc8cf2 100644
+--- a/sound/soc/codecs/ak4458.c
++++ b/sound/soc/codecs/ak4458.c
+@@ -790,16 +790,12 @@ static int ak4458_i2c_probe(struct i2c_client *i2c)
  
- 	if (MUA0(meter_urb, s) == 0x61 && MUA1(meter_urb, s) == 0x02 &&
- 		MUA2(meter_urb, s) == 0x04 && MUB0(meter_urb, s) == 0x62) {
--		if (MUC0(meter_urb, s) == 0x72)
--			store->meter_level[MUB2(meter_urb, s) - 1] = val;
--		if (MUC0(meter_urb, s) == 0xb2)
--			store->comp_level[MUB2(meter_urb, s) - 1] = val;
-+		if (ch < SND_US16X08_MAX_CHANNELS) {
-+			if (MUC0(meter_urb, s) == 0x72)
-+				store->meter_level[ch] = val;
-+			if (MUC0(meter_urb, s) == 0xb2)
-+				store->comp_level[ch] = val;
-+		}
- 	}
- 	if (MUA0(meter_urb, s) == 0x61 && MUA1(meter_urb, s) == 0x02 &&
--		MUA2(meter_urb, s) == 0x02 && MUB0(meter_urb, s) == 0x62)
--		store->master_level[MUB2(meter_urb, s) - 1] = val;
-+		MUA2(meter_urb, s) == 0x02 && MUB0(meter_urb, s) == 0x62) {
-+		if (ch < ARRAY_SIZE(store->master_level))
-+			store->master_level[ch] = val;
-+	}
+ 	pm_runtime_enable(&i2c->dev);
+ 	regcache_cache_only(ak4458->regmap, true);
+-	ak4458_reset(ak4458, false);
+ 
+ 	return 0;
  }
  
- /* Function to retrieve current meter values from the device.
+ static void ak4458_i2c_remove(struct i2c_client *i2c)
+ {
+-	struct ak4458_priv *ak4458 = i2c_get_clientdata(i2c);
+-
+-	ak4458_reset(ak4458, true);
+ 	pm_runtime_disable(&i2c->dev);
+ }
+ 
 -- 
 2.51.0
 
