@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA56D224B04;
-	Tue,  6 Jan 2026 17:39:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D13224B04;
+	Tue,  6 Jan 2026 17:39:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721159; cv=none; b=Vfm7S4C4OwB5Y/T1yAoN9r9zKb3eC2ciBDw1AhyLcJYrfydCMF7g5sjokDqiR07Ph2Y2domKYLI0Au8RyCo2WIUWkw2qYf48esh6sFZV+EUGlgREcIrO+mMMfuKp3Yl+WKJqLvet3rcyhkdyQz9n7OOF4zoCqxs6Gut6SxvkJYU=
+	t=1767721162; cv=none; b=mlMkaqKorFMnxOue6YRKGCnGpeBvTqvWm+E/hVCBp7EzuOaQQzw5xp/EX6tqkCs/cYbs3kT+JidVW6OJHEt4ciXPsVvDSbUmlSoFxBrnoGU2zpRpB5trje7pBgJCmQPLzpyeeZNNJ6v3Z2wamiA5Hyd6wWZ+CgHPQBiLN2UQ6D0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721159; c=relaxed/simple;
-	bh=5UthNTyx2izj2QVmLPUR2h1fsL2SeRoJZn+DsSqGzv0=;
+	s=arc-20240116; t=1767721162; c=relaxed/simple;
+	bh=zGsXY3E5mVLl4v8yjYLSZRUOUrA4BqjjhtwBz85+6DI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jJ/owdgc2tG+czRM5lklR11wq9l12JiCriMWBXZwVlLuCui9fvVWHhbZk/H5+gJSIAR7jAwBO0bZZP0R/7ryejeYfwnh2VVVTGo+C60hd90MRvrqdNnT6zwHqRVZjZ1Vu+tKwkQQ4fWzbctzhsMDOBEEZZhWMpQbFn4WboKpaaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XaWxIiW/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=icB3f0+ACQNnT+D5Hc4Du0h0RZNoD8SNJq3n6dboteQTtH5f3HhTkGbmrDXF7WPqmplS7zfBUiEbmfCnbOeOWPOvKCKa8gZWlj/lgB9BQKiR9K6+3D4FL0nLkd89T3r6QMU1YesGal4zoRDT4jLeNOjsIzha60JtsXMzLIADbjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uzD98qHT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XaWxIiW/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51532C116C6;
-	Tue,  6 Jan 2026 17:39:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uzD98qHT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93382C116C6;
+	Tue,  6 Jan 2026 17:39:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721158;
-	bh=5UthNTyx2izj2QVmLPUR2h1fsL2SeRoJZn+DsSqGzv0=;
+	s=korg; t=1767721162;
+	bh=zGsXY3E5mVLl4v8yjYLSZRUOUrA4BqjjhtwBz85+6DI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XaWxIiW/TqYdGT5jFlKrIuchSy6NRe2kDo4A8ZYKWF387xjzILRGyfi4fiOxWIO8Q
-	 rbkcFKULnli+NFx+OxAhccT3+cw60xItgYFcBOh+2hBKZJuHwYeXdVk6TeA/gwsPJ8
-	 6AOkbE/AkBKzARoBabeVtQuMQbemPTe+YAPhpPzs=
+	b=uzD98qHTSRGdSB3DniZPJMqYJ5pDq6XQ6GmphwFvItu72JhFQ+g2zNaclRKT2QlFy
+	 23FaU9jKFRms/r86N97Hr7ZhJFwc2XGAVcZrRe6GuT6F2j9/eb31DcBtx8ZUbX0bDu
+	 Vopla7HruN3B/HIcJaewb1eIcPXpsX3KXpY/AEA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.12 452/567] nfsd: Drop the client reference in client_states_open()
-Date: Tue,  6 Jan 2026 18:03:54 +0100
-Message-ID: <20260106170508.067665016@linuxfoundation.org>
+	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 453/567] net: usb: sr9700: fix incorrect command used to write single register
+Date: Tue,  6 Jan 2026 18:03:55 +0100
+Message-ID: <20260106170508.104608776@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,36 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
 
-commit 1f941b2c23fd34c6f3b76d36f9d0a2528fa92b8f upstream.
+commit fa0b198be1c6775bc7804731a43be5d899d19e7a upstream.
 
-In error path, call drop_client() to drop the reference
-obtained by get_nfsdfs_clp().
+This fixes the device failing to initialize with "error reading MAC
+address" for me, probably because the incorrect write of NCR_RST to
+SR_NCR is not actually resetting the device.
 
-Fixes: 78599c42ae3c ("nfsd4: add file to display list of client's opens")
+Fixes: c9b37458e95629b1d1171457afdcc1bf1eb7881d ("USB2NET : SR9700 : One chip USB 1.1 USB2NET SR9700Device Driver Support")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+Link: https://patch.msgid.link/20251221082400.50688-1-enelsonmoore@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/usb/sr9700.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -2989,8 +2989,10 @@ static int client_states_open(struct ino
- 		return -ENXIO;
+--- a/drivers/net/usb/sr9700.c
++++ b/drivers/net/usb/sr9700.c
+@@ -52,7 +52,7 @@ static int sr_read_reg(struct usbnet *de
  
- 	ret = seq_open(file, &states_seq_ops);
--	if (ret)
-+	if (ret) {
-+		drop_client(clp);
- 		return ret;
-+	}
- 	s = file->private_data;
- 	s->private = clp;
- 	return 0;
+ static int sr_write_reg(struct usbnet *dev, u8 reg, u8 value)
+ {
+-	return usbnet_write_cmd(dev, SR_WR_REGS, SR_REQ_WR_REG,
++	return usbnet_write_cmd(dev, SR_WR_REG, SR_REQ_WR_REG,
+ 				value, reg, NULL, 0);
+ }
+ 
+@@ -65,7 +65,7 @@ static void sr_write_async(struct usbnet
+ 
+ static void sr_write_reg_async(struct usbnet *dev, u8 reg, u8 value)
+ {
+-	usbnet_write_cmd_async(dev, SR_WR_REGS, SR_REQ_WR_REG,
++	usbnet_write_cmd_async(dev, SR_WR_REG, SR_REQ_WR_REG,
+ 			       value, reg, NULL, 0);
+ }
+ 
 
 
