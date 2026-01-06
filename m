@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F9622C3770;
-	Tue,  6 Jan 2026 17:32:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645112D0C99;
+	Tue,  6 Jan 2026 17:32:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720744; cv=none; b=Ixo2eBYzwOBbf6O00n0J4+UoQ6sDn57QPt1z4fRc1O6wZaPeTS+aa/wcjJl7/BKrvolV0gDX5+nXz8R+FmDEpblGN3JXrfKkQMVxbz12MOzIGWTynyDPwlI+iyKKzNGRUqpoBIUxROIibXVU+nCm6HGzVUNGLoLxtQxheVKm3ag=
+	t=1767720747; cv=none; b=dwHrBxxivGjFMfZSjQwccy6iuVhkruvIRgnpekYO7w8hVz2U8Jvi0oma4e2vjsHoV2WnnwUtLx7tmYbK2uZ2PMhRa5WWvPoPKJtJP9e39yCw+mDTWvlVAYpjHuCOek4QnyI1ykQU25jwiwaQxjXrVH+UAWQXaImTk7JxXVlhDEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720744; c=relaxed/simple;
-	bh=C1ePl8ydEQqWgoRvTjenL2Wb58ob1Yyq/e1yTFOzBpo=;
+	s=arc-20240116; t=1767720747; c=relaxed/simple;
+	bh=nE3W8G6G1vQglOnxmvbvJ5cPfvtjyrXZGd1vOMmyQlM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LP+9HFln6NQ1bcv1FzvwC/tzM8NoRtD256f7E4zes8Au2QCFwnOdwkzXPs27glYsnDaP1eMy+PNooYLq86ftouEzYzs0toHT3IsQzKQ6J82T+nTV97WCx6/LkQxiVvfgEgJN6gx/KAzy5L48BxbJLOTSIxdIPE5m/IjTMmTwxSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UfY/f+Hk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tb3ge9rsCSDaaG4yFaKtZxQLrRONpuob0Flj7jhePckCQqZ7/6v1VSpcf/tieFpkhp+WtJCL1Whu/oEGarO+OCQ3ec9B4BWRDnP8fqPbKYkZoV07bdaXSkSbvcIU1OwJTAN6WTH8pdWrML8P71QNj+3wybjuWsLNc2/SR+4Y1h4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S7rC57gg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UfY/f+Hk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 195D5C116C6;
-	Tue,  6 Jan 2026 17:32:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S7rC57gg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73438C116C6;
+	Tue,  6 Jan 2026 17:32:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720743;
-	bh=C1ePl8ydEQqWgoRvTjenL2Wb58ob1Yyq/e1yTFOzBpo=;
+	s=korg; t=1767720746;
+	bh=nE3W8G6G1vQglOnxmvbvJ5cPfvtjyrXZGd1vOMmyQlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UfY/f+HkO6HuvoNmiUoR6HdDPGP6aVMwTZ2RDCBJoJMWunuqXYOquywXJLgGV1DSx
-	 ZxnvRZmPGn3STeOlKkoUXbR7Z2ICMILL3lC2sv/ccI1hOtDe27mCE6IOSfjJztT5fG
-	 GomBLBvldbXIbHjxivcbGyq8x1FQVUmjUJ+HaC+0=
+	b=S7rC57ggxvXxTXrL6+bruf1ZPf4/hWMry9U9n+qW1RxFhstYJOzLcYgwWIea1K9Yz
+	 O+z7wisNaIwh3sS3mFFXcX44QscOJsqxGZimJJArnyZvOJF5ECOBtgLA8JDw50vE59
+	 Rk8gray8bDnawQNtW30eTHfdurm1hu5QRPuWFFLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9b35e9bc0951140d13e6@syzkaller.appspotmail.com,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Michal Schmidt <mschmidt@redhat.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 329/567] ipv6: fix a BUG in rt6_get_pcpu_route() under PREEMPT_RT
-Date: Tue,  6 Jan 2026 18:01:51 +0100
-Message-ID: <20260106170503.505024650@linuxfoundation.org>
+Subject: [PATCH 6.12 330/567] RDMA/irdma: avoid invalid read in irdma_net_event
+Date: Tue,  6 Jan 2026 18:01:52 +0100
+Message-ID: <20260106170503.540929577@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,62 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Michal Schmidt <mschmidt@redhat.com>
 
-[ Upstream commit 1adaea51c61b52e24e7ab38f7d3eba023b2d050d ]
+[ Upstream commit 6f05611728e9d0ab024832a4f1abb74a5f5d0bb0 ]
 
-On PREEMPT_RT kernels, after rt6_get_pcpu_route() returns NULL, the
-current task can be preempted. Another task running on the same CPU
-may then execute rt6_make_pcpu_route() and successfully install a
-pcpu_rt entry. When the first task resumes execution, its cmpxchg()
-in rt6_make_pcpu_route() will fail because rt6i_pcpu is no longer
-NULL, triggering the BUG_ON(prev). It's easy to reproduce it by adding
-mdelay() after rt6_get_pcpu_route().
+irdma_net_event() should not dereference anything from "neigh" (alias
+"ptr") until it has checked that the event is NETEVENT_NEIGH_UPDATE.
+Other events come with different structures pointed to by "ptr" and they
+may be smaller than struct neighbour.
 
-Using preempt_disable/enable is not appropriate here because
-ip6_rt_pcpu_alloc() may sleep.
+Move the read of neigh->dev under the NETEVENT_NEIGH_UPDATE case.
 
-Fix this by handling the cmpxchg() failure gracefully on PREEMPT_RT:
-free our allocation and return the existing pcpu_rt installed by
-another task. The BUG_ON is replaced by WARN_ON_ONCE for non-PREEMPT_RT
-kernels where such races should not occur.
+The bug is mostly harmless, but it triggers KASAN on debug kernels:
 
-Link: https://syzkaller.appspot.com/bug?extid=9b35e9bc0951140d13e6
-Fixes: d2d6422f8bd1 ("x86: Allow to enable PREEMPT_RT.")
-Reported-by: syzbot+9b35e9bc0951140d13e6@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/6918cd88.050a0220.1c914e.0045.GAE@google.com/T/
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20251223051413.124687-1-jiayuan.chen@linux.dev
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+ BUG: KASAN: stack-out-of-bounds in irdma_net_event+0x32e/0x3b0 [irdma]
+ Read of size 8 at addr ffffc900075e07f0 by task kworker/27:2/542554
+
+ CPU: 27 PID: 542554 Comm: kworker/27:2 Kdump: loaded Not tainted 5.14.0-630.el9.x86_64+debug #1
+ Hardware name: [...]
+ Workqueue: events rt6_probe_deferred
+ Call Trace:
+  <IRQ>
+  dump_stack_lvl+0x60/0xb0
+  print_address_description.constprop.0+0x2c/0x3f0
+  print_report+0xb4/0x270
+  kasan_report+0x92/0xc0
+  irdma_net_event+0x32e/0x3b0 [irdma]
+  notifier_call_chain+0x9e/0x180
+  atomic_notifier_call_chain+0x5c/0x110
+  rt6_do_redirect+0xb91/0x1080
+  tcp_v6_err+0xe9b/0x13e0
+  icmpv6_notify+0x2b2/0x630
+  ndisc_redirect_rcv+0x328/0x530
+  icmpv6_rcv+0xc16/0x1360
+  ip6_protocol_deliver_rcu+0xb84/0x12e0
+  ip6_input_finish+0x117/0x240
+  ip6_input+0xc4/0x370
+  ipv6_rcv+0x420/0x7d0
+  __netif_receive_skb_one_core+0x118/0x1b0
+  process_backlog+0xd1/0x5d0
+  __napi_poll.constprop.0+0xa3/0x440
+  net_rx_action+0x78a/0xba0
+  handle_softirqs+0x2d4/0x9c0
+  do_softirq+0xad/0xe0
+  </IRQ>
+
+Fixes: 915cc7ac0f8e ("RDMA/irdma: Add miscellaneous utility definitions")
+Link: https://patch.msgid.link/r/20251127143150.121099-1-mschmidt@redhat.com
+Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/irdma/utils.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 22866444efc0..276fa74af206 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -1470,7 +1470,18 @@ static struct rt6_info *rt6_make_pcpu_route(struct net *net,
+diff --git a/drivers/infiniband/hw/irdma/utils.c b/drivers/infiniband/hw/irdma/utils.c
+index 0422787592d8..87a6d58663de 100644
+--- a/drivers/infiniband/hw/irdma/utils.c
++++ b/drivers/infiniband/hw/irdma/utils.c
+@@ -251,7 +251,7 @@ int irdma_net_event(struct notifier_block *notifier, unsigned long event,
+ 		    void *ptr)
+ {
+ 	struct neighbour *neigh = ptr;
+-	struct net_device *real_dev, *netdev = (struct net_device *)neigh->dev;
++	struct net_device *real_dev, *netdev;
+ 	struct irdma_device *iwdev;
+ 	struct ib_device *ibdev;
+ 	__be32 *p;
+@@ -260,6 +260,7 @@ int irdma_net_event(struct notifier_block *notifier, unsigned long event,
  
- 	p = this_cpu_ptr(res->nh->rt6i_pcpu);
- 	prev = cmpxchg(p, NULL, pcpu_rt);
--	BUG_ON(prev);
-+	if (unlikely(prev)) {
-+		/*
-+		 * Another task on this CPU already installed a pcpu_rt.
-+		 * This can happen on PREEMPT_RT where preemption is possible.
-+		 * Free our allocation and return the existing one.
-+		 */
-+		WARN_ON_ONCE(!IS_ENABLED(CONFIG_PREEMPT_RT));
-+
-+		dst_dev_put(&pcpu_rt->dst);
-+		dst_release(&pcpu_rt->dst);
-+		return prev;
-+	}
- 
- 	if (res->f6i->fib6_destroying) {
- 		struct fib6_info *from;
+ 	switch (event) {
+ 	case NETEVENT_NEIGH_UPDATE:
++		netdev = neigh->dev;
+ 		real_dev = rdma_vlan_dev_real_dev(netdev);
+ 		if (!real_dev)
+ 			real_dev = netdev;
 -- 
 2.51.0
 
