@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A5F350A30;
-	Tue,  6 Jan 2026 17:22:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2B8350D46;
+	Tue,  6 Jan 2026 17:22:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720132; cv=none; b=TeXsf90B8P6OAynD/0NruBTiA8xmVapjycsyBfABdimEZfJMC+RPYv5rEziDFIB1a+APWDVViKDQMhF7+MmrtgPvfmzQ2cnAfjvj88qbMt1uvFufsNerY1cP3/GNFurRZDOxiULiNOlMITUX978vlzS8CxM3WVtK0n0yuawooq8=
+	t=1767720135; cv=none; b=groMyP0PVOzcmPr/Ri/KHTTPRzZothlF73FuvOTwtzixIL4eMi6DjsPy0IzncSgGOsTVrbUlTS1DCZ56qBR4aKeVhGps8g1/lOTaOxNqAnTGo5eYnkhaY74i79a7wa6VI++Mc2ICn4pFzqWFBWz9dO27hSxdFv/BybAX1DpEGlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720132; c=relaxed/simple;
-	bh=HMsbp7ukdJtTE/8th+CXtJFrvdtGeX3NvVFgmlreZpc=;
+	s=arc-20240116; t=1767720135; c=relaxed/simple;
+	bh=m9GHbLSEtaN7y/EOoc7W1fbjFP2PUM0BFf+8hznNlcc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RmODLTYmg+xsBYkz4JocLrN+t44gu7l9DK/B7YQz+SObbpZBiAFrx1Z3ikEXY9qiliXxvOd9pJ0GkjaNV5z4kmFLRitTEZr7Ndls85taJtUUGvmWjvYnPjVdQYhmZp/HFgL3T8RLg1plp16e+fGIl2zLvGzPOKVU4a55werhYRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uE5GKBMs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g3LVgZrhjT9DmQvZCFvbs8xQfs83OSIXovO+sHmiCGN6mbypEbijF1h9XBKL9uyN2q7Gy7LXenA0bAXuO9OkR7KY9WY57vKBde+d+MljTIPXqeqgP2/M55Qt/hA9Z3v+LM9EOTAoy6B11Xd+ITdJP03UKJeZ2PvkTe+qswNJDcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A0h+Y5+S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uE5GKBMs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D6BBC19424;
-	Tue,  6 Jan 2026 17:22:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A0h+Y5+S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C975FC116C6;
+	Tue,  6 Jan 2026 17:22:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720131;
-	bh=HMsbp7ukdJtTE/8th+CXtJFrvdtGeX3NvVFgmlreZpc=;
+	s=korg; t=1767720135;
+	bh=m9GHbLSEtaN7y/EOoc7W1fbjFP2PUM0BFf+8hznNlcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uE5GKBMs4DH6G9yvZUiqVoD7CPlFdHbnjbAw57IxpLk96I9GcB9a3+lhAJwa0g1sH
-	 WspEF6pu25++BgFIYAkFlfiIUjTzZN1gBvcyWlN6CsG52yKQyN4omuomxlefgEiQDC
-	 tYOaakoKtNiFzwMgVkRtHK/6haK5l5v8oiMoWslc=
+	b=A0h+Y5+SodIyZuPtwtbr+DXj4MDhcZYrExI8B2NVjv0KLbXXl8PAKoDQ0XKCGndwR
+	 WzKdp8INBLfJC51sHTTafPYaoFD57xptezgMWCWYQIy+FedSynklLNL/541A3+tLRt
+	 9YuOtBxMLg4W5VdWykCTTNJtDJGHW/+iom26p+zE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 101/567] xfs: dont leak a locked dquot when xfs_dquot_attach_buf fails
-Date: Tue,  6 Jan 2026 17:58:03 +0100
-Message-ID: <20260106170455.064209851@linuxfoundation.org>
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 137/567] usb: typec: ucsi: Handle incorrect num_connectors capability
+Date: Tue,  6 Jan 2026 17:58:39 +0100
+Message-ID: <20260106170456.394323064@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -53,47 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Mark Pearson <mpearson-lenovo@squebb.ca>
 
-commit 204c8f77e8d4a3006f8abe40331f221a597ce608 upstream.
+[ Upstream commit 30cd2cb1abf4c4acdb1ddb468c946f68939819fb ]
 
-xfs_qm_quotacheck_dqadjust acquired the dquot through xfs_qm_dqget,
-which means it owns a reference and holds q_qlock.  Both need to
-be dropped on an error exit.
+The UCSI spec states that the num_connectors field is 7 bits, and the
+8th bit is reserved and should be set to zero.
+Some buggy FW has been known to set this bit, and it can lead to a
+system not booting.
+Flag that the FW is not behaving correctly, and auto-fix the value
+so that the system boots correctly.
 
-Cc: <stable@vger.kernel.org> # v6.13
-Fixes: ca378189fdfa ("xfs: convert quotacheck to attach dquot buffers")
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Found on Lenovo P1 G8 during Linux enablement program. The FW will
+be fixed, but seemed worth addressing in case it hit platforms that
+aren't officially Linux supported.
+
+Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250821185319.2585023-1-mpearson-lenovo@squebb.ca
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_qm.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/usb/typec/ucsi/ucsi.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/fs/xfs/xfs_qm.c
-+++ b/fs/xfs/xfs_qm.c
-@@ -1134,7 +1134,7 @@ xfs_qm_quotacheck_dqadjust(
- 
- 	error = xfs_dquot_attach_buf(NULL, dqp);
- 	if (error)
--		return error;
-+		goto out_unlock;
- 
- 	trace_xfs_dqadjust(dqp);
- 
-@@ -1164,8 +1164,9 @@ xfs_qm_quotacheck_dqadjust(
+diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
+index 896e6bc1b5e2..9a0fb6a79b21 100644
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -1772,6 +1772,12 @@ static int ucsi_init(struct ucsi *ucsi)
+ 		ret = -ENODEV;
+ 		goto err_reset;
  	}
++	/* Check if reserved bit set. This is out of spec but happens in buggy FW */
++	if (ucsi->cap.num_connectors & 0x80) {
++		dev_warn(ucsi->dev, "UCSI: Invalid num_connectors %d. Likely buggy FW\n",
++			 ucsi->cap.num_connectors);
++		ucsi->cap.num_connectors &= 0x7f; // clear bit and carry on
++	}
  
- 	dqp->q_flags |= XFS_DQFLAG_DIRTY;
-+out_unlock:
- 	xfs_qm_dqput(dqp);
--	return 0;
-+	return error;
- }
- 
- /*
+ 	/* Allocate the connectors. Released in ucsi_unregister() */
+ 	connector = kcalloc(ucsi->cap.num_connectors + 1, sizeof(*connector), GFP_KERNEL);
+-- 
+2.51.0
+
 
 
