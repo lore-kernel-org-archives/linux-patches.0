@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA662DF13B;
-	Tue,  6 Jan 2026 17:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BAA933993;
+	Tue,  6 Jan 2026 17:33:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720827; cv=none; b=Ooe6iUgpMkXXi/elxnwMRmR3OXUmBKb6V2YaO/jGKOgM4RVIUM/qS//jw7p17xJEwI56rsoHB99wsUi6oowcQZEzkMiJRUEBGBghjcMy5Ykk9U96d3wNn1V6OgNfilwoAgMIbXuQssVyV0DFcgf9kUXDTZVkw/v+l9WsiJ5wn1U=
+	t=1767720830; cv=none; b=b29+eC9y4YGzG4f91T5fBJUPpum/FrBGZSaOvdcFOktlzwtAodZKKY3VwGPQxM7KAlf1GobZw8vDysyPDgtsfdZ8e8cS+WRsfNKgAoNy+Z9q8wryxUfl5C7HpqqclLbpBcXPhX+MGCTLEeryLE37vcw8DKoMwbHnS7gPhIQBLaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720827; c=relaxed/simple;
-	bh=AUlTrlVy1qIm/yceaOEKpy5feyPTn+D7ePA+Y9OJt5E=;
+	s=arc-20240116; t=1767720830; c=relaxed/simple;
+	bh=jIXVaLoxF3lnlj3LLwJ8NFEbeezuWL2WZquky5s/YSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aoc7yBFX8JCD58tSoHMNyUcks0olijp6civY0LjSGgQHPkYaL0a2Vge7vnmEA+ahnv9yXWRroVB3gy2lbEs1udCJDewqv6VvW3HSZ1hC6B0QGJBI3lg0RruxVeGUTY0JpgOcewUYiyCIJcuYTda3zoALNTaNK/Fzl/K/WBdR9Ow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZVwjnNQY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=knsRziJs2ICudbr1yagB1QYR9Z9NcJjZPVYqwD0rdBNpohG6n8iOyQauo41X+T318MyGGco+JDKxVsHFk6DZi2mvWU8dTjHPmimpqmcxi3ZpweP/Dl0zIfqTZ5V9lyK3spX8PH7bOwEMZF/O0sdA/yOIg1R1MyizegpcIifXYLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qxEAbJDJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZVwjnNQY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F65FC116C6;
-	Tue,  6 Jan 2026 17:33:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qxEAbJDJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B08FDC116C6;
+	Tue,  6 Jan 2026 17:33:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720826;
-	bh=AUlTrlVy1qIm/yceaOEKpy5feyPTn+D7ePA+Y9OJt5E=;
+	s=korg; t=1767720830;
+	bh=jIXVaLoxF3lnlj3LLwJ8NFEbeezuWL2WZquky5s/YSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZVwjnNQYj8f/Un8OMJAp0Khsu0hLRX8N46T6s38sv0/+14g8/T/dK75jGqPPuwEHb
-	 H9L0sTBLBp0iwGfTCkq/iVVCpOUN2FieHEgihR6+UV2xWOQlCNWQ2bn8UctTZCz6SG
-	 CXPAn+QWYv1LG6bRMfYXjbcy0/ki7Se0BGPL35to=
+	b=qxEAbJDJj6xuizfxqAsO1GQM2eXXdExwfahhriSJl9Zp1TsTb3TvIPrrTzq0lyW+r
+	 hbSOuLYT0EWoj0pPgYTh+6tU43wMqMiPou+HnZe4P27VQ7aqo66veycj8X73ZcFDhR
+	 I8iGj6zEotb6sxTgloZ1r6VsnLpPNjizo+GeOeYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Alex Williamson <alex@shazbot.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 321/567] net: bridge: Describe @tunnel_hash member in net_bridge_vlan_group struct
-Date: Tue,  6 Jan 2026 18:01:43 +0100
-Message-ID: <20260106170503.200238965@linuxfoundation.org>
+Subject: [PATCH 6.12 322/567] vfio/pds: Fix memory leak in pds_vfio_dirty_enable()
+Date: Tue,  6 Jan 2026 18:01:44 +0100
+Message-ID: <20260106170503.236756478@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -53,39 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bagas Sanjaya <bagasdotme@gmail.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit f79f9b7ace1713e4b83888c385f5f55519dfb687 ]
+[ Upstream commit 665077d78dc7941ce6a330c02023a2b469cc8cc7 ]
 
-Sphinx reports kernel-doc warning:
+pds_vfio_dirty_enable() allocates memory for region_info. If
+interval_tree_iter_first() returns NULL, the function returns -EINVAL
+immediately without freeing the allocated memory, causing a memory leak.
 
-WARNING: ./net/bridge/br_private.h:267 struct member 'tunnel_hash' not described in 'net_bridge_vlan_group'
+Fix this by jumping to the out_free_region_info label to ensure
+region_info is freed.
 
-Fix it by describing @tunnel_hash member.
-
-Fixes: efa5356b0d9753 ("bridge: per vlan dst_metadata netlink support")
-Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20251218042936.24175-2-bagasdotme@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 2e7c6feb4ef52 ("vfio/pds: Add multi-region support")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Link: https://lore.kernel.org/r/20251225143150.1117366-1-zilin@seu.edu.cn
+Signed-off-by: Alex Williamson <alex@shazbot.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_private.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/vfio/pci/pds/dirty.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
-index 741b0b8c4bab..a2e59108a5dc 100644
---- a/net/bridge/br_private.h
-+++ b/net/bridge/br_private.h
-@@ -247,6 +247,7 @@ struct net_bridge_vlan {
-  * struct net_bridge_vlan_group
-  *
-  * @vlan_hash: VLAN entry rhashtable
-+ * @tunnel_hash: Hash table to map from tunnel key ID (e.g. VXLAN VNI) to VLAN
-  * @vlan_list: sorted VLAN entry list
-  * @num_vlans: number of total VLAN entries
-  * @pvid: PVID VLAN id
+diff --git a/drivers/vfio/pci/pds/dirty.c b/drivers/vfio/pci/pds/dirty.c
+index 481992142f79..4915a7c1c491 100644
+--- a/drivers/vfio/pci/pds/dirty.c
++++ b/drivers/vfio/pci/pds/dirty.c
+@@ -292,8 +292,11 @@ static int pds_vfio_dirty_enable(struct pds_vfio_pci_device *pds_vfio,
+ 	len = num_ranges * sizeof(*region_info);
+ 
+ 	node = interval_tree_iter_first(ranges, 0, ULONG_MAX);
+-	if (!node)
+-		return -EINVAL;
++	if (!node) {
++		err = -EINVAL;
++		goto out_free_region_info;
++	}
++
+ 	for (int i = 0; i < num_ranges; i++) {
+ 		struct pds_lm_dirty_region_info *ri = &region_info[i];
+ 		u64 region_size = node->last - node->start + 1;
 -- 
 2.51.0
 
