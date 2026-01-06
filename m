@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C74992F7AAC;
-	Tue,  6 Jan 2026 18:01:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCAEE2F7AAC;
+	Tue,  6 Jan 2026 18:01:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722468; cv=none; b=Yf+14M9P7iFYMFktT/4LYUOC9ZzOwymvy6ppqeLFx57SmOxuaXqoDxhjk4nuOqTgWJh2B3SDt0j+QLk8g5C8jg+871JZAXbZeuTdEnawEyTF0OroXK5K7wCMk6tha2LXPTekH0dFQSe5azez0aJiOTpZlKLzvcvG0A0LqlnWFAk=
+	t=1767722472; cv=none; b=eWOGpt6RrishDUxCaWAHN3CHMn0Qrl5sFtkCEyS+q/5jf8RNfB6pQWnWiQhPyWN/oVaFsxpNSZLRGLgfrHO/CfSmwOS7yrmKkCP5jCmQ3VwJ1ezgcT6m5pSPGA+d03wwMka0AGXb1Z3YTGXJPPjxNhteE4lCMTbLw9WPy+bywTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722468; c=relaxed/simple;
-	bh=HeRelvJKt+62oarx6iCC5xiEJTzV7wTKYrB9XbEB5xU=;
+	s=arc-20240116; t=1767722472; c=relaxed/simple;
+	bh=I1tflvDhiN1cJNUqk2A1rx55R6OLlfYwFmizYoywjsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JtDoMqZi+WXQ54JgaKF5eFDmEmoutEaPA0XaKhd6bt1eQZjmdWL5WtSI/zZ+sJxwjFMFiqsZeRwpun/XR16xcFHTUHMmPWox+96BEWgdl+3PclWXx9lQpa/Q8qytaEr6U2HcXwiinYdkXw1jJ36PcqsAQ87avuPM9PnA20ANAmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Te+UjV2x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UTie9rPS68ztPfIB+d3BLjIDVHJggwJjcsjVpjq9bna/Lz0Z9+F6BfXWxi7L8N8p/XgGk3pP7rnLXG6t7x4rNvF/1FUxXp2r/k7CJIsFGE1wJKw9fL897KA9ZPXwGk8L87CXlxII3BZIoPZhvaTTezACBTtG83/w9iEMKYnMCOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2o9slDoL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Te+UjV2x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCCDAC116C6;
-	Tue,  6 Jan 2026 18:01:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2o9slDoL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D8FFC116C6;
+	Tue,  6 Jan 2026 18:01:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722468;
-	bh=HeRelvJKt+62oarx6iCC5xiEJTzV7wTKYrB9XbEB5xU=;
+	s=korg; t=1767722471;
+	bh=I1tflvDhiN1cJNUqk2A1rx55R6OLlfYwFmizYoywjsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Te+UjV2x9YhH5GmXM9xj0+roj/KGUfMmewpK/jl1tjDjWyx3qH4qFMgK5lIESoZ9S
-	 cU5h0qPMtMpWI7Fy9gZutxAiLFjLm+aNEAnM7MftAeA0CPWjTRZ482HrGjLsrxyfK1
-	 P/3lBHjbMI9gW/1ymOk9V58TaqH6boOwZuvmYth4=
+	b=2o9slDoLy0fWyOQUO+fUAyZYDBppxU0v8iVYMxaICnE+qZhBXsgXOss3O7/UF06hp
+	 m9RhEevJcNhtkDzmzgyqewVeGNkLviXSHEPdaJFZrrT0ZG2orcXKVU/NRNsFfPq1vR
+	 ffG6oqBKxbZ9+Uk0R2IXX27IhaDkANejWdm8kyNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Subject: [PATCH 6.18 266/312] drm/amdgpu/sdma6: Update SDMA 6.0.3 FW version to include UMQ protected-fence fix
-Date: Tue,  6 Jan 2026 18:05:40 +0100
-Message-ID: <20260106170557.468356311@linuxfoundation.org>
+	CK Hu <ck.hu@mediatek.com>,
+	Johan Hovold <johan@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Subject: [PATCH 6.18 275/312] drm/mediatek: Fix probe resource leaks
+Date: Tue,  6 Jan 2026 18:05:49 +0100
+Message-ID: <20260106170557.796671475@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -45,59 +46,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit c8e7e3c2215e286ebfe66fe828ed426546c519e6 upstream.
+commit 07c7c640a8eb9e196f357d15d88a59602a947197 upstream.
 
-On GFX11.0.3, earlier SDMA firmware versions issue the
-PROTECTED_FENCE write from the user VMID (e.g. VMID 8) instead of
-VMID 0. This causes a GPU VM protection fault when SDMA tries to
-write the secure fence location, as seen in the UMQ SDMA test
-(cs-sdma-with-IP-DMA-UMQ)
+Make sure to unmap and release the component iomap and clock on probe
+failure (e.g. probe deferral) and on driver unbind.
 
-Fixes the below GPU page fault:
-[  514.037189] amdgpu 0000:0b:00.0: amdgpu: [gfxhub] page fault (src_id:0 ring:40 vmid:8 pasid:32770)
-[  514.037199] amdgpu 0000:0b:00.0: amdgpu:  Process  pid 0 thread  pid 0
-[  514.037205] amdgpu 0000:0b:00.0: amdgpu:   in page starting at address 0x00007fff00409000 from client 10
-[  514.037212] amdgpu 0000:0b:00.0: amdgpu: GCVM_L2_PROTECTION_FAULT_STATUS:0x00841A51
-[  514.037217] amdgpu 0000:0b:00.0: amdgpu:      Faulty UTCL2 client ID: SDMA0 (0xd)
-[  514.037223] amdgpu 0000:0b:00.0: amdgpu:      MORE_FAULTS: 0x1
-[  514.037227] amdgpu 0000:0b:00.0: amdgpu:      WALKER_ERROR: 0x0
-[  514.037232] amdgpu 0000:0b:00.0: amdgpu:      PERMISSION_FAULTS: 0x5
-[  514.037236] amdgpu 0000:0b:00.0: amdgpu:      MAPPING_ERROR: 0x0
-[  514.037241] amdgpu 0000:0b:00.0: amdgpu:      RW: 0x1
+Note that unlike of_iomap(), devm_of_iomap() also checks whether the
+region is already mapped.
 
-v2: Updated commit message
-v3: s/gfx11.0.3/sdma 6.0.3/ in patch title (Alex)
-
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 119f5173628a ("drm/mediatek: Add DRM Driver for Mediatek SoC MT8173.")
+Cc: stable@vger.kernel.org	# 4.7
+Cc: CK Hu <ck.hu@mediatek.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20250923152340.18234-2-johan@kernel.org/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/sdma_v6_0.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/mediatek/mtk_ddp_comp.c |   20 ++++++++++++++++----
+ drivers/gpu/drm/mediatek/mtk_ddp_comp.h |    2 +-
+ drivers/gpu/drm/mediatek/mtk_drm_drv.c  |    4 ++--
+ 3 files changed, 19 insertions(+), 7 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/sdma_v6_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/sdma_v6_0.c
-@@ -1389,7 +1389,7 @@ static int sdma_v6_0_sw_init(struct amdg
- 			adev->userq_funcs[AMDGPU_HW_IP_DMA] = &userq_mes_funcs;
- 		break;
- 	case IP_VERSION(6, 0, 3):
--		if ((adev->sdma.instance[0].fw_version >= 27) && !adev->sdma.disable_uq)
-+		if (adev->sdma.instance[0].fw_version >= 29 && !adev->sdma.disable_uq)
- 			adev->userq_funcs[AMDGPU_HW_IP_DMA] = &userq_mes_funcs;
- 		break;
- 	case IP_VERSION(6, 1, 0):
+--- a/drivers/gpu/drm/mediatek/mtk_ddp_comp.c
++++ b/drivers/gpu/drm/mediatek/mtk_ddp_comp.c
+@@ -621,15 +621,20 @@ int mtk_find_possible_crtcs(struct drm_d
+ 	return ret;
+ }
+ 
+-int mtk_ddp_comp_init(struct device_node *node, struct mtk_ddp_comp *comp,
++static void mtk_ddp_comp_clk_put(void *_clk)
++{
++	struct clk *clk = _clk;
++
++	clk_put(clk);
++}
++
++int mtk_ddp_comp_init(struct device *dev, struct device_node *node, struct mtk_ddp_comp *comp,
+ 		      unsigned int comp_id)
+ {
+ 	struct platform_device *comp_pdev;
+ 	enum mtk_ddp_comp_type type;
+ 	struct mtk_ddp_comp_dev *priv;
+-#if IS_REACHABLE(CONFIG_MTK_CMDQ)
+ 	int ret;
+-#endif
+ 
+ 	if (comp_id >= DDP_COMPONENT_DRM_ID_MAX)
+ 		return -EINVAL;
+@@ -670,11 +675,18 @@ int mtk_ddp_comp_init(struct device_node
+ 	if (!priv)
+ 		return -ENOMEM;
+ 
+-	priv->regs = of_iomap(node, 0);
++	priv->regs = devm_of_iomap(dev, node, 0, NULL);
++	if (IS_ERR(priv->regs))
++		return PTR_ERR(priv->regs);
++
+ 	priv->clk = of_clk_get(node, 0);
+ 	if (IS_ERR(priv->clk))
+ 		return PTR_ERR(priv->clk);
+ 
++	ret = devm_add_action_or_reset(dev, mtk_ddp_comp_clk_put, priv->clk);
++	if (ret)
++		return ret;
++
+ #if IS_REACHABLE(CONFIG_MTK_CMDQ)
+ 	ret = cmdq_dev_get_client_reg(comp->dev, &priv->cmdq_reg, 0);
+ 	if (ret)
+--- a/drivers/gpu/drm/mediatek/mtk_ddp_comp.h
++++ b/drivers/gpu/drm/mediatek/mtk_ddp_comp.h
+@@ -350,7 +350,7 @@ static inline void mtk_ddp_comp_encoder_
+ int mtk_ddp_comp_get_id(struct device_node *node,
+ 			enum mtk_ddp_comp_type comp_type);
+ int mtk_find_possible_crtcs(struct drm_device *drm, struct device *dev);
+-int mtk_ddp_comp_init(struct device_node *comp_node, struct mtk_ddp_comp *comp,
++int mtk_ddp_comp_init(struct device *dev, struct device_node *comp_node, struct mtk_ddp_comp *comp,
+ 		      unsigned int comp_id);
+ enum mtk_ddp_comp_type mtk_ddp_comp_get_type(unsigned int comp_id);
+ void mtk_ddp_write(struct cmdq_pkt *cmdq_pkt, unsigned int value,
+--- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+@@ -1123,7 +1123,7 @@ static int mtk_drm_probe(struct platform
+ 							    (void *)private->mmsys_dev,
+ 							    sizeof(*private->mmsys_dev));
+ 		private->ddp_comp[DDP_COMPONENT_DRM_OVL_ADAPTOR].dev = &ovl_adaptor->dev;
+-		mtk_ddp_comp_init(NULL, &private->ddp_comp[DDP_COMPONENT_DRM_OVL_ADAPTOR],
++		mtk_ddp_comp_init(dev, NULL, &private->ddp_comp[DDP_COMPONENT_DRM_OVL_ADAPTOR],
+ 				  DDP_COMPONENT_DRM_OVL_ADAPTOR);
+ 		component_match_add(dev, &match, compare_dev, &ovl_adaptor->dev);
+ 	}
+@@ -1189,7 +1189,7 @@ static int mtk_drm_probe(struct platform
+ 						   node);
+ 		}
+ 
+-		ret = mtk_ddp_comp_init(node, &private->ddp_comp[comp_id], comp_id);
++		ret = mtk_ddp_comp_init(dev, node, &private->ddp_comp[comp_id], comp_id);
+ 		if (ret) {
+ 			of_node_put(node);
+ 			goto err_node;
 
 
