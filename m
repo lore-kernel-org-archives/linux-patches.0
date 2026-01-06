@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA9635C1AD;
-	Tue,  6 Jan 2026 17:46:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD7535C1B3;
+	Tue,  6 Jan 2026 17:46:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721570; cv=none; b=V8nBEbR2WrweSF9IU+pQbialkr4LLpuyosqn0vLuu0+3jLMmhZBJ4UecYfnC9w/Kn09VcOg8zdNaGAB+a/PNW+7EzY+3HPOLkjL4t5Ae4x3fYVbhXW0DxtaXT4PatyyCF7Xh/EY1fNt/B7pvee74Ka5ZxDG7eWlPGUjtXPqnWE0=
+	t=1767721573; cv=none; b=UfvOJqeYXnzpM3aFU4p+kdG3eFh7sieuqTBYhwZlmlo0wWgqnR+QmR6tQlZ0eg90QkI49NpD4yXRBpB4QoRNHm9UuyQVhPxio/q5z9HqH3K4HZqWKKAgMhQJ0OwVa0VsQYpQVb5lPT1S/DdnG5HvTgAMWUrieykkohm240F8VzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721570; c=relaxed/simple;
-	bh=Aosv+cXBwPda67suy+SpR0XMDi5hRqTGplPL+6fGvew=;
+	s=arc-20240116; t=1767721573; c=relaxed/simple;
+	bh=yYNbcevIFGl1jHgmxma8GWMY+M1ygwWeiwpi/WLhgJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=npt9xYrpCqsgdjfnYxwwU4NYXp959enN8Cptgz3+zi8C/A/r3EAK+JPtB61hqttKIVAUZCA2NPQtGSRxzLYWpg2THTti7UmKf4PYjdq1TkyEMRsnpVpmhjMfxI9+gkcQni3JqlQCiTN6tHppWLv7zaV46lbFZ42mhsKeiNqpnYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KV0HsjkG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=n8OCyiFW1s7c4MdRJ2LhHvi0vU+dxS7dYqWhRjnH9AcXDMFwWHgWOYV5wJ1VTeIP05sJGyfCudxnjoIWYIjGormT7d/TqiGE3BkmL3yhEInAe+acrENxABrpj3I5pPjgI2VP7oSHrM9Xl9rdpkLhnbsmaQSsj+drsGzK+GFO+lQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZyBcqYjg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KV0HsjkG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7406DC116C6;
-	Tue,  6 Jan 2026 17:46:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZyBcqYjg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1CC9C116C6;
+	Tue,  6 Jan 2026 17:46:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721569;
-	bh=Aosv+cXBwPda67suy+SpR0XMDi5hRqTGplPL+6fGvew=;
+	s=korg; t=1767721573;
+	bh=yYNbcevIFGl1jHgmxma8GWMY+M1ygwWeiwpi/WLhgJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KV0HsjkGMGmiEZDIejmxIDaNbjEArqCibg4dK0NmTQVJErdHs5s7ak0vkzkDgQsp2
-	 HE2pLnjPEvETTjQy8T8Zp0Jyx2T8BNrGxsD414BWDHmSyadJ3z7pE3KjBrYMHuodKE
-	 R5iqSyyxTcXaBuyjQv0+XZugaZbKxSVPajAy49RA=
+	b=ZyBcqYjgPlIh2ybOhoQQ/alr0kIS8QzL3OHcLKlCqtMK0XjpfOhdBHC8Pw6xuP9nh
+	 bYRNjvPMkWnKmBz/6HYDjuazUZYSe4JddZ+YWAU12kE1FEE1BWyhk6Pd3J0AwAYdx6
+	 dbAKh8Gwk1SWxnzcYyAODrPynrHob+VXAeA+gZoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Ming Qian <ming.qian@oss.nxp.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 560/567] media: amphion: Make some vpu_v4l2 functions static
-Date: Tue,  6 Jan 2026 18:05:42 +0100
-Message-ID: <20260106170512.142606848@linuxfoundation.org>
+	kernel test robot <oliver.sang@intel.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Fernand Sieber <sieberf@amazon.com>,
+	=?UTF-8?q?Holger=20Hoffst=C3=A4tte?= <holger@applied-asynchrony.com>
+Subject: [PATCH 6.18 001/312] sched/proxy: Yield the donor task
+Date: Tue,  6 Jan 2026 18:01:15 +0100
+Message-ID: <20260106170547.891234889@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
-References: <20260106170451.332875001@linuxfoundation.org>
+In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
+References: <20260106170547.832845344@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,101 +46,118 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+From: Fernand Sieber <sieberf@amazon.com>
 
-[ Upstream commit 5d1e54bb4dc6741284a3ed587e994308ddee2f16 ]
+commit 127b90315ca07ccad2618db7ba950a63e3b32d22 upstream.
 
-Some functions defined in vpu_v4l2.c are never used outside of that
-compilation unit. Make them static.
+When executing a task in proxy context, handle yields as if they were
+requested by the donor task. This matches the traditional PI semantics
+of yield() as well.
 
-Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Reviewed-by: Ming Qian <ming.qian@oss.nxp.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Stable-dep-of: 634c2cd17bd0 ("media: amphion: Remove vpu_vb_is_codecconfig")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This avoids scenario like proxy task yielding, pick next task selecting the
+same previous blocked donor, running the proxy task again, etc.
+
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202510211205.1e0f5223-lkp@intel.com
+Suggested-by: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Fernand Sieber <sieberf@amazon.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20251106104022.195157-1-sieberf@amazon.com
+Cc: Holger Hoffstätte <holger@applied-asynchrony.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/amphion/vpu_v4l2.c |   12 +++++++++---
- drivers/media/platform/amphion/vpu_v4l2.h |    8 --------
- 2 files changed, 9 insertions(+), 11 deletions(-)
+ kernel/sched/deadline.c |    2 +-
+ kernel/sched/ext.c      |    4 ++--
+ kernel/sched/fair.c     |    2 +-
+ kernel/sched/rt.c       |    2 +-
+ kernel/sched/syscalls.c |    5 +++--
+ 5 files changed, 8 insertions(+), 7 deletions(-)
 
---- a/drivers/media/platform/amphion/vpu_v4l2.c
-+++ b/drivers/media/platform/amphion/vpu_v4l2.c
-@@ -24,6 +24,11 @@
- #include "vpu_msgs.h"
- #include "vpu_helpers.h"
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -2143,7 +2143,7 @@ static void yield_task_dl(struct rq *rq)
+ 	 * it and the bandwidth timer will wake it up and will give it
+ 	 * new scheduling parameters (thanks to dl_yielded=1).
+ 	 */
+-	rq->curr->dl.dl_yielded = 1;
++	rq->donor->dl.dl_yielded = 1;
  
-+static char *vpu_type_name(u32 type)
-+{
-+	return V4L2_TYPE_IS_OUTPUT(type) ? "output" : "capture";
-+}
-+
- void vpu_inst_lock(struct vpu_inst *inst)
+ 	update_rq_clock(rq);
+ 	update_curr_dl(rq);
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -1493,7 +1493,7 @@ static bool dequeue_task_scx(struct rq *
+ static void yield_task_scx(struct rq *rq)
  {
- 	mutex_lock(&inst->lock);
-@@ -42,7 +47,7 @@ dma_addr_t vpu_get_vb_phy_addr(struct vb
- 			vb->planes[plane_no].data_offset;
+ 	struct scx_sched *sch = scx_root;
+-	struct task_struct *p = rq->curr;
++	struct task_struct *p = rq->donor;
+ 
+ 	if (SCX_HAS_OP(sch, yield))
+ 		SCX_CALL_OP_2TASKS_RET(sch, SCX_KF_REST, yield, rq, p, NULL);
+@@ -1504,7 +1504,7 @@ static void yield_task_scx(struct rq *rq
+ static bool yield_to_task_scx(struct rq *rq, struct task_struct *to)
+ {
+ 	struct scx_sched *sch = scx_root;
+-	struct task_struct *from = rq->curr;
++	struct task_struct *from = rq->donor;
+ 
+ 	if (SCX_HAS_OP(sch, yield))
+ 		return SCX_CALL_OP_2TASKS_RET(sch, SCX_KF_REST, yield, rq,
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -8993,7 +8993,7 @@ static void put_prev_task_fair(struct rq
+  */
+ static void yield_task_fair(struct rq *rq)
+ {
+-	struct task_struct *curr = rq->curr;
++	struct task_struct *curr = rq->donor;
+ 	struct cfs_rq *cfs_rq = task_cfs_rq(curr);
+ 	struct sched_entity *se = &curr->se;
+ 
+--- a/kernel/sched/rt.c
++++ b/kernel/sched/rt.c
+@@ -1490,7 +1490,7 @@ static void requeue_task_rt(struct rq *r
+ 
+ static void yield_task_rt(struct rq *rq)
+ {
+-	requeue_task_rt(rq, rq->curr, 0);
++	requeue_task_rt(rq, rq->donor, 0);
  }
  
--unsigned int vpu_get_vb_length(struct vb2_buffer *vb, u32 plane_no)
-+static unsigned int vpu_get_vb_length(struct vb2_buffer *vb, u32 plane_no)
- {
- 	if (plane_no >= vb->num_planes)
- 		return 0;
-@@ -81,7 +86,7 @@ void vpu_v4l2_set_error(struct vpu_inst
- 	vpu_inst_unlock(inst);
- }
+ static int find_lowest_rq(struct task_struct *task);
+--- a/kernel/sched/syscalls.c
++++ b/kernel/sched/syscalls.c
+@@ -1351,7 +1351,7 @@ static void do_sched_yield(void)
+ 	rq = this_rq_lock_irq(&rf);
  
--int vpu_notify_eos(struct vpu_inst *inst)
-+static int vpu_notify_eos(struct vpu_inst *inst)
- {
- 	static const struct v4l2_event ev = {
- 		.id = 0,
-@@ -562,7 +567,8 @@ static void vpu_vb2_buf_finish(struct vb
- 		call_void_vop(inst, on_queue_empty, q->type);
- }
+ 	schedstat_inc(rq->yld_count);
+-	current->sched_class->yield_task(rq);
++	rq->donor->sched_class->yield_task(rq);
  
--void vpu_vb2_buffers_return(struct vpu_inst *inst, unsigned int type, enum vb2_buffer_state state)
-+static void vpu_vb2_buffers_return(struct vpu_inst *inst, unsigned int type,
-+				   enum vb2_buffer_state state)
+ 	preempt_disable();
+ 	rq_unlock_irq(rq, &rf);
+@@ -1420,12 +1420,13 @@ EXPORT_SYMBOL(yield);
+  */
+ int __sched yield_to(struct task_struct *p, bool preempt)
  {
- 	struct vb2_v4l2_buffer *buf;
+-	struct task_struct *curr = current;
++	struct task_struct *curr;
+ 	struct rq *rq, *p_rq;
+ 	int yielded = 0;
  
---- a/drivers/media/platform/amphion/vpu_v4l2.h
-+++ b/drivers/media/platform/amphion/vpu_v4l2.h
-@@ -26,15 +26,12 @@ void vpu_skip_frame(struct vpu_inst *ins
- struct vb2_v4l2_buffer *vpu_find_buf_by_sequence(struct vpu_inst *inst, u32 type, u32 sequence);
- struct vb2_v4l2_buffer *vpu_find_buf_by_idx(struct vpu_inst *inst, u32 type, u32 idx);
- void vpu_v4l2_set_error(struct vpu_inst *inst);
--int vpu_notify_eos(struct vpu_inst *inst);
- int vpu_notify_source_change(struct vpu_inst *inst);
- int vpu_set_last_buffer_dequeued(struct vpu_inst *inst, bool eos);
--void vpu_vb2_buffers_return(struct vpu_inst *inst, unsigned int type, enum vb2_buffer_state state);
- int vpu_get_num_buffers(struct vpu_inst *inst, u32 type);
- bool vpu_is_source_empty(struct vpu_inst *inst);
+ 	scoped_guard (raw_spinlock_irqsave, &p->pi_lock) {
+ 		rq = this_rq();
++		curr = rq->donor;
  
- dma_addr_t vpu_get_vb_phy_addr(struct vb2_buffer *vb, u32 plane_no);
--unsigned int vpu_get_vb_length(struct vb2_buffer *vb, u32 plane_no);
- static inline struct vpu_format *vpu_get_format(struct vpu_inst *inst, u32 type)
- {
- 	if (V4L2_TYPE_IS_OUTPUT(type))
-@@ -43,11 +40,6 @@ static inline struct vpu_format *vpu_get
- 		return &inst->cap_format;
- }
- 
--static inline char *vpu_type_name(u32 type)
--{
--	return V4L2_TYPE_IS_OUTPUT(type) ? "output" : "capture";
--}
--
- static inline int vpu_vb_is_codecconfig(struct vb2_v4l2_buffer *vbuf)
- {
- #ifdef V4L2_BUF_FLAG_CODECCONFIG
+ again:
+ 		p_rq = task_rq(p);
 
 
