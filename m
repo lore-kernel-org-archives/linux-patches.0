@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2E534D3B9;
-	Tue,  6 Jan 2026 17:20:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F4B34D4D9;
+	Tue,  6 Jan 2026 17:20:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720053; cv=none; b=aoWG/i2TtV4OrfyAG11V5apnyNed52gWh5CR0nA/nsZOTvRwQkNV5t7H5JIdwydRxoChnRAjIz0tdMK+sAzhlT+DtI8KWe/HCT3JDAQEXpM4RTyM+TYEmJ4Si8eaSkZKOzOEi5HtqKEmo0nE2R+EPcvQMJVMLPE8vrdJ4I5bwvA=
+	t=1767720057; cv=none; b=CHDi8x9r5iSMhBNl1v9pAaNSVAqkvpHWC63qW7DJTw6p+LYR4IPmXkp8Jkkuc0PafmHiiFQMCkoLd3BcqOuMOhYwJ7vUPFOQzZtS1BcD93G5VUI2yopT0Qk0X0mdTVHC4a7/gLg3C7KQzZ1wqyVanABCR5ManTjaPG3nDCmvUXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720053; c=relaxed/simple;
-	bh=jWwZENcqcTuRM66GvopzIacFEjWhRDJyv1G3tDfqBVg=;
+	s=arc-20240116; t=1767720057; c=relaxed/simple;
+	bh=eaLHbgAg97ElF244De1PLdKLsKUhJI1uaOp5MiWqlx4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MHTtqQbk94J9H5t8nnzgHhwgqmGfbeB8MHDfvcIVunr+sk93FxRPCCLs6a4f6n0qe7CE6JpWMjNHr5A3i/wy+O/o+Kqda9btZmFhSjmEdyzF8DwYxMKSpHT3vM8IWRis8B5xWf5UzD7ODVTCIeKilkut56nLhqK1WSBz1wCyVu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IATdmDkZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GZ7R9vpCRydlYyeLc7XnS9A2nnHSf2soFI3yi2ykgGe4v9WBmxdZw76mx4K5a5OeNnGamKaw4HAkOcq24kYiP93MZf6lgV/NYDtg1fhxAvzD2bJEFHatAwZGzQzqy5byoZe8CqPKhATu22ZZ15FGxOE4yUB/qOKkNSzfCPpDGQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C0wMTlmc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IATdmDkZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37D9AC116C6;
-	Tue,  6 Jan 2026 17:20:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C0wMTlmc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C157FC116C6;
+	Tue,  6 Jan 2026 17:20:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720053;
-	bh=jWwZENcqcTuRM66GvopzIacFEjWhRDJyv1G3tDfqBVg=;
+	s=korg; t=1767720057;
+	bh=eaLHbgAg97ElF244De1PLdKLsKUhJI1uaOp5MiWqlx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IATdmDkZkpBE9TToU6bheAt5OwOdXA1WAtlfvUZboS84lb8xe9nB2axVb93ipZchy
-	 nan9KqnJ+RI1HaAmcjfAusjPTsqTJiAuZQURI2jjuh3EkXk5Cpbsar4Gu4MpreK7KG
-	 SUMgaCsN3RFtsManjcCkFxgTZHTxgoRJWcl83AVE=
+	b=C0wMTlmcBXeCUaRWqchWNfnt1ZebtSuzLzwtjuN1PJOA+Xdy6MS14Y6XepKs7XovV
+	 2ZC8HRyKIEM1+3WLzf3Bx7xrQN7R2Rppzkf/dLgU6MsyycEbgO9rA8GL/gRU6qbRFR
+	 C+76jRvOUSvhnCM5jecYjkT3d3MFtHA7ViKBYca8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kartik Rajput <kkartik@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>
-Subject: [PATCH 6.12 103/567] soc/tegra: fuse: Do not register SoC device on ACPI boot
-Date: Tue,  6 Jan 2026 17:58:05 +0100
-Message-ID: <20260106170455.139721468@linuxfoundation.org>
+	Peter Wang <peter.wang@mediatek.com>,
+	Chun-Hung Wu <chun-hung.wu@mediatek.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 121/567] scsi: ufs: host: mediatek: Fix shutdown/suspend race condition
+Date: Tue,  6 Jan 2026 17:58:23 +0100
+Message-ID: <20260106170455.804834820@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -50,37 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kartik Rajput <kkartik@nvidia.com>
+From: Peter Wang <peter.wang@mediatek.com>
 
-commit c87f820bc4748fdd4d50969e8930cd88d1b61582 upstream.
+[ Upstream commit 014de20bb36ba03e0e0b0a7e0a1406ab900c9fda ]
 
-On Tegra platforms using ACPI, the SMCCC driver already registers the
-SoC device. This makes the registration performed by the Tegra fuse
-driver redundant.
+Address a race condition between shutdown and suspend operations in the
+UFS Mediatek driver. Before entering suspend, check if a shutdown is in
+progress to prevent conflicts and ensure system stability.
 
-When booted via ACPI, skip registering the SoC device and suppress
-printing SKU information from the Tegra fuse driver, as this information
-is already provided by the SMCCC driver.
-
-Fixes: 972167c69080 ("soc/tegra: fuse: Add ACPI support for Tegra194 and Tegra234")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kartik Rajput <kkartik@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Peter Wang <peter.wang@mediatek.com>
+Acked-by: Chun-Hung Wu <chun-hung.wu@mediatek.com>
+Link: https://patch.msgid.link/20250924094527.2992256-6-peter.wang@mediatek.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/tegra/fuse/fuse-tegra.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/ufs/host/ufs-mediatek.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/soc/tegra/fuse/fuse-tegra.c
-+++ b/drivers/soc/tegra/fuse/fuse-tegra.c
-@@ -182,8 +182,6 @@ static int tegra_fuse_probe(struct platf
- 		}
+diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
+index 00ecfe14c1fd..1fb98af4ac56 100644
+--- a/drivers/ufs/host/ufs-mediatek.c
++++ b/drivers/ufs/host/ufs-mediatek.c
+@@ -1994,6 +1994,11 @@ static int ufs_mtk_system_suspend(struct device *dev)
+ 	struct arm_smccc_res res;
+ 	int ret;
  
- 		fuse->soc->init(fuse);
--		tegra_fuse_print_sku_info(&tegra_sku_info);
--		tegra_soc_device_register();
- 
- 		err = tegra_fuse_add_lookups(fuse);
- 		if (err)
++	if (hba->shutting_down) {
++		ret = -EBUSY;
++		goto out;
++	}
++
+ 	ret = ufshcd_system_suspend(dev);
+ 	if (ret)
+ 		goto out;
+-- 
+2.51.0
+
 
 
