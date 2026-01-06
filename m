@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0F53354AEE;
-	Tue,  6 Jan 2026 17:22:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1C1354AF6;
+	Tue,  6 Jan 2026 17:23:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720178; cv=none; b=ldDSi1ZZB92YFvE/CU5XFksEbwGu/23lb3VUbNzcvGHMByJdjKHCWJ1+4/P878P+gvbDBlqrXaUWpd77xQryXRoJk4Isrfi9ge4owzFDUum5BZcLCyzh+wU+h5a0O7tfVNsXcTP48LeOHY9EnDzv/tkabs5kqaMxXsZzFUIglEM=
+	t=1767720182; cv=none; b=G8b159lFCF8h3gAtVJqs2iMJpFKh+TrbGZkp5equnmpN0lFNA8FkibtYF5BM/LIcYQXePU/3wjHE2NKylocQeikx2EDg4DluuMyl9y+ea+vqcYJ/2kWYrvIKxyaowesWYddPBnYrwwBXA6hP+E2pOw98X2NcvclqrWgzNU+9VZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720178; c=relaxed/simple;
-	bh=VqvCLcn3LJeDLSmWqfw8/kniQb9wTvn+A3Zw7V/ucGA=;
+	s=arc-20240116; t=1767720182; c=relaxed/simple;
+	bh=G9fVfBKF2kk5vzqV/LZ1mix89UUpixYwmtb0EwyJJBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WCXJhdTsps5hnusU41VPDwVllbhsSdfDdkzYD24NIqEq+b2wuWQdS9uwcsMzenxNBWZb5xO3iq5uhBW4S3TfyxYCfjFUtq9HeQHMqS0jJlhRCXGhlqyFfSXvFoHstXpV3+zzgNLwS8KdJtrc9b2+cLUeRkKPu3kppdaDWlg4014=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SuFe+raC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BWAXlIPu4A/d40PIRg77zNADRDRfUoHKeFHub5EQVtZUKvPp0eYC6gCpGYCVcuhfe4ZuF3yobqQd5pFGd4034Nzj8gLCTt5sklbIYTmlFVjtCFaNaUJPI6pAdV2KCyajmpsMgsNUA1/AWXO3NnvcXi4iZ36fBaTcRuB/ScronT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uEk8oC7w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SuFe+raC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27F76C116C6;
-	Tue,  6 Jan 2026 17:22:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uEk8oC7w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59C0AC116C6;
+	Tue,  6 Jan 2026 17:23:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720178;
-	bh=VqvCLcn3LJeDLSmWqfw8/kniQb9wTvn+A3Zw7V/ucGA=;
+	s=korg; t=1767720181;
+	bh=G9fVfBKF2kk5vzqV/LZ1mix89UUpixYwmtb0EwyJJBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SuFe+raC9G+tqcC1/kWhEiFXbk3zETF4ISUKPlU+l88ETdWrrsHj3h26edpBWWz8L
-	 EQQlwrcWwfFxHOD0VoQPdzN/XRLADVbY8B1R+4kaIPom5/hw31LiYmEZ4XqNKGuF9b
-	 vlGcNikXdHy4yU4wRSQugGBomfUwpqo6Q7kCDUTk=
+	b=uEk8oC7wfl6VF3+o6Fvh2PHUBtLz3eX/bG0XpODBYzyCG9MelK+CLqMol2Y1iCExJ
+	 PX2sQvD9ZtPwVawgPDCuEX1Tr3JnN7/qGc8veVQJXkwWMv1RePjWTCb+roOqoolF7I
+	 QVZHNGoXZM+q4OObVrdNX2F+5QzetcnblSrF/YHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.12 157/567] perf: arm_cspmu: fix error handling in arm_cspmu_impl_unregister()
-Date: Tue,  6 Jan 2026 17:58:59 +0100
-Message-ID: <20260106170457.136929442@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>
+Subject: [PATCH 6.12 158/567] lib/crypto: x86/blake2s: Fix 32-bit arg treated as 64-bit
+Date: Tue,  6 Jan 2026 17:59:00 +0100
+Message-ID: <20260106170457.174088770@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -50,41 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit 970e1e41805f0bd49dc234330a9390f4708d097d upstream.
+commit 2f22115709fc7ebcfa40af3367a508fbbd2f71e9 upstream.
 
-driver_find_device() calls get_device() to increment the reference
-count once a matching device is found. device_release_driver()
-releases the driver, but it does not decrease the reference count that
-was incremented by driver_find_device(). At the end of the loop, there
-is no put_device() to balance the reference count. To avoid reference
-count leakage, add put_device() to decrease the reference count.
+In the C code, the 'inc' argument to the assembly functions
+blake2s_compress_ssse3() and blake2s_compress_avx512() is declared with
+type u32, matching blake2s_compress().  The assembly code then reads it
+from the 64-bit %rcx.  However, the ABI doesn't guarantee zero-extension
+to 64 bits, nor do gcc or clang guarantee it.  Therefore, fix these
+functions to read this argument from the 32-bit %ecx.
 
-Found by code review.
+In theory, this bug could have caused the wrong 'inc' value to be used,
+causing incorrect BLAKE2s hashes.  In practice, probably not: I've fixed
+essentially this same bug in many other assembly files too, but there's
+never been a real report of it having caused a problem.  In x86_64, all
+writes to 32-bit registers are zero-extended to 64 bits.  That results
+in zero-extension in nearly all situations.  I've only been able to
+demonstrate a lack of zero-extension with a somewhat contrived example
+involving truncation, e.g. when the C code has a u64 variable holding
+0x1234567800000040 and passes it as a u32 expecting it to be truncated
+to 0x40 (64).  But that's not what the real code does, of course.
 
+Fixes: ed0356eda153 ("crypto: blake2s - x86_64 SIMD implementation")
 Cc: stable@vger.kernel.org
-Fixes: bfc653aa89cb ("perf: arm_cspmu: Separate Arm and vendor module")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Signed-off-by: Will Deacon <will@kernel.org>
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Link: https://lore.kernel.org/r/20251102234209.62133-2-ebiggers@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/perf/arm_cspmu/arm_cspmu.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/x86/crypto/blake2s-core.S |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/perf/arm_cspmu/arm_cspmu.c
-+++ b/drivers/perf/arm_cspmu/arm_cspmu.c
-@@ -1412,8 +1412,10 @@ void arm_cspmu_impl_unregister(const str
- 
- 	/* Unbind the driver from all matching backend devices. */
- 	while ((dev = driver_find_device(&arm_cspmu_driver.driver, NULL,
--			match, arm_cspmu_match_device)))
-+			match, arm_cspmu_match_device))) {
- 		device_release_driver(dev);
-+		put_device(dev);
-+	}
- 
- 	mutex_lock(&arm_cspmu_lock);
- 
+--- a/arch/x86/crypto/blake2s-core.S
++++ b/arch/x86/crypto/blake2s-core.S
+@@ -54,7 +54,7 @@ SYM_FUNC_START(blake2s_compress_ssse3)
+ 	movdqa		ROT16(%rip),%xmm12
+ 	movdqa		ROR328(%rip),%xmm13
+ 	movdqu		0x20(%rdi),%xmm14
+-	movq		%rcx,%xmm15
++	movd		%ecx,%xmm15
+ 	leaq		SIGMA+0xa0(%rip),%r8
+ 	jmp		.Lbeginofloop
+ 	.align		32
+@@ -179,7 +179,7 @@ SYM_FUNC_START(blake2s_compress_avx512)
+ 	vmovdqu		(%rdi),%xmm0
+ 	vmovdqu		0x10(%rdi),%xmm1
+ 	vmovdqu		0x20(%rdi),%xmm4
+-	vmovq		%rcx,%xmm5
++	vmovd		%ecx,%xmm5
+ 	vmovdqa		IV(%rip),%xmm14
+ 	vmovdqa		IV+16(%rip),%xmm15
+ 	jmp		.Lblake2s_compress_avx512_mainloop
 
 
