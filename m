@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D687336C0CB;
-	Tue,  6 Jan 2026 17:58:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 280A936C0D3;
+	Tue,  6 Jan 2026 17:58:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722283; cv=none; b=CJwwBxYrzFbboBgG7SG78vk9cMFp0DCePqKH6tbpo3pX1FAe30G4gv6DXnyll+GMKqKQu/uJ8iTQ3E9+Sy/Npw29M3LiLwa5Gnr2C2hkDf3I/oOEOpFLeOPQAEBbd1Q2yEqQuVnit/FBNab0+zqbT6KWb6QjATO/g+2AC9e5KQY=
+	t=1767722285; cv=none; b=p9Ife9U/imy5X1cp2ZXsYa/xBR9hyjDZd1jyxO4VZIWqYOp/7RnZ9GOK4ow525hbzinjN5e+EP+b/k3tW2MVCpsFZAi9jQgiVLBueTDxdprQXKNITInDL25EsyZUtDj2iMDdYLly+AW962rJ7ZQZ7ZSKVZ9eI8jK0giKu/4Q31c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722283; c=relaxed/simple;
-	bh=8F4B8g3RHTOpHkUBEYvIqbGm+QgWDc/DKkj+3wgrWwE=;
+	s=arc-20240116; t=1767722285; c=relaxed/simple;
+	bh=CZFv5R5AvSQ3KI19sl+5uMm333rVJO0ImOtALYryFto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IieYfhHNqap+t442LLdcGD9Cvwb8DLLHauFQANn2Yma5uQRB605NuveQRZK90UwP2d4uwMdQwNtLh3SLXRQoeElKCKJTPTVB1+uUyvM/n6+VrGbOYgmn5XrLhqkEF+cCynvgxfE01b7RZeRFrEDqfpMzafLH2Xjt54QJHzBomAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aGaHOB8P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lg35YM7wkdia9eLilOMoygDTww5f+fXUJGT7C21B8qowldjb9zvfPbGy/eDCpBpRWgnwL1c0fFOL/wZZ14c4BVTwui6OvHBEGXJ/aouVOIQAe9XeTtul08RA1LZfzMn4uBJlNVRRrC1C7QMxVJlKBawGqKEWOtxnZD1abPjn1vA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f41PARhL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aGaHOB8P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28444C116C6;
-	Tue,  6 Jan 2026 17:58:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f41PARhL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3734AC116C6;
+	Tue,  6 Jan 2026 17:58:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722281;
-	bh=8F4B8g3RHTOpHkUBEYvIqbGm+QgWDc/DKkj+3wgrWwE=;
+	s=korg; t=1767722284;
+	bh=CZFv5R5AvSQ3KI19sl+5uMm333rVJO0ImOtALYryFto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aGaHOB8PXeWVGBvq33eKvgTsh4nLmN9vy+nAHyu3IRwu7qpmRWgv9ZomUMymH/Ydc
-	 BzDQpqHdqaZc+8FoQa5SY/w8WgiHSOX2Zx3uGEMe84ktnJPUypVajnOO0QgV3iY+2j
-	 5UCrPsY6BwxTpr5A+lqesKSCLI7yXaGuINu3TdHI=
+	b=f41PARhLFtb/WWWMVm7Fjqx9LaaE28ANmr3EkSgwUXj6Ige6tYnE02sIlqWiSq0+z
+	 3hj13WUjtdsrMDniw1eWkVfGwlvOcYXMNs2UAV4zT9hlcVu+HtvMHz7VPsmDV1tbEj
+	 pgNmGQiyZXVWHnoTUwCov4d5cCPOy3YHYH1UEs0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Macpaul Lin <macpaul.lin@mediatek.com>,
-	Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Frank Li <Frank.Li@nxp.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.18 217/312] pmdomain: mtk-pm-domains: Fix spinlock recursion fix in probe
-Date: Tue,  6 Jan 2026 18:04:51 +0100
-Message-ID: <20260106170555.693688296@linuxfoundation.org>
+Subject: [PATCH 6.18 218/312] pmdomain: imx: Fix reference count leak in imx_gpc_probe()
+Date: Tue,  6 Jan 2026 18:04:52 +0100
+Message-ID: <20260106170555.729447904@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -51,83 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Macpaul Lin <macpaul.lin@mediatek.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 305f254727bd379bbed0385afa0162f5bde1f51c upstream.
+commit 73cb5f6eafb0ac7aea8cdeb8ff12981aa741d8fb upstream.
 
-Remove scpsys_get_legacy_regmap(), replacing its usage with
-of_find_node_with_property(). Explicitly call of_node_get(np) before each
-of_find_node_with_property() to maintain correct node reference counting.
+of_get_child_by_name() returns a node pointer with refcount incremented.
+Use the __free() attribute to manage the pgc_node reference, ensuring
+automatic of_node_put() cleanup when pgc_node goes out of scope.
 
-The of_find_node_with_property() function "consumes" its input by calling
-of_node_put() internally, whether or not it finds a match.  Currently,
-dev->of_node (np) is passed multiple times in sequence without incrementing
-its reference count, causing it to be decremented multiple times and
-risking early memory release.
+This eliminates the need for explicit error handling paths and avoids
+reference count leaks.
 
-Adding of_node_get(np) before each call balances the reference count,
-preventing premature node release.
-
-Fixes: c1bac49fe91f ("pmdomains: mtk-pm-domains: Fix spinlock recursion in probe")
+Fixes: 721cabf6c660 ("soc: imx: move PGC handling to a new GPC driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Macpaul Lin <macpaul.lin@mediatek.com>
-Tested-by: Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/mediatek/mtk-pm-domains.c |   21 ++++++---------------
- 1 file changed, 6 insertions(+), 15 deletions(-)
+ drivers/pmdomain/imx/gpc.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/pmdomain/mediatek/mtk-pm-domains.c
-+++ b/drivers/pmdomain/mediatek/mtk-pm-domains.c
-@@ -748,18 +748,6 @@ static void scpsys_domain_cleanup(struct
- 	}
- }
- 
--static struct device_node *scpsys_get_legacy_regmap(struct device_node *np, const char *pn)
--{
--	struct device_node *local_node;
--
--	for_each_child_of_node(np, local_node) {
--		if (of_property_present(local_node, pn))
--			return local_node;
--	}
--
--	return NULL;
--}
--
- static int scpsys_get_bus_protection_legacy(struct device *dev, struct scpsys *scpsys)
+--- a/drivers/pmdomain/imx/gpc.c
++++ b/drivers/pmdomain/imx/gpc.c
+@@ -402,13 +402,12 @@ clk_err:
+ static int imx_gpc_probe(struct platform_device *pdev)
  {
- 	const u8 bp_blocks[3] = {
-@@ -781,7 +769,8 @@ static int scpsys_get_bus_protection_leg
- 	 * this makes it then possible to allocate the array of bus_prot
- 	 * regmaps and convert all to the new style handling.
- 	 */
--	node = scpsys_get_legacy_regmap(np, "mediatek,infracfg");
-+	of_node_get(np);
-+	node = of_find_node_with_property(np, "mediatek,infracfg");
- 	if (node) {
- 		regmap[0] = syscon_regmap_lookup_by_phandle(node, "mediatek,infracfg");
- 		of_node_put(node);
-@@ -794,7 +783,8 @@ static int scpsys_get_bus_protection_leg
- 		regmap[0] = NULL;
- 	}
+ 	const struct imx_gpc_dt_data *of_id_data = device_get_match_data(&pdev->dev);
+-	struct device_node *pgc_node;
++	struct device_node *pgc_node __free(device_node)
++		= of_get_child_by_name(pdev->dev.of_node, "pgc");
+ 	struct regmap *regmap;
+ 	void __iomem *base;
+ 	int ret;
  
--	node = scpsys_get_legacy_regmap(np, "mediatek,smi");
-+	of_node_get(np);
-+	node = of_find_node_with_property(np, "mediatek,smi");
- 	if (node) {
- 		smi_np = of_parse_phandle(node, "mediatek,smi", 0);
- 		of_node_put(node);
-@@ -812,7 +802,8 @@ static int scpsys_get_bus_protection_leg
- 		regmap[1] = NULL;
- 	}
- 
--	node = scpsys_get_legacy_regmap(np, "mediatek,infracfg-nao");
-+	of_node_get(np);
-+	node = of_find_node_with_property(np, "mediatek,infracfg-nao");
- 	if (node) {
- 		regmap[2] = syscon_regmap_lookup_by_phandle(node, "mediatek,infracfg-nao");
- 		num_regmaps++;
+-	pgc_node = of_get_child_by_name(pdev->dev.of_node, "pgc");
+-
+ 	/* bail out if DT too old and doesn't provide the necessary info */
+ 	if (!of_property_present(pdev->dev.of_node, "#power-domain-cells") &&
+ 	    !pgc_node)
 
 
