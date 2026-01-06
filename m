@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4413A355045;
-	Tue,  6 Jan 2026 17:28:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5913734F466;
+	Tue,  6 Jan 2026 17:28:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720500; cv=none; b=BxNbm70ID/NVfseCnm9avYnNB7CqENgep2NATBhHBbJsL2a/lzNoangyfLTDzfCIvUJZAAcvpj3iH2SvXOjTEV6jqG/blBCCWD09710od7LGUfalbTtbanD5rixeSLVfArLLoqOPG41aq6kDHmepFQu2E0zCDD6XFZr2A0oC4qo=
+	t=1767720503; cv=none; b=sQqmvnGpD9VNyYpCQYzwUe2ngkth/5G3sI9pUcJyuGzBDQidVZ1g1GvbtSLueLH2uLY3lSfCeDpEuwccIPSroOaK4WhEtHyy8/sV0kfNErGeAwH3nZNNMRdTwHwSR0TB5Zj/dYXOm23+iRck4g11nsg0UyWIMdggDXZ6Epf9fEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720500; c=relaxed/simple;
-	bh=mN+hM/PVxQc7qZR9/X85Uiql9ZnR+gHshc+6VepGAhk=;
+	s=arc-20240116; t=1767720503; c=relaxed/simple;
+	bh=eskvsdgUbtLusXcuxOLrrUP/O1XT01AUo3G3SDHPKvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PJwJdLicR2zt3brUO03DwaCVItUelGoy9vcu0PoU7zugF4LswnirZYYgnrRqv6YuSlYPTfB5TBtfk4gXO9ms3XNt9joK9EQ6n9RvD/nxTtWxYcBuu3PcO+V51RlCrFa9Z42fKRd1HhwJBmJYNy1pQqIfOpMJOtzAcQEmfWJFuGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IUYpvc/O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OVFPCpyQYNEtWa4R3r/B7aK5Fv46RO8salxkLyy8RDCNO1h0pBONYigPm+6Kximx4isjRKnSGWli7fyM9nZbNkJ4h95NqXppf3TToMzVjErJZNhhJ43FJKnsaJWYZJb8d+ImXX5bOKHaL7w6AN8DtjvE+HOZG+SwUn7KUjdYlv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8TkmtN7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IUYpvc/O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7B9CC116C6;
-	Tue,  6 Jan 2026 17:28:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8TkmtN7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D402FC116C6;
+	Tue,  6 Jan 2026 17:28:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720500;
-	bh=mN+hM/PVxQc7qZR9/X85Uiql9ZnR+gHshc+6VepGAhk=;
+	s=korg; t=1767720503;
+	bh=eskvsdgUbtLusXcuxOLrrUP/O1XT01AUo3G3SDHPKvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IUYpvc/O+npvBZsLM6xAqn3vfZhZpYrvbufbQHnpVKCE9G4QKhTvhdB/UWBQfN0SE
-	 fwtMr2YP46Mtts1fFOIErjCQHGwz0YLEHt1vQ+h0YAeMlPCC/Z+cgKXlgnGXGuzYIj
-	 Ou2OiRGL5cIYPENHPhXb1T6hEMntiDzBx0OawX0A=
+	b=d8TkmtN7W2H2YIBZIJdGzgEO7+x1dT+Z8bFOnhz9GUC3bs6cC9EgS02yJgn5BMfBm
+	 C7YdB7ByVgxfPrtoXmff3BU37X5whG6NxvZx9I4gerLJDKEkF/pWlKTwNvK//WOpoK
+	 nvJd5sZnaTVoPOddNNtcxHxqam4SlZBhmDWaMkqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Arefev <arefev@swemel.ru>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 256/567] ALSA: hda: cs35l41: Fix NULL pointer dereference in cs35l41_hda_read_acpi()
-Date: Tue,  6 Jan 2026 18:00:38 +0100
-Message-ID: <20260106170500.783027798@linuxfoundation.org>
+Subject: [PATCH 6.12 257/567] ALSA: wavefront: Use guard() for spin locks
+Date: Tue,  6 Jan 2026 18:00:39 +0100
+Message-ID: <20260106170500.822644950@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,39 +50,364 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis Arefev <arefev@swemel.ru>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit c34b04cc6178f33c08331568c7fd25c5b9a39f66 ]
+[ Upstream commit 4b97f8e614ba46a50bd181d40b5a1424411a211a ]
 
-The acpi_get_first_physical_node() function can return NULL, in which
-case the get_device() function also returns NULL, but this value is
-then dereferenced without checking,so add a check to prevent a crash.
+Clean up the code using guard() for spin locks.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Merely code refactoring, and no behavior change.
 
-Fixes: 7b2f3eb492da ("ALSA: hda: cs35l41: Add support for CS35L41 in HDA systems")
-Cc: stable@vger.kernel.org
-Signed-off-by: Denis Arefev <arefev@swemel.ru>
-Reviewed-by: Richard Fitzgerald <rf@opensource.cirrus.com>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20251202101338.11437-1-arefev@swemel.ru
-[ sound/hda/codecs/side-codecs/ -> sound/pci/hda/ ]
+Link: https://patch.msgid.link/20250829145300.5460-19-tiwai@suse.de
+Stable-dep-of: e11c5c13ce0a ("ALSA: wavefront: Clear substream pointers on close")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/cs35l41_hda.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/isa/wavefront/wavefront_midi.c  |  127 +++++++++++++---------------------
+ sound/isa/wavefront/wavefront_synth.c |   18 ++--
+ 2 files changed, 59 insertions(+), 86 deletions(-)
 
---- a/sound/pci/hda/cs35l41_hda.c
-+++ b/sound/pci/hda/cs35l41_hda.c
-@@ -1865,6 +1865,8 @@ static int cs35l41_hda_read_acpi(struct
+--- a/sound/isa/wavefront/wavefront_midi.c
++++ b/sound/isa/wavefront/wavefront_midi.c
+@@ -113,7 +113,6 @@ static void snd_wavefront_midi_output_wr
+ {
+ 	snd_wavefront_midi_t *midi = &card->wavefront.midi;
+ 	snd_wavefront_mpu_id  mpu;
+-	unsigned long flags;
+ 	unsigned char midi_byte;
+ 	int max = 256, mask = 1;
+ 	int timeout;
+@@ -142,11 +141,9 @@ static void snd_wavefront_midi_output_wr
+ 				break;
+ 		}
+ 	
+-		spin_lock_irqsave (&midi->virtual, flags);
+-		if ((midi->mode[midi->output_mpu] & MPU401_MODE_OUTPUT) == 0) {
+-			spin_unlock_irqrestore (&midi->virtual, flags);
++		guard(spinlock_irqsave)(&midi->virtual);
++		if ((midi->mode[midi->output_mpu] & MPU401_MODE_OUTPUT) == 0)
+ 			goto __second;
+-		}
+ 		if (output_ready (midi)) {
+ 			if (snd_rawmidi_transmit(midi->substream_output[midi->output_mpu], &midi_byte, 1) == 1) {
+ 				if (!midi->isvirtual ||
+@@ -160,14 +157,11 @@ static void snd_wavefront_midi_output_wr
+ 						del_timer(&midi->timer);
+ 				}
+ 				midi->mode[midi->output_mpu] &= ~MPU401_MODE_OUTPUT_TRIGGER;
+-				spin_unlock_irqrestore (&midi->virtual, flags);
+ 				goto __second;
+ 			}
+ 		} else {
+-			spin_unlock_irqrestore (&midi->virtual, flags);
+ 			return;
+ 		}
+-		spin_unlock_irqrestore (&midi->virtual, flags);
+ 	}
  
- 	cs35l41->dacpi = adev;
- 	physdev = get_device(acpi_get_first_physical_node(adev));
-+	if (!physdev)
-+		return -ENODEV;
+       __second:
+@@ -185,15 +179,13 @@ static void snd_wavefront_midi_output_wr
+ 				break;
+ 		}
+ 	
+-		spin_lock_irqsave (&midi->virtual, flags);
++		guard(spinlock_irqsave)(&midi->virtual);
+ 		if (!midi->isvirtual)
+ 			mask = 0;
+ 		mpu = midi->output_mpu ^ mask;
+ 		mask = 0;	/* don't invert the value from now */
+-		if ((midi->mode[mpu] & MPU401_MODE_OUTPUT) == 0) {
+-			spin_unlock_irqrestore (&midi->virtual, flags);
++		if ((midi->mode[mpu] & MPU401_MODE_OUTPUT) == 0)
+ 			return;
+-		}
+ 		if (snd_rawmidi_transmit_empty(midi->substream_output[mpu]))
+ 			goto __timer;
+ 		if (output_ready (midi)) {
+@@ -215,20 +207,16 @@ static void snd_wavefront_midi_output_wr
+ 						del_timer(&midi->timer);
+ 				}
+ 				midi->mode[mpu] &= ~MPU401_MODE_OUTPUT_TRIGGER;
+-				spin_unlock_irqrestore (&midi->virtual, flags);
+ 				return;
+ 			}
+ 		} else {
+-			spin_unlock_irqrestore (&midi->virtual, flags);
+ 			return;
+ 		}
+-		spin_unlock_irqrestore (&midi->virtual, flags);
+ 	}
+ }
  
- 	sub = acpi_get_subsystem_id(ACPI_HANDLE(physdev));
- 	if (IS_ERR(sub))
+ static int snd_wavefront_midi_input_open(struct snd_rawmidi_substream *substream)
+ {
+-	unsigned long flags;
+ 	snd_wavefront_midi_t *midi;
+ 	snd_wavefront_mpu_id mpu;
+ 
+@@ -243,17 +231,15 @@ static int snd_wavefront_midi_input_open
+ 	if (!midi)
+ 	        return -EIO;
+ 
+-	spin_lock_irqsave (&midi->open, flags);
++	guard(spinlock_irqsave)(&midi->open);
+ 	midi->mode[mpu] |= MPU401_MODE_INPUT;
+ 	midi->substream_input[mpu] = substream;
+-	spin_unlock_irqrestore (&midi->open, flags);
+ 
+ 	return 0;
+ }
+ 
+ static int snd_wavefront_midi_output_open(struct snd_rawmidi_substream *substream)
+ {
+-	unsigned long flags;
+ 	snd_wavefront_midi_t *midi;
+ 	snd_wavefront_mpu_id mpu;
+ 
+@@ -268,17 +254,15 @@ static int snd_wavefront_midi_output_ope
+ 	if (!midi)
+ 	        return -EIO;
+ 
+-	spin_lock_irqsave (&midi->open, flags);
++	guard(spinlock_irqsave)(&midi->open);
+ 	midi->mode[mpu] |= MPU401_MODE_OUTPUT;
+ 	midi->substream_output[mpu] = substream;
+-	spin_unlock_irqrestore (&midi->open, flags);
+ 
+ 	return 0;
+ }
+ 
+ static int snd_wavefront_midi_input_close(struct snd_rawmidi_substream *substream)
+ {
+-	unsigned long flags;
+ 	snd_wavefront_midi_t *midi;
+ 	snd_wavefront_mpu_id mpu;
+ 
+@@ -293,16 +277,14 @@ static int snd_wavefront_midi_input_clos
+ 	if (!midi)
+ 	        return -EIO;
+ 
+-	spin_lock_irqsave (&midi->open, flags);
++	guard(spinlock_irqsave)(&midi->open);
+ 	midi->mode[mpu] &= ~MPU401_MODE_INPUT;
+-	spin_unlock_irqrestore (&midi->open, flags);
+ 
+ 	return 0;
+ }
+ 
+ static int snd_wavefront_midi_output_close(struct snd_rawmidi_substream *substream)
+ {
+-	unsigned long flags;
+ 	snd_wavefront_midi_t *midi;
+ 	snd_wavefront_mpu_id mpu;
+ 
+@@ -317,15 +299,13 @@ static int snd_wavefront_midi_output_clo
+ 	if (!midi)
+ 	        return -EIO;
+ 
+-	spin_lock_irqsave (&midi->open, flags);
++	guard(spinlock_irqsave)(&midi->open);
+ 	midi->mode[mpu] &= ~MPU401_MODE_OUTPUT;
+-	spin_unlock_irqrestore (&midi->open, flags);
+ 	return 0;
+ }
+ 
+ static void snd_wavefront_midi_input_trigger(struct snd_rawmidi_substream *substream, int up)
+ {
+-	unsigned long flags;
+ 	snd_wavefront_midi_t *midi;
+ 	snd_wavefront_mpu_id mpu;
+ 
+@@ -341,30 +321,27 @@ static void snd_wavefront_midi_input_tri
+ 	if (!midi)
+ 		return;
+ 
+-	spin_lock_irqsave (&midi->virtual, flags);
++	guard(spinlock_irqsave)(&midi->virtual);
+ 	if (up) {
+ 		midi->mode[mpu] |= MPU401_MODE_INPUT_TRIGGER;
+ 	} else {
+ 		midi->mode[mpu] &= ~MPU401_MODE_INPUT_TRIGGER;
+ 	}
+-	spin_unlock_irqrestore (&midi->virtual, flags);
+ }
+ 
+ static void snd_wavefront_midi_output_timer(struct timer_list *t)
+ {
+ 	snd_wavefront_midi_t *midi = from_timer(midi, t, timer);
+ 	snd_wavefront_card_t *card = midi->timer_card;
+-	unsigned long flags;
+ 	
+-	spin_lock_irqsave (&midi->virtual, flags);
+-	mod_timer(&midi->timer, 1 + jiffies);
+-	spin_unlock_irqrestore (&midi->virtual, flags);
++	scoped_guard(spinlock_irqsave, &midi->virtual) {
++		mod_timer(&midi->timer, 1 + jiffies);
++	}
+ 	snd_wavefront_midi_output_write(card);
+ }
+ 
+ static void snd_wavefront_midi_output_trigger(struct snd_rawmidi_substream *substream, int up)
+ {
+-	unsigned long flags;
+ 	snd_wavefront_midi_t *midi;
+ 	snd_wavefront_mpu_id mpu;
+ 
+@@ -380,22 +357,22 @@ static void snd_wavefront_midi_output_tr
+ 	if (!midi)
+ 		return;
+ 
+-	spin_lock_irqsave (&midi->virtual, flags);
+-	if (up) {
+-		if ((midi->mode[mpu] & MPU401_MODE_OUTPUT_TRIGGER) == 0) {
+-			if (!midi->istimer) {
+-				timer_setup(&midi->timer,
+-					    snd_wavefront_midi_output_timer,
+-					    0);
+-				mod_timer(&midi->timer, 1 + jiffies);
++	scoped_guard(spinlock_irqsave, &midi->virtual) {
++		if (up) {
++			if ((midi->mode[mpu] & MPU401_MODE_OUTPUT_TRIGGER) == 0) {
++				if (!midi->istimer) {
++					timer_setup(&midi->timer,
++						    snd_wavefront_midi_output_timer,
++						    0);
++					mod_timer(&midi->timer, 1 + jiffies);
++				}
++				midi->istimer++;
++				midi->mode[mpu] |= MPU401_MODE_OUTPUT_TRIGGER;
+ 			}
+-			midi->istimer++;
+-			midi->mode[mpu] |= MPU401_MODE_OUTPUT_TRIGGER;
++		} else {
++			midi->mode[mpu] &= ~MPU401_MODE_OUTPUT_TRIGGER;
+ 		}
+-	} else {
+-		midi->mode[mpu] &= ~MPU401_MODE_OUTPUT_TRIGGER;
+ 	}
+-	spin_unlock_irqrestore (&midi->virtual, flags);
+ 
+ 	if (up)
+ 		snd_wavefront_midi_output_write((snd_wavefront_card_t *)substream->rmidi->card->private_data);
+@@ -405,7 +382,6 @@ void
+ snd_wavefront_midi_interrupt (snd_wavefront_card_t *card)
+ 
+ {
+-	unsigned long flags;
+ 	snd_wavefront_midi_t *midi;
+ 	static struct snd_rawmidi_substream *substream = NULL;
+ 	static int mpu = external_mpu; 
+@@ -419,37 +395,37 @@ snd_wavefront_midi_interrupt (snd_wavefr
+ 		return;
+ 	}
+ 
+-	spin_lock_irqsave (&midi->virtual, flags);
+-	while (--max) {
++	scoped_guard(spinlock_irqsave, &midi->virtual) {
++		while (--max) {
+ 
+-		if (input_avail (midi)) {
+-			byte = read_data (midi);
++			if (input_avail(midi)) {
++				byte = read_data(midi);
+ 
+-			if (midi->isvirtual) {				
+-				if (byte == WF_EXTERNAL_SWITCH) {
+-					substream = midi->substream_input[external_mpu];
+-					mpu = external_mpu;
+-				} else if (byte == WF_INTERNAL_SWITCH) { 
+-					substream = midi->substream_output[internal_mpu];
++				if (midi->isvirtual) {
++					if (byte == WF_EXTERNAL_SWITCH) {
++						substream = midi->substream_input[external_mpu];
++						mpu = external_mpu;
++					} else if (byte == WF_INTERNAL_SWITCH) {
++						substream = midi->substream_output[internal_mpu];
++						mpu = internal_mpu;
++					} /* else just leave it as it is */
++				} else {
++					substream = midi->substream_input[internal_mpu];
+ 					mpu = internal_mpu;
+-				} /* else just leave it as it is */
+-			} else {
+-				substream = midi->substream_input[internal_mpu];
+-				mpu = internal_mpu;
+-			}
++				}
+ 
+-			if (substream == NULL) {
+-				continue;
+-			}
++				if (substream == NULL) {
++					continue;
++				}
+ 
+-			if (midi->mode[mpu] & MPU401_MODE_INPUT_TRIGGER) {
+-				snd_rawmidi_receive(substream, &byte, 1);
++				if (midi->mode[mpu] & MPU401_MODE_INPUT_TRIGGER) {
++					snd_rawmidi_receive(substream, &byte, 1);
++				}
++			} else {
++				break;
+ 			}
+-		} else {
+-			break;
+ 		}
+-	} 
+-	spin_unlock_irqrestore (&midi->virtual, flags);
++	}
+ 
+ 	snd_wavefront_midi_output_write(card);
+ }
+@@ -471,13 +447,10 @@ void
+ snd_wavefront_midi_disable_virtual (snd_wavefront_card_t *card)
+ 
+ {
+-	unsigned long flags;
+-
+-	spin_lock_irqsave (&card->wavefront.midi.virtual, flags);
++	guard(spinlock_irqsave)(&card->wavefront.midi.virtual);
+ 	// snd_wavefront_midi_input_close (card->ics2115_external_rmidi);
+ 	// snd_wavefront_midi_output_close (card->ics2115_external_rmidi);
+ 	card->wavefront.midi.isvirtual = 0;
+-	spin_unlock_irqrestore (&card->wavefront.midi.virtual, flags);
+ }
+ 
+ int
+--- a/sound/isa/wavefront/wavefront_synth.c
++++ b/sound/isa/wavefront/wavefront_synth.c
+@@ -1741,10 +1741,10 @@ snd_wavefront_internal_interrupt (snd_wa
+ 		return;
+ 	}
+ 
+-	spin_lock(&dev->irq_lock);
+-	dev->irq_ok = 1;
+-	dev->irq_cnt++;
+-	spin_unlock(&dev->irq_lock);
++	scoped_guard(spinlock, &dev->irq_lock) {
++		dev->irq_ok = 1;
++		dev->irq_cnt++;
++	}
+ 	wake_up(&dev->interrupt_sleeper);
+ }
+ 
+@@ -1796,11 +1796,11 @@ wavefront_should_cause_interrupt (snd_wa
+ 	wait_queue_entry_t wait;
+ 
+ 	init_waitqueue_entry(&wait, current);
+-	spin_lock_irq(&dev->irq_lock);
+-	add_wait_queue(&dev->interrupt_sleeper, &wait);
+-	dev->irq_ok = 0;
+-	outb (val,port);
+-	spin_unlock_irq(&dev->irq_lock);
++	scoped_guard(spinlock_irq, &dev->irq_lock) {
++		add_wait_queue(&dev->interrupt_sleeper, &wait);
++		dev->irq_ok = 0;
++		outb(val, port);
++	}
+ 	while (!dev->irq_ok && time_before(jiffies, timeout)) {
+ 		schedule_timeout_uninterruptible(1);
+ 		barrier();
 
 
