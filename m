@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46795349AE8;
-	Tue,  6 Jan 2026 17:18:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B21D349AF2;
+	Tue,  6 Jan 2026 17:18:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719904; cv=none; b=u5fqgnbpzQfr4FrGRJu9OI6MRMF7WDimvHaM5OrLC+GyOLo2yqpFd6YzcSNbnxtnfAHo3egnCFJb762rt4It2iFGcayficIemG1I9dVNNc0U21J9trkYfJkYVimSXbdIXvsAk3MgF8eB0wwrfNpOG0/2vzawXHwdLKZMXvkREqo=
+	t=1767719907; cv=none; b=fA37RRHVOeMgQ6JMCoBjLicXHXIov3+L7cSLyd+RA4gyAHI4iFzIkYuCvGTNc71wYffx3FXLN7ORDR8I5utrgU85JHjGctK5FE3n6xliwtp1CgwM0zLWuPGQyayJlRsH41qAwz0XS+ua3Obs9BXV/MPbCnKfuKd+Fp0Gin/oGW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719904; c=relaxed/simple;
-	bh=v9gvtYahj3Z1bxMZzhvd43UA0GJ1Xf2qV1Ha4fH1nJM=;
+	s=arc-20240116; t=1767719907; c=relaxed/simple;
+	bh=YdCcgI1NCLVvL/h4/4fQX7E0QCl0Xd8FjoLK7TvSz3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BT/Q/vGnfWDprsrD8OfeRbVi/PYTPVurQrhs8A/uvLjdHg3bW+nq8/1IGjboH9PALprCTv4T34S2ING9IL2qHOc8Agh7j1SlXl8vXsa1kCtUaYZyVmkgRX7f2nFVD+BeS9vT1xbHwm34rE6btRz3WkzPCjvt5ZjNCV3YPzrvjfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kea0D7kM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BDKl8Sl35e177dhhkFO4t1RXBsdjXqhdd4+4itNKnIsa9RknpjvFFL/CTQHRtu7OCZCL/TAkddKSLisxwDDrJRhXAPafHXC8BptExSVyIe/UJTiDQRcS41gxypcmSKyqn9Brzve1IQrR+tz1jpeUy3U/SK1gLMJzRtZRh98jW+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gr3mGOvk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kea0D7kM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 615DDC116C6;
-	Tue,  6 Jan 2026 17:18:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gr3mGOvk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8323C116C6;
+	Tue,  6 Jan 2026 17:18:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719903;
-	bh=v9gvtYahj3Z1bxMZzhvd43UA0GJ1Xf2qV1Ha4fH1nJM=;
+	s=korg; t=1767719907;
+	bh=YdCcgI1NCLVvL/h4/4fQX7E0QCl0Xd8FjoLK7TvSz3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kea0D7kMLzjVLmZ2OdAdaZXy4KDGOhAWCPZHnn1JwzuvkPpIhfpDBj13bxD9uFNKc
-	 ZSVPcb8u4Id5R52Bz2llxL8lLPnA3jCBTAnV0Wmnx8+Ai57OHrhrE+y5VeyDLP1Zx8
-	 i4zZ6/YHVxsIun0A13t02Ama6kVuH9slZTzlvt3o=
+	b=Gr3mGOvkV1oKO3GcjAj6tEvfZjMnxgwG+0h68XY/OcfwN1a5QTercfAQwCLoSq/3G
+	 hwaCJo0USmdewNTqZhE5TPfyLQGlB/hobbIH9D8spBiyZ3RSrhu6h9NE8exGKnB0pI
+	 fWqXYhR9hYXKGd20Mq6bEYGMihdfycmm2KsMNdcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <horms@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 076/567] net: hns3: using the num_tqps to check whether tqp_index is out of range when vf get ring info from mbx
-Date: Tue,  6 Jan 2026 17:57:38 +0100
-Message-ID: <20260106170454.145614977@linuxfoundation.org>
+Subject: [PATCH 6.12 077/567] net: hns3: add VLAN id validation before using
+Date: Tue,  6 Jan 2026 17:57:39 +0100
+Message-ID: <20260106170454.181909781@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -55,44 +55,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Jian Shen <shenjian15@huawei.com>
 
-[ Upstream commit d180c11aa8a6fa735f9ac2c72c61364a9afc2ba7 ]
+[ Upstream commit 6ef935e65902bfed53980ad2754b06a284ea8ac1 ]
 
-Currently, rss_size = num_tqps / tc_num. If tc_num is 1, then num_tqps
-equals rss_size. However, if the tc_num is greater than 1, then rss_size
-will be less than num_tqps, causing the tqp_index check for subsequent TCs
-using rss_size to always fail.
+Currently, the VLAN id may be used without validation when
+receive a VLAN configuration mailbox from VF. The length of
+vlan_del_fail_bmap is BITS_TO_LONGS(VLAN_N_VID). It may cause
+out-of-bounds memory access once the VLAN id is bigger than
+or equal to VLAN_N_VID.
 
-This patch uses the num_tqps to check whether tqp_index is out of range,
-instead of rss_size.
+Therefore, VLAN id needs to be checked to ensure it is within
+the range of VLAN_N_VID.
 
-Fixes: 326334aad024 ("net: hns3: add a check for tqp_index in hclge_get_ring_chain_from_mbx()")
+Fixes: fe4144d47eef ("net: hns3: sync VLAN filter entries when kill VLAN ID failed")
 Signed-off-by: Jian Shen <shenjian15@huawei.com>
 Signed-off-by: Jijie Shao <shaojijie@huawei.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20251211023737.2327018-3-shaojijie@huawei.com
+Link: https://patch.msgid.link/20251211023737.2327018-4-shaojijie@huawei.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c
-index 59c863306657f..9eab095d784bd 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c
-@@ -193,10 +193,10 @@ static int hclge_get_ring_chain_from_mbx(
- 		return -EINVAL;
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+index f5eafd1ded413..8dd970ef02ac6 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+@@ -10572,6 +10572,9 @@ int hclge_set_vlan_filter(struct hnae3_handle *handle, __be16 proto,
+ 	bool writen_to_tbl = false;
+ 	int ret = 0;
  
- 	for (i = 0; i < ring_num; i++) {
--		if (req->msg.param[i].tqp_index >= vport->nic.kinfo.rss_size) {
-+		if (req->msg.param[i].tqp_index >= vport->nic.kinfo.num_tqps) {
- 			dev_err(&hdev->pdev->dev, "tqp index(%u) is out of range(0-%u)\n",
- 				req->msg.param[i].tqp_index,
--				vport->nic.kinfo.rss_size - 1U);
-+				vport->nic.kinfo.num_tqps - 1U);
- 			return -EINVAL;
- 		}
- 	}
++	if (vlan_id >= VLAN_N_VID)
++		return -EINVAL;
++
+ 	/* When device is resetting or reset failed, firmware is unable to
+ 	 * handle mailbox. Just record the vlan id, and remove it after
+ 	 * reset finished.
 -- 
 2.51.0
 
