@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3165835CB76;
-	Tue,  6 Jan 2026 17:47:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7882935975;
+	Tue,  6 Jan 2026 17:47:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721645; cv=none; b=VRBzP0BSGV2crj8RAUC2jU/0aExtrx/gyslO6h9odl1bzhSQb+hMZNIiA1SI4u+KgvkPP/70xhafVwSAIjBcMmpikLf5m4z/jeZMp/hrnie1JQXs/+rCyqX5xGbBrmFicpGgBBaHzVExwCHCZN4i/257LngPk9qgieqwCbnltUY=
+	t=1767721648; cv=none; b=I6zZZFHBOW6qYYYIqdUNfD5nH/6yRPM92+MSRcu0TQ/XKTjWqml4mhmpGHtHJzD/As9Bm/MRjOiiPrUon8MssszYoI+CvTOaR1ElYBXRoTnkg3rsffA9rnGDGZp++7Grz5qV22LfUWK4ib6LQmK1q5xODU1bCtJeVAUhaKujuXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721645; c=relaxed/simple;
-	bh=KSMn+YEtoWChojJlKFlWaeJaeXuKa5MuHGkRHpVfymQ=;
+	s=arc-20240116; t=1767721648; c=relaxed/simple;
+	bh=8l9T+XZJFPo6x43jinIhPXJFYnrF+KJJBVQilAl2x00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hvqc1csP94h786UY4bHJzgK+Vfua3d+U0rGzeLkCny89NGnjOm+2gtOCjsOvzv8TkZgMdMGZZ33IeBHwir8bxlyL4sZ0MTUdwy5TNdz2a+JlpMs/NDTByCOj2oihDr9kEunVZdNPoGMJgEUToG/vkNbUzIxw73nJjXiQZdPucjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kHl3W3kf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pSwOzduGiAWfhO+VeGR8ZTZNIoRyva2Bs++/+zgC3zZ8GetYi/wrj/1+KsQtEt0Ts0iBY0zZzWI78GsHtU6yguyv7NYYvY0KpcBDUt9XrH6GbYJ0p8I/GJQCtCuBwiKyXPm6i+pmZrP0H4mqqcz1CjUrSK3UUvIwUrqxtRbinVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gm5E9i4c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kHl3W3kf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D9DAC116C6;
-	Tue,  6 Jan 2026 17:47:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gm5E9i4c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB0A3C116C6;
+	Tue,  6 Jan 2026 17:47:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721644;
-	bh=KSMn+YEtoWChojJlKFlWaeJaeXuKa5MuHGkRHpVfymQ=;
+	s=korg; t=1767721648;
+	bh=8l9T+XZJFPo6x43jinIhPXJFYnrF+KJJBVQilAl2x00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kHl3W3kf/7ALY1jA0AeokeGj5pGxUYPfmRmE0kM4UygzA4rG9t2cgrvU/H8VjHne9
-	 3VSuAdFxb2HDiZQNBujezls6IgpXZ01+3plb/zp9DrP2GNZUGWH22uJAvkVM/69fgR
-	 6GK7nribfFdtpn7L32pEpYg7Qv+JXwijwoyNBQew=
+	b=Gm5E9i4cwlMU8wLGrrzi6ISUrDvgQaUdDFPMz/7SegbvtAfROg98K4WFshGgwLhR/
+	 Hyesp6SRpFnTnRU6dibbxTDdlMF7wUY4BewRNLHkljHwCqlL7Nv0C2+oRIjvw7y21b
+	 MU9/MGgqWETyXzHcCFo8h8IG+UQgvrb9O2RWdLcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shravan Kumar Ramani <shravankr@nvidia.com>,
-	David Thompson <davthompson@nvidia.com>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 030/312] platform/mellanox: mlxbf-pmc: Remove trailing whitespaces from event names
-Date: Tue,  6 Jan 2026 18:01:44 +0100
-Message-ID: <20260106170548.947335282@linuxfoundation.org>
+Subject: [PATCH 6.18 031/312] platform/x86: msi-laptop: add missing sysfs_remove_group()
+Date: Tue,  6 Jan 2026 18:01:45 +0100
+Message-ID: <20260106170548.983288268@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -53,55 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shravan Kumar Ramani <shravankr@nvidia.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit f13bce715d1600698310a4a7832f6a52499d5395 ]
+[ Upstream commit 1461209cf813b6ee6d40f29b96b544587df6d2b1 ]
 
-Some event names have trailing whitespaces at the end which causes programming
-of counters using the name for these specific events to fail and hence need to
-be removed.
+A sysfs group is created in msi_init() when old_ec_model is enabled, but
+never removed. Remove the msipf_old_attribute_group in that case.
 
-Fixes: 423c3361855c ("platform/mellanox: mlxbf-pmc: Add support for BlueField-3")
-Signed-off-by: Shravan Kumar Ramani <shravankr@nvidia.com>
-Reviewed-by: David Thompson <davthompson@nvidia.com>
-Link: https://patch.msgid.link/065cbae0717dcc1169681c4dbb1a6e050b8574b3.1766059953.git.shravankr@nvidia.com
+Fixes: 03696e51d75a ("msi-laptop: Disable brightness control for new EC")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Link: https://patch.msgid.link/20251217103617.27668-2-fourier.thomas@gmail.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/mellanox/mlxbf-pmc.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/platform/x86/msi-laptop.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/platform/mellanox/mlxbf-pmc.c b/drivers/platform/mellanox/mlxbf-pmc.c
-index 16a2fd9fdd9b..5ec1ad471696 100644
---- a/drivers/platform/mellanox/mlxbf-pmc.c
-+++ b/drivers/platform/mellanox/mlxbf-pmc.c
-@@ -801,18 +801,18 @@ static const struct mlxbf_pmc_events mlxbf_pmc_llt_miss_events[] = {
- 	{11, "GDC_MISS_MACHINE_CHI_TXDAT"},
- 	{12, "GDC_MISS_MACHINE_CHI_RXDAT"},
- 	{13, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC0_0"},
--	{14, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC0_1 "},
-+	{14, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC0_1"},
- 	{15, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC0_2"},
--	{16, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC0_3 "},
--	{17, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC1_0 "},
--	{18, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC1_1 "},
--	{19, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC1_2 "},
--	{20, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC1_3 "},
-+	{16, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC0_3"},
-+	{17, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC1_0"},
-+	{18, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC1_1"},
-+	{19, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC1_2"},
-+	{20, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC1_3"},
- 	{21, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC_DONE0_0"},
- 	{22, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC_DONE0_1"},
- 	{23, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC_DONE0_2"},
- 	{24, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC_DONE0_3"},
--	{25, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC_DONE1_0 "},
-+	{25, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC_DONE1_0"},
- 	{26, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC_DONE1_1"},
- 	{27, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC_DONE1_2"},
- 	{28, "GDC_MISS_MACHINE_G_FIFO_FF_EXEC_DONE1_3"},
+diff --git a/drivers/platform/x86/msi-laptop.c b/drivers/platform/x86/msi-laptop.c
+index c4b150fa093f..ddef6b78d2fa 100644
+--- a/drivers/platform/x86/msi-laptop.c
++++ b/drivers/platform/x86/msi-laptop.c
+@@ -1130,6 +1130,9 @@ static void __exit msi_cleanup(void)
+ 	sysfs_remove_group(&msipf_device->dev.kobj, &msipf_attribute_group);
+ 	if (!quirks->old_ec_model && threeg_exists)
+ 		device_remove_file(&msipf_device->dev, &dev_attr_threeg);
++	if (quirks->old_ec_model)
++		sysfs_remove_group(&msipf_device->dev.kobj,
++				   &msipf_old_attribute_group);
+ 	platform_device_unregister(msipf_device);
+ 	platform_driver_unregister(&msipf_driver);
+ 	backlight_device_unregister(msibl_device);
 -- 
 2.51.0
 
