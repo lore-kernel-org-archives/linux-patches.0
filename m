@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E80034678C;
-	Tue,  6 Jan 2026 17:21:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E4EF346A18;
+	Tue,  6 Jan 2026 17:21:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720108; cv=none; b=a70h19SgQUem3aV/M586nQ3C5uLxiUpGTpY5TDVdQMf1r65MSupZB76pJ+6fY0xkZWKwPwO0U6mv1pbjOT3iPpYXjuhpcB1fte5UbN7X1Dt/fZBqW8Xar1exAii038EZWRiYZlpfrVUqysiqXQ0mwYLyLoLXNHRjQzUCY6irovw=
+	t=1767720111; cv=none; b=Th0bY/KBK5h/qQMlgUQjkHzJ5TGNIOSYJTLZnNr4yxFC5n2XdRV5n6zm9nyYXprzKiTLY8qrAKl/iJFkru2rybJLN0loHutcBIp6O+iaa8vsQ3RvNWW9RO413tvHJd42JGKtBZ0rN6W5L3NJZe8a9fel/aCtILOZy0aEDIBWwkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720108; c=relaxed/simple;
-	bh=fAUDj3JPjWOA1+xmTUXjPcAb6ixvpzKob9KxeqHkQys=;
+	s=arc-20240116; t=1767720111; c=relaxed/simple;
+	bh=BhcEhRnWRieEb7tSSduaiDmW6BoPXJ0u1DLDdE0B8BI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DRU5wxfKqAXedT8nmPyRBADBVNf4wdLSylwjdrrnZowroh2XB3lSknALXdZukEYTRGbGbXE9KZixQtxpZu5wVIcfgI2iZWWQMxg4GYg+19xlKpZNJcrLOILKQ9tfhh5De7597DBowkny6fc9Z2Tu/khWBvruuPZRSrhJv7+j29c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wt010Lze; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MZZRbW/I/cmZYP34yI9INkY1sz+5vHfs2vt1B8ueqFgtVd4bl47CjQ7Amz+YjGwYalTBFfCkdqIMOUYOx5WnJcSIQu0qm5ZCOSuW+oQ6iWlQvIjSaN2wDHpPgq3uW7GeGJfbVeCDGjBESe9R3RrsaEPsAmEqrClZJMMmCLZMhx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RAsH2CMn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wt010Lze"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8C08C19424;
-	Tue,  6 Jan 2026 17:21:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RAsH2CMn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3B0CC16AAE;
+	Tue,  6 Jan 2026 17:21:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720108;
-	bh=fAUDj3JPjWOA1+xmTUXjPcAb6ixvpzKob9KxeqHkQys=;
+	s=korg; t=1767720111;
+	bh=BhcEhRnWRieEb7tSSduaiDmW6BoPXJ0u1DLDdE0B8BI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wt010LzeogJIeZbgrQd1lMMNFQGhBLwcyZQ2MEIrJZMpf6QxZcWq4fuSsolrxt9fb
-	 bL6PdlZ+Ct+JO72zXkiRNF5qisEuM5hb5PRNUxjfQBH0/1telqrNwZe72uiI9gpUtN
-	 xvbAalQk6KunkCqb/AnI97HoaS5jmXNb2ybHz5xc=
+	b=RAsH2CMnF4CRV+FGG8xKhWkSBF7FKJMq9d8ZPqaGpA/fLfc9arX0AwC3b8d6fv2FY
+	 ST7jHnzZ5cU2juqTaCj8ricvL3v2saf3vqo3stxfsWS5DfjdY4Pu6a9hNLu2ScKE07
+	 hlWKRRGcf0wOnIHmAIUx6r85s5JIN0n6xHvJJMEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 135/567] exfat: zero out post-EOF page cache on file extension
-Date: Tue,  6 Jan 2026 17:58:37 +0100
-Message-ID: <20260106170456.319454613@linuxfoundation.org>
+	Pengjie Zhang <zhangpengjie2@huawei.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.12 105/567] ACPI: CPPC: Fix missing PCC check for guaranteed_perf
+Date: Tue,  6 Jan 2026 17:58:07 +0100
+Message-ID: <20260106170455.213677837@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,63 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuezhang Mo <Yuezhang.Mo@sony.com>
+From: Pengjie Zhang <zhangpengjie2@huawei.com>
 
-[ Upstream commit 4e163c39dd4e70fcdce948b8774d96e0482b4a11 ]
+commit 6ea3a44cef28add2d93b1ef119d84886cb1e3c9b upstream.
 
-xfstests generic/363 was failing due to unzeroed post-EOF page
-cache that allowed mmap writes beyond EOF to become visible
-after file extension.
+The current implementation overlooks the 'guaranteed_perf'
+register in this check.
 
-For example, in following xfs_io sequence, 0x22 should not be
-written to the file but would become visible after the extension:
+If the Guaranteed Performance register is located in the PCC
+subspace, the function currently attempts to read it without
+acquiring the lock and without sending the CMD_READ doorbell
+to the firmware. This can result in reading stale data.
 
-  xfs_io -f -t -c "pwrite -S 0x11 0 8" \
-    -c "mmap 0 4096" \
-    -c "mwrite -S 0x22 32 32" \
-    -c "munmap" \
-    -c "pwrite -S 0x33 512 32" \
-    $testfile
-
-This violates the expected behavior where writes beyond EOF via
-mmap should not persist after the file is extended. Instead, the
-extended region should contain zeros.
-
-Fix this by using truncate_pagecache() to truncate the page cache
-after the current EOF when extending the file.
-
-Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 29523f095397 ("ACPI / CPPC: Add support for guaranteed performance")
+Signed-off-by: Pengjie Zhang <zhangpengjie2@huawei.com>
+Cc: 4.20+ <stable@vger.kernel.org> # 4.20+
+[ rjw: Subject and changelog edits ]
+Link: https://patch.msgid.link/20251210132227.1988380-1-zhangpengjie2@huawei.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exfat/file.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/acpi/cppc_acpi.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/exfat/file.c b/fs/exfat/file.c
-index 7ac5126aa4f1..033852efe5dc 100644
---- a/fs/exfat/file.c
-+++ b/fs/exfat/file.c
-@@ -25,6 +25,8 @@ static int exfat_cont_expand(struct inode *inode, loff_t size)
- 	struct exfat_sb_info *sbi = EXFAT_SB(sb);
- 	struct exfat_chain clu;
- 
-+	truncate_pagecache(inode, i_size_read(inode));
-+
- 	ret = inode_newsize_ok(inode, size);
- 	if (ret)
- 		return ret;
-@@ -587,6 +589,9 @@ static ssize_t exfat_file_write_iter(struct kiocb *iocb, struct iov_iter *iter)
- 
- 	inode_lock(inode);
- 
-+	if (pos > i_size_read(inode))
-+		truncate_pagecache(inode, i_size_read(inode));
-+
- 	valid_size = ei->valid_size;
- 
- 	ret = generic_write_checks(iocb, iter);
--- 
-2.51.0
-
+--- a/drivers/acpi/cppc_acpi.c
++++ b/drivers/acpi/cppc_acpi.c
+@@ -1297,7 +1297,8 @@ int cppc_get_perf_caps(int cpunum, struc
+ 	/* Are any of the regs PCC ?*/
+ 	if (CPC_IN_PCC(highest_reg) || CPC_IN_PCC(lowest_reg) ||
+ 		CPC_IN_PCC(lowest_non_linear_reg) || CPC_IN_PCC(nominal_reg) ||
+-		CPC_IN_PCC(low_freq_reg) || CPC_IN_PCC(nom_freq_reg)) {
++		CPC_IN_PCC(low_freq_reg) || CPC_IN_PCC(nom_freq_reg) ||
++		CPC_IN_PCC(guaranteed_reg)) {
+ 		if (pcc_ss_id < 0) {
+ 			pr_debug("Invalid pcc_ss_id\n");
+ 			return -ENODEV;
 
 
