@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B21D349AF2;
-	Tue,  6 Jan 2026 17:18:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C26349AE8;
+	Tue,  6 Jan 2026 17:18:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719907; cv=none; b=fA37RRHVOeMgQ6JMCoBjLicXHXIov3+L7cSLyd+RA4gyAHI4iFzIkYuCvGTNc71wYffx3FXLN7ORDR8I5utrgU85JHjGctK5FE3n6xliwtp1CgwM0zLWuPGQyayJlRsH41qAwz0XS+ua3Obs9BXV/MPbCnKfuKd+Fp0Gin/oGW8=
+	t=1767719910; cv=none; b=nvDrKHD3Pxi1pzxnp8za2u2Au50Xc9XvKv/8xZw0Xw+fiutGtk0DV/WSj3cWWJhCL7gF923RAWzOv1G0IyIicsJi3TelVCNFS4BnF2pWGZdLbm2C92bM94MopX180GkgKVy9NviH8gWZnjR1iVsuwRiOLXx78+PMxCEiTMa8g5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719907; c=relaxed/simple;
-	bh=YdCcgI1NCLVvL/h4/4fQX7E0QCl0Xd8FjoLK7TvSz3g=;
+	s=arc-20240116; t=1767719910; c=relaxed/simple;
+	bh=cf5nt6KWWYV+IG7NgKBwktvcBr8kgw1skPIkYMsMDdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BDKl8Sl35e177dhhkFO4t1RXBsdjXqhdd4+4itNKnIsa9RknpjvFFL/CTQHRtu7OCZCL/TAkddKSLisxwDDrJRhXAPafHXC8BptExSVyIe/UJTiDQRcS41gxypcmSKyqn9Brzve1IQrR+tz1jpeUy3U/SK1gLMJzRtZRh98jW+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gr3mGOvk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rNwGglVXhgKjN0vUAWxbP6UVvWOO0XMEUokT9GFyJWc1LBqRV9FJ4FCIw7YL3oxuLN3TwbTtEN0HKX8ScwV4R+hf1yiFWsCCVDM3C4rQAaupvtkqJ18mYHv6W1dU1XDF996UInn+xRCSX8Ra5rVmlKtXSnmHKQvOB+ArUeVssUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tzAgh0C5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gr3mGOvk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8323C116C6;
-	Tue,  6 Jan 2026 17:18:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tzAgh0C5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7A51C116C6;
+	Tue,  6 Jan 2026 17:18:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719907;
-	bh=YdCcgI1NCLVvL/h4/4fQX7E0QCl0Xd8FjoLK7TvSz3g=;
+	s=korg; t=1767719910;
+	bh=cf5nt6KWWYV+IG7NgKBwktvcBr8kgw1skPIkYMsMDdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gr3mGOvkV1oKO3GcjAj6tEvfZjMnxgwG+0h68XY/OcfwN1a5QTercfAQwCLoSq/3G
-	 hwaCJo0USmdewNTqZhE5TPfyLQGlB/hobbIH9D8spBiyZ3RSrhu6h9NE8exGKnB0pI
-	 fWqXYhR9hYXKGd20Mq6bEYGMihdfycmm2KsMNdcU=
+	b=tzAgh0C5b4sYYLbJuefpeQht1AAygnrSwkXZeDJYXlQ9d6uMkXOth61xuAaGdfSYp
+	 defi2VxpW87Fw89ZU29sBjDgTGPYYouv734UGXsJMkiNN+/RYll8+/HLmlR1QVs3K2
+	 5eGsndsVbt/BiwRrrvdcfo4P1xs/fuViRK4Wjzkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Shen <shenjian15@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Denis Sergeev <denserg.edu@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 077/567] net: hns3: add VLAN id validation before using
-Date: Tue,  6 Jan 2026 17:57:39 +0100
-Message-ID: <20260106170454.181909781@linuxfoundation.org>
+Subject: [PATCH 6.12 078/567] hwmon: (dell-smm) Limit fan multiplier to avoid overflow
+Date: Tue,  6 Jan 2026 17:57:40 +0100
+Message-ID: <20260106170454.218295303@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -53,44 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jian Shen <shenjian15@huawei.com>
+From: Denis Sergeev <denserg.edu@gmail.com>
 
-[ Upstream commit 6ef935e65902bfed53980ad2754b06a284ea8ac1 ]
+[ Upstream commit 46c28bbbb150b80827e4bcbea231560af9d16854 ]
 
-Currently, the VLAN id may be used without validation when
-receive a VLAN configuration mailbox from VF. The length of
-vlan_del_fail_bmap is BITS_TO_LONGS(VLAN_N_VID). It may cause
-out-of-bounds memory access once the VLAN id is bigger than
-or equal to VLAN_N_VID.
+The fan nominal speed returned by SMM is limited to 16 bits, but the
+driver allows the fan multiplier to be set via a module parameter.
 
-Therefore, VLAN id needs to be checked to ensure it is within
-the range of VLAN_N_VID.
+Clamp the computed fan multiplier so that fan_nominal_speed *
+i8k_fan_mult always fits into a signed 32-bit integer and refuse to
+initialize the driver if the value is too large.
 
-Fixes: fe4144d47eef ("net: hns3: sync VLAN filter entries when kill VLAN ID failed")
-Signed-off-by: Jian Shen <shenjian15@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20251211023737.2327018-4-shaojijie@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 20bdeebc88269 ("hwmon: (dell-smm) Introduce helper function for data init")
+Signed-off-by: Denis Sergeev <denserg.edu@gmail.com>
+Link: https://lore.kernel.org/r/20251209063706.49008-1-denserg.edu@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/hwmon/dell-smm-hwmon.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index f5eafd1ded413..8dd970ef02ac6 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -10572,6 +10572,9 @@ int hclge_set_vlan_filter(struct hnae3_handle *handle, __be16 proto,
- 	bool writen_to_tbl = false;
- 	int ret = 0;
+diff --git a/drivers/hwmon/dell-smm-hwmon.c b/drivers/hwmon/dell-smm-hwmon.c
+index f73f46193748..9df78861f5f8 100644
+--- a/drivers/hwmon/dell-smm-hwmon.c
++++ b/drivers/hwmon/dell-smm-hwmon.c
+@@ -75,6 +75,9 @@
+ #define DELL_SMM_NO_TEMP	10
+ #define DELL_SMM_NO_FANS	4
  
-+	if (vlan_id >= VLAN_N_VID)
-+		return -EINVAL;
++/* limit fan multiplier to avoid overflow */
++#define DELL_SMM_MAX_FAN_MULT (INT_MAX / U16_MAX)
 +
- 	/* When device is resetting or reset failed, firmware is unable to
- 	 * handle mailbox. Just record the vlan id, and remove it after
- 	 * reset finished.
+ struct smm_regs {
+ 	unsigned int eax;
+ 	unsigned int ebx;
+@@ -1203,6 +1206,12 @@ static int dell_smm_init_data(struct device *dev, const struct dell_smm_ops *ops
+ 	data->ops = ops;
+ 	/* All options must not be 0 */
+ 	data->i8k_fan_mult = fan_mult ? : I8K_FAN_MULT;
++	if (data->i8k_fan_mult > DELL_SMM_MAX_FAN_MULT) {
++		dev_err(dev,
++			"fan multiplier %u is too large (max %u)\n",
++			data->i8k_fan_mult, DELL_SMM_MAX_FAN_MULT);
++		return -EINVAL;
++	}
+ 	data->i8k_fan_max = fan_max ? : I8K_FAN_HIGH;
+ 	data->i8k_pwm_mult = DIV_ROUND_UP(255, data->i8k_fan_max);
+ 
 -- 
 2.51.0
 
