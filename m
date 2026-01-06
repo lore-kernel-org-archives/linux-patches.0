@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB8235503A;
-	Tue,  6 Jan 2026 17:24:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D71C352F8F;
+	Tue,  6 Jan 2026 17:24:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720252; cv=none; b=uZf5KKsDUGjLDkRHpI0G0J7UEf+Ijxs7yGXXrvpti/6P8yAGJAJNYnxQK3ymYbCD20H+1KL/2Zq7wHfZ+BPaRSqSgldltMAmxje39+lEvnBjehlljsKq6cATzE3bvWjaw8oDsFRmKbmJLGmxiBWOySGo/NeFEdWqd5HiPil7Z48=
+	t=1767720256; cv=none; b=EVB7XTnNA2ggsDzlXStMS68VwtN3mfFYrydD8NFhnZP3IS3uxNWDWclL/Nzs6h2rX9XGRuyZtZYTNnzJQ72i+zt4m+fUKvu24A1xiH/QtEk/yhV7dW4fv3siS9ZMJdWM4830ZhooU4yn+O0654179Qv1OCsNklB2NooA1JMS5Cw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720252; c=relaxed/simple;
-	bh=ehVoZxOnGI3nin9JWLKIuqBSsCQALK/hI4ZdYCd2fuE=;
+	s=arc-20240116; t=1767720256; c=relaxed/simple;
+	bh=L537cf6+WIsW2OnDn8lWMmf4YoECyiQZPv92qVV/sdY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QlCi2CREqHm/gsIcOciS5o10Wou9uYLZXE8XhHWbu39ca7ImxdP+9NHAzjE9MdavfU6Wv2Hu8cZd960xNUKqnukWnBvoeJJM3bqO0ovL3FI3t/Uqp9PemLQlGqbLz4Yz2CiQ/VQrB+SGX8v5vjj2sXFEnLNioPBeydQsS05KkUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mPxNvbel; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iPkVr3Fr2qjaoVM67p19yFdTH2tDieU+zzmPdS+vTfQIEPIUj+TH8M77MEpHCylgzxeeuqKEV/bK+2QfFI7arBe5WUpvL30dEmOhWC+JdGXmuLooXH8rK6IrLXqPw/K/eucmawtfiCQ8p83JTzXfP4G4ixxvmqIGmD36GcpJ6uU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ScDFyY26; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mPxNvbel"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EEE6C116C6;
-	Tue,  6 Jan 2026 17:24:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ScDFyY26"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88C94C116C6;
+	Tue,  6 Jan 2026 17:24:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720252;
-	bh=ehVoZxOnGI3nin9JWLKIuqBSsCQALK/hI4ZdYCd2fuE=;
+	s=korg; t=1767720256;
+	bh=L537cf6+WIsW2OnDn8lWMmf4YoECyiQZPv92qVV/sdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mPxNvbelaBeDZPGe4q/XpFjiHYfYs9KUQv49ALcbjGV6wLdnMbXBX5E5EGtQx68fN
-	 B2TIj4tJJimzurzAWDlu8vnmvzCKKCyZq4dJGKkkgsbk2DlKD5Z87XWt928Uu7EEW6
-	 C+M3NXCxhdY94uuRC/mxxHHflVO3j6CZhz2dVxCI=
+	b=ScDFyY26RvngCOk+YeHVNBO8L8e5JZ0r1e+OQLzu+65pL3uVeuTDo7C3K5F8K52fq
+	 wSFy6dGJ28FRoc7bVz1CPK8O6SB/4GdAhIjZJHGm2QovW1OmZeYP0yXx+I1AwSyeX/
+	 KcUHtu3sjIWgIvTrjh7Itvv4r6t/TtVBR14xf5P0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
+	Ma Ke <make24@iscas.ac.cn>,
 	Johan Hovold <johan@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.12 181/567] phy: broadcom: bcm63xx-usbh: fix section mismatches
-Date: Tue,  6 Jan 2026 17:59:23 +0100
-Message-ID: <20260106170458.024969043@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	Vladimir Zapolskiy <vz@mleia.com>
+Subject: [PATCH 6.12 182/567] usb: ohci-nxp: fix device leak on probe failure
+Date: Tue,  6 Jan 2026 17:59:24 +0100
+Message-ID: <20260106170458.062133811@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -46,7 +46,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -55,52 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 356d1924b9a6bc2164ce2bf1fad147b0c37ae085 upstream.
+commit b4c61e542faf8c9131d69ecfc3ad6de96d1b2ab8 upstream.
 
-Platform drivers can be probed after their init sections have been
-discarded (e.g. on probe deferral or manual rebind through sysfs) so the
-probe function and match table must not live in init.
+Make sure to drop the reference taken when looking up the PHY I2C device
+during probe on probe failure (e.g. probe deferral) and on driver
+unbind.
 
-Fixes: 783f6d3dcf35 ("phy: bcm63xx-usbh: Add BCM63xx USBH driver")
-Cc: stable@vger.kernel.org	# 5.9
-Cc: Álvaro Fernández Rojas <noltari@gmail.com>
+Fixes: 73108aa90cbf ("USB: ohci-nxp: Use isp1301 driver")
+Cc: stable@vger.kernel.org	# 3.5
+Reported-by: Ma Ke <make24@iscas.ac.cn>
+Link: https://lore.kernel.org/lkml/20251117013428.21840-1-make24@iscas.ac.cn/
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20251017054537.6884-1-johan@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Reviewed-by: Vladimir Zapolskiy <vz@mleia.com>
+Link: https://patch.msgid.link/20251218153519.19453-4-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/broadcom/phy-bcm63xx-usbh.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/usb/host/ohci-nxp.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/phy/broadcom/phy-bcm63xx-usbh.c
-+++ b/drivers/phy/broadcom/phy-bcm63xx-usbh.c
-@@ -375,7 +375,7 @@ static struct phy *bcm63xx_usbh_phy_xlat
- 	return of_phy_simple_xlate(dev, args);
+--- a/drivers/usb/host/ohci-nxp.c
++++ b/drivers/usb/host/ohci-nxp.c
+@@ -223,6 +223,7 @@ static int ohci_hcd_nxp_probe(struct pla
+ fail_resource:
+ 	usb_put_hcd(hcd);
+ fail_disable:
++	put_device(&isp1301_i2c_client->dev);
+ 	isp1301_i2c_client = NULL;
+ 	return ret;
+ }
+@@ -234,6 +235,7 @@ static void ohci_hcd_nxp_remove(struct p
+ 	usb_remove_hcd(hcd);
+ 	ohci_nxp_stop_hc();
+ 	usb_put_hcd(hcd);
++	put_device(&isp1301_i2c_client->dev);
+ 	isp1301_i2c_client = NULL;
  }
  
--static int __init bcm63xx_usbh_phy_probe(struct platform_device *pdev)
-+static int bcm63xx_usbh_phy_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
- 	struct bcm63xx_usbh_phy	*usbh;
-@@ -432,7 +432,7 @@ static int __init bcm63xx_usbh_phy_probe
- 	return 0;
- }
- 
--static const struct of_device_id bcm63xx_usbh_phy_ids[] __initconst = {
-+static const struct of_device_id bcm63xx_usbh_phy_ids[] = {
- 	{ .compatible = "brcm,bcm6318-usbh-phy", .data = &usbh_bcm6318 },
- 	{ .compatible = "brcm,bcm6328-usbh-phy", .data = &usbh_bcm6328 },
- 	{ .compatible = "brcm,bcm6358-usbh-phy", .data = &usbh_bcm6358 },
-@@ -443,7 +443,7 @@ static const struct of_device_id bcm63xx
- };
- MODULE_DEVICE_TABLE(of, bcm63xx_usbh_phy_ids);
- 
--static struct platform_driver bcm63xx_usbh_phy_driver __refdata = {
-+static struct platform_driver bcm63xx_usbh_phy_driver = {
- 	.driver	= {
- 		.name = "bcm63xx-usbh-phy",
- 		.of_match_table = bcm63xx_usbh_phy_ids,
 
 
