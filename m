@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F47335577;
-	Tue,  6 Jan 2026 17:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364BF225A3B;
+	Tue,  6 Jan 2026 17:37:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721060; cv=none; b=X8JkHeLrU2F2I1QvpFHqUn78I0FEtezEldBOnu+EEgxQ9TrrdYsWEG9Z8gQaF/SGoLsE9cXkTZBLwWqpc+XGE9XCR2SF6fEyLYZZZy9AKuppY+C19Yi2DHFzRmjZ3dbu3glYAZgLwfXU2Log8wWcBtrYGeoQvXGeiUO7MSiG4YU=
+	t=1767721064; cv=none; b=KGqMi+bxzsfqNoNyY5luaqI74zrnAJgBFhfXreZGxT03+TDuXFjQb2tHBE670D8AsOS1suSKdB9o9YK5i03F73L2VZ98DG3ACRRe9UwHWVxSMM0gG75TJiRFfO+IE4Xy/jLA0XwySuZZ+iTwpAK7D4lCiih02hobgajit+erWpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721060; c=relaxed/simple;
-	bh=rD9xJRs3vASbDRnKRO5/2HG3nX33Y+vgSo891XtfOPs=;
+	s=arc-20240116; t=1767721064; c=relaxed/simple;
+	bh=EcneMUXGOo9eCjKwkMvYJiXmepLfIF5EvIxOFKC4Wzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E/8G849if+Lnf3TLOzeZqug1xaNA3g1A2pbhnvrVdGarF0LO5MNIO5+jk+qgjasyDo8QfBnk21WMVheTYNLACu6HN0/2Txbjoct1cf0ZIdid4vNIosfJf0/q3Y8Ty4ZiUiUekF3EDYwi3BmDOCBRWc+79BsDxQqYn4l+gSCW8uk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxExKrOF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mgzuhl55ho9VPiKLf0Hhv/vlD2sKgGQYwVWEcg1y61o2QZU8QhH6dGohPYaTmPTVEmUi8Kq0vQk44sVaLFxsYSdI1MWqwA71LoG7UbmGVXD0XuEgxb2ydru5/AmXZYrplKLoHXf80vArQ2GoLSo+TgAAihuOStfapqWeazW2JjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iaVqjf05; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxExKrOF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D679FC116C6;
-	Tue,  6 Jan 2026 17:37:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iaVqjf05"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F81BC116C6;
+	Tue,  6 Jan 2026 17:37:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721060;
-	bh=rD9xJRs3vASbDRnKRO5/2HG3nX33Y+vgSo891XtfOPs=;
+	s=korg; t=1767721064;
+	bh=EcneMUXGOo9eCjKwkMvYJiXmepLfIF5EvIxOFKC4Wzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yxExKrOF0QQOxDkv81AYEs2G1TzVEJsppZ3ZAqmENymgyvhfUiEtptgwlu0SXvK8s
-	 vvqwS2jBNfF8hUf7ZGrgKDLSzT51MD04lZCg4Z2987NI5l4LYckI450DVQm37AtfZX
-	 sKxMTO1+VRwcjcqQLDUq93Gy6B5JRINc6L/k9BO4=
+	b=iaVqjf05YgioxvrQnrHI4r7M0tW1Tkwjxe7zwwJaDPGs74KS99g5KQeFPudRLzjPB
+	 qq5k79NKfCMyzfkmwHxXuflJlzgP2FsGSWB/Z4MOK5TG79xVyXWC83PU2Q5FoyzAkr
+	 8JtjRStzVa33uCMtM9Xf4B0mx8hnBpTBHVrywtD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sven Schnelle <svens@stackframe.org>,
 	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.12 391/567] parisc: entry.S: fix space adjustment on interruption for 64-bit userspace
-Date: Tue,  6 Jan 2026 18:02:53 +0100
-Message-ID: <20260106170505.804331306@linuxfoundation.org>
+Subject: [PATCH 6.12 392/567] parisc: entry: set W bit for !compat tasks in syscall_restore_rfi()
+Date: Tue,  6 Jan 2026 18:02:54 +0100
+Message-ID: <20260106170505.842450598@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,59 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Schnelle <svens@stackframe.org>
 
-commit 1aa4524c0c1b54842c4c0a370171d11b12d0709b upstream.
+commit 5fb1d3ce3e74a4530042795e1e065422295f1371 upstream.
 
-In wide mode, the IASQ contain the upper part of the GVA
-during interruption. This needs to be reversed before
-the space is used - otherwise it contains parts of IAOQ.
-See Page 2-13 "Processing Resources / Interruption Instruction
-Address Queues" in the Parisc 2.0 Architecture Manual page 2-13
-for an explanation.
+When the kernel leaves to userspace via syscall_restore_rfi(), the
+W bit is not set in the new PSW. This doesn't cause any problems
+because there's no 64 bit userspace for parisc. Simple static binaries
+are usually loaded at addresses way below the 32 bit limit so the W bit
+doesn't matter.
 
-The IAOQ/IASQ space_adjust was skipped for other interruptions
-than itlb misses. However, the code in handle_interruption()
-checks whether iasq[0] contains a valid space. Due to the not
-masked out bits this match failed and the process was killed.
-
-Also add space_adjust for IAOQ1/IASQ1 so ptregs contains sane values.
+Fix this by setting the W bit when TIF_32BIT is not set.
 
 Signed-off-by: Sven Schnelle <svens@stackframe.org>
-Cc: stable@vger.kernel.org # v6.0+
+Cc: stable@vger.kernel.org
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/entry.S |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ arch/parisc/kernel/asm-offsets.c |    2 ++
+ arch/parisc/kernel/entry.S       |    5 ++++-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
+--- a/arch/parisc/kernel/asm-offsets.c
++++ b/arch/parisc/kernel/asm-offsets.c
+@@ -258,6 +258,8 @@ int main(void)
+ 	BLANK();
+ 	DEFINE(TIF_BLOCKSTEP_PA_BIT, 31-TIF_BLOCKSTEP);
+ 	DEFINE(TIF_SINGLESTEP_PA_BIT, 31-TIF_SINGLESTEP);
++	DEFINE(TIF_32BIT_PA_BIT, 31-TIF_32BIT);
++
+ 	BLANK();
+ 	DEFINE(ASM_PMD_SHIFT, PMD_SHIFT);
+ 	DEFINE(ASM_PGDIR_SHIFT, PGDIR_SHIFT);
 --- a/arch/parisc/kernel/entry.S
 +++ b/arch/parisc/kernel/entry.S
-@@ -1059,8 +1059,6 @@ ENTRY_CFI(intr_save)		/* for os_hpmc */
- 	STREG           %r17, PT_IOR(%r29)
+@@ -1846,6 +1846,10 @@ syscall_restore_rfi:
+ 	extru,= %r19,TIF_BLOCKSTEP_PA_BIT,1,%r0
+ 	depi	-1,7,1,%r20			   /* T bit */
  
- #if defined(CONFIG_64BIT)
--	b,n		intr_save2
--
- skip_save_ior:
- 	/* We have a itlb miss, and when executing code above 4 Gb on ILP64, we
- 	 * need to adjust iasq/iaoq here in the same way we adjusted isr/ior
-@@ -1069,10 +1067,17 @@ skip_save_ior:
- 	bb,COND(>=),n	%r8,PSW_W_BIT,intr_save2
- 	LDREG		PT_IASQ0(%r29), %r16
- 	LDREG		PT_IAOQ0(%r29), %r17
--	/* adjust iasq/iaoq */
-+	/* adjust iasq0/iaoq0 */
- 	space_adjust	%r16,%r17,%r1
- 	STREG           %r16, PT_IASQ0(%r29)
- 	STREG           %r17, PT_IAOQ0(%r29)
-+
-+	LDREG		PT_IASQ1(%r29), %r16
-+	LDREG		PT_IAOQ1(%r29), %r17
-+	/* adjust iasq1/iaoq1 */
-+	space_adjust	%r16,%r17,%r1
-+	STREG           %r16, PT_IASQ1(%r29)
-+	STREG           %r17, PT_IAOQ1(%r29)
- #else
- skip_save_ior:
- #endif
++#ifdef CONFIG_64BIT
++	extru,<> %r19,TIF_32BIT_PA_BIT,1,%r0
++	depi	-1,4,1,%r20			   /* W bit */
++#endif
+ 	STREG	%r20,TASK_PT_PSW(%r1)
+ 
+ 	/* Always store space registers, since sr3 can be changed (e.g. fork) */
+@@ -1859,7 +1863,6 @@ syscall_restore_rfi:
+ 	STREG   %r25,TASK_PT_IASQ0(%r1)
+ 	STREG   %r25,TASK_PT_IASQ1(%r1)
+ 
+-	/* XXX W bit??? */
+ 	/* Now if old D bit is clear, it means we didn't save all registers
+ 	 * on syscall entry, so do that now.  This only happens on TRACEME
+ 	 * calls, or if someone attached to us while we were on a syscall.
 
 
