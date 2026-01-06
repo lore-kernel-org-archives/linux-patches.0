@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27902FD7C3;
-	Tue,  6 Jan 2026 17:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 120432EFD95;
+	Tue,  6 Jan 2026 17:42:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721374; cv=none; b=FlcIWrlHxAHXaroBfrIJnwxxol/tyH2WCUshBzVfFTINVBRHgJtMUWFznYqq/W+9CdXsparene+jDYve4qXCjaK4ea4EGhY5xhyvNCD3HubOY15+JaI0pFHbP+Ra8+wiGY8SjJaxL65+sX2pX0ganChVgfGvASh5m9v3TU4B1Ng=
+	t=1767721377; cv=none; b=SwtQIG2UcFaG8lFcG0Bu/irWFSxXep2h6m3ih9h7uiW1v/IK1+L2H8FqIWG1se641n3shzVChgBNKQhOPCAAwuAvHWDWKqFGPFjvMuf+M1eYxS1ho+0hsrNElZmiSiVD714o4UM18QtW4qzGyuGPjlKn7i8O3LQp2qCQRuA3NXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721374; c=relaxed/simple;
-	bh=Qkmh3FBoey17/0Cn3R9A8zMdccy9DrwLtCfkunaSeUg=;
+	s=arc-20240116; t=1767721377; c=relaxed/simple;
+	bh=85LdQLz1kXLrWOv6eYUHoHr4pZ8eNwOCck0hRirchs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MhwLP/8la3W8qUYfQAJ+iDAQrc4ZV0P8tcbCwp911N2/D71A3V+8WlMGM0XZzunluyi6in9g5Y5mcRM0JbWL3Rh4D72VHchBMDD21ls19fI3cqllRPCXePjMCwvdq8TpQlI6zEnZ+E/AWosn/mIvLFRfFhAb+IMBxs56JTzv1m4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KBKKhjU4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QEoVUOzFFgN56f/G7mYOC7YNPSmWtqba10qAisp+Vmh0MFfp+5TY0aYLCGIFGgNAHN0ONr3WNjPWZo6w6Md+UC0ndxQyDRkf+kOiN42NQDDpbGKWuyme8JEe/gOuuGkaImYIH2xn7sYu2DamRNMAtMZKhrVZmjL22exMQbozO3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=niWaVSm5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KBKKhjU4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 684CEC116C6;
-	Tue,  6 Jan 2026 17:42:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="niWaVSm5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A7C3C116C6;
+	Tue,  6 Jan 2026 17:42:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721373;
-	bh=Qkmh3FBoey17/0Cn3R9A8zMdccy9DrwLtCfkunaSeUg=;
+	s=korg; t=1767721376;
+	bh=85LdQLz1kXLrWOv6eYUHoHr4pZ8eNwOCck0hRirchs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KBKKhjU4Na1qxzSwtPFUwHTKtWBjPtW3wb3mIC30E4O9f/DGtUBQU9rNyaKb/njC6
-	 7GT0TD6IBmgAdNdjfUCT9cn98dbf/BNEi1ha0jB63Cfm0u0BfJ/tY7WjHf16thiH2V
-	 ORIsh2pjA7wY1J7BLSHQUdKGbKLpZUbpIowtLUP8=
+	b=niWaVSm55T3PVtpLnL0h0acc/3ZLJC68OIMaUZkDXaMbbxwsEGT8/8eOfWmzi07cE
+	 OZoTyYQP9UnpuJlgIFnkxBv+nLpXXefIl247q6n/6VXqAHdaQwDy/A/05RQEq+XDIA
+	 4Fm+0k1NdOVtMhb5W8ysMS1pkFDKvQNoLVd7WKMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 517/567] gpiolib: acpi: Handle deferred list via new API
-Date: Tue,  6 Jan 2026 18:04:59 +0100
-Message-ID: <20260106170510.505523653@linuxfoundation.org>
+Subject: [PATCH 6.12 518/567] gpiolib: acpi: Add acpi_gpio_need_run_edge_events_on_boot() getter
+Date: Tue,  6 Jan 2026 18:05:00 +0100
+Message-ID: <20260106170510.543181168@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -54,9 +54,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit a594877663d1e3d5cf57ec8af739582fc5c47cec ]
+[ Upstream commit 5666a8777add09d1167de308df2147983486a0af ]
 
-Introduce a new API and handle deferred list via it which moves
+Add acpi_gpio_need_run_edge_events_on_boot() getter which moves
 towards isolating the GPIO ACPI and quirk APIs. It will helps
 splitting them completely in the next changes.
 
@@ -69,117 +69,40 @@ Stable-dep-of: 2d967310c49e ("gpiolib: acpi: Add quirk for Dell Precision 7780")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpiolib-acpi.c |   52 +++++++++++++++++++++++++++-----------------
- drivers/gpio/gpiolib-acpi.h |    5 ++++
- 2 files changed, 37 insertions(+), 20 deletions(-)
+ drivers/gpio/gpiolib-acpi.c |    7 ++++++-
+ drivers/gpio/gpiolib-acpi.h |    2 ++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
 --- a/drivers/gpio/gpiolib-acpi.c
 +++ b/drivers/gpio/gpiolib-acpi.c
-@@ -350,6 +350,27 @@ static struct gpio_desc *acpi_request_ow
- 	return desc;
+@@ -268,7 +268,7 @@ static void acpi_gpiochip_request_irq(st
+ 	event->irq_requested = true;
+ 
+ 	/* Make sure we trigger the initial state of edge-triggered IRQs */
+-	if (run_edge_events_on_boot &&
++	if (acpi_gpio_need_run_edge_events_on_boot() &&
+ 	    (event->irqflags & (IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING))) {
+ 		value = gpiod_get_raw_value_cansleep(event->desc);
+ 		if (((event->irqflags & IRQF_TRIGGER_RISING) && value == 1) ||
+@@ -371,6 +371,11 @@ void acpi_gpio_remove_from_deferred_list
+ 	mutex_unlock(&acpi_gpio_deferred_req_irqs_lock);
  }
  
-+bool acpi_gpio_add_to_deferred_list(struct list_head *list)
++int acpi_gpio_need_run_edge_events_on_boot(void)
 +{
-+	bool defer;
-+
-+	mutex_lock(&acpi_gpio_deferred_req_irqs_lock);
-+	defer = !acpi_gpio_deferred_req_irqs_done;
-+	if (defer)
-+		list_add(list, &acpi_gpio_deferred_req_irqs_list);
-+	mutex_unlock(&acpi_gpio_deferred_req_irqs_lock);
-+
-+	return defer;
-+}
-+
-+void acpi_gpio_remove_from_deferred_list(struct list_head *list)
-+{
-+	mutex_lock(&acpi_gpio_deferred_req_irqs_lock);
-+	if (!list_empty(list))
-+		list_del_init(list);
-+	mutex_unlock(&acpi_gpio_deferred_req_irqs_lock);
++	return run_edge_events_on_boot;
 +}
 +
  bool acpi_gpio_in_ignore_list(enum acpi_gpio_ignore_list list, const char *controller_in,
  			      unsigned int pin_in)
  {
-@@ -536,7 +557,6 @@ void acpi_gpiochip_request_interrupts(st
- 	struct acpi_gpio_chip *acpi_gpio;
- 	acpi_handle handle;
- 	acpi_status status;
--	bool defer;
- 
- 	if (!chip->parent || !chip->to_irq)
- 		return;
-@@ -555,14 +575,7 @@ void acpi_gpiochip_request_interrupts(st
- 	acpi_walk_resources(handle, METHOD_NAME__AEI,
- 			    acpi_gpiochip_alloc_event, acpi_gpio);
- 
--	mutex_lock(&acpi_gpio_deferred_req_irqs_lock);
--	defer = !acpi_gpio_deferred_req_irqs_done;
--	if (defer)
--		list_add(&acpi_gpio->deferred_req_irqs_list_entry,
--			 &acpi_gpio_deferred_req_irqs_list);
--	mutex_unlock(&acpi_gpio_deferred_req_irqs_lock);
--
--	if (defer)
-+	if (acpi_gpio_add_to_deferred_list(&acpi_gpio->deferred_req_irqs_list_entry))
- 		return;
- 
- 	acpi_gpiochip_request_irqs(acpi_gpio);
-@@ -594,10 +607,7 @@ void acpi_gpiochip_free_interrupts(struc
- 	if (ACPI_FAILURE(status))
- 		return;
- 
--	mutex_lock(&acpi_gpio_deferred_req_irqs_lock);
--	if (!list_empty(&acpi_gpio->deferred_req_irqs_list_entry))
--		list_del_init(&acpi_gpio->deferred_req_irqs_list_entry);
--	mutex_unlock(&acpi_gpio_deferred_req_irqs_lock);
-+	acpi_gpio_remove_from_deferred_list(&acpi_gpio->deferred_req_irqs_list_entry);
- 
- 	list_for_each_entry_safe_reverse(event, ep, &acpi_gpio->events, node) {
- 		if (event->irq_requested) {
-@@ -615,6 +625,14 @@ void acpi_gpiochip_free_interrupts(struc
- }
- EXPORT_SYMBOL_GPL(acpi_gpiochip_free_interrupts);
- 
-+void __init acpi_gpio_process_deferred_list(struct list_head *list)
-+{
-+	struct acpi_gpio_chip *acpi_gpio, *tmp;
-+
-+	list_for_each_entry_safe(acpi_gpio, tmp, list, deferred_req_irqs_list_entry)
-+		acpi_gpiochip_request_irqs(acpi_gpio);
-+}
-+
- int acpi_dev_add_driver_gpios(struct acpi_device *adev,
- 			      const struct acpi_gpio_mapping *gpios)
- {
-@@ -1505,14 +1523,8 @@ int acpi_gpio_count(const struct fwnode_
- /* Run deferred acpi_gpiochip_request_irqs() */
- static int __init acpi_gpio_handle_deferred_request_irqs(void)
- {
--	struct acpi_gpio_chip *acpi_gpio, *tmp;
--
- 	mutex_lock(&acpi_gpio_deferred_req_irqs_lock);
--	list_for_each_entry_safe(acpi_gpio, tmp,
--				 &acpi_gpio_deferred_req_irqs_list,
--				 deferred_req_irqs_list_entry)
--		acpi_gpiochip_request_irqs(acpi_gpio);
--
-+	acpi_gpio_process_deferred_list(&acpi_gpio_deferred_req_irqs_list);
- 	acpi_gpio_deferred_req_irqs_done = true;
- 	mutex_unlock(&acpi_gpio_deferred_req_irqs_lock);
- 
 --- a/drivers/gpio/gpiolib-acpi.h
 +++ b/drivers/gpio/gpiolib-acpi.h
-@@ -58,6 +58,11 @@ static inline int acpi_gpio_count(const
- }
- #endif
+@@ -63,6 +63,8 @@ void acpi_gpio_process_deferred_list(str
+ bool acpi_gpio_add_to_deferred_list(struct list_head *list);
+ void acpi_gpio_remove_from_deferred_list(struct list_head *list);
  
-+void acpi_gpio_process_deferred_list(struct list_head *list);
-+
-+bool acpi_gpio_add_to_deferred_list(struct list_head *list);
-+void acpi_gpio_remove_from_deferred_list(struct list_head *list);
++int acpi_gpio_need_run_edge_events_on_boot(void);
 +
  enum acpi_gpio_ignore_list {
  	ACPI_GPIO_IGNORE_WAKE,
