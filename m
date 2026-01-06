@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F061027F754;
-	Tue,  6 Jan 2026 17:31:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2130733EC;
+	Tue,  6 Jan 2026 17:31:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720693; cv=none; b=dciduRIswTMRhEWz0up2BbAnO/ijMYrIOFbe9KJkZ2gnPCuLOVmKaZY1k1GEIxsEeCGgdDEHcR5NtkZa/T9M2+Px4UR0ZrTds28WSaA/d52+5+TV++UyBZRW0IdfLNyQNkmXFiDivC4qTDqm4CCfqpDhqo67y8+sfQpF4nfHZ1Q=
+	t=1767720696; cv=none; b=qkLgHupGKGsdI9G4x7UXxYoDGnOVr0bZGzecrC/uxILGe7xM2ye/qX++hbE7+OlUJaILHFpJqiUZCHZ4kRe/1CEx0Cc6Azl6SodhxH5+uDsu43EAjECgeRVuRovfzYjQOXEetP0Bwv5Jgwl06VHe5kmRQQhNdXJyDyjgcBUhp28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720693; c=relaxed/simple;
-	bh=UnpzAm7g1jJIcaWC7gBCswZ2g9XpPf0bN3Ve8IKlqMI=;
+	s=arc-20240116; t=1767720696; c=relaxed/simple;
+	bh=wzdgaHNZUYT996mbrW0HEUlI832hVgGva3uuXwK4qBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZonddjMDfuYnCOYKJddyXmqon3+5GYBvJLdZU1Rq2hjEXCVD8Xl7uCwFCuP/CfiyGf5rc9H/vLNR3YJV6TcFa8vnFKS4gujeJaeqayQLnyVmENoVIFkHuhAGQ9OxpnyyR69iM15qtGcl36rPnlEXZA9gt2WEsLS5CxVTHESbpEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CiP9z71h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DTbM0Y+8m3GIHbrz/WFlpPjoccLJ7VWA6fC6J5YkjQ1MJIUXnbyedY7hEtsCWN+0wF/NlntYJmRr8x2eTSB/qlW4r8hAzJGHwSNvM/UzzvpqprVS7XAnrMVYxLgn5LEHlJ6rRerVGAhGle4jHUiS3HLVHkhI/c84J4ADJVxX59I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wMUW859m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CiP9z71h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64B9FC116C6;
-	Tue,  6 Jan 2026 17:31:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wMUW859m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E1A2C116C6;
+	Tue,  6 Jan 2026 17:31:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720692;
-	bh=UnpzAm7g1jJIcaWC7gBCswZ2g9XpPf0bN3Ve8IKlqMI=;
+	s=korg; t=1767720696;
+	bh=wzdgaHNZUYT996mbrW0HEUlI832hVgGva3uuXwK4qBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CiP9z71ho9FHrDfEBkEDNBDMjB38RFmhZ/XQYkVha3o1gZp9P2BZ3PhGukOZDxukR
-	 Lh+lYgQGp3j+3mGs6ibFw+wfN+fYSzkClrbZ1J9CHpJ5BrXhbF3R+ssDn+syGjL2t7
-	 Tq5pdzJIp1hb568Api+KKiWe8ElDp/crKcxffiOM=
+	b=wMUW859mOcR9QKpjZuR80GBuNgNX6VRreQT75TY1ipgqayLMgZQABW06DZ+qwzehf
+	 yx0A47sKUohl6Yk2GDlqQEH1IZe9sBJQDOHmpI6FV1EQ4xBzGleSj8BaubpgyCSaVk
+	 0t+sIQZSQdcQOAwMVTpCG6PgXz8TcZ/dawuyS590=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raju Rangoju <Raju.Rangoju@amd.com>,
-	Simon Horman <horms@kernel.org>,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 312/567] amd-xgbe: reset retries and mode on RX adapt failures
-Date: Tue,  6 Jan 2026 18:01:34 +0100
-Message-ID: <20260106170502.869247439@linuxfoundation.org>
+	Yu Kuai <yukuai3@huawei.com>,
+	Johan Hovold <johan@kernel.org>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 6.12 281/567] soc: amlogic: canvas: fix device leak on lookup
+Date: Tue,  6 Jan 2026 18:01:03 +0100
+Message-ID: <20260106170501.725993078@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -53,53 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raju Rangoju <Raju.Rangoju@amd.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit df60c332caf95d70f967aeace826e7e2f0847361 ]
+commit 32200f4828de9d7e6db379909898e718747f4e18 upstream.
 
-During the stress tests, early RX adaptation handshakes can fail, such
-as missing the RX_ADAPT ACK or not receiving a coefficient update before
-block lock is established. Continuing to retry RX adaptation in this
-state is often ineffective if the current mode selection is not viable.
+Make sure to drop the reference taken to the canvas platform device when
+looking up its driver data.
 
-Resetting the RX adaptation retry counter when an RX_ADAPT request fails
-to receive ACK or a coefficient update prior to block lock, and clearing
-mode_set so the next bring-up performs a fresh mode selection rather
-than looping on a likely invalid configuration.
+Note that holding a reference to a device does not prevent its driver
+data from going away so there is no point in keeping the reference.
 
-Fixes: 4f3b20bfbb75 ("amd-xgbe: add support for rx-adaptation")
-Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Link: https://patch.msgid.link/20251215151728.311713-1-Raju.Rangoju@amd.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Also note that commit 28f851e6afa8 ("soc: amlogic: canvas: add missing
+put_device() call in meson_canvas_get()") fixed the leak in a lookup
+error path, but the reference is still leaking on success.
+
+Fixes: d4983983d987 ("soc: amlogic: add meson-canvas driver")
+Cc: stable@vger.kernel.org	# 4.20: 28f851e6afa8
+Cc: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://patch.msgid.link/20250926142454.5929-2-johan@kernel.org
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/soc/amlogic/meson-canvas.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-index 32e633d11348..6d2c401bb246 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-@@ -2036,6 +2036,7 @@ static void xgbe_set_rx_adap_mode(struct xgbe_prv_data *pdata,
- {
- 	if (pdata->rx_adapt_retries++ >= MAX_RX_ADAPT_RETRIES) {
- 		pdata->rx_adapt_retries = 0;
-+		pdata->mode_set = false;
- 		return;
- 	}
+--- a/drivers/soc/amlogic/meson-canvas.c
++++ b/drivers/soc/amlogic/meson-canvas.c
+@@ -73,10 +73,9 @@ struct meson_canvas *meson_canvas_get(st
+ 	 * current state, this driver probe cannot return -EPROBE_DEFER
+ 	 */
+ 	canvas = dev_get_drvdata(&canvas_pdev->dev);
+-	if (!canvas) {
+-		put_device(&canvas_pdev->dev);
++	put_device(&canvas_pdev->dev);
++	if (!canvas)
+ 		return ERR_PTR(-EINVAL);
+-	}
  
-@@ -2082,6 +2083,7 @@ static void xgbe_rx_adaptation(struct xgbe_prv_data *pdata)
- 		 */
- 		netif_dbg(pdata, link, pdata->netdev, "Block_lock done");
- 		pdata->rx_adapt_done = true;
-+		pdata->rx_adapt_retries = 0;
- 		pdata->mode_set = false;
- 		return;
- 	}
--- 
-2.51.0
-
+ 	return canvas;
+ }
 
 
