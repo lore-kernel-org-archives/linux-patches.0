@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5827C3019BA;
-	Tue,  6 Jan 2026 17:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF28303CB6;
+	Tue,  6 Jan 2026 17:35:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720930; cv=none; b=OVUOIXkok4Y+gjxRPaC8T/Qay9cdfxQFRnxVsa2Fr739/VaJspCefiZpwj+yjoErHbCYXgMpH+hmZmp/6XQkHde/uSUGl5yDjpl787sGt41lwgia3ojEK04bFQBRAMh6pwnDXXiD+OD9n/ll/IWv5+SIBIfrks0R7rPlNQbyonM=
+	t=1767720934; cv=none; b=n1mheHFGz5MGPH0A5FYzXSZ/c0E3ZHVfUWa0B6winL5zLTWwcJG5AlboK1BRyAUuxX5ycaZ1MGIMWx7UUT90zFnkDwJ4Pi8/E0pIe/Y20imv4hl0AoKZWvvKY0kIYNO2mrx3+YaWeF/NauXOG9x3ane7lw6Dkdn7G+E9Gq/gTfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720930; c=relaxed/simple;
-	bh=sC4+dJAYTpZ+C0pAu2HS9Ja+21j/VFu93T6ICJMO1YU=;
+	s=arc-20240116; t=1767720934; c=relaxed/simple;
+	bh=ovpVKps7ARTbg43rPewdsOcymPEj9Q3aPJVo+vnIahY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AkAS+1hua5l22XdvK0iuDrtlR2l7yFxqoRXdssjgu/g53FWwr6N7SV0GFJ/hKF/5mBBNdLL9KbtMF20iS59h0Vy9ltHBcrqRfW0Wpq8XkYPd3eIfrOY2PvR7keKmjaE37gex083BH4+dgsc6g8174GZJEtKhCa1T846y6klmCEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1hXRV10g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fkkjATl/JKxJWRHwULT27hzrG5B2h+b0LapgG7ffL5CDqUeDb7eObj4XS0WkF/3X2LZIem4e4OXuxS2Heyhr0/GjSV+rJsXDre+QngvoPxjlRNrtSMszuebY9Txm9VOXh0syV3gioTC0RhKduu84OA7gER/guZn0h8SX5VcDhZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GjFd//Lx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1hXRV10g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB0A8C116C6;
-	Tue,  6 Jan 2026 17:35:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GjFd//Lx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 043F9C116C6;
+	Tue,  6 Jan 2026 17:35:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720930;
-	bh=sC4+dJAYTpZ+C0pAu2HS9Ja+21j/VFu93T6ICJMO1YU=;
+	s=korg; t=1767720933;
+	bh=ovpVKps7ARTbg43rPewdsOcymPEj9Q3aPJVo+vnIahY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1hXRV10g00ysd+5Twv7E3MYesFiWt8BUY76QtY2KVJvARGPnOewvGipdBelhaGa8/
-	 N7wh6U52qkzP7iwH4zihQNH4jO27N4YqzimHDdFkTM2GfUU//W0r6ytb+Iv6PDvReA
-	 As5tSeid/SjP3/pIJ3i9fwN6kgIH4X+wZkEmK1vY=
+	b=GjFd//LxmTkY27xzdjhPpAwSiDdOMxhSDz/ybI+e4hJiS3j9xK5twlt/IecwSpMPS
+	 BJPWSzwg3PfIIUyTpmnb1kx4UCeinvLXwMzZEO3GrKyl4Ou889/oQeXQUxfalnVaCj
+	 2HPO79ywtmFGVJ4E2eu+YjBO2z7V7My3KkNv8kf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 383/567] media: verisilicon: Fix CPU stalls on G2 bus error
-Date: Tue,  6 Jan 2026 18:02:45 +0100
-Message-ID: <20260106170505.509926181@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Martino Facchin <m.facchin@arduino.cc>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Alexey Klimov <alexey.klimov@linaro.org>
+Subject: [PATCH 6.12 352/567] ASoC: qcom: q6adm: the the copp device only during last instance
+Date: Tue,  6 Jan 2026 18:02:14 +0100
+Message-ID: <20260106170504.354353573@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,235 +53,223 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-commit 19c286b755072a22a063052f530a6b1fac8a1f63 upstream.
+commit 74cc4f3ea4e99262ba0d619c6a4ee33e2cd47f65 upstream.
 
-In some seek stress tests, we are getting IRQ from the G2 decoder where
-the dec_bus_int and the dec_e bits are high, meaning the decoder is
-still running despite the error.
+A matching Common object post processing instance is normally resused
+across multiple streams. However currently we close this on DSP
+even though there is a refcount on this copp object, this can result in
+below error.
 
-Fix this by reworking the IRQ handler to only finish the job once we
-have reached completion and move the software reset to when our software
-watchdog triggers.
+q6routing ab00000.remoteproc:glink-edge:apr:service@8:routing: Found Matching Copp 0x0
+qcom-q6adm aprsvc:service:4:8: cmd = 0x10325 return error = 0x2
+q6routing ab00000.remoteproc:glink-edge:apr:service@8:routing: DSP returned error[2]
+q6routing ab00000.remoteproc:glink-edge:apr:service@8:routing: Found Matching Copp 0x0
+qcom-q6adm aprsvc:service:4:8: cmd = 0x10325 return error = 0x2
+q6routing ab00000.remoteproc:glink-edge:apr:service@8:routing: DSP returned error[2]
+qcom-q6adm aprsvc:service:4:8: cmd = 0x10327 return error = 0x2
+qcom-q6adm aprsvc:service:4:8: DSP returned error[2]
+qcom-q6adm aprsvc:service:4:8: Failed to close copp -22
+qcom-q6adm aprsvc:service:4:8: cmd = 0x10327 return error = 0x2
+qcom-q6adm aprsvc:service:4:8: DSP returned error[2]
+qcom-q6adm aprsvc:service:4:8: Failed to close copp -22
 
-This way, we let the hardware continue on errors when it did not self
-reset and in worse case scenario the hardware timeout will
-automatically stop it. The actual error will be fixed in a follow up
-patch.
+Fix this by addressing moving the adm_close to copp_kref destructor
+callback.
 
-Fixes: 3385c514ecc5a ("media: hantro: Convert imx8m_vpu_g2_irq to helper")
-Cc: stable@vger.kernel.org
-Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: 7b20b2be51e1 ("ASoC: qdsp6: q6adm: Add q6adm driver")
+Cc: Stable@vger.kernel.org
+Reported-by: Martino Facchin <m.facchin@arduino.cc>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Tested-by: Alexey Klimov <alexey.klimov@linaro.org> # RB5, RB3
+Link: https://patch.msgid.link/20251023102444.88158-3-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/verisilicon/hantro_g2.c          |   84 ++++++++++++----
- drivers/media/platform/verisilicon/hantro_g2_hevc_dec.c |    2 
- drivers/media/platform/verisilicon/hantro_g2_regs.h     |   13 ++
- drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c  |    2 
- drivers/media/platform/verisilicon/hantro_hw.h          |    1 
- drivers/media/platform/verisilicon/imx8m_vpu_hw.c       |    2 
- 6 files changed, 83 insertions(+), 21 deletions(-)
+ sound/soc/qcom/qdsp6/q6adm.c |  146 ++++++++++++++++++++-----------------------
+ 1 file changed, 71 insertions(+), 75 deletions(-)
 
---- a/drivers/media/platform/verisilicon/hantro_g2.c
-+++ b/drivers/media/platform/verisilicon/hantro_g2.c
-@@ -5,43 +5,93 @@
-  * Copyright (C) 2021 Collabora Ltd, Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-  */
+--- a/sound/soc/qcom/qdsp6/q6adm.c
++++ b/sound/soc/qcom/qdsp6/q6adm.c
+@@ -109,11 +109,75 @@ static struct q6copp *q6adm_find_copp(st
  
-+#include <linux/delay.h>
- #include "hantro_hw.h"
- #include "hantro_g2_regs.h"
+ }
  
- #define G2_ALIGN	16
- 
--void hantro_g2_check_idle(struct hantro_dev *vpu)
-+static bool hantro_g2_active(struct hantro_ctx *ctx)
- {
--	int i;
-+	struct hantro_dev *vpu = ctx->dev;
-+	u32 status;
-+
-+	status = vdpu_read(vpu, G2_REG_INTERRUPT);
-+
-+	return (status & G2_REG_INTERRUPT_DEC_E);
-+}
- 
--	for (i = 0; i < 3; i++) {
--		u32 status;
-+/**
-+ * hantro_g2_reset:
-+ * @ctx: the hantro context
-+ *
-+ * Emulates a reset using Hantro abort function. Failing this procedure would
-+ * results in programming a running IP which leads to CPU hang.
-+ *
-+ * Using a hard reset procedure instead is prefferred.
-+ */
-+void hantro_g2_reset(struct hantro_ctx *ctx)
++static int q6adm_apr_send_copp_pkt(struct q6adm *adm, struct q6copp *copp,
++				   struct apr_pkt *pkt, uint32_t rsp_opcode)
 +{
-+	struct hantro_dev *vpu = ctx->dev;
-+	u32 status;
- 
--		/* Make sure the VPU is idle */
--		status = vdpu_read(vpu, G2_REG_INTERRUPT);
--		if (status & G2_REG_INTERRUPT_DEC_E) {
--			dev_warn(vpu->dev, "device still running, aborting");
--			status |= G2_REG_INTERRUPT_DEC_ABORT_E | G2_REG_INTERRUPT_DEC_IRQ_DIS;
--			vdpu_write(vpu, status, G2_REG_INTERRUPT);
--		}
-+	status = vdpu_read(vpu, G2_REG_INTERRUPT);
-+	if (status & G2_REG_INTERRUPT_DEC_E) {
-+		dev_warn_ratelimited(vpu->dev, "device still running, aborting");
-+		status |= G2_REG_INTERRUPT_DEC_ABORT_E | G2_REG_INTERRUPT_DEC_IRQ_DIS;
-+		vdpu_write(vpu, status, G2_REG_INTERRUPT);
++	struct device *dev = adm->dev;
++	uint32_t opcode = pkt->hdr.opcode;
++	int ret;
 +
-+		do {
-+			mdelay(1);
-+		} while (hantro_g2_active(ctx));
- 	}
- }
- 
- irqreturn_t hantro_g2_irq(int irq, void *dev_id)
++	mutex_lock(&adm->lock);
++	copp->result.opcode = 0;
++	copp->result.status = 0;
++	ret = apr_send_pkt(adm->apr, pkt);
++	if (ret < 0) {
++		dev_err(dev, "Failed to send APR packet\n");
++		ret = -EINVAL;
++		goto err;
++	}
++
++	/* Wait for the callback with copp id */
++	if (rsp_opcode)
++		ret = wait_event_timeout(copp->wait,
++					 (copp->result.opcode == opcode) ||
++					 (copp->result.opcode == rsp_opcode),
++					 msecs_to_jiffies(TIMEOUT_MS));
++	else
++		ret = wait_event_timeout(copp->wait,
++					 (copp->result.opcode == opcode),
++					 msecs_to_jiffies(TIMEOUT_MS));
++
++	if (!ret) {
++		dev_err(dev, "ADM copp cmd timedout\n");
++		ret = -ETIMEDOUT;
++	} else if (copp->result.status > 0) {
++		dev_err(dev, "DSP returned error[%d]\n",
++			copp->result.status);
++		ret = -EINVAL;
++	}
++
++err:
++	mutex_unlock(&adm->lock);
++	return ret;
++}
++
++static int q6adm_device_close(struct q6adm *adm, struct q6copp *copp,
++			      int port_id, int copp_idx)
++{
++	struct apr_pkt close;
++
++	close.hdr.hdr_field = APR_HDR_FIELD(APR_MSG_TYPE_SEQ_CMD,
++					APR_HDR_LEN(APR_HDR_SIZE),
++					APR_PKT_VER);
++	close.hdr.pkt_size = sizeof(close);
++	close.hdr.src_port = port_id;
++	close.hdr.dest_port = copp->id;
++	close.hdr.token = port_id << 16 | copp_idx;
++	close.hdr.opcode = ADM_CMD_DEVICE_CLOSE_V5;
++
++	return q6adm_apr_send_copp_pkt(adm, copp, &close, 0);
++}
++
+ static void q6adm_free_copp(struct kref *ref)
  {
- 	struct hantro_dev *vpu = dev_id;
--	enum vb2_buffer_state state;
- 	u32 status;
+ 	struct q6copp *c = container_of(ref, struct q6copp, refcount);
+ 	struct q6adm *adm = c->adm;
+ 	unsigned long flags;
++	int ret;
++
++	ret = q6adm_device_close(adm, c, c->afe_port, c->copp_idx);
++	if (ret < 0)
++		dev_err(adm->dev, "Failed to close copp %d\n", ret);
  
- 	status = vdpu_read(vpu, G2_REG_INTERRUPT);
--	state = (status & G2_REG_INTERRUPT_DEC_RDY_INT) ?
--		 VB2_BUF_STATE_DONE : VB2_BUF_STATE_ERROR;
- 
--	vdpu_write(vpu, 0, G2_REG_INTERRUPT);
--	vdpu_write(vpu, G2_REG_CONFIG_DEC_CLK_GATE_E, G2_REG_CONFIG);
-+	if (!(status & G2_REG_INTERRUPT_DEC_IRQ))
-+		return IRQ_NONE;
-+
-+	hantro_reg_write(vpu, &g2_dec_irq, 0);
-+	hantro_reg_write(vpu, &g2_dec_int_stat, 0);
-+	hantro_reg_write(vpu, &g2_clk_gate_e, 1);
-+
-+	if (status & G2_REG_INTERRUPT_DEC_RDY_INT) {
-+		hantro_irq_done(vpu, VB2_BUF_STATE_DONE);
-+		return IRQ_HANDLED;
-+	}
-+
-+	if (status & G2_REG_INTERRUPT_DEC_ABORT_INT) {
-+		/* disabled on abort, though lets be safe and handle it */
-+		dev_warn_ratelimited(vpu->dev, "decode operation aborted.");
-+		return IRQ_HANDLED;
-+	}
-+
-+	if (status & G2_REG_INTERRUPT_DEC_LAST_SLICE_INT)
-+		dev_warn_ratelimited(vpu->dev, "not all macroblocks were decoded.");
-+
-+	if (status & G2_REG_INTERRUPT_DEC_BUS_INT)
-+		dev_warn_ratelimited(vpu->dev, "bus error detected.");
-+
-+	if (status & G2_REG_INTERRUPT_DEC_ERROR_INT)
-+		dev_warn_ratelimited(vpu->dev, "decode error detected.");
- 
--	hantro_irq_done(vpu, state);
-+	if (status & G2_REG_INTERRUPT_DEC_TIMEOUT)
-+		dev_warn_ratelimited(vpu->dev, "frame decode timed out.");
-+
-+	/**
-+	 * If the decoding haven't stopped, let it continue. The hardware timeout
-+	 * will trigger if it is trully stuck.
-+	 */
-+	if (status & G2_REG_INTERRUPT_DEC_E)
-+		return IRQ_HANDLED;
- 
-+	hantro_irq_done(vpu, VB2_BUF_STATE_ERROR);
- 	return IRQ_HANDLED;
+ 	spin_lock_irqsave(&adm->copps_list_lock, flags);
+ 	clear_bit(c->copp_idx, &adm->copp_bitmap[c->afe_port]);
+@@ -155,13 +219,13 @@ static int q6adm_callback(struct apr_dev
+ 		switch (result->opcode) {
+ 		case ADM_CMD_DEVICE_OPEN_V5:
+ 		case ADM_CMD_DEVICE_CLOSE_V5:
+-			copp = q6adm_find_copp(adm, port_idx, copp_idx);
+-			if (!copp)
+-				return 0;
+-
+-			copp->result = *result;
+-			wake_up(&copp->wait);
+-			kref_put(&copp->refcount, q6adm_free_copp);
++			list_for_each_entry(copp, &adm->copps_list, node) {
++				if ((port_idx == copp->afe_port) && (copp_idx == copp->copp_idx)) {
++					copp->result = *result;
++					wake_up(&copp->wait);
++					break;
++				}
++			}
+ 			break;
+ 		case ADM_CMD_MATRIX_MAP_ROUTINGS_V5:
+ 			adm->result = *result;
+@@ -234,65 +298,6 @@ static struct q6copp *q6adm_alloc_copp(s
+ 	return c;
  }
  
---- a/drivers/media/platform/verisilicon/hantro_g2_hevc_dec.c
-+++ b/drivers/media/platform/verisilicon/hantro_g2_hevc_dec.c
-@@ -582,8 +582,6 @@ int hantro_g2_hevc_dec_run(struct hantro
- 	struct hantro_dev *vpu = ctx->dev;
- 	int ret;
- 
--	hantro_g2_check_idle(vpu);
+-static int q6adm_apr_send_copp_pkt(struct q6adm *adm, struct q6copp *copp,
+-				   struct apr_pkt *pkt, uint32_t rsp_opcode)
+-{
+-	struct device *dev = adm->dev;
+-	uint32_t opcode = pkt->hdr.opcode;
+-	int ret;
 -
- 	/* Prepare HEVC decoder context. */
- 	ret = hantro_hevc_dec_prepare_run(ctx);
- 	if (ret)
---- a/drivers/media/platform/verisilicon/hantro_g2_regs.h
-+++ b/drivers/media/platform/verisilicon/hantro_g2_regs.h
-@@ -22,7 +22,14 @@
- #define G2_REG_VERSION			G2_SWREG(0)
- 
- #define G2_REG_INTERRUPT		G2_SWREG(1)
-+#define G2_REG_INTERRUPT_DEC_LAST_SLICE_INT	BIT(19)
-+#define G2_REG_INTERRUPT_DEC_TIMEOUT	BIT(18)
-+#define G2_REG_INTERRUPT_DEC_ERROR_INT	BIT(16)
-+#define G2_REG_INTERRUPT_DEC_BUF_INT	BIT(14)
-+#define G2_REG_INTERRUPT_DEC_BUS_INT	BIT(13)
- #define G2_REG_INTERRUPT_DEC_RDY_INT	BIT(12)
-+#define G2_REG_INTERRUPT_DEC_ABORT_INT	BIT(11)
-+#define G2_REG_INTERRUPT_DEC_IRQ	BIT(8)
- #define G2_REG_INTERRUPT_DEC_ABORT_E	BIT(5)
- #define G2_REG_INTERRUPT_DEC_IRQ_DIS	BIT(4)
- #define G2_REG_INTERRUPT_DEC_E		BIT(0)
-@@ -35,6 +42,9 @@
- #define BUS_WIDTH_128			2
- #define BUS_WIDTH_256			3
- 
-+#define g2_dec_int_stat		G2_DEC_REG(1, 11, 0xf)
-+#define g2_dec_irq		G2_DEC_REG(1, 8, 0x1)
-+
- #define g2_strm_swap		G2_DEC_REG(2, 28, 0xf)
- #define g2_strm_swap_old	G2_DEC_REG(2, 27, 0x1f)
- #define g2_pic_swap		G2_DEC_REG(2, 22, 0x1f)
-@@ -225,6 +235,9 @@
- #define vp9_filt_level_seg5	G2_DEC_REG(19,  8, 0x3f)
- #define vp9_quant_seg5		G2_DEC_REG(19,  0, 0xff)
- 
-+#define g2_timemout_override_e	G2_DEC_REG(45, 31, 0x1)
-+#define g2_timemout_cycles	G2_DEC_REG(45, 0, 0x7fffffff)
-+
- #define hevc_cur_poc_00		G2_DEC_REG(46, 24, 0xff)
- #define hevc_cur_poc_01		G2_DEC_REG(46, 16, 0xff)
- #define hevc_cur_poc_02		G2_DEC_REG(46, 8,  0xff)
---- a/drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c
-+++ b/drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c
-@@ -893,8 +893,6 @@ int hantro_g2_vp9_dec_run(struct hantro_
- 	struct vb2_v4l2_buffer *dst;
- 	int ret;
- 
--	hantro_g2_check_idle(ctx->dev);
+-	mutex_lock(&adm->lock);
+-	copp->result.opcode = 0;
+-	copp->result.status = 0;
+-	ret = apr_send_pkt(adm->apr, pkt);
+-	if (ret < 0) {
+-		dev_err(dev, "Failed to send APR packet\n");
+-		ret = -EINVAL;
+-		goto err;
+-	}
 -
- 	ret = start_prepare_run(ctx, &decode_params);
- 	if (ret) {
- 		hantro_end_prepare_run(ctx);
---- a/drivers/media/platform/verisilicon/hantro_hw.h
-+++ b/drivers/media/platform/verisilicon/hantro_hw.h
-@@ -583,6 +583,7 @@ void hantro_g2_vp9_dec_done(struct hantr
- int hantro_vp9_dec_init(struct hantro_ctx *ctx);
- void hantro_vp9_dec_exit(struct hantro_ctx *ctx);
- void hantro_g2_check_idle(struct hantro_dev *vpu);
-+void hantro_g2_reset(struct hantro_ctx *ctx);
- irqreturn_t hantro_g2_irq(int irq, void *dev_id);
+-	/* Wait for the callback with copp id */
+-	if (rsp_opcode)
+-		ret = wait_event_timeout(copp->wait,
+-					 (copp->result.opcode == opcode) ||
+-					 (copp->result.opcode == rsp_opcode),
+-					 msecs_to_jiffies(TIMEOUT_MS));
+-	else
+-		ret = wait_event_timeout(copp->wait,
+-					 (copp->result.opcode == opcode),
+-					 msecs_to_jiffies(TIMEOUT_MS));
+-
+-	if (!ret) {
+-		dev_err(dev, "ADM copp cmd timedout\n");
+-		ret = -ETIMEDOUT;
+-	} else if (copp->result.status > 0) {
+-		dev_err(dev, "DSP returned error[%d]\n",
+-			copp->result.status);
+-		ret = -EINVAL;
+-	}
+-
+-err:
+-	mutex_unlock(&adm->lock);
+-	return ret;
+-}
+-
+-static int q6adm_device_close(struct q6adm *adm, struct q6copp *copp,
+-			      int port_id, int copp_idx)
+-{
+-	struct apr_pkt close;
+-
+-	close.hdr.hdr_field = APR_HDR_FIELD(APR_MSG_TYPE_SEQ_CMD,
+-					APR_HDR_LEN(APR_HDR_SIZE),
+-					APR_PKT_VER);
+-	close.hdr.pkt_size = sizeof(close);
+-	close.hdr.src_port = port_id;
+-	close.hdr.dest_port = copp->id;
+-	close.hdr.token = port_id << 16 | copp_idx;
+-	close.hdr.opcode = ADM_CMD_DEVICE_CLOSE_V5;
+-
+-	return q6adm_apr_send_copp_pkt(adm, copp, &close, 0);
+-}
+-
+ static struct q6copp *q6adm_find_matching_copp(struct q6adm *adm,
+ 					       int port_id, int topology,
+ 					       int mode, int rate,
+@@ -567,15 +572,6 @@ EXPORT_SYMBOL_GPL(q6adm_matrix_map);
+  */
+ int q6adm_close(struct device *dev, struct q6copp *copp)
+ {
+-	struct q6adm *adm = dev_get_drvdata(dev->parent);
+-	int ret = 0;
+-
+-	ret = q6adm_device_close(adm, copp, copp->afe_port, copp->copp_idx);
+-	if (ret < 0) {
+-		dev_err(adm->dev, "Failed to close copp %d\n", ret);
+-		return ret;
+-	}
+-
+ 	kref_put(&copp->refcount, q6adm_free_copp);
  
- #endif /* HANTRO_HW_H_ */
---- a/drivers/media/platform/verisilicon/imx8m_vpu_hw.c
-+++ b/drivers/media/platform/verisilicon/imx8m_vpu_hw.c
-@@ -312,11 +312,13 @@ static const struct hantro_codec_ops imx
- static const struct hantro_codec_ops imx8mq_vpu_g2_codec_ops[] = {
- 	[HANTRO_MODE_HEVC_DEC] = {
- 		.run = hantro_g2_hevc_dec_run,
-+		.reset = hantro_g2_reset,
- 		.init = hantro_hevc_dec_init,
- 		.exit = hantro_hevc_dec_exit,
- 	},
- 	[HANTRO_MODE_VP9_DEC] = {
- 		.run = hantro_g2_vp9_dec_run,
-+		.reset = hantro_g2_reset,
- 		.done = hantro_g2_vp9_dec_done,
- 		.init = hantro_vp9_dec_init,
- 		.exit = hantro_vp9_dec_exit,
+ 	return 0;
 
 
