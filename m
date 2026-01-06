@@ -1,91 +1,124 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87A0E337686
-	for <patches@lists.linux.dev>; Tue,  6 Jan 2026 16:30:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 008F033F8A0;
+	Tue,  6 Jan 2026 17:14:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767717027; cv=none; b=kV/z/WnSFJH6mVljAwy/OzyBhlq5Gn+u6xTUpWv63DL6Avw0BDSgPUOW1mKc2RmTgwKHeD/7w910qB/NSaZgXrPwOF6AgJZZSaEV9nK+qt4vcYCuikLyY5OPBaU/hyLfb1yWvhgvCDpE+dOotB1qoJLOcWFcbSfxuk2qKwQRknQ=
+	t=1767719684; cv=none; b=hpE00czmvTgQ6mxtOSygjzMXBbBUo9D9h7KhwBX6RUrRz/q74CvdZSiduKL2Y+lhYXDX+eMfa++2CzFTdHYog9Py333ODjO0GN9yWky8T/CUN5EqeKXG+AStnEJP2uvKTmrRLwxv2tOA7wGpqym2ZH0hOvGsWMjzeNpvcnzcsLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767717027; c=relaxed/simple;
-	bh=U0j51mleQ1XhvbVqXphZJy29E+snKGgnLb9jc3YD3Fk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rus+Kr1hj/NzjMNcr+3xVU+sfQUiNNbBcu6JNUEoQp6d+XPfxUqbkh7TvocuK2oWFPPCMCBr4GfUysVFxPuZUOss6GghvU/KE49giYODmrvlgD6vRj87ioUKAXPLingLzmnU8o6LId3B3gy1Ti6N1uMFD44s+JUzJ9GioBfQdg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=elpWYXU9; arc=none smtp.client-ip=209.85.208.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1767719684; c=relaxed/simple;
+	bh=g07DO8jQYqI0244wH3YhnM26vGxFCQlvv/6qLe0VulM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=u5Zdjwo4mxwIyLA4NGe+Y2FtwyB3Xq4ioaDm8Xc3jvD6z1hfCaJAG7TisHbADqFfOZRKvKMVCilNZ1U0yOGG3Kdo3WQjVpKRNRTVqJg4KBrM7vse8oHwGe31VtYNgkL30DdSlEHghNh/WGTKqD04fFMlkmK71uVq69alBPSuNvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZpMnJdJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="elpWYXU9"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-6505cac9879so1823387a12.1
-        for <patches@lists.linux.dev>; Tue, 06 Jan 2026 08:30:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767717024; x=1768321824; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=YFywE2icKNJ+cB7uTyuGoCkXxbifngq0AAd5tIXgGGI=;
-        b=elpWYXU9Y1EEsIfgqBz6Tl9mxko1J7+4lBuq+espkCQqjbIMB9yqw4QVOiBvIb6fWj
-         SuzojjQ8X3gS4IkwUaHbPdnqtEpE/heIjxpcP3Z7OjGUi47R6+3jzHn0K+WVO7NEbKRx
-         Ey4ZHM3EVsUIdZH0F7VAegK0IxSIxOqYMqC44YEA8lVw5pNFnpavSlwDCUdSso2Wx8zL
-         +lO09OBJT8MqS1MFzZeb7uHM2+J5hGsNXdJjZMlrcKsx3fYIw6RgC91F5+bkK2Mtt4dM
-         GCsO3wRcwWMX8RIvhLGc9V7kW37QffKlkda71rWF4krqFcBzIl9qz+OTg8LRaSkxZ+TR
-         jWFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767717024; x=1768321824;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YFywE2icKNJ+cB7uTyuGoCkXxbifngq0AAd5tIXgGGI=;
-        b=RtXJs089mbv8fVo45ICQ6TxDf4VcJQL41f2wafnBQnn5XK7/ngN4+Gw+9QLmdMVAUa
-         ZfaYzJQF9oRNtcu35iIoaU4fyB2Pqj4yjQE5e8bW7iLlFriuqDbZCN48L1FVBgU8C5kt
-         uMCNAfjnSem1nl71BA5R7IR1e0c3l80BConGgb2T14bhgdIVTFYZvc+MAo0+LQ3XoyBR
-         4p48jd4CWo6jdSxsACB3FuhPsNHGeCZGkZ1teqgSl+G55Am+1AeepAwPbBqdGv4oDsgj
-         eZI3Mqhbs9eETKo5/749F3tRYC/+qZqao0bXSIdSM7tzBrOLiad3tTpa7nJpRp7Qm3Cb
-         uMdg==
-X-Forwarded-Encrypted: i=1; AJvYcCXYfLAeF2D1Bih8Dd1iEO9xv1VTojX1QqsPIHSggKl+2hmGoHOdygJ20JWtwHsKBm8d9Y2ArpzT@lists.linux.dev
-X-Gm-Message-State: AOJu0YwKM3WuTkkPaWV1A8K/2ER0qSsRkVOkZS4AAsbpWUtKhrIHwLgd
-	2lS1UFmsdn+Rm/14REy+l5cLuKT1gPYAaB6b//yyAQ1UO1cu/DHh5lOaaSW3Mx9yq/mdxC7KnHW
-	CjPZLGtebPBhYSRcWMSRmK2cetmhBMbQ=
-X-Gm-Gg: AY/fxX5CtVNPb9n/soE89gFmeJeWIhYZ4JtoxeGfQq0Tc4g/z0ifFkQP7IcAFctwAYo
-	P3qrQP8jy7iLRBOXGLKnI/INOKwUrHSN33U17+/lRRwu1vvkhjvygQEQ4hKHIvbVElhaPDdDYUq
-	K27i96WyPv3aDCYge5VAf5yVEKNANaccm2N5ONpQN0xb3hHCdjSox4fQBHkbfL5KBro7zkpeY2V
-	BV8jFMK5liaY7DWzA4D6IQsa5tgb+xRDJUd70u3n5JiyBsDAM5AFZwm2ox5SVwki3jLD7T/
-X-Google-Smtp-Source: AGHT+IGiqs1gDfUISyBczs4HyJmVzzzKZpgRC6NkJpj6fa6eM1SDvFi4fb2rgcGA7Eu/T1LDB0EY4X8+Kh2dwLV669s=
-X-Received: by 2002:a17:907:c15:b0:b7c:e320:5232 with SMTP id
- a640c23a62f3a-b8426a49324mr367887766b.5.1767717023650; Tue, 06 Jan 2026
- 08:30:23 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZpMnJdJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F5FC116C6;
+	Tue,  6 Jan 2026 17:14:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1767719683;
+	bh=g07DO8jQYqI0244wH3YhnM26vGxFCQlvv/6qLe0VulM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=jZpMnJdJ0corrN2z76lus//0wx8Zzf0Q1PGBn37Txyk1mNvRDxnBqkSMBSs3Sdc98
+	 9P1YegVdO0qbLi0PQFoG6lEBhoCVNll+zTfnKxn8vybZ//F6G2mSWDJCbXh6o5EoaD
+	 peF0U5HJqUYHVp6l62GYHAHoDpub+oRcpIsMNPkQ=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Vyacheslav Kovalevsky <slava.kovalevskiy.2014@gmail.com>,
+	Boris Burkov <boris@bur.io>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 001/567] btrfs: do not skip logging new dentries when logging a new name
+Date: Tue,  6 Jan 2026 17:56:23 +0100
+Message-ID: <20260106170451.395993144@linuxfoundation.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
+References: <20260106170451.332875001@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251228063440.2623595-1-safinaskar@gmail.com>
- <20251228063440.2623595-2-safinaskar@gmail.com> <CA+=Fv5Ra7fFTd2wA77iM_6X7NooApfoMJX5z1j60cXex_uxm7w@mail.gmail.com>
- <alpine.DEB.2.21.2601061310110.45251@angie.orcam.me.uk>
-In-Reply-To: <alpine.DEB.2.21.2601061310110.45251@angie.orcam.me.uk>
-From: Magnus Lindholm <linmag7@gmail.com>
-Date: Tue, 6 Jan 2026 17:30:12 +0100
-X-Gm-Features: AQt7F2ryRckCS1QLF5YuAHz3r2RQu9Pt7ESbBtlhCipsrDrEYweGbF2trlCO0MY
-Message-ID: <CA+=Fv5Rw3vJGLsEyuKOBMyZTcQd=ayV5jT6bhWNn=uzXKsw13w@mail.gmail.com>
-Subject: Re: [PATCH 1/1] alpha: trivial: remove ^L chars
-To: "Maciej W. Rozycki" <macro@orcam.me.uk>
-Cc: Askar Safin <safinaskar@gmail.com>, Richard Henderson <richard.henderson@linaro.org>, 
-	Matt Turner <mattst88@gmail.com>, linux-alpha@vger.kernel.org, 
-	kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
->  As a matter of interest, why would the presence of ^L characters cause
-> any issues?  That is just another instance of white space and it has been
-> commonly used across some source code to separate functional parts, e.g.
-> in the GNU toolchain.  It can be ignored unless you actually send the code
-> to a printer (which I suppose hardly anyone does nowadays).
->
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-I guess you're right, at this point it's mostly aesthetics. ^L is just
-whitespace and the compiler ignores it, likely a relic from the old
-days. Some editors display it a bit oddly, and most of the kernel seems
-to have pruned these over time, but a few still linger in arch/alpha,
-which fits the age and heritage there.
+------------------
 
-Magnus
+From: Filipe Manana <fdmanana@suse.com>
+
+[ Upstream commit 5630f7557de61264ccb4f031d4734a1a97eaed16 ]
+
+When we are logging a directory and the log context indicates that we
+are logging a new name for some other file (that is or was inside that
+directory), we skip logging the inodes for new dentries in the directory.
+
+This is ok most of the time, but if after the rename or link operation
+that triggered the logging of that directory, we have an explicit fsync
+of that directory without the directory inode being evicted and reloaded,
+we end up never logging the inodes for the new dentries that we found
+during the new name logging, as the next directory fsync will only process
+dentries that were added after the last time we logged the directory (we
+are doing an incremental directory logging).
+
+So make sure we always log new dentries for a directory even if we are
+in a context of logging a new name.
+
+We started skipping logging inodes for new dentries as of commit
+c48792c6ee7a ("btrfs: do not log new dentries when logging that a new name
+exists") and it was fine back then, because when logging a directory we
+always iterated over all the directory entries (for leaves changed in the
+current transaction) so a subsequent fsync would always log anything that
+was previously skipped while logging a directory when logging a new name
+(with btrfs_log_new_name()). But later support for incrementally logging
+a directory was added in commit dc2872247ec0 ("btrfs: keep track of the
+last logged keys when logging a directory"), to avoid checking all dir
+items every time we log a directory, so the check to skip dentry logging
+added in the first commit should have been removed when the incremental
+support for logging a directory was added.
+
+A test case for fstests will follow soon.
+
+Reported-by: Vyacheslav Kovalevsky <slava.kovalevskiy.2014@gmail.com>
+Link: https://lore.kernel.org/linux-btrfs/84c4e713-85d6-42b9-8dcf-0722ed26cb05@gmail.com/
+Fixes: dc2872247ec0 ("btrfs: keep track of the last logged keys when logging a directory")
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ fs/btrfs/tree-log.c | 8 --------
+ 1 file changed, 8 deletions(-)
+
+diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
+index 609f221d4c309..25ab8f3af56c8 100644
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -5556,14 +5556,6 @@ static int log_new_dir_dentries(struct btrfs_trans_handle *trans,
+ 	struct btrfs_inode *curr_inode = start_inode;
+ 	int ret = 0;
+ 
+-	/*
+-	 * If we are logging a new name, as part of a link or rename operation,
+-	 * don't bother logging new dentries, as we just want to log the names
+-	 * of an inode and that any new parents exist.
+-	 */
+-	if (ctx->logging_new_name)
+-		return 0;
+-
+ 	path = btrfs_alloc_path();
+ 	if (!path)
+ 		return -ENOMEM;
+-- 
+2.51.0
+
+
+
