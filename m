@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F8134A76D;
-	Tue,  6 Jan 2026 17:43:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4259D34AB03;
+	Tue,  6 Jan 2026 17:43:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721433; cv=none; b=G0ZTP58W+YXhvtAK3Fs1E0JJEuxZ1rE9RogJ+VQXRzFgryo+BaZaY13sOeVIJvNHaw8LTWMk6oboDmsfhiDSZHOf8hXZnnIZeGd5D3Hky5hgHPDCScCvz2GL7D743OhkBt6q6xesC24s+wjh7OUGu+y88+HwHEk16nz5H1ooLQI=
+	t=1767721437; cv=none; b=OZb6LdtWO5EMP2LjX4zVQQeWFSE0UoTUFMby/YquRerXlXOx3lWDZDcuYOvLvr5+HnamMB15tVhYk96HnLKatsVMXHxFpw6j7WMMjulSVgUTIeVFqC91JYZv8PyKTgDKEI7XP4yhe2b+Q1652FgG/gaijNLD2Q3aJsSq1UT0dPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721433; c=relaxed/simple;
-	bh=uiII31t7u4LU6bB6uE5YHkwfaAbYRbTvYyP4PnMWyQ8=;
+	s=arc-20240116; t=1767721437; c=relaxed/simple;
+	bh=W4cqYthHfpg6NSP7U6zyaUs/NAYa9LGydY4bkHwFyLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bEv/kxS5eUAkPaUNd9ayaRz6J7aKruGAjxBy/KeAhNLq0m0izs8nxCu2qGYiJarLpxvGdWchQPMdZrjt8+fdOzwPNPeCCrQ3s9T7yarW4YcChs/bPyFOuMFugRx8AEi11z5igIq65aP6F3Pm40nMqi4X61jCf0gqTkOwGN4xAIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hmQ8Bzii; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pAetfhU1d7JgeH141ZoOcdlkUq5/pEi9sf/u0fnD8jbFTD50woy3yUtdGFaFTHvxSwUggzqjqkY/EFcqkBxZIhYSMzzQTyxgOQizGQoHbK1oWIpWAdTQZ568YL4Wnb4RKQRulngSYs98GRoQx7WqVBGCWRngexSAy2+Z0mDhP3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gorxdpen; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hmQ8Bzii"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29174C19424;
-	Tue,  6 Jan 2026 17:43:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gorxdpen"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7061C16AAE;
+	Tue,  6 Jan 2026 17:43:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721433;
-	bh=uiII31t7u4LU6bB6uE5YHkwfaAbYRbTvYyP4PnMWyQ8=;
+	s=korg; t=1767721437;
+	bh=W4cqYthHfpg6NSP7U6zyaUs/NAYa9LGydY4bkHwFyLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hmQ8BziiJ4INJ92L98G3VngMkXKGFbgXPcdqXAUT4bFxXfNZVTlE8tEcHIATGoVtK
-	 ynhoVPlDcpwMiTFd+HG3331aDl8BmTn+eth7SCCSfdOJHsmNLycvjFUtMqlOpPSDQ4
-	 d2Yg54Ptqz7MpilvdVSQm955xMKa/4mSScAO+izU=
+	b=gorxdpenRHV3w/Nt2NBY3Y+cVbN8Ne1FHlUX3kcSUmanSiC0zQt2PmPl8JsgI3Lgq
+	 kP//An6kdxt09FTmxSLBY8O1f8mRIkq3PfI8X5xzx80WU1pGD+w/m8ChDT88VpEv3i
+	 PXFb88/qX7+9L6tYN0JTWNbYkuSgYJJeIWbYy1PI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quan Zhou <quan.zhou@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
-	Jan Kiszka <jan.kiszka@siemens.com>
-Subject: [PATCH 6.12 536/567] wifi: mt76: mt7925: add handler to hif suspend/resume event
-Date: Tue,  6 Jan 2026 18:05:18 +0100
-Message-ID: <20260106170511.229414497@linuxfoundation.org>
+	Madhu Chittim <madhu.chittim@intel.com>,
+	Joshua Hay <joshua.a.hay@intel.com>,
+	Krishneil Singh <krishneil.k.singh@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 6.12 537/567] idpf: add support for SW triggered interrupts
+Date: Tue,  6 Jan 2026 18:05:19 +0100
+Message-ID: <20260106170511.267328700@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,477 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quan Zhou <quan.zhou@mediatek.com>
+From: Joshua Hay <joshua.a.hay@intel.com>
 
-[ Upstream commit 8f6571ad470feb242dcef36e53f7cf1bba03780f ]
+[ Upstream commit 93433c1d919775f8ac0f7893692f42e6731a5373 ]
 
-When the system suspend or resume, the WiFi driver sends
-an hif_ctrl command to the firmware and waits for an event.
-Due to changes in the event format reported by the chip, the
-current mt7925's driver does not account for these changes,
-resulting in command timeout. Add flow to handle hif_ctrl
-event to avoid command timeout. We also exented API
-mt76_connac_mcu_set_hif_suspend for connac3 this time.
+SW triggered interrupts are guaranteed to fire after their timer
+expires, unlike Tx and Rx interrupts which will only fire after the
+timer expires _and_ a descriptor write back is available to be processed
+by the driver.
 
-Signed-off-by: Quan Zhou <quan.zhou@mediatek.com>
-Link: https://patch.msgid.link/3a0844ff5162142c4a9f3cf7104f75076ddd3b87.1735910562.git.quan.zhou@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+Add the necessary fields, defines, and initializations to enable a SW
+triggered interrupt in the vector's dyn_ctl register.
+
+Reviewed-by: Madhu Chittim <madhu.chittim@intel.com>
+Signed-off-by: Joshua Hay <joshua.a.hay@intel.com>
+Tested-by: Krishneil Singh <krishneil.k.singh@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7615/main.c     |    4 -
- drivers/net/wireless/mediatek/mt76/mt7615/pci.c      |    6 +-
- drivers/net/wireless/mediatek/mt76/mt7615/sdio.c     |    4 -
- drivers/net/wireless/mediatek/mt76/mt7615/usb.c      |    4 -
- drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c |    4 -
- drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.h |    3 -
- drivers/net/wireless/mediatek/mt76/mt7921/pci.c      |    6 +-
- drivers/net/wireless/mediatek/mt76/mt7921/sdio.c     |    6 +-
- drivers/net/wireless/mediatek/mt76/mt7921/usb.c      |    4 -
- drivers/net/wireless/mediatek/mt76/mt7925/mcu.c      |   49 ++++++++++++++++++-
- drivers/net/wireless/mediatek/mt76/mt7925/mt7925.h   |   20 +++++++
- drivers/net/wireless/mediatek/mt76/mt7925/pci.c      |   29 ++++++++---
- drivers/net/wireless/mediatek/mt76/mt7925/usb.c      |   20 +++++--
- drivers/net/wireless/mediatek/mt76/mt792x.h          |    2 
- 14 files changed, 127 insertions(+), 34 deletions(-)
+ drivers/net/ethernet/intel/idpf/idpf_dev.c    |    3 +++
+ drivers/net/ethernet/intel/idpf/idpf_txrx.h   |    8 +++++++-
+ drivers/net/ethernet/intel/idpf/idpf_vf_dev.c |    3 +++
+ 3 files changed, 13 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7615/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/main.c
-@@ -1249,7 +1249,7 @@ static int mt7615_suspend(struct ieee802
- 					    phy->mt76);
+--- a/drivers/net/ethernet/intel/idpf/idpf_dev.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_dev.c
+@@ -101,6 +101,9 @@ static int idpf_intr_reg_init(struct idp
+ 		intr->dyn_ctl_itridx_s = PF_GLINT_DYN_CTL_ITR_INDX_S;
+ 		intr->dyn_ctl_intrvl_s = PF_GLINT_DYN_CTL_INTERVAL_S;
+ 		intr->dyn_ctl_wb_on_itr_m = PF_GLINT_DYN_CTL_WB_ON_ITR_M;
++		intr->dyn_ctl_swint_trig_m = PF_GLINT_DYN_CTL_SWINT_TRIG_M;
++		intr->dyn_ctl_sw_itridx_ena_m =
++			PF_GLINT_DYN_CTL_SW_ITR_INDX_ENA_M;
  
- 	if (!mt7615_dev_running(dev))
--		err = mt76_connac_mcu_set_hif_suspend(&dev->mt76, true);
-+		err = mt76_connac_mcu_set_hif_suspend(&dev->mt76, true, true);
+ 		spacing = IDPF_ITR_IDX_SPACING(reg_vals[vec_id].itrn_index_spacing,
+ 					       IDPF_PF_ITR_IDX_SPACING);
+--- a/drivers/net/ethernet/intel/idpf/idpf_txrx.h
++++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.h
+@@ -354,6 +354,8 @@ struct idpf_vec_regs {
+  * @dyn_ctl_itridx_m: Mask for ITR index
+  * @dyn_ctl_intrvl_s: Register bit offset for ITR interval
+  * @dyn_ctl_wb_on_itr_m: Mask for WB on ITR feature
++ * @dyn_ctl_sw_itridx_ena_m: Mask for SW ITR index
++ * @dyn_ctl_swint_trig_m: Mask for dyn_ctl SW triggered interrupt enable
+  * @rx_itr: RX ITR register
+  * @tx_itr: TX ITR register
+  * @icr_ena: Interrupt cause register offset
+@@ -367,6 +369,8 @@ struct idpf_intr_reg {
+ 	u32 dyn_ctl_itridx_m;
+ 	u32 dyn_ctl_intrvl_s;
+ 	u32 dyn_ctl_wb_on_itr_m;
++	u32 dyn_ctl_sw_itridx_ena_m;
++	u32 dyn_ctl_swint_trig_m;
+ 	void __iomem *rx_itr;
+ 	void __iomem *tx_itr;
+ 	void __iomem *icr_ena;
+@@ -437,7 +441,7 @@ struct idpf_q_vector {
+ 	cpumask_var_t affinity_mask;
+ 	__cacheline_group_end_aligned(cold);
+ };
+-libeth_cacheline_set_assert(struct idpf_q_vector, 112,
++libeth_cacheline_set_assert(struct idpf_q_vector, 120,
+ 			    24 + sizeof(struct napi_struct) +
+ 			    2 * sizeof(struct dim),
+ 			    8 + sizeof(cpumask_var_t));
+@@ -471,6 +475,8 @@ struct idpf_tx_queue_stats {
+ #define IDPF_ITR_IS_DYNAMIC(itr_mode) (itr_mode)
+ #define IDPF_ITR_TX_DEF		IDPF_ITR_20K
+ #define IDPF_ITR_RX_DEF		IDPF_ITR_20K
++/* Index used for 'SW ITR' update in DYN_CTL register */
++#define IDPF_SW_ITR_UPDATE_IDX	2
+ /* Index used for 'No ITR' update in DYN_CTL register */
+ #define IDPF_NO_ITR_UPDATE_IDX	3
+ #define IDPF_ITR_IDX_SPACING(spacing, dflt)	(spacing ? spacing : dflt)
+--- a/drivers/net/ethernet/intel/idpf/idpf_vf_dev.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_vf_dev.c
+@@ -101,6 +101,9 @@ static int idpf_vf_intr_reg_init(struct
+ 		intr->dyn_ctl_itridx_s = VF_INT_DYN_CTLN_ITR_INDX_S;
+ 		intr->dyn_ctl_intrvl_s = VF_INT_DYN_CTLN_INTERVAL_S;
+ 		intr->dyn_ctl_wb_on_itr_m = VF_INT_DYN_CTLN_WB_ON_ITR_M;
++		intr->dyn_ctl_swint_trig_m = VF_INT_DYN_CTLN_SWINT_TRIG_M;
++		intr->dyn_ctl_sw_itridx_ena_m =
++			VF_INT_DYN_CTLN_SW_ITR_INDX_ENA_M;
  
- 	mt7615_mutex_release(dev);
- 
-@@ -1271,7 +1271,7 @@ static int mt7615_resume(struct ieee8021
- 	if (!running) {
- 		int err;
- 
--		err = mt76_connac_mcu_set_hif_suspend(&dev->mt76, false);
-+		err = mt76_connac_mcu_set_hif_suspend(&dev->mt76, false, true);
- 		if (err < 0) {
- 			mt7615_mutex_release(dev);
- 			return err;
---- a/drivers/net/wireless/mediatek/mt76/mt7615/pci.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/pci.c
-@@ -83,7 +83,7 @@ static int mt7615_pci_suspend(struct pci
- 	hif_suspend = !test_bit(MT76_STATE_SUSPEND, &dev->mphy.state) &&
- 		      mt7615_firmware_offload(dev);
- 	if (hif_suspend) {
--		err = mt76_connac_mcu_set_hif_suspend(mdev, true);
-+		err = mt76_connac_mcu_set_hif_suspend(mdev, true, true);
- 		if (err)
- 			return err;
- 	}
-@@ -131,7 +131,7 @@ restore:
- 	}
- 	napi_enable(&mdev->tx_napi);
- 	if (hif_suspend)
--		mt76_connac_mcu_set_hif_suspend(mdev, false);
-+		mt76_connac_mcu_set_hif_suspend(mdev, false, true);
- 
- 	return err;
- }
-@@ -175,7 +175,7 @@ static int mt7615_pci_resume(struct pci_
- 
- 	if (!test_bit(MT76_STATE_SUSPEND, &dev->mphy.state) &&
- 	    mt7615_firmware_offload(dev))
--		err = mt76_connac_mcu_set_hif_suspend(mdev, false);
-+		err = mt76_connac_mcu_set_hif_suspend(mdev, false, true);
- 
- 	return err;
- }
---- a/drivers/net/wireless/mediatek/mt76/mt7615/sdio.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/sdio.c
-@@ -191,7 +191,7 @@ static int mt7663s_suspend(struct device
- 	    mt7615_firmware_offload(mdev)) {
- 		int err;
- 
--		err = mt76_connac_mcu_set_hif_suspend(&mdev->mt76, true);
-+		err = mt76_connac_mcu_set_hif_suspend(&mdev->mt76, true, true);
- 		if (err < 0)
- 			return err;
- 	}
-@@ -230,7 +230,7 @@ static int mt7663s_resume(struct device
- 
- 	if (!test_bit(MT76_STATE_SUSPEND, &mdev->mphy.state) &&
- 	    mt7615_firmware_offload(mdev))
--		err = mt76_connac_mcu_set_hif_suspend(&mdev->mt76, false);
-+		err = mt76_connac_mcu_set_hif_suspend(&mdev->mt76, false, true);
- 
- 	return err;
- }
---- a/drivers/net/wireless/mediatek/mt76/mt7615/usb.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/usb.c
-@@ -225,7 +225,7 @@ static int mt7663u_suspend(struct usb_in
- 	    mt7615_firmware_offload(dev)) {
- 		int err;
- 
--		err = mt76_connac_mcu_set_hif_suspend(&dev->mt76, true);
-+		err = mt76_connac_mcu_set_hif_suspend(&dev->mt76, true, true);
- 		if (err < 0)
- 			return err;
- 	}
-@@ -253,7 +253,7 @@ static int mt7663u_resume(struct usb_int
- 
- 	if (!test_bit(MT76_STATE_SUSPEND, &dev->mphy.state) &&
- 	    mt7615_firmware_offload(dev))
--		err = mt76_connac_mcu_set_hif_suspend(&dev->mt76, false);
-+		err = mt76_connac_mcu_set_hif_suspend(&dev->mt76, false, true);
- 
- 	return err;
- }
---- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-@@ -2527,7 +2527,7 @@ mt76_connac_mcu_set_wow_ctrl(struct mt76
- }
- EXPORT_SYMBOL_GPL(mt76_connac_mcu_set_wow_ctrl);
- 
--int mt76_connac_mcu_set_hif_suspend(struct mt76_dev *dev, bool suspend)
-+int mt76_connac_mcu_set_hif_suspend(struct mt76_dev *dev, bool suspend, bool wait_resp)
- {
- 	struct {
- 		struct {
-@@ -2559,7 +2559,7 @@ int mt76_connac_mcu_set_hif_suspend(stru
- 		req.hdr.hif_type = 0;
- 
- 	return mt76_mcu_send_msg(dev, MCU_UNI_CMD(HIF_CTRL), &req,
--				 sizeof(req), true);
-+				 sizeof(req), wait_resp);
- }
- EXPORT_SYMBOL_GPL(mt76_connac_mcu_set_hif_suspend);
- 
---- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.h
-@@ -1049,6 +1049,7 @@ enum {
- /* unified event table */
- enum {
- 	MCU_UNI_EVENT_RESULT = 0x01,
-+	MCU_UNI_EVENT_HIF_CTRL = 0x03,
- 	MCU_UNI_EVENT_FW_LOG_2_HOST = 0x04,
- 	MCU_UNI_EVENT_ACCESS_REG = 0x6,
- 	MCU_UNI_EVENT_IE_COUNTDOWN = 0x09,
-@@ -1989,7 +1990,7 @@ int mt76_connac_mcu_set_suspend_mode(str
- 				     struct ieee80211_vif *vif,
- 				     bool enable, u8 mdtim,
- 				     bool wow_suspend);
--int mt76_connac_mcu_set_hif_suspend(struct mt76_dev *dev, bool suspend);
-+int mt76_connac_mcu_set_hif_suspend(struct mt76_dev *dev, bool suspend, bool wait_resp);
- void mt76_connac_mcu_set_suspend_iter(void *priv, u8 *mac,
- 				      struct ieee80211_vif *vif);
- int mt76_connac_sta_state_dp(struct mt76_dev *dev,
---- a/drivers/net/wireless/mediatek/mt76/mt7921/pci.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/pci.c
-@@ -435,7 +435,7 @@ static int mt7921_pci_suspend(struct dev
- 	if (err < 0)
- 		goto restore_suspend;
- 
--	err = mt76_connac_mcu_set_hif_suspend(mdev, true);
-+	err = mt76_connac_mcu_set_hif_suspend(mdev, true, true);
- 	if (err)
- 		goto restore_suspend;
- 
-@@ -481,7 +481,7 @@ restore_napi:
- 	if (!pm->ds_enable)
- 		mt76_connac_mcu_set_deep_sleep(&dev->mt76, false);
- 
--	mt76_connac_mcu_set_hif_suspend(mdev, false);
-+	mt76_connac_mcu_set_hif_suspend(mdev, false, true);
- 
- restore_suspend:
- 	pm->suspended = false;
-@@ -532,7 +532,7 @@ static int mt7921_pci_resume(struct devi
- 	if (!pm->ds_enable)
- 		mt76_connac_mcu_set_deep_sleep(&dev->mt76, false);
- 
--	err = mt76_connac_mcu_set_hif_suspend(mdev, false);
-+	err = mt76_connac_mcu_set_hif_suspend(mdev, false, true);
- 	if (err < 0)
- 		goto failed;
- 
---- a/drivers/net/wireless/mediatek/mt76/mt7921/sdio.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/sdio.c
-@@ -240,7 +240,7 @@ static int mt7921s_suspend(struct device
- 			   mt76s_txqs_empty(&dev->mt76), 5 * HZ);
- 
- 	/* It is supposed that SDIO bus is idle at the point */
--	err = mt76_connac_mcu_set_hif_suspend(mdev, true);
-+	err = mt76_connac_mcu_set_hif_suspend(mdev, true, true);
- 	if (err)
- 		goto restore_worker;
- 
-@@ -258,7 +258,7 @@ static int mt7921s_suspend(struct device
- restore_txrx_worker:
- 	mt76_worker_enable(&mdev->sdio.net_worker);
- 	mt76_worker_enable(&mdev->sdio.txrx_worker);
--	mt76_connac_mcu_set_hif_suspend(mdev, false);
-+	mt76_connac_mcu_set_hif_suspend(mdev, false, true);
- 
- restore_worker:
- 	mt76_worker_enable(&mdev->tx_worker);
-@@ -302,7 +302,7 @@ static int mt7921s_resume(struct device
- 	if (!pm->ds_enable)
- 		mt76_connac_mcu_set_deep_sleep(mdev, false);
- 
--	err = mt76_connac_mcu_set_hif_suspend(mdev, false);
-+	err = mt76_connac_mcu_set_hif_suspend(mdev, false, true);
- failed:
- 	pm->suspended = false;
- 
---- a/drivers/net/wireless/mediatek/mt76/mt7921/usb.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/usb.c
-@@ -263,7 +263,7 @@ static int mt7921u_suspend(struct usb_in
- 	pm->suspended = true;
- 	flush_work(&dev->reset_work);
- 
--	err = mt76_connac_mcu_set_hif_suspend(&dev->mt76, true);
-+	err = mt76_connac_mcu_set_hif_suspend(&dev->mt76, true, true);
- 	if (err)
- 		goto failed;
- 
-@@ -313,7 +313,7 @@ static int mt7921u_resume(struct usb_int
- 	if (err < 0)
- 		goto failed;
- 
--	err = mt76_connac_mcu_set_hif_suspend(&dev->mt76, false);
-+	err = mt76_connac_mcu_set_hif_suspend(&dev->mt76, false, true);
- failed:
- 	pm->suspended = false;
- 
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-@@ -39,7 +39,6 @@ int mt7925_mcu_parse_response(struct mt7
- 	} else if (cmd == MCU_UNI_CMD(DEV_INFO_UPDATE) ||
- 		   cmd == MCU_UNI_CMD(BSS_INFO_UPDATE) ||
- 		   cmd == MCU_UNI_CMD(STA_REC_UPDATE) ||
--		   cmd == MCU_UNI_CMD(HIF_CTRL) ||
- 		   cmd == MCU_UNI_CMD(OFFLOAD) ||
- 		   cmd == MCU_UNI_CMD(SUSPEND)) {
- 		struct mt7925_mcu_uni_event *event;
-@@ -342,6 +341,51 @@ static void mt7925_mcu_roc_handle_grant(
- }
- 
- static void
-+mt7925_mcu_handle_hif_ctrl_basic(struct mt792x_dev *dev, struct tlv *tlv)
-+{
-+	struct mt7925_mcu_hif_ctrl_basic_tlv *basic;
-+
-+	basic = (struct mt7925_mcu_hif_ctrl_basic_tlv *)tlv;
-+
-+	if (basic->hifsuspend) {
-+		if (basic->hif_tx_traffic_status == HIF_TRAFFIC_IDLE &&
-+		    basic->hif_rx_traffic_status == HIF_TRAFFIC_IDLE)
-+			/* success */
-+			dev->hif_idle = true;
-+		else
-+			/* busy */
-+			/* invalid */
-+			dev->hif_idle = false;
-+	} else {
-+		dev->hif_resumed = true;
-+	}
-+	wake_up(&dev->wait);
-+}
-+
-+static void
-+mt7925_mcu_uni_hif_ctrl_event(struct mt792x_dev *dev, struct sk_buff *skb)
-+{
-+	struct tlv *tlv;
-+	u32 tlv_len;
-+
-+	skb_pull(skb, sizeof(struct mt7925_mcu_rxd) + 4);
-+	tlv = (struct tlv *)skb->data;
-+	tlv_len = skb->len;
-+
-+	while (tlv_len > 0 && le16_to_cpu(tlv->len) <= tlv_len) {
-+		switch (le16_to_cpu(tlv->tag)) {
-+		case UNI_EVENT_HIF_CTRL_BASIC:
-+			mt7925_mcu_handle_hif_ctrl_basic(dev, tlv);
-+			break;
-+		default:
-+			break;
-+		}
-+		tlv_len -= le16_to_cpu(tlv->len);
-+		tlv = (struct tlv *)((char *)(tlv) + le16_to_cpu(tlv->len));
-+	}
-+}
-+
-+static void
- mt7925_mcu_uni_roc_event(struct mt792x_dev *dev, struct sk_buff *skb)
- {
- 	struct tlv *tlv;
-@@ -487,6 +531,9 @@ mt7925_mcu_uni_rx_unsolicited_event(stru
- 	rxd = (struct mt7925_mcu_rxd *)skb->data;
- 
- 	switch (rxd->eid) {
-+	case MCU_UNI_EVENT_HIF_CTRL:
-+		mt7925_mcu_uni_hif_ctrl_event(dev, skb);
-+		break;
- 	case MCU_UNI_EVENT_FW_LOG_2_HOST:
- 		mt7925_mcu_uni_debug_msg_event(dev, skb);
- 		break;
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mt7925.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mt7925.h
-@@ -27,6 +27,26 @@
- 
- #define MCU_UNI_EVENT_ROC  0x27
- 
-+#define HIF_TRAFFIC_IDLE 0x2
-+
-+enum {
-+	UNI_EVENT_HIF_CTRL_BASIC = 0,
-+	UNI_EVENT_HIF_CTRL_TAG_NUM
-+};
-+
-+struct mt7925_mcu_hif_ctrl_basic_tlv {
-+	__le16 tag;
-+	__le16 len;
-+	u8 cid;
-+	u8 pad[3];
-+	u32 status;
-+	u8 hif_type;
-+	u8 hif_tx_traffic_status;
-+	u8 hif_rx_traffic_status;
-+	u8 hifsuspend;
-+	u8 rsv[4];
-+} __packed;
-+
- enum {
- 	UNI_ROC_ACQUIRE,
- 	UNI_ROC_ABORT,
---- a/drivers/net/wireless/mediatek/mt76/mt7925/pci.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/pci.c
-@@ -442,9 +442,10 @@ static int mt7925_pci_suspend(struct dev
- 	struct mt76_dev *mdev = pci_get_drvdata(pdev);
- 	struct mt792x_dev *dev = container_of(mdev, struct mt792x_dev, mt76);
- 	struct mt76_connac_pm *pm = &dev->pm;
--	int i, err;
-+	int i, err, ret;
- 
- 	pm->suspended = true;
-+	dev->hif_resumed = false;
- 	flush_work(&dev->reset_work);
- 	cancel_delayed_work_sync(&pm->ps_work);
- 	cancel_work_sync(&pm->wake_work);
-@@ -463,9 +464,13 @@ static int mt7925_pci_suspend(struct dev
- 	 */
- 	mt7925_mcu_set_deep_sleep(dev, true);
- 
--	err = mt76_connac_mcu_set_hif_suspend(mdev, true);
--	if (err)
-+	mt76_connac_mcu_set_hif_suspend(mdev, true, false);
-+	ret = wait_event_timeout(dev->wait,
-+				 dev->hif_idle, 3 * HZ);
-+	if (!ret) {
-+		err = -ETIMEDOUT;
- 		goto restore_suspend;
-+	}
- 
- 	napi_disable(&mdev->tx_napi);
- 	mt76_worker_disable(&mdev->tx_worker);
-@@ -506,8 +511,11 @@ restore_napi:
- 	if (!pm->ds_enable)
- 		mt7925_mcu_set_deep_sleep(dev, false);
- 
--	mt76_connac_mcu_set_hif_suspend(mdev, false);
--
-+	mt76_connac_mcu_set_hif_suspend(mdev, false, false);
-+	ret = wait_event_timeout(dev->wait,
-+				 dev->hif_resumed, 3 * HZ);
-+	if (!ret)
-+		err = -ETIMEDOUT;
- restore_suspend:
- 	pm->suspended = false;
- 
-@@ -523,8 +531,9 @@ static int mt7925_pci_resume(struct devi
- 	struct mt76_dev *mdev = pci_get_drvdata(pdev);
- 	struct mt792x_dev *dev = container_of(mdev, struct mt792x_dev, mt76);
- 	struct mt76_connac_pm *pm = &dev->pm;
--	int i, err;
-+	int i, err, ret;
- 
-+	dev->hif_idle = false;
- 	err = mt792x_mcu_drv_pmctrl(dev);
- 	if (err < 0)
- 		goto failed;
-@@ -553,9 +562,13 @@ static int mt7925_pci_resume(struct devi
- 	napi_schedule(&mdev->tx_napi);
- 	local_bh_enable();
- 
--	err = mt76_connac_mcu_set_hif_suspend(mdev, false);
--	if (err < 0)
-+	mt76_connac_mcu_set_hif_suspend(mdev, false, false);
-+	ret = wait_event_timeout(dev->wait,
-+				 dev->hif_resumed, 3 * HZ);
-+	if (!ret) {
-+		err = -ETIMEDOUT;
- 		goto failed;
-+	}
- 
- 	/* restore previous ds setting */
- 	if (!pm->ds_enable)
---- a/drivers/net/wireless/mediatek/mt76/mt7925/usb.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/usb.c
-@@ -246,14 +246,19 @@ static int mt7925u_suspend(struct usb_in
- {
- 	struct mt792x_dev *dev = usb_get_intfdata(intf);
- 	struct mt76_connac_pm *pm = &dev->pm;
--	int err;
-+	int err, ret;
- 
- 	pm->suspended = true;
-+	dev->hif_resumed = false;
- 	flush_work(&dev->reset_work);
- 
--	err = mt76_connac_mcu_set_hif_suspend(&dev->mt76, true);
--	if (err)
-+	mt76_connac_mcu_set_hif_suspend(&dev->mt76, true, false);
-+	ret = wait_event_timeout(dev->wait,
-+				 dev->hif_idle, 3 * HZ);
-+	if (!ret) {
-+		err = -ETIMEDOUT;
- 		goto failed;
-+	}
- 
- 	mt76u_stop_rx(&dev->mt76);
- 	mt76u_stop_tx(&dev->mt76);
-@@ -274,8 +279,9 @@ static int mt7925u_resume(struct usb_int
- 	struct mt792x_dev *dev = usb_get_intfdata(intf);
- 	struct mt76_connac_pm *pm = &dev->pm;
- 	bool reinit = true;
--	int err, i;
-+	int err, i, ret;
- 
-+	dev->hif_idle = false;
- 	for (i = 0; i < 10; i++) {
- 		u32 val = mt76_rr(dev, MT_WF_SW_DEF_CR_USB_MCU_EVENT);
- 
-@@ -301,7 +307,11 @@ static int mt7925u_resume(struct usb_int
- 	if (err < 0)
- 		goto failed;
- 
--	err = mt76_connac_mcu_set_hif_suspend(&dev->mt76, false);
-+	mt76_connac_mcu_set_hif_suspend(&dev->mt76, false, false);
-+	ret = wait_event_timeout(dev->wait,
-+				 dev->hif_resumed, 3 * HZ);
-+	if (!ret)
-+		err = -ETIMEDOUT;
- failed:
- 	pm->suspended = false;
- 
---- a/drivers/net/wireless/mediatek/mt76/mt792x.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt792x.h
-@@ -216,6 +216,8 @@ struct mt792x_dev {
- 	bool has_eht:1;
- 	bool regd_in_progress:1;
- 	bool aspm_supported:1;
-+	bool hif_idle:1;
-+	bool hif_resumed:1;
- 	wait_queue_head_t wait;
- 
- 	struct work_struct init_work;
+ 		spacing = IDPF_ITR_IDX_SPACING(reg_vals[vec_id].itrn_index_spacing,
+ 					       IDPF_VF_ITR_IDX_SPACING);
 
 
