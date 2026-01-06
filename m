@@ -1,38 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213B430595C;
-	Tue,  6 Jan 2026 18:00:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A21366547;
+	Tue,  6 Jan 2026 18:00:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722442; cv=none; b=IGoZyOX/JqjD7XtwWJNIUORIYqYLhwTWnFqx+C6RuL4SvMgI71NDh3GtdxuINEy2RYrGTPhVk2tEXvnuwS0E9yr6IF748u9rTtmZOu/sHREahJJx+zFdM8FR5vRwf9y7JMNvBBDOPT8Ro9gqputG/7F3TPTFyEvhQZQeVHrfKz4=
+	t=1767722445; cv=none; b=dL8T6681j9HD2noENEg//K0YIIJQGtUDYDt9tE8j+QW9X7XUzkrBiPpMl1VwW6nSgwQZD02Olq4ghF9AITEmAjnU0Fliz+icCYWacvqtE/eMDqGiZyJv/P6j07AtKBnG+p2oIDyS1XCuMZRPlL3epcGW6Tz+0GrUYk5XvHLV+hg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722442; c=relaxed/simple;
-	bh=/UD+DLte2UOUGqd4PHiNbBwU0EGBBIs17IXvbYD+Qbg=;
+	s=arc-20240116; t=1767722445; c=relaxed/simple;
+	bh=faMirbnbp2OFdmYjAj6DwcLp1cwBawYPqeqNTUIDCDw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=InWWzjQLZXNFbjb21hIraNtXzr27X246KI0PhY1jsI/q8iNItWp6jKl/gQ3JqF4XxrNda5zUzY9BmjKwlwhV2oGQ+XB/sQ2fS0kYQ9kKQvVuFdwgChvKTApAdZHCPj+O8gCceXisOecZmGaw9Don6usHd1CAVwROWvKtLETKg2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ODjhPtQk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bcxdUuZjuh6T4lsbYz4/jVAkJou20sa5rRxTVzDLFUZ1pLN/Nw9jkqL3noazV/2AcE+rikq1Ut80XcjKcwncSEepVl3OpiY/zevVN+E4w2apkTTYdZQAM+ub6IZQwMPmELVEEv8uop3olNwsSRwraC4Pc7dKZDdRLg3K1sb3DkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GBS/G5jW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ODjhPtQk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AEE5C116C6;
-	Tue,  6 Jan 2026 18:00:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GBS/G5jW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C625C16AAE;
+	Tue,  6 Jan 2026 18:00:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722442;
-	bh=/UD+DLte2UOUGqd4PHiNbBwU0EGBBIs17IXvbYD+Qbg=;
+	s=korg; t=1767722445;
+	bh=faMirbnbp2OFdmYjAj6DwcLp1cwBawYPqeqNTUIDCDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ODjhPtQk8PWevKJrncHvEJ6oRzL+fJkFjkeHgQFim27S+ZjV1fm5jDpQQsNc2jo+Q
-	 Xk8VocmJmA9o5jCUHwfHItKSVTXoCGUPfjoU3F0HkCC0jsTCAS1Uz5RcU+m86oqB++
-	 SAaWF21rXjrEUbn0cTofJKiMLCM2qE6dVUYvKWqM=
+	b=GBS/G5jWY4LS5pGVFGBgbCPJNHPS8piKMUjQP0uNVbwdlnvte93YNxjB2TJCoKYDa
+	 Tb8Euv5b4P7iPskxTZu+h36WOlzFjwf8PEjlPa1evkxXFMg+wzkJ9jUkow6ZN/apZT
+	 E0WITYfkhVVFBdXv1y3DLApNxkPbfCTYFeTQOh3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Natalie Vock <natalie.vock@gmx.de>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 264/312] drm/amdgpu: Forward VMID reservation errors
-Date: Tue,  6 Jan 2026 18:05:38 +0100
-Message-ID: <20260106170557.396775615@linuxfoundation.org>
+	Wake Liu <wakel@google.com>,
+	Peter Xu <peterx@redhat.com>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 234/312] selftests/mm: fix thread state check in uffd-unit-tests
+Date: Tue,  6 Jan 2026 18:05:08 +0100
+Message-ID: <20260106170556.316818434@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -45,42 +55,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Natalie Vock <natalie.vock@gmx.de>
+From: Wake Liu <wakel@google.com>
 
-commit 8defb4f081a5feccc3ea8372d0c7af3522124e1f upstream.
+commit 632b874d59a36caf829ab5790dafb90f9b350fd6 upstream.
 
-Otherwise userspace may be fooled into believing it has a reserved VMID
-when in reality it doesn't, ultimately leading to GPU hangs when SPM is
-used.
+In the thread_state_get() function, the logic to find the thread's state
+character was using `sizeof(header) - 1` to calculate the offset from the
+"State:\t" string.
 
-Fixes: 80e709ee6ecc ("drm/amdgpu: add option params to enforce process isolation between graphics and compute")
-Cc: stable@vger.kernel.org
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Natalie Vock <natalie.vock@gmx.de>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+The `header` variable is a `const char *` pointer.  `sizeof()` on a
+pointer returns the size of the pointer itself, not the length of the
+string literal it points to.  This makes the code's behavior dependent on
+the architecture's pointer size.
+
+This bug was identified on a 32-bit ARM build (`gsi_tv_arm`) for Android,
+running on an ARMv8-based device, compiled with Clang 19.0.1.
+
+On this 32-bit architecture, `sizeof(char *)` is 4.  The expression
+`sizeof(header) - 1` resulted in an incorrect offset of 3, causing the
+test to read the wrong character from `/proc/[tid]/status` and fail.
+
+On 64-bit architectures, `sizeof(char *)` is 8, so the expression
+coincidentally evaluates to 7, which matches the length of "State:\t".
+This is why the bug likely remained hidden on 64-bit builds.
+
+To fix this and make the code portable and correct across all
+architectures, this patch replaces `sizeof(header) - 1` with
+`strlen(header)`.  The `strlen()` function correctly calculates the
+string's length, ensuring the correct offset is always used.
+
+Link: https://lkml.kernel.org/r/20251210091408.3781445-1-wakel@google.com
+Fixes: f60b6634cd88 ("mm/selftests: add a test to verify mmap_changing race with -EAGAIN")
+Signed-off-by: Wake Liu <wakel@google.com>
+Acked-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Cc: Bill Wendling <morbo@google.com>
+Cc: Justin Stitt <justinstitt@google.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ tools/testing/selftests/mm/uffd-unit-tests.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -2910,8 +2910,7 @@ int amdgpu_vm_ioctl(struct drm_device *d
- 	switch (args->in.op) {
- 	case AMDGPU_VM_OP_RESERVE_VMID:
- 		/* We only have requirement to reserve vmid from gfxhub */
--		amdgpu_vmid_alloc_reserved(adev, vm, AMDGPU_GFXHUB(0));
--		break;
-+		return amdgpu_vmid_alloc_reserved(adev, vm, AMDGPU_GFXHUB(0));
- 	case AMDGPU_VM_OP_UNRESERVE_VMID:
- 		amdgpu_vmid_free_reserved(adev, vm, AMDGPU_GFXHUB(0));
- 		break;
+--- a/tools/testing/selftests/mm/uffd-unit-tests.c
++++ b/tools/testing/selftests/mm/uffd-unit-tests.c
+@@ -1317,7 +1317,7 @@ static thread_state thread_state_get(pid
+ 		p = strstr(tmp, header);
+ 		if (p) {
+ 			/* For example, "State:\tD (disk sleep)" */
+-			c = *(p + sizeof(header) - 1);
++			c = *(p + strlen(header));
+ 			return c == 'D' ?
+ 			    THR_STATE_UNINTERRUPTIBLE : THR_STATE_UNKNOWN;
+ 		}
 
 
