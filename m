@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76573846F;
-	Tue,  6 Jan 2026 17:30:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19C1155389;
+	Tue,  6 Jan 2026 17:30:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720649; cv=none; b=qqfU5UMQo1T0CZ99EarsNmjyG8jCiFVgph+DhTxekuGjsspf30MsUTmxd5r7TbjdrqbCC9boVczbGLXvfpVir2dLszm0L2G0vGp6I5XKAam6ZM9lzk+oEvpmXJeuwPCBQLnlzPK++SYs4YorKdDp6+3hMOCGKMuNX2FELY1PZjw=
+	t=1767720652; cv=none; b=C50UxEpSoqYPhPpFUK8AqWovcunrXZaZwuAu8jXBFwWTRD0Ha32VnnUfeYQ6D8QUggsPQRMv1oOAqOc5ysGjv/O/hPuxIkLGX/LhMGw87RvgWxgmZt9dRzuxjnNxPBaquoRGoIBsulNDYb+nbqY4vCPry/7p5hM1Lg1HZLEX5Cg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720649; c=relaxed/simple;
-	bh=vAtoFfMvbV4dmiQ4sAL0JCu1+Ke2nEtJCeBp+6V377Y=;
+	s=arc-20240116; t=1767720652; c=relaxed/simple;
+	bh=i2GW2IuTj0+UzuG+V8KkSch3qnEn8ipOQRpuDG4DW/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DMMjMR/W/iHOTODriX6S81G/BMIJQB58uGD9d7mRg21GFCnufaR+Q6ULjY1iKy6RZC3JOcyuYeXVM+HAzoKLm7OZ5r0WlaCcMrUuRwKy0Rc45k3jp06EGe7h31SzlMDTxnKI6GzI7jhEriuT71NzkWzA8kkoL3ssiy+i5zTUTlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ubnjaGu1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bllL255fauvyqoZ+UmapM65w8+nUZLmisl7vfiOrb3WjpEOJGgp3+X9eso/w6BiDF5T1+LdFPyOYZ06Vaz0k8TDM9FLjgTgLnY0YF4G9u5sjzdzJgTP+bMq5iAwgrYjWz7Tfl9sfrkW4Iqdcql5a3W1lfq7kH3zRvMS84BA177o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AD6TqYyX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ubnjaGu1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D95BEC116C6;
-	Tue,  6 Jan 2026 17:30:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AD6TqYyX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41520C116C6;
+	Tue,  6 Jan 2026 17:30:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720649;
-	bh=vAtoFfMvbV4dmiQ4sAL0JCu1+Ke2nEtJCeBp+6V377Y=;
+	s=korg; t=1767720652;
+	bh=i2GW2IuTj0+UzuG+V8KkSch3qnEn8ipOQRpuDG4DW/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ubnjaGu1Go04gWrK5SuPrTnGuiR2V27mbsxs23DX2nGBFv1aKMifvLFlTQMiC1q/u
-	 TkT/bMQhf7261jG37+rS1bidKV0kL2PefGa+N9pwpoDGkiVJ0lFcik4Rl6KDauvAcL
-	 C5IXZ14N38BZN0DUJ4zUOZS9PKPdbMTUzaLGyyAY=
+	b=AD6TqYyX4AUgUlhs2xGFIxTakxoioEEuJ8y9DwUQXsSrCvySllN6oDCPsqJhTDFaT
+	 3qNJAPEomNc3/ZV5UWuBOWYi40ZySq0ZB0gKqIs0yKQLqmrE1a6SLAHsvQZ2cwAm1h
+	 KfyQQKeysjaWxA65uTb9R0RivcqVeaxheE1zZ5s8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kohei Enju <enjuk@amazon.com>,
+	Brian Vazquez <brianvv@google.com>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Samuel Salin <Samuel.salin@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 300/567] iavf: fix off-by-one issues in iavf_config_rss_reg()
-Date: Tue,  6 Jan 2026 18:01:22 +0100
-Message-ID: <20260106170502.430625532@linuxfoundation.org>
+Subject: [PATCH 6.12 301/567] idpf: reduce mbx_task schedule delay to 300us
+Date: Tue,  6 Jan 2026 18:01:23 +0100
+Message-ID: <20260106170502.467532142@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -54,111 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kohei Enju <enjuk@amazon.com>
+From: Brian Vazquez <brianvv@google.com>
 
-[ Upstream commit 6daa2893f323981c7894c68440823326e93a7d61 ]
+[ Upstream commit b3d6bbae1d6d5638a4ab702ab195476787cde857 ]
 
-There are off-by-one bugs when configuring RSS hash key and lookup
-table, causing out-of-bounds reads to memory [1] and out-of-bounds
-writes to device registers.
+During the IDPF init phase, the mailbox runs in poll mode until it is
+configured to properly handle interrupts. The previous delay of 300ms is
+excessively long for the mailbox polling mechanism, which causes a slow
+initialization of ~2s:
 
-Before commit 43a3d9ba34c9 ("i40evf: Allow PF driver to configure RSS"),
-the loop upper bounds were:
-    i <= I40E_VFQF_{HKEY,HLUT}_MAX_INDEX
-which is safe since the value is the last valid index.
+echo 0000:06:12.4 > /sys/bus/pci/drivers/idpf/bind
 
-That commit changed the bounds to:
-    i <= adapter->rss_{key,lut}_size / 4
-where `rss_{key,lut}_size / 4` is the number of dwords, so the last
-valid index is `(rss_{key,lut}_size / 4) - 1`. Therefore, using `<=`
-accesses one element past the end.
+[   52.444239] idpf 0000:06:12.4: enabling device (0000 -> 0002)
+[   52.485005] idpf 0000:06:12.4: Device HW Reset initiated
+[   54.177181] idpf 0000:06:12.4: PTP init failed, err=-EOPNOTSUPP
+[   54.206177] idpf 0000:06:12.4: Minimum RX descriptor support not provided, using the default
+[   54.206182] idpf 0000:06:12.4: Minimum TX descriptor support not provided, using the default
 
-Fix the issues by using `<` instead of `<=`, ensuring we do not exceed
-the bounds.
+Changing the delay to 300us avoids the delays during the initial mailbox
+transactions, making the init phase much faster:
 
-[1] KASAN splat about rss_key_size off-by-one
-  BUG: KASAN: slab-out-of-bounds in iavf_config_rss+0x619/0x800
-  Read of size 4 at addr ffff888102c50134 by task kworker/u8:6/63
+[   83.342590] idpf 0000:06:12.4: enabling device (0000 -> 0002)
+[   83.384402] idpf 0000:06:12.4: Device HW Reset initiated
+[   83.518323] idpf 0000:06:12.4: PTP init failed, err=-EOPNOTSUPP
+[   83.547430] idpf 0000:06:12.4: Minimum RX descriptor support not provided, using the default
+[   83.547435] idpf 0000:06:12.4: Minimum TX descriptor support not provided, using the default
 
-  CPU: 0 UID: 0 PID: 63 Comm: kworker/u8:6 Not tainted 6.18.0-rc2-enjuk-tnguy-00378-g3005f5b77652-dirty #156 PREEMPT(voluntary)
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-  Workqueue: iavf iavf_watchdog_task
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x6f/0xb0
-   print_report+0x170/0x4f3
-   kasan_report+0xe1/0x1a0
-   iavf_config_rss+0x619/0x800
-   iavf_watchdog_task+0x2be7/0x3230
-   process_one_work+0x7fd/0x1420
-   worker_thread+0x4d1/0xd40
-   kthread+0x344/0x660
-   ret_from_fork+0x249/0x320
-   ret_from_fork_asm+0x1a/0x30
-   </TASK>
-
-  Allocated by task 63:
-   kasan_save_stack+0x30/0x50
-   kasan_save_track+0x14/0x30
-   __kasan_kmalloc+0x7f/0x90
-   __kmalloc_noprof+0x246/0x6f0
-   iavf_watchdog_task+0x28fc/0x3230
-   process_one_work+0x7fd/0x1420
-   worker_thread+0x4d1/0xd40
-   kthread+0x344/0x660
-   ret_from_fork+0x249/0x320
-   ret_from_fork_asm+0x1a/0x30
-
-  The buggy address belongs to the object at ffff888102c50100
-   which belongs to the cache kmalloc-64 of size 64
-  The buggy address is located 0 bytes to the right of
-   allocated 52-byte region [ffff888102c50100, ffff888102c50134)
-
-  The buggy address belongs to the physical page:
-  page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x102c50
-  flags: 0x200000000000000(node=0|zone=2)
-  page_type: f5(slab)
-  raw: 0200000000000000 ffff8881000418c0 dead000000000122 0000000000000000
-  raw: 0000000000000000 0000000080200020 00000000f5000000 0000000000000000
-  page dumped because: kasan: bad access detected
-
-  Memory state around the buggy address:
-   ffff888102c50000: 00 00 00 00 00 00 00 fc fc fc fc fc fc fc fc fc
-   ffff888102c50080: 00 00 00 00 00 00 00 fc fc fc fc fc fc fc fc fc
-  >ffff888102c50100: 00 00 00 00 00 00 04 fc fc fc fc fc fc fc fc fc
-                                       ^
-   ffff888102c50180: 00 00 00 00 00 00 00 00 fc fc fc fc fc fc fc fc
-   ffff888102c50200: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-
-Fixes: 43a3d9ba34c9 ("i40evf: Allow PF driver to configure RSS")
-Signed-off-by: Kohei Enju <enjuk@amazon.com>
+Fixes: 4930fbf419a7 ("idpf: add core init and interrupt request")
+Signed-off-by: Brian Vazquez <brianvv@google.com>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Tested-by: Samuel Salin <Samuel.salin@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/iavf/iavf_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/idpf/idpf_lib.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
-index 5516795cc250..422af897d933 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_main.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
-@@ -1718,11 +1718,11 @@ static int iavf_config_rss_reg(struct iavf_adapter *adapter)
- 	u16 i;
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_lib.c b/drivers/net/ethernet/intel/idpf/idpf_lib.c
+index 371fc5052420..173ddc248867 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_lib.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_lib.c
+@@ -1214,7 +1214,7 @@ void idpf_mbx_task(struct work_struct *work)
+ 		idpf_mb_irq_enable(adapter);
+ 	else
+ 		queue_delayed_work(adapter->mbx_wq, &adapter->mbx_task,
+-				   msecs_to_jiffies(300));
++				   usecs_to_jiffies(300));
  
- 	dw = (u32 *)adapter->rss_key;
--	for (i = 0; i <= adapter->rss_key_size / 4; i++)
-+	for (i = 0; i < adapter->rss_key_size / 4; i++)
- 		wr32(hw, IAVF_VFQF_HKEY(i), dw[i]);
- 
- 	dw = (u32 *)adapter->rss_lut;
--	for (i = 0; i <= adapter->rss_lut_size / 4; i++)
-+	for (i = 0; i < adapter->rss_lut_size / 4; i++)
- 		wr32(hw, IAVF_VFQF_HLUT(i), dw[i]);
- 
- 	iavf_flush(hw);
+ 	idpf_recv_mb_msg(adapter);
+ }
 -- 
 2.51.0
 
