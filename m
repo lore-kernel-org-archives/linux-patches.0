@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE75355817;
-	Tue,  6 Jan 2026 17:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E73A3559FD;
+	Tue,  6 Jan 2026 17:45:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721523; cv=none; b=oWOOu/FNT9BWqKqzs09ZiCLkuGUpjLt6/XmlRyD9P8S7JRaniuBiKwVJu6qK0ji5vNzhhspLdhnQ4mWMJxmYx5VssZawzQtMYt3hyytCuAwlt0Y8E+Q1c3vMOY1PyPueVWfCiusSWl43MelDotNNd59GHDL3A1EVzNz2dlTUTn8=
+	t=1767721526; cv=none; b=lOiqOJMP3o3m+XTx4MaZs6a5urjwEdHMFkEv75KRRvLIVwo9vCQmLiVXfn+J5Vu6DOYiXRlxwov6Aq5lE7NruExn0FjIFhw2NpRHyss62/lok0p4DWRfjHK4K2+pJTJt5X9J32Uc2yYmiKsdoXNHoSwgOGvzVDk3WkORKRfGbsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721523; c=relaxed/simple;
-	bh=Y4u+EkoUASIgPTs36oyPfCQ3UuqYxRtIz+5oj24e5g0=;
+	s=arc-20240116; t=1767721526; c=relaxed/simple;
+	bh=iWVhLUey+Y3NadkMP0BScf4Fj1U6HV9GGKzmam1/N5Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SpHNoPGSqssMbh0fMJ6diJv4aqGn0c8FV4RY/1Enq+ntJaArwCJ20MupMg/FSdNZEwHZG7lOPMM1ahHXD7NMWF3dU8eH8ACBavbs8VYcZgQsCyIfhW/oiifUw2vp8/34laiEw09ZYu6P+XwxQoX1q0gXIiw3UnBXMkyxx7q5gXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gqk6TKPc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AJXOKvaKv19G/EkN+3gFtvtr+55ZvcP+XMwgNzrlOPqPtbqjM5IBuhRD9QlOR//V2jjMgkFGwLxqZ0FYybwArn8dUieuL0MdNg6Mor4BnrSv20lXb9VWgkNQYz6XTHhFQq99zj1AkQ9VzZA9GDUDFGS16nix8pJ2VVwLFlVCX5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lSojw1KS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gqk6TKPc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41B67C116C6;
-	Tue,  6 Jan 2026 17:45:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lSojw1KS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7089C2BC86;
+	Tue,  6 Jan 2026 17:45:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721522;
-	bh=Y4u+EkoUASIgPTs36oyPfCQ3UuqYxRtIz+5oj24e5g0=;
+	s=korg; t=1767721526;
+	bh=iWVhLUey+Y3NadkMP0BScf4Fj1U6HV9GGKzmam1/N5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gqk6TKPc7dVRTqR4e949oc4ECwQwSRe8tdbZNcPlK4qpOMljmeenfgin+FusgeTAa
-	 /l1EXQU613XUsog/RK1BKZD5DXxJ4I9HwzOP0TkMeiWlNOl3It+8ClcDl06Ab/TzCv
-	 BdD+QePrxvDLfZBwXuayqmmY4Fe5kjBrlgDBXUVA=
+	b=lSojw1KSVBmz/c90r+XXZKnC8TEkceMapnnXIQISyWA3Sl0sOop73cLUjAy8DltZk
+	 pc5pizYrgDNEdbd2E071+K5VIuSokYmSBw5FMWjQ+lL0EwcNN37gt0JTca8jFpR9+B
+	 WvhKN/pBpc228iyU7yZmfIxkSYVHxNZYCMjo+ocM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Zqiang <qiang.zhang@linux.dev>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: [PATCH 6.12 529/567] usbnet: Fix using smp_processor_id() in preemptible code warnings
-Date: Tue,  6 Jan 2026 18:05:11 +0100
-Message-ID: <20260106170510.964268694@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Cosmin Tanislav <demonsingur@gmail.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Michael Walle <mwalle@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>
+Subject: [PATCH 6.12 530/567] serial: core: Fix serial device initialization
+Date: Tue,  6 Jan 2026 18:05:12 +0100
+Message-ID: <20260106170511.002582854@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -52,75 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zqiang <qiang.zhang@linux.dev>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 327cd4b68b4398b6c24f10eb2b2533ffbfc10185 ]
+commit f54151148b969fb4b62bec8093d255306d20df30 upstream.
 
-Syzbot reported the following warning:
+During restoring sysfs fwnode information the information of_node_reused
+was dropped. This was previously set by device_set_of_node_from_dev().
+Add it back manually
 
-BUG: using smp_processor_id() in preemptible [00000000] code: dhcpcd/2879
-caller is usbnet_skb_return+0x74/0x490 drivers/net/usb/usbnet.c:331
-CPU: 1 UID: 0 PID: 2879 Comm: dhcpcd Not tainted 6.15.0-rc4-syzkaller-00098-g615dca38c2ea #0 PREEMPT(voluntary)
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x16c/0x1f0 lib/dump_stack.c:120
- check_preemption_disabled+0xd0/0xe0 lib/smp_processor_id.c:49
- usbnet_skb_return+0x74/0x490 drivers/net/usb/usbnet.c:331
- usbnet_resume_rx+0x4b/0x170 drivers/net/usb/usbnet.c:708
- usbnet_change_mtu+0x1be/0x220 drivers/net/usb/usbnet.c:417
- __dev_set_mtu net/core/dev.c:9443 [inline]
- netif_set_mtu_ext+0x369/0x5c0 net/core/dev.c:9496
- netif_set_mtu+0xb0/0x160 net/core/dev.c:9520
- dev_set_mtu+0xae/0x170 net/core/dev_api.c:247
- dev_ifsioc+0xa31/0x18d0 net/core/dev_ioctl.c:572
- dev_ioctl+0x223/0x10e0 net/core/dev_ioctl.c:821
- sock_do_ioctl+0x19d/0x280 net/socket.c:1204
- sock_ioctl+0x42f/0x6a0 net/socket.c:1311
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:906 [inline]
- __se_sys_ioctl fs/ioctl.c:892 [inline]
- __x64_sys_ioctl+0x190/0x200 fs/ioctl.c:892
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xcd/0x260 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-For historical and portability reasons, the netif_rx() is usually
-run in the softirq or interrupt context, this commit therefore add
-local_bh_disable/enable() protection in the usbnet_resume_rx().
-
-Fixes: 43daa96b166c ("usbnet: Stop RX Q on MTU change")
-Link: https://syzkaller.appspot.com/bug?id=81f55dfa587ee544baaaa5a359a060512228c1e1
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Zqiang <qiang.zhang@linux.dev>
-Link: https://patch.msgid.link/20251011070518.7095-1-qiang.zhang@linux.dev
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[Harshit: Resolved conflicts due to missing commit: 2c04d279e857 ("net:
-usb: Convert tasklet API to new bottom half workqueue mechanism") in
-6.12.y]
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Fixes: 24ec03cc5512 ("serial: core: Restore sysfs fwnode information")
+Cc: stable <stable@kernel.org>
+Suggested-by: Cosmin Tanislav <demonsingur@gmail.com>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Tested-by: Michael Walle <mwalle@kernel.org>
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Tested-by: Cosmin Tanislav <demonsingur@gmail.com>
+Link: https://patch.msgid.link/20251219152813.1893982-1-alexander.stein@ew.tq-group.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/usbnet.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/tty/serial/serial_base_bus.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -702,6 +702,7 @@ void usbnet_resume_rx(struct usbnet *dev
- 	struct sk_buff *skb;
- 	int num = 0;
+--- a/drivers/tty/serial/serial_base_bus.c
++++ b/drivers/tty/serial/serial_base_bus.c
+@@ -74,6 +74,7 @@ static int serial_base_device_init(struc
+ 	dev->parent = parent_dev;
+ 	dev->bus = &serial_base_bus_type;
+ 	dev->release = release;
++	dev->of_node_reused = true;
  
-+	local_bh_disable();
- 	clear_bit(EVENT_RX_PAUSED, &dev->flags);
+ 	device_set_node(dev, fwnode_handle_get(dev_fwnode(parent_dev)));
  
- 	while ((skb = skb_dequeue(&dev->rxq_pause)) != NULL) {
-@@ -710,6 +711,7 @@ void usbnet_resume_rx(struct usbnet *dev
- 	}
- 
- 	tasklet_schedule(&dev->bh);
-+	local_bh_enable();
- 
- 	netif_dbg(dev, rx_status, dev->net,
- 		  "paused rx queue disabled, %d skbs requeued\n", num);
 
 
