@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A3AD238159;
-	Tue,  6 Jan 2026 17:23:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F8C355035;
+	Tue,  6 Jan 2026 17:23:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720188; cv=none; b=b4+L513QMXcP8ZZ/SV6FpbokbL+vWkC7P8mm5wfFP58dO/b40Qh9+vco8US9lsK6wNPbvZj7QM1AizqnfDvu3dSkNbJk/Xv3pbBIO/g0zDs+JUXw7DtS4ohCMJObGPB9hpCcQMh/EB78tdxEszpzTTUDm/yWaarnGn0ygPAOzzY=
+	t=1767720191; cv=none; b=YfLNiZEoIjMpCaXVZPNUEAI30iGMbf/x++mI0dW9kZWbvLkCjQDCcVqDkl0hH/zBGpZDeFEsrCno+MA0OjhhTG8iAx676BkaqghTIWKiW2OZDqNRDjlpHWh5v04vm8qWda1vDOTYjlzqD9Hp3Bev6KiYY4yXFY1VEsa3QqBJrAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720188; c=relaxed/simple;
-	bh=wBgQJmGFX9TlmbTZxk16uMWg4wtp2rlp1fgrx7oTbC0=;
+	s=arc-20240116; t=1767720191; c=relaxed/simple;
+	bh=J7q45wHS6K90fpvuQQr/HlXrLg7wF520VWRHxpb/38I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ugAQRRd1NvG8Mm8PextTnDBpMZOCwUnWRTsaq8TvXzrHrZXnzPJwUBjnTvo4C/Nh9CQ3s2pk2WxQ+QFiPu6zW9h4SzvUH/C+0pLMYyylfeyzTKWIjXfvweRhARxKpKkKOeOBHs0mFLaYKiLuNk/q/7iPcjR+a/A/JqbO2h0heCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MahAKv9e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bhn0F62BP9WPhk8nGXXI932IJSUnPDR8Bmovga1LRHex5cmK6Ix/TeB8bTx6VRzp2+tViLFjlsTQiXY867afH62uCSqOJpHLW1kPQ4pRLK+PdFcyGceooBAeNFfaeslFN3E9AK1g9hTEOWEvTpc+oV3O76HswWZIHo/QRlhCbD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Js86vPa7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MahAKv9e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8C67C116C6;
-	Tue,  6 Jan 2026 17:23:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Js86vPa7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D55E9C116C6;
+	Tue,  6 Jan 2026 17:23:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720188;
-	bh=wBgQJmGFX9TlmbTZxk16uMWg4wtp2rlp1fgrx7oTbC0=;
+	s=korg; t=1767720191;
+	bh=J7q45wHS6K90fpvuQQr/HlXrLg7wF520VWRHxpb/38I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MahAKv9ekSYSzvMpZJsWu0BgkCCoDC4gQR6h4DaYYPoDNFSMSDf0PVJO5T57mWBPp
-	 hjny1+3ik48WWpIHvlGW39jHh7OjCb5aP9T6VDim5PJoNBySc8c2YvmCaj9Nqr4IVH
-	 yKp+wMmS0YfY5Udr+D+u9ecWznHT1iA7gfjFF5uk=
+	b=Js86vPa7dy6h47jM80FzyOY2saJg9WAj2MFVcPF5rTeHxt9i7cWprtVNEZb7tbIaT
+	 iL/7h5dbtV+qzP6ex0SZhm9veUPBzrAMKulK8wT7yI9kbBp6r/Rpuc5PtiHYFfaqhC
+	 aqGqDwb9t7rh6GAXfVda0EKGxHF68im2UsDZmwco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Sven Eckelmann (Plasma Cloud)" <se@simonwunderlich.de>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.12 160/567] wifi: mt76: Fix DTS power-limits on little endian systems
-Date: Tue,  6 Jan 2026 17:59:02 +0100
-Message-ID: <20260106170457.248684413@linuxfoundation.org>
+	Li Chen <chenl311@chinatelecom.cn>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 161/567] block: rate-limit capacity change info log
+Date: Tue,  6 Jan 2026 17:59:03 +0100
+Message-ID: <20260106170457.285066047@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -50,134 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann (Plasma Cloud) <se@simonwunderlich.de>
+From: Li Chen <chenl311@chinatelecom.cn>
 
-commit 38b845e1f9e810869b0a0b69f202b877b7b7fb12 upstream.
+commit 3179a5f7f86bcc3acd5d6fb2a29f891ef5615852 upstream.
 
-The power-limits for ru and mcs and stored in the devicetree as bytewise
-array (often with sizes which are not a multiple of 4). These arrays have a
-prefix which defines for how many modes a line is applied. This prefix is
-also only a byte - but the code still tried to fix the endianness of this
-byte with a be32 operation. As result, loading was mostly failing or was
-sending completely unexpected values to the firmware.
+loop devices under heavy stress-ng loop streessor can trigger many
+capacity change events in a short time. Each event prints an info
+message from set_capacity_and_notify(), flooding the console and
+contributing to soft lockups on slow consoles.
 
-Since the other rates are also stored in the devicetree as bytewise arrays,
-just drop the u32 access + be32_to_cpu conversion and directly access them
-as bytes arrays.
+Switch the printk in set_capacity_and_notify() to
+pr_info_ratelimited() so frequent capacity changes do not spam
+the log while still reporting occasional changes.
 
 Cc: stable@vger.kernel.org
-Fixes: 22b980badc0f ("mt76: add functions for parsing rate power limits from DT")
-Fixes: a9627d992b5e ("mt76: extend DT rate power limits to support 11ax devices")
-Signed-off-by: Sven Eckelmann (Plasma Cloud) <se@simonwunderlich.de>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/eeprom.c |   37 ++++++++++++++++++----------
- 1 file changed, 24 insertions(+), 13 deletions(-)
+ block/genhd.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/mediatek/mt76/eeprom.c
-+++ b/drivers/net/wireless/mediatek/mt76/eeprom.c
-@@ -253,6 +253,19 @@ mt76_get_of_array(struct device_node *np
- 	return prop->value;
- }
+--- a/block/genhd.c
++++ b/block/genhd.c
+@@ -83,7 +83,7 @@ bool set_capacity_and_notify(struct gend
+ 	    (disk->flags & GENHD_FL_HIDDEN))
+ 		return false;
  
-+static const s8 *
-+mt76_get_of_array_s8(struct device_node *np, char *name, size_t *len, int min)
-+{
-+	struct property *prop = of_find_property(np, name, NULL);
-+
-+	if (!prop || !prop->value || prop->length < min)
-+		return NULL;
-+
-+	*len = prop->length;
-+
-+	return prop->value;
-+}
-+
- struct device_node *
- mt76_find_channel_node(struct device_node *np, struct ieee80211_channel *chan)
- {
-@@ -294,7 +307,7 @@ mt76_get_txs_delta(struct device_node *n
- }
+-	pr_info("%s: detected capacity change from %lld to %lld\n",
++	pr_info_ratelimited("%s: detected capacity change from %lld to %lld\n",
+ 		disk->disk_name, capacity, size);
  
- static void
--mt76_apply_array_limit(s8 *pwr, size_t pwr_len, const __be32 *data,
-+mt76_apply_array_limit(s8 *pwr, size_t pwr_len, const s8 *data,
- 		       s8 target_power, s8 nss_delta, s8 *max_power)
- {
- 	int i;
-@@ -303,15 +316,14 @@ mt76_apply_array_limit(s8 *pwr, size_t p
- 		return;
- 
- 	for (i = 0; i < pwr_len; i++) {
--		pwr[i] = min_t(s8, target_power,
--			       be32_to_cpu(data[i]) + nss_delta);
-+		pwr[i] = min_t(s8, target_power, data[i] + nss_delta);
- 		*max_power = max(*max_power, pwr[i]);
- 	}
- }
- 
- static void
- mt76_apply_multi_array_limit(s8 *pwr, size_t pwr_len, s8 pwr_num,
--			     const __be32 *data, size_t len, s8 target_power,
-+			     const s8 *data, size_t len, s8 target_power,
- 			     s8 nss_delta, s8 *max_power)
- {
- 	int i, cur;
-@@ -319,8 +331,7 @@ mt76_apply_multi_array_limit(s8 *pwr, si
- 	if (!data)
- 		return;
- 
--	len /= 4;
--	cur = be32_to_cpu(data[0]);
-+	cur = data[0];
- 	for (i = 0; i < pwr_num; i++) {
- 		if (len < pwr_len + 1)
- 			break;
-@@ -335,7 +346,7 @@ mt76_apply_multi_array_limit(s8 *pwr, si
- 		if (!len)
- 			break;
- 
--		cur = be32_to_cpu(data[0]);
-+		cur = data[0];
- 	}
- }
- 
-@@ -346,7 +357,7 @@ s8 mt76_get_rate_power_limits(struct mt7
- {
- 	struct mt76_dev *dev = phy->dev;
- 	struct device_node *np;
--	const __be32 *val;
-+	const s8 *val;
- 	char name[16];
- 	u32 mcs_rates = dev->drv->mcs_rates;
- 	u32 ru_rates = ARRAY_SIZE(dest->ru[0]);
-@@ -392,21 +403,21 @@ s8 mt76_get_rate_power_limits(struct mt7
- 
- 	txs_delta = mt76_get_txs_delta(np, hweight16(phy->chainmask));
- 
--	val = mt76_get_of_array(np, "rates-cck", &len, ARRAY_SIZE(dest->cck));
-+	val = mt76_get_of_array_s8(np, "rates-cck", &len, ARRAY_SIZE(dest->cck));
- 	mt76_apply_array_limit(dest->cck, ARRAY_SIZE(dest->cck), val,
- 			       target_power, txs_delta, &max_power);
- 
--	val = mt76_get_of_array(np, "rates-ofdm",
--				&len, ARRAY_SIZE(dest->ofdm));
-+	val = mt76_get_of_array_s8(np, "rates-ofdm",
-+				   &len, ARRAY_SIZE(dest->ofdm));
- 	mt76_apply_array_limit(dest->ofdm, ARRAY_SIZE(dest->ofdm), val,
- 			       target_power, txs_delta, &max_power);
- 
--	val = mt76_get_of_array(np, "rates-mcs", &len, mcs_rates + 1);
-+	val = mt76_get_of_array_s8(np, "rates-mcs", &len, mcs_rates + 1);
- 	mt76_apply_multi_array_limit(dest->mcs[0], ARRAY_SIZE(dest->mcs[0]),
- 				     ARRAY_SIZE(dest->mcs), val, len,
- 				     target_power, txs_delta, &max_power);
- 
--	val = mt76_get_of_array(np, "rates-ru", &len, ru_rates + 1);
-+	val = mt76_get_of_array_s8(np, "rates-ru", &len, ru_rates + 1);
- 	mt76_apply_multi_array_limit(dest->ru[0], ARRAY_SIZE(dest->ru[0]),
- 				     ARRAY_SIZE(dest->ru), val, len,
- 				     target_power, txs_delta, &max_power);
+ 	/*
 
 
