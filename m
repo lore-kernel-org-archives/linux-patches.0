@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A706F35E541;
-	Tue,  6 Jan 2026 17:47:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF0135E53C;
+	Tue,  6 Jan 2026 17:47:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721665; cv=none; b=kxMah93Mj+dDdfx7WfbJTITzFw4aAIbTo6tHHHSi/hwNdusU+x+LLpL1lG6XUYifyByMBUKzaDnTClx1UoA21kBCYojogcfePL50Wygs0H0uyXe+ayXDYG34Dfea0pjnAAlgSKGYIk/DpKDLy7C7rUXTy9+y1nTym85r4SlfyIo=
+	t=1767721668; cv=none; b=f5lTUalrF0nRa6FMkcXe1/psmeqMBBnmpjDzhCoNMqppgZQjr4sEYd8jCoK2f/j52f6pRR9PVel+rsTes8uI2lUOyzmX6cX3FyKjNDddEX7yfvboC0wzJNSjXwSXmIaB38JFg0Aw6cCagdlIp9Wj6/mNIYUBrzSLTJ99DF2dRLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721665; c=relaxed/simple;
-	bh=rO3PN0kV1absZP67zedRory/d7Taq4mhHcjt8/rTlV4=;
+	s=arc-20240116; t=1767721668; c=relaxed/simple;
+	bh=4mivJ6k6AOO8Tvtdeyr0diVjzi0ej5IecCNjU/CZpD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u3UJevmQBdXarbC5meO7UW50azq5LMUTbTI1L1IJVeD9We6xBiP+Ct0YPTGNxq7lUVmM+gsdCS+jgUycCllqDkQAh3fmrLwpDmKlJLtmZFq1ksMy3lUGVVbNxXleN3/byGaQ1m5N3/LiJonWNm4PEgIECFDaRbfGAdMK0tnGSjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xzdccbH0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tOFizgnF55znzM2CAJDeztCvaoLbGTXfkTGyqUcOuQqAjnzJFFko3ZIxxjWZpJy5ebEmz5Losj2fAkChTZH7YJ5eXVPnx166nLc+lTcMG0DsxgjJ067ko0SG7ivM1vKZezCC13QfTV1xq4lqurc+Lj0NeNX8dYC0UHtjkkOZ+SY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QF+wRVGy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xzdccbH0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C337EC116C6;
-	Tue,  6 Jan 2026 17:47:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QF+wRVGy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D88AC116C6;
+	Tue,  6 Jan 2026 17:47:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721665;
-	bh=rO3PN0kV1absZP67zedRory/d7Taq4mhHcjt8/rTlV4=;
+	s=korg; t=1767721668;
+	bh=4mivJ6k6AOO8Tvtdeyr0diVjzi0ej5IecCNjU/CZpD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xzdccbH0kvAmewd3PD9KZSnGCZgMY1pGgjmOSCNUKYTGLlmesXABwV6NgIrEakpSQ
-	 0ZOrSGCH2t/V0eq+GOFoL+vVh1TkrfIQy6OzIP9Ez3yNwr8QJb5d+QzD22iUVZWm1J
-	 e6bjb3wOfEm/Tu5nLWbmJ2RLcxsFU6cU0epZ1nhw=
+	b=QF+wRVGyUendtbXdV5P0uyP503Uwbi6y6jPg5j5h2kpALL4Wn1eVgB1HthLq4EwEv
+	 WALsX4LRc52b1XLB1iE2zr9DbATzCFzH9GOcRPxzwsUkfuIYlHRii/Fbw7+nddUWL2
+	 KR+tvCz5vv0mImPy6Iv8zhh2BYDV8Sx0uvgzZ9DY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Kohei Enju <enjuk@amazon.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 036/312] net: dsa: fix missing put_device() in dsa_tree_find_first_conduit()
-Date: Tue,  6 Jan 2026 18:01:50 +0100
-Message-ID: <20260106170549.162411124@linuxfoundation.org>
+Subject: [PATCH 6.18 019/312] iavf: fix off-by-one issues in iavf_config_rss_reg()
+Date: Tue,  6 Jan 2026 18:01:33 +0100
+Message-ID: <20260106170548.550223994@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -51,100 +54,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Kohei Enju <enjuk@amazon.com>
 
-[ Upstream commit a9f96dc59b4a50ffbf86158f315e115969172d48 ]
+[ Upstream commit 6daa2893f323981c7894c68440823326e93a7d61 ]
 
-of_find_net_device_by_node() searches net devices by their /sys/class/net/,
-entry. It is documented in its kernel-doc that:
+There are off-by-one bugs when configuring RSS hash key and lookup
+table, causing out-of-bounds reads to memory [1] and out-of-bounds
+writes to device registers.
 
- * If successful, returns a pointer to the net_device with the embedded
- * struct device refcount incremented by one, or NULL on failure. The
- * refcount must be dropped when done with the net_device.
+Before commit 43a3d9ba34c9 ("i40evf: Allow PF driver to configure RSS"),
+the loop upper bounds were:
+    i <= I40E_VFQF_{HKEY,HLUT}_MAX_INDEX
+which is safe since the value is the last valid index.
 
-We are missing a put_device(&conduit->dev) which we could place at the
-end of dsa_tree_find_first_conduit(). But to explain why calling
-put_device() right away is safe is the same as to explain why the chosen
-solution is different.
+That commit changed the bounds to:
+    i <= adapter->rss_{key,lut}_size / 4
+where `rss_{key,lut}_size / 4` is the number of dwords, so the last
+valid index is `(rss_{key,lut}_size / 4) - 1`. Therefore, using `<=`
+accesses one element past the end.
 
-The code is very poorly split: dsa_tree_find_first_conduit() was first
-introduced in commit 95f510d0b792 ("net: dsa: allow the DSA master to be
-seen and changed through rtnetlink") but was first used several commits
-later, in commit acc43b7bf52a ("net: dsa: allow masters to join a LAG").
+Fix the issues by using `<` instead of `<=`, ensuring we do not exceed
+the bounds.
 
-Assume there is a switch with 2 CPU ports and 2 conduits, eno2 and eno3.
-When we create a LAG (bonding or team device) and place eno2 and eno3
-beneath it, we create a 3rd conduit (the LAG device itself), but this is
-slightly different than the first two.
+[1] KASAN splat about rss_key_size off-by-one
+  BUG: KASAN: slab-out-of-bounds in iavf_config_rss+0x619/0x800
+  Read of size 4 at addr ffff888102c50134 by task kworker/u8:6/63
 
-Namely, the cpu_dp->conduit pointer of the CPU ports does not change,
-and remains pointing towards the physical Ethernet controllers which are
-now LAG ports. Only 2 things change:
-- the LAG device has a dev->dsa_ptr which marks it as a DSA conduit
-- dsa_port_to_conduit(user port) finds the LAG and not the physical
-  conduit, because of the dp->cpu_port_in_lag bit being set.
+  CPU: 0 UID: 0 PID: 63 Comm: kworker/u8:6 Not tainted 6.18.0-rc2-enjuk-tnguy-00378-g3005f5b77652-dirty #156 PREEMPT(voluntary)
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+  Workqueue: iavf iavf_watchdog_task
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x6f/0xb0
+   print_report+0x170/0x4f3
+   kasan_report+0xe1/0x1a0
+   iavf_config_rss+0x619/0x800
+   iavf_watchdog_task+0x2be7/0x3230
+   process_one_work+0x7fd/0x1420
+   worker_thread+0x4d1/0xd40
+   kthread+0x344/0x660
+   ret_from_fork+0x249/0x320
+   ret_from_fork_asm+0x1a/0x30
+   </TASK>
 
-When the LAG device is destroyed, dsa_tree_migrate_ports_from_lag_conduit()
-is called and this is where dsa_tree_find_first_conduit() kicks in.
+  Allocated by task 63:
+   kasan_save_stack+0x30/0x50
+   kasan_save_track+0x14/0x30
+   __kasan_kmalloc+0x7f/0x90
+   __kmalloc_noprof+0x246/0x6f0
+   iavf_watchdog_task+0x28fc/0x3230
+   process_one_work+0x7fd/0x1420
+   worker_thread+0x4d1/0xd40
+   kthread+0x344/0x660
+   ret_from_fork+0x249/0x320
+   ret_from_fork_asm+0x1a/0x30
 
-This is the logical mistake and the reason why introducing code in one
-patch and using it from another is bad practice. I didn't realize that I
-don't have to call of_find_net_device_by_node() again; the cpu_dp->conduit
-association was never undone, and is still available for direct (re)use.
-There's only one concern - maybe the conduit disappeared in the
-meantime, but the netdev_hold() call we made during dsa_port_parse_cpu()
-(see previous change) ensures that this was not the case.
+  The buggy address belongs to the object at ffff888102c50100
+   which belongs to the cache kmalloc-64 of size 64
+  The buggy address is located 0 bytes to the right of
+   allocated 52-byte region [ffff888102c50100, ffff888102c50134)
 
-Therefore, fixing the code means reimplementing it in the simplest way.
+  The buggy address belongs to the physical page:
+  page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x102c50
+  flags: 0x200000000000000(node=0|zone=2)
+  page_type: f5(slab)
+  raw: 0200000000000000 ffff8881000418c0 dead000000000122 0000000000000000
+  raw: 0000000000000000 0000000080200020 00000000f5000000 0000000000000000
+  page dumped because: kasan: bad access detected
 
-I am blaming the time of use, since this is what "git blame" would show
-if we were to monitor for the conduit's kobject's refcount remaining
-elevated instead of being freed.
+  Memory state around the buggy address:
+   ffff888102c50000: 00 00 00 00 00 00 00 fc fc fc fc fc fc fc fc fc
+   ffff888102c50080: 00 00 00 00 00 00 00 fc fc fc fc fc fc fc fc fc
+  >ffff888102c50100: 00 00 00 00 00 00 04 fc fc fc fc fc fc fc fc fc
+                                       ^
+   ffff888102c50180: 00 00 00 00 00 00 00 00 fc fc fc fc fc fc fc fc
+   ffff888102c50200: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
 
-Tested on the NXP LS1028A, using the steps from
-Documentation/networking/dsa/configuration.rst section "Affinity of user
-ports to CPU ports", followed by (extra prints added by me):
-
-$ ip link del bond0
-mscc_felix 0000:00:00.5 swp3: Link is Down
-bond0 (unregistering): (slave eno2): Releasing backup interface
-fsl_enetc 0000:00:00.2 eno2: Link is Down
-mscc_felix 0000:00:00.5 swp0: bond0 disappeared, migrating to eno2
-mscc_felix 0000:00:00.5 swp1: bond0 disappeared, migrating to eno2
-mscc_felix 0000:00:00.5 swp2: bond0 disappeared, migrating to eno2
-mscc_felix 0000:00:00.5 swp3: bond0 disappeared, migrating to eno2
-
-Fixes: acc43b7bf52a ("net: dsa: allow masters to join a LAG")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20251215150236.3931670-2-vladimir.oltean@nxp.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 43a3d9ba34c9 ("i40evf: Allow PF driver to configure RSS")
+Signed-off-by: Kohei Enju <enjuk@amazon.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dsa/dsa.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/net/ethernet/intel/iavf/iavf_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/dsa/dsa.c b/net/dsa/dsa.c
-index d466d0234087..ded9a291e620 100644
---- a/net/dsa/dsa.c
-+++ b/net/dsa/dsa.c
-@@ -366,16 +366,10 @@ static struct dsa_port *dsa_tree_find_first_cpu(struct dsa_switch_tree *dst)
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
+index c2fbe443ef85..4b0fc8f354bc 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_main.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
+@@ -1726,11 +1726,11 @@ static int iavf_config_rss_reg(struct iavf_adapter *adapter)
+ 	u16 i;
  
- struct net_device *dsa_tree_find_first_conduit(struct dsa_switch_tree *dst)
- {
--	struct device_node *ethernet;
--	struct net_device *conduit;
- 	struct dsa_port *cpu_dp;
+ 	dw = (u32 *)adapter->rss_key;
+-	for (i = 0; i <= adapter->rss_key_size / 4; i++)
++	for (i = 0; i < adapter->rss_key_size / 4; i++)
+ 		wr32(hw, IAVF_VFQF_HKEY(i), dw[i]);
  
- 	cpu_dp = dsa_tree_find_first_cpu(dst);
--	ethernet = of_parse_phandle(cpu_dp->dn, "ethernet", 0);
--	conduit = of_find_net_device_by_node(ethernet);
--	of_node_put(ethernet);
--
--	return conduit;
-+	return cpu_dp->conduit;
- }
+ 	dw = (u32 *)adapter->rss_lut;
+-	for (i = 0; i <= adapter->rss_lut_size / 4; i++)
++	for (i = 0; i < adapter->rss_lut_size / 4; i++)
+ 		wr32(hw, IAVF_VFQF_HLUT(i), dw[i]);
  
- /* Assign the default CPU port (the first one in the tree) to all ports of the
+ 	iavf_flush(hw);
 -- 
 2.51.0
 
