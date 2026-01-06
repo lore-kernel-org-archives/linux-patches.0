@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 732D5376BF0;
-	Tue,  6 Jan 2026 18:00:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC76F37C0ED;
+	Tue,  6 Jan 2026 18:00:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722405; cv=none; b=aQXCZ0RYEVNNh7KOGWtUa0V5XAnV3ky+lUdaS5weQ7DPDEzOOCL4uUUunOE+Wsxls37+Nmnw4uv1EYt7QB++nr1R3hBKDGBU2qn9XdEQZIiIxmY/M75hbre+xnAtc6JJtqs0rcv7V7zIaMRoIHhUTMvs3O1jfAKr46Px+O+kaSM=
+	t=1767722409; cv=none; b=kTzAdNmUUzFCTZYIKM1ufrn9TSugGNsO2Md83ve0ZS/LELl8qLUMOScJlP/26JvQmHXmpbR5Tv0CnRI3VqZqbEpl14WDrTUWm7+Dh6faB0pvy7y9D3mhk2vpMBJZcNXXJNw72K+67JtHS74nKGbRhrz8d8T+tCvMMgNw/VOPw8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722405; c=relaxed/simple;
-	bh=xeXn8aQlrMZd8s80clJJC8Z+fyxnHA3aXmGK7w0W+RI=;
+	s=arc-20240116; t=1767722409; c=relaxed/simple;
+	bh=jhrRqkE79vArfRMplbw3IlwnAdC7C+bvuqq1ueJnaQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IYPVCezzCtz1X0ac4MtWv01MM+/D0Oyt4iDIJ5wjnEF4CoJN1Ub6uXr5XtsmG0NVTf9APB69z0TgJ20TpWpTIENz02yYBpaB4n3SfHuEYHJwYZX5/gGmak5CfzZqaVFbFPyRS3VR1nCs4XERzN/G05evp2c7H9sbPInCEFZbD+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=km4BPgOw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bdBN0zmM3dJG04ur1llxwh0sD1gOUxgTrXVdoXmgOpGJbzt6hgfPktz9v5CbxDHWN0s0h/FRBdze0wKS7FC76OfGTONEDkMs31bQ46+q5QKsdbLBnwKMJ/8M2dj/BwThKtnEY1HPmuh0auqkxLWL85o6Lcmja5BBx3IPLPg/CS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a6Cz2Htj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="km4BPgOw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3B34C16AAE;
-	Tue,  6 Jan 2026 18:00:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a6Cz2Htj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C010C116C6;
+	Tue,  6 Jan 2026 18:00:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722405;
-	bh=xeXn8aQlrMZd8s80clJJC8Z+fyxnHA3aXmGK7w0W+RI=;
+	s=korg; t=1767722408;
+	bh=jhrRqkE79vArfRMplbw3IlwnAdC7C+bvuqq1ueJnaQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=km4BPgOwi8MBcKHZLHTe4nf65AZ64khepwfpMER1ETytobGMNaol/Lux+EmAH5RAp
-	 O/KWxQSZz7XlCg6IojkRCiNAmCG+fUbUrKKGuYN47a57Yp2jyMhDeeqFBzNzG7zj3B
-	 7sOSngsFQmDxYckQrZRdkJGXJS6E31stKJMBGXiU=
+	b=a6Cz2Htjtigh4SKwmIg4cRcZ4DHeH5XIDirYt6cn/6H1zJ8FSrIEoHtT84puV7MDk
+	 J6NlN4oH/tk0BT0S40ou6KK4mI8XO3yjudhr5s+sg258YoHcfAtTv6/Er+lKeM99MZ
+	 hRZ/La1hOJLhL5QsJXLVVujzirI3JaCXqdhmN95E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 254/312] net: usb: sr9700: fix incorrect command used to write single register
-Date: Tue,  6 Jan 2026 18:05:28 +0100
-Message-ID: <20260106170557.037573289@linuxfoundation.org>
+Subject: [PATCH 6.18 255/312] net: phy: mediatek: fix nvmem cell reference leak in mt798x_phy_calibration
+Date: Tue,  6 Jan 2026 18:05:29 +0100
+Message-ID: <20260106170557.073478686@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -50,43 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit fa0b198be1c6775bc7804731a43be5d899d19e7a upstream.
+commit 1e5a541420b8c6d87d88eb50b6b978cdeafee1c9 upstream.
 
-This fixes the device failing to initialize with "error reading MAC
-address" for me, probably because the incorrect write of NCR_RST to
-SR_NCR is not actually resetting the device.
+When nvmem_cell_read() fails in mt798x_phy_calibration(), the function
+returns without calling nvmem_cell_put(), leaking the cell reference.
 
-Fixes: c9b37458e95629b1d1171457afdcc1bf1eb7881d ("USB2NET : SR9700 : One chip USB 1.1 USB2NET SR9700Device Driver Support")
+Move nvmem_cell_put() right after nvmem_cell_read() to ensure the cell
+reference is always released regardless of the read result.
+
+Found via static analysis and code review.
+
+Fixes: 98c485eaf509 ("net: phy: add driver for MediaTek SoC built-in GE PHYs")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
-Link: https://patch.msgid.link/20251221082400.50688-1-enelsonmoore@gmail.com
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Reviewed-by: Daniel Golle <daniel@makrotopia.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20251211081313.2368460-1-linmq006@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/sr9700.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/phy/mediatek/mtk-ge-soc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/usb/sr9700.c
-+++ b/drivers/net/usb/sr9700.c
-@@ -52,7 +52,7 @@ static int sr_read_reg(struct usbnet *de
+--- a/drivers/net/phy/mediatek/mtk-ge-soc.c
++++ b/drivers/net/phy/mediatek/mtk-ge-soc.c
+@@ -1167,9 +1167,9 @@ static int mt798x_phy_calibration(struct
+ 	}
  
- static int sr_write_reg(struct usbnet *dev, u8 reg, u8 value)
- {
--	return usbnet_write_cmd(dev, SR_WR_REGS, SR_REQ_WR_REG,
-+	return usbnet_write_cmd(dev, SR_WR_REG, SR_REQ_WR_REG,
- 				value, reg, NULL, 0);
- }
+ 	buf = (u32 *)nvmem_cell_read(cell, &len);
++	nvmem_cell_put(cell);
+ 	if (IS_ERR(buf))
+ 		return PTR_ERR(buf);
+-	nvmem_cell_put(cell);
  
-@@ -65,7 +65,7 @@ static void sr_write_async(struct usbnet
- 
- static void sr_write_reg_async(struct usbnet *dev, u8 reg, u8 value)
- {
--	usbnet_write_cmd_async(dev, SR_WR_REGS, SR_REQ_WR_REG,
-+	usbnet_write_cmd_async(dev, SR_WR_REG, SR_REQ_WR_REG,
- 			       value, reg, NULL, 0);
- }
- 
+ 	if (!buf[0] || !buf[1] || !buf[2] || !buf[3] || len < 4 * sizeof(u32)) {
+ 		phydev_err(phydev, "invalid efuse data\n");
 
 
