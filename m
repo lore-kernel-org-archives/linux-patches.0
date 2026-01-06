@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4947636403F;
-	Tue,  6 Jan 2026 17:51:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D405836402B;
+	Tue,  6 Jan 2026 17:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721861; cv=none; b=hqvC7cllCRMYku+0TbwRWRyl/Js1gNVgCo5Hnk9sZ1XcGL5PLLpF/8X4C28OZbAT2X/4yZ+zGuSTvpdKxiStSAJNzxeJiakbh2eK8lZPyX9jD0Cc7UwV1nueC24NSEZ39Jp32th/7H/ql4hp9v9iHifqNZQIGRqcRopz1CRjIk4=
+	t=1767721864; cv=none; b=Z+M9FGQMXH8jpWHQZm8adRCTj6f3Hh22JU7GqWuboDd58rMqBw7TODEMC+ksaJqohwEYnaoxiS4yBejtWehsGt1vUQzL4R3RBm8lcVfo6Szv6KkUiet/vqF67cI5xOgA2B95ivXyh0gP6mQawqkq5EUzKe8mBzo0ZpqawM3geos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721861; c=relaxed/simple;
-	bh=F7LKzK51wcnKCO5qgC0TSy/LxMG4aFVAn01cOi3HEUU=;
+	s=arc-20240116; t=1767721864; c=relaxed/simple;
+	bh=1dooVpSJNOpFVj9jGnzjR7tbuUIeuB7hflP72OlzSdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u2aXGcSFntKxgixl/AY3SQv9vYXd1u9NQNTwyHftGmPxHoIC03nuAQrkq22dBX27GRqxBePCgBb8+f+KppvzfqpCnNdxqyyX1O72jROGYOMUMwbyOMuWH/aEk5v0/HwXhhYW7jKnub55Dk9k8uehVpzlJFHPICL6IsOka/I/9KY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sGNc4VpT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dNHufiwAbOb0nu8h6K/nxICTqO0oAB9IMUAbWoPfVrpdyVP36vLQwMp7RVqDVNFaqS/VDbYl4A5VhUR1EyIc7+CyKHQ6aPVVuEuvWLuM97KyNMR4/OMRGr1Sw3/aaH/L98vxFhT6BK1RbV9J8256uDaiQKqJb38yMMV9SQYq2AE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JiOYQeDf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sGNc4VpT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B64EC116C6;
-	Tue,  6 Jan 2026 17:51:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JiOYQeDf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1474DC19423;
+	Tue,  6 Jan 2026 17:51:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721861;
-	bh=F7LKzK51wcnKCO5qgC0TSy/LxMG4aFVAn01cOi3HEUU=;
+	s=korg; t=1767721864;
+	bh=1dooVpSJNOpFVj9jGnzjR7tbuUIeuB7hflP72OlzSdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sGNc4VpTp6H3qUmxmhW1vaOGTp926FEAK034YKAPTjHYAaGYmppahDi4Z8RTXhp9n
-	 mx6Lczpp17+Y0nGUGIfkFs/yop17eBqXwEvGQBRblthQ61rfy4GDXI6/09rU1nIcod
-	 5w+imYp7QeXSsjH1LMl2OUGMuLyXbXEZFqaO3mp8=
+	b=JiOYQeDfW+Q6E93gmbuEJW9Xvvy8SGdzJaTpXFLn9pAG79R2+ciC+U4pG67nrrYUn
+	 fsMHxkswuYUcAE8DC9V6ZccBWdRMfOD3x3IOhirRFcSdDynMrMqNIHhIOAtvy1tIRl
+	 Xj65SAJ9esTEbh7+Q36NwkloBClSkqRiFyMOEXQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Moore <paul@paul-moore.com>,
-	Will Rosenberg <whrosenb@asu.edu>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 060/312] ipv6: BUG() in pskb_expand_head() as part of calipso_skbuff_setattr()
-Date: Tue,  6 Jan 2026 18:02:14 +0100
-Message-ID: <20260106170550.021856050@linuxfoundation.org>
+Subject: [PATCH 6.18 061/312] ipv4: Fix reference count leak when using error routes with nexthop objects
+Date: Tue,  6 Jan 2026 18:02:15 +0100
+Message-ID: <20260106170550.057891656@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -52,95 +54,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Will Rosenberg <whrosenb@asu.edu>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 58fc7342b529803d3c221101102fe913df7adb83 ]
+[ Upstream commit ac782f4e3bfcde145b8a7f8af31d9422d94d172a ]
 
-There exists a kernel oops caused by a BUG_ON(nhead < 0) at
-net/core/skbuff.c:2232 in pskb_expand_head().
-This bug is triggered as part of the calipso_skbuff_setattr()
-routine when skb_cow() is passed headroom > INT_MAX
-(i.e. (int)(skb_headroom(skb) + len_delta) < 0).
+When a nexthop object is deleted, it is marked as dead and then
+fib_table_flush() is called to flush all the routes that are using the
+dead nexthop.
 
-The root cause of the bug is due to an implicit integer cast in
-__skb_cow(). The check (headroom > skb_headroom(skb)) is meant to ensure
-that delta = headroom - skb_headroom(skb) is never negative, otherwise
-we will trigger a BUG_ON in pskb_expand_head(). However, if
-headroom > INT_MAX and delta <= -NET_SKB_PAD, the check passes, delta
-becomes negative, and pskb_expand_head() is passed a negative value for
-nhead.
+The current logic in fib_table_flush() is to only flush error routes
+(e.g., blackhole) when it is called as part of network namespace
+dismantle (i.e., with flush_all=true). Therefore, error routes are not
+flushed when their nexthop object is deleted:
 
-Fix the trigger condition in calipso_skbuff_setattr(). Avoid passing
-"negative" headroom sizes to skb_cow() within calipso_skbuff_setattr()
-by only using skb_cow() to grow headroom.
+ # ip link add name dummy1 up type dummy
+ # ip nexthop add id 1 dev dummy1
+ # ip route add 198.51.100.1/32 nhid 1
+ # ip route add blackhole 198.51.100.2/32 nhid 1
+ # ip nexthop del id 1
+ # ip route show
+ blackhole 198.51.100.2 nhid 1 dev dummy1
 
-PoC:
-	Using `netlabelctl` tool:
+As such, they keep holding a reference on the nexthop object which in
+turn holds a reference on the nexthop device, resulting in a reference
+count leak:
 
-        netlabelctl map del default
-        netlabelctl calipso add pass doi:7
-        netlabelctl map add default address:0::1/128 protocol:calipso,7
+ # ip link del dev dummy1
+ [   70.516258] unregister_netdevice: waiting for dummy1 to become free. Usage count = 2
 
-        Then run the following PoC:
+Fix by flushing error routes when their nexthop is marked as dead.
 
-        int fd = socket(AF_INET6, SOCK_DGRAM, IPPROTO_UDP);
+IPv6 does not suffer from this problem.
 
-        // setup msghdr
-        int cmsg_size = 2;
-        int cmsg_len = 0x60;
-        struct msghdr msg;
-        struct sockaddr_in6 dest_addr;
-        struct cmsghdr * cmsg = (struct cmsghdr *) calloc(1,
-                        sizeof(struct cmsghdr) + cmsg_len);
-        msg.msg_name = &dest_addr;
-        msg.msg_namelen = sizeof(dest_addr);
-        msg.msg_iov = NULL;
-        msg.msg_iovlen = 0;
-        msg.msg_control = cmsg;
-        msg.msg_controllen = cmsg_len;
-        msg.msg_flags = 0;
-
-        // setup sockaddr
-        dest_addr.sin6_family = AF_INET6;
-        dest_addr.sin6_port = htons(31337);
-        dest_addr.sin6_flowinfo = htonl(31337);
-        dest_addr.sin6_addr = in6addr_loopback;
-        dest_addr.sin6_scope_id = 31337;
-
-        // setup cmsghdr
-        cmsg->cmsg_len = cmsg_len;
-        cmsg->cmsg_level = IPPROTO_IPV6;
-        cmsg->cmsg_type = IPV6_HOPOPTS;
-        char * hop_hdr = (char *)cmsg + sizeof(struct cmsghdr);
-        hop_hdr[1] = 0x9; //set hop size - (0x9 + 1) * 8 = 80
-
-        sendmsg(fd, &msg, 0);
-
-Fixes: 2917f57b6bc1 ("calipso: Allow the lsm to label the skbuff directly.")
-Suggested-by: Paul Moore <paul@paul-moore.com>
-Signed-off-by: Will Rosenberg <whrosenb@asu.edu>
-Acked-by: Paul Moore <paul@paul-moore.com>
-Link: https://patch.msgid.link/20251219173637.797418-1-whrosenb@asu.edu
+Fixes: 493ced1ac47c ("ipv4: Allow routes to use nexthop objects")
+Reported-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Closes: https://lore.kernel.org/netdev/d943f806-4da6-4970-ac28-b9373b0e63ac@I-love.SAKURA.ne.jp/
+Reported-by: syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20251221144829.197694-1-idosch@nvidia.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/calipso.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/ipv4/fib_trie.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv6/calipso.c b/net/ipv6/calipso.c
-index df1986973430..21f6ed126253 100644
---- a/net/ipv6/calipso.c
-+++ b/net/ipv6/calipso.c
-@@ -1342,7 +1342,8 @@ static int calipso_skbuff_setattr(struct sk_buff *skb,
- 	/* At this point new_end aligns to 4n, so (new_end & 4) pads to 8n */
- 	pad = ((new_end & 4) + (end & 7)) & 7;
- 	len_delta = new_end - (int)end + pad;
--	ret_val = skb_cow(skb, skb_headroom(skb) + len_delta);
-+	ret_val = skb_cow(skb,
-+			  skb_headroom(skb) + (len_delta > 0 ? len_delta : 0));
- 	if (ret_val < 0)
- 		return ret_val;
+diff --git a/net/ipv4/fib_trie.c b/net/ipv4/fib_trie.c
+index 59a6f0a9638f..7e2c17fec3fc 100644
+--- a/net/ipv4/fib_trie.c
++++ b/net/ipv4/fib_trie.c
+@@ -2053,10 +2053,11 @@ int fib_table_flush(struct net *net, struct fib_table *tb, bool flush_all)
+ 				continue;
+ 			}
  
+-			/* Do not flush error routes if network namespace is
+-			 * not being dismantled
++			/* When not flushing the entire table, skip error
++			 * routes that are not marked for deletion.
+ 			 */
+-			if (!flush_all && fib_props[fa->fa_type].error) {
++			if (!flush_all && fib_props[fa->fa_type].error &&
++			    !(fi->fib_flags & RTNH_F_DEAD)) {
+ 				slen = fa->fa_slen;
+ 				continue;
+ 			}
 -- 
 2.51.0
 
