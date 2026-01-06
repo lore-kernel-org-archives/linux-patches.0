@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C39D3446C6;
-	Tue,  6 Jan 2026 17:39:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7A83446D2;
+	Tue,  6 Jan 2026 17:39:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721192; cv=none; b=UCaVHqAZUVPFgck+Iljc152STJt9RaxsHrb2yMeMDe4/3I6GffI0r4HUqxqWDlQ+sAldBB5mNAcLtA3W2Q2k4RLsZk2Hu+x86yBERbmxEEHI/uD8FNRdO8K5wUMGeDj/eGysNSDO+/XlAfJMLQaL0qk6f3lu3kJBSo4RUhIieHw=
+	t=1767721195; cv=none; b=In8gaz+5UHSOzNMjLQL1plP7TCTHbPlO8gIfW2JThO0x8L/FW78zAcW7Q+LLDvL+PpFZBNIR1EHfH+hgYlp5GvKP0EoMSGHQNSd0vJgmUp3d2jztDyw6hocmBw2G/AaHWjnqonxEBnNx3c67osPQGpPYv+UYVL6Gsiv/X1JPNtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721192; c=relaxed/simple;
-	bh=UP1TJUkCnXeWtCApFKX45BCGQZ3SFLGC7G7tyqir67Q=;
+	s=arc-20240116; t=1767721195; c=relaxed/simple;
+	bh=BL9LuOiDAjEEc11KjZ6M+cRcyPqyL01xya6YyQ6lkRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J83KSOfzdRYBWnbhYfm+LwYRZJuQzmpU1UdBRHAg309mVkA8KbpzvHw5tFoHI+RbRqMbTCmnMPw20cWwk9FqNqJhqNyfrR8YbxTAildkd5aQzEVRHflOStow4LBsZolVMeT6UB0UFAfVAT63aHwk0Rnkn06mnAD5F0h0SluLk44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JdMPJMvr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Erm/RYJV5ZUDk/UEhaUnjodX2Rm7TpTr36yMX+8NGfQhMqnuvG00lrZAGNPE5uwp+kAFvtos7tJ1wl3v9TdHg1yzJBp8avKqEGvBAU6YBq6Ij7bAncwuU2nnXWhfpy8zWkwFwbW4BIn8Q4uDwA9FyB7LeV0v8Vy55ZvDikVie5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xp5AGz84; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JdMPJMvr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FA9EC116C6;
-	Tue,  6 Jan 2026 17:39:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xp5AGz84"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F25B7C116C6;
+	Tue,  6 Jan 2026 17:39:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721192;
-	bh=UP1TJUkCnXeWtCApFKX45BCGQZ3SFLGC7G7tyqir67Q=;
+	s=korg; t=1767721195;
+	bh=BL9LuOiDAjEEc11KjZ6M+cRcyPqyL01xya6YyQ6lkRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JdMPJMvr6OUMjF5kyTsnaeerVogBb4btNt2Re0qoTgyoyd4ubx22/7CfEo8IW9TFW
-	 9WC/Uha9G1dTqYzKBxPZxxYCZ4Pa7NA9Kw1prCfvA/vO6luXUCvziSkvhZpJnYhjT7
-	 gO8/a5MvcvXD745xpoBQav3z4XsSwr/JLJ4IoFIE=
+	b=xp5AGz84U6g1DRhekuj3ihzgXigy9BMFs/gSHe2Xxij4rynfImzwXHJl979hIGi1t
+	 mHm24UYw2jKFwbk+iTd37ENw97Ant9nPXrmFXdt5KKqpiuDgketdUpgI2mn7zWY0CL
+	 Kz7EtP6rAqvf+va2ugWDrqXQU9VaVlIaXhl/NuPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Konstantin <answer2019@yandex.ru>,
-	Matthew Schwartz <matthew.schwartz@linux.dev>
-Subject: [PATCH 6.12 456/567] Revert "drm/amd: Skip power ungate during suspend for VPE"
-Date: Tue,  6 Jan 2026 18:03:58 +0100
-Message-ID: <20260106170508.214913258@linuxfoundation.org>
+	Matthew Auld <matthew.auld@intel.com>,
+	Sanjay Yadav <sanjay.kumar.yadav@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>
+Subject: [PATCH 6.12 465/567] drm/xe/oa: Fix potential UAF in xe_oa_add_config_ioctl()
+Date: Tue,  6 Jan 2026 18:04:07 +0100
+Message-ID: <20260106170508.549988237@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -46,57 +45,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello (AMD) <superm1@kernel.org>
+From: Sanjay Yadav <sanjay.kumar.yadav@intel.com>
 
-commit 3925683515e93844be204381d2d5a1df5de34f31 upstream.
+commit dcb171931954c51a1a7250d558f02b8f36570783 upstream.
 
-Skipping power ungate exposed some scenarios that will fail
-like below:
+In xe_oa_add_config_ioctl(), we accessed oa_config->id after dropping
+metrics_lock. Since this lock protects the lifetime of oa_config, an
+attacker could guess the id and call xe_oa_remove_config_ioctl() with
+perfect timing, freeing oa_config before we dereference it, leading to
+a potential use-after-free.
 
-```
-amdgpu: Register(0) [regVPEC_QUEUE_RESET_REQ] failed to reach value 0x00000000 != 0x00000001n
-amdgpu 0000:c1:00.0: amdgpu: VPE queue reset failed
-...
-amdgpu: [drm] *ERROR* wait_for_completion_timeout timeout!
-```
+Fix this by caching the id in a local variable while holding the lock.
 
-The underlying s2idle issue that prompted this commit is going to
-be fixed in BIOS.
-This reverts commit 2a6c826cfeedd7714611ac115371a959ead55bda.
+v2: (Matt A)
+- Dropped mutex_unlock(&oa->metrics_lock) ordering change from
+  xe_oa_remove_config_ioctl()
 
-Fixes: 2a6c826cfeed ("drm/amd: Skip power ungate during suspend for VPE")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reported-by: Konstantin <answer2019@yandex.ru>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220812
-Reported-by: Matthew Schwartz <matthew.schwartz@linux.dev>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/6614
+Fixes: cdf02fe1a94a7 ("drm/xe/oa/uapi: Add/remove OA config perf ops")
+Cc: <stable@vger.kernel.org> # v6.11+
+Suggested-by: Matthew Auld <matthew.auld@intel.com>
+Signed-off-by: Sanjay Yadav <sanjay.kumar.yadav@intel.com>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://patch.msgid.link/20251118114859.3379952-2-sanjay.kumar.yadav@intel.com
+(cherry picked from commit 28aeaed130e8e587fd1b73b6d66ca41ccc5a1a31)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/xe/xe_oa.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -3092,11 +3092,10 @@ int amdgpu_device_set_pg_state(struct am
- 		    (adev->ip_blocks[i].version->type == AMD_IP_BLOCK_TYPE_GFX ||
- 		     adev->ip_blocks[i].version->type == AMD_IP_BLOCK_TYPE_SDMA))
- 			continue;
--		/* skip CG for VCE/UVD/VPE, it's handled specially */
-+		/* skip CG for VCE/UVD, it's handled specially */
- 		if (adev->ip_blocks[i].version->type != AMD_IP_BLOCK_TYPE_UVD &&
- 		    adev->ip_blocks[i].version->type != AMD_IP_BLOCK_TYPE_VCE &&
- 		    adev->ip_blocks[i].version->type != AMD_IP_BLOCK_TYPE_VCN &&
--		    adev->ip_blocks[i].version->type != AMD_IP_BLOCK_TYPE_VPE &&
- 		    adev->ip_blocks[i].version->type != AMD_IP_BLOCK_TYPE_JPEG &&
- 		    adev->ip_blocks[i].version->funcs->set_powergating_state) {
- 			/* enable powergating to save power */
+--- a/drivers/gpu/drm/xe/xe_oa.c
++++ b/drivers/gpu/drm/xe/xe_oa.c
+@@ -2378,11 +2378,13 @@ int xe_oa_add_config_ioctl(struct drm_de
+ 		goto sysfs_err;
+ 	}
+ 
+-	mutex_unlock(&oa->metrics_lock);
++	id = oa_config->id;
++
++	drm_dbg(&oa->xe->drm, "Added config %s id=%i\n", oa_config->uuid, id);
+ 
+-	drm_dbg(&oa->xe->drm, "Added config %s id=%i\n", oa_config->uuid, oa_config->id);
++	mutex_unlock(&oa->metrics_lock);
+ 
+-	return oa_config->id;
++	return id;
+ 
+ sysfs_err:
+ 	mutex_unlock(&oa->metrics_lock);
 
 
