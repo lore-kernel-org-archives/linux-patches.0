@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404AA36D4ED;
-	Tue,  6 Jan 2026 17:59:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA68355033;
+	Tue,  6 Jan 2026 17:59:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722344; cv=none; b=casNfaa3/h/g3Vxd8s3PvOg79Ai4+DH/W9wR6Y4YkqNaqg8vK4kN6QjBXZxLf02p7ca8jFXXFi8Uhtk8QPCWD6i7lNWiMWc5BB5++6s3vJHsm3cPaWN+F2Z3Y73xSFlA1Rn7C5TbV/sWoRXB2I+3rVrAZrHe/Yk4qAY7mecR2IY=
+	t=1767722347; cv=none; b=VnlU4kw2vb5coAPwrwE93LUc4Q5E3NsemGBwfMi/aLMfi/Mu8f3MUfWX9hibsdYuXOhXRleGMK27fCfaPIe0RyWoYCQ5naNPELArPvn5BhY5PLmHBS/sN+W6iNskPX42qf7gUU7dno4+rnu3VsVlU3Wp1sBKr4cE3ho4jVyham4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722344; c=relaxed/simple;
-	bh=mcMJc+9UHVYMWE1DeyGsXR6LM2Ymm6rlsLjFeWvtfgE=;
+	s=arc-20240116; t=1767722347; c=relaxed/simple;
+	bh=mYTgNbc60G16wTGULF0KekEPbng2BZYeqqgQtskbUic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LHEVKug11GTsgacAPZQIpmbGUWce9uDEQLon5liZ5m6QHqKic/421ivSJe0kU6wcyMeki7zrq/1QEQzYXfRSwAB8FYhDqCuguStqVkapL9Chf8J1B48wBfS3sK2TZ33QFbsyJqPRIIfliEf+DxropFWlsf9j37wfYt0s3MGUtDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cJKIXU48; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GD2n+p7E/wGf23lSpXc/3Fy2KLWny/91MjwV3PcHtJaeXIRw8fUq8racM+kfchRjTh0AtR+N/L2XyDX/EBQ2TF0PwqKbooZ/obK++u+J4OFQfaahndhthMbSKKtt+u5VyvDzMr8xpjrNu3D+Rljz1FKiiqhTCFvKiRFUgqwyr6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=om21sTr8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cJKIXU48"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63304C19423;
-	Tue,  6 Jan 2026 17:59:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="om21sTr8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 775AAC116C6;
+	Tue,  6 Jan 2026 17:59:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722343;
-	bh=mcMJc+9UHVYMWE1DeyGsXR6LM2Ymm6rlsLjFeWvtfgE=;
+	s=korg; t=1767722347;
+	bh=mYTgNbc60G16wTGULF0KekEPbng2BZYeqqgQtskbUic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cJKIXU484AXDsW7mlNw+VLIDzxnNpkvg+tgksk+80DThdbllirzBQigNgb0ph7Lbb
-	 QOuNn8Vq9SA5aEXeGXAfCaUo5g75slBIAKmHK7pNsaeehfLk8PeIdHeadPKNZX4alL
-	 QdsNKy599cYCCx/gk7LbGvCwG6OSRCE1A24cUsxQ=
+	b=om21sTr8puAqt/WCOogvVjulpocxWPINaL5KvGHtiQKM6UlNuXkGjFU56lNGUALyx
+	 9XMVQnQ47Er2PziOkvQVuMygU84pTi+DOnTGoFTDn+gOUdzBlgJUbNAauSTuC9CwOR
+	 USqf7WbokN+bYrkP6GLVl9+nIKZXTy48jMKbClVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@google.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 204/312] mm/damon/tests/core-kunit: handle alloc failures on damon_test_split_at()
-Date: Tue,  6 Jan 2026 18:04:38 +0100
-Message-ID: <20260106170555.213390091@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Rui Wang <wangrui@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.18 195/312] LoongArch: Fix build errors for CONFIG_RANDSTRUCT
+Date: Tue,  6 Jan 2026 18:04:29 +0100
+Message-ID: <20260106170554.880546726@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -53,51 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit 5e80d73f22043c59c8ad36452a3253937ed77955 upstream.
+commit 3c250aecef62da81deb38ac6738ac0a88d91f1fc upstream.
 
-damon_test_split_at() is assuming all dynamic memory allocation in it will
-succeed.  Those are indeed likely in the real use cases since those
-allocations are too small to fail, but theoretically those could fail.  In
-the case, inappropriate memory access can happen.  Fix it by appropriately
-cleanup pre-allocated memory and skip the execution of the remaining tests
-in the failure cases.
+When CONFIG_RANDSTRUCT enabled, members of task_struct are randomized.
+There is a chance that TASK_STACK_CANARY be out of 12bit immediate's
+range and causes build errors. TASK_STACK_CANARY is naturally aligned,
+so fix it by replacing ld.d/st.d with ldptr.d/stptr.d which have 14bit
+immediates.
 
-Link: https://lkml.kernel.org/r/20251101182021.74868-6-sj@kernel.org
-Fixes: 17ccae8bb5c9 ("mm/damon: add kunit tests")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>
-Cc: David Gow <davidgow@google.com>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: <stable@vger.kernel.org>	[5.15+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202511240656.0NaPcJs1-lkp@intel.com/
+Suggested-by: Rui Wang <wangrui@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/tests/core-kunit.h |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ arch/loongarch/kernel/switch.S |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/mm/damon/tests/core-kunit.h
-+++ b/mm/damon/tests/core-kunit.h
-@@ -124,8 +124,19 @@ static void damon_test_split_at(struct k
- 	struct damon_target *t;
- 	struct damon_region *r, *r_new;
- 
-+	if (!c)
-+		kunit_skip(test, "ctx alloc fail");
- 	t = damon_new_target();
-+	if (!t) {
-+		damon_destroy_ctx(c);
-+		kunit_skip(test, "target alloc fail");
-+	}
- 	r = damon_new_region(0, 100);
-+	if (!r) {
-+		damon_destroy_ctx(c);
-+		damon_free_target(t);
-+		kunit_skip(test, "region alloc fail");
-+	}
- 	r->nr_accesses_bp = 420000;
- 	r->nr_accesses = 42;
- 	r->last_nr_accesses = 15;
+--- a/arch/loongarch/kernel/switch.S
++++ b/arch/loongarch/kernel/switch.S
+@@ -25,8 +25,8 @@ SYM_FUNC_START(__switch_to)
+ 	stptr.d a4, a0, THREAD_SCHED_CFA
+ #if defined(CONFIG_STACKPROTECTOR) && !defined(CONFIG_SMP)
+ 	la	t7, __stack_chk_guard
+-	LONG_L	t8, a1, TASK_STACK_CANARY
+-	LONG_S	t8, t7, 0
++	ldptr.d	t8, a1, TASK_STACK_CANARY
++	stptr.d	t8, t7, 0
+ #endif
+ 	move	tp, a2
+ 	cpu_restore_nonscratch a1
 
 
