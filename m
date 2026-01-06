@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3450B34CFDC;
-	Tue,  6 Jan 2026 17:20:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFAD034CFC8;
+	Tue,  6 Jan 2026 17:20:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720024; cv=none; b=NQpHs5pCTv8WdwN8Mlonu0od1RETwQqIBv7EWXFsgo6RnR+OqFqmhpsm2aHjHsr7nRWoEhYQQg+uIkB6F1n8sqXRNZyG9WNeq8tOMtxzfIJzp5C7hobZuNA9KgL610bHb9RoDr5I5r006MqJqQi8XoaVGGcjBZH6W8BO78MdYO4=
+	t=1767720027; cv=none; b=Y+xViMgc11P3K4Tde1pDtYH5StZAVnF0ygvcxSYbF/XDuUieF79scyZLGb4TeboFKfu8QPQ/RsuewG5z3EDl8gQ7rF/HBqG20AjkSTopVM7sCkvZBDE9EH6hZWl8q09oCLokxncwDbwuaC/pq48KS0h7Ds/+YYEMGCUE4jZYbtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720024; c=relaxed/simple;
-	bh=CVYIoF8+wabA/BFK2n+AE3L+vFzk8N1BdOx8BIqgz48=;
+	s=arc-20240116; t=1767720027; c=relaxed/simple;
+	bh=Y7TJsESkqZVpEJduGoBDEDtNKO+NyPNNTT6CQcKstOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TXJD3Da5vXRkJKlblpEeV4PkCGKJD28KncMcIpoWb9ZRyRmPpRVxH8lo+SXw0RajssYQzfilLqugBxztM2ap1ZWc6+LYm8laUafXSyHt1AJcz7dFiUGn1b+mJJEciGgp3r6uSgvzmT8LI7k5VWDoBxFI2Ml/owHyB/LVWhKndxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CPYswXqS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mhbRLrbulyduNcEfPdrFILH9RTaMdoHcDPBjsUEpa0Aubei57jR5/y98I5Pj8JuaXL6/Te5P0UqxbCI3ckzTr3hVmpNU3Xcm/ZIJVH/7hhY5GdTpbBQ2IE6R9BdzaChD2lA0oEU304ML7OiGjjtOfgDwMGEpLoVB23nK8sc76JY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UIDKUsY6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CPYswXqS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97D83C116C6;
-	Tue,  6 Jan 2026 17:20:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UIDKUsY6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D804CC116C6;
+	Tue,  6 Jan 2026 17:20:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720024;
-	bh=CVYIoF8+wabA/BFK2n+AE3L+vFzk8N1BdOx8BIqgz48=;
+	s=korg; t=1767720027;
+	bh=Y7TJsESkqZVpEJduGoBDEDtNKO+NyPNNTT6CQcKstOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CPYswXqSrgs1yOmV8886M4ohYuZWPvLLQzh/qcL3B1glV4hHR0Yf/px9607LGo/a/
-	 cNwPrMs9RZQucxyWPt61V9k5e7cCJT21QAaNtfRKqcKWFiDKnsyPaZUdCyrmp+xo8J
-	 F7w7h1dpiEz5hZ0RY574aSpf/XCdA34DkQpONP1E=
+	b=UIDKUsY6utx9cRrghWDa/RaIc64/3LMl4Yew8cUipk8fAtGKj5+2YyP6ETnO+WEs5
+	 sQNaBgOHzKoyUsdZ5wIlBq/ofSc57P2DKzV+dz/hnuRvNgpnT4BoHLxTAvDKot7Vfb
+	 mJ2pSitZUYg5kIPyTVISwLfM+M4fGySvyrsN25N0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
 	Takashi Iwai <tiwai@suse.de>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 112/567] ALSA: vxpocket: Fix resource leak in vxpocket_probe error path
-Date: Tue,  6 Jan 2026 17:58:14 +0100
-Message-ID: <20260106170455.471903387@linuxfoundation.org>
+Subject: [PATCH 6.12 113/567] ALSA: pcmcia: Fix resource leak in snd_pdacf_probe error path
+Date: Tue,  6 Jan 2026 17:58:15 +0100
+Message-ID: <20260106170455.509892359@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -53,43 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 2a03b40deacbd293ac9aed0f9b11197dad54fe5f ]
+[ Upstream commit 5032347c04ba7ff9ba878f262e075d745c06a2a8 ]
 
-When vxpocket_config() fails, vxpocket_probe() returns the error code
+When pdacf_config() fails, snd_pdacf_probe() returns the error code
 directly without freeing the sound card resources allocated by
 snd_card_new(), which leads to a memory leak.
 
-Add proper error handling to free the sound card and clear the
-allocation bit when vxpocket_config() fails.
+Add proper error handling to free the sound card and clear the card
+list entry when pdacf_config() fails.
 
 Fixes: 15b99ac17295 ("[PATCH] pcmcia: add return value to _config() functions")
+Suggested-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20251215042652.695-1-vulab@iscas.ac.cn
+Link: https://patch.msgid.link/20251215090433.211-1-vulab@iscas.ac.cn
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pcmcia/vx/vxpocket.c | 8 +++++++-
+ sound/pcmcia/pdaudiocf/pdaudiocf.c | 8 +++++++-
  1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pcmcia/vx/vxpocket.c b/sound/pcmcia/vx/vxpocket.c
-index d2d5f64d63b4..e1f5b8cfeef0 100644
---- a/sound/pcmcia/vx/vxpocket.c
-+++ b/sound/pcmcia/vx/vxpocket.c
-@@ -284,7 +284,13 @@ static int vxpocket_probe(struct pcmcia_device *p_dev)
+diff --git a/sound/pcmcia/pdaudiocf/pdaudiocf.c b/sound/pcmcia/pdaudiocf/pdaudiocf.c
+index 494460746614..7531e89e35da 100644
+--- a/sound/pcmcia/pdaudiocf/pdaudiocf.c
++++ b/sound/pcmcia/pdaudiocf/pdaudiocf.c
+@@ -131,7 +131,13 @@ static int snd_pdacf_probe(struct pcmcia_device *link)
+ 	link->config_index = 1;
+ 	link->config_regs = PRESENT_OPTION;
  
- 	vxp->p_dev = p_dev;
- 
--	return vxpocket_config(p_dev);
-+	err = vxpocket_config(p_dev);
+-	return pdacf_config(link);
++	err = pdacf_config(link);
 +	if (err < 0) {
-+		card_alloc &= ~(1 << i);
++		card_list[i] = NULL;
 +		snd_card_free(card);
 +		return err;
 +	}
 +	return 0;
  }
  
- static void vxpocket_detach(struct pcmcia_device *link)
+ 
 -- 
 2.51.0
 
