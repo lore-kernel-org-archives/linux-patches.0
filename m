@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99C1364E89;
-	Tue,  6 Jan 2026 17:53:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03EE5364E89;
+	Tue,  6 Jan 2026 17:53:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722021; cv=none; b=RhZaXdmefbnNXmr770WvlawwFKqLREEEKiGFqGW5Zlg0Dc7ZGZXSXatJNjbkxP1PiM9j+HWJmn0gQ1Dwxs2fx5+RvAop/R2rBZcpeRvNMjw5OHaFiXq7IYpmVpNa46YFhefBb9Y1Chrj6K/1Tj2pUiwGgmYO9Cb/JJU+agM+3ZA=
+	t=1767722024; cv=none; b=W1BEavAvK+jY4qC3/95QYmzg7n4eBrZrJV/7TqVUtsxPUeTjFd2jMbVCMsetpfunp6vCwMzkeHZsrSizTW8kAf2SXPFhHQbNp5pyFdkgykmTWeq0nwxjK8QdVVQwxw2Gc1JxkjNaTWvc9zSsAErBODTP4mW6dODGcJqwFQMzfts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722021; c=relaxed/simple;
-	bh=MjkhwzmADecJFBFrgKe20EiSuyX85L14oVtepKkopws=;
+	s=arc-20240116; t=1767722024; c=relaxed/simple;
+	bh=lbcQRH7pvMkqdW5WCsYNO0Kn6uOpoz2lvehG+MI3DZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=folKq7wuTRgnqxYsSZngNWyW6WwTyaR6GU24wHIaJfn4fiC9iuQ1RK6dEMAdOLm/tZpF6ve5AtQ1Weefa92HQo4QJNAgZAaHt6t+Sl/n4nmnfo3qG0H/Kkn0pNbbFQHSAU84btVp6UraLBSetaJ+y0PbUW5DB3Rs1LsvGnI6La0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hEI2pUNr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aUQEX81sokMYMi22/uH2jMuYEPyJ7pTteJJo0j9dIEfh5Ms4FciZ/O/bae/b015rR93GkkT4R1Tv1EToOehBvIywtMFNQ8n/bK5eWrBW04hiiyUYMxwqPStk+XUyCAzZt5z441NH6Is9Nev+yRO6yTjTjREdylcmuz/G0xs57hI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YKSSVRUe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hEI2pUNr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5506CC116C6;
-	Tue,  6 Jan 2026 17:53:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YKSSVRUe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 660DDC16AAE;
+	Tue,  6 Jan 2026 17:53:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722020;
-	bh=MjkhwzmADecJFBFrgKe20EiSuyX85L14oVtepKkopws=;
+	s=korg; t=1767722023;
+	bh=lbcQRH7pvMkqdW5WCsYNO0Kn6uOpoz2lvehG+MI3DZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hEI2pUNrQdg7FeIPS2SLrxA1+QK2yciaNUCeYkmfJDWeRFMx5SQHeoT4oFhvG5O3X
-	 9Ka9mFt3zP9nmyOt9tokMRCNcn0A/+C5CXiJ5B18sJ4wrzK9JxuYvDMQgSkeVhL6pV
-	 A33TRs+61C+utzqpgoIHu2YEJMn9K3Uxa5JVPo9s=
+	b=YKSSVRUeWIscaKVWhWQAPGHyf3oD36lFLh0BMrfSjXwTa1OToc3TNz5OcCHHqtglE
+	 TXSfRc+Fo3xDZf6Ihf88jtkIO86a2HPdBPgs+URRzGbCtDOpLlwM+qaB+UPhUXM3fU
+	 ZVNiw10EyQL0ErxdMs7aH/6U2p0eRcDyn6HidPwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 142/312] media: rc: st_rc: Fix reset control resource leak
-Date: Tue,  6 Jan 2026 18:03:36 +0100
-Message-ID: <20260106170552.979508019@linuxfoundation.org>
+	wang.yaxin@zte.com.cn,
+	mhiramat@kernel.org,
+	mark.rutland@arm.com,
+	mathieu.desnoyers@efficios.com,
+	zhang.run@zte.com.cn,
+	yang.yang29@zte.com.cn,
+	Shengming Hu <hu.shengming@zte.com.cn>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.18 125/312] fgraph: Check ftrace_pids_enabled on registration for early filtering
+Date: Tue,  6 Jan 2026 18:03:19 +0100
+Message-ID: <20260106170552.366326434@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -52,39 +56,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Shengming Hu <hu.shengming@zte.com.cn>
 
-commit 1240abf4b71f632f0117b056e22488e4d9808938 upstream.
+commit 1650a1b6cb1ae6cb99bb4fce21b30ebdf9fc238e upstream.
 
-The driver calls reset_control_get_optional_exclusive() but never calls
-reset_control_put() in error paths or in the remove function. This causes
-a resource leak when probe fails after successfully acquiring the reset
-control, or when the driver is unloaded.
+When registering ftrace_graph, check if ftrace_pids_enabled is active.
+If enabled, assign entryfunc to fgraph_pid_func to ensure filtering
+is performed before executing the saved original entry function.
 
-Switch to devm_reset_control_get_optional_exclusive() to automatically
-manage the reset control resource.
-
-Fixes: a4b80242d046 ("media: st-rc: explicitly request exclusive reset control")
 Cc: stable@vger.kernel.org
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Reviewed-by: Patrice Chotard <patrice.chotard@foss.st.com>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Cc: <wang.yaxin@zte.com.cn>
+Cc: <mhiramat@kernel.org>
+Cc: <mark.rutland@arm.com>
+Cc: <mathieu.desnoyers@efficios.com>
+Cc: <zhang.run@zte.com.cn>
+Cc: <yang.yang29@zte.com.cn>
+Link: https://patch.msgid.link/20251126173331679XGVF98NLhyLJRdtNkVZ6w@zte.com.cn
+Fixes: df3ec5da6a1e7 ("function_graph: Add pid tracing back to function graph tracer")
+Signed-off-by: Shengming Hu <hu.shengming@zte.com.cn>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/st_rc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/fgraph.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/media/rc/st_rc.c
-+++ b/drivers/media/rc/st_rc.c
-@@ -284,7 +284,7 @@ static int st_rc_probe(struct platform_d
- 	else
- 		rc_dev->rx_base = rc_dev->base;
+--- a/kernel/trace/fgraph.c
++++ b/kernel/trace/fgraph.c
+@@ -1377,6 +1377,13 @@ int register_ftrace_graph(struct fgraph_
  
--	rc_dev->rstc = reset_control_get_optional_exclusive(dev, NULL);
-+	rc_dev->rstc = devm_reset_control_get_optional_exclusive(dev, NULL);
- 	if (IS_ERR(rc_dev->rstc)) {
- 		ret = PTR_ERR(rc_dev->rstc);
- 		goto err;
+ 	ftrace_graph_active++;
+ 
++	/* Always save the function, and reset at unregistering */
++	gops->saved_func = gops->entryfunc;
++#ifdef CONFIG_DYNAMIC_FTRACE
++	if (ftrace_pids_enabled(&gops->ops))
++		gops->entryfunc = fgraph_pid_func;
++#endif
++
+ 	if (ftrace_graph_active == 2)
+ 		ftrace_graph_disable_direct(true);
+ 
+@@ -1396,8 +1403,6 @@ int register_ftrace_graph(struct fgraph_
+ 	} else {
+ 		init_task_vars(gops->idx);
+ 	}
+-	/* Always save the function, and reset at unregistering */
+-	gops->saved_func = gops->entryfunc;
+ 
+ 	gops->ops.flags |= FTRACE_OPS_FL_GRAPH;
+ 
 
 
