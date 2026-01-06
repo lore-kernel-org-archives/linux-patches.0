@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CDAA36BCD0;
-	Tue,  6 Jan 2026 17:56:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C6AA36BCD0;
+	Tue,  6 Jan 2026 17:56:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722183; cv=none; b=tU/QpljKOjVnzB6exxsr29j/7hJiHqQ5cd+w2h8QsmRFZLJQDvu+p7AargLAGtrIpiYw6BXRselrqJ5ByQU+9iU+ZC4fV3oPSseX1ZVvlZAzFpt4Ie3gysjy1emn0y/HdSUJaLnyBP4ys7R2/yrISQ4uCp7QmEtQkvVCd8rtOPE=
+	t=1767722187; cv=none; b=FFDOZa5A0IC5U/O5yFTp/LvzhbmBYtBGiTM8cwiApUtgdnHKIrJuESJrWnAVwtqHxULw3leN03tHzERcnZHv6YdY4Rl02C4hZ4GXUtriHGDxngh2I4kjg31N3PlXDU29Enb05RgYfYkZW4wHYKANcdO28HOPvkaNPASLhhRrXsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722183; c=relaxed/simple;
-	bh=5TK8J38FFhoZuBqD5ZU6Ea3IXRJDUbq6bKljbloIEHE=;
+	s=arc-20240116; t=1767722187; c=relaxed/simple;
+	bh=wqgfab9O/duJON2dUJo8HgTSnFGz48S1MqVksPKyPMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pzHf3KsKMuGkt3HbQMUfuvp6FMr/X/yDKsIoMn86yljqfRmXmoYh22yJpL7wJzVz9ZxfizISIqI8vEEQd67M0RUCdDxKuZyPv576PHTPqaY6sQic4sVxRAZ5ISS7ALuN+KwJNGKKhM3TUxVvHKv35nRT57GNAqIkup8PfMHRIao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NIacGt89; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r05ryGHv2P7LGSMyR5G2vnUGH0PsJj8Mdmf7IQYm+dCom5opbfMYuxTx3szFOU62nhHXSA/Jpc7WoDAwFPwd7uVQLF8CNWHU+yes9Jg2UrglTSeSLL1P+z+wBob0qtmMnZpjGJmezN7XjAFm+cfpH48nh8+z4/eYMy/RLOzLTTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fhmN8mOE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NIacGt89"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A163EC116C6;
-	Tue,  6 Jan 2026 17:56:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fhmN8mOE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2309CC116C6;
+	Tue,  6 Jan 2026 17:56:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722183;
-	bh=5TK8J38FFhoZuBqD5ZU6Ea3IXRJDUbq6bKljbloIEHE=;
+	s=korg; t=1767722186;
+	bh=wqgfab9O/duJON2dUJo8HgTSnFGz48S1MqVksPKyPMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NIacGt89xDmRvzRAOuloGLVvRBB+KHb4M5SDtATLxTkoZBEngAjNf+qwW9vKTWbAC
-	 irHOnlwjLzJ1md08+hRlUCksvOV1nPUyYzaoQ9bBCrI1pzin7ynjcMmgurJ5mNqqOk
-	 pmTKXYVczQO41Rc3Mr+cYnq5HAz+I6cDAoXshAlg=
+	b=fhmN8mOEqG0NjjGBwhZ2rGM8PpiUb6sTX5q9nZQ6o0Yh+EImOtetGXF5VAP7eJYic
+	 HRVcxhtvPHfR1XVcMKGkAXu+37SuFgN8dBsOCmWj6wyZX8OUkOPdefnJsEr9zC1Z1o
+	 TjPNFJXR0kRo6tDwWgd6PzBijnDgEb3EApGXn4yg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.18 162/312] power: supply: max77705: Fix potential IRQ chip conflict when probing two devices
-Date: Tue,  6 Jan 2026 18:03:56 +0100
-Message-ID: <20260106170553.697338484@linuxfoundation.org>
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Jai Luthra <jai.luthra@ideasonboard.com>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.18 189/312] media: i2c: imx219: Fix 1920x1080 mode to use 1:1 pixel aspect ratio
+Date: Tue,  6 Jan 2026 18:04:23 +0100
+Message-ID: <20260106170554.668064376@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -50,80 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Dave Stevenson <dave.stevenson@raspberrypi.com>
 
-commit 1cb053ea2e1dedd8f2d9653b7c3ca5b93c8c9275 upstream.
+commit 9ef6e4db152c34580cc52792f32485c193945395 upstream.
 
-MAX77705 charger is most likely always a single device on the board,
-however nothing stops board designers to have two of them, thus same
-device driver could probe twice. Or user could manually try to probing
-second time.
+Commit 0af46fbc333d ("media: i2c: imx219: Calculate crop rectangle
+dynamically") meant that the 1920x1080 mode switched from using no
+binning to using vertical binning but no horizontal binning, which
+resulted in stretched pixels.
 
-Device driver is not ready for that case, because it allocates
-statically 'struct regmap_irq_chip' as non-const and stores during
-probe in 'irq_drv_data' member a pointer to per-probe state
-container ('struct max77705_charger_data').  devm_regmap_add_irq_chip()
-does not make a copy of 'struct regmap_irq_chip' but stores the pointer.
+Until proper controls are available to independently select horizontal
+and vertical binning, restore the original 1:1 pixel aspect ratio by
+forcing binning to be uniform in both directions.
 
-Second probe - either successful or failure - would overwrite the
-'irq_drv_data' from previous device probe, so interrupts would be
-executed in a wrong context.
-
-Fixes: a6a494c8e3ce ("power: supply: max77705: Add charger driver for Maxim 77705")
 Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://patch.msgid.link/20251023102905.71535-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 0af46fbc333d ("media: i2c: imx219: Calculate crop rectangle dynamically")
+Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+[Add comment & reword commit message]
+Signed-off-by: Jai Luthra <jai.luthra@ideasonboard.com>
+Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/max77705_charger.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/media/i2c/imx219.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/power/supply/max77705_charger.c
-+++ b/drivers/power/supply/max77705_charger.c
-@@ -60,7 +60,7 @@ static const struct regmap_irq max77705_
- 	REGMAP_IRQ_REG_LINE(MAX77705_AICL_I, BITS_PER_BYTE),
- };
+--- a/drivers/media/i2c/imx219.c
++++ b/drivers/media/i2c/imx219.c
+@@ -856,7 +856,7 @@ static int imx219_set_pad_format(struct
+ 	const struct imx219_mode *mode;
+ 	struct v4l2_mbus_framefmt *format;
+ 	struct v4l2_rect *crop;
+-	u8 bin_h, bin_v;
++	u8 bin_h, bin_v, binning;
+ 	u32 prev_line_len;
  
--static struct regmap_irq_chip max77705_charger_irq_chip = {
-+static const struct regmap_irq_chip max77705_charger_irq_chip = {
- 	.name			= "max77705-charger",
- 	.status_base		= MAX77705_CHG_REG_INT,
- 	.mask_base		= MAX77705_CHG_REG_INT_MASK,
-@@ -567,6 +567,7 @@ static int max77705_charger_probe(struct
- {
- 	struct power_supply_config pscfg = {};
- 	struct max77705_charger_data *chg;
-+	struct regmap_irq_chip *chip_desc;
- 	struct device *dev;
- 	struct regmap_irq_chip_data *irq_data;
- 	int ret;
-@@ -580,6 +581,13 @@ static int max77705_charger_probe(struct
- 	chg->dev = dev;
- 	i2c_set_clientdata(i2c, chg);
+ 	format = v4l2_subdev_state_get_format(state, 0);
+@@ -877,9 +877,12 @@ static int imx219_set_pad_format(struct
+ 	bin_h = min(IMX219_PIXEL_ARRAY_WIDTH / format->width, 2U);
+ 	bin_v = min(IMX219_PIXEL_ARRAY_HEIGHT / format->height, 2U);
  
-+	chip_desc = devm_kmemdup(dev, &max77705_charger_irq_chip,
-+				 sizeof(max77705_charger_irq_chip),
-+				 GFP_KERNEL);
-+	if (!chip_desc)
-+		return -ENOMEM;
-+	chip_desc->irq_drv_data = chg;
++	/* Ensure bin_h and bin_v are same to avoid 1:2 or 2:1 stretching */
++	binning = min(bin_h, bin_v);
 +
- 	chg->regmap = devm_regmap_init_i2c(i2c, &max77705_chg_regmap_config);
- 	if (IS_ERR(chg->regmap))
- 		return PTR_ERR(chg->regmap);
-@@ -599,11 +607,9 @@ static int max77705_charger_probe(struct
- 	if (IS_ERR(chg->psy_chg))
- 		return PTR_ERR(chg->psy_chg);
- 
--	max77705_charger_irq_chip.irq_drv_data = chg;
- 	ret = devm_regmap_add_irq_chip(chg->dev, chg->regmap, i2c->irq,
- 					IRQF_ONESHOT, 0,
--					&max77705_charger_irq_chip,
--					&irq_data);
-+					chip_desc, &irq_data);
- 	if (ret)
- 		return dev_err_probe(dev, ret, "failed to add irq chip\n");
+ 	crop = v4l2_subdev_state_get_crop(state, 0);
+-	crop->width = format->width * bin_h;
+-	crop->height = format->height * bin_v;
++	crop->width = format->width * binning;
++	crop->height = format->height * binning;
+ 	crop->left = (IMX219_NATIVE_WIDTH - crop->width) / 2;
+ 	crop->top = (IMX219_NATIVE_HEIGHT - crop->height) / 2;
  
 
 
