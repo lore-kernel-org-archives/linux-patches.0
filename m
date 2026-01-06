@@ -1,36 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2CD1DF965;
-	Tue,  6 Jan 2026 17:56:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 759DF2F9998;
+	Tue,  6 Jan 2026 17:56:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767722206; cv=none; b=JVw9YIRd0tbajvQjsvh/wqtewzslZ4ypNgZzt7WZOnXhYA3WxdAXXYv+0DnvtW1ru3BrMut6tRSngwZv8J5ASbjRO0XiDAd9TldsujKyqg/uEv+QnCeTvo+Q1Uvwro1N82xXvZHF+1Qwzm0RvrqxCClvsxoOmEOq2yWv4Um+r5s=
+	t=1767722210; cv=none; b=OUWz4cYYoENqNHr6wu9ENBTcXjGmhY96XHPX33d/yx4WZfhylJBwNuLW7KUaZ1UaO092NJ0ATIgTey3zAmNxp79xnIlK7YVZjRSnhes9aeFiFacpe8lFGYc0hQ7NtMFensbKU4ld9irMml2idUxU9PRiVGYCzeGrSyO+ITbPxoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767722206; c=relaxed/simple;
-	bh=veHRAwMoWI3dtoEyE9Q7trsTMfkmGmaQeu/PcSymCFU=;
+	s=arc-20240116; t=1767722210; c=relaxed/simple;
+	bh=+KfqX7EmozrYj0wWKy8LetnQ0uJXy3XDR1Bd6krtp8I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uUuaEv8oDHAbqQAVusBx/BehOzcF6qgSGqDXgYhQq2TAUO0H9qZcAj1In80tCHoRjAd5QJv0gcmbRnAh6ypl2xlXbSK4CuL7ShJxqeyUaGyxHxbYCuF2O+tTtdT1UhFD+I10i6g9j4/vNwKnDfy9wAqEQwHrRugkZe22jSLys/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i1Q2fs76; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kNTlcUfU44o3uFF145xhfbXnCxTS3aJ1YGKPGqbA1FhEpQhq+rrSFt6DPP45NzCK/Zhw59dVTS3Uza+sFrtUbg55xszjE9AP631NPaHuK35e1qihNV4iEZVmtBVjCfBglMU72XpmqbPEcbFIml1MspmLZRvZ4lAXaLviIV7YOuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ePrqrNGg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i1Q2fs76"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2DB6C116C6;
-	Tue,  6 Jan 2026 17:56:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ePrqrNGg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D93ABC16AAE;
+	Tue,  6 Jan 2026 17:56:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767722206;
-	bh=veHRAwMoWI3dtoEyE9Q7trsTMfkmGmaQeu/PcSymCFU=;
+	s=korg; t=1767722210;
+	bh=+KfqX7EmozrYj0wWKy8LetnQ0uJXy3XDR1Bd6krtp8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i1Q2fs767KAQJrjehb7bbgZ1zMzD/MFvEI1JkeeZDbymmqP0yG4hZzPAj4XFc+nTl
-	 jaJ+JpzFVzqZc2BTVg+qjqcUXW7km2f06dWmwbK93+e0RNk4VpZ5Fw0IClUCxlGctV
-	 3SZgbb9cQQD7qKVNMw0vOf//3R7WoAkATOTMnK/o=
+	b=ePrqrNGgBUudXCuaiWRuZKDAQxj8YEjP3NXLhfdt9lmpgU+ps62j4298+74Mj7cJ4
+	 h0jFdoqjA8rJkcZKkLlaYf+kl/jqulhlgmFTdGFCfXDrElcBDIqHy7EH5cx50Cnogl
+	 bTdMqM8JRqAPd71sfjK+SX2Yys817iTdak6ySBxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.18 194/312] LoongArch: Fix arch_dup_task_struct() for CONFIG_RANDSTRUCT
-Date: Tue,  6 Jan 2026 18:04:28 +0100
-Message-ID: <20260106170554.844496690@linuxfoundation.org>
+	David Hildenbrand <david@redhat.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 163/312] powerpc/pseries/cmm: adjust BALLOON_MIGRATE when migrating pages
+Date: Tue,  6 Jan 2026 18:03:57 +0100
+Message-ID: <20260106170553.732893803@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -49,37 +55,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: David Hildenbrand <david@redhat.com>
 
-commit a91b446e359aa96cc2655318789fd37441337415 upstream.
+commit 0da2ba35c0d532ca0fe7af698b17d74c4d084b9a upstream.
 
-Now the optimized version of arch_dup_task_struct() for LoongArch
-assumes 'thread' is the last member of 'task_struct'. But this is
-not true if CONFIG_RANDSTRUCT is enabled after Linux-6.16.
+Let's properly adjust BALLOON_MIGRATE like the other drivers.
 
-So fix the arch_dup_task_struct() function for CONFIG_RANDSTRUCT by
-copying the whole 'task_struct'.
+Note that the INFLATE/DEFLATE events are triggered from the core when
+enqueueing/dequeueing pages.
 
-Cc: stable@vger.kernel.org   # 6.16+
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+This was found by code inspection.
+
+Link: https://lkml.kernel.org/r/20251021100606.148294-3-david@redhat.com
+Fixes: fe030c9b85e6 ("powerpc/pseries/cmm: Implement balloon compaction")
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/process.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ arch/powerpc/platforms/pseries/cmm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/loongarch/kernel/process.c
-+++ b/arch/loongarch/kernel/process.c
-@@ -130,6 +130,11 @@ int arch_dup_task_struct(struct task_str
+--- a/arch/powerpc/platforms/pseries/cmm.c
++++ b/arch/powerpc/platforms/pseries/cmm.c
+@@ -532,6 +532,7 @@ static int cmm_migratepage(struct balloo
  
- 	preempt_enable();
+ 	spin_lock_irqsave(&b_dev_info->pages_lock, flags);
+ 	balloon_page_insert(b_dev_info, newpage);
++	__count_vm_event(BALLOON_MIGRATE);
+ 	b_dev_info->isolated_pages--;
+ 	spin_unlock_irqrestore(&b_dev_info->pages_lock, flags);
  
-+	if (IS_ENABLED(CONFIG_RANDSTRUCT)) {
-+		memcpy(dst, src, sizeof(struct task_struct));
-+		return 0;
-+	}
-+
- 	if (!used_math())
- 		memcpy(dst, src, offsetof(struct task_struct, thread.fpu.fpr));
- 	else
 
 
