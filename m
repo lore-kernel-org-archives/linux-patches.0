@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EEAF34CFC9;
-	Tue,  6 Jan 2026 17:20:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033D834CFD6;
+	Tue,  6 Jan 2026 17:20:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767720018; cv=none; b=eBdQkhDETNuV1D7zBiAkVHH2zQZSEljwHUX+aXIRaXMT6sitKNs59w9K957bnt/1uVbE5q4SHC0Tqa7nyrpj01tpgJOGKsZaz0E+7EC1A5+CLSAg+Iqo+szWOFNiqTIXt5ZJ7QzKpDacRqzkym5uEUOuxaT9B6g+5n38Rao8FNw=
+	t=1767720021; cv=none; b=PMRw+HI6GTtFaXkLzlHoDdBOnsIsYfoSLNsMQkCykKpkvhtbNy3D0y2JU0JT2H5/+BC9WkNxAvZ9vBAKHyX2PEcBYHAMYXprG1o26kvrM7DqPeVWnyEqBwaqfrgaochehWKuLmurVNijLrXjj7LbJX2K5ZjrPrvv6t2sJrI4mow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767720018; c=relaxed/simple;
-	bh=RoWILjF+wzYTZnJ3KBx72UAPcAk1NN+egl7/ers5zeQ=;
+	s=arc-20240116; t=1767720021; c=relaxed/simple;
+	bh=dD3+Hs54T1oHQiGFq7qokp2Rpv1DcDqHYfE4rE1xNPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tiiGs5oBtUAlPS7oGtVbaa9UooLg3HKBHevIsva6kdwu6gZLOsTz93zdJJ37nc1cDcFkI2f1u5NZFeMnBfWlokNED+o+wTIojzL0h30jObRopQntUjLYAurxCTo5YmF/CKj+MQxXccbZ5Ph6Wbwg7NNXXDtqBeKHCq5SyhTo/0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CPhqWfTS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u0FxnQniVEQT6UBj51BDts1oUi1sY4MkPmZOh0poZ+hp+rEHbVrGuj6Rs9am0fHshpbx2uAs3gDbFnfbU28tjDazp2s+Jld1YR86iU4tji7Sk5Ky5IDNMSaJtfZIpHiAAo+TeC9VdGMaoqAOk19pEaG6H3vOiI4n30BpdnBdePA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c/KyXoZx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CPhqWfTS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4229BC116C6;
-	Tue,  6 Jan 2026 17:20:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c/KyXoZx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C603C116C6;
+	Tue,  6 Jan 2026 17:20:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767720017;
-	bh=RoWILjF+wzYTZnJ3KBx72UAPcAk1NN+egl7/ers5zeQ=;
+	s=korg; t=1767720020;
+	bh=dD3+Hs54T1oHQiGFq7qokp2Rpv1DcDqHYfE4rE1xNPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CPhqWfTSVB3vD8sHoCCtYfGRpDHEWS6DcP8MF7Ry9gNCDohA+WKt9XYKfh7qJ5GA6
-	 SXz8wPF8+urVobmb2WTrDgRIPU6/LF+1uPlh/jR0m8SVegcdRSBvEkzh2KIGE3EI5u
-	 pn0T367XghMeFf75MUN+YoBDooeFjDKBmhv3epks=
+	b=c/KyXoZxPj4Cnw1J5ptY7GT6TCAl7u4KomSFDl8W52dVcOB3dfqN8ulW4bmyNnyc/
+	 8AuqLpIjKd6/4DnYxVOafntLN8jnkGxFsOAfIZtjPY4iQRgj6CSPPT9IC2tugXnbAK
+	 ZvfFUL/ZrL/HS3DaEJVD9X56RZeyGV40w+vV00Uk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.12 102/567] can: gs_usb: gs_can_open(): fix error handling
-Date: Tue,  6 Jan 2026 17:58:04 +0100
-Message-ID: <20260106170455.102659029@linuxfoundation.org>
+	Yongxin Liu <yongxin.liu@windriver.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 111/567] x86/fpu: Fix FPU state core dump truncation on CPUs with no extended xfeatures
+Date: Tue,  6 Jan 2026 17:58:13 +0100
+Message-ID: <20260106170455.435476784@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -49,43 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Yongxin Liu <yongxin.liu@windriver.com>
 
-commit 3e54d3b4a8437b6783d4145c86962a2aa51022f3 upstream.
+[ Upstream commit c8161e5304abb26e6c0bec6efc947992500fa6c5 ]
 
-Commit 2603be9e8167 ("can: gs_usb: gs_can_open(): improve error handling")
-added missing error handling to the gs_can_open() function.
+Zero can be a valid value of num_records. For example, on Intel Atom x6425RE,
+only x87 and SSE are supported (features 0, 1), and fpu_user_cfg.max_features
+is 3. The for_each_extended_xfeature() loop only iterates feature 2, which is
+not enabled, so num_records = 0. This is valid and should not cause core dump
+failure.
 
-The driver uses 2 USB anchors to track the allocated URBs: the TX URBs in
-struct gs_can::tx_submitted for each netdev and the RX URBs in struct
-gs_usb::rx_submitted for the USB device. gs_can_open() allocates the RX
-URBs, while TX URBs are allocated during gs_can_start_xmit().
+The issue is that dump_xsave_layout_desc() returns 0 for both genuine errors
+(dump_emit() failure) and valid cases (no extended features). Use negative
+return values for errors and only abort on genuine failures.
 
-The cleanup in gs_can_open() kills all anchored dev->tx_submitted
-URBs (which is not necessary since the netdev is not yet registered), but
-misses the parent->rx_submitted URBs.
-
-Fix the problem by killing the rx_submitted instead of the tx_submitted.
-
-Fixes: 2603be9e8167 ("can: gs_usb: gs_can_open(): improve error handling")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251210-gs_usb-fix-error-handling-v1-1-d6a5a03f10bb@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ba386777a30b ("x86/elf: Add a new FPU buffer layout info to x86 core files")
+Signed-off-by: Yongxin Liu <yongxin.liu@windriver.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://patch.msgid.link/20251210000219.4094353-2-yongxin.liu@windriver.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/gs_usb.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/fpu/xstate.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/can/usb/gs_usb.c
-+++ b/drivers/net/can/usb/gs_usb.c
-@@ -1071,7 +1071,7 @@ out_usb_free_urb:
- 	usb_free_urb(urb);
- out_usb_kill_anchored_urbs:
- 	if (!parent->active_channels) {
--		usb_kill_anchored_urbs(&dev->tx_submitted);
-+		usb_kill_anchored_urbs(&parent->rx_submitted);
+diff --git a/arch/x86/kernel/fpu/xstate.c b/arch/x86/kernel/fpu/xstate.c
+index 22abb5ee0cf2..aacb59c4a35c 100644
+--- a/arch/x86/kernel/fpu/xstate.c
++++ b/arch/x86/kernel/fpu/xstate.c
+@@ -1879,7 +1879,7 @@ static int dump_xsave_layout_desc(struct coredump_params *cprm)
+ 		};
  
- 		if (dev->feature & GS_CAN_FEATURE_HW_TIMESTAMP)
- 			gs_usb_timestamp_stop(parent);
+ 		if (!dump_emit(cprm, &xc, sizeof(xc)))
+-			return 0;
++			return -1;
+ 
+ 		num_records++;
+ 	}
+@@ -1917,7 +1917,7 @@ int elf_coredump_extra_notes_write(struct coredump_params *cprm)
+ 		return 1;
+ 
+ 	num_records = dump_xsave_layout_desc(cprm);
+-	if (!num_records)
++	if (num_records < 0)
+ 		return 1;
+ 
+ 	/* Total size should be equal to the number of records */
+-- 
+2.51.0
+
 
 
