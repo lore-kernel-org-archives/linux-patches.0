@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB04919258E;
-	Tue,  6 Jan 2026 17:17:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D48E19258E;
+	Tue,  6 Jan 2026 17:17:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767719822; cv=none; b=OV4guVPwm+JP8RrfZa+qblUHrkcStb44dix4WnhaGbWZLEvJB/kr5KqDzjXZkXOs8CxmkEw770DYnFT4LWf1p8wGVs8u5CZWJW9RSEc9WZpvibHo/yoROklxA7jybPIz6DR0c8gdpQ5H8asZu5AFIPMEAa9F/lp0VWT6+E5QPfQ=
+	t=1767719825; cv=none; b=M1qlDKek0C3BU3E1RetNhvEpKCG1Ix2soppJLIx0BXn0zKiEZ3AKva+xIVKSKcg+x9KmWe0xG9RMb1CPavZjoDZadsO0x9uZMFW6ZWZZS0ONSLqWikE7feUjIQDzkxfRVnuNoWwPmXX8n3paIUz0QBTTWVa6M3dVS87+iEhdo9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767719822; c=relaxed/simple;
-	bh=hhyZ2KMsl3LFTWivDFwyvkzV3dSg6ozrPM+zWyn3bOE=;
+	s=arc-20240116; t=1767719825; c=relaxed/simple;
+	bh=GelFoTVlYnZ9LRVYc3oLAdjzjDNJkstGIqbHbHB7W5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LDHEmbEXX5hO2fuZNNmbJSFwVgXa+DMLMlZIXQ10xWC3i3EwdvI9ph2YiyaDfBBzH/QVVLzW3HHFP2cHThs2z4AVRbK1rBNs17raPdDBEXumvtjcH4bR0oAoWpA+duN9aQKrXeMzRyiiPCkE2Yu4r2vpOPd2Gb/Lzid7Lwycrgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tIMGgz7J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EUwkUao3NFUNcBxDGdGKLlttt2JIuAeGhCwvk3WwgpY5s798Lcj00pXq80wq5mhEKYFvakgIzeYc8wDd2S5nsVYR+ogZvlfmeFcHvGPIqnwDEnLuUlZ+hSCoL7zZgyrdpA50aBTEwariDupM0ePOi+GRULeack5yq0k/WmeO+6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gmOsRA0Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tIMGgz7J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C079C116C6;
-	Tue,  6 Jan 2026 17:17:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gmOsRA0Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A03FBC19423;
+	Tue,  6 Jan 2026 17:17:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767719821;
-	bh=hhyZ2KMsl3LFTWivDFwyvkzV3dSg6ozrPM+zWyn3bOE=;
+	s=korg; t=1767719825;
+	bh=GelFoTVlYnZ9LRVYc3oLAdjzjDNJkstGIqbHbHB7W5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tIMGgz7J+8zdNincY8o1aZORzGm7It7U9gSJtKraTEqgEk7oSGa8n7XpyvWSmchzr
-	 lwKKgTCijAcDhRxFWGt8QezNs5yYQ1AYGpvUpYgaZxbvT8yiLg21mHP/d7+hfhh+8Z
-	 6ZhZ7HC9oHxxdjwYKeF6XDUHnL3xsu7bdU12r8Qw=
+	b=gmOsRA0ZNJtfBskFpvAA69iZecp2GqQXdybDZyOxhp24oDOKM3MGO1B1P6+zkda+R
+	 RO6ODsIrmUDKCel90jfeCY8du5xlZbwYym1bTmpTq/dhCiBdF2QKTdab3jHT+gxvGq
+	 iXIVMfvY4xhBi/CjiuOsFHpZNP1FjeAhLza/0VfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 033/567] btrfs: scrub: always update btrfs_scrub_progress::last_physical
-Date: Tue,  6 Jan 2026 17:56:55 +0100
-Message-ID: <20260106170452.566436630@linuxfoundation.org>
+Subject: [PATCH 6.12 051/567] mlxsw: spectrum_mr: Fix use-after-free when updating multicast route stats
+Date: Tue,  6 Jan 2026 17:57:13 +0100
+Message-ID: <20260106170453.226443486@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 References: <20260106170451.332875001@linuxfoundation.org>
@@ -51,88 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 54df8b80cc63aa0f22c4590cad11542731ed43ff ]
+[ Upstream commit 8ac1dacec458f55f871f7153242ed6ab60373b90 ]
 
-[BUG]
-When a scrub failed immediately without any byte scrubbed, the returned
-btrfs_scrub_progress::last_physical will always be 0, even if there is a
-non-zero @start passed into btrfs_scrub_dev() for resume cases.
+Cited commit added a dedicated mutex (instead of RTNL) to protect the
+multicast route list, so that it will not change while the driver
+periodically traverses it in order to update the kernel about multicast
+route stats that were queried from the device.
 
-This will reset the progress and make later scrub resume start from the
-beginning.
+One instance of list entry deletion (during route replace) was missed
+and it can result in a use-after-free [1].
 
-[CAUSE]
-The function btrfs_scrub_dev() accepts a @progress parameter to copy its
-updated progress to the caller, there are cases where we either don't
-touch progress::last_physical at all or copy 0 into last_physical:
+Fix by acquiring the mutex before deleting the entry from the list and
+releasing it afterwards.
 
-- last_physical not updated at all
-  If some error happened before scrubbing any super block or chunk, we
-  will not copy the progress, leaving the @last_physical untouched.
+[1]
+BUG: KASAN: slab-use-after-free in mlxsw_sp_mr_stats_update+0x4a5/0x540 drivers/net/ethernet/mellanox/mlxsw/spectrum_mr.c:1006 [mlxsw_spectrum]
+Read of size 8 at addr ffff8881523c2fa8 by task kworker/2:5/22043
 
-  E.g. failed to allocate @sctx, scrubbing a missing device or even
-  there is already a running scrub and so on.
+CPU: 2 UID: 0 PID: 22043 Comm: kworker/2:5 Not tainted 6.18.0-rc1-custom-g1a3d6d7cd014 #1 PREEMPT(full)
+Hardware name: Mellanox Technologies Ltd. MSN2010/SA002610, BIOS 5.6.5 08/24/2017
+Workqueue: mlxsw_core mlxsw_sp_mr_stats_update [mlxsw_spectrum]
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xba/0x110
+ print_report+0x174/0x4f5
+ kasan_report+0xdf/0x110
+ mlxsw_sp_mr_stats_update+0x4a5/0x540 drivers/net/ethernet/mellanox/mlxsw/spectrum_mr.c:1006 [mlxsw_spectrum]
+ process_one_work+0x9cc/0x18e0
+ worker_thread+0x5df/0xe40
+ kthread+0x3b8/0x730
+ ret_from_fork+0x3e9/0x560
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
 
-  All those cases won't touch @progress at all, resulting the
-  last_physical untouched and will be left as 0 for most cases.
+Allocated by task 29933:
+ kasan_save_stack+0x30/0x50
+ kasan_save_track+0x14/0x30
+ __kasan_kmalloc+0x8f/0xa0
+ mlxsw_sp_mr_route_add+0xd8/0x4770 [mlxsw_spectrum]
+ mlxsw_sp_router_fibmr_event_work+0x371/0xad0 drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c:7965 [mlxsw_spectrum]
+ process_one_work+0x9cc/0x18e0
+ worker_thread+0x5df/0xe40
+ kthread+0x3b8/0x730
+ ret_from_fork+0x3e9/0x560
+ ret_from_fork_asm+0x1a/0x30
 
-- Error out before scrubbing any bytes
-  In those case we allocated @sctx, and sctx->stat.last_physical is all
-  zero (initialized by kvzalloc()).
-  Unfortunately some critical errors happened during
-  scrub_enumerate_chunks() or scrub_supers() before any stripe is really
-  scrubbed.
+Freed by task 29933:
+ kasan_save_stack+0x30/0x50
+ kasan_save_track+0x14/0x30
+ __kasan_save_free_info+0x3b/0x70
+ __kasan_slab_free+0x43/0x70
+ kfree+0x14e/0x700
+ mlxsw_sp_mr_route_add+0x2dea/0x4770 drivers/net/ethernet/mellanox/mlxsw/spectrum_mr.c:444 [mlxsw_spectrum]
+ mlxsw_sp_router_fibmr_event_work+0x371/0xad0 drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c:7965 [mlxsw_spectrum]
+ process_one_work+0x9cc/0x18e0
+ worker_thread+0x5df/0xe40
+ kthread+0x3b8/0x730
+ ret_from_fork+0x3e9/0x560
+ ret_from_fork_asm+0x1a/0x30
 
-  In that case although we will copy sctx->stat back to @progress, since
-  no byte is really scrubbed, last_physical will be overwritten to 0.
-
-[FIX]
-Make sure the parameter @progress always has its @last_physical member
-updated to @start parameter inside btrfs_scrub_dev().
-
-At the very beginning of the function, set @progress->last_physical to
-@start, so that even if we error out without doing progress copying,
-last_physical is still at @start.
-
-Then after we got @sctx allocated, set sctx->stat.last_physical to
-@start, this will make sure even if we didn't get any byte scrubbed, at
-the progress copying stage the @last_physical is not left as zero.
-
-This should resolve the resume progress reset problem.
-
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: f38656d06725 ("mlxsw: spectrum_mr: Protect multicast route list with a lock")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/f996feecfd59fde297964bfc85040b6d83ec6089.1764695650.git.petrm@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/scrub.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/mellanox/mlxsw/spectrum_mr.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
-index 9f811ea604f71..3cbb9f22d3944 100644
---- a/fs/btrfs/scrub.c
-+++ b/fs/btrfs/scrub.c
-@@ -2943,6 +2943,10 @@ int btrfs_scrub_dev(struct btrfs_fs_info *fs_info, u64 devid, u64 start,
- 	unsigned int nofs_flag;
- 	bool need_commit = false;
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_mr.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_mr.c
+index 5afe6b155ef0d..81935f87bfcd7 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_mr.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_mr.c
+@@ -440,7 +440,9 @@ int mlxsw_sp_mr_route_add(struct mlxsw_sp_mr_table *mr_table,
+ 		rhashtable_remove_fast(&mr_table->route_ht,
+ 				       &mr_orig_route->ht_node,
+ 				       mlxsw_sp_mr_route_ht_params);
++		mutex_lock(&mr_table->route_list_lock);
+ 		list_del(&mr_orig_route->node);
++		mutex_unlock(&mr_table->route_list_lock);
+ 		mlxsw_sp_mr_route_destroy(mr_table, mr_orig_route);
+ 	}
  
-+	/* Set the basic fallback @last_physical before we got a sctx. */
-+	if (progress)
-+		progress->last_physical = start;
-+
- 	if (btrfs_fs_closing(fs_info))
- 		return -EAGAIN;
- 
-@@ -2961,6 +2965,7 @@ int btrfs_scrub_dev(struct btrfs_fs_info *fs_info, u64 devid, u64 start,
- 	sctx = scrub_setup_ctx(fs_info, is_dev_replace);
- 	if (IS_ERR(sctx))
- 		return PTR_ERR(sctx);
-+	sctx->stat.last_physical = start;
- 
- 	ret = scrub_workers_get(fs_info);
- 	if (ret)
 -- 
 2.51.0
 
