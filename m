@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00384362135;
-	Tue,  6 Jan 2026 17:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB7B3624DD;
+	Tue,  6 Jan 2026 17:50:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767721827; cv=none; b=O3tHcj4tPBhymnYpfCbLaKAt+T2GYCUzpPTUPmAAdGdrvB8ifcKw7H0nKBC1rhc1W+wz88rOMtfj985mlTDEjqGBN43ulKzppkVA+8LGpUgYjy4goI6k9D3mOeT1CifQASvKWixFzTkpw2ecBGBqSTbqL2mZ1LJNLhOIfOZbhQE=
+	t=1767721830; cv=none; b=FfL7KXKB/U7SPZk5JW3Lqa2NRaR5H7gGHKHAX2DgByN7ULd4kRLsSv7njAJZh7y1DVPSxuksQMU2IB/+gWEHFyYPSG+1ueQK6LianPPZ5BOEZmrzmYKqV+ln8kxWWffQSXgFfZaw/3M+9eldQilV8G0KN2fxu7hzGXKlPZGPU+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767721827; c=relaxed/simple;
-	bh=tfjizciqjTAEvxTLmCaOOzjgmfsYHBU+rbAvFpJIj00=;
+	s=arc-20240116; t=1767721830; c=relaxed/simple;
+	bh=pxS7IxNKlzHA6KXjkfs4oGbVeCCaSMcTJfcH0UxtLGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TJPd2/EAjRKcRHBAl6u2LJ5GM6WazQt/tc7KN7yOhdKaFg04DjXsr2TlQrW4MsoDoDlLxc+4OfAg0QiN9QIQK4EzzgEF57GiOrdE0+nGT63sR7Fikz2jMlsIWIAqpcLAr9/01Ak6UN4YO8jADIXwR44f+pIxRk9xgfFn7vezkqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=itIpT2KU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oZ8sHBEMXN+vU0lmQWRpeAB9wijxuvzQO1Pu2JHUJ6Bmjyyj/v+FSANoMbQhZ1u+obPFiMLaKL64t8AIFGbIyjSvil7KCcu8NpjIc+4Lmxmx8+seahDPP02fIeaMoJU+bsj98HfVJ6CUW9i19Z1HVs+e6snG9eLfu1Y/rw+BFIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aBbltGNT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="itIpT2KU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61CAFC116C6;
-	Tue,  6 Jan 2026 17:50:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aBbltGNT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D786BC16AAE;
+	Tue,  6 Jan 2026 17:50:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767721826;
-	bh=tfjizciqjTAEvxTLmCaOOzjgmfsYHBU+rbAvFpJIj00=;
+	s=korg; t=1767721830;
+	bh=pxS7IxNKlzHA6KXjkfs4oGbVeCCaSMcTJfcH0UxtLGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=itIpT2KUC+tssSbYoiTvjz/KR8UnJtVrlfnM6n6EnUTB1GAuKoZ5CQyA7rcp3pGa0
-	 7ufxTIXbECFL8NenT2c3cvzBpGYLq70wyjCUXmLpi5dCQBnSkFfopQTT5UsqhZJaoD
-	 iGcH8UvZarRSjsJAqGKnDuCKP50yfiwitW047nxE=
+	b=aBbltGNTNPckhtlvUCCoOnCLx+0uHkb4TPDqHkjxEaSIMXMhmwHXPScD55Q5Y2zSl
+	 xZmx2XiSmZJcGZZFcjxsj9r94CNaBwBkoxticlrYAQdgUV0a3PExg5vbJ2GSkVZZbB
+	 Lhy3bS+hcbu4ZQEtQCf8BlgDfgjTv3JZgsS3S2Co=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	Jonathan Cavitt <jonathan.cavitt@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 082/312] drm/xe/guc: READ/WRITE_ONCE g2h_fence->done
-Date: Tue,  6 Jan 2026 18:02:36 +0100
-Message-ID: <20260106170550.804665535@linuxfoundation.org>
+Subject: [PATCH 6.18 083/312] ksmbd: Fix memory leak in get_file_all_info()
+Date: Tue,  6 Jan 2026 18:02:37 +0100
+Message-ID: <20260106170550.840365693@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
 References: <20260106170547.832845344@linuxfoundation.org>
@@ -47,76 +46,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonathan Cavitt <jonathan.cavitt@intel.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit bed2a6bd20681aacfb063015c1edfab6f58a333e ]
+[ Upstream commit 0c56693b06a68476ba113db6347e7897475f9e4c ]
 
-Use READ_ONCE and WRITE_ONCE when operating on g2h_fence->done
-to prevent the compiler from ignoring important modifications
-to its value.
+In get_file_all_info(), if vfs_getattr() fails, the function returns
+immediately without freeing the allocated filename, leading to a memory
+leak.
 
-Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
-Suggested-by: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20251222201957.63245-5-jonathan.cavitt@intel.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-(cherry picked from commit b5179dbd1c14743ae80f0aaa28eaaf35c361608f)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Fix this by freeing the filename before returning in this error case.
+
+Fixes: 5614c8c487f6a ("ksmbd: replace generic_fillattr with vfs_getattr")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_guc_ct.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ fs/smb/server/smb2pdu.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_guc_ct.c b/drivers/gpu/drm/xe/xe_guc_ct.c
-index b7afe8e983cb..3aac1a7aa2e7 100644
---- a/drivers/gpu/drm/xe/xe_guc_ct.c
-+++ b/drivers/gpu/drm/xe/xe_guc_ct.c
-@@ -106,7 +106,9 @@ static void g2h_fence_cancel(struct g2h_fence *g2h_fence)
- {
- 	g2h_fence->cancel = true;
- 	g2h_fence->fail = true;
--	g2h_fence->done = true;
-+
-+	/* WRITE_ONCE pairs with READ_ONCEs in guc_ct_send_recv. */
-+	WRITE_ONCE(g2h_fence->done, true);
- }
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 6a94cda0927d..2b59c282cda5 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -4933,8 +4933,10 @@ static int get_file_all_info(struct ksmbd_work *work,
  
- static bool g2h_fence_needs_alloc(struct g2h_fence *g2h_fence)
-@@ -1128,10 +1130,13 @@ static int guc_ct_send_recv(struct xe_guc_ct *ct, const u32 *action, u32 len,
+ 	ret = vfs_getattr(&fp->filp->f_path, &stat, STATX_BASIC_STATS,
+ 			  AT_STATX_SYNC_AS_STAT);
+-	if (ret)
++	if (ret) {
++		kfree(filename);
  		return ret;
- 	}
++	}
  
--	ret = wait_event_timeout(ct->g2h_fence_wq, g2h_fence.done, HZ);
-+	/* READ_ONCEs pairs with WRITE_ONCEs in parse_g2h_response
-+	 * and g2h_fence_cancel.
-+	 */
-+	ret = wait_event_timeout(ct->g2h_fence_wq, READ_ONCE(g2h_fence.done), HZ);
- 	if (!ret) {
- 		LNL_FLUSH_WORK(&ct->g2h_worker);
--		if (g2h_fence.done) {
-+		if (READ_ONCE(g2h_fence.done)) {
- 			xe_gt_warn(gt, "G2H fence %u, action %04x, done\n",
- 				   g2h_fence.seqno, action[0]);
- 			ret = 1;
-@@ -1375,7 +1380,8 @@ static int parse_g2h_response(struct xe_guc_ct *ct, u32 *msg, u32 len)
- 
- 	g2h_release_space(ct, GUC_CTB_HXG_MSG_MAX_LEN);
- 
--	g2h_fence->done = true;
-+	/* WRITE_ONCE pairs with READ_ONCEs in guc_ct_send_recv. */
-+	WRITE_ONCE(g2h_fence->done, true);
- 	smp_mb();
- 
- 	wake_up_all(&ct->g2h_fence_wq);
+ 	ksmbd_debug(SMB, "filename = %s\n", filename);
+ 	delete_pending = ksmbd_inode_pending_delete(fp);
 -- 
 2.51.0
 
