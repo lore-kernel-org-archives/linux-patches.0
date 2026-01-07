@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C3E379964;
-	Wed,  7 Jan 2026 15:53:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0033A397ACC;
+	Wed,  7 Jan 2026 15:53:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767801224; cv=none; b=qPli+UCFgHBMBzlJNFXmdMRDyP2zeRJo4prjam8SynID8exQQIxExayKW5xJiykWlenYHnIE46Neb9mmJTD5XCjegXcFgtm3m4eX/Cug6tHiX8+h3LheFwm4qou06HI0sVWxy6uYNQcZhQ2rm8fyBfpY8GeKal7wnsF/Lfo4gjc=
+	t=1767801228; cv=none; b=k350sGNdBtR2+efXSNusMVrJosioW1rAdWYE9KmG6kh1ZP61Gkdr9pMMfU0igPjir9BCzSmyLoL0T9i/pA5BlnxDhHn/d84WJr+9ax5PZy2avZ6fcmYqpfsNSP2HGEBcxOli3b9lwHY1f63hSpGaQxsLrKY4ELThhppbH68l47Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767801224; c=relaxed/simple;
-	bh=kiB2gOT8X8qjTaO897jfEtwY7RIgIUHodFtaqLh0MkU=;
+	s=arc-20240116; t=1767801228; c=relaxed/simple;
+	bh=QUsVMu+wmJmPa4Y3bc659Yy2m3ZzKZ2vIGmrTzq6TTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=a6bZb3o44OoKGL1EccougiBk/3gEtYx1H7Vmm598KFdX1/a13oZHLbqyXItTuZoBaCVtQ1OcvLod+mk67FdyNIsOjY7+KN5mbYFqDasnil46HMoG1UJgaSdDEjgvMI9qp6LgL94agQqaSBVPRp91MUpaVCoTfAACS4JhxGapviE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yrk2GE4S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tzQitG+YFbG67iLdgThzGgADG7E6kVJEqeO72kBO/UgxMGesTsPQsTvAx5Y3E+mz2GQ5PAwTGnY7+NQ22/U1AEMr4amtdfGgct7KvkX0yNjbRvZt2Og4JCQ1htWGrqbSzhi7ZO68XfF1E4U7d2+otTBRNd5thEw8+/UCl25jyaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XfYMaYN8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yrk2GE4S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7922EC4CEF1;
-	Wed,  7 Jan 2026 15:53:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XfYMaYN8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1686C4CEF1;
+	Wed,  7 Jan 2026 15:53:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767801223;
-	bh=kiB2gOT8X8qjTaO897jfEtwY7RIgIUHodFtaqLh0MkU=;
+	s=k20201202; t=1767801225;
+	bh=QUsVMu+wmJmPa4Y3bc659Yy2m3ZzKZ2vIGmrTzq6TTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yrk2GE4SvXEPWCiXJGPJSpRVmh/LnXn0fN/pRgnoPW2syYkYjLgB6DVwZ5h3HknPj
-	 C34wBkVI8GuRDHQz23mkKc2azM3MmILfc6HwGePREMpWA3pZSxvPLO3YguXOaxRN3g
-	 3YiZr1EkjEj9uyRnUgkiev9O4pdYWgZJ8g/K60K9dmfdF5dKKbxYeyihFXOBDXyX3H
-	 FPk/FgRZ7GO5opraC+zYx+CgIKYcHH9uL3Wm8HyAyyQ+4GkeT0wjYImY6gvMCieqJr
-	 kMT4oVEFU9a0MUldry/ciGrrnU/JgnrLp6Psl+uPy4yMIRDKrTIX5YSdRaQOzwaS37
-	 +uuwlP8c8aaSQ==
+	b=XfYMaYN8ZBCb2j0uJcwyJ2i9ovaKd7Ldm5L6wbmkbOHQB/6j/GZnDDpGJu1IB4Ks4
+	 5ocZMQaUNrhv+3eWOsOGA2K7nORkM+Ly/FUn0BGz9A66loDRQrsk667fL/qbQFyJUX
+	 NTG2T3ZyG7XN3QD1RxE4HtwzH3Ss4A/vSn/9l1CM6GzTCkciMnXb47zcRHuqIA2HUM
+	 J4YiqZqZ1qkotVT3YzHXbptjz+uWGwFfKdZ2nAW6TIggpWkdWAb3MeyjyuiLe6dng0
+	 RFaAYmPwbT+pkKoanuaWX5eJYuldPWneybkeiw3kjecxKrVInV9vF/KPKLOTe4C1RG
+	 w3WmKnG2J439g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Dmytro Bagrii <dimich.dmb@gmail.com>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: =?UTF-8?q?Peter=20=C3=85strand?= <astrand@lysator.liu.se>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	hansg@kernel.org,
-	pmenzel@molgen.mpg.de,
-	setotau@mainlining.org,
-	kernel@aiyionpri.me
-Subject: [PATCH AUTOSEL 6.18] platform/x86: dell-lis3lv02d: Add Latitude 5400
-Date: Wed,  7 Jan 2026 10:53:10 -0500
-Message-ID: <20260107155329.4063936-8-sashal@kernel.org>
+	sakari.ailus@linux.intel.com
+Subject: [PATCH AUTOSEL 6.18-5.10] wifi: wlcore: ensure skb headroom before skb_push
+Date: Wed,  7 Jan 2026 10:53:11 -0500
+Message-ID: <20260107155329.4063936-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260107155329.4063936-1-sashal@kernel.org>
 References: <20260107155329.4063936-1-sashal@kernel.org>
@@ -49,171 +45,170 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.3
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmytro Bagrii <dimich.dmb@gmail.com>
+From: Peter Åstrand <astrand@lysator.liu.se>
 
-[ Upstream commit a5b9fdd33c59a964a26d12c39b636ef85a25b074 ]
+[ Upstream commit e75665dd096819b1184087ba5718bd93beafff51 ]
 
-Add accelerometer address 0x29 for Dell Latitude 5400.
+This avoids occasional skb_under_panic Oops from wl1271_tx_work. In this case, headroom is
+less than needed (typically 110 - 94 = 16 bytes).
 
-The address is verified as below:
-
-    $ cat /sys/class/dmi/id/product_name
-    Latitude 5400
-
-    $ grep -H '' /sys/bus/pci/drivers/i801_smbus/0000\:00*/i2c-*/name
-    /sys/bus/pci/drivers/i801_smbus/0000:00:1f.4/i2c-10/name:SMBus I801 adapter at 0000:00:1f.4
-
-    $ i2cdetect 10
-    WARNING! This program can confuse your I2C bus, cause data loss and worse!
-    I will probe file /dev/i2c-10.
-    I will probe address range 0x08-0x77.
-    Continue? [Y/n] Y
-         0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
-    00:                         08 -- -- -- -- -- -- --
-    10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-    20: -- -- -- -- -- -- -- -- -- UU -- -- -- -- -- --
-    30: 30 -- -- -- -- 35 UU UU -- -- -- -- -- -- -- --
-    40: -- -- -- -- 44 -- -- -- -- -- -- -- -- -- -- --
-    50: UU -- 52 -- -- -- -- -- -- -- -- -- -- -- -- --
-    60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-    70: -- -- -- -- -- -- -- --
-
-    $ xargs -n1 -a /proc/cmdline | grep ^dell_lis3lv02d
-    dell_lis3lv02d.probe_i2c_addr=1
-
-    $ dmesg | grep lis3lv02d
-    ...
-    [  206.012411] i2c i2c-10: Probing for lis3lv02d on address 0x29
-    [  206.013727] i2c i2c-10: Detected lis3lv02d on address 0x29, please report this upstream to platform-driver-x86@vger.kernel.org so that a quirk can be added
-    [  206.240841] lis3lv02d_i2c 10-0029: supply Vdd not found, using dummy regulator
-    [  206.240868] lis3lv02d_i2c 10-0029: supply Vdd_IO not found, using dummy regulator
-    [  206.261258] lis3lv02d: 8 bits 3DC sensor found
-    [  206.346722] input: ST LIS3LV02DL Accelerometer as /devices/faux/lis3lv02d/input/input17
-
-    $ cat /sys/class/input/input17/name
-    ST LIS3LV02DL Accelerometer
-
-Signed-off-by: Dmytro Bagrii <dimich.dmb@gmail.com>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251128161523.6224-1-dimich.dmb@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Peter Astrand <astrand@lysator.liu.se>
+Link: https://patch.msgid.link/097bd417-e1d7-acd4-be05-47b199075013@lysator.liu.se
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis: platform/x86: dell-lis3lv02d: Add Latitude 5400
+## Commit Analysis: wifi: wlcore: ensure skb headroom before skb_push
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The commit adds DMI-based accelerometer support for Dell Latitude 5400
-laptops. The commit message is exemplary:
-- Shows detailed hardware verification using i2cdetect
-- Demonstrates the driver itself detected the hardware and prompted the
-  user to report it upstream
-- Has proper Reviewed-by tags from experienced maintainers (Hans de
-  Goede, Ilpo Järvinen)
+**Key indicators:**
+- Subject clearly states this ensures skb headroom before skb_push - a
+  defensive check
+- Body explicitly states: "This avoids occasional skb_under_panic Oops
+  from wl1271_tx_work"
+- Provides specific details: "headroom is less than needed (typically
+  110 - 94 = 16 bytes)"
+- Committed by Johannes Berg (wireless maintainer)
+
+The commit message clearly indicates this fixes a **kernel panic** - one
+of the most severe bug categories.
 
 ### 2. CODE CHANGE ANALYSIS
 
-The change is minimal:
+Let me examine the actual code change:
+
 ```c
-+       DELL_LIS3LV02D_DMI_ENTRY("Latitude 5400",      0x29),
+if (total_blocks <= wl->tx_blocks_available) {
++   if (skb_headroom(skb) < (total_len - skb->len) &&
++       pskb_expand_head(skb, (total_len - skb->len), 0, GFP_ATOMIC)) {
++       wl1271_free_tx_id(wl, id);
++       return -EAGAIN;
++   }
+    desc = skb_push(skb, total_len - skb->len);
 ```
 
-This adds a single entry to an existing DMI table, mapping the product
-name "Latitude 5400" to I2C address 0x29. The macro
-`DELL_LIS3LV02D_DMI_ENTRY` is already defined and used extensively for
-other Dell models. The I2C address 0x29 is consistent with other
-Latitude models in the list.
+**The bug mechanism:**
+- `skb_push()` prepends space to an skb to add the TX hardware
+  descriptor
+- If the skb doesn't have sufficient headroom, `skb_push()` triggers
+  `skb_under_panic()` - a kernel Oops
+- The original code assumed sufficient headroom always existed, which is
+  incorrect
+
+**The fix mechanism:**
+1. Check if headroom is insufficient: `skb_headroom(skb) < (total_len -
+   skb->len)`
+2. If insufficient, call `pskb_expand_head()` to expand the buffer
+3. On expansion failure (memory pressure), properly cleanup by freeing
+   the tx_id
+4. Return `-EAGAIN` to indicate temporary failure (allows retry)
+5. Only proceed with `skb_push()` after headroom is guaranteed
+
+**Technical correctness:**
+- Uses `GFP_ATOMIC` - correct for TX path which may hold locks
+- Properly frees the allocated `id` on failure path (no resource leak)
+- Returns `-EAGAIN` which is the appropriate error for temporary
+  failures
+- This is a well-established kernel pattern for skb headroom handling
 
 ### 3. CLASSIFICATION
 
-This falls squarely into the **NEW DEVICE IDs** exception category that
-IS appropriate for stable:
-- Adds a DMI entry to an existing, working driver
-- Analogous to adding PCI IDs or USB IDs
-- The driver infrastructure already exists; only the hardware
-  identification is new
-- This is NOT a new feature - it enables existing functionality on
-  additional hardware
+**Type:** Bug fix - fixes a kernel panic (skb_under_panic Oops)
+
+**Not in exception categories** - this is a straight bug fix for a
+crash, not a device ID, quirk, DT update, or build fix.
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-- **Lines changed**: 1
-- **Files touched**: 1
-- **Complexity**: Trivial - adding an entry to a static const table
-- **Risk**: Extremely low
-  - Only affects Dell Latitude 5400 systems
-  - Uses identical mechanism as all other supported models
-  - Even if wrong, impact is isolated to one hardware model
-  - Hardware verified by submitter with actual device
+| Metric | Assessment |
+|--------|------------|
+| Lines added | +5 lines of actual logic |
+| Files changed | 1 file |
+| Complexity | Very low - standard skb headroom check pattern |
+| Risk | **Very low** - defensive check that cannot make things worse |
+
+**Failure mode analysis:**
+- If `pskb_expand_head()` fails: returns -EAGAIN, TX retries later
+  (graceful degradation)
+- If check is overly conservative: no harm, just an extra allocation
+- Cannot introduce new crashes - the check is purely defensive
 
 ### 5. USER IMPACT
 
-- Users with Dell Latitude 5400 laptops get accelerometer support
-- The dmesg output shows the driver detected the hardware and explicitly
-  asked for an upstream quirk to be added
-- Without this entry, the accelerometer is non-functional on this laptop
-  model
+**Affected users:** Users of TI WiLink WiFi hardware (wl12xx/wl18xx
+families)
+- Common in embedded systems, some laptops, IoT devices
+- This is a mature, production driver present in all stable trees
+
+**Bug severity:** **Critical** - kernel panic causes system crash
+- Even "occasional" panics are unacceptable in production
+- WiFi TX is a common operation, so affected users hit this repeatedly
 
 ### 6. STABILITY INDICATORS
 
-- **Reviewed-by**: Hans de Goede (prominent x86 platform maintainer)
-- **Reviewed-by**: Ilpo Järvinen (Intel kernel maintainer)
-- Follows established pattern used by 15+ other entries in the same
-  table
-- Hardware verified on actual Dell Latitude 5400
+- Reviewed and accepted by wireless maintainer (Johannes Berg)
+- Simple, well-understood pattern used throughout the kernel
+- The fix has minimal side effects - worst case is a failed TX that
+  retries
 
 ### 7. DEPENDENCY CHECK
 
-- No dependencies on other commits
-- The driver, macro, and infrastructure all exist in stable trees
-- Self-contained, atomic change
+- **Standalone fix** - no dependencies on other commits
+- Uses standard kernel APIs (skb_headroom, pskb_expand_head) that exist
+  in all stable trees
+- The wlcore driver has existed for many years in stable kernels
 
-### CONCLUSION
+### SUMMARY
 
-This is a textbook example of a commit that **should** be backported to
-stable:
+**This is a textbook stable candidate:**
 
-1. **Obviously correct**: Single-line addition following an established
-   pattern
-2. **Tested**: Verified on actual hardware
-3. **Fixes a real issue**: Enables accelerometer on hardware that has
-   one
-4. **Small and contained**: One line, minimal risk
-5. **Exception category**: This is exactly the type of device ID/DMI
-   entry addition that stable rules explicitly allow
+1. **Fixes a kernel panic** - the most critical bug category
+2. **Small and surgical** - 5 lines of defensive checking
+3. **Obviously correct** - standard skb headroom pattern used throughout
+   kernel
+4. **Zero regression risk** - purely defensive, cannot make things worse
+5. **No new features** - just adds a safety check before existing
+   operation
+6. **Affects real users** - wlcore is a production driver for shipping
+   hardware
+7. **No dependencies** - applies cleanly to any kernel version with
+   wlcore
 
-The risk is near-zero (only affects one specific laptop model), and the
-benefit is real (enables hardware functionality for Latitude 5400
-users). This type of trivial hardware enablement is routinely and
-appropriately backported to stable trees.
+The fix prevents a real kernel Oops that users encounter in production.
+The change is minimal, the pattern is well-established, and the risk of
+regression is essentially zero. This is exactly the type of fix that
+stable kernel rules are designed to accept.
 
 **YES**
 
- drivers/platform/x86/dell/dell-lis3lv02d.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/ti/wlcore/tx.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/platform/x86/dell/dell-lis3lv02d.c b/drivers/platform/x86/dell/dell-lis3lv02d.c
-index 77905a9ddde9..fe52bcd896f7 100644
---- a/drivers/platform/x86/dell/dell-lis3lv02d.c
-+++ b/drivers/platform/x86/dell/dell-lis3lv02d.c
-@@ -44,6 +44,7 @@ static const struct dmi_system_id lis3lv02d_devices[] __initconst = {
- 	/*
- 	 * Additional individual entries were added after verification.
- 	 */
-+	DELL_LIS3LV02D_DMI_ENTRY("Latitude 5400",      0x29),
- 	DELL_LIS3LV02D_DMI_ENTRY("Latitude 5480",      0x29),
- 	DELL_LIS3LV02D_DMI_ENTRY("Latitude 5500",      0x29),
- 	DELL_LIS3LV02D_DMI_ENTRY("Latitude E6330",     0x29),
+diff --git a/drivers/net/wireless/ti/wlcore/tx.c b/drivers/net/wireless/ti/wlcore/tx.c
+index 464587d16ab2..f251627c24c6 100644
+--- a/drivers/net/wireless/ti/wlcore/tx.c
++++ b/drivers/net/wireless/ti/wlcore/tx.c
+@@ -207,6 +207,11 @@ static int wl1271_tx_allocate(struct wl1271 *wl, struct wl12xx_vif *wlvif,
+ 	total_blocks = wlcore_hw_calc_tx_blocks(wl, total_len, spare_blocks);
+ 
+ 	if (total_blocks <= wl->tx_blocks_available) {
++		if (skb_headroom(skb) < (total_len - skb->len) &&
++		    pskb_expand_head(skb, (total_len - skb->len), 0, GFP_ATOMIC)) {
++			wl1271_free_tx_id(wl, id);
++			return -EAGAIN;
++		}
+ 		desc = skb_push(skb, total_len - skb->len);
+ 
+ 		wlcore_hw_set_tx_desc_blocks(wl, desc, total_blocks,
 -- 
 2.51.0
 
