@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C57A39A811;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C479392838;
 	Wed,  7 Jan 2026 15:53:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767801216; cv=none; b=JvQyITFbxIP+zt0lS2bttKwwMZw3EOi/3IUhyvyf9dSXesooTrveEUnovXqfwf0PH2Zlfpl/MJ/OZkk9prP+uYhVF/pOy2psDy8/cTopRQyyknDlL6pZA4xfK6zOZ1PCrC2PHPuknngDa7sisNx6Earrr4Yr7s2aM+60oWnDMao=
+	t=1767801216; cv=none; b=lenOu5PZRSrg5EGuBUamw5FcFsKGV9oiJZFMAWyc4zGcLajN57KeKpLslNg8XqhbnJLYhDnha6fS6cpjszU4gHn0T9kJ7AhXLjz5jZwpe1f9BdNFWjr+804Rbzkz2v3wlNa2ZFWUew/aDA87RSheQpW08xeK4MioX9eD/JwZ1Gk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1767801216; c=relaxed/simple;
-	bh=baIElWLGbbT3EEa9pR+TKV01vRMQoodNknv6twf9pyk=;
+	bh=cbuhn2GE9sik3u9T+uUC/6rl0GNp/R2VX6KZN551EKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZzVv7SQx8ZlG3k+ZipJZVwpHRDUC2NV/Rb1dWrsgS1AjO2r6+FrXQTyQu7MV0KoN9DwKSazHppnz2H745DOt5yb3WwMDvyWl0nIqZZ7JY15ArazHsAvS28FCgJ365cDFcfUe77t6rVhVmlCtjMMmTGn3Vo8TJAd7IwTbuT8O6is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PWJzcG55; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nXkMXTa99OB7NM6qRRpWueaMnxH6XYv0MLFm9lEtIsP2dh1K1UNwBk1F8XFquG+BF3t75SXhKxk4WIWAKVk02Vo38n4QcXavzqY/m552Koq8f4EL6HczMq6cbSyHhF8fLkhsr5NzDyekoxicHXv4YIboDFTIxO15SPJvbqW/+SM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V7eYQaId; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PWJzcG55"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6058C4CEF1;
-	Wed,  7 Jan 2026 15:53:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V7eYQaId"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5151FC4CEF7;
+	Wed,  7 Jan 2026 15:53:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767801215;
-	bh=baIElWLGbbT3EEa9pR+TKV01vRMQoodNknv6twf9pyk=;
+	s=k20201202; t=1767801214;
+	bh=cbuhn2GE9sik3u9T+uUC/6rl0GNp/R2VX6KZN551EKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PWJzcG55gxymAqeMGzhVHpTRopNX3X2YBX7qVW9SFLnmkb+isaKQo8av+gwZhcFDe
-	 Qqrsp8Sa4+XGGpzMH6NkxRUwjFlE7duzs0Yaxa4YnuSk+mWtyRGU1I8tyulI/u4xXj
-	 bQZa4NwCKNS/HwjC7D2VvYeKLcNeHGCp/2QjI6gS08gdiuPDU81ihDpVVbNxgcNQ/D
-	 /2ItXEYUaLBZBh6C6vvhEkcjy6Ef5MpISrz84s2OJLcGTUQsNqcEN9Qja8L8lB/YGU
-	 VoxBL6NUJSqokstPZTkxXB61PfjcGCEKTbqi1d9DLnPE3CvXxFngcIzwicCFuZw9HR
-	 2pycSkR+hIa8g==
+	b=V7eYQaIdqzgE06dl/u6QjYrfqjOP8WMXPt2cpQUUE+A1tqhxMECBlYdLFbFeXemDr
+	 bmAE6NOxu5ESQZm76aAWXsAhgzI60uKrXi++XMYQ8LhhqjoVBrPCJHge3/chE0e0Vr
+	 IRj5cZI1fTDSK6hUa7tu8OnlhJTcUtGWs65Wt8YzPF1ciXrNGXysAPjardzbs9m1EK
+	 mKFy0kUIj3cWwsIfapsHLzotrgovr2Z1i1aGk1+cxPFDA3mZZ4bkzkTh1yUSNBgQ20
+	 z2ALsCk2QE1OHBEF7Bd+8vVuAtIGdBb8SAms7YuVvAMaP5qKScF8BOeGF4wjbO+K2R
+	 xs/ndfZ+iLEvA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Johannes Berg <johannes.berg@intel.com>,
-	syzbot+639af5aa411f2581ad38@syzkaller.appspotmail.com,
+Cc: ZhangGuoDong <zhangguodong@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>,
-	johannes@sipsolutions.net,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] wifi: mac80211: don't WARN for connections on invalid channels
-Date: Wed,  7 Jan 2026 10:53:06 -0500
-Message-ID: <20260107155329.4063936-4-sashal@kernel.org>
+	smfrench@gmail.com,
+	linux-cifs@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.6] smb/server: fix refcount leak in smb2_open()
+Date: Wed,  7 Jan 2026 10:53:05 -0500
+Message-ID: <20260107155329.4063936-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260107155329.4063936-1-sashal@kernel.org>
 References: <20260107155329.4063936-1-sashal@kernel.org>
@@ -52,180 +54,155 @@ X-stable-base: Linux 6.18.3
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: ZhangGuoDong <zhangguodong@kylinos.cn>
 
-[ Upstream commit 99067b58a408a384d2a45c105eb3dce980a862ce ]
+[ Upstream commit f416c556997aa56ec4384c6b6efd6a0e6ac70aa7 ]
 
-It's not clear (to me) how exactly syzbot managed to hit this,
-but it seems conceivable that e.g. regulatory changed and has
-disabled a channel between scanning (channel is checked to be
-usable by cfg80211_get_ies_channel_number) and connecting on
-the channel later.
+When ksmbd_vfs_getattr() fails, the reference count of ksmbd_file
+must be released.
 
-With one scenario that isn't covered elsewhere described above,
-the warning isn't good, replace it with a (more informative)
-error message.
-
-Reported-by: syzbot+639af5aa411f2581ad38@syzkaller.appspotmail.com
-Link: https://patch.msgid.link/20251202102511.5a8fb5184fa3.I961ee41b8f10538a54b8565dbf03ec1696e80e03@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Suggested-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of Commit: wifi: mac80211: don't WARN for connections on
-invalid channels
+## Commit Analysis: smb/server: fix refcount leak in smb2_open()
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-**Subject:** Indicates removal of a WARN for a legitimate condition in
-WiFi channel handling.
+The commit message is clear and concise:
+- **Subject:** Explicitly identifies this as a "fix" for a "refcount
+  leak"
+- **Body:** Explains the bug - when `ksmbd_vfs_getattr()` fails, the
+  reference count of `ksmbd_file` is not being released
+- **Tags:** Has Suggested-by from Namjae Jeon (ksmbd maintainer), Acked-
+  by from same maintainer, and signed off by Steve French (SMB/CIFS
+  maintainer)
 
-**Key details from message:**
-- **Reported by syzbot** - demonstrates this is a reproducible, real-
-  world triggerable issue
-- **Author:** Johannes Berg - the mac80211 maintainer and highly trusted
-  kernel developer
-- **Scenario explained:** Regulatory changes can disable a channel
-  between scanning and connecting, making this condition legitimately
-  reachable (not a kernel bug)
-- The WARN_ON was inappropriate because it treats a recoverable
-  condition as a programming error
+The maintainer involvement indicates this is a legitimate bug fix.
 
 ### 2. CODE CHANGE ANALYSIS
 
-The change is in `ieee80211_determine_chan_mode()` in
-`net/mac80211/mlme.c`:
+Let me examine the exact change:
 
-**Before:**
 ```c
-if (WARN_ON(chanreq->oper.width == NL80211_CHAN_WIDTH_20_NOHT)) {
-    ret = -EINVAL;
-    goto free;
-}
+// BEFORE:
+rc = ksmbd_vfs_getattr(&fp->filp->f_path, &stat);
+if (rc)
+    goto err_out2;
+
+ksmbd_put_durable_fd(fp);
+goto reconnected_fp;
+
+// AFTER:
+rc = ksmbd_vfs_getattr(&fp->filp->f_path, &stat);
+ksmbd_put_durable_fd(fp);
+if (rc)
+    goto err_out2;
+
+goto reconnected_fp;
 ```
 
-**After:**
-```c
-if (chanreq->oper.width == NL80211_CHAN_WIDTH_20_NOHT) {
-    link_id_info(sdata, link_id,
-                 "unusable channel (%d MHz) for connection\n",
-                 chanreq->oper.chan->center_freq);
-    ret = -EINVAL;
-    goto free;
-}
-```
+**The Bug:**
+In the original code, when `ksmbd_vfs_getattr()` fails (returns non-
+zero), the code jumps directly to `err_out2` **without** calling
+`ksmbd_put_durable_fd(fp)`. This means the reference count acquired
+earlier (via `ksmbd_reopen_durable_fd`) is never released - a classic
+refcount leak.
 
-**Technical explanation:**
-- The loop tries to downgrade channel width when a channel is not usable
-- When it reaches minimum width (20MHz NOHT) and channel is still
-  unusable, connection fails
-- **The bug:** `WARN_ON()` was used, but this condition CAN happen
-  legitimately (e.g., regulatory DB change between scan and connect)
-- **The fix:** Replaces WARN_ON with an informative log message; same
-  functional behavior (-EINVAL return)
+**The Fix:**
+Move `ksmbd_put_durable_fd(fp)` to before the error check so the
+reference is released in both success and error paths. This is the
+correct pattern for resource cleanup.
 
 ### 3. CLASSIFICATION
 
-- **Type:** Bug fix - inappropriate WARN removal
-- **NOT a feature addition:** Same functional behavior, just better
-  error handling
-- **Security-adjacent:** On systems with `panic_on_warn=1`, this could
-  cause a kernel crash from a user-triggerable condition
+- **Type:** Bug fix (resource leak)
+- **Severity:** Medium - refcount leaks can lead to memory exhaustion
+  over time
+- **Component:** ksmbd (kernel SMB server) - fs/smb/server/
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-- **Lines changed:** ~5 lines net change
-- **Files touched:** 1 file
-- **Risk:** **VERY LOW**
-  - Functional behavior unchanged (returns -EINVAL in same conditions)
-  - Only changes logging output
-  - Cannot introduce regression
+- **Lines changed:** 2 (one line moved)
+- **Files changed:** 1 (fs/smb/server/smb2pdu.c)
+- **Complexity:** Very low - straightforward line repositioning
+- **Risk:** Very low - the fix is obviously correct and doesn't change
+  any logic, just ensures cleanup happens unconditionally
 
 ### 5. USER IMPACT
 
-**Affected users:**
-- **panic_on_warn systems:** Could crash from this legitimate condition
-  - HIGH impact
-- **All WiFi users:** Reduces log noise from false warnings - MEDIUM
-  impact
-- **Production environments:** Many use panic_on_warn, making this
-  important
-
-**Severity:** This is syzbot-triggerable, meaning attackers could
-potentially trigger crashes on panic_on_warn systems.
+- **Affected users:** Systems running ksmbd (kernel SMB server)
+- **Trigger condition:** When a durable file handle reconnection attempt
+  has `ksmbd_vfs_getattr()` fail
+- **Consequence of bug:** Reference count leak leading to potential
+  resource exhaustion over time
+- **Severity:** Important for production SMB servers that may run for
+  extended periods
 
 ### 6. STABILITY INDICATORS
 
-- ✅ Reported-by: syzbot (confirmed reproducible)
-- ✅ Johannes Berg is the mac80211 maintainer
-- ✅ Fix is trivially correct
-- ✅ No complex logic changes
+- ✅ Acked-by from subsystem maintainer (Namjae Jeon)
+- ✅ Suggested-by from the same maintainer
+- ✅ Signed-off by Steve French (CIFS/SMB maintainer)
+- ✅ Small, surgical fix with clear scope
 
 ### 7. DEPENDENCY CHECK
 
-- **Standalone fix:** No dependencies on other commits
-- **Code path existence:** `ieee80211_determine_chan_mode()` is core
-  mac80211 code that exists in stable trees
+This is a standalone fix. The code path exists in all kernels with ksmbd
+support (5.15+). No other commits are required for this fix to work.
 
-### STABLE KERNEL CRITERIA EVALUATION
+### STABLE KERNEL CRITERIA ASSESSMENT
 
-| Criterion | Met? | Notes |
-|-----------|------|-------|
-| Obviously correct | ✅ | Simple WARN_ON removal |
-| Fixes real bug | ✅ | syzbot reported, crashes on panic_on_warn |
-| Important issue | ✅ | Potential crashes in production |
-| Small and contained | ✅ | ~5 lines, 1 file |
-| No new features | ✅ | Same behavior, better logging |
-| Applies cleanly | ✅ | Standard pattern |
-
-### RISK VS BENEFIT
-
-**Benefits:**
-- Prevents crashes on panic_on_warn systems
-- Fixes syzbot-reported issue
-- Provides better diagnostic information
-- Zero functional change to normal operation
-
-**Risks:**
-- Essentially none - the change is purely about removing an
-  inappropriate warning and adding informational logging
+| Criterion | Status |
+|-----------|--------|
+| Obviously correct | ✅ Yes - reference must be released in both paths |
+| Fixes real bug | ✅ Yes - refcount leak is a real resource management
+bug |
+| Important issue | ✅ Yes - can cause resource exhaustion |
+| Small and contained | ✅ Yes - 2 lines, single file |
+| No new features | ✅ Yes - pure bugfix |
+| Applies cleanly | ✅ Should apply cleanly |
 
 ### CONCLUSION
 
-This is a textbook example of a good stable backport candidate:
-1. Small, surgical fix (few lines, one file)
-2. Fixes a real bug that syzbot can trigger
-3. From the subsystem maintainer
-4. Zero risk of regression (same functional behavior)
-5. Important for panic_on_warn systems which are common in production
+This is an ideal stable backport candidate:
+- **Clear bug:** Reference count leak when error path is taken
+- **Obvious fix:** Move cleanup before error check
+- **Minimal change:** Single line repositioned
+- **Low risk:** No logic changes, just proper resource management
+- **Maintainer endorsed:** Acked by ksmbd maintainer
 
-The fix correctly recognizes that a channel becoming unusable between
-scan and connect is a legitimate condition (e.g., due to regulatory
-changes), not a kernel bug that warrants WARN_ON.
+The fix addresses a resource leak that could affect production SMB
+servers over time. The change is trivial (one line moved), obviously
+correct, and has zero risk of introducing regressions.
 
 **YES**
 
- net/mac80211/mlme.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index f3138d158535..c8b588f4e494 100644
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -1126,7 +1126,10 @@ ieee80211_determine_chan_mode(struct ieee80211_sub_if_data *sdata,
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index e052dcb9a14c..3795fb90e161 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -3019,10 +3019,10 @@ int smb2_open(struct ksmbd_work *work)
+ 			file_info = FILE_OPENED;
  
- 	while (!ieee80211_chandef_usable(sdata, &chanreq->oper,
- 					 IEEE80211_CHAN_DISABLED)) {
--		if (WARN_ON(chanreq->oper.width == NL80211_CHAN_WIDTH_20_NOHT)) {
-+		if (chanreq->oper.width == NL80211_CHAN_WIDTH_20_NOHT) {
-+			link_id_info(sdata, link_id,
-+				     "unusable channel (%d MHz) for connection\n",
-+				     chanreq->oper.chan->center_freq);
- 			ret = -EINVAL;
- 			goto free;
+ 			rc = ksmbd_vfs_getattr(&fp->filp->f_path, &stat);
++			ksmbd_put_durable_fd(fp);
+ 			if (rc)
+ 				goto err_out2;
+ 
+-			ksmbd_put_durable_fd(fp);
+ 			goto reconnected_fp;
  		}
+ 	} else if (req_op_level == SMB2_OPLOCK_LEVEL_LEASE)
 -- 
 2.51.0
 
