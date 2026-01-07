@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 816C33B8D5F;
-	Wed,  7 Jan 2026 15:53:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3032F37BE8D;
+	Wed,  7 Jan 2026 15:54:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767801237; cv=none; b=GpYNVA2Mw3tWrFmwZ0fPx91rBhX+00dmRjubfHukT1MiZgJrcr4npXAHENsq4CLRj0Nd9L2vncQJRHiTUDNZaJkrQXB9yXPwqoGVR/bnhq19fS9YbE4nziaNfke4KfWiyzgPaIg+ITdvbKgRwK4yvTz7za1dsL2u2GPXKM+66jM=
+	t=1767801241; cv=none; b=qSjbE1JpfGtJD2Q8QMBmjkRkNLxcmNvpwk9RGuFEKTqf3G5r5eBtylRrkhZfJJJF1UjBnbrMfw+HoeuUbv07Ybxod7XrrSaK8zPJ45CF/cmFMb7R4Q0BnpzC3zGSP/eSn/I/lzCFqYwBQX2nukDB7yHkDO7wXoW1+ElU275Ha4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767801237; c=relaxed/simple;
-	bh=JmYyWDTM7t3/lb3xdXAr3X3MhE4VtbCTQC4BpbefxIM=;
+	s=arc-20240116; t=1767801241; c=relaxed/simple;
+	bh=WKo4PZzhnHSlJTo/qquvidCwuvQQyg1xRs1qWr4gyqE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DHlMdJlKjlJg0IRclpMvn4aLS95oL+J4Jn9tu3TjqxFv3A1pI9NjJTY4Zb0oNzyJGOW8Dd6VICqy7lIET/hnvS/Okn6xiwQBilsRc4r+106ksJa4BWfJZurNA5QfiIIvtVX0c8GYSFFfle0+GxdwXR3pjDo9/MquzRgrmLaKm7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p8ZGtYR6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ROewWz+dXS7X0z/Lwo8II4cFyOAMO7vbzxzGsTWwBHXKDdM5fr7mscCvdrrPjZsXCkO5IE4cgdszI73j2IBIGB392nafYi3eLdtSry4/P+uny3va0QkCD5VohAzyHB24j9gnK/8RJnPuP4YrXdYz34ZyDyPSgI/jO6cljbnMrv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pazkUYrN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p8ZGtYR6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DDEEC4CEF1;
-	Wed,  7 Jan 2026 15:53:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pazkUYrN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 732EEC4CEF7;
+	Wed,  7 Jan 2026 15:53:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767801237;
-	bh=JmYyWDTM7t3/lb3xdXAr3X3MhE4VtbCTQC4BpbefxIM=;
+	s=k20201202; t=1767801240;
+	bh=WKo4PZzhnHSlJTo/qquvidCwuvQQyg1xRs1qWr4gyqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p8ZGtYR6OPm+i6YfBcUjwi9102L6MOMDpGBZbT0WYirBOBV3SEoqY207tAGQ3z2eC
-	 SHxwZmHpotPjFnPY3JiQL5pMMuVf8u4Nn1DPtPXRdHVCGfjlgz6HfLpuyxLhXIvoGR
-	 IiBiwX+OlH2xPg+ytzIfqwXQd6yzGiFgf7gqgpNBwVqpWsLDwfcpGZdv6FUdwNnz7h
-	 SM1PkxXcEx15DQvXiJTDsL54qkKc/0Q72/6AVUhCAJzAkL7EGk6y/8uywwbaJvmPkb
-	 eJWzgEc2xcqwb4BX+ZOPPoQscj4Wn006lMK9UNdY83pE76LP/pgy7r7SU98K9CL0mA
-	 POCsGaDtSz1Mw==
+	b=pazkUYrNRTR0YY30bpiau8gpKbJe8JVRXOiiv5jnHJsvwnKtGAW0oPMzZXJwyELQi
+	 C+oDITdK80D335g+Nbwh+xFvYWTCfOF8br4VvZ9HZ728AmveTUiDR62ODA1BeQGzYD
+	 HvRRXDjsjfMu2HGdJYTtHcnKP13ijPIiNrlhQ5qqpFctWLvZqjVOYveokfhCd9OMo+
+	 6Rq90nlNP3IHEZcf/XqL8IHRMI/YmfIn0hqwkhBe2C40TjQcJUwJKLunTnjwcKUS1k
+	 Wlie/h2HCyJrfYjnh2JCIcXxyshi91LSRLIVbkWkvY3EZCBpVDPu9m5TdUXBQYpFAM
+	 eLZqfMmHpqkcw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Huacai Chen <chenhuacai@loongson.cn>,
+Cc: FengWei Shih <dannyshih@synology.com>,
+	Yu Kuai <yukuai@fnnas.com>,
 	Sasha Levin <sashal@kernel.org>,
-	chenhuacai@kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] LoongArch: Set correct protection_map[] for VM_NONE/VM_SHARED
-Date: Wed,  7 Jan 2026 10:53:14 -0500
-Message-ID: <20260107155329.4063936-12-sashal@kernel.org>
+	song@kernel.org,
+	linux-raid@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.12] md: suspend array while updating raid_disks via sysfs
+Date: Wed,  7 Jan 2026 10:53:16 -0500
+Message-ID: <20260107155329.4063936-14-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260107155329.4063936-1-sashal@kernel.org>
 References: <20260107155329.4063936-1-sashal@kernel.org>
@@ -47,167 +49,178 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.3
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: FengWei Shih <dannyshih@synology.com>
 
-[ Upstream commit d5be446948b379f1d1a8e7bc6656d13f44c5c7b1 ]
+[ Upstream commit 2cc583653bbe050bacd1cadcc9776d39bf449740 ]
 
-For 32BIT platform _PAGE_PROTNONE is 0, so set a VMA to be VM_NONE or
-VM_SHARED will make pages non-present, then cause Oops with kernel page
-fault.
+In raid1_reshape(), freeze_array() is called before modifying the r1bio
+memory pool (conf->r1bio_pool) and conf->raid_disks, and
+unfreeze_array() is called after the update is completed.
 
-Fix it by set correct protection_map[] for VM_NONE/VM_SHARED, replacing
-_PAGE_PROTNONE with _PAGE_PRESENT.
+However, freeze_array() only waits until nr_sync_pending and
+(nr_pending - nr_queued) of all buckets reaches zero. When an I/O error
+occurs, nr_queued is increased and the corresponding r1bio is queued to
+either retry_list or bio_end_io_list. As a result, freeze_array() may
+unblock before these r1bios are released.
 
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+This can lead to a situation where conf->raid_disks and the mempool have
+already been updated while queued r1bios, allocated with the old
+raid_disks value, are later released. Consequently, free_r1bio() may
+access memory out of bounds in put_all_bios() and release r1bios of the
+wrong size to the new mempool, potentially causing issues with the
+mempool as well.
+
+Since only normal I/O might increase nr_queued while an I/O error occurs,
+suspending the array avoids this issue.
+
+Note: Updating raid_disks via ioctl SET_ARRAY_INFO already suspends
+the array. Therefore, we suspend the array when updating raid_disks
+via sysfs to avoid this issue too.
+
+Signed-off-by: FengWei Shih <dannyshih@synology.com>
+Link: https://lore.kernel.org/linux-raid/20251226101816.4506-1-dannyshih@synology.com
+Signed-off-by: Yu Kuai <yukuai@fnnas.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of LoongArch protection_map[] Fix
+## Comprehensive Analysis
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The commit message clearly describes:
-- **Problem:** On 32-bit LoongArch platforms, `_PAGE_PROTNONE` is 0
-- **Symptom:** Setting a VMA to VM_NONE or VM_SHARED makes pages non-
-  present
-- **Impact:** **Oops with kernel page fault** - this is a crash
-
-Keywords present: "Oops", "page fault" - these are strong indicators of
-a crash-level bug.
+The commit clearly describes a **race condition bug** in the MD RAID
+subsystem:
+- When updating `raid_disks` via sysfs, `raid1_reshape()` calls
+  `freeze_array()` before modifying the memory pool
+- `freeze_array()` waits until `nr_pending - nr_queued` reaches a target
+  value
+- During I/O errors, `nr_queued` is incremented when r1bios are queued
+  to `retry_list` or `bio_end_io_list`
+- This allows `freeze_array()` to return while r1bios are still queued
+- When these queued r1bios (allocated with old `raid_disks` value) are
+  later freed after the mempool is resized, it causes:
+  - **Out-of-bounds memory access** in `put_all_bios()`
+  - **Mempool corruption** from releasing wrong-sized r1bios
 
 ### 2. CODE CHANGE ANALYSIS
 
-The fix modifies the `protection_map[16]` array in
-`arch/loongarch/mm/cache.c`:
-
-**For `[VM_NONE]` and `[VM_SHARED]` entries:**
+The fix is minimal - only **2 lines changed**:
 ```c
 // Before:
-_PAGE_PROTNONE | _PAGE_NO_EXEC | _PAGE_NO_READ
+err = mddev_lock(mddev);
+...
+mddev_unlock(mddev);
 
 // After:
-_PAGE_NO_EXEC | _PAGE_NO_READ | (_PAGE_PROTNONE ? : _PAGE_PRESENT)
+err = mddev_suspend_and_lock(mddev);
+...
+mddev_unlock_and_resume(mddev);
 ```
 
-**Technical mechanism of the bug:**
-- `_PAGE_PROTNONE` is a page table bit meant to mark pages that should
-  fault on userspace access but remain valid to the kernel
-- On LoongArch 32-bit, `_PAGE_PROTNONE` is defined as 0
-- When `_PAGE_PROTNONE` is 0, ORing it into the protection flags
-  contributes nothing
-- Without any "present" bit set, pages are completely non-present
-- Any access (even from kernel) triggers a page fault → kernel Oops
-
-**The fix logic:**
-Using GNU C extension: `(_PAGE_PROTNONE ? : _PAGE_PRESENT)` means:
-- If `_PAGE_PROTNONE` is non-zero → use `_PAGE_PROTNONE`
-- If `_PAGE_PROTNONE` is 0 → use `_PAGE_PRESENT` as fallback
-
-This ensures pages always have a valid presence indication regardless of
-platform configuration.
+This ensures the array is fully suspended during the reconfiguration,
+stopping ALL I/O (not just waiting for a counter condition). This is the
+**same approach the ioctl path already uses** (`SET_ARRAY_INFO`), making
+the fix clearly correct.
 
 ### 3. CLASSIFICATION
 
-- **Bug Fix:** Yes - fixes a kernel crash
-- **Feature Addition:** No
-- **Exception Category:** N/A - this is a straightforward crash fix
+- **Bug fix**: Memory safety issue (out-of-bounds access, memory
+  corruption)
+- **Not a feature**: No new functionality or APIs added
+- **Severity**: HIGH - memory corruption can cause kernel crashes and
+  potential data corruption
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-| Metric | Assessment |
-|--------|------------|
-| Lines changed | ~4 lines (minimal) |
-| Files touched | 1 file |
-| Complexity | Very low - simple conditional |
-| Subsystem | LoongArch MM (architecture-specific) |
-| Blast radius | Limited to LoongArch 32-bit only |
-
-**Risk:** Very low. The change is:
-- Architecture-specific (won't affect x86, ARM, etc.)
-- Surgical and contained
-- Uses well-understood pattern
+- **Lines changed**: 2
+- **Files affected**: 1 (`drivers/md/md.c`)
+- **Subsystem**: MD RAID - mature and widely used
+- **Risk**: VERY LOW - uses existing, well-tested suspend mechanism
+  already used by ioctl path
+- **Pattern**: Matches existing code pattern for similar operations
 
 ### 5. USER IMPACT
 
-- **Affected users:** LoongArch 32-bit platform users
-- **Severity:** High - kernel Oops/crash
-- **Trigger condition:** Basic VM operations with VM_NONE or VM_SHARED
-- This affects fundamental memory protection functionality
+- **Who is affected**: MD RAID (software RAID) users - common in servers
+  and enterprise deployments
+- **Trigger condition**: Resize array via sysfs while I/O errors are
+  occurring
+- **Consequence of bug**: Kernel crashes, potential data corruption
+- **Impact level**: HIGH for affected users (data integrity at risk)
 
 ### 6. STABILITY INDICATORS
 
-- Signed-off by Huacai Chen (LoongArch architecture maintainer)
-- The fix is straightforward and obviously correct
+- Signed-off by two developers
+- Has Link to mailing list discussion
+- Uses conservative approach matching existing ioctl behavior
 
 ### 7. DEPENDENCY CHECK
 
-- Self-contained fix
-- No dependencies on other commits
-- LoongArch has been in mainline since kernel 5.19
+The helper functions `mddev_suspend_and_lock()` and
+`mddev_unlock_and_resume()` were added in commit f45461e24feb
+(v6.7-rc1). These are inline functions in `md.h` that simply combine
+`mddev_suspend()` + `mddev_lock()` and `mddev_unlock()` +
+`mddev_resume()`.
 
-### STABLE TREE CRITERIA EVALUATION
+For stable kernels **6.7+**: This patch should apply cleanly.
 
-| Criterion | Met? |
-|-----------|------|
-| Obviously correct and tested | ✅ Yes - logic is clear |
-| Fixes a real bug | ✅ Yes - kernel Oops |
-| Fixes important issue | ✅ Yes - crash |
-| Small and contained | ✅ Yes - 4 lines, 1 file |
-| No new features | ✅ Yes |
-| Applies cleanly | ✅ Likely (straightforward) |
+For stable kernels **< 6.7** (6.6.y, 6.1.y, 5.15.y LTS): Would need
+either:
+1. Backport of f45461e24feb first, OR
+2. An adapted fix using direct calls to `mddev_suspend()` and
+   `mddev_resume()`
 
-### CONCLUSION
+The bug itself has existed since the `raid_disks_store()` function was
+introduced (very old), so all stable kernels are potentially affected.
 
-This is a textbook stable-worthy commit:
-- **Fixes a kernel Oops/crash** on LoongArch 32-bit platforms
-- **Minimal change** - only 4 lines modified in a single architecture-
-  specific file
-- **Obviously correct** - the conditional expression correctly handles
-  both 32-bit and 64-bit cases
-- **Zero risk to other architectures** - completely LoongArch-specific
-- **Low risk even within LoongArch** - the fix is surgical and well-
-  understood
+## Summary
 
-The benefit (preventing kernel crashes) clearly outweighs the minimal
-risk. This should be backported to any stable tree containing LoongArch
-support (5.19+).
+This commit fixes a real, serious memory safety bug in the MD RAID
+subsystem that can cause out-of-bounds memory access and mempool
+corruption. The fix is:
+- Small and surgical (2 lines)
+- Obviously correct (uses existing suspend mechanism)
+- Consistent with how the ioctl path already handles this
+- Low risk (well-tested pattern)
+
+The bug affects software RAID users who resize arrays via sysfs during
+I/O errors - a legitimate operational scenario. The consequences (memory
+corruption, potential crashes) are severe.
+
+The only consideration is that for pre-6.7 stable kernels, the fix needs
+adaptation or dependency backporting, but this is a standard stable
+maintenance consideration.
 
 **YES**
 
- arch/loongarch/mm/cache.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/md/md.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/loongarch/mm/cache.c b/arch/loongarch/mm/cache.c
-index 6be04d36ca07..496916845ff7 100644
---- a/arch/loongarch/mm/cache.c
-+++ b/arch/loongarch/mm/cache.c
-@@ -160,8 +160,8 @@ void cpu_cache_init(void)
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index cef5b2954ac5..d72ce43f0ebc 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -4399,7 +4399,7 @@ raid_disks_store(struct mddev *mddev, const char *buf, size_t len)
+ 	if (err < 0)
+ 		return err;
  
- static const pgprot_t protection_map[16] = {
- 	[VM_NONE]					= __pgprot(_CACHE_CC | _PAGE_USER |
--								   _PAGE_PROTNONE | _PAGE_NO_EXEC |
--								   _PAGE_NO_READ),
-+								   _PAGE_NO_EXEC | _PAGE_NO_READ |
-+								   (_PAGE_PROTNONE ? : _PAGE_PRESENT)),
- 	[VM_READ]					= __pgprot(_CACHE_CC | _PAGE_VALID |
- 								   _PAGE_USER | _PAGE_PRESENT |
- 								   _PAGE_NO_EXEC),
-@@ -180,8 +180,8 @@ static const pgprot_t protection_map[16] = {
- 	[VM_EXEC | VM_WRITE | VM_READ]			= __pgprot(_CACHE_CC | _PAGE_VALID |
- 								   _PAGE_USER | _PAGE_PRESENT),
- 	[VM_SHARED]					= __pgprot(_CACHE_CC | _PAGE_USER |
--								   _PAGE_PROTNONE | _PAGE_NO_EXEC |
--								   _PAGE_NO_READ),
-+								   _PAGE_NO_EXEC | _PAGE_NO_READ |
-+								   (_PAGE_PROTNONE ? : _PAGE_PRESENT)),
- 	[VM_SHARED | VM_READ]				= __pgprot(_CACHE_CC | _PAGE_VALID |
- 								   _PAGE_USER | _PAGE_PRESENT |
- 								   _PAGE_NO_EXEC),
+-	err = mddev_lock(mddev);
++	err = mddev_suspend_and_lock(mddev);
+ 	if (err)
+ 		return err;
+ 	if (mddev->pers)
+@@ -4424,7 +4424,7 @@ raid_disks_store(struct mddev *mddev, const char *buf, size_t len)
+ 	} else
+ 		mddev->raid_disks = n;
+ out_unlock:
+-	mddev_unlock(mddev);
++	mddev_unlock_and_resume(mddev);
+ 	return err ? err : len;
+ }
+ static struct md_sysfs_entry md_raid_disks =
 -- 
 2.51.0
 
