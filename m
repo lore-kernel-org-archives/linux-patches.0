@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B5A39C657;
-	Wed,  7 Jan 2026 15:53:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C57A39A811;
+	Wed,  7 Jan 2026 15:53:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767801214; cv=none; b=qVuWuvbvRNf22ZzCNQ2jlM4tUUjYNHicqlfNwzNY4SubdK2NvvwuZ8N0GvMuedyB6lgPReLVG2DBzMJhloGmfB6H1MqTPYeKOPSsL7C1Jv4NAIdAhmNtSff8WxKjOO1VKE8RwDW6TFfsowZ8cqqiTQ/YqfERtWU4rCylhf3Muhw=
+	t=1767801216; cv=none; b=JvQyITFbxIP+zt0lS2bttKwwMZw3EOi/3IUhyvyf9dSXesooTrveEUnovXqfwf0PH2Zlfpl/MJ/OZkk9prP+uYhVF/pOy2psDy8/cTopRQyyknDlL6pZA4xfK6zOZ1PCrC2PHPuknngDa7sisNx6Earrr4Yr7s2aM+60oWnDMao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767801214; c=relaxed/simple;
-	bh=1l8gtyiVh89SnrAAKIoGglB35M8j8jbonFhl8c4Gh40=;
+	s=arc-20240116; t=1767801216; c=relaxed/simple;
+	bh=baIElWLGbbT3EEa9pR+TKV01vRMQoodNknv6twf9pyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=L8cBEuTMuLslgGz771D6QAh5ZEX+mdMBt8QLAfG/mJsaluZxrOcad4TGsZgj0pj9IODRVZ50ykhVaU6USZL35zL2BWqkB7/6ORKGMrgR1yKuZeYv3/G4dl0Ckd4p9vkXnGEqiLko7N1dhcXcjE3eTqZxxXk7eaiuCH9/8CYLGdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SAJZ2nA8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZzVv7SQx8ZlG3k+ZipJZVwpHRDUC2NV/Rb1dWrsgS1AjO2r6+FrXQTyQu7MV0KoN9DwKSazHppnz2H745DOt5yb3WwMDvyWl0nIqZZ7JY15ArazHsAvS28FCgJ365cDFcfUe77t6rVhVmlCtjMMmTGn3Vo8TJAd7IwTbuT8O6is=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PWJzcG55; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SAJZ2nA8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31618C19422;
-	Wed,  7 Jan 2026 15:53:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PWJzcG55"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6058C4CEF1;
+	Wed,  7 Jan 2026 15:53:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767801212;
-	bh=1l8gtyiVh89SnrAAKIoGglB35M8j8jbonFhl8c4Gh40=;
+	s=k20201202; t=1767801215;
+	bh=baIElWLGbbT3EEa9pR+TKV01vRMQoodNknv6twf9pyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SAJZ2nA8+w/T0cOLmRCYqOAYrDWeqoXUD+dqoDvMBAY1N9cSSUrxylOLn8mL8XGm/
-	 8EX1mAiA0+2Udxoug70GGvFuAyirph8wko39dCjnQj4s5n01Q9hEQ7tZce4Mj80Xwd
-	 jYSp4EeU9FBHlOMQCsCF4gQstibDzKAI/vsTmeN+nlQuxWTWT+Az/VSLts4B2EmnXC
-	 RFU8w4aPgDAlmOzQ7fTzXH+1YjUucC6/NqC1L5ICTCK8oHbrqpYtVHnkCQzu+9cxOv
-	 9Zr1KeD9ALy3VCl6x+UuLBL+gfOOWT4S2TDBHgeDi/UPmtSfftz/nw+DXoFGTOnwCJ
-	 1wSfEa8dI6JSQ==
+	b=PWJzcG55gxymAqeMGzhVHpTRopNX3X2YBX7qVW9SFLnmkb+isaKQo8av+gwZhcFDe
+	 Qqrsp8Sa4+XGGpzMH6NkxRUwjFlE7duzs0Yaxa4YnuSk+mWtyRGU1I8tyulI/u4xXj
+	 bQZa4NwCKNS/HwjC7D2VvYeKLcNeHGCp/2QjI6gS08gdiuPDU81ihDpVVbNxgcNQ/D
+	 /2ItXEYUaLBZBh6C6vvhEkcjy6Ef5MpISrz84s2OJLcGTUQsNqcEN9Qja8L8lB/YGU
+	 VoxBL6NUJSqokstPZTkxXB61PfjcGCEKTbqi1d9DLnPE3CvXxFngcIzwicCFuZw9HR
+	 2pycSkR+hIa8g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alexandre Negrel <alexandre@negrel.dev>,
-	Jens Axboe <axboe@kernel.dk>,
+Cc: Johannes Berg <johannes.berg@intel.com>,
+	syzbot+639af5aa411f2581ad38@syzkaller.appspotmail.com,
 	Sasha Levin <sashal@kernel.org>,
-	io-uring@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] io_uring: use GFP_NOWAIT for overflow CQEs on legacy rings
-Date: Wed,  7 Jan 2026 10:53:04 -0500
-Message-ID: <20260107155329.4063936-2-sashal@kernel.org>
+	johannes@sipsolutions.net,
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18] wifi: mac80211: don't WARN for connections on invalid channels
+Date: Wed,  7 Jan 2026 10:53:06 -0500
+Message-ID: <20260107155329.4063936-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260107155329.4063936-1-sashal@kernel.org>
 References: <20260107155329.4063936-1-sashal@kernel.org>
@@ -51,153 +52,180 @@ X-stable-base: Linux 6.18.3
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandre Negrel <alexandre@negrel.dev>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit fc5ff2500976cd2710a7acecffd12d95ee4f98fc ]
+[ Upstream commit 99067b58a408a384d2a45c105eb3dce980a862ce ]
 
-Allocate the overflowing CQE with GFP_NOWAIT instead of GFP_ATOMIC. This
-changes causes allocations to fail earlier in out-of-memory situations,
-rather than being deferred. Using GFP_ATOMIC allows a process to exceed
-memory limits.
+It's not clear (to me) how exactly syzbot managed to hit this,
+but it seems conceivable that e.g. regulatory changed and has
+disabled a channel between scanning (channel is checked to be
+usable by cfg80211_get_ies_channel_number) and connecting on
+the channel later.
 
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220794
-Signed-off-by: Alexandre Negrel <alexandre@negrel.dev>
-Link: https://lore.kernel.org/io-uring/20251229201933.515797-1-alexandre@negrel.dev/
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+With one scenario that isn't covered elsewhere described above,
+the warning isn't good, replace it with a (more informative)
+error message.
+
+Reported-by: syzbot+639af5aa411f2581ad38@syzkaller.appspotmail.com
+Link: https://patch.msgid.link/20251202102511.5a8fb5184fa3.I961ee41b8f10538a54b8565dbf03ec1696e80e03@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of io_uring GFP_NOWAIT Commit
+## Analysis of Commit: wifi: mac80211: don't WARN for connections on
+invalid channels
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The commit message is clear and well-structured:
-- **Problem**: Using `GFP_ATOMIC` for overflow CQE allocations allows
-  processes to exceed memory limits
-- **Solution**: Change to `GFP_NOWAIT` which fails earlier in OOM
-  situations
-- **Bug Reference**: Links to kernel bugzilla (bug 220794) - indicates a
-  real user-reported issue
-- **Proper sign-offs**: Author and maintainer (Jens Axboe) signatures
-  present
+**Subject:** Indicates removal of a WARN for a legitimate condition in
+WiFi channel handling.
 
-The key insight is that `GFP_ATOMIC` can dip into emergency memory
-reserves, allowing allocations to succeed even when a process should be
-constrained by memory limits. This is a resource exhaustion / memory
-limit bypass issue.
+**Key details from message:**
+- **Reported by syzbot** - demonstrates this is a reproducible, real-
+  world triggerable issue
+- **Author:** Johannes Berg - the mac80211 maintainer and highly trusted
+  kernel developer
+- **Scenario explained:** Regulatory changes can disable a channel
+  between scanning and connecting, making this condition legitimately
+  reachable (not a kernel bug)
+- The WARN_ON was inappropriate because it treats a recoverable
+  condition as a programming error
 
 ### 2. CODE CHANGE ANALYSIS
 
-The change is minimal - a single line:
+The change is in `ieee80211_determine_chan_mode()` in
+`net/mac80211/mlme.c`:
+
+**Before:**
 ```c
-- ocqe = io_alloc_ocqe(ctx, cqe, big_cqe, GFP_ATOMIC);
-+       ocqe = io_alloc_ocqe(ctx, cqe, big_cqe, GFP_NOWAIT);
+if (WARN_ON(chanreq->oper.width == NL80211_CHAN_WIDTH_20_NOHT)) {
+    ret = -EINVAL;
+    goto free;
+}
 ```
 
-**Technical mechanism of the bug:**
-- `io_cqe_overflow_locked()` is called when the completion queue is full
-  and entries must overflow
-- This function runs with `completion_lock` held, so it cannot sleep
-  (ruling out `GFP_KERNEL`)
-- `GFP_ATOMIC` can access emergency memory reserves, bypassing memory
-  limits
-- `GFP_NOWAIT` is also non-sleeping but respects memory limits by
-  failing instead of dipping into reserves
+**After:**
+```c
+if (chanreq->oper.width == NL80211_CHAN_WIDTH_20_NOHT) {
+    link_id_info(sdata, link_id,
+                 "unusable channel (%d MHz) for connection\n",
+                 chanreq->oper.chan->center_freq);
+    ret = -EINVAL;
+    goto free;
+}
+```
 
-**Why the fix works:**
-- Both flags are appropriate for the atomic context (holding spinlock)
-- `GFP_NOWAIT` is semantically correct: the allocation should fail
-  gracefully under memory pressure rather than bypass system memory
-  constraints
+**Technical explanation:**
+- The loop tries to downgrade channel width when a channel is not usable
+- When it reaches minimum width (20MHz NOHT) and channel is still
+  unusable, connection fails
+- **The bug:** `WARN_ON()` was used, but this condition CAN happen
+  legitimately (e.g., regulatory DB change between scan and connect)
+- **The fix:** Replaces WARN_ON with an informative log message; same
+  functional behavior (-EINVAL return)
 
 ### 3. CLASSIFICATION
 
-- **Bug fix**: Yes - fixes memory limit bypass
-- **Feature**: No - no new functionality added
-- **Security-relevant**: Yes - this could be exploited for resource
-  exhaustion/DoS, particularly in containerized or multi-tenant
-  environments with memory cgroups
+- **Type:** Bug fix - inappropriate WARN removal
+- **NOT a feature addition:** Same functional behavior, just better
+  error handling
+- **Security-adjacent:** On systems with `panic_on_warn=1`, this could
+  cause a kernel crash from a user-triggerable condition
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-- **Lines changed**: 1
-- **Files touched**: 1 (io_uring/io_uring.c)
-- **Complexity**: Trivial
-- **Function context**: `__cold` path - not in hot path, used only
-  during overflow conditions
-
-**Risk analysis:**
-- Allocation may fail more readily under memory pressure - but that's
-  the *intended* behavior
-- If overflow allocation fails, the CQE won't be recorded - applications
-  relying on completion notifications might be affected, but this is
-  correct behavior when memory is exhausted
-- Very low risk of regression since this is the semantically correct
-  change
+- **Lines changed:** ~5 lines net change
+- **Files touched:** 1 file
+- **Risk:** **VERY LOW**
+  - Functional behavior unchanged (returns -EINVAL in same conditions)
+  - Only changes logging output
+  - Cannot introduce regression
 
 ### 5. USER IMPACT
 
-- **Who is affected**: Users running io_uring workloads (databases,
-  high-performance I/O applications)
-- **Severity of bug**: Medium-High - allows memory limit bypass which is
-  particularly problematic in:
-  - Container environments (Docker, Kubernetes)
-  - Systems with memory cgroups
-  - Multi-tenant systems
-- **Reported by users**: Yes - bugzilla link indicates real-world issue
+**Affected users:**
+- **panic_on_warn systems:** Could crash from this legitimate condition
+  - HIGH impact
+- **All WiFi users:** Reduces log noise from false warnings - MEDIUM
+  impact
+- **Production environments:** Many use panic_on_warn, making this
+  important
+
+**Severity:** This is syzbot-triggerable, meaning attackers could
+potentially trigger crashes on panic_on_warn systems.
 
 ### 6. STABILITY INDICATORS
 
-- Accepted by Jens Axboe (io_uring maintainer)
-- Has proper Link: to mailing list discussion
-- Referenced bug report demonstrates real user impact
-- Simple, well-understood change
+- ✅ Reported-by: syzbot (confirmed reproducible)
+- ✅ Johannes Berg is the mac80211 maintainer
+- ✅ Fix is trivially correct
+- ✅ No complex logic changes
 
 ### 7. DEPENDENCY CHECK
 
-- No dependencies on other commits
-- `io_alloc_ocqe()` and `io_cqe_overflow_locked()` exist in stable
-  kernels
-- io_uring has been present since kernel 5.1
+- **Standalone fix:** No dependencies on other commits
+- **Code path existence:** `ieee80211_determine_chan_mode()` is core
+  mac80211 code that exists in stable trees
+
+### STABLE KERNEL CRITERIA EVALUATION
+
+| Criterion | Met? | Notes |
+|-----------|------|-------|
+| Obviously correct | ✅ | Simple WARN_ON removal |
+| Fixes real bug | ✅ | syzbot reported, crashes on panic_on_warn |
+| Important issue | ✅ | Potential crashes in production |
+| Small and contained | ✅ | ~5 lines, 1 file |
+| No new features | ✅ | Same behavior, better logging |
+| Applies cleanly | ✅ | Standard pattern |
+
+### RISK VS BENEFIT
+
+**Benefits:**
+- Prevents crashes on panic_on_warn systems
+- Fixes syzbot-reported issue
+- Provides better diagnostic information
+- Zero functional change to normal operation
+
+**Risks:**
+- Essentially none - the change is purely about removing an
+  inappropriate warning and adding informational logging
 
 ### CONCLUSION
 
-**Meets stable criteria:**
-- ✅ Obviously correct - semantically appropriate GFP flag
-- ✅ Fixes a real bug - memory limit bypass (resource exhaustion)
-- ✅ Small and contained - single line change
-- ✅ No new features or APIs
-- ✅ Tested in mainline
-- ✅ Referenced bug report shows real user impact
+This is a textbook example of a good stable backport candidate:
+1. Small, surgical fix (few lines, one file)
+2. Fixes a real bug that syzbot can trigger
+3. From the subsystem maintainer
+4. Zero risk of regression (same functional behavior)
+5. Important for panic_on_warn systems which are common in production
 
-**Risk vs Benefit:**
-- Risk: Minimal - well-understood change to allocation flags
-- Benefit: Fixes a memory limit bypass that could be used for DoS
-
-This is an ideal stable backport candidate: a tiny, surgical fix
-addressing a real security-relevant bug (memory limit bypass) with
-minimal risk of regression.
+The fix correctly recognizes that a channel becoming unusable between
+scan and connect is a legitimate condition (e.g., due to regulatory
+changes), not a kernel bug that warrants WARN_ON.
 
 **YES**
 
- io_uring/io_uring.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/mlme.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index 60adab71ad2d..93b203205a16 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -897,7 +897,7 @@ static __cold bool io_cqe_overflow_locked(struct io_ring_ctx *ctx,
- {
- 	struct io_overflow_cqe *ocqe;
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index f3138d158535..c8b588f4e494 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -1126,7 +1126,10 @@ ieee80211_determine_chan_mode(struct ieee80211_sub_if_data *sdata,
  
--	ocqe = io_alloc_ocqe(ctx, cqe, big_cqe, GFP_ATOMIC);
-+	ocqe = io_alloc_ocqe(ctx, cqe, big_cqe, GFP_NOWAIT);
- 	return io_cqring_add_overflow(ctx, ocqe);
- }
- 
+ 	while (!ieee80211_chandef_usable(sdata, &chanreq->oper,
+ 					 IEEE80211_CHAN_DISABLED)) {
+-		if (WARN_ON(chanreq->oper.width == NL80211_CHAN_WIDTH_20_NOHT)) {
++		if (chanreq->oper.width == NL80211_CHAN_WIDTH_20_NOHT) {
++			link_id_info(sdata, link_id,
++				     "unusable channel (%d MHz) for connection\n",
++				     chanreq->oper.chan->center_freq);
+ 			ret = -EINVAL;
+ 			goto free;
+ 		}
 -- 
 2.51.0
 
