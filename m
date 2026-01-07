@@ -1,143 +1,178 @@
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.24])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 031A37260D
-	for <patches@lists.linux.dev>; Wed,  7 Jan 2026 01:19:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.24
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA053BB4A
+	for <patches@lists.linux.dev>; Wed,  7 Jan 2026 08:05:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767748764; cv=none; b=RW/nRjbdD4MLHGarMESnhEW58Y5kiGt/tLN0h8kjOSd9tJH2TXmsaHgOL8FBVFNlx8eN0pvHzDfuXb4Nlk/5x1dKSaE40ogFp37jnt9+SgDwlAtA+54uRp8n21CzM2nrnFUHeOd/9CnCVi1qh7DN9Jzl75Fhs+aNIc6wmO/a2x4=
+	t=1767773115; cv=none; b=X7SVbLdjZaE2Jn9JffQCg3Y5fiRiElDpK5oMmKRklWVJX9ZMv2PfOi4uJ9hOXo0f8/jyW9kchqp0LrhiXz+j5VrSjEsiNeIb+321tqSVjX2uZkZ9kDk45O5GoZDahvdthrcA8/x9NTQvrUz7dLkgpH+Rie5BEykq9JTwy3T6w8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767748764; c=relaxed/simple;
-	bh=DJ8x18+rVbeTdWZC5rb6mndc40okBcea9rPwS6mh9vk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YgvRqwuNsGLn6WXa1/jPOwMiyzQZ42n49lFb7Z2JYVqZT1lLFPzg28EUi8ymz4z2yXl9kx0sZMKyrINLgwWmzBng4j50juEYQjRx8DJCIFZQkrJXVouwGqFaTco+QsiDAuK4JxPzOL0CqfY7AWYcn61a4SLNW216i3k5+g+754I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu; spf=pass smtp.mailfrom=heusel.eu; dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b=cxhmPx6q; arc=none smtp.client-ip=212.227.17.24
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=heusel.eu
+	s=arc-20240116; t=1767773115; c=relaxed/simple;
+	bh=xHllFBFUlqwO9t0eAvqYTg9WJll2vY0hzxsQKnhIlxg=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=d7fUqjaQf15v+9S3L8dRU9iXxbbsXGAFIN8dc2O5bBk11EGckJUtXSHzU/6I49gzrcf9aWhhhJ6suZM/98yHDzwuaDe77Zmi+BloJy2VrjhV+Izz49g/L8sPQYp5CIQOu5CYStV/0dzakQTy10c9UAtlzK4Rs7+bGlMKkRbswyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=hW5uosiX; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=UR/FsX+/; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=hW5uosiX; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=UR/FsX+/; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b="cxhmPx6q"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=heusel.eu;
-	s=s1-ionos; t=1767748749; x=1768353549; i=christian@heusel.eu;
-	bh=f+eVlcAsT4+f3dANXhZgKxe5UluorPMUS8CUY3So/s8=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:In-Reply-To:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=cxhmPx6qXN0A0g851OUTL8Wdb4GJ9VCws1eWjJ/qnC9wgtrYK3j/Gosejpi8uVMr
-	 aw6gGc5HweTPJ5UgOQ6mxwMZEH1gAXNDTn/DLulz6fcFDJf0utmqwN2x7JiqXnelu
-	 CcuCHzSRyHK8o8RXFK4XJwMPLx0v4bP66NQPDLW+iGnyS9+fdwhmvG6epy7GCyXlj
-	 i7ATKJ+I0tlhgtCnvs5vu7GafLn+/fYaB1ARtP3pX56y5jekRqIWYZu26PvlrlhG1
-	 Dj26gaNpalX+V/dxfXU7GeAeYIKaHCtJ5iEPLvj2Xg9yk9I9gVfO4EmUOz1gBAN6v
-	 XJwfVXVMXPPaOeJqoA==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from localhost ([94.31.75.239]) by mrelayeu.kundenserver.de
- (mreue106 [212.227.15.183]) with ESMTPSA (Nemesis) id
- 1MuUSa-1vvMex2xak-00riJa; Wed, 07 Jan 2026 01:51:53 +0100
-Date: Wed, 7 Jan 2026 01:51:51 +0100
-From: Christian Heusel <christian@heusel.eu>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
-	broonie@kernel.org, achill@achill.org, sr@sladewatkins.com
-Subject: Re: [PATCH 6.18 000/312] 6.18.4-rc1 review
-Message-ID: <f7ea70a5-a8ef-470a-a8c5-e8dd59b27da0@heusel.eu>
-References: <20260106170547.832845344@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="hW5uosiX";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="UR/FsX+/";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="hW5uosiX";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="UR/FsX+/"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 859FE33AF2;
+	Wed,  7 Jan 2026 08:05:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1767773111; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=jD09M/XJzsS6gONTWnJUHOB1Hx0G1Mtqz242EBUvEmE=;
+	b=hW5uosiXriRQ2Lzvw3G12+ZtWw0/ODqBX8wrsAPcDDWR1dY0O6zjQ2tGTFWDWJ+KZNDtQD
+	KVkj0IysN8iRRCNAEeRex9/w+/Tq7hrHpCpoqsQDHvWe0YUeUoG7XdWFCXOFSeJxN/jlnS
+	SUo28PIhRugOuc2UrHNmXqomSRyFKIw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1767773111;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=jD09M/XJzsS6gONTWnJUHOB1Hx0G1Mtqz242EBUvEmE=;
+	b=UR/FsX+/JdSxAs9ksYmZf9HrYNG3gcYOoxzYt8gYDQFVOY5yK3FPhjLyUPgQkC8/K1gKAs
+	sWcj21gaSlxzShDA==
+Authentication-Results: smtp-out1.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=hW5uosiX;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="UR/FsX+/"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1767773111; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=jD09M/XJzsS6gONTWnJUHOB1Hx0G1Mtqz242EBUvEmE=;
+	b=hW5uosiXriRQ2Lzvw3G12+ZtWw0/ODqBX8wrsAPcDDWR1dY0O6zjQ2tGTFWDWJ+KZNDtQD
+	KVkj0IysN8iRRCNAEeRex9/w+/Tq7hrHpCpoqsQDHvWe0YUeUoG7XdWFCXOFSeJxN/jlnS
+	SUo28PIhRugOuc2UrHNmXqomSRyFKIw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1767773111;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=jD09M/XJzsS6gONTWnJUHOB1Hx0G1Mtqz242EBUvEmE=;
+	b=UR/FsX+/JdSxAs9ksYmZf9HrYNG3gcYOoxzYt8gYDQFVOY5yK3FPhjLyUPgQkC8/K1gKAs
+	sWcj21gaSlxzShDA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 37BAE3EA63;
+	Wed,  7 Jan 2026 08:05:11 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id p8xWDLcTXmllSAAAD6G6ig
+	(envelope-from <tiwai@suse.de>); Wed, 07 Jan 2026 08:05:11 +0000
+Date: Wed, 07 Jan 2026 09:05:10 +0100
+Message-ID: <87jyxtetl5.wl-tiwai@suse.de>
+From: Takashi Iwai <tiwai@suse.de>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>,
+	linux-sound@vger.kernel.org,
+	llvm@lists.linux.dev,
+	patches@lists.linux.dev,
+	kernel test robot <lkp@intel.com>
+Subject: Re: [PATCH] ALSA: pcm: Revert bufs move in snd_pcm_xfern_frames_ioctl()
+In-Reply-To: <20260106-pcm_native-revert-var-move-free-for-old-clang-v1-1-06a03693423d@kernel.org>
+References: <20260106-pcm_native-revert-var-move-free-for-old-clang-v1-1-06a03693423d@kernel.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/30.1 Mule/6.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="mu3qtd4ostqhaly4"
-Content-Disposition: inline
-In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
-X-Provags-ID: V03:K1:ndKig8m4M8Ew+C5qnt+FauN9bwinCMshLxsDvYLsvO/IFHowLwe
- SI2Izn1H24x2dJiHjxXxdHThlpgXFjjwzydehVScUrb1liM53qdMZ3nlqm4//oTO6+LmSNY
- zq6mPgSj2pvzQGwClKuQOu5lKuPyWCz6mSVtN5POUrkx33q8uQ66xutW7e4KA5eo+h9reG+
- l/Ypi96gTh+tulsuCPrQw==
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:n9SfgEaJLR0=;1iaGVDeny1Onw2KjjNAkmSOkcpC
- hGQisOC+jeOr/aLK9/RX4uHXRk1+pGGlNIIc4DOIKr/zfO4JdvNG1qcq4SsvsJkHOas5sCMJs
- aBK5VaNHrbw/uD9jLpov6yw4aD6X4eBX1VPV6CiuRKELBh/tg9qJk5HueDXV7mnrylL/7Zcuw
- N+QQksuvUE/saKFkhhhTcJtk6L1xif/EJH15fujuJ/fhxHBchssVqgfKEoSqviYz/YTIhjYjb
- EdTQmaX329Jx7BZRInOG8dQfgpR+BfONHVG/9NPKiwyAqJeMT0APppLoDwq7vYm70oOWEZ5qd
- oORgLX4qjEwt1x0a31+i0dXeYfIm/Noae4uM6E+cx+MWri4x1AUJQSdA6GJvCLqWtgtAMbkmq
- cHCo21BXwgfI8gXzXUMt1YTIXRsgKJodrbdKU1AbOXbtss2zjmOB0Ic/C3GLXySakhr3lDbCQ
- XmlhTDJ76Fj2xNLOQwH/+n5uAGY1cUihsUqD9M7ZMjnVsv6TK2/7pcA/fmTHWyyEwey+amDET
- U8FMAuoOOuOU0FbRsyme9HC8ak1pgWF5h1wuBYAjg0MI58wvBP3EOiUCIcm464uTlFCTCRMiY
- +U9QbcWPyLUUoViQ83FwrsrcL/7wtsIz+cN/6vWORmxkFlIETD/K/+la4J5sgOJxlsJYU7c4C
- Fk7/sQIr6xhA5LupqnVrn4aH9W/5wBTocaWonBq39ugV1mQxMsvicnA+SlOhZp1e6PqEgnmsJ
- Ok79U7WraB+a+UnohAExUEKnVvCgBHTwqhe1z2jN89GXmjhCHSjTgOpWRX4RSd+rLw5WpUlfj
- K+2/unBm9n6djJPtLh+WaoRzrYM+brQ3rd/jepMNrqtcRuu7zIRwFnRUj5hZvUt35rWZDgeqJ
- g8zlx7Pm2P0+cLZr4dr2W0k3WpEaffXL6KwNUqmG+W3K61s+JYJVEnHHZeOg7ZB1o49vojv5F
- uf3cQkRSk5on6q8y2nu8lOXb+reu3p4offBDqIkF8AR18TSbpLTxHGBxMMTxjeEkMY6QeZviB
- LcuO5KwSA0Wc87VW1J3d/cz2l7Nyv4eXkxBoeCQagcOKzXb5BasyVY/w7RNwPL0Z9CIAE+fCl
- Ek32Lj6JU7cD/DrxALwu/G0jxOFS7JJZBS3YNty06iJF6+Cb82CH+su4nbiKFW+YUMolnAuqj
- UwVZ4ZZmN8pQXpWRm9YnenLskXqXp03lwyjgEiYf5b0hyqpns6Je3zsKG3mLP/WQh7T4ZFXlI
- Cqv/YpSErh1D6CwO7z5yUkGYWiU7IRmzYkraDcFKmAvMAFxACAqc6BMEjMYRZ0SIF+b0ArHAS
- k/idN7fNl+sG2PlySG9iXD62gzHYjTVLiJ4R69GGnYSrsWcT17o2hZd5Fg9zzPseYF28mKw9s
- CDNBYBtpDeTwpVXTTnr2z37yZrWqC4N0LAiCJDjVt4LnaNF3iDTwWsKiYanBGdURka8OYGkiy
- 6spZmhKEcZTRVGaaDYi2VALyAfBd4y/LvHE+bQ3u73keBd6X+LugEqRHd1q5IvyjCEKXt8uwe
- ZIMQn43rckd6lprSg023RliwWJvKm+fsxXn1ykzmWs2TnRO16wu6Dw54vv3dyCguafh+CgY3+
- z0XtEKcCOktFLemkU6uta3m6E4G4IAnd2TKxpzIqDcmhxZnpsCnK7Pm5UXVYSQlqPVCALcAZy
- aJ70Q/8v6SgE9d/lr3kzbCoItnzFKgtwyj7txe0w9y1swDMntWDnMXtdHDJvFtooq16k4BjJB
- PNKamdKYWuF63
+X-Spam-Score: -2.01
+X-Rspamd-Queue-Id: 859FE33AF2
+X-Spamd-Result: default: False [-2.01 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	MID_CONTAINS_FROM(1.00)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	ARC_NA(0.00)[];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	TO_DN_SOME(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	FREEMAIL_CC(0.00)[perex.cz,suse.com,gmail.com,google.com,vger.kernel.org,lists.linux.dev,intel.com];
+	RCVD_TLS_ALL(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[lkml];
+	DKIM_TRACE(0.00)[suse.de:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:mid]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+X-Spam-Level: 
+
+On Wed, 07 Jan 2026 00:08:18 +0100,
+Nathan Chancellor wrote:
+> 
+> When building with clang older than 17 targeting architectures that use
+> asm goto for their get_user() and put_user(), such as arm64, after
+> commit f3d233daf011 ("ALSA: pcm: Relax __free() variable declarations"),
+> there are bogus errors around skipping over a variable declared with the
+> cleanup attribute:
+> 
+>   sound/core/pcm_native.c:3308:6: error: cannot jump from this asm goto statement to one of its possible targets
+>           if (put_user(result, &_xfern->result))
+>               ^
+>   ...
+>   arch/arm64/include/asm/uaccess.h:298:2: note: expanded from macro '__put_mem_asm'
+>           asm goto(
+>           ^
+>   sound/core/pcm_native.c:3295:6: note: possible target of asm goto statement
+>           if (put_user(0, &_xfern->result))
+>               ^
+>   ...
+>   sound/core/pcm_native.c:3300:8: note: jump exits scope of variable with __attribute__((cleanup))
+>           void *bufs __free(kfree) =
+>                 ^
+> 
+> clang-17 fixed a bug in clang's jump scope checker [1] where all labels
+> in a function were checked as valid targets for all asm goto instances
+> in a function, regardless of whether they were actual targets in a
+> paricular asm goto's provided list of labels.
+> 
+> To workaround this, revert the change done to
+> snd_pcm_xfern_frames_ioctl() by commit f3d233daf011 ("ALSA: pcm: Relax
+> __free() variable declarations") to avoid a variable declared with
+> cleanup from existing between multiple uses of asm goto. There are no
+> other uses of cleanup in this function so there should be low risk from
+> moving this variable back to the top of the function.
+> 
+> Link: https://github.com/ClangBuiltLinux/linux/issues/1886 [1]
+> Reported-by: kernel test robot <lkp@intel.com>
+> Closes: https://lore.kernel.org/oe-kbuild-all/202512190802.i4Jzbcsl-lkp@intel.com/
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+
+I hoped that this mess is addressed in the put_user() side, but it
+doesn't seem happening, so I took your workaround now.
 
 
---mu3qtd4ostqhaly4
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH 6.18 000/312] 6.18.4-rc1 review
-MIME-Version: 1.0
+thanks,
 
-On 26/01/06 06:01PM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.18.4 release.
-> There are 312 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->=20
-> Responses should be made by Thu, 08 Jan 2026 17:04:53 +0000.
-> Anything received after that time might be too late.
->=20
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.4-=
-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git=
- linux-6.18.y
-> and the diffstat can be found below.
->=20
-
-Tested-by: Christian Heusel <christian@heusel.eu>
-
-Tested on the following hardware:
-
-* a Framework 13 Laptop with a Ryzen AI 5 340
-* a Framework Desktop with a Ryzen AI Max 395+
-
---mu3qtd4ostqhaly4
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEb3ea3iR6a4oPcswTwEfU8yi1JYUFAmldriYACgkQwEfU8yi1
-JYWYBg//ZSEqxCRbL0/by2JJlcpRP7/szCImUpUyoH1IHOqgpnsd2lGtl3GwkAps
-qR0Z1zdY60f7ImphE0ZfL1qAqXTL+/cBvFryG5nlNsjhtkG5BvUwd9y7w+Uc27Yk
-dVPuW32r0fjR2nOBnrI53BTTOYigBQUF0c/eyqK7UyTr7h7fD1yIUto0D6TWkRmB
-wXy3Un5v7t/EyuVJq9B9r/dycZTAHVEQXcDX1Nh4WCton/tcP7PMXVT7O7hsS6xV
-+A2T8yqUDmM5IDsKJD7nkNi87lSp58iyBWdMEumnUIPsxLyPrUMr4shY0Or7s5Up
-ZZlxehIvwVZF4o98YYMtuc57TUQK/P123wc2BQJoZuHKNO++eGzuPbvcCpek9EGx
-wwIVGLzX3lDcwXrMF6ef43OtJfdWufhw/WELeojnr0TKQ7EIp8r7lKUrwt4Kl2nH
-uiTbhke3uZHqYuYKQMv+wFp9YYPyWSjzhnvXEjKm0j76Fs8GBjaEpmZ79th0v7vg
-vi+VwZV5gmbQXJE81ucX2LUUOwXgI0X9aC569CCFDm3bYArHJFVQVmrNPxz//c6U
-qMTo+kz3my2Pea2ERsuE4Auy2cE0cB9Uv4QAp4IWwU4xvPF29oU3I7YeUa4PispO
-4fAIynqMK54lf3RS6ZjDi2FxMYW9oTVSzA2kqrJDwO5c37ZUL2k=
-=MbQe
------END PGP SIGNATURE-----
-
---mu3qtd4ostqhaly4--
+Takashi
