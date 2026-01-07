@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5888D39A7F9;
-	Wed,  7 Jan 2026 15:53:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC4F3A1CF4;
+	Wed,  7 Jan 2026 15:53:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767801219; cv=none; b=BKH2FtRQxri0M5UQzryeBy7WS3Eu5FsNR07pxwJw92YKL7k9o6T5nnN6M1d0gEftR9Ia83JIni/M0RuBbcdQsc6BmLfF3AOXHBbj4Auqg2VdcPmJdyvss7r0CRBPIGWrP60R8ooVeh1YPfSYefeX71Uig57Q1H2yMOA8bLx6vFw=
+	t=1767801221; cv=none; b=D2fm5fyJoVwfrQWoPVOBnQqtNWsI1roTeGLP2lIpmiaIGs+l70w278tg7JW5QOJt0iZVNJJrFn8snhyZW8avlbl8GvBDIvJ3RyYL1Tpitpn4zJE2FoaxXYrkboRecTS+HuMTzabg3RyPyk5g5QpemI8qVXd7abLDhfOzWBoJxoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767801219; c=relaxed/simple;
-	bh=wdMvfSJWGFav7L/E7nCk3KbVSxk4Vh8tBkpPa3X7OJ4=;
+	s=arc-20240116; t=1767801221; c=relaxed/simple;
+	bh=CO5+tSdOQc0WuSROBg3qtnQEPnHZ8ivRvTUTNMMwSTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jy9nOYul1IUcE6dLVxfDtCQeDN4UV9e5fdLPNADHcDrhQZhxykgK87vGPChd3s9U1cm1+8iaSLEivrg/SM3HnYrSzjPSpZezDwMioO1TWfJmPQGQBvP4TdNzGt7mHbdIPwcm86zjwMrQZHKMyEwlig68QOK1Veqyz/vqnNfG61Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jWsw4rN9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pIjTb03ztTYyeoABnCK/aq24cYPGA/1AqWkXhEZzlDUgg2E78pUlIggnjfbke5wVQJ5yOpPg9fO+wwwpTQpYXqricIQDaRsSe51VEx8w9AQqgSJSd/WU88nP0lyHEXFDpIj54hSLPwG28soYMPVIFlVEumjbWtXgmdHADxUJs+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R9RdXJ7/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jWsw4rN9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9466C4CEF1;
-	Wed,  7 Jan 2026 15:53:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R9RdXJ7/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C6D5C4CEF7;
+	Wed,  7 Jan 2026 15:53:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767801217;
-	bh=wdMvfSJWGFav7L/E7nCk3KbVSxk4Vh8tBkpPa3X7OJ4=;
+	s=k20201202; t=1767801218;
+	bh=CO5+tSdOQc0WuSROBg3qtnQEPnHZ8ivRvTUTNMMwSTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jWsw4rN90FF58SpdPWPw351Zo29UHf1psFRMlL+voC1010tUq1lc9/zQxw0OZ2XB8
-	 BYDoXnPuDQekMHWokwWiwAQbS4vGLGmvVKVpoY80EwWn3ekZ0xQy0OMUT6ooDvwXme
-	 tbv1npfULPb8QYT2gQwT+GHpT6QeFwLnalTTTNP4n5tAgt/Dt0VwCHmFrkukyLiOas
-	 CvrVhCuQbfLjBE93S4b+eauk+WQt2a4/2LSmgSLyp/9bv5wnfMTTk+J5gTGqJFsDSf
-	 38ClIgiQqO6JjDakKM7pWD/+U5Aoalm0w9N3JdwX9HlpMCgsAiX/eZEL62qmAkwS/C
-	 pr7+xqj203U7Q==
+	b=R9RdXJ7/PYTDjlYtYoFRlHcnJW6xSn38hZZgW+RIXlhYcG7KdtO9Potmyi4ZCDH+r
+	 Y+ttzlCx5Ib14ZIwYfu/Zl3MvlUDENzR3L3jw/K7Oz2583vGtWp2ndIIBsneh79Myr
+	 OSZEYjagZ2wPNtu+ckxLhhvZRkm8moqDV0bZc3Yi+t2juuk/iY9gg8WHV9OMaUy1U3
+	 bpLyGXdGbbqFr+d32F9Dvy6zrP3N9km6AphYlJ3frEosXEFnDNC2rwI2C+h2wiW3/h
+	 es/a5sLDuYF2JjcSPgfGfNVi4Sn50XFIkQY6vFGqM/KicLqUUbBz7Q/qh086Hyl57I
+	 LzbgHe8gfcuYg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ethan Nelson-Moore <enelsonmoore@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+Cc: Moon Hee Lee <moonhee.lee.ca@gmail.com>,
+	syzbot+b364457b2d1d4e4a3054@syzkaller.appspotmail.com,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-usb@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] net: usb: sr9700: support devices with virtual driver CD
-Date: Wed,  7 Jan 2026 10:53:07 -0500
-Message-ID: <20260107155329.4063936-5-sashal@kernel.org>
+	johannes@sipsolutions.net,
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] wifi: mac80211: ocb: skip rx_no_sta when interface is not joined
+Date: Wed,  7 Jan 2026 10:53:08 -0500
+Message-ID: <20260107155329.4063936-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260107155329.4063936-1-sashal@kernel.org>
 References: <20260107155329.4063936-1-sashal@kernel.org>
@@ -48,159 +50,111 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.3
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+From: Moon Hee Lee <moonhee.lee.ca@gmail.com>
 
-[ Upstream commit bf4172bd870c3a34d3065cbb39192c22cbd7b18d ]
+[ Upstream commit ff4071c60018a668249dc6a2df7d16330543540e ]
 
-Some SR9700 devices have an SPI flash chip containing a virtual driver
-CD, in which case they appear as a device with two interfaces and
-product ID 0x9702. Interface 0 is the driver CD and interface 1 is the
-Ethernet device.
+ieee80211_ocb_rx_no_sta() assumes a valid channel context, which is only
+present after JOIN_OCB.
 
-Link: https://github.com/name-kurniawan/usb-lan
-Link: https://www.draisberghof.de/usb_modeswitch/bb/viewtopic.php?t=2185
-Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
-Link: https://patch.msgid.link/20251211062451.139036-1-enelsonmoore@gmail.com
-[pabeni@redhat.com: fixes link tags]
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+RX may run before JOIN_OCB is executed, in which case the OCB interface
+is not operational. Skip RX peer handling when the interface is not
+joined to avoid warnings in the RX path.
+
+Reported-by: syzbot+b364457b2d1d4e4a3054@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=b364457b2d1d4e4a3054
+Tested-by: syzbot+b364457b2d1d4e4a3054@syzkaller.appspotmail.com
+Signed-off-by: Moon Hee Lee <moonhee.lee.ca@gmail.com>
+Link: https://patch.msgid.link/20251216035932.18332-1-moonhee.lee.ca@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of Commit: net: usb: sr9700: support devices with virtual
-driver CD
+OCB support has been in the kernel since 2014 - it exists in all
+supported stable trees.
 
-### 1. COMMIT MESSAGE ANALYSIS
+## 3. CLASSIFICATION
 
-The commit adds support for SR9700 USB Ethernet devices that include a
-virtual driver CD-ROM. These devices use product ID 0x9702 (vs the
-standard 0x9700) and present two interfaces: interface 0 is the CD-ROM,
-interface 1 is the actual Ethernet device.
+- **Type:** Bug fix - fixes kernel warnings triggered by a race
+  condition
+- **Category:** Not an exception category - straightforward bug fix
+- **Security:** Not directly security-related, but the WARN_ON_ONCE
+  could trigger panic on systems with `panic_on_warn=1`
 
-External links reference real-world user issues with these devices
-(usb_modeswitch discussions, GitHub repo), confirming this addresses
-actual hardware in the field.
+## 4. SCOPE AND RISK ASSESSMENT
 
-### 2. CODE CHANGE ANALYSIS
+- **Size:** Minimal - 3 lines added (one check + early return)
+- **Files:** 1 file (net/mac80211/ocb.c)
+- **Complexity:** Very low - simple flag check before proceeding
+- **Risk:** Extremely low
+  - Uses existing `joined` flag already used elsewhere in the same file
+  - Follows established pattern (identical check exists at line 126)
+  - Cannot break existing functionality - before join, nothing should
+    happen anyway
 
-The change is minimal and straightforward:
-```c
-{
-    /* SR9700 with virtual driver CD-ROM - interface 0 is the CD-ROM
-device */
-    USB_DEVICE_INTERFACE_NUMBER(0x0fe6, 0x9702, 1),
-    .driver_info = (unsigned long)&sr9700_driver_info,
-},
-```
+## 5. USER IMPACT
 
-This adds a single entry to the USB device ID table:
-- Same vendor ID (0x0fe6) as existing SR9700
-- New product ID (0x9702) for devices with virtual CD-ROM
-- Matches only interface 1 (the Ethernet interface, avoiding the CD-ROM
-  on interface 0)
-- Uses the exact same `sr9700_driver_info` - no driver code changes
+- **Affected users:** OCB mode users (vehicle-to-vehicle communications,
+  IEEE 802.11p)
+- **Severity:** Medium - causes kernel warnings in RX path
+- **Systems with `panic_on_warn=1`:** This could cause system crashes
+- **Reproducibility:** Confirmed reproducible by syzkaller
 
-### 3. CLASSIFICATION
+## 6. STABILITY INDICATORS
 
-**This is a NEW DEVICE ID addition** - one of the explicitly allowed
-exceptions for stable backports.
+- **Tested-by: syzbot** - Fix verified by the same fuzzer that found the
+  bug
+- **Maintainer sign-off:** Johannes Berg (mac80211 maintainer)
+- **Pattern established:** Same check pattern already used in
+  `ieee80211_ocb_work()`
 
-- NOT a new feature in the traditional sense
-- NOT adding a new driver
-- NOT changing any APIs or driver logic
-- Simply adding a USB ID to enable hardware on an existing, mature
-  driver
-
-### 4. SCOPE AND RISK ASSESSMENT
-
-| Metric | Assessment |
-|--------|------------|
-| Lines changed | +5 lines |
-| Files touched | 1 |
-| Code complexity | Trivial - USB ID table entry only |
-| Risk level | **Very Low** |
-
-The sr9700 driver is mature and unchanged. The only "new" aspect is
-using `USB_DEVICE_INTERFACE_NUMBER()` instead of `USB_DEVICE()` to
-specifically bind to interface 1, which is correct behavior for this
-dual-interface device.
-
-### 5. USER IMPACT
-
-- **Affected users**: Anyone with SR9700 USB Ethernet adapters that have
-  the virtual CD-ROM feature (product ID 0x9702)
-- **Current state**: Device is completely non-functional without this
-  patch - the driver doesn't recognize it
-- **Severity**: Hardware unusable - users cannot access their network
-  adapter
-- **Evidence**: External links show real users encountering this issue
-
-### 6. STABILITY INDICATORS
-
-- Signed-off-by Paolo Abeni (Red Hat networking maintainer)
-- Clean, follows established patterns for USB device ID additions
-- Uses standard kernel macros (`USB_DEVICE_INTERFACE_NUMBER`)
-
-### 7. DEPENDENCY CHECK
+## 7. DEPENDENCY CHECK
 
 - No dependencies on other commits
-- The sr9700 driver exists in all maintained stable kernels (driver
-  added in 2013)
-- Patch applies cleanly with no modifications needed
+- Uses existing `joined` flag (in kernel since 2014)
+- Will apply cleanly to any stable tree with OCB support
 
----
+## SUMMARY
 
-## Verdict
+This is an ideal stable backport candidate:
 
-This commit is a **textbook example** of what should be backported to
-stable:
+1. **Obviously correct:** Simple early-return check using existing flag,
+   follows pattern already in the code
+2. **Fixes real bug:** Syzbot-reported, reproducible kernel warnings
+3. **Small and contained:** 3 lines, single file, no side effects
+4. **No new features:** Just adds a defensive check
+5. **Low risk:** Cannot break anything - OCB shouldn't process RX before
+   joining anyway
+6. **Tested:** Verified by syzbot
 
-**Meets stable criteria:**
-- ✅ Obviously correct - simple USB ID table entry
-- ✅ Fixes real bug - hardware completely unusable without it
-- ✅ Small and contained - 5 lines, single file, no logic changes
-- ✅ No new features - enables existing driver for device variant
-- ✅ Falls into Device ID exception - explicitly allowed for stable
-
-**Risk assessment:**
-- Minimal risk - cannot affect existing 0x9700 device users
-- Worst case if wrong: only affects users with 0x9702 devices who
-  already can't use them
-
-**Benefit:**
-- Clear user benefit - enables hardware that otherwise doesn't work at
-  all
-
-**NO** concerns:
-- No backport adjustments needed
-- No dependencies
-- Driver code is identical across stable versions
+The fix prevents kernel warnings (and potential crashes on
+`panic_on_warn` systems) when RX frames arrive on an OCB interface
+before it has finished the join operation. It's a simple, surgical fix
+with no risk of regression.
 
 **YES**
 
- drivers/net/usb/sr9700.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/mac80211/ocb.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/usb/sr9700.c b/drivers/net/usb/sr9700.c
-index 091bc2aca7e8..d8ffb59eaf34 100644
---- a/drivers/net/usb/sr9700.c
-+++ b/drivers/net/usb/sr9700.c
-@@ -539,6 +539,11 @@ static const struct usb_device_id products[] = {
- 		USB_DEVICE(0x0fe6, 0x9700),	/* SR9700 device */
- 		.driver_info = (unsigned long)&sr9700_driver_info,
- 	},
-+	{
-+		/* SR9700 with virtual driver CD-ROM - interface 0 is the CD-ROM device */
-+		USB_DEVICE_INTERFACE_NUMBER(0x0fe6, 0x9702, 1),
-+		.driver_info = (unsigned long)&sr9700_driver_info,
-+	},
- 	{},			/* END */
- };
+diff --git a/net/mac80211/ocb.c b/net/mac80211/ocb.c
+index a5d4358f122a..ebb4f4d88c23 100644
+--- a/net/mac80211/ocb.c
++++ b/net/mac80211/ocb.c
+@@ -47,6 +47,9 @@ void ieee80211_ocb_rx_no_sta(struct ieee80211_sub_if_data *sdata,
+ 	struct sta_info *sta;
+ 	int band;
  
++	if (!ifocb->joined)
++		return;
++
+ 	/* XXX: Consider removing the least recently used entry and
+ 	 *      allow new one to be added.
+ 	 */
 -- 
 2.51.0
 
