@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC0E83A1A2C;
-	Wed,  7 Jan 2026 15:53:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B5A39C657;
+	Wed,  7 Jan 2026 15:53:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767801212; cv=none; b=MZbuUoEjdKdY25aLHQn+ZfHIbOXm8WjIkvZLALtbsvKhgooeu2exMwMfXrEk71d56jVJtEyDttlDkgEAQtuP0EsA2uS4ANdVIjp3NSpc3y4k6ZbhJvP+yhUbucmwTl+/dsgghF12dMxa/R5U6DV5gNy5sE3Arm5FTaverQV/6WQ=
+	t=1767801214; cv=none; b=qVuWuvbvRNf22ZzCNQ2jlM4tUUjYNHicqlfNwzNY4SubdK2NvvwuZ8N0GvMuedyB6lgPReLVG2DBzMJhloGmfB6H1MqTPYeKOPSsL7C1Jv4NAIdAhmNtSff8WxKjOO1VKE8RwDW6TFfsowZ8cqqiTQ/YqfERtWU4rCylhf3Muhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767801212; c=relaxed/simple;
-	bh=7lFgq7zHXS0MDWQPU7zaspeLRHzzrG6BnP2YKILo3AE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=EuzKfV0TOILOO6ZC0QZXq/DQel3gqR6rVJp2rl24oUBiP0TZ2xCTMQpQHfP0TdJZlhq5C1LiOGkg/6w2/GKzjmpXHjFFQZCzdWIbPmcMp7Bqe/Ja667ySlN3V4INC/xigCXZPx/LHEFSGInaEXQpU35UAxl6H60oyRNfkDlxhnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vLMsLSMf; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1767801214; c=relaxed/simple;
+	bh=1l8gtyiVh89SnrAAKIoGglB35M8j8jbonFhl8c4Gh40=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=L8cBEuTMuLslgGz771D6QAh5ZEX+mdMBt8QLAfG/mJsaluZxrOcad4TGsZgj0pj9IODRVZ50ykhVaU6USZL35zL2BWqkB7/6ORKGMrgR1yKuZeYv3/G4dl0Ckd4p9vkXnGEqiLko7N1dhcXcjE3eTqZxxXk7eaiuCH9/8CYLGdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SAJZ2nA8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vLMsLSMf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7006C4CEF1;
-	Wed,  7 Jan 2026 15:53:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SAJZ2nA8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31618C19422;
+	Wed,  7 Jan 2026 15:53:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767801211;
-	bh=7lFgq7zHXS0MDWQPU7zaspeLRHzzrG6BnP2YKILo3AE=;
-	h=From:To:Cc:Subject:Date:From;
-	b=vLMsLSMfwYcRBqpEoQEte73cNd4+bQSyo4Ym90e4+R44vc8ncFJawJvao+qzcQ7DQ
-	 VgD2VVQAC/ZX1raSeXADLMttJjwElIY89kePhRbgXJubDuNgcq23n+mwk5BiwR9WwW
-	 uBi576iWFj/Er5nUNHHOJ89NvbOJqN77lZ2PrK88FUQo5o2g/S0zGYKmOcBg44pj2H
-	 jvGuHSV9BOH/NvVwOpzDZIEX6zYyhH4vpbxpeZZedWvV3RtE0S7ZGVg45mCTYdMhmL
-	 puTAh5rKbnZHrOqmQ5DCWwGO4jxll1FciGRPRgdrsPmKSXEpMP4DjFoSMf+BrHGidd
-	 gFCHVISjGMn7g==
+	s=k20201202; t=1767801212;
+	bh=1l8gtyiVh89SnrAAKIoGglB35M8j8jbonFhl8c4Gh40=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=SAJZ2nA8+w/T0cOLmRCYqOAYrDWeqoXUD+dqoDvMBAY1N9cSSUrxylOLn8mL8XGm/
+	 8EX1mAiA0+2Udxoug70GGvFuAyirph8wko39dCjnQj4s5n01Q9hEQ7tZce4Mj80Xwd
+	 jYSp4EeU9FBHlOMQCsCF4gQstibDzKAI/vsTmeN+nlQuxWTWT+Az/VSLts4B2EmnXC
+	 RFU8w4aPgDAlmOzQ7fTzXH+1YjUucC6/NqC1L5ICTCK8oHbrqpYtVHnkCQzu+9cxOv
+	 9Zr1KeD9ALy3VCl6x+UuLBL+gfOOWT4S2TDBHgeDi/UPmtSfftz/nw+DXoFGTOnwCJ
+	 1wSfEa8dI6JSQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: ZhangGuoDong <zhangguodong@kylinos.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+Cc: Alexandre Negrel <alexandre@negrel.dev>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>,
-	smfrench@gmail.com,
-	linux-cifs@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] smb/server: call ksmbd_session_rpc_close() on error path in create_smb2_pipe()
-Date: Wed,  7 Jan 2026 10:53:03 -0500
-Message-ID: <20260107155329.4063936-1-sashal@kernel.org>
+	io-uring@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18] io_uring: use GFP_NOWAIT for overflow CQEs on legacy rings
+Date: Wed,  7 Jan 2026 10:53:04 -0500
+Message-ID: <20260107155329.4063936-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260107155329.4063936-1-sashal@kernel.org>
+References: <20260107155329.4063936-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -51,126 +51,152 @@ X-stable-base: Linux 6.18.3
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ZhangGuoDong <zhangguodong@kylinos.cn>
+From: Alexandre Negrel <alexandre@negrel.dev>
 
-[ Upstream commit 7c28f8eef5ac5312794d8a52918076dcd787e53b ]
+[ Upstream commit fc5ff2500976cd2710a7acecffd12d95ee4f98fc ]
 
-When ksmbd_iov_pin_rsp() fails, we should call ksmbd_session_rpc_close().
+Allocate the overflowing CQE with GFP_NOWAIT instead of GFP_ATOMIC. This
+changes causes allocations to fail earlier in out-of-memory situations,
+rather than being deferred. Using GFP_ATOMIC allows a process to exceed
+memory limits.
 
-Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
-Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220794
+Signed-off-by: Alexandre Negrel <alexandre@negrel.dev>
+Link: https://lore.kernel.org/io-uring/20251229201933.515797-1-alexandre@negrel.dev/
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+## Analysis of io_uring GFP_NOWAIT Commit
+
+### 1. COMMIT MESSAGE ANALYSIS
+
+The commit message is clear and well-structured:
+- **Problem**: Using `GFP_ATOMIC` for overflow CQE allocations allows
+  processes to exceed memory limits
+- **Solution**: Change to `GFP_NOWAIT` which fails earlier in OOM
+  situations
+- **Bug Reference**: Links to kernel bugzilla (bug 220794) - indicates a
+  real user-reported issue
+- **Proper sign-offs**: Author and maintainer (Jens Axboe) signatures
+  present
+
+The key insight is that `GFP_ATOMIC` can dip into emergency memory
+reserves, allowing allocations to succeed even when a process should be
+constrained by memory limits. This is a resource exhaustion / memory
+limit bypass issue.
+
+### 2. CODE CHANGE ANALYSIS
+
+The change is minimal - a single line:
+```c
+- ocqe = io_alloc_ocqe(ctx, cqe, big_cqe, GFP_ATOMIC);
++       ocqe = io_alloc_ocqe(ctx, cqe, big_cqe, GFP_NOWAIT);
+```
+
+**Technical mechanism of the bug:**
+- `io_cqe_overflow_locked()` is called when the completion queue is full
+  and entries must overflow
+- This function runs with `completion_lock` held, so it cannot sleep
+  (ruling out `GFP_KERNEL`)
+- `GFP_ATOMIC` can access emergency memory reserves, bypassing memory
+  limits
+- `GFP_NOWAIT` is also non-sleeping but respects memory limits by
+  failing instead of dipping into reserves
+
+**Why the fix works:**
+- Both flags are appropriate for the atomic context (holding spinlock)
+- `GFP_NOWAIT` is semantically correct: the allocation should fail
+  gracefully under memory pressure rather than bypass system memory
+  constraints
+
 ### 3. CLASSIFICATION
 
-**Bug Type:** Resource leak
-- This is clearly a **bug fix**, not a feature addition
-- When `ksmbd_iov_pin_rsp()` fails after `ksmbd_session_rpc_open()`
-  succeeds, the RPC session is never closed
-- Resources leaked include:
-  - The `ksmbd_session_rpc` structure memory
-  - The IPC ID allocated via `ksmbd_ipc_id_alloc()`
-  - Entry remains in the session's `rpc_handle_list` xarray
+- **Bug fix**: Yes - fixes memory limit bypass
+- **Feature**: No - no new functionality added
+- **Security-relevant**: Yes - this could be exploited for resource
+  exhaustion/DoS, particularly in containerized or multi-tenant
+  environments with memory cgroups
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-**Size:** Very small - 4 lines of actual code change
-- Line 1: `int id;` → `int id = -1;` (initialization to enable cleanup
-  check)
-- Lines 2-3: Added `if (id >= 0) ksmbd_session_rpc_close(work->sess,
-  id);` in error path
+- **Lines changed**: 1
+- **Files touched**: 1 (io_uring/io_uring.c)
+- **Complexity**: Trivial
+- **Function context**: `__cold` path - not in hot path, used only
+  during overflow conditions
 
-**Risk:** Very low
-- Only affects the error path when `ksmbd_iov_pin_rsp()` fails
-- Standard cleanup pattern already used elsewhere in the codebase
-- Cannot affect normal (successful) operation
-
-**Subsystem:** ksmbd (kernel SMB server)
-- Mature component, been in mainline since Linux 5.15
-- Has an active maintainer (Namjae Jeon)
+**Risk analysis:**
+- Allocation may fail more readily under memory pressure - but that's
+  the *intended* behavior
+- If overflow allocation fails, the CQE won't be recorded - applications
+  relying on completion notifications might be affected, but this is
+  correct behavior when memory is exhausted
+- Very low risk of regression since this is the semantically correct
+  change
 
 ### 5. USER IMPACT
 
-- **Who is affected:** Users running ksmbd as their SMB server
-- **Trigger condition:** Any time `ksmbd_iov_pin_rsp()` fails after
-  opening an RPC pipe
-- **Severity:** Medium - resource leaks accumulate over time, can lead
-  to system degradation or resource exhaustion under sustained error
-  conditions
-- **Real-world likelihood:** Moderate - `ksmbd_iov_pin_rsp()` can fail
-  with -ENOMEM under memory pressure
+- **Who is affected**: Users running io_uring workloads (databases,
+  high-performance I/O applications)
+- **Severity of bug**: Medium-High - allows memory limit bypass which is
+  particularly problematic in:
+  - Container environments (Docker, Kubernetes)
+  - Systems with memory cgroups
+  - Multi-tenant systems
+- **Reported by users**: Yes - bugzilla link indicates real-world issue
 
 ### 6. STABILITY INDICATORS
 
-- **Acked-by:** Namjae Jeon (ksmbd maintainer)
-- **Signed-off-by:** Steve French (SMB/CIFS maintainer)
-- The fix follows the existing pattern in the codebase (similar cleanup
-  is done for `name` in the same error path)
+- Accepted by Jens Axboe (io_uring maintainer)
+- Has proper Link: to mailing list discussion
+- Referenced bug report demonstrates real user impact
+- Simple, well-understood change
 
 ### 7. DEPENDENCY CHECK
 
 - No dependencies on other commits
-- Uses `ksmbd_session_rpc_close()` which exists in all kernel versions
-  with ksmbd (5.15+)
-- The affected code (`create_smb2_pipe()` and `ksmbd_iov_pin_rsp()`)
-  exists in stable trees
+- `io_alloc_ocqe()` and `io_cqe_overflow_locked()` exist in stable
+  kernels
+- io_uring has been present since kernel 5.1
 
----
+### CONCLUSION
 
-## Conclusion
+**Meets stable criteria:**
+- ✅ Obviously correct - semantically appropriate GFP flag
+- ✅ Fixes a real bug - memory limit bypass (resource exhaustion)
+- ✅ Small and contained - single line change
+- ✅ No new features or APIs
+- ✅ Tested in mainline
+- ✅ Referenced bug report shows real user impact
 
-This commit fixes a clear resource leak in the ksmbd SMB server. When
-the final step of creating an SMB pipe (`ksmbd_iov_pin_rsp()`) fails,
-the previously opened RPC session was never cleaned up, causing memory
-and ID leaks.
+**Risk vs Benefit:**
+- Risk: Minimal - well-understood change to allocation flags
+- Benefit: Fixes a memory limit bypass that could be used for DoS
 
-**Why it should be backported:**
-1. **Fixes a real bug** - Resource leaks are a well-known category of
-   bugs that accumulate over time
-2. **Obviously correct** - Standard error path cleanup pattern, mirrors
-   how `name` is freed in the same path
-3. **Small and surgical** - Only 4 lines changed, localized to one
-   function
-4. **Low risk** - Only affects error path, cannot break normal operation
-5. **Maintainer acknowledgment** - Acked by ksmbd maintainer
-6. **Affects stable trees** - ksmbd has been in-kernel since 5.15,
-   stable users can hit this bug
-
-**Concerns:** None significant. The fix is trivial and follows
-established patterns.
+This is an ideal stable backport candidate: a tiny, surgical fix
+addressing a real security-relevant bug (memory limit bypass) with
+minimal risk of regression.
 
 **YES**
 
- fs/smb/server/smb2pdu.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ io_uring/io_uring.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 6a94cda0927d..e052dcb9a14c 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -2291,7 +2291,7 @@ static noinline int create_smb2_pipe(struct ksmbd_work *work)
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index 60adab71ad2d..93b203205a16 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -897,7 +897,7 @@ static __cold bool io_cqe_overflow_locked(struct io_ring_ctx *ctx,
  {
- 	struct smb2_create_rsp *rsp;
- 	struct smb2_create_req *req;
--	int id;
-+	int id = -1;
- 	int err;
- 	char *name;
+ 	struct io_overflow_cqe *ocqe;
  
-@@ -2348,6 +2348,9 @@ static noinline int create_smb2_pipe(struct ksmbd_work *work)
- 		break;
- 	}
- 
-+	if (id >= 0)
-+		ksmbd_session_rpc_close(work->sess, id);
-+
- 	if (!IS_ERR(name))
- 		kfree(name);
+-	ocqe = io_alloc_ocqe(ctx, cqe, big_cqe, GFP_ATOMIC);
++	ocqe = io_alloc_ocqe(ctx, cqe, big_cqe, GFP_NOWAIT);
+ 	return io_cqring_add_overflow(ctx, ocqe);
+ }
  
 -- 
 2.51.0
