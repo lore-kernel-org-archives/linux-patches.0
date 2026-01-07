@@ -1,33 +1,35 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail11.truemail.it (mail11.truemail.it [217.194.8.81])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29748301016;
-	Wed,  7 Jan 2026 11:49:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1107312837
+	for <patches@lists.linux.dev>; Wed,  7 Jan 2026 11:53:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.194.8.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767786590; cv=none; b=n7FAIrRStHLH4Kk2+R+ShYjjzcoTNs9jEXHN7yYfMbe0jSyEc1UmmjVmKk1lARJf8bgR5AQcXhoyA2DuTbLhkTnSnG3eI1NgnEHTBG8CEH8cN3pN0TnI/cFeUGg1djbQFMNWkgP5UCQBjv+7JS1NpbK23qxxAUNqrx9P4/+iMFA=
+	t=1767786829; cv=none; b=ORgu+JWctXRMt/Fo+CUhWLUbfJTOFYz583rgJbE9pf4Sd0PxjUh5Ri8+B7JFkZ3ut8aL3Xcmj5CPvdS+EdhDC1orZBRZAmmeIiNYU089A7u38Mc39FI5IDifQd5S5qfLpvln/9WOHn+gr0hcIwZXtmYasb6pHnOtei6Y0xzRJxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767786590; c=relaxed/simple;
-	bh=WSdZjmhXyn580OMhUBNNyUD+VZGi9nnjl1noW2QEhLs=;
+	s=arc-20240116; t=1767786829; c=relaxed/simple;
+	bh=o1ltIjtrOA9HPER2D4rGnFOELy54LxjT3d8U4Nor+MY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OEwC3vi4ni4gcWw4liD5zb+yTaHzsRVnSuYEzsiviLUqi6oA8U48w7X9ymllqfMOHXnDtLVJ8qBY6nXfz7oSA8O94U3xkPLquSqA7L+yymTc0/Y9o1NmfyhzofIxdjii4xzjVp3YylA6UN3S3TbRhcTE5vUUyaOxzS+3SlXg0Wg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Oupdxflb; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=JrTq5qgimRtCaxRqidIq1q8tU5t+U9B7VRYMjMyoakOijoCiwzo4To7ujRvea0alOEOBTWBp4VqaRg7bTgQAGKMN76ZeSb42ycCYY0xU776RGkTZo2iTH2JsZrPCrx7wVvi9IBX4NjMPdxNIo/sqdCbYea0wWYAioWCAxam2NOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dolcini.it; spf=pass smtp.mailfrom=dolcini.it; dkim=pass (2048-bit key) header.d=dolcini.it header.i=@dolcini.it header.b=zNQxaFuO; arc=none smtp.client-ip=217.194.8.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dolcini.it
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dolcini.it
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Oupdxflb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34155C4CEF7;
-	Wed,  7 Jan 2026 11:49:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767786589;
-	bh=WSdZjmhXyn580OMhUBNNyUD+VZGi9nnjl1noW2QEhLs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Oupdxflbv2NaRfKZcSETkC52W+aepYPClqCAT6yI//dr1n5ks3p7N0DvP9UQmGqrK
-	 DGYXdGYspm/ElLmp+ycU56TDs2RNXkKa1oRIxXP+fN12bDzf0bJVc+TgkvBq+uq8t9
-	 92W6Ru6ATJSV25Eng4Qt3uKwtL4YtVk3aTX42F2MMPK4bW9e1fbG+YFFywcr/jjGUa
-	 7/EY61lTtLUu6pBlvK/sYgsA2GIJjQEoT1qVNCmeUIcU9+++xQtpszY+x1uPAGoqCX
-	 LgR0NIMGcdAqhQV0wK3J8ByZUM78gM5UNUhfdlZBQLzrOAZ9pscYJcowjFvKKVfqvD
-	 0wYrPME/+2SKA==
-Date: Wed, 7 Jan 2026 11:49:43 +0000
-From: Mark Brown <broonie@kernel.org>
+	dkim=pass (2048-bit key) header.d=dolcini.it header.i=@dolcini.it header.b="zNQxaFuO"
+Received: from francesco-nb (93-49-2-63.ip317.fastwebnet.it [93.49.2.63])
+	by mail11.truemail.it (Postfix) with ESMTPA id D8C931FEB6;
+	Wed,  7 Jan 2026 12:53:36 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dolcini.it;
+	s=default; t=1767786817;
+	bh=6EpNA0RLT7Xitv6bYEUuPLrpKEKrvJijTdXbr6JK2Zw=; h=From:To:Subject;
+	b=zNQxaFuOtHWy+jodt1MRDGjkriy2P4GaNGE02VFx4H5twdbzGO/sU9Y48RO8D1YD1
+	 tFeD1JJdoO8px4LSv5SLkoMJ4jItZfhT/0PPdqzxEzOUyd0vNVz6SuGLdTlMPP4Din
+	 9Cq9KCrziO51S3tTDhZIw1dt9ZQj32Io3WdXar3goYz94WHvh0PHx1cOC3bev6cFFf
+	 JVvtVX8iuV0DdaUBCdySltK8U3FaQqGlTEylc3tgIKCrfeYVDoVNE4oCvxKc69iwAz
+	 k9UyV+q/bGwr6s7FAFSd7G9HV6/k4kwtq/PCsFpFDwNrxGwqI2mNqEoOl1ZOg9Ozv3
+	 0uQ9N9VII/bgA==
+Date: Wed, 7 Jan 2026 12:53:33 +0100
+From: Francesco Dolcini <francesco@dolcini.it>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
@@ -35,9 +37,10 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
 	jonathanh@nvidia.com, f.fainelli@gmail.com,
 	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, achill@achill.org, sr@sladewatkins.com
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
 Subject: Re: [PATCH 6.12 000/567] 6.12.64-rc1 review
-Message-ID: <a5bd832e-6d43-417f-a250-385e957e3a91@sirena.org.uk>
+Message-ID: <20260107115333.GA28907@francesco-nb>
 References: <20260106170451.332875001@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -45,16 +48,9 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="VqLXHwF49Da4oSRs"
-Content-Disposition: inline
-In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
-X-Cookie: Is there life before breakfast?
-
-
---VqLXHwF49Da4oSRs
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <20260106170451.332875001@linuxfoundation.org>
 
 On Tue, Jan 06, 2026 at 05:56:22PM +0100, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.12.64 release.
@@ -62,21 +58,14 @@ On Tue, Jan 06, 2026 at 05:56:22PM +0100, Greg Kroah-Hartman wrote:
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 
-Tested-by: Mark Brown <broonie@kernel.org>
+Compiled and tested on
 
---VqLXHwF49Da4oSRs
-Content-Type: application/pgp-signature; name="signature.asc"
+ - Verdin AM62
+ - Verdin iMX8MP
+ - Toradex SMARC iMX8MP
 
------BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmleSFYACgkQJNaLcl1U
-h9A+2gf/WqZ5PIgQ/aJNfCwPLVW4F85Cg+dKMKfWduZbAPpzPDv6GBk4WO2LOErQ
-rizwkMSda0RHMcPkO5rSKcddsuFz79g3eb9FSFnci+hsnhKalGMgJPAONS/pJzeA
-f659Yg2/OfiA8Wxl1rlug2iVVZpTtyKTyVUmEyVODyROhbSk189hVNamf4URYG0Z
-YEi5Q9my987LEmqRMzSWslvVyBR3ewgNdNWJxs3CQHzFBjvu2owz0TiQ9e4b8EuM
-6Ln6rJRbE+cgxc0pmRVy3Vmwv1EucVVgJTskzm+lB+KItccKjmLJ9CQGdpoLPQI9
-GL03//NF0BJjPDuVf9I9pto7a4ylzg==
-=uWQr
------END PGP SIGNATURE-----
+Tested-by: Francesco Dolcini <francesco.dolcini@toradex.com>
 
---VqLXHwF49Da4oSRs--
+Francesco
+
