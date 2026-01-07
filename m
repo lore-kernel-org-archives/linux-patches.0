@@ -1,106 +1,125 @@
-Received: from mail-dy1-f180.google.com (mail-dy1-f180.google.com [74.125.82.180])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5188530FC3E
-	for <patches@lists.linux.dev>; Tue,  6 Jan 2026 23:43:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06FACDDC5
+	for <patches@lists.linux.dev>; Wed,  7 Jan 2026 00:04:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767743015; cv=none; b=m3TEv4BAlzmNVCruHqWesnalyhCbDlusfT1H16gIUxNuwtWHbNh92gQ4QXfPAPg2NG5JUw6gDCOataV6yBjMlxouBpk6FzrymLbRwhRSQpOw4LXrsfaubmXomV0jNK66dPfrIxOEpHeeIO+GSss9FxtzExlZujr4GsFe82AdWOI=
+	t=1767744293; cv=none; b=PiZv4OGJrE9LBaGsUCpouxpFGn4tATv26pVkQOlgx1rzs5kUh/J7uMGuxQtXAForO4cyd6gl/w5rmpmgYqBFQdRRGo9c46mkOhOr4SNw5CQBx/6yqt0rbLKGMvHt9v6kgPqbsSXXMXU4G2cDv/AvZnTwQ4dQap0K/ol2FK1plhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767743015; c=relaxed/simple;
-	bh=VGkLebrf2s0S0oSkDIbSvJEk7DH6tTHXsiTFxBucxho=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tz84fM5eplQ8FI/90YLjrk09tw+BtzKhIxRZaqGUY9pnTYnrtmi42KfmI1wNt1cKRFTM4Y0TBlAMplzURgKBXwioAepL44ItL3kqnwdN+3MIoubLRycC3jVDYiOV1oeUAyT394/RwuVqVoIIAZNrvDXnkYGzpYZV2wvBdEe2Hfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org; spf=pass smtp.mailfrom=linuxtx.org; dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b=hzZuXI3i; arc=none smtp.client-ip=74.125.82.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
+	s=arc-20240116; t=1767744293; c=relaxed/simple;
+	bh=8qJPx+kC5MLS3XV6h2sWuTOwf1eMrgy6GAS9eEFlKx0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=e93E4CGnqe/y1MCLAMy/6nnD5wKWKGHGVhPxv8yJ/uSIOkqFpyaJNhh+oXjlaBdAPxnhSCAor6X+K6hXvmZS+OI88nOBArLBCjNnNeBbFJk35Ddt2tCujCed6dBJdgYce0r0QFtfv3K17F/X5McuR+acRfoWFwFMlMZfhJwO6yg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=H73TEBMm; arc=none smtp.client-ip=209.85.167.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="hzZuXI3i"
-Received: by mail-dy1-f180.google.com with SMTP id 5a478bee46e88-2ae5af476e1so194962eec.1
-        for <patches@lists.linux.dev>; Tue, 06 Jan 2026 15:43:32 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="H73TEBMm"
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-59b30275e69so1190604e87.1
+        for <patches@lists.linux.dev>; Tue, 06 Jan 2026 16:04:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxtx.org; s=google; t=1767743012; x=1768347812; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Iriy/jTf6gbGO8cBymtUQpIhVVJMny9RNybfpndFjsg=;
-        b=hzZuXI3i3CT0yV2QB1AnYVhPEHVSpRehxJhpJIN+UblwG5uq7wc9EGcAJQb/apr79u
-         KHNv0yJqiycNbfljnEka74nOaCh86rkcf8iNaZIyQgFzJ9q41aY9bSREIah7oIU3cV4T
-         6J6poFFKBAeW2E+xdjb21XCgrvf3LYlN4IF8I=
+        d=chromium.org; s=google; t=1767744290; x=1768349090; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HKyvUh+QhrMURKxvdZgbCSxanf920aeudQdpSlc4NpA=;
+        b=H73TEBMmQuwFHUoiAc+P9+m5Qyfe3T+tkw4fVEIhXKfo8ni5VYk0Dz6jHDudYF/wr6
+         ItZeHCP0txx5s/TXBliTjAYrTZ+1ca05X9mo9FPsfPZXgz6OLJdMdnyCqvMkuUCCwyAg
+         dFT8dVqDOFbvU0VAWeI1hPlyGYVOsrowpgkY4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767743012; x=1768347812;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Iriy/jTf6gbGO8cBymtUQpIhVVJMny9RNybfpndFjsg=;
-        b=mWsrZu0gEXaMJr8Hez02eLj6zKD3f9xiV1KO1XKdKUFn14Lq0gMtFzPYFF04PzovoC
-         5cXXtA6wSq8Z/VNT16pWfNWFAMDmqUbDkjUKdDdlYxqo5L0GwU/vwnAGXwaovMk1sNiY
-         LrBPg1A80odjD9MYT55PcHTV5rKhp9r2SWrsXX9AuSoNu0DuebSIBfEi3tuNz+o97wmy
-         m527hMqB/VQ1zuiIzmV4eAv8lAeqKk/Gzuww8kNMjiGPjVzlVokOcTIFWjQpcQK8epbZ
-         q8Z46+mP7zZsK95CNJWkVVfA/7xw99fzmMD9p96w+HcWWx2ZUBpVmnqx4seVSkHMwyRc
-         TnPw==
-X-Forwarded-Encrypted: i=1; AJvYcCXo3dvAmaQkM6uGe1BYZVzFe7JA+Kg81uM0v05N4O0Rez2+XvsInJV4xVPocfK1qhWEzVwGM8qD@lists.linux.dev
-X-Gm-Message-State: AOJu0YzGJCWdOvgdPDz6M12jPtd75LWhVMnRLGBULuQ+XdXfVHSTvEFU
-	b3u4Addv+wCUD4ci1zX1Cy66zHuJTH465CTQoCOb6lQzVT3EclvxYc240YwOc1Iu+A==
-X-Gm-Gg: AY/fxX7ebx2Gs72ykLq6MOeqjj38Cy1hqswtFUMppFIxnDC7S6bsuEMN8rIdJCF1JmH
-	lAPvfq3D7Tyx7YMjFyy17f6JixTkGixvh9znqNxD4KyfsIeEsQ95ZXb4U/ZCaluGTqrF3Jo9fiH
-	t3Go1cVAZGSniCEyKcRC1YtZVvZ5TZsTIHRdNJrBi0h/xvfVfVJUKllMiozKqrIHP1dtSo8BA8w
-	mKqPFILTGPpfOSHmCLNV4jYZtAnP6+ADjN1fBaHNjyfPKHQRHp4XPtEGe7lUtftmKWxjX8BDtW0
-	n7EB4zTnx6wT4OM46EuRbG1GsN6Bwj7U8mqHPw1qHwyhfvnm4W0MMHN58YyylEVtfVMeBTLt90n
-	ub7HDgPis/wUP9DJQf8L7HAgc7igE95v3nNogjCpb7WzQDJtA5gZfsSFD/vL+VVS+STQLDW38Js
-	uVMX6rYFaU8qecSYqToO+3fWPLYaclXhmY
-X-Google-Smtp-Source: AGHT+IHyuJEH4V7n4G0qnmsZSEUoTz784nvKISSfOirQNW/wrkNx/kkN3iOrWhsQh8ilcEMCxYtxQA==
-X-Received: by 2002:a05:7300:2205:b0:2ab:9d23:f0b1 with SMTP id 5a478bee46e88-2b16fe5a446mr3385737eec.13.1767743012194;
-        Tue, 06 Jan 2026 15:43:32 -0800 (PST)
-Received: from fedora64.linuxtx.org ([216.147.122.116])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b17078ccf4sm5457537eec.16.2026.01.06.15.43.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Jan 2026 15:43:31 -0800 (PST)
-Sender: Justin Forbes <jmforbes@linuxtx.org>
-Date: Tue, 6 Jan 2026 16:43:29 -0700
-From: Justin Forbes <jforbes@fedoraproject.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 6.18 000/312] 6.18.4-rc1 review
-Message-ID: <aV2eIbaO_7WxXjb7@fedora64.linuxtx.org>
-References: <20260106170547.832845344@linuxfoundation.org>
+        d=1e100.net; s=20230601; t=1767744290; x=1768349090;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=HKyvUh+QhrMURKxvdZgbCSxanf920aeudQdpSlc4NpA=;
+        b=Axu5VADfjLSm0RXzDkAaWytY8ivtseXbLXzhYabA9Zl/XCrnvAP2eAaHR9yFk/jhTL
+         zCUz6spE/oXRRutA/8fLogA5VsjJsS6gTbFGgjceBcQ+tw2CFwhuoXZj83BkhRrXftP8
+         0XGlSumJmnIhO2gGyUN9UoYv3W9lsYZDV6OelqUlDSip9Yie4QpsbAJatTfAirTminEK
+         G4KdTT5kWGRKjkRpUV2jaSj/PJ5KqRhw8W9cVNilL2yS9q+FwJwidxS4XVPH5Sg0gQac
+         h951gNIsrKfbsiAfH3trJ2cYtlT6wrSEviuDQUNshubwy7lBANasCYw4uYk0/XEN8vlB
+         azUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVthCKFmoIRrGbLmY1oKmEInan4At3YE383LJjE+TRdze4VrskD+5rGsqlFtLf8KXUaPJ6pMewO@lists.linux.dev
+X-Gm-Message-State: AOJu0YyYJbwI9v0KU+Pyk8L9R9evgINUh2ADsgRXwlRniY22GKCudDqp
+	v/IfA4gXTY1v61plux29ICE0DkYCr493LaXQOlY/Bq4Qh+c7Rn75iU70P2s7P8vKZfZc37MpQv7
+	Et9nTTQhxulvxIOAwdzm5bsIaiNwurQUjLfS1Eps=
+X-Gm-Gg: AY/fxX7KMWs6hnGgOHG8GNty/ObAIuSZLe/q4DLPYgSmo343kMOXEiGLHDv2g8EQXW7
+	dNawjTvzeztFC90U/Ezlr06R4b4bPXdW74su1U4FMePp9rJG2kWgZ+CIb8OZqIEkzBGnvTy5Fp6
+	0V/Q8pUGO2wOrbVRFdi1MTuzwaXhoYjJf8302AezwFJCdNjb7/8i+/Y6r6emddfijGW1g4dlas3
+	sCe60Ef+88M09r1BvYdm0ZyyrqgpS0pIL9lRpg+XNDqFmTkRwOroHufdYs09Ka6j9k=
+X-Google-Smtp-Source: AGHT+IFQdy/+2J9uOSYpxLDewV04a9J0eyKjqcf1U3V7EFffmr/5C+V3f6woXruTS5TnVHp7er13+RW98nO287n4HrI=
+X-Received: by 2002:a05:6512:3dac:b0:598:e8b7:665d with SMTP id
+ 2adb3069b0e04-59b6ef0698bmr282600e87.3.1767744290137; Tue, 06 Jan 2026
+ 16:04:50 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
+References: <20260106170451.332875001@linuxfoundation.org> <20260106170509.599329945@linuxfoundation.org>
+In-Reply-To: <20260106170509.599329945@linuxfoundation.org>
+From: =?UTF-8?Q?=C5=81ukasz_Bartosik?= <ukaszb@chromium.org>
+Date: Wed, 7 Jan 2026 01:04:37 +0100
+X-Gm-Features: AQt7F2oZgW6rINda_2dA-YwksISTYezoZCKXSbhdQxy3iradySpgB4CCqOninEU
+Message-ID: <CALwA+NZCSz26m96R0gjKP7=O3Z_kWmnt82SiaqvOukR9vFxv2A@mail.gmail.com>
+Subject: Re: [PATCH 6.12 493/567] xhci: dbgtty: fix device unregister: fixup
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	stable <stable@kernel.org>, Sasha Levin <sashal@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jan 06, 2026 at 06:01:14PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.18.4 release.
-> There are 312 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 08 Jan 2026 17:04:53 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.4-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.18.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+On Tue, Jan 6, 2026 at 6:43=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> 6.12-stable review patch.  If anyone has any objections, please let me kn=
+ow.
+>
+> ------------------
+>
+> From: =C5=81ukasz Bartosik <ukaszb@chromium.org>
+>
+> [ Upstream commit 74098cc06e753d3ffd8398b040a3a1dfb65260c0 ]
+>
+> This fixup replaces tty_vhangup() call with call to
+> tty_port_tty_vhangup(). Both calls hangup tty device
+> synchronously however tty_port_tty_vhangup() increases
+> reference count during the hangup operation using
+> scoped_guard(tty_port_tty).
+>
+> Cc: stable <stable@kernel.org>
+> Fixes: 1f73b8b56cf3 ("xhci: dbgtty: fix device unregister")
+> Signed-off-by: =C5=81ukasz Bartosik <ukaszb@chromium.org>
+> Link: https://patch.msgid.link/20251127111644.3161386-1-ukaszb@google.com
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> ---
+>  drivers/usb/host/xhci-dbgtty.c |    2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> --- a/drivers/usb/host/xhci-dbgtty.c
+> +++ b/drivers/usb/host/xhci-dbgtty.c
+> @@ -522,7 +522,7 @@ static void xhci_dbc_tty_unregister_devi
+>          * Hang up the TTY. This wakes up any blocked
+>          * writers and causes subsequent writes to fail.
+>          */
+> -       tty_vhangup(port->port.tty);
+> +       tty_port_tty_vhangup(&port->port);
 
-Tested rc1 against the Fedora build system (aarch64, ppc64le, s390x,
-x86_64), and boot tested x86_64. No regressions noted.
+The function tty_port_tty_vhangup does not exist in the 6.12 kernel.
+It was added later.
 
-Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
+I sent updated patch
+https://lore.kernel.org/stable/20260106235820.2995848-1-ukaszb@chromium.org=
+/T/#mb46d870145474d04aaabeccc76aaf949b34bbf86
+
+Thanks,
+=C5=81ukasz
+
+>
+>         tty_unregister_device(dbc_tty_driver, port->minor);
+>         xhci_dbc_tty_exit_port(port);
+>
+>
