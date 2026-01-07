@@ -1,52 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A140737996C;
-	Wed,  7 Jan 2026 15:53:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 816C33B8D5F;
+	Wed,  7 Jan 2026 15:53:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767801236; cv=none; b=ak+Bb3T8kWHuC+B26CIa1C2S8YJA/b/J/4vOLczJwrtx37vQ/xpbRQKNaAcP3VBb5lfyJsNlNaosgJO7JB+IWSkdQEUzxZBjSdkWgbREPP2kmmzQ8yf3bK7do3D+ie1wqWFOxDEc/fQLfzavuo5GuuTN6lVxJib+B03iDMjPoew=
+	t=1767801237; cv=none; b=GpYNVA2Mw3tWrFmwZ0fPx91rBhX+00dmRjubfHukT1MiZgJrcr4npXAHENsq4CLRj0Nd9L2vncQJRHiTUDNZaJkrQXB9yXPwqoGVR/bnhq19fS9YbE4nziaNfke4KfWiyzgPaIg+ITdvbKgRwK4yvTz7za1dsL2u2GPXKM+66jM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767801236; c=relaxed/simple;
-	bh=iAxVfRTXVTe2JGeObQQ/jNjHNR45g20PNAJM33yX/U0=;
+	s=arc-20240116; t=1767801237; c=relaxed/simple;
+	bh=JmYyWDTM7t3/lb3xdXAr3X3MhE4VtbCTQC4BpbefxIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JFCIe6nvfmFdJhOFIzayKa43ogNdb0ZGMn100UReNbtJFPLmtAVn8J6U9fORbjEnwmmco1jl0s4CIffUUCVGEY+SbT8UYNOOIkAa4Un6eBS3TOBT8imGLVHCMs9us67hkSoGLrkf84GbhAKWh7aunjjXn9CFkZXeGUBgYNArQFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iqrn1+Zh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=DHlMdJlKjlJg0IRclpMvn4aLS95oL+J4Jn9tu3TjqxFv3A1pI9NjJTY4Zb0oNzyJGOW8Dd6VICqy7lIET/hnvS/Okn6xiwQBilsRc4r+106ksJa4BWfJZurNA5QfiIIvtVX0c8GYSFFfle0+GxdwXR3pjDo9/MquzRgrmLaKm7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p8ZGtYR6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iqrn1+Zh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43B8BC4CEF7;
-	Wed,  7 Jan 2026 15:53:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p8ZGtYR6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DDEEC4CEF1;
+	Wed,  7 Jan 2026 15:53:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767801235;
-	bh=iAxVfRTXVTe2JGeObQQ/jNjHNR45g20PNAJM33yX/U0=;
+	s=k20201202; t=1767801237;
+	bh=JmYyWDTM7t3/lb3xdXAr3X3MhE4VtbCTQC4BpbefxIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iqrn1+Zh4aApERyJQL/YFZ3K1bOgZ0DuwbsxkDJqSDDLXtlX7jSWFteWjVCa3Po0W
-	 5DzKo2udCgmQ0NTdvc+MPrRbX2QlaBbcqEQ6oA/0sQScJYGL+mAqumTiflUdraPfaI
-	 5gvPWmRuzybKRIXLtxPcKxRV91/hJQ09Mf2LXFdiHuxX4jUnDtMoNX4KOY+qqBC8li
-	 v1f3aUAEj2b3AiOVQMBoh8/RealKE+dYC1hHf71yUeSHbEwDRIj1dXtzkJ5aaSxbVD
-	 pRvLiCI8KSy2rCBEQ3HZTkGNHuboGdcZG7azQPYIqiYv3wE6U7ZPYAhT+h6bS7sdGZ
-	 vGqjXg2FKHAUA==
+	b=p8ZGtYR6OPm+i6YfBcUjwi9102L6MOMDpGBZbT0WYirBOBV3SEoqY207tAGQ3z2eC
+	 SHxwZmHpotPjFnPY3JiQL5pMMuVf8u4Nn1DPtPXRdHVCGfjlgz6HfLpuyxLhXIvoGR
+	 IiBiwX+OlH2xPg+ytzIfqwXQd6yzGiFgf7gqgpNBwVqpWsLDwfcpGZdv6FUdwNnz7h
+	 SM1PkxXcEx15DQvXiJTDsL54qkKc/0Q72/6AVUhCAJzAkL7EGk6y/8uywwbaJvmPkb
+	 eJWzgEc2xcqwb4BX+ZOPPoQscj4Wn006lMK9UNdY83pE76LP/pgy7r7SU98K9CL0mA
+	 POCsGaDtSz1Mw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yao Zi <ziyao@disroot.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>,
-	richardcochran@gmail.com,
-	pjw@kernel.org,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	shaul.triebitz@intel.com,
-	emmanuel.grumbach@intel.com,
-	netdev@vger.kernel.org,
-	linux-riscv@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.18] wifi: iwlwifi: Implement settime64 as stub for MVM/MLD PTP
-Date: Wed,  7 Jan 2026 10:53:13 -0500
-Message-ID: <20260107155329.4063936-11-sashal@kernel.org>
+	chenhuacai@kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.1] LoongArch: Set correct protection_map[] for VM_NONE/VM_SHARED
+Date: Wed,  7 Jan 2026 10:53:14 -0500
+Message-ID: <20260107155329.4063936-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260107155329.4063936-1-sashal@kernel.org>
 References: <20260107155329.4063936-1-sashal@kernel.org>
@@ -62,167 +50,164 @@ X-stable-base: Linux 6.18.3
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yao Zi <ziyao@disroot.org>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit 81d90d93d22ca4f61833cba921dce9a0bd82218f ]
+[ Upstream commit d5be446948b379f1d1a8e7bc6656d13f44c5c7b1 ]
 
-Since commit dfb073d32cac ("ptp: Return -EINVAL on ptp_clock_register if
-required ops are NULL"), PTP clock registered through ptp_clock_register
-is required to have ptp_clock_info.settime64 set, however, neither MVM
-nor MLD's PTP clock implementation sets it, resulting in warnings when
-the interface starts up, like
+For 32BIT platform _PAGE_PROTNONE is 0, so set a VMA to be VM_NONE or
+VM_SHARED will make pages non-present, then cause Oops with kernel page
+fault.
 
-WARNING: drivers/ptp/ptp_clock.c:325 at ptp_clock_register+0x2c8/0x6b8, CPU#1: wpa_supplicant/469
-CPU: 1 UID: 0 PID: 469 Comm: wpa_supplicant Not tainted 6.18.0+ #101 PREEMPT(full)
-ra: ffff800002732cd4 iwl_mvm_ptp_init+0x114/0x188 [iwlmvm]
-ERA: 9000000002fdc468 ptp_clock_register+0x2c8/0x6b8
-iwlwifi 0000:01:00.0: Failed to register PHC clock (-22)
+Fix it by set correct protection_map[] for VM_NONE/VM_SHARED, replacing
+_PAGE_PROTNONE with _PAGE_PRESENT.
 
-I don't find an appropriate firmware interface to implement settime64()
-for iwlwifi MLD/MVM, thus instead create a stub that returns
--EOPTNOTSUPP only, suppressing the warning and allowing the PTP clock to
-be registered.
-
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Closes: https://lore.kernel.org/all/20251108044822.GA3262936@ax162/
-Signed-off-by: Yao Zi <ziyao@disroot.org>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-tested-by: damian Tometzki damian@riscv-rocks.de
-Tested-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Acked-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20251204123204.9316-1-ziyao@disroot.org
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Summary Analysis
+## Analysis of LoongArch protection_map[] Fix
 
-### Problem Being Fixed
-This commit fixes a **regression** caused by commit dfb073d32cac ("ptp:
-Return -EINVAL on ptp_clock_register if required ops are NULL"), which
-made `settime64` mandatory for PTP clock registration. Without this fix:
+### 1. COMMIT MESSAGE ANALYSIS
 
-1. **Immediate symptom**: PTP clock registration fails with -EINVAL
-   (error -22), producing a kernel WARNING
-2. **Underlying issue**: Prevents a potential NULL pointer dereference
-   in `ptp_clock_settime()` (line 107 of `drivers/ptp/ptp_clock.c`)
-   which unconditionally calls `ptp->info->settime64()` when userspace
-   calls `clock_settime()` on the PTP device
+The commit message clearly describes:
+- **Problem:** On 32-bit LoongArch platforms, `_PAGE_PROTNONE` is 0
+- **Symptom:** Setting a VMA to VM_NONE or VM_SHARED makes pages non-
+  present
+- **Impact:** **Oops with kernel page fault** - this is a crash
 
-### Code Change Analysis
-The fix is extremely simple and surgical:
-- Adds two trivial 5-line stub functions (`iwl_mld_ptp_settime` and
-  `iwl_mvm_ptp_settime`) that simply return `-EOPNOTSUPP`
-- Registers these stubs in the respective `ptp_clock_info` structures
-- Total change: ~14 lines of obvious, trivial code
+Keywords present: "Oops", "page fault" - these are strong indicators of
+a crash-level bug.
 
-### Stable Tree Criteria Evaluation
-| Criterion | Assessment |
-|-----------|------------|
-| Obviously correct | ✅ Stub returns standard "not supported" error |
-| Fixes real bug | ✅ Fixes PTP registration failure and potential NULL
-deref |
-| Important issue | ✅ Prevents kernel WARNING and failed functionality |
-| Small and contained | ✅ ~14 lines, 2 files, same driver |
-| No new features | ✅ Just adds required stub, no new functionality |
+### 2. CODE CHANGE ANALYSIS
 
-### Evidence of Similar Fixes Being Backported
-The similar commits `329d050bbe63` (gve) and `6d080f810ffd` (iavf) that
-add identical `settime64` stubs have been backported to stable
-(confirmed in `stable/linux-6.18.y`). This establishes precedent.
+The fix modifies the `protection_map[16]` array in
+`arch/loongarch/mm/cache.c`:
 
-### Testing and Review Quality
-Excellent:
-- 4 different Tested-by tags (Nathan Chancellor, damian Tometzki, Oliver
-  Hartkopp, and implicit by Johannes Berg who merged it)
-- Reviewed-by from Simon Horman
-- Acked-by from Intel iwlwifi maintainer (Miri Korenblit)
-- Bug was reported with a lore.kernel.org link
+**For `[VM_NONE]` and `[VM_SHARED]` entries:**
+```c
+// Before:
+_PAGE_PROTNONE | _PAGE_NO_EXEC | _PAGE_NO_READ
 
-### Risk Assessment
-**Risk: Essentially zero.** The stub function just returns
-`-EOPNOTSUPP`. It cannot cause any regressions because:
-- It only gets called if userspace explicitly tries to set the PTP clock
-  time
-- Returning -EOPNOTSUPP is the correct response for unsupported
-  functionality
-- The alternative (no stub) causes immediate registration failure
+// After:
+_PAGE_NO_EXEC | _PAGE_NO_READ | (_PAGE_PROTNONE ? : _PAGE_PRESENT)
+```
 
-### Dependency Considerations
-- The MVM part (`mvm/ptp.c`) applies to kernels with iwlwifi MVM PTP
-  support (v6.3+)
-- The MLD part (`mld/ptp.c`) is only relevant for very recent kernels
-  (v6.11+)
-- Stable maintainers can easily drop the MLD hunk for older kernels that
-  don't have it
+**Technical mechanism of the bug:**
+- `_PAGE_PROTNONE` is a page table bit meant to mark pages that should
+  fault on userspace access but remain valid to the kernel
+- On LoongArch 32-bit, `_PAGE_PROTNONE` is defined as 0
+- When `_PAGE_PROTNONE` is 0, ORing it into the protection flags
+  contributes nothing
+- Without any "present" bit set, pages are completely non-present
+- Any access (even from kernel) triggers a page fault → kernel Oops
 
-### Conclusion
-This is a textbook stable backport candidate: a small, obvious fix for a
-real regression affecting production users of Intel WiFi hardware. The
-fix pattern has already been applied and backported for other drivers
-(gve, iavf). The risk is essentially zero, and the benefit is clear
-(functional PTP clock registration and prevention of potential NULL
-dereference).
+**The fix logic:**
+Using GNU C extension: `(_PAGE_PROTNONE ? : _PAGE_PRESENT)` means:
+- If `_PAGE_PROTNONE` is non-zero → use `_PAGE_PROTNONE`
+- If `_PAGE_PROTNONE` is 0 → use `_PAGE_PRESENT` as fallback
+
+This ensures pages always have a valid presence indication regardless of
+platform configuration.
+
+### 3. CLASSIFICATION
+
+- **Bug Fix:** Yes - fixes a kernel crash
+- **Feature Addition:** No
+- **Exception Category:** N/A - this is a straightforward crash fix
+
+### 4. SCOPE AND RISK ASSESSMENT
+
+| Metric | Assessment |
+|--------|------------|
+| Lines changed | ~4 lines (minimal) |
+| Files touched | 1 file |
+| Complexity | Very low - simple conditional |
+| Subsystem | LoongArch MM (architecture-specific) |
+| Blast radius | Limited to LoongArch 32-bit only |
+
+**Risk:** Very low. The change is:
+- Architecture-specific (won't affect x86, ARM, etc.)
+- Surgical and contained
+- Uses well-understood pattern
+
+### 5. USER IMPACT
+
+- **Affected users:** LoongArch 32-bit platform users
+- **Severity:** High - kernel Oops/crash
+- **Trigger condition:** Basic VM operations with VM_NONE or VM_SHARED
+- This affects fundamental memory protection functionality
+
+### 6. STABILITY INDICATORS
+
+- Signed-off by Huacai Chen (LoongArch architecture maintainer)
+- The fix is straightforward and obviously correct
+
+### 7. DEPENDENCY CHECK
+
+- Self-contained fix
+- No dependencies on other commits
+- LoongArch has been in mainline since kernel 5.19
+
+### STABLE TREE CRITERIA EVALUATION
+
+| Criterion | Met? |
+|-----------|------|
+| Obviously correct and tested | ✅ Yes - logic is clear |
+| Fixes a real bug | ✅ Yes - kernel Oops |
+| Fixes important issue | ✅ Yes - crash |
+| Small and contained | ✅ Yes - 4 lines, 1 file |
+| No new features | ✅ Yes |
+| Applies cleanly | ✅ Likely (straightforward) |
+
+### CONCLUSION
+
+This is a textbook stable-worthy commit:
+- **Fixes a kernel Oops/crash** on LoongArch 32-bit platforms
+- **Minimal change** - only 4 lines modified in a single architecture-
+  specific file
+- **Obviously correct** - the conditional expression correctly handles
+  both 32-bit and 64-bit cases
+- **Zero risk to other architectures** - completely LoongArch-specific
+- **Low risk even within LoongArch** - the fix is surgical and well-
+  understood
+
+The benefit (preventing kernel crashes) clearly outweighs the minimal
+risk. This should be backported to any stable tree containing LoongArch
+support (5.19+).
 
 **YES**
 
- drivers/net/wireless/intel/iwlwifi/mld/ptp.c | 7 +++++++
- drivers/net/wireless/intel/iwlwifi/mvm/ptp.c | 7 +++++++
- 2 files changed, 14 insertions(+)
+ arch/loongarch/mm/cache.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/ptp.c b/drivers/net/wireless/intel/iwlwifi/mld/ptp.c
-index ffeb37a7f830..231920425c06 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/ptp.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/ptp.c
-@@ -121,6 +121,12 @@ static int iwl_mld_ptp_gettime(struct ptp_clock_info *ptp,
- 	return 0;
- }
+diff --git a/arch/loongarch/mm/cache.c b/arch/loongarch/mm/cache.c
+index 6be04d36ca07..496916845ff7 100644
+--- a/arch/loongarch/mm/cache.c
++++ b/arch/loongarch/mm/cache.c
+@@ -160,8 +160,8 @@ void cpu_cache_init(void)
  
-+static int iwl_mld_ptp_settime(struct ptp_clock_info *ptp,
-+			       const struct timespec64 *ts)
-+{
-+	return -EOPNOTSUPP;
-+}
-+
- static int iwl_mld_ptp_adjtime(struct ptp_clock_info *ptp, s64 delta)
- {
- 	struct iwl_mld *mld = container_of(ptp, struct iwl_mld,
-@@ -279,6 +285,7 @@ void iwl_mld_ptp_init(struct iwl_mld *mld)
- 
- 	mld->ptp_data.ptp_clock_info.owner = THIS_MODULE;
- 	mld->ptp_data.ptp_clock_info.gettime64 = iwl_mld_ptp_gettime;
-+	mld->ptp_data.ptp_clock_info.settime64 = iwl_mld_ptp_settime;
- 	mld->ptp_data.ptp_clock_info.max_adj = 0x7fffffff;
- 	mld->ptp_data.ptp_clock_info.adjtime = iwl_mld_ptp_adjtime;
- 	mld->ptp_data.ptp_clock_info.adjfine = iwl_mld_ptp_adjfine;
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/ptp.c b/drivers/net/wireless/intel/iwlwifi/mvm/ptp.c
-index 06a4c9f74797..ad156b82eaa9 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/ptp.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/ptp.c
-@@ -220,6 +220,12 @@ static int iwl_mvm_ptp_gettime(struct ptp_clock_info *ptp,
- 	return 0;
- }
- 
-+static int iwl_mvm_ptp_settime(struct ptp_clock_info *ptp,
-+			       const struct timespec64 *ts)
-+{
-+	return -EOPNOTSUPP;
-+}
-+
- static int iwl_mvm_ptp_adjtime(struct ptp_clock_info *ptp, s64 delta)
- {
- 	struct iwl_mvm *mvm = container_of(ptp, struct iwl_mvm,
-@@ -281,6 +287,7 @@ void iwl_mvm_ptp_init(struct iwl_mvm *mvm)
- 	mvm->ptp_data.ptp_clock_info.adjfine = iwl_mvm_ptp_adjfine;
- 	mvm->ptp_data.ptp_clock_info.adjtime = iwl_mvm_ptp_adjtime;
- 	mvm->ptp_data.ptp_clock_info.gettime64 = iwl_mvm_ptp_gettime;
-+	mvm->ptp_data.ptp_clock_info.settime64 = iwl_mvm_ptp_settime;
- 	mvm->ptp_data.scaled_freq = SCALE_FACTOR;
- 
- 	/* Give a short 'friendly name' to identify the PHC clock */
+ static const pgprot_t protection_map[16] = {
+ 	[VM_NONE]					= __pgprot(_CACHE_CC | _PAGE_USER |
+-								   _PAGE_PROTNONE | _PAGE_NO_EXEC |
+-								   _PAGE_NO_READ),
++								   _PAGE_NO_EXEC | _PAGE_NO_READ |
++								   (_PAGE_PROTNONE ? : _PAGE_PRESENT)),
+ 	[VM_READ]					= __pgprot(_CACHE_CC | _PAGE_VALID |
+ 								   _PAGE_USER | _PAGE_PRESENT |
+ 								   _PAGE_NO_EXEC),
+@@ -180,8 +180,8 @@ static const pgprot_t protection_map[16] = {
+ 	[VM_EXEC | VM_WRITE | VM_READ]			= __pgprot(_CACHE_CC | _PAGE_VALID |
+ 								   _PAGE_USER | _PAGE_PRESENT),
+ 	[VM_SHARED]					= __pgprot(_CACHE_CC | _PAGE_USER |
+-								   _PAGE_PROTNONE | _PAGE_NO_EXEC |
+-								   _PAGE_NO_READ),
++								   _PAGE_NO_EXEC | _PAGE_NO_READ |
++								   (_PAGE_PROTNONE ? : _PAGE_PRESENT)),
+ 	[VM_SHARED | VM_READ]				= __pgprot(_CACHE_CC | _PAGE_VALID |
+ 								   _PAGE_USER | _PAGE_PRESENT |
+ 								   _PAGE_NO_EXEC),
 -- 
 2.51.0
 
