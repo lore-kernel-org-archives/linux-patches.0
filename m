@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0033A397ACC;
-	Wed,  7 Jan 2026 15:53:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F196E37999A;
+	Wed,  7 Jan 2026 15:53:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767801228; cv=none; b=k350sGNdBtR2+efXSNusMVrJosioW1rAdWYE9KmG6kh1ZP61Gkdr9pMMfU0igPjir9BCzSmyLoL0T9i/pA5BlnxDhHn/d84WJr+9ax5PZy2avZ6fcmYqpfsNSP2HGEBcxOli3b9lwHY1f63hSpGaQxsLrKY4ELThhppbH68l47Y=
+	t=1767801229; cv=none; b=aPuM0ZZrksvjuBJbJk6TvY/M5COZqMcRYjqI0426ENkGyY1DmeYdpTSzRLwcec8mByjN2v8kFzKiAq1tTW1m5GK4Vlx/3GU1xlZHKqXcxezCNYLAtcSUMS4In47VIKSIhDAoSBmGyPRMVz1NZQ/4iMfIjohMxuV1O4zexLlNxTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767801228; c=relaxed/simple;
-	bh=QUsVMu+wmJmPa4Y3bc659Yy2m3ZzKZ2vIGmrTzq6TTE=;
+	s=arc-20240116; t=1767801229; c=relaxed/simple;
+	bh=wP0SRYC/Uxw5ny2yW3zdrW+ttw0FFwCtSvbWxScNDCI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tzQitG+YFbG67iLdgThzGgADG7E6kVJEqeO72kBO/UgxMGesTsPQsTvAx5Y3E+mz2GQ5PAwTGnY7+NQ22/U1AEMr4amtdfGgct7KvkX0yNjbRvZt2Og4JCQ1htWGrqbSzhi7ZO68XfF1E4U7d2+otTBRNd5thEw8+/UCl25jyaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XfYMaYN8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dZTV3W1MIlVBZr10jua+tf7l9R4T26RzTBYnmT52DkscT8V3qmwPpSgD3zNWFLDBoIxrzEWa9Q11C8XLKUE4DGAEVPVbnMAkfx+iwE0jYTGW1ekeomvEFfahqabNwdTap6M8CFbc7MUOKGL8lMltRpJJ2t7yctZ4YdU7CjpIzMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H55d2JFh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XfYMaYN8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1686C4CEF1;
-	Wed,  7 Jan 2026 15:53:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H55d2JFh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FA64C19422;
+	Wed,  7 Jan 2026 15:53:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767801225;
-	bh=QUsVMu+wmJmPa4Y3bc659Yy2m3ZzKZ2vIGmrTzq6TTE=;
+	s=k20201202; t=1767801227;
+	bh=wP0SRYC/Uxw5ny2yW3zdrW+ttw0FFwCtSvbWxScNDCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XfYMaYN8ZBCb2j0uJcwyJ2i9ovaKd7Ldm5L6wbmkbOHQB/6j/GZnDDpGJu1IB4Ks4
-	 5ocZMQaUNrhv+3eWOsOGA2K7nORkM+Ly/FUn0BGz9A66loDRQrsk667fL/qbQFyJUX
-	 NTG2T3ZyG7XN3QD1RxE4HtwzH3Ss4A/vSn/9l1CM6GzTCkciMnXb47zcRHuqIA2HUM
-	 J4YiqZqZ1qkotVT3YzHXbptjz+uWGwFfKdZ2nAW6TIggpWkdWAb3MeyjyuiLe6dng0
-	 RFaAYmPwbT+pkKoanuaWX5eJYuldPWneybkeiw3kjecxKrVInV9vF/KPKLOTe4C1RG
-	 w3WmKnG2J439g==
+	b=H55d2JFh40C+r1p8kV4nxrqGW8kBYOZK52kE9lTL5e1vz+63kHZIcGR7Dlr37DE+L
+	 BTgRmZwVkcNvJLBoP7BXIaY2cAVG9tlAu2/f4229Aa8Lt0RsCUlMmvwqLo3bbv28zP
+	 juTIMHMWpetvItuM0DPtvadcBXtVgOwdWgzceyciO+zdZ87t0wHfw7P6DVcqlU1SM5
+	 +V7Z1M5scgjCzzimdBdCYkugLFFA7aMydC3pfzNsLL4DvKa/vEdTr/HiQ7ZUKCmbhF
+	 xXkISt/l3Qt6at6lRMZuwlqzGoqebUXGl+WS/gi6FmQexM+8qDkjMskWIvcegGIYJK
+	 pCG/fBZiE6+NQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Peter=20=C3=85strand?= <astrand@lysator.liu.se>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: ZhangGuoDong <zhangguodong@kylinos.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>,
-	sakari.ailus@linux.intel.com
-Subject: [PATCH AUTOSEL 6.18-5.10] wifi: wlcore: ensure skb headroom before skb_push
-Date: Wed,  7 Jan 2026 10:53:11 -0500
-Message-ID: <20260107155329.4063936-9-sashal@kernel.org>
+	smfrench@gmail.com,
+	linux-cifs@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.6] smb/server: fix refcount leak in parse_durable_handle_context()
+Date: Wed,  7 Jan 2026 10:53:12 -0500
+Message-ID: <20260107155329.4063936-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260107155329.4063936-1-sashal@kernel.org>
 References: <20260107155329.4063936-1-sashal@kernel.org>
@@ -48,167 +51,119 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.3
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Åstrand <astrand@lysator.liu.se>
+From: ZhangGuoDong <zhangguodong@kylinos.cn>
 
-[ Upstream commit e75665dd096819b1184087ba5718bd93beafff51 ]
+[ Upstream commit 3296c3012a9d9a27e81e34910384e55a6ff3cff0 ]
 
-This avoids occasional skb_under_panic Oops from wl1271_tx_work. In this case, headroom is
-less than needed (typically 110 - 94 = 16 bytes).
+When the command is a replay operation and -ENOEXEC is returned,
+the refcount of ksmbd_file must be released.
 
-Signed-off-by: Peter Astrand <astrand@lysator.liu.se>
-Link: https://patch.msgid.link/097bd417-e1d7-acd4-be05-47b199075013@lysator.liu.se
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Commit Analysis: wifi: wlcore: ensure skb headroom before skb_push
-
-### 1. COMMIT MESSAGE ANALYSIS
-
-**Key indicators:**
-- Subject clearly states this ensures skb headroom before skb_push - a
-  defensive check
-- Body explicitly states: "This avoids occasional skb_under_panic Oops
-  from wl1271_tx_work"
-- Provides specific details: "headroom is less than needed (typically
-  110 - 94 = 16 bytes)"
-- Committed by Johannes Berg (wireless maintainer)
-
-The commit message clearly indicates this fixes a **kernel panic** - one
-of the most severe bug categories.
-
-### 2. CODE CHANGE ANALYSIS
-
-Let me examine the actual code change:
-
-```c
-if (total_blocks <= wl->tx_blocks_available) {
-+   if (skb_headroom(skb) < (total_len - skb->len) &&
-+       pskb_expand_head(skb, (total_len - skb->len), 0, GFP_ATOMIC)) {
-+       wl1271_free_tx_id(wl, id);
-+       return -EAGAIN;
-+   }
-    desc = skb_push(skb, total_len - skb->len);
-```
-
-**The bug mechanism:**
-- `skb_push()` prepends space to an skb to add the TX hardware
-  descriptor
-- If the skb doesn't have sufficient headroom, `skb_push()` triggers
-  `skb_under_panic()` - a kernel Oops
-- The original code assumed sufficient headroom always existed, which is
-  incorrect
-
-**The fix mechanism:**
-1. Check if headroom is insufficient: `skb_headroom(skb) < (total_len -
-   skb->len)`
-2. If insufficient, call `pskb_expand_head()` to expand the buffer
-3. On expansion failure (memory pressure), properly cleanup by freeing
-   the tx_id
-4. Return `-EAGAIN` to indicate temporary failure (allows retry)
-5. Only proceed with `skb_push()` after headroom is guaranteed
-
-**Technical correctness:**
-- Uses `GFP_ATOMIC` - correct for TX path which may hold locks
-- Properly frees the allocated `id` on failure path (no resource leak)
-- Returns `-EAGAIN` which is the appropriate error for temporary
-  failures
-- This is a well-established kernel pattern for skb headroom handling
-
 ### 3. CLASSIFICATION
 
-**Type:** Bug fix - fixes a kernel panic (skb_under_panic Oops)
-
-**Not in exception categories** - this is a straight bug fix for a
-crash, not a device ID, quirk, DT update, or build fix.
+- **Type**: Bug fix (refcount/memory leak)
+- **Pattern**: Classic missed put() in error path
+- **Severity**: Medium - causes memory leak affecting long-running
+  servers
+- **Not applicable**: No new features, no device IDs, no API changes
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-| Metric | Assessment |
+| Aspect | Assessment |
 |--------|------------|
-| Lines added | +5 lines of actual logic |
-| Files changed | 1 file |
-| Complexity | Very low - standard skb headroom check pattern |
-| Risk | **Very low** - defensive check that cannot make things worse |
-
-**Failure mode analysis:**
-- If `pskb_expand_head()` fails: returns -EAGAIN, TX retries later
-  (graceful degradation)
-- If check is overly conservative: no harm, just an extra allocation
-- Cannot introduce new crashes - the check is purely defensive
+| Lines changed | 1 (single line addition) |
+| Files touched | 1 (fs/smb/server/smb2pdu.c) |
+| Complexity | Very low - standard refcount balance fix |
+| Risk of regression | Very low - only affects specific error path |
+| Subsystem maturity | ksmbd is relatively mature with active
+maintenance |
 
 ### 5. USER IMPACT
 
-**Affected users:** Users of TI WiLink WiFi hardware (wl12xx/wl18xx
-families)
-- Common in embedded systems, some laptops, IoT devices
-- This is a mature, production driver present in all stable trees
-
-**Bug severity:** **Critical** - kernel panic causes system crash
-- Even "occasional" panics are unacceptable in production
-- WiFi TX is a common operation, so affected users hit this repeatedly
+- **Affected users**: Users of ksmbd (in-kernel SMB server)
+- **Bug trigger**: When a SMB durable v2 open request is NOT a replay
+  operation
+- **Consequence**: Memory leak - `ksmbd_file` structures are not freed
+- **Long-term impact**: Memory exhaustion on busy SMB servers over time
 
 ### 6. STABILITY INDICATORS
 
-- Reviewed and accepted by wireless maintainer (Johannes Berg)
-- Simple, well-understood pattern used throughout the kernel
-- The fix has minimal side effects - worst case is a failed TX that
-  retries
+- **Acked-by**: Namjae Jeon (ksmbd maintainer) - authoritative
+- **Fix pattern**: Textbook refcount leak fix - very well understood
+- **Code path**: Clear and deterministic - when -ENOEXEC is returned,
+  reference must be released
 
 ### 7. DEPENDENCY CHECK
 
-- **Standalone fix** - no dependencies on other commits
-- Uses standard kernel APIs (skb_headroom, pskb_expand_head) that exist
-  in all stable trees
-- The wlcore driver has existed for many years in stable kernels
+- **Self-contained**: Yes - no dependencies on other commits
+- **Affected versions**: Introduced in v6.9-rc1 via commit c8efcc786146a
+- **Applies to stable trees**: 6.9.y, 6.10.y, 6.11.y, 6.12.y, etc.
+- **Clean backport**: Should apply cleanly to any tree containing
+  c8efcc786146a
 
-### SUMMARY
+### Technical Analysis
 
-**This is a textbook stable candidate:**
+The bug mechanism is straightforward:
 
-1. **Fixes a kernel panic** - the most critical bug category
-2. **Small and surgical** - 5 lines of defensive checking
-3. **Obviously correct** - standard skb headroom pattern used throughout
-   kernel
-4. **Zero regression risk** - purely defensive, cannot make things worse
-5. **No new features** - just adds a safety check before existing
-   operation
-6. **Affects real users** - wlcore is a production driver for shipping
-   hardware
-7. **No dependencies** - applies cleanly to any kernel version with
-   wlcore
+1. `ksmbd_lookup_fd_cguid()` looks up a file by GUID and returns it with
+   an incremented refcount via `ksmbd_fp_get()`
+2. The caller at line 2816 stores this in `dh_info->fp`
+3. In the error path (line 2820-2822), when NOT a replay operation, the
+   code returns -ENOEXEC
+4. **The bug**: The `goto out` statement jumps to a label that simply
+   returns, without releasing the reference
+5. **The fix**: Add `ksmbd_put_durable_fd(dh_info->fp)` before `goto
+   out` to properly decrement the refcount
 
-The fix prevents a real kernel Oops that users encounter in production.
-The change is minimal, the pattern is well-established, and the risk of
-regression is essentially zero. This is exactly the type of fix that
-stable kernel rules are designed to accept.
+This is a standard kernel refcount bug pattern: lookup functions return
+referenced objects, and callers must ensure all exit paths release the
+reference.
+
+### Conclusion
+
+This commit is an excellent candidate for stable backporting:
+
+- **Obviously correct**: Standard refcount leak fix pattern used
+  throughout the kernel
+- **Fixes a real bug**: Memory leak that can affect production servers
+- **Small and surgical**: Single line addition with zero risk of
+  breaking unrelated code
+- **No new features**: Pure bug fix
+- **Well-tested**: Acked by the subsystem maintainer
+- **Clear scope**: Only affects the specific -ENOEXEC error path in
+  durable handle parsing
+
+The fix is minimal, addresses a genuine resource leak, and follows
+established kernel patterns. The risk of regression is essentially zero
+since the fix only adds a missing cleanup call in a specific error path.
 
 **YES**
 
- drivers/net/wireless/ti/wlcore/tx.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/smb/server/smb2pdu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/ti/wlcore/tx.c b/drivers/net/wireless/ti/wlcore/tx.c
-index 464587d16ab2..f251627c24c6 100644
---- a/drivers/net/wireless/ti/wlcore/tx.c
-+++ b/drivers/net/wireless/ti/wlcore/tx.c
-@@ -207,6 +207,11 @@ static int wl1271_tx_allocate(struct wl1271 *wl, struct wl12xx_vif *wlvif,
- 	total_blocks = wlcore_hw_calc_tx_blocks(wl, total_len, spare_blocks);
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 3795fb90e161..e4ac9d72faa0 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -2822,6 +2822,7 @@ static int parse_durable_handle_context(struct ksmbd_work *work,
+ 					    SMB2_CLIENT_GUID_SIZE)) {
+ 					if (!(req->hdr.Flags & SMB2_FLAGS_REPLAY_OPERATION)) {
+ 						err = -ENOEXEC;
++						ksmbd_put_durable_fd(dh_info->fp);
+ 						goto out;
+ 					}
  
- 	if (total_blocks <= wl->tx_blocks_available) {
-+		if (skb_headroom(skb) < (total_len - skb->len) &&
-+		    pskb_expand_head(skb, (total_len - skb->len), 0, GFP_ATOMIC)) {
-+			wl1271_free_tx_id(wl, id);
-+			return -EAGAIN;
-+		}
- 		desc = skb_push(skb, total_len - skb->len);
- 
- 		wlcore_hw_set_tx_desc_blocks(wl, desc, total_blocks,
 -- 
 2.51.0
 
