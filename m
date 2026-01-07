@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C479392838;
-	Wed,  7 Jan 2026 15:53:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5888D39A7F9;
+	Wed,  7 Jan 2026 15:53:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767801216; cv=none; b=lenOu5PZRSrg5EGuBUamw5FcFsKGV9oiJZFMAWyc4zGcLajN57KeKpLslNg8XqhbnJLYhDnha6fS6cpjszU4gHn0T9kJ7AhXLjz5jZwpe1f9BdNFWjr+804Rbzkz2v3wlNa2ZFWUew/aDA87RSheQpW08xeK4MioX9eD/JwZ1Gk=
+	t=1767801219; cv=none; b=BKH2FtRQxri0M5UQzryeBy7WS3Eu5FsNR07pxwJw92YKL7k9o6T5nnN6M1d0gEftR9Ia83JIni/M0RuBbcdQsc6BmLfF3AOXHBbj4Auqg2VdcPmJdyvss7r0CRBPIGWrP60R8ooVeh1YPfSYefeX71Uig57Q1H2yMOA8bLx6vFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767801216; c=relaxed/simple;
-	bh=cbuhn2GE9sik3u9T+uUC/6rl0GNp/R2VX6KZN551EKg=;
+	s=arc-20240116; t=1767801219; c=relaxed/simple;
+	bh=wdMvfSJWGFav7L/E7nCk3KbVSxk4Vh8tBkpPa3X7OJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nXkMXTa99OB7NM6qRRpWueaMnxH6XYv0MLFm9lEtIsP2dh1K1UNwBk1F8XFquG+BF3t75SXhKxk4WIWAKVk02Vo38n4QcXavzqY/m552Koq8f4EL6HczMq6cbSyHhF8fLkhsr5NzDyekoxicHXv4YIboDFTIxO15SPJvbqW/+SM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V7eYQaId; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jy9nOYul1IUcE6dLVxfDtCQeDN4UV9e5fdLPNADHcDrhQZhxykgK87vGPChd3s9U1cm1+8iaSLEivrg/SM3HnYrSzjPSpZezDwMioO1TWfJmPQGQBvP4TdNzGt7mHbdIPwcm86zjwMrQZHKMyEwlig68QOK1Veqyz/vqnNfG61Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jWsw4rN9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V7eYQaId"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5151FC4CEF7;
-	Wed,  7 Jan 2026 15:53:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jWsw4rN9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9466C4CEF1;
+	Wed,  7 Jan 2026 15:53:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767801214;
-	bh=cbuhn2GE9sik3u9T+uUC/6rl0GNp/R2VX6KZN551EKg=;
+	s=k20201202; t=1767801217;
+	bh=wdMvfSJWGFav7L/E7nCk3KbVSxk4Vh8tBkpPa3X7OJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V7eYQaIdqzgE06dl/u6QjYrfqjOP8WMXPt2cpQUUE+A1tqhxMECBlYdLFbFeXemDr
-	 bmAE6NOxu5ESQZm76aAWXsAhgzI60uKrXi++XMYQ8LhhqjoVBrPCJHge3/chE0e0Vr
-	 IRj5cZI1fTDSK6hUa7tu8OnlhJTcUtGWs65Wt8YzPF1ciXrNGXysAPjardzbs9m1EK
-	 mKFy0kUIj3cWwsIfapsHLzotrgovr2Z1i1aGk1+cxPFDA3mZZ4bkzkTh1yUSNBgQ20
-	 z2ALsCk2QE1OHBEF7Bd+8vVuAtIGdBb8SAms7YuVvAMaP5qKScF8BOeGF4wjbO+K2R
-	 xs/ndfZ+iLEvA==
+	b=jWsw4rN90FF58SpdPWPw351Zo29UHf1psFRMlL+voC1010tUq1lc9/zQxw0OZ2XB8
+	 BYDoXnPuDQekMHWokwWiwAQbS4vGLGmvVKVpoY80EwWn3ekZ0xQy0OMUT6ooDvwXme
+	 tbv1npfULPb8QYT2gQwT+GHpT6QeFwLnalTTTNP4n5tAgt/Dt0VwCHmFrkukyLiOas
+	 CvrVhCuQbfLjBE93S4b+eauk+WQt2a4/2LSmgSLyp/9bv5wnfMTTk+J5gTGqJFsDSf
+	 38ClIgiQqO6JjDakKM7pWD/+U5Aoalm0w9N3JdwX9HlpMCgsAiX/eZEL62qmAkwS/C
+	 pr7+xqj203U7Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: ZhangGuoDong <zhangguodong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Steve French <stfrench@microsoft.com>,
+Cc: Ethan Nelson-Moore <enelsonmoore@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	smfrench@gmail.com,
-	linux-cifs@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] smb/server: fix refcount leak in smb2_open()
-Date: Wed,  7 Jan 2026 10:53:05 -0500
-Message-ID: <20260107155329.4063936-3-sashal@kernel.org>
+	linux-usb@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] net: usb: sr9700: support devices with virtual driver CD
+Date: Wed,  7 Jan 2026 10:53:07 -0500
+Message-ID: <20260107155329.4063936-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260107155329.4063936-1-sashal@kernel.org>
 References: <20260107155329.4063936-1-sashal@kernel.org>
@@ -54,155 +51,156 @@ X-stable-base: Linux 6.18.3
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ZhangGuoDong <zhangguodong@kylinos.cn>
+From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
 
-[ Upstream commit f416c556997aa56ec4384c6b6efd6a0e6ac70aa7 ]
+[ Upstream commit bf4172bd870c3a34d3065cbb39192c22cbd7b18d ]
 
-When ksmbd_vfs_getattr() fails, the reference count of ksmbd_file
-must be released.
+Some SR9700 devices have an SPI flash chip containing a virtual driver
+CD, in which case they appear as a device with two interfaces and
+product ID 0x9702. Interface 0 is the driver CD and interface 1 is the
+Ethernet device.
 
-Suggested-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
-Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Link: https://github.com/name-kurniawan/usb-lan
+Link: https://www.draisberghof.de/usb_modeswitch/bb/viewtopic.php?t=2185
+Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+Link: https://patch.msgid.link/20251211062451.139036-1-enelsonmoore@gmail.com
+[pabeni@redhat.com: fixes link tags]
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Commit Analysis: smb/server: fix refcount leak in smb2_open()
+## Analysis of Commit: net: usb: sr9700: support devices with virtual
+driver CD
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The commit message is clear and concise:
-- **Subject:** Explicitly identifies this as a "fix" for a "refcount
-  leak"
-- **Body:** Explains the bug - when `ksmbd_vfs_getattr()` fails, the
-  reference count of `ksmbd_file` is not being released
-- **Tags:** Has Suggested-by from Namjae Jeon (ksmbd maintainer), Acked-
-  by from same maintainer, and signed off by Steve French (SMB/CIFS
-  maintainer)
+The commit adds support for SR9700 USB Ethernet devices that include a
+virtual driver CD-ROM. These devices use product ID 0x9702 (vs the
+standard 0x9700) and present two interfaces: interface 0 is the CD-ROM,
+interface 1 is the actual Ethernet device.
 
-The maintainer involvement indicates this is a legitimate bug fix.
+External links reference real-world user issues with these devices
+(usb_modeswitch discussions, GitHub repo), confirming this addresses
+actual hardware in the field.
 
 ### 2. CODE CHANGE ANALYSIS
 
-Let me examine the exact change:
-
+The change is minimal and straightforward:
 ```c
-// BEFORE:
-rc = ksmbd_vfs_getattr(&fp->filp->f_path, &stat);
-if (rc)
-    goto err_out2;
-
-ksmbd_put_durable_fd(fp);
-goto reconnected_fp;
-
-// AFTER:
-rc = ksmbd_vfs_getattr(&fp->filp->f_path, &stat);
-ksmbd_put_durable_fd(fp);
-if (rc)
-    goto err_out2;
-
-goto reconnected_fp;
+{
+    /* SR9700 with virtual driver CD-ROM - interface 0 is the CD-ROM
+device */
+    USB_DEVICE_INTERFACE_NUMBER(0x0fe6, 0x9702, 1),
+    .driver_info = (unsigned long)&sr9700_driver_info,
+},
 ```
 
-**The Bug:**
-In the original code, when `ksmbd_vfs_getattr()` fails (returns non-
-zero), the code jumps directly to `err_out2` **without** calling
-`ksmbd_put_durable_fd(fp)`. This means the reference count acquired
-earlier (via `ksmbd_reopen_durable_fd`) is never released - a classic
-refcount leak.
-
-**The Fix:**
-Move `ksmbd_put_durable_fd(fp)` to before the error check so the
-reference is released in both success and error paths. This is the
-correct pattern for resource cleanup.
+This adds a single entry to the USB device ID table:
+- Same vendor ID (0x0fe6) as existing SR9700
+- New product ID (0x9702) for devices with virtual CD-ROM
+- Matches only interface 1 (the Ethernet interface, avoiding the CD-ROM
+  on interface 0)
+- Uses the exact same `sr9700_driver_info` - no driver code changes
 
 ### 3. CLASSIFICATION
 
-- **Type:** Bug fix (resource leak)
-- **Severity:** Medium - refcount leaks can lead to memory exhaustion
-  over time
-- **Component:** ksmbd (kernel SMB server) - fs/smb/server/
+**This is a NEW DEVICE ID addition** - one of the explicitly allowed
+exceptions for stable backports.
+
+- NOT a new feature in the traditional sense
+- NOT adding a new driver
+- NOT changing any APIs or driver logic
+- Simply adding a USB ID to enable hardware on an existing, mature
+  driver
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-- **Lines changed:** 2 (one line moved)
-- **Files changed:** 1 (fs/smb/server/smb2pdu.c)
-- **Complexity:** Very low - straightforward line repositioning
-- **Risk:** Very low - the fix is obviously correct and doesn't change
-  any logic, just ensures cleanup happens unconditionally
+| Metric | Assessment |
+|--------|------------|
+| Lines changed | +5 lines |
+| Files touched | 1 |
+| Code complexity | Trivial - USB ID table entry only |
+| Risk level | **Very Low** |
+
+The sr9700 driver is mature and unchanged. The only "new" aspect is
+using `USB_DEVICE_INTERFACE_NUMBER()` instead of `USB_DEVICE()` to
+specifically bind to interface 1, which is correct behavior for this
+dual-interface device.
 
 ### 5. USER IMPACT
 
-- **Affected users:** Systems running ksmbd (kernel SMB server)
-- **Trigger condition:** When a durable file handle reconnection attempt
-  has `ksmbd_vfs_getattr()` fail
-- **Consequence of bug:** Reference count leak leading to potential
-  resource exhaustion over time
-- **Severity:** Important for production SMB servers that may run for
-  extended periods
+- **Affected users**: Anyone with SR9700 USB Ethernet adapters that have
+  the virtual CD-ROM feature (product ID 0x9702)
+- **Current state**: Device is completely non-functional without this
+  patch - the driver doesn't recognize it
+- **Severity**: Hardware unusable - users cannot access their network
+  adapter
+- **Evidence**: External links show real users encountering this issue
 
 ### 6. STABILITY INDICATORS
 
-- ✅ Acked-by from subsystem maintainer (Namjae Jeon)
-- ✅ Suggested-by from the same maintainer
-- ✅ Signed-off by Steve French (CIFS/SMB maintainer)
-- ✅ Small, surgical fix with clear scope
+- Signed-off-by Paolo Abeni (Red Hat networking maintainer)
+- Clean, follows established patterns for USB device ID additions
+- Uses standard kernel macros (`USB_DEVICE_INTERFACE_NUMBER`)
 
 ### 7. DEPENDENCY CHECK
 
-This is a standalone fix. The code path exists in all kernels with ksmbd
-support (5.15+). No other commits are required for this fix to work.
+- No dependencies on other commits
+- The sr9700 driver exists in all maintained stable kernels (driver
+  added in 2013)
+- Patch applies cleanly with no modifications needed
 
-### STABLE KERNEL CRITERIA ASSESSMENT
+---
 
-| Criterion | Status |
-|-----------|--------|
-| Obviously correct | ✅ Yes - reference must be released in both paths |
-| Fixes real bug | ✅ Yes - refcount leak is a real resource management
-bug |
-| Important issue | ✅ Yes - can cause resource exhaustion |
-| Small and contained | ✅ Yes - 2 lines, single file |
-| No new features | ✅ Yes - pure bugfix |
-| Applies cleanly | ✅ Should apply cleanly |
+## Verdict
 
-### CONCLUSION
+This commit is a **textbook example** of what should be backported to
+stable:
 
-This is an ideal stable backport candidate:
-- **Clear bug:** Reference count leak when error path is taken
-- **Obvious fix:** Move cleanup before error check
-- **Minimal change:** Single line repositioned
-- **Low risk:** No logic changes, just proper resource management
-- **Maintainer endorsed:** Acked by ksmbd maintainer
+**Meets stable criteria:**
+- ✅ Obviously correct - simple USB ID table entry
+- ✅ Fixes real bug - hardware completely unusable without it
+- ✅ Small and contained - 5 lines, single file, no logic changes
+- ✅ No new features - enables existing driver for device variant
+- ✅ Falls into Device ID exception - explicitly allowed for stable
 
-The fix addresses a resource leak that could affect production SMB
-servers over time. The change is trivial (one line moved), obviously
-correct, and has zero risk of introducing regressions.
+**Risk assessment:**
+- Minimal risk - cannot affect existing 0x9700 device users
+- Worst case if wrong: only affects users with 0x9702 devices who
+  already can't use them
+
+**Benefit:**
+- Clear user benefit - enables hardware that otherwise doesn't work at
+  all
+
+**NO** concerns:
+- No backport adjustments needed
+- No dependencies
+- Driver code is identical across stable versions
 
 **YES**
 
- fs/smb/server/smb2pdu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/usb/sr9700.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index e052dcb9a14c..3795fb90e161 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -3019,10 +3019,10 @@ int smb2_open(struct ksmbd_work *work)
- 			file_info = FILE_OPENED;
+diff --git a/drivers/net/usb/sr9700.c b/drivers/net/usb/sr9700.c
+index 091bc2aca7e8..d8ffb59eaf34 100644
+--- a/drivers/net/usb/sr9700.c
++++ b/drivers/net/usb/sr9700.c
+@@ -539,6 +539,11 @@ static const struct usb_device_id products[] = {
+ 		USB_DEVICE(0x0fe6, 0x9700),	/* SR9700 device */
+ 		.driver_info = (unsigned long)&sr9700_driver_info,
+ 	},
++	{
++		/* SR9700 with virtual driver CD-ROM - interface 0 is the CD-ROM device */
++		USB_DEVICE_INTERFACE_NUMBER(0x0fe6, 0x9702, 1),
++		.driver_info = (unsigned long)&sr9700_driver_info,
++	},
+ 	{},			/* END */
+ };
  
- 			rc = ksmbd_vfs_getattr(&fp->filp->f_path, &stat);
-+			ksmbd_put_durable_fd(fp);
- 			if (rc)
- 				goto err_out2;
- 
--			ksmbd_put_durable_fd(fp);
- 			goto reconnected_fp;
- 		}
- 	} else if (req_op_level == SMB2_OPLOCK_LEVEL_LEASE)
 -- 
 2.51.0
 
