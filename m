@@ -1,178 +1,115 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from omta040.useast.a.cloudfilter.net (omta040.useast.a.cloudfilter.net [44.202.169.39])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA053BB4A
-	for <patches@lists.linux.dev>; Wed,  7 Jan 2026 08:05:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551772E7165
+	for <patches@lists.linux.dev>; Wed,  7 Jan 2026 10:20:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.39
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767773115; cv=none; b=X7SVbLdjZaE2Jn9JffQCg3Y5fiRiElDpK5oMmKRklWVJX9ZMv2PfOi4uJ9hOXo0f8/jyW9kchqp0LrhiXz+j5VrSjEsiNeIb+321tqSVjX2uZkZ9kDk45O5GoZDahvdthrcA8/x9NTQvrUz7dLkgpH+Rie5BEykq9JTwy3T6w8c=
+	t=1767781247; cv=none; b=k7ERx/QivpfJG1tpQfEHohy+YBL9Gx91//pZOZXek05p7hmGNrYH+LRlSVyNVF1PASK0BtT7PnP8EjklLw6aQ+YEadY5di1viNoTESH2zKfCOPJyMYrWCyzvRYMO3agFoU628I6V3thOVwc5Vtik2caMWVRi67C+d3Z0VV7BkdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767773115; c=relaxed/simple;
-	bh=xHllFBFUlqwO9t0eAvqYTg9WJll2vY0hzxsQKnhIlxg=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d7fUqjaQf15v+9S3L8dRU9iXxbbsXGAFIN8dc2O5bBk11EGckJUtXSHzU/6I49gzrcf9aWhhhJ6suZM/98yHDzwuaDe77Zmi+BloJy2VrjhV+Izz49g/L8sPQYp5CIQOu5CYStV/0dzakQTy10c9UAtlzK4Rs7+bGlMKkRbswyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=hW5uosiX; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=UR/FsX+/; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=hW5uosiX; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=UR/FsX+/; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1767781247; c=relaxed/simple;
+	bh=2kevmReVONO9r3jfr4iR4uVtt2oiu4HSkohKuguGhf8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qsTY+uowi+s2P1SQcSkSEhAlJivtCtHKOfRW5mRjtxqDYiYxcTRx3Nbfp9JrclrUGTsXBMk85mvRYtworFlui6qmnEFNDxbrKSByZcJKlAaSqKOmOE7zSWazSyXzcdSJzdx8YGiKazt04FyTYgIw7SkAa1/3gEeGWkylGK8GuYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=zm3MPFKC; arc=none smtp.client-ip=44.202.169.39
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="hW5uosiX";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="UR/FsX+/";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="hW5uosiX";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="UR/FsX+/"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 859FE33AF2;
-	Wed,  7 Jan 2026 08:05:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1767773111; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=jD09M/XJzsS6gONTWnJUHOB1Hx0G1Mtqz242EBUvEmE=;
-	b=hW5uosiXriRQ2Lzvw3G12+ZtWw0/ODqBX8wrsAPcDDWR1dY0O6zjQ2tGTFWDWJ+KZNDtQD
-	KVkj0IysN8iRRCNAEeRex9/w+/Tq7hrHpCpoqsQDHvWe0YUeUoG7XdWFCXOFSeJxN/jlnS
-	SUo28PIhRugOuc2UrHNmXqomSRyFKIw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1767773111;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=jD09M/XJzsS6gONTWnJUHOB1Hx0G1Mtqz242EBUvEmE=;
-	b=UR/FsX+/JdSxAs9ksYmZf9HrYNG3gcYOoxzYt8gYDQFVOY5yK3FPhjLyUPgQkC8/K1gKAs
-	sWcj21gaSlxzShDA==
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=hW5uosiX;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="UR/FsX+/"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1767773111; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=jD09M/XJzsS6gONTWnJUHOB1Hx0G1Mtqz242EBUvEmE=;
-	b=hW5uosiXriRQ2Lzvw3G12+ZtWw0/ODqBX8wrsAPcDDWR1dY0O6zjQ2tGTFWDWJ+KZNDtQD
-	KVkj0IysN8iRRCNAEeRex9/w+/Tq7hrHpCpoqsQDHvWe0YUeUoG7XdWFCXOFSeJxN/jlnS
-	SUo28PIhRugOuc2UrHNmXqomSRyFKIw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1767773111;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=jD09M/XJzsS6gONTWnJUHOB1Hx0G1Mtqz242EBUvEmE=;
-	b=UR/FsX+/JdSxAs9ksYmZf9HrYNG3gcYOoxzYt8gYDQFVOY5yK3FPhjLyUPgQkC8/K1gKAs
-	sWcj21gaSlxzShDA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 37BAE3EA63;
-	Wed,  7 Jan 2026 08:05:11 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id p8xWDLcTXmllSAAAD6G6ig
-	(envelope-from <tiwai@suse.de>); Wed, 07 Jan 2026 08:05:11 +0000
-Date: Wed, 07 Jan 2026 09:05:10 +0100
-Message-ID: <87jyxtetl5.wl-tiwai@suse.de>
-From: Takashi Iwai <tiwai@suse.de>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
-	linux-sound@vger.kernel.org,
-	llvm@lists.linux.dev,
-	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH] ALSA: pcm: Revert bufs move in snd_pcm_xfern_frames_ioctl()
-In-Reply-To: <20260106-pcm_native-revert-var-move-free-for-old-clang-v1-1-06a03693423d@kernel.org>
-References: <20260106-pcm_native-revert-var-move-free-for-old-clang-v1-1-06a03693423d@kernel.org>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/30.1 Mule/6.0
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="zm3MPFKC"
+Received: from eig-obgw-6002b.ext.cloudfilter.net ([10.0.30.203])
+	by cmsmtp with ESMTPS
+	id d0dyv15PWv724dQegvyTvb; Wed, 07 Jan 2026 10:20:42 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id dQefvWOZUPL32dQefv2HxR; Wed, 07 Jan 2026 10:20:41 +0000
+X-Authority-Analysis: v=2.4 cv=MqhS63ae c=1 sm=1 tr=0 ts=695e3379
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=LzWpqFdwXcEHhgZWz_sA:9 a=QEXdDO2ut3YA:10
+ a=nmWuMzfKamIsx3l42hEX:22 a=L5EjiQpGQaFGZdqT14z7:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=eHohJFZUQWvjst9MO5HlxGxqblsHLRuIuobVHc7MXls=; b=zm3MPFKCdNjV2m4I5OOPxgHy3R
+	XiCmp2hO3d78aBoa8rGZ5fGi4xbxn2jzBsY7tNz8TNaLJZoUWOuSjK7J+M50vkJaigmZegisdfa1s
+	nPkSLCWYiMrfWYEgFYswwlVsGXwzQk6ol7WapzHZiVSC5Pp58BvttpSvU2/9WMkETsNgw5MO1hGCs
+	5vQQMwUtC1MVhzgyehO+VlhaxXzLJlfvikAUUMOZqYQToSb9/ObmouLLHxRvuDrTBKSX5b7KmoUHb
+	PTJeYG7AtAPqZ0CcpQDZtRtN4c/B6JNLkZsi7uJe1fQeuryMSq2mMVBzOyArXs6EROdig+NVIbk5r
+	iEnZ46FA==;
+Received: from c-73-92-56-26.hsd1.ca.comcast.net ([73.92.56.26]:40060 helo=[10.0.1.180])
+	by box5620.bluehost.com with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+	(Exim 4.98.2)
+	(envelope-from <re@w6rz.net>)
+	id 1vdQef-00000001Xto-0PHv;
+	Wed, 07 Jan 2026 03:20:41 -0700
+Message-ID: <d18989a3-4b79-492d-a023-a8a2a48fd7a6@w6rz.net>
+Date: Wed, 7 Jan 2026 02:20:39 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-Spam-Flag: NO
-X-Spam-Score: -2.01
-X-Rspamd-Queue-Id: 859FE33AF2
-X-Spamd-Result: default: False [-2.01 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	ARC_NA(0.00)[];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	TO_DN_SOME(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	FREEMAIL_CC(0.00)[perex.cz,suse.com,gmail.com,google.com,vger.kernel.org,lists.linux.dev,intel.com];
-	RCVD_TLS_ALL(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[lkml];
-	DKIM_TRACE(0.00)[suse.de:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:mid]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Level: 
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.18 000/312] 6.18.4-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20260106170547.832845344@linuxfoundation.org>
+Content-Language: en-US
+From: Ron Economos <re@w6rz.net>
+In-Reply-To: <20260106170547.832845344@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.92.56.26
+X-Source-L: No
+X-Exim-ID: 1vdQef-00000001Xto-0PHv
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-92-56-26.hsd1.ca.comcast.net ([10.0.1.180]) [73.92.56.26]:40060
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 18
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfFLksW9AVfZPcY4hbqpXWljOJzDFxa72FmmXCrmNiSiuE4mJgHsut9vg88yS11G7JWuH+qm9fNJzVSFDSupS9p7xcWoN4NhS3pWIoObY56MciyebkB+L
+ sXCkwkKu97RT90kIcJ+vSGwo8INNO9QdICmYFLJ0RLk64gmcpbzV2GtNGft0XnLGhQjjjaN2Ah8x5g==
 
-On Wed, 07 Jan 2026 00:08:18 +0100,
-Nathan Chancellor wrote:
-> 
-> When building with clang older than 17 targeting architectures that use
-> asm goto for their get_user() and put_user(), such as arm64, after
-> commit f3d233daf011 ("ALSA: pcm: Relax __free() variable declarations"),
-> there are bogus errors around skipping over a variable declared with the
-> cleanup attribute:
-> 
->   sound/core/pcm_native.c:3308:6: error: cannot jump from this asm goto statement to one of its possible targets
->           if (put_user(result, &_xfern->result))
->               ^
->   ...
->   arch/arm64/include/asm/uaccess.h:298:2: note: expanded from macro '__put_mem_asm'
->           asm goto(
->           ^
->   sound/core/pcm_native.c:3295:6: note: possible target of asm goto statement
->           if (put_user(0, &_xfern->result))
->               ^
->   ...
->   sound/core/pcm_native.c:3300:8: note: jump exits scope of variable with __attribute__((cleanup))
->           void *bufs __free(kfree) =
->                 ^
-> 
-> clang-17 fixed a bug in clang's jump scope checker [1] where all labels
-> in a function were checked as valid targets for all asm goto instances
-> in a function, regardless of whether they were actual targets in a
-> paricular asm goto's provided list of labels.
-> 
-> To workaround this, revert the change done to
-> snd_pcm_xfern_frames_ioctl() by commit f3d233daf011 ("ALSA: pcm: Relax
-> __free() variable declarations") to avoid a variable declared with
-> cleanup from existing between multiple uses of asm goto. There are no
-> other uses of cleanup in this function so there should be low risk from
-> moving this variable back to the top of the function.
-> 
-> Link: https://github.com/ClangBuiltLinux/linux/issues/1886 [1]
-> Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/oe-kbuild-all/202512190802.i4Jzbcsl-lkp@intel.com/
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+On 1/6/26 09:01, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.18.4 release.
+> There are 312 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 08 Jan 2026 17:04:53 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.4-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.18.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-I hoped that this mess is addressed in the put_user() side, but it
-doesn't seem happening, so I took your workaround now.
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
+Tested-by: Ron Economos <re@w6rz.net>
 
-thanks,
-
-Takashi
