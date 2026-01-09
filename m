@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA98735B149;
-	Fri,  9 Jan 2026 12:50:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 943E2326D51;
+	Fri,  9 Jan 2026 12:50:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767963029; cv=none; b=Nfg98F6GrEBwNm3Y1bJlqNLVW0afpZWapUkq3iFVlCbsmBcxVioNQ80rxyFAmqucnuylmCN/YkqgJdXlRWh5vy6mSUqrzdF0MMgxM7U7qgR/kn9AYt+o1Qz86eDQ105ubuHZGRMJgQVtO+nzua/AuZoqnUUn9csJ3gY/mKh7EEo=
+	t=1767963032; cv=none; b=Qa4p4/J+9mQiHHekZQoqMzqbNtKzwbikLFCoSSYQHGmZTgAGKaKfqJf9iNtuRZlCEmthl9jb8HQAZ4BIYtlRN58z2Up9rjdQsey2XBANv7AWwrPBZmHArF6i7K/p3XK4iBqIPJVAb4d0Yb6XuVfoE65nocSCVkGuPDEGzB8HAZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767963029; c=relaxed/simple;
-	bh=2nfstkgvt3OpeGAff9SOASJp+fBPkfZlmN2ZO1BOy4E=;
+	s=arc-20240116; t=1767963032; c=relaxed/simple;
+	bh=ELL54DuV3ICW6j6QC7Km3mG74DY+WZg28whYIzFX4SU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U3GYo2eugQ1V6bQD5gWSPBvgkjRek3aff0TQsrMvmcXKoNYGfzDZ9J6qZp4GKRtmSb5/f+B4i9hCeYJDhFI2CJ+Vu7h57FQ99b+Gc4+lhQ2aB473rMCQPB651jbwquy1i3e6dxl5xCWuutg5NQBXe44l9R9D7ogTg0lgeXADmTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2L/gwHVG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D1J1kia6eJGT0r6YasuEMDrW20xZ3sT3Hr8OciYNmn7miDuxLEjfL2FirXJ5J0G7ReU1vzJYfZ9lXRvf4c1fBWAAEPhZvW+wCIOawHIdJKtf+ZEL8m1gk/xcvcd11JrJu0Q9IDHTvmvKKSVj8cyk+k0oYh9a/65+CB6DNHCFU44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iwQM0yn/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2L/gwHVG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CEEBC4CEF1;
-	Fri,  9 Jan 2026 12:50:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iwQM0yn/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2327FC4CEF1;
+	Fri,  9 Jan 2026 12:50:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767963029;
-	bh=2nfstkgvt3OpeGAff9SOASJp+fBPkfZlmN2ZO1BOy4E=;
+	s=korg; t=1767963032;
+	bh=ELL54DuV3ICW6j6QC7Km3mG74DY+WZg28whYIzFX4SU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2L/gwHVGvHI7p/jFZka5MSBmEmfA1STBDBVaqrAEQhF22wxAJYHdBxsf56Zr4aFUV
-	 /YtXPwKdnpKQLKaSpQWCuI7Yk/0Z+l5vgDIzh1cNNg+CZScd6ekDGU5QXDGrsBA4Ne
-	 wHDARMFEx9l7+dlg/WKQzJqZg+Syxoh73z623MGw=
+	b=iwQM0yn/Gw4vuUgP1ipu1Php5L0nBd/jsZ1w8yodbIyBfbCnFaAwArx5msjtuUtXL
+	 ealDwGHFvpRhjm6EIbdY8Fs+ecX4VDUemzUOSsn9rARdbSijYxCDaue51ihdkUfKVW
+	 m09qYAqYDg53OiVywQvE3t1KzJVcSQiwkb574f5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olivier Moysan <olivier.moysan@st.com>,
-	Johan Hovold <johan@kernel.org>,
-	olivier moysan <olivier.moysan@foss.st.com>,
-	Mark Brown <broonie@kernel.org>,
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 573/634] ASoC: stm32: sai: fix OF node leak on probe
-Date: Fri,  9 Jan 2026 12:44:11 +0100
-Message-ID: <20260109112139.168490600@linuxfoundation.org>
+Subject: [PATCH 6.1 574/634] media: verisilicon: Fix CPU stalls on G2 bus error
+Date: Fri,  9 Jan 2026 12:44:12 +0100
+Message-ID: <20260109112139.206576613@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -53,146 +52,233 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 
-[ Upstream commit 23261f0de09427367e99f39f588e31e2856a690e ]
+[ Upstream commit 19c286b755072a22a063052f530a6b1fac8a1f63 ]
 
-The reference taken to the sync provider OF node when probing the
-platform device is currently only dropped if the set_sync() callback
-fails during DAI probe.
+In some seek stress tests, we are getting IRQ from the G2 decoder where
+the dec_bus_int and the dec_e bits are high, meaning the decoder is
+still running despite the error.
 
-Make sure to drop the reference on platform probe failures (e.g. probe
-deferral) and on driver unbind.
+Fix this by reworking the IRQ handler to only finish the job once we
+have reached completion and move the software reset to when our software
+watchdog triggers.
 
-This also avoids a potential use-after-free in case the DAI is ever
-reprobed without first rebinding the platform driver.
+This way, we let the hardware continue on errors when it did not self
+reset and in worse case scenario the hardware timeout will
+automatically stop it. The actual error will be fixed in a follow up
+patch.
 
-Fixes: 5914d285f6b7 ("ASoC: stm32: sai: Add synchronization support")
-Fixes: d4180b4c02e7 ("ASoC: stm32: sai: fix set_sync service")
-Cc: Olivier Moysan <olivier.moysan@st.com>
-Cc: stable@vger.kernel.org      # 4.16: d4180b4c02e7
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: olivier moysan <olivier.moysan@foss.st.com>
-Link: https://patch.msgid.link/20251124104908.15754-4-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 3385c514ecc5a ("media: hantro: Convert imx8m_vpu_g2_irq to helper")
+Cc: stable@vger.kernel.org
+Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/stm/stm32_sai.c     |   12 +++---------
- sound/soc/stm/stm32_sai_sub.c |   23 ++++++++++++++++-------
- 2 files changed, 19 insertions(+), 16 deletions(-)
+ drivers/media/platform/verisilicon/hantro_g2.c          |   84 ++++++++++++----
+ drivers/media/platform/verisilicon/hantro_g2_hevc_dec.c |    2 
+ drivers/media/platform/verisilicon/hantro_g2_regs.h     |   13 ++
+ drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c  |    2 
+ drivers/media/platform/verisilicon/hantro_hw.h          |    1 
+ drivers/media/platform/verisilicon/imx8m_vpu_hw.c       |    2 
+ 6 files changed, 83 insertions(+), 21 deletions(-)
 
---- a/sound/soc/stm/stm32_sai.c
-+++ b/sound/soc/stm/stm32_sai.c
-@@ -122,7 +122,6 @@ static int stm32_sai_set_sync(struct stm
- 	if (!pdev) {
- 		dev_err(&sai_client->pdev->dev,
- 			"Device not found for node %pOFn\n", np_provider);
--		of_node_put(np_provider);
- 		return -ENODEV;
+--- a/drivers/media/platform/verisilicon/hantro_g2.c
++++ b/drivers/media/platform/verisilicon/hantro_g2.c
+@@ -5,40 +5,90 @@
+  * Copyright (C) 2021 Collabora Ltd, Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+  */
+ 
++#include <linux/delay.h>
+ #include "hantro_hw.h"
+ #include "hantro_g2_regs.h"
+ 
+-void hantro_g2_check_idle(struct hantro_dev *vpu)
++static bool hantro_g2_active(struct hantro_ctx *ctx)
+ {
+-	int i;
++	struct hantro_dev *vpu = ctx->dev;
++	u32 status;
++
++	status = vdpu_read(vpu, G2_REG_INTERRUPT);
++
++	return (status & G2_REG_INTERRUPT_DEC_E);
++}
+ 
+-	for (i = 0; i < 3; i++) {
+-		u32 status;
++/**
++ * hantro_g2_reset:
++ * @ctx: the hantro context
++ *
++ * Emulates a reset using Hantro abort function. Failing this procedure would
++ * results in programming a running IP which leads to CPU hang.
++ *
++ * Using a hard reset procedure instead is prefferred.
++ */
++void hantro_g2_reset(struct hantro_ctx *ctx)
++{
++	struct hantro_dev *vpu = ctx->dev;
++	u32 status;
+ 
+-		/* Make sure the VPU is idle */
+-		status = vdpu_read(vpu, G2_REG_INTERRUPT);
+-		if (status & G2_REG_INTERRUPT_DEC_E) {
+-			dev_warn(vpu->dev, "device still running, aborting");
+-			status |= G2_REG_INTERRUPT_DEC_ABORT_E | G2_REG_INTERRUPT_DEC_IRQ_DIS;
+-			vdpu_write(vpu, status, G2_REG_INTERRUPT);
+-		}
++	status = vdpu_read(vpu, G2_REG_INTERRUPT);
++	if (status & G2_REG_INTERRUPT_DEC_E) {
++		dev_warn_ratelimited(vpu->dev, "device still running, aborting");
++		status |= G2_REG_INTERRUPT_DEC_ABORT_E | G2_REG_INTERRUPT_DEC_IRQ_DIS;
++		vdpu_write(vpu, status, G2_REG_INTERRUPT);
++
++		do {
++			mdelay(1);
++		} while (hantro_g2_active(ctx));
  	}
- 
-@@ -131,21 +130,16 @@ static int stm32_sai_set_sync(struct stm
- 	if (!sai_provider) {
- 		dev_err(&sai_client->pdev->dev,
- 			"SAI sync provider data not found\n");
--		ret = -EINVAL;
--		goto error;
-+		return -EINVAL;
- 	}
- 
- 	/* Configure sync client */
- 	ret = stm32_sai_sync_conf_client(sai_client, synci);
- 	if (ret < 0)
--		goto error;
-+		return ret;
- 
- 	/* Configure sync provider */
--	ret = stm32_sai_sync_conf_provider(sai_provider, synco);
--
--error:
--	of_node_put(np_provider);
--	return ret;
-+	return stm32_sai_sync_conf_provider(sai_provider, synco);
  }
  
- static int stm32_sai_probe(struct platform_device *pdev)
---- a/sound/soc/stm/stm32_sai_sub.c
-+++ b/sound/soc/stm/stm32_sai_sub.c
-@@ -1435,7 +1435,8 @@ static int stm32_sai_sub_parse_of(struct
- 				dev_err(&pdev->dev,
- 					"External synchro not supported\n");
- 				of_node_put(args.np);
--				return -EINVAL;
-+				ret = -EINVAL;
-+				goto err_put_sync_provider;
- 			}
- 			sai->sync = SAI_SYNC_EXTERNAL;
+ irqreturn_t hantro_g2_irq(int irq, void *dev_id)
+ {
+ 	struct hantro_dev *vpu = dev_id;
+-	enum vb2_buffer_state state;
+ 	u32 status;
  
-@@ -1444,7 +1445,8 @@ static int stm32_sai_sub_parse_of(struct
- 			    (sai->synci > (SAI_GCR_SYNCIN_MAX + 1))) {
- 				dev_err(&pdev->dev, "Wrong SAI index\n");
- 				of_node_put(args.np);
--				return -EINVAL;
-+				ret = -EINVAL;
-+				goto err_put_sync_provider;
- 			}
+ 	status = vdpu_read(vpu, G2_REG_INTERRUPT);
+-	state = (status & G2_REG_INTERRUPT_DEC_RDY_INT) ?
+-		 VB2_BUF_STATE_DONE : VB2_BUF_STATE_ERROR;
  
- 			if (of_property_match_string(args.np, "compatible",
-@@ -1458,7 +1460,8 @@ static int stm32_sai_sub_parse_of(struct
- 			if (!sai->synco) {
- 				dev_err(&pdev->dev, "Unknown SAI sub-block\n");
- 				of_node_put(args.np);
--				return -EINVAL;
-+				ret = -EINVAL;
-+				goto err_put_sync_provider;
- 			}
- 		}
- 
-@@ -1468,13 +1471,15 @@ static int stm32_sai_sub_parse_of(struct
- 
- 	of_node_put(args.np);
- 	sai->sai_ck = devm_clk_get(&pdev->dev, "sai_ck");
--	if (IS_ERR(sai->sai_ck))
--		return dev_err_probe(&pdev->dev, PTR_ERR(sai->sai_ck),
--				     "Missing kernel clock sai_ck\n");
-+	if (IS_ERR(sai->sai_ck)) {
-+		ret = dev_err_probe(&pdev->dev, PTR_ERR(sai->sai_ck),
-+				    "Missing kernel clock sai_ck\n");
-+		goto err_put_sync_provider;
+-	vdpu_write(vpu, 0, G2_REG_INTERRUPT);
+-	vdpu_write(vpu, G2_REG_CONFIG_DEC_CLK_GATE_E, G2_REG_CONFIG);
++	if (!(status & G2_REG_INTERRUPT_DEC_IRQ))
++		return IRQ_NONE;
++
++	hantro_reg_write(vpu, &g2_dec_irq, 0);
++	hantro_reg_write(vpu, &g2_dec_int_stat, 0);
++	hantro_reg_write(vpu, &g2_clk_gate_e, 1);
++
++	if (status & G2_REG_INTERRUPT_DEC_RDY_INT) {
++		hantro_irq_done(vpu, VB2_BUF_STATE_DONE);
++		return IRQ_HANDLED;
 +	}
++
++	if (status & G2_REG_INTERRUPT_DEC_ABORT_INT) {
++		/* disabled on abort, though lets be safe and handle it */
++		dev_warn_ratelimited(vpu->dev, "decode operation aborted.");
++		return IRQ_HANDLED;
++	}
++
++	if (status & G2_REG_INTERRUPT_DEC_LAST_SLICE_INT)
++		dev_warn_ratelimited(vpu->dev, "not all macroblocks were decoded.");
++
++	if (status & G2_REG_INTERRUPT_DEC_BUS_INT)
++		dev_warn_ratelimited(vpu->dev, "bus error detected.");
++
++	if (status & G2_REG_INTERRUPT_DEC_ERROR_INT)
++		dev_warn_ratelimited(vpu->dev, "decode error detected.");
  
- 	ret = clk_prepare(sai->pdata->pclk);
- 	if (ret < 0)
--		return ret;
-+		goto err_put_sync_provider;
+-	hantro_irq_done(vpu, state);
++	if (status & G2_REG_INTERRUPT_DEC_TIMEOUT)
++		dev_warn_ratelimited(vpu->dev, "frame decode timed out.");
++
++	/**
++	 * If the decoding haven't stopped, let it continue. The hardware timeout
++	 * will trigger if it is trully stuck.
++	 */
++	if (status & G2_REG_INTERRUPT_DEC_E)
++		return IRQ_HANDLED;
  
- 	if (STM_SAI_IS_F4(sai->pdata))
- 		return 0;
-@@ -1496,6 +1501,8 @@ static int stm32_sai_sub_parse_of(struct
- 
- err_unprepare_pclk:
- 	clk_unprepare(sai->pdata->pclk);
-+err_put_sync_provider:
-+	of_node_put(sai->np_sync_provider);
- 
- 	return ret;
++	hantro_irq_done(vpu, VB2_BUF_STATE_ERROR);
+ 	return IRQ_HANDLED;
  }
-@@ -1566,6 +1573,7 @@ static int stm32_sai_sub_probe(struct pl
+--- a/drivers/media/platform/verisilicon/hantro_g2_hevc_dec.c
++++ b/drivers/media/platform/verisilicon/hantro_g2_hevc_dec.c
+@@ -592,8 +592,6 @@ int hantro_g2_hevc_dec_run(struct hantro
+ 	struct hantro_dev *vpu = ctx->dev;
+ 	int ret;
  
- err_unprepare_pclk:
- 	clk_unprepare(sai->pdata->pclk);
-+	of_node_put(sai->np_sync_provider);
+-	hantro_g2_check_idle(vpu);
+-
+ 	/* Prepare HEVC decoder context. */
+ 	ret = hantro_hevc_dec_prepare_run(ctx);
+ 	if (ret)
+--- a/drivers/media/platform/verisilicon/hantro_g2_regs.h
++++ b/drivers/media/platform/verisilicon/hantro_g2_regs.h
+@@ -22,7 +22,14 @@
+ #define G2_REG_VERSION			G2_SWREG(0)
  
- 	return ret;
- }
-@@ -1578,6 +1586,7 @@ static void stm32_sai_sub_remove(struct
- 	snd_dmaengine_pcm_unregister(&pdev->dev);
- 	snd_soc_unregister_component(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
-+	of_node_put(sai->np_sync_provider);
- }
+ #define G2_REG_INTERRUPT		G2_SWREG(1)
++#define G2_REG_INTERRUPT_DEC_LAST_SLICE_INT	BIT(19)
++#define G2_REG_INTERRUPT_DEC_TIMEOUT	BIT(18)
++#define G2_REG_INTERRUPT_DEC_ERROR_INT	BIT(16)
++#define G2_REG_INTERRUPT_DEC_BUF_INT	BIT(14)
++#define G2_REG_INTERRUPT_DEC_BUS_INT	BIT(13)
+ #define G2_REG_INTERRUPT_DEC_RDY_INT	BIT(12)
++#define G2_REG_INTERRUPT_DEC_ABORT_INT	BIT(11)
++#define G2_REG_INTERRUPT_DEC_IRQ	BIT(8)
+ #define G2_REG_INTERRUPT_DEC_ABORT_E	BIT(5)
+ #define G2_REG_INTERRUPT_DEC_IRQ_DIS	BIT(4)
+ #define G2_REG_INTERRUPT_DEC_E		BIT(0)
+@@ -35,6 +42,9 @@
+ #define BUS_WIDTH_128			2
+ #define BUS_WIDTH_256			3
  
- #ifdef CONFIG_PM_SLEEP
++#define g2_dec_int_stat		G2_DEC_REG(1, 11, 0xf)
++#define g2_dec_irq		G2_DEC_REG(1, 8, 0x1)
++
+ #define g2_strm_swap		G2_DEC_REG(2, 28, 0xf)
+ #define g2_strm_swap_old	G2_DEC_REG(2, 27, 0x1f)
+ #define g2_pic_swap		G2_DEC_REG(2, 22, 0x1f)
+@@ -225,6 +235,9 @@
+ #define vp9_filt_level_seg5	G2_DEC_REG(19,  8, 0x3f)
+ #define vp9_quant_seg5		G2_DEC_REG(19,  0, 0xff)
+ 
++#define g2_timemout_override_e	G2_DEC_REG(45, 31, 0x1)
++#define g2_timemout_cycles	G2_DEC_REG(45, 0, 0x7fffffff)
++
+ #define hevc_cur_poc_00		G2_DEC_REG(46, 24, 0xff)
+ #define hevc_cur_poc_01		G2_DEC_REG(46, 16, 0xff)
+ #define hevc_cur_poc_02		G2_DEC_REG(46, 8,  0xff)
+--- a/drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c
++++ b/drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c
+@@ -909,8 +909,6 @@ int hantro_g2_vp9_dec_run(struct hantro_
+ 	struct vb2_v4l2_buffer *dst;
+ 	int ret;
+ 
+-	hantro_g2_check_idle(ctx->dev);
+-
+ 	ret = start_prepare_run(ctx, &decode_params);
+ 	if (ret) {
+ 		hantro_end_prepare_run(ctx);
+--- a/drivers/media/platform/verisilicon/hantro_hw.h
++++ b/drivers/media/platform/verisilicon/hantro_hw.h
+@@ -436,6 +436,7 @@ void hantro_g2_vp9_dec_done(struct hantr
+ int hantro_vp9_dec_init(struct hantro_ctx *ctx);
+ void hantro_vp9_dec_exit(struct hantro_ctx *ctx);
+ void hantro_g2_check_idle(struct hantro_dev *vpu);
++void hantro_g2_reset(struct hantro_ctx *ctx);
+ irqreturn_t hantro_g2_irq(int irq, void *dev_id);
+ 
+ #endif /* HANTRO_HW_H_ */
+--- a/drivers/media/platform/verisilicon/imx8m_vpu_hw.c
++++ b/drivers/media/platform/verisilicon/imx8m_vpu_hw.c
+@@ -310,11 +310,13 @@ static const struct hantro_codec_ops imx
+ static const struct hantro_codec_ops imx8mq_vpu_g2_codec_ops[] = {
+ 	[HANTRO_MODE_HEVC_DEC] = {
+ 		.run = hantro_g2_hevc_dec_run,
++		.reset = hantro_g2_reset,
+ 		.init = hantro_hevc_dec_init,
+ 		.exit = hantro_hevc_dec_exit,
+ 	},
+ 	[HANTRO_MODE_VP9_DEC] = {
+ 		.run = hantro_g2_vp9_dec_run,
++		.reset = hantro_g2_reset,
+ 		.done = hantro_g2_vp9_dec_done,
+ 		.init = hantro_vp9_dec_init,
+ 		.exit = hantro_vp9_dec_exit,
 
 
