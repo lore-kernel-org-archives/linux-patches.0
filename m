@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C849328B58;
-	Fri,  9 Jan 2026 12:13:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F2B3346AF;
+	Fri,  9 Jan 2026 12:13:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960808; cv=none; b=RTxEJyw/C8kcYh6zhCPHZrrdbbl9+jCccWTHmfqNJxmDlrhY6JBFr23bXbO/Mb8gFxoUE8ACdysik6yQ+Iy8XBUaiwI5sWELfZVGmJcMnMSEEiCRnTAUUXxfOYMWs5W9Wwdjsf2tInlymeBJmPzBfYhcG/12Ry4A3+shVFJzEjM=
+	t=1767960811; cv=none; b=Sv0AICcCWMiynXBChVAsRmKvntyJc1mciMwviTzp4E+e/uYeoJetHYI55+ti94NRwUt+Vt6mw+WFvDRcyjCjXpKZIHnaI7u59SJoMVTbZOiFLocC5EJW7OUKrZraBnaxsWyk+mK4oDAmZKvPSm+jHDFUxslTs9efBKMyKwjoSos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960808; c=relaxed/simple;
-	bh=L/UGCnH3F4JzhcJuKRcqUH/Mf8lNvZQxKEMcetj1zP4=;
+	s=arc-20240116; t=1767960811; c=relaxed/simple;
+	bh=+jUVSiTvw0/s661JvwLa2ASO875HcYdbpu6II1D2tXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KrMWhs3CmASSe3OK01oaCltvK8F68YQZjc486fE5iwOD5aZkAVXY0oqweZTmfO4WGclbS6X1ttoMVZbWbt6HCWIvqcYtM70XXsj4cibBDLqqv4Hn5Ru+QJfNmoD+70vRov6zfjW8cV84Qpfh44hpIidvP50F+NEXWco//apgWYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FMYrQg4O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lhat9mWqWMcfbBTNifsgnQ1xee9uXOULs0s985IMAKKb+PJ/y88sUuD3TfO/mRtYYb5+lePhsy9UBGcDvuH0f6FP1OUFCXSL5p8n3g06Q5IE4HL91by9MYpPWEJEqCzEUP8L+YPp35SgEe/8Mqs7sRq93KJoXAhKWp3a6FkqLns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RdoBDHdw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FMYrQg4O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C501C4CEF1;
-	Fri,  9 Jan 2026 12:13:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RdoBDHdw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 780AEC4CEF1;
+	Fri,  9 Jan 2026 12:13:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960808;
-	bh=L/UGCnH3F4JzhcJuKRcqUH/Mf8lNvZQxKEMcetj1zP4=;
+	s=korg; t=1767960810;
+	bh=+jUVSiTvw0/s661JvwLa2ASO875HcYdbpu6II1D2tXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FMYrQg4O3PozPfvrCLOFwr8+QM9wk7utt9tfntgjGKZHpHv83LBdStUy0AVugTipl
-	 B7Fa+Z9Yjlvtl7KAB7ljFWe10l9T0CN3YrsGovfJPr9+M4BP99PFeBE+f42TIfRwda
-	 j5rKsCt4c6fFaYkb8NzqUFFV0l2eW3DyoYHVcyEk=
+	b=RdoBDHdwu+cMyqZUfzvoZ1MTs6J/xFs0WC3LK2zDvy2jZ1Opwiii5+tGbWDDWYrNR
+	 Vjk7mUG0vncEPrSa3KY70KitpMgXcuddnWUjSJGWrlRsyTa9AGngU39KpItE0Z1bqs
+	 Aw2aHGEsR5S4/pfr+1IfaTL4nBSJZffpCkfBXI5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yong Wu <yong.wu@mediatek.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Johan Hovold <johan@kernel.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 6.6 500/737] iommu/mediatek: fix use-after-free on probe deferral
-Date: Fri,  9 Jan 2026 12:40:39 +0100
-Message-ID: <20260109112152.803035225@linuxfoundation.org>
+	Andrey Skvortsov <andrej.skvortzov@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 501/737] wifi: rtw88: limit indirect IO under powered off for RTL8822CS
+Date: Fri,  9 Jan 2026 12:40:40 +0100
+Message-ID: <20260109112152.840567592@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -53,91 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-commit de83d4617f9fe059623e97acf7e1e10d209625b5 upstream.
+[ Upstream commit f3ccdfda345ca9a624ea425840a926b8338c1e25 ]
 
-The driver is dropping the references taken to the larb devices during
-probe after successful lookup as well as on errors. This can
-potentially lead to a use-after-free in case a larb device has not yet
-been bound to its driver so that the iommu driver probe defers.
+The indirect IO is necessary for RTL8822CS, but not necessary for other
+chips. Otherwiese, it throws errors and becomes unusable.
 
-Fix this by keeping the references as expected while the iommu driver is
-bound.
+ rtw88_8723cs mmc1:0001:1: WOW Firmware version 11.0.0, H2C version 0
+ rtw88_8723cs mmc1:0001:1: Firmware version 11.0.0, H2C version 0
+ rtw88_8723cs mmc1:0001:1: sdio read32 failed (0xf0): -110
+ rtw88_8723cs mmc1:0001:1: sdio write8 failed (0x1c): -110
+ rtw88_8723cs mmc1:0001:1: sdio read32 failed (0xf0): -110
 
-Fixes: 26593928564c ("iommu/mediatek: Add error path for loop of mm_dts_parse")
-Cc: stable@vger.kernel.org
-Cc: Yong Wu <yong.wu@mediatek.com>
-Acked-by: Robin Murphy <robin.murphy@arm.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Yong Wu <yong.wu@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+By vendor driver, only RTL8822CS and RTL8822ES need indirect IO, but
+RTL8822ES isn't supported yet. Therefore, limit it to RTL8822CS only.
+
+Reported-by: Andrey Skvortsov <andrej.skvortzov@gmail.com>
+Closes: https://lore.kernel.org/linux-wireless/07a32e2d6c764eb1bd9415b5a921a652@realtek.com/T/#m997b4522f7209ba629561c776bfd1d13ab24c1d4
+Fixes: 58de1f91e033 ("wifi: rtw88: sdio: use indirect IO for device registers before power-on")
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Tested-by: Andrey Skvortsov <andrej.skvortzov@gmail.com>
+Link: https://patch.msgid.link/1764034729-1251-1-git-send-email-pkshih@realtek.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/mtk_iommu.c |   25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ drivers/net/wireless/realtek/rtw88/sdio.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/iommu/mtk_iommu.c
-+++ b/drivers/iommu/mtk_iommu.c
-@@ -1196,16 +1196,19 @@ static int mtk_iommu_mm_dts_parse(struct
- 		}
+diff --git a/drivers/net/wireless/realtek/rtw88/sdio.c b/drivers/net/wireless/realtek/rtw88/sdio.c
+index df4248744d87..025a97526551 100644
+--- a/drivers/net/wireless/realtek/rtw88/sdio.c
++++ b/drivers/net/wireless/realtek/rtw88/sdio.c
+@@ -143,8 +143,10 @@ static u32 rtw_sdio_to_io_address(struct rtw_dev *rtwdev, u32 addr,
  
- 		component_match_add(dev, match, component_compare_dev, &plarbdev->dev);
--		platform_device_put(plarbdev);
- 	}
- 
--	if (!frst_avail_smicomm_node)
--		return -EINVAL;
-+	if (!frst_avail_smicomm_node) {
-+		ret = -EINVAL;
-+		goto err_larbdev_put;
-+	}
- 
- 	pcommdev = of_find_device_by_node(frst_avail_smicomm_node);
- 	of_node_put(frst_avail_smicomm_node);
--	if (!pcommdev)
--		return -ENODEV;
-+	if (!pcommdev) {
-+		ret = -ENODEV;
-+		goto err_larbdev_put;
-+	}
- 	data->smicomm_dev = &pcommdev->dev;
- 
- 	link = device_link_add(data->smicomm_dev, dev,
-@@ -1213,7 +1216,8 @@ static int mtk_iommu_mm_dts_parse(struct
- 	platform_device_put(pcommdev);
- 	if (!link) {
- 		dev_err(dev, "Unable to link %s.\n", dev_name(data->smicomm_dev));
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto err_larbdev_put;
- 	}
- 	return 0;
- 
-@@ -1385,8 +1389,12 @@ out_sysfs_remove:
- 	iommu_device_sysfs_remove(&data->iommu);
- out_list_del:
- 	list_del(&data->list);
--	if (MTK_IOMMU_IS_TYPE(data->plat_data, MTK_IOMMU_TYPE_MM))
-+	if (MTK_IOMMU_IS_TYPE(data->plat_data, MTK_IOMMU_TYPE_MM)) {
- 		device_link_remove(data->smicomm_dev, dev);
+ static bool rtw_sdio_use_direct_io(struct rtw_dev *rtwdev, u32 addr)
+ {
++	bool might_indirect_under_power_off = rtwdev->chip->id == RTW_CHIP_TYPE_8822C;
 +
-+		for (i = 0; i < MTK_LARB_NR_MAX; i++)
-+			put_device(data->larb_imu[i].dev);
-+	}
- out_runtime_disable:
- 	pm_runtime_disable(dev);
- 	return ret;
-@@ -1406,6 +1414,9 @@ static void mtk_iommu_remove(struct plat
- 	if (MTK_IOMMU_IS_TYPE(data->plat_data, MTK_IOMMU_TYPE_MM)) {
- 		device_link_remove(data->smicomm_dev, &pdev->dev);
- 		component_master_del(&pdev->dev, &mtk_iommu_com_ops);
-+
-+		for (i = 0; i < MTK_LARB_NR_MAX; i++)
-+			put_device(data->larb_imu[i].dev);
- 	}
- 	pm_runtime_disable(&pdev->dev);
- 	for (i = 0; i < data->plat_data->banks_num; i++) {
+ 	if (!test_bit(RTW_FLAG_POWERON, rtwdev->flags) &&
+-	    !rtw_sdio_is_bus_addr(addr))
++	    !rtw_sdio_is_bus_addr(addr) && might_indirect_under_power_off)
+ 		return false;
+ 
+ 	return !rtw_sdio_is_sdio30_supported(rtwdev) ||
+-- 
+2.51.0
+
 
 
