@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1A8D32AAB5;
-	Fri,  9 Jan 2026 12:23:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6198A303C87;
+	Fri,  9 Jan 2026 12:23:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961406; cv=none; b=HvMu6tXyGwL6QcXou1e9lvn0Ef1jsT9nceTjJb57JB+SpmQaGJCVs/P4KIp3aO8j+wZPQIKENtn5PJ/E8H+rlIwWPmeyHJst/JlswySMGoDjj5x+Wb2JMws5xrGPKG9qDgaP25Cu9MybZXuEccOyIr35tPsyfHPElbCKtDWD578=
+	t=1767961409; cv=none; b=XH5FlNuPueBrio/FxS8cvtZ2AbUKEjxy5q5N69dy9w0D5sK1RgmKzyO2UN73VR/FVOyIHSos1+jhAmQOXe51qXkqy/VpK2dSj2tICkAIXmQAXcVms6Ej+gOtfaU/ABc/fcl69u+RoC6lhH6/lvBf4qUnSz4kWLWUWvmOMuj/WqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961406; c=relaxed/simple;
-	bh=pBG8xDzjFX7D52sb7k3los/pJsDflTCF8YS2niMyXqo=;
+	s=arc-20240116; t=1767961409; c=relaxed/simple;
+	bh=nHEEOiOal034vzwrP0Xwgau0Fns2xUojiJjLRavDIlU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nk29cPkK2Kpo4H35tARuFi9kZNMgZiZHrhBHwhiuqShNM6ahSCbtUVBvBHwwyq/Ql4NRyE1jfzvahyYyFt5GyRmmzrZTOcpmBp8y05pdCbq76c9v2tkbRBwQ3nqcD26r4pJFFZnFyi8BFxaFHPsXTG5ufwCR404vThEY2fOQIAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K665yJFn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eskNhQ/g/xIE9/ClNaxrV1InnirFWsfZYW5QDWoXvKrZM2C08XGBCiewAg/8bKvIKVWSlc4QFWf31TMvK9jGsmk4Cik0MlXAvVIyl2eXffr4xtGb7r21zwoZ1XQWC/0ISPQmiRi4wy6OL/fPllG+EnPQPbGapFOgarToTKJ1obQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QahODZqp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K665yJFn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7858C4CEF1;
-	Fri,  9 Jan 2026 12:23:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QahODZqp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9181C4CEF1;
+	Fri,  9 Jan 2026 12:23:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961406;
-	bh=pBG8xDzjFX7D52sb7k3los/pJsDflTCF8YS2niMyXqo=;
+	s=korg; t=1767961409;
+	bh=nHEEOiOal034vzwrP0Xwgau0Fns2xUojiJjLRavDIlU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K665yJFngsJ2qec7pUiQs5AAP3RPdoQk+JfpcR7+nLWC1xFJyns1VfiP7KxWObBNZ
-	 9LpIHFSBm8juATdOPaNEpLDjRdYnJd12zQbChmifmhICaGEw3uF8WW7EzevPOiK3aM
-	 rWwvhCmM3VucFvS1krTfpKWED85/CfLXFq7yycl0=
+	b=QahODZqpgTKQ3+6Ngv6c/XPEyYRWWrGAzCmV+z1TNRefoDyt5CYdcN51Wq+ANrn9H
+	 o26fC8yf3maofKsibXB+QSzzE2N0vc95fCAbUrMgF36wqCEbIUJO4Sx9LweCc9NGk5
+	 fEtoyt7h7IkQQ/opJakSQ98LQNqutWXoMA6prYNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com, vincent.guittot@linaro.org, dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de, vschneid@redhat.com, linux-kernel@vger.kernel.org, ajay.kaher@broadcom.com, alexey.makhalov@broadcom.com, yin.ding@broadcom.com, tapas.kundu@broadcom.com, Chris Mason" <clm@meta.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Ajay Kaher <ajay.kaher@broadcom.com>,
-	Chris Mason <clm@meta.com>
-Subject: [PATCH 6.6 711/737] sched/fair: Proportional newidle balance
-Date: Fri,  9 Jan 2026 12:44:10 +0100
-Message-ID: <20260109112200.822136645@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Wen Yang <wen.yang@linux.dev>
+Subject: [PATCH 6.6 712/737] net: Remove conditional threaded-NAPI wakeup based on task state.
+Date: Fri,  9 Jan 2026 12:44:11 +0100
+Message-ID: <20260109112200.859495184@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -53,203 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra (Intel) <peterz@infradead.org>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-commit 33cf66d88306663d16e4759e9d24766b0aaa2e17 upstream.
+commit 56364c910691f6d10ba88c964c9041b9ab777bd6 upstream.
 
-Add a randomized algorithm that runs newidle balancing proportional to
-its success rate.
+A NAPI thread is scheduled by first setting NAPI_STATE_SCHED bit. If
+successful (the bit was not yet set) then the NAPI_STATE_SCHED_THREADED
+is set but only if thread's state is not TASK_INTERRUPTIBLE (is
+TASK_RUNNING) followed by task wakeup.
 
-This improves schbench significantly:
+If the task is idle (TASK_INTERRUPTIBLE) then the
+NAPI_STATE_SCHED_THREADED bit is not set. The thread is no relying on
+the bit but always leaving the wait-loop after returning from schedule()
+because there must have been a wakeup.
 
- 6.18-rc4:			2.22 Mrps/s
- 6.18-rc4+revert:		2.04 Mrps/s
- 6.18-rc4+revert+random:	2.18 Mrps/S
+The smpboot-threads implementation for per-CPU threads requires an
+explicit condition and does not support "if we get out of schedule()
+then there must be something to do".
 
-Conversely, per Adam Li this affects SpecJBB slightly, reducing it by 1%:
+Removing this optimisation simplifies the following integration.
 
- 6.17:			-6%
- 6.17+revert:		 0%
- 6.17+revert+random:	-1%
+Set NAPI_STATE_SCHED_THREADED unconditionally on wakeup and rely on it
+in the wait path by removing the `woken' condition.
 
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Tested-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Tested-by: Chris Mason <clm@meta.com>
-Link: https://lkml.kernel.org/r/6825c50d-7fa7-45d8-9b81-c6e7e25738e2@meta.com
-Link: https://patch.msgid.link/20251107161739.770122091@infradead.org
-[ Ajay: Modified to apply on v6.6 ]
-Signed-off-by: Ajay Kaher <ajay.kaher@broadcom.com>
+Acked-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Wen Yang <wen.yang@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/sched/topology.h |    3 ++
- kernel/sched/core.c            |    3 ++
- kernel/sched/fair.c            |   44 +++++++++++++++++++++++++++++++++++++----
- kernel/sched/features.h        |    5 ++++
- kernel/sched/sched.h           |    7 ++++++
- kernel/sched/topology.c        |    6 +++++
- 6 files changed, 64 insertions(+), 4 deletions(-)
+ net/core/dev.c |   14 ++------------
+ 1 file changed, 2 insertions(+), 12 deletions(-)
 
---- a/include/linux/sched/topology.h
-+++ b/include/linux/sched/topology.h
-@@ -106,6 +106,9 @@ struct sched_domain {
- 	unsigned int nr_balance_failed; /* initialise to 0 */
- 
- 	/* idle_balance() stats */
-+	unsigned int newidle_call;
-+	unsigned int newidle_success;
-+	unsigned int newidle_ratio;
- 	u64 max_newidle_lb_cost;
- 	unsigned long last_decay_max_lb_cost;
- 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -116,6 +116,7 @@ EXPORT_TRACEPOINT_SYMBOL_GPL(sched_util_
- EXPORT_TRACEPOINT_SYMBOL_GPL(sched_update_nr_running_tp);
- 
- DEFINE_PER_CPU_SHARED_ALIGNED(struct rq, runqueues);
-+DEFINE_PER_CPU(struct rnd_state, sched_rnd_state);
- 
- #ifdef CONFIG_SCHED_DEBUG
- /*
-@@ -9872,6 +9873,8 @@ void __init sched_init_smp(void)
- {
- 	sched_init_numa(NUMA_NO_NODE);
- 
-+	prandom_init_once(&sched_rnd_state);
-+
- 	/*
- 	 * There's no userspace yet to cause hotplug operations; hence all the
- 	 * CPU masks are stable and all blatant races in the below code cannot
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -11716,11 +11716,27 @@ void update_max_interval(void)
- 	max_load_balance_interval = HZ*num_online_cpus()/10;
- }
- 
--static inline bool update_newidle_cost(struct sched_domain *sd, u64 cost)
-+static inline void update_newidle_stats(struct sched_domain *sd, unsigned int success)
-+{
-+	sd->newidle_call++;
-+	sd->newidle_success += success;
-+
-+	if (sd->newidle_call >= 1024) {
-+		sd->newidle_ratio = sd->newidle_success;
-+		sd->newidle_call /= 2;
-+		sd->newidle_success /= 2;
-+	}
-+}
-+
-+static inline bool
-+update_newidle_cost(struct sched_domain *sd, u64 cost, unsigned int success)
- {
- 	unsigned long next_decay = sd->last_decay_max_lb_cost + HZ;
- 	unsigned long now = jiffies;
- 
-+	if (cost)
-+		update_newidle_stats(sd, success);
-+
- 	if (cost > sd->max_newidle_lb_cost) {
- 		/*
- 		 * Track max cost of a domain to make sure to not delay the
-@@ -11768,7 +11784,7 @@ static void rebalance_domains(struct rq
- 		 * Decay the newidle max times here because this is a regular
- 		 * visit to all the domains.
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -4526,13 +4526,7 @@ static inline void ____napi_schedule(str
  		 */
--		need_decay = update_newidle_cost(sd, 0);
-+		need_decay = update_newidle_cost(sd, 0, 0);
- 		max_cost += sd->max_newidle_lb_cost;
+ 		thread = READ_ONCE(napi->thread);
+ 		if (thread) {
+-			/* Avoid doing set_bit() if the thread is in
+-			 * INTERRUPTIBLE state, cause napi_thread_wait()
+-			 * makes sure to proceed with napi polling
+-			 * if the thread is explicitly woken from here.
+-			 */
+-			if (READ_ONCE(thread->__state) != TASK_INTERRUPTIBLE)
+-				set_bit(NAPI_STATE_SCHED_THREADED, &napi->state);
++			set_bit(NAPI_STATE_SCHED_THREADED, &napi->state);
+ 			wake_up_process(thread);
+ 			return;
+ 		}
+@@ -6688,8 +6682,6 @@ static int napi_poll(struct napi_struct
  
- 		/*
-@@ -12406,6 +12422,22 @@ static int sched_balance_newidle(struct
- 			break;
- 
- 		if (sd->flags & SD_BALANCE_NEWIDLE) {
-+			unsigned int weight = 1;
-+
-+			if (sched_feat(NI_RANDOM)) {
-+				/*
-+				 * Throw a 1k sided dice; and only run
-+				 * newidle_balance according to the success
-+				 * rate.
-+				 */
-+				u32 d1k = sched_rng() % 1024;
-+				weight = 1 + sd->newidle_ratio;
-+				if (d1k > weight) {
-+					update_newidle_stats(sd, 0);
-+					continue;
-+				}
-+				weight = (1024 + weight/2) / weight;
-+			}
- 
- 			pulled_task = load_balance(this_cpu, this_rq,
- 						   sd, CPU_NEWLY_IDLE,
-@@ -12413,10 +12445,14 @@ static int sched_balance_newidle(struct
- 
- 			t1 = sched_clock_cpu(this_cpu);
- 			domain_cost = t1 - t0;
--			update_newidle_cost(sd, domain_cost);
+ static int napi_thread_wait(struct napi_struct *napi)
+ {
+-	bool woken = false;
 -
- 			curr_cost += domain_cost;
- 			t0 = t1;
-+
-+			/*
-+			 * Track max cost of a domain to make sure to not delay the
-+			 * next wakeup on the CPU.
-+			 */
-+			update_newidle_cost(sd, domain_cost, weight * !!pulled_task);
+ 	set_current_state(TASK_INTERRUPTIBLE);
+ 
+ 	while (!kthread_should_stop()) {
+@@ -6698,15 +6690,13 @@ static int napi_thread_wait(struct napi_
+ 		 * Testing SCHED bit is not enough because SCHED bit might be
+ 		 * set by some other busy poll thread or by napi_disable().
+ 		 */
+-		if (test_bit(NAPI_STATE_SCHED_THREADED, &napi->state) || woken) {
++		if (test_bit(NAPI_STATE_SCHED_THREADED, &napi->state)) {
+ 			WARN_ON(!list_empty(&napi->poll_list));
+ 			__set_current_state(TASK_RUNNING);
+ 			return 0;
  		}
  
- 		/*
---- a/kernel/sched/features.h
-+++ b/kernel/sched/features.h
-@@ -88,4 +88,9 @@ SCHED_FEAT(UTIL_EST_FASTUP, true)
- 
- SCHED_FEAT(LATENCY_WARN, false)
- 
-+/*
-+ * Do newidle balancing proportional to its success rate using randomization.
-+ */
-+SCHED_FEAT(NI_RANDOM, true)
-+
- SCHED_FEAT(HZ_BW, true)
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -5,6 +5,7 @@
- #ifndef _KERNEL_SCHED_SCHED_H
- #define _KERNEL_SCHED_SCHED_H
- 
-+#include <linux/prandom.h>
- #include <linux/sched/affinity.h>
- #include <linux/sched/autogroup.h>
- #include <linux/sched/cpufreq.h>
-@@ -1205,6 +1206,12 @@ static inline bool is_migration_disabled
- }
- 
- DECLARE_PER_CPU_SHARED_ALIGNED(struct rq, runqueues);
-+DECLARE_PER_CPU(struct rnd_state, sched_rnd_state);
-+
-+static inline u32 sched_rng(void)
-+{
-+	return prandom_u32_state(this_cpu_ptr(&sched_rnd_state));
-+}
- 
- #define cpu_rq(cpu)		(&per_cpu(runqueues, (cpu)))
- #define this_rq()		this_cpu_ptr(&runqueues)
---- a/kernel/sched/topology.c
-+++ b/kernel/sched/topology.c
-@@ -1600,6 +1600,12 @@ sd_init(struct sched_domain_topology_lev
- 
- 		.last_balance		= jiffies,
- 		.balance_interval	= sd_weight,
-+
-+		/* 50% success rate */
-+		.newidle_call		= 512,
-+		.newidle_success	= 256,
-+		.newidle_ratio		= 512,
-+
- 		.max_newidle_lb_cost	= 0,
- 		.last_decay_max_lb_cost	= jiffies,
- 		.child			= child,
+ 		schedule();
+-		/* woken being true indicates this thread owns this napi. */
+-		woken = true;
+ 		set_current_state(TASK_INTERRUPTIBLE);
+ 	}
+ 	__set_current_state(TASK_RUNNING);
 
 
