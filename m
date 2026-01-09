@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50CC331A7EA;
-	Fri,  9 Jan 2026 11:49:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5FDA2FBDF5;
+	Fri,  9 Jan 2026 11:49:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959376; cv=none; b=FDfYJhURcUY6wZcXzMexlWoZxA4S2W8C905JwwVyt7yBxqOW4j7KkIE94+LSjjlV0LdanIkOFFRqV6RUkxohrv0g4GGpp1qeJMgDy0Zdj05X1v3D+4JQ7PqgrNUty5HkkABlCNwaDMYERPypnsl5m2ZWlpSzNegNlxouLkT67Tk=
+	t=1767959379; cv=none; b=YPicGXPKMDUYBBW0vGUOnqF2ddPRdAlcDf8Z9NOrX9GLLH9DRK2yFPI7c/il6zIC88tABV6AhC+lzBpCFJwKbl2uzXmHAPTlhJvPc468avlLPz99OsULlByAU+3BgoFJAqCUpwWTZ7rZFhU6nbJ48xSVfvHVZo4wyAFVwJJ0Ghw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959376; c=relaxed/simple;
-	bh=u7cbSRmpmXJ54MZx4dcB8bmqZEJKaSh/wdYtquhnCBc=;
+	s=arc-20240116; t=1767959379; c=relaxed/simple;
+	bh=TehjN3l/YSlcFtX9b1Fx4kK8l2gFh2I9UJajLCHyNuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CSPZK1Kn4s9GSCx9PC+aLpR68RsfE2h/V8OjPf8rhZs7kwXp4fUxGk2Fq8YRprLpJVCjt+A+9m0eBRvUVoHFR91kDP/D7bVDDfmLZBYyh2SMuaXZbrhMBUAmImSkM+0waSTX0PP16u//8UgjtM/wAlU45iEUG2l1z6W2pK2TUNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mM1PdJZ4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kYl74i/FTH0ahgULzDCA7vtLsF3gLP5iA95NfBqbnypY3ENI2hMBwMPBiB9RusI0t+ZOwS2lJJbcmfaSZiUf57TEg+3/Vzrq23jEEgPbKXq226tzovrm8eb2rjBns/prmpozXpZDGXxF10l88THYNvpIXcHHWjT9JSeGluVuUs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RoBwAedf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mM1PdJZ4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AC7CC4CEF1;
-	Fri,  9 Jan 2026 11:49:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RoBwAedf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73EF9C4CEF1;
+	Fri,  9 Jan 2026 11:49:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959376;
-	bh=u7cbSRmpmXJ54MZx4dcB8bmqZEJKaSh/wdYtquhnCBc=;
+	s=korg; t=1767959378;
+	bh=TehjN3l/YSlcFtX9b1Fx4kK8l2gFh2I9UJajLCHyNuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mM1PdJZ4sV71SXppQIbUqpSHcbeYmj2O3MZT9W9hzGSOTP/UlBlpcD6f3oSXiCtnK
-	 ohtteII/e6a8A4Hteyr1qYf/HXH/1ZzICjDcdpSTlFtkkvhDXWPKOxa8qVIvvDDqEO
-	 NrdWhrzzr4zch+2NgoFaJBzr4C3VCniNhM14WZps=
+	b=RoBwAedfufCehv/fY1wTjO2BnoeTILfF+nIbRgxm3MPwq3q+zPKu6Xe0DIn9X1uCS
+	 wNF1ZUWtNP5aV/yD8e34lRXoKWDR7GuHp4AzBLVbz+0sz9pIK7PFNYBZJ9jDm6mlEk
+	 7uEkA7qypAQqKFnWr0zdW+Ni1wgTBRn/c69C/7Sc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+999eb23467f83f9bf9bf@syzkaller.appspotmail.com,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Casey Chen <cachen@purestorage.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@suse.de>,
+	Ming Lei <ming.lei@redhat.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 003/737] xfrm: also call xfrm_state_delete_tunnel at destroy time for states that were never added
-Date: Fri,  9 Jan 2026 12:32:22 +0100
-Message-ID: <20260109112134.118207633@linuxfoundation.org>
+Subject: [PATCH 6.6 030/737] nvme: fix admin request_queue lifetime
+Date: Fri,  9 Jan 2026 12:32:49 +0100
+Message-ID: <20260109112135.129760700@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,73 +55,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit 10deb69864840ccf96b00ac2ab3a2055c0c04721 ]
+[ Upstream commit 03b3bcd319b3ab5182bc9aaa0421351572c78ac0 ]
 
-In commit b441cf3f8c4b ("xfrm: delete x->tunnel as we delete x"), I
-missed the case where state creation fails between full
-initialization (->init_state has been called) and being inserted on
-the lists.
+The namespaces can access the controller's admin request_queue, and
+stale references on the namespaces may exist after tearing down the
+controller. Ensure the admin request_queue is active by moving the
+controller's 'put' to after all controller references have been released
+to ensure no one is can access the request_queue. This fixes a reported
+use-after-free bug:
 
-In this situation, ->init_state has been called, so for IPcomp
-tunnels, the fallback tunnel has been created and added onto the
-lists, but the user state never gets added, because we fail before
-that. The user state doesn't go through __xfrm_state_delete, so we
-don't call xfrm_state_delete_tunnel for those states, and we end up
-leaking the FB tunnel.
+  BUG: KASAN: slab-use-after-free in blk_queue_enter+0x41c/0x4a0
+  Read of size 8 at addr ffff88c0a53819f8 by task nvme/3287
+  CPU: 67 UID: 0 PID: 3287 Comm: nvme Tainted: G            E       6.13.2-ga1582f1a031e #15
+  Tainted: [E]=UNSIGNED_MODULE
+  Hardware name: Jabil /EGS 2S MB1, BIOS 1.00 06/18/2025
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x4f/0x60
+   print_report+0xc4/0x620
+   ? _raw_spin_lock_irqsave+0x70/0xb0
+   ? _raw_read_unlock_irqrestore+0x30/0x30
+   ? blk_queue_enter+0x41c/0x4a0
+   kasan_report+0xab/0xe0
+   ? blk_queue_enter+0x41c/0x4a0
+   blk_queue_enter+0x41c/0x4a0
+   ? __irq_work_queue_local+0x75/0x1d0
+   ? blk_queue_start_drain+0x70/0x70
+   ? irq_work_queue+0x18/0x20
+   ? vprintk_emit.part.0+0x1cc/0x350
+   ? wake_up_klogd_work_func+0x60/0x60
+   blk_mq_alloc_request+0x2b7/0x6b0
+   ? __blk_mq_alloc_requests+0x1060/0x1060
+   ? __switch_to+0x5b7/0x1060
+   nvme_submit_user_cmd+0xa9/0x330
+   nvme_user_cmd.isra.0+0x240/0x3f0
+   ? force_sigsegv+0xe0/0xe0
+   ? nvme_user_cmd64+0x400/0x400
+   ? vfs_fileattr_set+0x9b0/0x9b0
+   ? cgroup_update_frozen_flag+0x24/0x1c0
+   ? cgroup_leave_frozen+0x204/0x330
+   ? nvme_ioctl+0x7c/0x2c0
+   blkdev_ioctl+0x1a8/0x4d0
+   ? blkdev_common_ioctl+0x1930/0x1930
+   ? fdget+0x54/0x380
+   __x64_sys_ioctl+0x129/0x190
+   do_syscall_64+0x5b/0x160
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+  RIP: 0033:0x7f765f703b0b
+  Code: ff ff ff 85 c0 79 9b 49 c7 c4 ff ff ff ff 5b 5d 4c 89 e0 41 5c c3 66 0f 1f 84 00 00 00 00 00 f3 0f 1e fa b8 10 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d dd 52 0f 00 f7 d8 64 89 01 48
+  RSP: 002b:00007ffe2cefe808 EFLAGS: 00000202 ORIG_RAX: 0000000000000010
+  RAX: ffffffffffffffda RBX: 00007ffe2cefe860 RCX: 00007f765f703b0b
+  RDX: 00007ffe2cefe860 RSI: 00000000c0484e41 RDI: 0000000000000003
+  RBP: 0000000000000000 R08: 0000000000000003 R09: 0000000000000000
+  R10: 00007f765f611d50 R11: 0000000000000202 R12: 0000000000000003
+  R13: 00000000c0484e41 R14: 0000000000000001 R15: 00007ffe2cefea60
+   </TASK>
 
-There are several codepaths affected by this: the add/update paths, in
-both net/key and xfrm, and the migrate code (xfrm_migrate,
-xfrm_state_migrate). A "proper" rollback of the init_state work would
-probably be doable in the add/update code, but for migrate it gets
-more complicated as multiple states may be involved.
-
-At some point, the new (not-inserted) state will be destroyed, so call
-xfrm_state_delete_tunnel during xfrm_state_gc_destroy. Most states
-will have their fallback tunnel cleaned up during __xfrm_state_delete,
-which solves the issue that b441cf3f8c4b (and other patches before it)
-aimed at. All states (including FB tunnels) will be removed from the
-lists once xfrm_state_fini has called flush_work(&xfrm_state_gc_work).
-
-Reported-by: syzbot+999eb23467f83f9bf9bf@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=999eb23467f83f9bf9bf
-Fixes: b441cf3f8c4b ("xfrm: delete x->tunnel as we delete x")
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Reported-by: Casey Chen <cachen@purestorage.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_state.c | 3 ++-
+ drivers/nvme/host/core.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
-index b0e2958342ad2..3d806492e1de9 100644
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -521,6 +521,7 @@ void xfrm_state_free(struct xfrm_state *x)
- }
- EXPORT_SYMBOL(xfrm_state_free);
- 
-+static void xfrm_state_delete_tunnel(struct xfrm_state *x);
- static void xfrm_state_gc_destroy(struct xfrm_state *x)
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 78d00e25a1790..f09ebcbe11798 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -4318,7 +4318,6 @@ EXPORT_SYMBOL_GPL(nvme_alloc_admin_tag_set);
+ void nvme_remove_admin_tag_set(struct nvme_ctrl *ctrl)
  {
- 	hrtimer_cancel(&x->mtimer);
-@@ -535,6 +536,7 @@ static void xfrm_state_gc_destroy(struct xfrm_state *x)
- 	kfree(x->preplay_esn);
- 	if (x->type_offload)
- 		xfrm_put_type_offload(x->type_offload);
-+	xfrm_state_delete_tunnel(x);
- 	if (x->type) {
- 		x->type->destructor(x);
- 		xfrm_put_type(x->type);
-@@ -731,7 +733,6 @@ void __xfrm_state_destroy(struct xfrm_state *x)
- }
- EXPORT_SYMBOL(__xfrm_state_destroy);
+ 	blk_mq_destroy_queue(ctrl->admin_q);
+-	blk_put_queue(ctrl->admin_q);
+ 	if (ctrl->ops->flags & NVME_F_FABRICS) {
+ 		blk_mq_destroy_queue(ctrl->fabrics_q);
+ 		blk_put_queue(ctrl->fabrics_q);
+@@ -4463,6 +4462,8 @@ static void nvme_free_ctrl(struct device *dev)
+ 		container_of(dev, struct nvme_ctrl, ctrl_device);
+ 	struct nvme_subsystem *subsys = ctrl->subsys;
  
--static void xfrm_state_delete_tunnel(struct xfrm_state *x);
- int __xfrm_state_delete(struct xfrm_state *x)
- {
- 	struct net *net = xs_net(x);
++	if (ctrl->admin_q)
++		blk_put_queue(ctrl->admin_q);
+ 	if (!subsys || ctrl->instance != subsys->instance)
+ 		ida_free(&nvme_instance_ida, ctrl->instance);
+ 
 -- 
 2.51.0
 
