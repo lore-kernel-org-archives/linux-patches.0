@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F748359F99;
-	Fri,  9 Jan 2026 12:06:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59690359F99;
+	Fri,  9 Jan 2026 12:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960397; cv=none; b=PQfN7DsA7s5mTqQm9MYJA7pdQq11xG77cPcW1cW9csM5xp+FgjoemAb1khvR3QX2VbhtJI2u/6vr1m4gBIP6jcM89VGC5edqMKbCmHl/KFFJ+hRANerL4lDeOEOBLuGnhHOWXQsKUpm+Zg8eybsxYRVJGoDwTZlaiMt4iA5nULs=
+	t=1767960400; cv=none; b=rOHoAbf7uiN+g6I3FFg7rXmzfjNxUTKBC3XBP/YhOZyHZAq+2XPBlxSU+3w/PFU+RRwDoGEOSsFzhZU+YscNp36WoEwfcZ/G9g0FTsY7TCFRarB8SdOi8sY30HOxPl9LCAO71QKUx28Wnz072+kQSqUHuyv+nXGVMahDdbtCUZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960397; c=relaxed/simple;
-	bh=GKnUI5ICdQ5/w5l68qXilXw9Z1TNyvfRN8tMDuKpjYE=;
+	s=arc-20240116; t=1767960400; c=relaxed/simple;
+	bh=obkef75NRodlE4i3ScSRpVG+u/eSEegHMnddeUXQ+Wc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nW9GdNahiQ3ImRdTJclKJASR3p/hNeO03VDy9uoGtprmJz4mgtFJQCbBRYBLswfQBrJ7BjO6i4/2WvdBI7Y9KWwPWaJhujZIvlZCMhIQljdd2q9Wo5nWO0jmUbJf771tD7pKBhCyRdvKyGC+BuCOsNAK8dI1D8SXoqn1Rysdd38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xHm1BjBY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EFkvkmNKMFY+qiKgpE738SeBYbufwBTc3PJyqmhQVqgw2eTl4rk8Cg0qaGMzucYevq0IqhDq7UV4b6ojYbV3nEsHDHeUMxq/e/5e0Xg7E+QQg2lSojWHJMzISbUS7sqh3FDszLwHnY022l/BRGxx7KOdmR/YkFH1F2PPUnNTlIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zflqiDh3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xHm1BjBY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3227C4CEF1;
-	Fri,  9 Jan 2026 12:06:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zflqiDh3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A763FC4CEF1;
+	Fri,  9 Jan 2026 12:06:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960397;
-	bh=GKnUI5ICdQ5/w5l68qXilXw9Z1TNyvfRN8tMDuKpjYE=;
+	s=korg; t=1767960400;
+	bh=obkef75NRodlE4i3ScSRpVG+u/eSEegHMnddeUXQ+Wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xHm1BjBYEydPj4ZbZQ3KTwx3FsbntyNH+7qBuGpJd+6CTKzZEh1Xq0POg0SZwRFjq
-	 bPTafFi7CXavHQtyPvweNqHLaYX9fcD3RX8FrTpExS0Vq9xbDs1fuASDi0BmIOG8Mu
-	 IbGYdoi67XvUpfBPVguyhJRzPvApD8pLtuHlNU7I=
+	b=zflqiDh35jLHQM1w8F291oDlh6owEXLfAHRFo60MQZTMuTVVGGX+qiT/wbn8zTW3O
+	 FxZa2VUT2wGeU5p8uApEBamil1zftwKQcW/iWLq/xB+mhoOxiYBYpEeK2ZJZVy2AzZ
+	 k9ySHoV73m3IvIOcDt5vzAcqmSikFunqGPwxv6Rw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Scott Mayhew <smayhew@redhat.com>,
+	Wei Fang <wei.fang@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Hariprasad Kelam <hkelam@marvell.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 356/737] net/handshake: duplicate handshake cancellations leak socket
-Date: Fri,  9 Jan 2026 12:38:15 +0100
-Message-ID: <20260109112147.387460494@linuxfoundation.org>
+Subject: [PATCH 6.6 357/737] net: enetc: do not transmit redirected XDP frames when the link is down
+Date: Fri,  9 Jan 2026 12:38:16 +0100
+Message-ID: <20260109112147.425574267@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,59 +54,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Scott Mayhew <smayhew@redhat.com>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit 15564bd67e2975002f2a8e9defee33e321d3183f ]
+[ Upstream commit 2939203ffee818f1e5ebd60bbb85a174d63aab9c ]
 
-When a handshake request is cancelled it is removed from the
-handshake_net->hn_requests list, but it is still present in the
-handshake_rhashtbl until it is destroyed.
+In the current implementation, the enetc_xdp_xmit() always transmits
+redirected XDP frames even if the link is down, but the frames cannot
+be transmitted from TX BD rings when the link is down, so the frames
+are still kept in the TX BD rings. If the XDP program is uninstalled,
+users will see the following warning logs.
 
-If a second cancellation request arrives for the same handshake request,
-then remove_pending() will return false... and assuming
-HANDSHAKE_F_REQ_COMPLETED isn't set in req->hr_flags, we'll continue
-processing through the out_true label, where we put another reference on
-the sock and a refcount underflow occurs.
+fsl_enetc 0000:00:00.0 eno0: timeout for tx ring #6 clear
 
-This can happen for example if a handshake times out - particularly if
-the SUNRPC client sends the AUTH_TLS probe to the server but doesn't
-follow it up with the ClientHello due to a problem with tlshd.  When the
-timeout is hit on the server, the server will send a FIN, which triggers
-a cancellation request via xs_reset_transport().  When the timeout is
-hit on the client, another cancellation request happens via
-xs_tls_handshake_sync().
+More worse, the TX BD ring cannot work properly anymore, because the
+HW PIR and CIR are not equal after the re-initialization of the TX
+BD ring. At this point, the BDs between CIR and PIR are invalid,
+which will cause a hardware malfunction.
 
-Add a test_and_set_bit(HANDSHAKE_F_REQ_COMPLETED) in the pending cancel
-path so duplicate cancels can be detected.
+Another reason is that there is internal context in the ring prefetch
+logic that will retain the state from the first incarnation of the ring
+and continue prefetching from the stale location when we re-initialize
+the ring. The internal context is only reset by an FLR. That is to say,
+for LS1028A ENETC, software cannot set the HW CIR and PIR when
+initializing the TX BD ring.
 
-Fixes: 3b3009ea8abb ("net/handshake: Create a NETLINK service for handling handshake requests")
-Suggested-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Scott Mayhew <smayhew@redhat.com>
-Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
-Link: https://patch.msgid.link/20251209193015.3032058-1-smayhew@redhat.com
+It does not make sense to transmit redirected XDP frames when the link is
+down. Add a link status check to prevent transmission in this condition.
+This fixes part of the issue, but more complex cases remain. For example,
+the TX BD ring may still contain unsent frames when the link goes down.
+Those situations require additional patches, which will build on this
+one.
+
+Fixes: 9d2b68cc108d ("net: enetc: add support for XDP_REDIRECT")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Hariprasad Kelam <hkelam@marvell.com>
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20251211020919.121113-1-wei.fang@nxp.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/handshake/request.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/freescale/enetc/enetc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/handshake/request.c b/net/handshake/request.c
-index 94d5cef3e048b..0ac126b0add60 100644
---- a/net/handshake/request.c
-+++ b/net/handshake/request.c
-@@ -325,7 +325,11 @@ bool handshake_req_cancel(struct sock *sk)
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
+index 7accf3a3e9f0d..e3ab6f4f8dbba 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc.c
+@@ -1429,7 +1429,8 @@ int enetc_xdp_xmit(struct net_device *ndev, int num_frames,
+ 	int xdp_tx_bd_cnt, i, k;
+ 	int xdp_tx_frm_cnt = 0;
  
- 	hn = handshake_pernet(net);
- 	if (hn && remove_pending(hn, req)) {
--		/* Request hadn't been accepted */
-+		/* Request hadn't been accepted - mark cancelled */
-+		if (test_and_set_bit(HANDSHAKE_F_REQ_COMPLETED, &req->hr_flags)) {
-+			trace_handshake_cancel_busy(net, req, sk);
-+			return false;
-+		}
- 		goto out_true;
- 	}
- 	if (test_and_set_bit(HANDSHAKE_F_REQ_COMPLETED, &req->hr_flags)) {
+-	if (unlikely(test_bit(ENETC_TX_DOWN, &priv->flags)))
++	if (unlikely(test_bit(ENETC_TX_DOWN, &priv->flags) ||
++		     !netif_carrier_ok(ndev)))
+ 		return -ENETDOWN;
+ 
+ 	enetc_lock_mdio();
 -- 
 2.51.0
 
