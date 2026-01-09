@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00965359F99;
-	Fri,  9 Jan 2026 12:01:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59C8335561;
+	Fri,  9 Jan 2026 12:01:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960073; cv=none; b=OYvLFhyt3m5Pk0lw16eNZ20F5YdJmRV994bZCqyjMt/aDprbrFlj8r4+6UagNs4MjocX8TbCuTqcXj2snzWnNvpETIRm9767DVrfiLn5AIOixmKGtNER2WZyc/6S1s43FmUjWDYBcxnil4NOFZBXznJtcX5VFfYMOW1z6X4S9qA=
+	t=1767960075; cv=none; b=CL9IXFwHqIwzlZmuGQQyVUXVqtue7ESXalZf7iJUL7OfiJbN3IWV8BL1u+CFAz87NdmuQK+Ocj0IP4bHM1siavawDdHFwOBsECEe67PfxMHPi+R7AF0IVt5rJEKgRfFF+wsguc/0AV3yFMFzzF1Td1C+4cID68095xMASWnoDxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960073; c=relaxed/simple;
-	bh=gPmj0HgKDAJyTw8m6JKCgCdQb2rUzVVmLo96HAq8FbQ=;
+	s=arc-20240116; t=1767960075; c=relaxed/simple;
+	bh=WV7/M9W/2XBcP5zxdVAkCUnwHGWawit4iEGdTA5GdjI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ny6t0QQy7aV9WRXDR4pRaeZKXWX69rvdQ7NV9t0S83tItGLFRTTo7C5jFM9iaaz1GjsWq+33uk3tdYFNeSAveBth09nFdHJ11/BxtdtzsaKuGZcRmq7V+oZJexbF7ZBXU0Ynvsgoc2dDmjiKhdiYaYUERbLLCPsTnWDISML9JHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nnZxBBxu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fOU1YjBcjRIFrXSUvQNyL6osEVlxJbGwjNs4XmZnhNyQlHb8EKa5LZWq1bnBlqp81UO+jsVGSpezCN2ERRIf2HRMa9g/gtbthaOYN5DlHRsCVemP/rIXgdWzaG6ijbGfpdwbA7It1yHyod4AFQyRWsxefWZzmrckKiUsnnME5WQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qsngL6qq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nnZxBBxu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DB61C19422;
-	Fri,  9 Jan 2026 12:01:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qsngL6qq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54B64C4CEF1;
+	Fri,  9 Jan 2026 12:01:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960072;
-	bh=gPmj0HgKDAJyTw8m6JKCgCdQb2rUzVVmLo96HAq8FbQ=;
+	s=korg; t=1767960075;
+	bh=WV7/M9W/2XBcP5zxdVAkCUnwHGWawit4iEGdTA5GdjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nnZxBBxuw7pjpo5o/lASPgCvfgYIuMSZNuoseRHv1B4DNGPA344k6cu1F0Zxrnl+8
-	 H0F+Yzkcq0TrhDayU8avi1/pO75dJSXt6sLO7SX1+oh/G4n1N+58SId8IA7JM8rsu9
-	 /RkyV/kJ6njs24zgSuqIJ744rR6bLqUx6muLhQ8Q=
+	b=qsngL6qqMF+roR59SAORv/9fWKdBhwKZu1j0m4fxAI7Aru70n5asqdB8gS37UYjYX
+	 mg+6kTNCrulgFpkn+CYPG8oZ7RL74St5OAa0qjJGwh0X0r/1Tjw7a9/qDIT9kdRe+a
+	 9OuW7QxrrAqnJiCB4dsBOZ/lT4xp7CwuWNyivEhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Zhang <cong.zhang@oss.qualcomm.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Ivan Stepchenko <sid@itb.spb.ru>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 275/737] blk-mq: Abort suspend when wakeup events are pending
-Date: Fri,  9 Jan 2026 12:36:54 +0100
-Message-ID: <20260109112144.349311055@linuxfoundation.org>
+Subject: [PATCH 6.6 249/737] mtd: lpddr_cmds: fix signed shifts in lpddr_cmds
+Date: Fri,  9 Jan 2026 12:36:28 +0100
+Message-ID: <20260109112143.359777061@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,71 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Zhang <cong.zhang@oss.qualcomm.com>
+From: Ivan Stepchenko <sid@itb.spb.ru>
 
-[ Upstream commit c196bf43d706592d8801a7513603765080e495fb ]
+[ Upstream commit c909fec69f84b39e63876c69b9df2c178c6b76ba ]
 
-During system suspend, wakeup capable IRQs for block device can be
-delayed, which can cause blk_mq_hctx_notify_offline() to hang
-indefinitely while waiting for pending request to complete.
-Skip the request waiting loop and abort suspend when wakeup events are
-pending to prevent the deadlock.
+There are several places where a value of type 'int' is shifted by
+lpddr->chipshift. lpddr->chipshift is derived from QINFO geometry and
+might reach 31 when QINFO reports a 2 GiB size - the maximum supported by
+LPDDR(1) compliant chips. This may cause unexpected sign-extensions when
+casting the integer value to the type of 'unsigned long'.
 
-Fixes: bf0beec0607d ("blk-mq: drain I/O when all CPUs in a hctx are offline")
-Signed-off-by: Cong Zhang <cong.zhang@oss.qualcomm.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Use '1UL << lpddr->chipshift' and cast 'j' to unsigned long before
+shifting so the computation is performed at the destination width.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: c68264711ca6 ("[MTD] LPDDR Command set driver")
+Signed-off-by: Ivan Stepchenko <sid@itb.spb.ru>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ drivers/mtd/lpddr/lpddr_cmds.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 5da948b07058b..4895c8a33d392 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -24,6 +24,7 @@
- #include <linux/sched/sysctl.h>
- #include <linux/sched/topology.h>
- #include <linux/sched/signal.h>
-+#include <linux/suspend.h>
- #include <linux/delay.h>
- #include <linux/crash_dump.h>
- #include <linux/prefetch.h>
-@@ -3548,6 +3549,7 @@ static int blk_mq_hctx_notify_offline(unsigned int cpu, struct hlist_node *node)
- {
- 	struct blk_mq_hw_ctx *hctx = hlist_entry_safe(node,
- 			struct blk_mq_hw_ctx, cpuhp_online);
-+	int ret = 0;
+diff --git a/drivers/mtd/lpddr/lpddr_cmds.c b/drivers/mtd/lpddr/lpddr_cmds.c
+index 3c3939bc2dadc..2a2318230936e 100644
+--- a/drivers/mtd/lpddr/lpddr_cmds.c
++++ b/drivers/mtd/lpddr/lpddr_cmds.c
+@@ -79,7 +79,7 @@ struct mtd_info *lpddr_cmdset(struct map_info *map)
+ 		mutex_init(&shared[i].lock);
+ 		for (j = 0; j < lpddr->qinfo->HWPartsNum; j++) {
+ 			*chip = lpddr->chips[i];
+-			chip->start += j << lpddr->chipshift;
++			chip->start += (unsigned long)j << lpddr->chipshift;
+ 			chip->oldstate = chip->state = FL_READY;
+ 			chip->priv = &shared[i];
+ 			/* those should be reset too since
+@@ -559,7 +559,7 @@ static int lpddr_point(struct mtd_info *mtd, loff_t adr, size_t len,
+ 			break;
  
- 	if (!cpumask_test_cpu(cpu, hctx->cpumask) ||
- 	    !blk_mq_last_cpu_in_hctx(cpu, hctx))
-@@ -3569,12 +3571,24 @@ static int blk_mq_hctx_notify_offline(unsigned int cpu, struct hlist_node *node)
- 	 * frozen and there are no requests.
- 	 */
- 	if (percpu_ref_tryget(&hctx->queue->q_usage_counter)) {
--		while (blk_mq_hctx_has_requests(hctx))
-+		while (blk_mq_hctx_has_requests(hctx)) {
-+			/*
-+			 * The wakeup capable IRQ handler of block device is
-+			 * not called during suspend. Skip the loop by checking
-+			 * pm_wakeup_pending to prevent the deadlock and improve
-+			 * suspend latency.
-+			 */
-+			if (pm_wakeup_pending()) {
-+				clear_bit(BLK_MQ_S_INACTIVE, &hctx->state);
-+				ret = -EBUSY;
-+				break;
-+			}
- 			msleep(5);
-+		}
- 		percpu_ref_put(&hctx->queue->q_usage_counter);
+ 		if ((len + ofs - 1) >> lpddr->chipshift)
+-			thislen = (1<<lpddr->chipshift) - ofs;
++			thislen = (1UL << lpddr->chipshift) - ofs;
+ 		else
+ 			thislen = len;
+ 		/* get the chip */
+@@ -575,7 +575,7 @@ static int lpddr_point(struct mtd_info *mtd, loff_t adr, size_t len,
+ 		len -= thislen;
+ 
+ 		ofs = 0;
+-		last_end += 1 << lpddr->chipshift;
++		last_end += 1UL << lpddr->chipshift;
+ 		chipnum++;
+ 		chip = &lpddr->chips[chipnum];
  	}
+@@ -601,7 +601,7 @@ static int lpddr_unpoint (struct mtd_info *mtd, loff_t adr, size_t len)
+ 			break;
  
--	return 0;
-+	return ret;
- }
+ 		if ((len + ofs - 1) >> lpddr->chipshift)
+-			thislen = (1<<lpddr->chipshift) - ofs;
++			thislen = (1UL << lpddr->chipshift) - ofs;
+ 		else
+ 			thislen = len;
  
- static int blk_mq_hctx_notify_online(unsigned int cpu, struct hlist_node *node)
 -- 
 2.51.0
 
