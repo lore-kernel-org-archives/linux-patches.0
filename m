@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1479531A7EA;
-	Fri,  9 Jan 2026 12:28:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5478306483;
+	Fri,  9 Jan 2026 12:28:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961737; cv=none; b=dVwLFSXVmGMeuupU4F+9Y88vqCgYR08+jfP4eYJYGr0m7xa8Ia2vPXKLYSpDOXYacTVS5429F1bKIJwSIuWAoVwuO3+T9/qYRXyx54DaBHe+8/YyyNM18d9oZFtC/ZuhVq8ERaUbrgX7YWIzXurFnkOYJWP6CYKAaQEcY3MLwAI=
+	t=1767961740; cv=none; b=JHeQJH7tDyTRJ2SSnLufShe4SF5VqomkFleJ2f+12zYnKhE++o6XsbxG7O0kQzsZFt5DN8DuHqDct3mAsBNBK6ecMTBbZO0RVnzgqiwl/0cjDnVqDorafxcSdcA4SSSmCaY2PQLe1iD/PRN30Y3QUzInjh2hk+jH8Wege7uibGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961737; c=relaxed/simple;
-	bh=aIYvJ0mmgumQFrHGeWQjEq2c+Xq/ZCWxo2Jp3NyDPsg=;
+	s=arc-20240116; t=1767961740; c=relaxed/simple;
+	bh=79xUYWUI6rgdd5jOMdCZVzzChM/dydsgg0JC/cKEk+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T+ghXN+/2skcurpN/ka9ZrItM6qHRaPD/PlzuC12RJ2ZtuQZKVyMYNvVDa88w2ZTMR7lkf+wE2TvZhkmxaxteLug9KYBv/JId4Cu1r3yESQ7z8/z24UWd/yCuEZOdaM3WNZQBvRv/yoV4eGAzAFAzWKc6RtAGZiArNUX1tIwNr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K+uWNMba; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ukz0v977qiocaBCIliaXhTba7uO9B323XInxJwOv2jWvJKCeKj6YbaVXqQX3fyfMVPsdT7BKyRpXalmhZ/lsEAoKCfLHRGyDjwimpqMWBydK+FhZpv3cM9TuslQEcrtBNpr0YNgpNeTWT/DmbOkDKtkD9ZmCl/23j3U4isaRf8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ykFL+8Lw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K+uWNMba"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CF7EC4CEF1;
-	Fri,  9 Jan 2026 12:28:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ykFL+8Lw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E77CC4CEF1;
+	Fri,  9 Jan 2026 12:28:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961736;
-	bh=aIYvJ0mmgumQFrHGeWQjEq2c+Xq/ZCWxo2Jp3NyDPsg=;
+	s=korg; t=1767961739;
+	bh=79xUYWUI6rgdd5jOMdCZVzzChM/dydsgg0JC/cKEk+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K+uWNMba4nWml+SiWkMc8dt7N2ILnLV54Dg8NVBABtqzVPozqYJGqpScO7tpdEEM7
-	 DTMjP/ZZpQN8qyWuEwEVx9LGOeUdP4iUxUe64zh6I3yG1/YRM+m2DMXB7PQ+oTgQA8
-	 PUGyox0NzG8dqLGQBVwyiQM5A42hbvL4SUK91Rto=
+	b=ykFL+8LwhQk+Jbsvj0qSTU0+H49yqFa0h83XA2YJkf/KJBzStTrtIlNMVfhQv3vpi
+	 17syJjPEW07uGwCE5wap4pthERICeMmBKik46tnHuovKFIyJBJQvskaAwMgrTlMGXp
+	 HjxokxxhTxL/tDy93dKUw4H+A/KjHTE+erHM4xcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Sergey Bashirov <sergeybashirov@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 118/634] watchdog: wdat_wdt: Fix ACPI table leak in probe function
-Date: Fri,  9 Jan 2026 12:36:36 +0100
-Message-ID: <20260109112121.876563736@linuxfoundation.org>
+Subject: [PATCH 6.1 119/634] NFSD/blocklayout: Fix minlength check in proc_layoutget
+Date: Fri,  9 Jan 2026 12:36:37 +0100
+Message-ID: <20260109112121.915138704@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,158 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Sergey Bashirov <sergeybashirov@gmail.com>
 
-[ Upstream commit 25c0b472eab8379683d4eef681185c104bed8ffd ]
+[ Upstream commit 3524b021b0ec620a76c89aee78e9d4b4130fb711 ]
 
-wdat_wdt_probe() calls acpi_get_table() to obtain the WDAT ACPI table but
-never calls acpi_put_table() on any paths. This causes a permanent ACPI
-table memory leak.
+The extent returned by the file system may have a smaller offset than
+the segment offset requested by the client. In this case, the minimum
+segment length must be checked against the requested range. Otherwise,
+the client may not be able to continue the read/write operation.
 
-Add a single cleanup path which calls acpi_put_table() to ensure
-the ACPI table is always released.
-
-Fixes: 058dfc767008 ("ACPI / watchdog: Add support for WDAT hardware watchdog")
-Suggested-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Fixes: 8650b8a05850 ("nfsd: pNFS block layout driver")
+Signed-off-by: Sergey Bashirov <sergeybashirov@gmail.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/wdat_wdt.c | 64 +++++++++++++++++++++++++------------
- 1 file changed, 43 insertions(+), 21 deletions(-)
+ fs/nfsd/blocklayout.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/watchdog/wdat_wdt.c b/drivers/watchdog/wdat_wdt.c
-index ce7a4a9e4b03c..4bc56c49147c7 100644
---- a/drivers/watchdog/wdat_wdt.c
-+++ b/drivers/watchdog/wdat_wdt.c
-@@ -327,19 +327,27 @@ static int wdat_wdt_probe(struct platform_device *pdev)
- 		return -ENODEV;
+diff --git a/fs/nfsd/blocklayout.c b/fs/nfsd/blocklayout.c
+index 59f119cce3dc6..3a9415fd77546 100644
+--- a/fs/nfsd/blocklayout.c
++++ b/fs/nfsd/blocklayout.c
+@@ -23,6 +23,7 @@ nfsd4_block_proc_layoutget(struct inode *inode, const struct svc_fh *fhp,
+ {
+ 	struct nfsd4_layout_seg *seg = &args->lg_seg;
+ 	struct super_block *sb = inode->i_sb;
++	u64 length;
+ 	u32 block_size = i_blocksize(inode);
+ 	struct pnfs_block_extent *bex;
+ 	struct iomap iomap;
+@@ -53,7 +54,8 @@ nfsd4_block_proc_layoutget(struct inode *inode, const struct svc_fh *fhp,
+ 		goto out_error;
+ 	}
  
- 	wdat = devm_kzalloc(dev, sizeof(*wdat), GFP_KERNEL);
--	if (!wdat)
--		return -ENOMEM;
-+	if (!wdat) {
-+		ret = -ENOMEM;
-+		goto out_put_table;
-+	}
- 
- 	regs = devm_kcalloc(dev, pdev->num_resources, sizeof(*regs),
- 			    GFP_KERNEL);
--	if (!regs)
--		return -ENOMEM;
-+	if (!regs) {
-+		ret = -ENOMEM;
-+		goto out_put_table;
-+	}
- 
- 	/* WDAT specification wants to have >= 1ms period */
--	if (tbl->timer_period < 1)
--		return -EINVAL;
--	if (tbl->min_count > tbl->max_count)
--		return -EINVAL;
-+	if (tbl->timer_period < 1) {
-+		ret = -EINVAL;
-+		goto out_put_table;
-+	}
-+	if (tbl->min_count > tbl->max_count) {
-+		ret = -EINVAL;
-+		goto out_put_table;
-+	}
- 
- 	wdat->period = tbl->timer_period;
- 	wdat->wdd.min_timeout = DIV_ROUND_UP(wdat->period * tbl->min_count, 1000);
-@@ -356,15 +364,20 @@ static int wdat_wdt_probe(struct platform_device *pdev)
- 		res = &pdev->resource[i];
- 		if (resource_type(res) == IORESOURCE_MEM) {
- 			reg = devm_ioremap_resource(dev, res);
--			if (IS_ERR(reg))
--				return PTR_ERR(reg);
-+			if (IS_ERR(reg)) {
-+				ret = PTR_ERR(reg);
-+				goto out_put_table;
-+			}
- 		} else if (resource_type(res) == IORESOURCE_IO) {
- 			reg = devm_ioport_map(dev, res->start, 1);
--			if (!reg)
--				return -ENOMEM;
-+			if (!reg) {
-+				ret = -ENOMEM;
-+				goto out_put_table;
-+			}
- 		} else {
- 			dev_err(dev, "Unsupported resource\n");
--			return -EINVAL;
-+			ret = -EINVAL;
-+			goto out_put_table;
- 		}
- 
- 		regs[i] = reg;
-@@ -386,8 +399,10 @@ static int wdat_wdt_probe(struct platform_device *pdev)
- 		}
- 
- 		instr = devm_kzalloc(dev, sizeof(*instr), GFP_KERNEL);
--		if (!instr)
--			return -ENOMEM;
-+		if (!instr) {
-+			ret = -ENOMEM;
-+			goto out_put_table;
-+		}
- 
- 		INIT_LIST_HEAD(&instr->node);
- 		instr->entry = entries[i];
-@@ -418,7 +433,8 @@ static int wdat_wdt_probe(struct platform_device *pdev)
- 
- 		if (!instr->reg) {
- 			dev_err(dev, "I/O resource not found\n");
--			return -EINVAL;
-+			ret = -EINVAL;
-+			goto out_put_table;
- 		}
- 
- 		instructions = wdat->instructions[action];
-@@ -426,8 +442,10 @@ static int wdat_wdt_probe(struct platform_device *pdev)
- 			instructions = devm_kzalloc(dev,
- 						    sizeof(*instructions),
- 						    GFP_KERNEL);
--			if (!instructions)
--				return -ENOMEM;
-+			if (!instructions) {
-+				ret = -ENOMEM;
-+				goto out_put_table;
-+			}
- 
- 			INIT_LIST_HEAD(instructions);
- 			wdat->instructions[action] = instructions;
-@@ -441,7 +459,7 @@ static int wdat_wdt_probe(struct platform_device *pdev)
- 
- 	ret = wdat_wdt_enable_reboot(wdat);
- 	if (ret)
--		return ret;
-+		goto out_put_table;
- 
- 	platform_set_drvdata(pdev, wdat);
- 
-@@ -458,12 +476,16 @@ static int wdat_wdt_probe(struct platform_device *pdev)
- 
- 	ret = wdat_wdt_set_timeout(&wdat->wdd, timeout);
- 	if (ret)
--		return ret;
-+		goto out_put_table;
- 
- 	watchdog_set_nowayout(&wdat->wdd, nowayout);
- 	watchdog_stop_on_reboot(&wdat->wdd);
- 	watchdog_stop_on_unregister(&wdat->wdd);
--	return devm_watchdog_register_device(dev, &wdat->wdd);
-+	ret = devm_watchdog_register_device(dev, &wdat->wdd);
-+
-+out_put_table:
-+	acpi_put_table((struct acpi_table_header *)tbl);
-+	return ret;
- }
- 
- static int wdat_wdt_suspend_noirq(struct device *dev)
+-	if (iomap.length < args->lg_minlength) {
++	length = iomap.offset + iomap.length - seg->offset;
++	if (length < args->lg_minlength) {
+ 		dprintk("pnfsd: extent smaller than minlength\n");
+ 		goto out_layoutunavailable;
+ 	}
 -- 
 2.51.0
 
