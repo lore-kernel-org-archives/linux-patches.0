@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7430C2DEA6F;
-	Fri,  9 Jan 2026 11:58:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CD7A2DEA6F;
+	Fri,  9 Jan 2026 11:58:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959899; cv=none; b=d1iXhEnW3przY9X9+X3XiQC74JOYIf85lYIbnol0m5DIPjzoanUoNIR0iQ0zNlZGP7M0cKWjLhrnqjA1csAmVd28yRT3YBISUsxiic3wLWi8zlwk59D1DIrWDBJTiS2MfALDyXKsgyK3TjQqdknZxsI095YqqDR1nPC2XjxOR6w=
+	t=1767959902; cv=none; b=ivJkNIEwS7yhnmdWD+RMRdqP/lh+4bnrslck5YdOSnlNw/S46gf3s/a6UUJbqWjluGbu+U5FAxht8+s7kysvclbvuUIDFADgNtpr3DlrrzFmRtiZlLBvFze2fTwLYzRShXuCoTGHYAqVUMy+5GzoRaBwEb+T5XBc1ZmZyXuZZxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959899; c=relaxed/simple;
-	bh=2pP+hrht66k6Xz8c+sGX7P94tH3JQXtSR8+DibfQgj4=;
+	s=arc-20240116; t=1767959902; c=relaxed/simple;
+	bh=uyMcUj2fnMgP7hvzmJCKm7jHE5ecqdEnNZpA0o0pOCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nt6FAib8GU1EPkVWGWdSpuQvalr+hpRS2tsVeFx72J7I70t/eGAWwKsI2teZTlUWABq9hqg5jYZF0K8YLrn2eynJZgGe3xlLt/rz5FYu7jSnLO8Pxc21DtW23zpquKACWfpjMQQxdw50KBWr0AsTdZ32hqITrZO5EAWcDsYoRHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OVTClfaV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T2DOM9gpoWMAm92hpR/RYBMhRy+i6vqB3sDLvd8PRAEyu2qwFg55FazMFZ573phXh0cvDxMA+g7yOJxnZiLoKY4Q3plN+iTDYPnAdnwRmXeKJQJBhURFJX568DpSn9yDIUkBdlv5ZAI5m0Fr798L2gLAgvXX1BZirnyzT/cuVJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UnSKbqQF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OVTClfaV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3008C4CEF1;
-	Fri,  9 Jan 2026 11:58:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UnSKbqQF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBFE0C19421;
+	Fri,  9 Jan 2026 11:58:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959899;
-	bh=2pP+hrht66k6Xz8c+sGX7P94tH3JQXtSR8+DibfQgj4=;
+	s=korg; t=1767959902;
+	bh=uyMcUj2fnMgP7hvzmJCKm7jHE5ecqdEnNZpA0o0pOCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OVTClfaVV9ZhLOD+JFftV5EPAGYlNWMbAPwThLEZPrtnxgUG4TAS1vnA2u36jy/uM
-	 VKAGP2EMwA16jkszY/YTN1NvptrUuCORaE4G+8wflSciRHkIObgnQHb0T6X2QEa0Nc
-	 rSYy1iNLOBwaNRxY4T3gB88YqD2M2zNh7ybQvOBo=
+	b=UnSKbqQFQVE87MkCgAewaBaShmUEaI4G8C9pi//g3YdnyNDKtZ70mGunjy7WCo2mR
+	 8Yuo/c+RyPpxn878fQQpqtrdfFU8ghlbrttTyikaVRoMLVvuDeUKNZ/Oi8eUSVgscN
+	 iVjFiy2lpQTNgqrH8/Ax3Sdo16Pw2WiaYNgPMZyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Haotian Zhang <vulab@iscas.ac.cn>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 182/737] mfd: mt6397-irq: Fix missing irq_domain_remove() in error path
-Date: Fri,  9 Jan 2026 12:35:21 +0100
-Message-ID: <20260109112140.840776484@linuxfoundation.org>
+Subject: [PATCH 6.6 183/737] mfd: mt6358-irq: Fix missing irq_domain_remove() in error path
+Date: Fri,  9 Jan 2026 12:35:22 +0100
+Message-ID: <20260109112140.879380362@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -53,31 +53,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit b4b1bd1f330fdd13706382be6c90ce9f58cee3f5 ]
+[ Upstream commit 384bd58bf7095e4c4c8fcdbcede316ef342c630c ]
 
-If devm_request_threaded_irq() fails after irq_domain_create_linear()
-succeeds in mt6397_irq_init(), the function returns without removing
+If devm_request_threaded_irq() fails after irq_domain_add_linear()
+succeeds in mt6358_irq_init(), the function returns without removing
 the created IRQ domain, leading to a resource leak.
 
 Call irq_domain_remove() in the error path after a successful
-irq_domain_create_linear() to properly release the IRQ domain.
+irq_domain_add_linear() to properly release the IRQ domain.
 
-Fixes: a4872e80ce7d ("mfd: mt6397: Extract IRQ related code from core driver")
+Fixes: 2b91c28f2abd ("mfd: Add support for the MediaTek MT6358 PMIC")
 Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20251118121500.605-1-vulab@iscas.ac.cn
+Link: https://patch.msgid.link/20251118121427.583-1-vulab@iscas.ac.cn
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/mt6397-irq.c | 1 +
+ drivers/mfd/mt6358-irq.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/mfd/mt6397-irq.c b/drivers/mfd/mt6397-irq.c
-index 886745b5b607c..1e83f7c7ce145 100644
---- a/drivers/mfd/mt6397-irq.c
-+++ b/drivers/mfd/mt6397-irq.c
-@@ -208,6 +208,7 @@ int mt6397_irq_init(struct mt6397_chip *chip)
+diff --git a/drivers/mfd/mt6358-irq.c b/drivers/mfd/mt6358-irq.c
+index 49830b526ee88..10a0952615a17 100644
+--- a/drivers/mfd/mt6358-irq.c
++++ b/drivers/mfd/mt6358-irq.c
+@@ -286,6 +286,7 @@ int mt6358_irq_init(struct mt6397_chip *chip)
  	if (ret) {
- 		dev_err(chip->dev, "failed to register irq=%d; err: %d\n",
+ 		dev_err(chip->dev, "Failed to register IRQ=%d, ret=%d\n",
  			chip->irq, ret);
 +		irq_domain_remove(chip->irq_domain);
  		return ret;
