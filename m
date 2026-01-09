@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2553932AAB5;
-	Fri,  9 Jan 2026 12:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0827B35971B;
+	Fri,  9 Jan 2026 12:19:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961191; cv=none; b=thbf/Qd9BS8DtZkXTgkst2FboWOIr2Km1pEay68LthDfkSeBwGfqdtGytmQyGN3vvOEs6maKO7PcPFc4H+5GW+7lQiy2P9Bi1Hex3bIWZ995YhtGLLp+NHK5t6yEJycc+rg0OiRPHCBQ7zuIcE8nFn5zHh801zj8ACFnf5KdIxk=
+	t=1767961194; cv=none; b=CFQGuHKp+BgTPRi81CyxCPDJu+HNvTowghikRkbGa+YSeHSPIKDCxhqkALD5tT3MYLkN362F6wuIpRE9ADkow07haccXM843fV7uTaAapqGNcCwF8nMFg6UK3wV/GHJuUzqCjnXIuBgaSie0433EpJ4FZq3xdJdNObWNGO/dQ7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961191; c=relaxed/simple;
-	bh=5lQ2fWMHkzc8GZ6R1fc2FU3uywMeUBbv1GtVYHSp7uY=;
+	s=arc-20240116; t=1767961194; c=relaxed/simple;
+	bh=U4maQHENNXwFBpOC94oXCKAFqMJaMjwrSLMPYcG3fNs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dEyV1sGuDUqrFOY4q/nVe4YMSRd1om2iTyOtTS7YQMXzNrdAuML8acZyaBXbMxzJlhgFEU8yjy0xnYdQOht/XPp1vBIvsOl4zr90mFGzAngdqPKEx5r6OsbtPfDXGdBpC9LTAoVIaAFu5Totc4G18kqO32WDxJnplQknWmYLdbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=axDfMoLb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q+olHEH+ZTn48q+8prOUoYPG+oUsF8eR8iAAeJp7TL75cPjvoIGQTdsC94xUqSs0trTDEkUFvtM3tTZhRuec3X5gCCQyfnznCwZvX1LYizHejPJYXn22tZ98ZArYlQTYCoSOWnh/fgBzeH38gtuSsgzlZ4EGTnMabRTomMTW6V8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n2QBrBtH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="axDfMoLb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A86F3C4CEF1;
-	Fri,  9 Jan 2026 12:19:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n2QBrBtH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87036C4CEF1;
+	Fri,  9 Jan 2026 12:19:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961191;
-	bh=5lQ2fWMHkzc8GZ6R1fc2FU3uywMeUBbv1GtVYHSp7uY=;
+	s=korg; t=1767961193;
+	bh=U4maQHENNXwFBpOC94oXCKAFqMJaMjwrSLMPYcG3fNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=axDfMoLbuRFG/X0QFjMvgGcEFJIEsOUWXc5TrdutjuWFt03aYsClIkQiZeP8jn7f7
-	 Lm7xfbEuDMdnDsUhjq9LyzC/nm+AOGasM9V8GE1xU+OVEQksQEdgHxyIoAZGvS9fOO
-	 wzhT80F3g3FlJE/ENindfSTSL01Zj6BSOSAcB+TI=
+	b=n2QBrBtH9tJskpHJC0dmr9pRN6PBLECZm2llLj8Yt5qXwPQKX7GxUIIuJUl2f2BIp
+	 GY6nWiu7hxT7yJlEaH8rsI1gn1tT9effkD8gExBg/J4s63fwvQx+INAH9IZg4MDIf5
+	 8H9/L/DyUziObVYyl2wgY3TOSBuhVdItuTWvxqaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Sven Eckelmann (Plasma Cloud)" <se@simonwunderlich.de>,
-	Felix Fietkau <nbd@nbd.name>,
+	"Kory Maincent (TI.com)" <kory.maincent@bootlin.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 639/737] wifi: mt76: Fix DTS power-limits on little endian systems
-Date: Fri,  9 Jan 2026 12:42:58 +0100
-Message-ID: <20260109112158.048505989@linuxfoundation.org>
+Subject: [PATCH 6.6 666/737] drm/tilcdc: Fix removal actions in case of failed probe
+Date: Fri,  9 Jan 2026 12:43:25 +0100
+Message-ID: <20260109112159.096916299@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,136 +52,210 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Sven Eckelmann (Plasma Cloud)" <se@simonwunderlich.de>
+From: "Kory Maincent (TI.com)" <kory.maincent@bootlin.com>
 
-[ Upstream commit 38b845e1f9e810869b0a0b69f202b877b7b7fb12 ]
+[ Upstream commit a585c7ef9cabda58088916baedc6573e9a5cd2a7 ]
 
-The power-limits for ru and mcs and stored in the devicetree as bytewise
-array (often with sizes which are not a multiple of 4). These arrays have a
-prefix which defines for how many modes a line is applied. This prefix is
-also only a byte - but the code still tried to fix the endianness of this
-byte with a be32 operation. As result, loading was mostly failing or was
-sending completely unexpected values to the firmware.
+The drm_kms_helper_poll_fini() and drm_atomic_helper_shutdown() helpers
+should only be called when the device has been successfully registered.
+Currently, these functions are called unconditionally in tilcdc_fini(),
+which causes warnings during probe deferral scenarios.
 
-Since the other rates are also stored in the devicetree as bytewise arrays,
-just drop the u32 access + be32_to_cpu conversion and directly access them
-as bytes arrays.
+[    7.972317] WARNING: CPU: 0 PID: 23 at drivers/gpu/drm/drm_atomic_state_helper.c:175 drm_atomic_helper_crtc_duplicate_state+0x60/0x68
+...
+[    8.005820]  drm_atomic_helper_crtc_duplicate_state from drm_atomic_get_crtc_state+0x68/0x108
+[    8.005858]  drm_atomic_get_crtc_state from drm_atomic_helper_disable_all+0x90/0x1c8
+[    8.005885]  drm_atomic_helper_disable_all from drm_atomic_helper_shutdown+0x90/0x144
+[    8.005911]  drm_atomic_helper_shutdown from tilcdc_fini+0x68/0xf8 [tilcdc]
+[    8.005957]  tilcdc_fini [tilcdc] from tilcdc_pdev_probe+0xb0/0x6d4 [tilcdc]
+
+Fix this by rewriting the failed probe cleanup path using the standard
+goto error handling pattern, which ensures that cleanup functions are
+only called on successfully initialized resources. Additionally, remove
+the now-unnecessary is_registered flag.
 
 Cc: stable@vger.kernel.org
-Fixes: 22b980badc0f ("mt76: add functions for parsing rate power limits from DT")
-Fixes: a9627d992b5e ("mt76: extend DT rate power limits to support 11ax devices")
-Signed-off-by: Sven Eckelmann (Plasma Cloud) <se@simonwunderlich.de>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-[ Adjust context ]
+Fixes: 3c4babae3c4a ("drm: Call drm_atomic_helper_shutdown() at shutdown/remove time for misc drivers")
+Signed-off-by: Kory Maincent (TI.com) <kory.maincent@bootlin.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20251125090546.137193-1-kory.maincent@bootlin.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/eeprom.c |   37 ++++++++++++++++++----------
- 1 file changed, 24 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/tilcdc/tilcdc_crtc.c |    2 -
+ drivers/gpu/drm/tilcdc/tilcdc_drv.c  |   53 +++++++++++++++++++++++------------
+ drivers/gpu/drm/tilcdc/tilcdc_drv.h  |    2 -
+ 3 files changed, 37 insertions(+), 20 deletions(-)
 
---- a/drivers/net/wireless/mediatek/mt76/eeprom.c
-+++ b/drivers/net/wireless/mediatek/mt76/eeprom.c
-@@ -245,6 +245,19 @@ mt76_get_of_array(struct device_node *np
- 	return prop->value;
+--- a/drivers/gpu/drm/tilcdc/tilcdc_crtc.c
++++ b/drivers/gpu/drm/tilcdc/tilcdc_crtc.c
+@@ -586,7 +586,7 @@ out:
+ 	drm_modeset_unlock(&crtc->mutex);
  }
  
-+static const s8 *
-+mt76_get_of_array_s8(struct device_node *np, char *name, size_t *len, int min)
-+{
-+	struct property *prop = of_find_property(np, name, NULL);
-+
-+	if (!prop || !prop->value || prop->length < min)
-+		return NULL;
-+
-+	*len = prop->length;
-+
-+	return prop->value;
-+}
-+
- static struct device_node *
- mt76_find_channel_node(struct device_node *np, struct ieee80211_channel *chan)
+-static void tilcdc_crtc_destroy(struct drm_crtc *crtc)
++void tilcdc_crtc_destroy(struct drm_crtc *crtc)
  {
-@@ -284,7 +297,7 @@ mt76_get_txs_delta(struct device_node *n
- }
+ 	struct tilcdc_drm_private *priv = crtc->dev->dev_private;
  
- static void
--mt76_apply_array_limit(s8 *pwr, size_t pwr_len, const __be32 *data,
-+mt76_apply_array_limit(s8 *pwr, size_t pwr_len, const s8 *data,
- 		       s8 target_power, s8 nss_delta, s8 *max_power)
- {
- 	int i;
-@@ -293,15 +306,14 @@ mt76_apply_array_limit(s8 *pwr, size_t p
- 		return;
+--- a/drivers/gpu/drm/tilcdc/tilcdc_drv.c
++++ b/drivers/gpu/drm/tilcdc/tilcdc_drv.c
+@@ -171,8 +171,7 @@ static void tilcdc_fini(struct drm_devic
+ 	if (priv->crtc)
+ 		tilcdc_crtc_shutdown(priv->crtc);
  
- 	for (i = 0; i < pwr_len; i++) {
--		pwr[i] = min_t(s8, target_power,
--			       be32_to_cpu(data[i]) + nss_delta);
-+		pwr[i] = min_t(s8, target_power, data[i] + nss_delta);
- 		*max_power = max(*max_power, pwr[i]);
+-	if (priv->is_registered)
+-		drm_dev_unregister(dev);
++	drm_dev_unregister(dev);
+ 
+ 	drm_kms_helper_poll_fini(dev);
+ 	drm_atomic_helper_shutdown(dev);
+@@ -219,21 +218,21 @@ static int tilcdc_init(const struct drm_
+ 	priv->wq = alloc_ordered_workqueue("tilcdc", 0);
+ 	if (!priv->wq) {
+ 		ret = -ENOMEM;
+-		goto init_failed;
++		goto put_drm;
  	}
- }
  
- static void
- mt76_apply_multi_array_limit(s8 *pwr, size_t pwr_len, s8 pwr_num,
--			     const __be32 *data, size_t len, s8 target_power,
-+			     const s8 *data, size_t len, s8 target_power,
- 			     s8 nss_delta, s8 *max_power)
- {
- 	int i, cur;
-@@ -309,8 +321,7 @@ mt76_apply_multi_array_limit(s8 *pwr, si
- 	if (!data)
- 		return;
- 
--	len /= 4;
--	cur = be32_to_cpu(data[0]);
-+	cur = data[0];
- 	for (i = 0; i < pwr_num; i++) {
- 		if (len < pwr_len + 1)
- 			break;
-@@ -325,7 +336,7 @@ mt76_apply_multi_array_limit(s8 *pwr, si
- 		if (!len)
- 			break;
- 
--		cur = be32_to_cpu(data[0]);
-+		cur = data[0];
+ 	priv->mmio = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(priv->mmio)) {
+ 		dev_err(dev, "failed to request / ioremap\n");
+ 		ret = PTR_ERR(priv->mmio);
+-		goto init_failed;
++		goto free_wq;
  	}
+ 
+ 	priv->clk = clk_get(dev, "fck");
+ 	if (IS_ERR(priv->clk)) {
+ 		dev_err(dev, "failed to get functional clock\n");
+ 		ret = -ENODEV;
+-		goto init_failed;
++		goto free_wq;
+ 	}
+ 
+ 	pm_runtime_enable(dev);
+@@ -312,7 +311,7 @@ static int tilcdc_init(const struct drm_
+ 	ret = tilcdc_crtc_create(ddev);
+ 	if (ret < 0) {
+ 		dev_err(dev, "failed to create crtc\n");
+-		goto init_failed;
++		goto disable_pm;
+ 	}
+ 	modeset_init(ddev);
+ 
+@@ -323,46 +322,46 @@ static int tilcdc_init(const struct drm_
+ 	if (ret) {
+ 		dev_err(dev, "failed to register cpufreq notifier\n");
+ 		priv->freq_transition.notifier_call = NULL;
+-		goto init_failed;
++		goto destroy_crtc;
+ 	}
+ #endif
+ 
+ 	if (priv->is_componentized) {
+ 		ret = component_bind_all(dev, ddev);
+ 		if (ret < 0)
+-			goto init_failed;
++			goto unregister_cpufreq_notif;
+ 
+ 		ret = tilcdc_add_component_encoder(ddev);
+ 		if (ret < 0)
+-			goto init_failed;
++			goto unbind_component;
+ 	} else {
+ 		ret = tilcdc_attach_external_device(ddev);
+ 		if (ret)
+-			goto init_failed;
++			goto unregister_cpufreq_notif;
+ 	}
+ 
+ 	if (!priv->external_connector &&
+ 	    ((priv->num_encoders == 0) || (priv->num_connectors == 0))) {
+ 		dev_err(dev, "no encoders/connectors found\n");
+ 		ret = -EPROBE_DEFER;
+-		goto init_failed;
++		goto unbind_component;
+ 	}
+ 
+ 	ret = drm_vblank_init(ddev, 1);
+ 	if (ret < 0) {
+ 		dev_err(dev, "failed to initialize vblank\n");
+-		goto init_failed;
++		goto unbind_component;
+ 	}
+ 
+ 	ret = platform_get_irq(pdev, 0);
+ 	if (ret < 0)
+-		goto init_failed;
++		goto unbind_component;
+ 	priv->irq = ret;
+ 
+ 	ret = tilcdc_irq_install(ddev, priv->irq);
+ 	if (ret < 0) {
+ 		dev_err(dev, "failed to install IRQ handler\n");
+-		goto init_failed;
++		goto unbind_component;
+ 	}
+ 
+ 	drm_mode_config_reset(ddev);
+@@ -371,15 +370,33 @@ static int tilcdc_init(const struct drm_
+ 
+ 	ret = drm_dev_register(ddev, 0);
+ 	if (ret)
+-		goto init_failed;
+-	priv->is_registered = true;
++		goto stop_poll;
+ 
+ 	drm_fbdev_dma_setup(ddev, bpp);
+ 	return 0;
+ 
+-init_failed:
+-	tilcdc_fini(ddev);
++stop_poll:
++	drm_kms_helper_poll_fini(ddev);
++	tilcdc_irq_uninstall(ddev);
++unbind_component:
++	if (priv->is_componentized)
++		component_unbind_all(dev, ddev);
++unregister_cpufreq_notif:
++#ifdef CONFIG_CPU_FREQ
++	cpufreq_unregister_notifier(&priv->freq_transition,
++				    CPUFREQ_TRANSITION_NOTIFIER);
++destroy_crtc:
++#endif
++	tilcdc_crtc_destroy(priv->crtc);
++disable_pm:
++	pm_runtime_disable(dev);
++	clk_put(priv->clk);
++free_wq:
++	destroy_workqueue(priv->wq);
++put_drm:
+ 	platform_set_drvdata(pdev, NULL);
++	ddev->dev_private = NULL;
++	drm_dev_put(ddev);
+ 
+ 	return ret;
  }
+--- a/drivers/gpu/drm/tilcdc/tilcdc_drv.h
++++ b/drivers/gpu/drm/tilcdc/tilcdc_drv.h
+@@ -82,7 +82,6 @@ struct tilcdc_drm_private {
+ 	struct drm_encoder *external_encoder;
+ 	struct drm_connector *external_connector;
  
-@@ -336,7 +347,7 @@ s8 mt76_get_rate_power_limits(struct mt7
- {
- 	struct mt76_dev *dev = phy->dev;
- 	struct device_node *np;
--	const __be32 *val;
-+	const s8 *val;
- 	char name[16];
- 	u32 mcs_rates = dev->drv->mcs_rates;
- 	u32 ru_rates = ARRAY_SIZE(dest->ru[0]);
-@@ -382,21 +393,21 @@ s8 mt76_get_rate_power_limits(struct mt7
- 
- 	txs_delta = mt76_get_txs_delta(np, hweight8(phy->antenna_mask));
- 
--	val = mt76_get_of_array(np, "rates-cck", &len, ARRAY_SIZE(dest->cck));
-+	val = mt76_get_of_array_s8(np, "rates-cck", &len, ARRAY_SIZE(dest->cck));
- 	mt76_apply_array_limit(dest->cck, ARRAY_SIZE(dest->cck), val,
- 			       target_power, txs_delta, &max_power);
- 
--	val = mt76_get_of_array(np, "rates-ofdm",
--				&len, ARRAY_SIZE(dest->ofdm));
-+	val = mt76_get_of_array_s8(np, "rates-ofdm",
-+				   &len, ARRAY_SIZE(dest->ofdm));
- 	mt76_apply_array_limit(dest->ofdm, ARRAY_SIZE(dest->ofdm), val,
- 			       target_power, txs_delta, &max_power);
- 
--	val = mt76_get_of_array(np, "rates-mcs", &len, mcs_rates + 1);
-+	val = mt76_get_of_array_s8(np, "rates-mcs", &len, mcs_rates + 1);
- 	mt76_apply_multi_array_limit(dest->mcs[0], ARRAY_SIZE(dest->mcs[0]),
- 				     ARRAY_SIZE(dest->mcs), val, len,
- 				     target_power, txs_delta, &max_power);
- 
--	val = mt76_get_of_array(np, "rates-ru", &len, ru_rates + 1);
-+	val = mt76_get_of_array_s8(np, "rates-ru", &len, ru_rates + 1);
- 	mt76_apply_multi_array_limit(dest->ru[0], ARRAY_SIZE(dest->ru[0]),
- 				     ARRAY_SIZE(dest->ru), val, len,
- 				     target_power, txs_delta, &max_power);
+-	bool is_registered;
+ 	bool is_componentized;
+ 	bool irq_enabled;
+ };
+@@ -164,6 +163,7 @@ void tilcdc_crtc_set_panel_info(struct d
+ void tilcdc_crtc_set_simulate_vesa_sync(struct drm_crtc *crtc,
+ 					bool simulate_vesa_sync);
+ void tilcdc_crtc_shutdown(struct drm_crtc *crtc);
++void tilcdc_crtc_destroy(struct drm_crtc *crtc);
+ int tilcdc_crtc_update_fb(struct drm_crtc *crtc,
+ 		struct drm_framebuffer *fb,
+ 		struct drm_pending_vblank_event *event);
 
 
