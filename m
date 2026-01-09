@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CC7D35971B;
-	Fri,  9 Jan 2026 12:20:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C930359FA0;
+	Fri,  9 Jan 2026 12:20:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961219; cv=none; b=AS+/Bh+8HULLrXiz1hGNf2OlYEcuZMc8j8wT0deTHzFCx63hOyG21giudirbcaG8InH54qfaXrf38aSyv9XmaBbrn5BgJI1dLl8NzyvkAATts8F2eTm0sYFGbhACDqSZoeYPtJE0SAd8aC/8mMkjiTbfUBVkjduP1BnvMej/Jtc=
+	t=1767961222; cv=none; b=Moy9gqP/8iuw+ZKTKAmgkFT7pNvARaHUiNgtOA70IRnPfgAl8rSnJdbArHcGUX2awDVJJNNKbZ6fUpkWBwpkrkRkGA84DMlJKo4KEeKQydjHVohvRT5RQVBlcyfpQ4+9RNJc51s5tuaqIlYFtFQVfa2HPMlsxvfVP31B7ASVQDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961219; c=relaxed/simple;
-	bh=JH5yilMbDU6TIzVxuhF99NBJ3bn5b5iLK19ySpTOCes=;
+	s=arc-20240116; t=1767961222; c=relaxed/simple;
+	bh=+PZHv7hPA1kXIHJ1u0V7j+wQaFh8gDnQsFK4pomY1y4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aAeqhwS7MMcXvIoImsQXOjC4fJfB8xsmtYHV35ePMXjSdGU4F/9FfNu8VGqfxTBALpP+L3j+79B90CxyaKk1cm0BtiA0QOuO+3TB7cX+eeW9RXE8kMdlnF3oAoNRWAUFQeCSGG/bhjWH1K7vhH2RvL18ovP+RUzEdcGj+bC2dO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nznsprjy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c2+Ir5gBJGQj8+jrWyyg46e2p6F/sOB0ibw/UjVYuFYdk03Xh52JguDhZ+oizHhQNwIznPnKBOSHccRJAAn0bu8F2lxZzgNkiHdj1dZLAnQXBevX04LuV5NRNiWt1CAsTQ3o21awncFPYfGrlMRxy4n3iTYwj/HZdhvgNMF1tAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dyQZP5Bn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nznsprjy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09149C16AAE;
-	Fri,  9 Jan 2026 12:20:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dyQZP5Bn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB0F7C16AAE;
+	Fri,  9 Jan 2026 12:20:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961219;
-	bh=JH5yilMbDU6TIzVxuhF99NBJ3bn5b5iLK19ySpTOCes=;
+	s=korg; t=1767961222;
+	bh=+PZHv7hPA1kXIHJ1u0V7j+wQaFh8gDnQsFK4pomY1y4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NznsprjymA98tZM0S8xZHZIYXQY4egeZJ1srNKa4/umqKSYR0fzIHchitC2989oOo
-	 HW+HTlUgYJAiPGCBESCgUcKjXOlmo3kATFu7YK6glLA67HN98R/j2OTKfOAd9DTtrQ
-	 sGBrVitMMmCgc7ZTkkcB5g6t/hgkfPuaUTCmhvig=
+	b=dyQZP5BnIno4qzu96tY66fjf5rfhSafU5fWkXYf3+KirZ2jhHC7OVk1j5zxKu5SuN
+	 8klmsCXhs8KmzEx1uHU7xtyzGl7tWsSq7Y84Ax7wXXJRWbT20oxt47Y2hcdvfChSUj
+	 v9Ys+JD2X6eMU3eAOjp6L2wO5K3saYRhXoH+CRXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 644/737] mptcp: pm: ignore unknown endpoint flags
-Date: Fri,  9 Jan 2026 12:43:03 +0100
-Message-ID: <20260109112158.241067741@linuxfoundation.org>
+Subject: [PATCH 6.6 645/737] f2fs: use f2fs_err_ratelimited() to avoid redundant logs
+Date: Fri,  9 Jan 2026 12:43:04 +0100
+Message-ID: <20260109112158.278952847@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,65 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 0ace3297a7301911e52d8195cb1006414897c859 ]
+[ Upstream commit 0b8eb814e05885cde53c1d56ee012a029b8413e6 ]
 
-Before this patch, the kernel was saving any flags set by the userspace,
-even unknown ones. This doesn't cause critical issues because the kernel
-is only looking at specific ones. But on the other hand, endpoints dumps
-could tell the userspace some recent flags seem to be supported on older
-kernel versions.
+Use f2fs_err_ratelimited() to instead f2fs_err() in
+f2fs_record_stop_reason() and f2fs_record_errors() to
+avoid redundant logs.
 
-Instead, ignore all unknown flags when parsing them. By doing that, the
-userspace can continue to set unsupported flags, but it has a way to
-verify what is supported by the kernel.
-
-Note that it sounds better to continue accepting unsupported flags not
-to change the behaviour, but also that eases things on the userspace
-side by adding "optional" endpoint types only supported by newer kernel
-versions without having to deal with the different kernel versions.
-
-A note for the backports: there will be conflicts in mptcp.h on older
-versions not having the mentioned flags, the new line should still be
-added last, and the '5' needs to be adapted to have the same value as
-the last entry.
-
-Fixes: 01cacb00b35c ("mptcp: add netlink-based PM")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251205-net-mptcp-misc-fixes-6-19-rc1-v1-1-9e4781a6c1b8@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ GENMASK(5, 0) => GENMASK(4, 0) + context ]
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: ca8b201f2854 ("f2fs: fix to avoid potential deadlock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/uapi/linux/mptcp.h |    1 +
- net/mptcp/pm_netlink.c     |    3 ++-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ fs/f2fs/super.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/include/uapi/linux/mptcp.h
-+++ b/include/uapi/linux/mptcp.h
-@@ -88,6 +88,7 @@ enum {
- #define MPTCP_PM_ADDR_FLAG_BACKUP			(1 << 2)
- #define MPTCP_PM_ADDR_FLAG_FULLMESH			(1 << 3)
- #define MPTCP_PM_ADDR_FLAG_IMPLICIT			(1 << 4)
-+#define MPTCP_PM_ADDR_FLAGS_MASK			GENMASK(4, 0)
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -4054,7 +4054,9 @@ static void f2fs_record_stop_reason(stru
  
- enum {
- 	MPTCP_PM_CMD_UNSPEC,
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -1435,7 +1435,8 @@ int mptcp_pm_parse_entry(struct nlattr *
- 	}
+ 	f2fs_up_write(&sbi->sb_lock);
+ 	if (err)
+-		f2fs_err(sbi, "f2fs_commit_super fails to record err:%d", err);
++		f2fs_err_ratelimited(sbi,
++			"f2fs_commit_super fails to record stop_reason, err:%d",
++			err);
+ }
  
- 	if (tb[MPTCP_PM_ADDR_ATTR_FLAGS])
--		entry->flags = nla_get_u32(tb[MPTCP_PM_ADDR_ATTR_FLAGS]);
-+		entry->flags = nla_get_u32(tb[MPTCP_PM_ADDR_ATTR_FLAGS]) &
-+			       MPTCP_PM_ADDR_FLAGS_MASK;
+ void f2fs_save_errors(struct f2fs_sb_info *sbi, unsigned char flag)
+@@ -4097,8 +4099,9 @@ static void f2fs_record_errors(struct f2
  
- 	if (tb[MPTCP_PM_ADDR_ATTR_PORT])
- 		entry->addr.port = htons(nla_get_u16(tb[MPTCP_PM_ADDR_ATTR_PORT]));
+ 	err = f2fs_commit_super(sbi, false);
+ 	if (err)
+-		f2fs_err(sbi, "f2fs_commit_super fails to record errors:%u, err:%d",
+-								error, err);
++		f2fs_err_ratelimited(sbi,
++			"f2fs_commit_super fails to record errors:%u, err:%d",
++			error, err);
+ out_unlock:
+ 	f2fs_up_write(&sbi->sb_lock);
+ }
 
 
