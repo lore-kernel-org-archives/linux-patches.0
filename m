@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96195359FBB;
-	Fri,  9 Jan 2026 12:03:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 719FD35A93B;
+	Fri,  9 Jan 2026 12:03:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960186; cv=none; b=pcq0Z0FzEzZUggtRdLLqOrrFYRccO9GxphlMjXXiPuC+ODoU1Gu/GOfdNvqMkwxNbdlbiQZa+rbam3FmFaamtO0wWVGxIZ/UmW504sLD0OiNEEGNcQh+jp6zCzyF+mdekLi23l1NWDX3sEX5V9XvPKTd13On5nfK0bcEF/cGgvc=
+	t=1767960189; cv=none; b=W9P4OMvSa816f3XNEruD6La/uK78n56kU4+0kQbt1t9mSaSbeG3OQOcMNReQRJbVXL2ONSFiQZWOaV3gnGnf0VGs6dkzUTbHAFCtHOMzLOYd7txC89vzHXKVRxVkzsnLWSr0s+Q1sEv2UQQscgld4Wo1sb0gpFXSoksMuEIl1vA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960186; c=relaxed/simple;
-	bh=+tQU/mkOQeDIE092eDUcV/8g/pNAGhaGFhnvlAX+A5o=;
+	s=arc-20240116; t=1767960189; c=relaxed/simple;
+	bh=so+CwicG8gLN0wFF0RK15lJ4yYOvBSndTWxHZLfW/gw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YDQZgr5mnG/16M0WLE6pwpjDm8A4UtpkZmBetMstEOpC2MfstehiqIb0/yVWq2Sh9ivUkf6QFwMINJcLNPAYWsPaXl+fKHm29UGjLfmuBP8VL15JWSZrSGZviJSgwPUOZTOis7jkDOVogPg2Xp92mql/35VdHhWx2fFlokEtacw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZRPSjZhj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m8m53QLRzETNNnCS82mam9kXlAGDGOczgtIrCmPKwPXp8JGi6oUYGLsRfmCK4PJpxZIGlpa8XDKfalHN25KpnYaSvwvNMlLrxvLy+1HXWQtMi9NIUZdWElwgnvlcODqvGVsft/hCH+8hVCV4QZgYUi7JfDoUXHrVH8FHjnV/GAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BbEXtyXW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZRPSjZhj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2250EC4AF09;
-	Fri,  9 Jan 2026 12:03:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BbEXtyXW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2DAAC4CEF1;
+	Fri,  9 Jan 2026 12:03:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960186;
-	bh=+tQU/mkOQeDIE092eDUcV/8g/pNAGhaGFhnvlAX+A5o=;
+	s=korg; t=1767960189;
+	bh=so+CwicG8gLN0wFF0RK15lJ4yYOvBSndTWxHZLfW/gw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZRPSjZhjQg9HyzKxTQnlr6MJAemi8J54M4HpUyCZtqp6jt9ZwgNvDh9joN8VcUmdB
-	 DEXx6N79Q8xOVLbkJr4TSLeLO73gyCXBSP1b7QZK8gT0q5ualCZy2dY3TX+jfJCzsH
-	 Fx02HqFwkbrz3wIhMqv5PmSEUWsVHJsfGDi4KrOQ=
+	b=BbEXtyXWmz3TwHJR/cNSZVmWHfyA2+De55fTQ4kqjYQMOUM/nsJXwJgcLv73O+897
+	 r/deI4sZ0IDzxsFp0ecVnoAv3g/zetj+2KHy6BrC3c0y77plm76M/1FBjeHiS3grWC
+	 6QaruB31f1DPKT7UyZ6XOR5TS1JtUKX5Vg9IFA1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Liu <song@kernel.org>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Petr Mladek <pmladek@suse.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 314/737] livepatch: Match old_sympos 0 and 1 in klp_find_func()
-Date: Fri,  9 Jan 2026 12:37:33 +0100
-Message-ID: <20260109112145.813978533@linuxfoundation.org>
+Subject: [PATCH 6.6 315/737] fs/ntfs3: Support timestamps prior to epoch
+Date: Fri,  9 Jan 2026 12:37:34 +0100
+Message-ID: <20260109112145.850860996@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,86 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Song Liu <song@kernel.org>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 139560e8b973402140cafeb68c656c1374bd4c20 ]
+[ Upstream commit 5180138604323895b5c291eca6aa7c20be494ade ]
 
-When there is only one function of the same name, old_sympos of 0 and 1
-are logically identical. Match them in klp_find_func().
+Before it used an unsigned 64-bit type, which prevented proper handling
+of timestamps earlier than 1970-01-01. Switch to a signed 64-bit type to
+support pre-epoch timestamps. The issue was caught by xfstests.
 
-This is to avoid a corner case with different toolchain behavior.
-
-In this specific issue, two versions of kpatch-build were used to
-build livepatch for the same kernel. One assigns old_sympos == 0 for
-unique local functions, the other assigns old_sympos == 1 for unique
-local functions. Both versions work fine by themselves. (PS: This
-behavior change was introduced in a downstream version of kpatch-build.
-This change does not exist in upstream kpatch-build.)
-
-However, during livepatch upgrade (with the replace flag set) from a
-patch built with one version of kpatch-build to the same fix built with
-the other version of kpatch-build, livepatching fails with errors like:
-
-[   14.218706] sysfs: cannot create duplicate filename 'xxx/somefunc,1'
-...
-[   14.219466] Call Trace:
-[   14.219468]  <TASK>
-[   14.219469]  dump_stack_lvl+0x47/0x60
-[   14.219474]  sysfs_warn_dup.cold+0x17/0x27
-[   14.219476]  sysfs_create_dir_ns+0x95/0xb0
-[   14.219479]  kobject_add_internal+0x9e/0x260
-[   14.219483]  kobject_add+0x68/0x80
-[   14.219485]  ? kstrdup+0x3c/0xa0
-[   14.219486]  klp_enable_patch+0x320/0x830
-[   14.219488]  patch_init+0x443/0x1000 [ccc_0_6]
-[   14.219491]  ? 0xffffffffa05eb000
-[   14.219492]  do_one_initcall+0x2e/0x190
-[   14.219494]  do_init_module+0x67/0x270
-[   14.219496]  init_module_from_file+0x75/0xa0
-[   14.219499]  idempotent_init_module+0x15a/0x240
-[   14.219501]  __x64_sys_finit_module+0x61/0xc0
-[   14.219503]  do_syscall_64+0x5b/0x160
-[   14.219505]  entry_SYSCALL_64_after_hwframe+0x4b/0x53
-[   14.219507] RIP: 0033:0x7f545a4bd96d
-...
-[   14.219516] kobject: kobject_add_internal failed for somefunc,1 with
-    -EEXIST, don't try to register things with the same name ...
-
-This happens because klp_find_func() thinks somefunc with old_sympos==0
-is not the same as somefunc with old_sympos==1, and klp_add_object_nops
-adds another xxx/func,1 to the list of functions to patch.
-
-Signed-off-by: Song Liu <song@kernel.org>
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
-[pmladek@suse.com: Fixed some typos.]
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Tested-by: Petr Mladek <pmladek@suse.com>
-Signed-off-by: Petr Mladek <pmladek@suse.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/livepatch/core.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/ntfs3/ntfs_fs.h | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/livepatch/core.c b/kernel/livepatch/core.c
-index ecbc9b6aba3a1..81fd438697446 100644
---- a/kernel/livepatch/core.c
-+++ b/kernel/livepatch/core.c
-@@ -90,8 +90,14 @@ static struct klp_func *klp_find_func(struct klp_object *obj,
- 	struct klp_func *func;
+diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
+index 72810d8f62ee9..31f57ee9a1a9b 100644
+--- a/fs/ntfs3/ntfs_fs.h
++++ b/fs/ntfs3/ntfs_fs.h
+@@ -990,11 +990,12 @@ static inline __le64 kernel2nt(const struct timespec64 *ts)
+  */
+ static inline void nt2kernel(const __le64 tm, struct timespec64 *ts)
+ {
+-	u64 t = le64_to_cpu(tm) - _100ns2seconds * SecondsToStartOf1970;
++	s32 t32;
++	/* use signed 64 bit to support timestamps prior to epoch. xfstest 258. */
++	s64 t = le64_to_cpu(tm) - _100ns2seconds * SecondsToStartOf1970;
  
- 	klp_for_each_func(obj, func) {
-+		/*
-+		 * Besides identical old_sympos, also consider old_sympos
-+		 * of 0 and 1 are identical.
-+		 */
- 		if ((strcmp(old_func->old_name, func->old_name) == 0) &&
--		    (old_func->old_sympos == func->old_sympos)) {
-+		    ((old_func->old_sympos == func->old_sympos) ||
-+		     (old_func->old_sympos == 0 && func->old_sympos == 1) ||
-+		     (old_func->old_sympos == 1 && func->old_sympos == 0))) {
- 			return func;
- 		}
- 	}
+-	// WARNING: do_div changes its first argument(!)
+-	ts->tv_nsec = do_div(t, _100ns2seconds) * 100;
+-	ts->tv_sec = t;
++	ts->tv_sec = div_s64_rem(t, _100ns2seconds, &t32);
++	ts->tv_nsec = t32 * 100;
+ }
+ 
+ static inline struct ntfs_sb_info *ntfs_sb(struct super_block *sb)
 -- 
 2.51.0
 
