@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD9CF26ED41;
-	Fri,  9 Jan 2026 12:22:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE8C32737EE;
+	Fri,  9 Jan 2026 12:22:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961322; cv=none; b=IDk3+Z/qQZJqG1kqE+b8h6nmYzSJ3omx847YRN5+z/O3hwebsGeXpYlMRngGzj1h4nVB/xuawaTmSdQqJqggnOd20jeBcE2T4SEMjUcZNYqb50czV/DtBelDQo6zDdCys3oQqLABuxkiG2igwUhin58ZvEXoYbgOtIPvOmYGKUo=
+	t=1767961325; cv=none; b=QmYvdn1hRhHUs1bLNdUy2NFy71IbPY7IPirAN8Kw8EQYZNnG5CWNAxpkoA2KfPrH2hM5i5cC7tjp79jBNVKs6C5BH0z6DUcsE/2geWAmUol0TYsg6BuLh7/mXDn2GpqMgexNqhWkeScCNjb8ePs521unwJurjmaCzA8ucspQItc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961322; c=relaxed/simple;
-	bh=vR4u7Oa47OhpisSw71E21q9yoGrCgDeGF6wj3BbBf2Q=;
+	s=arc-20240116; t=1767961325; c=relaxed/simple;
+	bh=4wl4/xANb/4tRKX/vkdAerueqJr36wYqyob6yz5Gi/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d1HvcOHzIk1NHiT+P/M6pL24GTa/ipsSTFMHjfkyMQZhF47tEh++4OMBHXGejJSc+p2UIzQX63WH9cz4kTwBzFnGK2Ui7+yt+4m4+TCciMfBdUAPC3NM38JBqBVtuyRCKar1zF3ygxLoJeU3tvp/YCqgP0ZCbn1U+bfowBG2l2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W6lgU9Gg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KKsYy2V9dB8PbxGODEbdbwVfs07LOdYpZPZ7JB42F0UxpXmbJ5bcI970PG7576hlmYF8IXIMKOVBRJ4FLRzLRLYoUyC8zSSJ84dxjuGifMXK/WsGFdSxN04I7Nexpu4wdEiiBpMhw6MR7fjjNqk+0gE7kmNRgGFZavbUPj/WNyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=otTCANO8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W6lgU9Gg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 556D7C4CEF1;
-	Fri,  9 Jan 2026 12:22:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="otTCANO8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CF92C19421;
+	Fri,  9 Jan 2026 12:22:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961322;
-	bh=vR4u7Oa47OhpisSw71E21q9yoGrCgDeGF6wj3BbBf2Q=;
+	s=korg; t=1767961325;
+	bh=4wl4/xANb/4tRKX/vkdAerueqJr36wYqyob6yz5Gi/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W6lgU9Ggz1kpngva59TR5Q/LOz5d3f8sw8DXxm1CSxFfpI9/ZRyANuyaLGSoFWO1m
-	 uyUeXERDo49Hba+Upq8T9HoU3fBr78KHp6JF2+U4rqseGszgUuBRzz4KU2KK4KZaNY
-	 52fqTAodMm1pwhIXYhrDRgnDiB7QrLRNjY8wYym8=
+	b=otTCANO8bICT4XFqULXmD57w96n2BHxnGhF2g4Xj+GYwFTn3n+56xRV0aE0++Xmwc
+	 4zbq7yaQZvkpG+n2JldirYSETDytAJ5vV+A/55BDsXvYSeyLdHtSe1m/j0uaefHCcD
+	 QhHnfRJ3nwKkyjbRi7L3fkSRrQnyH4gG2Vu9c8mw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	yan kang <kangyan91@outlook.com>,
-	yue sun <samsun1006219@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Subject: [PATCH 6.6 671/737] net: Remove RTNL dance for SIOCBRADDIF and SIOCBRDELIF.
-Date: Fri,  9 Jan 2026 12:43:30 +0100
-Message-ID: <20260109112159.292432019@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 706/737] mm/damon/tests/vaddr-kunit: handle alloc failures in damon_test_split_evenly_fail()
+Date: Fri,  9 Jan 2026 12:44:05 +0100
+Message-ID: <20260109112200.630246247@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -57,297 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: SeongJae Park <sj@kernel.org>
 
-commit ed3ba9b6e280e14cc3148c1b226ba453f02fa76c upstream.
+commit 7890e5b5bb6e386155c6e755fe70e0cdcc77f18e upstream.
 
-SIOCBRDELIF is passed to dev_ioctl() first and later forwarded to
-br_ioctl_call(), which causes unnecessary RTNL dance and the splat
-below [0] under RTNL pressure.
+damon_test_split_evenly_fail() is assuming all dynamic memory allocation
+in it will succeed.  Those are indeed likely in the real use cases since
+those allocations are too small to fail, but theoretically those could
+fail.  In the case, inappropriate memory access can happen.  Fix it by
+appropriately cleanup pre-allocated memory and skip the execution of the
+remaining tests in the failure cases.
 
-Let's say Thread A is trying to detach a device from a bridge and
-Thread B is trying to remove the bridge.
-
-In dev_ioctl(), Thread A bumps the bridge device's refcnt by
-netdev_hold() and releases RTNL because the following br_ioctl_call()
-also re-acquires RTNL.
-
-In the race window, Thread B could acquire RTNL and try to remove
-the bridge device.  Then, rtnl_unlock() by Thread B will release RTNL
-and wait for netdev_put() by Thread A.
-
-Thread A, however, must hold RTNL after the unlock in dev_ifsioc(),
-which may take long under RTNL pressure, resulting in the splat by
-Thread B.
-
-  Thread A (SIOCBRDELIF)           Thread B (SIOCBRDELBR)
-  ----------------------           ----------------------
-  sock_ioctl                       sock_ioctl
-  `- sock_do_ioctl                 `- br_ioctl_call
-     `- dev_ioctl                     `- br_ioctl_stub
-        |- rtnl_lock                     |
-        |- dev_ifsioc                    '
-        '  |- dev = __dev_get_by_name(...)
-           |- netdev_hold(dev, ...)      .
-       /   |- rtnl_unlock  ------.       |
-       |   |- br_ioctl_call       `--->  |- rtnl_lock
-  Race |   |  `- br_ioctl_stub           |- br_del_bridge
-  Window   |     |                       |  |- dev = __dev_get_by_name(...)
-       |   |     |  May take long        |  `- br_dev_delete(dev, ...)
-       |   |     |  under RTNL pressure  |     `- unregister_netdevice_queue(dev, ...)
-       |   |     |               |       `- rtnl_unlock
-       \   |     |- rtnl_lock  <-'          `- netdev_run_todo
-           |     |- ...                        `- netdev_run_todo
-           |     `- rtnl_unlock                   |- __rtnl_unlock
-           |                                      |- netdev_wait_allrefs_any
-           |- netdev_put(dev, ...)  <----------------'
-                                                Wait refcnt decrement
-                                                and log splat below
-
-To avoid blocking SIOCBRDELBR unnecessarily, let's not call
-dev_ioctl() for SIOCBRADDIF and SIOCBRDELIF.
-
-In the dev_ioctl() path, we do the following:
-
-  1. Copy struct ifreq by get_user_ifreq in sock_do_ioctl()
-  2. Check CAP_NET_ADMIN in dev_ioctl()
-  3. Call dev_load() in dev_ioctl()
-  4. Fetch the master dev from ifr.ifr_name in dev_ifsioc()
-
-3. can be done by request_module() in br_ioctl_call(), so we move
-1., 2., and 4. to br_ioctl_stub().
-
-Note that 2. is also checked later in add_del_if(), but it's better
-performed before RTNL.
-
-SIOCBRADDIF and SIOCBRDELIF have been processed in dev_ioctl() since
-the pre-git era, and there seems to be no specific reason to process
-them there.
-
-[0]:
-unregister_netdevice: waiting for wpan3 to become free. Usage count = 2
-ref_tracker: wpan3@ffff8880662d8608 has 1/1 users at
-     __netdev_tracker_alloc include/linux/netdevice.h:4282 [inline]
-     netdev_hold include/linux/netdevice.h:4311 [inline]
-     dev_ifsioc+0xc6a/0x1160 net/core/dev_ioctl.c:624
-     dev_ioctl+0x255/0x10c0 net/core/dev_ioctl.c:826
-     sock_do_ioctl+0x1ca/0x260 net/socket.c:1213
-     sock_ioctl+0x23a/0x6c0 net/socket.c:1318
-     vfs_ioctl fs/ioctl.c:51 [inline]
-     __do_sys_ioctl fs/ioctl.c:906 [inline]
-     __se_sys_ioctl fs/ioctl.c:892 [inline]
-     __x64_sys_ioctl+0x1a4/0x210 fs/ioctl.c:892
-     do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-     do_syscall_64+0xcb/0x250 arch/x86/entry/common.c:83
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: 893b19587534 ("net: bridge: fix ioctl locking")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Reported-by: yan kang <kangyan91@outlook.com>
-Reported-by: yue sun <samsun1006219@gmail.com>
-Closes: https://lore.kernel.org/netdev/SY8P300MB0421225D54EB92762AE8F0F2A1D32@SY8P300MB0421.AUSP300.PROD.OUTLOOK.COM/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20250316192851.19781-1-kuniyu@amazon.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[cascardo: fixed conflict at dev_ifsioc]
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Link: https://lkml.kernel.org/r/20251101182021.74868-19-sj@kernel.org
+Fixes: 17ccae8bb5c9 ("mm/damon: add kunit tests")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: Brendan Higgins <brendan.higgins@linux.dev>
+Cc: David Gow <davidgow@google.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: <stable@vger.kernel.org>	[5.15+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/if_bridge.h |    6 ++----
- net/bridge/br_ioctl.c     |   36 +++++++++++++++++++++++++++++++++---
- net/bridge/br_private.h   |    3 +--
- net/core/dev_ioctl.c      |   16 ----------------
- net/socket.c              |   19 +++++++++----------
- 5 files changed, 45 insertions(+), 35 deletions(-)
+ mm/damon/vaddr-test.h |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/include/linux/if_bridge.h
-+++ b/include/linux/if_bridge.h
-@@ -65,11 +65,9 @@ struct br_ip_list {
- #define BR_DEFAULT_AGEING_TIME	(300 * HZ)
- 
- struct net_bridge;
--void brioctl_set(int (*hook)(struct net *net, struct net_bridge *br,
--			     unsigned int cmd, struct ifreq *ifr,
-+void brioctl_set(int (*hook)(struct net *net, unsigned int cmd,
- 			     void __user *uarg));
--int br_ioctl_call(struct net *net, struct net_bridge *br, unsigned int cmd,
--		  struct ifreq *ifr, void __user *uarg);
-+int br_ioctl_call(struct net *net, unsigned int cmd, void __user *uarg);
- 
- #if IS_ENABLED(CONFIG_BRIDGE) && IS_ENABLED(CONFIG_BRIDGE_IGMP_SNOOPING)
- int br_multicast_list_adjacent(struct net_device *dev,
---- a/net/bridge/br_ioctl.c
-+++ b/net/bridge/br_ioctl.c
-@@ -394,10 +394,26 @@ static int old_deviceless(struct net *ne
- 	return -EOPNOTSUPP;
- }
- 
--int br_ioctl_stub(struct net *net, struct net_bridge *br, unsigned int cmd,
--		  struct ifreq *ifr, void __user *uarg)
-+int br_ioctl_stub(struct net *net, unsigned int cmd, void __user *uarg)
+--- a/mm/damon/vaddr-test.h
++++ b/mm/damon/vaddr-test.h
+@@ -250,7 +250,16 @@ static void damon_test_split_evenly_fail
+ 		unsigned long start, unsigned long end, unsigned int nr_pieces)
  {
- 	int ret = -EOPNOTSUPP;
-+	struct ifreq ifr;
+ 	struct damon_target *t = damon_new_target();
+-	struct damon_region *r = damon_new_region(start, end);
++	struct damon_region *r;
 +
-+	if (cmd == SIOCBRADDIF || cmd == SIOCBRDELIF) {
-+		void __user *data;
-+		char *colon;
++	if (!t)
++		kunit_skip(test, "target alloc fail");
 +
-+		if (!ns_capable(net->user_ns, CAP_NET_ADMIN))
-+			return -EPERM;
-+
-+		if (get_user_ifreq(&ifr, &data, uarg))
-+			return -EFAULT;
-+
-+		ifr.ifr_name[IFNAMSIZ - 1] = 0;
-+		colon = strchr(ifr.ifr_name, ':');
-+		if (colon)
-+			*colon = 0;
++	r = damon_new_region(start, end);
++	if (!r) {
++		damon_free_target(t);
++		kunit_skip(test, "region alloc fail");
 +	}
  
- 	rtnl_lock();
- 
-@@ -430,7 +446,21 @@ int br_ioctl_stub(struct net *net, struc
- 		break;
- 	case SIOCBRADDIF:
- 	case SIOCBRDELIF:
--		ret = add_del_if(br, ifr->ifr_ifindex, cmd == SIOCBRADDIF);
-+	{
-+		struct net_device *dev;
-+
-+		dev = __dev_get_by_name(net, ifr.ifr_name);
-+		if (!dev || !netif_device_present(dev)) {
-+			ret = -ENODEV;
-+			break;
-+		}
-+		if (!netif_is_bridge_master(dev)) {
-+			ret = -EOPNOTSUPP;
-+			break;
-+		}
-+
-+		ret = add_del_if(netdev_priv(dev), ifr.ifr_ifindex, cmd == SIOCBRADDIF);
-+	}
- 		break;
- 	}
- 
---- a/net/bridge/br_private.h
-+++ b/net/bridge/br_private.h
-@@ -948,8 +948,7 @@ br_port_get_check_rtnl(const struct net_
- /* br_ioctl.c */
- int br_dev_siocdevprivate(struct net_device *dev, struct ifreq *rq,
- 			  void __user *data, int cmd);
--int br_ioctl_stub(struct net *net, struct net_bridge *br, unsigned int cmd,
--		  struct ifreq *ifr, void __user *uarg);
-+int br_ioctl_stub(struct net *net, unsigned int cmd, void __user *uarg);
- 
- /* br_multicast.c */
- #ifdef CONFIG_BRIDGE_IGMP_SNOOPING
---- a/net/core/dev_ioctl.c
-+++ b/net/core/dev_ioctl.c
-@@ -517,7 +517,6 @@ static int dev_ifsioc(struct net *net, s
- 	int err;
- 	struct net_device *dev = __dev_get_by_name(net, ifr->ifr_name);
- 	const struct net_device_ops *ops;
--	netdevice_tracker dev_tracker;
- 
- 	if (!dev)
- 		return -ENODEV;
-@@ -580,19 +579,6 @@ static int dev_ifsioc(struct net *net, s
- 	case SIOCWANDEV:
- 		return dev_siocwandev(dev, &ifr->ifr_settings);
- 
--	case SIOCBRADDIF:
--	case SIOCBRDELIF:
--		if (!netif_device_present(dev))
--			return -ENODEV;
--		if (!netif_is_bridge_master(dev))
--			return -EOPNOTSUPP;
--		netdev_hold(dev, &dev_tracker, GFP_KERNEL);
--		rtnl_unlock();
--		err = br_ioctl_call(net, netdev_priv(dev), cmd, ifr, NULL);
--		netdev_put(dev, &dev_tracker);
--		rtnl_lock();
--		return err;
--
- 	case SIOCDEVPRIVATE ... SIOCDEVPRIVATE + 15:
- 		return dev_siocdevprivate(dev, ifr, data, cmd);
- 
-@@ -773,8 +759,6 @@ int dev_ioctl(struct net *net, unsigned
- 	case SIOCBONDRELEASE:
- 	case SIOCBONDSETHWADDR:
- 	case SIOCBONDCHANGEACTIVE:
--	case SIOCBRADDIF:
--	case SIOCBRDELIF:
- 	case SIOCSHWTSTAMP:
- 		if (!ns_capable(net->user_ns, CAP_NET_ADMIN))
- 			return -EPERM;
---- a/net/socket.c
-+++ b/net/socket.c
-@@ -1168,12 +1168,10 @@ static ssize_t sock_write_iter(struct ki
-  */
- 
- static DEFINE_MUTEX(br_ioctl_mutex);
--static int (*br_ioctl_hook)(struct net *net, struct net_bridge *br,
--			    unsigned int cmd, struct ifreq *ifr,
-+static int (*br_ioctl_hook)(struct net *net, unsigned int cmd,
- 			    void __user *uarg);
- 
--void brioctl_set(int (*hook)(struct net *net, struct net_bridge *br,
--			     unsigned int cmd, struct ifreq *ifr,
-+void brioctl_set(int (*hook)(struct net *net, unsigned int cmd,
- 			     void __user *uarg))
- {
- 	mutex_lock(&br_ioctl_mutex);
-@@ -1182,8 +1180,7 @@ void brioctl_set(int (*hook)(struct net
- }
- EXPORT_SYMBOL(brioctl_set);
- 
--int br_ioctl_call(struct net *net, struct net_bridge *br, unsigned int cmd,
--		  struct ifreq *ifr, void __user *uarg)
-+int br_ioctl_call(struct net *net, unsigned int cmd, void __user *uarg)
- {
- 	int err = -ENOPKG;
- 
-@@ -1192,7 +1189,7 @@ int br_ioctl_call(struct net *net, struc
- 
- 	mutex_lock(&br_ioctl_mutex);
- 	if (br_ioctl_hook)
--		err = br_ioctl_hook(net, br, cmd, ifr, uarg);
-+		err = br_ioctl_hook(net, cmd, uarg);
- 	mutex_unlock(&br_ioctl_mutex);
- 
- 	return err;
-@@ -1292,7 +1289,9 @@ static long sock_ioctl(struct file *file
- 		case SIOCSIFBR:
- 		case SIOCBRADDBR:
- 		case SIOCBRDELBR:
--			err = br_ioctl_call(net, NULL, cmd, NULL, argp);
-+		case SIOCBRADDIF:
-+		case SIOCBRDELIF:
-+			err = br_ioctl_call(net, cmd, argp);
- 			break;
- 		case SIOCGIFVLAN:
- 		case SIOCSIFVLAN:
-@@ -3454,6 +3453,8 @@ static int compat_sock_ioctl_trans(struc
- 	case SIOCGPGRP:
- 	case SIOCBRADDBR:
- 	case SIOCBRDELBR:
-+	case SIOCBRADDIF:
-+	case SIOCBRDELIF:
- 	case SIOCGIFVLAN:
- 	case SIOCSIFVLAN:
- 	case SIOCGSKNS:
-@@ -3493,8 +3494,6 @@ static int compat_sock_ioctl_trans(struc
- 	case SIOCGIFPFLAGS:
- 	case SIOCGIFTXQLEN:
- 	case SIOCSIFTXQLEN:
--	case SIOCBRADDIF:
--	case SIOCBRDELIF:
- 	case SIOCGIFNAME:
- 	case SIOCSIFNAME:
- 	case SIOCGMIIPHY:
+ 	damon_add_region(r, t);
+ 	KUNIT_EXPECT_EQ(test,
 
 
