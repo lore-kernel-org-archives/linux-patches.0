@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEDD432AAB5;
-	Fri,  9 Jan 2026 12:21:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A0426ED41;
+	Fri,  9 Jan 2026 12:21:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961277; cv=none; b=YelPWsUiWKUh+/JjPhe7jKTbyZM8Bz/qlGQ/RG5Mulr7IUq2cfmDgJkmv5PgAjGzHFCfnIahJjYyjICdELI/fv/bR4plCbvu7Kig6XvsKc94XXdifJ3zPNbsx9CS+JH+WD66TOtGGyusMe0fVgOUlY+NV11cfgUVtq/DM7Hrbho=
+	t=1767961280; cv=none; b=gB1tAyKAibC1eyLKG5ByJDCa5NSCB36+67l5ysrA2eD9WOelr9VD3uGPoHbKPVQ5fuD0jjqBwntRdswk4j3QhAPQ524ktHz70fuOgvU0Pp8SxZaJ0gY5buowR6i0ZXBNvWgEmBJQ5U5pyHjMIrdabOFNJeeqtNWey3dbZYItWSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961277; c=relaxed/simple;
-	bh=e3oO4DMrVP3OkJFyrXlGA9q5vcj5DWR7WNggTL7oH4U=;
+	s=arc-20240116; t=1767961280; c=relaxed/simple;
+	bh=Ch75+uAqu9hlhMxyERCLmvib/Yimd5y6BBpfsjD864I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ocoG/jb2m50c2JLyhA0Vcg/mKVHvuU5u67l0I638YiT4UhbIHxQ4J4MDp3se2fgn66TmAhXiwowLryvzF8QUboErWm7api7xKeO/z3rOfH+F2Zsz92+wx+acDCTpT/OCduvfBL4ZypieDwjig4dpO12v72JI1an3ILba2HwSWoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D23SPcSq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qvI4Qj822Ikmc5Ra5via46+bQtU3tTmId2XTLHrekSBIFHQSVWsnwiQOGlOMIA9oGyuDK344JgF1Np4tQxgpO0amHFY07QJ3RvyNath/jyI3R6urTjpYfy9zUShBMkHFeZiH3YQC2T2oHNX/dyE5nVQw4LIOrYa23dhW3LiB/5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cE9gmqj1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D23SPcSq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF870C19421;
-	Fri,  9 Jan 2026 12:21:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cE9gmqj1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C92F9C4CEF1;
+	Fri,  9 Jan 2026 12:21:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961277;
-	bh=e3oO4DMrVP3OkJFyrXlGA9q5vcj5DWR7WNggTL7oH4U=;
+	s=korg; t=1767961280;
+	bh=Ch75+uAqu9hlhMxyERCLmvib/Yimd5y6BBpfsjD864I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D23SPcSquR9tM8i/DfA3wzefT6up4QxK3s41DfjLftb0l8vh8tbC91Dnt/R9aqiVl
-	 mlOqGcIiWsIIJCV9His71HTLIhknE3/tGD1/E7Ckip0jfbABSCURoZoqsw7Oy1afD4
-	 uF9lWIaE04KRa0fzYZ0Pm9NNpIUELyOwmaYj0xPk=
+	b=cE9gmqj1MDEUZ0yeV+Nt3bOx8Ws1hxie0tk389MpWs8x79DSd/BM7iXfPPOFs/Rer
+	 wC5n+xydDKvhXUD1YBPGcGMZeK92IpEBfjExvLFjiGTGwHM/36LOlAUavOb1d2n8RB
+	 sKa//pAwE7dZ4hGVLV6ZG0A70UH6vC7sxGdvThTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Chao Gao <chao.gao@intel.com>,
+	Dongli Zhang <dongli.zhang@oracle.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 696/737] powerpc/pseries/cmm: adjust BALLOON_MIGRATE when migrating pages
-Date: Fri,  9 Jan 2026 12:43:55 +0100
-Message-ID: <20260109112200.250014574@linuxfoundation.org>
+Subject: [PATCH 6.6 697/737] KVM: nVMX: Immediately refresh APICv controls as needed on nested VM-Exit
+Date: Fri,  9 Jan 2026 12:43:56 +0100
+Message-ID: <20260109112200.287875829@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -56,42 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Dongli Zhang <dongli.zhang@oracle.com>
 
-[ Upstream commit 0da2ba35c0d532ca0fe7af698b17d74c4d084b9a ]
+[ Upstream commit 29763138830916f46daaa50e83e7f4f907a3236b ]
 
-Let's properly adjust BALLOON_MIGRATE like the other drivers.
+If an APICv status updated was pended while L2 was active, immediately
+refresh vmcs01's controls instead of pending KVM_REQ_APICV_UPDATE as
+kvm_vcpu_update_apicv() only calls into vendor code if a change is
+necessary.
 
-Note that the INFLATE/DEFLATE events are triggered from the core when
-enqueueing/dequeueing pages.
+E.g. if APICv is inhibited, and then activated while L2 is running:
 
-This was found by code inspection.
+  kvm_vcpu_update_apicv()
+  |
+  -> __kvm_vcpu_update_apicv()
+     |
+     -> apic->apicv_active = true
+      |
+      -> vmx_refresh_apicv_exec_ctrl()
+         |
+         -> vmx->nested.update_vmcs01_apicv_status = true
+          |
+          -> return
 
-Link: https://lkml.kernel.org/r/20251021100606.148294-3-david@redhat.com
-Fixes: fe030c9b85e6 ("powerpc/pseries/cmm: Implement balloon compaction")
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Then L2 exits to L1:
+
+  __nested_vmx_vmexit()
+  |
+  -> kvm_make_request(KVM_REQ_APICV_UPDATE)
+
+  vcpu_enter_guest(): KVM_REQ_APICV_UPDATE
+  -> kvm_vcpu_update_apicv()
+     |
+     -> __kvm_vcpu_update_apicv()
+        |
+        -> return // because if (apic->apicv_active == activate)
+
+Reported-by: Chao Gao <chao.gao@intel.com>
+Closes: https://lore.kernel.org/all/aQ2jmnN8wUYVEawF@intel.com
+Fixes: 7c69661e225c ("KVM: nVMX: Defer APICv updates while L2 is active until L1 is active")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+[sean: write changelog]
+Link: https://patch.msgid.link/20251205231913.441872-3-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+[ exported vmx_refresh_apicv_exec_ctrl() and added declaration in vmx.h ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/pseries/cmm.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/kvm/vmx/nested.c |    2 +-
+ arch/x86/kvm/vmx/vmx.c    |    2 +-
+ arch/x86/kvm/vmx/vmx.h    |    1 +
+ 3 files changed, 3 insertions(+), 2 deletions(-)
 
---- a/arch/powerpc/platforms/pseries/cmm.c
-+++ b/arch/powerpc/platforms/pseries/cmm.c
-@@ -532,6 +532,7 @@ static int cmm_migratepage(struct balloo
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -4908,7 +4908,7 @@ void nested_vmx_vmexit(struct kvm_vcpu *
  
- 	spin_lock_irqsave(&b_dev_info->pages_lock, flags);
- 	balloon_page_insert(b_dev_info, newpage);
-+	__count_vm_event(BALLOON_MIGRATE);
- 	b_dev_info->isolated_pages--;
- 	spin_unlock_irqrestore(&b_dev_info->pages_lock, flags);
+ 	if (vmx->nested.update_vmcs01_apicv_status) {
+ 		vmx->nested.update_vmcs01_apicv_status = false;
+-		kvm_make_request(KVM_REQ_APICV_UPDATE, vcpu);
++		vmx_refresh_apicv_exec_ctrl(vcpu);
+ 	}
  
+ 	if (vmx->nested.update_vmcs01_hwapic_isr) {
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -4451,7 +4451,7 @@ static u32 vmx_vmexit_ctrl(void)
+ 		~(VM_EXIT_LOAD_IA32_PERF_GLOBAL_CTRL | VM_EXIT_LOAD_IA32_EFER);
+ }
+ 
+-static void vmx_refresh_apicv_exec_ctrl(struct kvm_vcpu *vcpu)
++void vmx_refresh_apicv_exec_ctrl(struct kvm_vcpu *vcpu)
+ {
+ 	struct vcpu_vmx *vmx = to_vmx(vcpu);
+ 
+--- a/arch/x86/kvm/vmx/vmx.h
++++ b/arch/x86/kvm/vmx/vmx.h
+@@ -395,6 +395,7 @@ void __vmx_set_segment(struct kvm_vcpu *
+ u64 construct_eptp(struct kvm_vcpu *vcpu, hpa_t root_hpa, int root_level);
+ 
+ bool vmx_guest_inject_ac(struct kvm_vcpu *vcpu);
++void vmx_refresh_apicv_exec_ctrl(struct kvm_vcpu *vcpu);
+ void vmx_update_exception_bitmap(struct kvm_vcpu *vcpu);
+ bool vmx_nmi_blocked(struct kvm_vcpu *vcpu);
+ bool __vmx_interrupt_blocked(struct kvm_vcpu *vcpu);
 
 
