@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A83135CBB9;
-	Fri,  9 Jan 2026 12:47:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E7735C1AD;
+	Fri,  9 Jan 2026 12:47:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962858; cv=none; b=MfFo/ybE5CFjUyelfERiv8jBBlkjqkpIhqPmO6QQeTodk09wJSaAiAfPMqvQ4Yk4JiJIN/PtAaYDCR6eNWDP2hYB1PzwNVmim4m7gMXKSe12UvRu1c7cpzcfxwlvd4W0faUsKZApMoK5bq3X+9y1WhZi6Fw8PDVCGfqjCqG+aIA=
+	t=1767962861; cv=none; b=GDoHM8kfWk4prOFJU4hU59uKHNBS92xUgGaBUd7FqejG20jNeRAS5yGh9fg7ahYTb9eQD6N4Hm0/4c6kCuQajCaZh1u8rKgPsXFwEcOE2bTSgkhDaZoDAS+EtzRdgMfEBpApie3bAeMSJ0/jMFC26bKBt4ketsn7DP6LDvf6iBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962858; c=relaxed/simple;
-	bh=wrCrkwf6wlwxV6tMSytj9yEXXUiYYQHMjEdCg2Pz9Mo=;
+	s=arc-20240116; t=1767962861; c=relaxed/simple;
+	bh=Omh48r+icdEcIo2vciHPUjk57dqbBk/Kwxtovw39d3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mjAwlefldksC34c5nNGdH9hCp1ImS9k/vqlp7c2vwAGYGda03oJciMyTYOeCUTuZ15hKDGvQP2AiqRFU0AqkXZKv11x4ATpRM/159zoYfJ8ageZEORbPAPf90gyzPQsB0hkgrpx6u6wx+E9aSQDhpVCXeWfA2I+zpY04m8oG7CQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hTgNxnHz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PxMNyw4WLw+bFhkXBD7OuEriH9+jBhMSYR4VGsNL5QufycZ3uyI/3uffvE+t09imQhHse9+cZQ7KRIhSulN0f/l62VX0CHl99TfGn7a1CnGAdcoR5yrFferwuqJ+H6XxEMmnrA1zWJa4hklBwyZPsPqBhoV3GXSdX1As9h3IG38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NMxcg+JU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hTgNxnHz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAB7BC4CEF1;
-	Fri,  9 Jan 2026 12:47:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NMxcg+JU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72DBBC16AAE;
+	Fri,  9 Jan 2026 12:47:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962858;
-	bh=wrCrkwf6wlwxV6tMSytj9yEXXUiYYQHMjEdCg2Pz9Mo=;
+	s=korg; t=1767962860;
+	bh=Omh48r+icdEcIo2vciHPUjk57dqbBk/Kwxtovw39d3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hTgNxnHztb5trrQjor1Onz8Dg88JXLfX99g4r7E/B+JOY2CZUr2hZJxJ5sn8hUytL
-	 Hro53kQ6VxOVqV3bSLkJWKDVMsu6d46AmYRBXjG9SIcVIrBc9F5xBikp/3kwUR0QBt
-	 EkAB06r7iBNC6XJClJuD/LAPQ4+y9VVbkAV/M2YA=
+	b=NMxcg+JUIPdLgiL7BG46Tpp3BibK9I/kHaPpEXMtOs1pD0RZqzW3JnsB62wDzyewQ
+	 xDVsHO/xp5sWNc746zwg8ZmMVveSi8q7heLs/fU+4VATDG9P5QKYug4oRjxOgyek1I
+	 vcTcOSnrJ3ZM9MmLd8OxknNJnev1imw+1bPKo0EI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lai Yi <yi1.lai@linux.intel.com>,
-	Jonathan McDowell <noodles@meta.com>,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Jarkko Sakkinen <jarkko.sakkinen@opinsys.com>
-Subject: [PATCH 6.1 512/634] tpm: Cap the number of PCR banks
-Date: Fri,  9 Jan 2026 12:43:10 +0100
-Message-ID: <20260109112136.819063576@linuxfoundation.org>
+	Hari Bathini <hbathini@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Aboorva Devarajan <aboorvad@linux.ibm.com>
+Subject: [PATCH 6.1 513/634] powerpc/64s/radix/kfence: map __kfence_pool at page granularity
+Date: Fri,  9 Jan 2026 12:43:11 +0100
+Message-ID: <20260109112136.856825802@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,99 +51,228 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarkko Sakkinen <jarkko.sakkinen@opinsys.com>
+From: Hari Bathini <hbathini@linux.ibm.com>
 
-commit faf07e611dfa464b201223a7253e9dc5ee0f3c9e upstream.
+commit 353d7a84c214f184d5a6b62acdec8b4424159b7c upstream.
 
-tpm2_get_pcr_allocation() does not cap any upper limit for the number of
-banks. Cap the limit to eight banks so that out of bounds values coming
-from external I/O cause on only limited harm.
+When KFENCE is enabled, total system memory is mapped at page level
+granularity. But in radix MMU mode, ~3GB additional memory is needed
+to map 100GB of system memory at page level granularity when compared
+to using 2MB direct mapping.This is not desired considering KFENCE is
+designed to be enabled in production kernels [1].
 
-Cc: stable@vger.kernel.org # v5.10+
-Fixes: bcfff8384f6c ("tpm: dynamically allocate the allocated_banks array")
-Tested-by: Lai Yi <yi1.lai@linux.intel.com>
-Reviewed-by: Jonathan McDowell <noodles@meta.com>
-Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
-Signed-off-by: Jarkko Sakkinen <jarkko.sakkinen@opinsys.com>
+Mapping only the memory allocated for KFENCE pool at page granularity is
+sufficient to enable KFENCE support. So, allocate __kfence_pool during
+bootup and map it at page granularity instead of mapping all system
+memory at page granularity.
+
+Without patch:
+  # cat /proc/meminfo
+  MemTotal:       101201920 kB
+
+With patch:
+  # cat /proc/meminfo
+  MemTotal:       104483904 kB
+
+Note that enabling KFENCE at runtime is disabled for radix MMU for now,
+as it depends on the ability to split page table mappings and such APIs
+are not currently implemented for radix MMU.
+
+All kfence_test.c testcases passed with this patch.
+
+[1] https://lore.kernel.org/all/20201103175841.3495947-2-elver@google.com/
+
+Signed-off-by: Hari Bathini <hbathini@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240701130021.578240-1-hbathini@linux.ibm.com
+Cc: Aboorva Devarajan <aboorvad@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm-chip.c |    1 -
- drivers/char/tpm/tpm1-cmd.c |    5 -----
- drivers/char/tpm/tpm2-cmd.c |    8 +++-----
- include/linux/tpm.h         |    8 +++++---
- 4 files changed, 8 insertions(+), 14 deletions(-)
+ arch/powerpc/include/asm/kfence.h        |   11 +++-
+ arch/powerpc/mm/book3s64/radix_pgtable.c |   84 +++++++++++++++++++++++++++++--
+ arch/powerpc/mm/init-common.c            |    3 +
+ 3 files changed, 93 insertions(+), 5 deletions(-)
 
---- a/drivers/char/tpm/tpm-chip.c
-+++ b/drivers/char/tpm/tpm-chip.c
-@@ -269,7 +269,6 @@ static void tpm_dev_release(struct devic
+--- a/arch/powerpc/include/asm/kfence.h
++++ b/arch/powerpc/include/asm/kfence.h
+@@ -15,10 +15,19 @@
+ #define ARCH_FUNC_PREFIX "."
+ #endif
  
- 	kfree(chip->work_space.context_buf);
- 	kfree(chip->work_space.session_buf);
--	kfree(chip->allocated_banks);
- 	kfree(chip);
++#ifdef CONFIG_KFENCE
++extern bool kfence_disabled;
++
++static inline void disable_kfence(void)
++{
++	kfence_disabled = true;
++}
++
+ static inline bool arch_kfence_init_pool(void)
+ {
+-	return true;
++	return !kfence_disabled;
+ }
++#endif
+ 
+ #ifdef CONFIG_PPC64
+ static inline bool kfence_protect_page(unsigned long addr, bool protect)
+--- a/arch/powerpc/mm/book3s64/radix_pgtable.c
++++ b/arch/powerpc/mm/book3s64/radix_pgtable.c
+@@ -17,6 +17,7 @@
+ #include <linux/hugetlb.h>
+ #include <linux/string_helpers.h>
+ #include <linux/memory.h>
++#include <linux/kfence.h>
+ 
+ #include <asm/pgalloc.h>
+ #include <asm/mmu_context.h>
+@@ -31,6 +32,7 @@
+ #include <asm/uaccess.h>
+ #include <asm/ultravisor.h>
+ #include <asm/set_memory.h>
++#include <asm/kfence.h>
+ 
+ #include <trace/events/thp.h>
+ 
+@@ -294,7 +296,8 @@ static unsigned long next_boundary(unsig
+ 
+ static int __meminit create_physical_mapping(unsigned long start,
+ 					     unsigned long end,
+-					     int nid, pgprot_t _prot)
++					     int nid, pgprot_t _prot,
++					     unsigned long mapping_sz_limit)
+ {
+ 	unsigned long vaddr, addr, mapping_size = 0;
+ 	bool prev_exec, exec = false;
+@@ -302,7 +305,10 @@ static int __meminit create_physical_map
+ 	int psize;
+ 	unsigned long max_mapping_size = radix_mem_block_size;
+ 
+-	if (debug_pagealloc_enabled_or_kfence())
++	if (mapping_sz_limit < max_mapping_size)
++		max_mapping_size = mapping_sz_limit;
++
++	if (debug_pagealloc_enabled())
+ 		max_mapping_size = PAGE_SIZE;
+ 
+ 	start = ALIGN(start, PAGE_SIZE);
+@@ -357,8 +363,74 @@ static int __meminit create_physical_map
+ 	return 0;
  }
  
---- a/drivers/char/tpm/tpm1-cmd.c
-+++ b/drivers/char/tpm/tpm1-cmd.c
-@@ -799,11 +799,6 @@ int tpm1_pm_suspend(struct tpm_chip *chi
-  */
- int tpm1_get_pcr_allocation(struct tpm_chip *chip)
- {
--	chip->allocated_banks = kcalloc(1, sizeof(*chip->allocated_banks),
--					GFP_KERNEL);
--	if (!chip->allocated_banks)
--		return -ENOMEM;
--
- 	chip->allocated_banks[0].alg_id = TPM_ALG_SHA1;
- 	chip->allocated_banks[0].digest_size = hash_digest_size[HASH_ALGO_SHA1];
- 	chip->allocated_banks[0].crypto_id = HASH_ALGO_SHA1;
---- a/drivers/char/tpm/tpm2-cmd.c
-+++ b/drivers/char/tpm/tpm2-cmd.c
-@@ -574,11 +574,9 @@ ssize_t tpm2_get_pcr_allocation(struct t
- 
- 	nr_possible_banks = be32_to_cpup(
- 		(__be32 *)&buf.data[TPM_HEADER_SIZE + 5]);
--
--	chip->allocated_banks = kcalloc(nr_possible_banks,
--					sizeof(*chip->allocated_banks),
--					GFP_KERNEL);
--	if (!chip->allocated_banks) {
-+	if (nr_possible_banks > TPM2_MAX_PCR_BANKS) {
-+		pr_err("tpm: out of bank capacity: %u > %u\n",
-+		       nr_possible_banks, TPM2_MAX_PCR_BANKS);
- 		rc = -ENOMEM;
- 		goto out;
- 	}
---- a/include/linux/tpm.h
-+++ b/include/linux/tpm.h
-@@ -25,7 +25,9 @@
- #include <crypto/hash_info.h>
- 
- #define TPM_DIGEST_SIZE 20	/* Max TPM v1.2 PCR size */
--#define TPM_MAX_DIGEST_SIZE SHA512_DIGEST_SIZE
++#ifdef CONFIG_KFENCE
++static bool __ro_after_init kfence_early_init = !!CONFIG_KFENCE_SAMPLE_INTERVAL;
 +
-+#define TPM2_MAX_DIGEST_SIZE	SHA512_DIGEST_SIZE
-+#define TPM2_MAX_PCR_BANKS	8
++static int __init parse_kfence_early_init(char *arg)
++{
++	int val;
++
++	if (get_option(&arg, &val))
++		kfence_early_init = !!val;
++	return 0;
++}
++early_param("kfence.sample_interval", parse_kfence_early_init);
++
++static inline phys_addr_t alloc_kfence_pool(void)
++{
++	phys_addr_t kfence_pool;
++
++	/*
++	 * TODO: Support to enable KFENCE after bootup depends on the ability to
++	 *       split page table mappings. As such support is not currently
++	 *       implemented for radix pagetables, support enabling KFENCE
++	 *       only at system startup for now.
++	 *
++	 *       After support for splitting mappings is available on radix,
++	 *       alloc_kfence_pool() & map_kfence_pool() can be dropped and
++	 *       mapping for __kfence_pool memory can be
++	 *       split during arch_kfence_init_pool().
++	 */
++	if (!kfence_early_init)
++		goto no_kfence;
++
++	kfence_pool = memblock_phys_alloc(KFENCE_POOL_SIZE, PAGE_SIZE);
++	if (!kfence_pool)
++		goto no_kfence;
++
++	memblock_mark_nomap(kfence_pool, KFENCE_POOL_SIZE);
++	return kfence_pool;
++
++no_kfence:
++	disable_kfence();
++	return 0;
++}
++
++static inline void map_kfence_pool(phys_addr_t kfence_pool)
++{
++	if (!kfence_pool)
++		return;
++
++	if (create_physical_mapping(kfence_pool, kfence_pool + KFENCE_POOL_SIZE,
++				    -1, PAGE_KERNEL, PAGE_SIZE))
++		goto err;
++
++	memblock_clear_nomap(kfence_pool, KFENCE_POOL_SIZE);
++	__kfence_pool = __va(kfence_pool);
++	return;
++
++err:
++	memblock_phys_free(kfence_pool, KFENCE_POOL_SIZE);
++	disable_kfence();
++}
++#else
++static inline phys_addr_t alloc_kfence_pool(void) { return 0; }
++static inline void map_kfence_pool(phys_addr_t kfence_pool) { }
++#endif
++
+ static void __init radix_init_pgtable(void)
+ {
++	phys_addr_t kfence_pool;
+ 	unsigned long rts_field;
+ 	phys_addr_t start, end;
+ 	u64 i;
+@@ -366,6 +438,8 @@ static void __init radix_init_pgtable(vo
+ 	/* We don't support slb for radix */
+ 	slb_set_size(0);
  
- struct tpm_chip;
- struct trusted_key_payload;
-@@ -51,7 +53,7 @@ enum tpm_algorithms {
++	kfence_pool = alloc_kfence_pool();
++
+ 	/*
+ 	 * Create the linear mapping
+ 	 */
+@@ -382,9 +456,11 @@ static void __init radix_init_pgtable(vo
+ 		}
  
- struct tpm_digest {
- 	u16 alg_id;
--	u8 digest[TPM_MAX_DIGEST_SIZE];
-+	u8 digest[TPM2_MAX_DIGEST_SIZE];
- } __packed;
+ 		WARN_ON(create_physical_mapping(start, end,
+-						-1, PAGE_KERNEL));
++						-1, PAGE_KERNEL, ~0UL));
+ 	}
  
- struct tpm_bank_info {
-@@ -157,7 +159,7 @@ struct tpm_chip {
- 	unsigned int groups_cnt;
++	map_kfence_pool(kfence_pool);
++
+ 	if (!cpu_has_feature(CPU_FTR_HVMODE) &&
+ 			cpu_has_feature(CPU_FTR_P9_RADIX_PREFETCH_BUG)) {
+ 		/*
+@@ -889,7 +965,7 @@ int __meminit radix__create_section_mapp
+ 	}
  
- 	u32 nr_allocated_banks;
--	struct tpm_bank_info *allocated_banks;
-+	struct tpm_bank_info allocated_banks[TPM2_MAX_PCR_BANKS];
- #ifdef CONFIG_ACPI
- 	acpi_handle acpi_dev_handle;
- 	char ppi_version[TPM_PPI_VERSION_LEN + 1];
+ 	return create_physical_mapping(__pa(start), __pa(end),
+-				       nid, prot);
++				       nid, prot, ~0UL);
+ }
+ 
+ int __meminit radix__remove_section_mapping(unsigned long start, unsigned long end)
+--- a/arch/powerpc/mm/init-common.c
++++ b/arch/powerpc/mm/init-common.c
+@@ -31,6 +31,9 @@ EXPORT_SYMBOL_GPL(kernstart_virt_addr);
+ 
+ bool disable_kuep = !IS_ENABLED(CONFIG_PPC_KUEP);
+ bool disable_kuap = !IS_ENABLED(CONFIG_PPC_KUAP);
++#ifdef CONFIG_KFENCE
++bool __ro_after_init kfence_disabled;
++#endif
+ 
+ static int __init parse_nosmep(char *p)
+ {
 
 
