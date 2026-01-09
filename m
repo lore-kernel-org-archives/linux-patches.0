@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E81D132FA3D;
-	Fri,  9 Jan 2026 11:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6847359F8C;
+	Fri,  9 Jan 2026 11:53:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959579; cv=none; b=QYWr2XDGrgdWQgDdFdMm0JYOF8yiDNVBHFPG2ffCKrJCfbxf9FVKXma+ACIvZnOBdGJPBlVq5vPZ13sbpiBk/3dR6okK5ogSmpZ3SrK4kVrPbm6DWFQ3nsR5KskKZOfa45WJBh+DgaOcyofy6K8D/z8fL33cfaGm1vm650rLKKo=
+	t=1767959581; cv=none; b=Dz6SxtDYnu4opOGdGO667s8i1D7nTli1IpXa7ggClMvGrgG9ox39rj4EieVA7HIRU0S28BdbwO+rbefEF0mWOzSFdlVUjIYmmIuoNc28MlqCZpHAWGg5AIDqSpKgbsioU+lPXDWnAN2PzdU8Tr5Zd/JOm4b9L2ZFRyf67pd/Fxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959579; c=relaxed/simple;
-	bh=svqDqcR1YIhSJGO2/morTMh1X5ZqN2NUwKHximS5obU=;
+	s=arc-20240116; t=1767959581; c=relaxed/simple;
+	bh=jrw6S8yLdzpoDhTao4bVpxEmY/aEWowvJK3qKYI+45g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JbTftn9z4XwmU6JJkPpxadMecn2OBIB8Ne0W4H+rGwW0QlRmFICBpDp2Ft4hQmSKTWthLdWq3fQd2/h/NlwaObjMqRNbkR0a91Ze8+wP+aNFskuYEfyw0yON2Os3f/G37FCJPG5pz3tiICrf4p3lG1JaAwSGnz+Rk/tuMds2fu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VNzYKeDJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hyM7IxJ6d8MZW+6lOF2aRmQXbybIfKTPAKgbwKv3IPQQhxkteLSS4Oi+LCy4xUmQ9hrS1nl30rAPpxtR19Bi12/7z3oj+fWPwSetQb4I/JhJ7ogceS/J+N3and1KHQcaqclUKWOACBKoM19NBSegl26kKw6tAEzzAbxWD8c/Frw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tHWIpQ7i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VNzYKeDJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74643C16AAE;
-	Fri,  9 Jan 2026 11:52:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tHWIpQ7i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52231C4CEF1;
+	Fri,  9 Jan 2026 11:53:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959578;
-	bh=svqDqcR1YIhSJGO2/morTMh1X5ZqN2NUwKHximS5obU=;
+	s=korg; t=1767959581;
+	bh=jrw6S8yLdzpoDhTao4bVpxEmY/aEWowvJK3qKYI+45g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VNzYKeDJaDajx3SjqCE9RW417FSxemn7mSR68JthwuXL6yVt75/EGA6aTsG543Ilj
-	 MzU3S3u5b7DJghid3tXzYN9k+u+KZToEtVBvx2BoIT+ib/JqHVHPNg+3xbpLOQTyoO
-	 HO0PQHmhIq+7WT9Py8lngaWAwQtVOO2Er3b5hwsE=
+	b=tHWIpQ7ilAE8VU6slshW9szPJdCuOlrD3r1hWfmSZOpR7NS5wL5xA1bhQmXUELXVO
+	 EZdwnvtomZCODpQMPuxLsQZGJ1xNgrP231JL0OMjdTS7XOm7kWdzyKVUYPqOe2g6+g
+	 ngO5Fkw/1xOFf4YhXasCQsotcXTYqF8NtDWMUknE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin.berg@intel.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 100/737] tools/nolibc/stdio: let perror work when NOLIBC_IGNORE_ERRNO is set
-Date: Fri,  9 Jan 2026 12:33:59 +0100
-Message-ID: <20260109112137.764454257@linuxfoundation.org>
+Subject: [PATCH 6.6 101/737] soc: qcom: smem: fix hwspinlock resource leak in probe error paths
+Date: Fri,  9 Jan 2026 12:34:00 +0100
+Message-ID: <20260109112137.801909224@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -45,45 +46,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benjamin Berg <benjamin.berg@intel.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit c485ca3aff2442adea4c08ceb5183e671ebed22a ]
+[ Upstream commit dc5db35073a19f6d3c30bea367b551c1a784ef8f ]
 
-There is no errno variable when NOLIBC_IGNORE_ERRNO is defined. As such,
-simply print the message with "unknown error" rather than the integer
-value of errno.
+The hwspinlock acquired via hwspin_lock_request_specific() is not
+released on several error paths. This results in resource leakage
+when probe fails.
 
-Fixes: acab7bcdb1bc ("tools/nolibc/stdio: add perror() to report the errno value")
-Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Switch to devm_hwspin_lock_request_specific() to automatically
+handle cleanup on probe failure. Remove the manual hwspin_lock_free()
+in qcom_smem_remove() as devm handles it automatically.
+
+Fixes: 20bb6c9de1b7 ("soc: qcom: smem: map only partitions used by local HOST")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20251029022733.255-1-vulab@iscas.ac.cn
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/nolibc/stdio.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/soc/qcom/smem.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/tools/include/nolibc/stdio.h b/tools/include/nolibc/stdio.h
-index cae402c11e575..36952314eef6f 100644
---- a/tools/include/nolibc/stdio.h
-+++ b/tools/include/nolibc/stdio.h
-@@ -352,7 +352,11 @@ int printf(const char *fmt, ...)
- static __attribute__((unused))
- void perror(const char *msg)
- {
-+#ifdef NOLIBC_IGNORE_ERRNO
-+	fprintf(stderr, "%s%sunknown error\n", (msg && *msg) ? msg : "", (msg && *msg) ? ": " : "");
-+#else
- 	fprintf(stderr, "%s%serrno=%d\n", (msg && *msg) ? msg : "", (msg && *msg) ? ": " : "", errno);
-+#endif
- }
+diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
+index aead7dd482ea3..5217ff0a434f5 100644
+--- a/drivers/soc/qcom/smem.c
++++ b/drivers/soc/qcom/smem.c
+@@ -1164,7 +1164,7 @@ static int qcom_smem_probe(struct platform_device *pdev)
+ 		return hwlock_id;
+ 	}
  
- static __attribute__((unused))
+-	smem->hwlock = hwspin_lock_request_specific(hwlock_id);
++	smem->hwlock = devm_hwspin_lock_request_specific(&pdev->dev, hwlock_id);
+ 	if (!smem->hwlock)
+ 		return -ENXIO;
+ 
+@@ -1217,7 +1217,6 @@ static int qcom_smem_remove(struct platform_device *pdev)
+ {
+ 	platform_device_unregister(__smem->socinfo);
+ 
+-	hwspin_lock_free(__smem->hwlock);
+ 	__smem = NULL;
+ 
+ 	return 0;
 -- 
 2.51.0
 
