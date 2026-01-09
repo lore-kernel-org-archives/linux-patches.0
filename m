@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E7735C1AD;
-	Fri,  9 Jan 2026 12:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C83DA35CBCD;
+	Fri,  9 Jan 2026 12:47:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962861; cv=none; b=GDoHM8kfWk4prOFJU4hU59uKHNBS92xUgGaBUd7FqejG20jNeRAS5yGh9fg7ahYTb9eQD6N4Hm0/4c6kCuQajCaZh1u8rKgPsXFwEcOE2bTSgkhDaZoDAS+EtzRdgMfEBpApie3bAeMSJ0/jMFC26bKBt4ketsn7DP6LDvf6iBo=
+	t=1767962863; cv=none; b=NyM0SY/ZgDddn1Xb54z+08ifRn4yu/tkL4VKYQM0jicQIQCetUf+YpIyNlkzvYDQcolrNuJCgE41frp1mCp82XPKB6g92qhsuI1A1y+XLBmlyzsKH9vsJkoGnIEYITTBSiww9qCWkmnsSKE67rTyUov54QuZ6qPscePMxFwT2Ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962861; c=relaxed/simple;
-	bh=Omh48r+icdEcIo2vciHPUjk57dqbBk/Kwxtovw39d3c=;
+	s=arc-20240116; t=1767962863; c=relaxed/simple;
+	bh=8o0q58lklegSf8LYT6qZivRd5dZMYiTddTVj7NsQLmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PxMNyw4WLw+bFhkXBD7OuEriH9+jBhMSYR4VGsNL5QufycZ3uyI/3uffvE+t09imQhHse9+cZQ7KRIhSulN0f/l62VX0CHl99TfGn7a1CnGAdcoR5yrFferwuqJ+H6XxEMmnrA1zWJa4hklBwyZPsPqBhoV3GXSdX1As9h3IG38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NMxcg+JU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M04cgSXdkGwn9harqdiBsj6nYWhB6fvIzKX0AA4uCvpLwfrcZ75iPLO5zaaOfojSbPgedHwm+iCjT2JbGfib4J7RNfE84+BuMWlSG+7L6cKKwdO0Dq8OBk6MJS9nO7FIwNExPl4ggafyYD+EX+yPONMAa+NKaOnqxHXI36dy9xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d+GHj9xX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NMxcg+JU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72DBBC16AAE;
-	Fri,  9 Jan 2026 12:47:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d+GHj9xX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55D22C16AAE;
+	Fri,  9 Jan 2026 12:47:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962860;
-	bh=Omh48r+icdEcIo2vciHPUjk57dqbBk/Kwxtovw39d3c=;
+	s=korg; t=1767962863;
+	bh=8o0q58lklegSf8LYT6qZivRd5dZMYiTddTVj7NsQLmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NMxcg+JUIPdLgiL7BG46Tpp3BibK9I/kHaPpEXMtOs1pD0RZqzW3JnsB62wDzyewQ
-	 xDVsHO/xp5sWNc746zwg8ZmMVveSi8q7heLs/fU+4VATDG9P5QKYug4oRjxOgyek1I
-	 vcTcOSnrJ3ZM9MmLd8OxknNJnev1imw+1bPKo0EI=
+	b=d+GHj9xXrpsFnsR1fqXh1i6K2QvCVAVhZaJTPSWzXhPGqDS8wCTFRy1pT1KrIf7VJ
+	 MkIerx4mvAh5eqKPOMi2GlfcCZLeBDYSEy3OoLXSVYfv1SPLdywqx5F0ZTGEwkhx5p
+	 J8cae6rM6XhoCi1TJh9b/HGxjBwilUasZczBczuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari Bathini <hbathini@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Aboorva Devarajan <aboorvad@linux.ibm.com>
-Subject: [PATCH 6.1 513/634] powerpc/64s/radix/kfence: map __kfence_pool at page granularity
-Date: Fri,  9 Jan 2026 12:43:11 +0100
-Message-ID: <20260109112136.856825802@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 514/634] mm/damon/tests/vaddr-kunit: handle alloc failures in damon_test_split_evenly_fail()
+Date: Fri,  9 Jan 2026 12:43:12 +0100
+Message-ID: <20260109112136.894496028@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,228 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hari Bathini <hbathini@linux.ibm.com>
+From: SeongJae Park <sj@kernel.org>
 
-commit 353d7a84c214f184d5a6b62acdec8b4424159b7c upstream.
+commit 7890e5b5bb6e386155c6e755fe70e0cdcc77f18e upstream.
 
-When KFENCE is enabled, total system memory is mapped at page level
-granularity. But in radix MMU mode, ~3GB additional memory is needed
-to map 100GB of system memory at page level granularity when compared
-to using 2MB direct mapping.This is not desired considering KFENCE is
-designed to be enabled in production kernels [1].
+damon_test_split_evenly_fail() is assuming all dynamic memory allocation
+in it will succeed.  Those are indeed likely in the real use cases since
+those allocations are too small to fail, but theoretically those could
+fail.  In the case, inappropriate memory access can happen.  Fix it by
+appropriately cleanup pre-allocated memory and skip the execution of the
+remaining tests in the failure cases.
 
-Mapping only the memory allocated for KFENCE pool at page granularity is
-sufficient to enable KFENCE support. So, allocate __kfence_pool during
-bootup and map it at page granularity instead of mapping all system
-memory at page granularity.
-
-Without patch:
-  # cat /proc/meminfo
-  MemTotal:       101201920 kB
-
-With patch:
-  # cat /proc/meminfo
-  MemTotal:       104483904 kB
-
-Note that enabling KFENCE at runtime is disabled for radix MMU for now,
-as it depends on the ability to split page table mappings and such APIs
-are not currently implemented for radix MMU.
-
-All kfence_test.c testcases passed with this patch.
-
-[1] https://lore.kernel.org/all/20201103175841.3495947-2-elver@google.com/
-
-Signed-off-by: Hari Bathini <hbathini@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240701130021.578240-1-hbathini@linux.ibm.com
-Cc: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Link: https://lkml.kernel.org/r/20251101182021.74868-19-sj@kernel.org
+Fixes: 17ccae8bb5c9 ("mm/damon: add kunit tests")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: Brendan Higgins <brendan.higgins@linux.dev>
+Cc: David Gow <davidgow@google.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: <stable@vger.kernel.org>	[5.15+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/include/asm/kfence.h        |   11 +++-
- arch/powerpc/mm/book3s64/radix_pgtable.c |   84 +++++++++++++++++++++++++++++--
- arch/powerpc/mm/init-common.c            |    3 +
- 3 files changed, 93 insertions(+), 5 deletions(-)
+ mm/damon/vaddr-test.h |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/arch/powerpc/include/asm/kfence.h
-+++ b/arch/powerpc/include/asm/kfence.h
-@@ -15,10 +15,19 @@
- #define ARCH_FUNC_PREFIX "."
- #endif
- 
-+#ifdef CONFIG_KFENCE
-+extern bool kfence_disabled;
-+
-+static inline void disable_kfence(void)
-+{
-+	kfence_disabled = true;
-+}
-+
- static inline bool arch_kfence_init_pool(void)
+--- a/mm/damon/vaddr-test.h
++++ b/mm/damon/vaddr-test.h
+@@ -242,7 +242,16 @@ static void damon_test_split_evenly_fail
+ 		unsigned long start, unsigned long end, unsigned int nr_pieces)
  {
--	return true;
-+	return !kfence_disabled;
- }
-+#endif
- 
- #ifdef CONFIG_PPC64
- static inline bool kfence_protect_page(unsigned long addr, bool protect)
---- a/arch/powerpc/mm/book3s64/radix_pgtable.c
-+++ b/arch/powerpc/mm/book3s64/radix_pgtable.c
-@@ -17,6 +17,7 @@
- #include <linux/hugetlb.h>
- #include <linux/string_helpers.h>
- #include <linux/memory.h>
-+#include <linux/kfence.h>
- 
- #include <asm/pgalloc.h>
- #include <asm/mmu_context.h>
-@@ -31,6 +32,7 @@
- #include <asm/uaccess.h>
- #include <asm/ultravisor.h>
- #include <asm/set_memory.h>
-+#include <asm/kfence.h>
- 
- #include <trace/events/thp.h>
- 
-@@ -294,7 +296,8 @@ static unsigned long next_boundary(unsig
- 
- static int __meminit create_physical_mapping(unsigned long start,
- 					     unsigned long end,
--					     int nid, pgprot_t _prot)
-+					     int nid, pgprot_t _prot,
-+					     unsigned long mapping_sz_limit)
- {
- 	unsigned long vaddr, addr, mapping_size = 0;
- 	bool prev_exec, exec = false;
-@@ -302,7 +305,10 @@ static int __meminit create_physical_map
- 	int psize;
- 	unsigned long max_mapping_size = radix_mem_block_size;
- 
--	if (debug_pagealloc_enabled_or_kfence())
-+	if (mapping_sz_limit < max_mapping_size)
-+		max_mapping_size = mapping_sz_limit;
+ 	struct damon_target *t = damon_new_target();
+-	struct damon_region *r = damon_new_region(start, end);
++	struct damon_region *r;
 +
-+	if (debug_pagealloc_enabled())
- 		max_mapping_size = PAGE_SIZE;
++	if (!t)
++		kunit_skip(test, "target alloc fail");
++
++	r = damon_new_region(start, end);
++	if (!r) {
++		damon_free_target(t);
++		kunit_skip(test, "region alloc fail");
++	}
  
- 	start = ALIGN(start, PAGE_SIZE);
-@@ -357,8 +363,74 @@ static int __meminit create_physical_map
- 	return 0;
- }
- 
-+#ifdef CONFIG_KFENCE
-+static bool __ro_after_init kfence_early_init = !!CONFIG_KFENCE_SAMPLE_INTERVAL;
-+
-+static int __init parse_kfence_early_init(char *arg)
-+{
-+	int val;
-+
-+	if (get_option(&arg, &val))
-+		kfence_early_init = !!val;
-+	return 0;
-+}
-+early_param("kfence.sample_interval", parse_kfence_early_init);
-+
-+static inline phys_addr_t alloc_kfence_pool(void)
-+{
-+	phys_addr_t kfence_pool;
-+
-+	/*
-+	 * TODO: Support to enable KFENCE after bootup depends on the ability to
-+	 *       split page table mappings. As such support is not currently
-+	 *       implemented for radix pagetables, support enabling KFENCE
-+	 *       only at system startup for now.
-+	 *
-+	 *       After support for splitting mappings is available on radix,
-+	 *       alloc_kfence_pool() & map_kfence_pool() can be dropped and
-+	 *       mapping for __kfence_pool memory can be
-+	 *       split during arch_kfence_init_pool().
-+	 */
-+	if (!kfence_early_init)
-+		goto no_kfence;
-+
-+	kfence_pool = memblock_phys_alloc(KFENCE_POOL_SIZE, PAGE_SIZE);
-+	if (!kfence_pool)
-+		goto no_kfence;
-+
-+	memblock_mark_nomap(kfence_pool, KFENCE_POOL_SIZE);
-+	return kfence_pool;
-+
-+no_kfence:
-+	disable_kfence();
-+	return 0;
-+}
-+
-+static inline void map_kfence_pool(phys_addr_t kfence_pool)
-+{
-+	if (!kfence_pool)
-+		return;
-+
-+	if (create_physical_mapping(kfence_pool, kfence_pool + KFENCE_POOL_SIZE,
-+				    -1, PAGE_KERNEL, PAGE_SIZE))
-+		goto err;
-+
-+	memblock_clear_nomap(kfence_pool, KFENCE_POOL_SIZE);
-+	__kfence_pool = __va(kfence_pool);
-+	return;
-+
-+err:
-+	memblock_phys_free(kfence_pool, KFENCE_POOL_SIZE);
-+	disable_kfence();
-+}
-+#else
-+static inline phys_addr_t alloc_kfence_pool(void) { return 0; }
-+static inline void map_kfence_pool(phys_addr_t kfence_pool) { }
-+#endif
-+
- static void __init radix_init_pgtable(void)
- {
-+	phys_addr_t kfence_pool;
- 	unsigned long rts_field;
- 	phys_addr_t start, end;
- 	u64 i;
-@@ -366,6 +438,8 @@ static void __init radix_init_pgtable(vo
- 	/* We don't support slb for radix */
- 	slb_set_size(0);
- 
-+	kfence_pool = alloc_kfence_pool();
-+
- 	/*
- 	 * Create the linear mapping
- 	 */
-@@ -382,9 +456,11 @@ static void __init radix_init_pgtable(vo
- 		}
- 
- 		WARN_ON(create_physical_mapping(start, end,
--						-1, PAGE_KERNEL));
-+						-1, PAGE_KERNEL, ~0UL));
- 	}
- 
-+	map_kfence_pool(kfence_pool);
-+
- 	if (!cpu_has_feature(CPU_FTR_HVMODE) &&
- 			cpu_has_feature(CPU_FTR_P9_RADIX_PREFETCH_BUG)) {
- 		/*
-@@ -889,7 +965,7 @@ int __meminit radix__create_section_mapp
- 	}
- 
- 	return create_physical_mapping(__pa(start), __pa(end),
--				       nid, prot);
-+				       nid, prot, ~0UL);
- }
- 
- int __meminit radix__remove_section_mapping(unsigned long start, unsigned long end)
---- a/arch/powerpc/mm/init-common.c
-+++ b/arch/powerpc/mm/init-common.c
-@@ -31,6 +31,9 @@ EXPORT_SYMBOL_GPL(kernstart_virt_addr);
- 
- bool disable_kuep = !IS_ENABLED(CONFIG_PPC_KUEP);
- bool disable_kuap = !IS_ENABLED(CONFIG_PPC_KUAP);
-+#ifdef CONFIG_KFENCE
-+bool __ro_after_init kfence_disabled;
-+#endif
- 
- static int __init parse_nosmep(char *p)
- {
+ 	damon_add_region(r, t);
+ 	KUNIT_EXPECT_EQ(test,
 
 
