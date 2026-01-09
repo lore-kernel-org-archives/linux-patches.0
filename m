@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775D135BDB9;
-	Fri,  9 Jan 2026 12:26:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C3862737EE;
+	Fri,  9 Jan 2026 12:26:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961595; cv=none; b=nQkSjn9FOC0y/9U1FUH+cblwekNP7M1e7KsDRkO7o4d4cWH/vzEepdub2mlw/69SyUpsIU1ZcW916CxkNJIDgAjnjhKQX18Ms1bUzN2dGRJ6Ql4lqrgl83L6SQumiw1KU2R5o+Zb+/fgiUVmq4ZhjvnYOqajy4e9dEwwQ6JtWoQ=
+	t=1767961598; cv=none; b=YQnvBfLlIqvaoxzArEoVmEmzYsmyKA06x+LfrJ43GVZp4SH5hVo7HtHf+poEBA8pNr+RhUl+6BpBTIohGa1dg6TPjXpVfByDSxEBrfJk21pgHvJVqoBLxPWA0BYZoNEsg4iBYjHz3iCaZ3zvY0ePvDoc9ax37zuKkxmagliZDUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961595; c=relaxed/simple;
-	bh=KIUldL/VWWJw7lH30LykBsjersQ1K9ivD2baWxyYRCI=;
+	s=arc-20240116; t=1767961598; c=relaxed/simple;
+	bh=4A3R+YuIFQ3Ouau8kOqfUfkRIxTimcTizL1+Isk7tIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TaUNdbbxV4xS/RhIES3eRTy+X811kwvfyK1XN8Od6BCEsrKUqZtiucGGfpgUqXrbQHwh/Gw0LZX2CnEIOWw4iiJ4Q4MxydkgfFYj8/DocdXkuj/cmRebbHYbxsrbNumpG0Bee+IP6GFL7ybFY8K1ZJhi5b03S7cmkQkHOvLhZzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ILVd/WcH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dEGEhq5pzo6Urlr53oMmYeWTJ+vE8TJSvTeaRqDIZAWYXaqk0D2do1nvglCxZzL3baow2zfqsJ9EoIYSLKKbbp8djR4D6xX5K54QT2nstTpmirGaoas6JoUNRJ/I0KII75c4FqAigygunMatwRF24hCYOkrgdlk4fTmYh44FJXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UxnVG2/p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ILVd/WcH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03DC0C4CEF1;
-	Fri,  9 Jan 2026 12:26:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UxnVG2/p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC39DC4CEF1;
+	Fri,  9 Jan 2026 12:26:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961595;
-	bh=KIUldL/VWWJw7lH30LykBsjersQ1K9ivD2baWxyYRCI=;
+	s=korg; t=1767961598;
+	bh=4A3R+YuIFQ3Ouau8kOqfUfkRIxTimcTizL1+Isk7tIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ILVd/WcHDuUdc9KY5UIPkeBhl/D3MZvp0fQiucNfjXfX+X/sIVnz3sc/nYcZUcoy/
-	 j/6zUKzEAMUb5OLdLugltwxRVD7KfD/mOlf8PxcMVYluZXTPNw2BCWERqMDFqofIPu
-	 7SyCP16YVaOq3r6V21gUEcud9DksDO/6LO4UKtI8=
+	b=UxnVG2/pswnNCzyOtNIRhkV8MttrRXGL6tnW4rwFCS2kZxItW4uaYS7dgbRorZq+D
+	 6w3Ros4XZpWzA19oxxZtDH57ZHzijSMmmFvaDotWG1ckW6VHqgh9DspJsSi6zbmK74
+	 YznOSXgXiq4xvcw47i7HbAyaTmIWBOjEZuguZuws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7811bb68a317954a0347@syzkaller.appspotmail.com,
-	stable <stable@kernel.org>,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 6.1 036/634] comedi: multiq3: sanitize config options in multiq3_attach()
-Date: Fri,  9 Jan 2026 12:35:14 +0100
-Message-ID: <20260109112118.806506405@linuxfoundation.org>
+	syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Tigran Aivazian <aivazian.tigran@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 027/634] bfs: Reconstruct file type when loading from disk
+Date: Fri,  9 Jan 2026 12:35:05 +0100
+Message-ID: <20260109112118.467654537@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,81 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-commit f24c6e3a39fa355dabfb684c9ca82db579534e72 upstream.
+[ Upstream commit 34ab4c75588c07cca12884f2bf6b0347c7a13872 ]
 
-Syzbot identified an issue [1] in multiq3_attach() that induces a
-task timeout due to open() or COMEDI_DEVCONFIG ioctl operations,
-specifically, in the case of multiq3 driver.
+syzbot is reporting that S_IFMT bits of inode->i_mode can become bogus when
+the S_IFMT bits of the 32bits "mode" field loaded from disk are corrupted
+or when the 32bits "attributes" field loaded from disk are corrupted.
 
-This problem arose when syzkaller managed to craft weird configuration
-options used to specify the number of channels in encoder subdevice.
-If a particularly great number is passed to s->n_chan in
-multiq3_attach() via it->options[2], then multiple calls to
-multiq3_encoder_reset() at the end of driver-specific attach() method
-will be running for minutes, thus blocking tasks and affected devices
-as well.
+A documentation says that BFS uses only lower 9 bits of the "mode" field.
+But I can't find an explicit explanation that the unused upper 23 bits
+(especially, the S_IFMT bits) are initialized with 0.
 
-While this issue is most likely not too dangerous for real-life
-devices, it still makes sense to sanitize configuration inputs. Enable
-a sensible limit on the number of encoder chips (4 chips max, each
-with 2 channels) to stop this behaviour from manifesting.
+Therefore, ignore the S_IFMT bits of the "mode" field loaded from disk.
+Also, verify that the value of the "attributes" field loaded from disk is
+either BFS_VREG or BFS_VDIR (because BFS supports only regular files and
+the root directory).
 
-[1] Syzbot crash:
-INFO: task syz.2.19:6067 blocked for more than 143 seconds.
-...
-Call Trace:
- <TASK>
- context_switch kernel/sched/core.c:5254 [inline]
- __schedule+0x17c4/0x4d60 kernel/sched/core.c:6862
- __schedule_loop kernel/sched/core.c:6944 [inline]
- schedule+0x165/0x360 kernel/sched/core.c:6959
- schedule_preempt_disabled+0x13/0x30 kernel/sched/core.c:7016
- __mutex_lock_common kernel/locking/mutex.c:676 [inline]
- __mutex_lock+0x7e6/0x1350 kernel/locking/mutex.c:760
- comedi_open+0xc0/0x590 drivers/comedi/comedi_fops.c:2868
- chrdev_open+0x4cc/0x5e0 fs/char_dev.c:414
- do_dentry_open+0x953/0x13f0 fs/open.c:965
- vfs_open+0x3b/0x340 fs/open.c:1097
-...
-
-Reported-by: syzbot+7811bb68a317954a0347@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=7811bb68a317954a0347
-Fixes: 77e01cdbad51 ("Staging: comedi: add multiq3 driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Reviewed-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20251023132205.395753-1-n.zhandarovich@fintech.ru
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=895c23f6917da440ed0d
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Link: https://patch.msgid.link/fabce673-d5b9-4038-8287-0fd65d80203b@I-love.SAKURA.ne.jp
+Reviewed-by: Tigran Aivazian <aivazian.tigran@gmail.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/comedi/drivers/multiq3.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/bfs/inode.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
---- a/drivers/comedi/drivers/multiq3.c
-+++ b/drivers/comedi/drivers/multiq3.c
-@@ -67,6 +67,11 @@
- #define MULTIQ3_TRSFRCNTR_OL		0x10	/* xfer CNTR to OL (x and y) */
- #define MULTIQ3_EFLAG_RESET		0x06	/* reset E bit of flag reg */
+diff --git a/fs/bfs/inode.c b/fs/bfs/inode.c
+index 1926bec2c8500..07f7929d07fd8 100644
+--- a/fs/bfs/inode.c
++++ b/fs/bfs/inode.c
+@@ -60,7 +60,19 @@ struct inode *bfs_iget(struct super_block *sb, unsigned long ino)
+ 	off = (ino - BFS_ROOT_INO) % BFS_INODES_PER_BLOCK;
+ 	di = (struct bfs_inode *)bh->b_data + off;
  
-+/*
-+ * Limit on the number of optional encoder channels
-+ */
-+#define MULTIQ3_MAX_ENC_CHANS		8
-+
- static void multiq3_set_ctrl(struct comedi_device *dev, unsigned int bits)
- {
- 	/*
-@@ -312,6 +317,10 @@ static int multiq3_attach(struct comedi_
- 	s->insn_read	= multiq3_encoder_insn_read;
- 	s->insn_config	= multiq3_encoder_insn_config;
+-	inode->i_mode = 0x0000FFFF & le32_to_cpu(di->i_mode);
++	/*
++	 * https://martin.hinner.info/fs/bfs/bfs-structure.html explains that
++	 * BFS in SCO UnixWare environment used only lower 9 bits of di->i_mode
++	 * value. This means that, although bfs_write_inode() saves whole
++	 * inode->i_mode bits (which include S_IFMT bits and S_IS{UID,GID,VTX}
++	 * bits), middle 7 bits of di->i_mode value can be garbage when these
++	 * bits were not saved by bfs_write_inode().
++	 * Since we can't tell whether middle 7 bits are garbage, use only
++	 * lower 12 bits (i.e. tolerate S_IS{UID,GID,VTX} bits possibly being
++	 * garbage) and reconstruct S_IFMT bits for Linux environment from
++	 * di->i_vtype value.
++	 */
++	inode->i_mode = 0x00000FFF & le32_to_cpu(di->i_mode);
+ 	if (le32_to_cpu(di->i_vtype) == BFS_VDIR) {
+ 		inode->i_mode |= S_IFDIR;
+ 		inode->i_op = &bfs_dir_inops;
+@@ -70,6 +82,11 @@ struct inode *bfs_iget(struct super_block *sb, unsigned long ino)
+ 		inode->i_op = &bfs_file_inops;
+ 		inode->i_fop = &bfs_file_operations;
+ 		inode->i_mapping->a_ops = &bfs_aops;
++	} else {
++		brelse(bh);
++		printf("Unknown vtype=%u %s:%08lx\n",
++		       le32_to_cpu(di->i_vtype), inode->i_sb->s_id, ino);
++		goto error;
+ 	}
  
-+	/* sanity check for number of encoder channels */
-+	if (s->n_chan > MULTIQ3_MAX_ENC_CHANS)
-+		s->n_chan = MULTIQ3_MAX_ENC_CHANS;
-+
- 	for (i = 0; i < s->n_chan; i++)
- 		multiq3_encoder_reset(dev, i);
- 
+ 	BFS_I(inode)->i_sblock =  le32_to_cpu(di->i_sblock);
+-- 
+2.51.0
+
 
 
