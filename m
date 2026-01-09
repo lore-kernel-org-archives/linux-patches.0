@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40EED33032C;
-	Fri,  9 Jan 2026 12:46:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9856F358D30;
+	Fri,  9 Jan 2026 12:46:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962807; cv=none; b=G1mJUtRhzBW5H8xJBj3FTLspxD8jOARgMhvy8eGe3OnOQYkkIET6FMCE+/dMIYPGVMU7577vqJUvuYlP2kL8zRW8aO1b0l+tT5tAYip9VpnP6kae2c/tJdJ1Uy0V2VmWlzxJjzmNFykYRjkffcCfvWrQ3/iBEzvc78SE45IOWAw=
+	t=1767962809; cv=none; b=qRjGZKNWmTvXCXUMXSZNLPfw+inBrNypxXIdhJ4anHVJPjpp2/9kR+Lxe77VulRX8kbOB/g5rKS/bJmPL4OVzpaQJTLygB5zAc2AVn9/KsUdVmhGRwoJn3tGzpcyfPA3xm4SlnMW7WI6R0OI/+NV3fLhU8mXRy4ANGo2pZJSHE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962807; c=relaxed/simple;
-	bh=k112OGGGXYzRV7opfFucio6E4xPBMUGvKp1dTE3kr1o=;
+	s=arc-20240116; t=1767962809; c=relaxed/simple;
+	bh=QX+KWCdPEY14Kcd5HxedPMy9E8rUVwMaG681hBnDhoc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=od82/3llRQxRNALrYbGAF5/XxHeY0EAMvFWXSjA9hZIl0tNeNlYJ1AqPysk/YgDLryzPugW+EZ7GqENhX2fHy+QmcEqH24cs0HKJ0csuK6d0II+ZFn+IY1VJz33nHHNrI2LYkrJKWonNJzZ47Mh9c3vDtVFrmakvSR46jJKf3e0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=omF31A/X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JWw6FqeehHZVi9xAMrb1wroTaXFRPfNJt06uOFzU2yxEGAxIbYJwd4b9k7V7uaSC6b4sPDmnIqYYASn8z9Gw3thHjrC7qdMxdkJlsWtbl4imKwUd4GpP4lu0dPe7+VBpwdFz1mNx9zlHtc2HKOkr48i76jzxvsZ58k1IKVtOmfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ySmubJwl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="omF31A/X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54501C4CEF1;
-	Fri,  9 Jan 2026 12:46:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ySmubJwl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E565C16AAE;
+	Fri,  9 Jan 2026 12:46:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962806;
-	bh=k112OGGGXYzRV7opfFucio6E4xPBMUGvKp1dTE3kr1o=;
+	s=korg; t=1767962809;
+	bh=QX+KWCdPEY14Kcd5HxedPMy9E8rUVwMaG681hBnDhoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=omF31A/XFOAHwatw/bV6S/0Qur84cC4QeuyCN6TcjkEF2UShO/mSSINkehgRkyz51
-	 u4KNi7pmOzlzvYvkK+pw7Hyz2HuNG7YUFJ4GSMMlb+vT48km2dt8NIh0k0mqhXAcwU
-	 ZrdXoulYpYNjcQU6Dx09QpCpIedA+wadacf9zLeU=
+	b=ySmubJwlI9qrXYfwqpO3SOVlHKYNKqKg2XsvdtDvaLLLg/qDCBZwbGcPm2nPIw984
+	 OzW/sJXHbF6oRM+BKyUSiNJrWlA4mONxQ9oIh0dXROaUWhoeCv/4O/RJXOTzz2N4xB
+	 /c5Pvokg7Hff28+XqCZMWCpycxAAmQzEeaVv13SY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Magnus Damm <damm+renesas@opensource.se>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Johan Hovold <johan@kernel.org>,
-	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 6.1 452/634] iommu/ipmmu-vmsa: fix device leak on of_xlate()
-Date: Fri,  9 Jan 2026 12:42:10 +0100
-Message-ID: <20260109112134.551476002@linuxfoundation.org>
+	Duoming Zhou <duoming@zju.edu.cn>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.1 488/634] media: i2c: ADV7604: Remove redundant cancel_delayed_work in probe
+Date: Fri,  9 Jan 2026 12:42:46 +0100
+Message-ID: <20260109112135.908550715@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,34 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-commit 80aa518452c4aceb9459f9a8e3184db657d1b441 upstream.
+commit 8f34f24355a607b98ecd9924837aab13c676eeca upstream.
 
-Make sure to drop the reference taken to the iommu platform device when
-looking up its driver data during of_xlate().
+The delayed_work delayed_work_enable_hotplug is initialized with
+INIT_DELAYED_WORK() in adv76xx_probe(), but it is never scheduled
+anywhere in the probe function.
 
-Fixes: 7b2d59611fef ("iommu/ipmmu-vmsa: Replace local utlb code with fwspec ids")
-Cc: stable@vger.kernel.org	# 4.14
-Cc: Magnus Damm <damm+renesas@opensource.se>
-Acked-by: Robin Murphy <robin.murphy@arm.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Calling cancel_delayed_work() on a work that has never been
+scheduled is redundant and unnecessary, as there is no pending
+work to cancel.
+
+Remove the redundant cancel_delayed_work() from error handling
+path and adjust the goto label accordingly to simplify the code
+and avoid potential confusion.
+
+Fixes: 54450f591c99 ("[media] adv7604: driver for the Analog Devices ADV7604 video decoder")
+Cc: stable@vger.kernel.org
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/ipmmu-vmsa.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/i2c/adv7604.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/iommu/ipmmu-vmsa.c
-+++ b/drivers/iommu/ipmmu-vmsa.c
-@@ -714,6 +714,8 @@ static int ipmmu_init_platform_device(st
+--- a/drivers/media/i2c/adv7604.c
++++ b/drivers/media/i2c/adv7604.c
+@@ -3617,7 +3617,7 @@ static int adv76xx_probe(struct i2c_clie
+ 	err = media_entity_pads_init(&sd->entity, state->source_pad + 1,
+ 				state->pads);
+ 	if (err)
+-		goto err_work_queues;
++		goto err_i2c;
  
- 	dev_iommu_priv_set(dev, platform_get_drvdata(ipmmu_pdev));
+ 	/* Configure regmaps */
+ 	err = configure_regmaps(state);
+@@ -3658,8 +3658,6 @@ static int adv76xx_probe(struct i2c_clie
  
-+	put_device(&ipmmu_pdev->dev);
-+
- 	return 0;
- }
- 
+ err_entity:
+ 	media_entity_cleanup(&sd->entity);
+-err_work_queues:
+-	cancel_delayed_work(&state->delayed_work_enable_hotplug);
+ err_i2c:
+ 	adv76xx_unregister_clients(state);
+ err_hdl:
 
 
