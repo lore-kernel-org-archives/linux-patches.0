@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731BD33ADB8;
-	Fri,  9 Jan 2026 11:58:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 137CF32BF21;
+	Fri,  9 Jan 2026 11:59:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959939; cv=none; b=LSC4gj4i5HAGenInhOiPZ7lMe9hPbTY/nR8SK+bhdQ2VEwHkau4naFYxVTQuwrGZK5zND2zRzJjECyO/QAbs/wxvnCF76qhw6x76vX3RQyDyBxXa95D91oY5qf239xzU0Y0JGAbwIEfB+pdULt41bJ27GoezL/SC2yPeZBJbR0M=
+	t=1767959942; cv=none; b=sgc7IwXiVkeZFwJMjXGYQqKy0i0h8L+yLlZrTOPHsBdusD44bHksW8jobKL0v4nKs5JFVGgoplvfKVSK/jTd+XLHLzYhLjSo9OD3LUgxZ/twl6myIzFCGyrhtHKg4Wz/jhYI5Cr2FdmT//r0RfhLqrAIT3DjYaRui+yiZXuppb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959939; c=relaxed/simple;
-	bh=D/3tuzyYiAH+sxDlGdwSGdNhjC8xoEn8YAcZeD2U218=;
+	s=arc-20240116; t=1767959942; c=relaxed/simple;
+	bh=fcfVpP/WQMnXxFsK1NdbFUJDA2lgjAQesQ9WxiLjD/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QufM6U5T5eJXHioRUUDFiHUHwE8QV1Axb1A2Q+H6eVSyNa7Il5Q39LFkKc0HLmVw7CBosAuhMUxFS4l4RpWNOlqlazhf9TSW1+QBSiT0h3TbNXVzcHNCvaUUn2bOD5x3MWOB9pPSPguYJjligJMkOmHGPsU2ctFjWSaLqAOZ0r4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lgE9Tm24; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r169r2cLWApVpVTSK52ThqynNsM0op5V5Yqke9iOnIHy64qioMeFv3Z5g1V4pw1Ga6hdjx2XJhVIBxTg0Wuzxiq2O5ZExaSbinJpn9CtN6x2VxnU4HJY2TaQn8YlE0RTiksrIBtIADEZ5PBSEveCmKG/Sn+wT4RJyZDTN7xZHlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KFFpxfmE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lgE9Tm24"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF843C4CEF1;
-	Fri,  9 Jan 2026 11:58:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KFFpxfmE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 933B0C4CEF1;
+	Fri,  9 Jan 2026 11:59:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959939;
-	bh=D/3tuzyYiAH+sxDlGdwSGdNhjC8xoEn8YAcZeD2U218=;
+	s=korg; t=1767959942;
+	bh=fcfVpP/WQMnXxFsK1NdbFUJDA2lgjAQesQ9WxiLjD/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lgE9Tm24K4N+jdyC2Vww0SeQUfD3TxK7mjuRatd9HpsPEcnNsI1jx/eh3hA4oZUJz
-	 YW+XxGemdkLiAFENn4MwIonsGrhs5vZ0Nj2H/05Zoe1Hzq3QDfZzXehPJcJw8K6x/Z
-	 if5B61ASODmgXurElbDrt74CaqMUoHojqq08/UxU=
+	b=KFFpxfmE2qWjemacmhKmDfEyVxNUdoaI+qLCl7vxRJ5AnCNqsrDq4unpFLUn2bpwy
+	 7oQYdpKX3P1EVuma+e2EyRJYLNPD8bhtarIeLHlfVOFWZV0vSN3lTfvr0BMhDs+8Sr
+	 Xugt5wMlKajxlrEh+7TLq99H0T73Or6FBIJE+cmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Brett Creeley <brett.creeley@amd.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 229/737] vdpa/pds: use %pe for ERR_PTR() in event handler registration
-Date: Fri,  9 Jan 2026 12:36:08 +0100
-Message-ID: <20260109112142.614426387@linuxfoundation.org>
+Subject: [PATCH 6.6 230/737] ASoC: Intel: catpt: Fix error path in hw_params()
+Date: Fri,  9 Jan 2026 12:36:09 +0100
+Message-ID: <20260109112142.651587237@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,38 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit 731ca4a4cc52fd5c5ae309edcfd2d7e54ece3321 ]
+[ Upstream commit 86a5b621be658fc8fe594ca6db317d64de30cce1 ]
 
-Use %pe instead of %ps when printing ERR_PTR() values. %ps is intended
-for string pointers, while %pe correctly prints symbolic error names
-for error pointers returned via ERR_PTR().
-This shows the returned error value more clearly.
+Do not leave any resources hanging on the DSP side if
+applying user settings fails.
 
-Fixes: 67f27b8b3a34 ("pds_vdpa: subscribe to the pds_core events")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Reviewed-by: Brett Creeley <brett.creeley@amd.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20251018174705.1511982-1-alok.a.tiwari@oracle.com>
+Fixes: 768a3a3b327d ("ASoC: Intel: catpt: Optimize applying user settings")
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20251126095523.3925364-4-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/pds/vdpa_dev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/intel/catpt/pcm.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/vdpa/pds/vdpa_dev.c b/drivers/vdpa/pds/vdpa_dev.c
-index 25c0fe5ec3d5d..744739a708b25 100644
---- a/drivers/vdpa/pds/vdpa_dev.c
-+++ b/drivers/vdpa/pds/vdpa_dev.c
-@@ -51,7 +51,7 @@ static int pds_vdpa_register_event_handler(struct pds_vdpa_device *pdsv)
- 		err = pdsc_register_notify(nb);
- 		if (err) {
- 			nb->notifier_call = NULL;
--			dev_err(dev, "failed to register pds event handler: %ps\n",
-+			dev_err(dev, "failed to register pds event handler: %pe\n",
- 				ERR_PTR(err));
- 			return -EINVAL;
- 		}
+diff --git a/sound/soc/intel/catpt/pcm.c b/sound/soc/intel/catpt/pcm.c
+index f1a5cb825ff1f..10d1c15857bfa 100644
+--- a/sound/soc/intel/catpt/pcm.c
++++ b/sound/soc/intel/catpt/pcm.c
+@@ -417,8 +417,10 @@ static int catpt_dai_hw_params(struct snd_pcm_substream *substream,
+ 		return CATPT_IPC_ERROR(ret);
+ 
+ 	ret = catpt_dai_apply_usettings(dai, stream);
+-	if (ret)
++	if (ret) {
++		catpt_ipc_free_stream(cdev, stream->info.stream_hw_id);
+ 		return ret;
++	}
+ 
+ 	stream->allocated = true;
+ 	return 0;
 -- 
 2.51.0
 
