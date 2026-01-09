@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E6F335BCD;
-	Fri,  9 Jan 2026 12:43:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9DA5335BCD;
+	Fri,  9 Jan 2026 12:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962584; cv=none; b=BROFuKD2SuKUu1YGFVooHM/dzkqwblnC9nF+/X7CkpMpq1+WZS9DTooG/VNndpNA/D9ANYpA1AIGuBA0IYbMr8e9HCN4wFxoOOnxmWjid0BUZseMcaB6XKws5V5cqLBVSyAkQxbROuPbmdSHpqi1Jcid28GYLuKf0DPsTrx+1XQ=
+	t=1767962586; cv=none; b=jYZbreye2LwAWUCqOYj20olOOFalABiTzUduYMr59bJ9D4V5np52OaCS+P5ZiXeJxz/qVs6sR1WlhjD/Hmphvu34t9qMaGGKct/5lWpB7vr7N1lbo6PXtR+u+9i/vBCQUVXeLBL5feBFcAdZA2QSNEHYi9Jln+X6Ms+Epz4KLCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962584; c=relaxed/simple;
-	bh=hhnIZlPHlFL0eBblIJ6PSyyBPH5V3c5rafhzjdk5v5I=;
+	s=arc-20240116; t=1767962586; c=relaxed/simple;
+	bh=Grk4mJYg/W3PCOjkZPGV8GHx1nX6RFIG/SurwoSukJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nZIlrhafOaEBBq0bu2t0inaUD/7vF43/ppUtekK3urwY7Ip6j06ouk9eSpm+dbqu6t5S9F04Yw3Bo1QiVhA1Ki7bs33FlQcF6/FS9BMEIHkK3TheVfx04ABR7J/E4LpL3tE+tButERdLIo+Avn1kiA6iltDj1kq4kseo4aAZDwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nKEBEwjY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rUD8vWbfEbduUm0iyge3i8dEsbCQM9eAosdSAQu7+XTqFR756QiuvJqSmcHdEuEPyqDL6jbBm4XRvdZRQZJL+yZ45snPa64GO4tsyRRr3KGEU/ntGbEX70mukEBnUsZ8C4RxDp8zqHUG58eGPrqY7Es88DusRbGFRx0JX4vBmg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IxtR9wxU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nKEBEwjY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67622C4CEF1;
-	Fri,  9 Jan 2026 12:43:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IxtR9wxU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C342C4CEF1;
+	Fri,  9 Jan 2026 12:43:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962583;
-	bh=hhnIZlPHlFL0eBblIJ6PSyyBPH5V3c5rafhzjdk5v5I=;
+	s=korg; t=1767962586;
+	bh=Grk4mJYg/W3PCOjkZPGV8GHx1nX6RFIG/SurwoSukJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nKEBEwjYD2PXd3Q6ieAeOPVV3qfgT2ZTG2JroH8q+NEvSUnNSixT5sR2dI0VwydRH
-	 sjPG7jZh6tk2XL1Sw+fkHIX9HOVSs9UqgZP0eitJp0SJ/2TfbL+vtpdM63JaKAR+QB
-	 pS11/z6r9Hw4eejtwBkWnxvC8dBIEBWI0RwfRZWM=
+	b=IxtR9wxUh68jdCD066R9ImFTmNwGHF+iJWq5zbjgu4VpJHAy0bCfCjtIxOEi+BUp6
+	 T3D5dBt4Xdk2y+8wh3ZcgfQU+Q9mcUPoD9RZSe0q24BP+bjVnzi8nOJd932LSoXuT6
+	 aNqbtCSpPCo8Y1MS/7DuusgI+ubhke6u2hTRA4sU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 415/634] firewire: nosy: Fix dma_free_coherent() size
-Date: Fri,  9 Jan 2026 12:41:33 +0100
-Message-ID: <20260109112133.152368350@linuxfoundation.org>
+Subject: [PATCH 6.1 416/634] net: dsa: b53: skip multicast entries for fdb_dump()
+Date: Fri,  9 Jan 2026 12:41:34 +0100
+Message-ID: <20260109112133.189742148@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,65 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit c48c0fd0e19684b6ecdb4108a429e3a4e73f5e21 ]
+[ Upstream commit d42bce414d1c5c0b536758466a1f63ac358e613c ]
 
-It looks like the buffer allocated and mapped in add_card() is done
-with size RCV_BUFFER_SIZE which is 16 KB and 4KB.
+port_fdb_dump() is supposed to only add fdb entries, but we iterate over
+the full ARL table, which also includes multicast entries.
 
-Fixes: 286468210d83 ("firewire: new driver: nosy - IEEE 1394 traffic sniffer")
-Co-developed-by: Thomas Fourier <fourier.thomas@gmail.com>
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Co-developed-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/20251216165420.38355-2-fourier.thomas@gmail.com
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+So check if the entry is a multicast entry before passing it on to the
+callback().
+
+Additionally, the port of those entries is a bitmask, not a port number,
+so any included entries would have even be for the wrong port.
+
+Fixes: 1da6df85c6fb ("net: dsa: b53: Implement ARL add/del/dump operations")
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20251217205756.172123-1-jonas.gorski@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firewire/nosy.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/dsa/b53/b53_common.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/firewire/nosy.c b/drivers/firewire/nosy.c
-index ea31ac7ac1ca..e59053738a43 100644
---- a/drivers/firewire/nosy.c
-+++ b/drivers/firewire/nosy.c
-@@ -36,6 +36,8 @@
+diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
+index bdbb873fe6eb..49fb610db484 100644
+--- a/drivers/net/dsa/b53/b53_common.c
++++ b/drivers/net/dsa/b53/b53_common.c
+@@ -1815,6 +1815,9 @@ static int b53_fdb_copy(int port, const struct b53_arl_entry *ent,
+ 	if (!ent->is_valid)
+ 		return 0;
  
- static char driver_name[] = KBUILD_MODNAME;
- 
-+#define RCV_BUFFER_SIZE (16 * 1024)
++	if (is_multicast_ether_addr(ent->mac))
++		return 0;
 +
- /* this is the physical layout of a PCL, its size is 128 bytes */
- struct pcl {
- 	__le32 next;
-@@ -517,16 +519,14 @@ remove_card(struct pci_dev *dev)
- 			  lynx->rcv_start_pcl, lynx->rcv_start_pcl_bus);
- 	dma_free_coherent(&lynx->pci_device->dev, sizeof(struct pcl),
- 			  lynx->rcv_pcl, lynx->rcv_pcl_bus);
--	dma_free_coherent(&lynx->pci_device->dev, PAGE_SIZE, lynx->rcv_buffer,
--			  lynx->rcv_buffer_bus);
-+	dma_free_coherent(&lynx->pci_device->dev, RCV_BUFFER_SIZE,
-+			  lynx->rcv_buffer, lynx->rcv_buffer_bus);
- 
- 	iounmap(lynx->registers);
- 	pci_disable_device(dev);
- 	lynx_put(lynx);
- }
- 
--#define RCV_BUFFER_SIZE (16 * 1024)
--
- static int
- add_card(struct pci_dev *dev, const struct pci_device_id *unused)
- {
-@@ -680,7 +680,7 @@ add_card(struct pci_dev *dev, const struct pci_device_id *unused)
- 		dma_free_coherent(&lynx->pci_device->dev, sizeof(struct pcl),
- 				  lynx->rcv_pcl, lynx->rcv_pcl_bus);
- 	if (lynx->rcv_buffer)
--		dma_free_coherent(&lynx->pci_device->dev, PAGE_SIZE,
-+		dma_free_coherent(&lynx->pci_device->dev, RCV_BUFFER_SIZE,
- 				  lynx->rcv_buffer, lynx->rcv_buffer_bus);
- 	iounmap(lynx->registers);
+ 	if (port != ent->port)
+ 		return 0;
  
 -- 
 2.51.0
