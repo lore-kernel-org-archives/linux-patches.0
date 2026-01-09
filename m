@@ -1,225 +1,254 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 841D614F112
-	for <patches@lists.linux.dev>; Fri,  9 Jan 2026 00:34:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.13
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767918842; cv=fail; b=GOmvtyoL1nFNMfBDDlqJ4LYdguveGYMLowzJxQK4B7rExhE+BfJ+0nlBcdRh8EASgp79xAXDaOJxcFk1Dp29mkQM07URxmmIeDLvDCe4PX8+3f2aY3MAwFkylzHSYNTUSzfDbyZFQ/md+rNl7H7OWNeP5BzB2d9/0/oHI6h7RMQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767918842; c=relaxed/simple;
-	bh=Y3lmv/XBn6pvLHSa3RvP+XnXifzXz+dieocqaKdDyus=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=XQmPQdr7xeYj2DsCWCUCBW7fw1PCqrO9fE9AYLGgpUhxbz6UeMFF+Y76nmf6RQHsEMb4pPIvFm1E71RENXtGSVCJRcEQB1WZXP3QAGD4ewrG8wUMP1p9XJpwVJhdlKCPoN7QzZpt1u2zczUXzPyFDo1SjPrdUd1TVCba99Dd2vM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=heivh2q7; arc=fail smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C5F3570C5
+	for <patches@lists.linux.dev>; Fri,  9 Jan 2026 09:06:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1767949597; cv=none; b=QRd5Zken/viHsrWQC48NIgDB3Jxdfuplb1jhUNuqUl4heuRVKyct9dwSCPRL45LZYNe9KGVDEmXxZ5obLaptjrj3U0rlKZ04E42MXTz30Iakgv21ijhI2zQhU5XsKIexhsgMlqkCLCGREp/Lf8b2I4lqaxfJV7WzbJDxWTG6p3o=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1767949597; c=relaxed/simple;
+	bh=fWqgP7eSi1KUIjxhrWcDi21Hb4l2pDe5rmdIVAWgWPo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BFcZMZAgoXznWa+fWr/98wybVw7JsaspU3Me0e/U6hYt44XBP82nTUggHPXsu6CvVpPLCb3l8vqOpf6/+jJqSd6Eh6BBxULA7kOHAG3WMyThL4BLmZUmOmg9g6ZyY5Vcq1tv1BF0qTntmvIz20mHgo5y/cVBiXvb43l8VO6PvGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MxQnQQuo; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=cnMis/Bs; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="heivh2q7"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1767918841; x=1799454841;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=Y3lmv/XBn6pvLHSa3RvP+XnXifzXz+dieocqaKdDyus=;
-  b=heivh2q7J5/LI2W1asFV6ER9CThlFYN42JwPaLnpwJr2CbaiH+BZuyso
-   GQTyEejhZdVrXxPi/3l978jyPtqJCl18TuWAIudIswVjEkp7xtf93+gTm
-   tF12IYH0bk+Oz6a+QIBF6FWPx/6aVPwlRSZID+NxSI64TN69jl8dtaNpi
-   VcuSdk9CGT3AfqsFcLzMtZAjv6ndsLZNd0BVc414t+v4jI5VvNdoC5MZf
-   qTrbffpvtqBnYDcJ9LLNqK1PVPeCL8LTjoF8KUeo0RWOdZxl5XUlVUGcA
-   cgZpmSmDCWygQynmOqhc2uloXWES+S+s3q5qbl7V4rO/vpel1kBEo7GH+
-   A==;
-X-CSE-ConnectionGUID: F+fJjsLtRfqU4dpAyOMBfQ==
-X-CSE-MsgGUID: EnRpPBr1SqSJDdqlmrH/0w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11665"; a="80413186"
-X-IronPort-AV: E=Sophos;i="6.21,211,1763452800"; 
-   d="scan'208";a="80413186"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jan 2026 16:34:00 -0800
-X-CSE-ConnectionGUID: 5+f5SugoRBaLPHxNKcMHDA==
-X-CSE-MsgGUID: 74n6MrtXRl28/FQ1swervg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,211,1763452800"; 
-   d="scan'208";a="207479651"
-Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
-  by orviesa003.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jan 2026 16:33:59 -0800
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.29; Thu, 8 Jan 2026 16:33:59 -0800
-Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.29 via Frontend Transport; Thu, 8 Jan 2026 16:33:59 -0800
-Received: from CY3PR05CU001.outbound.protection.outlook.com (40.93.201.25) by
- edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.29; Thu, 8 Jan 2026 16:33:59 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=XNEYqYezLtvhIEYYaY8ZUQ7GXKGFSi/f02YS7WD7BsT0PNzv9IQWcvacYBaEdesqLJhPwKjE1AStvpjiM67nzCMItfNx2vJmMjrwq826zTfFy92ujJX90qDor/yZb93XUK9eUMPVxj1PL6cryiAcizGViF4N8A/JrEXEROlsh5bvIaCyLua1LMWxM4nYMzkMMpugO0Yb1WGQaJFPjGkdIVqjwsw3Vbam/rm4W1M+X0XmrLmO3KRzcB8fSIE1DSFq2c+WZcDYfPEktkVDcZ8bKoN4XJaGdNIobiclAbEoAB1TpglH5lkNHpJvzj/PCYuU27e+wIGyWDZJkK0ggjv+dQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=61VhQMcs3n7oHq5UJjhIjHNqfLfBqhxj2JzLRzaM7wk=;
- b=YTtoPGXaooLSiQe54+Fb1M7PodXo8p9BwkzEFevIfUGXCM5GGkBFZuP7/TdKtxP1TmeUMi3kO6lnRynZFAvBEch/XYmoXF9N5Um1qIlTABuEZlSvNKhhQbtzKcOYS4gF2c3pTNoh7gW7wPWw779sPrRVHWJZTQS4ORxx/bCx37ayqI8ucMqlFot40k7HdUeCvbvcBZZlckI2cL6vPYb7q2Ot5vxX9PSTjEsM49+qZR8R0zDoCGJ9u7MrFQ3RN73b3lVH8jG2epXOO5brqWNZIRPAZ9jtVKjfdkqJOcx66mfa+iLDwQLuvFsgBvA5cc6mbi1gKMmd6ACZ9C7FsCndew==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
- by SJ0PR11MB5134.namprd11.prod.outlook.com (2603:10b6:a03:2de::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9499.4; Fri, 9 Jan
- 2026 00:33:51 +0000
-Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
- ([fe80::61a:aa57:1d81:a9cf]) by SJ2PR11MB7573.namprd11.prod.outlook.com
- ([fe80::61a:aa57:1d81:a9cf%3]) with mapi id 15.20.9499.002; Fri, 9 Jan 2026
- 00:33:51 +0000
-Message-ID: <c27ff6a4-505c-4873-9e41-d52a21a1eba8@intel.com>
-Date: Thu, 8 Jan 2026 16:33:18 -0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] once: Don't use a work queue to reset sleepable static
- key
-To: Tony Luck <tony.luck@intel.com>, Andrew Morton <akpm@linux-foundation.org>
-CC: Eric Dumazet <edumazet@google.com>, <linux-kernel@vger.kernel.org>,
-	<patches@lists.linux.dev>
-References: <20260108232717.14411-1-tony.luck@intel.com>
-Content-Language: en-US
-From: Reinette Chatre <reinette.chatre@intel.com>
-In-Reply-To: <20260108232717.14411-1-tony.luck@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4PR03CA0185.namprd03.prod.outlook.com
- (2603:10b6:303:b8::10) To SJ2PR11MB7573.namprd11.prod.outlook.com
- (2603:10b6:a03:4d2::10)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MxQnQQuo";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="cnMis/Bs"
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6096ffwW1953231
+	for <patches@lists.linux.dev>; Fri, 9 Jan 2026 09:06:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	rrGDbD4E64ochKqofLUd4Z6PCmwVO6LP8USJFReLrZY=; b=MxQnQQuoXitKlChq
+	l6q7BSifxiV8rH5QEvjeFOrhempCtgTZ+u7ooGB/UhvHfgEfbqxdC6yxub6E8Or0
+	yVjrRcxF+ffMhmOKd4z+ERj0g0kpPitgJGPsk4mgbqKegMyM1uZaCrGjOsEUhx9k
+	KhAfUKLGpS94BXJzfEpLTJErc9b/8oNC+3uGpoysoODh+lj/154yHOSRdmZsfHx2
+	iHCPpriFcXjxgVFZR3/vaaYFbcAAJ35tWqMWLuvQR8itwMbWK1O/lxxHrM2EvN1M
+	8CwtGZq9JJp9N4yrgFwZsRcEj3zLAZpE1aNmEC2ah5L7RqMez9ND+vsQHRjh7o4B
+	LSb6iA==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bjfdaaqht-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <patches@lists.linux.dev>; Fri, 09 Jan 2026 09:06:33 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-8bbb6031cfdso119250185a.1
+        for <patches@lists.linux.dev>; Fri, 09 Jan 2026 01:06:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1767949593; x=1768554393; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rrGDbD4E64ochKqofLUd4Z6PCmwVO6LP8USJFReLrZY=;
+        b=cnMis/BsUfUpYSeo34bfaHZNIkPG5cCPlQlHlfJpzPdxBgaOc5zNddsHDXzhBOqg1S
+         41pJsdPt5pp7AOmX6PYnYbTL4d9VUSnbNVRWQJvcjxKFWjX9/ppMgDOjd2UACnQ0x8sH
+         RS6t5ho6ofqhHUnWivwlyFoOPx4tNjBOG7GTwFAFTlbRrXpc7K6qqsE2HuFU7CsezzlS
+         b/2EAkreS2Ut4lWa8RE5pB+10Onu3HVofp2dzNMBr90HS4t4zg0myiUx9wkWkztyjjL+
+         re6P10dHxC+Xnjsf2DL+L0hb3WveBjt1wJ0fFMFd8NlJ1zQWI+gXDACxKRUvDJVv6tdk
+         p1LQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767949593; x=1768554393;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rrGDbD4E64ochKqofLUd4Z6PCmwVO6LP8USJFReLrZY=;
+        b=MHvpWj4tCd+kODAjW/5Qb+MJUx5G7Sh7gFmzCOIQOR6wXD5qAt54AKRz7OhMK4OLtX
+         Fci/kmpStXP3xDwMyH+dZkhT+/jC/NyjJdPCoOFewdbux1Rf1dQswTIIMxyj+KU6om/3
+         csBBpVxpZV0tWqnD9uvq7uacuqOP/HAo9Hnrw2JOeq1edYJqUUBnsyGJ6FQa3nfc7HMG
+         nFJwzy0xLFbjWdn6xNNdoknwHLIW6c2FsVf8/o08gR4wIrMbmEvCF3YPKzjMS/euodQ6
+         Om/KB9VfNN1V3bOGgwB56aDWpdlBVnxnjgxBOJRv1QXXLa4/B1+bFD0ScwYh+Ok9Y2aS
+         xezA==
+X-Forwarded-Encrypted: i=1; AJvYcCVhhj1nHgIkG3OCvqup6up0TUDZnQuQxsk2TOZoLQVdBfpH27hqyZKPpx3mMQVQCcCZySPXiv3b@lists.linux.dev
+X-Gm-Message-State: AOJu0YwF3DEug/NsEkDmWPvmbgE+xUWHrkZK0FyCrLarw8bXWDHH7FyF
+	3uZym1EwNl9xJYngjf8RhFpIXBtLxgv1qoyCCJ4OVq7omct7jqccbL1ZDpXheY7TGSCA8rDBEAj
+	SDdfRlKZhSa/n7q1neLuKp/VhANZeBiwZWuPFXEtC4wS7QLIw1ICKAUuxCNEY
+X-Gm-Gg: AY/fxX5CA2JyIyOfpcqhQLbuB2AhTgI77hj5l7X0FP1620hJR3D4EBeNmedYhkEt9Fu
+	XB1FM3EaxxdZE4hOxwwWFMfx1y6bgYiIb6sQzrATrLIqpUqho9WcCQQMi4BjL9l3tr88FROhmEH
+	iQhcPbKagWfEucWeVQ5Q4B7HNrLoczkWuFc4mRv3G7t187ssV0rfpXMWaMr+qdHNvKFECgfCbGJ
+	4ODI0DTEG0i5TlPgAnNeBp4ZAARmBcKMGYt8ZxEPQjGF/KjmDyWhjiyOoQBzvvEi3aMuoeNOW1k
+	o1A9ny/vjwIx2qyrH6G3sP7XBGbbEvoSoZl9lwtg1oPfW82k7O+Wi6sKtrwmbbga3XxzU0RqR8U
+	Fh8Q6I7JJ4tjq22GRzXxsvRMBaK9f5fUJPKQc/Qa9+CcqCfOtJNiDPzEyeskeV9Vwyts=
+X-Received: by 2002:a05:620a:40cb:b0:8b2:e704:55fe with SMTP id af79cd13be357-8c3894104edmr885986185a.10.1767949593044;
+        Fri, 09 Jan 2026 01:06:33 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHNhlqG1qVA0WeSBPAv41iXJojsZ0EgDiNOaWVzG9AckeDmRxc+YXyNI/94n7ZKvJNWAxmdPQ==
+X-Received: by 2002:a05:620a:40cb:b0:8b2:e704:55fe with SMTP id af79cd13be357-8c3894104edmr885984385a.10.1767949592559;
+        Fri, 09 Jan 2026 01:06:32 -0800 (PST)
+Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6507b8c4479sm9806221a12.1.2026.01.09.01.06.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 09 Jan 2026 01:06:32 -0800 (PST)
+Message-ID: <ca851614-2804-4029-9799-19e71dd73414@oss.qualcomm.com>
+Date: Fri, 9 Jan 2026 10:06:29 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|SJ0PR11MB5134:EE_
-X-MS-Office365-Filtering-Correlation-Id: 297e708b-ae9f-4fbd-1738-08de4f16c2e0
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?bzJsVlRLZXVNeEU2Zm53TmdkM3V4d1drb01OY3VXTEdPWmw5b3B0Vlh3TkFH?=
- =?utf-8?B?Z0htb0J5aHNEQk1jK0V1RmJRQXd5OE95K3ZVS0ZJZHNxLzdsWWFpR3ZaZDVB?=
- =?utf-8?B?bXdJZ2VxSVFjRVpJK014L0ppWDZuMXBpZ292bUhOZzRVUS94RkRydHJtR1lC?=
- =?utf-8?B?QmVnb05mcWRYd3RhT0VnYkhuM1lNVVZUajdNeXFxczhFeWdXeFh2alJOazR2?=
- =?utf-8?B?cWZPZzUrTHBEZWlyQ1MzK2kxOGsxRDZIbDBkMXVwT3Q0dFVDUVJHN3BHRHMx?=
- =?utf-8?B?YmtGVHhZRmROQ0VuSWFEOHJJOC8wcDJ5SHBDUFlOWlA1RytTenk4Ky81dWFX?=
- =?utf-8?B?d1QrZzdsc1QreVJxWkhsZzhWNkR0R0hJRDFaTWlIRWF5a2JIS0hrTUVWeVdz?=
- =?utf-8?B?ak9POTlZbzBGV1BRRkJFSGJzVTlacHBvOHhiMnFsRU94Y253MDFiTThCK3l0?=
- =?utf-8?B?T21aZGxXWVV6WnRYeWYxeklhK29PQ3FxQzlrdmcxNmVIM3BLUmZQdm85TzVl?=
- =?utf-8?B?QU82aE9kaldSbWxRVTVGMmRCQzlPSXAyYW12UGZyL2NvTWhzeUcwQVpwWW5N?=
- =?utf-8?B?RW4wYmI1d3k5ZjZVdlpib085R1psVHVOd0RrMHNPSW1qMXZsckxKcVJKRWJh?=
- =?utf-8?B?ZU0xaGlZSlg2TXMwTERSTnA5MHR2eDc3b2N6d3h1VkV0SDJST2JKSW9PbURF?=
- =?utf-8?B?cGlyNXMrNlMzdWgzYnBPV04rUGxEV2NrVW5zQ0FpT1pmTk5nVWdrS1dscjRD?=
- =?utf-8?B?NkFaTndhU0xkSkVRQzhIdi95RElocG4yTmphc0luUTZaMU9FL3Uzd0ZBcllW?=
- =?utf-8?B?WndnQ1hsN29USXF6TEJ2RCtKcDlZa2ZBam03V1pyemd5cGdMZ3ZxaldRbVBz?=
- =?utf-8?B?NmtxTVdrZ3p0eXg5QnNqcEdVMk1hU3ZYNEFWWDJCcG5vM1l2ZGZLa1ZuVlcr?=
- =?utf-8?B?MVVyTW0zUkgrbWczQ1R6RVF1V0VMN2FpSDFIaHByMHlWcjFUWTFybXpuNGhH?=
- =?utf-8?B?Nm9ncWd6a3ZZbU5zRmFTdndLckwxVzJoM1RnMTI0b05lNmk2Y2hYSjNoRnRP?=
- =?utf-8?B?YlJEUkVaK3pUSHlaNmx1em5TK2s5dHB4RjlnQXRQYm5idnBaYlQ1ODFabFIw?=
- =?utf-8?B?OG53N1Fic01vVnphODdMWXd6WU5HY2tRcXdENzhTbkMyQWh6bmZKMGNyWEJM?=
- =?utf-8?B?ZWQ3SjdLZmxPSkh5N3B2UHM0SDMreTJjdHE0cGEzNnUzMUk2MG1CcUVKR0VQ?=
- =?utf-8?B?NkpxeDhoNVJNdldsNjc0VmVvNmM1YlhEUDdlRDZpaU5nZTBRZkw0ZWtjNTRm?=
- =?utf-8?B?amQwdWI2SHAwVDJMazR6MDdIR21NOEdxMTFEU1hzVUlyQzhNUGpNcUpUYjh0?=
- =?utf-8?B?V082S20xTmUzQU92WktDTVB2dTQzME94a2tOTXAvMkxZRnlwcDJ0QkZxeW5R?=
- =?utf-8?B?TVNxL2lvTmR3QTRTNUxFUHkzUWZsMmFDTkVxVlk4ZlZNaCtiT2UwTmIxUzFB?=
- =?utf-8?B?T2RTdFI3bHJ0dEVhVnBwM1B4dHR1T2ZCRHI1VWMvTENYOTNwY0lqdU9maWpK?=
- =?utf-8?B?b2kxY2pwWDVFelYrbGpiaXNjYlZLQXJteDFMbXRYcEdTc0szd2h1dXJqc3hU?=
- =?utf-8?B?N0tNWWR3dTVqUjhRZlBiRzFxMHREYlFoYzhXSnpXeVQydlNabXl3dWJvRTVn?=
- =?utf-8?B?UXRPNDN0b0U5M3lRNFVac2xTUmE4bitWb3ZQZWgxaEJMamtLMGpSMVdVNi8x?=
- =?utf-8?B?MEVwUGNsajVuTjBHNkhvNXllYUVNRGVBT2NLRkNGZlI2aUQvdVBoZEdGekZt?=
- =?utf-8?B?Ly9EQk13TnFBZzBRWnpGeWpNbi9QdTFscUJ3NFptdzlJdE1LbzRkd3BGbjU0?=
- =?utf-8?B?dzJuOEtBS01GakRmNUVvVzRYWFJ2U3c1bmc4a2NsaG54dHlDa0R5eVpBckxi?=
- =?utf-8?Q?B78IHRqPPqR1K5tUFixKHKcavTTTQXz2?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?akIwQWR2b3d0S3NmWi9lSCsvbGpLb1lkdWtnUlcxK0RNRTNRQWU1VlFyQlpV?=
- =?utf-8?B?OWNRUFdNaUt5V3JyUmgydlQ2QitFNE5UZHpTblM1djNPaHdhOGh2WmoyeFJm?=
- =?utf-8?B?NlJtSUhoVGtRREdaOEZIQVA0UXJ5Ky94V3U5V2cxeTA5S2llU0h0emVIUGRz?=
- =?utf-8?B?RzkwZTIrZmtZUldXNzdhWmpYVmoxWUpRdmVGU2hJR1VFWGhicER2TGFhN2F5?=
- =?utf-8?B?dEg3Sm9JZGh6WW8rQStod2ozVE5lY2xGUG5WMFFRelBXbXV2QzlVVzlVYzlG?=
- =?utf-8?B?d0YxdXlobmlUa2s0REJsYmM3amhtMWpqZC9kLzROdWJPcGJQYXlueFEzVXda?=
- =?utf-8?B?cnc4WExmV293TjdIL3k5d3hSUnF3UHB6djQzWjVtbCtVc1FTbGJlQjNHVjA2?=
- =?utf-8?B?TU5xUzRXNVlwd2dSVk9sRWRPbU1taEg4ZVMrS3RaZGZBc2hrQkZLU2pkVWpl?=
- =?utf-8?B?emJ4VlByK3BienA5T09xZ1l1ZjEzaXl1eWhGZkdFd3NjSVZVS1RHWmYxdG13?=
- =?utf-8?B?amZIbHpFaGQ2MWlubjJZalNsQ3g2cThOeWxIbmQyUjFUS01JM296UHd5YS8r?=
- =?utf-8?B?bTBqUEt3Y0tqZVRPcmtHQnEzaGgxSnMwNGpIRWNTVmIyeVdJWDJwWkR3WVNI?=
- =?utf-8?B?QkJBM0tENm5ubmpQbW45S2JuYWdwRTJqWi9mbVk4cldLbzRKMEY4K2k4VE9H?=
- =?utf-8?B?Z0gxbk5mNmhldE9ITXh0VkhFSDRyWm1UYi9OSmhLS1dsaVF0Y3Fjak9IM1pk?=
- =?utf-8?B?ZWFIcXE5eDFkT0dCcVovWTBhZng4Z3cwWlRSTDZJVnFoUXJ4dlg4Z3FPOHZ4?=
- =?utf-8?B?UFFScmZFQ3oyNVJQTVVvbVhKVmQxM0VodmkrUHJIMUVkNUk2bHowVHJlQU5i?=
- =?utf-8?B?eHcwcXg0U0ZXZzdSdEVKK1ZkeGw5blFNUGlZdTRhOGpVYi9kWmdEZ1JRUjZC?=
- =?utf-8?B?MXVYMDF5V1ByS0NTYW41ZHovWUFGOFBsVklzTEpVVlY5dXhqZHNuc1VoOVBq?=
- =?utf-8?B?bUxQUmszdE1sajNkOWd4REI4ZWEwdHBZejBna1lzc1J6RWlVK3lPV0dORkJJ?=
- =?utf-8?B?SUptcEtPZmZRQi9RMENDWFZkcXZXdlRjM2FKRVpRYTQ1M2R2Q2QvK054a21B?=
- =?utf-8?B?SHNpVzhMVWw0dlNSQzB2Smt1VmQxQ2RwMEZVSVJrVzlwdEtWaTNRcURwRXRi?=
- =?utf-8?B?K2lJV1BtTWY1MzBCV2laNWJ4eHNGU1RsbWRISEFKamdHY1o0WEFrczdlRENa?=
- =?utf-8?B?TkR5Y2NMQnV6QzRtaTFrTGR0ZWY4NjRUYzEwMFQzR1JUUWtXQVhYcEtBTENB?=
- =?utf-8?B?MGRFUWpDN05rc0lISGdKelJOTVJxclA5MEJMNEg4bjQrMjdXRFF2R2RFLzRT?=
- =?utf-8?B?clovb29zUUk1ODRvL3J4bzE1TmREbllRVGFmSHBXM0dXSFVsekVBVFNHRmNZ?=
- =?utf-8?B?dlZhdDhxMmFSa21mNGs3akZETlBFdHVhUEQyZjJTTytvU2RUai9RcGkvbkdK?=
- =?utf-8?B?cTlmSUY3WVgxcTdvQ0hPeXVwcWNCZDdHeG1zclhWcU1sdWtpR3AwYXBZY2cx?=
- =?utf-8?B?TkZ1ZW9hYjJwWXpMUTFpci9OWS9PTWl6Rm05TFBOUGYrelhabVZiNWxtMjYr?=
- =?utf-8?B?M3JQYlJ1OGZFYk5oanlaeFE4cGJRT21BK1JIOFZJQkhWWmNpeXYzK1ZYTFdU?=
- =?utf-8?B?bmk0V2YrQmk3dDVUSE9Ec0xyOW81OE5GckFRd0w0Q3FqMWx6VkZZNDJQRlM0?=
- =?utf-8?B?NVZMRjhzb1diL2tkczNWLy9HQVZKbFNKNkcrcmRVZkNncHNHc253Nm5STGd2?=
- =?utf-8?B?YWVkNU1hZ1loUzZoWVpKamRIZitqR3cxbFZnb0FMdjV0U0dKR3AzZEtMZFpW?=
- =?utf-8?B?N29OdzhrZHNFWHQ0V1dRVnB0N3dtYjN2R1kyMFlSSFJYZlB5T0djM1VQVUx1?=
- =?utf-8?B?KzEzcFcyaWtDRzduaHhEQUlndXVoczRNU3lQeU03SjZVUlpaM1VXYkxvLzdM?=
- =?utf-8?B?c2dMY21xL3BmR2VUd29uYXRJdFl0aHUxYmJIQjUvS2RhZkV0eDJqdngzMHEr?=
- =?utf-8?B?aUhnVkJnL2hsa1l4TFBDZnpMR0grTkhTbkdmeWUwLzNLakduSDVEUkpRRmhO?=
- =?utf-8?B?c0xXT09LQXc4bGJOYWg5ekpFT0gzZ2NCVkMvOHN3UlVsQW91ZDcvY3pud0xz?=
- =?utf-8?B?Mm9TUnNqUVZScUNBaU4wYnVRUUk3bW8rZ3RhbXAvaTQ5OW5wNzNTM1RNQitW?=
- =?utf-8?B?R0NsRGdNc3hxWFArWllHWWFkaXp2TXZvajRHV0dWNUV1SGhUZTBpZmxSUXFO?=
- =?utf-8?B?RU9QRGJSNFp5NHNiTVpCVXIyVElFbW1DU1dlVzZUQ2dPTXNRckt6QWdwbEZw?=
- =?utf-8?Q?o8Hxap7qHV1QSw9I=3D?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 297e708b-ae9f-4fbd-1738-08de4f16c2e0
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jan 2026 00:33:51.2988
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: g4TtzkBB4etJ0Zs0i31CEi5fX61dGbcI/dSlhbPJ6dSW5Pg6y6qoFGxLLQsW8vA+nf7sdl5ElU05H0WhgnqrNoaf0lp4ZQuPcSjeCPCAr0k=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB5134
-X-OriginatorOrg: intel.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/msm/dp: Avoid division by zero in
+ msm_dp_ctrl_config_msa()
+To: Nathan Chancellor <nathan@kernel.org>,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov
+ <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, llvm@lists.linux.dev,
+        patches@lists.linux.dev, kernel test robot <lkp@intel.com>
+References: <20260108-drm-msm-dp_ctrl-avoid-zero-div-v1-1-6a8debcb3033@kernel.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20260108-drm-msm-dp_ctrl-avoid-zero-div-v1-1-6a8debcb3033@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=Ue1ciaSN c=1 sm=1 tr=0 ts=6960c519 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=NEAV23lmAAAA:8 a=VwQbUJbxAAAA:8 a=QyXUC8HyAAAA:8
+ a=xIqhFIF2P0JOsuq1WLcA:9 a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-ORIG-GUID: nOnvq5vsmeWFHSYt6oDIZqhLkzyzHrbT
+X-Proofpoint-GUID: nOnvq5vsmeWFHSYt6oDIZqhLkzyzHrbT
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA5MDA2NCBTYWx0ZWRfX6J+spLrx2GtT
+ dvbrBnmxXbi1cW5rQ2cMuthM5x61FdMoNXnrw9nu2ORUZiJWCgs80qeGDnl3qGAdBmYNDIjmcqj
+ Z2AMwTzRc9Ox7a0FqF6iQSvnaqrC/e4vydgXyku09TcePfO0UE/RP6Uau+jaapAh86akYQXQyrY
+ pkr2mbuvrMB0MTf1B/ke8bGMB8+mGUgUMkhj7HJBoGI0Es7qwLpPDBbiMp6A+sJPBAErJH3nm1V
+ q+rThuSHkQfm5k/P5IBkW8RNFgMQxnjxxwxOLaDqqZDEeVQ9X9lN4kq1Hw/HGFl2aSHOJY+NZwN
+ Dbc04jL0HWCyIYCqclq2Kv+ExlgLhGW0haqJ0q8FWl+AzzjupJBKWLVOaVdGDxiShp9FUIEp+ET
+ +wq8dl21EplEa1ZMqVsNhzRncv5KgzHIwNE3QHo4CQ4DGuhS+XvePt2v0dai0Oeciw8YYOsHlUE
+ PBC/OjfYOiAcR0cXELQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-09_02,2026-01-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 lowpriorityscore=0 clxscore=1011 priorityscore=1501
+ bulkscore=0 suspectscore=0 phishscore=0 spamscore=0 malwarescore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
+ definitions=main-2601090064
 
-Hi Tony,
-
-On 1/8/26 3:27 PM, Tony Luck wrote:
-> Pointless overhead to use a work queue to reset the static key
-> for a DO_ONCE_SLEEPABLE() invocation.
+On 1/9/26 12:29 AM, Nathan Chancellor wrote:
+> An (admittedly problematic) optimization change in LLVM 20 [1] turns
+> known division by zero into the equivalent of __builtin_unreachable(),
+> which invokes undefined behavior if it is encountered in a control flow
+> graph, destroying code generation. When compile testing for x86_64,
+> objtool flags an instance of this optimization triggering in
+> msm_dp_ctrl_config_msa(), inlined into msm_dp_ctrl_on_stream():
 > 
-> Reported-by: Reinette Chatre <reinette.chatre@intel.com>
-> Signed-off-by: Tony Luck <tony.luck@intel.com>
+>   drivers/gpu/drm/msm/msm.o: warning: objtool: msm_dp_ctrl_on_stream(): unexpected end of section .text.msm_dp_ctrl_on_stream
+> 
+> The zero division happens if the else branch in the first if statement
+> in msm_dp_ctrl_config_msa() is taken because pixel_div is initialized to
+> zero and it is not possible for LLVM to eliminate the else branch since
+> rate is still not known after inlining into msm_dp_ctrl_on_stream().
+> Change pixel_div to one to make the division well defined in the
+> presence of an unsupported rate, relying on the DRM_ERROR print to
+> indicate the error to the user.
+> 
+> Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
+> Link: https://github.com/llvm/llvm-project/commit/37932643abab699e8bb1def08b7eb4eae7ff1448 [1]
+> Reported-by: kernel test robot <lkp@intel.com>
+> Closes: https://lore.kernel.org/oe-kbuild-all/202601081959.9UVJEOfP-lkp@intel.com/
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 > ---
->  lib/once.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+>  drivers/gpu/drm/msm/dp/dp_ctrl.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/lib/once.c b/lib/once.c
-> index 2c306f0e891e..d83bdde78ced 100644
-> --- a/lib/once.c
-> +++ b/lib/once.c
-> @@ -93,6 +93,7 @@ void __do_once_sleepable_done(bool *done, struct static_key_true *once_key,
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> index cbcc7c2f0ffc..e4731c059ed8 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> @@ -2395,7 +2395,7 @@ static void msm_dp_ctrl_config_msa(struct msm_dp_ctrl_private *ctrl,
+>  			       bool is_ycbcr_420)
 >  {
->  	*done = true;
->  	mutex_unlock(&once_mutex);
-> -	once_disable_jump(once_key, mod);
-> +	BUG_ON(!static_key_enabled(once_key));
-> +	static_branch_disable(once_key);
+>  	u32 pixel_m, pixel_n;
+> -	u32 mvid, nvid, pixel_div = 0, dispcc_input_rate;
+> +	u32 mvid, nvid, pixel_div = 1, dispcc_input_rate;
+>  	u32 const nvid_fixed = DP_LINK_CONSTANT_N_VALUE;
+>  	u32 const link_rate_hbr2 = 540000;
+>  	u32 const link_rate_hbr3 = 810000;
+> 
+> ---
+> base-commit: 66691e272e40c91305f1704695e0cb340cd162ff
+> change-id: 20260108-drm-msm-dp_ctrl-avoid-zero-div-be5dc40cbc18
 
-Can this be simplified more by disabling once_key with once_mutex held to eliminate the need for the
-done boolean? Unless static_branch_disable() is considered to be so slow that it should also be
-avoided in sleepable context, deferring to a mutex protected boolean until it completes ...
-If "done" boolean is removed this may need an additional check of once_key within
-__do_once_sleepable_start() just in case a second caller was blocked on once_mutex.
+Dmitry, would it be beneficial to throw an actual error when the rate is
+is mangled? i.e.
 
-Reinette
+diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+index aa2303d0e148..4f710b8e6bc6 100644
+--- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
++++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+@@ -2404,9 +2404,9 @@ static int msm_dp_ctrl_link_retrain(struct msm_dp_ctrl_private *ctrl)
+        return msm_dp_ctrl_setup_main_link(ctrl, &training_step);
+ }
+ 
+-static void msm_dp_ctrl_config_msa(struct msm_dp_ctrl_private *ctrl,
+-                              u32 rate, u32 stream_rate_khz,
+-                              bool is_ycbcr_420)
++static int msm_dp_ctrl_config_msa(struct msm_dp_ctrl_private *ctrl,
++                                 u32 rate, u32 stream_rate_khz,
++                                 bool is_ycbcr_420)
+ {
+        u32 pixel_m, pixel_n;
+        u32 mvid, nvid, pixel_div = 0, dispcc_input_rate;
+@@ -2415,14 +2415,21 @@ static void msm_dp_ctrl_config_msa(struct msm_dp_ctrl_private *ctrl,
+        u32 const link_rate_hbr3 = 810000;
+        unsigned long den, num;
+ 
+-       if (rate == link_rate_hbr3)
++       switch (rate) {
++       case link_rate_hbr3:
+                pixel_div = 6;
+-       else if (rate == 162000 || rate == 270000)
+-               pixel_div = 2;
+-       else if (rate == link_rate_hbr2)
++               break;
++       case link_rate_hbr2:
+                pixel_div = 4;
+-       else
++               break;
++       case 270000:
++       case 162000:
++               pixel_div = 2;
++               break;
++       default:
+                DRM_ERROR("Invalid pixel mux divider\n");
++               return -EINVAL;
++       }
+ 
+        dispcc_input_rate = (rate * 10) / pixel_div;
+ 
+@@ -2458,6 +2465,8 @@ static void msm_dp_ctrl_config_msa(struct msm_dp_ctrl_private *ctrl,
+        drm_dbg_dp(ctrl->drm_dev, "mvid=0x%x, nvid=0x%x\n", mvid, nvid);
+        msm_dp_write_link(ctrl, REG_DP_SOFTWARE_MVID, mvid);
+        msm_dp_write_link(ctrl, REG_DP_SOFTWARE_NVID, nvid);
++
++       return 0;
+ }
+ 
+ int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl, bool force_link_train)
+@@ -2525,10 +2534,11 @@ int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl, bool force_link_train
+ 
+        msm_dp_ctrl_configure_source_params(ctrl);
+ 
+-       msm_dp_ctrl_config_msa(ctrl,
+-               ctrl->link->link_params.rate,
+-               pixel_rate_orig,
+-               ctrl->panel->msm_dp_mode.out_fmt_is_yuv_420);
++       ret = msm_dp_ctrl_config_msa(ctrl, ctrl->link->link_params.rate,
++                                    pixel_rate_orig,
++                                    ctrl->panel->msm_dp_mode.out_fmt_is_yuv_420);
++       if (ret)
++               return ret;
+ 
+        msm_dp_panel_clear_dsc_dto(ctrl->panel);
+ 
+
+
+Konrad
