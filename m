@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E7C33032C;
-	Fri,  9 Jan 2026 12:39:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4029235A95C;
+	Fri,  9 Jan 2026 12:39:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962350; cv=none; b=XXSNGBBW3h/ICGIcAr8cxD6QEpPQQT3E187nR9Ymzt2OnpVpjcgI+CND5kDUc2CApgEtSXoObYwcIAL3LLSetZqbUeeboV5V37NZSHp3niMkYO/CNzHSpPInhgiv0DTkssaM9CpXJEtG4Vzd9tuiKl6V6UH+otzVQqydVZaf0GY=
+	t=1767962353; cv=none; b=PmmdIT1d7boG0gVmhs4ZM/5FTgOVSpSWYcb3LcgVUxZcVeAuL7QiLlQmJHTfQXJju2D3TpWT0dJeMg0fwrFOwhEhCsECNwRQV3n8uxJDtiO4xEotfDda67x0gWHP5DPn3qVr6GK9zmRhlJSYyy9xTO0IVwYa/vmDf4euDBhqY64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962350; c=relaxed/simple;
-	bh=5wwyXNYWIYB4N/OFHg4+kTOR1Q62taN9LSMME/FDdCQ=;
+	s=arc-20240116; t=1767962353; c=relaxed/simple;
+	bh=yPgFNXV8smKwdXm33l5vOZiedM+NpTufl5Kc/WD1mTk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nyNu6AAk9Cag0/b4m0wd3SeZ4t7J0wjdkiG5jgass6i82bx8sx5KQpkQ90+iWAQjC0DN7RjoyLryfYJsd3LExvevFTybasemTi6nV058ASYu+gfyz07zIF38pYRKTNeSQG0v562J0ywSJXb0aHXX8ksbsiBEQ7yJqMKFibhOfCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I7jVi1/F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hbqtxt/Jh0ib020F08p9b+9RE/UJ4VCf6QmKWSbBnWzqnfgStCjEcSl41Ev7QtfuSVVNYJ+K0tt4EGhjRO9NbqCJzlrqLTwV8uZ+gRA6HKR/LM8EDCw5d/Obw5xvSjSD9sqHLEhJ28EOiG5q78dUKxuGDm8FvmKUUTEO1nah4Pg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C25t2pP5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I7jVi1/F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCCFBC4CEF1;
-	Fri,  9 Jan 2026 12:39:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C25t2pP5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF75FC4CEF1;
+	Fri,  9 Jan 2026 12:39:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962350;
-	bh=5wwyXNYWIYB4N/OFHg4+kTOR1Q62taN9LSMME/FDdCQ=;
+	s=korg; t=1767962353;
+	bh=yPgFNXV8smKwdXm33l5vOZiedM+NpTufl5Kc/WD1mTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I7jVi1/F3kOrCbMUfLXHLFk3O63lmvl1NBsapW/P3LYwwRWIhXOzMsat9ZeYE2BOA
-	 +OiAjhTmGi+IGFlBE3v2TOG+LjSzzaKCYctoaLjmioep1DhdI0LxiR6pzowROWFQ0E
-	 4Ct4+BY0+4s++7yXq12GPsYxvqStzhOKyS8jIBH0=
+	b=C25t2pP5u/0ZTwIzPhRh1MWd0O5ll0gegqq5RTXoQDtW3kiPVctYO0SBc/n0fjCeS
+	 OZhQO/qL650Eio/RneNhv/7KsTY4XiNrkZkKoB3ZZ+nbNzXSd8rBceaPIs3JoQImlN
+	 Xjc+f8E/TGQqk1vL7SKgxp8SjW+fZ1hM8ZDZRLi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeongjun Park <aha310510@gmail.com>,
+	Colin Ian King <colin.i.king@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.1 334/634] media: dvb-usb: dtv5100: fix out-of-bounds in dtv5100_i2c_msg()
-Date: Fri,  9 Jan 2026 12:40:12 +0100
-Message-ID: <20260109112130.093514841@linuxfoundation.org>
+Subject: [PATCH 6.1 335/634] media: pvrusb2: Fix incorrect variable used in trace message
+Date: Fri,  9 Jan 2026 12:40:13 +0100
+Message-ID: <20260109112130.130880718@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -50,38 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-commit b91e6aafe8d356086cc621bc03e35ba2299e4788 upstream.
+commit be440980eace19c035a0745fd6b6e42707bc4f49 upstream.
 
-rlen value is a user-controlled value, but dtv5100_i2c_msg() does not
-check the size of the rlen value. Therefore, if it is set to a value
-larger than sizeof(st->data), an out-of-bounds vuln occurs for st->data.
+The pvr2_trace message is reporting an error about control read
+transfers, however it is using the incorrect variable write_len
+instead of read_lean. Fix this by using the correct variable
+read_len.
 
-Therefore, we need to add proper range checking to prevent this vuln.
-
-Fixes: 60688d5e6e6e ("V4L/DVB (8735): dtv5100: replace dummy frontend by zl10353")
+Fixes: d855497edbfb ("V4L/DVB (4228a): pvrusb2 to kernel 2.6.18")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/dvb-usb/dtv5100.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/media/usb/pvrusb2/pvrusb2-hdw.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/usb/dvb-usb/dtv5100.c
-+++ b/drivers/media/usb/dvb-usb/dtv5100.c
-@@ -55,6 +55,11 @@ static int dtv5100_i2c_msg(struct dvb_us
+--- a/drivers/media/usb/pvrusb2/pvrusb2-hdw.c
++++ b/drivers/media/usb/pvrusb2/pvrusb2-hdw.c
+@@ -3620,7 +3620,7 @@ static int pvr2_send_request_ex(struct p
+ 		pvr2_trace(
+ 			PVR2_TRACE_ERROR_LEGS,
+ 			"Attempted to execute %d byte control-read transfer (limit=%d)",
+-			write_len,PVR2_CTL_BUFFSIZE);
++			read_len, PVR2_CTL_BUFFSIZE);
+ 		return -EINVAL;
  	}
- 	index = (addr << 8) + wbuf[0];
- 
-+	if (rlen > sizeof(st->data)) {
-+		warn("rlen = %x is too big!\n", rlen);
-+		return -EINVAL;
-+	}
-+
- 	memcpy(st->data, rbuf, rlen);
- 	msleep(1); /* avoid I2C errors */
- 	return usb_control_msg(d->udev, pipe, request,
+ 	if ((!write_len) && (!read_len)) {
 
 
