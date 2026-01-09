@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7DF33A712;
-	Fri,  9 Jan 2026 11:58:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F25CE32BF21;
+	Fri,  9 Jan 2026 11:58:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959905; cv=none; b=RdQWC1MWMN4WMC8+DFLa6GkosNTLTO4GRqCTt5YSDhPK4DrfhqvtoHMe3XdHMjPo0G6hh23CsutYPm+tc/pqb6uTpOntNpfEG945jM1dxWd7eBKSk7KwltZ4f/ZZMMLqAd5Tr9j/xVK+nsF69XX1iMM2TTM6GeCslOtCwDFKbOs=
+	t=1767959908; cv=none; b=fvGJiyUifG3+cITDwi3nb3POA3DDY/s005rZ2Gdlq046EP1vwRjJW7edP4tOo7GYPQiFZs3NbQ9wNUOdc/06X08Fug6qSgfMFWRH7DVoDbWt8zCilVhUcQzwlzlB4fZcjyq08478ZB5c0QUiG5Wr4PTVEG7lblnHkwfyz8RmPzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959905; c=relaxed/simple;
-	bh=mim64aLuLOSZRNdD+ajai/y9jQuCSM5lOaWlPVwBtt8=;
+	s=arc-20240116; t=1767959908; c=relaxed/simple;
+	bh=BKNe0ib/rb4oqfCNskh6ZnnkpMy0KrI3A3iJwk3DT2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VTND+frynU4W1buj9ClIBy2XEMQS2PDAiDzgkAxSjtb/iFzsw6foeVEMQrckx0busD9eUPuuQIzwGn60oEqAm992SJmglZBgHnvTtlQoAO24KIMQ4OAf34YBGU9vcHqD+Jb/Xz3AhDO0+Nn4Ypo7k+G/sAijQY87Li06de8GmkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvbHf3H/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LTBOiVXP2yM9HTlE6OlDxETUcT/UJx6Ly7VqZ3TwPCTKK7YchWXAfMZcVVCmlE8hI9o/aRqJ2dLYlLQ3AwcNiBnIGNoTOY/gF6B4bBjsC/UCRgWQOMwL7BBCbCgbAkYhIkWKR5n+czwPdLeAveRwG/fAM8SRdfnu1fjuQqewnfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H2/YnsCM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvbHf3H/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0736C4CEF1;
-	Fri,  9 Jan 2026 11:58:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H2/YnsCM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80553C4CEF1;
+	Fri,  9 Jan 2026 11:58:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959905;
-	bh=mim64aLuLOSZRNdD+ajai/y9jQuCSM5lOaWlPVwBtt8=;
+	s=korg; t=1767959907;
+	bh=BKNe0ib/rb4oqfCNskh6ZnnkpMy0KrI3A3iJwk3DT2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cvbHf3H/dsx7276RAB4IcgT4pUKP1KJb4o61YOHWOBk7ipTDF4k3KntUdcKPQyBYv
-	 jWpjuW48xpqPEJqazXYvXmaGOZ5JAIhFBFl11EHqoETOgBW/rzoaOQX4GtyZlRDQXi
-	 q6PftKNrC3acStyo2hb93N2VwSVoKBMLpAIaGhRE=
+	b=H2/YnsCMeIAdLEJAlcnIXVY6GylLBckaZcg7IMqov7oKCcIVR3YpO2gTo3CR8G1yr
+	 QUI4cIsC8QwMfZjZpKhezjNBiCjUxfDFaLngKkFYEDMiAUezxmjolgrcJer/7+D6Bb
+	 Wj11XNQ5mEB5pciKKpAcCeZJ1w+S6XOEKqOrYrVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Alexander Dahl <ada@thorsis.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 184/737] phy: renesas: rcar-gen3-usb2: Fix an error handling path in rcar_gen3_phy_usb2_probe()
-Date: Fri,  9 Jan 2026 12:35:23 +0100
-Message-ID: <20260109112140.917293547@linuxfoundation.org>
+Subject: [PATCH 6.6 185/737] net: phy: adin1100: Fix software power-down ready condition
+Date: Fri,  9 Jan 2026 12:35:24 +0100
+Message-ID: <20260109112140.954686404@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -49,96 +47,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Alexander Dahl <ada@thorsis.com>
 
-[ Upstream commit 662bb179d3381c7c069e44bb177396bcaee31cc8 ]
+[ Upstream commit bccaf1fe08f2c9f96f6bc38391d41e67f6bf38e3 ]
 
-If an error occurs after the reset_control_deassert(),
-reset_control_assert() must be called, as already done in the remove
-function.
+Value CRSM_SFT_PD written to Software Power-Down Control Register
+(CRSM_SFT_PD_CNTRL) is 0x01 and therefor different to value
+CRSM_SFT_PD_RDY (0x02) read from System Status Register (CRSM_STAT) for
+confirmation powerdown has been reached.
 
-Use devm_add_action_or_reset() to add the missing call and simplify the
-.remove() function accordingly.
+The condition could have only worked when disabling powerdown
+(both 0x00), but never when enabling it (0x01 != 0x02).
 
-While at it, drop struct rcar_gen3_chan::rstc as it is not used aymore.
+Result is a timeout, like so:
 
-[claudiu.beznea: removed "struct reset_control *rstc = data;" from
- rcar_gen3_reset_assert(), dropped struct rcar_gen3_chan::rstc]
+    $ ifdown eth0
+    macb f802c000.ethernet eth0: Link is Down
+    ADIN1100 f802c000.ethernet-ffffffff:01: adin_set_powerdown_mode failed: -110
+    ADIN1100 f802c000.ethernet-ffffffff:01: adin_set_powerdown_mode failed: -110
 
-Fixes: 4eae16375357 ("phy: renesas: rcar-gen3-usb2: Add support to initialize the bus")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Link: https://patch.msgid.link/20251023135810.1688415-3-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 7eaf9132996a ("net: phy: adin1100: Add initial support for ADIN1100 industrial PHY")
+Signed-off-by: Alexander Dahl <ada@thorsis.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Acked-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://patch.msgid.link/20251119124737.280939-2-ada@thorsis.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/renesas/phy-rcar-gen3-usb2.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ drivers/net/phy/adin1100.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/phy/renesas/phy-rcar-gen3-usb2.c b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
-index 9a6391361a0be..89a9693c9f577 100644
---- a/drivers/phy/renesas/phy-rcar-gen3-usb2.c
-+++ b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
-@@ -117,7 +117,6 @@ struct rcar_gen3_chan {
- 	struct extcon_dev *extcon;
- 	struct rcar_gen3_phy rphys[NUM_OF_PHYS];
- 	struct regulator *vbus;
--	struct reset_control *rstc;
- 	struct work_struct work;
- 	spinlock_t lock;	/* protects access to hardware and driver data structure. */
- 	enum usb_dr_mode dr_mode;
-@@ -658,21 +657,31 @@ static enum usb_dr_mode rcar_gen3_get_dr_mode(struct device_node *np)
- 	return candidate;
- }
- 
-+static void rcar_gen3_reset_assert(void *data)
-+{
-+	reset_control_assert(data);
-+}
-+
- static int rcar_gen3_phy_usb2_init_bus(struct rcar_gen3_chan *channel)
- {
- 	struct device *dev = channel->dev;
-+	struct reset_control *rstc;
- 	int ret;
- 	u32 val;
- 
--	channel->rstc = devm_reset_control_array_get_shared(dev);
--	if (IS_ERR(channel->rstc))
--		return PTR_ERR(channel->rstc);
-+	rstc = devm_reset_control_array_get_shared(dev);
-+	if (IS_ERR(rstc))
-+		return PTR_ERR(rstc);
- 
- 	ret = pm_runtime_resume_and_get(dev);
- 	if (ret)
+diff --git a/drivers/net/phy/adin1100.c b/drivers/net/phy/adin1100.c
+index 7619d6185801c..2f47b7020e12b 100644
+--- a/drivers/net/phy/adin1100.c
++++ b/drivers/net/phy/adin1100.c
+@@ -148,7 +148,7 @@ static int adin_set_powerdown_mode(struct phy_device *phydev, bool en)
  		return ret;
  
--	ret = reset_control_deassert(channel->rstc);
-+	ret = reset_control_deassert(rstc);
-+	if (ret)
-+		goto rpm_put;
-+
-+	ret = devm_add_action_or_reset(dev, rcar_gen3_reset_assert, rstc);
- 	if (ret)
- 		goto rpm_put;
- 
-@@ -814,7 +823,6 @@ static void rcar_gen3_phy_usb2_remove(struct platform_device *pdev)
- 	if (channel->is_otg_channel)
- 		device_remove_file(&pdev->dev, &dev_attr_role);
- 
--	reset_control_assert(channel->rstc);
- 	pm_runtime_disable(&pdev->dev);
- };
+ 	return phy_read_mmd_poll_timeout(phydev, MDIO_MMD_VEND1, ADIN_CRSM_STAT, ret,
+-					 (ret & ADIN_CRSM_SFT_PD_RDY) == val,
++					 !!(ret & ADIN_CRSM_SFT_PD_RDY) == en,
+ 					 1000, 30000, true);
+ }
  
 -- 
 2.51.0
