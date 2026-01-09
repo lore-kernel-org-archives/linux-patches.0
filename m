@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4666F32AAB5;
-	Fri,  9 Jan 2026 12:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6705732936C;
+	Fri,  9 Jan 2026 12:17:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961039; cv=none; b=BGJ6IU4dsT2VBPiHwiczyIbG3hNL0U0uiRl7y/wY6RBzVghCSuK8NVsQJtDYodDRfxQIV5UwOsq7KDkgGtWDaq1rYrOAfvQBq8Qd+vscXLo/85ai4zyy183PpMWFTQ+21M0u/yxZIglQXyf+prq/YcYSS5rJwqZFoK35btD8g4Y=
+	t=1767961042; cv=none; b=KKQtN+/7V0wBG6srmg6kUU4flHlCyZiATYIhWS+nO0YnHmoHQsSrLbhTdVGvP8j2+65sBOow/51DpI9irKJihS/J6rmRzcwaGWRaO4RYBldHpawJDmuWktrgQJyyaVhhI4Cv58E/qpitpRo2UHURssq10EyLrea8SgzQj+bjVAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961039; c=relaxed/simple;
-	bh=/wzGTg27sYYozicl1aDBP4XQOWnI4CaovDOYUDk9T5s=;
+	s=arc-20240116; t=1767961042; c=relaxed/simple;
+	bh=1BACs9Eg/Qy/+R+u0zJtTt4DxjpNGLJKPrXoih8Bjvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Eb3kIULGGq/6NKYjPn8ZXuHxTXNCu7DjleFIWm31EmrojxsP3mwPUCiQnfT6iRbQ8lnXLZ48If47A+2kPPuvFEkkJG8Vaa+wQhiAXBQSuQt7QxiElQLViFhfjdbRenQwHyS3Jo3kdtiUsUUonTST9AIh6MRaOGwFfc4aEmsOtBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NcJuhKvu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YF8bhOyJC/iRoXvwMVH/6CpIEGXErfVutCBRU/ZCrI9/9stF30t4l0mH0PJOiN/PxH9BL8AOAI9dh8venpzJUM/rQCI832JHkIvGBFVR58ZjSFWNH8V0voWEYSv+BcRfIn2mXqtP7GSrVOlKZBOjflSkGkSpGtWxtqCsTf07bVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KbS4gh6N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NcJuhKvu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD126C4CEF1;
-	Fri,  9 Jan 2026 12:17:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KbS4gh6N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5B27C4CEF1;
+	Fri,  9 Jan 2026 12:17:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961039;
-	bh=/wzGTg27sYYozicl1aDBP4XQOWnI4CaovDOYUDk9T5s=;
+	s=korg; t=1767961042;
+	bh=1BACs9Eg/Qy/+R+u0zJtTt4DxjpNGLJKPrXoih8Bjvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NcJuhKvukWxh1K9bEZbfGkljppWqL/GKLPCVVNOM66/yTgvyjhW4S4WHFsO3V7NOX
-	 1Gu5N/TQQ0CRDj/FxEjLIL1TWxQTELeSVCz1Amg/5TGApfWKwkD5yL3gZa/UFrJR3u
-	 PICFzbJLx+VIz00EHIyiyRE3HJDaugq9G48rBsFU=
+	b=KbS4gh6NOQvCQ6S0UqxhAX4WEZpDkgeVdJpc/+b6iVs0uiMOLjYKLec/+5GTbnF6t
+	 Ilo8UiiyTMz9phloyI1QBSWUF/F5l7QCro6kxMtNpH9ck83gPzuooJhsoJBih2ShrJ
+	 m1ynFronazkDxGgo6xMlfxO2y3G2O9yd4IVS73Z0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
+	syzbot+4ef89409a235d804c6c2@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 614/737] net: usb: sr9700: fix incorrect command used to write single register
-Date: Fri,  9 Jan 2026 12:42:33 +0100
-Message-ID: <20260109112157.102842148@linuxfoundation.org>
+Subject: [PATCH 6.6 615/737] net: nfc: fix deadlock between nfc_unregister_device and rfkill_fop_write
+Date: Fri,  9 Jan 2026 12:42:34 +0100
+Message-ID: <20260109112157.139712691@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -50,43 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-commit fa0b198be1c6775bc7804731a43be5d899d19e7a upstream.
+commit 1ab526d97a57e44d26fadcc0e9adeb9c0c0182f5 upstream.
 
-This fixes the device failing to initialize with "error reading MAC
-address" for me, probably because the incorrect write of NCR_RST to
-SR_NCR is not actually resetting the device.
+A deadlock can occur between nfc_unregister_device() and rfkill_fop_write()
+due to lock ordering inversion between device_lock and rfkill_global_mutex.
 
-Fixes: c9b37458e95629b1d1171457afdcc1bf1eb7881d ("USB2NET : SR9700 : One chip USB 1.1 USB2NET SR9700Device Driver Support")
+The problematic lock order is:
+
+Thread A (rfkill_fop_write):
+  rfkill_fop_write()
+    mutex_lock(&rfkill_global_mutex)
+      rfkill_set_block()
+        nfc_rfkill_set_block()
+          nfc_dev_down()
+            device_lock(&dev->dev)    <- waits for device_lock
+
+Thread B (nfc_unregister_device):
+  nfc_unregister_device()
+    device_lock(&dev->dev)
+      rfkill_unregister()
+        mutex_lock(&rfkill_global_mutex)  <- waits for rfkill_global_mutex
+
+This creates a classic ABBA deadlock scenario.
+
+Fix this by moving rfkill_unregister() and rfkill_destroy() outside the
+device_lock critical section. Store the rfkill pointer in a local variable
+before releasing the lock, then call rfkill_unregister() after releasing
+device_lock.
+
+This change is safe because rfkill_fop_write() holds rfkill_global_mutex
+while calling the rfkill callbacks, and rfkill_unregister() also acquires
+rfkill_global_mutex before cleanup. Therefore, rfkill_unregister() will
+wait for any ongoing callback to complete before proceeding, and
+device_del() is only called after rfkill_unregister() returns, preventing
+any use-after-free.
+
+The similar lock ordering in nfc_register_device() (device_lock ->
+rfkill_global_mutex via rfkill_register) is safe because during
+registration the device is not yet in rfkill_list, so no concurrent
+rfkill operations can occur on this device.
+
+Fixes: 3e3b5dfcd16a ("NFC: reorder the logic in nfc_{un,}register_device")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
-Link: https://patch.msgid.link/20251221082400.50688-1-enelsonmoore@gmail.com
+Reported-by: syzbot+4ef89409a235d804c6c2@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=4ef89409a235d804c6c2
+Link: https://lore.kernel.org/all/20251217054908.178907-1-kartikey406@gmail.com/T/ [v1]
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251218012355.279940-1-kartikey406@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/sr9700.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/nfc/core.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/net/usb/sr9700.c
-+++ b/drivers/net/usb/sr9700.c
-@@ -52,7 +52,7 @@ static int sr_read_reg(struct usbnet *de
- 
- static int sr_write_reg(struct usbnet *dev, u8 reg, u8 value)
+--- a/net/nfc/core.c
++++ b/net/nfc/core.c
+@@ -1154,6 +1154,7 @@ EXPORT_SYMBOL(nfc_register_device);
+ void nfc_unregister_device(struct nfc_dev *dev)
  {
--	return usbnet_write_cmd(dev, SR_WR_REGS, SR_REQ_WR_REG,
-+	return usbnet_write_cmd(dev, SR_WR_REG, SR_REQ_WR_REG,
- 				value, reg, NULL, 0);
- }
+ 	int rc;
++	struct rfkill *rfk = NULL;
  
-@@ -65,7 +65,7 @@ static void sr_write_async(struct usbnet
+ 	pr_debug("dev_name=%s\n", dev_name(&dev->dev));
  
- static void sr_write_reg_async(struct usbnet *dev, u8 reg, u8 value)
- {
--	usbnet_write_cmd_async(dev, SR_WR_REGS, SR_REQ_WR_REG,
-+	usbnet_write_cmd_async(dev, SR_WR_REG, SR_REQ_WR_REG,
- 			       value, reg, NULL, 0);
- }
+@@ -1164,13 +1165,17 @@ void nfc_unregister_device(struct nfc_de
  
+ 	device_lock(&dev->dev);
+ 	if (dev->rfkill) {
+-		rfkill_unregister(dev->rfkill);
+-		rfkill_destroy(dev->rfkill);
++		rfk = dev->rfkill;
+ 		dev->rfkill = NULL;
+ 	}
+ 	dev->shutting_down = true;
+ 	device_unlock(&dev->dev);
+ 
++	if (rfk) {
++		rfkill_unregister(rfk);
++		rfkill_destroy(rfk);
++	}
++
+ 	if (dev->ops->check_presence) {
+ 		del_timer_sync(&dev->check_pres_timer);
+ 		cancel_work_sync(&dev->check_pres_work);
 
 
