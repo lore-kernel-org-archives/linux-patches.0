@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74AEC35BDAB;
-	Fri,  9 Jan 2026 12:51:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A47C1482E8;
+	Fri,  9 Jan 2026 12:51:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767963062; cv=none; b=sIcOTS3zH9OFrMl1ykrjT4nwGY60EyXX4ZmMtrRQThM0SEkCWLnf/f5/VLOjIft3UTam96C1+VfAmLHqSVgpwoSpaw1ECqPxk9JsPZ8IlrAg6L6oKLHqJuF2Ypd6xiBakkb7meVDPUGgA6nTNd/cZRKATXth0o1t7hfiAklvgQc=
+	t=1767963065; cv=none; b=sRIpNxgtbnqKwS+Pys/Vc8W6tqy5ZOBgtYtKyiOJLB23DNMiUXdbAJNBzszyRhgkT/JLpXMlMi40uUXs5HwU1iD9INRvYta/cI2ZQb7lkTkqwptT0PlIODJBvbvHkVa/pK+LG7I1XcB0STxBuyeNN5nrtl8bLl5VAgK92hp9CHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767963062; c=relaxed/simple;
-	bh=YH5TZKlyT03aN+aiskFf/h1fzPRiPdz1WQMOELmR7yU=;
+	s=arc-20240116; t=1767963065; c=relaxed/simple;
+	bh=4xJ8rDCDe1ShWiWJIYJQrQMDGcxwx8Lef5spPpMerfg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ppFTvjfkj/UgtLHheDNy0T6zvXs/Z1zY+OrLL9YmhNjONF16U6y9wE9hAExCGyePk7pGI9yh1QgoTrRF0x6f1TjB3pRd7zwcn/UvX6EKIA7rSaTdfGv2Zh/e8mp+oYNZsvYMZRMyFX/2MYFUCKANK9aaz7WXhlJy0RUpvobSRE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eRp3Wa40; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=td8hrDIxB/bqQBYxKMCYHWe0WVNvUdx1kFkUZBzAlwj3T+KqsZacEmg4J6aDF0K8d6tLywW3bv/8WPvjRWd8DAl8XAcNvQblZIZzLD+umE0Gs9ZfA0uuacrI18/qxSEU2n+RiKL05Rm7o3ZzkY6J11YIoJGdtoBGJr00g8a+B2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GbH0OEV0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eRp3Wa40"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADD36C4CEF1;
-	Fri,  9 Jan 2026 12:51:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GbH0OEV0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FFBAC4CEF1;
+	Fri,  9 Jan 2026 12:51:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767963062;
-	bh=YH5TZKlyT03aN+aiskFf/h1fzPRiPdz1WQMOELmR7yU=;
+	s=korg; t=1767963064;
+	bh=4xJ8rDCDe1ShWiWJIYJQrQMDGcxwx8Lef5spPpMerfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eRp3Wa40plmKBgdK0orWG3V881pL5Omx7X5MI54z4uNxi9fKtdOc0MTOnH72KqFmB
-	 Bs0JwYxy+Y7WHD0ndHfiYXo6OB5vQLujyUSoKAV3UPoFY9Us8LxXriugRmGOyGlcb+
-	 cUBb6nPtQSg7z++GayiWTIBpORYgHwTgeXeM9X6s=
+	b=GbH0OEV0SpmNgUVyxGHNgKIKKPn44JyJDw6usjBj+mbtN6d+Vz4pA/8ufy/cMp/rN
+	 cRgsWQLDggilNGTBit7Z6Xi0bz+D7B1zLLT8WKhd+Nz8hU2BpCz7GVfCGIskfFyH/5
+	 h7fdafZ4WU+Nao4yK/rgX9ml2DDbyhn4DY5fFE4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Qian <ming.qian@oss.nxp.com>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 583/634] media: amphion: Remove vpu_vb_is_codecconfig
-Date: Fri,  9 Jan 2026 12:44:21 +0100
-Message-ID: <20260109112139.551412033@linuxfoundation.org>
+Subject: [PATCH 6.1 584/634] media: mediatek: vcodec: Fix a reference leak in mtk_vcodec_fw_vpu_init()
+Date: Fri,  9 Jan 2026 12:44:22 +0100
+Message-ID: <20260109112139.590006922@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,139 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Qian <ming.qian@oss.nxp.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-[ Upstream commit 634c2cd17bd021487c57b95973bddb14be8002ff ]
+[ Upstream commit cdd0f118ef87db8a664fb5ea366fd1766d2df1cd ]
 
-Currently the function vpu_vb_is_codecconfig() always returns 0.
-Delete it and its related code.
+vpu_get_plat_device() increases the reference count of the returned
+platform device. However, when devm_kzalloc() fails, the reference
+is not released, causing a reference leak.
 
-Fixes: 3cd084519c6f ("media: amphion: add vpu v4l2 m2m support")
+Fix this by calling put_device() on fw_pdev->dev before returning
+on the error path.
+
+Fixes: e25a89f743b1 ("media: mtk-vcodec: potential dereference of null pointer")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ adapted file path from common/ subdirectory and adjusted devm_kzalloc target from plat_dev->dev to dev->plat_dev->dev ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/amphion/vpu_malone.c |   23 +++--------------------
- drivers/media/platform/amphion/vpu_v4l2.c   |   10 ----------
- drivers/media/platform/amphion/vpu_v4l2.h   |   10 ----------
- 3 files changed, 3 insertions(+), 40 deletions(-)
+ drivers/media/platform/mediatek/vcodec/mtk_vcodec_fw_vpu.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/media/platform/amphion/vpu_malone.c
-+++ b/drivers/media/platform/amphion/vpu_malone.c
-@@ -1295,22 +1295,18 @@ static int vpu_malone_insert_scode_vc1_g
- {
- 	if (!scode->inst->total_input_count)
- 		return 0;
--	if (vpu_vb_is_codecconfig(to_vb2_v4l2_buffer(scode->vb)))
--		scode->need_data = 0;
- 	return 0;
- }
+--- a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_fw_vpu.c
++++ b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_fw_vpu.c
+@@ -94,8 +94,10 @@ struct mtk_vcodec_fw *mtk_vcodec_fw_vpu_
+ 	vpu_wdt_reg_handler(fw_pdev, mtk_vcodec_vpu_reset_handler, dev, rst_id);
  
- static int vpu_malone_insert_scode_vc1_g_pic(struct malone_scode_t *scode)
- {
--	struct vb2_v4l2_buffer *vbuf;
- 	u8 nal_hdr[MALONE_VC1_NAL_HEADER_LEN];
- 	u32 *data = NULL;
- 	int ret;
- 
--	vbuf = to_vb2_v4l2_buffer(scode->vb);
- 	data = vb2_plane_vaddr(scode->vb, 0);
- 
--	if (scode->inst->total_input_count == 0 || vpu_vb_is_codecconfig(vbuf))
-+	if (scode->inst->total_input_count == 0)
- 		return 0;
- 	if (MALONE_VC1_CONTAIN_NAL(*data))
- 		return 0;
-@@ -1331,8 +1327,6 @@ static int vpu_malone_insert_scode_vc1_l
- 	int size = 0;
- 	u8 rcv_seqhdr[MALONE_VC1_RCV_SEQ_HEADER_LEN];
- 
--	if (vpu_vb_is_codecconfig(to_vb2_v4l2_buffer(scode->vb)))
--		scode->need_data = 0;
- 	if (scode->inst->total_input_count)
- 		return 0;
- 	scode->need_data = 0;
-@@ -1503,7 +1497,7 @@ static int vpu_malone_input_frame_data(s
- 	scode.vb = vb;
- 	scode.wptr = wptr;
- 	scode.need_data = 1;
--	if (vbuf->sequence == 0 || vpu_vb_is_codecconfig(vbuf))
-+	if (vbuf->sequence == 0)
- 		ret = vpu_malone_insert_scode(&scode, SCODE_SEQUENCE);
- 
- 	if (ret < 0)
-@@ -1539,7 +1533,7 @@ static int vpu_malone_input_frame_data(s
- 	 * This module is currently only supported for the H264 and HEVC formats,
- 	 * for other formats, vpu_malone_add_scode() will return 0.
- 	 */
--	if ((disp_imm || low_latency) && !vpu_vb_is_codecconfig(vbuf)) {
-+	if (disp_imm || low_latency) {
- 		ret = vpu_malone_add_scode(inst->core->iface,
- 					   inst->id,
- 					   &inst->stream_buffer,
-@@ -1586,7 +1580,6 @@ int vpu_malone_input_frame(struct vpu_sh
- 			   struct vpu_inst *inst, struct vb2_buffer *vb)
- {
- 	struct vpu_dec_ctrl *hc = shared->priv;
--	struct vb2_v4l2_buffer *vbuf;
- 	struct vpu_malone_str_buffer __iomem *str_buf = hc->str_buf[inst->id];
- 	u32 disp_imm = hc->codec_param[inst->id].disp_imm;
- 	u32 size;
-@@ -1600,16 +1593,6 @@ int vpu_malone_input_frame(struct vpu_sh
- 		return ret;
- 	size = ret;
- 
--	/*
--	 * if buffer only contain codec data, and the timestamp is invalid,
--	 * don't put the invalid timestamp to resync
--	 * merge the data to next frame
--	 */
--	vbuf = to_vb2_v4l2_buffer(vb);
--	if (vpu_vb_is_codecconfig(vbuf)) {
--		inst->extra_size += size;
--		return 0;
--	}
- 	if (inst->extra_size) {
- 		size += inst->extra_size;
- 		inst->extra_size = 0;
---- a/drivers/media/platform/amphion/vpu_v4l2.c
-+++ b/drivers/media/platform/amphion/vpu_v4l2.c
-@@ -257,16 +257,6 @@ struct vb2_v4l2_buffer *vpu_next_src_buf
- 	if (!src_buf || vpu_get_buffer_state(src_buf) == VPU_BUF_STATE_IDLE)
- 		return NULL;
- 
--	while (vpu_vb_is_codecconfig(src_buf)) {
--		v4l2_m2m_src_buf_remove(inst->fh.m2m_ctx);
--		vpu_set_buffer_state(src_buf, VPU_BUF_STATE_IDLE);
--		v4l2_m2m_buf_done(src_buf, VB2_BUF_STATE_DONE);
--
--		src_buf = v4l2_m2m_next_src_buf(inst->fh.m2m_ctx);
--		if (!src_buf || vpu_get_buffer_state(src_buf) == VPU_BUF_STATE_IDLE)
--			return NULL;
--	}
--
- 	return src_buf;
- }
- 
---- a/drivers/media/platform/amphion/vpu_v4l2.h
-+++ b/drivers/media/platform/amphion/vpu_v4l2.h
-@@ -37,14 +37,4 @@ static inline struct vpu_format *vpu_get
- 	else
- 		return &inst->cap_format;
- }
--
--static inline int vpu_vb_is_codecconfig(struct vb2_v4l2_buffer *vbuf)
--{
--#ifdef V4L2_BUF_FLAG_CODECCONFIG
--	return (vbuf->flags & V4L2_BUF_FLAG_CODECCONFIG) ? 1 : 0;
--#else
--	return 0;
--#endif
--}
--
- #endif
+ 	fw = devm_kzalloc(&dev->plat_dev->dev, sizeof(*fw), GFP_KERNEL);
+-	if (!fw)
++	if (!fw) {
++		put_device(&fw_pdev->dev);
+ 		return ERR_PTR(-ENOMEM);
++	}
+ 	fw->type = VPU;
+ 	fw->ops = &mtk_vcodec_vpu_msg;
+ 	fw->pdev = fw_pdev;
 
 
