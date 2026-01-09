@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07CA732AAB5;
-	Fri,  9 Jan 2026 11:45:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E49033D50F;
+	Fri,  9 Jan 2026 11:45:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959101; cv=none; b=nO65PLS6YCTqp5mLksl/lnajKbf+FqtR1szgL19io8Ko+nIfrv8oPZ+QQFW+YBWQM/k42/onyUe0JeXnhKtxgQDkNEGqf1OZWIL2MChSGll+x+2awecs0svWG5mIz1Y/3HVoJc+/+EJKkpGto6YupkNxDoWXIucxdEUS03sP42A=
+	t=1767959103; cv=none; b=b4pu0Uph1eVAU1HJTo+lt1pnOWKCXh59k5IWjUXwjb43fDWNcQjbRq1FRJJ8aV1g6f+TFnJOFVjucbS+GNcTvMJZzh7KDQj96lvPGMhqLLT9O8p5RgV6bezkb192K+HvdQxFKtMyvd/BciXcWejNJZcbgmYfn729y1TP3h0MaPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959101; c=relaxed/simple;
-	bh=ESAwJg5GC7gopkhc1sBp4OowaDlWKa9bQHBOTp2aonk=;
+	s=arc-20240116; t=1767959103; c=relaxed/simple;
+	bh=VuNbK6IddF/rdbWqXWLyR3Ta+ijLfxVsqBq/ESkywKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aTGTPwEYhg9ub662o7AtANALYXsDwRsBu6hymictSRwIelN04J2efIoDWcpBW2AM83KFA7K5aCNyAlkjK846/4vwm6nkkIsr9TF48tXzVd2jFHbiQ7lK3l5cqTVPgwALpdLx2FM3q6DQOuXAVENlA0EYXos22lYCIMmM+U0vBWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v4qFnEvx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WbnnTiK5CSoZ989Q6+Sp6ZMIxbPIBKjHpQIeWIA4+JvSdB9XZUA9/VWHYIXTuf4PLErKs/iO3FLYzDiLORI+b+qNuKU6VFtRXghSH3UgmK9DAkMpF8RT6xElGbJ+9//Q5o0AttFcfH063Etid4/rPEfTse7vWBt4Ol0aWakAshk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yAwOrY1z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v4qFnEvx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D05A3C4CEF1;
-	Fri,  9 Jan 2026 11:44:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yAwOrY1z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D7D8C4CEF1;
+	Fri,  9 Jan 2026 11:45:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959099;
-	bh=ESAwJg5GC7gopkhc1sBp4OowaDlWKa9bQHBOTp2aonk=;
+	s=korg; t=1767959102;
+	bh=VuNbK6IddF/rdbWqXWLyR3Ta+ijLfxVsqBq/ESkywKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v4qFnEvxKTBKO4n69onVqOzU8D/E1XCN4iV65PqTb+3vybfnbMi0q9WLdIijjzPYn
-	 2b2mV6ZIzRVNCKXuhuYy1oUlG859/F5w3nFjjV1D4n3uJ0jnMQgNPuZPnk97jNen36
-	 1S88j/49PVUXS0LpxUG3eTLnuTVwQCUxdTk0yZaY=
+	b=yAwOrY1zbmZL7ab0ojyUnQMsEMdi+AACrt8FsreO2Y2x2JRZvT5MzT9g8U+eyR7Pr
+	 dhpFzXol9qmIxdjevDn6ygokHHJbim9yNSW6YSHbeRNVRHwNUiTr/Mi6N5z1vTJOLf
+	 cicd7/T4ZCOrMA0ezLJ5SI8bYyGuuPoq37urIC6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Natalie Vock <natalie.vock@gmx.de>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 08/16] drm/amdgpu: Forward VMID reservation errors
-Date: Fri,  9 Jan 2026 12:43:49 +0100
-Message-ID: <20260109111951.736965048@linuxfoundation.org>
+	Aaron Rainbolt <arainbolt@kfocus.org>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Richa Bharti <richa.bharti@siemens.com>
+Subject: [PATCH 6.12 09/16] cpufreq: intel_pstate: Check IDA only before MSR_IA32_PERF_CTL writes
+Date: Fri,  9 Jan 2026 12:43:50 +0100
+Message-ID: <20260109111951.774773967@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109111951.415522519@linuxfoundation.org>
 References: <20260109111951.415522519@linuxfoundation.org>
@@ -46,49 +46,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Natalie Vock <natalie.vock@gmx.de>
+From: Richa Bharti <richa.bharti@siemens.com>
 
-[ Upstream commit 8defb4f081a5feccc3ea8372d0c7af3522124e1f ]
+[ Upstream commit 4b747cc628d8f500d56cf1338280eacc66362ff3 ]
 
-Otherwise userspace may be fooled into believing it has a reserved VMID
-when in reality it doesn't, ultimately leading to GPU hangs when SPM is
-used.
+Commit ac4e04d9e378 ("cpufreq: intel_pstate: Unchecked MSR aceess in
+legacy mode") introduced a check for feature X86_FEATURE_IDA to verify
+turbo mode support. Although this is the correct way to check for turbo
+mode support, it causes issues on some platforms that disable turbo
+during OS boot, but enable it later [1]. Before adding this feature
+check, users were able to get turbo mode frequencies by writing 0 to
+/sys/devices/system/cpu/intel_pstate/no_turbo post-boot.
 
-Fixes: 80e709ee6ecc ("drm/amdgpu: add option params to enforce process isolation between graphics and compute")
-Cc: stable@vger.kernel.org
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Natalie Vock <natalie.vock@gmx.de>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-[ adapted 3-argument amdgpu_vmid_alloc_reserved(adev, vm, vmhub) call to 2-argument version and added separate error check to preserve reserved_vmid tracking logic. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+To restore the old behavior on the affected systems while still
+addressing the unchecked MSR issue on some Skylake-X systems, check
+X86_FEATURE_IDA only immediately before updates of MSR_IA32_PERF_CTL
+that may involve setting the Turbo Engage Bit (bit 32).
+
+Fixes: ac4e04d9e378 ("cpufreq: intel_pstate: Unchecked MSR aceess in legacy mode")
+Reported-by: Aaron Rainbolt <arainbolt@kfocus.org>
+Closes: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2122531 [1]
+Tested-by: Aaron Rainbolt <arainbolt@kfocus.org>
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+[ rjw: Subject adjustment, changelog edits ]
+Link: https://patch.msgid.link/20251111010840.141490-1-srinivas.pandruvada@linux.intel.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+[ richa: Backport to 6.12.y with context adjustments ]
+Signed-off-by: Richa Bharti <richa.bharti@siemens.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/cpufreq/intel_pstate.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -2747,10 +2747,12 @@ int amdgpu_vm_ioctl(struct drm_device *d
- 	case AMDGPU_VM_OP_RESERVE_VMID:
- 		/* We only have requirement to reserve vmid from gfxhub */
- 		if (!fpriv->vm.reserved_vmid[AMDGPU_GFXHUB(0)]) {
--			amdgpu_vmid_alloc_reserved(adev, AMDGPU_GFXHUB(0));
-+			int r = amdgpu_vmid_alloc_reserved(adev, AMDGPU_GFXHUB(0));
-+
-+			if (r)
-+				return r;
- 			fpriv->vm.reserved_vmid[AMDGPU_GFXHUB(0)] = true;
- 		}
+--- a/drivers/cpufreq/intel_pstate.c
++++ b/drivers/cpufreq/intel_pstate.c
+@@ -600,9 +600,6 @@ static bool turbo_is_disabled(void)
+ {
+ 	u64 misc_en;
+ 
+-	if (!cpu_feature_enabled(X86_FEATURE_IDA))
+-		return true;
 -
- 		break;
- 	case AMDGPU_VM_OP_UNRESERVE_VMID:
- 		if (fpriv->vm.reserved_vmid[AMDGPU_GFXHUB(0)]) {
+ 	rdmsrl(MSR_IA32_MISC_ENABLE, misc_en);
+ 
+ 	return !!(misc_en & MSR_IA32_MISC_ENABLE_TURBO_DISABLE);
+@@ -2018,7 +2015,8 @@ static u64 atom_get_val(struct cpudata *
+ 	u32 vid;
+ 
+ 	val = (u64)pstate << 8;
+-	if (READ_ONCE(global.no_turbo) && !READ_ONCE(global.turbo_disabled))
++	if (READ_ONCE(global.no_turbo) && !READ_ONCE(global.turbo_disabled) &&
++	    cpu_feature_enabled(X86_FEATURE_IDA))
+ 		val |= (u64)1 << 32;
+ 
+ 	vid_fp = cpudata->vid.min + mul_fp(
+@@ -2183,7 +2181,8 @@ static u64 core_get_val(struct cpudata *
+ 	u64 val;
+ 
+ 	val = (u64)pstate << 8;
+-	if (READ_ONCE(global.no_turbo) && !READ_ONCE(global.turbo_disabled))
++	if (READ_ONCE(global.no_turbo) && !READ_ONCE(global.turbo_disabled) &&
++	    cpu_feature_enabled(X86_FEATURE_IDA))
+ 		val |= (u64)1 << 32;
+ 
+ 	return val;
 
 
