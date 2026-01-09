@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCD333290A;
-	Fri,  9 Jan 2026 11:54:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A968433290A;
+	Fri,  9 Jan 2026 11:54:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959678; cv=none; b=hAX5AZm13MhUT+I4g4vNO7IwyhCW85hVH5lur8TDKxftQeidbA1LnlppsXakpQjZeUGgxXytYwheXGrxw5/CnJoxyQulzCWCgF2bIAbge4uQHYPfJNXhRL9TMnVw+zvZ0X/MFxYcfVcKMGSgfh+mi2h5fJggPDpKB/2tJiJ7nh8=
+	t=1767959681; cv=none; b=pUtshHd3GuVkihbM5S3xRAj80/RN1y+Hsf+kkjMUPFhRzfbJogTEGS3eE6r05qUElKhaDIEiUj/f57ZU2LukGz8vHZDZOi/A3Hv6osJQIBuBqXGFVajWldHvXbxByj8BX1IrEX5nTPRlECWAYDEpD6kXJgHszPYvR28J0xj6mak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959678; c=relaxed/simple;
-	bh=fqxPh2IEwfAffS6v3gUpMQodRsi4nko5BYRNbpVPTAI=;
+	s=arc-20240116; t=1767959681; c=relaxed/simple;
+	bh=1XgmN59ndzGCWndrTa2h5W353JKfsRmdU1hMJiCh+Co=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CQzhDr5fhvQjZvx3U/T2dwfupjZK8ALs+ryLDNcsinBDUdFCylmDS6J3uYKz2vhXxPt1EU6AHNmn7voS8fPCHAZOWHup/fX/R0FmEYgJcsJSqY+5PtjKR/H3RSHAaFVgQtTY+wkGUnx/UOb+GBHU6JV/nKEVolJ37hYZx0TA1O0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fRgmBkgq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cFIIeJU9HazdBiijAGG9VP58rzIsID/J/q7+YB6Hp8hcx5E+XmcIDj+kieBfmexuMAoLPb5pCC8lXwGKvnp+GtXh5t1pDlnGcuqCw8dfSwS1t0X8ufWBjFDoyIHxsRLazn1CwbzLavVWbVE5vjZDMiKABkDbQ5A6Jp+WtZVxeqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWE2lSe6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fRgmBkgq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D953C4CEF1;
-	Fri,  9 Jan 2026 11:54:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWE2lSe6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EADE6C4CEF1;
+	Fri,  9 Jan 2026 11:54:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959678;
-	bh=fqxPh2IEwfAffS6v3gUpMQodRsi4nko5BYRNbpVPTAI=;
+	s=korg; t=1767959681;
+	bh=1XgmN59ndzGCWndrTa2h5W353JKfsRmdU1hMJiCh+Co=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fRgmBkgqJLdAJts4zY2YycCLeCgGY/p+YrdwJtenhE+CR5/1X43EbEW89t9I2CVXt
-	 5b3uG9MgVYAVPRtwkZp9MnnUGjw/S+r7oG7roS2KrAH7In6Br4ogAVJpZEQjqJ6Z44
-	 kvMDE1I67LZGCPMYMAb32hb511LO2K/g439KbZMg=
+	b=dWE2lSe66//pWHuqzsfIQR4XBiQNkasndm5aUZd4tgKHFbl1Ev6aXWEHjxrvqBp6h
+	 gZdK21fjGjn6h0U4U2SxFfFVNvpORG0IbE0NLZ4rxglFyvzgug6oFUCoSK+rFNbWup
+	 1zIo2Bh3vFfVWHR9TCdMAyJQK89wG+sSfuxR5SvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Jack Wang <jinpu.wang@ionos.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Jihed Chaibi <jihed.chaibi.dev@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 135/737] RDMA/rtrs: server: Fix error handling in get_or_create_srv
-Date: Fri,  9 Jan 2026 12:34:34 +0100
-Message-ID: <20260109112139.079507691@linuxfoundation.org>
+Subject: [PATCH 6.6 136/737] ARM: dts: stm32: stm32mp157c-phycore: Fix STMPE811 touchscreen node properties
+Date: Fri,  9 Jan 2026 12:34:35 +0100
+Message-ID: <20260109112139.116982008@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,39 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
 
-[ Upstream commit a338d6e849ab31f32c08b4fcac11c0c72afbb150 ]
+[ Upstream commit e40b061cd379f4897e705d17cf1b4572ad0f3963 ]
 
-After device_initialize() is called, use put_device() to release the
-device according to kernel device management rules. While direct
-kfree() work in this case, using put_device() is more correct.
+Move st,adc-freq, st,mod-12b, st,ref-sel, and st,sample-time properties
+from the touchscreen subnode to the parent touch@44 node. These properties
+are defined in the st,stmpe.yaml schema for the parent node, not the
+touchscreen subnode, resolving the validation error about unevaluated
+properties.
 
-Found by code review.
-
-Fixes: 9cb837480424 ("RDMA/rtrs: server: main functionality")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Link: https://patch.msgid.link/20251110005158.13394-1-make24@iscas.ac.cn
-Acked-by: Jack Wang <jinpu.wang@ionos.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 27538a18a4fcc ("ARM: dts: stm32: add STM32MP1-based Phytec SoM")
+Signed-off-by: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
+Link: https://lore.kernel.org/r/20250915224611.169980-1-jihed.chaibi.dev@gmail.com
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/rtrs/rtrs-srv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../boot/dts/st/stm32mp157c-phycore-stm32mp15-som.dtsi    | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/rtrs/rtrs-srv.c b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-index 84d1654148d76..5dbf315630c1a 100644
---- a/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-+++ b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-@@ -1443,7 +1443,7 @@ static struct rtrs_srv_sess *get_or_create_srv(struct rtrs_srv_ctx *ctx,
- 	kfree(srv->chunks);
+diff --git a/arch/arm/boot/dts/st/stm32mp157c-phycore-stm32mp15-som.dtsi b/arch/arm/boot/dts/st/stm32mp157c-phycore-stm32mp15-som.dtsi
+index 4e8b2d2b30c7a..7dfe1fbfbfedc 100644
+--- a/arch/arm/boot/dts/st/stm32mp157c-phycore-stm32mp15-som.dtsi
++++ b/arch/arm/boot/dts/st/stm32mp157c-phycore-stm32mp15-som.dtsi
+@@ -185,13 +185,13 @@ touch@44 {
+ 		interrupt-parent = <&gpioi>;
+ 		vio-supply = <&v3v3>;
+ 		vcc-supply = <&v3v3>;
++		st,sample-time = <4>;
++		st,mod-12b = <1>;
++		st,ref-sel = <0>;
++		st,adc-freq = <1>;
  
- err_free_srv:
--	kfree(srv);
-+	put_device(&srv->dev);
- 	return ERR_PTR(-ENOMEM);
- }
- 
+ 		touchscreen {
+ 			compatible = "st,stmpe-ts";
+-			st,sample-time = <4>;
+-			st,mod-12b = <1>;
+-			st,ref-sel = <0>;
+-			st,adc-freq = <1>;
+ 			st,ave-ctrl = <1>;
+ 			st,touch-det-delay = <2>;
+ 			st,settling = <2>;
 -- 
 2.51.0
 
