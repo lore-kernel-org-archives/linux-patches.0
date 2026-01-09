@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9092EC54D;
-	Fri,  9 Jan 2026 12:28:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FDDC23F417;
+	Fri,  9 Jan 2026 12:28:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961711; cv=none; b=o7jKlhSnLDOJHlKkc0yIrL18gnrfrwlkbZqYXdvoMjoRMJjF7RqxhAS5oNk3uGCZ0paRay1Mz0hDLM58Sg+td9lVzbBG6QrBNS72zTwUBEp5UXGx6/e3sBatEa+WvtNta/3eBFLnk3BP49Hi2uK2o5kPEZ4EJgjNA1AbETXcCOc=
+	t=1767961714; cv=none; b=pa48U1uQRlwWmsJu2tSMDgikgSNW95ojnQdFgQm448HWNHqxvwduHMf/oRZ3d7VlvZbe49d+G2aVaT9oZGg089eAFhet8qMadsWOZr1YNUpoZfP/IYW4Vhh63YnzvelLyimRouqhIJtAUGL54IUCb1WHVOZAumitYzNP4zBNHRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961711; c=relaxed/simple;
-	bh=9Zh7Lljd4TXNaGi4d+wZazDtmrfR0AgOPJSxjXZfZjg=;
+	s=arc-20240116; t=1767961714; c=relaxed/simple;
+	bh=Sf/omHDuY0f/JKwqeUQf/KcpxoiLeyCH+kBbXou54ag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iuGP6bna+Uu34qV4JbbBQjCRRG2Xo9RGUNECg0YeJeTe+Moa0Zn0ndff9NrxWdav4bscskRnyLt7dU7CkBF8/nxV1TcgyFse2xoYtpbUFWfN/p7fteQoMKZrQsBBc/i1aORJYXSgXQYsO7mkj+B7zVi3qHzZ2OOGTdCqyAb/U2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kzf9xUr/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nK6EGurHl8J3ZzqHsmIlp5quni67sRoBYGDKQwnxJ+ycR1m0GKSM6ce0wj9R7mRjdRKo1xCR9V8WrmCX/yYExHbV9AEOjiFbUV5wcQ143FU258GwdDUzxA9Y/ePZZtYgw1rA7Bz7td5bgz7TsCpL6TTrzcSfrK1YhGRo7jHOcrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zDsHSmHV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kzf9xUr/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E2AC4CEF1;
-	Fri,  9 Jan 2026 12:28:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zDsHSmHV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A00D4C4CEF1;
+	Fri,  9 Jan 2026 12:28:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961711;
-	bh=9Zh7Lljd4TXNaGi4d+wZazDtmrfR0AgOPJSxjXZfZjg=;
+	s=korg; t=1767961714;
+	bh=Sf/omHDuY0f/JKwqeUQf/KcpxoiLeyCH+kBbXou54ag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kzf9xUr/huYPscsBa1lP7GGkqAc0MGuvzvAvLzcxSf0oeMewIjKw+kxaSg9SADMl6
-	 ULrVhBNtVLF19gnIPwP26cFtDxdFgj0X1NGIefYW+TuKjgl/yKk7MGNDeOf4Zx2pBs
-	 NpDn1tHtpcYDQfndhSe4H9rkj2svqbspUA4Wrab4=
+	b=zDsHSmHVOv5yBIKepf1ronQeOAkt2iMc9iFyN8IgfJXMNJX354TDsLc1WObBrh6cY
+	 +jWoVgV1Zakd560jWnVRwdAz6zO/vW1sGWiR9nvWwv/r5xgM70onrt3zn4oH469kZS
+	 3/rmVgN48HrNr7sfFIpD1vMbtfh2q2FlN2NLSzpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	syzbot+727d161855d11d81e411@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 110/634] ocfs2: relax BUG() to ocfs2_error() in __ocfs2_move_extent()
-Date: Fri,  9 Jan 2026 12:36:28 +0100
-Message-ID: <20260109112121.572961342@linuxfoundation.org>
+Subject: [PATCH 6.1 111/634] ACPI: property: Fix fwnode refcount leak in acpi_fwnode_graph_parse_endpoint()
+Date: Fri,  9 Jan 2026 12:36:29 +0100
+Message-ID: <20260109112121.611092943@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -58,49 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 8a7d58845fae061c62b50bc5eeb9bae4a1dedc3d ]
+[ Upstream commit 593ee49222a0d751062fd9a5e4a963ade4ec028a ]
 
-In '__ocfs2_move_extent()', relax 'BUG()' to 'ocfs2_error()' just
-to avoid crashing the whole kernel due to a filesystem corruption.
+acpi_fwnode_graph_parse_endpoint() calls fwnode_get_parent() to obtain the
+parent fwnode but returns without calling fwnode_handle_put() on it. This
+potentially leads to a fwnode refcount leak and prevents the parent node
+from being released properly.
 
-Fixes: 8f603e567aa7 ("Ocfs2/move_extents: move a range of extent.")
-Link: https://lkml.kernel.org/r/20251009102349.181126-2-dmantipov@yandex.ru
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Closes: https://syzkaller.appspot.com/bug?extid=727d161855d11d81e411
-Reported-by: syzbot+727d161855d11d81e411@syzkaller.appspotmail.com
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Call fwnode_handle_put() on the parent fwnode before returning to prevent
+the leak from occurring.
+
+Fixes: 3b27d00e7b6d ("device property: Move fwnode graph ops to firmware specific locations")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+[ rjw: Changelog edits ]
+Link: https://patch.msgid.link/20251111075000.1828-1-vulab@iscas.ac.cn
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/move_extents.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/acpi/property.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ocfs2/move_extents.c b/fs/ocfs2/move_extents.c
-index 866d57dfe9f74..1ac42064657d5 100644
---- a/fs/ocfs2/move_extents.c
-+++ b/fs/ocfs2/move_extents.c
-@@ -98,7 +98,13 @@ static int __ocfs2_move_extent(handle_t *handle,
+diff --git a/drivers/acpi/property.c b/drivers/acpi/property.c
+index 9f7880cc2bd8c..0ff1c3d2504d4 100644
+--- a/drivers/acpi/property.c
++++ b/drivers/acpi/property.c
+@@ -1634,6 +1634,7 @@ static int acpi_fwnode_graph_parse_endpoint(const struct fwnode_handle *fwnode,
+ 	if (fwnode_property_read_u32(fwnode, "reg", &endpoint->id))
+ 		fwnode_property_read_u32(fwnode, "endpoint", &endpoint->id);
  
- 	rec = &el->l_recs[index];
++	fwnode_handle_put(port_fwnode);
+ 	return 0;
+ }
  
--	BUG_ON(ext_flags != rec->e_flags);
-+	if (ext_flags != rec->e_flags) {
-+		ret = ocfs2_error(inode->i_sb,
-+				  "Inode %llu has corrupted extent %d with flags 0x%x at cpos %u\n",
-+				  (unsigned long long)ino, index, rec->e_flags, cpos);
-+		goto out;
-+	}
-+
- 	/*
- 	 * after moving/defraging to new location, the extent is not going
- 	 * to be refcounted anymore.
 -- 
 2.51.0
 
