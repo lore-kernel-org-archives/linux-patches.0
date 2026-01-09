@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E26338FA3;
-	Fri,  9 Jan 2026 12:28:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1815A335083;
+	Fri,  9 Jan 2026 12:28:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961680; cv=none; b=ux+3M8OW6X8w7N1pTa/PgOhSUr/WbdJh85vr0nJNvYs9U0SbC+TgB6r3jUtBMCCUt90/wxfFw6t3DLbh6T0qVK9NxqYdIQbc2oAjWF2Co5kt0rbJa0p5yqSIGGjI183cbc3d1ETsrp5DaLeI1VUsCkv6MveVUZh4zlhFsmWXF2M=
+	t=1767961683; cv=none; b=hX+boPnN3hfMy+sMl5+KVI7iPCysbGwFSoKfDvgAp6t9TwxzE0A9h8V5Rt7OhkW+uJx7K9sWH4O0mjs5zsVZ+GCDWRnCmPPzhzl9fgx8n/Y6dxk3ke0Bx8Z7iXeNzTrAGRRLNHRERl2ZRAxRn5SCreTTtXliB4TIEg5ri4kvuNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961680; c=relaxed/simple;
-	bh=+chvDVFSV9ASrDopwP/Vo/ECarMFuwoFLSjaJ9bHj2M=;
+	s=arc-20240116; t=1767961683; c=relaxed/simple;
+	bh=9Uw1cIqodQK7d4IpCgrLU1sXKYnroQxCZt1Xwhgu69c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WJ4wFPE2uIL7yZ9I4JmCYocWTUrWkvVsAaMI3ZNu28MR+BMVjSmT5ycr2CNEv8HrgwVnSdBm3VwXK0N2jsAoFG846bu7jQtTmnNPSsIp04NzGPYxSTrVNjlzAWlWYRZ7fJDip/G541wWgT85iSPy3JPEJ/bLybswuuZ6yF+bbDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZpRlV3+L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ki+A76KiLWTLRWHOrrZeJUP3E6TGTdaC23Tdpm+ZKvpa3jD+z7itgvpSIdP5/s/42yzY1goEg7KeruaB32FW2nUuPNaJfjc0l9HlnzQDZdwm5gnS11GwlFb8ydr3WR8WvT9S6I3JvxJoYp0cOiDdxFNPCoZF9D8cHTv9IrgRKXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WG02OLA8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZpRlV3+L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC934C4CEF1;
-	Fri,  9 Jan 2026 12:27:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WG02OLA8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99A9AC19421;
+	Fri,  9 Jan 2026 12:28:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961680;
-	bh=+chvDVFSV9ASrDopwP/Vo/ECarMFuwoFLSjaJ9bHj2M=;
+	s=korg; t=1767961683;
+	bh=9Uw1cIqodQK7d4IpCgrLU1sXKYnroQxCZt1Xwhgu69c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZpRlV3+LgZWfaJD8n76CdGpOO986+/Ti4W/lzPhKmygH808B8Ai+iOVY9GaJqFCba
-	 sqEY9fvoCYkalN0a1rDt3563sT1FxgveN2FBy9PohH1gI0YkcbPjpqNQUpn26ZNkNz
-	 lcVL5FZBrMVsc8ZDA4lXCn4eQsG7BJYmBiodreuw=
+	b=WG02OLA8TK5UQh4BKADXZ/MWUB48viDFwlst5mk5s2w3kJK83JkhUOwO8DaP+fctf
+	 Tn4X1DoV5B7fP/yTmm+fMy4OmOFKBhjzAPfIJX5RboM2+LIjiE/w0NGMzaKLDRaS7m
+	 75FqUX7gtYp7Lfe/JVAIzZh1i8rTDpJZH19WsyIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Jack Wang <jinpu.wang@ionos.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 097/634] RDMA/rtrs: server: Fix error handling in get_or_create_srv
-Date: Fri,  9 Jan 2026 12:36:15 +0100
-Message-ID: <20260109112121.083828920@linuxfoundation.org>
+Subject: [PATCH 6.1 067/634] sctp: Defer SCTP_DBG_OBJCNT_DEC() to sctp_destroy_sock().
+Date: Fri,  9 Jan 2026 12:35:45 +0100
+Message-ID: <20260109112119.967245124@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,39 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit a338d6e849ab31f32c08b4fcac11c0c72afbb150 ]
+[ Upstream commit 622e8838a29845316668ec2e7648428878df7f9a ]
 
-After device_initialize() is called, use put_device() to release the
-device according to kernel device management rules. While direct
-kfree() work in this case, using put_device() is more correct.
+SCTP_DBG_OBJCNT_INC() is called only when sctp_init_sock()
+returns 0 after successfully allocating sctp_sk(sk)->ep.
 
-Found by code review.
+OTOH, SCTP_DBG_OBJCNT_DEC() is called in sctp_close().
 
-Fixes: 9cb837480424 ("RDMA/rtrs: server: main functionality")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Link: https://patch.msgid.link/20251110005158.13394-1-make24@iscas.ac.cn
-Acked-by: Jack Wang <jinpu.wang@ionos.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+The code seems to expect that the socket is always exposed
+to userspace once SCTP_DBG_OBJCNT_INC() is incremented, but
+there is a path where the assumption is not true.
+
+In sctp_accept(), sctp_sock_migrate() could fail after
+sctp_init_sock().
+
+Then, sk_common_release() does not call inet_release() nor
+sctp_close().  Instead, it calls sk->sk_prot->destroy().
+
+Let's move SCTP_DBG_OBJCNT_DEC() from sctp_close() to
+sctp_destroy_sock().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20251023231751.4168390-2-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/rtrs/rtrs-srv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sctp/socket.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/rtrs/rtrs-srv.c b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-index 8b3b9b798676b..51ec4620ca821 100644
---- a/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-+++ b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-@@ -1448,7 +1448,7 @@ static struct rtrs_srv_sess *get_or_create_srv(struct rtrs_srv_ctx *ctx,
- 	kfree(srv->chunks);
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index 8a8a5cf8d8e65..090a2fadf4bb3 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -1552,8 +1552,6 @@ static void sctp_close(struct sock *sk, long timeout)
+ 	spin_unlock_bh(&net->sctp.addr_wq_lock);
  
- err_free_srv:
--	kfree(srv);
-+	put_device(&srv->dev);
- 	return ERR_PTR(-ENOMEM);
+ 	sock_put(sk);
+-
+-	SCTP_DBG_OBJCNT_DEC(sock);
  }
  
+ /* Handle EPIPE error. */
+@@ -5105,9 +5103,12 @@ static void sctp_destroy_sock(struct sock *sk)
+ 		sp->do_auto_asconf = 0;
+ 		list_del(&sp->auto_asconf_list);
+ 	}
++
+ 	sctp_endpoint_free(sp->ep);
++
+ 	sk_sockets_allocated_dec(sk);
+ 	sock_prot_inuse_add(sock_net(sk), sk->sk_prot, -1);
++	SCTP_DBG_OBJCNT_DEC(sock);
+ }
+ 
+ /* Triggered when there are no references on the socket anymore */
 -- 
 2.51.0
 
