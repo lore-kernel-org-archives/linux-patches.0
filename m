@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85CB035B149;
-	Fri,  9 Jan 2026 12:46:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76DC43590C6;
+	Fri,  9 Jan 2026 12:46:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962761; cv=none; b=V9B2Wy2xrf+XUNSla18epmCYlfrmFwH8PnYz1KMarEqey5pQ1Bh2bVXrMkr4iMpB8Or0QgDCRPC3Xb+qbI7tZGxU/MZwih57aQH2IdFFRKaSIiXbLRh57HDLuYp22/iNFWbmncU5n/fH8g8aGNzEg+iIJYyPATPBWqNsx7Eyadk=
+	t=1767962764; cv=none; b=PTFPePDreYNP8NdJDFGhJ4rEFeZ6RW6GRKs74ILLv9KuQ0Ex+Rr3tPFXn4jRn1iBvs5QQrpDKc5/YYPlNE9ZJdvdFuZewwfwXy7/W+SZo/TbtGAZhnnh0jsZmTrGZg2EOz53kcL2yGbAyHXoNDTmwuH7GwAl+ASTkdobMy/sM3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962761; c=relaxed/simple;
-	bh=AmXAJJztOZlUA6gOZcb2LEk414LF6DIN68EQZCINi1w=;
+	s=arc-20240116; t=1767962764; c=relaxed/simple;
+	bh=glQJWUgDnXhzGD4GrUcT6urJjK2d6XqL0to8OXgrvHc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Id6juTus7fVPKNjPrz/ePotxw36NzqZB6hpmmvvwHYTwBQxai3MWGEsZfYO5QHls2anqeJYj91QkftDVF6l4ml4eAMqmNUUCGpKvq49vQxPqmY3HkfdoYxqg2RtLTnCGJZeK/3GTBOZB2EDorE+7wQKw9oCchzvGp9YBto42Kb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jXavtMxP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PCsX7eDUmBVofC0z7pIoVPOf3WDLA7eQQZinJqYAZ8wzLi67Fsw1idgslg/Exe0x47LXKvb08YYDnvklRNlTRwqP6AZLg018CGC+P5bwn4iQne/Vzt2pExhwV6VHMmjZagoJ6IY4yZfyMA+3qkfMvyfbm/22nZvTC/VwBySfHwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jd4Tf3nM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jXavtMxP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 043D1C4CEF1;
-	Fri,  9 Jan 2026 12:46:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jd4Tf3nM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 004DEC4CEF1;
+	Fri,  9 Jan 2026 12:46:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962761;
-	bh=AmXAJJztOZlUA6gOZcb2LEk414LF6DIN68EQZCINi1w=;
+	s=korg; t=1767962764;
+	bh=glQJWUgDnXhzGD4GrUcT6urJjK2d6XqL0to8OXgrvHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jXavtMxPL4qrj7MsRm5EVFFDdlZxBlZdOxcn1p1TOGECLeX17SjienLSpMFS2QF/T
-	 7RY5P16RZGFMLtcJ0lU//DDXr4J+xbeqRZwds3QgVKZcikfQeCdbsVaxJsiluMbnZg
-	 lbXblMu1VAz5QwRHLHI/w8B4Y7et6EHvVC3VjmnQ=
+	b=jd4Tf3nMVISLjGenguwlnyzdviYHoe5MMMPqperWD3vYIQqOVI8MJnkfwvsAx/xTa
+	 fI0EsDB3h201NGHf4Y5J4Fc5NJTMnsQQ3ZxRD6iaHZvRfNHtYeITJrXmx4A2bl/sLh
+	 eoqhvhEUOAdYyIYRfZPH3DeHT/iiASTU/UorhVl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
+	Ivan Abramov <i.abramov@mt-integration.ru>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.1 478/634] media: cec: Fix debugfs leak on bus_register() failure
-Date: Fri,  9 Jan 2026 12:42:36 +0100
-Message-ID: <20260109112135.534230918@linuxfoundation.org>
+Subject: [PATCH 6.1 479/634] media: msp3400: Avoid possible out-of-bounds array accesses in msp3400c_thread()
+Date: Fri,  9 Jan 2026 12:42:37 +0100
+Message-ID: <20260109112135.571424118@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -50,35 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Ivan Abramov <i.abramov@mt-integration.ru>
 
-commit c43bcd2b2aa3c2ca9d2433c3990ecbc2c47d10eb upstream.
+commit d2bceb2e20e783d57e739c71e4e50b4b9f4a3953 upstream.
 
-In cec_devnode_init(), the debugfs directory created with
-debugfs_create_dir() is not removed if bus_register() fails.
-This leaves a stale "cec" entry in debugfs and prevents
-proper module reloading.
+It's possible for max1 to remain -1 if msp_read() always fail. This
+variable is further used as index for accessing arrays.
 
-Fix this by removing the debugfs directory in the error path.
+Fix that by checking max1 prior to array accesses.
 
-Fixes: a56960e8b406 ("[media] cec: add HDMI CEC framework (core)")
+It seems that restart is the preferable action in case of out-of-bounds
+value.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 8a4b275f9c19 ("V4L/DVB (3427): audmode and rxsubchans fixes (VIDIOC_G/S_TUNER)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Signed-off-by: Ivan Abramov <i.abramov@mt-integration.ru>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/cec/core/cec-core.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/i2c/msp3400-kthreads.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/media/cec/core/cec-core.c
-+++ b/drivers/media/cec/core/cec-core.c
-@@ -449,6 +449,7 @@ static int __init cec_devnode_init(void)
+--- a/drivers/media/i2c/msp3400-kthreads.c
++++ b/drivers/media/i2c/msp3400-kthreads.c
+@@ -596,6 +596,8 @@ restart:
+ 				"carrier2 val: %5d / %s\n", val, cd[i].name);
+ 		}
  
- 	ret = bus_register(&cec_bus_type);
- 	if (ret < 0) {
-+		debugfs_remove_recursive(top_cec_dir);
- 		unregister_chrdev_region(cec_dev_t, CEC_NUM_DEVICES);
- 		pr_warn("cec: bus_register failed\n");
- 		return -EIO;
++		if (max1 < 0 || max1 > 3)
++			goto restart;
+ 		/* program the msp3400 according to the results */
+ 		state->main = msp3400c_carrier_detect_main[max1].cdo;
+ 		switch (max1) {
 
 
