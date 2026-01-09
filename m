@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080D631D750;
-	Fri,  9 Jan 2026 12:24:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403162737EE;
+	Fri,  9 Jan 2026 12:25:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961498; cv=none; b=bRfyX9BJmTLyyWBsKE93kKu1zCrE8EsxZ5esDBGYCzvwJveHePxn9haW7G8iPeuAEvSaS9SD84yCv04heFNxG3nkaQiZjuJXUR0enU5q5KG8rHD3+O3SLSn4ib7sCQEqTn2RgsRwd1AfJ9KllJ45phduObud206SEo9f3UyBN+g=
+	t=1767961501; cv=none; b=le2DBlHxo7sPlg24trpYgE+lHUdNdNc2fhskQZBM0cINr6o3DUe+2ycpQxkNhl6qCcPB6egt0TJ0Dp5abW6rjTkz6jj78MxWzXxFUbazz/Mw5j29KZUNh7dD0QweV5KAWPUzRFr772brqHY5AJiT+KHwZEavZFCZ3afCXH2LkHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961498; c=relaxed/simple;
-	bh=B3itSASgs8ECCl+6BX+iZs4mpQrJD1dxA2fkrQjGWVs=;
+	s=arc-20240116; t=1767961501; c=relaxed/simple;
+	bh=6CxA22hLdgShFlyMbV3VfcpVDwmZfzPouHmFBdY12zA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pl7ijb0wqQKknoZp4g7gqmW05ZyCadoHt42UzDAYuz5NtRrRxCqRjMnxyMZ1OrytFTqr+Ru2L5ogYVe63J4dlWtNXTrzqaEH7xFClZS+YpTjkDtP5UiCloPPGLuMlcAc+LSRAJnHli3IcGynDIVnXLdowoFNr1aZmVJl0/jMxNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y4Q2W7ZJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sj0yUV2ZgN8hTIMwfFN6w9OIl4b1b/CeinIA2MvGmbRZpaIk40ysifkMyv8nMimIcVYwx7cY0mG21Mrm3YyXJNrbwTB6RODhRSyOl0fL1aPlIUWMJHxgdsG9xaUmYqoIKuxzrFf//K6gdp3QYLNEv6pC4eNGE55++iL6hDeGZWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s6skMXfa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y4Q2W7ZJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 871DFC4CEF1;
-	Fri,  9 Jan 2026 12:24:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s6skMXfa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7DC9C4CEF1;
+	Fri,  9 Jan 2026 12:25:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961497;
-	bh=B3itSASgs8ECCl+6BX+iZs4mpQrJD1dxA2fkrQjGWVs=;
+	s=korg; t=1767961501;
+	bh=6CxA22hLdgShFlyMbV3VfcpVDwmZfzPouHmFBdY12zA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y4Q2W7ZJp3IksCq4y5ItMKzUBRBQ2HMWltbQcPpwTKQ+qmpYb+23e2REkm9gFEsbB
-	 U+m/1XToVNHEWn16iGpFtwjKQ9OBRuHrmlddkmv9B1FwyJ7+49M1ADosIb63/aRKOt
-	 Qmms4sScje/OEFXOhUU6XY1HLegPIptDyDowQ8sw=
+	b=s6skMXfatD40wI80lngA+D0qcEG3D1VhDjOE/WSDnij2vhEM7Id+CZOzZrO6hggdZ
+	 Re2O8Ye0ce2bXHEm0xb7VaT8RXjbUW8jPzFWZYgWNB0pwYidRTSZXRNqYL88Gy+VZ2
+	 UOhaXJNxJeCJqyRCqXPUWYykkhbOKd83brbbVfx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prasad Sodagudi <prasad.sodagudi@oss.qualcomm.com>,
-	Praveen Talari <praveen.talari@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 028/634] pinctrl: qcom: msm: Fix deadlock in pinmux configuration
-Date: Fri,  9 Jan 2026 12:35:06 +0100
-Message-ID: <20260109112118.506544754@linuxfoundation.org>
+	syzbot+ab8008c24e84adee93ff@syzkaller.appspotmail.com,
+	stable <stable@kernel.org>,
+	Ian Abbott <abbotti@mev.co.uk>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Subject: [PATCH 6.1 037/634] comedi: check devices attached status in compat ioctls
+Date: Fri,  9 Jan 2026 12:35:15 +0100
+Message-ID: <20260109112118.843776483@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -53,48 +52,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Praveen Talari <praveen.talari@oss.qualcomm.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit 1c2e70397b4125022dba80f6111271a37fb36bae ]
+commit 0de7d9cd07a2671fa6089173bccc0b2afe6b93ee upstream.
 
-Replace disable_irq() with disable_irq_nosync() in msm_pinmux_set_mux()
-to prevent deadlock when wakeup IRQ is triggered on the same
-GPIO being reconfigured.
+Syzbot identified an issue [1] that crashes kernel, seemingly due to
+unexistent callback dev->get_valid_routes(). By all means, this should
+not occur as said callback must always be set to
+get_zero_valid_routes() in __comedi_device_postconfig().
 
-The issue occurs when a wakeup IRQ is triggered on a GPIO and the IRQ
-handler attempts to reconfigure the same GPIO's pinmux. In this scenario,
-msm_pinmux_set_mux() calls disable_irq() which waits for the currently
-running IRQ handler to complete, creating a circular dependency that
-results in deadlock.
+As the crash seems to appear exclusively in i386 kernels, at least,
+judging from [1] reports, the blame lies with compat versions
+of standard IOCTL handlers. Several of them are modified and
+do not use comedi_unlocked_ioctl(). While functionality of these
+ioctls essentially copy their original versions, they do not
+have required sanity check for device's attached status. This,
+in turn, leads to a possibility of calling select IOCTLs on a
+device that has not been properly setup, even via COMEDI_DEVCONFIG.
 
-Using disable_irq_nosync() avoids waiting for the IRQ handler to
-complete, preventing the deadlock condition while still properly
-disabling the interrupt during pinmux reconfiguration.
+Doing so on unconfigured devices means that several crucial steps
+are missed, for instance, specifying dev->get_valid_routes()
+callback.
 
-Suggested-by: Prasad Sodagudi <prasad.sodagudi@oss.qualcomm.com>
-Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this somewhat crudely by ensuring device's attached status before
+performing any ioctls, improving logic consistency between modern
+and compat functions.
+
+[1] Syzbot report:
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+...
+CR2: ffffffffffffffd6 CR3: 000000006c717000 CR4: 0000000000352ef0
+Call Trace:
+ <TASK>
+ get_valid_routes drivers/comedi/comedi_fops.c:1322 [inline]
+ parse_insn+0x78c/0x1970 drivers/comedi/comedi_fops.c:1401
+ do_insnlist_ioctl+0x272/0x700 drivers/comedi/comedi_fops.c:1594
+ compat_insnlist drivers/comedi/comedi_fops.c:3208 [inline]
+ comedi_compat_ioctl+0x810/0x990 drivers/comedi/comedi_fops.c:3273
+ __do_compat_sys_ioctl fs/ioctl.c:695 [inline]
+ __se_compat_sys_ioctl fs/ioctl.c:638 [inline]
+ __ia32_compat_sys_ioctl+0x242/0x370 fs/ioctl.c:638
+ do_syscall_32_irqs_on arch/x86/entry/syscall_32.c:83 [inline]
+...
+
+Reported-by: syzbot+ab8008c24e84adee93ff@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ab8008c24e84adee93ff
+Fixes: 3fbfd2223a27 ("comedi: get rid of compat_alloc_user_space() mess in COMEDI_CHANINFO compat")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Ian Abbott <abbotti@mev.co.uk>
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Link: https://patch.msgid.link/20251023132234.395794-1-n.zhandarovich@fintech.ru
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/qcom/pinctrl-msm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/comedi/comedi_fops.c |   42 ++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 36 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-index 34fc47c5c65aa..4f92078dc689d 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -214,7 +214,7 @@ static int msm_pinmux_set_mux(struct pinctrl_dev *pctldev,
- 	 */
- 	if (d && i != gpio_func &&
- 	    !test_and_set_bit(d->hwirq, pctrl->disabled_for_mux))
--		disable_irq(irq);
-+		disable_irq_nosync(irq);
+--- a/drivers/comedi/comedi_fops.c
++++ b/drivers/comedi/comedi_fops.c
+@@ -2966,7 +2966,12 @@ static int compat_chaninfo(struct file *
+ 	chaninfo.rangelist = compat_ptr(chaninfo32.rangelist);
  
- 	raw_spin_lock_irqsave(&pctrl->lock, flags);
+ 	mutex_lock(&dev->mutex);
+-	err = do_chaninfo_ioctl(dev, &chaninfo);
++	if (!dev->attached) {
++		dev_dbg(dev->class_dev, "no driver attached\n");
++		err = -ENODEV;
++	} else {
++		err = do_chaninfo_ioctl(dev, &chaninfo);
++	}
+ 	mutex_unlock(&dev->mutex);
+ 	return err;
+ }
+@@ -2987,7 +2992,12 @@ static int compat_rangeinfo(struct file
+ 	rangeinfo.range_ptr = compat_ptr(rangeinfo32.range_ptr);
  
--- 
-2.51.0
-
+ 	mutex_lock(&dev->mutex);
+-	err = do_rangeinfo_ioctl(dev, &rangeinfo);
++	if (!dev->attached) {
++		dev_dbg(dev->class_dev, "no driver attached\n");
++		err = -ENODEV;
++	} else {
++		err = do_rangeinfo_ioctl(dev, &rangeinfo);
++	}
+ 	mutex_unlock(&dev->mutex);
+ 	return err;
+ }
+@@ -3063,7 +3073,12 @@ static int compat_cmd(struct file *file,
+ 		return rc;
+ 
+ 	mutex_lock(&dev->mutex);
+-	rc = do_cmd_ioctl(dev, &cmd, &copy, file);
++	if (!dev->attached) {
++		dev_dbg(dev->class_dev, "no driver attached\n");
++		rc = -ENODEV;
++	} else {
++		rc = do_cmd_ioctl(dev, &cmd, &copy, file);
++	}
+ 	mutex_unlock(&dev->mutex);
+ 	if (copy) {
+ 		/* Special case: copy cmd back to user. */
+@@ -3088,7 +3103,12 @@ static int compat_cmdtest(struct file *f
+ 		return rc;
+ 
+ 	mutex_lock(&dev->mutex);
+-	rc = do_cmdtest_ioctl(dev, &cmd, &copy, file);
++	if (!dev->attached) {
++		dev_dbg(dev->class_dev, "no driver attached\n");
++		rc = -ENODEV;
++	} else {
++		rc = do_cmdtest_ioctl(dev, &cmd, &copy, file);
++	}
+ 	mutex_unlock(&dev->mutex);
+ 	if (copy) {
+ 		err = put_compat_cmd(compat_ptr(arg), &cmd);
+@@ -3148,7 +3168,12 @@ static int compat_insnlist(struct file *
+ 	}
+ 
+ 	mutex_lock(&dev->mutex);
+-	rc = do_insnlist_ioctl(dev, insns, insnlist32.n_insns, file);
++	if (!dev->attached) {
++		dev_dbg(dev->class_dev, "no driver attached\n");
++		rc = -ENODEV;
++	} else {
++		rc = do_insnlist_ioctl(dev, insns, insnlist32.n_insns, file);
++	}
+ 	mutex_unlock(&dev->mutex);
+ 	kfree(insns);
+ 	return rc;
+@@ -3167,7 +3192,12 @@ static int compat_insn(struct file *file
+ 		return rc;
+ 
+ 	mutex_lock(&dev->mutex);
+-	rc = do_insn_ioctl(dev, &insn, file);
++	if (!dev->attached) {
++		dev_dbg(dev->class_dev, "no driver attached\n");
++		rc = -ENODEV;
++	} else {
++		rc = do_insn_ioctl(dev, &insn, file);
++	}
+ 	mutex_unlock(&dev->mutex);
+ 	return rc;
+ }
 
 
