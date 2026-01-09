@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4717B35A95C;
-	Fri,  9 Jan 2026 12:30:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1650235B142;
+	Fri,  9 Jan 2026 12:30:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961854; cv=none; b=THpw4RJqlfOppG4d/0wVQSjwnMzLGjFv0L0ggom6eeB9CiRlRFiTtJA4EpbjzPsxQb2q0UAWtU1n91oxUW6i6V99uUMY5ULCBDeX81HkerTFBJBmjudEp6Sg8xdCzb64G5m60aoQqju6FwcwUBbZp3rAd8Esto8L+8EsyvdP9/0=
+	t=1767961857; cv=none; b=gIPJNH7m2GCR98yKepKcntFtLb7pyLL5fBN2x4HfiVI/H7H1uCKuBj8WK/xzXOOeEhDJKSak4V6uMdcZRx9P6lKo9yKqBFQssNFDfp6kHxjODG8OXftRTKPZGiF6d03TD8Nu2FprBhqLBcMNS42h/pwSIy386ZaRn3QsAyr1r4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961854; c=relaxed/simple;
-	bh=PQU1Z9LLqszX5g378NBfw4ySGnJ7oPM149LYONSeGJU=;
+	s=arc-20240116; t=1767961857; c=relaxed/simple;
+	bh=exoSAMNxHSpskD8RzDcgLaY/zOWQhCB2E6V2Lb/6YlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jiZzkhgbOwo/44PpldpBKlpEgxHcGHLdUl4IHU66DeFW6eQCvid6lUoRnnXmmuJ2epEALERGSBfyJ3nLczKfumNj8V9Stvw21/JBGcKQYpEoeGq8cylV1wv837tvn6Wod8y8BqSkRjN672oNMcbkgaij3Ih/ormKxmvY+cQWlQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xBk5gfZ2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fzAStSAHBi1nspLBTi0kE6CLusu5A/bPomRmw+gbZWcvEgiDv66uZUIcCPWd6bJHbcF0RHN1bBX3bAheLuYMTWj54XIEd6ZDdJ/x/sNdV8vj7EDQg0/Mh9brOJ9O1nwNDlNMMz8V3iO8LBo/HgHTd2PCR7RiPLc9aLDG2BjsKjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wtzd7m6i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xBk5gfZ2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6315C4CEF1;
-	Fri,  9 Jan 2026 12:30:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wtzd7m6i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96F20C4CEF1;
+	Fri,  9 Jan 2026 12:30:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961854;
-	bh=PQU1Z9LLqszX5g378NBfw4ySGnJ7oPM149LYONSeGJU=;
+	s=korg; t=1767961857;
+	bh=exoSAMNxHSpskD8RzDcgLaY/zOWQhCB2E6V2Lb/6YlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xBk5gfZ2OxZOXdJJfa/uCW/MKxVLhb1MYdQLdQjeJjhgYHXAS9tuVle1KPzch99X2
-	 mo13j1/hfrwZpT2DFG4K8XWjKw2qllS5TqZW9bBbW3Lwlo/zhU6w7Az2qURz6cbMtc
-	 88C6JQORuJk5cfW5SNM/HmYpJmCCcrvCDIHCDYRI=
+	b=wtzd7m6iRR7MlGYZ9/x7qdjoPIL2imfJ0NGGIsyXPBwTg0X/HHY0NJYfj8q9qVGMt
+	 WYTF0U7beNiTgKJRYURScxHjp66SiuzoX/cr4Yhc355Afo53dtZ/X7td8S5aLSy5uX
+	 pTpcKky9aFieWgCEFRlDM5jHHOw0NHBseuuw87Qw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Haotian Zhang <vulab@iscas.ac.cn>,
+	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 159/634] hwmon: sy7636a: Fix regulator_enable resource leak on error path
-Date: Fri,  9 Jan 2026 12:37:17 +0100
-Message-ID: <20260109112123.434098792@linuxfoundation.org>
+Subject: [PATCH 6.1 160/634] ACPI: processor_core: fix map_x2apic_id for amd-pstate on am4
+Date: Fri,  9 Jan 2026 12:37:18 +0100
+Message-ID: <20260109112123.470800934@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -45,58 +45,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: René Rebe <rene@exactco.de>
 
-[ Upstream commit 2f88425ef590b7fcc2324334b342e048edc144a9 ]
+[ Upstream commit 17e7972979e147cc51d4a165e6b6b0f93273ca68 ]
 
-In sy7636a_sensor_probe(), regulator_enable() is called but if
-devm_hwmon_device_register_with_info() fails, the function returns
-without calling regulator_disable(), leaving the regulator enabled
-and leaking the reference count.
+On all AMD AM4 systems I have seen, e.g ASUS X470-i, Pro WS X570 Ace
+and equivalent Gigabyte, amd-pstate does not initialize when the
+x2apic is enabled in the BIOS. Kernel debug messages include:
 
-Switch to devm_regulator_get_enable() to automatically
-manage the regulator resource.
+[    0.315438] acpi LNXCPU:00: Failed to get CPU physical ID.
+[    0.354756] ACPI CPPC: No CPC descriptor for CPU:0
+[    0.714951] amd_pstate: the _CPC object is not present in SBIOS or ACPI disabled
 
-Fixes: de34a4053250 ("hwmon: sy7636a: Add temperature driver for sy7636a")
-Suggested-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20251126162602.2086-1-vulab@iscas.ac.cn
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+I tracked this down to map_x2apic_id() checking device_declaration
+passed in via the type argument of acpi_get_phys_id() via
+map_madt_entry() while map_lapic_id() does not.
+
+It appears these BIOSes use Processor statements for declaring the CPUs
+in the ACPI namespace instead of processor device objects (which should
+have been used). CPU declarations via Processor statements were
+deprecated in ACPI 6.0 that was released 10 years ago. They should not
+be used any more in any contemporary platform firmware.
+
+I tried to contact Asus support multiple times, but never received a
+reply nor did any BIOS update ever change this.
+
+Fix amd-pstate w/ x2apic on am4 by allowing map_x2apic_id() to work with
+CPUs declared via Processor statements for IDs less than 255, which is
+consistent with ACPI 5.0 that still allowed Processor statements to be
+used for declaring CPUs.
+
+Fixes: 7237d3de78ff ("x86, ACPI: add support for x2apic ACPI extensions")
+Signed-off-by: René Rebe <rene@exactco.de>
+[ rjw: Changelog edits ]
+Link: https://patch.msgid.link/20251126.165513.1373131139292726554.rene@exactco.de
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/sy7636a-hwmon.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ drivers/acpi/processor_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/sy7636a-hwmon.c b/drivers/hwmon/sy7636a-hwmon.c
-index 9fabd60e9a970..73d958de485d8 100644
---- a/drivers/hwmon/sy7636a-hwmon.c
-+++ b/drivers/hwmon/sy7636a-hwmon.c
-@@ -66,18 +66,13 @@ static const struct hwmon_chip_info sy7636a_chip_info = {
- static int sy7636a_sensor_probe(struct platform_device *pdev)
- {
- 	struct regmap *regmap = dev_get_regmap(pdev->dev.parent, NULL);
--	struct regulator *regulator;
- 	struct device *hwmon_dev;
- 	int err;
+diff --git a/drivers/acpi/processor_core.c b/drivers/acpi/processor_core.c
+index 2ac48cda5b201..eae7efae3b5cf 100644
+--- a/drivers/acpi/processor_core.c
++++ b/drivers/acpi/processor_core.c
+@@ -54,7 +54,7 @@ static int map_x2apic_id(struct acpi_subtable_header *entry,
+ 	if (!(apic->lapic_flags & ACPI_MADT_ENABLED))
+ 		return -ENODEV;
  
- 	if (!regmap)
- 		return -EPROBE_DEFER;
- 
--	regulator = devm_regulator_get(&pdev->dev, "vcom");
--	if (IS_ERR(regulator))
--		return PTR_ERR(regulator);
--
--	err = regulator_enable(regulator);
-+	err = devm_regulator_get_enable(&pdev->dev, "vcom");
- 	if (err)
- 		return err;
- 
+-	if (device_declaration && (apic->uid == acpi_id)) {
++	if (apic->uid == acpi_id && (device_declaration || acpi_id < 255)) {
+ 		*apic_id = apic->local_apic_id;
+ 		return 0;
+ 	}
 -- 
 2.51.0
 
