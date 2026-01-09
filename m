@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E41A432BF21;
-	Fri,  9 Jan 2026 11:59:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E471A33A712;
+	Fri,  9 Jan 2026 11:59:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959973; cv=none; b=FXumWTlUN9GvP3usJ2q9xanIFPL6KJSwa6JYUmynGWTyttw/IVOFg4zASwzcbYIr3kgzXjzwKZZcL4JisZOIpTKMDDZq4cORP4rHCiEzOyQL9DYJWZkvW2guq++oaV2bxdLNmEmSxa/pmfoSNVE9sSWAdE9rez/byZPRAww/gmw=
+	t=1767959976; cv=none; b=eYaqzxbHfyOfnGXcnrzIeDTPrL8awbrTW3Su27Gh9/HsHKnpxYb4FfxBaZlB1Q+EIpm2hs8PM59TOeIi7XKJJRAcOQjj4KJTIvxGizi/cJI8k8jVnCWIPczeK5LviwZfK+n92Ir/8OH3EJMEJfJzR+OcFId256iu/nxMascRXUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959973; c=relaxed/simple;
-	bh=zmk407QINqb/S4qQpQe/7IAVIjnJOUg7AM6rxz8mMHA=;
+	s=arc-20240116; t=1767959976; c=relaxed/simple;
+	bh=snoG/B3KfAbHxcjhGcheXSLWs9VM/Lp07KiyGVW+xM8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cNwZPEuB4T84UoqDxjdjBTdtkYOnQL7g22BFZphMMTrQtyAzqceHmuJUZT8tU9BFYpKcEi659wOj/2pWYeMfxeVbggSeFK5NsZ4V4ISD+DRDw939vx1zyjE05GpHp/vjfGULx+2pFtiJQgMG4Es1jC5mU039cs++cIoBZVx5+DQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qWRnF3Vd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jScm4HMO8u1jljEdENir7uzPQ8MGcLlOrZaB9S0jx5tyjsjntNKAa9+WQnQmxwVnLIWARcQ7w1kEweantIMtVnXxDxN9qNK7s/2bv0+Mrk9jbwsEgOUDs0YcZY9MYmTDhDzsyvRUDxicTFltZb9gcDxqKT4TcaKcDbcBDdqoYko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M5KI2IFx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qWRnF3Vd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 728AAC4CEF1;
-	Fri,  9 Jan 2026 11:59:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M5KI2IFx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 467C1C4CEF1;
+	Fri,  9 Jan 2026 11:59:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959972;
-	bh=zmk407QINqb/S4qQpQe/7IAVIjnJOUg7AM6rxz8mMHA=;
+	s=korg; t=1767959975;
+	bh=snoG/B3KfAbHxcjhGcheXSLWs9VM/Lp07KiyGVW+xM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qWRnF3VdN7Wbskv9v6VpVvXdSSMpxHgbllSdpdTliv+I1xmS+hJRWQt2u8aH3LExp
-	 C89LadtgZnui51L2P6imwahfS2R1JbPehZAY6AZosRd5pCyW4MC8HprrbSqFE0n3T5
-	 C9j4zhFkHly5EMKxOWJUFITLMcSEZnNivih28C1w=
+	b=M5KI2IFxUqn7+/xVgsQt+QtnBERPy3MUcLMEFVOmil3Ni9Iy2R/K7SeHjjkbavXC7
+	 HogpGkQm1x1qQsW6iOI0bnxU6Xi1jU0Ljwfb2ACKJ11wDXw4zH117QkNuDT23cCKDA
+	 EjVvlZTIO93cBwclM+cNsg1jQ8AxvKlIlO9aVjco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sindhu Devale <sindhu.devale@intel.com>,
+	Shiraz Saleem <shiraz.saleem@intel.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 240/737] netfilter: flowtable: check for maximum number of encapsulations in bridge vlan
-Date: Fri,  9 Jan 2026 12:36:19 +0100
-Message-ID: <20260109112143.025523459@linuxfoundation.org>
+Subject: [PATCH 6.6 214/737] RDMA/irdma: Add support to re-register a memory region
+Date: Fri,  9 Jan 2026 12:35:53 +0100
+Message-ID: <20260109112142.054658765@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -50,45 +52,360 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Sindhu Devale <sindhu.devale@intel.com>
 
-[ Upstream commit 634f3853cc98d73bdec8918010ee29b06981583e ]
+[ Upstream commit 5ac388db27c443dadfbb0b8b23fa7ccf429d901a ]
 
-Add a sanity check to skip path discovery if the maximum number of
-encapsulation is reached. While at it, check for underflow too.
+Add support for reregister MR verb API by doing a de-register
+followed by a register MR with the new attributes. Reuse resources
+like iwmr handle and HW stag where possible.
 
-Fixes: 26267bf9bb57 ("netfilter: flowtable: bridge vlan hardware offload and switchdev")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sindhu Devale <sindhu.devale@intel.com>
+Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
+Link: https://lore.kernel.org/r/20231004151306.228-1-shiraz.saleem@intel.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: 71d3bdae5eab ("RDMA/irdma: Do not directly rely on IB_PD_UNSAFE_GLOBAL_RKEY")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_flow_offload.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/irdma/verbs.c | 232 ++++++++++++++++++++++------
+ drivers/infiniband/hw/irdma/verbs.h |   2 +
+ 2 files changed, 191 insertions(+), 43 deletions(-)
 
-diff --git a/net/netfilter/nft_flow_offload.c b/net/netfilter/nft_flow_offload.c
-index 1894032a7971c..75dddcaa9aa37 100644
---- a/net/netfilter/nft_flow_offload.c
-+++ b/net/netfilter/nft_flow_offload.c
-@@ -140,12 +140,19 @@ static void nft_dev_path_info(const struct net_device_path_stack *stack,
- 				info->ingress_vlans |= BIT(info->num_encaps - 1);
- 				break;
- 			case DEV_PATH_BR_VLAN_TAG:
-+				if (info->num_encaps >= NF_FLOW_TABLE_ENCAP_MAX) {
-+					info->indev = NULL;
-+					break;
-+				}
- 				info->encap[info->num_encaps].id = path->bridge.vlan_id;
- 				info->encap[info->num_encaps].proto = path->bridge.vlan_proto;
- 				info->num_encaps++;
- 				break;
- 			case DEV_PATH_BR_VLAN_UNTAG:
--				info->num_encaps--;
-+				if (WARN_ON_ONCE(info->num_encaps-- == 0)) {
-+					info->indev = NULL;
-+					break;
-+				}
- 				break;
- 			case DEV_PATH_BR_VLAN_KEEP:
- 				break;
+diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
+index 29540b2b2373c..aece20f105918 100644
+--- a/drivers/infiniband/hw/irdma/verbs.c
++++ b/drivers/infiniband/hw/irdma/verbs.c
+@@ -2661,8 +2661,11 @@ static int irdma_hw_alloc_stag(struct irdma_device *iwdev,
+ 	cqp_info->in.u.alloc_stag.scratch = (uintptr_t)cqp_request;
+ 	status = irdma_handle_cqp_op(iwdev->rf, cqp_request);
+ 	irdma_put_cqp_request(&iwdev->rf->cqp, cqp_request);
++	if (status)
++		return status;
+ 
+-	return status;
++	iwmr->is_hwreg = 1;
++	return 0;
+ }
+ 
+ /**
+@@ -2828,14 +2831,18 @@ static int irdma_hwreg_mr(struct irdma_device *iwdev, struct irdma_mr *iwmr,
+ 	ret = irdma_handle_cqp_op(iwdev->rf, cqp_request);
+ 	irdma_put_cqp_request(&iwdev->rf->cqp, cqp_request);
+ 
++	if (!ret)
++		iwmr->is_hwreg = 1;
++
+ 	return ret;
+ }
+ 
+-static int irdma_reg_user_mr_type_mem(struct irdma_mr *iwmr, int access)
++static int irdma_reg_user_mr_type_mem(struct irdma_mr *iwmr, int access,
++				      bool create_stag)
+ {
+ 	struct irdma_device *iwdev = to_iwdev(iwmr->ibmr.device);
+ 	struct irdma_pbl *iwpbl = &iwmr->iwpbl;
+-	u32 stag;
++	u32 stag = 0;
+ 	u8 lvl;
+ 	int err;
+ 
+@@ -2854,15 +2861,18 @@ static int irdma_reg_user_mr_type_mem(struct irdma_mr *iwmr, int access)
+ 		}
+ 	}
+ 
+-	stag = irdma_create_stag(iwdev);
+-	if (!stag) {
+-		err = -ENOMEM;
+-		goto free_pble;
++	if (create_stag) {
++		stag = irdma_create_stag(iwdev);
++		if (!stag) {
++			err = -ENOMEM;
++			goto free_pble;
++		}
++
++		iwmr->stag = stag;
++		iwmr->ibmr.rkey = stag;
++		iwmr->ibmr.lkey = stag;
+ 	}
+ 
+-	iwmr->stag = stag;
+-	iwmr->ibmr.rkey = stag;
+-	iwmr->ibmr.lkey = stag;
+ 	err = irdma_hwreg_mr(iwdev, iwmr, access);
+ 	if (err)
+ 		goto err_hwreg;
+@@ -2870,7 +2880,8 @@ static int irdma_reg_user_mr_type_mem(struct irdma_mr *iwmr, int access)
+ 	return 0;
+ 
+ err_hwreg:
+-	irdma_free_stag(iwdev, stag);
++	if (stag)
++		irdma_free_stag(iwdev, stag);
+ 
+ free_pble:
+ 	if (iwpbl->pble_alloc.level != PBLE_LEVEL_0 && iwpbl->pbl_allocated)
+@@ -3050,7 +3061,7 @@ static struct ib_mr *irdma_reg_user_mr(struct ib_pd *pd, u64 start, u64 len,
+ 			goto error;
+ 		break;
+ 	case IRDMA_MEMREG_TYPE_MEM:
+-		err = irdma_reg_user_mr_type_mem(iwmr, access);
++		err = irdma_reg_user_mr_type_mem(iwmr, access, true);
+ 		if (err)
+ 			goto error;
+ 
+@@ -3094,7 +3105,7 @@ static struct ib_mr *irdma_reg_user_mr_dmabuf(struct ib_pd *pd, u64 start,
+ 		goto err_release;
+ 	}
+ 
+-	err = irdma_reg_user_mr_type_mem(iwmr, access);
++	err = irdma_reg_user_mr_type_mem(iwmr, access, true);
+ 	if (err)
+ 		goto err_iwmr;
+ 
+@@ -3109,6 +3120,161 @@ static struct ib_mr *irdma_reg_user_mr_dmabuf(struct ib_pd *pd, u64 start,
+ 	return ERR_PTR(err);
+ }
+ 
++static int irdma_hwdereg_mr(struct ib_mr *ib_mr)
++{
++	struct irdma_device *iwdev = to_iwdev(ib_mr->device);
++	struct irdma_mr *iwmr = to_iwmr(ib_mr);
++	struct irdma_pd *iwpd = to_iwpd(ib_mr->pd);
++	struct irdma_dealloc_stag_info *info;
++	struct irdma_pbl *iwpbl = &iwmr->iwpbl;
++	struct irdma_cqp_request *cqp_request;
++	struct cqp_cmds_info *cqp_info;
++	int status;
++
++	/* Skip HW MR de-register when it is already de-registered
++	 * during an MR re-reregister and the re-registration fails
++	 */
++	if (!iwmr->is_hwreg)
++		return 0;
++
++	cqp_request = irdma_alloc_and_get_cqp_request(&iwdev->rf->cqp, true);
++	if (!cqp_request)
++		return -ENOMEM;
++
++	cqp_info = &cqp_request->info;
++	info = &cqp_info->in.u.dealloc_stag.info;
++	memset(info, 0, sizeof(*info));
++	info->pd_id = iwpd->sc_pd.pd_id;
++	info->stag_idx = ib_mr->rkey >> IRDMA_CQPSQ_STAG_IDX_S;
++	info->mr = true;
++	if (iwpbl->pbl_allocated)
++		info->dealloc_pbl = true;
++
++	cqp_info->cqp_cmd = IRDMA_OP_DEALLOC_STAG;
++	cqp_info->post_sq = 1;
++	cqp_info->in.u.dealloc_stag.dev = &iwdev->rf->sc_dev;
++	cqp_info->in.u.dealloc_stag.scratch = (uintptr_t)cqp_request;
++	status = irdma_handle_cqp_op(iwdev->rf, cqp_request);
++	irdma_put_cqp_request(&iwdev->rf->cqp, cqp_request);
++	if (status)
++		return status;
++
++	iwmr->is_hwreg = 0;
++	return 0;
++}
++
++/*
++ * irdma_rereg_mr_trans - Re-register a user MR for a change translation.
++ * @iwmr: ptr of iwmr
++ * @start: virtual start address
++ * @len: length of mr
++ * @virt: virtual address
++ *
++ * Re-register a user memory region when a change translation is requested.
++ * Re-register a new region while reusing the stag from the original registration.
++ */
++static int irdma_rereg_mr_trans(struct irdma_mr *iwmr, u64 start, u64 len,
++				u64 virt)
++{
++	struct irdma_device *iwdev = to_iwdev(iwmr->ibmr.device);
++	struct irdma_pbl *iwpbl = &iwmr->iwpbl;
++	struct ib_pd *pd = iwmr->ibmr.pd;
++	struct ib_umem *region;
++	int err;
++
++	region = ib_umem_get(pd->device, start, len, iwmr->access);
++	if (IS_ERR(region))
++		return PTR_ERR(region);
++
++	iwmr->region = region;
++	iwmr->ibmr.iova = virt;
++	iwmr->ibmr.pd = pd;
++	iwmr->page_size = ib_umem_find_best_pgsz(region,
++				iwdev->rf->sc_dev.hw_attrs.page_size_cap,
++				virt);
++	if (unlikely(!iwmr->page_size)) {
++		err = -EOPNOTSUPP;
++		goto err;
++	}
++
++	iwmr->len = region->length;
++	iwpbl->user_base = virt;
++	iwmr->page_cnt = ib_umem_num_dma_blocks(region, iwmr->page_size);
++
++	err = irdma_reg_user_mr_type_mem(iwmr, iwmr->access, false);
++	if (err)
++		goto err;
++
++	return 0;
++
++err:
++	ib_umem_release(region);
++	return err;
++}
++
++/*
++ *  irdma_rereg_user_mr - Re-Register a user memory region(MR)
++ *  @ibmr: ib mem to access iwarp mr pointer
++ *  @flags: bit mask to indicate which of the attr's of MR modified
++ *  @start: virtual start address
++ *  @len: length of mr
++ *  @virt: virtual address
++ *  @new_access: bit mask of access flags
++ *  @new_pd: ptr of pd
++ *  @udata: user data
++ *
++ *  Return:
++ *  NULL - Success, existing MR updated
++ *  ERR_PTR - error occurred
++ */
++static struct ib_mr *irdma_rereg_user_mr(struct ib_mr *ib_mr, int flags,
++					 u64 start, u64 len, u64 virt,
++					 int new_access, struct ib_pd *new_pd,
++					 struct ib_udata *udata)
++{
++	struct irdma_device *iwdev = to_iwdev(ib_mr->device);
++	struct irdma_mr *iwmr = to_iwmr(ib_mr);
++	struct irdma_pbl *iwpbl = &iwmr->iwpbl;
++	int ret;
++
++	if (len > iwdev->rf->sc_dev.hw_attrs.max_mr_size)
++		return ERR_PTR(-EINVAL);
++
++	if (flags & ~(IB_MR_REREG_TRANS | IB_MR_REREG_PD | IB_MR_REREG_ACCESS))
++		return ERR_PTR(-EOPNOTSUPP);
++
++	ret = irdma_hwdereg_mr(ib_mr);
++	if (ret)
++		return ERR_PTR(ret);
++
++	if (flags & IB_MR_REREG_ACCESS)
++		iwmr->access = new_access;
++
++	if (flags & IB_MR_REREG_PD) {
++		iwmr->ibmr.pd = new_pd;
++		iwmr->ibmr.device = new_pd->device;
++	}
++
++	if (flags & IB_MR_REREG_TRANS) {
++		if (iwpbl->pbl_allocated) {
++			irdma_free_pble(iwdev->rf->pble_rsrc,
++					&iwpbl->pble_alloc);
++			iwpbl->pbl_allocated = false;
++		}
++		if (iwmr->region) {
++			ib_umem_release(iwmr->region);
++			iwmr->region = NULL;
++		}
++
++		ret = irdma_rereg_mr_trans(iwmr, start, len, virt);
++	} else
++		ret = irdma_hwreg_mr(iwdev, iwmr, iwmr->access);
++	if (ret)
++		return ERR_PTR(ret);
++
++	return NULL;
++}
++
+ /**
+  * irdma_reg_phys_mr - register kernel physical memory
+  * @pd: ibpd pointer
+@@ -3216,16 +3382,10 @@ static void irdma_del_memlist(struct irdma_mr *iwmr,
+  */
+ static int irdma_dereg_mr(struct ib_mr *ib_mr, struct ib_udata *udata)
+ {
+-	struct ib_pd *ibpd = ib_mr->pd;
+-	struct irdma_pd *iwpd = to_iwpd(ibpd);
+ 	struct irdma_mr *iwmr = to_iwmr(ib_mr);
+ 	struct irdma_device *iwdev = to_iwdev(ib_mr->device);
+-	struct irdma_dealloc_stag_info *info;
+ 	struct irdma_pbl *iwpbl = &iwmr->iwpbl;
+-	struct irdma_pble_alloc *palloc = &iwpbl->pble_alloc;
+-	struct irdma_cqp_request *cqp_request;
+-	struct cqp_cmds_info *cqp_info;
+-	int status;
++	int ret;
+ 
+ 	if (iwmr->type != IRDMA_MEMREG_TYPE_MEM) {
+ 		if (iwmr->region) {
+@@ -3239,33 +3399,18 @@ static int irdma_dereg_mr(struct ib_mr *ib_mr, struct ib_udata *udata)
+ 		goto done;
+ 	}
+ 
+-	cqp_request = irdma_alloc_and_get_cqp_request(&iwdev->rf->cqp, true);
+-	if (!cqp_request)
+-		return -ENOMEM;
+-
+-	cqp_info = &cqp_request->info;
+-	info = &cqp_info->in.u.dealloc_stag.info;
+-	memset(info, 0, sizeof(*info));
+-	info->pd_id = iwpd->sc_pd.pd_id;
+-	info->stag_idx = ib_mr->rkey >> IRDMA_CQPSQ_STAG_IDX_S;
+-	info->mr = true;
+-	if (iwpbl->pbl_allocated)
+-		info->dealloc_pbl = true;
+-
+-	cqp_info->cqp_cmd = IRDMA_OP_DEALLOC_STAG;
+-	cqp_info->post_sq = 1;
+-	cqp_info->in.u.dealloc_stag.dev = &iwdev->rf->sc_dev;
+-	cqp_info->in.u.dealloc_stag.scratch = (uintptr_t)cqp_request;
+-	status = irdma_handle_cqp_op(iwdev->rf, cqp_request);
+-	irdma_put_cqp_request(&iwdev->rf->cqp, cqp_request);
+-	if (status)
+-		return status;
++	ret = irdma_hwdereg_mr(ib_mr);
++	if (ret)
++		return ret;
+ 
+ 	irdma_free_stag(iwdev, iwmr->stag);
+ done:
+ 	if (iwpbl->pbl_allocated)
+-		irdma_free_pble(iwdev->rf->pble_rsrc, palloc);
+-	ib_umem_release(iwmr->region);
++		irdma_free_pble(iwdev->rf->pble_rsrc, &iwpbl->pble_alloc);
++
++	if (iwmr->region)
++		ib_umem_release(iwmr->region);
++
+ 	kfree(iwmr);
+ 
+ 	return 0;
+@@ -4595,6 +4740,7 @@ static const struct ib_device_ops irdma_dev_ops = {
+ 	.query_qp = irdma_query_qp,
+ 	.reg_user_mr = irdma_reg_user_mr,
+ 	.reg_user_mr_dmabuf = irdma_reg_user_mr_dmabuf,
++	.rereg_user_mr = irdma_rereg_user_mr,
+ 	.req_notify_cq = irdma_req_notify_cq,
+ 	.resize_cq = irdma_resize_cq,
+ 	INIT_RDMA_OBJ_SIZE(ib_pd, irdma_pd, ibpd),
+diff --git a/drivers/infiniband/hw/irdma/verbs.h b/drivers/infiniband/hw/irdma/verbs.h
+index bb9ab945938e0..533b4597c407f 100644
+--- a/drivers/infiniband/hw/irdma/verbs.h
++++ b/drivers/infiniband/hw/irdma/verbs.h
+@@ -100,6 +100,8 @@ struct irdma_mr {
+ 		struct ib_mw ibmw;
+ 	};
+ 	struct ib_umem *region;
++	int access;
++	u8 is_hwreg;
+ 	u16 type;
+ 	u32 page_cnt;
+ 	u64 page_size;
 -- 
 2.51.0
 
