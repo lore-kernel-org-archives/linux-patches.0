@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00622F12D4;
-	Fri,  9 Jan 2026 11:56:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48671335561;
+	Fri,  9 Jan 2026 11:56:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959788; cv=none; b=IX8+Wt47Wk8zLyIyzRyIWmXcaqlXyCnZpVs4EVdWHSdWwwP4x8ugsjNxIkq4quPCmtsZPm5wq78CjQPTdNoa/4oiHHsvNBSkL5FX6RZ2ly4NtsDC6UYiy7T8R2gem7kq0ynMr3dzQWg7fkCcPl16vulZDgs4K++m3SjOzmRMGvo=
+	t=1767959791; cv=none; b=nn1cAml2AGzf+GSIAaBQwerRxKpjUfqDz0mlnK60DkpXTSQ2HjCz0a2DHnRCafWhH5i8nxSHybjauuHITd5u5pGh0F/0UblNDDjSEOGApw984tk6ey2ge94vllZnShha13o5r38Zo+NuGn5EcI9Ufbzhb46QHm/kJ3/7dQ2VuEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959788; c=relaxed/simple;
-	bh=mJGzLX1LSQ7kUlNH/TRDIfo+/BKU9Nxg/jfEV1a/Jg8=;
+	s=arc-20240116; t=1767959791; c=relaxed/simple;
+	bh=4NYoMnBG2lHhaOYipHZBAPteiswGp7z/lvPOy4ocaMM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e7v+H8jao+zhYXoIFIKcy5BSCx8z9yJ65dlf8BH8P20Z83ebVK29dM+ghu8hr3oYM+Nu0v5ZYLqa/na+Vk2R1JGAFTJAqqa/Tj5A8wxQBNW2CBzlZAhW0atrkX+z406QeF+uWqyZ+K/EJs+5C3Vh7xeW/BqpQXrBMA3hCgDIFiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sNlzsOBq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HRH4dzN2p8nH2218sBHCt6toYVZQGXuRM3ee7WjCrM4Hw5ZYlscjJ7QNMfbBPKDS6OjoLADcs9p1fl8yUxgNEZX3ZGmJe/RU6mKj22Zbv0IF/BveYYoTNYxH6JLYOaK7FnisQfHkLI3TD/86u0K4GwONh0ZQrXkbHs5ojBQ8xE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CNNf3T5E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sNlzsOBq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA03FC4CEF1;
-	Fri,  9 Jan 2026 11:56:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CNNf3T5E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7D3AC4CEF1;
+	Fri,  9 Jan 2026 11:56:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959788;
-	bh=mJGzLX1LSQ7kUlNH/TRDIfo+/BKU9Nxg/jfEV1a/Jg8=;
+	s=korg; t=1767959791;
+	bh=4NYoMnBG2lHhaOYipHZBAPteiswGp7z/lvPOy4ocaMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sNlzsOBqG7Z6pxbFn1lp6WoSzNnIfXBnPjkBodDjqtUg3bRV3747z3yKfCLcbXF4B
-	 UDSr6BrQ4aocQKFILxRN3FqfdW31BTQjG/sRErb6N4qhr+SxwCLdVYjmEUZFOwDl/o
-	 UPivvQGRR5CDBcjGAMXTdp1e377ziXfPXlpTsz4Y=
+	b=CNNf3T5E+VLrNxn/P9rTEmklpZaDi6aF3N4bK7pwf2bC571dnaeDAC6mZs9Wo271Q
+	 iPrXou0ZCfzizM0nJl2K2MkKBRalTS6VEsfkEy4ZpAR3KImWcLigzEf/WeHnB8Ji8N
+	 Hj80Mlbch/uPB5S8HRuf0Z6dHwk84SUhkm+79meY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Garri Djavadyan <g.djavadyan@gmail.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
 	David Ahern <dsahern@kernel.org>,
-	Kui-Feng Lee <thinker.li@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 174/737] net/ipv6: Remove expired routes with a separated list of routes.
-Date: Fri,  9 Jan 2026 12:35:13 +0100
-Message-ID: <20260109112140.537988876@linuxfoundation.org>
+Subject: [PATCH 6.6 175/737] ipv6: clear RA flags when adding a static route
+Date: Fri,  9 Jan 2026 12:35:14 +0100
+Message-ID: <20260109112140.574945818@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,410 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kui-Feng Lee <thinker.li@gmail.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 5eb902b8e7193cdcb33242af0a56502e6b5206e9 ]
+[ Upstream commit f72514b3c5698e4b900b25345e09f9ed33123de6 ]
 
-FIB6 GC walks trees of fib6_tables to remove expired routes. Walking a tree
-can be expensive if the number of routes in a table is big, even if most of
-them are permanent. Checking routes in a separated list of routes having
-expiration will avoid this potential issue.
+When an IPv6 Router Advertisement (RA) is received for a prefix, the
+kernel creates the corresponding on-link route with flags RTF_ADDRCONF
+and RTF_PREFIX_RT configured and RTF_EXPIRES if lifetime is set.
 
+If later a user configures a static IPv6 address on the same prefix the
+kernel clears the RTF_EXPIRES flag but it doesn't clear the RTF_ADDRCONF
+and RTF_PREFIX_RT. When the next RA for that prefix is received, the
+kernel sees the route as RA-learned and wrongly configures back the
+lifetime. This is problematic because if the route expires, the static
+address won't have the corresponding on-link route.
+
+This fix clears the RTF_ADDRCONF and RTF_PREFIX_RT flags preventing that
+the lifetime is configured when the next RA arrives. If the static
+address is deleted, the route becomes RA-learned again.
+
+Fixes: 14ef37b6d00e ("ipv6: fix route lookup in addrconf_prefix_rcv()")
+Reported-by: Garri Djavadyan <g.djavadyan@gmail.com>
+Closes: https://lore.kernel.org/netdev/ba807d39aca5b4dcf395cc11dca61a130a52cfd3.camel@gmail.com/
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
 Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: Kui-Feng Lee <thinker.li@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: f72514b3c569 ("ipv6: clear RA flags when adding a static route")
+Link: https://patch.msgid.link/20251115095939.6967-1-fmancera@suse.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip6_fib.h | 46 ++++++++++++++++++++++++++++++++-
- net/ipv6/addrconf.c   | 41 ++++++++++++++++++++++++-----
- net/ipv6/ip6_fib.c    | 60 +++++++++++++++++++++++++++++++++++++++----
- net/ipv6/ndisc.c      | 10 +++++++-
- net/ipv6/route.c      | 13 ++++++++--
- 5 files changed, 154 insertions(+), 16 deletions(-)
+ net/ipv6/ip6_fib.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/net/ip6_fib.h b/include/net/ip6_fib.h
-index 1121d614942c8..f4c5b705418c0 100644
---- a/include/net/ip6_fib.h
-+++ b/include/net/ip6_fib.h
-@@ -179,6 +179,9 @@ struct fib6_info {
- 
- 	refcount_t			fib6_ref;
- 	unsigned long			expires;
-+
-+	struct hlist_node		gc_link;
-+
- 	struct dst_metrics		*fib6_metrics;
- #define fib6_pmtu		fib6_metrics->metrics[RTAX_MTU-1]
- 
-@@ -249,12 +252,18 @@ static inline bool fib6_requires_src(const struct fib6_info *rt)
- 	return rt->fib6_src.plen > 0;
- }
- 
-+/* The callers should hold f6i->fib6_table->tb6_lock if a route has ever
-+ * been added to a table before.
-+ */
- static inline void fib6_clean_expires(struct fib6_info *f6i)
- {
- 	f6i->fib6_flags &= ~RTF_EXPIRES;
- 	f6i->expires = 0;
- }
- 
-+/* The callers should hold f6i->fib6_table->tb6_lock if a route has ever
-+ * been added to a table before.
-+ */
- static inline void fib6_set_expires(struct fib6_info *f6i,
- 				    unsigned long expires)
- {
-@@ -335,8 +344,10 @@ static inline bool fib6_info_hold_safe(struct fib6_info *f6i)
- 
- static inline void fib6_info_release(struct fib6_info *f6i)
- {
--	if (f6i && refcount_dec_and_test(&f6i->fib6_ref))
-+	if (f6i && refcount_dec_and_test(&f6i->fib6_ref)) {
-+		DEBUG_NET_WARN_ON_ONCE(!hlist_unhashed(&f6i->gc_link));
- 		call_rcu(&f6i->rcu, fib6_info_destroy_rcu);
-+	}
- }
- 
- enum fib6_walk_state {
-@@ -390,6 +401,7 @@ struct fib6_table {
- 	struct inet_peer_base	tb6_peers;
- 	unsigned int		flags;
- 	unsigned int		fib_seq;
-+	struct hlist_head       tb6_gc_hlist;	/* GC candidates */
- #define RT6_TABLE_HAS_DFLT_ROUTER	BIT(0)
- };
- 
-@@ -506,6 +518,38 @@ void fib6_gc_cleanup(void);
- 
- int fib6_init(void);
- 
-+/* Add the route to the gc list if it is not already there
-+ *
-+ * The callers should hold f6i->fib6_table->tb6_lock.
-+ */
-+static inline void fib6_add_gc_list(struct fib6_info *f6i)
-+{
-+	/* If fib6_node is null, the f6i is not in (or removed from) the
-+	 * table.
-+	 *
-+	 * There is a gap between finding the f6i from the table and
-+	 * calling this function without the protection of the tb6_lock.
-+	 * This check makes sure the f6i is not added to the gc list when
-+	 * it is not on the table.
-+	 */
-+	if (!rcu_dereference_protected(f6i->fib6_node,
-+				       lockdep_is_held(&f6i->fib6_table->tb6_lock)))
-+		return;
-+
-+	if (hlist_unhashed(&f6i->gc_link))
-+		hlist_add_head(&f6i->gc_link, &f6i->fib6_table->tb6_gc_hlist);
-+}
-+
-+/* Remove the route from the gc list if it is on the list.
-+ *
-+ * The callers should hold f6i->fib6_table->tb6_lock.
-+ */
-+static inline void fib6_remove_gc_list(struct fib6_info *f6i)
-+{
-+	if (!hlist_unhashed(&f6i->gc_link))
-+		hlist_del_init(&f6i->gc_link);
-+}
-+
- struct ipv6_route_iter {
- 	struct seq_net_private p;
- 	struct fib6_walker w;
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index 0e49ee83533b5..b606d77fe7fce 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -1268,6 +1268,7 @@ static void
- cleanup_prefix_route(struct inet6_ifaddr *ifp, unsigned long expires,
- 		     bool del_rt, bool del_peer)
- {
-+	struct fib6_table *table;
- 	struct fib6_info *f6i;
- 
- 	f6i = addrconf_get_prefix_route(del_peer ? &ifp->peer_addr : &ifp->addr,
-@@ -1277,8 +1278,15 @@ cleanup_prefix_route(struct inet6_ifaddr *ifp, unsigned long expires,
- 		if (del_rt)
- 			ip6_del_rt(dev_net(ifp->idev->dev), f6i, false);
- 		else {
--			if (!(f6i->fib6_flags & RTF_EXPIRES))
-+			if (!(f6i->fib6_flags & RTF_EXPIRES)) {
-+				table = f6i->fib6_table;
-+				spin_lock_bh(&table->tb6_lock);
-+
- 				fib6_set_expires(f6i, expires);
-+				fib6_add_gc_list(f6i);
-+
-+				spin_unlock_bh(&table->tb6_lock);
-+			}
- 			fib6_info_release(f6i);
- 		}
- 	}
-@@ -2736,6 +2744,7 @@ EXPORT_SYMBOL_GPL(addrconf_prefix_rcv_add_addr);
- void addrconf_prefix_rcv(struct net_device *dev, u8 *opt, int len, bool sllao)
- {
- 	struct prefix_info *pinfo;
-+	struct fib6_table *table;
- 	__u32 valid_lft;
- 	__u32 prefered_lft;
- 	int addr_type, err;
-@@ -2812,11 +2821,20 @@ void addrconf_prefix_rcv(struct net_device *dev, u8 *opt, int len, bool sllao)
- 			if (valid_lft == 0) {
- 				ip6_del_rt(net, rt, false);
- 				rt = NULL;
--			} else if (addrconf_finite_timeout(rt_expires)) {
--				/* not infinity */
--				fib6_set_expires(rt, jiffies + rt_expires);
- 			} else {
--				fib6_clean_expires(rt);
-+				table = rt->fib6_table;
-+				spin_lock_bh(&table->tb6_lock);
-+
-+				if (addrconf_finite_timeout(rt_expires)) {
-+					/* not infinity */
-+					fib6_set_expires(rt, jiffies + rt_expires);
-+					fib6_add_gc_list(rt);
-+				} else {
-+					fib6_clean_expires(rt);
-+					fib6_remove_gc_list(rt);
-+				}
-+
-+				spin_unlock_bh(&table->tb6_lock);
- 			}
- 		} else if (valid_lft) {
- 			clock_t expires = 0;
-@@ -4770,6 +4788,7 @@ static int modify_prefix_route(struct inet6_ifaddr *ifp,
- 			       unsigned long expires, u32 flags,
- 			       bool modify_peer)
- {
-+	struct fib6_table *table;
- 	struct fib6_info *f6i;
- 	u32 prio;
- 
-@@ -4790,10 +4809,18 @@ static int modify_prefix_route(struct inet6_ifaddr *ifp,
- 				      ifp->rt_priority, ifp->idev->dev,
- 				      expires, flags, GFP_KERNEL);
- 	} else {
--		if (!expires)
-+		table = f6i->fib6_table;
-+		spin_lock_bh(&table->tb6_lock);
-+
-+		if (!expires) {
- 			fib6_clean_expires(f6i);
--		else
-+			fib6_remove_gc_list(f6i);
-+		} else {
- 			fib6_set_expires(f6i, expires);
-+			fib6_add_gc_list(f6i);
-+		}
-+
-+		spin_unlock_bh(&table->tb6_lock);
- 
- 		fib6_info_release(f6i);
- 	}
 diff --git a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
-index c44136cbbaa1f..ab84e2dd682f8 100644
+index ab84e2dd682f8..646ff1276aff2 100644
 --- a/net/ipv6/ip6_fib.c
 +++ b/net/ipv6/ip6_fib.c
-@@ -160,6 +160,8 @@ struct fib6_info *fib6_info_alloc(gfp_t gfp_flags, bool with_fib6_nh)
- 	INIT_LIST_HEAD(&f6i->fib6_siblings);
- 	refcount_set(&f6i->fib6_ref, 1);
- 
-+	INIT_HLIST_NODE(&f6i->gc_link);
-+
- 	return f6i;
- }
- 
-@@ -246,6 +248,7 @@ static struct fib6_table *fib6_alloc_table(struct net *net, u32 id)
- 				   net->ipv6.fib6_null_entry);
- 		table->tb6_root.fn_flags = RTN_ROOT | RTN_TL_ROOT | RTN_RTINFO;
- 		inet_peer_base_init(&table->tb6_peers);
-+		INIT_HLIST_HEAD(&table->tb6_gc_hlist);
- 	}
- 
- 	return table;
-@@ -1063,6 +1066,9 @@ static void fib6_purge_rt(struct fib6_info *rt, struct fib6_node *fn,
- 				    lockdep_is_held(&table->tb6_lock));
- 		}
- 	}
-+
-+	fib6_clean_expires(rt);
-+	fib6_remove_gc_list(rt);
- }
- 
- /*
-@@ -1123,10 +1129,13 @@ static int fib6_add_rt2node(struct fib6_node *fn, struct fib6_info *rt,
- 					WRITE_ONCE(rt->fib6_nsiblings, 0);
- 				if (!(iter->fib6_flags & RTF_EXPIRES))
- 					return -EEXIST;
--				if (!(rt->fib6_flags & RTF_EXPIRES))
-+				if (!(rt->fib6_flags & RTF_EXPIRES)) {
- 					fib6_clean_expires(iter);
--				else
-+					fib6_remove_gc_list(iter);
-+				} else {
+@@ -1136,6 +1136,10 @@ static int fib6_add_rt2node(struct fib6_node *fn, struct fib6_info *rt,
  					fib6_set_expires(iter, rt->expires);
-+					fib6_add_gc_list(iter);
+ 					fib6_add_gc_list(iter);
+ 				}
++				if (!(rt->fib6_flags & (RTF_ADDRCONF | RTF_PREFIX_RT))) {
++					iter->fib6_flags &= ~RTF_ADDRCONF;
++					iter->fib6_flags &= ~RTF_PREFIX_RT;
 +				}
  
  				if (rt->fib6_pmtu)
  					fib6_metric_set(iter, RTAX_MTU,
-@@ -1491,6 +1500,10 @@ int fib6_add(struct fib6_node *root, struct fib6_info *rt,
- 		if (rt->nh)
- 			list_add(&rt->nh_list, &rt->nh->f6i_list);
- 		__fib6_update_sernum_upto_root(rt, fib6_new_sernum(info->nl_net));
-+
-+		if (rt->fib6_flags & RTF_EXPIRES)
-+			fib6_add_gc_list(rt);
-+
- 		fib6_start_gc(info->nl_net, rt);
- 	}
- 
-@@ -2294,9 +2307,8 @@ static void fib6_flush_trees(struct net *net)
-  *	Garbage collection
-  */
- 
--static int fib6_age(struct fib6_info *rt, void *arg)
-+static int fib6_age(struct fib6_info *rt, struct fib6_gc_args *gc_args)
- {
--	struct fib6_gc_args *gc_args = arg;
- 	unsigned long now = jiffies;
- 
- 	/*
-@@ -2321,6 +2333,42 @@ static int fib6_age(struct fib6_info *rt, void *arg)
- 	return 0;
- }
- 
-+static void fib6_gc_table(struct net *net,
-+			  struct fib6_table *tb6,
-+			  struct fib6_gc_args *gc_args)
-+{
-+	struct fib6_info *rt;
-+	struct hlist_node *n;
-+	struct nl_info info = {
-+		.nl_net = net,
-+		.skip_notify = false,
-+	};
-+
-+	hlist_for_each_entry_safe(rt, n, &tb6->tb6_gc_hlist, gc_link)
-+		if (fib6_age(rt, gc_args) == -1)
-+			fib6_del(rt, &info);
-+}
-+
-+static void fib6_gc_all(struct net *net, struct fib6_gc_args *gc_args)
-+{
-+	struct fib6_table *table;
-+	struct hlist_head *head;
-+	unsigned int h;
-+
-+	rcu_read_lock();
-+	for (h = 0; h < FIB6_TABLE_HASHSZ; h++) {
-+		head = &net->ipv6.fib_table_hash[h];
-+		hlist_for_each_entry_rcu(table, head, tb6_hlist) {
-+			spin_lock_bh(&table->tb6_lock);
-+
-+			fib6_gc_table(net, table, gc_args);
-+
-+			spin_unlock_bh(&table->tb6_lock);
-+		}
-+	}
-+	rcu_read_unlock();
-+}
-+
- void fib6_run_gc(unsigned long expires, struct net *net, bool force)
- {
- 	struct fib6_gc_args gc_args;
-@@ -2336,7 +2384,7 @@ void fib6_run_gc(unsigned long expires, struct net *net, bool force)
- 			  net->ipv6.sysctl.ip6_rt_gc_interval;
- 	gc_args.more = 0;
- 
--	fib6_clean_all(net, fib6_age, &gc_args);
-+	fib6_gc_all(net, &gc_args);
- 	now = jiffies;
- 	net->ipv6.ip6_rt_last_gc = now;
- 
-@@ -2396,6 +2444,7 @@ static int __net_init fib6_net_init(struct net *net)
- 	net->ipv6.fib6_main_tbl->tb6_root.fn_flags =
- 		RTN_ROOT | RTN_TL_ROOT | RTN_RTINFO;
- 	inet_peer_base_init(&net->ipv6.fib6_main_tbl->tb6_peers);
-+	INIT_HLIST_HEAD(&net->ipv6.fib6_main_tbl->tb6_gc_hlist);
- 
- #ifdef CONFIG_IPV6_MULTIPLE_TABLES
- 	net->ipv6.fib6_local_tbl = kzalloc(sizeof(*net->ipv6.fib6_local_tbl),
-@@ -2408,6 +2457,7 @@ static int __net_init fib6_net_init(struct net *net)
- 	net->ipv6.fib6_local_tbl->tb6_root.fn_flags =
- 		RTN_ROOT | RTN_TL_ROOT | RTN_RTINFO;
- 	inet_peer_base_init(&net->ipv6.fib6_local_tbl->tb6_peers);
-+	INIT_HLIST_HEAD(&net->ipv6.fib6_local_tbl->tb6_gc_hlist);
- #endif
- 	fib6_tables_init(net);
- 
-diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
-index 8d853971f2f68..d8e5e2833eded 100644
---- a/net/ipv6/ndisc.c
-+++ b/net/ipv6/ndisc.c
-@@ -1241,6 +1241,7 @@ static enum skb_drop_reason ndisc_router_discovery(struct sk_buff *skb)
- 	struct ndisc_options ndopts;
- 	struct fib6_info *rt = NULL;
- 	struct inet6_dev *in6_dev;
-+	struct fib6_table *table;
- 	u32 defrtr_usr_metric;
- 	unsigned int pref = 0;
- 	__u32 old_if_flags;
-@@ -1413,8 +1414,15 @@ static enum skb_drop_reason ndisc_router_discovery(struct sk_buff *skb)
- 		inet6_rt_notify(RTM_NEWROUTE, rt, &nlinfo, NLM_F_REPLACE);
- 	}
- 
--	if (rt)
-+	if (rt) {
-+		table = rt->fib6_table;
-+		spin_lock_bh(&table->tb6_lock);
-+
- 		fib6_set_expires(rt, jiffies + (HZ * lifetime));
-+		fib6_add_gc_list(rt);
-+
-+		spin_unlock_bh(&table->tb6_lock);
-+	}
- 	if (in6_dev->cnf.accept_ra_min_hop_limit < 256 &&
- 	    ra_msg->icmph.icmp6_hop_limit) {
- 		if (in6_dev->cnf.accept_ra_min_hop_limit <= ra_msg->icmph.icmp6_hop_limit) {
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index eb9e505f71f97..929f92b555113 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -971,6 +971,7 @@ int rt6_route_rcv(struct net_device *dev, u8 *opt, int len,
- 	struct net *net = dev_net(dev);
- 	struct route_info *rinfo = (struct route_info *) opt;
- 	struct in6_addr prefix_buf, *prefix;
-+	struct fib6_table *table;
- 	unsigned int pref;
- 	unsigned long lifetime;
- 	struct fib6_info *rt;
-@@ -1029,10 +1030,18 @@ int rt6_route_rcv(struct net_device *dev, u8 *opt, int len,
- 				 (rt->fib6_flags & ~RTF_PREF_MASK) | RTF_PREF(pref);
- 
- 	if (rt) {
--		if (!addrconf_finite_timeout(lifetime))
-+		table = rt->fib6_table;
-+		spin_lock_bh(&table->tb6_lock);
-+
-+		if (!addrconf_finite_timeout(lifetime)) {
- 			fib6_clean_expires(rt);
--		else
-+			fib6_remove_gc_list(rt);
-+		} else {
- 			fib6_set_expires(rt, jiffies + HZ * lifetime);
-+			fib6_add_gc_list(rt);
-+		}
-+
-+		spin_unlock_bh(&table->tb6_lock);
- 
- 		fib6_info_release(rt);
- 	}
 -- 
 2.51.0
 
