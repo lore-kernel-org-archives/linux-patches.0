@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E992F35B130;
-	Fri,  9 Jan 2026 12:32:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24F433C53C;
+	Fri,  9 Jan 2026 12:32:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961939; cv=none; b=CuEVnD/x6t0pxhAk5n+JV3ZtqeI8b8DLDohBlkeWZrdohC9NZRNw6S96nfmernr+RhvUV8O+VEVCTIHzWzEtOZjR9Xcdh5nl9Iw9cHN+xcWOib64y4k1AEW429NcWBkOx98f7StqN9nMz/MDSG/0BN44OAU/W1zdq8U57ijybQQ=
+	t=1767961941; cv=none; b=onCuu22JkKSBGTKqYagB44UvCk66BIfryomJlwbwDebYZwAT7baOAxjQztKOWr0tJZ2pGp4nSUK8/KDXROzFq6QyxG/37RQMsqDKvBF3Qm/ZqlatnTVpRTHTELmF1VwUC6VdG17a1M8ui+bEcfrW4EsC9IdwwtUe/0jD1E9j+uY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961939; c=relaxed/simple;
-	bh=SidY7b74nIHjR4VtRvErsXN/Ayy7icV3AFZQD4ZlFQA=;
+	s=arc-20240116; t=1767961941; c=relaxed/simple;
+	bh=qxwHcZ66tM8X5zauqtb+S4odQ9IFbyZ8QtHxMcA2x7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mO/38BgEuXP1TUMfyWr4jtXaI8guNCW1cDpbBSBpss/1/jlx9S5qM95bQi4RkmAJatVqEYlmBtK87hqKWqw2MLFk7WGwM4tYT0Vx5eqRv8ZoAXPGLSLJmBHx5v0NB3FhomUtRRdDFKHfOIDy+Opq3SoHo7pm5YrsxQRdSA6Ju/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iQqEQY1v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t+BR48Zscz4leco8eC/ultAqLKPynaHVPY+qMhaRyLBS+6uRQOlcwFyqHLnaCyLdCFCRphH6NQ/sNctfQ9dlFtIoBnrx+U0GkO7se73EE/RqzkDXIAMmxJTKuigIgBlPUHYG991g2g/xcJohv75LND43Npn5Qyu5lqQK5OGtzIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nv66XNwH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iQqEQY1v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78F33C16AAE;
-	Fri,  9 Jan 2026 12:32:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nv66XNwH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59F6DC4CEF1;
+	Fri,  9 Jan 2026 12:32:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961938;
-	bh=SidY7b74nIHjR4VtRvErsXN/Ayy7icV3AFZQD4ZlFQA=;
+	s=korg; t=1767961941;
+	bh=qxwHcZ66tM8X5zauqtb+S4odQ9IFbyZ8QtHxMcA2x7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iQqEQY1vtAzzHhNhhbM7PuJ0FVVgjvXPOGv8l0tpxb7ap64d0W7WAJSw4v26up8vC
-	 /IAF2RC5zd932RzmKBycKEAiaZMoCq4VWLMEKMb3Q0va20gm6kEUnBB9eLxx8NMw9u
-	 cgnJSob+NcEhSTnQeGzDQ63XBdjk5Lh5OBNPj9xg=
+	b=nv66XNwHDVZLIvnXnWITkeHmfAfDiDPIGGwtl3wu33WMojvGPD5FrwXrwdse5ikm5
+	 TB7P8cGaYiMkf7ppcH/u66AKO7bJW8FxkfyNI3PSTRg+lyq/+uXm7p5NJJKiIX+3Ik
+	 2mVCvJizGGY++YvFLKIy29wVZYlZiDPTYr1h3kp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Michael Stoler <michael.stoler@vastdata.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 189/634] NFS: Initialise verifiers for visible dentries in readdir and lookup
-Date: Fri,  9 Jan 2026 12:37:47 +0100
-Message-ID: <20260109112124.550780322@linuxfoundation.org>
+Subject: [PATCH 6.1 190/634] NFS: Initialise verifiers for visible dentries in nfs_atomic_open()
+Date: Fri,  9 Jan 2026 12:37:48 +0100
+Message-ID: <20260109112124.588004630@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -53,58 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 9bd545539b233725a3416801f7c374bff0327d6e ]
+[ Upstream commit 518c32a1bc4f8df1a8442ee8cdfea3e2fcff20a0 ]
 
 Ensure that the verifiers are initialised before calling
-d_splice_alias() in both nfs_prime_dcache() and nfs_lookup().
+d_splice_alias() in nfs_atomic_open().
 
 Reported-by: Michael Stoler <michael.stoler@vastdata.com>
-Fixes: a1147b8281bd ("NFS: Fix up directory verifier races")
+Fixes: 809fd143de88 ("NFSv4: Ensure nfs_atomic_open set the dentry verifier on ENOENT")
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/dir.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/nfs/dir.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/nfs/dir.c b/fs/nfs/dir.c
-index b54c92d8e2730..c395b3ccaf6ec 100644
+index c395b3ccaf6ec..a89c0528c858e 100644
 --- a/fs/nfs/dir.c
 +++ b/fs/nfs/dir.c
-@@ -788,16 +788,17 @@ void nfs_prime_dcache(struct dentry *parent, struct nfs_entry *entry,
- 		goto out;
- 	}
- 
-+	nfs_set_verifier(dentry, dir_verifier);
- 	inode = nfs_fhget(dentry->d_sb, entry->fh, entry->fattr);
- 	alias = d_splice_alias(inode, dentry);
- 	d_lookup_done(dentry);
- 	if (alias) {
- 		if (IS_ERR(alias))
- 			goto out;
-+		nfs_set_verifier(alias, dir_verifier);
- 		dput(dentry);
- 		dentry = alias;
- 	}
--	nfs_set_verifier(dentry, dir_verifier);
- 	trace_nfs_readdir_lookup(d_inode(parent), dentry, 0);
- out:
- 	dput(dentry);
-@@ -1990,13 +1991,14 @@ struct dentry *nfs_lookup(struct inode *dir, struct dentry * dentry, unsigned in
- 	nfs_lookup_advise_force_readdirplus(dir, flags);
- 
- no_entry:
-+	nfs_set_verifier(dentry, dir_verifier);
- 	res = d_splice_alias(inode, dentry);
- 	if (res != NULL) {
- 		if (IS_ERR(res))
- 			goto out;
-+		nfs_set_verifier(res, dir_verifier);
- 		dentry = res;
- 	}
--	nfs_set_verifier(dentry, dir_verifier);
- out:
- 	trace_nfs_lookup_exit(dir, dentry, flags, PTR_ERR_OR_ZERO(res));
- 	nfs_free_fattr(fattr);
+@@ -2139,12 +2139,12 @@ int nfs_atomic_open(struct inode *dir, struct dentry *dentry,
+ 		d_drop(dentry);
+ 		switch (err) {
+ 		case -ENOENT:
+-			d_splice_alias(NULL, dentry);
+ 			if (nfs_server_capable(dir, NFS_CAP_CASE_INSENSITIVE))
+ 				dir_verifier = inode_peek_iversion_raw(dir);
+ 			else
+ 				dir_verifier = nfs_save_change_attribute(dir);
+ 			nfs_set_verifier(dentry, dir_verifier);
++			d_splice_alias(NULL, dentry);
+ 			break;
+ 		case -EISDIR:
+ 		case -ENOTDIR:
 -- 
 2.51.0
 
