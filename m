@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F9D035B159;
-	Fri,  9 Jan 2026 12:38:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D992C35B142;
+	Fri,  9 Jan 2026 12:38:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962299; cv=none; b=QnmYuO3gPS23uOlJqxVEwQJlWZpr15uSHybZxudHcFWJ8BST75bO4+jd9GW+dj1RLlf8wqnU42pDBEApRmrc3qQlhSEbhq+29aPhsy/oPsAPifNdHiPSa9yC2Hn+27Db7RGQ9z8WgtWoQ+8rHMXuX+nQyE2M3QbTCuQgqnjzgnQ=
+	t=1767962301; cv=none; b=g15ydx9T4oe+a6/Bck4fyZexThkNwloaGAk9xpvQMilVwkspD0wJM/kf9Toh/PIBwOG1xdxXbeOdxe83yg5yyvA5XtXheOsz4uVwZ6e4AbjcBhtzO8FrHhUH5kvjPlRfqIAkiqA+kIHCr7puAPAfWFeotMHLegXrgSxiwYXxXpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962299; c=relaxed/simple;
-	bh=gjwEXrLBMZ2HZzIMprZc/xgmuVwpb9luZ+lyvMtSHYw=;
+	s=arc-20240116; t=1767962301; c=relaxed/simple;
+	bh=+mgWIkuZ+pkr9nh5RMgkrNMq2/WDu8ZtEa0NR6SN3MY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fa2s7WL/5AbHq2PXb6STZ/IyDAYH+SRqXNFKnXlRVp1OnRwrTjed8gkcVVws3eA7wF/HdB5vPA9ePgvkmF3RVXNFB/Gfefmux+oGgRWaU/KljaPj4gXvjvpNbFsF0+57+USULOrxIl2zL/DvtrQRUOV7B7dxu+Bvhcqudm936Ng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N24LbA7Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BEY5ZfRyLbnjQKqWuBSoY6npzjARAuG7Yvbn1z4lYR+nYm5kgHLhkPwQl5ytq90wCbDxW8L7RpjenZ+bzlpg4WVbZMIUh4SlJVqrzweJa7+mXkiLYAMpBXpaNhyDo60+OWlYZ8KAnVzJtYqkH0fGem7P1O3j3Xxaeyt8d1UqDj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dmJqCWot; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N24LbA7Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 656ACC4CEF1;
-	Fri,  9 Jan 2026 12:38:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dmJqCWot"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F392C4CEF1;
+	Fri,  9 Jan 2026 12:38:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962298;
-	bh=gjwEXrLBMZ2HZzIMprZc/xgmuVwpb9luZ+lyvMtSHYw=;
+	s=korg; t=1767962301;
+	bh=+mgWIkuZ+pkr9nh5RMgkrNMq2/WDu8ZtEa0NR6SN3MY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N24LbA7QKoodWAKN9gmwgJ2bcpeIZuP0VczwxPMulI3OafYQEDe1jA/UNMVzc746K
-	 73e3L9D8XCTRtsj5ro712Pzgu0vkl9rH+JhyREHzGM86o0k0E9B1Ba7+qdNada3rLh
-	 GjskashL9f5Ac/PsSE3DN4nFh+qzYWQBKviPmeP8=
+	b=dmJqCWotIllNEzPPO41bGgeZAU+kG+RA/ed3RnVGhslenaTgsMCdxWCV7k8MnOpXR
+	 /ZOg5SImYNyxVVPVWWbO3mBAimKrjojnZZv0UcSAabXebCAEBvdV5UHQ9Al1Wps9G9
+	 HyExUAGYxmVWgtEWxux7FZAS3wVxt8f7ErFZAPkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qianchang Zhao <pioooooooooip@gmail.com>,
-	Zhitong Liu <liuzhitong1993@gmail.com>,
+	Alexandre <roger.andersen@protonmail.com>,
+	Stanislas Polu <spolu@dust.tt>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 283/634] ksmbd: skip lock-range check on equal size to avoid size==0 underflow
-Date: Fri,  9 Jan 2026 12:39:21 +0100
-Message-ID: <20260109112128.181308182@linuxfoundation.org>
+Subject: [PATCH 6.1 284/634] ksmbd: Fix refcount leak when invalid session is found on session lookup
+Date: Fri,  9 Jan 2026 12:39:22 +0100
+Message-ID: <20260109112128.218425721@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,45 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qianchang Zhao <pioooooooooip@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 5d510ac31626ed157d2182149559430350cf2104 upstream.
+commit cafb57f7bdd57abba87725eb4e82bbdca4959644 upstream.
 
-When size equals the current i_size (including 0), the code used to call
-check_lock_range(filp, i_size, size - 1, WRITE), which computes `size - 1`
-and can underflow for size==0. Skip the equal case.
+When a session is found but its state is not SMB2_SESSION_VALID, It
+indicates that no valid session was found, but it is missing to decrement
+the reference count acquired by the session lookup, which results in
+a reference count leak. This patch fixes the issue by explicitly calling
+ksmbd_user_session_put to release the reference to the session.
 
 Cc: stable@vger.kernel.org
-Reported-by: Qianchang Zhao <pioooooooooip@gmail.com>
-Reported-by: Zhitong Liu <liuzhitong1993@gmail.com>
-Signed-off-by: Qianchang Zhao <pioooooooooip@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Reported-by: Alexandre <roger.andersen@protonmail.com>
+Reported-by: Stanislas Polu <spolu@dust.tt>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/vfs.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/smb/server/mgmt/user_session.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -330,6 +330,9 @@ static int check_lock_range(struct file
- 	struct file_lock_context *ctx = file_inode(filp)->i_flctx;
- 	int error = 0;
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -312,8 +312,10 @@ struct ksmbd_session *ksmbd_session_look
+ 	sess = ksmbd_session_lookup(conn, id);
+ 	if (!sess && conn->binding)
+ 		sess = ksmbd_session_lookup_slowpath(id);
+-	if (sess && sess->state != SMB2_SESSION_VALID)
++	if (sess && sess->state != SMB2_SESSION_VALID) {
++		ksmbd_user_session_put(sess);
+ 		sess = NULL;
++	}
+ 	return sess;
+ }
  
-+	if (start == end)
-+		return 0;
-+
- 	if (!ctx || list_empty_careful(&ctx->flc_posix))
- 		return 0;
- 
-@@ -830,7 +833,7 @@ int ksmbd_vfs_truncate(struct ksmbd_work
- 		if (size < inode->i_size) {
- 			err = check_lock_range(filp, size,
- 					       inode->i_size - 1, WRITE);
--		} else {
-+		} else if (size > inode->i_size) {
- 			err = check_lock_range(filp, inode->i_size,
- 					       size - 1, WRITE);
- 		}
 
 
