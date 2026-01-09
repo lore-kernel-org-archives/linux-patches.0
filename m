@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3268835E53B;
-	Fri,  9 Jan 2026 12:48:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132CC35E548;
+	Fri,  9 Jan 2026 12:48:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962906; cv=none; b=q+tWeFXzMzfqQm4rrM/x8tagInLppqjHtEdc8tkZafaqcS7ERsmXzSefenyUauKCiqa/kqLGtO1d4mkaO6ewUCO1h1+SUyYtHbnd4LOT/o+/J7Pf848NyG7MlkDEaaMus4JeM7vWMlRMWyRub/+bsEPg5td5IzBvzdaqRwftH/o=
+	t=1767962909; cv=none; b=AkwGEKaCR/FPrGIOuifW2XvJt4eipew1g/qb9dnUDhxCa0Pv1R3IaB1qgsUlOv94Oean6nvcvCoZWxt7hou5Dzc5sfliKVdPA3n1amDHJr0dmkpiekTxp92/k6EduRbzscwRuxbIW9NTrA5JvL8pxAUUD/ZC3GIDFu7fjSaicis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962906; c=relaxed/simple;
-	bh=/VUiyfWTGp2fStGoma7xVHhFrOfX9YXd8Ly3kZBqr/8=;
+	s=arc-20240116; t=1767962909; c=relaxed/simple;
+	bh=HdowSssH3JJqPgGnCA4XuMs1UL+djEDPKtQjOAvq9A4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=olnlCIOmWNLSJFlIrBzq3eUR8NE9iYqZGj5uXfy/Gmg2DZR2PyChitS5a/DTp0pR3Qg8Kb6tq8ivLQXa1FowODJCZ1davxDMurp7DfzA/i+IC8U+T3D5F8b4ixU2GXNnvYn11OKBuTvN5cObCKs4PkplmGh3k/Vb1wRVEUKp6n4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=owwpdWUq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uGGCI1dHHlD/lbJ5rMloeA6B6dx0iilSHTNvwmTgq52GYNMCkzKDOjNLUoEMGn6cpD1FAoCn7vxpY8w5YGj2pJTlEtLVzV7iu4GdkU+D0UKmUkx/nDdrMEpJfDaN7JutstTIjo3WtgAie2xtHZ3iJMJKlMiTZNuPn2QqDckcJ8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NnIfrYcP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="owwpdWUq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1EF2C4CEF1;
-	Fri,  9 Jan 2026 12:48:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NnIfrYcP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90BA1C4CEF1;
+	Fri,  9 Jan 2026 12:48:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962906;
-	bh=/VUiyfWTGp2fStGoma7xVHhFrOfX9YXd8Ly3kZBqr/8=;
+	s=korg; t=1767962909;
+	bh=HdowSssH3JJqPgGnCA4XuMs1UL+djEDPKtQjOAvq9A4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=owwpdWUq7D1Kewcnf+/ImcoCGXu6QMBTBoeXEnS0AizfPJZiYiRdl76LRtTE5GSnV
-	 w9ERwVVGAc+OnGQWusfZr6wKTDCroTZPeisx45msP9FcKeWQWDpXI56CMt+CeSjpc3
-	 q2TNXE/3yzWEO9nCD4BjXJ5Yx7FB6vu1DwkBGm08=
+	b=NnIfrYcP2XZTYjUADzsJJM67jz1WWm7rNfz3qG91AJBijKjNUI0OPjQ57SxChsmaG
+	 QmcCEZsbvsTZxBseeRDTdel7hlU7JGMM+jaKAomE504EaPIS9YDbegYmO7o1YaFAM1
+	 lYw8+yrzKLUWVBvgRXbBDQgzJ+iNfE6Fuv+Xq6uk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Qian <ming.qian@oss.nxp.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.1 487/634] media: amphion: Cancel message work before releasing the VPU core
-Date: Fri,  9 Jan 2026 12:42:45 +0100
-Message-ID: <20260109112135.871449314@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 523/634] mm/damon/tests/core-kunit: handle alloc failures on damon_test_split_regions_of()
+Date: Fri,  9 Jan 2026 12:43:21 +0100
+Message-ID: <20260109112137.244008522@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,44 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Qian <ming.qian@oss.nxp.com>
+From: SeongJae Park <sj@kernel.org>
 
-commit ae246b0032146e352c4c06a7bf03cd3d5bcb2ecd upstream.
+commit eded254cb69044bd4abde87394ea44909708d7c0 upstream.
 
-To avoid accessing the VPU register after release of the VPU core,
-cancel the message work and destroy the workqueue that handles the
-VPU message before release of the VPU core.
+damon_test_split_regions_of() is assuming all dynamic memory allocation in
+it will succeed.  Those are indeed likely in the real use cases since
+those allocations are too small to fail, but theoretically those could
+fail.  In the case, inappropriate memory access can happen.  Fix it by
+appropriately cleanup pre-allocated memory and skip the execution of the
+remaining tests in the failure cases.
 
-Fixes: 3cd084519c6f ("media: amphion: add vpu v4l2 m2m support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Link: https://lkml.kernel.org/r/20251101182021.74868-9-sj@kernel.org
+Fixes: 17ccae8bb5c9 ("mm/damon: add kunit tests")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: Brendan Higgins <brendan.higgins@linux.dev>
+Cc: David Gow <davidgow@google.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: <stable@vger.kernel.org>	[5.15+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/amphion/vpu_v4l2.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ mm/damon/core-test.h |   20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
---- a/drivers/media/platform/amphion/vpu_v4l2.c
-+++ b/drivers/media/platform/amphion/vpu_v4l2.c
-@@ -597,15 +597,15 @@ static int vpu_v4l2_release(struct vpu_i
- {
- 	vpu_trace(inst->vpu->dev, "%p\n", inst);
+--- a/mm/damon/core-test.h
++++ b/mm/damon/core-test.h
+@@ -256,15 +256,35 @@ static void damon_test_split_regions_of(
+ 	struct damon_target *t;
+ 	struct damon_region *r;
  
--	vpu_release_core(inst->core);
--	put_device(inst->dev);
--
- 	if (inst->workqueue) {
- 		cancel_work_sync(&inst->msg_work);
- 		destroy_workqueue(inst->workqueue);
- 		inst->workqueue = NULL;
- 	}
++	if (!c)
++		kunit_skip(test, "ctx alloc fail");
+ 	t = damon_new_target();
++	if (!t) {
++		damon_destroy_ctx(c);
++		kunit_skip(test, "target alloc fail");
++	}
+ 	r = damon_new_region(0, 22);
++	if (!r) {
++		damon_destroy_ctx(c);
++		damon_free_target(t);
++		kunit_skip(test, "region alloc fail");
++	}
+ 	damon_add_region(r, t);
+ 	damon_split_regions_of(t, 2);
+ 	KUNIT_EXPECT_LE(test, damon_nr_regions(t), 2u);
+ 	damon_free_target(t);
  
-+	vpu_release_core(inst->core);
-+	put_device(inst->dev);
-+
- 	v4l2_ctrl_handler_free(&inst->ctrl_handler);
- 	mutex_destroy(&inst->lock);
- 
+ 	t = damon_new_target();
++	if (!t) {
++		damon_destroy_ctx(c);
++		kunit_skip(test, "second target alloc fail");
++	}
+ 	r = damon_new_region(0, 220);
++	if (!r) {
++		damon_destroy_ctx(c);
++		damon_free_target(t);
++		kunit_skip(test, "second region alloc fail");
++	}
+ 	damon_add_region(r, t);
+ 	damon_split_regions_of(t, 4);
+ 	KUNIT_EXPECT_LE(test, damon_nr_regions(t), 4u);
 
 
