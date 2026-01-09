@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19B935A95B;
-	Fri,  9 Jan 2026 12:31:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B624433C53C;
+	Fri,  9 Jan 2026 12:31:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961877; cv=none; b=IBp4/sox3k0mCK9IoP2TY88h/sN12VJBICAnkozvp4FQpfjba+Us199ug2z+ihxeB2+EO80PHyXCNpAlJ+KDTrMi62wjatNRi/R7KMhsby4e5AXQ3z7LHrpcTul2hDB67UX/m4MwtK850s92kMbJUjDp2vfGqxxBeS1Y7k69G20=
+	t=1767961879; cv=none; b=One4yyb6NYqyMaYc7+GYsZKKJSltVpVyLLP711oNI+HShelPBMn3dKP3Q63zWmHsku84LNBT/l4rRZjIAAludj2Ok3+hoTxUQqnqQvfI4C75tvKlQ3tTN69+nwhoqlFbQtQAbpgvYg13FHcAqbQ/eRz6MrX2+ggL+aS5x4wbI2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961877; c=relaxed/simple;
-	bh=rutcdPqCiej+RJmBFXTHcdial/nK99mt74UhwSgWoQs=;
+	s=arc-20240116; t=1767961879; c=relaxed/simple;
+	bh=0DDIUwFawcqgmKOyalBvMWmKDJ+W/lzRuyDZAUbylY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eeTMmvAwtl9kdMaNNkuOGneUlNMcUvtJY6mg4llkv9gLKKNcXwrJPcdZO2XEIKa/tRLxCV/cbX+iRlA38tAj/3XZpdZdv3qQy+uFaJgajGPNfk2A7/zzq5+nm0IPYs/FUreU7sxo/kQd0RV2iHdBLaiFKvi6OHiLkMQdrgNHZsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uT0UeH+H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JMCE+vdbuq2bZryIfBQI4P2drN25PRZm5kcBTCM/G2UwjTVHzxjl541eHFGK2ZytqY1vTjkZg300YMquv2rvO9Wb9R4wNfykcWtZhe/ohLrSuvwS3v6nieJJqJc8OrTz/A2tmfW4kBL7I0TIIBTZTfG/bN4CH+vnrHV81lRpfsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HUwHudcd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uT0UeH+H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C346C4CEF1;
-	Fri,  9 Jan 2026 12:31:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HUwHudcd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4142FC4CEF1;
+	Fri,  9 Jan 2026 12:31:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961876;
-	bh=rutcdPqCiej+RJmBFXTHcdial/nK99mt74UhwSgWoQs=;
+	s=korg; t=1767961879;
+	bh=0DDIUwFawcqgmKOyalBvMWmKDJ+W/lzRuyDZAUbylY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uT0UeH+Huh2C4rh0NEcJhh+IROHPuJd+aljw1FsN9vbJMq9Zp6g8PcJkyxyGAHp5v
-	 LBwKIrSE7N0d6yiKgLYLbZ48D7LK8zQl1i/0JNRsj1HEw0MIqGficToMyZjIOzBnb+
-	 JRQPYyhSV+OIcu5XCj9dA9qxiGna2jq+KZ4uqEb0=
+	b=HUwHudcdiYwjJJ8h3A9ZirJa/hZUtbKqBWEU/6McWnljG38K1LSxnPJakkUQqe5aa
+	 3QENW99kJhrLRW8dE5wZhgpx60VP8V3ADP9CGfcFs3UXnZFH1ZR3uJmTIHridTTWes
+	 F32ue+Fyxss8vu5horR34ZWyFUYg6fXYpsP/SFDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	sparkhuang <huangshaobo3@xiaomi.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 166/634] ASoC: Intel: catpt: Fix error path in hw_params()
-Date: Fri,  9 Jan 2026 12:37:24 +0100
-Message-ID: <20260109112123.694660321@linuxfoundation.org>
+Subject: [PATCH 6.1 167/634] regulator: core: Protect regulator_supply_alias_list with regulator_list_mutex
+Date: Fri,  9 Jan 2026 12:37:25 +0100
+Message-ID: <20260109112123.731667993@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,39 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: sparkhuang <huangshaobo3@xiaomi.com>
 
-[ Upstream commit 86a5b621be658fc8fe594ca6db317d64de30cce1 ]
+[ Upstream commit 0cc15a10c3b4ab14cd71b779fd5c9ca0cb2bc30d ]
 
-Do not leave any resources hanging on the DSP side if
-applying user settings fails.
+regulator_supply_alias_list was accessed without any locking in
+regulator_supply_alias(), regulator_register_supply_alias(), and
+regulator_unregister_supply_alias(). Concurrent registration,
+unregistration and lookups can race, leading to:
 
-Fixes: 768a3a3b327d ("ASoC: Intel: catpt: Optimize applying user settings")
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20251126095523.3925364-4-cezary.rojewski@intel.com
+1 use-after-free if an alias entry is removed while being read,
+2 duplicate entries when two threads register the same alias,
+3 inconsistent alias mappings observed by consumers.
+
+Protect all traversals, insertions and deletions on
+regulator_supply_alias_list with the existing regulator_list_mutex.
+
+Fixes: a06ccd9c3785f ("regulator: core: Add ability to create a lookup alias for supply")
+Signed-off-by: sparkhuang <huangshaobo3@xiaomi.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20251127025716.5440-1-huangshaobo3@xiaomi.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/catpt/pcm.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/regulator/core.c | 32 ++++++++++++++++++++------------
+ 1 file changed, 20 insertions(+), 12 deletions(-)
 
-diff --git a/sound/soc/intel/catpt/pcm.c b/sound/soc/intel/catpt/pcm.c
-index 30ca5416c9a3f..a30cdc94871d1 100644
---- a/sound/soc/intel/catpt/pcm.c
-+++ b/sound/soc/intel/catpt/pcm.c
-@@ -417,8 +417,10 @@ static int catpt_dai_hw_params(struct snd_pcm_substream *substream,
- 		return CATPT_IPC_ERROR(ret);
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 436764329f63b..7b1d60628a001 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -1977,6 +1977,7 @@ static void regulator_supply_alias(struct device **dev, const char **supply)
+ {
+ 	struct regulator_supply_alias *map;
  
- 	ret = catpt_dai_apply_usettings(dai, stream);
--	if (ret)
-+	if (ret) {
-+		catpt_ipc_free_stream(cdev, stream->info.stream_hw_id);
- 		return ret;
++	mutex_lock(&regulator_list_mutex);
+ 	map = regulator_find_supply_alias(*dev, *supply);
+ 	if (map) {
+ 		dev_dbg(*dev, "Mapping supply %s to %s,%s\n",
+@@ -1985,6 +1986,7 @@ static void regulator_supply_alias(struct device **dev, const char **supply)
+ 		*dev = map->alias_dev;
+ 		*supply = map->alias_supply;
+ 	}
++	mutex_unlock(&regulator_list_mutex);
+ }
+ 
+ static int regulator_match(struct device *dev, const void *data)
+@@ -2463,22 +2465,26 @@ int regulator_register_supply_alias(struct device *dev, const char *id,
+ 				    const char *alias_id)
+ {
+ 	struct regulator_supply_alias *map;
++	struct regulator_supply_alias *new_map;
+ 
+-	map = regulator_find_supply_alias(dev, id);
+-	if (map)
+-		return -EEXIST;
+-
+-	map = kzalloc(sizeof(struct regulator_supply_alias), GFP_KERNEL);
+-	if (!map)
++	new_map = kzalloc(sizeof(struct regulator_supply_alias), GFP_KERNEL);
++	if (!new_map)
+ 		return -ENOMEM;
+ 
+-	map->src_dev = dev;
+-	map->src_supply = id;
+-	map->alias_dev = alias_dev;
+-	map->alias_supply = alias_id;
+-
+-	list_add(&map->list, &regulator_supply_alias_list);
++	mutex_lock(&regulator_list_mutex);
++	map = regulator_find_supply_alias(dev, id);
++	if (map) {
++		mutex_unlock(&regulator_list_mutex);
++		kfree(new_map);
++		return -EEXIST;
 +	}
  
- 	stream->allocated = true;
- 	return 0;
++	new_map->src_dev = dev;
++	new_map->src_supply = id;
++	new_map->alias_dev = alias_dev;
++	new_map->alias_supply = alias_id;
++	list_add(&new_map->list, &regulator_supply_alias_list);
++	mutex_unlock(&regulator_list_mutex);
+ 	pr_info("Adding alias for supply %s,%s -> %s,%s\n",
+ 		id, dev_name(dev), alias_id, dev_name(alias_dev));
+ 
+@@ -2498,11 +2504,13 @@ void regulator_unregister_supply_alias(struct device *dev, const char *id)
+ {
+ 	struct regulator_supply_alias *map;
+ 
++	mutex_lock(&regulator_list_mutex);
+ 	map = regulator_find_supply_alias(dev, id);
+ 	if (map) {
+ 		list_del(&map->list);
+ 		kfree(map);
+ 	}
++	mutex_unlock(&regulator_list_mutex);
+ }
+ EXPORT_SYMBOL_GPL(regulator_unregister_supply_alias);
+ 
 -- 
 2.51.0
 
