@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7386D35BDA8;
-	Fri,  9 Jan 2026 12:51:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 516013590DC;
+	Fri,  9 Jan 2026 12:52:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767963119; cv=none; b=mXBfhQNrwoFdhttutI7Wdqzi7IAWxLjkkRWlQBeULJWrRsKU8b1KzYlLHk+E4RhQm75Y0xiZmpJhOUVUrguNdqPABitIZhqTJEP+5kS2m5eVrV+F9FTIXUMUKuA3d3HNhYCWqDYg95ngZ09qdsloO9WP7PF4fx2y0O53HPzH04U=
+	t=1767963122; cv=none; b=BM+0TagQVGAdu9VkMXgTbBc7quy1BNDclCOfcVyE5SPtQykLsglwJLjhcVZMOyoJ+gXq+IqjAw5HsbekpqnytwdN5cXfwToe/VM4pZR0jHnBzhxkjxFiT3eVEFu5TcicTY5EuVFiyuyP0pdPb9XNwVNHXFx4TQJ0AQUshVSVK2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767963119; c=relaxed/simple;
-	bh=tMBOgZG4s+JI1Kl0RRxMr5arUUxZYkYjFeogHbpYqmE=;
+	s=arc-20240116; t=1767963122; c=relaxed/simple;
+	bh=mXQiDMkwHNe9Rul84nHDOYNFK50d94LoAioa4XmA+lA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o0RdXeOR+OFeXo2qrk9iHGgUdpFUgIPdw2nxn0c3ssT3xKWaC7O9PZnYlKc/sKxnoahfSHoTPi3LhGp2nG5QXPlsDI5lfjkql7qx0I6XOhdPfvTdwcAy7VlTQQNSenhQsH9tTz7jYRyVmn7xGsDcgVu0oMMU92vEzf+cPJCQyPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kDQWevlS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m9/MS27pPtmvRju+Vk+Q4efgnlbGw/d2VQqGYfKm7D6/379rO9vILdRcw44X39EXlBwarTPYo6cb32eK/HhgEz9YHOvBIxkI8BUCFnphfJbC4Psg9c6zKy2fT3VWVOyfpjuaSCJi+VcUwuGm/uYrNstO0ZN8LUnaCRRvZievrOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a8FFOdaY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kDQWevlS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D31AC4CEF1;
-	Fri,  9 Jan 2026 12:51:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a8FFOdaY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F433C4CEF1;
+	Fri,  9 Jan 2026 12:52:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767963119;
-	bh=tMBOgZG4s+JI1Kl0RRxMr5arUUxZYkYjFeogHbpYqmE=;
+	s=korg; t=1767963121;
+	bh=mXQiDMkwHNe9Rul84nHDOYNFK50d94LoAioa4XmA+lA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kDQWevlSK8qgd2gWMtCDbOosJARMrr8wT95/dARhZYT/KzcY1L5yWHNwnMG7ECYa6
-	 jOS0AIqMi/KODMRI7U0/S/ixhDjpETQE5K8di5tiRde+XL0dtNluK9a38xdf44JCYr
-	 4dSOk1eV4FvRPtgbfRavquSEOxWBhg9ngfU7W99Q=
+	b=a8FFOdaYfgoZFBC3msPSz9FEQCoW8LR0DsPijjcQ4VF1JOl3Udhlz167sjVVK5w0s
+	 KEEBXFjKv9SB8Emrbah7EKi6IaDghcMRXzjEUbUo+uTWfKssHzK7ehkViPPOKjBraY
+	 atsDNIaeY1YJFlXHKHnHuBk7WWKCmnanntnNVEis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Johan Hovold <johan@kernel.org>,
-	Joerg Roedel <joerg.roedel@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 604/634] iommu/qcom: fix device leak on of_xlate()
-Date: Fri,  9 Jan 2026 12:44:42 +0100
-Message-ID: <20260109112140.356044677@linuxfoundation.org>
+	Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Filip Hejsek <filip.hejsek@gmail.com>
+Subject: [PATCH 6.1 605/634] virtio_console: fix order of fields cols and rows
+Date: Fri,  9 Jan 2026 12:44:43 +0100
+Message-ID: <20260109112140.394594927@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -54,61 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
 
-[ Upstream commit 6a3908ce56e6879920b44ef136252b2f0c954194 ]
+commit 5326ab737a47278dbd16ed3ee7380b26c7056ddd upstream.
 
-Make sure to drop the reference taken to the iommu platform device when
-looking up its driver data during of_xlate().
+According to section 5.3.6.2 (Multiport Device Operation) of the virtio
+spec(version 1.2) a control buffer with the event VIRTIO_CONSOLE_RESIZE
+is followed by a virtio_console_resize struct containing cols then rows.
+The kernel implements this the wrong way around (rows then cols) resulting
+in the two values being swapped.
 
-Note that commit e2eae09939a8 ("iommu/qcom: add missing put_device()
-call in qcom_iommu_of_xlate()") fixed the leak in a couple of error
-paths, but the reference is still leaking on success and late failures.
-
-Fixes: 0ae349a0f33f ("iommu/qcom: Add qcom_iommu")
-Cc: stable@vger.kernel.org	# 4.14: e2eae09939a8
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>
-Cc: Yu Kuai <yukuai3@huawei.com>
-Acked-by: Robin Murphy <robin.murphy@arm.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
+Message-Id: <20250324144300.905535-1-maxbr@linux.ibm.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Cc: Filip Hejsek <filip.hejsek@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/arm/arm-smmu/qcom_iommu.c |   10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/char/virtio_console.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-+++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-@@ -558,14 +558,14 @@ static int qcom_iommu_of_xlate(struct de
+--- a/drivers/char/virtio_console.c
++++ b/drivers/char/virtio_console.c
+@@ -1615,8 +1615,8 @@ static void handle_control_message(struc
+ 		break;
+ 	case VIRTIO_CONSOLE_RESIZE: {
+ 		struct {
+-			__virtio16 rows;
+ 			__virtio16 cols;
++			__virtio16 rows;
+ 		} size;
  
- 	qcom_iommu = platform_get_drvdata(iommu_pdev);
- 
-+	put_device(&iommu_pdev->dev);
-+
- 	/* make sure the asid specified in dt is valid, so we don't have
- 	 * to sanity check this elsewhere:
- 	 */
- 	if (WARN_ON(asid > qcom_iommu->max_asid) ||
--	    WARN_ON(qcom_iommu->ctxs[asid] == NULL)) {
--		put_device(&iommu_pdev->dev);
-+	    WARN_ON(qcom_iommu->ctxs[asid] == NULL))
- 		return -EINVAL;
--	}
- 
- 	if (!dev_iommu_priv_get(dev)) {
- 		dev_iommu_priv_set(dev, qcom_iommu);
-@@ -574,10 +574,8 @@ static int qcom_iommu_of_xlate(struct de
- 		 * multiple different iommu devices.  Multiple context
- 		 * banks are ok, but multiple devices are not:
- 		 */
--		if (WARN_ON(qcom_iommu != dev_iommu_priv_get(dev))) {
--			put_device(&iommu_pdev->dev);
-+		if (WARN_ON(qcom_iommu != dev_iommu_priv_get(dev)))
- 			return -EINVAL;
--		}
- 	}
- 
- 	return iommu_fwspec_add_ids(dev, &asid, 1);
+ 		if (!is_console_port(port))
 
 
