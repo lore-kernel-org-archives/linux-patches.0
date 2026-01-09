@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10AB4358D30;
-	Fri,  9 Jan 2026 12:36:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D071335B12B;
+	Fri,  9 Jan 2026 12:36:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962200; cv=none; b=BB72ehaEEh8Uvac7enhqw40N04spuOOu5hYG/gYov8IyqbjCP1yIKDYTopKxD+/9alySc6ZRlINQbuMEjKwGsa4RZbOP9Ps9/yF6473ruF2BcUoaHC2WIzDorUQdDpyZhKyuGnLaNqzYqD8m7LEAWYFT0XEiB6hWb5iL2ubnZ8s=
+	t=1767962202; cv=none; b=oLNd+2LS9/olVZjmxOLdg3HSo+Wu5sabfxpHqqirW9B/xyJbcC4CZjCpvHV6SI1iAFw9WXs6Ts0m52xqC3Agj1uu1hwi/eedpEKUAQY6t/WS8JNYzdkDGLPkU75U6pcpOgS+qVfMolkcg33USfd7TBmmTZCVG3KopOwQaPLL9zo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962200; c=relaxed/simple;
-	bh=HOlQIoePZYNN8iHcmh5gEc9ioS9Fb/4YtlZHPohx7Xg=;
+	s=arc-20240116; t=1767962202; c=relaxed/simple;
+	bh=5idNZq0+twRF7c3r3IIAh8pFuOKYGESc5jl2VSMR9Gk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TT0WlOVW+7WITcxW2oo3dNayTdGo14sJ+tI0yqWxKeAUJ1e00ASzNss7atenuvdfmAAmXHUBhcEvUdPrdO54l86XAMnftlxl8yhz1hUEUQESnZrDN15l3KLYQ+63TJEX6XyPPNY7Y06fLQS86RbUnIQViD9Qe7m9aavmMGdxbP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BHd2VQfA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gxVThJM8WCIFm3hYw9BkiPC+nD9gaUpx8n2oxj+CWMYtwZ/ibyRRXhdKyLMoI4IUCnuEM5rZEvL/WnvFZC3K+Kn2NvAa9L76hdfPFUXAcii5IgHxQVQFbtanM7Jwbp0s1FCIFWs7/hsBbi7X0ZqqN+SA4CpI1ZOZPBF3osVAWE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YqVV23EZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BHd2VQfA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93529C4CEF1;
-	Fri,  9 Jan 2026 12:36:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YqVV23EZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F1DDC4CEF1;
+	Fri,  9 Jan 2026 12:36:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962199;
-	bh=HOlQIoePZYNN8iHcmh5gEc9ioS9Fb/4YtlZHPohx7Xg=;
+	s=korg; t=1767962202;
+	bh=5idNZq0+twRF7c3r3IIAh8pFuOKYGESc5jl2VSMR9Gk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BHd2VQfAJvW3o67sYym5VNahueOQyR4KqKqz4fALwpts/N/4VzDMG2W5vsgTM/n3e
-	 ow4KTTAcTbquFtYMwMRQ2SYIMB1p2JN/F5i2uySy/+ZWaUlesCj+XrT9UofxYE96kH
-	 Z7XR04V1bxcuSLR5GFDEAI5vkx7h3mu/b11kHfUw=
+	b=YqVV23EZPlIzNaCCspkJtkxZIYfCuHJg06QpK4yUWccy4kYv/tRZ9305usFAXIlzj
+	 tnmb3OV6mJUBf3525dohF0mfk8Z2TQGVPUj0N2nN3FRmPHATUXPmoII9F3j9k4xnrF
+	 NadalA4wUlQjwTg0zNTzzGFoQZcC3KdvTctK0ws4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zdi-disclosures@trendmicro.com,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Davide Caratti <dcaratti@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 249/634] net/sched: ets: Always remove class from active list before deleting in ets_qdisc_change
-Date: Fri,  9 Jan 2026 12:38:47 +0100
-Message-ID: <20260109112126.909131172@linuxfoundation.org>
+Subject: [PATCH 6.1 240/634] hfsplus: Verify inode mode when loading from disk
+Date: Fri,  9 Jan 2026 12:38:38 +0100
+Message-ID: <20260109112126.573633476@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -54,229 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit ce052b9402e461a9aded599f5b47e76bc727f7de ]
+[ Upstream commit 005d4b0d33f6b4a23d382b7930f7a96b95b01f39 ]
 
-zdi-disclosures@trendmicro.com says:
+syzbot is reporting that S_IFMT bits of inode->i_mode can become bogus when
+the S_IFMT bits of the 16bits "mode" field loaded from disk are corrupted.
 
-The vulnerability is a race condition between `ets_qdisc_dequeue` and
-`ets_qdisc_change`.  It leads to UAF on `struct Qdisc` object.
-Attacker requires the capability to create new user and network namespace
-in order to trigger the bug.
-See my additional commentary at the end of the analysis.
+According to [1], the permissions field was treated as reserved in Mac OS
+8 and 9. According to [2], the reserved field was explicitly initialized
+with 0, and that field must remain 0 as long as reserved. Therefore, when
+the "mode" field is not 0 (i.e. no longer reserved), the file must be
+S_IFDIR if dir == 1, and the file must be one of S_IFREG/S_IFLNK/S_IFCHR/
+S_IFBLK/S_IFIFO/S_IFSOCK if dir == 0.
 
-Analysis:
-
-static int ets_qdisc_change(struct Qdisc *sch, struct nlattr *opt,
-                          struct netlink_ext_ack *extack)
-{
-...
-
-      // (1) this lock is preventing .change handler (`ets_qdisc_change`)
-      //to race with .dequeue handler (`ets_qdisc_dequeue`)
-      sch_tree_lock(sch);
-
-      for (i = nbands; i < oldbands; i++) {
-              if (i >= q->nstrict && q->classes[i].qdisc->q.qlen)
-                      list_del_init(&q->classes[i].alist);
-              qdisc_purge_queue(q->classes[i].qdisc);
-      }
-
-      WRITE_ONCE(q->nbands, nbands);
-      for (i = nstrict; i < q->nstrict; i++) {
-              if (q->classes[i].qdisc->q.qlen) {
-		      // (2) the class is added to the q->active
-                      list_add_tail(&q->classes[i].alist, &q->active);
-                      q->classes[i].deficit = quanta[i];
-              }
-      }
-      WRITE_ONCE(q->nstrict, nstrict);
-      memcpy(q->prio2band, priomap, sizeof(priomap));
-
-      for (i = 0; i < q->nbands; i++)
-              WRITE_ONCE(q->classes[i].quantum, quanta[i]);
-
-      for (i = oldbands; i < q->nbands; i++) {
-              q->classes[i].qdisc = queues[i];
-              if (q->classes[i].qdisc != &noop_qdisc)
-                      qdisc_hash_add(q->classes[i].qdisc, true);
-      }
-
-      // (3) the qdisc is unlocked, now dequeue can be called in parallel
-      // to the rest of .change handler
-      sch_tree_unlock(sch);
-
-      ets_offload_change(sch);
-      for (i = q->nbands; i < oldbands; i++) {
-	      // (4) we're reducing the refcount for our class's qdisc and
-	      //  freeing it
-              qdisc_put(q->classes[i].qdisc);
-	      // (5) If we call .dequeue between (4) and (5), we will have
-	      // a strong UAF and we can control RIP
-              q->classes[i].qdisc = NULL;
-              WRITE_ONCE(q->classes[i].quantum, 0);
-              q->classes[i].deficit = 0;
-              gnet_stats_basic_sync_init(&q->classes[i].bstats);
-              memset(&q->classes[i].qstats, 0, sizeof(q->classes[i].qstats));
-      }
-      return 0;
-}
-
-Comment:
-This happens because some of the classes have their qdiscs assigned to
-NULL, but remain in the active list. This commit fixes this issue by always
-removing the class from the active list before deleting and freeing its
-associated qdisc
-
-Reproducer Steps
-(trimmed version of what was sent by zdi-disclosures@trendmicro.com)
-
-```
-DEV="${DEV:-lo}"
-ROOT_HANDLE="${ROOT_HANDLE:-1:}"
-BAND2_HANDLE="${BAND2_HANDLE:-20:}"   # child under 1:2
-PING_BYTES="${PING_BYTES:-48}"
-PING_COUNT="${PING_COUNT:-200000}"
-PING_DST="${PING_DST:-127.0.0.1}"
-
-SLOW_TBF_RATE="${SLOW_TBF_RATE:-8bit}"
-SLOW_TBF_BURST="${SLOW_TBF_BURST:-100b}"
-SLOW_TBF_LAT="${SLOW_TBF_LAT:-1s}"
-
-cleanup() {
-  tc qdisc del dev "$DEV" root 2>/dev/null
-}
-trap cleanup EXIT
-
-ip link set "$DEV" up
-
-tc qdisc del dev "$DEV" root 2>/dev/null || true
-
-tc qdisc add dev "$DEV" root handle "$ROOT_HANDLE" ets bands 2 strict 2
-
-tc qdisc add dev "$DEV" parent 1:2 handle "$BAND2_HANDLE" \
-  tbf rate "$SLOW_TBF_RATE" burst "$SLOW_TBF_BURST" latency "$SLOW_TBF_LAT"
-
-tc filter add dev "$DEV" parent 1: protocol all prio 1 u32 match u32 0 0 flowid 1:2
-tc -s qdisc ls dev $DEV
-
-ping -I "$DEV" -f -c "$PING_COUNT" -s "$PING_BYTES" -W 0.001 "$PING_DST" \
-  >/dev/null 2>&1 &
-tc qdisc change dev "$DEV" root handle "$ROOT_HANDLE" ets bands 2 strict 0
-tc qdisc change dev "$DEV" root handle "$ROOT_HANDLE" ets bands 2 strict 2
-tc -s qdisc ls dev $DEV
-tc qdisc del dev "$DEV" parent 1:2 || true
-tc -s qdisc ls dev $DEV
-tc qdisc change dev "$DEV" root handle "$ROOT_HANDLE" ets bands 1 strict 1
-```
-
-KASAN report
-```
-==================================================================
-BUG: KASAN: slab-use-after-free in ets_qdisc_dequeue+0x1071/0x11b0 kernel/net/sched/sch_ets.c:481
-Read of size 8 at addr ffff8880502fc018 by task ping/12308
->
-CPU: 0 UID: 0 PID: 12308 Comm: ping Not tainted 6.18.0-rc4-dirty #1 PREEMPT(full)
-Hardware name: QEMU Ubuntu 25.04 PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-Call Trace:
- <IRQ>
- __dump_stack kernel/lib/dump_stack.c:94
- dump_stack_lvl+0x100/0x190 kernel/lib/dump_stack.c:120
- print_address_description kernel/mm/kasan/report.c:378
- print_report+0x156/0x4c9 kernel/mm/kasan/report.c:482
- kasan_report+0xdf/0x110 kernel/mm/kasan/report.c:595
- ets_qdisc_dequeue+0x1071/0x11b0 kernel/net/sched/sch_ets.c:481
- dequeue_skb kernel/net/sched/sch_generic.c:294
- qdisc_restart kernel/net/sched/sch_generic.c:399
- __qdisc_run+0x1c9/0x1b00 kernel/net/sched/sch_generic.c:417
- __dev_xmit_skb kernel/net/core/dev.c:4221
- __dev_queue_xmit+0x2848/0x4410 kernel/net/core/dev.c:4729
- dev_queue_xmit kernel/./include/linux/netdevice.h:3365
-[...]
-
-Allocated by task 17115:
- kasan_save_stack+0x30/0x50 kernel/mm/kasan/common.c:56
- kasan_save_track+0x14/0x30 kernel/mm/kasan/common.c:77
- poison_kmalloc_redzone kernel/mm/kasan/common.c:400
- __kasan_kmalloc+0xaa/0xb0 kernel/mm/kasan/common.c:417
- kasan_kmalloc kernel/./include/linux/kasan.h:262
- __do_kmalloc_node kernel/mm/slub.c:5642
- __kmalloc_node_noprof+0x34e/0x990 kernel/mm/slub.c:5648
- kmalloc_node_noprof kernel/./include/linux/slab.h:987
- qdisc_alloc+0xb8/0xc30 kernel/net/sched/sch_generic.c:950
- qdisc_create_dflt+0x93/0x490 kernel/net/sched/sch_generic.c:1012
- ets_class_graft+0x4fd/0x800 kernel/net/sched/sch_ets.c:261
- qdisc_graft+0x3e4/0x1780 kernel/net/sched/sch_api.c:1196
-[...]
-
-Freed by task 9905:
- kasan_save_stack+0x30/0x50 kernel/mm/kasan/common.c:56
- kasan_save_track+0x14/0x30 kernel/mm/kasan/common.c:77
- __kasan_save_free_info+0x3b/0x70 kernel/mm/kasan/generic.c:587
- kasan_save_free_info kernel/mm/kasan/kasan.h:406
- poison_slab_object kernel/mm/kasan/common.c:252
- __kasan_slab_free+0x5f/0x80 kernel/mm/kasan/common.c:284
- kasan_slab_free kernel/./include/linux/kasan.h:234
- slab_free_hook kernel/mm/slub.c:2539
- slab_free kernel/mm/slub.c:6630
- kfree+0x144/0x700 kernel/mm/slub.c:6837
- rcu_do_batch kernel/kernel/rcu/tree.c:2605
- rcu_core+0x7c0/0x1500 kernel/kernel/rcu/tree.c:2861
- handle_softirqs+0x1ea/0x8a0 kernel/kernel/softirq.c:622
- __do_softirq kernel/kernel/softirq.c:656
-[...]
-
-Commentary:
-
-1. Maher Azzouzi working with Trend Micro Zero Day Initiative was reported as
-the person who found the issue. I requested to get a proper email to add to the
-reported-by tag but got no response. For this reason i will credit the person
-i exchanged emails with i.e zdi-disclosures@trendmicro.com
-
-2. Neither i nor Victor who did a much more thorough testing was able to
-reproduce a UAF with the PoC or other approaches we tried. We were both able to
-reproduce a null ptr deref. After exchange with zdi-disclosures@trendmicro.com
-they sent a small change to be made to the code to add an extra delay which
-was able to simulate the UAF. i.e, this:
-   qdisc_put(q->classes[i].qdisc);
-   mdelay(90);
-   q->classes[i].qdisc = NULL;
-
-I was informed by Thomas Gleixner(tglx@linutronix.de) that adding delays was
-acceptable approach for demonstrating the bug, quote:
-"Adding such delays is common exploit validation practice"
-The equivalent delay could happen "by virt scheduling the vCPU out, SMIs,
-NMIs, PREEMPT_RT enabled kernel"
-
-3. I asked the OP to test and report back but got no response and after a
-few days gave up and proceeded to submit this fix.
-
-Fixes: de6d25924c2a ("net/sched: sch_ets: don't peek at classes beyond 'nbands'")
-Reported-by: zdi-disclosures@trendmicro.com
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Davide Caratti <dcaratti@redhat.com>
-Link: https://patch.msgid.link/20251128151919.576920-1-jhs@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=895c23f6917da440ed0d
+Link: https://developer.apple.com/library/archive/technotes/tn/tn1150.html#HFSPlusPermissions [1]
+Link: https://developer.apple.com/library/archive/technotes/tn/tn1150.html#ReservedAndPadFields [2]
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/04ded9f9-73fb-496c-bfa5-89c4f5d1d7bb@I-love.SAKURA.ne.jp
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_ets.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/hfsplus/inode.c | 32 ++++++++++++++++++++++++++++----
+ 1 file changed, 28 insertions(+), 4 deletions(-)
 
-diff --git a/net/sched/sch_ets.c b/net/sched/sch_ets.c
-index 9873f4ae90c3a..b732d09ede99a 100644
---- a/net/sched/sch_ets.c
-+++ b/net/sched/sch_ets.c
-@@ -652,7 +652,7 @@ static int ets_qdisc_change(struct Qdisc *sch, struct nlattr *opt,
- 	sch_tree_lock(sch);
+diff --git a/fs/hfsplus/inode.c b/fs/hfsplus/inode.c
+index 399a6354f0cc5..98291bd73b65f 100644
+--- a/fs/hfsplus/inode.c
++++ b/fs/hfsplus/inode.c
+@@ -183,13 +183,29 @@ const struct dentry_operations hfsplus_dentry_operations = {
+ 	.d_compare    = hfsplus_compare_dentry,
+ };
  
- 	for (i = nbands; i < oldbands; i++) {
--		if (i >= q->nstrict && q->classes[i].qdisc->q.qlen)
-+		if (cl_is_active(&q->classes[i]))
- 			list_del_init(&q->classes[i].alist);
- 		qdisc_purge_queue(q->classes[i].qdisc);
- 	}
+-static void hfsplus_get_perms(struct inode *inode,
+-		struct hfsplus_perm *perms, int dir)
++static int hfsplus_get_perms(struct inode *inode,
++			     struct hfsplus_perm *perms, int dir)
+ {
+ 	struct hfsplus_sb_info *sbi = HFSPLUS_SB(inode->i_sb);
+ 	u16 mode;
+ 
+ 	mode = be16_to_cpu(perms->mode);
++	if (dir) {
++		if (mode && !S_ISDIR(mode))
++			goto bad_type;
++	} else if (mode) {
++		switch (mode & S_IFMT) {
++		case S_IFREG:
++		case S_IFLNK:
++		case S_IFCHR:
++		case S_IFBLK:
++		case S_IFIFO:
++		case S_IFSOCK:
++			break;
++		default:
++			goto bad_type;
++		}
++	}
+ 
+ 	i_uid_write(inode, be32_to_cpu(perms->owner));
+ 	if ((test_bit(HFSPLUS_SB_UID, &sbi->flags)) || (!i_uid_read(inode) && !mode))
+@@ -215,6 +231,10 @@ static void hfsplus_get_perms(struct inode *inode,
+ 		inode->i_flags |= S_APPEND;
+ 	else
+ 		inode->i_flags &= ~S_APPEND;
++	return 0;
++bad_type:
++	pr_err("invalid file type 0%04o for inode %lu\n", mode, inode->i_ino);
++	return -EIO;
+ }
+ 
+ static int hfsplus_file_open(struct inode *inode, struct file *file)
+@@ -518,7 +538,9 @@ int hfsplus_cat_read_inode(struct inode *inode, struct hfs_find_data *fd)
+ 		}
+ 		hfs_bnode_read(fd->bnode, &entry, fd->entryoffset,
+ 					sizeof(struct hfsplus_cat_folder));
+-		hfsplus_get_perms(inode, &folder->permissions, 1);
++		res = hfsplus_get_perms(inode, &folder->permissions, 1);
++		if (res)
++			goto out;
+ 		set_nlink(inode, 1);
+ 		inode->i_size = 2 + be32_to_cpu(folder->valence);
+ 		inode->i_atime = hfsp_mt2ut(folder->access_date);
+@@ -545,7 +567,9 @@ int hfsplus_cat_read_inode(struct inode *inode, struct hfs_find_data *fd)
+ 
+ 		hfsplus_inode_read_fork(inode, HFSPLUS_IS_RSRC(inode) ?
+ 					&file->rsrc_fork : &file->data_fork);
+-		hfsplus_get_perms(inode, &file->permissions, 0);
++		res = hfsplus_get_perms(inode, &file->permissions, 0);
++		if (res)
++			goto out;
+ 		set_nlink(inode, 1);
+ 		if (S_ISREG(inode->i_mode)) {
+ 			if (file->permissions.dev)
 -- 
 2.51.0
 
