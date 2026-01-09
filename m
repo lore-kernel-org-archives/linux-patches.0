@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B9E359701;
-	Fri,  9 Jan 2026 12:31:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F0FF336EDA;
+	Fri,  9 Jan 2026 12:31:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961885; cv=none; b=ktyPLLItUlHVqt5K18nX8hecN5jpr6aeLefD7SzO9o1yqQfqfVS0+EpP+70iI2Xp5oU/rRimWVMWvqWsCWWv48MzaiVQJ5hNupiX0HcG8rycWKGtz08eQq9Oyv1OGwDtQxM2Trh/+uu9eweDPj9m8/3aIADASfGJDuZ1//j0o+w=
+	t=1767961888; cv=none; b=ghiYKj2Mn4hVsxGTjx+Nr5N5IcPAoenTudHOjPNijw5Agq2v3hqSNoafmedu5F/dMOEqA4rEI42E04uCUsUzCL5M7IZkaoVTQCoqQv8E2nAkMM++p8RupeMiHgMAcqD80RW/HHnOgXBVHu8ZFL97Ll7o9ONjKbVOEvqIWUZScck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961885; c=relaxed/simple;
-	bh=n199HlC7jjOqGM3rwVqU6HjuzbV6TRaHMLaRpfwZTas=;
+	s=arc-20240116; t=1767961888; c=relaxed/simple;
+	bh=bOJy2FdXY1sMZtPQqxPl2RMAczJ8DtdmdWUKiIwBfuU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OtlDkeI+RQXemK6uN/+8LXB1F7hmq610NfnbVt1Gzt0VdKnw/VP9tX6fXVr4oroVVBzdqgdHsTbTJRfIuW13LchHL4QpknRGpESG3k3F6xH5XUa6fl7XoXJPO/me1K2qnyGeAx33eBnWgG7pjUMWUZFiZH/PqHBsqJ+AOw1CVRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PRYux1cr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fj8pKcQlJ2WU6DX9wk8+fLcr1Hjs+jDb932++/HBsle5k3/hcxLCLEzsxoptvHflonjIeEHW7uDmc2weFXA1E8so69ENwgwE29WONPE/agxmQnpa85NxIqBSnGxN/vp0aM4FNz5CvmiqMQ1ijh+123KBf/mg6xzwOezbGkgz2w8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W7cY7NXm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PRYux1cr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB7F2C4CEF1;
-	Fri,  9 Jan 2026 12:31:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W7cY7NXm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE3F3C4CEF1;
+	Fri,  9 Jan 2026 12:31:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961885;
-	bh=n199HlC7jjOqGM3rwVqU6HjuzbV6TRaHMLaRpfwZTas=;
+	s=korg; t=1767961888;
+	bh=bOJy2FdXY1sMZtPQqxPl2RMAczJ8DtdmdWUKiIwBfuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PRYux1crIAx6kj/XnDQ26cEeA3/H7+Yw6XPZz2L7SSuBEYn1m+t5HJmqvDpNz29/r
-	 pQBxkBrDAqV3NhW1BdKSJznpGQCV0hfXgM3b7CEypiplHpL8IPpn0Qg/K0+rDsNB+h
-	 ENH37ws+rgHOwsLH6pEzH6FEKDFAkb2l2e2EmnQw=
+	b=W7cY7NXm7u8qyFBxsnZJhXVK5zrPUH03R2BBRxjk5SyvtDWJ+H+2GlSuwZppV19jz
+	 vKvv5K+BxUX5AshGxBQdMeB+BCQBquSbIrtQYxoIDNLDTD+5NvYUujOcMTRA0b+vsD
+	 YwkyXpD1D87SyjV1PbEbMbyBhOwUbMbKPyX+LDYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jisheng Zhang <jszhang@kernel.org>,
+	syzbot+d8fd35fa6177afa8c92b@syzkaller.appspotmail.com,
+	Gopi Krishna Menon <krishnagopi487@gmail.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 138/634] usb: dwc2: fix hang during suspend if set as peripheral
-Date: Fri,  9 Jan 2026 12:36:56 +0100
-Message-ID: <20260109112122.648230842@linuxfoundation.org>
+Subject: [PATCH 6.1 139/634] usb: raw-gadget: cap raw_io transfer length to KMALLOC_MAX_SIZE
+Date: Fri,  9 Jan 2026 12:36:57 +0100
+Message-ID: <20260109112122.685909628@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -50,64 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jisheng Zhang <jszhang@kernel.org>
+From: Gopi Krishna Menon <krishnagopi487@gmail.com>
 
-[ Upstream commit 2b94b054ac4974ad2f89f7f7461840c851933adb ]
+[ Upstream commit a5160af78be7fcf3ade6caab0a14e349560c96d7 ]
 
-dwc2 on most platforms needs phy controller, clock and power supply.
-All of them must be enabled/activated to properly operate. If dwc2
-is configured as peripheral mode, then all the above three hardware
-resources are disabled at the end of the probe:
+The previous commit removed the PAGE_SIZE limit on transfer length of
+raw_io buffer in order to avoid any problems with emulating USB devices
+whose full configuration descriptor exceeds PAGE_SIZE in length. However
+this also removes the upperbound on user supplied length, allowing very
+large values to be passed to the allocator.
 
-	/* Gadget code manages lowlevel hw on its own */
-	if (hsotg->dr_mode == USB_DR_MODE_PERIPHERAL)
-		dwc2_lowlevel_hw_disable(hsotg);
+syzbot on fuzzing the transfer length with very large value (1.81GB)
+results in kmalloc() to fall back to the page allocator, which triggers
+a kernel warning as the page allocator cannot handle allocations more
+than MAX_PAGE_ORDER/KMALLOC_MAX_SIZE.
 
-But the dwc2_suspend() tries to read the dwc2's reg to check whether
-is_device_mode or not, this would result in hang during suspend if dwc2
-is configured as peripheral mode.
+Since there is no limit imposed on the size of buffer for both control
+and non control transfers, cap the raw_io transfer length to
+KMALLOC_MAX_SIZE and return -EINVAL for larger transfer length to
+prevent any warnings from the page allocator.
 
-Fix this hang by bypassing suspend/resume if lowlevel hw isn't
-enabled.
-
-Fixes: 09a75e857790 ("usb: dwc2: refactor common low-level hw code to platform.c")
-Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
-Link: https://patch.msgid.link/20251104002503.17158-3-jszhang@kernel.org
+Fixes: 37b9dd0d114a ("usb: raw-gadget: do not limit transfer length")
+Tested-by: syzbot+d8fd35fa6177afa8c92b@syzkaller.appspotmail.com
+Reported-by: syzbot+d8fd35fa6177afa8c92b@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/68fc07a0.a70a0220.3bf6c6.01ab.GAE@google.com/
+Signed-off-by: Gopi Krishna Menon <krishnagopi487@gmail.com>
+Reviewed-by: Andrey Konovalov <andreyknvl@gmail.com>
+Link: https://patch.msgid.link/20251028165659.50962-1-krishnagopi487@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc2/platform.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/legacy/raw_gadget.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/usb/dwc2/platform.c b/drivers/usb/dwc2/platform.c
-index 8e80b20361e3a..4464c7b1f0cf1 100644
---- a/drivers/usb/dwc2/platform.c
-+++ b/drivers/usb/dwc2/platform.c
-@@ -618,9 +618,13 @@ static int dwc2_driver_probe(struct platform_device *dev)
- static int __maybe_unused dwc2_suspend(struct device *dev)
- {
- 	struct dwc2_hsotg *dwc2 = dev_get_drvdata(dev);
--	bool is_device_mode = dwc2_is_device_mode(dwc2);
-+	bool is_device_mode;
- 	int ret = 0;
+diff --git a/drivers/usb/gadget/legacy/raw_gadget.c b/drivers/usb/gadget/legacy/raw_gadget.c
+index 2deab4a6030d7..8aa1a8408ae33 100644
+--- a/drivers/usb/gadget/legacy/raw_gadget.c
++++ b/drivers/usb/gadget/legacy/raw_gadget.c
+@@ -39,6 +39,7 @@ MODULE_LICENSE("GPL");
  
-+	if (!dwc2->ll_hw_enabled)
-+		return 0;
-+
-+	is_device_mode = dwc2_is_device_mode(dwc2);
- 	if (is_device_mode)
- 		dwc2_hsotg_suspend(dwc2);
+ static DEFINE_IDA(driver_id_numbers);
+ #define DRIVER_DRIVER_NAME_LENGTH_MAX	32
++#define USB_RAW_IO_LENGTH_MAX KMALLOC_MAX_SIZE
  
-@@ -671,6 +675,9 @@ static int __maybe_unused dwc2_resume(struct device *dev)
- 	struct dwc2_hsotg *dwc2 = dev_get_drvdata(dev);
- 	int ret = 0;
+ #define RAW_EVENT_QUEUE_SIZE	16
  
-+	if (!dwc2->ll_hw_enabled)
-+		return 0;
-+
- 	if (dwc2->phy_off_for_suspend && dwc2->ll_hw_enabled) {
- 		ret = __dwc2_lowlevel_hw_enable(dwc2);
- 		if (ret)
+@@ -620,6 +621,8 @@ static void *raw_alloc_io_data(struct usb_raw_ep_io *io, void __user *ptr,
+ 		return ERR_PTR(-EINVAL);
+ 	if (!usb_raw_io_flags_valid(io->flags))
+ 		return ERR_PTR(-EINVAL);
++	if (io->length > USB_RAW_IO_LENGTH_MAX)
++		return ERR_PTR(-EINVAL);
+ 	if (get_from_user)
+ 		data = memdup_user(ptr + sizeof(*io), io->length);
+ 	else {
 -- 
 2.51.0
 
