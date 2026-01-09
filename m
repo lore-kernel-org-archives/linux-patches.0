@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDA172EC54D;
-	Fri,  9 Jan 2026 12:23:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ABFE35971B;
+	Fri,  9 Jan 2026 12:23:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961397; cv=none; b=U+d6c1zTVula6T0ozJDxKrmq9ny+PDyc5YDmsYN4jUWomPU9PqSMTo8LdnEL9Uu1LkKogITV0rf2WGCxIFu6DUr3WGL5I48E3RL1mtOHx8T0iir4r0jt3L0c6lN8pnrW/MIrRSMHhaPpD50HVlihg0X9sQi/oeKYaAGi8yiYy8A=
+	t=1767961401; cv=none; b=bSnslXMBhlv+BE7J9vUXrpYUGof4odaQ86c3rFDRzrhFUwqMfcRZV5oogXe3QoNtW+Sqb+EO5clPh/H6gAI5mPg5IGHjsQeEE9TABlLltKpk067DSySa098fuMbcRri42erGbV4kY1H59buanIyqaIfHsG/FsmwmXbr029KhOMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961397; c=relaxed/simple;
-	bh=s9vJBTZtdOhHIRzUYPCK/ZjsolTsGXmCI17rqQ2YOUs=;
+	s=arc-20240116; t=1767961401; c=relaxed/simple;
+	bh=BwyG9s1E8OvDoPbozBNwizyMPdsDDseg4SbJsaNVBR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VwEuJomr+6ze8pMtqeG4JuXEsaYlU3si0PfpzuiRgDLg7W84MFDYYaff9fdW6oQl03V4LubH4A8qUmEL2zylOAQ0lGtFKBZuvHEWfLxCvlM7Drb4h3OYcxPZ4u/xN+jV8XmReJE57M1Pnid//5ftwo+mZkbX3etkFG7i0tvl528=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VW9xgJW/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HXgn8qwVXmD8ZYgwgbNdGNaTA+dMK0/rw1nQPqQLyCN5lAk8O+mv7lNU/FP+ZJBe4Axg3n5x5xiVd7zsiYqvqxFJJjyQFoDQG9qaX4qeGlV6HLMyXBW5WDRI79TN03d61/pjxq5QZNODBlV+raUg/ZvRYyOE3yrCesDDs4jiMwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w8SaDoAo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VW9xgJW/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66FD8C4CEF1;
-	Fri,  9 Jan 2026 12:23:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w8SaDoAo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 489E2C4CEF1;
+	Fri,  9 Jan 2026 12:23:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961397;
-	bh=s9vJBTZtdOhHIRzUYPCK/ZjsolTsGXmCI17rqQ2YOUs=;
+	s=korg; t=1767961400;
+	bh=BwyG9s1E8OvDoPbozBNwizyMPdsDDseg4SbJsaNVBR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VW9xgJW/h/yhjMojt2TjA9AmRSFK3peZm8c2FwECPvcla1dEfM3p4BGQbXTVaWur0
-	 ErAO+37udbFy/69xJ/EvfhPVd1uIk0MeaNaEDuWXEC7hgQzZ7ZJ3agUnuiMnw7Xuje
-	 V/uVFiez+9tmgM779Hmi0kX/maC3zPNtFFJBBRC8=
+	b=w8SaDoAoe6oHLA9hxwYVA9UjevX+lwWBLj3P7MS7thCnMK5Rdk/WNyJpbXOUVTods
+	 HRLwwAq2C71Is3zmS484SYSF2JCg+KRe98NnKZCOHqw5AFxU33QSB+KCShpmtOFN1n
+	 eWYi/G/eTI21AqPakFCLC/czeycc3v2H6qpxvxQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashish Kalra <ashish.kalra@amd.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Sairaj Kodilkar <sarunkod@amd.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 737/737] Revert "iommu/amd: Skip enabling command/event buffers for kdump"
-Date: Fri,  9 Jan 2026 12:44:36 +0100
-Message-ID: <20260109112201.830855236@linuxfoundation.org>
+	"mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com, vincent.guittot@linaro.org, dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de, vschneid@redhat.com, linux-kernel@vger.kernel.org, ajay.kaher@broadcom.com, alexey.makhalov@broadcom.com, yin.ding@broadcom.com, tapas.kundu@broadcom.com, Chris Mason" <clm@meta.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Ajay Kaher <ajay.kaher@broadcom.com>,
+	Chris Mason <clm@meta.com>
+Subject: [PATCH 6.6 709/737] sched/fair: Small cleanup to sched_balance_newidle()
+Date: Fri,  9 Jan 2026 12:44:08 +0100
+Message-ID: <20260109112200.743794654@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -53,68 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Peter Zijlstra <peterz@infradead.org>
 
-This reverts commit 44a764aec64b3f3235b9cbac2525222f69685418 which is
-commit 9be15fbfc6c5c89c22cf6e209f66ea43ee0e58bb upstream.
+commit e78e70dbf603c1425f15f32b455ca148c932f6c1 upstream.
 
-This causes problems in older kernel trees as SNP host kdump is not
-supported in them, so drop it from the stable branches.
+Pull out the !sd check to simplify code.
 
-Reported-by: Ashish Kalra <ashish.kalra@amd.com>
-Link: https://lore.kernel.org/r/dacdff7f-0606-4ed5-b056-2de564404d51@amd.com
-Cc: Vasant Hegde <vasant.hegde@amd.com>
-Cc: Sairaj Kodilkar <sarunkod@amd.com>
-Cc: Joerg Roedel <joerg.roedel@amd.com>
-Cc: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
+Tested-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
+Tested-by: Chris Mason <clm@meta.com>
+Link: https://patch.msgid.link/20251107161739.525916173@infradead.org
+[ Ajay: Modified to apply on v6.6 ]
+Signed-off-by: Ajay Kaher <ajay.kaher@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/amd/init.c |   28 +++++++++-------------------
- 1 file changed, 9 insertions(+), 19 deletions(-)
+ kernel/sched/fair.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -840,16 +840,11 @@ static void iommu_enable_command_buffer(
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -12374,14 +12374,15 @@ static int sched_balance_newidle(struct
  
- 	BUG_ON(iommu->cmd_buf == NULL);
+ 	rcu_read_lock();
+ 	sd = rcu_dereference_check_sched_domain(this_rq->sd);
++	if (!sd) {
++		rcu_read_unlock();
++		goto out;
++	}
  
--	if (!is_kdump_kernel()) {
--		/*
--		 * Command buffer is re-used for kdump kernel and setting
--		 * of MMIO register is not required.
--		 */
--		entry = iommu_virt_to_phys(iommu->cmd_buf);
--		entry |= MMIO_CMD_SIZE_512;
--		memcpy_toio(iommu->mmio_base + MMIO_CMD_BUF_OFFSET,
--			    &entry, sizeof(entry));
--	}
-+	entry = iommu_virt_to_phys(iommu->cmd_buf);
-+	entry |= MMIO_CMD_SIZE_512;
-+
-+	memcpy_toio(iommu->mmio_base + MMIO_CMD_BUF_OFFSET,
-+		    &entry, sizeof(entry));
- 
- 	amd_iommu_reset_cmd_buffer(iommu);
- }
-@@ -898,15 +893,10 @@ static void iommu_enable_event_buffer(st
- 
- 	BUG_ON(iommu->evt_buf == NULL);
- 
--	if (!is_kdump_kernel()) {
--		/*
--		 * Event buffer is re-used for kdump kernel and setting
--		 * of MMIO register is not required.
--		 */
--		entry = iommu_virt_to_phys(iommu->evt_buf) | EVT_LEN_MASK;
--		memcpy_toio(iommu->mmio_base + MMIO_EVT_BUF_OFFSET,
--			    &entry, sizeof(entry));
--	}
-+	entry = iommu_virt_to_phys(iommu->evt_buf) | EVT_LEN_MASK;
-+
-+	memcpy_toio(iommu->mmio_base + MMIO_EVT_BUF_OFFSET,
-+		    &entry, sizeof(entry));
- 
- 	/* set head and tail to zero manually */
- 	writel(0x00, iommu->mmio_base + MMIO_EVT_HEAD_OFFSET);
+ 	if (!READ_ONCE(this_rq->rd->overload) ||
+-	    (sd && this_rq->avg_idle < sd->max_newidle_lb_cost)) {
+-
+-		if (sd)
+-			update_next_balance(sd, &next_balance);
++	    this_rq->avg_idle < sd->max_newidle_lb_cost) {
++		update_next_balance(sd, &next_balance);
+ 		rcu_read_unlock();
+-
+ 		goto out;
+ 	}
+ 	rcu_read_unlock();
 
 
