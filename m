@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A90359F8D;
-	Fri,  9 Jan 2026 12:32:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E992F35B130;
+	Fri,  9 Jan 2026 12:32:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961936; cv=none; b=fll5Pll45AJLo70RO271bLCEvS+QASTelSjiYEa5jbBoMOXWRe64fF0HB4ZDTovshpxsUY5VpvhrOX4Do+sDz1RqGlHKh1KFckv7sv1kK5AXJ8Gnhp8MFQ2SkvmIKqr2Rxn4GZX4XzDgJi1HtjBfACddtUGCiXSZHIOCOLoW7dA=
+	t=1767961939; cv=none; b=CuEVnD/x6t0pxhAk5n+JV3ZtqeI8b8DLDohBlkeWZrdohC9NZRNw6S96nfmernr+RhvUV8O+VEVCTIHzWzEtOZjR9Xcdh5nl9Iw9cHN+xcWOib64y4k1AEW429NcWBkOx98f7StqN9nMz/MDSG/0BN44OAU/W1zdq8U57ijybQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961936; c=relaxed/simple;
-	bh=Q7oAXds72TqiSn6o9RPZAUECs2/t8vmOkcSn3/Lruyc=;
+	s=arc-20240116; t=1767961939; c=relaxed/simple;
+	bh=SidY7b74nIHjR4VtRvErsXN/Ayy7icV3AFZQD4ZlFQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S3K7Ijy1dOG6GZ1Z1rc9Mn4Wy3DAZT0X4pJduhMM8HSOvhBKQhJfGVQJnxjn8E7fKemlS3Q2VaGb7y2DzUtOznRPClGcSP7aIDNjEZkc8oKIFtPp0bJuZQsPTgw1k/IQRrhHkegKWNhUSwkEoZ0LS0q5/Or6G7ELiTmJXourlsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TsVwcfh6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mO/38BgEuXP1TUMfyWr4jtXaI8guNCW1cDpbBSBpss/1/jlx9S5qM95bQi4RkmAJatVqEYlmBtK87hqKWqw2MLFk7WGwM4tYT0Vx5eqRv8ZoAXPGLSLJmBHx5v0NB3FhomUtRRdDFKHfOIDy+Opq3SoHo7pm5YrsxQRdSA6Ju/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iQqEQY1v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TsVwcfh6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6530C4CEF1;
-	Fri,  9 Jan 2026 12:32:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iQqEQY1v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78F33C16AAE;
+	Fri,  9 Jan 2026 12:32:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961936;
-	bh=Q7oAXds72TqiSn6o9RPZAUECs2/t8vmOkcSn3/Lruyc=;
+	s=korg; t=1767961938;
+	bh=SidY7b74nIHjR4VtRvErsXN/Ayy7icV3AFZQD4ZlFQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TsVwcfh6a2GqVg1/Ri6wXnJmAV29bvPYLimumhOJHlN9AY6CtlPRk22kvlu6/7xMC
-	 XpNLoffHQ+aVdFvRbxpViSu/xQk3lyUFl8Omft+loLO+BUxDpVVt93WluqmLnw/87K
-	 rdZDRU8kClDdhIetYnfarGJe1X7IA39QcLtuFYBw=
+	b=iQqEQY1vtAzzHhNhhbM7PuJ0FVVgjvXPOGv8l0tpxb7ap64d0W7WAJSw4v26up8vC
+	 /IAF2RC5zd932RzmKBycKEAiaZMoCq4VWLMEKMb3Q0va20gm6kEUnBB9eLxx8NMw9u
+	 cgnJSob+NcEhSTnQeGzDQ63XBdjk5Lh5OBNPj9xg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Michael Stoler <michael.stoler@vastdata.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 171/634] resource: introduce is_type_match() helper and use it
-Date: Fri,  9 Jan 2026 12:37:29 +0100
-Message-ID: <20260109112123.880385128@linuxfoundation.org>
+Subject: [PATCH 6.1 189/634] NFS: Initialise verifiers for visible dentries in readdir and lookup
+Date: Fri,  9 Jan 2026 12:37:47 +0100
+Message-ID: <20260109112124.550780322@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,89 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit ba1eccc114ffc62c4495a5e15659190fa2c42308 ]
+[ Upstream commit 9bd545539b233725a3416801f7c374bff0327d6e ]
 
-There are already a couple of places where we may replace a few lines of
-code by calling a helper, which increases readability while deduplicating
-the code.
+Ensure that the verifiers are initialised before calling
+d_splice_alias() in both nfs_prime_dcache() and nfs_lookup().
 
-Introduce is_type_match() helper and use it.
-
-Link: https://lkml.kernel.org/r/20240925154355.1170859-3-andriy.shevchenko@linux.intel.com
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Rasmus Villemoes <linux@rasmusvillemoes.dk>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 6fb3acdebf65 ("Reinstate "resource: avoid unnecessary lookups in find_next_iomem_res()"")
+Reported-by: Michael Stoler <michael.stoler@vastdata.com>
+Fixes: a1147b8281bd ("NFS: Fix up directory verifier races")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/resource.c | 23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+ fs/nfs/dir.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/resource.c b/kernel/resource.c
-index 20cb54f387e71..1170ed58404fb 100644
---- a/kernel/resource.c
-+++ b/kernel/resource.c
-@@ -310,6 +310,11 @@ int release_resource(struct resource *old)
- 
- EXPORT_SYMBOL(release_resource);
- 
-+static bool is_type_match(struct resource *p, unsigned long flags, unsigned long desc)
-+{
-+	return (p->flags & flags) == flags && (desc == IORES_DESC_NONE || desc == p->desc);
-+}
-+
- /**
-  * find_next_iomem_res - Finds the lowest iomem resource that covers part of
-  *			 [@start..@end].
-@@ -352,13 +357,9 @@ static int find_next_iomem_res(resource_size_t start, resource_size_t end,
- 		if (p->end < start)
- 			continue;
- 
--		if ((p->flags & flags) != flags)
--			continue;
--		if ((desc != IORES_DESC_NONE) && (desc != p->desc))
--			continue;
--
- 		/* Found a match, break */
--		break;
-+		if (is_type_match(p, flags, desc))
-+			break;
+diff --git a/fs/nfs/dir.c b/fs/nfs/dir.c
+index b54c92d8e2730..c395b3ccaf6ec 100644
+--- a/fs/nfs/dir.c
++++ b/fs/nfs/dir.c
+@@ -788,16 +788,17 @@ void nfs_prime_dcache(struct dentry *parent, struct nfs_entry *entry,
+ 		goto out;
  	}
  
- 	if (p) {
-@@ -501,7 +502,7 @@ static int __region_intersects(struct resource *parent, resource_size_t start,
- 	int type = 0; int other = 0;
- 	struct resource *p, *dp;
- 	struct resource res, o;
--	bool is_type, covered;
-+	bool covered;
++	nfs_set_verifier(dentry, dir_verifier);
+ 	inode = nfs_fhget(dentry->d_sb, entry->fh, entry->fattr);
+ 	alias = d_splice_alias(inode, dentry);
+ 	d_lookup_done(dentry);
+ 	if (alias) {
+ 		if (IS_ERR(alias))
+ 			goto out;
++		nfs_set_verifier(alias, dir_verifier);
+ 		dput(dentry);
+ 		dentry = alias;
+ 	}
+-	nfs_set_verifier(dentry, dir_verifier);
+ 	trace_nfs_readdir_lookup(d_inode(parent), dentry, 0);
+ out:
+ 	dput(dentry);
+@@ -1990,13 +1991,14 @@ struct dentry *nfs_lookup(struct inode *dir, struct dentry * dentry, unsigned in
+ 	nfs_lookup_advise_force_readdirplus(dir, flags);
  
- 	res.start = start;
- 	res.end = start + size - 1;
-@@ -509,9 +510,7 @@ static int __region_intersects(struct resource *parent, resource_size_t start,
- 	for (p = parent->child; p ; p = p->sibling) {
- 		if (!resource_intersection(p, &res, &o))
- 			continue;
--		is_type = (p->flags & flags) == flags &&
--			(desc == IORES_DESC_NONE || desc == p->desc);
--		if (is_type) {
-+		if (is_type_match(p, flags, desc)) {
- 			type++;
- 			continue;
- 		}
-@@ -531,9 +530,7 @@ static int __region_intersects(struct resource *parent, resource_size_t start,
- 		for_each_resource(p, dp, false) {
- 			if (!resource_overlaps(dp, &res))
- 				continue;
--			is_type = (dp->flags & flags) == flags &&
--				(desc == IORES_DESC_NONE || desc == dp->desc);
--			if (is_type) {
-+			if (is_type_match(dp, flags, desc)) {
- 				type++;
- 				/*
- 				 * Range from 'o.start' to 'dp->start'
+ no_entry:
++	nfs_set_verifier(dentry, dir_verifier);
+ 	res = d_splice_alias(inode, dentry);
+ 	if (res != NULL) {
+ 		if (IS_ERR(res))
+ 			goto out;
++		nfs_set_verifier(res, dir_verifier);
+ 		dentry = res;
+ 	}
+-	nfs_set_verifier(dentry, dir_verifier);
+ out:
+ 	trace_nfs_lookup_exit(dir, dentry, flags, PTR_ERR_OR_ZERO(res));
+ 	nfs_free_fattr(fattr);
 -- 
 2.51.0
 
