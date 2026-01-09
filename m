@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06C6835B13F;
-	Fri,  9 Jan 2026 12:37:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D708E335BCD;
+	Fri,  9 Jan 2026 12:37:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962234; cv=none; b=N2gz6XY1SH1Xvf+f8V4hwCPp37j/7MdlupVFa/4dFrd8sK66VbmKnNmTEhRr80vckG+pL+Zag8pPFQ0fmbxbXDEZgooQRlOQ/Qc+ZYHGLW07Y7HRMMh+egXd+4WK3Kp504xQEdN8S4UiGDjpqFH8MuYRpadQ+CWzensRku+neLc=
+	t=1767962236; cv=none; b=i02CLTo+mJkIfvb/1vrjC91B4EIEEgF9tVljXvazoJhxyKGWmNtCt1h9XDHpTfACIKrrtrSjq6ln7prrDz1OO0sCkkgNpBeBBi50BWDiGiZCUJbD1Cmh0xOQYcljZO14LLBQy9kpFjJ4JOSwg75slyrUEFDlXnl+Yd4weUFLexU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962234; c=relaxed/simple;
-	bh=XjLFq8WDA1ikcwqyAffvFNiSCZlGALbp5yk8L9G2Pkw=;
+	s=arc-20240116; t=1767962236; c=relaxed/simple;
+	bh=a4joI7te4bnLkDaO4R0pjh3SRwTGE3wC/2zVOr0B5oo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dGrDVwCmiHISrCR7mzVilVZkaP4aq2OmwdQimOaUeBH1AdRi0I1nFs+RPBhO7OAXvLHEFaQ1IfNnza3V0RssbGKrOxC7PVzDsJj8obD3lZ/tpET8TmHT7ZBGey5y4E1MBLUc+rbfIVZND5CORZ6ytiWd/WgI79o1DtgsKwaY6lM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UD25ZA7H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tys78/20qi7oNZ1/X8oGgxyeshWSnpvMy/jCHZ5zGLU+ZuSJXAz8N9CTYmsY8sErLypR9FVqP+26rClXKUj4/Yrjm6ZEGEIfGfIK5C3vjyv3sCidKB5ug1aV5J5GkCXJBuO2rhthUxacYip22ZbGwNcYDnBRLEQAvITxxn92zG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SgC2a7l6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UD25ZA7H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86DB1C4CEF1;
-	Fri,  9 Jan 2026 12:37:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SgC2a7l6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 635F5C4CEF1;
+	Fri,  9 Jan 2026 12:37:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962233;
-	bh=XjLFq8WDA1ikcwqyAffvFNiSCZlGALbp5yk8L9G2Pkw=;
+	s=korg; t=1767962236;
+	bh=a4joI7te4bnLkDaO4R0pjh3SRwTGE3wC/2zVOr0B5oo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UD25ZA7HDjdKerRHZIXaT+Rl5po+7r7GWXNfu+kVareoKRpRqJxWQVUQ+w/LI3W8f
-	 9ZLokmR2zUwHzlenFXz0KqISh2BVMBB0OdUi8IDYRddUeo3Vfh+cwRf5Cquc4iFuqE
-	 09Yj7alZgXWnrZ69g69Qc+96rdZX0RCXjSuUGStw=
+	b=SgC2a7l6R/HraUmRHzrgGyeIccLwcSvVhA1sbu8nwq+amQo7dAAgPidp4JBxakR8G
+	 373pEenCad/+fochQmy1DpalfOVQDJWud9n/lUeIGpxxUwBsmRHj6XHYq/SQOQXIWD
+	 G0dzI+XKdqNALI3fAp/YjLE4eLh/ia+kk7D/Vx+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Haotian Zhang <vulab@iscas.ac.cn>,
+	Ziv Xu <ziv.xu@starfivetech.com>,
+	William Qiu <william.qiu@starfivetech.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 294/634] ALSA: pcmcia: Fix resource leak in snd_pdacf_probe error path
-Date: Fri,  9 Jan 2026 12:39:32 +0100
-Message-ID: <20260109112128.593321530@linuxfoundation.org>
+Subject: [PATCH 6.1 277/634] spi: cadence-quadspi: Add support for StarFive JH7110 QSPI
+Date: Fri,  9 Jan 2026 12:39:15 +0100
+Message-ID: <20260109112127.955684085@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,45 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: William Qiu <william.qiu@starfivetech.com>
 
-[ Upstream commit 5032347c04ba7ff9ba878f262e075d745c06a2a8 ]
+[ Upstream commit 47fef94afeae2a125607b6b45145594713471320 ]
 
-When pdacf_config() fails, snd_pdacf_probe() returns the error code
-directly without freeing the sound card resources allocated by
-snd_card_new(), which leads to a memory leak.
+Add QSPI reset operation in device probe and add RISCV support to
+QUAD SPI Kconfig.
 
-Add proper error handling to free the sound card and clear the card
-list entry when pdacf_config() fails.
-
-Fixes: 15b99ac17295 ("[PATCH] pcmcia: add return value to _config() functions")
-Suggested-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20251215090433.211-1-vulab@iscas.ac.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Co-developed-by: Ziv Xu <ziv.xu@starfivetech.com>
+Signed-off-by: Ziv Xu <ziv.xu@starfivetech.com>
+Signed-off-by: William Qiu <william.qiu@starfivetech.com>
+Link: https://lore.kernel.org/r/20230302105221.197421-3-william.qiu@starfivetech.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 1889dd208197 ("spi: cadence-quadspi: Fix clock disable on probe failure path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pcmcia/pdaudiocf/pdaudiocf.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/spi/Kconfig               |  2 +-
+ drivers/spi/spi-cadence-quadspi.c | 21 ++++++++++++++++++++-
+ 2 files changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/sound/pcmcia/pdaudiocf/pdaudiocf.c b/sound/pcmcia/pdaudiocf/pdaudiocf.c
-index 8363ec08df5d..4468d81683ec 100644
---- a/sound/pcmcia/pdaudiocf/pdaudiocf.c
-+++ b/sound/pcmcia/pdaudiocf/pdaudiocf.c
-@@ -132,7 +132,13 @@ static int snd_pdacf_probe(struct pcmcia_device *link)
- 	link->config_index = 1;
- 	link->config_regs = PRESENT_OPTION;
+diff --git a/drivers/spi/Kconfig b/drivers/spi/Kconfig
+index 15ea11ebcbe0..834fc0b8e27e 100644
+--- a/drivers/spi/Kconfig
++++ b/drivers/spi/Kconfig
+@@ -230,7 +230,7 @@ config SPI_CADENCE
  
--	return pdacf_config(link);
-+	err = pdacf_config(link);
-+	if (err < 0) {
-+		card_list[i] = NULL;
-+		snd_card_free(card);
-+		return err;
+ config SPI_CADENCE_QUADSPI
+ 	tristate "Cadence Quad SPI controller"
+-	depends on OF && (ARM || ARM64 || X86 || COMPILE_TEST)
++	depends on OF && (ARM || ARM64 || X86 || RISCV || COMPILE_TEST)
+ 	help
+ 	  Enable support for the Cadence Quad SPI Flash controller.
+ 
+diff --git a/drivers/spi/spi-cadence-quadspi.c b/drivers/spi/spi-cadence-quadspi.c
+index 3200e55136cd..fe537b8d87e5 100644
+--- a/drivers/spi/spi-cadence-quadspi.c
++++ b/drivers/spi/spi-cadence-quadspi.c
+@@ -1586,7 +1586,7 @@ static int cqspi_setup_flash(struct cqspi_st *cqspi)
+ static int cqspi_probe(struct platform_device *pdev)
+ {
+ 	const struct cqspi_driver_platdata *ddata;
+-	struct reset_control *rstc, *rstc_ocp;
++	struct reset_control *rstc, *rstc_ocp, *rstc_ref;
+ 	struct device *dev = &pdev->dev;
+ 	struct spi_master *master;
+ 	struct resource *res_ahb;
+@@ -1679,6 +1679,17 @@ static int cqspi_probe(struct platform_device *pdev)
+ 		goto probe_reset_failed;
+ 	}
+ 
++	if (of_device_is_compatible(pdev->dev.of_node, "starfive,jh7110-qspi")) {
++		rstc_ref = devm_reset_control_get_optional_exclusive(dev, "rstc_ref");
++		if (IS_ERR(rstc_ref)) {
++			ret = PTR_ERR(rstc_ref);
++			dev_err(dev, "Cannot get QSPI REF reset.\n");
++			goto probe_reset_failed;
++		}
++		reset_control_assert(rstc_ref);
++		reset_control_deassert(rstc_ref);
 +	}
-+	return 0;
- }
++
+ 	reset_control_assert(rstc);
+ 	reset_control_deassert(rstc);
  
+@@ -1836,6 +1847,10 @@ static const struct cqspi_driver_platdata versal_ospi = {
+ 	.get_dma_status = cqspi_get_versal_dma_status,
+ };
+ 
++static const struct cqspi_driver_platdata jh7110_qspi = {
++	.quirks = CQSPI_DISABLE_DAC_MODE,
++};
++
+ static const struct of_device_id cqspi_dt_ids[] = {
+ 	{
+ 		.compatible = "cdns,qspi-nor",
+@@ -1861,6 +1876,10 @@ static const struct of_device_id cqspi_dt_ids[] = {
+ 		.compatible = "intel,socfpga-qspi",
+ 		.data = &socfpga_qspi,
+ 	},
++	{
++		.compatible = "starfive,jh7110-qspi",
++		.data = &jh7110_qspi,
++	},
+ 	{ /* end of table */ }
+ };
  
 -- 
 2.51.0
