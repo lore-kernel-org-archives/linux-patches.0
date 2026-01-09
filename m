@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8961482E8;
-	Fri,  9 Jan 2026 12:48:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1E321482E8;
+	Fri,  9 Jan 2026 12:48:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962929; cv=none; b=OkvDf0o2hYrBv6q3kHJUEvPjXZpH4XTu9sXT4ouUhuKDZqxxuQclokuw2y+j1xCuSgKxk4ytb5Nd5FIESx+qNTE3hWyJ82zqKnXDUHaUyqsNj/lAhqXRCacgBmwciOItFiv9pdq1sk2w1AmbbKZ5Wx5JjceqAhIwJw5twgZjYyU=
+	t=1767962932; cv=none; b=CbT+D8VEvi7jnv3+8SNYo4/ICF6zJ3Ka19bgc0HNHRSOYNqnbI5se4/Eq6Y9slZVTty9ml0nYGAtcEcBZFhnTuPiw34XAKyqf/Q0IuNV6T5Tt5rRbQqZVTxDROZu/X1naxsIgrraGUNVWZSrZCDP2/qkaWS4E4BUfR5rgJxokHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962929; c=relaxed/simple;
-	bh=m8GWsUj1qd7CgjeSiJAnAFDas5zSQq1TIeUB4tHBVro=;
+	s=arc-20240116; t=1767962932; c=relaxed/simple;
+	bh=VscB7dg29+Aa4mLEOXDeWvbhVR2yn0FIL4Ym8pVZuiY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fMgfB6B2y8+wlNLyZlpth0hWG8JHHKe+JxzX9sxFbHFnnRgT/g1UVVC/CHysGB1bmwh3tC5YmogR4mYiUSpVq5ORDOzaMAJKn2JOEGJbuEE7LoF/5G4fAFGXbvb9wlVNJkEs9Cv3HsV9JzPXYHMStJqf3zqUFNiQK3dvFeJBpxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XdHxxJFv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZNde2+yl0z3NMCoSNh28Ib8g59KwRbpfU4jaLZpmDa7hSDVn3GHZeZ2y9ItxU3JQSxM/Dnol7o0FQ93aumdnNIsP2d1o98rZ45mottLt/nyFfveuvaNkghBR7msenXN1tt9BItuzgHlRlo2biAT1b++QhwR0MugxVO+s7V3Ff38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q2hZns1a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XdHxxJFv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C1E1C4CEF1;
-	Fri,  9 Jan 2026 12:48:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q2hZns1a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DBD6C4CEF1;
+	Fri,  9 Jan 2026 12:48:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962928;
-	bh=m8GWsUj1qd7CgjeSiJAnAFDas5zSQq1TIeUB4tHBVro=;
+	s=korg; t=1767962931;
+	bh=VscB7dg29+Aa4mLEOXDeWvbhVR2yn0FIL4Ym8pVZuiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XdHxxJFvjvHlAA1+eY5A5DILY4IjsiwtvwBGN4NueiHIcdke2TvcCJlMu/aQGIQAO
-	 PMz2JW57f83oHZlO9d32pJtgGEpammSDCOF5riz7mbLUTgqwQNvotRfDr8Bvt0LYkn
-	 jQpZSs3LEBO52cN0a/sntiHSEMEEnkoi56QPqhWs=
+	b=Q2hZns1a4IpMuE8c76e5cABJaQbxZevGVNZb1wfuDXKXZxg/pTvrBTTh0/IKledy2
+	 ZyuD6cYmcRGmaz1KBQZnfcjMGSI0exFxh0PxS4po+BFWmfLkAi+GM5bwIrmzmA2hPb
+	 X3DS7LKc+nmzQxKJ9iV2R8a0fpSvZOAcpyDDj2+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 538/634] ALSA: wavefront: Fix integer overflow in sample size validation
-Date: Fri,  9 Jan 2026 12:43:36 +0100
-Message-ID: <20260109112137.825611696@linuxfoundation.org>
+Subject: [PATCH 6.1 539/634] can: gs_usb: gs_can_open(): fix error handling
+Date: Fri,  9 Jan 2026 12:43:37 +0100
+Message-ID: <20260109112137.864335274@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,40 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit 0c4a13ba88594fd4a27292853e736c6b4349823d ]
+[ Upstream commit 3e54d3b4a8437b6783d4145c86962a2aa51022f3 ]
 
-The wavefront_send_sample() function has an integer overflow issue
-when validating sample size. The header->size field is u32 but gets
-cast to int for comparison with dev->freemem
+Commit 2603be9e8167 ("can: gs_usb: gs_can_open(): improve error handling")
+added missing error handling to the gs_can_open() function.
 
-Fix by using unsigned comparison to avoid integer overflow.
+The driver uses 2 USB anchors to track the allocated URBs: the TX URBs in
+struct gs_can::tx_submitted for each netdev and the RX URBs in struct
+gs_usb::rx_submitted for the USB device. gs_can_open() allocates the RX
+URBs, while TX URBs are allocated during gs_can_start_xmit().
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+The cleanup in gs_can_open() kills all anchored dev->tx_submitted
+URBs (which is not necessary since the netdev is not yet registered), but
+misses the parent->rx_submitted URBs.
+
+Fix the problem by killing the rx_submitted instead of the tx_submitted.
+
+Fixes: 2603be9e8167 ("can: gs_usb: gs_can_open(): improve error handling")
 Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Link: https://patch.msgid.link/SYBPR01MB7881B47789D1B060CE8BF4C3AFC2A@SYBPR01MB7881.ausprd01.prod.outlook.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20251210-gs_usb-fix-error-handling-v1-1-d6a5a03f10bb@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+[ adapted error handling for simpler code structure without timestamp stop functionality ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/isa/wavefront/wavefront_synth.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/can/usb/gs_usb.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/isa/wavefront/wavefront_synth.c
-+++ b/sound/isa/wavefront/wavefront_synth.c
-@@ -950,9 +950,9 @@ wavefront_send_sample (snd_wavefront_t *
- 	if (header->size) {
- 		dev->freemem = wavefront_freemem (dev);
+--- a/drivers/net/can/usb/gs_usb.c
++++ b/drivers/net/can/usb/gs_usb.c
+@@ -985,7 +985,7 @@ out_usb_free_urb:
+ 	usb_free_urb(urb);
+ out_usb_kill_anchored_urbs:
+ 	if (!parent->active_channels)
+-		usb_kill_anchored_urbs(&dev->tx_submitted);
++		usb_kill_anchored_urbs(&parent->rx_submitted);
  
--		if (dev->freemem < (int)header->size) {
-+		if (dev->freemem < 0 || dev->freemem < header->size) {
- 			dev_err(dev->card->dev,
--				"insufficient memory to load %d byte sample.\n",
-+				"insufficient memory to load %u byte sample.\n",
- 				header->size);
- 			return -ENOMEM;
- 		}
+ 	close_candev(netdev);
+ 
 
 
