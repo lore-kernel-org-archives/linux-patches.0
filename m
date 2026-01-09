@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4C13596FC;
-	Fri,  9 Jan 2026 12:53:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6FA33B6ED;
+	Fri,  9 Jan 2026 12:53:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767963204; cv=none; b=Itg5EY9iQ7/l0YCYuMywDRpm+l378EdBsZCO7sgS08SaQASD9ODBp+J2Rr9fZjgTa0tiAkeYJIEBmTC+hvcZUrr7KPCYO2/Gj3F/qQTh+MFHIiT+JnoHEVvh7XnQkgObzEa+45+FdPByZkw/mal9DBJSr3BrUiKjfV2KhJ4rm3w=
+	t=1767963206; cv=none; b=BaYiNKemSBm3qcyK2aPHI328qMjpCAjmlhfkIiegLQCqSX9yByleA+UKCXAFsY6c62vYZjguzGLjVJCIeehC2ef+vAhyu8CzFyR4P1QpwiGxH0agQTusWGqW1hDgtSrUKHEyAxNsXknwQp2TrOJgAvPSBTtCsMVlpfrCQpLwWtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767963204; c=relaxed/simple;
-	bh=Y7NFua6tuMkzoKLhll207Lba63B/eXxIp2A8SFbxjOA=;
+	s=arc-20240116; t=1767963206; c=relaxed/simple;
+	bh=J0/wiaTbEJI2t1mOA0TNqfEeBN2ayLMAiRJOTZJVO0U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AxPAoQ8QuxbltYGBFlPK03k70xYeJNnYyWNbJzxC5WwooTKLBpyHA/WC0l21qzZ/C2eos9np2ic+EpKrOC/PqKiB0pDmT5m5lHYjY8D5W7lrenFVUWLVmdqmB4UGcCMS6fUJ1JVHNvTOjX+WVPTn/Qc3T61YYh6wRExXKziBIaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MPLkhXfG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GjR0GxvU0WlKU9v8iHtw6eo7a6nAPy8o1QBpwCo0jKt2XSDBZbf8VB13NF4tasQO2VIfFRDK7cRZTf68dyTTHfUygRhrcCVwVdhRjy4w2xDIaCh/XLbIGoAqPwhYLN59xWzEcQSiJ+NDlH2cCbW0pGPVtXGAVTQnytXFw3VdMDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FXi7klyJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MPLkhXfG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D067C4CEF1;
-	Fri,  9 Jan 2026 12:53:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FXi7klyJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9A86C4CEF1;
+	Fri,  9 Jan 2026 12:53:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767963203;
-	bh=Y7NFua6tuMkzoKLhll207Lba63B/eXxIp2A8SFbxjOA=;
+	s=korg; t=1767963206;
+	bh=J0/wiaTbEJI2t1mOA0TNqfEeBN2ayLMAiRJOTZJVO0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MPLkhXfGTVVKkXggKsH9NgRy0QgfAaIWWKTFWIvjqp/GGawOlLsz209LStfGyr9CM
-	 PxYjqoLfepjMGrWzaIbjVj7IHjKhz7IjQbe159JLZUZnXoQ7G9rUzCu6apMOmcWI/A
-	 sWRiuL8hAOw3fz6Zz0xno/OcWSrFm9R6/XL7S3mE=
+	b=FXi7klyJGFCpMfGlSkhybg8PNwPNB2/P3da6qVzMlK8H2JW7u1j7mU2b+cyCgKC5V
+	 svgbkWgyKMvhi7FmDkrAxWqJFrLx/JxqcqTBEb4OPdU0N3gqLYpJk2Ibuf95Odqh/c
+	 NjlOSfBi8Hd9dk+DxRaY+e68sYM2XXtK/XMSEpKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jouni Malinen <jouni.malinen@oss.qualcomm.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 591/634] wifi: mac80211: Discard Beacon frames to non-broadcast address
-Date: Fri,  9 Jan 2026 12:44:29 +0100
-Message-ID: <20260109112139.860385224@linuxfoundation.org>
+	David Hildenbrand <david@redhat.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Andy Lutomirski <luto@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Borislav Petkov <bp@alien8.de>,
+	Rik van Riel <riel@surriel.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 627/634] kernel/fork: only call untrack_pfn_clear() on VMAs duplicated for fork()
+Date: Fri,  9 Jan 2026 12:45:05 +0100
+Message-ID: <20260109112141.229726861@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,59 +60,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jouni Malinen <jouni.malinen@oss.qualcomm.com>
+From: David Hildenbrand <david@redhat.com>
 
-[ Upstream commit 193d18f60588e95d62e0f82b6a53893e5f2f19f8 ]
+commit e9f180d7cfde23b9f8eebd60272465176373ab2c upstream.
 
-Beacon frames are required to be sent to the broadcast address, see IEEE
-Std 802.11-2020, 11.1.3.1 ("The Address 1 field of the Beacon .. frame
-shall be set to the broadcast address"). A unicast Beacon frame might be
-used as a targeted attack to get one of the associated STAs to do
-something (e.g., using CSA to move it to another channel). As such, it
-is better have strict filtering for this on the received side and
-discard all Beacon frames that are sent to an unexpected address.
+Not intuitive, but vm_area_dup() located in kernel/fork.c is not only used
+for duplicating VMAs during fork(), but also for duplicating VMAs when
+splitting VMAs or when mremap()'ing them.
 
-This is even more important for cases where beacon protection is used.
-The current implementation in mac80211 is correctly discarding unicast
-Beacon frames if the Protected Frame bit in the Frame Control field is
-set to 0. However, if that bit is set to 1, the logic used for checking
-for configured BIGTK(s) does not actually work. If the driver does not
-have logic for dropping unicast Beacon frames with Protected Frame bit
-1, these frames would be accepted in mac80211 processing as valid Beacon
-frames even though they are not protected. This would allow beacon
-protection to be bypassed. While the logic for checking beacon
-protection could be extended to cover this corner case, a more generic
-check for discard all Beacon frames based on A1=unicast address covers
-this without needing additional changes.
+VM_PFNMAP mappings can at least get ordinarily mremap()'ed (no change in
+size) and apparently also shrunk during mremap(), which implies
+duplicating the VMA in __split_vma() first.
 
-Address all these issues by dropping received Beacon frames if they are
-sent to a non-broadcast address.
+In case of ordinary mremap() (no change in size), we first duplicate the
+VMA in copy_vma_and_data()->copy_vma() to then call untrack_pfn_clear() on
+the old VMA: we effectively move the VM_PAT reservation.  So the
+untrack_pfn_clear() call on the new VMA duplicating is wrong in that
+context.
 
-Cc: stable@vger.kernel.org
-Fixes: af2d14b01c32 ("mac80211: Beacon protection using the new BIGTK (STA)")
-Signed-off-by: Jouni Malinen <jouni.malinen@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251215151134.104501-1-jouni.malinen@oss.qualcomm.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ adapted RX_DROP return value to RX_DROP_MONITOR ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Splitting of VMAs seems problematic, because we don't duplicate/adjust the
+reservation when splitting the VMA.  Instead, in memtype_erase() -- called
+during zapping/munmap -- we shrink a reservation in case only the end
+address matches: Assume we split a VMA into A and B, both would share a
+reservation until B is unmapped.
+
+So when unmapping B, the reservation would be updated to cover only A.
+When unmapping A, we would properly remove the now-shrunk reservation.
+That scenario describes the mremap() shrinking (old_size > new_size),
+where we split + unmap B, and the untrack_pfn_clear() on the new VMA when
+is wrong.
+
+What if we manage to split a VM_PFNMAP VMA into A and B and unmap A first?
+It would be broken because we would never free the reservation.  Likely,
+there are ways to trigger such a VMA split outside of mremap().
+
+Affecting other VMA duplication was not intended, vm_area_dup() being used
+outside of kernel/fork.c was an oversight.  So let's fix that for; how to
+handle VMA splits better should be investigated separately.
+
+
+With a simple reproducer that uses mprotect() to split such a VMA I can
+trigger
+
+x86/PAT: pat_mremap:26448 freeing invalid memtype [mem 0x00000000-0x00000fff]
+
+Link: https://lkml.kernel.org/r/20250422144942.2871395-1-david@redhat.com
+Fixes: dc84bc2aba85 ("x86/mm/pat: Fix VM_PAT handling when fork() fails in copy_page_range()")
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/rx.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/fork.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/net/mac80211/rx.c
-+++ b/net/mac80211/rx.c
-@@ -3299,6 +3299,11 @@ ieee80211_rx_h_mgmt_check(struct ieee802
- 	if (!ieee80211_is_mgmt(mgmt->frame_control))
- 		return RX_DROP_MONITOR;
- 
-+	/* Drop non-broadcast Beacon frames */
-+	if (ieee80211_is_beacon(mgmt->frame_control) &&
-+	    !is_broadcast_ether_addr(mgmt->da))
-+		return RX_DROP_MONITOR;
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -476,10 +476,6 @@ struct vm_area_struct *vm_area_dup(struc
+ 		*new = data_race(*orig);
+ 		INIT_LIST_HEAD(&new->anon_vma_chain);
+ 		dup_anon_vma_name(orig, new);
+-
+-		/* track_pfn_copy() will later take care of copying internal state. */
+-		if (unlikely(new->vm_flags & VM_PFNMAP))
+-			untrack_pfn_clear(new);
+ 	}
+ 	return new;
+ }
+@@ -650,6 +646,11 @@ static __latent_entropy int dup_mmap(str
+ 		tmp = vm_area_dup(mpnt);
+ 		if (!tmp)
+ 			goto fail_nomem;
 +
- 	if (rx->sdata->vif.type == NL80211_IFTYPE_AP &&
- 	    ieee80211_is_beacon(mgmt->frame_control) &&
- 	    !(rx->flags & IEEE80211_RX_BEACON_REPORTED)) {
++		/* track_pfn_copy() will later take care of copying internal state. */
++		if (unlikely(tmp->vm_flags & VM_PFNMAP))
++			untrack_pfn_clear(tmp);
++
+ 		retval = vma_dup_policy(mpnt, tmp);
+ 		if (retval)
+ 			goto fail_nomem_policy;
 
 
