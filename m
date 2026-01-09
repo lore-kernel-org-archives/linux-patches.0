@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B83433BBBD;
-	Fri,  9 Jan 2026 12:09:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B09B833BBBD;
+	Fri,  9 Jan 2026 12:09:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960581; cv=none; b=VOQlL1TDrBKND6gAznNOGUcpj5GOU+jW3VVNOCHy3NL29/EpE9ImBbIKe5sIFpFrIZGB8oZXzCpi2bVajFQO++/GEQYICRmaSPEoN9Nc0+frwZNzobZ1GVBlYyCAvcNzP9FAaFmDpVtdj2y2Jc325TjViDgVwJchFKj09fqL2Q4=
+	t=1767960584; cv=none; b=nNq7c2rX0AiB/QeUfSbeHc/O1tKMUZU/qIrC+aTa1zQkwiGHv5fZusJgemPjQsqd/t257bamtNwWV7DXXJy2J5Y0CrF6LEMi7S7GEliB+T8ZhaS8jy7kr3UePKdGsQcco9x8Ws1ar3YkMRWaK75Ev3NC3Ur6ogYK1XcBkobheEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960581; c=relaxed/simple;
-	bh=WCslTM6MsuBzeeCbstisTqvvrHcePYfa2wSbjvb8NOI=;
+	s=arc-20240116; t=1767960584; c=relaxed/simple;
+	bh=r4m39U1N476ta3jujkdLsdNvLQOLi/oYQRCM4U+yKHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lCDVBiUvGv5Y36c3uXGyjdpHVfHSHcF5p3wgDUh4EL9ADMVd8DoEO6pa4ZMB1wrr/f5rTW7e0ovChapGafiIDeHbOucrO+jGK5ZlAimVjolsCMpSaBddlO1GffSfcpw8aX1TAnrSYIClxCab+7heNewieSE0EPWS1Kz2DIF/FCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0IMBPoiq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tHL3gF0NVf1oMh4tE0nngV8zl6glHUISBePPGU19qZ9utt2tOlnK0cCMxpR3cHlcA1XQpM1SCCUDn5sJhAjpQ/4ShOFvobi2sjUF6J8f4H7bMzVfO5zFMbep0hB3oLpSwRb2XR9tcvWHaXN0fKjNRvm5M1fEl5oWwuRsW6RN03c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mPQSrnTW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0IMBPoiq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AA6BC4CEF1;
-	Fri,  9 Jan 2026 12:09:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mPQSrnTW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3736C4CEF1;
+	Fri,  9 Jan 2026 12:09:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960581;
-	bh=WCslTM6MsuBzeeCbstisTqvvrHcePYfa2wSbjvb8NOI=;
+	s=korg; t=1767960584;
+	bh=r4m39U1N476ta3jujkdLsdNvLQOLi/oYQRCM4U+yKHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0IMBPoiqN0iZKG/c1DERRW9zB2hGt/KMWXd6jW153MbuXWUD4fRaop9fLrA78+g+Z
-	 bTULTI8rO7pjtwpq+RkJPpV5GR5ea8lbPvs8tXf7gr8w89S0m9K8mtuf+Pih38/yE/
-	 /2m6FChkv2lX8ZgB0rCGKlVUC6KcYf5CXGdMy6qU=
+	b=mPQSrnTWZZlVQjcAq2d3yMIcEyOx89KwQ86unZWxHN+gA8CeDRH6ePUVnFPlAOaXV
+	 okYEM2yF91+nUpy5+DbfuDchdUlc4txBPXxfgAv9uzLvtI8NTQ4ZVyOBRK+BmTqu//
+	 6xzxFJwsFmDq/Ijkt/COUNsoDRFZQrY2taFOp7IY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.6 453/737] f2fs: fix return value of f2fs_recover_fsync_data()
-Date: Fri,  9 Jan 2026 12:39:52 +0100
-Message-ID: <20260109112151.035154756@linuxfoundation.org>
+	Alison Schofield <alison.schofield@intel.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>
+Subject: [PATCH 6.6 454/737] tools/testing/nvdimm: Use per-DIMM device handle
+Date: Fri,  9 Jan 2026 12:39:53 +0100
+Message-ID: <20260109112151.072121889@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,80 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Alison Schofield <alison.schofield@intel.com>
 
-commit 01fba45deaddcce0d0b01c411435d1acf6feab7b upstream.
+commit f59b701b4674f7955170b54c4167c5590f4714eb upstream.
 
-With below scripts, it will trigger panic in f2fs:
+KASAN reports a global-out-of-bounds access when running these nfit
+tests: clear.sh, pmem-errors.sh, pfn-meta-errors.sh, btt-errors.sh,
+daxdev-errors.sh, and inject-error.sh.
 
-mkfs.f2fs -f /dev/vdd
-mount /dev/vdd /mnt/f2fs
-touch /mnt/f2fs/foo
-sync
-echo 111 >> /mnt/f2fs/foo
-f2fs_io fsync /mnt/f2fs/foo
-f2fs_io shutdown 2 /mnt/f2fs
-umount /mnt/f2fs
-mount -o ro,norecovery /dev/vdd /mnt/f2fs
-or
-mount -o ro,disable_roll_forward /dev/vdd /mnt/f2fs
+[] BUG: KASAN: global-out-of-bounds in nfit_test_ctl+0x769f/0x7840 [nfit_test]
+[] Read of size 4 at addr ffffffffc03ea01c by task ndctl/1215
+[] The buggy address belongs to the variable:
+[] handle+0x1c/0x1df4 [nfit_test]
 
-F2FS-fs (vdd): f2fs_recover_fsync_data: recovery fsync data, check_only: 0
-F2FS-fs (vdd): Mounted with checkpoint version = 7f5c361f
-F2FS-fs (vdd): Stopped filesystem due to reason: 0
-F2FS-fs (vdd): f2fs_recover_fsync_data: recovery fsync data, check_only: 1
-Filesystem f2fs get_tree() didn't set fc->root, returned 1
-------------[ cut here ]------------
-kernel BUG at fs/super.c:1761!
-Oops: invalid opcode: 0000 [#1] SMP PTI
-CPU: 3 UID: 0 PID: 722 Comm: mount Not tainted 6.18.0-rc2+ #721 PREEMPT(voluntary)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-RIP: 0010:vfs_get_tree.cold+0x18/0x1a
-Call Trace:
- <TASK>
- fc_mount+0x13/0xa0
- path_mount+0x34e/0xc50
- __x64_sys_mount+0x121/0x150
- do_syscall_64+0x84/0x800
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-RIP: 0033:0x7fa6cc126cfe
+nfit_test_search_spa() uses handle[nvdimm->id] to retrieve a device
+handle and triggers a KASAN error when it reads past the end of the
+handle array. It should not be indexing the handle array at all.
 
-The root cause is we missed to handle error number returned from
-f2fs_recover_fsync_data() when mounting image w/ ro,norecovery or
-ro,disable_roll_forward mount option, result in returning a positive
-error number to vfs_get_tree(), fix it.
+The correct device handle is stored in per-DIMM test data. Each DIMM
+has a struct nfit_mem that embeds a struct acpi_nfit_memdev that
+describes the NFIT device handle. Use that device handle here.
 
-Cc: stable@kernel.org
-Fixes: 6781eabba1bd ("f2fs: give -EINVAL for norecovery and rw mount")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 10246dc84dfc ("acpi nfit: nfit_test supports translate SPA")
+Cc: stable@vger.kernel.org
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>> ---
+Link: https://patch.msgid.link/20251031234227.1303113-1-alison.schofield@intel.com
+Signed-off-by: Ira Weiny <ira.weiny@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/super.c |   14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ tools/testing/nvdimm/test/nfit.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -4692,11 +4692,15 @@ try_onemore:
- 		}
- 	} else {
- 		err = f2fs_recover_fsync_data(sbi, true);
--
--		if (!f2fs_readonly(sb) && err > 0) {
--			err = -EINVAL;
--			f2fs_err(sbi, "Need to recover fsync data");
--			goto free_meta;
-+		if (err > 0) {
-+			if (!f2fs_readonly(sb)) {
-+				f2fs_err(sbi, "Need to recover fsync data");
-+				err = -EINVAL;
-+				goto free_meta;
-+			} else {
-+				f2fs_info(sbi, "drop all fsynced data");
-+				err = 0;
-+			}
- 		}
- 	}
+--- a/tools/testing/nvdimm/test/nfit.c
++++ b/tools/testing/nvdimm/test/nfit.c
+@@ -670,6 +670,7 @@ static int nfit_test_search_spa(struct n
+ 		.addr = spa->spa,
+ 		.region = NULL,
+ 	};
++	struct nfit_mem *nfit_mem;
+ 	u64 dpa;
+ 
+ 	ret = device_for_each_child(&bus->dev, &ctx,
+@@ -687,8 +688,12 @@ static int nfit_test_search_spa(struct n
+ 	 */
+ 	nd_mapping = &nd_region->mapping[nd_region->ndr_mappings - 1];
+ 	nvdimm = nd_mapping->nvdimm;
++	nfit_mem = nvdimm_provider_data(nvdimm);
++	if (!nfit_mem)
++		return -EINVAL;
+ 
+-	spa->devices[0].nfit_device_handle = handle[nvdimm->id];
++	spa->devices[0].nfit_device_handle =
++		__to_nfit_memdev(nfit_mem)->device_handle;
+ 	spa->num_nvdimms = 1;
+ 	spa->devices[0].dpa = dpa;
  
 
 
