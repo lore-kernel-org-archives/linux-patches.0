@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132D126ED41;
-	Fri,  9 Jan 2026 12:20:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0214A32AAB5;
+	Fri,  9 Jan 2026 12:20:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961228; cv=none; b=ON/nBdAy7OxuKgfp1L8XMkQ4iQwas1rLIEYcuwu/3H8gVlQhURon2pnd63wjGb+v7fvywje9bSRKGFdq8pky50qF1n40s8MnPuPJZAt/OBPDnboXNKn2XmKyZzH1PVGCzemGoyNKJMu7pJoRij+m0zsGsgqrC73Db1ctuR4+tPU=
+	t=1767961231; cv=none; b=C+1wImDZjz7Ve4lNm74ivZGr/ppUtkESkBPvjVtdpyjmXTjF4008DnVXaaLcihQt5CF9yoQijF9yunaFGlJSaNAPHHIdcvDTy/H7lY/B13f9q8jYJsV3Rm8/k+tXLYMFQDdXg8MtYUyLlzaMF+DSeZh9UkPw2Eb/W6AuBuycknY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961228; c=relaxed/simple;
-	bh=QPf9kjo/KbZjFH9KBKFNFFhPNg4aoaRDi8ASGqvq8ME=;
+	s=arc-20240116; t=1767961231; c=relaxed/simple;
+	bh=wouDCOrxsWLOgQjLWg0n19PCQ7Uye3Y6aqEdWm8EcL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZNHY215zfUaQ1ka1RFyRU2OfM+Ty6LiGOuvztT1tsamV9PPiqTrDq5Pr80L4C/P1QqHnilly1YhTzgftZNNOtnOmvP4+ZkqhHbL4c+5op9/rNj9bCDvocVA4aPOZun94U84a50kLUuay6TFiN0wZUy25TD7XCTX96uK6wpNrsGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ajlcOKCp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MTQweIJXZBboS7W+zNLXzg7EhskollZXf/3ibv0X4eUn1kU8AmfBd99GFCqTijYau+kQuIC711PAETaW+9yidfJ6lQZssaSJ8KGWmFkQxzSUCkr1Zqt9Q3eJFRrdYqaePTJoQFrvhNTHUNMZf0EGd+pVD7LIuQ0V6eNRHGvHAwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yqeaWEJY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ajlcOKCp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 962E6C4CEF1;
-	Fri,  9 Jan 2026 12:20:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yqeaWEJY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7923CC4CEF1;
+	Fri,  9 Jan 2026 12:20:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961228;
-	bh=QPf9kjo/KbZjFH9KBKFNFFhPNg4aoaRDi8ASGqvq8ME=;
+	s=korg; t=1767961230;
+	bh=wouDCOrxsWLOgQjLWg0n19PCQ7Uye3Y6aqEdWm8EcL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ajlcOKCp54TlHP4WYXhiSiXzAAOptDHHezKt4kHG3PuE39QKLoAyvEQgCUPtR8gHu
-	 eWa28ECu/ND5DFPWAZ3TyAJkQiLwTRgveKLZfRPLTipz0TbVnLFlbVuumw0SRNoHPy
-	 FYr0IOEfUtaJKZxTCkRB28Cj+KuiF9HR0w2lmyGs=
+	b=yqeaWEJY3uirT2vOU1EAxFgziwV9+0wDvyGxNhw/JovnmQtCUGD3Qe45x5GbWkYAc
+	 x5fx8o5yIwIiJIo1yM6/lR0HdQF2FIRQTEkB/01QRVAUXUhO+JbFvKH2qPDUxasixL
+	 bhz1tkDeG03JyOrNillvoEaTikO456Q70zQlarbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?David=20Nystr=C3=B6m?= <david.nystrom@est.tech>
-Subject: [PATCH 6.6 672/737] drm/amd/display: Fix null pointer deref in dcn20_resource.c
-Date: Fri,  9 Jan 2026 12:43:31 +0100
-Message-ID: <20260109112159.330731622@linuxfoundation.org>
+	jefflexu@linux.alibaba.com,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Stefan Roesch <shr@devkernel.io>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 681/737] mm: fix arithmetic for bdi min_ratio
+Date: Fri,  9 Jan 2026 12:43:40 +0100
+Message-ID: <20260109112159.673905192@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -46,86 +47,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aurabindo Pillai <aurabindo.pillai@amd.com>
+From: Jingbo Xu <jefflexu@linux.alibaba.com>
 
-[ Upstream commit ecbf60782662f0a388493685b85a645a0ba1613c ]
+commit e0646b7590084a5bf3b056d3ad871d9379d2c25a upstream.
 
-Fixes a hang thats triggered when MPV is run on a DCN401 dGPU:
+Since now bdi->min_ratio is part per million, fix the wrong arithmetic.
+Otherwise it will fail with -EINVAL when setting a reasonable min_ratio,
+as it tries to set min_ratio to (min_ratio * BDI_RATIO_SCALE) in
+percentage unit, which exceeds 100% anyway.
 
-mpv --hwdec=vaapi --vo=gpu --hwdec-codecs=all
+    # cat /sys/class/bdi/253\:0/min_ratio
+    0
+    # cat /sys/class/bdi/253\:0/max_ratio
+    100
+    # echo 1 > /sys/class/bdi/253\:0/min_ratio
+    -bash: echo: write error: Invalid argument
 
-and then enabling fullscreen playback (double click on the video)
-
-The following calltrace will be seen:
-
-[  181.843989] BUG: kernel NULL pointer dereference, address: 0000000000000000
-[  181.843997] #PF: supervisor instruction fetch in kernel mode
-[  181.844003] #PF: error_code(0x0010) - not-present page
-[  181.844009] PGD 0 P4D 0
-[  181.844020] Oops: 0010 [#1] PREEMPT SMP NOPTI
-[  181.844028] CPU: 6 PID: 1892 Comm: gnome-shell Tainted: G        W  OE      6.5.0-41-generic #41~22.04.2-Ubuntu
-[  181.844038] Hardware name: System manufacturer System Product Name/CROSSHAIR VI HERO, BIOS 6302 10/23/2018
-[  181.844044] RIP: 0010:0x0
-[  181.844079] Code: Unable to access opcode bytes at 0xffffffffffffffd6.
-[  181.844084] RSP: 0018:ffffb593c2b8f7b0 EFLAGS: 00010246
-[  181.844093] RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000004
-[  181.844099] RDX: ffffb593c2b8f804 RSI: ffffb593c2b8f7e0 RDI: ffff9e3c8e758400
-[  181.844105] RBP: ffffb593c2b8f7b8 R08: ffffb593c2b8f9c8 R09: ffffb593c2b8f96c
-[  181.844110] R10: 0000000000000000 R11: 0000000000000000 R12: ffffb593c2b8f9c8
-[  181.844115] R13: 0000000000000001 R14: ffff9e3c88000000 R15: 0000000000000005
-[  181.844121] FS:  00007c6e323bb5c0(0000) GS:ffff9e3f85f80000(0000) knlGS:0000000000000000
-[  181.844128] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  181.844134] CR2: ffffffffffffffd6 CR3: 0000000140fbe000 CR4: 00000000003506e0
-[  181.844141] Call Trace:
-[  181.844146]  <TASK>
-[  181.844153]  ? show_regs+0x6d/0x80
-[  181.844167]  ? __die+0x24/0x80
-[  181.844179]  ? page_fault_oops+0x99/0x1b0
-[  181.844192]  ? do_user_addr_fault+0x31d/0x6b0
-[  181.844204]  ? exc_page_fault+0x83/0x1b0
-[  181.844216]  ? asm_exc_page_fault+0x27/0x30
-[  181.844237]  dcn20_get_dcc_compression_cap+0x23/0x30 [amdgpu]
-[  181.845115]  amdgpu_dm_plane_validate_dcc.constprop.0+0xe5/0x180 [amdgpu]
-[  181.845985]  amdgpu_dm_plane_fill_plane_buffer_attributes+0x300/0x580 [amdgpu]
-[  181.846848]  fill_dc_plane_info_and_addr+0x258/0x350 [amdgpu]
-[  181.847734]  fill_dc_plane_attributes+0x162/0x350 [amdgpu]
-[  181.848748]  dm_update_plane_state.constprop.0+0x4e3/0x6b0 [amdgpu]
-[  181.849791]  ? dm_update_plane_state.constprop.0+0x4e3/0x6b0 [amdgpu]
-[  181.850840]  amdgpu_dm_atomic_check+0xdfe/0x1760 [amdgpu]
-
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: David Nyström <david.nystrom@est.tech>
+Link: https://lkml.kernel.org/r/20231219142508.86265-2-jefflexu@linux.alibaba.com
+Fixes: 8021fb3232f2 ("mm: split off __bdi_set_min_ratio() function")
+Signed-off-by: Jingbo Xu <jefflexu@linux.alibaba.com>
+Reported-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Stefan Roesch <shr@devkernel.io>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn20/dcn20_resource.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ mm/page-writeback.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_resource.c
-@@ -2179,10 +2179,11 @@ bool dcn20_get_dcc_compression_cap(const
- 		const struct dc_dcc_surface_param *input,
- 		struct dc_surface_dcc_cap *output)
- {
--	return dc->res_pool->hubbub->funcs->get_dcc_compression_cap(
--			dc->res_pool->hubbub,
--			input,
--			output);
-+	if (dc->res_pool->hubbub->funcs->get_dcc_compression_cap)
-+		return dc->res_pool->hubbub->funcs->get_dcc_compression_cap(
-+			dc->res_pool->hubbub, input, output);
-+
-+	return false;
- }
+--- a/mm/page-writeback.c
++++ b/mm/page-writeback.c
+@@ -714,7 +714,6 @@ static int __bdi_set_min_ratio(struct ba
  
- static void dcn20_destroy_resource_pool(struct resource_pool **pool)
+ 	if (min_ratio > 100 * BDI_RATIO_SCALE)
+ 		return -EINVAL;
+-	min_ratio *= BDI_RATIO_SCALE;
+ 
+ 	spin_lock_bh(&bdi_lock);
+ 	if (min_ratio > bdi->max_ratio) {
 
 
