@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90017336EDA;
-	Fri,  9 Jan 2026 12:34:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A159335BCD;
+	Fri,  9 Jan 2026 12:34:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962086; cv=none; b=Sz4+ZwFQvSVTiGRfJFe5B3+CnfPHMyDO2yDgnqmOEBC0euXK/916AsqvZwdRlLNYK7/2Vwphr3/2PH64Xtoir1ePoI+upE/GH/TS7PwjKMc4zCwqIY9EzR25SoyQAanQGfUY/W030PdCsDer24JqmWxldy0JHztYd3yF6UXjoRw=
+	t=1767962089; cv=none; b=Y/slZFZH5BSnPi56MNq76mhuCwh1OkxPq4ed6W5g+qGZXT2hz7Fsv8q2BCav3yZ186Rz0L1J0n2Y7iVb5hcY6L4S376psAV80Wme9UWkgSe71RU8HstqPC4xf9rkQmNP0NGjMIZrffnNfQ36JUhdLF0f/82h7oaigDIoKTcffis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962086; c=relaxed/simple;
-	bh=mkArNErPYcxliYQWcTgjVWbtu3FtIv26u7zIidEAv6U=;
+	s=arc-20240116; t=1767962089; c=relaxed/simple;
+	bh=jevsbeaZ6sTiyIg3FPfyGkLTvScWMhmwzR6AfTNYvFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gtr1aCnvzFG99wlJsZKrsTPhbEFpe+xkaE1zGPxu5odzUa7u6K/Fr06QnFir2pOWs2FQzKxK2lfya0O8qVmUccPAt/5zynApjGG0qb+5+qZTuqol8es2J6IUks01pCBDO2/FqYnrIQKxkCmw9KnzRmSP4o3Tgba9zHgzzwdnTVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W72Ua7wl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sXJPa2ItwN6ZesmIRUn6HYlagdVjzRGOlfN2cnRQ32x7l/6RMKbX1uMvZydnM5EfaJG30rXXIZhh37MnsZa5TGMHBoDEdlqWnyfbYN8IZQZswSIgIWdevcj56GMJXK2psxsmBdphaQXBF2hTiVgyjaqijsHQxLQWqgTeufeX5Sw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ceXFF88O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W72Ua7wl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 177A0C4CEF1;
-	Fri,  9 Jan 2026 12:34:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ceXFF88O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF338C16AAE;
+	Fri,  9 Jan 2026 12:34:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962086;
-	bh=mkArNErPYcxliYQWcTgjVWbtu3FtIv26u7zIidEAv6U=;
+	s=korg; t=1767962089;
+	bh=jevsbeaZ6sTiyIg3FPfyGkLTvScWMhmwzR6AfTNYvFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W72Ua7wlgk/IfhXOiD2+7850iMZw5sGvgFoOd49S0BTS0Pid6ZGFyDeO3RnJb5BSI
-	 x6++elrcAZt/NlXhTVxlB+MBvWiHjSo76V3UWK2vv03ttsoI2AVtFabpkSnO9XX992
-	 gsLBlpSfbEYuEs87aO/S0SrssTPdLK0Dj7Jz+eSI=
+	b=ceXFF88OARiz2PYS5ixy1H5/hFPFlYhdARdudAS/k+woAi1mBkdjIOJdkECLeHAqp
+	 7mNf21jcHutEjU8Sg8EZ7p3h9t3CnhHacivCCMkH8N4+eVb2x3dRfiy0yTqV6Y8kIh
+	 UXA6hoRP1GCxU+JQfeqQsLjoQuhi9Ti/79OrCrXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Link Mauve <kernel@linkmauve.fr>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Junrui Luo <moonafterrain@outlook.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 209/634] rtc: gamecube: Check the return value of ioremap()
-Date: Fri,  9 Jan 2026 12:38:07 +0100
-Message-ID: <20260109112125.302246992@linuxfoundation.org>
+Subject: [PATCH 6.1 210/634] ALSA: firewire-motu: add bounds check in put_user loop for DSP events
+Date: Fri,  9 Jan 2026 12:38:08 +0100
+Message-ID: <20260109112125.339272452@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,42 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit d1220e47e4bd2be8b84bc158f4dea44f2f88b226 ]
+[ Upstream commit 298e753880b6ea99ac30df34959a7a03b0878eed ]
 
-The function ioremap() in gamecube_rtc_read_offset_from_sram() can fail
-and return NULL, which is dereferenced without checking, leading to a
-NULL pointer dereference.
+In the DSP event handling code, a put_user() loop copies event data.
+When the user buffer size is not aligned to 4 bytes, it could overwrite
+beyond the buffer boundary.
 
-Add a check for the return value of ioremap() and return -ENOMEM on
-failure.
+Fix by adding a bounds check before put_user().
 
-Fixes: 86559400b3ef ("rtc: gamecube: Add a RTC driver for the GameCube, Wii and Wii U")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Reviewed-by: Link Mauve <kernel@linkmauve.fr>
-Link: https://patch.msgid.link/20251126080625.1752-1-vulab@iscas.ac.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Suggested-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 634ec0b2906e ("ALSA: firewire-motu: notify event for parameter change in register DSP model")
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Link: https://patch.msgid.link/SYBPR01MB788112C72AF8A1C8C448B4B8AFA3A@SYBPR01MB7881.ausprd01.prod.outlook.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-gamecube.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/firewire/motu/motu-hwdep.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-gamecube.c b/drivers/rtc/rtc-gamecube.c
-index c828bc8e05b9c..045d5d45ab4b0 100644
---- a/drivers/rtc/rtc-gamecube.c
-+++ b/drivers/rtc/rtc-gamecube.c
-@@ -242,6 +242,10 @@ static int gamecube_rtc_read_offset_from_sram(struct priv *d)
- 	}
- 
- 	hw_srnprot = ioremap(res.start, resource_size(&res));
-+	if (!hw_srnprot) {
-+		pr_err("failed to ioremap hw_srnprot\n");
-+		return -ENOMEM;
-+	}
- 	old = ioread32be(hw_srnprot);
- 
- 	/* TODO: figure out why we use this magic constant.  I obtained it by
+diff --git a/sound/firewire/motu/motu-hwdep.c b/sound/firewire/motu/motu-hwdep.c
+index 28885c8004aea..8519a9f9ce2c0 100644
+--- a/sound/firewire/motu/motu-hwdep.c
++++ b/sound/firewire/motu/motu-hwdep.c
+@@ -75,7 +75,7 @@ static long hwdep_read(struct snd_hwdep *hwdep, char __user *buf, long count,
+ 		while (consumed < count &&
+ 		       snd_motu_register_dsp_message_parser_copy_event(motu, &ev)) {
+ 			ptr = (u32 __user *)(buf + consumed);
+-			if (put_user(ev, ptr))
++			if (consumed + sizeof(ev) > count || put_user(ev, ptr))
+ 				return -EFAULT;
+ 			consumed += sizeof(ev);
+ 		}
 -- 
 2.51.0
 
