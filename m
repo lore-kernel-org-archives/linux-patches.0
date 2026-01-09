@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 369A423ED5B;
-	Fri,  9 Jan 2026 12:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CFE823ED5B;
+	Fri,  9 Jan 2026 12:10:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960613; cv=none; b=a+c0Meg/Jz2pXFGSFdSPpTzDUT4QJVmQD+08GD6lXTqWT5WXcD2vGDaEWbombIt7GYraPrsHBoY+PjCJw144pjf24m7rwYXVTe92/EhjbSurmCRSdpJnMlxJHqEglHUV6O6CclXa9Ga7VDs/luHFOv+9bNT+B0DIBE//IvBq7Rs=
+	t=1767960616; cv=none; b=e5zOQaVSy3qZHrLtmED4I06xfk2GvD4jq6N93xfC55AKwyuKYEq5BeQtM8asquU6bVrREApYu+19LvFhf6QY320C7xJaeN3PSz9Cb+v4TlzmmF/l6F1+DJFFfuOqtCfZ8Rc7hM4x4ZwU3SF3NKK4GIcFX5TMP5c54wHdAD2t+ZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960613; c=relaxed/simple;
-	bh=3eEeBDSxO1aVoTFC8CNPiEMGACSMUPvErnXEcd8J++Y=;
+	s=arc-20240116; t=1767960616; c=relaxed/simple;
+	bh=9nzShEq1csnzae3gy/fHbRqG5JjkhwJ/+HzBhxuhWUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q06j+QMDeRC830ijEjBAk+HUffvX3UMmKiw8qZ9206SPPe5NUG2VKUorSlfLl2tqYYwwufm08loyauCg0uthQrIvfGy+G/ZX8bJueBg0s1dfR74+BvvHBOlhEBWrmkKFn+ibAlVXeBTpCU6qhZcXqmUniqVoNExW7Y+1fjPDNns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aaiOMzF7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PsqHpC3XOFl/wDAFp1/6vYg+568aJ0SZtb7ySP3hAEvTh+pughRogKJm7TVPgInvLQm/vY2bPP0nbEP1MZqUWMVHz9pU8mD8T7SQI8JE7ED6wmN8+5vZM2KW7Oi4bHkKz3tmgOdyaP7eb76N36yYaNT6LTjuoV8mmuMJ7+WfQT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AoXU0hBC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aaiOMzF7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C3AEC4CEF1;
-	Fri,  9 Jan 2026 12:10:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AoXU0hBC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3699BC19423;
+	Fri,  9 Jan 2026 12:10:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960612;
-	bh=3eEeBDSxO1aVoTFC8CNPiEMGACSMUPvErnXEcd8J++Y=;
+	s=korg; t=1767960615;
+	bh=9nzShEq1csnzae3gy/fHbRqG5JjkhwJ/+HzBhxuhWUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aaiOMzF7/DPcKpOOEh6mrQMAigr+hj+nnUJLlWuLfOoY5eilci5ItjP9b1SlsNJ4Q
-	 l5CNmgDQTQK713vFWiS2dUJRIqito+1/2DtOazt7i1k/p0BgbikxUeX1v+TykEjXri
-	 MkrcZyZNRgjBBOHbSw4u66V4UbdwmrB8+8WH1IQo=
+	b=AoXU0hBCoXBMP7xOAEs5Y+Tt3dQIKZY2Z2iYDRytRv0zDIRY7rcwaYeA5qEXplm0g
+	 r2EhM7AZi+O3wm3rIu/sUnT7bDlRIgdHOBVx/vdLs2ROmJiIdT37ydSVBl/uhjrrGS
+	 ZN7vWs8OraSBF/C5Mj+Fan4/4Cr75PJF9tobke68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Baokun Li <libaokun1@huawei.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.6 423/737] ext4: clear i_state_flags when alloc inode
-Date: Fri,  9 Jan 2026 12:39:22 +0100
-Message-ID: <20260109112149.907485573@linuxfoundation.org>
+	Jiyuan Xie <xiejiyuan@vivo.com>,
+	Zhichi Lin <zhichi.lin@vivo.com>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Will Deacon <will@kernel.org>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Kees Cook <keescook@chromium.org>,
+	Marco Elver <elver@google.com>,
+	Yee Lee <yee.lee@mediatek.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 459/737] scs: fix a wrong parameter in __scs_magic
+Date: Fri,  9 Jan 2026 12:39:58 +0100
+Message-ID: <20260109112151.258145909@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -54,59 +57,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haibo Chen <haibo.chen@nxp.com>
+From: Zhichi Lin <zhichi.lin@vivo.com>
 
-commit 4091c8206cfd2e3bb529ef260887296b90d9b6a2 upstream.
+commit 08bd4c46d5e63b78e77f2605283874bbe868ab19 upstream.
 
-i_state_flags used on 32-bit archs, need to clear this flag when
-alloc inode.
-Find this issue when umount ext4, sometimes track the inode as orphan
-accidently, cause ext4 mesg dump.
+__scs_magic() needs a 'void *' variable, but a 'struct task_struct *' is
+given.  'task_scs(tsk)' is the starting address of the task's shadow call
+stack, and '__scs_magic(task_scs(tsk))' is the end address of the task's
+shadow call stack.  Here should be '__scs_magic(task_scs(tsk))'.
 
-Fixes: acf943e9768e ("ext4: fix checks for orphan inodes")
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Message-ID: <20251104-ext4-v1-1-73691a0800f9@nxp.com>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+The user-visible effect of this bug is that when CONFIG_DEBUG_STACK_USAGE
+is enabled, the shadow call stack usage checking function
+(scs_check_usage) would scan an incorrect memory range.  This could lead
+to:
+
+1. **Inaccurate stack usage reporting**: The function would calculate
+   wrong usage statistics for the shadow call stack, potentially showing
+   incorrect value in kmsg.
+
+2. **Potential kernel crash**: If the value of __scs_magic(tsk)is
+   greater than that of __scs_magic(task_scs(tsk)), the for loop may
+   access unmapped memory, potentially causing a kernel panic.  However,
+   this scenario is unlikely because task_struct is allocated via the slab
+   allocator (which typically returns lower addresses), while the shadow
+   call stack returned by task_scs(tsk) is allocated via vmalloc(which
+   typically returns higher addresses).
+
+However, since this is purely a debugging feature
+(CONFIG_DEBUG_STACK_USAGE), normal production systems should be not
+unaffected.  The bug only impacts developers and testers who are actively
+debugging stack usage with this configuration enabled.
+
+Link: https://lkml.kernel.org/r/20251011082222.12965-1-zhichi.lin@vivo.com
+Fixes: 5bbaf9d1fcb9 ("scs: Add support for stack usage debugging")
+Signed-off-by: Jiyuan Xie <xiejiyuan@vivo.com>
+Signed-off-by: Zhichi Lin <zhichi.lin@vivo.com>
+Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+Acked-by: Will Deacon <will@kernel.org>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Marco Elver <elver@google.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Yee Lee <yee.lee@mediatek.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/ialloc.c |    1 -
- fs/ext4/inode.c  |    1 -
- fs/ext4/super.c  |    1 +
- 3 files changed, 1 insertion(+), 2 deletions(-)
+ kernel/scs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ext4/ialloc.c
-+++ b/fs/ext4/ialloc.c
-@@ -1299,7 +1299,6 @@ got:
- 					      sizeof(gen));
- 	}
+--- a/kernel/scs.c
++++ b/kernel/scs.c
+@@ -135,7 +135,7 @@ static void scs_check_usage(struct task_
+ 	if (!IS_ENABLED(CONFIG_DEBUG_STACK_USAGE))
+ 		return;
  
--	ext4_clear_state_flags(ei); /* Only relevant on 32-bit archs */
- 	ext4_set_inode_state(inode, EXT4_STATE_NEW);
- 
- 	ei->i_extra_isize = sbi->s_want_extra_isize;
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -4913,7 +4913,6 @@ struct inode *__ext4_iget(struct super_b
- 	ei->i_projid = make_kprojid(&init_user_ns, i_projid);
- 	set_nlink(inode, le16_to_cpu(raw_inode->i_links_count));
- 
--	ext4_clear_state_flags(ei);	/* Only relevant on 32-bit archs */
- 	ei->i_inline_off = 0;
- 	ei->i_dir_start_lookup = 0;
- 	ei->i_dtime = le32_to_cpu(raw_inode->i_dtime);
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -1412,6 +1412,7 @@ static struct inode *ext4_alloc_inode(st
- 
- 	inode_set_iversion(&ei->vfs_inode, 1);
- 	ei->i_flags = 0;
-+	ext4_clear_state_flags(ei);	/* Only relevant on 32-bit archs */
- 	spin_lock_init(&ei->i_raw_lock);
- 	ei->i_prealloc_node = RB_ROOT;
- 	atomic_set(&ei->i_prealloc_active, 0);
+-	for (p = task_scs(tsk); p < __scs_magic(tsk); ++p) {
++	for (p = task_scs(tsk); p < __scs_magic(task_scs(tsk)); ++p) {
+ 		if (!READ_ONCE_NOCHECK(*p))
+ 			break;
+ 		used += sizeof(*p);
 
 
