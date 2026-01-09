@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE9CC33CE9A;
-	Fri,  9 Jan 2026 12:05:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D016633CE9A;
+	Fri,  9 Jan 2026 12:05:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960334; cv=none; b=D+5iT9A4dzB9aKP8ViwVdChRRuDs1fkEjPDyDYNCWimmzfKJv0dnUdalbxPNXXTEzMdUxppGlLzB8HuOiJK+T2y2TqPKzDZRq3Hy8Z9VRRoukZnApx1bko2cskU6z/TOX68NbMKtPBey3ICQ8Tu6+MlGTFoT7miskwhg6V5I8I0=
+	t=1767960337; cv=none; b=ML/ipXkoCpQdVaNL7MLWJbRqcXNyyAHklx+LO9oIv1zyzEGXdJNPI8xEsOlGYSp9RqY6opcqRwsdpfbY4QjI7XJQxcyzNAp0bNm1rW/7mXEAPkxtq7Ctk1yXeJ5zKxtB/L2B1jphGfMYzZKV0Bxdw0ipAb9KzmjDjkxUyY2pUxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960334; c=relaxed/simple;
-	bh=WS096ypEDK1d9d6qsQpZOyYsC1oEJ/PoYv+ELErPHOE=;
+	s=arc-20240116; t=1767960337; c=relaxed/simple;
+	bh=ejJ/sOJ4bk2Ld8VZNhnh0VB8TCJhUjN6nv5KsN1G05M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KCSLSF2lJPD8KApXNtnEcRm5BhE/aD0dsfszrIX7JlXcCmB7OZTfijRJU/KCK+YXiYrA2uCzmXdxhqAEpguvQlzO00Y9cSVl+l4h13JyZEga/3EWn19/d4D+WSEtkRWZhgRsyBf3gVfYK6TYyDh7kt8iCvCFdH2ZUmg6UApSlX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cusZN4YC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B6H9oHAEPBztF+eYan/9tl3tfF0xGZHv5P2vsofmM0PE4IKGLdLfLge06l0VsP6kOp9eOxeIvgLydaMS/ftBsj3gbKJbnck/474wktLqkIt0S4ZUEPH/ioeXFOxwDkDvdTZMnph+Ibk+trpQNZysRgW3jh6kot5D2wEoO3RUaeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m7+hUlrk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cusZN4YC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C622C4CEF1;
-	Fri,  9 Jan 2026 12:05:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m7+hUlrk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18012C4CEF1;
+	Fri,  9 Jan 2026 12:05:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960334;
-	bh=WS096ypEDK1d9d6qsQpZOyYsC1oEJ/PoYv+ELErPHOE=;
+	s=korg; t=1767960337;
+	bh=ejJ/sOJ4bk2Ld8VZNhnh0VB8TCJhUjN6nv5KsN1G05M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cusZN4YC+ElxqfBBkjsKQycnl56qeBke2tOtYh5VGnKo3VhRG+eLf393nLoBpx7R2
-	 A61eTWAcwEUaPe8iCvxqNvA6dEDRCSjwhw3KdHCnVvPmftCiMuBKh6EKUQZHc8BxfG
-	 2KVHoms1HHLru+cBgM7GfPp2hNDcNV3/vqseY7wM=
+	b=m7+hUlrkxXOzJSiSOmhYGHazzEqlBAnwCBUyRUkIoTwflOSHBpa1yoLyldkQJ7GYR
+	 EnulZKqsyfKProL3Fly+R5gttpi6NwzX8P3uJ/qOkkpYdX+BBXoIxFwxV81zED4Eh/
+	 WQNnTolTEhPOt57EXvpvkGMeOeWHJyXZ2V6C/SAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Jack Wang <jinpu.wang@ionos.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 368/737] block: rnbd-clt: Fix leaked ID in init_dev()
-Date: Fri,  9 Jan 2026 12:38:27 +0100
-Message-ID: <20260109112147.838566397@linuxfoundation.org>
+	Qianchang Zhao <pioooooooooip@gmail.com>,
+	Zhitong Liu <liuzhitong1993@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 369/737] ksmbd: skip lock-range check on equal size to avoid size==0 underflow
+Date: Fri,  9 Jan 2026 12:38:28 +0100
+Message-ID: <20260109112147.875674318@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,63 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Qianchang Zhao <pioooooooooip@gmail.com>
 
-[ Upstream commit c9b5645fd8ca10f310e41b07540f98e6a9720f40 ]
+commit 5d510ac31626ed157d2182149559430350cf2104 upstream.
 
-If kstrdup() fails in init_dev(), then the newly allocated ID is lost.
+When size equals the current i_size (including 0), the code used to call
+check_lock_range(filp, i_size, size - 1, WRITE), which computes `size - 1`
+and can underflow for size==0. Skip the equal case.
 
-Fixes: 64e8a6ece1a5 ("block/rnbd-clt: Dynamically alloc buffer for pathname & blk_symlink_name")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Acked-by: Jack Wang <jinpu.wang@ionos.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Reported-by: Qianchang Zhao <pioooooooooip@gmail.com>
+Reported-by: Zhitong Liu <liuzhitong1993@gmail.com>
+Signed-off-by: Qianchang Zhao <pioooooooooip@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/rnbd/rnbd-clt.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ fs/smb/server/vfs.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/rnbd/rnbd-clt.c b/drivers/block/rnbd/rnbd-clt.c
-index b0550b68645d..0c3c63cf986b 100644
---- a/drivers/block/rnbd/rnbd-clt.c
-+++ b/drivers/block/rnbd/rnbd-clt.c
-@@ -1440,9 +1440,11 @@ static struct rnbd_clt_dev *init_dev(struct rnbd_clt_session *sess,
- 		goto out_alloc;
- 	}
+--- a/fs/smb/server/vfs.c
++++ b/fs/smb/server/vfs.c
+@@ -333,6 +333,9 @@ static int check_lock_range(struct file
+ 	struct file_lock_context *ctx = locks_inode_context(file_inode(filp));
+ 	int error = 0;
  
--	ret = ida_alloc_max(&index_ida, (1 << (MINORBITS - RNBD_PART_BITS)) - 1,
--			    GFP_KERNEL);
--	if (ret < 0) {
-+	dev->clt_device_id = ida_alloc_max(&index_ida,
-+					   (1 << (MINORBITS - RNBD_PART_BITS)) - 1,
-+					   GFP_KERNEL);
-+	if (dev->clt_device_id < 0) {
-+		ret = dev->clt_device_id;
- 		pr_err("Failed to initialize device '%s' from session %s, allocating idr failed, err: %d\n",
- 		       pathname, sess->sessname, ret);
- 		goto out_queues;
-@@ -1451,10 +1453,9 @@ static struct rnbd_clt_dev *init_dev(struct rnbd_clt_session *sess,
- 	dev->pathname = kstrdup(pathname, GFP_KERNEL);
- 	if (!dev->pathname) {
- 		ret = -ENOMEM;
--		goto out_queues;
-+		goto out_ida;
- 	}
++	if (start == end)
++		return 0;
++
+ 	if (!ctx || list_empty_careful(&ctx->flc_posix))
+ 		return 0;
  
--	dev->clt_device_id	= ret;
- 	dev->sess		= sess;
- 	dev->access_mode	= access_mode;
- 	dev->nr_poll_queues	= nr_poll_queues;
-@@ -1470,6 +1471,8 @@ static struct rnbd_clt_dev *init_dev(struct rnbd_clt_session *sess,
- 
- 	return dev;
- 
-+out_ida:
-+	ida_free(&index_ida, dev->clt_device_id);
- out_queues:
- 	kfree(dev->hw_queues);
- out_alloc:
--- 
-2.51.0
-
+@@ -834,7 +837,7 @@ int ksmbd_vfs_truncate(struct ksmbd_work
+ 		if (size < inode->i_size) {
+ 			err = check_lock_range(filp, size,
+ 					       inode->i_size - 1, WRITE);
+-		} else {
++		} else if (size > inode->i_size) {
+ 			err = check_lock_range(filp, inode->i_size,
+ 					       size - 1, WRITE);
+ 		}
 
 
