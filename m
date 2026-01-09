@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F1E9336EDA;
-	Fri,  9 Jan 2026 12:37:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E029335BCD;
+	Fri,  9 Jan 2026 12:37:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962256; cv=none; b=Hm6rb45l+im/xKxlY7g6MVtOWPcAN3/26rz+py5ZQr1Zg76DMvpctaJwAyCYvtYltEOyk97fDjKS8kW1zeuM/AkZD1cESEV5NJC4w2Nd85n7z5cO7lFk4jmqpibinClAOsFbCBz5dqvhh05gUu+9C76g3Q6Y+Q7LEjc+spaZY1g=
+	t=1767962259; cv=none; b=MFio3/sJ8HoNT+ZoNLzp/qkgNjAeiD/7iOKuZ3vTeCKMVG4oDWTnQOapv8pj4KmYnFrQ1V8Uu29UTLDrtVuVHJ0N9AVfmAM2mJS2c9DexdWgf0XC4qA/MuIxffJhYs3VBJ6z48MwZm0c6RQC/3jpIXTaQAuPm3NTttfWd5wDNog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962256; c=relaxed/simple;
-	bh=zbQ8/28qBN85jDu9zfO1z4htcPH5+5jCiVEYr4vVL9A=;
+	s=arc-20240116; t=1767962259; c=relaxed/simple;
+	bh=WnaFrqkErvzfNyvGmZzusqXNLj4Vt/a0RYEkP7jdSJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mUjvj6OW5DHYSdFGyhUUFZfh8nOsBK+pPII+E6HxvUxQor3HOxy557JtFwvfqrm/HU/ho8C968wLGftTmRTmMEE/LjUym1xCvMaVy+mhOlv/0nEjbbiKDLyGPcyx3EfQOIXruyF/323lD6PFjLz2bsjSpmmJkWlFGEGPo2t16f4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GgmSQ0bN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VdKkBaOa52XbEbD9dCJiR+WZtGmro3vnnFtOTF7EXdIgfqWra6TNMTazKPtYqe86JP5zjPJh6d+gFWb9pbmXAdpPecIkW3jdmdFyF0vUaWzZPNKt1x/aDH89Fk7NcyFJbe8VMuFgobDrqb3cex4ccYMgIl4kONRfXWYSBHYrRRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rUiMsnkB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GgmSQ0bN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AA54C4CEF1;
-	Fri,  9 Jan 2026 12:37:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rUiMsnkB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBBDDC4CEF1;
+	Fri,  9 Jan 2026 12:37:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962256;
-	bh=zbQ8/28qBN85jDu9zfO1z4htcPH5+5jCiVEYr4vVL9A=;
+	s=korg; t=1767962259;
+	bh=WnaFrqkErvzfNyvGmZzusqXNLj4Vt/a0RYEkP7jdSJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GgmSQ0bNVTavF78C/BnLe+XzVYE01uYN8uTAXkTnaNC/MkOBXd1qyIfGYqEnmmdMT
-	 JqCmG4fMicAp25jpLxQZtgYRVPU7o7b6/908Xlio/JFSS6D5MP4/5q08DbUMOvdsXX
-	 J0hiq6mhF3jVZR52eaJRcMt03LFx1f41YXj/vnK0=
+	b=rUiMsnkBGPVXfc8IXpOKozyST1aWbJ3gYd8Yv42DvQ64rdQnSas51i9I/GTcUdy7o
+	 D8rR5A9K/b+Hw46OpDJLcqV9BbCinSE3ubIYXZjDd/l+VuRotp08JnfUrlFrHRL+xX
+	 NQYTutB2QvzXuHBmtIZ3ye3ORsygft9D3gaQIk5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Collins <bcollins@kernel.org>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Tony Battersby <tonyb@cybernetics.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 301/634] powerpc/addnote: Fix overflow on 32-bit builds
-Date: Fri,  9 Jan 2026 12:39:39 +0100
-Message-ID: <20260109112128.861196676@linuxfoundation.org>
+Subject: [PATCH 6.1 302/634] scsi: qla2xxx: Fix lost interrupts with qlini_mode=disabled
+Date: Fri,  9 Jan 2026 12:39:40 +0100
+Message-ID: <20260109112128.898600634@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,48 +51,191 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Collins <bcollins@kernel.org>
+From: Tony Battersby <tonyb@cybernetics.com>
 
-[ Upstream commit 825ce89a3ef17f84cf2c0eacfa6b8dc9fd11d13f ]
+[ Upstream commit 4f6aaade2a22ac428fa99ed716cf2b87e79c9837 ]
 
-The PUT_64[LB]E() macros need to cast the value to unsigned long long
-like the GET_64[LB]E() macros. Caused lots of warnings when compiled
-on 32-bit, and clobbered addresses (36-bit P4080).
+When qla2xxx is loaded with qlini_mode=disabled,
+ha->flags.disable_msix_handshake is used before it is set, resulting in
+the wrong interrupt handler being used on certain HBAs
+(qla2xxx_msix_rsp_q_hs() is used when qla2xxx_msix_rsp_q() should be
+used).  The only difference between these two interrupt handlers is that
+the _hs() version writes to a register to clear the "RISC" interrupt,
+whereas the other version does not.  So this bug results in the RISC
+interrupt being cleared when it should not be.  This occasionally causes
+a different interrupt handler qla24xx_msix_default() for a different
+vector to see ((stat & HSRX_RISC_INT) == 0) and ignore its interrupt,
+which then causes problems like:
 
-Signed-off-by: Ben Collins <bcollins@kernel.org>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/2025042122-mustard-wrasse-694572@boujee-and-buff
+qla2xxx [0000:02:00.0]-d04c:6: MBX Command timeout for cmd 20,
+  iocontrol=8 jiffies=1090c0300 mb[0-3]=[0x4000 0x0 0x40 0xda] mb7 0x500
+  host_status 0x40000010 hccr 0x3f00
+qla2xxx [0000:02:00.0]-101e:6: Mailbox cmd timeout occurred, cmd=0x20,
+  mb[0]=0x20. Scheduling ISP abort
+(the cmd varies; sometimes it is 0x20, 0x22, 0x54, 0x5a, 0x5d, or 0x6a)
+
+This problem can be reproduced with a 16 or 32 Gbps HBA by loading
+qla2xxx with qlini_mode=disabled and running a high IOPS test while
+triggering frequent RSCN database change events.
+
+While analyzing the problem I discovered that even with
+disable_msix_handshake forced to 0, it is not necessary to clear the
+RISC interrupt from qla2xxx_msix_rsp_q_hs() (more below).  So just
+completely remove qla2xxx_msix_rsp_q_hs() and the logic for selecting
+it, which also fixes the bug with qlini_mode=disabled.
+
+The test below describes the justification for not needing
+qla2xxx_msix_rsp_q_hs():
+
+Force disable_msix_handshake to 0:
+qla24xx_config_rings():
+if (0 && (ha->fw_attributes & BIT_6) && (IS_MSIX_NACK_CAPABLE(ha)) &&
+    (ha->flags.msix_enabled)) {
+
+In qla24xx_msix_rsp_q() and qla2xxx_msix_rsp_q_hs(), check:
+  (rd_reg_dword(&reg->host_status) & HSRX_RISC_INT)
+
+Count the number of calls to each function with HSRX_RISC_INT set and
+the number with HSRX_RISC_INT not set while performing some I/O.
+
+If qla2xxx_msix_rsp_q_hs() clears the RISC interrupt (original code):
+qla24xx_msix_rsp_q:    50% of calls have HSRX_RISC_INT set
+qla2xxx_msix_rsp_q_hs:  5% of calls have HSRX_RISC_INT set
+(# of qla2xxx_msix_rsp_q_hs interrupts) =
+    (# of qla24xx_msix_rsp_q interrupts) * 3
+
+If qla2xxx_msix_rsp_q_hs() does not clear the RISC interrupt (patched
+code):
+qla24xx_msix_rsp_q:    100% of calls have HSRX_RISC_INT set
+qla2xxx_msix_rsp_q_hs:   9% of calls have HSRX_RISC_INT set
+(# of qla2xxx_msix_rsp_q_hs interrupts) =
+    (# of qla24xx_msix_rsp_q interrupts) * 3
+
+In the case of the original code, qla24xx_msix_rsp_q() was seeing
+HSRX_RISC_INT set only 50% of the time because qla2xxx_msix_rsp_q_hs()
+was clearing it when it shouldn't have been.  In the patched code,
+qla24xx_msix_rsp_q() sees HSRX_RISC_INT set 100% of the time, which
+makes sense if that interrupt handler needs to clear the RISC interrupt
+(which it does).  qla2xxx_msix_rsp_q_hs() sees HSRX_RISC_INT only 9% of
+the time, which is just overlap from the other interrupt during the
+high IOPS test.
+
+Tested with SCST on:
+QLE2742  FW:v9.08.02 (32 Gbps 2-port)
+QLE2694L FW:v9.10.11 (16 Gbps 4-port)
+QLE2694L FW:v9.08.02 (16 Gbps 4-port)
+QLE2672  FW:v8.07.12 (16 Gbps 2-port)
+both initiator and target mode
+
+Signed-off-by: Tony Battersby <tonyb@cybernetics.com>
+Link: https://patch.msgid.link/56d378eb-14ad-49c7-bae9-c649b6c7691e@cybernetics.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/boot/addnote.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/scsi/qla2xxx/qla_def.h |  1 -
+ drivers/scsi/qla2xxx/qla_gbl.h |  2 +-
+ drivers/scsi/qla2xxx/qla_isr.c | 32 +++-----------------------------
+ drivers/scsi/qla2xxx/qla_mid.c |  4 +---
+ 4 files changed, 5 insertions(+), 34 deletions(-)
 
-diff --git a/arch/powerpc/boot/addnote.c b/arch/powerpc/boot/addnote.c
-index 53b3b2621457..78704927453a 100644
---- a/arch/powerpc/boot/addnote.c
-+++ b/arch/powerpc/boot/addnote.c
-@@ -68,8 +68,8 @@ static int e_class = ELFCLASS32;
- #define PUT_16BE(off, v)(buf[off] = ((v) >> 8) & 0xff, \
- 			 buf[(off) + 1] = (v) & 0xff)
- #define PUT_32BE(off, v)(PUT_16BE((off), (v) >> 16L), PUT_16BE((off) + 2, (v)))
--#define PUT_64BE(off, v)((PUT_32BE((off), (v) >> 32L), \
--			  PUT_32BE((off) + 4, (v))))
-+#define PUT_64BE(off, v)((PUT_32BE((off), (unsigned long long)(v) >> 32L), \
-+			  PUT_32BE((off) + 4, (unsigned long long)(v))))
+diff --git a/drivers/scsi/qla2xxx/qla_def.h b/drivers/scsi/qla2xxx/qla_def.h
+index f8b949eaffcf..c0d8714d6f76 100644
+--- a/drivers/scsi/qla2xxx/qla_def.h
++++ b/drivers/scsi/qla2xxx/qla_def.h
+@@ -3461,7 +3461,6 @@ struct isp_operations {
+ #define QLA_MSIX_RSP_Q			0x01
+ #define QLA_ATIO_VECTOR		0x02
+ #define QLA_MSIX_QPAIR_MULTIQ_RSP_Q	0x03
+-#define QLA_MSIX_QPAIR_MULTIQ_RSP_Q_HS	0x04
  
- #define GET_16LE(off)	((buf[off]) + (buf[(off)+1] << 8))
- #define GET_32LE(off)	(GET_16LE(off) + (GET_16LE((off)+2U) << 16U))
-@@ -78,7 +78,8 @@ static int e_class = ELFCLASS32;
- #define PUT_16LE(off, v) (buf[off] = (v) & 0xff, \
- 			  buf[(off) + 1] = ((v) >> 8) & 0xff)
- #define PUT_32LE(off, v) (PUT_16LE((off), (v)), PUT_16LE((off) + 2, (v) >> 16L))
--#define PUT_64LE(off, v) (PUT_32LE((off), (v)), PUT_32LE((off) + 4, (v) >> 32L))
-+#define PUT_64LE(off, v) (PUT_32LE((off), (unsigned long long)(v)), \
-+			  PUT_32LE((off) + 4, (unsigned long long)(v) >> 32L))
+ #define QLA_MIDX_DEFAULT	0
+ #define QLA_MIDX_RSP_Q		1
+diff --git a/drivers/scsi/qla2xxx/qla_gbl.h b/drivers/scsi/qla2xxx/qla_gbl.h
+index f991fb81c72b..f654877ed083 100644
+--- a/drivers/scsi/qla2xxx/qla_gbl.h
++++ b/drivers/scsi/qla2xxx/qla_gbl.h
+@@ -776,7 +776,7 @@ extern int qla2x00_dfs_remove(scsi_qla_host_t *);
  
- #define GET_16(off)	(e_data == ELFDATA2MSB ? GET_16BE(off) : GET_16LE(off))
- #define GET_32(off)	(e_data == ELFDATA2MSB ? GET_32BE(off) : GET_32LE(off))
+ /* Globa function prototypes for multi-q */
+ extern int qla25xx_request_irq(struct qla_hw_data *, struct qla_qpair *,
+-	struct qla_msix_entry *, int);
++	struct qla_msix_entry *);
+ extern int qla25xx_init_req_que(struct scsi_qla_host *, struct req_que *);
+ extern int qla25xx_init_rsp_que(struct scsi_qla_host *, struct rsp_que *);
+ extern int qla25xx_create_req_que(struct qla_hw_data *, uint16_t, uint8_t,
+diff --git a/drivers/scsi/qla2xxx/qla_isr.c b/drivers/scsi/qla2xxx/qla_isr.c
+index db65dbab3a9f..b5421614c857 100644
+--- a/drivers/scsi/qla2xxx/qla_isr.c
++++ b/drivers/scsi/qla2xxx/qla_isr.c
+@@ -4313,32 +4313,6 @@ qla2xxx_msix_rsp_q(int irq, void *dev_id)
+ 	return IRQ_HANDLED;
+ }
+ 
+-irqreturn_t
+-qla2xxx_msix_rsp_q_hs(int irq, void *dev_id)
+-{
+-	struct qla_hw_data *ha;
+-	struct qla_qpair *qpair;
+-	struct device_reg_24xx __iomem *reg;
+-	unsigned long flags;
+-
+-	qpair = dev_id;
+-	if (!qpair) {
+-		ql_log(ql_log_info, NULL, 0x505b,
+-		    "%s: NULL response queue pointer.\n", __func__);
+-		return IRQ_NONE;
+-	}
+-	ha = qpair->hw;
+-
+-	reg = &ha->iobase->isp24;
+-	spin_lock_irqsave(&ha->hardware_lock, flags);
+-	wrt_reg_dword(&reg->hccr, HCCRX_CLR_RISC_INT);
+-	spin_unlock_irqrestore(&ha->hardware_lock, flags);
+-
+-	queue_work(ha->wq, &qpair->q_work);
+-
+-	return IRQ_HANDLED;
+-}
+-
+ /* Interrupt handling helpers. */
+ 
+ struct qla_init_msix_entry {
+@@ -4351,7 +4325,6 @@ static const struct qla_init_msix_entry msix_entries[] = {
+ 	{ "rsp_q", qla24xx_msix_rsp_q },
+ 	{ "atio_q", qla83xx_msix_atio_q },
+ 	{ "qpair_multiq", qla2xxx_msix_rsp_q },
+-	{ "qpair_multiq_hs", qla2xxx_msix_rsp_q_hs },
+ };
+ 
+ static const struct qla_init_msix_entry qla82xx_msix_entries[] = {
+@@ -4638,9 +4611,10 @@ qla2x00_free_irqs(scsi_qla_host_t *vha)
+ }
+ 
+ int qla25xx_request_irq(struct qla_hw_data *ha, struct qla_qpair *qpair,
+-	struct qla_msix_entry *msix, int vector_type)
++	struct qla_msix_entry *msix)
+ {
+-	const struct qla_init_msix_entry *intr = &msix_entries[vector_type];
++	const struct qla_init_msix_entry *intr =
++		&msix_entries[QLA_MSIX_QPAIR_MULTIQ_RSP_Q];
+ 	scsi_qla_host_t *vha = pci_get_drvdata(ha->pdev);
+ 	int ret;
+ 
+diff --git a/drivers/scsi/qla2xxx/qla_mid.c b/drivers/scsi/qla2xxx/qla_mid.c
+index 8e582fbb3403..79e4319bbbd2 100644
+--- a/drivers/scsi/qla2xxx/qla_mid.c
++++ b/drivers/scsi/qla2xxx/qla_mid.c
+@@ -908,9 +908,7 @@ qla25xx_create_rsp_que(struct qla_hw_data *ha, uint16_t options,
+ 	    rsp->options, rsp->id, rsp->rsp_q_in,
+ 	    rsp->rsp_q_out);
+ 
+-	ret = qla25xx_request_irq(ha, qpair, qpair->msix,
+-		ha->flags.disable_msix_handshake ?
+-		QLA_MSIX_QPAIR_MULTIQ_RSP_Q : QLA_MSIX_QPAIR_MULTIQ_RSP_Q_HS);
++	ret = qla25xx_request_irq(ha, qpair, qpair->msix);
+ 	if (ret)
+ 		goto que_failed;
+ 
 -- 
 2.51.0
 
