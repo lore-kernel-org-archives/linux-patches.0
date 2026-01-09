@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A5E23ED5B;
-	Fri,  9 Jan 2026 12:12:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A49423ED5B;
+	Fri,  9 Jan 2026 12:12:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960763; cv=none; b=fuMQs1fIYiamzBTl+dppD4/NpYtnkILkxNHWkBb9uB7Bh0ciWIoHNrYggAI53NBvG10GGMTHva/sYSvWLvun9Qd7xIl77qdXWxrWtHlN91ZdbXcVeCmExbZvB/Saw0IW2Xfp8qchGVtsKMmW5wJDM0ei5ysyCSWGp8oh+t1+F54=
+	t=1767960766; cv=none; b=sVl2cDa9FWR6TVnj9KjUSjhcExYPVqT6ImvzELHz9mhu2jA9DT0zGlYXXdcVCAHxddkz6habYQcVRh8mEIsH0I4FydSTSZrM09zTs2Xn2vOh0sPfofzz7T+feTsPP7swLIglXzsoDn7m9XtaIGXs5cwe8RDwelesEIAnIpui3Rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960763; c=relaxed/simple;
-	bh=zD4bnzMQFkcU5SftcxAHmnJKEWsV2tGYfkflACJxplY=;
+	s=arc-20240116; t=1767960766; c=relaxed/simple;
+	bh=56540hn6YH3BTW7lY5Vrs0TwZ8EndUh6bNwbpsd6VTc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X3VhVGingKumyMVVO6TUGSaym1F0NCiLp2fgkJlPJA8CuTmKVArP6lcTl2723e3hdh5YuNYCSAozICyfwClUBBbUm3rP/Y8uTnz1ZGfl8Pr5uR5Kbd1FMxWrgmBBrqmLnEl7NqGO9nPgP1aDGI3h9VHH/vTr90dGN6nr8bMHs+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=va/c16U0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rervb8xhj8xDfDx+ZpAd+9i1oEAiIRHf8kMql40f2TGMxE/bgFEJHhK1tIRoKUiTFWm4Vcf/0Hw6Qbo5pxoEBf7oBjDDMY0MzcphnmOcuWc2y3h6hWbquj17CipF1r/470nwSm9IRCH+4pzXz3HKr+NxOxP82cnQsCyrwOYoI3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N6i/S/zJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="va/c16U0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82B2CC4CEF1;
-	Fri,  9 Jan 2026 12:12:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N6i/S/zJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60256C4CEF1;
+	Fri,  9 Jan 2026 12:12:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960762;
-	bh=zD4bnzMQFkcU5SftcxAHmnJKEWsV2tGYfkflACJxplY=;
+	s=korg; t=1767960765;
+	bh=56540hn6YH3BTW7lY5Vrs0TwZ8EndUh6bNwbpsd6VTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=va/c16U05u8JycsnX+twQV7wFam93g0PM0Ks7CcgnJOmqSJY+etIZpOrnKnW721hw
-	 YvLp+VtEgnQpWCa4BOuVQXGxaG6zI5jO865yefrdv7nzZR/lNIr3Wvmx1HAU/UVoZB
-	 /xlIMdzoCovPtlT5RdYRL6OvzSfhqln/uYfIGexk=
+	b=N6i/S/zJua9AExPBKPIpbAPpxJmZlAq9/soJfMItrjSZrsSeyUwDCGZDZVj2lBSxk
+	 xYMekMBqXAOpDRUeDhRwCwJapvBMtIg/qIpSkW/3RrpcEVprRCeoEiPNokP2l67sY7
+	 4woUVeCy9klLnKf87o3hYfDvFt/ozIhaIJMbq3DE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Alice C. Munduruca" <alice.munduruca@canonical.com>,
-	Cengiz Can <cengiz.can@canonical.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Simon Horman <horms@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 516/737] selftests: net: fix "buffer overflow detected" for tap.c
-Date: Fri,  9 Jan 2026 12:40:55 +0100
-Message-ID: <20260109112153.411268840@linuxfoundation.org>
+Subject: [PATCH 6.6 517/737] smc91x: fix broken irq-context in PREEMPT_RT
+Date: Fri,  9 Jan 2026 12:40:56 +0100
+Message-ID: <20260109112153.448403220@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -53,95 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice C. Munduruca <alice.munduruca@canonical.com>
+From: Yeoreum Yun <yeoreum.yun@arm.com>
 
-[ Upstream commit 472c5dd6b95c02b3e5d7395acf542150e91165e7 ]
+[ Upstream commit 6402078bd9d1ed46e79465e1faaa42e3458f8a33 ]
 
-When the selftest 'tap.c' is compiled with '-D_FORTIFY_SOURCE=3',
-the strcpy() in rtattr_add_strsz() is replaced with a checked
-version which causes the test to consistently fail when compiled
-with toolchains for which this option is enabled by default.
+When smc91x.c is built with PREEMPT_RT, the following splat occurs
+in FVP_RevC:
 
- TAP version 13
- 1..3
- # Starting 3 tests from 1 test cases.
- #  RUN           tap.test_packet_valid_udp_gso ...
- *** buffer overflow detected ***: terminated
- # test_packet_valid_udp_gso: Test terminated by assertion
- #          FAIL  tap.test_packet_valid_udp_gso
- not ok 1 tap.test_packet_valid_udp_gso
- #  RUN           tap.test_packet_valid_udp_csum ...
- *** buffer overflow detected ***: terminated
- # test_packet_valid_udp_csum: Test terminated by assertion
- #          FAIL  tap.test_packet_valid_udp_csum
- not ok 2 tap.test_packet_valid_udp_csum
- #  RUN           tap.test_packet_crash_tap_invalid_eth_proto ...
- *** buffer overflow detected ***: terminated
- # test_packet_crash_tap_invalid_eth_proto: Test terminated by assertion
- #          FAIL  tap.test_packet_crash_tap_invalid_eth_proto
- not ok 3 tap.test_packet_crash_tap_invalid_eth_proto
- # FAILED: 0 / 3 tests passed.
- # Totals: pass:0 fail:3 xfail:0 xpass:0 skip:0 error:0
+[   13.055000] smc91x LNRO0003:00 eth0: link up, 10Mbps, half-duplex, lpa 0x0000
+[   13.062137] BUG: workqueue leaked atomic, lock or RCU: kworker/2:1[106]
+[   13.062137]      preempt=0x00000000 lock=0->0 RCU=0->1 workfn=mld_ifc_work
+[   13.062266] C
+** replaying previous printk message **
+[   13.062266] CPU: 2 UID: 0 PID: 106 Comm: kworker/2:1 Not tainted 6.18.0-dirty #179 PREEMPT_{RT,(full)}
+[   13.062353] Hardware name:  , BIOS
+[   13.062382] Workqueue: mld mld_ifc_work
+[   13.062469] Call trace:
+[   13.062494]  show_stack+0x24/0x40 (C)
+[   13.062602]  __dump_stack+0x28/0x48
+[   13.062710]  dump_stack_lvl+0x7c/0xb0
+[   13.062818]  dump_stack+0x18/0x34
+[   13.062926]  process_scheduled_works+0x294/0x450
+[   13.063043]  worker_thread+0x260/0x3d8
+[   13.063124]  kthread+0x1c4/0x228
+[   13.063235]  ret_from_fork+0x10/0x20
 
-A buffer overflow is detected by the fortified glibc __strcpy_chk()
-since the __builtin_object_size() of `RTA_DATA(rta)` is incorrectly
-reported as 1, even though there is ample space in its bounding
-buffer `req`.
+This happens because smc_special_trylock() disables IRQs even on PREEMPT_RT,
+but smc_special_unlock() does not restore IRQs on PREEMPT_RT.
+The reason is that smc_special_unlock() calls spin_unlock_irqrestore(),
+and rcu_read_unlock_bh() in __dev_queue_xmit() cannot invoke
+rcu_read_unlock() through __local_bh_enable_ip() when current->softirq_disable_cnt becomes zero.
 
-Additionally, given that IFLA_IFNAME also expects a null-terminated
-string, callers of rtaddr_add_str{,sz}() could simply use the
-rtaddr_add_strsz() variant. (which has been renamed to remove the
-trailing `sz`) memset() has been used for this function since it
-is unchecked and thus circumvents the issue discussed in the
-previous paragraph.
+To address this issue, replace smc_special_trylock() with spin_trylock_irqsave().
 
-Fixes: 2e64fe4624d1 ("selftests: add few test cases for tap driver")
-Signed-off-by: Alice C. Munduruca <alice.munduruca@canonical.com>
-Reviewed-by: Cengiz Can <cengiz.can@canonical.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20251216170641.250494-1-alice.munduruca@canonical.com
+Fixes: 342a93247e08 ("locking/spinlock: Provide RT variant header: <linux/spinlock_rt.h>")
+Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20251217085115.1730036-1-yeoreum.yun@arm.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/tap.c | 16 +++++-----------
- 1 file changed, 5 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/smsc/smc91x.c | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
-diff --git a/tools/testing/selftests/net/tap.c b/tools/testing/selftests/net/tap.c
-index 247c3b3ac1c9..51a209014f1c 100644
---- a/tools/testing/selftests/net/tap.c
-+++ b/tools/testing/selftests/net/tap.c
-@@ -56,18 +56,12 @@ static void rtattr_end(struct nlmsghdr *nh, struct rtattr *attr)
- static struct rtattr *rtattr_add_str(struct nlmsghdr *nh, unsigned short type,
- 				     const char *s)
- {
--	struct rtattr *rta = rtattr_add(nh, type, strlen(s));
-+	unsigned int strsz = strlen(s) + 1;
-+	struct rtattr *rta;
- 
--	memcpy(RTA_DATA(rta), s, strlen(s));
--	return rta;
--}
--
--static struct rtattr *rtattr_add_strsz(struct nlmsghdr *nh, unsigned short type,
--				       const char *s)
--{
--	struct rtattr *rta = rtattr_add(nh, type, strlen(s) + 1);
-+	rta = rtattr_add(nh, type, strsz);
- 
--	strcpy(RTA_DATA(rta), s);
-+	memcpy(RTA_DATA(rta), s, strsz);
- 	return rta;
- }
- 
-@@ -119,7 +113,7 @@ static int dev_create(const char *dev, const char *link_type,
- 
- 	link_info = rtattr_begin(&req.nh, IFLA_LINKINFO);
- 
--	rtattr_add_strsz(&req.nh, IFLA_INFO_KIND, link_type);
-+	rtattr_add_str(&req.nh, IFLA_INFO_KIND, link_type);
- 
- 	if (fill_info_data) {
- 		info_data = rtattr_begin(&req.nh, IFLA_INFO_DATA);
+diff --git a/drivers/net/ethernet/smsc/smc91x.c b/drivers/net/ethernet/smsc/smc91x.c
+index 032eccf8eb42..7c2fdd02f1d3 100644
+--- a/drivers/net/ethernet/smsc/smc91x.c
++++ b/drivers/net/ethernet/smsc/smc91x.c
+@@ -515,15 +515,7 @@ static inline void  smc_rcv(struct net_device *dev)
+  * any other concurrent access and C would always interrupt B. But life
+  * isn't that easy in a SMP world...
+  */
+-#define smc_special_trylock(lock, flags)				\
+-({									\
+-	int __ret;							\
+-	local_irq_save(flags);						\
+-	__ret = spin_trylock(lock);					\
+-	if (!__ret)							\
+-		local_irq_restore(flags);				\
+-	__ret;								\
+-})
++#define smc_special_trylock(lock, flags)	spin_trylock_irqsave(lock, flags)
+ #define smc_special_lock(lock, flags)		spin_lock_irqsave(lock, flags)
+ #define smc_special_unlock(lock, flags) 	spin_unlock_irqrestore(lock, flags)
+ #else
 -- 
 2.51.0
 
