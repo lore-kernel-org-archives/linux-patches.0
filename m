@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1815A335083;
-	Fri,  9 Jan 2026 12:28:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 035E638FA3;
+	Fri,  9 Jan 2026 12:28:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961683; cv=none; b=hX+boPnN3hfMy+sMl5+KVI7iPCysbGwFSoKfDvgAp6t9TwxzE0A9h8V5Rt7OhkW+uJx7K9sWH4O0mjs5zsVZ+GCDWRnCmPPzhzl9fgx8n/Y6dxk3ke0Bx8Z7iXeNzTrAGRRLNHRERl2ZRAxRn5SCreTTtXliB4TIEg5ri4kvuNA=
+	t=1767961686; cv=none; b=ADFRpw4kEAUOiFI1HdfFQ/ChJwE9x+Cmorq3aGsuiigRD5zEq8fbNdKwX16E6eOtMxsuAakWAqRrGdJhziygAQq+S0b1/z0ry8W4u4SVAAXOt8u43pO6q6ZHtMoQDiMAC6L+JNRh0mln+RnBX8qOkVp4GBtGz5+ICsZOL8I7ZGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961683; c=relaxed/simple;
-	bh=9Uw1cIqodQK7d4IpCgrLU1sXKYnroQxCZt1Xwhgu69c=;
+	s=arc-20240116; t=1767961686; c=relaxed/simple;
+	bh=nHtD6E+0NFQNK0VmMVx4kgNQ0r/vwBz0tDZlVk8y240=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ki+A76KiLWTLRWHOrrZeJUP3E6TGTdaC23Tdpm+ZKvpa3jD+z7itgvpSIdP5/s/42yzY1goEg7KeruaB32FW2nUuPNaJfjc0l9HlnzQDZdwm5gnS11GwlFb8ydr3WR8WvT9S6I3JvxJoYp0cOiDdxFNPCoZF9D8cHTv9IrgRKXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WG02OLA8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a0pTdd3Qwxn4fhyanCgUnCQDJjPackS5QemX11CvaTfI5p5VcL5V/1jr4sl+xHQ6pjYtHEM2lLmgod20tuWrS+A7o7c6VQhtLwgNrc6Vb8+1qtw8Pf5KpUKNht2J4jtbx1j43vBq9NCJYqteKeMGkkbS4iKwyRshBcGOQ9Nju4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tmj5AnO8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WG02OLA8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99A9AC19421;
-	Fri,  9 Jan 2026 12:28:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tmj5AnO8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80CF2C4CEF1;
+	Fri,  9 Jan 2026 12:28:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961683;
-	bh=9Uw1cIqodQK7d4IpCgrLU1sXKYnroQxCZt1Xwhgu69c=;
+	s=korg; t=1767961685;
+	bh=nHtD6E+0NFQNK0VmMVx4kgNQ0r/vwBz0tDZlVk8y240=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WG02OLA8TK5UQh4BKADXZ/MWUB48viDFwlst5mk5s2w3kJK83JkhUOwO8DaP+fctf
-	 Tn4X1DoV5B7fP/yTmm+fMy4OmOFKBhjzAPfIJX5RboM2+LIjiE/w0NGMzaKLDRaS7m
-	 75FqUX7gtYp7Lfe/JVAIzZh1i8rTDpJZH19WsyIU=
+	b=tmj5AnO8zVcpTb4yJFGGNpwAUG9sqmhpUf+wqQMYeR5QNQEo5+qSIZjrOqTeQaZhd
+	 uMLQXQ0t3uD3JnrSOOcYXULbuJsXOxW1K3hBQe2haGHSLa53UpIdfPfcRtns1v4ZLp
+	 ZeEr4ClDsx/6LhAsErzWRXxqctfp0TYGwNUqDpbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Tengda Wu <wutengda@huaweicloud.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 067/634] sctp: Defer SCTP_DBG_OBJCNT_DEC() to sctp_destroy_sock().
-Date: Fri,  9 Jan 2026 12:35:45 +0100
-Message-ID: <20260109112119.967245124@linuxfoundation.org>
+Subject: [PATCH 6.1 068/634] x86/dumpstack: Prevent KASAN false positive warnings in __show_regs()
+Date: Fri,  9 Jan 2026 12:35:46 +0100
+Message-ID: <20260109112120.004323394@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,64 +53,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Tengda Wu <wutengda@huaweicloud.com>
 
-[ Upstream commit 622e8838a29845316668ec2e7648428878df7f9a ]
+[ Upstream commit ced37e9ceae50e4cb6cd058963bd315ec9afa651 ]
 
-SCTP_DBG_OBJCNT_INC() is called only when sctp_init_sock()
-returns 0 after successfully allocating sctp_sk(sk)->ep.
+When triggering a stack dump via sysrq (echo t > /proc/sysrq-trigger),
+KASAN may report false-positive out-of-bounds access:
 
-OTOH, SCTP_DBG_OBJCNT_DEC() is called in sctp_close().
+  BUG: KASAN: out-of-bounds in __show_regs+0x4b/0x340
+  Call Trace:
+    dump_stack_lvl
+    print_address_description.constprop.0
+    print_report
+    __show_regs
+    show_trace_log_lvl
+    sched_show_task
+    show_state_filter
+    sysrq_handle_showstate
+    __handle_sysrq
+    write_sysrq_trigger
+    proc_reg_write
+    vfs_write
+    ksys_write
+    do_syscall_64
+    entry_SYSCALL_64_after_hwframe
 
-The code seems to expect that the socket is always exposed
-to userspace once SCTP_DBG_OBJCNT_INC() is incremented, but
-there is a path where the assumption is not true.
+The issue occurs as follows:
 
-In sctp_accept(), sctp_sock_migrate() could fail after
-sctp_init_sock().
+  Task A (walk other tasks' stacks)           Task B (running)
+  1. echo t > /proc/sysrq-trigger
+  show_trace_log_lvl
+    regs = unwind_get_entry_regs()
+    show_regs_if_on_stack(regs)
+                                              2. The stack value pointed by
+                                                 `regs` keeps changing, and
+                                                 so are the tags in its
+                                                 KASAN shadow region.
+      __show_regs(regs)
+        regs->ax, regs->bx, ...
+          3. hit KASAN redzones, OOB
 
-Then, sk_common_release() does not call inet_release() nor
-sctp_close().  Instead, it calls sk->sk_prot->destroy().
+When task A walks task B's stack without suspending it, the continuous changes
+in task B's stack (and corresponding KASAN shadow tags) may cause task A to
+hit KASAN redzones when accessing obsolete values on the stack, resulting in
+false positive reports.
 
-Let's move SCTP_DBG_OBJCNT_DEC() from sctp_close() to
-sctp_destroy_sock().
+Simply stopping the task before unwinding is not a viable fix, as it would
+alter the state intended to inspect. This is especially true for diagnosing
+misbehaving tasks (e.g., in a hard lockup), where stopping might fail or hide
+the root cause by changing the call stack.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20251023231751.4168390-2-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Therefore, fix this by disabling KASAN checks during asynchronous stack
+unwinding, which is identified when the unwinding task does not match the
+current task (task != current).
+
+  [ bp: Align arguments on function's opening brace. ]
+
+Fixes: 3b3fa11bc700 ("x86/dumpstack: Print any pt_regs found on the stack")
+Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Link: https://patch.msgid.link/all/20251023090632.269121-1-wutengda@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/x86/kernel/dumpstack.c | 23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 8a8a5cf8d8e65..090a2fadf4bb3 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -1552,8 +1552,6 @@ static void sctp_close(struct sock *sk, long timeout)
- 	spin_unlock_bh(&net->sctp.addr_wq_lock);
- 
- 	sock_put(sk);
--
--	SCTP_DBG_OBJCNT_DEC(sock);
- }
- 
- /* Handle EPIPE error. */
-@@ -5105,9 +5103,12 @@ static void sctp_destroy_sock(struct sock *sk)
- 		sp->do_auto_asconf = 0;
- 		list_del(&sp->auto_asconf_list);
+diff --git a/arch/x86/kernel/dumpstack.c b/arch/x86/kernel/dumpstack.c
+index 52dc5839d1e8e..0667d947d82bb 100644
+--- a/arch/x86/kernel/dumpstack.c
++++ b/arch/x86/kernel/dumpstack.c
+@@ -183,8 +183,8 @@ static void show_regs_if_on_stack(struct stack_info *info, struct pt_regs *regs,
+  * in false positive reports. Disable instrumentation to avoid those.
+  */
+ __no_kmsan_checks
+-static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
+-			unsigned long *stack, const char *log_lvl)
++static void __show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
++				 unsigned long *stack, const char *log_lvl)
+ {
+ 	struct unwind_state state;
+ 	struct stack_info stack_info = {0};
+@@ -305,6 +305,25 @@ static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
  	}
-+
- 	sctp_endpoint_free(sp->ep);
-+
- 	sk_sockets_allocated_dec(sk);
- 	sock_prot_inuse_add(sock_net(sk), sk->sk_prot, -1);
-+	SCTP_DBG_OBJCNT_DEC(sock);
  }
  
- /* Triggered when there are no references on the socket anymore */
++static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
++			       unsigned long *stack, const char *log_lvl)
++{
++	/*
++	 * Disable KASAN to avoid false positives during walking another
++	 * task's stacks, as values on these stacks may change concurrently
++	 * with task execution.
++	 */
++	bool disable_kasan = task && task != current;
++
++	if (disable_kasan)
++		kasan_disable_current();
++
++	__show_trace_log_lvl(task, regs, stack, log_lvl);
++
++	if (disable_kasan)
++		kasan_enable_current();
++}
++
+ void show_stack(struct task_struct *task, unsigned long *sp,
+ 		       const char *loglvl)
+ {
 -- 
 2.51.0
 
