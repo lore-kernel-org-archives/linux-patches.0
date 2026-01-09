@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6985227EA8;
-	Fri,  9 Jan 2026 12:52:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD810358D38;
+	Fri,  9 Jan 2026 12:52:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767963144; cv=none; b=nJZ9nkx3u+bsWA0c6QKYQwXijO7/NEzfLC4JiOko2UHV3yAoPMyOCR0pBjVoc23ymEEZlzbvQfl20rWrS00dlBOra5fIa1o4OwQSVK/QfMH3HQKcblvp5Ts4BfUag+hdk6nf/eeEJ5BSEpzU/Da1vk0qKGZ3M127Nvx8waKjp6o=
+	t=1767963147; cv=none; b=iyJTq9f3zBNQ+/YBIW7uJtWPkzzjDC8KrgIji6GpSBxr0MJbhF4YXjEgS+zNaW8fcV9f6k8hTpBQVYLdYcta66/cIdy8WSlyYEvod7ZZfUHl0nlKWNHe/P+dxD/7fSQ6vOwJMF9rKJ3o73ISaq+lPXmPb7s3fKyIStm2GT8150Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767963144; c=relaxed/simple;
-	bh=ggOsNEpcNLkNzQ/5ytWC7PTuVOGOHNY/ygb0u7niSCM=;
+	s=arc-20240116; t=1767963147; c=relaxed/simple;
+	bh=rd+9n76rlMh0W6Q3zREQWITePipR1VU9eMWIyGrkqJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DkxOzSPniPTFOSJAJkzrsnD6T//OqHAEN9dlk6Ek0F986YVDu6GANlkf1EqP/7wOsMPOY/HMbd0LzV3iVUgCOlR7GtFkkR6BmGPPdHftqOxEky49UNbitYBkS9wsnWeAFC9IbRni3q7Mz8xeEzHYUizUUH3alpUvmRiMgNwaHXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wSrwJ52f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j03MCnsGup4hqzr6OBR2SzkdtxQy9WR2lhc+AAF28jkF+R+OX80ANjhz2kXI1wdRs3qHwLzp5JJVf4xSA2Bbmu885/2mK9x73efCG2Cuwj5Fr7lhIgC3a4L2Fz3nyTBuXAPAOdNRlIm/1E5Ff8GIVUGxD0tNcNB9QbiiMJDCycU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UUqFn4cT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wSrwJ52f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32675C4CEF1;
-	Fri,  9 Jan 2026 12:52:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UUqFn4cT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F000FC4CEF1;
+	Fri,  9 Jan 2026 12:52:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767963144;
-	bh=ggOsNEpcNLkNzQ/5ytWC7PTuVOGOHNY/ygb0u7niSCM=;
+	s=korg; t=1767963147;
+	bh=rd+9n76rlMh0W6Q3zREQWITePipR1VU9eMWIyGrkqJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wSrwJ52fxFQcKQ/HlwnaBMoG8NWLfg6RFCYHPZNdVxOOfetRCH5/g5QZHgCBYFi07
-	 RDA9SRo+TQRecr+E7LDFSsgSAmo50JqBg40v80jf1hw73DutTrlvyWzpqk3lhqIeEJ
-	 1jyfwm2iusOOBhZZuI33rOXZYD4lAQz2zFVdc75I=
+	b=UUqFn4cTeyCNIoOLx2q8R9WxzROis8ogE64OSslRJ+pKwXSJoExuZEsCpzQdECExw
+	 4PuBHuR/bnARtJrg05vS85kQJenDMcffxbk8VlztVn2tf34T/cc0KPaM4xTasmtb4Y
+	 oFphDizxXEA4T9i58Et58KmdhC4hL7jF48nIrvSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zack Rusin <zack.rusin@broadcom.com>,
-	Kuzey Arda Bulut <kuzeyardabulut@gmail.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	dri-devel@lists.freedesktop.org,
-	Ian Forbes <ian.forbes@broadcom.com>,
-	Sasha Levin <sashal@kernel.org>,
+	Niklas Neronin <niklas.neronin@linux.intel.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Shivani Agarwal <shivani.agarwal@broadcom.com>
-Subject: [PATCH 6.1 612/634] drm/vmwgfx: Fix a null-ptr access in the cursor snooper
-Date: Fri,  9 Jan 2026 12:44:50 +0100
-Message-ID: <20260109112140.662840075@linuxfoundation.org>
+Subject: [PATCH 6.1 613/634] usb: xhci: move link chain bit quirk checks into one helper function.
+Date: Fri,  9 Jan 2026 12:44:51 +0100
+Message-ID: <20260109112140.700948028@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -55,77 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zack Rusin <zack.rusin@broadcom.com>
+From: Niklas Neronin <niklas.neronin@linux.intel.com>
 
-[ Upstream commit 5ac2c0279053a2c5265d46903432fb26ae2d0da2 ]
+commit 7476a2215c07703db5e95efaa3fc5b9f957b9417 upstream.
 
-Check that the resource which is converted to a surface exists before
-trying to use the cursor snooper on it.
+Older 0.95 xHCI hosts and some other specific newer hosts require the
+chain bit to be set for Link TRBs even if the link TRB is not in the
+middle of a transfer descriptor (TD).
 
-vmw_cmd_res_check allows explicit invalid (SVGA3D_INVALID_ID) identifiers
-because some svga commands accept SVGA3D_INVALID_ID to mean "no surface",
-unfortunately functions that accept the actual surfaces as objects might
-(and in case of the cursor snooper, do not) be able to handle null
-objects. Make sure that we validate not only the identifier (via the
-vmw_cmd_res_check) but also check that the actual resource exists before
-trying to do something with it.
+move the checks for all those cases  into one xhci_link_chain_quirk()
+function to clean up and avoid code duplication.
 
-Fixes unchecked null-ptr reference in the snooping code.
+No functional changes.
 
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Fixes: c0951b797e7d ("drm/vmwgfx: Refactor resource management")
-Reported-by: Kuzey Arda Bulut <kuzeyardabulut@gmail.com>
-Cc: Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
-Cc: dri-devel@lists.freedesktop.org
-Reviewed-by: Ian Forbes <ian.forbes@broadcom.com>
-Link: https://lore.kernel.org/r/20250917153655.1968583-1-zack.rusin@broadcom.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[skip renaming chain_links flag, reword commit message -Mathias]
+
+Signed-off-by: Niklas Neronin <niklas.neronin@linux.intel.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20240626124835.1023046-10-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 [Shivani: Modified to apply on v5.10.y-v6.1.y]
 Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c |   17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/usb/host/xhci-mem.c  |   10 ++--------
+ drivers/usb/host/xhci-ring.c |    8 ++------
+ drivers/usb/host/xhci.h      |    7 +++++--
+ 3 files changed, 9 insertions(+), 16 deletions(-)
 
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-@@ -1507,6 +1507,7 @@ static int vmw_cmd_dma(struct vmw_privat
- 		       SVGA3dCmdHeader *header)
- {
- 	struct vmw_buffer_object *vmw_bo = NULL;
-+	struct vmw_resource *res;
- 	struct vmw_surface *srf = NULL;
- 	VMW_DECLARE_CMD_VAR(*cmd, SVGA3dCmdSurfaceDMA);
- 	int ret;
-@@ -1542,18 +1543,24 @@ static int vmw_cmd_dma(struct vmw_privat
+--- a/drivers/usb/host/xhci-mem.c
++++ b/drivers/usb/host/xhci-mem.c
+@@ -133,10 +133,7 @@ static void xhci_link_rings(struct xhci_
+ 	if (!ring || !first || !last)
+ 		return;
  
- 	dirty = (cmd->body.transfer == SVGA3D_WRITE_HOST_VRAM) ?
- 		VMW_RES_DIRTY_SET : 0;
--	ret = vmw_cmd_res_check(dev_priv, sw_context, vmw_res_surface,
--				dirty, user_surface_converter,
--				&cmd->body.host.sid, NULL);
-+	ret = vmw_cmd_res_check(dev_priv, sw_context, vmw_res_surface, dirty,
-+				user_surface_converter, &cmd->body.host.sid,
-+				NULL);
- 	if (unlikely(ret != 0)) {
- 		if (unlikely(ret != -ERESTARTSYS))
- 			VMW_DEBUG_USER("could not find surface for DMA.\n");
- 		return ret;
- 	}
+-	/* Set chain bit for 0.95 hosts, and for isoc rings on AMD 0.96 host */
+-	chain_links = !!(xhci_link_trb_quirk(xhci) ||
+-			 (ring->type == TYPE_ISOC &&
+-			  (xhci->quirks & XHCI_AMD_0x96_HOST)));
++	chain_links = xhci_link_chain_quirk(xhci, ring->type);
  
--	srf = vmw_res_to_srf(sw_context->res_cache[vmw_res_surface].res);
-+	res = sw_context->res_cache[vmw_res_surface].res;
-+	if (!res) {
-+		VMW_DEBUG_USER("Invalid DMA surface.\n");
-+		return -EINVAL;
-+	}
+ 	next = ring->enq_seg->next;
+ 	xhci_link_segments(ring->enq_seg, first, ring->type, chain_links);
+@@ -326,10 +323,7 @@ static int xhci_alloc_segments_for_ring(
+ 	struct xhci_segment *prev;
+ 	bool chain_links;
  
--	vmw_kms_cursor_snoop(srf, sw_context->fp->tfile, &vmw_bo->base, header);
-+	srf = vmw_res_to_srf(res);
-+	vmw_kms_cursor_snoop(srf, sw_context->fp->tfile, &vmw_bo->base,
-+			     header);
+-	/* Set chain bit for 0.95 hosts, and for isoc rings on AMD 0.96 host */
+-	chain_links = !!(xhci_link_trb_quirk(xhci) ||
+-			 (type == TYPE_ISOC &&
+-			  (xhci->quirks & XHCI_AMD_0x96_HOST)));
++	chain_links = xhci_link_chain_quirk(xhci, type);
  
- 	return 0;
+ 	prev = xhci_segment_alloc(xhci, cycle_state, max_packet, flags);
+ 	if (!prev)
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -250,9 +250,7 @@ static void inc_enq(struct xhci_hcd *xhc
+ 		 * AMD 0.96 host, carry over the chain bit of the previous TRB
+ 		 * (which may mean the chain bit is cleared).
+ 		 */
+-		if (!(ring->type == TYPE_ISOC &&
+-		      (xhci->quirks & XHCI_AMD_0x96_HOST)) &&
+-		    !xhci_link_trb_quirk(xhci)) {
++		if (!xhci_link_chain_quirk(xhci, ring->type)) {
+ 			next->link.control &= cpu_to_le32(~TRB_CHAIN);
+ 			next->link.control |= cpu_to_le32(chain);
+ 		}
+@@ -3355,9 +3353,7 @@ static int prepare_ring(struct xhci_hcd
+ 		/* If we're not dealing with 0.95 hardware or isoc rings
+ 		 * on AMD 0.96 host, clear the chain bit.
+ 		 */
+-		if (!xhci_link_trb_quirk(xhci) &&
+-		    !(ep_ring->type == TYPE_ISOC &&
+-		      (xhci->quirks & XHCI_AMD_0x96_HOST)))
++		if (!xhci_link_chain_quirk(xhci, ep_ring->type))
+ 			ep_ring->enqueue->link.control &=
+ 				cpu_to_le32(~TRB_CHAIN);
+ 		else
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -1788,9 +1788,12 @@ static inline void xhci_write_64(struct
+ 	lo_hi_writeq(val, regs);
  }
+ 
+-static inline int xhci_link_trb_quirk(struct xhci_hcd *xhci)
++
++/* Link TRB chain should always be set on 0.95 hosts, and AMD 0.96 ISOC rings */
++static inline bool xhci_link_chain_quirk(struct xhci_hcd *xhci, enum xhci_ring_type type)
+ {
+-	return xhci->quirks & XHCI_LINK_TRB_QUIRK;
++	return (xhci->quirks & XHCI_LINK_TRB_QUIRK) ||
++	       (type == TYPE_ISOC && (xhci->quirks & XHCI_AMD_0x96_HOST));
+ }
+ 
+ /* xHCI debugging */
 
 
