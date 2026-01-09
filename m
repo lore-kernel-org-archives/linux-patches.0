@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E6F359FBA;
-	Fri,  9 Jan 2026 12:06:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB241946C8;
+	Fri,  9 Jan 2026 12:06:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960360; cv=none; b=kpV2cM0Z4pxlAwKg7Sj0T54Lhy65HC4BfCAvyaHvt/uRILHV8WIdq0uM6mN1bPNEzqz9/0BBFYLpZzu2zhPHUHyiXc3tpOmgQAGXKvCohJE9pfydufWkkuJWMQL2KQ+xDXAUArylHO86FgOwVyXqQ0SmyjwzQ5X8m5t4tb7nzUo=
+	t=1767960363; cv=none; b=A7q9e3YG28QA9+fkniSVHzeAfq5lUith0iT95PfZD34Hsj3y6VLPJ6ff1GkurYH9H8xHcizCx+cjzGTJ6bVNjfqnKHX+yLhGyROmg2mCDvy8ZDDcuVh2ItvAUpc614kfBdYpKs7Z5ivv6KDwimxwRl5FVVt19lv9hGI0CDfp+WM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960360; c=relaxed/simple;
-	bh=PUrCsLkGrQ1XRdXY6Wv9V5C6nUpbkz1KmkaVx/jKSbc=;
+	s=arc-20240116; t=1767960363; c=relaxed/simple;
+	bh=/BDkqTGPuFOG//mEKeH6hPcYAJX3bjbEQzkNvs790PM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wt51RWZrTUoltvG06HKbTXaRf8y8wGLSLu/EphPWKND2Q4Xg6EIcqBaC6aR6alESmhLFjvHREGwpxL0rJOhOjABFx2e238pLFNRCZRWLLa45SSgQO87ZNRMN+x6w4X5G/p6zsSznnWTRsuKsZQSnVaSp98hJatSj6Iki5P9rsb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KLWRxMPG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SV5lJIG3HG2Kyl8BCJdT/NbBPh/URu+rXve33q7jY6ovlf5pJbbNoLY+90Suwuiq9B8m4nJuxnF0ybUKlIrgXDjs8xiEe/9/p8+YxwtBPDvO/3gjvzVbJ8gRsv6PjtTzGUdtWuxN4aJd6zBZK44CwIm+AH9xtw9nVlrULyC9jQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KUm/DC9B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KLWRxMPG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8987C4CEF1;
-	Fri,  9 Jan 2026 12:05:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KUm/DC9B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B47ACC4CEF1;
+	Fri,  9 Jan 2026 12:06:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960360;
-	bh=PUrCsLkGrQ1XRdXY6Wv9V5C6nUpbkz1KmkaVx/jKSbc=;
+	s=korg; t=1767960363;
+	bh=/BDkqTGPuFOG//mEKeH6hPcYAJX3bjbEQzkNvs790PM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KLWRxMPGdHQJmFWR6LVNTBcwAoalHdZ3ai7IKgf3zMecvqj4aX9jrjGoAj95rpW/+
-	 5IPQc0lskwAM2s/IlostOwyifGNpjodJBJfSstsK2L0LoO44h6DC6fdMWyBraaASAO
-	 d63CCaFab2dnLYY694iaGc912KSm7YTbNwZjWsZU=
+	b=KUm/DC9B0DHw1AYlaK4Xk6NhrVEId9pDG97/Bq6qPJMrr7PNH85hW7EUSUflyc6KP
+	 n1VcfeN8Y2kr5Kg8fWUwnzktPBEon9J5Pq8Br11OaSj0hqRnjW0x0YriJHT419Gxo0
+	 v9NL9v95++OJ1o5c4aMgt2SvFZZUZmq3kDriymrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pengjie Zhang <zhangpengjie2@huawei.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	lihuisong@huawei.com,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.6 376/737] ACPI: PCC: Fix race condition by removing static qualifier
-Date: Fri,  9 Jan 2026 12:38:35 +0100
-Message-ID: <20260109112148.138922246@linuxfoundation.org>
+Subject: [PATCH 6.6 377/737] ACPI: CPPC: Fix missing PCC check for guaranteed_perf
+Date: Fri,  9 Jan 2026 12:38:36 +0100
+Message-ID: <20260109112148.177037130@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -54,38 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Pengjie Zhang <zhangpengjie2@huawei.com>
 
-commit f103fa127c93016bcd89b05d8e11dc1a84f6990d upstream.
+commit 6ea3a44cef28add2d93b1ef119d84886cb1e3c9b upstream.
 
-Local variable 'ret' in acpi_pcc_address_space_setup() is currently
-declared as 'static'. This can lead to race conditions in a
-multithreaded environment.
+The current implementation overlooks the 'guaranteed_perf'
+register in this check.
 
-Remove the 'static' qualifier to ensure that 'ret' will be allocated
-directly on the stack as a local variable.
+If the Guaranteed Performance register is located in the PCC
+subspace, the function currently attempts to read it without
+acquiring the lock and without sending the CMD_READ doorbell
+to the firmware. This can result in reading stale data.
 
-Fixes: a10b1c99e2dc ("ACPI: PCC: Setup PCC Opregion handler only if platform interrupt is available")
+Fixes: 29523f095397 ("ACPI / CPPC: Add support for guaranteed performance")
 Signed-off-by: Pengjie Zhang <zhangpengjie2@huawei.com>
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Acked-by: lihuisong@huawei.com
-Cc: 6.2+ <stable@vger.kernel.org> # 6.2+
-[ rjw: Changelog edits ]
-Link: https://patch.msgid.link/20251210132634.2050033-1-zhangpengjie2@huawei.com
+Cc: 4.20+ <stable@vger.kernel.org> # 4.20+
+[ rjw: Subject and changelog edits ]
+Link: https://patch.msgid.link/20251210132227.1988380-1-zhangpengjie2@huawei.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/acpi_pcc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/cppc_acpi.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/acpi/acpi_pcc.c
-+++ b/drivers/acpi/acpi_pcc.c
-@@ -53,7 +53,7 @@ acpi_pcc_address_space_setup(acpi_handle
- 	struct pcc_data *data;
- 	struct acpi_pcc_info *ctx = handler_context;
- 	struct pcc_mbox_chan *pcc_chan;
--	static acpi_status ret;
-+	acpi_status ret;
- 
- 	data = kzalloc(sizeof(*data), GFP_KERNEL);
- 	if (!data)
+--- a/drivers/acpi/cppc_acpi.c
++++ b/drivers/acpi/cppc_acpi.c
+@@ -1299,7 +1299,8 @@ int cppc_get_perf_caps(int cpunum, struc
+ 	/* Are any of the regs PCC ?*/
+ 	if (CPC_IN_PCC(highest_reg) || CPC_IN_PCC(lowest_reg) ||
+ 		CPC_IN_PCC(lowest_non_linear_reg) || CPC_IN_PCC(nominal_reg) ||
+-		CPC_IN_PCC(low_freq_reg) || CPC_IN_PCC(nom_freq_reg)) {
++		CPC_IN_PCC(low_freq_reg) || CPC_IN_PCC(nom_freq_reg) ||
++		CPC_IN_PCC(guaranteed_reg)) {
+ 		if (pcc_ss_id < 0) {
+ 			pr_debug("Invalid pcc_ss_id\n");
+ 			return -ENODEV;
 
 
