@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F0DD359701;
-	Fri,  9 Jan 2026 12:34:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D7835B137;
+	Fri,  9 Jan 2026 12:35:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962098; cv=none; b=fYNnwO8n/E2itHnbPfG/wvtVhan3sHkfyySGVufGotjvKXq1edH/vJ+5QTjyEaNGfMY3/Tg+YUkxudPFX4bLw91CjJ8X6HxkGO02iKZGowKIXQ1w87ipmziWqZNFZk0yaIU1fgnYsywtqyEszlNnQf2Wo4zYNyC/rVBQjAgDq70=
+	t=1767962101; cv=none; b=gJBwSRcINCD6/pUVk/eTGw8m5OY+B5Xovk6Qrau0In9O2iyYpuUHmc+acDreVZ3DU01Y3v1EN0r43+5Yl9If5+KXqoDVT7PnjHpmfH66rH0kRcdEesSZMYXLiAkMDOgLUo988d5I5bWgnNRGKMGDRTtm8uOUKjzvJjIBu/iZZqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962098; c=relaxed/simple;
-	bh=tDcAYe6FNxCsBmj+do8aGnBa/T/BYyfpzetRBIpqouU=;
+	s=arc-20240116; t=1767962101; c=relaxed/simple;
+	bh=qcsIcUACrdiUAKk3fBaNk4PTB+Bhur8l2IL8ul2bUks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EPxarIPgGkvWoUyxUjkVEsvrDgJpsuLVCIR5DBbDbEJTtw6c7TwrFwB7OCMqZxRsuCnBI6pFaqYT/eBwYYjL7Ku6teFvio+GgB2VvuBYtLgrNlbMN3Y37eXuqK4QtLOHjDY/uSIMQrU0VNrbul8ivyMfKsRNU9xWHbVnkzSbZc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dt1JKDIO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u89V9KmZ+S8vYRdeaS3W2zooBboJTwtVOmqTFljHqAo/spqpONGe9aztxAg0ZPO6HkLlj3khG3sFAcbsps8OpCID8WsiuRpxJZuoeXbg2P3q+DcCCtUNsH1XbuhmU0MeJQkrzYX+hVSI910OtiDqZg98Hz67oZOxDR2emM0KGiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CSQpv+8r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dt1JKDIO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ECB9C4CEF1;
-	Fri,  9 Jan 2026 12:34:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CSQpv+8r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEB49C4CEF1;
+	Fri,  9 Jan 2026 12:35:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962097;
-	bh=tDcAYe6FNxCsBmj+do8aGnBa/T/BYyfpzetRBIpqouU=;
+	s=korg; t=1767962101;
+	bh=qcsIcUACrdiUAKk3fBaNk4PTB+Bhur8l2IL8ul2bUks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dt1JKDIO0PyBCXfnXfXnwboTtMVrfaSZA4p5yZk9/C/j3wpXVQYzP5CpNeUNM4RSd
-	 vdORn9sify1E0wffOm8lzzdSha22kRCkWGd/ah7k7iz/JaPRjuebx3VUddcpyFU684
-	 3w6Ccs2BJhPWPDp4vfhmilwpbOGU6DWEST3k6YzM=
+	b=CSQpv+8rS6cQVKfyNnX9SnNp2yRp+OkrCg1B2jBI9DHhZ/D1vyGNMpSQ4MBA1spJi
+	 gk6xfvDaY9yeZu0xTVvpKZPTK/nWERWznNMaYiRzTC23CmeHqQdAwCflK+AqkQQwfB
+	 QvVII3VskD1m0nV7TCV/wpPJqvR04OG3vPrHbBL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Benjamin Marzinski <bmarzins@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 213/634] dm log-writes: Add missing set_freezable() for freezable kthread
-Date: Fri,  9 Jan 2026 12:38:11 +0100
-Message-ID: <20260109112125.450765220@linuxfoundation.org>
+Subject: [PATCH 6.1 214/634] efi/cper: Add a new helper function to print bitmasks
+Date: Fri,  9 Jan 2026 12:38:12 +0100
+Message-ID: <20260109112125.488010608@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,38 +53,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-[ Upstream commit ab08f9c8b363297cafaf45475b08f78bf19b88ef ]
+[ Upstream commit a976d790f49499ccaa0f991788ad8ebf92e7fd5c ]
 
-The log_writes_kthread() calls try_to_freeze() but lacks set_freezable(),
-rendering the freeze attempt ineffective since kernel threads are
-non-freezable by default. This prevents proper thread suspension during
-system suspend/hibernate.
+Add a helper function to print a string with names associated
+to each bit field.
 
-Add set_freezable() to explicitly mark the thread as freezable.
+A typical example is:
 
-Fixes: 0e9cebe72459 ("dm: add log writes target")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Reviewed-by: Benjamin Marzinski <bmarzins@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+	const char * const bits[] = {
+		"bit 3 name",
+		"bit 4 name",
+		"bit 5 name",
+	};
+	char str[120];
+        unsigned int bitmask = BIT(3) | BIT(5);
+
+	#define MASK  GENMASK(5,3)
+
+	cper_bits_to_str(str, sizeof(str), FIELD_GET(MASK, bitmask),
+			 bits, ARRAY_SIZE(bits));
+
+The above code fills string "str" with "bit 3 name|bit 5 name".
+
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-log-writes.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/firmware/efi/cper.c | 60 +++++++++++++++++++++++++++++++++++++
+ include/linux/cper.h        |  2 ++
+ 2 files changed, 62 insertions(+)
 
-diff --git a/drivers/md/dm-log-writes.c b/drivers/md/dm-log-writes.c
-index efdfb2e1868a4..4241f40f9ad26 100644
---- a/drivers/md/dm-log-writes.c
-+++ b/drivers/md/dm-log-writes.c
-@@ -431,6 +431,7 @@ static int log_writes_kthread(void *arg)
- 	struct log_writes_c *lc = (struct log_writes_c *)arg;
- 	sector_t sector = 0;
+diff --git a/drivers/firmware/efi/cper.c b/drivers/firmware/efi/cper.c
+index e4e5ea7ce910a..eb5e67af69273 100644
+--- a/drivers/firmware/efi/cper.c
++++ b/drivers/firmware/efi/cper.c
+@@ -12,6 +12,7 @@
+  * Specification version 2.4.
+  */
  
-+	set_freezable();
- 	while (!kthread_should_stop()) {
- 		bool super = false;
- 		bool logging_enabled;
++#include <linux/bitmap.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/time.h>
+@@ -105,6 +106,65 @@ void cper_print_bits(const char *pfx, unsigned int bits,
+ 		printk("%s\n", buf);
+ }
+ 
++/**
++ * cper_bits_to_str - return a string for set bits
++ * @buf: buffer to store the output string
++ * @buf_size: size of the output string buffer
++ * @bits: bit mask
++ * @strs: string array, indexed by bit position
++ * @strs_size: size of the string array: @strs
++ *
++ * Add to @buf the bitmask in hexadecimal. Then, for each set bit in @bits,
++ * add the corresponding string describing the bit in @strs to @buf.
++ *
++ * A typical example is::
++ *
++ *	const char * const bits[] = {
++ *		"bit 3 name",
++ *		"bit 4 name",
++ *		"bit 5 name",
++ *	};
++ *	char str[120];
++ *	unsigned int bitmask = BIT(3) | BIT(5);
++ *	#define MASK GENMASK(5,3)
++ *
++ *	cper_bits_to_str(str, sizeof(str), FIELD_GET(MASK, bitmask),
++ *			 bits, ARRAY_SIZE(bits));
++ *
++ * The above code fills the string ``str`` with ``bit 3 name|bit 5 name``.
++ *
++ * Return: number of bytes stored or an error code if lower than zero.
++ */
++int cper_bits_to_str(char *buf, int buf_size, unsigned long bits,
++		     const char * const strs[], unsigned int strs_size)
++{
++	int len = buf_size;
++	char *str = buf;
++	int i, size;
++
++	*buf = '\0';
++
++	for_each_set_bit(i, &bits, strs_size) {
++		if (!(bits & BIT_ULL(i)))
++			continue;
++
++		if (*buf && len > 0) {
++			*str = '|';
++			len--;
++			str++;
++		}
++
++		size = strscpy(str, strs[i], len);
++		if (size < 0)
++			return size;
++
++		len -= size;
++		str += size;
++	}
++	return len - buf_size;
++}
++EXPORT_SYMBOL_GPL(cper_bits_to_str);
++
+ static const char * const proc_type_strs[] = {
+ 	"IA32/X64",
+ 	"IA64",
+diff --git a/include/linux/cper.h b/include/linux/cper.h
+index eacb7dd7b3af3..a15b7b9740344 100644
+--- a/include/linux/cper.h
++++ b/include/linux/cper.h
+@@ -561,6 +561,8 @@ const char *cper_mem_err_type_str(unsigned int);
+ const char *cper_mem_err_status_str(u64 status);
+ void cper_print_bits(const char *prefix, unsigned int bits,
+ 		     const char * const strs[], unsigned int strs_size);
++int cper_bits_to_str(char *buf, int buf_size, unsigned long bits,
++		     const char * const strs[], unsigned int strs_size);
+ void cper_mem_err_pack(const struct cper_sec_mem_err *,
+ 		       struct cper_mem_err_compact *);
+ const char *cper_mem_err_unpack(struct trace_seq *,
 -- 
 2.51.0
 
