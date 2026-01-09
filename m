@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F0D2DEA6F;
-	Fri,  9 Jan 2026 11:59:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346EE33B97F;
+	Fri,  9 Jan 2026 11:59:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959967; cv=none; b=TxqtV2LgFoBkcQSDgr3xHgdKw5iMTIWKafvbpggkMl/yv80ctGiP/0ZgFi2HDrViN45TczipUgTrc8XvDg2lu0GkZhqheoCpl/ryNK/5IPUmkswDyI13py42qUrqr+Mp58muq9BcEek0Tz+nbwzQrSgcVGLCuz0ZdG8v/gyNU/I=
+	t=1767959970; cv=none; b=BYdSyuCP4k6dqCuEkW8ejCbJA9LkG0W6JA9k+xwOPXFcASjuK/kwZZhDVGliJNgnMT0UyISHyaeupAzWvWxpRWEjMk7+JZmfdlJa3Fgdl6JaDPPayevhbjWvyC1KmnL2VXUxvtUF7J4WtcvF3VmrHQdAtDFqBT+x5zUXdM9n6mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959967; c=relaxed/simple;
-	bh=lefDbjO632IEzbVcLyqHgDPjOUuHXOQrPpEUVFeQzJQ=;
+	s=arc-20240116; t=1767959970; c=relaxed/simple;
+	bh=0/hjEoINBstHlWZLBBfIi8SC4Cj1vE2sfGsWsNqI1yI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XSr/m+WR0oX5n3aCoifk2TcttEG1/6ggN1W62iL9UocQD3G5uy3e+SLScX/ztfI6wnJOn917J4f2YHpbM/tCweQUYYlIzAf6+rDNppIqlMYbGPHbiE2ldx77rjSimOLPoHJC3rHn5/DDk0cgNTZocjSbP3YQYAOLDrOgJJ0JBNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TrLSr1Qg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WBVZo00nQ+gjy0sFbMju6H2b7K1jVC+Wx85LMIjCQoqsm3H0l0sGUqeM9IZwyMBOkdz5y5T+krud4MtnueSTFtRWWLhcFCPBBlMdqxr/WxIXCNfUNNb/3H81PYiRuWFZWUjFPZGOonav1SVbDhx5PE3W5HT2SqcCcV8bURElj8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y6lsl39f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TrLSr1Qg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02623C4CEF1;
-	Fri,  9 Jan 2026 11:59:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y6lsl39f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7E45C4CEF1;
+	Fri,  9 Jan 2026 11:59:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959967;
-	bh=lefDbjO632IEzbVcLyqHgDPjOUuHXOQrPpEUVFeQzJQ=;
+	s=korg; t=1767959970;
+	bh=0/hjEoINBstHlWZLBBfIi8SC4Cj1vE2sfGsWsNqI1yI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TrLSr1Qgilq7mAu5pF6QlooXAPdcDkDX07dmB+wpPeGK2MPVGkY357Sua5O4Vp+eP
-	 7dC7eMHADjeIMm0DlFBFq0X84UWB/HyhAhoRdnD/V0a8zfNiK+n4gQnJ7kCMyqczwy
-	 G6B3T/1SYmqtGOGwHRDQR75Xe4gMwX85nm3lds1I=
+	b=Y6lsl39f416oFdFkVNyiq95mHigl36mDgiN2ujPcZc7D1ZfYrSPm236ndr4auagsk
+	 fpElbZd8MYslVK+EsrfA/7MEejdwlrlmzkZUVCIuJJhfgV8raj4STPfb4/NtJwGSdY
+	 TWzr7L0KqMZuz2wPwqZzLw0u38S6rModvAxku688=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Ilias Stamatis <ilstam@amazon.com>,
+	"David Hildenbrand (Red Hat)" <david@kernel.org>,
+	Andriy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Baoquan He <bhe@redhat.com>,
+	"Huang, Ying" <huang.ying.caritas@gmail.com>,
+	Nadav Amit <nadav.amit@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 238/737] resource: introduce is_type_match() helper and use it
-Date: Fri,  9 Jan 2026 12:36:17 +0100
-Message-ID: <20260109112142.951153270@linuxfoundation.org>
+Subject: [PATCH 6.6 239/737] Reinstate "resource: avoid unnecessary lookups in find_next_iomem_res()"
+Date: Fri,  9 Jan 2026 12:36:18 +0100
+Message-ID: <20260109112142.988295350@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -46,95 +50,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Ilias Stamatis <ilstam@amazon.com>
 
-[ Upstream commit ba1eccc114ffc62c4495a5e15659190fa2c42308 ]
+[ Upstream commit 6fb3acdebf65a72df0a95f9fd2c901ff2bc9a3a2 ]
 
-There are already a couple of places where we may replace a few lines of
-code by calling a helper, which increases readability while deduplicating
-the code.
+Commit 97523a4edb7b ("kernel/resource: remove first_lvl / siblings_only
+logic") removed an optimization introduced by commit 756398750e11
+("resource: avoid unnecessary lookups in find_next_iomem_res()").  That
+was not called out in the message of the first commit explicitly so it's
+not entirely clear whether removing the optimization happened
+inadvertently or not.
 
-Introduce is_type_match() helper and use it.
+As the original commit message of the optimization explains there is no
+point considering the children of a subtree in find_next_iomem_res() if
+the top level range does not match.
 
-Link: https://lkml.kernel.org/r/20240925154355.1170859-3-andriy.shevchenko@linux.intel.com
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Reinstating the optimization results in performance improvements in
+systems where /proc/iomem is ~5k lines long.  Calling mmap() on /dev/mem
+in such platforms takes 700-1500μs without the optimisation and 10-50μs
+with the optimisation.
+
+Note that even though commit 97523a4edb7b removed the 'sibling_only'
+parameter from next_resource(), newer kernels have basically reinstated it
+under the name 'skip_children'.
+
+Link: https://lore.kernel.org/all/20251124165349.3377826-1-ilstam@amazon.com/T/#u
+Fixes: 97523a4edb7b ("kernel/resource: remove first_lvl / siblings_only logic")
+Signed-off-by: Ilias Stamatis <ilstam@amazon.com>
+Acked-by: David Hildenbrand (Red Hat) <david@kernel.org>
+Cc: Andriy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: "Huang, Ying" <huang.ying.caritas@gmail.com>
+Cc: Nadav Amit <nadav.amit@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 6fb3acdebf65 ("Reinstate "resource: avoid unnecessary lookups in find_next_iomem_res()"")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/resource.c | 23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+ kernel/resource.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/kernel/resource.c b/kernel/resource.c
-index dcc3b564c0537..67410132b40e1 100644
+index 67410132b40e1..dca8581eb3992 100644
 --- a/kernel/resource.c
 +++ b/kernel/resource.c
-@@ -310,6 +310,11 @@ int release_resource(struct resource *old)
+@@ -336,6 +336,8 @@ static int find_next_iomem_res(resource_size_t start, resource_size_t end,
+ 			       unsigned long flags, unsigned long desc,
+ 			       struct resource *res)
+ {
++	/* Skip children until we find a top level range that matches */
++	bool skip_children = true;
+ 	struct resource *p;
  
- EXPORT_SYMBOL(release_resource);
+ 	if (!res)
+@@ -346,7 +348,7 @@ static int find_next_iomem_res(resource_size_t start, resource_size_t end,
  
-+static bool is_type_match(struct resource *p, unsigned long flags, unsigned long desc)
-+{
-+	return (p->flags & flags) == flags && (desc == IORES_DESC_NONE || desc == p->desc);
-+}
-+
- /**
-  * find_next_iomem_res - Finds the lowest iomem resource that covers part of
-  *			 [@start..@end].
-@@ -352,13 +357,9 @@ static int find_next_iomem_res(resource_size_t start, resource_size_t end,
+ 	read_lock(&resource_lock);
+ 
+-	for_each_resource(&iomem_resource, p, false) {
++	for_each_resource(&iomem_resource, p, skip_children) {
+ 		/* If we passed the resource we are looking for, stop */
+ 		if (p->start > end) {
+ 			p = NULL;
+@@ -357,6 +359,12 @@ static int find_next_iomem_res(resource_size_t start, resource_size_t end,
  		if (p->end < start)
  			continue;
  
--		if ((p->flags & flags) != flags)
--			continue;
--		if ((desc != IORES_DESC_NONE) && (desc != p->desc))
--			continue;
--
++		/*
++		 * We found a top level range that matches what we are looking
++		 * for. Time to start checking children too.
++		 */
++		skip_children = false;
++
  		/* Found a match, break */
--		break;
-+		if (is_type_match(p, flags, desc))
-+			break;
- 	}
- 
- 	if (p) {
-@@ -501,7 +502,7 @@ static int __region_intersects(struct resource *parent, resource_size_t start,
- 	int type = 0; int other = 0;
- 	struct resource *p, *dp;
- 	struct resource res, o;
--	bool is_type, covered;
-+	bool covered;
- 
- 	res.start = start;
- 	res.end = start + size - 1;
-@@ -509,9 +510,7 @@ static int __region_intersects(struct resource *parent, resource_size_t start,
- 	for (p = parent->child; p ; p = p->sibling) {
- 		if (!resource_intersection(p, &res, &o))
- 			continue;
--		is_type = (p->flags & flags) == flags &&
--			(desc == IORES_DESC_NONE || desc == p->desc);
--		if (is_type) {
-+		if (is_type_match(p, flags, desc)) {
- 			type++;
- 			continue;
- 		}
-@@ -531,9 +530,7 @@ static int __region_intersects(struct resource *parent, resource_size_t start,
- 		for_each_resource(p, dp, false) {
- 			if (!resource_overlaps(dp, &res))
- 				continue;
--			is_type = (dp->flags & flags) == flags &&
--				(desc == IORES_DESC_NONE || desc == dp->desc);
--			if (is_type) {
-+			if (is_type_match(dp, flags, desc)) {
- 				type++;
- 				/*
- 				 * Range from 'o.start' to 'dp->start'
+ 		if (is_type_match(p, flags, desc))
+ 			break;
 -- 
 2.51.0
 
