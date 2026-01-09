@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1483631A069;
-	Fri,  9 Jan 2026 12:51:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82B435C196;
+	Fri,  9 Jan 2026 12:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767963106; cv=none; b=nVYeZ2kRMczgil36HVV0mnhWrOQ5sJj15D+Cs9hJKUcpaoMP27ppdDeY1EKDUlTU8yd+4NrjWlppxOKWb0XnWj1By9CflesivPCufiB5D+LyfN2NzZHvn7FfFXcUqIl/Gp3Wbujj4Q6gqn+XfZVEx4fpbA85gse0WFEKxSp7uRM=
+	t=1767963107; cv=none; b=HP+6L41ss6Hi3ciPWMUKEbvaOdyLtAcYs22igYHCtINTIyXU/A16M8V3fjf7MxaSL5lduJxPf+ZVlQjWctSvAvHsErgegUG98qdFL008OXHK3bDLJmtPAUA1lBPSqAA+NzJzAdm+kqhaBIg91QPrD+FcHBbfKbywC0PWN35c1qQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767963106; c=relaxed/simple;
-	bh=U6iHvCQS/cVXOUNI1DzJ5yBPX8cgysBu1YnzH3HCabc=;
+	s=arc-20240116; t=1767963107; c=relaxed/simple;
+	bh=J07lT7XeByUy0/Z+ZmgKQ1/xljDexaEijjNPn22/eD0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FNIqHkRTRXv//uc08qUW8H1zsZsDvUwhU2DGnFoPLbO8t/2nnHgJdNu2Ye48eW1U8mr29YIqt/H1VXG5jBhTXg6rUvAG2Y+nxHWttHnQweeV2x4otRlOgYKMgh+cVUwhaOo+4JWrRiOWUZ4Ep0ACuY0uPt99FyGvkYRCGfPN3b8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P2jWtAYT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FOk+XPDhioSdn5Q7CGcL9XHIIB+RHa+gW/a4Y4N2QovOxaC3DOIMVHxvz9t+6MphqHFN+eIXy3YnqNp7iandjCWSrrCX0AWF3sGqMKzrgvR1aqCjA6/r09CEboMnM2iJh+KGfXBrUgvqQPQQ8ckPIf4KUT30Ywo51imioMsslJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vzdfqAaP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P2jWtAYT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B14DC4CEF1;
-	Fri,  9 Jan 2026 12:51:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vzdfqAaP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A8A6C4CEF1;
+	Fri,  9 Jan 2026 12:51:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767963105;
-	bh=U6iHvCQS/cVXOUNI1DzJ5yBPX8cgysBu1YnzH3HCabc=;
+	s=korg; t=1767963107;
+	bh=J07lT7XeByUy0/Z+ZmgKQ1/xljDexaEijjNPn22/eD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P2jWtAYTmWz/XbLzRcvE6tqufpUn22VrPRhvudsCq6xK5x8MN/7xuILOfD305RC08
-	 /G/BpkgBOWyb+Wf7JNbJdGcknbo4fso+G7LIz5/KWu4+X9ixvImd57+mIm2LN8IoFh
-	 7d95eLQsCNDtj989sMw1HJf5N4aVMNF3s6uKGUMw=
+	b=vzdfqAaP3HYvhI+VG9VK64G44NzHeMFdH7CZWIsNikpctiCCrRKXXtXW7Sr91jX2n
+	 vi0L+KskhUsAlpWRzY1kf49exrvFNrS7lc3Q7tkS7RBGS11xnb6jORO1JDEYheJW7Y
+	 dQ5aSsvp34hd19ogsfcprWe8PI2B0q4mKmNiRvEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Hong Yun <yhong@link.cuhk.edu.hk>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Luben Tuikov <luben.tuikov@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 557/634] f2fs: use global inline_xattr_slab instead of per-sb slab cache
-Date: Fri,  9 Jan 2026 12:43:55 +0100
-Message-ID: <20260109112138.556554864@linuxfoundation.org>
+Subject: [PATCH 6.1 592/634] drm/amdgpu: cleanup scheduler job initialization v2
+Date: Fri,  9 Jan 2026 12:44:30 +0100
+Message-ID: <20260109112139.899385750@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -54,232 +52,709 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Christian König <christian.koenig@amd.com>
 
-[ Upstream commit 1f27ef42bb0b7c0740c5616ec577ec188b8a1d05 ]
+[ Upstream commit f7d66fb2ea43a3016e78a700a2ca6c77a74579f9 ]
 
-As Hong Yun reported in mailing list:
+Init the DRM scheduler base class while allocating the job.
 
-loop7: detected capacity change from 0 to 131072
-------------[ cut here ]------------
-kmem_cache of name 'f2fs_xattr_entry-7:7' already exists
-WARNING: CPU: 0 PID: 24426 at mm/slab_common.c:110 kmem_cache_sanity_check mm/slab_common.c:109 [inline]
-WARNING: CPU: 0 PID: 24426 at mm/slab_common.c:110 __kmem_cache_create_args+0xa6/0x320 mm/slab_common.c:307
-CPU: 0 UID: 0 PID: 24426 Comm: syz.7.1370 Not tainted 6.17.0-rc4 #1 PREEMPT(full)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
-RIP: 0010:kmem_cache_sanity_check mm/slab_common.c:109 [inline]
-RIP: 0010:__kmem_cache_create_args+0xa6/0x320 mm/slab_common.c:307
-Call Trace:
- __kmem_cache_create include/linux/slab.h:353 [inline]
- f2fs_kmem_cache_create fs/f2fs/f2fs.h:2943 [inline]
- f2fs_init_xattr_caches+0xa5/0xe0 fs/f2fs/xattr.c:843
- f2fs_fill_super+0x1645/0x2620 fs/f2fs/super.c:4918
- get_tree_bdev_flags+0x1fb/0x260 fs/super.c:1692
- vfs_get_tree+0x43/0x140 fs/super.c:1815
- do_new_mount+0x201/0x550 fs/namespace.c:3808
- do_mount fs/namespace.c:4136 [inline]
- __do_sys_mount fs/namespace.c:4347 [inline]
- __se_sys_mount+0x298/0x2f0 fs/namespace.c:4324
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x8e/0x3a0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+This makes the whole handling much more cleaner.
 
-The bug can be reproduced w/ below scripts:
-- mount /dev/vdb /mnt1
-- mount /dev/vdc /mnt2
-- umount /mnt1
-- mounnt /dev/vdb /mnt1
+v2: fix coding style
 
-The reason is if we created two slab caches, named f2fs_xattr_entry-7:3
-and f2fs_xattr_entry-7:7, and they have the same slab size. Actually,
-slab system will only create one slab cache core structure which has
-slab name of "f2fs_xattr_entry-7:3", and two slab caches share the same
-structure and cache address.
-
-So, if we destroy f2fs_xattr_entry-7:3 cache w/ cache address, it will
-decrease reference count of slab cache, rather than release slab cache
-entirely, since there is one more user has referenced the cache.
-
-Then, if we try to create slab cache w/ name "f2fs_xattr_entry-7:3" again,
-slab system will find that there is existed cache which has the same name
-and trigger the warning.
-
-Let's changes to use global inline_xattr_slab instead of per-sb slab cache
-for fixing.
-
-Fixes: a999150f4fe3 ("f2fs: use kmem_cache pool during inline xattr lookups")
-Cc: stable@kernel.org
-Reported-by: Hong Yun <yhong@link.cuhk.edu.hk>
-Tested-by: Hong Yun <yhong@link.cuhk.edu.hk>
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ folio => page , context ]
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Luben Tuikov <luben.tuikov@amd.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221014084641.128280-7-christian.koenig@amd.com
+Stable-dep-of: 4fa944255be5 ("drm/amdgpu: add missing lock to amdgpu_ttm_access_memory_sdma")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/f2fs.h  |    3 ---
- fs/f2fs/super.c |   15 +++++++--------
- fs/f2fs/xattr.c |   30 ++++++++++--------------------
- fs/f2fs/xattr.h |   10 ++++++----
- 4 files changed, 23 insertions(+), 35 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c  |    2 
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c      |    8 ---
+ drivers/gpu/drm/amd/amdgpu/amdgpu_job.c     |   44 ++++++++++----------
+ drivers/gpu/drm/amd/amdgpu/amdgpu_job.h     |   14 +++---
+ drivers/gpu/drm/amd/amdgpu/amdgpu_jpeg.c    |    7 +--
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c     |   56 +++++++++----------------
+ drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c     |    9 +---
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c     |   13 +++--
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c     |   22 +++++-----
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c |   61 ++++++++++++++--------------
+ drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c      |   12 +----
+ drivers/gpu/drm/amd/amdgpu/uvd_v6_0.c       |    8 +--
+ drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c       |   12 ++---
+ drivers/gpu/drm/amd/amdkfd/kfd_migrate.c    |   17 ++-----
+ 14 files changed, 135 insertions(+), 150 deletions(-)
 
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -1807,9 +1807,6 @@ struct f2fs_sb_info {
- 	spinlock_t error_lock;			/* protect errors array */
- 	bool error_dirty;			/* errors of sb is dirty */
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
+@@ -673,7 +673,7 @@ int amdgpu_amdkfd_submit_ib(struct amdgp
+ 		goto err;
+ 	}
  
--	struct kmem_cache *inline_xattr_slab;	/* inline xattr entry */
--	unsigned int inline_xattr_slab_size;	/* default inline xattr slab size */
+-	ret = amdgpu_job_alloc(adev, 1, &job, NULL);
++	ret = amdgpu_job_alloc(adev, NULL, NULL, NULL, 1, &job);
+ 	if (ret)
+ 		goto err;
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+@@ -285,12 +285,8 @@ static int amdgpu_cs_pass1(struct amdgpu
+ 	}
+ 
+ 	for (i = 0; i < p->gang_size; ++i) {
+-		ret = amdgpu_job_alloc(p->adev, num_ibs[i], &p->jobs[i], vm);
+-		if (ret)
+-			goto free_all_kdata;
 -
- 	/* For reclaimed segs statistics per each GC mode */
- 	unsigned int gc_segment_mode;		/* GC state for reclaimed segments */
- 	unsigned int gc_reclaimed_segs[MAX_GC_MODE];	/* Reclaimed segs for each mode */
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -1674,7 +1674,6 @@ static void f2fs_put_super(struct super_
+-		ret = drm_sched_job_init(&p->jobs[i]->base, p->entities[i],
+-					 &fpriv->vm);
++		ret = amdgpu_job_alloc(p->adev, vm, p->entities[i], vm,
++				       num_ibs[i], &p->jobs[i]);
+ 		if (ret)
+ 			goto free_all_kdata;
+ 	}
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
+@@ -88,8 +88,9 @@ exit:
+ 	return DRM_GPU_SCHED_STAT_NOMINAL;
+ }
  
- 	destroy_device_list(sbi);
- 	f2fs_destroy_page_array_cache(sbi);
--	f2fs_destroy_xattr_caches(sbi);
- 	mempool_destroy(sbi->write_io_dummy);
- #ifdef CONFIG_QUOTA
- 	for (i = 0; i < MAXQUOTAS; i++)
-@@ -4305,13 +4304,9 @@ try_onemore:
+-int amdgpu_job_alloc(struct amdgpu_device *adev, unsigned num_ibs,
+-		     struct amdgpu_job **job, struct amdgpu_vm *vm)
++int amdgpu_job_alloc(struct amdgpu_device *adev, struct amdgpu_vm *vm,
++		     struct drm_sched_entity *entity, void *owner,
++		     unsigned int num_ibs, struct amdgpu_job **job)
+ {
+ 	if (num_ibs == 0)
+ 		return -EINVAL;
+@@ -110,23 +111,30 @@ int amdgpu_job_alloc(struct amdgpu_devic
+ 	(*job)->vram_lost_counter = atomic_read(&adev->vram_lost_counter);
+ 	(*job)->vm_pd_addr = AMDGPU_BO_INVALID_OFFSET;
+ 
+-	return 0;
++	if (!entity)
++		return 0;
++
++	return drm_sched_job_init(&(*job)->base, entity, owner);
+ }
+ 
+-int amdgpu_job_alloc_with_ib(struct amdgpu_device *adev, unsigned size,
+-		enum amdgpu_ib_pool_type pool_type,
+-		struct amdgpu_job **job)
++int amdgpu_job_alloc_with_ib(struct amdgpu_device *adev,
++			     struct drm_sched_entity *entity, void *owner,
++			     size_t size, enum amdgpu_ib_pool_type pool_type,
++			     struct amdgpu_job **job)
+ {
+ 	int r;
+ 
+-	r = amdgpu_job_alloc(adev, 1, job, NULL);
++	r = amdgpu_job_alloc(adev, NULL, entity, owner, 1, job);
+ 	if (r)
+ 		return r;
+ 
+ 	(*job)->num_ibs = 1;
+ 	r = amdgpu_ib_get(adev, NULL, size, pool_type, &(*job)->ibs[0]);
+-	if (r)
++	if (r) {
++		if (entity)
++			drm_sched_job_cleanup(&(*job)->base);
+ 		kfree(*job);
++	}
+ 
+ 	return r;
+ }
+@@ -199,6 +207,9 @@ void amdgpu_job_set_gang_leader(struct a
+ 
+ void amdgpu_job_free(struct amdgpu_job *job)
+ {
++	if (job->base.entity)
++		drm_sched_job_cleanup(&job->base);
++
+ 	amdgpu_job_free_resources(job);
+ 	amdgpu_sync_free(&job->sync);
+ 	amdgpu_sync_free(&job->sched_sync);
+@@ -211,25 +222,16 @@ void amdgpu_job_free(struct amdgpu_job *
+ 		dma_fence_put(&job->hw_fence);
+ }
+ 
+-int amdgpu_job_submit(struct amdgpu_job *job, struct drm_sched_entity *entity,
+-		      void *owner, struct dma_fence **f)
++struct dma_fence *amdgpu_job_submit(struct amdgpu_job *job)
+ {
+-	int r;
+-
+-	if (!f)
+-		return -EINVAL;
+-
+-	r = drm_sched_job_init(&job->base, entity, owner);
+-	if (r)
+-		return r;
++	struct dma_fence *f;
+ 
+ 	drm_sched_job_arm(&job->base);
+-
+-	*f = dma_fence_get(&job->base.s_fence->finished);
++	f = dma_fence_get(&job->base.s_fence->finished);
+ 	amdgpu_job_free_resources(job);
+ 	drm_sched_entity_push_job(&job->base);
+ 
+-	return 0;
++	return f;
+ }
+ 
+ int amdgpu_job_submit_direct(struct amdgpu_job *job, struct amdgpu_ring *ring,
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.h
+@@ -78,18 +78,20 @@ static inline struct amdgpu_ring *amdgpu
+ 	return to_amdgpu_ring(job->base.entity->rq->sched);
+ }
+ 
+-int amdgpu_job_alloc(struct amdgpu_device *adev, unsigned num_ibs,
+-		     struct amdgpu_job **job, struct amdgpu_vm *vm);
+-int amdgpu_job_alloc_with_ib(struct amdgpu_device *adev, unsigned size,
+-		enum amdgpu_ib_pool_type pool, struct amdgpu_job **job);
++int amdgpu_job_alloc(struct amdgpu_device *adev, struct amdgpu_vm *vm,
++		     struct drm_sched_entity *entity, void *owner,
++		     unsigned int num_ibs, struct amdgpu_job **job);
++int amdgpu_job_alloc_with_ib(struct amdgpu_device *adev,
++			     struct drm_sched_entity *entity, void *owner,
++			     size_t size, enum amdgpu_ib_pool_type pool_type,
++			     struct amdgpu_job **job);
+ void amdgpu_job_set_resources(struct amdgpu_job *job, struct amdgpu_bo *gds,
+ 			      struct amdgpu_bo *gws, struct amdgpu_bo *oa);
+ void amdgpu_job_free_resources(struct amdgpu_job *job);
+ void amdgpu_job_set_gang_leader(struct amdgpu_job *job,
+ 				struct amdgpu_job *leader);
+ void amdgpu_job_free(struct amdgpu_job *job);
+-int amdgpu_job_submit(struct amdgpu_job *job, struct drm_sched_entity *entity,
+-		      void *owner, struct dma_fence **f);
++struct dma_fence *amdgpu_job_submit(struct amdgpu_job *job);
+ int amdgpu_job_submit_direct(struct amdgpu_job *job, struct amdgpu_ring *ring,
+ 			     struct dma_fence **fence);
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_jpeg.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_jpeg.c
+@@ -152,14 +152,15 @@ static int amdgpu_jpeg_dec_set_reg(struc
+ 	const unsigned ib_size_dw = 16;
+ 	int i, r;
+ 
+-	r = amdgpu_job_alloc_with_ib(ring->adev, ib_size_dw * 4,
+-					AMDGPU_IB_POOL_DIRECT, &job);
++	r = amdgpu_job_alloc_with_ib(ring->adev, NULL, NULL, ib_size_dw * 4,
++				     AMDGPU_IB_POOL_DIRECT, &job);
+ 	if (r)
+ 		return r;
+ 
+ 	ib = &job->ibs[0];
+ 
+-	ib->ptr[0] = PACKETJ(adev->jpeg.internal.jpeg_pitch, 0, 0, PACKETJ_TYPE0);
++	ib->ptr[0] = PACKETJ(adev->jpeg.internal.jpeg_pitch, 0, 0,
++			     PACKETJ_TYPE0);
+ 	ib->ptr[1] = 0xDEADBEEF;
+ 	for (i = 2; i < 16; i += 2) {
+ 		ib->ptr[i] = PACKETJ(0, 0, 0, PACKETJ_TYPE6);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+@@ -189,7 +189,6 @@ static int amdgpu_ttm_map_buffer(struct
+ 	struct amdgpu_device *adev = ring->adev;
+ 	unsigned offset, num_pages, num_dw, num_bytes;
+ 	uint64_t src_addr, dst_addr;
+-	struct dma_fence *fence;
+ 	struct amdgpu_job *job;
+ 	void *cpu_addr;
+ 	uint64_t flags;
+@@ -229,7 +228,9 @@ static int amdgpu_ttm_map_buffer(struct
+ 	num_dw = ALIGN(adev->mman.buffer_funcs->copy_num_dw, 8);
+ 	num_bytes = num_pages * 8 * AMDGPU_GPU_PAGES_IN_CPU_PAGE;
+ 
+-	r = amdgpu_job_alloc_with_ib(adev, num_dw * 4 + num_bytes,
++	r = amdgpu_job_alloc_with_ib(adev, &adev->mman.entity,
++				     AMDGPU_FENCE_OWNER_UNDEFINED,
++				     num_dw * 4 + num_bytes,
+ 				     AMDGPU_IB_POOL_DELAYED, &job);
+ 	if (r)
+ 		return r;
+@@ -269,18 +270,8 @@ static int amdgpu_ttm_map_buffer(struct
  		}
  	}
  
--	/* init per sbi slab cache */
--	err = f2fs_init_xattr_caches(sbi);
--	if (err)
--		goto free_io_dummy;
- 	err = f2fs_init_page_array_cache(sbi);
- 	if (err)
--		goto free_xattr_cache;
-+		goto free_io_dummy;
+-	r = amdgpu_job_submit(job, &adev->mman.entity,
+-			      AMDGPU_FENCE_OWNER_UNDEFINED, &fence);
+-	if (r)
+-		goto error_free;
+-
+-	dma_fence_put(fence);
+-
+-	return r;
+-
+-error_free:
+-	amdgpu_job_free(job);
+-	return r;
++	dma_fence_put(amdgpu_job_submit(job));
++	return 0;
+ }
  
- 	/* get an inode for meta space */
- 	sbi->meta_inode = f2fs_iget(sb, F2FS_META_INO(sbi));
-@@ -4624,8 +4619,6 @@ free_meta_inode:
- 	sbi->meta_inode = NULL;
- free_page_array_cache:
- 	f2fs_destroy_page_array_cache(sbi);
--free_xattr_cache:
--	f2fs_destroy_xattr_caches(sbi);
- free_io_dummy:
- 	mempool_destroy(sbi->write_io_dummy);
- free_percpu:
-@@ -4792,7 +4785,12 @@ static int __init init_f2fs_fs(void)
- 	err = f2fs_create_casefold_cache();
- 	if (err)
- 		goto free_compress_cache;
-+	err = f2fs_init_xattr_cache();
-+	if (err)
-+		goto free_casefold_cache;
- 	return 0;
-+free_casefold_cache:
-+	f2fs_destroy_casefold_cache();
- free_compress_cache:
- 	f2fs_destroy_compress_cache();
- free_compress_mempool:
-@@ -4832,6 +4830,7 @@ fail:
+ /**
+@@ -1402,7 +1393,8 @@ static void amdgpu_ttm_vram_mm_access(st
+ }
  
- static void __exit exit_f2fs_fs(void)
+ static int amdgpu_ttm_access_memory_sdma(struct ttm_buffer_object *bo,
+-					unsigned long offset, void *buf, int len, int write)
++					unsigned long offset, void *buf,
++					int len, int write)
  {
-+	f2fs_destroy_xattr_cache();
- 	f2fs_destroy_casefold_cache();
- 	f2fs_destroy_compress_cache();
- 	f2fs_destroy_compress_mempool();
---- a/fs/f2fs/xattr.c
-+++ b/fs/f2fs/xattr.c
-@@ -23,11 +23,12 @@
- #include "xattr.h"
- #include "segment.h"
+ 	struct amdgpu_bo *abo = ttm_to_amdgpu_bo(bo);
+ 	struct amdgpu_device *adev = amdgpu_ttm_adev(abo->tbo.bdev);
+@@ -1426,26 +1418,27 @@ static int amdgpu_ttm_access_memory_sdma
+ 		memcpy(adev->mman.sdma_access_ptr, buf, len);
  
-+static struct kmem_cache *inline_xattr_slab;
- static void *xattr_alloc(struct f2fs_sb_info *sbi, int size, bool *is_inline)
- {
--	if (likely(size == sbi->inline_xattr_slab_size)) {
-+	if (likely(size == DEFAULT_XATTR_SLAB_SIZE)) {
- 		*is_inline = true;
--		return f2fs_kmem_cache_alloc(sbi->inline_xattr_slab,
-+		return f2fs_kmem_cache_alloc(inline_xattr_slab,
- 					GFP_F2FS_ZERO, false, sbi);
- 	}
- 	*is_inline = false;
-@@ -38,7 +39,7 @@ static void xattr_free(struct f2fs_sb_in
- 							bool is_inline)
- {
- 	if (is_inline)
--		kmem_cache_free(sbi->inline_xattr_slab, xattr_addr);
-+		kmem_cache_free(inline_xattr_slab, xattr_addr);
+ 	num_dw = ALIGN(adev->mman.buffer_funcs->copy_num_dw, 8);
+-	r = amdgpu_job_alloc_with_ib(adev, num_dw * 4, AMDGPU_IB_POOL_DELAYED, &job);
++	r = amdgpu_job_alloc_with_ib(adev, &adev->mman.entity,
++				     AMDGPU_FENCE_OWNER_UNDEFINED,
++				     num_dw * 4, AMDGPU_IB_POOL_DELAYED,
++				     &job);
+ 	if (r)
+ 		goto out;
+ 
+ 	amdgpu_res_first(abo->tbo.resource, offset, len, &src_mm);
+-	src_addr = amdgpu_ttm_domain_start(adev, bo->resource->mem_type) + src_mm.start;
++	src_addr = amdgpu_ttm_domain_start(adev, bo->resource->mem_type) +
++		src_mm.start;
+ 	dst_addr = amdgpu_bo_gpu_offset(adev->mman.sdma_access_bo);
+ 	if (write)
+ 		swap(src_addr, dst_addr);
+ 
+-	amdgpu_emit_copy_buffer(adev, &job->ibs[0], src_addr, dst_addr, PAGE_SIZE, false);
++	amdgpu_emit_copy_buffer(adev, &job->ibs[0], src_addr, dst_addr,
++				PAGE_SIZE, false);
+ 
+ 	amdgpu_ring_pad_ib(adev->mman.buffer_funcs_ring, &job->ibs[0]);
+ 	WARN_ON(job->ibs[0].length_dw > num_dw);
+ 
+-	r = amdgpu_job_submit(job, &adev->mman.entity, AMDGPU_FENCE_OWNER_UNDEFINED, &fence);
+-	if (r) {
+-		amdgpu_job_free(job);
+-		goto out;
+-	}
++	fence = amdgpu_job_submit(job);
+ 
+ 	if (!dma_fence_wait_timeout(fence, false, adev->sdma_timeout))
+ 		r = -ETIMEDOUT;
+@@ -1994,7 +1987,9 @@ static int amdgpu_ttm_prepare_job(struct
+ 		AMDGPU_IB_POOL_DELAYED;
+ 	int r;
+ 
+-	r = amdgpu_job_alloc_with_ib(adev, num_dw * 4, pool, job);
++	r = amdgpu_job_alloc_with_ib(adev, &adev->mman.entity,
++				     AMDGPU_FENCE_OWNER_UNDEFINED,
++				     num_dw * 4, pool, job);
+ 	if (r)
+ 		return r;
+ 
+@@ -2059,8 +2054,7 @@ int amdgpu_copy_buffer(struct amdgpu_rin
+ 	if (direct_submit)
+ 		r = amdgpu_job_submit_direct(job, ring, fence);
  	else
- 		kfree(xattr_addr);
- }
-@@ -830,25 +831,14 @@ int f2fs_setxattr(struct inode *inode, i
- 	return err;
+-		r = amdgpu_job_submit(job, &adev->mman.entity,
+-				      AMDGPU_FENCE_OWNER_UNDEFINED, fence);
++		*fence = amdgpu_job_submit(job);
+ 	if (r)
+ 		goto error_free;
+ 
+@@ -2105,16 +2099,8 @@ static int amdgpu_ttm_fill_mem(struct am
+ 
+ 	amdgpu_ring_pad_ib(ring, &job->ibs[0]);
+ 	WARN_ON(job->ibs[0].length_dw > num_dw);
+-	r = amdgpu_job_submit(job, &adev->mman.entity,
+-			      AMDGPU_FENCE_OWNER_UNDEFINED, fence);
+-	if (r)
+-		goto error_free;
+-
++	*fence = amdgpu_job_submit(job);
+ 	return 0;
+-
+-error_free:
+-	amdgpu_job_free(job);
+-	return r;
  }
  
--int f2fs_init_xattr_caches(struct f2fs_sb_info *sbi)
-+int __init f2fs_init_xattr_cache(void)
+ int amdgpu_fill_buffer(struct amdgpu_bo *bo,
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
+@@ -1132,7 +1132,9 @@ static int amdgpu_uvd_send_msg(struct am
+ 	unsigned offset_idx = 0;
+ 	unsigned offset[3] = { UVD_BASE_SI, 0, 0 };
+ 
+-	r = amdgpu_job_alloc_with_ib(adev, 64, direct ? AMDGPU_IB_POOL_DIRECT :
++	r = amdgpu_job_alloc_with_ib(ring->adev, &adev->uvd.entity,
++				     AMDGPU_FENCE_OWNER_UNDEFINED,
++				     64, direct ? AMDGPU_IB_POOL_DIRECT :
+ 				     AMDGPU_IB_POOL_DELAYED, &job);
+ 	if (r)
+ 		return r;
+@@ -1181,10 +1183,7 @@ static int amdgpu_uvd_send_msg(struct am
+ 		if (r)
+ 			goto err_free;
+ 
+-		r = amdgpu_job_submit(job, &adev->uvd.entity,
+-				      AMDGPU_FENCE_OWNER_UNDEFINED, &f);
+-		if (r)
+-			goto err_free;
++		f = amdgpu_job_submit(job);
+ 	}
+ 
+ 	amdgpu_bo_reserve(bo, true);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c
+@@ -450,8 +450,10 @@ static int amdgpu_vce_get_create_msg(str
+ 	uint64_t addr;
+ 	int i, r;
+ 
+-	r = amdgpu_job_alloc_with_ib(ring->adev, ib_size_dw * 4,
+-				     AMDGPU_IB_POOL_DIRECT, &job);
++	r = amdgpu_job_alloc_with_ib(ring->adev, &ring->adev->vce.entity,
++				     AMDGPU_FENCE_OWNER_UNDEFINED,
++				     ib_size_dw * 4, AMDGPU_IB_POOL_DIRECT,
++				     &job);
+ 	if (r)
+ 		return r;
+ 
+@@ -538,7 +540,9 @@ static int amdgpu_vce_get_destroy_msg(st
+ 	struct dma_fence *f = NULL;
+ 	int i, r;
+ 
+-	r = amdgpu_job_alloc_with_ib(ring->adev, ib_size_dw * 4,
++	r = amdgpu_job_alloc_with_ib(ring->adev, &ring->adev->vce.entity,
++				     AMDGPU_FENCE_OWNER_UNDEFINED,
++				     ib_size_dw * 4,
+ 				     direct ? AMDGPU_IB_POOL_DIRECT :
+ 				     AMDGPU_IB_POOL_DELAYED, &job);
+ 	if (r)
+@@ -570,8 +574,7 @@ static int amdgpu_vce_get_destroy_msg(st
+ 	if (direct)
+ 		r = amdgpu_job_submit_direct(job, ring, &f);
+ 	else
+-		r = amdgpu_job_submit(job, &ring->adev->vce.entity,
+-				      AMDGPU_FENCE_OWNER_UNDEFINED, &f);
++		f = amdgpu_job_submit(job);
+ 	if (r)
+ 		goto err;
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c
+@@ -627,15 +627,16 @@ static int amdgpu_vcn_dec_send_msg(struc
+ 				   struct amdgpu_ib *ib_msg,
+ 				   struct dma_fence **fence)
  {
--	dev_t dev = sbi->sb->s_bdev->bd_dev;
--	char slab_name[32];
--
--	sprintf(slab_name, "f2fs_xattr_entry-%u:%u", MAJOR(dev), MINOR(dev));
--
--	sbi->inline_xattr_slab_size = F2FS_OPTION(sbi).inline_xattr_size *
--					sizeof(__le32) + XATTR_PADDING_SIZE;
--
--	sbi->inline_xattr_slab = f2fs_kmem_cache_create(slab_name,
--					sbi->inline_xattr_slab_size);
--	if (!sbi->inline_xattr_slab)
--		return -ENOMEM;
--
--	return 0;
-+	inline_xattr_slab = f2fs_kmem_cache_create("f2fs_xattr_entry",
-+					DEFAULT_XATTR_SLAB_SIZE);
-+	return inline_xattr_slab ? 0 : -ENOMEM;
++	u64 addr = AMDGPU_GPU_PAGE_ALIGN(ib_msg->gpu_addr);
+ 	struct amdgpu_device *adev = ring->adev;
+ 	struct dma_fence *f = NULL;
+ 	struct amdgpu_job *job;
+ 	struct amdgpu_ib *ib;
+-	uint64_t addr = AMDGPU_GPU_PAGE_ALIGN(ib_msg->gpu_addr);
+ 	int i, r;
+ 
+-	r = amdgpu_job_alloc_with_ib(adev, 64,
+-					AMDGPU_IB_POOL_DIRECT, &job);
++	r = amdgpu_job_alloc_with_ib(ring->adev, NULL, NULL,
++				     64, AMDGPU_IB_POOL_DIRECT,
++				     &job);
+ 	if (r)
+ 		goto err;
+ 
+@@ -813,8 +814,9 @@ static int amdgpu_vcn_dec_sw_send_msg(st
+ 	if (adev->vcn.using_unified_queue)
+ 		ib_size_dw += 8;
+ 
+-	r = amdgpu_job_alloc_with_ib(adev, ib_size_dw * 4,
+-				AMDGPU_IB_POOL_DIRECT, &job);
++	r = amdgpu_job_alloc_with_ib(ring->adev, NULL, NULL,
++				     ib_size_dw * 4, AMDGPU_IB_POOL_DIRECT,
++				     &job);
+ 	if (r)
+ 		goto err;
+ 
+@@ -942,8 +944,9 @@ static int amdgpu_vcn_enc_get_create_msg
+ 	if (adev->vcn.using_unified_queue)
+ 		ib_size_dw += 8;
+ 
+-	r = amdgpu_job_alloc_with_ib(ring->adev, ib_size_dw * 4,
+-					AMDGPU_IB_POOL_DIRECT, &job);
++	r = amdgpu_job_alloc_with_ib(ring->adev, NULL, NULL,
++				     ib_size_dw * 4, AMDGPU_IB_POOL_DIRECT,
++				     &job);
+ 	if (r)
+ 		return r;
+ 
+@@ -1008,8 +1011,9 @@ static int amdgpu_vcn_enc_get_destroy_ms
+ 	if (adev->vcn.using_unified_queue)
+ 		ib_size_dw += 8;
+ 
+-	r = amdgpu_job_alloc_with_ib(ring->adev, ib_size_dw * 4,
+-					AMDGPU_IB_POOL_DIRECT, &job);
++	r = amdgpu_job_alloc_with_ib(ring->adev, NULL, NULL,
++				     ib_size_dw * 4, AMDGPU_IB_POOL_DIRECT,
++				     &job);
+ 	if (r)
+ 		return r;
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
+@@ -47,6 +47,32 @@ static int amdgpu_vm_sdma_map_table(stru
+ 	return r;
  }
  
--void f2fs_destroy_xattr_caches(struct f2fs_sb_info *sbi)
-+void f2fs_destroy_xattr_cache(void)
++/* Allocate a new job for @count PTE updates */
++static int amdgpu_vm_sdma_alloc_job(struct amdgpu_vm_update_params *p,
++				    unsigned int count)
++{
++	enum amdgpu_ib_pool_type pool = p->immediate ? AMDGPU_IB_POOL_IMMEDIATE
++		: AMDGPU_IB_POOL_DELAYED;
++	struct drm_sched_entity *entity = p->immediate ? &p->vm->immediate
++		: &p->vm->delayed;
++	unsigned int ndw;
++	int r;
++
++	/* estimate how many dw we need */
++	ndw = AMDGPU_VM_SDMA_MIN_NUM_DW;
++	if (p->pages_addr)
++		ndw += count * 2;
++	ndw = min(ndw, AMDGPU_VM_SDMA_MAX_NUM_DW);
++
++	r = amdgpu_job_alloc_with_ib(p->adev, entity, AMDGPU_FENCE_OWNER_VM,
++				     ndw * 4, pool, &p->job);
++	if (r)
++		return r;
++
++	p->num_dw_left = ndw;
++	return 0;
++}
++
+ /**
+  * amdgpu_vm_sdma_prepare - prepare SDMA command submission
+  *
+@@ -61,17 +87,12 @@ static int amdgpu_vm_sdma_prepare(struct
+ 				  struct dma_resv *resv,
+ 				  enum amdgpu_sync_mode sync_mode)
  {
--	kmem_cache_destroy(sbi->inline_xattr_slab);
-+	kmem_cache_destroy(inline_xattr_slab);
- }
---- a/fs/f2fs/xattr.h
-+++ b/fs/f2fs/xattr.h
-@@ -88,6 +88,8 @@ struct f2fs_xattr_entry {
- 			F2FS_TOTAL_EXTRA_ATTR_SIZE / sizeof(__le32) -	\
- 			DEF_INLINE_RESERVED_SIZE -			\
- 			MIN_INLINE_DENTRY_SIZE / sizeof(__le32))
-+#define DEFAULT_XATTR_SLAB_SIZE	(DEFAULT_INLINE_XATTR_ADDRS *		\
-+				sizeof(__le32) + XATTR_PADDING_SIZE)
+-	enum amdgpu_ib_pool_type pool = p->immediate ? AMDGPU_IB_POOL_IMMEDIATE
+-		: AMDGPU_IB_POOL_DELAYED;
+-	unsigned int ndw = AMDGPU_VM_SDMA_MIN_NUM_DW;
+ 	int r;
  
- /*
-  * On-disk structure of f2fs_xattr
-@@ -131,8 +133,8 @@ extern int f2fs_setxattr(struct inode *,
- extern int f2fs_getxattr(struct inode *, int, const char *, void *,
- 						size_t, struct page *);
- extern ssize_t f2fs_listxattr(struct dentry *, char *, size_t);
--extern int f2fs_init_xattr_caches(struct f2fs_sb_info *);
--extern void f2fs_destroy_xattr_caches(struct f2fs_sb_info *);
-+int __init f2fs_init_xattr_cache(void);
-+void f2fs_destroy_xattr_cache(void);
- #else
+-	r = amdgpu_job_alloc_with_ib(p->adev, ndw * 4, pool, &p->job);
++	r = amdgpu_vm_sdma_alloc_job(p, 0);
+ 	if (r)
+ 		return r;
  
- #define f2fs_xattr_handlers	NULL
-@@ -149,8 +151,8 @@ static inline int f2fs_getxattr(struct i
+-	p->num_dw_left = ndw;
+-
+ 	if (!resv)
+ 		return 0;
+ 
+@@ -91,20 +112,16 @@ static int amdgpu_vm_sdma_commit(struct
+ 				 struct dma_fence **fence)
  {
- 	return -EOPNOTSUPP;
- }
--static inline int f2fs_init_xattr_caches(struct f2fs_sb_info *sbi) { return 0; }
--static inline void f2fs_destroy_xattr_caches(struct f2fs_sb_info *sbi) { }
-+static inline int __init f2fs_init_xattr_cache(void) { return 0; }
-+static inline void f2fs_destroy_xattr_cache(void) { }
- #endif
+ 	struct amdgpu_ib *ib = p->job->ibs;
+-	struct drm_sched_entity *entity;
+ 	struct amdgpu_ring *ring;
+ 	struct dma_fence *f;
+-	int r;
  
- #ifdef CONFIG_F2FS_FS_SECURITY
+-	entity = p->immediate ? &p->vm->immediate : &p->vm->delayed;
+-	ring = container_of(entity->rq->sched, struct amdgpu_ring, sched);
++	ring = container_of(p->vm->delayed.rq->sched, struct amdgpu_ring,
++			    sched);
+ 
+ 	WARN_ON(ib->length_dw == 0);
+ 	amdgpu_ring_pad_ib(ring, ib);
+ 	WARN_ON(ib->length_dw > p->num_dw_left);
+-	r = amdgpu_job_submit(p->job, entity, AMDGPU_FENCE_OWNER_VM, &f);
+-	if (r)
+-		goto error;
++	f = amdgpu_job_submit(p->job);
+ 
+ 	if (p->unlocked) {
+ 		struct dma_fence *tmp = dma_fence_get(f);
+@@ -127,10 +144,6 @@ static int amdgpu_vm_sdma_commit(struct
+ 	}
+ 	dma_fence_put(f);
+ 	return 0;
+-
+-error:
+-	amdgpu_job_free(p->job);
+-	return r;
+ }
+ 
+ /**
+@@ -210,8 +223,6 @@ static int amdgpu_vm_sdma_update(struct
+ 				 uint64_t flags)
+ {
+ 	struct amdgpu_bo *bo = &vmbo->bo;
+-	enum amdgpu_ib_pool_type pool = p->immediate ? AMDGPU_IB_POOL_IMMEDIATE
+-		: AMDGPU_IB_POOL_DELAYED;
+ 	struct dma_resv_iter cursor;
+ 	unsigned int i, ndw, nptes;
+ 	struct dma_fence *fence;
+@@ -238,19 +249,9 @@ static int amdgpu_vm_sdma_update(struct
+ 			if (r)
+ 				return r;
+ 
+-			/* estimate how many dw we need */
+-			ndw = 32;
+-			if (p->pages_addr)
+-				ndw += count * 2;
+-			ndw = max(ndw, AMDGPU_VM_SDMA_MIN_NUM_DW);
+-			ndw = min(ndw, AMDGPU_VM_SDMA_MAX_NUM_DW);
+-
+-			r = amdgpu_job_alloc_with_ib(p->adev, ndw * 4, pool,
+-						     &p->job);
++			r = amdgpu_vm_sdma_alloc_job(p, count);
+ 			if (r)
+ 				return r;
+-
+-			p->num_dw_left = ndw;
+ 		}
+ 
+ 		if (!p->pages_addr) {
+--- a/drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c
+@@ -371,7 +371,9 @@ static void gmc_v10_0_flush_gpu_tlb(stru
+ 	 * translation. Avoid this by doing the invalidation from the SDMA
+ 	 * itself.
+ 	 */
+-	r = amdgpu_job_alloc_with_ib(adev, 16 * 4, AMDGPU_IB_POOL_IMMEDIATE,
++	r = amdgpu_job_alloc_with_ib(ring->adev, &adev->mman.entity,
++				     AMDGPU_FENCE_OWNER_UNDEFINED,
++				     16 * 4, AMDGPU_IB_POOL_IMMEDIATE,
+ 				     &job);
+ 	if (r)
+ 		goto error_alloc;
+@@ -380,10 +382,7 @@ static void gmc_v10_0_flush_gpu_tlb(stru
+ 	job->vm_needs_flush = true;
+ 	job->ibs->ptr[job->ibs->length_dw++] = ring->funcs->nop;
+ 	amdgpu_ring_pad_ib(ring, &job->ibs[0]);
+-	r = amdgpu_job_submit(job, &adev->mman.entity,
+-			      AMDGPU_FENCE_OWNER_UNDEFINED, &fence);
+-	if (r)
+-		goto error_submit;
++	fence = amdgpu_job_submit(job);
+ 
+ 	mutex_unlock(&adev->mman.gtt_window_lock);
+ 
+@@ -392,9 +391,6 @@ static void gmc_v10_0_flush_gpu_tlb(stru
+ 
+ 	return;
+ 
+-error_submit:
+-	amdgpu_job_free(job);
+-
+ error_alloc:
+ 	mutex_unlock(&adev->mman.gtt_window_lock);
+ 	DRM_ERROR("Error flushing GPU TLB using the SDMA (%d)!\n", r);
+--- a/drivers/gpu/drm/amd/amdgpu/uvd_v6_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/uvd_v6_0.c
+@@ -216,8 +216,8 @@ static int uvd_v6_0_enc_get_create_msg(s
+ 	uint64_t addr;
+ 	int i, r;
+ 
+-	r = amdgpu_job_alloc_with_ib(ring->adev, ib_size_dw * 4,
+-					AMDGPU_IB_POOL_DIRECT, &job);
++	r = amdgpu_job_alloc_with_ib(ring->adev, NULL, NULL, ib_size_dw * 4,
++				     AMDGPU_IB_POOL_DIRECT, &job);
+ 	if (r)
+ 		return r;
+ 
+@@ -280,8 +280,8 @@ static int uvd_v6_0_enc_get_destroy_msg(
+ 	uint64_t addr;
+ 	int i, r;
+ 
+-	r = amdgpu_job_alloc_with_ib(ring->adev, ib_size_dw * 4,
+-					AMDGPU_IB_POOL_DIRECT, &job);
++	r = amdgpu_job_alloc_with_ib(ring->adev, NULL, NULL, ib_size_dw * 4,
++				     AMDGPU_IB_POOL_DIRECT, &job);
+ 	if (r)
+ 		return r;
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c
+@@ -213,7 +213,7 @@ static int uvd_v7_0_enc_ring_test_ring(s
+  *
+  * Open up a stream for HW test
+  */
+-static int uvd_v7_0_enc_get_create_msg(struct amdgpu_ring *ring, uint32_t handle,
++static int uvd_v7_0_enc_get_create_msg(struct amdgpu_ring *ring, u32 handle,
+ 				       struct amdgpu_bo *bo,
+ 				       struct dma_fence **fence)
+ {
+@@ -224,8 +224,8 @@ static int uvd_v7_0_enc_get_create_msg(s
+ 	uint64_t addr;
+ 	int i, r;
+ 
+-	r = amdgpu_job_alloc_with_ib(ring->adev, ib_size_dw * 4,
+-					AMDGPU_IB_POOL_DIRECT, &job);
++	r = amdgpu_job_alloc_with_ib(ring->adev, NULL, NULL, ib_size_dw * 4,
++				     AMDGPU_IB_POOL_DIRECT, &job);
+ 	if (r)
+ 		return r;
+ 
+@@ -276,7 +276,7 @@ err:
+  *
+  * Close up a stream for HW test or if userspace failed to do so
+  */
+-static int uvd_v7_0_enc_get_destroy_msg(struct amdgpu_ring *ring, uint32_t handle,
++static int uvd_v7_0_enc_get_destroy_msg(struct amdgpu_ring *ring, u32 handle,
+ 					struct amdgpu_bo *bo,
+ 					struct dma_fence **fence)
+ {
+@@ -287,8 +287,8 @@ static int uvd_v7_0_enc_get_destroy_msg(
+ 	uint64_t addr;
+ 	int i, r;
+ 
+-	r = amdgpu_job_alloc_with_ib(ring->adev, ib_size_dw * 4,
+-					AMDGPU_IB_POOL_DIRECT, &job);
++	r = amdgpu_job_alloc_with_ib(ring->adev, NULL, NULL, ib_size_dw * 4,
++				     AMDGPU_IB_POOL_DIRECT, &job);
+ 	if (r)
+ 		return r;
+ 
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_migrate.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_migrate.c
+@@ -65,8 +65,11 @@ svm_migrate_gart_map(struct amdgpu_ring
+ 	num_dw = ALIGN(adev->mman.buffer_funcs->copy_num_dw, 8);
+ 	num_bytes = npages * 8;
+ 
+-	r = amdgpu_job_alloc_with_ib(adev, num_dw * 4 + num_bytes,
+-				     AMDGPU_IB_POOL_DELAYED, &job);
++	r = amdgpu_job_alloc_with_ib(adev, &adev->mman.entity,
++				     AMDGPU_FENCE_OWNER_UNDEFINED,
++				     num_dw * 4 + num_bytes,
++				     AMDGPU_IB_POOL_DELAYED,
++				     &job);
+ 	if (r)
+ 		return r;
+ 
+@@ -89,18 +92,10 @@ svm_migrate_gart_map(struct amdgpu_ring
+ 	cpu_addr = &job->ibs[0].ptr[num_dw];
+ 
+ 	amdgpu_gart_map(adev, 0, npages, addr, pte_flags, cpu_addr);
+-	r = amdgpu_job_submit(job, &adev->mman.entity,
+-			      AMDGPU_FENCE_OWNER_UNDEFINED, &fence);
+-	if (r)
+-		goto error_free;
+-
++	fence = amdgpu_job_submit(job);
+ 	dma_fence_put(fence);
+ 
+ 	return r;
+-
+-error_free:
+-	amdgpu_job_free(job);
+-	return r;
+ }
+ 
+ /**
 
 
