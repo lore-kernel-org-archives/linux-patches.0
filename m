@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B779333B6C6;
-	Fri,  9 Jan 2026 12:27:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8703E38FA3;
+	Fri,  9 Jan 2026 12:27:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961671; cv=none; b=TpPuWq+wjBzOXmpWwH0LgwZoxYDI8WuYjL4oIQrpTiVTj7oCYQJVVJcWkWD3oOvp2LXim5ViuyNBfUtUojY282cYSEOx5jhTFP/7ySeonJh5mFIZlmN77JfS/vOQBKKnNn1OT3tEZj8Q+ydIt7s3GbMk9B6rW11xsCVLUD3aUOs=
+	t=1767961674; cv=none; b=HaIWYK1xtCuheIPPiuRfgQKmrCSkOFkQ4505aX90gR+adHX8SZY/Gg64vfEfkhQVng9CO+j1vi9p2PBEhCYAqTij/qg01ZRa8J1YVsOCA1rVRe83vMwJqeSeSUcn0l0zQ5M7Ac24oYzZDBGVSdDCk2tj14Ht8OJh7bE+qrEMV2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961671; c=relaxed/simple;
-	bh=MkTEzZzFYJacRLAKxSBbXhOo5ovhD2IMgmoHWhyCT5Q=;
+	s=arc-20240116; t=1767961674; c=relaxed/simple;
+	bh=BDa7bj9uDsbeyKO38m4azPKnQ09ocTWWtjweHgvvIxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=koRFtk5cu6mHXN3EEYAgqSnt+dYdHs5EIE7uWQsnoh2yLT8wKfn0qzg/hBjwHu78691+4jv2sp9aCseFZhnDcRh1rwGFAi2KdakZv1SelRYl1Vr9ZqBw/UHTgPuZDK4If2jOiJmv1B8Tdzz+OsCyhNAtnPt/h3X5T+ZqUTqMVh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lQAoWF5k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X/sS4bF10uMgAPPXAXTHPrFJ9kZzOU/OcgBbMhFJ/7SScyacC5GSm6QYrL4l5O0VDyPpkPUxpV+KBYZ7BVUG8EEjJiSDYt+StYYjxM5DIOz6cGuiz8q3ltzVJT11xTe+YOfjk1tRwjgMsO/7IZkGg1ORO9s++A59d8ypy6zNSZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eXLYiHpf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lQAoWF5k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46D0CC4CEF1;
-	Fri,  9 Jan 2026 12:27:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eXLYiHpf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 158B8C4CEF1;
+	Fri,  9 Jan 2026 12:27:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961671;
-	bh=MkTEzZzFYJacRLAKxSBbXhOo5ovhD2IMgmoHWhyCT5Q=;
+	s=korg; t=1767961674;
+	bh=BDa7bj9uDsbeyKO38m4azPKnQ09ocTWWtjweHgvvIxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lQAoWF5kReOGpba8r35G1EyGh6tXtfrB2u1Y8IxWd8liOUB7uHblzcpeZ1KbK1AZj
-	 hlVJkNsd1yAjCXNZM98eRJmUa0sW3fp4HAA7x1DIugWmDzmeIb6+JVz7HoOK8DEAGY
-	 IrFt4vMfGM+ouoFGkif1Ev9T3hw0weOVNGJeCEv4=
+	b=eXLYiHpfZ4+PdPyQnkl2JZyy6+1ZE+/FYQIHYkpWTQg4LuoFF2cWP/jTaWWHD1ak8
+	 ruKT3cCRKSn5qGQ2enn/nRHMYSVCLB3UNoqFphga67DnS63b7wGQAMkjkcMJipue01
+	 TWVpgOwuPHH9+j3BYcvHEbp9QiCRPKlQN+ybiZoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Scott Teel <scott.teel@microchip.com>,
-	Scott Benesh <scott.benesh@microchip.com>,
-	Mike McGowen <mike.mcgowen@microchip.com>,
-	Don Brace <don.brace@microchip.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 094/634] scsi: smartpqi: Fix device resources accessed after device removal
-Date: Fri,  9 Jan 2026 12:36:12 +0100
-Message-ID: <20260109112120.971615089@linuxfoundation.org>
+Subject: [PATCH 6.1 095/634] dt-bindings: PCI: convert amlogic,meson-pcie.txt to dt-schema
+Date: Fri,  9 Jan 2026 12:36:13 +0100
+Message-ID: <20260109112121.009051955@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -54,92 +52,242 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike McGowen <mike.mcgowen@microchip.com>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit b518e86d1a70a88f6592a7c396cf1b93493d1aab ]
+[ Upstream commit b80b848bdf56bd402b7a91aea5b77cec93dfe4c2 ]
 
-Correct possible race conditions during device removal.
+Convert the Amlogic Meson AXG DWC PCIe SoC controller bindings to
+dt-schema.
 
-Previously, a scheduled work item to reset a LUN could still execute
-after the device was removed, leading to use-after-free and other
-resource access issues.
-
-This race condition occurs because the abort handler may schedule a LUN
-reset concurrently with device removal via sdev_destroy(), leading to
-use-after-free and improper access to freed resources.
-
-  - Check in the device reset handler if the device is still present in
-    the controller's SCSI device list before running; if not, the reset
-    is skipped.
-
-  - Cancel any pending TMF work that has not started in sdev_destroy().
-
-  - Ensure device freeing in sdev_destroy() is done while holding the
-    LUN reset mutex to avoid races with ongoing resets.
-
-Fixes: 2d80f4054f7f ("scsi: smartpqi: Update deleting a LUN via sysfs")
-Reviewed-by: Scott Teel <scott.teel@microchip.com>
-Reviewed-by: Scott Benesh <scott.benesh@microchip.com>
-Signed-off-by: Mike McGowen <mike.mcgowen@microchip.com>
-Signed-off-by: Don Brace <don.brace@microchip.com>
-Link: https://patch.msgid.link/20251106163823.786828-3-don.brace@microchip.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://lore.kernel.org/r/20221117-b4-amlogic-bindings-convert-v4-5-34e623dbf789@linaro.org
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Stable-dep-of: 4813dea9e272 ("dt-bindings: PCI: amlogic: Fix the register name of the DBI region")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/smartpqi/smartpqi_init.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ .../bindings/pci/amlogic,axg-pcie.yaml        | 134 ++++++++++++++++++
+ .../bindings/pci/amlogic,meson-pcie.txt       |  70 ---------
+ 2 files changed, 134 insertions(+), 70 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/pci/amlogic,axg-pcie.yaml
+ delete mode 100644 Documentation/devicetree/bindings/pci/amlogic,meson-pcie.txt
 
-diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
-index 5e39df2b6a4c0..a9f504959dd56 100644
---- a/drivers/scsi/smartpqi/smartpqi_init.c
-+++ b/drivers/scsi/smartpqi/smartpqi_init.c
-@@ -6401,10 +6401,22 @@ static int pqi_device_reset(struct pqi_ctrl_info *ctrl_info, struct pqi_scsi_dev
- 
- static int pqi_device_reset_handler(struct pqi_ctrl_info *ctrl_info, struct pqi_scsi_dev *device, u8 lun, struct scsi_cmnd *scmd, u8 scsi_opcode)
- {
-+	unsigned long flags;
- 	int rc;
- 
- 	mutex_lock(&ctrl_info->lun_reset_mutex);
- 
-+	spin_lock_irqsave(&ctrl_info->scsi_device_list_lock, flags);
-+	if (pqi_find_scsi_dev(ctrl_info, device->bus, device->target, device->lun) == NULL) {
-+		dev_warn(&ctrl_info->pci_dev->dev,
-+			"skipping reset of scsi %d:%d:%d:%u, device has been removed\n",
-+			ctrl_info->scsi_host->host_no, device->bus, device->target, device->lun);
-+		spin_unlock_irqrestore(&ctrl_info->scsi_device_list_lock, flags);
-+		mutex_unlock(&ctrl_info->lun_reset_mutex);
-+		return 0;
-+	}
-+	spin_unlock_irqrestore(&ctrl_info->scsi_device_list_lock, flags);
+diff --git a/Documentation/devicetree/bindings/pci/amlogic,axg-pcie.yaml b/Documentation/devicetree/bindings/pci/amlogic,axg-pcie.yaml
+new file mode 100644
+index 0000000000000..a5bd90bc0712e
+--- /dev/null
++++ b/Documentation/devicetree/bindings/pci/amlogic,axg-pcie.yaml
+@@ -0,0 +1,134 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/pci/amlogic,axg-pcie.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
- 	dev_err(&ctrl_info->pci_dev->dev,
- 		"resetting scsi %d:%d:%d:%d due to cmd 0x%02x\n",
- 		ctrl_info->scsi_host->host_no,
-@@ -6583,7 +6595,9 @@ static void pqi_slave_destroy(struct scsi_device *sdev)
- {
- 	struct pqi_ctrl_info *ctrl_info;
- 	struct pqi_scsi_dev *device;
-+	struct pqi_tmf_work *tmf_work;
- 	int mutex_acquired;
-+	unsigned int lun;
- 	unsigned long flags;
- 
- 	ctrl_info = shost_to_hba(sdev->host);
-@@ -6610,8 +6624,13 @@ static void pqi_slave_destroy(struct scsi_device *sdev)
- 
- 	mutex_unlock(&ctrl_info->scan_mutex);
- 
-+	for (lun = 0, tmf_work = device->tmf_work; lun < PQI_MAX_LUNS_PER_DEVICE; lun++, tmf_work++)
-+		cancel_work_sync(&tmf_work->work_struct);
++title: Amlogic Meson AXG DWC PCIe SoC controller
 +
-+	mutex_lock(&ctrl_info->lun_reset_mutex);
- 	pqi_dev_info(ctrl_info, "removed", device);
- 	pqi_free_device(device);
-+	mutex_unlock(&ctrl_info->lun_reset_mutex);
- }
- 
- static int pqi_getpciinfo_ioctl(struct pqi_ctrl_info *ctrl_info, void __user *arg)
++maintainers:
++  - Neil Armstrong <neil.armstrong@linaro.org>
++
++description:
++  Amlogic Meson PCIe host controller is based on the Synopsys DesignWare PCI core.
++
++allOf:
++  - $ref: /schemas/pci/pci-bus.yaml#
++  - $ref: /schemas/pci/snps,dw-pcie-common.yaml#
++
++# We need a select here so we don't match all nodes with 'snps,dw-pcie'
++select:
++  properties:
++    compatible:
++      enum:
++        - amlogic,axg-pcie
++        - amlogic,g12a-pcie
++  required:
++    - compatible
++
++properties:
++  compatible:
++    items:
++      - enum:
++          - amlogic,axg-pcie
++          - amlogic,g12a-pcie
++      - const: snps,dw-pcie
++
++  reg:
++    items:
++      - description: External local bus interface registers
++      - description: Meson designed configuration registers
++      - description: PCIe configuration space
++
++  reg-names:
++    items:
++      - const: elbi
++      - const: cfg
++      - const: config
++
++  interrupts:
++    maxItems: 1
++
++  clocks:
++    items:
++      - description: PCIe GEN 100M PLL clock
++      - description: PCIe RC clock gate
++      - description: PCIe PHY clock
++
++  clock-names:
++    items:
++      - const: pclk
++      - const: port
++      - const: general
++
++  phys:
++    maxItems: 1
++
++  phy-names:
++    const: pcie
++
++  resets:
++    items:
++      - description: Port Reset
++      - description: Shared APB reset
++
++  reset-names:
++    items:
++      - const: port
++      - const: apb
++
++  num-lanes:
++    const: 1
++
++  power-domains:
++    maxItems: 1
++
++required:
++  - compatible
++  - reg
++  - reg-names
++  - interrupts
++  - clock
++  - clock-names
++  - "#address-cells"
++  - "#size-cells"
++  - "#interrupt-cells"
++  - interrupt-map
++  - interrupt-map-mask
++  - ranges
++  - bus-range
++  - device_type
++  - num-lanes
++  - phys
++  - phy-names
++  - resets
++  - reset-names
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/irq.h>
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    pcie: pcie@f9800000 {
++        compatible = "amlogic,axg-pcie", "snps,dw-pcie";
++        reg = <0xf9800000 0x400000>, <0xff646000 0x2000>, <0xf9f00000 0x100000>;
++        reg-names = "elbi", "cfg", "config";
++        interrupts = <GIC_SPI 177 IRQ_TYPE_EDGE_RISING>;
++        clocks = <&pclk>, <&clk_port>, <&clk_phy>;
++        clock-names = "pclk", "port", "general";
++        resets = <&reset_pcie_port>, <&reset_pcie_apb>;
++        reset-names = "port", "apb";
++        phys = <&pcie_phy>;
++        phy-names = "pcie";
++        #interrupt-cells = <1>;
++        interrupt-map-mask = <0 0 0 0>;
++        interrupt-map = <0 0 0 0 &gic GIC_SPI 179 IRQ_TYPE_EDGE_RISING>;
++        bus-range = <0x0 0xff>;
++        #address-cells = <3>;
++        #size-cells = <2>;
++        device_type = "pci";
++        num-lanes = <1>;
++        ranges = <0x82000000 0 0 0xf9c00000 0 0x00300000>;
++    };
++...
+diff --git a/Documentation/devicetree/bindings/pci/amlogic,meson-pcie.txt b/Documentation/devicetree/bindings/pci/amlogic,meson-pcie.txt
+deleted file mode 100644
+index c3a75ac6e59d1..0000000000000
+--- a/Documentation/devicetree/bindings/pci/amlogic,meson-pcie.txt
++++ /dev/null
+@@ -1,70 +0,0 @@
+-Amlogic Meson AXG DWC PCIE SoC controller
+-
+-Amlogic Meson PCIe host controller is based on the Synopsys DesignWare PCI core.
+-It shares common functions with the PCIe DesignWare core driver and
+-inherits common properties defined in
+-Documentation/devicetree/bindings/pci/snps,dw-pcie.yaml.
+-
+-Additional properties are described here:
+-
+-Required properties:
+-- compatible:
+-	should contain :
+-	- "amlogic,axg-pcie" for AXG SoC Family
+-	- "amlogic,g12a-pcie" for G12A SoC Family
+-	to identify the core.
+-- reg:
+-	should contain the configuration address space.
+-- reg-names: Must be
+-	- "elbi"	External local bus interface registers
+-	- "cfg"		Meson specific registers
+-	- "config"	PCIe configuration space
+-- reset-gpios: The GPIO to generate PCIe PERST# assert and deassert signal.
+-- clocks: Must contain an entry for each entry in clock-names.
+-- clock-names: Must include the following entries:
+-	- "pclk"       PCIe GEN 100M PLL clock
+-	- "port"       PCIe_x(A or B) RC clock gate
+-	- "general"    PCIe Phy clock
+-- resets: phandle to the reset lines.
+-- reset-names: must contain "port" and "apb"
+-       - "port"        Port A or B reset
+-       - "apb"         Share APB reset
+-- phys: should contain a phandle to the PCIE phy
+-- phy-names: must contain "pcie"
+-
+-- device_type:
+-	should be "pci". As specified in snps,dw-pcie.yaml
+-
+-
+-Example configuration:
+-
+-	pcie: pcie@f9800000 {
+-			compatible = "amlogic,axg-pcie", "snps,dw-pcie";
+-			reg = <0x0 0xf9800000 0x0 0x400000
+-					0x0 0xff646000 0x0 0x2000
+-					0x0 0xf9f00000 0x0 0x100000>;
+-			reg-names = "elbi", "cfg", "config";
+-			reset-gpios = <&gpio GPIOX_19 GPIO_ACTIVE_HIGH>;
+-			interrupts = <GIC_SPI 177 IRQ_TYPE_EDGE_RISING>;
+-			#interrupt-cells = <1>;
+-			interrupt-map-mask = <0 0 0 0>;
+-			interrupt-map = <0 0 0 0 &gic GIC_SPI 179 IRQ_TYPE_EDGE_RISING>;
+-			bus-range = <0x0 0xff>;
+-			#address-cells = <3>;
+-			#size-cells = <2>;
+-			device_type = "pci";
+-			ranges = <0x82000000 0 0 0x0 0xf9c00000 0 0x00300000>;
+-
+-			clocks = <&clkc CLKID_USB
+-					&clkc CLKID_PCIE_A
+-					&clkc CLKID_PCIE_CML_EN0>;
+-			clock-names = "general",
+-					"pclk",
+-					"port";
+-			resets = <&reset RESET_PCIE_A>,
+-				<&reset RESET_PCIE_APB>;
+-			reset-names = "port",
+-					"apb";
+-			phys = <&pcie_phy>;
+-			phy-names = "pcie";
+-	};
 -- 
 2.51.0
 
