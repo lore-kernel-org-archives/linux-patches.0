@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7EFD336ED1;
-	Fri,  9 Jan 2026 12:50:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC5E3336ED1;
+	Fri,  9 Jan 2026 12:50:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767963001; cv=none; b=jED4HcMP/2HIi2G7xe/4gLBLP0DUV+j7HdHmo6Pn4Ylno6Z8fCxtWzg68+mCH0VlvnWgWjEBlWyuyJWHP6hOrjJt6sDuGcBjes5nPlMdJDSOq2Mho6KuGI9JRd/s7ILeiB85Gln7zbcasNhnDIC9vjuQPZnUlOOuV4jsxg6d8rY=
+	t=1767963004; cv=none; b=KPHPY4t2W7lXj1U+zWu3osgcGtvUTxKVFJKK/KM1SAq0lwb5Ds2gcaHryVUs4ONBjh2dKdWnHAatmUcc8kiIpzcS3bhh4uvVeUsTv3h9rYFD/it4YTxgVJz6rfSRH6wva91M325ZKAgmxurfx75FpPmtFetRVw6GDFpOl9iKK6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767963001; c=relaxed/simple;
-	bh=IotgPHRlDXdNo+XvvJgiA+jQsAYR3z/HarR4UxVq82g=;
+	s=arc-20240116; t=1767963004; c=relaxed/simple;
+	bh=jFcbHAucQ9nnxv92ZUJxTiW99o8G6mmL2Pxqn7ZwhXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jnceMBMUcjIwbASVwD3P1zGaJvhh+UyVqbSEf3zQndGWsaluh7yLKk/YBnFtmGK9HOk4FZ4S6OVDYVDT2WJDMNoKoJN4daEMsPh90vgvCCWmBk6/byO8SnXiVf+/YOnqZaJgQF6vctWBOHRVTUJWFQBxKKxtyltXGjdaTcTMryc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l6AQeaKU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uKKndHUpbl75phJWvo48KTEJ1ZjM2tbNgBsTc83ChUBlIpobmBbCGm296mPH/n78BRV+krPX0l5T/aZ0QF/2MNbgIovFDXDax/Zn+lReR3yQi48IbZcl+kdzm1yFyKzxho05t8GkZpc3Q5oPoKeGK1Jadv0cj0l0w0eLwxCk/BU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wmJQMyq7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l6AQeaKU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDBABC4CEF1;
-	Fri,  9 Jan 2026 12:50:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wmJQMyq7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E393C4CEF1;
+	Fri,  9 Jan 2026 12:50:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767963001;
-	bh=IotgPHRlDXdNo+XvvJgiA+jQsAYR3z/HarR4UxVq82g=;
+	s=korg; t=1767963003;
+	bh=jFcbHAucQ9nnxv92ZUJxTiW99o8G6mmL2Pxqn7ZwhXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l6AQeaKU/peq1g3Ga1ETkyZ5LiXZ+XvDTxFjQk4gnPhtLE13hR32NPwbDjQfQxZaD
-	 mkGREUtGdxEZVItzghHdJVPL19Rk6olSsw5lxG2CFhRufQAflhv4XSmB7RS864BSlv
-	 SMlpCzpQ+hr+qZn7yRxODaX1TPLgqT1nWbLFIfxY=
+	b=wmJQMyq7bTVxj/wY3Z3W4e5+Tm5sYsTM2hQqjC259NkCHLJpkwu3gL6GpoC99cJM8
+	 TWQm6BET/g9D1ZFScBwTvu1W7dJbeSHWcw0w40BfVLzvAGddS0LU6/eiUIlCY5MNJx
+	 4BSmsR4MaAPGeSYGe0bootTIUwWOctM9tAFI4qtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	syzbot+204a4382fcb3311f3858@syzkaller.appspotmail.com,
-	Dong Chenchen <dongchenchen2@huawei.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Mina Almasry <almasrymina@google.com>,
-	Ruohan Lan <ruohanlan@aliyun.com>
-Subject: [PATCH 6.1 530/634] page_pool: Fix use-after-free in page_pool_recycle_in_ring
-Date: Fri,  9 Jan 2026 12:43:28 +0100
-Message-ID: <20260109112137.512325358@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 531/634] KVM: x86/mmu: Use EMULTYPE flag to track write #PFs to shadow pages
+Date: Fri,  9 Jan 2026 12:43:29 +0100
+Message-ID: <20260109112137.551861710@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -48,150 +45,233 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dong Chenchen <dongchenchen2@huawei.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 271683bb2cf32e5126c592b5d5e6a756fa374fd9 ]
+[ Upstream commit 258d985f6eb360c9c7aacd025d0dbc080a59423f ]
 
-syzbot reported a uaf in page_pool_recycle_in_ring:
+Use a new EMULTYPE flag, EMULTYPE_WRITE_PF_TO_SP, to track page faults
+on self-changing writes to shadowed page tables instead of propagating
+that information to the emulator via a semi-persistent vCPU flag.  Using
+a flag in "struct kvm_vcpu_arch" is confusing, especially as implemented,
+as it's not at all obvious that clearing the flag only when emulation
+actually occurs is correct.
 
-BUG: KASAN: slab-use-after-free in lock_release+0x151/0xa30 kernel/locking/lockdep.c:5862
-Read of size 8 at addr ffff8880286045a0 by task syz.0.284/6943
+E.g. if KVM sets the flag and then retries the fault without ever getting
+to the emulator, the flag will be left set for future calls into the
+emulator.  But because the flag is consumed if and only if both
+EMULTYPE_PF and EMULTYPE_ALLOW_RETRY_PF are set, and because
+EMULTYPE_ALLOW_RETRY_PF is deliberately not set for direct MMUs, emulated
+MMIO, or while L2 is active, KVM avoids false positives on a stale flag
+since FNAME(page_fault) is guaranteed to be run and refresh the flag
+before it's ultimately consumed by the tail end of reexecute_instruction().
 
-CPU: 0 UID: 0 PID: 6943 Comm: syz.0.284 Not tainted 6.13.0-rc3-syzkaller-gdfa94ce54f41 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0x169/0x550 mm/kasan/report.c:489
- kasan_report+0x143/0x180 mm/kasan/report.c:602
- lock_release+0x151/0xa30 kernel/locking/lockdep.c:5862
- __raw_spin_unlock_bh include/linux/spinlock_api_smp.h:165 [inline]
- _raw_spin_unlock_bh+0x1b/0x40 kernel/locking/spinlock.c:210
- spin_unlock_bh include/linux/spinlock.h:396 [inline]
- ptr_ring_produce_bh include/linux/ptr_ring.h:164 [inline]
- page_pool_recycle_in_ring net/core/page_pool.c:707 [inline]
- page_pool_put_unrefed_netmem+0x748/0xb00 net/core/page_pool.c:826
- page_pool_put_netmem include/net/page_pool/helpers.h:323 [inline]
- page_pool_put_full_netmem include/net/page_pool/helpers.h:353 [inline]
- napi_pp_put_page+0x149/0x2b0 net/core/skbuff.c:1036
- skb_pp_recycle net/core/skbuff.c:1047 [inline]
- skb_free_head net/core/skbuff.c:1094 [inline]
- skb_release_data+0x6c4/0x8a0 net/core/skbuff.c:1125
- skb_release_all net/core/skbuff.c:1190 [inline]
- __kfree_skb net/core/skbuff.c:1204 [inline]
- sk_skb_reason_drop+0x1c9/0x380 net/core/skbuff.c:1242
- kfree_skb_reason include/linux/skbuff.h:1263 [inline]
- __skb_queue_purge_reason include/linux/skbuff.h:3343 [inline]
-
-root cause is:
-
-page_pool_recycle_in_ring
-  ptr_ring_produce
-    spin_lock(&r->producer_lock);
-    WRITE_ONCE(r->queue[r->producer++], ptr)
-      //recycle last page to pool
-				page_pool_release
-				  page_pool_scrub
-				    page_pool_empty_ring
-				      ptr_ring_consume
-				      page_pool_return_page  //release all page
-				  __page_pool_destroy
-				     free_percpu(pool->recycle_stats);
-				     free(pool) //free
-
-     spin_unlock(&r->producer_lock); //pool->ring uaf read
-  recycle_stat_inc(pool, ring);
-
-page_pool can be free while page pool recycle the last page in ring.
-Add producer-lock barrier to page_pool_release to prevent the page
-pool from being free before all pages have been recycled.
-
-recycle_stat_inc() is empty when CONFIG_PAGE_POOL_STATS is not
-enabled, which will trigger Wempty-body build warning. Add definition
-for pool stat macro to fix warning.
-
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://lore.kernel.org/netdev/20250513083123.3514193-1-dongchenchen2@huawei.com
-Fixes: ff7d6b27f894 ("page_pool: refurbish version of page_pool code")
-Reported-by: syzbot+204a4382fcb3311f3858@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=204a4382fcb3311f3858
-Signed-off-by: Dong Chenchen <dongchenchen2@huawei.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Link: https://patch.msgid.link/20250527114152.3119109-1-dongchenchen2@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Minor context change fixed. ]
-Signed-off-by: Ruohan Lan <ruohanlan@aliyun.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-Id: <20230202182817.407394-2-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Stable-dep-of: 4da3768e1820 ("KVM: SVM: Don't skip unrelated instruction if INT3/INTO is replaced")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/page_pool.c |   27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+ arch/x86/include/asm/kvm_host.h |   37 ++++++++++++++++++++-----------------
+ arch/x86/kvm/mmu/mmu.c          |    5 +++--
+ arch/x86/kvm/mmu/mmu_internal.h |   12 +++++++++++-
+ arch/x86/kvm/mmu/paging_tmpl.h  |    4 +---
+ arch/x86/kvm/x86.c              |   15 ++-------------
+ 5 files changed, 37 insertions(+), 36 deletions(-)
 
---- a/net/core/page_pool.c
-+++ b/net/core/page_pool.c
-@@ -128,9 +128,9 @@ u64 *page_pool_ethtool_stats_get(u64 *da
- EXPORT_SYMBOL(page_pool_ethtool_stats_get);
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -890,23 +890,6 @@ struct kvm_vcpu_arch {
  
- #else
--#define alloc_stat_inc(pool, __stat)
--#define recycle_stat_inc(pool, __stat)
--#define recycle_stat_add(pool, __stat, val)
-+#define alloc_stat_inc(...)	do { } while (0)
-+#define recycle_stat_inc(...)	do { } while (0)
-+#define recycle_stat_add(...)	do { } while (0)
- #endif
+ 	u64 msr_kvm_poll_control;
  
- static bool page_pool_producer_lock(struct page_pool *pool)
-@@ -539,19 +539,16 @@ static void page_pool_return_page(struct
+-	/*
+-	 * Indicates the guest is trying to write a gfn that contains one or
+-	 * more of the PTEs used to translate the write itself, i.e. the access
+-	 * is changing its own translation in the guest page tables.  KVM exits
+-	 * to userspace if emulation of the faulting instruction fails and this
+-	 * flag is set, as KVM cannot make forward progress.
+-	 *
+-	 * If emulation fails for a write to guest page tables, KVM unprotects
+-	 * (zaps) the shadow page for the target gfn and resumes the guest to
+-	 * retry the non-emulatable instruction (on hardware).  Unprotecting the
+-	 * gfn doesn't allow forward progress for a self-changing access because
+-	 * doing so also zaps the translation for the gfn, i.e. retrying the
+-	 * instruction will hit a !PRESENT fault, which results in a new shadow
+-	 * page and sends KVM back to square one.
+-	 */
+-	bool write_fault_to_shadow_pgtable;
+-
+ 	/* set at EPT violation at this point */
+ 	unsigned long exit_qualification;
  
- static bool page_pool_recycle_in_ring(struct page_pool *pool, struct page *page)
- {
--	int ret;
--	/* BH protection not needed if current is softirq */
--	if (in_softirq())
--		ret = ptr_ring_produce(&pool->ring, page);
--	else
--		ret = ptr_ring_produce_bh(&pool->ring, page);
-+	bool in_softirq, ret;
+@@ -1825,6 +1808,25 @@ u64 vcpu_tsc_khz(struct kvm_vcpu *vcpu);
+  * EMULTYPE_COMPLETE_USER_EXIT - Set when the emulator should update interruptibility
+  *				 state and inject single-step #DBs after skipping
+  *				 an instruction (after completing userspace I/O).
++ *
++ * EMULTYPE_WRITE_PF_TO_SP - Set when emulating an intercepted page fault that
++ *			     is attempting to write a gfn that contains one or
++ *			     more of the PTEs used to translate the write itself,
++ *			     and the owning page table is being shadowed by KVM.
++ *			     If emulation of the faulting instruction fails and
++ *			     this flag is set, KVM will exit to userspace instead
++ *			     of retrying emulation as KVM cannot make forward
++ *			     progress.
++ *
++ *			     If emulation fails for a write to guest page tables,
++ *			     KVM unprotects (zaps) the shadow page for the target
++ *			     gfn and resumes the guest to retry the non-emulatable
++ *			     instruction (on hardware).  Unprotecting the gfn
++ *			     doesn't allow forward progress for a self-changing
++ *			     access because doing so also zaps the translation for
++ *			     the gfn, i.e. retrying the instruction will hit a
++ *			     !PRESENT fault, which results in a new shadow page
++ *			     and sends KVM back to square one.
+  */
+ #define EMULTYPE_NO_DECODE	    (1 << 0)
+ #define EMULTYPE_TRAP_UD	    (1 << 1)
+@@ -1834,6 +1836,7 @@ u64 vcpu_tsc_khz(struct kvm_vcpu *vcpu);
+ #define EMULTYPE_VMWARE_GP	    (1 << 5)
+ #define EMULTYPE_PF		    (1 << 6)
+ #define EMULTYPE_COMPLETE_USER_EXIT (1 << 7)
++#define EMULTYPE_WRITE_PF_TO_SP	    (1 << 8)
  
--	if (!ret) {
-+	/* BH protection not needed if current is softirq */
-+	in_softirq = page_pool_producer_lock(pool);
-+	ret = !__ptr_ring_produce(&pool->ring, page);
-+	if (ret)
- 		recycle_stat_inc(pool, ring);
--		return true;
--	}
-+	page_pool_producer_unlock(pool, in_softirq);
+ int kvm_emulate_instruction(struct kvm_vcpu *vcpu, int emulation_type);
+ int kvm_emulate_instruction_from_buffer(struct kvm_vcpu *vcpu,
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -4152,7 +4152,7 @@ void kvm_arch_async_page_ready(struct kv
+ 	      work->arch.cr3 != kvm_mmu_get_guest_pgd(vcpu, vcpu->arch.mmu))
+ 		return;
  
--	return false;
-+	return ret;
+-	kvm_mmu_do_page_fault(vcpu, work->cr2_or_gpa, 0, true);
++	kvm_mmu_do_page_fault(vcpu, work->cr2_or_gpa, 0, true, NULL);
  }
  
- /* Only allow direct recycling in special circumstances, into the
-@@ -826,10 +823,14 @@ static void page_pool_scrub(struct page_
+ static int kvm_faultin_pfn(struct kvm_vcpu *vcpu, struct kvm_page_fault *fault)
+@@ -5580,7 +5580,8 @@ int noinline kvm_mmu_page_fault(struct k
  
- static int page_pool_release(struct page_pool *pool)
+ 	if (r == RET_PF_INVALID) {
+ 		r = kvm_mmu_do_page_fault(vcpu, cr2_or_gpa,
+-					  lower_32_bits(error_code), false);
++					  lower_32_bits(error_code), false,
++					  &emulation_type);
+ 		if (KVM_BUG_ON(r == RET_PF_INVALID, vcpu->kvm))
+ 			return -EIO;
+ 	}
+--- a/arch/x86/kvm/mmu/mmu_internal.h
++++ b/arch/x86/kvm/mmu/mmu_internal.h
+@@ -223,6 +223,13 @@ struct kvm_page_fault {
+ 	kvm_pfn_t pfn;
+ 	hva_t hva;
+ 	bool map_writable;
++
++	/*
++	 * Indicates the guest is trying to write a gfn that contains one or
++	 * more of the PTEs used to translate the write itself, i.e. the access
++	 * is changing its own translation in the guest page tables.
++	 */
++	bool write_fault_to_shadow_pgtable;
+ };
+ 
+ int kvm_tdp_page_fault(struct kvm_vcpu *vcpu, struct kvm_page_fault *fault);
+@@ -256,7 +263,7 @@ enum {
+ };
+ 
+ static inline int kvm_mmu_do_page_fault(struct kvm_vcpu *vcpu, gpa_t cr2_or_gpa,
+-					u32 err, bool prefetch)
++					u32 err, bool prefetch, int *emulation_type)
  {
-+	bool in_softirq;
- 	int inflight;
+ 	struct kvm_page_fault fault = {
+ 		.addr = cr2_or_gpa,
+@@ -290,6 +297,9 @@ static inline int kvm_mmu_do_page_fault(
+ 	else
+ 		r = vcpu->arch.mmu->page_fault(vcpu, &fault);
  
- 	page_pool_scrub(pool);
- 	inflight = page_pool_inflight(pool);
-+	/* Acquire producer lock to make sure producers have exited. */
-+	in_softirq = page_pool_producer_lock(pool);
-+	page_pool_producer_unlock(pool, in_softirq);
- 	if (!inflight)
- 		page_pool_free(pool);
++	if (fault.write_fault_to_shadow_pgtable && emulation_type)
++		*emulation_type |= EMULTYPE_WRITE_PF_TO_SP;
++
+ 	/*
+ 	 * Similar to above, prefetch faults aren't truly spurious, and the
+ 	 * async #PF path doesn't do emulation.  Do count faults that are fixed
+--- a/arch/x86/kvm/mmu/paging_tmpl.h
++++ b/arch/x86/kvm/mmu/paging_tmpl.h
+@@ -829,10 +829,8 @@ static int FNAME(page_fault)(struct kvm_
+ 	if (r)
+ 		return r;
  
+-	vcpu->arch.write_fault_to_shadow_pgtable = false;
+-
+ 	is_self_change_mapping = FNAME(is_self_change_mapping)(vcpu,
+-	      &walker, fault->user, &vcpu->arch.write_fault_to_shadow_pgtable);
++	      &walker, fault->user, &fault->write_fault_to_shadow_pgtable);
+ 
+ 	if (is_self_change_mapping)
+ 		fault->max_level = PG_LEVEL_4K;
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -8532,7 +8532,6 @@ static int handle_emulation_failure(stru
+ }
+ 
+ static bool reexecute_instruction(struct kvm_vcpu *vcpu, gpa_t cr2_or_gpa,
+-				  bool write_fault_to_shadow_pgtable,
+ 				  int emulation_type)
+ {
+ 	gpa_t gpa = cr2_or_gpa;
+@@ -8603,7 +8602,7 @@ static bool reexecute_instruction(struct
+ 	 * be fixed by unprotecting shadow page and it should
+ 	 * be reported to userspace.
+ 	 */
+-	return !write_fault_to_shadow_pgtable;
++	return !(emulation_type & EMULTYPE_WRITE_PF_TO_SP);
+ }
+ 
+ static bool retry_instruction(struct x86_emulate_ctxt *ctxt,
+@@ -8874,20 +8873,12 @@ int x86_emulate_instruction(struct kvm_v
+ 	int r;
+ 	struct x86_emulate_ctxt *ctxt = vcpu->arch.emulate_ctxt;
+ 	bool writeback = true;
+-	bool write_fault_to_spt;
+ 
+ 	if (unlikely(!kvm_can_emulate_insn(vcpu, emulation_type, insn, insn_len)))
+ 		return 1;
+ 
+ 	vcpu->arch.l1tf_flush_l1d = true;
+ 
+-	/*
+-	 * Clear write_fault_to_shadow_pgtable here to ensure it is
+-	 * never reused.
+-	 */
+-	write_fault_to_spt = vcpu->arch.write_fault_to_shadow_pgtable;
+-	vcpu->arch.write_fault_to_shadow_pgtable = false;
+-
+ 	if (!(emulation_type & EMULTYPE_NO_DECODE)) {
+ 		kvm_clear_exception_queue(vcpu);
+ 
+@@ -8908,7 +8899,6 @@ int x86_emulate_instruction(struct kvm_v
+ 				return 1;
+ 			}
+ 			if (reexecute_instruction(vcpu, cr2_or_gpa,
+-						  write_fault_to_spt,
+ 						  emulation_type))
+ 				return 1;
+ 
+@@ -8994,8 +8984,7 @@ restart:
+ 		return 1;
+ 
+ 	if (r == EMULATION_FAILED) {
+-		if (reexecute_instruction(vcpu, cr2_or_gpa, write_fault_to_spt,
+-					emulation_type))
++		if (reexecute_instruction(vcpu, cr2_or_gpa, emulation_type))
+ 			return 1;
+ 
+ 		return handle_emulation_failure(vcpu, emulation_type);
 
 
