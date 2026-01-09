@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B73531A7EA;
-	Fri,  9 Jan 2026 11:57:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2EBC2F12D4;
+	Fri,  9 Jan 2026 11:57:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959832; cv=none; b=IJI5kbeB73YyLV7SkpdCn0oO1YF9qtvUV8n0w8CDJ6UE2Jc69PMlIfCnOOBYFEphLxJ8VNkMk9hNxqgqTttfBE0YMGGhaS3UbpCG8oUNQRjgxpPe6a5Z9+w4pj2sK15eZwzdBiLaLgSSO+9XnHkmdDad4ee1gxnBXGU7Gxm1CZQ=
+	t=1767959835; cv=none; b=qltkyJtbG3GXOJXL2IHdC8vphuufZ2JKdBCUtGL9dQsDT2B48wJhjh21qUx2OAMqdhmhUfi1zgyTm0a/ptjvOJu4U6YXiEio/eCWASunSO0RZz/SV9U2VmqOdbUp/pR0kmku/jd8bVfUPsj6yVd7cR5uVx4S72gasAnfAJKHKKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959832; c=relaxed/simple;
-	bh=JDK742nWLCOn+ZgLAUh2EVudwvRdPo61m58+l4Di4kU=;
+	s=arc-20240116; t=1767959835; c=relaxed/simple;
+	bh=khSI0OuWDNKttkgCKA2un8Kb/OgMpXVSK1eCJktWbqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SZyLjOiPrUGSA6u9utlAl9OGrcz2hGow6Npepves64QG+0CwIeO8LRkaR+n1DDtIhJwZ4AVDfvUIe5ccNjdrNTzrKi6qCJGBUXmAq35jD85+dvMzHntO8YPfRlEKFjDioCe7hp7MfTWOLV8Kzu6sz8VAuaiJqujuohSR0iGn6Ug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=neyguz2c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XFjq9zFXI1Vp5kVanA3VmD3FPa57WumFMx0lLY501Rt2Eh041EP6u58BT2cAXreOP9RgEOrVQqMyI8Fpju0hUGLAQyftpBjoMvOmwWtiJ8SbbAvZtTjvs/ackKDfbbCZSM4P9XZVgsXTCI/2JsoInih4Lqjh6i4Xyjq3cyKlmY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dSljjIEw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="neyguz2c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE0D0C16AAE;
-	Fri,  9 Jan 2026 11:57:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dSljjIEw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7428EC4CEF1;
+	Fri,  9 Jan 2026 11:57:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959832;
-	bh=JDK742nWLCOn+ZgLAUh2EVudwvRdPo61m58+l4Di4kU=;
+	s=korg; t=1767959834;
+	bh=khSI0OuWDNKttkgCKA2un8Kb/OgMpXVSK1eCJktWbqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=neyguz2cMaMSghF1Heu1ZIkvO448lKMSc0wB2T7R199ZGPPGp6p4sKKiuTor2S9CH
-	 reZ+LX9IjZTCqUfsefJK1ndeVa4sGsnpFsrmdl9QiIP0JdnBiJIVqhOS81m70Khqcj
-	 kK28XUH6cU5c38o6hZLTSm5bQhi9nxt8XQe07t10=
+	b=dSljjIEwJfkIB2r/rjs7ZDXCbwK5AWM+K6L9z4kvewE3mact/GZPJRs01sN8mvU+U
+	 5OfBAAMYEY0HPSYSC7TtEwD5ynAiJkHpgmDmYtCL7a6xkTCOzsj6PD0NOt5vA0bMs9
+	 KAUqQ3hWffa8GqwQ+nPDmynTcztYJKoxPbbXiNdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jisheng Zhang <jszhang@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 191/737] usb: dwc2: fix hang during shutdown if set as peripheral
-Date: Fri,  9 Jan 2026 12:35:30 +0100
-Message-ID: <20260109112141.180292624@linuxfoundation.org>
+Subject: [PATCH 6.6 192/737] usb: dwc2: fix hang during suspend if set as peripheral
+Date: Fri,  9 Jan 2026 12:35:31 +0100
+Message-ID: <20260109112141.218194328@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,7 +52,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Jisheng Zhang <jszhang@kernel.org>
 
-[ Upstream commit b6ebcfdcac40a27953f052e4269ce75a18825ffc ]
+[ Upstream commit 2b94b054ac4974ad2f89f7f7461840c851933adb ]
 
 dwc2 on most platforms needs phy controller, clock and power supply.
 All of them must be enabled/activated to properly operate. If dwc2
@@ -63,41 +63,51 @@ resources are disabled at the end of the probe:
 	if (hsotg->dr_mode == USB_DR_MODE_PERIPHERAL)
 		dwc2_lowlevel_hw_disable(hsotg);
 
-But dwc2_driver_shutdown() tries to disable the interrupts on HW IP
-level. This would result in hang during shutdown if dwc2 is configured
-as peripheral mode.
+But the dwc2_suspend() tries to read the dwc2's reg to check whether
+is_device_mode or not, this would result in hang during suspend if dwc2
+is configured as peripheral mode.
 
-Fix this hang by only disable and sync irq when lowlevel hw is enabled.
+Fix this hang by bypassing suspend/resume if lowlevel hw isn't
+enabled.
 
-Fixes: 4fdf228cdf69 ("usb: dwc2: Fix shutdown callback in platform")
+Fixes: 09a75e857790 ("usb: dwc2: refactor common low-level hw code to platform.c")
 Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
-Link: https://patch.msgid.link/20251104002503.17158-2-jszhang@kernel.org
+Link: https://patch.msgid.link/20251104002503.17158-3-jszhang@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc2/platform.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/usb/dwc2/platform.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/usb/dwc2/platform.c b/drivers/usb/dwc2/platform.c
-index 79ce88b5f07d9..fad6f68f86bd6 100644
+index fad6f68f86bd6..e80982c817d7d 100644
 --- a/drivers/usb/dwc2/platform.c
 +++ b/drivers/usb/dwc2/platform.c
-@@ -369,11 +369,11 @@ static void dwc2_driver_shutdown(struct platform_device *dev)
+@@ -649,9 +649,13 @@ static int dwc2_driver_probe(struct platform_device *dev)
+ static int __maybe_unused dwc2_suspend(struct device *dev)
  {
- 	struct dwc2_hsotg *hsotg = platform_get_drvdata(dev);
+ 	struct dwc2_hsotg *dwc2 = dev_get_drvdata(dev);
+-	bool is_device_mode = dwc2_is_device_mode(dwc2);
++	bool is_device_mode;
+ 	int ret = 0;
  
--	dwc2_disable_global_interrupts(hsotg);
--	synchronize_irq(hsotg->irq);
--
--	if (hsotg->ll_hw_enabled)
-+	if (hsotg->ll_hw_enabled) {
-+		dwc2_disable_global_interrupts(hsotg);
-+		synchronize_irq(hsotg->irq);
- 		dwc2_lowlevel_hw_disable(hsotg);
-+	}
- }
++	if (!dwc2->ll_hw_enabled)
++		return 0;
++
++	is_device_mode = dwc2_is_device_mode(dwc2);
+ 	if (is_device_mode)
+ 		dwc2_hsotg_suspend(dwc2);
  
- /**
+@@ -702,6 +706,9 @@ static int __maybe_unused dwc2_resume(struct device *dev)
+ 	struct dwc2_hsotg *dwc2 = dev_get_drvdata(dev);
+ 	int ret = 0;
+ 
++	if (!dwc2->ll_hw_enabled)
++		return 0;
++
+ 	if (dwc2->phy_off_for_suspend && dwc2->ll_hw_enabled) {
+ 		ret = __dwc2_lowlevel_hw_enable(dwc2);
+ 		if (ret)
 -- 
 2.51.0
 
