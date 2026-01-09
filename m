@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE36C33C511;
-	Fri,  9 Jan 2026 11:54:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD7533A712;
+	Fri,  9 Jan 2026 11:54:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959673; cv=none; b=KR/g3S9xePXG7rPd7PmCRcWhUvNWtLFk2wd7RphDLMF9LRrGulf9stqWPJPMQD4u4cxuEdHpNE8xgt4ADs211RsFavs0SveqZVimv1EJb8M+efg2Uo6xZqxoEmDdRVFP3Nu5oGYH5hwCQnQUiEcwx18av0+0u266VG+YmQvIegY=
+	t=1767959675; cv=none; b=Fl1lkxOyc/vS2+fMhHCpZ9bhsLNeQAWJAPv4j6XBJ2uvbS9LWcpa5sDC968pvfoYmh/MyQCAKzpt1R3lQzftfyesLjIXvioHNZ6SAeHAYT7R/dgWqZ/5defOWQ/ou9crPF4AKjt84pj/hOa6vOMNqolspiZP4O9SSrNwdBAozEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959673; c=relaxed/simple;
-	bh=l1Ykn/WoEesvZzCiQ76LlHUmUsMOhCaUC9BjNhRYClI=;
+	s=arc-20240116; t=1767959675; c=relaxed/simple;
+	bh=X/GsknKRNjbOxO0w3nd1RcywI72ypQZhlrm8ZWFw3IU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hz5x+RH64vYabt8AVFVFUPOcPEh0Kha+DrgtKNxlmrcioMACmXSdKGk8YwBfhYbSgjtTUIOI9F5YxyZGm1CzDWZHHUfnb61eFdR5+IJ6jIErwgaHvtFUK4T8MGPpcat1CxKmd6jMSFetNYB24dkuZVuYVO3+HdFRMt6tCWGwrGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IyWFAYUg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QwRAAF6MF95L2hKLrFemC/nRUe9oX1FO2Ec9Hi7gEnfmMaqE3VOGBvlRXTluc90fvijnknSwOTqNXDow4EC7S1wDtkYNNcQBYYWcnfiA0Vo0fmCRqLASueqc74z9gF9XYxhZuzcfBSK2vSdZxDQhP3RF9pOwTX1QAZAmkR5N2/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FKBJWPUs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IyWFAYUg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 794F7C4CEF1;
-	Fri,  9 Jan 2026 11:54:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FKBJWPUs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A6E3C4CEF1;
+	Fri,  9 Jan 2026 11:54:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959672;
-	bh=l1Ykn/WoEesvZzCiQ76LlHUmUsMOhCaUC9BjNhRYClI=;
+	s=korg; t=1767959675;
+	bh=X/GsknKRNjbOxO0w3nd1RcywI72ypQZhlrm8ZWFw3IU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IyWFAYUgxtRnh9w30iF4voVKMF5EcMc+oh5r8q7L3aS7RCSRYlAEeI3XQkopibhP0
-	 uyjw+SeWwdXgrK3z9U5wiE4Jv9MOR2gDkszaGBCUX5KMxq8zZo/bjEo0ECULF7GWRW
-	 AGOq1QGM5/71tTgDL3BUL8K+Ly2Ix9hk/1zZGU80=
+	b=FKBJWPUsu/E9zY6tnjIsn3HoBNN1K0hs3fEMYyHC1RJGoUzmOPtdqrGb65A2JVwEI
+	 LU2kC0ycatsYNgU0PHwZ8oAbHTG5TOnwBkHrA/wjfBVUkBgHDMTF2uzAYaHsUvT3GD
+	 Clec4eYROFufM/eVfWDG08784pRYH2PTpjpvA4mQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	Kuan-Wei Chiu <visitorckw@gmail.com>,
+	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 134/737] dt-bindings: PCI: amlogic: Fix the register name of the DBI region
-Date: Fri,  9 Jan 2026 12:34:33 +0100
-Message-ID: <20260109112139.042041353@linuxfoundation.org>
+Subject: [PATCH 6.6 108/737] interconnect: debugfs: Fix incorrect error handling for NULL path
+Date: Fri,  9 Jan 2026 12:34:07 +0100
+Message-ID: <20260109112138.065648985@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,55 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-[ Upstream commit 4813dea9e272ba0a57c50b8d51d440dd8e3ccdd7 ]
+[ Upstream commit 6bfe104fd0f94d0248af22c256ce725ee087157b ]
 
-Binding incorrectly specifies the 'DBI' region as 'ELBI'. DBI is a must
-have region for DWC controllers as it has the Root Port and controller
-specific registers, while ELBI has optional registers.
+The icc_commit_set() function, used by the debugfs interface, checks
+the validity of the global cur_path pointer using IS_ERR_OR_NULL().
+However, in the specific case where cur_path is NULL, while
+IS_ERR_OR_NULL(NULL) correctly evaluates to true, the subsequent call
+to PTR_ERR(NULL) returns 0.
 
-Hence, fix the binding. Though this is an ABI break, this change is needed
-to accurately describe the PCI memory map.
+This causes the function to return a success code (0) instead of an
+error, misleading the user into believing their bandwidth request was
+successfully committed when, in fact, no operation was performed.
 
-Fixes: 7cd210391101 ("dt-bindings: PCI: meson: add DT bindings for Amlogic Meson PCIe controller")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20251101-pci-meson-fix-v1-1-c50dcc56ed6a@oss.qualcomm.com
+Fix this by adding an explicit check to return -EINVAL if cur_path is
+NULL. This prevents silent failures and ensures that an invalid
+operational sequence is immediately and clearly reported as an error.
+
+Fixes: 770c69f037c1 ("interconnect: Add debugfs test client")
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Link: https://lore.kernel.org/r/20251010151447.2289779-1-visitorckw@gmail.com
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/pci/amlogic,axg-pcie.yaml | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/interconnect/debugfs-client.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/pci/amlogic,axg-pcie.yaml b/Documentation/devicetree/bindings/pci/amlogic,axg-pcie.yaml
-index a5bd90bc0712e..9c3b8e65c42a3 100644
---- a/Documentation/devicetree/bindings/pci/amlogic,axg-pcie.yaml
-+++ b/Documentation/devicetree/bindings/pci/amlogic,axg-pcie.yaml
-@@ -36,13 +36,13 @@ properties:
+diff --git a/drivers/interconnect/debugfs-client.c b/drivers/interconnect/debugfs-client.c
+index bc3fd8a7b9eb4..778deeb4a7e8a 100644
+--- a/drivers/interconnect/debugfs-client.c
++++ b/drivers/interconnect/debugfs-client.c
+@@ -117,7 +117,12 @@ static int icc_commit_set(void *data, u64 val)
  
-   reg:
-     items:
--      - description: External local bus interface registers
-+      - description: Data Bus Interface registers
-       - description: Meson designed configuration registers
-       - description: PCIe configuration space
+ 	mutex_lock(&debugfs_lock);
  
-   reg-names:
-     items:
--      - const: elbi
-+      - const: dbi
-       - const: cfg
-       - const: config
- 
-@@ -113,7 +113,7 @@ examples:
-     pcie: pcie@f9800000 {
-         compatible = "amlogic,axg-pcie", "snps,dw-pcie";
-         reg = <0xf9800000 0x400000>, <0xff646000 0x2000>, <0xf9f00000 0x100000>;
--        reg-names = "elbi", "cfg", "config";
-+        reg-names = "dbi", "cfg", "config";
-         interrupts = <GIC_SPI 177 IRQ_TYPE_EDGE_RISING>;
-         clocks = <&pclk>, <&clk_port>, <&clk_phy>;
-         clock-names = "pclk", "port", "general";
+-	if (IS_ERR_OR_NULL(cur_path)) {
++	if (!cur_path) {
++		ret = -EINVAL;
++		goto out;
++	}
++
++	if (IS_ERR(cur_path)) {
+ 		ret = PTR_ERR(cur_path);
+ 		goto out;
+ 	}
 -- 
 2.51.0
 
