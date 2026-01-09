@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDCB63590C4;
-	Fri,  9 Jan 2026 12:42:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A25A4335BCD;
+	Fri,  9 Jan 2026 12:42:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962538; cv=none; b=sutChdmvtalIJV/hsV7tdncUo2AWw7QjFFFRGtgmYC987eKRKD1IxZzvKD/FSFUROGwywustZeDyWIDww4UXT1iWk/0ORv3d+nizr4ifASxpOjNbxUNK22BNIimQMMqjwqRHa3848B346ljQjv9ikt5DKJYARnnbKzQ1M8J9ans=
+	t=1767962541; cv=none; b=XXdhxD7RLNoxxpNLea6Sc7HBFWIFkZNUhGsw3Yu744erVbWdFxfiFB8KBfn0A6hOIHtQ47u6LS5OmsisYQy2z/EFdAdYHgP9kb7MPpt4FILrbCKWPP7ib9JPJXqaTZHq+AxcfK9OcGtpFxwmHZBG86wHYvDct52GYTBMay6Ti0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962538; c=relaxed/simple;
-	bh=9LlgN9qqz6Mp7cax2GsX8TK5nKYpBIP8Wp2ePmhiT/4=;
+	s=arc-20240116; t=1767962541; c=relaxed/simple;
+	bh=9anle2/v1JjC/zvzCMeDmKkNh6aLzGSsq3fYnaHqbl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T7SzirC7exESocOwxvWwfXizi6FhEUDHDvm135BbdcoSMgg6bco/p8WQlyAyaabQugUafWf9pp4OfURC1yGV0Sr0sVgSFKCG4V4mWId8eabgkfj4nblua1//x2+t5UNSTJZlnq4BxxwYA4p/uVRbtSJQC5bR0HLiENbQnoGXGJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MDemYlP1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bpCUslISXl+UKmSVtPTHeVgR8+PZN7Hy52JRLrZj5HFkpjNtTHKo95YMGeDSPSeHHHMhKO25k3yka5rXtCYrGw4kst1e8pWj9dWQerEG40hV0i9s87CbogerWP3CDDCxOxhCDp6YinZHdl/Pn77ocWrQYJKZhS23t+2RjcnSbsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jt1pXuVX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MDemYlP1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 585B6C4CEF1;
-	Fri,  9 Jan 2026 12:42:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jt1pXuVX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B404C4CEF1;
+	Fri,  9 Jan 2026 12:42:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962538;
-	bh=9LlgN9qqz6Mp7cax2GsX8TK5nKYpBIP8Wp2ePmhiT/4=;
+	s=korg; t=1767962541;
+	bh=9anle2/v1JjC/zvzCMeDmKkNh6aLzGSsq3fYnaHqbl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MDemYlP1lVdUa5rJ9WG0eUFy64DT8lJmvh060IatS5UNUjiY04r+LrpLAQx3cJTS9
-	 AdZ6Gfl3TVkaZrpOKmuGCeSwKOPWPenETBxwBsB5mViCXcGs0lUyupvtKE+BI+FQfR
-	 1jNC2o885/mRc0tCZSGYHvld/A2LmHLqSJUKQUzw=
+	b=jt1pXuVXxyKv8nqHpPVOg13g9rgAx5G60EY6XE+d8AIdVuruV4ra93v9zZD/p7Ozs
+	 g5pChTnKLXbTv/2jYnbltMpkvIeT6sN8gRrjxgYgBn7WGMqUfdPfNPdNf/zGHiacIp
+	 xhPV+fJflqFzjJiW510glZuiwDC47z9Qej9RHX+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory Herrero <gregory.herrero@oracle.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 401/634] i40e: validate ring_len parameter against hardware-specific values
-Date: Fri,  9 Jan 2026 12:41:19 +0100
-Message-ID: <20260109112132.618003134@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.1 384/634] i2c: amd-mp2: fix reference leak in MP2 PCI device
+Date: Fri,  9 Jan 2026 12:41:02 +0100
+Message-ID: <20260109112131.981008891@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -53,100 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Herrero <gregory.herrero@oracle.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-[ Upstream commit 69942834215323cd9131db557091b4dec43f19c5 ]
+commit a6ee6aac66fb394b7f6e6187c73bdcd873f2d139 upstream.
 
-The maximum number of descriptors supported by the hardware is
-hardware-dependent and can be retrieved using
-i40e_get_max_num_descriptors(). Move this function to a shared header
-and use it when checking for valid ring_len parameter rather than using
-hardcoded value.
+In i2c_amd_probe(), amd_mp2_find_device() utilizes
+driver_find_next_device() which internally calls driver_find_device()
+to locate the matching device. driver_find_device() increments the
+reference count of the found device by calling get_device(), but
+amd_mp2_find_device() fails to call put_device() to decrement the
+reference count before returning. This results in a reference count
+leak of the PCI device each time i2c_amd_probe() is executed, which
+may prevent the device from being properly released and cause a memory
+leak.
 
-By fixing an over-acceptance issue, behavior change could be seen where
-ring_len could now be rejected while configuring rx and tx queues if its
-size is larger than the hardware-dependent maximum number of
-descriptors.
+Found by code review.
 
-Fixes: 55d225670def ("i40e: add validation for ring_len param")
-Signed-off-by: Gregory Herrero <gregory.herrero@oracle.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 529766e0a011 ("i2c: Add drivers for the AMD PCIe MP2 I2C controller")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20251022095402.8846-1-make24@iscas.ac.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e.h             | 11 +++++++++++
- drivers/net/ethernet/intel/i40e/i40e_ethtool.c     | 12 ------------
- drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |  4 ++--
- 3 files changed, 13 insertions(+), 14 deletions(-)
+ drivers/i2c/busses/i2c-amd-mp2-pci.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e.h b/drivers/net/ethernet/intel/i40e/i40e.h
-index bc2ccb77dbe0..af60be8626aa 100644
---- a/drivers/net/ethernet/intel/i40e/i40e.h
-+++ b/drivers/net/ethernet/intel/i40e/i40e.h
-@@ -1325,4 +1325,15 @@ static inline u32 i40e_is_tc_mqprio_enabled(struct i40e_pf *pf)
- 	return pf->flags & I40E_FLAG_TC_MQPRIO;
+--- a/drivers/i2c/busses/i2c-amd-mp2-pci.c
++++ b/drivers/i2c/busses/i2c-amd-mp2-pci.c
+@@ -449,13 +449,16 @@ struct amd_mp2_dev *amd_mp2_find_device(
+ {
+ 	struct device *dev;
+ 	struct pci_dev *pci_dev;
++	struct amd_mp2_dev *mp2_dev;
+ 
+ 	dev = driver_find_next_device(&amd_mp2_pci_driver.driver, NULL);
+ 	if (!dev)
+ 		return NULL;
+ 
+ 	pci_dev = to_pci_dev(dev);
+-	return (struct amd_mp2_dev *)pci_get_drvdata(pci_dev);
++	mp2_dev = (struct amd_mp2_dev *)pci_get_drvdata(pci_dev);
++	put_device(dev);
++	return mp2_dev;
  }
+ EXPORT_SYMBOL_GPL(amd_mp2_find_device);
  
-+static inline u32 i40e_get_max_num_descriptors(const struct i40e_pf *pf)
-+{
-+	const struct i40e_hw *hw = &pf->hw;
-+
-+	switch (hw->mac.type) {
-+	case I40E_MAC_XL710:
-+		return I40E_MAX_NUM_DESCRIPTORS_XL710;
-+	default:
-+		return I40E_MAX_NUM_DESCRIPTORS;
-+	}
-+}
- #endif /* _I40E_H_ */
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_ethtool.c b/drivers/net/ethernet/intel/i40e/i40e_ethtool.c
-index c3378106946c..1aed31bc2e8a 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_ethtool.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_ethtool.c
-@@ -2012,18 +2012,6 @@ static void i40e_get_drvinfo(struct net_device *netdev,
- 		drvinfo->n_priv_flags += I40E_GL_PRIV_FLAGS_STR_LEN;
- }
- 
--static u32 i40e_get_max_num_descriptors(struct i40e_pf *pf)
--{
--	struct i40e_hw *hw = &pf->hw;
--
--	switch (hw->mac.type) {
--	case I40E_MAC_XL710:
--		return I40E_MAX_NUM_DESCRIPTORS_XL710;
--	default:
--		return I40E_MAX_NUM_DESCRIPTORS;
--	}
--}
--
- static void i40e_get_ringparam(struct net_device *netdev,
- 			       struct ethtool_ringparam *ring,
- 			       struct kernel_ethtool_ringparam *kernel_ring,
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-index 2b2f9bb755b6..1bba77347efb 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -656,7 +656,7 @@ static int i40e_config_vsi_tx_queue(struct i40e_vf *vf, u16 vsi_id,
- 
- 	/* ring_len has to be multiple of 8 */
- 	if (!IS_ALIGNED(info->ring_len, 8) ||
--	    info->ring_len > I40E_MAX_NUM_DESCRIPTORS_XL710) {
-+	    info->ring_len > i40e_get_max_num_descriptors(pf)) {
- 		ret = -EINVAL;
- 		goto error_context;
- 	}
-@@ -728,7 +728,7 @@ static int i40e_config_vsi_rx_queue(struct i40e_vf *vf, u16 vsi_id,
- 
- 	/* ring_len has to be multiple of 32 */
- 	if (!IS_ALIGNED(info->ring_len, 32) ||
--	    info->ring_len > I40E_MAX_NUM_DESCRIPTORS_XL710) {
-+	    info->ring_len > i40e_get_max_num_descriptors(pf)) {
- 		ret = -EINVAL;
- 		goto error_param;
- 	}
--- 
-2.51.0
-
 
 
