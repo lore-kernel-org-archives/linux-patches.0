@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132CC35E548;
-	Fri,  9 Jan 2026 12:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E268D33C53B;
+	Fri,  9 Jan 2026 12:48:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962909; cv=none; b=AkwGEKaCR/FPrGIOuifW2XvJt4eipew1g/qb9dnUDhxCa0Pv1R3IaB1qgsUlOv94Oean6nvcvCoZWxt7hou5Dzc5sfliKVdPA3n1amDHJr0dmkpiekTxp92/k6EduRbzscwRuxbIW9NTrA5JvL8pxAUUD/ZC3GIDFu7fjSaicis=
+	t=1767962912; cv=none; b=lN/1fPoL1F51YhjmaxS9vfqsV7fzgUtQzHbWlN1G/Q8d/CP1mUk9f1TnImd7Q1FpoEv3jfgGVB4TFrtAoTpGcDrSjuRHmT0b50oWzAG4qP/BpdTVD7ZjiS0bZsBcFJy6VUNWhCD3mAzRSY340rwcjNe2W78bIXw2ygdh1wDEa3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962909; c=relaxed/simple;
-	bh=HdowSssH3JJqPgGnCA4XuMs1UL+djEDPKtQjOAvq9A4=;
+	s=arc-20240116; t=1767962912; c=relaxed/simple;
+	bh=pY95L0V1HCwqBpB+YGuYw8kMLVwas3LBTXsNf+j/fHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uGGCI1dHHlD/lbJ5rMloeA6B6dx0iilSHTNvwmTgq52GYNMCkzKDOjNLUoEMGn6cpD1FAoCn7vxpY8w5YGj2pJTlEtLVzV7iu4GdkU+D0UKmUkx/nDdrMEpJfDaN7JutstTIjo3WtgAie2xtHZ3iJMJKlMiTZNuPn2QqDckcJ8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NnIfrYcP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HeVDW8F3ftCY49tVNSPCxB8TvBNwFwwG3eGWUE+iQkjjJV1sjWYFG7SW7nd7LIG8AjrQrp6Vp7FtIIIU2Om43KK8eSfg3r+2Z5vQAGCxtbx2BfHAgAwhSzWCIkKqd7WtJ890FxmUvSPnMMrYrMcbY09HeN1Rjtq2as49C9+t5Q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EAoLBJ61; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NnIfrYcP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90BA1C4CEF1;
-	Fri,  9 Jan 2026 12:48:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EAoLBJ61"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67633C4CEF1;
+	Fri,  9 Jan 2026 12:48:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962909;
-	bh=HdowSssH3JJqPgGnCA4XuMs1UL+djEDPKtQjOAvq9A4=;
+	s=korg; t=1767962911;
+	bh=pY95L0V1HCwqBpB+YGuYw8kMLVwas3LBTXsNf+j/fHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NnIfrYcP2XZTYjUADzsJJM67jz1WWm7rNfz3qG91AJBijKjNUI0OPjQ57SxChsmaG
-	 QmcCEZsbvsTZxBseeRDTdel7hlU7JGMM+jaKAomE504EaPIS9YDbegYmO7o1YaFAM1
-	 lYw8+yrzKLUWVBvgRXbBDQgzJ+iNfE6Fuv+Xq6uk=
+	b=EAoLBJ61TQlf7aeVZ8zcuwi1UUuurDl8MuGAprbWVs8kRP1kRC1yQarylTw1Kj4Lh
+	 2JWJpQxY0Bg2cWOCbGcOu8tkNIYfsueIISCfg4oZECDonlnh0jNUrOmeOmmTDVPMdr
+	 EqpmAgTFusoISGP7EMowsai13xkOkdywGPsmj+W0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@google.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 523/634] mm/damon/tests/core-kunit: handle alloc failures on damon_test_split_regions_of()
-Date: Fri,  9 Jan 2026 12:43:21 +0100
-Message-ID: <20260109112137.244008522@linuxfoundation.org>
+	Omar Sandoval <osandov@fb.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 532/634] KVM: SVM: Dont skip unrelated instruction if INT3/INTO is replaced
+Date: Fri,  9 Jan 2026 12:43:30 +0100
+Message-ID: <20260109112137.590410180@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -53,67 +51,199 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Omar Sandoval <osandov@fb.com>
 
-commit eded254cb69044bd4abde87394ea44909708d7c0 upstream.
+[ Upstream commit 4da3768e1820cf15cced390242d8789aed34f54d ]
 
-damon_test_split_regions_of() is assuming all dynamic memory allocation in
-it will succeed.  Those are indeed likely in the real use cases since
-those allocations are too small to fail, but theoretically those could
-fail.  In the case, inappropriate memory access can happen.  Fix it by
-appropriately cleanup pre-allocated memory and skip the execution of the
-remaining tests in the failure cases.
+When re-injecting a soft interrupt from an INT3, INT0, or (select) INTn
+instruction, discard the exception and retry the instruction if the code
+stream is changed (e.g. by a different vCPU) between when the CPU
+executes the instruction and when KVM decodes the instruction to get the
+next RIP.
 
-Link: https://lkml.kernel.org/r/20251101182021.74868-9-sj@kernel.org
-Fixes: 17ccae8bb5c9 ("mm/damon: add kunit tests")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>
-Cc: David Gow <davidgow@google.com>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: <stable@vger.kernel.org>	[5.15+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+As effectively predicted by commit 6ef88d6e36c2 ("KVM: SVM: Re-inject
+INT3/INTO instead of retrying the instruction"), failure to verify that
+the correct INTn instruction was decoded can effectively clobber guest
+state due to decoding the wrong instruction and thus specifying the
+wrong next RIP.
+
+The bug most often manifests as "Oops: int3" panics on static branch
+checks in Linux guests.  Enabling or disabling a static branch in Linux
+uses the kernel's "text poke" code patching mechanism.  To modify code
+while other CPUs may be executing that code, Linux (temporarily)
+replaces the first byte of the original instruction with an int3 (opcode
+0xcc), then patches in the new code stream except for the first byte,
+and finally replaces the int3 with the first byte of the new code
+stream.  If a CPU hits the int3, i.e. executes the code while it's being
+modified, then the guest kernel must look up the RIP to determine how to
+handle the #BP, e.g. by emulating the new instruction.  If the RIP is
+incorrect, then this lookup fails and the guest kernel panics.
+
+The bug reproduces almost instantly by hacking the guest kernel to
+repeatedly check a static branch[1] while running a drgn script[2] on
+the host to constantly swap out the memory containing the guest's TSS.
+
+[1]: https://gist.github.com/osandov/44d17c51c28c0ac998ea0334edf90b5a
+[2]: https://gist.github.com/osandov/10e45e45afa29b11e0c7209247afc00b
+
+Fixes: 6ef88d6e36c2 ("KVM: SVM: Re-inject INT3/INTO instead of retrying the instruction")
+Cc: stable@vger.kernel.org
+Co-developed-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Omar Sandoval <osandov@fb.com>
+Link: https://patch.msgid.link/1cc6dcdf36e3add7ee7c8d90ad58414eeb6c3d34.1762278762.git.osandov@fb.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/core-test.h |   20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ arch/x86/include/asm/kvm_host.h |    9 +++++++++
+ arch/x86/kvm/svm/svm.c          |   24 +++++++++++++-----------
+ arch/x86/kvm/x86.c              |   21 +++++++++++++++++++++
+ 3 files changed, 43 insertions(+), 11 deletions(-)
 
---- a/mm/damon/core-test.h
-+++ b/mm/damon/core-test.h
-@@ -256,15 +256,35 @@ static void damon_test_split_regions_of(
- 	struct damon_target *t;
- 	struct damon_region *r;
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -1827,6 +1827,11 @@ u64 vcpu_tsc_khz(struct kvm_vcpu *vcpu);
+  *			     the gfn, i.e. retrying the instruction will hit a
+  *			     !PRESENT fault, which results in a new shadow page
+  *			     and sends KVM back to square one.
++ *
++ * EMULTYPE_SKIP_SOFT_INT - Set in combination with EMULTYPE_SKIP to only skip
++ *                          an instruction if it could generate a given software
++ *                          interrupt, which must be encoded via
++ *                          EMULTYPE_SET_SOFT_INT_VECTOR().
+  */
+ #define EMULTYPE_NO_DECODE	    (1 << 0)
+ #define EMULTYPE_TRAP_UD	    (1 << 1)
+@@ -1837,6 +1842,10 @@ u64 vcpu_tsc_khz(struct kvm_vcpu *vcpu);
+ #define EMULTYPE_PF		    (1 << 6)
+ #define EMULTYPE_COMPLETE_USER_EXIT (1 << 7)
+ #define EMULTYPE_WRITE_PF_TO_SP	    (1 << 8)
++#define EMULTYPE_SKIP_SOFT_INT	    (1 << 9)
++
++#define EMULTYPE_SET_SOFT_INT_VECTOR(v)	((u32)((v) & 0xff) << 16)
++#define EMULTYPE_GET_SOFT_INT_VECTOR(e)	(((e) >> 16) & 0xff)
  
-+	if (!c)
-+		kunit_skip(test, "ctx alloc fail");
- 	t = damon_new_target();
-+	if (!t) {
-+		damon_destroy_ctx(c);
-+		kunit_skip(test, "target alloc fail");
-+	}
- 	r = damon_new_region(0, 22);
-+	if (!r) {
-+		damon_destroy_ctx(c);
-+		damon_free_target(t);
-+		kunit_skip(test, "region alloc fail");
-+	}
- 	damon_add_region(r, t);
- 	damon_split_regions_of(t, 2);
- 	KUNIT_EXPECT_LE(test, damon_nr_regions(t), 2u);
- 	damon_free_target(t);
+ int kvm_emulate_instruction(struct kvm_vcpu *vcpu, int emulation_type);
+ int kvm_emulate_instruction_from_buffer(struct kvm_vcpu *vcpu,
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -370,6 +370,7 @@ static bool svm_can_emulate_instruction(
+ 					void *insn, int insn_len);
  
- 	t = damon_new_target();
-+	if (!t) {
-+		damon_destroy_ctx(c);
-+		kunit_skip(test, "second target alloc fail");
+ static int __svm_skip_emulated_instruction(struct kvm_vcpu *vcpu,
++					   int emul_type,
+ 					   bool commit_side_effects)
+ {
+ 	struct vcpu_svm *svm = to_svm(vcpu);
+@@ -399,7 +400,7 @@ static int __svm_skip_emulated_instructi
+ 		if (unlikely(!commit_side_effects))
+ 			old_rflags = svm->vmcb->save.rflags;
+ 
+-		if (!kvm_emulate_instruction(vcpu, EMULTYPE_SKIP))
++		if (!kvm_emulate_instruction(vcpu, emul_type))
+ 			return 0;
+ 
+ 		if (unlikely(!commit_side_effects))
+@@ -417,11 +418,13 @@ done:
+ 
+ static int svm_skip_emulated_instruction(struct kvm_vcpu *vcpu)
+ {
+-	return __svm_skip_emulated_instruction(vcpu, true);
++	return __svm_skip_emulated_instruction(vcpu, EMULTYPE_SKIP, true);
+ }
+ 
+-static int svm_update_soft_interrupt_rip(struct kvm_vcpu *vcpu)
++static int svm_update_soft_interrupt_rip(struct kvm_vcpu *vcpu, u8 vector)
+ {
++	const int emul_type = EMULTYPE_SKIP | EMULTYPE_SKIP_SOFT_INT |
++			      EMULTYPE_SET_SOFT_INT_VECTOR(vector);
+ 	unsigned long rip, old_rip = kvm_rip_read(vcpu);
+ 	struct vcpu_svm *svm = to_svm(vcpu);
+ 
+@@ -437,7 +440,7 @@ static int svm_update_soft_interrupt_rip
+ 	 * in use, the skip must not commit any side effects such as clearing
+ 	 * the interrupt shadow or RFLAGS.RF.
+ 	 */
+-	if (!__svm_skip_emulated_instruction(vcpu, !nrips))
++	if (!__svm_skip_emulated_instruction(vcpu, emul_type, !nrips))
+ 		return -EIO;
+ 
+ 	rip = kvm_rip_read(vcpu);
+@@ -473,7 +476,7 @@ static void svm_inject_exception(struct
+ 	kvm_deliver_exception_payload(vcpu, ex);
+ 
+ 	if (kvm_exception_is_soft(ex->vector) &&
+-	    svm_update_soft_interrupt_rip(vcpu))
++	    svm_update_soft_interrupt_rip(vcpu, ex->vector))
+ 		return;
+ 
+ 	svm->vmcb->control.event_inj = ex->vector
+@@ -3524,11 +3527,12 @@ static void svm_inject_nmi(struct kvm_vc
+ 
+ static void svm_inject_irq(struct kvm_vcpu *vcpu, bool reinjected)
+ {
++	struct kvm_queued_interrupt *intr = &vcpu->arch.interrupt;
+ 	struct vcpu_svm *svm = to_svm(vcpu);
+ 	u32 type;
+ 
+-	if (vcpu->arch.interrupt.soft) {
+-		if (svm_update_soft_interrupt_rip(vcpu))
++	if (intr->soft) {
++		if (svm_update_soft_interrupt_rip(vcpu, intr->nr))
+ 			return;
+ 
+ 		type = SVM_EVTINJ_TYPE_SOFT;
+@@ -3536,12 +3540,10 @@ static void svm_inject_irq(struct kvm_vc
+ 		type = SVM_EVTINJ_TYPE_INTR;
+ 	}
+ 
+-	trace_kvm_inj_virq(vcpu->arch.interrupt.nr,
+-			   vcpu->arch.interrupt.soft, reinjected);
++	trace_kvm_inj_virq(intr->nr, intr->soft, reinjected);
+ 	++vcpu->stat.irq_injections;
+ 
+-	svm->vmcb->control.event_inj = vcpu->arch.interrupt.nr |
+-				       SVM_EVTINJ_VALID | type;
++	svm->vmcb->control.event_inj = intr->nr | SVM_EVTINJ_VALID | type;
+ }
+ 
+ void svm_complete_interrupt_delivery(struct kvm_vcpu *vcpu, int delivery_mode,
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -8840,6 +8840,23 @@ static bool is_vmware_backdoor_opcode(st
+ 	return false;
+ }
+ 
++static bool is_soft_int_instruction(struct x86_emulate_ctxt *ctxt,
++				    int emulation_type)
++{
++	u8 vector = EMULTYPE_GET_SOFT_INT_VECTOR(emulation_type);
++
++	switch (ctxt->b) {
++	case 0xcc:
++		return vector == BP_VECTOR;
++	case 0xcd:
++		return vector == ctxt->src.val;
++	case 0xce:
++		return vector == OF_VECTOR;
++	default:
++		return false;
 +	}
- 	r = damon_new_region(0, 220);
-+	if (!r) {
-+		damon_destroy_ctx(c);
-+		damon_free_target(t);
-+		kunit_skip(test, "second region alloc fail");
-+	}
- 	damon_add_region(r, t);
- 	damon_split_regions_of(t, 4);
- 	KUNIT_EXPECT_LE(test, damon_nr_regions(t), 4u);
++}
++
+ /*
+  * Decode an instruction for emulation.  The caller is responsible for handling
+  * code breakpoints.  Note, manually detecting code breakpoints is unnecessary
+@@ -8930,6 +8947,10 @@ int x86_emulate_instruction(struct kvm_v
+ 	 * injecting single-step #DBs.
+ 	 */
+ 	if (emulation_type & EMULTYPE_SKIP) {
++		if (emulation_type & EMULTYPE_SKIP_SOFT_INT &&
++		    !is_soft_int_instruction(ctxt, emulation_type))
++			return 0;
++
+ 		if (ctxt->mode != X86EMUL_MODE_PROT64)
+ 			ctxt->eip = (u32)ctxt->_eip;
+ 		else
 
 
