@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E1133C530;
-	Fri,  9 Jan 2026 12:14:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B463835A92E;
+	Fri,  9 Jan 2026 12:14:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960885; cv=none; b=RSZkOoJiz+XbUcEz5E1xQsJCj9sk/F/KEFF27h2iw0X00WGFEWGWd1MarYf84GyI75yT7B3KhUCNlDqauipIty2DJDcWbHJCRhTBtQcs0f4NoJM8LB04+6wKFdZHGZggaVDFDjf6zq7/Q9s1EtQ4MezOAnOjWbautAXV0GQ7pm8=
+	t=1767960888; cv=none; b=AUny9Wtg7fJbPT/Qs73/MSvURO5hYs2JUHe49sqU+f3yKEQObaB+HvaeiwhC2AgMfqyR/pLWyd27Y7fIKhAMpzN7vZmvsuKUXfncTGapY3i9VAFGytSBq1Awg1EA2YPYcn7ax/E2uc7GTgfJ75rsNf09/JvI/Sv3xV3aQKQHRYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960885; c=relaxed/simple;
-	bh=DFqH3SKrkLCdqVcsQqt0RQTzcg3r21IQiiWn+WVAGZk=;
+	s=arc-20240116; t=1767960888; c=relaxed/simple;
+	bh=9H4fuH6tCkn3CWfWm7XAreTQjWU0Qe4yFAQ0Pa6x+Z0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F9pqoIzMVE5/uFqWJWCRDqDQ+hB7LundDmIZJHpchRRzu7i6PgptTcgHDQWjv9I3pVwjmZsc9WvWx7ZQ9olMflMC/40Z9CvLmvWka6B6oFHR4rmn08Ein+Y4KeUtq7H3eKhYol2SycXpHSa6Gx7Jp54l3W82DS7ptd6tuypaxmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eivqLPim; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zcl0F6omo+NlHpXK1FtyTGLsgBAd/gSjj0QSom57OjlMcfS7HbSzyJqXwBlnxOJeaWNQBQKf4tzgn4OPYbTwKzmmZqqYzalgCcD2aWM7ep8YGay4n6W6pRwAN8cHi5bC34EIJo57CmXEBBRc7oBs8tnprcw0SzCi9S5veA4DcQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D9OV892Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eivqLPim"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 535F4C4CEF1;
-	Fri,  9 Jan 2026 12:14:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D9OV892Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E6F4C4CEF1;
+	Fri,  9 Jan 2026 12:14:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960885;
-	bh=DFqH3SKrkLCdqVcsQqt0RQTzcg3r21IQiiWn+WVAGZk=;
+	s=korg; t=1767960888;
+	bh=9H4fuH6tCkn3CWfWm7XAreTQjWU0Qe4yFAQ0Pa6x+Z0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eivqLPim+BpxepNpbwMukFCXB6NMV5JBv/7PxHX/CM/aRQfDONiMHy5bLiNNjFNfk
-	 pNcubj9JdT/0kGOVtyuKLdks7WFRf0oru/pqRxMCKhkmlO4zLz92pXU53hSCE2rOwD
-	 dWvFZ6fTpR7ntWKE9c8KNk9eq3kOQK9BdY3lcB7c=
+	b=D9OV892QFQ/a0uBHLMMyDImQDvSzDaL4d/xZqKCFUgbmLDv0MVakn3glmHC9ZjZtX
+	 pAS8VmPLvE3RBAl2EHP6U9PlosOBiaa3MYmi4BCXWdRSzs5eCmJEfhYJXQU1M69p8d
+	 NaPSYMYR2dc2t3GLDDNZ8D5fTj5l7V6kI2YirAfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 532/737] RDMA/bnxt_re: Fix incorrect BAR check in bnxt_qplib_map_creq_db()
-Date: Fri,  9 Jan 2026 12:41:11 +0100
-Message-ID: <20260109112154.009252351@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Thierry Reding <treding@nvidia.com>,
+	Johan Hovold <johan@kernel.org>,
+	Joerg Roedel <joerg.roedel@amd.com>
+Subject: [PATCH 6.6 559/737] iommu/tegra: fix device leak on probe_device()
+Date: Fri,  9 Jan 2026 12:41:38 +0100
+Message-ID: <20260109112155.031900700@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,45 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 145a417a39d7efbc881f52e829817376972b278c ]
+commit c08934a61201db8f1d1c66fcc63fb2eb526b656d upstream.
 
-RCFW_COMM_CONS_PCI_BAR_REGION is defined as BAR 2, so checking
-!creq_db->reg.bar_id is incorrect and always false.
+Make sure to drop the reference taken to the iommu platform device when
+looking up its driver data during probe_device().
 
-pci_resource_start() returns the BAR base address, and a value of 0
-indicates that the BAR is unassigned. Update the condition to test
-bar_base == 0 instead.
+Note that commit 9826e393e4a8 ("iommu/tegra-smmu: Fix missing
+put_device() call in tegra_smmu_find") fixed the leak in an error path,
+but the reference is still leaking on success.
 
-This ensures the driver detects and logs an error for an unassigned
-RCFW communication BAR.
-
-Fixes: cee0c7bba486 ("RDMA/bnxt_re: Refactor command queue management code")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Link: https://patch.msgid.link/20251217100158.752504-1-alok.a.tiwari@oracle.com
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 891846516317 ("memory: Add NVIDIA Tegra memory controller support")
+Cc: stable@vger.kernel.org	# 3.19: 9826e393e4a8
+Cc: Miaoqian Lin <linmq006@gmail.com>
+Acked-by: Robin Murphy <robin.murphy@arm.com>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_rcfw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/tegra-smmu.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-index e82bd37158ad..2accda5a04a1 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-@@ -1116,7 +1116,7 @@ static int bnxt_qplib_map_creq_db(struct bnxt_qplib_rcfw *rcfw, u32 reg_offt)
- 	creq_db->dbinfo.flags = 0;
- 	creq_db->reg.bar_id = RCFW_COMM_CONS_PCI_BAR_REGION;
- 	creq_db->reg.bar_base = pci_resource_start(pdev, creq_db->reg.bar_id);
--	if (!creq_db->reg.bar_id)
-+	if (!creq_db->reg.bar_base)
- 		dev_err(&pdev->dev,
- 			"QPLIB: CREQ BAR region %d resc start is 0!",
- 			creq_db->reg.bar_id);
--- 
-2.51.0
-
+--- a/drivers/iommu/tegra-smmu.c
++++ b/drivers/iommu/tegra-smmu.c
+@@ -804,10 +804,9 @@ static struct tegra_smmu *tegra_smmu_fin
+ 		return NULL;
+ 
+ 	mc = platform_get_drvdata(pdev);
+-	if (!mc) {
+-		put_device(&pdev->dev);
++	put_device(&pdev->dev);
++	if (!mc)
+ 		return NULL;
+-	}
+ 
+ 	return mc->smmu;
+ }
 
 
