@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D708E335BCD;
-	Fri,  9 Jan 2026 12:37:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96465335BCD;
+	Fri,  9 Jan 2026 12:37:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962236; cv=none; b=i02CLTo+mJkIfvb/1vrjC91B4EIEEgF9tVljXvazoJhxyKGWmNtCt1h9XDHpTfACIKrrtrSjq6ln7prrDz1OO0sCkkgNpBeBBi50BWDiGiZCUJbD1Cmh0xOQYcljZO14LLBQy9kpFjJ4JOSwg75slyrUEFDlXnl+Yd4weUFLexU=
+	t=1767962239; cv=none; b=kC6criStwCScwDm/3gExpl89mammXTF/Hqg3M0n2Pp2MWHCGi6ajK+layNuNIBOcHvJlOH7QMXoLljeKwG7PokYSA9gA2RFnrtYCkHNzP83zV0foPY+cAtEGThy2gOOZy7sq5gs27X9Xb6Ohwmf1ClRQLOIqukU9r5FICoGty9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962236; c=relaxed/simple;
-	bh=a4joI7te4bnLkDaO4R0pjh3SRwTGE3wC/2zVOr0B5oo=;
+	s=arc-20240116; t=1767962239; c=relaxed/simple;
+	bh=KGrGollUQbb2Few+W3xAeJG7UqOVLoE/hz+NMtPE5UM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tys78/20qi7oNZ1/X8oGgxyeshWSnpvMy/jCHZ5zGLU+ZuSJXAz8N9CTYmsY8sErLypR9FVqP+26rClXKUj4/Yrjm6ZEGEIfGfIK5C3vjyv3sCidKB5ug1aV5J5GkCXJBuO2rhthUxacYip22ZbGwNcYDnBRLEQAvITxxn92zG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SgC2a7l6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jLS8taVBR+Wasaf7rNFxc1ljm2C8JdmtkPkbtvQ2N2nqslS3u6WDARU7996yZ1py1JEPmV3qFRpmnvJvys4G3IN5eGNl/mXjfCe6h9VXNVDkjXFMv8iQRC0F6tRjKQ9y4vZCZ5wBRX3LtWNtdvntWBX9RXHj9JuHOXcQCncBAjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ecsJPcFr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SgC2a7l6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 635F5C4CEF1;
-	Fri,  9 Jan 2026 12:37:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ecsJPcFr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 289DBC4CEF1;
+	Fri,  9 Jan 2026 12:37:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962236;
-	bh=a4joI7te4bnLkDaO4R0pjh3SRwTGE3wC/2zVOr0B5oo=;
+	s=korg; t=1767962239;
+	bh=KGrGollUQbb2Few+W3xAeJG7UqOVLoE/hz+NMtPE5UM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SgC2a7l6R/HraUmRHzrgGyeIccLwcSvVhA1sbu8nwq+amQo7dAAgPidp4JBxakR8G
-	 373pEenCad/+fochQmy1DpalfOVQDJWud9n/lUeIGpxxUwBsmRHj6XHYq/SQOQXIWD
-	 G0dzI+XKdqNALI3fAp/YjLE4eLh/ia+kk7D/Vx+s=
+	b=ecsJPcFrAox5SXOmWdYUNAb2bEWk5IEFZ5MFGB25Xgf5v+Z7JgzScP/utF/YfYA4H
+	 3p/9f7Jf4mTdofM57TTe9vlToYqsbTGHNyOdJ2YHT1SrwN38ShfmZCNw2l3WRMqy71
+	 kPWxXl9OHt8fmx9/QuTzQLdkclNnKnuJewY6mMGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ziv Xu <ziv.xu@starfivetech.com>,
-	William Qiu <william.qiu@starfivetech.com>,
-	Mark Brown <broonie@kernel.org>,
+	"DARKNAVY (@DarkNavyOrg)" <vr@darknavy.com>,
+	Shipei Qu <qu@darknavy.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 277/634] spi: cadence-quadspi: Add support for StarFive JH7110 QSPI
-Date: Fri,  9 Jan 2026 12:39:15 +0100
-Message-ID: <20260109112127.955684085@linuxfoundation.org>
+Subject: [PATCH 6.1 295/634] ALSA: usb-mixer: us16x08: validate meter packet indices
+Date: Fri,  9 Jan 2026 12:39:33 +0100
+Message-ID: <20260109112128.631767980@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,91 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Qiu <william.qiu@starfivetech.com>
+From: Shipei Qu <qu@darknavy.com>
 
-[ Upstream commit 47fef94afeae2a125607b6b45145594713471320 ]
+[ Upstream commit 5526c1c6ba1d0913c7dfcbbd6fe1744ea7c55f1e ]
 
-Add QSPI reset operation in device probe and add RISCV support to
-QUAD SPI Kconfig.
+get_meter_levels_from_urb() parses the 64-byte meter packets sent by
+the device and fills the per-channel arrays meter_level[],
+comp_level[] and master_level[] in struct snd_us16x08_meter_store.
 
-Co-developed-by: Ziv Xu <ziv.xu@starfivetech.com>
-Signed-off-by: Ziv Xu <ziv.xu@starfivetech.com>
-Signed-off-by: William Qiu <william.qiu@starfivetech.com>
-Link: https://lore.kernel.org/r/20230302105221.197421-3-william.qiu@starfivetech.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 1889dd208197 ("spi: cadence-quadspi: Fix clock disable on probe failure path")
+Currently the function derives the channel index directly from the
+meter packet (MUB2(meter_urb, s) - 1) and uses it to index those
+arrays without validating the range. If the packet contains a
+negative or out-of-range channel number, the driver may write past
+the end of these arrays.
+
+Introduce a local channel variable and validate it before updating the
+arrays. We reject negative indices, limit meter_level[] and
+comp_level[] to SND_US16X08_MAX_CHANNELS, and guard master_level[]
+updates with ARRAY_SIZE(master_level).
+
+Fixes: d2bb390a2081 ("ALSA: usb-audio: Tascam US-16x08 DSP mixer quirk")
+Reported-by: DARKNAVY (@DarkNavyOrg) <vr@darknavy.com>
+Closes: https://lore.kernel.org/tencent_21C112743C44C1A2517FF219@qq.com
+Signed-off-by: Shipei Qu <qu@darknavy.com>
+Link: https://patch.msgid.link/20251217024630.59576-1-qu@darknavy.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/Kconfig               |  2 +-
- drivers/spi/spi-cadence-quadspi.c | 21 ++++++++++++++++++++-
- 2 files changed, 21 insertions(+), 2 deletions(-)
+ sound/usb/mixer_us16x08.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/spi/Kconfig b/drivers/spi/Kconfig
-index 15ea11ebcbe0..834fc0b8e27e 100644
---- a/drivers/spi/Kconfig
-+++ b/drivers/spi/Kconfig
-@@ -230,7 +230,7 @@ config SPI_CADENCE
- 
- config SPI_CADENCE_QUADSPI
- 	tristate "Cadence Quad SPI controller"
--	depends on OF && (ARM || ARM64 || X86 || COMPILE_TEST)
-+	depends on OF && (ARM || ARM64 || X86 || RISCV || COMPILE_TEST)
- 	help
- 	  Enable support for the Cadence Quad SPI Flash controller.
- 
-diff --git a/drivers/spi/spi-cadence-quadspi.c b/drivers/spi/spi-cadence-quadspi.c
-index 3200e55136cd..fe537b8d87e5 100644
---- a/drivers/spi/spi-cadence-quadspi.c
-+++ b/drivers/spi/spi-cadence-quadspi.c
-@@ -1586,7 +1586,7 @@ static int cqspi_setup_flash(struct cqspi_st *cqspi)
- static int cqspi_probe(struct platform_device *pdev)
+diff --git a/sound/usb/mixer_us16x08.c b/sound/usb/mixer_us16x08.c
+index 20ac32635f1f..d05cb54de788 100644
+--- a/sound/usb/mixer_us16x08.c
++++ b/sound/usb/mixer_us16x08.c
+@@ -656,17 +656,25 @@ static void get_meter_levels_from_urb(int s,
+ 	u8 *meter_urb)
  {
- 	const struct cqspi_driver_platdata *ddata;
--	struct reset_control *rstc, *rstc_ocp;
-+	struct reset_control *rstc, *rstc_ocp, *rstc_ref;
- 	struct device *dev = &pdev->dev;
- 	struct spi_master *master;
- 	struct resource *res_ahb;
-@@ -1679,6 +1679,17 @@ static int cqspi_probe(struct platform_device *pdev)
- 		goto probe_reset_failed;
- 	}
+ 	int val = MUC2(meter_urb, s) + (MUC3(meter_urb, s) << 8);
++	int ch = MUB2(meter_urb, s) - 1;
++
++	if (ch < 0)
++		return;
  
-+	if (of_device_is_compatible(pdev->dev.of_node, "starfive,jh7110-qspi")) {
-+		rstc_ref = devm_reset_control_get_optional_exclusive(dev, "rstc_ref");
-+		if (IS_ERR(rstc_ref)) {
-+			ret = PTR_ERR(rstc_ref);
-+			dev_err(dev, "Cannot get QSPI REF reset.\n");
-+			goto probe_reset_failed;
+ 	if (MUA0(meter_urb, s) == 0x61 && MUA1(meter_urb, s) == 0x02 &&
+ 		MUA2(meter_urb, s) == 0x04 && MUB0(meter_urb, s) == 0x62) {
+-		if (MUC0(meter_urb, s) == 0x72)
+-			store->meter_level[MUB2(meter_urb, s) - 1] = val;
+-		if (MUC0(meter_urb, s) == 0xb2)
+-			store->comp_level[MUB2(meter_urb, s) - 1] = val;
++		if (ch < SND_US16X08_MAX_CHANNELS) {
++			if (MUC0(meter_urb, s) == 0x72)
++				store->meter_level[ch] = val;
++			if (MUC0(meter_urb, s) == 0xb2)
++				store->comp_level[ch] = val;
 +		}
-+		reset_control_assert(rstc_ref);
-+		reset_control_deassert(rstc_ref);
+ 	}
+ 	if (MUA0(meter_urb, s) == 0x61 && MUA1(meter_urb, s) == 0x02 &&
+-		MUA2(meter_urb, s) == 0x02 && MUB0(meter_urb, s) == 0x62)
+-		store->master_level[MUB2(meter_urb, s) - 1] = val;
++		MUA2(meter_urb, s) == 0x02 && MUB0(meter_urb, s) == 0x62) {
++		if (ch < ARRAY_SIZE(store->master_level))
++			store->master_level[ch] = val;
 +	}
-+
- 	reset_control_assert(rstc);
- 	reset_control_deassert(rstc);
+ }
  
-@@ -1836,6 +1847,10 @@ static const struct cqspi_driver_platdata versal_ospi = {
- 	.get_dma_status = cqspi_get_versal_dma_status,
- };
- 
-+static const struct cqspi_driver_platdata jh7110_qspi = {
-+	.quirks = CQSPI_DISABLE_DAC_MODE,
-+};
-+
- static const struct of_device_id cqspi_dt_ids[] = {
- 	{
- 		.compatible = "cdns,qspi-nor",
-@@ -1861,6 +1876,10 @@ static const struct of_device_id cqspi_dt_ids[] = {
- 		.compatible = "intel,socfpga-qspi",
- 		.data = &socfpga_qspi,
- 	},
-+	{
-+		.compatible = "starfive,jh7110-qspi",
-+		.data = &jh7110_qspi,
-+	},
- 	{ /* end of table */ }
- };
- 
+ /* Function to retrieve current meter values from the device.
 -- 
 2.51.0
 
