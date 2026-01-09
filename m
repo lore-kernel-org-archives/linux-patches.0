@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C197226ED41;
-	Fri,  9 Jan 2026 12:19:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63F62737EE;
+	Fri,  9 Jan 2026 12:20:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961199; cv=none; b=Q6Fspn1FKPUsP5rrxAowxPM4UloumGz9oZAiO7RJCkZ0uEN8//1yJi5ubKZQ6FYz9ep+r/E/Hn2cr4C3MMpOixF1mlhAbFJmAhjxmArhJzH8WwgZR71oC3Xbl05v2EPf9o2J60Y1c7Rl1WkRtEw3s/hLgwmHk0UK8KQ7SfmS9NY=
+	t=1767961202; cv=none; b=qPBnBHI4sTdSYt0AtNUZKwM0cIwmVfBqUqBrXmycFYqWO8iwrgVxzBcZYAXq48ds07RMLydcBwrnlOLYPGy9B59Lm4RV16exCgdrf5oGJBebDTD0uOFTqOsFi6enjzqFpBkZqZQqINfWmoK5YYTStKh74fOF9deE6yu8vf42GRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961199; c=relaxed/simple;
-	bh=ajmXznLHH7K9v1tURci6vhdTot1IPQ3MWr9ngvy6fno=;
+	s=arc-20240116; t=1767961202; c=relaxed/simple;
+	bh=RPcDCtxt7mdMG7SaPuIgs61SOnlh8P6eBT18CDzeDec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iJ4SKdpMuC8MbPi9gVZ0z2UYTPjjrez6oiNNiG82s0+dQ7gDjEKN3wqOv62nbgpxauI8IycKeddsFDa9lGcBE+9+ia4oGrrte69ZJZourziqTjw3xs3oqNnbmzWvC4AN3Yk8+u+n30UbPlfMsj84LYAWEnKEmK14pi3fIaoWdJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m7y8m2fr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r4URwYD+ZrFckiIX/4isajeWtS6pRJyAa664Hu9l/57YRIv8zLWrj6GgnlMdafAx0BmMpX3s1HNxsCwKIJEDyt536nlV6B2pB1sYVPra30w9Hg7DFBw90usd+Aj9jS+v4s8UJMs2ctdF2db9jfMlrIx5FAmhWoppSI96WcGC7Vs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PySpDPwE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m7y8m2fr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44FFFC4CEF1;
-	Fri,  9 Jan 2026 12:19:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PySpDPwE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E423C4CEF1;
+	Fri,  9 Jan 2026 12:20:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961199;
-	bh=ajmXznLHH7K9v1tURci6vhdTot1IPQ3MWr9ngvy6fno=;
+	s=korg; t=1767961202;
+	bh=RPcDCtxt7mdMG7SaPuIgs61SOnlh8P6eBT18CDzeDec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m7y8m2frRavlT704oQVaJqOJFZG+j3T/wfts51slLwoE0uscay5B3ftIG/MWm90bc
-	 isl+Ll651qh9LeOfRPrKRfLV7si7tSH+YQHHGuXEibKXHAnrEjm7xD8VhTB6peaQ8K
-	 96DQrQSa+8sFjuIi7Mv2tG0IJJi6zdRrtmPm/pFs=
+	b=PySpDPwEYRX0W12g8eWZW1tUD4oUSz5kjKwQpazx/1Qt6o06GPwFikfxCxC6PqDV7
+	 M1n1eNez3lSB64iUeF8kjd/1DTDZuksgQOgm8KXGrgo7eV/AxTYaJGN8vdIc5DH4cd
+	 /3vco5klOxT/piAhMUjeGDJB3ffzf2aIzSeiJegI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	=?UTF-8?q?=C5=81ukasz=20Bartosik?= <ukaszb@chromium.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 668/737] xhci: dbgtty: fix device unregister: fixup
-Date: Fri,  9 Jan 2026 12:43:27 +0100
-Message-ID: <20260109112159.172694969@linuxfoundation.org>
+	Niklas Neronin <niklas.neronin@linux.intel.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Shivani Agarwal <shivani.agarwal@broadcom.com>
+Subject: [PATCH 6.6 669/737] usb: xhci: move link chain bit quirk checks into one helper function.
+Date: Fri,  9 Jan 2026 12:43:28 +0100
+Message-ID: <20260109112159.215601207@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -45,44 +45,106 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Łukasz Bartosik <ukaszb@chromium.org>
+From: Niklas Neronin <niklas.neronin@linux.intel.com>
 
-[ Upstream commit 74098cc06e753d3ffd8398b040a3a1dfb65260c0 ]
+commit 7476a2215c07703db5e95efaa3fc5b9f957b9417 upstream.
 
-This fixup replaces tty_vhangup() call with call to
-tty_port_tty_vhangup(). Both calls hangup tty device
-synchronously however tty_port_tty_vhangup() increases
-reference count during the hangup operation using
-scoped_guard(tty_port_tty).
+Older 0.95 xHCI hosts and some other specific newer hosts require the
+chain bit to be set for Link TRBs even if the link TRB is not in the
+middle of a transfer descriptor (TD).
 
-Cc: stable <stable@kernel.org>
-Fixes: 1f73b8b56cf3 ("xhci: dbgtty: fix device unregister")
-Signed-off-by: Łukasz Bartosik <ukaszb@chromium.org>
-Link: https://patch.msgid.link/20251127111644.3161386-1-ukaszb@google.com
+move the checks for all those cases  into one xhci_link_chain_quirk()
+function to clean up and avoid code duplication.
+
+No functional changes.
+
+[skip renaming chain_links flag, reword commit message -Mathias]
+
+Signed-off-by: Niklas Neronin <niklas.neronin@linux.intel.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20240626124835.1023046-10-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[Shivani: Modified to apply on 6.6.y]
+Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-dbgtty.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/host/xhci-mem.c  |   10 ++--------
+ drivers/usb/host/xhci-ring.c |    8 ++------
+ drivers/usb/host/xhci.h      |    7 +++++--
+ 3 files changed, 9 insertions(+), 16 deletions(-)
 
---- a/drivers/usb/host/xhci-dbgtty.c
-+++ b/drivers/usb/host/xhci-dbgtty.c
-@@ -522,7 +522,7 @@ static void xhci_dbc_tty_unregister_devi
- 	 * Hang up the TTY. This wakes up any blocked
- 	 * writers and causes subsequent writes to fail.
- 	 */
--	tty_vhangup(port->port.tty);
-+	tty_port_tty_vhangup(&port->port);
+--- a/drivers/usb/host/xhci-mem.c
++++ b/drivers/usb/host/xhci-mem.c
+@@ -136,10 +136,7 @@ static void xhci_link_rings(struct xhci_
+ 	if (!ring || !first || !last)
+ 		return;
  
- 	tty_unregister_device(dbc_tty_driver, port->minor);
- 	xhci_dbc_tty_exit_port(port);
+-	/* Set chain bit for 0.95 hosts, and for isoc rings on AMD 0.96 host */
+-	chain_links = !!(xhci_link_trb_quirk(xhci) ||
+-			 (ring->type == TYPE_ISOC &&
+-			  (xhci->quirks & XHCI_AMD_0x96_HOST)));
++	chain_links = xhci_link_chain_quirk(xhci, ring->type);
+ 
+ 	next = ring->enq_seg->next;
+ 	xhci_link_segments(ring->enq_seg, first, ring->type, chain_links);
+@@ -330,10 +327,7 @@ static int xhci_alloc_segments_for_ring(
+ 	unsigned int num = 0;
+ 	bool chain_links;
+ 
+-	/* Set chain bit for 0.95 hosts, and for isoc rings on AMD 0.96 host */
+-	chain_links = !!(xhci_link_trb_quirk(xhci) ||
+-			 (type == TYPE_ISOC &&
+-			  (xhci->quirks & XHCI_AMD_0x96_HOST)));
++	chain_links = xhci_link_chain_quirk(xhci, type);
+ 
+ 	prev = xhci_segment_alloc(xhci, cycle_state, max_packet, num, flags);
+ 	if (!prev)
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -245,9 +245,7 @@ static void inc_enq(struct xhci_hcd *xhc
+ 		 * AMD 0.96 host, carry over the chain bit of the previous TRB
+ 		 * (which may mean the chain bit is cleared).
+ 		 */
+-		if (!(ring->type == TYPE_ISOC &&
+-		      (xhci->quirks & XHCI_AMD_0x96_HOST)) &&
+-		    !xhci_link_trb_quirk(xhci)) {
++		if (!xhci_link_chain_quirk(xhci, ring->type)) {
+ 			next->link.control &= cpu_to_le32(~TRB_CHAIN);
+ 			next->link.control |= cpu_to_le32(chain);
+ 		}
+@@ -3381,9 +3379,7 @@ static int prepare_ring(struct xhci_hcd
+ 		/* If we're not dealing with 0.95 hardware or isoc rings
+ 		 * on AMD 0.96 host, clear the chain bit.
+ 		 */
+-		if (!xhci_link_trb_quirk(xhci) &&
+-		    !(ep_ring->type == TYPE_ISOC &&
+-		      (xhci->quirks & XHCI_AMD_0x96_HOST)))
++		if (!xhci_link_chain_quirk(xhci, ep_ring->type))
+ 			ep_ring->enqueue->link.control &=
+ 				cpu_to_le32(~TRB_CHAIN);
+ 		else
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -1784,9 +1784,12 @@ static inline void xhci_write_64(struct
+ 	lo_hi_writeq(val, regs);
+ }
+ 
+-static inline int xhci_link_trb_quirk(struct xhci_hcd *xhci)
++
++/* Link TRB chain should always be set on 0.95 hosts, and AMD 0.96 ISOC rings */
++static inline bool xhci_link_chain_quirk(struct xhci_hcd *xhci, enum xhci_ring_type type)
+ {
+-	return xhci->quirks & XHCI_LINK_TRB_QUIRK;
++	return (xhci->quirks & XHCI_LINK_TRB_QUIRK) ||
++	       (type == TYPE_ISOC && (xhci->quirks & XHCI_AMD_0x96_HOST));
+ }
+ 
+ /* xHCI debugging */
 
 
