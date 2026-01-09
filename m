@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD22E320CB6;
-	Fri,  9 Jan 2026 12:11:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B573C320CB6;
+	Fri,  9 Jan 2026 12:11:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960691; cv=none; b=NvIrIpZGB9lJix8GrACKGMakgylQUMvIGuWvHrCt/vlK1hxSSgH22kS+hS53XwjpGK+efvT0hQBZuIz8KCwKEIAID9GrWf/f88jC22y3xrhHh0I2SwJ6Lf2Ujz5dZj2TmbFE9YeDiH5V4GbzcyFGFTs/qQCQe/5qMogrNAfg5gc=
+	t=1767960694; cv=none; b=DR+OXsEzYbBQWGGTqywovL2FlAsByaV/eJ8GGzIFkNJ0Jk32+/WDmTgj6rWk84qqNzeh/ItvS3RB9tZL4k8p3KkzkheqbsirwXrk0E2sAr62ejGeqWmem7mprPLM53BqzTkuCxqb9GuT0wK/LulIqHra4q9560dS6aNcrXGYVC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960691; c=relaxed/simple;
-	bh=+EU/IC77tM/XYtMpH79gHddAmdgoNQaB4V9K8Dx8ZgU=;
+	s=arc-20240116; t=1767960694; c=relaxed/simple;
+	bh=BnKyyC5IJl35Gjfjy/6lQ7WMqkT7CTKLTbNJP9tzfNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y5gUm/XlJzV0mXjrA6QZohJkn6S6i6K6muELnBUYTcCNjswG/B2dp6E6B57eusi471SblQ0VCTFVz8xv10l9gnJSxL73lst8hvfDiWGVPY83kC+Bu1mV6751SL/5Aoe31xic0KBxCWPNY2AZdvg5omQfjRYH032A8WBvPt13qlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d4hyb9Ky; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hm4p6Mc4ZdmHNBECYnRBH4IHImKO0BLUUet0f+zYZ56LSXc1L5lZ9l5WpUabauD1kSqrgaGTLCeu/XWvrPrZ871N2usrMZddgRnTmRgdp2XHktDADTblsmr9MaSWUJ4vwm8la4zvojuUenUGXkXaoRqY1P0Hz5hn9CCkFLx9MZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F0IktdEl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d4hyb9Ky"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64100C4CEF1;
-	Fri,  9 Jan 2026 12:11:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F0IktdEl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42186C4CEF1;
+	Fri,  9 Jan 2026 12:11:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960691;
-	bh=+EU/IC77tM/XYtMpH79gHddAmdgoNQaB4V9K8Dx8ZgU=;
+	s=korg; t=1767960694;
+	bh=BnKyyC5IJl35Gjfjy/6lQ7WMqkT7CTKLTbNJP9tzfNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d4hyb9KyK9QLWXy84LbR+hwx2KhrSh582rdml8vt8cybq0vu9TymYCLn04c1aKSpq
-	 C6lX37GUnoZE5TJR2HpCaOq44z6InU6mD6cmNKhc4wetX9F4H6xDQzIRUGLKoQTlw4
-	 gRipc5qqzdTX0UvdxkSMBHsT7jo5peHtCAh7rcvg=
+	b=F0IktdElA2OnAmQZEt45ekXka6rgGKucXmIO4edbmGYhOYxDjBXb+uzhKcqcWjl2i
+	 o1/EqmU+ssi8fjxgCIHg9Ob8BLk/0pGb50hQRfXWceql/5K+Pn8IH8R0E2gheL3eLh
+	 yG5VB886/gWXXicwY4gNkXOH6Wx3TjNEcg2uNws0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Douglas Raillard <douglas.raillard@arm.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 490/737] tracing: Fix fixed array of synthetic event
-Date: Fri,  9 Jan 2026 12:40:29 +0100
-Message-ID: <20260109112152.423462560@linuxfoundation.org>
+	Brian Masney <bmasney@redhat.com>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Johan Hovold <johan@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.6 491/737] soc: qcom: ocmem: fix device leak on lookup
+Date: Fri,  9 Jan 2026 12:40:30 +0100
+Message-ID: <20260109112152.460705571@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,58 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Johan Hovold <johan@kernel.org>
 
-commit 47ef834209e5981f443240d8a8b45bf680df22aa upstream.
+commit b5c16ea57b030b8e9428ec726e26219dfe05c3d9 upstream.
 
-The commit 4d38328eb442d ("tracing: Fix synth event printk format for str
-fields") replaced "%.*s" with "%s" but missed removing the number size of
-the dynamic and static strings. The commit e1a453a57bc7 ("tracing: Do not
-add length to print format in synthetic events") fixed the dynamic part
-but did not fix the static part. That is, with the commands:
+Make sure to drop the reference taken to the ocmem platform device when
+looking up its driver data.
 
-  # echo 's:wake_lat char[] wakee; u64 delta;' >> /sys/kernel/tracing/dynamic_events
-  # echo 'hist:keys=pid:ts=common_timestamp.usecs if !(common_flags & 0x18)' > /sys/kernel/tracing/events/sched/sched_waking/trigger
-  # echo 'hist:keys=next_pid:delta=common_timestamp.usecs-$ts:onmatch(sched.sched_waking).trace(wake_lat,next_comm,$delta)' > /sys/kernel/tracing/events/sched/sched_switch/trigger
+Note that holding a reference to a device does not prevent its driver
+data from going away so there is no point in keeping the reference.
 
-That caused the output of:
+Also note that commit 0ff027027e05 ("soc: qcom: ocmem: Fix missing
+put_device() call in of_get_ocmem") fixed the leak in a lookup error
+path, but the reference is still leaking on success.
 
-          <idle>-0       [001] d..5.   193.428167: wake_lat: wakee=(efault)sshd-sessiondelta=155
-    sshd-session-879     [001] d..5.   193.811080: wake_lat: wakee=(efault)kworker/u34:5delta=58
-          <idle>-0       [002] d..5.   193.811198: wake_lat: wakee=(efault)bashdelta=91
-
-The commit e1a453a57bc7 fixed the part where the synthetic event had
-"char[] wakee". But if one were to replace that with a static size string:
-
-  # echo 's:wake_lat char[16] wakee; u64 delta;' >> /sys/kernel/tracing/dynamic_events
-
-Where "wakee" is defined as "char[16]" and not "char[]" making it a static
-size, the code triggered the "(efaul)" again.
-
-Remove the added STR_VAR_LEN_MAX size as the string is still going to be
-nul terminated.
-
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Douglas Raillard <douglas.raillard@arm.com>
-Link: https://patch.msgid.link/20251204151935.5fa30355@gandalf.local.home
-Fixes: e1a453a57bc7 ("tracing: Do not add length to print format in synthetic events")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 88c1e9404f1d ("soc: qcom: add OCMEM driver")
+Cc: stable@vger.kernel.org	# 5.5: 0ff027027e05
+Cc: Brian Masney <bmasney@redhat.com>
+Cc: Miaoqian Lin <linmq006@gmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Link: https://lore.kernel.org/r/20250926143511.6715-2-johan@kernel.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_synth.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/soc/qcom/ocmem.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/trace/trace_events_synth.c
-+++ b/kernel/trace/trace_events_synth.c
-@@ -382,7 +382,6 @@ static enum print_line_t print_synth_eve
- 				n_u64++;
- 			} else {
- 				trace_seq_printf(s, print_fmt, se->fields[i]->name,
--						 STR_VAR_LEN_MAX,
- 						 (char *)&entry->fields[n_u64].as_u64,
- 						 i == se->n_fields - 1 ? "" : " ");
- 				n_u64 += STR_VAR_LEN_MAX / sizeof(u64);
+--- a/drivers/soc/qcom/ocmem.c
++++ b/drivers/soc/qcom/ocmem.c
+@@ -204,9 +204,9 @@ struct ocmem *of_get_ocmem(struct device
+ 	of_node_put(devnode);
+ 
+ 	ocmem = platform_get_drvdata(pdev);
++	put_device(&pdev->dev);
+ 	if (!ocmem) {
+ 		dev_err(dev, "Cannot get ocmem\n");
+-		put_device(&pdev->dev);
+ 		return ERR_PTR(-ENODEV);
+ 	}
+ 	return ocmem;
 
 
