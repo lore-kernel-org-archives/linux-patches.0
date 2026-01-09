@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF9C33B6E8;
-	Fri,  9 Jan 2026 12:31:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19B935A95B;
+	Fri,  9 Jan 2026 12:31:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961874; cv=none; b=StQZOLtunTiGeHVZ2H8bfbtFDlthVGqFhmUPW4dpGUPdhOWifoBoihW5T8MLkXUj64ZSEK2CJJu09AgcD5GWkgg8NrtgITZxMkdtY8OgYGFV5bP04Hznb7VTrdnD9bTQM/z2U5U+8xr8Ufp5YodPYm2r+I0x6EWLmJpxsQIHppg=
+	t=1767961877; cv=none; b=IBp4/sox3k0mCK9IoP2TY88h/sN12VJBICAnkozvp4FQpfjba+Us199ug2z+ihxeB2+EO80PHyXCNpAlJ+KDTrMi62wjatNRi/R7KMhsby4e5AXQ3z7LHrpcTul2hDB67UX/m4MwtK850s92kMbJUjDp2vfGqxxBeS1Y7k69G20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961874; c=relaxed/simple;
-	bh=SWleuy6dI590TZSw94eBywe5lIL3ApidDfmGwGghHls=;
+	s=arc-20240116; t=1767961877; c=relaxed/simple;
+	bh=rutcdPqCiej+RJmBFXTHcdial/nK99mt74UhwSgWoQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pY/gpt0KcjzJDTu30S69IJD7QZY+X5lbOedb/2vt9t1321DVGvy6ysOGbQkBOGvVyBuXciMxZ6lDJDoJa61sYntikXG7YiGb86iVbJRUJGNxsbisND7aXR4vvgkGkszYLLyy1FV6eUt+yKVLUZcwvUuhvmMmYFylhpDxYPMG3hk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZmbYqo9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eeTMmvAwtl9kdMaNNkuOGneUlNMcUvtJY6mg4llkv9gLKKNcXwrJPcdZO2XEIKa/tRLxCV/cbX+iRlA38tAj/3XZpdZdv3qQy+uFaJgajGPNfk2A7/zzq5+nm0IPYs/FUreU7sxo/kQd0RV2iHdBLaiFKvi6OHiLkMQdrgNHZsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uT0UeH+H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZmbYqo9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B751C16AAE;
-	Fri,  9 Jan 2026 12:31:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uT0UeH+H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C346C4CEF1;
+	Fri,  9 Jan 2026 12:31:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961873;
-	bh=SWleuy6dI590TZSw94eBywe5lIL3ApidDfmGwGghHls=;
+	s=korg; t=1767961876;
+	bh=rutcdPqCiej+RJmBFXTHcdial/nK99mt74UhwSgWoQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sZmbYqo9ZU8usxUMhdsflGntnOk9McK6tv/tH276BGd5qpmaUri3dVp1pilpzxJG/
-	 8K5pR2Gr6LvGHINlpv8ANxULCMW9+G09iD6KHBLpiQ/ZF8djRluoXFXpuKqoctI2vC
-	 YPtmk11i4km5mjcMKmftj01rb0hOFkdfh5tlCL4U=
+	b=uT0UeH+Huh2C4rh0NEcJhh+IROHPuJd+aljw1FsN9vbJMq9Zp6g8PcJkyxyGAHp5v
+	 LBwKIrSE7N0d6yiKgLYLbZ48D7LK8zQl1i/0JNRsj1HEw0MIqGficToMyZjIOzBnb+
+	 JRQPYyhSV+OIcu5XCj9dA9qxiGna2jq+KZ4uqEb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 165/634] virtio: fix virtqueue_set_affinity() docs
-Date: Fri,  9 Jan 2026 12:37:23 +0100
-Message-ID: <20260109112123.656979277@linuxfoundation.org>
+Subject: [PATCH 6.1 166/634] ASoC: Intel: catpt: Fix error path in hw_params()
+Date: Fri,  9 Jan 2026 12:37:24 +0100
+Message-ID: <20260109112123.694660321@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,34 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael S. Tsirkin <mst@redhat.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit 43236d8bbafff94b423afecc4a692dd90602d426 ]
+[ Upstream commit 86a5b621be658fc8fe594ca6db317d64de30cce1 ]
 
-Rewrite the comment for better grammar and clarity.
+Do not leave any resources hanging on the DSP side if
+applying user settings fails.
 
-Fixes: 75a0a52be3c2 ("virtio: introduce an API to set affinity for a virtqueue")
-Message-Id: <e317e91bd43b070e5eaec0ebbe60c5749d02e2dd.1763026134.git.mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: 768a3a3b327d ("ASoC: Intel: catpt: Optimize applying user settings")
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20251126095523.3925364-4-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/virtio_config.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/intel/catpt/pcm.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/virtio_config.h b/include/linux/virtio_config.h
-index eee145cfea6b5..2051295c3920c 100644
---- a/include/linux/virtio_config.h
-+++ b/include/linux/virtio_config.h
-@@ -308,7 +308,7 @@ const char *virtio_bus_name(struct virtio_device *vdev)
-  * @vq: the virtqueue
-  * @cpu_mask: the cpu mask
-  *
-- * Pay attention the function are best-effort: the affinity hint may not be set
-+ * Note that this function is best-effort: the affinity hint may not be set
-  * due to config support, irq type and sharing.
-  *
-  */
+diff --git a/sound/soc/intel/catpt/pcm.c b/sound/soc/intel/catpt/pcm.c
+index 30ca5416c9a3f..a30cdc94871d1 100644
+--- a/sound/soc/intel/catpt/pcm.c
++++ b/sound/soc/intel/catpt/pcm.c
+@@ -417,8 +417,10 @@ static int catpt_dai_hw_params(struct snd_pcm_substream *substream,
+ 		return CATPT_IPC_ERROR(ret);
+ 
+ 	ret = catpt_dai_apply_usettings(dai, stream);
+-	if (ret)
++	if (ret) {
++		catpt_ipc_free_stream(cdev, stream->info.stream_hw_id);
+ 		return ret;
++	}
+ 
+ 	stream->allocated = true;
+ 	return 0;
 -- 
 2.51.0
 
