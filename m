@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A818336EDA;
-	Fri,  9 Jan 2026 12:30:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4158135B120;
+	Fri,  9 Jan 2026 12:30:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961834; cv=none; b=bMr3nXY3kUzHLDJifV2jDKrSZ/gneGHliX0OxRetslmEt0w0+7c1VQBfDOufZBGhxqsRGeZshaQxn7MxCo8UxCB2QkglRhbXqNcwe5Un/JPPbCJKNEjCDREhFcD7tkMuOb1LBk7CmnFJNJPpehnQYr46OcDwFFFiXovgo2FzCuY=
+	t=1767961837; cv=none; b=mXfCYMdYMXBP1qMFoFU/wm3YDr99ysA+n6o0uHepebygzthJIhCoi10/gG04hY36Hybii8ZJ3KV6qOY4gr2x6llE1/vDqcTQNz9QAePZSEbgXF1t/RgHREvENbJWWX6SQIWSX5/LQsOlke6OABRVV43XKPTAvw9Njpu2BO2NIv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961834; c=relaxed/simple;
-	bh=fycHa7uXIbPBsN8hoVC462obpfu1MljgDVKgGs0v8cw=;
+	s=arc-20240116; t=1767961837; c=relaxed/simple;
+	bh=FEkmLOl/Z1wQXn5W5GtCWsfHZuEkXomkV0JbSxBEdn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AqDCuxNfQeso+ZuXwkilnPc2UddG4GIl65rdulXtx6bwPuzuSuF/Ox53xarvcrpJiGGS6+RuPdLBwD6HL+UF+dWXoqLORIn389474fJrKR4/5oEK3wAHVyP8mjzgnspp1roAarcdrIrF4Wo5nm5TtTEF8ZLSz+iIkvTJXja70rk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lN4mrEkB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q7evqUJrZY+WkoVdZZuS0Mcx5fasbyqGbvN6sdxQ+cBfijwNZqz0eeRFbqMCvuEz5nwR9NLvoVuKmKP/oeTmMYKPtaNut/dkj37MWkzto98cCdTo5yy/wXqAg2+ITsJnoaLyJVDGh3vwJVIv0YejzCIoH8ks6VNWvEmFrV+RMec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yd+dJK/8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lN4mrEkB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC32EC4CEF1;
-	Fri,  9 Jan 2026 12:30:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yd+dJK/8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1A0AC4CEF1;
+	Fri,  9 Jan 2026 12:30:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961834;
-	bh=fycHa7uXIbPBsN8hoVC462obpfu1MljgDVKgGs0v8cw=;
+	s=korg; t=1767961837;
+	bh=FEkmLOl/Z1wQXn5W5GtCWsfHZuEkXomkV0JbSxBEdn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lN4mrEkBp91PaQTuSyTlDbZXP89eJ7lRNLuuZSf4m7u66968tibkRTVK8wXXoOwqi
-	 YYb5eVkpBSROsk9jQ2fRvNnpW9kVxf29gH26zIvYfgUyUvEcoafz8mw2SZX1RflJUW
-	 UAS0/yfYlUSk+DyLniB+qwBbjkmPqPhBFq4daFVc=
+	b=Yd+dJK/8ra5V+LD4IkLMXLHU9RTYHUgtvngvGMnwVjJEHQb7aytuKSN4lLjlGVsLV
+	 AkKSPg40Wljfy8oVep7/6y66EXdFDF0EdnGvWFsvSaaCjVq7MDE7+NlMEUPpSG6dye
+	 8r8R5oc0OCo2WDD+02itb7oG21zUo5cWXmZj4lcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Czurylo <krzysztof.czurylo@intel.com>,
-	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Minas Harutyunyan <hminas@synopsys.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 153/634] RDMA/irdma: Fix data race in irdma_sc_ccq_arm
-Date: Fri,  9 Jan 2026 12:37:11 +0100
-Message-ID: <20260109112123.209579658@linuxfoundation.org>
+Subject: [PATCH 6.1 136/634] usb: dwc2: disable platform lowlevel hw resources during shutdown
+Date: Fri,  9 Jan 2026 12:36:54 +0100
+Message-ID: <20260109112122.572021408@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,76 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Czurylo <krzysztof.czurylo@intel.com>
+From: Jisheng Zhang <jszhang@kernel.org>
 
-[ Upstream commit a521928164433de44fed5aaf5f49aeb3f1fb96f5 ]
+[ Upstream commit 7481a97c5f49f10c7490bb990d0e863f23b9bb71 ]
 
-Adds a lock around irdma_sc_ccq_arm body to prevent inter-thread data race.
-Fixes data race in irdma_sc_ccq_arm() reported by KCSAN:
+On some SoC platforms, in shutdown stage, most components' power is cut
+off, but there's still power supply to the so called always-on
+domain, so if the dwc2's regulator is from the always-on domain, we
+need to explicitly disable it to save power.
 
-BUG: KCSAN: data-race in irdma_sc_ccq_arm [irdma] / irdma_sc_ccq_arm [irdma]
+Disable platform lowlevel hw resources such as phy, clock and
+regulators etc. in device shutdown hook to reduce non-necessary power
+consumption when the platform enters shutdown stage.
 
-read to 0xffff9d51b4034220 of 8 bytes by task 255 on cpu 11:
- irdma_sc_ccq_arm+0x36/0xd0 [irdma]
- irdma_cqp_ce_handler+0x300/0x310 [irdma]
- cqp_compl_worker+0x2a/0x40 [irdma]
- process_one_work+0x402/0x7e0
- worker_thread+0xb3/0x6d0
- kthread+0x178/0x1a0
- ret_from_fork+0x2c/0x50
-
-write to 0xffff9d51b4034220 of 8 bytes by task 89 on cpu 3:
- irdma_sc_ccq_arm+0x7e/0xd0 [irdma]
- irdma_cqp_ce_handler+0x300/0x310 [irdma]
- irdma_wait_event+0xd4/0x3e0 [irdma]
- irdma_handle_cqp_op+0xa5/0x220 [irdma]
- irdma_hw_flush_wqes+0xb1/0x300 [irdma]
- irdma_flush_wqes+0x22e/0x3a0 [irdma]
- irdma_cm_disconn_true+0x4c7/0x5d0 [irdma]
- irdma_disconnect_worker+0x35/0x50 [irdma]
- process_one_work+0x402/0x7e0
- worker_thread+0xb3/0x6d0
- kthread+0x178/0x1a0
- ret_from_fork+0x2c/0x50
-
-value changed: 0x0000000000024000 -> 0x0000000000034000
-
-Fixes: 3f49d6842569 ("RDMA/irdma: Implement HW Admin Queue OPs")
-Signed-off-by: Krzysztof Czurylo <krzysztof.czurylo@intel.com>
-Signed-off-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
-Link: https://patch.msgid.link/20251125025350.180-2-tatyana.e.nikolova@intel.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+Acked-by: Minas Harutyunyan <hminas@synopsys.com>
+Link: https://lore.kernel.org/r/20250629094655.747-1-jszhang@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: b6ebcfdcac40 ("usb: dwc2: fix hang during shutdown if set as peripheral")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/ctrl.c | 3 +++
+ drivers/usb/dwc2/platform.c | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/drivers/infiniband/hw/irdma/ctrl.c b/drivers/infiniband/hw/irdma/ctrl.c
-index d98bfb83c3b4b..9525144a4c4e5 100644
---- a/drivers/infiniband/hw/irdma/ctrl.c
-+++ b/drivers/infiniband/hw/irdma/ctrl.c
-@@ -3303,11 +3303,13 @@ int irdma_sc_cqp_destroy(struct irdma_sc_cqp *cqp)
-  */
- void irdma_sc_ccq_arm(struct irdma_sc_cq *ccq)
- {
-+	unsigned long flags;
- 	u64 temp_val;
- 	u16 sw_cq_sel;
- 	u8 arm_next_se;
- 	u8 arm_seq_num;
+diff --git a/drivers/usb/dwc2/platform.c b/drivers/usb/dwc2/platform.c
+index 9de5a1be4a0ae..5e8c74e20bffa 100644
+--- a/drivers/usb/dwc2/platform.c
++++ b/drivers/usb/dwc2/platform.c
+@@ -340,6 +340,9 @@ static void dwc2_driver_shutdown(struct platform_device *dev)
  
-+	spin_lock_irqsave(&ccq->dev->cqp_lock, flags);
- 	get_64bit_val(ccq->cq_uk.shadow_area, 32, &temp_val);
- 	sw_cq_sel = (u16)FIELD_GET(IRDMA_CQ_DBSA_SW_CQ_SELECT, temp_val);
- 	arm_next_se = (u8)FIELD_GET(IRDMA_CQ_DBSA_ARM_NEXT_SE, temp_val);
-@@ -3318,6 +3320,7 @@ void irdma_sc_ccq_arm(struct irdma_sc_cq *ccq)
- 		   FIELD_PREP(IRDMA_CQ_DBSA_ARM_NEXT_SE, arm_next_se) |
- 		   FIELD_PREP(IRDMA_CQ_DBSA_ARM_NEXT, 1);
- 	set_64bit_val(ccq->cq_uk.shadow_area, 32, temp_val);
-+	spin_unlock_irqrestore(&ccq->dev->cqp_lock, flags);
+ 	dwc2_disable_global_interrupts(hsotg);
+ 	synchronize_irq(hsotg->irq);
++
++	if (hsotg->ll_hw_enabled)
++		dwc2_lowlevel_hw_disable(hsotg);
+ }
  
- 	dma_wmb(); /* make sure shadow area is updated before arming */
- 
+ /**
 -- 
 2.51.0
 
