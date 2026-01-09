@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 925EE33B97A;
-	Fri,  9 Jan 2026 12:18:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59FDC32936C;
+	Fri,  9 Jan 2026 12:18:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961136; cv=none; b=Iq+A/jeGc1E9ai8O4aK8afbrfOrTQi+0kvpmOh4zD8xQ+WRx7+debsv07NYwfuXPPLVAd4gPdQUTTz2YnV43tE8iVGDE+PstQdohwXoHyXYNlvsO/tXA91yvEInZLjMX4NKHrpaCl8AFE6xrqr99eQXqZaI4Q9526nrylD4TLXM=
+	t=1767961139; cv=none; b=cq9O6zDq4EJVPxyHS4KLETRRGgQXyXVE9pyaH6XrA5HKCYg9hDkE0GMlVbPqcqDpaz8FQg0ewDYGJHTuGJmihmoRk2hae6Cu9aP82I4MOWM2/PlpA+QUDqxfsgGijb+cRzhpd3uMbsHEaah6NTL4P4G5IMI4GSkyVbbYyjauML4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961136; c=relaxed/simple;
-	bh=LdRr0JX5d7YWS5eaMmTyCTg4M3Ufgja1fqIENHORGVw=;
+	s=arc-20240116; t=1767961139; c=relaxed/simple;
+	bh=+Q7onqfWLGym7rA6qNVsMHITnNL/x4DW5ECL26dAXJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cl6Tj+7PxevHfLNne1ET1ibs4u546s190LImMPw/7kX6yJrv6NQ0g5myOGCUKg7D0KXzuTPdQvuLj4Lx6M9ZKktLDQtuzJeux8ayUunV/150f63um9fVxwfXFpMS8N5xcitkcfwv/1oJxCPj0ZNVTTaWm+LeX89xW9P478XibI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bFxy5U6Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QZ7jMm6KNi1g95JrKVVTKQQ0YLRgINIo8pCNhwmN0zYDpjfQNH+xmn5XyLI3QoOA+90jQPu9X7FayLk+AtyV0ijf9el1v8MzvKVlJNebo+23iMQ4ba7h3i1UXQlS4t1Eaq3p+t3wQK+7XHHqVn77yRR9kj9iKL/5VbmOVzzQXu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VfTIG6yw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bFxy5U6Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FE8FC4CEF1;
-	Fri,  9 Jan 2026 12:18:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VfTIG6yw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCD78C4CEF1;
+	Fri,  9 Jan 2026 12:18:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961136;
-	bh=LdRr0JX5d7YWS5eaMmTyCTg4M3Ufgja1fqIENHORGVw=;
+	s=korg; t=1767961139;
+	bh=+Q7onqfWLGym7rA6qNVsMHITnNL/x4DW5ECL26dAXJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bFxy5U6ZSgRCHMlZvH0RdFlj1U1rk9mlAILfNT5p3BNsugdDI24+/D4BuTX3sJB1c
-	 qirpx9wciQxGrLe721fnDyDvIW80O1O8H+KSmAdSjxSG7ZcK1Qgp9YTCZje2Q9N3Cy
-	 /Lm9FGnk9T3agHYFglQbZoW36CAyXXuujExCdmTk=
+	b=VfTIG6ywLJ8eMUAEaDvY848GnGzqJrpq5bMLgi3amyAKSG3ketZSicCN1qpoJeMN4
+	 lKc3HU50taPGG7xJ+00AM1eJRfHB265rh751uACpwB+EnKlhiwdR+iEncWMTQ06P2Y
+	 8+rH8gqN8R1g4q5kfBclUd9gdbteXBllpib6AWIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Askar Safin <safinaskar@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 648/737] gpiolib: acpi: Add quirk for Dell Precision 7780
-Date: Fri,  9 Jan 2026 12:43:07 +0100
-Message-ID: <20260109112158.393652215@linuxfoundation.org>
+Subject: [PATCH 6.6 649/737] ARM: dts: microchip: sama7g5: fix uart fifo size to 32
+Date: Fri,  9 Jan 2026 12:43:08 +0100
+Message-ID: <20260109112158.433960691@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,58 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Askar Safin <safinaskar@gmail.com>
+From: Nicolas Ferre <nicolas.ferre@microchip.com>
 
-[ Upstream commit 2d967310c49ed93ac11cef408a55ddf15c3dd52e ]
+[ Upstream commit 5654889a94b0de5ad6ceae3793e7f5e0b61b50b6 ]
 
-Dell Precision 7780 often wakes up on its own from suspend. Sometimes
-wake up happens immediately (i. e. within 7 seconds), sometimes it happens
-after, say, 30 minutes.
+On some flexcom nodes related to uart, the fifo sizes were wrong: fix
+them to 32 data.
 
-Fixes: 1796f808e4bb ("HID: i2c-hid: acpi: Stop setting wakeup_capable")
-Link: https://lore.kernel.org/linux-i2c/197ae95ffd8.dc819e60457077.7692120488609091556@zohomail.com/
-Cc: stable@vger.kernel.org
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Askar Safin <safinaskar@gmail.com>
-Link: https://lore.kernel.org/r/20251206180414.3183334-2-safinaskar@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-[ adapted quirk entry location from gpiolib-acpi-quirks.c to gpiolib-acpi.c ]
+Fixes: 7540629e2fc7 ("ARM: dts: at91: add sama7g5 SoC DT and sama7g5-ek")
+Cc: stable@vger.kernel.org # 5.15+
+Signed-off-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Link: https://lore.kernel.org/r/20251114103313.20220-2-nicolas.ferre@microchip.com
+Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpiolib-acpi.c |   22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ arch/arm/boot/dts/microchip/sama7g5.dtsi |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpio/gpiolib-acpi.c
-+++ b/drivers/gpio/gpiolib-acpi.c
-@@ -1720,6 +1720,28 @@ static const struct dmi_system_id gpioli
- 			.ignore_interrupt = "AMDI0030:00@11",
- 		},
- 	},
-+	{
-+		/*
-+		 * Spurious wakeups, likely from touchpad controller
-+		 * Dell Precision 7780
-+		 * Found in BIOS 1.24.1
-+		 *
-+		 * Found in touchpad firmware, installed by Dell Touchpad Firmware Update Utility version 1160.4196.9, A01
-+		 * ( Dell-Touchpad-Firmware-Update-Utility_VYGNN_WIN64_1160.4196.9_A00.EXE ),
-+		 * released on 11 Jul 2024
-+		 *
-+		 * https://lore.kernel.org/linux-i2c/197ae95ffd8.dc819e60457077.7692120488609091556@zohomail.com/
-+		 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
-+			DMI_MATCH(DMI_PRODUCT_FAMILY, "Precision"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Precision 7780"),
-+			DMI_MATCH(DMI_BOARD_NAME, "0C6JVW"),
-+		},
-+		.driver_data = &(struct acpi_gpiolib_dmi_quirk) {
-+			.ignore_wake = "VEN_0488:00@355",
-+		},
-+	},
- 	{} /* Terminating entry */
- };
- 
+--- a/arch/arm/boot/dts/microchip/sama7g5.dtsi
++++ b/arch/arm/boot/dts/microchip/sama7g5.dtsi
+@@ -811,7 +811,7 @@
+ 				dma-names = "tx", "rx";
+ 				atmel,use-dma-rx;
+ 				atmel,use-dma-tx;
+-				atmel,fifo-size = <16>;
++				atmel,fifo-size = <32>;
+ 				status = "disabled";
+ 			};
+ 		};
+@@ -837,7 +837,7 @@
+ 				dma-names = "tx", "rx";
+ 				atmel,use-dma-rx;
+ 				atmel,use-dma-tx;
+-				atmel,fifo-size = <16>;
++				atmel,fifo-size = <32>;
+ 				status = "disabled";
+ 			};
+ 		};
 
 
