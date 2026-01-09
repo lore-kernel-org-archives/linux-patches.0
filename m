@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F59033B97F;
-	Fri,  9 Jan 2026 11:55:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1540432FA3D;
+	Fri,  9 Jan 2026 11:55:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959732; cv=none; b=j2RDbbQVxtfqYUEcfr+b6Bl7ds44wxas3f4xScms8IEjVzKZoh0fm2tJaoU0znmUXt7Cvfi6siUWEBLJ8eMtKuZItDdglxgdPolhXH1XH6iO4IxrtuK8EHalJOHnIzxGRBfGgekMGMla2OtJYE/b6pqx2n/j7ttsfTc2rnQsWwc=
+	t=1767959735; cv=none; b=qCYJIfq9Hc8ReHYzox049UeWVYAiKPYgNQbhtItlYdcObuNW8nO/ZYtPzb1xaijDv+HDqLVJY95m09Lx13wTzrpwKsfGyQxpWqUrBcFiEYjohOPkYVIuHhM9t2pDgbkCdxDPDfLmXIowVXBXf2cMupovR5TlfScYyrsGp1IrDtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959732; c=relaxed/simple;
-	bh=+0uOFFiooQVyuS65PnGjdn0+q5RJo4XOq4tXrrONeqM=;
+	s=arc-20240116; t=1767959735; c=relaxed/simple;
+	bh=06BStZZTO3EhlDkOGQX1+4kKNIMDaWwANj9JfqRrqng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tGFRuVLGp4bve+sV7LwRIQgXYoYxMCy6EtTX9BSalKUIRKMKZLV93WoF1f7Um5sJ0FN86B11RDtrrLQDmWpQNvb2GAty+FGmpuOxkJP58QTwhNuFtnUWYFan0TRvzuSLw7ATMTMcrR5MyFCiCQk0xQO79jlNTNV0hJRUlXfZDdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mF6Hc2U+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NWgzWzoaKAnA0bgBMCQFWgRHE2QNVaolMGH+dNaDk2BPbqNtRBHaqmUrOos3WAmWRnmj/ZHYg1OzIZ3IkU4sHttF5oEpplEzmmNkVLmekwB6oGKmwLgIZd6uk3HLftbwmRiA8rFXofFKQuvVFrbr4YWmQKyaoOXCRh+jVcpvIw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jHXUok54; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mF6Hc2U+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0398C4CEF1;
-	Fri,  9 Jan 2026 11:55:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jHXUok54"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 705F6C4CEF1;
+	Fri,  9 Jan 2026 11:55:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959732;
-	bh=+0uOFFiooQVyuS65PnGjdn0+q5RJo4XOq4tXrrONeqM=;
+	s=korg; t=1767959734;
+	bh=06BStZZTO3EhlDkOGQX1+4kKNIMDaWwANj9JfqRrqng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mF6Hc2U+diXZybEAJ6hYEYSJSoHbqunrOpAd0AtZv9JMf5JG1/TmFpAmXa1FNN/nQ
-	 G93zgp+8J28cPHsU32yicu30E2hE/S13jd8TI2WhUeRyq1TmRZVBsjZ5uQyONW13wb
-	 kyqAiV+VpaPXCWwKGcpCPXXKCG0TSxVVurmgbuPo=
+	b=jHXUok54PtWkZP+mjtGydg04tNTcFBu6h2nib3Le3IvjXxZR2iEokNV5Y2kcw/Ojq
+	 yxwlCdezhizRH6Av0IwcwrFpu58ATIBpL+pqYI58H/s37dBqRgJu+Ts/kKasxlO7s/
+	 9I1G5GSCRZkxSKMo8SPR6wAXVQ/Mjl/zWOFFydrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	FUKAUMI Naoki <naoki@radxa.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 156/737] arm64: dts: rockchip: Add eeprom vcc-supply for Radxa ROCK 5A
-Date: Fri,  9 Jan 2026 12:34:55 +0100
-Message-ID: <20260109112139.864468103@linuxfoundation.org>
+Subject: [PATCH 6.6 157/737] ps3disk: use memcpy_{from,to}_bvec index
+Date: Fri,  9 Jan 2026 12:34:56 +0100
+Message-ID: <20260109112139.902161899@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -45,52 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: FUKAUMI Naoki <naoki@radxa.com>
+From: Rene Rebe <rene@exactco.de>
 
-[ Upstream commit 3069ff1930aa71e125874c780ffaa6caeda5800a ]
+[ Upstream commit 79bd8c9814a273fa7ba43399e1c07adec3fc95db ]
 
-The VCC supply for the BL24C16 EEPROM chip found on Radxa ROCK 5A is
-vcc_3v3_pmu, which is routed to vcc_3v3_s3 via a zero-ohm resistor. [1]
-Describe this supply.
+With 6e0a48552b8c (ps3disk: use memcpy_{from,to}_bvec) converting
+ps3disk to new bvec helpers, incrementing the offset was accidently
+lost, corrupting consecutive buffers. Restore index for non-corrupted
+data transfers.
 
-[1] https://dl.radxa.com/rock5/5a/docs/hw/radxa_rock5a_V1.1_sch.pdf p.4, p.19
-
-Fixes: 89c880808cff8 ("arm64: dts: rockchip: add I2C EEPROM to rock-5a")
-Signed-off-by: FUKAUMI Naoki <naoki@radxa.com>
-Link: https://patch.msgid.link/20251112035133.28753-3-naoki@radxa.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 6e0a48552b8c (ps3disk: use memcpy_{from,to}_bvec)
+Signed-off-by: René Rebe <rene@exactco.de>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3588s-rock-5a.dts | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/block/ps3disk.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3588s-rock-5a.dts b/arch/arm64/boot/dts/rockchip/rk3588s-rock-5a.dts
-index f60243e2b3c39..cd8bd50b35778 100644
---- a/arch/arm64/boot/dts/rockchip/rk3588s-rock-5a.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3588s-rock-5a.dts
-@@ -189,6 +189,7 @@ eeprom: eeprom@50 {
- 		compatible = "belling,bl24c16a", "atmel,24c16";
- 		reg = <0x50>;
- 		pagesize = <16>;
-+		vcc-supply = <&vcc_3v3_pmu>;
- 	};
- };
+diff --git a/drivers/block/ps3disk.c b/drivers/block/ps3disk.c
+index 36d7b36c60c76..79d3779e1c7ad 100644
+--- a/drivers/block/ps3disk.c
++++ b/drivers/block/ps3disk.c
+@@ -85,10 +85,14 @@ static void ps3disk_scatter_gather(struct ps3_storage_device *dev,
+ 	struct bio_vec bvec;
  
-@@ -518,7 +519,7 @@ regulator-state-mem {
- 				};
- 			};
+ 	rq_for_each_segment(bvec, req, iter) {
++		dev_dbg(&dev->sbd.core, "%s:%u: %u sectors from %llu\n",
++			__func__, __LINE__, bio_sectors(iter.bio),
++			iter.bio->bi_iter.bi_sector);
+ 		if (gather)
+ 			memcpy_from_bvec(dev->bounce_buf + offset, &bvec);
+ 		else
+ 			memcpy_to_bvec(&bvec, dev->bounce_buf + offset);
++		offset += bvec.bv_len;
+ 	}
+ }
  
--			vcc_3v3_s3: dcdc-reg8 {
-+			vcc_3v3_pmu: vcc_3v3_s3: dcdc-reg8 {
- 				regulator-name = "vcc_3v3_s3";
- 				regulator-always-on;
- 				regulator-boot-on;
 -- 
 2.51.0
 
