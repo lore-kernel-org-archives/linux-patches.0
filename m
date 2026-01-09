@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 751ED33D50F;
-	Fri,  9 Jan 2026 12:05:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C2B6359F98;
+	Fri,  9 Jan 2026 12:05:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960340; cv=none; b=JtmffgEzyuLvsc9I1PZDWciK5c+mDzn5eT8SuYIqz6tMhDN9JmWEcOMW1ff/lKC5guskygxFy3YG8RYC10aF9PpsMNXBRPZgZTbBO25989UEf/o2mTG+foaxfsHnBea4OlKlyoBDfwi4jpXHRY2OOioiPVwiMxa79gcnU6Zdvnk=
+	t=1767960343; cv=none; b=uoOdOYN0j9PI5CGXT1vOhelX1ZRcgqWP1CjsZ79JRA00HRCKCczm3pS3zfKa9EF0n3xorWRMzxK2D4omd7plY26qjyHYhxAuhFC1/v7y6r0B2VWIEQBzLeofKe/DK5lUHgSANo5m6OlLE6X4elZ5Sko5Qi9amCWD+Xjwm+Cx6d8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960340; c=relaxed/simple;
-	bh=yNDRWy5kfg4Y610swwFa99+RjlnQJmuQR1ALI8WEI4I=;
+	s=arc-20240116; t=1767960343; c=relaxed/simple;
+	bh=aObbv1EmwtKXclyM9FiGivIO81dRYqL8/+4K/x7B/2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dii37VGV4UvlrFeoOzgbaAbBdOi55tkkH4az6Xzy6vhN08hWN56eZSzbSTIlUVRXGdAJJau4oR53t8S5PgEof51Zn7NtNLu3G8NmDwb/UikVLJ1kr+hHiCxoQ1dG+AKooBixBXx1glPlT/ZrdzcMSW+N4yDmGYpagmK5JlBNwd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kACVhxuW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rjupwbveRyewcA2WEy5jUEvKBX9ZpTe/5Tf6m/SKXsL4ZL4k9LVoOLhseFtRw+KlRQ7qYFBczvaaWzzxiZ7+8Zm678/LDdnFjwEsMlLntHPg+SkEqmb/qVFNnTOqbGnW1TibPlqxKkKD7gU8QA6f+Y6f1JoqBoOD0Kmj/oPcsFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yaImPy1h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kACVhxuW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1D7BC4CEF1;
-	Fri,  9 Jan 2026 12:05:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yaImPy1h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE239C4CEF1;
+	Fri,  9 Jan 2026 12:05:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960340;
-	bh=yNDRWy5kfg4Y610swwFa99+RjlnQJmuQR1ALI8WEI4I=;
+	s=korg; t=1767960343;
+	bh=aObbv1EmwtKXclyM9FiGivIO81dRYqL8/+4K/x7B/2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kACVhxuWA5cVbrMvSXHsId8rrU5+TNVqv8FT2lisBWfbC9yq2FgawI6loe0vsXnXq
-	 6evhDdUo8XviRz6bRAF3XuXeiDVUFRt477Fl7Lq06xY3ESSIw9BpioaP5Dr9ywbRBG
-	 Cmqa69TSsU6WWJ1Pxezj2PSHHs8mgXZACg4+yfc4=
+	b=yaImPy1hSYy0puSzx+8+jvCYKUT36mcuqq4ucOFbNRI2FW15Vr7yW9GZpS7KR2GAR
+	 /ZdWXTBPfuneE2b3XZqB/ytmPVVOA8bwFkxDd12j3g3Dp0ShIbE2E5mVbdMxQWBWqR
+	 u1FUW0xh/allwRh6RhqJrd5MzH1Irwzkbef0o+n4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre <roger.andersen@protonmail.com>,
+	Roger <roger.andersen@protonmail.com>,
 	Stanislas Polu <spolu@dust.tt>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 370/737] ksmbd: Fix refcount leak when invalid session is found on session lookup
-Date: Fri,  9 Jan 2026 12:38:29 +0100
-Message-ID: <20260109112147.912959948@linuxfoundation.org>
+Subject: [PATCH 6.6 371/737] ksmbd: fix buffer validation by including null terminator size in EA length
+Date: Fri,  9 Jan 2026 12:38:30 +0100
+Message-ID: <20260109112147.950563035@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -54,37 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit cafb57f7bdd57abba87725eb4e82bbdca4959644 upstream.
+commit 95d7a890e4b03e198836d49d699408fd1867cb55 upstream.
 
-When a session is found but its state is not SMB2_SESSION_VALID, It
-indicates that no valid session was found, but it is missing to decrement
-the reference count acquired by the session lookup, which results in
-a reference count leak. This patch fixes the issue by explicitly calling
-ksmbd_user_session_put to release the reference to the session.
+The smb2_set_ea function, which handles Extended Attributes (EA),
+was performing buffer validation checks that incorrectly omitted the size
+of the null terminating character (+1 byte) for EA Name.
+This patch fixes the issue by explicitly adding '+ 1' to EaNameLength where
+the null terminator is expected to be present in the buffer, ensuring
+the validation accurately reflects the total required buffer size.
 
 Cc: stable@vger.kernel.org
-Reported-by: Alexandre <roger.andersen@protonmail.com>
+Reported-by: Roger <roger.andersen@protonmail.com>
 Reported-by: Stanislas Polu <spolu@dust.tt>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/mgmt/user_session.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/smb/server/mgmt/user_session.c
-+++ b/fs/smb/server/mgmt/user_session.c
-@@ -312,8 +312,10 @@ struct ksmbd_session *ksmbd_session_look
- 	sess = ksmbd_session_lookup(conn, id);
- 	if (!sess && conn->binding)
- 		sess = ksmbd_session_lookup_slowpath(id);
--	if (sess && sess->state != SMB2_SESSION_VALID)
-+	if (sess && sess->state != SMB2_SESSION_VALID) {
-+		ksmbd_user_session_put(sess);
- 		sess = NULL;
-+	}
- 	return sess;
- }
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -2356,7 +2356,7 @@ static int smb2_set_ea(struct smb2_ea_in
+ 	int rc = 0;
+ 	unsigned int next = 0;
  
+-	if (buf_len < sizeof(struct smb2_ea_info) + eabuf->EaNameLength +
++	if (buf_len < sizeof(struct smb2_ea_info) + eabuf->EaNameLength + 1 +
+ 			le16_to_cpu(eabuf->EaValueLength))
+ 		return -EINVAL;
+ 
+@@ -2433,7 +2433,7 @@ next:
+ 			break;
+ 		}
+ 
+-		if (buf_len < sizeof(struct smb2_ea_info) + eabuf->EaNameLength +
++		if (buf_len < sizeof(struct smb2_ea_info) + eabuf->EaNameLength + 1 +
+ 				le16_to_cpu(eabuf->EaValueLength)) {
+ 			rc = -EINVAL;
+ 			break;
 
 
