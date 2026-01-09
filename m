@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F93359F98;
-	Fri,  9 Jan 2026 12:02:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4863333D50F;
+	Fri,  9 Jan 2026 12:02:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960172; cv=none; b=FbqqYTUFnFSrsPWRHvxoznMCCehmjUJTcAKLYCgrvb4tI/Lk37AcMjuKJ+XMDvY8t72zRZldthAXEe9h2Vq9CvhYJQFjK7G2cZVmxVVBlCWVFFpcAuB2bZaC4/K/qjRIC152PPqWOOslKV4M5zPA0tPxR4gv/U6OEvXbt4QpI7c=
+	t=1767960175; cv=none; b=UfqFTG8ZJGL1R31glQYwHZAyg1rLIx4gegue5+oRhUQtm2ZgIj1+f5O4bYSAVbwZQiUvOUeN1tfRutoyuWN6e0+lxenlO3UTT9Il9xf7ChsVwSyTDzmbsXlgRoXKmaRfOsrJnb31Jbe6Wzac2gW4eVLMo820g2Fi+3IwP8cImq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960172; c=relaxed/simple;
-	bh=IkQOhTSP3mHTTcoGXeA7N9XfwEp91BrHZ6r/YGCCgIc=;
+	s=arc-20240116; t=1767960175; c=relaxed/simple;
+	bh=kLPGhu378T4PJ+AonNYcsabE4s3K+Udq65f7jXKRv9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KIvXxrD7czTMTmxyT1V+1WAR9VHKK+ScVChQEmK+om2UB5fPwTcMqWUmwsMOtR3Ox3y4ey18grbMDUf+ugN1t9XjGb9uYbClBAbohLlnDb1dNPCd+VcpnNgUU/f0x8woOlyn/pWdyhyfv2hYGOsmYurvFDviZ8mEIKhphfTHmLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W70+edHm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gIj7vt1/WR5thJubIPY5XVf+r4219L6295gvV+UmJ2NlRzjhO4XKCS85jQG/wsb/AzeR/nnzBqLk1P2Jh9fVd+2E0uJGb1yNP2/R7M/rtTsC28VBE5OFQ1bhK5CWh38e09Ckl1VEM6KcDA+sIpV9jKfI3MDPkEJxzTBRX7g75WA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qSqrnMFy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W70+edHm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4DE4C4CEF1;
-	Fri,  9 Jan 2026 12:02:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qSqrnMFy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF0FC4CEF1;
+	Fri,  9 Jan 2026 12:02:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960172;
-	bh=IkQOhTSP3mHTTcoGXeA7N9XfwEp91BrHZ6r/YGCCgIc=;
+	s=korg; t=1767960174;
+	bh=kLPGhu378T4PJ+AonNYcsabE4s3K+Udq65f7jXKRv9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W70+edHmwQc6eqbYoE6xD5PL6goBaggvFzdEjkFjY7n1e4zkg6Klic1tCkIjOKr8y
-	 Ct/HSwsYiY5+4FpyIVmTNxjbdZbAr4+KuVnslkuKMCQ3/QRE6yjSI3MOWhedCGMRQf
-	 7zlI6THYoUy/DR+gz5RXhup9JKTmWkmMtmtIpbgk=
+	b=qSqrnMFyjicDFp2VR3tshGkQrAQWwuz8MPbDP2IlMNFaubIErxsiEnXn0ft5SVz/s
+	 s+SLad1nRFGNbMrvaE6klZY7j6AVMMDpDZ4/AvfYCid4Ve8d8Qp+kQ7lbnqD3IZQL9
+	 YcQKclBlXmFQH0X3oNL7SGwL4RMxL5xom8L/MUfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Hal Feng <hal.feng@starfivetech.com>,
+	Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 310/737] ACPI: property: Use ACPI functions in acpi_graph_get_next_endpoint() only
-Date: Fri,  9 Jan 2026 12:37:29 +0100
-Message-ID: <20260109112145.665871039@linuxfoundation.org>
+Subject: [PATCH 6.6 311/737] cpufreq: dt-platdev: Add JH7110S SOC to the allowlist
+Date: Fri,  9 Jan 2026 12:37:30 +0100
+Message-ID: <20260109112145.702588502@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -53,56 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Hal Feng <hal.feng@starfivetech.com>
 
-[ Upstream commit 5d010473cdeaabf6a2d3a9e2aed2186c1b73c213 ]
+[ Upstream commit 6e7970cab51d01b8f7c56f120486c571c22e1b80 ]
 
-Calling fwnode_get_next_child_node() in ACPI implementation of the fwnode
-property API is somewhat problematic as the latter is used in the
-impelementation of the former. Instead of using
-fwnode_get_next_child_node() in acpi_graph_get_next_endpoint(), call
-acpi_get_next_subnode() directly instead.
+Add the compatible strings for supporting the generic
+cpufreq driver on the StarFive JH7110S SoC.
 
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Link: https://patch.msgid.link/20251001104320.1272752-3-sakari.ailus@linux.intel.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Hal Feng <hal.feng@starfivetech.com>
+Reviewed-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/property.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/cpufreq/cpufreq-dt-platdev.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/acpi/property.c b/drivers/acpi/property.c
-index 1b8f3958b0edb..6bb85c12b5a02 100644
---- a/drivers/acpi/property.c
-+++ b/drivers/acpi/property.c
-@@ -1370,7 +1370,7 @@ static struct fwnode_handle *acpi_graph_get_next_endpoint(
+diff --git a/drivers/cpufreq/cpufreq-dt-platdev.c b/drivers/cpufreq/cpufreq-dt-platdev.c
+index c58c1defd7458..8b53388280d73 100644
+--- a/drivers/cpufreq/cpufreq-dt-platdev.c
++++ b/drivers/cpufreq/cpufreq-dt-platdev.c
+@@ -87,6 +87,7 @@ static const struct of_device_id allowlist[] __initconst = {
+ 	{ .compatible = "st-ericsson,u9540", },
  
- 	if (!prev) {
- 		do {
--			port = fwnode_get_next_child_node(fwnode, port);
-+			port = acpi_get_next_subnode(fwnode, port);
- 			/*
- 			 * The names of the port nodes begin with "port@"
- 			 * followed by the number of the port node and they also
-@@ -1388,13 +1388,13 @@ static struct fwnode_handle *acpi_graph_get_next_endpoint(
- 	if (!port)
- 		return NULL;
+ 	{ .compatible = "starfive,jh7110", },
++	{ .compatible = "starfive,jh7110s", },
  
--	endpoint = fwnode_get_next_child_node(port, prev);
-+	endpoint = acpi_get_next_subnode(port, prev);
- 	while (!endpoint) {
--		port = fwnode_get_next_child_node(fwnode, port);
-+		port = acpi_get_next_subnode(fwnode, port);
- 		if (!port)
- 			break;
- 		if (is_acpi_graph_node(port, "port"))
--			endpoint = fwnode_get_next_child_node(port, NULL);
-+			endpoint = acpi_get_next_subnode(port, NULL);
- 	}
- 
- 	/*
+ 	{ .compatible = "ti,omap2", },
+ 	{ .compatible = "ti,omap4", },
 -- 
 2.51.0
 
