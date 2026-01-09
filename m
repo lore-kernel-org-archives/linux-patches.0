@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF18F2737EE;
-	Fri,  9 Jan 2026 12:16:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335E026ED41;
+	Fri,  9 Jan 2026 12:17:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961019; cv=none; b=c2wlqywUpbZ1npWAKG86JE4a/GKgLWf/O5mi6sf/mGKTuMiBTDFE0kihV+Cj0u8dnpILHG2AYyvjCLKuQBhcZ4q4znXXaQ/SB6B6PRTNUK/ZiCyHIFwMzyWSTbocKt4J/I9q8eJnj8/Q07HMJfLdUr4p+ZbvRlMJNdpIdF5R47w=
+	t=1767961022; cv=none; b=Mstbga/ynTXncGIwqi8Odl/xPvfwnC6ls1StZ9cQOzAG/15yvRC0lDmgHA6de6mbw8/n0guK4+PjNff5UlPaBpmTEdzrG2OGySZc0ad7Eyj903f7rjlTnzGePVGweTtT6ahZtfKIwecW4SAfHq4dyBgwgKlYD62E1xgbCdFc/qo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961019; c=relaxed/simple;
-	bh=h1xebJKKkxMvbD8lBSQvdavr/ZTDZGh09Zem4l0MfMA=;
+	s=arc-20240116; t=1767961022; c=relaxed/simple;
+	bh=Ejj1p+Cnzx1Z1C2EBkwlglkU3zV9VEEtt/XlzOrriTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OR7Oi9emOnXz2zSYma/U8H+OxONy0HOF4xanCC8caWOyfLo2P1pyTznQ+exyH20iOFqip1E029jGR86Ca2w5HYxUJLw6PROX29mooAygTZKU9BL+qJBDRmBbMUZ75AoW8MzjDpQScvD366rkfgc8fT6Imrd68PDIFTvM57Mt9XA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IrTQxKGo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=csjEqgSU9tp+Bm8DxJUHXjaU4VmPM01b9Uf84yi75gmoOBbVkcrcHO8FQw4nPfLhmt/En1cjNydKEOhurIkJzjt6JQSuJDL89Q9+K31EgFAOiIYHXjCVuW/Q9ibFaMH2Vr6BDkqSo5AhftuKADXjIXrgohu2bEPWeBO7OQsiNfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yh0jVZ3Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IrTQxKGo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF2A5C4CEF1;
-	Fri,  9 Jan 2026 12:16:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yh0jVZ3Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2079C4CEF1;
+	Fri,  9 Jan 2026 12:17:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961019;
-	bh=h1xebJKKkxMvbD8lBSQvdavr/ZTDZGh09Zem4l0MfMA=;
+	s=korg; t=1767961022;
+	bh=Ejj1p+Cnzx1Z1C2EBkwlglkU3zV9VEEtt/XlzOrriTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IrTQxKGonzoQqgmlFn70nq18XZJmKlo45dQSATQQSh2L8qyfvYhEUsuBRny7Z9GBd
-	 +kFMwdhcd2km0eWDlLk+9Zbnn9LwA6o+Kxp9N0qDhAc4rS0u03FPUjk/ld9TKLVM3j
-	 CldOdCPa3X35a50GOCBN3j8OAHAmmvRqXaA9s3Gk=
+	b=yh0jVZ3ZYbGkjTb6eeHtQwyunjd+QVmAsgOdBHJUXIFRuX3vc7z5Nu6oxOgC7J08u
+	 GJHzTJbuZn0aBfURx3hVerEegC+uNMwQoRqwT/ElzXdbUaVYPG3OXbCJkWOVZW6dEP
+	 sdx4a/E7EwfYEDAC4W7RcqoxvP3q2eslumOrmEkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schnelle <svens@stackframe.org>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.6 574/737] parisc: entry: set W bit for !compat tasks in syscall_restore_rfi()
-Date: Fri,  9 Jan 2026 12:41:53 +0100
-Message-ID: <20260109112155.595204664@linuxfoundation.org>
+	Nicholas Piggin <npiggin@gmail.com>,
+	Donet Tom <donettom@linux.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.6 565/737] powerpc/64s/slb: Fix SLB multihit issue during SLB preload
+Date: Fri,  9 Jan 2026 12:41:44 +0100
+Message-ID: <20260109112155.257639483@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -44,64 +46,327 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sven Schnelle <svens@stackframe.org>
+From: Donet Tom <donettom@linux.ibm.com>
 
-commit 5fb1d3ce3e74a4530042795e1e065422295f1371 upstream.
+commit 00312419f0863964625d6dcda8183f96849412c6 upstream.
 
-When the kernel leaves to userspace via syscall_restore_rfi(), the
-W bit is not set in the new PSW. This doesn't cause any problems
-because there's no 64 bit userspace for parisc. Simple static binaries
-are usually loaded at addresses way below the 32 bit limit so the W bit
-doesn't matter.
+On systems using the hash MMU, there is a software SLB preload cache that
+mirrors the entries loaded into the hardware SLB buffer. This preload
+cache is subject to periodic eviction — typically after every 256 context
+switches — to remove old entry.
 
-Fix this by setting the W bit when TIF_32BIT is not set.
+To optimize performance, the kernel skips switch_mmu_context() in
+switch_mm_irqs_off() when the prev and next mm_struct are the same.
+However, on hash MMU systems, this can lead to inconsistencies between
+the hardware SLB and the software preload cache.
 
-Signed-off-by: Sven Schnelle <svens@stackframe.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
+If an SLB entry for a process is evicted from the software cache on one
+CPU, and the same process later runs on another CPU without executing
+switch_mmu_context(), the hardware SLB may retain stale entries. If the
+kernel then attempts to reload that entry, it can trigger an SLB
+multi-hit error.
+
+The following timeline shows how stale SLB entries are created and can
+cause a multi-hit error when a process moves between CPUs without a
+MMU context switch.
+
+CPU 0                                   CPU 1
+-----                                    -----
+Process P
+exec                                    swapper/1
+ load_elf_binary
+  begin_new_exc
+    activate_mm
+     switch_mm_irqs_off
+      switch_mmu_context
+       switch_slb
+       /*
+        * This invalidates all
+        * the entries in the HW
+        * and setup the new HW
+        * SLB entries as per the
+        * preload cache.
+        */
+context_switch
+sched_migrate_task migrates process P to cpu-1
+
+Process swapper/0                       context switch (to process P)
+(uses mm_struct of Process P)           switch_mm_irqs_off()
+                                         switch_slb
+                                           load_slb++
+                                            /*
+                                            * load_slb becomes 0 here
+                                            * and we evict an entry from
+                                            * the preload cache with
+                                            * preload_age(). We still
+                                            * keep HW SLB and preload
+                                            * cache in sync, that is
+                                            * because all HW SLB entries
+                                            * anyways gets evicted in
+                                            * switch_slb during SLBIA.
+                                            * We then only add those
+                                            * entries back in HW SLB,
+                                            * which are currently
+                                            * present in preload_cache
+                                            * (after eviction).
+                                            */
+                                        load_elf_binary continues...
+                                         setup_new_exec()
+                                          slb_setup_new_exec()
+
+                                        sched_switch event
+                                        sched_migrate_task migrates
+                                        process P to cpu-0
+
+context_switch from swapper/0 to Process P
+ switch_mm_irqs_off()
+  /*
+   * Since both prev and next mm struct are same we don't call
+   * switch_mmu_context(). This will cause the HW SLB and SW preload
+   * cache to go out of sync in preload_new_slb_context. Because there
+   * was an SLB entry which was evicted from both HW and preload cache
+   * on cpu-1. Now later in preload_new_slb_context(), when we will try
+   * to add the same preload entry again, we will add this to the SW
+   * preload cache and then will add it to the HW SLB. Since on cpu-0
+   * this entry was never invalidated, hence adding this entry to the HW
+   * SLB will cause a SLB multi-hit error.
+   */
+load_elf_binary continues...
+ START_THREAD
+  start_thread
+   preload_new_slb_context
+   /*
+    * This tries to add a new EA to preload cache which was earlier
+    * evicted from both cpu-1 HW SLB and preload cache. This caused the
+    * HW SLB of cpu-0 to go out of sync with the SW preload cache. The
+    * reason for this was, that when we context switched back on CPU-0,
+    * we should have ideally called switch_mmu_context() which will
+    * bring the HW SLB entries on CPU-0 in sync with SW preload cache
+    * entries by setting up the mmu context properly. But we didn't do
+    * that since the prev mm_struct running on cpu-0 was same as the
+    * next mm_struct (which is true for swapper / kernel threads). So
+    * now when we try to add this new entry into the HW SLB of cpu-0,
+    * we hit a SLB multi-hit error.
+    */
+
+WARNING: CPU: 0 PID: 1810970 at arch/powerpc/mm/book3s64/slb.c:62
+assert_slb_presence+0x2c/0x50(48 results) 02:47:29 [20157/42149]
+Modules linked in:
+CPU: 0 UID: 0 PID: 1810970 Comm: dd Not tainted 6.16.0-rc3-dirty #12
+VOLUNTARY
+Hardware name: IBM pSeries (emulated by qemu) POWER8 (architected)
+0x4d0200 0xf000004 of:SLOF,HEAD hv:linux,kvm pSeries
+NIP:  c00000000015426c LR: c0000000001543b4 CTR: 0000000000000000
+REGS: c0000000497c77e0 TRAP: 0700   Not tainted  (6.16.0-rc3-dirty)
+MSR:  8000000002823033 <SF,VEC,VSX,FP,ME,IR,DR,RI,LE>  CR: 28888482  XER: 00000000
+CFAR: c0000000001543b0 IRQMASK: 3
+<...>
+NIP [c00000000015426c] assert_slb_presence+0x2c/0x50
+LR [c0000000001543b4] slb_insert_entry+0x124/0x390
+Call Trace:
+  0x7fffceb5ffff (unreliable)
+  preload_new_slb_context+0x100/0x1a0
+  start_thread+0x26c/0x420
+  load_elf_binary+0x1b04/0x1c40
+  bprm_execve+0x358/0x680
+  do_execveat_common+0x1f8/0x240
+  sys_execve+0x58/0x70
+  system_call_exception+0x114/0x300
+  system_call_common+0x160/0x2c4
+
+>From the above analysis, during early exec the hardware SLB is cleared,
+and entries from the software preload cache are reloaded into hardware
+by switch_slb. However, preload_new_slb_context and slb_setup_new_exec
+also attempt to load some of the same entries, which can trigger a
+multi-hit. In most cases, these additional preloads simply hit existing
+entries and add nothing new. Removing these functions avoids redundant
+preloads and eliminates the multi-hit issue. This patch removes these
+two functions.
+
+We tested process switching performance using the context_switch
+benchmark on POWER9/hash, and observed no regression.
+
+Without this patch: 129041 ops/sec
+With this patch:    129341 ops/sec
+
+We also measured SLB faults during boot, and the counts are essentially
+the same with and without this patch.
+
+SLB faults without this patch: 19727
+SLB faults with this patch:    19786
+
+Fixes: 5434ae74629a ("powerpc/64s/hash: Add a SLB preload cache")
+cc: stable@vger.kernel.org
+Suggested-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Donet Tom <donettom@linux.ibm.com>
+Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/0ac694ae683494fe8cadbd911a1a5018d5d3c541.1761834163.git.ritesh.list@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/asm-offsets.c |    2 ++
- arch/parisc/kernel/entry.S       |    5 ++++-
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ arch/powerpc/include/asm/book3s/64/mmu-hash.h |    1 
+ arch/powerpc/kernel/process.c                 |    5 -
+ arch/powerpc/mm/book3s64/internal.h           |    2 
+ arch/powerpc/mm/book3s64/mmu_context.c        |    2 
+ arch/powerpc/mm/book3s64/slb.c                |   88 --------------------------
+ 5 files changed, 98 deletions(-)
 
---- a/arch/parisc/kernel/asm-offsets.c
-+++ b/arch/parisc/kernel/asm-offsets.c
-@@ -258,6 +258,8 @@ int main(void)
- 	BLANK();
- 	DEFINE(TIF_BLOCKSTEP_PA_BIT, 31-TIF_BLOCKSTEP);
- 	DEFINE(TIF_SINGLESTEP_PA_BIT, 31-TIF_SINGLESTEP);
-+	DEFINE(TIF_32BIT_PA_BIT, 31-TIF_32BIT);
-+
- 	BLANK();
- 	DEFINE(ASM_PMD_SHIFT, PMD_SHIFT);
- 	DEFINE(ASM_PGDIR_SHIFT, PGDIR_SHIFT);
---- a/arch/parisc/kernel/entry.S
-+++ b/arch/parisc/kernel/entry.S
-@@ -1846,6 +1846,10 @@ syscall_restore_rfi:
- 	extru,= %r19,TIF_BLOCKSTEP_PA_BIT,1,%r0
- 	depi	-1,7,1,%r20			   /* T bit */
+--- a/arch/powerpc/include/asm/book3s/64/mmu-hash.h
++++ b/arch/powerpc/include/asm/book3s/64/mmu-hash.h
+@@ -524,7 +524,6 @@ void slb_save_contents(struct slb_entry
+ void slb_dump_contents(struct slb_entry *slb_ptr);
  
-+#ifdef CONFIG_64BIT
-+	extru,<> %r19,TIF_32BIT_PA_BIT,1,%r0
-+	depi	-1,4,1,%r20			   /* W bit */
-+#endif
- 	STREG	%r20,TASK_PT_PSW(%r1)
+ extern void slb_vmalloc_update(void);
+-void preload_new_slb_context(unsigned long start, unsigned long sp);
  
- 	/* Always store space registers, since sr3 can be changed (e.g. fork) */
-@@ -1859,7 +1863,6 @@ syscall_restore_rfi:
- 	STREG   %r25,TASK_PT_IASQ0(%r1)
- 	STREG   %r25,TASK_PT_IASQ1(%r1)
+ #ifdef CONFIG_PPC_64S_HASH_MMU
+ void slb_set_size(u16 size);
+--- a/arch/powerpc/kernel/process.c
++++ b/arch/powerpc/kernel/process.c
+@@ -1882,8 +1882,6 @@ int copy_thread(struct task_struct *p, c
+ 	return 0;
+ }
  
--	/* XXX W bit??? */
- 	/* Now if old D bit is clear, it means we didn't save all registers
- 	 * on syscall entry, so do that now.  This only happens on TRACEME
- 	 * calls, or if someone attached to us while we were on a syscall.
+-void preload_new_slb_context(unsigned long start, unsigned long sp);
+-
+ /*
+  * Set up a thread for executing a new program
+  */
+@@ -1891,9 +1889,6 @@ void start_thread(struct pt_regs *regs,
+ {
+ #ifdef CONFIG_PPC64
+ 	unsigned long load_addr = regs->gpr[2];	/* saved by ELF_PLAT_INIT */
+-
+-	if (IS_ENABLED(CONFIG_PPC_BOOK3S_64) && !radix_enabled())
+-		preload_new_slb_context(start, sp);
+ #endif
+ 
+ #ifdef CONFIG_PPC_TRANSACTIONAL_MEM
+--- a/arch/powerpc/mm/book3s64/internal.h
++++ b/arch/powerpc/mm/book3s64/internal.h
+@@ -24,8 +24,6 @@ static inline bool stress_hpt(void)
+ 
+ void hpt_do_stress(unsigned long ea, unsigned long hpte_group);
+ 
+-void slb_setup_new_exec(void);
+-
+ void exit_lazy_flush_tlb(struct mm_struct *mm, bool always_flush);
+ 
+ #endif /* ARCH_POWERPC_MM_BOOK3S64_INTERNAL_H */
+--- a/arch/powerpc/mm/book3s64/mmu_context.c
++++ b/arch/powerpc/mm/book3s64/mmu_context.c
+@@ -150,8 +150,6 @@ static int hash__init_new_context(struct
+ void hash__setup_new_exec(void)
+ {
+ 	slice_setup_new_exec();
+-
+-	slb_setup_new_exec();
+ }
+ #else
+ static inline int hash__init_new_context(struct mm_struct *mm)
+--- a/arch/powerpc/mm/book3s64/slb.c
++++ b/arch/powerpc/mm/book3s64/slb.c
+@@ -328,94 +328,6 @@ static void preload_age(struct thread_in
+ 	ti->slb_preload_tail = (ti->slb_preload_tail + 1) % SLB_PRELOAD_NR;
+ }
+ 
+-void slb_setup_new_exec(void)
+-{
+-	struct thread_info *ti = current_thread_info();
+-	struct mm_struct *mm = current->mm;
+-	unsigned long exec = 0x10000000;
+-
+-	WARN_ON(irqs_disabled());
+-
+-	/*
+-	 * preload cache can only be used to determine whether a SLB
+-	 * entry exists if it does not start to overflow.
+-	 */
+-	if (ti->slb_preload_nr + 2 > SLB_PRELOAD_NR)
+-		return;
+-
+-	hard_irq_disable();
+-
+-	/*
+-	 * We have no good place to clear the slb preload cache on exec,
+-	 * flush_thread is about the earliest arch hook but that happens
+-	 * after we switch to the mm and have already preloaded the SLBEs.
+-	 *
+-	 * For the most part that's probably okay to use entries from the
+-	 * previous exec, they will age out if unused. It may turn out to
+-	 * be an advantage to clear the cache before switching to it,
+-	 * however.
+-	 */
+-
+-	/*
+-	 * preload some userspace segments into the SLB.
+-	 * Almost all 32 and 64bit PowerPC executables are linked at
+-	 * 0x10000000 so it makes sense to preload this segment.
+-	 */
+-	if (!is_kernel_addr(exec)) {
+-		if (preload_add(ti, exec))
+-			slb_allocate_user(mm, exec);
+-	}
+-
+-	/* Libraries and mmaps. */
+-	if (!is_kernel_addr(mm->mmap_base)) {
+-		if (preload_add(ti, mm->mmap_base))
+-			slb_allocate_user(mm, mm->mmap_base);
+-	}
+-
+-	/* see switch_slb */
+-	asm volatile("isync" : : : "memory");
+-
+-	local_irq_enable();
+-}
+-
+-void preload_new_slb_context(unsigned long start, unsigned long sp)
+-{
+-	struct thread_info *ti = current_thread_info();
+-	struct mm_struct *mm = current->mm;
+-	unsigned long heap = mm->start_brk;
+-
+-	WARN_ON(irqs_disabled());
+-
+-	/* see above */
+-	if (ti->slb_preload_nr + 3 > SLB_PRELOAD_NR)
+-		return;
+-
+-	hard_irq_disable();
+-
+-	/* Userspace entry address. */
+-	if (!is_kernel_addr(start)) {
+-		if (preload_add(ti, start))
+-			slb_allocate_user(mm, start);
+-	}
+-
+-	/* Top of stack, grows down. */
+-	if (!is_kernel_addr(sp)) {
+-		if (preload_add(ti, sp))
+-			slb_allocate_user(mm, sp);
+-	}
+-
+-	/* Bottom of heap, grows up. */
+-	if (heap && !is_kernel_addr(heap)) {
+-		if (preload_add(ti, heap))
+-			slb_allocate_user(mm, heap);
+-	}
+-
+-	/* see switch_slb */
+-	asm volatile("isync" : : : "memory");
+-
+-	local_irq_enable();
+-}
+-
+ static void slb_cache_slbie_kernel(unsigned int index)
+ {
+ 	unsigned long slbie_data = get_paca()->slb_cache[index];
 
 
