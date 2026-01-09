@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FDB93346AF;
-	Fri,  9 Jan 2026 12:15:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2C52DEA6F;
+	Fri,  9 Jan 2026 12:15:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960903; cv=none; b=VFlQSmP5dKZU7j9LH9ASYpoDOQVq3jouyCLNAu+fUnZVIyh9CM0QSuTJ/8RxH07W51EvRboB6nhqkvl0kbzRuU5EWFP5SJosdc+/8PpT9buXVpP0mck3yt8o9SnM9Nbu8HJET36BH9IrsJ8YPFZO6IC+Bf7VILHEc3t4OT4eyvk=
+	t=1767960905; cv=none; b=cRy8x1/7UrDsYoA8sezFFNrPZXolHNsam/fMamtn8oMmkd3m838tR7uXQcSgKit5FVBb1yjptLa+b+08O4T7lmxUGBOyb0eIi8a0IgAAbxKE4FlzsGxs5Ixxl4NTOQvlZG61/MGAFQgd/6RwjcLZr6sCmsEinBjelgxSw3XDCRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960903; c=relaxed/simple;
-	bh=kETqoArN59FBongMGNpPmT/CfUSL38/2BqYuygCkvrw=;
+	s=arc-20240116; t=1767960905; c=relaxed/simple;
+	bh=UNGYZ1kIvBF9oAHJKGZMeVKxEIVfQx3OR3sdjawX/2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g825iuquv52Zlh6yYYXNMmsn6Yu2vB5/S7PQLUPVgD7hTguNrghlAjYGLCfnS1q4L58c3pj5tIc31pKgkz0X280jhYMHzJwBIJKQcfgxoyPy6ARNukyKgktHB0iC3IAk/8SHssqBGNYR0K0ycn/yGd+uvcfKkkdcI+3ADA9rPs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oybQt+IL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nj8z910vzelBUc0ojZ2zTht5tSboJ9XMsHhLlfqgQxhVHi8I7f2AP1kDstZUWooReZUE2reCeE9SzM7MDrVpvqUlLUCuqabmCW61x6Lc/G/Awoybi0SFUhJo/L3uiT7j/9WGGaECY6rPpBYv7CcRYl1VxcHbtDN/KWzlYBUftT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vlYMcB1J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oybQt+IL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DB36C4CEF1;
-	Fri,  9 Jan 2026 12:15:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vlYMcB1J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A5DC4CEF1;
+	Fri,  9 Jan 2026 12:15:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960902;
-	bh=kETqoArN59FBongMGNpPmT/CfUSL38/2BqYuygCkvrw=;
+	s=korg; t=1767960905;
+	bh=UNGYZ1kIvBF9oAHJKGZMeVKxEIVfQx3OR3sdjawX/2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oybQt+ILOl77gqJlUvejxSS7hxdnCkpah6jUKOSvB5p9eY96VAC55UskcCCRJ+wmy
-	 r7UgZZ708F0FD+gal/XtMj02M2SeK6+5Mvd9tUzRLFZJK3pYhP1Gg7WQCR8nkiDZSf
-	 1ulFMTfdmLiB7r890xrFKJ1kvO2KLEBL1TfVuSRA=
+	b=vlYMcB1JSdMYijgCnKbB1soyUM0S7eacps5lLHE4/rKCs/JTSDjrm++XLemj3dC8y
+	 Png7ufPTYzkcfEvYP2Nz/81KRpZOOsnzPMTFovDH+9jFZcZ+06zc7ePoR+jq77QoMX
+	 whtoUEFEAqU/Mpum2mKCDPZM/WmUa4REpdK+AqGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Dave Vasilevsky <dave@vasilevsky.ca>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.6 564/737] powerpc, mm: Fix mprotect on book3s 32-bit
-Date: Fri,  9 Jan 2026 12:41:43 +0100
-Message-ID: <20260109112155.220018155@linuxfoundation.org>
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 533/737] RDMA/bnxt_re: Fix IB_SEND_IP_CSUM handling in post_send
+Date: Fri,  9 Jan 2026 12:41:12 +0100
+Message-ID: <20260109112154.046678460@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,75 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Vasilevsky <dave@vasilevsky.ca>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-commit 78fc63ffa7813e33681839bb33826c24195f0eb7 upstream.
+[ Upstream commit f01765a2361323e78e3d91b1cb1d5527a83c5cf7 ]
 
-On 32-bit book3s with hash-MMUs, tlb_flush() was a no-op. This was
-unnoticed because all uses until recently were for unmaps, and thus
-handled by __tlb_remove_tlb_entry().
+The bnxt_re SEND path checks wr->send_flags to enable features such as
+IP checksum offload. However, send_flags is a bitmask and may contain
+multiple flags (e.g. IB_SEND_SIGNALED | IB_SEND_IP_CSUM), while the
+existing code uses a switch() statement that only matches when
+send_flags is exactly IB_SEND_IP_CSUM.
 
-After commit 4a18419f71cd ("mm/mprotect: use mmu_gather") in kernel 5.19,
-tlb_gather_mmu() started being used for mprotect as well. This caused
-mprotect to simply not work on these machines:
+As a result, checksum offload is not enabled when additional SEND
+flags are present.
 
-  int *ptr = mmap(NULL, 4096, PROT_READ|PROT_WRITE,
-                  MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
-  *ptr = 1; // force HPTE to be created
-  mprotect(ptr, 4096, PROT_READ);
-  *ptr = 2; // should segfault, but succeeds
+Replace the switch() with a bitmask test:
 
-Fixed by making tlb_flush() actually flush TLB pages. This finally
-agrees with the behaviour of boot3s64's tlb_flush().
+    if (wr->send_flags & IB_SEND_IP_CSUM)
 
-Fixes: 4a18419f71cd ("mm/mprotect: use mmu_gather")
-Cc: stable@vger.kernel.org
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Dave Vasilevsky <dave@vasilevsky.ca>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20251116-vasi-mprotect-g3-v3-1-59a9bd33ba00@vasilevsky.ca
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This ensures IP checksum offload is enabled correctly when multiple
+SEND flags are used.
+
+Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Link: https://patch.msgid.link/20251219093308.2415620-1-alok.a.tiwari@oracle.com
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/book3s/32/tlbflush.h |    5 ++++-
- arch/powerpc/mm/book3s32/tlb.c                |    9 +++++++++
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
---- a/arch/powerpc/include/asm/book3s/32/tlbflush.h
-+++ b/arch/powerpc/include/asm/book3s/32/tlbflush.h
-@@ -11,6 +11,7 @@
- void hash__flush_tlb_mm(struct mm_struct *mm);
- void hash__flush_tlb_page(struct vm_area_struct *vma, unsigned long vmaddr);
- void hash__flush_range(struct mm_struct *mm, unsigned long start, unsigned long end);
-+void hash__flush_gather(struct mmu_gather *tlb);
- 
- #ifdef CONFIG_SMP
- void _tlbie(unsigned long address);
-@@ -29,7 +30,9 @@ void _tlbia(void);
- static inline void tlb_flush(struct mmu_gather *tlb)
- {
- 	/* 603 needs to flush the whole TLB here since it doesn't use a hash table. */
--	if (!mmu_has_feature(MMU_FTR_HPTE_TABLE))
-+	if (mmu_has_feature(MMU_FTR_HPTE_TABLE))
-+		hash__flush_gather(tlb);
-+	else
- 		_tlbia();
- }
- 
---- a/arch/powerpc/mm/book3s32/tlb.c
-+++ b/arch/powerpc/mm/book3s32/tlb.c
-@@ -105,3 +105,12 @@ void hash__flush_tlb_page(struct vm_area
- 		flush_hash_pages(mm->context.id, vmaddr, pmd_val(*pmd), 1);
- }
- EXPORT_SYMBOL(hash__flush_tlb_page);
-+
-+void hash__flush_gather(struct mmu_gather *tlb)
-+{
-+	if (tlb->fullmm || tlb->need_flush_all)
-+		hash__flush_tlb_mm(tlb->mm);
-+	else
-+		hash__flush_range(tlb->mm, tlb->start, tlb->end);
-+}
-+EXPORT_SYMBOL(hash__flush_gather);
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+index 31fff5885f1a..5a4644f7ad98 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+@@ -2771,14 +2771,9 @@ int bnxt_re_post_send(struct ib_qp *ib_qp, const struct ib_send_wr *wr,
+ 				wqe.rawqp1.lflags |=
+ 					SQ_SEND_RAWETH_QP1_LFLAGS_ROCE_CRC;
+ 			}
+-			switch (wr->send_flags) {
+-			case IB_SEND_IP_CSUM:
++			if (wr->send_flags & IB_SEND_IP_CSUM)
+ 				wqe.rawqp1.lflags |=
+ 					SQ_SEND_RAWETH_QP1_LFLAGS_IP_CHKSUM;
+-				break;
+-			default:
+-				break;
+-			}
+ 			fallthrough;
+ 		case IB_WR_SEND_WITH_INV:
+ 			rc = bnxt_re_build_send_wqe(qp, wr, &wqe);
+-- 
+2.51.0
+
 
 
