@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68FB033C53A;
-	Fri,  9 Jan 2026 12:37:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD5833C53A;
+	Fri,  9 Jan 2026 12:37:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962273; cv=none; b=Ugc3RRD8XDKLdK1StJHxTon9U6+dFs1DzVBY6v/WdQ888TVIQv53f8widagxE+Ff0v41oklQq3ln8C6VsusP/N/PLlNbhScfIRQE8GwUavSItyd8TUXSfywMFk+fT8PVvMFudHSVh2uvcvOlfV7M7YI7sA677f6bFebpzRUGKTg=
+	t=1767962276; cv=none; b=WU2ukfuzJuaU2zIkHDooJ9AIOehSsDFapfau/BzPev1g0H5AGmeiJP1wdp7SijNl0kK8Y8YvGbzOnYd1syHLL7lUNqFSP9BSn2xV09qBaOxv/kskrmRTp98eQypS14Bblmhc77qMCaQHcrnrFlnWGvMzwuTSgGsMFgT0CVGOTaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962273; c=relaxed/simple;
-	bh=qZt/JDmhjNzf2/WoH7uxxo1yUU9uXZO7wuzs5Q7mhdI=;
+	s=arc-20240116; t=1767962276; c=relaxed/simple;
+	bh=TITbY8ppc0U8goMa6TmdhZr5cIev7bH0FTt5YweeWCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FUhT0X5/WvHQ8dhN6/e8LQFhNL1hHmI/I9Ev0Mb9/eK++4Y+JsE9k3mmWRt2Esn2HWQggDwnnpPIaUNJEXQfMSxqkh5Rq3hBHgtN49PTXIsAgJ1MVGIOX5PnKO7yKv22m+yma5109K1pmTWh9plDEduA6+YfF0T9gfcyU+2oFOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m32igkbk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NfeEwR+fqjq5cjmOLfFOgo/YQn6zpHgXeFcBawDxS6iq/sJPZMcURzc6DknumSf0CwkMrouiNcOQ4piVciBGUkXfIVv5WHtuFCNpac2lsGj/8Mq+0JLTqNl8AslBRHk1kVg51L9Ror8F+LRQgN4SA9lwzAnK+MfY66nGamcBOH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iSjgiERT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m32igkbk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC7BBC4CEF1;
-	Fri,  9 Jan 2026 12:37:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iSjgiERT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7042C4CEF1;
+	Fri,  9 Jan 2026 12:37:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962273;
-	bh=qZt/JDmhjNzf2/WoH7uxxo1yUU9uXZO7wuzs5Q7mhdI=;
+	s=korg; t=1767962276;
+	bh=TITbY8ppc0U8goMa6TmdhZr5cIev7bH0FTt5YweeWCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m32igkbkaw4PQ8W+MuItJxP1VnvVASmaopKLR270XvdTtYqIvpOAKfEScFN2xpKWL
-	 SS3jPpvizCMZ7ZKoZ6dK0o9DaU0zJdDMU3QXlAaAC3KYIUg8Ht9NQET2BPS76BobZm
-	 GP8ahFsQ2epndujWAgfM8JYsUXlsk+M4Pp7ofxLw=
+	b=iSjgiERTeS9VPaDEDvCq4gV7HscS7qBEs1EwwoQt5hxG+vK8OGZ9wX35Dl0xRbgCU
+	 7vR0IMYi0HRKLt71DZSEhhw5qUhcPRoA+ZBudznbqHzq/DWa/8Yv/cuY+FcXelf6e0
+	 iyXzQpSGyxJYf6PrjeLPGWMo3/VVAIJnCxiA1XA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Troy Mitchell <troy.mitchell@linux.dev>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Encrow Thorne <jyc0019@gmail.com>,
+	kernel test robot <oliver.sang@intel.com>,
+	Yuezhang Mo <Yuezhang.Mo@sony.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 306/634] reset: fix BIT macro reference
-Date: Fri,  9 Jan 2026 12:39:44 +0100
-Message-ID: <20260109112129.048360653@linuxfoundation.org>
+Subject: [PATCH 6.1 307/634] exfat: fix remount failure in different process environments
+Date: Fri,  9 Jan 2026 12:39:45 +0100
+Message-ID: <20260109112129.085796271@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,38 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Encrow Thorne <jyc0019@gmail.com>
+From: Yuezhang Mo <Yuezhang.Mo@sony.com>
 
-[ Upstream commit f3d8b64ee46c9b4b0b82b1a4642027728bac95b8 ]
+[ Upstream commit 51fc7b4ce10ccab8ea5e4876bcdc42cf5202a0ef ]
 
-RESET_CONTROL_FLAGS_BIT_* macros use BIT(), but reset.h does not
-include bits.h. This causes compilation errors when including
-reset.h standalone.
+The kernel test robot reported that the exFAT remount operation
+failed. The reason for the failure was that the process's umask
+is different between mount and remount, causing fs_fmask and
+fs_dmask are changed.
 
-Include bits.h to make reset.h self-contained.
+Potentially, both gid and uid may also be changed. Therefore, when
+initializing fs_context for remount, inherit these mount options
+from the options used during mount.
 
-Suggested-by: Troy Mitchell <troy.mitchell@linux.dev>
-Reviewed-by: Troy Mitchell <troy.mitchell@linux.dev>
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Signed-off-by: Encrow Thorne <jyc0019@gmail.com>
-Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202511251637.81670f5c-lkp@intel.com
+Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/reset.h | 1 +
- 1 file changed, 1 insertion(+)
+ fs/exfat/super.c | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/reset.h b/include/linux/reset.h
-index 514ddf003efc..4b31d683776e 100644
---- a/include/linux/reset.h
-+++ b/include/linux/reset.h
-@@ -2,6 +2,7 @@
- #ifndef _LINUX_RESET_H_
- #define _LINUX_RESET_H_
+diff --git a/fs/exfat/super.c b/fs/exfat/super.c
+index 6cb7a11a3f62..52b852a4121b 100644
+--- a/fs/exfat/super.c
++++ b/fs/exfat/super.c
+@@ -763,10 +763,21 @@ static int exfat_init_fs_context(struct fs_context *fc)
+ 	ratelimit_state_init(&sbi->ratelimit, DEFAULT_RATELIMIT_INTERVAL,
+ 			DEFAULT_RATELIMIT_BURST);
  
-+#include <linux/bits.h>
- #include <linux/err.h>
- #include <linux/errno.h>
- #include <linux/types.h>
+-	sbi->options.fs_uid = current_uid();
+-	sbi->options.fs_gid = current_gid();
+-	sbi->options.fs_fmask = current->fs->umask;
+-	sbi->options.fs_dmask = current->fs->umask;
++	if (fc->purpose == FS_CONTEXT_FOR_RECONFIGURE && fc->root) {
++		struct super_block *sb = fc->root->d_sb;
++		struct exfat_mount_options *cur_opts = &EXFAT_SB(sb)->options;
++
++		sbi->options.fs_uid = cur_opts->fs_uid;
++		sbi->options.fs_gid = cur_opts->fs_gid;
++		sbi->options.fs_fmask = cur_opts->fs_fmask;
++		sbi->options.fs_dmask = cur_opts->fs_dmask;
++	} else {
++		sbi->options.fs_uid = current_uid();
++		sbi->options.fs_gid = current_gid();
++		sbi->options.fs_fmask = current->fs->umask;
++		sbi->options.fs_dmask = current->fs->umask;
++	}
++
+ 	sbi->options.allow_utime = -1;
+ 	sbi->options.iocharset = exfat_default_iocharset;
+ 	sbi->options.errors = EXFAT_ERRORS_RO;
 -- 
 2.51.0
 
