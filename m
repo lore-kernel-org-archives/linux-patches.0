@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE0FA1946C8;
-	Fri,  9 Jan 2026 12:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F93359F98;
+	Fri,  9 Jan 2026 12:02:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960169; cv=none; b=Uvu7QlAc+hj4Ujsp6uaEwxLlnPrx3Np+jTi4uLGfm77kMCCHgGYZXbRl20fbV8BkIEc06/4NOzXqkPIADPIbhFke3Qe2B1lY1xp7LExCVCzObTc4vB2RxlX5wBGO8iWoZUWiYhSj+m0V2qEP3PJUzLqd7dOgAFiwt4qEyPrC/+w=
+	t=1767960172; cv=none; b=FbqqYTUFnFSrsPWRHvxoznMCCehmjUJTcAKLYCgrvb4tI/Lk37AcMjuKJ+XMDvY8t72zRZldthAXEe9h2Vq9CvhYJQFjK7G2cZVmxVVBlCWVFFpcAuB2bZaC4/K/qjRIC152PPqWOOslKV4M5zPA0tPxR4gv/U6OEvXbt4QpI7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960169; c=relaxed/simple;
-	bh=NGfJWgMPHWHIVPh6ve6hX+pHrB0e52oSksfKk1sHTw8=;
+	s=arc-20240116; t=1767960172; c=relaxed/simple;
+	bh=IkQOhTSP3mHTTcoGXeA7N9XfwEp91BrHZ6r/YGCCgIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BwRXl2GPnChl1nPL/eAGPTYYG7J0Ii3g/i5oxVGWi5/lRsKCLPOgaotqnYEzjQaVCvAwl70u90de4kExboOu9ovRuE/xHaNrvSicydKUlZHAR+cxyEDYyQUIvjgyNAp9OUDWOO4EWnH5KTpWf4ulZM6iFiNTw+1MJDgIYF10isA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pmqEViYk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KIvXxrD7czTMTmxyT1V+1WAR9VHKK+ScVChQEmK+om2UB5fPwTcMqWUmwsMOtR3Ox3y4ey18grbMDUf+ugN1t9XjGb9uYbClBAbohLlnDb1dNPCd+VcpnNgUU/f0x8woOlyn/pWdyhyfv2hYGOsmYurvFDviZ8mEIKhphfTHmLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W70+edHm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pmqEViYk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC15C4CEF1;
-	Fri,  9 Jan 2026 12:02:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W70+edHm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4DE4C4CEF1;
+	Fri,  9 Jan 2026 12:02:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960169;
-	bh=NGfJWgMPHWHIVPh6ve6hX+pHrB0e52oSksfKk1sHTw8=;
+	s=korg; t=1767960172;
+	bh=IkQOhTSP3mHTTcoGXeA7N9XfwEp91BrHZ6r/YGCCgIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pmqEViYkzAGxsO5yD0to6Ap/pE3KccIoqQUE1qtdPAh8YAQSZN/TJLdd7nAHIMv9e
-	 l1lPXA1EiFj5HSSF5DERG0IW+msU8KNf64/vdMvL+en+BZfR8GFaGXkNcyebzpj6pn
-	 VrgDcL2GMH754nsxeLSvKtmbNDN+UGSXrJ7YVl5I=
+	b=W70+edHmwQc6eqbYoE6xD5PL6goBaggvFzdEjkFjY7n1e4zkg6Klic1tCkIjOKr8y
+	 Ct/HSwsYiY5+4FpyIVmTNxjbdZbAr4+KuVnslkuKMCQ3/QRE6yjSI3MOWhedCGMRQf
+	 7zlI6THYoUy/DR+gz5RXhup9JKTmWkmMtmtIpbgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cryolitia PukNgae <cryolitia.pukngae@linux.dev>,
-	WangYuli <wangyl5933@chinaunicom.cn>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 309/737] ACPICA: Avoid walking the Namespace if start_node is NULL
-Date: Fri,  9 Jan 2026 12:37:28 +0100
-Message-ID: <20260109112145.628662539@linuxfoundation.org>
+Subject: [PATCH 6.6 310/737] ACPI: property: Use ACPI functions in acpi_graph_get_next_endpoint() only
+Date: Fri,  9 Jan 2026 12:37:29 +0100
+Message-ID: <20260109112145.665871039@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,61 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cryolitia PukNgae <cryolitia.pukngae@linux.dev>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-[ Upstream commit 9d6c58dae8f6590c746ac5d0012ffe14a77539f0 ]
+[ Upstream commit 5d010473cdeaabf6a2d3a9e2aed2186c1b73c213 ]
 
-Although commit 0c9992315e73 ("ACPICA: Avoid walking the ACPI Namespace
-if it is not there") fixed the situation when both start_node and
-acpi_gbl_root_node are NULL, the Linux kernel mainline now still crashed
-on Honor Magicbook 14 Pro [1].
+Calling fwnode_get_next_child_node() in ACPI implementation of the fwnode
+property API is somewhat problematic as the latter is used in the
+impelementation of the former. Instead of using
+fwnode_get_next_child_node() in acpi_graph_get_next_endpoint(), call
+acpi_get_next_subnode() directly instead.
 
-That happens due to the access to the member of parent_node in
-acpi_ns_get_next_node().  The NULL pointer dereference will always
-happen, no matter whether or not the start_node is equal to
-ACPI_ROOT_OBJECT, so move the check of start_node being NULL
-out of the if block.
-
-Unfortunately, all the attempts to contact Honor have failed, they
-refused to provide any technical support for Linux.
-
-The bad DSDT table's dump could be found on GitHub [2].
-
-DMI: HONOR FMB-P/FMB-P-PCB, BIOS 1.13 05/08/2025
-
-Link: https://github.com/acpica/acpica/commit/1c1b57b9eba4554cb132ee658dd942c0210ed20d
-Link: https://gist.github.com/Cryolitia/a860ffc97437dcd2cd988371d5b73ed7 [1]
-Link: https://github.com/denis-bb/honor-fmb-p-dsdt [2]
-Signed-off-by: Cryolitia PukNgae <cryolitia.pukngae@linux.dev>
-Reviewed-by: WangYuli <wangyl5933@chinaunicom.cn>
-[ rjw: Subject adjustment, changelog edits ]
-Link: https://patch.msgid.link/20251125-acpica-v1-1-99e63b1b25f8@linux.dev
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Link: https://patch.msgid.link/20251001104320.1272752-3-sakari.ailus@linux.intel.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/nswalk.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/acpi/property.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/acpi/acpica/nswalk.c b/drivers/acpi/acpica/nswalk.c
-index eee396a77baec..1b000ccbf8e1f 100644
---- a/drivers/acpi/acpica/nswalk.c
-+++ b/drivers/acpi/acpica/nswalk.c
-@@ -169,9 +169,12 @@ acpi_ns_walk_namespace(acpi_object_type type,
+diff --git a/drivers/acpi/property.c b/drivers/acpi/property.c
+index 1b8f3958b0edb..6bb85c12b5a02 100644
+--- a/drivers/acpi/property.c
++++ b/drivers/acpi/property.c
+@@ -1370,7 +1370,7 @@ static struct fwnode_handle *acpi_graph_get_next_endpoint(
  
- 	if (start_node == ACPI_ROOT_OBJECT) {
- 		start_node = acpi_gbl_root_node;
--		if (!start_node) {
--			return_ACPI_STATUS(AE_NO_NAMESPACE);
--		}
-+	}
-+
-+	/* Avoid walking the namespace if the StartNode is NULL */
-+
-+	if (!start_node) {
-+		return_ACPI_STATUS(AE_NO_NAMESPACE);
+ 	if (!prev) {
+ 		do {
+-			port = fwnode_get_next_child_node(fwnode, port);
++			port = acpi_get_next_subnode(fwnode, port);
+ 			/*
+ 			 * The names of the port nodes begin with "port@"
+ 			 * followed by the number of the port node and they also
+@@ -1388,13 +1388,13 @@ static struct fwnode_handle *acpi_graph_get_next_endpoint(
+ 	if (!port)
+ 		return NULL;
+ 
+-	endpoint = fwnode_get_next_child_node(port, prev);
++	endpoint = acpi_get_next_subnode(port, prev);
+ 	while (!endpoint) {
+-		port = fwnode_get_next_child_node(fwnode, port);
++		port = acpi_get_next_subnode(fwnode, port);
+ 		if (!port)
+ 			break;
+ 		if (is_acpi_graph_node(port, "port"))
+-			endpoint = fwnode_get_next_child_node(port, NULL);
++			endpoint = acpi_get_next_subnode(port, NULL);
  	}
  
- 	/* Null child means "get first node" */
+ 	/*
 -- 
 2.51.0
 
