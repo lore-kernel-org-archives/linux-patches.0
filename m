@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33AC633C511;
-	Fri,  9 Jan 2026 11:51:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFEEB359F8A;
+	Fri,  9 Jan 2026 11:51:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959508; cv=none; b=aGzCmPo1wgoT5lDWJ21JdeehiLSs8Hr2esPe96JD6fN6LsO9iqZ+Jz2CSzYFRHywX4UkWaMPU8kL0maYbkvOqOUrQ7s3zADGf2Sa2VB0ztN4oFj2dbBRFQdJMZJpVF5fUf1ftaFXx9iAjxjDzn0qEroqnrrq057T3KRFlQ8vsfM=
+	t=1767959510; cv=none; b=SGb5znTHBWkpQrII1fnAoACFppivMFGlsvLx6+2RfFYPQDDRPhY5d+tIVLWzfYu+KoB429EUkjPFoF/myqsGqr3XTD8yK81Uc0nRC5gSq/0K4gjHa8px3Cp+HL4IJ8jw9cdbAH09GQ3rn+pfRqFRXVkBpyl7mSznCw1CFdpHCvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959508; c=relaxed/simple;
-	bh=l/vAl3eKjxP5y0GOiS4ymcCKHpGAVOwZYmP+svZaMQg=;
+	s=arc-20240116; t=1767959510; c=relaxed/simple;
+	bh=J/4yaW6wGxetNHvdkI+DtOfWrzaAeulqew3h/0aSJ7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eGYo9CnGsz7N96xwAwLIFhBG4o/gBIkX7trVlfF8TXoHQ2vjah8Y4jCZz/RNZ6gLe4baVSMre5Rr2v2s0r8oQSLZN4q3JhUG3PHMRL8uQkBcRqcqZkFjMubv50ANT2rBJBsnTrsOn7xduaS9UqhARarFNQD+1SXGKqvS+jv+VjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DXLXycT9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EiKyMjBzBOG92wxjrDhyZZgs79e0ojWq6e1l9fBVQJGZHl9/9avRKcmnCPcsEkIM0xI3F6v9IJd0N4kTLKhqNX5amxxDJ2aKtYAuYolYsd4NYKZs/9loo50B2HV6H6QVph6pKeSFw6qprZ7IzLJXhddIOjozenKDWdFMt3hzbPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aXmvctJr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DXLXycT9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B23AEC4CEF1;
-	Fri,  9 Jan 2026 11:51:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aXmvctJr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71E6BC16AAE;
+	Fri,  9 Jan 2026 11:51:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959508;
-	bh=l/vAl3eKjxP5y0GOiS4ymcCKHpGAVOwZYmP+svZaMQg=;
+	s=korg; t=1767959510;
+	bh=J/4yaW6wGxetNHvdkI+DtOfWrzaAeulqew3h/0aSJ7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DXLXycT9ufQlWWYYQNe7BN8ldM93i6fZUK7SzR/GfVt8wrbPHI9gqE5oT2KoSe2yU
-	 jSfEyHqj3Gs4pQkaxZXE9uYgSuWp0WmQRdbH0ZxAePXfTTTCzLw0w6FTvE+T86EHsu
-	 b39XGO9MEwZoD7qBo/SepZ+JwbWuzy5BpRwNXGks=
+	b=aXmvctJrl1MJo0kaVkc/ujDqJlaPBXdCHQRH7orB6+iLrq7rUIAbdGTaJ6nNlC8jQ
+	 igE6ud1agJeybtEYAbgmAhH51illeppMa/lL3SsiT9rsktm57naZ4INtHWGLB0eeHO
+	 vh/eTEHrjoBRxKYtlpwCEXuDuHz1tZa2tf3lst38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ston Jia <ston.jia@outlook.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	syzbot+332bd4e9d148f11a87dc@syzkaller.appspotmail.com,
+	Sidharth Seela <sidharthseela@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 034/737] platform/x86: huawei-wmi: add keys for HONOR models
-Date: Fri,  9 Jan 2026 12:32:53 +0100
-Message-ID: <20260109112135.279959446@linuxfoundation.org>
+Subject: [PATCH 6.6 070/737] ntfs3: Fix uninit buffer allocated by __getname()
+Date: Fri,  9 Jan 2026 12:33:29 +0100
+Message-ID: <20260109112136.630459529@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -45,49 +46,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jia Ston <ston.jia@outlook.com>
+From: Sidharth Seela <sidharthseela@gmail.com>
 
-[ Upstream commit 5c72329716d0858621021193330594d5d26bf44d ]
+[ Upstream commit 9948dcb2f7b5a1bf8e8710eafaf6016e00be3ad6 ]
 
-HONOR MagicBook X16/X14 models produced in 2025 cannot use the Print
-Screen and YOYO keys properly, with the system reporting them as
-unknown key presses (codes: 0x028b and 0x028e).
+Fix uninit errors caused after buffer allocation given to 'de'; by
+initializing the buffer with zeroes. The fix was found by using KMSAN.
 
-To resolve this, a key_entry is added for both the HONOR Print Screen
-key and the HONOR YOYO key, ensuring they function correctly on these
-models.
-
-Signed-off-by: Ston Jia <ston.jia@outlook.com>
-Link: https://patch.msgid.link/20251029051804.220111-1-ston.jia@outlook.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reported-by: syzbot+332bd4e9d148f11a87dc@syzkaller.appspotmail.com
+Fixes: 78ab59fee07f2 ("fs/ntfs3: Rework file operations")
+Signed-off-by: Sidharth Seela <sidharthseela@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/huawei-wmi.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/ntfs3/inode.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/x86/huawei-wmi.c b/drivers/platform/x86/huawei-wmi.c
-index 0ef1c46b617b6..29ef391d33052 100644
---- a/drivers/platform/x86/huawei-wmi.c
-+++ b/drivers/platform/x86/huawei-wmi.c
-@@ -81,6 +81,10 @@ static const struct key_entry huawei_wmi_keymap[] = {
- 	{ KE_KEY,    0x289, { KEY_WLAN } },
- 	// Huawei |M| key
- 	{ KE_KEY,    0x28a, { KEY_CONFIG } },
-+	// HONOR YOYO key
-+	{ KE_KEY,    0x28b, { KEY_NOTIFICATION_CENTER } },
-+	// HONOR print screen
-+	{ KE_KEY,    0x28e, { KEY_PRINT } },
- 	// Keyboard backlit
- 	{ KE_IGNORE, 0x293, { KEY_KBDILLUMTOGGLE } },
- 	{ KE_IGNORE, 0x294, { KEY_KBDILLUMUP } },
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index a967babea8a59..f27e25776b730 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -1758,6 +1758,7 @@ int ntfs_link_inode(struct inode *inode, struct dentry *dentry)
+ 	de = __getname();
+ 	if (!de)
+ 		return -ENOMEM;
++	memset(de, 0, PATH_MAX);
+ 
+ 	/* Mark rw ntfs as dirty. It will be cleared at umount. */
+ 	ntfs_set_state(sbi, NTFS_DIRTY_DIRTY);
 -- 
 2.51.0
 
