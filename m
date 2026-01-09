@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E77033A712;
-	Fri,  9 Jan 2026 11:58:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4FC32BF21;
+	Fri,  9 Jan 2026 11:58:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959888; cv=none; b=QV23C8sHPR/yhrK/Ny8Ysj3xdPEefMUDreY7Zq/TGPrvhKGBb9ssdCYBFl5NyJKB3Mb7NSFiLH7+qGs59WziKSYKaBuuKQ9cvpjchYGr9enppx96yALhtOM344GgOWCW33+TS39ecT+N9Tqv7kSHwRiOjLndrBC5q+OoEXdMipY=
+	t=1767959890; cv=none; b=RApPLRAy8g1p8Xf+1FaTG3cpNs5T3AXnS9mjndVVj/8xO4YDB2/NI3stRx7iAQipXRmjgFgrD6VXPnUBknJooxB0mS2G/p2kgBUFmHWABQbjj1feO40GUyqHjH3CHm5OeHyyy5lB8/vD1VHF+MXpvu4rDfjwBR2fJ6tFKnOODPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959888; c=relaxed/simple;
-	bh=j7tbZT8TEuU79UVmRPlPQlktZzGqo/k8abP4bDLS8QI=;
+	s=arc-20240116; t=1767959890; c=relaxed/simple;
+	bh=hJWODLjBWhbI9Y/h1fv+mBicUEgLs8eJXMvhofU74lU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uchfZDU632QfoIM1jYzlPtnZq2aZbEbpvPxPz0k0hgOVLz4xfpaTu7lC1iy31ICZMu3k+XweCNa7tcVRpbF0UZvJ7qjw103xIiIkyTxPBcRtxf+N2FPuG2mN7fVeQHBrSemIhTQ9zF5aAsEjn/dUFx2EGAUS9jjgVkTad5XNdLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mWAxfvSC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=khzgnSW3CZSH7Lm23og8k/DypK+qh4GhTuwEWoiJkS9JS17Vr+fBO9hjqD4fKgS8fZSvNtpDG5zecxSGbL+E8B/tSCc9fRfDUTuuHammW87Koqr1WrCW1qNIDiRqj2/0u7MMOGjkbTnOGn9uxGpVaA1KAUKy4VlvXUYSZagn+1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LS2heaEp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mWAxfvSC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF124C4CEF1;
-	Fri,  9 Jan 2026 11:58:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LS2heaEp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E2EEC4CEF1;
+	Fri,  9 Jan 2026 11:58:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959888;
-	bh=j7tbZT8TEuU79UVmRPlPQlktZzGqo/k8abP4bDLS8QI=;
+	s=korg; t=1767959890;
+	bh=hJWODLjBWhbI9Y/h1fv+mBicUEgLs8eJXMvhofU74lU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mWAxfvSCEnxFYPKCOh9tATqOa7RWCDJH9oZYuERqZw/1wufmYC1A5fPfJRnvmkBZV
-	 AselIMbeIoIKSXJnOslkHpLVDbSgDvN0JhZloKAIspoVnF1RPxFoy3gKxj0gCllwWB
-	 fI3kji/uHoEs3OM3Q/kWzBcA6yuy8E2SIEmNa5w0=
+	b=LS2heaEpaaXORkrZdhpW8zOp2tmOpincoSI5f3LMC7pkhpYOhIdgfdqvRYdhy9II1
+	 kEe0FimoLVR5eqbxebSR4WysMmiE00jHiIERlZuhLYIrcHani0FMx1o4qMItdclSuo
+	 bhFcA9ZaML1+KAlFgkkbAE7Sbp5BEDh5kpY7PXZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
 	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
-	Herve Codina <herve.codina@bootlin.com>,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 209/737] backlight: led-bl: Add devlink to supplier LEDs
-Date: Fri,  9 Jan 2026 12:35:48 +0100
-Message-ID: <20260109112141.861259282@linuxfoundation.org>
+Subject: [PATCH 6.6 210/737] backlight: lp855x: Fix lp855x.h kernel-doc warnings
+Date: Fri,  9 Jan 2026 12:35:49 +0100
+Message-ID: <20260109112141.898461242@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -54,100 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 9341d6698f4cfdfc374fb6944158d111ebe16a9d ]
+[ Upstream commit 2d45db63260c6ae3cf007361e04a1c41bd265084 ]
 
-LED Backlight is a consumer of one or multiple LED class devices, but
-devlink is currently unable to create correct supplier-producer links when
-the supplier is a class device. It creates instead a link where the
-supplier is the parent of the expected device.
+Add a missing struct short description and a missing leading " *" to
+lp855x.h to avoid kernel-doc warnings:
 
-One consequence is that removal order is not correctly enforced.
+Warning: include/linux/platform_data/lp855x.h:126 missing initial short
+ description on line:
+ * struct lp855x_platform_data
+Warning: include/linux/platform_data/lp855x.h:131 bad line:
+   Only valid when mode is PWM_BASED.
 
-Issues happen for example with the following sections in a device tree
-overlay:
-
-    // An LED driver chip
-    pca9632@62 {
-        compatible = "nxp,pca9632";
-        reg = <0x62>;
-
-	// ...
-
-        addon_led_pwm: led-pwm@3 {
-            reg = <3>;
-            label = "addon:led:pwm";
-        };
-    };
-
-    backlight-addon {
-        compatible = "led-backlight";
-        leds = <&addon_led_pwm>;
-        brightness-levels = <255>;
-        default-brightness-level = <255>;
-    };
-
-In this example, the devlink should be created between the backlight-addon
-(consumer) and the pca9632@62 (supplier). Instead it is created between the
-backlight-addon (consumer) and the parent of the pca9632@62, which is
-typically the I2C bus adapter.
-
-On removal of the above overlay, the LED driver can be removed before the
-backlight device, resulting in:
-
-    Unable to handle kernel NULL pointer dereference at virtual address 0000000000000010
-    ...
-    Call trace:
-     led_put+0xe0/0x140
-     devm_led_release+0x6c/0x98
-
-Another way to reproduce the bug without any device tree overlays is
-unbinding the LED class device (pca9632@62) before unbinding the consumer
-(backlight-addon):
-
-  echo 11-0062 >/sys/bus/i2c/drivers/leds-pca963x/unbind
-  echo ...backlight-dock >/sys/bus/platform/drivers/led-backlight/unbind
-
-Fix by adding a devlink between the consuming led-backlight device and the
-supplying LED device, as other drivers and subsystems do as well.
-
-Fixes: ae232e45acf9 ("backlight: add led-backlight driver")
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Fixes: 7be865ab8634 ("backlight: new backlight driver for LP855x devices")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
 Reviewed-by: Daniel Thompson (RISCstar) <danielt@kernel.org>
-Reviewed-by: Herve Codina <herve.codina@bootlin.com>
-Tested-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Link: https://patch.msgid.link/20250519-led-backlight-add-devlink-to-supplier-class-device-v6-1-845224aeb2ce@bootlin.com
+Link: https://patch.msgid.link/20251111060916.1995920-1-rdunlap@infradead.org
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/backlight/led_bl.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ include/linux/platform_data/lp855x.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/video/backlight/led_bl.c b/drivers/video/backlight/led_bl.c
-index 0e53e427a91dc..9089d17200ec7 100644
---- a/drivers/video/backlight/led_bl.c
-+++ b/drivers/video/backlight/led_bl.c
-@@ -209,6 +209,19 @@ static int led_bl_probe(struct platform_device *pdev)
- 		return PTR_ERR(priv->bl_dev);
- 	}
+diff --git a/include/linux/platform_data/lp855x.h b/include/linux/platform_data/lp855x.h
+index ab222dd05bbc2..3b4a891acefe9 100644
+--- a/include/linux/platform_data/lp855x.h
++++ b/include/linux/platform_data/lp855x.h
+@@ -124,12 +124,12 @@ struct lp855x_rom_data {
+ };
  
-+	for (i = 0; i < priv->nb_leds; i++) {
-+		struct device_link *link;
-+
-+		link = device_link_add(&pdev->dev, priv->leds[i]->dev->parent,
-+				       DL_FLAG_AUTOREMOVE_CONSUMER);
-+		if (!link) {
-+			dev_err(&pdev->dev, "Failed to add devlink (consumer %s, supplier %s)\n",
-+				dev_name(&pdev->dev), dev_name(priv->leds[i]->dev->parent));
-+			backlight_device_unregister(priv->bl_dev);
-+			return -EINVAL;
-+		}
-+	}
-+
- 	for (i = 0; i < priv->nb_leds; i++) {
- 		mutex_lock(&priv->leds[i]->led_access);
- 		led_sysfs_disable(priv->leds[i]);
+ /**
+- * struct lp855x_platform_data
++ * struct lp855x_platform_data - lp855 platform-specific data
+  * @name : Backlight driver name. If it is not defined, default name is set.
+  * @device_control : value of DEVICE CONTROL register
+  * @initial_brightness : initial value of backlight brightness
+  * @period_ns : platform specific pwm period value. unit is nano.
+-		Only valid when mode is PWM_BASED.
++ *		Only valid when mode is PWM_BASED.
+  * @size_program : total size of lp855x_rom_data
+  * @rom_data : list of new eeprom/eprom registers
+  */
 -- 
 2.51.0
 
