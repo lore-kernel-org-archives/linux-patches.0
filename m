@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B626328B58;
-	Fri,  9 Jan 2026 12:14:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCAA33B6E1;
+	Fri,  9 Jan 2026 12:14:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960894; cv=none; b=m4h4sOWkPFtzgCC9YcASkg+EekibISJJzf7h9+GfjcIrwm3660G3K27JbdJlu2pblzGqY3Iyrddvz42p13VBsNMKVgOszwq9W57MvQzPBTJc18d1PLdfxc1U/dlghfWKI6zj/dsi7TB4Zw/ia2j7AP7gFLUx9en2+jP9DKFsjSk=
+	t=1767960897; cv=none; b=mrgKd4VLOgLamOnRCt1EAT1dxdT4b6M7NFFnCOVBQI8ywdHWFdRXHl+azWG5idebyaOq4CNMOvG4xpl1htdG4y4uD29B43dHI9udBkTEPqYYT/M0cOAs9VKH8wUC6ZQ0+TVl2mE0Q1SbXkvnITfdQgca4uIhI1oCilgwiAH/dKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960894; c=relaxed/simple;
-	bh=/4TKp1NRpu50WMu1zrJJZ2aooizExDOVD0EYPgtHFVI=;
+	s=arc-20240116; t=1767960897; c=relaxed/simple;
+	bh=3B+bZ2wps1pkRNNSjwQgBq/Muu27AvpJZ8lZoG/Thfw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uD8PXLnRuPWwwSPMmN9e0ks8qtAo6SBN85u4z1snXY7tHsvn5tD6vW+8wHO4TayKtPjCj1iwiTsBStAdj398zvFKnMv6Ipo65Bt61HeULeBRC+ok961vOUs9MRSY5AEbaWGjwEglUhXMYBxeNjWH4Ey6/FgCjl1jai+b0Sd8R+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DSZY7dXw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qrIoCllwb8kpXBwIt0NbSLqMdormHxIXGdr+fsKaaueqNauwFKnSiW8lLAiMGdlpPEorSQ10Mj9K802TeD67jcq5sOIRAAySe6Jczgs8myzzWBXP04ScpZvg4gswDHaW02OzUpEDBDv3wRVp8CuH45FCCDDyDlWixEiqa2TEPTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1UtRNKQD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DSZY7dXw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC79CC4CEF1;
-	Fri,  9 Jan 2026 12:14:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1UtRNKQD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEDF1C4CEF1;
+	Fri,  9 Jan 2026 12:14:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960894;
-	bh=/4TKp1NRpu50WMu1zrJJZ2aooizExDOVD0EYPgtHFVI=;
+	s=korg; t=1767960897;
+	bh=3B+bZ2wps1pkRNNSjwQgBq/Muu27AvpJZ8lZoG/Thfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DSZY7dXwOjODfo8SyfsoeDb1AJ7d+Xc3bOi4GNUa+HdZ4uTsdZtwvHcUyXs1nNYJ1
-	 mwrnyYAUbz5zEoh8uxV5AWqlVaANcc1UVxJFq76NH3UM0IMk6f766d800ZG8G4ICFx
-	 he6B4i6eGEPvd9Np3cHW3FfT2H/N3FF2qZXxjJ5Q=
+	b=1UtRNKQDyLr5dJL0olPiuHo424uhRAB2crkGL5MSKBFvoGwNHlDreXQeZDQdTKCoZ
+	 2wwM0yIt86kQA+GyAZNQqnJEJzOpVTu9f5o0IuVKEiz7CbyxD/skMJz5oQH5VEVyIW
+	 FRxxgMNbqxg3Km6Ui+qew2AnkDOiibaSFmiNnzM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.6 561/737] HID: logitech-dj: Remove duplicate error logging
-Date: Fri,  9 Jan 2026 12:41:40 +0100
-Message-ID: <20260109112155.108310675@linuxfoundation.org>
+	Lukas Wunner <lukas@wunner.de>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>
+Subject: [PATCH 6.6 562/737] PCI/PM: Reinstate clearing state_saved in legacy and !PM codepaths
+Date: Fri,  9 Jan 2026 12:41:41 +0100
+Message-ID: <20260109112155.144459613@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -50,163 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <johannes.goede@oss.qualcomm.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-commit ca389a55d8b2d86a817433bf82e0602b68c4d541 upstream.
+commit 894f475f88e06c0f352c829849560790dbdedbe5 upstream.
 
-logi_dj_recv_query_paired_devices() and logi_dj_recv_switch_to_dj_mode()
-both have 2 callers which all log an error if the function fails. Move
-the error logging to inside these 2 functions to remove the duplicated
-error logging in the callers.
+When a PCI device is suspended, it is normally the PCI core's job to save
+Config Space and put the device into a low power state.  However drivers
+are allowed to assume these responsibilities.  When they do, the PCI core
+can tell by looking at the state_saved flag in struct pci_dev:  The flag
+is cleared before commencing the suspend sequence and it is set when
+pci_save_state() is called.  If the PCI core finds the flag set late in
+the suspend sequence, it refrains from calling pci_save_state() itself.
 
-While at it also move the logi_dj_recv_send_report() call error handling
-in logi_dj_recv_switch_to_dj_mode() to directly after the call. That call
-only fails if the report cannot be found and in that case it does nothing,
-so the msleep() is not necessary on failures.
+But there are two corner cases where the PCI core neglects to clear the
+flag before commencing the suspend sequence:
 
-Fixes: 6f20d3261265 ("HID: logitech-dj: Fix error handling in logi_dj_recv_switch_to_dj_mode()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+* If a driver has legacy PCI PM callbacks, pci_legacy_suspend() neglects
+  to clear the flag.  The (stale) flag is subsequently queried by
+  pci_legacy_suspend() itself and pci_legacy_suspend_late().
+
+* If a device has no driver or its driver has no PCI PM callbacks,
+  pci_pm_freeze() neglects to clear the flag.  The (stale) flag is
+  subsequently queried by pci_pm_freeze_noirq().
+
+The flag may be set prior to suspend if the device went through error
+recovery:  Drivers commonly invoke pci_restore_state() + pci_save_state()
+to restore Config Space after reset.
+
+The flag may also be set if drivers call pci_save_state() on probe to
+allow for recovery from subsequent errors.
+
+The result is that pci_legacy_suspend_late() and pci_pm_freeze_noirq()
+don't call pci_save_state() and so the state that will be restored on
+resume is the one recorded on last error recovery or on probe, not the one
+that the device had on suspend.  If the two states happen to be identical,
+there's no problem.
+
+Reinstate clearing the flag in pci_legacy_suspend() and pci_pm_freeze().
+The two functions used to do that until commit 4b77b0a2ba27 ("PCI: Clear
+saved_state after the state has been restored") deemed it unnecessary
+because it assumed that it's sufficient to clear the flag on resume in
+pci_restore_state().  The commit seemingly did not take into account that
+pci_save_state() and pci_restore_state() are not only used by power
+management code, but also for error recovery.
+
+Devices without driver or whose driver has no PCI PM callbacks may be in
+runtime suspend when pci_pm_freeze() is called.  Their state has already
+been saved, so don't clear the flag to skip a pointless pci_save_state()
+in pci_pm_freeze_noirq().
+
+None of the drivers with legacy PCI PM callbacks seem to use runtime PM,
+so clear the flag unconditionally in their case.
+
+Fixes: 4b77b0a2ba27 ("PCI: Clear saved_state after the state has been restored")
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
+Cc: stable@vger.kernel.org # v2.6.32+
+Link: https://patch.msgid.link/094f2aad64418710daf0940112abe5a0afdc6bce.1763483367.git.lukas@wunner.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-logitech-dj.c |   56 +++++++++++++++++-------------------------
- 1 file changed, 23 insertions(+), 33 deletions(-)
+ drivers/pci/pci-driver.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/hid/hid-logitech-dj.c
-+++ b/drivers/hid/hid-logitech-dj.c
-@@ -805,7 +805,6 @@ static void delayedwork_callback(struct
- 	struct dj_workitem workitem;
- 	unsigned long flags;
- 	int count;
--	int retval;
+--- a/drivers/pci/pci-driver.c
++++ b/drivers/pci/pci-driver.c
+@@ -644,6 +644,8 @@ static int pci_legacy_suspend(struct dev
+ 	struct pci_dev *pci_dev = to_pci_dev(dev);
+ 	struct pci_driver *drv = pci_dev->driver;
  
- 	dbg_hid("%s\n", __func__);
- 
-@@ -842,11 +841,7 @@ static void delayedwork_callback(struct
- 		logi_dj_recv_destroy_djhid_device(djrcv_dev, &workitem);
- 		break;
- 	case WORKITEM_TYPE_UNKNOWN:
--		retval = logi_dj_recv_query_paired_devices(djrcv_dev);
--		if (retval) {
--			hid_err(djrcv_dev->hidpp, "%s: logi_dj_recv_query_paired_devices error: %d\n",
--				__func__, retval);
--		}
-+		logi_dj_recv_query_paired_devices(djrcv_dev);
- 		break;
- 	case WORKITEM_TYPE_EMPTY:
- 		dbg_hid("%s: device list is empty\n", __func__);
-@@ -1239,8 +1234,10 @@ static int logi_dj_recv_query_paired_dev
- 
- 	djrcv_dev->last_query = jiffies;
- 
--	if (djrcv_dev->type != recvr_type_dj)
--		return logi_dj_recv_query_hidpp_devices(djrcv_dev);
-+	if (djrcv_dev->type != recvr_type_dj) {
-+		retval = logi_dj_recv_query_hidpp_devices(djrcv_dev);
-+		goto out;
-+	}
- 
- 	dj_report = kzalloc(sizeof(struct dj_report), GFP_KERNEL);
- 	if (!dj_report)
-@@ -1250,6 +1247,10 @@ static int logi_dj_recv_query_paired_dev
- 	dj_report->report_type = REPORT_TYPE_CMD_GET_PAIRED_DEVICES;
- 	retval = logi_dj_recv_send_report(djrcv_dev, dj_report);
- 	kfree(dj_report);
-+out:
-+	if (retval < 0)
-+		hid_err(djrcv_dev->hidpp, "%s error:%d\n", __func__, retval);
++	pci_dev->state_saved = false;
 +
- 	return retval;
- }
+ 	if (drv && drv->suspend) {
+ 		pci_power_t prev = pci_dev->current_state;
+ 		int error;
+@@ -1048,6 +1050,8 @@ static int pci_pm_freeze(struct device *
  
-@@ -1275,6 +1276,8 @@ static int logi_dj_recv_switch_to_dj_mod
- 								(u8)timeout;
- 
- 		retval = logi_dj_recv_send_report(djrcv_dev, dj_report);
-+		if (retval)
-+			goto out;
- 
- 		/*
- 		 * Ugly sleep to work around a USB 3.0 bug when the receiver is
-@@ -1283,11 +1286,6 @@ static int logi_dj_recv_switch_to_dj_mod
- 		 * 50 msec should gives enough time to the receiver to be ready.
- 		 */
- 		msleep(50);
--
--		if (retval) {
--			kfree(dj_report);
--			return retval;
--		}
- 	}
- 
- 	/*
-@@ -1313,7 +1311,12 @@ static int logi_dj_recv_switch_to_dj_mod
- 			HIDPP_REPORT_SHORT_LENGTH, HID_OUTPUT_REPORT,
- 			HID_REQ_SET_REPORT);
- 
-+out:
- 	kfree(dj_report);
-+
-+	if (retval < 0)
-+		hid_err(hdev, "%s error:%d\n", __func__, retval);
-+
- 	return retval;
- }
- 
-@@ -1835,11 +1838,8 @@ static int logi_dj_probe(struct hid_devi
- 
- 	if (has_hidpp) {
- 		retval = logi_dj_recv_switch_to_dj_mode(djrcv_dev, 0);
--		if (retval < 0) {
--			hid_err(hdev, "%s: logi_dj_recv_switch_to_dj_mode returned error:%d\n",
--				__func__, retval);
-+		if (retval < 0)
- 			goto switch_to_dj_mode_fail;
--		}
- 	}
- 
- 	/* This is enabling the polling urb on the IN endpoint */
-@@ -1857,15 +1857,11 @@ static int logi_dj_probe(struct hid_devi
- 		spin_lock_irqsave(&djrcv_dev->lock, flags);
- 		djrcv_dev->ready = true;
- 		spin_unlock_irqrestore(&djrcv_dev->lock, flags);
--		retval = logi_dj_recv_query_paired_devices(djrcv_dev);
--		if (retval < 0) {
--			hid_err(hdev, "%s: logi_dj_recv_query_paired_devices error:%d\n",
--				__func__, retval);
--			/*
--			 * This can happen with a KVM, let the probe succeed,
--			 * logi_dj_recv_queue_unknown_work will retry later.
--			 */
--		}
-+		/*
-+		 * This can fail with a KVM. Ignore errors to let the probe
-+		 * succeed, logi_dj_recv_queue_unknown_work will retry later.
-+		 */
-+		logi_dj_recv_query_paired_devices(djrcv_dev);
- 	}
- 
- 	return 0;
-@@ -1882,18 +1878,12 @@ hid_hw_start_fail:
- #ifdef CONFIG_PM
- static int logi_dj_reset_resume(struct hid_device *hdev)
- {
--	int retval;
- 	struct dj_receiver_dev *djrcv_dev = hid_get_drvdata(hdev);
- 
- 	if (!djrcv_dev || djrcv_dev->hidpp != hdev)
+ 	if (!pm) {
+ 		pci_pm_default_suspend(pci_dev);
++		if (!pm_runtime_suspended(dev))
++			pci_dev->state_saved = false;
  		return 0;
+ 	}
  
--	retval = logi_dj_recv_switch_to_dj_mode(djrcv_dev, 0);
--	if (retval < 0) {
--		hid_err(hdev, "%s: logi_dj_recv_switch_to_dj_mode returned error:%d\n",
--			__func__, retval);
--	}
--
-+	logi_dj_recv_switch_to_dj_mode(djrcv_dev, 0);
- 	return 0;
- }
- #endif
 
 
