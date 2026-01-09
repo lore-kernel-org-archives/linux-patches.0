@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D4E5358D30;
-	Fri,  9 Jan 2026 12:34:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E2831E8836;
+	Fri,  9 Jan 2026 12:34:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962092; cv=none; b=J4AWVqn4FipdQuVgJzk34LRxvev85mvBTW2n9GD8HaGc5hF95y5BwhWjhwC5mUIcuf4knWAKtkI8K5OXh1UevDyDejIHmkWHWqJjuRF9xvTJBv/JXkUely6fNhMeNlzbQ1tPmEYiRFOHK/ohLZOv3ovh9xpZtUMLS5hH9D16vrY=
+	t=1767962095; cv=none; b=byAPH4WqorkSDJNjxNO3A1NG7oCqeOXO7hkMvTEdW3YGqxdLeY93BNJSrRMynhuQDh+wkzsIWuLMKnLJBwjnqhGOiDArgODPPs7CsZvAjloU04HQx5BI/1zpsJva40zpSAxk4PZSzK2z+6PDaeKvEULsNm/v5i3PqSVcIfsOMiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962092; c=relaxed/simple;
-	bh=+IdZJX1QPXfFiZLgIZdHvr8HGy+YwsrXi6n0GaF1R3M=;
+	s=arc-20240116; t=1767962095; c=relaxed/simple;
+	bh=g5FZ5qnPNypIMd5cLRlndhj72L1DP5VCXk6Klrl5jIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uqMF88km2fTt0EDABbEL/9ud6/sOGtvjJ9G1iDFbN7Po4glR7FUg/lVtaOPU87Pcuyj0kIVLYmWpRNtjU5vWj4AHnpRUHmvVQsVk6dxtm+IC+d+DLCeU4yaRiwyWHRnYKbmrZWKd3mQfDUcsv0akpUuc2M7Nwso2gIPfxY6cOyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yl7vFElB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gS/ai8joWn4zKOr6KpDdXdV8D2TmBjbByFMEP+1S4l7i/RH7lfC8V38k9wB6nPwbH+wYohmTvnJfTPCVSJcbxqy3le5SI2hIQkjt6L4ur1lj171uK/026oMXqZc8LsBKpQjhM1FeO8c1j3tbyduf+i0pdxN5qsWWiD8buF0rP8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Hli6Ns0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yl7vFElB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B626AC4CEF1;
-	Fri,  9 Jan 2026 12:34:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Hli6Ns0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9D8C4CEF1;
+	Fri,  9 Jan 2026 12:34:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962092;
-	bh=+IdZJX1QPXfFiZLgIZdHvr8HGy+YwsrXi6n0GaF1R3M=;
+	s=korg; t=1767962095;
+	bh=g5FZ5qnPNypIMd5cLRlndhj72L1DP5VCXk6Klrl5jIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yl7vFElB4xF0I2UNMhG3xVO60kOsmBZRamkDD95kRiLEMdX+Ivua0oYvwpH9xfi4N
-	 xSiCydW+cKLIyZoipcjQMjE643TI3Avrsn9dBhJdCjQOia4CIPP12qB947xv4NDAZP
-	 De7FKBgBIF/tXzRJUeeu5wpHkeELMHjBlLYsZdYU=
+	b=2Hli6Ns0QDmLOA8DdJwvjBHsWUe/xqTuXrqYukKBRRXegbda0jl1xrkIcD/50xaDM
+	 aI5/U99pwQ4XFxXLrQ/Xmoh7byETUStoJcCZqTdotjiebh+W25X7Wln/cSGMnaASsB
+	 08fzWmoGj0HTxaNW+Bku9SHHvSWN11fjQKHOqFrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xie Yuanbin <xieyuanbin1@huawei.com>,
-	Liyuan Pang <pangliyuan1@huawei.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Alexey Simakov <bigalex934@gmail.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 211/634] ARM: 9464/1: fix input-only operand modification in load_unaligned_zeropad()
-Date: Fri,  9 Jan 2026 12:38:09 +0100
-Message-ID: <20260109112125.375902836@linuxfoundation.org>
+Subject: [PATCH 6.1 212/634] dm-raid: fix possible NULL dereference with undefined raid type
+Date: Fri,  9 Jan 2026 12:38:10 +0100
+Message-ID: <20260109112125.413605580@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,64 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liyuan Pang <pangliyuan1@huawei.com>
+From: Alexey Simakov <bigalex934@gmail.com>
 
-[ Upstream commit edb924a7211c9aa7a4a415e03caee4d875e46b8e ]
+[ Upstream commit 2f6cfd6d7cb165a7af8877b838a9f6aab4159324 ]
 
-In the inline assembly inside load_unaligned_zeropad(), the "addr" is
-constrained as input-only operand. The compiler assumes that on exit
-from the asm statement these operands contain the same values as they
-had before executing the statement, but when kernel page fault happened, the assembly fixup code "bic %2 %2, #0x3" modify the value of "addr", which may lead to an unexpected behavior.
+rs->raid_type is assigned from get_raid_type_by_ll(), which may return
+NULL. This NULL value could be dereferenced later in the condition
+'if (!(rs_is_raid10(rs) && rt_is_raid0(rs->raid_type)))'.
 
-Use a temporary variable "tmp" to handle it, instead of modifying the
-input-only operand, just like what arm64's load_unaligned_zeropad()
-does.
+Add a fail-fast check to return early with an error if raid_type is NULL,
+similar to other uses of this function.
 
-Fixes: b9a50f74905a ("ARM: 7450/1: dcache: select DCACHE_WORD_ACCESS for little-endian ARMv6+ CPUs")
-Co-developed-by: Xie Yuanbin <xieyuanbin1@huawei.com>
-Signed-off-by: Xie Yuanbin <xieyuanbin1@huawei.com>
-Signed-off-by: Liyuan Pang <pangliyuan1@huawei.com>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Found by Linux Verification Center (linuxtesting.org) with Svace.
+
+Fixes: 33e53f06850f ("dm raid: introduce extended superblock and new raid types to support takeover/reshaping")
+Signed-off-by: Alexey Simakov <bigalex934@gmail.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/include/asm/word-at-a-time.h | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/md/dm-raid.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm/include/asm/word-at-a-time.h b/arch/arm/include/asm/word-at-a-time.h
-index 352ab213520d2..2e6d0b4349f47 100644
---- a/arch/arm/include/asm/word-at-a-time.h
-+++ b/arch/arm/include/asm/word-at-a-time.h
-@@ -66,7 +66,7 @@ static inline unsigned long find_zero(unsigned long mask)
-  */
- static inline unsigned long load_unaligned_zeropad(const void *addr)
- {
--	unsigned long ret, offset;
-+	unsigned long ret, tmp;
+diff --git a/drivers/md/dm-raid.c b/drivers/md/dm-raid.c
+index 21a1586c69a7f..3d9be184d4606 100644
+--- a/drivers/md/dm-raid.c
++++ b/drivers/md/dm-raid.c
+@@ -2259,6 +2259,8 @@ static int super_init_validation(struct raid_set *rs, struct md_rdev *rdev)
  
- 	/* Load word from unaligned pointer addr */
- 	asm(
-@@ -74,9 +74,9 @@ static inline unsigned long load_unaligned_zeropad(const void *addr)
- 	"2:\n"
- 	"	.pushsection .text.fixup,\"ax\"\n"
- 	"	.align 2\n"
--	"3:	and	%1, %2, #0x3\n"
--	"	bic	%2, %2, #0x3\n"
--	"	ldr	%0, [%2]\n"
-+	"3:	bic	%1, %2, #0x3\n"
-+	"	ldr	%0, [%1]\n"
-+	"	and	%1, %2, #0x3\n"
- 	"	lsl	%1, %1, #0x3\n"
- #ifndef __ARMEB__
- 	"	lsr	%0, %0, %1\n"
-@@ -89,7 +89,7 @@ static inline unsigned long load_unaligned_zeropad(const void *addr)
- 	"	.align	3\n"
- 	"	.long	1b, 3b\n"
- 	"	.popsection"
--	: "=&r" (ret), "=&r" (offset)
-+	: "=&r" (ret), "=&r" (tmp)
- 	: "r" (addr), "Qo" (*(unsigned long *)addr));
+ 			mddev->reshape_position = le64_to_cpu(sb->reshape_position);
+ 			rs->raid_type = get_raid_type_by_ll(mddev->level, mddev->layout);
++			if (!rs->raid_type)
++				return -EINVAL;
+ 		}
  
- 	return ret;
+ 	} else {
 -- 
 2.51.0
 
