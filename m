@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A8335A95C;
-	Fri,  9 Jan 2026 12:34:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE2A335BCD;
+	Fri,  9 Jan 2026 12:34:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962070; cv=none; b=i4HcNqKOGiISYUV0awPBHStBODkR9pT75V8lxJy71jf/I9z5IQtRc26Lh2RNz72ALL1qJc7ctmE6SxOjDAX7kbcW0TiJW2P4cBmdbV+WPAbq0gOc8PLUwV5RN/6LIAZFqz/ucXx9HfHVIKB4TkGovq1zacCwUQGXQblZPnKPim4=
+	t=1767962072; cv=none; b=exOjkMsGDlvr18TdwURURG1BGrDU4Iu1l2RCSKthMv9n+ctPXqOlG6pyJL5+BJyF1F+SFq408xzVEkd9hN00Wz03A7SJPPnzGCRLLPAG43LFn3jogBSqEi9UEoY/HjN6rnBDl+wiRluNP1KG3Ejpb6RNWUzPbOaMU2D7GCcWiGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962070; c=relaxed/simple;
-	bh=zhPVLryAJw9Wt0LJGFGxc0BKDrIBgHr2nptmnVwCQK0=;
+	s=arc-20240116; t=1767962072; c=relaxed/simple;
+	bh=PeSlTEWBuvj6vtaANFAk7t8Jn7gyLN4CHxDQbg8syqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ci4CHZzWqdKIM4k+eEmvmxe5B3qSdjb3uJ4pBzVbKXW9HuD9mR3vKso596EwmQyQ3f5t5GLJ5DypFlkwLI+q4Hb2dzUTKhUAfC9t5nziMLfAguJ1Ad7q78CBafkp+DZs+If3S9gbP3SGwQ+kht0k+gA34ytZ8opBuHuJxUgcPqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r3kp12ev; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Am0GYtBucF9qW3DF7Wb/gYdqitkt4ggD6OS4mD69MLb+eZQ4j4TSzysGog+y4IlC7YXWiZI6bo2IuKRpcVRaCUKYaYXHTADRLXc+paLOvZQPSObZce06jgYw1gHtVLeYH1RQnaRgN0CzvY4PUymBwBZOBBpt6JJKoZo/xayGMzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H4we3kim; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r3kp12ev"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30BFEC4CEF1;
-	Fri,  9 Jan 2026 12:34:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H4we3kim"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7712C4CEF1;
+	Fri,  9 Jan 2026 12:34:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962069;
-	bh=zhPVLryAJw9Wt0LJGFGxc0BKDrIBgHr2nptmnVwCQK0=;
+	s=korg; t=1767962072;
+	bh=PeSlTEWBuvj6vtaANFAk7t8Jn7gyLN4CHxDQbg8syqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r3kp12ev+7QuZX48XazVJUG4hb5BJGS3h6tU7v0Y04Ff6LkF0ypUV6aBLBvN1iLqI
-	 IaIwMNsP25REjHlovlpdzwxsn6mNA5zAryBC/G5WjD0rUKg9/dY/DbhrQKtDFI+brs
-	 Zdx+uuYpkwuduH90IY3HQQHuGzKJYU+aComw+wUs=
+	b=H4we3kimAzFYsU3ccGvjnfsugJU5Z3olit5LK1fDcSfEW1UmKL2OPZXz8uKzRA2q2
+	 e7N/3lHCjB+5JIsBSpPBf8rnmW9RWFqVCZFOKKmcdNbBttupPRSf8hnDDtXDXLuwB3
+	 tb9BNpAqMVh4Msodsm2/LQAdhZMuJMEFW6YnzrOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andres J Rosa <andyrosa@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Song Liu <song@kernel.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Petr Mladek <pmladek@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 208/634] ALSA: uapi: Fix typo in asound.h comment
-Date: Fri,  9 Jan 2026 12:38:06 +0100
-Message-ID: <20260109112125.265090963@linuxfoundation.org>
+Subject: [PATCH 6.1 235/634] livepatch: Match old_sympos 0 and 1 in klp_find_func()
+Date: Fri,  9 Jan 2026 12:38:33 +0100
+Message-ID: <20260109112126.270262898@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,34 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andres J Rosa <andyrosa@gmail.com>
+From: Song Liu <song@kernel.org>
 
-[ Upstream commit 9a97857db0c5655b8932f86b5d18bb959079b0ee ]
+[ Upstream commit 139560e8b973402140cafeb68c656c1374bd4c20 ]
 
-Fix 'level-shit' to 'level-shift' in struct snd_cea_861_aud_if comment.
+When there is only one function of the same name, old_sympos of 0 and 1
+are logically identical. Match them in klp_find_func().
 
-Fixes: 7ba1c40b536e ("ALSA: Add definitions for CEA-861 Audio InfoFrames")
-Signed-off-by: Andres J Rosa <andyrosa@gmail.com>
-Link: https://patch.msgid.link/20251203162509.1822-1-andyrosa@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+This is to avoid a corner case with different toolchain behavior.
+
+In this specific issue, two versions of kpatch-build were used to
+build livepatch for the same kernel. One assigns old_sympos == 0 for
+unique local functions, the other assigns old_sympos == 1 for unique
+local functions. Both versions work fine by themselves. (PS: This
+behavior change was introduced in a downstream version of kpatch-build.
+This change does not exist in upstream kpatch-build.)
+
+However, during livepatch upgrade (with the replace flag set) from a
+patch built with one version of kpatch-build to the same fix built with
+the other version of kpatch-build, livepatching fails with errors like:
+
+[   14.218706] sysfs: cannot create duplicate filename 'xxx/somefunc,1'
+...
+[   14.219466] Call Trace:
+[   14.219468]  <TASK>
+[   14.219469]  dump_stack_lvl+0x47/0x60
+[   14.219474]  sysfs_warn_dup.cold+0x17/0x27
+[   14.219476]  sysfs_create_dir_ns+0x95/0xb0
+[   14.219479]  kobject_add_internal+0x9e/0x260
+[   14.219483]  kobject_add+0x68/0x80
+[   14.219485]  ? kstrdup+0x3c/0xa0
+[   14.219486]  klp_enable_patch+0x320/0x830
+[   14.219488]  patch_init+0x443/0x1000 [ccc_0_6]
+[   14.219491]  ? 0xffffffffa05eb000
+[   14.219492]  do_one_initcall+0x2e/0x190
+[   14.219494]  do_init_module+0x67/0x270
+[   14.219496]  init_module_from_file+0x75/0xa0
+[   14.219499]  idempotent_init_module+0x15a/0x240
+[   14.219501]  __x64_sys_finit_module+0x61/0xc0
+[   14.219503]  do_syscall_64+0x5b/0x160
+[   14.219505]  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+[   14.219507] RIP: 0033:0x7f545a4bd96d
+...
+[   14.219516] kobject: kobject_add_internal failed for somefunc,1 with
+    -EEXIST, don't try to register things with the same name ...
+
+This happens because klp_find_func() thinks somefunc with old_sympos==0
+is not the same as somefunc with old_sympos==1, and klp_add_object_nops
+adds another xxx/func,1 to the list of functions to patch.
+
+Signed-off-by: Song Liu <song@kernel.org>
+Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
+[pmladek@suse.com: Fixed some typos.]
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Tested-by: Petr Mladek <pmladek@suse.com>
+Signed-off-by: Petr Mladek <pmladek@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/sound/asound.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/livepatch/core.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/include/uapi/sound/asound.h b/include/uapi/sound/asound.h
-index de6810e94abed..02b6f8eb0e29a 100644
---- a/include/uapi/sound/asound.h
-+++ b/include/uapi/sound/asound.h
-@@ -60,7 +60,7 @@ struct snd_cea_861_aud_if {
- 	unsigned char db2_sf_ss; /* sample frequency and size */
- 	unsigned char db3; /* not used, all zeros */
- 	unsigned char db4_ca; /* channel allocation code */
--	unsigned char db5_dminh_lsv; /* downmix inhibit & level-shit values */
-+	unsigned char db5_dminh_lsv; /* downmix inhibit & level-shift values */
- };
+diff --git a/kernel/livepatch/core.c b/kernel/livepatch/core.c
+index 0e651fd4cc9fc..e3f251ec1637f 100644
+--- a/kernel/livepatch/core.c
++++ b/kernel/livepatch/core.c
+@@ -89,8 +89,14 @@ static struct klp_func *klp_find_func(struct klp_object *obj,
+ 	struct klp_func *func;
  
- /****************************************************************************
+ 	klp_for_each_func(obj, func) {
++		/*
++		 * Besides identical old_sympos, also consider old_sympos
++		 * of 0 and 1 are identical.
++		 */
+ 		if ((strcmp(old_func->old_name, func->old_name) == 0) &&
+-		    (old_func->old_sympos == func->old_sympos)) {
++		    ((old_func->old_sympos == func->old_sympos) ||
++		     (old_func->old_sympos == 0 && func->old_sympos == 1) ||
++		     (old_func->old_sympos == 1 && func->old_sympos == 0))) {
+ 			return func;
+ 		}
+ 	}
 -- 
 2.51.0
 
