@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8973333C53C;
-	Fri,  9 Jan 2026 12:31:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C37B33372B;
+	Fri,  9 Jan 2026 12:31:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961899; cv=none; b=sqjhFpu/PYuUCyBRIh828Jy0Eq3yINKlAP8lOqtaeCr81mSWx0v2Cx86jrUj6JWU2Oj9KNuw6SzG2NN2MA0LRh2X2YYVTr2Ef/ugmZejfB1jSz60tVK9F3Yor5uJVIt94uDa8gADbYycB5jeilT87XGvvZPXvp1cLsY8iSA3aTY=
+	t=1767961902; cv=none; b=mBCDWV+/AzTNpxT8wuRbz2cyD1KAAVfMhuBMnsPh3/WkHyL98lw1Yj41QzWZXFFgtDWjsoQHorcec1bRnjRC344o9na4vu6oXlmdxrIVCO3YURaSZ8H7cyloXAeyxRCOCSvsAz4rp/bGBhb4niV9mMQGY12BsjBu6znTVu79lEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961899; c=relaxed/simple;
-	bh=v35Q39HP8SBZPKSfy+gO7zIwf33xLTF/kFGTpkORpr8=;
+	s=arc-20240116; t=1767961902; c=relaxed/simple;
+	bh=tjiRcUrATE8QibbY/fy6FOrY9O/uZePTMCGYUKSpoa4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QzDRylqCZUALhYZ08Da0YNxjAt/x2TmMEiFkCrsCskJAA83C0KcRe6a5brXGbtc2GhHjccuAZyjxqIOOEnpboN8Dda3elr5LlQu+3lbR1o9+Dvvp4MpVo2HVJUBvQQ+w12d6UXl9IPLKuK2Bu2U4Q5qedqv+cCau5sT7mSrbaCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xcrxZWP0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MN3gL81EBvrM5zvOD9B8lz0Gqc/kbQPno+oNOvUpKqa4U6E7FMXciZjCOjt2kR8NrdXR7oYkLcNncIdb7SdrgESC5ZYIkKY0OaZMQ2X+Kqx8iJIvIODyHw0JN4WFpHqc5P38oIBh4leeQ3PqNXGVQSWd+0Eh5MWksBSUQZNK5R0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aQ7ClTEa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xcrxZWP0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17432C4CEF1;
-	Fri,  9 Jan 2026 12:31:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aQ7ClTEa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC958C4CEF1;
+	Fri,  9 Jan 2026 12:31:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961899;
-	bh=v35Q39HP8SBZPKSfy+gO7zIwf33xLTF/kFGTpkORpr8=;
+	s=korg; t=1767961902;
+	bh=tjiRcUrATE8QibbY/fy6FOrY9O/uZePTMCGYUKSpoa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xcrxZWP0xwcJunoLxC4oiQNohVcDNMWT/U4iAXPxREju7ZbtN/gSZXmVlzpgZf2/K
-	 rtiApWCZt7aBrnd6W1EH9q+guwDPnIg4AoGqhPnCX8y6lFwyOitiLzM4c9u2wpOBIR
-	 fPTXmIzqnkajLotXgCvmsQaq74ELXFlUNflAPcvg=
+	b=aQ7ClTEahqVOSsYeP0D9ParQIurFUYxowvS2uq9uh3DRkgbe/ZgxaDgC+GZc5vxdr
+	 tLjSl5eyZNuO6WZKI1Yd67YVIHGyrmwBomIJVpNpRis+NQRmWqCUNc0fM1UmSlxi3R
+	 kgKVmdezam6JZCuz80WMPaqTbEFzgu8tyQPcmE08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fangyu Yu <fangyu.yu@linux.alibaba.com>,
-	Anup Patel <anup@brainfault.org>,
+	Zhao Yipeng <zhaoyipeng5@huawei.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 143/634] RISC-V: KVM: Fix guest page fault within HLV* instructions
-Date: Fri,  9 Jan 2026 12:37:01 +0100
-Message-ID: <20260109112122.836400859@linuxfoundation.org>
+Subject: [PATCH 6.1 134/634] ima: Handle error code returned by ima_filter_rule_match()
+Date: Fri,  9 Jan 2026 12:36:52 +0100
+Message-ID: <20260109112122.495685636@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,82 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fangyu Yu <fangyu.yu@linux.alibaba.com>
+From: Zhao Yipeng <zhaoyipeng5@huawei.com>
 
-[ Upstream commit 974555d6e417974e63444266e495a06d06c23af5 ]
+[ Upstream commit 738c9738e690f5cea24a3ad6fd2d9a323cf614f6 ]
 
-When executing HLV* instructions at the HS mode, a guest page fault
-may occur when a g-stage page table migration between triggering the
-virtual instruction exception and executing the HLV* instruction.
+In ima_match_rules(), if ima_filter_rule_match() returns -ENOENT due to
+the rule being NULL, the function incorrectly skips the 'if (!rc)' check
+and sets 'result = true'. The LSM rule is considered a match, causing
+extra files to be measured by IMA.
 
-This may be a corner case, and one simpler way to handle this is to
-re-execute the instruction where the virtual  instruction exception
-occurred, and the guest page fault will be automatically handled.
+This issue can be reproduced in the following scenario:
+After unloading the SELinux policy module via 'semodule -d', if an IMA
+measurement is triggered before ima_lsm_rules is updated,
+in ima_match_rules(), the first call to ima_filter_rule_match() returns
+-ESTALE. This causes the code to enter the 'if (rc == -ESTALE &&
+!rule_reinitialized)' block, perform ima_lsm_copy_rule() and retry. In
+ima_lsm_copy_rule(), since the SELinux module has been removed, the rule
+becomes NULL, and the second call to ima_filter_rule_match() returns
+-ENOENT. This bypasses the 'if (!rc)' check and results in a false match.
 
-Fixes: b91f0e4cb8a3 ("RISC-V: KVM: Factor-out instruction emulation into separate sources")
-Signed-off-by: Fangyu Yu <fangyu.yu@linux.alibaba.com>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://lore.kernel.org/r/20251121133543.46822-1-fangyu.yu@linux.alibaba.com
-Signed-off-by: Anup Patel <anup@brainfault.org>
+Call trace:
+  selinux_audit_rule_match+0x310/0x3b8
+  security_audit_rule_match+0x60/0xa0
+  ima_match_rules+0x2e4/0x4a0
+  ima_match_policy+0x9c/0x1e8
+  ima_get_action+0x48/0x60
+  process_measurement+0xf8/0xa98
+  ima_bprm_check+0x98/0xd8
+  security_bprm_check+0x5c/0x78
+  search_binary_handler+0x6c/0x318
+  exec_binprm+0x58/0x1b8
+  bprm_execve+0xb8/0x130
+  do_execveat_common.isra.0+0x1a8/0x258
+  __arm64_sys_execve+0x48/0x68
+  invoke_syscall+0x50/0x128
+  el0_svc_common.constprop.0+0xc8/0xf0
+  do_el0_svc+0x24/0x38
+  el0_svc+0x44/0x200
+  el0t_64_sync_handler+0x100/0x130
+  el0t_64_sync+0x3c8/0x3d0
+
+Fix this by changing 'if (!rc)' to 'if (rc <= 0)' to ensure that error
+codes like -ENOENT do not bypass the check and accidentally result in a
+successful match.
+
+Fixes: 4af4662fa4a9d ("integrity: IMA policy")
+Signed-off-by: Zhao Yipeng <zhaoyipeng5@huawei.com>
+Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kvm/vcpu_insn.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ security/integrity/ima/ima_policy.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/kvm/vcpu_insn.c b/arch/riscv/kvm/vcpu_insn.c
-index 0bb52761a3f73..2dca4ab4fda88 100644
---- a/arch/riscv/kvm/vcpu_insn.c
-+++ b/arch/riscv/kvm/vcpu_insn.c
-@@ -393,6 +393,22 @@ static int system_opcode_insn(struct kvm_vcpu *vcpu, struct kvm_run *run,
- 	return (rc <= 0) ? rc : 1;
- }
- 
-+static bool is_load_guest_page_fault(unsigned long scause)
-+{
-+	/**
-+	 * If a g-stage page fault occurs, the direct approach
-+	 * is to let the g-stage page fault handler handle it
-+	 * naturally, however, calling the g-stage page fault
-+	 * handler here seems rather strange.
-+	 * Considering this is a corner case, we can directly
-+	 * return to the guest and re-execute the same PC, this
-+	 * will trigger a g-stage page fault again and then the
-+	 * regular g-stage page fault handler will populate
-+	 * g-stage page table.
-+	 */
-+	return (scause == EXC_LOAD_GUEST_PAGE_FAULT);
-+}
-+
- /**
-  * kvm_riscv_vcpu_virtual_insn -- Handle virtual instruction trap
-  *
-@@ -418,6 +434,8 @@ int kvm_riscv_vcpu_virtual_insn(struct kvm_vcpu *vcpu, struct kvm_run *run,
- 							  ct->sepc,
- 							  &utrap);
- 			if (utrap.scause) {
-+				if (is_load_guest_page_fault(utrap.scause))
-+					return 1;
- 				utrap.sepc = ct->sepc;
- 				kvm_riscv_vcpu_trap_redirect(vcpu, &utrap);
- 				return 1;
-@@ -473,6 +491,8 @@ int kvm_riscv_vcpu_mmio_load(struct kvm_vcpu *vcpu, struct kvm_run *run,
- 		insn = kvm_riscv_vcpu_unpriv_read(vcpu, true, ct->sepc,
- 						  &utrap);
- 		if (utrap.scause) {
-+			if (is_load_guest_page_fault(utrap.scause))
-+				return 1;
- 			/* Redirect trap if we failed to read instruction */
- 			utrap.sepc = ct->sepc;
- 			kvm_riscv_vcpu_trap_redirect(vcpu, &utrap);
-@@ -599,6 +619,8 @@ int kvm_riscv_vcpu_mmio_store(struct kvm_vcpu *vcpu, struct kvm_run *run,
- 		insn = kvm_riscv_vcpu_unpriv_read(vcpu, true, ct->sepc,
- 						  &utrap);
- 		if (utrap.scause) {
-+			if (is_load_guest_page_fault(utrap.scause))
-+				return 1;
- 			/* Redirect trap if we failed to read instruction */
- 			utrap.sepc = ct->sepc;
- 			kvm_riscv_vcpu_trap_redirect(vcpu, &utrap);
+diff --git a/security/integrity/ima/ima_policy.c b/security/integrity/ima/ima_policy.c
+index 1f930711db769..3eba0d27bc125 100644
+--- a/security/integrity/ima/ima_policy.c
++++ b/security/integrity/ima/ima_policy.c
+@@ -646,7 +646,7 @@ static bool ima_match_rules(struct ima_rule_entry *rule,
+ 				goto retry;
+ 			}
+ 		}
+-		if (!rc) {
++		if (rc <= 0) {
+ 			result = false;
+ 			goto out;
+ 		}
 -- 
 2.51.0
 
