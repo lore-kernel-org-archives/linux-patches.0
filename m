@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57AD235C1B8;
-	Fri,  9 Jan 2026 12:48:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3268835E53B;
+	Fri,  9 Jan 2026 12:48:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962903; cv=none; b=PrhJY4EP1YYbyTRAiBMdIsXYsnP8h4Me23z3cZXTxIxTKo+kzyrCyb9OTWf6Fdksse8NuingQJh40DiMgj7Ay8UkSIK5s26rXnfxeZbxgEQk9WE5gm3ERYduhLmsfMXPc0kGHxtmVQv9z/Chu9DrgdEkKNlmxDnk+OgIOME/pF8=
+	t=1767962906; cv=none; b=q+tWeFXzMzfqQm4rrM/x8tagInLppqjHtEdc8tkZafaqcS7ERsmXzSefenyUauKCiqa/kqLGtO1d4mkaO6ewUCO1h1+SUyYtHbnd4LOT/o+/J7Pf848NyG7MlkDEaaMus4JeM7vWMlRMWyRub/+bsEPg5td5IzBvzdaqRwftH/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962903; c=relaxed/simple;
-	bh=OQB5QMJLIq0dLtuPOTm3i2ecRSXZI8b/9bay4mGMEoE=;
+	s=arc-20240116; t=1767962906; c=relaxed/simple;
+	bh=/VUiyfWTGp2fStGoma7xVHhFrOfX9YXd8Ly3kZBqr/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BKrMkVIoMHtkLWR2Kql05fQtGOGmZI0iZRONGfAu1jzaXE5jcn2t5jtb32OMaSQpgocMU/F1V5XbtzQ1FqHsgWce/ECZM7ymHLK7SRQJLtEZ6ru5yhN0Qr3XlGGi0oXrApSKPWKtJk1NoGAqky50L2M6JYp0m7B9CC6Uyjuo+CQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FvBOQ94P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=olnlCIOmWNLSJFlIrBzq3eUR8NE9iYqZGj5uXfy/Gmg2DZR2PyChitS5a/DTp0pR3Qg8Kb6tq8ivLQXa1FowODJCZ1davxDMurp7DfzA/i+IC8U+T3D5F8b4ixU2GXNnvYn11OKBuTvN5cObCKs4PkplmGh3k/Vb1wRVEUKp6n4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=owwpdWUq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FvBOQ94P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8C22C4CEF1;
-	Fri,  9 Jan 2026 12:48:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="owwpdWUq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1EF2C4CEF1;
+	Fri,  9 Jan 2026 12:48:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962903;
-	bh=OQB5QMJLIq0dLtuPOTm3i2ecRSXZI8b/9bay4mGMEoE=;
+	s=korg; t=1767962906;
+	bh=/VUiyfWTGp2fStGoma7xVHhFrOfX9YXd8Ly3kZBqr/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FvBOQ94PKvaZ42UgmZ56zxF7uONSWyOZrrbZVm0cd9oFoGixf96A99Bwm5foG7fq4
-	 dU6dAZgqhwR5o6WnfGzWoGloiizgvLOu5Ab++wNYACVtBpQqyZ+pfj/c+DBbTeY1LN
-	 sQ1m/13yw+GSEvQM9UI8P0WM5DBfB/YX41P7O55g=
+	b=owwpdWUq7D1Kewcnf+/ImcoCGXu6QMBTBoeXEnS0AizfPJZiYiRdl76LRtTE5GSnV
+	 w9ERwVVGAc+OnGQWusfZr6wKTDCroTZPeisx45msP9FcKeWQWDpXI56CMt+CeSjpc3
+	 q2TNXE/3yzWEO9nCD4BjXJ5Yx7FB6vu1DwkBGm08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+938fcd548c303fe33c1a@syzkaller.appspotmail.com,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.1 496/634] RDMA/core: Check for the presence of LS_NLA_TYPE_DGID correctly
-Date: Fri,  9 Jan 2026 12:42:54 +0100
-Message-ID: <20260109112136.209768492@linuxfoundation.org>
+	Ming Qian <ming.qian@oss.nxp.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.1 487/634] media: amphion: Cancel message work before releasing the VPU core
+Date: Fri,  9 Jan 2026 12:42:45 +0100
+Message-ID: <20260109112135.871449314@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -50,129 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Ming Qian <ming.qian@oss.nxp.com>
 
-commit a7b8e876e0ef0232b8076972c57ce9a7286b47ca upstream.
+commit ae246b0032146e352c4c06a7bf03cd3d5bcb2ecd upstream.
 
-The netlink response for RDMA_NL_LS_OP_IP_RESOLVE should always have a
-LS_NLA_TYPE_DGID attribute, it is invalid if it does not.
+To avoid accessing the VPU register after release of the VPU core,
+cancel the message work and destroy the workqueue that handles the
+VPU message before release of the VPU core.
 
-Use the nl parsing logic properly and call nla_parse_deprecated() to fill
-the nlattrs array and then directly index that array to get the data for
-the DGID. Just fail if it is NULL.
-
-Remove the for loop searching for the nla, and squash the validation and
-parsing into one function.
-
-Fixes an uninitialized read from the stack triggered by userspace if it
-does not provide the DGID to a kernel initiated RDMA_NL_LS_OP_IP_RESOLVE
-query.
-
-    BUG: KMSAN: uninit-value in hex_byte_pack include/linux/hex.h:13 [inline]
-    BUG: KMSAN: uninit-value in ip6_string+0xef4/0x13a0 lib/vsprintf.c:1490
-     hex_byte_pack include/linux/hex.h:13 [inline]
-     ip6_string+0xef4/0x13a0 lib/vsprintf.c:1490
-     ip6_addr_string+0x18a/0x3e0 lib/vsprintf.c:1509
-     ip_addr_string+0x245/0xee0 lib/vsprintf.c:1633
-     pointer+0xc09/0x1bd0 lib/vsprintf.c:2542
-     vsnprintf+0xf8a/0x1bd0 lib/vsprintf.c:2930
-     vprintk_store+0x3ae/0x1530 kernel/printk/printk.c:2279
-     vprintk_emit+0x307/0xcd0 kernel/printk/printk.c:2426
-     vprintk_default+0x3f/0x50 kernel/printk/printk.c:2465
-     vprintk+0x36/0x50 kernel/printk/printk_safe.c:82
-     _printk+0x17e/0x1b0 kernel/printk/printk.c:2475
-     ib_nl_process_good_ip_rsep drivers/infiniband/core/addr.c:128 [inline]
-     ib_nl_handle_ip_res_resp+0x963/0x9d0 drivers/infiniband/core/addr.c:141
-     rdma_nl_rcv_msg drivers/infiniband/core/netlink.c:-1 [inline]
-     rdma_nl_rcv_skb drivers/infiniband/core/netlink.c:239 [inline]
-     rdma_nl_rcv+0xefa/0x11c0 drivers/infiniband/core/netlink.c:259
-     netlink_unicast_kernel net/netlink/af_netlink.c:1320 [inline]
-     netlink_unicast+0xf04/0x12b0 net/netlink/af_netlink.c:1346
-     netlink_sendmsg+0x10b3/0x1250 net/netlink/af_netlink.c:1896
-     sock_sendmsg_nosec net/socket.c:714 [inline]
-     __sock_sendmsg+0x333/0x3d0 net/socket.c:729
-     ____sys_sendmsg+0x7e0/0xd80 net/socket.c:2617
-     ___sys_sendmsg+0x271/0x3b0 net/socket.c:2671
-     __sys_sendmsg+0x1aa/0x300 net/socket.c:2703
-     __compat_sys_sendmsg net/compat.c:346 [inline]
-     __do_compat_sys_sendmsg net/compat.c:353 [inline]
-     __se_compat_sys_sendmsg net/compat.c:350 [inline]
-     __ia32_compat_sys_sendmsg+0xa4/0x100 net/compat.c:350
-     ia32_sys_call+0x3f6c/0x4310 arch/x86/include/generated/asm/syscalls_32.h:371
-     do_syscall_32_irqs_on arch/x86/entry/syscall_32.c:83 [inline]
-     __do_fast_syscall_32+0xb0/0x150 arch/x86/entry/syscall_32.c:306
-     do_fast_syscall_32+0x38/0x80 arch/x86/entry/syscall_32.c:331
-     do_SYSENTER_32+0x1f/0x30 arch/x86/entry/syscall_32.c:3
-
-Link: https://patch.msgid.link/r/0-v1-3fbaef094271+2cf-rdma_op_ip_rslv_syz_jgg@nvidia.com
+Fixes: 3cd084519c6f ("media: amphion: add vpu v4l2 m2m support")
 Cc: stable@vger.kernel.org
-Fixes: ae43f8286730 ("IB/core: Add IP to GID netlink offload")
-Reported-by: syzbot+938fcd548c303fe33c1a@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/r/68dc3dac.a00a0220.102ee.004f.GAE@google.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/addr.c |   33 ++++++++++-----------------------
- 1 file changed, 10 insertions(+), 23 deletions(-)
+ drivers/media/platform/amphion/vpu_v4l2.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/infiniband/core/addr.c
-+++ b/drivers/infiniband/core/addr.c
-@@ -80,37 +80,25 @@ static const struct nla_policy ib_nl_add
- 		.min = sizeof(struct rdma_nla_ls_gid)},
- };
- 
--static inline bool ib_nl_is_good_ip_resp(const struct nlmsghdr *nlh)
-+static void ib_nl_process_ip_rsep(const struct nlmsghdr *nlh)
+--- a/drivers/media/platform/amphion/vpu_v4l2.c
++++ b/drivers/media/platform/amphion/vpu_v4l2.c
+@@ -597,15 +597,15 @@ static int vpu_v4l2_release(struct vpu_i
  {
- 	struct nlattr *tb[LS_NLA_TYPE_MAX] = {};
-+	union ib_gid gid;
-+	struct addr_req *req;
-+	int found = 0;
- 	int ret;
+ 	vpu_trace(inst->vpu->dev, "%p\n", inst);
  
- 	if (nlh->nlmsg_flags & RDMA_NL_LS_F_ERR)
--		return false;
-+		return;
- 
- 	ret = nla_parse_deprecated(tb, LS_NLA_TYPE_MAX - 1, nlmsg_data(nlh),
- 				   nlmsg_len(nlh), ib_nl_addr_policy, NULL);
- 	if (ret)
--		return false;
+-	vpu_release_core(inst->core);
+-	put_device(inst->dev);
 -
--	return true;
--}
--
--static void ib_nl_process_good_ip_rsep(const struct nlmsghdr *nlh)
--{
--	const struct nlattr *head, *curr;
--	union ib_gid gid;
--	struct addr_req *req;
--	int len, rem;
--	int found = 0;
--
--	head = (const struct nlattr *)nlmsg_data(nlh);
--	len = nlmsg_len(nlh);
-+		return;
+ 	if (inst->workqueue) {
+ 		cancel_work_sync(&inst->msg_work);
+ 		destroy_workqueue(inst->workqueue);
+ 		inst->workqueue = NULL;
+ 	}
  
--	nla_for_each_attr(curr, head, len, rem) {
--		if (curr->nla_type == LS_NLA_TYPE_DGID)
--			memcpy(&gid, nla_data(curr), nla_len(curr));
--	}
-+	if (!tb[LS_NLA_TYPE_DGID])
-+		return;
-+	memcpy(&gid, nla_data(tb[LS_NLA_TYPE_DGID]), sizeof(gid));
++	vpu_release_core(inst->core);
++	put_device(inst->dev);
++
+ 	v4l2_ctrl_handler_free(&inst->ctrl_handler);
+ 	mutex_destroy(&inst->lock);
  
- 	spin_lock_bh(&lock);
- 	list_for_each_entry(req, &req_list, list) {
-@@ -137,8 +125,7 @@ int ib_nl_handle_ip_res_resp(struct sk_b
- 	    !(NETLINK_CB(skb).sk))
- 		return -EPERM;
- 
--	if (ib_nl_is_good_ip_resp(nlh))
--		ib_nl_process_good_ip_rsep(nlh);
-+	ib_nl_process_ip_rsep(nlh);
- 
- 	return 0;
- }
 
 
