@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 093A1359701;
-	Fri,  9 Jan 2026 12:28:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1E12737EE;
+	Fri,  9 Jan 2026 12:28:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961717; cv=none; b=DhJvi2aJqxiH556B32TCScbZQYGlppjSBrCmJM3iHodH2xcyWXTzdoWQNkfpGReMdvgLqMd7vBA7KE20A4uRk4ckoFjD5XITYPYosAca2zhQgae57zZDbd9levy7HiPJ7PoLHJknaoot9tpjZQU8SPV6DbAXoZv9PMkdHvtk8Ko=
+	t=1767961720; cv=none; b=Tz0AozpxW0VhSG5DOdV/fCGd8ihvEwyfpjGcsijtSWzgM/G8/2i/4R4bU2c+gX+nyfnbbTdIgGkbW9eKn7raLfHzGYTkMJCq0c7049GGJH4ubk4xOmnkHdHTPtePfyD2ZwUMc5UClX43Ffx6CBqaioSQ31ciXXLgJd3xkzy+IGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961717; c=relaxed/simple;
-	bh=+FVqqwQ7SUIWPlBXsoo9cvC2rc8mU8/7+alCA9PKGww=;
+	s=arc-20240116; t=1767961720; c=relaxed/simple;
+	bh=6O0kOYmVdBvymnWFEN5Ej1rDMUiaqoUTy5V1ZQfhJMM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zj2/PIenh4qD6x2wkehJXqzw12mVRXErZm/UU2mBfHO3m5dGEzCFzuTJOMbwTHX+VSD+d3zuhY7Wc9+EEygRo4NKfpds/yDjRllfu72PylpAoGbJNB7MI9xDTiQ7mbsusqhwKKlUIjr9A7ifbc2/7k+S7F/zNV+rbv/cVGVlDZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mnJrgDx+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MwtcuRWqwMIvNocr6xGOi8SUTakdUgs+o7tfyfpZ9UaO2iYsSq7IKA0yS27ojxoYdxG4yok3PavviJ4qxQlLt6J9h7a4M0L4k7jLo81sqCUbu6jjmjjoVVUFLRanjN2EFZ2VxzItHlqxTMwIAj7KiCARyp//yuu53vukI7U0n6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=buxiUN4C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mnJrgDx+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88705C4CEF1;
-	Fri,  9 Jan 2026 12:28:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="buxiUN4C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87453C4CEF1;
+	Fri,  9 Jan 2026 12:28:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961716;
-	bh=+FVqqwQ7SUIWPlBXsoo9cvC2rc8mU8/7+alCA9PKGww=;
+	s=korg; t=1767961719;
+	bh=6O0kOYmVdBvymnWFEN5Ej1rDMUiaqoUTy5V1ZQfhJMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mnJrgDx+G1yZX0q1Vzn3ox89ptBp7zkUHHLFedYcjcCuhkyq+CX2cfbX0FM9+nJUn
-	 hpEiYDp0KFdnqqq1s2Gq6ycpEoFlZleBpwMoWSPgfKnV/3oVg02mmZw8wm2nzAaYef
-	 x++G/+5iS9WUqLFaGVXD0AI1GDH8LwyNUrprfnAs=
+	b=buxiUN4CdraLj8OXe9Gq16PI2V7vhz5ehgnliflFkUJcEYxLOZygY61gXv92sdxoF
+	 vKKNLgYHfa1YZfP7IEviCTdGlOzAClS8CAMZMIY34Z6qQ5J9TTHcFwkWacAMc9dA+G
+	 Wb3JAxu1qC4pnoZO+B0EWtp1Ci5fa/lEYlwzgmYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Markus Elfring <Markus.Elfring@web.de>,
 	Haotian Zhang <vulab@iscas.ac.cn>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 112/634] scsi: sim710: Fix resource leak by adding missing ioport_unmap() calls
-Date: Fri,  9 Jan 2026 12:36:30 +0100
-Message-ID: <20260109112121.648443301@linuxfoundation.org>
+Subject: [PATCH 6.1 113/634] leds: netxbig: Fix GPIO descriptor leak in error paths
+Date: Fri,  9 Jan 2026 12:36:31 +0100
+Message-ID: <20260109112121.686033227@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -53,45 +54,109 @@ Content-Transfer-Encoding: 8bit
 
 From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit acd194d9b5bac419e04968ffa44351afabb50bac ]
+[ Upstream commit 03865dd8af52eb16c38062df2ed30a91b604780e ]
 
-The driver calls ioport_map() to map I/O ports in sim710_probe_common()
-but never calls ioport_unmap() to release the mapping. This causes
-resource leaks in both the error path when request_irq() fails and in
-the normal device removal path via sim710_device_remove().
+The function netxbig_gpio_ext_get() acquires GPIO descriptors but
+fails to release them when errors occur mid-way through initialization.
+The cleanup callback registered by devm_add_action_or_reset() only
+runs on success, leaving acquired GPIOs leaked on error paths.
 
-Add ioport_unmap() calls in the out_release error path and in
-sim710_device_remove().
+Add goto-based error handling to release all acquired GPIOs before
+returning errors.
 
-Fixes: 56fece20086e ("[PATCH] finally fix 53c700 to use the generic iomem infrastructure")
+Fixes: 9af512e81964 ("leds: netxbig: Convert to use GPIO descriptors")
+Suggested-by: Markus Elfring <Markus.Elfring@web.de>
 Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20251029032555.1476-1-vulab@iscas.ac.cn
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://patch.msgid.link/20251031021620.781-1-vulab@iscas.ac.cn
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/sim710.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/leds/leds-netxbig.c | 36 ++++++++++++++++++++++++++----------
+ 1 file changed, 26 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/scsi/sim710.c b/drivers/scsi/sim710.c
-index e519df68d603d..70c75ab1453a1 100644
---- a/drivers/scsi/sim710.c
-+++ b/drivers/scsi/sim710.c
-@@ -133,6 +133,7 @@ static int sim710_probe_common(struct device *dev, unsigned long base_addr,
-  out_put_host:
- 	scsi_host_put(host);
-  out_release:
-+	ioport_unmap(hostdata->base);
- 	release_region(base_addr, 64);
-  out_free:
- 	kfree(hostdata);
-@@ -148,6 +149,7 @@ static int sim710_device_remove(struct device *dev)
+diff --git a/drivers/leds/leds-netxbig.c b/drivers/leds/leds-netxbig.c
+index 6692de0af68f1..ea0801b9cb010 100644
+--- a/drivers/leds/leds-netxbig.c
++++ b/drivers/leds/leds-netxbig.c
+@@ -364,6 +364,9 @@ static int netxbig_gpio_ext_get(struct device *dev,
+ 	if (!addr)
+ 		return -ENOMEM;
  
- 	scsi_remove_host(host);
- 	NCR_700_release(host);
-+	ioport_unmap(hostdata->base);
- 	kfree(hostdata);
- 	free_irq(host->irq, host);
- 	release_region(host->base, 64);
++	gpio_ext->addr = addr;
++	gpio_ext->num_addr = 0;
++
+ 	/*
+ 	 * We cannot use devm_ managed resources with these GPIO descriptors
+ 	 * since they are associated with the "GPIO extension device" which
+@@ -375,45 +378,58 @@ static int netxbig_gpio_ext_get(struct device *dev,
+ 		gpiod = gpiod_get_index(gpio_ext_dev, "addr", i,
+ 					GPIOD_OUT_LOW);
+ 		if (IS_ERR(gpiod))
+-			return PTR_ERR(gpiod);
++			goto err_set_code;
+ 		gpiod_set_consumer_name(gpiod, "GPIO extension addr");
+ 		addr[i] = gpiod;
++		gpio_ext->num_addr++;
+ 	}
+-	gpio_ext->addr = addr;
+-	gpio_ext->num_addr = num_addr;
+ 
+ 	ret = gpiod_count(gpio_ext_dev, "data");
+ 	if (ret < 0) {
+ 		dev_err(dev,
+ 			"Failed to count GPIOs in DT property data-gpios\n");
+-		return ret;
++		goto err_free_addr;
+ 	}
+ 	num_data = ret;
+ 	data = devm_kcalloc(dev, num_data, sizeof(*data), GFP_KERNEL);
+-	if (!data)
+-		return -ENOMEM;
++	if (!data) {
++		ret = -ENOMEM;
++		goto err_free_addr;
++	}
++
++	gpio_ext->data = data;
++	gpio_ext->num_data = 0;
+ 
+ 	for (i = 0; i < num_data; i++) {
+ 		gpiod = gpiod_get_index(gpio_ext_dev, "data", i,
+ 					GPIOD_OUT_LOW);
+ 		if (IS_ERR(gpiod))
+-			return PTR_ERR(gpiod);
++			goto err_free_data;
+ 		gpiod_set_consumer_name(gpiod, "GPIO extension data");
+ 		data[i] = gpiod;
++		gpio_ext->num_data++;
+ 	}
+-	gpio_ext->data = data;
+-	gpio_ext->num_data = num_data;
+ 
+ 	gpiod = gpiod_get(gpio_ext_dev, "enable", GPIOD_OUT_LOW);
+ 	if (IS_ERR(gpiod)) {
+ 		dev_err(dev,
+ 			"Failed to get GPIO from DT property enable-gpio\n");
+-		return PTR_ERR(gpiod);
++		goto err_free_data;
+ 	}
+ 	gpiod_set_consumer_name(gpiod, "GPIO extension enable");
+ 	gpio_ext->enable = gpiod;
+ 
+ 	return devm_add_action_or_reset(dev, netxbig_gpio_ext_remove, gpio_ext);
++
++err_free_data:
++	for (i = 0; i < gpio_ext->num_data; i++)
++		gpiod_put(gpio_ext->data[i]);
++err_set_code:
++	ret = PTR_ERR(gpiod);
++err_free_addr:
++	for (i = 0; i < gpio_ext->num_addr; i++)
++		gpiod_put(gpio_ext->addr[i]);
++	return ret;
+ }
+ 
+ static int netxbig_leds_get_of_pdata(struct device *dev,
 -- 
 2.51.0
 
