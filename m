@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC25833375D;
-	Fri,  9 Jan 2026 12:02:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3711946C8;
+	Fri,  9 Jan 2026 12:02:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960163; cv=none; b=sWzu/zbUWJa5c3at5GsmcdsosFFl9zawjf839vOo4pPPXUgQmRGElD3lobIWa01lBkHFZt94J/VV5lSkriqhxuBD0QmFf7kV+nZL11wooeKUzICxEgWcLa56EcXssi0oitp/R8KbNqPXrVnKJqUxGY1LyK0VvnU1ALYdFQtImqo=
+	t=1767960167; cv=none; b=j0WemHqvqSfJSM9qHItATny4UxoprS2nElhD9IA/yf59Uh6lMgsKxLc/8yWhW8h1Qcpeg4iiCFp/xIPhIsAvVAiiAJgJeZmnIOk4Wky19CuplAmmraQgXaoxEL66KIInGuTOJ1SO1mp+zkaR+xN3FdY+b1xClvqJjeys57K2r8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960163; c=relaxed/simple;
-	bh=RV3+lQoKzSlP8VT3jCVcPpkMkouZHdKpKoYS2oNxEGw=;
+	s=arc-20240116; t=1767960167; c=relaxed/simple;
+	bh=4ToilO3StlI1dEz5kPEOdA+Qmud4eodsg8x8kFW/ZAw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YFqka8UUUCaiGrnKKQJaPzGLHuhWMPiLn4P8Kcuu7bLkWQq6Nw4z4peaOF6kLinOdBvwj1OSMqPMRTYySqui8m4S407lKq/egAQKzGqxvqc71g1aisdaz8Qmd4YAkBLYPVLl5BBRqDe/EJxbiYz8/tWcObvjNPGTSVInswrX5Ls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PIROp9xZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YRiNLHrALV+T6qH65ra3szNeIwSkrk6/VqHDo4zQzxjQPsVuo+8zQzHXlLgB3iCK+CrFx3Df1pqlMthp/EoFzIOyYy8wSEeMVqrRsejXSTKngV77EqoLB7kPKu38UhatrEDtVZPK3F1YPUmYIx6xP6im71nryXujihoxp4DGvZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IvaoIVtA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PIROp9xZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5214CC4CEF1;
-	Fri,  9 Jan 2026 12:02:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IvaoIVtA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D89EC16AAE;
+	Fri,  9 Jan 2026 12:02:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960163;
-	bh=RV3+lQoKzSlP8VT3jCVcPpkMkouZHdKpKoYS2oNxEGw=;
+	s=korg; t=1767960166;
+	bh=4ToilO3StlI1dEz5kPEOdA+Qmud4eodsg8x8kFW/ZAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PIROp9xZSo0sY+/RoWd9HaEkXCK1T8jLQMnU0XW+9+fRIHAN6eZGS3h/7MLJXNI3C
-	 6iLBsCPu9oQheoh/Yv8T6zWrTT/7r5PnuU32oVQJzak24IX9BzSijGDwock0V0b91t
-	 vNuVxXC3zZW502jVQ4ZYeXsld8n6AuOR2LHdNJZA=
+	b=IvaoIVtAYntv20lqr/Ot41mi54PA4CtMQHtoZVmF8t6liJJLBa4BUk8z1oJAiitsi
+	 iqZoJVF6g2CZbldulSh2X1wucCwtkbBa58G3xCaprvNFQEMuM8H5txzpSp4Pykp7BK
+	 oq64LIQ+2EGOUxqN+GJLRor7/ZGMP2d04qgdLf7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Salisbury <joseph.salisbury@oracle.com>,
-	Adam Li <adamli@os.amperecomputing.com>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Hazem Mohamed Abuelfotoh <abuehaze@amazon.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Chris Mason <clm@meta.com>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 307/737] sched/fair: Revert max_newidle_lb_cost bump
-Date: Fri,  9 Jan 2026 12:37:26 +0100
-Message-ID: <20260109112145.554848375@linuxfoundation.org>
+Subject: [PATCH 6.6 308/737] x86/ptrace: Always inline trivial accessors
+Date: Fri,  9 Jan 2026 12:37:27 +0100
+Message-ID: <20260109112145.591848706@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -57,73 +53,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit d206fbad9328ddb68ebabd7cf7413392acd38081 ]
+[ Upstream commit 1fe4002cf7f23d70c79bda429ca2a9423ebcfdfa ]
 
-Many people reported regressions on their database workloads due to:
+A KASAN build bloats these single load/store helpers such that
+it fails to inline them:
 
-  155213a2aed4 ("sched/fair: Bump sd->max_newidle_lb_cost when newidle balance fails")
+  vmlinux.o: error: objtool: irqentry_exit+0x5e8: call to instruction_pointer_set() with UACCESS enabled
 
-For instance Adam Li reported a 6% regression on SpecJBB.
+Make sure the compiler isn't allowed to do stupid.
 
-Conversely this will regress schbench again; on my machine from 2.22
-Mrps/s down to 2.04 Mrps/s.
-
-Reported-by: Joseph Salisbury <joseph.salisbury@oracle.com>
-Reported-by: Adam Li <adamli@os.amperecomputing.com>
-Reported-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Reported-by: Hazem Mohamed Abuelfotoh <abuehaze@amazon.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Tested-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Tested-by: Chris Mason <clm@meta.com>
-Link: https://lkml.kernel.org/r/20250626144017.1510594-2-clm@fb.com
-Link: https://lkml.kernel.org/r/006c9df2-b691-47f1-82e6-e233c3f91faf@oracle.com
-Link: https://patch.msgid.link/20251107161739.406147760@infradead.org
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://patch.msgid.link/20251031105435.GU4068168@noisy.programming.kicks-ass.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 19 +++----------------
- 1 file changed, 3 insertions(+), 16 deletions(-)
+ arch/x86/include/asm/ptrace.h | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index cf3a51f323e32..38cc72d203c07 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -11722,14 +11722,8 @@ static inline bool update_newidle_cost(struct sched_domain *sd, u64 cost)
- 		/*
- 		 * Track max cost of a domain to make sure to not delay the
- 		 * next wakeup on the CPU.
--		 *
--		 * sched_balance_newidle() bumps the cost whenever newidle
--		 * balance fails, and we don't want things to grow out of
--		 * control.  Use the sysctl_sched_migration_cost as the upper
--		 * limit, plus a litle extra to avoid off by ones.
- 		 */
--		sd->max_newidle_lb_cost =
--			min(cost, sysctl_sched_migration_cost + 200);
-+		sd->max_newidle_lb_cost = cost;
- 		sd->last_decay_max_lb_cost = jiffies;
- 	} else if (time_after(jiffies, sd->last_decay_max_lb_cost + HZ)) {
- 		/*
-@@ -12415,17 +12409,10 @@ static int sched_balance_newidle(struct rq *this_rq, struct rq_flags *rf)
+diff --git a/arch/x86/include/asm/ptrace.h b/arch/x86/include/asm/ptrace.h
+index 5a83fbd9bc0b4..eb5b1e2aa7000 100644
+--- a/arch/x86/include/asm/ptrace.h
++++ b/arch/x86/include/asm/ptrace.h
+@@ -187,12 +187,12 @@ convert_ip_to_linear(struct task_struct *child, struct pt_regs *regs);
+ extern void send_sigtrap(struct pt_regs *regs, int error_code, int si_code);
  
- 			t1 = sched_clock_cpu(this_cpu);
- 			domain_cost = t1 - t0;
-+			update_newidle_cost(sd, domain_cost);
-+
- 			curr_cost += domain_cost;
- 			t0 = t1;
--
--			/*
--			 * Failing newidle means it is not effective;
--			 * bump the cost so we end up doing less of it.
--			 */
--			if (!pulled_task)
--				domain_cost = (3 * sd->max_newidle_lb_cost) / 2;
--
--			update_newidle_cost(sd, domain_cost);
- 		}
  
- 		/*
+-static inline unsigned long regs_return_value(struct pt_regs *regs)
++static __always_inline unsigned long regs_return_value(struct pt_regs *regs)
+ {
+ 	return regs->ax;
+ }
+ 
+-static inline void regs_set_return_value(struct pt_regs *regs, unsigned long rc)
++static __always_inline void regs_set_return_value(struct pt_regs *regs, unsigned long rc)
+ {
+ 	regs->ax = rc;
+ }
+@@ -277,34 +277,34 @@ static __always_inline bool ip_within_syscall_gap(struct pt_regs *regs)
+ }
+ #endif
+ 
+-static inline unsigned long kernel_stack_pointer(struct pt_regs *regs)
++static __always_inline unsigned long kernel_stack_pointer(struct pt_regs *regs)
+ {
+ 	return regs->sp;
+ }
+ 
+-static inline unsigned long instruction_pointer(struct pt_regs *regs)
++static __always_inline unsigned long instruction_pointer(struct pt_regs *regs)
+ {
+ 	return regs->ip;
+ }
+ 
+-static inline void instruction_pointer_set(struct pt_regs *regs,
+-		unsigned long val)
++static __always_inline
++void instruction_pointer_set(struct pt_regs *regs, unsigned long val)
+ {
+ 	regs->ip = val;
+ }
+ 
+-static inline unsigned long frame_pointer(struct pt_regs *regs)
++static __always_inline unsigned long frame_pointer(struct pt_regs *regs)
+ {
+ 	return regs->bp;
+ }
+ 
+-static inline unsigned long user_stack_pointer(struct pt_regs *regs)
++static __always_inline unsigned long user_stack_pointer(struct pt_regs *regs)
+ {
+ 	return regs->sp;
+ }
+ 
+-static inline void user_stack_pointer_set(struct pt_regs *regs,
+-		unsigned long val)
++static __always_inline
++void user_stack_pointer_set(struct pt_regs *regs, unsigned long val)
+ {
+ 	regs->sp = val;
+ }
 -- 
 2.51.0
 
