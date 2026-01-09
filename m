@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69EFC15ADB4;
-	Fri,  9 Jan 2026 12:47:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41F7815ADB4;
+	Fri,  9 Jan 2026 12:47:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962835; cv=none; b=oWPbRAmtXHZoLHRCaHa4qEBaH5qmUo9kQjwL5Qw7xTxyZhyYqBmzQCeL1/qVTs6qAVC3VrMVg7mJipYja5ZPuSMe731+7FJjnm4RTPbV1E0Rw+sJmkBAx6ZXSQLyMNgWMIQa1y1bNVebjM0SBfodDhe5pzuOHC1pGjJCH7jlYC4=
+	t=1767962838; cv=none; b=TNPSY/0Dg1TXGqXKcysYFjD7WETGELob4gBGaV39TvpPJ6DMiTDWwSvqXRf2xZdXpDagVQti7001ZJvDJenO3+PgkjFPpweNt3XZYhUvlsuF1lkm/UeLi1Xix27jhIWC50ypnLnYDHdc5gHa+wJoAv16xjBP8Pq9eBhuBifeA94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962835; c=relaxed/simple;
-	bh=0vqjeH9O4QXUIj2WFVU4qItS0Ovtz8LAkvNr+60b2Iw=;
+	s=arc-20240116; t=1767962838; c=relaxed/simple;
+	bh=s1iH1IYmoz0/dzpwP4mxZjQu9XZKTQhUu7UsqZpoxxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tGdBVzKSqhJCrmkucUIoKNzbO6FBLXnHjMbs5LyrwYPDiwqL9SW+kMLquUFyGPicF9RtrYaYJuUAZ5SCeMxcf9Db4p+LjREbS/E1/wiRURScC5/n5GDh/F6oFIz1JZtrEh6tqYh8yF1K1EpZSLzjQ0DNyJnvU94QQ0QGCU9rtHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UiAevl/E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oJ4aNdW/yPadg+PPHDo7viE/U24AhVMOckPsgYck2CqhgXLNXF23X4IfRZ8BecrpiDlgjyXl5zJTL7BJlIriVJPw4cXfEHu1iYZiP2mIPryO1FQ0RRfO2NQQGDIWJhXP0XbvgApOHfChaF7VOGDgJhwcvlwe6CxqcBlrxgz/GqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sB9ABxi4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UiAevl/E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E07E0C4CEF1;
-	Fri,  9 Jan 2026 12:47:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sB9ABxi4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0EEEC4CEF1;
+	Fri,  9 Jan 2026 12:47:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962835;
-	bh=0vqjeH9O4QXUIj2WFVU4qItS0Ovtz8LAkvNr+60b2Iw=;
+	s=korg; t=1767962838;
+	bh=s1iH1IYmoz0/dzpwP4mxZjQu9XZKTQhUu7UsqZpoxxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UiAevl/E2BpyF2+fBCddFFQJlPNrwoMFmhQqEQz8GQJO3MKocT9BO0ajoHU8ZjSp2
-	 1OLffMo+L5Xagwb3v0RKOYIJkI38IyPBQ7nb4NUYR/Ru5KoueaErDKNhFKQ4IQHoZW
-	 XfCYxYHfQoakO/IyL//EhbPj7svr0ImUBHr4EZ20=
+	b=sB9ABxi42bEJvyznY/xbAXpi7hO9+inwb49NgGVQKlTqtfjfwaIw3ZzycbLrWdFgh
+	 A+qv1Q1W5Qis9Emn80D0SHZuiGQnQtJkwEpESCgG24fvjO1g5s1t5vdk2xsKQyOCD4
+	 hhJYdJPwJ81dTOu/pooc4lUMg96Wj8zEe9oHkDcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>
-Subject: [PATCH 6.1 505/634] drm/msm/a6xx: Fix out of bound IO access in a6xx_get_gmu_registers
-Date: Fri,  9 Jan 2026 12:43:03 +0100
-Message-ID: <20260109112136.555117347@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	Markus Schneider-Pargmann <msp@baylibre.com>,
+	CK Hu <ck.hu@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Subject: [PATCH 6.1 506/634] drm/mediatek: Fix device node reference leak in mtk_dp_dt_parse()
+Date: Fri,  9 Jan 2026 12:43:04 +0100
+Message-ID: <20260109112136.592343846@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,35 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit 779b68a5bf2764c8ed3aa800e41ba0d5d007e1e7 upstream.
+commit a846505a193d7492ad3531e33cacfca31e4bcdd1 upstream.
 
-REG_A6XX_GMU_AO_AHB_FENCE_CTRL register falls under GMU's register
-range. So, use gmu_write() routines to write to this register.
+The function mtk_dp_dt_parse() calls of_graph_get_endpoint_by_regs()
+to get the endpoint device node, but fails to call of_node_put() to release
+the reference when the function returns. This results in a device node
+reference leak.
 
-Fixes: 1707add81551 ("drm/msm/a6xx: Add a6xx gpu state")
+Fix this by adding the missing of_node_put() call before returning from
+the function.
+
+Found via static analysis and code review.
+
+Fixes: f70ac097a2cf ("drm/mediatek: Add MT8195 Embedded DisplayPort driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/688993/
-Message-ID: <20251118-kaana-gpu-support-v4-1-86eeb8e93fb6@oss.qualcomm.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Reviewed-by: Markus Schneider-Pargmann <msp@baylibre.com>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20251029072307.10955-1-linmq006@gmail.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/mediatek/mtk_dp.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-@@ -801,7 +801,7 @@ static void a6xx_get_gmu_registers(struc
- 		return;
- 
- 	/* Set the fence to ALLOW mode so we can access the registers */
--	gpu_write(gpu, REG_A6XX_GMU_AO_AHB_FENCE_CTRL, 0);
-+	gmu_write(&a6xx_gpu->gmu, REG_A6XX_GMU_AO_AHB_FENCE_CTRL, 0);
- 
- 	_a6xx_get_gmu_registers(gpu, a6xx_state, &a6xx_gmu_reglist[2],
- 		&a6xx_state->gmu_registers[2], false);
+--- a/drivers/gpu/drm/mediatek/mtk_dp.c
++++ b/drivers/gpu/drm/mediatek/mtk_dp.c
+@@ -1919,6 +1919,7 @@ static int mtk_dp_dt_parse(struct mtk_dp
+ 	endpoint = of_graph_get_endpoint_by_regs(pdev->dev.of_node, 1, -1);
+ 	len = of_property_count_elems_of_size(endpoint,
+ 					      "data-lanes", sizeof(u32));
++	of_node_put(endpoint);
+ 	if (len < 0 || len > 4 || len == 3) {
+ 		dev_err(dev, "invalid data lane size: %d\n", len);
+ 		return -EINVAL;
 
 
