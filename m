@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C0482F7AD0;
-	Fri,  9 Jan 2026 12:38:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67FC35B135;
+	Fri,  9 Jan 2026 12:38:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962304; cv=none; b=KH14AKfhHoWyS5McNndAp1q4nUQ2aGZCTJbolhWbC63lzdQGuwXpkhTg8IQMYF5cUYeHUmRWvZggsCNQ0aoPBZeX3NkLDRwE5hTZHSpko4HXCY4EgpO/XnMfzm5/n2IZEgeM52SVJ28YpIGI62lEKuSqjKTB4NByaw8HdPeFP3M=
+	t=1767962307; cv=none; b=IaZomq38kZTfOaQ+4hYMp4PHf4lrM4zZS7+FN2Rj8r+xkeq+VMPOuiu0iFhAgynoPhi8rU+WyHk8yEAYzOTSz5Vb0ONqgU3RXbhLSJp9tYFp9cpuBhN/TggsBoj5sxlSQgv/clcTEpc3oh97jwEAJOB4XPHHv4Jpe/x7UvfOWgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962304; c=relaxed/simple;
-	bh=W09lXEHcaJFScgod2XA4vgVOTKzCXZShlehL+9CmZDE=;
+	s=arc-20240116; t=1767962307; c=relaxed/simple;
+	bh=mrSjzw9Oh/BWN4SWoeLe2J6tzEFh5nI1z3vPUJKylzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ho2Q1YawURHwPpQpEGzfm18XixEkBcdRP7f/tr1mFCnavNOL2cSVqimeCxwwvD0aw0m54wxuJ8h84zuBMuf56CkDn5ENSzsmgBYLoyzQn1U4zYAgpxtB2m0FCVlQj+kxPPIKYrFEWPx6ekYrcOfLOObGchnkmFlBqLB/c2IYCJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QW3x0qiv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=icO5DzMR5oljxZc5vY2fmUUmyJbIDXErNwWUA0o7Zo7zXCEHrr/SSgTNvWjhp2L2OeqH0ccGlb5pL2yjd0j+GIWy8QXKsA3o4KroiH09saMImYEqeSGxNwzFwSLxB/+jhcHs5UAdVIMO0IZlE51XNKQcrjd8zfdkcMVqoOuB+KU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WPMutUQ0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QW3x0qiv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05DE1C4CEF1;
-	Fri,  9 Jan 2026 12:38:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WPMutUQ0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E96FC4CEF1;
+	Fri,  9 Jan 2026 12:38:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962304;
-	bh=W09lXEHcaJFScgod2XA4vgVOTKzCXZShlehL+9CmZDE=;
+	s=korg; t=1767962307;
+	bh=mrSjzw9Oh/BWN4SWoeLe2J6tzEFh5nI1z3vPUJKylzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QW3x0qivcOhvYbGHePcect4ss+LhJW98FdUACpXP0Dc2BBP/avUmj7hHxGMmh0pou
-	 fX0FbRRwj+eb2JZIhjXB1RwV98VaswHYqQ6t7WBpGafMRLOUAOVb42lJTI0draYupj
-	 Cub+2eMZ7ITTGs+a/1oRDv1vL22nTjxYAky8OH/g=
+	b=WPMutUQ0ygR2dyOfJaxzgdWHs3CD2xLiDYCKByWtqZL62Afg7m5CUES1hmrZyU8Pg
+	 F8TJpXZGMNuZFXzHukxjogfYaCZyZsXiYc1BXiHVW4LjBk9PQRo+sQ5CUsxzYiF569
+	 ifkmeK5wHDlZzV0TAzdgI41VGYyTlFkNG/WN44dE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Gerst <brgerst@gmail.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Juergen Gross <jgross@suse.com>,
-	Sohil Mehta <sohil.mehta@intel.com>,
-	Andy Lutomirski <luto@kernel.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Josh Poimboeuf <jpoimboe@redhat.com>,
+	Chen Changcheng <chenchangcheng@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 275/634] x86/xen: Move Xen upcall handler
-Date: Fri,  9 Jan 2026 12:39:13 +0100
-Message-ID: <20260109112127.880637612@linuxfoundation.org>
+Subject: [PATCH 6.1 312/634] usb: usb-storage: No additional quirks need to be added to the EL-R12 optical drive.
+Date: Fri,  9 Jan 2026 12:39:50 +0100
+Message-ID: <20260109112129.272403772@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -57,211 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Gerst <brgerst@gmail.com>
+From: Chen Changcheng <chenchangcheng@kylinos.cn>
 
-[ Upstream commit 1ab7b5ed44ba9bce581e225f40219b793bc779d6 ]
+[ Upstream commit 955a48a5353f4fe009704a9a4272a3adf627cd35 ]
 
-Move the upcall handler to Xen-specific files.
+The optical drive of EL-R12 has the same vid and pid as INIC-3069,
+as follows:
+T:  Bus=02 Lev=02 Prnt=02 Port=01 Cnt=01 Dev#=  3 Spd=5000 MxCh= 0
+D:  Ver= 3.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
+P:  Vendor=13fd ProdID=3940 Rev= 3.10
+S:  Manufacturer=HL-DT-ST
+S:  Product= DVD+-RW GT80N
+S:  SerialNumber=423349524E4E38303338323439202020
+C:* #Ifs= 1 Cfg#= 1 Atr=80 MxPwr=144mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=08(stor.) Sub=02 Prot=50 Driver=usb-storage
+E:  Ad=83(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=0a(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
 
-No functional changes.
+This will result in the optical drive device also adding
+the quirks of US_FL_NO_ATA_1X. When performing an erase operation,
+it will fail, and the reason for the failure is as follows:
+[  388.967742] sr 5:0:0:0: [sr0] tag#0 Send: scmd 0x00000000d20c33a7
+[  388.967742] sr 5:0:0:0: [sr0] tag#0 CDB: ATA command pass through(12)/Blank a1 11 00 00 00 00 00 00 00 00 00 00
+[  388.967773] sr 5:0:0:0: [sr0] tag#0 Done: SUCCESS Result: hostbyte=DID_TARGET_FAILURE driverbyte=DRIVER_OK cmd_age=0s
+[  388.967773] sr 5:0:0:0: [sr0] tag#0 CDB: ATA command pass through(12)/Blank a1 11 00 00 00 00 00 00 00 00 00 00
+[  388.967803] sr 5:0:0:0: [sr0] tag#0 Sense Key : Illegal Request [current]
+[  388.967803] sr 5:0:0:0: [sr0] tag#0 Add. Sense: Invalid field in cdb
+[  388.967803] sr 5:0:0:0: [sr0] tag#0 scsi host busy 1 failed 0
+[  388.967803] sr 5:0:0:0: Notifying upper driver of completion (result 8100002)
+[  388.967834] sr 5:0:0:0: [sr0] tag#0 0 sectors total, 0 bytes done.
 
-Signed-off-by: Brian Gerst <brgerst@gmail.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Reviewed-by: Sohil Mehta <sohil.mehta@intel.com>
-Cc: Andy Lutomirski <luto@kernel.org>
-Cc: H. Peter Anvin <hpa@zytor.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Josh Poimboeuf <jpoimboe@redhat.com>
-Link: https://lore.kernel.org/r/20250314151220.862768-2-brgerst@gmail.com
-Stable-dep-of: e5aff444e3a7 ("x86/xen: Fix sparse warning in enlighten_pv.c")
+For the EL-R12 standard optical drive, all operational commands
+and usage scenarios were tested without adding the IGNORE_RESIDUE quirks,
+and no issues were encountered. It can be reasonably concluded
+that removing the IGNORE_RESIDUE quirks has no impact.
+
+Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
+Link: https://patch.msgid.link/20251121064020.29332-1-chenchangcheng@kylinos.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/entry/common.c     | 72 -------------------------------------
- arch/x86/xen/enlighten_pv.c | 69 +++++++++++++++++++++++++++++++++++
- 2 files changed, 69 insertions(+), 72 deletions(-)
+ drivers/usb/storage/unusual_uas.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/entry/common.c b/arch/x86/entry/common.c
-index e72dac092245..3c88bdf96e7a 100644
---- a/arch/x86/entry/common.c
-+++ b/arch/x86/entry/common.c
-@@ -20,11 +20,6 @@
- #include <linux/syscalls.h>
- #include <linux/uaccess.h>
+diff --git a/drivers/usb/storage/unusual_uas.h b/drivers/usb/storage/unusual_uas.h
+index 1477e31d7763..b695f5ba9a40 100644
+--- a/drivers/usb/storage/unusual_uas.h
++++ b/drivers/usb/storage/unusual_uas.h
+@@ -98,7 +98,7 @@ UNUSUAL_DEV(0x125f, 0xa94a, 0x0160, 0x0160,
+ 		US_FL_NO_ATA_1X),
  
--#ifdef CONFIG_XEN_PV
--#include <xen/xen-ops.h>
--#include <xen/events.h>
--#endif
--
- #include <asm/apic.h>
- #include <asm/desc.h>
- #include <asm/traps.h>
-@@ -346,70 +341,3 @@ SYSCALL_DEFINE0(ni_syscall)
- {
- 	return -ENOSYS;
- }
--
--#ifdef CONFIG_XEN_PV
--#ifndef CONFIG_PREEMPTION
--/*
-- * Some hypercalls issued by the toolstack can take many 10s of
-- * seconds. Allow tasks running hypercalls via the privcmd driver to
-- * be voluntarily preempted even if full kernel preemption is
-- * disabled.
-- *
-- * Such preemptible hypercalls are bracketed by
-- * xen_preemptible_hcall_begin() and xen_preemptible_hcall_end()
-- * calls.
-- */
--DEFINE_PER_CPU(bool, xen_in_preemptible_hcall);
--EXPORT_SYMBOL_GPL(xen_in_preemptible_hcall);
--
--/*
-- * In case of scheduling the flag must be cleared and restored after
-- * returning from schedule as the task might move to a different CPU.
-- */
--static __always_inline bool get_and_clear_inhcall(void)
--{
--	bool inhcall = __this_cpu_read(xen_in_preemptible_hcall);
--
--	__this_cpu_write(xen_in_preemptible_hcall, false);
--	return inhcall;
--}
--
--static __always_inline void restore_inhcall(bool inhcall)
--{
--	__this_cpu_write(xen_in_preemptible_hcall, inhcall);
--}
--#else
--static __always_inline bool get_and_clear_inhcall(void) { return false; }
--static __always_inline void restore_inhcall(bool inhcall) { }
--#endif
--
--static void __xen_pv_evtchn_do_upcall(struct pt_regs *regs)
--{
--	struct pt_regs *old_regs = set_irq_regs(regs);
--
--	inc_irq_stat(irq_hv_callback_count);
--
--	xen_evtchn_do_upcall();
--
--	set_irq_regs(old_regs);
--}
--
--__visible noinstr void xen_pv_evtchn_do_upcall(struct pt_regs *regs)
--{
--	irqentry_state_t state = irqentry_enter(regs);
--	bool inhcall;
--
--	instrumentation_begin();
--	run_sysvec_on_irqstack_cond(__xen_pv_evtchn_do_upcall, regs);
--
--	inhcall = get_and_clear_inhcall();
--	if (inhcall && !WARN_ON_ONCE(state.exit_rcu)) {
--		irqentry_exit_cond_resched();
--		instrumentation_end();
--		restore_inhcall(inhcall);
--	} else {
--		instrumentation_end();
--		irqentry_exit(regs, state);
--	}
--}
--#endif /* CONFIG_XEN_PV */
-diff --git a/arch/x86/xen/enlighten_pv.c b/arch/x86/xen/enlighten_pv.c
-index ee8f452cc58b..9a54049744bf 100644
---- a/arch/x86/xen/enlighten_pv.c
-+++ b/arch/x86/xen/enlighten_pv.c
-@@ -71,6 +71,7 @@
- #include <asm/mwait.h>
- #include <asm/pci_x86.h>
- #include <asm/cpu.h>
-+#include <asm/irq_stack.h>
- #ifdef CONFIG_X86_IOPL_IOPERM
- #include <asm/io_bitmap.h>
- #endif
-@@ -96,6 +97,44 @@ void *xen_initial_gdt;
- static int xen_cpu_up_prepare_pv(unsigned int cpu);
- static int xen_cpu_dead_pv(unsigned int cpu);
- 
-+#ifndef CONFIG_PREEMPTION
-+/*
-+ * Some hypercalls issued by the toolstack can take many 10s of
-+ * seconds. Allow tasks running hypercalls via the privcmd driver to
-+ * be voluntarily preempted even if full kernel preemption is
-+ * disabled.
-+ *
-+ * Such preemptible hypercalls are bracketed by
-+ * xen_preemptible_hcall_begin() and xen_preemptible_hcall_end()
-+ * calls.
-+ */
-+DEFINE_PER_CPU(bool, xen_in_preemptible_hcall);
-+EXPORT_SYMBOL_GPL(xen_in_preemptible_hcall);
-+
-+/*
-+ * In case of scheduling the flag must be cleared and restored after
-+ * returning from schedule as the task might move to a different CPU.
-+ */
-+static __always_inline bool get_and_clear_inhcall(void)
-+{
-+	bool inhcall = __this_cpu_read(xen_in_preemptible_hcall);
-+
-+	__this_cpu_write(xen_in_preemptible_hcall, false);
-+	return inhcall;
-+}
-+
-+static __always_inline void restore_inhcall(bool inhcall)
-+{
-+	__this_cpu_write(xen_in_preemptible_hcall, inhcall);
-+}
-+
-+#else
-+
-+static __always_inline bool get_and_clear_inhcall(void) { return false; }
-+static __always_inline void restore_inhcall(bool inhcall) { }
-+
-+#endif
-+
- struct tls_descs {
- 	struct desc_struct desc[3];
- };
-@@ -597,6 +636,36 @@ DEFINE_IDTENTRY_RAW(xenpv_exc_machine_check)
- }
- #endif
- 
-+static void __xen_pv_evtchn_do_upcall(struct pt_regs *regs)
-+{
-+	struct pt_regs *old_regs = set_irq_regs(regs);
-+
-+	inc_irq_stat(irq_hv_callback_count);
-+
-+	xen_evtchn_do_upcall();
-+
-+	set_irq_regs(old_regs);
-+}
-+
-+__visible noinstr void xen_pv_evtchn_do_upcall(struct pt_regs *regs)
-+{
-+	irqentry_state_t state = irqentry_enter(regs);
-+	bool inhcall;
-+
-+	instrumentation_begin();
-+	run_sysvec_on_irqstack_cond(__xen_pv_evtchn_do_upcall, regs);
-+
-+	inhcall = get_and_clear_inhcall();
-+	if (inhcall && !WARN_ON_ONCE(state.exit_rcu)) {
-+		irqentry_exit_cond_resched();
-+		instrumentation_end();
-+		restore_inhcall(inhcall);
-+	} else {
-+		instrumentation_end();
-+		irqentry_exit(regs, state);
-+	}
-+}
-+
- struct trap_array_entry {
- 	void (*orig)(void);
- 	void (*xen)(void);
+ /* Reported-by: Benjamin Tissoires <benjamin.tissoires@redhat.com> */
+-UNUSUAL_DEV(0x13fd, 0x3940, 0x0000, 0x9999,
++UNUSUAL_DEV(0x13fd, 0x3940, 0x0309, 0x0309,
+ 		"Initio Corporation",
+ 		"INIC-3069",
+ 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
 -- 
 2.51.0
 
