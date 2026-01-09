@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22920335BCD;
-	Fri,  9 Jan 2026 12:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB4F4335BCD;
+	Fri,  9 Jan 2026 12:44:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962657; cv=none; b=kgKFOWk6yD/PDGBUwRB1RARsGxpZeS5b5xsElQ9J00o4GmaV9BFauZAyqT5nqpdV4Oja7MVPV3aZh0/+Oi3zzM0SDu6+oHMWWXnQPi92+Fp1Kp1AUQ7QIeLW/R3opzBWtkiRYP86TjncHnwqPS9qAO1Aibzm8nnC5KTaQTl9aFY=
+	t=1767962660; cv=none; b=r4g5wRjAeAj7WpJuyU1lE896aJn7GrZlOULWSwWz3Om+OoQg4FIDWSS0Qsm8dHxE156ciFTUQXXU0h4AlE24FWouEwtUhiVVA0q0XpNBC5mOi89clVn2QiZlsSVyDjQMMavqcWRaeExg/IzpjDo2gKyNa0HOknDbSf+PC22mqN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962657; c=relaxed/simple;
-	bh=hhTOfYPqxpVptuoYN1V2c2PyBOhLQjUdRBkOu0MR6dg=;
+	s=arc-20240116; t=1767962660; c=relaxed/simple;
+	bh=j5zUEmfsYtMDPfSEWrTKnIqYVURms0fz/7KnAJAmRZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lq9VVzwJXDVYEx1ZpCVnbpEJYe5h1ST+ouQ1lWr4bGOjzMd+NVJ63XRZ6kFIXlJnir1fxGWjiOCR+Xa5qJRLfhvIryLf6RGDI5tbRzv+3XzAFftIFyyAAkIImtsl9ZOYyG57KBBYuGLEjIxNjyZ9U8ckMTOGMGML43EJSPM1cOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uWJqmiDs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KF/sxBKjdly/qaFpfHIcBT3gwvI/ujlh0Tvf04adBen4nvtwMTb9xbqed1eAC7UXJ3xlQSGNdh+qaAcJiq+UlzMxy7BvtllaLwkHkvgB1OAJ3Ixzwpl9HWN3M9Bp3HXt9Dw+QfnLqIG9sVoPv+ZUvqMDCOMadEONLlcou1YanOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2QxnypuV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uWJqmiDs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DAB3C4CEF1;
-	Fri,  9 Jan 2026 12:44:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2QxnypuV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79544C4CEF1;
+	Fri,  9 Jan 2026 12:44:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962657;
-	bh=hhTOfYPqxpVptuoYN1V2c2PyBOhLQjUdRBkOu0MR6dg=;
+	s=korg; t=1767962659;
+	bh=j5zUEmfsYtMDPfSEWrTKnIqYVURms0fz/7KnAJAmRZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uWJqmiDsuuYgYXDFk46jY5IFTaItZzrJ5iUsnoCy8nSoOPFoq9pLInV/uiTVB4fiy
-	 fKU345G5q0udZvRyWja+2GyP+bWQcvyt3GmF8qJU5AkmsrzfU/udwjEUS7pYB+FQ1p
-	 uDxr0bQBOw00HQbiLLf5jFGRTaGoIOtko48ZzWyI=
+	b=2QxnypuVL/dCLeY6uYFKMkxGLKhGuSKYwTLd0JyH87+IHzcTS/7A1EwA08Xod0x0m
+	 Etusg75+0z1WRIE4l1P3RAxHp6xExtDO4KQFVIDzIfd0SQVKnWh+IDOY4Fe5lKc34Z
+	 avWiSTLDCt+p4GXmxHU/jPfnx9WS2iL6n3VdySk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Yipeng Zou <zouyipeng@huawei.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 442/634] selftests/ftrace: traceonoff_triggers: strip off names
-Date: Fri,  9 Jan 2026 12:42:00 +0100
-Message-ID: <20260109112134.171528539@linuxfoundation.org>
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 6.1 443/634] ntfs: Do not overwrite uptodate pages
+Date: Fri,  9 Jan 2026 12:42:01 +0100
+Message-ID: <20260109112134.207999414@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -53,93 +50,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yipeng Zou <zouyipeng@huawei.com>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit b889b4fb4cbea3ca7eb9814075d6a51936394bd9 ]
+commit 68f6bd128e75a032432eda9d16676ed2969a1096 upstream.
 
-The func_traceonoff_triggers.tc sometimes goes to fail
-on my board, Kunpeng-920.
+When reading a compressed file, we may read several pages in addition to
+the one requested.  The current code will overwrite pages in the page
+cache with the data from disc which can definitely result in changes
+that have been made being lost.
 
-[root@localhost]# ./ftracetest ./test.d/ftrace/func_traceonoff_triggers.tc -l fail.log
-=== Ftrace unit tests ===
-[1] ftrace - test for function traceon/off triggers     [FAIL]
-[2] (instance)  ftrace - test for function traceon/off triggers [UNSUPPORTED]
+For example if we have four consecutie pages ABCD in the file compressed
+into a single extent, on first access, we'll bring in ABCD.  Then we
+write to page B.  Memory pressure results in the eviction of ACD.
+When we attempt to write to page C, we will overwrite the data in page
+B with the data currently on disk.
 
-I look up the log, and it shows that the md5sum is different between csum1 and csum2.
+I haven't investigated the decompression code to check whether it's
+OK to overwrite a clean page or whether it might be possible to see
+corrupt data.  Out of an abundance of caution, decline to overwrite
+uptodate pages, not just dirty pages.
 
-++ cnt=611
-++ sleep .1
-+++ cnt_trace
-+++ grep -v '^#' trace
-+++ wc -l
-++ cnt2=611
-++ '[' 611 -ne 611 ']'
-+++ cat tracing_on
-++ on=0
-++ '[' 0 '!=' 0 ']'
-+++ md5sum trace
-++ csum1='76896aa74362fff66a6a5f3cf8a8a500  trace'
-++ sleep .1
-+++ md5sum trace
-++ csum2='ee8625a21c058818fc26e45c1ed3f6de  trace'
-++ '[' '76896aa74362fff66a6a5f3cf8a8a500  trace' '!=' 'ee8625a21c058818fc26e45c1ed3f6de  trace' ']'
-++ fail 'Tracing file is still changing'
-++ echo Tracing file is still changing
-Tracing file is still changing
-++ exit_fail
-++ exit 1
-
-So I directly dump the trace file before md5sum, the diff shows that:
-
-[root@localhost]# diff trace_1.log trace_2.log -y --suppress-common-lines
-dockerd-12285   [036] d.... 18385.510290: sched_stat | <...>-12285   [036] d.... 18385.510290: sched_stat
-dockerd-12285   [036] d.... 18385.510291: sched_swit | <...>-12285   [036] d.... 18385.510291: sched_swit
-<...>-740       [044] d.... 18385.602859: sched_stat | kworker/44:1-740 [044] d.... 18385.602859: sched_stat
-<...>-740       [044] d.... 18385.602860: sched_swit | kworker/44:1-740 [044] d.... 18385.602860: sched_swit
-
-And we can see that <...> filed be filled with names.
-
-We can strip off the names there to fix that.
-
-After strip off the names:
-
-kworker/u257:0-12 [019] d..2.  2528.758910: sched_stat | -12 [019] d..2.  2528.758910: sched_stat_runtime: comm=k
-kworker/u257:0-12 [019] d..2.  2528.758912: sched_swit | -12 [019] d..2.  2528.758912: sched_switch: prev_comm=kw
-<idle>-0          [000] d.s5.  2528.762318: sched_waki | -0  [000] d.s5.  2528.762318: sched_waking: comm=sshd pi
-<idle>-0          [037] dNh2.  2528.762326: sched_wake | -0  [037] dNh2.  2528.762326: sched_wakeup: comm=sshd pi
-<idle>-0          [037] d..2.  2528.762334: sched_swit | -0  [037] d..2.  2528.762334: sched_switch: prev_comm=sw
-
-Link: https://lore.kernel.org/r/20230818013226.2182299-1-zouyipeng@huawei.com
-Fixes: d87b29179aa0 ("selftests: ftrace: Use md5sum to take less time of checking logs")
-Suggested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Yipeng Zou <zouyipeng@huawei.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4342306f0f0d (fs/ntfs3: Add file operations and implementation)
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../ftrace/test.d/ftrace/func_traceonoff_triggers.tc         | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/ntfs3/frecord.c |   35 +++++++++++++++++++++++++++++------
+ 1 file changed, 29 insertions(+), 6 deletions(-)
 
-diff --git a/tools/testing/selftests/ftrace/test.d/ftrace/func_traceonoff_triggers.tc b/tools/testing/selftests/ftrace/test.d/ftrace/func_traceonoff_triggers.tc
-index aee22289536b..1b57771dbfdf 100644
---- a/tools/testing/selftests/ftrace/test.d/ftrace/func_traceonoff_triggers.tc
-+++ b/tools/testing/selftests/ftrace/test.d/ftrace/func_traceonoff_triggers.tc
-@@ -90,9 +90,10 @@ if [ $on != "0" ]; then
-     fail "Tracing is not off"
- fi
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -2150,6 +2150,29 @@ out:
+ 	return err;
+ }
  
--csum1=`md5sum trace`
-+# Cannot rely on names being around as they are only cached, strip them
-+csum1=`cat trace | sed -e 's/^ *[^ ]*\(-[0-9][0-9]*\)/\1/' | md5sum`
- sleep $SLEEP_TIME
--csum2=`md5sum trace`
-+csum2=`cat trace | sed -e 's/^ *[^ ]*\(-[0-9][0-9]*\)/\1/' | md5sum`
++static struct page *ntfs_lock_new_page(struct address_space *mapping,
++		pgoff_t index, gfp_t gfp)
++{
++	struct folio *folio = __filemap_get_folio(mapping, index,
++			FGP_LOCK | FGP_ACCESSED | FGP_CREAT, gfp);
++	struct page *page;
++
++	if (IS_ERR(folio))
++		return ERR_CAST(folio);
++
++	if (!folio_test_uptodate(folio))
++		return folio_file_page(folio, index);
++
++	/* Use a temporary page to avoid data corruption */
++	folio_unlock(folio);
++	folio_put(folio);
++	page = alloc_page(gfp);
++	if (!page)
++		return ERR_PTR(-ENOMEM);
++	__SetPageLocked(page);
++	return page;
++}
++
+ /*
+  * ni_readpage_cmpr
+  *
+@@ -2203,9 +2226,9 @@ int ni_readpage_cmpr(struct ntfs_inode *
+ 		if (i == idx)
+ 			continue;
  
- if [ "$csum1" != "$csum2" ]; then
-     fail "Tracing file is still changing"
--- 
-2.51.0
-
+-		pg = find_or_create_page(mapping, index, gfp_mask);
+-		if (!pg) {
+-			err = -ENOMEM;
++		pg = ntfs_lock_new_page(mapping, index, gfp_mask);
++		if (IS_ERR(pg)) {
++			err = PTR_ERR(pg);
+ 			goto out1;
+ 		}
+ 		pages[i] = pg;
+@@ -2307,13 +2330,13 @@ int ni_decompress_file(struct ntfs_inode
+ 		for (i = 0; i < pages_per_frame; i++, index++) {
+ 			struct page *pg;
+ 
+-			pg = find_or_create_page(mapping, index, gfp_mask);
+-			if (!pg) {
++			pg = ntfs_lock_new_page(mapping, index, gfp_mask);
++			if (IS_ERR(pg)) {
+ 				while (i--) {
+ 					unlock_page(pages[i]);
+ 					put_page(pages[i]);
+ 				}
+-				err = -ENOMEM;
++				err = PTR_ERR(pg);
+ 				goto out;
+ 			}
+ 			pages[i] = pg;
 
 
