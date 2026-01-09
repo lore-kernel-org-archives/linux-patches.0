@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82045335561;
-	Fri,  9 Jan 2026 11:57:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512BF35970A;
+	Fri,  9 Jan 2026 11:57:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959865; cv=none; b=h470fw+f7rk9rGYZaw/GceXeb+6VQE+qdC2l1wTtoTGS4+lpDmaNvXClqNqyHmGuxpwMONAmojTBzCKcdjiTmss3Sxh/PHdtBWeIGzTj9Q5Xdm2MBhs7AeJPvNsfl8bb3xlIIoaj63asWWmCbQGg+c/ndtfS4LCDTBIdGu+Z3+A=
+	t=1767959868; cv=none; b=rWHPEcqpWMY2dpYbPVQ51ARknka5MDcflB7TXCcfjwFKSZBngw4CJhix3ornfe1sxWNkWh+nC52iME0ZrGlWa/PAKrwAfHJjecp1XGwS81U/l0SGbUzbUOTSV9nv3J1kGTrHqiaQe5jdF8lHJvf61hfogvlCNKsBMuJV6Tr0ibo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959865; c=relaxed/simple;
-	bh=fVVY7XCk2dHwANiNigyRFg9djbl9qj+D8S3ECYKGDdA=;
+	s=arc-20240116; t=1767959868; c=relaxed/simple;
+	bh=spQehq4rM3khZ05vrSnf+l/cseA9GVDulkxkPD9fL4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O8mSMjsS2RS9OBKGXXx/6Ue2l6UZyYVzBSd1ISf9ceU24u0hyWzSgjBFeV8HvnB98BYg9jsyO8OF8PLvjcdkHwKrqQPoaxtZQJo6faKp91JOTrizsrgpqIJDjG7SizCWXqcJqu8zQb2P0sjK06BBhsS29YV7Jd/u+16Tdt7R1Yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f3Vixbeb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R8jgGGnH8f9+FYvt2UElnTz3wvR7ic5GPh3fUYd9r4PSDVGOy74+jC+7rEHt2KzBqUbnkl4MuqRaRydLk4Ff/pcbjzO4xdnNarzjZZ+DjMIaai3/GfHIz78w7ideHIJvw0SIgvoet/XzFnq1sSzbX/x5H0zk+X+Ba3h4Xr5tWFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJeXm0SH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f3Vixbeb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D7D4C4CEF1;
-	Fri,  9 Jan 2026 11:57:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJeXm0SH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2007C4CEF1;
+	Fri,  9 Jan 2026 11:57:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959865;
-	bh=fVVY7XCk2dHwANiNigyRFg9djbl9qj+D8S3ECYKGDdA=;
+	s=korg; t=1767959868;
+	bh=spQehq4rM3khZ05vrSnf+l/cseA9GVDulkxkPD9fL4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f3VixbebT7TacsxPfqbA7rbip+ELM5mQ9o6+rPyLVoyrAHXsEgwT8vxIgCKAxncoD
-	 l5OcR3nEtfOoEL1Zrj3xI5EvJs+/e/BF0JtU42bj+5hA7oPoBBx8B7glFaaEuQhDuq
-	 1Rh0GH9po1ipnO0Ethz6xIL7qXtMdQ8N4vlknI1M=
+	b=dJeXm0SHIAdNC7vf86pN8q6riNX6a2krdH9PUjZi0gHFzLO2gJQqLyUbbsi1GLj/h
+	 hCWt5SbvG0QUSefAeTJBDOaDM3Xp+w6jAAuVPc7FbhDC49/tvlOJEo2whC0MuakXU4
+	 gIqtVjJ2tdp22IUsgQjtjfoeOchSuuHb4RwTrWOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianglei Nie <niejianglei2021@163.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Abdun Nihaal <abdun.nihaal@gmail.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 202/737] staging: fbtft: core: fix potential memory leak in fbtft_probe_common()
-Date: Fri,  9 Jan 2026 12:35:41 +0100
-Message-ID: <20260109112141.600985524@linuxfoundation.org>
+Subject: [PATCH 6.6 203/737] btrfs: fix leaf leak in an error path in btrfs_del_items()
+Date: Fri,  9 Jan 2026 12:35:42 +0100
+Message-ID: <20260109112141.638068535@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,44 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianglei Nie <niejianglei2021@163.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 47d3949a9b04cbcb0e10abae30c2b53e98706e11 ]
+[ Upstream commit e7dd1182fcedee7c6097c9f49eba8de94a4364e3 ]
 
-fbtft_probe_common() allocates a memory chunk for "info" with
-fbtft_framebuffer_alloc(). When "display->buswidth == 0" is true, the
-function returns without releasing the "info", which will lead to a
-memory leak.
+If the call to btrfs_del_leaf() fails we return without decrementing the
+extra ref we took on the leaf, therefore leaking it. Fix this by ensuring
+we drop the ref count before returning the error.
 
-Fix it by calling fbtft_framebuffer_release() when "display->buswidth
-== 0" is true.
-
-Fixes: c296d5f9957c ("staging: fbtft: core support")
-Signed-off-by: Jianglei Nie <niejianglei2021@163.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Abdun Nihaal <abdun.nihaal@gmail.com>
-Link: https://patch.msgid.link/20251112192235.2088654-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 751a27615dda ("btrfs: do not BUG_ON() on tree mod log failures at btrfs_del_ptr()")
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/fbtft/fbtft-core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/btrfs/ctree.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/fbtft/fbtft-core.c b/drivers/staging/fbtft/fbtft-core.c
-index dce721f440c5e..5dfe2d7a73e37 100644
---- a/drivers/staging/fbtft/fbtft-core.c
-+++ b/drivers/staging/fbtft/fbtft-core.c
-@@ -1225,8 +1225,8 @@ int fbtft_probe_common(struct fbtft_display *display,
- 	par->pdev = pdev;
- 
- 	if (display->buswidth == 0) {
--		dev_err(dev, "buswidth is not set\n");
--		return -EINVAL;
-+		ret = dev_err_probe(dev, -EINVAL, "buswidth is not set\n");
-+		goto out_release;
- 	}
- 
- 	/* write register functions */
+diff --git a/fs/btrfs/ctree.c b/fs/btrfs/ctree.c
+index 31b1b448efc2e..a26c6e9d562d6 100644
+--- a/fs/btrfs/ctree.c
++++ b/fs/btrfs/ctree.c
+@@ -4743,9 +4743,9 @@ int btrfs_del_items(struct btrfs_trans_handle *trans, struct btrfs_root *root,
+ 			if (btrfs_header_nritems(leaf) == 0) {
+ 				path->slots[1] = slot;
+ 				ret = btrfs_del_leaf(trans, root, path, leaf);
++				free_extent_buffer(leaf);
+ 				if (ret < 0)
+ 					return ret;
+-				free_extent_buffer(leaf);
+ 				ret = 0;
+ 			} else {
+ 				/* if we're still in the path, make sure
 -- 
 2.51.0
 
