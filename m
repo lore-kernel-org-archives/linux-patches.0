@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2177B35B133;
-	Fri,  9 Jan 2026 12:30:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35F833372B;
+	Fri,  9 Jan 2026 12:31:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961860; cv=none; b=gv6Nzi3xcmUgaBFtQBEWlWFsWB1jJkTboCVacrkkdwpRnK48Jkd1UaA5uFJEBZCyAmOQ+RqmzJDS3Z4wzzmNsY67RGwNpUGltiZHuObngBLaOrny0E2MEWE5niEDdu90aFCB3TfveHG0ZNhDKNWQSrZ1/V/M8BujkCKnTpAUiEQ=
+	t=1767961862; cv=none; b=Aoid9YQQUX/7SSOxOFYhW94ZuLKrmytc5gHGcdqqTyjECa2YNracjcNwTQ9EjqK6bZCDtRdijWg15Zji7YlOeR2stHi+zx8gs9Aq2aFUHgeeyGQUHhoEZevNUA7BJo4vy522IrWWlNiR4qtyJdKm/BteAWfp1WbCRw4buOajd/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961860; c=relaxed/simple;
-	bh=0ff8Z1SxuHFLkO80nLZMOPL11JOJx4xdc3ka3QTlcAQ=;
+	s=arc-20240116; t=1767961862; c=relaxed/simple;
+	bh=lD1+DHXijMiTEq7gKlHPgh54DhKpMvoGPQgMl5LsjVU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TiBcmIFwzaZe+vr5FjXzvliNnlIZtfztdDGdUV4ItxWHn+ba2YUJqJ22u4G5SK9y7R2w41vx3NEXeV4udae6xRduBrBR+uacYvtvPK1ES5zZ3MLTYS0e//UPFAyf9aATx3sUh6pMfRXJKC/vrZ32gpmQlGhHyuSk903g3+lD2HQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J2JIJqM9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aMNu52TXp0KI3/zeWdoKGsdiVzT4RiHef4r+NGVU/e0DcKxN5P4UAWhtK8OyrSH9hhxY6ny0mLDVwwBnzcsXybSTtu5+yXEMhlORMbfswjdFja+op30YA5wuFC8jpvR000YdE8YaYbjIDt8lPc5bTV6GeInoiZ3ENf7/USjLITw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m4S5zSTz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J2JIJqM9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 567B4C4CEF1;
-	Fri,  9 Jan 2026 12:30:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m4S5zSTz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 326A3C4CEF1;
+	Fri,  9 Jan 2026 12:31:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961859;
-	bh=0ff8Z1SxuHFLkO80nLZMOPL11JOJx4xdc3ka3QTlcAQ=;
+	s=korg; t=1767961862;
+	bh=lD1+DHXijMiTEq7gKlHPgh54DhKpMvoGPQgMl5LsjVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J2JIJqM9LiMhWj/poRFBBtoYLSEncYD2AB/2QtEsXxdx+Fz8+OELBfV8sBE7QwbNZ
-	 rwS69YK+DqrwUV/D9x4Uv/oJEY1S11HaRHlyP47S9hv07vBk8iDqytbyV8YGYhWg37
-	 rQCxQO1WPBdXAbYnaPLt0pw6myd+h87K7QS+lLIQ=
+	b=m4S5zSTzqEaTgpfeMhWIe6qqbCicZXrCpsYmxxfFxEbl8okMqApWAh3WPb1KVnwrF
+	 H3UjiUbrby8uRsbDsTAjU0i38mS/dWY/PnSItRj0T+gqCd32brA2ft3bhbCDdC3NFa
+	 b/dQp5q5A8cQ/+05/OWO0RpNZ+90TqzMITSnAeqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
 	Jan Kara <jack@suse.cz>,
+	Yongjian Sun <sunyongjian1@huawei.com>,
+	Baokun Li <libaokun1@huawei.com>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 161/634] ext4: remove unused return value of __mb_check_buddy
-Date: Fri,  9 Jan 2026 12:37:19 +0100
-Message-ID: <20260109112123.508303130@linuxfoundation.org>
+Subject: [PATCH 6.1 162/634] ext4: improve integrity checking in __mb_check_buddy by enhancing order-0 validation
+Date: Fri,  9 Jan 2026 12:37:20 +0100
+Message-ID: <20260109112123.545591999@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,61 +53,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Yongjian Sun <sunyongjian1@huawei.com>
 
-[ Upstream commit 133de5a0d8f8e32b34feaa8beae7a189482f1856 ]
+[ Upstream commit d9ee3ff810f1cc0e253c9f2b17b668b973cb0e06 ]
 
-Remove unused return value of __mb_check_buddy.
+When the MB_CHECK_ASSERT macro is enabled, we found that the
+current validation logic in __mb_check_buddy has a gap in
+detecting certain invalid buddy states, particularly related
+to order-0 (bitmap) bits.
 
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+The original logic consists of three steps:
+1. Validates higher-order buddies: if a higher-order bit is
+set, at most one of the two corresponding lower-order bits
+may be free; if a higher-order bit is clear, both lower-order
+bits must be allocated (and their bitmap bits must be 0).
+2. For any set bit in order-0, ensures all corresponding
+higher-order bits are not free.
+3. Verifies that all preallocated blocks (pa) in the group
+have pa_pstart within bounds and their bitmap bits marked as
+allocated.
+
+However, this approach fails to properly validate cases where
+order-0 bits are incorrectly cleared (0), allowing some invalid
+configurations to pass:
+
+               corrupt            integral
+
+order 3           1                  1
+order 2       1       1          1       1
+order 1     1   1   1   1      1   1   1   1
+order 0    0 0 1 1 1 1 1 1    1 1 1 1 1 1 1 1
+
+Here we get two adjacent free blocks at order-0 with inconsistent
+higher-order state, and the right one shows the correct scenario.
+
+The root cause is insufficient validation of order-0 zero bits.
+To fix this and improve completeness without significant performance
+cost, we refine the logic:
+
+1. Maintain the top-down higher-order validation, but we no longer
+check the cases where the higher-order bit is 0, as this case will
+be covered in step 2.
+2. Enhance order-0 checking by examining pairs of bits:
+   - If either bit in a pair is set (1), all corresponding
+     higher-order bits must not be free.
+   - If both bits are clear (0), then exactly one of the
+     corresponding higher-order bits must be free
+3. Keep the preallocation (pa) validation unchanged.
+
+This change closes the validation gap, ensuring illegal buddy states
+involving order-0 are correctly detected, while removing redundant
+checks and maintaining efficiency.
+
+Fixes: c9de560ded61f ("ext4: Add multi block allocator for ext4")
+Suggested-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Yongjian Sun <sunyongjian1@huawei.com>
+Reviewed-by: Baokun Li <libaokun1@huawei.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20240105092102.496631-2-shikemeng@huaweicloud.com
+Message-ID: <20251106060614.631382-3-sunyongjian@huaweicloud.com>
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Stable-dep-of: d9ee3ff810f1 ("ext4: improve integrity checking in __mb_check_buddy by enhancing order-0 validation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ fs/ext4/mballoc.c | 49 +++++++++++++++++++++++++++++++----------------
+ 1 file changed, 32 insertions(+), 17 deletions(-)
 
 diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index 1dc25e7b922ad..db302f617da72 100644
+index db302f617da72..8282fbc1a6892 100644
 --- a/fs/ext4/mballoc.c
 +++ b/fs/ext4/mballoc.c
-@@ -666,7 +666,7 @@ do {									\
+@@ -666,6 +666,24 @@ do {									\
  	}								\
  } while (0)
  
--static int __mb_check_buddy(struct ext4_buddy *e4b, char *file,
-+static void __mb_check_buddy(struct ext4_buddy *e4b, char *file,
++/*
++ * Perform buddy integrity check with the following steps:
++ *
++ * 1. Top-down validation (from highest order down to order 1, excluding order-0 bitmap):
++ *    For each pair of adjacent orders, if a higher-order bit is set (indicating a free block),
++ *    at most one of the two corresponding lower-order bits may be clear (free).
++ *
++ * 2. Order-0 (bitmap) validation, performed on bit pairs:
++ *    - If either bit in a pair is set (1, allocated), then all corresponding higher-order bits
++ *      must not be free (0).
++ *    - If both bits in a pair are clear (0, free), then exactly one of the corresponding
++ *      higher-order bits must be free (0).
++ *
++ * 3. Preallocation (pa) list validation:
++ *    For each preallocated block (pa) in the group:
++ *    - Verify that pa_pstart falls within the bounds of this block group.
++ *    - Ensure the corresponding bit(s) in the order-0 bitmap are marked as allocated (1).
++ */
+ static void __mb_check_buddy(struct ext4_buddy *e4b, char *file,
  				const char *function, int line)
  {
- 	struct super_block *sb = e4b->bd_sb;
-@@ -685,7 +685,7 @@ static int __mb_check_buddy(struct ext4_buddy *e4b, char *file,
- 	void *buddy2;
+@@ -707,15 +725,6 @@ static void __mb_check_buddy(struct ext4_buddy *e4b, char *file,
+ 				continue;
+ 			}
  
- 	if (e4b->bd_info->bb_check_counter++ % 10)
--		return 0;
-+		return;
- 
- 	while (order > 1) {
- 		buddy = mb_find_buddy(e4b, order, &max);
-@@ -747,7 +747,7 @@ static int __mb_check_buddy(struct ext4_buddy *e4b, char *file,
- 
- 	grp = ext4_get_group_info(sb, e4b->bd_group);
- 	if (!grp)
--		return NULL;
-+		return;
- 	list_for_each(cur, &grp->bb_prealloc_list) {
- 		ext4_group_t groupnr;
- 		struct ext4_prealloc_space *pa;
-@@ -757,7 +757,6 @@ static int __mb_check_buddy(struct ext4_buddy *e4b, char *file,
- 		for (i = 0; i < pa->pa_len; i++)
- 			MB_CHECK_ASSERT(mb_test_bit(k + i, buddy));
+-			/* both bits in buddy2 must be 1 */
+-			MB_CHECK_ASSERT(mb_test_bit(i << 1, buddy2));
+-			MB_CHECK_ASSERT(mb_test_bit((i << 1) + 1, buddy2));
+-
+-			for (j = 0; j < (1 << order); j++) {
+-				k = (i * (1 << order)) + j;
+-				MB_CHECK_ASSERT(
+-					!mb_test_bit(k, e4b->bd_bitmap));
+-			}
+ 			count++;
+ 		}
+ 		MB_CHECK_ASSERT(e4b->bd_info->bb_counters[order] == count);
+@@ -731,15 +740,21 @@ static void __mb_check_buddy(struct ext4_buddy *e4b, char *file,
+ 				fragments++;
+ 				fstart = i;
+ 			}
+-			continue;
++		} else {
++			fstart = -1;
+ 		}
+-		fstart = -1;
+-		/* check used bits only */
+-		for (j = 0; j < e4b->bd_blkbits + 1; j++) {
+-			buddy2 = mb_find_buddy(e4b, j, &max2);
+-			k = i >> j;
+-			MB_CHECK_ASSERT(k < max2);
+-			MB_CHECK_ASSERT(mb_test_bit(k, buddy2));
++		if (!(i & 1)) {
++			int in_use, zero_bit_count = 0;
++
++			in_use = mb_test_bit(i, buddy) || mb_test_bit(i + 1, buddy);
++			for (j = 1; j < e4b->bd_blkbits + 2; j++) {
++				buddy2 = mb_find_buddy(e4b, j, &max2);
++				k = i >> j;
++				MB_CHECK_ASSERT(k < max2);
++				if (!mb_test_bit(k, buddy2))
++					zero_bit_count++;
++			}
++			MB_CHECK_ASSERT(zero_bit_count == !in_use);
+ 		}
  	}
--	return 0;
- }
- #undef MB_CHECK_ASSERT
- #define mb_check_buddy(e4b) __mb_check_buddy(e4b,	\
+ 	MB_CHECK_ASSERT(!EXT4_MB_GRP_NEED_INIT(e4b->bd_info));
 -- 
 2.51.0
 
