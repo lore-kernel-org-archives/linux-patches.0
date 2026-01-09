@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E12F433C53A;
-	Fri,  9 Jan 2026 12:41:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6CC91CAB3;
+	Fri,  9 Jan 2026 12:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962505; cv=none; b=h3reSVA8P+Pt3sYc+k2Inv6F4p9yWCGT6hMXgLGuYXZCsquClIFc8+euVjoyQI6k/Z8cqnBHwiDsFnDpEhmT1LBx9tkDKSQE7HH+LNmMQE8wUxYnAMG11EFOp3mxRs2nwiYXBa+DlpRoq3pEnlAGbNrgu1GzPBo98cdVuyYHbS4=
+	t=1767962507; cv=none; b=YeqhCGX4tJ18IyX2zUxzwA/+aU/mt+zO70Thm2SdjzEfqKOhZKX6DxjEJTXFWW1Qr/bPl2yKvB5h7T39BDU5D1epXRTU0I1PT/3foU89fpoyVdWfY2XSXk58T/Vwcuxvkplfiv1ktZPuYduZyYbU4cloWFSPypWIgRsOLPvZ3WM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962505; c=relaxed/simple;
-	bh=3KI1USyMLHSnMDEU+K+nFCBZeDDJXchWyMG7prvhtV4=;
+	s=arc-20240116; t=1767962507; c=relaxed/simple;
+	bh=JIFdScJo7rTVoiIY3WLOONdq+jWUpq2LmyV2YcA94Ko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QqrFjLi1uOWyUZjkng+YTyo7G3B4QQ5TZtRCuTSUHRUXvXF6XGMtvg/hkFUXET/sqd21/VscV5+jpuh/ydwcoA7MAzVdF5t5dJL+JjqkV0CCicITDldzz5NSGhwHNty/sXPlReqb+3GqhU97ir07TVLpfkH0DuvlkcI3IAIGxBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C+Qj7w43; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EUQ3I9jiqrb9gFoLMX92wmDCyxMi56CKQsHLebuL50jketWd/sfldjyyPUY4GWKWjQFmsIjmNtr/BLZylsB2pGrJARHHggeIWYlhFXDEYjXBVvC+9UewJSwG0eUAWqPtBgRO9z48nscs2eV5Y+AD0Hbec3SvNXN97OVZRXstxJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NOTfXcI1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C+Qj7w43"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DF6FC4CEF1;
-	Fri,  9 Jan 2026 12:41:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NOTfXcI1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 494F4C4CEF1;
+	Fri,  9 Jan 2026 12:41:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962504;
-	bh=3KI1USyMLHSnMDEU+K+nFCBZeDDJXchWyMG7prvhtV4=;
+	s=korg; t=1767962507;
+	bh=JIFdScJo7rTVoiIY3WLOONdq+jWUpq2LmyV2YcA94Ko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C+Qj7w43ABWCgW//TovZ2kWjCpDPf17uZNBn0+VrrauJpiywe6+WIPrtLeLusEq1g
-	 jWYlboUpZ3pG/9K+k1bCNX0wWwSI4O85DemErl25yoGzrYebbYzrfcnXMuLhDq91MX
-	 +25/Ft/K7fkUbjzAK/PRUu7Ine5p5XJAoRjt5r84=
+	b=NOTfXcI1ZA1wZVf0dx5/68q4o5dBTsKCaMzE6m9KQ98bfNMdJLK4vCgaVRRTUQRpj
+	 rJthHuxA+Rza8WlUflyJG5xFZOZrrF0ZcBXlL02pXarT0XtgNKEYI3514OfiFtaFoO
+	 t4+cAvTJqEyCddCgYwSfL9xB6is4oCZ8Yplj2+cA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tzung-Bi Shih <tzungbi@kernel.org>
-Subject: [PATCH 6.1 355/634] platform/chrome: cros_ec_ishtp: Fix UAF after unbinding driver
-Date: Fri,  9 Jan 2026 12:40:33 +0100
-Message-ID: <20260109112130.882413964@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.1 346/634] scsi: aic94xx: fix use-after-free in device removal path
+Date: Fri,  9 Jan 2026 12:40:24 +0100
+Message-ID: <20260109112130.544329767@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -49,34 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit 944edca81e7aea15f83cf9a13a6ab67f711e8abd upstream.
+commit f6ab594672d4cba08540919a4e6be2e202b60007 upstream.
 
-After unbinding the driver, another kthread `cros_ec_console_log_work`
-is still accessing the device, resulting an UAF and crash.
+The asd_pci_remove() function fails to synchronize with pending tasklets
+before freeing the asd_ha structure, leading to a potential
+use-after-free vulnerability.
 
-The driver doesn't unregister the EC device in .remove() which should
-shutdown sub-devices synchronously.  Fix it.
+When a device removal is triggered (via hot-unplug or module unload),
+race condition can occur.
 
-Fixes: 26a14267aff2 ("platform/chrome: Add ChromeOS EC ISHTP driver")
+The fix adds tasklet_kill() before freeing the asd_ha structure,
+ensuring all scheduled tasklets complete before cleanup proceeds.
+
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Reported-by: Junrui Luo <moonafterrain@outlook.com>
+Fixes: 2908d778ab3e ("[SCSI] aic94xx: new driver")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20251031033900.3577394-1-tzungbi@kernel.org
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Link: https://patch.msgid.link/ME2PR01MB3156AB7DCACA206C845FC7E8AFFDA@ME2PR01MB3156.ausprd01.prod.outlook.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/chrome/cros_ec_ishtp.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/aic94xx/aic94xx_init.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/platform/chrome/cros_ec_ishtp.c
-+++ b/drivers/platform/chrome/cros_ec_ishtp.c
-@@ -715,6 +715,7 @@ static void cros_ec_ishtp_remove(struct
+--- a/drivers/scsi/aic94xx/aic94xx_init.c
++++ b/drivers/scsi/aic94xx/aic94xx_init.c
+@@ -897,6 +897,9 @@ static void asd_pci_remove(struct pci_de
  
- 	cancel_work_sync(&client_data->work_ishtp_reset);
- 	cancel_work_sync(&client_data->work_ec_evt);
-+	cros_ec_unregister(client_data->ec_dev);
- 	cros_ish_deinit(cros_ish_cl);
- 	ishtp_put_device(cl_device);
- }
+ 	asd_disable_ints(asd_ha);
+ 
++	/* Ensure all scheduled tasklets complete before freeing resources */
++	tasklet_kill(&asd_ha->seq.dl_tasklet);
++
+ 	asd_remove_dev_attrs(asd_ha);
+ 
+ 	/* XXX more here as needed */
 
 
