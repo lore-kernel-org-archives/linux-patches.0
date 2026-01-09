@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95FE433C511;
-	Fri,  9 Jan 2026 11:51:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329AB30FF1D;
+	Fri,  9 Jan 2026 11:51:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959468; cv=none; b=p+JeP+W8Gp0k25pIc+hfFYp7m2fEYOXJNSd5jyFBO0bnNj+WGo0qlNRSkYI+u1eZVdSaYpeBF/ae5Uibld3QvQ5jAAPpUmuTJ8C9vwvJoAvNejV+9qhaUIcf5XCwBinhN6xNFzd4cKhqGLsH7EgwEH3tIDZw5kbLhyf7Q2XwUxk=
+	t=1767959471; cv=none; b=WRWPH9mQw6GFqI2oHQu1/iyUiMO1cp5i6W40OfVjEFJMCBNdYlcPJykRqZQ8V9HWTUsi6Yq3moexsZA2Weknvot8B8ajUXB9DuWcL+kdjUYeIVW/IY9IMlIe1jdytCagilpnq21xJ+FX67TcLI+jyNoNh03evsZdJarHRM36Mzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959468; c=relaxed/simple;
-	bh=TsPqG8YKOl9vjLwIw+Ncuu/gABfuB8gpEmD3Fb+RXbU=;
+	s=arc-20240116; t=1767959471; c=relaxed/simple;
+	bh=cS1pACqQ+Tcv2HLolleqyzGvVD+3kZsnvaQ1Dr65Wtk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W98K491XLe6K3VCqeBXQgPWxi61xnOE01vz/BFCBWqoiQQMuHwqoDqUphGplr0NwtVFLcCTI6MltSrPtNM0ynAK/7Ld6Ws+bd8/6kdjFfdghjwY0CrRNnxFTME6VYQfZ+t1Zcjy8/AGqYFCdnsY3VR9rmjcNDq28zzls5jPJBCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zd8zmqkL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t0xQQX9ZFne9qT1A+sGrmk8fM4dn90AtlGT7tL3CUqRf4n4ayHTOb0ijJQKrBtSeXIwVQOPokcwSVg4ykxv/DTFFONs8bq/SOaN6zRxIUSJIokkFF8XcZnMN31Rrrk8jzmHh1KGl84aylP0tJQhABV6ng9HgfmyBWCB0ExXKp9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RVtrDKWh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zd8zmqkL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D879FC4CEF1;
-	Fri,  9 Jan 2026 11:51:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RVtrDKWh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2DF3C4CEF1;
+	Fri,  9 Jan 2026 11:51:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959468;
-	bh=TsPqG8YKOl9vjLwIw+Ncuu/gABfuB8gpEmD3Fb+RXbU=;
+	s=korg; t=1767959471;
+	bh=cS1pACqQ+Tcv2HLolleqyzGvVD+3kZsnvaQ1Dr65Wtk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zd8zmqkLYOieAnT+d5kJoMDjjj5rXnuyk8aTEJg2vfD4tXzh2xw3WkhNQUiK3ojyq
-	 yx0N4/sklX3R78pv5/2qlqHJcWVAiRPs3//4+7IGq8pktboEyynjX3GuY5VKu1CTGt
-	 GkwspVlxBTTVbiYadNZh3lqWvpld9vN0TomvoITw=
+	b=RVtrDKWhPHthvAudj4ANW8nbxvnSXNTqDln9bjG1XycZa9HxyVj1IrZCfiS97MBuy
+	 u0qg8jwJwFmhAo4T49vyQnRvJkcPHPrcuwGUrYmO/z958ZNDb9lz981/fk326OSvgs
+	 nXYTPfF6vxouolLjMetJKB5P1Nhui10aGi/PNjU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernand Sieber <sieberf@amazon.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Johan Hovold <johan@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 062/737] sched/fair: Forfeit vruntime on yield
-Date: Fri,  9 Jan 2026 12:33:21 +0100
-Message-ID: <20260109112136.325673768@linuxfoundation.org>
+Subject: [PATCH 6.6 063/737] irqchip/irq-bcm7038-l1: Fix section mismatch
+Date: Fri,  9 Jan 2026 12:33:22 +0100
+Message-ID: <20260109112136.369574447@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,66 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernand Sieber <sieberf@amazon.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 79104becf42baeeb4a3f2b106f954b9fc7c10a3c ]
+[ Upstream commit e9db5332caaf4789ae3bafe72f61ad8e6e0c2d81 ]
 
-If a task yields, the scheduler may decide to pick it again. The task in
-turn may decide to yield immediately or shortly after, leading to a tight
-loop of yields.
+Platform drivers can be probed after their init sections have been
+discarded so the irqchip init callback must not live in init.
 
-If there's another runnable task as this point, the deadline will be
-increased by the slice at each loop. This can cause the deadline to runaway
-pretty quickly, and subsequent elevated run delays later on as the task
-doesn't get picked again. The reason the scheduler can pick the same task
-again and again despite its deadline increasing is because it may be the
-only eligible task at that point.
-
-Fix this by making the task forfeiting its remaining vruntime and pushing
-the deadline one slice ahead. This implements yield behavior more
-authentically.
-
-We limit the forfeiting to eligible tasks. This is because core scheduling
-prefers running ineligible tasks rather than force idling. As such, without
-the condition, we can end up on a yield loop which makes the vruntime
-increase rapidly, leading to anomalous run delays later down the line.
-
-Fixes: 147f3efaa24182 ("sched/fair: Implement an EEVDF-like scheduling  policy")
-Signed-off-by: Fernand Sieber <sieberf@amazon.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20250401123622.584018-1-sieberf@amazon.com
-Link: https://lore.kernel.org/r/20250911095113.203439-1-sieberf@amazon.com
-Link: https://lore.kernel.org/r/20250916140228.452231-1-sieberf@amazon.com
+Fixes: c057c799e379 ("irqchip/irq-bcm7038-l1: Switch to IRQCHIP_PLATFORM_DRIVER")
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/irqchip/irq-bcm7038-l1.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 7f23b866c3d4c..cf3a51f323e32 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -8614,7 +8614,19 @@ static void yield_task_fair(struct rq *rq)
- 	 */
- 	rq_clock_skip_update(rq);
- 
--	se->deadline += calc_delta_fair(se->slice, se);
-+	/*
-+	 * Forfeit the remaining vruntime, only if the entity is eligible. This
-+	 * condition is necessary because in core scheduling we prefer to run
-+	 * ineligible tasks rather than force idling. If this happens we may
-+	 * end up in a loop where the core scheduler picks the yielding task,
-+	 * which yields immediately again; without the condition the vruntime
-+	 * ends up quickly running away.
-+	 */
-+	if (entity_eligible(cfs_rq, se)) {
-+		se->vruntime = se->deadline;
-+		se->deadline += calc_delta_fair(se->slice, se);
-+		update_min_vruntime(cfs_rq);
-+	}
+diff --git a/drivers/irqchip/irq-bcm7038-l1.c b/drivers/irqchip/irq-bcm7038-l1.c
+index 24ca1d656adc5..51d38a92ec200 100644
+--- a/drivers/irqchip/irq-bcm7038-l1.c
++++ b/drivers/irqchip/irq-bcm7038-l1.c
+@@ -219,9 +219,8 @@ static int bcm7038_l1_set_affinity(struct irq_data *d,
  }
+ #endif
  
- static bool yield_to_task_fair(struct rq *rq, struct task_struct *p)
+-static int __init bcm7038_l1_init_one(struct device_node *dn,
+-				      unsigned int idx,
+-				      struct bcm7038_l1_chip *intc)
++static int bcm7038_l1_init_one(struct device_node *dn, unsigned int idx,
++			       struct bcm7038_l1_chip *intc)
+ {
+ 	struct resource res;
+ 	resource_size_t sz;
+@@ -395,8 +394,7 @@ static const struct irq_domain_ops bcm7038_l1_domain_ops = {
+ 	.map			= bcm7038_l1_map,
+ };
+ 
+-static int __init bcm7038_l1_of_init(struct device_node *dn,
+-			      struct device_node *parent)
++static int bcm7038_l1_of_init(struct device_node *dn, struct device_node *parent)
+ {
+ 	struct bcm7038_l1_chip *intc;
+ 	int idx, ret;
 -- 
 2.51.0
 
