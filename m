@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0695E31A7EA;
-	Fri,  9 Jan 2026 11:55:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF79B2DEA6F;
+	Fri,  9 Jan 2026 11:55:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959721; cv=none; b=TYy3CXHIjHw/ZOGZXeVlerdYDY38ubkTx8OxTruWyiQJDZXxhaH/d3prpWvz9EubXjBoBExKI0hfG1nKagUyFGAltWBMTAAVfW+Ao9HFgFijCkzPlN8Rjt75rhNXlvtWUHKfZRb5si/sdGeOhYhp64XC/8prpcGyVnfZJ6CNKLE=
+	t=1767959723; cv=none; b=TjfCm45RJnFnk8ArpEUzaf4eR3ragj4k8MldBmfX+MBtPqJeW2RG6wFwW/7sHtlZqY31ZSkbKw3BgG+7T0pfDYfROUXhlsah46CCG35TiT+3gB5rF2M5Xm0I3DQZ0T8zTqVO6xPcqfFyT6IQk5CAtmJgd0CGuS2GXTblsnQEHKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959721; c=relaxed/simple;
-	bh=K3sv4FxOxBx/Dzvqyf5Ovy47LEDkmc8KWOvdMUpTwJQ=;
+	s=arc-20240116; t=1767959723; c=relaxed/simple;
+	bh=ciYRqC6gU4NpvSZwHpurON4Ap6SXR3w/82end/3XDNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bofoACqAn7rpEx+Kf9QMi25LLePHbSZEplQ/sLk7E4zNhGeZBxcg9VPRvmbrsZgY+JoUwtIscLz4GRr2yzgb9/mYe/edrbCe1CFheKLmmtjo/xKRSM7E5E7mEu8oCMvd0jLcMIn1XcDSYdLR89afrwtbmnTs8C5L8CJTkWD6DQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IvXzc2+P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SS4+UT2BhOtsvhs8rn+B6y7gnxGTZBfYuDoX58hbJ4a6dd1zr3gU6TiWzv+DtjtGdLI57niKhics4/3ruWwdvCIVigIQae39oSJFb0WGb0mhNicEVBSoka11BJOQ4P/CDBIwV7jjYPLv6HzDuQ6c9ezsM2uJxi319p3PpMlvPoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UXsEtDbA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IvXzc2+P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8273FC4CEF1;
-	Fri,  9 Jan 2026 11:55:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXsEtDbA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D5A5C4CEF1;
+	Fri,  9 Jan 2026 11:55:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959720;
-	bh=K3sv4FxOxBx/Dzvqyf5Ovy47LEDkmc8KWOvdMUpTwJQ=;
+	s=korg; t=1767959723;
+	bh=ciYRqC6gU4NpvSZwHpurON4Ap6SXR3w/82end/3XDNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IvXzc2+PUjPmurpD/W6aFKveK7WEcDHIkTn0rnwq9GO9YoAMMstw6ZPN9PKVkpLKP
-	 ByCkF+dAsUpX+oSU6DdOB/xgS/Sdd7lNYmnK5OwBPF0aOfkZqM6u+c0L3mQRgOPvy6
-	 A+o8rL/ajJEwEUNvP9/MCLmHBk/qEowCn6NcI3s8=
+	b=UXsEtDbAWIKT0Ns7DUm+87XTD34Zzn0KagLryFMv00LAenjA7ivAhpUetTA0Xo+0H
+	 3o1joXuNG7vrE/29lXjW7rVW7jKUFU4pHaeH+vLLNbN0ZLNUqHZ9uHtvaqCqCzF3Gn
+	 pO3FxXAZK6XO2U7QOAbbOTfDAHsvfZTl+Y9wUQPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Elfring <Markus.Elfring@web.de>,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Lee Jones <lee@kernel.org>,
+	Leon Hwang <leon.hwang@linux.dev>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 152/737] leds: netxbig: Fix GPIO descriptor leak in error paths
-Date: Fri,  9 Jan 2026 12:34:51 +0100
-Message-ID: <20260109112139.715639815@linuxfoundation.org>
+Subject: [PATCH 6.6 153/737] bpf: Free special fields when update [lru_,]percpu_hash maps
+Date: Fri,  9 Jan 2026 12:34:52 +0100
+Message-ID: <20260109112139.753137882@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,111 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Leon Hwang <leon.hwang@linux.dev>
 
-[ Upstream commit 03865dd8af52eb16c38062df2ed30a91b604780e ]
+[ Upstream commit 6af6e49a76c9af7d42eb923703e7648cb2bf401a ]
 
-The function netxbig_gpio_ext_get() acquires GPIO descriptors but
-fails to release them when errors occur mid-way through initialization.
-The cleanup callback registered by devm_add_action_or_reset() only
-runs on success, leaving acquired GPIOs leaked on error paths.
+As [lru_,]percpu_hash maps support BPF_KPTR_{REF,PERCPU}, missing
+calls to 'bpf_obj_free_fields()' in 'pcpu_copy_value()' could cause the
+memory referenced by BPF_KPTR_{REF,PERCPU} fields to be held until the
+map gets freed.
 
-Add goto-based error handling to release all acquired GPIOs before
-returning errors.
+Fix this by calling 'bpf_obj_free_fields()' after
+'copy_map_value[,_long]()' in 'pcpu_copy_value()'.
 
-Fixes: 9af512e81964 ("leds: netxbig: Convert to use GPIO descriptors")
-Suggested-by: Markus Elfring <Markus.Elfring@web.de>
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20251031021620.781-1-vulab@iscas.ac.cn
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 65334e64a493 ("bpf: Support kptrs in percpu hashmap and percpu LRU hashmap")
+Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/r/20251105151407.12723-2-leon.hwang@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-netxbig.c | 36 ++++++++++++++++++++++++++----------
- 1 file changed, 26 insertions(+), 10 deletions(-)
+ kernel/bpf/hashtab.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/leds/leds-netxbig.c b/drivers/leds/leds-netxbig.c
-index 6692de0af68f1..ea0801b9cb010 100644
---- a/drivers/leds/leds-netxbig.c
-+++ b/drivers/leds/leds-netxbig.c
-@@ -364,6 +364,9 @@ static int netxbig_gpio_ext_get(struct device *dev,
- 	if (!addr)
- 		return -ENOMEM;
- 
-+	gpio_ext->addr = addr;
-+	gpio_ext->num_addr = 0;
+diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
+index 8a3eadf17f785..8bac6ae1204dc 100644
+--- a/kernel/bpf/hashtab.c
++++ b/kernel/bpf/hashtab.c
+@@ -957,15 +957,21 @@ static void free_htab_elem(struct bpf_htab *htab, struct htab_elem *l)
+ static void pcpu_copy_value(struct bpf_htab *htab, void __percpu *pptr,
+ 			    void *value, bool onallcpus)
+ {
++	void *ptr;
 +
- 	/*
- 	 * We cannot use devm_ managed resources with these GPIO descriptors
- 	 * since they are associated with the "GPIO extension device" which
-@@ -375,45 +378,58 @@ static int netxbig_gpio_ext_get(struct device *dev,
- 		gpiod = gpiod_get_index(gpio_ext_dev, "addr", i,
- 					GPIOD_OUT_LOW);
- 		if (IS_ERR(gpiod))
--			return PTR_ERR(gpiod);
-+			goto err_set_code;
- 		gpiod_set_consumer_name(gpiod, "GPIO extension addr");
- 		addr[i] = gpiod;
-+		gpio_ext->num_addr++;
+ 	if (!onallcpus) {
+ 		/* copy true value_size bytes */
+-		copy_map_value(&htab->map, this_cpu_ptr(pptr), value);
++		ptr = this_cpu_ptr(pptr);
++		copy_map_value(&htab->map, ptr, value);
++		bpf_obj_free_fields(htab->map.record, ptr);
+ 	} else {
+ 		u32 size = round_up(htab->map.value_size, 8);
+ 		int off = 0, cpu;
+ 
+ 		for_each_possible_cpu(cpu) {
+-			copy_map_value_long(&htab->map, per_cpu_ptr(pptr, cpu), value + off);
++			ptr = per_cpu_ptr(pptr, cpu);
++			copy_map_value_long(&htab->map, ptr, value + off);
++			bpf_obj_free_fields(htab->map.record, ptr);
+ 			off += size;
+ 		}
  	}
--	gpio_ext->addr = addr;
--	gpio_ext->num_addr = num_addr;
- 
- 	ret = gpiod_count(gpio_ext_dev, "data");
- 	if (ret < 0) {
- 		dev_err(dev,
- 			"Failed to count GPIOs in DT property data-gpios\n");
--		return ret;
-+		goto err_free_addr;
- 	}
- 	num_data = ret;
- 	data = devm_kcalloc(dev, num_data, sizeof(*data), GFP_KERNEL);
--	if (!data)
--		return -ENOMEM;
-+	if (!data) {
-+		ret = -ENOMEM;
-+		goto err_free_addr;
-+	}
-+
-+	gpio_ext->data = data;
-+	gpio_ext->num_data = 0;
- 
- 	for (i = 0; i < num_data; i++) {
- 		gpiod = gpiod_get_index(gpio_ext_dev, "data", i,
- 					GPIOD_OUT_LOW);
- 		if (IS_ERR(gpiod))
--			return PTR_ERR(gpiod);
-+			goto err_free_data;
- 		gpiod_set_consumer_name(gpiod, "GPIO extension data");
- 		data[i] = gpiod;
-+		gpio_ext->num_data++;
- 	}
--	gpio_ext->data = data;
--	gpio_ext->num_data = num_data;
- 
- 	gpiod = gpiod_get(gpio_ext_dev, "enable", GPIOD_OUT_LOW);
- 	if (IS_ERR(gpiod)) {
- 		dev_err(dev,
- 			"Failed to get GPIO from DT property enable-gpio\n");
--		return PTR_ERR(gpiod);
-+		goto err_free_data;
- 	}
- 	gpiod_set_consumer_name(gpiod, "GPIO extension enable");
- 	gpio_ext->enable = gpiod;
- 
- 	return devm_add_action_or_reset(dev, netxbig_gpio_ext_remove, gpio_ext);
-+
-+err_free_data:
-+	for (i = 0; i < gpio_ext->num_data; i++)
-+		gpiod_put(gpio_ext->data[i]);
-+err_set_code:
-+	ret = PTR_ERR(gpiod);
-+err_free_addr:
-+	for (i = 0; i < gpio_ext->num_addr; i++)
-+		gpiod_put(gpio_ext->addr[i]);
-+	return ret;
- }
- 
- static int netxbig_leds_get_of_pdata(struct device *dev,
 -- 
 2.51.0
 
