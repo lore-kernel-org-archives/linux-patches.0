@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E73E833BBBD;
-	Fri,  9 Jan 2026 12:10:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2EC3346AF;
+	Fri,  9 Jan 2026 12:10:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960638; cv=none; b=WaTCKxlg60uRRNANbb4aLlkWZs5/gi+8NHGlYK1o4aDHQpc4u4+GHlQQLYRLmiEhApy8PBHmfopSHxKOHK5Bl8M202F9QGucgCJT+p6dg0JzwOEX1+NWo7uhdUHSHrXW5nYzopM+pFSyTKAgoHratKhp00bw1aNDK4JKKlybX3A=
+	t=1767960640; cv=none; b=Fb3dNDjSnBFjXAt3D21+LDzJ/3pv53HjMnHgxPPi3dG1kJ/HhP55GpjD8Inc5eTSOxfhOm7LomObAzIuIlt28j/LqnCS6EALBOvJ8YA1fTSeDDfWkarU20xDOuY/wBT4VDOACe7D2GgoaIjLyXAF8MSiGjUHJijGzN/dz87wgsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960638; c=relaxed/simple;
-	bh=xmVoVDfB23OJ5ZuaXeKu4Ibxj2cMt+V/M8T8aExnYQ0=;
+	s=arc-20240116; t=1767960640; c=relaxed/simple;
+	bh=bnRFepEBO2WP0OmhYO+MXFyoY/NNa67tLLwjgGC/mek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B/iwXGJ/g8KDyY/cI4YIls7LKMDnbRGjjItVcgEtNYrV88CcA/ARsXLrhabzOo0E+gV5eUenpAJ/z1OzcNFHpvQbcVu7jJY5WLz0dn4eRHR2n80tXP7ZdAqz7REqMi7tjk7PwteQTLpLWqp5sDYk9xJfFKLSq4T+ADMOij+ZgCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XYjtiGi5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dvC594Wm/VKFREaqbf4Aaahw9LUfGDl8lZpAcCxohxH6lw9T8xwgmNOncINl4c/emgtOt8Y4JmrzaMUU3f0Jei8AIhH8oECxJ++RwkVreun3CMLIu8HiAgKdXmr+vjfklHKydNFXiiutPOXivg+lMNiwy63hfF/JS2lLOg+9IEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WwTnvrDb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XYjtiGi5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 694E5C16AAE;
-	Fri,  9 Jan 2026 12:10:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WwTnvrDb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C170C4CEF1;
+	Fri,  9 Jan 2026 12:10:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960637;
-	bh=xmVoVDfB23OJ5ZuaXeKu4Ibxj2cMt+V/M8T8aExnYQ0=;
+	s=korg; t=1767960640;
+	bh=bnRFepEBO2WP0OmhYO+MXFyoY/NNa67tLLwjgGC/mek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XYjtiGi5aVSrIZ3umn7LJoPewqtPv0jSzZImuNoLmmMgQlTfxOH9XaBEp6rSIpqaF
-	 NBEo/4gjj3yT8NbB4gKxro4LxIQG333XE7GYrcYQn/Ew+4nCjaLOAiF0Eb8WBQJgOn
-	 1TnGixL87XzVzGOubV3eEWIChxy415rXFuW6H2ZE=
+	b=WwTnvrDbDMgsHMSW2vvOB9x/H4pVZwdZw5PxU2+tJMbKoRsg4DfPuWo4KvWzFZqcQ
+	 6OH77Xd/0dZDmQI1N0+e/cMgmelY6WUOcV3zyFhFpdIfu/WXbdvwX4ChT9ijgnksU2
+	 NKBaqhnDCue84+iIA3C8SLSB0/XDw2N9DgOxaRVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ed Tsai <ed.tsai@mediatek.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.6 473/737] PM: runtime: Do not clear needs_force_resume with enabled runtime PM
-Date: Fri,  9 Jan 2026 12:40:12 +0100
-Message-ID: <20260109112151.779660534@linuxfoundation.org>
+	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 474/737] r8169: fix RTL8117 Wake-on-Lan in DASH mode
+Date: Fri,  9 Jan 2026 12:40:13 +0100
+Message-ID: <20260109112151.818194324@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -45,69 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: René Rebe <rene@exactco.de>
 
-commit 359afc8eb02a518fbdd0cbd462c8c2827c6cbec2 upstream.
+commit dd75c723ef566f7f009c047f47e0eee95fe348ab upstream.
 
-Commit 89d9cec3b1e9 ("PM: runtime: Clear power.needs_force_resume in
-pm_runtime_reinit()") added provisional clearing of power.needs_force_resume
-to pm_runtime_reinit(), but it is done unconditionally which is a
-mistake because pm_runtime_reinit() may race with driver probing
-and removal [1].
+Wake-on-Lan does currently not work for r8169 in DASH mode, e.g. the
+ASUS Pro WS X570-ACE with RTL8168fp/RTL8117.
 
-To address this, notice that power.needs_force_resume should never
-be set when runtime PM is enabled and so it only needs to be cleared
-when runtime PM is disabled, and update pm_runtime_init() to only
-clear that flag when runtime PM is disabled.
+Fix by not returning early in rtl_prepare_power_down when dash_enabled.
+While this fixes WoL, it still kills the OOB RTL8117 remote management
+BMC connection. Fix by not calling rtl8168_driver_stop if WoL is enabled.
 
-Fixes: 89d9cec3b1e9 ("PM: runtime: Clear power.needs_force_resume in pm_runtime_reinit()")
-Reported-by: Ed Tsai <ed.tsai@mediatek.com>
-Closes: https://lore.kernel.org/linux-pm/20251215122154.3180001-1-ed.tsai@mediatek.com/ [1]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Cc: 6.17+ <stable@vger.kernel.org> # 6.17+
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
-Link: https://patch.msgid.link/12807571.O9o76ZdvQC@rafael.j.wysocki
+Fixes: 065c27c184d6 ("r8169: phy power ops")
+Signed-off-by: René Rebe <rene@exactco.de>
+Cc: stable@vger.kernel.org
+Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
+Link: https://patch.msgid.link/20251202.194137.1647877804487085954.rene@exactco.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/power/runtime.c |   22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/realtek/r8169_main.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/drivers/base/power/runtime.c
-+++ b/drivers/base/power/runtime.c
-@@ -1827,16 +1827,18 @@ void pm_runtime_init(struct device *dev)
-  */
- void pm_runtime_reinit(struct device *dev)
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -2581,9 +2581,6 @@ static void rtl_wol_enable_rx(struct rtl
+ 
+ static void rtl_prepare_power_down(struct rtl8169_private *tp)
  {
--	if (!pm_runtime_enabled(dev)) {
--		if (dev->power.runtime_status == RPM_ACTIVE)
--			pm_runtime_set_suspended(dev);
--		if (dev->power.irq_safe) {
--			spin_lock_irq(&dev->power.lock);
--			dev->power.irq_safe = 0;
--			spin_unlock_irq(&dev->power.lock);
--			if (dev->parent)
--				pm_runtime_put(dev->parent);
--		}
-+	if (pm_runtime_enabled(dev))
-+		return;
-+
-+	if (dev->power.runtime_status == RPM_ACTIVE)
-+		pm_runtime_set_suspended(dev);
-+
-+	if (dev->power.irq_safe) {
-+		spin_lock_irq(&dev->power.lock);
-+		dev->power.irq_safe = 0;
-+		spin_unlock_irq(&dev->power.lock);
-+		if (dev->parent)
-+			pm_runtime_put(dev->parent);
- 	}
- 	/*
- 	 * Clear power.needs_force_resume in case it has been set by
+-	if (tp->dash_enabled)
+-		return;
+-
+ 	if (tp->mac_version == RTL_GIGA_MAC_VER_32 ||
+ 	    tp->mac_version == RTL_GIGA_MAC_VER_33)
+ 		rtl_ephy_write(tp, 0x19, 0xff64);
+@@ -4721,7 +4718,7 @@ static void rtl8169_down(struct rtl8169_
+ 	rtl_disable_exit_l1(tp);
+ 	rtl_prepare_power_down(tp);
+ 
+-	if (tp->dash_type != RTL_DASH_NONE)
++	if (tp->dash_type != RTL_DASH_NONE && !tp->saved_wolopts)
+ 		rtl8168_driver_stop(tp);
+ }
+ 
 
 
