@@ -1,111 +1,93 @@
-Received: from mail-dl1-f49.google.com (mail-dl1-f49.google.com [74.125.82.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 440871BF33
-	for <patches@lists.linux.dev>; Fri,  9 Jan 2026 22:06:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBE63345CBF
+	for <patches@lists.linux.dev>; Fri,  9 Jan 2026 22:16:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767996369; cv=none; b=Xv9gd2JC7RuPowXuU0Ay/OOx3v9Vs3FRRxg1h6InvoBI2Af4dGh1uYv//sTaOMmOx3dQAzAJfDFCkm12RdCcFqlq7KlQ7JwwUhY7/UgfJFv5H8zMIxV9inRBUdsAyJm1z03iEHZl3Tcp+aaW3A/VhLCKoD9vL5gcr1aqmQTsiNc=
+	t=1767996992; cv=none; b=kZcZCUZVQRn6A7yweb3kOibZ2tEzojMZ+sNY+1CtEU76PxcKdFTuorcuzDbK6aDcwjgklWC1kVHzBOE+5H21H9Nos90NxBOJOQc9wfll6J2hqAsXhIK0MbXWbj6QKm4+Kdu3YGY57EOKevzRhk6AQZzdCGJLjEYXpueosmI3utI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767996369; c=relaxed/simple;
-	bh=swwFGWg/jJM7yv0Xw7oHtYtyit1HnAscQ4AwHOR42rI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TePYe4o0xiYnuBnIcRMP5/3pAJ4Yr6tunesImpAY9RXNSUzau/dl17rC+cl1xUDvw3cDuYcznhbIMyPEgKgtCMgCeKC48/zHD+A0Z1FSwMxwXIdJ/ZGPfqPXixHSwVSnfnr7/U2xt85M9Oqx6rukeFEZFHj1bgMnJb1f1Gpul6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CWGN2cUJ; arc=none smtp.client-ip=74.125.82.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1767996992; c=relaxed/simple;
+	bh=cxk1xow6CQeAOgvMi8GBqisy/olozKnTmv9ScIK5g4o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GIx6FL/B0bQpqPA7PEoXAZvdOBMSiwBYMwRafXq2vQsrX1rqfiLYD6DThNFZKwm3YI/gfeKtJk3v1XCLf80OAqCe7MWSJXimCS3tDIK2bvm4CjYcuDCF3AVMQI78hdSTWHiU4/lutDexTp45Nq5ixwTyP4PYHU32LYNvT+MA770=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=em6tWjjJ; arc=none smtp.client-ip=65.109.113.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CWGN2cUJ"
-Received: by mail-dl1-f49.google.com with SMTP id a92af1059eb24-11f3a10dcbbso4035145c88.1
-        for <patches@lists.linux.dev>; Fri, 09 Jan 2026 14:06:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767996367; x=1768601167; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=agPABsKkhvuouLEAS2GQt5eEaQkhiWfnzTAz4qrEzlo=;
-        b=CWGN2cUJjkY8S0v/JaI7djvszmLA8OZE0h/fdLHuDxwZDGsF/XLYPGxnyAs7GkBLuM
-         huckt82Vmb1nksaPwczSLB4516170ZoCIsVcD8pswtT7xmo9g4K0BktplfiaN9hK0OnG
-         g6UPNCiNxUnSfRFrrgflLexnalb5vhU+wVOAdMz2Id/dTCwwKpiLpQl3BPYTyqwi8Xfw
-         CD77POSCMJaQfbM49PlVpOO6N6xUj5yA0YlS9DgMo9cPvWmngo+5cPU1KkeLzSjCKQYl
-         Ugh4Od+MgH72nkpNaZ7iCOp15ufk0zJ3og8gexd4bKLsu4iB1pQ/pHz0+k+Fp27+0yVa
-         pmdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767996367; x=1768601167;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=agPABsKkhvuouLEAS2GQt5eEaQkhiWfnzTAz4qrEzlo=;
-        b=fEIdMgl0kYGOB11V/c86wvFtC1UTJHY0xE+qnWA3JrEEQ9lLRo439fvVAuXlyhcX1k
-         +Vusx6F+ydjK92Lxn65Fg3MiVFNKl+nAFNZHG2OggbYyDvloWN0E02GqK9QhFZRc1yfo
-         GqfxRvwfzguCpwQ8ipAHiJAtoQUZG+hVDKSNd0r+HiOO6jyx4yZAjqHqaVCwUbkZnwtl
-         RsLFq1bVqdP3wfotucb3MiZCBCr118sFdaikmKLPTCE4nTYv1n9hkyuI6zDnXqAmcSn2
-         Fpbh/wftv+ANb1aw0uVLUHriwfNri4G9ACSsNIY3XiSJIDUUgP+HafQXhe71vkZ+iZh9
-         xh4g==
-X-Gm-Message-State: AOJu0YxPsKeTyEdZ5TMwAsZzoBKWeOTC+A7NhGWcBbse/g9NlU58QLSd
-	Tyubu/Nzp3ie1J+xBXUr5+5zI842NS8uS3A9Rk7olFwer0RS+n/x7j1j
-X-Gm-Gg: AY/fxX5Cw20ahE7xUZ4juTtzj1WmIKzc23SvrQxX9JPOuqJar3xel/S7ft69DWHjg/o
-	3gHSQfMGGqVtgxqP7SrjZUFk49cCnJZdd4YvzNG7X4/sMQwkKwLZnt8i/MGP4/fgFDYChAIEgWA
-	9VUV/t7AkM9Km4Ih8/froMf/aozCHTxsZVU9UxaGLCDFVkmkiY8V5zOaoapJQBSpD22cujUAHce
-	/E5T1dOpSGtcWhWBviKUIBNSw7cReeQWxE4/TOqR4U05PlZqAulCuZOVbyJDjnLXwYC2g2VG4Mb
-	lEx7P7jYnTD1gS+QdUVnYd36NE4pOdYDX+o8GOQN3DPzYbouFozUlLziP1od1nTWkqjSYD7UAv6
-	6PbyhBQfdLKoJsintfnpGTS4OwrbbZXtfzgXZ0uwY9IHecVGSjlBILbqwcbi96zWBT7Ah0rYous
-	Qc9za0atBJLVNIbOK6hVTE5AoXCvbtxiVxAezZVA==
-X-Google-Smtp-Source: AGHT+IFpDvZmcjnb0/gblc368UV09XDLk6L/2cdvvznpi5MwFjdKdvzlHIWKhVg4BUbXE9DXSL3Zvw==
-X-Received: by 2002:a05:7022:6096:b0:122:415:25ed with SMTP id a92af1059eb24-1220415265amr5206420c88.49.1767996367271;
-        Fri, 09 Jan 2026 14:06:07 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-121f248c16fsm18561401c88.10.2026.01.09.14.06.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Jan 2026 14:06:06 -0800 (PST)
-Message-ID: <adb5cdc3-0a24-497a-b506-266120355e42@gmail.com>
-Date: Fri, 9 Jan 2026 14:06:04 -0800
+	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="em6tWjjJ"
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 45CE840E02D2;
+	Fri,  9 Jan 2026 22:16:24 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
+	header.d=alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id TguyptvE2ilO; Fri,  9 Jan 2026 22:16:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
+	t=1767996981; bh=mCQza+e453B6lyWbX+tbqNYM+HVyVvM7cVhptS5lTrk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=em6tWjjJ4g0Rft+nEkZdu695QwiIwGOjzFnASL/obEcEr23WnpGSTEMeiJRYrQ3E5
+	 elsrMJIRIafiBZPWndxlLU15czkDJqhdxyXYPI90XBSSVdu2onU1X9fxXiw1IXYitD
+	 U7aOOcghNOwEOXHIA/k2GZ1Hoi3HHs6CYvypN8g7yLUF0fbje5hITzLWxj0J+zi20P
+	 F7VSX/saavY8E5JC1xGwP1KyrZH0QLTrFE/Fw8d4ZWyYZ+5XlLHHScbf3z+fUZsgag
+	 YwnqnfUCsPypzfGxZKZrKNmht7YOWZuA3ST4yaZyXsEEdvsQ8rMF2WkaQ9YrMaxz92
+	 QWHwc4Io/HVYX3YWVJCR9BiNcUDcDVx2hIOk/w5NhL9k3om6gJcNNyfh4a2uQEdIAY
+	 Gp6eR/Wt1/tPPQt5SPrlvSKsdA4vMUdJSdpEJJ7ZeAzjDAbvNNNplHWKEJuA7nS7M/
+	 Fvq1oAizOAszY3Hpz5CS+q7vlx/F6l3TYaYLghe0VLi1BOiC2GQlCr0pVRP8xl6J4o
+	 vht+OA+Nnkn/tKK+fW5e732Frmk09fDg5aY2hxd5uLSqscA5f203n19TrHmR/vI0GE
+	 G0JhWFuJc3oVFfJCZeX4IcQlWjeTy3+MjT2QyFEnzKrBljYmml2rZA/EyWoETepETa
+	 b066X6UuQ1A5oYRaBxD/w+H0=
+Received: from zn.tnic (pd953023b.dip0.t-ipconnect.de [217.83.2.59])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with UTF8SMTPSA id D26EE40E0028;
+	Fri,  9 Jan 2026 22:16:07 +0000 (UTC)
+Date: Fri, 9 Jan 2026 23:16:01 +0100
+From: Borislav Petkov <bp@alien8.de>
+To: Tony Luck <tony.luck@intel.com>
+Cc: Fenghua Yu <fenghuay@nvidia.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>, Chen Yu <yu.c.chen@intel.com>,
+	x86@kernel.org, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH v17 24/32] x86/resctrl: Add energy/perf choices to rdt
+ boot option
+Message-ID: <20260109221601.GIaWF-IRmxb7WgQOWj@fat_crate.local>
+References: <20251217172121.12030-1-tony.luck@intel.com>
+ <20251217172121.12030-25-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.18 0/5] 6.18.5-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com
-References: <20260109111950.344681501@linuxfoundation.org>
-Content-Language: en-US, fr-FR
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20260109111950.344681501@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251217172121.12030-25-tony.luck@intel.com>
 
-On 1/9/26 03:44, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.18.5 release.
-> There are 5 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sun, 11 Jan 2026 11:19:41 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.5-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.18.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+On Wed, Dec 17, 2025 at 09:21:11AM -0800, Tony Luck wrote:
+> +bool intel_aet_option(bool force_off, char *tok)
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+What does that function do? Handle the AET options? So then
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+	intel_handle_aet_option()
+
+?
+
+IOW, you need a verb in its name so that it is clear what happens:
+
+	if (intel_handle_aet_option())
+		bla;
+
 -- 
-Florian
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
