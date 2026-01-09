@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B6F359FA0;
-	Fri,  9 Jan 2026 12:19:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B869C35B127;
+	Fri,  9 Jan 2026 12:19:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961144; cv=none; b=rhhKqZoXGUrXYGoesdgYZRAsMgU5guf7TZZ4SU9ESwotdkMHwvSueRQywejGpJosCzLTAlZmoxw1Cxyis0/ONn7TpKE8yLHqU9AR8hi0DoPnjaLHBZ6SYAXuTQWl+QAc/R6ow6HmcGBCP+m5zgmr3wMFhK7krCVJIXoQxBzqfkQ=
+	t=1767961147; cv=none; b=eg7wafgw3FNEeVSV00r1UJgq2/YMKzCNoIeGoAPKxTfFlyy4h3YDPX6NSF2veQZuG9Ae8lD+y+PKfvUW5QVw5D+b5iuikiUZA7aCgVJiUVGB4elsELIsOGf0z2HaLrTJhkv4TM70kRQeQXV58NJakdJf77vtq+pkkrYW+GmUAXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961144; c=relaxed/simple;
-	bh=Y8G9NBmMFCI+lMFgBDlNueh14tPv5p+8T9R6zmfwmFk=;
+	s=arc-20240116; t=1767961147; c=relaxed/simple;
+	bh=oVMigsyMuBXzOccD64Pk/D+ZEA7kCPHGHHPQsGfdYv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pc0t5l89my71lbY6iX3Qk4f/hr0i+dTib7uRO8suP31r3UJtH5F3lymC3ylpoHLqw1JbcpUPFIGGz3rmLjBf4k87juHJgsipwe7Rc20JCSe+CVhfmue54DuHM4AtSsdKzgufMeJR/ioEFoovzkGBTLjlEw++hT52M4IGK2Co5TA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y9CB028/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l/KNvqLwU5fGueqsGcHuJq6odRtSJz7PJ9Liks1ytkV9h6M6SYluXdMCiUAvPY50HN3XbKmrF6S6Rz7s2p6iLSKMq3K9A5Zsd5JFYJ9RCwlCBsAgahraskhPePvsBLvjjhXoGEC+MkkEKCEJmiCnLsISHFjDe7yT0bMdh7ZtLlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZnvXpmpz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y9CB028/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 671AAC4CEF1;
-	Fri,  9 Jan 2026 12:19:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZnvXpmpz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4016CC16AAE;
+	Fri,  9 Jan 2026 12:19:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961144;
-	bh=Y8G9NBmMFCI+lMFgBDlNueh14tPv5p+8T9R6zmfwmFk=;
+	s=korg; t=1767961147;
+	bh=oVMigsyMuBXzOccD64Pk/D+ZEA7kCPHGHHPQsGfdYv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y9CB028/9/VTNbQjI3GKsfSUrojTI3cxoEU/5jlQNPifw0nQNUA6cDnDonW2TQlPi
-	 jCgr34uF0auEcGtVf22rczBZjz/9DUu98jw3iw2lvaFj5BopSRdTthoz9XpBTyndTy
-	 Jwl3bAPCg/t5Dm+9mqgdD4lv2rvGFs0tPyzBw1I8=
+	b=ZnvXpmpzJN6CeIKHWuS1mAMHAWzCau2Dsj4JEfGvHZ56tvfTWLXrS8qRfV5BJsAu3
+	 I02oAlICjix7/vvT/HyEuVJohcBaB3dDUkpKnzPjULQ50EDcb2YDBBkX1ezkEgX7nJ
+	 Cp+rWw3/CwpxUhuQNjjw+hFliFrjqMK06y1YOpQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joanne Koong <joannelkoong@gmail.com>,
-	Omar Sandoval <osandov@fb.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jim Quinlan <james.quinlan@broadcom.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 651/737] fuse: fix readahead reclaim deadlock
-Date: Fri,  9 Jan 2026 12:43:10 +0100
-Message-ID: <20260109112158.510024510@linuxfoundation.org>
+Subject: [PATCH 6.6 652/737] PCI: brcmstb: Fix disabling L0s capability
+Date: Fri,  9 Jan 2026 12:43:11 +0100
+Message-ID: <20260109112158.549203615@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,117 +53,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joanne Koong <joannelkoong@gmail.com>
+From: Jim Quinlan <james.quinlan@broadcom.com>
 
-[ Upstream commit bd5603eaae0aabf527bfb3ce1bb07e979ce5bd50 ]
+[ Upstream commit 9583f9d22991d2cfb5cc59a2552040c4ae98d998 ]
 
-Commit e26ee4efbc79 ("fuse: allocate ff->release_args only if release is
-needed") skips allocating ff->release_args if the server does not
-implement open. However in doing so, fuse_prepare_release() now skips
-grabbing the reference on the inode, which makes it possible for an
-inode to be evicted from the dcache while there are inflight readahead
-requests. This causes a deadlock if the server triggers reclaim while
-servicing the readahead request and reclaim attempts to evict the inode
-of the file being read ahead. Since the folio is locked during
-readahead, when reclaim evicts the fuse inode and fuse_evict_inode()
-attempts to remove all folios associated with the inode from the page
-cache (truncate_inode_pages_range()), reclaim will block forever waiting
-for the lock since readahead cannot relinquish the lock because it is
-itself blocked in reclaim:
+caab002d5069 ("PCI: brcmstb: Disable L0s component of ASPM if requested")
+set PCI_EXP_LNKCAP_ASPM_L1 and (optionally) PCI_EXP_LNKCAP_ASPM_L0S in
+PCI_EXP_LNKCAP (aka PCIE_RC_CFG_PRIV1_LINK_CAPABILITY in brcmstb).
 
->>> stack_trace(1504735)
- folio_wait_bit_common (mm/filemap.c:1308:4)
- folio_lock (./include/linux/pagemap.h:1052:3)
- truncate_inode_pages_range (mm/truncate.c:336:10)
- fuse_evict_inode (fs/fuse/inode.c:161:2)
- evict (fs/inode.c:704:3)
- dentry_unlink_inode (fs/dcache.c:412:3)
- __dentry_kill (fs/dcache.c:615:3)
- shrink_kill (fs/dcache.c:1060:12)
- shrink_dentry_list (fs/dcache.c:1087:3)
- prune_dcache_sb (fs/dcache.c:1168:2)
- super_cache_scan (fs/super.c:221:10)
- do_shrink_slab (mm/shrinker.c:435:9)
- shrink_slab (mm/shrinker.c:626:10)
- shrink_node (mm/vmscan.c:5951:2)
- shrink_zones (mm/vmscan.c:6195:3)
- do_try_to_free_pages (mm/vmscan.c:6257:3)
- do_swap_page (mm/memory.c:4136:11)
- handle_pte_fault (mm/memory.c:5562:10)
- handle_mm_fault (mm/memory.c:5870:9)
- do_user_addr_fault (arch/x86/mm/fault.c:1338:10)
- handle_page_fault (arch/x86/mm/fault.c:1481:3)
- exc_page_fault (arch/x86/mm/fault.c:1539:2)
- asm_exc_page_fault+0x22/0x27
+But instead of using PCI_EXP_LNKCAP_ASPM_L1 and PCI_EXP_LNKCAP_ASPM_L0S
+directly, it used PCIE_LINK_STATE_L1 and PCIE_LINK_STATE_L0S, which are
+Linux-created values that only coincidentally matched the PCIe spec.
+b478e162f227 ("PCI/ASPM: Consolidate link state defines") later changed
+them so they no longer matched the PCIe spec, so the bits ended up in the
+wrong place in PCI_EXP_LNKCAP.
 
-Fix this deadlock by allocating ff->release_args and grabbing the
-reference on the inode when preparing the file for release even if the
-server does not implement open. The inode reference will be dropped when
-the last reference on the fuse file is dropped (see fuse_file_put() ->
-fuse_release_end()).
+Use PCI_EXP_LNKCAP_ASPM_L0S to clear L0s support when there's an
+'aspm-no-l0s' property.  Rely on brcmstb hardware to advertise L0s and/or
+L1 support otherwise.
 
-Fixes: e26ee4efbc79 ("fuse: allocate ff->release_args only if release is needed")
+Fixes: caab002d5069 ("PCI: brcmstb: Disable L0s component of ASPM if requested")
+Reported-by: Bjorn Helgaas <bhelgaas@google.com>
+Closes: https://lore.kernel.org/linux-pci/20250925194424.GA2197200@bhelgaas
+Signed-off-by: Jim Quinlan <james.quinlan@broadcom.com>
+[mani: reworded subject and description, added closes tag and CCed stable]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+[bhelgaas: commit log]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
-Reported-by: Omar Sandoval <osandov@fb.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Link: https://patch.msgid.link/20251003170436.1446030-1-james.quinlan@broadcom.com
+[ adapted context due to missing link width negotiation defines and variables ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/file.c |   26 +++++++++++++++++++-------
- 1 file changed, 19 insertions(+), 7 deletions(-)
+ drivers/pci/controller/pcie-brcmstb.c |   10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -113,7 +113,9 @@ static void fuse_file_put(struct fuse_fi
- 		struct fuse_args *args = (ra ? &ra->args : NULL);
+--- a/drivers/pci/controller/pcie-brcmstb.c
++++ b/drivers/pci/controller/pcie-brcmstb.c
+@@ -46,7 +46,6 @@
+ #define  PCIE_RC_CFG_PRIV1_ID_VAL3_CLASS_CODE_MASK	0xffffff
  
- 		if (!args) {
--			/* Do nothing when server does not implement 'open' */
-+			/* Do nothing when server does not implement 'opendir' */
-+		} else if (args->opcode == FUSE_RELEASE && ff->fm->fc->no_open) {
-+			fuse_release_end(ff->fm, args, 0);
- 		} else if (sync) {
- 			fuse_simple_request(ff->fm, args);
- 			fuse_release_end(ff->fm, args, 0);
-@@ -134,8 +136,17 @@ struct fuse_file *fuse_file_open(struct
- 	struct fuse_file *ff;
- 	int opcode = isdir ? FUSE_OPENDIR : FUSE_OPEN;
- 	bool open = isdir ? !fc->no_opendir : !fc->no_open;
-+	bool release = !isdir || open;
+ #define PCIE_RC_CFG_PRIV1_LINK_CAPABILITY			0x04dc
+-#define  PCIE_RC_CFG_PRIV1_LINK_CAPABILITY_ASPM_SUPPORT_MASK	0xc00
  
--	ff = fuse_file_alloc(fm, open);
-+	/*
-+	 * ff->args->release_args still needs to be allocated (so we can hold an
-+	 * inode reference while there are pending inflight file operations when
-+	 * ->release() is called, see fuse_prepare_release()) even if
-+	 * fc->no_open is set else it becomes possible for reclaim to deadlock
-+	 * if while servicing the readahead request the server triggers reclaim
-+	 * and reclaim evicts the inode of the file being read ahead.
-+	 */
-+	ff = fuse_file_alloc(fm, release);
- 	if (!ff)
- 		return ERR_PTR(-ENOMEM);
+ #define PCIE_RC_DL_MDIO_ADDR				0x1100
+ #define PCIE_RC_DL_MDIO_WR_DATA				0x1104
+@@ -867,7 +866,7 @@ static int brcm_pcie_setup(struct brcm_p
+ 	void __iomem *base = pcie->base;
+ 	struct pci_host_bridge *bridge;
+ 	struct resource_entry *entry;
+-	u32 tmp, burst, aspm_support;
++	u32 tmp, burst;
+ 	int num_out_wins = 0;
+ 	int ret, memc;
  
-@@ -154,13 +165,14 @@ struct fuse_file *fuse_file_open(struct
- 			fuse_file_free(ff);
- 			return ERR_PTR(err);
- 		} else {
--			/* No release needed */
--			kfree(ff->release_args);
--			ff->release_args = NULL;
--			if (isdir)
-+			if (isdir) {
-+				/* No release needed */
-+				kfree(ff->release_args);
-+				ff->release_args = NULL;
- 				fc->no_opendir = 1;
--			else
-+			} else {
- 				fc->no_open = 1;
-+			}
- 		}
- 	}
+@@ -971,12 +970,9 @@ static int brcm_pcie_setup(struct brcm_p
+ 	writel(tmp, base + PCIE_MISC_RC_BAR3_CONFIG_LO);
  
+ 	/* Don't advertise L0s capability if 'aspm-no-l0s' */
+-	aspm_support = PCIE_LINK_STATE_L1;
+-	if (!of_property_read_bool(pcie->np, "aspm-no-l0s"))
+-		aspm_support |= PCIE_LINK_STATE_L0S;
+ 	tmp = readl(base + PCIE_RC_CFG_PRIV1_LINK_CAPABILITY);
+-	u32p_replace_bits(&tmp, aspm_support,
+-		PCIE_RC_CFG_PRIV1_LINK_CAPABILITY_ASPM_SUPPORT_MASK);
++	if (of_property_read_bool(pcie->np, "aspm-no-l0s"))
++		tmp &= ~PCI_EXP_LNKCAP_ASPM_L0S;
+ 	writel(tmp, base + PCIE_RC_CFG_PRIV1_LINK_CAPABILITY);
+ 
+ 	/*
 
 
