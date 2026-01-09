@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D27433C1B6;
-	Fri,  9 Jan 2026 12:24:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0812032AAB5;
+	Fri,  9 Jan 2026 12:24:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961466; cv=none; b=uqnmukt+XLtUaQBs/KgJ+6GvpMI8IAnuCIZaJvY1Gb22z+ZKaf5+TYg+8o/uOSxJXi9tqB0Nf3G22LzCIotnVN6aDh7Ejuv1uyy9BnqRgaTvYDU437IW7SDcKFTSAtoHYRkMAz4CQc1kVXSWY7KnLAoRrbbRzgMNjrFE7eDGw44=
+	t=1767961469; cv=none; b=ARq+x1P4TNvBDvPyjZwWrgbn7vt27do8ZgBdeT+vvxpAvkk55WZfoIiM3eQAXtoe6xHCMpjDA8Vt0BQlqgwv4V6ftOR2QgU+ie+sm1avmtjKerx94ME3TwVdkN7RSqIoSY01JYb1bLIysA7zDA2N/5/S6MDcJOwe5AxiEk2pO2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961466; c=relaxed/simple;
-	bh=8+YgfyGY5RN+Y7MXBEa0FXJu99h3JNen6PDXwvdpegA=;
+	s=arc-20240116; t=1767961469; c=relaxed/simple;
+	bh=TOHvDTH/YlgLz2IdVq2d/soJM6ucsydALq26dU7u3xs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AxqZi68BsuNOc1rIZG3FOvPQ4zkYIqIyVninaiZEtcY0tmydjFzJVkcbjOCuHosAmSAReIDSqg5t88mzYUVtqKRtz8BAkk50rwlTfGw5Ic56X4uldM5q1OOGVP81DBMZPB4LDsbtNGHXhES11j5uTDG6ox6S+2ete/LH8L71Ejk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zB9F6UMl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kAhHNA9zdkHZnXFRKgDSoT6mfXQl3mvX8vwMpb2bwdELD998kz9qD75ZMxAn/wdmvTR6BVRVvWXlBCHCnoaQN+3w+BirVV15g8xdSWXXKHqjPY/1FXlcVMjYWdqIawE0NhcTU4ugm3Cd04ZPrO4geeBykmGfX7Z601ti/LYgdDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xdmzXAhQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zB9F6UMl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE31DC4CEF1;
-	Fri,  9 Jan 2026 12:24:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xdmzXAhQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 856B2C4CEF1;
+	Fri,  9 Jan 2026 12:24:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961466;
-	bh=8+YgfyGY5RN+Y7MXBEa0FXJu99h3JNen6PDXwvdpegA=;
+	s=korg; t=1767961468;
+	bh=TOHvDTH/YlgLz2IdVq2d/soJM6ucsydALq26dU7u3xs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zB9F6UMlY99AW5a4Awb9PB1yapKnGF2Y6v7BHok5oR+Ep72Yo2LnVUe9z3aL1ApBu
-	 t4iLDnpwXDytkNsseCuIlFdU1ceIjdF4om8sroBdEELkIqx3Rm17RYIl/ouRBtf+zf
-	 0gDzoWy7ldCD95By6zUoJpVTOm03HLOWQCu327ok=
+	b=xdmzXAhQeN/d+v5TzpnI7enDmVplszKvKbHA/VHyR/hNnWkZ7dNBR5FYI98imWKZ4
+	 agPLAfnJ/Pfc26b6wMos3Iw0a3XpEvVtXbuXcbJJmjuKTbUxwQZShZRWrGiyRX0ncX
+	 HKzrNtap34vqxspidOpqnkPP6b1R8ppRIGxztQaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Forbes <ian.forbes@broadcom.com>,
-	Zack Rusin <zack.rusin@broadcom.com>,
+	Yiqi Sun <sunyiqixm@gmail.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 024/634] drm/vmwgfx: Use kref in vmw_bo_dirty
-Date: Fri,  9 Jan 2026 12:35:02 +0100
-Message-ID: <20260109112118.355507757@linuxfoundation.org>
+Subject: [PATCH 6.1 025/634] smb: fix invalid username check in smb3_fs_context_parse_param()
+Date: Fri,  9 Jan 2026 12:35:03 +0100
+Message-ID: <20260109112118.393525489@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,80 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Forbes <ian.forbes@broadcom.com>
+From: Yiqi Sun <sunyiqixm@gmail.com>
 
-[ Upstream commit c1962742ffff7e245f935903a4658eb6f94f6058 ]
+[ Upstream commit ed6612165b74f09db00ef0abaf9831895ab28b7f ]
 
-Rather than using an ad hoc reference count use kref which is atomic
-and has underflow warnings.
+Since the maximum return value of strnlen(..., CIFS_MAX_USERNAME_LEN)
+is CIFS_MAX_USERNAME_LEN, length check in smb3_fs_context_parse_param()
+is always FALSE and invalid.
 
-Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Link: https://patch.msgid.link/20251030193640.153697-1-ian.forbes@broadcom.com
+Fix the comparison in if statement.
+
+Signed-off-by: Yiqi Sun <sunyiqixm@gmail.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ fs/smb/client/fs_context.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c b/drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c
-index 7bc99b1279f7d..09e938498442c 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c
-@@ -50,22 +50,22 @@ enum vmw_bo_dirty_method {
+diff --git a/fs/smb/client/fs_context.c b/fs/smb/client/fs_context.c
+index e6d2e4162b081..9000299e98cb4 100644
+--- a/fs/smb/client/fs_context.c
++++ b/fs/smb/client/fs_context.c
+@@ -1183,7 +1183,7 @@ static int smb3_fs_context_parse_param(struct fs_context *fc,
+ 			break;
+ 		}
  
- /**
-  * struct vmw_bo_dirty - Dirty information for buffer objects
-+ * @ref_count: Reference count for this structure. Must be first member!
-  * @start: First currently dirty bit
-  * @end: Last currently dirty bit + 1
-  * @method: The currently used dirty method
-  * @change_count: Number of consecutive method change triggers
-- * @ref_count: Reference count for this structure
-  * @bitmap_size: The size of the bitmap in bits. Typically equal to the
-  * nuber of pages in the bo.
-  * @bitmap: A bitmap where each bit represents a page. A set bit means a
-  * dirty page.
-  */
- struct vmw_bo_dirty {
-+	struct   kref ref_count;
- 	unsigned long start;
- 	unsigned long end;
- 	enum vmw_bo_dirty_method method;
- 	unsigned int change_count;
--	unsigned int ref_count;
- 	unsigned long bitmap_size;
- 	unsigned long bitmap[];
- };
-@@ -235,7 +235,7 @@ int vmw_bo_dirty_add(struct vmw_buffer_object *vbo)
- 	int ret;
- 
- 	if (dirty) {
--		dirty->ref_count++;
-+		kref_get(&dirty->ref_count);
- 		return 0;
- 	}
- 
-@@ -249,7 +249,7 @@ int vmw_bo_dirty_add(struct vmw_buffer_object *vbo)
- 	dirty->bitmap_size = num_pages;
- 	dirty->start = dirty->bitmap_size;
- 	dirty->end = 0;
--	dirty->ref_count = 1;
-+	kref_init(&dirty->ref_count);
- 	if (num_pages < PAGE_SIZE / sizeof(pte_t)) {
- 		dirty->method = VMW_BO_DIRTY_PAGETABLE;
- 	} else {
-@@ -288,10 +288,8 @@ void vmw_bo_dirty_release(struct vmw_buffer_object *vbo)
- {
- 	struct vmw_bo_dirty *dirty = vbo->dirty;
- 
--	if (dirty && --dirty->ref_count == 0) {
--		kvfree(dirty);
-+	if (dirty && kref_put(&dirty->ref_count, (void *)kvfree))
- 		vbo->dirty = NULL;
--	}
- }
- 
- /**
+-		if (strnlen(param->string, CIFS_MAX_USERNAME_LEN) >
++		if (strnlen(param->string, CIFS_MAX_USERNAME_LEN) ==
+ 		    CIFS_MAX_USERNAME_LEN) {
+ 			pr_warn("username too long\n");
+ 			goto cifs_parse_mount_err;
 -- 
 2.51.0
 
