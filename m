@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3EA7359F98;
-	Fri,  9 Jan 2026 12:01:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9575D359FB6;
+	Fri,  9 Jan 2026 12:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960095; cv=none; b=L7Tn0l71ieIiWVJS9IoW6YN+l5pnWEK0gICq/kS/ABgTE/VGyOIWrJNuBvQsopMKHlzLplyG+elpOb0rB16RTRuHUI5jkgRKjNNgC9twT30qBr9VsZHpYwpPysiQ0ULDzKR69ciWJ2JVy6u0Kj4pj+cCVJ6aY4R2DwF4B2av6gI=
+	t=1767960098; cv=none; b=B8lQ7EAUSqmVMltklA7jf4hY/lD6GDAM1MQkav89J7C2nIIp23x29LfDm8BPWevCaoreBq2/IzMigSrTLhpcpI9O0GgvVQCAgM5QcCbVakmbRcFKZ3Q8xPePYqIuD/yx18Kl9yffwPl+WATspko4jn2zh1VNFcwBEcInIo0Wg18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960095; c=relaxed/simple;
-	bh=kW2Otd302WO7atXV/DjLqqOWSpvdWPqqg2AdzAqaVTo=;
+	s=arc-20240116; t=1767960098; c=relaxed/simple;
+	bh=mRwFwJm7oc8O3rJ9hZIPWQUDQMg50oRFxakgXYFSpq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LyHGZxQZBFDM5lW8CmhQaUtNc31kFXpIM8PIwrmlQgJ0f5Bok5uqiVU6s3GDe6cbDHeaGDSPRwOy+pbAw0xvInI+Xg0MoFcNB5EBiu4uNZB7FnEOnoVGuuHRlD/IPmCAGAnYg3SLYGpFBM4TY72B3GxfFBjJNiD1RBgg/XYkzFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ktp7vrEF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MttFBako6TLkiJU2AV2sI8CG5X3iKH1nsrOl94QfNIQwip02mCnV+kO4SQ3PM5b19LEXccKyz0NK314hydLIxL2Ayxj+H9Og9whTLxBCTwqn6b5nBsfJUm4tWOymW7C83SFD1jS+f2fRqpX5g08SnU6ktY5aEfEfBr55UX0y6Ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d1L/sYj4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ktp7vrEF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E7EAC4CEF1;
-	Fri,  9 Jan 2026 12:01:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d1L/sYj4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F444C4CEF1;
+	Fri,  9 Jan 2026 12:01:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960095;
-	bh=kW2Otd302WO7atXV/DjLqqOWSpvdWPqqg2AdzAqaVTo=;
+	s=korg; t=1767960098;
+	bh=mRwFwJm7oc8O3rJ9hZIPWQUDQMg50oRFxakgXYFSpq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ktp7vrEF8TZJuX7adM3yEH0p4cGEhHqYvKk+Bf2ewc21v//cYzvJejHNWuEz3Ja5r
-	 VmYvHzEVMkgC+y0+DG8xplLoNrQtvMuchInpw9t7TDkV3FMToHD1qFTeoudyHnJUhu
-	 vZvXJnqWEW7M+k1RJy7cyk7GbRvj9D3/tDiglTsE=
+	b=d1L/sYj49xi2cPa3OKdvAdi0rsjTYvx7B0NeCFrEWhnSvdcQOuwv44xdOJwYrnFsT
+	 1A1jOnXYxNkXrfY3Ui6EmgtxSK7KBAppVcGvkRtEEgKbzum9e5h/La9zbRm0UoPvvr
+	 rRKzsZL7WfJLtheG1Z6f87WZxj3hV+XkBV9MijkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandru Gagniuc <mr.nuke.me@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Yu Kuai <yukuai@fnnas.com>,
+	Li Nan <linan122@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 250/737] remoteproc: qcom_q6v5_wcss: fix parsing of qcom,halt-regs
-Date: Fri,  9 Jan 2026 12:36:29 +0100
-Message-ID: <20260109112143.396669493@linuxfoundation.org>
+Subject: [PATCH 6.6 251/737] md/raid5: fix IO hang when array is broken with IO inflight
+Date: Fri,  9 Jan 2026 12:36:30 +0100
+Message-ID: <20260109112143.434465308@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,55 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+From: Yu Kuai <yukuai@fnnas.com>
 
-[ Upstream commit 7e81fa8d809ed1e67ae9ecd52d20a20c2c65d877 ]
+[ Upstream commit a913d1f6a7f607c110aeef8b58c8988f47a4b24e ]
 
-The "qcom,halt-regs" consists of a phandle reference followed by the
-three offsets within syscon for halt registers. Thus, we need to
-request 4 integers from of_property_read_variable_u32_array(), with
-the halt_reg ofsets at indexes 1, 2, and 3. Offset 0 is the phandle.
+Following test can cause IO hang:
 
-With MAX_HALT_REG at 3, of_property_read_variable_u32_array() returns
--EOVERFLOW, causing .probe() to fail.
+mdadm -CvR /dev/md0 -l10 -n4 /dev/sd[abcd] --assume-clean --chunk=64K --bitmap=none
+sleep 5
+echo 1 > /sys/block/sda/device/delete
+echo 1 > /sys/block/sdb/device/delete
+echo 1 > /sys/block/sdc/device/delete
+echo 1 > /sys/block/sdd/device/delete
 
-Increase MAX_HALT_REG to 4, and update the indexes accordingly.
+dd if=/dev/md0 of=/dev/null bs=8k count=1 iflag=direct
 
-Fixes: 0af65b9b915e ("remoteproc: qcom: wcss: Add non pas wcss Q6 support for QCS404")
-Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
-Link: https://lore.kernel.org/r/20251129013207.3981517-1-mr.nuke.me@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Root cause:
+
+1) all disks removed, however all rdevs in the array is still in sync,
+IO will be issued normally.
+
+2) IO failure from sda, and set badblocks failed, sda will be faulty
+and MD_SB_CHANGING_PENDING will be set.
+
+3) error recovery try to recover this IO from other disks, IO will be
+issued to sdb, sdc, and sdd.
+
+4) IO failure from sdb, and set badblocks failed again, now array is
+broken and will become read-only.
+
+5) IO failure from sdc and sdd, however, stripe can't be handled anymore
+because MD_SB_CHANGING_PENDING is set:
+
+handle_stripe
+ handle_stripe
+ if (test_bit MD_SB_CHANGING_PENDING)
+  set_bit STRIPE_HANDLE
+  goto finish
+  // skip handling failed stripe
+
+release_stripe
+ if (test_bit STRIPE_HANDLE)
+  list_add_tail conf->hand_list
+
+6) later raid5d can't handle failed stripe as well:
+
+raid5d
+ md_check_recovery
+  md_update_sb
+   if (!md_is_rdwr())
+    // can't clear pending bit
+    return
+ if (test_bit MD_SB_CHANGING_PENDING)
+  break;
+  // can't handle failed stripe
+
+Since MD_SB_CHANGING_PENDING can never be cleared for read-only array,
+fix this problem by skip this checking for read-only array.
+
+Link: https://lore.kernel.org/linux-raid/20251117085557.770572-3-yukuai@fnnas.com
+Fixes: d87f064f5874 ("md: never update metadata when array is read-only.")
+Signed-off-by: Yu Kuai <yukuai@fnnas.com>
+Reviewed-by: Li Nan <linan122@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5_wcss.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/md/raid5.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
-index cff1fa07d1def..f80d701225a18 100644
---- a/drivers/remoteproc/qcom_q6v5_wcss.c
-+++ b/drivers/remoteproc/qcom_q6v5_wcss.c
-@@ -85,7 +85,7 @@
- #define TCSR_WCSS_CLK_MASK	0x1F
- #define TCSR_WCSS_CLK_ENABLE	0x14
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index f69e4a6a8a592..aad2b8c0c5418 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -5002,7 +5002,8 @@ static void handle_stripe(struct stripe_head *sh)
+ 		goto finish;
  
--#define MAX_HALT_REG		3
-+#define MAX_HALT_REG		4
- enum {
- 	WCSS_IPQ8074,
- 	WCSS_QCS404,
-@@ -863,9 +863,9 @@ static int q6v5_wcss_init_mmio(struct q6v5_wcss *wcss,
- 		return -EINVAL;
+ 	if (s.handle_bad_blocks ||
+-	    test_bit(MD_SB_CHANGE_PENDING, &conf->mddev->sb_flags)) {
++	    (md_is_rdwr(conf->mddev) &&
++	     test_bit(MD_SB_CHANGE_PENDING, &conf->mddev->sb_flags))) {
+ 		set_bit(STRIPE_HANDLE, &sh->state);
+ 		goto finish;
  	}
+@@ -6829,7 +6830,8 @@ static void raid5d(struct md_thread *thread)
+ 		int batch_size, released;
+ 		unsigned int offset;
  
--	wcss->halt_q6 = halt_reg[0];
--	wcss->halt_wcss = halt_reg[1];
--	wcss->halt_nc = halt_reg[2];
-+	wcss->halt_q6 = halt_reg[1];
-+	wcss->halt_wcss = halt_reg[2];
-+	wcss->halt_nc = halt_reg[3];
+-		if (test_bit(MD_SB_CHANGE_PENDING, &mddev->sb_flags))
++		if (md_is_rdwr(mddev) &&
++		    test_bit(MD_SB_CHANGE_PENDING, &mddev->sb_flags))
+ 			break;
  
- 	return 0;
- }
+ 		released = release_stripe_list(conf, conf->temp_inactive_list);
 -- 
 2.51.0
 
