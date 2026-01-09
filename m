@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC7C1359713;
-	Fri,  9 Jan 2026 12:15:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1497733C1B6;
+	Fri,  9 Jan 2026 12:15:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960922; cv=none; b=V/lTAa97NPpPAIYBB/XfYhVayNu001jkW3vhCkwuKMUtEUsRp0y3qhaf1HaVroQGcANQ6pWrF171YYKCd7GQP1ZXKLW9GG6WiHFgQCKE1RS2lY+NffJp2sw3ODtLFovNHH0O1AsJOjzEhMAgTDceuhr1hPaSP2dJA2VPWYNDOEg=
+	t=1767960926; cv=none; b=JoyN+VLUYYeQbewP2AoUYait8j2602MA7Dms/ryvcB4CCBWBDeluAtd0cZxraHbWg5hRE0TFWNR74X+P1BOJyUmtuiwsQs6HIsgzJNNvRlw+pmga4IRcVfojykpsJwu6a4CqHflLlQr+Rtvi2k4479FfhdSFHFubgx+s/T+A8hI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960922; c=relaxed/simple;
-	bh=iGvpY4vs1BYhLHaxBs2vKMCmiw0NvWeHio15DK1GB9U=;
+	s=arc-20240116; t=1767960926; c=relaxed/simple;
+	bh=xQ6tL8KkfVMencHs0dB0X2gK4W5vnKR7hhufRCgcfdc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nv5qOUPbcaNLuw7f6tFY4Vljadok9T3vWxyHZDDpB2Wl9cIW1LsJKFs/kMIQznQrXGNWcxDcKE35x/vbDH2pTJw1SzWN7OVHyFaCSVUkOLJtyT9Ga690r3VkbU7KQESSd/n6qMha/tQriSKfb5XSEwkGSaqEX31y0sTPTL9koBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P9a0J7oU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aPKJBnCSWSkdQ1IwYbEKAc5vcPxTtiKpM+bmk1Tv0+4pRsXScCn/XV9aPCmHTBI2adz6WEMLjopzdd+kmsgzqctxs4fHyXIm/IChxwbcwCbS17sFzl1KapVbjlDbCAKFFkY7YDo4FRqkX8YUzwI/n7h5rlE5lL+o7IZRIFWI9zQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hrhnv2Zc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P9a0J7oU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67BB7C4CEF1;
-	Fri,  9 Jan 2026 12:15:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hrhnv2Zc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4444CC4CEF1;
+	Fri,  9 Jan 2026 12:15:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960922;
-	bh=iGvpY4vs1BYhLHaxBs2vKMCmiw0NvWeHio15DK1GB9U=;
+	s=korg; t=1767960925;
+	bh=xQ6tL8KkfVMencHs0dB0X2gK4W5vnKR7hhufRCgcfdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P9a0J7oU33U+veGQ9/+xfdfwlrNYqo2IZ3TmWnDnsFkndK1wkDjgYgy9ulPnfSkV3
-	 0Fvtd3QQ1PdBcVlAf2UhUpHMtA2brlxXRZfklZCiKUh/6Yt2NxX49SyLWnFLE0NTQ+
-	 QPVVl6fPY9lvbHnDOk1j4Am1z0/3axHk1Fhqb8Mw=
+	b=hrhnv2ZcSSDo4yfxC0NbP7aJJuv/81SFPU8B5Vj9ZctY697Xk+I8CzQh63CYPZ1oX
+	 mtWpBV3Ou1+rFwMjeZj7hK26A4Qu3zI72/1ThmobFFFzC4R0sfgIz23Ra7DSxe26rx
+	 4bEs/bRV3vn6Gnqlknf7PMds/qJpKbd83X4ccynQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Schmidt <mschmidt@redhat.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 529/737] RDMA/irdma: avoid invalid read in irdma_net_event
-Date: Fri,  9 Jan 2026 12:41:08 +0100
-Message-ID: <20260109112153.896808547@linuxfoundation.org>
+	Christian Hitz <christian.hitz@bbv.ch>,
+	Jacek Anaszewski <jacek.anaszewski@gmail.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.6 566/737] leds: leds-lp50xx: Allow LED 0 to be added to module bank
+Date: Fri,  9 Jan 2026 12:41:45 +0100
+Message-ID: <20260109112155.294193787@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,83 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Schmidt <mschmidt@redhat.com>
+From: Christian Hitz <christian.hitz@bbv.ch>
 
-[ Upstream commit 6f05611728e9d0ab024832a4f1abb74a5f5d0bb0 ]
+commit 26fe74d598c32e7bc6f150edfc4aa43e1bee55db upstream.
 
-irdma_net_event() should not dereference anything from "neigh" (alias
-"ptr") until it has checked that the event is NETEVENT_NEIGH_UPDATE.
-Other events come with different structures pointed to by "ptr" and they
-may be smaller than struct neighbour.
+led_banks contains LED module number(s) that should be grouped into the
+module bank. led_banks is 0-initialized.
+By checking the led_banks entries for 0, un-set entries are detected.
+But a 0-entry also indicates that LED module 0 should be grouped into the
+module bank.
 
-Move the read of neigh->dev under the NETEVENT_NEIGH_UPDATE case.
+By only iterating over the available entries no check for unused entries
+is required and LED module 0 can be added to bank.
 
-The bug is mostly harmless, but it triggers KASAN on debug kernels:
-
- BUG: KASAN: stack-out-of-bounds in irdma_net_event+0x32e/0x3b0 [irdma]
- Read of size 8 at addr ffffc900075e07f0 by task kworker/27:2/542554
-
- CPU: 27 PID: 542554 Comm: kworker/27:2 Kdump: loaded Not tainted 5.14.0-630.el9.x86_64+debug #1
- Hardware name: [...]
- Workqueue: events rt6_probe_deferred
- Call Trace:
-  <IRQ>
-  dump_stack_lvl+0x60/0xb0
-  print_address_description.constprop.0+0x2c/0x3f0
-  print_report+0xb4/0x270
-  kasan_report+0x92/0xc0
-  irdma_net_event+0x32e/0x3b0 [irdma]
-  notifier_call_chain+0x9e/0x180
-  atomic_notifier_call_chain+0x5c/0x110
-  rt6_do_redirect+0xb91/0x1080
-  tcp_v6_err+0xe9b/0x13e0
-  icmpv6_notify+0x2b2/0x630
-  ndisc_redirect_rcv+0x328/0x530
-  icmpv6_rcv+0xc16/0x1360
-  ip6_protocol_deliver_rcu+0xb84/0x12e0
-  ip6_input_finish+0x117/0x240
-  ip6_input+0xc4/0x370
-  ipv6_rcv+0x420/0x7d0
-  __netif_receive_skb_one_core+0x118/0x1b0
-  process_backlog+0xd1/0x5d0
-  __napi_poll.constprop.0+0xa3/0x440
-  net_rx_action+0x78a/0xba0
-  handle_softirqs+0x2d4/0x9c0
-  do_softirq+0xad/0xe0
-  </IRQ>
-
-Fixes: 915cc7ac0f8e ("RDMA/irdma: Add miscellaneous utility definitions")
-Link: https://patch.msgid.link/r/20251127143150.121099-1-mschmidt@redhat.com
-Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 242b81170fb8 ("leds: lp50xx: Add the LP50XX family of the RGB LED driver")
+Signed-off-by: Christian Hitz <christian.hitz@bbv.ch>
+Reviewed-by: Jacek Anaszewski <jacek.anaszewski@gmail.com>
+Link: https://patch.msgid.link/20251008123222.1117331-1-christian@klarinett.li
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/irdma/utils.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/leds/leds-lp50xx.c |   10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/infiniband/hw/irdma/utils.c b/drivers/infiniband/hw/irdma/utils.c
-index 6cd5cb85dafe..91ed7edcd788 100644
---- a/drivers/infiniband/hw/irdma/utils.c
-+++ b/drivers/infiniband/hw/irdma/utils.c
-@@ -251,7 +251,7 @@ int irdma_net_event(struct notifier_block *notifier, unsigned long event,
- 		    void *ptr)
- {
- 	struct neighbour *neigh = ptr;
--	struct net_device *real_dev, *netdev = (struct net_device *)neigh->dev;
-+	struct net_device *real_dev, *netdev;
- 	struct irdma_device *iwdev;
- 	struct ib_device *ibdev;
- 	__be32 *p;
-@@ -260,6 +260,7 @@ int irdma_net_event(struct notifier_block *notifier, unsigned long event,
+--- a/drivers/leds/leds-lp50xx.c
++++ b/drivers/leds/leds-lp50xx.c
+@@ -346,17 +346,15 @@ out:
+ 	return ret;
+ }
  
- 	switch (event) {
- 	case NETEVENT_NEIGH_UPDATE:
-+		netdev = neigh->dev;
- 		real_dev = rdma_vlan_dev_real_dev(netdev);
- 		if (!real_dev)
- 			real_dev = netdev;
--- 
-2.51.0
-
+-static int lp50xx_set_banks(struct lp50xx *priv, u32 led_banks[])
++static int lp50xx_set_banks(struct lp50xx *priv, u32 led_banks[], int num_leds)
+ {
+ 	u8 led_config_lo, led_config_hi;
+ 	u32 bank_enable_mask = 0;
+ 	int ret;
+ 	int i;
+ 
+-	for (i = 0; i < priv->chip_info->max_modules; i++) {
+-		if (led_banks[i])
+-			bank_enable_mask |= (1 << led_banks[i]);
+-	}
++	for (i = 0; i < num_leds; i++)
++		bank_enable_mask |= (1 << led_banks[i]);
+ 
+ 	led_config_lo = bank_enable_mask;
+ 	led_config_hi = bank_enable_mask >> 8;
+@@ -412,7 +410,7 @@ static int lp50xx_probe_leds(struct fwno
+ 			return ret;
+ 		}
+ 
+-		ret = lp50xx_set_banks(priv, led_banks);
++		ret = lp50xx_set_banks(priv, led_banks, num_leds);
+ 		if (ret) {
+ 			dev_err(priv->dev, "Cannot setup banked LEDs\n");
+ 			return ret;
 
 
