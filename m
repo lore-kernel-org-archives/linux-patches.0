@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9037232AAB5;
-	Fri,  9 Jan 2026 11:45:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5952359FB6;
+	Fri,  9 Jan 2026 11:45:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959120; cv=none; b=GsLY58wiZw3wsxziJ4ooPwlu7rgtSuLyeXH1D5i+ITnIpup8UEEuac97u2Ivur3WjdIS5i1kf0L4RqUZ7JjAqEq72poAGpJruRotAb99nb6cPH0EREcZmFrdQSJyfygMv2IVe7eIzlOGK5HC92EE1nBJSS8DpRtPfQew0cq+uBM=
+	t=1767959122; cv=none; b=GWfqRiYTXGi5kFfmlG716Z+c8kRUMqG69bXHE5pytTueFUUnSjz0Ttt3HKDc9Zuf+VZvLr7IQVoCK8pMfnBOhpKPYpTcd4spI8h+3UNXOVAexBiaBsLmuGRZTR45bVa7ObPoiB1tdERl8o36ac3XOzHfOK65+ZLsCNVGlGj5nkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959120; c=relaxed/simple;
-	bh=mNId9po01GmHIXiop9AU6MdCcMn/0hkV/pc7QmQ+k44=;
+	s=arc-20240116; t=1767959122; c=relaxed/simple;
+	bh=bgFHCyahtMA28aOpfEeXgN9fl3lAC8ZPzNW+7tiKRGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z+TREy+ycL0zXrbgG8sblCP+gYfwNRzBPEXgjTR07wipraEQtZRz8XlY7EDzvBZH4k9iz3mBiAMf9W9yuys4jHg5lKQFHDbPCikA+ZU/tBDhL+ZuU5LDoY8uQGtyvu+TGqh+rVoNM+8AJ4r4LjtdhTNaZeMm93BRS9eA9LvDe4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ryXPTQiw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=myXawO7kBrFQYkIWf28iw+BhDMODXyWXcKKNbbGoACP1XmPi5ukNzVkpZVmudT1qg5Gu1ISMT1nL4Nh//TjgFmfisvaTXYm9+he0swh7enBwSKYQT9POs8KY0gCMPc8bbuFzo6z7yeFKt4n8wSpc4i4REe2FuGYziPN245ezfSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eJoPsaxu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ryXPTQiw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BBA4C19422;
-	Fri,  9 Jan 2026 11:45:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eJoPsaxu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDD84C4CEF1;
+	Fri,  9 Jan 2026 11:45:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959119;
-	bh=mNId9po01GmHIXiop9AU6MdCcMn/0hkV/pc7QmQ+k44=;
+	s=korg; t=1767959122;
+	bh=bgFHCyahtMA28aOpfEeXgN9fl3lAC8ZPzNW+7tiKRGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ryXPTQiwa24APXGLpowa4cpEH1278swiQvHW6Pm72iWLRAm/jiUphU3cYLL3rN8Mb
-	 v+LIC7Q+CaYsvinfEfkdqDw/QbXETERFRBl7ra1fkYrkbV9H/EVDYeAV6uGxE3RW6A
-	 nNLMfHJfI0UfvF09kWdajG9enCv0WD8Oy9sA5deo=
+	b=eJoPsaxuhG8iRqYiN+92qDiQPimfgD59P6OyrCDoXR2QRdMKvgWPEj3Dy0B7OXqKo
+	 lYNqnAymFj3yPd1a61zVP5kGROFa+va1p9543fDuN23A/iAnKx03xmHezR1IpldIRF
+	 mdVLFuVh8S1E/4IZmvVcxA44T7NCLrkIjjspH594=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zorro Lang <zlang@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.18 5/5] nfs/localio: fix regression due to out-of-order __put_cred
-Date: Fri,  9 Jan 2026 12:44:07 +0100
-Message-ID: <20260109111950.550738956@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 1/5] mptcp: ensure context reset on disconnect()
+Date: Fri,  9 Jan 2026 12:44:03 +0100
+Message-ID: <20260109111950.401714051@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109111950.344681501@linuxfoundation.org>
 References: <20260109111950.344681501@linuxfoundation.org>
@@ -53,100 +51,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 3af870aedbff10bfed220e280b57a405e972229f upstream.
+[ Upstream commit 86730ac255b0497a272704de9a1df559f5d6602e ]
 
-Commit f2060bdc21d7 ("nfs/localio: add refcounting for each iocb IO
-associated with NFS pgio header") inadvertantly reintroduced the same
-potential for __put_cred() triggering BUG_ON(cred == current->cred) that
-commit 992203a1fba5 ("nfs/localio: restore creds before releasing pageio
-data") fixed.
+After the blamed commit below, if the MPC subflow is already in TCP_CLOSE
+status or has fallback to TCP at mptcp_disconnect() time,
+mptcp_do_fastclose() skips setting the `send_fastclose flag` and the later
+__mptcp_close_ssk() does not reset anymore the related subflow context.
 
-Fix this by saving and restoring the cred around each {read,write}_iter
-call within the respective for loop of nfs_local_call_{read,write} using
-scoped_with_creds().
+Any later connection will be created with both the `request_mptcp` flag
+and the msk-level fallback status off (it is unconditionally cleared at
+MPTCP disconnect time), leading to a warning in subflow_data_ready():
 
-NOTE: this fix started by first reverting the following commits:
+  WARNING: CPU: 26 PID: 8996 at net/mptcp/subflow.c:1519 subflow_data_ready (net/mptcp/subflow.c:1519 (discriminator 13))
+  Modules linked in:
+  CPU: 26 UID: 0 PID: 8996 Comm: syz.22.39 Not tainted 6.18.0-rc7-05427-g11fc074f6c36 #1 PREEMPT(voluntary)
+  Hardware name: Bochs Bochs, BIOS Bochs 01/01/2011
+  RIP: 0010:subflow_data_ready (net/mptcp/subflow.c:1519 (discriminator 13))
+  Code: 90 0f 0b 90 90 e9 04 fe ff ff e8 b7 1e f5 fe 89 ee bf 07 00 00 00 e8 db 19 f5 fe 83 fd 07 0f 84 35 ff ff ff e8 9d 1e f5 fe 90 <0f> 0b 90 e9 27 ff ff ff e8 8f 1e f5 fe 4c 89 e7 48 89 de e8 14 09
+  RSP: 0018:ffffc9002646fb30 EFLAGS: 00010293
+  RAX: 0000000000000000 RBX: ffff88813b218000 RCX: ffffffff825c8435
+  RDX: ffff8881300b3580 RSI: ffffffff825c8443 RDI: 0000000000000005
+  RBP: 000000000000000b R08: ffffffff825c8435 R09: 000000000000000b
+  R10: 0000000000000005 R11: 0000000000000007 R12: ffff888131ac0000
+  R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+  FS:  00007f88330af6c0(0000) GS:ffff888a93dd2000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00007f88330aefe8 CR3: 000000010ff59000 CR4: 0000000000350ef0
+  Call Trace:
+   <TASK>
+   tcp_data_ready (net/ipv4/tcp_input.c:5356)
+   tcp_data_queue (net/ipv4/tcp_input.c:5445)
+   tcp_rcv_state_process (net/ipv4/tcp_input.c:7165)
+   tcp_v4_do_rcv (net/ipv4/tcp_ipv4.c:1955)
+   __release_sock (include/net/sock.h:1158 (discriminator 6) net/core/sock.c:3180 (discriminator 6))
+   release_sock (net/core/sock.c:3737)
+   mptcp_sendmsg (net/mptcp/protocol.c:1763 net/mptcp/protocol.c:1857)
+   inet_sendmsg (net/ipv4/af_inet.c:853 (discriminator 7))
+   __sys_sendto (net/socket.c:727 (discriminator 15) net/socket.c:742 (discriminator 15) net/socket.c:2244 (discriminator 15))
+   __x64_sys_sendto (net/socket.c:2247)
+   do_syscall_64 (arch/x86/entry/syscall_64.c:63 (discriminator 1) arch/x86/entry/syscall_64.c:94 (discriminator 1))
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+  RIP: 0033:0x7f883326702d
 
- 94afb627dfc2 ("nfs: use credential guards in nfs_local_call_read()")
- bff3c841f7bd ("nfs: use credential guards in nfs_local_call_write()")
- 1d18101a644e ("Merge tag 'kernel-6.19-rc1.cred' of git://git.kernel.org/pub/scm/linux/kernel/git/vfs/vfs")
+Address the issue setting an explicit `fastclosing` flag at fastclose
+time, and checking such flag after mptcp_do_fastclose().
 
-followed by narrowly fixing the cred lifetime issue by using
-scoped_with_creds().  In doing so, this commit's changes appear more
-extensive than they really are (as evidenced by comparing to v6.18's
-fs/nfs/localio.c).
-
-Reported-by: Zorro Lang <zlang@redhat.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Acked-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Link: https://lore.kernel.org/linux-next/20251205111942.4150b06f@canb.auug.org.au/
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: ae155060247b ("mptcp: fix duplicate reset on fastclose")
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20251212-net-mptcp-subflow_data_ready-warn-v1-2-d1f9fd1c36c8@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ Adjust context ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/localio.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/mptcp/protocol.c |    8 +++++---
+ net/mptcp/protocol.h |    3 ++-
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
---- a/fs/nfs/localio.c
-+++ b/fs/nfs/localio.c
-@@ -623,8 +623,6 @@ static void nfs_local_call_read(struct w
- 	ssize_t status;
- 	int n_iters;
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2421,10 +2421,10 @@ bool __mptcp_retransmit_pending_data(str
+  */
+ static void __mptcp_subflow_disconnect(struct sock *ssk,
+ 				       struct mptcp_subflow_context *subflow,
+-				       unsigned int flags)
++				       bool fastclosing)
+ {
+ 	if (((1 << ssk->sk_state) & (TCPF_CLOSE | TCPF_LISTEN)) ||
+-	    subflow->send_fastclose) {
++	    fastclosing) {
+ 		/* The MPTCP code never wait on the subflow sockets, TCP-level
+ 		 * disconnect should never fail
+ 		 */
+@@ -2476,7 +2476,7 @@ static void __mptcp_close_ssk(struct soc
  
--	save_cred = override_creds(filp->f_cred);
--
- 	n_iters = atomic_read(&iocb->n_iters);
- 	for (int i = 0; i < n_iters ; i++) {
- 		if (iocb->iter_is_dio_aligned[i]) {
-@@ -637,7 +635,10 @@ static void nfs_local_call_read(struct w
- 		} else
- 			iocb->kiocb.ki_flags &= ~IOCB_DIRECT;
+ 	need_push = (flags & MPTCP_CF_PUSH) && __mptcp_retransmit_pending_data(sk);
+ 	if (!dispose_it) {
+-		__mptcp_subflow_disconnect(ssk, subflow, flags);
++		__mptcp_subflow_disconnect(ssk, subflow, msk->fastclosing);
+ 		release_sock(ssk);
  
-+		save_cred = override_creds(filp->f_cred);
- 		status = filp->f_op->read_iter(&iocb->kiocb, &iocb->iters[i]);
-+		revert_creds(save_cred);
-+
- 		if (status != -EIOCBQUEUED) {
- 			if (unlikely(status >= 0 && status < iocb->iters[i].count))
- 				force_done = true; /* Partial read */
-@@ -647,8 +648,6 @@ static void nfs_local_call_read(struct w
- 			}
- 		}
- 	}
--
--	revert_creds(save_cred);
- }
+ 		goto out;
+@@ -2789,6 +2789,7 @@ static void mptcp_do_fastclose(struct so
+ 	struct mptcp_sock *msk = mptcp_sk(sk);
  
- static int
-@@ -830,7 +829,6 @@ static void nfs_local_call_write(struct
- 	int n_iters;
+ 	mptcp_set_state(sk, TCP_CLOSE);
++	msk->fastclosing = 1;
  
- 	current->flags |= PF_LOCAL_THROTTLE | PF_MEMALLOC_NOIO;
--	save_cred = override_creds(filp->f_cred);
+ 	/* Explicitly send the fastclose reset as need */
+ 	if (__mptcp_check_fallback(msk))
+@@ -3299,6 +3300,7 @@ static int mptcp_disconnect(struct sock
+ 	msk->bytes_sent = 0;
+ 	msk->bytes_retrans = 0;
+ 	msk->rcvspace_init = 0;
++	msk->fastclosing = 0;
  
- 	file_start_write(filp);
- 	n_iters = atomic_read(&iocb->n_iters);
-@@ -845,7 +843,10 @@ static void nfs_local_call_write(struct
- 		} else
- 			iocb->kiocb.ki_flags &= ~IOCB_DIRECT;
- 
-+		save_cred = override_creds(filp->f_cred);
- 		status = filp->f_op->write_iter(&iocb->kiocb, &iocb->iters[i]);
-+		revert_creds(save_cred);
-+
- 		if (status != -EIOCBQUEUED) {
- 			if (unlikely(status >= 0 && status < iocb->iters[i].count))
- 				force_done = true; /* Partial write */
-@@ -857,7 +858,6 @@ static void nfs_local_call_write(struct
- 	}
- 	file_end_write(filp);
- 
--	revert_creds(save_cred);
- 	current->flags = old_flags;
- }
- 
+ 	WRITE_ONCE(sk->sk_shutdown, 0);
+ 	sk_error_report(sk);
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -321,7 +321,8 @@ struct mptcp_sock {
+ 			fastopening:1,
+ 			in_accept_queue:1,
+ 			free_first:1,
+-			rcvspace_init:1;
++			rcvspace_init:1,
++			fastclosing:1;
+ 	u32		notsent_lowat;
+ 	int		keepalive_cnt;
+ 	int		keepalive_idle;
 
 
