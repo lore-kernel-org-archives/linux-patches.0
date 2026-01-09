@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4766733290A;
-	Fri,  9 Jan 2026 11:51:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EDAD350A12;
+	Fri,  9 Jan 2026 11:51:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959491; cv=none; b=u/4JrRIkXBSVKgfwc0ltVGikb4RhB7c5jf6kz3kLFyHILAQItVyUY9KmczOaSaU0FwAuXyclPYDAz0GyvDz3kfKa3DhFj1/AgtpmTvprP4EHaMAhW00UX9V2NOqkNgUv5HRxsyzWYxgwdEvHgFUr0cv3M3ltxbnWwtwLafBkARM=
+	t=1767959494; cv=none; b=eZXKkAbVmkMpCI928TNhhw/pLtXlWlkNlxH6P+9CAiXMieK5YYuv2bn7tsVCQ9a7JlQ/la0N+ZA0HbR4TebSWvNGhVbX6c1Ph8JPn+6oDAAGEnoY8Jut0cLsnR2nDBkbvQv8Hnf03QSvWzV3h4uTfnzPlq32f5VMdUiYsnVY2ec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959491; c=relaxed/simple;
-	bh=ZrelkOIVCaWIIBzXcTjSQvTPQTtUqqBkRlmPmh6NPUM=;
+	s=arc-20240116; t=1767959494; c=relaxed/simple;
+	bh=RXA/8T05SbT+Vvkyx/nWJl06C7YqfsBwm8Q+xc7+bqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=miGJvsmdx/IvqqYov7ExavdBOB4ceLBYkIZSbrXpo6DjFqxjmrW2o0aLEAc3+9ciOvtQ56IH1NqMgbdAs9aicqG4CcIAlKjlLph9HXASXt0xbn48PKIrlrqPRaX6z/LoA9Da1RXaVYUP5RptG4lpZMMDQiDYxiC+IIPxqklG9FI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fOImzAJQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gs1cOuj9qsXrh92VxZ6Jky6VcTyK5Cn+kOPgS5qXpoulgPnjnHhFkM/TADkD91zJpQBhdexErsR9K5CP2YldUm9Ka6yx3Gg29mtdyZliqwojH/3GqW9xNI4C76+pPOfyZwFX5kdJyeKQvryWVIlWTVJQ8VPb1NiEQcCNt/llWDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NESJ2tV5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fOImzAJQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8A2AC16AAE;
-	Fri,  9 Jan 2026 11:51:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NESJ2tV5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A12AEC19421;
+	Fri,  9 Jan 2026 11:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959491;
-	bh=ZrelkOIVCaWIIBzXcTjSQvTPQTtUqqBkRlmPmh6NPUM=;
+	s=korg; t=1767959494;
+	bh=RXA/8T05SbT+Vvkyx/nWJl06C7YqfsBwm8Q+xc7+bqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fOImzAJQ4l0el9KsntElu8FZLQ460aWNUH8vkZ5n4rmxYbqGvXuWrb5PZ1cnfP//B
-	 hvvlSzWikTPo4L360S302CJKAUYnCWRWfe+IXE9lTrVrCRBdOfMqKWFeZeoQQDMr6j
-	 /GUpQpuOgIf0u8rVqPI5Lw1SbwCY6lOROMOtGq84=
+	b=NESJ2tV52y7/k9Oc+AjO+yvnFqUO2Mr4Ymrq/HdEC2yDKy3ije6HemvSe5c2jgByG
+	 C2OBaW+xK1vBE4tWhJHx4Yq08nwmW74mKQyPIxtox5lWZdH2LkcH6O31A3Y8B/DSMz
+	 /RCr1jSOFlDzpHL6hjOak7Q7EFlSa5SK37KUnxk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianyang Zhang <zhangtianyang@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 038/737] LoongArch: Mask all interrupts during kexec/kdump
-Date: Fri,  9 Jan 2026 12:32:57 +0100
-Message-ID: <20260109112135.427873150@linuxfoundation.org>
+Subject: [PATCH 6.6 039/737] samples: work around glibc redefining some of our defines wrong
+Date: Fri,  9 Jan 2026 12:32:58 +0100
+Message-ID: <20260109112135.465693005@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,46 +50,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 863a320dc6fd7c855f47da4bb82a8de2d9102ea2 ]
+[ Upstream commit a48f822908982353c3256e35a089e9e7d0d61580 ]
 
-If the default state of the interrupt controllers in the first kernel
-don't mask any interrupts, it may cause the second kernel to potentially
-receive interrupts (which were previously allocated by the first kernel)
-immediately after a CPU becomes online during its boot process. These
-interrupts cannot be properly routed, leading to bad IRQ issues.
+Apparently as of version 2.42, glibc headers define AT_RENAME_NOREPLACE
+and some of the other flags for renameat2() and friends in <stdio.h>.
 
-This patch calls machine_kexec_mask_interrupts() to mask all interrupts
-during the kexec/kdump process.
+Which would all be fine, except for inexplicable reasons glibc decided
+to define them _differently_ from the kernel definitions, which then
+makes some of our sample code that includes both kernel headers and user
+space headers unhappy, because the compiler will (correctly) complain
+about redefining things.
 
-Signed-off-by: Tianyang Zhang <zhangtianyang@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Now, mixing kernel headers and user space headers is always a somewhat
+iffy proposition due to namespacing issues, but it's kind of inevitable
+in our sample and selftest code.  And this is just glibc being stupid.
+
+Those defines come from the kernel, glibc is exposing the kernel
+interfaces, and glibc shouldn't make up some random new expressions for
+these values.
+
+It's not like glibc headers changed the actual result values, but they
+arbitrarily just decided to use a different expression to describe those
+values.  The kernel just does
+
+    #define AT_RENAME_NOREPLACE  0x0001
+
+while glibc does
+
+    # define RENAME_NOREPLACE (1 << 0)
+    # define AT_RENAME_NOREPLACE RENAME_NOREPLACE
+
+instead.  Same value in the end, but very different macro definition.
+
+For absolutely no reason.
+
+This has since been fixed in the glibc development tree, so eventually
+we'll end up with the canonical expressions and no clashes.  But in the
+meantime the broken headers are in the glibc-2.42 release and have made
+it out into distributions.
+
+Do a minimal work-around to make the samples build cleanly by just
+undefining the affected macros in between the user space header include
+and the kernel header includes.
+
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kernel/machine_kexec.c | 2 ++
- 1 file changed, 2 insertions(+)
+ samples/vfs/test-statx.c         | 6 ++++++
+ samples/watch_queue/watch_test.c | 6 ++++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/arch/loongarch/kernel/machine_kexec.c b/arch/loongarch/kernel/machine_kexec.c
-index 30aa420610a06..e50c9a81ff1aa 100644
---- a/arch/loongarch/kernel/machine_kexec.c
-+++ b/arch/loongarch/kernel/machine_kexec.c
-@@ -249,6 +249,7 @@ void machine_crash_shutdown(struct pt_regs *regs)
- #ifdef CONFIG_SMP
- 	crash_smp_send_stop();
- #endif
-+	machine_kexec_mask_interrupts();
- 	cpumask_set_cpu(crashing_cpu, &cpus_in_crash);
- 
- 	pr_info("Starting crashdump kernel...\n");
-@@ -286,6 +287,7 @@ void machine_kexec(struct kimage *image)
- 
- 	/* We do not want to be bothered. */
- 	local_irq_disable();
-+	machine_kexec_mask_interrupts();
- 
- 	pr_notice("EFI boot flag 0x%lx\n", efi_boot);
- 	pr_notice("Command line at 0x%lx\n", cmdline_ptr);
+diff --git a/samples/vfs/test-statx.c b/samples/vfs/test-statx.c
+index 49c7a46cee073..424a6fa15723c 100644
+--- a/samples/vfs/test-statx.c
++++ b/samples/vfs/test-statx.c
+@@ -19,6 +19,12 @@
+ #include <time.h>
+ #include <sys/syscall.h>
+ #include <sys/types.h>
++
++// Work around glibc header silliness
++#undef AT_RENAME_NOREPLACE
++#undef AT_RENAME_EXCHANGE
++#undef AT_RENAME_WHITEOUT
++
+ #include <linux/stat.h>
+ #include <linux/fcntl.h>
+ #define statx foo
+diff --git a/samples/watch_queue/watch_test.c b/samples/watch_queue/watch_test.c
+index 8c6cb57d5cfc5..24cf7d7a19725 100644
+--- a/samples/watch_queue/watch_test.c
++++ b/samples/watch_queue/watch_test.c
+@@ -16,6 +16,12 @@
+ #include <errno.h>
+ #include <sys/ioctl.h>
+ #include <limits.h>
++
++// Work around glibc header silliness
++#undef AT_RENAME_NOREPLACE
++#undef AT_RENAME_EXCHANGE
++#undef AT_RENAME_WHITEOUT
++
+ #include <linux/watch_queue.h>
+ #include <linux/unistd.h>
+ #include <linux/keyctl.h>
 -- 
 2.51.0
 
