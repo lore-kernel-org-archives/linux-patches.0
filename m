@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902DA35A92E;
-	Fri,  9 Jan 2026 12:11:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC9632F748;
+	Fri,  9 Jan 2026 12:11:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960663; cv=none; b=tJ85Ri9ByGo2NmOFN4dp5J2G02m8SOwixUS2QlLD/vi+/gkE539pQ6WSVGkPD9y+2XzknC54h3eqP6Sh267GoDRfOs/0tab5tksJQwsaPrZgEsHkBIymHWpM1qIWvdUwH1dAcpzENWusVWFS9hiYdcIp3dcANlm+rdxx2/RgzdU=
+	t=1767960666; cv=none; b=T5yyFIi66LdmvnP6wo8SYyLvXIK+giMKY+kZ60nGhII7ZtIOeTarj94hDsrEwm8RLRdERdBr7G5RboK1m1es5ziT51I8Zh+QsuOwjRuUrssQ5i8+zW+nAp/WK7U53m57xB/fDUxYoTZgO3td+VIA3qErFuSwocvyBdTGpQ+2tdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960663; c=relaxed/simple;
-	bh=sNlrv9Obc0LGELsiNNWBYWNRksVFefP2dppr9rbUEP8=;
+	s=arc-20240116; t=1767960666; c=relaxed/simple;
+	bh=zJupx4jlLo4pbF8Bowfyj9Js6ktFXWL1RG4lirtaMq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VfEzkVJQdzXZXnQj8h+ZdAow94dcA+NNvCa28Zaqf562A1z4S0Pl/0PmaMsBLSKZ7puuhJB7mrxbCeD28Zy20Ed2FS+FLZQhgB8Tb7l2nhYGlCNzKRBWSyAXobyGneofarcHn5iRQEiHUI2y2qXDxQhrNCVdXoxGk3Cx/7bBsNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ib9ORw+Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XIMcc3vsLdYtuFkkI2BunAb3sOl8nShESo8Hq/ss6bZLNIS4+Pq2LSuqQjrfwGiWcq7d8bncWeaOibb/zSeKfy3kRShQjr0Bs3RDeoNd9gsMXQX3GNkIWadqIJgQzt9U9/DwIdfjWJUL9JmZZDTd3vSmleSY9rVpGGTVdy5CuLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZgkAvaFb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ib9ORw+Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B4C1C4CEF1;
-	Fri,  9 Jan 2026 12:11:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZgkAvaFb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2970C19421;
+	Fri,  9 Jan 2026 12:11:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960663;
-	bh=sNlrv9Obc0LGELsiNNWBYWNRksVFefP2dppr9rbUEP8=;
+	s=korg; t=1767960666;
+	bh=zJupx4jlLo4pbF8Bowfyj9Js6ktFXWL1RG4lirtaMq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ib9ORw+YTsyjiK5nIARVHe+LqPPPJOad16ESS00GpSL+4Zz4xhgElB+EgkrH2sNpF
-	 aN7f0Z3dskJgMrHPMSwo5DON7nuDu2DJDdjqby62EBBDqIvJ+fqOwsYsqgZ7AlTbS/
-	 peOQkKPG0nGLEmfev7WLdxUp5zZnRiBZ80kJ9prc=
+	b=ZgkAvaFb7Bh+KbiH/nB5aIJYm884hB+3OsTP18OzFDJhrx+xdoxV36VZ9ssIBY06q
+	 Q7jyVKNXjlT22SSfGmeqkeK+UjZ7rcMCkj7KpVQrujjLDH3Q3xtQeOnWzeyh35nS3P
+	 ozn2fntEsNYoDv8332VFVwy/948qQpQ9rfJVgBPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vyacheslav Kovalevsky <slva.kovalevskiy.2014@gmail.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.6 481/737] btrfs: dont log conflicting inode if its a dir moved in the current transaction
-Date: Fri,  9 Jan 2026 12:40:20 +0100
-Message-ID: <20260109112152.079107641@linuxfoundation.org>
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>
+Subject: [PATCH 6.6 482/737] s390/ipl: Clear SBP flag when bootprog is set
+Date: Fri,  9 Jan 2026 12:40:21 +0100
+Message-ID: <20260109112152.118267756@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,269 +51,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Sven Schnelle <svens@linux.ibm.com>
 
-commit 266273eaf4d99475f1ae57f687b3e42bc71ec6f0 upstream.
+commit b1aa01d31249bd116b18c7f512d3e46b4b4ad83b upstream.
 
-We can't log a conflicting inode if it's a directory and it was moved
-from one parent directory to another parent directory in the current
-transaction, as this can result an attempt to have a directory with
-two hard links during log replay, one for the old parent directory and
-another for the new parent directory.
+With z16 a new flag 'search boot program' was introduced for
+list-directed IPL (SCSI, NVMe, ECKD DASD). If this flag is set,
+e.g. via selecting the "Automatic" value for the "Boot program
+selector" control on an HMC load panel, it is copied to the reipl
+structure from the initial ipl structure. When a user now sets a
+boot prog via sysfs, the flag is not cleared and the bootloader
+will again automatically select the boot program, ignoring user
+configuration.
 
-The following scenario triggers that issue:
+To avoid that, clear the SBP flag when a bootprog sysfs file is
+written.
 
-1) We have directories "dir1" and "dir2" created in a past transaction.
-   Directory "dir1" has inode A as its parent directory;
-
-2) We move "dir1" to some other directory;
-
-3) We create a file with the name "dir1" in directory inode A;
-
-4) We fsync the new file. This results in logging the inode of the new file
-   and the inode for the directory "dir1" that was previously moved in the
-   current transaction. So the log tree has the INODE_REF item for the
-   new location of "dir1";
-
-5) We move the new file to some other directory. This results in updating
-   the log tree to included the new INODE_REF for the new location of the
-   file and removes the INODE_REF for the old location. This happens
-   during the rename when we call btrfs_log_new_name();
-
-6) We fsync the file, and that persists the log tree changes done in the
-   previous step (btrfs_log_new_name() only updates the log tree in
-   memory);
-
-7) We have a power failure;
-
-8) Next time the fs is mounted, log replay happens and when processing
-   the inode for directory "dir1" we find a new INODE_REF and add that
-   link, but we don't remove the old link of the inode since we have
-   not logged the old parent directory of the directory inode "dir1".
-
-As a result after log replay finishes when we trigger writeback of the
-subvolume tree's extent buffers, the tree check will detect that we have
-a directory a hard link count of 2 and we get a mount failure.
-The errors and stack traces reported in dmesg/syslog are like this:
-
-   [ 3845.729764] BTRFS info (device dm-0): start tree-log replay
-   [ 3845.730304] page: refcount:3 mapcount:0 mapping:000000005c8a3027 index:0x1d00 pfn:0x11510c
-   [ 3845.731236] memcg:ffff9264c02f4e00
-   [ 3845.731751] aops:btree_aops [btrfs] ino:1
-   [ 3845.732300] flags: 0x17fffc00000400a(uptodate|private|writeback|node=0|zone=2|lastcpupid=0x1ffff)
-   [ 3845.733346] raw: 017fffc00000400a 0000000000000000 dead000000000122 ffff9264d978aea8
-   [ 3845.734265] raw: 0000000000001d00 ffff92650e6d4738 00000003ffffffff ffff9264c02f4e00
-   [ 3845.735305] page dumped because: eb page dump
-   [ 3845.735981] BTRFS critical (device dm-0): corrupt leaf: root=5 block=30408704 slot=6 ino=257, invalid nlink: has 2 expect no more than 1 for dir
-   [ 3845.737786] BTRFS info (device dm-0): leaf 30408704 gen 10 total ptrs 17 free space 14881 owner 5
-   [ 3845.737789] BTRFS info (device dm-0): refs 4 lock_owner 0 current 30701
-   [ 3845.737792] 	item 0 key (256 INODE_ITEM 0) itemoff 16123 itemsize 160
-   [ 3845.737794] 		inode generation 3 transid 9 size 16 nbytes 16384
-   [ 3845.737795] 		block group 0 mode 40755 links 1 uid 0 gid 0
-   [ 3845.737797] 		rdev 0 sequence 2 flags 0x0
-   [ 3845.737798] 		atime 1764259517.0
-   [ 3845.737800] 		ctime 1764259517.572889464
-   [ 3845.737801] 		mtime 1764259517.572889464
-   [ 3845.737802] 		otime 1764259517.0
-   [ 3845.737803] 	item 1 key (256 INODE_REF 256) itemoff 16111 itemsize 12
-   [ 3845.737805] 		index 0 name_len 2
-   [ 3845.737807] 	item 2 key (256 DIR_ITEM 2363071922) itemoff 16077 itemsize 34
-   [ 3845.737808] 		location key (257 1 0) type 2
-   [ 3845.737810] 		transid 9 data_len 0 name_len 4
-   [ 3845.737811] 	item 3 key (256 DIR_ITEM 2676584006) itemoff 16043 itemsize 34
-   [ 3845.737813] 		location key (258 1 0) type 2
-   [ 3845.737814] 		transid 9 data_len 0 name_len 4
-   [ 3845.737815] 	item 4 key (256 DIR_INDEX 2) itemoff 16009 itemsize 34
-   [ 3845.737816] 		location key (257 1 0) type 2
-   [ 3845.737818] 		transid 9 data_len 0 name_len 4
-   [ 3845.737819] 	item 5 key (256 DIR_INDEX 3) itemoff 15975 itemsize 34
-   [ 3845.737820] 		location key (258 1 0) type 2
-   [ 3845.737821] 		transid 9 data_len 0 name_len 4
-   [ 3845.737822] 	item 6 key (257 INODE_ITEM 0) itemoff 15815 itemsize 160
-   [ 3845.737824] 		inode generation 9 transid 10 size 6 nbytes 0
-   [ 3845.737825] 		block group 0 mode 40755 links 2 uid 0 gid 0
-   [ 3845.737826] 		rdev 0 sequence 1 flags 0x0
-   [ 3845.737827] 		atime 1764259517.572889464
-   [ 3845.737828] 		ctime 1764259517.572889464
-   [ 3845.737830] 		mtime 1764259517.572889464
-   [ 3845.737831] 		otime 1764259517.572889464
-   [ 3845.737832] 	item 7 key (257 INODE_REF 256) itemoff 15801 itemsize 14
-   [ 3845.737833] 		index 2 name_len 4
-   [ 3845.737834] 	item 8 key (257 INODE_REF 258) itemoff 15787 itemsize 14
-   [ 3845.737836] 		index 2 name_len 4
-   [ 3845.737837] 	item 9 key (257 DIR_ITEM 2507850652) itemoff 15754 itemsize 33
-   [ 3845.737838] 		location key (259 1 0) type 1
-   [ 3845.737839] 		transid 10 data_len 0 name_len 3
-   [ 3845.737840] 	item 10 key (257 DIR_INDEX 2) itemoff 15721 itemsize 33
-   [ 3845.737842] 		location key (259 1 0) type 1
-   [ 3845.737843] 		transid 10 data_len 0 name_len 3
-   [ 3845.737844] 	item 11 key (258 INODE_ITEM 0) itemoff 15561 itemsize 160
-   [ 3845.737846] 		inode generation 9 transid 10 size 8 nbytes 0
-   [ 3845.737847] 		block group 0 mode 40755 links 1 uid 0 gid 0
-   [ 3845.737848] 		rdev 0 sequence 1 flags 0x0
-   [ 3845.737849] 		atime 1764259517.572889464
-   [ 3845.737850] 		ctime 1764259517.572889464
-   [ 3845.737851] 		mtime 1764259517.572889464
-   [ 3845.737852] 		otime 1764259517.572889464
-   [ 3845.737853] 	item 12 key (258 INODE_REF 256) itemoff 15547 itemsize 14
-   [ 3845.737855] 		index 3 name_len 4
-   [ 3845.737856] 	item 13 key (258 DIR_ITEM 1843588421) itemoff 15513 itemsize 34
-   [ 3845.737857] 		location key (257 1 0) type 2
-   [ 3845.737858] 		transid 10 data_len 0 name_len 4
-   [ 3845.737860] 	item 14 key (258 DIR_INDEX 2) itemoff 15479 itemsize 34
-   [ 3845.737861] 		location key (257 1 0) type 2
-   [ 3845.737862] 		transid 10 data_len 0 name_len 4
-   [ 3845.737863] 	item 15 key (259 INODE_ITEM 0) itemoff 15319 itemsize 160
-   [ 3845.737865] 		inode generation 10 transid 10 size 0 nbytes 0
-   [ 3845.737866] 		block group 0 mode 100600 links 1 uid 0 gid 0
-   [ 3845.737867] 		rdev 0 sequence 2 flags 0x0
-   [ 3845.737868] 		atime 1764259517.580874966
-   [ 3845.737869] 		ctime 1764259517.586121869
-   [ 3845.737870] 		mtime 1764259517.580874966
-   [ 3845.737872] 		otime 1764259517.580874966
-   [ 3845.737873] 	item 16 key (259 INODE_REF 257) itemoff 15306 itemsize 13
-   [ 3845.737874] 		index 2 name_len 3
-   [ 3845.737875] BTRFS error (device dm-0): block=30408704 write time tree block corruption detected
-   [ 3845.739448] ------------[ cut here ]------------
-   [ 3845.740092] WARNING: CPU: 5 PID: 30701 at fs/btrfs/disk-io.c:335 btree_csum_one_bio+0x25a/0x270 [btrfs]
-   [ 3845.741439] Modules linked in: btrfs dm_flakey crc32c_cryptoapi (...)
-   [ 3845.750626] CPU: 5 UID: 0 PID: 30701 Comm: mount Tainted: G        W           6.18.0-rc6-btrfs-next-218+ #1 PREEMPT(full)
-   [ 3845.752414] Tainted: [W]=WARN
-   [ 3845.752828] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.2-0-gea1b7a073390-prebuilt.qemu.org 04/01/2014
-   [ 3845.754499] RIP: 0010:btree_csum_one_bio+0x25a/0x270 [btrfs]
-   [ 3845.755460] Code: 31 f6 48 89 (...)
-   [ 3845.758685] RSP: 0018:ffffa8d9c5677678 EFLAGS: 00010246
-   [ 3845.759450] RAX: 0000000000000000 RBX: ffff92650e6d4738 RCX: 0000000000000000
-   [ 3845.760309] RDX: 0000000000000000 RSI: ffffffff9aab45b9 RDI: ffff9264c4748000
-   [ 3845.761239] RBP: ffff9264d4324000 R08: 0000000000000000 R09: ffffa8d9c5677468
-   [ 3845.762607] R10: ffff926bdc1fffa8 R11: 0000000000000003 R12: ffffa8d9c5677680
-   [ 3845.764099] R13: 0000000000004000 R14: ffff9264dd624000 R15: ffff9264d978aba8
-   [ 3845.765094] FS:  00007f751fa5a840(0000) GS:ffff926c42a82000(0000) knlGS:0000000000000000
-   [ 3845.766226] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-   [ 3845.766970] CR2: 0000558df1815380 CR3: 000000010ed88003 CR4: 0000000000370ef0
-   [ 3845.768009] Call Trace:
-   [ 3845.768392]  <TASK>
-   [ 3845.768714]  btrfs_submit_bbio+0x6ee/0x7f0 [btrfs]
-   [ 3845.769640]  ? write_one_eb+0x28e/0x340 [btrfs]
-   [ 3845.770588]  btree_write_cache_pages+0x2f0/0x550 [btrfs]
-   [ 3845.771286]  ? alloc_extent_state+0x19/0x100 [btrfs]
-   [ 3845.771967]  ? merge_next_state+0x1a/0x90 [btrfs]
-   [ 3845.772586]  ? set_extent_bit+0x233/0x8b0 [btrfs]
-   [ 3845.773198]  ? xas_load+0x9/0xc0
-   [ 3845.773589]  ? xas_find+0x14d/0x1a0
-   [ 3845.773969]  do_writepages+0xc6/0x160
-   [ 3845.774367]  filemap_fdatawrite_wbc+0x48/0x60
-   [ 3845.775003]  __filemap_fdatawrite_range+0x5b/0x80
-   [ 3845.775902]  btrfs_write_marked_extents+0x61/0x170 [btrfs]
-   [ 3845.776707]  btrfs_write_and_wait_transaction+0x4e/0xc0 [btrfs]
-   [ 3845.777379]  ? _raw_spin_unlock_irqrestore+0x23/0x40
-   [ 3845.777923]  btrfs_commit_transaction+0x5ea/0xd20 [btrfs]
-   [ 3845.778551]  ? _raw_spin_unlock+0x15/0x30
-   [ 3845.778986]  ? release_extent_buffer+0x34/0x160 [btrfs]
-   [ 3845.779659]  btrfs_recover_log_trees+0x7a3/0x7c0 [btrfs]
-   [ 3845.780416]  ? __pfx_replay_one_buffer+0x10/0x10 [btrfs]
-   [ 3845.781499]  open_ctree+0x10bb/0x15f0 [btrfs]
-   [ 3845.782194]  btrfs_get_tree.cold+0xb/0x16c [btrfs]
-   [ 3845.782764]  ? fscontext_read+0x15c/0x180
-   [ 3845.783202]  ? rw_verify_area+0x50/0x180
-   [ 3845.783667]  vfs_get_tree+0x25/0xd0
-   [ 3845.784047]  vfs_cmd_create+0x59/0xe0
-   [ 3845.784458]  __do_sys_fsconfig+0x4f6/0x6b0
-   [ 3845.784914]  do_syscall_64+0x50/0x1220
-   [ 3845.785340]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-   [ 3845.785980] RIP: 0033:0x7f751fc7f4aa
-   [ 3845.786759] Code: 73 01 c3 48 (...)
-   [ 3845.789951] RSP: 002b:00007ffcdba45dc8 EFLAGS: 00000246 ORIG_RAX: 00000000000001af
-   [ 3845.791402] RAX: ffffffffffffffda RBX: 000055ccc8291c20 RCX: 00007f751fc7f4aa
-   [ 3845.792688] RDX: 0000000000000000 RSI: 0000000000000006 RDI: 0000000000000003
-   [ 3845.794308] RBP: 000055ccc8292120 R08: 0000000000000000 R09: 0000000000000000
-   [ 3845.795829] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-   [ 3845.797183] R13: 00007f751fe11580 R14: 00007f751fe1326c R15: 00007f751fdf8a23
-   [ 3845.798633]  </TASK>
-   [ 3845.799067] ---[ end trace 0000000000000000 ]---
-   [ 3845.800215] BTRFS: error (device dm-0) in btrfs_commit_transaction:2553: errno=-5 IO failure (Error while writing out transaction)
-   [ 3845.801860] BTRFS warning (device dm-0 state E): Skipping commit of aborted transaction.
-   [ 3845.802815] BTRFS error (device dm-0 state EA): Transaction aborted (error -5)
-   [ 3845.803728] BTRFS: error (device dm-0 state EA) in cleanup_transaction:2036: errno=-5 IO failure
-   [ 3845.805374] BTRFS: error (device dm-0 state EA) in btrfs_replay_log:2083: errno=-5 IO failure (Failed to recover log tree)
-   [ 3845.807919] BTRFS error (device dm-0 state EA): open_ctree failed: -5
-
-Fix this by never logging a conflicting inode that is a directory and was
-moved in the current transaction (its last_unlink_trans equals the current
-transaction) and instead fallback to a transaction commit.
-
-A test case for fstests will follow soon.
-
-Reported-by: Vyacheslav Kovalevsky <slva.kovalevskiy.2014@gmail.com>
-Link: https://lore.kernel.org/linux-btrfs/7bbc9419-5c56-450a-b5a0-efeae7457113@gmail.com/
-CC: stable@vger.kernel.org # 6.1+
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/tree-log.c |   38 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
+ arch/s390/include/uapi/asm/ipl.h |    1 
+ arch/s390/kernel/ipl.c           |   48 +++++++++++++++++++++++++++++----------
+ 2 files changed, 37 insertions(+), 12 deletions(-)
 
---- a/fs/btrfs/tree-log.c
-+++ b/fs/btrfs/tree-log.c
-@@ -5704,6 +5704,33 @@ static int conflicting_inode_is_dir(stru
- 	return ret;
- }
+--- a/arch/s390/include/uapi/asm/ipl.h
++++ b/arch/s390/include/uapi/asm/ipl.h
+@@ -15,6 +15,7 @@ struct ipl_pl_hdr {
+ #define IPL_PL_FLAG_IPLPS	0x80
+ #define IPL_PL_FLAG_SIPL	0x40
+ #define IPL_PL_FLAG_IPLSR	0x20
++#define IPL_PL_FLAG_SBP		0x10
  
-+static bool can_log_conflicting_inode(const struct btrfs_trans_handle *trans,
-+				      const struct btrfs_inode *inode)
-+{
-+	if (!S_ISDIR(inode->vfs_inode.i_mode))
-+		return true;
-+
-+	if (inode->last_unlink_trans < trans->transid)
-+		return true;
-+
-+	/*
-+	 * If this is a directory and its unlink_trans is not from a past
-+	 * transaction then we must fallback to a transaction commit in order
-+	 * to avoid getting a directory with 2 hard links after log replay.
-+	 *
-+	 * This happens if a directory A is renamed, moved from one parent
-+	 * directory to another one, a new file is created in the old parent
-+	 * directory with the old name of our directory A, the new file is
-+	 * fsynced, then we moved the new file to some other parent directory
-+	 * and fsync again the new file. This results in a log tree where we
-+	 * logged that directory A existed, with the INODE_REF item for the
-+	 * new location but without having logged its old parent inode, so
-+	 * that on log replay we add a new link for the new location but the
-+	 * old link remains, resulting in a link count of 2.
-+	 */
-+	return false;
-+}
-+
- static int add_conflicting_inode(struct btrfs_trans_handle *trans,
- 				 struct btrfs_root *root,
- 				 struct btrfs_path *path,
-@@ -5807,6 +5834,11 @@ static int add_conflicting_inode(struct
- 		return 0;
- 	}
+ /* IPL Parameter Block header */
+ struct ipl_pb_hdr {
+--- a/arch/s390/kernel/ipl.c
++++ b/arch/s390/kernel/ipl.c
+@@ -260,6 +260,24 @@ static struct kobj_attribute sys_##_pref
+ 			sys_##_prefix##_##_name##_show,			\
+ 			sys_##_prefix##_##_name##_store)
  
-+	if (!can_log_conflicting_inode(trans, inode)) {
-+		btrfs_add_delayed_iput(inode);
-+		return BTRFS_LOG_FORCE_COMMIT;
-+	}
++#define DEFINE_IPL_ATTR_BOOTPROG_RW(_prefix, _name, _fmt_out, _fmt_in, _hdr, _value)	\
++	IPL_ATTR_SHOW_FN(_prefix, _name, _fmt_out, (unsigned long long) _value)		\
++static ssize_t sys_##_prefix##_##_name##_store(struct kobject *kobj,			\
++		struct kobj_attribute *attr,						\
++		const char *buf, size_t len)						\
++{											\
++	unsigned long long value;							\
++	if (sscanf(buf, _fmt_in, &value) != 1)						\
++		return -EINVAL;								\
++	(_value) = value;								\
++	(_hdr).flags &= ~IPL_PL_FLAG_SBP;						\
++	return len;									\
++}											\
++static struct kobj_attribute sys_##_prefix##_##_name##_attr =				\
++	__ATTR(_name, 0644,								\
++			sys_##_prefix##_##_name##_show,					\
++			sys_##_prefix##_##_name##_store)
 +
- 	btrfs_add_delayed_iput(inode);
+ #define DEFINE_IPL_ATTR_STR_RW(_prefix, _name, _fmt_out, _fmt_in, _value)\
+ IPL_ATTR_SHOW_FN(_prefix, _name, _fmt_out, _value)			\
+ static ssize_t sys_##_prefix##_##_name##_store(struct kobject *kobj,	\
+@@ -824,12 +842,13 @@ DEFINE_IPL_ATTR_RW(reipl_fcp, wwpn, "0x%
+ 		   reipl_block_fcp->fcp.wwpn);
+ DEFINE_IPL_ATTR_RW(reipl_fcp, lun, "0x%016llx\n", "%llx\n",
+ 		   reipl_block_fcp->fcp.lun);
+-DEFINE_IPL_ATTR_RW(reipl_fcp, bootprog, "%lld\n", "%lld\n",
+-		   reipl_block_fcp->fcp.bootprog);
+ DEFINE_IPL_ATTR_RW(reipl_fcp, br_lba, "%lld\n", "%lld\n",
+ 		   reipl_block_fcp->fcp.br_lba);
+ DEFINE_IPL_ATTR_RW(reipl_fcp, device, "0.0.%04llx\n", "0.0.%llx\n",
+ 		   reipl_block_fcp->fcp.devno);
++DEFINE_IPL_ATTR_BOOTPROG_RW(reipl_fcp, bootprog, "%lld\n", "%lld\n",
++			    reipl_block_fcp->hdr,
++			    reipl_block_fcp->fcp.bootprog);
  
- 	ino_elem = kmalloc(sizeof(*ino_elem), GFP_NOFS);
-@@ -5871,6 +5903,12 @@ static int log_conflicting_inodes(struct
- 				break;
- 			}
+ static void reipl_get_ascii_loadparm(char *loadparm,
+ 				     struct ipl_parameter_block *ibp)
+@@ -982,10 +1001,11 @@ DEFINE_IPL_ATTR_RW(reipl_nvme, fid, "0x%
+ 		   reipl_block_nvme->nvme.fid);
+ DEFINE_IPL_ATTR_RW(reipl_nvme, nsid, "0x%08llx\n", "%llx\n",
+ 		   reipl_block_nvme->nvme.nsid);
+-DEFINE_IPL_ATTR_RW(reipl_nvme, bootprog, "%lld\n", "%lld\n",
+-		   reipl_block_nvme->nvme.bootprog);
+ DEFINE_IPL_ATTR_RW(reipl_nvme, br_lba, "%lld\n", "%lld\n",
+ 		   reipl_block_nvme->nvme.br_lba);
++DEFINE_IPL_ATTR_BOOTPROG_RW(reipl_nvme, bootprog, "%lld\n", "%lld\n",
++			    reipl_block_nvme->hdr,
++			    reipl_block_nvme->nvme.bootprog);
  
-+			if (!can_log_conflicting_inode(trans, inode)) {
-+				btrfs_add_delayed_iput(inode);
-+				ret = BTRFS_LOG_FORCE_COMMIT;
-+				break;
-+			}
-+
- 			/*
- 			 * Always log the directory, we cannot make this
- 			 * conditional on need_log_inode() because the directory
+ static struct attribute *reipl_nvme_attrs[] = {
+ 	&sys_reipl_nvme_fid_attr.attr,
+@@ -1112,8 +1132,9 @@ static struct bin_attribute *reipl_eckd_
+ };
+ 
+ DEFINE_IPL_CCW_ATTR_RW(reipl_eckd, device, reipl_block_eckd->eckd);
+-DEFINE_IPL_ATTR_RW(reipl_eckd, bootprog, "%lld\n", "%lld\n",
+-		   reipl_block_eckd->eckd.bootprog);
++DEFINE_IPL_ATTR_BOOTPROG_RW(reipl_eckd, bootprog, "%lld\n", "%lld\n",
++			    reipl_block_eckd->hdr,
++			    reipl_block_eckd->eckd.bootprog);
+ 
+ static struct attribute *reipl_eckd_attrs[] = {
+ 	&sys_reipl_eckd_device_attr.attr,
+@@ -1641,12 +1662,13 @@ DEFINE_IPL_ATTR_RW(dump_fcp, wwpn, "0x%0
+ 		   dump_block_fcp->fcp.wwpn);
+ DEFINE_IPL_ATTR_RW(dump_fcp, lun, "0x%016llx\n", "%llx\n",
+ 		   dump_block_fcp->fcp.lun);
+-DEFINE_IPL_ATTR_RW(dump_fcp, bootprog, "%lld\n", "%lld\n",
+-		   dump_block_fcp->fcp.bootprog);
+ DEFINE_IPL_ATTR_RW(dump_fcp, br_lba, "%lld\n", "%lld\n",
+ 		   dump_block_fcp->fcp.br_lba);
+ DEFINE_IPL_ATTR_RW(dump_fcp, device, "0.0.%04llx\n", "0.0.%llx\n",
+ 		   dump_block_fcp->fcp.devno);
++DEFINE_IPL_ATTR_BOOTPROG_RW(dump_fcp, bootprog, "%lld\n", "%lld\n",
++			    dump_block_fcp->hdr,
++			    dump_block_fcp->fcp.bootprog);
+ 
+ static struct attribute *dump_fcp_attrs[] = {
+ 	&sys_dump_fcp_device_attr.attr,
+@@ -1667,10 +1689,11 @@ DEFINE_IPL_ATTR_RW(dump_nvme, fid, "0x%0
+ 		   dump_block_nvme->nvme.fid);
+ DEFINE_IPL_ATTR_RW(dump_nvme, nsid, "0x%08llx\n", "%llx\n",
+ 		   dump_block_nvme->nvme.nsid);
+-DEFINE_IPL_ATTR_RW(dump_nvme, bootprog, "%lld\n", "%llx\n",
+-		   dump_block_nvme->nvme.bootprog);
+ DEFINE_IPL_ATTR_RW(dump_nvme, br_lba, "%lld\n", "%llx\n",
+ 		   dump_block_nvme->nvme.br_lba);
++DEFINE_IPL_ATTR_BOOTPROG_RW(dump_nvme, bootprog, "%lld\n", "%llx\n",
++			    dump_block_nvme->hdr,
++			    dump_block_nvme->nvme.bootprog);
+ 
+ static struct attribute *dump_nvme_attrs[] = {
+ 	&sys_dump_nvme_fid_attr.attr,
+@@ -1687,8 +1710,9 @@ static struct attribute_group dump_nvme_
+ 
+ /* ECKD dump device attributes */
+ DEFINE_IPL_CCW_ATTR_RW(dump_eckd, device, dump_block_eckd->eckd);
+-DEFINE_IPL_ATTR_RW(dump_eckd, bootprog, "%lld\n", "%llx\n",
+-		   dump_block_eckd->eckd.bootprog);
++DEFINE_IPL_ATTR_BOOTPROG_RW(dump_eckd, bootprog, "%lld\n", "%llx\n",
++			    dump_block_eckd->hdr,
++			    dump_block_eckd->eckd.bootprog);
+ 
+ IPL_ATTR_BR_CHR_SHOW_FN(dump, dump_block_eckd->eckd);
+ IPL_ATTR_BR_CHR_STORE_FN(dump, dump_block_eckd->eckd);
 
 
