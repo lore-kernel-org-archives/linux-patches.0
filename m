@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE68B35B157;
-	Fri,  9 Jan 2026 12:52:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E83359712;
+	Fri,  9 Jan 2026 12:52:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767963167; cv=none; b=Ss1vWNoKF3Rwzt33HhTxw7krCtmUIrVo6CQ5wDJIwKiAVR3cEB+g8+WiRnOtwIMGxKdMKAw3CVsOxHFcm9Fw8kLBJIiYPARCiQFz0RHw8oQFs5BSYrP6c+7iNLhw7SmmQ3OjDxZ3F2bwNry8nKhgZi5PP/6AP4lK6YXJRZNaX28=
+	t=1767963170; cv=none; b=GXle6ptECXMf8SAD+f1LFj0JQ7dK4b5oECtnS6mtVmafxTJcM9ZGfpHlcI5lzXE/kxGlZ7pl3W4eECZHJJr//7VprKVWBqkql6AEXQa4vUiZMa9NTr0I191AbbvvEISwuQsG8Q7sqkvIJVrGgg/x0E6pFtJbkZ26V3aj1XlVd9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767963167; c=relaxed/simple;
-	bh=dEujkZ7dNVwNB+hvAoQdbU8e9FmBwYVjUmfw2I24cGA=;
+	s=arc-20240116; t=1767963170; c=relaxed/simple;
+	bh=KSitO+/ag9qBIBmbeG9iSM7XfU38528NWJf3t+TFosE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rVs0nPbCcqABHu4oRGp7XVo/f3wtM9t1cvaYBsCDx36hZQpGWYkrVOp+lgEiAaic/QurOE1HCOVI1no7f39XKCm/loeHHrM7wlJhqcVUGuiK6TykeDb0Ree80E1HWJ2wtf7S9brQO1iXyZWhw7f1iaNZE19tafy0X26DrO9nm+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1oCBP27V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hj6gfU7YL4tp0CEjYRVHh+shMPdaWeIUuQ8D9QbYlDpi7Roi2Hrjark+31YSYWftxvXK17lkPY8mxKZE6dNbAASYOAe1CR0OdIGkPwSjgWFbUT/UdEI32dliA4BiEpwEgkQtgC20FG7ifl+UEQgtIEvQPX97Ph6VZ0Rgukxct/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SKK1iJF8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1oCBP27V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F86CC4CEF1;
-	Fri,  9 Jan 2026 12:52:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SKK1iJF8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B2ADC4CEF1;
+	Fri,  9 Jan 2026 12:52:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767963166;
-	bh=dEujkZ7dNVwNB+hvAoQdbU8e9FmBwYVjUmfw2I24cGA=;
+	s=korg; t=1767963169;
+	bh=KSitO+/ag9qBIBmbeG9iSM7XfU38528NWJf3t+TFosE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1oCBP27VEdmm+sLkhI9o9AaRsI8pib3KvxDsuEvz5G2IMzDgKtb7mu+aZq5r92uuP
-	 GcLmVQ2vwbh5xoue3kPSJAUf2syHn8GKmyQU6pDh6dq7gHLWFZQuw8alEss5jUHDcP
-	 l16gldI/R27AWTYuK6S5tcxEZatQ47ssMvgDpiUQ=
+	b=SKK1iJF8zJqqQTvvQ0OG7gVpZSto7lwdYBVsbGQSvsJ63/zk0r3Ic1bD9YKnJupEs
+	 wL9Ql7/AZUg2pVQcwsA8Ht3WGb1uP1yXyythRXF8CgkXtfaQouZayZ+XojFs5LZgC/
+	 pTP47uCQ37//7PK9hXD8f9gL8w+tk3h08ActnF8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriel Krisman Bertazi <krisman@suse.de>,
-	Theodore Tso <tytso@mit.edu>,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Subject: [PATCH 6.1 620/634] ext4: fix error message when rejecting the default hash
-Date: Fri,  9 Jan 2026 12:44:58 +0100
-Message-ID: <20260109112140.966967003@linuxfoundation.org>
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+	Stefan Christ <contact@stefanchrist.eu>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	dri-devel@lists.freedesktop.org,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 594/634] drm/gma500: Remove unused helper psb_fbdev_fb_setcolreg()
+Date: Fri,  9 Jan 2026 12:44:32 +0100
+Message-ID: <20260109112139.976790486@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,105 +54,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriel Krisman Bertazi <krisman@suse.de>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit a2187431c395cdfbf144e3536f25468c64fc7cfa upstream.
+[ Upstream commit be729f9de6c64240645dc80a24162ac4d3fe00a8 ]
 
-Commit 985b67cd8639 ("ext4: filesystems without casefold feature cannot
-be mounted with siphash") properly rejects volumes where
-s_def_hash_version is set to DX_HASH_SIPHASH, but the check and the
-error message should not look into casefold setup - a filesystem should
-never have DX_HASH_SIPHASH as the default hash.  Fix it and, since we
-are there, move the check to ext4_hash_info_init.
+Remove psb_fbdev_fb_setcolreg(), which hasn't been called in almost
+a decade.
 
-Fixes:985b67cd8639 ("ext4: filesystems without casefold feature cannot
-be mounted with siphash")
+Gma500 commit 4d8d096e9ae8 ("gma500: introduce the framebuffer support
+code") added the helper psb_fbdev_fb_setcolreg() for setting the fbdev
+palette via fbdev's fb_setcolreg callback. Later
+commit 3da6c2f3b730 ("drm/gma500: use DRM_FB_HELPER_DEFAULT_OPS for
+fb_ops") set several default helpers for fbdev emulation, including
+fb_setcmap.
 
-Signed-off-by: Gabriel Krisman Bertazi <krisman@suse.de>
-Link: https://patch.msgid.link/87jzg1en6j.fsf_-_@mailhost.krisman.be
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+The fbdev subsystem always prefers fb_setcmap over fb_setcolreg. [1]
+Hence, the gma500 code is no longer in use and gma500 has been using
+drm_fb_helper_setcmap() for several years without issues.
+
+Fixes: 3da6c2f3b730 ("drm/gma500: use DRM_FB_HELPER_DEFAULT_OPS for fb_ops")
+Cc: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
+Cc: Stefan Christ <contact@stefanchrist.eu>
+Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v4.10+
+Link: https://elixir.bootlin.com/linux/v6.16.9/source/drivers/video/fbdev/core/fbcmap.c#L246 # [1]
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Acked-by: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
+Link: https://lore.kernel.org/r/20250929082338.18845-1-tzimmermann@suse.de
+[ adapted patch from fbdev.c to framebuffer.c where the function was named psbfb_setcolreg() instead of psb_fbdev_fb_setcolreg() ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/ext4.h  |    1 +
- fs/ext4/super.c |   28 +++++++++++++++++-----------
- 2 files changed, 18 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/gma500/framebuffer.c |   42 -----------------------------------
+ 1 file changed, 42 deletions(-)
 
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -2460,6 +2460,7 @@ static inline __le16 ext4_rec_len_to_dis
- #define DX_HASH_HALF_MD4_UNSIGNED	4
- #define DX_HASH_TEA_UNSIGNED		5
- #define DX_HASH_SIPHASH			6
-+#define DX_HASH_LAST 			DX_HASH_SIPHASH
+--- a/drivers/gpu/drm/gma500/framebuffer.c
++++ b/drivers/gpu/drm/gma500/framebuffer.c
+@@ -35,47 +35,6 @@ static const struct drm_framebuffer_func
+ 	.create_handle = drm_gem_fb_create_handle,
+ };
  
- static inline u32 ext4_chksum(struct ext4_sb_info *sbi, u32 crc,
- 			      const void *address, unsigned int length)
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -3552,14 +3552,6 @@ int ext4_feature_set_ok(struct super_blo
- 	}
- #endif
- 
--	if (EXT4_SB(sb)->s_es->s_def_hash_version == DX_HASH_SIPHASH &&
--	    !ext4_has_feature_casefold(sb)) {
--		ext4_msg(sb, KERN_ERR,
--			 "Filesystem without casefold feature cannot be "
--			 "mounted with siphash");
--		return 0;
+-#define CMAP_TOHW(_val, _width) ((((_val) << (_width)) + 0x7FFF - (_val)) >> 16)
+-
+-static int psbfb_setcolreg(unsigned regno, unsigned red, unsigned green,
+-			   unsigned blue, unsigned transp,
+-			   struct fb_info *info)
+-{
+-	struct drm_fb_helper *fb_helper = info->par;
+-	struct drm_framebuffer *fb = fb_helper->fb;
+-	uint32_t v;
+-
+-	if (!fb)
+-		return -ENOMEM;
+-
+-	if (regno > 255)
+-		return 1;
+-
+-	red = CMAP_TOHW(red, info->var.red.length);
+-	blue = CMAP_TOHW(blue, info->var.blue.length);
+-	green = CMAP_TOHW(green, info->var.green.length);
+-	transp = CMAP_TOHW(transp, info->var.transp.length);
+-
+-	v = (red << info->var.red.offset) |
+-	    (green << info->var.green.offset) |
+-	    (blue << info->var.blue.offset) |
+-	    (transp << info->var.transp.offset);
+-
+-	if (regno < 16) {
+-		switch (fb->format->cpp[0] * 8) {
+-		case 16:
+-			((uint32_t *) info->pseudo_palette)[regno] = v;
+-			break;
+-		case 24:
+-		case 32:
+-			((uint32_t *) info->pseudo_palette)[regno] = v;
+-			break;
+-		}
 -	}
 -
- 	if (readonly)
- 		return 1;
- 
-@@ -5043,16 +5035,27 @@ out:
- 	return ret;
- }
- 
--static void ext4_hash_info_init(struct super_block *sb)
-+static int ext4_hash_info_init(struct super_block *sb)
+-	return 0;
+-}
+-
+ static vm_fault_t psbfb_vm_fault(struct vm_fault *vmf)
  {
- 	struct ext4_sb_info *sbi = EXT4_SB(sb);
- 	struct ext4_super_block *es = sbi->s_es;
- 	unsigned int i;
- 
-+	sbi->s_def_hash_version = es->s_def_hash_version;
-+
-+	if (sbi->s_def_hash_version > DX_HASH_LAST) {
-+		ext4_msg(sb, KERN_ERR,
-+			 "Invalid default hash set in the superblock");
-+		return -EINVAL;
-+	} else if (sbi->s_def_hash_version == DX_HASH_SIPHASH) {
-+		ext4_msg(sb, KERN_ERR,
-+			 "SIPHASH is not a valid default hash value");
-+		return -EINVAL;
-+	}
-+
- 	for (i = 0; i < 4; i++)
- 		sbi->s_hash_seed[i] = le32_to_cpu(es->s_hash_seed[i]);
- 
--	sbi->s_def_hash_version = es->s_def_hash_version;
- 	if (ext4_has_feature_dir_index(sb)) {
- 		i = le32_to_cpu(es->s_flags);
- 		if (i & EXT2_FLAGS_UNSIGNED_HASH)
-@@ -5070,6 +5073,7 @@ static void ext4_hash_info_init(struct s
- #endif
- 		}
- 	}
-+	return 0;
- }
- 
- static int __ext4_fill_super(struct fs_context *fc, struct super_block *sb)
-@@ -5224,7 +5228,9 @@ static int __ext4_fill_super(struct fs_c
- 	sbi->s_addr_per_block_bits = ilog2(EXT4_ADDR_PER_BLOCK(sb));
- 	sbi->s_desc_per_block_bits = ilog2(EXT4_DESC_PER_BLOCK(sb));
- 
--	ext4_hash_info_init(sb);
-+	err = ext4_hash_info_init(sb);
-+	if (err)
-+		goto failed_mount;
- 
- 	if (ext4_handle_clustersize(sb))
- 		goto failed_mount;
+ 	struct vm_area_struct *vma = vmf->vma;
+@@ -146,7 +105,6 @@ static int psbfb_mmap(struct fb_info *in
+ static const struct fb_ops psbfb_unaccel_ops = {
+ 	.owner = THIS_MODULE,
+ 	DRM_FB_HELPER_DEFAULT_OPS,
+-	.fb_setcolreg = psbfb_setcolreg,
+ 	.fb_fillrect = drm_fb_helper_cfb_fillrect,
+ 	.fb_copyarea = drm_fb_helper_cfb_copyarea,
+ 	.fb_imageblit = drm_fb_helper_cfb_imageblit,
 
 
