@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CDE432AAB5;
-	Fri,  9 Jan 2026 12:23:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4229315ADB4;
+	Fri,  9 Jan 2026 12:23:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961389; cv=none; b=j1vF9XRmpEa+tdloGTcjmpwbsrpYyLRM4lLj0FXACgLPv56NZZV82dOokz33mFlV17q4HpBaPgyJCYKLZMC9EVaQ0LHLGR2EIgaUiY4f9M/iHNnn9j4P663dPAH/lrgZmHykS+/x6IysiU18Na247AR/XNnN37IK2+tfdqN3FHw=
+	t=1767961392; cv=none; b=KVzXuLTW7i0eonndVTIaZbdVOuy3um2llu5RvHdN+7tNOd0TY28hbUDAa5FecGWaZclaw4fYix3Jc4508ZTlDwzHc7krlS/dr7ruyRd1TcpRMwpqSwaktsPttz93LpCec2uz5xMnefdxzYx1enI/NONvIX2caeHrYuw4Jvjz+3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961389; c=relaxed/simple;
-	bh=i1kgx993EoJ5tsrKj+xvRm/JHluPmRw/z3fQsQulwVQ=;
+	s=arc-20240116; t=1767961392; c=relaxed/simple;
+	bh=sglgP4nrzMf9AieQM4DL+n/6UDGucMH6MJ8uQ8T0/fg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wfz2zP/R41SCLnWPrdM2rUDK4k/7pKldmDp+Tn1FF/9SuUOVS9NS2kPgnmk/gXCBBC3mK/kWgP0C83WZI0RmrfPJ+u4tJsW0KuVtIRwQ9rhqhkJVQOjqf1xZFoXp6pV3HrQ7qdVJblkPxJO7em2B2WMJuC3pDeZksTA3E3mBNlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vZRP/+wY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tMLMz2czkei56sody+rrN4vaWnwyFfNWoJuimlubbwptITBJD5sdwdiujE9lxwSjvf4YxNqPgV9ngwhFywzFTsWBfOtANgU2uDbYyqJqLLeSOunWdbdgYUUmPXq/+oj9M4wgBEFKD2lXbnzk06dAdTPGJy971daTyeZy0VWRaJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q/Se26u3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vZRP/+wY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCA7CC4CEF1;
-	Fri,  9 Jan 2026 12:23:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q/Se26u3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1ED4C4CEF1;
+	Fri,  9 Jan 2026 12:23:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961389;
-	bh=i1kgx993EoJ5tsrKj+xvRm/JHluPmRw/z3fQsQulwVQ=;
+	s=korg; t=1767961392;
+	bh=sglgP4nrzMf9AieQM4DL+n/6UDGucMH6MJ8uQ8T0/fg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vZRP/+wYUJv2lZzoX8rELb05ci8M29O7wLrcfJIY7zAMfVrfxa7w9QAJPLVAKNyFm
-	 Yai+JanAvKcN3jeYn4oHAwm49uLlGMt7RYMCAwNvigLf3p2YQDg7GPOQrluc8JHx+r
-	 jIwQ6CSrNPq7y3x2vwGUTCN8bXJmwROltpzNTG/Q=
+	b=q/Se26u3A4laP0HIFVuZRl4034idAhiB/vnYByX/t9ZYD7iZ8LEqxwta3J05K/yDt
+	 B7VA2xabgnXU+ksx+ZdRyJMdN9QNek8Edd+oIpB0sWSCdmloZjVcCNemhKYO4ITnhr
+	 u/XW/n4rlrBoNGhFlpyFI3VppBqoKQXKuy5ADvwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e2ce9e275ecc70a30b72@syzkaller.appspotmail.com,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Ajay Kaher <ajay.kaher@broadcom.com>,
-	Shivani Agarwal <shivani.agarwal@broadcom.com>
-Subject: [PATCH 6.6 708/737] RDMA/core: Fix "KASAN: slab-use-after-free Read in ib_register_device" problem
-Date: Fri,  9 Jan 2026 12:44:07 +0100
-Message-ID: <20260109112200.706709012@linuxfoundation.org>
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	linux-doc@vger.kernel.org
+Subject: [PATCH 6.6 735/737] tty: fix tty_port_tty_*hangup() kernel-doc
+Date: Fri,  9 Jan 2026 12:44:34 +0100
+Message-ID: <20260109112201.755593272@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -48,91 +46,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhu Yanjun <yanjun.zhu@linux.dev>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-commit d0706bfd3ee40923c001c6827b786a309e2a8713 upstream.
+commit 6241b49540a65a6d5274fa938fd3eb4cbfe2e076 upstream.
 
-Call Trace:
+The commit below added a new helper, but omitted to move (and add) the
+corressponding kernel-doc. Do it now.
 
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:408 [inline]
- print_report+0xc3/0x670 mm/kasan/report.c:521
- kasan_report+0xe0/0x110 mm/kasan/report.c:634
- strlen+0x93/0xa0 lib/string.c:420
- __fortify_strlen include/linux/fortify-string.h:268 [inline]
- get_kobj_path_length lib/kobject.c:118 [inline]
- kobject_get_path+0x3f/0x2a0 lib/kobject.c:158
- kobject_uevent_env+0x289/0x1870 lib/kobject_uevent.c:545
- ib_register_device drivers/infiniband/core/device.c:1472 [inline]
- ib_register_device+0x8cf/0xe00 drivers/infiniband/core/device.c:1393
- rxe_register_device+0x275/0x320 drivers/infiniband/sw/rxe/rxe_verbs.c:1552
- rxe_net_add+0x8e/0xe0 drivers/infiniband/sw/rxe/rxe_net.c:550
- rxe_newlink+0x70/0x190 drivers/infiniband/sw/rxe/rxe.c:225
- nldev_newlink+0x3a3/0x680 drivers/infiniband/core/nldev.c:1796
- rdma_nl_rcv_msg+0x387/0x6e0 drivers/infiniband/core/netlink.c:195
- rdma_nl_rcv_skb.constprop.0.isra.0+0x2e5/0x450
- netlink_unicast_kernel net/netlink/af_netlink.c:1313 [inline]
- netlink_unicast+0x53a/0x7f0 net/netlink/af_netlink.c:1339
- netlink_sendmsg+0x8d1/0xdd0 net/netlink/af_netlink.c:1883
- sock_sendmsg_nosec net/socket.c:712 [inline]
- __sock_sendmsg net/socket.c:727 [inline]
- ____sys_sendmsg+0xa95/0xc70 net/socket.c:2566
- ___sys_sendmsg+0x134/0x1d0 net/socket.c:2620
- __sys_sendmsg+0x16d/0x220 net/socket.c:2652
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xcd/0x260 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-This problem is similar to the problem that the
-commit 1d6a9e7449e2 ("RDMA/core: Fix use-after-free when rename device name")
-fixes.
-
-The root cause is: the function ib_device_rename() renames the name with
-lock. But in the function kobject_uevent(), this name is accessed without
-lock protection at the same time.
-
-The solution is to add the lock protection when this name is accessed in
-the function kobject_uevent().
-
-Fixes: 779e0bf47632 ("RDMA/core: Do not indicate device ready when device enablement fails")
-Link: https://patch.msgid.link/r/20250506151008.75701-1-yanjun.zhu@linux.dev
-Reported-by: syzbot+e2ce9e275ecc70a30b72@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e2ce9e275ecc70a30b72
-Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-[ Ajay: Modified to apply on v5.10.y-v6.6.y
-        ib_device_notify_register() not present in v5.10.y-v6.6.y,
-        so directly added lock for kobject_uevent() ]
-Signed-off-by: Ajay Kaher <ajay.kaher@broadcom.com>
-Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
+Signed-off-by: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
+Fixes: 2b5eac0f8c6e ("tty: introduce and use tty_port_tty_vhangup() helper")
+Link: https://lore.kernel.org/all/b23d566c-09dc-7374-cc87-0ad4660e8b2e@linux.intel.com/
+Reported-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: linux-doc@vger.kernel.org
+Link: https://lore.kernel.org/r/20250624080641.509959-6-jirislaby@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/device.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ Documentation/driver-api/tty/tty_port.rst |    5 +++--
+ drivers/tty/tty_port.c                    |    5 -----
+ include/linux/tty_port.h                  |    9 +++++++++
+ 3 files changed, 12 insertions(+), 7 deletions(-)
 
---- a/drivers/infiniband/core/device.c
-+++ b/drivers/infiniband/core/device.c
-@@ -1450,8 +1450,13 @@ int ib_register_device(struct ib_device
- 		return ret;
- 	}
- 	dev_set_uevent_suppress(&device->dev, false);
-+
-+	down_read(&devices_rwsem);
-+
- 	/* Mark for userspace that device is ready */
- 	kobject_uevent(&device->dev.kobj, KOBJ_ADD);
-+
-+	up_read(&devices_rwsem);
- 	ib_device_put(device);
+--- a/Documentation/driver-api/tty/tty_port.rst
++++ b/Documentation/driver-api/tty/tty_port.rst
+@@ -42,9 +42,10 @@ TTY Refcounting
+ TTY Helpers
+ -----------
  
- 	return 0;
++.. kernel-doc::  include/linux/tty_port.h
++   :identifiers: tty_port_tty_hangup tty_port_tty_vhangup
+ .. kernel-doc::  drivers/tty/tty_port.c
+-   :identifiers: tty_port_tty_hangup tty_port_tty_wakeup
+-
++   :identifiers: tty_port_tty_wakeup
+ 
+ Modem Signals
+ -------------
+--- a/drivers/tty/tty_port.c
++++ b/drivers/tty/tty_port.c
+@@ -409,11 +409,6 @@ void tty_port_hangup(struct tty_port *po
+ }
+ EXPORT_SYMBOL(tty_port_hangup);
+ 
+-/**
+- * tty_port_tty_hangup - helper to hang up a tty
+- * @port: tty port
+- * @check_clocal: hang only ttys with %CLOCAL unset?
+- */
+ void __tty_port_tty_hangup(struct tty_port *port, bool check_clocal, bool async)
+ {
+ 	struct tty_struct *tty = tty_port_tty_get(port);
+--- a/include/linux/tty_port.h
++++ b/include/linux/tty_port.h
+@@ -254,11 +254,20 @@ static inline int tty_port_users(struct
+ 	return port->count + port->blocked_open;
+ }
+ 
++/**
++ * tty_port_tty_hangup - helper to hang up a tty asynchronously
++ * @port: tty port
++ * @check_clocal: hang only ttys with %CLOCAL unset?
++ */
+ static inline void tty_port_tty_hangup(struct tty_port *port, bool check_clocal)
+ {
+ 	__tty_port_tty_hangup(port, check_clocal, true);
+ }
+ 
++/**
++ * tty_port_tty_vhangup - helper to hang up a tty synchronously
++ * @port: tty port
++ */
+ static inline void tty_port_tty_vhangup(struct tty_port *port)
+ {
+ 	__tty_port_tty_hangup(port, false, false);
 
 
