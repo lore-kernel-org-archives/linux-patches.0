@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5D633B6F1;
-	Fri,  9 Jan 2026 12:08:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16C0435A94B;
+	Fri,  9 Jan 2026 12:08:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960511; cv=none; b=adi1F1BqAUzzR25Jirj144DCW1zI5eYyz2zmON1Oj7h/j1KykbX+yJyR1LMS/fWm5MeAn6h74xh7xL/XxAeET58b4/mOrj2Ox7TI57235DGnKcLn01QoRufz3y/OyBlC8Vxedi+/wGJDYzmaOz5P+1T0UJpTPfAAiLFwkWa9lM8=
+	t=1767960514; cv=none; b=GiYg4XeBzaufeaEjiTTrk7OgBxxoDuSh5rjhRxLRW7JC3Dpl+e+2HmtWOaFxugU+gptEKHLg4uBX4zSZcw8eTCv9D6+8qQynaMVgEZQeq7gqWszTAPRQjiwgKWsOZ6wlggwLBNevX206eOozz3+29y1kZn3C7vtPJar3Aibh80A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960511; c=relaxed/simple;
-	bh=+YaKkBfovf0IrNKU7DrDwcyjzc2Bh2e8fmTg6aForvQ=;
+	s=arc-20240116; t=1767960514; c=relaxed/simple;
+	bh=S+MCB7Yoek14F9AIfcXf7NPm4yzX9GJB5ehMvNy5G+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lRPCsTWb6uTaI8kHSdv6H7c4Z5CuG9WAIF5rog4TfvLztra6KYRzdisvxAlBPc8z8oN1YG+HVViLNrHzIKxnOKPBpSLju2wrteIs2XCrXjsiQR7GSTC44QehMiB0/+BoNQGctMb2zWcaCGWbLpcY3m/tWT8fC1WYTnpRRoTZowo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s4Q7OJE7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PN8SB5xkBC25p1wE8HXit4Jvw1VZcTrS5ygSvnwAvzv3hDuqgxqrwGmQoIjPfTZX2nql7Dfc5/ilP5Vu0m1bmhnA354oHB9qGA9iMCAoWmw160uChifeA2pbmcWFlbLm3PI5ShGnnAfhI+4srroOnm57lhsXQl7SYmE/xNNGOOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E5feeev0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s4Q7OJE7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FE4CC16AAE;
-	Fri,  9 Jan 2026 12:08:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E5feeev0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63F7FC4AF09;
+	Fri,  9 Jan 2026 12:08:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960510;
-	bh=+YaKkBfovf0IrNKU7DrDwcyjzc2Bh2e8fmTg6aForvQ=;
+	s=korg; t=1767960513;
+	bh=S+MCB7Yoek14F9AIfcXf7NPm4yzX9GJB5ehMvNy5G+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s4Q7OJE7i5Dpz5QbK0unn2NXEJQjtcrev73N4GHuyDJ8uphs7us4EgX+8STPVXPkg
-	 /a2YXOc3LAMTKaN6OwkdfHciB8k/6oL1zYoA2q2Aele7tFkZIn6awV0VZFxQPX880U
-	 JuOoYBU1vsxgvNwl0KR0QWdGQNljZ/p1w3c95jCk=
+	b=E5feeev02qS6dOpax46jPJ0TxJ/mNhq7PDpy8dy//kBZprkxGSaU4IQOonq0AcNdJ
+	 iUbi5vS3AB/tehVexyiAjd1LCVidHD7oYl9c36uff4e23w3EfgN9FzVigO9XuQmuqC
+	 mACkOZkVXVp4b0YzoRj+jeEBZFBSSczO8vmFtkUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Troy Mitchell <troy.mitchell@linux.dev>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Encrow Thorne <jyc0019@gmail.com>,
+	Matthias Schiffer <matthias.schiffer@tq-group.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Kevin Hilman <khilman@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 397/737] reset: fix BIT macro reference
-Date: Fri,  9 Jan 2026 12:38:56 +0100
-Message-ID: <20260109112148.936082475@linuxfoundation.org>
+Subject: [PATCH 6.6 388/737] ti-sysc: allow OMAP2 and OMAP4 timers to be reserved on AM33xx
+Date: Fri,  9 Jan 2026 12:38:47 +0100
+Message-ID: <20260109112148.595233491@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,38 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Encrow Thorne <jyc0019@gmail.com>
+From: Matthias Schiffer <matthias.schiffer@tq-group.com>
 
-[ Upstream commit f3d8b64ee46c9b4b0b82b1a4642027728bac95b8 ]
+[ Upstream commit 3f61783920504b2cf99330b372d82914bb004d8e ]
 
-RESET_CONTROL_FLAGS_BIT_* macros use BIT(), but reset.h does not
-include bits.h. This causes compilation errors when including
-reset.h standalone.
+am33xx.dtsi has the same clock setup as am35xx.dtsi, setting
+ti,no-reset-on-init and ti,no-idle on timer1_target and timer2_target,
+so AM33 needs the same workaround as AM35 to avoid ti-sysc probe
+failing on certain target modules.
 
-Include bits.h to make reset.h self-contained.
-
-Suggested-by: Troy Mitchell <troy.mitchell@linux.dev>
-Reviewed-by: Troy Mitchell <troy.mitchell@linux.dev>
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Signed-off-by: Encrow Thorne <jyc0019@gmail.com>
-Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+Signed-off-by: Matthias Schiffer <matthias.schiffer@tq-group.com>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Link: https://lore.kernel.org/r/20250825131114.2206804-1-alexander.stein@ew.tq-group.com
+Signed-off-by: Kevin Hilman <khilman@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/reset.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/bus/ti-sysc.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/reset.h b/include/linux/reset.h
-index 514ddf003efc..4b31d683776e 100644
---- a/include/linux/reset.h
-+++ b/include/linux/reset.h
-@@ -2,6 +2,7 @@
- #ifndef _LINUX_RESET_H_
- #define _LINUX_RESET_H_
+diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
+index 46d7410f6f0f..b6a7d0d3f153 100644
+--- a/drivers/bus/ti-sysc.c
++++ b/drivers/bus/ti-sysc.c
+@@ -37,6 +37,7 @@ enum sysc_soc {
+ 	SOC_UNKNOWN,
+ 	SOC_2420,
+ 	SOC_2430,
++	SOC_AM33,
+ 	SOC_3430,
+ 	SOC_AM35,
+ 	SOC_3630,
+@@ -2996,6 +2997,7 @@ static void ti_sysc_idle(struct work_struct *work)
+ static const struct soc_device_attribute sysc_soc_match[] = {
+ 	SOC_FLAG("OMAP242*", SOC_2420),
+ 	SOC_FLAG("OMAP243*", SOC_2430),
++	SOC_FLAG("AM33*", SOC_AM33),
+ 	SOC_FLAG("AM35*", SOC_AM35),
+ 	SOC_FLAG("OMAP3[45]*", SOC_3430),
+ 	SOC_FLAG("OMAP3[67]*", SOC_3630),
+@@ -3201,10 +3203,15 @@ static int sysc_check_active_timer(struct sysc *ddata)
+ 	 * can be dropped if we stop supporting old beagleboard revisions
+ 	 * A to B4 at some point.
+ 	 */
+-	if (sysc_soc->soc == SOC_3430 || sysc_soc->soc == SOC_AM35)
++	switch (sysc_soc->soc) {
++	case SOC_AM33:
++	case SOC_3430:
++	case SOC_AM35:
+ 		error = -ENXIO;
+-	else
++		break;
++	default:
+ 		error = -EBUSY;
++	}
  
-+#include <linux/bits.h>
- #include <linux/err.h>
- #include <linux/errno.h>
- #include <linux/types.h>
+ 	if ((ddata->cfg.quirks & SYSC_QUIRK_NO_RESET_ON_INIT) &&
+ 	    (ddata->cfg.quirks & SYSC_QUIRK_NO_IDLE))
 -- 
 2.51.0
 
