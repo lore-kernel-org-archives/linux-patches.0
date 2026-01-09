@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7284035C188;
-	Fri,  9 Jan 2026 12:46:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BA8E3590C6;
+	Fri,  9 Jan 2026 12:46:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962781; cv=none; b=hWnLWiT3MWRRxPOpNcUPQNz94m8VdV6ebxSo0HvV1m51Ni+nKnW4euMGAePMKS7mfR4Kx2+Q6fDMJzAE9FoufgXbq7QJn0zBzpKwV1G8PorKEaSm6cGWiEgXqkNKWCH1gtGLjpZIGzHXKPRbO2uZ4F1x0HXb2UBWg7qGFQp25GQ=
+	t=1767962784; cv=none; b=RsbvFJlHwSksDvr8KPU7FVYCxoWQYakTvovqy7lw8vKBwJK7fIbASMh5EfY9zh2ZbG7KEJKKNeMVqH2+HxsY0a8aKdIMjX8DzW4vAnwr94SH0n5DPTMcu4vLyI3Pt3q4eQptark/30tvSnTguZuYbt/k8h1clyFkTxjJUTlmQRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962781; c=relaxed/simple;
-	bh=JgkPr2G3E+MOBAlWdh4ylMOjYLwRi+mF6mJQacj73vQ=;
+	s=arc-20240116; t=1767962784; c=relaxed/simple;
+	bh=UJ0bD7WVI4/ZRDDP3ObENUBCz9jbW0sAMewh5pVegOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cBcPYoLyGjS4kx6N0+7XHAZybJ2FIwEZ5eN0XB163QHmXL4HSUBMIHuAp6cyfadx7DvR6vfNcM6ONAnuntyBxWbAdkiu+FdMO/VGIpvRpbm8VVRdpc21XKxS3srsB3qUVI3V/AYDfpQ3hg5MjYkBhfpHqnhyfwFRwV2skwNXV3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bz0Vmg4R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XKz+upF6Qdr4v/3TRtFvg8ZjENFKRZJngteSKA4OqUxOg4wBRl/+vDr1JhIYOjbOAgQUQuVJ8Kb3C7MGoC2uzHfa7VY4CmNKY9UblCezFn7bTm5uUHB8vC67ZFotoXd07XKMUcU1K5OsDVBUDVNZafWtFYVC4ZHr+e3O3vZy4Oo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GVDzsQ67; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bz0Vmg4R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01C1DC4CEF1;
-	Fri,  9 Jan 2026 12:46:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GVDzsQ67"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE291C4CEF1;
+	Fri,  9 Jan 2026 12:46:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962781;
-	bh=JgkPr2G3E+MOBAlWdh4ylMOjYLwRi+mF6mJQacj73vQ=;
+	s=korg; t=1767962784;
+	bh=UJ0bD7WVI4/ZRDDP3ObENUBCz9jbW0sAMewh5pVegOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bz0Vmg4RNixprQG3s+T7uquK8in5EDexjF9U5Mp4E9miJKkoBt4wYoD2XdUT+BTzk
-	 ARR1uR5KHCZnGPukeLDW8drMSbnvJmjyJTh9jpmGCaWESmMLlWfDtv0/Lye9Ns0AIs
-	 HjkVdJsY0tGHcitsmAca+FJpOYLGc6EWYqUbSsjY=
+	b=GVDzsQ67y8+/4qYpKotYuEKOADkGfGKUkRLzlFBfbDi4mOFiQpmR/D9v1+xuav3RM
+	 HtHeDxWmxcOJW8BGa9caJs+DeDgVN7PEnNiIUr1pOI6J+QzSHtbekvJLJ84h41Qs5h
+	 XZvRop//tMgHyCnGszyWlcGFx537QJ0ElmTAfKTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Johan Hovold <johan@kernel.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.1 484/634] media: videobuf2: Fix device reference leak in vb2_dc_alloc error path
-Date: Fri,  9 Jan 2026 12:42:42 +0100
-Message-ID: <20260109112135.757268566@linuxfoundation.org>
+Subject: [PATCH 6.1 485/634] media: vpif_capture: fix section mismatch
+Date: Fri,  9 Jan 2026 12:42:43 +0100
+Message-ID: <20260109112135.794929651@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,38 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Johan Hovold <johan@kernel.org>
 
-commit 94de23a9aa487d7c1372efb161721d7949a177ae upstream.
+commit 0ef841113724166c3c484d0e9ae6db1eb5634fde upstream.
 
-In vb2_dc_alloc(), get_device() is called to increment the device
-reference count. However, if subsequent DMA allocation fails
-(vb2_dc_alloc_coherent or vb2_dc_alloc_non_coherent returns error),
-the function returns without calling put_device(), causing a device
-reference leak.
+Platform drivers can be probed after their init sections have been
+discarded (e.g. on probe deferral or manual rebind through sysfs) so the
+probe function must not live in init.
 
-Add put_device() call in the error path before kfree() to properly
-release the device reference acquired earlier.
+Note that commit ffa1b391c61b ("V4L/DVB: vpif_cap/disp: Removed section
+mismatch warning") incorrectly suppressed the modpost warning.
 
-Fixes: de27891f675e ("media: videobuf2: handle non-contiguous DMA allocations")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Reviewed-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Fixes: ffa1b391c61b ("V4L/DVB: vpif_cap/disp: Removed section mismatch warning")
+Fixes: 6ffefff5a9e7 ("V4L/DVB (12906c): V4L : vpif capture driver for DM6467")
+Cc: stable@vger.kernel.org	# 2.6.32
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/common/videobuf2/videobuf2-dma-contig.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/platform/ti/davinci/vpif_capture.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/common/videobuf2/videobuf2-dma-contig.c
-+++ b/drivers/media/common/videobuf2/videobuf2-dma-contig.c
-@@ -258,6 +258,7 @@ static void *vb2_dc_alloc(struct vb2_buf
+--- a/drivers/media/platform/ti/davinci/vpif_capture.c
++++ b/drivers/media/platform/ti/davinci/vpif_capture.c
+@@ -1601,7 +1601,7 @@ err_cleanup:
+  * This creates device entries by register itself to the V4L2 driver and
+  * initializes fields of each channel objects
+  */
+-static __init int vpif_probe(struct platform_device *pdev)
++static int vpif_probe(struct platform_device *pdev)
+ {
+ 	struct vpif_subdev_info *subdevdata;
+ 	struct i2c_adapter *i2c_adap;
+@@ -1809,7 +1809,7 @@ static int vpif_resume(struct device *de
  
- 	if (ret) {
- 		dev_err(dev, "dma alloc of size %lu failed\n", size);
-+		put_device(buf->dev);
- 		kfree(buf);
- 		return ERR_PTR(-ENOMEM);
- 	}
+ static SIMPLE_DEV_PM_OPS(vpif_pm_ops, vpif_suspend, vpif_resume);
+ 
+-static __refdata struct platform_driver vpif_driver = {
++static struct platform_driver vpif_driver = {
+ 	.driver	= {
+ 		.name	= VPIF_DRIVER_NAME,
+ 		.pm	= &vpif_pm_ops,
 
 
