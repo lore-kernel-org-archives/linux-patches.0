@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0173635BDD0;
-	Fri,  9 Jan 2026 12:45:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A9D533372B;
+	Fri,  9 Jan 2026 12:45:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962756; cv=none; b=qRO+ocInqAP+TjxSMc2o1CMCW5+dZWzfSCb2Lm81Phiz93hHvFRVjKX7iZ/chYNT/cOQWJ2qT0Cmo0cVJh6+X83MJBhWqlbGCGtSjVmK8hVJLVJ6fbh52Ijoiu/UCPfMCj/pl7UafYmueGSLiZMY4KQFXfaBHGlV659kdH5SZDo=
+	t=1767962758; cv=none; b=BWduvnlBOLFF7ktcBiqWknVUN/deY+4InbQAijTYJqEcYaIWLSAgTQHtStlP0RqpVbJGBopzF2ELyUgQHPlzv4IqmFlyI1mYLSV/xzZ72ZF7OhdY6OrAZXkoVU3G8ioVZu+eQdxkc1sRZ5F42XdE7yIcMQVF3yalwgrjS4zj4Lw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962756; c=relaxed/simple;
-	bh=QhvDSUaL9wxt3TkXV1FL0SC6FVWqDOHNHbh1fqR5POU=;
+	s=arc-20240116; t=1767962758; c=relaxed/simple;
+	bh=c6mBhJ7f7yI8eAT3XmUAhbwNKGf9C3JKbZP6V53VjtM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NbFqXqoC9zTSSIhdJlPy1kcFq1ovFGQGpQzH6XMtl0eBg+TqdYyte2IKekybxI/nlCjX6Smdofqopbmy2Ssoxh9feL2zmrIPjLQnSGvJzOFBmOjFZ5nfXXq1rm54/ODs+IBx2XgLYRIkMEbmzA+xFHA1lXXZzHl/l+1gh+l6cvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GfdW0VMA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YBUYgOAYubbkWI1SVtRO6sIwSBSULIZR9CafS+zTNkgVYsrzH2p/Ay9wPRszzxcdi4t1CLPuNYANcCRPDRW9BZ5w0IDC9izztKWkQmqQ8yt5dnmbMa5hfQCnMz1ZlmyTDKAeVb6plk7aKQCLPUbEUqli/NlBv4ZuzfUrzolD73k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LXFOarK2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GfdW0VMA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B555C4CEF1;
-	Fri,  9 Jan 2026 12:45:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LXFOarK2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 272C3C4CEF1;
+	Fri,  9 Jan 2026 12:45:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962755;
-	bh=QhvDSUaL9wxt3TkXV1FL0SC6FVWqDOHNHbh1fqR5POU=;
+	s=korg; t=1767962758;
+	bh=c6mBhJ7f7yI8eAT3XmUAhbwNKGf9C3JKbZP6V53VjtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GfdW0VMASbGqi2L/7tRsUA3sBmnKlfUz9KuIs1qf+3u0sf5bqhl9OZ51BIcSuSrwB
-	 3iSG1xC0OcORMtH2EC31R8P3gdSsv36NHXWt+UyRz0tmlphaM3PaCV2ilgH2XhUfGM
-	 Chn+CYSZWiRkFQPZjJtQrFip8RGtP1IOomCWf6SY=
+	b=LXFOarK2iccBH3Ke5KFdhoifaWTQtabRU4I6yi4FpweFkZKHPqDxOQ8T7tXjJdq7y
+	 Tb0HqVEByYNuIpLK0fEBQMnMhMdM4ZnTQRLOjxtt/xMw1f/Q20ApgtstlE7Clh783C
+	 m0vfGn8NtSZ4Oci6GcPXQWFz1zJw1ruFvklLlIso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
+	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
 	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.1 476/634] fbdev: pxafb: Fix multiple clamped values in pxafb_adjust_timing
-Date: Fri,  9 Jan 2026 12:42:34 +0100
-Message-ID: <20260109112135.459779240@linuxfoundation.org>
+Subject: [PATCH 6.1 477/634] fbdev: tcx.c fix mem_map to correct smem_start offset
+Date: Fri,  9 Jan 2026 12:42:35 +0100
+Message-ID: <20260109112135.496642781@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -44,49 +44,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: René Rebe <rene@exactco.de>
 
-commit 0155e868cbc111846cc2809c1546ea53810a56ae upstream.
+commit 35fa2b4bf96415b88d7edaa5cf8af5185d9ce76e upstream.
 
-The variables were never clamped because the return value of clamp_val()
-was not used. Fix this by assigning the clamped values, and use clamp()
-instead of clamp_val().
+403ae52ac047 ("sparc: fix drivers/video/tcx.c warning") changed the
+physbase initializing breaking the user-space mmap, e.g. for Xorg
+entirely.
 
-Cc: stable@vger.kernel.org
-Fixes: 3f16ff608a75 ("[ARM] pxafb: cleanup of the timing checking code")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Fix fbdev mmap table so the sbus mmap helper work correctly, and
+not try to map vastly (physbase) offset memory.
+
+Fixes: 403ae52ac047 ("sparc: fix drivers/video/tcx.c warning")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: René Rebe <rene@exactco.de>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/pxafb.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/video/fbdev/tcx.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/video/fbdev/pxafb.c
-+++ b/drivers/video/fbdev/pxafb.c
-@@ -418,12 +418,12 @@ static int pxafb_adjust_timing(struct px
- 	var->yres = max_t(int, var->yres, MIN_YRES);
- 
- 	if (!(fbi->lccr0 & LCCR0_LCDT)) {
--		clamp_val(var->hsync_len, 1, 64);
--		clamp_val(var->vsync_len, 1, 64);
--		clamp_val(var->left_margin,  1, 255);
--		clamp_val(var->right_margin, 1, 255);
--		clamp_val(var->upper_margin, 1, 255);
--		clamp_val(var->lower_margin, 1, 255);
-+		var->hsync_len = clamp(var->hsync_len, 1, 64);
-+		var->vsync_len = clamp(var->vsync_len, 1, 64);
-+		var->left_margin  = clamp(var->left_margin,  1, 255);
-+		var->right_margin = clamp(var->right_margin, 1, 255);
-+		var->upper_margin = clamp(var->upper_margin, 1, 255);
-+		var->lower_margin = clamp(var->lower_margin, 1, 255);
+--- a/drivers/video/fbdev/tcx.c
++++ b/drivers/video/fbdev/tcx.c
+@@ -436,7 +436,7 @@ static int tcx_probe(struct platform_dev
+ 			j = i;
+ 			break;
+ 		}
+-		par->mmap_map[i].poff = op->resource[j].start;
++		par->mmap_map[i].poff = op->resource[j].start - info->fix.smem_start;
  	}
  
- 	/* make sure each line is aligned on word boundary */
+ 	info->flags = FBINFO_DEFAULT;
 
 
