@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3413531A069;
-	Fri,  9 Jan 2026 12:53:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C66B31A069;
+	Fri,  9 Jan 2026 12:53:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767963212; cv=none; b=l77H0uHragHbkzb6yXr9tEqksQ69RhjZaTgtHI/T2EhuIF5NcuO+he7kZqcNICv2IDhbFPCCe5N64EZ3N/SUivr8oQf4/W5Ld3rSQHxr+g+hhxjtQb1twR0K5e1AAhxdSPV6uHyc9XqRo/iWCbNyRAEjDug33h8wlKycXBKx5Ws=
+	t=1767963215; cv=none; b=DU9fiqhTIBQ9nqekZZpWZH4imwF8mnxV40q2Z6dx6KTJ/H8RXkj2b6G9g8jf6Zo83LKlXJyoHWyZyqEoSICyl29ujvQuyrFJT6aaAyEDBYv3rMTmwABOYXckcTOFUqr1Pjq64jK17tSL5eyc+D4u6aW4ZwKS29ksdvSfOI2UxlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767963212; c=relaxed/simple;
-	bh=R7oRxjIMH2M3eJ9NNio1PQsUzAKBCTUInhcL79QAuGk=;
+	s=arc-20240116; t=1767963215; c=relaxed/simple;
+	bh=24gcN5Jx3hS/JHyYvLS7FEmzfsDPJUiYg7wi1F+SC20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YOs4JN66l8hVPQp4XWYHC2ND01e+qdNV/FOPno9K/H7XZX1SUWBFqcnaiRhiU90P42qXGMH3z4YXxDVIxQX+nX7+KsLKtXM5pn8xiHhE9p44zPJcjfYuXKisft0BI9y6N8uKP3AZFem+C0y7/bYBZmQ0PblJ7VCajF7vN1suh4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VWfH5aLq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iCTMi+wGVuFVyg0ZfXDods2IhxXYpSX33FYRvfGHMSA483PWol2zMte4kkGlVOyzzPgNzhuNSXkR+jUKKBdaTVcURB4eX7/q3NhN4Sa9awGV562HdIqrWjlhgReGaArLNs3JTuizvQrce9L2SvbmpwOI7gLsUkcpsGltMtLdaRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pZmWzxvn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VWfH5aLq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6FC9C4CEF1;
-	Fri,  9 Jan 2026 12:53:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pZmWzxvn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED24C4CEF1;
+	Fri,  9 Jan 2026 12:53:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767963212;
-	bh=R7oRxjIMH2M3eJ9NNio1PQsUzAKBCTUInhcL79QAuGk=;
+	s=korg; t=1767963214;
+	bh=24gcN5Jx3hS/JHyYvLS7FEmzfsDPJUiYg7wi1F+SC20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VWfH5aLq7Kb2xT+o5THxqf7rpf/CvF/6kEjK31D2d4CpcPT+LGZbuVVSdsa0Mvkxj
-	 Q2IyJziDGbVdQuIKmUVAMUeKoGF0NB0UVZuQVARo6nHgkhwZFN2Z1TNYrAxlxpdDgL
-	 Jy5fOuent6L80s5oAHfE9nxJ+WqXbMqfYYZ5OViY=
+	b=pZmWzxvnCSX1Iw7Q6a/wUwxjLztTmKub5QVJE7OhU4hz1ONUQBagb96abZhlyfDhk
+	 xBxkmZdQwu18WRFoXRLOpyxoWiC5LR0fbjWTtEUM8mmSpLCR99SX/JPMQQRYoHFTuH
+	 RTD/LCwI1s1qYm1DWTPSxZv7YCuiLhWxnm6D6CMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Johan Hovold <johan@kernel.org>,
-	Vladimir Zapolskiy <vz@mleia.com>
-Subject: [PATCH 6.1 629/634] usb: gadget: lpc32xx_udc: fix clock imbalance in error path
-Date: Fri,  9 Jan 2026 12:45:07 +0100
-Message-ID: <20260109112141.303705164@linuxfoundation.org>
+	Jisheng Zhang <jszhang@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.1 630/634] net: stmmac: fix incorrect rxq|txq_stats reference
+Date: Fri,  9 Jan 2026 12:45:08 +0100
+Message-ID: <20260109112141.341007693@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -45,108 +45,655 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Jisheng Zhang <jszhang@kernel.org>
 
-commit 782be79e4551550d7a82b1957fc0f7347e6d461f upstream.
+commit 8070274b472e2e9f5f67a990f5e697634c415708 upstream.
 
-A recent change fixing a device reference leak introduced a clock
-imbalance by reusing an error path so that the clock may be disabled
-before having been enabled.
+commit 133466c3bbe1 ("net: stmmac: use per-queue 64 bit statistics
+where necessary") caused one regression as found by Uwe, the backtrace
+looks like:
 
-Note that the clock framework allows for passing in NULL clocks so there
-is no risk for a NULL pointer dereference.
+	INFO: trying to register non-static key.
+	The code is fine but needs lockdep annotation, or maybe
+	you didn't initialize this object before use?
+	turning off the locking correctness validator.
+	CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.5.0-rc1-00449-g133466c3bbe1-dirty #21
+	Hardware name: STM32 (Device Tree Support)
+	 unwind_backtrace from show_stack+0x18/0x1c
+	 show_stack from dump_stack_lvl+0x60/0x90
+	 dump_stack_lvl from register_lock_class+0x98c/0x99c
+	 register_lock_class from __lock_acquire+0x74/0x293c
+	 __lock_acquire from lock_acquire+0x134/0x398
+	 lock_acquire from stmmac_get_stats64+0x2ac/0x2fc
+	 stmmac_get_stats64 from dev_get_stats+0x44/0x130
+	 dev_get_stats from rtnl_fill_stats+0x38/0x120
+	 rtnl_fill_stats from rtnl_fill_ifinfo+0x834/0x17f4
+	 rtnl_fill_ifinfo from rtmsg_ifinfo_build_skb+0xc0/0x144
+	 rtmsg_ifinfo_build_skb from rtmsg_ifinfo+0x50/0x88
+	 rtmsg_ifinfo from __dev_notify_flags+0xc0/0xec
+	 __dev_notify_flags from dev_change_flags+0x50/0x5c
+	 dev_change_flags from ip_auto_config+0x2f4/0x1260
+	 ip_auto_config from do_one_initcall+0x70/0x35c
+	 do_one_initcall from kernel_init_freeable+0x2ac/0x308
+	 kernel_init_freeable from kernel_init+0x1c/0x138
+	 kernel_init from ret_from_fork+0x14/0x2c
 
-Also drop the bogus I2C client NULL check added by the offending commit
-as the pointer has already been verified to be non-NULL.
+The reason is the rxq|txq_stats structures are not what expected
+because stmmac_open() -> __stmmac_open() the structure is overwritten
+by "memcpy(&priv->dma_conf, dma_conf, sizeof(*dma_conf));"
+This causes the well initialized syncp member of rxq|txq_stats is
+overwritten unexpectedly as pointed out by Johannes and Uwe.
 
-Fixes: c84117912bdd ("USB: lpc32xx_udc: Fix error handling in probe")
-Cc: stable@vger.kernel.org
-Cc: Ma Ke <make24@iscas.ac.cn>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Vladimir Zapolskiy <vz@mleia.com>
-Link: https://patch.msgid.link/20251218153519.19453-2-johan@kernel.org
+Fix this issue by moving rxq|txq_stats back to stmmac_extra_stats. For
+SMP cache friendly, we also mark stmmac_txq_stats and stmmac_rxq_stats
+as ____cacheline_aligned_in_smp.
+
+Fixes: 133466c3bbe1 ("net: stmmac: use per-queue 64 bit statistics where necessary")
+Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+Reported-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Tested-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20230917165328.3403-1-jszhang@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/lpc32xx_udc.c |   19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/common.h         |    7 -
+ drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c    |   16 +-
+ drivers/net/ethernet/stmicro/stmmac/dwmac4_lib.c     |   16 +-
+ drivers/net/ethernet/stmicro/stmmac/dwmac_lib.c      |   16 +-
+ drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c   |   16 +-
+ drivers/net/ethernet/stmicro/stmmac/stmmac.h         |    2 
+ drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c |   32 ++--
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c    |  127 ++++++++++---------
+ 8 files changed, 121 insertions(+), 111 deletions(-)
 
---- a/drivers/usb/gadget/udc/lpc32xx_udc.c
-+++ b/drivers/usb/gadget/udc/lpc32xx_udc.c
-@@ -3027,7 +3027,7 @@ static int lpc32xx_udc_probe(struct plat
- 	pdev->dev.dma_mask = &lpc32xx_usbd_dmamask;
- 	retval = dma_set_coherent_mask(&pdev->dev, DMA_BIT_MASK(32));
- 	if (retval)
--		goto i2c_fail;
-+		goto err_put_client;
+--- a/drivers/net/ethernet/stmicro/stmmac/common.h
++++ b/drivers/net/ethernet/stmicro/stmmac/common.h
+@@ -69,7 +69,7 @@ struct stmmac_txq_stats {
+ 	u64 tx_tso_frames;
+ 	u64 tx_tso_nfrags;
+ 	struct u64_stats_sync syncp;
+-};
++} ____cacheline_aligned_in_smp;
  
- 	udc->board = &lpc32xx_usbddata;
+ struct stmmac_rxq_stats {
+ 	u64 rx_bytes;
+@@ -78,7 +78,7 @@ struct stmmac_rxq_stats {
+ 	u64 rx_normal_irq_n;
+ 	u64 napi_poll;
+ 	struct u64_stats_sync syncp;
+-};
++} ____cacheline_aligned_in_smp;
  
-@@ -3047,7 +3047,7 @@ static int lpc32xx_udc_probe(struct plat
- 		udc->udp_irq[i] = platform_get_irq(pdev, i);
- 		if (udc->udp_irq[i] < 0) {
- 			retval = udc->udp_irq[i];
--			goto i2c_fail;
-+			goto err_put_client;
+ /* Extra statistic and debug information exposed by ethtool */
+ struct stmmac_extra_stats {
+@@ -201,6 +201,9 @@ struct stmmac_extra_stats {
+ 	unsigned long mtl_est_hlbf;
+ 	unsigned long mtl_est_btre;
+ 	unsigned long mtl_est_btrlm;
++	/* per queue statistics */
++	struct stmmac_txq_stats txq_stats[MTL_MAX_TX_QUEUES];
++	struct stmmac_rxq_stats rxq_stats[MTL_MAX_RX_QUEUES];
+ 	unsigned long rx_dropped;
+ 	unsigned long rx_errors;
+ 	unsigned long tx_dropped;
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c
+@@ -440,8 +440,8 @@ static int sun8i_dwmac_dma_interrupt(str
+ 				     struct stmmac_extra_stats *x, u32 chan,
+ 				     u32 dir)
+ {
+-	struct stmmac_rx_queue *rx_q = &priv->dma_conf.rx_queue[chan];
+-	struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[chan];
++	struct stmmac_rxq_stats *rxq_stats = &priv->xstats.rxq_stats[chan];
++	struct stmmac_txq_stats *txq_stats = &priv->xstats.txq_stats[chan];
+ 	int ret = 0;
+ 	u32 v;
+ 
+@@ -454,9 +454,9 @@ static int sun8i_dwmac_dma_interrupt(str
+ 
+ 	if (v & EMAC_TX_INT) {
+ 		ret |= handle_tx;
+-		u64_stats_update_begin(&tx_q->txq_stats.syncp);
+-		tx_q->txq_stats.tx_normal_irq_n++;
+-		u64_stats_update_end(&tx_q->txq_stats.syncp);
++		u64_stats_update_begin(&txq_stats->syncp);
++		txq_stats->tx_normal_irq_n++;
++		u64_stats_update_end(&txq_stats->syncp);
+ 	}
+ 
+ 	if (v & EMAC_TX_DMA_STOP_INT)
+@@ -478,9 +478,9 @@ static int sun8i_dwmac_dma_interrupt(str
+ 
+ 	if (v & EMAC_RX_INT) {
+ 		ret |= handle_rx;
+-		u64_stats_update_begin(&rx_q->rxq_stats.syncp);
+-		rx_q->rxq_stats.rx_normal_irq_n++;
+-		u64_stats_update_end(&rx_q->rxq_stats.syncp);
++		u64_stats_update_begin(&rxq_stats->syncp);
++		rxq_stats->rx_normal_irq_n++;
++		u64_stats_update_end(&rxq_stats->syncp);
+ 	}
+ 
+ 	if (v & EMAC_RX_BUF_UA_INT)
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_lib.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_lib.c
+@@ -171,8 +171,8 @@ int dwmac4_dma_interrupt(struct stmmac_p
+ 	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
+ 	u32 intr_status = readl(ioaddr + DMA_CHAN_STATUS(dwmac4_addrs, chan));
+ 	u32 intr_en = readl(ioaddr + DMA_CHAN_INTR_ENA(dwmac4_addrs, chan));
+-	struct stmmac_rx_queue *rx_q = &priv->dma_conf.rx_queue[chan];
+-	struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[chan];
++	struct stmmac_rxq_stats *rxq_stats = &priv->xstats.rxq_stats[chan];
++	struct stmmac_txq_stats *txq_stats = &priv->xstats.txq_stats[chan];
+ 	int ret = 0;
+ 
+ 	if (dir == DMA_DIR_RX)
+@@ -201,15 +201,15 @@ int dwmac4_dma_interrupt(struct stmmac_p
+ 	}
+ 	/* TX/RX NORMAL interrupts */
+ 	if (likely(intr_status & DMA_CHAN_STATUS_RI)) {
+-		u64_stats_update_begin(&rx_q->rxq_stats.syncp);
+-		rx_q->rxq_stats.rx_normal_irq_n++;
+-		u64_stats_update_end(&rx_q->rxq_stats.syncp);
++		u64_stats_update_begin(&rxq_stats->syncp);
++		rxq_stats->rx_normal_irq_n++;
++		u64_stats_update_end(&rxq_stats->syncp);
+ 		ret |= handle_rx;
+ 	}
+ 	if (likely(intr_status & DMA_CHAN_STATUS_TI)) {
+-		u64_stats_update_begin(&tx_q->txq_stats.syncp);
+-		tx_q->txq_stats.tx_normal_irq_n++;
+-		u64_stats_update_end(&tx_q->txq_stats.syncp);
++		u64_stats_update_begin(&txq_stats->syncp);
++		txq_stats->tx_normal_irq_n++;
++		u64_stats_update_end(&txq_stats->syncp);
+ 		ret |= handle_tx;
+ 	}
+ 
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac_lib.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac_lib.c
+@@ -162,8 +162,8 @@ static void show_rx_process_state(unsign
+ int dwmac_dma_interrupt(struct stmmac_priv *priv, void __iomem *ioaddr,
+ 			struct stmmac_extra_stats *x, u32 chan, u32 dir)
+ {
+-	struct stmmac_rx_queue *rx_q = &priv->dma_conf.rx_queue[chan];
+-	struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[chan];
++	struct stmmac_rxq_stats *rxq_stats = &priv->xstats.rxq_stats[chan];
++	struct stmmac_txq_stats *txq_stats = &priv->xstats.txq_stats[chan];
+ 	int ret = 0;
+ 	/* read the status register (CSR5) */
+ 	u32 intr_status = readl(ioaddr + DMA_STATUS);
+@@ -215,16 +215,16 @@ int dwmac_dma_interrupt(struct stmmac_pr
+ 			u32 value = readl(ioaddr + DMA_INTR_ENA);
+ 			/* to schedule NAPI on real RIE event. */
+ 			if (likely(value & DMA_INTR_ENA_RIE)) {
+-				u64_stats_update_begin(&rx_q->rxq_stats.syncp);
+-				rx_q->rxq_stats.rx_normal_irq_n++;
+-				u64_stats_update_end(&rx_q->rxq_stats.syncp);
++				u64_stats_update_begin(&rxq_stats->syncp);
++				rxq_stats->rx_normal_irq_n++;
++				u64_stats_update_end(&rxq_stats->syncp);
+ 				ret |= handle_rx;
+ 			}
+ 		}
+ 		if (likely(intr_status & DMA_STATUS_TI)) {
+-			u64_stats_update_begin(&tx_q->txq_stats.syncp);
+-			tx_q->txq_stats.tx_normal_irq_n++;
+-			u64_stats_update_end(&tx_q->txq_stats.syncp);
++			u64_stats_update_begin(&txq_stats->syncp);
++			txq_stats->tx_normal_irq_n++;
++			u64_stats_update_end(&txq_stats->syncp);
+ 			ret |= handle_tx;
+ 		}
+ 		if (unlikely(intr_status & DMA_STATUS_ERI))
+--- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
+@@ -333,8 +333,8 @@ static int dwxgmac2_dma_interrupt(struct
+ 				  struct stmmac_extra_stats *x, u32 chan,
+ 				  u32 dir)
+ {
+-	struct stmmac_rx_queue *rx_q = &priv->dma_conf.rx_queue[chan];
+-	struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[chan];
++	struct stmmac_rxq_stats *rxq_stats = &priv->xstats.rxq_stats[chan];
++	struct stmmac_txq_stats *txq_stats = &priv->xstats.txq_stats[chan];
+ 	u32 intr_status = readl(ioaddr + XGMAC_DMA_CH_STATUS(chan));
+ 	u32 intr_en = readl(ioaddr + XGMAC_DMA_CH_INT_EN(chan));
+ 	int ret = 0;
+@@ -363,15 +363,15 @@ static int dwxgmac2_dma_interrupt(struct
+ 	/* TX/RX NORMAL interrupts */
+ 	if (likely(intr_status & XGMAC_NIS)) {
+ 		if (likely(intr_status & XGMAC_RI)) {
+-			u64_stats_update_begin(&rx_q->rxq_stats.syncp);
+-			rx_q->rxq_stats.rx_normal_irq_n++;
+-			u64_stats_update_end(&rx_q->rxq_stats.syncp);
++			u64_stats_update_begin(&rxq_stats->syncp);
++			rxq_stats->rx_normal_irq_n++;
++			u64_stats_update_end(&rxq_stats->syncp);
+ 			ret |= handle_rx;
+ 		}
+ 		if (likely(intr_status & (XGMAC_TI | XGMAC_TBU))) {
+-			u64_stats_update_begin(&tx_q->txq_stats.syncp);
+-			tx_q->txq_stats.tx_normal_irq_n++;
+-			u64_stats_update_end(&tx_q->txq_stats.syncp);
++			u64_stats_update_begin(&txq_stats->syncp);
++			txq_stats->tx_normal_irq_n++;
++			u64_stats_update_end(&txq_stats->syncp);
+ 			ret |= handle_tx;
  		}
  	}
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
+@@ -77,7 +77,6 @@ struct stmmac_tx_queue {
+ 	dma_addr_t dma_tx_phy;
+ 	dma_addr_t tx_tail_addr;
+ 	u32 mss;
+-	struct stmmac_txq_stats txq_stats;
+ };
  
-@@ -3055,7 +3055,7 @@ static int lpc32xx_udc_probe(struct plat
- 	if (IS_ERR(udc->udp_baseaddr)) {
- 		dev_err(udc->dev, "IO map failure\n");
- 		retval = PTR_ERR(udc->udp_baseaddr);
--		goto i2c_fail;
-+		goto err_put_client;
+ struct stmmac_rx_buffer {
+@@ -119,7 +118,6 @@ struct stmmac_rx_queue {
+ 		unsigned int len;
+ 		unsigned int error;
+ 	} state;
+-	struct stmmac_rxq_stats rxq_stats;
+ };
+ 
+ struct stmmac_channel {
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
+@@ -557,14 +557,14 @@ static void stmmac_get_per_qstats(struct
+ 
+ 	pos = data;
+ 	for (q = 0; q < tx_cnt; q++) {
+-		struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[q];
++		struct stmmac_txq_stats *txq_stats = &priv->xstats.txq_stats[q];
+ 		struct stmmac_txq_stats snapshot;
+ 
+ 		data = pos;
+ 		do {
+-			start = u64_stats_fetch_begin(&tx_q->txq_stats.syncp);
+-			snapshot = tx_q->txq_stats;
+-		} while (u64_stats_fetch_retry(&tx_q->txq_stats.syncp, start));
++			start = u64_stats_fetch_begin(&txq_stats->syncp);
++			snapshot = *txq_stats;
++		} while (u64_stats_fetch_retry(&txq_stats->syncp, start));
+ 
+ 		p = (char *)&snapshot + offsetof(struct stmmac_txq_stats, tx_pkt_n);
+ 		for (stat = 0; stat < STMMAC_TXQ_STATS; stat++) {
+@@ -575,14 +575,14 @@ static void stmmac_get_per_qstats(struct
+ 
+ 	pos = data;
+ 	for (q = 0; q < rx_cnt; q++) {
+-		struct stmmac_rx_queue *rx_q = &priv->dma_conf.rx_queue[q];
++		struct stmmac_rxq_stats *rxq_stats = &priv->xstats.rxq_stats[q];
+ 		struct stmmac_rxq_stats snapshot;
+ 
+ 		data = pos;
+ 		do {
+-			start = u64_stats_fetch_begin(&rx_q->rxq_stats.syncp);
+-			snapshot = rx_q->rxq_stats;
+-		} while (u64_stats_fetch_retry(&rx_q->rxq_stats.syncp, start));
++			start = u64_stats_fetch_begin(&rxq_stats->syncp);
++			snapshot = *rxq_stats;
++		} while (u64_stats_fetch_retry(&rxq_stats->syncp, start));
+ 
+ 		p = (char *)&snapshot + offsetof(struct stmmac_rxq_stats, rx_pkt_n);
+ 		for (stat = 0; stat < STMMAC_RXQ_STATS; stat++) {
+@@ -646,14 +646,14 @@ static void stmmac_get_ethtool_stats(str
+ 
+ 	pos = j;
+ 	for (i = 0; i < rx_queues_count; i++) {
+-		struct stmmac_rx_queue *rx_q = &priv->dma_conf.rx_queue[i];
++		struct stmmac_rxq_stats *rxq_stats = &priv->xstats.rxq_stats[i];
+ 		struct stmmac_rxq_stats snapshot;
+ 
+ 		j = pos;
+ 		do {
+-			start = u64_stats_fetch_begin(&rx_q->rxq_stats.syncp);
+-			snapshot = rx_q->rxq_stats;
+-		} while (u64_stats_fetch_retry(&rx_q->rxq_stats.syncp, start));
++			start = u64_stats_fetch_begin(&rxq_stats->syncp);
++			snapshot = *rxq_stats;
++		} while (u64_stats_fetch_retry(&rxq_stats->syncp, start));
+ 
+ 		data[j++] += snapshot.rx_pkt_n;
+ 		data[j++] += snapshot.rx_normal_irq_n;
+@@ -663,14 +663,14 @@ static void stmmac_get_ethtool_stats(str
+ 
+ 	pos = j;
+ 	for (i = 0; i < tx_queues_count; i++) {
+-		struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[i];
++		struct stmmac_txq_stats *txq_stats = &priv->xstats.txq_stats[i];
+ 		struct stmmac_txq_stats snapshot;
+ 
+ 		j = pos;
+ 		do {
+-			start = u64_stats_fetch_begin(&tx_q->txq_stats.syncp);
+-			snapshot = tx_q->txq_stats;
+-		} while (u64_stats_fetch_retry(&tx_q->txq_stats.syncp, start));
++			start = u64_stats_fetch_begin(&txq_stats->syncp);
++			snapshot = *txq_stats;
++		} while (u64_stats_fetch_retry(&txq_stats->syncp, start));
+ 
+ 		data[j++] += snapshot.tx_pkt_n;
+ 		data[j++] += snapshot.tx_normal_irq_n;
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -2426,6 +2426,7 @@ static bool stmmac_xdp_xmit_zc(struct st
+ {
+ 	struct netdev_queue *nq = netdev_get_tx_queue(priv->dev, queue);
+ 	struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[queue];
++	struct stmmac_txq_stats *txq_stats = &priv->xstats.txq_stats[queue];
+ 	struct xsk_buff_pool *pool = tx_q->xsk_pool;
+ 	unsigned int entry = tx_q->cur_tx;
+ 	struct dma_desc *tx_desc = NULL;
+@@ -2505,9 +2506,9 @@ static bool stmmac_xdp_xmit_zc(struct st
+ 		tx_q->cur_tx = STMMAC_GET_ENTRY(tx_q->cur_tx, priv->dma_conf.dma_tx_size);
+ 		entry = tx_q->cur_tx;
+ 	}
+-	flags = u64_stats_update_begin_irqsave(&tx_q->txq_stats.syncp);
+-	tx_q->txq_stats.tx_set_ic_bit += tx_set_ic_bit;
+-	u64_stats_update_end_irqrestore(&tx_q->txq_stats.syncp, flags);
++	flags = u64_stats_update_begin_irqsave(&txq_stats->syncp);
++	txq_stats->tx_set_ic_bit += tx_set_ic_bit;
++	u64_stats_update_end_irqrestore(&txq_stats->syncp, flags);
+ 
+ 	if (tx_desc) {
+ 		stmmac_flush_tx_descriptors(priv, queue);
+@@ -2547,6 +2548,7 @@ static void stmmac_bump_dma_threshold(st
+ static int stmmac_tx_clean(struct stmmac_priv *priv, int budget, u32 queue)
+ {
+ 	struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[queue];
++	struct stmmac_txq_stats *txq_stats = &priv->xstats.txq_stats[queue];
+ 	unsigned int bytes_compl = 0, pkts_compl = 0;
+ 	unsigned int entry, xmits = 0, count = 0;
+ 	u32 tx_packets = 0, tx_errors = 0;
+@@ -2706,11 +2708,11 @@ static int stmmac_tx_clean(struct stmmac
+ 	if (tx_q->dirty_tx != tx_q->cur_tx)
+ 		stmmac_tx_timer_arm(priv, queue);
+ 
+-	flags = u64_stats_update_begin_irqsave(&tx_q->txq_stats.syncp);
+-	tx_q->txq_stats.tx_packets += tx_packets;
+-	tx_q->txq_stats.tx_pkt_n += tx_packets;
+-	tx_q->txq_stats.tx_clean++;
+-	u64_stats_update_end_irqrestore(&tx_q->txq_stats.syncp, flags);
++	flags = u64_stats_update_begin_irqsave(&txq_stats->syncp);
++	txq_stats->tx_packets += tx_packets;
++	txq_stats->tx_pkt_n += tx_packets;
++	txq_stats->tx_clean++;
++	u64_stats_update_end_irqrestore(&txq_stats->syncp, flags);
+ 
+ 	priv->xstats.tx_errors += tx_errors;
+ 
+@@ -4123,6 +4125,7 @@ static netdev_tx_t stmmac_tso_xmit(struc
+ 	int nfrags = skb_shinfo(skb)->nr_frags;
+ 	u32 queue = skb_get_queue_mapping(skb);
+ 	unsigned int first_entry, tx_packets;
++	struct stmmac_txq_stats *txq_stats;
+ 	int tmp_pay_len = 0, first_tx;
+ 	struct stmmac_tx_queue *tx_q;
+ 	bool has_vlan, set_ic;
+@@ -4133,6 +4136,7 @@ static netdev_tx_t stmmac_tso_xmit(struc
+ 	int i;
+ 
+ 	tx_q = &priv->dma_conf.tx_queue[queue];
++	txq_stats = &priv->xstats.txq_stats[queue];
+ 	first_tx = tx_q->cur_tx;
+ 
+ 	/* Compute header lengths */
+@@ -4303,13 +4307,13 @@ static netdev_tx_t stmmac_tso_xmit(struc
+ 		netif_tx_stop_queue(netdev_get_tx_queue(priv->dev, queue));
  	}
  
- 	/* Get USB device clock */
-@@ -3063,14 +3063,14 @@ static int lpc32xx_udc_probe(struct plat
- 	if (IS_ERR(udc->usb_slv_clk)) {
- 		dev_err(udc->dev, "failed to acquire USB device clock\n");
- 		retval = PTR_ERR(udc->usb_slv_clk);
--		goto i2c_fail;
-+		goto err_put_client;
+-	flags = u64_stats_update_begin_irqsave(&tx_q->txq_stats.syncp);
+-	tx_q->txq_stats.tx_bytes += skb->len;
+-	tx_q->txq_stats.tx_tso_frames++;
+-	tx_q->txq_stats.tx_tso_nfrags += nfrags;
++	flags = u64_stats_update_begin_irqsave(&txq_stats->syncp);
++	txq_stats->tx_bytes += skb->len;
++	txq_stats->tx_tso_frames++;
++	txq_stats->tx_tso_nfrags += nfrags;
+ 	if (set_ic)
+-		tx_q->txq_stats.tx_set_ic_bit++;
+-	u64_stats_update_end_irqrestore(&tx_q->txq_stats.syncp, flags);
++		txq_stats->tx_set_ic_bit++;
++	u64_stats_update_end_irqrestore(&txq_stats->syncp, flags);
+ 
+ 	if (priv->sarc_type)
+ 		stmmac_set_desc_sarc(priv, first, priv->sarc_type);
+@@ -4380,6 +4384,7 @@ static netdev_tx_t stmmac_xmit(struct sk
+ 	u32 queue = skb_get_queue_mapping(skb);
+ 	int nfrags = skb_shinfo(skb)->nr_frags;
+ 	int gso = skb_shinfo(skb)->gso_type;
++	struct stmmac_txq_stats *txq_stats;
+ 	struct dma_edesc *tbs_desc = NULL;
+ 	struct dma_desc *desc, *first;
+ 	struct stmmac_tx_queue *tx_q;
+@@ -4389,6 +4394,7 @@ static netdev_tx_t stmmac_xmit(struct sk
+ 	dma_addr_t des;
+ 
+ 	tx_q = &priv->dma_conf.tx_queue[queue];
++	txq_stats = &priv->xstats.txq_stats[queue];
+ 	first_tx = tx_q->cur_tx;
+ 
+ 	if (priv->tx_path_in_lpi_mode && priv->eee_sw_timer_en)
+@@ -4540,11 +4546,11 @@ static netdev_tx_t stmmac_xmit(struct sk
+ 		netif_tx_stop_queue(netdev_get_tx_queue(priv->dev, queue));
  	}
  
- 	/* Enable USB device clock */
- 	retval = clk_prepare_enable(udc->usb_slv_clk);
- 	if (retval < 0) {
- 		dev_err(udc->dev, "failed to start USB device clock\n");
--		goto i2c_fail;
-+		goto err_put_client;
+-	flags = u64_stats_update_begin_irqsave(&tx_q->txq_stats.syncp);
+-	tx_q->txq_stats.tx_bytes += skb->len;
++	flags = u64_stats_update_begin_irqsave(&txq_stats->syncp);
++	txq_stats->tx_bytes += skb->len;
+ 	if (set_ic)
+-		tx_q->txq_stats.tx_set_ic_bit++;
+-	u64_stats_update_end_irqrestore(&tx_q->txq_stats.syncp, flags);
++		txq_stats->tx_set_ic_bit++;
++	u64_stats_update_end_irqrestore(&txq_stats->syncp, flags);
+ 
+ 	if (priv->sarc_type)
+ 		stmmac_set_desc_sarc(priv, first, priv->sarc_type);
+@@ -4751,6 +4757,7 @@ static unsigned int stmmac_rx_buf2_len(s
+ static int stmmac_xdp_xmit_xdpf(struct stmmac_priv *priv, int queue,
+ 				struct xdp_frame *xdpf, bool dma_map)
+ {
++	struct stmmac_txq_stats *txq_stats = &priv->xstats.txq_stats[queue];
+ 	struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[queue];
+ 	unsigned int entry = tx_q->cur_tx;
+ 	struct dma_desc *tx_desc;
+@@ -4810,9 +4817,9 @@ static int stmmac_xdp_xmit_xdpf(struct s
+ 		unsigned long flags;
+ 		tx_q->tx_count_frames = 0;
+ 		stmmac_set_tx_ic(priv, tx_desc);
+-		flags = u64_stats_update_begin_irqsave(&tx_q->txq_stats.syncp);
+-		tx_q->txq_stats.tx_set_ic_bit++;
+-		u64_stats_update_end_irqrestore(&tx_q->txq_stats.syncp, flags);
++		flags = u64_stats_update_begin_irqsave(&txq_stats->syncp);
++		txq_stats->tx_set_ic_bit++;
++		u64_stats_update_end_irqrestore(&txq_stats->syncp, flags);
  	}
  
- 	/* Setup deferred workqueue data */
-@@ -3172,9 +3172,10 @@ dma_alloc_fail:
- 	dma_free_coherent(&pdev->dev, UDCA_BUFF_SIZE,
- 			  udc->udca_v_base, udc->udca_p_base);
- i2c_fail:
--	if (udc->isp1301_i2c_client)
--		put_device(&udc->isp1301_i2c_client->dev);
- 	clk_disable_unprepare(udc->usb_slv_clk);
-+err_put_client:
-+	put_device(&udc->isp1301_i2c_client->dev);
-+
- 	dev_err(udc->dev, "%s probe failed, %d\n", driver_name, retval);
+ 	stmmac_enable_dma_transmission(priv, priv->ioaddr);
+@@ -4967,7 +4974,7 @@ static void stmmac_dispatch_skb_zc(struc
+ 				   struct dma_desc *p, struct dma_desc *np,
+ 				   struct xdp_buff *xdp)
+ {
+-	struct stmmac_rx_queue *rx_q = &priv->dma_conf.rx_queue[queue];
++	struct stmmac_rxq_stats *rxq_stats = &priv->xstats.rxq_stats[queue];
+ 	struct stmmac_channel *ch = &priv->channel[queue];
+ 	unsigned int len = xdp->data_end - xdp->data;
+ 	enum pkt_hash_types hash_type;
+@@ -4997,10 +5004,10 @@ static void stmmac_dispatch_skb_zc(struc
+ 	skb_record_rx_queue(skb, queue);
+ 	napi_gro_receive(&ch->rxtx_napi, skb);
  
- 	return retval;
-@@ -3199,11 +3200,9 @@ static int lpc32xx_udc_remove(struct pla
- 	dma_free_coherent(&pdev->dev, UDCA_BUFF_SIZE,
- 			  udc->udca_v_base, udc->udca_p_base);
- 
--	if (udc->isp1301_i2c_client)
--		put_device(&udc->isp1301_i2c_client->dev);
--
- 	clk_disable_unprepare(udc->usb_slv_clk);
- 
-+	put_device(&udc->isp1301_i2c_client->dev);
- 	return 0;
+-	flags = u64_stats_update_begin_irqsave(&rx_q->rxq_stats.syncp);
+-	rx_q->rxq_stats.rx_pkt_n++;
+-	rx_q->rxq_stats.rx_bytes += len;
+-	u64_stats_update_end_irqrestore(&rx_q->rxq_stats.syncp, flags);
++	flags = u64_stats_update_begin_irqsave(&rxq_stats->syncp);
++	rxq_stats->rx_pkt_n++;
++	rxq_stats->rx_bytes += len;
++	u64_stats_update_end_irqrestore(&rxq_stats->syncp, flags);
  }
  
+ static bool stmmac_rx_refill_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
+@@ -5063,6 +5070,7 @@ static bool stmmac_rx_refill_zc(struct s
+ 
+ static int stmmac_rx_zc(struct stmmac_priv *priv, int limit, u32 queue)
+ {
++	struct stmmac_rxq_stats *rxq_stats = &priv->xstats.rxq_stats[queue];
+ 	struct stmmac_rx_queue *rx_q = &priv->dma_conf.rx_queue[queue];
+ 	unsigned int count = 0, error = 0, len = 0;
+ 	int dirty = stmmac_rx_dirty(priv, queue);
+@@ -5222,9 +5230,9 @@ read_again:
+ 
+ 	stmmac_finalize_xdp_rx(priv, xdp_status);
+ 
+-	flags = u64_stats_update_begin_irqsave(&rx_q->rxq_stats.syncp);
+-	rx_q->rxq_stats.rx_pkt_n += count;
+-	u64_stats_update_end_irqrestore(&rx_q->rxq_stats.syncp, flags);
++	flags = u64_stats_update_begin_irqsave(&rxq_stats->syncp);
++	rxq_stats->rx_pkt_n += count;
++	u64_stats_update_end_irqrestore(&rxq_stats->syncp, flags);
+ 
+ 	priv->xstats.rx_dropped += rx_dropped;
+ 	priv->xstats.rx_errors += rx_errors;
+@@ -5252,6 +5260,7 @@ read_again:
+ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+ {
+ 	u32 rx_errors = 0, rx_dropped = 0, rx_bytes = 0, rx_packets = 0;
++	struct stmmac_rxq_stats *rxq_stats = &priv->xstats.rxq_stats[queue];
+ 	struct stmmac_rx_queue *rx_q = &priv->dma_conf.rx_queue[queue];
+ 	struct stmmac_channel *ch = &priv->channel[queue];
+ 	unsigned int count = 0, error = 0, len = 0;
+@@ -5509,11 +5518,11 @@ drain_data:
+ 
+ 	stmmac_rx_refill(priv, queue);
+ 
+-	flags = u64_stats_update_begin_irqsave(&rx_q->rxq_stats.syncp);
+-	rx_q->rxq_stats.rx_packets += rx_packets;
+-	rx_q->rxq_stats.rx_bytes += rx_bytes;
+-	rx_q->rxq_stats.rx_pkt_n += count;
+-	u64_stats_update_end_irqrestore(&rx_q->rxq_stats.syncp, flags);
++	flags = u64_stats_update_begin_irqsave(&rxq_stats->syncp);
++	rxq_stats->rx_packets += rx_packets;
++	rxq_stats->rx_bytes += rx_bytes;
++	rxq_stats->rx_pkt_n += count;
++	u64_stats_update_end_irqrestore(&rxq_stats->syncp, flags);
+ 
+ 	priv->xstats.rx_dropped += rx_dropped;
+ 	priv->xstats.rx_errors += rx_errors;
+@@ -5526,15 +5535,15 @@ static int stmmac_napi_poll_rx(struct na
+ 	struct stmmac_channel *ch =
+ 		container_of(napi, struct stmmac_channel, rx_napi);
+ 	struct stmmac_priv *priv = ch->priv_data;
+-	struct stmmac_rx_queue *rx_q;
++	struct stmmac_rxq_stats *rxq_stats;
+ 	u32 chan = ch->index;
+ 	unsigned long flags;
+ 	int work_done;
+ 
+-	rx_q = &priv->dma_conf.rx_queue[chan];
+-	flags = u64_stats_update_begin_irqsave(&rx_q->rxq_stats.syncp);
+-	rx_q->rxq_stats.napi_poll++;
+-	u64_stats_update_end_irqrestore(&rx_q->rxq_stats.syncp, flags);
++	rxq_stats = &priv->xstats.rxq_stats[chan];
++	flags = u64_stats_update_begin_irqsave(&rxq_stats->syncp);
++	rxq_stats->napi_poll++;
++	u64_stats_update_end_irqrestore(&rxq_stats->syncp, flags);
+ 
+ 	work_done = stmmac_rx(priv, budget, chan);
+ 	if (work_done < budget && napi_complete_done(napi, work_done)) {
+@@ -5553,15 +5562,15 @@ static int stmmac_napi_poll_tx(struct na
+ 	struct stmmac_channel *ch =
+ 		container_of(napi, struct stmmac_channel, tx_napi);
+ 	struct stmmac_priv *priv = ch->priv_data;
+-	struct stmmac_tx_queue *tx_q;
++	struct stmmac_txq_stats *txq_stats;
+ 	u32 chan = ch->index;
+ 	unsigned long flags;
+ 	int work_done;
+ 
+-	tx_q = &priv->dma_conf.tx_queue[chan];
+-	flags = u64_stats_update_begin_irqsave(&tx_q->txq_stats.syncp);
+-	tx_q->txq_stats.napi_poll++;
+-	u64_stats_update_end_irqrestore(&tx_q->txq_stats.syncp, flags);
++	txq_stats = &priv->xstats.txq_stats[chan];
++	flags = u64_stats_update_begin_irqsave(&txq_stats->syncp);
++	txq_stats->napi_poll++;
++	u64_stats_update_end_irqrestore(&txq_stats->syncp, flags);
+ 
+ 	work_done = stmmac_tx_clean(priv, budget, chan);
+ 	work_done = min(work_done, budget);
+@@ -5583,20 +5592,20 @@ static int stmmac_napi_poll_rxtx(struct
+ 		container_of(napi, struct stmmac_channel, rxtx_napi);
+ 	struct stmmac_priv *priv = ch->priv_data;
+ 	int rx_done, tx_done, rxtx_done;
+-	struct stmmac_rx_queue *rx_q;
+-	struct stmmac_tx_queue *tx_q;
++	struct stmmac_rxq_stats *rxq_stats;
++	struct stmmac_txq_stats *txq_stats;
+ 	u32 chan = ch->index;
+ 	unsigned long flags;
+ 
+-	rx_q = &priv->dma_conf.rx_queue[chan];
+-	flags = u64_stats_update_begin_irqsave(&rx_q->rxq_stats.syncp);
+-	rx_q->rxq_stats.napi_poll++;
+-	u64_stats_update_end_irqrestore(&rx_q->rxq_stats.syncp, flags);
+-
+-	tx_q = &priv->dma_conf.tx_queue[chan];
+-	flags = u64_stats_update_begin_irqsave(&tx_q->txq_stats.syncp);
+-	tx_q->txq_stats.napi_poll++;
+-	u64_stats_update_end_irqrestore(&tx_q->txq_stats.syncp, flags);
++	rxq_stats = &priv->xstats.rxq_stats[chan];
++	flags = u64_stats_update_begin_irqsave(&rxq_stats->syncp);
++	rxq_stats->napi_poll++;
++	u64_stats_update_end_irqrestore(&rxq_stats->syncp, flags);
++
++	txq_stats = &priv->xstats.txq_stats[chan];
++	flags = u64_stats_update_begin_irqsave(&txq_stats->syncp);
++	txq_stats->napi_poll++;
++	u64_stats_update_end_irqrestore(&txq_stats->syncp, flags);
+ 
+ 	tx_done = stmmac_tx_clean(priv, budget, chan);
+ 	tx_done = min(tx_done, budget);
+@@ -6843,7 +6852,7 @@ static void stmmac_get_stats64(struct ne
+ 	int q;
+ 
+ 	for (q = 0; q < tx_cnt; q++) {
+-		struct stmmac_txq_stats *txq_stats = &priv->dma_conf.tx_queue[q].txq_stats;
++		struct stmmac_txq_stats *txq_stats = &priv->xstats.txq_stats[q];
+ 		u64 tx_packets;
+ 		u64 tx_bytes;
+ 
+@@ -6858,7 +6867,7 @@ static void stmmac_get_stats64(struct ne
+ 	}
+ 
+ 	for (q = 0; q < rx_cnt; q++) {
+-		struct stmmac_rxq_stats *rxq_stats = &priv->dma_conf.rx_queue[q].rxq_stats;
++		struct stmmac_rxq_stats *rxq_stats = &priv->xstats.rxq_stats[q];
+ 		u64 rx_packets;
+ 		u64 rx_bytes;
+ 
+@@ -7230,9 +7239,9 @@ int stmmac_dvr_probe(struct device *devi
+ 	priv->dev = ndev;
+ 
+ 	for (i = 0; i < MTL_MAX_RX_QUEUES; i++)
+-		u64_stats_init(&priv->dma_conf.rx_queue[i].rxq_stats.syncp);
++		u64_stats_init(&priv->xstats.rxq_stats[i].syncp);
+ 	for (i = 0; i < MTL_MAX_TX_QUEUES; i++)
+-		u64_stats_init(&priv->dma_conf.tx_queue[i].txq_stats.syncp);
++		u64_stats_init(&priv->xstats.txq_stats[i].syncp);
+ 
+ 	stmmac_set_ethtool_ops(ndev);
+ 	priv->pause = pause;
 
 
