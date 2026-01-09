@@ -1,47 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD02535C1A8;
-	Fri,  9 Jan 2026 12:48:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96FD52E6CB8;
+	Fri,  9 Jan 2026 12:48:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962897; cv=none; b=q2G0dm/wGCAvIGPCmZgsB2OvcpzTHY/KPSBetun03asXLG/qQgyZv88U4gn5lpcpancUeeD/tMIDk91UHZqPU9IM1uXL2OY7Aqo+UoRv0Ty6LvmoDuia1PBX9+d8XRXAVoAXF+ZecFchIfhh7MgTBA7vBHrU7mpYpL2Q0+cX0LI=
+	t=1767962900; cv=none; b=fAklxbrVflFyMRmE3krkl6gf3Tiw/UXM5NAXgiAMhSPiGAIw8B9k/qR/Q83DFIZO9wWwqRWyAPWvtnU1MHbK0g/RY+lKFbsW+CmNkzfD6hsziBA/qzKDhzgLaGASHKBYgHABWK1df67Mec13l2VRjT8zT8Ccf6TnkhdWaAZtgh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962897; c=relaxed/simple;
-	bh=cZ4tptG2FBJWUn28ny8mIYHfMQJQKFCLuBUduhY06rI=;
+	s=arc-20240116; t=1767962900; c=relaxed/simple;
+	bh=RT3kikAOKVsPGiogK7phoyfZLkN/+V/elLrGJu3bP00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K8h/uHQ6IM7q0qEVk2s04WkRMoghDB4xyxMbQlkkqQaz46UJBS/z5NcabZP6Y39mBPv7C8uDWgultDv84qwKcQYpw3IsHAyprosaFz3BPQ1B7awHWpLRkP/xaKMXzs0elyR03PzvkixQ/YjO6VCenRPOv8ssqfqTU+zQr06Ld5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v8ppMQev; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LChWGlsU1FucafS0xrqpczOKcrzyxrh8+H8Db/Wj4hpI+UcPaTlVYLRUG8UnUpJFVpMmJ0S2D7IHlzytQPmlalTr/qop/NCgLOYjufPPTxm35IUrFynD6KRmgGUR5N3dgngyitviy+xgZWlvjAXMt2b0Mv0HeTyZQ8UTgKB2WgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JxKr1raQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v8ppMQev"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D0AEC16AAE;
-	Fri,  9 Jan 2026 12:48:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JxKr1raQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 187A0C4CEF1;
+	Fri,  9 Jan 2026 12:48:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962897;
-	bh=cZ4tptG2FBJWUn28ny8mIYHfMQJQKFCLuBUduhY06rI=;
+	s=korg; t=1767962900;
+	bh=RT3kikAOKVsPGiogK7phoyfZLkN/+V/elLrGJu3bP00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v8ppMQevYNxclF6Jl5xccMMY61JMSg1h8A2uHR3XD3V8TcRNvIfgU6ZB9I/JZsXue
-	 +gBzlO70nX0OEjJEB61F2lXjrmOU87hubbXa43Nm+Z66SfvOBUU1V8g3xp12yoVMdV
-	 r1G52erVseIjP6Q0TlU56VIKhX556a8cSZZdcKEg=
+	b=JxKr1raQx7Outu8Q8htCNEa823eiPJa1QOSd74Og4XT5i/cyRSqSd66OO5403eLd+
+	 KXLLuj77BYXG39bL/jYSCJ5engqBFoYGddVI0/xmuUgO7uiXmRtjxl3GiUQ6EzPmKB
+	 hgE1zI+xJCDs5HMnx1ZE+j68Q6VeakxC5+JplJG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Dmitriy Vyukov <dvyukov@google.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Kees Cook <kees@kernel.org>,
-	Marco Elver <elver@google.com>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Jan Sokolowski <jan.sokolowski@intel.com>,
+	Koen Koning <koen.koning@intel.com>,
+	Peter Senna Tschudin <peter.senna@linux.intel.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 494/634] kasan: refactor pcpu kasan vmalloc unpoison
-Date: Fri,  9 Jan 2026 12:42:52 +0100
-Message-ID: <20260109112136.131738021@linuxfoundation.org>
+Subject: [PATCH 6.1 495/634] idr: fix idr_alloc() returning an ID out of range
+Date: Fri,  9 Jan 2026 12:42:53 +0100
+Message-ID: <20260109112136.170327720@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -54,128 +48,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-commit 6f13db031e27e88213381039032a9cc061578ea6 upstream.
+commit c6e8e595a0798ad67da0f7bebaf69c31ef70dfff upstream.
 
-A KASAN tag mismatch, possibly causing a kernel panic, can be observed
-on systems with a tag-based KASAN enabled and with multiple NUMA nodes.
-It was reported on arm64 and reproduced on x86. It can be explained in
-the following points:
+If you use an IDR with a non-zero base, and specify a range that lies
+entirely below the base, 'max - base' becomes very large and
+idr_get_free() can return an ID that lies outside of the requested range.
 
-1. There can be more than one virtual memory chunk.
-2. Chunk's base address has a tag.
-3. The base address points at the first chunk and thus inherits
-   the tag of the first chunk.
-4. The subsequent chunks will be accessed with the tag from the
-   first chunk.
-5. Thus, the subsequent chunks need to have their tag set to
-   match that of the first chunk.
-
-Refactor code by reusing __kasan_unpoison_vmalloc in a new helper in
-preparation for the actual fix.
-
-Link: https://lkml.kernel.org/r/eb61d93b907e262eefcaa130261a08bcb6c5ce51.1764874575.git.m.wieczorretman@pm.me
-Fixes: 1d96320f8d53 ("kasan, vmalloc: add vmalloc tagging for SW_TAGS")
-Signed-off-by: Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>
-Reviewed-by: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: Danilo Krummrich <dakr@kernel.org>
-Cc: Dmitriy Vyukov <dvyukov@google.com>
-Cc: Jiayuan Chen <jiayuan.chen@linux.dev>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Marco Elver <elver@google.com>
-Cc: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
-Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
-Cc: <stable@vger.kernel.org>	[6.1+]
+Link: https://lkml.kernel.org/r/20251128161853.3200058-1-willy@infradead.org
+Fixes: 6ce711f27500 ("idr: Make 1-based IDRs more efficient")
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Reported-by: Jan Sokolowski <jan.sokolowski@intel.com>
+Reported-by: Koen Koning <koen.koning@intel.com>
+Reported-by: Peter Senna Tschudin <peter.senna@linux.intel.com>
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/6449
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/kasan.h |   15 +++++++++++++++
- mm/kasan/common.c     |   17 +++++++++++++++++
- mm/vmalloc.c          |    4 +---
- 3 files changed, 33 insertions(+), 3 deletions(-)
+ lib/idr.c                           |    2 ++
+ tools/testing/radix-tree/idr-test.c |   21 +++++++++++++++++++++
+ 2 files changed, 23 insertions(+)
 
---- a/include/linux/kasan.h
-+++ b/include/linux/kasan.h
-@@ -428,6 +428,16 @@ static __always_inline void kasan_poison
- 		__kasan_poison_vmalloc(start, size);
+--- a/lib/idr.c
++++ b/lib/idr.c
+@@ -40,6 +40,8 @@ int idr_alloc_u32(struct idr *idr, void
+ 
+ 	if (WARN_ON_ONCE(!(idr->idr_rt.xa_flags & ROOT_IS_IDR)))
+ 		idr->idr_rt.xa_flags |= IDR_RT_MARKER;
++	if (max < base)
++		return -ENOSPC;
+ 
+ 	id = (id < base) ? 0 : id - base;
+ 	radix_tree_iter_init(&iter, id);
+--- a/tools/testing/radix-tree/idr-test.c
++++ b/tools/testing/radix-tree/idr-test.c
+@@ -57,6 +57,26 @@ void idr_alloc_test(void)
+ 	idr_destroy(&idr);
  }
  
-+void __kasan_unpoison_vmap_areas(struct vm_struct **vms, int nr_vms,
-+				 kasan_vmalloc_flags_t flags);
-+static __always_inline void
-+kasan_unpoison_vmap_areas(struct vm_struct **vms, int nr_vms,
-+			  kasan_vmalloc_flags_t flags)
++void idr_alloc2_test(void)
 +{
-+	if (kasan_enabled())
-+		__kasan_unpoison_vmap_areas(vms, nr_vms, flags);
++	int id;
++	struct idr idr = IDR_INIT_BASE(idr, 1);
++
++	id = idr_alloc(&idr, idr_alloc2_test, 0, 1, GFP_KERNEL);
++	assert(id == -ENOSPC);
++
++	id = idr_alloc(&idr, idr_alloc2_test, 1, 2, GFP_KERNEL);
++	assert(id == 1);
++
++	id = idr_alloc(&idr, idr_alloc2_test, 0, 1, GFP_KERNEL);
++	assert(id == -ENOSPC);
++
++	id = idr_alloc(&idr, idr_alloc2_test, 0, 2, GFP_KERNEL);
++	assert(id == -ENOSPC);
++
++	idr_destroy(&idr);
 +}
 +
- #else /* CONFIG_KASAN_VMALLOC */
+ void idr_replace_test(void)
+ {
+ 	DEFINE_IDR(idr);
+@@ -409,6 +429,7 @@ void idr_checks(void)
  
- static inline void kasan_populate_early_vm_area_shadow(void *start,
-@@ -451,6 +461,11 @@ static inline void *kasan_unpoison_vmall
- static inline void kasan_poison_vmalloc(const void *start, unsigned long size)
- { }
- 
-+static __always_inline void
-+kasan_unpoison_vmap_areas(struct vm_struct **vms, int nr_vms,
-+			  kasan_vmalloc_flags_t flags)
-+{ }
-+
- #endif /* CONFIG_KASAN_VMALLOC */
- 
- #if (defined(CONFIG_KASAN_GENERIC) || defined(CONFIG_KASAN_SW_TAGS)) && \
---- a/mm/kasan/common.c
-+++ b/mm/kasan/common.c
-@@ -26,6 +26,7 @@
- #include <linux/string.h>
- #include <linux/types.h>
- #include <linux/bug.h>
-+#include <linux/vmalloc.h>
- 
- #include "kasan.h"
- #include "../slab.h"
-@@ -450,3 +451,19 @@ bool __kasan_check_byte(const void *addr
- 	}
- 	return true;
- }
-+
-+#ifdef CONFIG_KASAN_VMALLOC
-+void __kasan_unpoison_vmap_areas(struct vm_struct **vms, int nr_vms,
-+				 kasan_vmalloc_flags_t flags)
-+{
-+	unsigned long size;
-+	void *addr;
-+	int area;
-+
-+	for (area = 0 ; area < nr_vms ; area++) {
-+		size = vms[area]->size;
-+		addr = vms[area]->addr;
-+		vms[area]->addr = __kasan_unpoison_vmalloc(addr, size, flags);
-+	}
-+}
-+#endif
---- a/mm/vmalloc.c
-+++ b/mm/vmalloc.c
-@@ -3960,9 +3960,7 @@ retry:
- 	 * With hardware tag-based KASAN, marking is skipped for
- 	 * non-VM_ALLOC mappings, see __kasan_unpoison_vmalloc().
- 	 */
--	for (area = 0; area < nr_vms; area++)
--		vms[area]->addr = kasan_unpoison_vmalloc(vms[area]->addr,
--				vms[area]->size, KASAN_VMALLOC_PROT_NORMAL);
-+	kasan_unpoison_vmap_areas(vms, nr_vms, KASAN_VMALLOC_PROT_NORMAL);
- 
- 	kfree(vas);
- 	return vms;
+ 	idr_replace_test();
+ 	idr_alloc_test();
++	idr_alloc2_test();
+ 	idr_null_test();
+ 	idr_nowait_test();
+ 	idr_get_next_test(0);
 
 
