@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532FC32BF21;
-	Fri,  9 Jan 2026 11:58:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F09C2C21E6;
+	Fri,  9 Jan 2026 11:58:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959919; cv=none; b=i7baYNlVI+q8lZ+YQD6Vc3BK9jYaeMI+7KuyopvUklrNfcCmibE1r9eUA+R9/MIN7E4VcG/mGp5fXrtd2zi+jKBrEW2nDFh5Cgf9uVrAEgu+JHwMF9hYPEpd7V6o6y7BnnW3MaENI57gv3Novw92/0T2IRuy93qo86quIBSA2lQ=
+	t=1767959922; cv=none; b=rOiDhwa5Q2Gt9cTnOs5ItFnLYtTwaE/zWzuIeA9tssdYgy5WgoTFq95CCiwJr7PUNHuzgPvj0QMtjZ1vD7Xv41KlN/oA9agGDD2uz6iflu692SLw2RylnhU9AjZeuhOFnM7Iywwp0U1MjsksanZ9qL9LEKUEWt5l3XvGtC1DiZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959919; c=relaxed/simple;
-	bh=cwMbQRweGBlBX5YMA5qcgqHrEVJlH+mKzGlbYa4bfE0=;
+	s=arc-20240116; t=1767959922; c=relaxed/simple;
+	bh=EV5L2FAiVkQOpRsDFAT+kFqZ5UmY+mOCEo6M7BB3FpM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tuSferQg9xaSTmuZDb2fOElZUAxSlPUnAOg5IZIsW6wllYGiOp6nOqTUnnx8RIWoDZmSloQX81Qf37zi4tvdhl/i2GdZnfNxfA+HRQ5e52s/tq2ypqu4plOZnl/yNo+KKdgkypjWB++EXmKncp7PiJYmZtAglFLugIQtv6pVLUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OYmLF7qq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XqXD1EWuDcPgJFKLqxTm+e2WW965uxngZeImBBznL6Ken/0GOA2qPHSN1MlfcE2rAQXEHYh6gbtUtiG28DLa6GButD/7rgyCKFJnEa8yBJNptWya325hZS4vHucmRVvRRY421DQcwhBfYjrRS63mefE+D5Lm5LOc4ay/g+OZ1sE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xRMSU65c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OYmLF7qq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D65C3C4CEF1;
-	Fri,  9 Jan 2026 11:58:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xRMSU65c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B029CC4CEF1;
+	Fri,  9 Jan 2026 11:58:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959919;
-	bh=cwMbQRweGBlBX5YMA5qcgqHrEVJlH+mKzGlbYa4bfE0=;
+	s=korg; t=1767959922;
+	bh=EV5L2FAiVkQOpRsDFAT+kFqZ5UmY+mOCEo6M7BB3FpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OYmLF7qqhAf03VBw/5eAAkmC9y99YCd1UYEfy8v6d+gOraT0i6erVxPXFByci4oBu
-	 NIy68StkYh/li1PgVdjVAxQ8aRr/kHMdgfYtArEGqsQanWEw2eIDyYgG8OUBzg2lc9
-	 OnWPzNZIp61FgORlCMGpVayqTFAHTG7Jwe1896iE=
+	b=xRMSU65cuHzU8fAaQUQOoZfUd08fwxpbfhZLJ3aepZBepGp4KVds2g9CdY2l7U///
+	 7JYDAWZtS+ote4D0lQtjWILboBKykfuCrEQP1p0xrbqk9YASaQhWhXKo/yvVdfo2Gu
+	 Uqkjf1R8OcjGH9enZ2Ex+5RbVQw5h/8+PcdEsMOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Brodsky <kevin.brodsky@arm.com>,
-	Caleb Sander Mateos <csander@purestorage.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 222/737] ublk: prevent invalid access with DEBUG
-Date: Fri,  9 Jan 2026 12:36:01 +0100
-Message-ID: <20260109112142.353460403@linuxfoundation.org>
+Subject: [PATCH 6.6 223/737] ext4: remove unused return value of __mb_check_buddy
+Date: Fri,  9 Jan 2026 12:36:02 +0100
+Message-ID: <20260109112142.390547554@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,55 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kevin Brodsky <kevin.brodsky@arm.com>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit c6a45ee7607de3a350008630f4369b1b5ac80884 ]
+[ Upstream commit 133de5a0d8f8e32b34feaa8beae7a189482f1856 ]
 
-ublk_ch_uring_cmd_local() may jump to the out label before
-initialising the io pointer. This will cause trouble if DEBUG is
-defined, because the pr_devel() call dereferences io. Clang reports:
+Remove unused return value of __mb_check_buddy.
 
-drivers/block/ublk_drv.c:2403:6: error: variable 'io' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
- 2403 |         if (tag >= ub->dev_info.queue_depth)
-      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-drivers/block/ublk_drv.c:2492:32: note: uninitialized use occurs here
- 2492 |                         __func__, cmd_op, tag, ret, io->flags);
-      |
-
-Fix this by initialising io to NULL and checking it before
-dereferencing it.
-
-Signed-off-by: Kevin Brodsky <kevin.brodsky@arm.com>
-Fixes: 71f28f3136af ("ublk_drv: add io_uring based userspace block driver")
-Reviewed-by: Caleb Sander Mateos <csander@purestorage.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20240105092102.496631-2-shikemeng@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: d9ee3ff810f1 ("ext4: improve integrity checking in __mb_check_buddy by enhancing order-0 validation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ext4/mballoc.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index 88d566f0ffa64..563b2a94d4c3c 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -1709,7 +1709,7 @@ static int __ublk_ch_uring_cmd(struct io_uring_cmd *cmd,
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index c5f642096ab4e..9721ae0ff92ed 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -676,7 +676,7 @@ do {									\
+ 	}								\
+ } while (0)
+ 
+-static int __mb_check_buddy(struct ext4_buddy *e4b, char *file,
++static void __mb_check_buddy(struct ext4_buddy *e4b, char *file,
+ 				const char *function, int line)
  {
- 	struct ublk_device *ub = cmd->file->private_data;
- 	struct ublk_queue *ubq;
--	struct ublk_io *io;
-+	struct ublk_io *io = NULL;
- 	u32 cmd_op = cmd->cmd_op;
- 	unsigned tag = ub_cmd->tag;
- 	int ret = -EINVAL;
-@@ -1822,7 +1822,7 @@ static int __ublk_ch_uring_cmd(struct io_uring_cmd *cmd,
+ 	struct super_block *sb = e4b->bd_sb;
+@@ -695,7 +695,7 @@ static int __mb_check_buddy(struct ext4_buddy *e4b, char *file,
+ 	void *buddy2;
  
-  out:
- 	pr_devel("%s: complete: cmd op %d, tag %d ret %x io_flags %x\n",
--			__func__, cmd_op, tag, ret, io->flags);
-+			__func__, cmd_op, tag, ret, io ? io->flags : 0);
- 	return ret;
+ 	if (e4b->bd_info->bb_check_counter++ % 10)
+-		return 0;
++		return;
+ 
+ 	while (order > 1) {
+ 		buddy = mb_find_buddy(e4b, order, &max);
+@@ -757,7 +757,7 @@ static int __mb_check_buddy(struct ext4_buddy *e4b, char *file,
+ 
+ 	grp = ext4_get_group_info(sb, e4b->bd_group);
+ 	if (!grp)
+-		return NULL;
++		return;
+ 	list_for_each(cur, &grp->bb_prealloc_list) {
+ 		ext4_group_t groupnr;
+ 		struct ext4_prealloc_space *pa;
+@@ -767,7 +767,6 @@ static int __mb_check_buddy(struct ext4_buddy *e4b, char *file,
+ 		for (i = 0; i < pa->pa_len; i++)
+ 			MB_CHECK_ASSERT(mb_test_bit(k + i, buddy));
+ 	}
+-	return 0;
  }
- 
+ #undef MB_CHECK_ASSERT
+ #define mb_check_buddy(e4b) __mb_check_buddy(e4b,	\
 -- 
 2.51.0
 
