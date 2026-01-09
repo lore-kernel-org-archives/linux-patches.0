@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E74D35B135;
-	Fri,  9 Jan 2026 12:49:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ECD923F417;
+	Fri,  9 Jan 2026 12:49:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962969; cv=none; b=hTVFwH2WQ+3o+SLmD4FEZnITuS0+mLdL8OSYqROKFXlHwADEiOJtTChDk6RqruGST159GQLs84yNmfrbLR2yr4MkrBYV595MbXgtqo19W5gCPxNsMsE1NJxkKX8TAdvOVciXm2aZrPxlOaWEMBc78Mr0eYU0An/DJ9pIBKPZ1Co=
+	t=1767962972; cv=none; b=WSTk1oo5m1DLrnpR/K/YYzmWaUFathK0AstH6+EL0lWQgygc38ygiLcgvyU0dSOAoc0GMFDXO6MA+4A7dGT2da1VNPqtJ2NXMArDn/Yla2h9NBGFMnsoDe+3WkFO13C3Yr1r77pWKJqF112w5v/SRr8ZKTRUnWZxCdEPdX7HjVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962969; c=relaxed/simple;
-	bh=Vq9kN7IfR0bIwTuM+HfIL6IJHUHSo/fqGLqJx8lv8BM=;
+	s=arc-20240116; t=1767962972; c=relaxed/simple;
+	bh=12Ht3Co6Vwk5ER+gT2bvDsVZWsPPEZk7oJXFOofdt9s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BLy137EcHsOarJz26dYbhIrMBAdJdWGwGrjEcxznQnTJd7e6DogoUNCCH64yJP0wSgerHOMMw5WJVxHRKOHxhpoPXevtAcIyuzbOtbq/a6o0dBUFA0l3aLRQoeMQ4nMQEfs6KhF+zfS5YgckJMaqr5F2TwYKlqPvNmSjBg4UDAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KfGIxaeA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=panttehPlH7mdiSkkCcy1mVsToFVK52ntRS/kgCWFMblceZvXzSeen9koTqe+98D89Y362OogyRDBBdEKxQb0QyUhUTyif4ZXkP7A5Tn2r38nD/Hc2UlsxXnDbKVmQJBdXE0QDtF19RQ+o/PdYyA7fvhbtT4b1fsdI9i8bKSMVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j8OgSzyv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KfGIxaeA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEF0EC4CEF1;
-	Fri,  9 Jan 2026 12:49:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j8OgSzyv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C051CC4CEF1;
+	Fri,  9 Jan 2026 12:49:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962969;
-	bh=Vq9kN7IfR0bIwTuM+HfIL6IJHUHSo/fqGLqJx8lv8BM=;
+	s=korg; t=1767962972;
+	bh=12Ht3Co6Vwk5ER+gT2bvDsVZWsPPEZk7oJXFOofdt9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KfGIxaeAyoVQcY+yRp51IOh6PjGYVqXH2q5/rbZ/VMUxksI+0lM0Kec41NG4jwdr/
-	 pYerUL94+V38wCOKkaOz7N2Dda/ktJGDID+tNwMSUrCYzidGRXwCU2+oZGQepTGwET
-	 ujAw8FnHDT9mGumzc6QnKpGLObx7xmeGajq4Z5AU=
+	b=j8OgSzyvkaAMmLHUonE6XvAvYnjg+IO7vmK7Bkm6b4Q2PLwFcu+d7xKsqjMnaklOJ
+	 xzJsmMo9M4cZoiR60PxrjZOXnBRYZWcQ9sRj+7P0qEBoQWWivXahqWrLEpeXYOqvQ8
+	 f+u6o2vDrzMtEoroUMI1Ubr+Y3W2/Rw3GfDBCEeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	syzbot+24124df3170c3638b35f@syzkaller.appspotmail.com,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 551/634] f2fs: fix to avoid updating zero-sized extent in extent cache
-Date: Fri,  9 Jan 2026 12:43:49 +0100
-Message-ID: <20260109112138.326139761@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 525/634] mm/damon/tests/core-kunit: handle alloc failures in damon_test_set_regions()
+Date: Fri,  9 Jan 2026 12:43:23 +0100
+Message-ID: <20260109112137.320829752@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -53,64 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: SeongJae Park <sj@kernel.org>
 
-[ Upstream commit 7c37c79510329cd951a4dedf3f7bf7e2b18dccec ]
+commit 74d5969995d129fd59dd93b9c7daa6669cb6810f upstream.
 
-As syzbot reported:
+damon_test_set_regions() is assuming all dynamic memory allocation in it
+will succeed.  Those are indeed likely in the real use cases since those
+allocations are too small to fail, but theoretically those could fail.  In
+the case, inappropriate memory access can happen.  Fix it by appropriately
+cleanup pre-allocated memory and skip the execution of the remaining tests
+in the failure cases.
 
-F2FS-fs (loop0): __update_extent_tree_range: extent len is zero, type: 0, extent [0, 0, 0], age [0, 0]
-------------[ cut here ]------------
-kernel BUG at fs/f2fs/extent_cache.c:678!
-Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-CPU: 0 UID: 0 PID: 5336 Comm: syz.0.0 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
-RIP: 0010:__update_extent_tree_range+0x13bc/0x1500 fs/f2fs/extent_cache.c:678
-Call Trace:
- <TASK>
- f2fs_update_read_extent_cache_range+0x192/0x3e0 fs/f2fs/extent_cache.c:1085
- f2fs_do_zero_range fs/f2fs/file.c:1657 [inline]
- f2fs_zero_range+0x10c1/0x1580 fs/f2fs/file.c:1737
- f2fs_fallocate+0x583/0x990 fs/f2fs/file.c:2030
- vfs_fallocate+0x669/0x7e0 fs/open.c:342
- ioctl_preallocate fs/ioctl.c:289 [inline]
- file_ioctl+0x611/0x780 fs/ioctl.c:-1
- do_vfs_ioctl+0xb33/0x1430 fs/ioctl.c:576
- __do_sys_ioctl fs/ioctl.c:595 [inline]
- __se_sys_ioctl+0x82/0x170 fs/ioctl.c:583
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f07bc58eec9
-
-In error path of f2fs_zero_range(), it may add a zero-sized extent
-into extent cache, it should be avoided.
-
-Fixes: 6e9619499f53 ("f2fs: support in batch fzero in dnode page")
-Cc: stable@kernel.org
-Reported-by: syzbot+24124df3170c3638b35f@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-f2fs-devel/68e5d698.050a0220.256323.0032.GAE@google.com
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ adapted patch to only guard f2fs_update_read_extent_cache_range() ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20251101182021.74868-11-sj@kernel.org
+Fixes: 62f409560eb2 ("mm/damon/core-test: test damon_set_regions")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: Brendan Higgins <brendan.higgins@linux.dev>
+Cc: David Gow <davidgow@google.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: <stable@vger.kernel.org>	[6.1+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/file.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ mm/damon/core-test.h |   17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -1552,7 +1552,9 @@ static int f2fs_do_zero_range(struct dno
- 		f2fs_set_data_blkaddr(dn, NEW_ADDR);
- 	}
+--- a/mm/damon/core-test.h
++++ b/mm/damon/core-test.h
+@@ -341,13 +341,26 @@ static void damon_test_ops_registration(
+ static void damon_test_set_regions(struct kunit *test)
+ {
+ 	struct damon_target *t = damon_new_target();
+-	struct damon_region *r1 = damon_new_region(4, 16);
+-	struct damon_region *r2 = damon_new_region(24, 32);
++	struct damon_region *r1, *r2;
+ 	struct damon_addr_range range = {.start = 8, .end = 28};
+ 	unsigned long expects[] = {8, 16, 16, 24, 24, 28};
+ 	int expect_idx = 0;
+ 	struct damon_region *r;
  
--	f2fs_update_read_extent_cache_range(dn, start, 0, index - start);
-+	if (index > start)
-+		f2fs_update_read_extent_cache_range(dn, start, 0,
-+							index - start);
- 
- 	return ret;
- }
++	if (!t)
++		kunit_skip(test, "target alloc fail");
++	r1 = damon_new_region(4, 16);
++	if (!r1) {
++		damon_free_target(t);
++		kunit_skip(test, "region alloc fail");
++	}
++	r2 = damon_new_region(24, 32);
++	if (!r2) {
++		damon_free_target(t);
++		damon_free_region(r1);
++		kunit_skip(test, "second region alloc fail");
++	}
++
+ 	damon_add_region(r1, t);
+ 	damon_add_region(r2, t);
+ 	damon_set_regions(t, &range, 1);
 
 
