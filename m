@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 051F0359F8E;
-	Fri,  9 Jan 2026 12:49:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7EFD336ED1;
+	Fri,  9 Jan 2026 12:50:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962998; cv=none; b=qyRTFu0rApz6JDXeJAXhVvDdTSp7LmehpFJOJnV2J1IWSL/fAqC0bc8c1RTWWZFPihPFWVXZzRq+tHte07ts3t3SExJS0YNe0d/mhGy6Ta65g8216Y9bWgmB5upMmx2VUhgWvoumsjmnjW4/3mabxoYgOAMzUpEp53AwqG9XSsA=
+	t=1767963001; cv=none; b=jED4HcMP/2HIi2G7xe/4gLBLP0DUV+j7HdHmo6Pn4Ylno6Z8fCxtWzg68+mCH0VlvnWgWjEBlWyuyJWHP6hOrjJt6sDuGcBjes5nPlMdJDSOq2Mho6KuGI9JRd/s7ILeiB85Gln7zbcasNhnDIC9vjuQPZnUlOOuV4jsxg6d8rY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962998; c=relaxed/simple;
-	bh=p0C/GEoEQ6vUJbbjUQMSqyu/za+HPl/3+PPLte63Iac=;
+	s=arc-20240116; t=1767963001; c=relaxed/simple;
+	bh=IotgPHRlDXdNo+XvvJgiA+jQsAYR3z/HarR4UxVq82g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EEL4hoi/XYf/geSYSOnXgj2jGVVDk5WU/XfsGThWCm7tWHMw3sziNIdUTP38IIFKFjfNY2VkKnrc0Ts3Ij5Z1knW6wRiXVS8KCVMq+MnZc8qZCUMtjvKCLGBRgDcE157+D/DArROkTQvvDtH6CiFIHEfiapevUeOroogrT9q2bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tgh+ydy9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jnceMBMUcjIwbASVwD3P1zGaJvhh+UyVqbSEf3zQndGWsaluh7yLKk/YBnFtmGK9HOk4FZ4S6OVDYVDT2WJDMNoKoJN4daEMsPh90vgvCCWmBk6/byO8SnXiVf+/YOnqZaJgQF6vctWBOHRVTUJWFQBxKKxtyltXGjdaTcTMryc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l6AQeaKU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tgh+ydy9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 877BBC4CEF1;
-	Fri,  9 Jan 2026 12:49:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l6AQeaKU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDBABC4CEF1;
+	Fri,  9 Jan 2026 12:50:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962997;
-	bh=p0C/GEoEQ6vUJbbjUQMSqyu/za+HPl/3+PPLte63Iac=;
+	s=korg; t=1767963001;
+	bh=IotgPHRlDXdNo+XvvJgiA+jQsAYR3z/HarR4UxVq82g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tgh+ydy9OhCArZ6tZTKAF5uo9LMbrX4chHlBnqXCArP2uX6WOe5AX/uYWP6d0ca5F
-	 4wgy4VmVmMYiUjTq89sKQrbPswBi+w4CKUX+YahOlrpIAZN6wVumPi6QBJ7F9CsKIo
-	 CsjQtLtvZQgl6KlMFeqzsUurhKi/B1KcNmA8QEvw=
+	b=l6AQeaKU/peq1g3Ga1ETkyZ5LiXZ+XvDTxFjQk4gnPhtLE13hR32NPwbDjQfQxZaD
+	 mkGREUtGdxEZVItzghHdJVPL19Rk6olSsw5lxG2CFhRufQAflhv4XSmB7RS864BSlv
+	 SMlpCzpQ+hr+qZn7yRxODaX1TPLgqT1nWbLFIfxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Rajani Kantha <681739313@139.com>
-Subject: [PATCH 6.1 529/634] ksmbd: fix out-of-bounds in parse_sec_desc()
-Date: Fri,  9 Jan 2026 12:43:27 +0100
-Message-ID: <20260109112137.472791216@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+204a4382fcb3311f3858@syzkaller.appspotmail.com,
+	Dong Chenchen <dongchenchen2@huawei.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Mina Almasry <almasrymina@google.com>,
+	Ruohan Lan <ruohanlan@aliyun.com>
+Subject: [PATCH 6.1 530/634] page_pool: Fix use-after-free in page_pool_recycle_in_ring
+Date: Fri,  9 Jan 2026 12:43:28 +0100
+Message-ID: <20260109112137.512325358@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -46,76 +48,150 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Dong Chenchen <dongchenchen2@huawei.com>
 
-commit d6e13e19063db24f94b690159d0633aaf72a0f03 upstream.
+[ Upstream commit 271683bb2cf32e5126c592b5d5e6a756fa374fd9 ]
 
-If osidoffset, gsidoffset and dacloffset could be greater than smb_ntsd
-struct size. If it is smaller, It could cause slab-out-of-bounds.
-And when validating sid, It need to check it included subauth array size.
+syzbot reported a uaf in page_pool_recycle_in_ring:
 
-Cc: stable@vger.kernel.org
-Reported-by: Norbert Szetei <norbert@doyensec.com>
-Tested-by: Norbert Szetei <norbert@doyensec.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Rajani Kantha <681739313@139.com>
+BUG: KASAN: slab-use-after-free in lock_release+0x151/0xa30 kernel/locking/lockdep.c:5862
+Read of size 8 at addr ffff8880286045a0 by task syz.0.284/6943
+
+CPU: 0 UID: 0 PID: 6943 Comm: syz.0.284 Not tainted 6.13.0-rc3-syzkaller-gdfa94ce54f41 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:378 [inline]
+ print_report+0x169/0x550 mm/kasan/report.c:489
+ kasan_report+0x143/0x180 mm/kasan/report.c:602
+ lock_release+0x151/0xa30 kernel/locking/lockdep.c:5862
+ __raw_spin_unlock_bh include/linux/spinlock_api_smp.h:165 [inline]
+ _raw_spin_unlock_bh+0x1b/0x40 kernel/locking/spinlock.c:210
+ spin_unlock_bh include/linux/spinlock.h:396 [inline]
+ ptr_ring_produce_bh include/linux/ptr_ring.h:164 [inline]
+ page_pool_recycle_in_ring net/core/page_pool.c:707 [inline]
+ page_pool_put_unrefed_netmem+0x748/0xb00 net/core/page_pool.c:826
+ page_pool_put_netmem include/net/page_pool/helpers.h:323 [inline]
+ page_pool_put_full_netmem include/net/page_pool/helpers.h:353 [inline]
+ napi_pp_put_page+0x149/0x2b0 net/core/skbuff.c:1036
+ skb_pp_recycle net/core/skbuff.c:1047 [inline]
+ skb_free_head net/core/skbuff.c:1094 [inline]
+ skb_release_data+0x6c4/0x8a0 net/core/skbuff.c:1125
+ skb_release_all net/core/skbuff.c:1190 [inline]
+ __kfree_skb net/core/skbuff.c:1204 [inline]
+ sk_skb_reason_drop+0x1c9/0x380 net/core/skbuff.c:1242
+ kfree_skb_reason include/linux/skbuff.h:1263 [inline]
+ __skb_queue_purge_reason include/linux/skbuff.h:3343 [inline]
+
+root cause is:
+
+page_pool_recycle_in_ring
+  ptr_ring_produce
+    spin_lock(&r->producer_lock);
+    WRITE_ONCE(r->queue[r->producer++], ptr)
+      //recycle last page to pool
+				page_pool_release
+				  page_pool_scrub
+				    page_pool_empty_ring
+				      ptr_ring_consume
+				      page_pool_return_page  //release all page
+				  __page_pool_destroy
+				     free_percpu(pool->recycle_stats);
+				     free(pool) //free
+
+     spin_unlock(&r->producer_lock); //pool->ring uaf read
+  recycle_stat_inc(pool, ring);
+
+page_pool can be free while page pool recycle the last page in ring.
+Add producer-lock barrier to page_pool_release to prevent the page
+pool from being free before all pages have been recycled.
+
+recycle_stat_inc() is empty when CONFIG_PAGE_POOL_STATS is not
+enabled, which will trigger Wempty-body build warning. Add definition
+for pool stat macro to fix warning.
+
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/netdev/20250513083123.3514193-1-dongchenchen2@huawei.com
+Fixes: ff7d6b27f894 ("page_pool: refurbish version of page_pool code")
+Reported-by: syzbot+204a4382fcb3311f3858@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=204a4382fcb3311f3858
+Signed-off-by: Dong Chenchen <dongchenchen2@huawei.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Reviewed-by: Mina Almasry <almasrymina@google.com>
+Link: https://patch.msgid.link/20250527114152.3119109-1-dongchenchen2@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Minor context change fixed. ]
+Signed-off-by: Ruohan Lan <ruohanlan@aliyun.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smbacl.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ net/core/page_pool.c |   27 ++++++++++++++-------------
+ 1 file changed, 14 insertions(+), 13 deletions(-)
 
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -815,6 +815,13 @@ static int parse_sid(struct smb_sid *psi
- 		return -EINVAL;
- 	}
+--- a/net/core/page_pool.c
++++ b/net/core/page_pool.c
+@@ -128,9 +128,9 @@ u64 *page_pool_ethtool_stats_get(u64 *da
+ EXPORT_SYMBOL(page_pool_ethtool_stats_get);
  
-+	if (!psid->num_subauth)
-+		return 0;
-+
-+	if (psid->num_subauth > SID_MAX_SUB_AUTHORITIES ||
-+	    end_of_acl < (char *)psid + 8 + sizeof(__le32) * psid->num_subauth)
-+		return -EINVAL;
-+
- 	return 0;
+ #else
+-#define alloc_stat_inc(pool, __stat)
+-#define recycle_stat_inc(pool, __stat)
+-#define recycle_stat_add(pool, __stat, val)
++#define alloc_stat_inc(...)	do { } while (0)
++#define recycle_stat_inc(...)	do { } while (0)
++#define recycle_stat_add(...)	do { } while (0)
+ #endif
+ 
+ static bool page_pool_producer_lock(struct page_pool *pool)
+@@ -539,19 +539,16 @@ static void page_pool_return_page(struct
+ 
+ static bool page_pool_recycle_in_ring(struct page_pool *pool, struct page *page)
+ {
+-	int ret;
+-	/* BH protection not needed if current is softirq */
+-	if (in_softirq())
+-		ret = ptr_ring_produce(&pool->ring, page);
+-	else
+-		ret = ptr_ring_produce_bh(&pool->ring, page);
++	bool in_softirq, ret;
+ 
+-	if (!ret) {
++	/* BH protection not needed if current is softirq */
++	in_softirq = page_pool_producer_lock(pool);
++	ret = !__ptr_ring_produce(&pool->ring, page);
++	if (ret)
+ 		recycle_stat_inc(pool, ring);
+-		return true;
+-	}
++	page_pool_producer_unlock(pool, in_softirq);
+ 
+-	return false;
++	return ret;
  }
  
-@@ -856,6 +863,9 @@ int parse_sec_desc(struct user_namespace
- 	pntsd->type = cpu_to_le16(DACL_PRESENT);
+ /* Only allow direct recycling in special circumstances, into the
+@@ -826,10 +823,14 @@ static void page_pool_scrub(struct page_
  
- 	if (pntsd->osidoffset) {
-+		if (le32_to_cpu(pntsd->osidoffset) < sizeof(struct smb_ntsd))
-+			return -EINVAL;
-+
- 		rc = parse_sid(owner_sid_ptr, end_of_acl);
- 		if (rc) {
- 			pr_err("%s: Error %d parsing Owner SID\n", __func__, rc);
-@@ -871,6 +881,9 @@ int parse_sec_desc(struct user_namespace
- 	}
+ static int page_pool_release(struct page_pool *pool)
+ {
++	bool in_softirq;
+ 	int inflight;
  
- 	if (pntsd->gsidoffset) {
-+		if (le32_to_cpu(pntsd->gsidoffset) < sizeof(struct smb_ntsd))
-+			return -EINVAL;
-+
- 		rc = parse_sid(group_sid_ptr, end_of_acl);
- 		if (rc) {
- 			pr_err("%s: Error %d mapping Owner SID to gid\n",
-@@ -892,6 +905,9 @@ int parse_sec_desc(struct user_namespace
- 		pntsd->type |= cpu_to_le16(DACL_PROTECTED);
+ 	page_pool_scrub(pool);
+ 	inflight = page_pool_inflight(pool);
++	/* Acquire producer lock to make sure producers have exited. */
++	in_softirq = page_pool_producer_lock(pool);
++	page_pool_producer_unlock(pool, in_softirq);
+ 	if (!inflight)
+ 		page_pool_free(pool);
  
- 	if (dacloffset) {
-+		if (dacloffset < sizeof(struct smb_ntsd))
-+			return -EINVAL;
-+
- 		parse_dacl(user_ns, dacl_ptr, end_of_acl,
- 			   owner_sid_ptr, group_sid_ptr, fattr);
- 	}
 
 
