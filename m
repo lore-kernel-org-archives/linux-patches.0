@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5BAA35A947;
-	Fri,  9 Jan 2026 12:10:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AFC435A956;
+	Fri,  9 Jan 2026 12:10:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960601; cv=none; b=BGYeufdPVPCvHUe5kE7+u8vjCKyc1eMuJgHwbXzy13wPGEUAfYnQfVc7bvHd8F64npmvyuffnxwxMmOE7G+8ucT4zDFRrRXTcSimuZDs8VSWwpZNEozTBLzwaX/ANq8gqkM1BaYzjm4uZw5O4VC8ILAMBGawQVopsn4XwLlkSuU=
+	t=1767960604; cv=none; b=B5sRk1qdqxWA8V6FkMyObSDFyG4mFOSBCoqE+bLSSowAmNTUj2Sb77/j1C9wSZ3L0kKyrqNKdPvwvUSG+9yVSmCUGCmupqc1IhpJc6Vu0Pl74iMTRBx0jU9PhLqoeNJg+ITpwWNUDAzHx6D1MklCZUU8uwye6Ybn4GQm5Xte3Xs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960601; c=relaxed/simple;
-	bh=wffMHlbkjJRorYBsuozl+bs3uNwyl69hxEck6jCk4To=;
+	s=arc-20240116; t=1767960604; c=relaxed/simple;
+	bh=cN+gR7PTuac9GFQn5+3EuRPFJyJWegYvENdimQufgcU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ugWWAwv7jV5fvZcQjky7lq9z5hgZnps46/cOeRFBrPs0ukmDjkXoWRyO4UJxBNpBV5lNp8yGjfy5JCvFjf6yrMA/e+n7D+4Ad9K/gGDOOBLXVZsb4NvehhagHSkIMG8RgQG0SwknKB1LkvQy4CZGUl+NszeAQ3nhf9BJLydaoDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hJ61Qzyh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kAKMz1wZ+8tVn0p+xiDJqBoyktKlQ1HMn6OjzhjZDczcGr14enHHxWaigUdLU5Z6gcaRfn9S7Biju48PD9qhWQA2DW0NPiqcF+4TTlYkCpcYRH4R9g9CaQE98kgsaeSLisgcPHcNMl4W+rFbIdDIA06M9xdQcWFtQDuIjWkZLZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bWGzBttV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hJ61Qzyh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1356CC4CEF1;
-	Fri,  9 Jan 2026 12:10:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bWGzBttV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D36DAC4CEF1;
+	Fri,  9 Jan 2026 12:10:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960601;
-	bh=wffMHlbkjJRorYBsuozl+bs3uNwyl69hxEck6jCk4To=;
+	s=korg; t=1767960604;
+	bh=cN+gR7PTuac9GFQn5+3EuRPFJyJWegYvENdimQufgcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hJ61Qzyh701Ky7Y3IZ8Ez/nvg5TGljvKo0+on3+bY5nRUswago8nqRzqF2m85NXCB
-	 qlV1X4+pS9KtXkaKQMGxXP2CCBLB6qJCSS+IdBZWi52+lAOPXoZsgqevDl6dZ3i/Vf
-	 i4ejIDsPnE1b2TchcWde3dEIbvXmD0C6O5AyRoZA=
+	b=bWGzBttV5h1QJJVctKER1IHpyeOMTLOgve/egBfp8HZ1/d60x0jYaofPOLwQHS5L6
+	 mlyjDnv7cr4NejltYUMRHmNkThUMu4ePSTt6bAAM6xMABH3D6Hn9UA2E7J5sD/kM3n
+	 a+HQ+pnclSpn10jhK/52MXqIdBdcpfDX4t+Aqu70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jakub Kicinski <kuba@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 429/737] mptcp: schedule rtx timer only after pushing data
-Date: Fri,  9 Jan 2026 12:39:28 +0100
-Message-ID: <20260109112150.135001931@linuxfoundation.org>
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+Subject: [PATCH 6.6 430/737] mptcp: avoid deadlock on fallback while reinjecting
+Date: Fri,  9 Jan 2026 12:39:29 +0100
+Message-ID: <20260109112150.171498247@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -53,69 +53,108 @@ Content-Transfer-Encoding: 8bit
 
 From: Paolo Abeni <pabeni@redhat.com>
 
-commit 2ea6190f42d0416a4310e60a7fcb0b49fcbbd4fb upstream.
+commit ffb8c27b0539dd90262d1021488e7817fae57c42 upstream.
 
-The MPTCP protocol usually schedule the retransmission timer only
-when there is some chances for such retransmissions to happen.
+Jakub reported an MPTCP deadlock at fallback time:
 
-With a notable exception: __mptcp_push_pending() currently schedule
-such timer unconditionally, potentially leading to unnecessary rtx
-timer expiration.
+ WARNING: possible recursive locking detected
+ 6.18.0-rc7-virtme #1 Not tainted
+ --------------------------------------------
+ mptcp_connect/20858 is trying to acquire lock:
+ ff1100001da18b60 (&msk->fallback_lock){+.-.}-{3:3}, at: __mptcp_try_fallback+0xd8/0x280
 
-The issue is present since the blamed commit below but become easily
-reproducible after commit 27b0e701d387 ("mptcp: drop bogus optimization
-in __mptcp_check_push()")
+ but task is already holding lock:
+ ff1100001da18b60 (&msk->fallback_lock){+.-.}-{3:3}, at: __mptcp_retrans+0x352/0xaa0
 
-Fixes: 33d41c9cd74c ("mptcp: more accurate timeout")
+ other info that might help us debug this:
+  Possible unsafe locking scenario:
+
+        CPU0
+        ----
+   lock(&msk->fallback_lock);
+   lock(&msk->fallback_lock);
+
+  *** DEADLOCK ***
+
+  May be due to missing lock nesting notation
+
+ 3 locks held by mptcp_connect/20858:
+  #0: ff1100001da18290 (sk_lock-AF_INET){+.+.}-{0:0}, at: mptcp_sendmsg+0x114/0x1bc0
+  #1: ff1100001db40fd0 (k-sk_lock-AF_INET#2){+.+.}-{0:0}, at: __mptcp_retrans+0x2cb/0xaa0
+  #2: ff1100001da18b60 (&msk->fallback_lock){+.-.}-{3:3}, at: __mptcp_retrans+0x352/0xaa0
+
+ stack backtrace:
+ CPU: 0 UID: 0 PID: 20858 Comm: mptcp_connect Not tainted 6.18.0-rc7-virtme #1 PREEMPT(full)
+ Hardware name: Bochs, BIOS Bochs 01/01/2011
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0x6f/0xa0
+  print_deadlock_bug.cold+0xc0/0xcd
+  validate_chain+0x2ff/0x5f0
+  __lock_acquire+0x34c/0x740
+  lock_acquire.part.0+0xbc/0x260
+  _raw_spin_lock_bh+0x38/0x50
+  __mptcp_try_fallback+0xd8/0x280
+  mptcp_sendmsg_frag+0x16c2/0x3050
+  __mptcp_retrans+0x421/0xaa0
+  mptcp_release_cb+0x5aa/0xa70
+  release_sock+0xab/0x1d0
+  mptcp_sendmsg+0xd5b/0x1bc0
+  sock_write_iter+0x281/0x4d0
+  new_sync_write+0x3c5/0x6f0
+  vfs_write+0x65e/0xbb0
+  ksys_write+0x17e/0x200
+  do_syscall_64+0xbb/0xfd0
+  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+ RIP: 0033:0x7fa5627cbc5e
+ Code: 4d 89 d8 e8 14 bd 00 00 4c 8b 5d f8 41 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 11 c9 c3 0f 1f 80 00 00 00 00 48 8b 45 10 0f 05 <c9> c3 83 e2 39 83 fa 08 75 e7 e8 13 ff ff ff 0f 1f 00 f3 0f 1e fa
+ RSP: 002b:00007fff1fe14700 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
+ RAX: ffffffffffffffda RBX: 0000000000000005 RCX: 00007fa5627cbc5e
+ RDX: 0000000000001f9c RSI: 00007fff1fe16984 RDI: 0000000000000005
+ RBP: 00007fff1fe14710 R08: 0000000000000000 R09: 0000000000000000
+ R10: 0000000000000000 R11: 0000000000000202 R12: 00007fff1fe16920
+ R13: 0000000000002000 R14: 0000000000001f9c R15: 0000000000001f9c
+
+The packet scheduler could attempt a reinjection after receiving an
+MP_FAIL and before the infinite map has been transmitted, causing a
+deadlock since MPTCP needs to do the reinjection atomically from WRT
+fallback.
+
+Address the issue explicitly avoiding the reinjection in the critical
+scenario. Note that this is the only fallback critical section that
+could potentially send packets and hit the double-lock.
+
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Closes: https://netdev-ctrl.bots.linux.dev/logs/vmksft/mptcp-dbg/results/412720/1-mptcp-join-sh/stderr
+Fixes: f8a1d9b18c5e ("mptcp: make fallback action and fallback decision atomic")
 Cc: stable@vger.kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251205-net-mptcp-misc-fixes-6-19-rc1-v1-3-9e4781a6c1b8@kernel.org
+Link: https://patch.msgid.link/20251205-net-mptcp-misc-fixes-6-19-rc1-v1-4-9e4781a6c1b8@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |   15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ net/mptcp/protocol.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 --- a/net/mptcp/protocol.c
 +++ b/net/mptcp/protocol.c
-@@ -1630,7 +1630,7 @@ void __mptcp_push_pending(struct sock *s
- 	struct mptcp_sendmsg_info info = {
- 				.flags = flags,
- 	};
--	bool do_check_data_fin = false;
-+	bool copied = false;
- 	int push_count = 1;
+@@ -2712,10 +2712,13 @@ static void __mptcp_retrans(struct sock
  
- 	while (mptcp_send_head(sk) && (push_count > 0)) {
-@@ -1672,7 +1672,7 @@ void __mptcp_push_pending(struct sock *s
- 						push_count--;
- 					continue;
- 				}
--				do_check_data_fin = true;
-+				copied = true;
- 			}
- 		}
- 	}
-@@ -1681,11 +1681,14 @@ void __mptcp_push_pending(struct sock *s
- 	if (ssk)
- 		mptcp_push_release(ssk, &info);
- 
--	/* ensure the rtx timer is running */
--	if (!mptcp_rtx_timer_pending(sk))
--		mptcp_reset_rtx_timer(sk);
--	if (do_check_data_fin)
-+	/* Avoid scheduling the rtx timer if no data has been pushed; the timer
-+	 * will be updated on positive acks by __mptcp_cleanup_una().
-+	 */
-+	if (copied) {
-+		if (!mptcp_rtx_timer_pending(sk))
-+			mptcp_reset_rtx_timer(sk);
- 		mptcp_check_send_data_fin(sk);
-+	}
- }
- 
- static void __mptcp_subflow_push_pending(struct sock *sk, struct sock *ssk, bool first)
+ 			/*
+ 			 * make the whole retrans decision, xmit, disallow
+-			 * fallback atomic
++			 * fallback atomic, note that we can't retrans even
++			 * when an infinite fallback is in progress, i.e. new
++			 * subflows are disallowed.
+ 			 */
+ 			spin_lock_bh(&msk->fallback_lock);
+-			if (__mptcp_check_fallback(msk)) {
++			if (__mptcp_check_fallback(msk) ||
++			    !msk->allow_subflows) {
+ 				spin_unlock_bh(&msk->fallback_lock);
+ 				release_sock(ssk);
+ 				goto clear_scheduled;
 
 
