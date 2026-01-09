@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48671335561;
-	Fri,  9 Jan 2026 11:56:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A64A33290A;
+	Fri,  9 Jan 2026 11:56:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959791; cv=none; b=nn1cAml2AGzf+GSIAaBQwerRxKpjUfqDz0mlnK60DkpXTSQ2HjCz0a2DHnRCafWhH5i8nxSHybjauuHITd5u5pGh0F/0UblNDDjSEOGApw984tk6ey2ge94vllZnShha13o5r38Zo+NuGn5EcI9Ufbzhb46QHm/kJ3/7dQ2VuEQ=
+	t=1767959794; cv=none; b=CHbJe9OIXEiGAgZ/dofnch8Z+XIs2ANxhlQPEHId76ejs/PchBhARMHjEEJ2we4PzBBeNzUZnoH8v4EaH1qvftGAXPqGPkhKokJ9cQsA5W4x6RCbwqL1IDAS8ISpno02t9IWrZsVQjhdKBOJVcfwIcMH8o5BZGmF3RdLHx4Gzzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959791; c=relaxed/simple;
-	bh=4NYoMnBG2lHhaOYipHZBAPteiswGp7z/lvPOy4ocaMM=;
+	s=arc-20240116; t=1767959794; c=relaxed/simple;
+	bh=/JEz22GyCjMPLMWECVksD3ve3sz+FKI3DyhMGccqpwg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HRH4dzN2p8nH2218sBHCt6toYVZQGXuRM3ee7WjCrM4Hw5ZYlscjJ7QNMfbBPKDS6OjoLADcs9p1fl8yUxgNEZX3ZGmJe/RU6mKj22Zbv0IF/BveYYoTNYxH6JLYOaK7FnisQfHkLI3TD/86u0K4GwONh0ZQrXkbHs5ojBQ8xE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CNNf3T5E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GL48XKV+E6YL4LR+Qgk1Bl/C70+Cgk0CXNIdq82+TwLRyflJ3nTdaof5JG1fiectMNsh+YdATqC9YEntnlTVk/C9pOw3Tu9jvc5sKQNHrEh1LmG73g6ulXdzudgwcJacOugZKpKezuudbzWdjFHDR0ZgO8VeOZNuDKUaXM/e7Ac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=caJDD8fO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CNNf3T5E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7D3AC4CEF1;
-	Fri,  9 Jan 2026 11:56:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="caJDD8fO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 207B3C4CEF1;
+	Fri,  9 Jan 2026 11:56:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959791;
-	bh=4NYoMnBG2lHhaOYipHZBAPteiswGp7z/lvPOy4ocaMM=;
+	s=korg; t=1767959794;
+	bh=/JEz22GyCjMPLMWECVksD3ve3sz+FKI3DyhMGccqpwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CNNf3T5E+VLrNxn/P9rTEmklpZaDi6aF3N4bK7pwf2bC571dnaeDAC6mZs9Wo271Q
-	 iPrXou0ZCfzizM0nJl2K2MkKBRalTS6VEsfkEy4ZpAR3KImWcLigzEf/WeHnB8Ji8N
-	 Hj80Mlbch/uPB5S8HRuf0Z6dHwk84SUhkm+79meY=
+	b=caJDD8fOs9JqwOWa1BqDkTZCPT7tryg5sxq5OjngM2C3IuHN92tUTwD75kDMmgYhR
+	 EseYfAF5YWsfBUJINMQuguDYji/rcJpPpe3WJxA+v5ZsHHQ99S+tdwD7+q4iEj9Dbe
+	 GJmLmrXy7NwxQljnkXA785v3vFtVqTkYaNpLftBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Garri Djavadyan <g.djavadyan@gmail.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	James Clark <james.clark@linaro.org>,
+	Leo Yan <leo.yan@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 175/737] ipv6: clear RA flags when adding a static route
-Date: Fri,  9 Jan 2026 12:35:14 +0100
-Message-ID: <20260109112140.574945818@linuxfoundation.org>
+Subject: [PATCH 6.6 144/737] coresight: etm4x: Correct polling IDLE bit
+Date: Fri,  9 Jan 2026 12:34:43 +0100
+Message-ID: <20260109112139.415563977@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -53,52 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit f72514b3c5698e4b900b25345e09f9ed33123de6 ]
+[ Upstream commit 4dc4e22f9536341255f5de6047977a80ff47eaef ]
 
-When an IPv6 Router Advertisement (RA) is received for a prefix, the
-kernel creates the corresponding on-link route with flags RTF_ADDRCONF
-and RTF_PREFIX_RT configured and RTF_EXPIRES if lifetime is set.
+Since commit 4ff6039ffb79 ("coresight-etm4x: add isb() before reading
+the TRCSTATR"), the code has incorrectly been polling the PMSTABLE bit
+instead of the IDLE bit.
 
-If later a user configures a static IPv6 address on the same prefix the
-kernel clears the RTF_EXPIRES flag but it doesn't clear the RTF_ADDRCONF
-and RTF_PREFIX_RT. When the next RA for that prefix is received, the
-kernel sees the route as RA-learned and wrongly configures back the
-lifetime. This is problematic because if the route expires, the static
-address won't have the corresponding on-link route.
+This commit corrects the typo.
 
-This fix clears the RTF_ADDRCONF and RTF_PREFIX_RT flags preventing that
-the lifetime is configured when the next RA arrives. If the static
-address is deleted, the route becomes RA-learned again.
-
-Fixes: 14ef37b6d00e ("ipv6: fix route lookup in addrconf_prefix_rcv()")
-Reported-by: Garri Djavadyan <g.djavadyan@gmail.com>
-Closes: https://lore.kernel.org/netdev/ba807d39aca5b4dcf395cc11dca61a130a52cfd3.camel@gmail.com/
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20251115095939.6967-1-fmancera@suse.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 4ff6039ffb79 ("coresight-etm4x: add isb() before reading the TRCSTATR")
+Reviewed-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Reviewed-by: Mike Leach <mike.leach@linaro.org>
+Tested-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20251111-arm_coresight_power_management_fix-v6-4-f55553b6c8b3@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_fib.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/hwtracing/coresight/coresight-etm4x-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
-index ab84e2dd682f8..646ff1276aff2 100644
---- a/net/ipv6/ip6_fib.c
-+++ b/net/ipv6/ip6_fib.c
-@@ -1136,6 +1136,10 @@ static int fib6_add_rt2node(struct fib6_node *fn, struct fib6_info *rt,
- 					fib6_set_expires(iter, rt->expires);
- 					fib6_add_gc_list(iter);
- 				}
-+				if (!(rt->fib6_flags & (RTF_ADDRCONF | RTF_PREFIX_RT))) {
-+					iter->fib6_flags &= ~RTF_ADDRCONF;
-+					iter->fib6_flags &= ~RTF_PREFIX_RT;
-+				}
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+index e4d8d446ea4d3..cc35175abd504 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+@@ -1805,7 +1805,7 @@ static int __etm4_cpu_save(struct etmv4_drvdata *drvdata)
+ 		state->trcpdcr = etm4x_read32(csa, TRCPDCR);
  
- 				if (rt->fib6_pmtu)
- 					fib6_metric_set(iter, RTAX_MTU,
+ 	/* wait for TRCSTATR.IDLE to go up */
+-	if (etm4x_wait_status(csa, TRCSTATR_PMSTABLE_BIT, 1)) {
++	if (etm4x_wait_status(csa, TRCSTATR_IDLE_BIT, 1)) {
+ 		dev_err(etm_dev,
+ 			"timeout while waiting for Idle Trace Status\n");
+ 		etm4_os_unlock(drvdata);
 -- 
 2.51.0
 
