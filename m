@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5485C33D50F;
-	Fri,  9 Jan 2026 12:05:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34C5359F98;
+	Fri,  9 Jan 2026 12:05:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960303; cv=none; b=m7DHThrAfuk1zLswoYUOR+zakdzN/R0p8tl2Ih2tREN1KMXYBcpevHi91LXcZHOHp/PnlI6pSrM8uWuJRF4+SEx7fFDh5mFUJvu8ftVkahoxBRuiCkhmsHa8bsPv1vscXjkrqjV2OmFYtWjCsgin/8KsaU2MAXEaiZwDWFs74aY=
+	t=1767960305; cv=none; b=F/EFixowwAS2kx4DlDUhjNAefSnpWyymHXfICeKnEkXCmMUBN61mQEKHaHxf5A3EZAev0azzLIkDrxvN4iq4Fhj+zlFiotBF/p3hnfQ6OiFrXP2uMux7h3HEDfFUqjdg8/qayn7LlQw92kVzKIkqypKwHVvzPD1carqukRM3tlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960303; c=relaxed/simple;
-	bh=5KBJt7nqAMNDchb4528VJHS9YCD5x9/STsK/vttw8RY=;
+	s=arc-20240116; t=1767960305; c=relaxed/simple;
+	bh=S2OpFmhjQ5KIZjDu403i2NI1llhvkUorrHqcae+lu6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bDq3KbqMCdMd4T+rB1m3hWYu/1FJW0VQMbwAxAdQKCtUQD0SclhJPPK83McLImsuYYBavjB7x/t0gSFn0V17kq7h9v4LREtCoNBiIZ6K/GaTmIYKnclmTs3a4piyevWRXedLTULQhUctqI93F61JPqzSKzjt0+Xzpkg4PoqDBS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IXDbux7R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k5oXfCZizzBXQypKGfcTx6LsETL++ESzgEkv6v7lRz2Fh+Dsjrm1VDexDH8Mwey8qezQHpxBrV85O+Jk9fmWj3aSIQnV+O23lhuMAvF+yt79k30mz43Xw/iuEXfBOU9mv6a7+VxfLOvFjAWebPLViqkvhBp/MnFUbrnHCosOv9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GY9rhqa1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IXDbux7R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1DF2C4CEF1;
-	Fri,  9 Jan 2026 12:05:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GY9rhqa1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 620C4C4CEF1;
+	Fri,  9 Jan 2026 12:05:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960303;
-	bh=5KBJt7nqAMNDchb4528VJHS9YCD5x9/STsK/vttw8RY=;
+	s=korg; t=1767960305;
+	bh=S2OpFmhjQ5KIZjDu403i2NI1llhvkUorrHqcae+lu6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IXDbux7R3Yg/9YX4LprlBW6s3h82npVoQ//1Fu8c/QzC7hfNo48yPRlvVJ7aXVfxG
-	 DpPu7cpnKC4Aw/JHtqiH0bZQtouhvJbi+hcy58DCEYxJ8c11GRh6e1/ArEmh3IS489
-	 wcEffm1nb6noWbh4k/RKnMdOATY0avxPntrB1XK0=
+	b=GY9rhqa1In0ZLdAquTtdGCDuKlrH3rgfYs5x7l7EyVNw6fEHyvRoy1FyLWec3sHuW
+	 eY227nAy0cGkGdj0HjLw1C2tgQyRWX2Xnpl3kIT16NgGgD4TR8dIHGrPSwnQN7+H9n
+	 kPtAdhJaOvyDEQIdgoMWR0MrxkPdzyIVaFNGRgbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 324/737] gfs2: fix remote evict for read-only filesystems
-Date: Fri,  9 Jan 2026 12:37:43 +0100
-Message-ID: <20260109112146.186162760@linuxfoundation.org>
+Subject: [PATCH 6.6 325/737] smb/server: fix return value of smb2_ioctl()
+Date: Fri,  9 Jan 2026 12:37:44 +0100
+Message-ID: <20260109112146.223217751@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -50,39 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
 
-[ Upstream commit 64c10ed9274bc46416f502afea48b4ae11279669 ]
+[ Upstream commit 269df046c1e15ab34fa26fd90db9381f022a0963 ]
 
-When a node tries to delete an inode, it first requests exclusive access
-to the iopen glock.  This triggers demote requests on all remote nodes
-currently holding the iopen glock.  To satisfy those requests, the
-remote nodes evict the inode in question, or they poke the corresponding
-inode glock to signal that the inode is still in active use.
+__process_request() will not print error messages if smb2_ioctl()
+always returns 0.
 
-This behavior doesn't depend on whether or not a filesystem is
-read-only, so remove the incorrect read-only check.
+Fix this by returning the correct value at the end of function.
 
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/glops.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/smb/server/smb2pdu.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/fs/gfs2/glops.c b/fs/gfs2/glops.c
-index 1c854d4e2d491..4a169c60bce65 100644
---- a/fs/gfs2/glops.c
-+++ b/fs/gfs2/glops.c
-@@ -640,8 +640,7 @@ static void iopen_go_callback(struct gfs2_glock *gl, bool remote)
- 	struct gfs2_inode *ip = gl->gl_object;
- 	struct gfs2_sbd *sdp = gl->gl_name.ln_sbd;
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index a819f198c3337..8fa68c3b24f3f 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -8094,7 +8094,7 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 		id = req->VolatileFileId;
  
--	if (!remote || sb_rdonly(sdp->sd_vfs) ||
--	    test_bit(SDF_KILL, &sdp->sd_flags))
-+	if (!remote || test_bit(SDF_KILL, &sdp->sd_flags))
- 		return;
+ 	if (req->Flags != cpu_to_le32(SMB2_0_IOCTL_IS_FSCTL)) {
+-		rsp->hdr.Status = STATUS_NOT_SUPPORTED;
++		ret = -EOPNOTSUPP;
+ 		goto out;
+ 	}
  
- 	if (gl->gl_demote_state == LM_ST_UNLOCKED &&
+@@ -8114,8 +8114,9 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 	case FSCTL_DFS_GET_REFERRALS:
+ 	case FSCTL_DFS_GET_REFERRALS_EX:
+ 		/* Not support DFS yet */
++		ret = -EOPNOTSUPP;
+ 		rsp->hdr.Status = STATUS_FS_DRIVER_REQUIRED;
+-		goto out;
++		goto out2;
+ 	case FSCTL_CREATE_OR_GET_OBJECT_ID:
+ 	{
+ 		struct file_object_buf_type1_ioctl_rsp *obj_buf;
+@@ -8405,8 +8406,10 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 		rsp->hdr.Status = STATUS_BUFFER_TOO_SMALL;
+ 	else if (ret < 0 || rsp->hdr.Status == 0)
+ 		rsp->hdr.Status = STATUS_INVALID_PARAMETER;
++
++out2:
+ 	smb2_set_err_rsp(work);
+-	return 0;
++	return ret;
+ }
+ 
+ /**
 -- 
 2.51.0
 
