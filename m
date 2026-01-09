@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A83F1946C8;
-	Fri,  9 Jan 2026 12:04:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD13A1946C8;
+	Fri,  9 Jan 2026 12:04:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960274; cv=none; b=Qr3FpDHn5jgcCZOqy6Cqq+S073Ge9i5mcwO99i0n43vaHyszKvl0Q2NsFj1Zsl6yNxnDm2WSApVbfo+n2NTZ3WPfd7FfaK7NhvgyohcqiDDsFlXX7XBdOBERfbavPbRDEPUFsUHv1sOSceDcljZCXKTtwFWLi8BH2R6fXLv9RC4=
+	t=1767960277; cv=none; b=swiQuERWh1YhX3/ElJXXyFa4grMWU9K4+cu63Ul6ae1D72IrY2nR7U6UvsE2fnoWTYaFehaY/uAR+tfy7rUa6Qc72tvnzUZf4YMC5aWM87egf+9GV2sQvsnQEbUpIDWGevOcgX5ItqPs6EkXPFhrmVnCteOzOCQ0rUR8g64WAJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960274; c=relaxed/simple;
-	bh=7Sp6/TkT40NXzkvqnwleiT1rFc8tGHgxtEfZqFqPC5w=;
+	s=arc-20240116; t=1767960277; c=relaxed/simple;
+	bh=pX/RlAFSoduCQunTQIlR8Qmc78ikAisfoHFbLHwtEAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d/vXvR7WqsMvuQMerxfLv4OcnkZzdGZM5UVHGcna5CT9kKyQTvG4+aR6/YLIxXE4yj37rdlQV+wK0ytJevKAz8Bz6vHgvw0GE2p8RNugktPPrS0y4oBm3waCFNSD/v8+aC3gGzkbzvwNlreNoOjbhdFsgGMbESa+JyNNU+GKswI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DqOBUo8+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dAAifxgBc/kb5Ae7oa8UzYNBsA6PayFH9EX3zfMKE3r4kJ6dE+/EA3nmM2dzsF3sxDXgauRB/FWgLAisXJWHkCbwjYajqM83Xlv+J+Z0us/iHEozxvM9ZW7Ama6v2yWws739ni/UcbSyxFcCbKuZrw2L1nVI0L35ivNtRbdFPQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h22173P3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DqOBUo8+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 157C9C4CEF1;
-	Fri,  9 Jan 2026 12:04:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h22173P3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E870AC4CEF1;
+	Fri,  9 Jan 2026 12:04:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960274;
-	bh=7Sp6/TkT40NXzkvqnwleiT1rFc8tGHgxtEfZqFqPC5w=;
+	s=korg; t=1767960277;
+	bh=pX/RlAFSoduCQunTQIlR8Qmc78ikAisfoHFbLHwtEAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DqOBUo8+FkBLj/QHCH4mNgnECicyh0Vyd1agYjcwxEYnc7XJ9Me0CQ9yjfH6Fzek1
-	 FlJlxbckpEhStc+Ojxb07OKbcaIl5yymed3FHwi69ymqWdQCIttYmZAhPLmXKuUgMp
-	 YSFrl6D4JNYSTLTc0MDqNgexsVnQFfeWi744j8H0=
+	b=h22173P3yXCiYlH2aZqdMH5jU11GQAbEOjEPBfDWc9MDj06ot0HUBYqdOwUYS7ThJ
+	 0I4pYkT6LF834zh2I0g64baCVd7NbUkaDrhLZ4gIOrY19waKE05d6+cxVhaSQAfOPm
+	 DquBlrPwWASyyzOzpH/u0gU59JZv7/b3QD8380lY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 346/737] netfilter: nf_tables: allow loads only when register is initialized
-Date: Fri,  9 Jan 2026 12:38:05 +0100
-Message-ID: <20260109112147.003750344@linuxfoundation.org>
+Subject: [PATCH 6.6 320/737] hfsplus: Verify inode mode when loading from disk
+Date: Fri,  9 Jan 2026 12:37:39 +0100
+Message-ID: <20260109112146.037760977@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,150 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 14fb07130c7ddd257e30079b87499b3f89097b09 ]
+[ Upstream commit 005d4b0d33f6b4a23d382b7930f7a96b95b01f39 ]
 
-Reject rules where a load occurs from a register that has not seen a store
-early in the same rule.
+syzbot is reporting that S_IFMT bits of inode->i_mode can become bogus when
+the S_IFMT bits of the 16bits "mode" field loaded from disk are corrupted.
 
-commit 4c905f6740a3 ("netfilter: nf_tables: initialize registers in
-nft_do_chain()")
-had to add a unconditional memset to the nftables register space to avoid
-leaking stack information to userspace.
+According to [1], the permissions field was treated as reserved in Mac OS
+8 and 9. According to [2], the reserved field was explicitly initialized
+with 0, and that field must remain 0 as long as reserved. Therefore, when
+the "mode" field is not 0 (i.e. no longer reserved), the file must be
+S_IFDIR if dir == 1, and the file must be one of S_IFREG/S_IFLNK/S_IFCHR/
+S_IFBLK/S_IFIFO/S_IFSOCK if dir == 0.
 
-This memset shows up in benchmarks.  After this change, this commit can
-be reverted again.
-
-Note that this breaks userspace compatibility, because theoretically
-you can do
-
-  rule 1: reg2 := meta load iif, reg2  == 1 jump ...
-  rule 2: reg2 == 2 jump ...   // read access with no store in this rule
-
-... after this change this is rejected.
-
-Neither nftables nor iptables-nft generate such rules, each rule is
-always standalone.
-
-This resuts in a small increase of nft_ctx structure by sizeof(long).
-
-To cope with hypothetical rulesets like the example above one could emit
-on-demand "reg[x] = 0" store when generating the datapath blob in
-nf_tables_commit_chain_prepare().
-
-A patch that does this is linked to below.
-
-For now, lets disable this.  In nf_tables, a rule is the smallest
-unit that can be replaced from userspace, i.e. a hypothetical ruleset
-that relies on earlier initialisations of registers can't be changed
-at will as register usage would need to be coordinated.
-
-Link: https://lore.kernel.org/netfilter-devel/20240627135330.17039-4-fw@strlen.de/
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Stable-dep-of: a67fd55f6a09 ("netfilter: nf_tables: remove redundant chain validation on register store")
+Reported-by: syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=895c23f6917da440ed0d
+Link: https://developer.apple.com/library/archive/technotes/tn/tn1150.html#HFSPlusPermissions [1]
+Link: https://developer.apple.com/library/archive/technotes/tn/tn1150.html#ReservedAndPadFields [2]
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/04ded9f9-73fb-496c-bfa5-89c4f5d1d7bb@I-love.SAKURA.ne.jp
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h |  1 +
- net/netfilter/nf_tables_api.c     | 38 +++++++++++++++++++++++++++----
- 2 files changed, 35 insertions(+), 4 deletions(-)
+ fs/hfsplus/inode.c | 32 ++++++++++++++++++++++++++++----
+ 1 file changed, 28 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index 917edb4380e58..a8fcbdb37a7f9 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -221,6 +221,7 @@ struct nft_ctx {
- 	u8				family;
- 	u8				level;
- 	bool				report;
-+	DECLARE_BITMAP(reg_inited, NFT_REG32_NUM);
+diff --git a/fs/hfsplus/inode.c b/fs/hfsplus/inode.c
+index 73ff191ff2adc..2619e5371ec9c 100644
+--- a/fs/hfsplus/inode.c
++++ b/fs/hfsplus/inode.c
+@@ -183,13 +183,29 @@ const struct dentry_operations hfsplus_dentry_operations = {
+ 	.d_compare    = hfsplus_compare_dentry,
  };
  
- enum nft_data_desc_flags {
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 7bccfb1a8a725..8b8895e4372d9 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -146,6 +146,8 @@ static void nft_ctx_init(struct nft_ctx *ctx,
- 	ctx->report	= nlmsg_report(nlh);
- 	ctx->flags	= nlh->nlmsg_flags;
- 	ctx->seq	= nlh->nlmsg_seq;
-+
-+	bitmap_zero(ctx->reg_inited, NFT_REG32_NUM);
- }
- 
- static struct nft_trans *nft_trans_alloc_gfp(const struct nft_ctx *ctx,
-@@ -10915,8 +10917,8 @@ static int nft_validate_register_load(enum nft_registers reg, unsigned int len)
- int nft_parse_register_load(const struct nft_ctx *ctx,
- 			    const struct nlattr *attr, u8 *sreg, u32 len)
+-static void hfsplus_get_perms(struct inode *inode,
+-		struct hfsplus_perm *perms, int dir)
++static int hfsplus_get_perms(struct inode *inode,
++			     struct hfsplus_perm *perms, int dir)
  {
--	u32 reg;
--	int err;
-+	int err, invalid_reg;
-+	u32 reg, next_register;
+ 	struct hfsplus_sb_info *sbi = HFSPLUS_SB(inode->i_sb);
+ 	u16 mode;
  
- 	err = nft_parse_register(attr, &reg);
- 	if (err < 0)
-@@ -10926,11 +10928,36 @@ int nft_parse_register_load(const struct nft_ctx *ctx,
- 	if (err < 0)
- 		return err;
+ 	mode = be16_to_cpu(perms->mode);
++	if (dir) {
++		if (mode && !S_ISDIR(mode))
++			goto bad_type;
++	} else if (mode) {
++		switch (mode & S_IFMT) {
++		case S_IFREG:
++		case S_IFLNK:
++		case S_IFCHR:
++		case S_IFBLK:
++		case S_IFIFO:
++		case S_IFSOCK:
++			break;
++		default:
++			goto bad_type;
++		}
++	}
  
-+	next_register = DIV_ROUND_UP(len, NFT_REG32_SIZE) + reg;
-+
-+	/* Can't happen: nft_validate_register_load() should have failed */
-+	if (WARN_ON_ONCE(next_register > NFT_REG32_NUM))
-+		return -EINVAL;
-+
-+	/* find first register that did not see an earlier store. */
-+	invalid_reg = find_next_zero_bit(ctx->reg_inited, NFT_REG32_NUM, reg);
-+
-+	/* invalid register within the range that we're loading from? */
-+	if (invalid_reg < next_register)
-+		return -ENODATA;
-+
- 	*sreg = reg;
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(nft_parse_register_load);
- 
-+static void nft_saw_register_store(const struct nft_ctx *__ctx,
-+				   int reg, unsigned int len)
-+{
-+	unsigned int registers = DIV_ROUND_UP(len, NFT_REG32_SIZE);
-+	struct nft_ctx *ctx = (struct nft_ctx *)__ctx;
-+
-+	if (WARN_ON_ONCE(len == 0 || reg < 0))
-+		return;
-+
-+	bitmap_set(ctx->reg_inited, reg, registers);
-+}
-+
- static int nft_validate_register_store(const struct nft_ctx *ctx,
- 				       enum nft_registers reg,
- 				       const struct nft_data *data,
-@@ -10952,7 +10979,7 @@ static int nft_validate_register_store(const struct nft_ctx *ctx,
- 				return err;
- 		}
- 
--		return 0;
-+		break;
- 	default:
- 		if (type != NFT_DATA_VALUE)
- 			return -EINVAL;
-@@ -10965,8 +10992,11 @@ static int nft_validate_register_store(const struct nft_ctx *ctx,
- 		    sizeof_field(struct nft_regs, data))
- 			return -ERANGE;
- 
--		return 0;
-+		break;
- 	}
-+
-+	nft_saw_register_store(ctx, reg, len);
+ 	i_uid_write(inode, be32_to_cpu(perms->owner));
+ 	if ((test_bit(HFSPLUS_SB_UID, &sbi->flags)) || (!i_uid_read(inode) && !mode))
+@@ -215,6 +231,10 @@ static void hfsplus_get_perms(struct inode *inode,
+ 		inode->i_flags |= S_APPEND;
+ 	else
+ 		inode->i_flags &= ~S_APPEND;
 +	return 0;
++bad_type:
++	pr_err("invalid file type 0%04o for inode %lu\n", mode, inode->i_ino);
++	return -EIO;
  }
  
- int nft_parse_register_store(const struct nft_ctx *ctx,
+ static int hfsplus_file_open(struct inode *inode, struct file *file)
+@@ -519,7 +539,9 @@ int hfsplus_cat_read_inode(struct inode *inode, struct hfs_find_data *fd)
+ 		}
+ 		hfs_bnode_read(fd->bnode, &entry, fd->entryoffset,
+ 					sizeof(struct hfsplus_cat_folder));
+-		hfsplus_get_perms(inode, &folder->permissions, 1);
++		res = hfsplus_get_perms(inode, &folder->permissions, 1);
++		if (res)
++			goto out;
+ 		set_nlink(inode, 1);
+ 		inode->i_size = 2 + be32_to_cpu(folder->valence);
+ 		inode->i_atime = hfsp_mt2ut(folder->access_date);
+@@ -547,7 +569,9 @@ int hfsplus_cat_read_inode(struct inode *inode, struct hfs_find_data *fd)
+ 
+ 		hfsplus_inode_read_fork(inode, HFSPLUS_IS_RSRC(inode) ?
+ 					&file->rsrc_fork : &file->data_fork);
+-		hfsplus_get_perms(inode, &file->permissions, 0);
++		res = hfsplus_get_perms(inode, &file->permissions, 0);
++		if (res)
++			goto out;
+ 		set_nlink(inode, 1);
+ 		if (S_ISREG(inode->i_mode)) {
+ 			if (file->permissions.dev)
 -- 
 2.51.0
 
