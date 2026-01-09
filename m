@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EFFA31A7EA;
-	Fri,  9 Jan 2026 11:57:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C5D432FA3D;
+	Fri,  9 Jan 2026 11:57:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959857; cv=none; b=FdMh5FonDFL14KVaVb1YGS0ioiRn8IMnvv2w57yMyxV20ls10SQXTaLwtunawDIR4f/uh1/ybSCW1/GCAdP/UPTW7doCgRmiOcgJMdRVvYWQuP106Rri/ASYHUcj+9I9/bkeq9iiSGLZ/17e2zFCacAw14PrbTK6gtJULfesz3w=
+	t=1767959860; cv=none; b=lqgn9M1XNH5UAKd06gMFIKTa+58n+bA8SziCNigjAHCNMYTFdqTDdF40hstC9rqftIbl/g6Qf47AR8LWiWajCp8yzBumuD4KSurHUtB3epvx4UK128+NeOTs0Z61Zh9s8N1ShO/g9YCqL8foWSAolhpWmHIOPSbbP15lqTWO9hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959857; c=relaxed/simple;
-	bh=Aud7brorSkkvXky/sf3Pr50ZimX10brVgFtc3iq6qAg=;
+	s=arc-20240116; t=1767959860; c=relaxed/simple;
+	bh=zcfEb7tqNsmN1kd9hRrjBR4naFhTrU+/ACovy1MVYfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gZd3z7L3gjDt+87WY7iO5SHOJsX7oWP9MxEYixCA6GxOeTHrBYOBO1YPbfwDzFjFhQROEHsPctZ4/aIWHWm4bSIyN3nXvkwi4rH7Wv24y1UufL70FuDqtdBAQE3NtBryMpSx1gXDtTmSjMk0F2zCRBjELdZECzg89wVwaRgVQtw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HCNehZxX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sqxOUhiq/QRJ/lmukyi/WXy9dy5yF00gZ2PR51yQarLu/WKPdoJDmoRxVPjMipBnRYFnRV2b9ARC3RzClRTW+trPi3R15zNRcXave1i1YGssiyJB2pypTXhaR/qS98UQ0YnuLRqpSHaGGSN+ohfhJ8OAIc0TcwmurLHXg/mOm9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HkcogKvD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HCNehZxX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B07AFC4CEF1;
-	Fri,  9 Jan 2026 11:57:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HkcogKvD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 879CFC4CEF1;
+	Fri,  9 Jan 2026 11:57:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959857;
-	bh=Aud7brorSkkvXky/sf3Pr50ZimX10brVgFtc3iq6qAg=;
+	s=korg; t=1767959859;
+	bh=zcfEb7tqNsmN1kd9hRrjBR4naFhTrU+/ACovy1MVYfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HCNehZxXw2BINaQFTR6hWw3UCGwTHqlETa41eHlDO8Yng6845NwtWj2GLgqJ7eOki
-	 gnA+OPFLaFxap4xzjUQpEOX8eBxQu9FYhUz1Xfe1C8ThARMeMdfodajEykETrCK+Mx
-	 CMAbSoFcDwJzGlFIYHh+lXvhNs/ub8ja1iqzJgWo=
+	b=HkcogKvDgbMfvPji7HtYaqM57Fqmkhg4GRypBT+FMZaprCAQEMrovri2mTxcAvwHi
+	 q9FL3JJIy20KbvEEpOejkYIU/bWNmyOMrxf/pVU45yE7TwPnyQ6xgvJ8cbQexVg6pP
+	 beQefON5X4m6tJVJ4h9zR55Y/nx+UDPyzOgxdc9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kashyap Desai <kashyap.desai@broadcom.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 199/737] RDMA/bnxt_re: Fix the inline size for GenP7 devices
-Date: Fri,  9 Jan 2026 12:35:38 +0100
-Message-ID: <20260109112141.489069977@linuxfoundation.org>
+Subject: [PATCH 6.6 200/737] mt76: mt7615: Fix memory leak in mt7615_mcu_wtbl_sta_add()
+Date: Fri,  9 Jan 2026 12:35:39 +0100
+Message-ID: <20260109112141.526400146@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -53,38 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Selvin Xavier <selvin.xavier@broadcom.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit 6afe40ff484a1155b71158b911c65299496e35c3 ]
+[ Upstream commit 53d1548612670aa8b5d89745116cc33d9d172863 ]
 
-Inline size supported by the device is based on the number
-of SGEs supported by the adapter. Change the inline
-size calculation based on that.
+In mt7615_mcu_wtbl_sta_add(), an skb sskb is allocated. If the
+subsequent call to mt76_connac_mcu_alloc_wtbl_req() fails, the function
+returns an error without freeing sskb, leading to a memory leak.
 
-Fixes: de1d364c3815 ("RDMA/bnxt_re: Add support for Variable WQE in Genp7 adapters")
-Reviewed-by: Kashyap Desai <kashyap.desai@broadcom.com>
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Link: https://patch.msgid.link/1763624215-10382-1-git-send-email-selvin.xavier@broadcom.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fix this by calling dev_kfree_skb() on sskb in the error handling path
+to ensure it is properly released.
+
+Fixes: 99c457d902cf9 ("mt76: mt7615: move mt7615_mcu_set_bmc to mt7615_mcu_ops")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20251113062415.103611-1-zilin@seu.edu.cn
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_sp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7615/mcu.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_sp.c b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-index 74c3f6b26c4d3..0b713c1821c3b 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-@@ -161,7 +161,7 @@ int bnxt_qplib_get_dev_attr(struct bnxt_qplib_rcfw *rcfw,
- 	attr->max_srq_wqes = le32_to_cpu(sb->max_srq_wr) - 1;
- 	attr->max_srq_sges = sb->max_srq_sge;
- 	attr->max_pkey = 1;
--	attr->max_inline_data = le32_to_cpu(sb->max_inline_data);
-+	attr->max_inline_data = attr->max_qp_sges * sizeof(struct sq_sge);
- 	if (!bnxt_qplib_is_chip_gen_p7(rcfw->res->cctx))
- 		attr->l2_db_size = (sb->l2_db_space_size + 1) *
- 				    (0x01 << RCFW_DBR_BASE_PAGE_SHIFT);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
+index e92040616a1f3..94adb22f8570f 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
+@@ -870,8 +870,10 @@ mt7615_mcu_wtbl_sta_add(struct mt7615_phy *phy, struct ieee80211_vif *vif,
+ 	wtbl_hdr = mt76_connac_mcu_alloc_wtbl_req(&dev->mt76, &msta->wcid,
+ 						  WTBL_RESET_AND_SET, NULL,
+ 						  &wskb);
+-	if (IS_ERR(wtbl_hdr))
++	if (IS_ERR(wtbl_hdr)) {
++		dev_kfree_skb(sskb);
+ 		return PTR_ERR(wtbl_hdr);
++	}
+ 
+ 	if (enable) {
+ 		mt76_connac_mcu_wtbl_generic_tlv(&dev->mt76, wskb, vif, sta,
 -- 
 2.51.0
 
