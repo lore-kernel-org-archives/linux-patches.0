@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C894132AAB5;
-	Fri,  9 Jan 2026 12:23:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9555126ED41;
+	Fri,  9 Jan 2026 12:23:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961380; cv=none; b=oL0hL8bgfPpV3TxXZwbp/hYAzp9qUFnhV9iJ0vLa778lCIHEO8EYQrMh5wveK0Ktu3tlhRRfvAhkFJbj3VebwmSlpyUGkPHcIiYjtQe4sUpK4qzY2ie/6WpArbhXI8luL2dQ7QP11qevYCme8okpDAoGOsvKSzpXnXUCpzqIiBk=
+	t=1767961383; cv=none; b=gYRk5S0Mf48EOlZ0B6T1o4cet2j3Uu9khJwNJlJG4sJlKEUXIXSW1QeqWKyFDQPxDFBZEKxuSlSaM5B8RVniyUYojIdLPjvo2mETISDGgG/sBpetgH22fedgaPiHrWtZ/LJcVs1Pqi4URneyMDWbvTo0lqDfwHWFPpkm0fW4ulA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961380; c=relaxed/simple;
-	bh=OLrg/FKMPQz9ztDIPzlikAjYuPl2OdbETQ4XLG18gM8=;
+	s=arc-20240116; t=1767961383; c=relaxed/simple;
+	bh=1YHFqgirNvWIfxmFR+BmDR9vFOESO9Fu67eHYf8yF4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=leRwXHhqR2PiJSQ4HCBDXuF+ripu0PQOFTMyd8yjlJJz22pfjWy8+YPDHfr74Fn0m0cCGHwVU4H+YRTFGZcei0bRVO9UzhTT7X26lUJVmNs4PgMAhFpSDC7U55tgdFyzkaqtwkpdIm2yNrv2dAg/Dn2+S3BPOo91wEAks9uW+8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aGd+I1kC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LJZru2y3jaikXw4ZXtFTQ3Jr5heULAd1QD4TePtJTxFBhknuQf4rleddbVC4o1axAx2oa1f0ckD/xNp2iVDH2eTrt0wz3NpjT9n5/mFLbC0iXtCBDbrPtG+Mr5cgJdUAiFiI1GoqnBQdHnkcLolHGr4UElrRVZjLZJO5HXsRc2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vOzjT6oS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aGd+I1kC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03778C16AAE;
-	Fri,  9 Jan 2026 12:22:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vOzjT6oS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 243DFC4CEF1;
+	Fri,  9 Jan 2026 12:23:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961380;
-	bh=OLrg/FKMPQz9ztDIPzlikAjYuPl2OdbETQ4XLG18gM8=;
+	s=korg; t=1767961383;
+	bh=1YHFqgirNvWIfxmFR+BmDR9vFOESO9Fu67eHYf8yF4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aGd+I1kC4yLpV3t+L60E6Gyn58G0g3XsSll11UKwONf7CzUWJex4Xg3OpmZpyrMdd
-	 mpkrl+lKhgiUasYx55QwCh80xxyGu33sQ81poQsgORNTXEPZ/TvNVruIXvvqqstqXn
-	 aid+k93laAFKBzo6Cjt9Q+mye8l62WC6XNGV2AQQ=
+	b=vOzjT6oS3vCHPN/rSskJIv61LSrT+1JxKJpniCTuZEM2d5Aon7979i/UVmN7MNXx+
+	 3kB8kY+T65ZtiMQAIRFyOcfinu15Amc7pXtvtWM6nq5RshRi3ZG/iNs/zscOdsA9eA
+	 9Zos9uzaEwi2n982E+K3Rp3jScAkpplqa5gSCh5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Rahul Sharma <black.hawk@163.com>
-Subject: [PATCH 6.6 732/737] net: stmmac: make sure that ptp_rate is not 0 before configuring EST
-Date: Fri,  9 Jan 2026 12:44:31 +0100
-Message-ID: <20260109112201.642932858@linuxfoundation.org>
+	Sean Nyekjaer <sean@geanix.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=F6nig?= <ukleinek@kernel.org>
+Subject: [PATCH 6.6 733/737] pwm: stm32: Always program polarity
+Date: Fri,  9 Jan 2026 12:44:32 +0100
+Message-ID: <20260109112201.680293398@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -53,59 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexis LothorÃ© <alexis.lothore@bootlin.com>
+From: Sean Nyekjaer <sean@geanix.com>
 
-commit cbefe2ffa7784525ec5d008ba87c7add19ec631a upstream.
+Commit 7346e7a058a2 ("pwm: stm32: Always do lazy disabling") triggered a
+regression where PWM polarity changes could be ignored.
 
-If the ptp_rate recorded earlier in the driver happens to be 0, this
-bogus value will propagate up to EST configuration, where it will
-trigger a division by 0.
+stm32_pwm_set_polarity() was skipped due to a mismatch between the
+cached pwm->state.polarity and the actual hardware state, leaving the
+hardware polarity unchanged.
 
-Prevent this division by 0 by adding the corresponding check and error
-code.
-
-Suggested-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Signed-off-by: Alexis LothorÃ© <alexis.lothore@bootlin.com>
-Fixes: 8572aec3d0dc ("net: stmmac: Add basic EST support for XGMAC")
-Link: https://patch.msgid.link/20250529-stmmac_tstamp_div-v4-2-d73340a794d5@bootlin.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ The context change is due to the commit c3f3b97238f6
-  ("net: stmmac: Refactor EST implementation")
-  which is irrelevant to the logic of this patch. ]
-Signed-off-by: Rahul Sharma <black.hawk@163.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7edf7369205b ("pwm: Add driver for STM32 plaftorm")
+Cc: stable@vger.kernel.org # <= 6.12
+Signed-off-by: Sean Nyekjaer <sean@geanix.com>
+Co-developed-by: Uwe Kleine-König <ukleinek@kernel.org>
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac5.c        |    5 +++++
- drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c |    5 +++++
- 2 files changed, 10 insertions(+)
+ drivers/pwm/pwm-stm32.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac5.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac5.c
-@@ -597,6 +597,11 @@ int dwmac5_est_configure(void __iomem *i
- 	int i, ret = 0x0;
- 	u32 ctrl;
+--- a/drivers/pwm/pwm-stm32.c
++++ b/drivers/pwm/pwm-stm32.c
+@@ -462,8 +462,7 @@ static int stm32_pwm_apply(struct pwm_ch
+ 		return 0;
+ 	}
  
-+	if (!ptp_rate) {
-+		pr_warn("Dwmac5: Invalid PTP rate");
-+		return -EINVAL;
-+	}
-+
- 	ret |= dwmac5_est_write(ioaddr, BTR_LOW, cfg->btr[0], false);
- 	ret |= dwmac5_est_write(ioaddr, BTR_HIGH, cfg->btr[1], false);
- 	ret |= dwmac5_est_write(ioaddr, TER, cfg->ter, false);
---- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-@@ -1537,6 +1537,11 @@ static int dwxgmac3_est_configure(void _
- 	int i, ret = 0x0;
- 	u32 ctrl;
+-	if (state->polarity != pwm->state.polarity)
+-		stm32_pwm_set_polarity(priv, pwm->hwpwm, state->polarity);
++	stm32_pwm_set_polarity(priv, pwm->hwpwm, state->polarity);
  
-+        if (!ptp_rate) {
-+                pr_warn("Dwxgmac2: Invalid PTP rate");
-+                return -EINVAL;
-+        }
-+
- 	ret |= dwxgmac3_est_write(ioaddr, XGMAC_BTR_LOW, cfg->btr[0], false);
- 	ret |= dwxgmac3_est_write(ioaddr, XGMAC_BTR_HIGH, cfg->btr[1], false);
- 	ret |= dwxgmac3_est_write(ioaddr, XGMAC_TER, cfg->ter, false);
+ 	ret = stm32_pwm_config(priv, pwm->hwpwm,
+ 			       state->duty_cycle, state->period);
 
 
