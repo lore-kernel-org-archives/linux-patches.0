@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE55359FBE;
-	Fri,  9 Jan 2026 12:01:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B0B359FB6;
+	Fri,  9 Jan 2026 12:01:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960109; cv=none; b=i1QJUrN7tCuEXwGqGk617NvXT3BPc+zqJkjFyNfI7Pzy2FVYUXEHJxmenoyywf9fsYxE9ywprnzCi3P5x1ncsPZL0IG7Y9xYqeeeSrKViESwgvAVnLKKdo0DiOF2XlnHTfvPupd+2yEhtQR5ReyMW0mrljjpg76lvlorH/aYUF0=
+	t=1767960112; cv=none; b=oMu1szqiETDPWf6Jogul9Y8m8VwbWhpCx1+9LyeDmfblYpshCVx8oXCTrL/Fw5vwdu3vKLToDvnmadgWY8B27ltNsR5AkQP6O2cRkGu9+Ii/vD3GFYhdxYNnuVikl6tOcps6AilvIBWs7rUoeW703j7NzRtER0Fof0zW65iXLbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960109; c=relaxed/simple;
-	bh=lzjvp+qj3KXX1pghHSpPlVz0e7geN+Ut/FYgJKXrWBo=;
+	s=arc-20240116; t=1767960112; c=relaxed/simple;
+	bh=oDkdIrThQ9xJMcyh44t/EkPF19PEu3/LTVR1AFtXHdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=unltvBbFrR58G9GJL9o8jKHeLaBZ4gGSp7AAhbW8unIGywf079YPtdzT2q5YkXms6wfWBtvEAAxuLveoN/GIuT4geoGwsqPnP+CPfP9q9Sj9UJ+GeJuEUH23EJBNSm7B8ewhIM2PP9qgVx9iUs5HEX+veDvDmPhZom/jRV35qN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L0fbi6D9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XRgm0DKrGx/wQvM3K4NRDcT2cOSYDDYLoPo6XJE10jLKB3r7OeTrr/SSCg1hrWJLp+9YW4hwm1+Hxtribr4oKjdeoxr3WwkM/16pP2Go1GZVDx5CMuHtZ9z+eaIauVm2S0rUewJvx+ixN+kFD/SsqHC/NteOFO1+WgOeXZFl6a8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nOzIkDBA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L0fbi6D9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44BEDC19421;
-	Fri,  9 Jan 2026 12:01:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOzIkDBA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 186F3C4CEF1;
+	Fri,  9 Jan 2026 12:01:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960109;
-	bh=lzjvp+qj3KXX1pghHSpPlVz0e7geN+Ut/FYgJKXrWBo=;
+	s=korg; t=1767960112;
+	bh=oDkdIrThQ9xJMcyh44t/EkPF19PEu3/LTVR1AFtXHdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L0fbi6D9Vi9Sps2sFMyYkzDzjfcdviog0reaELdGiu+dYzIrfyrlWK+mj2uBwcGnC
-	 PJxprIo1KR92yEV49n3MkJ5W7WDI1zdW5D319klYT7qXwbMpIke0v+i2RqMjtZN/vb
-	 CzFLI0CrwXoEaid4GhuKdgOp23iJH7LbGYM5cSgQ=
+	b=nOzIkDBA7W4R9V3kyFMWg6QBfq/8yI80AV25cuwF0u7OaSQcZcPaIhURxbHcqB1zl
+	 qUXIhIexdVme/hc4iLM+2IdSq9A2+KngZt41P9bi/U9GSpg8bCmyrSDs6GVdcg6zIs
+	 m4TLmLKFKpzvonkdt1l9+b0gV0EIKmugRpvfAvkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthijs Kooijman <matthijs@stdin.nl>,
-	Haojian Zhuang <haojian.zhuang@linaro.org>,
-	Tony Lindgren <tony@atomide.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Benjamin Poirier <bpoirier@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 255/737] pinctrl: single: Fix PIN_CONFIG_BIAS_DISABLE handling
-Date: Fri,  9 Jan 2026 12:36:34 +0100
-Message-ID: <20260109112143.583832203@linuxfoundation.org>
+Subject: [PATCH 6.6 246/737] selftests: bonding: Add more missing config options
+Date: Fri,  9 Jan 2026 12:36:25 +0100
+Message-ID: <20260109112143.247524077@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -53,93 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthijs Kooijman <matthijs@stdin.nl>
+From: Benjamin Poirier <bpoirier@nvidia.com>
 
-[ Upstream commit b5fe46efc147516a908d2d31bf40eb858ab76d51 ]
+[ Upstream commit dd2d40acdbb2b9e6bcddd5424b0e00c1760ecf26 ]
 
-The pinctrl-single driver handles pin_config_set by looking up the
-requested setting in a DT-defined lookup table, which defines what bits
-correspond to each setting. There is no way to add
-PIN_CONFIG_BIAS_DISABLE entries to the table, since there is instead
-code to disable the bias by applying the disable values of both the
-pullup and pulldown entries in the table.
+As a followup to commit 03fb8565c880 ("selftests: bonding: add missing
+build configs"), add more networking-specific config options which are
+needed for bonding tests.
 
-However, this code is inside the table-lookup loop, so it would only
-execute if there is an entry for PIN_CONFIG_BIAS_DISABLE in the table,
-which can never exist, so this code never runs.
+For testing, I used the minimal config generated by virtme-ng and I added
+the options in the config file. All bonding tests passed.
 
-This commit lifts the offending code out of the loop, so it just
-executes directly whenever PIN_CONFIG_BIAS_DISABLE is requested,
-skippipng the table lookup loop.
-
-This also introduces a new `param` variable to make the code slightly
-more readable.
-
-This bug seems to have existed when this code was first merged in commit
-9dddb4df90d13 ("pinctrl: single: support generic pinconf"). Earlier
-versions of this patch did have an entry for PIN_CONFIG_BIAS_DISABLE in
-the lookup table, but that was removed, which is probably how this bug
-was introduced.
-
-Signed-off-by: Matthijs Kooijman <matthijs@stdin.nl>
-Reviewed-by: Haojian Zhuang <haojian.zhuang@linaro.org>
-Reviewed-by: Tony Lindgren <tony@atomide.com>
-Message-ID: <20240319110633.230329-1-matthijs@stdin.nl>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Stable-dep-of: 61d1bb53547d ("pinctrl: single: Fix incorrect type for error return variable")
+Fixes: bbb774d921e2 ("net: Add tests for bonding and team address list management") # for ipv6
+Fixes: 6cbe791c0f4e ("kselftest: bonding: add num_grat_arp test") # for tc options
+Fixes: 222c94ec0ad4 ("selftests: bonding: add tests for ether type changes") # for nlmon
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Benjamin Poirier <bpoirier@nvidia.com>
+Link: https://lore.kernel.org/r/20240116154926.202164-1-bpoirier@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 2c28ee720ad1 ("selftests: bonding: add delay before each xvlan_over_bond connectivity check")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-single.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ tools/testing/selftests/drivers/net/bonding/config | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/pinctrl/pinctrl-single.c b/drivers/pinctrl/pinctrl-single.c
-index 7684039be10cb..5c6d5add6ecac 100644
---- a/drivers/pinctrl/pinctrl-single.c
-+++ b/drivers/pinctrl/pinctrl-single.c
-@@ -556,21 +556,30 @@ static int pcs_pinconf_set(struct pinctrl_dev *pctldev,
- 	unsigned offset = 0, shift = 0, i, data, ret;
- 	u32 arg;
- 	int j;
-+	enum pin_config_param param;
- 
- 	ret = pcs_get_function(pctldev, pin, &func);
- 	if (ret)
- 		return ret;
- 
- 	for (j = 0; j < num_configs; j++) {
-+		param = pinconf_to_config_param(configs[j]);
-+
-+		/* BIAS_DISABLE has no entry in the func->conf table */
-+		if (param == PIN_CONFIG_BIAS_DISABLE) {
-+			/* This just disables all bias entries */
-+			pcs_pinconf_clear_bias(pctldev, pin);
-+			continue;
-+		}
-+
- 		for (i = 0; i < func->nconfs; i++) {
--			if (pinconf_to_config_param(configs[j])
--				!= func->conf[i].param)
-+			if (param != func->conf[i].param)
- 				continue;
- 
- 			offset = pin * (pcs->width / BITS_PER_BYTE);
- 			data = pcs->read(pcs->base + offset);
- 			arg = pinconf_to_config_argument(configs[j]);
--			switch (func->conf[i].param) {
-+			switch (param) {
- 			/* 2 parameters */
- 			case PIN_CONFIG_INPUT_SCHMITT:
- 			case PIN_CONFIG_DRIVE_STRENGTH:
-@@ -582,9 +591,6 @@ static int pcs_pinconf_set(struct pinctrl_dev *pctldev,
- 				data |= (arg << shift) & func->conf[i].mask;
- 				break;
- 			/* 4 parameters */
--			case PIN_CONFIG_BIAS_DISABLE:
--				pcs_pinconf_clear_bias(pctldev, pin);
--				break;
- 			case PIN_CONFIG_BIAS_PULL_DOWN:
- 			case PIN_CONFIG_BIAS_PULL_UP:
- 				if (arg) {
+diff --git a/tools/testing/selftests/drivers/net/bonding/config b/tools/testing/selftests/drivers/net/bonding/config
+index f85b16fc5128c..899d7fb6ea8e9 100644
+--- a/tools/testing/selftests/drivers/net/bonding/config
++++ b/tools/testing/selftests/drivers/net/bonding/config
+@@ -1,5 +1,10 @@
+ CONFIG_BONDING=y
+ CONFIG_BRIDGE=y
+ CONFIG_DUMMY=y
++CONFIG_IPV6=y
+ CONFIG_MACVLAN=y
++CONFIG_NET_ACT_GACT=y
++CONFIG_NET_CLS_FLOWER=y
++CONFIG_NET_SCH_INGRESS=y
++CONFIG_NLMON=y
+ CONFIG_VETH=y
 -- 
 2.51.0
 
