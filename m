@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD6FE335097;
-	Fri,  9 Jan 2026 12:52:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A821C35BDC5;
+	Fri,  9 Jan 2026 12:52:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767963124; cv=none; b=S3vTLykmcOaOGzw3AH8WKaq4behsB7pPvWQshqjevEHUAACKTrsACzccEQsCZX9tMYgqov9jvGo+qibWPE1dENEYBm9MGRIcr8IkOjWcJEW4MGVivskklnuWb7y4cw7uZnQ2uWw0U4kfLMHSEMLfRynKTO9UOAzhWHdi+5X/KCo=
+	t=1767963127; cv=none; b=OeNhLCcg0oxSKFoXq3aYnISSSMQeCqJ4YNRHcMvB8CmdfrmWdcLn1RHpDumxk7+IRUoh3vAzw6+TPN3kYQMzt6yzgYxvF8SK1uuB5FvmlTaZoxbXes7rFx3Z+p3v+IZxsvlT4IegZASbMhSGo+flg/3lQwwUWy+YDos2c9vyJU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767963124; c=relaxed/simple;
-	bh=uanK5ni0ijL9kaMI4Sr0UdBuwi4vlH/DfXMaQKx8Dew=;
+	s=arc-20240116; t=1767963127; c=relaxed/simple;
+	bh=8zo6kgnm+u+8Bg0CZJTFqn/Z7+YmJ8GBf19OI6AhFhA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ffSY1kufhjLFrO0Nk1fiLIzQdW5TjLasCWGkcRZy9JTzfTqBEtH5V7b5xjkzd2QnAPMyFs8AsfwtYHUC0ra53nX9JM1mC6gxDALzkrZf1kEkmGDVUuPEe0k2q35gvcrh728Thug/a8TE8/1y66SJ7tknx0sy444gb1OERTKXfUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JDmK1dig; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HLvu9/zxXfRQGZ13N9a6GUhJUjW9A3jPr+FsbQotj2bt73Bq5qy+OmddG4QEyb9owaEQI6lMaTuAJbL2ArkJ+nvZgTNhUeMAVTw/aT8skGQ6UgHWMGRWbLeo6+npGPVL2rsIWHxBPsE9yk4qpo1GTLzR5DPGih/dbFr8O3wjqSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EM7TS0TH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JDmK1dig"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66AFCC4CEF1;
-	Fri,  9 Jan 2026 12:52:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EM7TS0TH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35BC6C4CEF1;
+	Fri,  9 Jan 2026 12:52:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767963124;
-	bh=uanK5ni0ijL9kaMI4Sr0UdBuwi4vlH/DfXMaQKx8Dew=;
+	s=korg; t=1767963127;
+	bh=8zo6kgnm+u+8Bg0CZJTFqn/Z7+YmJ8GBf19OI6AhFhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JDmK1diglCD/KfTRmGOQP/rJ2BIdTqCxZRGphH6AFTuq75KanqwLar5RFX4h0OQSH
-	 X6nI7CiTH2Pc2RuO6tAfcx5vkKNyc6ROYWcw4RP4GTbia52TbDxxjYL9tWPeD06Kco
-	 /P3sq8t3Xsg8hkdLKgcBl0QVasmRFbVjRDxc+V/I=
+	b=EM7TS0THSQtbCO1hoTwqJRi5/EYpEKUuuOG6FOE3wc0ZXaHTtzGoY2mwLZaM9Qehd
+	 Rjgs6ffXatHuRA32Lm4Hk560w60lnNW0xlkMK0In8BNv6Cg1TszBNPj8hBXq+gs5LV
+	 wUd1dvIzW1SMmoVmV7RPmfHEZgaaOZ+Ilp8mqgLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,  linux-kernel@vger.kernel.org, llvm@lists.linux.dev, stable@vger.kernel.org,  Justin Stitt" <justinstitt@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Tiffany Yang <ynaffit@google.com>,
-	Justin Stitt <justinstitt@google.com>
-Subject: [PATCH 6.1 606/634] KVM: arm64: sys_regs: disable -Wuninitialized-const-pointer warning
-Date: Fri,  9 Jan 2026 12:44:44 +0100
-Message-ID: <20260109112140.431368819@linuxfoundation.org>
+	Yi Sun <yi.sun@intel.com>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Bin Lan <lanbincn@139.com>
+Subject: [PATCH 6.1 607/634] dmaengine: idxd: Remove improper idxd_free
+Date: Fri,  9 Jan 2026 12:44:45 +0100
+Message-ID: <20260109112140.469719921@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,44 +54,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Stitt <justinstitt@google.com>
+From: Yi Sun <yi.sun@intel.com>
 
-A new warning in Clang 22 [1] complains that @clidr passed to
-get_clidr_el1() is an uninitialized const pointer. get_clidr_el1()
-doesn't really care since it casts away the const-ness anyways -- it is
-a false positive.
+[ Upstream commit f41c538881eec4dcf5961a242097d447f848cda6 ]
 
-This patch isn't needed for anything past 6.1 as this code section was
-reworked in Commit 7af0c2534f4c ("KVM: arm64: Normalize cache
-configuration") which incidentally removed the aforementioned warning.
-Since there is no upstream equivalent, this patch just needs to be
-applied to 6.1.
+The call to idxd_free() introduces a duplicate put_device() leading to a
+reference count underflow:
+refcount_t: underflow; use-after-free.
+WARNING: CPU: 15 PID: 4428 at lib/refcount.c:28 refcount_warn_saturate+0xbe/0x110
+...
+Call Trace:
+ <TASK>
+  idxd_remove+0xe4/0x120 [idxd]
+  pci_device_remove+0x3f/0xb0
+  device_release_driver_internal+0x197/0x200
+  driver_detach+0x48/0x90
+  bus_remove_driver+0x74/0xf0
+  pci_unregister_driver+0x2e/0xb0
+  idxd_exit_module+0x34/0x7a0 [idxd]
+  __do_sys_delete_module.constprop.0+0x183/0x280
+  do_syscall_64+0x54/0xd70
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Disable this warning for sys_regs.o instead of backporting the patches
-from 6.2+ that modified this code area.
+The idxd_unregister_devices() which is invoked at the very beginning of
+idxd_remove(), already takes care of the necessary put_device() through the
+following call path:
+idxd_unregister_devices() -> device_unregister() -> put_device()
 
-Cc: stable@vger.kernel.org
-Fixes: 7c8c5e6a9101e ("arm64: KVM: system register handling")
-Link: https://github.com/llvm/llvm-project/commit/00dacf8c22f065cb52efb14cd091d441f19b319e [1]
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Justin Stitt <justinstitt@google.com>
-Reviewed-by: Tiffany Yang <ynaffit@google.com>
+In addition, when CONFIG_DEBUG_KOBJECT_RELEASE is enabled, put_device() may
+trigger asynchronous cleanup via schedule_delayed_work(). If idxd_free() is
+called immediately after, it can result in a use-after-free.
+
+Remove the improper idxd_free() to avoid both the refcount underflow and
+potential memory corruption during module unload.
+
+Fixes: d5449ff1b04d ("dmaengine: idxd: Add missing idxd cleanup to fix memory leak in remove call")
+Signed-off-by: Yi Sun <yi.sun@intel.com>
+Tested-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+
+Link: https://lore.kernel.org/r/20250729150313.1934101-2-yi.sun@intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+[ Slightly adjust the context. ]
+Signed-off-by: Bin Lan <lanbincn@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/Makefile |    3 +++
- 1 file changed, 3 insertions(+)
+Without this patch, this issue can be reproduced in Linux-6.1.y 
+when the idxd module is removed.
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/dma/idxd/init.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/arch/arm64/kvm/Makefile
-+++ b/arch/arm64/kvm/Makefile
-@@ -24,6 +24,9 @@ kvm-y += arm.o mmu.o mmio.o psci.o hyper
+--- a/drivers/dma/idxd/init.c
++++ b/drivers/dma/idxd/init.c
+@@ -816,7 +816,6 @@ static void idxd_remove(struct pci_dev *
+ 	destroy_workqueue(idxd->wq);
+ 	perfmon_pmu_remove(idxd);
+ 	put_device(idxd_confdev(idxd));
+-	idxd_free(idxd);
+ }
  
- kvm-$(CONFIG_HW_PERF_EVENTS)  += pmu-emul.o pmu.o
- 
-+# Work around a false positive Clang 22 -Wuninitialized-const-pointer warning
-+CFLAGS_sys_regs.o := $(call cc-disable-warning, uninitialized-const-pointer)
-+
- always-y := hyp_constants.h hyp-constants.s
- 
- define rule_gen_hyp_constants
+ static struct pci_driver idxd_pci_driver = {
 
 
