@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB77D32FA3D;
-	Fri,  9 Jan 2026 11:58:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532FC32BF21;
+	Fri,  9 Jan 2026 11:58:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959916; cv=none; b=qbCbBsHlMxHZkqHR1dplguS+yVqggvk1SMZ8HVZE1CuPj7nAUCBhToASvWSQKPnyI23Xh9TUG1OjxFRW4k+i51BdtzbMdsRb7ZTjAvl7sX4K/wPFhkTflHHU4KeOVa4W0rtVjMrJGoeScu0KiuAMoJYw5Q24uoGrPLfqNntPjR8=
+	t=1767959919; cv=none; b=i7baYNlVI+q8lZ+YQD6Vc3BK9jYaeMI+7KuyopvUklrNfcCmibE1r9eUA+R9/MIN7E4VcG/mGp5fXrtd2zi+jKBrEW2nDFh5Cgf9uVrAEgu+JHwMF9hYPEpd7V6o6y7BnnW3MaENI57gv3Novw92/0T2IRuy93qo86quIBSA2lQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959916; c=relaxed/simple;
-	bh=468pLwhaowFwz6WlUoAWHCe2hQv8fwmxNEaD/8UZGhQ=;
+	s=arc-20240116; t=1767959919; c=relaxed/simple;
+	bh=cwMbQRweGBlBX5YMA5qcgqHrEVJlH+mKzGlbYa4bfE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=STLvTPwaBPXoeNdHqhyyighUT3nTLr1SPSwHoLJQxJrHlAeayPMckuFeLevY4b74+abfBTuVJX27k/etF6qUWqWbzzYekGZy55OuiYHrDrUIzdb82l403dkqQnb8T3m/bW8hbCb6ZYtLE54MJv7Jh8K/bi148vRMGY+PXplff7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VmdLkvnI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tuSferQg9xaSTmuZDb2fOElZUAxSlPUnAOg5IZIsW6wllYGiOp6nOqTUnnx8RIWoDZmSloQX81Qf37zi4tvdhl/i2GdZnfNxfA+HRQ5e52s/tq2ypqu4plOZnl/yNo+KKdgkypjWB++EXmKncp7PiJYmZtAglFLugIQtv6pVLUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OYmLF7qq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VmdLkvnI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16047C4CEF1;
-	Fri,  9 Jan 2026 11:58:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OYmLF7qq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D65C3C4CEF1;
+	Fri,  9 Jan 2026 11:58:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959916;
-	bh=468pLwhaowFwz6WlUoAWHCe2hQv8fwmxNEaD/8UZGhQ=;
+	s=korg; t=1767959919;
+	bh=cwMbQRweGBlBX5YMA5qcgqHrEVJlH+mKzGlbYa4bfE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VmdLkvnIwN93mrp3axWi7f++L5NIC7cvMyos853I2Km0Buw4vv13YmDSxgNLSlxJL
-	 O9/Y/fPR2YlLowWiK67ZysItZ4rFsLW4byBD/S/51ZnKi5I6cRKYr+MTmK7nbKhRGB
-	 dQdBAYR4smbZodgWXQ/o+cnp+bNVZJW4qFHhCdig=
+	b=OYmLF7qqhAf03VBw/5eAAkmC9y99YCd1UYEfy8v6d+gOraT0i6erVxPXFByci4oBu
+	 NIy68StkYh/li1PgVdjVAxQ8aRr/kHMdgfYtArEGqsQanWEw2eIDyYgG8OUBzg2lc9
+	 OnWPzNZIp61FgORlCMGpVayqTFAHTG7Jwe1896iE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Kevin Brodsky <kevin.brodsky@arm.com>,
 	Caleb Sander Mateos <csander@purestorage.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Keith Busch <kbusch@kernel.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 221/737] ublk: complete command synchronously on error
-Date: Fri,  9 Jan 2026 12:36:00 +0100
-Message-ID: <20260109112142.316242694@linuxfoundation.org>
+Subject: [PATCH 6.6 222/737] ublk: prevent invalid access with DEBUG
+Date: Fri,  9 Jan 2026 12:36:01 +0100
+Message-ID: <20260109112142.353460403@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -53,73 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Caleb Sander Mateos <csander@purestorage.com>
+From: Kevin Brodsky <kevin.brodsky@arm.com>
 
-[ Upstream commit 603f9be21c1894e462416e3324962d6c9c2b95f8 ]
+[ Upstream commit c6a45ee7607de3a350008630f4369b1b5ac80884 ]
 
-In case of an error, ublk's ->uring_cmd() functions currently return
--EIOCBQUEUED and immediately call io_uring_cmd_done(). -EIOCBQUEUED and
-io_uring_cmd_done() are intended for asynchronous completions. For
-synchronous completions, the ->uring_cmd() function can just return the
-negative return code directly. This skips io_uring_cmd_del_cancelable(),
-and deferring the completion to task work. So return the error code
-directly from __ublk_ch_uring_cmd() and ublk_ctrl_uring_cmd().
+ublk_ch_uring_cmd_local() may jump to the out label before
+initialising the io pointer. This will cause trouble if DEBUG is
+defined, because the pr_devel() call dereferences io. Clang reports:
 
-Update ublk_ch_uring_cmd_cb(), which currently ignores the return value
-from __ublk_ch_uring_cmd(), to call io_uring_cmd_done() for synchronous
-completions.
+drivers/block/ublk_drv.c:2403:6: error: variable 'io' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
+ 2403 |         if (tag >= ub->dev_info.queue_depth)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/block/ublk_drv.c:2492:32: note: uninitialized use occurs here
+ 2492 |                         __func__, cmd_op, tag, ret, io->flags);
+      |
 
-Signed-off-by: Caleb Sander Mateos <csander@purestorage.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Keith Busch <kbusch@kernel.org>
-Link: https://lore.kernel.org/r/20250225212456.2902549-1-csander@purestorage.com
+Fix this by initialising io to NULL and checking it before
+dereferencing it.
+
+Signed-off-by: Kevin Brodsky <kevin.brodsky@arm.com>
+Fixes: 71f28f3136af ("ublk_drv: add io_uring based userspace block driver")
+Reviewed-by: Caleb Sander Mateos <csander@purestorage.com>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: c6a45ee7607d ("ublk: prevent invalid access with DEBUG")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/block/ublk_drv.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index 6419f304fa5e2..88d566f0ffa64 100644
+index 88d566f0ffa64..563b2a94d4c3c 100644
 --- a/drivers/block/ublk_drv.c
 +++ b/drivers/block/ublk_drv.c
-@@ -1821,10 +1821,9 @@ static int __ublk_ch_uring_cmd(struct io_uring_cmd *cmd,
- 	return -EIOCBQUEUED;
- 
-  out:
--	io_uring_cmd_done(cmd, ret, 0, issue_flags);
- 	pr_devel("%s: complete: cmd op %d, tag %d ret %x io_flags %x\n",
- 			__func__, cmd_op, tag, ret, io->flags);
--	return -EIOCBQUEUED;
-+	return ret;
- }
- 
- static inline struct request *__ublk_check_and_get_req(struct ublk_device *ub,
-@@ -1880,7 +1879,10 @@ static inline int ublk_ch_uring_cmd_local(struct io_uring_cmd *cmd,
- static void ublk_ch_uring_cmd_cb(struct io_uring_cmd *cmd,
- 		unsigned int issue_flags)
+@@ -1709,7 +1709,7 @@ static int __ublk_ch_uring_cmd(struct io_uring_cmd *cmd,
  {
--	ublk_ch_uring_cmd_local(cmd, issue_flags);
-+	int ret = ublk_ch_uring_cmd_local(cmd, issue_flags);
-+
-+	if (ret != -EIOCBQUEUED)
-+		io_uring_cmd_done(cmd, ret, 0, issue_flags);
- }
+ 	struct ublk_device *ub = cmd->file->private_data;
+ 	struct ublk_queue *ubq;
+-	struct ublk_io *io;
++	struct ublk_io *io = NULL;
+ 	u32 cmd_op = cmd->cmd_op;
+ 	unsigned tag = ub_cmd->tag;
+ 	int ret = -EINVAL;
+@@ -1822,7 +1822,7 @@ static int __ublk_ch_uring_cmd(struct io_uring_cmd *cmd,
  
- static int ublk_ch_uring_cmd(struct io_uring_cmd *cmd, unsigned int issue_flags)
-@@ -2948,10 +2950,9 @@ static int ublk_ctrl_uring_cmd(struct io_uring_cmd *cmd,
- 	if (ub)
- 		ublk_put_device(ub);
   out:
--	io_uring_cmd_done(cmd, ret, 0, issue_flags);
- 	pr_devel("%s: cmd done ret %d cmd_op %x, dev id %d qid %d\n",
- 			__func__, ret, cmd->cmd_op, header->dev_id, header->queue_id);
--	return -EIOCBQUEUED;
-+	return ret;
+ 	pr_devel("%s: complete: cmd op %d, tag %d ret %x io_flags %x\n",
+-			__func__, cmd_op, tag, ret, io->flags);
++			__func__, cmd_op, tag, ret, io ? io->flags : 0);
+ 	return ret;
  }
  
- static const struct file_operations ublk_ctl_fops = {
 -- 
 2.51.0
 
