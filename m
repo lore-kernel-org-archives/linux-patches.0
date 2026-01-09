@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A18358D22;
-	Fri,  9 Jan 2026 11:53:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34416350A12;
+	Fri,  9 Jan 2026 11:53:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959624; cv=none; b=ErrbCpQbncF6uEPO8ga28Rn9F9NYB6/b3FwG3tvrU7YrtEE3Q8areqftwKp2jYZnqIaquMAjLpE0/X8TIqwNKZD1N9XSrOMaPi75xzwhPu91Vv+8FO5ML2k1okaaDqmCcxKoEURiPUqt0vMTC7kPhLVdOrYkzX48PAgvZrmEdrA=
+	t=1767959627; cv=none; b=CeE9ZMp4vDnDaRNUFxwaljliK1quZ+sNZurZ55cs+/426bFVIrAhE8yzgQ4lum2Nl6R4+/Gge817La2eVGOOd/fzyEbUqdvkMQL6U5HVwY0QHy1aN94uaYzMU9JgOHLYPVc4/vzCEUx1lD9rSzQ+8WBS7aXbN2/0QoG7v73yV+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959624; c=relaxed/simple;
-	bh=rkb0xSdNWPVmTa6agUZ0knoCYhQdOHl9Wny0xR4wJjc=;
+	s=arc-20240116; t=1767959627; c=relaxed/simple;
+	bh=Y4+S00te49ua3xixHXhzimec7W//ffOfQAhwBppEs3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J7vk7+uI1U+vuaMXMM/NjNAi1D94ArLWaiih5MgGovp+6RseCV3mHfyU5rwR4Nmqnk5OAhK/lLO2mfxwUozihhE+T0Yezwc5kOYI2xgIN5osD9bw0xw5gz0i2cNzeaxbVvhcphMRPdQoEjBbNEAXh5V2Cq7mrZj8g7QG3qNkIuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wz09SWws; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tOcSx3qkH17Ffk6AavMmTJmIrtD+vZfa/zDqbMWJO+5JpGdAhhkcgnHXwgf0zJHFEn3zo5CrZnVjeORouFW9t9ztTgJ57kRRvEeZMuFiaxCnhhkT+G35G8mT/ljvzaad7WQww/l4PjGid/WOEnNR7Dvl4BWcibrkgsf0G7k7vTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rq8G2Jgy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wz09SWws"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4A43C4CEF1;
-	Fri,  9 Jan 2026 11:53:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rq8G2Jgy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A72B1C4CEF1;
+	Fri,  9 Jan 2026 11:53:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959624;
-	bh=rkb0xSdNWPVmTa6agUZ0knoCYhQdOHl9Wny0xR4wJjc=;
+	s=korg; t=1767959627;
+	bh=Y4+S00te49ua3xixHXhzimec7W//ffOfQAhwBppEs3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wz09SWwskCf8bt2f43mnFa/o8GjOYapS9kAb92W+qXF9DxvxSuijxpbF4FWQ7dj6f
-	 yO80OssBYgDEbYX1OPhUCr94o9FEmJQek5HdL7tlufbylkp8PYZcs6Tc57/dCYZN2b
-	 UuTqFXJYPX0gWz0wOa50hy9nItyYEMvuxNt4byUg=
+	b=rq8G2JgyCHI2oL0sAMqt+BdgshBOFzJSOXEtqPHm9X9vCiq51MZTOyaD8cQsaa25y
+	 oXghZfF05FHKhx70n5UPuzsKi7KBbti10KL/96LxtlQTYKoxweb/qN/Nr5QEIX5iic
+	 lQQrVhVmJoRfzpFjaqinZdg9q7Y1pyllYRbz178A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tingmao Wang <m@maowtm.org>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Thierry Reding <treding@nvidia.com>,
+	Vishwaroop A <va@nvidia.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 118/737] fs/9p: Dont open remote file with APPEND mode when writeback cache is used
-Date: Fri,  9 Jan 2026 12:34:17 +0100
-Message-ID: <20260109112138.443914733@linuxfoundation.org>
+Subject: [PATCH 6.6 119/737] spi: tegra210-quad: Fix timeout handling
+Date: Fri,  9 Jan 2026 12:34:18 +0100
+Message-ID: <20260109112138.480696216@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,101 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tingmao Wang <m@maowtm.org>
+From: Vishwaroop A <va@nvidia.com>
 
-[ Upstream commit a63dd8fd137933551bfd9aeeeaa942f04c7aad65 ]
+[ Upstream commit b4e002d8a7cee3b1d70efad0e222567f92a73000 ]
 
-When page cache is used, writebacks are done on a page granularity, and it
-is expected that the underlying filesystem (such as v9fs) should respect
-the write position.  However, currently v9fs will passthrough O_APPEND to
-the server even on cached mode.  This causes data corruption if a sync or
-fstat gets between two writes to the same file.
+When the CPU that the QSPI interrupt handler runs on (typically CPU 0)
+is excessively busy, it can lead to rare cases of the IRQ thread not
+running before the transfer timeout is reached.
 
-This patch removes the APPEND flag from the open request we send to the
-server when writeback caching is involved.  I believe keeping server-side
-APPEND is probably fine for uncached mode (even if two fds are opened, one
-without O_APPEND and one with it, this should still be fine since they
-would use separate fid for the writes).
+While handling the timeouts, any pending transfers are cleaned up and
+the message that they correspond to is marked as failed, which leaves
+the curr_xfer field pointing at stale memory.
 
-Signed-off-by: Tingmao Wang <m@maowtm.org>
-Fixes: 4eb3117888a9 ("fs/9p: Rework cache modes and add new options to Documentation")
-Message-ID: <20251102235631.8724-1-m@maowtm.org>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+To avoid this, clear curr_xfer to NULL upon timeout and check for this
+condition when the IRQ thread is finally run.
+
+While at it, also make sure to clear interrupts on failure so that new
+interrupts can be run.
+
+A better, more involved, fix would move the interrupt clearing into a
+hard IRQ handler. Ideally we would also want to signal that the IRQ
+thread no longer needs to be run after the timeout is hit to avoid the
+extra check for a valid transfer.
+
+Fixes: 921fc1838fb0 ("spi: tegra210-quad: Add support for Tegra210 QSPI controller")
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Signed-off-by: Vishwaroop A <va@nvidia.com>
+Link: https://patch.msgid.link/20251028155703.4151791-2-va@nvidia.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/9p/vfs_file.c       | 11 ++++++++---
- fs/9p/vfs_inode.c      |  3 +--
- fs/9p/vfs_inode_dotl.c |  2 +-
- 3 files changed, 10 insertions(+), 6 deletions(-)
+ drivers/spi/spi-tegra210-quad.c | 22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/fs/9p/vfs_file.c b/fs/9p/vfs_file.c
-index 8566ddad49ad5..655e7bf602f1e 100644
---- a/fs/9p/vfs_file.c
-+++ b/fs/9p/vfs_file.c
-@@ -43,14 +43,18 @@ int v9fs_file_open(struct inode *inode, struct file *file)
- 	struct v9fs_session_info *v9ses;
- 	struct p9_fid *fid;
- 	int omode;
-+	int o_append;
- 
- 	p9_debug(P9_DEBUG_VFS, "inode: %p file: %p\n", inode, file);
- 	v9ses = v9fs_inode2v9ses(inode);
--	if (v9fs_proto_dotl(v9ses))
-+	if (v9fs_proto_dotl(v9ses)) {
- 		omode = v9fs_open_to_dotl_flags(file->f_flags);
--	else
-+		o_append = P9_DOTL_APPEND;
-+	} else {
- 		omode = v9fs_uflags2omode(file->f_flags,
- 					v9fs_proto_dotu(v9ses));
-+		o_append = P9_OAPPEND;
+diff --git a/drivers/spi/spi-tegra210-quad.c b/drivers/spi/spi-tegra210-quad.c
+index e9afebd724237..d9a487274b530 100644
+--- a/drivers/spi/spi-tegra210-quad.c
++++ b/drivers/spi/spi-tegra210-quad.c
+@@ -999,8 +999,10 @@ static void tegra_qspi_handle_error(struct tegra_qspi *tqspi)
+ 	dev_err(tqspi->dev, "error in transfer, fifo status 0x%08x\n", tqspi->status_reg);
+ 	tegra_qspi_dump_regs(tqspi);
+ 	tegra_qspi_flush_fifos(tqspi, true);
+-	if (device_reset(tqspi->dev) < 0)
++	if (device_reset(tqspi->dev) < 0) {
+ 		dev_warn_once(tqspi->dev, "device reset failed\n");
++		tegra_qspi_mask_clear_irq(tqspi);
 +	}
- 	fid = file->private_data;
- 	if (!fid) {
- 		fid = v9fs_fid_clone(file_dentry(file));
-@@ -58,9 +62,10 @@ int v9fs_file_open(struct inode *inode, struct file *file)
- 			return PTR_ERR(fid);
+ }
  
- 		if ((v9ses->cache & CACHE_WRITEBACK) && (omode & P9_OWRITE)) {
--			int writeback_omode = (omode & ~P9_OWRITE) | P9_ORDWR;
-+			int writeback_omode = (omode & ~(P9_OWRITE | o_append)) | P9_ORDWR;
+ static void tegra_qspi_transfer_end(struct spi_device *spi)
+@@ -1145,9 +1147,11 @@ static int tegra_qspi_combined_seq_xfer(struct tegra_qspi *tqspi,
+ 				}
  
- 			p9_debug(P9_DEBUG_CACHE, "write-only file with writeback enabled, try opening O_RDWR\n");
+ 				/* Reset controller if timeout happens */
+-				if (device_reset(tqspi->dev) < 0)
++				if (device_reset(tqspi->dev) < 0) {
+ 					dev_warn_once(tqspi->dev,
+ 						      "device reset failed\n");
++					tegra_qspi_mask_clear_irq(tqspi);
++				}
+ 				ret = -EIO;
+ 				goto exit;
+ 			}
+@@ -1169,11 +1173,13 @@ static int tegra_qspi_combined_seq_xfer(struct tegra_qspi *tqspi,
+ 			tegra_qspi_transfer_end(spi);
+ 			spi_transfer_delay_exec(xfer);
+ 		}
++		tqspi->curr_xfer = NULL;
+ 		transfer_phase++;
+ 	}
+ 	ret = 0;
+ 
+ exit:
++	tqspi->curr_xfer = NULL;
+ 	msg->status = ret;
+ 
+ 	return ret;
+@@ -1257,6 +1263,8 @@ static int tegra_qspi_non_combined_seq_xfer(struct tegra_qspi *tqspi,
+ 		msg->actual_length += xfer->len + dummy_bytes;
+ 
+ complete_xfer:
++		tqspi->curr_xfer = NULL;
 +
- 			err = p9_client_open(fid, writeback_omode);
- 			if (err < 0) {
- 				p9_debug(P9_DEBUG_CACHE, "could not open O_RDWR, disabling caches\n");
-diff --git a/fs/9p/vfs_inode.c b/fs/9p/vfs_inode.c
-index aba0625de48ae..e084caf467d10 100644
---- a/fs/9p/vfs_inode.c
-+++ b/fs/9p/vfs_inode.c
-@@ -824,7 +824,7 @@ v9fs_vfs_atomic_open(struct inode *dir, struct dentry *dentry,
- 	p9_omode = v9fs_uflags2omode(flags, v9fs_proto_dotu(v9ses));
+ 		if (ret < 0) {
+ 			tegra_qspi_transfer_end(spi);
+ 			spi_transfer_delay_exec(xfer);
+@@ -1353,6 +1361,7 @@ static irqreturn_t handle_cpu_based_xfer(struct tegra_qspi *tqspi)
+ 	tegra_qspi_calculate_curr_xfer_param(tqspi, t);
+ 	tegra_qspi_start_cpu_based_transfer(tqspi, t);
+ exit:
++	tqspi->curr_xfer = NULL;
+ 	spin_unlock_irqrestore(&tqspi->lock, flags);
+ 	return IRQ_HANDLED;
+ }
+@@ -1436,6 +1445,15 @@ static irqreturn_t tegra_qspi_isr_thread(int irq, void *context_data)
+ {
+ 	struct tegra_qspi *tqspi = context_data;
  
- 	if ((v9ses->cache & CACHE_WRITEBACK) && (p9_omode & P9_OWRITE)) {
--		p9_omode = (p9_omode & ~P9_OWRITE) | P9_ORDWR;
-+		p9_omode = (p9_omode & ~(P9_OWRITE | P9_OAPPEND)) | P9_ORDWR;
- 		p9_debug(P9_DEBUG_CACHE,
- 			"write-only file with writeback enabled, creating w/ O_RDWR\n");
- 	}
-@@ -1458,4 +1458,3 @@ static const struct inode_operations v9fs_symlink_inode_operations = {
- 	.getattr = v9fs_vfs_getattr,
- 	.setattr = v9fs_vfs_setattr,
- };
--
-diff --git a/fs/9p/vfs_inode_dotl.c b/fs/9p/vfs_inode_dotl.c
-index 91bcee2ab3c49..96e791c2b7b44 100644
---- a/fs/9p/vfs_inode_dotl.c
-+++ b/fs/9p/vfs_inode_dotl.c
-@@ -288,7 +288,7 @@ v9fs_vfs_atomic_open_dotl(struct inode *dir, struct dentry *dentry,
- 	}
++	/*
++	 * Occasionally the IRQ thread takes a long time to wake up (usually
++	 * when the CPU that it's running on is excessively busy) and we have
++	 * already reached the timeout before and cleaned up the timed out
++	 * transfer. Avoid any processing in that case and bail out early.
++	 */
++	if (!tqspi->curr_xfer)
++		return IRQ_NONE;
++
+ 	tqspi->status_reg = tegra_qspi_readl(tqspi, QSPI_FIFO_STATUS);
  
- 	if ((v9ses->cache & CACHE_WRITEBACK) && (p9_omode & P9_OWRITE)) {
--		p9_omode = (p9_omode & ~P9_OWRITE) | P9_ORDWR;
-+		p9_omode = (p9_omode & ~(P9_OWRITE | P9_DOTL_APPEND)) | P9_ORDWR;
- 		p9_debug(P9_DEBUG_CACHE,
- 			"write-only file with writeback enabled, creating w/ O_RDWR\n");
- 	}
+ 	if (tqspi->cur_direction & DATA_DIR_TX)
 -- 
 2.51.0
 
