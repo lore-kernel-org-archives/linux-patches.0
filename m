@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED1CC35A932;
-	Fri,  9 Jan 2026 12:06:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8001359FB0;
+	Fri,  9 Jan 2026 12:06:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960409; cv=none; b=UmEvNXmXpfgWLkviHeEvDiHcd9lvNj1m/5DXNzTIRB19l0osLLQkXMlPOLDg7Y131cGXCIIi1B2bzRuR4qs5kR7I2zYuK+Y0WZ1pl80XsKDPJHmyxq0izT2y5PuH+D/grguvGOamXkf9cAcLAVYLXOf034oevmjJjpc6X2i+A0A=
+	t=1767960411; cv=none; b=RHRHBHcmuUZ57R7KL+tWe1YiIHcqaYUWPJfcaTW84rnpZUb1HfjKpgMZ9GlHhsyDfHm8JpLyc3qs55OPUp5iyuUygmx8rpcO22VHAZj2peG5lGTYxnZeBhL3uL+wmb3zwYIAS/msN6hsA4gPjNtRFuq6z+GPSJvjlDVrzvmveeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960409; c=relaxed/simple;
-	bh=CdRN5elqxgXfAqrDrUoh9/NDs9uSr0YQGa+wQjfXZqI=;
+	s=arc-20240116; t=1767960411; c=relaxed/simple;
+	bh=ZnfdM2ZNn5OawAqJ5hnTrHDYEkv7uf3lIFGglFSmG9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r+TUXFbueLXTfmN1caYBOIeI8SN2B/IrJHy9z1tut2PUN3PmBeXsLLa7fvVnNlfS8pGPvRkB2GaPR+BxJD1JcV4fhIcD9/LAii26GG5hsjNwXQJhdhUWEmeF3IlO+YKzwTDuuM9i4DARokTaynYYKCyhPDi8XpVSiyM9XRG/XQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1jvTZR98; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YZqiBfNQirEfrIUJfrxZiJA2EawSEvGNGn2YtRh5bxdaHYVIrAZQe+4OXWmmAspsbZbSt4D8ET03e4GEs8IuLR9wsshY52Li3sxthamCEjWqO/8N0fdFmvwdXFl8xNyfiZnqB/Ml4C4GjWwURmWIpYADRHg2zTJ1ALQdcTP15Hw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ql17fNG7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1jvTZR98"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68349C4CEF1;
-	Fri,  9 Jan 2026 12:06:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ql17fNG7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5201EC4CEF1;
+	Fri,  9 Jan 2026 12:06:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960408;
-	bh=CdRN5elqxgXfAqrDrUoh9/NDs9uSr0YQGa+wQjfXZqI=;
+	s=korg; t=1767960411;
+	bh=ZnfdM2ZNn5OawAqJ5hnTrHDYEkv7uf3lIFGglFSmG9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1jvTZR98dPkLxBIDieNTmTzAfMElSYrNiD1PxgPHgwIcTjml0C9dmOPztB2jKtPCw
-	 rfSi7nY+2uXFyEVnUorDiPZUgQqVTJF5scbZjeV79Ih1r/wW13/9a2iUqfBUQheO3v
-	 ZT0u1ZRqmjBrpfXBg3qQGwGInWihCgZbnKtRWzsc=
+	b=ql17fNG7T1vbjh6fvTpqAsrnQTeRBEE0DKmbDovJcPKicoj0mOT/fiDs/wKoTb6KP
+	 DlGyRMZMFigHZftFB7KModHua6lEml76KA4syL2qxi8Ur3VpDHNVoDxPRg6EJTownJ
+	 A1hzn0SCZFkrzI1LKlVAbP+VbzeW2IvTCrBMnjlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Shen <shenjian15@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 360/737] net: hns3: add VLAN id validation before using
-Date: Fri,  9 Jan 2026 12:38:19 +0100
-Message-ID: <20260109112147.537978421@linuxfoundation.org>
+Subject: [PATCH 6.6 361/737] hwmon: (ibmpex) fix use-after-free in high/low store
+Date: Fri,  9 Jan 2026 12:38:20 +0100
+Message-ID: <20260109112147.575881385@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -53,44 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jian Shen <shenjian15@huawei.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit 6ef935e65902bfed53980ad2754b06a284ea8ac1 ]
+[ Upstream commit 6946c726c3f4c36f0f049e6f97e88c510b15f65d ]
 
-Currently, the VLAN id may be used without validation when
-receive a VLAN configuration mailbox from VF. The length of
-vlan_del_fail_bmap is BITS_TO_LONGS(VLAN_N_VID). It may cause
-out-of-bounds memory access once the VLAN id is bigger than
-or equal to VLAN_N_VID.
+The ibmpex_high_low_store() function retrieves driver data using
+dev_get_drvdata() and uses it without validation. This creates a race
+condition where the sysfs callback can be invoked after the data
+structure is freed, leading to use-after-free.
 
-Therefore, VLAN id needs to be checked to ensure it is within
-the range of VLAN_N_VID.
+Fix by adding a NULL check after dev_get_drvdata(), and reordering
+operations in the deletion path to prevent TOCTOU.
 
-Fixes: fe4144d47eef ("net: hns3: sync VLAN filter entries when kill VLAN ID failed")
-Signed-off-by: Jian Shen <shenjian15@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20251211023737.2327018-4-shaojijie@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Reported-by: Junrui Luo <moonafterrain@outlook.com>
+Fixes: 57c7c3a0fdea ("hwmon: IBM power meter driver")
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Link: https://lore.kernel.org/r/MEYPR01MB7886BE2F51BFE41875B74B60AFA0A@MEYPR01MB7886.ausprd01.prod.outlook.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/hwmon/ibmpex.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index 2fa64099e8be2..2df0c6305b908 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -10479,6 +10479,9 @@ int hclge_set_vlan_filter(struct hnae3_handle *handle, __be16 proto,
- 	bool writen_to_tbl = false;
- 	int ret = 0;
+diff --git a/drivers/hwmon/ibmpex.c b/drivers/hwmon/ibmpex.c
+index db066b368918..40fff7e95ea1 100644
+--- a/drivers/hwmon/ibmpex.c
++++ b/drivers/hwmon/ibmpex.c
+@@ -282,6 +282,9 @@ static ssize_t ibmpex_high_low_store(struct device *dev,
+ {
+ 	struct ibmpex_bmc_data *data = dev_get_drvdata(dev);
  
-+	if (vlan_id >= VLAN_N_VID)
-+		return -EINVAL;
++	if (!data)
++		return -ENODEV;
 +
- 	/* When device is resetting or reset failed, firmware is unable to
- 	 * handle mailbox. Just record the vlan id, and remove it after
- 	 * reset finished.
+ 	ibmpex_reset_high_low_data(data);
+ 
+ 	return count;
+@@ -514,6 +517,9 @@ static void ibmpex_bmc_delete(struct ibmpex_bmc_data *data)
+ {
+ 	int i, j;
+ 
++	hwmon_device_unregister(data->hwmon_dev);
++	dev_set_drvdata(data->bmc_device, NULL);
++
+ 	device_remove_file(data->bmc_device,
+ 			   &sensor_dev_attr_reset_high_low.dev_attr);
+ 	device_remove_file(data->bmc_device, &sensor_dev_attr_name.dev_attr);
+@@ -527,8 +533,7 @@ static void ibmpex_bmc_delete(struct ibmpex_bmc_data *data)
+ 		}
+ 
+ 	list_del(&data->list);
+-	dev_set_drvdata(data->bmc_device, NULL);
+-	hwmon_device_unregister(data->hwmon_dev);
++
+ 	ipmi_destroy_user(data->user);
+ 	kfree(data->sensors);
+ 	kfree(data);
 -- 
 2.51.0
 
