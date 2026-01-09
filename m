@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D79933A712;
-	Fri,  9 Jan 2026 11:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4EA133290A;
+	Fri,  9 Jan 2026 11:54:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959653; cv=none; b=kqeN0bu2Xah1UnYpOVGRduhbymlnQ7i1Cw0h/KpPbJn47jkhzned9Um9WVh/xUW1cvwLexxDCbBsOIgUFoOaipDSezi94uA5OWb5iPZxnT1YDEV0jyfXa91NhHa9yD+JukogfW7qyWBdHUfqC2RrX//P75r3gxuGOS4JhC6UNsw=
+	t=1767959655; cv=none; b=q9R+8zUdkKfbv9F2AvlmWHHD/RrJYny/LlFQnsO8T4ObyeNBTkJ5bzZwAkALM7pUdX6N8ECiUNHbGZsKkhqOpQ2iW2wgNv/B0eiZ8Or3rAbDBUljAarXUiZqCOmGzILRguKm8H0Mg6whCBakxA33z4E3zR5lMzOtiybCgWF16g4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959653; c=relaxed/simple;
-	bh=U8tQBP9+lNXnh/dfk/v1NQOltxSVsSr1S3TVUUMRLHU=;
+	s=arc-20240116; t=1767959655; c=relaxed/simple;
+	bh=KKrpiuUfOG7aLCK+Lr7v/OLtQU8lROoVQH9HNP0U6mM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dx/4YEL3j9MPXIn74m7ANc046w6DkVDyDVKJztuf0nVi4PA7GPcsaFLfBIXUNGDu32346rONbbO6bZT6t8dnAe8/ma0+dqGcYznDmTxXVew/5jDpkvzWbmjowJU7ku7KO7QR5zL9C3XR/CzBER6PkkdRzDZ1zxT8Scygi96Kq1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HzMIdrec; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OuqIsl87w1wmq3z9iqzZXPlQ14FSlpcnT19wmYrHc4G4GUF5Q9jQ2ilsUWPcvYuAHlPk3v4VW3uCVSzoWrfDJCSbwIvM7l2cjavuuK15FLUSFVbjwGs+gautOyEZimR+uYNOBcytAy5ZPbXY7k46eMc4l/Muq6ywfst6GJgoKGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bze2jeb4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HzMIdrec"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C269C4CEF1;
-	Fri,  9 Jan 2026 11:54:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bze2jeb4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66DA1C4CEF1;
+	Fri,  9 Jan 2026 11:54:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959653;
-	bh=U8tQBP9+lNXnh/dfk/v1NQOltxSVsSr1S3TVUUMRLHU=;
+	s=korg; t=1767959655;
+	bh=KKrpiuUfOG7aLCK+Lr7v/OLtQU8lROoVQH9HNP0U6mM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HzMIdrec4tkS9KN1YB08KQN3f9UlyYXghGm/oQqlvjmBJRvF4Asn9oxV8CkUUP0eO
-	 mNwEXtarWuv4Rs5RqFx90jw51z9S1yYj/X5jTgtpXu5dEYlV7IRKsCtk9rQeFmGPK8
-	 iV21gkhLzN+sJd2cEc77D3RlGoySLUokQYSmOm7Q=
+	b=Bze2jeb4LYqac0EKY0zoTn/Sy2/s3RYUS+ogvWOU9F8+Xk1wD0PpvMWe8x3vVhkIT
+	 JAxEuijqjdfEO9Q0Zzeh9uAkRz/Y/4pCuXGp8jxEL1+BEXGYMTxU01L0wrzJu8DlxG
+	 DQgpkWhGFSOFMeiQOIVB7yIQ1qCVPM9pDirwCgZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 127/737] perf/x86/intel: Correct large PEBS flag check
-Date: Fri,  9 Jan 2026 12:34:26 +0100
-Message-ID: <20260109112138.780375696@linuxfoundation.org>
+Subject: [PATCH 6.6 128/737] regulator: core: disable supply if enabling main regulator fails
+Date: Fri,  9 Jan 2026 12:34:27 +0100
+Message-ID: <20260109112138.817496196@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,43 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dapeng Mi <dapeng1.mi@linux.intel.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit 5e4e355ae7cdeb0fef5dbe908866e1f895abfacc ]
+[ Upstream commit fb1ebb10468da414d57153ddebaab29c38ef1a78 ]
 
-current large PEBS flag check only checks if sample_regs_user contains
-unsupported GPRs but doesn't check if sample_regs_intr contains
-unsupported GPRs.
+For 'always-on' and 'boot-on' regulators, the set_machine_constraints()
+may enable supply before enabling the main regulator, however if the
+latter fails, the function returns with an error but the supply remains
+enabled.
 
-Of course, currently PEBS HW supports to sample all perf supported GPRs,
-the missed check doesn't cause real issue. But it won't be true any more
-after the subsequent patches support to sample SSP register. SSP
-sampling is not supported by adaptive PEBS HW and it would be supported
-until arch-PEBS HW. So correct this issue.
+When this happens, the regulator_register() function continues on the
+error path where it puts the supply regulator. Since enabling the supply
+is not balanced with a disable call, a warning similar to the following
+gets issued from _regulator_put():
 
-Fixes: a47ba4d77e12 ("perf/x86: Enable free running PEBS for REGS_USER/INTR")
-Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20251029102136.61364-5-dapeng1.mi@linux.intel.com
+    [    1.603889] WARNING: CPU: 2 PID: 44 at _regulator_put+0x8c/0xa0
+    [    1.603908] Modules linked in:
+    [    1.603926] CPU: 2 UID: 0 PID: 44 Comm: kworker/u16:3 Not tainted 6.18.0-rc4 #0 NONE
+    [    1.603938] Hardware name: Qualcomm Technologies, Inc. IPQ9574/AP-AL02-C7 (DT)
+    [    1.603945] Workqueue: async async_run_entry_fn
+    [    1.603958] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+    [    1.603967] pc : _regulator_put+0x8c/0xa0
+    [    1.603976] lr : _regulator_put+0x7c/0xa0
+    ...
+    [    1.604140] Call trace:
+    [    1.604145]  _regulator_put+0x8c/0xa0 (P)
+    [    1.604156]  regulator_register+0x2ec/0xbf0
+    [    1.604166]  devm_regulator_register+0x60/0xb0
+    [    1.604178]  rpm_reg_probe+0x120/0x208
+    [    1.604187]  platform_probe+0x64/0xa8
+    ...
+
+In order to avoid this, change the set_machine_constraints() function to
+disable the supply if enabling the main regulator fails.
+
+Fixes: 05f224ca6693 ("regulator: core: Clean enabling always-on regulators + their supplies")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Link: https://patch.msgid.link/20251107-regulator-disable-supply-v1-1-c95f0536f1b5@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/regulator/core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
-index 87ea4339e03a2..8d1ec1d888da7 100644
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -3808,7 +3808,9 @@ static unsigned long intel_pmu_large_pebs_flags(struct perf_event *event)
- 	if (!event->attr.exclude_kernel)
- 		flags &= ~PERF_SAMPLE_REGS_USER;
- 	if (event->attr.sample_regs_user & ~PEBS_GP_REGS)
--		flags &= ~(PERF_SAMPLE_REGS_USER | PERF_SAMPLE_REGS_INTR);
-+		flags &= ~PERF_SAMPLE_REGS_USER;
-+	if (event->attr.sample_regs_intr & ~PEBS_GP_REGS)
-+		flags &= ~PERF_SAMPLE_REGS_INTR;
- 	return flags;
- }
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 1d49612eeb7e5..465f4f870162f 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -1653,6 +1653,8 @@ static int set_machine_constraints(struct regulator_dev *rdev)
+ 	 * and we have control then make sure it is enabled.
+ 	 */
+ 	if (rdev->constraints->always_on || rdev->constraints->boot_on) {
++		bool supply_enabled = false;
++
+ 		/* If we want to enable this regulator, make sure that we know
+ 		 * the supplying regulator.
+ 		 */
+@@ -1672,11 +1674,14 @@ static int set_machine_constraints(struct regulator_dev *rdev)
+ 				rdev->supply = NULL;
+ 				return ret;
+ 			}
++			supply_enabled = true;
+ 		}
+ 
+ 		ret = _regulator_do_enable(rdev);
+ 		if (ret < 0 && ret != -EINVAL) {
+ 			rdev_err(rdev, "failed to enable: %pe\n", ERR_PTR(ret));
++			if (supply_enabled)
++				regulator_disable(rdev->supply);
+ 			return ret;
+ 		}
  
 -- 
 2.51.0
