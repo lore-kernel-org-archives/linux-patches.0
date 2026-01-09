@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E8F135B138;
-	Fri,  9 Jan 2026 12:47:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69EFC15ADB4;
+	Fri,  9 Jan 2026 12:47:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962832; cv=none; b=f5RCJoDUPnNsPDaN6ceF16khaFi9LfUbKI2b1nVc5cRevA65a0YxjokjibCbf/ra8gdrin/C0KEkzI9luAf16l7JciORGvgXDTePut0Sg3O1afn19ajcqR1flkTpwUhZD+/ntaKFfpFK0Qs4hFZw5k7V75tSmK2GIOEhyvHgZIU=
+	t=1767962835; cv=none; b=oWPbRAmtXHZoLHRCaHa4qEBaH5qmUo9kQjwL5Qw7xTxyZhyYqBmzQCeL1/qVTs6qAVC3VrMVg7mJipYja5ZPuSMe731+7FJjnm4RTPbV1E0Rw+sJmkBAx6ZXSQLyMNgWMIQa1y1bNVebjM0SBfodDhe5pzuOHC1pGjJCH7jlYC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962832; c=relaxed/simple;
-	bh=EYdQt5eTlpKwospGqytlxPw0wFrr94Tp2ZhM0xRTzlQ=;
+	s=arc-20240116; t=1767962835; c=relaxed/simple;
+	bh=0vqjeH9O4QXUIj2WFVU4qItS0Ovtz8LAkvNr+60b2Iw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ICBwRjoZ7rtNM/XkeCYvwZHOF+xfjCy7vPgFrpwvzM2ZN+n7A9Bil/FeEM7OE2vk3/N2ZRgPqkepm4tNkC8chyo9aDNQgab53oFHoXXIHT0I5uOcSCgHoYkRKL9sLCuiYqMsZ8RcUOJIRnnCaeXkD1qAGkPdQ5JgfUlVYY3DL7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IoVtDQsP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tGdBVzKSqhJCrmkucUIoKNzbO6FBLXnHjMbs5LyrwYPDiwqL9SW+kMLquUFyGPicF9RtrYaYJuUAZ5SCeMxcf9Db4p+LjREbS/E1/wiRURScC5/n5GDh/F6oFIz1JZtrEh6tqYh8yF1K1EpZSLzjQ0DNyJnvU94QQ0QGCU9rtHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UiAevl/E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IoVtDQsP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00804C4CEF1;
-	Fri,  9 Jan 2026 12:47:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UiAevl/E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E07E0C4CEF1;
+	Fri,  9 Jan 2026 12:47:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962832;
-	bh=EYdQt5eTlpKwospGqytlxPw0wFrr94Tp2ZhM0xRTzlQ=;
+	s=korg; t=1767962835;
+	bh=0vqjeH9O4QXUIj2WFVU4qItS0Ovtz8LAkvNr+60b2Iw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IoVtDQsPEtfEkYRItFwQw48/vjHrXYIJurVDrXwjRQQB7IYd6SCiAbeQzOG4MO2F3
-	 YZFgmyRu2ue2SgtT8s62UYzexEGAIGIsAvaPxPoTA1EQe59SV85T/f9NG83vk+Ewja
-	 w+KLca0qiHIza6vakVsraMpKhZvfSfllwkgiYjTI=
+	b=UiAevl/E2BpyF2+fBCddFFQJlPNrwoMFmhQqEQz8GQJO3MKocT9BO0ajoHU8ZjSp2
+	 1OLffMo+L5Xagwb3v0RKOYIJkI38IyPBQ7nb4NUYR/Ru5KoueaErDKNhFKQ4IQHoZW
+	 XfCYxYHfQoakO/IyL//EhbPj7svr0ImUBHr4EZ20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Hao <kexin.hao@windriver.com>,
-	Xiaolei Wang <xiaolei.wang@windriver.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 504/634] net: macb: Relocate mog_init_rings() callback from macb_mac_link_up() to macb_open()
-Date: Fri,  9 Jan 2026 12:43:02 +0100
-Message-ID: <20260109112136.517780410@linuxfoundation.org>
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>
+Subject: [PATCH 6.1 505/634] drm/msm/a6xx: Fix out of bound IO access in a6xx_get_gmu_registers
+Date: Fri,  9 Jan 2026 12:43:03 +0100
+Message-ID: <20260109112136.555117347@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,170 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaolei Wang <xiaolei.wang@windriver.com>
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 
-commit 99537d5c476cada9cf75aef9fa75579a31faadb9 upstream.
+commit 779b68a5bf2764c8ed3aa800e41ba0d5d007e1e7 upstream.
 
-In the non-RT kernel, local_bh_disable() merely disables preemption,
-whereas it maps to an actual spin lock in the RT kernel. Consequently,
-when attempting to refill RX buffers via netdev_alloc_skb() in
-macb_mac_link_up(), a deadlock scenario arises as follows:
+REG_A6XX_GMU_AO_AHB_FENCE_CTRL register falls under GMU's register
+range. So, use gmu_write() routines to write to this register.
 
-   WARNING: possible circular locking dependency detected
-   6.18.0-08691-g2061f18ad76e #39 Not tainted
-   ------------------------------------------------------
-   kworker/0:0/8 is trying to acquire lock:
-   ffff00080369bbe0 (&bp->lock){+.+.}-{3:3}, at: macb_start_xmit+0x808/0xb7c
-
-   but task is already holding lock:
-   ffff000803698e58 (&queue->tx_ptr_lock){+...}-{3:3}, at: macb_start_xmit
-   +0x148/0xb7c
-
-   which lock already depends on the new lock.
-
-   the existing dependency chain (in reverse order) is:
-
-   -> #3 (&queue->tx_ptr_lock){+...}-{3:3}:
-          rt_spin_lock+0x50/0x1f0
-          macb_start_xmit+0x148/0xb7c
-          dev_hard_start_xmit+0x94/0x284
-          sch_direct_xmit+0x8c/0x37c
-          __dev_queue_xmit+0x708/0x1120
-          neigh_resolve_output+0x148/0x28c
-          ip6_finish_output2+0x2c0/0xb2c
-          __ip6_finish_output+0x114/0x308
-          ip6_output+0xc4/0x4a4
-          mld_sendpack+0x220/0x68c
-          mld_ifc_work+0x2a8/0x4f4
-          process_one_work+0x20c/0x5f8
-          worker_thread+0x1b0/0x35c
-          kthread+0x144/0x200
-          ret_from_fork+0x10/0x20
-
-   -> #2 (_xmit_ETHER#2){+...}-{3:3}:
-          rt_spin_lock+0x50/0x1f0
-          sch_direct_xmit+0x11c/0x37c
-          __dev_queue_xmit+0x708/0x1120
-          neigh_resolve_output+0x148/0x28c
-          ip6_finish_output2+0x2c0/0xb2c
-          __ip6_finish_output+0x114/0x308
-          ip6_output+0xc4/0x4a4
-          mld_sendpack+0x220/0x68c
-          mld_ifc_work+0x2a8/0x4f4
-          process_one_work+0x20c/0x5f8
-          worker_thread+0x1b0/0x35c
-          kthread+0x144/0x200
-          ret_from_fork+0x10/0x20
-
-   -> #1 ((softirq_ctrl.lock)){+.+.}-{3:3}:
-          lock_release+0x250/0x348
-          __local_bh_enable_ip+0x7c/0x240
-          __netdev_alloc_skb+0x1b4/0x1d8
-          gem_rx_refill+0xdc/0x240
-          gem_init_rings+0xb4/0x108
-          macb_mac_link_up+0x9c/0x2b4
-          phylink_resolve+0x170/0x614
-          process_one_work+0x20c/0x5f8
-          worker_thread+0x1b0/0x35c
-          kthread+0x144/0x200
-          ret_from_fork+0x10/0x20
-
-   -> #0 (&bp->lock){+.+.}-{3:3}:
-          __lock_acquire+0x15a8/0x2084
-          lock_acquire+0x1cc/0x350
-          rt_spin_lock+0x50/0x1f0
-          macb_start_xmit+0x808/0xb7c
-          dev_hard_start_xmit+0x94/0x284
-          sch_direct_xmit+0x8c/0x37c
-          __dev_queue_xmit+0x708/0x1120
-          neigh_resolve_output+0x148/0x28c
-          ip6_finish_output2+0x2c0/0xb2c
-          __ip6_finish_output+0x114/0x308
-          ip6_output+0xc4/0x4a4
-          mld_sendpack+0x220/0x68c
-          mld_ifc_work+0x2a8/0x4f4
-          process_one_work+0x20c/0x5f8
-          worker_thread+0x1b0/0x35c
-          kthread+0x144/0x200
-          ret_from_fork+0x10/0x20
-
-   other info that might help us debug this:
-
-   Chain exists of:
-     &bp->lock --> _xmit_ETHER#2 --> &queue->tx_ptr_lock
-
-    Possible unsafe locking scenario:
-
-          CPU0                    CPU1
-          ----                    ----
-     lock(&queue->tx_ptr_lock);
-                                  lock(_xmit_ETHER#2);
-                                  lock(&queue->tx_ptr_lock);
-     lock(&bp->lock);
-
-    *** DEADLOCK ***
-
-   Call trace:
-    show_stack+0x18/0x24 (C)
-    dump_stack_lvl+0xa0/0xf0
-    dump_stack+0x18/0x24
-    print_circular_bug+0x28c/0x370
-    check_noncircular+0x198/0x1ac
-    __lock_acquire+0x15a8/0x2084
-    lock_acquire+0x1cc/0x350
-    rt_spin_lock+0x50/0x1f0
-    macb_start_xmit+0x808/0xb7c
-    dev_hard_start_xmit+0x94/0x284
-    sch_direct_xmit+0x8c/0x37c
-    __dev_queue_xmit+0x708/0x1120
-    neigh_resolve_output+0x148/0x28c
-    ip6_finish_output2+0x2c0/0xb2c
-    __ip6_finish_output+0x114/0x308
-    ip6_output+0xc4/0x4a4
-    mld_sendpack+0x220/0x68c
-    mld_ifc_work+0x2a8/0x4f4
-    process_one_work+0x20c/0x5f8
-    worker_thread+0x1b0/0x35c
-    kthread+0x144/0x200
-    ret_from_fork+0x10/0x20
-
-Notably, invoking the mog_init_rings() callback upon link establishment
-is unnecessary. Instead, we can exclusively call mog_init_rings() within
-the ndo_open() callback. This adjustment resolves the deadlock issue.
-Furthermore, since MACB_CAPS_MACB_IS_EMAC cases do not use mog_init_rings()
-when opening the network interface via at91ether_open(), moving
-mog_init_rings() to macb_open() also eliminates the MACB_CAPS_MACB_IS_EMAC
-check.
-
-Fixes: 633e98a711ac ("net: macb: use resolved link config in mac_link_up()")
+Fixes: 1707add81551 ("drm/msm/a6xx: Add a6xx gpu state")
 Cc: stable@vger.kernel.org
-Suggested-by: Kevin Hao <kexin.hao@windriver.com>
-Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
-Link: https://patch.msgid.link/20251222015624.1994551-1-xiaolei.wang@windriver.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/688993/
+Message-ID: <20251118-kaana-gpu-support-v4-1-86eeb8e93fb6@oss.qualcomm.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -708,7 +708,6 @@ static void macb_mac_link_up(struct phyl
- 		/* Initialize rings & buffers as clearing MACB_BIT(TE) in link down
- 		 * cleared the pipeline and control registers.
- 		 */
--		bp->macbgem_ops.mog_init_rings(bp);
- 		macb_init_buffers(bp);
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+@@ -801,7 +801,7 @@ static void a6xx_get_gmu_registers(struc
+ 		return;
  
- 		for (q = 0, queue = bp->queues; q < bp->num_queues; ++q, ++queue)
-@@ -2880,6 +2879,8 @@ static int macb_open(struct net_device *
- 		goto pm_exit;
- 	}
+ 	/* Set the fence to ALLOW mode so we can access the registers */
+-	gpu_write(gpu, REG_A6XX_GMU_AO_AHB_FENCE_CTRL, 0);
++	gmu_write(&a6xx_gpu->gmu, REG_A6XX_GMU_AO_AHB_FENCE_CTRL, 0);
  
-+	bp->macbgem_ops.mog_init_rings(bp);
-+
- 	for (q = 0, queue = bp->queues; q < bp->num_queues; ++q, ++queue) {
- 		napi_enable(&queue->napi_rx);
- 		napi_enable(&queue->napi_tx);
+ 	_a6xx_get_gmu_registers(gpu, a6xx_state, &a6xx_gmu_reglist[2],
+ 		&a6xx_state->gmu_registers[2], false);
 
 
