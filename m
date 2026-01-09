@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC5E3336ED1;
-	Fri,  9 Jan 2026 12:50:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F21D51482E8;
+	Fri,  9 Jan 2026 12:50:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767963004; cv=none; b=KPHPY4t2W7lXj1U+zWu3osgcGtvUTxKVFJKK/KM1SAq0lwb5Ds2gcaHryVUs4ONBjh2dKdWnHAatmUcc8kiIpzcS3bhh4uvVeUsTv3h9rYFD/it4YTxgVJz6rfSRH6wva91M325ZKAgmxurfx75FpPmtFetRVw6GDFpOl9iKK6U=
+	t=1767963007; cv=none; b=HvF5CZOVVQ+YcdSc2YdHqHxuZuWBrZIdqilp+Krb/O1iJ/4d85lEqZRab1WE4KPJfxqHAmptkmqRIOR7mruhyS3WMhtkjKwl9gL5xw6wgk/0NyRaCIuBjLPELun9RzN0J65Hn2AtOnQ3aMuWElZqbC2Ko3l7vPxB1B5GNavLBI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767963004; c=relaxed/simple;
-	bh=jFcbHAucQ9nnxv92ZUJxTiW99o8G6mmL2Pxqn7ZwhXw=;
+	s=arc-20240116; t=1767963007; c=relaxed/simple;
+	bh=mvwncFRUq9kUZouF9BvXEHPADJY5Uufun1RI8DJ01fQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uKKndHUpbl75phJWvo48KTEJ1ZjM2tbNgBsTc83ChUBlIpobmBbCGm296mPH/n78BRV+krPX0l5T/aZ0QF/2MNbgIovFDXDax/Zn+lReR3yQi48IbZcl+kdzm1yFyKzxho05t8GkZpc3Q5oPoKeGK1Jadv0cj0l0w0eLwxCk/BU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wmJQMyq7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f+qFDSyr2fH/qw6JWH/EyEKAWRay2rTv9e9AXks2j+qIo1RakGfFgzk1/HLsXpixCd2zhQJmkYcCH/L79xAYfukkigBDsJJ5TdBAClJoG+07ZA6lSutYwOh4rxGTpYBRE7PvrRUT/rKMW7uqeeb++Iv92gpVNyXEGQlg5OwbgXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ytZpO7xa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wmJQMyq7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E393C4CEF1;
-	Fri,  9 Jan 2026 12:50:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ytZpO7xa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42252C4CEF1;
+	Fri,  9 Jan 2026 12:50:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767963003;
-	bh=jFcbHAucQ9nnxv92ZUJxTiW99o8G6mmL2Pxqn7ZwhXw=;
+	s=korg; t=1767963006;
+	bh=mvwncFRUq9kUZouF9BvXEHPADJY5Uufun1RI8DJ01fQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wmJQMyq7bTVxj/wY3Z3W4e5+Tm5sYsTM2hQqjC259NkCHLJpkwu3gL6GpoC99cJM8
-	 TWQm6BET/g9D1ZFScBwTvu1W7dJbeSHWcw0w40BfVLzvAGddS0LU6/eiUIlCY5MNJx
-	 4BSmsR4MaAPGeSYGe0bootTIUwWOctM9tAFI4qtk=
+	b=ytZpO7xayDycwX2g/PQw0h8eNQdZNo0YWbF+7+LLleffchXIXS7Pg4tRTFhDBQRVU
+	 yLCzyxQVETpvqqTBGYkGvTrvNBaB5TXJPRNPvVwNu/U8K8Taz0Samb7uk3JtmQXYrP
+	 auGrmZNzqvDVuEz7RNX/z5gwDMMlRxlCRZY0DfBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 531/634] KVM: x86/mmu: Use EMULTYPE flag to track write #PFs to shadow pages
-Date: Fri,  9 Jan 2026 12:43:29 +0100
-Message-ID: <20260109112137.551861710@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 522/634] mm/damon/tests/core-kunit: handle memory failure from damon_test_target()
+Date: Fri,  9 Jan 2026 12:43:20 +0100
+Message-ID: <20260109112137.205237924@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,227 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: SeongJae Park <sj@kernel.org>
 
-[ Upstream commit 258d985f6eb360c9c7aacd025d0dbc080a59423f ]
+commit fafe953de2c661907c94055a2497c6b8dbfd26f3 upstream.
 
-Use a new EMULTYPE flag, EMULTYPE_WRITE_PF_TO_SP, to track page faults
-on self-changing writes to shadowed page tables instead of propagating
-that information to the emulator via a semi-persistent vCPU flag.  Using
-a flag in "struct kvm_vcpu_arch" is confusing, especially as implemented,
-as it's not at all obvious that clearing the flag only when emulation
-actually occurs is correct.
+damon_test_target() is assuming all dynamic memory allocation in it will
+succeed.  Those are indeed likely in the real use cases since those
+allocations are too small to fail, but theoretically those could fail.  In
+the case, inappropriate memory access can happen.  Fix it by appropriately
+cleanup pre-allocated memory and skip the execution of the remaining tests
+in the failure cases.
 
-E.g. if KVM sets the flag and then retries the fault without ever getting
-to the emulator, the flag will be left set for future calls into the
-emulator.  But because the flag is consumed if and only if both
-EMULTYPE_PF and EMULTYPE_ALLOW_RETRY_PF are set, and because
-EMULTYPE_ALLOW_RETRY_PF is deliberately not set for direct MMUs, emulated
-MMIO, or while L2 is active, KVM avoids false positives on a stale flag
-since FNAME(page_fault) is guaranteed to be run and refresh the flag
-before it's ultimately consumed by the tail end of reexecute_instruction().
-
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-Id: <20230202182817.407394-2-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Stable-dep-of: 4da3768e1820 ("KVM: SVM: Don't skip unrelated instruction if INT3/INTO is replaced")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20251101182021.74868-4-sj@kernel.org
+Fixes: 17ccae8bb5c9 ("mm/damon: add kunit tests")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: Brendan Higgins <brendan.higgins@linux.dev>
+Cc: David Gow <davidgow@google.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: <stable@vger.kernel.org>	[5.15+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/kvm_host.h |   37 ++++++++++++++++++++-----------------
- arch/x86/kvm/mmu/mmu.c          |    5 +++--
- arch/x86/kvm/mmu/mmu_internal.h |   12 +++++++++++-
- arch/x86/kvm/mmu/paging_tmpl.h  |    4 +---
- arch/x86/kvm/x86.c              |   15 ++-------------
- 5 files changed, 37 insertions(+), 36 deletions(-)
+ mm/damon/core-test.h |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/arch/x86/include/asm/kvm_host.h
-+++ b/arch/x86/include/asm/kvm_host.h
-@@ -890,23 +890,6 @@ struct kvm_vcpu_arch {
+--- a/mm/damon/core-test.h
++++ b/mm/damon/core-test.h
+@@ -58,7 +58,14 @@ static void damon_test_target(struct kun
+ 	struct damon_ctx *c = damon_new_ctx();
+ 	struct damon_target *t;
  
- 	u64 msr_kvm_poll_control;
- 
--	/*
--	 * Indicates the guest is trying to write a gfn that contains one or
--	 * more of the PTEs used to translate the write itself, i.e. the access
--	 * is changing its own translation in the guest page tables.  KVM exits
--	 * to userspace if emulation of the faulting instruction fails and this
--	 * flag is set, as KVM cannot make forward progress.
--	 *
--	 * If emulation fails for a write to guest page tables, KVM unprotects
--	 * (zaps) the shadow page for the target gfn and resumes the guest to
--	 * retry the non-emulatable instruction (on hardware).  Unprotecting the
--	 * gfn doesn't allow forward progress for a self-changing access because
--	 * doing so also zaps the translation for the gfn, i.e. retrying the
--	 * instruction will hit a !PRESENT fault, which results in a new shadow
--	 * page and sends KVM back to square one.
--	 */
--	bool write_fault_to_shadow_pgtable;
--
- 	/* set at EPT violation at this point */
- 	unsigned long exit_qualification;
- 
-@@ -1825,6 +1808,25 @@ u64 vcpu_tsc_khz(struct kvm_vcpu *vcpu);
-  * EMULTYPE_COMPLETE_USER_EXIT - Set when the emulator should update interruptibility
-  *				 state and inject single-step #DBs after skipping
-  *				 an instruction (after completing userspace I/O).
-+ *
-+ * EMULTYPE_WRITE_PF_TO_SP - Set when emulating an intercepted page fault that
-+ *			     is attempting to write a gfn that contains one or
-+ *			     more of the PTEs used to translate the write itself,
-+ *			     and the owning page table is being shadowed by KVM.
-+ *			     If emulation of the faulting instruction fails and
-+ *			     this flag is set, KVM will exit to userspace instead
-+ *			     of retrying emulation as KVM cannot make forward
-+ *			     progress.
-+ *
-+ *			     If emulation fails for a write to guest page tables,
-+ *			     KVM unprotects (zaps) the shadow page for the target
-+ *			     gfn and resumes the guest to retry the non-emulatable
-+ *			     instruction (on hardware).  Unprotecting the gfn
-+ *			     doesn't allow forward progress for a self-changing
-+ *			     access because doing so also zaps the translation for
-+ *			     the gfn, i.e. retrying the instruction will hit a
-+ *			     !PRESENT fault, which results in a new shadow page
-+ *			     and sends KVM back to square one.
-  */
- #define EMULTYPE_NO_DECODE	    (1 << 0)
- #define EMULTYPE_TRAP_UD	    (1 << 1)
-@@ -1834,6 +1836,7 @@ u64 vcpu_tsc_khz(struct kvm_vcpu *vcpu);
- #define EMULTYPE_VMWARE_GP	    (1 << 5)
- #define EMULTYPE_PF		    (1 << 6)
- #define EMULTYPE_COMPLETE_USER_EXIT (1 << 7)
-+#define EMULTYPE_WRITE_PF_TO_SP	    (1 << 8)
- 
- int kvm_emulate_instruction(struct kvm_vcpu *vcpu, int emulation_type);
- int kvm_emulate_instruction_from_buffer(struct kvm_vcpu *vcpu,
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -4152,7 +4152,7 @@ void kvm_arch_async_page_ready(struct kv
- 	      work->arch.cr3 != kvm_mmu_get_guest_pgd(vcpu, vcpu->arch.mmu))
- 		return;
- 
--	kvm_mmu_do_page_fault(vcpu, work->cr2_or_gpa, 0, true);
-+	kvm_mmu_do_page_fault(vcpu, work->cr2_or_gpa, 0, true, NULL);
- }
- 
- static int kvm_faultin_pfn(struct kvm_vcpu *vcpu, struct kvm_page_fault *fault)
-@@ -5580,7 +5580,8 @@ int noinline kvm_mmu_page_fault(struct k
- 
- 	if (r == RET_PF_INVALID) {
- 		r = kvm_mmu_do_page_fault(vcpu, cr2_or_gpa,
--					  lower_32_bits(error_code), false);
-+					  lower_32_bits(error_code), false,
-+					  &emulation_type);
- 		if (KVM_BUG_ON(r == RET_PF_INVALID, vcpu->kvm))
- 			return -EIO;
- 	}
---- a/arch/x86/kvm/mmu/mmu_internal.h
-+++ b/arch/x86/kvm/mmu/mmu_internal.h
-@@ -223,6 +223,13 @@ struct kvm_page_fault {
- 	kvm_pfn_t pfn;
- 	hva_t hva;
- 	bool map_writable;
++	if (!c)
++		kunit_skip(test, "ctx alloc fail");
 +
-+	/*
-+	 * Indicates the guest is trying to write a gfn that contains one or
-+	 * more of the PTEs used to translate the write itself, i.e. the access
-+	 * is changing its own translation in the guest page tables.
-+	 */
-+	bool write_fault_to_shadow_pgtable;
- };
+ 	t = damon_new_target();
++	if (!t) {
++		damon_destroy_ctx(c);
++		kunit_skip(test, "target alloc fail");
++	}
+ 	KUNIT_EXPECT_EQ(test, 0u, nr_damon_targets(c));
  
- int kvm_tdp_page_fault(struct kvm_vcpu *vcpu, struct kvm_page_fault *fault);
-@@ -256,7 +263,7 @@ enum {
- };
- 
- static inline int kvm_mmu_do_page_fault(struct kvm_vcpu *vcpu, gpa_t cr2_or_gpa,
--					u32 err, bool prefetch)
-+					u32 err, bool prefetch, int *emulation_type)
- {
- 	struct kvm_page_fault fault = {
- 		.addr = cr2_or_gpa,
-@@ -290,6 +297,9 @@ static inline int kvm_mmu_do_page_fault(
- 	else
- 		r = vcpu->arch.mmu->page_fault(vcpu, &fault);
- 
-+	if (fault.write_fault_to_shadow_pgtable && emulation_type)
-+		*emulation_type |= EMULTYPE_WRITE_PF_TO_SP;
-+
- 	/*
- 	 * Similar to above, prefetch faults aren't truly spurious, and the
- 	 * async #PF path doesn't do emulation.  Do count faults that are fixed
---- a/arch/x86/kvm/mmu/paging_tmpl.h
-+++ b/arch/x86/kvm/mmu/paging_tmpl.h
-@@ -829,10 +829,8 @@ static int FNAME(page_fault)(struct kvm_
- 	if (r)
- 		return r;
- 
--	vcpu->arch.write_fault_to_shadow_pgtable = false;
--
- 	is_self_change_mapping = FNAME(is_self_change_mapping)(vcpu,
--	      &walker, fault->user, &vcpu->arch.write_fault_to_shadow_pgtable);
-+	      &walker, fault->user, &fault->write_fault_to_shadow_pgtable);
- 
- 	if (is_self_change_mapping)
- 		fault->max_level = PG_LEVEL_4K;
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -8532,7 +8532,6 @@ static int handle_emulation_failure(stru
- }
- 
- static bool reexecute_instruction(struct kvm_vcpu *vcpu, gpa_t cr2_or_gpa,
--				  bool write_fault_to_shadow_pgtable,
- 				  int emulation_type)
- {
- 	gpa_t gpa = cr2_or_gpa;
-@@ -8603,7 +8602,7 @@ static bool reexecute_instruction(struct
- 	 * be fixed by unprotecting shadow page and it should
- 	 * be reported to userspace.
- 	 */
--	return !write_fault_to_shadow_pgtable;
-+	return !(emulation_type & EMULTYPE_WRITE_PF_TO_SP);
- }
- 
- static bool retry_instruction(struct x86_emulate_ctxt *ctxt,
-@@ -8874,20 +8873,12 @@ int x86_emulate_instruction(struct kvm_v
- 	int r;
- 	struct x86_emulate_ctxt *ctxt = vcpu->arch.emulate_ctxt;
- 	bool writeback = true;
--	bool write_fault_to_spt;
- 
- 	if (unlikely(!kvm_can_emulate_insn(vcpu, emulation_type, insn, insn_len)))
- 		return 1;
- 
- 	vcpu->arch.l1tf_flush_l1d = true;
- 
--	/*
--	 * Clear write_fault_to_shadow_pgtable here to ensure it is
--	 * never reused.
--	 */
--	write_fault_to_spt = vcpu->arch.write_fault_to_shadow_pgtable;
--	vcpu->arch.write_fault_to_shadow_pgtable = false;
--
- 	if (!(emulation_type & EMULTYPE_NO_DECODE)) {
- 		kvm_clear_exception_queue(vcpu);
- 
-@@ -8908,7 +8899,6 @@ int x86_emulate_instruction(struct kvm_v
- 				return 1;
- 			}
- 			if (reexecute_instruction(vcpu, cr2_or_gpa,
--						  write_fault_to_spt,
- 						  emulation_type))
- 				return 1;
- 
-@@ -8994,8 +8984,7 @@ restart:
- 		return 1;
- 
- 	if (r == EMULATION_FAILED) {
--		if (reexecute_instruction(vcpu, cr2_or_gpa, write_fault_to_spt,
--					emulation_type))
-+		if (reexecute_instruction(vcpu, cr2_or_gpa, emulation_type))
- 			return 1;
- 
- 		return handle_emulation_failure(vcpu, emulation_type);
+ 	damon_add_target(c, t);
 
 
