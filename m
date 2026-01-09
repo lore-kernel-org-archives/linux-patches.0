@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59C8335561;
-	Fri,  9 Jan 2026 12:01:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52FA33032C;
+	Fri,  9 Jan 2026 12:01:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960075; cv=none; b=CL9IXFwHqIwzlZmuGQQyVUXVqtue7ESXalZf7iJUL7OfiJbN3IWV8BL1u+CFAz87NdmuQK+Ocj0IP4bHM1siavawDdHFwOBsECEe67PfxMHPi+R7AF0IVt5rJEKgRfFF+wsguc/0AV3yFMFzzF1Td1C+4cID68095xMASWnoDxw=
+	t=1767960078; cv=none; b=kLxmBMoWnpbGEd/qGjshGFjyuWgdr4DuJqxDzQXRtGkEN5V0iXTZOszob0ENjvvuAFHHnMKItnQuaqrygF1ye1vf8Aed17ciplfrokB0gMca9GeUtFMWFS2LbyqMKLH4u43iDa1027fZFRVkZ8qlK3iwQkdczmmY5zanvNbGgcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960075; c=relaxed/simple;
-	bh=WV7/M9W/2XBcP5zxdVAkCUnwHGWawit4iEGdTA5GdjI=;
+	s=arc-20240116; t=1767960078; c=relaxed/simple;
+	bh=kOfAXC/ScHT/Mg0nRkLSzVb+DMpJCOEkNet82ngGqXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fOU1YjBcjRIFrXSUvQNyL6osEVlxJbGwjNs4XmZnhNyQlHb8EKa5LZWq1bnBlqp81UO+jsVGSpezCN2ERRIf2HRMa9g/gtbthaOYN5DlHRsCVemP/rIXgdWzaG6ijbGfpdwbA7It1yHyod4AFQyRWsxefWZzmrckKiUsnnME5WQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qsngL6qq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qLFGhIscE1sCZtuiMyDGx0zhrYTRxgql+Z2DwSJSlhE1E5n3LxVIpkxkumlGuEMDu91PS3aIUMSnEJceuagQq148T3HqSH/xtYQDimGjQpPnFCXw4xYE8SWK/wPHkCCT20VH+3BW3x2Ker6lS662ZxrlOKY54sdbXq7q6ULvyzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ziz9uBGe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qsngL6qq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54B64C4CEF1;
-	Fri,  9 Jan 2026 12:01:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ziz9uBGe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F991C4CEF1;
+	Fri,  9 Jan 2026 12:01:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960075;
-	bh=WV7/M9W/2XBcP5zxdVAkCUnwHGWawit4iEGdTA5GdjI=;
+	s=korg; t=1767960078;
+	bh=kOfAXC/ScHT/Mg0nRkLSzVb+DMpJCOEkNet82ngGqXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qsngL6qqMF+roR59SAORv/9fWKdBhwKZu1j0m4fxAI7Aru70n5asqdB8gS37UYjYX
-	 mg+6kTNCrulgFpkn+CYPG8oZ7RL74St5OAa0qjJGwh0X0r/1Tjw7a9/qDIT9kdRe+a
-	 9OuW7QxrrAqnJiCB4dsBOZ/lT4xp7CwuWNyivEhQ=
+	b=ziz9uBGepVaEqpsg4jUdXYKfWhasDsAnzPW9dRJe7NCGIgCur0NRBBAxCdYoXrpqW
+	 3JPLhwzzLSiUHJYDl6S/7/Vwohtsk9F27SEfJFtSJUayAPOkOv1zYWilUQOdYcenLv
+	 yqOVb4MpFXEbtU/GQp5amWrAM8/laV/ZgSD0fdxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Stepchenko <sid@itb.spb.ru>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	shechenglong <shechenglong@xfusion.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 249/737] mtd: lpddr_cmds: fix signed shifts in lpddr_cmds
-Date: Fri,  9 Jan 2026 12:36:28 +0100
-Message-ID: <20260109112143.359777061@linuxfoundation.org>
+Subject: [PATCH 6.6 276/737] block: fix comment for op_is_zone_mgmt() to include RESET_ALL
+Date: Fri,  9 Jan 2026 12:36:55 +0100
+Message-ID: <20260109112144.388778168@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,69 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Stepchenko <sid@itb.spb.ru>
+From: shechenglong <shechenglong@xfusion.com>
 
-[ Upstream commit c909fec69f84b39e63876c69b9df2c178c6b76ba ]
+[ Upstream commit 8a32282175c964eb15638e8dfe199fc13c060f67 ]
 
-There are several places where a value of type 'int' is shifted by
-lpddr->chipshift. lpddr->chipshift is derived from QINFO geometry and
-might reach 31 when QINFO reports a 2 GiB size - the maximum supported by
-LPDDR(1) compliant chips. This may cause unexpected sign-extensions when
-casting the integer value to the type of 'unsigned long'.
+REQ_OP_ZONE_RESET_ALL is a zone management request, and op_is_zone_mgmt()
+has returned true for it.
 
-Use '1UL << lpddr->chipshift' and cast 'j' to unsigned long before
-shifting so the computation is performed at the destination width.
+Update the comment to remove the misleading exception note so
+the documentation matches the implementation.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: c68264711ca6 ("[MTD] LPDDR Command set driver")
-Signed-off-by: Ivan Stepchenko <sid@itb.spb.ru>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: 12a1c9353c47 ("block: fix op_is_zone_mgmt() to handle REQ_OP_ZONE_RESET_ALL")
+Signed-off-by: shechenglong <shechenglong@xfusion.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/lpddr/lpddr_cmds.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ include/linux/blk_types.h | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/mtd/lpddr/lpddr_cmds.c b/drivers/mtd/lpddr/lpddr_cmds.c
-index 3c3939bc2dadc..2a2318230936e 100644
---- a/drivers/mtd/lpddr/lpddr_cmds.c
-+++ b/drivers/mtd/lpddr/lpddr_cmds.c
-@@ -79,7 +79,7 @@ struct mtd_info *lpddr_cmdset(struct map_info *map)
- 		mutex_init(&shared[i].lock);
- 		for (j = 0; j < lpddr->qinfo->HWPartsNum; j++) {
- 			*chip = lpddr->chips[i];
--			chip->start += j << lpddr->chipshift;
-+			chip->start += (unsigned long)j << lpddr->chipshift;
- 			chip->oldstate = chip->state = FL_READY;
- 			chip->priv = &shared[i];
- 			/* those should be reset too since
-@@ -559,7 +559,7 @@ static int lpddr_point(struct mtd_info *mtd, loff_t adr, size_t len,
- 			break;
+diff --git a/include/linux/blk_types.h b/include/linux/blk_types.h
+index d328b318e44b1..b8ef39ca3d74f 100644
+--- a/include/linux/blk_types.h
++++ b/include/linux/blk_types.h
+@@ -508,10 +508,7 @@ static inline bool op_is_discard(blk_opf_t op)
+ }
  
- 		if ((len + ofs - 1) >> lpddr->chipshift)
--			thislen = (1<<lpddr->chipshift) - ofs;
-+			thislen = (1UL << lpddr->chipshift) - ofs;
- 		else
- 			thislen = len;
- 		/* get the chip */
-@@ -575,7 +575,7 @@ static int lpddr_point(struct mtd_info *mtd, loff_t adr, size_t len,
- 		len -= thislen;
- 
- 		ofs = 0;
--		last_end += 1 << lpddr->chipshift;
-+		last_end += 1UL << lpddr->chipshift;
- 		chipnum++;
- 		chip = &lpddr->chips[chipnum];
- 	}
-@@ -601,7 +601,7 @@ static int lpddr_unpoint (struct mtd_info *mtd, loff_t adr, size_t len)
- 			break;
- 
- 		if ((len + ofs - 1) >> lpddr->chipshift)
--			thislen = (1<<lpddr->chipshift) - ofs;
-+			thislen = (1UL << lpddr->chipshift) - ofs;
- 		else
- 			thislen = len;
- 
+ /*
+- * Check if a bio or request operation is a zone management operation, with
+- * the exception of REQ_OP_ZONE_RESET_ALL which is treated as a special case
+- * due to its different handling in the block layer and device response in
+- * case of command failure.
++ * Check if a bio or request operation is a zone management operation.
+  */
+ static inline bool op_is_zone_mgmt(enum req_op op)
+ {
 -- 
 2.51.0
 
