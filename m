@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32328352952;
-	Fri,  9 Jan 2026 12:36:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8D231ED6D;
+	Fri,  9 Jan 2026 12:36:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962169; cv=none; b=OJpPKpXEAQbodK8HMdmVL/hZxqjW7zFwLiWfihsv9vL6gE7O+y2ja0T2Q9gJe6cFN7g5QXA7E157Qdl0pqNwwmG4WkVN4lyCN5vEHqOScGBqhxaLZ+wVTsuRUpVnSHHi2EJe4fy5Vv9hXi6Jc4sECx3TveztOz5o36zfv0vm/A0=
+	t=1767962172; cv=none; b=t31ZLDQb22ohzYLwJENolnaE77ZLJN3IMjHLBs9pthL++A3O4DXhHQnrLgPrpklCnYGNlO2xmkFY5bXx/0zndP2EqT7p2mnxa4DhObPkqJ3BiEBWa6kMPPDwPKEE9jfONUJyrYdLSEjkHKsypxasiPNBjgHkXhqxTyrCY4OYFxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962169; c=relaxed/simple;
-	bh=lXsqlU4ianSQ91voobz7S62tAkvPdlMcj5XMZN58nVo=;
+	s=arc-20240116; t=1767962172; c=relaxed/simple;
+	bh=af9y6kQGyURp6aXLVvRbyytMQ4J+MasBAGlBsEXqXVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=exFJqG+89cs70vsENn3iONtYWdpZ/JY/xtaHqPJYb9eWgI5mNoEHLEZ1XVstYn9/X53f8OXRjF2EvpsXo2Xuty42CnzWFbiiZJZ39uhC+voz9vXEKfcP1Vv5Zee6ORl9Q3jQVPZFo/4eP56tOGIFOMFLMdPxsioffcVe4GOid1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hrNruMXN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DSz9Sbogx9K/sTzlkP6Kfe1uJj90Fat+fofS2nh01UWnGfsx93b4xnC4rX58ltb+rCLmopTNCRzX21W/WB9FyjZkTqJGF3qJldfb0xAVOsnLnZkKk0zLN3mno72Z5w4FmvQ1Ip8ea5jYqpYyG2Y31G1e8oYr/xXNRJkD/MJqZdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jaoBBA3D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hrNruMXN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0EF7C4CEF1;
-	Fri,  9 Jan 2026 12:36:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jaoBBA3D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A4C9C4CEF1;
+	Fri,  9 Jan 2026 12:36:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962169;
-	bh=lXsqlU4ianSQ91voobz7S62tAkvPdlMcj5XMZN58nVo=;
+	s=korg; t=1767962171;
+	bh=af9y6kQGyURp6aXLVvRbyytMQ4J+MasBAGlBsEXqXVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hrNruMXNXAG6KkdUJlqXB6ElqHSrIxuC+ZEP4cJfVONv9Y3KlY1beuXUWF/FHwTXm
-	 PvgxCfGmz+c8d668vfMh+Xi6AYtHAab8ABD6O4Ws4Wuc82rGHEA9ZV2FLEpk/jH8oI
-	 orCHiUOnMmktSYq56C3Vh8JEsO+DYw4XNzrj0q2g=
+	b=jaoBBA3DE0kfoqqXsLafaSloQXg2yVww2qftJxZnr2u28JHjAQdGF6eBeqM7ayIFF
+	 u2Ncg0U+lu/RdVxjjTqL/X+eIG3tC1koAlM/8OcvXSSoo4Z8pi50KcIySFkXvQf1aP
+	 5sYGTJHTvYR/RRGyfIHqOoEhlQyTbvr1u9ivmD+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Jian Shen <shenjian15@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 243/634] btrfs: scrub: always update btrfs_scrub_progress::last_physical
-Date: Fri,  9 Jan 2026 12:38:41 +0100
-Message-ID: <20260109112126.686013897@linuxfoundation.org>
+Subject: [PATCH 6.1 270/634] net: hns3: using the num_tqps to check whether tqp_index is out of range when vf get ring info from mbx
+Date: Fri,  9 Jan 2026 12:39:08 +0100
+Message-ID: <20260109112127.695431012@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,88 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Jian Shen <shenjian15@huawei.com>
 
-[ Upstream commit 54df8b80cc63aa0f22c4590cad11542731ed43ff ]
+[ Upstream commit d180c11aa8a6fa735f9ac2c72c61364a9afc2ba7 ]
 
-[BUG]
-When a scrub failed immediately without any byte scrubbed, the returned
-btrfs_scrub_progress::last_physical will always be 0, even if there is a
-non-zero @start passed into btrfs_scrub_dev() for resume cases.
+Currently, rss_size = num_tqps / tc_num. If tc_num is 1, then num_tqps
+equals rss_size. However, if the tc_num is greater than 1, then rss_size
+will be less than num_tqps, causing the tqp_index check for subsequent TCs
+using rss_size to always fail.
 
-This will reset the progress and make later scrub resume start from the
-beginning.
+This patch uses the num_tqps to check whether tqp_index is out of range,
+instead of rss_size.
 
-[CAUSE]
-The function btrfs_scrub_dev() accepts a @progress parameter to copy its
-updated progress to the caller, there are cases where we either don't
-touch progress::last_physical at all or copy 0 into last_physical:
-
-- last_physical not updated at all
-  If some error happened before scrubbing any super block or chunk, we
-  will not copy the progress, leaving the @last_physical untouched.
-
-  E.g. failed to allocate @sctx, scrubbing a missing device or even
-  there is already a running scrub and so on.
-
-  All those cases won't touch @progress at all, resulting the
-  last_physical untouched and will be left as 0 for most cases.
-
-- Error out before scrubbing any bytes
-  In those case we allocated @sctx, and sctx->stat.last_physical is all
-  zero (initialized by kvzalloc()).
-  Unfortunately some critical errors happened during
-  scrub_enumerate_chunks() or scrub_supers() before any stripe is really
-  scrubbed.
-
-  In that case although we will copy sctx->stat back to @progress, since
-  no byte is really scrubbed, last_physical will be overwritten to 0.
-
-[FIX]
-Make sure the parameter @progress always has its @last_physical member
-updated to @start parameter inside btrfs_scrub_dev().
-
-At the very beginning of the function, set @progress->last_physical to
-@start, so that even if we error out without doing progress copying,
-last_physical is still at @start.
-
-Then after we got @sctx allocated, set sctx->stat.last_physical to
-@start, this will make sure even if we didn't get any byte scrubbed, at
-the progress copying stage the @last_physical is not left as zero.
-
-This should resolve the resume progress reset problem.
-
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 326334aad024 ("net: hns3: add a check for tqp_index in hclge_get_ring_chain_from_mbx()")
+Signed-off-by: Jian Shen <shenjian15@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20251211023737.2327018-3-shaojijie@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/scrub.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
-index ce8a9c226534f..8cae31edc68d7 100644
---- a/fs/btrfs/scrub.c
-+++ b/fs/btrfs/scrub.c
-@@ -4294,6 +4294,10 @@ int btrfs_scrub_dev(struct btrfs_fs_info *fs_info, u64 devid, u64 start,
- 	unsigned int nofs_flag;
- 	bool need_commit = false;
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c
+index 61e155c4d441e..a961e90a85a67 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c
+@@ -193,10 +193,10 @@ static int hclge_get_ring_chain_from_mbx(
+ 		return -EINVAL;
  
-+	/* Set the basic fallback @last_physical before we got a sctx. */
-+	if (progress)
-+		progress->last_physical = start;
-+
- 	if (btrfs_fs_closing(fs_info))
- 		return -EAGAIN;
- 
-@@ -4312,6 +4316,7 @@ int btrfs_scrub_dev(struct btrfs_fs_info *fs_info, u64 devid, u64 start,
- 	sctx = scrub_setup_ctx(fs_info, is_dev_replace);
- 	if (IS_ERR(sctx))
- 		return PTR_ERR(sctx);
-+	sctx->stat.last_physical = start;
- 
- 	ret = scrub_workers_get(fs_info, is_dev_replace);
- 	if (ret)
+ 	for (i = 0; i < ring_num; i++) {
+-		if (req->msg.param[i].tqp_index >= vport->nic.kinfo.rss_size) {
++		if (req->msg.param[i].tqp_index >= vport->nic.kinfo.num_tqps) {
+ 			dev_err(&hdev->pdev->dev, "tqp index(%u) is out of range(0-%u)\n",
+ 				req->msg.param[i].tqp_index,
+-				vport->nic.kinfo.rss_size - 1U);
++				vport->nic.kinfo.num_tqps - 1U);
+ 			return -EINVAL;
+ 		}
+ 	}
 -- 
 2.51.0
 
