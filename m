@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 630222F12D4;
-	Fri,  9 Jan 2026 11:51:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C29232FA3D;
+	Fri,  9 Jan 2026 11:52:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959519; cv=none; b=uyaciTfTiENHTWdqMSV/QxhyrFCIvQH5l3DH7/QUjT7yOPj5ukrd/+6tEq/z5y5EdQHMQL73yF1bKN7PAsET3WTAfpCYQLXejl95U4Jcah2tChQsh5wrJ+92T/BxfcqgsE2HkDktC3LXmYf07iIdfg1tvdTzqhZySST1qh53iEs=
+	t=1767959522; cv=none; b=Y0stiLyG8OrF96Kjc03YfCCKP+RlwyMOaVVGTMtE4smZXAK+JeuA00TKN/X6hnJzHjbOBE/zaLlDJDQ4vP1y0V3G6AmVPmNm4VufUImcU2HxqWVQ/xj3n2uhlhvtwaWIntpOqdK32LCH88x8AfuFpF5KFIsGy864FYqxlIwuYmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959519; c=relaxed/simple;
-	bh=bXtsJmH9nSqmrM+SlPaJpCzeaLfYscvFe9uNug9sQcw=;
+	s=arc-20240116; t=1767959522; c=relaxed/simple;
+	bh=WXMSbNZuGORSTBrGCDXur9BsilYJFOGL7FkTxjp8+YY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vFeGjG7f9W3RffkxsrhJvUrsO4K4k+lAYMgL7WUtIYu+5uUZCDCWJy0x36Qntb5+gnjrP60ISyIrNB4KzF71HSd5rqWLEB6kAF+qoQNpceF8jhHf6JsCNR19eBx585ieH2D47S3/6yREq5CbIbHAqLrGiKTSklrhZzNZ9y1kuRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cc3cQPTX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=svGD7grpw/1iQitF7h1yWv9Xe3rqQBKBmbSsjurrYCjN8hZUdkhVZrpXa03c/GQCBzsp27mTWFoORyAYrw5gPwAJZHRC27tPdsNygTc+s3S8El3S+apipzyAqJEiwLtjf2YF8efBnZrfvSvb65sYbdsTJBF+C5Zqog7dn4xf3gs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g7K7PGf3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cc3cQPTX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1E5AC4CEF1;
-	Fri,  9 Jan 2026 11:51:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g7K7PGf3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBB8BC4CEF1;
+	Fri,  9 Jan 2026 11:52:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959519;
-	bh=bXtsJmH9nSqmrM+SlPaJpCzeaLfYscvFe9uNug9sQcw=;
+	s=korg; t=1767959522;
+	bh=WXMSbNZuGORSTBrGCDXur9BsilYJFOGL7FkTxjp8+YY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cc3cQPTX82xlyG+Igo+YnfP+JryqBdj/ztGsu6+yVmWuPh2EiZrRCnHv3goLpVok5
-	 Prh9zRKwmih2werZuwFT8gDaEX7jDWmti2lbx4haFHXvWerIK7FuhW5/2zRc8Qnw7v
-	 0SfoDNTmQjF6V8bOgaAXoMv0oghA1AsaU03esvG0=
+	b=g7K7PGf3LtaKmj+TaOYWM4u+mwbCmQFGIhagirK0XgYD8lKVul7xjk6WD1hde2lmc
+	 yOjXAmKQlhjJYl7z7ByZf7xyhJMIUuNsTM9mia+MOYqUToOUsD7LXpYgsXBJInOAh3
+	 kW8WQaAWFw9v6UDzm5FC5her3/F8jDA9u2vVtDmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Lukas Wunner <lukas@wunner.de>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 081/737] clk: qcom: camcc-sm6350: Fix PLL config of PLL2
-Date: Fri,  9 Jan 2026 12:33:40 +0100
-Message-ID: <20260109112137.043049127@linuxfoundation.org>
+Subject: [PATCH 6.6 082/737] crypto: asymmetric_keys - prevent overflow in asymmetric_key_generate_id
+Date: Fri,  9 Jan 2026 12:33:41 +0100
+Message-ID: <20260109112137.081229279@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -53,51 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit ab0e13141d679fdffdd3463a272c5c1b10be1794 ]
+[ Upstream commit df0845cf447ae1556c3440b8b155de0926cbaa56 ]
 
-The 'Agera' PLLs (with clk_agera_pll_configure) do not take some of the
-parameters that are provided in the vendor driver. Instead the upstream
-configuration should provide the final user_ctl value that is written to
-the USER_CTL register.
+Use check_add_overflow() to guard against potential integer overflows
+when adding the binary blob lengths and the size of an asymmetric_key_id
+structure and return ERR_PTR(-EOVERFLOW) accordingly. This prevents a
+possible buffer overflow when copying data from potentially malicious
+X.509 certificate fields that can be arbitrarily large, such as ASN.1
+INTEGER serial numbers, issuer names, etc.
 
-Fix the config so that the PLL is configured correctly, and fixes
-CAMCC_MCLK* being stuck off.
-
-Fixes: 80f5451d9a7c ("clk: qcom: Add camera clock controller driver for SM6350")
-Suggested-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251021-agera-pll-fixups-v1-1-8c1d8aff4afc@fairphone.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 7901c1a8effb ("KEYS: Implement binary asymmetric key ID handling")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/camcc-sm6350.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ crypto/asymmetric_keys/asymmetric_type.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/qcom/camcc-sm6350.c b/drivers/clk/qcom/camcc-sm6350.c
-index 79131e1699b81..83cee6994d160 100644
---- a/drivers/clk/qcom/camcc-sm6350.c
-+++ b/drivers/clk/qcom/camcc-sm6350.c
-@@ -144,15 +144,11 @@ static struct clk_alpha_pll_postdiv camcc_pll1_out_even = {
- static const struct alpha_pll_config camcc_pll2_config = {
- 	.l = 0x64,
- 	.alpha = 0x0,
--	.post_div_val = 0x3 << 8,
--	.post_div_mask = 0x3 << 8,
--	.aux_output_mask = BIT(1),
--	.main_output_mask = BIT(0),
--	.early_output_mask = BIT(3),
- 	.config_ctl_val = 0x20000800,
- 	.config_ctl_hi_val = 0x400003d2,
- 	.test_ctl_val = 0x04000400,
- 	.test_ctl_hi_val = 0x00004000,
-+	.user_ctl_val = 0x0000030b,
- };
- 
- static struct clk_alpha_pll camcc_pll2 = {
+diff --git a/crypto/asymmetric_keys/asymmetric_type.c b/crypto/asymmetric_keys/asymmetric_type.c
+index 43af5fa510c09..7859b0692b42b 100644
+--- a/crypto/asymmetric_keys/asymmetric_type.c
++++ b/crypto/asymmetric_keys/asymmetric_type.c
+@@ -11,6 +11,7 @@
+ #include <crypto/public_key.h>
+ #include <linux/seq_file.h>
+ #include <linux/module.h>
++#include <linux/overflow.h>
+ #include <linux/slab.h>
+ #include <linux/ctype.h>
+ #include <keys/system_keyring.h>
+@@ -151,12 +152,17 @@ struct asymmetric_key_id *asymmetric_key_generate_id(const void *val_1,
+ 						     size_t len_2)
+ {
+ 	struct asymmetric_key_id *kid;
+-
+-	kid = kmalloc(sizeof(struct asymmetric_key_id) + len_1 + len_2,
+-		      GFP_KERNEL);
++	size_t kid_sz;
++	size_t len;
++
++	if (check_add_overflow(len_1, len_2, &len))
++		return ERR_PTR(-EOVERFLOW);
++	if (check_add_overflow(sizeof(struct asymmetric_key_id), len, &kid_sz))
++		return ERR_PTR(-EOVERFLOW);
++	kid = kmalloc(kid_sz, GFP_KERNEL);
+ 	if (!kid)
+ 		return ERR_PTR(-ENOMEM);
+-	kid->len = len_1 + len_2;
++	kid->len = len;
+ 	memcpy(kid->data, val_1, len_1);
+ 	memcpy(kid->data + len_1, val_2, len_2);
+ 	return kid;
 -- 
 2.51.0
 
