@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29562DEA6F;
-	Fri,  9 Jan 2026 11:56:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF0C2DEA6F;
+	Fri,  9 Jan 2026 11:56:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959765; cv=none; b=p3NGpanIgC8a3FNhwlFX/1MmGf1ZJiw3h/Ma7f94wKVH8Ssw/i+bEX+//1Ea5SIz1TNT7w1t/h0zuwrNon4QG4eAX9CvbbfA+XAtOIv+MvN2UgCrkCfgITRXZlGnHj0VCdngeljGlQTVxeke5QZVN87AdpUuKSMoxYZ6mVQV6lM=
+	t=1767959768; cv=none; b=m5d32mfIsVVQSbWO6tQgRErgY79FdOdnV55bqb3i1DlQs5mvgqwRPBE3tdQboZ/kARqeg0OGiVRvCBeIwCBoPz6hDyNfzJ79pvnVM2GJ9L3QglY0mE5EU1rFpsW9fstbbUElwTmrB6STnr3u4vKCmWNvDn8RyWyWpCmBbtmZJVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959765; c=relaxed/simple;
-	bh=8gwl7X5NdgNvW8eAiohriBhENkeSmtSpzK8WgNcJkM4=;
+	s=arc-20240116; t=1767959768; c=relaxed/simple;
+	bh=X42oRKknX/gGJEWEFFylZ/SyB45Q8mjmZCkg8dKdsdc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n46yCufbZ19fz9KBo2ZzDtYpdjqvGcClPGSmdZYxnPXNzh+nSDw+cVU+b8fYQsZPFR9O3+l1RZQREBVYH0+v6QbHLyB5Okui6WYDOrvrRlSNdLsWQlfAecF7rc9+KecuNTvXajezQ+Wb8JSeAGs2zGwPvt6+pF5fx4Phje4ZvsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x5cOVKOE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kEUc4nNfJyb3lpqTAWzZffbQrOia9wkqoQPDUyghy7b7wx2r6pi2LfsvCFsmhhs8NrZrKFhUQygqNxfWyCf/7JmqdXZeDQHemqHN4TXJZz7/sqhfGBfi1RPDP4gmESaL7Hda2sJatpb0Gxe2rwbRpy5k4W/ycYh0Bji+VTN4R7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ix+waBqU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5cOVKOE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D0ACC16AAE;
-	Fri,  9 Jan 2026 11:56:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ix+waBqU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47321C16AAE;
+	Fri,  9 Jan 2026 11:56:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959765;
-	bh=8gwl7X5NdgNvW8eAiohriBhENkeSmtSpzK8WgNcJkM4=;
+	s=korg; t=1767959768;
+	bh=X42oRKknX/gGJEWEFFylZ/SyB45Q8mjmZCkg8dKdsdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x5cOVKOEMA9ZAwDIUd1Ejpt21qfZhHZ+g20wVd1rwRLpQlvuQhPWshZri3I2ou5FC
-	 FLi7TFLPlGPeetzKn631anAog8tS08DLwf1cKs2HEUE/OKoaa/g45Yy9uc3NxIP15K
-	 0V9AvNl4ab1hA3hN+hM8sVBUVnjoK8INfPKbbeSo=
+	b=Ix+waBqUZpxXZgF4CCKKOTI+zbzgCSxIXSOZ2GPKr2iE2We8fx1bc5rJS/wPqRvCM
+	 CLZ0QjNJlnAnFASgUmQ4/xl74Q3tABAXHpZ5sNPDWVzUjJdDWtNeUjYdkdm+2MmFyn
+	 FSxFfq6ItRQFUxnH67d6AM7RX5aVEUrYT0xoMgU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jose Fernandez <josef@netflix.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Pu Lehui <pulehui@huawei.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 167/737] bpf: Improve program stats run-time calculation
-Date: Fri,  9 Jan 2026 12:35:06 +0100
-Message-ID: <20260109112140.276450917@linuxfoundation.org>
+Subject: [PATCH 6.6 168/737] bpf: Fix invalid prog->stats access when update_effective_progs fails
+Date: Fri,  9 Jan 2026 12:35:07 +0100
+Message-ID: <20260109112140.313830895@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,83 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jose Fernandez <josef@netflix.com>
+From: Pu Lehui <pulehui@huawei.com>
 
-[ Upstream commit ce09cbdd988887662546a1175bcfdfc6c8fdd150 ]
+[ Upstream commit 7dc211c1159d991db609bdf4b0fb9033c04adcbc ]
 
-This patch improves the run-time calculation for program stats by
-capturing the duration as soon as possible after the program returns.
+Syzkaller triggers an invalid memory access issue following fault
+injection in update_effective_progs. The issue can be described as
+follows:
 
-Previously, the duration included u64_stats_t operations. While the
-instrumentation overhead is part of the total time spent when stats are
-enabled, distinguishing between the program's native execution time and
-the time spent due to instrumentation is crucial for accurate
-performance analysis.
+__cgroup_bpf_detach
+  update_effective_progs
+    compute_effective_progs
+      bpf_prog_array_alloc <-- fault inject
+  purge_effective_progs
+    /* change to dummy_bpf_prog */
+    array->items[index] = &dummy_bpf_prog.prog
 
-By making this change, the patch facilitates more precise optimization
-of BPF programs, enabling users to understand their performance in
-environments without stats enabled.
+---softirq start---
+__do_softirq
+  ...
+    __cgroup_bpf_run_filter_skb
+      __bpf_prog_run_save_cb
+        bpf_prog_run
+          stats = this_cpu_ptr(prog->stats)
+          /* invalid memory access */
+          flags = u64_stats_update_begin_irqsave(&stats->syncp)
+---softirq end---
 
-I used a virtualized environment to measure the run-time over one minute
-for a basic raw_tracepoint/sys_enter program, which just increments a
-local counter. Although the virtualization introduced some performance
-degradation that could affect the results, I observed approximately a
-16% decrease in average run-time reported by stats with this change
-(310 -> 260 nsec).
+  static_branch_dec(&cgroup_bpf_enabled_key[atype])
 
-Signed-off-by: Jose Fernandez <josef@netflix.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20240402034010.25060-1-josef@netflix.com
-Stable-dep-of: 7dc211c1159d ("bpf: Fix invalid prog->stats access when update_effective_progs fails")
+The reason is that fault injection caused update_effective_progs to fail
+and then changed the original prog into dummy_bpf_prog.prog in
+purge_effective_progs. Then a softirq came, and accessing the members of
+dummy_bpf_prog.prog in the softirq triggers invalid mem access.
+
+To fix it, skip updating stats when stats is NULL.
+
+Fixes: 492ecee892c2 ("bpf: enable program stats")
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Link: https://lore.kernel.org/r/20251115102343.2200727-1-pulehui@huaweicloud.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/filter.h  | 6 ++++--
- kernel/bpf/trampoline.c | 3 ++-
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ include/linux/filter.h | 12 +++++++-----
+ kernel/bpf/syscall.c   |  3 +++
+ 2 files changed, 10 insertions(+), 5 deletions(-)
 
 diff --git a/include/linux/filter.h b/include/linux/filter.h
-index ad5a3d68b5552..f9fb83be935d4 100644
+index f9fb83be935d4..30fe140d48888 100644
 --- a/include/linux/filter.h
 +++ b/include/linux/filter.h
-@@ -599,14 +599,16 @@ static __always_inline u32 __bpf_prog_run(const struct bpf_prog *prog,
- 	cant_migrate();
- 	if (static_branch_unlikely(&bpf_stats_enabled_key)) {
- 		struct bpf_prog_stats *stats;
--		u64 start = sched_clock();
-+		u64 duration, start = sched_clock();
- 		unsigned long flags;
- 
+@@ -605,11 +605,13 @@ static __always_inline u32 __bpf_prog_run(const struct bpf_prog *prog,
  		ret = dfunc(ctx, prog->insnsi, prog->bpf_func);
-+
-+		duration = sched_clock() - start;
- 		stats = this_cpu_ptr(prog->stats);
- 		flags = u64_stats_update_begin_irqsave(&stats->syncp);
- 		u64_stats_inc(&stats->cnt);
--		u64_stats_add(&stats->nsecs, sched_clock() - start);
-+		u64_stats_add(&stats->nsecs, duration);
- 		u64_stats_update_end_irqrestore(&stats->syncp, flags);
+ 
+ 		duration = sched_clock() - start;
+-		stats = this_cpu_ptr(prog->stats);
+-		flags = u64_stats_update_begin_irqsave(&stats->syncp);
+-		u64_stats_inc(&stats->cnt);
+-		u64_stats_add(&stats->nsecs, duration);
+-		u64_stats_update_end_irqrestore(&stats->syncp, flags);
++		if (likely(prog->stats)) {
++			stats = this_cpu_ptr(prog->stats);
++			flags = u64_stats_update_begin_irqsave(&stats->syncp);
++			u64_stats_inc(&stats->cnt);
++			u64_stats_add(&stats->nsecs, duration);
++			u64_stats_update_end_irqrestore(&stats->syncp, flags);
++		}
  	} else {
  		ret = dfunc(ctx, prog->insnsi, prog->bpf_func);
-diff --git a/kernel/bpf/trampoline.c b/kernel/bpf/trampoline.c
-index f8a58b4130701..e48791442acc5 100644
---- a/kernel/bpf/trampoline.c
-+++ b/kernel/bpf/trampoline.c
-@@ -870,12 +870,13 @@ static void notrace update_prog_stats(struct bpf_prog *prog,
- 	     * Hence check that 'start' is valid.
- 	     */
- 	    start > NO_START_TIME) {
-+		u64 duration = sched_clock() - start;
- 		unsigned long flags;
- 
- 		stats = this_cpu_ptr(prog->stats);
- 		flags = u64_stats_update_begin_irqsave(&stats->syncp);
- 		u64_stats_inc(&stats->cnt);
--		u64_stats_add(&stats->nsecs, sched_clock() - start);
-+		u64_stats_add(&stats->nsecs, duration);
- 		u64_stats_update_end_irqrestore(&stats->syncp, flags);
  	}
- }
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index 98f3f206d112e..63cf5a221081b 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -2224,6 +2224,9 @@ void notrace bpf_prog_inc_misses_counter(struct bpf_prog *prog)
+ 	struct bpf_prog_stats *stats;
+ 	unsigned int flags;
+ 
++	if (unlikely(!prog->stats))
++		return;
++
+ 	stats = this_cpu_ptr(prog->stats);
+ 	flags = u64_stats_update_begin_irqsave(&stats->syncp);
+ 	u64_stats_inc(&stats->misses);
 -- 
 2.51.0
 
