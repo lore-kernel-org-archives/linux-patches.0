@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508B933B6E8;
-	Fri,  9 Jan 2026 12:32:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FD6731E107;
+	Fri,  9 Jan 2026 12:32:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961967; cv=none; b=I/mEx7Vt7MrrOMe8NTpwVsIr7A/QN2Oez2Z4cH662TPQ/OgcjkDsw/TEmKvntgButOUoK3zcGRonL9LoH/5nplOywJi4qzrDWi2z+KCafY5+SVOuk57J0oIeWbuT7TLHlPgsKKJu5En2chZVXIWYd+tZ6ik5r/rqhvPv+0swA78=
+	t=1767961970; cv=none; b=tDJNle1K/SRFNmE09eN1fABU0c3z1lMX975V2glQFDb5uLFjVUW+MGGaJl2+LJrbjoLUHgLF1vtIPRBrYkvBi8OB8ovM/dSp4eL8FMwysS8LKNpwGbGupOPz2PT0+w9Us/cDIdFcCQ6dHWJmPubSSyg44K/u97Yru9Id2pU2R88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961967; c=relaxed/simple;
-	bh=iHeKR5nG+vILkblRiwWLOztdqo1Kvi89oyoqJqP40LA=;
+	s=arc-20240116; t=1767961970; c=relaxed/simple;
+	bh=XfkUsvOfmwf2GQJH+Ut7ClCzdau36x15dg0z5nD8ImY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cFx9mLdXgvryUjjZZLDFsL63raiN4T2VzYKdNYSYqaSWMuvkMgDR/z0ifQJ5i/GicjrPMFU2sHXCMq1ncmRvQdK3TfQUNqjdgdKHvRriB1eFS7CiJg8dcUcmYVATggOnsnuXxEr7TGiaPzmGhthpi1MJum1otwv6UMs5YTSbTxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P3cfXUsL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=b2nXQijmCCdBe3FNhm8CImkc8dyRg9ut6u1R/85yVq3Wo3906ABL0U59jdihc5tQfFx/VEvDFwz5x6i1xje5F0LDAWw/KJklNkVrpRlzCdqjzkzztlyTZmszdDLHZ03r1DTK/ajmL2maJSYJ2BbgwWHpFvW0qBxdUFPPTTemmFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cs82B2RF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P3cfXUsL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFCF6C4CEF1;
-	Fri,  9 Jan 2026 12:32:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cs82B2RF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1570C4CEF1;
+	Fri,  9 Jan 2026 12:32:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961967;
-	bh=iHeKR5nG+vILkblRiwWLOztdqo1Kvi89oyoqJqP40LA=;
+	s=korg; t=1767961970;
+	bh=XfkUsvOfmwf2GQJH+Ut7ClCzdau36x15dg0z5nD8ImY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P3cfXUsLzk+uInsA9oOc34++tjOB5GO8+XgfjE0a+k0jfBfv9X8dFJ87Ygs5puYFv
-	 XQ6BBHpLISZdBoyDgqPuPr1Bvj8N3pJZSjdQeDOPbfnEpLRvp30/ERk65vjzRFtZd3
-	 hKF9eGbgk8eCKu7VPhi1BQWgQR5yDnIF+mG8uYX8=
+	b=cs82B2RFYxMCxziHs9mc8G1bcaCbEt55lS4e74YPqTEW+jD5YMLSJkTHMr9i8s8ll
+	 UFfPvgZH65ik8UKBsKO9s+iq88jcNbPB12iePh9ZgRi+Hy3RNYLKGlKvoZ0QZ/nNUg
+	 Gtm5uH168s7Y/32XkEAcwdoOFne2N6LW4w0ms0wk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilias Stamatis <ilstam@amazon.com>,
-	"David Hildenbrand (Red Hat)" <david@kernel.org>,
-	Andriy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Baoquan He <bhe@redhat.com>,
-	"Huang, Ying" <huang.ying.caritas@gmail.com>,
-	Nadav Amit <nadav.amit@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 172/634] Reinstate "resource: avoid unnecessary lookups in find_next_iomem_res()"
-Date: Fri,  9 Jan 2026 12:37:30 +0100
-Message-ID: <20260109112123.917411998@linuxfoundation.org>
+Subject: [PATCH 6.1 199/634] fs/nls: Fix inconsistency between utf8_to_utf32() and utf32_to_utf8()
+Date: Fri,  9 Jan 2026 12:37:57 +0100
+Message-ID: <20260109112124.922805770@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -57,79 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilias Stamatis <ilstam@amazon.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 6fb3acdebf65a72df0a95f9fd2c901ff2bc9a3a2 ]
+[ Upstream commit c36f9d7b2869a003a2f7d6ff2c6bac9e62fd7d68 ]
 
-Commit 97523a4edb7b ("kernel/resource: remove first_lvl / siblings_only
-logic") removed an optimization introduced by commit 756398750e11
-("resource: avoid unnecessary lookups in find_next_iomem_res()").  That
-was not called out in the message of the first commit explicitly so it's
-not entirely clear whether removing the optimization happened
-inadvertently or not.
+After commit 25524b619029 ("fs/nls: Fix utf16 to utf8 conversion"),
+the return values of utf8_to_utf32() and utf32_to_utf8() are
+inconsistent when encountering an error: utf8_to_utf32() returns -1,
+while utf32_to_utf8() returns errno codes. Fix this inconsistency
+by modifying utf8_to_utf32() to return errno codes as well.
 
-As the original commit message of the optimization explains there is no
-point considering the children of a subtree in find_next_iomem_res() if
-the top level range does not match.
-
-Reinstating the optimization results in performance improvements in
-systems where /proc/iomem is ~5k lines long.  Calling mmap() on /dev/mem
-in such platforms takes 700-1500μs without the optimisation and 10-50μs
-with the optimisation.
-
-Note that even though commit 97523a4edb7b removed the 'sibling_only'
-parameter from next_resource(), newer kernels have basically reinstated it
-under the name 'skip_children'.
-
-Link: https://lore.kernel.org/all/20251124165349.3377826-1-ilstam@amazon.com/T/#u
-Fixes: 97523a4edb7b ("kernel/resource: remove first_lvl / siblings_only logic")
-Signed-off-by: Ilias Stamatis <ilstam@amazon.com>
-Acked-by: David Hildenbrand (Red Hat) <david@kernel.org>
-Cc: Andriy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Baoquan He <bhe@redhat.com>
-Cc: "Huang, Ying" <huang.ying.caritas@gmail.com>
-Cc: Nadav Amit <nadav.amit@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 25524b619029 ("fs/nls: Fix utf16 to utf8 conversion")
+Suggested-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://patch.msgid.link/20251129111535.8984-1-W_Armin@gmx.de
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/resource.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ fs/nls/nls_base.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/resource.c b/kernel/resource.c
-index 1170ed58404fb..f39b9fe738d14 100644
---- a/kernel/resource.c
-+++ b/kernel/resource.c
-@@ -336,6 +336,8 @@ static int find_next_iomem_res(resource_size_t start, resource_size_t end,
- 			       unsigned long flags, unsigned long desc,
- 			       struct resource *res)
- {
-+	/* Skip children until we find a top level range that matches */
-+	bool skip_children = true;
- 	struct resource *p;
- 
- 	if (!res)
-@@ -346,7 +348,7 @@ static int find_next_iomem_res(resource_size_t start, resource_size_t end,
- 
- 	read_lock(&resource_lock);
- 
--	for_each_resource(&iomem_resource, p, false) {
-+	for_each_resource(&iomem_resource, p, skip_children) {
- 		/* If we passed the resource we are looking for, stop */
- 		if (p->start > end) {
- 			p = NULL;
-@@ -357,6 +359,12 @@ static int find_next_iomem_res(resource_size_t start, resource_size_t end,
- 		if (p->end < start)
- 			continue;
- 
-+		/*
-+		 * We found a top level range that matches what we are looking
-+		 * for. Time to start checking children too.
-+		 */
-+		skip_children = false;
+diff --git a/fs/nls/nls_base.c b/fs/nls/nls_base.c
+index 7eacded3c17d1..f072eb6b563f6 100644
+--- a/fs/nls/nls_base.c
++++ b/fs/nls/nls_base.c
+@@ -67,19 +67,22 @@ int utf8_to_utf32(const u8 *s, int inlen, unicode_t *pu)
+ 			l &= t->lmask;
+ 			if (l < t->lval || l > UNICODE_MAX ||
+ 					(l & SURROGATE_MASK) == SURROGATE_PAIR)
+-				return -1;
++				return -EILSEQ;
 +
- 		/* Found a match, break */
- 		if (is_type_match(p, flags, desc))
- 			break;
+ 			*pu = (unicode_t) l;
+ 			return nc;
+ 		}
+ 		if (inlen <= nc)
+-			return -1;
++			return -EOVERFLOW;
++
+ 		s++;
+ 		c = (*s ^ 0x80) & 0xFF;
+ 		if (c & 0xC0)
+-			return -1;
++			return -EILSEQ;
++
+ 		l = (l << 6) | c;
+ 	}
+-	return -1;
++	return -EILSEQ;
+ }
+ EXPORT_SYMBOL(utf8_to_utf32);
+ 
 -- 
 2.51.0
 
