@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5980334C24;
-	Fri,  9 Jan 2026 12:21:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4013833B6F0;
+	Fri,  9 Jan 2026 12:21:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961291; cv=none; b=VIe4EfBCskAHvEhazhykS2Gv5NpaP05CxkKLfXv751Aikx/kpaBxNkSC0g3jxh+1cEQgNRE9w7ipUThPch5p2CZwZnLxhNDDNVB/rbri6vJB4z4kURJdBYdG68Ly64tQ8YXxK0qnMA4XcdZBemenX5bjXZE6hBKwYiRXF4/KQmI=
+	t=1767961294; cv=none; b=sLFq391rwbFkRkTGM7Z6cpeVYLzk/122yeJ+XAMKRqxTIPiEZHyAxdXaxgBKoyUjzhY5TqSJ1TTr52kXECNZXa9vvVHvYMVzRtgdJ1RcZv06hgZejsglfP2dq8NjU9essoBxFXxK0i0AUxYps/t/wtwUmiXAm+WBskxOWME68y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961291; c=relaxed/simple;
-	bh=ptvnAVmTw+R9jvS7SwT7HjcA3IudBNsHTKCJhvQzVnY=;
+	s=arc-20240116; t=1767961294; c=relaxed/simple;
+	bh=FpHsX85lqJn9OQE51ZOGLZC1ongNHG2HHg+z4q/5kys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hm+P7ZtBlgQZnJZy2+uZxq4bcw+ywkXpCfd0tCYBqmsRASmSpFx74bJKjFc6H1xeynaodtAkVw2nMpCLfwS15NKLqnH04nNQY/VrVCiV+84ePwit9yBgvz/z59AyktqrIHmi+dzS9ELb5PashqjKTOh7RtDHQKTf4vxqZmcs9Zg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gR6pfdLE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VuTrwT8+EVjdNgfAcD1dFjH53VZKKfF7ea3/xOTae8dE0XiXZIawnbI7pzQSDKBsFjRBdMi8FjuLmdQm+Ng5Ejg4bvShyD3eBXJLt6GQp/lZNd7JythnwCvWfCnc8AivbJPQU0RCtiWGCxjkLfULFlw2zq+fwHMVPuO8vXUy26Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bGy8+UO1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gR6pfdLE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C9BDC4CEF1;
-	Fri,  9 Jan 2026 12:21:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bGy8+UO1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDAFAC4CEF1;
+	Fri,  9 Jan 2026 12:21:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961291;
-	bh=ptvnAVmTw+R9jvS7SwT7HjcA3IudBNsHTKCJhvQzVnY=;
+	s=korg; t=1767961294;
+	bh=FpHsX85lqJn9OQE51ZOGLZC1ongNHG2HHg+z4q/5kys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gR6pfdLEdIZ9rs1Jrg2yFvZAqPwC2WTSBPKtzpEbfCoLn2kclPcw5utYv75xR+7CB
-	 drbaF1z6RxCepMS3HbWmIGbA5zkEyHjTkJ3Oo8Ple7S+4bZHKvgkEZutuwpcUf0hL0
-	 dTMo9l20j9V6FKljOCUta/0IgpoCxabPKqfv6f0g=
+	b=bGy8+UO1rn1QAfGYHtWereC9u6au+YPASUYZmlZbgNgFizKVhe2U9QtgSr9t4PQsJ
+	 +ucqCPUW64mWoBOU/dqvWopJTp58nxR5kqOW1pfy0+MbvBJYANQBIbaOGjl6Y+M9kA
+	 J5fSVPOT3hjvCUyXPQxJm1Cj8hFLFUiGQkkyqCjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari Bathini <hbathini@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Aboorva Devarajan <aboorvad@linux.ibm.com>
-Subject: [PATCH 6.6 674/737] powerpc/64s/radix/kfence: map __kfence_pool at page granularity
-Date: Fri,  9 Jan 2026 12:43:33 +0100
-Message-ID: <20260109112159.406549872@linuxfoundation.org>
+	Yunfei Dong <yunfei.dong@mediatek.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Fei Shao <fshao@chromium.org>,
+	Tomasz Figa <tfiga@chromium.org>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 701/737] media: mediatek: vcodec: Use spinlock for context list protection lock
+Date: Fri,  9 Jan 2026 12:44:00 +0100
+Message-ID: <20260109112200.441986961@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,228 +55,253 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hari Bathini <hbathini@linux.ibm.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-commit 353d7a84c214f184d5a6b62acdec8b4424159b7c upstream.
+[ Upstream commit a5844227e0f030d2af2d85d4aed10c5eca6ca176 ]
 
-When KFENCE is enabled, total system memory is mapped at page level
-granularity. But in radix MMU mode, ~3GB additional memory is needed
-to map 100GB of system memory at page level granularity when compared
-to using 2MB direct mapping.This is not desired considering KFENCE is
-designed to be enabled in production kernels [1].
+Previously a mutex was added to protect the encoder and decoder context
+lists from unexpected changes originating from the SCP IP block, causing
+the context pointer to go invalid, resulting in a NULL pointer
+dereference in the IPI handler.
 
-Mapping only the memory allocated for KFENCE pool at page granularity is
-sufficient to enable KFENCE support. So, allocate __kfence_pool during
-bootup and map it at page granularity instead of mapping all system
-memory at page granularity.
+Turns out on the MT8173, the VPU IPI handler is called from hard IRQ
+context. This causes a big warning from the scheduler. This was first
+reported downstream on the ChromeOS kernels, but is also reproducible
+on mainline using Fluster with the FFmpeg v4l2m2m decoders. Even though
+the actual capture format is not supported, the affected code paths
+are triggered.
 
-Without patch:
-  # cat /proc/meminfo
-  MemTotal:       101201920 kB
+Since this lock just protects the context list and operations on it are
+very fast, it should be OK to switch to a spinlock.
 
-With patch:
-  # cat /proc/meminfo
-  MemTotal:       104483904 kB
-
-Note that enabling KFENCE at runtime is disabled for radix MMU for now,
-as it depends on the ability to split page table mappings and such APIs
-are not currently implemented for radix MMU.
-
-All kfence_test.c testcases passed with this patch.
-
-[1] https://lore.kernel.org/all/20201103175841.3495947-2-elver@google.com/
-
-Signed-off-by: Hari Bathini <hbathini@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240701130021.578240-1-hbathini@linux.ibm.com
-Cc: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Fixes: 6467cda18c9f ("media: mediatek: vcodec: adding lock to protect decoder context list")
+Fixes: afaaf3a0f647 ("media: mediatek: vcodec: adding lock to protect encoder context list")
+Cc: Yunfei Dong <yunfei.dong@mediatek.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: Fei Shao <fshao@chromium.org>
+Reviewed-by: Tomasz Figa <tfiga@chromium.org>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ adapted file_to_dec_ctx() and file_to_enc_ctx() helper calls to equivalent fh_to_dec_ctx(file->private_data) and fh_to_enc_ctx(file->private_data) pattern ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/include/asm/kfence.h        |   11 +++-
- arch/powerpc/mm/book3s64/radix_pgtable.c |   84 +++++++++++++++++++++++++++++--
- arch/powerpc/mm/init-common.c            |    3 +
- 3 files changed, 93 insertions(+), 5 deletions(-)
+ drivers/media/platform/mediatek/vcodec/common/mtk_vcodec_fw_vpu.c   |   10 +++++---
+ drivers/media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_drv.c |   12 +++++-----
+ drivers/media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_drv.h |    2 -
+ drivers/media/platform/mediatek/vcodec/decoder/vdec_vpu_if.c        |    5 ++--
+ drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_drv.c |   12 +++++-----
+ drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_drv.h |    2 -
+ drivers/media/platform/mediatek/vcodec/encoder/venc_vpu_if.c        |    5 ++--
+ 7 files changed, 28 insertions(+), 20 deletions(-)
 
---- a/arch/powerpc/include/asm/kfence.h
-+++ b/arch/powerpc/include/asm/kfence.h
-@@ -15,10 +15,19 @@
- #define ARCH_FUNC_PREFIX "."
- #endif
- 
-+#ifdef CONFIG_KFENCE
-+extern bool kfence_disabled;
-+
-+static inline void disable_kfence(void)
-+{
-+	kfence_disabled = true;
-+}
-+
- static inline bool arch_kfence_init_pool(void)
+--- a/drivers/media/platform/mediatek/vcodec/common/mtk_vcodec_fw_vpu.c
++++ b/drivers/media/platform/mediatek/vcodec/common/mtk_vcodec_fw_vpu.c
+@@ -47,30 +47,32 @@ static void mtk_vcodec_vpu_reset_dec_han
  {
--	return true;
-+	return !kfence_disabled;
+ 	struct mtk_vcodec_dec_dev *dev = priv;
+ 	struct mtk_vcodec_dec_ctx *ctx;
++	unsigned long flags;
+ 
+ 	dev_err(&dev->plat_dev->dev, "Watchdog timeout!!");
+ 
+-	mutex_lock(&dev->dev_ctx_lock);
++	spin_lock_irqsave(&dev->dev_ctx_lock, flags);
+ 	list_for_each_entry(ctx, &dev->ctx_list, list) {
+ 		ctx->state = MTK_STATE_ABORT;
+ 		mtk_v4l2_vdec_dbg(0, ctx, "[%d] Change to state MTK_STATE_ABORT", ctx->id);
+ 	}
+-	mutex_unlock(&dev->dev_ctx_lock);
++	spin_unlock_irqrestore(&dev->dev_ctx_lock, flags);
  }
-+#endif
  
- #ifdef CONFIG_PPC64
- static inline bool kfence_protect_page(unsigned long addr, bool protect)
---- a/arch/powerpc/mm/book3s64/radix_pgtable.c
-+++ b/arch/powerpc/mm/book3s64/radix_pgtable.c
-@@ -17,6 +17,7 @@
- #include <linux/hugetlb.h>
- #include <linux/string_helpers.h>
- #include <linux/memory.h>
-+#include <linux/kfence.h>
- 
- #include <asm/pgalloc.h>
- #include <asm/mmu_context.h>
-@@ -31,6 +32,7 @@
- #include <asm/uaccess.h>
- #include <asm/ultravisor.h>
- #include <asm/set_memory.h>
-+#include <asm/kfence.h>
- 
- #include <trace/events/thp.h>
- 
-@@ -293,7 +295,8 @@ static unsigned long next_boundary(unsig
- 
- static int __meminit create_physical_mapping(unsigned long start,
- 					     unsigned long end,
--					     int nid, pgprot_t _prot)
-+					     int nid, pgprot_t _prot,
-+					     unsigned long mapping_sz_limit)
+ static void mtk_vcodec_vpu_reset_enc_handler(void *priv)
  {
- 	unsigned long vaddr, addr, mapping_size = 0;
- 	bool prev_exec, exec = false;
-@@ -301,7 +304,10 @@ static int __meminit create_physical_map
- 	int psize;
- 	unsigned long max_mapping_size = memory_block_size;
+ 	struct mtk_vcodec_enc_dev *dev = priv;
+ 	struct mtk_vcodec_enc_ctx *ctx;
++	unsigned long flags;
  
--	if (debug_pagealloc_enabled_or_kfence())
-+	if (mapping_sz_limit < max_mapping_size)
-+		max_mapping_size = mapping_sz_limit;
-+
-+	if (debug_pagealloc_enabled())
- 		max_mapping_size = PAGE_SIZE;
+ 	dev_err(&dev->plat_dev->dev, "Watchdog timeout!!");
  
- 	start = ALIGN(start, PAGE_SIZE);
-@@ -356,8 +362,74 @@ static int __meminit create_physical_map
+-	mutex_lock(&dev->dev_ctx_lock);
++	spin_lock_irqsave(&dev->dev_ctx_lock, flags);
+ 	list_for_each_entry(ctx, &dev->ctx_list, list) {
+ 		ctx->state = MTK_STATE_ABORT;
+ 		mtk_v4l2_vdec_dbg(0, ctx, "[%d] Change to state MTK_STATE_ABORT", ctx->id);
+ 	}
+-	mutex_unlock(&dev->dev_ctx_lock);
++	spin_unlock_irqrestore(&dev->dev_ctx_lock, flags);
+ }
+ 
+ static const struct mtk_vcodec_fw_ops mtk_vcodec_vpu_msg = {
+--- a/drivers/media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_drv.c
++++ b/drivers/media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_drv.c
+@@ -198,6 +198,7 @@ static int fops_vcodec_open(struct file
+ 	struct mtk_vcodec_dec_ctx *ctx = NULL;
+ 	int ret = 0, i, hw_count;
+ 	struct vb2_queue *src_vq;
++	unsigned long flags;
+ 
+ 	ctx = kzalloc(sizeof(*ctx), GFP_KERNEL);
+ 	if (!ctx)
+@@ -268,9 +269,9 @@ static int fops_vcodec_open(struct file
+ 
+ 	ctx->dev->vdec_pdata->init_vdec_params(ctx);
+ 
+-	mutex_lock(&dev->dev_ctx_lock);
++	spin_lock_irqsave(&dev->dev_ctx_lock, flags);
+ 	list_add(&ctx->list, &dev->ctx_list);
+-	mutex_unlock(&dev->dev_ctx_lock);
++	spin_unlock_irqrestore(&dev->dev_ctx_lock, flags);
+ 	mtk_vcodec_dbgfs_create(ctx);
+ 
+ 	mutex_unlock(&dev->dev_mutex);
+@@ -295,6 +296,7 @@ static int fops_vcodec_release(struct fi
+ {
+ 	struct mtk_vcodec_dec_dev *dev = video_drvdata(file);
+ 	struct mtk_vcodec_dec_ctx *ctx = fh_to_dec_ctx(file->private_data);
++	unsigned long flags;
+ 
+ 	mtk_v4l2_vdec_dbg(0, ctx, "[%d] decoder", ctx->id);
+ 	mutex_lock(&dev->dev_mutex);
+@@ -313,9 +315,9 @@ static int fops_vcodec_release(struct fi
+ 	v4l2_ctrl_handler_free(&ctx->ctrl_hdl);
+ 
+ 	mtk_vcodec_dbgfs_remove(dev, ctx->id);
+-	mutex_lock(&dev->dev_ctx_lock);
++	spin_lock_irqsave(&dev->dev_ctx_lock, flags);
+ 	list_del_init(&ctx->list);
+-	mutex_unlock(&dev->dev_ctx_lock);
++	spin_unlock_irqrestore(&dev->dev_ctx_lock, flags);
+ 	kfree(ctx);
+ 	mutex_unlock(&dev->dev_mutex);
  	return 0;
- }
+@@ -382,7 +384,7 @@ static int mtk_vcodec_probe(struct platf
+ 	for (i = 0; i < MTK_VDEC_HW_MAX; i++)
+ 		mutex_init(&dev->dec_mutex[i]);
+ 	mutex_init(&dev->dev_mutex);
+-	mutex_init(&dev->dev_ctx_lock);
++	spin_lock_init(&dev->dev_ctx_lock);
+ 	spin_lock_init(&dev->irqlock);
  
-+#ifdef CONFIG_KFENCE
-+static bool __ro_after_init kfence_early_init = !!CONFIG_KFENCE_SAMPLE_INTERVAL;
-+
-+static int __init parse_kfence_early_init(char *arg)
-+{
-+	int val;
-+
-+	if (get_option(&arg, &val))
-+		kfence_early_init = !!val;
-+	return 0;
-+}
-+early_param("kfence.sample_interval", parse_kfence_early_init);
-+
-+static inline phys_addr_t alloc_kfence_pool(void)
-+{
-+	phys_addr_t kfence_pool;
-+
-+	/*
-+	 * TODO: Support to enable KFENCE after bootup depends on the ability to
-+	 *       split page table mappings. As such support is not currently
-+	 *       implemented for radix pagetables, support enabling KFENCE
-+	 *       only at system startup for now.
-+	 *
-+	 *       After support for splitting mappings is available on radix,
-+	 *       alloc_kfence_pool() & map_kfence_pool() can be dropped and
-+	 *       mapping for __kfence_pool memory can be
-+	 *       split during arch_kfence_init_pool().
-+	 */
-+	if (!kfence_early_init)
-+		goto no_kfence;
-+
-+	kfence_pool = memblock_phys_alloc(KFENCE_POOL_SIZE, PAGE_SIZE);
-+	if (!kfence_pool)
-+		goto no_kfence;
-+
-+	memblock_mark_nomap(kfence_pool, KFENCE_POOL_SIZE);
-+	return kfence_pool;
-+
-+no_kfence:
-+	disable_kfence();
-+	return 0;
-+}
-+
-+static inline void map_kfence_pool(phys_addr_t kfence_pool)
-+{
-+	if (!kfence_pool)
-+		return;
-+
-+	if (create_physical_mapping(kfence_pool, kfence_pool + KFENCE_POOL_SIZE,
-+				    -1, PAGE_KERNEL, PAGE_SIZE))
-+		goto err;
-+
-+	memblock_clear_nomap(kfence_pool, KFENCE_POOL_SIZE);
-+	__kfence_pool = __va(kfence_pool);
-+	return;
-+
-+err:
-+	memblock_phys_free(kfence_pool, KFENCE_POOL_SIZE);
-+	disable_kfence();
-+}
-+#else
-+static inline phys_addr_t alloc_kfence_pool(void) { return 0; }
-+static inline void map_kfence_pool(phys_addr_t kfence_pool) { }
-+#endif
-+
- static void __init radix_init_pgtable(void)
+ 	snprintf(dev->v4l2_dev.name, sizeof(dev->v4l2_dev.name), "%s",
+--- a/drivers/media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_drv.h
++++ b/drivers/media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_drv.h
+@@ -271,7 +271,7 @@ struct mtk_vcodec_dec_dev {
+ 	/* decoder hardware mutex lock */
+ 	struct mutex dec_mutex[MTK_VDEC_HW_MAX];
+ 	struct mutex dev_mutex;
+-	struct mutex dev_ctx_lock;
++	spinlock_t dev_ctx_lock;
+ 	struct workqueue_struct *decode_workqueue;
+ 
+ 	spinlock_t irqlock;
+--- a/drivers/media/platform/mediatek/vcodec/decoder/vdec_vpu_if.c
++++ b/drivers/media/platform/mediatek/vcodec/decoder/vdec_vpu_if.c
+@@ -75,16 +75,17 @@ static void handle_get_param_msg_ack(con
+ static bool vpu_dec_check_ap_inst(struct mtk_vcodec_dec_dev *dec_dev, struct vdec_vpu_inst *vpu)
  {
-+	phys_addr_t kfence_pool;
- 	unsigned long rts_field;
- 	phys_addr_t start, end;
- 	u64 i;
-@@ -365,6 +437,8 @@ static void __init radix_init_pgtable(vo
- 	/* We don't support slb for radix */
- 	slb_set_size(0);
+ 	struct mtk_vcodec_dec_ctx *ctx;
++	unsigned long flags;
+ 	int ret = false;
  
-+	kfence_pool = alloc_kfence_pool();
-+
- 	/*
- 	 * Create the linear mapping
- 	 */
-@@ -381,9 +455,11 @@ static void __init radix_init_pgtable(vo
+-	mutex_lock(&dec_dev->dev_ctx_lock);
++	spin_lock_irqsave(&dec_dev->dev_ctx_lock, flags);
+ 	list_for_each_entry(ctx, &dec_dev->ctx_list, list) {
+ 		if (!IS_ERR_OR_NULL(ctx) && ctx->vpu_inst == vpu) {
+ 			ret = true;
+ 			break;
  		}
- 
- 		WARN_ON(create_physical_mapping(start, end,
--						-1, PAGE_KERNEL));
-+						-1, PAGE_KERNEL, ~0UL));
  	}
+-	mutex_unlock(&dec_dev->dev_ctx_lock);
++	spin_unlock_irqrestore(&dec_dev->dev_ctx_lock, flags);
  
-+	map_kfence_pool(kfence_pool);
-+
- 	if (!cpu_has_feature(CPU_FTR_HVMODE) &&
- 			cpu_has_feature(CPU_FTR_P9_RADIX_PREFETCH_BUG)) {
- 		/*
-@@ -875,7 +951,7 @@ int __meminit radix__create_section_mapp
- 	}
- 
- 	return create_physical_mapping(__pa(start), __pa(end),
--				       nid, prot);
-+				       nid, prot, ~0UL);
+ 	return ret;
  }
+--- a/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_drv.c
++++ b/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_drv.c
+@@ -117,6 +117,7 @@ static int fops_vcodec_open(struct file
+ 	struct mtk_vcodec_enc_ctx *ctx = NULL;
+ 	int ret = 0;
+ 	struct vb2_queue *src_vq;
++	unsigned long flags;
  
- int __meminit radix__remove_section_mapping(unsigned long start, unsigned long end)
---- a/arch/powerpc/mm/init-common.c
-+++ b/arch/powerpc/mm/init-common.c
-@@ -31,6 +31,9 @@ EXPORT_SYMBOL_GPL(kernstart_virt_addr);
+ 	ctx = kzalloc(sizeof(*ctx), GFP_KERNEL);
+ 	if (!ctx)
+@@ -177,9 +178,9 @@ static int fops_vcodec_open(struct file
+ 	mtk_v4l2_venc_dbg(2, ctx, "Create instance [%d]@%p m2m_ctx=%p ",
+ 			  ctx->id, ctx, ctx->m2m_ctx);
  
- bool disable_kuep = !IS_ENABLED(CONFIG_PPC_KUEP);
- bool disable_kuap = !IS_ENABLED(CONFIG_PPC_KUAP);
-+#ifdef CONFIG_KFENCE
-+bool __ro_after_init kfence_disabled;
-+#endif
+-	mutex_lock(&dev->dev_ctx_lock);
++	spin_lock_irqsave(&dev->dev_ctx_lock, flags);
+ 	list_add(&ctx->list, &dev->ctx_list);
+-	mutex_unlock(&dev->dev_ctx_lock);
++	spin_unlock_irqrestore(&dev->dev_ctx_lock, flags);
  
- static int __init parse_nosmep(char *p)
+ 	mutex_unlock(&dev->dev_mutex);
+ 	mtk_v4l2_venc_dbg(0, ctx, "%s encoder [%d]", dev_name(&dev->plat_dev->dev),
+@@ -204,6 +205,7 @@ static int fops_vcodec_release(struct fi
  {
+ 	struct mtk_vcodec_enc_dev *dev = video_drvdata(file);
+ 	struct mtk_vcodec_enc_ctx *ctx = fh_to_enc_ctx(file->private_data);
++	unsigned long flags;
+ 
+ 	mtk_v4l2_venc_dbg(1, ctx, "[%d] encoder", ctx->id);
+ 	mutex_lock(&dev->dev_mutex);
+@@ -214,9 +216,9 @@ static int fops_vcodec_release(struct fi
+ 	v4l2_fh_exit(&ctx->fh);
+ 	v4l2_ctrl_handler_free(&ctx->ctrl_hdl);
+ 
+-	mutex_lock(&dev->dev_ctx_lock);
++	spin_lock_irqsave(&dev->dev_ctx_lock, flags);
+ 	list_del_init(&ctx->list);
+-	mutex_unlock(&dev->dev_ctx_lock);
++	spin_unlock_irqrestore(&dev->dev_ctx_lock, flags);
+ 	kfree(ctx);
+ 	mutex_unlock(&dev->dev_mutex);
+ 	return 0;
+@@ -298,7 +300,7 @@ static int mtk_vcodec_probe(struct platf
+ 
+ 	mutex_init(&dev->enc_mutex);
+ 	mutex_init(&dev->dev_mutex);
+-	mutex_init(&dev->dev_ctx_lock);
++	spin_lock_init(&dev->dev_ctx_lock);
+ 	spin_lock_init(&dev->irqlock);
+ 
+ 	snprintf(dev->v4l2_dev.name, sizeof(dev->v4l2_dev.name), "%s",
+--- a/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_drv.h
++++ b/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_drv.h
+@@ -206,7 +206,7 @@ struct mtk_vcodec_enc_dev {
+ 	/* encoder hardware mutex lock */
+ 	struct mutex enc_mutex;
+ 	struct mutex dev_mutex;
+-	struct mutex dev_ctx_lock;
++	spinlock_t dev_ctx_lock;
+ 	struct workqueue_struct *encode_workqueue;
+ 
+ 	int enc_irq;
+--- a/drivers/media/platform/mediatek/vcodec/encoder/venc_vpu_if.c
++++ b/drivers/media/platform/mediatek/vcodec/encoder/venc_vpu_if.c
+@@ -45,16 +45,17 @@ static void handle_enc_encode_msg(struct
+ static bool vpu_enc_check_ap_inst(struct mtk_vcodec_enc_dev *enc_dev, struct venc_vpu_inst *vpu)
+ {
+ 	struct mtk_vcodec_enc_ctx *ctx;
++	unsigned long flags;
+ 	int ret = false;
+ 
+-	mutex_lock(&enc_dev->dev_ctx_lock);
++	spin_lock_irqsave(&enc_dev->dev_ctx_lock, flags);
+ 	list_for_each_entry(ctx, &enc_dev->ctx_list, list) {
+ 		if (!IS_ERR_OR_NULL(ctx) && ctx->vpu_inst == vpu) {
+ 			ret = true;
+ 			break;
+ 		}
+ 	}
+-	mutex_unlock(&enc_dev->dev_ctx_lock);
++	spin_unlock_irqrestore(&enc_dev->dev_ctx_lock, flags);
+ 
+ 	return ret;
+ }
 
 
