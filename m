@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8051DF72C;
-	Fri,  9 Jan 2026 12:43:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DB551DF72C;
+	Fri,  9 Jan 2026 12:43:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962603; cv=none; b=DOYp06HKM41KbUVqGAU6aYzcrwviyqjlHUmvcH/F/sO8aJDCAN6YPFmiJagGseGwlj7n3YS7UzeWYlfZWIqc0l0zkSGAw4Kw9jbapN/WYG2hFb2qMnunn0CXevqwoR/OU75ECDF3QSJCOPCu2M2Xi3McBrdkkAVY8U0iEhYeQrg=
+	t=1767962606; cv=none; b=Gc2Sgu2NdjJ2V71bNCBnHLi6GN2sjvFo/Jy9Mq0R3XT/pYpF20XF8cEghZgmuwvLaxvbRglG7VDqpWIhIsc2NV+pSSw6ekxWjqlZ+7+1ZBbATILiNJ/YgmduAS/z1JmcaW4sufYyvSUPrxiUIfoIwAEBzMfasrvO/O6Tfk5jUtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962603; c=relaxed/simple;
-	bh=4zS/UTtNXeuKsQS3DpyN8tLCoM3V016O+PlGnLGi3JI=;
+	s=arc-20240116; t=1767962606; c=relaxed/simple;
+	bh=R+nrXeZGazwZJ/v/n05etRYNE7dYVMAcwFUBdPrqfps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F4fuW5puXzX/7KYLA0bhDWnicGMOW/FvoHQsE+wWoiqEuk6GgkJyzvTw70acrA99/GbmEtzugsyU4BfWOYcxUvXgcY1U7po1IFUhEea10Tvenl/1Gv1yi5cAyJej0NI7+XNywWWRPo9q8um7OSOtEGrW6grRTWdLJ7b0CaDxgEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AVZ9Ouxa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kwqx27arur9THD4H+f2MadEfDLIxGywn3uYqaE3Ji3Pvql+d1mxJiLFzi1+Z05aceT/CNktXw7UcObCmQ2JAU2nbTfD7p6ssv8Ddt/s8ZdxUdWvCy/LoI6fS25Vc6eyW8U0NNZMgXl1oHDNpXIVIoW99TRlrGUxKDu41KWhaurE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GEuHqcxo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVZ9Ouxa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F20C4CEF1;
-	Fri,  9 Jan 2026 12:43:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GEuHqcxo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DCB9C19421;
+	Fri,  9 Jan 2026 12:43:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962603;
-	bh=4zS/UTtNXeuKsQS3DpyN8tLCoM3V016O+PlGnLGi3JI=;
+	s=korg; t=1767962606;
+	bh=R+nrXeZGazwZJ/v/n05etRYNE7dYVMAcwFUBdPrqfps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AVZ9OuxadiRmzhctRPIQXrp2DHldNNzR6EY3ufOxDl0gFU0m3hxLCuDf1Pw9Ry5kc
-	 xpExyOmk1VoPwKJ6Xhg7FljZMUshKoULkWXUpZ0kB6/WHSKjpBc+Zj+iYjQrIyZgY5
-	 viZ7XU8DF8+paCjDnr60//n0ClrVqQJL5rNROWtE=
+	b=GEuHqcxoZoI6ov4WTGTiGUeT0S6xm8Z6cuF5AElCujA4BvL8E3pan1v+w6MjTMg4E
+	 31P5W1LLuSa+EDspgDRWgXzMU8u/xCV419DyUcuJvcQDdsiBqH2MwQdd0aIcvKxm1y
+	 UppSc+3OaCIFSCHJrU4dhTo8Dgt4bUAqF04ngnkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aloka Dixit <quic_alokad@quicinc.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 391/634] wifi: cfg80211: move puncturing bitmap validation from mac80211
-Date: Fri,  9 Jan 2026 12:41:09 +0100
-Message-ID: <20260109112132.244200275@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.1 382/634] rpmsg: glink: fix rpmsg device leak
+Date: Fri,  9 Jan 2026 12:41:00 +0100
+Message-ID: <20260109112131.905882049@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,233 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aloka Dixit <quic_alokad@quicinc.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-[ Upstream commit b25413fed3d43e1ed3340df4d928971bb8639f66 ]
+commit a53e356df548f6b0e82529ef3cc6070f42622189 upstream.
 
-- Move ieee80211_valid_disable_subchannel_bitmap() from mlme.c to
-  chan.c, rename it as cfg80211_valid_disable_subchannel_bitmap()
-  and export it.
-- Modify the prototype to include struct cfg80211_chan_def instead
-  of only bandwidth to support a check which returns false if the
-  primary channel is punctured.
+While testing rpmsg-char interface it was noticed that duplicate sysfs
+entries are getting created and below warning is noticed.
 
-Signed-off-by: Aloka Dixit <quic_alokad@quicinc.com>
-Link: https://lore.kernel.org/r/20230131001227.25014-2-quic_alokad@quicinc.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Stable-dep-of: a519be2f5d95 ("wifi: mac80211: do not use old MBSSID elements")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reason for this is that we are leaking rpmsg device pointer, setting it
+null without actually unregistering device.
+Any further attempts to unregister fail because rpdev is NULL,
+resulting in a leak.
+
+Fix this by unregistering rpmsg device before removing its reference
+from rpmsg channel.
+
+sysfs: cannot create duplicate filename '/devices/platform/soc@0/3700000.remot
+eproc/remoteproc/remoteproc1/3700000.remoteproc:glink-edge/3700000.remoteproc:
+glink-edge.adsp_apps.-1.-1'
+[  114.115347] CPU: 0 UID: 0 PID: 9 Comm: kworker/0:0 Not
+ tainted 6.16.0-rc4 #7 PREEMPT
+[  114.115355] Hardware name: Qualcomm Technologies, Inc. Robotics RB3gen2 (DT)
+[  114.115358] Workqueue: events qcom_glink_work
+[  114.115371] Call trace:8
+[  114.115374]  show_stack+0x18/0x24 (C)
+[  114.115382]  dump_stack_lvl+0x60/0x80
+[  114.115388]  dump_stack+0x18/0x24
+[  114.115393]  sysfs_warn_dup+0x64/0x80
+[  114.115402]  sysfs_create_dir_ns+0xf4/0x120
+[  114.115409]  kobject_add_internal+0x98/0x260
+[  114.115416]  kobject_add+0x9c/0x108
+[  114.115421]  device_add+0xc4/0x7a0
+[  114.115429]  rpmsg_register_device+0x5c/0xb0
+[  114.115434]  qcom_glink_work+0x4bc/0x820
+[  114.115438]  process_one_work+0x148/0x284
+[  114.115446]  worker_thread+0x2c4/0x3e0
+[  114.115452]  kthread+0x12c/0x204
+[  114.115457]  ret_from_fork+0x10/0x20
+[  114.115464] kobject: kobject_add_internal failed for 3700000.remoteproc:
+glink-edge.adsp_apps.-1.-1 with -EEXIST, don't try to register things with
+the same name in the same directory.
+[  114.250045] rpmsg 3700000.remoteproc:glink-edge.adsp_apps.-1.-1:
+device_add failed: -17
+
+Fixes: 835764ddd9af ("rpmsg: glink: Move the common glink protocol implementation to glink_native.c")
+Cc: Stable@vger.kernel.org
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250822100043.2604794-2-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/cfg80211.h | 12 +++++++
- net/mac80211/mlme.c    | 73 ++++--------------------------------------
- net/wireless/chan.c    | 69 +++++++++++++++++++++++++++++++++++++++
- 3 files changed, 87 insertions(+), 67 deletions(-)
+ drivers/rpmsg/qcom_glink_native.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
-index d15033420ca3..bf79788f1c5d 100644
---- a/include/net/cfg80211.h
-+++ b/include/net/cfg80211.h
-@@ -9056,4 +9056,16 @@ static inline int cfg80211_color_change_notify(struct net_device *dev)
- 					 0, 0);
- }
+--- a/drivers/rpmsg/qcom_glink_native.c
++++ b/drivers/rpmsg/qcom_glink_native.c
+@@ -1242,6 +1242,7 @@ static void qcom_glink_destroy_ept(struc
+ {
+ 	struct glink_channel *channel = to_glink_channel(ept);
+ 	struct qcom_glink *glink = channel->glink;
++	struct rpmsg_channel_info chinfo;
+ 	unsigned long flags;
  
-+/**
-+ * cfg80211_valid_disable_subchannel_bitmap - validate puncturing bitmap
-+ * @bitmap: bitmap to be validated
-+ * @chandef: channel definition
-+ *
-+ * Validate the puncturing bitmap.
-+ *
-+ * Return: %true if the bitmap is valid. %false otherwise.
-+ */
-+bool cfg80211_valid_disable_subchannel_bitmap(u16 *bitmap,
-+					      const struct cfg80211_chan_def *chandef);
-+
- #endif /* __NET_CFG80211_H */
-diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index 25483596f22e..1fb41e5cc577 100644
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -88,67 +88,6 @@ MODULE_PARM_DESC(probe_wait_ms,
-  */
- #define IEEE80211_SIGNAL_AVE_MIN_COUNT	4
+ 	spin_lock_irqsave(&channel->recv_lock, flags);
+@@ -1249,6 +1250,13 @@ static void qcom_glink_destroy_ept(struc
+ 	spin_unlock_irqrestore(&channel->recv_lock, flags);
  
--struct ieee80211_per_bw_puncturing_values {
--	u8 len;
--	const u16 *valid_values;
--};
--
--static const u16 puncturing_values_80mhz[] = {
--	0x8, 0x4, 0x2, 0x1
--};
--
--static const u16 puncturing_values_160mhz[] = {
--	 0x80, 0x40, 0x20, 0x10, 0x8, 0x4, 0x2, 0x1, 0xc0, 0x30, 0xc, 0x3
--};
--
--static const u16 puncturing_values_320mhz[] = {
--	0xc000, 0x3000, 0xc00, 0x300, 0xc0, 0x30, 0xc, 0x3, 0xf000, 0xf00,
--	0xf0, 0xf, 0xfc00, 0xf300, 0xf0c0, 0xf030, 0xf00c, 0xf003, 0xc00f,
--	0x300f, 0xc0f, 0x30f, 0xcf, 0x3f
--};
--
--#define IEEE80211_PER_BW_VALID_PUNCTURING_VALUES(_bw) \
--	{ \
--		.len = ARRAY_SIZE(puncturing_values_ ## _bw ## mhz), \
--		.valid_values = puncturing_values_ ## _bw ## mhz \
--	}
--
--static const struct ieee80211_per_bw_puncturing_values per_bw_puncturing[] = {
--	IEEE80211_PER_BW_VALID_PUNCTURING_VALUES(80),
--	IEEE80211_PER_BW_VALID_PUNCTURING_VALUES(160),
--	IEEE80211_PER_BW_VALID_PUNCTURING_VALUES(320)
--};
--
--static bool ieee80211_valid_disable_subchannel_bitmap(u16 *bitmap,
--						      enum nl80211_chan_width bw)
--{
--	u32 idx, i;
--
--	switch (bw) {
--	case NL80211_CHAN_WIDTH_80:
--		idx = 0;
--		break;
--	case NL80211_CHAN_WIDTH_160:
--		idx = 1;
--		break;
--	case NL80211_CHAN_WIDTH_320:
--		idx = 2;
--		break;
--	default:
--		*bitmap = 0;
--		break;
--	}
--
--	if (!*bitmap)
--		return true;
--
--	for (i = 0; i < per_bw_puncturing[idx].len; i++)
--		if (per_bw_puncturing[idx].valid_values[i] == *bitmap)
--			return true;
--
--	return false;
--}
--
- /*
-  * Extract from the given disabled subchannel bitmap (raw format
-  * from the EHT Operation Element) the bits for the subchannel
-@@ -206,8 +145,8 @@ ieee80211_handle_puncturing_bitmap(struct ieee80211_link_data *link,
- 			ieee80211_extract_dis_subch_bmap(eht_oper, chandef,
- 							 bitmap);
- 
--		if (ieee80211_valid_disable_subchannel_bitmap(&bitmap,
--							      chandef->width))
-+		if (cfg80211_valid_disable_subchannel_bitmap(&bitmap,
-+							     chandef))
- 			break;
- 		link->u.mgd.conn_flags |=
- 			ieee80211_chandef_downgrade(chandef);
-@@ -5621,8 +5560,8 @@ static bool ieee80211_config_puncturing(struct ieee80211_link_data *link,
- 	    extracted == link->conf->eht_puncturing)
- 		return true;
- 
--	if (!ieee80211_valid_disable_subchannel_bitmap(&bitmap,
--						       link->conf->chandef.width)) {
-+	if (!cfg80211_valid_disable_subchannel_bitmap(&bitmap,
-+						      &link->conf->chandef)) {
- 		link_info(link,
- 			  "Got an invalid disable subchannel bitmap from AP %pM: bitmap = 0x%x, bw = 0x%x. disconnect\n",
- 			  link->u.mgd.bssid,
-@@ -7110,8 +7049,8 @@ ieee80211_setup_assoc_link(struct ieee80211_sub_if_data *sdata,
- 			u16 bitmap;
- 
- 			bitmap = get_unaligned_le16(disable_subchannel_bitmap);
--			if (ieee80211_valid_disable_subchannel_bitmap(&bitmap,
--								      link->conf->chandef.width))
-+			if (cfg80211_valid_disable_subchannel_bitmap(&bitmap,
-+								     &link->conf->chandef))
- 				ieee80211_handle_puncturing_bitmap(link,
- 								   eht_oper,
- 								   bitmap,
-diff --git a/net/wireless/chan.c b/net/wireless/chan.c
-index 0e5835cd8c61..0b7e81db383d 100644
---- a/net/wireless/chan.c
-+++ b/net/wireless/chan.c
-@@ -1460,3 +1460,72 @@ struct cfg80211_chan_def *wdev_chandef(struct wireless_dev *wdev,
- 	}
- }
- EXPORT_SYMBOL(wdev_chandef);
+ 	/* Decouple the potential rpdev from the channel */
++	if (channel->rpdev) {
++		strscpy_pad(chinfo.name, channel->name, sizeof(chinfo.name));
++		chinfo.src = RPMSG_ADDR_ANY;
++		chinfo.dst = RPMSG_ADDR_ANY;
 +
-+struct cfg80211_per_bw_puncturing_values {
-+	u8 len;
-+	const u16 *valid_values;
-+};
-+
-+static const u16 puncturing_values_80mhz[] = {
-+	0x8, 0x4, 0x2, 0x1
-+};
-+
-+static const u16 puncturing_values_160mhz[] = {
-+	 0x80, 0x40, 0x20, 0x10, 0x8, 0x4, 0x2, 0x1, 0xc0, 0x30, 0xc, 0x3
-+};
-+
-+static const u16 puncturing_values_320mhz[] = {
-+	0xc000, 0x3000, 0xc00, 0x300, 0xc0, 0x30, 0xc, 0x3, 0xf000, 0xf00,
-+	0xf0, 0xf, 0xfc00, 0xf300, 0xf0c0, 0xf030, 0xf00c, 0xf003, 0xc00f,
-+	0x300f, 0xc0f, 0x30f, 0xcf, 0x3f
-+};
-+
-+#define CFG80211_PER_BW_VALID_PUNCTURING_VALUES(_bw) \
-+	{ \
-+		.len = ARRAY_SIZE(puncturing_values_ ## _bw ## mhz), \
-+		.valid_values = puncturing_values_ ## _bw ## mhz \
++		rpmsg_unregister_device(glink->dev, &chinfo);
 +	}
-+
-+static const struct cfg80211_per_bw_puncturing_values per_bw_puncturing[] = {
-+	CFG80211_PER_BW_VALID_PUNCTURING_VALUES(80),
-+	CFG80211_PER_BW_VALID_PUNCTURING_VALUES(160),
-+	CFG80211_PER_BW_VALID_PUNCTURING_VALUES(320)
-+};
-+
-+bool cfg80211_valid_disable_subchannel_bitmap(u16 *bitmap,
-+					      const struct cfg80211_chan_def *chandef)
-+{
-+	u32 idx, i, start_freq;
-+
-+	switch (chandef->width) {
-+	case NL80211_CHAN_WIDTH_80:
-+		idx = 0;
-+		start_freq = chandef->center_freq1 - 40;
-+		break;
-+	case NL80211_CHAN_WIDTH_160:
-+		idx = 1;
-+		start_freq = chandef->center_freq1 - 80;
-+		break;
-+	case NL80211_CHAN_WIDTH_320:
-+		idx = 2;
-+		start_freq = chandef->center_freq1 - 160;
-+		break;
-+	default:
-+		*bitmap = 0;
-+		break;
-+	}
-+
-+	if (!*bitmap)
-+		return true;
-+
-+	/* check if primary channel is punctured */
-+	if (*bitmap & (u16)BIT((chandef->chan->center_freq - start_freq) / 20))
-+		return false;
-+
-+	for (i = 0; i < per_bw_puncturing[idx].len; i++)
-+		if (per_bw_puncturing[idx].valid_values[i] == *bitmap)
-+			return true;
-+
-+	return false;
-+}
-+EXPORT_SYMBOL(cfg80211_valid_disable_subchannel_bitmap);
--- 
-2.51.0
-
+ 	channel->rpdev = NULL;
+ 
+ 	qcom_glink_send_close_req(glink, channel);
 
 
