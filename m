@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD9C35A92E;
-	Fri,  9 Jan 2026 12:19:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D031835A952;
+	Fri,  9 Jan 2026 12:19:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961174; cv=none; b=Vuv9r3/0Gx7onf50SAdGQcjOoy4P01o1NIg0Ap3QnKzXmJF7paeYNDuVIQ9qDn9+VEJUE64UqPZvtN0Qlr3h9NDA9Ky4OuYWRETdeoztRiTK2d7Ns6kIQxnv1li8Yl8/FHHlw/gMnr0QG6sixzqQ0nVO7A5GicSlzADPGp8yrqk=
+	t=1767961176; cv=none; b=dA3uTYBKvqOMR8bHt+fGbd4V10Q1WNZCEzfLRzLeh4p6ffi0hff7Bz289+WdgCgmoh7FVlkB+YNMits8nWPD8DE6l5SRz0MAZN3xyru8kPI7HRLylLZpYTrXqeOrrdzfKJ5hBJuZXchq6QX4HkU/YRCePgQLRYqHttVmxjnyJXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961174; c=relaxed/simple;
-	bh=EN1a5kzJOscm1ojHBQM8pt9VykWtUvYQ4DuZcKuQne8=;
+	s=arc-20240116; t=1767961176; c=relaxed/simple;
+	bh=1NeYtME7wLvQ/lSq7QkmngVYW/wyHcCeR+FqSIJHQBM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bBXT9YKb/aWuNgQFwFNihMP2iwulZ1L3uhhnOA8G9Mu34FYshWrqiGPWfOMa76foxpv+SujH8l5vJSDKvT4s4Djugim39UgUzhzVf9TyUcLhzIVJZO24ycUGe/AjHf5xHOf+bdpHT1iTR4MqzryIkGXRX57zhzSkaHnDEeYcLP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gR9sjvfp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZknqgJSZ8wxFLdHtqOLAaiLjJjiTXssB3WKlR/723YoEAwtGCaDj543vqhMbgi6fZALtf+GX9GMoezrolUXD2dRXGdCnC0YiOCPoBXfvDIYSb5zzgKZZfmJA2d/1OUOUd0OV6BdJQi9kBkYz15hjHXOKdY4zjo8rOKrkBfK3OHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WNWSDBbA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gR9sjvfp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76BA3C4CEF1;
-	Fri,  9 Jan 2026 12:19:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WNWSDBbA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C15BC4CEF1;
+	Fri,  9 Jan 2026 12:19:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961173;
-	bh=EN1a5kzJOscm1ojHBQM8pt9VykWtUvYQ4DuZcKuQne8=;
+	s=korg; t=1767961176;
+	bh=1NeYtME7wLvQ/lSq7QkmngVYW/wyHcCeR+FqSIJHQBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gR9sjvfp8RzJLGPD1SLpi55P+3+i5CJ8i2YY0I9CBFqXDnJXnXP+TC/BXjoIMPjBf
-	 oKF3cEyEa8yn5fniIMncdsnsdB8K+XEGW1AuHIgNKTYCmA9KxDYfQVmdAcouhcmA0P
-	 t1INliCaEZvnUgNvTZLzHaiTt09+AtWFqnlrCFDU=
+	b=WNWSDBbAMKQVsVqy0dMMN5cbL1xFakB8ofsey1FCSZtFqcTtS6luxHV6ZP0Gj3myO
+	 f2gKDs7WoW0XRcCjciYur/YXvb20fgLStLial9FNVvC2J1adIdBCjMC8XsKinMN+wJ
+	 z2SnusUwXw2eCLLGZj1fqoGXu9j557iSuFgUpUHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Daniel Golle <daniel@makrotopia.org>,
-	Andrew Lunn <andrew@lunn.ch>,
 	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 660/737] net: phy: mediatek: fix nvmem cell reference leak in mt798x_phy_calibration
-Date: Fri,  9 Jan 2026 12:43:19 +0100
-Message-ID: <20260109112158.857291520@linuxfoundation.org>
+Subject: [PATCH 6.6 661/737] mptcp: ensure context reset on disconnect()
+Date: Fri,  9 Jan 2026 12:43:20 +0100
+Message-ID: <20260109112158.895313874@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -53,43 +51,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 1e5a541420b8c6d87d88eb50b6b978cdeafee1c9 ]
+[ Upstream commit 86730ac255b0497a272704de9a1df559f5d6602e ]
 
-When nvmem_cell_read() fails in mt798x_phy_calibration(), the function
-returns without calling nvmem_cell_put(), leaking the cell reference.
+After the blamed commit below, if the MPC subflow is already in TCP_CLOSE
+status or has fallback to TCP at mptcp_disconnect() time,
+mptcp_do_fastclose() skips setting the `send_fastclose flag` and the later
+__mptcp_close_ssk() does not reset anymore the related subflow context.
 
-Move nvmem_cell_put() right after nvmem_cell_read() to ensure the cell
-reference is always released regardless of the read result.
+Any later connection will be created with both the `request_mptcp` flag
+and the msk-level fallback status off (it is unconditionally cleared at
+MPTCP disconnect time), leading to a warning in subflow_data_ready():
 
-Found via static analysis and code review.
+  WARNING: CPU: 26 PID: 8996 at net/mptcp/subflow.c:1519 subflow_data_ready (net/mptcp/subflow.c:1519 (discriminator 13))
+  Modules linked in:
+  CPU: 26 UID: 0 PID: 8996 Comm: syz.22.39 Not tainted 6.18.0-rc7-05427-g11fc074f6c36 #1 PREEMPT(voluntary)
+  Hardware name: Bochs Bochs, BIOS Bochs 01/01/2011
+  RIP: 0010:subflow_data_ready (net/mptcp/subflow.c:1519 (discriminator 13))
+  Code: 90 0f 0b 90 90 e9 04 fe ff ff e8 b7 1e f5 fe 89 ee bf 07 00 00 00 e8 db 19 f5 fe 83 fd 07 0f 84 35 ff ff ff e8 9d 1e f5 fe 90 <0f> 0b 90 e9 27 ff ff ff e8 8f 1e f5 fe 4c 89 e7 48 89 de e8 14 09
+  RSP: 0018:ffffc9002646fb30 EFLAGS: 00010293
+  RAX: 0000000000000000 RBX: ffff88813b218000 RCX: ffffffff825c8435
+  RDX: ffff8881300b3580 RSI: ffffffff825c8443 RDI: 0000000000000005
+  RBP: 000000000000000b R08: ffffffff825c8435 R09: 000000000000000b
+  R10: 0000000000000005 R11: 0000000000000007 R12: ffff888131ac0000
+  R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+  FS:  00007f88330af6c0(0000) GS:ffff888a93dd2000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00007f88330aefe8 CR3: 000000010ff59000 CR4: 0000000000350ef0
+  Call Trace:
+   <TASK>
+   tcp_data_ready (net/ipv4/tcp_input.c:5356)
+   tcp_data_queue (net/ipv4/tcp_input.c:5445)
+   tcp_rcv_state_process (net/ipv4/tcp_input.c:7165)
+   tcp_v4_do_rcv (net/ipv4/tcp_ipv4.c:1955)
+   __release_sock (include/net/sock.h:1158 (discriminator 6) net/core/sock.c:3180 (discriminator 6))
+   release_sock (net/core/sock.c:3737)
+   mptcp_sendmsg (net/mptcp/protocol.c:1763 net/mptcp/protocol.c:1857)
+   inet_sendmsg (net/ipv4/af_inet.c:853 (discriminator 7))
+   __sys_sendto (net/socket.c:727 (discriminator 15) net/socket.c:742 (discriminator 15) net/socket.c:2244 (discriminator 15))
+   __x64_sys_sendto (net/socket.c:2247)
+   do_syscall_64 (arch/x86/entry/syscall_64.c:63 (discriminator 1) arch/x86/entry/syscall_64.c:94 (discriminator 1))
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+  RIP: 0033:0x7f883326702d
 
-Fixes: 98c485eaf509 ("net: phy: add driver for MediaTek SoC built-in GE PHYs")
+Address the issue setting an explicit `fastclosing` flag at fastclose
+time, and checking such flag after mptcp_do_fastclose().
+
+Fixes: ae155060247b ("mptcp: fix duplicate reset on fastclose")
 Cc: stable@vger.kernel.org
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Reviewed-by: Daniel Golle <daniel@makrotopia.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20251211081313.2368460-1-linmq006@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20251212-net-mptcp-subflow_data_ready-warn-v1-2-d1f9fd1c36c8@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ adapted context in mptcp_do_fastclose() to exclude missing mptcp_backlog_purge() call ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/mediatek-ge-soc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mptcp/protocol.c |    8 +++++---
+ net/mptcp/protocol.h |    3 ++-
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
---- a/drivers/net/phy/mediatek-ge-soc.c
-+++ b/drivers/net/phy/mediatek-ge-soc.c
-@@ -1082,9 +1082,9 @@ static int mt798x_phy_calibration(struct
- 	}
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2441,10 +2441,10 @@ bool __mptcp_retransmit_pending_data(str
+  */
+ static void __mptcp_subflow_disconnect(struct sock *ssk,
+ 				       struct mptcp_subflow_context *subflow,
+-				       unsigned int flags)
++				       bool fastclosing)
+ {
+ 	if (((1 << ssk->sk_state) & (TCPF_CLOSE | TCPF_LISTEN)) ||
+-	    subflow->send_fastclose) {
++	    fastclosing) {
+ 		/* The MPTCP code never wait on the subflow sockets, TCP-level
+ 		 * disconnect should never fail
+ 		 */
+@@ -2496,7 +2496,7 @@ static void __mptcp_close_ssk(struct soc
  
- 	buf = (u32 *)nvmem_cell_read(cell, &len);
-+	nvmem_cell_put(cell);
- 	if (IS_ERR(buf))
- 		return PTR_ERR(buf);
--	nvmem_cell_put(cell);
+ 	need_push = (flags & MPTCP_CF_PUSH) && __mptcp_retransmit_pending_data(sk);
+ 	if (!dispose_it) {
+-		__mptcp_subflow_disconnect(ssk, subflow, flags);
++		__mptcp_subflow_disconnect(ssk, subflow, msk->fastclosing);
+ 		release_sock(ssk);
  
- 	if (!buf[0] || !buf[1] || !buf[2] || !buf[3] || len < 4 * sizeof(u32)) {
- 		phydev_err(phydev, "invalid efuse data\n");
+ 		goto out;
+@@ -2808,6 +2808,7 @@ static void mptcp_do_fastclose(struct so
+ 	struct mptcp_sock *msk = mptcp_sk(sk);
+ 
+ 	mptcp_set_state(sk, TCP_CLOSE);
++	msk->fastclosing = 1;
+ 
+ 	/* Explicitly send the fastclose reset as need */
+ 	if (__mptcp_check_fallback(msk))
+@@ -3320,6 +3321,7 @@ static int mptcp_disconnect(struct sock
+ 	msk->bytes_sent = 0;
+ 	msk->bytes_retrans = 0;
+ 	msk->rcvspace_init = 0;
++	msk->fastclosing = 0;
+ 
+ 	WRITE_ONCE(sk->sk_shutdown, 0);
+ 	sk_error_report(sk);
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -305,7 +305,8 @@ struct mptcp_sock {
+ 			fastopening:1,
+ 			in_accept_queue:1,
+ 			free_first:1,
+-			rcvspace_init:1;
++			rcvspace_init:1,
++			fastclosing:1;
+ 	int		keepalive_cnt;
+ 	int		keepalive_idle;
+ 	int		keepalive_intvl;
 
 
