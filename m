@@ -1,42 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4013833B6F0;
-	Fri,  9 Jan 2026 12:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12FCF35B121;
+	Fri,  9 Jan 2026 12:21:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961294; cv=none; b=sLFq391rwbFkRkTGM7Z6cpeVYLzk/122yeJ+XAMKRqxTIPiEZHyAxdXaxgBKoyUjzhY5TqSJ1TTr52kXECNZXa9vvVHvYMVzRtgdJ1RcZv06hgZejsglfP2dq8NjU9essoBxFXxK0i0AUxYps/t/wtwUmiXAm+WBskxOWME68y8=
+	t=1767961297; cv=none; b=X9qkKTxiNkQsXSGDhpMaPWggc5gRN5Zd2TsmwrG7B+UrEV3snijlxLU5N/SKTrgW1fMFKsg9V7FhfLCrGfEFyYcqayCIW34RNpSijABoRReN1milPMxVZ0BHDV/Lp3pD2sM8RL9SXm2LSxeMQrUIj/eTue9KM3O0CX9pg5wj4tE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961294; c=relaxed/simple;
-	bh=FpHsX85lqJn9OQE51ZOGLZC1ongNHG2HHg+z4q/5kys=;
+	s=arc-20240116; t=1767961297; c=relaxed/simple;
+	bh=2O+9Dp055ZTrXa3Ub6joct0DmO0sgBj3Hp9oZUsIL8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VuTrwT8+EVjdNgfAcD1dFjH53VZKKfF7ea3/xOTae8dE0XiXZIawnbI7pzQSDKBsFjRBdMi8FjuLmdQm+Ng5Ejg4bvShyD3eBXJLt6GQp/lZNd7JythnwCvWfCnc8AivbJPQU0RCtiWGCxjkLfULFlw2zq+fwHMVPuO8vXUy26Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bGy8+UO1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pao0ke/ERWpGJPPvlM1RTg9TOyPAvF3TI6XKZWqVHaFcobVuQ/QfJQ0n37rulFJX+LLJO0a7BiZsvQXLZnqNxKJUDYrg82VtxbLZJHAyj1X1uNNhJ5tee9rcgRB9uNQmPtS/zudhuMKOx5YM8kPKOvAC1TJFTbUZVMftgb6VSnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jSfH98V2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bGy8+UO1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDAFAC4CEF1;
-	Fri,  9 Jan 2026 12:21:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jSfH98V2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90BEAC16AAE;
+	Fri,  9 Jan 2026 12:21:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961294;
-	bh=FpHsX85lqJn9OQE51ZOGLZC1ongNHG2HHg+z4q/5kys=;
+	s=korg; t=1767961297;
+	bh=2O+9Dp055ZTrXa3Ub6joct0DmO0sgBj3Hp9oZUsIL8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bGy8+UO1rn1QAfGYHtWereC9u6au+YPASUYZmlZbgNgFizKVhe2U9QtgSr9t4PQsJ
-	 +ucqCPUW64mWoBOU/dqvWopJTp58nxR5kqOW1pfy0+MbvBJYANQBIbaOGjl6Y+M9kA
-	 J5fSVPOT3hjvCUyXPQxJm1Cj8hFLFUiGQkkyqCjk=
+	b=jSfH98V2vqtljP/A9BsAOgTnhUq0SQk7gW0xQm0ApQpTAuwmKjmE8m9xZOl9zDmSC
+	 rUJbRNQOxsewHQWmFQ9umFrGVaXpM22vZU4pcn7M3cWFKCtS6phQtjEz4vho+9u7Tb
+	 oMzXIgZ2ywtJILJktZX014hN1K/5ZLFChd93/mLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunfei Dong <yunfei.dong@mediatek.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Fei Shao <fshao@chromium.org>,
-	Tomasz Figa <tfiga@chromium.org>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 701/737] media: mediatek: vcodec: Use spinlock for context list protection lock
-Date: Fri,  9 Jan 2026 12:44:00 +0100
-Message-ID: <20260109112200.441986961@linuxfoundation.org>
+	Yosry Ahmed <yosry.ahmed@linux.dev>
+Subject: [PATCH 6.6 702/737] KVM: SVM: Introduce svm_recalc_lbr_msr_intercepts()
+Date: Fri,  9 Jan 2026 12:44:01 +0100
+Message-ID: <20260109112200.480485652@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -55,253 +49,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Yosry Ahmed <yosry.ahmed@linux.dev>
 
-[ Upstream commit a5844227e0f030d2af2d85d4aed10c5eca6ca176 ]
+Introduce a helper updating the intercepts for LBR MSRs, similar to the
+one introduced upstream by commit 160f143cc131 ("KVM: SVM: Manually
+recalc all MSR intercepts on userspace MSR filter change"). The main
+difference is that this version uses set_msr_interception(), which has
+inverted polarity compared to svm_set_intercept_for_msr().
 
-Previously a mutex was added to protect the encoder and decoder context
-lists from unexpected changes originating from the SCP IP block, causing
-the context pointer to go invalid, resulting in a NULL pointer
-dereference in the IPI handler.
+This is intended to simplify incoming backports. No functional changes
+intended.
 
-Turns out on the MT8173, the VPU IPI handler is called from hard IRQ
-context. This causes a big warning from the scheduler. This was first
-reported downstream on the ChromeOS kernels, but is also reproducible
-on mainline using Fluster with the FFmpeg v4l2m2m decoders. Even though
-the actual capture format is not supported, the affected code paths
-are triggered.
-
-Since this lock just protects the context list and operations on it are
-very fast, it should be OK to switch to a spinlock.
-
-Fixes: 6467cda18c9f ("media: mediatek: vcodec: adding lock to protect decoder context list")
-Fixes: afaaf3a0f647 ("media: mediatek: vcodec: adding lock to protect encoder context list")
-Cc: Yunfei Dong <yunfei.dong@mediatek.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: Fei Shao <fshao@chromium.org>
-Reviewed-by: Tomasz Figa <tfiga@chromium.org>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[ adapted file_to_dec_ctx() and file_to_enc_ctx() helper calls to equivalent fh_to_dec_ctx(file->private_data) and fh_to_enc_ctx(file->private_data) pattern ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Yosry Ahmed <yosry.ahmed@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/mediatek/vcodec/common/mtk_vcodec_fw_vpu.c   |   10 +++++---
- drivers/media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_drv.c |   12 +++++-----
- drivers/media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_drv.h |    2 -
- drivers/media/platform/mediatek/vcodec/decoder/vdec_vpu_if.c        |    5 ++--
- drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_drv.c |   12 +++++-----
- drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_drv.h |    2 -
- drivers/media/platform/mediatek/vcodec/encoder/venc_vpu_if.c        |    5 ++--
- 7 files changed, 28 insertions(+), 20 deletions(-)
+ arch/x86/kvm/svm/svm.c |   32 +++++++++++++++++++++-----------
+ 1 file changed, 21 insertions(+), 11 deletions(-)
 
---- a/drivers/media/platform/mediatek/vcodec/common/mtk_vcodec_fw_vpu.c
-+++ b/drivers/media/platform/mediatek/vcodec/common/mtk_vcodec_fw_vpu.c
-@@ -47,30 +47,32 @@ static void mtk_vcodec_vpu_reset_dec_han
- {
- 	struct mtk_vcodec_dec_dev *dev = priv;
- 	struct mtk_vcodec_dec_ctx *ctx;
-+	unsigned long flags;
- 
- 	dev_err(&dev->plat_dev->dev, "Watchdog timeout!!");
- 
--	mutex_lock(&dev->dev_ctx_lock);
-+	spin_lock_irqsave(&dev->dev_ctx_lock, flags);
- 	list_for_each_entry(ctx, &dev->ctx_list, list) {
- 		ctx->state = MTK_STATE_ABORT;
- 		mtk_v4l2_vdec_dbg(0, ctx, "[%d] Change to state MTK_STATE_ABORT", ctx->id);
- 	}
--	mutex_unlock(&dev->dev_ctx_lock);
-+	spin_unlock_irqrestore(&dev->dev_ctx_lock, flags);
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -1012,18 +1012,31 @@ void svm_copy_lbrs(struct vmcb *to_vmcb,
+ 	vmcb_mark_dirty(to_vmcb, VMCB_LBR);
  }
  
- static void mtk_vcodec_vpu_reset_enc_handler(void *priv)
+-void svm_enable_lbrv(struct kvm_vcpu *vcpu)
++static void svm_recalc_lbr_msr_intercepts(struct kvm_vcpu *vcpu)
  {
- 	struct mtk_vcodec_enc_dev *dev = priv;
- 	struct mtk_vcodec_enc_ctx *ctx;
-+	unsigned long flags;
+ 	struct vcpu_svm *svm = to_svm(vcpu);
++	bool intercept = !(svm->vmcb->control.virt_ext & LBR_CTL_ENABLE_MASK);
  
- 	dev_err(&dev->plat_dev->dev, "Watchdog timeout!!");
+-	svm->vmcb->control.virt_ext |= LBR_CTL_ENABLE_MASK;
+-	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTBRANCHFROMIP, 1, 1);
+-	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTBRANCHTOIP, 1, 1);
+-	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTINTFROMIP, 1, 1);
+-	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTINTTOIP, 1, 1);
++	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTBRANCHFROMIP,
++			     !intercept, !intercept);
++	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTBRANCHTOIP,
++			     !intercept, !intercept);
++	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTINTFROMIP,
++			     !intercept, !intercept);
++	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTINTTOIP,
++			     !intercept, !intercept);
  
--	mutex_lock(&dev->dev_ctx_lock);
-+	spin_lock_irqsave(&dev->dev_ctx_lock, flags);
- 	list_for_each_entry(ctx, &dev->ctx_list, list) {
- 		ctx->state = MTK_STATE_ABORT;
- 		mtk_v4l2_vdec_dbg(0, ctx, "[%d] Change to state MTK_STATE_ABORT", ctx->id);
- 	}
--	mutex_unlock(&dev->dev_ctx_lock);
-+	spin_unlock_irqrestore(&dev->dev_ctx_lock, flags);
- }
+ 	if (sev_es_guest(vcpu->kvm))
+-		set_msr_interception(vcpu, svm->msrpm, MSR_IA32_DEBUGCTLMSR, 1, 1);
++		set_msr_interception(vcpu, svm->msrpm, MSR_IA32_DEBUGCTLMSR,
++				     !intercept, !intercept);
++}
++
++void svm_enable_lbrv(struct kvm_vcpu *vcpu)
++{
++	struct vcpu_svm *svm = to_svm(vcpu);
++
++	svm->vmcb->control.virt_ext |= LBR_CTL_ENABLE_MASK;
++	svm_recalc_lbr_msr_intercepts(vcpu);
  
- static const struct mtk_vcodec_fw_ops mtk_vcodec_vpu_msg = {
---- a/drivers/media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_drv.c
-+++ b/drivers/media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_drv.c
-@@ -198,6 +198,7 @@ static int fops_vcodec_open(struct file
- 	struct mtk_vcodec_dec_ctx *ctx = NULL;
- 	int ret = 0, i, hw_count;
- 	struct vb2_queue *src_vq;
-+	unsigned long flags;
+ 	/* Move the LBR msrs to the vmcb02 so that the guest can see them. */
+ 	if (is_guest_mode(vcpu))
+@@ -1037,10 +1050,7 @@ static void svm_disable_lbrv(struct kvm_
+ 	KVM_BUG_ON(sev_es_guest(vcpu->kvm), vcpu->kvm);
  
- 	ctx = kzalloc(sizeof(*ctx), GFP_KERNEL);
- 	if (!ctx)
-@@ -268,9 +269,9 @@ static int fops_vcodec_open(struct file
+ 	svm->vmcb->control.virt_ext &= ~LBR_CTL_ENABLE_MASK;
+-	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTBRANCHFROMIP, 0, 0);
+-	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTBRANCHTOIP, 0, 0);
+-	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTINTFROMIP, 0, 0);
+-	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTINTTOIP, 0, 0);
++	svm_recalc_lbr_msr_intercepts(vcpu);
  
- 	ctx->dev->vdec_pdata->init_vdec_params(ctx);
- 
--	mutex_lock(&dev->dev_ctx_lock);
-+	spin_lock_irqsave(&dev->dev_ctx_lock, flags);
- 	list_add(&ctx->list, &dev->ctx_list);
--	mutex_unlock(&dev->dev_ctx_lock);
-+	spin_unlock_irqrestore(&dev->dev_ctx_lock, flags);
- 	mtk_vcodec_dbgfs_create(ctx);
- 
- 	mutex_unlock(&dev->dev_mutex);
-@@ -295,6 +296,7 @@ static int fops_vcodec_release(struct fi
- {
- 	struct mtk_vcodec_dec_dev *dev = video_drvdata(file);
- 	struct mtk_vcodec_dec_ctx *ctx = fh_to_dec_ctx(file->private_data);
-+	unsigned long flags;
- 
- 	mtk_v4l2_vdec_dbg(0, ctx, "[%d] decoder", ctx->id);
- 	mutex_lock(&dev->dev_mutex);
-@@ -313,9 +315,9 @@ static int fops_vcodec_release(struct fi
- 	v4l2_ctrl_handler_free(&ctx->ctrl_hdl);
- 
- 	mtk_vcodec_dbgfs_remove(dev, ctx->id);
--	mutex_lock(&dev->dev_ctx_lock);
-+	spin_lock_irqsave(&dev->dev_ctx_lock, flags);
- 	list_del_init(&ctx->list);
--	mutex_unlock(&dev->dev_ctx_lock);
-+	spin_unlock_irqrestore(&dev->dev_ctx_lock, flags);
- 	kfree(ctx);
- 	mutex_unlock(&dev->dev_mutex);
- 	return 0;
-@@ -382,7 +384,7 @@ static int mtk_vcodec_probe(struct platf
- 	for (i = 0; i < MTK_VDEC_HW_MAX; i++)
- 		mutex_init(&dev->dec_mutex[i]);
- 	mutex_init(&dev->dev_mutex);
--	mutex_init(&dev->dev_ctx_lock);
-+	spin_lock_init(&dev->dev_ctx_lock);
- 	spin_lock_init(&dev->irqlock);
- 
- 	snprintf(dev->v4l2_dev.name, sizeof(dev->v4l2_dev.name), "%s",
---- a/drivers/media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_drv.h
-+++ b/drivers/media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_drv.h
-@@ -271,7 +271,7 @@ struct mtk_vcodec_dec_dev {
- 	/* decoder hardware mutex lock */
- 	struct mutex dec_mutex[MTK_VDEC_HW_MAX];
- 	struct mutex dev_mutex;
--	struct mutex dev_ctx_lock;
-+	spinlock_t dev_ctx_lock;
- 	struct workqueue_struct *decode_workqueue;
- 
- 	spinlock_t irqlock;
---- a/drivers/media/platform/mediatek/vcodec/decoder/vdec_vpu_if.c
-+++ b/drivers/media/platform/mediatek/vcodec/decoder/vdec_vpu_if.c
-@@ -75,16 +75,17 @@ static void handle_get_param_msg_ack(con
- static bool vpu_dec_check_ap_inst(struct mtk_vcodec_dec_dev *dec_dev, struct vdec_vpu_inst *vpu)
- {
- 	struct mtk_vcodec_dec_ctx *ctx;
-+	unsigned long flags;
- 	int ret = false;
- 
--	mutex_lock(&dec_dev->dev_ctx_lock);
-+	spin_lock_irqsave(&dec_dev->dev_ctx_lock, flags);
- 	list_for_each_entry(ctx, &dec_dev->ctx_list, list) {
- 		if (!IS_ERR_OR_NULL(ctx) && ctx->vpu_inst == vpu) {
- 			ret = true;
- 			break;
- 		}
- 	}
--	mutex_unlock(&dec_dev->dev_ctx_lock);
-+	spin_unlock_irqrestore(&dec_dev->dev_ctx_lock, flags);
- 
- 	return ret;
- }
---- a/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_drv.c
-+++ b/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_drv.c
-@@ -117,6 +117,7 @@ static int fops_vcodec_open(struct file
- 	struct mtk_vcodec_enc_ctx *ctx = NULL;
- 	int ret = 0;
- 	struct vb2_queue *src_vq;
-+	unsigned long flags;
- 
- 	ctx = kzalloc(sizeof(*ctx), GFP_KERNEL);
- 	if (!ctx)
-@@ -177,9 +178,9 @@ static int fops_vcodec_open(struct file
- 	mtk_v4l2_venc_dbg(2, ctx, "Create instance [%d]@%p m2m_ctx=%p ",
- 			  ctx->id, ctx, ctx->m2m_ctx);
- 
--	mutex_lock(&dev->dev_ctx_lock);
-+	spin_lock_irqsave(&dev->dev_ctx_lock, flags);
- 	list_add(&ctx->list, &dev->ctx_list);
--	mutex_unlock(&dev->dev_ctx_lock);
-+	spin_unlock_irqrestore(&dev->dev_ctx_lock, flags);
- 
- 	mutex_unlock(&dev->dev_mutex);
- 	mtk_v4l2_venc_dbg(0, ctx, "%s encoder [%d]", dev_name(&dev->plat_dev->dev),
-@@ -204,6 +205,7 @@ static int fops_vcodec_release(struct fi
- {
- 	struct mtk_vcodec_enc_dev *dev = video_drvdata(file);
- 	struct mtk_vcodec_enc_ctx *ctx = fh_to_enc_ctx(file->private_data);
-+	unsigned long flags;
- 
- 	mtk_v4l2_venc_dbg(1, ctx, "[%d] encoder", ctx->id);
- 	mutex_lock(&dev->dev_mutex);
-@@ -214,9 +216,9 @@ static int fops_vcodec_release(struct fi
- 	v4l2_fh_exit(&ctx->fh);
- 	v4l2_ctrl_handler_free(&ctx->ctrl_hdl);
- 
--	mutex_lock(&dev->dev_ctx_lock);
-+	spin_lock_irqsave(&dev->dev_ctx_lock, flags);
- 	list_del_init(&ctx->list);
--	mutex_unlock(&dev->dev_ctx_lock);
-+	spin_unlock_irqrestore(&dev->dev_ctx_lock, flags);
- 	kfree(ctx);
- 	mutex_unlock(&dev->dev_mutex);
- 	return 0;
-@@ -298,7 +300,7 @@ static int mtk_vcodec_probe(struct platf
- 
- 	mutex_init(&dev->enc_mutex);
- 	mutex_init(&dev->dev_mutex);
--	mutex_init(&dev->dev_ctx_lock);
-+	spin_lock_init(&dev->dev_ctx_lock);
- 	spin_lock_init(&dev->irqlock);
- 
- 	snprintf(dev->v4l2_dev.name, sizeof(dev->v4l2_dev.name), "%s",
---- a/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_drv.h
-+++ b/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_drv.h
-@@ -206,7 +206,7 @@ struct mtk_vcodec_enc_dev {
- 	/* encoder hardware mutex lock */
- 	struct mutex enc_mutex;
- 	struct mutex dev_mutex;
--	struct mutex dev_ctx_lock;
-+	spinlock_t dev_ctx_lock;
- 	struct workqueue_struct *encode_workqueue;
- 
- 	int enc_irq;
---- a/drivers/media/platform/mediatek/vcodec/encoder/venc_vpu_if.c
-+++ b/drivers/media/platform/mediatek/vcodec/encoder/venc_vpu_if.c
-@@ -45,16 +45,17 @@ static void handle_enc_encode_msg(struct
- static bool vpu_enc_check_ap_inst(struct mtk_vcodec_enc_dev *enc_dev, struct venc_vpu_inst *vpu)
- {
- 	struct mtk_vcodec_enc_ctx *ctx;
-+	unsigned long flags;
- 	int ret = false;
- 
--	mutex_lock(&enc_dev->dev_ctx_lock);
-+	spin_lock_irqsave(&enc_dev->dev_ctx_lock, flags);
- 	list_for_each_entry(ctx, &enc_dev->ctx_list, list) {
- 		if (!IS_ERR_OR_NULL(ctx) && ctx->vpu_inst == vpu) {
- 			ret = true;
- 			break;
- 		}
- 	}
--	mutex_unlock(&enc_dev->dev_ctx_lock);
-+	spin_unlock_irqrestore(&enc_dev->dev_ctx_lock, flags);
- 
- 	return ret;
- }
+ 	/*
+ 	 * Move the LBR msrs back to the vmcb01 to avoid copying them
 
 
