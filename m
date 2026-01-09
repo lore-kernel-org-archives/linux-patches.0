@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D864F1DF72C;
-	Fri,  9 Jan 2026 12:43:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D702C33032C;
+	Fri,  9 Jan 2026 12:43:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962611; cv=none; b=NYQrFo+vCN1I/ISZof3z/t7UyrbQX8jHycsC541/rqaIVg8r84+aqM7QTAewZ7yhrRIvVf//rLEDEgCg1Vm1vr7Y+Enx4v83oJJK1xC34BqzjYvpg4Ijq5m7UxdTcwbebSkRyjC0C9XlhxyyAU5bhoznR3FhmBzdDY2GJY4SE9w=
+	t=1767962614; cv=none; b=t8O7FsCsSUWN93lTD1giaRway14dHA9B5PfCqV9B1E8ZPe6y1Jy0c9nbHchIASZtwBA+SbRgvBGFg7draT8SWIriD1GClk0rtqSmZYrPPXtuyNCbO3ilxjSc06QXP2mMDuGhHK6BDtcVASytFEMgn84d/avdHqj23XpEjVCW7vM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962611; c=relaxed/simple;
-	bh=1xlBsNlDdNlEorKNWM5a8YekZjPdD1+ktW8NuMs86ks=;
+	s=arc-20240116; t=1767962614; c=relaxed/simple;
+	bh=1AXxg+aCDeKmQsMXtoo8ZE4NkeUJ7txozuzpTSl4tMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=boXmDSkCJaaNRYiADtzPx/X+t3wLK58LZmddXYSDeFZbDrbrk+vCj2u0JYHruaCoV/Ryr+zgQrogskDqSlxEuhPc/iaN4HtT3pl0yInmbIKdvSBr2jRE3n5RmibRJcxL/0O1kiVHhXuQO8WhT5hAFVrLIviFsPbkfFpmfBiXxvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u+J94adZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CnprT5UhKbpuyXaehhdbt+pRIiWf9+Mx0Mf00LyHe0d0MogSSp+EcpnQ22X8cglwIvbGG05f0dfWSz+XnP1SO0xigcMY7+ecSZPvobZ+t3jJOy+rmO61UxUKMTkYgEvlMozFIp7QB5U291WrdekbTnreiSQ/ScnrWTCJqgf0WJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TtueEfCh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+J94adZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63195C4CEF1;
-	Fri,  9 Jan 2026 12:43:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TtueEfCh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F977C4CEF1;
+	Fri,  9 Jan 2026 12:43:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962611;
-	bh=1xlBsNlDdNlEorKNWM5a8YekZjPdD1+ktW8NuMs86ks=;
+	s=korg; t=1767962614;
+	bh=1AXxg+aCDeKmQsMXtoo8ZE4NkeUJ7txozuzpTSl4tMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u+J94adZx2sawHL+c6CSTgUMvPGfVakfUxQvYLNP3U5EimLMFacVPQoKG/Y/QUM9G
-	 ON4jWqGGq4rIdEvAE49gGRykuN/UG345k4fT8zz0TEnBCtI83OAgQ+2VtOqqMLTjxT
-	 ssOg/NCLHB6oHr3sUNrZoTFLzTsqIrgGnQfWsdAc=
+	b=TtueEfChMnGyk6ISsNakft6TRFl0SfOnFPdL4JKs7QavsB8IyMn7Ttv1RPVoeoOak
+	 yvSV8AUib47rPrbint83Xt0RCI+YvTH5bTW+bl4l4FMFTUwzFVe83ulzkI/lh1uC1x
+	 84FhIMHoIX4knQ0M28bg1DvtdiCz8Swe1mK1EFeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
-	Hariprasad Kelam <hkelam@marvell.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Will Rosenberg <whrosenb@asu.edu>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 427/634] net: stmmac: fix the crash issue for zero copy XDP_TX action
-Date: Fri,  9 Jan 2026 12:41:45 +0100
-Message-ID: <20260109112133.611912933@linuxfoundation.org>
+Subject: [PATCH 6.1 428/634] ipv6: BUG() in pskb_expand_head() as part of calipso_skbuff_setattr()
+Date: Fri,  9 Jan 2026 12:41:46 +0100
+Message-ID: <20260109112133.649559078@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,94 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Will Rosenberg <whrosenb@asu.edu>
 
-[ Upstream commit a48e232210009be50591fdea8ba7c07b0f566a13 ]
+[ Upstream commit 58fc7342b529803d3c221101102fe913df7adb83 ]
 
-There is a crash issue when running zero copy XDP_TX action, the crash
-log is shown below.
+There exists a kernel oops caused by a BUG_ON(nhead < 0) at
+net/core/skbuff.c:2232 in pskb_expand_head().
+This bug is triggered as part of the calipso_skbuff_setattr()
+routine when skb_cow() is passed headroom > INT_MAX
+(i.e. (int)(skb_headroom(skb) + len_delta) < 0).
 
-[  216.122464] Unable to handle kernel paging request at virtual address fffeffff80000000
-[  216.187524] Internal error: Oops: 0000000096000144 [#1]  SMP
-[  216.301694] Call trace:
-[  216.304130]  dcache_clean_poc+0x20/0x38 (P)
-[  216.308308]  __dma_sync_single_for_device+0x1bc/0x1e0
-[  216.313351]  stmmac_xdp_xmit_xdpf+0x354/0x400
-[  216.317701]  __stmmac_xdp_run_prog+0x164/0x368
-[  216.322139]  stmmac_napi_poll_rxtx+0xba8/0xf00
-[  216.326576]  __napi_poll+0x40/0x218
-[  216.408054] Kernel panic - not syncing: Oops: Fatal exception in interrupt
+The root cause of the bug is due to an implicit integer cast in
+__skb_cow(). The check (headroom > skb_headroom(skb)) is meant to ensure
+that delta = headroom - skb_headroom(skb) is never negative, otherwise
+we will trigger a BUG_ON in pskb_expand_head(). However, if
+headroom > INT_MAX and delta <= -NET_SKB_PAD, the check passes, delta
+becomes negative, and pskb_expand_head() is passed a negative value for
+nhead.
 
-For XDP_TX action, the xdp_buff is converted to xdp_frame by
-xdp_convert_buff_to_frame(). The memory type of the resulting xdp_frame
-depends on the memory type of the xdp_buff. For page pool based xdp_buff
-it produces xdp_frame with memory type MEM_TYPE_PAGE_POOL. For zero copy
-XSK pool based xdp_buff it produces xdp_frame with memory type
-MEM_TYPE_PAGE_ORDER0. However, stmmac_xdp_xmit_back() does not check the
-memory type and always uses the page pool type, this leads to invalid
-mappings and causes the crash. Therefore, check the xdp_buff memory type
-in stmmac_xdp_xmit_back() to fix this issue.
+Fix the trigger condition in calipso_skbuff_setattr(). Avoid passing
+"negative" headroom sizes to skb_cow() within calipso_skbuff_setattr()
+by only using skb_cow() to grow headroom.
 
-Fixes: bba2556efad6 ("net: stmmac: Enable RX via AF_XDP zero-copy")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Hariprasad Kelam <hkelam@marvell.com>
-Link: https://patch.msgid.link/20251204071332.1907111-1-wei.fang@nxp.com
+PoC:
+	Using `netlabelctl` tool:
+
+        netlabelctl map del default
+        netlabelctl calipso add pass doi:7
+        netlabelctl map add default address:0::1/128 protocol:calipso,7
+
+        Then run the following PoC:
+
+        int fd = socket(AF_INET6, SOCK_DGRAM, IPPROTO_UDP);
+
+        // setup msghdr
+        int cmsg_size = 2;
+        int cmsg_len = 0x60;
+        struct msghdr msg;
+        struct sockaddr_in6 dest_addr;
+        struct cmsghdr * cmsg = (struct cmsghdr *) calloc(1,
+                        sizeof(struct cmsghdr) + cmsg_len);
+        msg.msg_name = &dest_addr;
+        msg.msg_namelen = sizeof(dest_addr);
+        msg.msg_iov = NULL;
+        msg.msg_iovlen = 0;
+        msg.msg_control = cmsg;
+        msg.msg_controllen = cmsg_len;
+        msg.msg_flags = 0;
+
+        // setup sockaddr
+        dest_addr.sin6_family = AF_INET6;
+        dest_addr.sin6_port = htons(31337);
+        dest_addr.sin6_flowinfo = htonl(31337);
+        dest_addr.sin6_addr = in6addr_loopback;
+        dest_addr.sin6_scope_id = 31337;
+
+        // setup cmsghdr
+        cmsg->cmsg_len = cmsg_len;
+        cmsg->cmsg_level = IPPROTO_IPV6;
+        cmsg->cmsg_type = IPV6_HOPOPTS;
+        char * hop_hdr = (char *)cmsg + sizeof(struct cmsghdr);
+        hop_hdr[1] = 0x9; //set hop size - (0x9 + 1) * 8 = 80
+
+        sendmsg(fd, &msg, 0);
+
+Fixes: 2917f57b6bc1 ("calipso: Allow the lsm to label the skbuff directly.")
+Suggested-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Will Rosenberg <whrosenb@asu.edu>
+Acked-by: Paul Moore <paul@paul-moore.com>
+Link: https://patch.msgid.link/20251219173637.797418-1-whrosenb@asu.edu
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/stmicro/stmmac/stmmac_main.c   | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ net/ipv6/calipso.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index b2362e107f20..438d0b7da345 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -86,6 +86,7 @@ MODULE_PARM_DESC(phyaddr, "Physical device address");
- #define STMMAC_XDP_CONSUMED	BIT(0)
- #define STMMAC_XDP_TX		BIT(1)
- #define STMMAC_XDP_REDIRECT	BIT(2)
-+#define STMMAC_XSK_CONSUMED	BIT(3)
+diff --git a/net/ipv6/calipso.c b/net/ipv6/calipso.c
+index 24666291c54a..72079ef2959b 100644
+--- a/net/ipv6/calipso.c
++++ b/net/ipv6/calipso.c
+@@ -1345,7 +1345,8 @@ static int calipso_skbuff_setattr(struct sk_buff *skb,
+ 	/* At this point new_end aligns to 4n, so (new_end & 4) pads to 8n */
+ 	pad = ((new_end & 4) + (end & 7)) & 7;
+ 	len_delta = new_end - (int)end + pad;
+-	ret_val = skb_cow(skb, skb_headroom(skb) + len_delta);
++	ret_val = skb_cow(skb,
++			  skb_headroom(skb) + (len_delta > 0 ? len_delta : 0));
+ 	if (ret_val < 0)
+ 		return ret_val;
  
- static int flow_ctrl = FLOW_AUTO;
- module_param(flow_ctrl, int, 0644);
-@@ -4839,6 +4840,7 @@ static int stmmac_xdp_get_tx_queue(struct stmmac_priv *priv,
- static int stmmac_xdp_xmit_back(struct stmmac_priv *priv,
- 				struct xdp_buff *xdp)
- {
-+	bool zc = !!(xdp->rxq->mem.type == MEM_TYPE_XSK_BUFF_POOL);
- 	struct xdp_frame *xdpf = xdp_convert_buff_to_frame(xdp);
- 	int cpu = smp_processor_id();
- 	struct netdev_queue *nq;
-@@ -4855,9 +4857,18 @@ static int stmmac_xdp_xmit_back(struct stmmac_priv *priv,
- 	/* Avoids TX time-out as we are sharing with slow path */
- 	txq_trans_cond_update(nq);
- 
--	res = stmmac_xdp_xmit_xdpf(priv, queue, xdpf, false);
--	if (res == STMMAC_XDP_TX)
-+	/* For zero copy XDP_TX action, dma_map is true */
-+	res = stmmac_xdp_xmit_xdpf(priv, queue, xdpf, zc);
-+	if (res == STMMAC_XDP_TX) {
- 		stmmac_flush_tx_descriptors(priv, queue);
-+	} else if (res == STMMAC_XDP_CONSUMED && zc) {
-+		/* xdp has been freed by xdp_convert_buff_to_frame(),
-+		 * no need to call xsk_buff_free() again, so return
-+		 * STMMAC_XSK_CONSUMED.
-+		 */
-+		res = STMMAC_XSK_CONSUMED;
-+		xdp_return_frame(xdpf);
-+	}
- 
- 	__netif_tx_unlock(nq);
- 
-@@ -5188,6 +5199,8 @@ static int stmmac_rx_zc(struct stmmac_priv *priv, int limit, u32 queue)
- 			break;
- 		case STMMAC_XDP_CONSUMED:
- 			xsk_buff_free(buf->xdp);
-+			fallthrough;
-+		case STMMAC_XSK_CONSUMED:
- 			rx_dropped++;
- 			break;
- 		case STMMAC_XDP_TX:
 -- 
 2.51.0
 
