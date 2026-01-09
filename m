@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB51F358D30;
-	Fri,  9 Jan 2026 12:40:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46AF6359FAC;
+	Fri,  9 Jan 2026 12:41:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962459; cv=none; b=iq6oVxX8VQYDFi4Syi+FXNLOHx1D+29Fxacp7lL1aF7OphzwaPOwCftuFACAs5plDpS2mD6X0MzP20GKPb8QVpCmqum7uu+2vQaQwBt7WuaHdylb0ClERTV9XAVGxgtfMOhwxECCkUNAHh6/fpcBtR1lGhubRkDuR6lfoyHmsbE=
+	t=1767962462; cv=none; b=uXXx10g6QGLgyzmUTm7vEjuy3fdkcHSBcKyTst38+L24MrxbV0ljWQmtYIrWYokw24eqSq7vFf2BoEa4CvK2wkTtSRBESBvEJq/Ig+/RJKLbBIAbjhzAL8ZsBhA3CJgSUY1JJbb4hB/ZyXZWOy0AOJes3u/6iUcKPqk7VQHQIHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962459; c=relaxed/simple;
-	bh=xpezYi2BS88HboVLipVN4nDzzVzeMvuJK4SDuIzgj/M=;
+	s=arc-20240116; t=1767962462; c=relaxed/simple;
+	bh=O93RQKU81Zvy35s8pK7pu3JwN3u7ilrZwJV4HU3f1Po=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jFk1ga5dKryAcyXCX5Y7dDOf4HcQz0CfsO/mIeIz7KP9C+VdvxVKn6/5LeRyMIaCjTApWkplCc2T7Ph350PhdwUD/NI6XjyI4fNgXDW4aCzZ7F0ZdbmgKDfTUlBWWTmHkYllL86ZUqE4npJMuPcpi1XIEU+q7ReQ89D2fn245eU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n6ZbEM6j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a9cHd+/l56YhzUnV6YSdI1eVr4tkJuLpYt4Y53hnfplGE6/+InwmCKBZjLPPnGr5xlTbwkGSBXv1gaIVl1PCJi3EZ/DKF0FjFexMTdLoK3C4pL4xuOnhP9YA1jT9HpibBNxZlE4LtktSqyARFa0zdYvQjtyHxBYNdx52vz3gQfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y+RIjt8F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n6ZbEM6j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF092C4CEF1;
-	Fri,  9 Jan 2026 12:40:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y+RIjt8F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C840BC16AAE;
+	Fri,  9 Jan 2026 12:41:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962459;
-	bh=xpezYi2BS88HboVLipVN4nDzzVzeMvuJK4SDuIzgj/M=;
+	s=korg; t=1767962462;
+	bh=O93RQKU81Zvy35s8pK7pu3JwN3u7ilrZwJV4HU3f1Po=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n6ZbEM6jyxrb4FOiD22YrwcSdHxkwUM3N4CXN3cT+EhDdMm9HCn8a5tKbE1GJZKMg
-	 +qbZ0OtIiXXx+iuO1mfcB+5JN57kiZf49QoxzIm7Pzg0oC3sp975tRcIdsBTmrf3B9
-	 q37dKeaJdHJrwxvhDVzvjgbFHj68mGYsd73cULPg=
+	b=Y+RIjt8F9NBtUTHwPaEGIPyDaS0xY/BqkKE16HVqBt2eh+432JSbfJqL1yLX68B17
+	 YYdsRMym2j64O4XFT7GnCHPsNwkM61xFy+qADbroke8zNl5TSBsoJx9btMwFbB5/YD
+	 wFQQkpNFCBgYh4fLG9SEW+BGl4H4oPe/nI9IRdp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudheendra Raghav Neela <sneela@tugraz.at>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.1 372/634] fsnotify: do not generate ACCESS/MODIFY events on child for special files
-Date: Fri,  9 Jan 2026 12:40:50 +0100
-Message-ID: <20260109112131.528052331@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.1 373/634] nfsd: Mark variable __maybe_unused to avoid W=1 build break
+Date: Fri,  9 Jan 2026 12:40:51 +0100
+Message-ID: <20260109112131.565896035@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,58 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit 635bc4def026a24e071436f4f356ea08c0eed6ff upstream.
+commit ebae102897e760e9e6bc625f701dd666b2163bd1 upstream.
 
-inotify/fanotify do not allow users with no read access to a file to
-subscribe to events (e.g. IN_ACCESS/IN_MODIFY), but they do allow the
-same user to subscribe for watching events on children when the user
-has access to the parent directory (e.g. /dev).
+Clang is not happy about set but (in some cases) unused variable:
 
-Users with no read access to a file but with read access to its parent
-directory can still stat the file and see if it was accessed/modified
-via atime/mtime change.
+fs/nfsd/export.c:1027:17: error: variable 'inode' set but not used [-Werror,-Wunused-but-set-variable]
 
-The same is not true for special files (e.g. /dev/null). Users will not
-generally observe atime/mtime changes when other users read/write to
-special files, only when someone sets atime/mtime via utimensat().
+since it's used as a parameter to dprintk() which might be configured
+a no-op. To avoid uglifying code with the specific ifdeffery just mark
+the variable __maybe_unused.
 
-Align fsnotify events with this stat behavior and do not generate
-ACCESS/MODIFY events to parent watchers on read/write of special files.
-The events are still generated to parent watchers on utimensat(). This
-closes some side-channels that could be possibly used for information
-exfiltration [1].
+The commit [1], which introduced this behaviour, is quite old and hence
+the Fixes tag points to the first of the Git era.
 
-[1] https://snee.la/pdf/pubs/file-notification-attacks.pdf
-
-Reported-by: Sudheendra Raghav Neela <sneela@tugraz.at>
-CC: stable@vger.kernel.org
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://git.kernel.org/pub/scm/linux/kernel/git/history/history.git/commit/?id=0431923fb7a1 [1]
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/notify/fsnotify.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ fs/nfsd/export.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/notify/fsnotify.c
-+++ b/fs/notify/fsnotify.c
-@@ -224,8 +224,15 @@ int __fsnotify_parent(struct dentry *den
- 	/*
- 	 * Include parent/name in notification either if some notification
- 	 * groups require parent info or the parent is interested in this event.
-+	 * The parent interest in ACCESS/MODIFY events does not apply to special
-+	 * files, where read/write are not on the filesystem of the parent and
-+	 * events can provide an undesirable side-channel for information
-+	 * exfiltration.
- 	 */
--	parent_interested = mask & p_mask & ALL_FSNOTIFY_EVENTS;
-+	parent_interested = mask & p_mask & ALL_FSNOTIFY_EVENTS &&
-+			    !(data_type == FSNOTIFY_EVENT_PATH &&
-+			      d_is_special(dentry) &&
-+			      (mask & (FS_ACCESS | FS_MODIFY)));
- 	if (parent_needed || parent_interested) {
- 		/* When notifying parent, child should be passed as data */
- 		WARN_ON_ONCE(inode != fsnotify_data_inode(data, data_type));
+--- a/fs/nfsd/export.c
++++ b/fs/nfsd/export.c
+@@ -990,7 +990,7 @@ exp_rootfh(struct net *net, struct auth_
+ {
+ 	struct svc_export	*exp;
+ 	struct path		path;
+-	struct inode		*inode;
++	struct inode		*inode __maybe_unused;
+ 	struct svc_fh		fh;
+ 	int			err;
+ 	struct nfsd_net		*nn = net_generic(net, nfsd_net_id);
 
 
