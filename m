@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B09B833BBBD;
-	Fri,  9 Jan 2026 12:09:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5260C338911;
+	Fri,  9 Jan 2026 12:09:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960584; cv=none; b=nNq7c2rX0AiB/QeUfSbeHc/O1tKMUZU/qIrC+aTa1zQkwiGHv5fZusJgemPjQsqd/t257bamtNwWV7DXXJy2J5Y0CrF6LEMi7S7GEliB+T8ZhaS8jy7kr3UePKdGsQcco9x8Ws1ar3YkMRWaK75Ev3NC3Ur6ogYK1XcBkobheEs=
+	t=1767960587; cv=none; b=cEkVagR7aDFrx39+uo6i0NkD7naO7UgkuIFVYdVOQc9KHKC8BSuG35eiu76bkfyRB/ZW3uKWy3mM/SHrNajRhTrfxkZBeeKbTrn3PESJPCXBPu2BLf66lh4q5IbuVSXJ7sTHzx8/vyJ611ySTWvzmzPPePphAhZlYvn48IUDS3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960584; c=relaxed/simple;
-	bh=r4m39U1N476ta3jujkdLsdNvLQOLi/oYQRCM4U+yKHg=;
+	s=arc-20240116; t=1767960587; c=relaxed/simple;
+	bh=fkgSClaGZL+dBYFM3Tjt7Td580VU57xjarfhNVqKM2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tHL3gF0NVf1oMh4tE0nngV8zl6glHUISBePPGU19qZ9utt2tOlnK0cCMxpR3cHlcA1XQpM1SCCUDn5sJhAjpQ/4ShOFvobi2sjUF6J8f4H7bMzVfO5zFMbep0hB3oLpSwRb2XR9tcvWHaXN0fKjNRvm5M1fEl5oWwuRsW6RN03c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mPQSrnTW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EOx0IfgHd8JtkVUrlhYMQrFFuqx6oXs2mNuhlxxf2tx7x9NUsgGNHaYySIhSGe/Vz09jcsMZORKIURBvW/IHfZosx2l9cpYOL2UfoG6iSskvS78it8AGvZceGGIpc+k81qFEf+Q3s7eQEMAFV6ZdJsWbMaPfomudP0n4Gn65v2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dLjEznVO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mPQSrnTW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3736C4CEF1;
-	Fri,  9 Jan 2026 12:09:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dLjEznVO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2D4CC4CEF1;
+	Fri,  9 Jan 2026 12:09:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960584;
-	bh=r4m39U1N476ta3jujkdLsdNvLQOLi/oYQRCM4U+yKHg=;
+	s=korg; t=1767960587;
+	bh=fkgSClaGZL+dBYFM3Tjt7Td580VU57xjarfhNVqKM2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mPQSrnTWZZlVQjcAq2d3yMIcEyOx89KwQ86unZWxHN+gA8CeDRH6ePUVnFPlAOaXV
-	 okYEM2yF91+nUpy5+DbfuDchdUlc4txBPXxfgAv9uzLvtI8NTQ4ZVyOBRK+BmTqu//
-	 6xzxFJwsFmDq/Ijkt/COUNsoDRFZQrY2taFOp7IY=
+	b=dLjEznVOhuzfCHyyM6Bu2FJH8Tp7y7ebWeR+u/++YxIqx5YUu8ic8CHwK2ne6QDsO
+	 e8rWY1vASzSgd+/RX4aCVC8XgAkxgX+6STcCNFsJM16B58i78WNJmrv1PKMeaxmDgz
+	 qSCti0+YkIDQVs8yQ0i9T0y95wjov3LCU2fy90mk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alison Schofield <alison.schofield@intel.com>,
-	Ira Weiny <ira.weiny@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>
-Subject: [PATCH 6.6 454/737] tools/testing/nvdimm: Use per-DIMM device handle
-Date: Fri,  9 Jan 2026 12:39:53 +0100
-Message-ID: <20260109112151.072121889@linuxfoundation.org>
+	syzbot+1d9c0edea5907af239e0@syzkaller.appspotmail.com,
+	Jeongjun Park <aha310510@gmail.com>,
+	Daniel Almeida <daniel.almeida@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.6 455/737] media: vidtv: initialize local pointers upon transfer of memory ownership
+Date: Fri,  9 Jan 2026 12:39:54 +0100
+Message-ID: <20260109112151.110825687@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,61 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alison Schofield <alison.schofield@intel.com>
+From: Jeongjun Park <aha310510@gmail.com>
 
-commit f59b701b4674f7955170b54c4167c5590f4714eb upstream.
+commit 98aabfe2d79f74613abc2b0b1cef08f97eaf5322 upstream.
 
-KASAN reports a global-out-of-bounds access when running these nfit
-tests: clear.sh, pmem-errors.sh, pfn-meta-errors.sh, btt-errors.sh,
-daxdev-errors.sh, and inject-error.sh.
+vidtv_channel_si_init() creates a temporary list (program, service, event)
+and ownership of the memory itself is transferred to the PAT/SDT/EIT
+tables through vidtv_psi_pat_program_assign(),
+vidtv_psi_sdt_service_assign(), vidtv_psi_eit_event_assign().
 
-[] BUG: KASAN: global-out-of-bounds in nfit_test_ctl+0x769f/0x7840 [nfit_test]
-[] Read of size 4 at addr ffffffffc03ea01c by task ndctl/1215
-[] The buggy address belongs to the variable:
-[] handle+0x1c/0x1df4 [nfit_test]
+The problem here is that the local pointer where the memory ownership
+transfer was completed is not initialized to NULL. This causes the
+vidtv_psi_pmt_create_sec_for_each_pat_entry() function to fail, and
+in the flow that jumps to free_eit, the memory that was freed by
+vidtv_psi_*_table_destroy() can be accessed again by
+vidtv_psi_*_event_destroy() due to the uninitialized local pointer, so it
+is freed once again.
 
-nfit_test_search_spa() uses handle[nvdimm->id] to retrieve a device
-handle and triggers a KASAN error when it reads past the end of the
-handle array. It should not be indexing the handle array at all.
+Therefore, to prevent use-after-free and double-free vulnerability,
+local pointers must be initialized to NULL when transferring memory
+ownership.
 
-The correct device handle is stored in per-DIMM test data. Each DIMM
-has a struct nfit_mem that embeds a struct acpi_nfit_memdev that
-describes the NFIT device handle. Use that device handle here.
-
-Fixes: 10246dc84dfc ("acpi nfit: nfit_test supports translate SPA")
-Cc: stable@vger.kernel.org
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>> ---
-Link: https://patch.msgid.link/20251031234227.1303113-1-alison.schofield@intel.com
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+Cc: <stable@vger.kernel.org>
+Reported-by: syzbot+1d9c0edea5907af239e0@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1d9c0edea5907af239e0
+Fixes: 3be8037960bc ("media: vidtv: add error checks")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Reviewed-by: Daniel Almeida <daniel.almeida@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/nvdimm/test/nfit.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/media/test-drivers/vidtv/vidtv_channel.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/tools/testing/nvdimm/test/nfit.c
-+++ b/tools/testing/nvdimm/test/nfit.c
-@@ -670,6 +670,7 @@ static int nfit_test_search_spa(struct n
- 		.addr = spa->spa,
- 		.region = NULL,
- 	};
-+	struct nfit_mem *nfit_mem;
- 	u64 dpa;
+--- a/drivers/media/test-drivers/vidtv/vidtv_channel.c
++++ b/drivers/media/test-drivers/vidtv/vidtv_channel.c
+@@ -461,12 +461,15 @@ int vidtv_channel_si_init(struct vidtv_m
  
- 	ret = device_for_each_child(&bus->dev, &ctx,
-@@ -687,8 +688,12 @@ static int nfit_test_search_spa(struct n
- 	 */
- 	nd_mapping = &nd_region->mapping[nd_region->ndr_mappings - 1];
- 	nvdimm = nd_mapping->nvdimm;
-+	nfit_mem = nvdimm_provider_data(nvdimm);
-+	if (!nfit_mem)
-+		return -EINVAL;
+ 	/* assemble all programs and assign to PAT */
+ 	vidtv_psi_pat_program_assign(m->si.pat, programs);
++	programs = NULL;
  
--	spa->devices[0].nfit_device_handle = handle[nvdimm->id];
-+	spa->devices[0].nfit_device_handle =
-+		__to_nfit_memdev(nfit_mem)->device_handle;
- 	spa->num_nvdimms = 1;
- 	spa->devices[0].dpa = dpa;
+ 	/* assemble all services and assign to SDT */
+ 	vidtv_psi_sdt_service_assign(m->si.sdt, services);
++	services = NULL;
  
+ 	/* assemble all events and assign to EIT */
+ 	vidtv_psi_eit_event_assign(m->si.eit, events);
++	events = NULL;
+ 
+ 	m->si.pmt_secs = vidtv_psi_pmt_create_sec_for_each_pat_entry(m->si.pat,
+ 								     m->pcr_pid);
 
 
