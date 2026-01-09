@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21EC11946C8;
-	Fri,  9 Jan 2026 12:12:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A5E23ED5B;
+	Fri,  9 Jan 2026 12:12:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960760; cv=none; b=hOuj3vO7EylWWIWo0PqfUpUuOc03MptQ6BSatD3m8qczg7cMB93lIR3cjneRAOR5uBw/VHqWpsUrhOfSnECPWI5kQtSY8VfzSbetiLd86tZRyMDfU9ZD8NQRqMDB4oA2TYQ5SO6t/loyUYdL8B6OFxEkBiuf21zscb1Yn7SgvYE=
+	t=1767960763; cv=none; b=fuMQs1fIYiamzBTl+dppD4/NpYtnkILkxNHWkBb9uB7Bh0ciWIoHNrYggAI53NBvG10GGMTHva/sYSvWLvun9Qd7xIl77qdXWxrWtHlN91ZdbXcVeCmExbZvB/Saw0IW2Xfp8qchGVtsKMmW5wJDM0ei5ysyCSWGp8oh+t1+F54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960760; c=relaxed/simple;
-	bh=MH6xTNstf+C7Frz7f9h5V6XndKZm9tktYeEpS3Rwx2M=;
+	s=arc-20240116; t=1767960763; c=relaxed/simple;
+	bh=zD4bnzMQFkcU5SftcxAHmnJKEWsV2tGYfkflACJxplY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oL+WqWmb8V4ydSRbHpM2zbk8/xe+aP+srFa11iU5b0Lif3vfSM5tmAoGPV10tAl+3E53v9873PmmI7a3YeXYcjtVnwGSRJHg9603wDHqBeh1S5MPM7x6WxavzGg1C+sHPU936SKkuvkzwzB8xPt1Tx0QPVNjJ93dmiWSmM5hbTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=syyszSwC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X3VhVGingKumyMVVO6TUGSaym1F0NCiLp2fgkJlPJA8CuTmKVArP6lcTl2723e3hdh5YuNYCSAozICyfwClUBBbUm3rP/Y8uTnz1ZGfl8Pr5uR5Kbd1FMxWrgmBBrqmLnEl7NqGO9nPgP1aDGI3h9VHH/vTr90dGN6nr8bMHs+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=va/c16U0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="syyszSwC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A20A7C4CEF1;
-	Fri,  9 Jan 2026 12:12:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="va/c16U0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82B2CC4CEF1;
+	Fri,  9 Jan 2026 12:12:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960760;
-	bh=MH6xTNstf+C7Frz7f9h5V6XndKZm9tktYeEpS3Rwx2M=;
+	s=korg; t=1767960762;
+	bh=zD4bnzMQFkcU5SftcxAHmnJKEWsV2tGYfkflACJxplY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=syyszSwCQicmO4DRjwTm82NiWuDki8JrnoMCvLX1UQhkfFJruymYn0BmbLWC7imre
-	 2RdG8XTATSBMGRK+J4ty8mrg5pUcIm73JMterqwG9x5jdaroWLlv1HrX/slYv13PiK
-	 DaVVj6QYHEg0PaelmmITI8+D4EVmOY+0o9X2AiGw=
+	b=va/c16U05u8JycsnX+twQV7wFam93g0PM0Ks7CcgnJOmqSJY+etIZpOrnKnW721hw
+	 YvLp+VtEgnQpWCa4BOuVQXGxaG6zI5jO865yefrdv7nzZR/lNIr3Wvmx1HAU/UVoZB
+	 /xlIMdzoCovPtlT5RdYRL6OvzSfhqln/uYfIGexk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8dd915c7cb0490fc8c52@syzkaller.appspotmail.com,
-	Deepakkumar Karn <dkarn@redhat.com>,
+	"Alice C. Munduruca" <alice.munduruca@canonical.com>,
+	Cengiz Can <cengiz.can@canonical.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 515/737] net: usb: rtl8150: fix memory leak on usb_submit_urb() failure
-Date: Fri,  9 Jan 2026 12:40:54 +0100
-Message-ID: <20260109112153.374073120@linuxfoundation.org>
+Subject: [PATCH 6.6 516/737] selftests: net: fix "buffer overflow detected" for tap.c
+Date: Fri,  9 Jan 2026 12:40:55 +0100
+Message-ID: <20260109112153.411268840@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,45 +53,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepakkumar Karn <dkarn@redhat.com>
+From: Alice C. Munduruca <alice.munduruca@canonical.com>
 
-[ Upstream commit 12cab1191d9890097171156d06bfa8d31f1e39c8 ]
+[ Upstream commit 472c5dd6b95c02b3e5d7395acf542150e91165e7 ]
 
-In async_set_registers(), when usb_submit_urb() fails, the allocated
-  async_req structure and URB are not freed, causing a memory leak.
+When the selftest 'tap.c' is compiled with '-D_FORTIFY_SOURCE=3',
+the strcpy() in rtattr_add_strsz() is replaced with a checked
+version which causes the test to consistently fail when compiled
+with toolchains for which this option is enabled by default.
 
-  The completion callback async_set_reg_cb() is responsible for freeing
-  these allocations, but it is only called after the URB is successfully
-  submitted and completes (successfully or with error). If submission
-  fails, the callback never runs and the memory is leaked.
+ TAP version 13
+ 1..3
+ # Starting 3 tests from 1 test cases.
+ #  RUN           tap.test_packet_valid_udp_gso ...
+ *** buffer overflow detected ***: terminated
+ # test_packet_valid_udp_gso: Test terminated by assertion
+ #          FAIL  tap.test_packet_valid_udp_gso
+ not ok 1 tap.test_packet_valid_udp_gso
+ #  RUN           tap.test_packet_valid_udp_csum ...
+ *** buffer overflow detected ***: terminated
+ # test_packet_valid_udp_csum: Test terminated by assertion
+ #          FAIL  tap.test_packet_valid_udp_csum
+ not ok 2 tap.test_packet_valid_udp_csum
+ #  RUN           tap.test_packet_crash_tap_invalid_eth_proto ...
+ *** buffer overflow detected ***: terminated
+ # test_packet_crash_tap_invalid_eth_proto: Test terminated by assertion
+ #          FAIL  tap.test_packet_crash_tap_invalid_eth_proto
+ not ok 3 tap.test_packet_crash_tap_invalid_eth_proto
+ # FAILED: 0 / 3 tests passed.
+ # Totals: pass:0 fail:3 xfail:0 xpass:0 skip:0 error:0
 
-  Fix this by freeing both the URB and the request structure in the error
-  path when usb_submit_urb() fails.
+A buffer overflow is detected by the fortified glibc __strcpy_chk()
+since the __builtin_object_size() of `RTA_DATA(rta)` is incorrectly
+reported as 1, even though there is ample space in its bounding
+buffer `req`.
 
-Reported-by: syzbot+8dd915c7cb0490fc8c52@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=8dd915c7cb0490fc8c52
-Fixes: 4d12997a9bb3 ("drivers: net: usb: rtl8150: concurrent URB bugfix")
-Signed-off-by: Deepakkumar Karn <dkarn@redhat.com>
-Link: https://patch.msgid.link/20251216151304.59865-2-dkarn@redhat.com
+Additionally, given that IFLA_IFNAME also expects a null-terminated
+string, callers of rtaddr_add_str{,sz}() could simply use the
+rtaddr_add_strsz() variant. (which has been renamed to remove the
+trailing `sz`) memset() has been used for this function since it
+is unchecked and thus circumvents the issue discussed in the
+previous paragraph.
+
+Fixes: 2e64fe4624d1 ("selftests: add few test cases for tap driver")
+Signed-off-by: Alice C. Munduruca <alice.munduruca@canonical.com>
+Reviewed-by: Cengiz Can <cengiz.can@canonical.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20251216170641.250494-1-alice.munduruca@canonical.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/rtl8150.c | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/testing/selftests/net/tap.c | 16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/usb/rtl8150.c b/drivers/net/usb/rtl8150.c
-index 278e6cb6f4d9..e40b0669d9f4 100644
---- a/drivers/net/usb/rtl8150.c
-+++ b/drivers/net/usb/rtl8150.c
-@@ -211,6 +211,8 @@ static int async_set_registers(rtl8150_t *dev, u16 indx, u16 size, u16 reg)
- 		if (res == -ENODEV)
- 			netif_device_detach(dev->netdev);
- 		dev_err(&dev->udev->dev, "%s failed with %d\n", __func__, res);
-+		kfree(req);
-+		usb_free_urb(async_urb);
- 	}
- 	return res;
+diff --git a/tools/testing/selftests/net/tap.c b/tools/testing/selftests/net/tap.c
+index 247c3b3ac1c9..51a209014f1c 100644
+--- a/tools/testing/selftests/net/tap.c
++++ b/tools/testing/selftests/net/tap.c
+@@ -56,18 +56,12 @@ static void rtattr_end(struct nlmsghdr *nh, struct rtattr *attr)
+ static struct rtattr *rtattr_add_str(struct nlmsghdr *nh, unsigned short type,
+ 				     const char *s)
+ {
+-	struct rtattr *rta = rtattr_add(nh, type, strlen(s));
++	unsigned int strsz = strlen(s) + 1;
++	struct rtattr *rta;
+ 
+-	memcpy(RTA_DATA(rta), s, strlen(s));
+-	return rta;
+-}
+-
+-static struct rtattr *rtattr_add_strsz(struct nlmsghdr *nh, unsigned short type,
+-				       const char *s)
+-{
+-	struct rtattr *rta = rtattr_add(nh, type, strlen(s) + 1);
++	rta = rtattr_add(nh, type, strsz);
+ 
+-	strcpy(RTA_DATA(rta), s);
++	memcpy(RTA_DATA(rta), s, strsz);
+ 	return rta;
  }
+ 
+@@ -119,7 +113,7 @@ static int dev_create(const char *dev, const char *link_type,
+ 
+ 	link_info = rtattr_begin(&req.nh, IFLA_LINKINFO);
+ 
+-	rtattr_add_strsz(&req.nh, IFLA_INFO_KIND, link_type);
++	rtattr_add_str(&req.nh, IFLA_INFO_KIND, link_type);
+ 
+ 	if (fill_info_data) {
+ 		info_data = rtattr_begin(&req.nh, IFLA_INFO_DATA);
 -- 
 2.51.0
 
