@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1CF635971B;
-	Fri,  9 Jan 2026 12:20:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CC7D35971B;
+	Fri,  9 Jan 2026 12:20:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961216; cv=none; b=d+D5eBuv1O3HIapWea58ur1gkapM/TFdL3WdZePXoJ2MOfo2hf417y907o4/uDihKNrc4fkRU+rGnaCXG+Q4h8E14q8qgkOVDf0k80QEcCuxz0xV7VvkjAeZ6GYZC1rqUuNrHVdHuBoEWQ8P4MyGSdjFYZ7WklPJMRY3w1sWaZc=
+	t=1767961219; cv=none; b=AS+/Bh+8HULLrXiz1hGNf2OlYEcuZMc8j8wT0deTHzFCx63hOyG21giudirbcaG8InH54qfaXrf38aSyv9XmaBbrn5BgJI1dLl8NzyvkAATts8F2eTm0sYFGbhACDqSZoeYPtJE0SAd8aC/8mMkjiTbfUBVkjduP1BnvMej/Jtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961216; c=relaxed/simple;
-	bh=nHZRJvfK7oVJBf2ydpTVY5/iFBluFsdsS8iEhlmowgE=;
+	s=arc-20240116; t=1767961219; c=relaxed/simple;
+	bh=JH5yilMbDU6TIzVxuhF99NBJ3bn5b5iLK19ySpTOCes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TCnVgL073Q7omtqYMi2y9tqBVgeUTVOV/YB0kfbdFPiPTtrPozX2tP98SpLY3WKSK3u6PNSXXLUsz1GyvxFyaZoEAvfVhEQrNtenik0Gmb+Pfy5NWyAEFKTwJcH8o59YN7S2AvM6yGAVpjn2mYkmNJvyZQTk4Qa3ZpC1beckMQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DJRR0VDL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aAeqhwS7MMcXvIoImsQXOjC4fJfB8xsmtYHV35ePMXjSdGU4F/9FfNu8VGqfxTBALpP+L3j+79B90CxyaKk1cm0BtiA0QOuO+3TB7cX+eeW9RXE8kMdlnF3oAoNRWAUFQeCSGG/bhjWH1K7vhH2RvL18ovP+RUzEdcGj+bC2dO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nznsprjy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DJRR0VDL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DA7EC4CEF1;
-	Fri,  9 Jan 2026 12:20:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nznsprjy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09149C16AAE;
+	Fri,  9 Jan 2026 12:20:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961216;
-	bh=nHZRJvfK7oVJBf2ydpTVY5/iFBluFsdsS8iEhlmowgE=;
+	s=korg; t=1767961219;
+	bh=JH5yilMbDU6TIzVxuhF99NBJ3bn5b5iLK19ySpTOCes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DJRR0VDLN7HIbahqvVm3AsRpe3zXyNDN5csjR9UUt7LLz5HE5GRBqN74xOdbXhPif
-	 fuvPijzss1JtLtrgdq+MRE8dOsL2iOyrD6no2LZiYXGEcoYt/wJfYlu5dkQuMrHhv3
-	 AgLxQgyFVewqXM8zmB+kK+by8fU1qpXgYGO1jkbc=
+	b=NznsprjymA98tZM0S8xZHZIYXQY4egeZJ1srNKa4/umqKSYR0fzIHchitC2989oOo
+	 HW+HTlUgYJAiPGCBESCgUcKjXOlmo3kATFu7YK6glLA67HN98R/j2OTKfOAd9DTtrQ
+	 sGBrVitMMmCgc7ZTkkcB5g6t/hgkfPuaUTCmhvig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seunghwan Baek <sh8267.baek@samsung.com>,
-	Peter Wang <peter.wang@mediatek.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 643/737] scsi: ufs: core: Add ufshcd_update_evt_hist() for UFS suspend error
-Date: Fri,  9 Jan 2026 12:43:02 +0100
-Message-ID: <20260109112158.202608671@linuxfoundation.org>
+Subject: [PATCH 6.6 644/737] mptcp: pm: ignore unknown endpoint flags
+Date: Fri,  9 Jan 2026 12:43:03 +0100
+Message-ID: <20260109112158.241067741@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,47 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seunghwan Baek <sh8267.baek@samsung.com>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-[ Upstream commit c9f36f04a8a2725172cdf2b5e32363e4addcb14c ]
+[ Upstream commit 0ace3297a7301911e52d8195cb1006414897c859 ]
 
-If UFS resume fails, the event history is updated in ufshcd_resume(), but
-there is no code anywhere to record UFS suspend. Therefore, add code to
-record UFS suspend error event history.
+Before this patch, the kernel was saving any flags set by the userspace,
+even unknown ones. This doesn't cause critical issues because the kernel
+is only looking at specific ones. But on the other hand, endpoints dumps
+could tell the userspace some recent flags seem to be supported on older
+kernel versions.
 
-Fixes: dd11376b9f1b ("scsi: ufs: Split the drivers/scsi/ufs directory")
+Instead, ignore all unknown flags when parsing them. By doing that, the
+userspace can continue to set unsupported flags, but it has a way to
+verify what is supported by the kernel.
+
+Note that it sounds better to continue accepting unsupported flags not
+to change the behaviour, but also that eases things on the userspace
+side by adding "optional" endpoint types only supported by newer kernel
+versions without having to deal with the different kernel versions.
+
+A note for the backports: there will be conflicts in mptcp.h on older
+versions not having the mentioned flags, the new line should still be
+added last, and the '5' needs to be adapted to have the same value as
+the last entry.
+
+Fixes: 01cacb00b35c ("mptcp: add netlink-based PM")
 Cc: stable@vger.kernel.org
-Signed-off-by: Seunghwan Baek <sh8267.baek@samsung.com>
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Link: https://patch.msgid.link/20251210063854.1483899-2-sh8267.baek@samsung.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-[ Adjust context ]
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20251205-net-mptcp-misc-fixes-6-19-rc1-v1-1-9e4781a6c1b8@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ GENMASK(5, 0) => GENMASK(4, 0) + context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ufs/core/ufshcd.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/uapi/linux/mptcp.h |    1 +
+ net/mptcp/pm_netlink.c     |    3 ++-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -10182,7 +10182,7 @@ static int ufshcd_suspend(struct ufs_hba
- 	ret = ufshcd_setup_clocks(hba, false);
- 	if (ret) {
- 		ufshcd_enable_irq(hba);
--		return ret;
-+		goto out;
- 	}
- 	if (ufshcd_is_clkgating_allowed(hba)) {
- 		hba->clk_gating.state = CLKS_OFF;
-@@ -10193,6 +10193,9 @@ static int ufshcd_suspend(struct ufs_hba
- 	ufshcd_vreg_set_lpm(hba);
- 	/* Put the host controller in low power mode if possible */
- 	ufshcd_hba_vreg_set_lpm(hba);
-+out:
-+	if (ret)
-+		ufshcd_update_evt_hist(hba, UFS_EVT_SUSPEND_ERR, (u32)ret);
- 	return ret;
- }
+--- a/include/uapi/linux/mptcp.h
++++ b/include/uapi/linux/mptcp.h
+@@ -88,6 +88,7 @@ enum {
+ #define MPTCP_PM_ADDR_FLAG_BACKUP			(1 << 2)
+ #define MPTCP_PM_ADDR_FLAG_FULLMESH			(1 << 3)
+ #define MPTCP_PM_ADDR_FLAG_IMPLICIT			(1 << 4)
++#define MPTCP_PM_ADDR_FLAGS_MASK			GENMASK(4, 0)
  
+ enum {
+ 	MPTCP_PM_CMD_UNSPEC,
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -1435,7 +1435,8 @@ int mptcp_pm_parse_entry(struct nlattr *
+ 	}
+ 
+ 	if (tb[MPTCP_PM_ADDR_ATTR_FLAGS])
+-		entry->flags = nla_get_u32(tb[MPTCP_PM_ADDR_ATTR_FLAGS]);
++		entry->flags = nla_get_u32(tb[MPTCP_PM_ADDR_ATTR_FLAGS]) &
++			       MPTCP_PM_ADDR_FLAGS_MASK;
+ 
+ 	if (tb[MPTCP_PM_ADDR_ATTR_PORT])
+ 		entry->addr.port = htons(nla_get_u16(tb[MPTCP_PM_ADDR_ATTR_PORT]));
 
 
