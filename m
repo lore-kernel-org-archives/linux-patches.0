@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B41E535A943;
-	Fri,  9 Jan 2026 12:15:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4E835A943;
+	Fri,  9 Jan 2026 12:15:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960954; cv=none; b=Z0b9XBCcULcX3owLXERlPzDB2Txv4RkPadfZCwNcL5YMrXAIop8TWMSN1flq++8r28a7j/xdWPKTzGFqhulQEYuUY7K5MeqKqtDIEg1Ot7+Nszh/ST8jBzND5KG9M+zkoLzsMz19Evq1GmNK74aabMxdVefKCrz4cYTCMmAVB8E=
+	t=1767960957; cv=none; b=Ktu9pB/ntzP/48YL3k8o7n+Mm1Kd6o9C5wLKf3SZhWdsjcCM0DJzlsDi0cCSNcONZyll2gm3kYTNv0DFGnTQuAckCP8VXAdPEwCi1LRgJuG40uYa70et8Vex6lk64EdD3ISd+jHUQ5VnpBiGGdGL1Ozik0ZpEYJQc9+R5SjUSLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960954; c=relaxed/simple;
-	bh=48vs9ErYCTx6eeYqhekbZpApXkLIAfqcrSmUjz9vZOA=;
+	s=arc-20240116; t=1767960957; c=relaxed/simple;
+	bh=MLRzOcwe52rOz00AychhaKP/WI1J/UZhOGiTEdjhGR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p53SB5gEbjv/ok1atzw8Hx9tq4XlgIIJNRkmj/U5/igzThT4EtLWetj7We3J8gUclbUoNqUqeTZ1TuIxlKch9EGPn681dRB2ubwQLqA9M+ht4gmzv72sFzO2s4TGIlLiRKEzrsq9MKsnmXWf+2jTV46KG7i/TPo+TEDosQsejXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g0asJJfs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K75BlrVw4kyEwpv1iR/4NGTGUmnEEVOPZjQzwfUCVZuDQ5wLwXfA5iX47+fwBo51ssIYIS5DRbAPDjLuhaljgkvj4lgpmtJ3MypxLPOV6UZHGgYeObVCphJTXUOCbQ4RMD3EVpYpC6xo9hSPxoV+YQO9ckX1rkJWjyLhNAd46js=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HXI4ouVs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g0asJJfs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CAEEC4CEF1;
-	Fri,  9 Jan 2026 12:15:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HXI4ouVs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 828E8C4CEF1;
+	Fri,  9 Jan 2026 12:15:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960953;
-	bh=48vs9ErYCTx6eeYqhekbZpApXkLIAfqcrSmUjz9vZOA=;
+	s=korg; t=1767960956;
+	bh=MLRzOcwe52rOz00AychhaKP/WI1J/UZhOGiTEdjhGR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g0asJJfs1MAnPSjZKWg9oTKfGaC/r6zNMAdHX8mGofHqY7GTd2M7BWJNw97OwOsVp
-	 KVJISQvHbDuiOlT85ccwGjOHw/WwPpilWJNptF5O2KOgLdMApv1Tl22CspHsXMykIE
-	 tJ8OgZxqcje7xpMcEb8YbfUoG0etrBfzdmzKoMYw=
+	b=HXI4ouVs0ddKy3Qp2vs7QCpI8u2r1tJxJohNIiiGRyAJkB5OMkqwLGAuyPOtK2wfS
+	 YGitJJO1Aa1la5VXCGl06mank3H4fdvrHTQ2kRGGoYEMsMIQZDhUBMmFhwEHleTLlH
+	 hQ72giIhXc4G+PJ/c52iK8Ujv7g0gaO5cstFq95Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Abramov <i.abramov@mt-integration.ru>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.6 584/737] media: msp3400: Avoid possible out-of-bounds array accesses in msp3400c_thread()
-Date: Fri,  9 Jan 2026 12:42:03 +0100
-Message-ID: <20260109112155.969239601@linuxfoundation.org>
+	Christian Hitz <christian.hitz@bbv.ch>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.6 567/737] leds: leds-lp50xx: LP5009 supports 3 modules for a total of 9 LEDs
+Date: Fri,  9 Jan 2026 12:41:46 +0100
+Message-ID: <20260109112155.330979030@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -50,39 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Abramov <i.abramov@mt-integration.ru>
+From: Christian Hitz <christian.hitz@bbv.ch>
 
-commit d2bceb2e20e783d57e739c71e4e50b4b9f4a3953 upstream.
+commit 5246e3673eeeccb4f5bf4f42375dd495d465ac15 upstream.
 
-It's possible for max1 to remain -1 if msp_read() always fail. This
-variable is further used as index for accessing arrays.
+LP5009 supports 9 LED outputs that are grouped into 3 modules.
 
-Fix that by checking max1 prior to array accesses.
-
-It seems that restart is the preferable action in case of out-of-bounds
-value.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 8a4b275f9c19 ("V4L/DVB (3427): audmode and rxsubchans fixes (VIDIOC_G/S_TUNER)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ivan Abramov <i.abramov@mt-integration.ru>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: 242b81170fb8 ("leds: lp50xx: Add the LP50XX family of the RGB LED driver")
+Signed-off-by: Christian Hitz <christian.hitz@bbv.ch>
+Link: https://patch.msgid.link/20251022063305.972190-1-christian@klarinett.li
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/msp3400-kthreads.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/leds/leds-lp50xx.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/i2c/msp3400-kthreads.c
-+++ b/drivers/media/i2c/msp3400-kthreads.c
-@@ -596,6 +596,8 @@ restart:
- 				"carrier2 val: %5d / %s\n", val, cd[i].name);
- 		}
+--- a/drivers/leds/leds-lp50xx.c
++++ b/drivers/leds/leds-lp50xx.c
+@@ -56,7 +56,7 @@
+ /* There are 3 LED outputs per bank */
+ #define LP50XX_LEDS_PER_MODULE	3
  
-+		if (max1 < 0 || max1 > 3)
-+			goto restart;
- 		/* program the msp3400 according to the results */
- 		state->main = msp3400c_carrier_detect_main[max1].cdo;
- 		switch (max1) {
+-#define LP5009_MAX_LED_MODULES	2
++#define LP5009_MAX_LED_MODULES	3
+ #define LP5012_MAX_LED_MODULES	4
+ #define LP5018_MAX_LED_MODULES	6
+ #define LP5024_MAX_LED_MODULES	8
 
 
