@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F9F35B153;
-	Fri,  9 Jan 2026 12:29:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB23359701;
+	Fri,  9 Jan 2026 12:30:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961800; cv=none; b=sWaxGySdKMf0N6xAzNDFgeLAbJuGyLx+cs+KQ2LNKXNKJ8w4LUa9zNKWpcsBt61Eu9pAaON5EcRqaA39Tuby2SptF8pkzhPegNc98a5kgqhMr4rzGAZBAiwgGphePDb/RdLkYTaiIAVq4spZ/Td/dx/fYSUn+EQYTE8Git+icGM=
+	t=1767961803; cv=none; b=oqQ1T59hgkTSspKr+qS3On9HZ00Bl/NXJtbV2j+TYOz4nOtNLjHeq7B5C3KLFzHAPEKwTAArAA8wkJ0JYcqFt9ebD7DiiTXSfnh6rbRRPrINYzzUBLK7fYgpf89/RV7+nNcpGH/VCTCi+VlvAoI1N+gN9NJHpoqJsjkb2CF7AOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961800; c=relaxed/simple;
-	bh=F41EzkFY3/wE0GOEjXoo2n6raNlOMtO+HG0PWOC4N2s=;
+	s=arc-20240116; t=1767961803; c=relaxed/simple;
+	bh=cPvOsCWwLQU8z52gEZTQpvR9TqpsCzRIP89fr8cXGCg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pxye/c8n4yek9OnQX0MC0JJDXjH9sJR+9ri1SWHX6V9NzT/ypTLA69yq7dO7ePnTzGnwK3Jj/GXBXKrk5IyRRZVKw6q7aYh2mgTwCKtRIYw4TNuDcdILSMYvlkRMf6XmShDPJhgmVpwK++2dapq3+TpvN5wfYdzZGt3WCqh0QEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=peZB6sKk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tB1VxG3HpDm+8CD9787UKDQOl9y8QMdqwNiXnQI2GhGZmJkxMUUckuQt1KohDZYTkkoVdS8YaefueqS/pma93XvXDicHhhodB/x8kQ4OZuCWNaBK4x2/r0dbBDX5cisDzATSx/P5rzHLX0HlK87pI/zvdMNJtW+nyy3C0tTiWuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ujNl7n8v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="peZB6sKk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FA57C19423;
-	Fri,  9 Jan 2026 12:29:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ujNl7n8v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BE84C4CEF1;
+	Fri,  9 Jan 2026 12:30:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961799;
-	bh=F41EzkFY3/wE0GOEjXoo2n6raNlOMtO+HG0PWOC4N2s=;
+	s=korg; t=1767961802;
+	bh=cPvOsCWwLQU8z52gEZTQpvR9TqpsCzRIP89fr8cXGCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=peZB6sKkG2qCM/Ch7/L+8Ck7OEc8QE7kPEJH3uSWszqaLSAD5YdFE0bbPWOcRAO4z
-	 kRcI3GQpAlflDUoESn0vgPfm+1KDgNQX8STp78kj8tNsQmtkwEmqYd5sdRCWpk/Bdb
-	 cyDIXela5Ve6sA3jOMIb6XfT8uHDF4DZ07INjnO0=
+	b=ujNl7n8vpMM0stQroT87GTzDVegKfC3gpdR3joUheJXmSgY+UvtTw8D1CS8GflvJQ
+	 s1toA1BGfcoO2QNfmwoJtAo3NSeTOKCxgxy02Dyz2X8Fwe4exTADx4AKWRo8vee1ZJ
+	 gjT+PSfcQwJVijXUR5C9Zv0Vjd9zBN2gG1y76R10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herve Codina <herve.codina@bootlin.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	syzbot+bdeb22a4b9a09ab9aa45@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 107/634] soc: renesas: r9a06g032-sysctrl: Handle h2mode setting based on USBF presence
-Date: Fri,  9 Jan 2026 12:36:25 +0100
-Message-ID: <20260109112121.460660311@linuxfoundation.org>
+Subject: [PATCH 6.1 098/634] ntfs3: init run lock for extend inode
+Date: Fri,  9 Jan 2026 12:36:16 +0100
+Message-ID: <20260109112121.121773933@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,82 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herve Codina <herve.codina@bootlin.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit e9fee814b054e4f6f2faf3d9c1944869fe41c9dd ]
+[ Upstream commit be99c62ac7e7af514e4b13f83c891a3cccefaa48 ]
 
-The CFG_USB[H2MODE] allows to switch the USB configuration. The
-configuration supported are:
-  - One host and one device
-or
-  - Two hosts
+After setting the inode mode of $Extend to a regular file, executing the
+truncate system call will enter the do_truncate() routine, causing the
+run_lock uninitialized error reported by syzbot.
 
-Set CFG_USB[H2MODE] based on the USBF controller (USB device)
-availability.
+Prior to patch 4e8011ffec79, if the inode mode of $Extend was not set to
+a regular file, the do_truncate() routine would not be entered.
 
-Signed-off-by: Herve Codina <herve.codina@bootlin.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20230105152257.310642-3-herve.codina@bootlin.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: f8def051bbcf ("clk: renesas: r9a06g032: Fix memory leak in error path")
+Add the run_lock initialization when loading $Extend.
+
+syzbot reported:
+INFO: trying to register non-static key.
+Call Trace:
+ dump_stack_lvl+0x189/0x250 lib/dump_stack.c:120
+ assign_lock_key+0x133/0x150 kernel/locking/lockdep.c:984
+ register_lock_class+0x105/0x320 kernel/locking/lockdep.c:1299
+ __lock_acquire+0x99/0xd20 kernel/locking/lockdep.c:5112
+ lock_acquire+0x120/0x360 kernel/locking/lockdep.c:5868
+ down_write+0x96/0x1f0 kernel/locking/rwsem.c:1590
+ ntfs_set_size+0x140/0x200 fs/ntfs3/inode.c:860
+ ntfs_extend+0x1d9/0x970 fs/ntfs3/file.c:387
+ ntfs_setattr+0x2e8/0xbe0 fs/ntfs3/file.c:808
+
+Fixes: 4e8011ffec79 ("ntfs3: pretend $Extend records as regular files")
+Reported-by: syzbot+bdeb22a4b9a09ab9aa45@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=bdeb22a4b9a09ab9aa45
+Tested-by: syzbot+bdeb22a4b9a09ab9aa45@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/r9a06g032-clocks.c | 28 ++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ fs/ntfs3/inode.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/renesas/r9a06g032-clocks.c b/drivers/clk/renesas/r9a06g032-clocks.c
-index 983faa5707b9c..087146f2ee068 100644
---- a/drivers/clk/renesas/r9a06g032-clocks.c
-+++ b/drivers/clk/renesas/r9a06g032-clocks.c
-@@ -25,6 +25,8 @@
- #include <linux/spinlock.h>
- #include <dt-bindings/clock/r9a06g032-sysctrl.h>
- 
-+#define R9A06G032_SYSCTRL_USB    0x00
-+#define R9A06G032_SYSCTRL_USB_H2MODE  (1<<1)
- #define R9A06G032_SYSCTRL_DMAMUX 0xA0
- 
- struct r9a06g032_gate {
-@@ -918,6 +920,29 @@ static void r9a06g032_clocks_del_clk_provider(void *data)
- 	of_clk_del_provider(data);
- }
- 
-+static void __init r9a06g032_init_h2mode(struct r9a06g032_priv *clocks)
-+{
-+	struct device_node *usbf_np = NULL;
-+	u32 usb;
-+
-+	while ((usbf_np = of_find_compatible_node(usbf_np, NULL,
-+						  "renesas,rzn1-usbf"))) {
-+		if (of_device_is_available(usbf_np))
-+			break;
-+	}
-+
-+	usb = readl(clocks->reg + R9A06G032_SYSCTRL_USB);
-+	if (usbf_np) {
-+		/* 1 host and 1 device mode */
-+		usb &= ~R9A06G032_SYSCTRL_USB_H2MODE;
-+		of_node_put(usbf_np);
-+	} else {
-+		/* 2 hosts mode */
-+		usb |= R9A06G032_SYSCTRL_USB_H2MODE;
-+	}
-+	writel(usb, clocks->reg + R9A06G032_SYSCTRL_USB);
-+}
-+
- static int __init r9a06g032_clocks_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
-@@ -947,6 +972,9 @@ static int __init r9a06g032_clocks_probe(struct platform_device *pdev)
- 	clocks->reg = of_iomap(np, 0);
- 	if (WARN_ON(!clocks->reg))
- 		return -ENOMEM;
-+
-+	r9a06g032_init_h2mode(clocks);
-+
- 	for (i = 0; i < ARRAY_SIZE(r9a06g032_clocks); ++i) {
- 		const struct r9a06g032_clkdesc *d = &r9a06g032_clocks[i];
- 		const char *parent_name = d->source ?
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index 785aa1673359a..e47eec61f2379 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -457,6 +457,7 @@ static struct inode *ntfs_read_mft(struct inode *inode,
+ 		/* Records in $Extend are not a files or general directories. */
+ 		inode->i_op = &ntfs_file_inode_operations;
+ 		mode = S_IFREG;
++		init_rwsem(&ni->file.run_lock);
+ 	} else {
+ 		err = -EINVAL;
+ 		goto out;
 -- 
 2.51.0
 
