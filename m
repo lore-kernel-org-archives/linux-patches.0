@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB2435B135;
-	Fri,  9 Jan 2026 12:49:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B594635B135;
+	Fri,  9 Jan 2026 12:49:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962949; cv=none; b=C3ub8Psq7jUgWcjfXctnN/vp1dqxuQYjvfarUwqAkGoft8JShLBqF7hbkWxkrHDVGCBwSoE+Ij0t/UHDCxB12Ym++PPmV7Ib+/K94xM62/IKOEbqdOpmG4xGLNHVjHIMNVeEB4UYHIlz52aLlC0Lis8Cx4v+SCvrDlt08i9wJIU=
+	t=1767962952; cv=none; b=B8Cw5Ak07BC25gyAF41skyEujM/8qJ0rplRBg2IqkxSdljhS1dGsSfJpSTVRsyaeWttRkB9LVzgjx7zvBTbr8/j5ECL3HgJI4g1YTv2jB1O/hW1tPCHnMnzqwq6K/YEQScTcJ5oaHrYTGallMiz/c3hS8gg1uiawd2LPNaXsDo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962949; c=relaxed/simple;
-	bh=c23e2ac08GFHq7YA1D6waojjU2+C7/+TrTPZLCcS/ro=;
+	s=arc-20240116; t=1767962952; c=relaxed/simple;
+	bh=47FlF+7bIkFMKSoVGy4iAD9RyDp+1UcgBgBPulhT7SY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XtNuBP0nn139mIGgxFq19cUjoaefczmHnehbAaGOBiz1o7LMTDZ5l998SwtGoKaZMLyoQNKOBr3bllTgKDndFpmkO+WvVeCTDItlz4esZC3/8Zy/HNSRhV57kYgVbkcOIoEIne1PYSz3hld7STmT4oQMEvzleKBNi59BWnaU6G0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CsimdkC6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kwRF7fJAUuL9pbQvESKxIKiMziXLqhvUm5ohfaIKkkSVkE1i1dXp018bNJQtaWQ8G7NQgoa51PZ6XD6BEBHkOqV2vyvwou24WT3qDSCVWwdSesZsFwHxCB0vD1rKb8BvkCOrQnm4fwlga+GqshzO8L78KqOmhbCcdKXZilNPFMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z45wNmEL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CsimdkC6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F649C4CEF1;
-	Fri,  9 Jan 2026 12:49:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z45wNmEL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E03C4C4CEF1;
+	Fri,  9 Jan 2026 12:49:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962949;
-	bh=c23e2ac08GFHq7YA1D6waojjU2+C7/+TrTPZLCcS/ro=;
+	s=korg; t=1767962952;
+	bh=47FlF+7bIkFMKSoVGy4iAD9RyDp+1UcgBgBPulhT7SY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CsimdkC6dAWqpSUGynm6niYZQr7BMHt75WiMbr0I32SBnK3H08cRpl6FVMQXbHt38
-	 ySIspLht5GxPfnd24VKZqXpp/M9TRyaZSaR8hujutUMKJMKBFXN+thyXVxf+k9yrz+
-	 eCj0otiWbpFZJgFr2J+cjcppPeu6pwU7fZ1ImD1c=
+	b=Z45wNmELfd6AqHhY6f9BlynIt4Kr5cpAX8cw+80kTEsHWBfRYu29aaNih1bN/UD1s
+	 sykTcL/+Kq3N9IBGRJJ7mfvB8ZVrh/J17RFCVpqTo73vq0xXUDx43U73P5Mb350Op7
+	 g9ACzW28vv1PynWP8yJX3TEeHlRzJc/VjxTszyVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 544/634] ext4: fix string copying in parse_apply_sb_mount_options()
-Date: Fri,  9 Jan 2026 12:43:42 +0100
-Message-ID: <20260109112138.058066762@linuxfoundation.org>
+Subject: [PATCH 6.1 545/634] mptcp: avoid deadlock on fallback while reinjecting
+Date: Fri,  9 Jan 2026 12:43:43 +0100
+Message-ID: <20260109112138.097514214@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -53,83 +52,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit ee5a977b4e771cc181f39d504426dbd31ed701cc ]
+[ Upstream commit ffb8c27b0539dd90262d1021488e7817fae57c42 ]
 
-strscpy_pad() can't be used to copy a non-NUL-term string into a NUL-term
-string of possibly bigger size.  Commit 0efc5990bca5 ("string.h: Introduce
-memtostr() and memtostr_pad()") provides additional information in that
-regard.  So if this happens, the following warning is observed:
+Jakub reported an MPTCP deadlock at fallback time:
 
-strnlen: detected buffer overflow: 65 byte read of buffer size 64
-WARNING: CPU: 0 PID: 28655 at lib/string_helpers.c:1032 __fortify_report+0x96/0xc0 lib/string_helpers.c:1032
-Modules linked in:
-CPU: 0 UID: 0 PID: 28655 Comm: syz-executor.3 Not tainted 6.12.54-syzkaller-00144-g5f0270f1ba00 #0
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-RIP: 0010:__fortify_report+0x96/0xc0 lib/string_helpers.c:1032
-Call Trace:
- <TASK>
- __fortify_panic+0x1f/0x30 lib/string_helpers.c:1039
- strnlen include/linux/fortify-string.h:235 [inline]
- sized_strscpy include/linux/fortify-string.h:309 [inline]
- parse_apply_sb_mount_options fs/ext4/super.c:2504 [inline]
- __ext4_fill_super fs/ext4/super.c:5261 [inline]
- ext4_fill_super+0x3c35/0xad00 fs/ext4/super.c:5706
- get_tree_bdev_flags+0x387/0x620 fs/super.c:1636
- vfs_get_tree+0x93/0x380 fs/super.c:1814
- do_new_mount fs/namespace.c:3553 [inline]
- path_mount+0x6ae/0x1f70 fs/namespace.c:3880
- do_mount fs/namespace.c:3893 [inline]
- __do_sys_mount fs/namespace.c:4103 [inline]
- __se_sys_mount fs/namespace.c:4080 [inline]
- __x64_sys_mount+0x280/0x300 fs/namespace.c:4080
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x64/0x140 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+ WARNING: possible recursive locking detected
+ 6.18.0-rc7-virtme #1 Not tainted
+ --------------------------------------------
+ mptcp_connect/20858 is trying to acquire lock:
+ ff1100001da18b60 (&msk->fallback_lock){+.-.}-{3:3}, at: __mptcp_try_fallback+0xd8/0x280
 
-Since userspace is expected to provide s_mount_opts field to be at most 63
-characters long with the ending byte being NUL-term, use a 64-byte buffer
-which matches the size of s_mount_opts, so that strscpy_pad() does its job
-properly.  Return with error if the user still managed to provide a
-non-NUL-term string here.
+ but task is already holding lock:
+ ff1100001da18b60 (&msk->fallback_lock){+.-.}-{3:3}, at: __mptcp_retrans+0x352/0xaa0
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+ other info that might help us debug this:
+  Possible unsafe locking scenario:
 
-Fixes: 8ecb790ea8c3 ("ext4: avoid potential buffer over-read in parse_apply_sb_mount_options()")
+        CPU0
+        ----
+   lock(&msk->fallback_lock);
+   lock(&msk->fallback_lock);
+
+  *** DEADLOCK ***
+
+  May be due to missing lock nesting notation
+
+ 3 locks held by mptcp_connect/20858:
+  #0: ff1100001da18290 (sk_lock-AF_INET){+.+.}-{0:0}, at: mptcp_sendmsg+0x114/0x1bc0
+  #1: ff1100001db40fd0 (k-sk_lock-AF_INET#2){+.+.}-{0:0}, at: __mptcp_retrans+0x2cb/0xaa0
+  #2: ff1100001da18b60 (&msk->fallback_lock){+.-.}-{3:3}, at: __mptcp_retrans+0x352/0xaa0
+
+ stack backtrace:
+ CPU: 0 UID: 0 PID: 20858 Comm: mptcp_connect Not tainted 6.18.0-rc7-virtme #1 PREEMPT(full)
+ Hardware name: Bochs, BIOS Bochs 01/01/2011
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0x6f/0xa0
+  print_deadlock_bug.cold+0xc0/0xcd
+  validate_chain+0x2ff/0x5f0
+  __lock_acquire+0x34c/0x740
+  lock_acquire.part.0+0xbc/0x260
+  _raw_spin_lock_bh+0x38/0x50
+  __mptcp_try_fallback+0xd8/0x280
+  mptcp_sendmsg_frag+0x16c2/0x3050
+  __mptcp_retrans+0x421/0xaa0
+  mptcp_release_cb+0x5aa/0xa70
+  release_sock+0xab/0x1d0
+  mptcp_sendmsg+0xd5b/0x1bc0
+  sock_write_iter+0x281/0x4d0
+  new_sync_write+0x3c5/0x6f0
+  vfs_write+0x65e/0xbb0
+  ksys_write+0x17e/0x200
+  do_syscall_64+0xbb/0xfd0
+  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+ RIP: 0033:0x7fa5627cbc5e
+ Code: 4d 89 d8 e8 14 bd 00 00 4c 8b 5d f8 41 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 11 c9 c3 0f 1f 80 00 00 00 00 48 8b 45 10 0f 05 <c9> c3 83 e2 39 83 fa 08 75 e7 e8 13 ff ff ff 0f 1f 00 f3 0f 1e fa
+ RSP: 002b:00007fff1fe14700 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
+ RAX: ffffffffffffffda RBX: 0000000000000005 RCX: 00007fa5627cbc5e
+ RDX: 0000000000001f9c RSI: 00007fff1fe16984 RDI: 0000000000000005
+ RBP: 00007fff1fe14710 R08: 0000000000000000 R09: 0000000000000000
+ R10: 0000000000000000 R11: 0000000000000202 R12: 00007fff1fe16920
+ R13: 0000000000002000 R14: 0000000000001f9c R15: 0000000000001f9c
+
+The packet scheduler could attempt a reinjection after receiving an
+MP_FAIL and before the infinite map has been transmitted, causing a
+deadlock since MPTCP needs to do the reinjection atomically from WRT
+fallback.
+
+Address the issue explicitly avoiding the reinjection in the critical
+scenario. Note that this is the only fallback critical section that
+could potentially send packets and hit the double-lock.
+
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Closes: https://netdev-ctrl.bots.linux.dev/logs/vmksft/mptcp-dbg/results/412720/1-mptcp-join-sh/stderr
+Fixes: f8a1d9b18c5e ("mptcp: make fallback action and fallback decision atomic")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Message-ID: <20251101160430.222297-1-pchelkin@ispras.ru>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-[ adapted 2-argument strscpy_pad() call to 3-argument form with explicit sizeof() ]
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20251205-net-mptcp-misc-fixes-6-19-rc1-v1-4-9e4781a6c1b8@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/super.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/mptcp/protocol.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -2416,7 +2416,7 @@ static int parse_apply_sb_mount_options(
- 					struct ext4_fs_context *m_ctx)
- {
- 	struct ext4_sb_info *sbi = EXT4_SB(sb);
--	char s_mount_opts[65];
-+	char s_mount_opts[64];
- 	struct ext4_fs_context *s_ctx = NULL;
- 	struct fs_context *fc = NULL;
- 	int ret = -ENOMEM;
-@@ -2424,7 +2424,8 @@ static int parse_apply_sb_mount_options(
- 	if (!sbi->s_es->s_mount_opts[0])
- 		return 0;
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2715,9 +2715,15 @@ static void __mptcp_retrans(struct sock
+ 	info.sent = 0;
+ 	info.limit = READ_ONCE(msk->csum_enabled) ? dfrag->data_len : dfrag->already_sent;
  
--	strscpy_pad(s_mount_opts, sbi->s_es->s_mount_opts, sizeof(s_mount_opts));
-+	if (strscpy_pad(s_mount_opts, sbi->s_es->s_mount_opts, sizeof(s_mount_opts)) < 0)
-+		return -E2BIG;
- 
- 	fc = kzalloc(sizeof(struct fs_context), GFP_KERNEL);
- 	if (!fc)
+-	/* make the whole retrans decision, xmit, disallow fallback atomic */
++	/*
++	 * make the whole retrans decision, xmit, disallow
++	 * fallback atomic, note that we can't retrans even
++	 * when an infinite fallback is in progress, i.e. new
++	 * subflows are disallowed.
++	 */
+ 	spin_lock_bh(&msk->fallback_lock);
+-	if (__mptcp_check_fallback(msk)) {
++	if (__mptcp_check_fallback(msk) ||
++	    !msk->allow_subflows) {
+ 		spin_unlock_bh(&msk->fallback_lock);
+ 		release_sock(ssk);
+ 		return;
 
 
