@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9DA5335BCD;
-	Fri,  9 Jan 2026 12:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 765F733D511;
+	Fri,  9 Jan 2026 12:43:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962586; cv=none; b=jYZbreye2LwAWUCqOYj20olOOFalABiTzUduYMr59bJ9D4V5np52OaCS+P5ZiXeJxz/qVs6sR1WlhjD/Hmphvu34t9qMaGGKct/5lWpB7vr7N1lbo6PXtR+u+9i/vBCQUVXeLBL5feBFcAdZA2QSNEHYi9Jln+X6Ms+Epz4KLCk=
+	t=1767962589; cv=none; b=CGwbadONe4w0+Tp5x+Fl/v9Yn1hepdaZW6tcViyQttryoUexAknFthcUP0We9rezHUgk22Dt+IKeRzriWRlhEVLEcp2YpAKly5dGYfNRII/rAMyWQK4oY6BQ+6RHQhg1PLHZQSYPFeE1gI8486lkOP5Oh1CZEJqiEmHZ+++oVUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962586; c=relaxed/simple;
-	bh=Grk4mJYg/W3PCOjkZPGV8GHx1nX6RFIG/SurwoSukJc=;
+	s=arc-20240116; t=1767962589; c=relaxed/simple;
+	bh=pt1yfe+W4Kaydq3eLqO6OMuQuNzreerfkPHqMtduH3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rUD8vWbfEbduUm0iyge3i8dEsbCQM9eAosdSAQu7+XTqFR756QiuvJqSmcHdEuEPyqDL6jbBm4XRvdZRQZJL+yZ45snPa64GO4tsyRRr3KGEU/ntGbEX70mukEBnUsZ8C4RxDp8zqHUG58eGPrqY7Es88DusRbGFRx0JX4vBmg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IxtR9wxU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PgLSoIJgJ66dcctZEhn6dZk34ok6mANUpDTA9QBBCukezrsuhyQVZNoZRKRNLJ8+MtvvonyYXKdkEdED3GTfiznBtpPbLMQjpdAVg4mqOVzcouhb7dfIRuZp3elxPZCRaVjCjkef009LJeUK1Il1WEfj1djEnMi78bI41X4oZXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ghj5ff+w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IxtR9wxU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C342C4CEF1;
-	Fri,  9 Jan 2026 12:43:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ghj5ff+w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF041C4CEF1;
+	Fri,  9 Jan 2026 12:43:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962586;
-	bh=Grk4mJYg/W3PCOjkZPGV8GHx1nX6RFIG/SurwoSukJc=;
+	s=korg; t=1767962589;
+	bh=pt1yfe+W4Kaydq3eLqO6OMuQuNzreerfkPHqMtduH3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IxtR9wxUh68jdCD066R9ImFTmNwGHF+iJWq5zbjgu4VpJHAy0bCfCjtIxOEi+BUp6
-	 T3D5dBt4Xdk2y+8wh3ZcgfQU+Q9mcUPoD9RZSe0q24BP+bjVnzi8nOJd932LSoXuT6
-	 aNqbtCSpPCo8Y1MS/7DuusgI+ubhke6u2hTRA4sU=
+	b=Ghj5ff+wXDojLc+zYYUGiro5rlHS+JNfZLJF8N9hJS2KY65wKJf18aSYU5hgXOCXR
+	 qxSu4clxRQUDeXYP23uVv5EbAlfjHcucTYAAY3CBn+q1iyQwgP+FCUieoZUozIbqvF
+	 EcXSxPuhYbsU2EGIw2ihQ5eVBCE84kHlzss0NHOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 416/634] net: dsa: b53: skip multicast entries for fdb_dump()
-Date: Fri,  9 Jan 2026 12:41:34 +0100
-Message-ID: <20260109112133.189742148@linuxfoundation.org>
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.1 386/634] hwmon: (w83791d) Convert macros to functions to avoid TOCTOU
+Date: Fri,  9 Jan 2026 12:41:04 +0100
+Message-ID: <20260109112132.056620770@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,45 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Gorski <jonas.gorski@gmail.com>
+From: Gui-Dong Han <hanguidong02@gmail.com>
 
-[ Upstream commit d42bce414d1c5c0b536758466a1f63ac358e613c ]
+commit 670d7ef945d3a84683594429aea6ab2cdfa5ceb4 upstream.
 
-port_fdb_dump() is supposed to only add fdb entries, but we iterate over
-the full ARL table, which also includes multicast entries.
+The macro FAN_FROM_REG evaluates its arguments multiple times. When used
+in lockless contexts involving shared driver data, this leads to
+Time-of-Check to Time-of-Use (TOCTOU) race conditions, potentially
+causing divide-by-zero errors.
 
-So check if the entry is a multicast entry before passing it on to the
-callback().
+Convert the macro to a static function. This guarantees that arguments
+are evaluated only once (pass-by-value), preventing the race
+conditions.
 
-Additionally, the port of those entries is a bitmask, not a port number,
-so any included entries would have even be for the wrong port.
+Additionally, in store_fan_div, move the calculation of the minimum
+limit inside the update lock. This ensures that the read-modify-write
+sequence operates on consistent data.
 
-Fixes: 1da6df85c6fb ("net: dsa: b53: Implement ARL add/del/dump operations")
-Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20251217205756.172123-1-jonas.gorski@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Adhere to the principle of minimal changes by only converting macros
+that evaluate arguments multiple times and are used in lockless
+contexts.
+
+Link: https://lore.kernel.org/all/CALbr=LYJ_ehtp53HXEVkSpYoub+XYSTU8Rg=o1xxMJ8=5z8B-g@mail.gmail.com/
+Fixes: 9873964d6eb2 ("[PATCH] HWMON: w83791d: New hardware monitoring driver for the Winbond W83791D")
+Cc: stable@vger.kernel.org
+Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Link: https://lore.kernel.org/r/20251202180105.12842-1-hanguidong02@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/hwmon/w83791d.c |   17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index bdbb873fe6eb..49fb610db484 100644
---- a/drivers/net/dsa/b53/b53_common.c
-+++ b/drivers/net/dsa/b53/b53_common.c
-@@ -1815,6 +1815,9 @@ static int b53_fdb_copy(int port, const struct b53_arl_entry *ent,
- 	if (!ent->is_valid)
- 		return 0;
+--- a/drivers/hwmon/w83791d.c
++++ b/drivers/hwmon/w83791d.c
+@@ -218,9 +218,14 @@ static u8 fan_to_reg(long rpm, int div)
+ 	return clamp_val((1350000 + rpm * div / 2) / (rpm * div), 1, 254);
+ }
  
-+	if (is_multicast_ether_addr(ent->mac))
+-#define FAN_FROM_REG(val, div)	((val) == 0 ? -1 : \
+-				((val) == 255 ? 0 : \
+-					1350000 / ((val) * (div))))
++static int fan_from_reg(int val, int div)
++{
++	if (val == 0)
++		return -1;
++	if (val == 255)
 +		return 0;
-+
- 	if (port != ent->port)
- 		return 0;
++	return 1350000 / (val * div);
++}
  
--- 
-2.51.0
-
+ /* for temp1 which is 8-bit resolution, LSB = 1 degree Celsius */
+ #define TEMP1_FROM_REG(val)	((val) * 1000)
+@@ -521,7 +526,7 @@ static ssize_t show_##reg(struct device
+ 	struct w83791d_data *data = w83791d_update_device(dev); \
+ 	int nr = sensor_attr->index; \
+ 	return sprintf(buf, "%d\n", \
+-		FAN_FROM_REG(data->reg[nr], DIV_FROM_REG(data->fan_div[nr]))); \
++		fan_from_reg(data->reg[nr], DIV_FROM_REG(data->fan_div[nr]))); \
+ }
+ 
+ show_fan_reg(fan);
+@@ -585,10 +590,10 @@ static ssize_t store_fan_div(struct devi
+ 	if (err)
+ 		return err;
+ 
++	mutex_lock(&data->update_lock);
+ 	/* Save fan_min */
+-	min = FAN_FROM_REG(data->fan_min[nr], DIV_FROM_REG(data->fan_div[nr]));
++	min = fan_from_reg(data->fan_min[nr], DIV_FROM_REG(data->fan_div[nr]));
+ 
+-	mutex_lock(&data->update_lock);
+ 	data->fan_div[nr] = div_to_reg(nr, val);
+ 
+ 	switch (nr) {
 
 
