@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A159335BCD;
-	Fri,  9 Jan 2026 12:34:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D4E5358D30;
+	Fri,  9 Jan 2026 12:34:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962089; cv=none; b=Y/slZFZH5BSnPi56MNq76mhuCwh1OkxPq4ed6W5g+qGZXT2hz7Fsv8q2BCav3yZ186Rz0L1J0n2Y7iVb5hcY6L4S376psAV80Wme9UWkgSe71RU8HstqPC4xf9rkQmNP0NGjMIZrffnNfQ36JUhdLF0f/82h7oaigDIoKTcffis=
+	t=1767962092; cv=none; b=J4AWVqn4FipdQuVgJzk34LRxvev85mvBTW2n9GD8HaGc5hF95y5BwhWjhwC5mUIcuf4knWAKtkI8K5OXh1UevDyDejIHmkWHWqJjuRF9xvTJBv/JXkUely6fNhMeNlzbQ1tPmEYiRFOHK/ohLZOv3ovh9xpZtUMLS5hH9D16vrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962089; c=relaxed/simple;
-	bh=jevsbeaZ6sTiyIg3FPfyGkLTvScWMhmwzR6AfTNYvFk=;
+	s=arc-20240116; t=1767962092; c=relaxed/simple;
+	bh=+IdZJX1QPXfFiZLgIZdHvr8HGy+YwsrXi6n0GaF1R3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sXJPa2ItwN6ZesmIRUn6HYlagdVjzRGOlfN2cnRQ32x7l/6RMKbX1uMvZydnM5EfaJG30rXXIZhh37MnsZa5TGMHBoDEdlqWnyfbYN8IZQZswSIgIWdevcj56GMJXK2psxsmBdphaQXBF2hTiVgyjaqijsHQxLQWqgTeufeX5Sw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ceXFF88O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uqMF88km2fTt0EDABbEL/9ud6/sOGtvjJ9G1iDFbN7Po4glR7FUg/lVtaOPU87Pcuyj0kIVLYmWpRNtjU5vWj4AHnpRUHmvVQsVk6dxtm+IC+d+DLCeU4yaRiwyWHRnYKbmrZWKd3mQfDUcsv0akpUuc2M7Nwso2gIPfxY6cOyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yl7vFElB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ceXFF88O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF338C16AAE;
-	Fri,  9 Jan 2026 12:34:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yl7vFElB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B626AC4CEF1;
+	Fri,  9 Jan 2026 12:34:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962089;
-	bh=jevsbeaZ6sTiyIg3FPfyGkLTvScWMhmwzR6AfTNYvFk=;
+	s=korg; t=1767962092;
+	bh=+IdZJX1QPXfFiZLgIZdHvr8HGy+YwsrXi6n0GaF1R3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ceXFF88OARiz2PYS5ixy1H5/hFPFlYhdARdudAS/k+woAi1mBkdjIOJdkECLeHAqp
-	 7mNf21jcHutEjU8Sg8EZ7p3h9t3CnhHacivCCMkH8N4+eVb2x3dRfiy0yTqV6Y8kIh
-	 UXA6hoRP1GCxU+JQfeqQsLjoQuhi9Ti/79OrCrXY=
+	b=yl7vFElB4xF0I2UNMhG3xVO60kOsmBZRamkDD95kRiLEMdX+Ivua0oYvwpH9xfi4N
+	 xSiCydW+cKLIyZoipcjQMjE643TI3Avrsn9dBhJdCjQOia4CIPP12qB947xv4NDAZP
+	 De7FKBgBIF/tXzRJUeeu5wpHkeELMHjBlLYsZdYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Junrui Luo <moonafterrain@outlook.com>,
+	Xie Yuanbin <xieyuanbin1@huawei.com>,
+	Liyuan Pang <pangliyuan1@huawei.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 210/634] ALSA: firewire-motu: add bounds check in put_user loop for DSP events
-Date: Fri,  9 Jan 2026 12:38:08 +0100
-Message-ID: <20260109112125.339272452@linuxfoundation.org>
+Subject: [PATCH 6.1 211/634] ARM: 9464/1: fix input-only operand modification in load_unaligned_zeropad()
+Date: Fri,  9 Jan 2026 12:38:09 +0100
+Message-ID: <20260109112125.375902836@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,39 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Liyuan Pang <pangliyuan1@huawei.com>
 
-[ Upstream commit 298e753880b6ea99ac30df34959a7a03b0878eed ]
+[ Upstream commit edb924a7211c9aa7a4a415e03caee4d875e46b8e ]
 
-In the DSP event handling code, a put_user() loop copies event data.
-When the user buffer size is not aligned to 4 bytes, it could overwrite
-beyond the buffer boundary.
+In the inline assembly inside load_unaligned_zeropad(), the "addr" is
+constrained as input-only operand. The compiler assumes that on exit
+from the asm statement these operands contain the same values as they
+had before executing the statement, but when kernel page fault happened, the assembly fixup code "bic %2 %2, #0x3" modify the value of "addr", which may lead to an unexpected behavior.
 
-Fix by adding a bounds check before put_user().
+Use a temporary variable "tmp" to handle it, instead of modifying the
+input-only operand, just like what arm64's load_unaligned_zeropad()
+does.
 
-Suggested-by: Takashi Iwai <tiwai@suse.de>
-Fixes: 634ec0b2906e ("ALSA: firewire-motu: notify event for parameter change in register DSP model")
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Link: https://patch.msgid.link/SYBPR01MB788112C72AF8A1C8C448B4B8AFA3A@SYBPR01MB7881.ausprd01.prod.outlook.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: b9a50f74905a ("ARM: 7450/1: dcache: select DCACHE_WORD_ACCESS for little-endian ARMv6+ CPUs")
+Co-developed-by: Xie Yuanbin <xieyuanbin1@huawei.com>
+Signed-off-by: Xie Yuanbin <xieyuanbin1@huawei.com>
+Signed-off-by: Liyuan Pang <pangliyuan1@huawei.com>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/firewire/motu/motu-hwdep.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/include/asm/word-at-a-time.h | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/sound/firewire/motu/motu-hwdep.c b/sound/firewire/motu/motu-hwdep.c
-index 28885c8004aea..8519a9f9ce2c0 100644
---- a/sound/firewire/motu/motu-hwdep.c
-+++ b/sound/firewire/motu/motu-hwdep.c
-@@ -75,7 +75,7 @@ static long hwdep_read(struct snd_hwdep *hwdep, char __user *buf, long count,
- 		while (consumed < count &&
- 		       snd_motu_register_dsp_message_parser_copy_event(motu, &ev)) {
- 			ptr = (u32 __user *)(buf + consumed);
--			if (put_user(ev, ptr))
-+			if (consumed + sizeof(ev) > count || put_user(ev, ptr))
- 				return -EFAULT;
- 			consumed += sizeof(ev);
- 		}
+diff --git a/arch/arm/include/asm/word-at-a-time.h b/arch/arm/include/asm/word-at-a-time.h
+index 352ab213520d2..2e6d0b4349f47 100644
+--- a/arch/arm/include/asm/word-at-a-time.h
++++ b/arch/arm/include/asm/word-at-a-time.h
+@@ -66,7 +66,7 @@ static inline unsigned long find_zero(unsigned long mask)
+  */
+ static inline unsigned long load_unaligned_zeropad(const void *addr)
+ {
+-	unsigned long ret, offset;
++	unsigned long ret, tmp;
+ 
+ 	/* Load word from unaligned pointer addr */
+ 	asm(
+@@ -74,9 +74,9 @@ static inline unsigned long load_unaligned_zeropad(const void *addr)
+ 	"2:\n"
+ 	"	.pushsection .text.fixup,\"ax\"\n"
+ 	"	.align 2\n"
+-	"3:	and	%1, %2, #0x3\n"
+-	"	bic	%2, %2, #0x3\n"
+-	"	ldr	%0, [%2]\n"
++	"3:	bic	%1, %2, #0x3\n"
++	"	ldr	%0, [%1]\n"
++	"	and	%1, %2, #0x3\n"
+ 	"	lsl	%1, %1, #0x3\n"
+ #ifndef __ARMEB__
+ 	"	lsr	%0, %0, %1\n"
+@@ -89,7 +89,7 @@ static inline unsigned long load_unaligned_zeropad(const void *addr)
+ 	"	.align	3\n"
+ 	"	.long	1b, 3b\n"
+ 	"	.popsection"
+-	: "=&r" (ret), "=&r" (offset)
++	: "=&r" (ret), "=&r" (tmp)
+ 	: "r" (addr), "Qo" (*(unsigned long *)addr));
+ 
+ 	return ret;
 -- 
 2.51.0
 
