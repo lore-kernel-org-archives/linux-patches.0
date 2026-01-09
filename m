@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D9B61946C8;
-	Fri,  9 Jan 2026 12:06:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0756A359F99;
+	Fri,  9 Jan 2026 12:06:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960366; cv=none; b=cX0VVswFnVkMte9Nb7PqV7Ohrc8Yo+iFA6XRKwX5hHQwXWQNbjaCXjkfwWeWxK2Ysf6cOq10eA1fO7VlNgPZ76db0b3aD3mXsuqavZUHq5xjyhEeRDzRLRid9YxTKqywMn6h61r1ks1IFwI2AmK0wvObKiCe6abUQdPzLvzNygs=
+	t=1767960369; cv=none; b=TXbH4pX6FpY+Apd87ItBp3Wp6ZtuQ9/jfmsn9VbX2v6YWOMx9lmRfZCbsqYhw7UJupiwLpznZhtw8NLLOoME8LbPI0Oryi1xUd8VJrI/N1SEhL63JS2ZA8CXpKut4+qHZVnfRUIcG51/TyKw3hwc7tA3peGeMs8GZ057oETkhHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960366; c=relaxed/simple;
-	bh=WnwrqoGkLv3bLtQ7pKl/P+6nEK0cOPeKVYnwNL7W4Zg=;
+	s=arc-20240116; t=1767960369; c=relaxed/simple;
+	bh=T/FgkQCLKyHvU9XKJegoQG6tBiYl/1HguX7pQJAuIX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NBd4eNtjnAQ3w7w0pjRPqGH2RPb35Ss+UR0pb0pXtQgQeG+1NVEiWEl4qqbr3Y5XyI+KEtL9XGCvpGR8xZCOLPiLhHTzK7sRrDGcvZ748EkDxnQyd5t9M2KJdfTa4V022vMjIl1Fbr8go3GKMwV9wVmXIOeEz7W8y8LVIvWT7pc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LyxyWFsA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bA5WmRX+9CHzeMoZ61mB6xxuFh2OqDHpAmmH7vB8DvNCpQuOae1FNh29HLJih7rHPpB6+fW9sd17SXr8N47Uc54Vm2aYEwVYA/A2csSfrMkbwhNiyDJ2ASQfaNxN4SiGpHiwR/3RIi8nKwOOkna3WgZT7F2r8Hfy0qlIEpBphvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AGXKYk0/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LyxyWFsA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A269DC4CEF1;
-	Fri,  9 Jan 2026 12:06:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AGXKYk0/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87091C4CEF1;
+	Fri,  9 Jan 2026 12:06:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960366;
-	bh=WnwrqoGkLv3bLtQ7pKl/P+6nEK0cOPeKVYnwNL7W4Zg=;
+	s=korg; t=1767960368;
+	bh=T/FgkQCLKyHvU9XKJegoQG6tBiYl/1HguX7pQJAuIX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LyxyWFsAOT+XV63mD/r8Fz5q4Ya3vopRUwT7xf4BQ5HfkJz1kld7cYEbQijntrhKu
-	 qrKpvb5+AyJAhdLOWa7/ceO1/JbcSGvV0AG7q0v5IRWDcoE7dehpGJrXW/W+flQ9gY
-	 J7s28sP4EfjySs87Fc1oQYqaEf1uaEXxW2ysfOBs=
+	b=AGXKYk0/jYYVNlXQJxIa8fuVkSctf4MuFTTWU+/82wCFCYmsDMw/Vv6RzoHe0XdmP
+	 DBPUV54emFlAddsZjrOyHcQm1c2MuxYqwesMq251ksldRihKF1KhNTyZEGPU9mt8NT
+	 idJ8ARdOVfpq21hJOrbmfBmrE2L2iKQAWqAkHhp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Sverdlin Alexander <alexander.sverdlin@siemens.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 378/737] spi: fsl-cpm: Check length parity before switching to 16 bit mode
-Date: Fri,  9 Jan 2026 12:38:37 +0100
-Message-ID: <20260109112148.218778555@linuxfoundation.org>
+	stable@bvger.kernel.org,
+	Jared Kangas <jkangas@redhat.com>,
+	Haibo Chen <haibo.chen@nxp.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.6 379/737] mmc: sdhci-esdhc-imx: add alternate ARCH_S32 dependency to Kconfig
+Date: Fri,  9 Jan 2026 12:38:38 +0100
+Message-ID: <20260109112148.256479111@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,46 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Jared Kangas <jkangas@redhat.com>
 
-commit 1417927df8049a0194933861e9b098669a95c762 upstream.
+commit d3ecb12e2e04ce53c95f933c462f2d8b150b965b upstream.
 
-Commit fc96ec826bce ("spi: fsl-cpm: Use 16 bit mode for large transfers
-with even size") failed to make sure that the size is really even
-before switching to 16 bit mode. Until recently the problem went
-unnoticed because kernfs uses a pre-allocated bounce buffer of size
-PAGE_SIZE for reading EEPROM.
+MMC_SDHCI_ESDHC_IMX requires ARCH_MXC despite also being used on
+ARCH_S32, which results in unmet dependencies when compiling strictly
+for ARCH_S32. Resolve this by adding ARCH_S32 as an alternative to
+ARCH_MXC in the driver's dependencies.
 
-But commit 8ad6249c51d0 ("eeprom: at25: convert to spi-mem API")
-introduced an additional dynamically allocated bounce buffer whose size
-is exactly the size of the transfer, leading to a buffer overrun in
-the fsl-cpm driver when that size is odd.
-
-Add the missing length parity verification and remain in 8 bit mode
-when the length is not even.
-
-Fixes: fc96ec826bce ("spi: fsl-cpm: Use 16 bit mode for large transfers with even size")
-Cc: stable@vger.kernel.org
-Closes: https://lore.kernel.org/all/638496dd-ec60-4e53-bad7-eb657f67d580@csgroup.eu/
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Reviewed-by: Sverdlin Alexander <alexander.sverdlin@siemens.com>
-Link: https://patch.msgid.link/3c4d81c3923c93f95ec56702a454744a4bad3cfc.1763627618.git.christophe.leroy@csgroup.eu
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 5c4f00627c9a ("mmc: sdhci-esdhc-imx: add NXP S32G2 support")
+Cc: stable@bvger.kernel.org
+Signed-off-by: Jared Kangas <jkangas@redhat.com>
+Reviewed-by: Haibo Chen <haibo.chen@nxp.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-fsl-spi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/Kconfig |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/spi/spi-fsl-spi.c
-+++ b/drivers/spi/spi-fsl-spi.c
-@@ -336,7 +336,7 @@ static int fsl_spi_prepare_message(struc
- 			if (t->bits_per_word == 16 || t->bits_per_word == 32)
- 				t->bits_per_word = 8; /* pretend its 8 bits */
- 			if (t->bits_per_word == 8 && t->len >= 256 &&
--			    (mpc8xxx_spi->flags & SPI_CPM1))
-+			    !(t->len & 1) && (mpc8xxx_spi->flags & SPI_CPM1))
- 				t->bits_per_word = 16;
- 		}
- 	}
+--- a/drivers/mmc/host/Kconfig
++++ b/drivers/mmc/host/Kconfig
+@@ -278,14 +278,14 @@ config MMC_SDHCI_ESDHC_MCF
+ 
+ config MMC_SDHCI_ESDHC_IMX
+ 	tristate "SDHCI support for the Freescale eSDHC/uSDHC i.MX controller"
+-	depends on ARCH_MXC || COMPILE_TEST
++	depends on ARCH_MXC || ARCH_S32 || COMPILE_TEST
+ 	depends on MMC_SDHCI_PLTFM
+ 	depends on OF
+ 	select MMC_SDHCI_IO_ACCESSORS
+ 	select MMC_CQHCI
+ 	help
+ 	  This selects the Freescale eSDHC/uSDHC controller support
+-	  found on i.MX25, i.MX35 i.MX5x and i.MX6x.
++	  found on i.MX25, i.MX35, i.MX5x, i.MX6x, and S32G.
+ 
+ 	  If you have a controller with this interface, say Y or M here.
+ 
 
 
