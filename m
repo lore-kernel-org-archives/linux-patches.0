@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B422359703;
-	Fri,  9 Jan 2026 11:58:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731BD33ADB8;
+	Fri,  9 Jan 2026 11:58:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959936; cv=none; b=fn/vhM0TyMLKHNOxUdpiUywh3EcjT/KKHCieyicO/n2SKKKqHofhZ6yyHIeTzxh7KOmoC86grwsNzulY9dRn7s4jvwO3tCvn+oWluxOfwr3FMaozX9rd1AYIU94GVKyiqcH8WtyHsggcKpbpXwtyLk6bM9ylK05GnYbBTUIPcnI=
+	t=1767959939; cv=none; b=LSC4gj4i5HAGenInhOiPZ7lMe9hPbTY/nR8SK+bhdQ2VEwHkau4naFYxVTQuwrGZK5zND2zRzJjECyO/QAbs/wxvnCF76qhw6x76vX3RQyDyBxXa95D91oY5qf239xzU0Y0JGAbwIEfB+pdULt41bJ27GoezL/SC2yPeZBJbR0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959936; c=relaxed/simple;
-	bh=iTRsOwhOSAsMdDAQWBF15WODjZhdwNOe5gO5d5+nZys=;
+	s=arc-20240116; t=1767959939; c=relaxed/simple;
+	bh=D/3tuzyYiAH+sxDlGdwSGdNhjC8xoEn8YAcZeD2U218=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q7tBEtCr9NCk1vNQAhkBXsf7OD9Ayq0PCuzA7ew+A8fvjcMssTb5+rAnh6kLen4lIsZcEQDLi0hl7k7DazD/UcN1g6vCdjaHqY7aozuyQKE3hpvS0sfqim8WXkl0myyVU61V/eg9FzBV8BZ/1zOhsUiHVhbSMtMQyfGzNXVTQM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IUjqlKoN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QufM6U5T5eJXHioRUUDFiHUHwE8QV1Axb1A2Q+H6eVSyNa7Il5Q39LFkKc0HLmVw7CBosAuhMUxFS4l4RpWNOlqlazhf9TSW1+QBSiT0h3TbNXVzcHNCvaUUn2bOD5x3MWOB9pPSPguYJjligJMkOmHGPsU2ctFjWSaLqAOZ0r4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lgE9Tm24; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IUjqlKoN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA13EC4CEF1;
-	Fri,  9 Jan 2026 11:58:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lgE9Tm24"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF843C4CEF1;
+	Fri,  9 Jan 2026 11:58:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959936;
-	bh=iTRsOwhOSAsMdDAQWBF15WODjZhdwNOe5gO5d5+nZys=;
+	s=korg; t=1767959939;
+	bh=D/3tuzyYiAH+sxDlGdwSGdNhjC8xoEn8YAcZeD2U218=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IUjqlKoNubxpleCwWKm3k+FAmpYkA0HAl+C1edZ42ZufZhuAu5MdVwk1hELSVf3Y6
-	 z8WQsMgAP2S0EoK1Qi1HqFESHvpV1wIwFz8VaX6NHMM6787LTBeec74wl96YbqAzpq
-	 l45vhi56Cj2CC3eXBUtyZq8+oqEgN7S6PSqw6sZg=
+	b=lgE9Tm24K4N+jdyC2Vww0SeQUfD3TxK7mjuRatd9HpsPEcnNsI1jx/eh3hA4oZUJz
+	 YW+XxGemdkLiAFENn4MwIonsGrhs5vZ0Nj2H/05Zoe1Hzq3QDfZzXehPJcJw8K6x/Z
+	 if5B61ASODmgXurElbDrt74CaqMUoHojqq08/UxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Wang <jasowang@redhat.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Brett Creeley <brett.creeley@amd.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 228/737] virtio: fix virtqueue_set_affinity() docs
-Date: Fri,  9 Jan 2026 12:36:07 +0100
-Message-ID: <20260109112142.576911619@linuxfoundation.org>
+Subject: [PATCH 6.6 229/737] vdpa/pds: use %pe for ERR_PTR() in event handler registration
+Date: Fri,  9 Jan 2026 12:36:08 +0100
+Message-ID: <20260109112142.614426387@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,34 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael S. Tsirkin <mst@redhat.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 43236d8bbafff94b423afecc4a692dd90602d426 ]
+[ Upstream commit 731ca4a4cc52fd5c5ae309edcfd2d7e54ece3321 ]
 
-Rewrite the comment for better grammar and clarity.
+Use %pe instead of %ps when printing ERR_PTR() values. %ps is intended
+for string pointers, while %pe correctly prints symbolic error names
+for error pointers returned via ERR_PTR().
+This shows the returned error value more clearly.
 
-Fixes: 75a0a52be3c2 ("virtio: introduce an API to set affinity for a virtqueue")
-Message-Id: <e317e91bd43b070e5eaec0ebbe60c5749d02e2dd.1763026134.git.mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
+Fixes: 67f27b8b3a34 ("pds_vdpa: subscribe to the pds_core events")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: Brett Creeley <brett.creeley@amd.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20251018174705.1511982-1-alok.a.tiwari@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/virtio_config.h | 2 +-
+ drivers/vdpa/pds/vdpa_dev.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/virtio_config.h b/include/linux/virtio_config.h
-index f106d3177476b..7528255068fd8 100644
---- a/include/linux/virtio_config.h
-+++ b/include/linux/virtio_config.h
-@@ -310,7 +310,7 @@ const char *virtio_bus_name(struct virtio_device *vdev)
-  * @vq: the virtqueue
-  * @cpu_mask: the cpu mask
-  *
-- * Pay attention the function are best-effort: the affinity hint may not be set
-+ * Note that this function is best-effort: the affinity hint may not be set
-  * due to config support, irq type and sharing.
-  *
-  */
+diff --git a/drivers/vdpa/pds/vdpa_dev.c b/drivers/vdpa/pds/vdpa_dev.c
+index 25c0fe5ec3d5d..744739a708b25 100644
+--- a/drivers/vdpa/pds/vdpa_dev.c
++++ b/drivers/vdpa/pds/vdpa_dev.c
+@@ -51,7 +51,7 @@ static int pds_vdpa_register_event_handler(struct pds_vdpa_device *pdsv)
+ 		err = pdsc_register_notify(nb);
+ 		if (err) {
+ 			nb->notifier_call = NULL;
+-			dev_err(dev, "failed to register pds event handler: %ps\n",
++			dev_err(dev, "failed to register pds event handler: %pe\n",
+ 				ERR_PTR(err));
+ 			return -EINVAL;
+ 		}
 -- 
 2.51.0
 
