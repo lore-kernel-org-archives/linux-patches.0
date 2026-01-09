@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02E4335BCD;
-	Fri,  9 Jan 2026 12:34:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90017336EDA;
+	Fri,  9 Jan 2026 12:34:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962083; cv=none; b=uriSa5icAyg/6tqMUJhsPMLdsAJVYaW9SDFlK/KD1siiRtoGQPyF3Fz6N+iQ7VQxv42JB3MLN0je9ZF96NlRgysfsqYLQW5j2JGpc7lUhzClvUD0GEioNHiGC+k+fl9rtn1cT7aoh3WkQct6VZjuUooqW36o1OTM7klapCaQ/bg=
+	t=1767962086; cv=none; b=Sz4+ZwFQvSVTiGRfJFe5B3+CnfPHMyDO2yDgnqmOEBC0euXK/916AsqvZwdRlLNYK7/2Vwphr3/2PH64Xtoir1ePoI+upE/GH/TS7PwjKMc4zCwqIY9EzR25SoyQAanQGfUY/W030PdCsDer24JqmWxldy0JHztYd3yF6UXjoRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962083; c=relaxed/simple;
-	bh=j8HnNCtiHQYgejtSwIdZATdk1aKqZrzWs/UFhHTVjA4=;
+	s=arc-20240116; t=1767962086; c=relaxed/simple;
+	bh=mkArNErPYcxliYQWcTgjVWbtu3FtIv26u7zIidEAv6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bhx/NgA5l7Qlv6Py4DLJZnhJRAzNuH7dGwUA9pVqxczblUr/biL5LGmdevZtkc3DmvJYUiUL9/rfI9ft/gi1ja43ze/X44UIEKfNnr98TeVPMF4uybHCMM3RqgxfZ0szAbfYXjSz5GCxlrwZWe+uu72i5VEQIuHNNcnV1eB8s6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QaJok9p7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gtr1aCnvzFG99wlJsZKrsTPhbEFpe+xkaE1zGPxu5odzUa7u6K/Fr06QnFir2pOWs2FQzKxK2lfya0O8qVmUccPAt/5zynApjGG0qb+5+qZTuqol8es2J6IUks01pCBDO2/FqYnrIQKxkCmw9KnzRmSP4o3Tgba9zHgzzwdnTVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W72Ua7wl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QaJok9p7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35D18C4CEF1;
-	Fri,  9 Jan 2026 12:34:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W72Ua7wl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 177A0C4CEF1;
+	Fri,  9 Jan 2026 12:34:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962083;
-	bh=j8HnNCtiHQYgejtSwIdZATdk1aKqZrzWs/UFhHTVjA4=;
+	s=korg; t=1767962086;
+	bh=mkArNErPYcxliYQWcTgjVWbtu3FtIv26u7zIidEAv6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QaJok9p7uzhoJo2SDb9c/x+pFxcXsANRX+mIBwiXz2YC80KLQnRl71ELWVI1e/jdE
-	 TxVIerpo9RvptKGZegglzH2eDn4UcpFlMJVRQgc/ddn06CEIwro/GiZrpeZmPcdvU+
-	 nqiyBIKtgVgBpWbCtJuefrSHFoabMoLGiN9dlgFA=
+	b=W72Ua7wlgk/IfhXOiD2+7850iMZw5sGvgFoOd49S0BTS0Pid6ZGFyDeO3RnJb5BSI
+	 x6++elrcAZt/NlXhTVxlB+MBvWiHjSo76V3UWK2vv03ttsoI2AVtFabpkSnO9XX992
+	 gsLBlpSfbEYuEs87aO/S0SrssTPdLK0Dj7Jz+eSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+005d2a9ecd9fbf525f6a@syzkaller.appspotmail.com,
-	Yang Chenzhi <yang.chenzhi@vivo.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Link Mauve <kernel@linkmauve.fr>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 239/634] hfsplus: fix missing hfs_bnode_get() in __hfs_bnode_create
-Date: Fri,  9 Jan 2026 12:38:37 +0100
-Message-ID: <20260109112126.535816872@linuxfoundation.org>
+Subject: [PATCH 6.1 209/634] rtc: gamecube: Check the return value of ioremap()
+Date: Fri,  9 Jan 2026 12:38:07 +0100
+Message-ID: <20260109112125.302246992@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,89 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Chenzhi <yang.chenzhi@vivo.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 152af114287851583cf7e0abc10129941f19466a ]
+[ Upstream commit d1220e47e4bd2be8b84bc158f4dea44f2f88b226 ]
 
-When sync() and link() are called concurrently, both threads may
-enter hfs_bnode_find() without finding the node in the hash table
-and proceed to create it.
+The function ioremap() in gamecube_rtc_read_offset_from_sram() can fail
+and return NULL, which is dereferenced without checking, leading to a
+NULL pointer dereference.
 
-Thread A:
-  hfsplus_write_inode()
-    -> hfsplus_write_system_inode()
-      -> hfs_btree_write()
-        -> hfs_bnode_find(tree, 0)
-          -> __hfs_bnode_create(tree, 0)
+Add a check for the return value of ioremap() and return -ENOMEM on
+failure.
 
-Thread B:
-  hfsplus_create_cat()
-    -> hfs_brec_insert()
-      -> hfs_bnode_split()
-        -> hfs_bmap_alloc()
-          -> hfs_bnode_find(tree, 0)
-            -> __hfs_bnode_create(tree, 0)
-
-In this case, thread A creates the bnode, sets refcnt=1, and hashes it.
-Thread B also tries to create the same bnode, notices it has already
-been inserted, drops its own instance, and uses the hashed one without
-getting the node.
-
-```
-
-	node2 = hfs_bnode_findhash(tree, cnid);
-	if (!node2) {                                 <- Thread A
-		hash = hfs_bnode_hash(cnid);
-		node->next_hash = tree->node_hash[hash];
-		tree->node_hash[hash] = node;
-		tree->node_hash_cnt++;
-	} else {                                      <- Thread B
-		spin_unlock(&tree->hash_lock);
-		kfree(node);
-		wait_event(node2->lock_wq,
-			!test_bit(HFS_BNODE_NEW, &node2->flags));
-		return node2;
-	}
-```
-
-However, hfs_bnode_find() requires each call to take a reference.
-Here both threads end up setting refcnt=1. When they later put the node,
-this triggers:
-
-BUG_ON(!atomic_read(&node->refcnt))
-
-In this scenario, Thread B in fact finds the node in the hash table
-rather than creating a new one, and thus must take a reference.
-
-Fix this by calling hfs_bnode_get() when reusing a bnode newly created by
-another thread to ensure the refcount is updated correctly.
-
-A similar bug was fixed in HFS long ago in commit
-a9dc087fd3c4 ("fix missing hfs_bnode_get() in __hfs_bnode_create")
-but the same issue remained in HFS+ until now.
-
-Reported-by: syzbot+005d2a9ecd9fbf525f6a@syzkaller.appspotmail.com
-Signed-off-by: Yang Chenzhi <yang.chenzhi@vivo.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/20250829093912.611853-1-yang.chenzhi@vivo.com
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Fixes: 86559400b3ef ("rtc: gamecube: Add a RTC driver for the GameCube, Wii and Wii U")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Reviewed-by: Link Mauve <kernel@linkmauve.fr>
+Link: https://patch.msgid.link/20251126080625.1752-1-vulab@iscas.ac.cn
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfsplus/bnode.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/rtc/rtc-gamecube.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/hfsplus/bnode.c b/fs/hfsplus/bnode.c
-index aa095e6fb20e8..c0089849be50e 100644
---- a/fs/hfsplus/bnode.c
-+++ b/fs/hfsplus/bnode.c
-@@ -481,6 +481,7 @@ static struct hfs_bnode *__hfs_bnode_create(struct hfs_btree *tree, u32 cnid)
- 		tree->node_hash[hash] = node;
- 		tree->node_hash_cnt++;
- 	} else {
-+		hfs_bnode_get(node2);
- 		spin_unlock(&tree->hash_lock);
- 		kfree(node);
- 		wait_event(node2->lock_wq,
+diff --git a/drivers/rtc/rtc-gamecube.c b/drivers/rtc/rtc-gamecube.c
+index c828bc8e05b9c..045d5d45ab4b0 100644
+--- a/drivers/rtc/rtc-gamecube.c
++++ b/drivers/rtc/rtc-gamecube.c
+@@ -242,6 +242,10 @@ static int gamecube_rtc_read_offset_from_sram(struct priv *d)
+ 	}
+ 
+ 	hw_srnprot = ioremap(res.start, resource_size(&res));
++	if (!hw_srnprot) {
++		pr_err("failed to ioremap hw_srnprot\n");
++		return -ENOMEM;
++	}
+ 	old = ioread32be(hw_srnprot);
+ 
+ 	/* TODO: figure out why we use this magic constant.  I obtained it by
 -- 
 2.51.0
 
