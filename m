@@ -1,35 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6FA33B6ED;
-	Fri,  9 Jan 2026 12:53:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4E0E33B6ED;
+	Fri,  9 Jan 2026 12:53:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767963206; cv=none; b=BaYiNKemSBm3qcyK2aPHI328qMjpCAjmlhfkIiegLQCqSX9yByleA+UKCXAFsY6c62vYZjguzGLjVJCIeehC2ef+vAhyu8CzFyR4P1QpwiGxH0agQTusWGqW1hDgtSrUKHEyAxNsXknwQp2TrOJgAvPSBTtCsMVlpfrCQpLwWtQ=
+	t=1767963209; cv=none; b=GJhDBFZaemWv1IQ7yXO/mbGV8CjjSbevVjBpQXCALTdv0IlGfCDhChzx951ioF7wJELIBLbH3/sZ8Tz2eDp+0FhzBb0Dqt9O/FarWCD+yARl0Y3g5YN5VsoNY3N/kLROQ1T4+TIb42apuPiyXlZeajGjuYb/48A8Wty92CFnQtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767963206; c=relaxed/simple;
-	bh=J0/wiaTbEJI2t1mOA0TNqfEeBN2ayLMAiRJOTZJVO0U=;
+	s=arc-20240116; t=1767963209; c=relaxed/simple;
+	bh=5NWRFrCJjnQxbckAbCm4hbwO+5BGeLbEEw4xDQ0yihw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GjR0GxvU0WlKU9v8iHtw6eo7a6nAPy8o1QBpwCo0jKt2XSDBZbf8VB13NF4tasQO2VIfFRDK7cRZTf68dyTTHfUygRhrcCVwVdhRjy4w2xDIaCh/XLbIGoAqPwhYLN59xWzEcQSiJ+NDlH2cCbW0pGPVtXGAVTQnytXFw3VdMDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FXi7klyJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q59+WxZWdyS/+ewO8l3p+UGBRnITCe9hvZT6Mf+PTc6V5m7bdEP7PLpg61y/CS0X+YCOrK5OLGuK9oujwjNXO4yAwAMQtb6LRO1P7+OJKmCp6TBuxYaZ7bCKWXtljeD8mgESrKB1FcHHiC2tsxWXtLVA5MOGEDZJxFIEfdNJ7YU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aXhW7jZc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FXi7klyJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9A86C4CEF1;
-	Fri,  9 Jan 2026 12:53:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aXhW7jZc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4020C4CEF1;
+	Fri,  9 Jan 2026 12:53:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767963206;
-	bh=J0/wiaTbEJI2t1mOA0TNqfEeBN2ayLMAiRJOTZJVO0U=;
+	s=korg; t=1767963209;
+	bh=5NWRFrCJjnQxbckAbCm4hbwO+5BGeLbEEw4xDQ0yihw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FXi7klyJGFCpMfGlSkhybg8PNwPNB2/P3da6qVzMlK8H2JW7u1j7mU2b+cyCgKC5V
-	 svgbkWgyKMvhi7FmDkrAxWqJFrLx/JxqcqTBEb4OPdU0N3gqLYpJk2Ibuf95Odqh/c
-	 NjlOSfBi8Hd9dk+DxRaY+e68sYM2XXtK/XMSEpKI=
+	b=aXhW7jZcmp90A0wNqtdGTMEJBnlD3gTLwuJTRIv8ShBU1d++CjRZwu4peS3cGL6W3
+	 mkmg5csKHUhvwgsEnxz7moBuRtSiZR41nUCgMcL7IpuH6I8ezLUq0WYDKeOc8yyqM7
+	 Pxua2Uop7jsyP1kDNlsfwd6QOLIxSm6F0vRE/hN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Hildenbrand <david@redhat.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
 	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
 	Ingo Molnar <mingo@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Andy Lutomirski <luto@kernel.org>,
 	Peter Zijlstra <peterz@infradead.org>,
@@ -37,11 +40,10 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Borislav Petkov <bp@alien8.de>,
 	Rik van Riel <riel@surriel.com>,
 	"H. Peter Anvin" <hpa@zytor.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 627/634] kernel/fork: only call untrack_pfn_clear() on VMAs duplicated for fork()
-Date: Fri,  9 Jan 2026 12:45:05 +0100
-Message-ID: <20260109112141.229726861@linuxfoundation.org>
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.1 628/634] mm: (un)track_pfn_copy() fix + doc improvements
+Date: Fri,  9 Jan 2026 12:45:06 +0100
+Message-ID: <20260109112141.266633093@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -62,53 +64,32 @@ Content-Transfer-Encoding: 8bit
 
 From: David Hildenbrand <david@redhat.com>
 
-commit e9f180d7cfde23b9f8eebd60272465176373ab2c upstream.
+commit 8c56c5dbcf52220cc9be7a36e7f21ebd5939e0b9 upstream.
 
-Not intuitive, but vm_area_dup() located in kernel/fork.c is not only used
-for duplicating VMAs during fork(), but also for duplicating VMAs when
-splitting VMAs or when mremap()'ing them.
+We got a late smatch warning and some additional review feedback.
 
-VM_PFNMAP mappings can at least get ordinarily mremap()'ed (no change in
-size) and apparently also shrunk during mremap(), which implies
-duplicating the VMA in __split_vma() first.
+	smatch warnings:
+	mm/memory.c:1428 copy_page_range() error: uninitialized symbol 'pfn'.
 
-In case of ordinary mremap() (no change in size), we first duplicate the
-VMA in copy_vma_and_data()->copy_vma() to then call untrack_pfn_clear() on
-the old VMA: we effectively move the VM_PAT reservation.  So the
-untrack_pfn_clear() call on the new VMA duplicating is wrong in that
-context.
+We actually use the pfn only when it is properly initialized; however, we
+may pass an uninitialized value to a function -- although it will not use
+it that likely still is UB in C.
 
-Splitting of VMAs seems problematic, because we don't duplicate/adjust the
-reservation when splitting the VMA.  Instead, in memtype_erase() -- called
-during zapping/munmap -- we shrink a reservation in case only the end
-address matches: Assume we split a VMA into A and B, both would share a
-reservation until B is unmapped.
+So let's just fix it by always initializing pfn in the caller of
+track_pfn_copy(), and improving the documentation of track_pfn_copy().
 
-So when unmapping B, the reservation would be updated to cover only A.
-When unmapping A, we would properly remove the now-shrunk reservation.
-That scenario describes the mremap() shrinking (old_size > new_size),
-where we split + unmap B, and the untrack_pfn_clear() on the new VMA when
-is wrong.
+While at it, clarify the doc of untrack_pfn_copy(), that internal checks
+make sure if we actually have to untrack anything.
 
-What if we manage to split a VM_PFNMAP VMA into A and B and unmap A first?
-It would be broken because we would never free the reservation.  Likely,
-there are ways to trigger such a VMA split outside of mremap().
-
-Affecting other VMA duplication was not intended, vm_area_dup() being used
-outside of kernel/fork.c was an oversight.  So let's fix that for; how to
-handle VMA splits better should be investigated separately.
-
-
-With a simple reproducer that uses mprotect() to split such a VMA I can
-trigger
-
-x86/PAT: pat_mremap:26448 freeing invalid memtype [mem 0x00000000-0x00000fff]
-
-Link: https://lkml.kernel.org/r/20250422144942.2871395-1-david@redhat.com
+Link: https://lkml.kernel.org/r/20250408085950.976103-1-david@redhat.com
 Fixes: dc84bc2aba85 ("x86/mm/pat: Fix VM_PAT handling when fork() fails in copy_page_range()")
 Signed-off-by: David Hildenbrand <david@redhat.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/r/202503270941.IFILyNCX-lkp@intel.com/
 Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Ingo Molnar <mingo@kernel.org>
+Acked-by: Ingo Molnar <mingo@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
 Cc: Dave Hansen <dave.hansen@linux.intel.com>
 Cc: Andy Lutomirski <luto@kernel.org>
 Cc: Peter Zijlstra <peterz@infradead.org>
@@ -120,33 +101,45 @@ Cc: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/fork.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ include/linux/pgtable.h |    9 ++++++---
+ mm/memory.c             |    2 +-
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -476,10 +476,6 @@ struct vm_area_struct *vm_area_dup(struc
- 		*new = data_race(*orig);
- 		INIT_LIST_HEAD(&new->anon_vma_chain);
- 		dup_anon_vma_name(orig, new);
--
--		/* track_pfn_copy() will later take care of copying internal state. */
--		if (unlikely(new->vm_flags & VM_PFNMAP))
--			untrack_pfn_clear(new);
- 	}
- 	return new;
- }
-@@ -650,6 +646,11 @@ static __latent_entropy int dup_mmap(str
- 		tmp = vm_area_dup(mpnt);
- 		if (!tmp)
- 			goto fail_nomem;
-+
-+		/* track_pfn_copy() will later take care of copying internal state. */
-+		if (unlikely(tmp->vm_flags & VM_PFNMAP))
-+			untrack_pfn_clear(tmp);
-+
- 		retval = vma_dup_policy(mpnt, tmp);
- 		if (retval)
- 			goto fail_nomem_policy;
+--- a/include/linux/pgtable.h
++++ b/include/linux/pgtable.h
+@@ -1196,8 +1196,9 @@ static inline void track_pfn_insert(stru
+ 
+ /*
+  * track_pfn_copy is called when a VM_PFNMAP VMA is about to get the page
+- * tables copied during copy_page_range(). On success, stores the pfn to be
+- * passed to untrack_pfn_copy().
++ * tables copied during copy_page_range(). Will store the pfn to be
++ * passed to untrack_pfn_copy() only if there is something to be untracked.
++ * Callers should initialize the pfn to 0.
+  */
+ static inline int track_pfn_copy(struct vm_area_struct *dst_vma,
+ 		struct vm_area_struct *src_vma, unsigned long *pfn)
+@@ -1207,7 +1208,9 @@ static inline int track_pfn_copy(struct
+ 
+ /*
+  * untrack_pfn_copy is called when a VM_PFNMAP VMA failed to copy during
+- * copy_page_range(), but after track_pfn_copy() was already called.
++ * copy_page_range(), but after track_pfn_copy() was already called. Can
++ * be called even if track_pfn_copy() did not actually track anything:
++ * handled internally.
+  */
+ static inline void untrack_pfn_copy(struct vm_area_struct *dst_vma,
+ 		unsigned long pfn)
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -1283,7 +1283,7 @@ copy_page_range(struct vm_area_struct *d
+ 	struct mm_struct *dst_mm = dst_vma->vm_mm;
+ 	struct mm_struct *src_mm = src_vma->vm_mm;
+ 	struct mmu_notifier_range range;
+-	unsigned long next, pfn;
++	unsigned long next, pfn = 0;
+ 	bool is_cow;
+ 	int ret;
+ 
 
 
