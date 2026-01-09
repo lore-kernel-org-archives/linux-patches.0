@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A97A334C24;
-	Fri,  9 Jan 2026 12:11:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192BE328B58;
+	Fri,  9 Jan 2026 12:11:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960669; cv=none; b=XKxjJBHH55HXRLtwdSTcb0q1uD5JR+i+Z4aHksEfz3gFKAtL8ndlVrwEHW6o6kxS2q9JlrOfK52jvdgyM+JVgJIIRHvfGg5EIEV1TMiEL3wV+8PeFjETbQHVqzWjREU8EYkfSc+oFu0ssJnIOLXeHapO3J5+wpYoHFX9sudX79g=
+	t=1767960672; cv=none; b=n4LX0kjM7VhfUbMDLXJn7ZNJMlotBopvMcTrkzSMSq0gLYqi6oUeIXJCxmDCTKhZP22AhGIa3S3ZocASytpKX7BhCfBes8QdozChxOi/ZJQSoIgXC79Ll/oA8GcI/wImLWVTkq8nhS10RaDgblQSebnDLGF+tOeTk8rn+gH5W3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960669; c=relaxed/simple;
-	bh=aMH0aMAFdl+2FNXCLNpTUfCFI+xiLT6FJhz38i3Rw/Q=;
+	s=arc-20240116; t=1767960672; c=relaxed/simple;
+	bh=QgaKnZh6dZq4AyO1/ORB4y7OTo9N+uOLjZcOMaAVpVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BQpK75AUUkW6W00px+leYSKQOeMiHLy1xAvi3m3w4hrOoeAPnB4iiMzZMOAqYOT/O72ojK1QnKy8vlIkZMYI3fq+FSXnKVDL+PBkgAc/PkciO0XDL/PRECrmi792JGDTBvlbfMSClXy9gcqcAJp0+kL20orVAKD7gzFqLIt9OC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=peEaSKuz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bZiLfVfft5emQCOr3YYTD8EFGaC0VZ7jp/RXsDedEX/8T4fF6+WHxEqoqIsyluWRoBNzrPrh4QYT6IKMvH5N+LcZ+ceBra2Gh2xA0jGq8nCf15tqD2HsU+TFDdzCtIRqUbP1Eb9bXJPtO/mfm94an8qlGnnDhjBtvkWJ7PedWoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nmumS1Qc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="peEaSKuz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B990DC19422;
-	Fri,  9 Jan 2026 12:11:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nmumS1Qc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99655C4CEF1;
+	Fri,  9 Jan 2026 12:11:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960669;
-	bh=aMH0aMAFdl+2FNXCLNpTUfCFI+xiLT6FJhz38i3Rw/Q=;
+	s=korg; t=1767960672;
+	bh=QgaKnZh6dZq4AyO1/ORB4y7OTo9N+uOLjZcOMaAVpVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=peEaSKuzVugi+f/f6bV0q94tvK06u9tMMZ6rnYsLwUBust2zq/y92/BF6pCKGgjwN
-	 H+qWu9ekpRulQaNjl508z7Nsl0BYQWrqOFY3VvU4Q4tqGIBmYVKq38yCw0YWDg6Tm1
-	 44VMcFKgOuUIGG7bjJqLIUxlm232R8HD+f/73BPk=
+	b=nmumS1QcIwqcJXTGClrrQNs333+VBqbgUrFvxhM/P3M3IVP/mcVuHfs1O5sUm2fVr
+	 JEQVsbwOW6XQIxKoajCUrdlxKiMkdvP1NzW2alr2rySQX1BaxPAapyXnI9cAakumpD
+	 9RvxPLf2uHeyBp9U4JqGsl3/vyjuJidpzVQjZJsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WangYuli <wangyl5933@chinaunicom.cn>,
-	Wentao Guan <guanwentao@uniontech.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.6 483/737] gpio: regmap: Fix memleak in error path in gpio_regmap_register()
-Date: Fri,  9 Jan 2026 12:40:22 +0100
-Message-ID: <20260109112152.155758955@linuxfoundation.org>
+	syzbot+641eec6b7af1f62f2b99@syzkaller.appspotmail.com,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.6 484/737] io_uring/poll: correctly handle io_poll_add() return value on update
+Date: Fri,  9 Jan 2026 12:40:23 +0100
+Message-ID: <20260109112152.192860006@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,38 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Guan <guanwentao@uniontech.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 52721cfc78c76b09c66e092b52617006390ae96a upstream.
+Commit 84230ad2d2afbf0c44c32967e525c0ad92e26b4e upstream.
 
-Call gpiochip_remove() to free the resources allocated by
-gpiochip_add_data() in error path.
+When the core of io_uring was updated to handle completions
+consistently and with fixed return codes, the POLL_REMOVE opcode
+with updates got slightly broken. If a POLL_ADD is pending and
+then POLL_REMOVE is used to update the events of that request, if that
+update causes the POLL_ADD to now trigger, then that completion is lost
+and a CQE is never posted.
 
-Fixes: 553b75d4bfe9 ("gpio: regmap: Allow to allocate regmap-irq device")
-Fixes: ae495810cffe ("gpio: regmap: add the .fixed_direction_output configuration parameter")
-CC: stable@vger.kernel.org
-Co-developed-by: WangYuli <wangyl5933@chinaunicom.cn>
-Signed-off-by: WangYuli <wangyl5933@chinaunicom.cn>
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20251204101303.30353-1-guanwentao@uniontech.com
-[Bartosz: reworked the commit message]
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Additionally, ensure that if an update does cause an existing POLL_ADD
+to complete, that the completion value isn't always overwritten with
+-ECANCELED. For that case, whatever io_poll_add() set the value to
+should just be retained.
+
+Cc: stable@vger.kernel.org
+Fixes: 97b388d70b53 ("io_uring: handle completions in the core")
+Reported-by: syzbot+641eec6b7af1f62f2b99@syzkaller.appspotmail.com
+Tested-by: syzbot+641eec6b7af1f62f2b99@syzkaller.appspotmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-regmap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/poll.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/gpio/gpio-regmap.c
-+++ b/drivers/gpio/gpio-regmap.c
-@@ -310,7 +310,7 @@ struct gpio_regmap *gpio_regmap_register
- 						 config->regmap_irq_line, config->regmap_irq_flags,
- 						 0, config->regmap_irq_chip, &gpio->irq_chip_data);
- 		if (ret)
--			goto err_free_bitmap;
-+			goto err_remove_gpiochip;
+--- a/io_uring/poll.c
++++ b/io_uring/poll.c
+@@ -1024,12 +1024,17 @@ found:
  
- 		irq_domain = regmap_irq_get_domain(gpio->irq_chip_data);
- 	} else
+ 		ret2 = io_poll_add(preq, issue_flags & ~IO_URING_F_UNLOCKED);
+ 		/* successfully updated, don't complete poll request */
+-		if (!ret2 || ret2 == -EIOCBQUEUED)
++		if (ret2 == IOU_ISSUE_SKIP_COMPLETE)
+ 			goto out;
++		/* request completed as part of the update, complete it */
++		else if (ret2 == IOU_OK)
++			goto complete;
+ 	}
+ 
+-	req_set_fail(preq);
+ 	io_req_set_res(preq, -ECANCELED, 0);
++complete:
++	if (preq->cqe.res < 0)
++		req_set_fail(preq);
+ 	preq->io_task_work.func = io_req_task_complete;
+ 	io_req_task_work_add(preq);
+ out:
 
 
