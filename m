@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E0F335BDDC;
-	Fri,  9 Jan 2026 12:50:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BE5335BDB2;
+	Fri,  9 Jan 2026 12:50:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767963024; cv=none; b=nipCLYaU5PIcrGQbNbNIkbTcFQl25KGJCgh2zleq/f18igC4WOhMSYp6KXATui/xasStjVQsIL4RrvoIQzKA3Uvx4sQCiT2MBnUJdgmHyvObO5zNESAWAkdxJnr7pG6dJ942Pq4zWwBQjw2lUdzZSzkx3YEUmnk3z29YeUVkjQY=
+	t=1767963027; cv=none; b=u5bGByrBCcy5xa9ndrjyuXyvNdJdFj8LPdDyHS55lW6VWRHZ0cBkwF8SIv16hit1eV9eu43WY8ziRmguGWj9H8yfUrgFwAxzpn/Pjs+kESnomA3fKJPq6fV1wzbpIl25eUluOATnKH14OL8AWt5F9S/6iMYEYppHzYre40+EjBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767963024; c=relaxed/simple;
-	bh=XYxULsQvCpMPajA41VfgP36DTyAGJE2N6Xc7uFBlrQA=;
+	s=arc-20240116; t=1767963027; c=relaxed/simple;
+	bh=wAKz5j7jCuUv2k7V0ONEfPx0jdxvGxEtLsb5lttMAfI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oC1iUU36steU5XtbpTYMCOcWi+OCtiPVNhJOn5l66zRUKYPfGcjc8SOAC36LYQXwitGfiA/qlJ19Y9m2KAtRqqDQCi8whMQjLMrCOVbQx9lxrHL+TwqZwSBp1u0J6uArWXaYh8l97RsWZofU1U5hGEExHZ02ErFvazZMi7aLoBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vv7npEjA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kZtdz9EsTdD3vzvEiHjflcGp9kOVf0QTIcJDwS/NHlHBUL4HjUaHSG1CIOStPZxiObr2mckv7gFcFDHPinLstjr59/vNML7vrKRhzOuqGICBHN/jGLLi4ISsat0fn5ztX/7IbWKKZwSDYHcjNY7OIJldZiAL8hCjKJFltkIMsCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T0OdplOz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vv7npEjA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A145FC4CEF1;
-	Fri,  9 Jan 2026 12:50:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T0OdplOz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 864BFC4CEF1;
+	Fri,  9 Jan 2026 12:50:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767963024;
-	bh=XYxULsQvCpMPajA41VfgP36DTyAGJE2N6Xc7uFBlrQA=;
+	s=korg; t=1767963026;
+	bh=wAKz5j7jCuUv2k7V0ONEfPx0jdxvGxEtLsb5lttMAfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vv7npEjATszqKTkRMUrbNjEeyPKSsgBd4scylaK45LlKkohX5tM/vLd5/54DC4Xbf
-	 VgEycZPJgcYCqek1QnSTfwXeKYEfby4dOt+iWW7DjHmVURSwSxg4F8gqSAhhsfxAtA
-	 BI24oy9pavJRs3sEv80YijiQJanWMgIio7t2RLyY=
+	b=T0OdplOzOEdXLQB0ooVV+5fJZrTsdzkN9P5wqehn6eLeGHM4uEJ28KPCHXDdXT4sG
+	 G+4xDu5RdZPjybZHR7oYB6uR4rRyHW0PD2PoYynX7j/3e4pJmLDxjzM+LTkht49Fhb
+	 sbCfwNaocShMGoh2MbLtpzL6AvH3ahObJMebNLtw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joanne Koong <joannelkoong@gmail.com>,
-	Omar Sandoval <osandov@fb.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Takashi Iwai <tiwai@suse.de>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 571/634] fuse: fix readahead reclaim deadlock
-Date: Fri,  9 Jan 2026 12:44:09 +0100
-Message-ID: <20260109112139.092941389@linuxfoundation.org>
+Subject: [PATCH 6.1 572/634] ASoC: stm: stm32_sai_sub: Convert to platform remove callback returning void
+Date: Fri,  9 Jan 2026 12:44:10 +0100
+Message-ID: <20260109112139.130729675@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -46,123 +47,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joanne Koong <joannelkoong@gmail.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit bd5603eaae0aabf527bfb3ce1bb07e979ce5bd50 ]
+[ Upstream commit a3bd37e2e2bce4fb1757a940fa985d556662ba80 ]
 
-Commit e26ee4efbc79 ("fuse: allocate ff->release_args only if release is
-needed") skips allocating ff->release_args if the server does not
-implement open. However in doing so, fuse_prepare_release() now skips
-grabbing the reference on the inode, which makes it possible for an
-inode to be evicted from the dcache while there are inflight readahead
-requests. This causes a deadlock if the server triggers reclaim while
-servicing the readahead request and reclaim attempts to evict the inode
-of the file being read ahead. Since the folio is locked during
-readahead, when reclaim evicts the fuse inode and fuse_evict_inode()
-attempts to remove all folios associated with the inode from the page
-cache (truncate_inode_pages_range()), reclaim will block forever waiting
-for the lock since readahead cannot relinquish the lock because it is
-itself blocked in reclaim:
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is (mostly) ignored
+and this typically results in resource leaks. To improve here there is a
+quest to make the remove callback return void. In the first step of this
+quest all drivers are converted to .remove_new() which already returns
+void.
 
->>> stack_trace(1504735)
- folio_wait_bit_common (mm/filemap.c:1308:4)
- folio_lock (./include/linux/pagemap.h:1052:3)
- truncate_inode_pages_range (mm/truncate.c:336:10)
- fuse_evict_inode (fs/fuse/inode.c:161:2)
- evict (fs/inode.c:704:3)
- dentry_unlink_inode (fs/dcache.c:412:3)
- __dentry_kill (fs/dcache.c:615:3)
- shrink_kill (fs/dcache.c:1060:12)
- shrink_dentry_list (fs/dcache.c:1087:3)
- prune_dcache_sb (fs/dcache.c:1168:2)
- super_cache_scan (fs/super.c:221:10)
- do_shrink_slab (mm/shrinker.c:435:9)
- shrink_slab (mm/shrinker.c:626:10)
- shrink_node (mm/vmscan.c:5951:2)
- shrink_zones (mm/vmscan.c:6195:3)
- do_try_to_free_pages (mm/vmscan.c:6257:3)
- do_swap_page (mm/memory.c:4136:11)
- handle_pte_fault (mm/memory.c:5562:10)
- handle_mm_fault (mm/memory.c:5870:9)
- do_user_addr_fault (arch/x86/mm/fault.c:1338:10)
- handle_page_fault (arch/x86/mm/fault.c:1481:3)
- exc_page_fault (arch/x86/mm/fault.c:1539:2)
- asm_exc_page_fault+0x22/0x27
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-Fix this deadlock by allocating ff->release_args and grabbing the
-reference on the inode when preparing the file for release even if the
-server does not implement open. The inode reference will be dropped when
-the last reference on the fuse file is dropped (see fuse_file_put() ->
-fuse_release_end()).
-
-Fixes: e26ee4efbc79 ("fuse: allocate ff->release_args only if release is needed")
-Cc: stable@vger.kernel.org
-Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
-Reported-by: Omar Sandoval <osandov@fb.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Acked-by: Takashi Iwai <tiwai@suse.de>
+Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Link: https://lore.kernel.org/r/20230315150745.67084-139-u.kleine-koenig@pengutronix.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 23261f0de094 ("ASoC: stm32: sai: fix OF node leak on probe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/file.c |   26 +++++++++++++++++++-------
- 1 file changed, 19 insertions(+), 7 deletions(-)
+ sound/soc/stm/stm32_sai_sub.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -112,7 +112,9 @@ static void fuse_file_put(struct fuse_fi
- 		struct fuse_args *args = (ra ? &ra->args : NULL);
+--- a/sound/soc/stm/stm32_sai_sub.c
++++ b/sound/soc/stm/stm32_sai_sub.c
+@@ -1570,7 +1570,7 @@ err_unprepare_pclk:
+ 	return ret;
+ }
  
- 		if (!args) {
--			/* Do nothing when server does not implement 'open' */
-+			/* Do nothing when server does not implement 'opendir' */
-+		} else if (args->opcode == FUSE_RELEASE && ff->fm->fc->no_open) {
-+			fuse_release_end(ff->fm, args, 0);
- 		} else if (sync) {
- 			fuse_simple_request(ff->fm, args);
- 			fuse_release_end(ff->fm, args, 0);
-@@ -133,8 +135,17 @@ struct fuse_file *fuse_file_open(struct
- 	struct fuse_file *ff;
- 	int opcode = isdir ? FUSE_OPENDIR : FUSE_OPEN;
- 	bool open = isdir ? !fc->no_opendir : !fc->no_open;
-+	bool release = !isdir || open;
+-static int stm32_sai_sub_remove(struct platform_device *pdev)
++static void stm32_sai_sub_remove(struct platform_device *pdev)
+ {
+ 	struct stm32_sai_sub_data *sai = dev_get_drvdata(&pdev->dev);
  
--	ff = fuse_file_alloc(fm, open);
-+	/*
-+	 * ff->args->release_args still needs to be allocated (so we can hold an
-+	 * inode reference while there are pending inflight file operations when
-+	 * ->release() is called, see fuse_prepare_release()) even if
-+	 * fc->no_open is set else it becomes possible for reclaim to deadlock
-+	 * if while servicing the readahead request the server triggers reclaim
-+	 * and reclaim evicts the inode of the file being read ahead.
-+	 */
-+	ff = fuse_file_alloc(fm, release);
- 	if (!ff)
- 		return ERR_PTR(-ENOMEM);
+@@ -1578,8 +1578,6 @@ static int stm32_sai_sub_remove(struct p
+ 	snd_dmaengine_pcm_unregister(&pdev->dev);
+ 	snd_soc_unregister_component(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+-
+-	return 0;
+ }
  
-@@ -153,13 +164,14 @@ struct fuse_file *fuse_file_open(struct
- 			fuse_file_free(ff);
- 			return ERR_PTR(err);
- 		} else {
--			/* No release needed */
--			kfree(ff->release_args);
--			ff->release_args = NULL;
--			if (isdir)
-+			if (isdir) {
-+				/* No release needed */
-+				kfree(ff->release_args);
-+				ff->release_args = NULL;
- 				fc->no_opendir = 1;
--			else
-+			} else {
- 				fc->no_open = 1;
-+			}
- 		}
- 	}
+ #ifdef CONFIG_PM_SLEEP
+@@ -1629,7 +1627,7 @@ static struct platform_driver stm32_sai_
+ 		.pm = &stm32_sai_sub_pm_ops,
+ 	},
+ 	.probe = stm32_sai_sub_probe,
+-	.remove = stm32_sai_sub_remove,
++	.remove_new = stm32_sai_sub_remove,
+ };
  
+ module_platform_driver(stm32_sai_sub_driver);
 
 
