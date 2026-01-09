@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52EDC35BDDB;
-	Fri,  9 Jan 2026 12:47:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A83135CBB9;
+	Fri,  9 Jan 2026 12:47:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962855; cv=none; b=E4G4XoBwoNL+PCracPWqqTN6RD6W6NAfeXbxatjj+GQPWlfLlgBkAXnjxTebFMCytcA7kPGPq1M9/Xn3VmpbWiqgTQQtEau0uDYD5c9MYV7LtGzC2O2SjLCNSWOGdieOBfIqKCfoQ0twl9HjiR0N9SXjnHMELbYUFof9sDMTk0A=
+	t=1767962858; cv=none; b=MfFo/ybE5CFjUyelfERiv8jBBlkjqkpIhqPmO6QQeTodk09wJSaAiAfPMqvQ4Yk4JiJIN/PtAaYDCR6eNWDP2hYB1PzwNVmim4m7gMXKSe12UvRu1c7cpzcfxwlvd4W0faUsKZApMoK5bq3X+9y1WhZi6Fw8PDVCGfqjCqG+aIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962855; c=relaxed/simple;
-	bh=aSN3fQw5bBtJi/+WPeBt4lyQqY1Kj9nBIjNGiXJHdS8=;
+	s=arc-20240116; t=1767962858; c=relaxed/simple;
+	bh=wrCrkwf6wlwxV6tMSytj9yEXXUiYYQHMjEdCg2Pz9Mo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mq/BMPRHxNt7OwUoojb3Z9TiUJJLBVlnnsvLrSnLRJUUHXbsMPf+APZz+LuubfLtWdYq2GXDFwzq76PL6A2c48e0C3jWr7jMnuUA39l2YDcoGzNc4Fhakg1/vDOaBf3TZRkYcf9mhNw/K9FdAtuN7YSJeOmfhXod64A0u/aPCT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V+QP6p3W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mjAwlefldksC34c5nNGdH9hCp1ImS9k/vqlp7c2vwAGYGda03oJciMyTYOeCUTuZ15hKDGvQP2AiqRFU0AqkXZKv11x4ATpRM/159zoYfJ8ageZEORbPAPf90gyzPQsB0hkgrpx6u6wx+E9aSQDhpVCXeWfA2I+zpY04m8oG7CQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hTgNxnHz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V+QP6p3W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEF45C4CEF1;
-	Fri,  9 Jan 2026 12:47:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hTgNxnHz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAB7BC4CEF1;
+	Fri,  9 Jan 2026 12:47:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962855;
-	bh=aSN3fQw5bBtJi/+WPeBt4lyQqY1Kj9nBIjNGiXJHdS8=;
+	s=korg; t=1767962858;
+	bh=wrCrkwf6wlwxV6tMSytj9yEXXUiYYQHMjEdCg2Pz9Mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V+QP6p3Whs4nGjO4QiK/wojvV/JV8yBltCdOR+un6aewu8oUoITzqWsQnRyY4qVtD
-	 NEmLYNE3Muj9Ct719XTqkOXW0WI8TgDM6YDAlrQ0apa8b8Hwk2Fp8X6nAnh2EMVORL
-	 0gU6SCOOP09iDO+3hq/LVfQ8+CtJhrvcc1uVM9RM=
+	b=hTgNxnHztb5trrQjor1Onz8Dg88JXLfX99g4r7E/B+JOY2CZUr2hZJxJ5sn8hUytL
+	 Hro53kQ6VxOVqV3bSLkJWKDVMsu6d46AmYRBXjG9SIcVIrBc9F5xBikp/3kwUR0QBt
+	 EkAB06r7iBNC6XJClJuD/LAPQ4+y9VVbkAV/M2YA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raju Cheerla <rcheerla@redhat.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 511/634] blk-mq: add helper for checking if one CPU is mapped to specified hctx
-Date: Fri,  9 Jan 2026 12:43:09 +0100
-Message-ID: <20260109112136.782488652@linuxfoundation.org>
+	Lai Yi <yi1.lai@linux.intel.com>,
+	Jonathan McDowell <noodles@meta.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Jarkko Sakkinen <jarkko.sakkinen@opinsys.com>
+Subject: [PATCH 6.1 512/634] tpm: Cap the number of PCR banks
+Date: Fri,  9 Jan 2026 12:43:10 +0100
+Message-ID: <20260109112136.819063576@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,71 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Jarkko Sakkinen <jarkko.sakkinen@opinsys.com>
 
-commit 7b815817aa58d2e2101feb2fcf64c60cae0b2695 upstream.
+commit faf07e611dfa464b201223a7253e9dc5ee0f3c9e upstream.
 
-Commit a46c27026da1 ("blk-mq: don't schedule block kworker on isolated CPUs")
-rules out isolated CPUs from hctx->cpumask, and hctx->cpumask should only be
-used for scheduling kworker.
+tpm2_get_pcr_allocation() does not cap any upper limit for the number of
+banks. Cap the limit to eight banks so that out of bounds values coming
+from external I/O cause on only limited harm.
 
-Add helper blk_mq_cpu_mapped_to_hctx() and apply it into cpuhp handlers.
-
-This patch avoids to forget clearing INACTIVE of hctx state in case that one
-isolated CPU becomes online, and fixes hang issue when allocating request
-from this hctx's tags.
-
-Cc: Raju Cheerla <rcheerla@redhat.com>
-Fixes: a46c27026da1 ("blk-mq: don't schedule block kworker on isolated CPUs")
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20240517020514.149771-1-ming.lei@redhat.com
-Tested-by: Raju Cheerla <rcheerla@redhat.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: stable@vger.kernel.org # v5.10+
+Fixes: bcfff8384f6c ("tpm: dynamically allocate the allocated_banks array")
+Tested-by: Lai Yi <yi1.lai@linux.intel.com>
+Reviewed-by: Jonathan McDowell <noodles@meta.com>
+Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Jarkko Sakkinen <jarkko.sakkinen@opinsys.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-mq.c |   20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ drivers/char/tpm/tpm-chip.c |    1 -
+ drivers/char/tpm/tpm1-cmd.c |    5 -----
+ drivers/char/tpm/tpm2-cmd.c |    8 +++-----
+ include/linux/tpm.h         |    8 +++++---
+ 4 files changed, 8 insertions(+), 14 deletions(-)
 
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -3579,12 +3579,28 @@ static int blk_mq_hctx_notify_offline(un
- 	return ret;
+--- a/drivers/char/tpm/tpm-chip.c
++++ b/drivers/char/tpm/tpm-chip.c
+@@ -269,7 +269,6 @@ static void tpm_dev_release(struct devic
+ 
+ 	kfree(chip->work_space.context_buf);
+ 	kfree(chip->work_space.session_buf);
+-	kfree(chip->allocated_banks);
+ 	kfree(chip);
  }
  
-+/*
-+ * Check if one CPU is mapped to the specified hctx
-+ *
-+ * Isolated CPUs have been ruled out from hctx->cpumask, which is supposed
-+ * to be used for scheduling kworker only. For other usage, please call this
-+ * helper for checking if one CPU belongs to the specified hctx
-+ */
-+static bool blk_mq_cpu_mapped_to_hctx(unsigned int cpu,
-+		const struct blk_mq_hw_ctx *hctx)
-+{
-+	struct blk_mq_hw_ctx *mapped_hctx = blk_mq_map_queue_type(hctx->queue,
-+			hctx->type, cpu);
-+
-+	return mapped_hctx == hctx;
-+}
-+
- static int blk_mq_hctx_notify_online(unsigned int cpu, struct hlist_node *node)
+--- a/drivers/char/tpm/tpm1-cmd.c
++++ b/drivers/char/tpm/tpm1-cmd.c
+@@ -799,11 +799,6 @@ int tpm1_pm_suspend(struct tpm_chip *chi
+  */
+ int tpm1_get_pcr_allocation(struct tpm_chip *chip)
  {
- 	struct blk_mq_hw_ctx *hctx = hlist_entry_safe(node,
- 			struct blk_mq_hw_ctx, cpuhp_online);
+-	chip->allocated_banks = kcalloc(1, sizeof(*chip->allocated_banks),
+-					GFP_KERNEL);
+-	if (!chip->allocated_banks)
+-		return -ENOMEM;
+-
+ 	chip->allocated_banks[0].alg_id = TPM_ALG_SHA1;
+ 	chip->allocated_banks[0].digest_size = hash_digest_size[HASH_ALGO_SHA1];
+ 	chip->allocated_banks[0].crypto_id = HASH_ALGO_SHA1;
+--- a/drivers/char/tpm/tpm2-cmd.c
++++ b/drivers/char/tpm/tpm2-cmd.c
+@@ -574,11 +574,9 @@ ssize_t tpm2_get_pcr_allocation(struct t
  
--	if (cpumask_test_cpu(cpu, hctx->cpumask))
-+	if (blk_mq_cpu_mapped_to_hctx(cpu, hctx))
- 		clear_bit(BLK_MQ_S_INACTIVE, &hctx->state);
- 	return 0;
- }
-@@ -3602,7 +3618,7 @@ static int blk_mq_hctx_notify_dead(unsig
- 	enum hctx_type type;
+ 	nr_possible_banks = be32_to_cpup(
+ 		(__be32 *)&buf.data[TPM_HEADER_SIZE + 5]);
+-
+-	chip->allocated_banks = kcalloc(nr_possible_banks,
+-					sizeof(*chip->allocated_banks),
+-					GFP_KERNEL);
+-	if (!chip->allocated_banks) {
++	if (nr_possible_banks > TPM2_MAX_PCR_BANKS) {
++		pr_err("tpm: out of bank capacity: %u > %u\n",
++		       nr_possible_banks, TPM2_MAX_PCR_BANKS);
+ 		rc = -ENOMEM;
+ 		goto out;
+ 	}
+--- a/include/linux/tpm.h
++++ b/include/linux/tpm.h
+@@ -25,7 +25,9 @@
+ #include <crypto/hash_info.h>
  
- 	hctx = hlist_entry_safe(node, struct blk_mq_hw_ctx, cpuhp_dead);
--	if (!cpumask_test_cpu(cpu, hctx->cpumask))
-+	if (!blk_mq_cpu_mapped_to_hctx(cpu, hctx))
- 		return 0;
+ #define TPM_DIGEST_SIZE 20	/* Max TPM v1.2 PCR size */
+-#define TPM_MAX_DIGEST_SIZE SHA512_DIGEST_SIZE
++
++#define TPM2_MAX_DIGEST_SIZE	SHA512_DIGEST_SIZE
++#define TPM2_MAX_PCR_BANKS	8
  
- 	ctx = __blk_mq_get_ctx(hctx->queue, cpu);
+ struct tpm_chip;
+ struct trusted_key_payload;
+@@ -51,7 +53,7 @@ enum tpm_algorithms {
+ 
+ struct tpm_digest {
+ 	u16 alg_id;
+-	u8 digest[TPM_MAX_DIGEST_SIZE];
++	u8 digest[TPM2_MAX_DIGEST_SIZE];
+ } __packed;
+ 
+ struct tpm_bank_info {
+@@ -157,7 +159,7 @@ struct tpm_chip {
+ 	unsigned int groups_cnt;
+ 
+ 	u32 nr_allocated_banks;
+-	struct tpm_bank_info *allocated_banks;
++	struct tpm_bank_info allocated_banks[TPM2_MAX_PCR_BANKS];
+ #ifdef CONFIG_ACPI
+ 	acpi_handle acpi_dev_handle;
+ 	char ppi_version[TPM_PPI_VERSION_LEN + 1];
 
 
