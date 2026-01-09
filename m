@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A17931E107;
-	Fri,  9 Jan 2026 12:32:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508B933B6E8;
+	Fri,  9 Jan 2026 12:32:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961964; cv=none; b=X9jdgKdCP6O89v4I8dzDYOesGFGdbrWxjOxRa6y1MASsexEhx4fbrs2xpBXka/Bi4YvA73V3KUt58qrSu4Mt5Uav3pQ86yoDY6MKkgfuFxoL+jPjfm/yL9hIiq4oHMPYoKEaXnNepaUxW7QIjSG7hNMeiyIlHlYttz474Ut2Ngk=
+	t=1767961967; cv=none; b=I/mEx7Vt7MrrOMe8NTpwVsIr7A/QN2Oez2Z4cH662TPQ/OgcjkDsw/TEmKvntgButOUoK3zcGRonL9LoH/5nplOywJi4qzrDWi2z+KCafY5+SVOuk57J0oIeWbuT7TLHlPgsKKJu5En2chZVXIWYd+tZ6ik5r/rqhvPv+0swA78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961964; c=relaxed/simple;
-	bh=EAhSv5kY/znuFvDz/FA/lU12XNWi6T5XOU5XwlzmKuk=;
+	s=arc-20240116; t=1767961967; c=relaxed/simple;
+	bh=iHeKR5nG+vILkblRiwWLOztdqo1Kvi89oyoqJqP40LA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=squqXYMuJ+3mlccX3vLX/wjrQQ7IKroFt4PR4Q6N/O2cQcbOrDvVxg4PQpANvRQhQ3X069n545ubBJBZurdepEV5VCvzRsGvd/OcsheLPLqL9kTYzfIg2UJ4vFu0+G5ew6Pj+JRjt8JQHR8WR2SJMiiOQRLfQaVWlIiRBsDJBJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jCG+L9Vc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cFx9mLdXgvryUjjZZLDFsL63raiN4T2VzYKdNYSYqaSWMuvkMgDR/z0ifQJ5i/GicjrPMFU2sHXCMq1ncmRvQdK3TfQUNqjdgdKHvRriB1eFS7CiJg8dcUcmYVATggOnsnuXxEr7TGiaPzmGhthpi1MJum1otwv6UMs5YTSbTxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P3cfXUsL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jCG+L9Vc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E85CBC4CEF1;
-	Fri,  9 Jan 2026 12:32:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P3cfXUsL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFCF6C4CEF1;
+	Fri,  9 Jan 2026 12:32:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961964;
-	bh=EAhSv5kY/znuFvDz/FA/lU12XNWi6T5XOU5XwlzmKuk=;
+	s=korg; t=1767961967;
+	bh=iHeKR5nG+vILkblRiwWLOztdqo1Kvi89oyoqJqP40LA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jCG+L9Vc1NfPscrs97uweAgKPOcO0Mcq/JEFJb+O4CzzfZjNYYjXvHrcCgjTBRJbe
-	 duqEpGfkudSyEEgzD4ZK7oSu97yIQc8w/ETPxL2HSfwMIGiVPTgWG2RnOy4rKYvPbJ
-	 EGJvnyebm0UxD7w9HKoEQLvisgStsp+nXFPqYO2g=
+	b=P3cfXUsLzk+uInsA9oOc34++tjOB5GO8+XgfjE0a+k0jfBfv9X8dFJ87Ygs5puYFv
+	 XQ6BBHpLISZdBoyDgqPuPr1Bvj8N3pJZSjdQeDOPbfnEpLRvp30/ERk65vjzRFtZd3
+	 hKF9eGbgk8eCKu7VPhi1BQWgQR5yDnIF+mG8uYX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Ilias Stamatis <ilstam@amazon.com>,
+	"David Hildenbrand (Red Hat)" <david@kernel.org>,
+	Andriy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Baoquan He <bhe@redhat.com>,
+	"Huang, Ying" <huang.ying.caritas@gmail.com>,
+	Nadav Amit <nadav.amit@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 198/634] NFS: Fix inheritance of the block sizes when automounting
-Date: Fri,  9 Jan 2026 12:37:56 +0100
-Message-ID: <20260109112124.885711650@linuxfoundation.org>
+Subject: [PATCH 6.1 172/634] Reinstate "resource: avoid unnecessary lookups in find_next_iomem_res()"
+Date: Fri,  9 Jan 2026 12:37:30 +0100
+Message-ID: <20260109112123.917411998@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -44,182 +50,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Ilias Stamatis <ilstam@amazon.com>
 
-[ Upstream commit 2b092175f5e301cdaa935093edfef2be9defb6df ]
+[ Upstream commit 6fb3acdebf65a72df0a95f9fd2c901ff2bc9a3a2 ]
 
-Only inherit the block sizes that were actually specified as mount
-parameters for the parent mount.
+Commit 97523a4edb7b ("kernel/resource: remove first_lvl / siblings_only
+logic") removed an optimization introduced by commit 756398750e11
+("resource: avoid unnecessary lookups in find_next_iomem_res()").  That
+was not called out in the message of the first commit explicitly so it's
+not entirely clear whether removing the optimization happened
+inadvertently or not.
 
-Fixes: 62a55d088cd8 ("NFS: Additional refactoring for fs_context conversion")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+As the original commit message of the optimization explains there is no
+point considering the children of a subtree in find_next_iomem_res() if
+the top level range does not match.
+
+Reinstating the optimization results in performance improvements in
+systems where /proc/iomem is ~5k lines long.  Calling mmap() on /dev/mem
+in such platforms takes 700-1500μs without the optimisation and 10-50μs
+with the optimisation.
+
+Note that even though commit 97523a4edb7b removed the 'sibling_only'
+parameter from next_resource(), newer kernels have basically reinstated it
+under the name 'skip_children'.
+
+Link: https://lore.kernel.org/all/20251124165349.3377826-1-ilstam@amazon.com/T/#u
+Fixes: 97523a4edb7b ("kernel/resource: remove first_lvl / siblings_only logic")
+Signed-off-by: Ilias Stamatis <ilstam@amazon.com>
+Acked-by: David Hildenbrand (Red Hat) <david@kernel.org>
+Cc: Andriy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: "Huang, Ying" <huang.ying.caritas@gmail.com>
+Cc: Nadav Amit <nadav.amit@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/client.c           | 21 +++++++++++++++++----
- fs/nfs/internal.h         |  1 -
- fs/nfs/namespace.c        |  5 ++++-
- fs/nfs/nfs4client.c       | 18 ++++++++++++++----
- fs/nfs/super.c            | 10 +++-------
- include/linux/nfs_fs_sb.h |  5 +++++
- 6 files changed, 43 insertions(+), 17 deletions(-)
+ kernel/resource.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/client.c b/fs/nfs/client.c
-index 2ca04dcb192aa..948bf8d7aed00 100644
---- a/fs/nfs/client.c
-+++ b/fs/nfs/client.c
-@@ -745,10 +745,18 @@ static int nfs_init_server(struct nfs_server *server,
- 		server->fattr_valid = NFS_ATTR_FATTR_V4;
- 	}
- 
--	if (ctx->rsize)
-+	if (ctx->bsize) {
-+		server->bsize = ctx->bsize;
-+		server->automount_inherit |= NFS_AUTOMOUNT_INHERIT_BSIZE;
-+	}
-+	if (ctx->rsize) {
- 		server->rsize = nfs_io_size(ctx->rsize, clp->cl_proto);
--	if (ctx->wsize)
-+		server->automount_inherit |= NFS_AUTOMOUNT_INHERIT_RSIZE;
-+	}
-+	if (ctx->wsize) {
- 		server->wsize = nfs_io_size(ctx->wsize, clp->cl_proto);
-+		server->automount_inherit |= NFS_AUTOMOUNT_INHERIT_WSIZE;
-+	}
- 
- 	server->acregmin = ctx->acregmin * HZ;
- 	server->acregmax = ctx->acregmax * HZ;
-@@ -940,8 +948,13 @@ EXPORT_SYMBOL_GPL(nfs_probe_server);
- void nfs_server_copy_userdata(struct nfs_server *target, struct nfs_server *source)
+diff --git a/kernel/resource.c b/kernel/resource.c
+index 1170ed58404fb..f39b9fe738d14 100644
+--- a/kernel/resource.c
++++ b/kernel/resource.c
+@@ -336,6 +336,8 @@ static int find_next_iomem_res(resource_size_t start, resource_size_t end,
+ 			       unsigned long flags, unsigned long desc,
+ 			       struct resource *res)
  {
- 	target->flags = source->flags;
--	target->rsize = source->rsize;
--	target->wsize = source->wsize;
-+	target->automount_inherit = source->automount_inherit;
-+	if (source->automount_inherit & NFS_AUTOMOUNT_INHERIT_BSIZE)
-+		target->bsize = source->bsize;
-+	if (source->automount_inherit & NFS_AUTOMOUNT_INHERIT_RSIZE)
-+		target->rsize = source->rsize;
-+	if (source->automount_inherit & NFS_AUTOMOUNT_INHERIT_WSIZE)
-+		target->wsize = source->wsize;
- 	target->acregmin = source->acregmin;
- 	target->acregmax = source->acregmax;
- 	target->acdirmin = source->acdirmin;
-diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
-index 323f50962a786..ec2e0d7ed7e36 100644
---- a/fs/nfs/internal.h
-+++ b/fs/nfs/internal.h
-@@ -145,7 +145,6 @@ struct nfs_fs_context {
- 		struct super_block	*sb;
- 		struct dentry		*dentry;
- 		struct nfs_fattr	*fattr;
--		unsigned int		inherited_bsize;
- 	} clone_data;
- };
++	/* Skip children until we find a top level range that matches */
++	bool skip_children = true;
+ 	struct resource *p;
  
-diff --git a/fs/nfs/namespace.c b/fs/nfs/namespace.c
-index 789baa1cf768c..663f1a3f7cc3e 100644
---- a/fs/nfs/namespace.c
-+++ b/fs/nfs/namespace.c
-@@ -190,6 +190,10 @@ struct vfsmount *nfs_d_automount(struct path *path)
- 	ctx->nfs_mod		= client->cl_nfs_mod;
- 	__module_get(ctx->nfs_mod->owner);
+ 	if (!res)
+@@ -346,7 +348,7 @@ static int find_next_iomem_res(resource_size_t start, resource_size_t end,
  
-+	/* Inherit block sizes if they were specified as mount parameters */
-+	if (server->automount_inherit & NFS_AUTOMOUNT_INHERIT_BSIZE)
-+		ctx->bsize = server->bsize;
+ 	read_lock(&resource_lock);
+ 
+-	for_each_resource(&iomem_resource, p, false) {
++	for_each_resource(&iomem_resource, p, skip_children) {
+ 		/* If we passed the resource we are looking for, stop */
+ 		if (p->start > end) {
+ 			p = NULL;
+@@ -357,6 +359,12 @@ static int find_next_iomem_res(resource_size_t start, resource_size_t end,
+ 		if (p->end < start)
+ 			continue;
+ 
++		/*
++		 * We found a top level range that matches what we are looking
++		 * for. Time to start checking children too.
++		 */
++		skip_children = false;
 +
- 	ret = client->rpc_ops->submount(fc, server);
- 	if (ret < 0) {
- 		mnt = ERR_PTR(ret);
-@@ -289,7 +293,6 @@ int nfs_do_submount(struct fs_context *fc)
- 		return -ENOMEM;
- 
- 	ctx->internal		= true;
--	ctx->clone_data.inherited_bsize = ctx->clone_data.sb->s_blocksize_bits;
- 
- 	p = nfs_devname(dentry, buffer, 4096);
- 	if (IS_ERR(p)) {
-diff --git a/fs/nfs/nfs4client.c b/fs/nfs/nfs4client.c
-index 4cb405e343b83..f8a50f6453dd1 100644
---- a/fs/nfs/nfs4client.c
-+++ b/fs/nfs/nfs4client.c
-@@ -1149,10 +1149,20 @@ static int nfs4_init_server(struct nfs_server *server, struct fs_context *fc)
- 	if (error < 0)
- 		return error;
- 
--	if (ctx->rsize)
--		server->rsize = nfs_io_size(ctx->rsize, server->nfs_client->cl_proto);
--	if (ctx->wsize)
--		server->wsize = nfs_io_size(ctx->wsize, server->nfs_client->cl_proto);
-+	if (ctx->bsize) {
-+		server->bsize = ctx->bsize;
-+		server->automount_inherit |= NFS_AUTOMOUNT_INHERIT_BSIZE;
-+	}
-+	if (ctx->rsize) {
-+		server->rsize =
-+			nfs_io_size(ctx->rsize, server->nfs_client->cl_proto);
-+		server->automount_inherit |= NFS_AUTOMOUNT_INHERIT_RSIZE;
-+	}
-+	if (ctx->wsize) {
-+		server->wsize =
-+			nfs_io_size(ctx->wsize, server->nfs_client->cl_proto);
-+		server->automount_inherit |= NFS_AUTOMOUNT_INHERIT_WSIZE;
-+	}
- 
- 	server->acregmin = ctx->acregmin * HZ;
- 	server->acregmax = ctx->acregmax * HZ;
-diff --git a/fs/nfs/super.c b/fs/nfs/super.c
-index 3a002bc75d22a..9a81f34362930 100644
---- a/fs/nfs/super.c
-+++ b/fs/nfs/super.c
-@@ -1057,8 +1057,9 @@ static void nfs_fill_super(struct super_block *sb, struct nfs_fs_context *ctx)
- 	sb->s_blocksize = 0;
- 	sb->s_xattr = server->nfs_client->cl_nfs_mod->xattr;
- 	sb->s_op = server->nfs_client->cl_nfs_mod->sops;
--	if (ctx->bsize)
--		sb->s_blocksize = nfs_block_size(ctx->bsize, &sb->s_blocksize_bits);
-+	if (server->bsize)
-+		sb->s_blocksize =
-+			nfs_block_size(server->bsize, &sb->s_blocksize_bits);
- 
- 	switch (server->nfs_client->rpc_ops->version) {
- 	case 2:
-@@ -1303,13 +1304,8 @@ int nfs_get_tree_common(struct fs_context *fc)
- 	}
- 
- 	if (!s->s_root) {
--		unsigned bsize = ctx->clone_data.inherited_bsize;
- 		/* initial superblock/root creation */
- 		nfs_fill_super(s, ctx);
--		if (bsize) {
--			s->s_blocksize_bits = bsize;
--			s->s_blocksize = 1U << bsize;
--		}
- 		error = nfs_get_cache_cookie(s, ctx);
- 		if (error < 0)
- 			goto error_splat_super;
-diff --git a/include/linux/nfs_fs_sb.h b/include/linux/nfs_fs_sb.h
-index eb1d41d87be30..877d5523239cf 100644
---- a/include/linux/nfs_fs_sb.h
-+++ b/include/linux/nfs_fs_sb.h
-@@ -155,6 +155,11 @@ struct nfs_server {
- #define NFS_MOUNT_WRITE_WAIT		0x02000000
- #define NFS_MOUNT_TRUNK_DISCOVERY	0x04000000
- 
-+	unsigned int		automount_inherit; /* Properties inherited by automount */
-+#define NFS_AUTOMOUNT_INHERIT_BSIZE	0x0001
-+#define NFS_AUTOMOUNT_INHERIT_RSIZE	0x0002
-+#define NFS_AUTOMOUNT_INHERIT_WSIZE	0x0004
-+
- 	unsigned int		caps;		/* server capabilities */
- 	__u64			fattr_valid;	/* Valid attributes */
- 	unsigned int		rsize;		/* read size */
+ 		/* Found a match, break */
+ 		if (is_type_match(p, flags, desc))
+ 			break;
 -- 
 2.51.0
 
