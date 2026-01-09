@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3643126ED41;
-	Fri,  9 Jan 2026 12:16:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92F0826ED41;
+	Fri,  9 Jan 2026 12:16:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960994; cv=none; b=lHLQpe1I6FoSUaXJ/P5Gze+oDDfDT89ml/SO5zKQ1SpCreoLeSp6fjwWa4IJxVaoApeKKqZtGd42AWq9dJWb9tOW9O7d3c4MF+W8ybFdeVVoVXfBf+P1YErez8uoOLf3bTJAVFrCAlaIZuFjvx4k73DaiEByypbYHz4QbhTdp3I=
+	t=1767960996; cv=none; b=MQeDS/mTJW2Z7PAXypW1JaQQGL1OPnzgyrUKdCvyDuTeLtKeB/MKEhGQwnsEdpWCIejLGjLd7EKoEc2zg1/CZxblMALeyZG/I04L6dN1Q2nZjCTxV1hE/79tAjA7xhK2bKMFz099OBun30tzl63J5RwFqMQBsrtYzEh662VwSp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960994; c=relaxed/simple;
-	bh=q9Z/+yPeREzm6UIPM1lKXQmQFO2iBAeHVl3xh+OEM+c=;
+	s=arc-20240116; t=1767960996; c=relaxed/simple;
+	bh=TWWKPLIDqpGjeajLXEH3s55ZTXFUkxCfjeNQJKONAOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kcE8Fv4FI77IF735bRHSP6aNnQxDZfbSJqOaUIb4Tw4kv9esN3g+tdN3me0+T1JLgzzy3kVxWlLQr1EBja1qInHwx2vg9sNkXPGkZ3DoNLDlXM4x0zKergX4hKw0/Af8W+c0zHaBP/Mj4AOfer+SMhrtZeykoNnxszJkAc5XeXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hl0od965; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R5kl2Fm84Zbgog6An9/c5PdjLShys06DIhpmGJ4Cfn+kz0xyaHhTP75C3NuljMvBy2o06aDVCsXcH3kcYv6JJZP01v/4fJbk4kPz4JTeBt8yLaHaaKCknLPIhyutth1KahgOcL9+bpGhrl+WuXQ5YD/mVWuXuevKvaY7l3SG39U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gRSvP0lt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hl0od965"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5273CC4CEF1;
-	Fri,  9 Jan 2026 12:16:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gRSvP0lt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FFB7C4CEF1;
+	Fri,  9 Jan 2026 12:16:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960993;
-	bh=q9Z/+yPeREzm6UIPM1lKXQmQFO2iBAeHVl3xh+OEM+c=;
+	s=korg; t=1767960996;
+	bh=TWWKPLIDqpGjeajLXEH3s55ZTXFUkxCfjeNQJKONAOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hl0od965HVDkEi2a2oDdvP3J6LGphbYRERPbVtU6MLGhElStoqWZsb6z05cFEZovT
-	 W+TcEUgwi0cGnAph9TKoTq83iklJZxJELlMxV7T63qedLvcemuFEpTy7/EPX16u5c7
-	 RQuh6lI2EzOCp/aMAwEM8qd4pbS5CB70YdvZDWbE=
+	b=gRSvP0ltQo1g6Mwy6QPdArtcPuziml2gkfa/1dHFfVIN+fxaPRfCrBI5xRfxE2AwB
+	 AzopCQu4DWzEY7LZf6iYUbPsoFzZqdb2wGa76goBS4Q1FH/FzV4DFrkiUzoJ/FpcWX
+	 +v0zeQwK+PMnTcUdgQlVQ6faJKP1nUwrJYD+bEQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianrui Zhao <zhaotianrui@loongson.cn>,
+	Qiang Ma <maqianga@uniontech.com>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.6 596/737] LoongArch: Add new PCI ID for pci_fixup_vgadev()
-Date: Fri,  9 Jan 2026 12:42:15 +0100
-Message-ID: <20260109112156.429497041@linuxfoundation.org>
+Subject: [PATCH 6.6 597/737] LoongArch: Correct the calculation logic of thread_count
+Date: Fri,  9 Jan 2026 12:42:16 +0100
+Message-ID: <20260109112156.467059338@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -50,36 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Qiang Ma <maqianga@uniontech.com>
 
-commit bf3fa8f232a1eec8d7b88dcd9e925e60f04f018d upstream.
+commit 1de0ae21f136efa6c5d8a4d3e07b7d1ca39c750f upstream.
 
-Loongson-2K3000 has a new PCI ID (0x7a46) for its display controller,
-Add it for pci_fixup_vgadev() since we prefer a discrete graphics card
-as default boot device if present.
+For thread_count, the current calculation method has a maximum of 255,
+which may not be sufficient in the future. Therefore, we are correcting
+it now.
+
+Reference: SMBIOS Specification, 7.5 Processor Information (Type 4)[1]
+
+[1]: https://www.dmtf.org/sites/default/files/standards/documents/DSP0134_3.9.0.pdf
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Tianrui Zhao <zhaotianrui@loongson.cn>
+Signed-off-by: Qiang Ma <maqianga@uniontech.com>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/pci/pci.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/loongarch/kernel/setup.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/arch/loongarch/pci/pci.c
-+++ b/arch/loongarch/pci/pci.c
-@@ -15,6 +15,7 @@
- #define PCI_DEVICE_ID_LOONGSON_HOST     0x7a00
- #define PCI_DEVICE_ID_LOONGSON_DC1      0x7a06
- #define PCI_DEVICE_ID_LOONGSON_DC2      0x7a36
-+#define PCI_DEVICE_ID_LOONGSON_DC3      0x7a46
+--- a/arch/loongarch/kernel/setup.c
++++ b/arch/loongarch/kernel/setup.c
+@@ -56,6 +56,7 @@
+ #define SMBIOS_FREQLOW_MASK		0xFF
+ #define SMBIOS_CORE_PACKAGE_OFFSET	0x23
+ #define SMBIOS_THREAD_PACKAGE_OFFSET	0x25
++#define SMBIOS_THREAD_PACKAGE_2_OFFSET	0x2E
+ #define LOONGSON_EFI_ENABLE		(1 << 3)
  
- int raw_pci_read(unsigned int domain, unsigned int bus, unsigned int devfn,
- 						int reg, int len, u32 *val)
-@@ -98,3 +99,4 @@ static void pci_fixup_vgadev(struct pci_
+ #ifdef CONFIG_EFI
+@@ -130,7 +131,12 @@ static void __init parse_cpu_table(const
+ 	cpu_clock_freq = freq_temp * 1000000;
+ 
+ 	loongson_sysconf.cpuname = (void *)dmi_string_parse(dm, dmi_data[16]);
+-	loongson_sysconf.cores_per_package = *(dmi_data + SMBIOS_THREAD_PACKAGE_OFFSET);
++	loongson_sysconf.cores_per_package = *(u8 *)(dmi_data + SMBIOS_THREAD_PACKAGE_OFFSET);
++	if (dm->length >= 0x30 && loongson_sysconf.cores_per_package == 0xff) {
++		/* SMBIOS 3.0+ has ThreadCount2 for more than 255 threads */
++		loongson_sysconf.cores_per_package =
++					  *(u16 *)(dmi_data + SMBIOS_THREAD_PACKAGE_2_OFFSET);
++	}
+ 
+ 	pr_info("CpuClock = %llu\n", cpu_clock_freq);
  }
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_DC1, pci_fixup_vgadev);
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_DC2, pci_fixup_vgadev);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_DC3, pci_fixup_vgadev);
 
 
