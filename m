@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB533359F98;
-	Fri,  9 Jan 2026 12:07:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90FD333BBBD;
+	Fri,  9 Jan 2026 12:07:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960428; cv=none; b=jzEYnKKvz4OVq3uJ33GLwnFlsp5WfQt4ej8/07dYz96OPw3aGIYDLrrhxhohSyUDUhkQbrZtIa1mkX3QzVjNi4CLhNaeUGwNKGNxmPNjema8gfgL38XDlstR9w3U9Q/x3VxRgVdpCK14GAA0b6mrg3cAlGuG8LZV/sg/N06QwkE=
+	t=1767960431; cv=none; b=aTkaByWakG7FCw1byT/IZCPsaw9DVNMFL77HSDr4UEwtT8uK4uktCXV51wgrrHtr6c22xJLzJw3D3PEEOIFn9leQs4I00Hp3HrkUIgHAQrnUbhBfM4ahrE+PMjgR9u7jPLpKMMXMJUG+J4w+6p3AoGfPeD4g01592nDeNW4acdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960428; c=relaxed/simple;
-	bh=K1KaalaLDlq4uIhcMwyQMN8n59z60CBWYm/2WGk+T1g=;
+	s=arc-20240116; t=1767960431; c=relaxed/simple;
+	bh=+jhtF2w5o39ujaWBZPlppcombXM0SqcL6p65ZQUF6XQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ttCWJXwV5GlseugfBjX8I1HzdIVgiZEDf/tFfuU3H7K6HFHTvFI7/XHoYBhlQIju5VTIEHk2bLl2pnvV5fy0R0kKUm78wjiaJmewoT/fExl3IjMleQ4XQqqtufvrXoa4OMxGkijLAvXpUO9wBYIJzsCJCJG1FTSf+sq4d2+Gm2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w3S0QZiO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nr6O+Dz7mJdopKGF2SB+HdQT3AKjFgRt9v4EnIWX3vEWWFnxLYBVzGEyrYyIW6FrMxC7S17i83tZGV1bRhmUzQkQdQcMthT6daEPc2Sh35ZeIVDUILEUO2VkD4K+zdhd1HGYMahftA92WHCOSMfX/o0vDeW+rHBpUlS6ZCwGIyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tc738+i+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w3S0QZiO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5692DC4CEF1;
-	Fri,  9 Jan 2026 12:07:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tc738+i+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21F6AC4CEF1;
+	Fri,  9 Jan 2026 12:07:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960428;
-	bh=K1KaalaLDlq4uIhcMwyQMN8n59z60CBWYm/2WGk+T1g=;
+	s=korg; t=1767960431;
+	bh=+jhtF2w5o39ujaWBZPlppcombXM0SqcL6p65ZQUF6XQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w3S0QZiOrPFQGo0sUv+AiNcZeWKXajvcJFjrz+6CqKZEb1ZEuZBAhk1J63strbuRj
-	 JlVuOypgzUy8n7lZEOh33eN9CKkO9du0ilsuU59qJq/f7ugqFSYCR/9ThgpcxotIDU
-	 4Y1kVOnbEW+3HcaZAsKkpuDVP+E1cVCqMlPosiCw=
+	b=tc738+i+NgiNL/hTjkrgz5FKfqDPVVPpSr7u2DgEyubzwBP+hqNlM8QT/cf02GS2/
+	 6gNI+zi75JssPs1IGjH5FKCIV3VWYGtOAnCcLhyd/VAe1MJ+xHoCcCHS6DWfGJhbjX
+	 uzeue49lcDnnZADiLQYy8n5QriaNiib2hh0Z8PY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Hongyu Xie <xiehongyu1@kylinos.cn>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 401/737] iio: adc: ti_am335x_adc: Limit step_avg to valid range for gcc complains
-Date: Fri,  9 Jan 2026 12:39:00 +0100
-Message-ID: <20260109112149.085885317@linuxfoundation.org>
+Subject: [PATCH 6.6 402/737] usb: xhci: limit run_graceperiod for only usb 3.0 devices
+Date: Fri,  9 Jan 2026 12:39:01 +0100
+Message-ID: <20260109112149.122663140@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,45 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Hongyu Xie <xiehongyu1@kylinos.cn>
 
-[ Upstream commit c9fb952360d0c78bbe98239bd6b702f05c2dbb31 ]
+[ Upstream commit 8d34983720155b8f05de765f0183d9b0e1345cc0 ]
 
-FIELD_PREP() checks that a value fits into the available bitfield, add a
-check for step_avg to fix gcc complains.
+run_graceperiod blocks usb 2.0 devices from auto suspending after
+xhci_start for 500ms.
 
-which gcc complains about:
-  drivers/iio/adc/ti_am335x_adc.c: In function 'tiadc_step_config':
-  include/linux/compiler_types.h:572:38: error: call to
-'__compiletime_assert_491' declared with attribute error: FIELD_PREP: value
-too large for the field include/linux/mfd/ti_am335x_tscadc.h:58:29: note:
-in expansion of macro 'FIELD_PREP'
-    #define STEPCONFIG_AVG(val) FIELD_PREP(GENMASK(4, 2), (val))
-                                ^~~~~~~~~~
-drivers/iio/adc/ti_am335x_adc.c:127:17: note: in expansion of macro 'STEPCONFIG_AVG'
-	stepconfig = STEPCONFIG_AVG(ffs(adc_dev->step_avg[i]) - 1)
+Log shows:
+[   13.387170] xhci_hub_control:1271: xhci-hcd PNP0D10:03: Get port status 7-1 read: 0x2a0, return 0x100
+[   13.387177] hub_event:5779: hub 7-0:1.0: state 7 ports 1 chg 0000 evt 0000
+[   13.387182] hub_suspend:3903: hub 7-0:1.0: hub_suspend
+[   13.387188] hcd_bus_suspend:2250: usb usb7: bus auto-suspend, wakeup 1
+[   13.387191] hcd_bus_suspend:2279: usb usb7: suspend raced with wakeup event
+[   13.387193] hcd_bus_resume:2303: usb usb7: usb auto-resume
+[   13.387296] hub_event:5779: hub 3-0:1.0: state 7 ports 1 chg 0000 evt 0000
+[   13.393343] handle_port_status:2034: xhci-hcd PNP0D10:02: handle_port_status: starting usb5 port polling.
+[   13.393353] xhci_hub_control:1271: xhci-hcd PNP0D10:02: Get port status 5-1 read: 0x206e1, return 0x10101
+[   13.400047] hub_suspend:3903: hub 3-0:1.0: hub_suspend
+[   13.403077] hub_resume:3948: hub 7-0:1.0: hub_resume
+[   13.403080] xhci_hub_control:1271: xhci-hcd PNP0D10:03: Get port status 7-1 read: 0x2a0, return 0x100
+[   13.403085] hub_event:5779: hub 7-0:1.0: state 7 ports 1 chg 0000 evt 0000
+[   13.403087] hub_suspend:3903: hub 7-0:1.0: hub_suspend
+[   13.403090] hcd_bus_suspend:2250: usb usb7: bus auto-suspend, wakeup 1
+[   13.403093] hcd_bus_suspend:2279: usb usb7: suspend raced with wakeup event
+[   13.403095] hcd_bus_resume:2303: usb usb7: usb auto-resume
+[   13.405002] handle_port_status:1913: xhci-hcd PNP0D10:04: Port change event, 9-1, id 1, portsc: 0x6e1
+[   13.405016] hub_activate:1169: usb usb5-port1: status 0101 change 0001
+[   13.405026] xhci_clear_port_change_bit:658: xhci-hcd PNP0D10:02: clear port1 connect change, portsc: 0x6e1
+[   13.413275] hcd_bus_suspend:2250: usb usb3: bus auto-suspend, wakeup 1
+[   13.419081] hub_resume:3948: hub 7-0:1.0: hub_resume
+[   13.419086] xhci_hub_control:1271: xhci-hcd PNP0D10:03: Get port status 7-1 read: 0x2a0, return 0x100
+[   13.419095] hub_event:5779: hub 7-0:1.0: state 7 ports 1 chg 0000 evt 0000
+[   13.419100] hub_suspend:3903: hub 7-0:1.0: hub_suspend
+[   13.419106] hcd_bus_suspend:2250: usb usb7: bus auto-suspend, wakeup 1
+[   13.419110] hcd_bus_suspend:2279: usb usb7: suspend raced with wakeup event
+[   13.419112] hcd_bus_resume:2303: usb usb7: usb auto-resume
+[   13.420455] handle_port_status:2034: xhci-hcd PNP0D10:04: handle_port_status: starting usb9 port polling.
+[   13.420493] handle_port_status:1913: xhci-hcd PNP0D10:05: Port change event, 10-1, id 1, portsc: 0x6e1
+[   13.425332] hcd_bus_suspend:2279: usb usb3: suspend raced with wakeup event
+[   13.431931] handle_port_status:2034: xhci-hcd PNP0D10:05: handle_port_status: starting usb10 port polling.
+[   13.435080] hub_resume:3948: hub 7-0:1.0: hub_resume
+[   13.435084] xhci_hub_control:1271: xhci-hcd PNP0D10:03: Get port status 7-1 read: 0x2a0, return 0x100
+[   13.435092] hub_event:5779: hub 7-0:1.0: state 7 ports 1 chg 0000 evt 0000
+[   13.435096] hub_suspend:3903: hub 7-0:1.0: hub_suspend
+[   13.435102] hcd_bus_suspend:2250: usb usb7: bus auto-suspend, wakeup 1
+[   13.435106] hcd_bus_suspend:2279: usb usb7: suspend raced with wakeup event
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202510102117.Jqxrw1vF-lkp@intel.com/
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+usb7 and other usb 2.0 root hub were rapidly toggling between suspend
+and resume states. More, "suspend raced with wakeup event" confuses people.
+
+So, limit run_graceperiod for only usb 3.0 devices
+
+Signed-off-by: Hongyu Xie <xiehongyu1@kylinos.cn>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20251119142417.2820519-2-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ti_am335x_adc.c | 2 +-
+ drivers/usb/host/xhci-hub.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/adc/ti_am335x_adc.c b/drivers/iio/adc/ti_am335x_adc.c
-index 32f1f91e2720..9e009b035eb5 100644
---- a/drivers/iio/adc/ti_am335x_adc.c
-+++ b/drivers/iio/adc/ti_am335x_adc.c
-@@ -123,7 +123,7 @@ static void tiadc_step_config(struct iio_dev *indio_dev)
- 
- 		chan = adc_dev->channel_line[i];
- 
--		if (adc_dev->step_avg[i])
-+		if (adc_dev->step_avg[i] && adc_dev->step_avg[i] <= STEPCONFIG_AVG_16)
- 			stepconfig = STEPCONFIG_AVG(ffs(adc_dev->step_avg[i]) - 1) |
- 				     STEPCONFIG_FIFO1;
+diff --git a/drivers/usb/host/xhci-hub.c b/drivers/usb/host/xhci-hub.c
+index d3d535ed00b5..61642c8d529f 100644
+--- a/drivers/usb/host/xhci-hub.c
++++ b/drivers/usb/host/xhci-hub.c
+@@ -1669,7 +1669,7 @@ int xhci_hub_status_data(struct usb_hcd *hcd, char *buf)
+ 	 * SS devices are only visible to roothub after link training completes.
+ 	 * Keep polling roothubs for a grace period after xHC start
+ 	 */
+-	if (xhci->run_graceperiod) {
++	if (hcd->speed >= HCD_USB3 && xhci->run_graceperiod) {
+ 		if (time_before(jiffies, xhci->run_graceperiod))
+ 			status = 1;
  		else
 -- 
 2.51.0
