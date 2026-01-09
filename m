@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4FB320CB6;
-	Fri,  9 Jan 2026 12:13:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1E4D359F9C;
+	Fri,  9 Jan 2026 12:13:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960783; cv=none; b=ZqNAJ244Vu4RHVWZUceASSscWNaa1M92p6Ssrelr3MJZpFbgsVXYpgdbVKqxx9kxSF2o6owFcUe9veZ0sElwVezpDJ6KxPhMTqzZTXo2CV8OVEGWj4PTQ3oRT4osxIFYOG5zBSLAVf6JBC3M7JEn532hkKIucvmZ0iqtTj82aRg=
+	t=1767960786; cv=none; b=GgoiFctAz+VWCVhr6ckFNFAErYrXw1OATBAHHchjVYiJ0//8C4Ocn1r4bugJKwXdZ/SIOpsKQZqQoUZvdRnVKST9seh5Btbb9+YdANnytCFDcnx+vLJnXfVgfnVY4qv0lnQ0361OmoKfhsxMWiSQe08YoYMPUNKeftI3v1HJgdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960783; c=relaxed/simple;
-	bh=46w9UfnD2IK+oqzecefTyx5Px8G+ozJ1+rpjf58ODZc=;
+	s=arc-20240116; t=1767960786; c=relaxed/simple;
+	bh=uoFlOhy6O5dJA6mYd8j+PUovjwjV3jLfKCA4i6H9Opk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZdMLR2G8YkEC8jm3bZqG5PbIfZ2fx6tt62NFsdDFEjldraS6X7rKxFRBe7Y/wcZIEeJfmirluyOi0SVV2s/Zqo4TqmmJRskYXUqeVKH/7w4MtaIcub3ltbrq03EIecM1sX0a8bNS4TpL/if7Ao/zj7N+aP3kSdG6CHexvAby6iU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EHz170S0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dbuMXfHaJu9QZpayC+k59fHE+50Gm9JmUNJo0oOvx1+ocWlKRQ6hokEQszz0v1EKt8iBEuQhD0e6pyCsG0GHS+zlL8JeusMxHsFVKXbWt4sTvVDWiDJyspu6lcwxfsijmoWdRpZC+PmAu5IBqz8csfyNvYJoOLWkj5JcRxw8RIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G0vYBTmY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EHz170S0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C634C4CEF1;
-	Fri,  9 Jan 2026 12:13:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G0vYBTmY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 599A5C4CEF1;
+	Fri,  9 Jan 2026 12:13:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960782;
-	bh=46w9UfnD2IK+oqzecefTyx5Px8G+ozJ1+rpjf58ODZc=;
+	s=korg; t=1767960785;
+	bh=uoFlOhy6O5dJA6mYd8j+PUovjwjV3jLfKCA4i6H9Opk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EHz170S0ROxsJVT5IbTUd//nnkHl1CO7OyJshYvFmU1IFhx2caHaMag7XxfLTPlGQ
-	 blImwAHyzwgT0OUlK6gumgTOYysSdAxtF3Scd1wOY48GLHICNKAQWrCc0UpBEKe/62
-	 UQuSrFYGVoDCONlZ/MwFUIYh5Q2fEuNu6yAlx9OE=
+	b=G0vYBTmYALv4CcTuL2Dd12Wl2NHWsaRQKoIJJD2cw5yhgDKWCob4tABrIKmOCfR0y
+	 cdQmeK7sgZryRHYmXbG93FjmpsnDLXOr9hs/+crFVZmGHgfoefug+NYXgYn9wZMO7D
+	 GSGqNiIVDqKyL7D7UcGH3NSCKs5SgQ4i6BgS0Fas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 523/737] platform/x86: hp-bioscfg: Fix out-of-bounds array access in ACPI package parsing
-Date: Fri,  9 Jan 2026 12:41:02 +0100
-Message-ID: <20260109112153.674060392@linuxfoundation.org>
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.6 497/737] hwmon: (w83791d) Convert macros to functions to avoid TOCTOU
+Date: Fri,  9 Jan 2026 12:40:36 +0100
+Message-ID: <20260109112152.688381848@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -46,132 +44,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Gui-Dong Han <hanguidong02@gmail.com>
 
-[ Upstream commit e44c42c830b7ab36e3a3a86321c619f24def5206 ]
+commit 670d7ef945d3a84683594429aea6ab2cdfa5ceb4 upstream.
 
-The hp_populate_*_elements_from_package() functions in the hp-bioscfg
-driver contain out-of-bounds array access vulnerabilities.
+The macro FAN_FROM_REG evaluates its arguments multiple times. When used
+in lockless contexts involving shared driver data, this leads to
+Time-of-Check to Time-of-Use (TOCTOU) race conditions, potentially
+causing divide-by-zero errors.
 
-These functions parse ACPI packages into internal data structures using
-a for loop with index variable 'elem' that iterates through
-enum_obj/integer_obj/order_obj/password_obj/string_obj arrays.
+Convert the macro to a static function. This guarantees that arguments
+are evaluated only once (pass-by-value), preventing the race
+conditions.
 
-When processing multi-element fields like PREREQUISITES and
-ENUM_POSSIBLE_VALUES, these functions read multiple consecutive array
-elements using expressions like 'enum_obj[elem + reqs]' and
-'enum_obj[elem + pos_values]' within nested loops.
+Additionally, in store_fan_div, move the calculation of the minimum
+limit inside the update lock. This ensures that the read-modify-write
+sequence operates on consistent data.
 
-The bug is that the bounds check only validated elem, but did not consider
-the additional offset when accessing elem + reqs or elem + pos_values.
+Adhere to the principle of minimal changes by only converting macros
+that evaluate arguments multiple times and are used in lockless
+contexts.
 
-The fix changes the bounds check to validate the actual accessed index.
-
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Reported-by: Junrui Luo <moonafterrain@outlook.com>
-Fixes: e6c7b3e15559 ("platform/x86: hp-bioscfg: string-attributes")
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Link: https://patch.msgid.link/SYBPR01MB788173D7DD4EA2CB6383683DAFB0A@SYBPR01MB7881.ausprd01.prod.outlook.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/all/CALbr=LYJ_ehtp53HXEVkSpYoub+XYSTU8Rg=o1xxMJ8=5z8B-g@mail.gmail.com/
+Fixes: 9873964d6eb2 ("[PATCH] HWMON: w83791d: New hardware monitoring driver for the Winbond W83791D")
+Cc: stable@vger.kernel.org
+Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Link: https://lore.kernel.org/r/20251202180105.12842-1-hanguidong02@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c       | 4 ++--
- drivers/platform/x86/hp/hp-bioscfg/int-attributes.c        | 2 +-
- drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c | 5 +++++
- drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c  | 5 +++++
- drivers/platform/x86/hp/hp-bioscfg/string-attributes.c     | 2 +-
- 5 files changed, 14 insertions(+), 4 deletions(-)
+ drivers/hwmon/w83791d.c |   17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c
-index a2402d31c146..20de4596e301 100644
---- a/drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c
-@@ -210,7 +210,7 @@ static int hp_populate_enumeration_elements_from_package(union acpi_object *enum
- 		case PREREQUISITES:
- 			size = min_t(u32, enum_data->common.prerequisites_size, MAX_PREREQUISITES_SIZE);
- 			for (reqs = 0; reqs < size; reqs++) {
--				if (elem >= enum_obj_count) {
-+				if (elem + reqs >= enum_obj_count) {
- 					pr_err("Error enum-objects package is too small\n");
- 					return -EINVAL;
- 				}
-@@ -261,7 +261,7 @@ static int hp_populate_enumeration_elements_from_package(union acpi_object *enum
+--- a/drivers/hwmon/w83791d.c
++++ b/drivers/hwmon/w83791d.c
+@@ -218,9 +218,14 @@ static u8 fan_to_reg(long rpm, int div)
+ 	return clamp_val((1350000 + rpm * div / 2) / (rpm * div), 1, 254);
+ }
  
- 			for (pos_values = 0; pos_values < size && pos_values < MAX_VALUES_SIZE;
- 			     pos_values++) {
--				if (elem >= enum_obj_count) {
-+				if (elem + pos_values >= enum_obj_count) {
- 					pr_err("Error enum-objects package is too small\n");
- 					return -EINVAL;
- 				}
-diff --git a/drivers/platform/x86/hp/hp-bioscfg/int-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/int-attributes.c
-index 86b7ac63fec2..875a807ccb89 100644
---- a/drivers/platform/x86/hp/hp-bioscfg/int-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/int-attributes.c
-@@ -228,7 +228,7 @@ static int hp_populate_integer_elements_from_package(union acpi_object *integer_
- 			size = min_t(u32, integer_data->common.prerequisites_size, MAX_PREREQUISITES_SIZE);
+-#define FAN_FROM_REG(val, div)	((val) == 0 ? -1 : \
+-				((val) == 255 ? 0 : \
+-					1350000 / ((val) * (div))))
++static int fan_from_reg(int val, int div)
++{
++	if (val == 0)
++		return -1;
++	if (val == 255)
++		return 0;
++	return 1350000 / (val * div);
++}
  
- 			for (reqs = 0; reqs < size; reqs++) {
--				if (elem >= integer_obj_count) {
-+				if (elem + reqs >= integer_obj_count) {
- 					pr_err("Error elem-objects package is too small\n");
- 					return -EINVAL;
- 				}
-diff --git a/drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c
-index 1ff09dfb7d7e..94a95ee57810 100644
---- a/drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c
-@@ -220,6 +220,11 @@ static int hp_populate_ordered_list_elements_from_package(union acpi_object *ord
- 			size = min_t(u32, ordered_list_data->common.prerequisites_size,
- 				     MAX_PREREQUISITES_SIZE);
- 			for (reqs = 0; reqs < size; reqs++) {
-+				if (elem + reqs >= order_obj_count) {
-+					pr_err("Error elem-objects package is too small\n");
-+					return -EINVAL;
-+				}
-+
- 				ret = hp_convert_hexstr_to_str(order_obj[elem + reqs].string.pointer,
- 							       order_obj[elem + reqs].string.length,
- 							       &str_value, &value_len);
-diff --git a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-index 03d0188804ba..6775a7ca74f5 100644
---- a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-@@ -309,6 +309,11 @@ static int hp_populate_password_elements_from_package(union acpi_object *passwor
- 				     MAX_PREREQUISITES_SIZE);
+ /* for temp1 which is 8-bit resolution, LSB = 1 degree Celsius */
+ #define TEMP1_FROM_REG(val)	((val) * 1000)
+@@ -521,7 +526,7 @@ static ssize_t show_##reg(struct device
+ 	struct w83791d_data *data = w83791d_update_device(dev); \
+ 	int nr = sensor_attr->index; \
+ 	return sprintf(buf, "%d\n", \
+-		FAN_FROM_REG(data->reg[nr], DIV_FROM_REG(data->fan_div[nr]))); \
++		fan_from_reg(data->reg[nr], DIV_FROM_REG(data->fan_div[nr]))); \
+ }
  
- 			for (reqs = 0; reqs < size; reqs++) {
-+				if (elem + reqs >= password_obj_count) {
-+					pr_err("Error elem-objects package is too small\n");
-+					return -EINVAL;
-+				}
-+
- 				ret = hp_convert_hexstr_to_str(password_obj[elem + reqs].string.pointer,
- 							       password_obj[elem + reqs].string.length,
- 							       &str_value, &value_len);
-diff --git a/drivers/platform/x86/hp/hp-bioscfg/string-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/string-attributes.c
-index f0c20070094d..5b3eac7f1685 100644
---- a/drivers/platform/x86/hp/hp-bioscfg/string-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/string-attributes.c
-@@ -219,7 +219,7 @@ static int hp_populate_string_elements_from_package(union acpi_object *string_ob
- 				     MAX_PREREQUISITES_SIZE);
+ show_fan_reg(fan);
+@@ -585,10 +590,10 @@ static ssize_t store_fan_div(struct devi
+ 	if (err)
+ 		return err;
  
- 			for (reqs = 0; reqs < size; reqs++) {
--				if (elem >= string_obj_count) {
-+				if (elem + reqs >= string_obj_count) {
- 					pr_err("Error elem-objects package is too small\n");
- 					return -EINVAL;
- 				}
--- 
-2.51.0
-
++	mutex_lock(&data->update_lock);
+ 	/* Save fan_min */
+-	min = FAN_FROM_REG(data->fan_min[nr], DIV_FROM_REG(data->fan_div[nr]));
++	min = fan_from_reg(data->fan_min[nr], DIV_FROM_REG(data->fan_div[nr]));
+ 
+-	mutex_lock(&data->update_lock);
+ 	data->fan_div[nr] = div_to_reg(nr, val);
+ 
+ 	switch (nr) {
 
 
