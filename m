@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9113D1946C8;
-	Fri,  9 Jan 2026 12:02:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D2311946C8;
+	Fri,  9 Jan 2026 12:02:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960155; cv=none; b=gGKFdr3zW0Yjw3YYVpEqbxkFB+7HJOg6mzZms9Zv0/lecYTm5kL5Bdk0fdqYuOGcdU7FtC8DhEOA/sq/lV+JJx7l96PTv/g8GZv22ZAVdnDU+XYgrh7vA1Rb4RLCXrrIS3Q+rhzp4Nlo9ZNrLSOHj4rAxIjSqrzwqhXmvt+hS94=
+	t=1767960158; cv=none; b=NNqZIyXnQiZmaGoR3NOfgBymdeajVV4S8Ck9CD3sQhfC3VK5t6zToGY4fG4nUo4g3GqZnjPziBosKPb5RASvXGglz9QsOs911Y4ACy0YEYAZ4EVpSiBRV7z5jt4bAr9UfVeOR+F/lGhzcepbu7mQAKJhXStbT8cBXbeWdsTznRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960155; c=relaxed/simple;
-	bh=RA6U0ctk1Dg5I5P2MVVnvJPxxFkPyaNscnFGF1DHs+E=;
+	s=arc-20240116; t=1767960158; c=relaxed/simple;
+	bh=t0nfZyK4uLsKMLdV/Iy1qyhNpe2gLS208NjF9YykYp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cVxIRDJqCakOvF9kjjL8oEerAc79BEQoTfj/xaSYDQs9dXbPl0HEk0L8zhZwDMwW1ma95+6uwVnqOWs2kcSobHt2Sa+EsVLbDQjcgft9HydxKLOOt++nlo5WTnzc4xswDe5Ic5XjQ8Sbb8PASRfYnqcgja7alhP4xkitO72RYPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w8SbrQxw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kMYMhXCnGFhwRXkQnWds/TOM9Xz47o085/1bCw0ZLwhY9hMLqI1tHiOCxVKM7SRjWSN6Ykgk68nh6a0Nsvmayu8znnEi2XRjpIWSKp2clRY5HsKQ/1qKr+ODcwo/5CwtMRSr7aLlFGiOe636ZCnzWbTDWLAi+jbCZZUQcpAWx8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L5VbHEdP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w8SbrQxw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1894C19422;
-	Fri,  9 Jan 2026 12:02:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L5VbHEdP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC4A9C4CEF1;
+	Fri,  9 Jan 2026 12:02:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960155;
-	bh=RA6U0ctk1Dg5I5P2MVVnvJPxxFkPyaNscnFGF1DHs+E=;
+	s=korg; t=1767960158;
+	bh=t0nfZyK4uLsKMLdV/Iy1qyhNpe2gLS208NjF9YykYp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w8SbrQxw7or5ew1TP4AKj5FAzniVH7TM1UtOQV/X1lsd31QbGEcjFQnACG/rpiERe
-	 /LatztTt+T3GJWHBpcFdEh+6L3PRCPlcA3cYZy1U8OuYqCPkJh6XYsIfc5aMpHDYfA
-	 cyIvxNbPW1INYaxVMhnv7kYPuOvFxttsU9fNiv5o=
+	b=L5VbHEdP6ngqc08dU/Dgrxu9p85x+EFqghMQeHpC0+WCbBLCbwhlhrsvexlNta6Mq
+	 kOtMMtr6o1+jnpO56sWrsYTAN+KPXnM82RilYUbic5IQush+pXttzI9692dSXoQ8wL
+	 lxAxIacVfVw3htD818hai/Q2hoi+/Eo1M+ZL2VMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joanne Koong <joannelkoong@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
+	syzkaller <syzkaller@googlegroups.com>,
+	George Kennedy <george.kennedy@oracle.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 304/737] iomap: account for unaligned end offsets when truncating read range
-Date: Fri,  9 Jan 2026 12:37:23 +0100
-Message-ID: <20260109112145.442068374@linuxfoundation.org>
+Subject: [PATCH 6.6 305/737] perf/x86/amd: Check event before enable to avoid GPF
+Date: Fri,  9 Jan 2026 12:37:24 +0100
+Message-ID: <20260109112145.479378203@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -53,72 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joanne Koong <joannelkoong@gmail.com>
+From: George Kennedy <george.kennedy@oracle.com>
 
-[ Upstream commit 9d875e0eef8ec15b6b1da0cb9a0f8ed13efee89e ]
+[ Upstream commit 866cf36bfee4fba6a492d2dcc5133f857e3446b0 ]
 
-The end position to start truncating from may be at an offset into a
-block, which under the current logic would result in overtruncation.
+On AMD machines cpuc->events[idx] can become NULL in a subtle race
+condition with NMI->throttle->x86_pmu_stop().
 
-Adjust the calculation to account for unaligned end offsets.
+Check event for NULL in amd_pmu_enable_all() before enable to avoid a GPF.
+This appears to be an AMD only issue.
 
-Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
-Link: https://patch.msgid.link/20251111193658.3495942-3-joannelkoong@gmail.com
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Syzkaller reported a GPF in amd_pmu_enable_all.
+
+INFO: NMI handler (perf_event_nmi_handler) took too long to run: 13.143
+    msecs
+Oops: general protection fault, probably for non-canonical address
+    0xdffffc0000000034: 0000  PREEMPT SMP KASAN NOPTI
+KASAN: null-ptr-deref in range [0x00000000000001a0-0x00000000000001a7]
+CPU: 0 UID: 0 PID: 328415 Comm: repro_36674776 Not tainted 6.12.0-rc1-syzk
+RIP: 0010:x86_pmu_enable_event (arch/x86/events/perf_event.h:1195
+    arch/x86/events/core.c:1430)
+RSP: 0018:ffff888118009d60 EFLAGS: 00010012
+RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 0000000000000000
+RDX: 0000000000000034 RSI: 0000000000000000 RDI: 00000000000001a0
+RBP: 0000000000000001 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000000 R12: 0000000000000002
+R13: ffff88811802a440 R14: ffff88811802a240 R15: ffff8881132d8601
+FS:  00007f097dfaa700(0000) GS:ffff888118000000(0000) GS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00000000200001c0 CR3: 0000000103d56000 CR4: 00000000000006f0
+Call Trace:
+ <IRQ>
+amd_pmu_enable_all (arch/x86/events/amd/core.c:760 (discriminator 2))
+x86_pmu_enable (arch/x86/events/core.c:1360)
+event_sched_out (kernel/events/core.c:1191 kernel/events/core.c:1186
+    kernel/events/core.c:2346)
+__perf_remove_from_context (kernel/events/core.c:2435)
+event_function (kernel/events/core.c:259)
+remote_function (kernel/events/core.c:92 (discriminator 1)
+    kernel/events/core.c:72 (discriminator 1))
+__flush_smp_call_function_queue (./arch/x86/include/asm/jump_label.h:27
+    ./include/linux/jump_label.h:207 ./include/trace/events/csd.h:64
+    kernel/smp.c:135 kernel/smp.c:540)
+__sysvec_call_function_single (./arch/x86/include/asm/jump_label.h:27
+    ./include/linux/jump_label.h:207
+    ./arch/x86/include/asm/trace/irq_vectors.h:99 arch/x86/kernel/smp.c:272)
+sysvec_call_function_single (arch/x86/kernel/smp.c:266 (discriminator 47)
+    arch/x86/kernel/smp.c:266 (discriminator 47))
+ </IRQ>
+
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: George Kennedy <george.kennedy@oracle.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/iomap/buffered-io.c | 22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ arch/x86/events/amd/core.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
-index 13a5f4422c797..7e9480150d61e 100644
---- a/fs/iomap/buffered-io.c
-+++ b/fs/iomap/buffered-io.c
-@@ -188,6 +188,22 @@ static void ifs_free(struct folio *folio)
- 	kfree(ifs);
+diff --git a/arch/x86/events/amd/core.c b/arch/x86/events/amd/core.c
+index aa8fc2cf1bde7..211f429750f5f 100644
+--- a/arch/x86/events/amd/core.c
++++ b/arch/x86/events/amd/core.c
+@@ -745,7 +745,12 @@ static void amd_pmu_enable_all(int added)
+ 		if (!test_bit(idx, cpuc->active_mask))
+ 			continue;
+ 
+-		amd_pmu_enable_event(cpuc->events[idx]);
++		/*
++		 * FIXME: cpuc->events[idx] can become NULL in a subtle race
++		 * condition with NMI->throttle->x86_pmu_stop().
++		 */
++		if (cpuc->events[idx])
++			amd_pmu_enable_event(cpuc->events[idx]);
+ 	}
  }
  
-+/*
-+ * Calculate how many bytes to truncate based off the number of blocks to
-+ * truncate and the end position to start truncating from.
-+ */
-+static size_t iomap_bytes_to_truncate(loff_t end_pos, unsigned block_bits,
-+		unsigned blocks_truncated)
-+{
-+	unsigned block_size = 1 << block_bits;
-+	unsigned block_offset = end_pos & (block_size - 1);
-+
-+	if (!block_offset)
-+		return blocks_truncated << block_bits;
-+
-+	return ((blocks_truncated - 1) << block_bits) + block_offset;
-+}
-+
- /*
-  * Calculate the range inside the folio that we actually need to read.
-  */
-@@ -233,7 +249,8 @@ static void iomap_adjust_read_range(struct inode *inode, struct folio *folio,
- 		/* truncate len if we find any trailing uptodate block(s) */
- 		while (++i <= last) {
- 			if (ifs_block_is_uptodate(ifs, i)) {
--				plen -= (last - i + 1) * block_size;
-+				plen -= iomap_bytes_to_truncate(*pos + plen,
-+						block_bits, last - i + 1);
- 				last = i - 1;
- 				break;
- 			}
-@@ -249,7 +266,8 @@ static void iomap_adjust_read_range(struct inode *inode, struct folio *folio,
- 		unsigned end = offset_in_folio(folio, isize - 1) >> block_bits;
- 
- 		if (first <= end && last > end)
--			plen -= (last - end) * block_size;
-+			plen -= iomap_bytes_to_truncate(*pos + plen, block_bits,
-+					last - end);
- 	}
- 
- 	*offp = poff;
 -- 
 2.51.0
 
