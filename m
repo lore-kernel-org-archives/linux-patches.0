@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D57B638FA3;
-	Fri,  9 Jan 2026 12:28:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B43162737EE;
+	Fri,  9 Jan 2026 12:28:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961702; cv=none; b=Srw6V5CXmXSAvFCBa3/GlT6tRAtOa3eoqmEVSfcJqmK7ElBzkAyzNLXFRtPrVfetBIYlcSSKLPFiaJJu7JgvHVOfV3hm7Rzhg0dA7tUV4to10P7RTF+VaEN9K3K8WnYr++6FpHOSBMdpEnpXXuPLcGlQk63rCzWEjhbv1UYgzq0=
+	t=1767961705; cv=none; b=YZlj5TVVgrKS24ciloZrJdoSbsNPkJ6pRl1fynpzj2ku/XJS7qYMFnz7WIg1plnw5abqAEcYwIiZRALO4iX0ZiAo6iiRE6JRYlHOzOvcqZvUh8wL3+sMCnWfoEBySANgbrqvH4gTgy4Voli1dEbyAsBbLP09tZbVwZqDVnCNDrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961702; c=relaxed/simple;
-	bh=oWJNXvYuOnClr5g/f7muN9CHRmXojRHezqZEMpRPOpk=;
+	s=arc-20240116; t=1767961705; c=relaxed/simple;
+	bh=yg7lUKuFgTeqqbLsJbmrdiiREmzWlXvwF/tBkhC+f/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EDPb+uOAXJPHWihYP+qURXVJusKliDsN86niW/Fo6zO33JmdOAn+DhtuKYRpwNtGlMtUIQ/sPfFExNvyZ7m4spElBYp/7vY4AOv4laUcpmO5v91YmZJelO+wA2A58Et6MKsm/7h5gGUtV3aaKGk3y5I15iWk5ZSr+KxrgYxn5ns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=icH19JLo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nrGfvsBs0mm5kGc58Zm5U+kbaawL9M9jfXYlfOBkwn7xcIBPzi6T0+Hx2h2IloKmsetpmH+MICaijztdgat3ic0yz4KeoKEOuB91g0vmLXuADTRm53hPIR3T2eGVfxjuLkAkvaI/Ab0OgEEOXgxrzsvqdDRM8MSdxnyBrTu97OQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dl1ak89o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="icH19JLo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B7EBC4CEF1;
-	Fri,  9 Jan 2026 12:28:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dl1ak89o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E55BC4CEF1;
+	Fri,  9 Jan 2026 12:28:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961702;
-	bh=oWJNXvYuOnClr5g/f7muN9CHRmXojRHezqZEMpRPOpk=;
+	s=korg; t=1767961705;
+	bh=yg7lUKuFgTeqqbLsJbmrdiiREmzWlXvwF/tBkhC+f/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=icH19JLoLLf0em0MZUKau6Y5rDVqtvHsbm9s9qNBmdqpHoPuNOTipynqLhEAFzG5m
-	 JJU6gka+L2Jg8B9B9wqtgsUH4tkK/2Q/8d5OcEiZQrkqQJwkUyQE5Ncdp/BSXR5sG1
-	 dXWplSGC9968YvoYxAlRbFSufd3qAwV7Ko/CMPZo=
+	b=dl1ak89ojUWnVgjPksFMJj8f6jkZ44E+BexcNRvMaYtPdZScaYWEkOsCwIPxKZGBE
+	 djLYKKTcNeEFoGFYCax1S8c5sH2Rlv/FFTG1WunsTVG1QZsvISxQmUMVsa9evWsovG
+	 oKDIX4lptLS/AtAYwA9rYlEs9+vdvISo8AsFqjiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avri Altman <avri.altman@sandisk.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Bean Huo <beanhuo@micron.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 099/634] scsi: ufs: core: fix incorrect buffer duplication in ufshcd_read_string_desc()
-Date: Fri,  9 Jan 2026 12:36:17 +0100
-Message-ID: <20260109112121.159515408@linuxfoundation.org>
+Subject: [PATCH 6.1 108/634] clk: renesas: r9a06g032: Fix memory leak in error path
+Date: Fri,  9 Jan 2026 12:36:26 +0100
+Message-ID: <20260109112121.497865870@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -53,43 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bean Huo <beanhuo@micron.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit d794b499f948801f54d67ddbc34a6eac5a6d150a ]
+[ Upstream commit f8def051bbcf8677f64701e9699bf6d11e2780cd ]
 
-The function ufshcd_read_string_desc() was duplicating memory starting
-from the beginning of struct uc_string_id, which included the length and
-type fields. As a result, the allocated buffer contained unwanted
-metadata in addition to the string itself.
+The current code uses of_iomap() to map registers but never calls
+iounmap() on any error path after the mapping. This causes a memory
+leak when probe fails after successful ioremap, for example when
+of_clk_add_provider() or r9a06g032_add_clk_domain() fails.
 
-The correct behavior is to duplicate only the Unicode character array in
-the structure. Update the code so that only the actual string content is
-copied into the new buffer.
+Replace of_iomap() with devm_of_iomap() to automatically unmap the
+region on probe failure. Update the error check accordingly to use
+IS_ERR() and PTR_ERR() since devm_of_iomap() returns ERR_PTR on error.
 
-Fixes: 5f57704dbcfe ("scsi: ufs: Use kmemdup in ufshcd_read_string_desc()")
-Reviewed-by: Avri Altman <avri.altman@sandisk.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Bean Huo <beanhuo@micron.com>
-Link: https://patch.msgid.link/20251107230518.4060231-3-beanhuo@iokpp.de
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 4c3d88526eba ("clk: renesas: Renesas R9A06G032 clock driver")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20251030061603.1954-1-vulab@iscas.ac.cn
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/renesas/r9a06g032-clocks.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 1120e83f781eb..7f24563159c1f 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -3586,7 +3586,7 @@ int ufshcd_read_string_desc(struct ufs_hba *hba, u8 desc_index,
- 		str[ret++] = '\0';
+diff --git a/drivers/clk/renesas/r9a06g032-clocks.c b/drivers/clk/renesas/r9a06g032-clocks.c
+index 087146f2ee068..4f9a11609a631 100644
+--- a/drivers/clk/renesas/r9a06g032-clocks.c
++++ b/drivers/clk/renesas/r9a06g032-clocks.c
+@@ -969,9 +969,9 @@ static int __init r9a06g032_clocks_probe(struct platform_device *pdev)
+ 	if (IS_ERR(mclk))
+ 		return PTR_ERR(mclk);
  
- 	} else {
--		str = kmemdup(uc_str, uc_str->len, GFP_KERNEL);
-+		str = kmemdup(uc_str->uc, uc_str->len, GFP_KERNEL);
- 		if (!str) {
- 			ret = -ENOMEM;
- 			goto out;
+-	clocks->reg = of_iomap(np, 0);
+-	if (WARN_ON(!clocks->reg))
+-		return -ENOMEM;
++	clocks->reg = devm_of_iomap(dev, np, 0, NULL);
++	if (IS_ERR(clocks->reg))
++		return PTR_ERR(clocks->reg);
+ 
+ 	r9a06g032_init_h2mode(clocks);
+ 
 -- 
 2.51.0
 
