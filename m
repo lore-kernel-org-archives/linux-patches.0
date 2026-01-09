@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D00B33C53A;
-	Fri,  9 Jan 2026 12:36:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7738C335BCD;
+	Fri,  9 Jan 2026 12:36:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962205; cv=none; b=JgduLhhutrkXoM6Tu883JjvzF1CmYvVKvmLdfRAYhBuj+vSqP98291u5qyxaP/ZSmjqATxHKkrhYFKcgyzRqN1sWbnwpmrExBCdJmiuE2cfYOAxet94XYm3lLkbNenTA8CABOSfR6blKO+L0FLimK7QX95X9ZrrFbtp6bc13l4k=
+	t=1767962208; cv=none; b=l7bsIqxn39mygaYpA3pJuPl7CVfD1IxbR9Y/fBHoXioApuOGGMeUVMCypWHEmZ7QMorZynGlPhyMRt95faMol4/vEASGwRNVvzGX9zW1kT4kTmR2hRF3aQqtZhtoEN+SzXU5CN5BtYsvXmjwU83k7O8cP332ylx33OmxOZcAeJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962205; c=relaxed/simple;
-	bh=2lUnh4ZGIGMVdf2hCvA3HvtuodQD+uts4vOVKeq9Ie8=;
+	s=arc-20240116; t=1767962208; c=relaxed/simple;
+	bh=9b1TGnhc27lZz4Y3O9fkoQVu5jRDoh8t3uKyG/dcuNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BNQOxhew7hbE6B9qo+0ps/Iqcv04yLCQTECTsm99SIf6Jwek0b143hA5pExFpQt6R6yS/QulhnRBkjb+9Y8WDceZEy6zGmiDWdQDQSC0SNGv2lT7eabE3YpklhagK+tvLQSY9VU301UNNIyvFxXNod0WK/Ed6iLAdaEH7LroT04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=udm96323; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RTbphrklaoTDPP/p9knNsFBniw28aHXYCjSa3PGTVuA9E0TLGbBE+cOe4fom122qzUU2b3eIsZu+Z+m6xmkk/MBwatta3n2bdOAdrPiGGQdY9pnuFr8W+0gYO63ys8HlAZep+qAbZgDqr7z0ByZPO/dMduLYcs8Z+jYGY1KKpX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NQnXBrBr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="udm96323"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A7E9C16AAE;
-	Fri,  9 Jan 2026 12:36:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NQnXBrBr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02087C4CEF1;
+	Fri,  9 Jan 2026 12:36:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962205;
-	bh=2lUnh4ZGIGMVdf2hCvA3HvtuodQD+uts4vOVKeq9Ie8=;
+	s=korg; t=1767962208;
+	bh=9b1TGnhc27lZz4Y3O9fkoQVu5jRDoh8t3uKyG/dcuNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=udm96323EmCCYLdMSVFwybt3Qk0r7N4ADIbVyNtaID5TKRNly+Pj9BwCF2OJ+PhOD
-	 5lsi3cSKQ1NZO57jeUbHxxm9NfGhva7XiFYnFM4QmepgN+Haa7sRb/fxbSdZRpdzxD
-	 n4ua3ejW6MuQrZlvFqc5TgI9jTNmL8b52rTKmNUo=
+	b=NQnXBrBrC+nZ3V2dAk4QGVEID6wKA0AfEOAprPcEO5jufpmEoYuxKXK8odFuyiP1E
+	 oBumtpmQeWhyrodwX0FfQ8jCSoLqe4S8CRupT6EUHY+ZvTrVYKgg/YJvcOO7aVrpmn
+	 fkZ8xTn23M/Vg+BTiXloGEKoeOcdRLTeWQd5X3O0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Boris Ostrovsky <boris.ostrovsky@oracle.com>,
-	Juergen Gross <jgross@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 276/634] x86/xen: Fix sparse warning in enlighten_pv.c
-Date: Fri,  9 Jan 2026 12:39:14 +0100
-Message-ID: <20260109112127.918389498@linuxfoundation.org>
+	Roger <roger.andersen@protonmail.com>,
+	Stanislas Polu <spolu@dust.tt>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 285/634] ksmbd: fix buffer validation by including null terminator size in EA length
+Date: Fri,  9 Jan 2026 12:39:23 +0100
+Message-ID: <20260109112128.256432564@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,46 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juergen Gross <jgross@suse.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit e5aff444e3a7bdeef5ea796a2099fc3c60a070fa ]
+commit 95d7a890e4b03e198836d49d699408fd1867cb55 upstream.
 
-The sparse tool issues a warning for arch/x76/xen/enlighten_pv.c:
+The smb2_set_ea function, which handles Extended Attributes (EA),
+was performing buffer validation checks that incorrectly omitted the size
+of the null terminating character (+1 byte) for EA Name.
+This patch fixes the issue by explicitly adding '+ 1' to EaNameLength where
+the null terminator is expected to be present in the buffer, ensuring
+the validation accurately reflects the total required buffer size.
 
-   arch/x86/xen/enlighten_pv.c:120:9: sparse: sparse: incorrect type
-     in initializer (different address spaces)
-     expected void const [noderef] __percpu *__vpp_verify
-     got bool *
-
-This is due to the percpu variable xen_in_preemptible_hcall being
-exported via EXPORT_SYMBOL_GPL() instead of EXPORT_PER_CPU_SYMBOL_GPL().
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202512140856.Ic6FetG6-lkp@intel.com/
-Fixes: fdfd811ddde3 ("x86/xen: allow privcmd hypercalls to be preempted")
-Reviewed-by: Boris Ostrovsky <boris.ostrovsky@oracle.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20251215115112.15072-1-jgross@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Reported-by: Roger <roger.andersen@protonmail.com>
+Reported-by: Stanislas Polu <spolu@dust.tt>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/xen/enlighten_pv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/xen/enlighten_pv.c b/arch/x86/xen/enlighten_pv.c
-index 9a54049744bf..772970fce042 100644
---- a/arch/x86/xen/enlighten_pv.c
-+++ b/arch/x86/xen/enlighten_pv.c
-@@ -109,7 +109,7 @@ static int xen_cpu_dead_pv(unsigned int cpu);
-  * calls.
-  */
- DEFINE_PER_CPU(bool, xen_in_preemptible_hcall);
--EXPORT_SYMBOL_GPL(xen_in_preemptible_hcall);
-+EXPORT_PER_CPU_SYMBOL_GPL(xen_in_preemptible_hcall);
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -2354,7 +2354,7 @@ static int smb2_set_ea(struct smb2_ea_in
+ 	int rc = 0;
+ 	unsigned int next = 0;
  
- /*
-  * In case of scheduling the flag must be cleared and restored after
--- 
-2.51.0
-
+-	if (buf_len < sizeof(struct smb2_ea_info) + eabuf->EaNameLength +
++	if (buf_len < sizeof(struct smb2_ea_info) + eabuf->EaNameLength + 1 +
+ 			le16_to_cpu(eabuf->EaValueLength))
+ 		return -EINVAL;
+ 
+@@ -2430,7 +2430,7 @@ next:
+ 			break;
+ 		}
+ 
+-		if (buf_len < sizeof(struct smb2_ea_info) + eabuf->EaNameLength +
++		if (buf_len < sizeof(struct smb2_ea_info) + eabuf->EaNameLength + 1 +
+ 				le16_to_cpu(eabuf->EaValueLength)) {
+ 			rc = -EINVAL;
+ 			break;
 
 
