@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79A6215ADB4;
-	Fri,  9 Jan 2026 12:23:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C582737EE;
+	Fri,  9 Jan 2026 12:23:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961412; cv=none; b=OfiY0UkZS6reOzkopBX+wmJwiluIaZrGHQgGWaPN7tsAxi8dOnprFl1/Kyv8hg0HgwNJ/JDdgOhzJL+iTiMXNDtzdGIUj7adEr2SvM6wK6P7Peb45XnIE85L7IJ4O0Mks47k1HGQQLA1+QLMK4J5ESUCx0gqpBnZ1cMkQKhz7RI=
+	t=1767961415; cv=none; b=jmPyTthHcAeEt+II3+kLoteo7ronfRoPwYq1e/z7J+OqYs61fJqnkyW+E0ZDNxM6SRX676iQVMRdPyu/SOjqGCHct6tVICM2U/FeWIpqCZCrQfVyWY6Qe+TqCa0bq0s8b78NO7rj2d9Fo5KYhPnO/LqNFa8I75QBF4kew6aLBU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961412; c=relaxed/simple;
-	bh=vIFinzTFR+L9kNezMIT90amYDnGDtoUtx2AalIUjp7U=;
+	s=arc-20240116; t=1767961415; c=relaxed/simple;
+	bh=Ap2ClbY57MQ+OGTvQkP2frIx2SfgH9GONjZ/gfV9U7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sRGXfSi4j9FqY9cpIuVFTyFFaYYXaaNCpwPtnJB5nuPuqpdAlH0HebGxcej9LdsI/g3/xk1yi6VvZAMP/qcX8NSBt+FoO2p14gmjz4O+4BE4c66sCrbcfgJSPWbbUyBuA/UkquBW7PP8aaSdl1QYkN/cqUMPUtqD1PXTAOnWyYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+uLsera; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dfSGC0g6lMWegvFCgjctw6Ma2OMXPP0UQZQ5kAJf+r10nC+Gl1A34lN88aKtFzeQ5ZcpiwcbHrUyzMZ5+/2za/QwAm98wJBAVI27pfKIGthlt0sNz7E2TFOqkym7FtRFx9j4Xnm5NhTv/wYpB5kK1IDhwVdkpPV4UXtC1FP0bQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y+8bMQHA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+uLsera"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8712C4CEF1;
-	Fri,  9 Jan 2026 12:23:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y+8bMQHA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A44BC4CEF1;
+	Fri,  9 Jan 2026 12:23:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961412;
-	bh=vIFinzTFR+L9kNezMIT90amYDnGDtoUtx2AalIUjp7U=;
+	s=korg; t=1767961415;
+	bh=Ap2ClbY57MQ+OGTvQkP2frIx2SfgH9GONjZ/gfV9U7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z+uLseraH8BcTuVjWIu8wKSuLeRVz9Fq3W0GqXcNuThCZLb4733VPO1sbbz0DyKau
-	 U23aS7gqxkxfKFLXAT58ttVjlxymMFq+nwm3NaO7CJ1pyCP++qe9vbUITfTN9Mzpiu
-	 XvCunNq2CQf91kkUIpIqXwbVrq057QxqiyjGFvI4=
+	b=y+8bMQHA9kUNZn9RpjEnhg7NIcBLI3+6IpLKugLBEUqSL6sDDxOryURjCXT2pZdce
+	 pBOeBJbwzPSIU1Mr3K3UHoPCOBr3BMX9mdDBW3J+DSYQ6Is07o0EQ1oUZZMkpBW56j
+	 9uhvnuzAdsIVdT7b+e+yY2SQmgUpvXa7BWBDQDYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Wen Yang <wen.yang@linux.dev>
-Subject: [PATCH 6.6 713/737] net: Allow to use SMP threads for backlog NAPI.
-Date: Fri,  9 Jan 2026 12:44:12 +0100
-Message-ID: <20260109112200.898415351@linuxfoundation.org>
+	syzbot+4b87489410b4efd181bf@syzkaller.appspotmail.com,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Shivani Agarwal <shivani.agarwal@broadcom.com>
+Subject: [PATCH 6.6 714/737] RDMA/rxe: Remove the direct link to net_device
+Date: Fri,  9 Jan 2026 12:44:13 +0100
+Message-ID: <20260109112200.938251822@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,336 +53,413 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Zhu Yanjun <yanjun.zhu@linux.dev>
 
-commit dad6b97702639fba27a2bd3e986982ad6f0db3a7 upstream.
+[ Upstream commit 2ac5415022d16d63d912a39a06f32f1f51140261 ]
 
-Backlog NAPI is a per-CPU NAPI struct only (with no device behind it)
-used by drivers which don't do NAPI them self, RPS and parts of the
-stack which need to avoid recursive deadlocks while processing a packet.
+The similar patch in siw is in the link:
+https://git.kernel.org/rdma/rdma/c/16b87037b48889
 
-The non-NAPI driver use the CPU local backlog NAPI. If RPS is enabled
-then a flow for the skb is computed and based on the flow the skb can be
-enqueued on a remote CPU. Scheduling/ raising the softirq (for backlog's
-NAPI) on the remote CPU isn't trivial because the softirq is only
-scheduled on the local CPU and performed after the hardirq is done.
-In order to schedule a softirq on the remote CPU, an IPI is sent to the
-remote CPU which schedules the backlog-NAPI on the then local CPU.
+This problem also occurred in RXE. The following analyze this problem.
+In the following Call Traces:
+"
+BUG: KASAN: slab-use-after-free in dev_get_flags+0x188/0x1d0 net/core/dev.c:8782
+Read of size 4 at addr ffff8880554640b0 by task kworker/1:4/5295
 
-On PREEMPT_RT interrupts are force-threaded. The soft interrupts are
-raised within the interrupt thread and processed after the interrupt
-handler completed still within the context of the interrupt thread. The
-softirq is handled in the context where it originated.
+CPU: 1 UID: 0 PID: 5295 Comm: kworker/1:4 Not tainted
+6.12.0-rc3-syzkaller-00399-g9197b73fd7bb #0
+Hardware name: Google Compute Engine/Google Compute Engine,
+BIOS Google 09/13/2024
+Workqueue: infiniband ib_cache_event_task
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:377 [inline]
+ print_report+0x169/0x550 mm/kasan/report.c:488
+ kasan_report+0x143/0x180 mm/kasan/report.c:601
+ dev_get_flags+0x188/0x1d0 net/core/dev.c:8782
+ rxe_query_port+0x12d/0x260 drivers/infiniband/sw/rxe/rxe_verbs.c:60
+ __ib_query_port drivers/infiniband/core/device.c:2111 [inline]
+ ib_query_port+0x168/0x7d0 drivers/infiniband/core/device.c:2143
+ ib_cache_update+0x1a9/0xb80 drivers/infiniband/core/cache.c:1494
+ ib_cache_event_task+0xf3/0x1e0 drivers/infiniband/core/cache.c:1568
+ process_one_work kernel/workqueue.c:3229 [inline]
+ process_scheduled_works+0xa65/0x1850 kernel/workqueue.c:3310
+ worker_thread+0x870/0xd30 kernel/workqueue.c:3391
+ kthread+0x2f2/0x390 kernel/kthread.c:389
+ ret_from_fork+0x4d/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+ </TASK>
+"
 
-With force-threaded interrupts enabled, ksoftirqd is woken up if a
-softirq is raised from hardirq context. This is the case if it is raised
-from an IPI. Additionally there is a warning on PREEMPT_RT if the
-softirq is raised from the idle thread.
-This was done for two reasons:
-- With threaded interrupts the processing should happen in thread
-  context (where it originated) and ksoftirqd is the only thread for
-  this context if raised from hardirq. Using the currently running task
-  instead would "punish" a random task.
-- Once ksoftirqd is active it consumes all further softirqs until it
-  stops running. This changed recently and is no longer the case.
+1). In the link [1],
 
-Instead of keeping the backlog NAPI in ksoftirqd (in force-threaded/
-PREEMPT_RT setups) I am proposing NAPI-threads for backlog.
-The "proper" setup with threaded-NAPI is not doable because the threads
-are not pinned to an individual CPU and can be modified by the user.
-Additionally a dummy network device would have to be assigned. Also
-CPU-hotplug has to be considered if additional CPUs show up.
-All this can be probably done/ solved but the smpboot-threads already
-provide this infrastructure.
+"
+ infiniband syz2: set down
+"
 
-Sending UDP packets over loopback expects that the packet is processed
-within the call. Delaying it by handing it over to the thread hurts
-performance. It is not beneficial to the outcome if the context switch
-happens immediately after enqueue or after a while to process a few
-packets in a batch.
-There is no need to always use the thread if the backlog NAPI is
-requested on the local CPU. This restores the loopback throuput. The
-performance drops mostly to the same value after enabling RPS on the
-loopback comparing the IPI and the tread result.
+This means that on 839.350575, the event ib_cache_event_task was sent andi
+queued in ib_wq.
 
-Create NAPI-threads for backlog if request during boot. The thread runs
-the inner loop from napi_threaded_poll(), the wait part is different. It
-checks for NAPI_STATE_SCHED (the backlog NAPI can not be disabled).
+2). In the link [1],
 
-The NAPI threads for backlog are optional, it has to be enabled via the boot
-argument "thread_backlog_napi". It is mandatory for PREEMPT_RT to avoid the
-wakeup of ksoftirqd from the IPI.
+"
+ team0 (unregistering): Port device team_slave_0 removed
+"
 
-Acked-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Wen Yang <wen.yang@linux.dev>
+It indicates that before 843.251853, the net device should be freed.
+
+3). In the link [1],
+
+"
+ BUG: KASAN: slab-use-after-free in dev_get_flags+0x188/0x1d0
+"
+
+This means that on 850.559070, this slab-use-after-free problem occurred.
+
+In all, on 839.350575, the event ib_cache_event_task was sent and queued
+in ib_wq,
+
+before 843.251853, the net device veth was freed.
+
+on 850.559070, this event was executed, and the mentioned freed net device
+was called. Thus, the above call trace occurred.
+
+[1] https://syzkaller.appspot.com/x/log.txt?x=12e7025f980000
+
+Reported-by: syzbot+4b87489410b4efd181bf@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=4b87489410b4efd181bf
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Link: https://patch.msgid.link/20241220222325.2487767-1-yanjun.zhu@linux.dev
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+[Shivani: - exported ib_device_get_netdev() function.
+          - added ib_device_get_netdev() to ib_verbs.h.]
+Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/dev.c |  152 +++++++++++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 115 insertions(+), 37 deletions(-)
+ drivers/infiniband/core/device.c      |    1 +
+ drivers/infiniband/sw/rxe/rxe.c       |   23 +++++++++++++++++++----
+ drivers/infiniband/sw/rxe/rxe.h       |    3 ++-
+ drivers/infiniband/sw/rxe/rxe_mcast.c |   22 ++++++++++++++++++++--
+ drivers/infiniband/sw/rxe/rxe_net.c   |   25 ++++++++++++++++++++-----
+ drivers/infiniband/sw/rxe/rxe_verbs.c |   26 +++++++++++++++++++++-----
+ drivers/infiniband/sw/rxe/rxe_verbs.h |   11 ++++++++---
+ include/rdma/ib_verbs.h               |    2 ++
+ 8 files changed, 93 insertions(+), 20 deletions(-)
 
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -78,6 +78,7 @@
- #include <linux/slab.h>
- #include <linux/sched.h>
- #include <linux/sched/mm.h>
-+#include <linux/smpboot.h>
- #include <linux/mutex.h>
- #include <linux/rwsem.h>
- #include <linux/string.h>
-@@ -217,6 +218,31 @@ static inline struct hlist_head *dev_ind
- 	return &net->dev_index_head[ifindex & (NETDEV_HASHENTRIES - 1)];
+--- a/drivers/infiniband/core/device.c
++++ b/drivers/infiniband/core/device.c
+@@ -2259,6 +2259,7 @@ struct net_device *ib_device_get_netdev(
+ 
+ 	return res;
+ }
++EXPORT_SYMBOL(ib_device_get_netdev);
+ 
+ /**
+  * ib_device_get_by_netdev - Find an IB device associated with a netdev
+--- a/drivers/infiniband/sw/rxe/rxe.c
++++ b/drivers/infiniband/sw/rxe/rxe.c
+@@ -40,6 +40,8 @@ void rxe_dealloc(struct ib_device *ib_de
+ /* initialize rxe device parameters */
+ static void rxe_init_device_param(struct rxe_dev *rxe)
+ {
++	struct net_device *ndev;
++
+ 	rxe->max_inline_data			= RXE_MAX_INLINE_DATA;
+ 
+ 	rxe->attr.vendor_id			= RXE_VENDOR_ID;
+@@ -71,8 +73,15 @@ static void rxe_init_device_param(struct
+ 	rxe->attr.max_fast_reg_page_list_len	= RXE_MAX_FMR_PAGE_LIST_LEN;
+ 	rxe->attr.max_pkeys			= RXE_MAX_PKEYS;
+ 	rxe->attr.local_ca_ack_delay		= RXE_LOCAL_CA_ACK_DELAY;
++
++	ndev = rxe_ib_device_get_netdev(&rxe->ib_dev);
++	if (!ndev)
++		return;
++
+ 	addrconf_addr_eui48((unsigned char *)&rxe->attr.sys_image_guid,
+-			rxe->ndev->dev_addr);
++			ndev->dev_addr);
++
++	dev_put(ndev);
+ 
+ 	rxe->max_ucontext			= RXE_MAX_UCONTEXT;
+ }
+@@ -109,10 +118,15 @@ static void rxe_init_port_param(struct r
+ static void rxe_init_ports(struct rxe_dev *rxe)
+ {
+ 	struct rxe_port *port = &rxe->port;
++	struct net_device *ndev;
+ 
+ 	rxe_init_port_param(port);
++	ndev = rxe_ib_device_get_netdev(&rxe->ib_dev);
++	if (!ndev)
++		return;
+ 	addrconf_addr_eui48((unsigned char *)&port->port_guid,
+-			    rxe->ndev->dev_addr);
++			    ndev->dev_addr);
++	dev_put(ndev);
+ 	spin_lock_init(&port->port_lock);
  }
  
-+#ifndef CONFIG_PREEMPT_RT
-+
-+static DEFINE_STATIC_KEY_FALSE(use_backlog_threads_key);
-+
-+static int __init setup_backlog_napi_threads(char *arg)
-+{
-+	static_branch_enable(&use_backlog_threads_key);
-+	return 0;
-+}
-+early_param("thread_backlog_napi", setup_backlog_napi_threads);
-+
-+static bool use_backlog_threads(void)
-+{
-+	return static_branch_unlikely(&use_backlog_threads_key);
-+}
-+
-+#else
-+
-+static bool use_backlog_threads(void)
-+{
-+	return true;
-+}
-+
-+#endif
-+
- static inline void rps_lock_irqsave(struct softnet_data *sd,
- 				    unsigned long *flags)
+@@ -169,12 +183,13 @@ void rxe_set_mtu(struct rxe_dev *rxe, un
+ /* called by ifc layer to create new rxe device.
+  * The caller should allocate memory for rxe by calling ib_alloc_device.
+  */
+-int rxe_add(struct rxe_dev *rxe, unsigned int mtu, const char *ibdev_name)
++int rxe_add(struct rxe_dev *rxe, unsigned int mtu, const char *ibdev_name,
++			struct net_device *ndev)
  {
-@@ -4494,6 +4520,7 @@ EXPORT_SYMBOL(__dev_direct_xmit);
- /*************************************************************************
-  *			Receiver routines
-  *************************************************************************/
-+static DEFINE_PER_CPU(struct task_struct *, backlog_napi);
+ 	rxe_init(rxe);
+ 	rxe_set_mtu(rxe, mtu);
  
- int netdev_max_backlog __read_mostly = 1000;
- EXPORT_SYMBOL(netdev_max_backlog);
-@@ -4526,12 +4553,16 @@ static inline void ____napi_schedule(str
- 		 */
- 		thread = READ_ONCE(napi->thread);
- 		if (thread) {
-+			if (use_backlog_threads() && thread == raw_cpu_read(backlog_napi))
-+				goto use_local_napi;
-+
- 			set_bit(NAPI_STATE_SCHED_THREADED, &napi->state);
- 			wake_up_process(thread);
- 			return;
- 		}
- 	}
- 
-+use_local_napi:
- 	list_add_tail(&napi->poll_list, &sd->poll_list);
- 	WRITE_ONCE(napi->list_owner, smp_processor_id());
- 	/* If not called from net_rx_action()
-@@ -4777,6 +4808,11 @@ static void napi_schedule_rps(struct sof
- 
- #ifdef CONFIG_RPS
- 	if (sd != mysd) {
-+		if (use_backlog_threads()) {
-+			__napi_schedule_irqoff(&sd->backlog);
-+			return;
-+		}
-+
- 		sd->rps_ipi_next = mysd->rps_ipi_list;
- 		mysd->rps_ipi_list = sd;
- 
-@@ -6000,7 +6036,7 @@ static void net_rps_action_and_irq_enabl
- #ifdef CONFIG_RPS
- 	struct softnet_data *remsd = sd->rps_ipi_list;
- 
--	if (remsd) {
-+	if (!use_backlog_threads() && remsd) {
- 		sd->rps_ipi_list = NULL;
- 
- 		local_irq_enable();
-@@ -6015,7 +6051,7 @@ static void net_rps_action_and_irq_enabl
- static bool sd_has_rps_ipi_waiting(struct softnet_data *sd)
- {
- #ifdef CONFIG_RPS
--	return sd->rps_ipi_list != NULL;
-+	return !use_backlog_threads() && sd->rps_ipi_list;
- #else
- 	return false;
- #endif
-@@ -6059,7 +6095,7 @@ static int process_backlog(struct napi_s
- 			 * We can use a plain write instead of clear_bit(),
- 			 * and we dont need an smp_mb() memory barrier.
- 			 */
--			napi->state = 0;
-+			napi->state &= NAPIF_STATE_THREADED;
- 			again = false;
- 		} else {
- 			skb_queue_splice_tail_init(&sd->input_pkt_queue,
-@@ -6725,43 +6761,48 @@ static void skb_defer_free_flush(struct
- 	}
+-	return rxe_register_device(rxe, ibdev_name);
++	return rxe_register_device(rxe, ibdev_name, ndev);
  }
  
--static int napi_threaded_poll(void *data)
-+static void napi_threaded_poll_loop(struct napi_struct *napi)
+ static int rxe_newlink(const char *ibdev_name, struct net_device *ndev)
+--- a/drivers/infiniband/sw/rxe/rxe.h
++++ b/drivers/infiniband/sw/rxe/rxe.h
+@@ -139,7 +139,8 @@ enum resp_states {
+ 
+ void rxe_set_mtu(struct rxe_dev *rxe, unsigned int dev_mtu);
+ 
+-int rxe_add(struct rxe_dev *rxe, unsigned int mtu, const char *ibdev_name);
++int rxe_add(struct rxe_dev *rxe, unsigned int mtu, const char *ibdev_name,
++			struct net_device *ndev);
+ 
+ void rxe_rcv(struct sk_buff *skb);
+ 
+--- a/drivers/infiniband/sw/rxe/rxe_mcast.c
++++ b/drivers/infiniband/sw/rxe/rxe_mcast.c
+@@ -31,10 +31,19 @@
+ static int rxe_mcast_add(struct rxe_dev *rxe, union ib_gid *mgid)
  {
--	struct napi_struct *napi = data;
- 	struct softnet_data *sd;
--	void *have;
-+	unsigned long last_qs = jiffies;
+ 	unsigned char ll_addr[ETH_ALEN];
++	struct net_device *ndev;
++	int ret;
++
++	ndev = rxe_ib_device_get_netdev(&rxe->ib_dev);
++	if (!ndev)
++		return -ENODEV;
  
--	while (!napi_thread_wait(napi)) {
--		unsigned long last_qs = jiffies;
-+	for (;;) {
-+		bool repoll = false;
-+		void *have;
+ 	ipv6_eth_mc_map((struct in6_addr *)mgid->raw, ll_addr);
  
--		for (;;) {
--			bool repoll = false;
-+		local_bh_disable();
-+		sd = this_cpu_ptr(&softnet_data);
-+		sd->in_napi_threaded_poll = true;
+-	return dev_mc_add(rxe->ndev, ll_addr);
++	ret = dev_mc_add(ndev, ll_addr);
++	dev_put(ndev);
++
++	return ret;
+ }
  
--			local_bh_disable();
--			sd = this_cpu_ptr(&softnet_data);
--			sd->in_napi_threaded_poll = true;
+ /**
+@@ -47,10 +56,19 @@ static int rxe_mcast_add(struct rxe_dev
+ static int rxe_mcast_del(struct rxe_dev *rxe, union ib_gid *mgid)
+ {
+ 	unsigned char ll_addr[ETH_ALEN];
++	struct net_device *ndev;
++	int ret;
++
++	ndev = rxe_ib_device_get_netdev(&rxe->ib_dev);
++	if (!ndev)
++		return -ENODEV;
+ 
+ 	ipv6_eth_mc_map((struct in6_addr *)mgid->raw, ll_addr);
+ 
+-	return dev_mc_del(rxe->ndev, ll_addr);
++	ret = dev_mc_del(ndev, ll_addr);
++	dev_put(ndev);
++
++	return ret;
+ }
+ 
+ /**
+--- a/drivers/infiniband/sw/rxe/rxe_net.c
++++ b/drivers/infiniband/sw/rxe/rxe_net.c
+@@ -509,7 +509,16 @@ out:
+  */
+ const char *rxe_parent_name(struct rxe_dev *rxe, unsigned int port_num)
+ {
+-	return rxe->ndev->name;
++	struct net_device *ndev;
++	char *ndev_name;
++
++	ndev = rxe_ib_device_get_netdev(&rxe->ib_dev);
++	if (!ndev)
++		return NULL;
++	ndev_name = ndev->name;
++	dev_put(ndev);
++
++	return ndev_name;
+ }
+ 
+ int rxe_net_add(const char *ibdev_name, struct net_device *ndev)
+@@ -521,9 +530,7 @@ int rxe_net_add(const char *ibdev_name,
+ 	if (!rxe)
+ 		return -ENOMEM;
+ 
+-	rxe->ndev = ndev;
 -
--			have = netpoll_poll_lock(napi);
--			__napi_poll(napi, &repoll);
--			netpoll_poll_unlock(have);
--
--			sd->in_napi_threaded_poll = false;
--			barrier();
--
--			if (sd_has_rps_ipi_waiting(sd)) {
--				local_irq_disable();
--				net_rps_action_and_irq_enable(sd);
--			}
--			skb_defer_free_flush(sd);
--			local_bh_enable();
-+		have = netpoll_poll_lock(napi);
-+		__napi_poll(napi, &repoll);
-+		netpoll_poll_unlock(have);
-+
-+		sd->in_napi_threaded_poll = false;
-+		barrier();
-+
-+		if (sd_has_rps_ipi_waiting(sd)) {
-+			local_irq_disable();
-+			net_rps_action_and_irq_enable(sd);
-+		}
-+		skb_defer_free_flush(sd);
-+		local_bh_enable();
+-	err = rxe_add(rxe, ndev->mtu, ibdev_name);
++	err = rxe_add(rxe, ndev->mtu, ibdev_name, ndev);
+ 	if (err) {
+ 		ib_dealloc_device(&rxe->ib_dev);
+ 		return err;
+@@ -571,10 +578,18 @@ void rxe_port_down(struct rxe_dev *rxe)
  
--			if (!repoll)
--				break;
-+		if (!repoll)
-+			break;
+ void rxe_set_port_state(struct rxe_dev *rxe)
+ {
+-	if (netif_running(rxe->ndev) && netif_carrier_ok(rxe->ndev))
++	struct net_device *ndev;
++
++	ndev = rxe_ib_device_get_netdev(&rxe->ib_dev);
++	if (!ndev)
++		return;
++
++	if (netif_running(ndev) && netif_carrier_ok(ndev))
+ 		rxe_port_up(rxe);
+ 	else
+ 		rxe_port_down(rxe);
++
++	dev_put(ndev);
+ }
  
--			rcu_softirq_qs_periodic(last_qs);
--			cond_resched();
--		}
-+		rcu_softirq_qs_periodic(last_qs);
-+		cond_resched();
- 	}
-+}
+ static int rxe_notify(struct notifier_block *not_blk,
+--- a/drivers/infiniband/sw/rxe/rxe_verbs.c
++++ b/drivers/infiniband/sw/rxe/rxe_verbs.c
+@@ -41,6 +41,7 @@ static int rxe_query_port(struct ib_devi
+ 			  u32 port_num, struct ib_port_attr *attr)
+ {
+ 	struct rxe_dev *rxe = to_rdev(ibdev);
++	struct net_device *ndev;
+ 	int err, ret;
+ 
+ 	if (port_num != 1) {
+@@ -51,19 +52,26 @@ static int rxe_query_port(struct ib_devi
+ 
+ 	memcpy(attr, &rxe->port.attr, sizeof(*attr));
+ 
++	ndev = rxe_ib_device_get_netdev(ibdev);
++	if (!ndev) {
++		err = -ENODEV;
++		goto err_out;
++	}
 +
-+static int napi_threaded_poll(void *data)
-+{
-+	struct napi_struct *napi = data;
+ 	mutex_lock(&rxe->usdev_lock);
+ 	ret = ib_get_eth_speed(ibdev, port_num, &attr->active_speed,
+ 			       &attr->active_width);
+ 
+ 	if (attr->state == IB_PORT_ACTIVE)
+ 		attr->phys_state = IB_PORT_PHYS_STATE_LINK_UP;
+-	else if (dev_get_flags(rxe->ndev) & IFF_UP)
++	else if (dev_get_flags(ndev) & IFF_UP)
+ 		attr->phys_state = IB_PORT_PHYS_STATE_POLLING;
+ 	else
+ 		attr->phys_state = IB_PORT_PHYS_STATE_DISABLED;
+ 
+ 	mutex_unlock(&rxe->usdev_lock);
+ 
++	dev_put(ndev);
+ 	return ret;
+ 
+ err_out:
+@@ -1428,9 +1436,16 @@ static const struct attribute_group rxe_
+ static int rxe_enable_driver(struct ib_device *ib_dev)
+ {
+ 	struct rxe_dev *rxe = container_of(ib_dev, struct rxe_dev, ib_dev);
++	struct net_device *ndev;
 +
-+	while (!napi_thread_wait(napi))
-+		napi_threaded_poll_loop(napi);
++	ndev = rxe_ib_device_get_netdev(ib_dev);
++	if (!ndev)
++		return -ENODEV;
+ 
+ 	rxe_set_port_state(rxe);
+-	dev_info(&rxe->ib_dev.dev, "added %s\n", netdev_name(rxe->ndev));
++	dev_info(&rxe->ib_dev.dev, "added %s\n", netdev_name(ndev));
 +
++	dev_put(ndev);
  	return 0;
  }
  
-@@ -11346,7 +11387,7 @@ static int dev_cpu_dead(unsigned int old
+@@ -1498,7 +1513,8 @@ static const struct ib_device_ops rxe_de
+ 	INIT_RDMA_OBJ_SIZE(ib_mw, rxe_mw, ibmw),
+ };
  
- 		list_del_init(&napi->poll_list);
- 		if (napi->poll == process_backlog)
--			napi->state = 0;
-+			napi->state &= NAPIF_STATE_THREADED;
- 		else
- 			____napi_schedule(sd, napi);
- 	}
-@@ -11354,12 +11395,14 @@ static int dev_cpu_dead(unsigned int old
- 	raise_softirq_irqoff(NET_TX_SOFTIRQ);
- 	local_irq_enable();
+-int rxe_register_device(struct rxe_dev *rxe, const char *ibdev_name)
++int rxe_register_device(struct rxe_dev *rxe, const char *ibdev_name,
++						struct net_device *ndev)
+ {
+ 	int err;
+ 	struct ib_device *dev = &rxe->ib_dev;
+@@ -1510,13 +1526,13 @@ int rxe_register_device(struct rxe_dev *
+ 	dev->num_comp_vectors = num_possible_cpus();
+ 	dev->local_dma_lkey = 0;
+ 	addrconf_addr_eui48((unsigned char *)&dev->node_guid,
+-			    rxe->ndev->dev_addr);
++			    ndev->dev_addr);
  
-+	if (!use_backlog_threads()) {
- #ifdef CONFIG_RPS
--	remsd = oldsd->rps_ipi_list;
--	oldsd->rps_ipi_list = NULL;
-+		remsd = oldsd->rps_ipi_list;
-+		oldsd->rps_ipi_list = NULL;
- #endif
--	/* send out pending IPI's on offline CPU */
--	net_rps_send_ipi(remsd);
-+		/* send out pending IPI's on offline CPU */
-+		net_rps_send_ipi(remsd);
-+	}
+ 	dev->uverbs_cmd_mask |= BIT_ULL(IB_USER_VERBS_CMD_POST_SEND) |
+ 				BIT_ULL(IB_USER_VERBS_CMD_REQ_NOTIFY_CQ);
  
- 	/* Process offline CPU's input_pkt_queue */
- 	while ((skb = __skb_dequeue(&oldsd->process_queue))) {
-@@ -11622,6 +11665,38 @@ static struct pernet_operations __net_in
-  *
-  */
+ 	ib_set_device_ops(dev, &rxe_dev_ops);
+-	err = ib_device_set_netdev(&rxe->ib_dev, rxe->ndev, 1);
++	err = ib_device_set_netdev(&rxe->ib_dev, ndev, 1);
+ 	if (err)
+ 		return err;
  
-+static int backlog_napi_should_run(unsigned int cpu)
+--- a/drivers/infiniband/sw/rxe/rxe_verbs.h
++++ b/drivers/infiniband/sw/rxe/rxe_verbs.h
+@@ -369,6 +369,7 @@ struct rxe_port {
+ 	u32			qp_gsi_index;
+ };
+ 
++#define	RXE_PORT	1
+ struct rxe_dev {
+ 	struct ib_device	ib_dev;
+ 	struct ib_device_attr	attr;
+@@ -376,8 +377,6 @@ struct rxe_dev {
+ 	int			max_inline_data;
+ 	struct mutex	usdev_lock;
+ 
+-	struct net_device	*ndev;
+-
+ 	struct rxe_pool		uc_pool;
+ 	struct rxe_pool		pd_pool;
+ 	struct rxe_pool		ah_pool;
+@@ -405,6 +404,11 @@ struct rxe_dev {
+ 	struct crypto_shash	*tfm;
+ };
+ 
++static inline struct net_device *rxe_ib_device_get_netdev(struct ib_device *dev)
 +{
-+	struct softnet_data *sd = per_cpu_ptr(&softnet_data, cpu);
-+	struct napi_struct *napi = &sd->backlog;
-+
-+	return test_bit(NAPI_STATE_SCHED_THREADED, &napi->state);
++	return ib_device_get_netdev(dev, RXE_PORT);
 +}
 +
-+static void run_backlog_napi(unsigned int cpu)
-+{
-+	struct softnet_data *sd = per_cpu_ptr(&softnet_data, cpu);
-+
-+	napi_threaded_poll_loop(&sd->backlog);
-+}
-+
-+static void backlog_napi_setup(unsigned int cpu)
-+{
-+	struct softnet_data *sd = per_cpu_ptr(&softnet_data, cpu);
-+	struct napi_struct *napi = &sd->backlog;
-+
-+	napi->thread = this_cpu_read(backlog_napi);
-+	set_bit(NAPI_STATE_THREADED, &napi->state);
-+}
-+
-+static struct smp_hotplug_thread backlog_threads = {
-+	.store			= &backlog_napi,
-+	.thread_should_run	= backlog_napi_should_run,
-+	.thread_fn		= run_backlog_napi,
-+	.thread_comm		= "backlog_napi/%u",
-+	.setup			= backlog_napi_setup,
-+};
-+
- /*
-  *       This is called single threaded during boot, so no need
-  *       to take the rtnl semaphore.
-@@ -11672,7 +11747,10 @@ static int __init net_dev_init(void)
- 		init_gro_hash(&sd->backlog);
- 		sd->backlog.poll = process_backlog;
- 		sd->backlog.weight = weight_p;
-+		INIT_LIST_HEAD(&sd->backlog.poll_list);
- 	}
-+	if (use_backlog_threads())
-+		smpboot_register_percpu_thread(&backlog_threads);
+ static inline void rxe_counter_inc(struct rxe_dev *rxe, enum rxe_counters index)
+ {
+ 	atomic64_inc(&rxe->stats_counters[index]);
+@@ -470,6 +474,7 @@ static inline struct rxe_pd *rxe_mw_pd(s
+ 	return to_rpd(mw->ibmw.pd);
+ }
  
- 	dev_boot_phase = 0;
+-int rxe_register_device(struct rxe_dev *rxe, const char *ibdev_name);
++int rxe_register_device(struct rxe_dev *rxe, const char *ibdev_name,
++						struct net_device *ndev);
  
+ #endif /* RXE_VERBS_H */
+--- a/include/rdma/ib_verbs.h
++++ b/include/rdma/ib_verbs.h
+@@ -4444,6 +4444,8 @@ struct net_device *ib_get_net_dev_by_par
+ 					    const struct sockaddr *addr);
+ int ib_device_set_netdev(struct ib_device *ib_dev, struct net_device *ndev,
+ 			 unsigned int port);
++struct net_device *ib_device_get_netdev(struct ib_device *ib_dev,
++					u32 port);
+ struct ib_wq *ib_create_wq(struct ib_pd *pd,
+ 			   struct ib_wq_init_attr *init_attr);
+ int ib_destroy_wq_user(struct ib_wq *wq, struct ib_udata *udata);
 
 
