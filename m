@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61923330D27;
-	Fri,  9 Jan 2026 12:48:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AAFF330D27;
+	Fri,  9 Jan 2026 12:48:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962886; cv=none; b=nm4M4fdhrzA4RNef3HaZPG4YwsGPiVO1VS+muOufjVfq0hGplHeW0oGWXpCZCpkaOIYAdA/1SWuTsqht9MIkKIcgvbo834SWwvDarVBqrZ3qRCa9V9OR+Cri37zksC5xWp/QLzRrJohleHuSoodLLAZCq9oPBmBPY72jPGQXpx0=
+	t=1767962889; cv=none; b=htTgKd0xBIu6LBSoaOdAmcQUQOns/kHcvbFGHEsdFZvK+51lK6HkJorFmczaOpL9CNlPyBp7vOALaSuHbi5hi9Y9VHSQErBv5XdJ40M5chXpMSpOH9VdIv/l/oySkTDhSykjnW3d8fTGMh9rd94TgfcNgnV/e8/fgWmMgD4vK1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962886; c=relaxed/simple;
-	bh=K2aOH/TFSshkLEA32+3TJeHiS887ChzpNU9awblDwnA=;
+	s=arc-20240116; t=1767962889; c=relaxed/simple;
+	bh=iW8K6JNv+NHxBxk8la9sRWhjS0zWLnC0QLTPLz89o6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k1zjmeKnQLJfBn0uZHorjS1w6QTmv/62UnPBla/M8BXDKQJstpqE2CEUt0zceK9FubsDxrzeS7ec+h+UpeeL1kXVcFsAGLjXWUL96a8quZDLHMdnK5XMKBoWLvXJQEYjKMoUUjfILSTVXU0SB7OoFaUhkrnErJ6jMR840o6OFcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/DFPI9z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M/8Ttgf1q7zmkuAiVnfYdmHFKz7hbDCvuD7L8Ix4ygUbw1s51LNnVWk8JI6QCn1FajqgCFbNl0OzhY+Hv2ktENjVmNQYkeNCZdrbl+oHjXztK48cLNs8T7y+Q/9mjZo1JH7wb9IG9ibpIOO/5OVHuq0Tqi2MEl0x2qXL1SnePNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oDvV+qwN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/DFPI9z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E674AC16AAE;
-	Fri,  9 Jan 2026 12:48:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oDvV+qwN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA22AC4CEF1;
+	Fri,  9 Jan 2026 12:48:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962886;
-	bh=K2aOH/TFSshkLEA32+3TJeHiS887ChzpNU9awblDwnA=;
+	s=korg; t=1767962889;
+	bh=iW8K6JNv+NHxBxk8la9sRWhjS0zWLnC0QLTPLz89o6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y/DFPI9z7zYHg+3qep8I+6B2mIss6Tiu5PvbS+dkchJH7LkRASyk5RoShhGkNbQH/
-	 yn1G49LSWo7RXHUc2VuqiaQzMih13Kl9BBXKV7dSjsKDrD4Yx81q7gonuw9V1tgTTd
-	 1voyLBGtKWSajzy/Z5+xoiqVoQnzKz0k5UDwfqoY=
+	b=oDvV+qwNRwwcBAypTeFVnykyQfWtDGCTvD/1OuWVJE9VPw471iKo1ZeISPAixfx9D
+	 gfSegkxEevXcarmwEfOlrJ5yspkrgtBn5d9sYZRZo+lBZwnFbRCNXJ7oIa3oMlt+jJ
+	 7hMXMeMc9Pu/hD9nw9xzLUPTsak6WW2NTYhDEd1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@google.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 521/634] mm/damon/tests/core-kunit: handle alloc failures on damon_test_merge_two()
-Date: Fri,  9 Jan 2026 12:43:19 +0100
-Message-ID: <20260109112137.166810624@linuxfoundation.org>
+	Qiang Ma <maqianga@uniontech.com>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.1 491/634] LoongArch: Correct the calculation logic of thread_count
+Date: Fri,  9 Jan 2026 12:42:49 +0100
+Message-ID: <20260109112136.019930494@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -53,52 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Qiang Ma <maqianga@uniontech.com>
 
-commit 3d443dd29a1db7efa587a4bb0c06a497e13ca9e4 upstream.
+commit 1de0ae21f136efa6c5d8a4d3e07b7d1ca39c750f upstream.
 
-damon_test_merge_two() is assuming all dynamic memory allocation in it
-will succeed.  Those are indeed likely in the real use cases since those
-allocations are too small to fail, but theoretically those could fail.  In
-the case, inappropriate memory access can happen.  Fix it by appropriately
-cleanup pre-allocated memory and skip the execution of the remaining tests
-in the failure cases.
+For thread_count, the current calculation method has a maximum of 255,
+which may not be sufficient in the future. Therefore, we are correcting
+it now.
 
-Link: https://lkml.kernel.org/r/20251101182021.74868-7-sj@kernel.org
-Fixes: 17ccae8bb5c9 ("mm/damon: add kunit tests")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>
-Cc: David Gow <davidgow@google.com>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: <stable@vger.kernel.org>	[5.15+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reference: SMBIOS Specification, 7.5 Processor Information (Type 4)[1]
+
+[1]: https://www.dmtf.org/sites/default/files/standards/documents/DSP0134_3.9.0.pdf
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Qiang Ma <maqianga@uniontech.com>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/core-test.h |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/loongarch/kernel/setup.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/mm/damon/core-test.h
-+++ b/mm/damon/core-test.h
-@@ -162,10 +162,20 @@ static void damon_test_merge_two(struct
- 	int i;
+--- a/arch/loongarch/kernel/setup.c
++++ b/arch/loongarch/kernel/setup.c
+@@ -50,6 +50,7 @@
+ #define SMBIOS_FREQLOW_MASK		0xFF
+ #define SMBIOS_CORE_PACKAGE_OFFSET	0x23
+ #define SMBIOS_THREAD_PACKAGE_OFFSET	0x25
++#define SMBIOS_THREAD_PACKAGE_2_OFFSET	0x2E
+ #define LOONGSON_EFI_ENABLE		(1 << 3)
  
- 	t = damon_new_target();
-+	if (!t)
-+		kunit_skip(test, "target alloc fail");
- 	r = damon_new_region(0, 100);
-+	if (!r) {
-+		damon_free_target(t);
-+		kunit_skip(test, "region alloc fail");
-+	}
- 	r->nr_accesses = 10;
- 	damon_add_region(r, t);
- 	r2 = damon_new_region(100, 300);
-+	if (!r2) {
-+		damon_free_target(t);
-+		kunit_skip(test, "second region alloc fail");
-+	}
- 	r2->nr_accesses = 20;
- 	damon_add_region(r2, t);
+ struct screen_info screen_info __section(".data");
+@@ -116,7 +117,12 @@ static void __init parse_cpu_table(const
+ 	cpu_clock_freq = freq_temp * 1000000;
  
+ 	loongson_sysconf.cpuname = (void *)dmi_string_parse(dm, dmi_data[16]);
+-	loongson_sysconf.cores_per_package = *(dmi_data + SMBIOS_THREAD_PACKAGE_OFFSET);
++	loongson_sysconf.cores_per_package = *(u8 *)(dmi_data + SMBIOS_THREAD_PACKAGE_OFFSET);
++	if (dm->length >= 0x30 && loongson_sysconf.cores_per_package == 0xff) {
++		/* SMBIOS 3.0+ has ThreadCount2 for more than 255 threads */
++		loongson_sysconf.cores_per_package =
++					  *(u16 *)(dmi_data + SMBIOS_THREAD_PACKAGE_2_OFFSET);
++	}
+ 
+ 	pr_info("CpuClock = %llu\n", cpu_clock_freq);
+ }
 
 
