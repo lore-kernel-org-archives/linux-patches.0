@@ -1,48 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB55335B15A;
-	Fri,  9 Jan 2026 12:44:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC3935A955;
+	Fri,  9 Jan 2026 12:44:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962648; cv=none; b=tKJaoCYChDUEN6VfYbt/mJInhiZm4Jtjqu/xGISF4iFIQppj2LgRj5IAC0WO1a1+hIatNkMVa/0Iqow+HKl1pdIfOk1d8iMOJHOivZt/3gur1Ke1Etq8EpkmHNqEMe0wnKbmMonZ6E8E5+kl0S8Y0OdlOcFldBUDgEY6oHGQW68=
+	t=1767962651; cv=none; b=YicIaN3XwZDcT5F6AbFQRHCNKtYVTxNvd+t5+YHKT9NHxJFc40V6A339SJ+pGCHKrLo72m5DlwYTEH0YzBUmV83teCSa+0EYjehOOMEpiD/dP75wM7fNSEnVBC2wQMqHfbLvjco4sNfiBPU8HGUOex+s2412UZtHWZ8+ug+bIpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962648; c=relaxed/simple;
-	bh=dSIZnFUG3wC640gUOjDd/AK8CUQzhZY67LyT6KxRmJE=;
+	s=arc-20240116; t=1767962651; c=relaxed/simple;
+	bh=SfpvyjfKohfGCA/nRI4zdHR/eRRYEmTmeO/x4JMPN2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cetGA0wBq8K9LHG3x66pZIkNftN+aUuTGKZhFmez6BZXo7zprSO7rgAsqn1rev1bH5YfTg87E/24JpuiNFZjd1g/QV+OHBNJAxsRnRQ+KXqFmy774X34aWDEja8z0S8xyY4vHlqEHfoadRtvnFmB5ZhdzgmIhm1kcYd4H2vdKtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VQfv7Hmc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DWNstzvBhRRYpkVsMTALE59IUbDkQM0eeQzpTWBLRK9Aa2IpeDEQtdM8BNEtg7M7E02DRjIQBFd4Sqa0pXoyNokI5dizq5607lASDJOyHVRJQqA+v8f7eTlbpgEF+ZuvLKDZTXVN0SXXliiW5Sg86MKp3v1tCXMnVuaRoOwo+YM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I8qIYMUe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VQfv7Hmc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10F40C19423;
-	Fri,  9 Jan 2026 12:44:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I8qIYMUe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4C34C4CEF1;
+	Fri,  9 Jan 2026 12:44:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962648;
-	bh=dSIZnFUG3wC640gUOjDd/AK8CUQzhZY67LyT6KxRmJE=;
+	s=korg; t=1767962651;
+	bh=SfpvyjfKohfGCA/nRI4zdHR/eRRYEmTmeO/x4JMPN2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VQfv7HmcCRcf5ngnwWpTsdDO+D9+uBTZRnUgOtIJIx+ncJM3sCf14g7dQ9finLJWB
-	 ZQGt4NVwvPY5oL3HV6J0n/Cri8ucpmoNNP2vTSJyYYRzHH8fXc3N03xldXr9I+0a4a
-	 wpVFDQ1Qe0WS+SpX6c1K/Qq0U6YJ68VUhvplYIp0=
+	b=I8qIYMUecXNil4zN0ND5RWwtfeejcl8tLIYdAWP84n02aqrEsZiUdIU4K1Cu+Bog4
+	 4dg4wuVvhy8YKifO0NCQaD3j/jCTVb6rjU/R2kq8MzK7fvRpmnOBL34yZzvPg2vPlG
+	 uD1aIQAKRfd9aJO5eJfZTUXR+34wTnsfYQeGBIxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Tim Chen <tim.c.chen@linux.intel.com>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Andrew Theurer <atheurer@redhat.com>,
+	Joe Mario <jmario@redhat.com>,
+	Sebastian Jug <sejug@redhat.com>,
 	Frederic Weisbecker <frederic@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Marcelo Tosatti <mtosatti@redhat.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Shakeel Butt <shakeelb@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Leonardo Bras <leobras@redhat.com>,
-	Ingo Molnar <mingo@elte.hu>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Tejun Heo <tj@kernel.org>,
+	Ming Lei <ming.lei@redhat.com>,
+	"Ewan D. Milne" <emilne@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 439/634] sched/isolation: add cpu_is_isolated() API
-Date: Fri,  9 Jan 2026 12:41:57 +0100
-Message-ID: <20260109112134.060269989@linuxfoundation.org>
+Subject: [PATCH 6.1 440/634] blk-mq: dont schedule block kworker on isolated CPUs
+Date: Fri,  9 Jan 2026 12:41:58 +0100
+Message-ID: <20260109112134.097561298@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -61,93 +60,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frederic Weisbecker <frederic@kernel.org>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit a85c2257a8ac353af16dbcbf32c50d3380860bc5 ]
+[ Upstream commit a46c27026da10a126dd870f7b65380010bd20db5 ]
 
-Patch series "memcg, cpuisol: do not interfere pcp cache charges draining
-with cpuisol workloads".
+Kernel parameter of `isolcpus=` or 'nohz_full=' are used to isolate CPUs
+for specific task, and it isn't expected to let block IO disturb these CPUs.
+blk-mq kworker shouldn't be scheduled on isolated CPUs. Also if isolated
+CPUs is run for blk-mq kworker, long block IO latency can be caused.
 
-Leonardo has reported [1] that pcp memcg charge draining can interfere
-with cpu isolated workloads.  The said draining is done from a WQ context
-with a pcp worker scheduled on each CPU which holds any cached charges for
-a specific memcg hierarchy.  Operation is not really a common operation
-[2].  It can be triggered from the userspace though so some care is
-definitely due.
+Kernel workqueue only respects CPU isolation for WQ_UNBOUND, for bound
+WQ, the responsibility is on user because CPU is specified as WQ API
+parameter, such as mod_delayed_work_on(cpu), queue_delayed_work_on(cpu)
+and queue_work_on(cpu).
 
-Leonardo has tried to address the issue by allowing remote charge draining
-[3].  This approach requires an additional locking to synchronize pcp
-caches sync from a remote cpu from local pcp consumers.  Even though the
-proposed lock was per-cpu there is still potential for contention and less
-predictable behavior.
+So not run blk-mq kworker on isolated CPUs by removing isolated CPUs
+from hctx->cpumask. Meantime use queue map to check if all CPUs in this
+hw queue are offline instead of hctx->cpumask, this way can avoid any
+cost in fast IO code path, and is safe since hctx->cpumask are only
+used in the two cases.
 
-This patchset addresses the issue from a different angle.  Rather than
-dealing with a potential synchronization, cpus which are isolated are
-simply never scheduled to be drained.  This means that a small amount of
-charges could be laying around and waiting for a later use or they are
-flushed when a different memcg is charged from the same cpu.  More details
-are in patch 2.  The first patch from Frederic is implementing an
-abstraction to tell whether a specific cpu has been isolated and therefore
-require a special treatment.
-
-This patch (of 2):
-
-Provide this new API to check if a CPU has been isolated either through
-isolcpus= or nohz_full= kernel parameter.
-
-It aims at avoiding kernel load deemed to be safely spared on CPUs running
-sensitive workload that can't bear any disturbance, such as pcp cache
-draining.
-
-Link: https://lkml.kernel.org/r/20230317134448.11082-1-mhocko@kernel.org
-Link: https://lkml.kernel.org/r/20230317134448.11082-2-mhocko@kernel.org
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Michal Hocko <mhocko@suse.com>
-Suggested-by: Michal Hocko <mhocko@suse.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Marcelo Tosatti <mtosatti@redhat.com>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Shakeel Butt <shakeelb@google.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Leonardo Bras <leobras@redhat.com>
-Cc: Ingo Molnar <mingo@elte.hu>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Tim Chen <tim.c.chen@linux.intel.com>
+Cc: Juri Lelli <juri.lelli@redhat.com>
+Cc: Andrew Theurer <atheurer@redhat.com>
+Cc: Joe Mario <jmario@redhat.com>
+Cc: Sebastian Jug <sejug@redhat.com>
+Cc: Frederic Weisbecker <frederic@kernel.org>
+Cc: Bart Van Assche <bvanassche@acm.org>
+Cc: Tejun Heo <tj@kernel.org>
+Tesed-by: Joe Mario <jmario@redhat.com>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Ewan D. Milne <emilne@redhat.com>
+Link: https://lore.kernel.org/r/20240322021244.1056223-1-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Stable-dep-of: 10845a105bbc ("blk-mq: skip CPU offline notify on unmapped hctx")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sched/isolation.h | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ block/blk-mq.c | 57 +++++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 47 insertions(+), 10 deletions(-)
 
-diff --git a/include/linux/sched/isolation.h b/include/linux/sched/isolation.h
-index 8c15abd67aed..fe1a46f30d24 100644
---- a/include/linux/sched/isolation.h
-+++ b/include/linux/sched/isolation.h
-@@ -46,6 +46,12 @@ static inline bool housekeeping_enabled(enum hk_type type)
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index d3ced0cff916..6cfbbe0d7792 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -30,6 +30,7 @@
+ #include <linux/prefetch.h>
+ #include <linux/blk-crypto.h>
+ #include <linux/part_stat.h>
++#include <linux/sched/isolation.h>
  
- static inline void housekeeping_affine(struct task_struct *t,
- 				       enum hk_type type) { }
-+
-+static inline bool housekeeping_test_cpu(int cpu, enum hk_type type)
-+{
-+	return true;
-+}
-+
- static inline void housekeeping_init(void) { }
- #endif /* CONFIG_CPU_ISOLATION */
+ #include <trace/events/block.h>
  
-@@ -58,4 +64,10 @@ static inline bool housekeeping_cpu(int cpu, enum hk_type type)
- 	return true;
+@@ -2216,6 +2217,15 @@ static inline int blk_mq_first_mapped_cpu(struct blk_mq_hw_ctx *hctx)
+ 	return cpu;
  }
  
-+static inline bool cpu_is_isolated(int cpu)
++/*
++ * ->next_cpu is always calculated from hctx->cpumask, so simply use
++ * it for speeding up the check
++ */
++static bool blk_mq_hctx_empty_cpumask(struct blk_mq_hw_ctx *hctx)
 +{
-+	return !housekeeping_test_cpu(cpu, HK_TYPE_DOMAIN) ||
-+		 !housekeeping_test_cpu(cpu, HK_TYPE_TICK);
++        return hctx->next_cpu >= nr_cpu_ids;
 +}
 +
- #endif /* _LINUX_SCHED_ISOLATION_H */
+ /*
+  * It'd be great if the workqueue API had a way to pass
+  * in a mask and had some smarts for more clever placement.
+@@ -2227,7 +2237,8 @@ static int blk_mq_hctx_next_cpu(struct blk_mq_hw_ctx *hctx)
+ 	bool tried = false;
+ 	int next_cpu = hctx->next_cpu;
+ 
+-	if (hctx->queue->nr_hw_queues == 1)
++	/* Switch to unbound if no allowable CPUs in this hctx */
++	if (hctx->queue->nr_hw_queues == 1 || blk_mq_hctx_empty_cpumask(hctx))
+ 		return WORK_CPU_UNBOUND;
+ 
+ 	if (--hctx->next_cpu_batch <= 0) {
+@@ -3497,14 +3508,30 @@ static bool blk_mq_hctx_has_requests(struct blk_mq_hw_ctx *hctx)
+ 	return data.has_rq;
+ }
+ 
+-static inline bool blk_mq_last_cpu_in_hctx(unsigned int cpu,
+-		struct blk_mq_hw_ctx *hctx)
++static bool blk_mq_hctx_has_online_cpu(struct blk_mq_hw_ctx *hctx,
++		unsigned int this_cpu)
+ {
+-	if (cpumask_first_and(hctx->cpumask, cpu_online_mask) != cpu)
+-		return false;
+-	if (cpumask_next_and(cpu, hctx->cpumask, cpu_online_mask) < nr_cpu_ids)
+-		return false;
+-	return true;
++	enum hctx_type type = hctx->type;
++	int cpu;
++
++	/*
++	 * hctx->cpumask has to rule out isolated CPUs, but userspace still
++	 * might submit IOs on these isolated CPUs, so use the queue map to
++	 * check if all CPUs mapped to this hctx are offline
++	 */
++	for_each_online_cpu(cpu) {
++		struct blk_mq_hw_ctx *h = blk_mq_map_queue_type(hctx->queue,
++				type, cpu);
++
++		if (h != hctx)
++			continue;
++
++		/* this hctx has at least one online CPU */
++		if (this_cpu != cpu)
++			return true;
++	}
++
++	return false;
+ }
+ 
+ static int blk_mq_hctx_notify_offline(unsigned int cpu, struct hlist_node *node)
+@@ -3513,8 +3540,7 @@ static int blk_mq_hctx_notify_offline(unsigned int cpu, struct hlist_node *node)
+ 			struct blk_mq_hw_ctx, cpuhp_online);
+ 	int ret = 0;
+ 
+-	if (!cpumask_test_cpu(cpu, hctx->cpumask) ||
+-	    !blk_mq_last_cpu_in_hctx(cpu, hctx))
++	if (blk_mq_hctx_has_online_cpu(hctx, cpu))
+ 		return 0;
+ 
+ 	/*
+@@ -3933,6 +3959,8 @@ static void blk_mq_map_swqueue(struct request_queue *q)
+ 	}
+ 
+ 	queue_for_each_hw_ctx(q, hctx, i) {
++		int cpu;
++
+ 		/*
+ 		 * If no software queues are mapped to this hardware queue,
+ 		 * disable it and free the request entries.
+@@ -3959,6 +3987,15 @@ static void blk_mq_map_swqueue(struct request_queue *q)
+ 		 */
+ 		sbitmap_resize(&hctx->ctx_map, hctx->nr_ctx);
+ 
++		/*
++		 * Rule out isolated CPUs from hctx->cpumask to avoid
++		 * running block kworker on isolated CPUs
++		 */
++		for_each_cpu(cpu, hctx->cpumask) {
++			if (cpu_is_isolated(cpu))
++				cpumask_clear_cpu(cpu, hctx->cpumask);
++		}
++
+ 		/*
+ 		 * Initialize batch roundrobin counts
+ 		 */
 -- 
 2.51.0
 
