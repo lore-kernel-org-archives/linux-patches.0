@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA91233032C;
-	Fri,  9 Jan 2026 12:39:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E0A33032C;
+	Fri,  9 Jan 2026 12:39:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962364; cv=none; b=RE4mXt5FH0I3ukcC1yKiIokmxq2Tm8Fzl7AXEltbiwe4hifqs2Tl9r8eIZjorqVtrp1M2PcvmOQ3b2ZEjn+vKaqVLHzGEWQQWnbBvIElcniVhukbE36K9AHvwE3FQQ3XCE8NV70Dorq5VyBFeoS26V3V0AUynWDh9LB3vDmBq8Q=
+	t=1767962367; cv=none; b=gVyn52DXGZJa1WT/izburV3EyvOjRRwfu2C9nFHiEXkK/UHXEbdG8J8OOvXENSpCEBpmeimfrHbq/He06sG28kVgJdZeZDI5r1Eqph8hdD4JjQa98UIAOChI6guo0AObmAYga9ymusstp/0kYRO1KxSWlr3PEffJcld55l4lcYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962364; c=relaxed/simple;
-	bh=/SQn9W/ouKWPuJijNX2empe6cQRmClTW6AdXTixAyXI=;
+	s=arc-20240116; t=1767962367; c=relaxed/simple;
+	bh=hfKbMtHPOx0LDQwKBMmpdpXBLEhZ3AgsOmTMvWUz9Qk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lvqLLjRs+dBSOo6fLwvK22tPpgfUoteiguNbLErR73gYT9MZ8BJ6Wy3Wefi8Mf+kCoNr6xB3FNq12h8hNPk+PhUQcsB2XoKU6Qnocs8z2sIAawFU7EE+FJYTf5szzQGIsbTbGxhyPAFdzZhUEGUtsEDzsjBayrPKzlL3MiexsIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fnvOirLv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cJ4aKM1uYtlm59QVC43TO0NZdJY1dCwtG9ITgw/dPV0zFrFh2N9yXqgrGwXZqB41cE4gY2NMpKHga8mu3ou5FFJEgfOsnVJ9mNn4maTgvpjw4jYD4tJwGIksfvCBtU4EQUTQ2TAtaRUrstLOfWu6pTPXGUHejeRJ6CG4p/zHooY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UVtDub1i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fnvOirLv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 173BBC4CEF1;
-	Fri,  9 Jan 2026 12:39:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UVtDub1i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4472C4CEF1;
+	Fri,  9 Jan 2026 12:39:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962364;
-	bh=/SQn9W/ouKWPuJijNX2empe6cQRmClTW6AdXTixAyXI=;
+	s=korg; t=1767962367;
+	bh=hfKbMtHPOx0LDQwKBMmpdpXBLEhZ3AgsOmTMvWUz9Qk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fnvOirLvlAv/Lqk6T+m2MzOstEzH3J76moIpk4PqDIDqeb8ovHaGMSDJFZGUQYH4T
-	 +2AT0l+ELGMEOzYL990JdWjPfcuCLoysM6ogutTlkZjPq1mU6KxQTBesl2acRMNyny
-	 IAvmWIJpsMdSKphKv+CHelMSyqtqAQRjkufNs7lc=
+	b=UVtDub1iTrxRvc0NGgbtmI6cq6zF1F/YuhiMwbICFvV7y/ApOWrgrOlJDRUmJAMcm
+	 6CULZrDxo+5bMDDHpUAHmHFxHgAY9hHFobFAhBwterwTS2LVH6LudJa9Vlc6pUADAm
+	 ORw/K2+j3TErtkrL1V08Xch/iVA+MEQPMmSzijyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Johan Hovold <johan@kernel.org>,
-	Vladimir Zapolskiy <vz@mleia.com>
-Subject: [PATCH 6.1 339/634] usb: phy: isp1301: fix non-OF device reference imbalance
-Date: Fri,  9 Jan 2026 12:40:17 +0100
-Message-ID: <20260109112130.282121267@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.1 340/634] usb: dwc3: of-simple: fix clock resource leak in dwc3_of_simple_probe
+Date: Fri,  9 Jan 2026 12:40:18 +0100
+Message-ID: <20260109112130.318768650@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,48 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit b4b64fda4d30a83a7f00e92a0c8a1d47699609f3 upstream.
+commit 3b4961313d31e200c9e974bb1536cdea217f78b5 upstream.
 
-A recent change fixing a device reference leak in a UDC driver
-introduced a potential use-after-free in the non-OF case as the
-isp1301_get_client() helper only increases the reference count for the
-returned I2C device in the OF case.
+When clk_bulk_prepare_enable() fails, the error path jumps to
+err_resetc_assert, skipping clk_bulk_put_all() and leaking the
+clock references acquired by clk_bulk_get_all().
 
-Increment the reference count also for non-OF so that the caller can
-decrement it unconditionally.
+Add err_clk_put_all label to properly release clock resources
+in all error paths.
 
-Note that this is inherently racy just as using the returned I2C device
-is since nothing is preventing the PHY driver from being unbound while
-in use.
+Found via static analysis and code review.
 
-Fixes: c84117912bdd ("USB: lpc32xx_udc: Fix error handling in probe")
-Cc: stable@vger.kernel.org
-Cc: Ma Ke <make24@iscas.ac.cn>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Vladimir Zapolskiy <vz@mleia.com>
-Link: https://patch.msgid.link/20251218153519.19453-3-johan@kernel.org
+Fixes: c0c61471ef86 ("usb: dwc3: of-simple: Convert to bulk clk API")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://patch.msgid.link/20251211064937.2360510-1-linmq006@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/phy/phy-isp1301.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/usb/dwc3/dwc3-of-simple.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/phy/phy-isp1301.c
-+++ b/drivers/usb/phy/phy-isp1301.c
-@@ -150,7 +150,12 @@ struct i2c_client *isp1301_get_client(st
- 		return client;
+--- a/drivers/usb/dwc3/dwc3-of-simple.c
++++ b/drivers/usb/dwc3/dwc3-of-simple.c
+@@ -71,11 +71,11 @@ static int dwc3_of_simple_probe(struct p
+ 	simple->num_clocks = ret;
+ 	ret = clk_bulk_prepare_enable(simple->num_clocks, simple->clks);
+ 	if (ret)
+-		goto err_resetc_assert;
++		goto err_clk_put_all;
  
- 	/* non-DT: only one ISP1301 chip supported */
--	return isp1301_i2c_client;
-+	if (isp1301_i2c_client) {
-+		get_device(&isp1301_i2c_client->dev);
-+		return isp1301_i2c_client;
-+	}
-+
-+	return NULL;
- }
- EXPORT_SYMBOL_GPL(isp1301_get_client);
+ 	ret = of_platform_populate(np, NULL, NULL, dev);
+ 	if (ret)
+-		goto err_clk_put;
++		goto err_clk_disable;
  
+ 	pm_runtime_set_active(dev);
+ 	pm_runtime_enable(dev);
+@@ -83,8 +83,9 @@ static int dwc3_of_simple_probe(struct p
+ 
+ 	return 0;
+ 
+-err_clk_put:
++err_clk_disable:
+ 	clk_bulk_disable_unprepare(simple->num_clocks, simple->clks);
++err_clk_put_all:
+ 	clk_bulk_put_all(simple->num_clocks, simple->clks);
+ 
+ err_resetc_assert:
 
 
