@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D7835B137;
-	Fri,  9 Jan 2026 12:35:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07ED635A95B;
+	Fri,  9 Jan 2026 12:35:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962101; cv=none; b=gJBwSRcINCD6/pUVk/eTGw8m5OY+B5Xovk6Qrau0In9O2iyYpuUHmc+acDreVZ3DU01Y3v1EN0r43+5Yl9If5+KXqoDVT7PnjHpmfH66rH0kRcdEesSZMYXLiAkMDOgLUo988d5I5bWgnNRGKMGDRTtm8uOUKjzvJjIBu/iZZqU=
+	t=1767962104; cv=none; b=siXlDtZu3SuHu22STGsFIy+A4TRtiP1l8es2yQbZDc8HKw0hMyhrX7f4qH6DLIv+qv8gkYcdyScj6lhByOtrcdmzC1yK3PKPRng5l7gfTNQe7jqQz1VDaHBtUFAujCJnDp6KI/axdMlMHn+5HmfuzQnk1U5nkxNKlgox89GTtQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962101; c=relaxed/simple;
-	bh=qcsIcUACrdiUAKk3fBaNk4PTB+Bhur8l2IL8ul2bUks=;
+	s=arc-20240116; t=1767962104; c=relaxed/simple;
+	bh=a6UpgP+VOgxYYSb9qcfp+s6su7rxjIk15ov2jE48pZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u89V9KmZ+S8vYRdeaS3W2zooBboJTwtVOmqTFljHqAo/spqpONGe9aztxAg0ZPO6HkLlj3khG3sFAcbsps8OpCID8WsiuRpxJZuoeXbg2P3q+DcCCtUNsH1XbuhmU0MeJQkrzYX+hVSI910OtiDqZg98Hz67oZOxDR2emM0KGiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CSQpv+8r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k3xEj64NRQRkiFDKi8EERJBM61P8fsnubtv6pVt+rez8LrGk+Ul5coLlRaCYEakoObZsWcRGAMPGdOF2ebkajcQ3MM36mqs2ACRPOcl3NHteadXeTAtYz2VoWOH+PqYg86bsUt9ikV+ZOo3rZJrRs9ycvNZMxD5VJuWG0JKg27o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lnrf9t8e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CSQpv+8r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEB49C4CEF1;
-	Fri,  9 Jan 2026 12:35:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lnrf9t8e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AD1FC4CEF1;
+	Fri,  9 Jan 2026 12:35:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962101;
-	bh=qcsIcUACrdiUAKk3fBaNk4PTB+Bhur8l2IL8ul2bUks=;
+	s=korg; t=1767962103;
+	bh=a6UpgP+VOgxYYSb9qcfp+s6su7rxjIk15ov2jE48pZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CSQpv+8rS6cQVKfyNnX9SnNp2yRp+OkrCg1B2jBI9DHhZ/D1vyGNMpSQ4MBA1spJi
-	 gk6xfvDaY9yeZu0xTVvpKZPTK/nWERWznNMaYiRzTC23CmeHqQdAwCflK+AqkQQwfB
-	 QvVII3VskD1m0nV7TCV/wpPJqvR04OG3vPrHbBL8=
+	b=lnrf9t8ePLossyNfJIoUq/B33rIpKwEAZpP8gDOEAXajh6XnryDlfDMScnaTPsZfz
+	 bsQ3Ajoulp7zzMkgq7/BkLKn2dOE0khHWs6EtSPtjTEYm07tBZ9TMby2zpqskh3VHM
+	 BK0xaA31OpKNqgK1jkymyPS7U6yUtUpTepYa/TMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	shechenglong <shechenglong@xfusion.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 214/634] efi/cper: Add a new helper function to print bitmasks
-Date: Fri,  9 Jan 2026 12:38:12 +0100
-Message-ID: <20260109112125.488010608@linuxfoundation.org>
+Subject: [PATCH 6.1 205/634] block: fix comment for op_is_zone_mgmt() to include RESET_ALL
+Date: Fri,  9 Jan 2026 12:38:03 +0100
+Message-ID: <20260109112125.153348117@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -53,131 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+From: shechenglong <shechenglong@xfusion.com>
 
-[ Upstream commit a976d790f49499ccaa0f991788ad8ebf92e7fd5c ]
+[ Upstream commit 8a32282175c964eb15638e8dfe199fc13c060f67 ]
 
-Add a helper function to print a string with names associated
-to each bit field.
+REQ_OP_ZONE_RESET_ALL is a zone management request, and op_is_zone_mgmt()
+has returned true for it.
 
-A typical example is:
+Update the comment to remove the misleading exception note so
+the documentation matches the implementation.
 
-	const char * const bits[] = {
-		"bit 3 name",
-		"bit 4 name",
-		"bit 5 name",
-	};
-	char str[120];
-        unsigned int bitmask = BIT(3) | BIT(5);
-
-	#define MASK  GENMASK(5,3)
-
-	cper_bits_to_str(str, sizeof(str), FIELD_GET(MASK, bitmask),
-			 bits, ARRAY_SIZE(bits));
-
-The above code fills string "str" with "bit 3 name|bit 5 name".
-
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: 12a1c9353c47 ("block: fix op_is_zone_mgmt() to handle REQ_OP_ZONE_RESET_ALL")
+Signed-off-by: shechenglong <shechenglong@xfusion.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/cper.c | 60 +++++++++++++++++++++++++++++++++++++
- include/linux/cper.h        |  2 ++
- 2 files changed, 62 insertions(+)
+ include/linux/blk_types.h | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/firmware/efi/cper.c b/drivers/firmware/efi/cper.c
-index e4e5ea7ce910a..eb5e67af69273 100644
---- a/drivers/firmware/efi/cper.c
-+++ b/drivers/firmware/efi/cper.c
-@@ -12,6 +12,7 @@
-  * Specification version 2.4.
-  */
- 
-+#include <linux/bitmap.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/time.h>
-@@ -105,6 +106,65 @@ void cper_print_bits(const char *pfx, unsigned int bits,
- 		printk("%s\n", buf);
+diff --git a/include/linux/blk_types.h b/include/linux/blk_types.h
+index 83ede90bb106f..335bd6d0f6a5e 100644
+--- a/include/linux/blk_types.h
++++ b/include/linux/blk_types.h
+@@ -510,10 +510,7 @@ static inline bool op_is_discard(blk_opf_t op)
  }
  
-+/**
-+ * cper_bits_to_str - return a string for set bits
-+ * @buf: buffer to store the output string
-+ * @buf_size: size of the output string buffer
-+ * @bits: bit mask
-+ * @strs: string array, indexed by bit position
-+ * @strs_size: size of the string array: @strs
-+ *
-+ * Add to @buf the bitmask in hexadecimal. Then, for each set bit in @bits,
-+ * add the corresponding string describing the bit in @strs to @buf.
-+ *
-+ * A typical example is::
-+ *
-+ *	const char * const bits[] = {
-+ *		"bit 3 name",
-+ *		"bit 4 name",
-+ *		"bit 5 name",
-+ *	};
-+ *	char str[120];
-+ *	unsigned int bitmask = BIT(3) | BIT(5);
-+ *	#define MASK GENMASK(5,3)
-+ *
-+ *	cper_bits_to_str(str, sizeof(str), FIELD_GET(MASK, bitmask),
-+ *			 bits, ARRAY_SIZE(bits));
-+ *
-+ * The above code fills the string ``str`` with ``bit 3 name|bit 5 name``.
-+ *
-+ * Return: number of bytes stored or an error code if lower than zero.
-+ */
-+int cper_bits_to_str(char *buf, int buf_size, unsigned long bits,
-+		     const char * const strs[], unsigned int strs_size)
-+{
-+	int len = buf_size;
-+	char *str = buf;
-+	int i, size;
-+
-+	*buf = '\0';
-+
-+	for_each_set_bit(i, &bits, strs_size) {
-+		if (!(bits & BIT_ULL(i)))
-+			continue;
-+
-+		if (*buf && len > 0) {
-+			*str = '|';
-+			len--;
-+			str++;
-+		}
-+
-+		size = strscpy(str, strs[i], len);
-+		if (size < 0)
-+			return size;
-+
-+		len -= size;
-+		str += size;
-+	}
-+	return len - buf_size;
-+}
-+EXPORT_SYMBOL_GPL(cper_bits_to_str);
-+
- static const char * const proc_type_strs[] = {
- 	"IA32/X64",
- 	"IA64",
-diff --git a/include/linux/cper.h b/include/linux/cper.h
-index eacb7dd7b3af3..a15b7b9740344 100644
---- a/include/linux/cper.h
-+++ b/include/linux/cper.h
-@@ -561,6 +561,8 @@ const char *cper_mem_err_type_str(unsigned int);
- const char *cper_mem_err_status_str(u64 status);
- void cper_print_bits(const char *prefix, unsigned int bits,
- 		     const char * const strs[], unsigned int strs_size);
-+int cper_bits_to_str(char *buf, int buf_size, unsigned long bits,
-+		     const char * const strs[], unsigned int strs_size);
- void cper_mem_err_pack(const struct cper_sec_mem_err *,
- 		       struct cper_mem_err_compact *);
- const char *cper_mem_err_unpack(struct trace_seq *,
+ /*
+- * Check if a bio or request operation is a zone management operation, with
+- * the exception of REQ_OP_ZONE_RESET_ALL which is treated as a special case
+- * due to its different handling in the block layer and device response in
+- * case of command failure.
++ * Check if a bio or request operation is a zone management operation.
+  */
+ static inline bool op_is_zone_mgmt(enum req_op op)
+ {
 -- 
 2.51.0
 
