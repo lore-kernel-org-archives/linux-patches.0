@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D46F33032C;
-	Fri,  9 Jan 2026 12:43:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5988F335BCD;
+	Fri,  9 Jan 2026 12:44:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962637; cv=none; b=FSlaukumiDgYR1+ZTGA5nm69vPZGQcmPXh3AmbKtl6LvbFS156d/PyXYAmH6rYxzZ1YjHCtBYqh8pLqVEIRUAlMiaOqmCbBxS5TJyXnYkw3kiArV8OdI88njrwkTiyhqcZ5msk3wR+uomwyZ6bdsYmRLAG0sO7wCME5GqrEyQtk=
+	t=1767962640; cv=none; b=FTQaAZW3sE89oIbxMQCCRW+sBmX0ge8UFZW7B0XKvNpYBGkv3uLt++2FLjLfxFZMgi5XO/b/oim2mafJ+OJavc7R9K4J6jxKicI38z5a0pqtqMSOb0/Yru79ZIl30gi89Z59w2Nk4wnkjJuzu1vY1SwYJVmFE1nCr5+5pn/baJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962637; c=relaxed/simple;
-	bh=0r3RN/NlFybC5AR3L/JUeR/jP/426HuDkb8DNDrsrf4=;
+	s=arc-20240116; t=1767962640; c=relaxed/simple;
+	bh=OlNz8YxJ4WQGSBmi7Ra/DlpqDyPtkAqbMbyYIIxOoCg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=me4o01ji34JWr1DiQsDvDGmuWOysW3XWfVdUSYN9GnUbazZhRc3D65Vni8yiQd2471Q+MMewrTRcSbTSos+5OEWakuTsLqAGi4Pbz8B0+sYzLpM5TrM43Qs6rlkuXvEIMZHzqqp14B34HilfhLWSnqXNx+aT2eOaGJyrm9MztFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tD5gr07q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=suVfDV1FypdCx/SmuOgMxfnj5jNKqxrVYKUdrHvDGqqbz+9b5IP/OtgPGjnJvf+u2nzockyOhxmiDgdZV6u28SttZRjDX6dxD6suZgjOEDZgw7RDt3eEaEJqHsEpaW0LSl8/wG4Ekg6iGvgxqdNYGw5hkGkag+ejF6i6TW2c64M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZBgtsLJk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tD5gr07q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19219C4CEF1;
-	Fri,  9 Jan 2026 12:43:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZBgtsLJk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEA8EC4CEF1;
+	Fri,  9 Jan 2026 12:43:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962637;
-	bh=0r3RN/NlFybC5AR3L/JUeR/jP/426HuDkb8DNDrsrf4=;
+	s=korg; t=1767962640;
+	bh=OlNz8YxJ4WQGSBmi7Ra/DlpqDyPtkAqbMbyYIIxOoCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tD5gr07qRI5B7di/aCZgwGTFBlA/cpdeYQNfObqB3id6VS6UFESywcf0L7cnvlCpq
-	 UoCxye9PSLaB1rAwqbm7IkJwmvjtSUMwX7QJEE4rEv50vSwZZEeXkpmuKpDmxiqbL+
-	 RBxqQGBAAuCkodmxkT+jqQ51WV72+cPg3s05ouqo=
+	b=ZBgtsLJkmTVcaRIDvfXbMvuIF/er1SqTmTQ/jL/GPriYJymTZgR3NQB7zVYOxhna2
+	 IPFkAYApfH1g6tMlNJW33gsrrDcapbbtIoBW1TOKrLAGWkUJ6+e8RbiZi+LlgDi4Ye
+	 7bVuuZZFw6e4lMmctxqPsmeGzZ5p+nkWe+zPi5Xs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damodharam Ammepalli <damodharam.ammepalli@broadcom.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Anshumali Gaur <agaur@marvell.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 436/634] RDMA/bnxt_re: Fix to use correct page size for PDE table
-Date: Fri,  9 Jan 2026 12:41:54 +0100
-Message-ID: <20260109112133.948385603@linuxfoundation.org>
+Subject: [PATCH 6.1 419/634] octeontx2-pf: fix "UBSAN: shift-out-of-bounds error"
+Date: Fri,  9 Jan 2026 12:41:37 +0100
+Message-ID: <20260109112133.304057585@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -53,48 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+From: Anshumali Gaur <agaur@marvell.com>
 
-[ Upstream commit 3d70e0fb0f289b0c778041c5bb04d099e1aa7c1c ]
+[ Upstream commit 85f4b0c650d9f9db10bda8d3acfa1af83bf78cf7 ]
 
-In bnxt_qplib_alloc_init_hwq(), while allocating memory for PDE table
-driver incorrectly is using the "pg_size" value passed to the function.
-Fixed to use the right value 4K. Also, fixed the allocation size for
-PBL table.
+This patch ensures that the RX ring size (rx_pending) is not
+set below the permitted length. This avoids UBSAN
+shift-out-of-bounds errors when users passes small or zero
+ring sizes via ethtool -G.
 
-Fixes: 0c4dcd602817 ("RDMA/bnxt_re: Refactor hardware queue memory allocation")
-Signed-off-by: Damodharam Ammepalli <damodharam.ammepalli@broadcom.com>
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Link: https://patch.msgid.link/20251223131855.145955-1-kalesh-anakkur.purayil@broadcom.com
-Reviewed-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: d45d8979840d ("octeontx2-pf: Add basic ethtool support")
+Signed-off-by: Anshumali Gaur <agaur@marvell.com>
+Link: https://patch.msgid.link/20251219062226.524844-1-agaur@marvell.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_res.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.c b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-index 4962d68bf217..5edad6a5a112 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_res.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-@@ -243,7 +243,7 @@ int bnxt_qplib_alloc_init_hwq(struct bnxt_qplib_hwq *hwq,
- 			if (npbl % BIT(MAX_PDL_LVL_SHIFT))
- 				npde++;
- 			/* Alloc PDE pages */
--			sginfo.pgsize = npde * pg_size;
-+			sginfo.pgsize = npde * ROCE_PG_SIZE_4K;
- 			sginfo.npages = 1;
- 			rc = __alloc_pbl(res, &hwq->pbl[PBL_LVL_0], &sginfo);
- 			if (rc)
-@@ -251,7 +251,7 @@ int bnxt_qplib_alloc_init_hwq(struct bnxt_qplib_hwq *hwq,
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c
+index 2d6f6edb1510..835e85f0667a 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c
+@@ -422,6 +422,14 @@ static int otx2_set_ringparam(struct net_device *netdev,
+ 	 */
+ 	if (rx_count < pfvf->hw.rq_skid)
+ 		rx_count =  pfvf->hw.rq_skid;
++
++	if (ring->rx_pending < 16) {
++		netdev_err(netdev,
++			   "rx ring size %u invalid, min is 16\n",
++			   ring->rx_pending);
++		return -EINVAL;
++	}
++
+ 	rx_count = Q_COUNT(Q_SIZE(rx_count, 3));
  
- 			/* Alloc PBL pages */
- 			sginfo.npages = npbl;
--			sginfo.pgsize = PAGE_SIZE;
-+			sginfo.pgsize = ROCE_PG_SIZE_4K;
- 			rc = __alloc_pbl(res, &hwq->pbl[PBL_LVL_1], &sginfo);
- 			if (rc)
- 				goto fail;
+ 	/* Due pipelining impact minimum 2000 unused SQ CQE's
 -- 
 2.51.0
 
