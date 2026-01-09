@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5207933A712;
-	Fri,  9 Jan 2026 11:54:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C81233290A;
+	Fri,  9 Jan 2026 11:54:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959684; cv=none; b=u9x42vIgArgJPQ+IAXi2znHrpdAG8oRnwaeGIwOUBBPbKS8hF+2YyztH2nWUOIlWWlFZJn4FmlBioCN4uD1Rhs3Opo315UmYXx/ua4pPgNOF0gl2ywrcLbO0O+ppgKU0RPdAqMeImo57Om/cpJesKRzgtIEgIK498syOWzGPUT8=
+	t=1767959687; cv=none; b=OID8pEBnT2OisRWvxoIf0T6NlEOxn5w7ETkjXKjG8iiyPkqnOqNI2NXqyab5lwt1uh9aH+K/xpkLtoPJ/lVXQFAMIqXy9bRKxp118V871MtpelxdilO/790Bfh7Z7EDlxmv8bzy7pAMf4NSnPHJayidaIMbmwTvPv9CBvCo8JS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959684; c=relaxed/simple;
-	bh=0pPPTNZgjSENzBh8/U5kSW78eoas0jnX1DSMH5eB5Lg=;
+	s=arc-20240116; t=1767959687; c=relaxed/simple;
+	bh=kG90H2qMi1des/07A/gZ/D1LRTyy8KEbJ5f/JJy7r1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oh6bM0FBa+x9KctD00qE7Q64SXaW3aqPSkXdgqdL3SmW8ZmnPCmmTcX1lrLPx6b4r9u+tVlmGcvdzncgbyqr98G4PTLE0XXI9k3L36FxsrgcIRbytmoj1mBuOj6DAUxGSaAgwv0AeTPWd0LKgMGrCAZKkZnZ/yNdq7gjAfqhlfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tv2qE9GT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SEpzY4UaC63ZCw2RebD0OFpgox3NM8s46l+WxKNhX3HCJ+J5w403NSX2mH0gTUGHCYvYBVYFrKjxgE0JGV/6Kv6wwH2RRCXIer454EnPi3zf22pNCRRKhxxPLxVlmlynVK3rZHZCMwsw612+Ps+BGHg0s5qAekSTPyeMvwqO5S4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JuSLYTkw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tv2qE9GT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C60F5C4CEF1;
-	Fri,  9 Jan 2026 11:54:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JuSLYTkw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E3B6C4CEF1;
+	Fri,  9 Jan 2026 11:54:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959684;
-	bh=0pPPTNZgjSENzBh8/U5kSW78eoas0jnX1DSMH5eB5Lg=;
+	s=korg; t=1767959687;
+	bh=kG90H2qMi1des/07A/gZ/D1LRTyy8KEbJ5f/JJy7r1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tv2qE9GTDJpT9+yFKhrb/FCD5Z9oZLKeb8NsBjbGbSsvIhnIY9WQyu29m7fSeyf6N
-	 hVNTXZ8tYkb4UhA0FdvCm5hAKWELBa+sOwuHrdgi49d46XylhLdiQ2NYLlgWCLzFm1
-	 d+tai+LyEnO2g52FxiZU/DgUbQxuKVwd5ClN8lgA=
+	b=JuSLYTkw97+HnlsbD22QU8noDh3mmn3MN8NWR7Vbe1ikvLiMoxdwSroaiWHMUqWTs
+	 Op47/wnSwz5+dC4DPchwCAebr8BQeLFwGCa87Vunwe6c6CDqDqretNwcIGQUNavyfM
+	 V4uYoE8Ryitii73JNdSKWNil30tjzdh/+FMuzk4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+bdeb22a4b9a09ab9aa45@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Avri Altman <avri.altman@sandisk.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Bean Huo <beanhuo@micron.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 137/737] ntfs3: init run lock for extend inode
-Date: Fri,  9 Jan 2026 12:34:36 +0100
-Message-ID: <20260109112139.154890263@linuxfoundation.org>
+Subject: [PATCH 6.6 138/737] scsi: ufs: core: fix incorrect buffer duplication in ufshcd_read_string_desc()
+Date: Fri,  9 Jan 2026 12:34:37 +0100
+Message-ID: <20260109112139.191487677@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,55 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Bean Huo <beanhuo@micron.com>
 
-[ Upstream commit be99c62ac7e7af514e4b13f83c891a3cccefaa48 ]
+[ Upstream commit d794b499f948801f54d67ddbc34a6eac5a6d150a ]
 
-After setting the inode mode of $Extend to a regular file, executing the
-truncate system call will enter the do_truncate() routine, causing the
-run_lock uninitialized error reported by syzbot.
+The function ufshcd_read_string_desc() was duplicating memory starting
+from the beginning of struct uc_string_id, which included the length and
+type fields. As a result, the allocated buffer contained unwanted
+metadata in addition to the string itself.
 
-Prior to patch 4e8011ffec79, if the inode mode of $Extend was not set to
-a regular file, the do_truncate() routine would not be entered.
+The correct behavior is to duplicate only the Unicode character array in
+the structure. Update the code so that only the actual string content is
+copied into the new buffer.
 
-Add the run_lock initialization when loading $Extend.
-
-syzbot reported:
-INFO: trying to register non-static key.
-Call Trace:
- dump_stack_lvl+0x189/0x250 lib/dump_stack.c:120
- assign_lock_key+0x133/0x150 kernel/locking/lockdep.c:984
- register_lock_class+0x105/0x320 kernel/locking/lockdep.c:1299
- __lock_acquire+0x99/0xd20 kernel/locking/lockdep.c:5112
- lock_acquire+0x120/0x360 kernel/locking/lockdep.c:5868
- down_write+0x96/0x1f0 kernel/locking/rwsem.c:1590
- ntfs_set_size+0x140/0x200 fs/ntfs3/inode.c:860
- ntfs_extend+0x1d9/0x970 fs/ntfs3/file.c:387
- ntfs_setattr+0x2e8/0xbe0 fs/ntfs3/file.c:808
-
-Fixes: 4e8011ffec79 ("ntfs3: pretend $Extend records as regular files")
-Reported-by: syzbot+bdeb22a4b9a09ab9aa45@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=bdeb22a4b9a09ab9aa45
-Tested-by: syzbot+bdeb22a4b9a09ab9aa45@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 5f57704dbcfe ("scsi: ufs: Use kmemdup in ufshcd_read_string_desc()")
+Reviewed-by: Avri Altman <avri.altman@sandisk.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Bean Huo <beanhuo@micron.com>
+Link: https://patch.msgid.link/20251107230518.4060231-3-beanhuo@iokpp.de
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/inode.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/ufs/core/ufshcd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
-index f27e25776b730..76326299ba368 100644
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -465,6 +465,7 @@ static struct inode *ntfs_read_mft(struct inode *inode,
- 		/* Records in $Extend are not a files or general directories. */
- 		inode->i_op = &ntfs_file_inode_operations;
- 		mode = S_IFREG;
-+		init_rwsem(&ni->file.run_lock);
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 01a7c1720ce15..9d6a47abe4bc6 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -3738,7 +3738,7 @@ int ufshcd_read_string_desc(struct ufs_hba *hba, u8 desc_index,
+ 		str[ret++] = '\0';
+ 
  	} else {
- 		err = -EINVAL;
- 		goto out;
+-		str = kmemdup(uc_str, uc_str->len, GFP_KERNEL);
++		str = kmemdup(uc_str->uc, uc_str->len, GFP_KERNEL);
+ 		if (!str) {
+ 			ret = -ENOMEM;
+ 			goto out;
 -- 
 2.51.0
 
