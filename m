@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636471946C8;
-	Fri,  9 Jan 2026 12:02:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4504233375D;
+	Fri,  9 Jan 2026 12:02:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960149; cv=none; b=pIinKbzTAMUsPLuK4ZAJOeCpvIs/G7V2zqvXb4AbDb9CDVmTBAqq+BdG4oYEJECG0ORs/0T+FkcsBCQMqJ8l5AYbD5MYgcAV+tTqPHp6vXU6rwsbVYKoyRtMD1ewV0jswrZP7o6nhUHSWMizXTpYTPctFsAerY0wXafrbjgkjAI=
+	t=1767960152; cv=none; b=rKfBJ0z0GbbQJ+wYTjMKPV6FkPi3UqSeJjXu/q09rbvRIRDWtvfVV2h9ippQQkE1LD0m3COgmSnuATCHGts2X3M12np2CmpKHvvAHEXvnt5CBJ1cxJQ6lncxjcZuhOG09An1TvlefwOcBvwU/0vcWMe5k44qRt9LwZjlcYdaY1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960149; c=relaxed/simple;
-	bh=arTxFakQqJNAt2/PSRgWAmbrJSeeTOpIuQyH3lqpqHM=;
+	s=arc-20240116; t=1767960152; c=relaxed/simple;
+	bh=Li9cNUEdhozLQZV3HklRIP/pJc3rkMj7meJCKzK0l+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m2i5L2tN+6ChnSZctMHjPB7hTrP8BVd7TSFtUkt7V3FyHFWDFpkFWFrbZY5Ch7Kvpnbnv3rhu/hfNae04UwJBhsdP6J01COyx/wkCW2JQoj+vTywm66JIeTY0pZy1X8iYSd15ugvbGx98Y0+kGRLPB0vnxwkdMUq3QyUpmlWPMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ea6TxqMF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aI5m3oZpnauB5zA82kA5USzFhLZJwxwWYv3y6auZYnxsNJMAoXXo88rkUjI8pEBTqAUhifuo8CdaVBeUVK/5qN9ZmCVKsESjbne7O2SPq7cVwaTws1jmL5GOARiKJ5Us0D6aa/q2RkM++wB+sKRneCkqi3SVXhNyon4xUEaLcf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mEI/V0Tp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ea6TxqMF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7365C4CEF1;
-	Fri,  9 Jan 2026 12:02:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mEI/V0Tp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1382C4CEF1;
+	Fri,  9 Jan 2026 12:02:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960149;
-	bh=arTxFakQqJNAt2/PSRgWAmbrJSeeTOpIuQyH3lqpqHM=;
+	s=korg; t=1767960152;
+	bh=Li9cNUEdhozLQZV3HklRIP/pJc3rkMj7meJCKzK0l+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ea6TxqMFocFhxgisFgQZYh1YI/LhEBQe9+RBbE4Pbydkq1eOBQpgY4I0ReXRnkHeN
-	 mi93tr+jM7YiHa4ZVQsvhJzyN38Tp3rlpDfTSZDKTrMZ5lE7UtJ4ril9elvJTCtx0M
-	 ppUeMMz4PtQPX0/zn28IlOeRRFRPcGHLmh8gLBM0=
+	b=mEI/V0TpyPwOYGij+LA2afoOdHNKtZLJPykcknnBYBKrjkwPyPMvw2eo5NfrlR3if
+	 7dCu0fYIgtepl7bNHxd2kEtUqr5Ud/aD/RF5sqFFZr+Wqurk0ckrS3jcCozkIAO57I
+	 urCd0Sm0+Znm3rTKQAOLmOa2SGNLr8DBF4X7tkAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+eadd98df8bceb15d7fed@syzkaller.appspotmail.com,
-	Qu Wenruo <wqu@suse.com>,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	David Sterba <dsterba@suse.com>,
+	Joanne Koong <joannelkoong@gmail.com>,
+	syzbot@syzkaller.appspotmail.com,
+	Brian Foster <bfoster@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 302/737] btrfs: fix memory leak of fs_devices in degraded seed device path
-Date: Fri,  9 Jan 2026 12:37:21 +0100
-Message-ID: <20260109112145.367564386@linuxfoundation.org>
+Subject: [PATCH 6.6 303/737] iomap: adjust read range correctly for non-block-aligned positions
+Date: Fri,  9 Jan 2026 12:37:22 +0100
+Message-ID: <20260109112145.404813465@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -53,49 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Joanne Koong <joannelkoong@gmail.com>
 
-[ Upstream commit b57f2ddd28737db6ff0e9da8467f0ab9d707e997 ]
+[ Upstream commit 7aa6bc3e8766990824f66ca76c19596ce10daf3e ]
 
-In open_seed_devices(), when find_fsid() fails and we're in DEGRADED
-mode, a new fs_devices is allocated via alloc_fs_devices() but is never
-added to the seed_list before returning. This contrasts with the normal
-path where fs_devices is properly added via list_add().
+iomap_adjust_read_range() assumes that the position and length passed in
+are block-aligned. This is not always the case however, as shown in the
+syzbot generated case for erofs. This causes too many bytes to be
+skipped for uptodate blocks, which results in returning the incorrect
+position and length to read in. If all the blocks are uptodate, this
+underflows length and returns a position beyond the folio.
 
-If any error occurs later in read_one_dev() or btrfs_read_chunk_tree(),
-the cleanup code iterates seed_list to free seed devices, but this
-orphaned fs_devices is never found and never freed, causing a memory
-leak. Any devices allocated via add_missing_dev() and attached to this
-fs_devices are also leaked.
+Fix the calculation to also take into account the block offset when
+calculating how many bytes can be skipped for uptodate blocks.
 
-Fix this by adding the newly allocated fs_devices to seed_list in the
-degraded path, consistent with the normal path.
-
-Fixes: 5f37583569442 ("Btrfs: move the missing device to its own fs device list")
-Reported-by: syzbot+eadd98df8bceb15d7fed@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=eadd98df8bceb15d7fed
-Tested-by: syzbot+eadd98df8bceb15d7fed@syzkaller.appspotmail.com
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
+Tested-by: syzbot@syzkaller.appspotmail.com
+Reviewed-by: Brian Foster <bfoster@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/volumes.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/iomap/buffered-io.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
-index 1eb543602ff12..8207b0b4c43a0 100644
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -6966,6 +6966,7 @@ static struct btrfs_fs_devices *open_seed_devices(struct btrfs_fs_info *fs_info,
+diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
+index 7ffdf0d037fae..13a5f4422c797 100644
+--- a/fs/iomap/buffered-io.c
++++ b/fs/iomap/buffered-io.c
+@@ -211,17 +211,24 @@ static void iomap_adjust_read_range(struct inode *inode, struct folio *folio,
+ 	 * to avoid reading in already uptodate ranges.
+ 	 */
+ 	if (ifs) {
+-		unsigned int i;
++		unsigned int i, blocks_skipped;
  
- 		fs_devices->seeding = true;
- 		fs_devices->opened = 1;
-+		list_add(&fs_devices->seed_list, &fs_info->fs_devices->seed_list);
- 		return fs_devices;
- 	}
+ 		/* move forward for each leading block marked uptodate */
+-		for (i = first; i <= last; i++) {
++		for (i = first; i <= last; i++)
+ 			if (!ifs_block_is_uptodate(ifs, i))
+ 				break;
+-			*pos += block_size;
+-			poff += block_size;
+-			plen -= block_size;
+-			first++;
++
++		blocks_skipped = i - first;
++		if (blocks_skipped) {
++			unsigned long block_offset = *pos & (block_size - 1);
++			unsigned bytes_skipped =
++				(blocks_skipped << block_bits) - block_offset;
++
++			*pos += bytes_skipped;
++			poff += bytes_skipped;
++			plen -= bytes_skipped;
+ 		}
++		first = i;
  
+ 		/* truncate len if we find any trailing uptodate block(s) */
+ 		while (++i <= last) {
 -- 
 2.51.0
 
