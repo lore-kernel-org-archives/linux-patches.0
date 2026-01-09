@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F8D35CBC5;
-	Fri,  9 Jan 2026 12:51:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F0435CBB4;
+	Fri,  9 Jan 2026 12:51:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767963110; cv=none; b=cLYjtfeb62vp8RTHCBeydP1asgQlkeWhlsfwk9KIK6m8cprGN/0qvMrM0DDkvGMr1GWF+MPVmKOtVhJ3CGvS1rMImPpcoWfzTMNyVPZfoZeY24Oin+PN89a4NqBt3NQhCwS1MBRxxTRkhO7X3gS859x6HvNO9pl/MxZ9dHlcXTQ=
+	t=1767963113; cv=none; b=a9am0oKKCa4VyYMMGmJKj4BzwK51y+SaGyoGMmw3Vsr6guk2NARVcVVnPo1QPWt5GNUrY2Rfl0Tme9knaX5FopdFGmMHynk4UZcMy5hIz+OdOZByVnxdDzxDzItVOEQGiyEgqwEPK1Fo4BINfAmzMgGtuMi/T90Oayi4h3D8YLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767963110; c=relaxed/simple;
-	bh=MSNsjMik/MI8ige1E6rS8cj8h025Fohv7gMEKU2fXGI=;
+	s=arc-20240116; t=1767963113; c=relaxed/simple;
+	bh=MKzxBzko7SSpch+PpsKGaKdPwfugIiBKz1npz2dx1QM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UfTY28GxkbdQz0irRC3yCB1oEfzVHXEh4IYOlIUd1FtlMkEKtSsX3zL1SRjjdmhELLfa9mryJB3f+Au/zcciF12ykigQmaQ9pN6j2+VI1MgGKTvjixZWv+Zh/92K8PQSyyv3ChPBuohaFQRy+mr0ikNnx6/4r3si91M7M8rNe/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DH2X8mA5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uJhZOrBO6jeMGiFCtcza0nMmINc/qAPrlXQ3mqjc5rUUEXxq5h65VvfNbtJpmfHSemXjtN4a4v2Bo9Hf5MouqPBY4YXs6ruuc9CkpBaqZpL2Zqqc2Rcda6AMzfCsOlIOfxuQZ/Aoatw65uJZfb62Pfkia6SiRRszQJxcAMzGwpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qi6H5WcL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DH2X8mA5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 372CEC19421;
-	Fri,  9 Jan 2026 12:51:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qi6H5WcL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 113A9C16AAE;
+	Fri,  9 Jan 2026 12:51:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767963110;
-	bh=MSNsjMik/MI8ige1E6rS8cj8h025Fohv7gMEKU2fXGI=;
+	s=korg; t=1767963113;
+	bh=MKzxBzko7SSpch+PpsKGaKdPwfugIiBKz1npz2dx1QM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DH2X8mA563fAcPEIWB6nY4+gYn6oJCUNxSEOIZkTr/u6YHr8lWkla1r9KvNoOPL6i
-	 XQlYpWdTcJ+mPCstuFn1u1AFBPHvSo3UMhn58sCOOVKuRfRpXUODQ7E4CaPRwNSLsd
-	 VDq9xNXTMkJfeSjQAsR6zKS9GYNlVRSUyq3Vhha4=
+	b=qi6H5WcLlOvmYyhJXOPY5hliFNEI7eu2eCzu2m42xjm0cylmaA8AAvqlC+1PeM90s
+	 tLu1jHJbEyuAIyQ36dQJ6g/qEwX2/97ocxJW6VWYeUgy1ECgaBwJYnpWmSVTZJD1yT
+	 W1+S5g1NNTDaYynxCYwRrh6VjbfjW/QJFTyKz5Mo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Joerg Roedel <jroedel@suse.de>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 601/634] iommu/arm-smmu: Convert to platform remove callback returning void
-Date: Fri,  9 Jan 2026 12:44:39 +0100
-Message-ID: <20260109112140.240811165@linuxfoundation.org>
+Subject: [PATCH 6.1 602/634] iommu/qcom: Use the asid read from device-tree if specified
+Date: Fri,  9 Jan 2026 12:44:40 +0100
+Message-ID: <20260109112140.279466614@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -45,123 +47,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 62565a77c2323d32f2be737455729ac7d3efe6ad ]
+[ Upstream commit fcf226f1f7083cba76af47bf8dd764b68b149cd2 ]
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is (mostly) ignored
-and this typically results in resource leaks. To improve here there is a
-quest to make the remove callback return void. In the first step of this
-quest all drivers are converted to .remove_new() which already returns
-void.
+As specified in this driver, the context banks are 0x1000 apart but
+on some SoCs the context number does not necessarily match this
+logic, hence we end up using the wrong ASID: keeping in mind that
+this IOMMU implementation relies heavily on SCM (TZ) calls, it is
+mandatory that we communicate the right context number.
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+Since this is all about how context banks are mapped in firmware,
+which may be board dependent (as a different firmware version may
+eventually change the expected context bank numbers), introduce a
+new property "qcom,ctx-asid": when found, the ASID will be forced
+as read from the devicetree.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20230321084125.337021-5-u.kleine-koenig@pengutronix.de
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+When "qcom,ctx-asid" is not found, this driver retains the previous
+behavior as to avoid breaking older devicetrees or systems that do
+not require forcing ASID numbers.
+
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+[Marijn: Rebased over next-20221111]
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230622092742.74819-3-angelogioacchino.delregno@collabora.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Stable-dep-of: 6a3908ce56e6 ("iommu/qcom: fix device leak on of_xlate()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu.c   |    6 ++----
- drivers/iommu/arm/arm-smmu/qcom_iommu.c |   12 ++++--------
- 2 files changed, 6 insertions(+), 12 deletions(-)
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c |   18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
---- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-@@ -2225,7 +2225,7 @@ static void arm_smmu_device_shutdown(str
- 	clk_bulk_unprepare(smmu->num_clks, smmu->clks);
- }
- 
--static int arm_smmu_device_remove(struct platform_device *pdev)
-+static void arm_smmu_device_remove(struct platform_device *pdev)
- {
- 	struct arm_smmu_device *smmu = platform_get_drvdata(pdev);
- 
-@@ -2233,8 +2233,6 @@ static int arm_smmu_device_remove(struct
- 	iommu_device_sysfs_remove(&smmu->iommu);
- 
- 	arm_smmu_device_shutdown(pdev);
--
--	return 0;
- }
- 
- static int __maybe_unused arm_smmu_runtime_resume(struct device *dev)
-@@ -2310,7 +2308,7 @@ static struct platform_driver arm_smmu_d
- 		.suppress_bind_attrs    = true,
- 	},
- 	.probe	= arm_smmu_device_probe,
--	.remove	= arm_smmu_device_remove,
-+	.remove_new = arm_smmu_device_remove,
- 	.shutdown = arm_smmu_device_shutdown,
- };
- module_platform_driver(arm_smmu_driver);
 --- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
 +++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-@@ -715,7 +715,7 @@ static int qcom_iommu_ctx_probe(struct p
- 	return 0;
- }
+@@ -563,7 +563,8 @@ static int qcom_iommu_of_xlate(struct de
+ 	 * index into qcom_iommu->ctxs:
+ 	 */
+ 	if (WARN_ON(asid < 1) ||
+-	    WARN_ON(asid > qcom_iommu->num_ctxs)) {
++	    WARN_ON(asid > qcom_iommu->num_ctxs) ||
++	    WARN_ON(qcom_iommu->ctxs[asid - 1] == NULL)) {
+ 		put_device(&iommu_pdev->dev);
+ 		return -EINVAL;
+ 	}
+@@ -650,7 +651,8 @@ free_mem:
  
--static int qcom_iommu_ctx_remove(struct platform_device *pdev)
-+static void qcom_iommu_ctx_remove(struct platform_device *pdev)
+ static int get_asid(const struct device_node *np)
  {
- 	struct qcom_iommu_dev *qcom_iommu = dev_get_drvdata(pdev->dev.parent);
- 	struct qcom_iommu_ctx *ctx = platform_get_drvdata(pdev);
-@@ -723,8 +723,6 @@ static int qcom_iommu_ctx_remove(struct
- 	platform_set_drvdata(pdev, NULL);
+-	u32 reg;
++	u32 reg, val;
++	int asid;
  
- 	qcom_iommu->ctxs[ctx->asid - 1] = NULL;
--
--	return 0;
+ 	/* read the "reg" property directly to get the relative address
+ 	 * of the context bank, and calculate the asid from that:
+@@ -658,7 +660,17 @@ static int get_asid(const struct device_
+ 	if (of_property_read_u32_index(np, "reg", 0, &reg))
+ 		return -ENODEV;
+ 
+-	return reg / 0x1000;      /* context banks are 0x1000 apart */
++	/*
++	 * Context banks are 0x1000 apart but, in some cases, the ASID
++	 * number doesn't match to this logic and needs to be passed
++	 * from the DT configuration explicitly.
++	 */
++	if (!of_property_read_u32(np, "qcom,ctx-asid", &val))
++		asid = val;
++	else
++		asid = reg / 0x1000;
++
++	return asid;
  }
  
- static const struct of_device_id ctx_of_match[] = {
-@@ -739,7 +737,7 @@ static struct platform_driver qcom_iommu
- 		.of_match_table	= ctx_of_match,
- 	},
- 	.probe	= qcom_iommu_ctx_probe,
--	.remove = qcom_iommu_ctx_remove,
-+	.remove_new = qcom_iommu_ctx_remove,
- };
- 
- static bool qcom_iommu_has_secure_context(struct qcom_iommu_dev *qcom_iommu)
-@@ -857,7 +855,7 @@ err_pm_disable:
- 	return ret;
- }
- 
--static int qcom_iommu_device_remove(struct platform_device *pdev)
-+static void qcom_iommu_device_remove(struct platform_device *pdev)
- {
- 	struct qcom_iommu_dev *qcom_iommu = platform_get_drvdata(pdev);
- 
-@@ -865,8 +863,6 @@ static int qcom_iommu_device_remove(stru
- 	platform_set_drvdata(pdev, NULL);
- 	iommu_device_sysfs_remove(&qcom_iommu->iommu);
- 	iommu_device_unregister(&qcom_iommu->iommu);
--
--	return 0;
- }
- 
- static int __maybe_unused qcom_iommu_resume(struct device *dev)
-@@ -903,7 +899,7 @@ static struct platform_driver qcom_iommu
- 		.pm		= &qcom_iommu_pm_ops,
- 	},
- 	.probe	= qcom_iommu_device_probe,
--	.remove	= qcom_iommu_device_remove,
-+	.remove_new = qcom_iommu_device_remove,
- };
- 
- static int __init qcom_iommu_init(void)
+ static int qcom_iommu_ctx_probe(struct platform_device *pdev)
 
 
