@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A28833C53A;
-	Fri,  9 Jan 2026 12:34:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72DA833B6E8;
+	Fri,  9 Jan 2026 12:34:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962046; cv=none; b=rRhQuZkpiCACYP+Ag7sPJckwYK5N5j8yttRVj/oL6PXbvw05hcdM2BEX4odJM25lCO+64jmTQiI8P5dqriMqVa9fqOs02+wMKSvHo1kPNEfIv3PMsEIQV6ZA+tkRqZlJXyumb18MHGw5AIeczld0F1RF5Ef1GNnqeHEHmC9L8yY=
+	t=1767962049; cv=none; b=P29+gmk+Qr0YVpRdmxaCelKFk6BcoqZRuTy4GWEDMUAM0Bdkoo+Pqwz7qNxoWh0zQp/jtpUoJeQSHljWmsh5yKQLOIJuHNizcujPQHZ31i1hxu9Gi8clUeu/jUAV/VGTxKcl9abW98PxjHCLgCIH9rCTXXyI/zkLXZ4EuKgALWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962046; c=relaxed/simple;
-	bh=dMFmX7MtSQY7JG1TSWUstlM4+ar6xdtivTD1Pqo4bac=;
+	s=arc-20240116; t=1767962049; c=relaxed/simple;
+	bh=8e/HEqs7/WHWCfme1v/QvmJsR6mEUYkL4oTuKTkTt0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hEuSCtSSNfng8DeQ5FI3kqGm6BRQqJnPwljXPAUInyBMUSsp+TmoS+WUkRd54XWbjBdSOcqxJTWYYPPXsjNqtHZRbnSWnT4+s4m4KiUa+atLvo5D+J+I7bpnj/RcFB4dm3eGzbZU4VxRzCmTzWxA2/D23Yk2duvV4zvcbJUaR3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ma0exD4K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gNC4zE8yw4oy4zGLpKr33QZuWiXZAi8x5CU8xSom46lmQmZdnljddRqxt5p/T58IvUFxPeKnnejkRYttl0OhOQkpdl4zwW1m239zPfr1T8tDn0zwclNYs3+6t/Hv6zYPT9Dx+bSZu2Xgdg7hGbJHJ7Gd2FIvG7ZIYTTK/DyTnK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qjBNYn7x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ma0exD4K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 245D9C4CEF1;
-	Fri,  9 Jan 2026 12:34:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qjBNYn7x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3CD0C4CEF1;
+	Fri,  9 Jan 2026 12:34:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962046;
-	bh=dMFmX7MtSQY7JG1TSWUstlM4+ar6xdtivTD1Pqo4bac=;
+	s=korg; t=1767962049;
+	bh=8e/HEqs7/WHWCfme1v/QvmJsR6mEUYkL4oTuKTkTt0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ma0exD4KElykSs+1E5zdLG5uihEngfzAFiqDBw6JFOixUOInC8ftfQ5Soa8/i9v73
-	 75y4rBppztmT8lWJc3/oOmjMeubEEinD/aqqKm26UzahWdnQ3GReD6cZYHMCjTEwCx
-	 koKufi2hkbpsSqXWuTEC6DavguJ94Am2aLWfIwg8=
+	b=qjBNYn7xjA00S4F+NltWfGqLM8HA0ol7iWX+cgGvhlnZvCd4Rae7rnbLAL5Q9kWup
+	 DWSO23LzcDjeWyHue/+mF1Ze778mfln+Entmz/zJxBZ8Dj+tWsC1x/V/dlhgA+Fccc
+	 revBSOdTFJ716WbcB14NlHzNF2AxNLZybiWBRa2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+eadd98df8bceb15d7fed@syzkaller.appspotmail.com,
-	Qu Wenruo <wqu@suse.com>,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	David Sterba <dsterba@suse.com>,
+	syzkaller <syzkaller@googlegroups.com>,
+	George Kennedy <george.kennedy@oracle.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 227/634] btrfs: fix memory leak of fs_devices in degraded seed device path
-Date: Fri,  9 Jan 2026 12:38:25 +0100
-Message-ID: <20260109112125.972286489@linuxfoundation.org>
+Subject: [PATCH 6.1 228/634] perf/x86/amd: Check event before enable to avoid GPF
+Date: Fri,  9 Jan 2026 12:38:26 +0100
+Message-ID: <20260109112126.009563977@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -53,48 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: George Kennedy <george.kennedy@oracle.com>
 
-[ Upstream commit b57f2ddd28737db6ff0e9da8467f0ab9d707e997 ]
+[ Upstream commit 866cf36bfee4fba6a492d2dcc5133f857e3446b0 ]
 
-In open_seed_devices(), when find_fsid() fails and we're in DEGRADED
-mode, a new fs_devices is allocated via alloc_fs_devices() but is never
-added to the seed_list before returning. This contrasts with the normal
-path where fs_devices is properly added via list_add().
+On AMD machines cpuc->events[idx] can become NULL in a subtle race
+condition with NMI->throttle->x86_pmu_stop().
 
-If any error occurs later in read_one_dev() or btrfs_read_chunk_tree(),
-the cleanup code iterates seed_list to free seed devices, but this
-orphaned fs_devices is never found and never freed, causing a memory
-leak. Any devices allocated via add_missing_dev() and attached to this
-fs_devices are also leaked.
+Check event for NULL in amd_pmu_enable_all() before enable to avoid a GPF.
+This appears to be an AMD only issue.
 
-Fix this by adding the newly allocated fs_devices to seed_list in the
-degraded path, consistent with the normal path.
+Syzkaller reported a GPF in amd_pmu_enable_all.
 
-Fixes: 5f37583569442 ("Btrfs: move the missing device to its own fs device list")
-Reported-by: syzbot+eadd98df8bceb15d7fed@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=eadd98df8bceb15d7fed
-Tested-by: syzbot+eadd98df8bceb15d7fed@syzkaller.appspotmail.com
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+INFO: NMI handler (perf_event_nmi_handler) took too long to run: 13.143
+    msecs
+Oops: general protection fault, probably for non-canonical address
+    0xdffffc0000000034: 0000  PREEMPT SMP KASAN NOPTI
+KASAN: null-ptr-deref in range [0x00000000000001a0-0x00000000000001a7]
+CPU: 0 UID: 0 PID: 328415 Comm: repro_36674776 Not tainted 6.12.0-rc1-syzk
+RIP: 0010:x86_pmu_enable_event (arch/x86/events/perf_event.h:1195
+    arch/x86/events/core.c:1430)
+RSP: 0018:ffff888118009d60 EFLAGS: 00010012
+RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 0000000000000000
+RDX: 0000000000000034 RSI: 0000000000000000 RDI: 00000000000001a0
+RBP: 0000000000000001 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000000 R12: 0000000000000002
+R13: ffff88811802a440 R14: ffff88811802a240 R15: ffff8881132d8601
+FS:  00007f097dfaa700(0000) GS:ffff888118000000(0000) GS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00000000200001c0 CR3: 0000000103d56000 CR4: 00000000000006f0
+Call Trace:
+ <IRQ>
+amd_pmu_enable_all (arch/x86/events/amd/core.c:760 (discriminator 2))
+x86_pmu_enable (arch/x86/events/core.c:1360)
+event_sched_out (kernel/events/core.c:1191 kernel/events/core.c:1186
+    kernel/events/core.c:2346)
+__perf_remove_from_context (kernel/events/core.c:2435)
+event_function (kernel/events/core.c:259)
+remote_function (kernel/events/core.c:92 (discriminator 1)
+    kernel/events/core.c:72 (discriminator 1))
+__flush_smp_call_function_queue (./arch/x86/include/asm/jump_label.h:27
+    ./include/linux/jump_label.h:207 ./include/trace/events/csd.h:64
+    kernel/smp.c:135 kernel/smp.c:540)
+__sysvec_call_function_single (./arch/x86/include/asm/jump_label.h:27
+    ./include/linux/jump_label.h:207
+    ./arch/x86/include/asm/trace/irq_vectors.h:99 arch/x86/kernel/smp.c:272)
+sysvec_call_function_single (arch/x86/kernel/smp.c:266 (discriminator 47)
+    arch/x86/kernel/smp.c:266 (discriminator 47))
+ </IRQ>
+
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: George Kennedy <george.kennedy@oracle.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/volumes.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/events/amd/core.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
-index 628238493167f..366cf2e8c51cb 100644
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -7416,6 +7416,7 @@ static struct btrfs_fs_devices *open_seed_devices(struct btrfs_fs_info *fs_info,
+diff --git a/arch/x86/events/amd/core.c b/arch/x86/events/amd/core.c
+index 1282f1a702139..5a6ef45dc9b68 100644
+--- a/arch/x86/events/amd/core.c
++++ b/arch/x86/events/amd/core.c
+@@ -731,7 +731,12 @@ static void amd_pmu_enable_all(int added)
+ 		if (!test_bit(idx, cpuc->active_mask))
+ 			continue;
  
- 		fs_devices->seeding = true;
- 		fs_devices->opened = 1;
-+		list_add(&fs_devices->seed_list, &fs_info->fs_devices->seed_list);
- 		return fs_devices;
+-		amd_pmu_enable_event(cpuc->events[idx]);
++		/*
++		 * FIXME: cpuc->events[idx] can become NULL in a subtle race
++		 * condition with NMI->throttle->x86_pmu_stop().
++		 */
++		if (cpuc->events[idx])
++			amd_pmu_enable_event(cpuc->events[idx]);
  	}
+ }
  
 -- 
 2.51.0
