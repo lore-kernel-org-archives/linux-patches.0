@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9897130FF1D;
-	Fri,  9 Jan 2026 11:51:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D96033290A;
+	Fri,  9 Jan 2026 11:51:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959485; cv=none; b=JRuD3VmXGPqGSAWGctdpXusj6mIHwc2qJhuwyWcgjMyPo1SHthO9ef61j8W9X28cCOwrmSzdRktg0yFanANIEQl6io9tNXD/GWiF6iZicuUmGKhiW2pof1YtZQU0sEFIgMd4jAYUR/u9+RBHwQNIcZOr3Nf5HibqPM5Xhd0ad1w=
+	t=1767959488; cv=none; b=CSXAiTFrUDw69/c4Kxa1ApBHEBrwDMLK6V6j4xmuTCYhN6cj0TA8oXn5NxuIhzM8db8V3gIzw+mfCj1zJmdEo72lJCCaOaUB36PPPHmeg11Ti3LoENzSQv5AAJFKiFel5wYhUDsIsQxiQMsOg3kw+7lzLfg/KCXHKB7Wy89WTDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959485; c=relaxed/simple;
-	bh=EykewuUKMRWAm6WBNt2KNViLwW1TH2s/npV9V4ObOcI=;
+	s=arc-20240116; t=1767959488; c=relaxed/simple;
+	bh=QqSbUpOCU7XrgJgkrz7sUjd6TW7eikbUKhx1KvFTFR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lfC9qXzOKGpuTvtTtlzrDXWDt3claCaaXmXTZCKSPQfB/s5woU2jX1tKlRIn1hMKdU0L+j3m7zmDudOvhUg8IJZgxCUlfRYqBDtQVp2VhgR4miUsLUBmsUs3Hkhs8VkLDMQOFsnAiZEow2ShtSMMaWM9mnyZmsooR/5rtp6TzVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H99a/p4h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cwm0MiBjm+wTvzm4D/MyHS0M6GrT1463gjjm9u8DVYuhX2E69+nym7tGtrOyyDg43fVDHoVpUZ/UVTjHt13hSVmqF0MQIkvIUn7O/OzKbiXGIu+6GlNxsdCinoYJImCRtDpNwrSARyuaEHMvbWBiCztpJcxZM51XTpTWrOXrYYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b8EMcoYH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H99a/p4h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26C56C4CEF1;
-	Fri,  9 Jan 2026 11:51:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b8EMcoYH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA4E5C16AAE;
+	Fri,  9 Jan 2026 11:51:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959485;
-	bh=EykewuUKMRWAm6WBNt2KNViLwW1TH2s/npV9V4ObOcI=;
+	s=korg; t=1767959488;
+	bh=QqSbUpOCU7XrgJgkrz7sUjd6TW7eikbUKhx1KvFTFR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H99a/p4hkR8X9auoCgTME629lhNhgZHdXUqnppnlKb3aRsLIHLeA0XYVsLLOovYjL
-	 7UHQZZELjCl+ddYNq5xC3f2BTepUy6F24G4MX/4GOsqEabBsKPg501ZTQxtxIRBywh
-	 urZCln+xtDD4Z5DMef6NVV3pvIrtTNCT5XGFDhz4=
+	b=b8EMcoYH7We17XyDO8boa6Seg3xpMoAOjqy+WVTE2jiA2KE7NcwQgSzlyHVW8K00Q
+	 hShWr9bRG69JF05EcaUsaTOpM1/5qUAbyTxGtIRcwIzJZ+dSaG/EuD4lLW3gcwfDS8
+	 zHmP3sdp0Pb/oqzEp1/H5Dy166qSa6No+PSFSdCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Franzki <ifranzki@linux.ibm.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 067/737] irqchip/qcom-irq-combiner: Fix section mismatch
-Date: Fri,  9 Jan 2026 12:33:26 +0100
-Message-ID: <20260109112136.518733842@linuxfoundation.org>
+Subject: [PATCH 6.6 068/737] crypto: authenc - Correctly pass EINPROGRESS back up to the caller
+Date: Fri,  9 Jan 2026 12:33:27 +0100
+Message-ID: <20260109112136.555883762@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,34 +52,200 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 9b685058ca936752285c5520d351b828312ac965 ]
+[ Upstream commit 96feb73def02d175850daa0e7c2c90c876681b5c ]
 
-Platform drivers can be probed after their init sections have been
-discarded so the probe callback must not live in init.
+When authenc is invoked with MAY_BACKLOG, it needs to pass EINPROGRESS
+notifications back up to the caller when the underlying algorithm
+returns EBUSY synchronously.
 
-Fixes: f20cc9b00c7b ("irqchip/qcom: Add IRQ combiner driver")
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+However, if the EBUSY comes from the second part of an authenc call,
+i.e., it is asynchronous, both the EBUSY and the subsequent EINPROGRESS
+notification must not be passed to the caller.
+
+Implement this by passing a mask to the function that starts the
+second half of authenc and using it to determine whether EBUSY
+and EINPROGRESS should be passed to the caller.
+
+This was a deficiency in the original implementation of authenc
+because it was not expected to be used with MAY_BACKLOG.
+
+Reported-by: Ingo Franzki <ifranzki@linux.ibm.com>
+Reported-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: 180ce7e81030 ("crypto: authenc - Add EINPROGRESS check")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/qcom-irq-combiner.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ crypto/authenc.c | 75 ++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 50 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/irqchip/qcom-irq-combiner.c b/drivers/irqchip/qcom-irq-combiner.c
-index 18e696dc7f4d6..9308088773be7 100644
---- a/drivers/irqchip/qcom-irq-combiner.c
-+++ b/drivers/irqchip/qcom-irq-combiner.c
-@@ -222,7 +222,7 @@ static int get_registers(struct platform_device *pdev, struct combiner *comb)
- 	return 0;
+diff --git a/crypto/authenc.c b/crypto/authenc.c
+index 3326c7343e867..ebaa035a54f4b 100644
+--- a/crypto/authenc.c
++++ b/crypto/authenc.c
+@@ -39,7 +39,7 @@ struct authenc_request_ctx {
+ 
+ static void authenc_request_complete(struct aead_request *req, int err)
+ {
+-	if (err != -EINPROGRESS)
++	if (err != -EINPROGRESS && err != -EBUSY)
+ 		aead_request_complete(req, err);
  }
  
--static int __init combiner_probe(struct platform_device *pdev)
-+static int combiner_probe(struct platform_device *pdev)
+@@ -109,27 +109,42 @@ static int crypto_authenc_setkey(struct crypto_aead *authenc, const u8 *key,
+ 	return err;
+ }
+ 
+-static void authenc_geniv_ahash_done(void *data, int err)
++static void authenc_geniv_ahash_finish(struct aead_request *req)
  {
- 	struct combiner *combiner;
- 	int nregs;
+-	struct aead_request *req = data;
+ 	struct crypto_aead *authenc = crypto_aead_reqtfm(req);
+ 	struct aead_instance *inst = aead_alg_instance(authenc);
+ 	struct authenc_instance_ctx *ictx = aead_instance_ctx(inst);
+ 	struct authenc_request_ctx *areq_ctx = aead_request_ctx(req);
+ 	struct ahash_request *ahreq = (void *)(areq_ctx->tail + ictx->reqoff);
+ 
+-	if (err)
+-		goto out;
+-
+ 	scatterwalk_map_and_copy(ahreq->result, req->dst,
+ 				 req->assoclen + req->cryptlen,
+ 				 crypto_aead_authsize(authenc), 1);
++}
+ 
+-out:
++static void authenc_geniv_ahash_done(void *data, int err)
++{
++	struct aead_request *req = data;
++
++	if (!err)
++		authenc_geniv_ahash_finish(req);
+ 	aead_request_complete(req, err);
+ }
+ 
+-static int crypto_authenc_genicv(struct aead_request *req, unsigned int flags)
++/*
++ * Used when the ahash request was invoked in the async callback context
++ * of the previous skcipher request.  Eat any EINPROGRESS notifications.
++ */
++static void authenc_geniv_ahash_done2(void *data, int err)
++{
++	struct aead_request *req = data;
++
++	if (!err)
++		authenc_geniv_ahash_finish(req);
++	authenc_request_complete(req, err);
++}
++
++static int crypto_authenc_genicv(struct aead_request *req, unsigned int mask)
+ {
+ 	struct crypto_aead *authenc = crypto_aead_reqtfm(req);
+ 	struct aead_instance *inst = aead_alg_instance(authenc);
+@@ -138,6 +153,7 @@ static int crypto_authenc_genicv(struct aead_request *req, unsigned int flags)
+ 	struct crypto_ahash *auth = ctx->auth;
+ 	struct authenc_request_ctx *areq_ctx = aead_request_ctx(req);
+ 	struct ahash_request *ahreq = (void *)(areq_ctx->tail + ictx->reqoff);
++	unsigned int flags = aead_request_flags(req) & ~mask;
+ 	u8 *hash = areq_ctx->tail;
+ 	int err;
+ 
+@@ -148,7 +164,8 @@ static int crypto_authenc_genicv(struct aead_request *req, unsigned int flags)
+ 	ahash_request_set_crypt(ahreq, req->dst, hash,
+ 				req->assoclen + req->cryptlen);
+ 	ahash_request_set_callback(ahreq, flags,
+-				   authenc_geniv_ahash_done, req);
++				   mask ? authenc_geniv_ahash_done2 :
++					  authenc_geniv_ahash_done, req);
+ 
+ 	err = crypto_ahash_digest(ahreq);
+ 	if (err)
+@@ -164,12 +181,11 @@ static void crypto_authenc_encrypt_done(void *data, int err)
+ {
+ 	struct aead_request *areq = data;
+ 
+-	if (err)
+-		goto out;
+-
+-	err = crypto_authenc_genicv(areq, 0);
+-
+-out:
++	if (err) {
++		aead_request_complete(areq, err);
++		return;
++	}
++	err = crypto_authenc_genicv(areq, CRYPTO_TFM_REQ_MAY_SLEEP);
+ 	authenc_request_complete(areq, err);
+ }
+ 
+@@ -222,11 +238,18 @@ static int crypto_authenc_encrypt(struct aead_request *req)
+ 	if (err)
+ 		return err;
+ 
+-	return crypto_authenc_genicv(req, aead_request_flags(req));
++	return crypto_authenc_genicv(req, 0);
++}
++
++static void authenc_decrypt_tail_done(void *data, int err)
++{
++	struct aead_request *req = data;
++
++	authenc_request_complete(req, err);
+ }
+ 
+ static int crypto_authenc_decrypt_tail(struct aead_request *req,
+-				       unsigned int flags)
++				       unsigned int mask)
+ {
+ 	struct crypto_aead *authenc = crypto_aead_reqtfm(req);
+ 	struct aead_instance *inst = aead_alg_instance(authenc);
+@@ -237,6 +260,7 @@ static int crypto_authenc_decrypt_tail(struct aead_request *req,
+ 	struct skcipher_request *skreq = (void *)(areq_ctx->tail +
+ 						  ictx->reqoff);
+ 	unsigned int authsize = crypto_aead_authsize(authenc);
++	unsigned int flags = aead_request_flags(req) & ~mask;
+ 	u8 *ihash = ahreq->result + authsize;
+ 	struct scatterlist *src, *dst;
+ 
+@@ -253,7 +277,9 @@ static int crypto_authenc_decrypt_tail(struct aead_request *req,
+ 
+ 	skcipher_request_set_tfm(skreq, ctx->enc);
+ 	skcipher_request_set_callback(skreq, flags,
+-				      req->base.complete, req->base.data);
++				      mask ? authenc_decrypt_tail_done :
++					     req->base.complete,
++				      mask ? req : req->base.data);
+ 	skcipher_request_set_crypt(skreq, src, dst,
+ 				   req->cryptlen - authsize, req->iv);
+ 
+@@ -264,12 +290,11 @@ static void authenc_verify_ahash_done(void *data, int err)
+ {
+ 	struct aead_request *req = data;
+ 
+-	if (err)
+-		goto out;
+-
+-	err = crypto_authenc_decrypt_tail(req, 0);
+-
+-out:
++	if (err) {
++		aead_request_complete(req, err);
++		return;
++	}
++	err = crypto_authenc_decrypt_tail(req, CRYPTO_TFM_REQ_MAY_SLEEP);
+ 	authenc_request_complete(req, err);
+ }
+ 
+@@ -299,7 +324,7 @@ static int crypto_authenc_decrypt(struct aead_request *req)
+ 	if (err)
+ 		return err;
+ 
+-	return crypto_authenc_decrypt_tail(req, aead_request_flags(req));
++	return crypto_authenc_decrypt_tail(req, 0);
+ }
+ 
+ static int crypto_authenc_init_tfm(struct crypto_aead *tfm)
 -- 
 2.51.0
 
