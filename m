@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BB02335BCD;
-	Fri,  9 Jan 2026 12:37:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF5DA335BCD;
+	Fri,  9 Jan 2026 12:38:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962279; cv=none; b=hMOfF5RCtp6YASirS05aZTQc9PO+XnHS50EMzABzUy5vv9KuNoiwkO+GgPx1PkIfYMWzOwh+a3HMZDeMyWajrQI4U+mBVYcewiz3NWQ6bdjXqyJXf9IPXRTpAK79bqjmjlyj9TvvbmpGukCHHTZsQqjKd5yfWCluF3pbMWQOeZc=
+	t=1767962282; cv=none; b=Ity7fhQHHadZHi5p6vU7aqYSXBD5IFmf17OKtfw48YfCdP7svgzuYMeX/HcU+tIBIkcHtIvOEAxF94lnH/Ov8bOaFn1WVhhIYrUm+Rasz1hcr8V06wP5qGj1qZ6CkJqu91ra2eLvy3pcJIUeGksPASirpfnEgFVdALWdMuSYliw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962279; c=relaxed/simple;
-	bh=9/VUGkKWR+dSWCWqgzktkJ4PxzlQn43QIa0VsZTIHME=;
+	s=arc-20240116; t=1767962282; c=relaxed/simple;
+	bh=c8xj2xrnAxnwWG5GiawebGrS/gqScoX5i6eM1SG8ekg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KjxV1sglUFR/N2CnzqaiMe1bYnh39R2AVYviVE+MkIyq6PdcVjH14pW2ocF6izZYMOKzOQQmNowLPfvSMzkkyuM/jYLAJgkS6WrrXr3p4+GXy7qAhYkkxY1AlMNWoBIRMLmT1AmzFgLgzjCI+cqy2Kv2u9j1zlWRPYz6uBu6Htk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I2p9b/L2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nj7bdir/dCl0zCWVnTeIPHcB0zb+TVYmDvyVo0Dg9ov8otpKna7iTT5cqfGH67Hvb+DcKVszsnbuAilylX8PFbG7ehlaMiqfbScbLGlsBdpDDm4CRaHQwscw2p1QTNgmDSoovANUUPZhF5LwpNO9+Z7RQaldzxzseJrmBKRBA7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N1dZAqoe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I2p9b/L2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DC26C4CEF1;
-	Fri,  9 Jan 2026 12:37:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N1dZAqoe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 776A0C16AAE;
+	Fri,  9 Jan 2026 12:38:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962279;
-	bh=9/VUGkKWR+dSWCWqgzktkJ4PxzlQn43QIa0VsZTIHME=;
+	s=korg; t=1767962281;
+	bh=c8xj2xrnAxnwWG5GiawebGrS/gqScoX5i6eM1SG8ekg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I2p9b/L2+TAm8OXI13c0LjzpEuwoCw61OgHT298fm0946HAPjSlK2KF/7kEKJbOcR
-	 zNhYiNhBOetr9F20sSe70lC6l85sBwsJdJP7BTJiElu0wSUt/5X1PEaTk/0wQ//J9N
-	 n2ZlVL7y1SJqo2xv5qzDw1ummJQLXmjPk81h5Yu0=
+	b=N1dZAqoeUE3IX0e9jCCdw+5/iCGs3XaeUcjddGVzkwNCPETaL0hRbgl0xqXf5usri
+	 PMBmoU2ZvHj4iexyPLILenxoeqva5WlzSkbC8ACYV/OgtnSSp9P9luDDdMC5G9uGI1
+	 q8pG+g9Tqo4hhjXmsMMke17/45zV75OFHZFhpWw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+205ef33a3b636b4181fb@syzkaller.appspotmail.com,
-	Lizhi Xu <lizhi.xu@windriver.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 308/634] usbip: Fix locking bug in RT-enabled kernels
-Date: Fri,  9 Jan 2026 12:39:46 +0100
-Message-ID: <20260109112129.123265517@linuxfoundation.org>
+Subject: [PATCH 6.1 309/634] usb: typec: ucsi: Handle incorrect num_connectors capability
+Date: Fri,  9 Jan 2026 12:39:47 +0100
+Message-ID: <20260109112129.159751952@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,62 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Xu <lizhi.xu@windriver.com>
+From: Mark Pearson <mpearson-lenovo@squebb.ca>
 
-[ Upstream commit 09bf21bf5249880f62fe759b53b14b4b52900c6c ]
+[ Upstream commit 30cd2cb1abf4c4acdb1ddb468c946f68939819fb ]
 
-Interrupts are disabled before entering usb_hcd_giveback_urb().
-A spinlock_t becomes a sleeping lock on PREEMPT_RT, so it cannot be
-acquired with disabled interrupts.
+The UCSI spec states that the num_connectors field is 7 bits, and the
+8th bit is reserved and should be set to zero.
+Some buggy FW has been known to set this bit, and it can lead to a
+system not booting.
+Flag that the FW is not behaving correctly, and auto-fix the value
+so that the system boots correctly.
 
-Save the interrupt status and restore it after usb_hcd_giveback_urb().
+Found on Lenovo P1 G8 during Linux enablement program. The FW will
+be fixed, but seemed worth addressing in case it hit platforms that
+aren't officially Linux supported.
 
-syz reported:
-BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
-Call Trace:
- dump_stack_lvl+0x189/0x250 lib/dump_stack.c:120
- rt_spin_lock+0xc7/0x2c0 kernel/locking/spinlock_rt.c:57
- spin_lock include/linux/spinlock_rt.h:44 [inline]
- mon_bus_complete drivers/usb/mon/mon_main.c:134 [inline]
- mon_complete+0x5c/0x200 drivers/usb/mon/mon_main.c:147
- usbmon_urb_complete include/linux/usb/hcd.h:738 [inline]
- __usb_hcd_giveback_urb+0x254/0x5e0 drivers/usb/core/hcd.c:1647
- vhci_urb_enqueue+0xb4f/0xe70 drivers/usb/usbip/vhci_hcd.c:818
-
-Reported-by: syzbot+205ef33a3b636b4181fb@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=205ef33a3b636b4181fb
-Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
-Acked-by: Shuah Khan <skhan@linuxfoundation.org>
-Link: https://lore.kernel.org/r/20250916014143.1439759-1-lizhi.xu@windriver.com
+Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250821185319.2585023-1-mpearson-lenovo@squebb.ca
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/usbip/vhci_hcd.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/usb/typec/ucsi/ucsi.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/usb/usbip/vhci_hcd.c b/drivers/usb/usbip/vhci_hcd.c
-index e3c8483d7ba4..cfe51672ca41 100644
---- a/drivers/usb/usbip/vhci_hcd.c
-+++ b/drivers/usb/usbip/vhci_hcd.c
-@@ -830,15 +830,15 @@ static int vhci_urb_enqueue(struct usb_hcd *hcd, struct urb *urb, gfp_t mem_flag
- no_need_xmit:
- 	usb_hcd_unlink_urb_from_ep(hcd, urb);
- no_need_unlink:
--	spin_unlock_irqrestore(&vhci->lock, flags);
- 	if (!ret) {
- 		/* usb_hcd_giveback_urb() should be called with
- 		 * irqs disabled
- 		 */
--		local_irq_disable();
-+		spin_unlock(&vhci->lock);
- 		usb_hcd_giveback_urb(hcd, urb, urb->status);
--		local_irq_enable();
-+		spin_lock(&vhci->lock);
+diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
+index c26b5aae11fb..5baa48213f1e 100644
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -1276,6 +1276,12 @@ static int ucsi_init(struct ucsi *ucsi)
+ 		ret = -ENODEV;
+ 		goto err_reset;
  	}
-+	spin_unlock_irqrestore(&vhci->lock, flags);
- 	return ret;
- }
++	/* Check if reserved bit set. This is out of spec but happens in buggy FW */
++	if (ucsi->cap.num_connectors & 0x80) {
++		dev_warn(ucsi->dev, "UCSI: Invalid num_connectors %d. Likely buggy FW\n",
++			 ucsi->cap.num_connectors);
++		ucsi->cap.num_connectors &= 0x7f; // clear bit and carry on
++	}
  
+ 	/* Allocate the connectors. Released in ucsi_unregister() */
+ 	connector = kcalloc(ucsi->cap.num_connectors + 1, sizeof(*connector), GFP_KERNEL);
 -- 
 2.51.0
 
