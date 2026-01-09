@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B041946C8;
-	Fri,  9 Jan 2026 12:12:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4FB320CB6;
+	Fri,  9 Jan 2026 12:13:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960780; cv=none; b=UQms4tyhOkgqEtmaTSZZkTfxVFjLzhdP+ikSpAWf1NMYgxbWIVX3pR2/B13l6ut2WKym9V3GqnXetsNgODk1o6565OQo9i9NMJPG7LkJVjegLqPaGeuDRH3OjE426PcSJ6IJU0HNpHKPmaKLab5SZfdIKF/ZNWYGPDWu01YjKto=
+	t=1767960783; cv=none; b=ZqNAJ244Vu4RHVWZUceASSscWNaa1M92p6Ssrelr3MJZpFbgsVXYpgdbVKqxx9kxSF2o6owFcUe9veZ0sElwVezpDJ6KxPhMTqzZTXo2CV8OVEGWj4PTQ3oRT4osxIFYOG5zBSLAVf6JBC3M7JEn532hkKIucvmZ0iqtTj82aRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960780; c=relaxed/simple;
-	bh=4MnewyECCgJ5gZqsaKuZf+bfLX/yOxxDaW66QDT7deY=;
+	s=arc-20240116; t=1767960783; c=relaxed/simple;
+	bh=46w9UfnD2IK+oqzecefTyx5Px8G+ozJ1+rpjf58ODZc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WAdZ7DkbFro+JC86IccfbesB9DDLMnpkA/1LvpAyz0+Aykd+36quedProe5n0NpHtROFinWepQ+Bc+ADip1ON8DFlddfKYCth6vfmKBQSDHifuy4Cx7nEHOa1kVAkI8ytK/T5vucfxNri3Doeor5N2jQtlkqaFIJ/eViTvCq+ZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YV8diOAS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZdMLR2G8YkEC8jm3bZqG5PbIfZ2fx6tt62NFsdDFEjldraS6X7rKxFRBe7Y/wcZIEeJfmirluyOi0SVV2s/Zqo4TqmmJRskYXUqeVKH/7w4MtaIcub3ltbrq03EIecM1sX0a8bNS4TpL/if7Ao/zj7N+aP3kSdG6CHexvAby6iU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EHz170S0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YV8diOAS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E1A3C4CEF1;
-	Fri,  9 Jan 2026 12:12:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EHz170S0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C634C4CEF1;
+	Fri,  9 Jan 2026 12:13:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960779;
-	bh=4MnewyECCgJ5gZqsaKuZf+bfLX/yOxxDaW66QDT7deY=;
+	s=korg; t=1767960782;
+	bh=46w9UfnD2IK+oqzecefTyx5Px8G+ozJ1+rpjf58ODZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YV8diOASnCjo9ElHv45ZHl+3nOLEpe4iw6i9MOFU/qfh1NXsYBJLiF95m45a3Vhuo
-	 R3ruvmZctk6BxfnU8gh+S+mu6RU2oP3nPIkZsmEmcGU3FRqg/vIKwXZOhzSWRlUhem
-	 Fgiowt/PeyQg7Kxws10sVGwrLmV6BgLyDxJ4N02E=
+	b=EHz170S0ROxsJVT5IbTUd//nnkHl1CO7OyJshYvFmU1IFhx2caHaMag7XxfLTPlGQ
+	 blImwAHyzwgT0OUlK6gumgTOYysSdAxtF3Scd1wOY48GLHICNKAQWrCc0UpBEKe/62
+	 UQuSrFYGVoDCONlZ/MwFUIYh5Q2fEuNu6yAlx9OE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 522/737] net: bridge: Describe @tunnel_hash member in net_bridge_vlan_group struct
-Date: Fri,  9 Jan 2026 12:41:01 +0100
-Message-ID: <20260109112153.636627114@linuxfoundation.org>
+Subject: [PATCH 6.6 523/737] platform/x86: hp-bioscfg: Fix out-of-bounds array access in ACPI package parsing
+Date: Fri,  9 Jan 2026 12:41:02 +0100
+Message-ID: <20260109112153.674060392@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -47,45 +46,130 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bagas Sanjaya <bagasdotme@gmail.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit f79f9b7ace1713e4b83888c385f5f55519dfb687 ]
+[ Upstream commit e44c42c830b7ab36e3a3a86321c619f24def5206 ]
 
-Sphinx reports kernel-doc warning:
+The hp_populate_*_elements_from_package() functions in the hp-bioscfg
+driver contain out-of-bounds array access vulnerabilities.
 
-WARNING: ./net/bridge/br_private.h:267 struct member 'tunnel_hash' not described in 'net_bridge_vlan_group'
+These functions parse ACPI packages into internal data structures using
+a for loop with index variable 'elem' that iterates through
+enum_obj/integer_obj/order_obj/password_obj/string_obj arrays.
 
-Fix it by describing @tunnel_hash member.
+When processing multi-element fields like PREREQUISITES and
+ENUM_POSSIBLE_VALUES, these functions read multiple consecutive array
+elements using expressions like 'enum_obj[elem + reqs]' and
+'enum_obj[elem + pos_values]' within nested loops.
 
-Fixes: efa5356b0d9753 ("bridge: per vlan dst_metadata netlink support")
-Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20251218042936.24175-2-bagasdotme@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The bug is that the bounds check only validated elem, but did not consider
+the additional offset when accessing elem + reqs or elem + pos_values.
+
+The fix changes the bounds check to validate the actual accessed index.
+
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Reported-by: Junrui Luo <moonafterrain@outlook.com>
+Fixes: e6c7b3e15559 ("platform/x86: hp-bioscfg: string-attributes")
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Link: https://patch.msgid.link/SYBPR01MB788173D7DD4EA2CB6383683DAFB0A@SYBPR01MB7881.ausprd01.prod.outlook.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_private.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c       | 4 ++--
+ drivers/platform/x86/hp/hp-bioscfg/int-attributes.c        | 2 +-
+ drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c | 5 +++++
+ drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c  | 5 +++++
+ drivers/platform/x86/hp/hp-bioscfg/string-attributes.c     | 2 +-
+ 5 files changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
-index c8a4e3b39b0e..371a948d29cc 100644
---- a/net/bridge/br_private.h
-+++ b/net/bridge/br_private.h
-@@ -245,6 +245,7 @@ struct net_bridge_vlan {
-  * struct net_bridge_vlan_group
-  *
-  * @vlan_hash: VLAN entry rhashtable
-+ * @tunnel_hash: Hash table to map from tunnel key ID (e.g. VXLAN VNI) to VLAN
-  * @vlan_list: sorted VLAN entry list
-  * @num_vlans: number of total VLAN entries
-  * @pvid: PVID VLAN id
+diff --git a/drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c
+index a2402d31c146..20de4596e301 100644
+--- a/drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c
+@@ -210,7 +210,7 @@ static int hp_populate_enumeration_elements_from_package(union acpi_object *enum
+ 		case PREREQUISITES:
+ 			size = min_t(u32, enum_data->common.prerequisites_size, MAX_PREREQUISITES_SIZE);
+ 			for (reqs = 0; reqs < size; reqs++) {
+-				if (elem >= enum_obj_count) {
++				if (elem + reqs >= enum_obj_count) {
+ 					pr_err("Error enum-objects package is too small\n");
+ 					return -EINVAL;
+ 				}
+@@ -261,7 +261,7 @@ static int hp_populate_enumeration_elements_from_package(union acpi_object *enum
+ 
+ 			for (pos_values = 0; pos_values < size && pos_values < MAX_VALUES_SIZE;
+ 			     pos_values++) {
+-				if (elem >= enum_obj_count) {
++				if (elem + pos_values >= enum_obj_count) {
+ 					pr_err("Error enum-objects package is too small\n");
+ 					return -EINVAL;
+ 				}
+diff --git a/drivers/platform/x86/hp/hp-bioscfg/int-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/int-attributes.c
+index 86b7ac63fec2..875a807ccb89 100644
+--- a/drivers/platform/x86/hp/hp-bioscfg/int-attributes.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/int-attributes.c
+@@ -228,7 +228,7 @@ static int hp_populate_integer_elements_from_package(union acpi_object *integer_
+ 			size = min_t(u32, integer_data->common.prerequisites_size, MAX_PREREQUISITES_SIZE);
+ 
+ 			for (reqs = 0; reqs < size; reqs++) {
+-				if (elem >= integer_obj_count) {
++				if (elem + reqs >= integer_obj_count) {
+ 					pr_err("Error elem-objects package is too small\n");
+ 					return -EINVAL;
+ 				}
+diff --git a/drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c
+index 1ff09dfb7d7e..94a95ee57810 100644
+--- a/drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c
+@@ -220,6 +220,11 @@ static int hp_populate_ordered_list_elements_from_package(union acpi_object *ord
+ 			size = min_t(u32, ordered_list_data->common.prerequisites_size,
+ 				     MAX_PREREQUISITES_SIZE);
+ 			for (reqs = 0; reqs < size; reqs++) {
++				if (elem + reqs >= order_obj_count) {
++					pr_err("Error elem-objects package is too small\n");
++					return -EINVAL;
++				}
++
+ 				ret = hp_convert_hexstr_to_str(order_obj[elem + reqs].string.pointer,
+ 							       order_obj[elem + reqs].string.length,
+ 							       &str_value, &value_len);
+diff --git a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
+index 03d0188804ba..6775a7ca74f5 100644
+--- a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
+@@ -309,6 +309,11 @@ static int hp_populate_password_elements_from_package(union acpi_object *passwor
+ 				     MAX_PREREQUISITES_SIZE);
+ 
+ 			for (reqs = 0; reqs < size; reqs++) {
++				if (elem + reqs >= password_obj_count) {
++					pr_err("Error elem-objects package is too small\n");
++					return -EINVAL;
++				}
++
+ 				ret = hp_convert_hexstr_to_str(password_obj[elem + reqs].string.pointer,
+ 							       password_obj[elem + reqs].string.length,
+ 							       &str_value, &value_len);
+diff --git a/drivers/platform/x86/hp/hp-bioscfg/string-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/string-attributes.c
+index f0c20070094d..5b3eac7f1685 100644
+--- a/drivers/platform/x86/hp/hp-bioscfg/string-attributes.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/string-attributes.c
+@@ -219,7 +219,7 @@ static int hp_populate_string_elements_from_package(union acpi_object *string_ob
+ 				     MAX_PREREQUISITES_SIZE);
+ 
+ 			for (reqs = 0; reqs < size; reqs++) {
+-				if (elem >= string_obj_count) {
++				if (elem + reqs >= string_obj_count) {
+ 					pr_err("Error elem-objects package is too small\n");
+ 					return -EINVAL;
+ 				}
 -- 
 2.51.0
 
