@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA5F26ED41;
-	Fri,  9 Jan 2026 12:21:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5980334C24;
+	Fri,  9 Jan 2026 12:21:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961289; cv=none; b=ZA4Ecl7rtoTW07pjmPSbjN/P7ix1QIcxsVgO9m/PWVT8x0CALsdfEdemGymVYLfCJt2p+Q3gEvYCVXvn47N7qdRONu/stmkK67QTu5HsoAPwDqK2Z7TdwcZqA7VK4jr/rJL1A/1+OtIrWW+CIXxGobhiW0Baj69QDcheFRsn+OY=
+	t=1767961291; cv=none; b=VIe4EfBCskAHvEhazhykS2Gv5NpaP05CxkKLfXv751Aikx/kpaBxNkSC0g3jxh+1cEQgNRE9w7ipUThPch5p2CZwZnLxhNDDNVB/rbri6vJB4z4kURJdBYdG68Ly64tQ8YXxK0qnMA4XcdZBemenX5bjXZE6hBKwYiRXF4/KQmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961289; c=relaxed/simple;
-	bh=XByjpTQOQrDfGNK0pjkmsDk5HOnpQ2f4ZGFMusY8TrE=;
+	s=arc-20240116; t=1767961291; c=relaxed/simple;
+	bh=ptvnAVmTw+R9jvS7SwT7HjcA3IudBNsHTKCJhvQzVnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nrlzGVGhBdN+SIzH/PDqhfP5tP5Ksnf6OeLX9PJ7B3FJAgaAMcMqoCBKcpYAraLA4ADakYkM7VZoSxMb/2Mu+XTBz3g2gfe6/JFk4v9SxxosdBcJNp//WXlYCTFAR7NN5/dAUUi68qGAxfDq2sXYum5LvGS5vmXjVml9bcTipgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nFEgqju8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hm+P7ZtBlgQZnJZy2+uZxq4bcw+ywkXpCfd0tCYBqmsRASmSpFx74bJKjFc6H1xeynaodtAkVw2nMpCLfwS15NKLqnH04nNQY/VrVCiV+84ePwit9yBgvz/z59AyktqrIHmi+dzS9ELb5PashqjKTOh7RtDHQKTf4vxqZmcs9Zg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gR6pfdLE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nFEgqju8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38127C4CEF1;
-	Fri,  9 Jan 2026 12:21:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gR6pfdLE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C9BDC4CEF1;
+	Fri,  9 Jan 2026 12:21:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961288;
-	bh=XByjpTQOQrDfGNK0pjkmsDk5HOnpQ2f4ZGFMusY8TrE=;
+	s=korg; t=1767961291;
+	bh=ptvnAVmTw+R9jvS7SwT7HjcA3IudBNsHTKCJhvQzVnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nFEgqju8RLDxOoXrEPWLBmO0vSlQm2JjG1EHd55mAwAZ1d+WeKUgqbBYYUwNDP+19
-	 fouf62Tyjbkxqn8+MLe1Cjpu0j3NPiMUykomNFU5peBGDcPUseO89YV9r8Opa5ODaJ
-	 rEx7d6BSu1m6e23oBx/wG6/DzEqfYnu+3BXc2+oc=
+	b=gR6pfdLEdIZ9rs1Jrg2yFvZAqPwC2WTSBPKtzpEbfCoLn2kclPcw5utYv75xR+7CB
+	 drbaF1z6RxCepMS3HbWmIGbA5zkEyHjTkJ3Oo8Ple7S+4bZHKvgkEZutuwpcUf0hL0
+	 dTMo9l20j9V6FKljOCUta/0IgpoCxabPKqfv6f0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Qian <ming.qian@oss.nxp.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 700/737] media: amphion: Remove vpu_vb_is_codecconfig
-Date: Fri,  9 Jan 2026 12:43:59 +0100
-Message-ID: <20260109112200.403215832@linuxfoundation.org>
+	Hari Bathini <hbathini@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Aboorva Devarajan <aboorvad@linux.ibm.com>
+Subject: [PATCH 6.6 674/737] powerpc/64s/radix/kfence: map __kfence_pool at page granularity
+Date: Fri,  9 Jan 2026 12:43:33 +0100
+Message-ID: <20260109112159.406549872@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,139 +51,228 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Qian <ming.qian@oss.nxp.com>
+From: Hari Bathini <hbathini@linux.ibm.com>
 
-[ Upstream commit 634c2cd17bd021487c57b95973bddb14be8002ff ]
+commit 353d7a84c214f184d5a6b62acdec8b4424159b7c upstream.
 
-Currently the function vpu_vb_is_codecconfig() always returns 0.
-Delete it and its related code.
+When KFENCE is enabled, total system memory is mapped at page level
+granularity. But in radix MMU mode, ~3GB additional memory is needed
+to map 100GB of system memory at page level granularity when compared
+to using 2MB direct mapping.This is not desired considering KFENCE is
+designed to be enabled in production kernels [1].
 
-Fixes: 3cd084519c6f ("media: amphion: add vpu v4l2 m2m support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Mapping only the memory allocated for KFENCE pool at page granularity is
+sufficient to enable KFENCE support. So, allocate __kfence_pool during
+bootup and map it at page granularity instead of mapping all system
+memory at page granularity.
+
+Without patch:
+  # cat /proc/meminfo
+  MemTotal:       101201920 kB
+
+With patch:
+  # cat /proc/meminfo
+  MemTotal:       104483904 kB
+
+Note that enabling KFENCE at runtime is disabled for radix MMU for now,
+as it depends on the ability to split page table mappings and such APIs
+are not currently implemented for radix MMU.
+
+All kfence_test.c testcases passed with this patch.
+
+[1] https://lore.kernel.org/all/20201103175841.3495947-2-elver@google.com/
+
+Signed-off-by: Hari Bathini <hbathini@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240701130021.578240-1-hbathini@linux.ibm.com
+Cc: Aboorva Devarajan <aboorvad@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/amphion/vpu_malone.c |   23 +++--------------------
- drivers/media/platform/amphion/vpu_v4l2.c   |   10 ----------
- drivers/media/platform/amphion/vpu_v4l2.h   |   10 ----------
- 3 files changed, 3 insertions(+), 40 deletions(-)
+ arch/powerpc/include/asm/kfence.h        |   11 +++-
+ arch/powerpc/mm/book3s64/radix_pgtable.c |   84 +++++++++++++++++++++++++++++--
+ arch/powerpc/mm/init-common.c            |    3 +
+ 3 files changed, 93 insertions(+), 5 deletions(-)
 
---- a/drivers/media/platform/amphion/vpu_malone.c
-+++ b/drivers/media/platform/amphion/vpu_malone.c
-@@ -1320,22 +1320,18 @@ static int vpu_malone_insert_scode_vc1_g
+--- a/arch/powerpc/include/asm/kfence.h
++++ b/arch/powerpc/include/asm/kfence.h
+@@ -15,10 +15,19 @@
+ #define ARCH_FUNC_PREFIX "."
+ #endif
+ 
++#ifdef CONFIG_KFENCE
++extern bool kfence_disabled;
++
++static inline void disable_kfence(void)
++{
++	kfence_disabled = true;
++}
++
+ static inline bool arch_kfence_init_pool(void)
  {
- 	if (!scode->inst->total_input_count)
- 		return 0;
--	if (vpu_vb_is_codecconfig(to_vb2_v4l2_buffer(scode->vb)))
--		scode->need_data = 0;
+-	return true;
++	return !kfence_disabled;
+ }
++#endif
+ 
+ #ifdef CONFIG_PPC64
+ static inline bool kfence_protect_page(unsigned long addr, bool protect)
+--- a/arch/powerpc/mm/book3s64/radix_pgtable.c
++++ b/arch/powerpc/mm/book3s64/radix_pgtable.c
+@@ -17,6 +17,7 @@
+ #include <linux/hugetlb.h>
+ #include <linux/string_helpers.h>
+ #include <linux/memory.h>
++#include <linux/kfence.h>
+ 
+ #include <asm/pgalloc.h>
+ #include <asm/mmu_context.h>
+@@ -31,6 +32,7 @@
+ #include <asm/uaccess.h>
+ #include <asm/ultravisor.h>
+ #include <asm/set_memory.h>
++#include <asm/kfence.h>
+ 
+ #include <trace/events/thp.h>
+ 
+@@ -293,7 +295,8 @@ static unsigned long next_boundary(unsig
+ 
+ static int __meminit create_physical_mapping(unsigned long start,
+ 					     unsigned long end,
+-					     int nid, pgprot_t _prot)
++					     int nid, pgprot_t _prot,
++					     unsigned long mapping_sz_limit)
+ {
+ 	unsigned long vaddr, addr, mapping_size = 0;
+ 	bool prev_exec, exec = false;
+@@ -301,7 +304,10 @@ static int __meminit create_physical_map
+ 	int psize;
+ 	unsigned long max_mapping_size = memory_block_size;
+ 
+-	if (debug_pagealloc_enabled_or_kfence())
++	if (mapping_sz_limit < max_mapping_size)
++		max_mapping_size = mapping_sz_limit;
++
++	if (debug_pagealloc_enabled())
+ 		max_mapping_size = PAGE_SIZE;
+ 
+ 	start = ALIGN(start, PAGE_SIZE);
+@@ -356,8 +362,74 @@ static int __meminit create_physical_map
  	return 0;
  }
  
- static int vpu_malone_insert_scode_vc1_g_pic(struct malone_scode_t *scode)
++#ifdef CONFIG_KFENCE
++static bool __ro_after_init kfence_early_init = !!CONFIG_KFENCE_SAMPLE_INTERVAL;
++
++static int __init parse_kfence_early_init(char *arg)
++{
++	int val;
++
++	if (get_option(&arg, &val))
++		kfence_early_init = !!val;
++	return 0;
++}
++early_param("kfence.sample_interval", parse_kfence_early_init);
++
++static inline phys_addr_t alloc_kfence_pool(void)
++{
++	phys_addr_t kfence_pool;
++
++	/*
++	 * TODO: Support to enable KFENCE after bootup depends on the ability to
++	 *       split page table mappings. As such support is not currently
++	 *       implemented for radix pagetables, support enabling KFENCE
++	 *       only at system startup for now.
++	 *
++	 *       After support for splitting mappings is available on radix,
++	 *       alloc_kfence_pool() & map_kfence_pool() can be dropped and
++	 *       mapping for __kfence_pool memory can be
++	 *       split during arch_kfence_init_pool().
++	 */
++	if (!kfence_early_init)
++		goto no_kfence;
++
++	kfence_pool = memblock_phys_alloc(KFENCE_POOL_SIZE, PAGE_SIZE);
++	if (!kfence_pool)
++		goto no_kfence;
++
++	memblock_mark_nomap(kfence_pool, KFENCE_POOL_SIZE);
++	return kfence_pool;
++
++no_kfence:
++	disable_kfence();
++	return 0;
++}
++
++static inline void map_kfence_pool(phys_addr_t kfence_pool)
++{
++	if (!kfence_pool)
++		return;
++
++	if (create_physical_mapping(kfence_pool, kfence_pool + KFENCE_POOL_SIZE,
++				    -1, PAGE_KERNEL, PAGE_SIZE))
++		goto err;
++
++	memblock_clear_nomap(kfence_pool, KFENCE_POOL_SIZE);
++	__kfence_pool = __va(kfence_pool);
++	return;
++
++err:
++	memblock_phys_free(kfence_pool, KFENCE_POOL_SIZE);
++	disable_kfence();
++}
++#else
++static inline phys_addr_t alloc_kfence_pool(void) { return 0; }
++static inline void map_kfence_pool(phys_addr_t kfence_pool) { }
++#endif
++
+ static void __init radix_init_pgtable(void)
  {
--	struct vb2_v4l2_buffer *vbuf;
- 	u8 nal_hdr[MALONE_VC1_NAL_HEADER_LEN];
- 	u32 *data = NULL;
- 	int ret;
++	phys_addr_t kfence_pool;
+ 	unsigned long rts_field;
+ 	phys_addr_t start, end;
+ 	u64 i;
+@@ -365,6 +437,8 @@ static void __init radix_init_pgtable(vo
+ 	/* We don't support slb for radix */
+ 	slb_set_size(0);
  
--	vbuf = to_vb2_v4l2_buffer(scode->vb);
- 	data = vb2_plane_vaddr(scode->vb, 0);
- 
--	if (scode->inst->total_input_count == 0 || vpu_vb_is_codecconfig(vbuf))
-+	if (scode->inst->total_input_count == 0)
- 		return 0;
- 	if (MALONE_VC1_CONTAIN_NAL(*data))
- 		return 0;
-@@ -1356,8 +1352,6 @@ static int vpu_malone_insert_scode_vc1_l
- 	int size = 0;
- 	u8 rcv_seqhdr[MALONE_VC1_RCV_SEQ_HEADER_LEN];
- 
--	if (vpu_vb_is_codecconfig(to_vb2_v4l2_buffer(scode->vb)))
--		scode->need_data = 0;
- 	if (scode->inst->total_input_count)
- 		return 0;
- 	scode->need_data = 0;
-@@ -1543,7 +1537,7 @@ static int vpu_malone_input_frame_data(s
- 	scode.vb = vb;
- 	scode.wptr = wptr;
- 	scode.need_data = 1;
--	if (vbuf->sequence == 0 || vpu_vb_is_codecconfig(vbuf))
-+	if (vbuf->sequence == 0)
- 		ret = vpu_malone_insert_scode(&scode, SCODE_SEQUENCE);
- 
- 	if (ret < 0)
-@@ -1579,7 +1573,7 @@ static int vpu_malone_input_frame_data(s
- 	 * This module is currently only supported for the H264 and HEVC formats,
- 	 * for other formats, vpu_malone_add_scode() will return 0.
++	kfence_pool = alloc_kfence_pool();
++
+ 	/*
+ 	 * Create the linear mapping
  	 */
--	if ((disp_imm || low_latency) && !vpu_vb_is_codecconfig(vbuf)) {
-+	if (disp_imm || low_latency) {
- 		ret = vpu_malone_add_scode(inst->core->iface,
- 					   inst->id,
- 					   &inst->stream_buffer,
-@@ -1626,7 +1620,6 @@ int vpu_malone_input_frame(struct vpu_sh
- 			   struct vpu_inst *inst, struct vb2_buffer *vb)
+@@ -381,9 +455,11 @@ static void __init radix_init_pgtable(vo
+ 		}
+ 
+ 		WARN_ON(create_physical_mapping(start, end,
+-						-1, PAGE_KERNEL));
++						-1, PAGE_KERNEL, ~0UL));
+ 	}
+ 
++	map_kfence_pool(kfence_pool);
++
+ 	if (!cpu_has_feature(CPU_FTR_HVMODE) &&
+ 			cpu_has_feature(CPU_FTR_P9_RADIX_PREFETCH_BUG)) {
+ 		/*
+@@ -875,7 +951,7 @@ int __meminit radix__create_section_mapp
+ 	}
+ 
+ 	return create_physical_mapping(__pa(start), __pa(end),
+-				       nid, prot);
++				       nid, prot, ~0UL);
+ }
+ 
+ int __meminit radix__remove_section_mapping(unsigned long start, unsigned long end)
+--- a/arch/powerpc/mm/init-common.c
++++ b/arch/powerpc/mm/init-common.c
+@@ -31,6 +31,9 @@ EXPORT_SYMBOL_GPL(kernstart_virt_addr);
+ 
+ bool disable_kuep = !IS_ENABLED(CONFIG_PPC_KUEP);
+ bool disable_kuap = !IS_ENABLED(CONFIG_PPC_KUAP);
++#ifdef CONFIG_KFENCE
++bool __ro_after_init kfence_disabled;
++#endif
+ 
+ static int __init parse_nosmep(char *p)
  {
- 	struct vpu_dec_ctrl *hc = shared->priv;
--	struct vb2_v4l2_buffer *vbuf;
- 	struct vpu_malone_str_buffer __iomem *str_buf = hc->str_buf[inst->id];
- 	u32 disp_imm = hc->codec_param[inst->id].disp_imm;
- 	u32 size;
-@@ -1640,16 +1633,6 @@ int vpu_malone_input_frame(struct vpu_sh
- 		return ret;
- 	size = ret;
- 
--	/*
--	 * if buffer only contain codec data, and the timestamp is invalid,
--	 * don't put the invalid timestamp to resync
--	 * merge the data to next frame
--	 */
--	vbuf = to_vb2_v4l2_buffer(vb);
--	if (vpu_vb_is_codecconfig(vbuf)) {
--		inst->extra_size += size;
--		return 0;
--	}
- 	if (inst->extra_size) {
- 		size += inst->extra_size;
- 		inst->extra_size = 0;
---- a/drivers/media/platform/amphion/vpu_v4l2.c
-+++ b/drivers/media/platform/amphion/vpu_v4l2.c
-@@ -342,16 +342,6 @@ struct vb2_v4l2_buffer *vpu_next_src_buf
- 	if (!src_buf || vpu_get_buffer_state(src_buf) == VPU_BUF_STATE_IDLE)
- 		return NULL;
- 
--	while (vpu_vb_is_codecconfig(src_buf)) {
--		v4l2_m2m_src_buf_remove(inst->fh.m2m_ctx);
--		vpu_set_buffer_state(src_buf, VPU_BUF_STATE_IDLE);
--		v4l2_m2m_buf_done(src_buf, VB2_BUF_STATE_DONE);
--
--		src_buf = v4l2_m2m_next_src_buf(inst->fh.m2m_ctx);
--		if (!src_buf || vpu_get_buffer_state(src_buf) == VPU_BUF_STATE_IDLE)
--			return NULL;
--	}
--
- 	return src_buf;
- }
- 
---- a/drivers/media/platform/amphion/vpu_v4l2.h
-+++ b/drivers/media/platform/amphion/vpu_v4l2.h
-@@ -38,14 +38,4 @@ static inline struct vpu_format *vpu_get
- 	else
- 		return &inst->cap_format;
- }
--
--static inline int vpu_vb_is_codecconfig(struct vb2_v4l2_buffer *vbuf)
--{
--#ifdef V4L2_BUF_FLAG_CODECCONFIG
--	return (vbuf->flags & V4L2_BUF_FLAG_CODECCONFIG) ? 1 : 0;
--#else
--	return 0;
--#endif
--}
--
- #endif
 
 
