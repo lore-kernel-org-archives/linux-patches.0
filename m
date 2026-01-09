@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D6B3191D2;
-	Fri,  9 Jan 2026 12:29:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1C0350D74;
+	Fri,  9 Jan 2026 12:29:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961788; cv=none; b=ni+HFxy4KXyBFx3z3VKIqz67PbL6JA7s4sWV6ZFisqjsXoDwMruI960TjapFyXibvjU779ERJrn5OJEWbMighibBlGhvSmgsDB/JisevC5ROinu5RDJ/2Om7OizxOmO9R0tX545pGtB4lXhBPU+79F33YWYdwZ2NBsAsYc0bq0A=
+	t=1767961791; cv=none; b=JJ+8yHqJkAIf8Gxhk6wkTEdEM1TeLdwqCizcekc41nc6qJwz7N+xUeKI2l0qOP5Zna+MHvDhliznDNC2QS6cHfQvkmoi6C5Jtbn87A8pE9kak+k3oFIO0h2oRLzVf/7AoMPbhhuh6+PrfxOsIUuOE96mEmPpJj2o7g753Y9DNck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961788; c=relaxed/simple;
-	bh=RwcYMYUJ/u6DcDvpyrkO+h7I8ppD13fEShLCzuGXwMg=;
+	s=arc-20240116; t=1767961791; c=relaxed/simple;
+	bh=OXJanGHf+9KX90NEfw+FSW7UuqlhPiKyib/FmnVKFPE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ug7acXAs1+iO2CpzRU6nKNjkX/VNnluyLnOcXaJGq6NIVSr7NaKfWavJWxuy0IPZmgXlKO1cd0L9YKha9qNBJspu0suR/KmoX221iViGXxpIsfAzOUThpPlYwi8NxgaggbXKJqmcJurPPJXvGJEY9qzUQJKwjv+mO9L0syAEmXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OIDG9fFn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kM7zAGKSmbfdW9l6O8WnJ2IBuUwTRVNTNE7fYaUOdfTkO3M2CYNObBdmAVGCWU7yx8mRk6G2vRo/KI2SC4m7YH6jxZTtocfuLihQQpdiKV7pljtOHAuJBVM3LCav77QDmiiW9fNEz/4yqHfokU6MDBUxVbZOWY4/hr6uTjjLE/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hBf4R1I3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OIDG9fFn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E38C6C4CEF1;
-	Fri,  9 Jan 2026 12:29:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hBf4R1I3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2DECC4CEF1;
+	Fri,  9 Jan 2026 12:29:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961788;
-	bh=RwcYMYUJ/u6DcDvpyrkO+h7I8ppD13fEShLCzuGXwMg=;
+	s=korg; t=1767961791;
+	bh=OXJanGHf+9KX90NEfw+FSW7UuqlhPiKyib/FmnVKFPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OIDG9fFnW79R5fsLjPzKjMY25yO0RcYcOKrZ1BVDXXWCd87FUzjiC2d1JrLY2wV7U
-	 v9LcgPQO2mE1EzXm+3EurVUaHUV3GKJkMC47wBVnahHgc2iHfeelTzRsAoVNs7u9iL
-	 Vl4qN94j9aSIBTU/UdYewCJDDINQEOqvMPKwGDsc=
+	b=hBf4R1I39XQLHz21J/zVtaq+g+0Ja56cGith8wQStFQ18EUbhHZiGKvddBUY7pnLm
+	 DUeg9/v1Hb+sGUCkF4idLwuctefIjp2v3oUyD/3T/2+YbyUyrcBAHSdJLlJ0aD7MpW
+	 PfSC56mDQefOJS5I1NciDZ1HOLQYpFf6lz1AKK5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Qixing <zhengqixing@huawei.com>,
-	Yu Kuai <yukuai@fnnas.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	James Clark <james.clark@linaro.org>,
+	Leo Yan <leo.yan@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 103/634] nbd: defer config unlock in nbd_genl_connect
-Date: Fri,  9 Jan 2026 12:36:21 +0100
-Message-ID: <20260109112121.308489611@linuxfoundation.org>
+Subject: [PATCH 6.1 104/634] coresight: etm4x: Correct polling IDLE bit
+Date: Fri,  9 Jan 2026 12:36:22 +0100
+Message-ID: <20260109112121.345850809@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,70 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Qixing <zhengqixing@huawei.com>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit 1649714b930f9ea6233ce0810ba885999da3b5d4 ]
+[ Upstream commit 4dc4e22f9536341255f5de6047977a80ff47eaef ]
 
-There is one use-after-free warning when running NBD_CMD_CONNECT and
-NBD_CLEAR_SOCK:
+Since commit 4ff6039ffb79 ("coresight-etm4x: add isb() before reading
+the TRCSTATR"), the code has incorrectly been polling the PMSTABLE bit
+instead of the IDLE bit.
 
-nbd_genl_connect
-  nbd_alloc_and_init_config // config_refs=1
-  nbd_start_device // config_refs=2
-  set NBD_RT_HAS_CONFIG_REF			open nbd // config_refs=3
-  recv_work done // config_refs=2
-						NBD_CLEAR_SOCK // config_refs=1
-						close nbd // config_refs=0
-  refcount_inc -> uaf
+This commit corrects the typo.
 
-------------[ cut here ]------------
-refcount_t: addition on 0; use-after-free.
-WARNING: CPU: 24 PID: 1014 at lib/refcount.c:25 refcount_warn_saturate+0x12e/0x290
- nbd_genl_connect+0x16d0/0x1ab0
- genl_family_rcv_msg_doit+0x1f3/0x310
- genl_rcv_msg+0x44a/0x790
-
-The issue can be easily reproduced by adding a small delay before
-refcount_inc(&nbd->config_refs) in nbd_genl_connect():
-
-        mutex_unlock(&nbd->config_lock);
-        if (!ret) {
-                set_bit(NBD_RT_HAS_CONFIG_REF, &config->runtime_flags);
-+               printk("before sleep\n");
-+               mdelay(5 * 1000);
-+               printk("after sleep\n");
-                refcount_inc(&nbd->config_refs);
-                nbd_connect_reply(info, nbd->index);
-        }
-
-Fixes: e46c7287b1c2 ("nbd: add a basic netlink interface")
-Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
-Reviewed-by: Yu Kuai <yukuai@fnnas.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 4ff6039ffb79 ("coresight-etm4x: add isb() before reading the TRCSTATR")
+Reviewed-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Reviewed-by: Mike Leach <mike.leach@linaro.org>
+Tested-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20251111-arm_coresight_power_management_fix-v6-4-f55553b6c8b3@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/nbd.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hwtracing/coresight/coresight-etm4x-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
-index 80a2d346a51cc..008534aad0a18 100644
---- a/drivers/block/nbd.c
-+++ b/drivers/block/nbd.c
-@@ -2116,12 +2116,13 @@ static int nbd_genl_connect(struct sk_buff *skb, struct genl_info *info)
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+index d89153d0517ec..a3553f9ca0786 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+@@ -1726,7 +1726,7 @@ static int __etm4_cpu_save(struct etmv4_drvdata *drvdata)
+ 		state->trcpdcr = etm4x_read32(csa, TRCPDCR);
  
- 	ret = nbd_start_device(nbd);
- out:
--	mutex_unlock(&nbd->config_lock);
- 	if (!ret) {
- 		set_bit(NBD_RT_HAS_CONFIG_REF, &config->runtime_flags);
- 		refcount_inc(&nbd->config_refs);
- 		nbd_connect_reply(info, nbd->index);
- 	}
-+	mutex_unlock(&nbd->config_lock);
-+
- 	nbd_config_put(nbd);
- 	if (put_dev)
- 		nbd_put(nbd);
+ 	/* wait for TRCSTATR.IDLE to go up */
+-	if (etm4x_wait_status(csa, TRCSTATR_PMSTABLE_BIT, 1)) {
++	if (etm4x_wait_status(csa, TRCSTATR_IDLE_BIT, 1)) {
+ 		dev_err(etm_dev,
+ 			"timeout while waiting for Idle Trace Status\n");
+ 		etm4_os_unlock(drvdata);
 -- 
 2.51.0
 
