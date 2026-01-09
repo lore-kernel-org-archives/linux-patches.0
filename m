@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A9A1CAB3;
-	Fri,  9 Jan 2026 12:42:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22DB935A955;
+	Fri,  9 Jan 2026 12:42:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962547; cv=none; b=Rg0JIZUjx53cz7pTDvDCwXxVw4LX2A4JsT3emq5pTDs1h64i/MSMdcNqAyMacNCIqSg+XqXOy3Z/1ar7JBMHP+DHP83jGuL4vzNM1fhMbhH2nyEZGgoVQfAIvRaPRPzyY3sDxoin2lMggcFYd81HKK/VM4+yWVYMSqj8C8mjoKw=
+	t=1767962550; cv=none; b=q0o0FyUCBsyr2Otul8tWm7uhQMNK0wvDXT4Qixh6rcsMJjCiGA7QjzAcBvguLnblfP5TdXu7pyB0Dosx4n9frxEUJlfJ0K/Luadrojx8puBFt7RcCZS9SaeyhptSsAK6ZMCS4xuGQVYBBKjrg+8FhuJyERI4ulQ3mxPHj12YEwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962547; c=relaxed/simple;
-	bh=VsBrcQ8OuXTGeSZpWw1SusvdGVGf2q1zvTSN4900wW0=;
+	s=arc-20240116; t=1767962550; c=relaxed/simple;
+	bh=/jmcWKSO+ef6sjmyMzquY9dsx5z2oLiyVRW64zk3ynw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gEpVNGMIXJC+qUyL7kQIIplp+Igenqtznqhb+aX63v9xEsd2G4rZ07BKQBWspEZHoCkkzLBeJWamL7dBBXbFQSa8qtEZuJDeLtTfF3jacGu1iAzVEPS1hBNsWjNbCDTd1/3KinwfnNMljN7Y1t9fe34p5jG5UmiLnGERMXgNkyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kac/+BEF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PVMKqSvXNcaIf3yIMgVsdkFVfgzHqK+gEMzDykqj++y6HJlVvAzsbV+/KF93oDEbw6qrvuwGlM9u8KCXsbsHyAWfPX/UHZyfgck/emjzGbWZy4hNHfz7Q0hHs8JLxIH9CGWuutWkRT68Z5bIrb6o1NzhgiD5so38Jk7rrDcrdsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cXO3SRSt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kac/+BEF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9B6DC4CEF1;
-	Fri,  9 Jan 2026 12:42:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cXO3SRSt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7188C4CEF1;
+	Fri,  9 Jan 2026 12:42:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962547;
-	bh=VsBrcQ8OuXTGeSZpWw1SusvdGVGf2q1zvTSN4900wW0=;
+	s=korg; t=1767962550;
+	bh=/jmcWKSO+ef6sjmyMzquY9dsx5z2oLiyVRW64zk3ynw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kac/+BEF7IDq7ej+YYfBqJq+L2Wzb7pE54eKUp5ddjL3RklsP6LcCh7JhUhZayaJ/
-	 TNtoHrcQcDASVfqKQ3Et5t2ZIzkeEMLnxnSOfwu0hDR17QZHGMcAPLMS3rcEbWAGDE
-	 nYmycAaj0nz3LnRwnlIrAZxM65hy7yoLkbIKeJR8=
+	b=cXO3SRStoyIqQGoJgXXsbDvARSLFRkxa31zDjWSdvFwDH88kU26j4r+etn+DJpnXe
+	 rxEZZNJMa8pCj2uztiE5a90D/7v7hg60HSPyXBHuGuPNLIoN5+WJKFBb3btf8MyRoJ
+	 eyeThM5ybx0DFjRo8THACu+J/vD437vrOoPu9G9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiumei Mu <xmu@redhat.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Raphael Pinsonneault-Thibeault <rpthibeault@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 403/634] crypto: seqiv - Do not use req->iv after crypto_aead_encrypt
-Date: Fri,  9 Jan 2026 12:41:21 +0100
-Message-ID: <20260109112132.693052327@linuxfoundation.org>
+Subject: [PATCH 6.1 404/634] Bluetooth: btusb: revert use of devm_kzalloc in btusb
+Date: Fri,  9 Jan 2026 12:41:22 +0100
+Message-ID: <20260109112132.730397465@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,59 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Raphael Pinsonneault-Thibeault <rpthibeault@gmail.com>
 
-[ Upstream commit 50fdb78b7c0bcc550910ef69c0984e751cac72fa ]
+[ Upstream commit 252714f1e8bdd542025b16321c790458014d6880 ]
 
-As soon as crypto_aead_encrypt is called, the underlying request
-may be freed by an asynchronous completion.  Thus dereferencing
-req->iv after it returns is invalid.
+This reverts commit 98921dbd00c4e ("Bluetooth: Use devm_kzalloc in
+btusb.c file").
 
-Instead of checking req->iv against info, create a new variable
-unaligned_info and use it for that purpose instead.
+In btusb_probe(), we use devm_kzalloc() to allocate the btusb data. This
+ties the lifetime of all the btusb data to the binding of a driver to
+one interface, INTF. In a driver that binds to other interfaces, ISOC
+and DIAG, this is an accident waiting to happen.
 
-Fixes: 0a270321dbf9 ("[CRYPTO] seqiv: Add Sequence Number IV Generator")
-Reported-by: Xiumei Mu <xmu@redhat.com>
-Reported-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+The issue is revealed in btusb_disconnect(), where calling
+usb_driver_release_interface(&btusb_driver, data->intf) will have devm
+free the data that is also being used by the other interfaces of the
+driver that may not be released yet.
+
+To fix this, revert the use of devm and go back to freeing memory
+explicitly.
+
+Fixes: 98921dbd00c4e ("Bluetooth: Use devm_kzalloc in btusb.c file")
+Signed-off-by: Raphael Pinsonneault-Thibeault <rpthibeault@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/seqiv.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/bluetooth/btusb.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/crypto/seqiv.c b/crypto/seqiv.c
-index b1bcfe537daf..562ab102226a 100644
---- a/crypto/seqiv.c
-+++ b/crypto/seqiv.c
-@@ -51,6 +51,7 @@ static int seqiv_aead_encrypt(struct aead_request *req)
- 	struct aead_geniv_ctx *ctx = crypto_aead_ctx(geniv);
- 	struct aead_request *subreq = aead_request_ctx(req);
- 	crypto_completion_t compl;
-+	bool unaligned_info;
- 	void *data;
- 	u8 *info;
- 	unsigned int ivsize = 8;
-@@ -80,8 +81,9 @@ static int seqiv_aead_encrypt(struct aead_request *req)
- 			return err;
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 983794632927..c6ac351209c0 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -3849,7 +3849,7 @@ static int btusb_probe(struct usb_interface *intf,
+ 			return -ENODEV;
  	}
  
--	if (unlikely(!IS_ALIGNED((unsigned long)info,
--				 crypto_aead_alignmask(geniv) + 1))) {
-+	unaligned_info = !IS_ALIGNED((unsigned long)info,
-+				     crypto_aead_alignmask(geniv) + 1);
-+	if (unlikely(unaligned_info)) {
- 		info = kmemdup(req->iv, ivsize, req->base.flags &
- 			       CRYPTO_TFM_REQ_MAY_SLEEP ? GFP_KERNEL :
- 			       GFP_ATOMIC);
-@@ -101,7 +103,7 @@ static int seqiv_aead_encrypt(struct aead_request *req)
- 	scatterwalk_map_and_copy(info, req->dst, req->assoclen, ivsize, 1);
+-	data = devm_kzalloc(&intf->dev, sizeof(*data), GFP_KERNEL);
++	data = kzalloc(sizeof(*data), GFP_KERNEL);
+ 	if (!data)
+ 		return -ENOMEM;
  
- 	err = crypto_aead_encrypt(subreq);
--	if (unlikely(info != req->iv))
-+	if (unlikely(unaligned_info))
- 		seqiv_aead_encrypt_complete2(req, err);
+@@ -3872,8 +3872,10 @@ static int btusb_probe(struct usb_interface *intf,
+ 		}
+ 	}
+ 
+-	if (!data->intr_ep || !data->bulk_tx_ep || !data->bulk_rx_ep)
++	if (!data->intr_ep || !data->bulk_tx_ep || !data->bulk_rx_ep) {
++		kfree(data);
+ 		return -ENODEV;
++	}
+ 
+ 	if (id->driver_info & BTUSB_AMP) {
+ 		data->cmdreq_type = USB_TYPE_CLASS | 0x01;
+@@ -3920,8 +3922,10 @@ static int btusb_probe(struct usb_interface *intf,
+ 	data->recv_acl = hci_recv_frame;
+ 
+ 	hdev = hci_alloc_dev_priv(priv_size);
+-	if (!hdev)
++	if (!hdev) {
++		kfree(data);
+ 		return -ENOMEM;
++	}
+ 
+ 	hdev->bus = HCI_USB;
+ 	hci_set_drvdata(hdev, data);
+@@ -4182,6 +4186,7 @@ static int btusb_probe(struct usb_interface *intf,
+ 	if (data->reset_gpio)
+ 		gpiod_put(data->reset_gpio);
+ 	hci_free_dev(hdev);
++	kfree(data);
  	return err;
  }
+ 
+@@ -4227,6 +4232,7 @@ static void btusb_disconnect(struct usb_interface *intf)
+ 	}
+ 
+ 	hci_free_dev(hdev);
++	kfree(data);
+ }
+ 
+ #ifdef CONFIG_PM
 -- 
 2.51.0
 
