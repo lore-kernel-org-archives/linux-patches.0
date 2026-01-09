@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4200E359FB0;
-	Fri,  9 Jan 2026 12:09:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0397235B139;
+	Fri,  9 Jan 2026 12:09:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960562; cv=none; b=D2SSt1R0bynPcG6d0p62m3p8KCtTamfcdpcm4Q0gh7Mo/6pYJyK96hVhm+MQ50WUM5DohJV/O/E5HwrCPgubNGhecnFSw6o6rpNwxKrS4yX1tlKJ3G9IygnQOiBEVu+/8+b27kWVxV0Ypu4Nz5uIJjQjLZJ1/n+RbBvPQAaK1Wg=
+	t=1767960565; cv=none; b=kBrq5knQ8CdUlOFntw0+l4/h0cMC7bSdX07c3ZiDGAuvPGldQxcsLCZDvS7uVsM3uZ50/fYTUXwlWs+FLKPKt7f9IuHlyyXMmL+RhKJT2NOklB+145yF53FKqBKauGzdD4KqbWZgm9OLkvz0Yo8BzAOMSpNzUP4r9/uuVdEnalI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960562; c=relaxed/simple;
-	bh=REK7oh1iMZBEWCQbTOtNhRRm19m89KSB2fM5BKyROhM=;
+	s=arc-20240116; t=1767960565; c=relaxed/simple;
+	bh=zgrDCxinRA1KZcsTZSpoe/Z8n5T8F7dmADfCSbEjUac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SYTFwb+orf8Ud5fdMU/iCF3RYUobTRz+3aq0Op4O9r+Jqa6pS1RhMqF2NrskwT8VdEiqKX68ZCzuhG8gGYUTDHwHxK36yKKXCwFHPKO/OfaTNniOglsUlKhjwNiKbD0GMtIee13DVZnXQFW/P9T9HGSCy5vOJ0SLJud7zMDKx0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0QvaOTWC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NFUT4RqUCXgST5EbDbQVSnZtwMJ7ZrlZ5f1ugF2HlNJol8/Ou7OUYM1mAzA3oZ2NnMqOqOzMQVb6K90A6gqTvTqtgpNpMrhFbnOX54WY5bi5vJxyXFZKjwd9IUtYhHfG5feQ0JBeVuqXOiv4QtgWdUDpGRyQRdleT5vVtwMEh2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OLE5AM4e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0QvaOTWC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CACC4CEF1;
-	Fri,  9 Jan 2026 12:09:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OLE5AM4e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8516CC4CEF1;
+	Fri,  9 Jan 2026 12:09:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960562;
-	bh=REK7oh1iMZBEWCQbTOtNhRRm19m89KSB2fM5BKyROhM=;
+	s=korg; t=1767960564;
+	bh=zgrDCxinRA1KZcsTZSpoe/Z8n5T8F7dmADfCSbEjUac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0QvaOTWCd8UcvfOtlbfRnc1qnITGXdKQdp4i6HWnWowmO0qygJHCI8aeCsIdjGB+3
-	 5f+0kw1QIUCjU+SOLoYv3WVFSyIt0uC6r9tVsMlZMBtV+/7WxjpfP9/5snj5NCAbiK
-	 a1/FCEMAKgB5MDRlPDH3bAT8J/At3HvHf46hvqcI=
+	b=OLE5AM4e2Fgl6KJiMLQ2QmYoLNYonYVlTk32caQDsE8EpzJdf/jQJCtpQrIu+MIng
+	 KhLNjeS5qO1tWTTX+r/gxbqgnnujh9JpR8SN6yLGi5dUZP3JzAHURpEjtkd6R1evDs
+	 o6n1nAAcHAlXkaq7OzYtYmsY4P040hnFkNEheoD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dai Ngo <dai.ngo@oracle.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.6 447/737] NFSD: use correct reservation type in nfsd4_scsi_fence_client
-Date: Fri,  9 Jan 2026 12:39:46 +0100
-Message-ID: <20260109112150.811887877@linuxfoundation.org>
+	Andrey Vatoropin <a.vatoropin@crpt.ru>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.6 448/737] scsi: target: Reset t_task_cdb pointer in error case
+Date: Fri,  9 Jan 2026 12:39:47 +0100
+Message-ID: <20260109112150.849274206@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,34 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dai Ngo <dai.ngo@oracle.com>
+From: Andrey Vatoropin <a.vatoropin@crpt.ru>
 
-commit 6f52063db9aabdaabea929b1e998af98c2e8d917 upstream.
+commit 5053eab38a4c4543522d0c320c639c56a8b59908 upstream.
 
-The reservation type argument for the pr_preempt call should match the
-one used in nfsd4_block_get_device_info_scsi.
+If allocation of cmd->t_task_cdb fails, it remains NULL but is later
+dereferenced in the 'err' path.
 
-Fixes: f99d4fbdae67 ("nfsd: add SCSI layout support")
+In case of error, reset NULL t_task_cdb value to point at the default
+fixed-size buffer.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 9e95fb805dc0 ("scsi: target: Fix NULL pointer dereference")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Andrey Vatoropin <a.vatoropin@crpt.ru>
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Link: https://patch.msgid.link/20251118084014.324940-1-a.vatoropin@crpt.ru
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/blocklayout.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/target/target_core_transport.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/nfsd/blocklayout.c
-+++ b/fs/nfsd/blocklayout.c
-@@ -334,7 +334,8 @@ nfsd4_scsi_fence_client(struct nfs4_layo
- 	struct block_device *bdev = ls->ls_file->nf_file->f_path.mnt->mnt_sb->s_bdev;
- 
- 	bdev->bd_disk->fops->pr_ops->pr_preempt(bdev, NFSD_MDS_PR_KEY,
--			nfsd4_scsi_pr_key(clp), 0, true);
-+			nfsd4_scsi_pr_key(clp),
-+			PR_EXCLUSIVE_ACCESS_REG_ONLY, true);
- }
- 
- const struct nfsd4_layout_ops scsi_layout_ops = {
+--- a/drivers/target/target_core_transport.c
++++ b/drivers/target/target_core_transport.c
+@@ -1524,6 +1524,7 @@ target_cmd_init_cdb(struct se_cmd *cmd,
+ 	if (scsi_command_size(cdb) > sizeof(cmd->__t_task_cdb)) {
+ 		cmd->t_task_cdb = kzalloc(scsi_command_size(cdb), gfp);
+ 		if (!cmd->t_task_cdb) {
++			cmd->t_task_cdb = &cmd->__t_task_cdb[0];
+ 			pr_err("Unable to allocate cmd->t_task_cdb"
+ 				" %u > sizeof(cmd->__t_task_cdb): %lu ops\n",
+ 				scsi_command_size(cdb),
 
 
