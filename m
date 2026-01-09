@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8922531E107;
-	Fri,  9 Jan 2026 12:32:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A17931E107;
+	Fri,  9 Jan 2026 12:32:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961961; cv=none; b=pchgi7n6C6xKzLIKgNEKKHYCOmVcn8+exRuqSOwoA1VoXEZI7L9k/Kujjok+47ukMgJibYdOp91WnZbCBuKhzkfEHYwio+ihxmntXiF7JtPzyea1M56CZlCykcmusI9Oox4qRN5zfcfeWZaovnzAp3Xhd3TtCLX1z1fUvHTxQz0=
+	t=1767961964; cv=none; b=X9jdgKdCP6O89v4I8dzDYOesGFGdbrWxjOxRa6y1MASsexEhx4fbrs2xpBXka/Bi4YvA73V3KUt58qrSu4Mt5Uav3pQ86yoDY6MKkgfuFxoL+jPjfm/yL9hIiq4oHMPYoKEaXnNepaUxW7QIjSG7hNMeiyIlHlYttz474Ut2Ngk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961961; c=relaxed/simple;
-	bh=lfyp+rdkpORbEoBepapd+PZcBPtCx7IVIEBUE1cQ5KA=;
+	s=arc-20240116; t=1767961964; c=relaxed/simple;
+	bh=EAhSv5kY/znuFvDz/FA/lU12XNWi6T5XOU5XwlzmKuk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mxx8rgSix9OPsTl9yuOHaGhmtByY/hRmMPmNIsVwRfQgwIque1O4sqTcijj1Rq6WLWunVET5QpfKjYKf7z23tD4mqaNmn9TJZYWg/hIkbQy/KR9IbNiJ86Acsel4CdVegWEbV6hrI627Msz9yNIJ8I3dAkY3e8+AayEEETwMU9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZiLFIcL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=squqXYMuJ+3mlccX3vLX/wjrQQ7IKroFt4PR4Q6N/O2cQcbOrDvVxg4PQpANvRQhQ3X069n545ubBJBZurdepEV5VCvzRsGvd/OcsheLPLqL9kTYzfIg2UJ4vFu0+G5ew6Pj+JRjt8JQHR8WR2SJMiiOQRLfQaVWlIiRBsDJBJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jCG+L9Vc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZiLFIcL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14D55C4CEF1;
-	Fri,  9 Jan 2026 12:32:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jCG+L9Vc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E85CBC4CEF1;
+	Fri,  9 Jan 2026 12:32:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961961;
-	bh=lfyp+rdkpORbEoBepapd+PZcBPtCx7IVIEBUE1cQ5KA=;
+	s=korg; t=1767961964;
+	bh=EAhSv5kY/znuFvDz/FA/lU12XNWi6T5XOU5XwlzmKuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GZiLFIcLrSbstT6ydGnvVxkySymHlqmnozXmWBpYmFADAnSmdgE6wr7TqrUpAItIk
-	 Sy0wsBDd2OOxLqMCE/bYmAc3kTGwJpknenwByTsLj6hHpyWC5WGSuM3zrj0MpMsSGD
-	 Nbt8tVDIpHD4z+iANghP6dWFj7RIC3BjtrNMf9x4=
+	b=jCG+L9Vc1NfPscrs97uweAgKPOcO0Mcq/JEFJb+O4CzzfZjNYYjXvHrcCgjTBRJbe
+	 duqEpGfkudSyEEgzD4ZK7oSu97yIQc8w/ETPxL2HSfwMIGiVPTgWG2RnOy4rKYvPbJ
+	 EGJvnyebm0UxD7w9HKoEQLvisgStsp+nXFPqYO2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@primarydata.com>,
-	Lance Shelton <lance.shelton@hammerspace.com>,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 197/634] Expand the type of nfs_fattr->valid
-Date: Fri,  9 Jan 2026 12:37:55 +0100
-Message-ID: <20260109112124.848077084@linuxfoundation.org>
+Subject: [PATCH 6.1 198/634] NFS: Fix inheritance of the block sizes when automounting
+Date: Fri,  9 Jan 2026 12:37:56 +0100
+Message-ID: <20260109112124.885711650@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -54,125 +50,176 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@primarydata.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit ce60ab3964782df9ba34f0a64c0bc766dd508bde ]
+[ Upstream commit 2b092175f5e301cdaa935093edfef2be9defb6df ]
 
-We need to be able to track more than 32 attributes per inode.
+Only inherit the block sizes that were actually specified as mount
+parameters for the parent mount.
 
-Signed-off-by: Trond Myklebust <trond.myklebust@primarydata.com>
-Signed-off-by: Lance Shelton <lance.shelton@hammerspace.com>
-Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://lore.kernel.org/r/1e3405fca54efd0be7c91c1da77917b94f5dfcc4.1748515333.git.bcodding@redhat.com
+Fixes: 62a55d088cd8 ("NFS: Additional refactoring for fs_context conversion")
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Stable-dep-of: 2b092175f5e3 ("NFS: Fix inheritance of the block sizes when automounting")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/inode.c            |  2 +-
- include/linux/nfs_fs_sb.h |  2 +-
- include/linux/nfs_xdr.h   | 54 +++++++++++++++++++--------------------
- 3 files changed, 29 insertions(+), 29 deletions(-)
+ fs/nfs/client.c           | 21 +++++++++++++++++----
+ fs/nfs/internal.h         |  1 -
+ fs/nfs/namespace.c        |  5 ++++-
+ fs/nfs/nfs4client.c       | 18 ++++++++++++++----
+ fs/nfs/super.c            | 10 +++-------
+ include/linux/nfs_fs_sb.h |  5 +++++
+ 6 files changed, 43 insertions(+), 17 deletions(-)
 
-diff --git a/fs/nfs/inode.c b/fs/nfs/inode.c
-index 627410be2e884..11e690942dbb3 100644
---- a/fs/nfs/inode.c
-+++ b/fs/nfs/inode.c
-@@ -2075,7 +2075,7 @@ static int nfs_update_inode(struct inode *inode, struct nfs_fattr *fattr)
- 	bool attr_changed = false;
- 	bool have_delegation;
+diff --git a/fs/nfs/client.c b/fs/nfs/client.c
+index 2ca04dcb192aa..948bf8d7aed00 100644
+--- a/fs/nfs/client.c
++++ b/fs/nfs/client.c
+@@ -745,10 +745,18 @@ static int nfs_init_server(struct nfs_server *server,
+ 		server->fattr_valid = NFS_ATTR_FATTR_V4;
+ 	}
  
--	dfprintk(VFS, "NFS: %s(%s/%lu fh_crc=0x%08x ct=%d info=0x%x)\n",
-+	dfprintk(VFS, "NFS: %s(%s/%lu fh_crc=0x%08x ct=%d info=0x%llx)\n",
- 			__func__, inode->i_sb->s_id, inode->i_ino,
- 			nfs_display_fhandle_hash(NFS_FH(inode)),
- 			atomic_read(&inode->i_count), fattr->valid);
+-	if (ctx->rsize)
++	if (ctx->bsize) {
++		server->bsize = ctx->bsize;
++		server->automount_inherit |= NFS_AUTOMOUNT_INHERIT_BSIZE;
++	}
++	if (ctx->rsize) {
+ 		server->rsize = nfs_io_size(ctx->rsize, clp->cl_proto);
+-	if (ctx->wsize)
++		server->automount_inherit |= NFS_AUTOMOUNT_INHERIT_RSIZE;
++	}
++	if (ctx->wsize) {
+ 		server->wsize = nfs_io_size(ctx->wsize, clp->cl_proto);
++		server->automount_inherit |= NFS_AUTOMOUNT_INHERIT_WSIZE;
++	}
+ 
+ 	server->acregmin = ctx->acregmin * HZ;
+ 	server->acregmax = ctx->acregmax * HZ;
+@@ -940,8 +948,13 @@ EXPORT_SYMBOL_GPL(nfs_probe_server);
+ void nfs_server_copy_userdata(struct nfs_server *target, struct nfs_server *source)
+ {
+ 	target->flags = source->flags;
+-	target->rsize = source->rsize;
+-	target->wsize = source->wsize;
++	target->automount_inherit = source->automount_inherit;
++	if (source->automount_inherit & NFS_AUTOMOUNT_INHERIT_BSIZE)
++		target->bsize = source->bsize;
++	if (source->automount_inherit & NFS_AUTOMOUNT_INHERIT_RSIZE)
++		target->rsize = source->rsize;
++	if (source->automount_inherit & NFS_AUTOMOUNT_INHERIT_WSIZE)
++		target->wsize = source->wsize;
+ 	target->acregmin = source->acregmin;
+ 	target->acregmax = source->acregmax;
+ 	target->acdirmin = source->acdirmin;
+diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
+index 323f50962a786..ec2e0d7ed7e36 100644
+--- a/fs/nfs/internal.h
++++ b/fs/nfs/internal.h
+@@ -145,7 +145,6 @@ struct nfs_fs_context {
+ 		struct super_block	*sb;
+ 		struct dentry		*dentry;
+ 		struct nfs_fattr	*fattr;
+-		unsigned int		inherited_bsize;
+ 	} clone_data;
+ };
+ 
+diff --git a/fs/nfs/namespace.c b/fs/nfs/namespace.c
+index 789baa1cf768c..663f1a3f7cc3e 100644
+--- a/fs/nfs/namespace.c
++++ b/fs/nfs/namespace.c
+@@ -190,6 +190,10 @@ struct vfsmount *nfs_d_automount(struct path *path)
+ 	ctx->nfs_mod		= client->cl_nfs_mod;
+ 	__module_get(ctx->nfs_mod->owner);
+ 
++	/* Inherit block sizes if they were specified as mount parameters */
++	if (server->automount_inherit & NFS_AUTOMOUNT_INHERIT_BSIZE)
++		ctx->bsize = server->bsize;
++
+ 	ret = client->rpc_ops->submount(fc, server);
+ 	if (ret < 0) {
+ 		mnt = ERR_PTR(ret);
+@@ -289,7 +293,6 @@ int nfs_do_submount(struct fs_context *fc)
+ 		return -ENOMEM;
+ 
+ 	ctx->internal		= true;
+-	ctx->clone_data.inherited_bsize = ctx->clone_data.sb->s_blocksize_bits;
+ 
+ 	p = nfs_devname(dentry, buffer, 4096);
+ 	if (IS_ERR(p)) {
+diff --git a/fs/nfs/nfs4client.c b/fs/nfs/nfs4client.c
+index 4cb405e343b83..f8a50f6453dd1 100644
+--- a/fs/nfs/nfs4client.c
++++ b/fs/nfs/nfs4client.c
+@@ -1149,10 +1149,20 @@ static int nfs4_init_server(struct nfs_server *server, struct fs_context *fc)
+ 	if (error < 0)
+ 		return error;
+ 
+-	if (ctx->rsize)
+-		server->rsize = nfs_io_size(ctx->rsize, server->nfs_client->cl_proto);
+-	if (ctx->wsize)
+-		server->wsize = nfs_io_size(ctx->wsize, server->nfs_client->cl_proto);
++	if (ctx->bsize) {
++		server->bsize = ctx->bsize;
++		server->automount_inherit |= NFS_AUTOMOUNT_INHERIT_BSIZE;
++	}
++	if (ctx->rsize) {
++		server->rsize =
++			nfs_io_size(ctx->rsize, server->nfs_client->cl_proto);
++		server->automount_inherit |= NFS_AUTOMOUNT_INHERIT_RSIZE;
++	}
++	if (ctx->wsize) {
++		server->wsize =
++			nfs_io_size(ctx->wsize, server->nfs_client->cl_proto);
++		server->automount_inherit |= NFS_AUTOMOUNT_INHERIT_WSIZE;
++	}
+ 
+ 	server->acregmin = ctx->acregmin * HZ;
+ 	server->acregmax = ctx->acregmax * HZ;
+diff --git a/fs/nfs/super.c b/fs/nfs/super.c
+index 3a002bc75d22a..9a81f34362930 100644
+--- a/fs/nfs/super.c
++++ b/fs/nfs/super.c
+@@ -1057,8 +1057,9 @@ static void nfs_fill_super(struct super_block *sb, struct nfs_fs_context *ctx)
+ 	sb->s_blocksize = 0;
+ 	sb->s_xattr = server->nfs_client->cl_nfs_mod->xattr;
+ 	sb->s_op = server->nfs_client->cl_nfs_mod->sops;
+-	if (ctx->bsize)
+-		sb->s_blocksize = nfs_block_size(ctx->bsize, &sb->s_blocksize_bits);
++	if (server->bsize)
++		sb->s_blocksize =
++			nfs_block_size(server->bsize, &sb->s_blocksize_bits);
+ 
+ 	switch (server->nfs_client->rpc_ops->version) {
+ 	case 2:
+@@ -1303,13 +1304,8 @@ int nfs_get_tree_common(struct fs_context *fc)
+ 	}
+ 
+ 	if (!s->s_root) {
+-		unsigned bsize = ctx->clone_data.inherited_bsize;
+ 		/* initial superblock/root creation */
+ 		nfs_fill_super(s, ctx);
+-		if (bsize) {
+-			s->s_blocksize_bits = bsize;
+-			s->s_blocksize = 1U << bsize;
+-		}
+ 		error = nfs_get_cache_cookie(s, ctx);
+ 		if (error < 0)
+ 			goto error_splat_super;
 diff --git a/include/linux/nfs_fs_sb.h b/include/linux/nfs_fs_sb.h
-index a9671f9300848..eb1d41d87be30 100644
+index eb1d41d87be30..877d5523239cf 100644
 --- a/include/linux/nfs_fs_sb.h
 +++ b/include/linux/nfs_fs_sb.h
-@@ -155,8 +155,8 @@ struct nfs_server {
+@@ -155,6 +155,11 @@ struct nfs_server {
  #define NFS_MOUNT_WRITE_WAIT		0x02000000
  #define NFS_MOUNT_TRUNK_DISCOVERY	0x04000000
  
--	unsigned int		fattr_valid;	/* Valid attributes */
++	unsigned int		automount_inherit; /* Properties inherited by automount */
++#define NFS_AUTOMOUNT_INHERIT_BSIZE	0x0001
++#define NFS_AUTOMOUNT_INHERIT_RSIZE	0x0002
++#define NFS_AUTOMOUNT_INHERIT_WSIZE	0x0004
++
  	unsigned int		caps;		/* server capabilities */
-+	__u64			fattr_valid;	/* Valid attributes */
+ 	__u64			fattr_valid;	/* Valid attributes */
  	unsigned int		rsize;		/* read size */
- 	unsigned int		rpages;		/* read size (in pages) */
- 	unsigned int		wsize;		/* write size */
-diff --git a/include/linux/nfs_xdr.h b/include/linux/nfs_xdr.h
-index 2fd973d188c47..0a380d41e4d95 100644
---- a/include/linux/nfs_xdr.h
-+++ b/include/linux/nfs_xdr.h
-@@ -45,7 +45,7 @@ struct nfs4_threshold {
- };
- 
- struct nfs_fattr {
--	unsigned int		valid;		/* which fields are valid */
-+	__u64			valid;		/* which fields are valid */
- 	umode_t			mode;
- 	__u32			nlink;
- 	kuid_t			uid;
-@@ -80,32 +80,32 @@ struct nfs_fattr {
- 	struct nfs4_label	*label;
- };
- 
--#define NFS_ATTR_FATTR_TYPE		(1U << 0)
--#define NFS_ATTR_FATTR_MODE		(1U << 1)
--#define NFS_ATTR_FATTR_NLINK		(1U << 2)
--#define NFS_ATTR_FATTR_OWNER		(1U << 3)
--#define NFS_ATTR_FATTR_GROUP		(1U << 4)
--#define NFS_ATTR_FATTR_RDEV		(1U << 5)
--#define NFS_ATTR_FATTR_SIZE		(1U << 6)
--#define NFS_ATTR_FATTR_PRESIZE		(1U << 7)
--#define NFS_ATTR_FATTR_BLOCKS_USED	(1U << 8)
--#define NFS_ATTR_FATTR_SPACE_USED	(1U << 9)
--#define NFS_ATTR_FATTR_FSID		(1U << 10)
--#define NFS_ATTR_FATTR_FILEID		(1U << 11)
--#define NFS_ATTR_FATTR_ATIME		(1U << 12)
--#define NFS_ATTR_FATTR_MTIME		(1U << 13)
--#define NFS_ATTR_FATTR_CTIME		(1U << 14)
--#define NFS_ATTR_FATTR_PREMTIME		(1U << 15)
--#define NFS_ATTR_FATTR_PRECTIME		(1U << 16)
--#define NFS_ATTR_FATTR_CHANGE		(1U << 17)
--#define NFS_ATTR_FATTR_PRECHANGE	(1U << 18)
--#define NFS_ATTR_FATTR_V4_LOCATIONS	(1U << 19)
--#define NFS_ATTR_FATTR_V4_REFERRAL	(1U << 20)
--#define NFS_ATTR_FATTR_MOUNTPOINT	(1U << 21)
--#define NFS_ATTR_FATTR_MOUNTED_ON_FILEID (1U << 22)
--#define NFS_ATTR_FATTR_OWNER_NAME	(1U << 23)
--#define NFS_ATTR_FATTR_GROUP_NAME	(1U << 24)
--#define NFS_ATTR_FATTR_V4_SECURITY_LABEL (1U << 25)
-+#define NFS_ATTR_FATTR_TYPE		BIT_ULL(0)
-+#define NFS_ATTR_FATTR_MODE		BIT_ULL(1)
-+#define NFS_ATTR_FATTR_NLINK		BIT_ULL(2)
-+#define NFS_ATTR_FATTR_OWNER		BIT_ULL(3)
-+#define NFS_ATTR_FATTR_GROUP		BIT_ULL(4)
-+#define NFS_ATTR_FATTR_RDEV		BIT_ULL(5)
-+#define NFS_ATTR_FATTR_SIZE		BIT_ULL(6)
-+#define NFS_ATTR_FATTR_PRESIZE		BIT_ULL(7)
-+#define NFS_ATTR_FATTR_BLOCKS_USED	BIT_ULL(8)
-+#define NFS_ATTR_FATTR_SPACE_USED	BIT_ULL(9)
-+#define NFS_ATTR_FATTR_FSID		BIT_ULL(10)
-+#define NFS_ATTR_FATTR_FILEID		BIT_ULL(11)
-+#define NFS_ATTR_FATTR_ATIME		BIT_ULL(12)
-+#define NFS_ATTR_FATTR_MTIME		BIT_ULL(13)
-+#define NFS_ATTR_FATTR_CTIME		BIT_ULL(14)
-+#define NFS_ATTR_FATTR_PREMTIME		BIT_ULL(15)
-+#define NFS_ATTR_FATTR_PRECTIME		BIT_ULL(16)
-+#define NFS_ATTR_FATTR_CHANGE		BIT_ULL(17)
-+#define NFS_ATTR_FATTR_PRECHANGE	BIT_ULL(18)
-+#define NFS_ATTR_FATTR_V4_LOCATIONS	BIT_ULL(19)
-+#define NFS_ATTR_FATTR_V4_REFERRAL	BIT_ULL(20)
-+#define NFS_ATTR_FATTR_MOUNTPOINT	BIT_ULL(21)
-+#define NFS_ATTR_FATTR_MOUNTED_ON_FILEID BIT_ULL(22)
-+#define NFS_ATTR_FATTR_OWNER_NAME	BIT_ULL(23)
-+#define NFS_ATTR_FATTR_GROUP_NAME	BIT_ULL(24)
-+#define NFS_ATTR_FATTR_V4_SECURITY_LABEL BIT_ULL(25)
- 
- #define NFS_ATTR_FATTR (NFS_ATTR_FATTR_TYPE \
- 		| NFS_ATTR_FATTR_MODE \
 -- 
 2.51.0
 
