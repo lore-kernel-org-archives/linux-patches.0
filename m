@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737032737EE;
-	Fri,  9 Jan 2026 12:25:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E6A2737EE;
+	Fri,  9 Jan 2026 12:25:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961544; cv=none; b=mFRqwR85574QpS3HGksTrnuajicxBT82H6g+HWcHLjXXu68xRq2y9ORnmvyiZ4FgQ3w+Gl++DInVK0nnhwLclaJbZUe/bvEUiN0ce7wbK/tIyYQPwpmoxvJcDMmnX/f4kzbbkKk4utuWXqUBK/UhqxXqa5Ql0waFFpJGLqSTmn4=
+	t=1767961547; cv=none; b=RplJ+uz2CWWaPRQypktjhAKELr4cXEb9zPygE6A28gc+2AKAbPkddU9R5DLcv4h55rTU207lHUSSesh/T3TsPBG08yWxr+VLIEPY92xDaB2mne0dLryrCGkpuTqhCVqIPDeKmCPW+XQmwVm6X6Z15r3Ghjy9U6p8tLLRVSsHhOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961544; c=relaxed/simple;
-	bh=bwemejVHCMJe6XHRyM+2o6pt8dmWC56pwa8gxL+mYm8=;
+	s=arc-20240116; t=1767961547; c=relaxed/simple;
+	bh=Mn1/MLBSHJ6eiVIxqOjADrv0c4cGHwSEiM2MpJJXKDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lzcjJnWRJ6uAAMx4oD0g1fGnocEb4EW4qNGe1+2bjOqP2vCwE68yUMZj8DuS23JHq0+n5BofUw+0IYaTnwZa8nzOvB9hEjiQmkHeb/Qr7dUSXDHd6KNJs//eS2IDTHHrw/BUSoC3YmpJdf2YLuJ3vv91MLHuKGQhqlvO3WlB6Hk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wtEl58Sk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aGn+hn8lY3L5MxRfNoBtn1JNr11RZhErjyLd4SvjkOpSa/YwY+DLUgEkEdv9+lTnZHT/sq19XW+khQXIsTiIvYUwWTqbweQjmYiDTrxgOqzosCJUIDTbI4JNATPvIvV90XVH370vZugcq9tnz5jZjFQCz8ZVbmO3QsJhuk3Hqcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bobypMZC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wtEl58Sk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5F7CC4CEF1;
-	Fri,  9 Jan 2026 12:25:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bobypMZC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C9D4C4CEF1;
+	Fri,  9 Jan 2026 12:25:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961544;
-	bh=bwemejVHCMJe6XHRyM+2o6pt8dmWC56pwa8gxL+mYm8=;
+	s=korg; t=1767961546;
+	bh=Mn1/MLBSHJ6eiVIxqOjADrv0c4cGHwSEiM2MpJJXKDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wtEl58SkcFYJ0gYDLCcS3ZxOogWAAMgnGAXX+WZl7eNTYxXIvJ/tOV7+NORtDc1TM
-	 7e5eEiCuAGL/V9GpV5sJgCSoFbAuVfITi8sLGcAhm7UeYetdfKMIBhBxkSj1SoB7nF
-	 GHNNypOk/M//BXxwgQt22Z0Z8/q95gjX/TWHCeWk=
+	b=bobypMZC/Cy5ZdjsBHL2kPfrpremD1b0QzfKmrhNc1PS2TpzRJfk9OmTs5UXp9Jxj
+	 Z370pbauv0r/Anv19qSHTWtdGr1EDwLrEP8IMu1gpabiAlIMwm042wdchdHVlZlM4n
+	 CWzxO11Xqid7B2NKnEpTpAcavaq7q4hgjUUE1ugg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Johan Hovold <johan@kernel.org>,
 	Thomas Gleixner <tglx@linutronix.de>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 051/634] irqchip/irq-brcmstb-l2: Fix section mismatch
-Date: Fri,  9 Jan 2026 12:35:29 +0100
-Message-ID: <20260109112119.365834163@linuxfoundation.org>
+Subject: [PATCH 6.1 052/634] irqchip/imx-mu-msi: Fix section mismatch
+Date: Fri,  9 Jan 2026 12:35:30 +0100
+Message-ID: <20260109112119.402992933@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -54,53 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit bbe1775924478e95372c2f896064ab6446000713 ]
+[ Upstream commit 64acfd8e680ff8992c101fe19aadb112ce551072 ]
 
 Platform drivers can be probed after their init sections have been
 discarded so the irqchip init callbacks must not live in init.
 
-Fixes: 51d9db5c8fbb ("irqchip/irq-brcmstb-l2: Switch to IRQCHIP_PLATFORM_DRIVER")
+Fixes: 70afdab904d2 ("irqchip: Add IMX MU MSI controller driver")
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-brcmstb-l2.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ drivers/irqchip/irq-imx-mu-msi.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/irqchip/irq-brcmstb-l2.c b/drivers/irqchip/irq-brcmstb-l2.c
-index 5d4421f75b43a..f1e244e1ba3bb 100644
---- a/drivers/irqchip/irq-brcmstb-l2.c
-+++ b/drivers/irqchip/irq-brcmstb-l2.c
-@@ -158,10 +158,8 @@ static void brcmstb_l2_intc_resume(struct irq_data *d)
- 	irq_gc_unlock_irqrestore(gc, flags);
+diff --git a/drivers/irqchip/irq-imx-mu-msi.c b/drivers/irqchip/irq-imx-mu-msi.c
+index 229039eda1b1f..9b158d0043fb4 100644
+--- a/drivers/irqchip/irq-imx-mu-msi.c
++++ b/drivers/irqchip/irq-imx-mu-msi.c
+@@ -303,9 +303,8 @@ static const struct imx_mu_dcfg imx_mu_cfg_imx8ulp = {
+ 		  },
+ };
+ 
+-static int __init imx_mu_of_init(struct device_node *dn,
+-				 struct device_node *parent,
+-				 const struct imx_mu_dcfg *cfg)
++static int imx_mu_of_init(struct device_node *dn, struct device_node *parent,
++			  const struct imx_mu_dcfg *cfg)
+ {
+ 	struct platform_device *pdev = of_find_device_by_node(dn);
+ 	struct device_link *pd_link_a;
+@@ -423,20 +422,17 @@ static const struct dev_pm_ops imx_mu_pm_ops = {
+ 			   imx_mu_runtime_resume, NULL)
+ };
+ 
+-static int __init imx_mu_imx7ulp_of_init(struct device_node *dn,
+-					 struct device_node *parent)
++static int imx_mu_imx7ulp_of_init(struct device_node *dn, struct device_node *parent)
+ {
+ 	return imx_mu_of_init(dn, parent, &imx_mu_cfg_imx7ulp);
  }
  
--static int __init brcmstb_l2_intc_of_init(struct device_node *np,
--					  struct device_node *parent,
--					  const struct brcmstb_intc_init_params
--					  *init_params)
-+static int brcmstb_l2_intc_of_init(struct device_node *np, struct device_node *parent,
-+				   const struct brcmstb_intc_init_params *init_params)
+-static int __init imx_mu_imx6sx_of_init(struct device_node *dn,
+-					struct device_node *parent)
++static int imx_mu_imx6sx_of_init(struct device_node *dn, struct device_node *parent)
  {
- 	unsigned int clr = IRQ_NOREQUEST | IRQ_NOPROBE | IRQ_NOAUTOEN;
- 	unsigned int set = 0;
-@@ -277,14 +275,12 @@ static int __init brcmstb_l2_intc_of_init(struct device_node *np,
- 	return ret;
+ 	return imx_mu_of_init(dn, parent, &imx_mu_cfg_imx6sx);
  }
  
--static int __init brcmstb_l2_edge_intc_of_init(struct device_node *np,
--	struct device_node *parent)
-+static int brcmstb_l2_edge_intc_of_init(struct device_node *np, struct device_node *parent)
+-static int __init imx_mu_imx8ulp_of_init(struct device_node *dn,
+-					 struct device_node *parent)
++static int imx_mu_imx8ulp_of_init(struct device_node *dn, struct device_node *parent)
  {
- 	return brcmstb_l2_intc_of_init(np, parent, &l2_edge_intc_init);
- }
- 
--static int __init brcmstb_l2_lvl_intc_of_init(struct device_node *np,
--	struct device_node *parent)
-+static int brcmstb_l2_lvl_intc_of_init(struct device_node *np, struct device_node *parent)
- {
- 	return brcmstb_l2_intc_of_init(np, parent, &l2_lvl_intc_init);
+ 	return imx_mu_of_init(dn, parent, &imx_mu_cfg_imx8ulp);
  }
 -- 
 2.51.0
