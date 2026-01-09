@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D453359FA0;
-	Fri,  9 Jan 2026 12:20:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3647359FA0;
+	Fri,  9 Jan 2026 12:20:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961242; cv=none; b=qPleYCpSZKTIrjqSKO+za2rpzriUysrPA98fJQUyvLrTYwMR0368PF7gE0TCAlkSzH/Evk8J7tMkYPuzHPzQdlUqJ5piUhlcnG+5e2f6ZWEOEWkY21QWbw+YgEAoUQrGjYUuoxr3Pw2ZQ7Yfokj83Y20oytU0fJqbo4ftLqUnq4=
+	t=1767961244; cv=none; b=rEjjOgMzVzDdNj0UeTU9HxFdF/vonKS/vsAtAXknrO/0NEpinW/B+YbnbSCuNaANdaM4vnlxcJRkRlxbKaQFKHcmjWHepiL1RLDINgx9zOpS5zfDw2Q5at+EcETCHOnyH/C8NQ8yREyYSyaVa4UIIGwH72Imjredtow3kGmc134=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961242; c=relaxed/simple;
-	bh=PkMQd5tNb7lXolBGKCAhmqNDg/2F/jnXVqntJm6WEbg=;
+	s=arc-20240116; t=1767961244; c=relaxed/simple;
+	bh=hA7wW4jOOmBt5CQdXgVoIWhS2rakVyuvko09btGdnoM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QoltO991ZxersCZILrlyN6pboEDS70D4rCtrz+jC+mJPbNBfDaWGEKEtEwTM1Fpo/VTsZpRIAPFiwMczeTiwXFPXt3dvE+7o3BMoJ4Xrr69G2TP95C1FtBt0hWoXnncEqI5O4JKY5mAFeLvOPNv9imsDTOuXsfIbnMMLtJRIj80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PSoa9ZkY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oOjA+MtrWBcpZJ+FKZg2DFRKn+gole6WSTnhCQFmgiVc+sc+KswjQEMslObzah1C+hLQi+CJqtnF2236ayGvLEvfVzxj3TYi0BWut/fLLhXJAuvvdB36hHGboWT02vw8F/OaIGlrDd3Zb4pZS09Nq8V5OYsgm4mkOIzYRObduiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FJ+939V7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PSoa9ZkY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04A5C4CEF1;
-	Fri,  9 Jan 2026 12:20:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FJ+939V7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6386EC4CEF1;
+	Fri,  9 Jan 2026 12:20:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961242;
-	bh=PkMQd5tNb7lXolBGKCAhmqNDg/2F/jnXVqntJm6WEbg=;
+	s=korg; t=1767961244;
+	bh=hA7wW4jOOmBt5CQdXgVoIWhS2rakVyuvko09btGdnoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PSoa9ZkYVustAywgX4+pCSBsLH8R5fD/NBwxWA1ByHZA/imjwWs9CrFltbqgOFFKi
-	 SPwGFp2vmYkPaC897Rvc1CSYlVDSLJlLVKn2irfAjzlphuMHUCd5kbomLRMe2tvGD5
-	 jSPYZPGpRXmpUXfxZEePFahEOOJS62MeUG7NqcuI=
+	b=FJ+939V7of8T35hpC7Qk7s2/vWjpl4bc0b+XDp6T5cbcYinWqQYslR9tfZZwASP/m
+	 0aX1MJ3DsvdkhaAZZreC0TZgn4KTcF+pMZuXL6Z6bNm4hWKFAwjv2v7zk2OraX+Amq
+	 HGc4zIUsvVC2B1/Xzeors8Uz5tM8zYlH9x0q7gYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 685/737] f2fs: keep POSIX_FADV_NOREUSE ranges
-Date: Fri,  9 Jan 2026 12:43:44 +0100
-Message-ID: <20260109112159.826654195@linuxfoundation.org>
+Subject: [PATCH 6.6 686/737] f2fs: drop inode from the donation list when the last file is closed
+Date: Fri,  9 Jan 2026 12:43:45 +0100
+Message-ID: <20260109112159.865479823@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -53,10 +53,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-[ Upstream commit ef0c333cad8d1940f132a7ce15f15920216a3bd5 ]
+[ Upstream commit 078cad8212ce4f4ebbafcc0936475b8215e1ca2a ]
 
-This patch records POSIX_FADV_NOREUSE ranges for users to reclaim the caches
-instantly off from LRU.
+Let's drop the inode from the donation list when there is no other
+open file.
 
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
@@ -64,190 +64,74 @@ Stable-dep-of: 10b591e7fb7c ("f2fs: fix to avoid updating compression context du
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/debug.c |    3 ++
- fs/f2fs/f2fs.h  |   12 ++++++++++-
- fs/f2fs/file.c  |   60 +++++++++++++++++++++++++++++++++++++++++++++++++++-----
- fs/f2fs/inode.c |   14 +++++++++++++
- fs/f2fs/super.c |    1 
- 5 files changed, 84 insertions(+), 6 deletions(-)
+ fs/f2fs/f2fs.h  |    2 ++
+ fs/f2fs/file.c  |    8 +++++++-
+ fs/f2fs/inode.c |    2 +-
+ fs/f2fs/super.c |    1 +
+ 4 files changed, 11 insertions(+), 2 deletions(-)
 
---- a/fs/f2fs/debug.c
-+++ b/fs/f2fs/debug.c
-@@ -100,6 +100,7 @@ static void update_general_status(struct
- 	si->ndirty_imeta = get_pages(sbi, F2FS_DIRTY_IMETA);
- 	si->ndirty_dirs = sbi->ndirty_inode[DIR_INODE];
- 	si->ndirty_files = sbi->ndirty_inode[FILE_INODE];
-+	si->ndonate_files = sbi->donate_files;
- 	si->nquota_files = sbi->nquota_files;
- 	si->ndirty_all = sbi->ndirty_inode[DIRTY_META];
- 	si->aw_cnt = atomic_read(&sbi->atomic_files);
-@@ -436,6 +437,8 @@ static int stat_show(struct seq_file *s,
- 			   si->compr_inode, si->compr_blocks);
- 		seq_printf(s, "  - Swapfile Inode: %u\n",
- 			   si->swapfile_inode);
-+		seq_printf(s, "  - Donate Inode: %u\n",
-+			   si->ndonate_files);
- 		seq_printf(s, "  - Orphan/Append/Update Inode: %u, %u, %u\n",
- 			   si->orphans, si->append, si->update);
- 		seq_printf(s, "\nMain area: %d segs, %d secs %d zones\n",
 --- a/fs/f2fs/f2fs.h
 +++ b/fs/f2fs/f2fs.h
-@@ -837,6 +837,11 @@ struct f2fs_inode_info {
- #endif
- 	struct list_head dirty_list;	/* dirty list for dirs and files */
- 	struct list_head gdirty_list;	/* linked in global dirty list */
-+
-+	/* linked in global inode list for cache donation */
-+	struct list_head gdonate_list;
-+	pgoff_t donate_start, donate_end; /* inclusive */
-+
+@@ -841,6 +841,7 @@ struct f2fs_inode_info {
+ 	/* linked in global inode list for cache donation */
+ 	struct list_head gdonate_list;
+ 	pgoff_t donate_start, donate_end; /* inclusive */
++	atomic_t open_count;		/* # of open files */
+ 
  	struct task_struct *atomic_write_task;	/* store atomic write task */
  	struct extent_tree *extent_tree[NR_EXTENT_CACHES];
- 					/* cached extent_tree entry */
-@@ -1261,6 +1266,7 @@ enum inode_type {
- 	DIR_INODE,			/* for dirty dir inode */
- 	FILE_INODE,			/* for dirty regular/symlink inode */
- 	DIRTY_META,			/* for all dirtied inode metadata */
-+	DONATE_INODE,			/* for all inode to donate pages */
- 	NR_INODE_TYPE,
- };
+@@ -3560,6 +3561,7 @@ int f2fs_try_to_free_nats(struct f2fs_sb
+ void f2fs_update_inode(struct inode *inode, struct page *node_page);
+ void f2fs_update_inode_page(struct inode *inode);
+ int f2fs_write_inode(struct inode *inode, struct writeback_control *wbc);
++void f2fs_remove_donate_inode(struct inode *inode);
+ void f2fs_evict_inode(struct inode *inode);
+ void f2fs_handle_failed_inode(struct inode *inode);
  
-@@ -1613,6 +1619,9 @@ struct f2fs_sb_info {
- 	unsigned int warm_data_age_threshold;
- 	unsigned int last_age_weight;
- 
-+	/* control donate caches */
-+	unsigned int donate_files;
-+
- 	/* basic filesystem units */
- 	unsigned int log_sectors_per_block;	/* log2 sectors per block */
- 	unsigned int log_blocksize;		/* log2 block size */
-@@ -3948,7 +3957,8 @@ struct f2fs_stat_info {
- 	unsigned long long allocated_data_blocks;
- 	int ndirty_node, ndirty_dent, ndirty_meta, ndirty_imeta;
- 	int ndirty_data, ndirty_qdata;
--	unsigned int ndirty_dirs, ndirty_files, nquota_files, ndirty_all;
-+	unsigned int ndirty_dirs, ndirty_files, ndirty_all;
-+	unsigned int nquota_files, ndonate_files;
- 	int nats, dirty_nats, sits, dirty_sits;
- 	int free_nids, avail_nids, alloc_nids;
- 	int total_count, utilization;
 --- a/fs/f2fs/file.c
 +++ b/fs/f2fs/file.c
-@@ -2435,6 +2435,52 @@ static int f2fs_ioc_shutdown(struct file
- 	return ret;
+@@ -621,7 +621,10 @@ static int f2fs_file_open(struct inode *
+ 	if (err)
+ 		return err;
+ 
+-	return finish_preallocate_blocks(inode);
++	err = finish_preallocate_blocks(inode);
++	if (!err)
++		atomic_inc(&F2FS_I(inode)->open_count);
++	return err;
  }
  
-+static void f2fs_keep_noreuse_range(struct inode *inode,
-+				loff_t offset, loff_t len)
-+{
-+	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
-+	u64 max_bytes = F2FS_BLK_TO_BYTES(max_file_blocks(inode));
-+	u64 start, end;
-+
-+	if (!S_ISREG(inode->i_mode))
-+		return;
-+
-+	if (offset >= max_bytes || len > max_bytes ||
-+	    (offset + len) > max_bytes)
-+		return;
-+
-+	start = offset >> PAGE_SHIFT;
-+	end = DIV_ROUND_UP(offset + len, PAGE_SIZE);
-+
-+	inode_lock(inode);
-+	if (f2fs_is_atomic_file(inode)) {
-+		inode_unlock(inode);
-+		return;
-+	}
-+
-+	spin_lock(&sbi->inode_lock[DONATE_INODE]);
-+	/* let's remove the range, if len = 0 */
-+	if (!len) {
-+		if (!list_empty(&F2FS_I(inode)->gdonate_list)) {
-+			list_del_init(&F2FS_I(inode)->gdonate_list);
-+			sbi->donate_files--;
-+		}
-+	} else {
-+		if (list_empty(&F2FS_I(inode)->gdonate_list)) {
-+			list_add_tail(&F2FS_I(inode)->gdonate_list,
-+					&sbi->inode_list[DONATE_INODE]);
-+			sbi->donate_files++;
-+		} else {
-+			list_move_tail(&F2FS_I(inode)->gdonate_list,
-+					&sbi->inode_list[DONATE_INODE]);
-+		}
-+		F2FS_I(inode)->donate_start = start;
-+		F2FS_I(inode)->donate_end = end - 1;
-+	}
-+	spin_unlock(&sbi->inode_lock[DONATE_INODE]);
-+	inode_unlock(inode);
-+}
-+
- static int f2fs_ioc_fitrim(struct file *filp, unsigned long arg)
+ void f2fs_truncate_data_blocks_range(struct dnode_of_data *dn, int count)
+@@ -1966,6 +1969,9 @@ out:
+ 
+ static int f2fs_release_file(struct inode *inode, struct file *filp)
  {
- 	struct inode *inode = file_inode(filp);
-@@ -5078,12 +5124,16 @@ static int f2fs_file_fadvise(struct file
- 	}
- 
- 	err = generic_fadvise(filp, offset, len, advice);
--	if (!err && advice == POSIX_FADV_DONTNEED &&
--		test_opt(F2FS_I_SB(inode), COMPRESS_CACHE) &&
--		f2fs_compressed_file(inode))
--		f2fs_invalidate_compress_pages(F2FS_I_SB(inode), inode->i_ino);
-+	if (err)
-+		return err;
- 
--	return err;
-+	if (advice == POSIX_FADV_DONTNEED &&
-+	    (test_opt(F2FS_I_SB(inode), COMPRESS_CACHE) &&
-+	     f2fs_compressed_file(inode)))
-+		f2fs_invalidate_compress_pages(F2FS_I_SB(inode), inode->i_ino);
-+	else if (advice == POSIX_FADV_NOREUSE)
-+		f2fs_keep_noreuse_range(inode, offset, len);
-+	return 0;
- }
- 
- #ifdef CONFIG_COMPAT
++	if (atomic_dec_and_test(&F2FS_I(inode)->open_count))
++		f2fs_remove_donate_inode(inode);
++
+ 	/*
+ 	 * f2fs_release_file is called at every close calls. So we should
+ 	 * not drop any inmemory pages by close called by other process.
 --- a/fs/f2fs/inode.c
 +++ b/fs/f2fs/inode.c
-@@ -811,6 +811,19 @@ int f2fs_write_inode(struct inode *inode
+@@ -811,7 +811,7 @@ int f2fs_write_inode(struct inode *inode
  	return 0;
  }
  
-+static void f2fs_remove_donate_inode(struct inode *inode)
-+{
-+	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
-+
-+	if (list_empty(&F2FS_I(inode)->gdonate_list))
-+		return;
-+
-+	spin_lock(&sbi->inode_lock[DONATE_INODE]);
-+	list_del_init(&F2FS_I(inode)->gdonate_list);
-+	sbi->donate_files--;
-+	spin_unlock(&sbi->inode_lock[DONATE_INODE]);
-+}
-+
- /*
-  * Called at the last iput() if i_nlink is zero
-  */
-@@ -844,6 +857,7 @@ void f2fs_evict_inode(struct inode *inod
- 
- 	f2fs_bug_on(sbi, get_dirty_pages(inode));
- 	f2fs_remove_dirty_inode(inode);
-+	f2fs_remove_donate_inode(inode);
- 
- 	f2fs_destroy_extent_tree(inode);
+-static void f2fs_remove_donate_inode(struct inode *inode)
++void f2fs_remove_donate_inode(struct inode *inode)
+ {
+ 	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
  
 --- a/fs/f2fs/super.c
 +++ b/fs/f2fs/super.c
-@@ -1413,6 +1413,7 @@ static struct inode *f2fs_alloc_inode(st
+@@ -1409,6 +1409,7 @@ static struct inode *f2fs_alloc_inode(st
+ 	/* Initialize f2fs-specific inode info */
+ 	atomic_set(&fi->dirty_pages, 0);
+ 	atomic_set(&fi->i_compr_blocks, 0);
++	atomic_set(&fi->open_count, 0);
+ 	init_f2fs_rwsem(&fi->i_sem);
  	spin_lock_init(&fi->i_size_lock);
  	INIT_LIST_HEAD(&fi->dirty_list);
- 	INIT_LIST_HEAD(&fi->gdirty_list);
-+	INIT_LIST_HEAD(&fi->gdonate_list);
- 	init_f2fs_rwsem(&fi->i_gc_rwsem[READ]);
- 	init_f2fs_rwsem(&fi->i_gc_rwsem[WRITE]);
- 	init_f2fs_rwsem(&fi->i_xattr_sem);
 
 
