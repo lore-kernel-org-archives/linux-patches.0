@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B8233C511;
-	Fri,  9 Jan 2026 11:56:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B5A2DEA6F;
+	Fri,  9 Jan 2026 11:56:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959771; cv=none; b=D6EWs8PURq331ZyGOLVLFKKvvydNPLHPjDImlVtUWVUiyXS2kqmJ5ffMN+Kh6UGwJIMPfSmk1b8c2WlbbFg5e3wS4miDlN2nBmGxO+UG2lpH/ahp4sfE3HK8JWKzvFTehNsFwoJIIgY2cwwzZtr3bUNGptTjSFWenVQaD9FTqsE=
+	t=1767959774; cv=none; b=TDvqh9yQZ0c9YwcRYXpR6UrhBPFIU00L1XnHXO3CVsEqHPZJna4+LrwN8YsxYXXJcJsWX4UZ5ALAeiP4dJU1AP9chWS/oswLhB8EpJzJjBuoK+IB9627l236lIBF3mbJQbj/U++xgj57TzSyGFpixLlHdEPWyL6ctNG2EsGnM4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959771; c=relaxed/simple;
-	bh=STlpYeKKSgO9/dA+iDhYjeNhR1u9SA0wtgqwSF97v2o=;
+	s=arc-20240116; t=1767959774; c=relaxed/simple;
+	bh=o+8/dVG6sANh43FjfixBnJ3erT/rVpnkUB77FQZWZsc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JIAzErNT+GeSc5lj0X1x9yHymuUDm9aSbyE9PKe5Js5ksUNSFpTq464H1MiKXdxkgh9j0KApxdZKQkm7NdjJ7YXUqbiq44GAyoe++xeP3WedaJxS5xXgFLq1NCE4ifIdJIHDEcSQws31LaG++62M6P4IVP5Klon4OXHcZVQRrTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BGyIHnMM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sa/0NTICH/FBRE80PpultW8etmZ0s5McNzDB2pPHJuALnZF5RLkqjM744tRBxfntgp7goVsDtT9SIgNJtvAtC1PCV0Rh9AySh1ES0TXp+qsrbVFxQooLSSBn7F/IZuFzQgLKu7bT0TI6sK/Awe7ZZFokORurPM6pVeYgWG9aEzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pp9ArP0c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BGyIHnMM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 239B6C4CEF1;
-	Fri,  9 Jan 2026 11:56:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pp9ArP0c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD38FC4CEF1;
+	Fri,  9 Jan 2026 11:56:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959771;
-	bh=STlpYeKKSgO9/dA+iDhYjeNhR1u9SA0wtgqwSF97v2o=;
+	s=korg; t=1767959774;
+	bh=o+8/dVG6sANh43FjfixBnJ3erT/rVpnkUB77FQZWZsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BGyIHnMM9V+Grx/hzPSbzpAwECEsTts2Zo7O3Fxvd12dfz2PRw2AJfgSuhjsaWLJL
-	 wsJiF/JIL1VFtzqeu/VTlDEOuY9zr4WjmqLCsThAZpn3FdOidsedrRsKjQbeXt53TV
-	 LGMAfWJP8dMWMq8b88WURFbSfNAewXL/55aFW+os=
+	b=Pp9ArP0cPq0ax460/d2Sh48jKOLQSWspY52u/W9oHlExljYj3QUtLMt9zNma4gXTV
+	 zMnK6NzNYtPOkrBhYHikS+sRp2vD1sLZcqjFZ/Y+1EQPAPHdrEhB1lYuC7lR9y3hdH
+	 j1C2QEn96ofEISQeNBOUfyuN01T+4L+6P5qWknTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Zheng Qixing <zhengqixing@huawei.com>,
+	Yu Kuai <yukuai@fnnas.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 169/737] powerpc/64s/hash: Restrict stress_hpt_struct memblock region to within RMA limit
-Date: Fri,  9 Jan 2026 12:35:08 +0100
-Message-ID: <20260109112140.350886836@linuxfoundation.org>
+Subject: [PATCH 6.6 143/737] nbd: defer config unlock in nbd_genl_connect
+Date: Fri,  9 Jan 2026 12:34:42 +0100
+Message-ID: <20260109112139.378112719@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,79 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+From: Zheng Qixing <zhengqixing@huawei.com>
 
-[ Upstream commit 17b45ccf09882e0c808ad2cf62acdc90ad968746 ]
+[ Upstream commit 1649714b930f9ea6233ce0810ba885999da3b5d4 ]
 
-When HV=0 & IR/DR=0, the Hash MMU is said to be in Virtual Real
-Addressing Mode during early boot. During this, we should ensure that
-memory region allocations for stress_hpt_struct should happen from
-within RMA region as otherwise the boot might get stuck while doing
-memset of this region.
+There is one use-after-free warning when running NBD_CMD_CONNECT and
+NBD_CLEAR_SOCK:
 
-History behind why do we have RMA region limitation is better explained
-in these 2 patches [1] & [2]. This patch ensures that memset to
-stress_hpt_struct during early boot does not cross ppc64_rma_size
-boundary.
+nbd_genl_connect
+  nbd_alloc_and_init_config // config_refs=1
+  nbd_start_device // config_refs=2
+  set NBD_RT_HAS_CONFIG_REF			open nbd // config_refs=3
+  recv_work done // config_refs=2
+						NBD_CLEAR_SOCK // config_refs=1
+						close nbd // config_refs=0
+  refcount_inc -> uaf
 
-[1]: https://lore.kernel.org/all/20190710052018.14628-1-sjitindarsingh@gmail.com/
-[2]: https://lore.kernel.org/all/87wp54usvj.fsf@linux.vnet.ibm.com/
+------------[ cut here ]------------
+refcount_t: addition on 0; use-after-free.
+WARNING: CPU: 24 PID: 1014 at lib/refcount.c:25 refcount_warn_saturate+0x12e/0x290
+ nbd_genl_connect+0x16d0/0x1ab0
+ genl_family_rcv_msg_doit+0x1f3/0x310
+ genl_rcv_msg+0x44a/0x790
 
-Fixes: 6b34a099faa12 ("powerpc/64s/hash: add stress_hpt kernel boot option to increase hash faults")
-Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/ada1173933ea7617a994d6ee3e54ced8797339fc.1761834163.git.ritesh.list@gmail.com
+The issue can be easily reproduced by adding a small delay before
+refcount_inc(&nbd->config_refs) in nbd_genl_connect():
+
+        mutex_unlock(&nbd->config_lock);
+        if (!ret) {
+                set_bit(NBD_RT_HAS_CONFIG_REF, &config->runtime_flags);
++               printk("before sleep\n");
++               mdelay(5 * 1000);
++               printk("after sleep\n");
+                refcount_inc(&nbd->config_refs);
+                nbd_connect_reply(info, nbd->index);
+        }
+
+Fixes: e46c7287b1c2 ("nbd: add a basic netlink interface")
+Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
+Reviewed-by: Yu Kuai <yukuai@fnnas.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/mm/book3s64/hash_utils.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/block/nbd.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/mm/book3s64/hash_utils.c b/arch/powerpc/mm/book3s64/hash_utils.c
-index ad2afa08e62ed..4f09d295e5188 100644
---- a/arch/powerpc/mm/book3s64/hash_utils.c
-+++ b/arch/powerpc/mm/book3s64/hash_utils.c
-@@ -1032,11 +1032,14 @@ static void __init htab_initialize(void)
- 	unsigned long table;
- 	unsigned long pteg_count;
- 	unsigned long prot;
--	phys_addr_t base = 0, size = 0, end;
-+	phys_addr_t base = 0, size = 0, end, limit = MEMBLOCK_ALLOC_ANYWHERE;
- 	u64 i;
+diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
+index 9e190d220e98f..8b7f306ec976f 100644
+--- a/drivers/block/nbd.c
++++ b/drivers/block/nbd.c
+@@ -2147,12 +2147,13 @@ static int nbd_genl_connect(struct sk_buff *skb, struct genl_info *info)
  
- 	DBG(" -> htab_initialize()\n");
- 
-+	if (firmware_has_feature(FW_FEATURE_LPAR))
-+		limit = ppc64_rma_size;
+ 	ret = nbd_start_device(nbd);
+ out:
+-	mutex_unlock(&nbd->config_lock);
+ 	if (!ret) {
+ 		set_bit(NBD_RT_HAS_CONFIG_REF, &config->runtime_flags);
+ 		refcount_inc(&nbd->config_refs);
+ 		nbd_connect_reply(info, nbd->index);
+ 	}
++	mutex_unlock(&nbd->config_lock);
 +
- 	if (mmu_has_feature(MMU_FTR_1T_SEGMENT)) {
- 		mmu_kernel_ssize = MMU_SEGSIZE_1T;
- 		mmu_highuser_ssize = MMU_SEGSIZE_1T;
-@@ -1052,7 +1055,7 @@ static void __init htab_initialize(void)
- 		// Too early to use nr_cpu_ids, so use NR_CPUS
- 		tmp = memblock_phys_alloc_range(sizeof(struct stress_hpt_struct) * NR_CPUS,
- 						__alignof__(struct stress_hpt_struct),
--						0, MEMBLOCK_ALLOC_ANYWHERE);
-+						MEMBLOCK_LOW_LIMIT, limit);
- 		memset((void *)tmp, 0xff, sizeof(struct stress_hpt_struct) * NR_CPUS);
- 		stress_hpt_struct = __va(tmp);
- 
-@@ -1086,7 +1089,6 @@ static void __init htab_initialize(void)
- 			mmu_hash_ops.hpte_clear_all();
- #endif
- 	} else {
--		unsigned long limit = MEMBLOCK_ALLOC_ANYWHERE;
- 
- #ifdef CONFIG_PPC_CELL
- 		/*
-@@ -1102,7 +1104,7 @@ static void __init htab_initialize(void)
- 
- 		table = memblock_phys_alloc_range(htab_size_bytes,
- 						  htab_size_bytes,
--						  0, limit);
-+						  MEMBLOCK_LOW_LIMIT, limit);
- 		if (!table)
- 			panic("ERROR: Failed to allocate %pa bytes below %pa\n",
- 			      &htab_size_bytes, &limit);
+ 	nbd_config_put(nbd);
+ 	if (put_dev)
+ 		nbd_put(nbd);
 -- 
 2.51.0
 
