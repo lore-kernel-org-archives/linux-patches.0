@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2340F33CE9A;
-	Fri,  9 Jan 2026 12:00:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ACBE359F98;
+	Fri,  9 Jan 2026 12:00:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960019; cv=none; b=rKOfIftlyHw0gMU4gzFgykrTziyehM0vU690Y5C0GXTXBv6yEHm9LO3xoL3H1KTbsZ2fEmvnX+ZZb2VB7rN8WoQNKp69RhzCBYDs0Pty6hB2YDoVJmZ90jvMNZ6i7QJHR9UyS1QXws14iTZlm8ZK5eBypK20h0LYDO8L2GSpa9U=
+	t=1767960022; cv=none; b=cQij+SkW1ZkGJXdEi2HQulBYWfcbi411PXmOgfMBSOfDNSMtjNVYPSIe2behXNS6r7pRRPNnJC0zx4jcgutXtx1rNsH5tt6fHiiYXZXLGVIElRei0EVvK/VudQEQISvD0Cj4cSQOkOcaVWdUVZ+9h87On8mqjzT8HsFqPfjQWhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960019; c=relaxed/simple;
-	bh=ucL7VrkDak9p8zCCGGc82C4TP8GmN195KEf+4ZYdPCs=;
+	s=arc-20240116; t=1767960022; c=relaxed/simple;
+	bh=hyilYcFRoF7CAFTo/oAdgHlTO9BzNTO0ovFC3CtTKXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pduEV12Fa8W51XYHT581fJcrtk6VJLpjwkt0sO3yTnShefUHbPGCwpkIu+XJqCVPuB9j/5mkjnN0oNut0b6SQLivWIWSICBMVV1Jr78AS8ksUxkSULLqyAX07x1HWrVHc3t1Aa+7vq2HlA4+lNS0I6qnDZDBlYIAGi2epdj8WNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nktlGdf5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cFSPWsont9tXSpvIpeHfK2Jb8NRS7jdrJERvn8k5S0Ty45gPqwUeF2T9B4//MlyQXn5vJaqSgPOwqQ2uhuoIyDOG16wDGp+jNzMkJK6eFB/JjXJn0gQ8n52YxllSyCw1cJ6u7UMxovzoYbkwo/8QwLfu8KgPd6VTh7yEs1H/Bqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=plbxZ3Q5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nktlGdf5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99AAFC4CEF1;
-	Fri,  9 Jan 2026 12:00:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="plbxZ3Q5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8588AC4CEF1;
+	Fri,  9 Jan 2026 12:00:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960019;
-	bh=ucL7VrkDak9p8zCCGGc82C4TP8GmN195KEf+4ZYdPCs=;
+	s=korg; t=1767960021;
+	bh=hyilYcFRoF7CAFTo/oAdgHlTO9BzNTO0ovFC3CtTKXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nktlGdf5H2cjh9kDMGuShaVMbJarZtZ4N8BimltUwQVOyppcHrrD6fKCTOFCpFMsQ
-	 LxQyLfUwTQqa9Znpqu+tjzUD+/KCVkKua0ofOeGsM/4qqTTGlGAENJiMnrJvZtf3+h
-	 6m6PCvlKpN+jGDKWDGOY6eQVu9VKcpUCtpFXHBdw=
+	b=plbxZ3Q5qB+/8gaLuu6PdSZs9A0Q7xRoj2QpBADm6XHsBL6d069jw6QRMilbbSeWR
+	 Tlu+LZXtEnThCvh542kH8QH6QWVg1Ks8eTovOxqSeG1JQrgSZU2RJUM7WTK8ae7VZP
+	 2dot1cF+WhivGoaJzyuSidGgkiwMwfxTfypWmopo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Helge Deller <deller@gmx.de>,
+	Eric Sandeen <sandeen@redhat.com>,
+	Remi Pommarel <repk@triplefau.lt>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 257/737] fbdev: ssd1307fb: fix potential page leak in ssd1307fb_probe()
-Date: Fri,  9 Jan 2026 12:36:36 +0100
-Message-ID: <20260109112143.660703183@linuxfoundation.org>
+Subject: [PATCH 6.6 258/737] 9p: fix cache/debug options printing in v9fs_show_options
+Date: Fri,  9 Jan 2026 12:36:37 +0100
+Message-ID: <20260109112143.697706704@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,44 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Eric Sandeen <sandeen@redhat.com>
 
-[ Upstream commit 164312662ae9764b83b84d97afb25c42eb2be473 ]
+[ Upstream commit f0445613314f474c1a0ec6fa8a5cd153a618f1b6 ]
 
-The page allocated for vmem using __get_free_pages() is not freed on the
-error paths after it. Fix that by adding a corresponding __free_pages()
-call to the error path.
+commit 4eb3117888a92 changed the cache= option to accept either string
+shortcuts or bitfield values. It also changed /proc/mounts to emit the
+option as the hexadecimal numeric value rather than the shortcut string.
 
-Fixes: facd94bc458a ("fbdev: ssd1307fb: Allocate page aligned video memory.")
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Signed-off-by: Helge Deller <deller@gmx.de>
+However, by printing "cache=%x" without the leading 0x, shortcuts such
+as "cache=loose" will emit "cache=f" and 'f' is not a string that is
+parseable by kstrtoint(), so remounting may fail if a remount with
+"cache=f" is attempted.
+
+debug=%x has had the same problem since options have been displayed in
+c4fac9100456 ("9p: Implement show_options")
+
+Fix these by adding the 0x prefix to the hexadecimal value shown in
+/proc/mounts.
+
+Fixes: 4eb3117888a92 ("fs/9p: Rework cache modes and add new options to Documentation")
+Signed-off-by: Eric Sandeen <sandeen@redhat.com>
+Message-ID: <54b93378-dcf1-4b04-922d-c8b4393da299@redhat.com>
+[Dominique: use %#x at Al Viro's suggestion, also handle debug]
+Tested-by: Remi Pommarel <repk@triplefau.lt>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/ssd1307fb.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/9p/v9fs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/video/fbdev/ssd1307fb.c b/drivers/video/fbdev/ssd1307fb.c
-index 1a4f90ea7d5a8..bf8ec4861b45c 100644
---- a/drivers/video/fbdev/ssd1307fb.c
-+++ b/drivers/video/fbdev/ssd1307fb.c
-@@ -688,7 +688,7 @@ static int ssd1307fb_probe(struct i2c_client *client)
- 	if (!ssd1307fb_defio) {
- 		dev_err(dev, "Couldn't allocate deferred io.\n");
- 		ret = -ENOMEM;
--		goto fb_alloc_error;
-+		goto fb_defio_error;
- 	}
+diff --git a/fs/9p/v9fs.c b/fs/9p/v9fs.c
+index be61810cb7798..159a2aae849b9 100644
+--- a/fs/9p/v9fs.c
++++ b/fs/9p/v9fs.c
+@@ -101,7 +101,7 @@ int v9fs_show_options(struct seq_file *m, struct dentry *root)
+ 	struct v9fs_session_info *v9ses = root->d_sb->s_fs_info;
  
- 	ssd1307fb_defio->delay = HZ / refreshrate;
-@@ -766,6 +766,8 @@ static int ssd1307fb_probe(struct i2c_client *client)
- 		regulator_disable(par->vbat_reg);
- reset_oled_error:
- 	fb_deferred_io_cleanup(info);
-+fb_defio_error:
-+	__free_pages(vmem, get_order(vmem_size));
- fb_alloc_error:
- 	framebuffer_release(info);
- 	return ret;
+ 	if (v9ses->debug)
+-		seq_printf(m, ",debug=%x", v9ses->debug);
++		seq_printf(m, ",debug=%#x", v9ses->debug);
+ 	if (!uid_eq(v9ses->dfltuid, V9FS_DEFUID))
+ 		seq_printf(m, ",dfltuid=%u",
+ 			   from_kuid_munged(&init_user_ns, v9ses->dfltuid));
+@@ -117,7 +117,7 @@ int v9fs_show_options(struct seq_file *m, struct dentry *root)
+ 	if (v9ses->nodev)
+ 		seq_puts(m, ",nodevmap");
+ 	if (v9ses->cache)
+-		seq_printf(m, ",cache=%x", v9ses->cache);
++		seq_printf(m, ",cache=%#x", v9ses->cache);
+ #ifdef CONFIG_9P_FSCACHE
+ 	if (v9ses->cachetag && (v9ses->cache & CACHE_FSCACHE))
+ 		seq_printf(m, ",cachetag=%s", v9ses->cachetag);
 -- 
 2.51.0
 
