@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27BBF35B15F;
-	Fri,  9 Jan 2026 12:09:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A99B35A93E;
+	Fri,  9 Jan 2026 12:09:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960576; cv=none; b=rpy8I/g33h9sCFOqTU88immLtqs+4QxWolQzcerFg4Sa2Uy7XNikceSPHw4RSQvWMzTR2Pvacgw2rp6qDAn4uBUsJFa37SVHWqWa95MmmzeBYoahG/NCSaS7bvxWwn39/S14e5MX7XWkOWIG4DUXDrzOPssdM6fNlo2VO8r83rc=
+	t=1767960579; cv=none; b=E8wmN5iJbKnsl6Sfz4p8LTTE6DKBKqYHFm6GSRweDp45DANgLb2Cyq31E+4FDeCZWVjh+SgywLew6b8hH1W+C/kh+FinmUqAXZNIN8mlKg/AYf9InrFMQdB9LK07FN8e25FHVHyf5jdGJwEQRZeU0KI6Tv7l2hNBwGwNY5s4MBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960576; c=relaxed/simple;
-	bh=RiyJal/JFnup6F2YbNtxxjFkjRRDLzXvqhUlWDgjTjE=;
+	s=arc-20240116; t=1767960579; c=relaxed/simple;
+	bh=nxkqlgKp4mm+zUZ/+UBYOW2Auw7opM10syhuVKhAX6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UfnsU35KYfBmGJLsfuXwT0OkVR9thtvNy1DrNmsjpB237+sjI6FR6/Tz14Ff2ZjtAG3YqWX5xqK0Zgel5xB/Ovj0naQistLCr/ZqenaSElotKMNDtTd9khw55a98aMWj6XEi6LE3YqI+p/GylUEv7UtxcckuuYD2upW8h5Ys+BA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hJjalpQi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g8Rj89kRfgof/Qi9BlcElwKe0Un/o5cHGRZzGs0zJeH6A9a8UOrz4p8TSh0qM62mwN3txUw/3lAxrpKYIZZ0pOdR3fB4pBMr+xlkTrNxmdEEhUdhrF3AxLvK21+tFKVm8O4k+5L0mO+ZIvwVdz5vQaXbS0EjGVLCMuwbgBBM7wE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qJs/ELvX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hJjalpQi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2A6C4CEF1;
-	Fri,  9 Jan 2026 12:09:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qJs/ELvX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A345C4CEF1;
+	Fri,  9 Jan 2026 12:09:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960576;
-	bh=RiyJal/JFnup6F2YbNtxxjFkjRRDLzXvqhUlWDgjTjE=;
+	s=korg; t=1767960578;
+	bh=nxkqlgKp4mm+zUZ/+UBYOW2Auw7opM10syhuVKhAX6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hJjalpQi819Qx2XHcZ7RXYLGRAXThz8kWC9QohDkzH7g/dn01rbB8vpjSHDvldSd2
-	 5bAaZeddTYpsXtrdks+rTt/HMoXA5MZCCtrSrEw2fkd9HwE/4kq3J9jdk6S8IdW12w
-	 ak7qYL0HM9lCCrsnJkSFRyTrJawO2EsHouSuTNqI=
+	b=qJs/ELvXn6aJxzeiZZCrIKvlgBnhbmrLyvnOpdcVxgDtkohuGKodo+nD9AZ02SbMv
+	 lZoVqKQ7nraXMOxYxRmNX8qB3RMuTQdFflVzLu0oe5q+3jMnjZZTHPfN4SDi9P87yT
+	 QSk4jNPC0C1Alur0QyhwYqBifHyQDlfY2CkKavH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Xiaole He <hexiaole1994@126.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.6 452/737] f2fs: fix age extent cache insertion skip on counter overflow
-Date: Fri,  9 Jan 2026 12:39:51 +0100
-Message-ID: <20260109112150.997555199@linuxfoundation.org>
+	syzbot+6e493c165d26d6fcbf72@syzkaller.appspotmail.com,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.6 426/737] jbd2: use a per-journal lock_class_key for jbd2_trans_commit_key
+Date: Fri,  9 Jan 2026 12:39:25 +0100
+Message-ID: <20260109112150.022039632@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,143 +53,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaole He <hexiaole1994@126.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-commit 27bf6a637b7613fc85fa6af468b7d612d78cd5c0 upstream.
+commit 524c3853831cf4f7e1db579e487c757c3065165c upstream.
 
-The age extent cache uses last_blocks (derived from
-allocated_data_blocks) to determine data age. However, there's a
-conflict between the deletion
-marker (last_blocks=0) and legitimate last_blocks=0 cases when
-allocated_data_blocks overflows to 0 after reaching ULLONG_MAX.
+syzbot is reporting possibility of deadlock due to sharing lock_class_key
+for jbd2_handle across ext4 and ocfs2. But this is a false positive, for
+one disk partition can't have two filesystems at the same time.
 
-In this case, valid extents are incorrectly skipped due to the
-"if (!tei->last_blocks)" check in __update_extent_tree_range().
-
-This patch fixes the issue by:
-1. Reserving ULLONG_MAX as an invalid/deletion marker
-2. Limiting allocated_data_blocks to range [0, ULLONG_MAX-1]
-3. Using F2FS_EXTENT_AGE_INVALID for deletion scenarios
-4. Adjusting overflow age calculation from ULLONG_MAX to (ULLONG_MAX-1)
-
-Reproducer (using a patched kernel with allocated_data_blocks
-initialized to ULLONG_MAX - 3 for quick testing):
-
-Step 1: Mount and check initial state
-  # dd if=/dev/zero of=/tmp/test.img bs=1M count=100
-  # mkfs.f2fs -f /tmp/test.img
-  # mkdir -p /mnt/f2fs_test
-  # mount -t f2fs -o loop,age_extent_cache /tmp/test.img /mnt/f2fs_test
-  # cat /sys/kernel/debug/f2fs/status | grep -A 4 "Block Age"
-  Allocated Data Blocks: 18446744073709551612 # ULLONG_MAX - 3
-  Inner Struct Count: tree: 1(0), node: 0
-
-Step 2: Create files and write data to trigger overflow
-  # touch /mnt/f2fs_test/{1,2,3,4}.txt; sync
-  # cat /sys/kernel/debug/f2fs/status | grep -A 4 "Block Age"
-  Allocated Data Blocks: 18446744073709551613 # ULLONG_MAX - 2
-  Inner Struct Count: tree: 5(0), node: 1
-
-  # dd if=/dev/urandom of=/mnt/f2fs_test/1.txt bs=4K count=1; sync
-  # cat /sys/kernel/debug/f2fs/status | grep -A 4 "Block Age"
-  Allocated Data Blocks: 18446744073709551614 # ULLONG_MAX - 1
-  Inner Struct Count: tree: 5(0), node: 2
-
-  # dd if=/dev/urandom of=/mnt/f2fs_test/2.txt bs=4K count=1; sync
-  # cat /sys/kernel/debug/f2fs/status | grep -A 4 "Block Age"
-  Allocated Data Blocks: 18446744073709551615 # ULLONG_MAX
-  Inner Struct Count: tree: 5(0), node: 3
-
-  # dd if=/dev/urandom of=/mnt/f2fs_test/3.txt bs=4K count=1; sync
-  # cat /sys/kernel/debug/f2fs/status | grep -A 4 "Block Age"
-  Allocated Data Blocks: 0 # Counter overflowed!
-  Inner Struct Count: tree: 5(0), node: 4
-
-Step 3: Trigger the bug - next write should create node but gets skipped
-  # dd if=/dev/urandom of=/mnt/f2fs_test/4.txt bs=4K count=1; sync
-  # cat /sys/kernel/debug/f2fs/status | grep -A 4 "Block Age"
-  Allocated Data Blocks: 1
-  Inner Struct Count: tree: 5(0), node: 4
-
-  Expected: node: 5 (new extent node for 4.txt)
-  Actual: node: 4 (extent insertion was incorrectly skipped due to
-  last_blocks = allocated_data_blocks = 0 in __get_new_block_age)
-
-After this fix, the extent node is correctly inserted and node count
-becomes 5 as expected.
-
-Fixes: 71644dff4811 ("f2fs: add block_age-based extent cache")
+Reported-by: syzbot+6e493c165d26d6fcbf72@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=6e493c165d26d6fcbf72
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Tested-by: syzbot+6e493c165d26d6fcbf72@syzkaller.appspotmail.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Message-ID: <987110fc-5470-457a-a218-d286a09dd82f@I-love.SAKURA.ne.jp>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
-Signed-off-by: Xiaole He <hexiaole1994@126.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/extent_cache.c |    5 +++--
- fs/f2fs/f2fs.h         |    6 ++++++
- fs/f2fs/segment.c      |    9 +++++++--
- 3 files changed, 16 insertions(+), 4 deletions(-)
+ fs/jbd2/journal.c    |    6 ++++--
+ include/linux/jbd2.h |    6 ++++++
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
---- a/fs/f2fs/extent_cache.c
-+++ b/fs/f2fs/extent_cache.c
-@@ -755,7 +755,7 @@ static void __update_extent_tree_range(s
- 	}
- 	goto out_read_extent_cache;
- update_age_extent_cache:
--	if (!tei->last_blocks)
-+	if (tei->last_blocks == F2FS_EXTENT_AGE_INVALID)
- 		goto out_read_extent_cache;
+--- a/fs/jbd2/journal.c
++++ b/fs/jbd2/journal.c
+@@ -1563,7 +1563,6 @@ static journal_t *journal_init_common(st
+ 			struct block_device *fs_dev,
+ 			unsigned long long start, int len, int blocksize)
+ {
+-	static struct lock_class_key jbd2_trans_commit_key;
+ 	journal_t *journal;
+ 	int err;
+ 	int n;
+@@ -1572,6 +1571,7 @@ static journal_t *journal_init_common(st
+ 	if (!journal)
+ 		return ERR_PTR(-ENOMEM);
  
- 	__set_extent_info(&ei, fofs, len, 0, false,
-@@ -859,7 +859,7 @@ static int __get_new_block_age(struct in
- 			cur_age = cur_blocks - tei.last_blocks;
- 		else
- 			/* allocated_data_blocks overflow */
--			cur_age = ULLONG_MAX - tei.last_blocks + cur_blocks;
-+			cur_age = (ULLONG_MAX - 1) - tei.last_blocks + cur_blocks;
++	lockdep_register_key(&journal->jbd2_trans_commit_key);
+ 	journal->j_blocksize = blocksize;
+ 	journal->j_dev = bdev;
+ 	journal->j_fs_dev = fs_dev;
+@@ -1601,7 +1601,7 @@ static journal_t *journal_init_common(st
+ 	journal->j_max_batch_time = 15000; /* 15ms */
+ 	atomic_set(&journal->j_reserved_credits, 0);
+ 	lockdep_init_map(&journal->j_trans_commit_map, "jbd2_handle",
+-			 &jbd2_trans_commit_key, 0);
++			 &journal->jbd2_trans_commit_key, 0);
  
- 		if (tei.age)
- 			ei->age = __calculate_block_age(sbi, cur_age, tei.age);
-@@ -1063,6 +1063,7 @@ void f2fs_update_age_extent_cache_range(
- 	struct extent_info ei = {
- 		.fofs = fofs,
- 		.len = len,
-+		.last_blocks = F2FS_EXTENT_AGE_INVALID,
- 	};
+ 	/* The journal is marked for error until we succeed with recovery! */
+ 	journal->j_flags = JBD2_ABORT;
+@@ -1648,6 +1648,7 @@ err_cleanup:
+ 	kfree(journal->j_wbuf);
+ 	jbd2_journal_destroy_revoke(journal);
+ 	journal_fail_superblock(journal);
++	lockdep_unregister_key(&journal->jbd2_trans_commit_key);
+ 	kfree(journal);
+ 	return ERR_PTR(err);
+ }
+@@ -2229,6 +2230,7 @@ int jbd2_journal_destroy(journal_t *jour
+ 		crypto_free_shash(journal->j_chksum_driver);
+ 	kfree(journal->j_fc_wbuf);
+ 	kfree(journal->j_wbuf);
++	lockdep_unregister_key(&journal->jbd2_trans_commit_key);
+ 	kfree(journal);
  
- 	if (!__may_extent_tree(dn->inode, EX_BLOCK_AGE))
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -626,6 +626,12 @@ enum extent_type {
- 	NR_EXTENT_CACHES,
- };
+ 	return err;
+--- a/include/linux/jbd2.h
++++ b/include/linux/jbd2.h
+@@ -1266,6 +1266,12 @@ struct journal_s
+ 	 */
+ 	struct lockdep_map	j_trans_commit_map;
+ #endif
++	/**
++	 * @jbd2_trans_commit_key:
++	 *
++	 * "struct lock_class_key" for @j_trans_commit_map
++	 */
++	struct lock_class_key	jbd2_trans_commit_key;
  
-+/*
-+ * Reserved value to mark invalid age extents, hence valid block range
-+ * from 0 to ULLONG_MAX-1
-+ */
-+#define F2FS_EXTENT_AGE_INVALID	ULLONG_MAX
-+
- struct extent_info {
- 	unsigned int fofs;		/* start offset in a file */
- 	unsigned int len;		/* length of the extent */
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -3542,8 +3542,13 @@ skip_new_segment:
- 	locate_dirty_segment(sbi, GET_SEGNO(sbi, old_blkaddr));
- 	locate_dirty_segment(sbi, GET_SEGNO(sbi, *new_blkaddr));
- 
--	if (IS_DATASEG(curseg->seg_type))
--		atomic64_inc(&sbi->allocated_data_blocks);
-+	if (IS_DATASEG(curseg->seg_type)) {
-+		unsigned long long new_val;
-+
-+		new_val = atomic64_inc_return(&sbi->allocated_data_blocks);
-+		if (unlikely(new_val == ULLONG_MAX))
-+			atomic64_set(&sbi->allocated_data_blocks, 0);
-+	}
- 
- 	up_write(&sit_i->sentry_lock);
- 
+ 	/**
+ 	 * @j_fc_cleanup_callback:
 
 
