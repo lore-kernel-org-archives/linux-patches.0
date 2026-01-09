@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 868F533B6F1;
-	Fri,  9 Jan 2026 12:11:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE8C23ED5B;
+	Fri,  9 Jan 2026 12:11:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960700; cv=none; b=dkAgl5jInibMSvc6sLnmTxoxd6zCDkFGS/4x5jp20dVGM6qCFZxVMu7pBJ8AMSx3gVPvVhyfpgK5sk/n3Mwv0pVZ+iSVmyTyGyGYbPK/0XfNjE41+vqOMyuwKwq97oMrb2lRjXUIDpt2RqoW7hqHvQpNXzKl4F2hvb5elxn4ab4=
+	t=1767960703; cv=none; b=MqpRuZHv8UXMDhIQqU74wGPLQ45vminPaAX3BZY+iBS9uX0XksFJIqK8BsZczAdIj4q06aDG3AANcWK9Xvhb4sATDM7Lloy+x4Qm77fMPwSIOTqdRRc4u3YjFKhFIBU/h33A0FUt6LnqTavbBnnymt8jtXnubyQIlvEDwvhOQUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960700; c=relaxed/simple;
-	bh=G9+eQ1To/Hljyti1BNCq3CNgyBZiYvohygudjsnx2Wc=;
+	s=arc-20240116; t=1767960703; c=relaxed/simple;
+	bh=iu6sLnUNmS+4Z3S8pTfs20lcFaqSYvMof0XLBr5NX9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NzDKKZtrb2Z5FPqP9lGgYg4MHunp9aKM1hzoLmGc2nYY42DZaE0naHlzsx3xrm/DBv1MMyDAwc/NXC9Pt7Qy2MfWYaG7LdNq/9PKZCfZ3LFFqU3PaWioPyi1Pq5amjdNP5IdafyeHiBLfU3GRdJBXHcgsDQZksI5LarCUB9tTao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xQiQiqPb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IsSu0ClUzAQISVqA4nhkItrEcmdiBW2Y2fLUuxlmUhj7X0PgjxyAusbOWMiM2S1WmsaDdKiTPbWSqmR0Tr0u6uQuFWsFETtze8L4wLrkVFRWBzhWgc+e52Js+8p+COhnuq8XgvAZucYyCMQ1stQyOgM80iYZorwp0pTwmmC7dTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1WvPh3dS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xQiQiqPb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C62D3C4CEF1;
-	Fri,  9 Jan 2026 12:11:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1WvPh3dS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2BF0C4CEF1;
+	Fri,  9 Jan 2026 12:11:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960700;
-	bh=G9+eQ1To/Hljyti1BNCq3CNgyBZiYvohygudjsnx2Wc=;
+	s=korg; t=1767960703;
+	bh=iu6sLnUNmS+4Z3S8pTfs20lcFaqSYvMof0XLBr5NX9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xQiQiqPb52RNcS4S7BhzKLnI/FBP835NSm7h2qEW5xIHKroCfw1ExM0Xu+/z818Wx
-	 WtbOtbpDLwtxztLact/3Resvi5lv50Zxei3eBT2UBM6HYR/LeaoUPXq9EdD/I/RAur
-	 AIbTN+/VUoZZmyYB5WMUmeqVYxTaB+9zPivSwbcg=
+	b=1WvPh3dSNQjC25zonrGmRvvw9B+0QZq2a0/aBkmWU4EAJUSRLIqHtVUlvDcm0NeU/
+	 7CKVOYA4xWQRoGz+1bjDjVWFB4OvuCFAsAQovnhRp9lbxsIfKX8Eubye/2U9OcejXB
+	 eqn42UhPuJxJDju4rd1IBjiARLoZ8ZRlxQ4Zn67I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.6 493/737] rpmsg: glink: fix rpmsg device leak
-Date: Fri,  9 Jan 2026 12:40:32 +0100
-Message-ID: <20260109112152.537991348@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.6 462/737] KVM: x86: WARN if hrtimer callback for periodic APIC timer fires with period=0
+Date: Fri,  9 Jan 2026 12:40:01 +0100
+Message-ID: <20260109112151.370875881@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,83 +49,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit a53e356df548f6b0e82529ef3cc6070f42622189 upstream.
+commit 0ea9494be9c931ddbc084ad5e11fda91b554cf47 upstream.
 
-While testing rpmsg-char interface it was noticed that duplicate sysfs
-entries are getting created and below warning is noticed.
+WARN and don't restart the hrtimer if KVM's callback runs with the guest's
+APIC timer in periodic mode but with a period of '0', as not advancing the
+hrtimer's deadline would put the CPU into an infinite loop of hrtimer
+events.  Observing a period of '0' should be impossible, even when the
+hrtimer is running on a different CPU than the vCPU, as KVM is supposed to
+cancel the hrtimer before changing (or zeroing) the period, e.g. when
+switching from periodic to one-shot.
 
-Reason for this is that we are leaking rpmsg device pointer, setting it
-null without actually unregistering device.
-Any further attempts to unregister fail because rpdev is NULL,
-resulting in a leak.
-
-Fix this by unregistering rpmsg device before removing its reference
-from rpmsg channel.
-
-sysfs: cannot create duplicate filename '/devices/platform/soc@0/3700000.remot
-eproc/remoteproc/remoteproc1/3700000.remoteproc:glink-edge/3700000.remoteproc:
-glink-edge.adsp_apps.-1.-1'
-[  114.115347] CPU: 0 UID: 0 PID: 9 Comm: kworker/0:0 Not
- tainted 6.16.0-rc4 #7 PREEMPT
-[  114.115355] Hardware name: Qualcomm Technologies, Inc. Robotics RB3gen2 (DT)
-[  114.115358] Workqueue: events qcom_glink_work
-[  114.115371] Call trace:8
-[  114.115374]  show_stack+0x18/0x24 (C)
-[  114.115382]  dump_stack_lvl+0x60/0x80
-[  114.115388]  dump_stack+0x18/0x24
-[  114.115393]  sysfs_warn_dup+0x64/0x80
-[  114.115402]  sysfs_create_dir_ns+0xf4/0x120
-[  114.115409]  kobject_add_internal+0x98/0x260
-[  114.115416]  kobject_add+0x9c/0x108
-[  114.115421]  device_add+0xc4/0x7a0
-[  114.115429]  rpmsg_register_device+0x5c/0xb0
-[  114.115434]  qcom_glink_work+0x4bc/0x820
-[  114.115438]  process_one_work+0x148/0x284
-[  114.115446]  worker_thread+0x2c4/0x3e0
-[  114.115452]  kthread+0x12c/0x204
-[  114.115457]  ret_from_fork+0x10/0x20
-[  114.115464] kobject: kobject_add_internal failed for 3700000.remoteproc:
-glink-edge.adsp_apps.-1.-1 with -EEXIST, don't try to register things with
-the same name in the same directory.
-[  114.250045] rpmsg 3700000.remoteproc:glink-edge.adsp_apps.-1.-1:
-device_add failed: -17
-
-Fixes: 835764ddd9af ("rpmsg: glink: Move the common glink protocol implementation to glink_native.c")
-Cc: Stable@vger.kernel.org
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250822100043.2604794-2-srinivas.kandagatla@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20251113205114.1647493-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rpmsg/qcom_glink_native.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/x86/kvm/lapic.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -1317,6 +1317,7 @@ static void qcom_glink_destroy_ept(struc
- {
- 	struct glink_channel *channel = to_glink_channel(ept);
- 	struct qcom_glink *glink = channel->glink;
-+	struct rpmsg_channel_info chinfo;
- 	unsigned long flags;
+--- a/arch/x86/kvm/lapic.c
++++ b/arch/x86/kvm/lapic.c
+@@ -2855,7 +2855,7 @@ static enum hrtimer_restart apic_timer_f
  
- 	spin_lock_irqsave(&channel->recv_lock, flags);
-@@ -1324,6 +1325,13 @@ static void qcom_glink_destroy_ept(struc
- 	spin_unlock_irqrestore(&channel->recv_lock, flags);
+ 	apic_timer_expired(apic, true);
  
- 	/* Decouple the potential rpdev from the channel */
-+	if (channel->rpdev) {
-+		strscpy_pad(chinfo.name, channel->name, sizeof(chinfo.name));
-+		chinfo.src = RPMSG_ADDR_ANY;
-+		chinfo.dst = RPMSG_ADDR_ANY;
-+
-+		rpmsg_unregister_device(glink->dev, &chinfo);
-+	}
- 	channel->rpdev = NULL;
- 
- 	qcom_glink_send_close_req(glink, channel);
+-	if (lapic_is_periodic(apic)) {
++	if (lapic_is_periodic(apic) && !WARN_ON_ONCE(!apic->lapic_timer.period)) {
+ 		advance_periodic_target_expiration(apic);
+ 		hrtimer_add_expires_ns(&ktimer->timer, ktimer->period);
+ 		return HRTIMER_RESTART;
 
 
