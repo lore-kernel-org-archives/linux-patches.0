@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45AC359FA0;
-	Fri,  9 Jan 2026 12:20:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9631D33B6F0;
+	Fri,  9 Jan 2026 12:20:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961247; cv=none; b=DeKzqXvDYrsbJWBOpMC/r9zEl6pfI+6sYCcxgJoxi0NrtiD3i844+AyumfpkM4jRMxbJSY102ZSeXfPU3Hv5VJafbDohN+aytJcixvyQN3Y3t4U1d5BwTH9PESRS0uVlc2bUUYbCvnKa2oO+hI4ax4ZjJwjS5dL7dsnKi8mJ9dQ=
+	t=1767961250; cv=none; b=R2xv8Sm8VxnmPKnUDyor4idy/4MKJJ3jI1cbL9m2J8M9dFfejguQYfIlLKjfwW9bw+GNwR5/0K15wxLkT5ZSr4GQFyQyMcwJdXaJ3Atad7AG1gVSfGCW4zSnOlrn9RseLYavJTTjcLf++0suxts4C3+yxmINyaMeNqQod1cv93g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961247; c=relaxed/simple;
-	bh=dywb2hl2JwcGBnCzPJtNe9rV0RROg3riU1CgFT3myRI=;
+	s=arc-20240116; t=1767961250; c=relaxed/simple;
+	bh=RcSAC0qLwVfECoVbJHoBGylawvoggYYmgqqwW8wryC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a7xCrbRoOCplNgLlbzuMJXWtfzT6HE/5P11qyx6dfd8gG8pdurU6nM7ZFQfIdnUX2gFE0hSUz1ijyRLkqovsLqT9r+vIyHz38AuGEVIOpeIZcsU4CobFeflE1yaxYQSnlGxd3Qhkp0LhD7rKRDRwu7mUAbELsf6Dw2EKuQoNDYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RiiS4/Lx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d5VZhOfkd7iCsxTvez2lQIXpTfFDpaZcVWIL9uXMzecMFWzFSGkXQ/yq4WUlbNy0b+9dpeILotpSnCePHOJ09gupsM0hfV9caqEfCV4YThnhWj0pT+mRf7Zdo9+enIfKont53/rERnPwbi0wKMQYqKk+bCbUvqeDg0ZD8e4L8K4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fflglKi2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RiiS4/Lx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A02EC4CEF1;
-	Fri,  9 Jan 2026 12:20:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fflglKi2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A48AC4CEF1;
+	Fri,  9 Jan 2026 12:20:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961247;
-	bh=dywb2hl2JwcGBnCzPJtNe9rV0RROg3riU1CgFT3myRI=;
+	s=korg; t=1767961250;
+	bh=RcSAC0qLwVfECoVbJHoBGylawvoggYYmgqqwW8wryC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RiiS4/Lx6QC4p/Y2IDQgxAQ4x9r4992xIVL86uMhl8f3GkP+iaGT21Bh9YkW6M4bZ
-	 Rke2cx8SjXL2A+lmjDxZyi/fYZ1j2EG9xdd/zQEIpTI0FBIkPj030DR5uoy69CFpWC
-	 DLtW1Iyl0leXvj+3kBrYgCE9meaFomGXoO5a4kgM=
+	b=fflglKi2EBMtvg0X1mMjlr6EdCP65rHCR9Za63xY6uI4ljKEa9sqxhyvAAnn/QZyY
+	 5wZvQr55zcRC5R//M1/tmKI+/1/HikApn3EcH5YZpLI+/H9kJ+RlsOx06P59rQPO4g
+	 9YtRh/EG+Jux98aZf9O3zZUxBSPFcT0Bw9liCcRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	"Bai, Shuangpeng" <sjb7183@psu.edu>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 687/737] f2fs: fix to avoid updating compression context during writeback
-Date: Fri,  9 Jan 2026 12:43:46 +0100
-Message-ID: <20260109112159.904029253@linuxfoundation.org>
+Subject: [PATCH 6.6 688/737] f2fs: fix to propagate error from f2fs_enable_checkpoint()
+Date: Fri,  9 Jan 2026 12:43:47 +0100
+Message-ID: <20260109112159.942319906@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -55,159 +54,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 10b591e7fb7cdc8c1e53e9c000dc0ef7069aaa76 ]
+[ Upstream commit be112e7449a6e1b54aa9feac618825d154b3a5c7 ]
 
-Bai, Shuangpeng <sjb7183@psu.edu> reported a bug as below:
+In order to let userspace detect such error rather than suffering
+silent failure.
 
-Oops: divide error: 0000 [#1] SMP KASAN PTI
-CPU: 0 UID: 0 PID: 11441 Comm: syz.0.46 Not tainted 6.17.0 #1 PREEMPT(full)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-RIP: 0010:f2fs_all_cluster_page_ready+0x106/0x550 fs/f2fs/compress.c:857
-Call Trace:
- <TASK>
- f2fs_write_cache_pages fs/f2fs/data.c:3078 [inline]
- __f2fs_write_data_pages fs/f2fs/data.c:3290 [inline]
- f2fs_write_data_pages+0x1c19/0x3600 fs/f2fs/data.c:3317
- do_writepages+0x38e/0x640 mm/page-writeback.c:2634
- filemap_fdatawrite_wbc mm/filemap.c:386 [inline]
- __filemap_fdatawrite_range mm/filemap.c:419 [inline]
- file_write_and_wait_range+0x2ba/0x3e0 mm/filemap.c:794
- f2fs_do_sync_file+0x6e6/0x1b00 fs/f2fs/file.c:294
- generic_write_sync include/linux/fs.h:3043 [inline]
- f2fs_file_write_iter+0x76e/0x2700 fs/f2fs/file.c:5259
- new_sync_write fs/read_write.c:593 [inline]
- vfs_write+0x7e9/0xe00 fs/read_write.c:686
- ksys_write+0x19d/0x2d0 fs/read_write.c:738
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xf7/0x470 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-The bug was triggered w/ below race condition:
-
-fsync				setattr			ioctl
-- f2fs_do_sync_file
- - file_write_and_wait_range
-  - f2fs_write_cache_pages
-  : inode is non-compressed
-  : cc.cluster_size =
-    F2FS_I(inode)->i_cluster_size = 0
-   - tag_pages_for_writeback
-				- f2fs_setattr
-				 - truncate_setsize
-				 - f2fs_truncate
-							- f2fs_fileattr_set
-							 - f2fs_setflags_common
-							  - set_compress_context
-							  : F2FS_I(inode)->i_cluster_size = 4
-							  : set_inode_flag(inode, FI_COMPRESSED_FILE)
-   - f2fs_compressed_file
-   : return true
-   - f2fs_all_cluster_page_ready
-   : "pgidx % cc->cluster_size" trigger dividing 0 issue
-
-Let's change as below to fix this issue:
-- introduce a new atomic type variable .writeback in structure f2fs_inode_info
-to track the number of threads which calling f2fs_write_cache_pages().
-- use .i_sem lock to protect .writeback update.
-- check .writeback before update compression context in f2fs_setflags_common()
-to avoid race w/ ->writepages.
-
-Fixes: 4c8ff7095bef ("f2fs: support data compression")
+Fixes: 4354994f097d ("f2fs: checkpoint disabling")
 Cc: stable@kernel.org
-Reported-by: Bai, Shuangpeng <sjb7183@psu.edu>
-Tested-by: Bai, Shuangpeng <sjb7183@psu.edu>
-Closes: https://lore.kernel.org/lkml/44D8F7B3-68AD-425F-9915-65D27591F93F@psu.edu
 Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ Adjust context ]
+[ Adjust context, no rollback ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/data.c  |   17 +++++++++++++++++
- fs/f2fs/f2fs.h  |    3 ++-
- fs/f2fs/file.c  |    5 +++--
- fs/f2fs/super.c |    1 +
- 4 files changed, 23 insertions(+), 3 deletions(-)
+ fs/f2fs/super.c |   24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -3233,6 +3233,19 @@ static inline bool __should_serialize_io
- 	return false;
- }
- 
-+static inline void account_writeback(struct inode *inode, bool inc)
-+{
-+	if (!f2fs_sb_has_compression(F2FS_I_SB(inode)))
-+		return;
-+
-+	f2fs_down_read(&F2FS_I(inode)->i_sem);
-+	if (inc)
-+		atomic_inc(&F2FS_I(inode)->writeback);
-+	else
-+		atomic_dec(&F2FS_I(inode)->writeback);
-+	f2fs_up_read(&F2FS_I(inode)->i_sem);
-+}
-+
- static int __f2fs_write_data_pages(struct address_space *mapping,
- 						struct writeback_control *wbc,
- 						enum iostat_type io_type)
-@@ -3282,10 +3295,14 @@ static int __f2fs_write_data_pages(struc
- 		locked = true;
- 	}
- 
-+	account_writeback(inode, true);
-+
- 	blk_start_plug(&plug);
- 	ret = f2fs_write_cache_pages(mapping, wbc, io_type);
- 	blk_finish_plug(&plug);
- 
-+	account_writeback(inode, false);
-+
- 	if (locked)
- 		mutex_unlock(&sbi->writepages);
- 
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -869,6 +869,7 @@ struct f2fs_inode_info {
- 	unsigned char i_compress_level;		/* compress level (lz4hc,zstd) */
- 	unsigned char i_compress_flag;		/* compress flag */
- 	unsigned int i_cluster_size;		/* cluster size */
-+	atomic_t writeback;			/* count # of writeback thread */
- 
- 	unsigned int atomic_write_cnt;
- 	loff_t original_i_size;		/* original i_size before atomic write */
-@@ -4485,7 +4486,7 @@ static inline bool f2fs_disable_compress
- 		f2fs_up_write(&F2FS_I(inode)->i_sem);
- 		return true;
- 	}
--	if (f2fs_is_mmap_file(inode) ||
-+	if (f2fs_is_mmap_file(inode) || atomic_read(&fi->writeback) ||
- 		(S_ISREG(inode->i_mode) && F2FS_HAS_BLOCKS(inode))) {
- 		f2fs_up_write(&F2FS_I(inode)->i_sem);
- 		return false;
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -2045,8 +2045,9 @@ static int f2fs_setflags_common(struct i
- 
- 			f2fs_down_write(&F2FS_I(inode)->i_sem);
- 			if (!f2fs_may_compress(inode) ||
--					(S_ISREG(inode->i_mode) &&
--					F2FS_HAS_BLOCKS(inode))) {
-+				atomic_read(&fi->writeback) ||
-+				(S_ISREG(inode->i_mode) &&
-+				F2FS_HAS_BLOCKS(inode))) {
- 				f2fs_up_write(&F2FS_I(inode)->i_sem);
- 				return -EINVAL;
- 			}
 --- a/fs/f2fs/super.c
 +++ b/fs/f2fs/super.c
-@@ -1410,6 +1410,7 @@ static struct inode *f2fs_alloc_inode(st
- 	atomic_set(&fi->dirty_pages, 0);
- 	atomic_set(&fi->i_compr_blocks, 0);
- 	atomic_set(&fi->open_count, 0);
-+	atomic_set(&fi->writeback, 0);
- 	init_f2fs_rwsem(&fi->i_sem);
- 	spin_lock_init(&fi->i_size_lock);
- 	INIT_LIST_HEAD(&fi->dirty_list);
+@@ -2267,9 +2267,10 @@ restore_flag:
+ 	return err;
+ }
+ 
+-static void f2fs_enable_checkpoint(struct f2fs_sb_info *sbi)
++static int f2fs_enable_checkpoint(struct f2fs_sb_info *sbi)
+ {
+ 	int retry = DEFAULT_RETRY_IO_COUNT;
++	int ret;
+ 
+ 	/* we should flush all the data to keep data consistency */
+ 	do {
+@@ -2287,10 +2288,14 @@ static void f2fs_enable_checkpoint(struc
+ 	set_sbi_flag(sbi, SBI_IS_DIRTY);
+ 	f2fs_up_write(&sbi->gc_lock);
+ 
+-	f2fs_sync_fs(sbi->sb, 1);
++	ret = f2fs_sync_fs(sbi->sb, 1);
++	if (ret)
++		f2fs_err(sbi, "%s sync_fs failed, ret: %d", __func__, ret);
+ 
+ 	/* Let's ensure there's no pending checkpoint anymore */
+ 	f2fs_flush_ckpt_thread(sbi);
++
++	return ret;
+ }
+ 
+ static int f2fs_remount(struct super_block *sb, int *flags, char *data)
+@@ -2511,7 +2516,9 @@ static int f2fs_remount(struct super_blo
+ 			if (err)
+ 				goto restore_discard;
+ 		} else {
+-			f2fs_enable_checkpoint(sbi);
++			err = f2fs_enable_checkpoint(sbi);
++			if (err)
++				goto restore_discard;
+ 		}
+ 	}
+ 
+@@ -4689,13 +4696,12 @@ reset_checkpoint:
+ 	/* f2fs_recover_fsync_data() cleared this already */
+ 	clear_sbi_flag(sbi, SBI_POR_DOING);
+ 
+-	if (test_opt(sbi, DISABLE_CHECKPOINT)) {
++	if (test_opt(sbi, DISABLE_CHECKPOINT))
+ 		err = f2fs_disable_checkpoint(sbi);
+-		if (err)
+-			goto sync_free_meta;
+-	} else if (is_set_ckpt_flags(sbi, CP_DISABLED_FLAG)) {
+-		f2fs_enable_checkpoint(sbi);
+-	}
++	else if (is_set_ckpt_flags(sbi, CP_DISABLED_FLAG))
++		err = f2fs_enable_checkpoint(sbi);
++	if (err)
++		goto sync_free_meta;
+ 
+ 	/*
+ 	 * If filesystem is not mounted as read-only then
 
 
