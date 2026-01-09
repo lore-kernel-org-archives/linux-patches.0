@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19B8035C19C;
-	Fri,  9 Jan 2026 12:47:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC8915ADB4;
+	Fri,  9 Jan 2026 12:47:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962821; cv=none; b=NbrbJXU95f0G/Gumkm8Bi5ELGOHxif0TyJoX1anEd3udxTtfrlILXFXbZSQe3lUk7sSGCNII1l+ZMjLvUdtxdyMxOtyHP+DFMMqNfeLdcqSc+TfuaMp9W1WFZaZqdTdURPO1dCbymPcJyo/bSlkYtUUzlDO3LkSozgQsKAI1o4I=
+	t=1767962823; cv=none; b=GL2GE9dD6DH57J/Kem5aE22l3skVQbY7ntiy9e/X1PM2D99KBzAnvCdRxF20F5mSTBoWfJuidlPK2oC9Uby7POYnwOo5UKlo7tQaD0C5WuI45+Ma+FwmQCBeP8IfJd5WbKt+oA3Zg+2CwaFuuxHhhVYoeLgvZ7hnTW8UY38HimY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962821; c=relaxed/simple;
-	bh=WVKF4nYu0/aT48/mE5tyMllhBcmIjdRHhi5SJlyOJ1A=;
+	s=arc-20240116; t=1767962823; c=relaxed/simple;
+	bh=bVvtZpavxpKQ31Ugg/3yANPTbR5kie45AkhTTAQvxhM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S/UJXAgl/DBIXLA93Oe40DqINGyOCwN7tFnE/snYzBQ/JubqHKPXZFLyvRG0guUK6+p+Y9p/gIsG6RyNlwljiZtyE5+asXkLmGAIPaYu7zUBBu/G1UC1KjxBCyWbHpXn7fPmpDIwiFMf9VKOEqhM7d7bOjK2+5sxpwWA6JTxBnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rHUNR/LE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cxg2a9nEJrReaHq9kRq3MuV28qDxjDM2PzPpmIZuRjJJayDK3EyKgFe2XALTnggsuvnY9Y51+deJeZA+I3NjX+kqBtqe0Ua37kh16WMfpxOnmcgcSRwvAhYiYqFGShMgCaMoDjF4n3ff9RXKva0zHccmRO/ZdGflABXRQPBxl3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z3B4XBXg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rHUNR/LE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C265C4CEF1;
-	Fri,  9 Jan 2026 12:47:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z3B4XBXg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51151C4CEF1;
+	Fri,  9 Jan 2026 12:47:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962821;
-	bh=WVKF4nYu0/aT48/mE5tyMllhBcmIjdRHhi5SJlyOJ1A=;
+	s=korg; t=1767962823;
+	bh=bVvtZpavxpKQ31Ugg/3yANPTbR5kie45AkhTTAQvxhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rHUNR/LECQSW8MyRguy8t9+2ymz3BpAWnb7Yy/EX1EmBfU9S/c8XxiRo/0xOJ+4ed
-	 MIP/I1U31rooflgHgy7VC2I967ckpJNCwFOM6c1bliKLDZixMEC06PECDP4Ve896nH
-	 6B2l9c/GPMCSruHcKvXr63wt1b3cmRMck5YPWc2c=
+	b=z3B4XBXgdYSnCt1t0DXzNerWETMYObeHcHhecSj9XWWTUeej/4ylG+mx9c+PBwEXy
+	 wccaXSASBeAbRClFVCcZTlzsjAr8EQmYsc1Bxcd1H30e/ZHd4K2EyFgqPbeHnEweoa
+	 MDUtJHgK3lBpiI7bc81+vosUbKkOqgBUinERyeIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hengqi Chen <hengqi.chen@gmail.com>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.1 500/634] LoongArch: BPF: Zero-extend bpf_tail_call() index
-Date: Fri,  9 Jan 2026 12:42:58 +0100
-Message-ID: <20260109112136.368823382@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.1 501/634] nfsd: Drop the client reference in client_states_open()
+Date: Fri,  9 Jan 2026 12:42:59 +0100
+Message-ID: <20260109112136.405798993@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -50,36 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hengqi Chen <hengqi.chen@gmail.com>
+From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
 
-commit eb71f5c433e1c6dff089b315881dec40a88a7baf upstream.
+commit 1f941b2c23fd34c6f3b76d36f9d0a2528fa92b8f upstream.
 
-The bpf_tail_call() index should be treated as a u32 value. Let's
-zero-extend it to avoid calling wrong BPF progs. See similar fixes
-for x86 [1]) and arm64 ([2]) for more details.
+In error path, call drop_client() to drop the reference
+obtained by get_nfsdfs_clp().
 
-  [1]: https://github.com/torvalds/linux/commit/90caccdd8cc0215705f18b92771b449b01e2474a
-  [2]: https://github.com/torvalds/linux/commit/16338a9b3ac30740d49f5dfed81bac0ffa53b9c7
-
+Fixes: 78599c42ae3c ("nfsd4: add file to display list of client's opens")
 Cc: stable@vger.kernel.org
-Fixes: 5dc615520c4d ("LoongArch: Add BPF JIT support")
-Signed-off-by: Hengqi Chen <hengqi.chen@gmail.com>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/net/bpf_jit.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/nfsd/nfs4state.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/loongarch/net/bpf_jit.c
-+++ b/arch/loongarch/net/bpf_jit.c
-@@ -224,6 +224,8 @@ static int emit_bpf_tail_call(struct jit
- 	 *	 goto out;
- 	 */
- 	tc_ninsn = insn ? ctx->offset[insn+1] - ctx->offset[insn] : ctx->offset[0];
-+	emit_zext_32(ctx, a2, true);
-+
- 	off = offsetof(struct bpf_array, map.max_entries);
- 	emit_insn(ctx, ldwu, t1, a1, off);
- 	/* bgeu $a2, $t1, jmp_offset */
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -2804,8 +2804,10 @@ static int client_states_open(struct ino
+ 		return -ENXIO;
+ 
+ 	ret = seq_open(file, &states_seq_ops);
+-	if (ret)
++	if (ret) {
++		drop_client(clp);
+ 		return ret;
++	}
+ 	s = file->private_data;
+ 	s->private = clp;
+ 	return 0;
 
 
