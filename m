@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1412737EE;
-	Fri,  9 Jan 2026 12:19:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD9C35A92E;
+	Fri,  9 Jan 2026 12:19:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961171; cv=none; b=oiHD+a3diGRRNyahoh2Qw/4V9zvgMYYN4+ByvYoAE3dqSy/bKp4AF5puAOSkOwattsLfX7F1oxUyzNWqUT9/BitmK810DMnTnHQBElu3fo440gl6eAuveI0MTqTYUUj8qY20AM7nHGgXhsrTm7JxJqVuykemToneRwljrnu6UI0=
+	t=1767961174; cv=none; b=Vuv9r3/0Gx7onf50SAdGQcjOoy4P01o1NIg0Ap3QnKzXmJF7paeYNDuVIQ9qDn9+VEJUE64UqPZvtN0Qlr3h9NDA9Ky4OuYWRETdeoztRiTK2d7Ns6kIQxnv1li8Yl8/FHHlw/gMnr0QG6sixzqQ0nVO7A5GicSlzADPGp8yrqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961171; c=relaxed/simple;
-	bh=RAWy9v56+CLMnQj5VxMFd9gCp8lW6pwCRfqpIVJNib8=;
+	s=arc-20240116; t=1767961174; c=relaxed/simple;
+	bh=EN1a5kzJOscm1ojHBQM8pt9VykWtUvYQ4DuZcKuQne8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a+T+LAiesLFaGjrvXg16o93c+3uA69KDFsYL14LICuZvWqf77woYO7fYPUIonL7AWmZyr3nEG++76CzJZthmMst39xoSnDFqq+28AnKdCzQlXaOnXmYEEjX9RqPSNdDb+uHUVRX4DsudC4mMyXtNVDA4RQ5i4yHHqm4jbyPPUNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BrYD/8DX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bBXT9YKb/aWuNgQFwFNihMP2iwulZ1L3uhhnOA8G9Mu34FYshWrqiGPWfOMa76foxpv+SujH8l5vJSDKvT4s4Djugim39UgUzhzVf9TyUcLhzIVJZO24ycUGe/AjHf5xHOf+bdpHT1iTR4MqzryIkGXRX57zhzSkaHnDEeYcLP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gR9sjvfp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BrYD/8DX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0A43C4CEF1;
-	Fri,  9 Jan 2026 12:19:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gR9sjvfp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76BA3C4CEF1;
+	Fri,  9 Jan 2026 12:19:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961171;
-	bh=RAWy9v56+CLMnQj5VxMFd9gCp8lW6pwCRfqpIVJNib8=;
+	s=korg; t=1767961173;
+	bh=EN1a5kzJOscm1ojHBQM8pt9VykWtUvYQ4DuZcKuQne8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BrYD/8DXfBZGjOwFvBfaDx4+zE+yRf6O3ZGis1RoMdZWwVdqqWl2NydU5k4x4qEYV
-	 eoMNwkCFezrCcOGnXDABt6csHuCIK4932Q9ZTwqChwI2yb2o7DtCuQnfKwA4uzXQDU
-	 id4t4m405mhTOhLA4/p0GcYbEK+JCjE85HBh6t+I=
+	b=gR9sjvfp8RzJLGPD1SLpi55P+3+i5CJ8i2YY0I9CBFqXDnJXnXP+TC/BXjoIMPjBf
+	 oKF3cEyEa8yn5fniIMncdsnsdB8K+XEGW1AuHIgNKTYCmA9KxDYfQVmdAcouhcmA0P
+	 t1INliCaEZvnUgNvTZLzHaiTt09+AtWFqnlrCFDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Frank Li <Frank.Li@nxp.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 659/737] pmdomain: imx: Fix reference count leak in imx_gpc_probe()
-Date: Fri,  9 Jan 2026 12:43:18 +0100
-Message-ID: <20260109112158.818690970@linuxfoundation.org>
+Subject: [PATCH 6.6 660/737] net: phy: mediatek: fix nvmem cell reference leak in mt798x_phy_calibration
+Date: Fri,  9 Jan 2026 12:43:19 +0100
+Message-ID: <20260109112158.857291520@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,45 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit 73cb5f6eafb0ac7aea8cdeb8ff12981aa741d8fb ]
+[ Upstream commit 1e5a541420b8c6d87d88eb50b6b978cdeafee1c9 ]
 
-of_get_child_by_name() returns a node pointer with refcount incremented.
-Use the __free() attribute to manage the pgc_node reference, ensuring
-automatic of_node_put() cleanup when pgc_node goes out of scope.
+When nvmem_cell_read() fails in mt798x_phy_calibration(), the function
+returns without calling nvmem_cell_put(), leaking the cell reference.
 
-This eliminates the need for explicit error handling paths and avoids
-reference count leaks.
+Move nvmem_cell_put() right after nvmem_cell_read() to ensure the cell
+reference is always released regardless of the read result.
 
-Fixes: 721cabf6c660 ("soc: imx: move PGC handling to a new GPC driver")
+Found via static analysis and code review.
+
+Fixes: 98c485eaf509 ("net: phy: add driver for MediaTek SoC built-in GE PHYs")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Reviewed-by: Daniel Golle <daniel@makrotopia.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20251211081313.2368460-1-linmq006@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/imx/gpc.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/phy/mediatek-ge-soc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pmdomain/imx/gpc.c
-+++ b/drivers/pmdomain/imx/gpc.c
-@@ -405,13 +405,12 @@ clk_err:
- static int imx_gpc_probe(struct platform_device *pdev)
- {
- 	const struct imx_gpc_dt_data *of_id_data = device_get_match_data(&pdev->dev);
--	struct device_node *pgc_node;
-+	struct device_node *pgc_node __free(device_node)
-+		= of_get_child_by_name(pdev->dev.of_node, "pgc");
- 	struct regmap *regmap;
- 	void __iomem *base;
- 	int ret;
+--- a/drivers/net/phy/mediatek-ge-soc.c
++++ b/drivers/net/phy/mediatek-ge-soc.c
+@@ -1082,9 +1082,9 @@ static int mt798x_phy_calibration(struct
+ 	}
  
--	pgc_node = of_get_child_by_name(pdev->dev.of_node, "pgc");
--
- 	/* bail out if DT too old and doesn't provide the necessary info */
- 	if (!of_property_read_bool(pdev->dev.of_node, "#power-domain-cells") &&
- 	    !pgc_node)
+ 	buf = (u32 *)nvmem_cell_read(cell, &len);
++	nvmem_cell_put(cell);
+ 	if (IS_ERR(buf))
+ 		return PTR_ERR(buf);
+-	nvmem_cell_put(cell);
+ 
+ 	if (!buf[0] || !buf[1] || !buf[2] || !buf[3] || len < 4 * sizeof(u32)) {
+ 		phydev_err(phydev, "invalid efuse data\n");
 
 
