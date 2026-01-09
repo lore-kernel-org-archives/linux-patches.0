@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D791933032C;
-	Fri,  9 Jan 2026 12:49:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3B933032C;
+	Fri,  9 Jan 2026 12:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962960; cv=none; b=MbBvK+koQajR/ekS29aJ7RLcqlW1nqtnIXOYNDPywhJOTaytv5iUm/o/KcJ78sGcG7FN14pw+M3vJ/uH6oi3Mb6d0MAgDuuQa9ZP7pYjauBoX6Ptjrk/pSh8yrlqDUwNgDLk4Tl/D+9WOuVjBnu4LA9PMyw5+iiCw0qiQSFmYgA=
+	t=1767962963; cv=none; b=uxzL0ujol1SdFXnE8+KrS9/q3TKXa4znq7kP/vuLP9ERZ6ZlPiElQnquW/5KnGOZiyOqrezdLfxcOWESGuBbCGLrMdALsLmhdKRxY4qdSkUQzILIv8rG6G+Fpvw0p5vEXlN5mbdcockf8adQIdfTq3/9MhVpMwhxd2X/NMXSh7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962960; c=relaxed/simple;
-	bh=x6qQIB93cZgq9ZcqImbPIuN5JCFirZeAb4lazCO2Gdg=;
+	s=arc-20240116; t=1767962963; c=relaxed/simple;
+	bh=HmetSKI46MCyKFChZHXVlk9RxY/iz4JLR4+UuwvQqjg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UCUI69UQHTcOLslqK7XDEDn1zFtdIsku5TeVGo8GTDHRxM/VLv/8Zsx3govpY8VMXU7frDR18UoryE2LF1qL+y0GVh7dGpohQ6NluUUFuQv9/jAVfd6G19PkAJkD6KjMpL/qzreQOebz4O67KCyAsTYGZFuL1VHOSNzaBKjnuqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rANM5kRY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GcBbPFiTTkoWeXyo230lmqoVBTLj5Hv6HW/Wrkxa6YY6SI3lFw3gFNsmWcNmfRT4wuGnAelV7FUlELeixmYZYjXvGujTkzImA3/YnHp2hexriSe9abTPypZD9dUYDHF3Ns9XcHWOJjx9hVYSPgibv/6khksoMV+11Q4i2oqETtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XNq1aeej; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rANM5kRY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63A06C16AAE;
-	Fri,  9 Jan 2026 12:49:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XNq1aeej"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D68BC4CEF1;
+	Fri,  9 Jan 2026 12:49:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962960;
-	bh=x6qQIB93cZgq9ZcqImbPIuN5JCFirZeAb4lazCO2Gdg=;
+	s=korg; t=1767962963;
+	bh=HmetSKI46MCyKFChZHXVlk9RxY/iz4JLR4+UuwvQqjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rANM5kRYkKpn6hFKWfo+3b8r1fHbTpHjaG86Df3jiP0cMd81DXfP8xz7UawDMlrXP
-	 LoUJVj2w9LsJz9kRdI/OYM++RZUYo4OqRkY+viwKEUqnCGYHPApWqTFbth8N5SPRHr
-	 nsfuVCSQEyDA7IAXbJV/iiTk+ClONVmNSVXtY6W0=
+	b=XNq1aeejLq4Y5srhLWTg77YDlFrcZNyl0V1Lx+Lm0rQRbKEXlBE6H8l0XSt7/BqmH
+	 rpN0Ycdbvp013/lOmsd6mtoZAbAabhiVTTSuuBmpFngd7/oqt1vBWPYfbbkHc3BL6G
+	 ZLqPjI/3a5H3/ut/10PxlYJ9gq87z+awnToLcI9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	stable <stable@kernel.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Udipto Goswami <udipto.goswami@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 548/634] mptcp: pm: ignore unknown endpoint flags
-Date: Fri,  9 Jan 2026 12:43:46 +0100
-Message-ID: <20260109112138.211676374@linuxfoundation.org>
+Subject: [PATCH 6.1 549/634] usb: dwc3: keep susphy enabled during exit to avoid controller faults
+Date: Fri,  9 Jan 2026 12:43:47 +0100
+Message-ID: <20260109112138.250368572@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,65 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Udipto Goswami <udipto.goswami@oss.qualcomm.com>
 
-[ Upstream commit 0ace3297a7301911e52d8195cb1006414897c859 ]
+[ Upstream commit e1003aa7ec9eccdde4c926bd64ef42816ad55f25 ]
 
-Before this patch, the kernel was saving any flags set by the userspace,
-even unknown ones. This doesn't cause critical issues because the kernel
-is only looking at specific ones. But on the other hand, endpoints dumps
-could tell the userspace some recent flags seem to be supported on older
-kernel versions.
+On some platforms, switching USB roles from host to device can trigger
+controller faults due to premature PHY power-down. This occurs when the
+PHY is disabled too early during teardown, causing synchronization
+issues between the PHY and controller.
 
-Instead, ignore all unknown flags when parsing them. By doing that, the
-userspace can continue to set unsupported flags, but it has a way to
-verify what is supported by the kernel.
+Keep susphy enabled during dwc3_host_exit() and dwc3_gadget_exit()
+ensures the PHY remains in a low-power state capable of handling
+required commands during role switch.
 
-Note that it sounds better to continue accepting unsupported flags not
-to change the behaviour, but also that eases things on the userspace
-side by adding "optional" endpoint types only supported by newer kernel
-versions without having to deal with the different kernel versions.
-
-A note for the backports: there will be conflicts in mptcp.h on older
-versions not having the mentioned flags, the new line should still be
-added last, and the '5' needs to be adapted to have the same value as
-the last entry.
-
-Fixes: 01cacb00b35c ("mptcp: add netlink-based PM")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251205-net-mptcp-misc-fixes-6-19-rc1-v1-1-9e4781a6c1b8@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ GENMASK(5, 0) => GENMASK(4, 0) + context ]
+Cc: stable <stable@kernel.org>
+Fixes: 6d735722063a ("usb: dwc3: core: Prevent phy suspend during init")
+Suggested-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Signed-off-by: Udipto Goswami <udipto.goswami@oss.qualcomm.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://patch.msgid.link/20251126054221.120638-1-udipto.goswami@oss.qualcomm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/uapi/linux/mptcp.h |    1 +
- net/mptcp/pm_netlink.c     |    3 ++-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/dwc3/gadget.c |    2 +-
+ drivers/usb/dwc3/host.c   |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/include/uapi/linux/mptcp.h
-+++ b/include/uapi/linux/mptcp.h
-@@ -88,6 +88,7 @@ enum {
- #define MPTCP_PM_ADDR_FLAG_BACKUP			(1 << 2)
- #define MPTCP_PM_ADDR_FLAG_FULLMESH			(1 << 3)
- #define MPTCP_PM_ADDR_FLAG_IMPLICIT			(1 << 4)
-+#define MPTCP_PM_ADDR_FLAGS_MASK			GENMASK(4, 0)
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -4646,7 +4646,7 @@ void dwc3_gadget_exit(struct dwc3 *dwc)
+ 	if (!dwc->gadget)
+ 		return;
  
- enum {
- 	MPTCP_PM_CMD_UNSPEC,
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -1424,7 +1424,8 @@ int mptcp_pm_parse_entry(struct nlattr *
- 	}
+-	dwc3_enable_susphy(dwc, false);
++	dwc3_enable_susphy(dwc, true);
+ 	usb_del_gadget(dwc->gadget);
+ 	dwc3_gadget_free_endpoints(dwc);
+ 	usb_put_gadget(dwc->gadget);
+--- a/drivers/usb/dwc3/host.c
++++ b/drivers/usb/dwc3/host.c
+@@ -162,7 +162,7 @@ err:
  
- 	if (tb[MPTCP_PM_ADDR_ATTR_FLAGS])
--		entry->flags = nla_get_u32(tb[MPTCP_PM_ADDR_ATTR_FLAGS]);
-+		entry->flags = nla_get_u32(tb[MPTCP_PM_ADDR_ATTR_FLAGS]) &
-+			       MPTCP_PM_ADDR_FLAGS_MASK;
- 
- 	if (tb[MPTCP_PM_ADDR_ATTR_PORT])
- 		entry->addr.port = htons(nla_get_u16(tb[MPTCP_PM_ADDR_ATTR_PORT]));
+ void dwc3_host_exit(struct dwc3 *dwc)
+ {
+-	dwc3_enable_susphy(dwc, false);
++	dwc3_enable_susphy(dwc, true);
+ 	platform_device_unregister(dwc->xhci);
+ 	dwc->xhci = NULL;
+ }
 
 
