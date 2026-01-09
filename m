@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EF4235BDB6;
-	Fri,  9 Jan 2026 12:52:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 610E43596FC;
+	Fri,  9 Jan 2026 12:52:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767963158; cv=none; b=IYLnWR+iFdIx22dP8K7bGTA57CylZW8cvg5Oor9qCrdpZkTqirdOQqTFR9mMKbrS65AvfUVS58lFueGz73XVSMX7r8CKE5zzbvHREBDpxWZKOzqX0Wml6NY/DXZlW41mBPqNRyNmi2ZBKmtJTeqSboE0HorBVor25KEKMoljaqE=
+	t=1767963161; cv=none; b=cFYXJfWYY7nSG2ZTKtn2dd/WxiGOq6olxJ8MhsY5xUo5kJNoC57EjbDqocF0jGuaYj13kbfmKShWqyTgCWQ/UE++JM32jhGa2tPmRNrwSFCHn3HjSEttRLXNAt7DhDpwiRw+SOLKH5nt1krt2m4dtOCZNDNLXNueKePUL8SOHQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767963158; c=relaxed/simple;
-	bh=uUUKkTgqbcUXm/BCMLiFrCYq9ukqgWy5mxThZS/2q80=;
+	s=arc-20240116; t=1767963161; c=relaxed/simple;
+	bh=cQyE/2qTQxDF/4NSUdNzoyNAr4DbYUwxpcZ4ATZRky0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jpRxur48DhFT/Ty68Ul6cX/zSV9aTSff6OjPG1Ch70U5TMfznweNRq0JlizCJ3NJxWa0Tw4OsKWVk7Jb08FpbIYLf88P3/PaO/bL1I3YhL0a6vxvVsCuU4URk4EMvGTKPnwjRNT5YuoEFlH4vmLH9PoUMHo3msN9Y/1jWhWrItQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k+XSouxi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eZZ0CJeFBi+vx9MOAMKVYY0Vr82rJegeXPPTFEPDtKHL6Qo+aZleccXIADnHu1v0x9mDltNDM3IKvvQQbkEZwrPp2gPo4oHisXKZAnoC5sFTxAY1hH93Bj+hKX9KtrlvEnPDdrhRrWBjJbLLtLLMu6ELlvFWpG+Ew93CNPvu4QM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Sc/pDfW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+XSouxi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 095ABC4CEF1;
-	Fri,  9 Jan 2026 12:52:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Sc/pDfW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E13D8C4CEF1;
+	Fri,  9 Jan 2026 12:52:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767963158;
-	bh=uUUKkTgqbcUXm/BCMLiFrCYq9ukqgWy5mxThZS/2q80=;
+	s=korg; t=1767963161;
+	bh=cQyE/2qTQxDF/4NSUdNzoyNAr4DbYUwxpcZ4ATZRky0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k+XSouxiInfSQUlPU/CxS9vEvE2NusHpoXw/8R1TvzUjRIZiF8k0xpVA1jozJQ30/
-	 WYqfr4InxD60zlHrZs0PFtrXpR8+8iTgTx4SSv0fyBMpyuK23VMRW7/Qm71mdZeuEI
-	 Mz9KdtYPlUeMErxJtu14M2RBK9HFUdoCnNYBNskQ=
+	b=1Sc/pDfWnm1+MT0Q7GDv9WCnnevRJCj0c9Kq+ep8ckRDInzpABMstG7ijsE6kvFR9
+	 dk2fa7re/UMrZXbQEMo4BpcI6DqnUH0b7toWQ2P6rl/frzaKg0Asb0hCfr06j/pYxY
+	 pG7eWS6vPa6n99X2TiJMXtotanWKZ5U/Qxq0HDUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com, vincent.guittot@linaro.org, dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de, vschneid@redhat.com, linux-kernel@vger.kernel.org, ajay.kaher@broadcom.com, alexey.makhalov@broadcom.com, yin.ding@broadcom.com, tapas.kundu@broadcom.com, Chris Mason" <clm@meta.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Ajay Kaher <ajay.kaher@broadcom.com>,
-	Chris Mason <clm@meta.com>
-Subject: [PATCH 6.1 617/634] sched/fair: Proportional newidle balance
-Date: Fri,  9 Jan 2026 12:44:55 +0100
-Message-ID: <20260109112140.852402316@linuxfoundation.org>
+	syzbot+340581ba9dceb7e06fb3@syzkaller.appspotmail.com,
+	Lizhi Xu <lizhi.xu@windriver.com>,
+	Theodore Tso <tytso@mit.edu>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Subject: [PATCH 6.1 618/634] ext4: filesystems without casefold feature cannot be mounted with siphash
+Date: Fri,  9 Jan 2026 12:44:56 +0100
+Message-ID: <20260109112140.890791757@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -53,204 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Lizhi Xu <lizhi.xu@windriver.com>
 
-commit 33cf66d88306663d16e4759e9d24766b0aaa2e17 upstream.
+commit 985b67cd86392310d9e9326de941c22fc9340eec upstream.
 
-Add a randomized algorithm that runs newidle balancing proportional to
-its success rate.
+When mounting the ext4 filesystem, if the default hash version is set to
+DX_HASH_SIPHASH but the casefold feature is not set, exit the mounting.
 
-This improves schbench significantly:
-
- 6.18-rc4:			2.22 Mrps/s
- 6.18-rc4+revert:		2.04 Mrps/s
- 6.18-rc4+revert+random:	2.18 Mrps/S
-
-Conversely, per Adam Li this affects SpecJBB slightly, reducing it by 1%:
-
- 6.17:			-6%
- 6.17+revert:		 0%
- 6.17+revert+random:	-1%
-
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Tested-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Tested-by: Chris Mason <clm@meta.com>
-Link: https://lkml.kernel.org/r/6825c50d-7fa7-45d8-9b81-c6e7e25738e2@meta.com
-Link: https://patch.msgid.link/20251107161739.770122091@infradead.org
-[ Ajay: Modified to apply on v6.1 ]
-Signed-off-by: Ajay Kaher <ajay.kaher@broadcom.com>
+Reported-by: syzbot+340581ba9dceb7e06fb3@syzkaller.appspotmail.com
+Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
+Link: https://patch.msgid.link/20240605012335.44086-1-lizhi.xu@windriver.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+[cascardo: small conflict fixup]
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/sched/topology.h |    3 ++
- kernel/sched/core.c            |    3 ++
- kernel/sched/fair.c            |   44 +++++++++++++++++++++++++++++++++++++----
- kernel/sched/features.h        |    5 ++++
- kernel/sched/sched.h           |    7 ++++++
- kernel/sched/topology.c        |    6 +++++
- 6 files changed, 64 insertions(+), 4 deletions(-)
+ fs/ext4/super.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/include/linux/sched/topology.h
-+++ b/include/linux/sched/topology.h
-@@ -106,6 +106,9 @@ struct sched_domain {
- 	unsigned int nr_balance_failed; /* initialise to 0 */
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -3552,6 +3552,14 @@ int ext4_feature_set_ok(struct super_blo
+ 	}
+ #endif
  
- 	/* idle_balance() stats */
-+	unsigned int newidle_call;
-+	unsigned int newidle_success;
-+	unsigned int newidle_ratio;
- 	u64 max_newidle_lb_cost;
- 	unsigned long last_decay_max_lb_cost;
- 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -112,6 +112,7 @@ EXPORT_TRACEPOINT_SYMBOL_GPL(sched_util_
- EXPORT_TRACEPOINT_SYMBOL_GPL(sched_update_nr_running_tp);
- 
- DEFINE_PER_CPU_SHARED_ALIGNED(struct rq, runqueues);
-+DEFINE_PER_CPU(struct rnd_state, sched_rnd_state);
- 
- #ifdef CONFIG_SCHED_DEBUG
- /*
-@@ -9632,6 +9633,8 @@ void __init sched_init_smp(void)
- {
- 	sched_init_numa(NUMA_NO_NODE);
- 
-+	prandom_init_once(&sched_rnd_state);
-+
- 	/*
- 	 * There's no userspace yet to cause hotplug operations; hence all the
- 	 * CPU masks are stable and all blatant races in the below code cannot
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -10935,11 +10935,27 @@ void update_max_interval(void)
- 	max_load_balance_interval = HZ*num_online_cpus()/10;
- }
- 
--static inline bool update_newidle_cost(struct sched_domain *sd, u64 cost)
-+static inline void update_newidle_stats(struct sched_domain *sd, unsigned int success)
-+{
-+	sd->newidle_call++;
-+	sd->newidle_success += success;
-+
-+	if (sd->newidle_call >= 1024) {
-+		sd->newidle_ratio = sd->newidle_success;
-+		sd->newidle_call /= 2;
-+		sd->newidle_success /= 2;
++	if (EXT4_SB(sb)->s_es->s_def_hash_version == DX_HASH_SIPHASH &&
++	    !ext4_has_feature_casefold(sb)) {
++		ext4_msg(sb, KERN_ERR,
++			 "Filesystem without casefold feature cannot be "
++			 "mounted with siphash");
++		return 0;
 +	}
-+}
 +
-+static inline bool
-+update_newidle_cost(struct sched_domain *sd, u64 cost, unsigned int success)
- {
- 	unsigned long next_decay = sd->last_decay_max_lb_cost + HZ;
- 	unsigned long now = jiffies;
+ 	if (readonly)
+ 		return 1;
  
-+	if (cost)
-+		update_newidle_stats(sd, success);
-+
- 	if (cost > sd->max_newidle_lb_cost) {
- 		/*
- 		 * Track max cost of a domain to make sure to not delay the
-@@ -10987,7 +11003,7 @@ static void rebalance_domains(struct rq
- 		 * Decay the newidle max times here because this is a regular
- 		 * visit to all the domains.
- 		 */
--		need_decay = update_newidle_cost(sd, 0);
-+		need_decay = update_newidle_cost(sd, 0, 0);
- 		max_cost += sd->max_newidle_lb_cost;
- 
- 		/*
-@@ -11621,6 +11637,22 @@ static int sched_balance_newidle(struct
- 			break;
- 
- 		if (sd->flags & SD_BALANCE_NEWIDLE) {
-+			unsigned int weight = 1;
-+
-+			if (sched_feat(NI_RANDOM)) {
-+				/*
-+				 * Throw a 1k sided dice; and only run
-+				 * newidle_balance according to the success
-+				 * rate.
-+				 */
-+				u32 d1k = sched_rng() % 1024;
-+				weight = 1 + sd->newidle_ratio;
-+				if (d1k > weight) {
-+					update_newidle_stats(sd, 0);
-+					continue;
-+				}
-+				weight = (1024 + weight/2) / weight;
-+			}
- 
- 			pulled_task = load_balance(this_cpu, this_rq,
- 						   sd, CPU_NEWLY_IDLE,
-@@ -11628,10 +11660,14 @@ static int sched_balance_newidle(struct
- 
- 			t1 = sched_clock_cpu(this_cpu);
- 			domain_cost = t1 - t0;
--			update_newidle_cost(sd, domain_cost);
--
- 			curr_cost += domain_cost;
- 			t0 = t1;
-+
-+			/*
-+			 * Track max cost of a domain to make sure to not delay the
-+			 * next wakeup on the CPU.
-+			 */
-+			update_newidle_cost(sd, domain_cost, weight * !!pulled_task);
- 		}
- 
- 		/*
---- a/kernel/sched/features.h
-+++ b/kernel/sched/features.h
-@@ -99,5 +99,10 @@ SCHED_FEAT(UTIL_EST_FASTUP, true)
- 
- SCHED_FEAT(LATENCY_WARN, false)
- 
-+/*
-+ * Do newidle balancing proportional to its success rate using randomization.
-+ */
-+SCHED_FEAT(NI_RANDOM, true)
-+
- SCHED_FEAT(ALT_PERIOD, true)
- SCHED_FEAT(BASE_SLICE, true)
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -5,6 +5,7 @@
- #ifndef _KERNEL_SCHED_SCHED_H
- #define _KERNEL_SCHED_SCHED_H
- 
-+#include <linux/prandom.h>
- #include <linux/sched/affinity.h>
- #include <linux/sched/autogroup.h>
- #include <linux/sched/cpufreq.h>
-@@ -1190,6 +1191,12 @@ static inline bool is_migration_disabled
- }
- 
- DECLARE_PER_CPU_SHARED_ALIGNED(struct rq, runqueues);
-+DECLARE_PER_CPU(struct rnd_state, sched_rnd_state);
-+
-+static inline u32 sched_rng(void)
-+{
-+	return prandom_u32_state(this_cpu_ptr(&sched_rnd_state));
-+}
- 
- #define cpu_rq(cpu)		(&per_cpu(runqueues, (cpu)))
- #define this_rq()		this_cpu_ptr(&runqueues)
---- a/kernel/sched/topology.c
-+++ b/kernel/sched/topology.c
-@@ -1584,6 +1584,12 @@ sd_init(struct sched_domain_topology_lev
- 
- 		.last_balance		= jiffies,
- 		.balance_interval	= sd_weight,
-+
-+		/* 50% success rate */
-+		.newidle_call		= 512,
-+		.newidle_success	= 256,
-+		.newidle_ratio		= 512,
-+
- 		.max_newidle_lb_cost	= 0,
- 		.last_decay_max_lb_cost	= jiffies,
- 		.child			= child,
 
 
