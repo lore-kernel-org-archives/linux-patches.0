@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5199831E107;
-	Fri,  9 Jan 2026 12:33:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D682131E107;
+	Fri,  9 Jan 2026 12:33:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961984; cv=none; b=YML991eBPffxfLKlk4hj7jf6o87y/gRgtehoYL2PfWjqIt3xMlcA5HnQ/UNEXns6bMLQXjdTjb+RQfL2rmjg22Exb642DHOAKU6zCKK7s0xW4pELaDweHEBL3OBEFWmatXt4HrhRYzddKre+ivUpa7NdQWH0/wuSPPLgsQg/VKM=
+	t=1767961986; cv=none; b=A8vp8GtAG4duia8+kMtYziG2hGbORZtwARUlGFxHsehoPYmtvdhDxfa+FwWEHljliszi8UI5WHYl/rRL/BTtkZn6mDj7J4N2XnuG7zUekCLhpcxbukB5RR+rsD/yBWhKhqw/OZRJfewwjESoIJSjNWPH3PwSYYgwGsQXFW0OSfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961984; c=relaxed/simple;
-	bh=GZCKIyKMFyDNdEkISuodvbmFjM8kY6yjU+cUCiIwB0g=;
+	s=arc-20240116; t=1767961986; c=relaxed/simple;
+	bh=38CXshL7B6VDRBls15sMTnNXxTky+SQ55Fy1G98kijc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YmfTu5kGd0Qo3YUeJfD/Xb2oP8uRzCcieThDM/80kuw2CrmONnRIZmkpF5UQ/lk11r3/4q8HnL9vvY0X+Y8IzfiSnIy3l0RKauUdOKnyRjw+IS12BvjRcHU8QEtXkSVckRMV+FQyYgdRWDjtSSrUmPCQFfKxNKOzwyMvIkAmKz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zc2+Oi2P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ayfxp4a/CMEaHORX8O921CVoVaYjDwF02WJFcRiHVorU3vVPv9wEhjAjEuudbcldWf0ScL+4IMkKNdZup/OGk3fDnXo6Ug969oNs630zUApQRu2PcYkBrm1QJe5NhGx+ekCaaJIgIctDGNe3wh4roB4XadGj3FLEv2HB1NFh+E8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SJW1Qi3x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zc2+Oi2P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D6CDC16AAE;
-	Fri,  9 Jan 2026 12:33:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SJW1Qi3x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 645B4C4CEF1;
+	Fri,  9 Jan 2026 12:33:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961983;
-	bh=GZCKIyKMFyDNdEkISuodvbmFjM8kY6yjU+cUCiIwB0g=;
+	s=korg; t=1767961986;
+	bh=38CXshL7B6VDRBls15sMTnNXxTky+SQ55Fy1G98kijc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zc2+Oi2P/+EOvaFg1AsuK5jc7Z3JiH3QPOmK0p5hBpYcKV1xp3DRxOaNvWlNaQCYt
-	 iqrgFvNDqRytRcswybEmH70KySMVuUnBuK06xVpoHMSpKUJZmfAZF1zc43Cy4h6mO0
-	 wWqaQzDEQmMvzBDPuStQvNAx7SfD3cvvsSO/e6P4=
+	b=SJW1Qi3x1vbtJKTt6Lu7ksbILbKNgLxGFPP0DUkHuPDqZySSHlRboli9BqRygIHuy
+	 7bLFwoBDqKrloEbnAlM1axwshQvedyctXgN0KM/ddadJd9jzWdb/0Il1nVi3kpRys6
+	 WUgfv5+OdbVNcDYOA4PGTPpoUDGkD/5nL1tbhVtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Zhang <cong.zhang@oss.qualcomm.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 204/634] blk-mq: Abort suspend when wakeup events are pending
-Date: Fri,  9 Jan 2026 12:38:02 +0100
-Message-ID: <20260109112125.115923241@linuxfoundation.org>
+Subject: [PATCH 6.1 173/634] netfilter: flowtable: check for maximum number of encapsulations in bridge vlan
+Date: Fri,  9 Jan 2026 12:37:31 +0100
+Message-ID: <20260109112123.954896735@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,71 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Zhang <cong.zhang@oss.qualcomm.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit c196bf43d706592d8801a7513603765080e495fb ]
+[ Upstream commit 634f3853cc98d73bdec8918010ee29b06981583e ]
 
-During system suspend, wakeup capable IRQs for block device can be
-delayed, which can cause blk_mq_hctx_notify_offline() to hang
-indefinitely while waiting for pending request to complete.
-Skip the request waiting loop and abort suspend when wakeup events are
-pending to prevent the deadlock.
+Add a sanity check to skip path discovery if the maximum number of
+encapsulation is reached. While at it, check for underflow too.
 
-Fixes: bf0beec0607d ("blk-mq: drain I/O when all CPUs in a hctx are offline")
-Signed-off-by: Cong Zhang <cong.zhang@oss.qualcomm.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 26267bf9bb57 ("netfilter: flowtable: bridge vlan hardware offload and switchdev")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ net/netfilter/nft_flow_offload.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 373a67a630f3b..d3ced0cff9161 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -24,6 +24,7 @@
- #include <linux/sched/sysctl.h>
- #include <linux/sched/topology.h>
- #include <linux/sched/signal.h>
-+#include <linux/suspend.h>
- #include <linux/delay.h>
- #include <linux/crash_dump.h>
- #include <linux/prefetch.h>
-@@ -3510,6 +3511,7 @@ static int blk_mq_hctx_notify_offline(unsigned int cpu, struct hlist_node *node)
- {
- 	struct blk_mq_hw_ctx *hctx = hlist_entry_safe(node,
- 			struct blk_mq_hw_ctx, cpuhp_online);
-+	int ret = 0;
- 
- 	if (!cpumask_test_cpu(cpu, hctx->cpumask) ||
- 	    !blk_mq_last_cpu_in_hctx(cpu, hctx))
-@@ -3531,12 +3533,24 @@ static int blk_mq_hctx_notify_offline(unsigned int cpu, struct hlist_node *node)
- 	 * frozen and there are no requests.
- 	 */
- 	if (percpu_ref_tryget(&hctx->queue->q_usage_counter)) {
--		while (blk_mq_hctx_has_requests(hctx))
-+		while (blk_mq_hctx_has_requests(hctx)) {
-+			/*
-+			 * The wakeup capable IRQ handler of block device is
-+			 * not called during suspend. Skip the loop by checking
-+			 * pm_wakeup_pending to prevent the deadlock and improve
-+			 * suspend latency.
-+			 */
-+			if (pm_wakeup_pending()) {
-+				clear_bit(BLK_MQ_S_INACTIVE, &hctx->state);
-+				ret = -EBUSY;
-+				break;
-+			}
- 			msleep(5);
-+		}
- 		percpu_ref_put(&hctx->queue->q_usage_counter);
- 	}
- 
--	return 0;
-+	return ret;
- }
- 
- static int blk_mq_hctx_notify_online(unsigned int cpu, struct hlist_node *node)
+diff --git a/net/netfilter/nft_flow_offload.c b/net/netfilter/nft_flow_offload.c
+index 9d335aa58907d..786519740b559 100644
+--- a/net/netfilter/nft_flow_offload.c
++++ b/net/netfilter/nft_flow_offload.c
+@@ -140,12 +140,19 @@ static void nft_dev_path_info(const struct net_device_path_stack *stack,
+ 				info->ingress_vlans |= BIT(info->num_encaps - 1);
+ 				break;
+ 			case DEV_PATH_BR_VLAN_TAG:
++				if (info->num_encaps >= NF_FLOW_TABLE_ENCAP_MAX) {
++					info->indev = NULL;
++					break;
++				}
+ 				info->encap[info->num_encaps].id = path->bridge.vlan_id;
+ 				info->encap[info->num_encaps].proto = path->bridge.vlan_proto;
+ 				info->num_encaps++;
+ 				break;
+ 			case DEV_PATH_BR_VLAN_UNTAG:
+-				info->num_encaps--;
++				if (WARN_ON_ONCE(info->num_encaps-- == 0)) {
++					info->indev = NULL;
++					break;
++				}
+ 				break;
+ 			case DEV_PATH_BR_VLAN_KEEP:
+ 				break;
 -- 
 2.51.0
 
