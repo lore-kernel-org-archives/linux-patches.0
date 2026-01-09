@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C594E15ADB4;
-	Fri,  9 Jan 2026 12:22:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A60E1334C24;
+	Fri,  9 Jan 2026 12:22:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961374; cv=none; b=GMJr4m3v7nSZ5elb95vMdvlHeL/wJw495SFnH2SQ0AXeN/CFstvyV/e9P/WgSBxxJZG9J+jGGEjHnHHe8ZZ90RVzEgpw0B/iji2Ws3EE4A3Lbfeiqm8YW4eUSghIhS5SStEGxM2r5AQk9gL7+JgkGxo0D+IUep7ErVSXs/CaZ54=
+	t=1767961377; cv=none; b=Sa2EMvDE4n3VFDT4ZoT/h/MGma7UDt4URiSciGADeircHbTcWvKx1UCXcM00aeE1Dtp883nLPvl1emmjPP734aAelO5idQAcyxEhmAKaqsRi25feMp27hvSMLSTZaIFfs64Or9WHhH3g1auaNDAr0BU5Eg2eOQJVGj4axY5Bg6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961374; c=relaxed/simple;
-	bh=wCIv9+LTbEXIt8VgL3twRiupPP7j+S20XWUo8tf/IaU=;
+	s=arc-20240116; t=1767961377; c=relaxed/simple;
+	bh=fa1GqnHZWdcnIMNyrxh8B7vhoNn/SSKb9yK0xHdRWN8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AJPs10a8Df398/7lBv1TJl3CXNBHbq6GvKDSt/pDNyPmKi8LYqBdwIzhUzdQk2fFM+7NV+FbMzvCfPdz110WRgN/+VdsqiIA2ZS4KwSNHoxQ9/XoyUjywTaxZJ3T2IG7qr3Ttg9WTPgABIuIb/kGbEJIPVQl83WbqIxLePe1zV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ab2gWkYG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lf2a3vRX8WapOMsK5ADZzlVDtWNCfmtFqkUsm4YC9cZQtBQW08tfoshvvBCWYLlfgy6YQtrNMFBVZpml9GBv9Nh41TXlb3dsejFbzD1DoMUX+9Zh5ztstUOg/wqrxPdzzAchRCPzMFpF7f8FunL4Z8InnQspEEPimfWLRy6Kc+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SHF6wJ/J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ab2gWkYG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50FBBC4CEF1;
-	Fri,  9 Jan 2026 12:22:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SHF6wJ/J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 323C0C4CEF1;
+	Fri,  9 Jan 2026 12:22:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961374;
-	bh=wCIv9+LTbEXIt8VgL3twRiupPP7j+S20XWUo8tf/IaU=;
+	s=korg; t=1767961377;
+	bh=fa1GqnHZWdcnIMNyrxh8B7vhoNn/SSKb9yK0xHdRWN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ab2gWkYGLLIt78AOCRC9tFPeczAQBjgY01zd6L1lkk+rgH8kDc/xtgfYOyxWnbMUS
-	 +/dQTemVoro6NLLcnzKzkBtou8iMGrInhXG2EneaJqabxX9BMsErQgwSjxPPD9R6zK
-	 0eR9lWrNLCeRi65l2xPQ7htcA1Qg/TOP0YLILa84=
+	b=SHF6wJ/JdIdfYqgRhZArnOnAQaPBoEVdUBANN6S2Yl1jsU9jnZ9m5+lMiGR8Df0Jw
+	 GpT0/7BkHdSNDelz33IvuBL6rsi1rPBfE6XYb/wUmK7WBt1Y7laiSUy8mzblQR5pL9
+	 T022MFYRAuCBk95du+y6FLgQM6s2wOYF/iv/Bou4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Filip Hejsek <filip.hejsek@gmail.com>
-Subject: [PATCH 6.6 730/737] virtio_console: fix order of fields cols and rows
-Date: Fri,  9 Jan 2026 12:44:29 +0100
-Message-ID: <20260109112201.566747040@linuxfoundation.org>
+	syzbot+340581ba9dceb7e06fb3@syzkaller.appspotmail.com,
+	Lizhi Xu <lizhi.xu@windriver.com>,
+	Theodore Tso <tytso@mit.edu>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Subject: [PATCH 6.6 731/737] ext4: filesystems without casefold feature cannot be mounted with siphash
+Date: Fri,  9 Jan 2026 12:44:30 +0100
+Message-ID: <20260109112201.603806562@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,36 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
+From: Lizhi Xu <lizhi.xu@windriver.com>
 
-commit 5326ab737a47278dbd16ed3ee7380b26c7056ddd upstream.
+commit 985b67cd86392310d9e9326de941c22fc9340eec upstream.
 
-According to section 5.3.6.2 (Multiport Device Operation) of the virtio
-spec(version 1.2) a control buffer with the event VIRTIO_CONSOLE_RESIZE
-is followed by a virtio_console_resize struct containing cols then rows.
-The kernel implements this the wrong way around (rows then cols) resulting
-in the two values being swapped.
+When mounting the ext4 filesystem, if the default hash version is set to
+DX_HASH_SIPHASH but the casefold feature is not set, exit the mounting.
 
-Signed-off-by: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
-Message-Id: <20250324144300.905535-1-maxbr@linux.ibm.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Cc: Filip Hejsek <filip.hejsek@gmail.com>
+Reported-by: syzbot+340581ba9dceb7e06fb3@syzkaller.appspotmail.com
+Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
+Link: https://patch.msgid.link/20240605012335.44086-1-lizhi.xu@windriver.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+[cascardo: small conflict fixup]
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/virtio_console.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/super.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/char/virtio_console.c
-+++ b/drivers/char/virtio_console.c
-@@ -1612,8 +1612,8 @@ static void handle_control_message(struc
- 		break;
- 	case VIRTIO_CONSOLE_RESIZE: {
- 		struct {
--			__virtio16 rows;
- 			__virtio16 cols;
-+			__virtio16 rows;
- 		} size;
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -3632,6 +3632,14 @@ int ext4_feature_set_ok(struct super_blo
+ 	}
+ #endif
  
- 		if (!is_console_port(port))
++	if (EXT4_SB(sb)->s_es->s_def_hash_version == DX_HASH_SIPHASH &&
++	    !ext4_has_feature_casefold(sb)) {
++		ext4_msg(sb, KERN_ERR,
++			 "Filesystem without casefold feature cannot be "
++			 "mounted with siphash");
++		return 0;
++	}
++
+ 	if (readonly)
+ 		return 1;
+ 
 
 
