@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B20133372B;
-	Fri,  9 Jan 2026 12:44:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A925733372B;
+	Fri,  9 Jan 2026 12:44:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962671; cv=none; b=HV/6q7Buy1Vxv+KAZlZEILZ2d4+yzabqzQNrnKnMLBZ0ALLXS6hmBXN9q4Hm1+j4FZuWTH2uU7djiUzyjMxG0wKtKRgdKQq3YcIBY1lg+Uo7xPyzu7On3SYeUnO7xCv6v5jfVUT90kS29bF98okdXPrjxMpMtvAD0FjFWfkLdHc=
+	t=1767962674; cv=none; b=jLjA+4KRx4wCI+/J4V/ZBkQ6/qL6co0e8gLBbcDgBjBxlQ8Y9sj7fv6ltDmvELWPDdYaAFBKNk7mC2A6AqFiVDg6EsKnBJTBGhZRO7P6tbw7CiKoR1+Nzb9MQ6Jzgw/GH/ZVfpeupjzcnwOu6j8TO25Tvvpa5Uvp678HLzt4JvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962671; c=relaxed/simple;
-	bh=TbQ4jTuu+bVhbE6zKtyxzqL6Ihy7j+4CUVRg4JRp4Sk=;
+	s=arc-20240116; t=1767962674; c=relaxed/simple;
+	bh=r4V8MelXp3xLbIQ92zSdW0lgr3s6u6II484xNgdBpgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ojUQTmrdZVd+0+u5aahJU0RLOdeDT6VzkSlqv1dmwjvNlkQHHpDPEPjkhOv7XcX47wWA5HhP44kaQ387AWJKoaZw7abJ1F9wDKrBrk4xlN7IofP1FahXXPO3ugHDPGlmZD40o4zCNiTfTWuP4Z5nTlZ3ZAM8Ni3yGIb5yGv+gEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CNQfWOsn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P0vCmA0qmIky6p1+WdBzBQElEBZVAM7agoFPZ4GcvQoA9VNiPbghxAeqlXt9rDNF5I/Lr3VUIQl8QPB1G6LWiW7KVzrlELfccKnEyXCfpMipPTRFbJ0kSzdeLaHJNsL9OoYuqWm4pBHYwX2qkXTcq+6i0u9WeoJNd0+pRxzfXRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mrieiP+h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CNQfWOsn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DBB8C4CEF1;
-	Fri,  9 Jan 2026 12:44:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mrieiP+h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2A33C4CEF1;
+	Fri,  9 Jan 2026 12:44:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962671;
-	bh=TbQ4jTuu+bVhbE6zKtyxzqL6Ihy7j+4CUVRg4JRp4Sk=;
+	s=korg; t=1767962674;
+	bh=r4V8MelXp3xLbIQ92zSdW0lgr3s6u6II484xNgdBpgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CNQfWOsn5091whC4BiG0OdDCleN9X56HVTb9jTvkQKQjUvaPzeIRonvntVQL5tg6h
-	 nTJXtW6ZuJfneVbQGtABXf+iphTmFtzpYr/YnAn2tDv7fvZQxAuOZ5ECCqDABPNBzV
-	 3DrIrNdhkrrSjlMkokrt+Rbcbw5fTuSenLzXJdWY=
+	b=mrieiP+hSr2fG8Dp9DlFi7UVfNgg5dXPAGy3rcZHF8M6uThrZOnd1IOAI3cMXxLFE
+	 6EREG1noCuBZyeLleyvEuwACohco/QflFK8y1wKZgz+VhwUDIr02c18cmesAokS9yr
+	 sjjQh/QSqQeNVpPlQhmszGZd08h+5wcQ/QYKKASo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Revanth Kumar Uppala <ruppala@nvidia.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 420/634] net: stmmac: Power up SERDES after the PHY link
-Date: Fri,  9 Jan 2026 12:41:38 +0100
-Message-ID: <20260109112133.341697772@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Martino Facchin <m.facchin@arduino.cc>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Alexey Klimov <alexey.klimov@linaro.org>
+Subject: [PATCH 6.1 447/634] ASoC: qcom: q6adm: the the copp device only during last instance
+Date: Fri,  9 Jan 2026 12:42:05 +0100
+Message-ID: <20260109112134.360021227@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,70 +53,223 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Revanth Kumar Uppala <ruppala@nvidia.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-[ Upstream commit a46e9010124256f5bf5fc2c241a45cf1944b768e ]
+commit 74cc4f3ea4e99262ba0d619c6a4ee33e2cd47f65 upstream.
 
-The Tegra MGBE ethernet controller requires that the SERDES link is
-powered-up after the PHY link is up, otherwise the link fails to
-become ready following a resume from suspend. Add a variable to indicate
-that the SERDES link must be powered-up after the PHY link.
+A matching Common object post processing instance is normally resused
+across multiple streams. However currently we close this on DSP
+even though there is a refcount on this copp object, this can result in
+below error.
 
-Signed-off-by: Revanth Kumar Uppala <ruppala@nvidia.com>
-Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: a48e23221000 ("net: stmmac: fix the crash issue for zero copy XDP_TX action")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+q6routing ab00000.remoteproc:glink-edge:apr:service@8:routing: Found Matching Copp 0x0
+qcom-q6adm aprsvc:service:4:8: cmd = 0x10325 return error = 0x2
+q6routing ab00000.remoteproc:glink-edge:apr:service@8:routing: DSP returned error[2]
+q6routing ab00000.remoteproc:glink-edge:apr:service@8:routing: Found Matching Copp 0x0
+qcom-q6adm aprsvc:service:4:8: cmd = 0x10325 return error = 0x2
+q6routing ab00000.remoteproc:glink-edge:apr:service@8:routing: DSP returned error[2]
+qcom-q6adm aprsvc:service:4:8: cmd = 0x10327 return error = 0x2
+qcom-q6adm aprsvc:service:4:8: DSP returned error[2]
+qcom-q6adm aprsvc:service:4:8: Failed to close copp -22
+qcom-q6adm aprsvc:service:4:8: cmd = 0x10327 return error = 0x2
+qcom-q6adm aprsvc:service:4:8: DSP returned error[2]
+qcom-q6adm aprsvc:service:4:8: Failed to close copp -22
+
+Fix this by addressing moving the adm_close to copp_kref destructor
+callback.
+
+Fixes: 7b20b2be51e1 ("ASoC: qdsp6: q6adm: Add q6adm driver")
+Cc: Stable@vger.kernel.org
+Reported-by: Martino Facchin <m.facchin@arduino.cc>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Tested-by: Alexey Klimov <alexey.klimov@linaro.org> # RB5, RB3
+Link: https://patch.msgid.link/20251023102444.88158-3-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 7 +++++--
- include/linux/stmmac.h                            | 1 +
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ sound/soc/qcom/qdsp6/q6adm.c |  146 ++++++++++++++++++++-----------------------
+ 1 file changed, 71 insertions(+), 75 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 202c43d73a2b..0483e8c2f1de 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -994,6 +994,9 @@ static void stmmac_mac_link_up(struct phylink_config *config,
- 	struct stmmac_priv *priv = netdev_priv(to_net_dev(config->dev));
- 	u32 old_ctrl, ctrl;
+--- a/sound/soc/qcom/qdsp6/q6adm.c
++++ b/sound/soc/qcom/qdsp6/q6adm.c
+@@ -109,11 +109,75 @@ static struct q6copp *q6adm_find_copp(st
  
-+	if (priv->plat->serdes_up_after_phy_linkup && priv->plat->serdes_powerup)
-+		priv->plat->serdes_powerup(priv->dev, priv->plat->bsp_priv);
+ }
+ 
++static int q6adm_apr_send_copp_pkt(struct q6adm *adm, struct q6copp *copp,
++				   struct apr_pkt *pkt, uint32_t rsp_opcode)
++{
++	struct device *dev = adm->dev;
++	uint32_t opcode = pkt->hdr.opcode;
++	int ret;
 +
- 	old_ctrl = readl(priv->ioaddr + MAC_CTRL_REG);
- 	ctrl = old_ctrl & ~priv->hw->link.speed_mask;
++	mutex_lock(&adm->lock);
++	copp->result.opcode = 0;
++	copp->result.status = 0;
++	ret = apr_send_pkt(adm->apr, pkt);
++	if (ret < 0) {
++		dev_err(dev, "Failed to send APR packet\n");
++		ret = -EINVAL;
++		goto err;
++	}
++
++	/* Wait for the callback with copp id */
++	if (rsp_opcode)
++		ret = wait_event_timeout(copp->wait,
++					 (copp->result.opcode == opcode) ||
++					 (copp->result.opcode == rsp_opcode),
++					 msecs_to_jiffies(TIMEOUT_MS));
++	else
++		ret = wait_event_timeout(copp->wait,
++					 (copp->result.opcode == opcode),
++					 msecs_to_jiffies(TIMEOUT_MS));
++
++	if (!ret) {
++		dev_err(dev, "ADM copp cmd timedout\n");
++		ret = -ETIMEDOUT;
++	} else if (copp->result.status > 0) {
++		dev_err(dev, "DSP returned error[%d]\n",
++			copp->result.status);
++		ret = -EINVAL;
++	}
++
++err:
++	mutex_unlock(&adm->lock);
++	return ret;
++}
++
++static int q6adm_device_close(struct q6adm *adm, struct q6copp *copp,
++			      int port_id, int copp_idx)
++{
++	struct apr_pkt close;
++
++	close.hdr.hdr_field = APR_HDR_FIELD(APR_MSG_TYPE_SEQ_CMD,
++					APR_HDR_LEN(APR_HDR_SIZE),
++					APR_PKT_VER);
++	close.hdr.pkt_size = sizeof(close);
++	close.hdr.src_port = port_id;
++	close.hdr.dest_port = copp->id;
++	close.hdr.token = port_id << 16 | copp_idx;
++	close.hdr.opcode = ADM_CMD_DEVICE_CLOSE_V5;
++
++	return q6adm_apr_send_copp_pkt(adm, copp, &close, 0);
++}
++
+ static void q6adm_free_copp(struct kref *ref)
+ {
+ 	struct q6copp *c = container_of(ref, struct q6copp, refcount);
+ 	struct q6adm *adm = c->adm;
+ 	unsigned long flags;
++	int ret;
++
++	ret = q6adm_device_close(adm, c, c->afe_port, c->copp_idx);
++	if (ret < 0)
++		dev_err(adm->dev, "Failed to close copp %d\n", ret);
  
-@@ -3839,7 +3842,7 @@ static int __stmmac_open(struct net_device *dev,
+ 	spin_lock_irqsave(&adm->copps_list_lock, flags);
+ 	clear_bit(c->copp_idx, &adm->copp_bitmap[c->afe_port]);
+@@ -155,13 +219,13 @@ static int q6adm_callback(struct apr_dev
+ 		switch (result->opcode) {
+ 		case ADM_CMD_DEVICE_OPEN_V5:
+ 		case ADM_CMD_DEVICE_CLOSE_V5:
+-			copp = q6adm_find_copp(adm, port_idx, copp_idx);
+-			if (!copp)
+-				return 0;
+-
+-			copp->result = *result;
+-			wake_up(&copp->wait);
+-			kref_put(&copp->refcount, q6adm_free_copp);
++			list_for_each_entry(copp, &adm->copps_list, node) {
++				if ((port_idx == copp->afe_port) && (copp_idx == copp->copp_idx)) {
++					copp->result = *result;
++					wake_up(&copp->wait);
++					break;
++				}
++			}
+ 			break;
+ 		case ADM_CMD_MATRIX_MAP_ROUTINGS_V5:
+ 			adm->result = *result;
+@@ -234,65 +298,6 @@ static struct q6copp *q6adm_alloc_copp(s
+ 	return c;
+ }
  
- 	stmmac_reset_queues_param(priv);
+-static int q6adm_apr_send_copp_pkt(struct q6adm *adm, struct q6copp *copp,
+-				   struct apr_pkt *pkt, uint32_t rsp_opcode)
+-{
+-	struct device *dev = adm->dev;
+-	uint32_t opcode = pkt->hdr.opcode;
+-	int ret;
+-
+-	mutex_lock(&adm->lock);
+-	copp->result.opcode = 0;
+-	copp->result.status = 0;
+-	ret = apr_send_pkt(adm->apr, pkt);
+-	if (ret < 0) {
+-		dev_err(dev, "Failed to send APR packet\n");
+-		ret = -EINVAL;
+-		goto err;
+-	}
+-
+-	/* Wait for the callback with copp id */
+-	if (rsp_opcode)
+-		ret = wait_event_timeout(copp->wait,
+-					 (copp->result.opcode == opcode) ||
+-					 (copp->result.opcode == rsp_opcode),
+-					 msecs_to_jiffies(TIMEOUT_MS));
+-	else
+-		ret = wait_event_timeout(copp->wait,
+-					 (copp->result.opcode == opcode),
+-					 msecs_to_jiffies(TIMEOUT_MS));
+-
+-	if (!ret) {
+-		dev_err(dev, "ADM copp cmd timedout\n");
+-		ret = -ETIMEDOUT;
+-	} else if (copp->result.status > 0) {
+-		dev_err(dev, "DSP returned error[%d]\n",
+-			copp->result.status);
+-		ret = -EINVAL;
+-	}
+-
+-err:
+-	mutex_unlock(&adm->lock);
+-	return ret;
+-}
+-
+-static int q6adm_device_close(struct q6adm *adm, struct q6copp *copp,
+-			      int port_id, int copp_idx)
+-{
+-	struct apr_pkt close;
+-
+-	close.hdr.hdr_field = APR_HDR_FIELD(APR_MSG_TYPE_SEQ_CMD,
+-					APR_HDR_LEN(APR_HDR_SIZE),
+-					APR_PKT_VER);
+-	close.hdr.pkt_size = sizeof(close);
+-	close.hdr.src_port = port_id;
+-	close.hdr.dest_port = copp->id;
+-	close.hdr.token = port_id << 16 | copp_idx;
+-	close.hdr.opcode = ADM_CMD_DEVICE_CLOSE_V5;
+-
+-	return q6adm_apr_send_copp_pkt(adm, copp, &close, 0);
+-}
+-
+ static struct q6copp *q6adm_find_matching_copp(struct q6adm *adm,
+ 					       int port_id, int topology,
+ 					       int mode, int rate,
+@@ -567,15 +572,6 @@ EXPORT_SYMBOL_GPL(q6adm_matrix_map);
+  */
+ int q6adm_close(struct device *dev, struct q6copp *copp)
+ {
+-	struct q6adm *adm = dev_get_drvdata(dev->parent);
+-	int ret = 0;
+-
+-	ret = q6adm_device_close(adm, copp, copp->afe_port, copp->copp_idx);
+-	if (ret < 0) {
+-		dev_err(adm->dev, "Failed to close copp %d\n", ret);
+-		return ret;
+-	}
+-
+ 	kref_put(&copp->refcount, q6adm_free_copp);
  
--	if (priv->plat->serdes_powerup) {
-+	if (!priv->plat->serdes_up_after_phy_linkup && priv->plat->serdes_powerup) {
- 		ret = priv->plat->serdes_powerup(dev, priv->plat->bsp_priv);
- 		if (ret < 0) {
- 			netdev_err(priv->dev, "%s: Serdes powerup failed\n",
-@@ -7563,7 +7566,7 @@ int stmmac_resume(struct device *dev)
- 			stmmac_mdio_reset(priv->mii);
- 	}
- 
--	if (priv->plat->serdes_powerup) {
-+	if (!priv->plat->serdes_up_after_phy_linkup && priv->plat->serdes_powerup) {
- 		ret = priv->plat->serdes_powerup(ndev,
- 						 priv->plat->bsp_priv);
- 
-diff --git a/include/linux/stmmac.h b/include/linux/stmmac.h
-index 9f4a4f70270d..c97df9464f90 100644
---- a/include/linux/stmmac.h
-+++ b/include/linux/stmmac.h
-@@ -273,5 +273,6 @@ struct plat_stmmacenet_data {
- 	int msi_tx_base_vec;
- 	bool use_phy_wol;
- 	bool sph_disable;
-+	bool serdes_up_after_phy_linkup;
- };
- #endif
--- 
-2.51.0
-
+ 	return 0;
 
 
