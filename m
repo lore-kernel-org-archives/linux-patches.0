@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE463359F9C;
-	Fri,  9 Jan 2026 12:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 171852737EE;
+	Fri,  9 Jan 2026 12:25:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961530; cv=none; b=JFkfyGU3aDN5PsBFWEK9vY7h+X/45v8Gsb3UB1nhvup/1pYMMCLYlK/K7Uy703SUJD9dkxWKjLyZgC9RDffkoIeP055hoLCKSTGwYPPlUCDASJKmLOuaU2cjCGZAW1NRAJMTRzVF00xWXdF5+nM+A52STShFqs1S8UWvQVU+ipM=
+	t=1767961534; cv=none; b=c6aBPjz/UHTl5YIR07RWCW3Kl031+2QMkeZ4fZ4AJ41CIgdYoJRhBYR/q6QdPGIHUBO+WtWbqgbkNmErt8aIzqEXg7+7CmgFMy6ZuC9gvd8nhRXQ8mpKhOK4LAf9TLyxEOlTJdRGkUx288au7cOV4z8JXSBIAgLgpbIR1056qE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961530; c=relaxed/simple;
-	bh=io1jmPlXEIbLibNVHsOEnoANo2t3+PL+flL9Ev5M/2U=;
+	s=arc-20240116; t=1767961534; c=relaxed/simple;
+	bh=czg0/o6JZKy+jFjsAkquCY85bdnHIZoBaP7Lz5CNunY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kcoOXQDfKqAoAco9kHVEkhP4Uob6rMRzikDMnDg5s5jKFUKAj5DGPjhwlGtkIeY5t6+DHKgwaAY1JBZmHd2iro6T+g0vVrWNxHZcQWA0PjxlGFnGj4+A78mG3pF8j5EiBuE85/N+Yg6A8Y4AEH9veVKHjwga5i4r8Cv32EbpDl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BXnXkC8O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cv1/mmqNAVnaWY0ztyYo4L5jl9OImbz0LXkhZFXyh+NeAgKpCn6qi/sMQ0oX9WOiriuUIbekHO20oZJT4iZmqJApt8lcYCoIXRhk3ghnGbji3oWmmGbkf6GntnIfSBsFHMoBU0TSMFVlofGNJt99A5icGa8MRY2J2mUmw6/do68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vi7N38T4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BXnXkC8O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C82CC4CEF1;
-	Fri,  9 Jan 2026 12:25:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vi7N38T4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 679FBC4CEF1;
+	Fri,  9 Jan 2026 12:25:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961529;
-	bh=io1jmPlXEIbLibNVHsOEnoANo2t3+PL+flL9Ev5M/2U=;
+	s=korg; t=1767961532;
+	bh=czg0/o6JZKy+jFjsAkquCY85bdnHIZoBaP7Lz5CNunY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BXnXkC8OOekwnm5+fadgIqj5mfhw1WbYW3ULVavMrgyFJbDsiCV1yUwd0z6X2fLwx
-	 oHmxTNSuXl8Oj/04EHdfLW1hOobsg7hj+9M3pu3OmPHAo2b/IAu5vlm/swYIxqRVgQ
-	 CSAdNE1+sinYl2Zfr6IgeTvZMGs3oWnlFYDmCuU8=
+	b=vi7N38T4F2zkkLUtYfe6VluFuwPmOfVS2PuJhQaUR74U/Yw3Dwr1OPUauLCN3wCCI
+	 MUSeH0iiW5lk4nO/NOi9u0CNJBL55/q8Gsdsqgi2n/Bt/uBxHbtVcz6aD7sTlBq6b3
+	 yDKBwVLV7qDC+RxMNYP5zYD77Js3Gqq5YI+9Cl9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bugaddr <Bugaddr@protonmail.com>,
-	Armin Wolf <W_Armin@gmx.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 029/634] platform/x86: acer-wmi: Ignore backlight event
-Date: Fri,  9 Jan 2026 12:35:07 +0100
-Message-ID: <20260109112118.544335048@linuxfoundation.org>
+Subject: [PATCH 6.1 047/634] objtool: Fix find_{symbol,func}_containing()
+Date: Fri,  9 Jan 2026 12:35:25 +0100
+Message-ID: <20260109112119.216774641@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -46,56 +45,427 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 444a9256f8d106e08a6bc2dc8ef28a8699e4b3ba ]
+[ Upstream commit 5da6aea375cde499fdfac3cde4f26df4a840eb9f ]
 
-On the Acer Nitro AN515-58, the event 4 - 0 is send by the ACPI
-firmware when the backlight up/down keys are pressed. Ignore this
-event to avoid spamming the kernel log with error messages, as the
-acpi-video driver already handles brightness up/down events.
+The current find_{symbol,func}_containing() functions are broken in
+the face of overlapping symbols, exactly the case that is needed for a
+new ibt/endbr supression.
 
-Reported-by: Bugaddr <Bugaddr@protonmail.com>
-Closes: https://bugaddr.tech/posts/2025-11-16-debugging-the-acer-nitro-5-an515-58-fn-f10-keyboard-backlight-bug-on-linux/#wmi-interface-issues
-Tested-by: Bugaddr <Bugaddr@protonmail.com>
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://patch.msgid.link/20251117155938.3030-1-W_Armin@gmx.de
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Import interval_tree_generic.h into the tools tree and convert the
+symbol tree to an interval tree to support proper range stabs.
+
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20220915111146.330203761@infradead.org
+Stable-dep-of: 72567c630d32 ("objtool: Fix weak symbol detection")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/acer-wmi.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ tools/include/linux/interval_tree_generic.h | 187 ++++++++++++++++++++
+ tools/objtool/elf.c                         |  93 +++++-----
+ tools/objtool/include/objtool/elf.h         |   3 +-
+ 3 files changed, 229 insertions(+), 54 deletions(-)
+ create mode 100644 tools/include/linux/interval_tree_generic.h
 
-diff --git a/drivers/platform/x86/acer-wmi.c b/drivers/platform/x86/acer-wmi.c
-index da765a7dedbc4..46311befc81ae 100644
---- a/drivers/platform/x86/acer-wmi.c
-+++ b/drivers/platform/x86/acer-wmi.c
-@@ -86,6 +86,7 @@ MODULE_ALIAS("wmi:676AA15E-6A47-4D9F-A2CC-1E6D18D14026");
+diff --git a/tools/include/linux/interval_tree_generic.h b/tools/include/linux/interval_tree_generic.h
+new file mode 100644
+index 0000000000000..aaa8a0767aa3a
+--- /dev/null
++++ b/tools/include/linux/interval_tree_generic.h
+@@ -0,0 +1,187 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++  Interval Trees
++  (C) 2012  Michel Lespinasse <walken@google.com>
++
++
++  include/linux/interval_tree_generic.h
++*/
++
++#include <linux/rbtree_augmented.h>
++
++/*
++ * Template for implementing interval trees
++ *
++ * ITSTRUCT:   struct type of the interval tree nodes
++ * ITRB:       name of struct rb_node field within ITSTRUCT
++ * ITTYPE:     type of the interval endpoints
++ * ITSUBTREE:  name of ITTYPE field within ITSTRUCT holding last-in-subtree
++ * ITSTART(n): start endpoint of ITSTRUCT node n
++ * ITLAST(n):  last endpoint of ITSTRUCT node n
++ * ITSTATIC:   'static' or empty
++ * ITPREFIX:   prefix to use for the inline tree definitions
++ *
++ * Note - before using this, please consider if generic version
++ * (interval_tree.h) would work for you...
++ */
++
++#define INTERVAL_TREE_DEFINE(ITSTRUCT, ITRB, ITTYPE, ITSUBTREE,		      \
++			     ITSTART, ITLAST, ITSTATIC, ITPREFIX)	      \
++									      \
++/* Callbacks for augmented rbtree insert and remove */			      \
++									      \
++RB_DECLARE_CALLBACKS_MAX(static, ITPREFIX ## _augment,			      \
++			 ITSTRUCT, ITRB, ITTYPE, ITSUBTREE, ITLAST)	      \
++									      \
++/* Insert / remove interval nodes from the tree */			      \
++									      \
++ITSTATIC void ITPREFIX ## _insert(ITSTRUCT *node,			      \
++				  struct rb_root_cached *root)	 	      \
++{									      \
++	struct rb_node **link = &root->rb_root.rb_node, *rb_parent = NULL;    \
++	ITTYPE start = ITSTART(node), last = ITLAST(node);		      \
++	ITSTRUCT *parent;						      \
++	bool leftmost = true;						      \
++									      \
++	while (*link) {							      \
++		rb_parent = *link;					      \
++		parent = rb_entry(rb_parent, ITSTRUCT, ITRB);		      \
++		if (parent->ITSUBTREE < last)				      \
++			parent->ITSUBTREE = last;			      \
++		if (start < ITSTART(parent))				      \
++			link = &parent->ITRB.rb_left;			      \
++		else {							      \
++			link = &parent->ITRB.rb_right;			      \
++			leftmost = false;				      \
++		}							      \
++	}								      \
++									      \
++	node->ITSUBTREE = last;						      \
++	rb_link_node(&node->ITRB, rb_parent, link);			      \
++	rb_insert_augmented_cached(&node->ITRB, root,			      \
++				   leftmost, &ITPREFIX ## _augment);	      \
++}									      \
++									      \
++ITSTATIC void ITPREFIX ## _remove(ITSTRUCT *node,			      \
++				  struct rb_root_cached *root)		      \
++{									      \
++	rb_erase_augmented_cached(&node->ITRB, root, &ITPREFIX ## _augment);  \
++}									      \
++									      \
++/*									      \
++ * Iterate over intervals intersecting [start;last]			      \
++ *									      \
++ * Note that a node's interval intersects [start;last] iff:		      \
++ *   Cond1: ITSTART(node) <= last					      \
++ * and									      \
++ *   Cond2: start <= ITLAST(node)					      \
++ */									      \
++									      \
++static ITSTRUCT *							      \
++ITPREFIX ## _subtree_search(ITSTRUCT *node, ITTYPE start, ITTYPE last)	      \
++{									      \
++	while (true) {							      \
++		/*							      \
++		 * Loop invariant: start <= node->ITSUBTREE		      \
++		 * (Cond2 is satisfied by one of the subtree nodes)	      \
++		 */							      \
++		if (node->ITRB.rb_left) {				      \
++			ITSTRUCT *left = rb_entry(node->ITRB.rb_left,	      \
++						  ITSTRUCT, ITRB);	      \
++			if (start <= left->ITSUBTREE) {			      \
++				/*					      \
++				 * Some nodes in left subtree satisfy Cond2.  \
++				 * Iterate to find the leftmost such node N.  \
++				 * If it also satisfies Cond1, that's the     \
++				 * match we are looking for. Otherwise, there \
++				 * is no matching interval as nodes to the    \
++				 * right of N can't satisfy Cond1 either.     \
++				 */					      \
++				node = left;				      \
++				continue;				      \
++			}						      \
++		}							      \
++		if (ITSTART(node) <= last) {		/* Cond1 */	      \
++			if (start <= ITLAST(node))	/* Cond2 */	      \
++				return node;	/* node is leftmost match */  \
++			if (node->ITRB.rb_right) {			      \
++				node = rb_entry(node->ITRB.rb_right,	      \
++						ITSTRUCT, ITRB);	      \
++				if (start <= node->ITSUBTREE)		      \
++					continue;			      \
++			}						      \
++		}							      \
++		return NULL;	/* No match */				      \
++	}								      \
++}									      \
++									      \
++ITSTATIC ITSTRUCT *							      \
++ITPREFIX ## _iter_first(struct rb_root_cached *root,			      \
++			ITTYPE start, ITTYPE last)			      \
++{									      \
++	ITSTRUCT *node, *leftmost;					      \
++									      \
++	if (!root->rb_root.rb_node)					      \
++		return NULL;						      \
++									      \
++	/*								      \
++	 * Fastpath range intersection/overlap between A: [a0, a1] and	      \
++	 * B: [b0, b1] is given by:					      \
++	 *								      \
++	 *         a0 <= b1 && b0 <= a1					      \
++	 *								      \
++	 *  ... where A holds the lock range and B holds the smallest	      \
++	 * 'start' and largest 'last' in the tree. For the later, we	      \
++	 * rely on the root node, which by augmented interval tree	      \
++	 * property, holds the largest value in its last-in-subtree.	      \
++	 * This allows mitigating some of the tree walk overhead for	      \
++	 * for non-intersecting ranges, maintained and consulted in O(1).     \
++	 */								      \
++	node = rb_entry(root->rb_root.rb_node, ITSTRUCT, ITRB);		      \
++	if (node->ITSUBTREE < start)					      \
++		return NULL;						      \
++									      \
++	leftmost = rb_entry(root->rb_leftmost, ITSTRUCT, ITRB);		      \
++	if (ITSTART(leftmost) > last)					      \
++		return NULL;						      \
++									      \
++	return ITPREFIX ## _subtree_search(node, start, last);		      \
++}									      \
++									      \
++ITSTATIC ITSTRUCT *							      \
++ITPREFIX ## _iter_next(ITSTRUCT *node, ITTYPE start, ITTYPE last)	      \
++{									      \
++	struct rb_node *rb = node->ITRB.rb_right, *prev;		      \
++									      \
++	while (true) {							      \
++		/*							      \
++		 * Loop invariants:					      \
++		 *   Cond1: ITSTART(node) <= last			      \
++		 *   rb == node->ITRB.rb_right				      \
++		 *							      \
++		 * First, search right subtree if suitable		      \
++		 */							      \
++		if (rb) {						      \
++			ITSTRUCT *right = rb_entry(rb, ITSTRUCT, ITRB);	      \
++			if (start <= right->ITSUBTREE)			      \
++				return ITPREFIX ## _subtree_search(right,     \
++								start, last); \
++		}							      \
++									      \
++		/* Move up the tree until we come from a node's left child */ \
++		do {							      \
++			rb = rb_parent(&node->ITRB);			      \
++			if (!rb)					      \
++				return NULL;				      \
++			prev = &node->ITRB;				      \
++			node = rb_entry(rb, ITSTRUCT, ITRB);		      \
++			rb = node->ITRB.rb_right;			      \
++		} while (prev == rb);					      \
++									      \
++		/* Check if the node intersects [start;last] */		      \
++		if (last < ITSTART(node))		/* !Cond1 */	      \
++			return NULL;					      \
++		else if (start <= ITLAST(node))		/* Cond2 */	      \
++			return node;					      \
++	}								      \
++}
+diff --git a/tools/objtool/elf.c b/tools/objtool/elf.c
+index 7e24b09b1163a..89b37cd4ab1dc 100644
+--- a/tools/objtool/elf.c
++++ b/tools/objtool/elf.c
+@@ -16,6 +16,7 @@
+ #include <string.h>
+ #include <unistd.h>
+ #include <errno.h>
++#include <linux/interval_tree_generic.h>
+ #include <objtool/builtin.h>
  
- enum acer_wmi_event_ids {
- 	WMID_HOTKEY_EVENT = 0x1,
-+	WMID_BACKLIGHT_EVENT = 0x4,
- 	WMID_ACCEL_OR_KBD_DOCK_EVENT = 0x5,
- 	WMID_GAMING_TURBO_KEY_EVENT = 0x7,
- 	WMID_AC_EVENT = 0x8,
-@@ -1992,6 +1993,9 @@ static void acer_wmi_notify(u32 value, void *context)
- 			sparse_keymap_report_event(acer_wmi_input_dev, scancode, 1, true);
- 		}
- 		break;
-+	case WMID_BACKLIGHT_EVENT:
-+		/* Already handled by acpi-video */
-+		break;
- 	case WMID_ACCEL_OR_KBD_DOCK_EVENT:
- 		acer_gsensor_event();
- 		acer_kbd_dock_event(&return_value);
+ #include <objtool/elf.h>
+@@ -50,38 +51,22 @@ static inline u32 str_hash(const char *str)
+ 	__elf_table(name); \
+ })
+ 
+-static bool symbol_to_offset(struct rb_node *a, const struct rb_node *b)
++static inline unsigned long __sym_start(struct symbol *s)
+ {
+-	struct symbol *sa = rb_entry(a, struct symbol, node);
+-	struct symbol *sb = rb_entry(b, struct symbol, node);
+-
+-	if (sa->offset < sb->offset)
+-		return true;
+-	if (sa->offset > sb->offset)
+-		return false;
+-
+-	if (sa->len < sb->len)
+-		return true;
+-	if (sa->len > sb->len)
+-		return false;
+-
+-	sa->alias = sb;
+-
+-	return false;
++	return s->offset;
+ }
+ 
+-static int symbol_by_offset(const void *key, const struct rb_node *node)
++static inline unsigned long __sym_last(struct symbol *s)
+ {
+-	const struct symbol *s = rb_entry(node, struct symbol, node);
+-	const unsigned long *o = key;
++	return s->offset + s->len - 1;
++}
+ 
+-	if (*o < s->offset)
+-		return -1;
+-	if (*o >= s->offset + s->len)
+-		return 1;
++INTERVAL_TREE_DEFINE(struct symbol, node, unsigned long, __subtree_last,
++		     __sym_start, __sym_last, static, __sym)
+ 
+-	return 0;
+-}
++#define __sym_for_each(_iter, _tree, _start, _end)			\
++	for (_iter = __sym_iter_first((_tree), (_start), (_end));	\
++	     _iter; _iter = __sym_iter_next(_iter, (_start), (_end)))
+ 
+ struct symbol_hole {
+ 	unsigned long key;
+@@ -147,13 +132,12 @@ static struct symbol *find_symbol_by_index(struct elf *elf, unsigned int idx)
+ 
+ struct symbol *find_symbol_by_offset(struct section *sec, unsigned long offset)
+ {
+-	struct rb_node *node;
+-
+-	rb_for_each(node, &offset, &sec->symbol_tree, symbol_by_offset) {
+-		struct symbol *s = rb_entry(node, struct symbol, node);
++	struct rb_root_cached *tree = (struct rb_root_cached *)&sec->symbol_tree;
++	struct symbol *iter;
+ 
+-		if (s->offset == offset && s->type != STT_SECTION)
+-			return s;
++	__sym_for_each(iter, tree, offset, offset) {
++		if (iter->offset == offset && iter->type != STT_SECTION)
++			return iter;
+ 	}
+ 
+ 	return NULL;
+@@ -161,13 +145,12 @@ struct symbol *find_symbol_by_offset(struct section *sec, unsigned long offset)
+ 
+ struct symbol *find_func_by_offset(struct section *sec, unsigned long offset)
+ {
+-	struct rb_node *node;
++	struct rb_root_cached *tree = (struct rb_root_cached *)&sec->symbol_tree;
++	struct symbol *iter;
+ 
+-	rb_for_each(node, &offset, &sec->symbol_tree, symbol_by_offset) {
+-		struct symbol *s = rb_entry(node, struct symbol, node);
+-
+-		if (s->offset == offset && s->type == STT_FUNC)
+-			return s;
++	__sym_for_each(iter, tree, offset, offset) {
++		if (iter->offset == offset && iter->type == STT_FUNC)
++			return iter;
+ 	}
+ 
+ 	return NULL;
+@@ -175,13 +158,12 @@ struct symbol *find_func_by_offset(struct section *sec, unsigned long offset)
+ 
+ struct symbol *find_symbol_containing(const struct section *sec, unsigned long offset)
+ {
+-	struct rb_node *node;
+-
+-	rb_for_each(node, &offset, &sec->symbol_tree, symbol_by_offset) {
+-		struct symbol *s = rb_entry(node, struct symbol, node);
++	struct rb_root_cached *tree = (struct rb_root_cached *)&sec->symbol_tree;
++	struct symbol *iter;
+ 
+-		if (s->type != STT_SECTION)
+-			return s;
++	__sym_for_each(iter, tree, offset, offset) {
++		if (iter->type != STT_SECTION)
++			return iter;
+ 	}
+ 
+ 	return NULL;
+@@ -202,7 +184,7 @@ int find_symbol_hole_containing(const struct section *sec, unsigned long offset)
+ 	/*
+ 	 * Find the rightmost symbol for which @offset is after it.
+ 	 */
+-	n = rb_find(&hole, &sec->symbol_tree, symbol_hole_by_offset);
++	n = rb_find(&hole, &sec->symbol_tree.rb_root, symbol_hole_by_offset);
+ 
+ 	/* found a symbol that contains @offset */
+ 	if (n)
+@@ -224,13 +206,12 @@ int find_symbol_hole_containing(const struct section *sec, unsigned long offset)
+ 
+ struct symbol *find_func_containing(struct section *sec, unsigned long offset)
+ {
+-	struct rb_node *node;
+-
+-	rb_for_each(node, &offset, &sec->symbol_tree, symbol_by_offset) {
+-		struct symbol *s = rb_entry(node, struct symbol, node);
++	struct rb_root_cached *tree = (struct rb_root_cached *)&sec->symbol_tree;
++	struct symbol *iter;
+ 
+-		if (s->type == STT_FUNC)
+-			return s;
++	__sym_for_each(iter, tree, offset, offset) {
++		if (iter->type == STT_FUNC)
++			return iter;
+ 	}
+ 
+ 	return NULL;
+@@ -373,6 +354,7 @@ static void elf_add_symbol(struct elf *elf, struct symbol *sym)
+ {
+ 	struct list_head *entry;
+ 	struct rb_node *pnode;
++	struct symbol *iter;
+ 
+ 	INIT_LIST_HEAD(&sym->pv_target);
+ 	sym->alias = sym;
+@@ -386,7 +368,12 @@ static void elf_add_symbol(struct elf *elf, struct symbol *sym)
+ 	sym->offset = sym->sym.st_value;
+ 	sym->len = sym->sym.st_size;
+ 
+-	rb_add(&sym->node, &sym->sec->symbol_tree, symbol_to_offset);
++	__sym_for_each(iter, &sym->sec->symbol_tree, sym->offset, sym->offset) {
++		if (iter->offset == sym->offset && iter->type == sym->type)
++			iter->alias = sym;
++	}
++
++	__sym_insert(sym, &sym->sec->symbol_tree);
+ 	pnode = rb_prev(&sym->node);
+ 	if (pnode)
+ 		entry = &rb_entry(pnode, struct symbol, node)->list;
+@@ -401,7 +388,7 @@ static void elf_add_symbol(struct elf *elf, struct symbol *sym)
+ 	 * can exist within a function, confusing the sorting.
+ 	 */
+ 	if (!sym->len)
+-		rb_erase(&sym->node, &sym->sec->symbol_tree);
++		__sym_remove(sym, &sym->sec->symbol_tree);
+ }
+ 
+ static int read_symbols(struct elf *elf)
+diff --git a/tools/objtool/include/objtool/elf.h b/tools/objtool/include/objtool/elf.h
+index 5d4a841fbd311..fdb6c96aa0a5a 100644
+--- a/tools/objtool/include/objtool/elf.h
++++ b/tools/objtool/include/objtool/elf.h
+@@ -30,7 +30,7 @@ struct section {
+ 	struct hlist_node hash;
+ 	struct hlist_node name_hash;
+ 	GElf_Shdr sh;
+-	struct rb_root symbol_tree;
++	struct rb_root_cached symbol_tree;
+ 	struct list_head symbol_list;
+ 	struct list_head reloc_list;
+ 	struct section *base, *reloc;
+@@ -53,6 +53,7 @@ struct symbol {
+ 	unsigned char bind, type;
+ 	unsigned long offset;
+ 	unsigned int len;
++	unsigned long __subtree_last;
+ 	struct symbol *pfunc, *cfunc, *alias;
+ 	u8 uaccess_safe      : 1;
+ 	u8 static_call_tramp : 1;
 -- 
 2.51.0
 
