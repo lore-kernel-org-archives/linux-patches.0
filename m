@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DB551DF72C;
-	Fri,  9 Jan 2026 12:43:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F35E11DF72C;
+	Fri,  9 Jan 2026 12:43:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962606; cv=none; b=Gc2Sgu2NdjJ2V71bNCBnHLi6GN2sjvFo/Jy9Mq0R3XT/pYpF20XF8cEghZgmuwvLaxvbRglG7VDqpWIhIsc2NV+pSSw6ekxWjqlZ+7+1ZBbATILiNJ/YgmduAS/z1JmcaW4sufYyvSUPrxiUIfoIwAEBzMfasrvO/O6Tfk5jUtY=
+	t=1767962609; cv=none; b=n5G/QktsnvDcFIQI0v5rIylzHQQetzziRYN7QpZE+HRtklYyaZIZPdBl+zbUv6uoVI9q/zd4BGCJ70MVWd0J3yulfeVC55Sv5gl+4oOI0bVkya12sO0mfBvrYbZ02miFsADqoI3q9yWDfi5fyaV4qyHenkS8wOrEiR9v4TjvqY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962606; c=relaxed/simple;
-	bh=R+nrXeZGazwZJ/v/n05etRYNE7dYVMAcwFUBdPrqfps=;
+	s=arc-20240116; t=1767962609; c=relaxed/simple;
+	bh=R+xx7fq8pExZ0mxP1ppBUcSUwWr8fmHMc0s+T8jknkA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kwqx27arur9THD4H+f2MadEfDLIxGywn3uYqaE3Ji3Pvql+d1mxJiLFzi1+Z05aceT/CNktXw7UcObCmQ2JAU2nbTfD7p6ssv8Ddt/s8ZdxUdWvCy/LoI6fS25Vc6eyW8U0NNZMgXl1oHDNpXIVIoW99TRlrGUxKDu41KWhaurE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GEuHqcxo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K+TmvMaUGwidtXUMI+8JWjMujQ97m8ov1VqVFLUpnIVmu5X24dU98PGijFS/2G+kjZ5G1x5lHZAzl/e8Oi1p6hXm8Eh7+q/jfGWkUH36kJ9pe/GxqzXrDE634ON043rL0oO8yqDljUgXRgrDfVAV+JJgF9lyVdd8vdkJmhT0RFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wu1fZ7Kp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GEuHqcxo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DCB9C19421;
-	Fri,  9 Jan 2026 12:43:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wu1fZ7Kp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83995C4CEF1;
+	Fri,  9 Jan 2026 12:43:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962606;
-	bh=R+nrXeZGazwZJ/v/n05etRYNE7dYVMAcwFUBdPrqfps=;
+	s=korg; t=1767962608;
+	bh=R+xx7fq8pExZ0mxP1ppBUcSUwWr8fmHMc0s+T8jknkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GEuHqcxoZoI6ov4WTGTiGUeT0S6xm8Z6cuF5AElCujA4BvL8E3pan1v+w6MjTMg4E
-	 31P5W1LLuSa+EDspgDRWgXzMU8u/xCV419DyUcuJvcQDdsiBqH2MwQdd0aIcvKxm1y
-	 UppSc+3OaCIFSCHJrU4dhTo8Dgt4bUAqF04ngnkg=
+	b=Wu1fZ7KpiPUTeDz18NfEy3/Gi26ripngyQeWNYAoE2gWy/21a+lwNRvqr557MiHf3
+	 GxBuIleyv0nin2jSV1CvKv9pSKa4K/f0IlvjbwWQ7ppuRxgC/uWem6K4912i5bKcxH
+	 G6NT75k5l4dl+O6eGp/vd7E+bS7FLDKG9Ho1g3S4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.1 382/634] rpmsg: glink: fix rpmsg device leak
-Date: Fri,  9 Jan 2026 12:41:00 +0100
-Message-ID: <20260109112131.905882049@linuxfoundation.org>
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 418/634] net: bridge: Describe @tunnel_hash member in net_bridge_vlan_group struct
+Date: Fri,  9 Jan 2026 12:41:36 +0100
+Message-ID: <20260109112133.266227201@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,83 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Bagas Sanjaya <bagasdotme@gmail.com>
 
-commit a53e356df548f6b0e82529ef3cc6070f42622189 upstream.
+[ Upstream commit f79f9b7ace1713e4b83888c385f5f55519dfb687 ]
 
-While testing rpmsg-char interface it was noticed that duplicate sysfs
-entries are getting created and below warning is noticed.
+Sphinx reports kernel-doc warning:
 
-Reason for this is that we are leaking rpmsg device pointer, setting it
-null without actually unregistering device.
-Any further attempts to unregister fail because rpdev is NULL,
-resulting in a leak.
+WARNING: ./net/bridge/br_private.h:267 struct member 'tunnel_hash' not described in 'net_bridge_vlan_group'
 
-Fix this by unregistering rpmsg device before removing its reference
-from rpmsg channel.
+Fix it by describing @tunnel_hash member.
 
-sysfs: cannot create duplicate filename '/devices/platform/soc@0/3700000.remot
-eproc/remoteproc/remoteproc1/3700000.remoteproc:glink-edge/3700000.remoteproc:
-glink-edge.adsp_apps.-1.-1'
-[  114.115347] CPU: 0 UID: 0 PID: 9 Comm: kworker/0:0 Not
- tainted 6.16.0-rc4 #7 PREEMPT
-[  114.115355] Hardware name: Qualcomm Technologies, Inc. Robotics RB3gen2 (DT)
-[  114.115358] Workqueue: events qcom_glink_work
-[  114.115371] Call trace:8
-[  114.115374]  show_stack+0x18/0x24 (C)
-[  114.115382]  dump_stack_lvl+0x60/0x80
-[  114.115388]  dump_stack+0x18/0x24
-[  114.115393]  sysfs_warn_dup+0x64/0x80
-[  114.115402]  sysfs_create_dir_ns+0xf4/0x120
-[  114.115409]  kobject_add_internal+0x98/0x260
-[  114.115416]  kobject_add+0x9c/0x108
-[  114.115421]  device_add+0xc4/0x7a0
-[  114.115429]  rpmsg_register_device+0x5c/0xb0
-[  114.115434]  qcom_glink_work+0x4bc/0x820
-[  114.115438]  process_one_work+0x148/0x284
-[  114.115446]  worker_thread+0x2c4/0x3e0
-[  114.115452]  kthread+0x12c/0x204
-[  114.115457]  ret_from_fork+0x10/0x20
-[  114.115464] kobject: kobject_add_internal failed for 3700000.remoteproc:
-glink-edge.adsp_apps.-1.-1 with -EEXIST, don't try to register things with
-the same name in the same directory.
-[  114.250045] rpmsg 3700000.remoteproc:glink-edge.adsp_apps.-1.-1:
-device_add failed: -17
-
-Fixes: 835764ddd9af ("rpmsg: glink: Move the common glink protocol implementation to glink_native.c")
-Cc: Stable@vger.kernel.org
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250822100043.2604794-2-srinivas.kandagatla@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: efa5356b0d9753 ("bridge: per vlan dst_metadata netlink support")
+Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20251218042936.24175-2-bagasdotme@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rpmsg/qcom_glink_native.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/bridge/br_private.h | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -1242,6 +1242,7 @@ static void qcom_glink_destroy_ept(struc
- {
- 	struct glink_channel *channel = to_glink_channel(ept);
- 	struct qcom_glink *glink = channel->glink;
-+	struct rpmsg_channel_info chinfo;
- 	unsigned long flags;
- 
- 	spin_lock_irqsave(&channel->recv_lock, flags);
-@@ -1249,6 +1250,13 @@ static void qcom_glink_destroy_ept(struc
- 	spin_unlock_irqrestore(&channel->recv_lock, flags);
- 
- 	/* Decouple the potential rpdev from the channel */
-+	if (channel->rpdev) {
-+		strscpy_pad(chinfo.name, channel->name, sizeof(chinfo.name));
-+		chinfo.src = RPMSG_ADDR_ANY;
-+		chinfo.dst = RPMSG_ADDR_ANY;
-+
-+		rpmsg_unregister_device(glink->dev, &chinfo);
-+	}
- 	channel->rpdev = NULL;
- 
- 	qcom_glink_send_close_req(glink, channel);
+diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
+index 901b9f609b0c..9f3f636587f3 100644
+--- a/net/bridge/br_private.h
++++ b/net/bridge/br_private.h
+@@ -224,6 +224,7 @@ struct net_bridge_vlan {
+  * struct net_bridge_vlan_group
+  *
+  * @vlan_hash: VLAN entry rhashtable
++ * @tunnel_hash: Hash table to map from tunnel key ID (e.g. VXLAN VNI) to VLAN
+  * @vlan_list: sorted VLAN entry list
+  * @num_vlans: number of total VLAN entries
+  * @pvid: PVID VLAN id
+-- 
+2.51.0
+
 
 
