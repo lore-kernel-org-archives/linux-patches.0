@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1C733375D;
-	Fri,  9 Jan 2026 12:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3AF433375D;
+	Fri,  9 Jan 2026 12:03:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960177; cv=none; b=F05ceUSMmE56fEkyvViViuoJTQqRG9K2o0bOM2QQ42mFOL4d87Oo8PK+GANYda9ijjfRQMzzGNCzyAfEeTPXBvQVL3yq1VNdeDncPlxfQjz4zRkz3I6gPWC985a8rS+LMT71+ufGeuztdUlV6pRZmm1qTm1G8fhpm3m9AROkAno=
+	t=1767960181; cv=none; b=Sc3jJiQVXvNh6mzeoYLqR2Ouv2Aw5nJo7O/JxcfBHIyvbFEHQg5WXC7PcCbH8gsiWTiN3/8r6gSxCbSYkCU/Qp2TIJG9shDu8bfJGBA1fkUqU5Az/mT95kjIKBj+xoV2UqDxMf3FrHqfYK43ubcjl/LNLBcdXxlc/yfyIdSLgTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960177; c=relaxed/simple;
-	bh=yFN2jDZMfESxOutXYYCbtjNU2Fnxj6hGdJW64fhj6cQ=;
+	s=arc-20240116; t=1767960181; c=relaxed/simple;
+	bh=cwwvOT6JOXpDbw5Qb3AN5yyI1kBi1f3utK3xUbDSOMU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U5RJgEJTgAeq3vBuAvGXxFsHbFxyhNEisqhSATP40CyWZyfKz3DehEKK/uAIkc3UkzArHr05hjkvXvxGoDg4J+oD3YAbQFM7uKqZnII+seHqD3HpLXRNnynMKcjWDzLZ1Vy1TSVf8dMNJxIyzadzr7pIzR1b/rcMWPD0ZgqO7rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PiXUWAd7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TxJzyiUf1tPJLTNTIa0SXLLbQbuafPxjBFKMujXZ74OQVI1dJwqdzN1tp740vEH6XiCbcklbo1quZzoCxzMiBHa/zPXpbHGVk/RgWYb6s2Y4mWxDSXiwmRpfLShoyicOUCLWFmzO+mWc1jFk/IihTQD+vZoU1e/wzaaxxmStCBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DTatACc3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PiXUWAd7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57BD3C4CEF1;
-	Fri,  9 Jan 2026 12:02:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DTatACc3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F536C4CEF1;
+	Fri,  9 Jan 2026 12:03:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960177;
-	bh=yFN2jDZMfESxOutXYYCbtjNU2Fnxj6hGdJW64fhj6cQ=;
+	s=korg; t=1767960180;
+	bh=cwwvOT6JOXpDbw5Qb3AN5yyI1kBi1f3utK3xUbDSOMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PiXUWAd7M11t3TramK5zUyEJMlG6IjlR3OSGXkgDVYeQfgY14yrWw905InUXd969f
-	 pC9v0bMYFxGpb6oSBZ3zAhbpzC7z9wZpNK8yiYvQ+eF2vXdFjtOXWSeGnvLYBd/nD3
-	 OvLfMv4ZU5ETGEqNUW73YHjZ+CN5hdJOKxwjyQFQ=
+	b=DTatACc3G0IlEQWhgFG+jJE1sAtu/7PtefUNpX0g99HBu5NLMDF1gEW7LElAv1XGL
+	 AJVdSPw4BZIlVJ3cOkMZ1vNRLRZgFYMcDJxGVJfeh5nXwnTGkfXVdxfEdcvOriO0Ep
+	 z1/XniiZaw/LIGYSle/LrT95w5KdVCZTMCiz5DPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Simakov <bigalex934@gmail.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Shuhao Fu <sfual@cse.ust.hk>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 285/737] dm-raid: fix possible NULL dereference with undefined raid type
-Date: Fri,  9 Jan 2026 12:37:04 +0100
-Message-ID: <20260109112144.733414702@linuxfoundation.org>
+Subject: [PATCH 6.6 312/737] cpufreq: s5pv210: fix refcount leak
+Date: Fri,  9 Jan 2026 12:37:31 +0100
+Message-ID: <20260109112145.739604883@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,40 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Simakov <bigalex934@gmail.com>
+From: Shuhao Fu <sfual@cse.ust.hk>
 
-[ Upstream commit 2f6cfd6d7cb165a7af8877b838a9f6aab4159324 ]
+[ Upstream commit 2de5cb96060a1664880d65b120e59485a73588a8 ]
 
-rs->raid_type is assigned from get_raid_type_by_ll(), which may return
-NULL. This NULL value could be dereferenced later in the condition
-'if (!(rs_is_raid10(rs) && rt_is_raid0(rs->raid_type)))'.
+In function `s5pv210_cpu_init`, a possible refcount inconsistency has
+been identified, causing a resource leak.
 
-Add a fail-fast check to return early with an error if raid_type is NULL,
-similar to other uses of this function.
+Why it is a bug:
+1. For every clk_get, there should be a matching clk_put on every
+successive error handling path.
+2. After calling `clk_get(dmc1_clk)`, variable `dmc1_clk` will not be
+freed even if any error happens.
 
-Found by Linux Verification Center (linuxtesting.org) with Svace.
+How it is fixed: For every failed path, an extra goto label is added to
+ensure `dmc1_clk` will be freed regardlessly.
 
-Fixes: 33e53f06850f ("dm raid: introduce extended superblock and new raid types to support takeover/reshaping")
-Signed-off-by: Alexey Simakov <bigalex934@gmail.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Shuhao Fu <sfual@cse.ust.hk>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-raid.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/cpufreq/s5pv210-cpufreq.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/md/dm-raid.c b/drivers/md/dm-raid.c
-index f23edd79df45e..0c4ab6865182b 100644
---- a/drivers/md/dm-raid.c
-+++ b/drivers/md/dm-raid.c
-@@ -2259,6 +2259,8 @@ static int super_init_validation(struct raid_set *rs, struct md_rdev *rdev)
+diff --git a/drivers/cpufreq/s5pv210-cpufreq.c b/drivers/cpufreq/s5pv210-cpufreq.c
+index 76c888ed8d160..d2fa42beae9c2 100644
+--- a/drivers/cpufreq/s5pv210-cpufreq.c
++++ b/drivers/cpufreq/s5pv210-cpufreq.c
+@@ -518,7 +518,7 @@ static int s5pv210_cpu_init(struct cpufreq_policy *policy)
  
- 			mddev->reshape_position = le64_to_cpu(sb->reshape_position);
- 			rs->raid_type = get_raid_type_by_ll(mddev->level, mddev->layout);
-+			if (!rs->raid_type)
-+				return -EINVAL;
- 		}
+ 	if (policy->cpu != 0) {
+ 		ret = -EINVAL;
+-		goto out_dmc1;
++		goto out;
+ 	}
  
- 	} else {
+ 	/*
+@@ -530,7 +530,7 @@ static int s5pv210_cpu_init(struct cpufreq_policy *policy)
+ 	if ((mem_type != LPDDR) && (mem_type != LPDDR2)) {
+ 		pr_err("CPUFreq doesn't support this memory type\n");
+ 		ret = -EINVAL;
+-		goto out_dmc1;
++		goto out;
+ 	}
+ 
+ 	/* Find current refresh counter and frequency each DMC */
+@@ -544,6 +544,8 @@ static int s5pv210_cpu_init(struct cpufreq_policy *policy)
+ 	cpufreq_generic_init(policy, s5pv210_freq_table, 40000);
+ 	return 0;
+ 
++out:
++	clk_put(dmc1_clk);
+ out_dmc1:
+ 	clk_put(dmc0_clk);
+ out_dmc0:
 -- 
 2.51.0
 
