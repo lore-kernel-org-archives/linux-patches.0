@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C2E733B943;
-	Fri,  9 Jan 2026 11:45:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9037232AAB5;
+	Fri,  9 Jan 2026 11:45:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959119; cv=none; b=m9g2HqC6iET5EnZftel/bsOIEiNSFifjDqCQdXMajRrK/axJ8bZ+RI6o7R8bc4d3ip4Ig9gE5dUXKcU+OonI+3YQbk2cLahinS5oHmbFHuks+QAbhvi7DFJZH78bGnp6nHsRYPKDRs6NN2x07y1Ymi3DIVCzvBoEv0KxJUhXtCA=
+	t=1767959120; cv=none; b=GsLY58wiZw3wsxziJ4ooPwlu7rgtSuLyeXH1D5i+ITnIpup8UEEuac97u2Ivur3WjdIS5i1kf0L4RqUZ7JjAqEq72poAGpJruRotAb99nb6cPH0EREcZmFrdQSJyfygMv2IVe7eIzlOGK5HC92EE1nBJSS8DpRtPfQew0cq+uBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959119; c=relaxed/simple;
-	bh=abskf/h/km/SnBS4/avYvRuXzxTNt5Gzi3CIoF8SPl4=;
+	s=arc-20240116; t=1767959120; c=relaxed/simple;
+	bh=mNId9po01GmHIXiop9AU6MdCcMn/0hkV/pc7QmQ+k44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sral2gXo2y9HTG2SQCqu3fQ5P1Ftr9xA/jG+q06+Z413a08MLtmrCouj2F7kNrWeqNZ3YhrbOpyDrqQkEQD3pttVrfiyPxlc5GKXshpLIXehFLMlDaUkSAMzvyQgAkhfXsEoI0NjVKc46vaQHb5iNBU0uzU9OBgwVqsvlLo8VAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zi+IY9In; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z+TREy+ycL0zXrbgG8sblCP+gYfwNRzBPEXgjTR07wipraEQtZRz8XlY7EDzvBZH4k9iz3mBiAMf9W9yuys4jHg5lKQFHDbPCikA+ZU/tBDhL+ZuU5LDoY8uQGtyvu+TGqh+rVoNM+8AJ4r4LjtdhTNaZeMm93BRS9eA9LvDe4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ryXPTQiw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zi+IY9In"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E815C16AAE;
-	Fri,  9 Jan 2026 11:45:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ryXPTQiw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BBA4C19422;
+	Fri,  9 Jan 2026 11:45:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959116;
-	bh=abskf/h/km/SnBS4/avYvRuXzxTNt5Gzi3CIoF8SPl4=;
+	s=korg; t=1767959119;
+	bh=mNId9po01GmHIXiop9AU6MdCcMn/0hkV/pc7QmQ+k44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zi+IY9In005iERCeux5Qu4AlAJ1Af1/x2VWEWtkELop3tR+/Zm+gBwOM4xezkl8z6
-	 5FM04CGevuJB1I8F/4sayd6IDu+VN2clX+hNIvFYpjEylS2xCWNan+V0wp5VwMJwou
-	 n2FJqiTo6SnnbVdmFtyYRBbEpCz9DMfvczbsJYEQ=
+	b=ryXPTQiwa24APXGLpowa4cpEH1278swiQvHW6Pm72iWLRAm/jiUphU3cYLL3rN8Mb
+	 v+LIC7Q+CaYsvinfEfkdqDw/QbXETERFRBl7ra1fkYrkbV9H/EVDYeAV6uGxE3RW6A
+	 nNLMfHJfI0UfvF09kWdajG9enCv0WD8Oy9sA5deo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Chris Mason <clm@meta.com>
-Subject: [PATCH 6.18 4/5] sched/fair: Proportional newidle balance
-Date: Fri,  9 Jan 2026 12:44:06 +0100
-Message-ID: <20260109111950.513989719@linuxfoundation.org>
+	Zorro Lang <zlang@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.18 5/5] nfs/localio: fix regression due to out-of-order __put_cred
+Date: Fri,  9 Jan 2026 12:44:07 +0100
+Message-ID: <20260109111950.550738956@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109111950.344681501@linuxfoundation.org>
 References: <20260109111950.344681501@linuxfoundation.org>
@@ -51,200 +53,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Mike Snitzer <snitzer@kernel.org>
 
-commit 33cf66d88306663d16e4759e9d24766b0aaa2e17 upstream.
+commit 3af870aedbff10bfed220e280b57a405e972229f upstream.
 
-Add a randomized algorithm that runs newidle balancing proportional to
-its success rate.
+Commit f2060bdc21d7 ("nfs/localio: add refcounting for each iocb IO
+associated with NFS pgio header") inadvertantly reintroduced the same
+potential for __put_cred() triggering BUG_ON(cred == current->cred) that
+commit 992203a1fba5 ("nfs/localio: restore creds before releasing pageio
+data") fixed.
 
-This improves schbench significantly:
+Fix this by saving and restoring the cred around each {read,write}_iter
+call within the respective for loop of nfs_local_call_{read,write} using
+scoped_with_creds().
 
- 6.18-rc4:			2.22 Mrps/s
- 6.18-rc4+revert:		2.04 Mrps/s
- 6.18-rc4+revert+random:	2.18 Mrps/S
+NOTE: this fix started by first reverting the following commits:
 
-Conversely, per Adam Li this affects SpecJBB slightly, reducing it by 1%:
+ 94afb627dfc2 ("nfs: use credential guards in nfs_local_call_read()")
+ bff3c841f7bd ("nfs: use credential guards in nfs_local_call_write()")
+ 1d18101a644e ("Merge tag 'kernel-6.19-rc1.cred' of git://git.kernel.org/pub/scm/linux/kernel/git/vfs/vfs")
 
- 6.17:			-6%
- 6.17+revert:		 0%
- 6.17+revert+random:	-1%
+followed by narrowly fixing the cred lifetime issue by using
+scoped_with_creds().  In doing so, this commit's changes appear more
+extensive than they really are (as evidenced by comparing to v6.18's
+fs/nfs/localio.c).
 
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Tested-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Tested-by: Chris Mason <clm@meta.com>
-Link: https://lkml.kernel.org/r/6825c50d-7fa7-45d8-9b81-c6e7e25738e2@meta.com
-Link: https://patch.msgid.link/20251107161739.770122091@infradead.org
+Reported-by: Zorro Lang <zlang@redhat.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Acked-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Link: https://lore.kernel.org/linux-next/20251205111942.4150b06f@canb.auug.org.au/
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/sched/topology.h |    3 ++
- kernel/sched/core.c            |    3 ++
- kernel/sched/fair.c            |   44 +++++++++++++++++++++++++++++++++++++----
- kernel/sched/features.h        |    5 ++++
- kernel/sched/sched.h           |    7 ++++++
- kernel/sched/topology.c        |    6 +++++
- 6 files changed, 64 insertions(+), 4 deletions(-)
+ fs/nfs/localio.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/include/linux/sched/topology.h
-+++ b/include/linux/sched/topology.h
-@@ -92,6 +92,9 @@ struct sched_domain {
- 	unsigned int nr_balance_failed; /* initialise to 0 */
+--- a/fs/nfs/localio.c
++++ b/fs/nfs/localio.c
+@@ -623,8 +623,6 @@ static void nfs_local_call_read(struct w
+ 	ssize_t status;
+ 	int n_iters;
  
- 	/* idle_balance() stats */
-+	unsigned int newidle_call;
-+	unsigned int newidle_success;
-+	unsigned int newidle_ratio;
- 	u64 max_newidle_lb_cost;
- 	unsigned long last_decay_max_lb_cost;
- 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -121,6 +121,7 @@ EXPORT_TRACEPOINT_SYMBOL_GPL(sched_updat
- EXPORT_TRACEPOINT_SYMBOL_GPL(sched_compute_energy_tp);
- 
- DEFINE_PER_CPU_SHARED_ALIGNED(struct rq, runqueues);
-+DEFINE_PER_CPU(struct rnd_state, sched_rnd_state);
- 
- #ifdef CONFIG_SCHED_PROXY_EXEC
- DEFINE_STATIC_KEY_TRUE(__sched_proxy_exec);
-@@ -8591,6 +8592,8 @@ void __init sched_init_smp(void)
- {
- 	sched_init_numa(NUMA_NO_NODE);
- 
-+	prandom_init_once(&sched_rnd_state);
-+
- 	/*
- 	 * There's no userspace yet to cause hotplug operations; hence all the
- 	 * CPU masks are stable and all blatant races in the below code cannot
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -12122,11 +12122,27 @@ void update_max_interval(void)
- 	max_load_balance_interval = HZ*num_online_cpus()/10;
- }
- 
--static inline bool update_newidle_cost(struct sched_domain *sd, u64 cost)
-+static inline void update_newidle_stats(struct sched_domain *sd, unsigned int success)
-+{
-+	sd->newidle_call++;
-+	sd->newidle_success += success;
-+
-+	if (sd->newidle_call >= 1024) {
-+		sd->newidle_ratio = sd->newidle_success;
-+		sd->newidle_call /= 2;
-+		sd->newidle_success /= 2;
-+	}
-+}
-+
-+static inline bool
-+update_newidle_cost(struct sched_domain *sd, u64 cost, unsigned int success)
- {
- 	unsigned long next_decay = sd->last_decay_max_lb_cost + HZ;
- 	unsigned long now = jiffies;
- 
-+	if (cost)
-+		update_newidle_stats(sd, success);
-+
- 	if (cost > sd->max_newidle_lb_cost) {
- 		/*
- 		 * Track max cost of a domain to make sure to not delay the
-@@ -12174,7 +12190,7 @@ static void sched_balance_domains(struct
- 		 * Decay the newidle max times here because this is a regular
- 		 * visit to all the domains.
- 		 */
--		need_decay = update_newidle_cost(sd, 0);
-+		need_decay = update_newidle_cost(sd, 0, 0);
- 		max_cost += sd->max_newidle_lb_cost;
- 
- 		/*
-@@ -12819,6 +12835,22 @@ static int sched_balance_newidle(struct
- 			break;
- 
- 		if (sd->flags & SD_BALANCE_NEWIDLE) {
-+			unsigned int weight = 1;
-+
-+			if (sched_feat(NI_RANDOM)) {
-+				/*
-+				 * Throw a 1k sided dice; and only run
-+				 * newidle_balance according to the success
-+				 * rate.
-+				 */
-+				u32 d1k = sched_rng() % 1024;
-+				weight = 1 + sd->newidle_ratio;
-+				if (d1k > weight) {
-+					update_newidle_stats(sd, 0);
-+					continue;
-+				}
-+				weight = (1024 + weight/2) / weight;
-+			}
- 
- 			pulled_task = sched_balance_rq(this_cpu, this_rq,
- 						   sd, CPU_NEWLY_IDLE,
-@@ -12826,10 +12858,14 @@ static int sched_balance_newidle(struct
- 
- 			t1 = sched_clock_cpu(this_cpu);
- 			domain_cost = t1 - t0;
--			update_newidle_cost(sd, domain_cost);
+-	save_cred = override_creds(filp->f_cred);
 -
- 			curr_cost += domain_cost;
- 			t0 = t1;
+ 	n_iters = atomic_read(&iocb->n_iters);
+ 	for (int i = 0; i < n_iters ; i++) {
+ 		if (iocb->iter_is_dio_aligned[i]) {
+@@ -637,7 +635,10 @@ static void nfs_local_call_read(struct w
+ 		} else
+ 			iocb->kiocb.ki_flags &= ~IOCB_DIRECT;
+ 
++		save_cred = override_creds(filp->f_cred);
+ 		status = filp->f_op->read_iter(&iocb->kiocb, &iocb->iters[i]);
++		revert_creds(save_cred);
 +
-+			/*
-+			 * Track max cost of a domain to make sure to not delay the
-+			 * next wakeup on the CPU.
-+			 */
-+			update_newidle_cost(sd, domain_cost, weight * !!pulled_task);
+ 		if (status != -EIOCBQUEUED) {
+ 			if (unlikely(status >= 0 && status < iocb->iters[i].count))
+ 				force_done = true; /* Partial read */
+@@ -647,8 +648,6 @@ static void nfs_local_call_read(struct w
+ 			}
  		}
- 
- 		/*
---- a/kernel/sched/features.h
-+++ b/kernel/sched/features.h
-@@ -121,3 +121,8 @@ SCHED_FEAT(WA_BIAS, true)
- SCHED_FEAT(UTIL_EST, true)
- 
- SCHED_FEAT(LATENCY_WARN, false)
-+
-+/*
-+ * Do newidle balancing proportional to its success rate using randomization.
-+ */
-+SCHED_FEAT(NI_RANDOM, true)
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -5,6 +5,7 @@
- #ifndef _KERNEL_SCHED_SCHED_H
- #define _KERNEL_SCHED_SCHED_H
- 
-+#include <linux/prandom.h>
- #include <linux/sched/affinity.h>
- #include <linux/sched/autogroup.h>
- #include <linux/sched/cpufreq.h>
-@@ -1349,6 +1350,12 @@ static inline bool is_migration_disabled
+ 	}
+-
+-	revert_creds(save_cred);
  }
  
- DECLARE_PER_CPU_SHARED_ALIGNED(struct rq, runqueues);
-+DECLARE_PER_CPU(struct rnd_state, sched_rnd_state);
-+
-+static inline u32 sched_rng(void)
-+{
-+	return prandom_u32_state(this_cpu_ptr(&sched_rnd_state));
-+}
+ static int
+@@ -830,7 +829,6 @@ static void nfs_local_call_write(struct
+ 	int n_iters;
  
- #define cpu_rq(cpu)		(&per_cpu(runqueues, (cpu)))
- #define this_rq()		this_cpu_ptr(&runqueues)
---- a/kernel/sched/topology.c
-+++ b/kernel/sched/topology.c
-@@ -1662,6 +1662,12 @@ sd_init(struct sched_domain_topology_lev
+ 	current->flags |= PF_LOCAL_THROTTLE | PF_MEMALLOC_NOIO;
+-	save_cred = override_creds(filp->f_cred);
  
- 		.last_balance		= jiffies,
- 		.balance_interval	= sd_weight,
+ 	file_start_write(filp);
+ 	n_iters = atomic_read(&iocb->n_iters);
+@@ -845,7 +843,10 @@ static void nfs_local_call_write(struct
+ 		} else
+ 			iocb->kiocb.ki_flags &= ~IOCB_DIRECT;
+ 
++		save_cred = override_creds(filp->f_cred);
+ 		status = filp->f_op->write_iter(&iocb->kiocb, &iocb->iters[i]);
++		revert_creds(save_cred);
 +
-+		/* 50% success rate */
-+		.newidle_call		= 512,
-+		.newidle_success	= 256,
-+		.newidle_ratio		= 512,
-+
- 		.max_newidle_lb_cost	= 0,
- 		.last_decay_max_lb_cost	= jiffies,
- 		.child			= child,
+ 		if (status != -EIOCBQUEUED) {
+ 			if (unlikely(status >= 0 && status < iocb->iters[i].count))
+ 				force_done = true; /* Partial write */
+@@ -857,7 +858,6 @@ static void nfs_local_call_write(struct
+ 	}
+ 	file_end_write(filp);
+ 
+-	revert_creds(save_cred);
+ 	current->flags = old_flags;
+ }
+ 
 
 
