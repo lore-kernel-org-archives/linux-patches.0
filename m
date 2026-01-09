@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E8335BDB3;
-	Fri,  9 Jan 2026 12:50:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E1B35B149;
+	Fri,  9 Jan 2026 12:50:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767963009; cv=none; b=pi3Wm2rGihR2G7YVuFngkH9rTEknCoQunwyiNGtNgN/2CSXHLnsbOCdcgJc1CjE2dbZzjUfPvFMWKUmxcVAsZv8zDlPAAysCdRnBjygxCPgRoDI/TC8mJaXfnkWq8sExxc1+VlpTtbwbjHtJTanAdHzwSImkLxPG2PkNBkjCmBo=
+	t=1767963012; cv=none; b=DLlU8vbgwqFpLYlJYpmrviqDzSOseSF73DB16o10o7KbarLSpvA/Iuf0Cfl96sxlmzaJeO0gGQtuBenY3o5AImTv6hxDsUvBMB5akFZfcnJJUSYNONkd2uz/HWGQmEUZsLkd1RTYeamCgc6roMa76Yby1eP1gSqDGZqF3LZ0+uo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767963009; c=relaxed/simple;
-	bh=CXVgg4/vDhoIyqwJS1/Oir7TiI2nF3Z/FEwNS04areg=;
+	s=arc-20240116; t=1767963012; c=relaxed/simple;
+	bh=sEUPC6bfssgJQmTWoLIMsK4RMy60bvmMNsAeYNV6c7s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nXCN2HiUtTfMVvyv3BpQAVMehQ1IZrU3vY/3o4r9FjCC3hbUBEBTiwm6eTOLYi164jXhO6j8654DdU7McaDWXS26MJw1z9YAdj7bYA2VX5kIjSX+UvfPzZLSyve08NZ6WpFLOhkPSvsXYu7mxNUiUtetY4G0FVsDUvXjdZSg3kg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uFzT2Q6S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Z/n8eNLlgqABXJenrx75+O+MUm/9C3WeSkFZK9wu03cg+GQwE4ji0co7gNc8ydjjRmxu+QEhhpHCjVmqKDDxcwO/F06bmTft2dK3UUDRSr421OoqCKn9/JV4qXjux1BJhVIqnTzrS+q8CQpG6/Cdz1TqWEaY0fBEOEe9mdjNTCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0sZ+X9L1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uFzT2Q6S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 181F5C4CEF1;
-	Fri,  9 Jan 2026 12:50:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0sZ+X9L1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B1CDC4CEF1;
+	Fri,  9 Jan 2026 12:50:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767963009;
-	bh=CXVgg4/vDhoIyqwJS1/Oir7TiI2nF3Z/FEwNS04areg=;
+	s=korg; t=1767963012;
+	bh=sEUPC6bfssgJQmTWoLIMsK4RMy60bvmMNsAeYNV6c7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uFzT2Q6ScpjoglJCduMgReIAKkCPaVphJnKzyxBSYs98DsHzsucdIaj/l3zZZhw7N
-	 r/NIV1kl072hoNq5ABBEOtltNWqZUbojlP2uB+isZuKKRuhNoZVdyLED28B4I+o5cr
-	 yl36FI28/uPKR1ptIHgtwMWrDHh/oghpYHzCrno0=
+	b=0sZ+X9L1oLMKPxmXdoPPnzD6wnqljweKzuizObfhpZ17/Z+Ug4R3jK/ZdEJd+EbGK
+	 vyhUC5yz3Hgpi/OP0J7ldwK10DF47j3amwYuDQhvVqj6joOVEilC8kmnutPy+806+v
+	 aLJdATTheIcfKke/6Q4hPIjk75pWMk1EAJI8OLFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 558/634] f2fs: fix to detect recoverable inode during dryrun of find_fsync_dnodes()
-Date: Fri,  9 Jan 2026 12:43:56 +0100
-Message-ID: <20260109112138.594573198@linuxfoundation.org>
+Subject: [PATCH 6.1 567/634] iommu/mtk_iommu_v1: Convert to platform remove callback returning void
+Date: Fri,  9 Jan 2026 12:44:05 +0100
+Message-ID: <20260109112138.940152581@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -46,96 +46,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 68d05693f8c031257a0822464366e1c2a239a512 ]
+[ Upstream commit 85e1049e50da9409678fc247ebad4c019d68041f ]
 
-mkfs.f2fs -f /dev/vdd
-mount /dev/vdd /mnt/f2fs
-touch /mnt/f2fs/foo
-sync		# avoid CP_UMOUNT_FLAG in last f2fs_checkpoint.ckpt_flags
-touch /mnt/f2fs/bar
-f2fs_io fsync /mnt/f2fs/bar
-f2fs_io shutdown 2 /mnt/f2fs
-umount /mnt/f2fs
-blockdev --setro /dev/vdd
-mount /dev/vdd /mnt/f2fs
-mount: /mnt/f2fs: WARNING: source write-protected, mounted read-only.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is (mostly) ignored
+and this typically results in resource leaks. To improve here there is a
+quest to make the remove callback return void. In the first step of this
+quest all drivers are converted to .remove_new() which already returns
+void.
 
-For the case if we create and fsync a new inode before sudden power-cut,
-without norecovery or disable_roll_forward mount option, the following
-mount will succeed w/o recovering last fsynced inode.
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-The problem here is that we only check inode_list list after
-find_fsync_dnodes() in f2fs_recover_fsync_data() to find out whether
-there is recoverable data in the iamge, but there is a missed case, if
-last fsynced inode is not existing in last checkpoint, then, we will
-fail to get its inode due to nat of inode node is not existing in last
-checkpoint, so the inode won't be linked in inode_list.
-
-Let's detect such case in dyrun mode to fix this issue.
-
-After this change, mount will fail as expected below:
-mount: /mnt/f2fs: cannot mount /dev/vdd read-only.
-       dmesg(1) may have more information after failed mount system call.
-demsg:
-F2FS-fs (vdd): Need to recover fsync data, but write access unavailable, please try mount w/ disable_roll_forward or norecovery
-
-Cc: stable@kernel.org
-Fixes: 6781eabba1bd ("f2fs: give -EINVAL for norecovery and rw mount")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ folio => page ]
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20230321084125.337021-9-u.kleine-koenig@pengutronix.de
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Stable-dep-of: 46207625c9f3 ("iommu/mediatek-v1: fix device leaks on probe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/recovery.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/iommu/mtk_iommu_v1.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/fs/f2fs/recovery.c
-+++ b/fs/f2fs/recovery.c
-@@ -360,7 +360,7 @@ static unsigned int adjust_por_ra_blocks
+--- a/drivers/iommu/mtk_iommu_v1.c
++++ b/drivers/iommu/mtk_iommu_v1.c
+@@ -708,7 +708,7 @@ out_clk_unprepare:
+ 	return ret;
  }
  
- static int find_fsync_dnodes(struct f2fs_sb_info *sbi, struct list_head *head,
--				bool check_only)
-+				bool check_only, bool *new_inode)
+-static int mtk_iommu_v1_remove(struct platform_device *pdev)
++static void mtk_iommu_v1_remove(struct platform_device *pdev)
  {
- 	struct curseg_info *curseg;
- 	struct page *page = NULL;
-@@ -418,6 +418,8 @@ static int find_fsync_dnodes(struct f2fs
- 			if (IS_ERR(entry)) {
- 				err = PTR_ERR(entry);
- 				if (err == -ENOENT) {
-+					if (check_only)
-+						*new_inode = true;
- 					err = 0;
- 					goto next;
- 				}
-@@ -834,6 +836,7 @@ int f2fs_recover_fsync_data(struct f2fs_
- 	unsigned long s_flags = sbi->sb->s_flags;
- 	bool need_writecp = false;
- 	bool fix_curseg_write_pointer = false;
-+	bool new_inode = false;
- #ifdef CONFIG_QUOTA
- 	int quota_enabled;
- #endif
-@@ -856,8 +859,8 @@ int f2fs_recover_fsync_data(struct f2fs_
- 	f2fs_down_write(&sbi->cp_global_sem);
+ 	struct mtk_iommu_v1_data *data = platform_get_drvdata(pdev);
  
- 	/* step #1: find fsynced inode numbers */
--	err = find_fsync_dnodes(sbi, &inode_list, check_only);
--	if (err || list_empty(&inode_list))
-+	err = find_fsync_dnodes(sbi, &inode_list, check_only, &new_inode);
-+	if (err < 0 || (list_empty(&inode_list) && (!check_only || !new_inode)))
- 		goto skip;
+@@ -718,7 +718,6 @@ static int mtk_iommu_v1_remove(struct pl
+ 	clk_disable_unprepare(data->bclk);
+ 	devm_free_irq(&pdev->dev, data->irq, data);
+ 	component_master_del(&pdev->dev, &mtk_iommu_v1_com_ops);
+-	return 0;
+ }
  
- 	if (check_only) {
+ static int __maybe_unused mtk_iommu_v1_suspend(struct device *dev)
+@@ -757,7 +756,7 @@ static const struct dev_pm_ops mtk_iommu
+ 
+ static struct platform_driver mtk_iommu_v1_driver = {
+ 	.probe	= mtk_iommu_v1_probe,
+-	.remove	= mtk_iommu_v1_remove,
++	.remove_new = mtk_iommu_v1_remove,
+ 	.driver	= {
+ 		.name = "mtk-iommu-v1",
+ 		.of_match_table = mtk_iommu_v1_of_ids,
 
 
