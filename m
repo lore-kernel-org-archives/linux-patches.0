@@ -1,46 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1FD33C53A;
-	Fri,  9 Jan 2026 12:33:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F113191D2;
+	Fri,  9 Jan 2026 12:33:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962018; cv=none; b=pAXUU6wpI7zuyTLP9+cv8mxSwUpuoy8EjBzIfsmfk55a9823A15pf0de70FrvGOf9UBzo0nNUlJliKwd9I7/MarCEYPBi+cvNALMVQfevkawHaSYfQdqgr6vqtVuXENmfb05n9DYLC16W+NdWyzRoFu2IfhmM+Y90xWSEjQT/wg=
+	t=1767962021; cv=none; b=ZgnggWJ4pK+f2wa0pdP4brxdrkX7VoTkDokBELD7yfoW9UWiOlFHFC7bc8Co5W6a2ampezKqjm4nSgTIVOUrMGkCdsO5LeVYndReSTlPWh6az8lGKT7CRA49uk67G6SBUxs11XUpz/RjFym+LDU0MB8JWZFYMujCd/XpLcWAtzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962018; c=relaxed/simple;
-	bh=KqHxpSAkBQOkagFroSa9Hf5wwR2C9XyYLwZJBRhxlT8=;
+	s=arc-20240116; t=1767962021; c=relaxed/simple;
+	bh=y2MCf8ebwa0S6yphx8E9zrkpIiMCdR7VbwGcMvx4PO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X6gb+282DfdNtpYVmuFmBFKN6xaupw8NT8ipNMUlKrXsY1xjMWzs27gA2sqtjYh9e2yYBp13WNonylVrK933XTmDG8tbPJIAe3dTYnZIJSYfYRTkIYGNxPWr0yIVKDuInM0Ku0AUDALjnnPb0Wxqbfuif78TvevBjvLFlCWtAb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LVIi0O3v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eCajojtE+wRwJ83BJNAwmez0VaflKNKEu/BXbyX0OMEDmkKeMjz4qGo08WCNkLkFLmf8+QAg8DSJx9mC2gCtTs17DeohYomjSurL9X3PeiSuafAMbcIWXJehL4L7+PWP3XpBSn4oIdRcOUUI7rScObsfsXqimqodkrUq8pvvM54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vd9f6EdH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LVIi0O3v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74EE8C4CEF1;
-	Fri,  9 Jan 2026 12:33:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vd9f6EdH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C0EDC4CEF1;
+	Fri,  9 Jan 2026 12:33:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962018;
-	bh=KqHxpSAkBQOkagFroSa9Hf5wwR2C9XyYLwZJBRhxlT8=;
+	s=korg; t=1767962020;
+	bh=y2MCf8ebwa0S6yphx8E9zrkpIiMCdR7VbwGcMvx4PO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LVIi0O3vZeKZujLKVHY6u6iUfUILRJmE7Mc0TKffrPYWKecISaQOHCzXYbuOJkZJ6
-	 4ibXCqMrM+401FbRf49rROx8Eex0px7ATHdZYGlSDa/+DPFw5vIDxjr25Di/sgd8U8
-	 SKqPGlLjFcztwqHwIt2eG4//l0ToQ3nHFjFwngWQ=
+	b=vd9f6EdHxQnFgX7Et1K//BQ4f93ELuV5TUsk25kl6p1/IScyEETbmyeqekkRM/b7q
+	 +ig9W3/skQXiO/HmmzE0GBuPO+p+Iv1detMuKy8uX7A6euGmak3NL3OngjvKhDzzew
+	 jsBY3XH7Uv+kI7TpB+A+ax+YR/XscIlvlDYBDUo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	syzbot+cfc7cab3bb6eaa7c4de2@syzkaller.appspotmail.com,
-	Heming Zhao <heming.zhao@suse.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 218/634] ocfs2: fix memory leak in ocfs2_merge_rec_left()
-Date: Fri,  9 Jan 2026 12:38:16 +0100
-Message-ID: <20260109112125.636343448@linuxfoundation.org>
+	Tianyang Zhang <zhangtianyang@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.1 219/634] [PATCH 6.12] LoongArch: Add machine_kexec_mask_interrupts() implementation
+Date: Fri,  9 Jan 2026 12:38:17 +0100
+Message-ID: <20260109112125.673670115@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -59,45 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit 2214ec4bf89d0fd27717322d3983a2f3b469c7f3 ]
+Commit 863a320dc6fd7c855f47da4b ("LoongArch: Mask all interrupts during
+kexec/kdump") is backported to LTS branches, but they lack a generic
+machine_kexec_mask_interrupts() implementation, so add an arch-specific
+one.
 
-In 'ocfs2_merge_rec_left()', do not reset 'left_path' to NULL after
-move, thus allowing 'ocfs2_free_path()' to free it before return.
-
-Link: https://lkml.kernel.org/r/20251205065159.392749-1-dmantipov@yandex.ru
-Fixes: 677b975282e4 ("ocfs2: Add support for cross extent block")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Reported-by: syzbot+cfc7cab3bb6eaa7c4de2@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=cfc7cab3bb6eaa7c4de2
-Reviewed-by: Heming Zhao <heming.zhao@suse.com>
-Acked-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Tianyang Zhang <zhangtianyang@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/alloc.c | 1 -
- 1 file changed, 1 deletion(-)
+ arch/loongarch/kernel/machine_kexec.c |   22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/fs/ocfs2/alloc.c b/fs/ocfs2/alloc.c
-index 7f11ffacc9150..fa5223b05fad7 100644
---- a/fs/ocfs2/alloc.c
-+++ b/fs/ocfs2/alloc.c
-@@ -3647,7 +3647,6 @@ static int ocfs2_merge_rec_left(struct ocfs2_path *right_path,
- 			 * So we use the new rightmost path.
- 			 */
- 			ocfs2_mv_path(right_path, left_path);
--			left_path = NULL;
- 		} else
- 			ocfs2_complete_edge_insert(handle, left_path,
- 						   right_path, subtree_index);
--- 
-2.51.0
-
+--- a/arch/loongarch/kernel/machine_kexec.c
++++ b/arch/loongarch/kernel/machine_kexec.c
+@@ -136,6 +136,28 @@ void kexec_reboot(void)
+ 	BUG();
+ }
+ 
++static void machine_kexec_mask_interrupts(void)
++{
++	unsigned int i;
++	struct irq_desc *desc;
++
++	for_each_irq_desc(i, desc) {
++		struct irq_chip *chip;
++
++		chip = irq_desc_get_chip(desc);
++		if (!chip)
++			continue;
++
++		if (chip->irq_eoi && irqd_irq_inprogress(&desc->irq_data))
++			chip->irq_eoi(&desc->irq_data);
++
++		if (chip->irq_mask)
++			chip->irq_mask(&desc->irq_data);
++
++		if (chip->irq_disable && !irqd_irq_disabled(&desc->irq_data))
++			chip->irq_disable(&desc->irq_data);
++	}
++}
+ 
+ #ifdef CONFIG_SMP
+ static void kexec_shutdown_secondary(void *regs)
 
 
