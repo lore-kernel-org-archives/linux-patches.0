@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96465335BCD;
-	Fri,  9 Jan 2026 12:37:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD5C31ED6D;
+	Fri,  9 Jan 2026 12:37:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962239; cv=none; b=kC6criStwCScwDm/3gExpl89mammXTF/Hqg3M0n2Pp2MWHCGi6ajK+layNuNIBOcHvJlOH7QMXoLljeKwG7PokYSA9gA2RFnrtYCkHNzP83zV0foPY+cAtEGThy2gOOZy7sq5gs27X9Xb6Ohwmf1ClRQLOIqukU9r5FICoGty9w=
+	t=1767962242; cv=none; b=UXdINKq/GFBfZGDHdUwNHQ9oQ+g7jvlLi+7paOtfhwmsnvK2k/RzXCKr3Fi0PKsTvfHrSexIbBmSZcWCd81IJ2r1VNYPv2sutOfS/82qjxVCcMR6KxbyJIvEqV/ayZQ2IerZBj5o2fpajTchBuRQtBPD22mu3zcUpm8YLKHDImI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962239; c=relaxed/simple;
-	bh=KGrGollUQbb2Few+W3xAeJG7UqOVLoE/hz+NMtPE5UM=;
+	s=arc-20240116; t=1767962242; c=relaxed/simple;
+	bh=TeTzPO/y7FWQR4TCun4kwtu+/R1ie08SWa42wbJHMU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jLS8taVBR+Wasaf7rNFxc1ljm2C8JdmtkPkbtvQ2N2nqslS3u6WDARU7996yZ1py1JEPmV3qFRpmnvJvys4G3IN5eGNl/mXjfCe6h9VXNVDkjXFMv8iQRC0F6tRjKQ9y4vZCZ5wBRX3LtWNtdvntWBX9RXHj9JuHOXcQCncBAjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ecsJPcFr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pCBu+cPYqQnYQRwwz6VCHfAVLuPh/T1eDQqMzEPHFzaG9S3cthrBDJBiCYYyOFkXyEo+d9u1ytAWzfLbd/AF/aVMFWFZIytLzLr9RdoJwqKUgFQrQBeNSH7pXj9TxMDnysLCYU6pSyHINbzD0MT3D4a/mAcjUI0VILlnFEUaYMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mg8AXWtH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ecsJPcFr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 289DBC4CEF1;
-	Fri,  9 Jan 2026 12:37:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mg8AXWtH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 046C5C4CEF1;
+	Fri,  9 Jan 2026 12:37:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962239;
-	bh=KGrGollUQbb2Few+W3xAeJG7UqOVLoE/hz+NMtPE5UM=;
+	s=korg; t=1767962242;
+	bh=TeTzPO/y7FWQR4TCun4kwtu+/R1ie08SWa42wbJHMU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ecsJPcFrAox5SXOmWdYUNAb2bEWk5IEFZ5MFGB25Xgf5v+Z7JgzScP/utF/YfYA4H
-	 3p/9f7Jf4mTdofM57TTe9vlToYqsbTGHNyOdJ2YHT1SrwN38ShfmZCNw2l3WRMqy71
-	 kPWxXl9OHt8fmx9/QuTzQLdkclNnKnuJewY6mMGE=
+	b=Mg8AXWtHh43nAGn92eMvaU/l8DoxnpTffeahjtArH5yp0RaZhcYLMOfWhsY1XDKAP
+	 OrKIay+DyAXbXKQnHlc+1qmRwYONXqqH4oMoCDtJyCyGW7SBDb6pC4VhDCeD9LJnq5
+	 U8Yos96w6ZhIHZWVZgqalhoMAPeuLjQB5+thOCyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"DARKNAVY (@DarkNavyOrg)" <vr@darknavy.com>,
-	Shipei Qu <qu@darknavy.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Jinhui Guo <guojinhui.liam@bytedance.com>,
+	Corey Minyard <corey@minyard.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 295/634] ALSA: usb-mixer: us16x08: validate meter packet indices
-Date: Fri,  9 Jan 2026 12:39:33 +0100
-Message-ID: <20260109112128.631767980@linuxfoundation.org>
+Subject: [PATCH 6.1 296/634] ipmi: Fix the race between __scan_channels() and deliver_response()
+Date: Fri,  9 Jan 2026 12:39:34 +0100
+Message-ID: <20260109112128.669285846@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,72 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shipei Qu <qu@darknavy.com>
+From: Jinhui Guo <guojinhui.liam@bytedance.com>
 
-[ Upstream commit 5526c1c6ba1d0913c7dfcbbd6fe1744ea7c55f1e ]
+[ Upstream commit 936750fdba4c45e13bbd17f261bb140dd55f5e93 ]
 
-get_meter_levels_from_urb() parses the 64-byte meter packets sent by
-the device and fills the per-channel arrays meter_level[],
-comp_level[] and master_level[] in struct snd_us16x08_meter_store.
+The race window between __scan_channels() and deliver_response() causes
+the parameters of some channels to be set to 0.
 
-Currently the function derives the channel index directly from the
-meter packet (MUB2(meter_urb, s) - 1) and uses it to index those
-arrays without validating the range. If the packet contains a
-negative or out-of-range channel number, the driver may write past
-the end of these arrays.
+1.[CPUA] __scan_channels() issues an IPMI request and waits with
+         wait_event() until all channels have been scanned.
+         wait_event() internally calls might_sleep(), which might
+         yield the CPU. (Moreover, an interrupt can preempt
+         wait_event() and force the task to yield the CPU.)
+2.[CPUB] deliver_response() is invoked when the CPU receives the
+         IPMI response. After processing a IPMI response,
+         deliver_response() directly assigns intf->wchannels to
+         intf->channel_list and sets intf->channels_ready to true.
+         However, not all channels are actually ready for use.
+3.[CPUA] Since intf->channels_ready is already true, wait_event()
+         never enters __wait_event(). __scan_channels() immediately
+         clears intf->null_user_handler and exits.
+4.[CPUB] Once intf->null_user_handler is set to NULL, deliver_response()
+         ignores further IPMI responses, leaving the remaining
+	 channels zero-initialized and unusable.
 
-Introduce a local channel variable and validate it before updating the
-arrays. We reject negative indices, limit meter_level[] and
-comp_level[] to SND_US16X08_MAX_CHANNELS, and guard master_level[]
-updates with ARRAY_SIZE(master_level).
+CPUA                             CPUB
+-------------------------------  -----------------------------
+__scan_channels()
+ intf->null_user_handler
+       = channel_handler;
+ send_channel_info_cmd(intf,
+       0);
+ wait_event(intf->waitq,
+       intf->channels_ready);
+  do {
+   might_sleep();
+                                 deliver_response()
+                                  channel_handler()
+                                   intf->channel_list =
+				         intf->wchannels + set;
+                                   intf->channels_ready = true;
+                                   send_channel_info_cmd(intf,
+                                         intf->curr_channel);
+   if (condition)
+    break;
+   __wait_event(wq_head,
+          condition);
+  } while(0)
+ intf->null_user_handler
+       = NULL;
+                                 deliver_response()
+                                  if (!msg->user)
+                                   if (intf->null_user_handler)
+                                    rv = -EINVAL;
+                                  return rv;
+-------------------------------  -----------------------------
 
-Fixes: d2bb390a2081 ("ALSA: usb-audio: Tascam US-16x08 DSP mixer quirk")
-Reported-by: DARKNAVY (@DarkNavyOrg) <vr@darknavy.com>
-Closes: https://lore.kernel.org/tencent_21C112743C44C1A2517FF219@qq.com
-Signed-off-by: Shipei Qu <qu@darknavy.com>
-Link: https://patch.msgid.link/20251217024630.59576-1-qu@darknavy.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fix the race between __scan_channels() and deliver_response() by
+deferring both the assignment intf->channel_list = intf->wchannels
+and the flag intf->channels_ready = true until all channels have
+been successfully scanned or until the IPMI request has failed.
+
+Signed-off-by: Jinhui Guo <guojinhui.liam@bytedance.com>
+Message-ID: <20250930074239.2353-2-guojinhui.liam@bytedance.com>
+Signed-off-by: Corey Minyard <corey@minyard.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_us16x08.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ drivers/char/ipmi/ipmi_msghandler.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/sound/usb/mixer_us16x08.c b/sound/usb/mixer_us16x08.c
-index 20ac32635f1f..d05cb54de788 100644
---- a/sound/usb/mixer_us16x08.c
-+++ b/sound/usb/mixer_us16x08.c
-@@ -656,17 +656,25 @@ static void get_meter_levels_from_urb(int s,
- 	u8 *meter_urb)
- {
- 	int val = MUC2(meter_urb, s) + (MUC3(meter_urb, s) << 8);
-+	int ch = MUB2(meter_urb, s) - 1;
-+
-+	if (ch < 0)
-+		return;
+diff --git a/drivers/char/ipmi/ipmi_msghandler.c b/drivers/char/ipmi/ipmi_msghandler.c
+index a475d0bd2685..b7f6cec0383f 100644
+--- a/drivers/char/ipmi/ipmi_msghandler.c
++++ b/drivers/char/ipmi/ipmi_msghandler.c
+@@ -3414,8 +3414,6 @@ channel_handler(struct ipmi_smi *intf, struct ipmi_recv_msg *msg)
+ 			intf->channels_ready = true;
+ 			wake_up(&intf->waitq);
+ 		} else {
+-			intf->channel_list = intf->wchannels + set;
+-			intf->channels_ready = true;
+ 			rv = send_channel_info_cmd(intf, intf->curr_channel);
+ 		}
  
- 	if (MUA0(meter_urb, s) == 0x61 && MUA1(meter_urb, s) == 0x02 &&
- 		MUA2(meter_urb, s) == 0x04 && MUB0(meter_urb, s) == 0x62) {
--		if (MUC0(meter_urb, s) == 0x72)
--			store->meter_level[MUB2(meter_urb, s) - 1] = val;
--		if (MUC0(meter_urb, s) == 0xb2)
--			store->comp_level[MUB2(meter_urb, s) - 1] = val;
-+		if (ch < SND_US16X08_MAX_CHANNELS) {
-+			if (MUC0(meter_urb, s) == 0x72)
-+				store->meter_level[ch] = val;
-+			if (MUC0(meter_urb, s) == 0xb2)
-+				store->comp_level[ch] = val;
-+		}
- 	}
- 	if (MUA0(meter_urb, s) == 0x61 && MUA1(meter_urb, s) == 0x02 &&
--		MUA2(meter_urb, s) == 0x02 && MUB0(meter_urb, s) == 0x62)
--		store->master_level[MUB2(meter_urb, s) - 1] = val;
-+		MUA2(meter_urb, s) == 0x02 && MUB0(meter_urb, s) == 0x62) {
-+		if (ch < ARRAY_SIZE(store->master_level))
-+			store->master_level[ch] = val;
-+	}
- }
- 
- /* Function to retrieve current meter values from the device.
 -- 
 2.51.0
 
