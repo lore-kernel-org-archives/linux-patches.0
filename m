@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5EB53590C6;
-	Fri,  9 Jan 2026 12:46:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3BEC3590C6;
+	Fri,  9 Jan 2026 12:46:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962773; cv=none; b=EcY9r9yEbrBa2IzshXNNMDLB2yGDLdyeeP/+3xfndAQHB+ATinvhKaghO23YjscrkwjCIshIsxCzK9kYjUCJPnqoZH4LcwwCkx8inFQzoY6leeNHvyavUkukqIEGpZhrdwCUsjXFVflt2QmyD/MOvrFeXAK4cTOqCQg4+KFep7g=
+	t=1767962775; cv=none; b=abZeN0M7Le1727Kc5SvZf+1PWwDdiqT41w6NyoKpjwhpqEtFbUo8zb0/Ia4Y3Tu/R7ick78Glf6jZCssakUR/RPlD+2v7fj2Zsbf8KHFx/2sqcb6nU6nz5NpVjIWK22yKUCmpvicGZzdvNu+9N6465kmE2aRvD+6uBSJRHrXIGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962773; c=relaxed/simple;
-	bh=cyK8+yMD2ME3zjSBpnZf6BdDC6Ez32g0DQFLFNXp3OU=;
+	s=arc-20240116; t=1767962775; c=relaxed/simple;
+	bh=3fu9JzRIxndSGnP/0a1SzBTciBMF3cdNqCqxu1vkVnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d+zFN1VkkM8UwrdEScOWr7/RVCbCwzLeFgR6pGmBN6IXacAEFzC21haPUktIaEmPtA0nTiu4V/Loe+mFuyZ0Vtp4OtVpqyOpxzCY+1f+WXtoRlcIa3rDa8aYmrnXD5Qzp/6/Mx1W7s+BrWnuDoB0cvxCGj2PNvwWs1RuOWcwkNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NT0j9NSh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UfWK4iHwHlbGJW5/xyf5Fnv1nArCeVb1R+N6s6e2IT/14CXFr3dBAlcjZ1tfWaQpR0PdJwzgYSVaySZyeONZNfoRbwlmmuC9tx2fon4sPTDEfYbY6XDrxsohXN+OypBiKrz50V7MkH2MKjLIB5+H+2XoTqUkgznoN6n7QCyd1jY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+j+C6Kx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NT0j9NSh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70DDFC4CEF1;
-	Fri,  9 Jan 2026 12:46:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+j+C6Kx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EE7FC16AAE;
+	Fri,  9 Jan 2026 12:46:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962772;
-	bh=cyK8+yMD2ME3zjSBpnZf6BdDC6Ez32g0DQFLFNXp3OU=;
+	s=korg; t=1767962775;
+	bh=3fu9JzRIxndSGnP/0a1SzBTciBMF3cdNqCqxu1vkVnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NT0j9NSh2B5WOi46YN48LGUcu2NkcBCLEJsfsvR6FXkDz0Htec8tBXy+NeFfEGU8U
-	 ZSdPUAMB4SHvMWY+ZLVZ8FyOckU2LM9z58PNZ2juJ6KueBO0Ip/lZpW8CPrFCwiT/E
-	 xYevuKKX/Ld8rOUlERlrCmjRkRJhwBQnf768qDS0=
+	b=z+j+C6Kxjy4i2uh3Fz0ddUNK0bCTFAoPPrPM45+qpTEdL3HFtQT0Dw3nOTm6RDWYW
+	 qAMSWM4t8OJpP9gXoVpJQvUlVzYtmlry7zwr7yza4yPFYCBh1qkjE5Tcslk/xdtBCI
+	 93oe3FEQZwsZ+2N772vf/ZyaTJWIquQPgR2sbtGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suman Anna <s-anna@ti.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Johan Hovold <johan@kernel.org>,
-	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 6.1 455/634] iommu/omap: fix device leaks on probe_device()
-Date: Fri,  9 Jan 2026 12:42:13 +0100
-Message-ID: <20260109112134.665231475@linuxfoundation.org>
+	Duoming Zhou <duoming@zju.edu.cn>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.1 482/634] media: TDA1997x: Remove redundant cancel_delayed_work in probe
+Date: Fri,  9 Jan 2026 12:42:40 +0100
+Message-ID: <20260109112135.683534132@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,66 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-commit b5870691065e6bbe6ba0650c0412636c6a239c5a upstream.
+commit 29de195ca39fc2ac0af6fd45522994df9f431f80 upstream.
 
-Make sure to drop the references taken to the iommu platform devices
-when looking up their driver data during probe_device().
+The delayed_work delayed_work_enable_hpd is initialized with
+INIT_DELAYED_WORK(), but it is never scheduled in tda1997x_probe().
 
-Note that the arch data device pointer added by commit 604629bcb505
-("iommu/omap: add support for late attachment of iommu devices") has
-never been used. Remove it to underline that the references are not
-needed.
+Calling cancel_delayed_work() on a work that has never been
+scheduled is redundant and unnecessary, as there is no pending
+work to cancel.
 
-Fixes: 9d5018deec86 ("iommu/omap: Add support to program multiple iommus")
-Fixes: 7d6827748d54 ("iommu/omap: Fix iommu archdata name for DT-based devices")
-Cc: stable@vger.kernel.org	# 3.18
-Cc: Suman Anna <s-anna@ti.com>
-Acked-by: Robin Murphy <robin.murphy@arm.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Remove the redundant cancel_delayed_work() from error handling
+path in tda1997x_probe() to avoid potential confusion.
+
+Fixes: 9ac0038db9a7 ("media: i2c: Add TDA1997x HDMI receiver driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/omap-iommu.c |    2 +-
- drivers/iommu/omap-iommu.h |    2 --
- 2 files changed, 1 insertion(+), 3 deletions(-)
+ drivers/media/i2c/tda1997x.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/iommu/omap-iommu.c
-+++ b/drivers/iommu/omap-iommu.c
-@@ -1682,6 +1682,7 @@ static struct iommu_device *omap_iommu_p
- 		}
- 
- 		oiommu = platform_get_drvdata(pdev);
-+		put_device(&pdev->dev);
- 		if (!oiommu) {
- 			of_node_put(np);
- 			kfree(arch_data);
-@@ -1689,7 +1690,6 @@ static struct iommu_device *omap_iommu_p
- 		}
- 
- 		tmp->iommu_dev = oiommu;
--		tmp->dev = &pdev->dev;
- 
- 		of_node_put(np);
- 	}
---- a/drivers/iommu/omap-iommu.h
-+++ b/drivers/iommu/omap-iommu.h
-@@ -88,7 +88,6 @@ struct omap_iommu {
- /**
-  * struct omap_iommu_arch_data - omap iommu private data
-  * @iommu_dev: handle of the OMAP iommu device
-- * @dev: handle of the iommu device
-  *
-  * This is an omap iommu private data object, which binds an iommu user
-  * to its iommu device. This object should be placed at the iommu user's
-@@ -97,7 +96,6 @@ struct omap_iommu {
-  */
- struct omap_iommu_arch_data {
- 	struct omap_iommu *iommu_dev;
--	struct device *dev;
- };
- 
- struct cr_regs {
+--- a/drivers/media/i2c/tda1997x.c
++++ b/drivers/media/i2c/tda1997x.c
+@@ -2794,7 +2794,6 @@ err_free_media:
+ err_free_handler:
+ 	v4l2_ctrl_handler_free(&state->hdl);
+ err_free_mutex:
+-	cancel_delayed_work(&state->delayed_work_enable_hpd);
+ 	mutex_destroy(&state->page_lock);
+ 	mutex_destroy(&state->lock);
+ 	tda1997x_set_power(state, 0);
 
 
