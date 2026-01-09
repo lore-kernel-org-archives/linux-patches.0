@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04ED033032C;
-	Fri,  9 Jan 2026 12:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225D133C53A;
+	Fri,  9 Jan 2026 12:42:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962553; cv=none; b=fx24w1rIztnHtq8NbdNfTgTyWaINNgJvtM+Wfqlw2jnggOK0BXohhu8DPz5eK70EtrCpup9vU66YlYQGx7e5/Za1S6xDHh7o8UoUi8NrGH01Slsw8WZh+nsKage8JZJXIkinWm0nMyxIyaSWO9Ohf4DgNPuvDr1j5Y72TAXUN6s=
+	t=1767962556; cv=none; b=IT2oPkNFVuXL4nVN5g1lDOgl359cAoZYAZ3BNCy/ia/qY7Mk0S4h2oSb7XAH/q9HT4po/UuBIJHs86+ixYbEY8A89KnABoCVQvlkoGZeDRDUE7Yoqr4FdLMGpulOC+eUzFHxwNMyWmPzRgXKuK+g5JRgXLhLE3S8wi0DrE5avbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962553; c=relaxed/simple;
-	bh=KkBVA5Cp3AyWmRjy2JbeEACP8KJSNVvDeXZ/YOCxnDo=;
+	s=arc-20240116; t=1767962556; c=relaxed/simple;
+	bh=xit5Pv/VI0QuADik4YBhzSp9SJcGWPxMgl1Gdb4UNrg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z1caa77ru4in3nfwBGRmlNmMAB8z71lUhEHes8FISF20oOZTl6E056XInqbefxcQ3ItIQ9rhdGRC4nCnUzGSah5ela9O7nmFFhTU0on1I6suTEL6wiwRmXu3LgKs6OQ91518IhQD9aTr8PtHCBRZtt1Hj53KrBoSZGb0Wn51L7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cNVG/RxG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Zhl8W3aqfeFOHrGBOchCeoDZlm5FLWPlJWkS7Tb2Fd1W4XAcI+bSc8aDxpf8vrJ2z+AWNAWLHpOBAKbrVg+IObffDLnn46zkx7fofSGrRD+eU9BBpP4ya5m+rSw5ncw1avI2dcVz/7iB/FTUy1sTJfOyxB+n2bFUtD1kO5UuEvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tr694bxB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cNVG/RxG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85231C4CEF1;
-	Fri,  9 Jan 2026 12:42:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tr694bxB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6495EC4CEF1;
+	Fri,  9 Jan 2026 12:42:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962552;
-	bh=KkBVA5Cp3AyWmRjy2JbeEACP8KJSNVvDeXZ/YOCxnDo=;
+	s=korg; t=1767962555;
+	bh=xit5Pv/VI0QuADik4YBhzSp9SJcGWPxMgl1Gdb4UNrg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cNVG/RxGWXh+H/uFo2WMCGuTycBmb1o3Vf0c+I3dp+UJKrMDArtkWpj0uaWZAWbuR
-	 busau1gAIbvz8Wz7ywBL/hA/c6nGzd6gFH+pvUvhpbl/w9CNfzO0hAepBijuY84/m0
-	 bChfWUu6WZ2GoGfz3hYAtzFPfLQCugk0G5WBvsJE=
+	b=tr694bxBgsXMwK99zsmvxWIMaSnR7iUjd2G7ldmfCmHbN4xxGKXLaOhxDEONZwzFR
+	 QRjFch6I2FaMFZ3OiAlR5q3fZdOcqpyyER0WEc0s7KWLSu5tbi44t8/GUZbkFSk/tN
+	 SrQoE1Tdo8AIElNB6OnTzeHONG8gVrX0axKTINBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacky Chou <jacky_chou@aspeedtech.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Adrian Moreno <amorenoz@redhat.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Eelco Chaudron <echaudro@redhat.com>,
+	Aaron Conole <aconole@redhat.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 405/634] net: mdio: aspeed: add dummy read to avoid read-after-write issue
-Date: Fri,  9 Jan 2026 12:41:23 +0100
-Message-ID: <20260109112132.767987791@linuxfoundation.org>
+Subject: [PATCH 6.1 406/634] net: openvswitch: Avoid needlessly taking the RTNL on vport destroy
+Date: Fri,  9 Jan 2026 12:41:24 +0100
+Message-ID: <20260109112132.807674871@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -46,56 +48,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jacky Chou <jacky_chou@aspeedtech.com>
+From: Toke Høiland-Jørgensen <toke@redhat.com>
 
-[ Upstream commit d1a1a4bade4b20c0858d0b2f81d2611de055f675 ]
+[ Upstream commit 5498227676303e3ffa9a3a46214af96bc3e81314 ]
 
-The Aspeed MDIO controller may return incorrect data when a read operation
-follows immediately after a write. Due to a controller bug, the subsequent
-read can latch stale data, causing the polling logic to terminate earlier
-than expected.
+The openvswitch teardown code will immediately call
+ovs_netdev_detach_dev() in response to a NETDEV_UNREGISTER notification.
+It will then start the dp_notify_work workqueue, which will later end up
+calling the vport destroy() callback. This callback takes the RTNL to do
+another ovs_netdev_detach_port(), which in this case is unnecessary.
+This causes extra pressure on the RTNL, in some cases leading to
+"unregister_netdevice: waiting for XX to become free" warnings on
+teardown.
 
-To work around this hardware issue, insert a dummy read after each write
-operation. This ensures that the next actual read returns the correct
-data and prevents premature polling exit.
+We can straight-forwardly avoid the extra RTNL lock acquisition by
+checking the device flags before taking the lock, and skip the locking
+altogether if the IFF_OVS_DATAPATH flag has already been unset.
 
-This workaround has been verified to stabilize MDIO transactions on
-affected Aspeed platforms.
-
-Fixes: f160e99462c6 ("net: phy: Add mdio-aspeed")
-Signed-off-by: Jacky Chou <jacky_chou@aspeedtech.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20251211-aspeed_mdio_add_dummy_read-v3-1-382868869004@aspeedtech.com
+Fixes: b07c26511e94 ("openvswitch: fix vport-netdev unregister")
+Tested-by: Adrian Moreno <amorenoz@redhat.com>
+Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Acked-by: Eelco Chaudron <echaudro@redhat.com>
+Acked-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/20251211115006.228876-1-toke@redhat.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/mdio/mdio-aspeed.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/openvswitch/vport-netdev.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/mdio/mdio-aspeed.c b/drivers/net/mdio/mdio-aspeed.c
-index 944d005d2bd1..77fccb903718 100644
---- a/drivers/net/mdio/mdio-aspeed.c
-+++ b/drivers/net/mdio/mdio-aspeed.c
-@@ -63,6 +63,13 @@ static int aspeed_mdio_op(struct mii_bus *bus, u8 st, u8 op, u8 phyad, u8 regad,
+diff --git a/net/openvswitch/vport-netdev.c b/net/openvswitch/vport-netdev.c
+index 2f61d5bdce1a..7126ff104550 100644
+--- a/net/openvswitch/vport-netdev.c
++++ b/net/openvswitch/vport-netdev.c
+@@ -153,10 +153,19 @@ void ovs_netdev_detach_dev(struct vport *vport)
  
- 	iowrite32(ctrl, ctx->base + ASPEED_MDIO_CTRL);
- 
-+	/* Workaround for read-after-write issue.
-+	 * The controller may return stale data if a read follows immediately
-+	 * after a write. A dummy read forces the hardware to update its
-+	 * internal state, ensuring that the next real read returns correct data.
+ static void netdev_destroy(struct vport *vport)
+ {
+-	rtnl_lock();
+-	if (netif_is_ovs_port(vport->dev))
+-		ovs_netdev_detach_dev(vport);
+-	rtnl_unlock();
++	/* When called from ovs_db_notify_wq() after a dp_device_event(), the
++	 * port has already been detached, so we can avoid taking the RTNL by
++	 * checking this first.
 +	 */
-+	ioread32(ctx->base + ASPEED_MDIO_CTRL);
-+
- 	return readl_poll_timeout(ctx->base + ASPEED_MDIO_CTRL, ctrl,
- 				!(ctrl & ASPEED_MDIO_CTRL_FIRE),
- 				ASPEED_MDIO_INTERVAL_US,
++	if (netif_is_ovs_port(vport->dev)) {
++		rtnl_lock();
++		/* Check again while holding the lock to ensure we don't race
++		 * with the netdev notifier and detach twice.
++		 */
++		if (netif_is_ovs_port(vport->dev))
++			ovs_netdev_detach_dev(vport);
++		rtnl_unlock();
++	}
+ 
+ 	call_rcu(&vport->rcu, vport_netdev_free);
+ }
 -- 
 2.51.0
 
