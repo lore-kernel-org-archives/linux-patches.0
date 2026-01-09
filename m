@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 246EA330337;
-	Fri,  9 Jan 2026 12:10:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B860B35A953;
+	Fri,  9 Jan 2026 12:10:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960655; cv=none; b=BH8umQlOl7H4Nt5fjDXo2JsxEIhDZM7lZ12zJBdL87EmQ6Fm8HeV0N9/4xj3ln//QdOEIhEJOOAkb+ZVvy6YVeKEgMvBa+1fkXyFvruFphWSqG+z298Jf/j6T7UNDNLqsiWRq1L8tntN38YzN5Andb3kQ/zIINo+TzvkKHkuTuk=
+	t=1767960657; cv=none; b=Khz+Nj47nkaWaGXeALle0HkV+NDAsHvxfw/y+UN+fBrO1vP6HFLmyxuMruSUSHzHJZRdNiLjdk+PvUSTlU8hTz9v4wtIcVcv6PKG+7UBx5IrkWYN9wANVa1cpyChb7xJg+x4jAwdIYGwsXKOrzpAvz9ZVeGYeswjPCJwicyY4+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960655; c=relaxed/simple;
-	bh=1VFTLyubVdtlg26RMaTHOVzKLA3fFQMj8doiOS7R03s=;
+	s=arc-20240116; t=1767960657; c=relaxed/simple;
+	bh=EtCqUqWLMi8+HjC78qX/nemPOTCP7Xp0NAQxCVrMEXA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f59Xq17T0RoxJrA/LH429KR67L6767i3ErOLfHR/dr8F/tze59yz2SshXAg2QW89BzuecuoCqVXICqtaBfTtTKLxBHqF+kCwZ65kpjVUo0OvrhsfdA1VM3GlwOCdSCOSt5sY3HngV6FiGOaV9CKhkXvWcRLBUDijz4li7KAigX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RNiacJlf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V06NphP+QgXHROIspiWGwe2UCz6W8vyv71U5fYz8+fMe6znsn+8DAhT4gJym0x+iXetws1FTPanbR0CSZ+EMGjnL9kT7xt2+k302bwGgKL38fVyY96bxV0yWOXLKWGV309E1VnCeRYQ/d2mJQxa/ir7eMM1XhA42AfOd6i54quk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GIrtqYXF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RNiacJlf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D9BC4CEF1;
-	Fri,  9 Jan 2026 12:10:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GIrtqYXF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42606C19421;
+	Fri,  9 Jan 2026 12:10:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960654;
-	bh=1VFTLyubVdtlg26RMaTHOVzKLA3fFQMj8doiOS7R03s=;
+	s=korg; t=1767960657;
+	bh=EtCqUqWLMi8+HjC78qX/nemPOTCP7Xp0NAQxCVrMEXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RNiacJlfYWOZ4NLTejwdGoG6nnGsyn4TbaqY+q00eM8I5ILX3iFimJ+duSfTraNDq
-	 X6kAZKh1O3ayfh9o8xbtbJC9X9in/cE/1ZJ0mB/4ThPlXszHAr/GjGp66PfLo0CwuN
-	 cql5kZ0+YATabebh3jaXbYKZTFzcLQsWHvyIQqwk=
+	b=GIrtqYXF5HhvDVYkTgfYMmaJINUKADMuDF31BwMYU3UvGCh1mn4pS5XLHvRN97XCU
+	 vewotd0Bf0bwKiYk48K23iQey58lVZF+j+ciFuZGxE2oYiaQCbzh4oJWOMUTM5dXGM
+	 Bl4awEntMp6GYn5suZwXySIJABSEjHeeO7kGSBtM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Joshua Rogers <linux@joshua.hu>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.6 478/737] svcrdma: return 0 on success from svc_rdma_copy_inline_range
-Date: Fri,  9 Jan 2026 12:40:17 +0100
-Message-ID: <20260109112151.967435091@linuxfoundation.org>
+Subject: [PATCH 6.6 479/737] SUNRPC: svcauth_gss: avoid NULL deref on zero length gss_token in gss_read_proxy_verf
+Date: Fri,  9 Jan 2026 12:40:18 +0100
+Message-ID: <20260109112152.004365293@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,30 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Joshua Rogers <linux@joshua.hu>
 
-commit 94972027ab55b200e031059fd6c7a649f8248020 upstream.
+commit d4b69a6186b215d2dc1ebcab965ed88e8d41768d upstream.
 
-The function comment specifies 0 on success and -EINVAL on invalid
-parameters. Make the tail return 0 after a successful copy loop.
+A zero length gss_token results in pages == 0 and in_token->pages[0]
+is NULL. The code unconditionally evaluates
+page_address(in_token->pages[0]) for the initial memcpy, which can
+dereference NULL even when the copy length is 0. Guard the first
+memcpy so it only runs when length > 0.
 
-Fixes: d7cc73972661 ("svcrdma: support multiple Read chunks per RPC")
+Fixes: 5866efa8cbfb ("SUNRPC: Fix svcauth_gss_proxy_init()")
 Cc: stable@vger.kernel.org
 Signed-off-by: Joshua Rogers <linux@joshua.hu>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_rw.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sunrpc/auth_gss/svcauth_gss.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/sunrpc/xprtrdma/svc_rdma_rw.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_rw.c
-@@ -834,7 +834,7 @@ static int svc_rdma_copy_inline_range(st
- 		offset += page_len;
+--- a/net/sunrpc/auth_gss/svcauth_gss.c
++++ b/net/sunrpc/auth_gss/svcauth_gss.c
+@@ -1093,7 +1093,8 @@ static int gss_read_proxy_verf(struct sv
  	}
  
--	return -EINVAL;
-+	return 0;
- }
+ 	length = min_t(unsigned int, inlen, (char *)xdr->end - (char *)xdr->p);
+-	memcpy(page_address(in_token->pages[0]), xdr->p, length);
++	if (length)
++		memcpy(page_address(in_token->pages[0]), xdr->p, length);
+ 	inlen -= length;
  
- /**
+ 	to_offs = length;
 
 
