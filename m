@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6F9826ED41;
-	Fri,  9 Jan 2026 12:18:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B789C224D6;
+	Fri,  9 Jan 2026 12:18:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961130; cv=none; b=tOapoDlxrGlOAhFrQ6TipYC1npd+RM7uvC4uU9Bk4C1Gs+ZRl91R3RgcTmcagcIjS3VT6TyJD8Ghb6bZGp3GJinskIzdwOoj7S5T7wcbRFFhBAtOSKWTErNqSGR/5f8qB4hNi/TB0Eo4hcjM3KlQL1bVivLsLNJApByUSxCz1t8=
+	t=1767961133; cv=none; b=g0VZm/t70AJoIueUL6Fl5mPQ3mdOSfCg4E+RAb/AE4MAu7Y6lO+QTnEcm7RyhCgK3EqgALugWQRpSrof46wVpJ+bnvaVEf6oB5adeBWQvJPqhuRE/PiA/MkECqDGQLKFu8EP4fIif+0AImV4QLkniIIq5w3ET6Smz2ItzIjF+qU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961130; c=relaxed/simple;
-	bh=QPjP4FE38AmVBqUKf9DZifFYG4zaGOVCAhEc88I0U/k=;
+	s=arc-20240116; t=1767961133; c=relaxed/simple;
+	bh=fgWJBF3jvwE/1WOnRv5F8ed0iSaN7EDD/qNm6gf6K0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s0NouYnsR5Rco8QOnwNmqLMVbykv1eq4N3IPHX6xkiY1mGhbGDpWVgXem5gLTIjnErzBG0u/7rnIel7uwf60CyXE5smCF/aIKOcdWVkTnMAy8LsECrgJ7DENEtH3hLxl478HDPZ/UkM6OvGK73vw04v5gULwBrF0e2mmIrO/NYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qo26C45F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nuCBqq/pbkAf/V0psU6U4aXSExYA/bsq1nZjjtAKbOr8etr6NuLtSO6zFUvPgdqcTnbHRMRWj4kxit2QMeSplU2DD37moMM03t1+kpiVXxUDlU4uABYUJmTEb3AY2spwD+iqII5Gw+8QJdM/311IxdkPH+MkV8MvJU39tygAOqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DpUybN7k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qo26C45F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6594BC16AAE;
-	Fri,  9 Jan 2026 12:18:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DpUybN7k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 435B7C16AAE;
+	Fri,  9 Jan 2026 12:18:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961130;
-	bh=QPjP4FE38AmVBqUKf9DZifFYG4zaGOVCAhEc88I0U/k=;
+	s=korg; t=1767961133;
+	bh=fgWJBF3jvwE/1WOnRv5F8ed0iSaN7EDD/qNm6gf6K0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qo26C45FdKbSOXHwYFoMIi87L7BC4rZoQPqzNz9mI/zhbDBJ63+SVqNkPVb9veLJ9
-	 L29PAs8eRF5gGXxslxsS/t9BVu6GDqj7l6xt7iZohEFTifLXW8+ht9lAlQMw/VD6cj
-	 RhV4egY5d8JSKCLTDrCUqHhsIB/6/41KTzhPWlK8=
+	b=DpUybN7kx1f+IdYcsF9Gg2aD5Az9FRpEa2Auj3FB+e8hxD3dD7rK767eakxKPog3g
+	 XHLUZ72BU5Aaj+Bli59kuLjvLvGxzuTn9IT10GF9PD5t0/Vw3jWUL8aA/dWNNjriQS
+	 nfdwGxuvZPqnXCzaXo37DOZNg0jkGMTaoBZ9nmJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	syzbot+14b90e1156b9f6fc1266@syzkaller.appspotmail.com,
-	Jiaming Zhang <r772577952@gmail.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 646/737] f2fs: fix to avoid potential deadlock
-Date: Fri,  9 Jan 2026 12:43:05 +0100
-Message-ID: <20260109112158.317317379@linuxfoundation.org>
+Subject: [PATCH 6.6 647/737] NFSD: Clear SECLABEL in the suppattr_exclcreat bitmap
+Date: Fri,  9 Jan 2026 12:43:06 +0100
+Message-ID: <20260109112158.355440662@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -54,218 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit ca8b201f28547e28343a6f00a6e91fa8c09572fe ]
+[ Upstream commit 27d17641cacfedd816789b75d342430f6b912bd2 ]
 
-As Jiaming Zhang and syzbot reported, there is potential deadlock in
-f2fs as below:
+>>From RFC 8881:
 
-Chain exists of:
-  &sbi->cp_rwsem --> fs_reclaim --> sb_internal#2
+5.8.1.14. Attribute 75: suppattr_exclcreat
 
- Possible unsafe locking scenario:
+> The bit vector that would set all REQUIRED and RECOMMENDED
+> attributes that are supported by the EXCLUSIVE4_1 method of file
+> creation via the OPEN operation. The scope of this attribute
+> applies to all objects with a matching fsid.
 
-       CPU0                    CPU1
-       ----                    ----
-  rlock(sb_internal#2);
-                               lock(fs_reclaim);
-                               lock(sb_internal#2);
-  rlock(&sbi->cp_rwsem);
+There's nothing in RFC 8881 that states that suppattr_exclcreat is
+or is not allowed to contain bits for attributes that are clear in
+the reported supported_attrs bitmask. But it doesn't make sense for
+an NFS server to indicate that it /doesn't/ implement an attribute,
+but then also indicate that clients /are/ allowed to set that
+attribute using OPEN(create) with EXCLUSIVE4_1.
 
- *** DEADLOCK ***
+Ensure that the SECURITY_LABEL and ACL bits are not set in the
+suppattr_exclcreat bitmask when they are also not set in the
+supported_attrs bitmask.
 
-3 locks held by kswapd0/73:
- #0: ffffffff8e247a40 (fs_reclaim){+.+.}-{0:0}, at: balance_pgdat mm/vmscan.c:7015 [inline]
- #0: ffffffff8e247a40 (fs_reclaim){+.+.}-{0:0}, at: kswapd+0x951/0x2800 mm/vmscan.c:7389
- #1: ffff8880118400e0 (&type->s_umount_key#50){.+.+}-{4:4}, at: super_trylock_shared fs/super.c:562 [inline]
- #1: ffff8880118400e0 (&type->s_umount_key#50){.+.+}-{4:4}, at: super_cache_scan+0x91/0x4b0 fs/super.c:197
- #2: ffff888011840610 (sb_internal#2){.+.+}-{0:0}, at: f2fs_evict_inode+0x8d9/0x1b60 fs/f2fs/inode.c:890
-
-stack backtrace:
-CPU: 0 UID: 0 PID: 73 Comm: kswapd0 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl+0x189/0x250 lib/dump_stack.c:120
- print_circular_bug+0x2ee/0x310 kernel/locking/lockdep.c:2043
- check_noncircular+0x134/0x160 kernel/locking/lockdep.c:2175
- check_prev_add kernel/locking/lockdep.c:3165 [inline]
- check_prevs_add kernel/locking/lockdep.c:3284 [inline]
- validate_chain+0xb9b/0x2140 kernel/locking/lockdep.c:3908
- __lock_acquire+0xab9/0xd20 kernel/locking/lockdep.c:5237
- lock_acquire+0x120/0x360 kernel/locking/lockdep.c:5868
- down_read+0x46/0x2e0 kernel/locking/rwsem.c:1537
- f2fs_down_read fs/f2fs/f2fs.h:2278 [inline]
- f2fs_lock_op fs/f2fs/f2fs.h:2357 [inline]
- f2fs_do_truncate_blocks+0x21c/0x10c0 fs/f2fs/file.c:791
- f2fs_truncate_blocks+0x10a/0x300 fs/f2fs/file.c:867
- f2fs_truncate+0x489/0x7c0 fs/f2fs/file.c:925
- f2fs_evict_inode+0x9f2/0x1b60 fs/f2fs/inode.c:897
- evict+0x504/0x9c0 fs/inode.c:810
- f2fs_evict_inode+0x1dc/0x1b60 fs/f2fs/inode.c:853
- evict+0x504/0x9c0 fs/inode.c:810
- dispose_list fs/inode.c:852 [inline]
- prune_icache_sb+0x21b/0x2c0 fs/inode.c:1000
- super_cache_scan+0x39b/0x4b0 fs/super.c:224
- do_shrink_slab+0x6ef/0x1110 mm/shrinker.c:437
- shrink_slab_memcg mm/shrinker.c:550 [inline]
- shrink_slab+0x7ef/0x10d0 mm/shrinker.c:628
- shrink_one+0x28a/0x7c0 mm/vmscan.c:4955
- shrink_many mm/vmscan.c:5016 [inline]
- lru_gen_shrink_node mm/vmscan.c:5094 [inline]
- shrink_node+0x315d/0x3780 mm/vmscan.c:6081
- kswapd_shrink_node mm/vmscan.c:6941 [inline]
- balance_pgdat mm/vmscan.c:7124 [inline]
- kswapd+0x147c/0x2800 mm/vmscan.c:7389
- kthread+0x70e/0x8a0 kernel/kthread.c:463
- ret_from_fork+0x4bc/0x870 arch/x86/kernel/process.c:158
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
- </TASK>
-
-The root cause is deadlock among four locks as below:
-
-kswapd
-- fs_reclaim				--- Lock A
- - shrink_one
-  - evict
-   - f2fs_evict_inode
-    - sb_start_intwrite			--- Lock B
-
-- iput
- - evict
-  - f2fs_evict_inode
-   - sb_start_intwrite			--- Lock B
-   - f2fs_truncate
-    - f2fs_truncate_blocks
-     - f2fs_do_truncate_blocks
-      - f2fs_lock_op			--- Lock C
-
-ioctl
-- f2fs_ioc_commit_atomic_write
- - f2fs_lock_op				--- Lock C
-  - __f2fs_commit_atomic_write
-   - __replace_atomic_write_block
-    - f2fs_get_dnode_of_data
-     - __get_node_folio
-      - f2fs_check_nid_range
-       - f2fs_handle_error
-        - f2fs_record_errors
-         - f2fs_down_write		--- Lock D
-
-open
-- do_open
- - do_truncate
-  - security_inode_need_killpriv
-   - f2fs_getxattr
-    - lookup_all_xattrs
-     - f2fs_handle_error
-      - f2fs_record_errors
-       - f2fs_down_write		--- Lock D
-        - f2fs_commit_super
-         - read_mapping_folio
-          - filemap_alloc_folio_noprof
-           - prepare_alloc_pages
-            - fs_reclaim_acquire	--- Lock A
-
-In order to avoid such deadlock, we need to avoid grabbing sb_lock in
-f2fs_handle_error(), so, let's use asynchronous method instead:
-- remove f2fs_handle_error() implementation
-- rename f2fs_handle_error_async() to f2fs_handle_error()
-- spread f2fs_handle_error()
-
-Fixes: 95fa90c9e5a7 ("f2fs: support recording errors into superblock")
-Cc: stable@kernel.org
-Reported-by: syzbot+14b90e1156b9f6fc1266@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-f2fs-devel/68eae49b.050a0220.ac43.0001.GAE@google.com
-Reported-by: Jiaming Zhang <r772577952@gmail.com>
-Closes: https://lore.kernel.org/lkml/CANypQFa-Gy9sD-N35o3PC+FystOWkNuN8pv6S75HLT0ga-Tzgw@mail.gmail.com
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 8c18f2052e75 ("nfsd41: SUPPATTR_EXCLCREAT attribute")
+Cc: stable@vger.kernel.org
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/compress.c |    5 +----
- fs/f2fs/f2fs.h     |    1 -
- fs/f2fs/super.c    |   41 -----------------------------------------
- 3 files changed, 1 insertion(+), 46 deletions(-)
+ fs/nfsd/nfs4xdr.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/f2fs/compress.c
-+++ b/fs/f2fs/compress.c
-@@ -754,10 +754,7 @@ void f2fs_decompress_cluster(struct deco
- 		ret = -EFSCORRUPTED;
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -3419,6 +3419,11 @@ out_acl:
+ 		u32 supp[3];
  
- 		/* Avoid f2fs_commit_super in irq context */
--		if (!in_task)
--			f2fs_handle_error_async(sbi, ERROR_FAIL_DECOMPRESSION);
--		else
--			f2fs_handle_error(sbi, ERROR_FAIL_DECOMPRESSION);
-+		f2fs_handle_error(sbi, ERROR_FAIL_DECOMPRESSION);
- 		goto out_release;
- 	}
- 
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -3638,7 +3638,6 @@ void f2fs_quota_off_umount(struct super_
- void f2fs_save_errors(struct f2fs_sb_info *sbi, unsigned char flag);
- void f2fs_handle_critical_error(struct f2fs_sb_info *sbi, unsigned char reason);
- void f2fs_handle_error(struct f2fs_sb_info *sbi, unsigned char error);
--void f2fs_handle_error_async(struct f2fs_sb_info *sbi, unsigned char error);
- int f2fs_commit_super(struct f2fs_sb_info *sbi, bool recover);
- int f2fs_sync_fs(struct super_block *sb, int sync);
- int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi);
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -4071,50 +4071,9 @@ void f2fs_save_errors(struct f2fs_sb_inf
- 	spin_unlock_irqrestore(&sbi->error_lock, flags);
- }
- 
--static bool f2fs_update_errors(struct f2fs_sb_info *sbi)
--{
--	unsigned long flags;
--	bool need_update = false;
--
--	spin_lock_irqsave(&sbi->error_lock, flags);
--	if (sbi->error_dirty) {
--		memcpy(F2FS_RAW_SUPER(sbi)->s_errors, sbi->errors,
--							MAX_F2FS_ERRORS);
--		sbi->error_dirty = false;
--		need_update = true;
--	}
--	spin_unlock_irqrestore(&sbi->error_lock, flags);
--
--	return need_update;
--}
--
--static void f2fs_record_errors(struct f2fs_sb_info *sbi, unsigned char error)
--{
--	int err;
--
--	f2fs_down_write(&sbi->sb_lock);
--
--	if (!f2fs_update_errors(sbi))
--		goto out_unlock;
--
--	err = f2fs_commit_super(sbi, false);
--	if (err)
--		f2fs_err_ratelimited(sbi,
--			"f2fs_commit_super fails to record errors:%u, err:%d",
--			error, err);
--out_unlock:
--	f2fs_up_write(&sbi->sb_lock);
--}
--
- void f2fs_handle_error(struct f2fs_sb_info *sbi, unsigned char error)
- {
- 	f2fs_save_errors(sbi, error);
--	f2fs_record_errors(sbi, error);
--}
--
--void f2fs_handle_error_async(struct f2fs_sb_info *sbi, unsigned char error)
--{
--	f2fs_save_errors(sbi, error);
- 
- 	if (!sbi->error_dirty)
- 		return;
+ 		memcpy(supp, nfsd_suppattrs[minorversion], sizeof(supp));
++		if (!IS_POSIXACL(d_inode(dentry)))
++			supp[0] &= ~FATTR4_WORD0_ACL;
++		if (!contextsupport)
++			supp[2] &= ~FATTR4_WORD2_SECURITY_LABEL;
++
+ 		supp[0] &= NFSD_SUPPATTR_EXCLCREAT_WORD0;
+ 		supp[1] &= NFSD_SUPPATTR_EXCLCREAT_WORD1;
+ 		supp[2] &= NFSD_SUPPATTR_EXCLCREAT_WORD2;
 
 
