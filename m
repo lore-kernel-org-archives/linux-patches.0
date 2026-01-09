@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BAB832AAB5;
-	Fri,  9 Jan 2026 12:19:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 110CB2737EE;
+	Fri,  9 Jan 2026 12:19:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961156; cv=none; b=g+uP6Ui9jpVamCxfYlQdNJCE7uCwA5UuYIkrhjhTTm/P0I4RY94S6E+YdES/ATlQKtZi79dq28taVbLeJzNwAZyPJyk1eoISST+0D54N5PIHzfFNJ6wk2OEjxA6pwN6la0h3vi1ngXUviiB8T/MTKE8hQbD0aZvcCwyEVsiUF40=
+	t=1767961159; cv=none; b=LfF+rSmoom0I522juusaRN0Py1DphEnW0jikiPpJtmrEeoTrtBfoVK0W91adTv197j3EuAqSCxQ64bk34yE1Rxw8/5v7IJlxlpR40vzivMSCZJtwWZ85hMHJGPruxBUItdOjJezA7EBLTH6en6gAu/S6TKIp+EQ/GU6YR7Ik1nw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961156; c=relaxed/simple;
-	bh=HV9leL2PqK/rIsl6w30qKhflwPrLupHIJg5HQvdoX1I=;
+	s=arc-20240116; t=1767961159; c=relaxed/simple;
+	bh=342LNpSvL03neXmnM43ZNT+cjiYCO2sDJ2vOGeqjjyU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a8n440VbB7OzMTiV9Dti348OgPUWA+meSZEzsPxuhnmEQ6/F8di1lWoUujvOlF7JqfJKYSpgT1iituR4jfdd+a8kpF23K/la+NTa+iWFohkpuCBy5+9OFVQcTmOo1zXZHm7tcjxK2n+4dGewDZrvOamzwncAOf9OHedFIbgowwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zpI6FIhc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a7gptAkuZHV7Nu/X7btZn9oRuG+6a/KeaThcJD/dVghwln1ZiKLDL4/GvhNmIXO0Ku/KoTJyfC35IjeL0eLYsuqmFA8D6fVwX5/Z8Y4GIJoPLXI7YDfM0xA9VUda2iAqH+OuJZAno04vGZrOQ9sJ5Q17OfQExwxais3ffKXWUVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0xyxl7kK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zpI6FIhc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA444C16AAE;
-	Fri,  9 Jan 2026 12:19:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0xyxl7kK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91BC8C4CEF1;
+	Fri,  9 Jan 2026 12:19:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961156;
-	bh=HV9leL2PqK/rIsl6w30qKhflwPrLupHIJg5HQvdoX1I=;
+	s=korg; t=1767961159;
+	bh=342LNpSvL03neXmnM43ZNT+cjiYCO2sDJ2vOGeqjjyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zpI6FIhco9v+KF1svvLSYZlo7orOTEbeqoY11tmO0zeajkVsJy5v2E1qdonRdw1y+
-	 ajTUjsF3z9HcqQpU6Prtjw76F2FvnEVIQxPSl3bcjQiYWojFPRg5ZmvWRkR4laaQxM
-	 EHBtGny21q87bsBO+dBHAS45jPWuONu5oe4fGtLw=
+	b=0xyxl7kKk33Hlu5oIFzdQ42tDLejSDG9rZreZ85sZlHPt8kaIPqLShSQoENT/5TQq
+	 tgCrAocg9s9xnqJAUZHpAI4xcIm+0nRPxSRduHpku3B7voDgnXCFYxP1+Jw3Tkyw1J
+	 /HJcKrjMu322mSrrNF7c6bFWEHIbi88ZClIjQH/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jouni Malinen <jouni.malinen@oss.qualcomm.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Daniel Vacek <neelx@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 655/737] wifi: mac80211: Discard Beacon frames to non-broadcast address
-Date: Fri,  9 Jan 2026 12:43:14 +0100
-Message-ID: <20260109112158.664129332@linuxfoundation.org>
+Subject: [PATCH 6.6 638/737] btrfs: dont rewrite ret from inode_permission
+Date: Fri,  9 Jan 2026 12:42:57 +0100
+Message-ID: <20260109112158.009658311@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,59 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jouni Malinen <jouni.malinen@oss.qualcomm.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 193d18f60588e95d62e0f82b6a53893e5f2f19f8 ]
+[ Upstream commit 0185c2292c600993199bc6b1f342ad47a9e8c678 ]
 
-Beacon frames are required to be sent to the broadcast address, see IEEE
-Std 802.11-2020, 11.1.3.1 ("The Address 1 field of the Beacon .. frame
-shall be set to the broadcast address"). A unicast Beacon frame might be
-used as a targeted attack to get one of the associated STAs to do
-something (e.g., using CSA to move it to another channel). As such, it
-is better have strict filtering for this on the received side and
-discard all Beacon frames that are sent to an unexpected address.
+In our user safe ino resolve ioctl we'll just turn any ret into -EACCES
+from inode_permission().  This is redundant, and could potentially be
+wrong if we had an ENOMEM in the security layer or some such other
+error, so simply return the actual return value.
 
-This is even more important for cases where beacon protection is used.
-The current implementation in mac80211 is correctly discarding unicast
-Beacon frames if the Protected Frame bit in the Frame Control field is
-set to 0. However, if that bit is set to 1, the logic used for checking
-for configured BIGTK(s) does not actually work. If the driver does not
-have logic for dropping unicast Beacon frames with Protected Frame bit
-1, these frames would be accepted in mac80211 processing as valid Beacon
-frames even though they are not protected. This would allow beacon
-protection to be bypassed. While the logic for checking beacon
-protection could be extended to cover this corner case, a more generic
-check for discard all Beacon frames based on A1=unicast address covers
-this without needing additional changes.
+Note: The patch was taken from v5 of fscrypt patchset
+(https://lore.kernel.org/linux-btrfs/cover.1706116485.git.josef@toxicpanda.com/)
+which was handled over time by various people: Omar Sandoval, Sweet Tea
+Dorminy, Josef Bacik.
 
-Address all these issues by dropping received Beacon frames if they are
-sent to a non-broadcast address.
-
-Cc: stable@vger.kernel.org
-Fixes: af2d14b01c32 ("mac80211: Beacon protection using the new BIGTK (STA)")
-Signed-off-by: Jouni Malinen <jouni.malinen@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251215151134.104501-1-jouni.malinen@oss.qualcomm.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ changed RX_DROP to RX_DROP_MONITOR ]
+Fixes: 23d0b79dfaed ("btrfs: Add unprivileged version of ino_lookup ioctl")
+CC: stable@vger.kernel.org # 5.4+
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Daniel Vacek <neelx@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+[ add note ]
+Signed-off-by: David Sterba <dsterba@suse.com>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/rx.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/btrfs/ioctl.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/net/mac80211/rx.c
-+++ b/net/mac80211/rx.c
-@@ -3388,6 +3388,11 @@ ieee80211_rx_h_mgmt_check(struct ieee802
- 	    rx->skb->len < IEEE80211_MIN_ACTION_SIZE)
- 		return RX_DROP_U_RUNT_ACTION;
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -2006,10 +2006,8 @@ static int btrfs_search_path_in_tree_use
+ 			ret = inode_permission(idmap, temp_inode,
+ 					       MAY_READ | MAY_EXEC);
+ 			iput(temp_inode);
+-			if (ret) {
+-				ret = -EACCES;
++			if (ret)
+ 				goto out_put;
+-			}
  
-+	/* Drop non-broadcast Beacon frames */
-+	if (ieee80211_is_beacon(mgmt->frame_control) &&
-+	    !is_broadcast_ether_addr(mgmt->da))
-+		return RX_DROP_MONITOR;
-+
- 	if (rx->sdata->vif.type == NL80211_IFTYPE_AP &&
- 	    ieee80211_is_beacon(mgmt->frame_control) &&
- 	    !(rx->flags & IEEE80211_RX_BEACON_REPORTED)) {
+ 			if (key.offset == upper_limit.objectid)
+ 				break;
 
 
