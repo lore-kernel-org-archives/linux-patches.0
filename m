@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE3B30FF1D;
-	Fri,  9 Jan 2026 12:29:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB232C21E6;
+	Fri,  9 Jan 2026 12:29:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961751; cv=none; b=pzxEbcqMIvkZUCgpzxG1Pu22oVTIUbdfyZjD84+QAsNrhX3pYhZ4TFDsskt/bgBbxGferlnRWxW4lseVSVyLwB7kq3xDGERpNRblnueQjm86Gzq1vLoVY+MwOq11ZB+K55sdW++F2NVVSR+GqoP5yRr/xpRRtMb1kRABAwz8c08=
+	t=1767961754; cv=none; b=ewaXwSDIydU7wXymkQXaQoRXAS7hvOeitL13h5/zBVRv0uwK76W80q4/Vw1De4w58QjPZaHxOs6bCEi2UMavvpuNnSXF5oBsrUFEQjc1CPd45AR4v3/Ki3/eYkBgVF9abO5yoR8sC47xoo6uqBceIJZl8vHm42/scxUCjfjU4eI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961751; c=relaxed/simple;
-	bh=bg9zqfclVmKLi2gnL7/vV0gkhIBKN0iNGuqvLsxZCfU=;
+	s=arc-20240116; t=1767961754; c=relaxed/simple;
+	bh=QudukGPPp24z2uzWNlHZeaBlU/x4go1EJijIuR503dM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BBMnpBak8sS3EeKOM79+nhs/g/nZVI8kPnWYx1jtQ3QnX1wbgLkDnXUuGzSjw+7NFakqBimTeVNIU6HZKk11jA+lEribk/VB3eDNmeXBsQkHXBmAbwfL+kDMoZTwATwdl9s5seHpY0hG2kt44KLKX1fXduqDbElAAqJ5WghE8xs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gs06NAuz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YPcfLXXWjAwhG503gjbqJOFyN0/QAHmletyGTf+vtFR3glxGnAnh7VEg/iC39bQFu+NYUuNl96RkVMnmaFDFrvucMIRbS+piWbc2xuMI3zMZ0nRcGOGuH9hFBMTuYLXFs37ZGi7KkTgAEDOKbHJMvYPgPZlDV+SVfx8SPNp134s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L6+Eacad; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gs06NAuz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEC39C19421;
-	Fri,  9 Jan 2026 12:29:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L6+Eacad"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B16DBC4CEF1;
+	Fri,  9 Jan 2026 12:29:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961751;
-	bh=bg9zqfclVmKLi2gnL7/vV0gkhIBKN0iNGuqvLsxZCfU=;
+	s=korg; t=1767961754;
+	bh=QudukGPPp24z2uzWNlHZeaBlU/x4go1EJijIuR503dM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gs06NAuzS0C40DixcJH8IozY3H0OBN0VkcV5aIdxMr/6lvVcpo/IeMoxQU/jmEq1p
-	 jgBE2Q03132CnF20ecskz+e6PrenW17ixgugCiXyVslIXyE+ZIjoVit93FAZ/1kl9l
-	 BGBlCva9/fLDKgL3uSajOzcVaRxOGrueAMyusnXE=
+	b=L6+EacadkcW/wYMyeYsE0JUhUdG9l3YvW14cGR+/QRVbU5xopO7PO/nkgGIP1kFWa
+	 SqVcJ1CGtwi/lOv0shz6FkVse+hKQg9RQFsJhd1H3nKzTMrEcAevzDi32ogPmARTWx
+	 W/4cQuNh9wcwjCiIbsGJ5t9oLrq0TEgljM2/0XLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Edward Adam Davis <eadavis@qq.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 123/634] powerpc/64s/ptdump: Fix kernel_hash_pagetable dump for ISA v3.00 HPTE format
-Date: Fri,  9 Jan 2026 12:36:41 +0100
-Message-ID: <20260109112122.072487855@linuxfoundation.org>
+Subject: [PATCH 6.1 124/634] fs/ntfs3: out1 also needs to put mi
+Date: Fri,  9 Jan 2026 12:36:42 +0100
+Message-ID: <20260109112122.110578846@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,50 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit eae40a6da63faa9fb63ff61f8fa2b3b57da78a84 ]
+[ Upstream commit 4d78d1173a653acdaf7500a32b8dc530ca4ad075 ]
 
-HPTE format was changed since Power9 (ISA 3.0) onwards. While dumping
-kernel hash page tables, nothing gets printed on powernv P9+. This patch
-utilizes the helpers added in the patch tagged as fixes, to convert new
-format to old format and dump the hptes. This fix is only needed for
-native_find() (powernv), since pseries continues to work fine with the
-old format.
+After ntfs_look_free_mft() executes successfully, all subsequent code
+that fails to execute must put mi.
 
-Fixes: 6b243fcfb5f1e ("powerpc/64: Simplify adaptation to new ISA v3.00 HPTE format")
-Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/4c2bb9e5b3cfbc0dd80b61b67cdd3ccfc632684c.1761834163.git.ritesh.list@gmail.com
+Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/mm/ptdump/hashpagetable.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/ntfs3/frecord.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/mm/ptdump/hashpagetable.c b/arch/powerpc/mm/ptdump/hashpagetable.c
-index 9a601587836b2..ee5e1dfe7932a 100644
---- a/arch/powerpc/mm/ptdump/hashpagetable.c
-+++ b/arch/powerpc/mm/ptdump/hashpagetable.c
-@@ -216,6 +216,8 @@ static int native_find(unsigned long ea, int psize, bool primary, u64 *v, u64
- 	vpn  = hpt_vpn(ea, vsid, ssize);
- 	hash = hpt_hash(vpn, shift, ssize);
- 	want_v = hpte_encode_avpn(vpn, psize, ssize);
-+	if (cpu_has_feature(CPU_FTR_ARCH_300))
-+		want_v = hpte_old_to_new_v(want_v);
+diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
+index fb572688f919f..f1f5b84e2ef17 100644
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -1067,9 +1067,9 @@ static int ni_ins_attr_ext(struct ntfs_inode *ni, struct ATTR_LIST_ENTRY *le,
  
- 	/* to check in the secondary hash table, we invert the hash */
- 	if (!primary)
-@@ -229,6 +231,10 @@ static int native_find(unsigned long ea, int psize, bool primary, u64 *v, u64
- 			/* HPTE matches */
- 			*v = be64_to_cpu(hptep->v);
- 			*r = be64_to_cpu(hptep->r);
-+			if (cpu_has_feature(CPU_FTR_ARCH_300)) {
-+				*v = hpte_new_to_old_v(*v, *r);
-+				*r = hpte_new_to_old_r(*r);
-+			}
- 			return 0;
- 		}
- 		++hpte_group;
+ out2:
+ 	ni_remove_mi(ni, mi);
+-	mi_put(mi);
+ 
+ out1:
++	mi_put(mi);
+ 	ntfs_mark_rec_free(sbi, rno, is_mft);
+ 
+ out:
 -- 
 2.51.0
 
