@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05C0332FA3D;
-	Fri,  9 Jan 2026 11:50:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A384B32BF21;
+	Fri,  9 Jan 2026 11:50:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959457; cv=none; b=gnXMbe0feWhYrWsjHY6cSUnwzTo2z3uDwxonO8AduQMhwXTlNQBBNl5dHyVGgZIYFqJPA36mMeoXZ0Vb1CSFIC9vzUiPIr6XXKfeupiYnp8FyZU5imVDy7WRYNjwJCvdzLZFU/KPAiFQFWvIlJRV+WVrV1gsL25hEhI4tCGRZb0=
+	t=1767959459; cv=none; b=cYZGnmTNUXWeU3cBWPinD17W+oclKS09Sq4liXYKrRd4a9XWhSV5lPBUClJ125cOSrg3NslD8YHCFTKNlXJeEPYO4KimX4Prf+fgsKPoXzGmZPNt0DHfHTs5cFw9Ttce82FWYzmb3dTtBMIZ8NuuxawvYWTf1Qt2RDAkRbgT0DI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959457; c=relaxed/simple;
-	bh=Yx9OsVAN7bTSs0lV9p4W3YOlaWDHPKC3EHMEH41NQZM=;
+	s=arc-20240116; t=1767959459; c=relaxed/simple;
+	bh=C2NKS+ij3yuYWC8OPB8d2LNl08kDDJ9rJXEDhRoNfN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HJfkGtToJEPfgPTTw06ohPSrXIbmO2jM9eMknUZRoWvkuMZsZo+T8xt4wo85vqK0tA3KPI3BxjeVPH6ZMo2/ecr/6AO0B0b7dulpb2LV1RTb+tgd82khkD5Qk8Cnp7LLMQqbxDNEmiXunLNNY0FkiH1TGHmRlQtoR8c49ieelSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dCrwhGIK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nN4fvgQPdbArqEYiXC79mnNLFBISigkKP17coeNcecHoY7fxcCkzvUXwRYAd6BW8j1+NG/aKCcD5YunTtZSkAOS3rLLhxaNEG9m5T5L49LgJlhBL0kD13r1kZY8C4YJkBJ5PbU5I0IwLiYic1K3N+AjQ/HKpQO7QP/TM7ftC1EY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbWnWTNb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dCrwhGIK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F4D9C4CEF1;
-	Fri,  9 Jan 2026 11:50:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbWnWTNb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB9DC4CEF1;
+	Fri,  9 Jan 2026 11:50:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959456;
-	bh=Yx9OsVAN7bTSs0lV9p4W3YOlaWDHPKC3EHMEH41NQZM=;
+	s=korg; t=1767959459;
+	bh=C2NKS+ij3yuYWC8OPB8d2LNl08kDDJ9rJXEDhRoNfN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dCrwhGIK41/F+NmQE2q5FfNMlaaJdMietXd9B9HnpqiW5sL5O/aPDmN1iXVb9QAik
-	 LG1+4/gQnsZxVqeLamfeq7bRG2gJgOwdIRQsOxiUB7hzhhQovKdpOhbyHMJo5DZy9e
-	 ZnevjWVmq/tIAOclVpvDM1uPBDzYy9zvlLFSWXxc=
+	b=gbWnWTNbEZDLr4nlVjf/vqdRTOboPbZBPOl8iPP8gEFHJaZLApXa6FWvyn6a+vxDr
+	 KdZhf1UFFishIZkigRSGDOn11GRGjN0Nbbl3LITnB2m2iFqY7cmipA22qf25kDtaOV
+	 SIfX4amw/vshgFCSgMsDzUxVY1tztbzsGguvvQGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Mavroudis Chatzilazaridis <mavchatz@protonmail.com>,
+	Stuart Hayhurst <stuart.a.hayhurst@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 058/737] clk: renesas: cpg-mssr: Read back reset registers to assure values latched
-Date: Fri,  9 Jan 2026 12:33:17 +0100
-Message-ID: <20260109112136.176213905@linuxfoundation.org>
+Subject: [PATCH 6.6 059/737] HID: logitech-hidpp: Do not assume FAP in hidpp_send_message_sync()
+Date: Fri,  9 Jan 2026 12:33:18 +0100
+Message-ID: <20260109112136.213290846@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,121 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marek.vasut+renesas@mailbox.org>
+From: Mavroudis Chatzilazaridis <mavchatz@protonmail.com>
 
-[ Upstream commit b91401af6c00ffab003698bfabd4c166df30748b ]
+[ Upstream commit aba7963544d47d82cdf36602a6678a093af0299d ]
 
-On R-Car V4H, the PCIEC controller DBI read would generate an SError in
-case the controller reset is released by writing SRSTCLR register first,
-and immediately afterward reading some PCIEC controller DBI register.
-The issue triggers in rcar_gen4_pcie_additional_common_init() on
-dw_pcie_readl_dbi(dw, PCIE_PORT_LANE_SKEW), which on V4H is the first
-read after reset_control_deassert(dw->core_rsts[DW_PCIE_PWR_RST].rstc).
+Currently, hidpp_send_message_sync() retries sending the message when the
+device returns a busy error code, specifically HIDPP20_ERROR_BUSY, which
+has a different meaning under RAP. This ends up being a problem because
+this function is used for both FAP and RAP messages.
 
-The reset controller which contains the SRSTCLR register and the PCIEC
-controller which contains the DBI register share the same root access
-bus, but the bus then splits into separate segments before reaching each
-IP.  Even if the SRSTCLR write access was posted on the bus before the
-DBI read access, it seems the DBI read access may reach the PCIEC
-controller before the SRSTCLR write completed, and trigger the SError.
+This issue is not noticeable on older receivers with unreachable devices
+since they return HIDPP_ERROR_RESOURCE_ERROR (0x09), which is not equal to
+HIDPP20_ERROR_BUSY (0x08).
 
-Mitigate the issue by adding a dummy SRSTCLR read, which assures the
-SRSTCLR write completes fully and is latched into the reset controller,
-before the PCIEC DBI read access can occur.
+However, newer receivers return HIDPP_ERROR_UNKNOWN_DEVICE (0x08) which
+happens to equal to HIDPP20_ERROR_BUSY, causing unnecessary retries when
+the device is not actually busy.
 
-Fixes: 0ab55cf18341 ("clk: renesas: cpg-mssr: Add support for R-Car V4H")
-Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20250922162113.113223-1-marek.vasut+renesas@mailbox.org
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+This is resolved by checking if the error response is FAP or RAP and
+picking the respective ERROR_BUSY code.
+
+Fixes: 60165ab774cb ("HID: logitech-hidpp: rework one more time the retries attempts")
+Signed-off-by: Mavroudis Chatzilazaridis <mavchatz@protonmail.com>
+Tested-by: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/renesas-cpg-mssr.c | 46 ++++++++++++--------------
- 1 file changed, 21 insertions(+), 25 deletions(-)
+ drivers/hid/hid-logitech-hidpp.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/renesas/renesas-cpg-mssr.c b/drivers/clk/renesas/renesas-cpg-mssr.c
-index c66b5e7359284..0f558d94750f1 100644
---- a/drivers/clk/renesas/renesas-cpg-mssr.c
-+++ b/drivers/clk/renesas/renesas-cpg-mssr.c
-@@ -597,18 +597,32 @@ static int __init cpg_mssr_add_clk_domain(struct device *dev,
+diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
+index 3a2c1e48aba20..5a2fe703cf57b 100644
+--- a/drivers/hid/hid-logitech-hidpp.c
++++ b/drivers/hid/hid-logitech-hidpp.c
+@@ -351,10 +351,15 @@ static int hidpp_send_message_sync(struct hidpp_device *hidpp,
  
- #define rcdev_to_priv(x)	container_of(x, struct cpg_mssr_priv, rcdev)
+ 	do {
+ 		ret = __do_hidpp_send_message_sync(hidpp, message, response);
+-		if (ret != HIDPP20_ERROR_BUSY)
++		if (response->report_id == REPORT_ID_HIDPP_SHORT &&
++		    ret != HIDPP_ERROR_BUSY)
++			break;
++		if ((response->report_id == REPORT_ID_HIDPP_LONG ||
++		     response->report_id == REPORT_ID_HIDPP_VERY_LONG) &&
++		    ret != HIDPP20_ERROR_BUSY)
+ 			break;
  
--static int cpg_mssr_reset(struct reset_controller_dev *rcdev,
--			  unsigned long id)
-+static int cpg_mssr_reset_operate(struct reset_controller_dev *rcdev,
-+				  const char *func, bool set, unsigned long id)
- {
- 	struct cpg_mssr_priv *priv = rcdev_to_priv(rcdev);
- 	unsigned int reg = id / 32;
- 	unsigned int bit = id % 32;
-+	const u16 off = set ? priv->reset_regs[reg] : priv->reset_clear_regs[reg];
- 	u32 bitmask = BIT(bit);
+-		dbg_hid("%s:got busy hidpp 2.0 error %02X, retrying\n", __func__, ret);
++		dbg_hid("%s:got busy hidpp error %02X, retrying\n", __func__, ret);
+ 	} while (--max_retries);
  
--	dev_dbg(priv->dev, "reset %u%02u\n", reg, bit);
-+	if (func)
-+		dev_dbg(priv->dev, "%s %u%02u\n", func, reg, bit);
-+
-+	writel(bitmask, priv->pub.base0 + off);
-+	readl(priv->pub.base0 + off);
-+	barrier_data(priv->pub.base0 + off);
-+
-+	return 0;
-+}
-+
-+static int cpg_mssr_reset(struct reset_controller_dev *rcdev,
-+			  unsigned long id)
-+{
-+	struct cpg_mssr_priv *priv = rcdev_to_priv(rcdev);
- 
- 	/* Reset module */
--	writel(bitmask, priv->pub.base0 + priv->reset_regs[reg]);
-+	cpg_mssr_reset_operate(rcdev, "reset", true, id);
- 
- 	/*
- 	 * On R-Car Gen4, delay after SRCR has been written is 1ms.
-@@ -621,36 +635,18 @@ static int cpg_mssr_reset(struct reset_controller_dev *rcdev,
- 		usleep_range(35, 1000);
- 
- 	/* Release module from reset state */
--	writel(bitmask, priv->pub.base0 + priv->reset_clear_regs[reg]);
--
--	return 0;
-+	return cpg_mssr_reset_operate(rcdev, NULL, false, id);
- }
- 
- static int cpg_mssr_assert(struct reset_controller_dev *rcdev, unsigned long id)
- {
--	struct cpg_mssr_priv *priv = rcdev_to_priv(rcdev);
--	unsigned int reg = id / 32;
--	unsigned int bit = id % 32;
--	u32 bitmask = BIT(bit);
--
--	dev_dbg(priv->dev, "assert %u%02u\n", reg, bit);
--
--	writel(bitmask, priv->pub.base0 + priv->reset_regs[reg]);
--	return 0;
-+	return cpg_mssr_reset_operate(rcdev, "assert", true, id);
- }
- 
- static int cpg_mssr_deassert(struct reset_controller_dev *rcdev,
- 			     unsigned long id)
- {
--	struct cpg_mssr_priv *priv = rcdev_to_priv(rcdev);
--	unsigned int reg = id / 32;
--	unsigned int bit = id % 32;
--	u32 bitmask = BIT(bit);
--
--	dev_dbg(priv->dev, "deassert %u%02u\n", reg, bit);
--
--	writel(bitmask, priv->pub.base0 + priv->reset_clear_regs[reg]);
--	return 0;
-+	return cpg_mssr_reset_operate(rcdev, "deassert", false, id);
- }
- 
- static int cpg_mssr_status(struct reset_controller_dev *rcdev,
+ 	mutex_unlock(&hidpp->send_mutex);
 -- 
 2.51.0
 
