@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC2033ADB5;
-	Fri,  9 Jan 2026 12:53:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C83AF32BF21;
+	Fri,  9 Jan 2026 12:53:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767963187; cv=none; b=ty0dWxnyeH+FoedtXSIM0aK7ZI4dr+hQwvXDBrXw/vvONVwxh6kxy3JrPVTZI4S8DEflD/qJQ+q4TF1XsBLPnLqJzHeZ3LP7nYB/v8fpvhb3f/a6FlOaAKkMo80Ip0ZDvzf0FNUSi9D/ONCuZ3Nxhyf5pwm7eHkncSSwVidFO1Y=
+	t=1767963189; cv=none; b=hM/MNZvaQ/48O5EWQ17Cdtd9D9k8d6aafBNLYOdBXkg8blzF9WwIpiCHS/jyppy9UlxpS/CgIFvIXJz/kHWGZgqLqa+F9loIheDsFDcDKEPLpIiMlihuXv+3wUSnq4EG6TWrl8OvsE38gVhMZyVybyY/RVh45yJxDEzHCyaoQH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767963187; c=relaxed/simple;
-	bh=0Dug1m/TZFSlpZSkRDoeGCGGhL0bTGGHhco8AXHAHkY=;
+	s=arc-20240116; t=1767963189; c=relaxed/simple;
+	bh=uK6ina17OTw/6aFSJhJq274+LurH+IgvY/YYW6JoM0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hTjaJmFy6TI+b1XMzccYLOs4ndfNUp3JSJGstZPgx/m+c4REWMtM7JbBdDrqWMXM8/ymN4/ggEcabVMivoE8kcU+P3xtmgGZ2qlE/Dv6fqBX0I931f+kpfgsc6tc60OnYiOsPLnW4xhV5ubL/CZg9hB7B8N6qsUn28ThWK75qPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HVihxpn5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ccWLoNfcplkgs+v7q2vnx9tX9yAP6FHe7OzhDs57fLc2eXeFcp3HEPN5TiaEwBeESBHfE0Z5GqUqpuhcRmk1x0RzuTr+8PguiLN6IvT9J2UlRr8qL3+LwvbxPtK5GwKpsQAmc8cUpokwHzv60nsSnuSi4t4Gn0510WxmwU7M24Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1xXdieh6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HVihxpn5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 850B8C4CEF1;
-	Fri,  9 Jan 2026 12:53:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1xXdieh6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 572F4C4CEF1;
+	Fri,  9 Jan 2026 12:53:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767963186;
-	bh=0Dug1m/TZFSlpZSkRDoeGCGGhL0bTGGHhco8AXHAHkY=;
+	s=korg; t=1767963189;
+	bh=uK6ina17OTw/6aFSJhJq274+LurH+IgvY/YYW6JoM0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HVihxpn5jkLWnn0zdKUZkWRryPHCMosDxBl7G3/xQCW50CaQfc8uG9YADJso/RQMc
-	 s4Ljqrsom4bY42W6wMu7i7sYWE8jUm21gsEjiEwk4plWiaitq+GA9sbvwIsn1so0qX
-	 1AYmAznUPqpBgOVx9v740Kgf0Zpkblyk2JmfqSQI=
+	b=1xXdieh6RiltOkeaiMnhKrrEJ2IjRmL7hpIkQy2iZPS7zYWgq/wSkiIV6AUJGUpPf
+	 GYI47bK1txnJgGOL+oT0M6kMEe4UcouJunGZCT3qpSeXNXh7pEePYyrciUx2Ts3wMC
+	 6xxxhYaDoJKlOYRUsgaeKHdJja2bgv4i6cupVEXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	yan kang <kangyan91@outlook.com>,
-	yue sun <samsun1006219@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Subject: [PATCH 6.1 595/634] net: Remove RTNL dance for SIOCBRADDIF and SIOCBRDELIF.
-Date: Fri,  9 Jan 2026 12:44:33 +0100
-Message-ID: <20260109112140.015758133@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 596/634] serial: Make uart_remove_one_port() return void
+Date: Fri,  9 Jan 2026 12:44:34 +0100
+Message-ID: <20260109112140.054132473@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,303 +44,249 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-commit ed3ba9b6e280e14cc3148c1b226ba453f02fa76c upstream.
+[ Upstream commit d5b3d02d0b107345f2a6ecb5b06f98356f5c97ab ]
 
-SIOCBRDELIF is passed to dev_ioctl() first and later forwarded to
-br_ioctl_call(), which causes unnecessary RTNL dance and the splat
-below [0] under RTNL pressure.
+The return value is only ever used as a return value for remove callbacks
+of platform drivers. This return value is ignored by the driver core.
+(The only effect is an error message, but uart_remove_one_port() already
+emitted one in this case.)
 
-Let's say Thread A is trying to detach a device from a bridge and
-Thread B is trying to remove the bridge.
+So the return value isn't used at all and uart_remove_one_port() can be
+changed to return void without any loss. Also this better matches the
+Linux device model as remove functions are not supposed to fail.
 
-In dev_ioctl(), Thread A bumps the bridge device's refcnt by
-netdev_hold() and releases RTNL because the following br_ioctl_call()
-also re-acquires RTNL.
-
-In the race window, Thread B could acquire RTNL and try to remove
-the bridge device.  Then, rtnl_unlock() by Thread B will release RTNL
-and wait for netdev_put() by Thread A.
-
-Thread A, however, must hold RTNL after the unlock in dev_ifsioc(),
-which may take long under RTNL pressure, resulting in the splat by
-Thread B.
-
-  Thread A (SIOCBRDELIF)           Thread B (SIOCBRDELBR)
-  ----------------------           ----------------------
-  sock_ioctl                       sock_ioctl
-  `- sock_do_ioctl                 `- br_ioctl_call
-     `- dev_ioctl                     `- br_ioctl_stub
-        |- rtnl_lock                     |
-        |- dev_ifsioc                    '
-        '  |- dev = __dev_get_by_name(...)
-           |- netdev_hold(dev, ...)      .
-       /   |- rtnl_unlock  ------.       |
-       |   |- br_ioctl_call       `--->  |- rtnl_lock
-  Race |   |  `- br_ioctl_stub           |- br_del_bridge
-  Window   |     |                       |  |- dev = __dev_get_by_name(...)
-       |   |     |  May take long        |  `- br_dev_delete(dev, ...)
-       |   |     |  under RTNL pressure  |     `- unregister_netdevice_queue(dev, ...)
-       |   |     |               |       `- rtnl_unlock
-       \   |     |- rtnl_lock  <-'          `- netdev_run_todo
-           |     |- ...                        `- netdev_run_todo
-           |     `- rtnl_unlock                   |- __rtnl_unlock
-           |                                      |- netdev_wait_allrefs_any
-           |- netdev_put(dev, ...)  <----------------'
-                                                Wait refcnt decrement
-                                                and log splat below
-
-To avoid blocking SIOCBRDELBR unnecessarily, let's not call
-dev_ioctl() for SIOCBRADDIF and SIOCBRDELIF.
-
-In the dev_ioctl() path, we do the following:
-
-  1. Copy struct ifreq by get_user_ifreq in sock_do_ioctl()
-  2. Check CAP_NET_ADMIN in dev_ioctl()
-  3. Call dev_load() in dev_ioctl()
-  4. Fetch the master dev from ifr.ifr_name in dev_ifsioc()
-
-3. can be done by request_module() in br_ioctl_call(), so we move
-1., 2., and 4. to br_ioctl_stub().
-
-Note that 2. is also checked later in add_del_if(), but it's better
-performed before RTNL.
-
-SIOCBRADDIF and SIOCBRDELIF have been processed in dev_ioctl() since
-the pre-git era, and there seems to be no specific reason to process
-them there.
-
-[0]:
-unregister_netdevice: waiting for wpan3 to become free. Usage count = 2
-ref_tracker: wpan3@ffff8880662d8608 has 1/1 users at
-     __netdev_tracker_alloc include/linux/netdevice.h:4282 [inline]
-     netdev_hold include/linux/netdevice.h:4311 [inline]
-     dev_ifsioc+0xc6a/0x1160 net/core/dev_ioctl.c:624
-     dev_ioctl+0x255/0x10c0 net/core/dev_ioctl.c:826
-     sock_do_ioctl+0x1ca/0x260 net/socket.c:1213
-     sock_ioctl+0x23a/0x6c0 net/socket.c:1318
-     vfs_ioctl fs/ioctl.c:51 [inline]
-     __do_sys_ioctl fs/ioctl.c:906 [inline]
-     __se_sys_ioctl fs/ioctl.c:892 [inline]
-     __x64_sys_ioctl+0x1a4/0x210 fs/ioctl.c:892
-     do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-     do_syscall_64+0xcb/0x250 arch/x86/entry/common.c:83
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: 893b19587534 ("net: bridge: fix ioctl locking")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Reported-by: yan kang <kangyan91@outlook.com>
-Reported-by: yue sun <samsun1006219@gmail.com>
-Closes: https://lore.kernel.org/netdev/SY8P300MB0421225D54EB92762AE8F0F2A1D32@SY8P300MB0421.AUSP300.PROD.OUTLOOK.COM/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20250316192851.19781-1-kuniyu@amazon.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[cascardo: fixed conflict at dev_ifsioc]
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20230512173810.131447-3-u.kleine-koenig@pengutronix.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 74098cc06e75 ("xhci: dbgtty: fix device unregister: fixup")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/if_bridge.h |    6 ++----
- net/bridge/br_ioctl.c     |   36 +++++++++++++++++++++++++++++++++---
- net/bridge/br_private.h   |    3 +--
- net/core/dev_ioctl.c      |   16 ----------------
- net/socket.c              |   19 +++++++++----------
- 5 files changed, 45 insertions(+), 35 deletions(-)
+ drivers/tty/serial/atmel_serial.c           |    5 ++---
+ drivers/tty/serial/clps711x.c               |    4 +++-
+ drivers/tty/serial/cpm_uart/cpm_uart_core.c |    5 ++++-
+ drivers/tty/serial/imx.c                    |    4 +++-
+ drivers/tty/serial/lantiq.c                 |    4 +++-
+ drivers/tty/serial/serial_core.c            |    6 +-----
+ drivers/tty/serial/st-asc.c                 |    4 +++-
+ drivers/tty/serial/uartlite.c               |   12 ++++--------
+ drivers/tty/serial/xilinx_uartps.c          |    5 ++---
+ include/linux/serial_core.h                 |    2 +-
+ 10 files changed, 26 insertions(+), 25 deletions(-)
 
---- a/include/linux/if_bridge.h
-+++ b/include/linux/if_bridge.h
-@@ -63,11 +63,9 @@ struct br_ip_list {
- #define BR_DEFAULT_AGEING_TIME	(300 * HZ)
+--- a/drivers/tty/serial/atmel_serial.c
++++ b/drivers/tty/serial/atmel_serial.c
+@@ -3022,14 +3022,13 @@ static int atmel_serial_remove(struct pl
+ {
+ 	struct uart_port *port = platform_get_drvdata(pdev);
+ 	struct atmel_uart_port *atmel_port = to_atmel_uart_port(port);
+-	int ret = 0;
  
- struct net_bridge;
--void brioctl_set(int (*hook)(struct net *net, struct net_bridge *br,
--			     unsigned int cmd, struct ifreq *ifr,
-+void brioctl_set(int (*hook)(struct net *net, unsigned int cmd,
- 			     void __user *uarg));
--int br_ioctl_call(struct net *net, struct net_bridge *br, unsigned int cmd,
--		  struct ifreq *ifr, void __user *uarg);
-+int br_ioctl_call(struct net *net, unsigned int cmd, void __user *uarg);
+ 	tasklet_kill(&atmel_port->tasklet_rx);
+ 	tasklet_kill(&atmel_port->tasklet_tx);
  
- #if IS_ENABLED(CONFIG_BRIDGE) && IS_ENABLED(CONFIG_BRIDGE_IGMP_SNOOPING)
- int br_multicast_list_adjacent(struct net_device *dev,
---- a/net/bridge/br_ioctl.c
-+++ b/net/bridge/br_ioctl.c
-@@ -394,10 +394,26 @@ static int old_deviceless(struct net *ne
- 	return -EOPNOTSUPP;
+ 	device_init_wakeup(&pdev->dev, 0);
+ 
+-	ret = uart_remove_one_port(&atmel_uart, port);
++	uart_remove_one_port(&atmel_uart, port);
+ 
+ 	kfree(atmel_port->rx_ring.buf);
+ 
+@@ -3039,7 +3038,7 @@ static int atmel_serial_remove(struct pl
+ 
+ 	pdev->dev.of_node = NULL;
+ 
+-	return ret;
++	return 0;
  }
  
--int br_ioctl_stub(struct net *net, struct net_bridge *br, unsigned int cmd,
--		  struct ifreq *ifr, void __user *uarg)
-+int br_ioctl_stub(struct net *net, unsigned int cmd, void __user *uarg)
+ static SIMPLE_DEV_PM_OPS(atmel_serial_pm_ops, atmel_serial_suspend,
+--- a/drivers/tty/serial/clps711x.c
++++ b/drivers/tty/serial/clps711x.c
+@@ -515,7 +515,9 @@ static int uart_clps711x_remove(struct p
  {
- 	int ret = -EOPNOTSUPP;
-+	struct ifreq ifr;
-+
-+	if (cmd == SIOCBRADDIF || cmd == SIOCBRDELIF) {
-+		void __user *data;
-+		char *colon;
-+
-+		if (!ns_capable(net->user_ns, CAP_NET_ADMIN))
-+			return -EPERM;
-+
-+		if (get_user_ifreq(&ifr, &data, uarg))
-+			return -EFAULT;
-+
-+		ifr.ifr_name[IFNAMSIZ - 1] = 0;
-+		colon = strchr(ifr.ifr_name, ':');
-+		if (colon)
-+			*colon = 0;
-+	}
+ 	struct clps711x_port *s = platform_get_drvdata(pdev);
  
- 	rtnl_lock();
- 
-@@ -430,7 +446,21 @@ int br_ioctl_stub(struct net *net, struc
- 		break;
- 	case SIOCBRADDIF:
- 	case SIOCBRDELIF:
--		ret = add_del_if(br, ifr->ifr_ifindex, cmd == SIOCBRADDIF);
-+	{
-+		struct net_device *dev;
+-	return uart_remove_one_port(&clps711x_uart, &s->port);
++	uart_remove_one_port(&clps711x_uart, &s->port);
 +
-+		dev = __dev_get_by_name(net, ifr.ifr_name);
-+		if (!dev || !netif_device_present(dev)) {
-+			ret = -ENODEV;
-+			break;
-+		}
-+		if (!netif_is_bridge_master(dev)) {
-+			ret = -EOPNOTSUPP;
-+			break;
-+		}
++	return 0;
+ }
+ 
+ static const struct of_device_id __maybe_unused clps711x_uart_dt_ids[] = {
+--- a/drivers/tty/serial/cpm_uart/cpm_uart_core.c
++++ b/drivers/tty/serial/cpm_uart/cpm_uart_core.c
+@@ -1428,7 +1428,10 @@ static int cpm_uart_probe(struct platfor
+ static int cpm_uart_remove(struct platform_device *ofdev)
+ {
+ 	struct uart_cpm_port *pinfo = platform_get_drvdata(ofdev);
+-	return uart_remove_one_port(&cpm_reg, &pinfo->port);
 +
-+		ret = add_del_if(netdev_priv(dev), ifr.ifr_ifindex, cmd == SIOCBRADDIF);
-+	}
- 		break;
- 	}
++	uart_remove_one_port(&cpm_reg, &pinfo->port);
++
++	return 0;
+ }
  
---- a/net/bridge/br_private.h
-+++ b/net/bridge/br_private.h
-@@ -895,8 +895,7 @@ br_port_get_check_rtnl(const struct net_
- /* br_ioctl.c */
- int br_dev_siocdevprivate(struct net_device *dev, struct ifreq *rq,
- 			  void __user *data, int cmd);
--int br_ioctl_stub(struct net *net, struct net_bridge *br, unsigned int cmd,
--		  struct ifreq *ifr, void __user *uarg);
-+int br_ioctl_stub(struct net *net, unsigned int cmd, void __user *uarg);
+ static const struct of_device_id cpm_uart_match[] = {
+--- a/drivers/tty/serial/imx.c
++++ b/drivers/tty/serial/imx.c
+@@ -2538,7 +2538,9 @@ static int imx_uart_remove(struct platfo
+ {
+ 	struct imx_port *sport = platform_get_drvdata(pdev);
  
- /* br_multicast.c */
- #ifdef CONFIG_BRIDGE_IGMP_SNOOPING
---- a/net/core/dev_ioctl.c
-+++ b/net/core/dev_ioctl.c
-@@ -315,7 +315,6 @@ static int dev_ifsioc(struct net *net, s
- 	int err;
- 	struct net_device *dev = __dev_get_by_name(net, ifr->ifr_name);
- 	const struct net_device_ops *ops;
--	netdevice_tracker dev_tracker;
+-	return uart_remove_one_port(&imx_uart_uart_driver, &sport->port);
++	uart_remove_one_port(&imx_uart_uart_driver, &sport->port);
++
++	return 0;
+ }
  
- 	if (!dev)
- 		return -ENODEV;
-@@ -378,19 +377,6 @@ static int dev_ifsioc(struct net *net, s
- 	case SIOCWANDEV:
- 		return dev_siocwandev(dev, &ifr->ifr_settings);
+ static void imx_uart_restore_context(struct imx_port *sport)
+--- a/drivers/tty/serial/lantiq.c
++++ b/drivers/tty/serial/lantiq.c
+@@ -918,7 +918,9 @@ static int lqasc_remove(struct platform_
+ {
+ 	struct uart_port *port = platform_get_drvdata(pdev);
  
--	case SIOCBRADDIF:
--	case SIOCBRDELIF:
--		if (!netif_device_present(dev))
--			return -ENODEV;
--		if (!netif_is_bridge_master(dev))
--			return -EOPNOTSUPP;
--		netdev_hold(dev, &dev_tracker, GFP_KERNEL);
--		rtnl_unlock();
--		err = br_ioctl_call(net, netdev_priv(dev), cmd, ifr, NULL);
--		netdev_put(dev, &dev_tracker);
--		rtnl_lock();
--		return err;
--
- 	case SIOCSHWTSTAMP:
- 		err = net_hwtstamp_validate(ifr);
- 		if (err)
-@@ -575,8 +561,6 @@ int dev_ioctl(struct net *net, unsigned
- 	case SIOCBONDRELEASE:
- 	case SIOCBONDSETHWADDR:
- 	case SIOCBONDCHANGEACTIVE:
--	case SIOCBRADDIF:
--	case SIOCBRDELIF:
- 	case SIOCSHWTSTAMP:
- 		if (!ns_capable(net->user_ns, CAP_NET_ADMIN))
- 			return -EPERM;
---- a/net/socket.c
-+++ b/net/socket.c
-@@ -1151,12 +1151,10 @@ static ssize_t sock_write_iter(struct ki
+-	return uart_remove_one_port(&lqasc_reg, port);
++	uart_remove_one_port(&lqasc_reg, port);
++
++	return 0;
+ }
+ 
+ static const struct ltq_soc_data soc_data_lantiq = {
+--- a/drivers/tty/serial/serial_core.c
++++ b/drivers/tty/serial/serial_core.c
+@@ -3186,13 +3186,12 @@ EXPORT_SYMBOL(uart_add_one_port);
+  * This unhooks (and hangs up) the specified port structure from the core
+  * driver. No further calls will be made to the low-level code for this port.
   */
- 
- static DEFINE_MUTEX(br_ioctl_mutex);
--static int (*br_ioctl_hook)(struct net *net, struct net_bridge *br,
--			    unsigned int cmd, struct ifreq *ifr,
-+static int (*br_ioctl_hook)(struct net *net, unsigned int cmd,
- 			    void __user *uarg);
- 
--void brioctl_set(int (*hook)(struct net *net, struct net_bridge *br,
--			     unsigned int cmd, struct ifreq *ifr,
-+void brioctl_set(int (*hook)(struct net *net, unsigned int cmd,
- 			     void __user *uarg))
+-int uart_remove_one_port(struct uart_driver *drv, struct uart_port *uport)
++void uart_remove_one_port(struct uart_driver *drv, struct uart_port *uport)
  {
- 	mutex_lock(&br_ioctl_mutex);
-@@ -1165,8 +1163,7 @@ void brioctl_set(int (*hook)(struct net
+ 	struct uart_state *state = drv->state + uport->line;
+ 	struct tty_port *port = &state->port;
+ 	struct uart_port *uart_port;
+ 	struct tty_struct *tty;
+-	int ret = 0;
+ 
+ 	mutex_lock(&port_mutex);
+ 
+@@ -3208,7 +3207,6 @@ int uart_remove_one_port(struct uart_dri
+ 
+ 	if (!uart_port) {
+ 		mutex_unlock(&port->mutex);
+-		ret = -EINVAL;
+ 		goto out;
+ 	}
+ 	uport->flags |= UPF_DEAD;
+@@ -3251,8 +3249,6 @@ int uart_remove_one_port(struct uart_dri
+ 	mutex_unlock(&port->mutex);
+ out:
+ 	mutex_unlock(&port_mutex);
+-
+-	return ret;
  }
- EXPORT_SYMBOL(brioctl_set);
+ EXPORT_SYMBOL(uart_remove_one_port);
  
--int br_ioctl_call(struct net *net, struct net_bridge *br, unsigned int cmd,
--		  struct ifreq *ifr, void __user *uarg)
-+int br_ioctl_call(struct net *net, unsigned int cmd, void __user *uarg)
+--- a/drivers/tty/serial/st-asc.c
++++ b/drivers/tty/serial/st-asc.c
+@@ -834,7 +834,9 @@ static int asc_serial_remove(struct plat
  {
- 	int err = -ENOPKG;
+ 	struct uart_port *port = platform_get_drvdata(pdev);
  
-@@ -1175,7 +1172,7 @@ int br_ioctl_call(struct net *net, struc
+-	return uart_remove_one_port(&asc_uart_driver, port);
++	uart_remove_one_port(&asc_uart_driver, port);
++
++	return 0;
+ }
  
- 	mutex_lock(&br_ioctl_mutex);
- 	if (br_ioctl_hook)
--		err = br_ioctl_hook(net, br, cmd, ifr, uarg);
-+		err = br_ioctl_hook(net, cmd, uarg);
- 	mutex_unlock(&br_ioctl_mutex);
+ #ifdef CONFIG_PM_SLEEP
+--- a/drivers/tty/serial/uartlite.c
++++ b/drivers/tty/serial/uartlite.c
+@@ -686,18 +686,15 @@ static int ulite_assign(struct device *d
+  *
+  * @dev: pointer to device structure
+  */
+-static int ulite_release(struct device *dev)
++static void ulite_release(struct device *dev)
+ {
+ 	struct uart_port *port = dev_get_drvdata(dev);
+-	int rc = 0;
  
- 	return err;
-@@ -1272,7 +1269,9 @@ static long sock_ioctl(struct file *file
- 		case SIOCSIFBR:
- 		case SIOCBRADDBR:
- 		case SIOCBRDELBR:
--			err = br_ioctl_call(net, NULL, cmd, NULL, argp);
-+		case SIOCBRADDIF:
-+		case SIOCBRDELIF:
-+			err = br_ioctl_call(net, cmd, argp);
- 			break;
- 		case SIOCGIFVLAN:
- 		case SIOCSIFVLAN:
-@@ -3376,6 +3375,8 @@ static int compat_sock_ioctl_trans(struc
- 	case SIOCGPGRP:
- 	case SIOCBRADDBR:
- 	case SIOCBRDELBR:
-+	case SIOCBRADDIF:
-+	case SIOCBRDELIF:
- 	case SIOCGIFVLAN:
- 	case SIOCSIFVLAN:
- 	case SIOCGSKNS:
-@@ -3415,8 +3416,6 @@ static int compat_sock_ioctl_trans(struc
- 	case SIOCGIFPFLAGS:
- 	case SIOCGIFTXQLEN:
- 	case SIOCSIFTXQLEN:
--	case SIOCBRADDIF:
--	case SIOCBRDELIF:
- 	case SIOCGIFNAME:
- 	case SIOCSIFNAME:
- 	case SIOCGMIIPHY:
+ 	if (port) {
+-		rc = uart_remove_one_port(&ulite_uart_driver, port);
++		uart_remove_one_port(&ulite_uart_driver, port);
+ 		dev_set_drvdata(dev, NULL);
+ 		port->mapbase = 0;
+ 	}
+-
+-	return rc;
+ }
+ 
+ /**
+@@ -891,14 +888,13 @@ static int ulite_remove(struct platform_
+ {
+ 	struct uart_port *port = dev_get_drvdata(&pdev->dev);
+ 	struct uartlite_data *pdata = port->private_data;
+-	int rc;
+ 
+ 	clk_disable_unprepare(pdata->clk);
+-	rc = ulite_release(&pdev->dev);
++	ulite_release(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 	pm_runtime_set_suspended(&pdev->dev);
+ 	pm_runtime_dont_use_autosuspend(&pdev->dev);
+-	return rc;
++	return 0;
+ }
+ 
+ /* work with hotplug and coldplug */
+--- a/drivers/tty/serial/xilinx_uartps.c
++++ b/drivers/tty/serial/xilinx_uartps.c
+@@ -1670,14 +1670,13 @@ static int cdns_uart_remove(struct platf
+ {
+ 	struct uart_port *port = platform_get_drvdata(pdev);
+ 	struct cdns_uart *cdns_uart_data = port->private_data;
+-	int rc;
+ 
+ 	/* Remove the cdns_uart port from the serial core */
+ #ifdef CONFIG_COMMON_CLK
+ 	clk_notifier_unregister(cdns_uart_data->uartclk,
+ 			&cdns_uart_data->clk_rate_change_nb);
+ #endif
+-	rc = uart_remove_one_port(cdns_uart_data->cdns_uart_driver, port);
++	uart_remove_one_port(cdns_uart_data->cdns_uart_driver, port);
+ 	port->mapbase = 0;
+ 	clk_disable_unprepare(cdns_uart_data->uartclk);
+ 	clk_disable_unprepare(cdns_uart_data->pclk);
+@@ -1693,7 +1692,7 @@ static int cdns_uart_remove(struct platf
+ 
+ 	if (!--instances)
+ 		uart_unregister_driver(cdns_uart_data->cdns_uart_driver);
+-	return rc;
++	return 0;
+ }
+ 
+ static struct platform_driver cdns_uart_platform_driver = {
+--- a/include/linux/serial_core.h
++++ b/include/linux/serial_core.h
+@@ -847,7 +847,7 @@ void uart_console_write(struct uart_port
+ int uart_register_driver(struct uart_driver *uart);
+ void uart_unregister_driver(struct uart_driver *uart);
+ int uart_add_one_port(struct uart_driver *reg, struct uart_port *port);
+-int uart_remove_one_port(struct uart_driver *reg, struct uart_port *port);
++void uart_remove_one_port(struct uart_driver *reg, struct uart_port *port);
+ bool uart_match_port(const struct uart_port *port1,
+ 		const struct uart_port *port2);
+ 
 
 
