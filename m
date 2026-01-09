@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C0032BF21;
-	Fri,  9 Jan 2026 11:57:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC02431A7EA;
+	Fri,  9 Jan 2026 11:57:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959848; cv=none; b=iLSjAXoVS0/FPMabk9CDbId2CgHlJrMDrqcsw3PoTo/G4hA/nqI5babFqJWTlSs7MFFTbO/Cq+DJdo64Ua0suJaF07Smfwj/EIfdURPyClfNESsAintjSiAjc1yIhsIEDugpdRNhbSa4wAPsP1ExDSideLtHR2xKq5SyvRETHL8=
+	t=1767959851; cv=none; b=et10g5C26blbNnZwF43YKC+K7A0GNmJb5hiaF3HQRE0VLDiyoWQ/QaiNUSIkkXM6iBz9YHq9/cwUIdmm0BNBMSabixJylVLNbaqWISGDrMyixLq/r6RPHZbiNfqRjF2x7j4wNUhRy8v0VLKwakissgECxcI4L3BNXQonJmypiKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959848; c=relaxed/simple;
-	bh=jpiuCV6q58LshJ0tBhHSPQK4YT9ahIOC8EaoLJay6oo=;
+	s=arc-20240116; t=1767959851; c=relaxed/simple;
+	bh=3nh/8QrN30601nZw9amwkPf/S0FEX2VsT0qfFxbWup4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BG3hQVYd2ABYKAjYtwLkMcmhohawgXmM5YQZH5qthfxirZmyqb0v1faRnrgprjomkHOjtxrpyA+dJY7FLc3Ieq0vyj6BgYKWKCLIpcSRmhXxFGYCXeslSGaFasdYNkaNQVrwO8tZu+Ne+qm6as52h7ugIxsqWzh/AFejmjk1FAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N2jXhECP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VuxSuGVrZPfRItt3N2KhxJ+uWuivJmIql0yTuFWvKt9jK2mEMJc6JuUjr2zYjKM1SLE3UPaM3JwBaGMdXxLYwkmLnTzRVOp+Rw9iEq2LcQcHEzOxOv/fKUvktz+i9rWY/8CWwnsPXoHXCq0eNuSRac4rNUlqAvJHj8L468wQKtU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZkQDRONY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N2jXhECP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54B02C4CEF1;
-	Fri,  9 Jan 2026 11:57:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZkQDRONY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38D09C4CEF1;
+	Fri,  9 Jan 2026 11:57:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959848;
-	bh=jpiuCV6q58LshJ0tBhHSPQK4YT9ahIOC8EaoLJay6oo=;
+	s=korg; t=1767959851;
+	bh=3nh/8QrN30601nZw9amwkPf/S0FEX2VsT0qfFxbWup4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N2jXhECPCFa2Wx6MruIWA3xMKRwFZy5mGik4SifNA3sufrYL+wCUQ2ClYUKB7uk3H
-	 e1j778zwj9oP0kxLWFHqqXUewfnrBnDK5f7Gw6MSECzO3/Zib0JMnoNXKVsuDcBynO
-	 8XqtSGl9kK3Respt7VGsm4/vbC20D6ElZ9VFDahk=
+	b=ZkQDRONYj86uSeriSuJi0EUilBm1pH3uv/zPltkf0ijIbQ0DicTU4qTUeby6kcf0P
+	 miAQDPm4ymPb2pas2iPbAsQNFs8lE3wl4jH3frnLSedztE59fGSVADE6JtkJMSCf9/
+	 FGxLZhR9xz/ta2ZS6EYiHQdeXqYkj6g0DLNySdrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Haotian Zhang <vulab@iscas.ac.cn>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 196/737] crypto: starfive - Correctly handle return of sg_nents_for_len
-Date: Fri,  9 Jan 2026 12:35:35 +0100
-Message-ID: <20260109112141.376171708@linuxfoundation.org>
+Subject: [PATCH 6.6 197/737] crypto: ccree - Correctly handle return of sg_nents_for_len
+Date: Fri,  9 Jan 2026 12:35:36 +0100
+Message-ID: <20260109112141.413408458@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -53,47 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit e9eb52037a529fbb307c290e9951a62dd728b03d ]
+[ Upstream commit 8700ce07c5c6bf27afa7b59a8d9cf58d783a7d5c ]
 
-The return value of sg_nents_for_len was assigned to an unsigned long
-in starfive_hash_digest, causing negative error codes to be converted
-to large positive integers.
+Fix error handling in cc_map_hash_request_update where sg_nents_for_len
+return value was assigned to u32, converting negative errors to large
+positive values before passing to sg_copy_to_buffer.
 
-Add error checking for sg_nents_for_len and return immediately on
-failure to prevent potential buffer overflows.
+Check sg_nents_for_len return value and propagate errors before
+assigning to areq_ctx->in_nents.
 
-Fixes: 7883d1b28a2b ("crypto: starfive - Add hash and HMAC support")
+Fixes: b7ec8530687a ("crypto: ccree - use std api when possible")
 Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/starfive/jh7110-hash.c | 6 +++++-
+ drivers/crypto/ccree/cc_buffer_mgr.c | 6 +++++-
  1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/starfive/jh7110-hash.c b/drivers/crypto/starfive/jh7110-hash.c
-index cc7650198d703..e973e73f866ba 100644
---- a/drivers/crypto/starfive/jh7110-hash.c
-+++ b/drivers/crypto/starfive/jh7110-hash.c
-@@ -358,6 +358,7 @@ static int starfive_hash_digest(struct ahash_request *req)
- 	struct starfive_cryp_ctx *ctx = crypto_ahash_ctx(tfm);
- 	struct starfive_cryp_request_ctx *rctx = ahash_request_ctx(req);
- 	struct starfive_cryp_dev *cryp = ctx->cryp;
-+	int sg_len;
+diff --git a/drivers/crypto/ccree/cc_buffer_mgr.c b/drivers/crypto/ccree/cc_buffer_mgr.c
+index bcca55bff910e..286e0d4b8f95e 100644
+--- a/drivers/crypto/ccree/cc_buffer_mgr.c
++++ b/drivers/crypto/ccree/cc_buffer_mgr.c
+@@ -1235,6 +1235,7 @@ int cc_map_hash_request_update(struct cc_drvdata *drvdata, void *ctx,
+ 	int rc = 0;
+ 	u32 dummy = 0;
+ 	u32 mapped_nents = 0;
++	int sg_nents;
  
- 	memset(rctx, 0, sizeof(struct starfive_cryp_request_ctx));
- 
-@@ -366,7 +367,10 @@ static int starfive_hash_digest(struct ahash_request *req)
- 	rctx->in_sg = req->src;
- 	rctx->blksize = crypto_tfm_alg_blocksize(crypto_ahash_tfm(tfm));
- 	rctx->digsize = crypto_ahash_digestsize(tfm);
--	rctx->in_sg_len = sg_nents_for_len(rctx->in_sg, rctx->total);
-+	sg_len = sg_nents_for_len(rctx->in_sg, rctx->total);
-+	if (sg_len < 0)
-+		return sg_len;
-+	rctx->in_sg_len = sg_len;
- 	ctx->rctx = rctx;
- 
- 	if (starfive_hash_check_aligned(rctx->in_sg, rctx->total, rctx->blksize))
+ 	dev_dbg(dev, " update params : curr_buff=%pK curr_buff_cnt=0x%X nbytes=0x%X src=%pK curr_index=%u\n",
+ 		curr_buff, *curr_buff_cnt, nbytes, src, areq_ctx->buff_index);
+@@ -1248,7 +1249,10 @@ int cc_map_hash_request_update(struct cc_drvdata *drvdata, void *ctx,
+ 	if (total_in_len < block_size) {
+ 		dev_dbg(dev, " less than one block: curr_buff=%pK *curr_buff_cnt=0x%X copy_to=%pK\n",
+ 			curr_buff, *curr_buff_cnt, &curr_buff[*curr_buff_cnt]);
+-		areq_ctx->in_nents = sg_nents_for_len(src, nbytes);
++		sg_nents = sg_nents_for_len(src, nbytes);
++		if (sg_nents < 0)
++			return sg_nents;
++		areq_ctx->in_nents = sg_nents;
+ 		sg_copy_to_buffer(src, areq_ctx->in_nents,
+ 				  &curr_buff[*curr_buff_cnt], nbytes);
+ 		*curr_buff_cnt += nbytes;
 -- 
 2.51.0
 
