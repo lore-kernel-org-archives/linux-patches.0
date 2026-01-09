@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D47D35B135;
-	Fri,  9 Jan 2026 12:46:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9D335B15C;
+	Fri,  9 Jan 2026 12:46:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962798; cv=none; b=rK556chmPGQ9LSpyggeijWDVuCrkDQOiuQIhPPbEyFV7WPAAfGDoeZ/qBugJCNv/FlQtgEVVnefdpDkNLamlL22sqfB+LExTaFopWWms9i9zWrUbJmo+TYvwLK925Ly61DHJr7uvMXLcMmKRqLbluJ2oOzvhNFVb284+OochhVw=
+	t=1767962801; cv=none; b=eqg7lmud+yGgFDnVUC+d/93M0t2MIFDaFDy36cLA7bVjwwqndRtM6mfU2Cx0j9/QYV+8D7YT4e6Ld9p6OLu4G+8ukq0DyO2w1T6ElD9MYhmtBJqGyOqGxvGdAhEWMbxcZ5eszo0J3sTMkyvjIil8chfLrScKINM751b5S4+Bp8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962798; c=relaxed/simple;
-	bh=YeO08sSXGX54wEdNKmEDBc6mmAFyO//Mntwka+/bR3I=;
+	s=arc-20240116; t=1767962801; c=relaxed/simple;
+	bh=0pPqiP3xU+9sWlMFXz7jZTT3R2ImlE5YZXtQdznqKj4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F/E8Ga8j3C/rrt0JiZJ7OQ8h4Lg1k0gsjvJlkIioTISsznAAE28SjG+tVfe0lBhNxs202c2NjaH/6FhjQ+A2SS8Qn5VfBwAu3wF7UVQGIGN1lk5Aw/clWQsejTYwERGXX7q3jp9POVQeT2fir35On4BzOecqNt/Ikvw5pOisaRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ur/Xnbs9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dph6dlkZMlRt7oZGNfJpRmQbHE9hVn83odYmVozk6q0tE8JRl6Mavw1Kwk4UZS12MWsTrv9q1T5kGbovs0KcIed5VlESLR6cKO5/NFnDG/6bZk6zsdHtfKeo2yweV+sxptCQcF9e13N/h3sVSEfx8OKxcIDtmzta1ezuXhxFQwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=04Lae8d8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ur/Xnbs9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2CD0C4CEF1;
-	Fri,  9 Jan 2026 12:46:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="04Lae8d8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F0DC4CEF1;
+	Fri,  9 Jan 2026 12:46:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962798;
-	bh=YeO08sSXGX54wEdNKmEDBc6mmAFyO//Mntwka+/bR3I=;
+	s=korg; t=1767962801;
+	bh=0pPqiP3xU+9sWlMFXz7jZTT3R2ImlE5YZXtQdznqKj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ur/Xnbs9AN0s/w4ELT8Vjnc5ryD2Ko91D5O4NqvIgD5ntAmwhamsGTQh+sLdZQEAe
-	 7YFIV5YOE8bZ8jTGzlwgrpBsZ1mNzYd53mwO1nh+vbJ6DhYnrndtBvJyMCONU5wyfq
-	 5/xSXmAJRn0FX2ygn7yZRdcLGQ5cl3QSXisJUWzA=
+	b=04Lae8d8ZbqrZtRMMEqIPi/LVCYSdRhpKd4eOhoKx0xgMY9wE5YSqKLu2mLOrSkhP
+	 1SRqnfcM+RiselCLov3KV6tMXcyQk2cIq4hfHkfJOeqUXaBRzNZFX8DeYPil5KQVKK
+	 rOEI7kaodfgfs0QfhVOSxEi0LWrAhtn8igjqMnbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>
-Subject: [PATCH 6.1 459/634] PCI/PM: Reinstate clearing state_saved in legacy and !PM codepaths
-Date: Fri,  9 Jan 2026 12:42:17 +0100
-Message-ID: <20260109112134.819509160@linuxfoundation.org>
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Dave Vasilevsky <dave@vasilevsky.ca>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.1 460/634] powerpc, mm: Fix mprotect on book3s 32-bit
+Date: Fri,  9 Jan 2026 12:42:18 +0100
+Message-ID: <20260109112134.857910321@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,88 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Dave Vasilevsky <dave@vasilevsky.ca>
 
-commit 894f475f88e06c0f352c829849560790dbdedbe5 upstream.
+commit 78fc63ffa7813e33681839bb33826c24195f0eb7 upstream.
 
-When a PCI device is suspended, it is normally the PCI core's job to save
-Config Space and put the device into a low power state.  However drivers
-are allowed to assume these responsibilities.  When they do, the PCI core
-can tell by looking at the state_saved flag in struct pci_dev:  The flag
-is cleared before commencing the suspend sequence and it is set when
-pci_save_state() is called.  If the PCI core finds the flag set late in
-the suspend sequence, it refrains from calling pci_save_state() itself.
+On 32-bit book3s with hash-MMUs, tlb_flush() was a no-op. This was
+unnoticed because all uses until recently were for unmaps, and thus
+handled by __tlb_remove_tlb_entry().
 
-But there are two corner cases where the PCI core neglects to clear the
-flag before commencing the suspend sequence:
+After commit 4a18419f71cd ("mm/mprotect: use mmu_gather") in kernel 5.19,
+tlb_gather_mmu() started being used for mprotect as well. This caused
+mprotect to simply not work on these machines:
 
-* If a driver has legacy PCI PM callbacks, pci_legacy_suspend() neglects
-  to clear the flag.  The (stale) flag is subsequently queried by
-  pci_legacy_suspend() itself and pci_legacy_suspend_late().
+  int *ptr = mmap(NULL, 4096, PROT_READ|PROT_WRITE,
+                  MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
+  *ptr = 1; // force HPTE to be created
+  mprotect(ptr, 4096, PROT_READ);
+  *ptr = 2; // should segfault, but succeeds
 
-* If a device has no driver or its driver has no PCI PM callbacks,
-  pci_pm_freeze() neglects to clear the flag.  The (stale) flag is
-  subsequently queried by pci_pm_freeze_noirq().
+Fixed by making tlb_flush() actually flush TLB pages. This finally
+agrees with the behaviour of boot3s64's tlb_flush().
 
-The flag may be set prior to suspend if the device went through error
-recovery:  Drivers commonly invoke pci_restore_state() + pci_save_state()
-to restore Config Space after reset.
-
-The flag may also be set if drivers call pci_save_state() on probe to
-allow for recovery from subsequent errors.
-
-The result is that pci_legacy_suspend_late() and pci_pm_freeze_noirq()
-don't call pci_save_state() and so the state that will be restored on
-resume is the one recorded on last error recovery or on probe, not the one
-that the device had on suspend.  If the two states happen to be identical,
-there's no problem.
-
-Reinstate clearing the flag in pci_legacy_suspend() and pci_pm_freeze().
-The two functions used to do that until commit 4b77b0a2ba27 ("PCI: Clear
-saved_state after the state has been restored") deemed it unnecessary
-because it assumed that it's sufficient to clear the flag on resume in
-pci_restore_state().  The commit seemingly did not take into account that
-pci_save_state() and pci_restore_state() are not only used by power
-management code, but also for error recovery.
-
-Devices without driver or whose driver has no PCI PM callbacks may be in
-runtime suspend when pci_pm_freeze() is called.  Their state has already
-been saved, so don't clear the flag to skip a pointless pci_save_state()
-in pci_pm_freeze_noirq().
-
-None of the drivers with legacy PCI PM callbacks seem to use runtime PM,
-so clear the flag unconditionally in their case.
-
-Fixes: 4b77b0a2ba27 ("PCI: Clear saved_state after the state has been restored")
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Cc: stable@vger.kernel.org # v2.6.32+
-Link: https://patch.msgid.link/094f2aad64418710daf0940112abe5a0afdc6bce.1763483367.git.lukas@wunner.de
+Fixes: 4a18419f71cd ("mm/mprotect: use mmu_gather")
+Cc: stable@vger.kernel.org
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Dave Vasilevsky <dave@vasilevsky.ca>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20251116-vasi-mprotect-g3-v3-1-59a9bd33ba00@vasilevsky.ca
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci-driver.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ arch/powerpc/include/asm/book3s/32/tlbflush.h |    5 ++++-
+ arch/powerpc/mm/book3s32/tlb.c                |    9 +++++++++
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
---- a/drivers/pci/pci-driver.c
-+++ b/drivers/pci/pci-driver.c
-@@ -644,6 +644,8 @@ static int pci_legacy_suspend(struct dev
- 	struct pci_dev *pci_dev = to_pci_dev(dev);
- 	struct pci_driver *drv = pci_dev->driver;
+--- a/arch/powerpc/include/asm/book3s/32/tlbflush.h
++++ b/arch/powerpc/include/asm/book3s/32/tlbflush.h
+@@ -9,6 +9,7 @@
+ void hash__flush_tlb_mm(struct mm_struct *mm);
+ void hash__flush_tlb_page(struct vm_area_struct *vma, unsigned long vmaddr);
+ void hash__flush_range(struct mm_struct *mm, unsigned long start, unsigned long end);
++void hash__flush_gather(struct mmu_gather *tlb);
  
-+	pci_dev->state_saved = false;
+ #ifdef CONFIG_SMP
+ void _tlbie(unsigned long address);
+@@ -27,7 +28,9 @@ void _tlbia(void);
+ static inline void tlb_flush(struct mmu_gather *tlb)
+ {
+ 	/* 603 needs to flush the whole TLB here since it doesn't use a hash table. */
+-	if (!mmu_has_feature(MMU_FTR_HPTE_TABLE))
++	if (mmu_has_feature(MMU_FTR_HPTE_TABLE))
++		hash__flush_gather(tlb);
++	else
+ 		_tlbia();
+ }
+ 
+--- a/arch/powerpc/mm/book3s32/tlb.c
++++ b/arch/powerpc/mm/book3s32/tlb.c
+@@ -105,3 +105,12 @@ void hash__flush_tlb_page(struct vm_area
+ 		flush_hash_pages(mm->context.id, vmaddr, pmd_val(*pmd), 1);
+ }
+ EXPORT_SYMBOL(hash__flush_tlb_page);
 +
- 	if (drv && drv->suspend) {
- 		pci_power_t prev = pci_dev->current_state;
- 		int error;
-@@ -1048,6 +1050,8 @@ static int pci_pm_freeze(struct device *
- 
- 	if (!pm) {
- 		pci_pm_default_suspend(pci_dev);
-+		if (!pm_runtime_suspended(dev))
-+			pci_dev->state_saved = false;
- 		return 0;
- 	}
- 
++void hash__flush_gather(struct mmu_gather *tlb)
++{
++	if (tlb->fullmm || tlb->need_flush_all)
++		hash__flush_tlb_mm(tlb->mm);
++	else
++		hash__flush_range(tlb->mm, tlb->start, tlb->end);
++}
++EXPORT_SYMBOL(hash__flush_gather);
 
 
