@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F48935BDD4;
-	Fri,  9 Jan 2026 12:40:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15DF235CB6A;
+	Fri,  9 Jan 2026 12:40:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962408; cv=none; b=IHuNYGrgK16nOPZihseMTtcEh7uGx14k9IDWnPRE1Swdsqf6Q4lwqeokf+xCckuf4ZMUjvpXIqe3uAGE1sRcdUbj1rzPYQTkmlkeZfB1VS2xUnWXA14tCAQtUl6j7xym5h5a+pvZ61+X0uvtznRScBAc812twkdzsEMuRPS0P4g=
+	t=1767962411; cv=none; b=QA5ShYUYaXwMk2odQlIB82g57ttk1BBiGJ4CUdYdEfdM2SaQmx8IKE2uGiBY33y0+ZR5P5rrRKa8x31HoLMWYs3YUfhpQndbB+h6Uo3dPZgnw/GZQPoMijB7LCiAgWFD5xCZZyEDOabs5W2CITpGLO0x/uL6yH+/W2eqtucSdmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962408; c=relaxed/simple;
-	bh=JtR3ZuKpDvzJ7zR7gu75hCMsV1F5JzGFQP/my5a9ZsQ=;
+	s=arc-20240116; t=1767962411; c=relaxed/simple;
+	bh=BTVXlOKYxI3PVxRl5suoE73R9JS1yNXhsrQ3JMZOwyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mlO9aKmYBsWKenwLpa7IXg7oMS7NZWQZ9DU7P6/rujvf3zyhgm7mwEh7JgYBFXg/vLQrvSfvJMAR38jLpl84svd5O7cA58IL1k9gxF8NlvzTNJK2f20PMotSxyuIMO4MJOcQIH5lP7sO4+9mFDNTw+LNI/nKYLnCWG23nw8dTQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j6q/lTSH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FwCqyBgQuQN5YpmATswPjXBxAAY2ocCbkjFMFWuTRpOIllH4Na+gP0SuGy8v+Ae2AMa+K11JqYzoY64dQbSu7Pkxkmhyu3LOEMMBjmAnbA4kX9GMimPkCzCPtnltD867lVadMcm2HKdwJdE0mH+Fwk2ltgOUvKAVxlXnofZU3Zg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=alA1IqOM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j6q/lTSH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4665C4CEF1;
-	Fri,  9 Jan 2026 12:40:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="alA1IqOM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96E6CC4CEF1;
+	Fri,  9 Jan 2026 12:40:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962408;
-	bh=JtR3ZuKpDvzJ7zR7gu75hCMsV1F5JzGFQP/my5a9ZsQ=;
+	s=korg; t=1767962411;
+	bh=BTVXlOKYxI3PVxRl5suoE73R9JS1yNXhsrQ3JMZOwyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j6q/lTSHXCzorWE3+ws2KXrO3msaXwb/ZKx5B/Uxc6fiDfNCzdhJDBGc+Kvy5/Bax
-	 grMfDRQc0aR0uk+Z4+mricWItlk9ayQRf5v8oLNiRKtw9vrNoYuBjNQd/pIxzSyPeD
-	 DLX4v4IKzFB4C1lQ9738Vau/bDS2SjlwIFFUtzJA=
+	b=alA1IqOM1Rb2jRniHlEI5I+7je75qqtjuPuenPw7y8cAJy/W9O/n1avNxAw+1VtKE
+	 P4RKYdX5hcIfmvB2uvE+ccpG2vVMFvZDE96f5l42Q1kcjxdUG+uaSKXT1CJ500/Nyg
+	 vWDdW445+W4bqkCfWGBSNM2CMjkCi1iz4vwTceDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dai Ngo <dai.ngo@oracle.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.1 347/634] NFSD: use correct reservation type in nfsd4_scsi_fence_client
-Date: Fri,  9 Jan 2026 12:40:25 +0100
-Message-ID: <20260109112130.581683335@linuxfoundation.org>
+	Jiyuan Xie <xiejiyuan@vivo.com>,
+	Zhichi Lin <zhichi.lin@vivo.com>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Will Deacon <will@kernel.org>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Kees Cook <keescook@chromium.org>,
+	Marco Elver <elver@google.com>,
+	Yee Lee <yee.lee@mediatek.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 356/634] scs: fix a wrong parameter in __scs_magic
+Date: Fri,  9 Jan 2026 12:40:34 +0100
+Message-ID: <20260109112130.920007481@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,34 +57,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dai Ngo <dai.ngo@oracle.com>
+From: Zhichi Lin <zhichi.lin@vivo.com>
 
-commit 6f52063db9aabdaabea929b1e998af98c2e8d917 upstream.
+commit 08bd4c46d5e63b78e77f2605283874bbe868ab19 upstream.
 
-The reservation type argument for the pr_preempt call should match the
-one used in nfsd4_block_get_device_info_scsi.
+__scs_magic() needs a 'void *' variable, but a 'struct task_struct *' is
+given.  'task_scs(tsk)' is the starting address of the task's shadow call
+stack, and '__scs_magic(task_scs(tsk))' is the end address of the task's
+shadow call stack.  Here should be '__scs_magic(task_scs(tsk))'.
 
-Fixes: f99d4fbdae67 ("nfsd: add SCSI layout support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+The user-visible effect of this bug is that when CONFIG_DEBUG_STACK_USAGE
+is enabled, the shadow call stack usage checking function
+(scs_check_usage) would scan an incorrect memory range.  This could lead
+to:
+
+1. **Inaccurate stack usage reporting**: The function would calculate
+   wrong usage statistics for the shadow call stack, potentially showing
+   incorrect value in kmsg.
+
+2. **Potential kernel crash**: If the value of __scs_magic(tsk)is
+   greater than that of __scs_magic(task_scs(tsk)), the for loop may
+   access unmapped memory, potentially causing a kernel panic.  However,
+   this scenario is unlikely because task_struct is allocated via the slab
+   allocator (which typically returns lower addresses), while the shadow
+   call stack returned by task_scs(tsk) is allocated via vmalloc(which
+   typically returns higher addresses).
+
+However, since this is purely a debugging feature
+(CONFIG_DEBUG_STACK_USAGE), normal production systems should be not
+unaffected.  The bug only impacts developers and testers who are actively
+debugging stack usage with this configuration enabled.
+
+Link: https://lkml.kernel.org/r/20251011082222.12965-1-zhichi.lin@vivo.com
+Fixes: 5bbaf9d1fcb9 ("scs: Add support for stack usage debugging")
+Signed-off-by: Jiyuan Xie <xiejiyuan@vivo.com>
+Signed-off-by: Zhichi Lin <zhichi.lin@vivo.com>
+Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+Acked-by: Will Deacon <will@kernel.org>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Marco Elver <elver@google.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Yee Lee <yee.lee@mediatek.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/blocklayout.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/scs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nfsd/blocklayout.c
-+++ b/fs/nfsd/blocklayout.c
-@@ -334,7 +334,8 @@ nfsd4_scsi_fence_client(struct nfs4_layo
- 	struct block_device *bdev = ls->ls_file->nf_file->f_path.mnt->mnt_sb->s_bdev;
+--- a/kernel/scs.c
++++ b/kernel/scs.c
+@@ -125,7 +125,7 @@ static void scs_check_usage(struct task_
+ 	if (!IS_ENABLED(CONFIG_DEBUG_STACK_USAGE))
+ 		return;
  
- 	bdev->bd_disk->fops->pr_ops->pr_preempt(bdev, NFSD_MDS_PR_KEY,
--			nfsd4_scsi_pr_key(clp), 0, true);
-+			nfsd4_scsi_pr_key(clp),
-+			PR_EXCLUSIVE_ACCESS_REG_ONLY, true);
- }
- 
- const struct nfsd4_layout_ops scsi_layout_ops = {
+-	for (p = task_scs(tsk); p < __scs_magic(tsk); ++p) {
++	for (p = task_scs(tsk); p < __scs_magic(task_scs(tsk)); ++p) {
+ 		if (!READ_ONCE_NOCHECK(*p))
+ 			break;
+ 		used += sizeof(*p);
 
 
