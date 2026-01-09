@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F726335BCD;
-	Fri,  9 Jan 2026 12:37:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68FB033C53A;
+	Fri,  9 Jan 2026 12:37:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962270; cv=none; b=tdUGzbTTm6MSpoFx/tjbCP6W8kQ8bLriWxZlfikmztLDRcjQngTqeVcXQyOY62lmD3d4iPpYiY9UoCr1hGXcn9juEJBdjQDJvHmpUgFkwLOUs7iX5YtPAtBfJtjnY5inQEzNwKItKocJBE0gBa888DPRKYmeeKTjzm+AMLCeFHI=
+	t=1767962273; cv=none; b=Ugc3RRD8XDKLdK1StJHxTon9U6+dFs1DzVBY6v/WdQ888TVIQv53f8widagxE+Ff0v41oklQq3ln8C6VsusP/N/PLlNbhScfIRQE8GwUavSItyd8TUXSfywMFk+fT8PVvMFudHSVh2uvcvOlfV7M7YI7sA677f6bFebpzRUGKTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962270; c=relaxed/simple;
-	bh=cImV3KpHFohL2ihHr1x7KZZfm6QuqsxMFMzJ0RMPeZM=;
+	s=arc-20240116; t=1767962273; c=relaxed/simple;
+	bh=qZt/JDmhjNzf2/WoH7uxxo1yUU9uXZO7wuzs5Q7mhdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GgHkmSSoDaLFr7xJrCmjq5fiE8tDFmvIjqdBoGh1i5iTCT+7ksWDPTdjaodtSCGd3t6o+YJ463VRtMgfpty6EchGMBK9C0MSjrtnKItnxnP98YsLBTvoxKM1m2OC02/nxWlDldweeJh8WdIVb7ApkkZ6LTeLonzMOm862rtF/Vs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gvpKliGc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FUhT0X5/WvHQ8dhN6/e8LQFhNL1hHmI/I9Ev0Mb9/eK++4Y+JsE9k3mmWRt2Esn2HWQggDwnnpPIaUNJEXQfMSxqkh5Rq3hBHgtN49PTXIsAgJ1MVGIOX5PnKO7yKv22m+yma5109K1pmTWh9plDEduA6+YfF0T9gfcyU+2oFOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m32igkbk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gvpKliGc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B8D5C4CEF1;
-	Fri,  9 Jan 2026 12:37:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m32igkbk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC7BBC4CEF1;
+	Fri,  9 Jan 2026 12:37:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962270;
-	bh=cImV3KpHFohL2ihHr1x7KZZfm6QuqsxMFMzJ0RMPeZM=;
+	s=korg; t=1767962273;
+	bh=qZt/JDmhjNzf2/WoH7uxxo1yUU9uXZO7wuzs5Q7mhdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gvpKliGceqMcpaF78WKWCQcW8oNEwA4ikzCYMSJuVjoBNrbyImmildu+ilk/r0T0c
-	 Qc1UMmJS+DN+aDh0rlH11iBRbu/g88nlAT53bZBb4Y32MXqOPfoWcihGHTlgsvRmet
-	 tA1gkfzHBpqaQTvE2UlF09tgvBDUtJrF8lMz17LQ=
+	b=m32igkbkaw4PQ8W+MuItJxP1VnvVASmaopKLR270XvdTtYqIvpOAKfEScFN2xpKWL
+	 SS3jPpvizCMZ7ZKoZ6dK0o9DaU0zJdDMU3QXlAaAC3KYIUg8Ht9NQET2BPS76BobZm
+	 GP8ahFsQ2epndujWAgfM8JYsUXlsk+M4Pp7ofxLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Qiang <liqiang01@kylinos.cn>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Troy Mitchell <troy.mitchell@linux.dev>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Encrow Thorne <jyc0019@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 305/634] via_wdt: fix critical boot hang due to unnamed resource allocation
-Date: Fri,  9 Jan 2026 12:39:43 +0100
-Message-ID: <20260109112129.011136625@linuxfoundation.org>
+Subject: [PATCH 6.1 306/634] reset: fix BIT macro reference
+Date: Fri,  9 Jan 2026 12:39:44 +0100
+Message-ID: <20260109112129.048360653@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,41 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Qiang <liqiang01@kylinos.cn>
+From: Encrow Thorne <jyc0019@gmail.com>
 
-[ Upstream commit 7aa31ee9ec92915926e74731378c009c9cc04928 ]
+[ Upstream commit f3d8b64ee46c9b4b0b82b1a4642027728bac95b8 ]
 
-The VIA watchdog driver uses allocate_resource() to reserve a MMIO
-region for the watchdog control register. However, the allocated
-resource was not given a name, which causes the kernel resource tree
-to contain an entry marked as "<BAD>" under /proc/iomem on x86
-platforms.
+RESET_CONTROL_FLAGS_BIT_* macros use BIT(), but reset.h does not
+include bits.h. This causes compilation errors when including
+reset.h standalone.
 
-During boot, this unnamed resource can lead to a critical hang because
-subsequent resource lookups and conflict checks fail to handle the
-invalid entry properly.
+Include bits.h to make reset.h self-contained.
 
-Signed-off-by: Li Qiang <liqiang01@kylinos.cn>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Suggested-by: Troy Mitchell <troy.mitchell@linux.dev>
+Reviewed-by: Troy Mitchell <troy.mitchell@linux.dev>
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+Signed-off-by: Encrow Thorne <jyc0019@gmail.com>
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/via_wdt.c | 1 +
+ include/linux/reset.h | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/watchdog/via_wdt.c b/drivers/watchdog/via_wdt.c
-index eeb39f96e72e..c1ed3ce153cf 100644
---- a/drivers/watchdog/via_wdt.c
-+++ b/drivers/watchdog/via_wdt.c
-@@ -165,6 +165,7 @@ static int wdt_probe(struct pci_dev *pdev,
- 		dev_err(&pdev->dev, "cannot enable PCI device\n");
- 		return -ENODEV;
- 	}
-+	wdt_res.name = "via_wdt";
+diff --git a/include/linux/reset.h b/include/linux/reset.h
+index 514ddf003efc..4b31d683776e 100644
+--- a/include/linux/reset.h
++++ b/include/linux/reset.h
+@@ -2,6 +2,7 @@
+ #ifndef _LINUX_RESET_H_
+ #define _LINUX_RESET_H_
  
- 	/*
- 	 * Allocate a MMIO region which contains watchdog control register
++#include <linux/bits.h>
+ #include <linux/err.h>
+ #include <linux/errno.h>
+ #include <linux/types.h>
 -- 
 2.51.0
 
