@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9201D359FBB;
-	Fri,  9 Jan 2026 12:06:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA7435A921;
+	Fri,  9 Jan 2026 12:07:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960417; cv=none; b=GK8LUGrMMCqHmsK8SDJUDj6zfJsWTTQjyeholNQF5r6K7BECmmagznfHYYvqBBJArHAW/E9rH/xRlaVXN6MyAp8fJreugWr0EDW0jYgNehbdp8eKn2gk583hnkZpheVLnw+PPOuR8pceryMsfas0PuroUPPP61iiK3/qmEmc3Sg=
+	t=1767960420; cv=none; b=eZaAyp07rBXNWTsjNAiAsBFI1o19W77YhbUSMsWM6QBp2s4iyt6dfb5hiWFUv0rFRCIz9gmEMAOdKf8E12pPGxhTD6wxHF2sa0ojoGi9uD+FOTW0EKeejwxWWTR8J8cTeEkMFAoGKOwNqQopq4X5PEZfyQf2emyHX96fNITxI0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960417; c=relaxed/simple;
-	bh=Og6PUvba5Hq34MaSNFHVIkcnK4ZsSFZk0VDI6J7DQrQ=;
+	s=arc-20240116; t=1767960420; c=relaxed/simple;
+	bh=iqmtGdfTpzvaNxQwEqE26j3tNFi/RN/WyZc7ru//Kyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hItQDm2ZDShrS4o4FSYyZsn2XQ/W0JqvrS+eTgRKxjszVbEsefDlQ0tMdKlsgfiquTFnFj3he2lVU8KTS4YTDpHLjNjpDStiQOjTnb/EXQo/gXAOKNnAk3EKTve71+j+qUCKIIVxHrhHBjHHGmxpCY0fzpvuuSGJR04HwLg+D9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S1w9JjW7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fvgBaJKhTNoOJ4ZN7dgLUAZ+X2WTxv9aL5GbiDhSiUVxyd+D03tvgZz4mxpSUJ1tN+1u3hgY6olxcXAwWJTVNqklVFpHRh317+Yggl/na2nZoddpYTn9akpdYD+zH30TWra1OvnXN+1LvK7iZt5sGU4q1wkNakzdpoy/IgQBpDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C9CaqvSO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S1w9JjW7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 160A1C4CEF1;
-	Fri,  9 Jan 2026 12:06:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C9CaqvSO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2C36C4CEF1;
+	Fri,  9 Jan 2026 12:06:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960417;
-	bh=Og6PUvba5Hq34MaSNFHVIkcnK4ZsSFZk0VDI6J7DQrQ=;
+	s=korg; t=1767960420;
+	bh=iqmtGdfTpzvaNxQwEqE26j3tNFi/RN/WyZc7ru//Kyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S1w9JjW7I4shEcz2uOOlEJrbdjG2ckNTCmhJyA/Ei5QMY+L80pCuAjOla9avNv/Yi
-	 u3RMfSabgYvRhhyh0ODpgfR4lbFDKETVRlauWqaXamx8y+8fCSFJT2noZdr5Eyc7Dl
-	 xQ2mbEi71gIXrqgR41lkKyx0MyfQVH3gJ3rFhoqw=
+	b=C9CaqvSOVsERjLcrrbbzTUEsPid6L3HiQVfKWFlNf40B1miDHme9sOfq8AVk0Sa0p
+	 qvbS6tEeZ/5ljV0l6e7K2VHP8+w3xJdii2x6XJbH87dlzdxTJkaA55c8pIFFAJyAEl
+	 wC5YCsIwKMjKsVPfi3JIMAVDaNYhuzWgJcr4gkjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josua Mayer <josua@solid-run.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	kernel test robot <oliver.sang@intel.com>,
+	Yuezhang Mo <Yuezhang.Mo@sony.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 389/737] clk: mvebu: cp110 add CLK_IGNORE_UNUSED to pcie_x10, pcie_x11 & pcie_x4
-Date: Fri,  9 Jan 2026 12:38:48 +0100
-Message-ID: <20260109112148.633515423@linuxfoundation.org>
+Subject: [PATCH 6.6 398/737] exfat: fix remount failure in different process environments
+Date: Fri,  9 Jan 2026 12:38:57 +0100
+Message-ID: <20260109112148.973193606@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,76 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josua Mayer <josua@solid-run.com>
+From: Yuezhang Mo <Yuezhang.Mo@sony.com>
 
-[ Upstream commit f0e6bc0c3ef4b4afb299bd6912586cafd5d864e9 ]
+[ Upstream commit 51fc7b4ce10ccab8ea5e4876bcdc42cf5202a0ef ]
 
-CP110 based platforms rely on the bootloader for pci port
-initialization.
-TF-A actively prevents non-uboot re-configuration of pci lanes, and many
-boards do not have software control over the pci card reset.
+The kernel test robot reported that the exFAT remount operation
+failed. The reason for the failure was that the process's umask
+is different between mount and remount, causing fs_fmask and
+fs_dmask are changed.
 
-If a pci port had link at boot-time and the clock is stopped at a later
-point, the link fails and can not be recovered.
+Potentially, both gid and uid may also be changed. Therefore, when
+initializing fs_context for remount, inherit these mount options
+from the options used during mount.
 
-PCI controller driver probe - and by extension ownership of a driver for
-the pci clocks - may be delayed especially on large modular kernels,
-causing the clock core to start disabling unused clocks.
-
-Add the CLK_IGNORE_UNUSED flag to the three pci port's clocks to ensure
-they are not stopped before the pci controller driver has taken
-ownership and tested for an existing link.
-
-This fixes failed pci link detection when controller driver probes late,
-e.g. with arm64 defconfig and CONFIG_PHY_MVEBU_CP110_COMPHY=m.
-
-Closes: https://lore.kernel.org/r/b71596c7-461b-44b6-89ab-3cfbd492639f@solid-run.com
-Signed-off-by: Josua Mayer <josua@solid-run.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202511251637.81670f5c-lkp@intel.com
+Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mvebu/cp110-system-controller.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ fs/exfat/super.c | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/mvebu/cp110-system-controller.c b/drivers/clk/mvebu/cp110-system-controller.c
-index 03c59bf22106..b47c86906046 100644
---- a/drivers/clk/mvebu/cp110-system-controller.c
-+++ b/drivers/clk/mvebu/cp110-system-controller.c
-@@ -110,6 +110,25 @@ static const char * const gate_base_names[] = {
- 	[CP110_GATE_EIP197]	= "eip197"
- };
+diff --git a/fs/exfat/super.c b/fs/exfat/super.c
+index 957135f20cb6..da3e03b059cf 100644
+--- a/fs/exfat/super.c
++++ b/fs/exfat/super.c
+@@ -764,10 +764,21 @@ static int exfat_init_fs_context(struct fs_context *fc)
+ 	ratelimit_state_init(&sbi->ratelimit, DEFAULT_RATELIMIT_INTERVAL,
+ 			DEFAULT_RATELIMIT_BURST);
  
-+static unsigned long gate_flags(const u8 bit_idx)
-+{
-+	switch (bit_idx) {
-+	case CP110_GATE_PCIE_X1_0:
-+	case CP110_GATE_PCIE_X1_1:
-+	case CP110_GATE_PCIE_X4:
-+		/*
-+		 * If a port had an active link at boot time, stopping
-+		 * the clock creates a failed state from which controller
-+		 * driver can not recover.
-+		 * Prevent stopping this clock till after a driver has taken
-+		 * ownership.
-+		 */
-+		return CLK_IGNORE_UNUSED;
-+	default:
-+		return 0;
-+	}
-+};
+-	sbi->options.fs_uid = current_uid();
+-	sbi->options.fs_gid = current_gid();
+-	sbi->options.fs_fmask = current->fs->umask;
+-	sbi->options.fs_dmask = current->fs->umask;
++	if (fc->purpose == FS_CONTEXT_FOR_RECONFIGURE && fc->root) {
++		struct super_block *sb = fc->root->d_sb;
++		struct exfat_mount_options *cur_opts = &EXFAT_SB(sb)->options;
 +
- struct cp110_gate_clk {
- 	struct clk_hw hw;
- 	struct regmap *regmap;
-@@ -171,6 +190,7 @@ static struct clk_hw *cp110_register_gate(const char *name,
- 	init.ops = &cp110_gate_ops;
- 	init.parent_names = &parent_name;
- 	init.num_parents = 1;
-+	init.flags = gate_flags(bit_idx);
- 
- 	gate->regmap = regmap;
- 	gate->bit_idx = bit_idx;
++		sbi->options.fs_uid = cur_opts->fs_uid;
++		sbi->options.fs_gid = cur_opts->fs_gid;
++		sbi->options.fs_fmask = cur_opts->fs_fmask;
++		sbi->options.fs_dmask = cur_opts->fs_dmask;
++	} else {
++		sbi->options.fs_uid = current_uid();
++		sbi->options.fs_gid = current_gid();
++		sbi->options.fs_fmask = current->fs->umask;
++		sbi->options.fs_dmask = current->fs->umask;
++	}
++
+ 	sbi->options.allow_utime = -1;
+ 	sbi->options.iocharset = exfat_default_iocharset;
+ 	sbi->options.errors = EXFAT_ERRORS_RO;
 -- 
 2.51.0
 
