@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA69635A92E;
-	Fri,  9 Jan 2026 12:00:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4046F33032C;
+	Fri,  9 Jan 2026 12:00:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960044; cv=none; b=HGfgizDrrq6pb1sJGKfsmcOg3hP9QoM0l6x9CUmn8n7xFwzaq6PRTCZyxdvvUuhccXDvJYRrPVLSp/yO7+cs+c3u8ZiyodFM090TMGd9Q0tXzprqjuFYuS4M94yictvzzcCPHjgIVBtpsjaLw/AxmgQtfGUgLvInt+2TJjsdJo4=
+	t=1767960047; cv=none; b=cuKQeXkMybThHg2VHwDxYo3ZbYyrn+Qgl74wTpg1Wskr4K6n1ECJIGX2mtegwRJniEDM46ZH5CNk+S/JDbmpo0R9BeAg8/PK7nv4nqqKItlaSWgvHxc2vbeVBQazGLMDbXJbNmEb8G7LkwBGwgTOtS8cPMQG2a7rtAqUFxBmf/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960044; c=relaxed/simple;
-	bh=nz/rg1jh2Qal1ffsEPjy1Rpuhk//FAyjBj3m1/bxykM=;
+	s=arc-20240116; t=1767960047; c=relaxed/simple;
+	bh=V7TKtz5rX9QvdZXABNKzkfGBQXfuClrEh3faoeWr/g4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HejnbgBBH7YcrRCOpQvnH/CArzY5qxbGN09ybtxYt+POzZJqqlWXWn5fQwsL1lXrQNrL8zBOlQ44bgXmWAXq/0kMaM7jbjM32T+11ogiNj4tDxswdmKqfGUe/MnQDQAUt2u9Gh1XN9tTUL3fThdZDdTt5y/i9B3pLQw5NoAt1u8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eslOGCjw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=byNG5eXC6LoSR9cC5DgK9rAF5U47aAeoBPfZOz6X7eE0fUDcLO/F6fHAa87MrqI+GQPuGg8cYn9FxCx0UtT3xu8/6j/c8jiuNcPQcxwGSr38BVBnLJK0GSR5xW8lNvHfhHggWRbe+6Ez0tQSC5XMTNYcObf8aufY1I1ycU929I0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XWrN++lk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eslOGCjw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 033F3C4CEF1;
-	Fri,  9 Jan 2026 12:00:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XWrN++lk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1C64C4CEF1;
+	Fri,  9 Jan 2026 12:00:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960044;
-	bh=nz/rg1jh2Qal1ffsEPjy1Rpuhk//FAyjBj3m1/bxykM=;
+	s=korg; t=1767960047;
+	bh=V7TKtz5rX9QvdZXABNKzkfGBQXfuClrEh3faoeWr/g4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eslOGCjwxj9c3GkYQ69Rn8RY4qPiWS4gdV61VuvKXhzJZ/EtdiEmho/muVH8gEmz5
-	 Xttc9q0DMBaBjXjMvJpkaoKA1Ps3GNCfrkZbrrYn5Q2QBjQHmx9+bTosJIqWOZBbTS
-	 vreArJHJzXhXjieKohJadMFM5m544WWNtOH5aipQ=
+	b=XWrN++lkYsoH+RikcJsyJjAYHk5cG7VoBQ9G3gt/Zc88w57GHs3xMqe9phayi085I
+	 C8DgUsQGH3209iQkoXmsZZfs48SS7QUcVWzNax7F3PnELdPbTwJA3Hn5THfvQwJYl3
+	 sHjUT9bwovVNqgExcaWe/ww+5iHyPVnCcaQL5hRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Hangbin Liu <liuhangbin@gmail.com>,
+	Alkis Georgopoulos <alkisg@gmail.com>,
+	Li Lingfeng <lilingfeng3@huawei.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 248/737] selftests: bonding: add delay before each xvlan_over_bond connectivity check
-Date: Fri,  9 Jan 2026 12:36:27 +0100
-Message-ID: <20260109112143.322698770@linuxfoundation.org>
+Subject: [PATCH 6.6 266/737] Revert "nfs: ignore SB_RDONLY when mounting nfs"
+Date: Fri,  9 Jan 2026 12:36:45 +0100
+Message-ID: <20260109112144.000560143@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,44 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 2c28ee720ad14f58eb88a97ec3efe7c5c315ea5d ]
+[ Upstream commit d4a26d34f1946142f9d32e540490e4926ae9a46b ]
 
-Jakub reported increased flakiness in bond_macvlan_ipvlan.sh on regular
-kernel, while the tests consistently pass on a debug kernel. This suggests
-a timing-sensitive issue.
+This reverts commit 52cb7f8f177878b4f22397b9c4d2c8f743766be3.
 
-To mitigate this, introduce a short sleep before each xvlan_over_bond
-connectivity check. The delay helps ensure neighbor and route cache
-have fully converged before verifying connectivity.
+Silently ignoring the "ro" and "rw" mount options causes user confusion,
+and regressions.
 
-The sleep interval is kept minimal since check_connection() is invoked
-nearly 100 times during the test.
-
-Fixes: 246af950b940 ("selftests: bonding: add macvlan over bond testing")
-Reported-by: Jakub Kicinski <kuba@kernel.org>
-Closes: https://lore.kernel.org/netdev/20251114082014.750edfad@kernel.org
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://patch.msgid.link/20251127143310.47740-1-liuhangbin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Alkis Georgopoulos<alkisg@gmail.com>
+Cc: Li Lingfeng <lilingfeng3@huawei.com>
+Fixes: 52cb7f8f1778 ("nfs: ignore SB_RDONLY when mounting nfs")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/drivers/net/bonding/bond_macvlan_ipvlan.sh | 1 +
- 1 file changed, 1 insertion(+)
+ fs/nfs/internal.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/drivers/net/bonding/bond_macvlan_ipvlan.sh b/tools/testing/selftests/drivers/net/bonding/bond_macvlan_ipvlan.sh
-index c4711272fe45d..559f300f965aa 100755
---- a/tools/testing/selftests/drivers/net/bonding/bond_macvlan_ipvlan.sh
-+++ b/tools/testing/selftests/drivers/net/bonding/bond_macvlan_ipvlan.sh
-@@ -30,6 +30,7 @@ check_connection()
- 	local message=${3}
- 	RET=0
+diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
+index bde81e0abf0ae..161c8fffbc1d9 100644
+--- a/fs/nfs/internal.h
++++ b/fs/nfs/internal.h
+@@ -12,7 +12,7 @@
+ #include <linux/nfs_page.h>
+ #include <linux/wait_bit.h>
  
-+	sleep 0.25
- 	ip netns exec ${ns} ping ${target} -c 4 -i 0.1 &>/dev/null
- 	check_err $? "ping failed"
- 	log_test "${bond_mode}/${xvlan_type}_${xvlan_mode}: ${message}"
+-#define NFS_SB_MASK (SB_NOSUID|SB_NODEV|SB_NOEXEC|SB_SYNCHRONOUS)
++#define NFS_SB_MASK (SB_RDONLY|SB_NOSUID|SB_NODEV|SB_NOEXEC|SB_SYNCHRONOUS)
+ 
+ extern const struct export_operations nfs_export_ops;
+ 
 -- 
 2.51.0
 
