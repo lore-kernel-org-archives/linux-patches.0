@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32E881946C8;
-	Fri,  9 Jan 2026 12:05:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6825F1946C8;
+	Fri,  9 Jan 2026 12:05:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960323; cv=none; b=CAxx9AzmJLVeFdA9IGJnPpxQltr+S73ciX12tare1IfkBh8EP/3VtYjkDC+a6MGOTK1PhmGSEZXZJIlkQwXnMLXT++/d3JuQDIyD1jtDZiULr6G58/hhdTOK1n1vl/YXhSHvp+J4fqYcEQKcqkgDa0wK3U4Rkq29+I4mkpALlTM=
+	t=1767960326; cv=none; b=PS1p9sg8xZ5N79+SHMdIc9IQJCKy1dT+/DKALvwHg/fKTDHOTEgmDiIHiJdHKmihN+NIImNSig04wMxvWD99qqkJ3jBUC106stt3Nnh+rfBK54Pdrbu000Hiul0cP8IC75tLgwwycmCTCDrlYg9G0/860/lILQiJDbyfzr4Bo8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960323; c=relaxed/simple;
-	bh=bF08xcUAreejH1gEgMm+bTsy5d90siujNZeIQBU4RCk=;
+	s=arc-20240116; t=1767960326; c=relaxed/simple;
+	bh=SqtbeOFZTbhvRFgpgAVxSxSzdioa3mmrzZ2MNIXsUho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hrCArwktsiCNJneb8/2XLpYf1bm4qQWeWDFRxfpQbu88vZK9NOk3I+Masp603PLwAv9ePT/nD92E5Q2aXuGMsZH8wpM01owd9OGb/Jt3STi3rEavavbCNSSRb3fpW+5NZuM2XWgsRY6XRZNsETpdpDYrxMoS0SMq+owmbX+Ujkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ACmLDeZS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GqTPcreMkn7290E7xqHnMUtizhrsYgxIfPsnfBAr30yAHzBfXIUlITgqA3vNAYWsULQTxDQYAM1jKLeUQKaeMaBgOICc3F6lUW4dvSWKwy4w+6rxhuZAmzCpxjt6+ls2TnpZ3M+RHgwkBbbY4ELv0gZqy+QdHvKd2qW7GoTZOF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AIL2PTD/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ACmLDeZS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABE17C4CEF1;
-	Fri,  9 Jan 2026 12:05:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AIL2PTD/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B1FC4CEF1;
+	Fri,  9 Jan 2026 12:05:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960323;
-	bh=bF08xcUAreejH1gEgMm+bTsy5d90siujNZeIQBU4RCk=;
+	s=korg; t=1767960326;
+	bh=SqtbeOFZTbhvRFgpgAVxSxSzdioa3mmrzZ2MNIXsUho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ACmLDeZS5CtNIoz6bRvUZRwgN/+ZHUTtnPUH+nETeFEjZohCGQbyi5Pm419w9aUS1
-	 TmzBb1XRx2VRFdSxZIVfSd4b5nidcEJb2Rbv6vRiAHRk+bgVQa4jUmblt1xweQDIDM
-	 7UJXPY3r8mNnLWbJJ3J1rjLt96LGx2yoxTTuDKKw=
+	b=AIL2PTD/4BbqUYnSxFNfNEOtSOeM6PGID5J1LsGuZla2KVfW5ts7S68JATii9W0ff
+	 fRGTaeblv1sTPgIESxvVU2xM4r6rgeuYuEuotBdU74ynDV8acxTFI+JWEL8GqLSirs
+	 GVptB+NFIPKkvcyeNwrVW5h/uxDl8NwWttNkBTbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Martin Botka <martin.botka@somainline.org>,
+	Brian Gerst <brgerst@gmail.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Juergen Gross <jgross@suse.com>,
+	Sohil Mehta <sohil.mehta@intel.com>,
+	Andy Lutomirski <luto@kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Josh Poimboeuf <jpoimboe@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 364/737] drm/panel: sony-td4353-jdi: Enable prepare_prev_first
-Date: Fri,  9 Jan 2026 12:38:23 +0100
-Message-ID: <20260109112147.689570949@linuxfoundation.org>
+Subject: [PATCH 6.6 365/737] x86/xen: Move Xen upcall handler
+Date: Fri,  9 Jan 2026 12:38:24 +0100
+Message-ID: <20260109112147.726879119@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -53,39 +57,211 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marijn Suijten <marijn.suijten@somainline.org>
+From: Brian Gerst <brgerst@gmail.com>
 
-[ Upstream commit 2b973ca48ff3ef1952091c8f988d7796781836c8 ]
+[ Upstream commit 1ab7b5ed44ba9bce581e225f40219b793bc779d6 ]
 
-The DSI host must be enabled before our prepare function can run, which
-has to send its init sequence over DSI.  Without enabling the host first
-the panel will not probe.
+Move the upcall handler to Xen-specific files.
 
-Fixes: 9e15123eca79 ("drm/msm/dsi: Stop unconditionally powering up DSI hosts at modeset")
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Martin Botka <martin.botka@somainline.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20251130-sony-akari-fix-panel-v1-1-1d27c60a55f5@somainline.org
+No functional changes.
+
+Signed-off-by: Brian Gerst <brgerst@gmail.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Reviewed-by: Sohil Mehta <sohil.mehta@intel.com>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Josh Poimboeuf <jpoimboe@redhat.com>
+Link: https://lore.kernel.org/r/20250314151220.862768-2-brgerst@gmail.com
+Stable-dep-of: e5aff444e3a7 ("x86/xen: Fix sparse warning in enlighten_pv.c")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-sony-td4353-jdi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/entry/common.c     | 72 -------------------------------------
+ arch/x86/xen/enlighten_pv.c | 69 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 69 insertions(+), 72 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-sony-td4353-jdi.c b/drivers/gpu/drm/panel/panel-sony-td4353-jdi.c
-index 1bde2f01786b..e7383a0e3d36 100644
---- a/drivers/gpu/drm/panel/panel-sony-td4353-jdi.c
-+++ b/drivers/gpu/drm/panel/panel-sony-td4353-jdi.c
-@@ -283,6 +283,8 @@ static int sony_td4353_jdi_probe(struct mipi_dsi_device *dsi)
- 	if (ret)
- 		return dev_err_probe(dev, ret, "Failed to get backlight\n");
+diff --git a/arch/x86/entry/common.c b/arch/x86/entry/common.c
+index e72dac092245..3c88bdf96e7a 100644
+--- a/arch/x86/entry/common.c
++++ b/arch/x86/entry/common.c
+@@ -20,11 +20,6 @@
+ #include <linux/syscalls.h>
+ #include <linux/uaccess.h>
  
-+	ctx->panel.prepare_prev_first = true;
+-#ifdef CONFIG_XEN_PV
+-#include <xen/xen-ops.h>
+-#include <xen/events.h>
+-#endif
+-
+ #include <asm/apic.h>
+ #include <asm/desc.h>
+ #include <asm/traps.h>
+@@ -346,70 +341,3 @@ SYSCALL_DEFINE0(ni_syscall)
+ {
+ 	return -ENOSYS;
+ }
+-
+-#ifdef CONFIG_XEN_PV
+-#ifndef CONFIG_PREEMPTION
+-/*
+- * Some hypercalls issued by the toolstack can take many 10s of
+- * seconds. Allow tasks running hypercalls via the privcmd driver to
+- * be voluntarily preempted even if full kernel preemption is
+- * disabled.
+- *
+- * Such preemptible hypercalls are bracketed by
+- * xen_preemptible_hcall_begin() and xen_preemptible_hcall_end()
+- * calls.
+- */
+-DEFINE_PER_CPU(bool, xen_in_preemptible_hcall);
+-EXPORT_SYMBOL_GPL(xen_in_preemptible_hcall);
+-
+-/*
+- * In case of scheduling the flag must be cleared and restored after
+- * returning from schedule as the task might move to a different CPU.
+- */
+-static __always_inline bool get_and_clear_inhcall(void)
+-{
+-	bool inhcall = __this_cpu_read(xen_in_preemptible_hcall);
+-
+-	__this_cpu_write(xen_in_preemptible_hcall, false);
+-	return inhcall;
+-}
+-
+-static __always_inline void restore_inhcall(bool inhcall)
+-{
+-	__this_cpu_write(xen_in_preemptible_hcall, inhcall);
+-}
+-#else
+-static __always_inline bool get_and_clear_inhcall(void) { return false; }
+-static __always_inline void restore_inhcall(bool inhcall) { }
+-#endif
+-
+-static void __xen_pv_evtchn_do_upcall(struct pt_regs *regs)
+-{
+-	struct pt_regs *old_regs = set_irq_regs(regs);
+-
+-	inc_irq_stat(irq_hv_callback_count);
+-
+-	xen_evtchn_do_upcall();
+-
+-	set_irq_regs(old_regs);
+-}
+-
+-__visible noinstr void xen_pv_evtchn_do_upcall(struct pt_regs *regs)
+-{
+-	irqentry_state_t state = irqentry_enter(regs);
+-	bool inhcall;
+-
+-	instrumentation_begin();
+-	run_sysvec_on_irqstack_cond(__xen_pv_evtchn_do_upcall, regs);
+-
+-	inhcall = get_and_clear_inhcall();
+-	if (inhcall && !WARN_ON_ONCE(state.exit_rcu)) {
+-		irqentry_exit_cond_resched();
+-		instrumentation_end();
+-		restore_inhcall(inhcall);
+-	} else {
+-		instrumentation_end();
+-		irqentry_exit(regs, state);
+-	}
+-}
+-#endif /* CONFIG_XEN_PV */
+diff --git a/arch/x86/xen/enlighten_pv.c b/arch/x86/xen/enlighten_pv.c
+index 3df7c96e7388..72b58fa4bc17 100644
+--- a/arch/x86/xen/enlighten_pv.c
++++ b/arch/x86/xen/enlighten_pv.c
+@@ -72,6 +72,7 @@
+ #include <asm/mwait.h>
+ #include <asm/pci_x86.h>
+ #include <asm/cpu.h>
++#include <asm/irq_stack.h>
+ #ifdef CONFIG_X86_IOPL_IOPERM
+ #include <asm/io_bitmap.h>
+ #endif
+@@ -97,6 +98,44 @@ void *xen_initial_gdt;
+ static int xen_cpu_up_prepare_pv(unsigned int cpu);
+ static int xen_cpu_dead_pv(unsigned int cpu);
+ 
++#ifndef CONFIG_PREEMPTION
++/*
++ * Some hypercalls issued by the toolstack can take many 10s of
++ * seconds. Allow tasks running hypercalls via the privcmd driver to
++ * be voluntarily preempted even if full kernel preemption is
++ * disabled.
++ *
++ * Such preemptible hypercalls are bracketed by
++ * xen_preemptible_hcall_begin() and xen_preemptible_hcall_end()
++ * calls.
++ */
++DEFINE_PER_CPU(bool, xen_in_preemptible_hcall);
++EXPORT_SYMBOL_GPL(xen_in_preemptible_hcall);
 +
- 	drm_panel_add(&ctx->panel);
++/*
++ * In case of scheduling the flag must be cleared and restored after
++ * returning from schedule as the task might move to a different CPU.
++ */
++static __always_inline bool get_and_clear_inhcall(void)
++{
++	bool inhcall = __this_cpu_read(xen_in_preemptible_hcall);
++
++	__this_cpu_write(xen_in_preemptible_hcall, false);
++	return inhcall;
++}
++
++static __always_inline void restore_inhcall(bool inhcall)
++{
++	__this_cpu_write(xen_in_preemptible_hcall, inhcall);
++}
++
++#else
++
++static __always_inline bool get_and_clear_inhcall(void) { return false; }
++static __always_inline void restore_inhcall(bool inhcall) { }
++
++#endif
++
+ struct tls_descs {
+ 	struct desc_struct desc[3];
+ };
+@@ -678,6 +717,36 @@ DEFINE_IDTENTRY_RAW(xenpv_exc_machine_check)
+ }
+ #endif
  
- 	ret = mipi_dsi_attach(dsi);
++static void __xen_pv_evtchn_do_upcall(struct pt_regs *regs)
++{
++	struct pt_regs *old_regs = set_irq_regs(regs);
++
++	inc_irq_stat(irq_hv_callback_count);
++
++	xen_evtchn_do_upcall();
++
++	set_irq_regs(old_regs);
++}
++
++__visible noinstr void xen_pv_evtchn_do_upcall(struct pt_regs *regs)
++{
++	irqentry_state_t state = irqentry_enter(regs);
++	bool inhcall;
++
++	instrumentation_begin();
++	run_sysvec_on_irqstack_cond(__xen_pv_evtchn_do_upcall, regs);
++
++	inhcall = get_and_clear_inhcall();
++	if (inhcall && !WARN_ON_ONCE(state.exit_rcu)) {
++		irqentry_exit_cond_resched();
++		instrumentation_end();
++		restore_inhcall(inhcall);
++	} else {
++		instrumentation_end();
++		irqentry_exit(regs, state);
++	}
++}
++
+ struct trap_array_entry {
+ 	void (*orig)(void);
+ 	void (*xen)(void);
 -- 
 2.51.0
 
