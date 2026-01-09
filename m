@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF08336EDA;
-	Fri,  9 Jan 2026 12:33:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0D7435B137;
+	Fri,  9 Jan 2026 12:33:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962001; cv=none; b=I06UlvAK0VGxAdrb2coag/H+ASZ9jidliZTd9lRm83PaWlAL9eV1PHrB9tHjPhNcyJlCFsp17mibYRDjtVCcfgExlmHzWs2Qy99dfLiC8SSRko/7Y9XhxUs8bHvYyzHY0l/2VBLhlZxLvATnqk3ZzUReHqJlwQxMJaN6fNLKlh8=
+	t=1767962004; cv=none; b=fYzhmGJYCuV0g2C1qzNybMkXvDGu9ZYA+oY7mThrOLD47XN7dDf2nx1+azMOprFJcljfmgd84JZQLa/+JZiW1XgEPEF/uZi/x4l2QOx791h7X+PemD7duBM8JD9Qyne0wvtOSvUET2z/uTxvcxvT5NNfd4XJBXqLf3mHJEW7DdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962001; c=relaxed/simple;
-	bh=ztB4m1A0+DqpJI07mmYlCjqI+oXX2M03lfZjMM7N4H8=;
+	s=arc-20240116; t=1767962004; c=relaxed/simple;
+	bh=wbhtO6I7ar89XIoxatr7QItwc6o6KPx5uBYsY1xCJ+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WYa/OWHZrzKeg/D7Rjomuxwm1RXgKavJ6rq2tH1zrGV+gYnMugfaQu2fnF1wKriDhvhgFIrOGO0XrwY14qRMU2CORDSg2JxUXLJXvZmmkFe1gCaC5RFYkwrJlH3LEoGZyv9E4OceR4GM4KXLaEJT8OZTRqgZfRwn3g7zIsHqJc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2n7GWDRM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R20+B8s1tzvN2zfbF7LJ2JcuFxDQYWrPXcEURF1tVUd1POWx/ozlSAiTPW1DRIJFQ1CHR1FrucLkI5+SYyQruWQRA6eYRcm2FOtDJ3JezBpurkqSN/mVwXm2Ve0rIRScLNRxyaAfmc8rc2xZ4YZXlS/WEU7O3JlF6wfUEB8VfOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k1+/M4wf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2n7GWDRM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D34DC4AF09;
-	Fri,  9 Jan 2026 12:33:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k1+/M4wf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52704C16AAE;
+	Fri,  9 Jan 2026 12:33:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962000;
-	bh=ztB4m1A0+DqpJI07mmYlCjqI+oXX2M03lfZjMM7N4H8=;
+	s=korg; t=1767962003;
+	bh=wbhtO6I7ar89XIoxatr7QItwc6o6KPx5uBYsY1xCJ+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2n7GWDRMPd7AM5vv98JNQTW4a8C1t12VhKW2mDfjv5NkqXp6NCdf5rldTUyvcOApg
-	 9I0sU8BXctfVIfAGZ51gdx43FjZ/pG9ipUgLrEx0D5b2TYfMFzS25cE/TP7kH4GQhx
-	 FftYLKp1H7Y73bEbnXKNcLCKM6HP3nu+WX3+h4/E=
+	b=k1+/M4wf4UsOMT3k0PwqvCWN9SSz4AVyGOjUJL2b5QpXXkjqpDf5l+CnaQgH6ZRIc
+	 6cpKMO27q3vBvXJACtQhRY3fpRKYXKZlo3E7YJNDCYabD5ztgcDuxr1VHsMbwng/Fn
+	 n5dLKYqcNJFD9QDjRC+miCoQnOPs4ATjG9dPh6iY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Stepchenko <sid@itb.spb.ru>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 178/634] mtd: lpddr_cmds: fix signed shifts in lpddr_cmds
-Date: Fri,  9 Jan 2026 12:37:36 +0100
-Message-ID: <20260109112124.141367985@linuxfoundation.org>
+Subject: [PATCH 6.1 169/634] resource: Reuse for_each_resource() macro
+Date: Fri,  9 Jan 2026 12:37:27 +0100
+Message-ID: <20260109112123.805985270@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,69 +50,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Stepchenko <sid@itb.spb.ru>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit c909fec69f84b39e63876c69b9df2c178c6b76ba ]
+[ Upstream commit 441f0dd8fa035a2c7cfe972047bb905d3be05c1b ]
 
-There are several places where a value of type 'int' is shifted by
-lpddr->chipshift. lpddr->chipshift is derived from QINFO geometry and
-might reach 31 when QINFO reports a 2 GiB size - the maximum supported by
-LPDDR(1) compliant chips. This may cause unexpected sign-extensions when
-casting the integer value to the type of 'unsigned long'.
+We have a few places where for_each_resource() is open coded.
+Replace that by the macro. This makes code easier to read and
+understand.
 
-Use '1UL << lpddr->chipshift' and cast 'j' to unsigned long before
-shifting so the computation is performed at the destination width.
+With this, compile r_next() only for CONFIG_PROC_FS=y.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: c68264711ca6 ("[MTD] LPDDR Command set driver")
-Signed-off-by: Ivan Stepchenko <sid@itb.spb.ru>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20230912165312.402422-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 6fb3acdebf65 ("Reinstate "resource: avoid unnecessary lookups in find_next_iomem_res()"")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/lpddr/lpddr_cmds.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ kernel/resource.c | 34 +++++++++++++++++++---------------
+ 1 file changed, 19 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/mtd/lpddr/lpddr_cmds.c b/drivers/mtd/lpddr/lpddr_cmds.c
-index ee063baed136c..5c39c9c653233 100644
---- a/drivers/mtd/lpddr/lpddr_cmds.c
-+++ b/drivers/mtd/lpddr/lpddr_cmds.c
-@@ -79,7 +79,7 @@ struct mtd_info *lpddr_cmdset(struct map_info *map)
- 		mutex_init(&shared[i].lock);
- 		for (j = 0; j < lpddr->qinfo->HWPartsNum; j++) {
- 			*chip = lpddr->chips[i];
--			chip->start += j << lpddr->chipshift;
-+			chip->start += (unsigned long)j << lpddr->chipshift;
- 			chip->oldstate = chip->state = FL_READY;
- 			chip->priv = &shared[i];
- 			/* those should be reset too since
-@@ -562,7 +562,7 @@ static int lpddr_point(struct mtd_info *mtd, loff_t adr, size_t len,
- 			break;
+diff --git a/kernel/resource.c b/kernel/resource.c
+index eb713a984c749..6703fd889ae1b 100644
+--- a/kernel/resource.c
++++ b/kernel/resource.c
+@@ -77,13 +77,6 @@ static struct resource *next_resource_skip_children(struct resource *p)
+ 	     (_p) = (_skip_children) ? next_resource_skip_children(_p) : \
+ 				       next_resource(_p))
  
- 		if ((len + ofs - 1) >> lpddr->chipshift)
--			thislen = (1<<lpddr->chipshift) - ofs;
-+			thislen = (1UL << lpddr->chipshift) - ofs;
- 		else
- 			thislen = len;
- 		/* get the chip */
-@@ -578,7 +578,7 @@ static int lpddr_point(struct mtd_info *mtd, loff_t adr, size_t len,
- 		len -= thislen;
+-static void *r_next(struct seq_file *m, void *v, loff_t *pos)
+-{
+-	struct resource *p = v;
+-	(*pos)++;
+-	return (void *)next_resource(p);
+-}
+-
+ #ifdef CONFIG_PROC_FS
  
- 		ofs = 0;
--		last_end += 1 << lpddr->chipshift;
-+		last_end += 1UL << lpddr->chipshift;
- 		chipnum++;
- 		chip = &lpddr->chips[chipnum];
- 	}
-@@ -604,7 +604,7 @@ static int lpddr_unpoint (struct mtd_info *mtd, loff_t adr, size_t len)
- 			break;
+ enum { MAX_IORES_LEVEL = 5 };
+@@ -91,14 +84,26 @@ enum { MAX_IORES_LEVEL = 5 };
+ static void *r_start(struct seq_file *m, loff_t *pos)
+ 	__acquires(resource_lock)
+ {
+-	struct resource *p = pde_data(file_inode(m->file));
+-	loff_t l = 0;
++	struct resource *root = pde_data(file_inode(m->file));
++	struct resource *p;
++	loff_t l = *pos;
++
+ 	read_lock(&resource_lock);
+-	for (p = p->child; p && l < *pos; p = r_next(m, p, &l))
+-		;
++	for_each_resource(root, p, false) {
++		if (l-- == 0)
++			break;
++	}
++
+ 	return p;
+ }
  
- 		if ((len + ofs - 1) >> lpddr->chipshift)
--			thislen = (1<<lpddr->chipshift) - ofs;
-+			thislen = (1UL << lpddr->chipshift) - ofs;
- 		else
- 			thislen = len;
++static void *r_next(struct seq_file *m, void *v, loff_t *pos)
++{
++	struct resource *p = v;
++	(*pos)++;
++	return (void *)next_resource(p);
++}
++
+ static void r_stop(struct seq_file *m, void *v)
+ 	__releases(resource_lock)
+ {
+@@ -336,7 +341,7 @@ static int find_next_iomem_res(resource_size_t start, resource_size_t end,
  
+ 	read_lock(&resource_lock);
+ 
+-	for (p = iomem_resource.child; p; p = next_resource(p)) {
++	for_each_resource(&iomem_resource, p, false) {
+ 		/* If we passed the resource we are looking for, stop */
+ 		if (p->start > end) {
+ 			p = NULL;
+@@ -1683,13 +1688,12 @@ __setup("reserve=", reserve_setup);
+  */
+ int iomem_map_sanity_check(resource_size_t addr, unsigned long size)
+ {
+-	struct resource *p = &iomem_resource;
+ 	resource_size_t end = addr + size - 1;
++	struct resource *p;
+ 	int err = 0;
+-	loff_t l;
+ 
+ 	read_lock(&resource_lock);
+-	for (p = p->child; p ; p = r_next(NULL, p, &l)) {
++	for_each_resource(&iomem_resource, p, false) {
+ 		/*
+ 		 * We can probably skip the resources without
+ 		 * IORESOURCE_IO attribute?
 -- 
 2.51.0
 
