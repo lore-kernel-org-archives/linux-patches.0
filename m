@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6730533C53A;
-	Fri,  9 Jan 2026 12:36:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E3D31ED6D;
+	Fri,  9 Jan 2026 12:36:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962180; cv=none; b=GjgxYyzlTLRa97NPF8Rn5F71uYRR+bDc9+CZOVHSDMXy38VsjaZ9XNQ2dfKL1syYUVGZZ41fW94v/uVAxvhJ1757bMszl4XCdHQUA5q+dDIN6m5EaicpRWLgBbvFGyeptjT/vzEaxxfT+eGQI2kAjx3ysuXDwHjED+797kMb/rc=
+	t=1767962183; cv=none; b=shuh46sadNjAGoXhgfntvfg586zBIWeMuOStWvuqY3f7+vZSryYvQ3cP4cBMJtDqTrUqmP+P8A5VnzTLRc5Kug/3qR2WuP4vuV71vkS2B1ytqx52ZL23YFKKGJ+dahcSKKrv+/lbygynIBvncsSaghE55YZTRF6i20QNf9KYnM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962180; c=relaxed/simple;
-	bh=tQOfWtl+8INNjLE/tTzeUVibP+UHjC/ghiNhYGWIO4c=;
+	s=arc-20240116; t=1767962183; c=relaxed/simple;
+	bh=Af7U+ldP4WP6vwgALNA+sDS+d1UiFbQ9LKHU7PpN2Uo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AkktsqPmUApOa3KvxNIMYWCHNYwQtzJJYMz63RSEihilwoolCeHEtPKmncWin93F9oyGFqDR61wrJ1pvhEsWsm2g0ehTKdniPmG+CefB9ipxfdFT46cur3f5UgG0FMTn8aOMNerzO9eQ/Xd57Al8jS7ux06H5XPemxSGNGbJ0VE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lzpJ7mFS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JLYp8Xij6atHEp1bLCCZ4+lMPktnXLaLpZGgPELMetJI9YTY2VxqtrcCWSOwMscQo5aN9ka6Pl0DCciITGmUPf51Wq5IqrY7st0VP2LFGcLvcHor5v19M4icKUQLbYr2eGmXhKrYRKNsGSnE1Cq/qFExDYXvoEurejs/C6C2Aw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lEWcy0lO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lzpJ7mFS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6C19C19423;
-	Fri,  9 Jan 2026 12:36:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lEWcy0lO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C17EDC4CEF1;
+	Fri,  9 Jan 2026 12:36:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962180;
-	bh=tQOfWtl+8INNjLE/tTzeUVibP+UHjC/ghiNhYGWIO4c=;
+	s=korg; t=1767962183;
+	bh=Af7U+ldP4WP6vwgALNA+sDS+d1UiFbQ9LKHU7PpN2Uo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lzpJ7mFSXgzG2CyBC1k39YuI2Lrdo5XFkfbTdWq5zfjurfwjPyInT2+uSMpc3MQAJ
-	 ol55mE88Tbiyj5mL4pmBuhezxDo7kKxLxqmZcfllP3dabRAQX7V7JLWQOIrv6rYtGV
-	 WbJi/WTRiJjlDciU3Tw21vom/GknrIHKinbZvqT4=
+	b=lEWcy0lOjiP4zq1ftn7HhZEqe6xIwvJacTtW8UR6/07dTdlgW9fIxDfDz6fEi8FuT
+	 Aw8KzrJ4AXp5//UJnUv9hz3mWvSDyIE4JkdrS6q1NGTNSc5b3NXbL7zK3B7cak9Yiv
+	 h9hX6vnQa94OedQ04/524x+5JSCwfn+TvvdrAGSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Simakov <bigalex934@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 273/634] hwmon: (tmp401) fix overflow caused by default conversion rate value
-Date: Fri,  9 Jan 2026 12:39:11 +0100
-Message-ID: <20260109112127.806845290@linuxfoundation.org>
+Subject: [PATCH 6.1 274/634] MIPS: Fix a reference leak bug in ip22_check_gio()
+Date: Fri,  9 Jan 2026 12:39:12 +0100
+Message-ID: <20260109112127.843871861@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,55 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Simakov <bigalex934@gmail.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-[ Upstream commit 82f2aab35a1ab2e1460de06ef04c726460aed51c ]
+[ Upstream commit 680ad315caaa2860df411cb378bf3614d96c7648 ]
 
-The driver computes conversion intervals using the formula:
+If gio_device_register fails, gio_dev_put() is required to
+drop the gio_dev device reference.
 
-    interval = (1 << (7 - rate)) * 125ms
-
-where 'rate' is the sensor's conversion rate register value. According to
-the datasheet, the power-on reset value of this register is 0x8, which
-could be assigned to the register, after handling i2c general call.
-Using this default value causes a result greater than the bit width of
-left operand and an undefined behaviour in the calculation above, since
-shifting by values larger than the bit width is undefined behaviour as
-per C language standard.
-
-Limit the maximum usable 'rate' value to 7 to prevent undefined
-behaviour in calculations.
-
-Found by Linux Verification Center (linuxtesting.org) with Svace.
-
-Note (groeck):
-    This does not matter in practice unless someone overwrites the chip
-    configuration from outside the driver while the driver is loaded.
-    The conversion time register is initialized with a value of 5 (500ms)
-    when the driver is loaded, and the driver never writes a bad value.
-
-Fixes: ca53e7640de7 ("hwmon: (tmp401) Convert to _info API")
-Signed-off-by: Alexey Simakov <bigalex934@gmail.com>
-Link: https://lore.kernel.org/r/20251211164342.6291-1-bigalex934@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: e84de0c61905 ("MIPS: GIO bus support for SGI IP22/28")
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/tmp401.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/mips/sgi-ip22/ip22-gio.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/tmp401.c b/drivers/hwmon/tmp401.c
-index f358ba679626..f869d585c345 100644
---- a/drivers/hwmon/tmp401.c
-+++ b/drivers/hwmon/tmp401.c
-@@ -408,7 +408,7 @@ static int tmp401_chip_read(struct device *dev, u32 attr, int channel, long *val
- 		ret = regmap_read(data->regmap, TMP401_CONVERSION_RATE, &regval);
- 		if (ret < 0)
- 			return ret;
--		*val = (1 << (7 - regval)) * 125;
-+		*val = (1 << (7 - min(regval, 7))) * 125;
- 		break;
- 	case hwmon_chip_temp_reset_history:
- 		*val = 0;
+diff --git a/arch/mips/sgi-ip22/ip22-gio.c b/arch/mips/sgi-ip22/ip22-gio.c
+index 8686e8c1c4e5..5b3d3d208db0 100644
+--- a/arch/mips/sgi-ip22/ip22-gio.c
++++ b/arch/mips/sgi-ip22/ip22-gio.c
+@@ -373,7 +373,8 @@ static void ip22_check_gio(int slotno, unsigned long addr, int irq)
+ 		gio_dev->resource.flags = IORESOURCE_MEM;
+ 		gio_dev->irq = irq;
+ 		dev_set_name(&gio_dev->dev, "%d", slotno);
+-		gio_device_register(gio_dev);
++		if (gio_device_register(gio_dev))
++			gio_dev_put(gio_dev);
+ 	} else
+ 		printk(KERN_INFO "GIO: slot %d : Empty\n", slotno);
+ }
 -- 
 2.51.0
 
