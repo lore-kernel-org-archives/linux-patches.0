@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD8F233C511;
-	Fri,  9 Jan 2026 11:51:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9686B2F12D4;
+	Fri,  9 Jan 2026 11:51:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959513; cv=none; b=Nw7ikxTCz1khBZe/FBtkIUtqKBFa8+aEY320auKfeM2zCOANkV5FysY8xqH9VVQlMVrLrOtnd0pDkzoRyelWp11ZPNOC+gwC0UXB5ZxgX5+np2Hp9xjfzzO0gjF/9YOFL89A6mUBLmicVbaPo/KQs19nDVJn1iIHaVBtfVNzFto=
+	t=1767959516; cv=none; b=RpH1kAURyu1X+hh87R2Fw0zVTgCTO7wzRNRRc/jVLtWItd15hvnUkwyxVQ1uADyy5XPp6vU45coLUaW9e14v20icrB3OczdqrXeEiUDpZ+uq8OamPC1H8w6nQeoF0P5MlZtplkL8ruvNKU4HMVpry3yizWFpxkTk4e8N3t82Toc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959513; c=relaxed/simple;
-	bh=+e29otBe0yEWImE7S6vbzG8yAHMDth1u0SyVF/FZi9I=;
+	s=arc-20240116; t=1767959516; c=relaxed/simple;
+	bh=mTzfCKbyWgqBhQWoJY5Dxq2mUyzHyCYTDLFzsxbqF/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SmpcnA2ZlEVVHt2na5j5m7CokMgh7PEMbIPQ7+F7sYv5Og2dR7BBPAB89Ssrr70klVOHkPqf4dJesXkgKqL2cG6Ym8F9XlDAtKSCpkTWyzFh3KYQjIdp9Qm74tBeYgzw5kU2gFetyY2/hrnqT5JcxqhybJUVpCJijw03tFLaY4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lpkaskuG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BBAjmTbUK17XfYg+QtqI5Fu6iW7boHn6q6gAeZKoM/xrgqawHPGjbX8RwsOZe6RjOaPHiijUTopBp1tA9NJL/FuLOSpV03vH0L62RAU1t/tfYkg2hWZGOby6IHjo2Wm1HRwKMJx/kgC7GMPtvc8G8OmH6atQUDb3EGWHNkhqckQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tx5OlVK+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lpkaskuG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8CDC4CEF1;
-	Fri,  9 Jan 2026 11:51:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tx5OlVK+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EDA4C4CEF1;
+	Fri,  9 Jan 2026 11:51:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959513;
-	bh=+e29otBe0yEWImE7S6vbzG8yAHMDth1u0SyVF/FZi9I=;
+	s=korg; t=1767959516;
+	bh=mTzfCKbyWgqBhQWoJY5Dxq2mUyzHyCYTDLFzsxbqF/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lpkaskuGAgZ1FqTSHlbo+qc8kmTZ9/7yB1HiBdihuYY+BGeQgLbxC3phHZZucl3LC
-	 BOLaXqeuqD/z4a8YOTyp5pZPey2DAXMQzmu0XOMF7mWhSZolPDXMTnHJtkiqy5J6Fs
-	 pIvAcu9XspJQ0Qc6rA82sznDgOrPBLPd8GOCB1fk=
+	b=tx5OlVK+Fnaw3fypmPaOd8/h/PAoy9RbSsbipzd4XtVDO+USlbL/ouzRg+ctEwra8
+	 YZssQd/TBD3alWAnJ/zTrQdTyVCoIwtpNVMgcw3iUdwHImwE0gGaqheXVYb9xPN2gr
+	 GQt0uL8S8phrM3Fre6u5ByWCcCC4kMyOqGDd2vCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Qiang <liqiang01@kylinos.cn>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Imran Shaik <imran.shaik@oss.qualcomm.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 079/737] uio: uio_fsl_elbc_gpcm:: Add null pointer check to uio_fsl_elbc_gpcm_probe
-Date: Fri,  9 Jan 2026 12:33:38 +0100
-Message-ID: <20260109112136.967360189@linuxfoundation.org>
+Subject: [PATCH 6.6 080/737] clk: qcom: camcc-sm6350: Specify Titan GDSC power domain as a parent to other
+Date: Fri,  9 Jan 2026 12:33:39 +0100
+Message-ID: <20260109112137.005038164@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -50,47 +54,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Qiang <liqiang01@kylinos.cn>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-[ Upstream commit d48fb15e6ad142e0577428a8c5028136e10c7b3d ]
+[ Upstream commit a76ce61d7225934b0a52c8172a8cd944002a8c6f ]
 
-devm_kasprintf() returns a pointer to dynamically allocated memory
-which can be NULL upon failure.
+When a consumer turns on/off a power domain dependent on another power
+domain in hardware, the parent power domain shall be turned on/off by
+the power domain provider as well, and to get it the power domain hardware
+hierarchy shall be described in the CAMCC driver.
 
-Fixes: d57801c45f53e ("uio: uio_fsl_elbc_gpcm: use device-managed allocators")
-Signed-off-by: Li Qiang <liqiang01@kylinos.cn>
-Link: https://patch.msgid.link/20251015064020.56589-1-liqiang01@kylinos.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Establish the power domain hierarchy with a Titan GDSC set as a parent of
+all other GDSC power domains provided by the SM6350 camera clock controller
+to enforce a correct sequence of enabling and disabling power domains by
+the consumers, this fixes the CAMCC as a supplier of power domains to CAMSS
+IP and its driver.
+
+Fixes: 80f5451d9a7c ("clk: qcom: Add camera clock controller driver for SM6350")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Imran Shaik <imran.shaik@oss.qualcomm.com>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Link: https://lore.kernel.org/r/20251021234450.2271279-3-vladimir.zapolskiy@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/uio/uio_fsl_elbc_gpcm.c | 7 +++++++
+ drivers/clk/qcom/camcc-sm6350.c | 7 +++++++
  1 file changed, 7 insertions(+)
 
-diff --git a/drivers/uio/uio_fsl_elbc_gpcm.c b/drivers/uio/uio_fsl_elbc_gpcm.c
-index 82dda799f327d..a433bc84313fa 100644
---- a/drivers/uio/uio_fsl_elbc_gpcm.c
-+++ b/drivers/uio/uio_fsl_elbc_gpcm.c
-@@ -384,6 +384,11 @@ static int uio_fsl_elbc_gpcm_probe(struct platform_device *pdev)
+diff --git a/drivers/clk/qcom/camcc-sm6350.c b/drivers/clk/qcom/camcc-sm6350.c
+index eca36bd3ba5c9..79131e1699b81 100644
+--- a/drivers/clk/qcom/camcc-sm6350.c
++++ b/drivers/clk/qcom/camcc-sm6350.c
+@@ -1692,6 +1692,8 @@ static struct clk_branch camcc_sys_tmr_clk = {
+ 	},
+ };
  
- 	/* set all UIO data */
- 	info->mem[0].name = devm_kasprintf(&pdev->dev, GFP_KERNEL, "%pOFn", node);
-+	if (!info->mem[0].name) {
-+		ret = -ENODEV;
-+		goto out_err3;
-+	}
++static struct gdsc titan_top_gdsc;
 +
- 	info->mem[0].addr = res.start;
- 	info->mem[0].size = resource_size(&res);
- 	info->mem[0].memtype = UIO_MEM_PHYS;
-@@ -423,6 +428,8 @@ static int uio_fsl_elbc_gpcm_probe(struct platform_device *pdev)
- out_err2:
- 	if (priv->shutdown)
- 		priv->shutdown(info, true);
-+
-+out_err3:
- 	iounmap(info->mem[0].internal_addr);
- 	return ret;
- }
+ static struct gdsc bps_gdsc = {
+ 	.gdscr = 0x6004,
+ 	.en_rest_wait_val = 0x2,
+@@ -1701,6 +1703,7 @@ static struct gdsc bps_gdsc = {
+ 		.name = "bps_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.parent = &titan_top_gdsc.pd,
+ 	.flags = VOTABLE,
+ };
+ 
+@@ -1713,6 +1716,7 @@ static struct gdsc ipe_0_gdsc = {
+ 		.name = "ipe_0_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.parent = &titan_top_gdsc.pd,
+ 	.flags = VOTABLE,
+ };
+ 
+@@ -1725,6 +1729,7 @@ static struct gdsc ife_0_gdsc = {
+ 		.name = "ife_0_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.parent = &titan_top_gdsc.pd,
+ };
+ 
+ static struct gdsc ife_1_gdsc = {
+@@ -1736,6 +1741,7 @@ static struct gdsc ife_1_gdsc = {
+ 		.name = "ife_1_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.parent = &titan_top_gdsc.pd,
+ };
+ 
+ static struct gdsc ife_2_gdsc = {
+@@ -1747,6 +1753,7 @@ static struct gdsc ife_2_gdsc = {
+ 		.name = "ife_2_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.parent = &titan_top_gdsc.pd,
+ };
+ 
+ static struct gdsc titan_top_gdsc = {
 -- 
 2.51.0
 
