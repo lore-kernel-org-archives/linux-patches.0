@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE66329E7B;
-	Fri,  9 Jan 2026 12:27:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23CDD23F417;
+	Fri,  9 Jan 2026 12:27:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961663; cv=none; b=etzROxTDDPXUOnu2wjC6WFwgodiD2YSXOip53K9ncFwOIT+lZqo7GY+2wMw/GDLRnLodLGeNBpyatbNoH15+UjzjL6bgFAcDZgcYO8Ixt7ECRbJJ7KnxV1foLXxlmWJ0hZvTW2uQQpWwjQtOAuvJ4gxLJk1QciqAE5aPPlu9Qpg=
+	t=1767961666; cv=none; b=aw7NRyCCzMGh0fQ76cFH6KTQqsapKLc9CBAkNnnugNscLyt1u44UFvVVbwdn0b7ScIXEG6QCxB0OVQHr3jyGQAHny0qUL2va8rfs3f4T/xtxOHKQk/nvImX1xOYhf0hdVZRauUkH0iH7R0Ramt3MsS6AfgAw1TMmaOr8gm/yfaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961663; c=relaxed/simple;
-	bh=zg00ZlERC87N8xsCdU+rORLe+xPcHgFIX0qg3vAICGw=;
+	s=arc-20240116; t=1767961666; c=relaxed/simple;
+	bh=lPctdfPk6MRXxq6Y4/eyyxSVoZZt29Gay/pOREJP/0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hQqmfUAJYAjJ4dZqoej4h0gYBD3uUEgOvsk5dTx0LmHihvKoP/mYS1tBIH4IjZ4QD0jOKm7pWmzPdLWhJOgIp2rG2rNmG0UTv7ei1WLaoI+FNLV+kB+fw1/5Lz3Bt/R7a/pRIb2B+VserkVJTNpwzJiDzw6GuMQdMR5vtRoDXS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gh+D/I7+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SRI/tk1afyxn7935sZlmInX8D/29F7LaDOnuohoXZgeymLlyyQFE7RlDZpkrWRG259r+E0FGIFkZ1Ia61j9gt2vvRPXfmdXpvyr3f9zyENV9oHTwnk22iokntCMOPPUmzpwf3fg5IjIOST+lGEkft3Tb4ZdmF0XNn6st5PjGB7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n0COhw1P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gh+D/I7+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9B06C4CEF1;
-	Fri,  9 Jan 2026 12:27:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n0COhw1P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5FD3C4CEF1;
+	Fri,  9 Jan 2026 12:27:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961663;
-	bh=zg00ZlERC87N8xsCdU+rORLe+xPcHgFIX0qg3vAICGw=;
+	s=korg; t=1767961666;
+	bh=lPctdfPk6MRXxq6Y4/eyyxSVoZZt29Gay/pOREJP/0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gh+D/I7+MVcFSIG0DYIqk69G0uhuS/GZddXZqQ7k2DjWqp5CmTfpjE/XPpFjA/oly
-	 jHBjDzE7bpoSjLYpUoBcJn9QI5dszUu1jtG5/yEz5Ct/tNhh3JTP3sRbdg0HOxYxZ7
-	 Dh2248RNP3VyCYjrizZsjl77djjPqqqhbQtFYStA=
+	b=n0COhw1PiiyfN4AxV0vQ5PV9a2LkaFHLA5Xqf+NpsOUYR9hchsfXg7Xt/2gQd357R
+	 WWTfpMmrtn5gCAp3r8WkpAoycGHaDYegegcboRLDe2G+mY6X5R7XZgo/mTXilvXpyO
+	 bsURfSDT7PNvNLQEXD5lPvRNGujT+3VWZ5KvQLiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Scott Benesh <scott.benesh@microchip.com>,
-	Scott Teel <scott.teel@microchip.com>,
-	Kevin Barnett <kevin.barnett@microchip.com>,
-	Mike McGowen <mike.mcgowen@microchip.com>,
-	Don Brace <don.brace@microchip.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 092/634] scsi: smartpqi: Remove contention for raid_bypass_cnt
-Date: Fri,  9 Jan 2026 12:36:10 +0100
-Message-ID: <20260109112120.896964993@linuxfoundation.org>
+Subject: [PATCH 6.1 066/634] phy: mscc: Fix PTP for VSC8574 and VSC8572
+Date: Fri,  9 Jan 2026 12:35:44 +0100
+Message-ID: <20260109112119.929825018@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -55,74 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike McGowen <mike.mcgowen@microchip.com>
+From: Horatiu Vultur <horatiu.vultur@microchip.com>
 
-[ Upstream commit 80d560d94fa9b28069c62e1a64ae4a03d5f43fbc ]
+[ Upstream commit ea5df88aeca112aac69e6c32e3dd1433a113b0c9 ]
 
-Reduce CPU contention when incrementing variable raid_bypass_cnt.
+The PTP initialization is two-step. First part are the function
+vsc8584_ptp_probe_once() and vsc8584_ptp_probe() at probe time which
+initialize the locks, queues, creates the PTP device. The second part is
+the function vsc8584_ptp_init() at config_init() time which initialize
+PTP in the HW.
 
-Remove the atomic operations for this variable by changing the atomic to an
-unsigned int and replace atomic operations with standard operations. The
-value is only checked that it is increasing and accuracy is not required.
+For VSC8574 and VSC8572, the PTP initialization is incomplete. It is
+missing the first part but it makes the second part. Meaning that the
+ptp_clock_register() is never called.
 
-Reviewed-by: Scott Benesh <scott.benesh@microchip.com>
-Reviewed-by: Scott Teel <scott.teel@microchip.com>
-Reviewed-by: Kevin Barnett <kevin.barnett@microchip.com>
-Signed-off-by: Mike McGowen <mike.mcgowen@microchip.com>
-Signed-off-by: Don Brace <don.brace@microchip.com>
-Link: https://lore.kernel.org/r/20230428153712.297638-6-don.brace@microchip.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: b518e86d1a70 ("scsi: smartpqi: Fix device resources accessed after device removal")
+There is no crash without the first part when enabling PTP but this is
+unexpected because some PHys have PTP functionality exposed by the
+driver and some don't even though they share the same PTP clock PTP.
+
+Fixes: 774626fa440e ("net: phy: mscc: Add PTP support for 2 more VSC PHYs")
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Link: https://patch.msgid.link/20251023191350.190940-3-horatiu.vultur@microchip.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/smartpqi/smartpqi.h      | 2 +-
- drivers/scsi/smartpqi/smartpqi_init.c | 6 +++---
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/phy/mscc/mscc_main.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/smartpqi/smartpqi.h b/drivers/scsi/smartpqi/smartpqi.h
-index af27bb0f3133e..6e2f08ac68166 100644
---- a/drivers/scsi/smartpqi/smartpqi.h
-+++ b/drivers/scsi/smartpqi/smartpqi.h
-@@ -1147,7 +1147,7 @@ struct pqi_scsi_dev {
- 
- 	struct pqi_stream_data stream_data[NUM_STREAMS_PER_LUN];
- 	atomic_t scsi_cmds_outstanding[PQI_MAX_LUNS_PER_DEVICE];
--	atomic_t raid_bypass_cnt;
-+	unsigned int raid_bypass_cnt;
- };
- 
- /* VPD inquiry pages */
-diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
-index d97946a09f646..4822b830ea371 100644
---- a/drivers/scsi/smartpqi/smartpqi_init.c
-+++ b/drivers/scsi/smartpqi/smartpqi_init.c
-@@ -6035,7 +6035,7 @@ static int pqi_scsi_queue_command(struct Scsi_Host *shost, struct scsi_cmnd *scm
- 			rc = pqi_raid_bypass_submit_scsi_cmd(ctrl_info, device, scmd, queue_group);
- 			if (rc == 0 || rc == SCSI_MLQUEUE_HOST_BUSY) {
- 				raid_bypassed = true;
--				atomic_inc(&device->raid_bypass_cnt);
-+				device->raid_bypass_cnt++;
- 			}
- 		}
- 		if (!raid_bypassed)
-@@ -7274,7 +7274,7 @@ static ssize_t pqi_raid_bypass_cnt_show(struct device *dev,
- 	struct scsi_device *sdev;
- 	struct pqi_scsi_dev *device;
- 	unsigned long flags;
--	int raid_bypass_cnt;
-+	unsigned int raid_bypass_cnt;
- 
- 	sdev = to_scsi_device(dev);
- 	ctrl_info = shost_to_hba(sdev->host);
-@@ -7290,7 +7290,7 @@ static ssize_t pqi_raid_bypass_cnt_show(struct device *dev,
- 		return -ENODEV;
- 	}
- 
--	raid_bypass_cnt = atomic_read(&device->raid_bypass_cnt);
-+	raid_bypass_cnt = device->raid_bypass_cnt;
- 
- 	spin_unlock_irqrestore(&ctrl_info->scsi_device_list_lock, flags);
- 
+diff --git a/drivers/net/phy/mscc/mscc_main.c b/drivers/net/phy/mscc/mscc_main.c
+index 2fabb6a7d2415..d9ad8aac58098 100644
+--- a/drivers/net/phy/mscc/mscc_main.c
++++ b/drivers/net/phy/mscc/mscc_main.c
+@@ -2560,7 +2560,7 @@ static struct phy_driver vsc85xx_driver[] = {
+ 	.suspend	= &genphy_suspend,
+ 	.resume		= &genphy_resume,
+ 	.remove		= &vsc85xx_remove,
+-	.probe		= &vsc8574_probe,
++	.probe		= &vsc8584_probe,
+ 	.set_wol	= &vsc85xx_wol_set,
+ 	.get_wol	= &vsc85xx_wol_get,
+ 	.get_tunable	= &vsc85xx_get_tunable,
+@@ -2581,12 +2581,12 @@ static struct phy_driver vsc85xx_driver[] = {
+ 	.config_aneg    = &vsc85xx_config_aneg,
+ 	.aneg_done	= &genphy_aneg_done,
+ 	.read_status	= &vsc85xx_read_status,
+-	.handle_interrupt = vsc85xx_handle_interrupt,
++	.handle_interrupt = vsc8584_handle_interrupt,
+ 	.config_intr    = &vsc85xx_config_intr,
+ 	.suspend	= &genphy_suspend,
+ 	.resume		= &genphy_resume,
+ 	.remove		= &vsc85xx_remove,
+-	.probe		= &vsc8574_probe,
++	.probe		= &vsc8584_probe,
+ 	.set_wol	= &vsc85xx_wol_set,
+ 	.get_wol	= &vsc85xx_wol_get,
+ 	.get_tunable	= &vsc85xx_get_tunable,
 -- 
 2.51.0
 
