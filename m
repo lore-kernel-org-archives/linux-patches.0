@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CFE823ED5B;
-	Fri,  9 Jan 2026 12:10:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9047F35A93D;
+	Fri,  9 Jan 2026 12:10:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960616; cv=none; b=e5zOQaVSy3qZHrLtmED4I06xfk2GvD4jq6N93xfC55AKwyuKYEq5BeQtM8asquU6bVrREApYu+19LvFhf6QY320C7xJaeN3PSz9Cb+v4TlzmmF/l6F1+DJFFfuOqtCfZ8Rc7hM4x4ZwU3SF3NKK4GIcFX5TMP5c54wHdAD2t+ZI=
+	t=1767960618; cv=none; b=O3MulRbkl+PusPb0X2OvB/GG/WcCqhOqV/pKFay6V0mvDdrhhoZgeMK5CawAXVx8LPuYkJDlL73XcQFSwAE4dO6Y8koSPaA+qxlISDRQcbmbsXb6PXjDT8lLVVtWe2fYBMnAtAkzNe357ZRTvzjI8e0Y+gbgjSBXD+Xh+oC7ILE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960616; c=relaxed/simple;
-	bh=9nzShEq1csnzae3gy/fHbRqG5JjkhwJ/+HzBhxuhWUU=;
+	s=arc-20240116; t=1767960618; c=relaxed/simple;
+	bh=DtetrF+s8XhnbuXFvcijRgBp7NjPER7O1twII2XTLlM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PsqHpC3XOFl/wDAFp1/6vYg+568aJ0SZtb7ySP3hAEvTh+pughRogKJm7TVPgInvLQm/vY2bPP0nbEP1MZqUWMVHz9pU8mD8T7SQI8JE7ED6wmN8+5vZM2KW7Oi4bHkKz3tmgOdyaP7eb76N36yYaNT6LTjuoV8mmuMJ7+WfQT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AoXU0hBC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kFLKLt831YV4BbG4ooeNMTJFMgelHx+jUj3ZUNKmEGZq7rMXioVqn0icKXRdqOjpUbIjTdgeOKTCsozQ3JJ4MHLSS0RFqIxPUx/CnlT93FO7HbLHDSriYYpJfjRqn67hlr7/pew6T4hklZFccvPEkfDXX9YA6VTUsPRaOOiIAV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CfeWSD5P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AoXU0hBC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3699BC19423;
-	Fri,  9 Jan 2026 12:10:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CfeWSD5P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BA95C19425;
+	Fri,  9 Jan 2026 12:10:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960615;
-	bh=9nzShEq1csnzae3gy/fHbRqG5JjkhwJ/+HzBhxuhWUU=;
+	s=korg; t=1767960618;
+	bh=DtetrF+s8XhnbuXFvcijRgBp7NjPER7O1twII2XTLlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AoXU0hBCoXBMP7xOAEs5Y+Tt3dQIKZY2Z2iYDRytRv0zDIRY7rcwaYeA5qEXplm0g
-	 r2EhM7AZi+O3wm3rIu/sUnT7bDlRIgdHOBVx/vdLs2ROmJiIdT37ydSVBl/uhjrrGS
-	 ZN7vWs8OraSBF/C5Mj+Fan4/4Cr75PJF9tobke68=
+	b=CfeWSD5P2fBNoK1pYuEmOYwl5Y5PzCDahsHj8UyCv7Lyyd1BZpj0YNCN0SaaLveyI
+	 6Z0v024xa8M/ZZodeHETrdLxgjERkNZq1Yzb27vyvdhm3zcPh8FxxNh/XLH2NWKlro
+	 qQeumPNNIybt6vM/mm0ZV7Fm0oFj1ALsVn457wbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiyuan Xie <xiejiyuan@vivo.com>,
-	Zhichi Lin <zhichi.lin@vivo.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Will Deacon <will@kernel.org>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Kees Cook <keescook@chromium.org>,
-	Marco Elver <elver@google.com>,
-	Yee Lee <yee.lee@mediatek.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 459/737] scs: fix a wrong parameter in __scs_magic
-Date: Fri,  9 Jan 2026 12:39:58 +0100
-Message-ID: <20260109112151.258145909@linuxfoundation.org>
+	Matteo Rizzo <matteorizzo@google.com>,
+	Jim Mattson <jmattson@google.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.6 468/737] KVM: SVM: Mark VMCB_PERM_MAP as dirty on nested VMRUN
+Date: Fri,  9 Jan 2026 12:40:07 +0100
+Message-ID: <20260109112151.593870842@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -57,65 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhichi Lin <zhichi.lin@vivo.com>
+From: Jim Mattson <jmattson@google.com>
 
-commit 08bd4c46d5e63b78e77f2605283874bbe868ab19 upstream.
+commit 93c9e107386dbe1243287a5b14ceca894de372b9 upstream.
 
-__scs_magic() needs a 'void *' variable, but a 'struct task_struct *' is
-given.  'task_scs(tsk)' is the starting address of the task's shadow call
-stack, and '__scs_magic(task_scs(tsk))' is the end address of the task's
-shadow call stack.  Here should be '__scs_magic(task_scs(tsk))'.
+Mark the VMCB_PERM_MAP bit as dirty in nested_vmcb02_prepare_control()
+on every nested VMRUN.
 
-The user-visible effect of this bug is that when CONFIG_DEBUG_STACK_USAGE
-is enabled, the shadow call stack usage checking function
-(scs_check_usage) would scan an incorrect memory range.  This could lead
-to:
+If L1 changes MSR interception (INTERCEPT_MSR_PROT) between two VMRUN
+instructions on the same L1 vCPU, the msrpm_base_pa in the associated
+vmcb02 will change, and the VMCB_PERM_MAP clean bit should be cleared.
 
-1. **Inaccurate stack usage reporting**: The function would calculate
-   wrong usage statistics for the shadow call stack, potentially showing
-   incorrect value in kmsg.
-
-2. **Potential kernel crash**: If the value of __scs_magic(tsk)is
-   greater than that of __scs_magic(task_scs(tsk)), the for loop may
-   access unmapped memory, potentially causing a kernel panic.  However,
-   this scenario is unlikely because task_struct is allocated via the slab
-   allocator (which typically returns lower addresses), while the shadow
-   call stack returned by task_scs(tsk) is allocated via vmalloc(which
-   typically returns higher addresses).
-
-However, since this is purely a debugging feature
-(CONFIG_DEBUG_STACK_USAGE), normal production systems should be not
-unaffected.  The bug only impacts developers and testers who are actively
-debugging stack usage with this configuration enabled.
-
-Link: https://lkml.kernel.org/r/20251011082222.12965-1-zhichi.lin@vivo.com
-Fixes: 5bbaf9d1fcb9 ("scs: Add support for stack usage debugging")
-Signed-off-by: Jiyuan Xie <xiejiyuan@vivo.com>
-Signed-off-by: Zhichi Lin <zhichi.lin@vivo.com>
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Acked-by: Will Deacon <will@kernel.org>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: Marco Elver <elver@google.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Yee Lee <yee.lee@mediatek.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 4bb170a5430b ("KVM: nSVM: do not mark all VMCB02 fields dirty on nested vmexit")
+Reported-by: Matteo Rizzo <matteorizzo@google.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Jim Mattson <jmattson@google.com>
+Link: https://lore.kernel.org/r/20250922162935.621409-2-jmattson@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/scs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/svm/nested.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/kernel/scs.c
-+++ b/kernel/scs.c
-@@ -135,7 +135,7 @@ static void scs_check_usage(struct task_
- 	if (!IS_ENABLED(CONFIG_DEBUG_STACK_USAGE))
- 		return;
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -676,6 +676,7 @@ static void nested_vmcb02_prepare_contro
+ 	vmcb02->control.nested_ctl = vmcb01->control.nested_ctl;
+ 	vmcb02->control.iopm_base_pa = vmcb01->control.iopm_base_pa;
+ 	vmcb02->control.msrpm_base_pa = vmcb01->control.msrpm_base_pa;
++	vmcb_mark_dirty(vmcb02, VMCB_PERM_MAP);
  
--	for (p = task_scs(tsk); p < __scs_magic(tsk); ++p) {
-+	for (p = task_scs(tsk); p < __scs_magic(task_scs(tsk)); ++p) {
- 		if (!READ_ONCE_NOCHECK(*p))
- 			break;
- 		used += sizeof(*p);
+ 	/* Done at vmrun: asid.  */
+ 
 
 
