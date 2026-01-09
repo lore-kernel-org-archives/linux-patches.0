@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713542F0C7F;
-	Fri,  9 Jan 2026 12:13:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5607C359F8C;
+	Fri,  9 Jan 2026 12:13:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960819; cv=none; b=HxunrlpyUMhhh7c0O0blBrLmKVW4u5Bz3HmmnE0+zcrq4vha9Cfv11u+fJ3HjZyTZggRTefOT3EDsir7JVXnxNLVI+cdlMk3AarbxMIP19pFNo87zncR7sqWGjn+O914X9eA4raIaOh1LWS4rkjjHbq1efDTVOGgssv9kKLTHEE=
+	t=1767960822; cv=none; b=jC6kV1S3P6a0SjTcVuqnnUOC8p0HcWL5XuIDp+sd3Hd0tMIJ39lSgupvfDZUIm9hSRjXFrQ+UIbUgVSE9Vl3tFzisxF5JYFJjhs2gLOK4EHOhvLg7ZyqTCpyNbUzpZ9DUX0RPxdjnstdCnF4npp5mFrPQcpLpRDTrgFOg1yloAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960819; c=relaxed/simple;
-	bh=kxd+4t7Hm8CoMhwJeIFDQZrFYP4kL/WvM0l/2jQxkCo=;
+	s=arc-20240116; t=1767960822; c=relaxed/simple;
+	bh=JeZdNnFZJMFj6fMz+VpYR4TyuSMpyFPjoeWl8qzi2jo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FEtUeXXd7pW/nNV2uaIj636c7Zu5BYqF6czZiFHGu4ftt58R7K3zdKipUimo7F8Ndh0mXKFrk2o8hF+eRZB6/uZVjnCZYbeIeXTG0ew43z8j36PDVHQ4t8QJDOqb/4wRWrR7BLwPDW7eAvqABkeMq0ZhzcIGtYGAicmXICmWN6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ej9cWcQF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pE8By3TK9GsG0Mi0W6HYcZDqcDgjgKzFYTwSfbYdy05OtU0hJdyzYvNE/Mw3AEanFFKDZKJ8US86HJkqsE25mO0dVhvttHyn3AjqftAUxSLkdtU3GMqhhbuH1UkTaGabnz+X68/YGVwBSkyBAtGxW1xbiZioxuRTlmacDem5vaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=otIE8mxg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ej9cWcQF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EED4CC4CEF1;
-	Fri,  9 Jan 2026 12:13:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="otIE8mxg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D53C7C4CEF1;
+	Fri,  9 Jan 2026 12:13:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960819;
-	bh=kxd+4t7Hm8CoMhwJeIFDQZrFYP4kL/WvM0l/2jQxkCo=;
+	s=korg; t=1767960822;
+	bh=JeZdNnFZJMFj6fMz+VpYR4TyuSMpyFPjoeWl8qzi2jo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ej9cWcQFgIHu9JRhgMmzBQNG7qvB/3IwwHswcgHIcQQbXSdV6emo2kM6HYOJcq5ZW
-	 5FBzV+5XLOQ2fpXa5AXisJ7pke00GiiWA59XCFvkmnK0hq37pr6Ax4/Uw2bqsH1l3o
-	 EGCagwMMVPoGHeN67L6IKmtHtPMHUiKWReIFC8vk=
+	b=otIE8mxgHr9fHwy+6qjm86qFxWWDfPaMH6BSMCzyvlSDvjYGXdpJfkNRGFCvoXxa1
+	 WNEFoBTHT9+4ycwbMCFpbhx5rWf8eDtwpOjn9e7tNM2pEjoOzifQ3hUne8673mH2wS
+	 i8kqmBHyB4MMEieOehd1KopcV9fmTAySjvigdfcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>
-Subject: [PATCH 6.6 494/737] platform/x86: intel: chtwc_int33fe: dont dereference swnode args
-Date: Fri,  9 Jan 2026 12:40:33 +0100
-Message-ID: <20260109112152.574849102@linuxfoundation.org>
+	Tom Sela <tomsela@amazon.com>,
+	Yonatan Nachum <ynachum@amazon.com>,
+	Michael Margolin <mrgolin@amazon.com>,
+	Gal Pressman <gal.pressman@linux.dev>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 530/737] RDMA/efa: Remove possible negative shift
+Date: Fri,  9 Jan 2026 12:41:09 +0100
+Message-ID: <20260109112153.934093727@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -47,119 +48,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Michael Margolin <mrgolin@amazon.com>
 
-commit 527250cd9092461f1beac3e4180a4481bffa01b5 upstream.
+[ Upstream commit 85463eb6a46caf2f1e0e1a6d0731f2f3bab17780 ]
 
-Members of struct software_node_ref_args should not be dereferenced
-directly but set using the provided macros. Commit d7cdbbc93c56
-("software node: allow referencing firmware nodes") changed the name of
-the software node member and caused a build failure. Remove all direct
-dereferences of the ref struct as a fix.
+The page size used for device might in some cases be smaller than
+PAGE_SIZE what results in a negative shift when calculating the number of
+host pages in PAGE_SIZE for a debug log. Remove the debug line together
+with the calculation.
 
-However, this driver also seems to abuse the software node interface by
-waiting for a node with an arbitrary name "intel-xhci-usb-sw" to appear
-in the system before setting up the reference for the I2C device, while
-the actual software node already exists in the intel-xhci-usb-role-switch
-module and should be used to set up a static reference. Add a FIXME for
-a future improvement.
-
-Fixes: d7cdbbc93c56 ("software node: allow referencing firmware nodes")
-Fixes: 53c24c2932e5 ("platform/x86: intel_cht_int33fe: use inline reference properties")
-Cc: stable@vger.kernel.org
-Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Closes: https://lore.kernel.org/all/20251121111534.7cdbfe5c@canb.auug.org.au/
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Acked-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 40909f664d27 ("RDMA/efa: Add EFA verbs implementation")
+Link: https://patch.msgid.link/r/20251210173656.8180-1-mrgolin@amazon.com
+Reviewed-by: Tom Sela <tomsela@amazon.com>
+Reviewed-by: Yonatan Nachum <ynachum@amazon.com>
+Signed-off-by: Michael Margolin <mrgolin@amazon.com>
+Reviewed-by: Gal Pressman <gal.pressman@linux.dev>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/chtwc_int33fe.c |   29 ++++++++++++++++++++---------
- 1 file changed, 20 insertions(+), 9 deletions(-)
+ drivers/infiniband/hw/efa/efa_verbs.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/drivers/platform/x86/intel/chtwc_int33fe.c
-+++ b/drivers/platform/x86/intel/chtwc_int33fe.c
-@@ -77,7 +77,7 @@ static const struct software_node max170
-  * software node.
-  */
- static struct software_node_ref_args fusb302_mux_refs[] = {
--	{ .node = NULL },
-+	SOFTWARE_NODE_REFERENCE(NULL),
- };
- 
- static const struct property_entry fusb302_properties[] = {
-@@ -190,11 +190,6 @@ static void cht_int33fe_remove_nodes(str
+diff --git a/drivers/infiniband/hw/efa/efa_verbs.c b/drivers/infiniband/hw/efa/efa_verbs.c
+index 0f8ca99d0827..2a5b93ef4b33 100644
+--- a/drivers/infiniband/hw/efa/efa_verbs.c
++++ b/drivers/infiniband/hw/efa/efa_verbs.c
+@@ -1224,13 +1224,9 @@ static int umem_to_page_list(struct efa_dev *dev,
+ 			     u32 hp_cnt,
+ 			     u8 hp_shift)
  {
- 	software_node_unregister_node_group(node_group);
+-	u32 pages_in_hp = BIT(hp_shift - PAGE_SHIFT);
+ 	struct ib_block_iter biter;
+ 	unsigned int hp_idx = 0;
  
--	if (fusb302_mux_refs[0].node) {
--		fwnode_handle_put(software_node_fwnode(fusb302_mux_refs[0].node));
--		fusb302_mux_refs[0].node = NULL;
--	}
+-	ibdev_dbg(&dev->ibdev, "hp_cnt[%u], pages_in_hp[%u]\n",
+-		  hp_cnt, pages_in_hp);
 -
- 	if (data->dp) {
- 		data->dp->secondary = NULL;
- 		fwnode_handle_put(data->dp);
-@@ -202,7 +197,15 @@ static void cht_int33fe_remove_nodes(str
- 	}
- }
+ 	rdma_umem_for_each_dma_block(umem, &biter, BIT(hp_shift))
+ 		page_list[hp_idx++] = rdma_block_iter_dma_address(&biter);
  
--static int cht_int33fe_add_nodes(struct cht_int33fe_data *data)
-+static void cht_int33fe_put_swnode(void *data)
-+{
-+	struct fwnode_handle *fwnode = data;
-+
-+	fwnode_handle_put(fwnode);
-+	fusb302_mux_refs[0] = SOFTWARE_NODE_REFERENCE(NULL);
-+}
-+
-+static int cht_int33fe_add_nodes(struct device *dev, struct cht_int33fe_data *data)
- {
- 	const struct software_node *mux_ref_node;
- 	int ret;
-@@ -212,17 +215,25 @@ static int cht_int33fe_add_nodes(struct
- 	 * until the mux driver has created software node for the mux device.
- 	 * It means we depend on the mux driver. This function will return
- 	 * -EPROBE_DEFER until the mux device is registered.
-+	 *
-+	 * FIXME: the relevant software node exists in intel-xhci-usb-role-switch
-+	 * and - if exported - could be used to set up a static reference.
- 	 */
- 	mux_ref_node = software_node_find_by_name(NULL, "intel-xhci-usb-sw");
- 	if (!mux_ref_node)
- 		return -EPROBE_DEFER;
- 
-+	ret = devm_add_action_or_reset(dev, cht_int33fe_put_swnode,
-+				       software_node_fwnode(mux_ref_node));
-+	if (ret)
-+		return ret;
-+
- 	/*
- 	 * Update node used in "usb-role-switch" property. Note that we
- 	 * rely on software_node_register_node_group() to use the original
- 	 * instance of properties instead of copying them.
- 	 */
--	fusb302_mux_refs[0].node = mux_ref_node;
-+	fusb302_mux_refs[0] = SOFTWARE_NODE_REFERENCE(mux_ref_node);
- 
- 	ret = software_node_register_node_group(node_group);
- 	if (ret)
-@@ -345,7 +356,7 @@ static int cht_int33fe_typec_probe(struc
- 		return fusb302_irq;
- 	}
- 
--	ret = cht_int33fe_add_nodes(data);
-+	ret = cht_int33fe_add_nodes(dev, data);
- 	if (ret)
- 		return ret;
- 
+-- 
+2.51.0
+
 
 
