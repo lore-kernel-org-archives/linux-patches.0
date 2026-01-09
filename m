@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65703359F98;
-	Fri,  9 Jan 2026 12:03:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EADC33CE9A;
+	Fri,  9 Jan 2026 12:03:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960192; cv=none; b=OSr31FS8J+hJ4FOaIukagbEsO3598+MK/5z/mN5YRDv80zOQBUHL21tSZ+B5Ol5xTpW5HNlHgRd2AsyjoC6yqF7PPqwtboKGdE6t15Tu9hBBdQBneSUAqycELpqaf3gN3pnLTznX5Ndh+HDqgvIc15bHotnmaAz9qnmFZbYOo34=
+	t=1767960195; cv=none; b=PZoffVfbydiVS5dYnXlZmiUpG0eDCdDtkM9zCaC7Vzr542FshCLYmcagM6ItELuYWAzQlhzjoByp2If3NPrwyYSZhDg16tkHfVuchHblsX/C0tRn4Bc6lR9Sp+7QqbnKkQzjYK//0Kg/9/+oLHXsJadpAp2aho9LlOYLBy9z0AY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960192; c=relaxed/simple;
-	bh=NmHApGR8+9V3afV5lPQJxmmrLiyqg6ZVNWXdU/e22So=;
+	s=arc-20240116; t=1767960195; c=relaxed/simple;
+	bh=Pelj5koWRfgpb/bX9yZSQFxbL8LtR/h9qPawgSKr8Xk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B5bvROlCVE/jk2d7V+UVu9uJTArk122WV2C6uMU2FZNO+pS0Z135p0zXKGs3hfzB3fEV9KSVJ/U9hnqIaThInrSNABIB3sYCxdJhuUAjnueI/JN2JMNii5MjnduKdnC99AbDHBQNA+wWYSBzfB8RR5Z44uL0OmfkiAS+qj5/mas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wun6kpRk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ec+J02Z7faoQZfPGqZ7sWfcVvtTgKijC7BN42of8gptiiFoMtWxD7lfsArejb4UEsKLHc4iRTkNU1FLkcZRV/JE0r1tAvjf+JQPy2KDXryhAaajDpfITeVF3dWSgcmFwHJO4s32w9Q7e9gWjVQCKLAnWkv2Uy+wFuGGate3+jPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w916amXA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wun6kpRk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6DEBC4CEF1;
-	Fri,  9 Jan 2026 12:03:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w916amXA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF073C4CEF1;
+	Fri,  9 Jan 2026 12:03:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960192;
-	bh=NmHApGR8+9V3afV5lPQJxmmrLiyqg6ZVNWXdU/e22So=;
+	s=korg; t=1767960195;
+	bh=Pelj5koWRfgpb/bX9yZSQFxbL8LtR/h9qPawgSKr8Xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wun6kpRkAIrpDKYuLejqRhXez9tdeIy1FhIMfhpGCgOTbkNfWDtn+nI50qbrf49M9
-	 jYHY+qZiWDiTreCKvES7y71vokf/dF1I2wSFBb3jWXX88QfMQ0JHG9K8eP0/Q9+J5A
-	 a/EVI/ba7HAWQEhvVsY0Fd7PjwsLFETSpjumQvL0=
+	b=w916amXAsyV4sp/F3EFj5DypRtiFoMOpr0aP0Km1Zf6NBWxQbiwD4+i8GPV0UVaKN
+	 TVMOmX3o2fBlaA/yg/skbLPr+LHQImMvXnkyNXohlmn5FQKlye8bYnb3rUcVj+7zyN
+	 NV7luFL/nVzzXJPd94S8+kApirWI1SFtS04/OrvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Malyshev <mike.malyshev@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nsc@kernel.org>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Benjamin Marzinski <bmarzins@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 316/737] kbuild: Use objtree for module signing key path
-Date: Fri,  9 Jan 2026 12:37:35 +0100
-Message-ID: <20260109112145.888904269@linuxfoundation.org>
+Subject: [PATCH 6.6 286/737] dm log-writes: Add missing set_freezable() for freezable kthread
+Date: Fri,  9 Jan 2026 12:37:05 +0100
+Message-ID: <20260109112144.770930470@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,56 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Malyshev <mike.malyshev@gmail.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit af61da281f52aba0c5b090bafb3a31c5739850ff ]
+[ Upstream commit ab08f9c8b363297cafaf45475b08f78bf19b88ef ]
 
-When building out-of-tree modules with CONFIG_MODULE_SIG_FORCE=y,
-module signing fails because the private key path uses $(srctree)
-while the public key path uses $(objtree). Since signing keys are
-generated in the build directory during kernel compilation, both
-paths should use $(objtree) for consistency.
+The log_writes_kthread() calls try_to_freeze() but lacks set_freezable(),
+rendering the freeze attempt ineffective since kernel threads are
+non-freezable by default. This prevents proper thread suspension during
+system suspend/hibernate.
 
-This causes SSL errors like:
-  SSL error:02001002:system library:fopen:No such file or directory
-  sign-file: /kernel-src/certs/signing_key.pem
+Add set_freezable() to explicitly mark the thread as freezable.
 
-The issue occurs because:
-- sig-key uses: $(srctree)/certs/signing_key.pem (source tree)
-- cmd_sign uses: $(objtree)/certs/signing_key.x509 (build tree)
-
-But both keys are generated in $(objtree) during the build.
-
-This complements commit 25ff08aa43e37 ("kbuild: Fix signing issue for
-external modules") which fixed the scripts path and public key path,
-but missed the private key path inconsistency.
-
-Fixes out-of-tree module signing for configurations with separate
-source and build directories (e.g., O=/kernel-out).
-
-Signed-off-by: Mikhail Malyshev <mike.malyshev@gmail.com>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Nicolas Schier <nsc@kernel.org>
-Link: https://patch.msgid.link/20251015163452.3754286-1-mike.malyshev@gmail.com
-Signed-off-by: Nicolas Schier <nsc@kernel.org>
+Fixes: 0e9cebe72459 ("dm: add log writes target")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Reviewed-by: Benjamin Marzinski <bmarzins@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/Makefile.modinst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/dm-log-writes.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/scripts/Makefile.modinst b/scripts/Makefile.modinst
-index 0afd75472679f..3e8b069a04ff0 100644
---- a/scripts/Makefile.modinst
-+++ b/scripts/Makefile.modinst
-@@ -96,7 +96,7 @@ endif
- # Don't stop modules_install even if we can't sign external modules.
- #
- ifeq ($(filter pkcs11:%, $(CONFIG_MODULE_SIG_KEY)),)
--sig-key := $(if $(wildcard $(CONFIG_MODULE_SIG_KEY)),,$(srctree)/)$(CONFIG_MODULE_SIG_KEY)
-+sig-key := $(if $(wildcard $(CONFIG_MODULE_SIG_KEY)),,$(objtree)/)$(CONFIG_MODULE_SIG_KEY)
- else
- sig-key := $(CONFIG_MODULE_SIG_KEY)
- endif
+diff --git a/drivers/md/dm-log-writes.c b/drivers/md/dm-log-writes.c
+index f17a6cf2284ec..dabfc856443a9 100644
+--- a/drivers/md/dm-log-writes.c
++++ b/drivers/md/dm-log-writes.c
+@@ -432,6 +432,7 @@ static int log_writes_kthread(void *arg)
+ 	struct log_writes_c *lc = arg;
+ 	sector_t sector = 0;
+ 
++	set_freezable();
+ 	while (!kthread_should_stop()) {
+ 		bool super = false;
+ 		bool logging_enabled;
 -- 
 2.51.0
 
