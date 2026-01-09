@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF8933C53A;
-	Fri,  9 Jan 2026 12:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5ABE335BCD;
+	Fri,  9 Jan 2026 12:34:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962078; cv=none; b=aJc9SQk/62kfv51NUmLG87K8g/33HZB5KNA01Ao04eefd/YwAurWqegFNa8V1ww2edkkNauurOQdPtBgvxACKwfJdR6OHq2bJcQex8O3vKxOj9LOJmGtHVC/WwIlT2XvxfZbo+S4xq73JxZetdPtmdpKXqWiZkjOQ9wB4CTc1lE=
+	t=1767962080; cv=none; b=LulUPnqj2C7sFGLgYXsib+R9kPo9dPPVY/yz3U5MX/UYogdsXDDmNarjvf8FcMg5kJZrVs35tOJVXnw75W0nFNozQUYhVAJMkzn7A5aeO8axaHqlFvqaRkyaBkzzTtEycjxaXV2EXY4jIJozcS6b91ome8iVUVryc5bVNwoIMfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962078; c=relaxed/simple;
-	bh=f5S9Y43VNzMsGc1UIGqPhelc0pMjLQeYHhbT4Kc9Ir8=;
+	s=arc-20240116; t=1767962080; c=relaxed/simple;
+	bh=JAx7wIdscb1g53Ooa7T5P+a2IGxebbGCWJlCxDsfkD0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X1SOiq2EsE5UdeQrJ7MnswFFu7WQK/XGNTS9cGCLMmkcF1hBwT8RgPP8YXqJix7VJoidJgu96fc6OeN8fM/J82Y4tP2xVphcVv3R/DN5H3f96ikpq9uwMk2dr+1pw9qzOQdLYM3b67yrQoL6v5+fwfolglmLjBRW5bCJLXTDduc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s7Lrrg4l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C/GxmP7sgheqimM7MhQEW9d0mS3+ES3wuqJOxE831G8bpSmJLzW+jAqUBTCt45GoGKh1uWvAMGZGw8P74qdjcjKWZQwM3a7/YVFmU7UBwj8LzM7osBKVMKJEmLDMCAsX+7QnHncdIUDe4qFIEwz4h0OB2erp4Px7jdyMbeObMpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WVcnwOl7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s7Lrrg4l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A8AAC4CEF1;
-	Fri,  9 Jan 2026 12:34:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WVcnwOl7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51F10C4CEF1;
+	Fri,  9 Jan 2026 12:34:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962077;
-	bh=f5S9Y43VNzMsGc1UIGqPhelc0pMjLQeYHhbT4Kc9Ir8=;
+	s=korg; t=1767962080;
+	bh=JAx7wIdscb1g53Ooa7T5P+a2IGxebbGCWJlCxDsfkD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s7Lrrg4lqRmjRCPmHo6fBmaTTDIBqfni466ZinN+7CG1oj7ZB7GDt+baRT4z/f+p5
-	 c9FwI/SFDIRsTgXX22KQoEDRS2OlmePxZU/4VhGk5Yn+qVC0ALzrKQz+ORqzP4eEi7
-	 GnNkOfXXx0CmW/eIQ8jHH00V41p/x48Hgmwv8EaA=
+	b=WVcnwOl7jr9ErIF+RE5vXPD6BmNAogaVdCX9u1y7myM9h8L5gTTMXyt5L4YAfe+Cr
+	 Y9D/QxrdftnnSmIR30ZZu0TW4FKOj/dJpBOso/2S0zRwxo6JvAuF6VJO+ct4FFAPMe
+	 RUmMfEBrJ72SG8OPXK/USbWRlhmhaBhmahuOAkYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Malyshev <mike.malyshev@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nsc@kernel.org>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Yangtao Li <frank.li@vivo.com>,
+	linux-fsdevel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 237/634] kbuild: Use objtree for module signing key path
-Date: Fri,  9 Jan 2026 12:38:35 +0100
-Message-ID: <20260109112126.462240308@linuxfoundation.org>
+Subject: [PATCH 6.1 238/634] hfsplus: fix volume corruption issue for generic/070
+Date: Fri,  9 Jan 2026 12:38:36 +0100
+Message-ID: <20260109112126.499280267@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,56 +53,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Malyshev <mike.malyshev@gmail.com>
+From: Viacheslav Dubeyko <slava@dubeyko.com>
 
-[ Upstream commit af61da281f52aba0c5b090bafb3a31c5739850ff ]
+[ Upstream commit ed490f36f439b877393c12a2113601e4145a5a56 ]
 
-When building out-of-tree modules with CONFIG_MODULE_SIG_FORCE=y,
-module signing fails because the private key path uses $(srctree)
-while the public key path uses $(objtree). Since signing keys are
-generated in the build directory during kernel compilation, both
-paths should use $(objtree) for consistency.
+The xfstests' test-case generic/070 leaves HFS+ volume
+in corrupted state:
 
-This causes SSL errors like:
-  SSL error:02001002:system library:fopen:No such file or directory
-  sign-file: /kernel-src/certs/signing_key.pem
+sudo ./check generic/070
+FSTYP -- hfsplus
+PLATFORM -- Linux/x86_64 hfsplus-testing-0001 6.17.0-rc1+ #4 SMP PREEMPT_DYNAMIC Wed Oct 1 15:02:44 PDT 2025
+MKFS_OPTIONS -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
 
-The issue occurs because:
-- sig-key uses: $(srctree)/certs/signing_key.pem (source tree)
-- cmd_sign uses: $(objtree)/certs/signing_key.x509 (build tree)
+generic/070 _check_generic_filesystem: filesystem on /dev/loop50 is inconsistent
+(see xfstests-dev/results//generic/070.full for details)
 
-But both keys are generated in $(objtree) during the build.
+Ran: generic/070
+Failures: generic/070
+Failed 1 of 1 tests
 
-This complements commit 25ff08aa43e37 ("kbuild: Fix signing issue for
-external modules") which fixed the scripts path and public key path,
-but missed the private key path inconsistency.
+sudo fsck.hfsplus -d /dev/loop50
+** /dev/loop50
+Using cacheBlockSize=32K cacheTotalBlock=1024 cacheSize=32768K.
+Executing fsck_hfs (version 540.1-Linux).
+** Checking non-journaled HFS Plus Volume.
+The volume name is test
+** Checking extents overflow file.
+Unused node is not erased (node = 1)
+** Checking catalog file.
+** Checking multi-linked files.
+** Checking catalog hierarchy.
+** Checking extended attributes file.
+** Checking volume bitmap.
+** Checking volume information.
+Verify Status: VIStat = 0x0000, ABTStat = 0x0000 EBTStat = 0x0004
+CBTStat = 0x0000 CatStat = 0x00000000
+** Repairing volume.
+** Rechecking volume.
+** Checking non-journaled HFS Plus Volume.
+The volume name is test
+** Checking extents overflow file.
+** Checking catalog file.
+** Checking multi-linked files.
+** Checking catalog hierarchy.
+** Checking extended attributes file.
+** Checking volume bitmap.
+** Checking volume information.
+** The volume test was repaired successfully.
 
-Fixes out-of-tree module signing for configurations with separate
-source and build directories (e.g., O=/kernel-out).
+It is possible to see that fsck.hfsplus detected not
+erased and unused node for the case of extents overflow file.
+The HFS+ logic has special method that defines if the node
+should be erased:
 
-Signed-off-by: Mikhail Malyshev <mike.malyshev@gmail.com>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Nicolas Schier <nsc@kernel.org>
-Link: https://patch.msgid.link/20251015163452.3754286-1-mike.malyshev@gmail.com
-Signed-off-by: Nicolas Schier <nsc@kernel.org>
+bool hfs_bnode_need_zeroout(struct hfs_btree *tree)
+{
+	struct super_block *sb = tree->inode->i_sb;
+	struct hfsplus_sb_info *sbi = HFSPLUS_SB(sb);
+	const u32 volume_attr = be32_to_cpu(sbi->s_vhdr->attributes);
+
+	return tree->cnid == HFSPLUS_CAT_CNID &&
+		volume_attr & HFSPLUS_VOL_UNUSED_NODE_FIX;
+}
+
+However, it is possible to see that this method works
+only for the case of catalog file. But debugging of the issue
+has shown that HFSPLUS_VOL_UNUSED_NODE_FIX attribute has been
+requested for the extents overflow file too:
+
+catalog file
+kernel: hfsplus: node 4, num_recs 0, flags 0x10
+kernel: hfsplus: tree->cnid 4, volume_attr 0x80000800
+
+extents overflow file
+kernel: hfsplus: node 1, num_recs 0, flags 0x10
+kernel: hfsplus: tree->cnid 3, volume_attr 0x80000800
+
+This patch modifies the hfs_bnode_need_zeroout() by checking
+only volume_attr but not the b-tree ID because node zeroing
+can be requested for all HFS+ b-tree types.
+
+sudo ./check generic/070
+FSTYP         -- hfsplus
+PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 6.18.0-rc3+ #79 SMP PREEMPT_DYNAMIC Fri Oct 31 16:07:42 PDT 2025
+MKFS_OPTIONS  -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
+
+generic/070 33s ...  34s
+Ran: generic/070
+Passed all 1 tests
+
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+cc: Yangtao Li <frank.li@vivo.com>
+cc: linux-fsdevel@vger.kernel.org
+Link: https://lore.kernel.org/r/20251101001229.247432-1-slava@dubeyko.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/Makefile.modinst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/hfsplus/bnode.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/scripts/Makefile.modinst b/scripts/Makefile.modinst
-index 10df89b9ef679..dc947e7872b9f 100644
---- a/scripts/Makefile.modinst
-+++ b/scripts/Makefile.modinst
-@@ -67,7 +67,7 @@ endif
- #
- ifeq ($(CONFIG_MODULE_SIG_ALL),y)
- ifeq ($(filter pkcs11:%, $(CONFIG_MODULE_SIG_KEY)),)
--sig-key := $(if $(wildcard $(CONFIG_MODULE_SIG_KEY)),,$(srctree)/)$(CONFIG_MODULE_SIG_KEY)
-+sig-key := $(if $(wildcard $(CONFIG_MODULE_SIG_KEY)),,$(objtree)/)$(CONFIG_MODULE_SIG_KEY)
- else
- sig-key := $(CONFIG_MODULE_SIG_KEY)
- endif
+diff --git a/fs/hfsplus/bnode.c b/fs/hfsplus/bnode.c
+index 407d5152eb411..aa095e6fb20e8 100644
+--- a/fs/hfsplus/bnode.c
++++ b/fs/hfsplus/bnode.c
+@@ -704,6 +704,5 @@ bool hfs_bnode_need_zeroout(struct hfs_btree *tree)
+ 	struct hfsplus_sb_info *sbi = HFSPLUS_SB(sb);
+ 	const u32 volume_attr = be32_to_cpu(sbi->s_vhdr->attributes);
+ 
+-	return tree->cnid == HFSPLUS_CAT_CNID &&
+-		volume_attr & HFSPLUS_VOL_UNUSED_NODE_FIX;
++	return volume_attr & HFSPLUS_VOL_UNUSED_NODE_FIX;
+ }
 -- 
 2.51.0
 
