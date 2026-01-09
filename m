@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E41ED23F417;
-	Fri,  9 Jan 2026 12:28:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D57B638FA3;
+	Fri,  9 Jan 2026 12:28:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961700; cv=none; b=b42cbiMQqZ0Uu1iVp7jEM5tQXfSeZ2af5flvL7pQVZ2yKeepsTeLg2HkRDgAOntl7FpoXjTAxAwIfKqfP0pqc/znMDlpNO3AsEDxmQ3ZYP12J6En7c9JtYOS3dGCg79ASfD13iA78C5CsCVbD9Ncj08u/yglSM4BG0BhsJX2SV0=
+	t=1767961702; cv=none; b=Srw6V5CXmXSAvFCBa3/GlT6tRAtOa3eoqmEVSfcJqmK7ElBzkAyzNLXFRtPrVfetBIYlcSSKLPFiaJJu7JgvHVOfV3hm7Rzhg0dA7tUV4to10P7RTF+VaEN9K3K8WnYr++6FpHOSBMdpEnpXXuPLcGlQk63rCzWEjhbv1UYgzq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961700; c=relaxed/simple;
-	bh=Aa3cYXA+8jsVU/9YQneXAtrbSNCzaz1BE8bEV/Cqjk8=;
+	s=arc-20240116; t=1767961702; c=relaxed/simple;
+	bh=oWJNXvYuOnClr5g/f7muN9CHRmXojRHezqZEMpRPOpk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZJHQpdq/ieuxKXIMpBYdHTv6s/l31F3KynTov1qNUGYOO8qdz66wE8oUd+K1t9y1NiUeYYXbh0xMm0qIXSncesJ0EVq7TNcaSqYKkKSRbHkifMyBUPurA1u50YKN7Us/H3nYev6hlHYTiOLlmwjohXerouW8qZdwmxVPeNdCiF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O4BALS87; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EDPb+uOAXJPHWihYP+qURXVJusKliDsN86niW/Fo6zO33JmdOAn+DhtuKYRpwNtGlMtUIQ/sPfFExNvyZ7m4spElBYp/7vY4AOv4laUcpmO5v91YmZJelO+wA2A58Et6MKsm/7h5gGUtV3aaKGk3y5I15iWk5ZSr+KxrgYxn5ns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=icH19JLo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O4BALS87"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7079EC4CEF1;
-	Fri,  9 Jan 2026 12:28:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="icH19JLo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B7EBC4CEF1;
+	Fri,  9 Jan 2026 12:28:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961699;
-	bh=Aa3cYXA+8jsVU/9YQneXAtrbSNCzaz1BE8bEV/Cqjk8=;
+	s=korg; t=1767961702;
+	bh=oWJNXvYuOnClr5g/f7muN9CHRmXojRHezqZEMpRPOpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O4BALS87pLvd3cW/aak+kTk/HKGnNXEmiwPU+KJrAd8PL1/E5Ya+/uPqRtMnLs3hD
-	 qTyIB/l6Xc5hNDTJSvwavqiDt16sOx+T7+eLtacDkIYmAn3NwupfCai7ehUEc+FJyx
-	 YVvcpWfoOt4mZETG9g5YnRC0xbZi+87/IgZEba0Q=
+	b=icH19JLoLLf0em0MZUKau6Y5rDVqtvHsbm9s9qNBmdqpHoPuNOTipynqLhEAFzG5m
+	 JJU6gka+L2Jg8B9B9wqtgsUH4tkK/2Q/8d5OcEiZQrkqQJwkUyQE5Ncdp/BSXR5sG1
+	 dXWplSGC9968YvoYxAlRbFSufd3qAwV7Ko/CMPZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Egorenkov <egorenar@linux.ibm.com>,
-	Mete Durlu <meted@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Avri Altman <avri.altman@sandisk.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Bean Huo <beanhuo@micron.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 063/634] s390/smp: Fix fallback CPU detection
-Date: Fri,  9 Jan 2026 12:35:41 +0100
-Message-ID: <20260109112119.817365938@linuxfoundation.org>
+Subject: [PATCH 6.1 099/634] scsi: ufs: core: fix incorrect buffer duplication in ufshcd_read_string_desc()
+Date: Fri,  9 Jan 2026 12:36:17 +0100
+Message-ID: <20260109112121.159515408@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,48 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Bean Huo <beanhuo@micron.com>
 
-[ Upstream commit 07a75d08cfa1b883a6e1256666e5f0617ee99231 ]
+[ Upstream commit d794b499f948801f54d67ddbc34a6eac5a6d150a ]
 
-In case SCLP CPU detection does not work a fallback mechanism using SIGP is
-in place. Since a cleanup this does not work correctly anymore: new CPUs
-are only considered if their type matches the boot CPU.
+The function ufshcd_read_string_desc() was duplicating memory starting
+from the beginning of struct uc_string_id, which included the length and
+type fields. As a result, the allocated buffer contained unwanted
+metadata in addition to the string itself.
 
-Before the cleanup the information if a CPU type should be considered was
-also part of a structure generated by the fallback mechanism and indicated
-that a CPU type should not be considered when adding CPUs.
+The correct behavior is to duplicate only the Unicode character array in
+the structure. Update the code so that only the actual string content is
+copied into the new buffer.
 
-Since the rework a global SCLP state is used instead. If the global SCLP
-state indicates that the CPU type should be considered and the fallback
-mechanism is used, there may be a mismatch with CPU types if CPUs are
-added. This can lead to a system with only a single CPU even tough there
-are many more CPUs.
-
-Address this by simply copying the boot cpu type into the generated data
-structure from the fallback mechanism.
-
-Reported-by: Alexander Egorenkov <egorenar@linux.ibm.com>
-Fixes: d08d94306e90 ("s390/smp: cleanup core vs. cpu in the SCLP interface")
-Reviewed-by: Mete Durlu <meted@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: 5f57704dbcfe ("scsi: ufs: Use kmemdup in ufshcd_read_string_desc()")
+Reviewed-by: Avri Altman <avri.altman@sandisk.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Bean Huo <beanhuo@micron.com>
+Link: https://patch.msgid.link/20251107230518.4060231-3-beanhuo@iokpp.de
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/smp.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/ufs/core/ufshcd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/kernel/smp.c b/arch/s390/kernel/smp.c
-index 436dbf4d743d8..8346cb75643ca 100644
---- a/arch/s390/kernel/smp.c
-+++ b/arch/s390/kernel/smp.c
-@@ -758,6 +758,7 @@ static void __ref smp_get_core_info(struct sclp_core_info *info, int early)
- 				continue;
- 			info->core[info->configured].core_id =
- 				address >> smp_cpu_mt_shift;
-+			info->core[info->configured].type = boot_core_type;
- 			info->configured++;
- 		}
- 		info->combined = info->configured;
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 1120e83f781eb..7f24563159c1f 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -3586,7 +3586,7 @@ int ufshcd_read_string_desc(struct ufs_hba *hba, u8 desc_index,
+ 		str[ret++] = '\0';
+ 
+ 	} else {
+-		str = kmemdup(uc_str, uc_str->len, GFP_KERNEL);
++		str = kmemdup(uc_str->uc, uc_str->len, GFP_KERNEL);
+ 		if (!str) {
+ 			ret = -ENOMEM;
+ 			goto out;
 -- 
 2.51.0
 
