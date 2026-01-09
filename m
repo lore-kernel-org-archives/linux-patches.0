@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A25A4335BCD;
-	Fri,  9 Jan 2026 12:42:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9AF1CAB3;
+	Fri,  9 Jan 2026 12:42:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962541; cv=none; b=XXdhxD7RLNoxxpNLea6Sc7HBFWIFkZNUhGsw3Yu744erVbWdFxfiFB8KBfn0A6hOIHtQ47u6LS5OmsisYQy2z/EFdAdYHgP9kb7MPpt4FILrbCKWPP7ib9JPJXqaTZHq+AxcfK9OcGtpFxwmHZBG86wHYvDct52GYTBMay6Ti0s=
+	t=1767962544; cv=none; b=V+a7nZBJgplX3O/jrSglTzYtks2hJQaaxC0QRF2y378E5K4AWPyGoc038Yfb8mjSFBXCTtK9PYyOu+BCN4C29GISJPK/eN58V5JSJhCbMh61G3BUPvlT9aw9bQVkzb9FRBcHNMuoQE//tKmWl2D98EvazYVLaOBSs1c2t4Ft1ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962541; c=relaxed/simple;
-	bh=9anle2/v1JjC/zvzCMeDmKkNh6aLzGSsq3fYnaHqbl4=;
+	s=arc-20240116; t=1767962544; c=relaxed/simple;
+	bh=XKzgaA9NCrOwMmZrutGkYcFYst4iw5qrZc/jCrs34Sg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bpCUslISXl+UKmSVtPTHeVgR8+PZN7Hy52JRLrZj5HFkpjNtTHKo95YMGeDSPSeHHHMhKO25k3yka5rXtCYrGw4kst1e8pWj9dWQerEG40hV0i9s87CbogerWP3CDDCxOxhCDp6YinZHdl/Pn77ocWrQYJKZhS23t+2RjcnSbsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jt1pXuVX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t2YC/I8udyU32F796e7RoXu9qGIL3/boIYiSAIZWs34duz2Zctzl8sqO7SqyOtUbVULr6nK9h5WjZ81CjEzK77dXYShL6EHTmLi84li/FxGkHE7bLnAQ32HlZwflApeNIPcO/bOe3tZN29EILmlpn/wrLxfreXyzCngJf+zv/5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eh+KKyq4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jt1pXuVX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B404C4CEF1;
-	Fri,  9 Jan 2026 12:42:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eh+KKyq4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 094E9C19421;
+	Fri,  9 Jan 2026 12:42:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962541;
-	bh=9anle2/v1JjC/zvzCMeDmKkNh6aLzGSsq3fYnaHqbl4=;
+	s=korg; t=1767962544;
+	bh=XKzgaA9NCrOwMmZrutGkYcFYst4iw5qrZc/jCrs34Sg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jt1pXuVXxyKv8nqHpPVOg13g9rgAx5G60EY6XE+d8AIdVuruV4ra93v9zZD/p7Ozs
-	 g5pChTnKLXbTv/2jYnbltMpkvIeT6sN8gRrjxgYgBn7WGMqUfdPfNPdNf/zGHiacIp
-	 xhPV+fJflqFzjJiW510glZuiwDC47z9Qej9RHX+M=
+	b=eh+KKyq4J6Sf0cRR7xL1A6v4TxwJ93F3yZxqMpxx1wKz42xeZ3jSLX/E80OOfmu26
+	 Xtc8qrZB+lded2MGUNcUevUrKArEixo9DEcD+Dj3BboD3oHAlBfcYZZQvuYEdcSYQY
+	 BW/NX250Gha3FQNQHj8Po50sJSZGkkS3/OHbkc4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.1 384/634] i2c: amd-mp2: fix reference leak in MP2 PCI device
-Date: Fri,  9 Jan 2026 12:41:02 +0100
-Message-ID: <20260109112131.981008891@linuxfoundation.org>
+	Kohei Enju <enjuk@amazon.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 402/634] iavf: fix off-by-one issues in iavf_config_rss_reg()
+Date: Fri,  9 Jan 2026 12:41:20 +0100
+Message-ID: <20260109112132.655881977@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -50,51 +54,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Kohei Enju <enjuk@amazon.com>
 
-commit a6ee6aac66fb394b7f6e6187c73bdcd873f2d139 upstream.
+[ Upstream commit 6daa2893f323981c7894c68440823326e93a7d61 ]
 
-In i2c_amd_probe(), amd_mp2_find_device() utilizes
-driver_find_next_device() which internally calls driver_find_device()
-to locate the matching device. driver_find_device() increments the
-reference count of the found device by calling get_device(), but
-amd_mp2_find_device() fails to call put_device() to decrement the
-reference count before returning. This results in a reference count
-leak of the PCI device each time i2c_amd_probe() is executed, which
-may prevent the device from being properly released and cause a memory
-leak.
+There are off-by-one bugs when configuring RSS hash key and lookup
+table, causing out-of-bounds reads to memory [1] and out-of-bounds
+writes to device registers.
 
-Found by code review.
+Before commit 43a3d9ba34c9 ("i40evf: Allow PF driver to configure RSS"),
+the loop upper bounds were:
+    i <= I40E_VFQF_{HKEY,HLUT}_MAX_INDEX
+which is safe since the value is the last valid index.
 
-Cc: stable@vger.kernel.org
-Fixes: 529766e0a011 ("i2c: Add drivers for the AMD PCIe MP2 I2C controller")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20251022095402.8846-1-make24@iscas.ac.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+That commit changed the bounds to:
+    i <= adapter->rss_{key,lut}_size / 4
+where `rss_{key,lut}_size / 4` is the number of dwords, so the last
+valid index is `(rss_{key,lut}_size / 4) - 1`. Therefore, using `<=`
+accesses one element past the end.
+
+Fix the issues by using `<` instead of `<=`, ensuring we do not exceed
+the bounds.
+
+[1] KASAN splat about rss_key_size off-by-one
+  BUG: KASAN: slab-out-of-bounds in iavf_config_rss+0x619/0x800
+  Read of size 4 at addr ffff888102c50134 by task kworker/u8:6/63
+
+  CPU: 0 UID: 0 PID: 63 Comm: kworker/u8:6 Not tainted 6.18.0-rc2-enjuk-tnguy-00378-g3005f5b77652-dirty #156 PREEMPT(voluntary)
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+  Workqueue: iavf iavf_watchdog_task
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x6f/0xb0
+   print_report+0x170/0x4f3
+   kasan_report+0xe1/0x1a0
+   iavf_config_rss+0x619/0x800
+   iavf_watchdog_task+0x2be7/0x3230
+   process_one_work+0x7fd/0x1420
+   worker_thread+0x4d1/0xd40
+   kthread+0x344/0x660
+   ret_from_fork+0x249/0x320
+   ret_from_fork_asm+0x1a/0x30
+   </TASK>
+
+  Allocated by task 63:
+   kasan_save_stack+0x30/0x50
+   kasan_save_track+0x14/0x30
+   __kasan_kmalloc+0x7f/0x90
+   __kmalloc_noprof+0x246/0x6f0
+   iavf_watchdog_task+0x28fc/0x3230
+   process_one_work+0x7fd/0x1420
+   worker_thread+0x4d1/0xd40
+   kthread+0x344/0x660
+   ret_from_fork+0x249/0x320
+   ret_from_fork_asm+0x1a/0x30
+
+  The buggy address belongs to the object at ffff888102c50100
+   which belongs to the cache kmalloc-64 of size 64
+  The buggy address is located 0 bytes to the right of
+   allocated 52-byte region [ffff888102c50100, ffff888102c50134)
+
+  The buggy address belongs to the physical page:
+  page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x102c50
+  flags: 0x200000000000000(node=0|zone=2)
+  page_type: f5(slab)
+  raw: 0200000000000000 ffff8881000418c0 dead000000000122 0000000000000000
+  raw: 0000000000000000 0000000080200020 00000000f5000000 0000000000000000
+  page dumped because: kasan: bad access detected
+
+  Memory state around the buggy address:
+   ffff888102c50000: 00 00 00 00 00 00 00 fc fc fc fc fc fc fc fc fc
+   ffff888102c50080: 00 00 00 00 00 00 00 fc fc fc fc fc fc fc fc fc
+  >ffff888102c50100: 00 00 00 00 00 00 04 fc fc fc fc fc fc fc fc fc
+                                       ^
+   ffff888102c50180: 00 00 00 00 00 00 00 00 fc fc fc fc fc fc fc fc
+   ffff888102c50200: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+
+Fixes: 43a3d9ba34c9 ("i40evf: Allow PF driver to configure RSS")
+Signed-off-by: Kohei Enju <enjuk@amazon.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-amd-mp2-pci.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/iavf/iavf_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/i2c/busses/i2c-amd-mp2-pci.c
-+++ b/drivers/i2c/busses/i2c-amd-mp2-pci.c
-@@ -449,13 +449,16 @@ struct amd_mp2_dev *amd_mp2_find_device(
- {
- 	struct device *dev;
- 	struct pci_dev *pci_dev;
-+	struct amd_mp2_dev *mp2_dev;
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
+index 7119bce4c091..467ad433a47b 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_main.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
+@@ -1783,11 +1783,11 @@ static int iavf_config_rss_reg(struct iavf_adapter *adapter)
+ 	u16 i;
  
- 	dev = driver_find_next_device(&amd_mp2_pci_driver.driver, NULL);
- 	if (!dev)
- 		return NULL;
+ 	dw = (u32 *)adapter->rss_key;
+-	for (i = 0; i <= adapter->rss_key_size / 4; i++)
++	for (i = 0; i < adapter->rss_key_size / 4; i++)
+ 		wr32(hw, IAVF_VFQF_HKEY(i), dw[i]);
  
- 	pci_dev = to_pci_dev(dev);
--	return (struct amd_mp2_dev *)pci_get_drvdata(pci_dev);
-+	mp2_dev = (struct amd_mp2_dev *)pci_get_drvdata(pci_dev);
-+	put_device(dev);
-+	return mp2_dev;
- }
- EXPORT_SYMBOL_GPL(amd_mp2_find_device);
+ 	dw = (u32 *)adapter->rss_lut;
+-	for (i = 0; i <= adapter->rss_lut_size / 4; i++)
++	for (i = 0; i < adapter->rss_lut_size / 4; i++)
+ 		wr32(hw, IAVF_VFQF_HLUT(i), dw[i]);
  
+ 	iavf_flush(hw);
+-- 
+2.51.0
+
 
 
