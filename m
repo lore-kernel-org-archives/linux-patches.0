@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5E9359FB0;
-	Fri,  9 Jan 2026 12:05:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81D533D50F;
+	Fri,  9 Jan 2026 12:05:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960346; cv=none; b=NRD/1q7di15309YHJGpY/eYgLTHP0qq8AP2W5IknaviDwZSGnLG2VT4u/AT5RcPiLQ1SPcYCdK64E12tgFVUcQ59Ro5oeP2UL2ZAtOYNh45xMPMoORbofFXFZ8N3IqljqIpw5TN40KKcJp6W9a4FKo6tC3OMZrtJcvc3tz/HH9w=
+	t=1767960348; cv=none; b=Kqkysley3rFoTjzSDNrb24kAJaN2sxNBpbHQI2/BxlmTAbncJK2iXzhIwtzztzWRd/k0J3tdKI8qiZH0mAjyEM99Vo49dmL5dvgnPSsok/q9qSqRohePJDtmJEO8p9U24FYRTZw05VwxgExy7d+X3yEzWqkV1X7Fb3718CqmU2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960346; c=relaxed/simple;
-	bh=U/hxFRAUYp/xllQp1BYY9Gof5+CVKemf60jz3rAioqg=;
+	s=arc-20240116; t=1767960348; c=relaxed/simple;
+	bh=GypZXVQG1fvbNKVgUPj6ZIGDQIOEtHrtBVGZWABsrqg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eChScPDGZqysZgKyo2CiwL/6kVZ5ElvfHL4Q6KSZeaYzmskJy9Pd4KNy03q05L40nPvDuDw8M2t+xYBCYuPd1sv+yZoTAyWWcSfQfqpjyXYQaS9AnHATfYA8Rn79HV8Ry6TrMtWGg3fg/CLBP3MhSBf+xl3qPDXO16HESNeRBe8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nbuXJiy0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dpzoTZEz3T/tQbZ5Ie85RxdmfxltxOHp6DOGx6Mz8cGfGaYlOvHF9C7DCekXBL5PpjjIh0iM2oo5Gb9gwaAsoRNy7Qlp7iPoV69isfVx7XaGyOjgMeeRCINnrcFbuFTLXkW2YGLQPjjmL7jCk8Aa+R8AyavdbqTzUX7A2nIsiKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zkM4xXik; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nbuXJiy0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C207C4CEF1;
-	Fri,  9 Jan 2026 12:05:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zkM4xXik"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68030C4CEF1;
+	Fri,  9 Jan 2026 12:05:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960346;
-	bh=U/hxFRAUYp/xllQp1BYY9Gof5+CVKemf60jz3rAioqg=;
+	s=korg; t=1767960348;
+	bh=GypZXVQG1fvbNKVgUPj6ZIGDQIOEtHrtBVGZWABsrqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nbuXJiy0rGmmdYBcmGTaTgLgoYLbSN44b0WJxamQKTPhTj50mumrGn4G3oKka50Pp
-	 mcEqFwk+6jxfUs+g/tBzyyxnUdb9F3cpaLosHfeh/r97XfnPvFz4d7bbbHIz5MhnSV
-	 LdlKOP8jy93nNmggYhim659K0I9qI+qXt5NjwG8g=
+	b=zkM4xXikcalNOeJR/L/L1n5fWi2L/ngFSVCer5GlHnPBAst42w6TFdsi7D4roulX6
+	 beb3SoVogWoqpkNxhR1bM31o6QCq7vwOpuJsNew5XFTmRoqGp53vjqhHPyLgc8UKzD
+	 H0B0iyXF/qE11RBomwbfKWN9112mfsTTvcfHXMB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 354/737] net/mlx5: Skip HotPlug check on sync reset using hot reset
-Date: Fri,  9 Jan 2026 12:38:13 +0100
-Message-ID: <20260109112147.312156491@linuxfoundation.org>
+	Ping Cheng <ping.cheng@wacom.com>,
+	stable@kernel.org,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.6 372/737] HID: input: map HID_GD_Z to ABS_DISTANCE for stylus/pen
+Date: Fri,  9 Jan 2026 12:38:31 +0100
+Message-ID: <20260109112147.988120842@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -53,66 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Moshe Shemesh <moshe@nvidia.com>
+From: Ping Cheng <pinglinux@gmail.com>
 
-[ Upstream commit 48bb52b0bc6693afb17a6024bab925b25fec44a1 ]
+commit 7953794f741e94d30df9dafaaa4c031c85b891d6 upstream.
 
-Sync reset request is nacked by the driver when PCIe bridge connected to
-mlx5 device has HotPlug interrupt enabled. However, when using reset
-method of hot reset this check can be skipped as Hotplug is supported on
-this reset method.
+HID_GD_Z is mapped to ABS_Z for stylus and pen in hid-input.c. But HID_GD_Z
+should be used to report ABS_DISTANCE for stylus and pen as described at:
+Documentation/input/event-codes.rst#n226
 
-Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20240911201757.1505453-12-saeed@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 367e501f8b09 ("net/mlx5: Serialize firmware reset with devlink")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+* ABS_DISTANCE:
+
+  - Used to describe the distance of a tool from an interaction surface. This
+    event should only be emitted while the tool is hovering, meaning in close
+    proximity of the device and while the value of the BTN_TOUCH code is 0. If
+    the input device may be used freely in three dimensions, consider ABS_Z
+    instead.
+  - BTN_TOOL_<name> should be set to 1 when the tool comes into detectable
+    proximity and set to 0 when the tool leaves detectable proximity.
+    BTN_TOOL_<name> signals the type of tool that is currently detected by the
+    hardware and is otherwise independent of ABS_DISTANCE and/or BTN_TOUCH.
+
+This patch makes the correct mapping. The ABS_DISTANCE is currently not mapped
+by any HID usage in hid-generic driver.
+
+Signed-off-by: Ping Cheng <ping.cheng@wacom.com>
+Cc: stable@kernel.org
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/hid/hid-input.c |   18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
-index dc7afc9e7777d..bdcd9e5306331 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
-@@ -396,7 +396,8 @@ static int mlx5_check_dev_ids(struct mlx5_core_dev *dev, u16 dev_id)
- 	return 0;
- }
+--- a/drivers/hid/hid-input.c
++++ b/drivers/hid/hid-input.c
+@@ -864,7 +864,7 @@ static void hidinput_configure_usage(str
  
--static bool mlx5_is_reset_now_capable(struct mlx5_core_dev *dev)
-+static bool mlx5_is_reset_now_capable(struct mlx5_core_dev *dev,
-+				      u8 reset_method)
- {
- 	u16 dev_id;
- 	int err;
-@@ -412,9 +413,11 @@ static bool mlx5_is_reset_now_capable(struct mlx5_core_dev *dev)
- 	}
+ 		switch (usage->hid) {
+ 		/* These usage IDs map directly to the usage codes. */
+-		case HID_GD_X: case HID_GD_Y: case HID_GD_Z:
++		case HID_GD_X: case HID_GD_Y:
+ 		case HID_GD_RX: case HID_GD_RY: case HID_GD_RZ:
+ 			if (field->flags & HID_MAIN_ITEM_RELATIVE)
+ 				map_rel(usage->hid & 0xf);
+@@ -872,6 +872,22 @@ static void hidinput_configure_usage(str
+ 				map_abs_clear(usage->hid & 0xf);
+ 			break;
  
- #if IS_ENABLED(CONFIG_HOTPLUG_PCI_PCIE)
--	err = mlx5_check_hotplug_interrupt(dev);
--	if (err)
--		return false;
-+	if (reset_method != MLX5_MFRL_REG_PCI_RESET_METHOD_HOT_RESET) {
-+		err = mlx5_check_hotplug_interrupt(dev);
-+		if (err)
-+			return false;
-+	}
- #endif
- 
- 	err = pci_read_config_word(dev->pdev, PCI_DEVICE_ID, &dev_id);
-@@ -435,7 +438,7 @@ static void mlx5_sync_reset_request_event(struct work_struct *work)
- 		mlx5_core_warn(dev, "Failed reading MFRL, err %d\n", err);
- 
- 	if (err || test_bit(MLX5_FW_RESET_FLAGS_NACK_RESET_REQUEST, &fw_reset->reset_flags) ||
--	    !mlx5_is_reset_now_capable(dev)) {
-+	    !mlx5_is_reset_now_capable(dev, fw_reset->reset_method)) {
- 		err = mlx5_fw_reset_set_reset_sync_nack(dev);
- 		mlx5_core_warn(dev, "PCI Sync FW Update Reset Nack %s",
- 			       err ? "Failed" : "Sent");
--- 
-2.51.0
-
++		case HID_GD_Z:
++			/* HID_GD_Z is mapped to ABS_DISTANCE for stylus/pen */
++			if (field->flags & HID_MAIN_ITEM_RELATIVE) {
++				map_rel(usage->hid & 0xf);
++			} else {
++				if (field->application == HID_DG_PEN ||
++				    field->physical == HID_DG_PEN ||
++				    field->logical == HID_DG_STYLUS ||
++				    field->physical == HID_DG_STYLUS ||
++				    field->application == HID_DG_DIGITIZER)
++					map_abs_clear(ABS_DISTANCE);
++				else
++					map_abs_clear(usage->hid & 0xf);
++			}
++			break;
++
+ 		case HID_GD_WHEEL:
+ 			if (field->flags & HID_MAIN_ITEM_RELATIVE) {
+ 				set_bit(REL_WHEEL, input->relbit);
 
 
