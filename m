@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31B1A359F99;
-	Fri,  9 Jan 2026 12:00:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CE4B359FAD;
+	Fri,  9 Jan 2026 12:00:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960033; cv=none; b=iwcyqt/OZ+zakeWipkg9wCS9BQY4g+c13lKYbkp4DEiBkAFrif8gliP3Uff/BtlXTk6kPhNCyNIj67p20vqwor3TUGlf5HNFY8yMo3C+RozAARr5cZgr8EwjTuIBYmUVvF4ErSKZJJ1yz2PkJe1kCqCtuTg+ile4I7pj746KOCc=
+	t=1767960036; cv=none; b=M6XaiC2LqzZJh772/R3tqi/lcckFzvbeVfZVshqmPsuv8aYqzESS5NjdQY0YV+FEOnI0Rz+oHs5EWlYYyZZDSkXNg+SkMcSR8F9u25hMCFBiR/XBhVFxyi428EXxludaI6BiTqTTUxodqiP08jIjBBQ0UrTw+/xwQesNStQ02DM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960033; c=relaxed/simple;
-	bh=YGiFDbTuK43Q7J8skr1lbpjz5ZJkJJprz1ddJq6SN2c=;
+	s=arc-20240116; t=1767960036; c=relaxed/simple;
+	bh=ctrJoTyIAumbzjwpUPkL2LBBzPWfv8lNhVf07uI79JM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M3yuEpRLlAyZwT4fEIummulMINvvKGS1ojdySqepZCU+hdAZhJkjqm8p04tNrbxqmJKZ6oxLSxX5WtGNQUcHrasXIhZaWfOjmOidM3dspgP9oRPh2lt/zQtiq0dCQb6mFbu5c2yZx7AtPcxiJ+fJnCNy89IFnFHr4b0S99AmkQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sDpRDTkr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cIroDupd9UBVyd846lqhXkFKdQMoQ3JtrQqhnmdt2VZxYCXP+c8q74yZZv212h4xIJ6yr3x/2CbAJmu73T5LftjgRPvSQTySdRiqS0+RAmdWi2CwCJKgJXdbaOxARbvAzHSe9erDwETA8R/4pD4bu3FTaiHcFsjAHY5srt7XRRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJSlz80b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sDpRDTkr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B34FAC4CEF1;
-	Fri,  9 Jan 2026 12:00:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJSlz80b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AAA4C4CEF1;
+	Fri,  9 Jan 2026 12:00:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960033;
-	bh=YGiFDbTuK43Q7J8skr1lbpjz5ZJkJJprz1ddJq6SN2c=;
+	s=korg; t=1767960035;
+	bh=ctrJoTyIAumbzjwpUPkL2LBBzPWfv8lNhVf07uI79JM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sDpRDTkrWbbONdzDOPE+hpIEhSy/kHWqtyQ1oY4RU9wfDN243SJQEfIBqUh//NQMG
-	 hu4Q9GJDHKTEMRv/ot+GcrvSCpIY9ezAGEXsYrK87eoAWdItLdZvyNSDFXRLmxqOkA
-	 WClNcpZgb2W72czOWJNjblX7ym/GbiG8BlGwb/CE=
+	b=nJSlz80br6kBcLxO36J0nT2wxlgG/MV8XcgwPGuNNUrcUnAC1/VbJFZoNiKuZNnXg
+	 rJMNNOyDncsNvyjd+65wZkqcQCxdGtcpMN7hNf7FFLE3XkFJAozqmWly7bQIjZmOQV
+	 AEpAe7IxuX8e/99OozBz0XTC+0a+V1cx+u4QEoRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Stoler <michael.stoler@vastdata.com>,
+	Jonathan Curley <jcurley@purestorage.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 262/737] NFS: Initialise verifiers for visible dentries in nfs_atomic_open()
-Date: Fri,  9 Jan 2026 12:36:41 +0100
-Message-ID: <20260109112143.847472346@linuxfoundation.org>
+Subject: [PATCH 6.6 263/737] NFSv4/pNFS: Clear NFS_INO_LAYOUTCOMMIT in pnfs_mark_layout_stateid_invalid
+Date: Fri,  9 Jan 2026 12:36:42 +0100
+Message-ID: <20260109112143.884875804@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,39 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Jonathan Curley <jcurley@purestorage.com>
 
-[ Upstream commit 518c32a1bc4f8df1a8442ee8cdfea3e2fcff20a0 ]
+[ Upstream commit e0f8058f2cb56de0b7572f51cd563ca5debce746 ]
 
-Ensure that the verifiers are initialised before calling
-d_splice_alias() in nfs_atomic_open().
+Fixes a crash when layout is null during this call stack:
 
-Reported-by: Michael Stoler <michael.stoler@vastdata.com>
-Fixes: 809fd143de88 ("NFSv4: Ensure nfs_atomic_open set the dentry verifier on ENOENT")
+write_inode
+    -> nfs4_write_inode
+        -> pnfs_layoutcommit_inode
+
+pnfs_set_layoutcommit relies on the lseg refcount to keep the layout
+around. Need to clear NFS_INO_LAYOUTCOMMIT otherwise we might attempt
+to reference a null layout.
+
+Fixes: fe1cf9469d7bc ("pNFS: Clear all layout segment state in pnfs_mark_layout_stateid_invalid")
+Signed-off-by: Jonathan Curley <jcurley@purestorage.com>
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/dir.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/pnfs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/nfs/dir.c b/fs/nfs/dir.c
-index d47e908ef411c..32e922a20d0d4 100644
---- a/fs/nfs/dir.c
-+++ b/fs/nfs/dir.c
-@@ -2149,12 +2149,12 @@ int nfs_atomic_open(struct inode *dir, struct dentry *dentry,
- 		d_drop(dentry);
- 		switch (err) {
- 		case -ENOENT:
--			d_splice_alias(NULL, dentry);
- 			if (nfs_server_capable(dir, NFS_CAP_CASE_INSENSITIVE))
- 				dir_verifier = inode_peek_iversion_raw(dir);
- 			else
- 				dir_verifier = nfs_save_change_attribute(dir);
- 			nfs_set_verifier(dentry, dir_verifier);
-+			d_splice_alias(NULL, dentry);
- 			break;
- 		case -EISDIR:
- 		case -ENOTDIR:
+diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
+index b40c20bd364b0..0737d9a15d862 100644
+--- a/fs/nfs/pnfs.c
++++ b/fs/nfs/pnfs.c
+@@ -465,6 +465,7 @@ pnfs_mark_layout_stateid_invalid(struct pnfs_layout_hdr *lo,
+ 	struct pnfs_layout_segment *lseg, *next;
+ 
+ 	set_bit(NFS_LAYOUT_INVALID_STID, &lo->plh_flags);
++	clear_bit(NFS_INO_LAYOUTCOMMIT, &NFS_I(lo->plh_inode)->flags);
+ 	list_for_each_entry_safe(lseg, next, &lo->plh_segs, pls_list)
+ 		pnfs_clear_lseg_state(lseg, lseg_list);
+ 	pnfs_clear_layoutreturn_info(lo);
 -- 
 2.51.0
 
