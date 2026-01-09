@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 258AD31E107;
-	Fri,  9 Jan 2026 12:34:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EC08336EDA;
+	Fri,  9 Jan 2026 12:34:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962041; cv=none; b=e1S9QqWa/pRZmy5/N22UhG2QgcNgvzCxWoJAPcQQbzdw7X/hcOmI1A/Dg8N8EGzlGYzqFa2PZBNjjKN9eOnTD962VQs9jqWMkdNL4U0N9o1uHTtuFTeXKntQYUHOCJchivuV1gsbMLHrc+0JBFsk3xMzTUmRZcY4J9WQuaQ//aA=
+	t=1767962044; cv=none; b=SFd3rOZrXBJJ8Y1xjf4V8G5o4Ljg0IttTWpXhy0JbHmcGL6LFMc24zhLH3p+VcVts29y9pkBQc3lGeCNaTLGJeyADaFF/XUqFyv8/vyk8VNbEwUvXrGYyu7bjeDXLsFVS9Foi5YegWhqXHwfEDnRY4gWgoZ0XZtBS9bbfl6GrYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962041; c=relaxed/simple;
-	bh=ZrjxTgoGh/C2jogyd0Tjt4/LtpL9ETWUzAZ5wOXBAao=;
+	s=arc-20240116; t=1767962044; c=relaxed/simple;
+	bh=p9POYlynfmVFn+n1lQ4wkJC+FlDd5bQVQD7/d4znnn8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E2AaAZQ3+xej4IfHWppj+7d8mG4hudXhpSeZkulOP53NsdCMKphbzmBhqngxXEP+7LtGU+3LrTuaLDd9J6wAq2OsLhOs2HuT6PNeX+OEU0jM1z6CjG6TYn2kM9IvfCKHNI6pJh2Sko/bWd/8XOF1CdKtIzlFTDibQyLCOPuLBX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=utzVe5gi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ljH1xDaL2wHoc0gzSw8NUtDfIFhMqTDNmMebRO/MEmBdjiW4ym9pm/yB8hAh8Qtqp51LdE3NtmVihqoG+bETKN70Wjcwl8WwJkYoJwK2NfWhYoaBY/MabD4nnGZ6PGS64dk/clnrWrfophHzOxR+6zcZTNqTONP1jgQv2bodb8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PO9Dy0z+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="utzVe5gi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D4B8C4CEF1;
-	Fri,  9 Jan 2026 12:33:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PO9Dy0z+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F2BEC4CEF1;
+	Fri,  9 Jan 2026 12:34:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962040;
-	bh=ZrjxTgoGh/C2jogyd0Tjt4/LtpL9ETWUzAZ5wOXBAao=;
+	s=korg; t=1767962043;
+	bh=p9POYlynfmVFn+n1lQ4wkJC+FlDd5bQVQD7/d4znnn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=utzVe5gi6L3OHl2a2JrGdLCgKWyZU3j1Ko2HlFgI3OX2HJukfPrDwj5QwgryCWpwe
-	 HWRlZSuXpJq+gUBqhamH8e1du/OWEn93cdqB2vkW+BSf5r913nhukwmcLC8HSMw8iv
-	 if45UNU6bp761LAMRGV35rFnqqU1hnO+B8/9jDqA=
+	b=PO9Dy0z+Pb0+cEqjFcgE9Wlmv4xR2h5eGkU0/5pcFNJwZbGmA48PXEBy8LBzg3Rx/
+	 8qwsVwcbACRo/7abQ0ciNvEeI4cbjcP92CMJhKiteAkL11iprQeh+S4q2/oAGu2nMH
+	 ca7nmfM7gH/Y2Myq3rXe120bGfliHlJn0ziEIl1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vyacheslav Kovalevsky <slava.kovalevskiy.2014@gmail.com>,
-	Boris Burkov <boris@bur.io>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Ondrej Mosnacek <omosnace@redhat.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 225/634] btrfs: do not skip logging new dentries when logging a new name
-Date: Fri,  9 Jan 2026 12:38:23 +0100
-Message-ID: <20260109112125.897906771@linuxfoundation.org>
+Subject: [PATCH 6.1 226/634] bpf, arm64: Do not audit capability check in do_jit()
+Date: Fri,  9 Jan 2026 12:38:24 +0100
+Message-ID: <20260109112125.935365439@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -53,70 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Ondrej Mosnacek <omosnace@redhat.com>
 
-[ Upstream commit 5630f7557de61264ccb4f031d4734a1a97eaed16 ]
+[ Upstream commit 189e5deb944a6f9c7992355d60bffd8ec2e54a9c ]
 
-When we are logging a directory and the log context indicates that we
-are logging a new name for some other file (that is or was inside that
-directory), we skip logging the inodes for new dentries in the directory.
+Analogically to the x86 commit 881a9c9cb785 ("bpf: Do not audit
+capability check in do_jit()"), change the capable() call to
+ns_capable_noaudit() in order to avoid spurious SELinux denials in audit
+log.
 
-This is ok most of the time, but if after the rename or link operation
-that triggered the logging of that directory, we have an explicit fsync
-of that directory without the directory inode being evicted and reloaded,
-we end up never logging the inodes for the new dentries that we found
-during the new name logging, as the next directory fsync will only process
-dentries that were added after the last time we logged the directory (we
-are doing an incremental directory logging).
+The commit log from that commit applies here as well:
+"""
+The failure of this check only results in a security mitigation being
+applied, slightly affecting performance of the compiled BPF program. It
+doesn't result in a failed syscall, an thus auditing a failed LSM
+permission check for it is unwanted. For example with SELinux, it causes
+a denial to be reported for confined processes running as root, which
+tends to be flagged as a problem to be fixed in the policy. Yet
+dontauditing or allowing CAP_SYS_ADMIN to the domain may not be
+desirable, as it would allow/silence also other checks - either going
+against the principle of least privilege or making debugging potentially
+harder.
 
-So make sure we always log new dentries for a directory even if we are
-in a context of logging a new name.
+Fix it by changing it from capable() to ns_capable_noaudit(), which
+instructs the LSMs to not audit the resulting denials.
+"""
 
-We started skipping logging inodes for new dentries as of commit
-c48792c6ee7a ("btrfs: do not log new dentries when logging that a new name
-exists") and it was fine back then, because when logging a directory we
-always iterated over all the directory entries (for leaves changed in the
-current transaction) so a subsequent fsync would always log anything that
-was previously skipped while logging a directory when logging a new name
-(with btrfs_log_new_name()). But later support for incrementally logging
-a directory was added in commit dc2872247ec0 ("btrfs: keep track of the
-last logged keys when logging a directory"), to avoid checking all dir
-items every time we log a directory, so the check to skip dentry logging
-added in the first commit should have been removed when the incremental
-support for logging a directory was added.
-
-A test case for fstests will follow soon.
-
-Reported-by: Vyacheslav Kovalevsky <slava.kovalevskiy.2014@gmail.com>
-Link: https://lore.kernel.org/linux-btrfs/84c4e713-85d6-42b9-8dcf-0722ed26cb05@gmail.com/
-Fixes: dc2872247ec0 ("btrfs: keep track of the last logged keys when logging a directory")
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: f300769ead03 ("arm64: bpf: Only mitigate cBPF programs loaded by unprivileged users")
+Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
+Link: https://lore.kernel.org/r/20251204125916.441021-1-omosnace@redhat.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/tree-log.c | 8 --------
- 1 file changed, 8 deletions(-)
+ arch/arm64/net/bpf_jit_comp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
-index 11a7408ebc265..aa506716e9201 100644
---- a/fs/btrfs/tree-log.c
-+++ b/fs/btrfs/tree-log.c
-@@ -5478,14 +5478,6 @@ static int log_new_dir_dentries(struct btrfs_trans_handle *trans,
- 	u64 ino = btrfs_ino(start_inode);
- 	int ret = 0;
+diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
+index 3dd23050a6c89..783883721aaf5 100644
+--- a/arch/arm64/net/bpf_jit_comp.c
++++ b/arch/arm64/net/bpf_jit_comp.c
+@@ -666,7 +666,7 @@ static void __maybe_unused build_bhb_mitigation(struct jit_ctx *ctx)
+ 	    arm64_get_spectre_v2_state() == SPECTRE_VULNERABLE)
+ 		return;
  
--	/*
--	 * If we are logging a new name, as part of a link or rename operation,
--	 * don't bother logging new dentries, as we just want to log the names
--	 * of an inode and that any new parents exist.
--	 */
--	if (ctx->logging_new_name)
--		return 0;
--
- 	path = btrfs_alloc_path();
- 	if (!path)
- 		return -ENOMEM;
+-	if (capable(CAP_SYS_ADMIN))
++	if (ns_capable_noaudit(&init_user_ns, CAP_SYS_ADMIN))
+ 		return;
+ 
+ 	if (supports_clearbhb(SCOPE_SYSTEM)) {
 -- 
 2.51.0
 
