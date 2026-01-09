@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A99B35A93E;
-	Fri,  9 Jan 2026 12:09:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B83433BBBD;
+	Fri,  9 Jan 2026 12:09:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960579; cv=none; b=E8wmN5iJbKnsl6Sfz4p8LTTE6DKBKqYHFm6GSRweDp45DANgLb2Cyq31E+4FDeCZWVjh+SgywLew6b8hH1W+C/kh+FinmUqAXZNIN8mlKg/AYf9InrFMQdB9LK07FN8e25FHVHyf5jdGJwEQRZeU0KI6Tv7l2hNBwGwNY5s4MBg=
+	t=1767960581; cv=none; b=VOQlL1TDrBKND6gAznNOGUcpj5GOU+jW3VVNOCHy3NL29/EpE9ImBbIKe5sIFpFrIZGB8oZXzCpi2bVajFQO++/GEQYICRmaSPEoN9Nc0+frwZNzobZ1GVBlYyCAvcNzP9FAaFmDpVtdj2y2Jc325TjViDgVwJchFKj09fqL2Q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960579; c=relaxed/simple;
-	bh=nxkqlgKp4mm+zUZ/+UBYOW2Auw7opM10syhuVKhAX6A=;
+	s=arc-20240116; t=1767960581; c=relaxed/simple;
+	bh=WCslTM6MsuBzeeCbstisTqvvrHcePYfa2wSbjvb8NOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g8Rj89kRfgof/Qi9BlcElwKe0Un/o5cHGRZzGs0zJeH6A9a8UOrz4p8TSh0qM62mwN3txUw/3lAxrpKYIZZ0pOdR3fB4pBMr+xlkTrNxmdEEhUdhrF3AxLvK21+tFKVm8O4k+5L0mO+ZIvwVdz5vQaXbS0EjGVLCMuwbgBBM7wE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qJs/ELvX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lCDVBiUvGv5Y36c3uXGyjdpHVfHSHcF5p3wgDUh4EL9ADMVd8DoEO6pa4ZMB1wrr/f5rTW7e0ovChapGafiIDeHbOucrO+jGK5ZlAimVjolsCMpSaBddlO1GffSfcpw8aX1TAnrSYIClxCab+7heNewieSE0EPWS1Kz2DIF/FCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0IMBPoiq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qJs/ELvX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A345C4CEF1;
-	Fri,  9 Jan 2026 12:09:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0IMBPoiq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AA6BC4CEF1;
+	Fri,  9 Jan 2026 12:09:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960578;
-	bh=nxkqlgKp4mm+zUZ/+UBYOW2Auw7opM10syhuVKhAX6A=;
+	s=korg; t=1767960581;
+	bh=WCslTM6MsuBzeeCbstisTqvvrHcePYfa2wSbjvb8NOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qJs/ELvXn6aJxzeiZZCrIKvlgBnhbmrLyvnOpdcVxgDtkohuGKodo+nD9AZ02SbMv
-	 lZoVqKQ7nraXMOxYxRmNX8qB3RMuTQdFflVzLu0oe5q+3jMnjZZTHPfN4SDi9P87yT
-	 QSk4jNPC0C1Alur0QyhwYqBifHyQDlfY2CkKavH8=
+	b=0IMBPoiqN0iZKG/c1DERRW9zB2hGt/KMWXd6jW153MbuXWUD4fRaop9fLrA78+g+Z
+	 bTULTI8rO7pjtwpq+RkJPpV5GR5ea8lbPvs8tXf7gr8w89S0m9K8mtuf+Pih38/yE/
+	 /2m6FChkv2lX8ZgB0rCGKlVUC6KcYf5CXGdMy6qU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6e493c165d26d6fcbf72@syzkaller.appspotmail.com,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.6 426/737] jbd2: use a per-journal lock_class_key for jbd2_trans_commit_key
-Date: Fri,  9 Jan 2026 12:39:25 +0100
-Message-ID: <20260109112150.022039632@linuxfoundation.org>
+	stable@kernel.org,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.6 453/737] f2fs: fix return value of f2fs_recover_fsync_data()
+Date: Fri,  9 Jan 2026 12:39:52 +0100
+Message-ID: <20260109112151.035154756@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -53,85 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Chao Yu <chao@kernel.org>
 
-commit 524c3853831cf4f7e1db579e487c757c3065165c upstream.
+commit 01fba45deaddcce0d0b01c411435d1acf6feab7b upstream.
 
-syzbot is reporting possibility of deadlock due to sharing lock_class_key
-for jbd2_handle across ext4 and ocfs2. But this is a false positive, for
-one disk partition can't have two filesystems at the same time.
+With below scripts, it will trigger panic in f2fs:
 
-Reported-by: syzbot+6e493c165d26d6fcbf72@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6e493c165d26d6fcbf72
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Tested-by: syzbot+6e493c165d26d6fcbf72@syzkaller.appspotmail.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Message-ID: <987110fc-5470-457a-a218-d286a09dd82f@I-love.SAKURA.ne.jp>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+mkfs.f2fs -f /dev/vdd
+mount /dev/vdd /mnt/f2fs
+touch /mnt/f2fs/foo
+sync
+echo 111 >> /mnt/f2fs/foo
+f2fs_io fsync /mnt/f2fs/foo
+f2fs_io shutdown 2 /mnt/f2fs
+umount /mnt/f2fs
+mount -o ro,norecovery /dev/vdd /mnt/f2fs
+or
+mount -o ro,disable_roll_forward /dev/vdd /mnt/f2fs
+
+F2FS-fs (vdd): f2fs_recover_fsync_data: recovery fsync data, check_only: 0
+F2FS-fs (vdd): Mounted with checkpoint version = 7f5c361f
+F2FS-fs (vdd): Stopped filesystem due to reason: 0
+F2FS-fs (vdd): f2fs_recover_fsync_data: recovery fsync data, check_only: 1
+Filesystem f2fs get_tree() didn't set fc->root, returned 1
+------------[ cut here ]------------
+kernel BUG at fs/super.c:1761!
+Oops: invalid opcode: 0000 [#1] SMP PTI
+CPU: 3 UID: 0 PID: 722 Comm: mount Not tainted 6.18.0-rc2+ #721 PREEMPT(voluntary)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+RIP: 0010:vfs_get_tree.cold+0x18/0x1a
+Call Trace:
+ <TASK>
+ fc_mount+0x13/0xa0
+ path_mount+0x34e/0xc50
+ __x64_sys_mount+0x121/0x150
+ do_syscall_64+0x84/0x800
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+RIP: 0033:0x7fa6cc126cfe
+
+The root cause is we missed to handle error number returned from
+f2fs_recover_fsync_data() when mounting image w/ ro,norecovery or
+ro,disable_roll_forward mount option, result in returning a positive
+error number to vfs_get_tree(), fix it.
+
 Cc: stable@kernel.org
+Fixes: 6781eabba1bd ("f2fs: give -EINVAL for norecovery and rw mount")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jbd2/journal.c    |    6 ++++--
- include/linux/jbd2.h |    6 ++++++
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ fs/f2fs/super.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
---- a/fs/jbd2/journal.c
-+++ b/fs/jbd2/journal.c
-@@ -1563,7 +1563,6 @@ static journal_t *journal_init_common(st
- 			struct block_device *fs_dev,
- 			unsigned long long start, int len, int blocksize)
- {
--	static struct lock_class_key jbd2_trans_commit_key;
- 	journal_t *journal;
- 	int err;
- 	int n;
-@@ -1572,6 +1571,7 @@ static journal_t *journal_init_common(st
- 	if (!journal)
- 		return ERR_PTR(-ENOMEM);
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -4692,11 +4692,15 @@ try_onemore:
+ 		}
+ 	} else {
+ 		err = f2fs_recover_fsync_data(sbi, true);
+-
+-		if (!f2fs_readonly(sb) && err > 0) {
+-			err = -EINVAL;
+-			f2fs_err(sbi, "Need to recover fsync data");
+-			goto free_meta;
++		if (err > 0) {
++			if (!f2fs_readonly(sb)) {
++				f2fs_err(sbi, "Need to recover fsync data");
++				err = -EINVAL;
++				goto free_meta;
++			} else {
++				f2fs_info(sbi, "drop all fsynced data");
++				err = 0;
++			}
+ 		}
+ 	}
  
-+	lockdep_register_key(&journal->jbd2_trans_commit_key);
- 	journal->j_blocksize = blocksize;
- 	journal->j_dev = bdev;
- 	journal->j_fs_dev = fs_dev;
-@@ -1601,7 +1601,7 @@ static journal_t *journal_init_common(st
- 	journal->j_max_batch_time = 15000; /* 15ms */
- 	atomic_set(&journal->j_reserved_credits, 0);
- 	lockdep_init_map(&journal->j_trans_commit_map, "jbd2_handle",
--			 &jbd2_trans_commit_key, 0);
-+			 &journal->jbd2_trans_commit_key, 0);
- 
- 	/* The journal is marked for error until we succeed with recovery! */
- 	journal->j_flags = JBD2_ABORT;
-@@ -1648,6 +1648,7 @@ err_cleanup:
- 	kfree(journal->j_wbuf);
- 	jbd2_journal_destroy_revoke(journal);
- 	journal_fail_superblock(journal);
-+	lockdep_unregister_key(&journal->jbd2_trans_commit_key);
- 	kfree(journal);
- 	return ERR_PTR(err);
- }
-@@ -2229,6 +2230,7 @@ int jbd2_journal_destroy(journal_t *jour
- 		crypto_free_shash(journal->j_chksum_driver);
- 	kfree(journal->j_fc_wbuf);
- 	kfree(journal->j_wbuf);
-+	lockdep_unregister_key(&journal->jbd2_trans_commit_key);
- 	kfree(journal);
- 
- 	return err;
---- a/include/linux/jbd2.h
-+++ b/include/linux/jbd2.h
-@@ -1266,6 +1266,12 @@ struct journal_s
- 	 */
- 	struct lockdep_map	j_trans_commit_map;
- #endif
-+	/**
-+	 * @jbd2_trans_commit_key:
-+	 *
-+	 * "struct lock_class_key" for @j_trans_commit_map
-+	 */
-+	struct lock_class_key	jbd2_trans_commit_key;
- 
- 	/**
- 	 * @j_fc_cleanup_callback:
 
 
