@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8E635B135;
-	Fri,  9 Jan 2026 12:09:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C6635A942;
+	Fri,  9 Jan 2026 12:09:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960547; cv=none; b=jx4Jpop3ql6VmptPUqtUq0gdRPlM8HCUlAK136Pt7AnqDYO2ePPFF/3VS62jsvmfq9lOB+pqEJlZpLNHJ8DCFMbtGVfK6qIloqEkYy/ZhlfS74KZbJLy/UUhoWYpTmnxG1catE/KDLJZva/fAGqSlOOaH7KlhBot4yI1DYuEBV0=
+	t=1767960550; cv=none; b=lYXntFFnuGf0+1OPAA0zKlqd40w/sSVcKjuhYrOJZ4uhnSBz8+/txC//UteW50Dvqc7CgU5YMlEj4XKd304+FNJGsCeYy30LslIJwro6AIm02eZJo9zsehxCUq88BGd8E4YpS3z6ZSYW1pE3kjXRSNieyzPIFhjP2hn6uMQjM0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960547; c=relaxed/simple;
-	bh=EyZuUazGu5AWry6LBNIigVcgfYzpHCTa+Wyqf63i8Dc=;
+	s=arc-20240116; t=1767960550; c=relaxed/simple;
+	bh=Pw22IraXcasHyBNW5rbiDu0s6Dy6+1MmNyb8NlMJ7xI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gOBkJY4N+jcUHtBWafA1XQ7GRj3TeGA3a+YN490U8FRrUKYP2YztN6sDBsVTmpJwvswWjcAT05eH0CJyFabXek5hAcSd7kEsRu4xlDz14JxbaqNGH3unDSwK7OZzsvQ3bo1lwg4VFnNyGm3UMVSSf2o4TJgESl72g1rS5jGeLN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xRW1a6mD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ERsSaE/LtGdAc3QcOyZYHN1wanCYHuXxbaY6n8e+AG4hHvZkO+znEPQMHmU+NGu+sU+uULPCSdy57eBewevnpVaZLjdzIT5zZ72/J3KaaUEKMoxKIlI2Zolj7szlXSsENEtZLjG2SR+emapviYmQRgOAmnt2ZzdBjI+4RbeStDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TGL6ifV2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xRW1a6mD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C621C16AAE;
-	Fri,  9 Jan 2026 12:09:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TGL6ifV2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19257C4CEF1;
+	Fri,  9 Jan 2026 12:09:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960547;
-	bh=EyZuUazGu5AWry6LBNIigVcgfYzpHCTa+Wyqf63i8Dc=;
+	s=korg; t=1767960550;
+	bh=Pw22IraXcasHyBNW5rbiDu0s6Dy6+1MmNyb8NlMJ7xI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xRW1a6mDi3dHPnBfVOnoUfsow+EGE9MgH/uKAUt1Rk5pMnNvhZU9pBLVko3/0kUNN
-	 DMY96b7sXNLq1h3WAd15uMjLk858AN/rYa+Y32fW04lVdIUN8eqEuAh/Avv9Tz/30e
-	 kvTNpw94ByGH2O0PUKIl0NI29CRuIpBA00mRinek=
+	b=TGL6ifV2VABmfLz61OuH4JYzOqhmK/I9Shgz4GDZh7/4uUkH7gsiarQ4evM0/s7Y9
+	 q2KifR34QN3iI16y1aFTJH4LQE6oEvQ7WtGteNYphW22G1gLBTOKhZ9PwKL0yQ5NkT
+	 7Ib7FTjyN6sNmiLt+m8dmCn9JgntgGDpDKj9YekY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.6 425/737] ext4: align max orphan file size with e2fsprogs limit
-Date: Fri,  9 Jan 2026 12:39:24 +0100
-Message-ID: <20260109112149.984718531@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Christian Loehle <christian.loehle@arm.com>
+Subject: [PATCH 6.6 443/737] cpuidle: governors: teo: Drop misguided target residency check
+Date: Fri,  9 Jan 2026 12:39:42 +0100
+Message-ID: <20260109112150.658343123@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -46,63 +44,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 7c11c56eb32eae96893eebafdbe3decadefe88ad upstream.
+commit a03b2011808ab02ccb7ab6b573b013b77fbb5921 upstream.
 
-Kernel commit 0a6ce20c1564 ("ext4: verify orphan file size is not too big")
-limits the maximum supported orphan file size to 8 << 20.
+When the target residency of the current candidate idle state is
+greater than the expected time till the closest timer (the sleep
+length), it does not matter whether or not the tick has already been
+stopped or if it is going to be stopped.  The closest timer will
+trigger anyway at its due time, so if an idle state with target
+residency above the sleep length is selected, energy will be wasted
+and there may be excess latency.
 
-However, in e2fsprogs, the orphan file size is set to 32–512 filesystem
-blocks when creating a filesystem.
+Of course, if the closest timer were canceled before it could trigger,
+a deeper idle state would be more suitable, but this is not expected
+to happen (generally speaking, hrtimers are not expected to be
+canceled as a rule).
 
-With 64k block size, formatting an ext4 fs >32G gives an orphan file bigger
-than the kernel allows, so mount prints an error and fails:
+Accordingly, the teo_state_ok() check done in that case causes energy to
+be wasted more often than it allows any energy to be saved (if it allows
+any energy to be saved at all), so drop it and let the governor use the
+teo_find_shallower_state() return value as the new candidate idle state
+index.
 
-    EXT4-fs (vdb): orphan file too big: 8650752
-    EXT4-fs (vdb): mount failed
-
-To prevent this issue and allow previously created 64KB filesystems to
-mount, we updates the maximum allowed orphan file size in the kernel to
-512 filesystem blocks.
-
-Fixes: 0a6ce20c1564 ("ext4: verify orphan file size is not too big")
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Message-ID: <20251120134233.2994147-1-libaokun@huaweicloud.com>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+Fixes: 21d28cd2fa5f ("cpuidle: teo: Do not call tick_nohz_get_sleep_length() upfront")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Tested-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://patch.msgid.link/5955081.DvuYhMxLoT@rafael.j.wysocki
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/orphan.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/cpuidle/governors/teo.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/fs/ext4/orphan.c
-+++ b/fs/ext4/orphan.c
-@@ -8,6 +8,8 @@
- #include "ext4.h"
- #include "ext4_jbd2.h"
- 
-+#define EXT4_MAX_ORPHAN_FILE_BLOCKS 512
-+
- static int ext4_orphan_file_add(handle_t *handle, struct inode *inode)
- {
- 	int i, j, start;
-@@ -589,7 +591,7 @@ int ext4_init_orphan_info(struct super_b
- 	 * consuming absurd amounts of memory when pinning blocks of orphan
- 	 * file in memory.
+--- a/drivers/cpuidle/governors/teo.c
++++ b/drivers/cpuidle/governors/teo.c
+@@ -595,11 +595,8 @@ static int teo_select(struct cpuidle_dri
+ 	 * If the closest expected timer is before the terget residency of the
+ 	 * candidate state, a shallower one needs to be found.
  	 */
--	if (inode->i_size > 8 << 20) {
-+	if (inode->i_size > (EXT4_MAX_ORPHAN_FILE_BLOCKS << inode->i_blkbits)) {
- 		ext4_msg(sb, KERN_ERR, "orphan file too big: %llu",
- 			 (unsigned long long)inode->i_size);
- 		ret = -EFSCORRUPTED;
+-	if (drv->states[idx].target_residency_ns > duration_ns) {
+-		i = teo_find_shallower_state(drv, dev, idx, duration_ns, false);
+-		if (teo_state_ok(i, drv))
+-			idx = i;
+-	}
++	if (drv->states[idx].target_residency_ns > duration_ns)
++		idx = teo_find_shallower_state(drv, dev, idx, duration_ns, false);
+ 
+ 	/*
+ 	 * If the selected state's target residency is below the tick length
 
 
