@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A821C35BDC5;
-	Fri,  9 Jan 2026 12:52:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCEF433032C;
+	Fri,  9 Jan 2026 12:52:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767963127; cv=none; b=OeNhLCcg0oxSKFoXq3aYnISSSMQeCqJ4YNRHcMvB8CmdfrmWdcLn1RHpDumxk7+IRUoh3vAzw6+TPN3kYQMzt6yzgYxvF8SK1uuB5FvmlTaZoxbXes7rFx3Z+p3v+IZxsvlT4IegZASbMhSGo+flg/3lQwwUWy+YDos2c9vyJU0=
+	t=1767963130; cv=none; b=MsKIYvAqC8EoSvIzeW/9bkzZuqExrHKmgejfbBF4znOlEQbPoZ0rWlKYPYUwMZBmP+GOshIeoshv2AXAUy3CuVWcNaeSUhq5wG4SfPEk1UDPvfbU0JfFyoHPjMxmPK4mSj5wz6Y9eiec+jwmSrzcIjsuMuudcXzkzBLgflxSUSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767963127; c=relaxed/simple;
-	bh=8zo6kgnm+u+8Bg0CZJTFqn/Z7+YmJ8GBf19OI6AhFhA=;
+	s=arc-20240116; t=1767963130; c=relaxed/simple;
+	bh=VH27WVoa+wAKV9jzF0lk/TmD4l5RYAguMVnxXwjkHsw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HLvu9/zxXfRQGZ13N9a6GUhJUjW9A3jPr+FsbQotj2bt73Bq5qy+OmddG4QEyb9owaEQI6lMaTuAJbL2ArkJ+nvZgTNhUeMAVTw/aT8skGQ6UgHWMGRWbLeo6+npGPVL2rsIWHxBPsE9yk4qpo1GTLzR5DPGih/dbFr8O3wjqSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EM7TS0TH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LRx6cgNOn90XP7edQhrSO0Zbc/vOKb/LQAbcM+9/tfXWP//3wr01jBLERM0lTRGEV9GHJgYLBNhJVimaZ5V9usjeamPC23DiDhwmdQHVQ2Rw/8sf9+6BnmP0uid+9UGhNOawxBYFX9i8jL6JgxO09gXkuPcIhsvKaDgzwWlzplA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oKEsPn+i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EM7TS0TH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35BC6C4CEF1;
-	Fri,  9 Jan 2026 12:52:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oKEsPn+i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FCB3C4CEF1;
+	Fri,  9 Jan 2026 12:52:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767963127;
-	bh=8zo6kgnm+u+8Bg0CZJTFqn/Z7+YmJ8GBf19OI6AhFhA=;
+	s=korg; t=1767963130;
+	bh=VH27WVoa+wAKV9jzF0lk/TmD4l5RYAguMVnxXwjkHsw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EM7TS0THSQtbCO1hoTwqJRi5/EYpEKUuuOG6FOE3wc0ZXaHTtzGoY2mwLZaM9Qehd
-	 Rjgs6ffXatHuRA32Lm4Hk560w60lnNW0xlkMK0In8BNv6Cg1TszBNPj8hBXq+gs5LV
-	 wUd1dvIzW1SMmoVmV7RPmfHEZgaaOZ+Ilp8mqgLU=
+	b=oKEsPn+iGHa6EzZse4izjVpPC2CoX+9DTdrdBhVkF+XLPzPNL6EU4kceM7ADTjAjr
+	 oCwybsk62Wvv1OKXIjzdJiagr+ucxIrVxUr6VJCd/vyCgphjcp1QD6lgRe+DPyIC21
+	 qIcyErCwstO0jWWjs3BHpZqslbpIw1ryyf0jXWf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Sun <yi.sun@intel.com>,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Bin Lan <lanbincn@139.com>
-Subject: [PATCH 6.1 607/634] dmaengine: idxd: Remove improper idxd_free
-Date: Fri,  9 Jan 2026 12:44:45 +0100
-Message-ID: <20260109112140.469719921@linuxfoundation.org>
+	Ma Wupeng <mawupeng1@huawei.com>,
+	syzbot+5f488e922d047d8f00cc@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Alexander Ofitserov <oficerovas@altlinux.org>,
+	Ajay Kaher <ajay.kaher@broadcom.com>
+Subject: [PATCH 6.1 608/634] x86/mm/pat: clear VM_PAT if copy_p4d_range failed
+Date: Fri,  9 Jan 2026 12:44:46 +0100
+Message-ID: <20260109112140.507829402@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -54,68 +53,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Sun <yi.sun@intel.com>
+From: Ma Wupeng <mawupeng1@huawei.com>
 
-[ Upstream commit f41c538881eec4dcf5961a242097d447f848cda6 ]
+[ Upstream commit d155df53f31068c3340733d586eb9b3ddfd70fc5 ]
 
-The call to idxd_free() introduces a duplicate put_device() leading to a
-reference count underflow:
-refcount_t: underflow; use-after-free.
-WARNING: CPU: 15 PID: 4428 at lib/refcount.c:28 refcount_warn_saturate+0xbe/0x110
-...
-Call Trace:
- <TASK>
-  idxd_remove+0xe4/0x120 [idxd]
-  pci_device_remove+0x3f/0xb0
-  device_release_driver_internal+0x197/0x200
-  driver_detach+0x48/0x90
-  bus_remove_driver+0x74/0xf0
-  pci_unregister_driver+0x2e/0xb0
-  idxd_exit_module+0x34/0x7a0 [idxd]
-  __do_sys_delete_module.constprop.0+0x183/0x280
-  do_syscall_64+0x54/0xd70
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+Syzbot reports a warning in untrack_pfn().  Digging into the root we found
+that this is due to memory allocation failure in pmd_alloc_one.  And this
+failure is produced due to failslab.
 
-The idxd_unregister_devices() which is invoked at the very beginning of
-idxd_remove(), already takes care of the necessary put_device() through the
-following call path:
-idxd_unregister_devices() -> device_unregister() -> put_device()
+In copy_page_range(), memory alloaction for pmd failed.  During the error
+handling process in copy_page_range(), mmput() is called to remove all
+vmas.  While untrack_pfn this empty pfn, warning happens.
 
-In addition, when CONFIG_DEBUG_KOBJECT_RELEASE is enabled, put_device() may
-trigger asynchronous cleanup via schedule_delayed_work(). If idxd_free() is
-called immediately after, it can result in a use-after-free.
+Here's a simplified flow:
 
-Remove the improper idxd_free() to avoid both the refcount underflow and
-potential memory corruption during module unload.
+dup_mm
+  dup_mmap
+    copy_page_range
+      copy_p4d_range
+        copy_pud_range
+          copy_pmd_range
+            pmd_alloc
+              __pmd_alloc
+                pmd_alloc_one
+                  page = alloc_pages(gfp, 0);
+                    if (!page)
+                      return NULL;
+    mmput
+        exit_mmap
+          unmap_vmas
+            unmap_single_vma
+              untrack_pfn
+                follow_phys
+                  WARN_ON_ONCE(1);
 
-Fixes: d5449ff1b04d ("dmaengine: idxd: Add missing idxd cleanup to fix memory leak in remove call")
-Signed-off-by: Yi Sun <yi.sun@intel.com>
-Tested-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Since this vma is not generate successfully, we can clear flag VM_PAT.  In
+this case, untrack_pfn() will not be called while cleaning this vma.
 
-Link: https://lore.kernel.org/r/20250729150313.1934101-2-yi.sun@intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-[ Slightly adjust the context. ]
-Signed-off-by: Bin Lan <lanbincn@139.com>
+Function untrack_pfn_moved() has also been renamed to fit the new logic.
+
+Link: https://lkml.kernel.org/r/20230217025615.1595558-1-mawupeng1@huawei.com
+Signed-off-by: Ma Wupeng <mawupeng1@huawei.com>
+Reported-by: <syzbot+5f488e922d047d8f00cc@syzkaller.appspotmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Alexander Ofitserov <oficerovas@altlinux.org>
+Cc: stable@vger.kernel.org
+[ Ajay: Modified to apply on v6.1 ]
+Signed-off-by: Ajay Kaher <ajay.kaher@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
-Without this patch, this issue can be reproduced in Linux-6.1.y 
-when the idxd module is removed.
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/dma/idxd/init.c |    1 -
- 1 file changed, 1 deletion(-)
+ arch/x86/mm/pat/memtype.c |   12 ++++++++----
+ include/linux/pgtable.h   |    7 ++++---
+ mm/memory.c               |    1 +
+ mm/mremap.c               |    2 +-
+ 4 files changed, 14 insertions(+), 8 deletions(-)
 
---- a/drivers/dma/idxd/init.c
-+++ b/drivers/dma/idxd/init.c
-@@ -816,7 +816,6 @@ static void idxd_remove(struct pci_dev *
- 	destroy_workqueue(idxd->wq);
- 	perfmon_pmu_remove(idxd);
- 	put_device(idxd_confdev(idxd));
--	idxd_free(idxd);
+--- a/arch/x86/mm/pat/memtype.c
++++ b/arch/x86/mm/pat/memtype.c
+@@ -1137,11 +1137,15 @@ void untrack_pfn(struct vm_area_struct *
  }
  
- static struct pci_driver idxd_pci_driver = {
+ /*
+- * untrack_pfn_moved is called, while mremapping a pfnmap for a new region,
+- * with the old vma after its pfnmap page table has been removed.  The new
+- * vma has a new pfnmap to the same pfn & cache type with VM_PAT set.
++ * untrack_pfn_clear is called if the following situation fits:
++ *
++ * 1) while mremapping a pfnmap for a new region,  with the old vma after
++ * its pfnmap page table has been removed.  The new vma has a new pfnmap
++ * to the same pfn & cache type with VM_PAT set.
++ * 2) while duplicating vm area, the new vma fails to copy the pgtable from
++ * old vma.
+  */
+-void untrack_pfn_moved(struct vm_area_struct *vma)
++void untrack_pfn_clear(struct vm_area_struct *vma)
+ {
+ 	vma->vm_flags &= ~VM_PAT;
+ }
+--- a/include/linux/pgtable.h
++++ b/include/linux/pgtable.h
+@@ -1214,9 +1214,10 @@ static inline void untrack_pfn(struct vm
+ }
+ 
+ /*
+- * untrack_pfn_moved is called while mremapping a pfnmap for a new region.
++ * untrack_pfn_clear is called while mremapping a pfnmap for a new region
++ * or fails to copy pgtable during duplicate vm area.
+  */
+-static inline void untrack_pfn_moved(struct vm_area_struct *vma)
++static inline void untrack_pfn_clear(struct vm_area_struct *vma)
+ {
+ }
+ #else
+@@ -1228,7 +1229,7 @@ extern void track_pfn_insert(struct vm_a
+ extern int track_pfn_copy(struct vm_area_struct *vma);
+ extern void untrack_pfn(struct vm_area_struct *vma, unsigned long pfn,
+ 			unsigned long size);
+-extern void untrack_pfn_moved(struct vm_area_struct *vma);
++extern void untrack_pfn_clear(struct vm_area_struct *vma);
+ #endif
+ 
+ #ifdef CONFIG_MMU
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -1335,6 +1335,7 @@ copy_page_range(struct vm_area_struct *d
+ 			continue;
+ 		if (unlikely(copy_p4d_range(dst_vma, src_vma, dst_pgd, src_pgd,
+ 					    addr, next))) {
++			untrack_pfn_clear(dst_vma);
+ 			ret = -ENOMEM;
+ 			break;
+ 		}
+--- a/mm/mremap.c
++++ b/mm/mremap.c
+@@ -682,7 +682,7 @@ static unsigned long move_vma(struct vm_
+ 
+ 	/* Tell pfnmap has moved from this vma */
+ 	if (unlikely(vma->vm_flags & VM_PFNMAP))
+-		untrack_pfn_moved(vma);
++		untrack_pfn_clear(vma);
+ 
+ 	if (unlikely(!err && (flags & MREMAP_DONTUNMAP))) {
+ 		/* We always clear VM_LOCKED[ONFAULT] on the old vma */
 
 
