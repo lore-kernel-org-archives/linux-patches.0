@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B624433C53C;
-	Fri,  9 Jan 2026 12:31:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE9033B6E8;
+	Fri,  9 Jan 2026 12:31:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961879; cv=none; b=One4yyb6NYqyMaYc7+GYsZKKJSltVpVyLLP711oNI+HShelPBMn3dKP3Q63zWmHsku84LNBT/l4rRZjIAAludj2Ok3+hoTxUQqnqQvfI4C75tvKlQ3tTN69+nwhoqlFbQtQAbpgvYg13FHcAqbQ/eRz6MrX2+ggL+aS5x4wbI2g=
+	t=1767961882; cv=none; b=kKGZzzIqwqxe3q7cadKRICqRjJLoQP6P7E6N0bXU3YyL57F7KeDZ/f26n0zegAjUb08rS+rIkbbOeg8gTXYuHdKjq7iifrjGJ8yO3vY+Rkk+MD38wiSrHR73whEkdk6LWMp+Mfi1E3xzpzGxXuBOxh3qzdUReKb+GGhn/oON0xI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961879; c=relaxed/simple;
-	bh=0DDIUwFawcqgmKOyalBvMWmKDJ+W/lzRuyDZAUbylY4=;
+	s=arc-20240116; t=1767961882; c=relaxed/simple;
+	bh=RQtRq9I3sJWw1pDKqOtHhNo1/dEGyHNq0gWM6gjWN3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JMCE+vdbuq2bZryIfBQI4P2drN25PRZm5kcBTCM/G2UwjTVHzxjl541eHFGK2ZytqY1vTjkZg300YMquv2rvO9Wb9R4wNfykcWtZhe/ohLrSuvwS3v6nieJJqJc8OrTz/A2tmfW4kBL7I0TIIBTZTfG/bN4CH+vnrHV81lRpfsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HUwHudcd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kRsDsAi1JzMMgRdrXQ2jsajPA1Cbv6sYilEaXBgQzqMg6zTYXK4qE/GT8Dfu1MZ8J3DUo6gKq01Vn5vPitiMJPgEr8jT3yT0adiEpGD9WYVCOc6CfYjyM9SA7URn/o/O8VS903EKY1gHb5FKaIjGlT+GM+wKjiU+/3OwFaCxOMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zSNBnfcR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HUwHudcd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4142FC4CEF1;
-	Fri,  9 Jan 2026 12:31:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zSNBnfcR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E513C19421;
+	Fri,  9 Jan 2026 12:31:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961879;
-	bh=0DDIUwFawcqgmKOyalBvMWmKDJ+W/lzRuyDZAUbylY4=;
+	s=korg; t=1767961882;
+	bh=RQtRq9I3sJWw1pDKqOtHhNo1/dEGyHNq0gWM6gjWN3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HUwHudcdiYwjJJ8h3A9ZirJa/hZUtbKqBWEU/6McWnljG38K1LSxnPJakkUQqe5aa
-	 3QENW99kJhrLRW8dE5wZhgpx60VP8V3ADP9CGfcFs3UXnZFH1ZR3uJmTIHridTTWes
-	 F32ue+Fyxss8vu5horR34ZWyFUYg6fXYpsP/SFDU=
+	b=zSNBnfcRj7xcB78Ug1rNwS8hzwnyekaRuu0sVP5yjXKxuy+lmbWI05ifEKAYRpqyq
+	 Kvtws+2UgHfnmwPQxygn9V3FgfZ0AXZf9zxJYhz/DHNUutDh/DGUHX+vxV3+R4p10a
+	 vjsCUDljERfqxQdFGUAOhXyw5hWBn8U7ZLBhRNYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sparkhuang <huangshaobo3@xiaomi.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 167/634] regulator: core: Protect regulator_supply_alias_list with regulator_list_mutex
-Date: Fri,  9 Jan 2026 12:37:25 +0100
-Message-ID: <20260109112123.731667993@linuxfoundation.org>
+Subject: [PATCH 6.1 168/634] resource: Replace printk(KERN_WARNING) by pr_warn(), printk() by pr_info()
+Date: Fri,  9 Jan 2026 12:37:26 +0100
+Message-ID: <20260109112123.769310027@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,105 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: sparkhuang <huangshaobo3@xiaomi.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 0cc15a10c3b4ab14cd71b779fd5c9ca0cb2bc30d ]
+[ Upstream commit 2a4e628570d42fcc13a94f1acf25e3cfeaec08f6 ]
 
-regulator_supply_alias_list was accessed without any locking in
-regulator_supply_alias(), regulator_register_supply_alias(), and
-regulator_unregister_supply_alias(). Concurrent registration,
-unregistration and lookups can race, leading to:
+Replace printk(KERN_WARNING) by pr_warn() and printk() by pr_info().
 
-1 use-after-free if an alias entry is removed while being read,
-2 duplicate entries when two threads register the same alias,
-3 inconsistent alias mappings observed by consumers.
+While at it, use %pa for the resource_size_t variables. With that,
+for the sake of consistency, introduce a temporary variable for
+the end address in iomem_map_sanity_check() like it's done in another
+function in the same module.
 
-Protect all traversals, insertions and deletions on
-regulator_supply_alias_list with the existing regulator_list_mutex.
-
-Fixes: a06ccd9c3785f ("regulator: core: Add ability to create a lookup alias for supply")
-Signed-off-by: sparkhuang <huangshaobo3@xiaomi.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20251127025716.5440-1-huangshaobo3@xiaomi.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Rafael J. Wysocki <rafael@kernel.org>
+Link: https://lore.kernel.org/r/20221109155618.42276-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 6fb3acdebf65 ("Reinstate "resource: avoid unnecessary lookups in find_next_iomem_res()"")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 32 ++++++++++++++++++++------------
- 1 file changed, 20 insertions(+), 12 deletions(-)
+ kernel/resource.c | 17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index 436764329f63b..7b1d60628a001 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -1977,6 +1977,7 @@ static void regulator_supply_alias(struct device **dev, const char **supply)
- {
- 	struct regulator_supply_alias *map;
+diff --git a/kernel/resource.c b/kernel/resource.c
+index ca0a59f5bc2bd..eb713a984c749 100644
+--- a/kernel/resource.c
++++ b/kernel/resource.c
+@@ -930,7 +930,7 @@ void insert_resource_expand_to_fit(struct resource *root, struct resource *new)
+ 		if (conflict->end > new->end)
+ 			new->end = conflict->end;
  
-+	mutex_lock(&regulator_list_mutex);
- 	map = regulator_find_supply_alias(*dev, *supply);
- 	if (map) {
- 		dev_dbg(*dev, "Mapping supply %s to %s,%s\n",
-@@ -1985,6 +1986,7 @@ static void regulator_supply_alias(struct device **dev, const char **supply)
- 		*dev = map->alias_dev;
- 		*supply = map->alias_supply;
+-		printk("Expanded resource %s due to conflict with %s\n", new->name, conflict->name);
++		pr_info("Expanded resource %s due to conflict with %s\n", new->name, conflict->name);
  	}
-+	mutex_unlock(&regulator_list_mutex);
+ 	write_unlock(&resource_lock);
  }
+@@ -1325,9 +1325,7 @@ void __release_region(struct resource *parent, resource_size_t start,
  
- static int regulator_match(struct device *dev, const void *data)
-@@ -2463,22 +2465,26 @@ int regulator_register_supply_alias(struct device *dev, const char *id,
- 				    const char *alias_id)
+ 	write_unlock(&resource_lock);
+ 
+-	printk(KERN_WARNING "Trying to free nonexistent resource "
+-		"<%016llx-%016llx>\n", (unsigned long long)start,
+-		(unsigned long long)end);
++	pr_warn("Trying to free nonexistent resource <%pa-%pa>\n", &start, &end);
+ }
+ EXPORT_SYMBOL(__release_region);
+ 
+@@ -1686,6 +1684,7 @@ __setup("reserve=", reserve_setup);
+ int iomem_map_sanity_check(resource_size_t addr, unsigned long size)
  {
- 	struct regulator_supply_alias *map;
-+	struct regulator_supply_alias *new_map;
+ 	struct resource *p = &iomem_resource;
++	resource_size_t end = addr + size - 1;
+ 	int err = 0;
+ 	loff_t l;
  
--	map = regulator_find_supply_alias(dev, id);
--	if (map)
--		return -EEXIST;
--
--	map = kzalloc(sizeof(struct regulator_supply_alias), GFP_KERNEL);
--	if (!map)
-+	new_map = kzalloc(sizeof(struct regulator_supply_alias), GFP_KERNEL);
-+	if (!new_map)
- 		return -ENOMEM;
+@@ -1695,12 +1694,12 @@ int iomem_map_sanity_check(resource_size_t addr, unsigned long size)
+ 		 * We can probably skip the resources without
+ 		 * IORESOURCE_IO attribute?
+ 		 */
+-		if (p->start >= addr + size)
++		if (p->start > end)
+ 			continue;
+ 		if (p->end < addr)
+ 			continue;
+ 		if (PFN_DOWN(p->start) <= PFN_DOWN(addr) &&
+-		    PFN_DOWN(p->end) >= PFN_DOWN(addr + size - 1))
++		    PFN_DOWN(p->end) >= PFN_DOWN(end))
+ 			continue;
+ 		/*
+ 		 * if a resource is "BUSY", it's not a hardware resource
+@@ -1711,10 +1710,8 @@ int iomem_map_sanity_check(resource_size_t addr, unsigned long size)
+ 		if (p->flags & IORESOURCE_BUSY)
+ 			continue;
  
--	map->src_dev = dev;
--	map->src_supply = id;
--	map->alias_dev = alias_dev;
--	map->alias_supply = alias_id;
--
--	list_add(&map->list, &regulator_supply_alias_list);
-+	mutex_lock(&regulator_list_mutex);
-+	map = regulator_find_supply_alias(dev, id);
-+	if (map) {
-+		mutex_unlock(&regulator_list_mutex);
-+		kfree(new_map);
-+		return -EEXIST;
-+	}
- 
-+	new_map->src_dev = dev;
-+	new_map->src_supply = id;
-+	new_map->alias_dev = alias_dev;
-+	new_map->alias_supply = alias_id;
-+	list_add(&new_map->list, &regulator_supply_alias_list);
-+	mutex_unlock(&regulator_list_mutex);
- 	pr_info("Adding alias for supply %s,%s -> %s,%s\n",
- 		id, dev_name(dev), alias_id, dev_name(alias_dev));
- 
-@@ -2498,11 +2504,13 @@ void regulator_unregister_supply_alias(struct device *dev, const char *id)
- {
- 	struct regulator_supply_alias *map;
- 
-+	mutex_lock(&regulator_list_mutex);
- 	map = regulator_find_supply_alias(dev, id);
- 	if (map) {
- 		list_del(&map->list);
- 		kfree(map);
+-		printk(KERN_WARNING "resource sanity check: requesting [mem %#010llx-%#010llx], which spans more than %s %pR\n",
+-		       (unsigned long long)addr,
+-		       (unsigned long long)(addr + size - 1),
+-		       p->name, p);
++		pr_warn("resource sanity check: requesting [mem %pa-%pa], which spans more than %s %pR\n",
++			&addr, &end, p->name, p);
+ 		err = -1;
+ 		break;
  	}
-+	mutex_unlock(&regulator_list_mutex);
- }
- EXPORT_SYMBOL_GPL(regulator_unregister_supply_alias);
- 
 -- 
 2.51.0
 
