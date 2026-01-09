@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD7533A712;
-	Fri,  9 Jan 2026 11:54:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCD333290A;
+	Fri,  9 Jan 2026 11:54:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959675; cv=none; b=Fl1lkxOyc/vS2+fMhHCpZ9bhsLNeQAWJAPv4j6XBJ2uvbS9LWcpa5sDC968pvfoYmh/MyQCAKzpt1R3lQzftfyesLjIXvioHNZ6SAeHAYT7R/dgWqZ/5defOWQ/ou9crPF4AKjt84pj/hOa6vOMNqolspiZP4O9SSrNwdBAozEw=
+	t=1767959678; cv=none; b=hAX5AZm13MhUT+I4g4vNO7IwyhCW85hVH5lur8TDKxftQeidbA1LnlppsXakpQjZeUGgxXytYwheXGrxw5/CnJoxyQulzCWCgF2bIAbge4uQHYPfJNXhRL9TMnVw+zvZ0X/MFxYcfVcKMGSgfh+mi2h5fJggPDpKB/2tJiJ7nh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959675; c=relaxed/simple;
-	bh=X/GsknKRNjbOxO0w3nd1RcywI72ypQZhlrm8ZWFw3IU=;
+	s=arc-20240116; t=1767959678; c=relaxed/simple;
+	bh=fqxPh2IEwfAffS6v3gUpMQodRsi4nko5BYRNbpVPTAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QwRAAF6MF95L2hKLrFemC/nRUe9oX1FO2Ec9Hi7gEnfmMaqE3VOGBvlRXTluc90fvijnknSwOTqNXDow4EC7S1wDtkYNNcQBYYWcnfiA0Vo0fmCRqLASueqc74z9gF9XYxhZuzcfBSK2vSdZxDQhP3RF9pOwTX1QAZAmkR5N2/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FKBJWPUs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CQzhDr5fhvQjZvx3U/T2dwfupjZK8ALs+ryLDNcsinBDUdFCylmDS6J3uYKz2vhXxPt1EU6AHNmn7voS8fPCHAZOWHup/fX/R0FmEYgJcsJSqY+5PtjKR/H3RSHAaFVgQtTY+wkGUnx/UOb+GBHU6JV/nKEVolJ37hYZx0TA1O0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fRgmBkgq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FKBJWPUs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A6E3C4CEF1;
-	Fri,  9 Jan 2026 11:54:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fRgmBkgq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D953C4CEF1;
+	Fri,  9 Jan 2026 11:54:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959675;
-	bh=X/GsknKRNjbOxO0w3nd1RcywI72ypQZhlrm8ZWFw3IU=;
+	s=korg; t=1767959678;
+	bh=fqxPh2IEwfAffS6v3gUpMQodRsi4nko5BYRNbpVPTAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FKBJWPUsu/E9zY6tnjIsn3HoBNN1K0hs3fEMYyHC1RJGoUzmOPtdqrGb65A2JVwEI
-	 LU2kC0ycatsYNgU0PHwZ8oAbHTG5TOnwBkHrA/wjfBVUkBgHDMTF2uzAYaHsUvT3GD
-	 Clec4eYROFufM/eVfWDG08784pRYH2PTpjpvA4mQ=
+	b=fRgmBkgqJLdAJts4zY2YycCLeCgGY/p+YrdwJtenhE+CR5/1X43EbEW89t9I2CVXt
+	 5b3uG9MgVYAVPRtwkZp9MnnUGjw/S+r7oG7roS2KrAH7In6Br4ogAVJpZEQjqJ6Z44
+	 kvMDE1I67LZGCPMYMAb32hb511LO2K/g439KbZMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Wei Chiu <visitorckw@gmail.com>,
-	Georgi Djakov <djakov@kernel.org>,
+	Ma Ke <make24@iscas.ac.cn>,
+	Jack Wang <jinpu.wang@ionos.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 108/737] interconnect: debugfs: Fix incorrect error handling for NULL path
-Date: Fri,  9 Jan 2026 12:34:07 +0100
-Message-ID: <20260109112138.065648985@linuxfoundation.org>
+Subject: [PATCH 6.6 135/737] RDMA/rtrs: server: Fix error handling in get_or_create_srv
+Date: Fri,  9 Jan 2026 12:34:34 +0100
+Message-ID: <20260109112139.079507691@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,51 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-[ Upstream commit 6bfe104fd0f94d0248af22c256ce725ee087157b ]
+[ Upstream commit a338d6e849ab31f32c08b4fcac11c0c72afbb150 ]
 
-The icc_commit_set() function, used by the debugfs interface, checks
-the validity of the global cur_path pointer using IS_ERR_OR_NULL().
-However, in the specific case where cur_path is NULL, while
-IS_ERR_OR_NULL(NULL) correctly evaluates to true, the subsequent call
-to PTR_ERR(NULL) returns 0.
+After device_initialize() is called, use put_device() to release the
+device according to kernel device management rules. While direct
+kfree() work in this case, using put_device() is more correct.
 
-This causes the function to return a success code (0) instead of an
-error, misleading the user into believing their bandwidth request was
-successfully committed when, in fact, no operation was performed.
+Found by code review.
 
-Fix this by adding an explicit check to return -EINVAL if cur_path is
-NULL. This prevents silent failures and ensures that an invalid
-operational sequence is immediately and clearly reported as an error.
-
-Fixes: 770c69f037c1 ("interconnect: Add debugfs test client")
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Link: https://lore.kernel.org/r/20251010151447.2289779-1-visitorckw@gmail.com
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Fixes: 9cb837480424 ("RDMA/rtrs: server: main functionality")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Link: https://patch.msgid.link/20251110005158.13394-1-make24@iscas.ac.cn
+Acked-by: Jack Wang <jinpu.wang@ionos.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/debugfs-client.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/infiniband/ulp/rtrs/rtrs-srv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/interconnect/debugfs-client.c b/drivers/interconnect/debugfs-client.c
-index bc3fd8a7b9eb4..778deeb4a7e8a 100644
---- a/drivers/interconnect/debugfs-client.c
-+++ b/drivers/interconnect/debugfs-client.c
-@@ -117,7 +117,12 @@ static int icc_commit_set(void *data, u64 val)
+diff --git a/drivers/infiniband/ulp/rtrs/rtrs-srv.c b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
+index 84d1654148d76..5dbf315630c1a 100644
+--- a/drivers/infiniband/ulp/rtrs/rtrs-srv.c
++++ b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
+@@ -1443,7 +1443,7 @@ static struct rtrs_srv_sess *get_or_create_srv(struct rtrs_srv_ctx *ctx,
+ 	kfree(srv->chunks);
  
- 	mutex_lock(&debugfs_lock);
+ err_free_srv:
+-	kfree(srv);
++	put_device(&srv->dev);
+ 	return ERR_PTR(-ENOMEM);
+ }
  
--	if (IS_ERR_OR_NULL(cur_path)) {
-+	if (!cur_path) {
-+		ret = -EINVAL;
-+		goto out;
-+	}
-+
-+	if (IS_ERR(cur_path)) {
- 		ret = PTR_ERR(cur_path);
- 		goto out;
- 	}
 -- 
 2.51.0
 
