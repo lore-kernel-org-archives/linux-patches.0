@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B667E35CB6D;
-	Fri,  9 Jan 2026 12:49:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB2435B135;
+	Fri,  9 Jan 2026 12:49:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962946; cv=none; b=ggEYM33bjbQ9+apwnZcitoI/xFu8xCezlydL9GouMWge2UMniUzg/F8B+AEcWLQmD7551RCK287gDGCVbdS4sqDdOZk22tzlh9uHMyrlMwYIQz6FhAgTzjBCxnH6eUMWwSX1adbfsEj18BznyyDuw5anwFgiYnq+w44YV3E4DDE=
+	t=1767962949; cv=none; b=C3ub8Psq7jUgWcjfXctnN/vp1dqxuQYjvfarUwqAkGoft8JShLBqF7hbkWxkrHDVGCBwSoE+Ij0t/UHDCxB12Ym++PPmV7Ib+/K94xM62/IKOEbqdOpmG4xGLNHVjHIMNVeEB4UYHIlz52aLlC0Lis8Cx4v+SCvrDlt08i9wJIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962946; c=relaxed/simple;
-	bh=vP84XvXyNDq3vTcyK+4OQfWh8X9b3PW3OWgYiGPvbwA=;
+	s=arc-20240116; t=1767962949; c=relaxed/simple;
+	bh=c23e2ac08GFHq7YA1D6waojjU2+C7/+TrTPZLCcS/ro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y1daJLj8YUxyUjFistUi2c90r2AtmeoMGk2usr5/fYVEbzPYemIgpIKvlK+l7lRRej7v5QVJbL3bVogKRoZ758OIaKRRjZhJSOD/5bFAxjOa1kv+m3iuD//ocItWuNDuqJ30Er7Ne2fhWX+T80f28LzV55BWMoW1rcAiTnR1ndE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2c3K1N6l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XtNuBP0nn139mIGgxFq19cUjoaefczmHnehbAaGOBiz1o7LMTDZ5l998SwtGoKaZMLyoQNKOBr3bllTgKDndFpmkO+WvVeCTDItlz4esZC3/8Zy/HNSRhV57kYgVbkcOIoEIne1PYSz3hld7STmT4oQMEvzleKBNi59BWnaU6G0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CsimdkC6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2c3K1N6l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41D58C4CEF1;
-	Fri,  9 Jan 2026 12:49:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CsimdkC6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F649C4CEF1;
+	Fri,  9 Jan 2026 12:49:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962946;
-	bh=vP84XvXyNDq3vTcyK+4OQfWh8X9b3PW3OWgYiGPvbwA=;
+	s=korg; t=1767962949;
+	bh=c23e2ac08GFHq7YA1D6waojjU2+C7/+TrTPZLCcS/ro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2c3K1N6lzv70jIFTarwpmjXRjGXo35Hzuuem3g3iHGoc5MqGwfO1c+B35UTuoU1b6
-	 39Zq6tJWQ95NNCjp+x3d8tc6upaiyqnDxMj+7pmsNnOtFCmgSrJKiAfz4idrFHgScj
-	 OuUVwsOfiKTjJ9ts0G3EQERBC1bCfkqNbB2o+eNg=
+	b=CsimdkC6dAWqpSUGynm6niYZQr7BMHt75WiMbr0I32SBnK3H08cRpl6FVMQXbHt38
+	 ySIspLht5GxPfnd24VKZqXpp/M9TRyaZSaR8hujutUMKJMKBFXN+thyXVxf+k9yrz+
+	 eCj0otiWbpFZJgFr2J+cjcppPeu6pwU7fZ1ImD1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
 	Baokun Li <libaokun1@huawei.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
 	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 543/634] jbd2: fix the inconsistency between checksum and data in memory for journal sb
-Date: Fri,  9 Jan 2026 12:43:41 +0100
-Message-ID: <20260109112138.019469884@linuxfoundation.org>
+Subject: [PATCH 6.1 544/634] ext4: fix string copying in parse_apply_sb_mount_options()
+Date: Fri,  9 Jan 2026 12:43:42 +0100
+Message-ID: <20260109112138.058066762@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -55,91 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Bin <yebin10@huawei.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 6abfe107894af7e8ce3a2e120c619d81ee764ad5 ]
+[ Upstream commit ee5a977b4e771cc181f39d504426dbd31ed701cc ]
 
-Copying the file system while it is mounted as read-only results in
-a mount failure:
-[~]# mkfs.ext4 -F /dev/sdc
-[~]# mount /dev/sdc -o ro /mnt/test
-[~]# dd if=/dev/sdc of=/dev/sda bs=1M
-[~]# mount /dev/sda /mnt/test1
-[ 1094.849826] JBD2: journal checksum error
-[ 1094.850927] EXT4-fs (sda): Could not load journal inode
-mount: mount /dev/sda on /mnt/test1 failed: Bad message
+strscpy_pad() can't be used to copy a non-NUL-term string into a NUL-term
+string of possibly bigger size.  Commit 0efc5990bca5 ("string.h: Introduce
+memtostr() and memtostr_pad()") provides additional information in that
+regard.  So if this happens, the following warning is observed:
 
-The process described above is just an abstracted way I came up with to
-reproduce the issue. In the actual scenario, the file system was mounted
-read-only and then copied while it was still mounted. It was found that
-the mount operation failed. The user intended to verify the data or use
-it as a backup, and this action was performed during a version upgrade.
-Above issue may happen as follows:
-ext4_fill_super
- set_journal_csum_feature_set(sb)
-  if (ext4_has_metadata_csum(sb))
-   incompat = JBD2_FEATURE_INCOMPAT_CSUM_V3;
-  if (test_opt(sb, JOURNAL_CHECKSUM)
-   jbd2_journal_set_features(sbi->s_journal, compat, 0, incompat);
-    lock_buffer(journal->j_sb_buffer);
-    sb->s_feature_incompat  |= cpu_to_be32(incompat);
-    //The data in the journal sb was modified, but the checksum was not
-      updated, so the data remaining in memory has a mismatch between the
-      data and the checksum.
-    unlock_buffer(journal->j_sb_buffer);
+strnlen: detected buffer overflow: 65 byte read of buffer size 64
+WARNING: CPU: 0 PID: 28655 at lib/string_helpers.c:1032 __fortify_report+0x96/0xc0 lib/string_helpers.c:1032
+Modules linked in:
+CPU: 0 UID: 0 PID: 28655 Comm: syz-executor.3 Not tainted 6.12.54-syzkaller-00144-g5f0270f1ba00 #0
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+RIP: 0010:__fortify_report+0x96/0xc0 lib/string_helpers.c:1032
+Call Trace:
+ <TASK>
+ __fortify_panic+0x1f/0x30 lib/string_helpers.c:1039
+ strnlen include/linux/fortify-string.h:235 [inline]
+ sized_strscpy include/linux/fortify-string.h:309 [inline]
+ parse_apply_sb_mount_options fs/ext4/super.c:2504 [inline]
+ __ext4_fill_super fs/ext4/super.c:5261 [inline]
+ ext4_fill_super+0x3c35/0xad00 fs/ext4/super.c:5706
+ get_tree_bdev_flags+0x387/0x620 fs/super.c:1636
+ vfs_get_tree+0x93/0x380 fs/super.c:1814
+ do_new_mount fs/namespace.c:3553 [inline]
+ path_mount+0x6ae/0x1f70 fs/namespace.c:3880
+ do_mount fs/namespace.c:3893 [inline]
+ __do_sys_mount fs/namespace.c:4103 [inline]
+ __se_sys_mount fs/namespace.c:4080 [inline]
+ __x64_sys_mount+0x280/0x300 fs/namespace.c:4080
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0x64/0x140 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-In this case, the journal sb copied over is in a state where the checksum
-and data are inconsistent, so mounting fails.
-To solve the above issue, update the checksum in memory after modifying
-the journal sb.
+Since userspace is expected to provide s_mount_opts field to be at most 63
+characters long with the ending byte being NUL-term, use a 64-byte buffer
+which matches the size of s_mount_opts, so that strscpy_pad() does its job
+properly.  Return with error if the user still managed to provide a
+non-NUL-term string here.
 
-Fixes: 4fd5ea43bc11 ("jbd2: checksum journal superblock")
-Signed-off-by: Ye Bin <yebin10@huawei.com>
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: 8ecb790ea8c3 ("ext4: avoid potential buffer over-read in parse_apply_sb_mount_options()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
 Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Message-ID: <20251103010123.3753631-1-yebin@huaweicloud.com>
+Message-ID: <20251101160430.222297-1-pchelkin@ispras.ru>
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
-[ Changed jbd2_superblock_csum(sb) to jbd2_superblock_csum(journal, sb) ]
+[ adapted 2-argument strscpy_pad() call to 3-argument form with explicit sizeof() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jbd2/journal.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ fs/ext4/super.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/jbd2/journal.c
-+++ b/fs/jbd2/journal.c
-@@ -2393,6 +2393,12 @@ int jbd2_journal_set_features(journal_t
- 	sb->s_feature_compat    |= cpu_to_be32(compat);
- 	sb->s_feature_ro_compat |= cpu_to_be32(ro);
- 	sb->s_feature_incompat  |= cpu_to_be32(incompat);
-+	/*
-+	 * Update the checksum now so that it is valid even for read-only
-+	 * filesystems where jbd2_write_superblock() doesn't get called.
-+	 */
-+	if (jbd2_journal_has_csum_v2or3(journal))
-+		sb->s_checksum = jbd2_superblock_csum(journal, sb);
- 	unlock_buffer(journal->j_sb_buffer);
- 	journal->j_revoke_records_per_block =
- 				journal_revoke_records_per_block(journal);
-@@ -2423,9 +2429,17 @@ void jbd2_journal_clear_features(journal
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -2416,7 +2416,7 @@ static int parse_apply_sb_mount_options(
+ 					struct ext4_fs_context *m_ctx)
+ {
+ 	struct ext4_sb_info *sbi = EXT4_SB(sb);
+-	char s_mount_opts[65];
++	char s_mount_opts[64];
+ 	struct ext4_fs_context *s_ctx = NULL;
+ 	struct fs_context *fc = NULL;
+ 	int ret = -ENOMEM;
+@@ -2424,7 +2424,8 @@ static int parse_apply_sb_mount_options(
+ 	if (!sbi->s_es->s_mount_opts[0])
+ 		return 0;
  
- 	sb = journal->j_superblock;
+-	strscpy_pad(s_mount_opts, sbi->s_es->s_mount_opts, sizeof(s_mount_opts));
++	if (strscpy_pad(s_mount_opts, sbi->s_es->s_mount_opts, sizeof(s_mount_opts)) < 0)
++		return -E2BIG;
  
-+	lock_buffer(journal->j_sb_buffer);
- 	sb->s_feature_compat    &= ~cpu_to_be32(compat);
- 	sb->s_feature_ro_compat &= ~cpu_to_be32(ro);
- 	sb->s_feature_incompat  &= ~cpu_to_be32(incompat);
-+	/*
-+	 * Update the checksum now so that it is valid even for read-only
-+	 * filesystems where jbd2_write_superblock() doesn't get called.
-+	 */
-+	if (jbd2_journal_has_csum_v2or3(journal))
-+		sb->s_checksum = jbd2_superblock_csum(journal, sb);
-+	unlock_buffer(journal->j_sb_buffer);
- 	journal->j_revoke_records_per_block =
- 				journal_revoke_records_per_block(journal);
- }
+ 	fc = kzalloc(sizeof(struct fs_context), GFP_KERNEL);
+ 	if (!fc)
 
 
