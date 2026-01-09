@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3525135C1AE;
-	Fri,  9 Jan 2026 12:47:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53C3B35E52C;
+	Fri,  9 Jan 2026 12:47:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962872; cv=none; b=tKnvgWpNHYzkUpHuWCRdUYeMG/8WhWw5btyfSPt33/bwLA5IUaKPguyJ8D0TuV/pzJ/+Pw9IEltGtVfi47AKV0cGwiGoeTWmPQd2BkN8TMvHdfvbqHOvrClmDBqhdgHo1R1dUed/hHR6YTqpSYjMpm1coG7ha73bXqR1oVJ2haA=
+	t=1767962875; cv=none; b=r4hC98nmg6K+6WOokmoKjc4own2oHllsU8WYTSedWWV1dxNvh9ZI18v/6mwxdlivC729LO6rpkbKmnXh0Di2xBIl8/uHBeIXKgfH99r3a8uHECD0KBIEqfc9dOM1SydhbFgZOJngoN2SburdQU7zXlE70xb3WMMtekHuwkltky0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962872; c=relaxed/simple;
-	bh=egZuM2v6wiEpdMBciC3CMAEzSR8dv8RFXSwBsj9dTaA=;
+	s=arc-20240116; t=1767962875; c=relaxed/simple;
+	bh=vYv7aXh9nLQCPrNoDi38hRpgngM0YOVsmzvrJxaXZyE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mPFSvJOC3i+UQ3R1qcMsUqbwe3D9SJq/F5XmkpzEHzoFpUrKgHahgwPJftJcutdtp/7aVOQ2MmtC8vlqzG1K9BiJhQZYbuXCAUi2K4oP5ayYLyGgSPrpCsbzsEnp4ykhZrbK3RROiHyRQFQM8lsPq9ywcsVVAkRkFYio8iCgXmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xFh7tjeD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Au8vlrrTC9+xQeHfc0aV4EfJjFqDROINEZbvdfK0OkO3sYD3J/tHe/boU47hLioaZKoazjyZ1hZkB8+wVlJvxpKBtAOYl5fHQ2YlSM3T52oI9Bg8p/tbqzw3bmD4aSwQX2w0AV9kyY4BDPWg4NXGqkAxx9TScLg+l3CGAo3x1dE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c1CMkznd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xFh7tjeD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B55A8C4CEF1;
-	Fri,  9 Jan 2026 12:47:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c1CMkznd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94A4FC4CEF1;
+	Fri,  9 Jan 2026 12:47:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962872;
-	bh=egZuM2v6wiEpdMBciC3CMAEzSR8dv8RFXSwBsj9dTaA=;
+	s=korg; t=1767962875;
+	bh=vYv7aXh9nLQCPrNoDi38hRpgngM0YOVsmzvrJxaXZyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xFh7tjeDuZ0479xbZhP+T1jn4D2XuxjXSSRbRRcrcTwhCa59VlSbYWrP5xJkeahMq
-	 RgyPuU4ejdlQYmAKl9238RQlxtja6XwofV7N4G20U978lnAGohJVfkIJYNNHroadGn
-	 Yh9i/pJ+gvHCtbx+Pu9KKqhft+Tu2/IXHgWJ1WJs=
+	b=c1CMkzndiwogCXs+avjyB35M/Xti4irhdcijpZavU77ltwvrH19NgeSUrrNfQlcxW
+	 EPthzpVQMIGDqf+L8BdWyZxLGhXF1ofiw0LlH7by3oV7sKSaYlBj/2DEWMzg0ImMuU
+	 Y4X2+vS293xIBURJSWDmpOfwCrLtUTKkR2wc1O0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianrui Zhao <zhaotianrui@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.1 490/634] LoongArch: Add new PCI ID for pci_fixup_vgadev()
-Date: Fri,  9 Jan 2026 12:42:48 +0100
-Message-ID: <20260109112135.983157152@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 517/634] mm/damon/tests/vaddr-kunit: handle alloc failures on damon_test_split_evenly_succ()
+Date: Fri,  9 Jan 2026 12:43:15 +0100
+Message-ID: <20260109112137.009673459@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -50,36 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: SeongJae Park <sj@kernel.org>
 
-commit bf3fa8f232a1eec8d7b88dcd9e925e60f04f018d upstream.
+commit 0a63a0e7570b9b2631dfb8d836dc572709dce39e upstream.
 
-Loongson-2K3000 has a new PCI ID (0x7a46) for its display controller,
-Add it for pci_fixup_vgadev() since we prefer a discrete graphics card
-as default boot device if present.
+damon_test_split_evenly_succ() is assuming all dynamic memory allocation
+in it will succeed.  Those are indeed likely in the real use cases since
+those allocations are too small to fail, but theoretically those could
+fail.  In the case, inappropriate memory access can happen.  Fix it by
+appropriately cleanup pre-allocated memory and skip the execution of the
+remaining tests in the failure cases.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Tianrui Zhao <zhaotianrui@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Link: https://lkml.kernel.org/r/20251101182021.74868-20-sj@kernel.org
+Fixes: 17ccae8bb5c9 ("mm/damon: add kunit tests")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: Brendan Higgins <brendan.higgins@linux.dev>
+Cc: David Gow <davidgow@google.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: <stable@vger.kernel.org>	[5.15+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/pci/pci.c |    2 ++
- 1 file changed, 2 insertions(+)
+ mm/damon/vaddr-test.h |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/arch/loongarch/pci/pci.c
-+++ b/arch/loongarch/pci/pci.c
-@@ -15,6 +15,7 @@
- #define PCI_DEVICE_ID_LOONGSON_HOST     0x7a00
- #define PCI_DEVICE_ID_LOONGSON_DC1      0x7a06
- #define PCI_DEVICE_ID_LOONGSON_DC2      0x7a36
-+#define PCI_DEVICE_ID_LOONGSON_DC3      0x7a46
+--- a/mm/damon/vaddr-test.h
++++ b/mm/damon/vaddr-test.h
+@@ -276,10 +276,17 @@ static void damon_test_split_evenly_succ
+ 	unsigned long start, unsigned long end, unsigned int nr_pieces)
+ {
+ 	struct damon_target *t = damon_new_target();
+-	struct damon_region *r = damon_new_region(start, end);
++	struct damon_region *r;
+ 	unsigned long expected_width = (end - start) / nr_pieces;
+ 	unsigned long i = 0;
  
- int raw_pci_read(unsigned int domain, unsigned int bus, unsigned int devfn,
- 						int reg, int len, u32 *val)
-@@ -98,3 +99,4 @@ static void pci_fixup_vgadev(struct pci_
- }
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_DC1, pci_fixup_vgadev);
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_DC2, pci_fixup_vgadev);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_DC3, pci_fixup_vgadev);
++	if (!t)
++		kunit_skip(test, "target alloc fail");
++	r = damon_new_region(start, end);
++	if (!r) {
++		damon_free_target(t);
++		kunit_skip(test, "region alloc fail");
++	}
+ 	damon_add_region(r, t);
+ 	KUNIT_EXPECT_EQ(test,
+ 			damon_va_evenly_split_region(t, r, nr_pieces), 0);
 
 
