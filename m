@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCCBA35A930;
-	Fri,  9 Jan 2026 12:11:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4AB0328B58;
+	Fri,  9 Jan 2026 12:11:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960677; cv=none; b=JNCndvCJFrgLM9w1WLMHKT4IIgEOEHuEQOpDKsVyYZn60ljSYSfehCfncWKOcI3HKrhH1AA8/+4Ze6k3SjsvGkJ3BBdAx5adnWnRQxRTF0un3jgRjwrdCCbPdyiIdXYfbqacER2WhZ97NKKt9/wwXi33PuxemVthpYGOu+/Oz98=
+	t=1767960680; cv=none; b=eQg/7fIJzA+FeweEBN8x7u8iBixkOHwcJrVfU/dXl8eDDRp0OXmILWngigWLJqo3+ZF7L7lEUHHWmRENcspdRTabrfslXm5V7dR4dG0gE2Ni4Oc0kaS3H6Nw41qP861M2nuvMhqO0eVjaBqGepW8zs4YacvyD/s3GJ/Mktkniu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960677; c=relaxed/simple;
-	bh=JO0QKjxvHnQnF+7EgAJsbSGjkUdSAGFhBPhAPxnqrCI=;
+	s=arc-20240116; t=1767960680; c=relaxed/simple;
+	bh=NePNGBNDNWXR6jeSvnchpzToth8WdoySmttOUi0D8N8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U8pNPI+hof0xLIaAGWihodB5gdCZjMwuIWl/gG9Cdc2VcNYckHfquf1oWY9ndi/twvdIEpYF9C7YkMGWGxLxHilffyimI7kYhBpkx8TpjRGKsmebOfKkpL53RDaojphArQvR0uWIOaMxQIyG2a5iqDJgy/xoHmHATsC8L1gYwzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uP2Yr1GC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uZEd7WbCy6VDKALGepnGpNM+pdt7DfFHAAw6L0CB7XOUmzCQPAPb6qwmBiqimORSTzYZbtVJEoYBLKF+2KzpdHtW89bwmApt1xNWCtWWw0QQMRqM4etFKIs1OkIHWYSlVtmVhMMNhve16XXbo1J9xE9FD5Ajva2+i7R+glIKfeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=umqKn6QP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uP2Yr1GC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A560C16AAE;
-	Fri,  9 Jan 2026 12:11:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="umqKn6QP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F532C19423;
+	Fri,  9 Jan 2026 12:11:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960677;
-	bh=JO0QKjxvHnQnF+7EgAJsbSGjkUdSAGFhBPhAPxnqrCI=;
+	s=korg; t=1767960680;
+	bh=NePNGBNDNWXR6jeSvnchpzToth8WdoySmttOUi0D8N8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uP2Yr1GCOIdpPchUPxYbRvVkcJGpXGWXs5H8JNTL0p1eWc2/3mgbAC2F3Xtryeiw/
-	 ypPOJQlbx/KGLNif6crkFTXz0UzRHJMx+yvzs+7DUk9IjxNps2xuu1W6CYmgk4JNio
-	 z+6hJ29KhHT7In4UrHgeJuyEM1EsN/Lmdn3Ri7q4=
+	b=umqKn6QPhQTpXdvtDfSX6Up9fb33yAeHu7rzqkU9kLqUmMPn8eYStg3gyvBH08RJw
+	 aUL4ANMcZ+neYNtIJEaEPNk97oaWTWCFTsbJxuO2wZi2TRRrGvJj8X5cIYcCk0CC55
+	 PYnvvf9LfAlTkpcBdgGcUhqPAleLhKaNjRAD3yAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Moreno <amorenoz@redhat.com>,
-	Aaron Conole <aconole@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Adrian Yip <adrian.ytw@gmail.com>
-Subject: [PATCH 6.6 486/737] selftests: openvswitch: Fix escape chars in regexp.
-Date: Fri,  9 Jan 2026 12:40:25 +0100
-Message-ID: <20260109112152.268215539@linuxfoundation.org>
+	Shivani Agarwal <shivani.agarwal@broadcom.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.6 487/737] crypto: af_alg - zero initialize memory allocated via sock_kmalloc
+Date: Fri,  9 Jan 2026 12:40:26 +0100
+Message-ID: <20260109112152.306276622@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,87 +50,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Moreno <amorenoz@redhat.com>
+From: Shivani Agarwal <shivani.agarwal@broadcom.com>
 
-commit 3fde60afe1f84746c1177861bd27b3ebb00cb8f5 upstream.
+commit 6f6e309328d53a10c0fe1f77dec2db73373179b6 upstream.
 
-Character sequences starting with `\` are interpreted by python as
-escaped Unicode characters. However, they have other meaning in
-regular expressions (e.g: "\d").
+Several crypto user API contexts and requests allocated with
+sock_kmalloc() were left uninitialized, relying on callers to
+set fields explicitly. This resulted in the use of uninitialized
+data in certain error paths or when new fields are added in the
+future.
 
-It seems Python >= 3.12 starts emitting a SyntaxWarning when these
-escaped sequences are not recognized as valid Unicode characters.
+The ACVP patches also contain two user-space interface files:
+algif_kpp.c and algif_akcipher.c. These too rely on proper
+initialization of their context structures.
 
-An example of these warnings:
+A particular issue has been observed with the newly added
+'inflight' variable introduced in af_alg_ctx by commit:
 
-tools/testing/selftests/net/openvswitch/ovs-dpctl.py:505:
-SyntaxWarning: invalid escape sequence '\d'
+  67b164a871af ("crypto: af_alg - Disallow multiple in-flight AIO requests")
 
-Fix all the warnings by flagging literals as raw strings.
+Because the context is not memset to zero after allocation,
+the inflight variable has contained garbage values. As a result,
+af_alg_alloc_areq() has incorrectly returned -EBUSY randomly when
+the garbage value was interpreted as true:
 
-Signed-off-by: Adrian Moreno <amorenoz@redhat.com>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://lore.kernel.org/r/20240416090913.2028475-1-amorenoz@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Adrian Yip <adrian.ytw@gmail.com>
+  https://github.com/gregkh/linux/blame/master/crypto/af_alg.c#L1209
+
+The check directly tests ctx->inflight without explicitly
+comparing against true/false. Since inflight is only ever set to
+true or false later, an uninitialized value has triggered
+-EBUSY failures. Zero-initializing memory allocated with
+sock_kmalloc() ensures inflight and other fields start in a known
+state, removing random issues caused by uninitialized data.
+
+Fixes: fe869cdb89c9 ("crypto: algif_hash - User-space interface for hash operations")
+Fixes: 5afdfd22e6ba ("crypto: algif_rng - add random number generator support")
+Fixes: 2d97591ef43d ("crypto: af_alg - consolidation of duplicate code")
+Fixes: 67b164a871af ("crypto: af_alg - Disallow multiple in-flight AIO requests")
+Cc: stable@vger.kernel.org
+Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/openvswitch/ovs-dpctl.py |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ crypto/af_alg.c     |    5 ++---
+ crypto/algif_hash.c |    3 +--
+ crypto/algif_rng.c  |    3 +--
+ 3 files changed, 4 insertions(+), 7 deletions(-)
 
---- a/tools/testing/selftests/net/openvswitch/ovs-dpctl.py
-+++ b/tools/testing/selftests/net/openvswitch/ovs-dpctl.py
-@@ -489,7 +489,7 @@ class ovsactions(nla):
-                     actstr, reason = parse_extract_field(
-                         actstr,
-                         "drop(",
--                        "([0-9]+)",
-+                        r"([0-9]+)",
-                         lambda x: int(x, 0),
-                         False,
-                         None,
-@@ -502,9 +502,9 @@ class ovsactions(nla):
-                     actstr = actstr[len("drop"): ]
-                     return (totallen - len(actstr))
+--- a/crypto/af_alg.c
++++ b/crypto/af_alg.c
+@@ -1211,15 +1211,14 @@ struct af_alg_async_req *af_alg_alloc_ar
+ 	if (unlikely(!areq))
+ 		return ERR_PTR(-ENOMEM);
  
--            elif parse_starts_block(actstr, "^(\d+)", False, True):
-+            elif parse_starts_block(actstr, r"^(\d+)", False, True):
-                 actstr, output = parse_extract_field(
--                    actstr, None, "(\d+)", lambda x: int(x), False, "0"
-+                    actstr, None, r"(\d+)", lambda x: int(x), False, "0"
-                 )
-                 self["attrs"].append(["OVS_ACTION_ATTR_OUTPUT", output])
-                 parsed = True
-@@ -512,7 +512,7 @@ class ovsactions(nla):
-                 actstr, recircid = parse_extract_field(
-                     actstr,
-                     "recirc(",
--                    "([0-9a-fA-Fx]+)",
-+                    r"([0-9a-fA-Fx]+)",
-                     lambda x: int(x, 0),
-                     False,
-                     0,
-@@ -588,17 +588,17 @@ class ovsactions(nla):
-                                 actstr = actstr[3:]
++	memset(areq, 0, areqlen);
++
+ 	ctx->inflight = true;
  
-                             actstr, ip_block_min = parse_extract_field(
--                                actstr, "=", "([0-9a-fA-F\.]+)", str, False
-+                                actstr, "=", r"([0-9a-fA-F\.]+)", str, False
-                             )
-                             actstr, ip_block_max = parse_extract_field(
--                                actstr, "-", "([0-9a-fA-F\.]+)", str, False
-+                                actstr, "-", r"([0-9a-fA-F\.]+)", str, False
-                             )
+ 	areq->areqlen = areqlen;
+ 	areq->sk = sk;
+ 	areq->first_rsgl.sgl.sgt.sgl = areq->first_rsgl.sgl.sgl;
+-	areq->last_rsgl = NULL;
+ 	INIT_LIST_HEAD(&areq->rsgl_list);
+-	areq->tsgl = NULL;
+-	areq->tsgl_entries = 0;
  
-                             actstr, proto_min = parse_extract_field(
--                                actstr, ":", "(\d+)", int, False
-+                                actstr, ":", r"(\d+)", int, False
-                             )
-                             actstr, proto_max = parse_extract_field(
--                                actstr, "-", "(\d+)", int, False
-+                                actstr, "-", r"(\d+)", int, False
-                             )
+ 	return areq;
+ }
+--- a/crypto/algif_hash.c
++++ b/crypto/algif_hash.c
+@@ -416,9 +416,8 @@ static int hash_accept_parent_nokey(void
+ 	if (!ctx)
+ 		return -ENOMEM;
  
-                             if t is not None:
+-	ctx->result = NULL;
++	memset(ctx, 0, len);
+ 	ctx->len = len;
+-	ctx->more = false;
+ 	crypto_init_wait(&ctx->wait);
+ 
+ 	ask->private = ctx;
+--- a/crypto/algif_rng.c
++++ b/crypto/algif_rng.c
+@@ -248,9 +248,8 @@ static int rng_accept_parent(void *priva
+ 	if (!ctx)
+ 		return -ENOMEM;
+ 
++	memset(ctx, 0, len);
+ 	ctx->len = len;
+-	ctx->addtl = NULL;
+-	ctx->addtl_len = 0;
+ 
+ 	/*
+ 	 * No seeding done at that point -- if multiple accepts are
 
 
