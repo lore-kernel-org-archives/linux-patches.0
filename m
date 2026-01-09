@@ -1,49 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F90227EA8;
-	Fri,  9 Jan 2026 12:52:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D5333372B;
+	Fri,  9 Jan 2026 12:52:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767963133; cv=none; b=anjmZsCdDqGm52t91/fCnUgDXDpXYV3kAEoqunEDBCvK7AY4xBxkpA8C+nrmm7IeORsa7yxdWFgb/9xj3r0cGa13YbrKwf31Y3lkbIrfSHTHUw59dVuEnV0C7GPdH44DmkqD3evTHfFYVubiK9Mx42nYZNiDRUYZgg4YDTMBGM4=
+	t=1767963136; cv=none; b=V1CuyFUn+3qI64JtT4Ag5FGwGyC9iqCD5jBAAzliIKRyYmMkgYTRmdZPN3PJBLV8P5LhtOOkTDgL1TLkO7+GuFPo1CkUm1Pi5Gkj6S2yyEXxxbYvNjHz3USB9W5ffhqYqnq3xVlAklq9WO6NhLr+A7AZa4mYFn70RJSGKlPJB8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767963133; c=relaxed/simple;
-	bh=B32i7GJ92mYBZxOHPnrrUKJP01RIpzSAhNnVAGL6mkA=;
+	s=arc-20240116; t=1767963136; c=relaxed/simple;
+	bh=9o0gqq+yfliWMDmic0cJIQdFpmSQ7gfqSqB2evzuKJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dy+rmZ6Wdmopznb/hyIxVxWZoR8tvt7UESpDXfq0pGpnowOimpu5OJosNgG0DUMP26B8IxVkfNKBM4qccN0vrIqMCX7tGsnBqkl057GI4altLAlqU5N5odvLc4Fn+a1lpNMmnFN4/RWqcvwgkAV7JcO4+ANLNo43IzDYJV8/Z5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T8cuR0KL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eNYUyao2P42Ng9GTCJBumtkKWORm1EXHik+xd/EKL8d82OTtj7bKZrqQ1XYM/t5jGY9A38fMjxlp42sSO8bajg/0F2aM3ctOJeYxefHd+qUo5BSdVx46vLWduorye+o0HzL/IUbwIoaHFfXYULHHY35Qhp0M7LxEywf0j/XzGzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yesU2q/+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T8cuR0KL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4608C4CEF1;
-	Fri,  9 Jan 2026 12:52:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yesU2q/+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97648C4CEF1;
+	Fri,  9 Jan 2026 12:52:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767963133;
-	bh=B32i7GJ92mYBZxOHPnrrUKJP01RIpzSAhNnVAGL6mkA=;
+	s=korg; t=1767963136;
+	bh=9o0gqq+yfliWMDmic0cJIQdFpmSQ7gfqSqB2evzuKJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T8cuR0KLxOJyhGnsj9MagmYiF0Rqo4cmXFnOBr+6FxHpMxDRGPoU2QyxJBd+YLG42
-	 6eGyCZjF6cmwiB3EPuS565tYkikemzT5t338Qco9e3T2x8SmAEY/UD+YPV1MTr1CDW
-	 ythBojpcpM+/Gr7/jip10C4DiFwXFhxwCQEis+hI=
+	b=yesU2q/+6Sfxd6kmYSB/EM7FJL6nbXiBrwxC57sLAMr1wFy5wYnVC+zbUcGPf5v55
+	 H0dkQiumaZgOvSx0CJT6pFDjCLYAnchDq3JSKujzRMinbsNkqsQqa7DrSprpZYFgTK
+	 sY5KlMi3QMXYjCzrAFcz6qbXdcMqNTAk8YzCU8cQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xingwei lee <xrivendell7@gmail.com>,
-	yuxin wang <wang1315768607@163.com>,
-	Marius Fleischer <fleischermarius@gmail.com>,
+	Peter Xu <peterx@redhat.com>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	James Houghton <jthoughton@google.com>,
+	Andrea Arcangeli <aarcange@redhat.com>,
+	Axel Rasmussen <axelrasmussen@google.com>,
 	David Hildenbrand <david@redhat.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Andy Lutomirski <luto@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Rik van Riel <riel@surriel.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Nadav Amit <nadav.amit@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	linux-mm@kvack.org,
-	Sasha Levin <sashal@kernel.org>,
-	Ajay Kaher <ajay.kaher@broadcom.com>
-Subject: [PATCH 6.1 609/634] x86/mm/pat: Fix VM_PAT handling when fork() fails in copy_page_range()
-Date: Fri,  9 Jan 2026 12:44:47 +0100
-Message-ID: <20260109112140.546075285@linuxfoundation.org>
+	Harry Yoo <harry.yoo@oracle.com>,
+	"David Hildenbrand (Red Hat)" <david@kernel.org>
+Subject: [PATCH 6.1 610/634] mm/mprotect: use long for page accountings and retval
+Date: Fri,  9 Jan 2026 12:44:48 +0100
+Message-ID: <20260109112140.584949761@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -62,290 +59,220 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Peter Xu <peterx@redhat.com>
 
-[ Upstream commit dc84bc2aba85a1508f04a936f9f9a15f64ebfb31 ]
+commit a79390f5d6a78647fd70856bd42b22d994de0ba2 upstream.
 
-If track_pfn_copy() fails, we already added the dst VMA to the maple
-tree. As fork() fails, we'll cleanup the maple tree, and stumble over
-the dst VMA for which we neither performed any reservation nor copied
-any page tables.
+Switch to use type "long" for page accountings and retval across the whole
+procedure of change_protection().
 
-Consequently untrack_pfn() will see VM_PAT and try obtaining the
-PAT information from the page table -- which fails because the page
-table was not copied.
+The change should have shrinked the possible maximum page number to be
+half comparing to previous (ULONG_MAX / 2), but it shouldn't overflow on
+any system either because the maximum possible pages touched by change
+protection should be ULONG_MAX / PAGE_SIZE.
 
-The easiest fix would be to simply clear the VM_PAT flag of the dst VMA
-if track_pfn_copy() fails. However, the whole thing is about "simply"
-clearing the VM_PAT flag is shaky as well: if we passed track_pfn_copy()
-and performed a reservation, but copying the page tables fails, we'll
-simply clear the VM_PAT flag, not properly undoing the reservation ...
-which is also wrong.
+Two reasons to switch from "unsigned long" to "long":
 
-So let's fix it properly: set the VM_PAT flag only if the reservation
-succeeded (leaving it clear initially), and undo the reservation if
-anything goes wrong while copying the page tables: clearing the VM_PAT
-flag after undoing the reservation.
+  1. It suites better on count_vm_numa_events(), whose 2nd parameter takes
+     a long type.
 
-Note that any copied page table entries will get zapped when the VMA will
-get removed later, after copy_page_range() succeeded; as VM_PAT is not set
-then, we won't try cleaning VM_PAT up once more and untrack_pfn() will be
-happy. Note that leaving these page tables in place without a reservation
-is not a problem, as we are aborting fork(); this process will never run.
+  2. It paves way for returning negative (error) values in the future.
 
-A reproducer can trigger this usually at the first try:
+Currently the only caller that consumes this retval is change_prot_numa(),
+where the unsigned long was converted to an int.  Since at it, touching up
+the numa code to also take a long, so it'll avoid any possible overflow
+too during the int-size convertion.
 
-  https://gitlab.com/davidhildenbrand/scratchspace/-/raw/main/reproducers/pat_fork.c
-
-  WARNING: CPU: 26 PID: 11650 at arch/x86/mm/pat/memtype.c:983 get_pat_info+0xf6/0x110
-  Modules linked in: ...
-  CPU: 26 UID: 0 PID: 11650 Comm: repro3 Not tainted 6.12.0-rc5+ #92
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-2.fc40 04/01/2014
-  RIP: 0010:get_pat_info+0xf6/0x110
-  ...
-  Call Trace:
-   <TASK>
-   ...
-   untrack_pfn+0x52/0x110
-   unmap_single_vma+0xa6/0xe0
-   unmap_vmas+0x105/0x1f0
-   exit_mmap+0xf6/0x460
-   __mmput+0x4b/0x120
-   copy_process+0x1bf6/0x2aa0
-   kernel_clone+0xab/0x440
-   __do_sys_clone+0x66/0x90
-   do_syscall_64+0x95/0x180
-
-Likely this case was missed in:
-
-  d155df53f310 ("x86/mm/pat: clear VM_PAT if copy_p4d_range failed")
-
-... and instead of undoing the reservation we simply cleared the VM_PAT flag.
-
-Keep the documentation of these functions in include/linux/pgtable.h,
-one place is more than sufficient -- we should clean that up for the other
-functions like track_pfn_remap/untrack_pfn separately.
-
-Fixes: d155df53f310 ("x86/mm/pat: clear VM_PAT if copy_p4d_range failed")
-Fixes: 2ab640379a0a ("x86: PAT: hooks in generic vm code to help archs to track pfnmap regions - v3")
-Reported-by: xingwei lee <xrivendell7@gmail.com>
-Reported-by: yuxin wang <wang1315768607@163.com>
-Reported-by: Marius Fleischer <fleischermarius@gmail.com>
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Andy Lutomirski <luto@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: linux-mm@kvack.org
-Link: https://lore.kernel.org/r/20250321112323.153741-1-david@redhat.com
-Closes: https://lore.kernel.org/lkml/CABOYnLx_dnqzpCW99G81DmOr+2UzdmZMk=T3uxwNxwz+R1RAwg@mail.gmail.com/
-Closes: https://lore.kernel.org/lkml/CAJg=8jwijTP5fre8woS4JVJQ8iUA6v+iNcsOgtj9Zfpc3obDOQ@mail.gmail.com/
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Cc: stable@vger.kernel.org
-[ Ajay: Modified to apply on v6.1 ]
-Signed-off-by: Ajay Kaher <ajay.kaher@broadcom.com>
+Link: https://lkml.kernel.org/r/20230104225207.1066932-3-peterx@redhat.com
+Signed-off-by: Peter Xu <peterx@redhat.com>
+Acked-by: Mike Kravetz <mike.kravetz@oracle.com>
+Acked-by: James Houghton <jthoughton@google.com>
+Cc: Andrea Arcangeli <aarcange@redhat.com>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: Nadav Amit <nadav.amit@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ Adjust context ]
+Signed-off-by: Harry Yoo <harry.yoo@oracle.com>
+Acked-by: David Hildenbrand (Red Hat) <david@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/pat/memtype.c |   52 ++++++++++++++++++++++++----------------------
- include/linux/pgtable.h   |   28 +++++++++++++++++++-----
- kernel/fork.c             |    4 +++
- mm/memory.c               |   11 +++------
- 4 files changed, 58 insertions(+), 37 deletions(-)
+ include/linux/hugetlb.h |    4 ++--
+ include/linux/mm.h      |    2 +-
+ mm/hugetlb.c            |    4 ++--
+ mm/mempolicy.c          |    2 +-
+ mm/mprotect.c           |   26 +++++++++++++-------------
+ 5 files changed, 19 insertions(+), 19 deletions(-)
 
---- a/arch/x86/mm/pat/memtype.c
-+++ b/arch/x86/mm/pat/memtype.c
-@@ -1029,29 +1029,42 @@ static int get_pat_info(struct vm_area_s
- 	return -EINVAL;
- }
+--- a/include/linux/hugetlb.h
++++ b/include/linux/hugetlb.h
+@@ -233,7 +233,7 @@ void hugetlb_vma_lock_release(struct kre
  
--/*
-- * track_pfn_copy is called when vma that is covering the pfnmap gets
-- * copied through copy_page_range().
-- *
-- * If the vma has a linear pfn mapping for the entire range, we get the prot
-- * from pte and reserve the entire vma range with single reserve_pfn_range call.
-- */
--int track_pfn_copy(struct vm_area_struct *vma)
-+int track_pfn_copy(struct vm_area_struct *dst_vma,
-+		struct vm_area_struct *src_vma, unsigned long *pfn)
+ int pmd_huge(pmd_t pmd);
+ int pud_huge(pud_t pud);
+-unsigned long hugetlb_change_protection(struct vm_area_struct *vma,
++long hugetlb_change_protection(struct vm_area_struct *vma,
+ 		unsigned long address, unsigned long end, pgprot_t newprot,
+ 		unsigned long cp_flags);
+ 
+@@ -447,7 +447,7 @@ static inline void move_hugetlb_state(st
  {
-+	const unsigned long vma_size = src_vma->vm_end - src_vma->vm_start;
- 	resource_size_t paddr;
--	unsigned long vma_size = vma->vm_end - vma->vm_start;
- 	pgprot_t pgprot;
-+	int rc;
- 
--	if (vma->vm_flags & VM_PAT) {
--		if (get_pat_info(vma, &paddr, &pgprot))
--			return -EINVAL;
--		/* reserve the whole chunk covered by vma. */
--		return reserve_pfn_range(paddr, vma_size, &pgprot, 1);
--	}
-+	if (!(src_vma->vm_flags & VM_PAT))
-+		return 0;
- 
-+	/*
-+	 * Duplicate the PAT information for the dst VMA based on the src
-+	 * VMA.
-+	 */
-+	if (get_pat_info(src_vma, &paddr, &pgprot))
-+		return -EINVAL;
-+	rc = reserve_pfn_range(paddr, vma_size, &pgprot, 1);
-+	if (rc)
-+		return rc;
-+
-+	/* Reservation for the destination VMA succeeded. */
-+	dst_vma->vm_flags |= VM_PAT;
-+	*pfn = PHYS_PFN(paddr);
- 	return 0;
  }
  
-+void untrack_pfn_copy(struct vm_area_struct *dst_vma, unsigned long pfn)
-+{
-+	untrack_pfn(dst_vma, pfn, dst_vma->vm_end - dst_vma->vm_start);
-+	/*
-+	 * Reservation was freed, any copied page tables will get cleaned
-+	 * up later, but without getting PAT involved again.
-+	 */
-+}
-+
- /*
-  * prot is passed in as a parameter for the new mapping. If the vma has
-  * a linear pfn mapping for the entire range, or no vma is provided,
-@@ -1136,15 +1149,6 @@ void untrack_pfn(struct vm_area_struct *
- 		vma->vm_flags &= ~VM_PAT;
+-static inline unsigned long hugetlb_change_protection(
++static inline long hugetlb_change_protection(
+ 			struct vm_area_struct *vma, unsigned long address,
+ 			unsigned long end, pgprot_t newprot,
+ 			unsigned long cp_flags)
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -2148,7 +2148,7 @@ extern unsigned long move_page_tables(st
+ #define  MM_CP_UFFD_WP_ALL                 (MM_CP_UFFD_WP | \
+ 					    MM_CP_UFFD_WP_RESOLVE)
+ 
+-extern unsigned long change_protection(struct mmu_gather *tlb,
++extern long change_protection(struct mmu_gather *tlb,
+ 			      struct vm_area_struct *vma, unsigned long start,
+ 			      unsigned long end, pgprot_t newprot,
+ 			      unsigned long cp_flags);
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -6668,7 +6668,7 @@ long follow_hugetlb_page(struct mm_struc
+ 	return i ? i : err;
  }
  
--/*
-- * untrack_pfn_clear is called if the following situation fits:
-- *
-- * 1) while mremapping a pfnmap for a new region,  with the old vma after
-- * its pfnmap page table has been removed.  The new vma has a new pfnmap
-- * to the same pfn & cache type with VM_PAT set.
-- * 2) while duplicating vm area, the new vma fails to copy the pgtable from
-- * old vma.
-- */
- void untrack_pfn_clear(struct vm_area_struct *vma)
+-unsigned long hugetlb_change_protection(struct vm_area_struct *vma,
++long hugetlb_change_protection(struct vm_area_struct *vma,
+ 		unsigned long address, unsigned long end,
+ 		pgprot_t newprot, unsigned long cp_flags)
  {
- 	vma->vm_flags &= ~VM_PAT;
---- a/include/linux/pgtable.h
-+++ b/include/linux/pgtable.h
-@@ -1195,15 +1195,26 @@ static inline void track_pfn_insert(stru
- }
- 
- /*
-- * track_pfn_copy is called when vma that is covering the pfnmap gets
-- * copied through copy_page_range().
-+ * track_pfn_copy is called when a VM_PFNMAP VMA is about to get the page
-+ * tables copied during copy_page_range(). On success, stores the pfn to be
-+ * passed to untrack_pfn_copy().
-  */
--static inline int track_pfn_copy(struct vm_area_struct *vma)
-+static inline int track_pfn_copy(struct vm_area_struct *dst_vma,
-+		struct vm_area_struct *src_vma, unsigned long *pfn)
- {
- 	return 0;
- }
- 
- /*
-+ * untrack_pfn_copy is called when a VM_PFNMAP VMA failed to copy during
-+ * copy_page_range(), but after track_pfn_copy() was already called.
-+ */
-+static inline void untrack_pfn_copy(struct vm_area_struct *dst_vma,
-+		unsigned long pfn)
-+{
-+}
-+
-+/*
-  * untrack_pfn is called while unmapping a pfnmap for a region.
-  * untrack can be called for a specific region indicated by pfn and size or
-  * can be for the entire vma (in which case pfn, size are zero).
-@@ -1214,8 +1225,10 @@ static inline void untrack_pfn(struct vm
- }
- 
- /*
-- * untrack_pfn_clear is called while mremapping a pfnmap for a new region
-- * or fails to copy pgtable during duplicate vm area.
-+ * untrack_pfn_clear is called in the following cases on a VM_PFNMAP VMA:
-+ *
-+ * 1) During mremap() on the src VMA after the page tables were moved.
-+ * 2) During fork() on the dst VMA, immediately after duplicating the src VMA.
-  */
- static inline void untrack_pfn_clear(struct vm_area_struct *vma)
- {
-@@ -1226,7 +1239,10 @@ extern int track_pfn_remap(struct vm_are
- 			   unsigned long size);
- extern void track_pfn_insert(struct vm_area_struct *vma, pgprot_t *prot,
- 			     pfn_t pfn);
--extern int track_pfn_copy(struct vm_area_struct *vma);
-+extern int track_pfn_copy(struct vm_area_struct *dst_vma,
-+		struct vm_area_struct *src_vma, unsigned long *pfn);
-+extern void untrack_pfn_copy(struct vm_area_struct *dst_vma,
-+		unsigned long pfn);
- extern void untrack_pfn(struct vm_area_struct *vma, unsigned long pfn,
- 			unsigned long size);
- extern void untrack_pfn_clear(struct vm_area_struct *vma);
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -476,6 +476,10 @@ struct vm_area_struct *vm_area_dup(struc
- 		*new = data_race(*orig);
- 		INIT_LIST_HEAD(&new->anon_vma_chain);
- 		dup_anon_vma_name(orig, new);
-+
-+		/* track_pfn_copy() will later take care of copying internal state. */
-+		if (unlikely(new->vm_flags & VM_PFNMAP))
-+			untrack_pfn_clear(new);
- 	}
- 	return new;
- }
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -1278,12 +1278,12 @@ int
- copy_page_range(struct vm_area_struct *dst_vma, struct vm_area_struct *src_vma)
- {
- 	pgd_t *src_pgd, *dst_pgd;
--	unsigned long next;
- 	unsigned long addr = src_vma->vm_start;
- 	unsigned long end = src_vma->vm_end;
- 	struct mm_struct *dst_mm = dst_vma->vm_mm;
- 	struct mm_struct *src_mm = src_vma->vm_mm;
+@@ -6677,7 +6677,7 @@ unsigned long hugetlb_change_protection(
+ 	pte_t *ptep;
+ 	pte_t pte;
+ 	struct hstate *h = hstate_vma(vma);
+-	unsigned long pages = 0, psize = huge_page_size(h);
++	long pages = 0, psize = huge_page_size(h);
+ 	bool shared_pmd = false;
  	struct mmu_notifier_range range;
-+	unsigned long next, pfn;
- 	bool is_cow;
- 	int ret;
+ 	unsigned long last_addr_mask;
+--- a/mm/mempolicy.c
++++ b/mm/mempolicy.c
+@@ -628,7 +628,7 @@ unsigned long change_prot_numa(struct vm
+ 			unsigned long addr, unsigned long end)
+ {
+ 	struct mmu_gather tlb;
+-	int nr_updated;
++	long nr_updated;
  
-@@ -1294,11 +1294,7 @@ copy_page_range(struct vm_area_struct *d
- 		return copy_hugetlb_page_range(dst_mm, src_mm, dst_vma, src_vma);
+ 	tlb_gather_mmu(&tlb, vma->vm_mm);
  
- 	if (unlikely(src_vma->vm_flags & VM_PFNMAP)) {
--		/*
--		 * We do not free on error cases below as remove_vma
--		 * gets called on error from higher level routine
--		 */
--		ret = track_pfn_copy(src_vma);
-+		ret = track_pfn_copy(dst_vma, src_vma, &pfn);
- 		if (ret)
- 			return ret;
- 	}
-@@ -1335,7 +1331,6 @@ copy_page_range(struct vm_area_struct *d
- 			continue;
- 		if (unlikely(copy_p4d_range(dst_vma, src_vma, dst_pgd, src_pgd,
- 					    addr, next))) {
--			untrack_pfn_clear(dst_vma);
- 			ret = -ENOMEM;
- 			break;
- 		}
-@@ -1345,6 +1340,8 @@ copy_page_range(struct vm_area_struct *d
- 		raw_write_seqcount_end(&src_mm->write_protect_seq);
- 		mmu_notifier_invalidate_range_end(&range);
- 	}
-+	if (ret && unlikely(src_vma->vm_flags & VM_PFNMAP))
-+		untrack_pfn_copy(dst_vma, pfn);
- 	return ret;
+--- a/mm/mprotect.c
++++ b/mm/mprotect.c
+@@ -72,13 +72,13 @@ static inline bool can_change_pte_writab
+ 	return true;
  }
+ 
+-static unsigned long change_pte_range(struct mmu_gather *tlb,
++static long change_pte_range(struct mmu_gather *tlb,
+ 		struct vm_area_struct *vma, pmd_t *pmd, unsigned long addr,
+ 		unsigned long end, pgprot_t newprot, unsigned long cp_flags)
+ {
+ 	pte_t *pte, oldpte;
+ 	spinlock_t *ptl;
+-	unsigned long pages = 0;
++	long pages = 0;
+ 	int target_node = NUMA_NO_NODE;
+ 	bool prot_numa = cp_flags & MM_CP_PROT_NUMA;
+ 	bool uffd_wp = cp_flags & MM_CP_UFFD_WP;
+@@ -346,13 +346,13 @@ uffd_wp_protect_file(struct vm_area_stru
+ 		}							\
+ 	} while (0)
+ 
+-static inline unsigned long change_pmd_range(struct mmu_gather *tlb,
++static inline long change_pmd_range(struct mmu_gather *tlb,
+ 		struct vm_area_struct *vma, pud_t *pud, unsigned long addr,
+ 		unsigned long end, pgprot_t newprot, unsigned long cp_flags)
+ {
+ 	pmd_t *pmd;
+ 	unsigned long next;
+-	unsigned long pages = 0;
++	long pages = 0;
+ 	unsigned long nr_huge_updates = 0;
+ 	struct mmu_notifier_range range;
+ 
+@@ -360,7 +360,7 @@ static inline unsigned long change_pmd_r
+ 
+ 	pmd = pmd_offset(pud, addr);
+ 	do {
+-		unsigned long this_pages;
++		long this_pages;
+ 
+ 		next = pmd_addr_end(addr, end);
+ 
+@@ -430,13 +430,13 @@ next:
+ 	return pages;
+ }
+ 
+-static inline unsigned long change_pud_range(struct mmu_gather *tlb,
++static inline long change_pud_range(struct mmu_gather *tlb,
+ 		struct vm_area_struct *vma, p4d_t *p4d, unsigned long addr,
+ 		unsigned long end, pgprot_t newprot, unsigned long cp_flags)
+ {
+ 	pud_t *pud;
+ 	unsigned long next;
+-	unsigned long pages = 0;
++	long pages = 0;
+ 
+ 	pud = pud_offset(p4d, addr);
+ 	do {
+@@ -451,13 +451,13 @@ static inline unsigned long change_pud_r
+ 	return pages;
+ }
+ 
+-static inline unsigned long change_p4d_range(struct mmu_gather *tlb,
++static inline long change_p4d_range(struct mmu_gather *tlb,
+ 		struct vm_area_struct *vma, pgd_t *pgd, unsigned long addr,
+ 		unsigned long end, pgprot_t newprot, unsigned long cp_flags)
+ {
+ 	p4d_t *p4d;
+ 	unsigned long next;
+-	unsigned long pages = 0;
++	long pages = 0;
+ 
+ 	p4d = p4d_offset(pgd, addr);
+ 	do {
+@@ -472,14 +472,14 @@ static inline unsigned long change_p4d_r
+ 	return pages;
+ }
+ 
+-static unsigned long change_protection_range(struct mmu_gather *tlb,
++static long change_protection_range(struct mmu_gather *tlb,
+ 		struct vm_area_struct *vma, unsigned long addr,
+ 		unsigned long end, pgprot_t newprot, unsigned long cp_flags)
+ {
+ 	struct mm_struct *mm = vma->vm_mm;
+ 	pgd_t *pgd;
+ 	unsigned long next;
+-	unsigned long pages = 0;
++	long pages = 0;
+ 
+ 	BUG_ON(addr >= end);
+ 	pgd = pgd_offset(mm, addr);
+@@ -498,12 +498,12 @@ static unsigned long change_protection_r
+ 	return pages;
+ }
+ 
+-unsigned long change_protection(struct mmu_gather *tlb,
++long change_protection(struct mmu_gather *tlb,
+ 		       struct vm_area_struct *vma, unsigned long start,
+ 		       unsigned long end, pgprot_t newprot,
+ 		       unsigned long cp_flags)
+ {
+-	unsigned long pages;
++	long pages;
+ 
+ 	BUG_ON((cp_flags & MM_CP_UFFD_WP_ALL) == MM_CP_UFFD_WP_ALL);
  
 
 
