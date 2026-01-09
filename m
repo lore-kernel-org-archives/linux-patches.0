@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E83E1A01C6;
-	Fri,  9 Jan 2026 12:26:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033AE1A01C6;
+	Fri,  9 Jan 2026 12:26:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961567; cv=none; b=SM6D7HfELFEJJo7nC+bsvEq6KRcWkjVhyB9X5d009a6BblhpKlwJnfrbQzrns7aNA+a4oXvhK7+310t7A+yNhi+0tgLd5gl2YJOzX8SHo5WE630M7KeieWUdxlXOlEzhLk9WNmf6z4PDd4IwXG0HhWF2HJnD9cIruN/B0PC0GM8=
+	t=1767961570; cv=none; b=KHwcuQwiFxSwWQH/TPbrTRxDHbdDnsPN/J07TJGh7Fa594+AWEQHVaL/QvGJJF+KlDzL3LS+AiunaAQm4Nm1PB4nEulFKB5iKIrM1F9SmCeQf9/n16n/H21CE6LV4L3tsyuPADnZP+RnM8pBpJrh70DV8DDyHIRH1foTnbYgpw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961567; c=relaxed/simple;
-	bh=bERpHhAXO5MXr7ArpfFBwBxYA4S2RgVq5gJiuQ0LHVc=;
+	s=arc-20240116; t=1767961570; c=relaxed/simple;
+	bh=YXAbEIiofmkcXmbVhWR54PrTGcyOAHiIOn5xJhuve/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LEP+c4LMgOpLiaBnfmX0w24lJJc7/1aoqLuHOZbaPb1IiBqt6ZA0c/QgEEZFOwm1QP+fHaLwUn76d2KJiFoJ3lbbsMCxaSMN4d014BPzsIRiQsRu+/5cJ27fE0leQ1DHGPXd9Da3fJSY9g8+sXd0Wybw8KbOMFoab/L9/gxDY5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YipiRvRJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VX7M/b+b9GJ8GO5QOw2TJLbr6Rkbz7FrrX4xNlL1hlHVdEOaftDTTGutonqEKQsgPOyc6/QhzVzMNQjj2saCS4PNxjpOpdSVlq/aLjV7U/Agv9N+O6BPEGVe6HD9ssmblyGyNymi/2xaORn1K9K9v+NnJkkRdHtQXVIRIPLTCMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vFMSkVJ5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YipiRvRJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 851DBC16AAE;
-	Fri,  9 Jan 2026 12:26:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vFMSkVJ5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5922BC4CEF1;
+	Fri,  9 Jan 2026 12:26:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961566;
-	bh=bERpHhAXO5MXr7ArpfFBwBxYA4S2RgVq5gJiuQ0LHVc=;
+	s=korg; t=1767961569;
+	bh=YXAbEIiofmkcXmbVhWR54PrTGcyOAHiIOn5xJhuve/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YipiRvRJvJx5Jg6Uwelvu797vv0/N+Zm0cLraAuXiqBMXOa+ZWSPfRWGLQct5c77k
-	 jgXw/qfKt4ux6DbCCZw9JHZQF4KyzvZsFmkhZ4DNn+x81P24F2+3M5OjcBVHyZoAV2
-	 bJNrMPfx5iMUvecILEHv7LWEUia0sq+YN5oax/Vk=
+	b=vFMSkVJ59J5hb+14Kw7ghu9UlboKcHu2E9bJ/X0SAERdcT5PPpVdyZTlfytnl6iQS
+	 oZFL57TT4GOyLL61yB9IRb3ln4hlL0gpJJ3Kkm5XLAfPh61MysXfNtlk4kpMlCFO8q
+	 ZsGVwjFtuQVRpYxEHCJxB4rdqJ2hheQDleO5JhKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Harvey <tharvey@gateworks.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Li Qiang <liqiang01@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 058/634] arm64: dts: imx8mm-venice-gw72xx: remove unused sdhc1 pinctrl
-Date: Fri,  9 Jan 2026 12:35:36 +0100
-Message-ID: <20260109112119.627956332@linuxfoundation.org>
+Subject: [PATCH 6.1 059/634] uio: uio_fsl_elbc_gpcm:: Add null pointer check to uio_fsl_elbc_gpcm_probe
+Date: Fri,  9 Jan 2026 12:35:37 +0100
+Message-ID: <20260109112119.664968261@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,44 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Harvey <tharvey@gateworks.com>
+From: Li Qiang <liqiang01@kylinos.cn>
 
-[ Upstream commit d949b8d12d6e8fa119bca10d3157cd42e810f6f7 ]
+[ Upstream commit d48fb15e6ad142e0577428a8c5028136e10c7b3d ]
 
-The SDHC1 interface is not used on the imx8mm-venice-gw72xx. Remove the
-unused pinctrl_usdhc1 iomux node.
+devm_kasprintf() returns a pointer to dynamically allocated memory
+which can be NULL upon failure.
 
-Fixes: 6f30b27c5ef5 ("arm64: dts: imx8mm: Add Gateworks i.MX 8M Mini Development Kits")
-Signed-off-by: Tim Harvey <tharvey@gateworks.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: d57801c45f53e ("uio: uio_fsl_elbc_gpcm: use device-managed allocators")
+Signed-off-by: Li Qiang <liqiang01@kylinos.cn>
+Link: https://patch.msgid.link/20251015064020.56589-1-liqiang01@kylinos.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/freescale/imx8mm-venice-gw72xx.dtsi      | 11 -----------
- 1 file changed, 11 deletions(-)
+ drivers/uio/uio_fsl_elbc_gpcm.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mm-venice-gw72xx.dtsi b/arch/arm64/boot/dts/freescale/imx8mm-venice-gw72xx.dtsi
-index 41d0de6a7027b..9b7e2b85004a9 100644
---- a/arch/arm64/boot/dts/freescale/imx8mm-venice-gw72xx.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mm-venice-gw72xx.dtsi
-@@ -338,17 +338,6 @@ MX8MM_IOMUXC_UART4_TXD_UART4_DCE_TX	0x140
- 		>;
- 	};
+diff --git a/drivers/uio/uio_fsl_elbc_gpcm.c b/drivers/uio/uio_fsl_elbc_gpcm.c
+index 7d8eb9dc20681..db4e64550f121 100644
+--- a/drivers/uio/uio_fsl_elbc_gpcm.c
++++ b/drivers/uio/uio_fsl_elbc_gpcm.c
+@@ -384,6 +384,11 @@ static int uio_fsl_elbc_gpcm_probe(struct platform_device *pdev)
  
--	pinctrl_usdhc1: usdhc1grp {
--		fsl,pins = <
--			MX8MM_IOMUXC_SD1_CLK_USDHC1_CLK		0x190
--			MX8MM_IOMUXC_SD1_CMD_USDHC1_CMD		0x1d0
--			MX8MM_IOMUXC_SD1_DATA0_USDHC1_DATA0	0x1d0
--			MX8MM_IOMUXC_SD1_DATA1_USDHC1_DATA1	0x1d0
--			MX8MM_IOMUXC_SD1_DATA2_USDHC1_DATA2	0x1d0
--			MX8MM_IOMUXC_SD1_DATA3_USDHC1_DATA3	0x1d0
--		>;
--	};
--
- 	pinctrl_usdhc2: usdhc2grp {
- 		fsl,pins = <
- 			MX8MM_IOMUXC_SD2_CLK_USDHC2_CLK		0x190
+ 	/* set all UIO data */
+ 	info->mem[0].name = devm_kasprintf(&pdev->dev, GFP_KERNEL, "%pOFn", node);
++	if (!info->mem[0].name) {
++		ret = -ENODEV;
++		goto out_err3;
++	}
++
+ 	info->mem[0].addr = res.start;
+ 	info->mem[0].size = resource_size(&res);
+ 	info->mem[0].memtype = UIO_MEM_PHYS;
+@@ -423,6 +428,8 @@ static int uio_fsl_elbc_gpcm_probe(struct platform_device *pdev)
+ out_err2:
+ 	if (priv->shutdown)
+ 		priv->shutdown(info, true);
++
++out_err3:
+ 	iounmap(info->mem[0].internal_addr);
+ 	return ret;
+ }
 -- 
 2.51.0
 
