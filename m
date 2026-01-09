@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D68335BCD;
-	Fri,  9 Jan 2026 12:44:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88E8335BCD;
+	Fri,  9 Jan 2026 12:44:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962643; cv=none; b=TLpN48EqUoxra/PWcoWoQe8JQa4nAh3AnAq/NtN/xbYx0SSy9IeSiS9cPlaaxs8lu5+OkQyfYs99rXpd34a3RjE7EEItcKr3NQbAZBUeKthGm7P/mN5VVq2LYCtZE+R9q8U27iVKgveMCIUY83WYZRestaJDroy6dDCKlAsBVAk=
+	t=1767962646; cv=none; b=GqtE31Jv+MLwGrkVtiRF7FeT2TfuaETe+C90FYJy4Yyaeqx7mli/tIwPJ4V52RAe1Y8iC7M2vExxUg0Nd8Xx5EkP91R0Nw+aPlfHuaMuq49EbT93Ch32pZXcnWwYdzejYHwlP1qIrw3H73dDeZs5DUnW28AedKVtdLhCkpQ7OaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962643; c=relaxed/simple;
-	bh=ZftGsgRNAPAGNTEGYOFpd9AyJolWjDY3hsnCmXBNTls=;
+	s=arc-20240116; t=1767962646; c=relaxed/simple;
+	bh=LlP5bt+VFvGapv+w1QEBXs6yc6e5I/MKGA5U43uFTQw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sTTBij8lXV+5RA9QzGX1FBoxFy+RqVGHgs6mLCg5lGvOJxNOk2X5uQ0H1pzDp3Y+qg2HwYijjJxEhPE/Gf+6bzi+vbxW5Bk921hC5kFcX3VNYQZSBEP2AcuR/K3DdVsFD9cm0CmOXcfvCG5mvU/zetz84Mco8usDErZa/5mfkIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r78hMEDW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IQMdvQR5NNnMVuR3sDSVkNo6h0/aDe1EIhAWLuwFiJkq2AiFkGpXVsP50zdZ6saI6zo9EjH25d53hhSUGHh11GOb33nHqxWp89R7+fOL/Hgh0wYINB1C/kY4d12HvF+/18OO9xGl+Y/lUU90Q56mqwjXHUgS+9TZKuXE3jTdIwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E8DdI9ES; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r78hMEDW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B24F7C4CEF1;
-	Fri,  9 Jan 2026 12:44:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E8DdI9ES"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7819EC4CEF1;
+	Fri,  9 Jan 2026 12:44:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962643;
-	bh=ZftGsgRNAPAGNTEGYOFpd9AyJolWjDY3hsnCmXBNTls=;
+	s=korg; t=1767962645;
+	bh=LlP5bt+VFvGapv+w1QEBXs6yc6e5I/MKGA5U43uFTQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r78hMEDWYOwm/EsILHVpR0KioVZ15gmwdGyfkO0Aqp1pkk5d1oicZ3MuBvW2MEeOe
-	 A0rq9jOB7FTeowhkSKvPHf/LXS1yuqIhg5XmJ/VoyNcZttckspU4jrwzjHvW8PoeWA
-	 djlgX21ko5EIwmo3pXF94aT18/j7h0gWeVJUvXmw=
+	b=E8DdI9ESHz8mVpt2ltRJNfRp8uGq5BLx1J5pYHb+XsJc79xOlTHhLXq5JYOTzHpsV
+	 4bHnLr3zVhO03wnWRdrGJ1QdrgyfnvKvD0b5OW93QyTmIfUqUMP7gQM+JHuNx3wL2Y
+	 zsf0SYx+oz2dgzhjsDwi/dP5VMCFjo4ipNAjhNJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Honggang LI <honggangli@163.com>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 437/634] RDMA/rtrs: Fix clt_path::max_pages_per_mr calculation
-Date: Fri,  9 Jan 2026 12:41:55 +0100
-Message-ID: <20260109112133.985209456@linuxfoundation.org>
+Subject: [PATCH 6.1 438/634] RDMA/bnxt_re: fix dma_free_coherent() pointer
+Date: Fri,  9 Jan 2026 12:41:56 +0100
+Message-ID: <20260109112134.022692812@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,38 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Honggang LI <honggangli@163.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 43bd09d5b750f700499ae8ec45fd41a4c48673e6 ]
+[ Upstream commit fcd431a9627f272b4c0bec445eba365fe2232a94 ]
 
-If device max_mr_size bits in the range [mr_page_shift+31:mr_page_shift]
-are zero, the `min3` function will set clt_path::max_pages_per_mr to
-zero.
+The dma_alloc_coherent() allocates a dma-mapped buffer, pbl->pg_arr[i].
+The dma_free_coherent() should pass the same buffer to
+dma_free_coherent() and not page-aligned.
 
-`alloc_path_reqs` will pass zero, which is invalid, as the third parameter
-to `ib_alloc_mr`.
-
-Fixes: 6a98d71daea1 ("RDMA/rtrs: client: main functionality")
-Signed-off-by: Honggang LI <honggangli@163.com>
-Link: https://patch.msgid.link/20251229025617.13241-1-honggangli@163.com
+Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Link: https://patch.msgid.link/20251230085121.8023-2-fourier.thomas@gmail.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/rtrs/rtrs-clt.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/hw/bnxt_re/qplib_res.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/rtrs/rtrs-clt.c b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-index dac8ddfc89e7..7c81452d73cf 100644
---- a/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-+++ b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-@@ -1465,6 +1465,7 @@ static void query_fast_reg_mode(struct rtrs_clt_path *clt_path)
- 	mr_page_shift      = max(12, ffs(ib_dev->attrs.page_size_cap) - 1);
- 	max_pages_per_mr   = ib_dev->attrs.max_mr_size;
- 	do_div(max_pages_per_mr, (1ull << mr_page_shift));
-+	max_pages_per_mr = min_not_zero((u32)max_pages_per_mr, U32_MAX);
- 	clt_path->max_pages_per_mr =
- 		min3(clt_path->max_pages_per_mr, (u32)max_pages_per_mr,
- 		     ib_dev->attrs.max_fast_reg_page_list_len);
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.c b/drivers/infiniband/hw/bnxt_re/qplib_res.c
+index 5edad6a5a112..6d811f67934e 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_res.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_res.c
+@@ -70,9 +70,7 @@ static void __free_pbl(struct bnxt_qplib_res *res, struct bnxt_qplib_pbl *pbl,
+ 		for (i = 0; i < pbl->pg_count; i++) {
+ 			if (pbl->pg_arr[i])
+ 				dma_free_coherent(&pdev->dev, pbl->pg_size,
+-						  (void *)((unsigned long)
+-						   pbl->pg_arr[i] &
+-						  PAGE_MASK),
++						  pbl->pg_arr[i],
+ 						  pbl->pg_map_arr[i]);
+ 			else
+ 				dev_warn(&pdev->dev,
 -- 
 2.51.0
 
