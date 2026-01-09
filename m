@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78585335567;
-	Fri,  9 Jan 2026 12:25:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F5C359F9C;
+	Fri,  9 Jan 2026 12:25:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961524; cv=none; b=McDv7njtq5L8hN/3/oHdfug1MGbzy+2u9+PPBessDOekrrYplzlMFZZEXukY0OFjNIZ4uDKT811GYLaB+IQFy+VbHIf3+DrLgkw10c5YPAh7+HK+f+sz+s/HNHU9aaGCB3ay/iy8t1SZDljXNO0FF0tAoHl2lV+FLw+gPEPSO90=
+	t=1767961527; cv=none; b=KuoBKzPgkKgOh1pyAjwiC0HOAGXAsu+DA/87fHeNq9BZpX7rCwoBSeXDGM6KxJ8KAGPgZ8/B/J6pN+NCMfbkY9dTjM6FxExLSDTXHOodIAdUIToQ/ludxrI03DJoP5agbj5L95HG6Wb6YxfB/ASgzlcGixE/l++RVE0Ai7+qMfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961524; c=relaxed/simple;
-	bh=iT+1eZA3Htg+s8MacbZ8B7GVvzP8PG6iB98H4Dj0akU=;
+	s=arc-20240116; t=1767961527; c=relaxed/simple;
+	bh=Saa0KlKahDKpeAIpEKleulfhEHssdqKWAPS6+LFEBwo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iZL/Reln5R57BIXEfjIFNvY1KqgYyEVBKWrhRYSUgLwZTfIkEEMtXYPVlVaKaFe2+VHsDKhrYfU5CsIZQtA2PtAXX+s00ogbWoJXvdBZWAWkJQZHit+XOaA5V3xCcLTquAY1E9FGCDxT0JD1aUWkhiuX7JGzEkoAZ6Gl5GN5U+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mLqvvh/3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UGq9i8KQYKdN1bvpzYBMuZqCI9FZgFk6alvN95H+3kMRhfwbxV/qZ9yrZrbZn5eQU7lsh2IadcPLZ4FXJ/7BbgcUtB6XiCtcH3//BS0snWDKS7yXW4zvTnSGd+joGHOVMVPxy70w0FYUx8v32wOb128wlvo1cLYSVSh0bbtpWLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YeZ3F5Oc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mLqvvh/3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB3FFC4CEF1;
-	Fri,  9 Jan 2026 12:25:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YeZ3F5Oc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8945CC4CEF1;
+	Fri,  9 Jan 2026 12:25:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961524;
-	bh=iT+1eZA3Htg+s8MacbZ8B7GVvzP8PG6iB98H4Dj0akU=;
+	s=korg; t=1767961526;
+	bh=Saa0KlKahDKpeAIpEKleulfhEHssdqKWAPS6+LFEBwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mLqvvh/3fMDkKDcYmt7vJFtoErijWCKrbqBA19bYRrp0PuR5U7j46nTw7eT9enz7j
-	 PABD5geQf1pswiJuSxNVvGQ+ZD38XJ+vz5sAjkOZABO7mSj5WlpJIvItCDBElByI9v
-	 yvyoU93dL/yTbpjkWxIb7dhjCPmaZ1fU4M78s3Ik=
+	b=YeZ3F5OcKW77eiJ4g5F5R8bNXTLOS6CxKmGqRgrkPKLJs2COPzISLmzAMCwzCR2Gs
+	 60pF1JqCv49eQdLk0GvkvWCtLoztJbRg+nHXNYBljCY40jDerT27i9E5wlZ928eEAH
+	 wp2JRnNhPLGxkh55Ql8DovhZ0B9xoeBIZVvlqE8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seungjin Bae <eeodqql09@gmail.com>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 045/634] USB: Fix descriptor count when handling invalid MBIM extended descriptor
-Date: Fri,  9 Jan 2026 12:35:23 +0100
-Message-ID: <20260109112119.142238935@linuxfoundation.org>
+Subject: [PATCH 6.1 046/634] clk: renesas: cpg-mssr: Add missing 1ms delay into reset toggle callback
+Date: Fri,  9 Jan 2026 12:35:24 +0100
+Message-ID: <20260109112119.178974077@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -50,45 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seungjin Bae <eeodqql09@gmail.com>
+From: Marek Vasut <marek.vasut+renesas@mailbox.org>
 
-[ Upstream commit 5570ad1423ee60f6e972dadb63fb2e5f90a54cbe ]
+[ Upstream commit 62abfd7bedc2b3d86d4209a4146f9d2b5ae21fab ]
 
-In cdc_parse_cdc_header(), the check for the USB_CDC_MBIM_EXTENDED_TYPE
-descriptor was using 'break' upon detecting an invalid length.
+R-Car V4H Reference Manual R19UH0186EJ0130 Rev.1.30 Apr. 21, 2025 page
+583 Figure 9.3.1(a) Software Reset flow (A) as well as flow (B) / (C)
+indicate after reset has been asserted by writing a matching reset bit
+into register SRCR, it is mandatory to wait 1ms.
 
-This was incorrect because 'break' only exits the switch statement,
-causing the code to fall through to cnt++, thus incorrectly
-incrementing the count of parsed descriptors for a descriptor that was
-actually invalid and being discarded.
+This 1ms delay is documented on R-Car V4H and V4M, it is currently
+unclear whether S4 is affected as well.  This patch does apply the extra
+delay on R-Car S4 as well.
 
-This patch changes 'break' to 'goto next_desc;' to ensure that the
-logic skips the counter increment and correctly proceeds to the next
-descriptor in the buffer. This maintains an accurate count of only
-the successfully parsed descriptors.
+Fix the reset driver to respect the additional delay when toggling
+resets.  Drivers which use separate reset_control_(de)assert() must
+assure matching delay in their driver code.
 
-Fixes: e4c6fb7794982 ("usbnet: move the CDC parser into USB core")
-Signed-off-by: Seungjin Bae <eeodqql09@gmail.com>
-Link: https://lore.kernel.org/r/20250928185611.764589-1-eeodqql09@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0ab55cf18341 ("clk: renesas: cpg-mssr: Add support for R-Car V4H")
+Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20250918030552.331389-1-marek.vasut+renesas@mailbox.org
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/message.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/renesas/renesas-cpg-mssr.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/core/message.c b/drivers/usb/core/message.c
-index 1673e5d089263..9f65556dc3745 100644
---- a/drivers/usb/core/message.c
-+++ b/drivers/usb/core/message.c
-@@ -2386,7 +2386,7 @@ int cdc_parse_cdc_header(struct usb_cdc_parsed_header *hdr,
- 			break;
- 		case USB_CDC_MBIM_EXTENDED_TYPE:
- 			if (elength < sizeof(struct usb_cdc_mbim_extended_desc))
--				break;
-+				goto next_desc;
- 			hdr->usb_cdc_mbim_extended_desc =
- 				(struct usb_cdc_mbim_extended_desc *)buffer;
- 			break;
+diff --git a/drivers/clk/renesas/renesas-cpg-mssr.c b/drivers/clk/renesas/renesas-cpg-mssr.c
+index 523fd45231571..d6137379510c1 100644
+--- a/drivers/clk/renesas/renesas-cpg-mssr.c
++++ b/drivers/clk/renesas/renesas-cpg-mssr.c
+@@ -618,8 +618,15 @@ static int cpg_mssr_reset(struct reset_controller_dev *rcdev,
+ 	/* Reset module */
+ 	writel(bitmask, priv->base + priv->reset_regs[reg]);
+ 
+-	/* Wait for at least one cycle of the RCLK clock (@ ca. 32 kHz) */
+-	udelay(35);
++	/*
++	 * On R-Car Gen4, delay after SRCR has been written is 1ms.
++	 * On older SoCs, delay after SRCR has been written is 35us
++	 * (one cycle of the RCLK clock @ ca. 32 kHz).
++	 */
++	if (priv->reg_layout == CLK_REG_LAYOUT_RCAR_GEN4)
++		usleep_range(1000, 2000);
++	else
++		usleep_range(35, 1000);
+ 
+ 	/* Release module from reset state */
+ 	writel(bitmask, priv->base + priv->reset_clear_regs[reg]);
 -- 
 2.51.0
 
