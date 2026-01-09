@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1FA3336EDA;
-	Fri,  9 Jan 2026 12:33:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A49BC1E8836;
+	Fri,  9 Jan 2026 12:33:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962034; cv=none; b=GaZs6wlB5daA3CgBtfeJoB+/g3L9T9nVgpJdUcsGCIK8WHq516Zn3VKSNrpwcbIvcYkUkHenJparR1YC6xjLiGfw1zr9VHBwbJxQCsYddwYcaRqLjEancL18OQMZRnEfohy7GXAJqw1sYavcRvF8WStuB1RvZ8QrpU+OsaT5fK0=
+	t=1767962037; cv=none; b=iRr3JGc6rxWKEvpa2DyV7V+0KQTKNWlxOJdP/jNA6Zga1OLU6B8p7iwQZywU58YSKd3Jm3lMYYNtbToCPX7G1TgyRUdJ3uL/+mRIMBXcR3tEwDkiTuDA3c7ekZ2SeM5cttml053xi5Y/4LC6yQu8JmeZXDog8d3BY+N+wXStsRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962034; c=relaxed/simple;
-	bh=/NkByLhiYW+D/zIBOBZQ1hUoX3oGDVAkP7Wkb6h0s0Q=;
+	s=arc-20240116; t=1767962037; c=relaxed/simple;
+	bh=/HK9a728RWmfD+1zuzbcyXMdHruj8tSjjRKfeshjqo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kwHTAl5vxBIQJzIi4ziIiF6ejUAJwxds5gt57SeozdZ3m/HEibG8o7OxUx4Uv/Cch861qRURP8M1R7zfbGunHR1BMZ7vMaqR+ioG4uTxE8lVCsIyx5V/qyF3CdQz7h7EiFknMPevCRUHCHvbios1L0tt4+taPY3zoxu/a1ZtwNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i5Pl/MkJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BsWwHvhjHhZturoBmzIFGw1cvn1rrqkGzF8xLIqYfhaIvXBwNiSW/CyyROlgOF6BLK3uqlp2PuSXBybfak9CpZoOU/h7AGxG78cunGnRYA4p74m17QudYhav1JwWRigAPZMQMceyQWIX6wtsTaAp4rKP311PYpesn7B8Cvh9s7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M1gHJXUa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i5Pl/MkJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F5ACC4CEF1;
-	Fri,  9 Jan 2026 12:33:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M1gHJXUa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 306E4C4CEF1;
+	Fri,  9 Jan 2026 12:33:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962034;
-	bh=/NkByLhiYW+D/zIBOBZQ1hUoX3oGDVAkP7Wkb6h0s0Q=;
+	s=korg; t=1767962037;
+	bh=/HK9a728RWmfD+1zuzbcyXMdHruj8tSjjRKfeshjqo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i5Pl/MkJfOax57l1kXAC90QoIf1F2YLzR4o6dU4rfhMNbBn3dHtKYVUQ/9PMslUvz
-	 4AXcYc4HoGrkGDZEl0zi88H9oYQvp6cAKNxQz+T/K5Hp2bP8EMSSwvYFy9xr+c7/k8
-	 0j6A4EQZFIkToJ+s6kmb7o4wZbDwmB+XKvP439J4=
+	b=M1gHJXUadpwh5//9wMgDfK+5DktlW+isGnRpTo1eLwWCTYiBs/qwO+dpbVLQoj5Ip
+	 KOVMx/lgOUh00TPGHoMdh30z7ZAUBguS4gpIn3Z6749i4JgL1FuYMY1pP3p8NCQxmx
+	 hPapGULoh9R3Yvintpox1+NR+D+IB907HfsHYRp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 224/634] ASoC: fsl_xcvr: get channel status data when PHY is not exists
-Date: Fri,  9 Jan 2026 12:38:22 +0100
-Message-ID: <20260109112125.861394477@linuxfoundation.org>
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 207/634] dma/pool: eliminate alloc_pages warning in atomic_pool_expand
+Date: Fri,  9 Jan 2026 12:38:05 +0100
+Message-ID: <20260109112125.227456057@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -50,51 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Dave Kleikamp <dave.kleikamp@oracle.com>
 
-commit ca592e20659e0304ebd8f4dabb273da4f9385848 upstream.
+[ Upstream commit 463d439becb81383f3a5a5d840800131f265a09c ]
 
-There is no PHY for the XCVR module on i.MX93, the channel status needs
-to be obtained from FSL_XCVR_RX_CS_DATA_* registers. And channel status
-acknowledge (CSA) bit should be set once channel status is processed.
+atomic_pool_expand iteratively tries the allocation while decrementing
+the page order. There is no need to issue a warning if an attempted
+allocation fails.
 
-Fixes: e240b9329a30 ("ASoC: fsl_xcvr: Add support for i.MX93 platform")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/20250710030405.3370671-2-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Fixes: d7e673ec2c8e ("dma-pool: Only allocate from CMA when in same memory zone")
+[mszyprow: fixed typo]
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20251202152810.142370-1-dave.kleikamp@oracle.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_xcvr.c |   20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ kernel/dma/pool.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/fsl/fsl_xcvr.c
-+++ b/sound/soc/fsl/fsl_xcvr.c
-@@ -1166,6 +1166,26 @@ static irqreturn_t irq0_isr(int irq, voi
- 				/* clear CS control register */
- 				writel_relaxed(0, reg_ctrl);
- 			}
-+		} else {
-+			regmap_read(xcvr->regmap, FSL_XCVR_RX_CS_DATA_0,
-+				    (u32 *)&xcvr->rx_iec958.status[0]);
-+			regmap_read(xcvr->regmap, FSL_XCVR_RX_CS_DATA_1,
-+				    (u32 *)&xcvr->rx_iec958.status[4]);
-+			regmap_read(xcvr->regmap, FSL_XCVR_RX_CS_DATA_2,
-+				    (u32 *)&xcvr->rx_iec958.status[8]);
-+			regmap_read(xcvr->regmap, FSL_XCVR_RX_CS_DATA_3,
-+				    (u32 *)&xcvr->rx_iec958.status[12]);
-+			regmap_read(xcvr->regmap, FSL_XCVR_RX_CS_DATA_4,
-+				    (u32 *)&xcvr->rx_iec958.status[16]);
-+			regmap_read(xcvr->regmap, FSL_XCVR_RX_CS_DATA_5,
-+				    (u32 *)&xcvr->rx_iec958.status[20]);
-+			for (i = 0; i < 6; i++) {
-+				val = *(u32 *)(xcvr->rx_iec958.status + i * 4);
-+				*(u32 *)(xcvr->rx_iec958.status + i * 4) =
-+					bitrev32(val);
-+			}
-+			regmap_set_bits(xcvr->regmap, FSL_XCVR_RX_DPTH_CTRL,
-+					FSL_XCVR_RX_DPTH_CTRL_CSA);
- 		}
- 	}
- 	if (isr & FSL_XCVR_IRQ_NEW_UD) {
+diff --git a/kernel/dma/pool.c b/kernel/dma/pool.c
+index 37d3ddd36ae5b..1e9d4cb018693 100644
+--- a/kernel/dma/pool.c
++++ b/kernel/dma/pool.c
+@@ -93,7 +93,7 @@ static int atomic_pool_expand(struct gen_pool *pool, size_t pool_size,
+ 			page = dma_alloc_from_contiguous(NULL, 1 << order,
+ 							 order, false);
+ 		if (!page)
+-			page = alloc_pages(gfp, order);
++			page = alloc_pages(gfp | __GFP_NOWARN, order);
+ 	} while (!page && order-- > 0);
+ 	if (!page)
+ 		goto out;
+-- 
+2.51.0
+
 
 
