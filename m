@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF0C2DEA6F;
-	Fri,  9 Jan 2026 11:56:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B8233C511;
+	Fri,  9 Jan 2026 11:56:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959768; cv=none; b=m5d32mfIsVVQSbWO6tQgRErgY79FdOdnV55bqb3i1DlQs5mvgqwRPBE3tdQboZ/kARqeg0OGiVRvCBeIwCBoPz6hDyNfzJ79pvnVM2GJ9L3QglY0mE5EU1rFpsW9fstbbUElwTmrB6STnr3u4vKCmWNvDn8RyWyWpCmBbtmZJVU=
+	t=1767959771; cv=none; b=D6EWs8PURq331ZyGOLVLFKKvvydNPLHPjDImlVtUWVUiyXS2kqmJ5ffMN+Kh6UGwJIMPfSmk1b8c2WlbbFg5e3wS4miDlN2nBmGxO+UG2lpH/ahp4sfE3HK8JWKzvFTehNsFwoJIIgY2cwwzZtr3bUNGptTjSFWenVQaD9FTqsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959768; c=relaxed/simple;
-	bh=X42oRKknX/gGJEWEFFylZ/SyB45Q8mjmZCkg8dKdsdc=;
+	s=arc-20240116; t=1767959771; c=relaxed/simple;
+	bh=STlpYeKKSgO9/dA+iDhYjeNhR1u9SA0wtgqwSF97v2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kEUc4nNfJyb3lpqTAWzZffbQrOia9wkqoQPDUyghy7b7wx2r6pi2LfsvCFsmhhs8NrZrKFhUQygqNxfWyCf/7JmqdXZeDQHemqHN4TXJZz7/sqhfGBfi1RPDP4gmESaL7Hda2sJatpb0Gxe2rwbRpy5k4W/ycYh0Bji+VTN4R7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ix+waBqU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JIAzErNT+GeSc5lj0X1x9yHymuUDm9aSbyE9PKe5Js5ksUNSFpTq464H1MiKXdxkgh9j0KApxdZKQkm7NdjJ7YXUqbiq44GAyoe++xeP3WedaJxS5xXgFLq1NCE4ifIdJIHDEcSQws31LaG++62M6P4IVP5Klon4OXHcZVQRrTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BGyIHnMM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ix+waBqU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47321C16AAE;
-	Fri,  9 Jan 2026 11:56:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BGyIHnMM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 239B6C4CEF1;
+	Fri,  9 Jan 2026 11:56:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959768;
-	bh=X42oRKknX/gGJEWEFFylZ/SyB45Q8mjmZCkg8dKdsdc=;
+	s=korg; t=1767959771;
+	bh=STlpYeKKSgO9/dA+iDhYjeNhR1u9SA0wtgqwSF97v2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ix+waBqUZpxXZgF4CCKKOTI+zbzgCSxIXSOZ2GPKr2iE2We8fx1bc5rJS/wPqRvCM
-	 CLZ0QjNJlnAnFASgUmQ4/xl74Q3tABAXHpZ5sNPDWVzUjJdDWtNeUjYdkdm+2MmFyn
-	 FSxFfq6ItRQFUxnH67d6AM7RX5aVEUrYT0xoMgU0=
+	b=BGyIHnMM9V+Grx/hzPSbzpAwECEsTts2Zo7O3Fxvd12dfz2PRw2AJfgSuhjsaWLJL
+	 wsJiF/JIL1VFtzqeu/VTlDEOuY9zr4WjmqLCsThAZpn3FdOidsedrRsKjQbeXt53TV
+	 LGMAfWJP8dMWMq8b88WURFbSfNAewXL/55aFW+os=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pu Lehui <pulehui@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 168/737] bpf: Fix invalid prog->stats access when update_effective_progs fails
-Date: Fri,  9 Jan 2026 12:35:07 +0100
-Message-ID: <20260109112140.313830895@linuxfoundation.org>
+Subject: [PATCH 6.6 169/737] powerpc/64s/hash: Restrict stress_hpt_struct memblock region to within RMA limit
+Date: Fri,  9 Jan 2026 12:35:08 +0100
+Message-ID: <20260109112140.350886836@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,89 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pu Lehui <pulehui@huawei.com>
+From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
 
-[ Upstream commit 7dc211c1159d991db609bdf4b0fb9033c04adcbc ]
+[ Upstream commit 17b45ccf09882e0c808ad2cf62acdc90ad968746 ]
 
-Syzkaller triggers an invalid memory access issue following fault
-injection in update_effective_progs. The issue can be described as
-follows:
+When HV=0 & IR/DR=0, the Hash MMU is said to be in Virtual Real
+Addressing Mode during early boot. During this, we should ensure that
+memory region allocations for stress_hpt_struct should happen from
+within RMA region as otherwise the boot might get stuck while doing
+memset of this region.
 
-__cgroup_bpf_detach
-  update_effective_progs
-    compute_effective_progs
-      bpf_prog_array_alloc <-- fault inject
-  purge_effective_progs
-    /* change to dummy_bpf_prog */
-    array->items[index] = &dummy_bpf_prog.prog
+History behind why do we have RMA region limitation is better explained
+in these 2 patches [1] & [2]. This patch ensures that memset to
+stress_hpt_struct during early boot does not cross ppc64_rma_size
+boundary.
 
----softirq start---
-__do_softirq
-  ...
-    __cgroup_bpf_run_filter_skb
-      __bpf_prog_run_save_cb
-        bpf_prog_run
-          stats = this_cpu_ptr(prog->stats)
-          /* invalid memory access */
-          flags = u64_stats_update_begin_irqsave(&stats->syncp)
----softirq end---
+[1]: https://lore.kernel.org/all/20190710052018.14628-1-sjitindarsingh@gmail.com/
+[2]: https://lore.kernel.org/all/87wp54usvj.fsf@linux.vnet.ibm.com/
 
-  static_branch_dec(&cgroup_bpf_enabled_key[atype])
-
-The reason is that fault injection caused update_effective_progs to fail
-and then changed the original prog into dummy_bpf_prog.prog in
-purge_effective_progs. Then a softirq came, and accessing the members of
-dummy_bpf_prog.prog in the softirq triggers invalid mem access.
-
-To fix it, skip updating stats when stats is NULL.
-
-Fixes: 492ecee892c2 ("bpf: enable program stats")
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
-Link: https://lore.kernel.org/r/20251115102343.2200727-1-pulehui@huaweicloud.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 6b34a099faa12 ("powerpc/64s/hash: add stress_hpt kernel boot option to increase hash faults")
+Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/ada1173933ea7617a994d6ee3e54ced8797339fc.1761834163.git.ritesh.list@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/filter.h | 12 +++++++-----
- kernel/bpf/syscall.c   |  3 +++
- 2 files changed, 10 insertions(+), 5 deletions(-)
+ arch/powerpc/mm/book3s64/hash_utils.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/filter.h b/include/linux/filter.h
-index f9fb83be935d4..30fe140d48888 100644
---- a/include/linux/filter.h
-+++ b/include/linux/filter.h
-@@ -605,11 +605,13 @@ static __always_inline u32 __bpf_prog_run(const struct bpf_prog *prog,
- 		ret = dfunc(ctx, prog->insnsi, prog->bpf_func);
+diff --git a/arch/powerpc/mm/book3s64/hash_utils.c b/arch/powerpc/mm/book3s64/hash_utils.c
+index ad2afa08e62ed..4f09d295e5188 100644
+--- a/arch/powerpc/mm/book3s64/hash_utils.c
++++ b/arch/powerpc/mm/book3s64/hash_utils.c
+@@ -1032,11 +1032,14 @@ static void __init htab_initialize(void)
+ 	unsigned long table;
+ 	unsigned long pteg_count;
+ 	unsigned long prot;
+-	phys_addr_t base = 0, size = 0, end;
++	phys_addr_t base = 0, size = 0, end, limit = MEMBLOCK_ALLOC_ANYWHERE;
+ 	u64 i;
  
- 		duration = sched_clock() - start;
--		stats = this_cpu_ptr(prog->stats);
--		flags = u64_stats_update_begin_irqsave(&stats->syncp);
--		u64_stats_inc(&stats->cnt);
--		u64_stats_add(&stats->nsecs, duration);
--		u64_stats_update_end_irqrestore(&stats->syncp, flags);
-+		if (likely(prog->stats)) {
-+			stats = this_cpu_ptr(prog->stats);
-+			flags = u64_stats_update_begin_irqsave(&stats->syncp);
-+			u64_stats_inc(&stats->cnt);
-+			u64_stats_add(&stats->nsecs, duration);
-+			u64_stats_update_end_irqrestore(&stats->syncp, flags);
-+		}
- 	} else {
- 		ret = dfunc(ctx, prog->insnsi, prog->bpf_func);
- 	}
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index 98f3f206d112e..63cf5a221081b 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -2224,6 +2224,9 @@ void notrace bpf_prog_inc_misses_counter(struct bpf_prog *prog)
- 	struct bpf_prog_stats *stats;
- 	unsigned int flags;
+ 	DBG(" -> htab_initialize()\n");
  
-+	if (unlikely(!prog->stats))
-+		return;
++	if (firmware_has_feature(FW_FEATURE_LPAR))
++		limit = ppc64_rma_size;
 +
- 	stats = this_cpu_ptr(prog->stats);
- 	flags = u64_stats_update_begin_irqsave(&stats->syncp);
- 	u64_stats_inc(&stats->misses);
+ 	if (mmu_has_feature(MMU_FTR_1T_SEGMENT)) {
+ 		mmu_kernel_ssize = MMU_SEGSIZE_1T;
+ 		mmu_highuser_ssize = MMU_SEGSIZE_1T;
+@@ -1052,7 +1055,7 @@ static void __init htab_initialize(void)
+ 		// Too early to use nr_cpu_ids, so use NR_CPUS
+ 		tmp = memblock_phys_alloc_range(sizeof(struct stress_hpt_struct) * NR_CPUS,
+ 						__alignof__(struct stress_hpt_struct),
+-						0, MEMBLOCK_ALLOC_ANYWHERE);
++						MEMBLOCK_LOW_LIMIT, limit);
+ 		memset((void *)tmp, 0xff, sizeof(struct stress_hpt_struct) * NR_CPUS);
+ 		stress_hpt_struct = __va(tmp);
+ 
+@@ -1086,7 +1089,6 @@ static void __init htab_initialize(void)
+ 			mmu_hash_ops.hpte_clear_all();
+ #endif
+ 	} else {
+-		unsigned long limit = MEMBLOCK_ALLOC_ANYWHERE;
+ 
+ #ifdef CONFIG_PPC_CELL
+ 		/*
+@@ -1102,7 +1104,7 @@ static void __init htab_initialize(void)
+ 
+ 		table = memblock_phys_alloc_range(htab_size_bytes,
+ 						  htab_size_bytes,
+-						  0, limit);
++						  MEMBLOCK_LOW_LIMIT, limit);
+ 		if (!table)
+ 			panic("ERROR: Failed to allocate %pa bytes below %pa\n",
+ 			      &htab_size_bytes, &limit);
 -- 
 2.51.0
 
