@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23CDD23F417;
-	Fri,  9 Jan 2026 12:27:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2529E335083;
+	Fri,  9 Jan 2026 12:27:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961666; cv=none; b=aw7NRyCCzMGh0fQ76cFH6KTQqsapKLc9CBAkNnnugNscLyt1u44UFvVVbwdn0b7ScIXEG6QCxB0OVQHr3jyGQAHny0qUL2va8rfs3f4T/xtxOHKQk/nvImX1xOYhf0hdVZRauUkH0iH7R0Ramt3MsS6AfgAw1TMmaOr8gm/yfaU=
+	t=1767961669; cv=none; b=F6ZsdirR/2WsGKV950q5WcUSQZRjHZVKXMsQDtPpp+ZMmIUUP8+3uH5b4IYIrIwZvf8FWUVHJ8kyRrdj5xKrityf7cNYyOSn4iypfELAOwdU3xujVLHJgwvjpX3gpL8HwMrTi9bVz0s2wXo86dwmZG4xB7yui0/14r/MQ3Cg2OE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961666; c=relaxed/simple;
-	bh=lPctdfPk6MRXxq6Y4/eyyxSVoZZt29Gay/pOREJP/0s=;
+	s=arc-20240116; t=1767961669; c=relaxed/simple;
+	bh=1vFQQUBPqJQ7MNjTvsIUFq7bxnpxvbh3otJskYoJUgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SRI/tk1afyxn7935sZlmInX8D/29F7LaDOnuohoXZgeymLlyyQFE7RlDZpkrWRG259r+E0FGIFkZ1Ia61j9gt2vvRPXfmdXpvyr3f9zyENV9oHTwnk22iokntCMOPPUmzpwf3fg5IjIOST+lGEkft3Tb4ZdmF0XNn6st5PjGB7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n0COhw1P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A8l5wesb4BGMq91sQtw8DR8AxINaGLthZaU5hWiLnjWXxkfhHkz4zpV0NB3qnsCI9Mw/xw9ajJDMbPMSmIYF9vegcOvfF4ssgNLUUAxRqUD9Z4XgH66KqDZ8P7IpPHimfZCNEJwrWsQvRe4ozIkH0g9vfNCpEgi0bOeaexlQFRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U9M3BbeV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n0COhw1P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5FD3C4CEF1;
-	Fri,  9 Jan 2026 12:27:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U9M3BbeV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A475C4CEF1;
+	Fri,  9 Jan 2026 12:27:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961666;
-	bh=lPctdfPk6MRXxq6Y4/eyyxSVoZZt29Gay/pOREJP/0s=;
+	s=korg; t=1767961668;
+	bh=1vFQQUBPqJQ7MNjTvsIUFq7bxnpxvbh3otJskYoJUgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n0COhw1PiiyfN4AxV0vQ5PV9a2LkaFHLA5Xqf+NpsOUYR9hchsfXg7Xt/2gQd357R
-	 WWTfpMmrtn5gCAp3r8WkpAoycGHaDYegegcboRLDe2G+mY6X5R7XZgo/mTXilvXpyO
-	 bsURfSDT7PNvNLQEXD5lPvRNGujT+3VWZ5KvQLiA=
+	b=U9M3BbeVdJaZ1Uh/5RPfjB4a94N6MDefZBALtV+TX+EvU02jOUC/0VvzMriUojJsD
+	 hQYPd368A3YZbx2AJ0FlzOgpmBTcjf/WKGewt/xOlPX591KPyLR4gOVHx5L86/4iCK
+	 b4KJs2mMkUxNU6Q4Qi7FiDMTD5dAJf5SpY8BKcqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mahesh Rajashekhara <mahesh.rajashekhara@microchip.com>,
+	Scott Teel <scott.teel@microchip.com>,
+	Scott Benesh <scott.benesh@microchip.com>,
+	Mike McGowen <mike.mcgowen@microchip.com>,
+	Kevin Barnett <kevin.barnett@microchip.com>,
+	Don Brace <don.brace@microchip.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 066/634] phy: mscc: Fix PTP for VSC8574 and VSC8572
-Date: Fri,  9 Jan 2026 12:35:44 +0100
-Message-ID: <20260109112119.929825018@linuxfoundation.org>
+Subject: [PATCH 6.1 093/634] scsi: smartpqi: Add abort handler
+Date: Fri,  9 Jan 2026 12:36:11 +0100
+Message-ID: <20260109112120.934420190@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,62 +56,431 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Horatiu Vultur <horatiu.vultur@microchip.com>
+From: Kevin Barnett <kevin.barnett@microchip.com>
 
-[ Upstream commit ea5df88aeca112aac69e6c32e3dd1433a113b0c9 ]
+[ Upstream commit 153c45dd63ef33ffb3d78307db5aa6131b2fdefc ]
 
-The PTP initialization is two-step. First part are the function
-vsc8584_ptp_probe_once() and vsc8584_ptp_probe() at probe time which
-initialize the locks, queues, creates the PTP device. The second part is
-the function vsc8584_ptp_init() at config_init() time which initialize
-PTP in the HW.
+Implement aborts as resets.
 
-For VSC8574 and VSC8572, the PTP initialization is incomplete. It is
-missing the first part but it makes the second part. Meaning that the
-ptp_clock_register() is never called.
+Avoid I/O stalls across all devices attached to a controller when device
+I/O requests time out.
 
-There is no crash without the first part when enabling PTP but this is
-unexpected because some PHys have PTP functionality exposed by the
-driver and some don't even though they share the same PTP clock PTP.
-
-Fixes: 774626fa440e ("net: phy: mscc: Add PTP support for 2 more VSC PHYs")
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Link: https://patch.msgid.link/20251023191350.190940-3-horatiu.vultur@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Mahesh Rajashekhara <mahesh.rajashekhara@microchip.com>
+Reviewed-by: Scott Teel <scott.teel@microchip.com>
+Reviewed-by: Scott Benesh <scott.benesh@microchip.com>
+Reviewed-by: Mike McGowen <mike.mcgowen@microchip.com>
+Signed-off-by: Kevin Barnett <kevin.barnett@microchip.com>
+Signed-off-by: Don Brace <don.brace@microchip.com>
+Link: https://lore.kernel.org/r/20230824155812.789913-2-don.brace@microchip.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: b518e86d1a70 ("scsi: smartpqi: Fix device resources accessed after device removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/mscc/mscc_main.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/scsi/smartpqi/smartpqi.h      |  14 ++-
+ drivers/scsi/smartpqi/smartpqi_init.c | 171 ++++++++++++++++++++------
+ 2 files changed, 149 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/net/phy/mscc/mscc_main.c b/drivers/net/phy/mscc/mscc_main.c
-index 2fabb6a7d2415..d9ad8aac58098 100644
---- a/drivers/net/phy/mscc/mscc_main.c
-+++ b/drivers/net/phy/mscc/mscc_main.c
-@@ -2560,7 +2560,7 @@ static struct phy_driver vsc85xx_driver[] = {
- 	.suspend	= &genphy_suspend,
- 	.resume		= &genphy_resume,
- 	.remove		= &vsc85xx_remove,
--	.probe		= &vsc8574_probe,
-+	.probe		= &vsc8584_probe,
- 	.set_wol	= &vsc85xx_wol_set,
- 	.get_wol	= &vsc85xx_wol_get,
- 	.get_tunable	= &vsc85xx_get_tunable,
-@@ -2581,12 +2581,12 @@ static struct phy_driver vsc85xx_driver[] = {
- 	.config_aneg    = &vsc85xx_config_aneg,
- 	.aneg_done	= &genphy_aneg_done,
- 	.read_status	= &vsc85xx_read_status,
--	.handle_interrupt = vsc85xx_handle_interrupt,
-+	.handle_interrupt = vsc8584_handle_interrupt,
- 	.config_intr    = &vsc85xx_config_intr,
- 	.suspend	= &genphy_suspend,
- 	.resume		= &genphy_resume,
- 	.remove		= &vsc85xx_remove,
--	.probe		= &vsc8574_probe,
-+	.probe		= &vsc8584_probe,
- 	.set_wol	= &vsc85xx_wol_set,
- 	.get_wol	= &vsc85xx_wol_get,
- 	.get_tunable	= &vsc85xx_get_tunable,
+diff --git a/drivers/scsi/smartpqi/smartpqi.h b/drivers/scsi/smartpqi/smartpqi.h
+index 6e2f08ac68166..5b40e7ad5e02d 100644
+--- a/drivers/scsi/smartpqi/smartpqi.h
++++ b/drivers/scsi/smartpqi/smartpqi.h
+@@ -1085,7 +1085,16 @@ struct pqi_stream_data {
+ 	u32	last_accessed;
+ };
+ 
+-#define PQI_MAX_LUNS_PER_DEVICE         256
++#define PQI_MAX_LUNS_PER_DEVICE		256
++
++struct pqi_tmf_work {
++	struct work_struct work_struct;
++	struct scsi_cmnd *scmd;
++	struct pqi_ctrl_info *ctrl_info;
++	struct pqi_scsi_dev *device;
++	u8	lun;
++	u8	scsi_opcode;
++};
+ 
+ struct pqi_scsi_dev {
+ 	int	devtype;		/* as reported by INQUIRY command */
+@@ -1110,6 +1119,7 @@ struct pqi_scsi_dev {
+ 	u8	ignore_device : 1;
+ 	bool	aio_enabled;		/* only valid for physical disks */
+ 	bool	in_remove;
++	bool	in_reset[PQI_MAX_LUNS_PER_DEVICE];
+ 	bool	device_offline;
+ 	u8	vendor[8];		/* bytes 8-15 of inquiry data */
+ 	u8	model[16];		/* bytes 16-31 of inquiry data */
+@@ -1148,6 +1158,8 @@ struct pqi_scsi_dev {
+ 	struct pqi_stream_data stream_data[NUM_STREAMS_PER_LUN];
+ 	atomic_t scsi_cmds_outstanding[PQI_MAX_LUNS_PER_DEVICE];
+ 	unsigned int raid_bypass_cnt;
++
++	struct pqi_tmf_work tmf_work[PQI_MAX_LUNS_PER_DEVICE];
+ };
+ 
+ /* VPD inquiry pages */
+diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
+index 4822b830ea371..5e39df2b6a4c0 100644
+--- a/drivers/scsi/smartpqi/smartpqi_init.c
++++ b/drivers/scsi/smartpqi/smartpqi_init.c
+@@ -48,6 +48,8 @@
+ #define PQI_POST_RESET_DELAY_SECS			5
+ #define PQI_POST_OFA_RESET_DELAY_UPON_TIMEOUT_SECS	10
+ 
++#define PQI_NO_COMPLETION	((void *)-1)
++
+ MODULE_AUTHOR("Microchip");
+ MODULE_DESCRIPTION("Driver for Microchip Smart Family Controller version "
+ 	DRIVER_VERSION);
+@@ -96,6 +98,7 @@ static int pqi_ofa_host_memory_update(struct pqi_ctrl_info *ctrl_info);
+ static int pqi_device_wait_for_pending_io(struct pqi_ctrl_info *ctrl_info,
+ 	struct pqi_scsi_dev *device, u8 lun, unsigned long timeout_msecs);
+ static void pqi_fail_all_outstanding_requests(struct pqi_ctrl_info *ctrl_info);
++static void pqi_tmf_worker(struct work_struct *work);
+ 
+ /* for flags argument to pqi_submit_raid_request_synchronous() */
+ #define PQI_SYNC_FLAGS_INTERRUPTABLE	0x1
+@@ -455,6 +458,21 @@ static inline bool pqi_device_in_remove(struct pqi_scsi_dev *device)
+ 	return device->in_remove;
+ }
+ 
++static inline void pqi_device_reset_start(struct pqi_scsi_dev *device, u8 lun)
++{
++	device->in_reset[lun] = true;
++}
++
++static inline void pqi_device_reset_done(struct pqi_scsi_dev *device, u8 lun)
++{
++	device->in_reset[lun] = false;
++}
++
++static inline bool pqi_device_in_reset(struct pqi_scsi_dev *device, u8 lun)
++{
++	return device->in_reset[lun];
++}
++
+ static inline int pqi_event_type_to_event_index(unsigned int event_type)
+ {
+ 	int index;
+@@ -2171,6 +2189,15 @@ static inline bool pqi_is_device_added(struct pqi_scsi_dev *device)
+ 	return device->sdev != NULL;
+ }
+ 
++static inline void pqi_init_device_tmf_work(struct pqi_scsi_dev *device)
++{
++	unsigned int lun;
++	struct pqi_tmf_work *tmf_work;
++
++	for (lun = 0, tmf_work = device->tmf_work; lun < PQI_MAX_LUNS_PER_DEVICE; lun++, tmf_work++)
++		INIT_WORK(&tmf_work->work_struct, pqi_tmf_worker);
++}
++
+ static void pqi_update_device_list(struct pqi_ctrl_info *ctrl_info,
+ 	struct pqi_scsi_dev *new_device_list[], unsigned int num_new_devices)
+ {
+@@ -2251,6 +2278,7 @@ static void pqi_update_device_list(struct pqi_ctrl_info *ctrl_info,
+ 		list_add_tail(&device->add_list_entry, &add_list);
+ 		/* To prevent this device structure from being freed later. */
+ 		device->keep_device = true;
++		pqi_init_device_tmf_work(device);
+ 	}
+ 
+ 	spin_unlock_irqrestore(&ctrl_info->scsi_device_list_lock, flags);
+@@ -5896,6 +5924,7 @@ static inline bool pqi_is_bypass_eligible_request(struct scsi_cmnd *scmd)
+ void pqi_prep_for_scsi_done(struct scsi_cmnd *scmd)
+ {
+ 	struct pqi_scsi_dev *device;
++	struct completion *wait;
+ 
+ 	if (!scmd->device) {
+ 		set_host_byte(scmd, DID_NO_CONNECT);
+@@ -5909,6 +5938,10 @@ void pqi_prep_for_scsi_done(struct scsi_cmnd *scmd)
+ 	}
+ 
+ 	atomic_dec(&device->scsi_cmds_outstanding[scmd->device->lun]);
++
++	wait = (struct completion *)xchg(&scmd->host_scribble, NULL);
++	if (wait != PQI_NO_COMPLETION)
++		complete(wait);
+ }
+ 
+ static bool pqi_is_parity_write_stream(struct pqi_ctrl_info *ctrl_info,
+@@ -5994,6 +6027,9 @@ static int pqi_scsi_queue_command(struct Scsi_Host *shost, struct scsi_cmnd *scm
+ 	u16 hw_queue;
+ 	struct pqi_queue_group *queue_group;
+ 	bool raid_bypassed;
++	u8 lun;
++
++	scmd->host_scribble = PQI_NO_COMPLETION;
+ 
+ 	device = scmd->device->hostdata;
+ 
+@@ -6003,7 +6039,9 @@ static int pqi_scsi_queue_command(struct Scsi_Host *shost, struct scsi_cmnd *scm
+ 		return 0;
+ 	}
+ 
+-	atomic_inc(&device->scsi_cmds_outstanding[scmd->device->lun]);
++	lun = (u8)scmd->device->lun;
++
++	atomic_inc(&device->scsi_cmds_outstanding[lun]);
+ 
+ 	ctrl_info = shost_to_hba(shost);
+ 
+@@ -6013,7 +6051,7 @@ static int pqi_scsi_queue_command(struct Scsi_Host *shost, struct scsi_cmnd *scm
+ 		return 0;
+ 	}
+ 
+-	if (pqi_ctrl_blocked(ctrl_info)) {
++	if (pqi_ctrl_blocked(ctrl_info) || pqi_device_in_reset(device, lun)) {
+ 		rc = SCSI_MLQUEUE_HOST_BUSY;
+ 		goto out;
+ 	}
+@@ -6048,8 +6086,10 @@ static int pqi_scsi_queue_command(struct Scsi_Host *shost, struct scsi_cmnd *scm
+ 	}
+ 
+ out:
+-	if (rc)
+-		atomic_dec(&device->scsi_cmds_outstanding[scmd->device->lun]);
++	if (rc) {
++		scmd->host_scribble = NULL;
++		atomic_dec(&device->scsi_cmds_outstanding[lun]);
++	}
+ 
+ 	return rc;
+ }
+@@ -6143,7 +6183,7 @@ static int pqi_wait_until_inbound_queues_empty(struct pqi_ctrl_info *ctrl_info)
+ }
+ 
+ static void pqi_fail_io_queued_for_device(struct pqi_ctrl_info *ctrl_info,
+-	struct pqi_scsi_dev *device)
++	struct pqi_scsi_dev *device, u8 lun)
+ {
+ 	unsigned int i;
+ 	unsigned int path;
+@@ -6173,6 +6213,9 @@ static void pqi_fail_io_queued_for_device(struct pqi_ctrl_info *ctrl_info,
+ 				if (scsi_device != device)
+ 					continue;
+ 
++				if ((u8)scmd->device->lun != lun)
++					continue;
++
+ 				list_del(&io_request->request_list_entry);
+ 				set_host_byte(scmd, DID_RESET);
+ 				pqi_free_io_request(io_request);
+@@ -6270,15 +6313,13 @@ static int pqi_wait_for_lun_reset_completion(struct pqi_ctrl_info *ctrl_info,
+ 
+ #define PQI_LUN_RESET_FIRMWARE_TIMEOUT_SECS	30
+ 
+-static int pqi_lun_reset(struct pqi_ctrl_info *ctrl_info, struct scsi_cmnd *scmd)
++static int pqi_lun_reset(struct pqi_ctrl_info *ctrl_info, struct pqi_scsi_dev *device, u8 lun)
+ {
+ 	int rc;
+ 	struct pqi_io_request *io_request;
+ 	DECLARE_COMPLETION_ONSTACK(wait);
+ 	struct pqi_task_management_request *request;
+-	struct pqi_scsi_dev *device;
+ 
+-	device = scmd->device->hostdata;
+ 	io_request = pqi_alloc_io_request(ctrl_info, NULL);
+ 	io_request->io_complete_callback = pqi_lun_reset_complete;
+ 	io_request->context = &wait;
+@@ -6293,7 +6334,7 @@ static int pqi_lun_reset(struct pqi_ctrl_info *ctrl_info, struct scsi_cmnd *scmd
+ 	memcpy(request->lun_number, device->scsi3addr,
+ 		sizeof(request->lun_number));
+ 	if (!pqi_is_logical_device(device) && ctrl_info->multi_lun_device_supported)
+-		request->ml_device_lun_number = (u8)scmd->device->lun;
++		request->ml_device_lun_number = lun;
+ 	request->task_management_function = SOP_TASK_MANAGEMENT_LUN_RESET;
+ 	if (ctrl_info->tmf_iu_timeout_supported)
+ 		put_unaligned_le16(PQI_LUN_RESET_FIRMWARE_TIMEOUT_SECS, &request->timeout);
+@@ -6301,7 +6342,7 @@ static int pqi_lun_reset(struct pqi_ctrl_info *ctrl_info, struct scsi_cmnd *scmd
+ 	pqi_start_io(ctrl_info, &ctrl_info->queue_groups[PQI_DEFAULT_QUEUE_GROUP], RAID_PATH,
+ 		io_request);
+ 
+-	rc = pqi_wait_for_lun_reset_completion(ctrl_info, device, (u8)scmd->device->lun, &wait);
++	rc = pqi_wait_for_lun_reset_completion(ctrl_info, device, lun, &wait);
+ 	if (rc == 0)
+ 		rc = io_request->status;
+ 
+@@ -6315,18 +6356,16 @@ static int pqi_lun_reset(struct pqi_ctrl_info *ctrl_info, struct scsi_cmnd *scmd
+ #define PQI_LUN_RESET_PENDING_IO_TIMEOUT_MSECS		(10 * 60 * 1000)
+ #define PQI_LUN_RESET_FAILED_PENDING_IO_TIMEOUT_MSECS	(2 * 60 * 1000)
+ 
+-static int pqi_lun_reset_with_retries(struct pqi_ctrl_info *ctrl_info, struct scsi_cmnd *scmd)
++static int pqi_lun_reset_with_retries(struct pqi_ctrl_info *ctrl_info, struct pqi_scsi_dev *device, u8 lun)
+ {
+ 	int reset_rc;
+ 	int wait_rc;
+ 	unsigned int retries;
+ 	unsigned long timeout_msecs;
+-	struct pqi_scsi_dev *device;
+ 
+-	device = scmd->device->hostdata;
+ 	for (retries = 0;;) {
+-		reset_rc = pqi_lun_reset(ctrl_info, scmd);
+-		if (reset_rc == 0 || reset_rc == -ENODEV || ++retries > PQI_LUN_RESET_RETRIES)
++		reset_rc = pqi_lun_reset(ctrl_info, device, lun);
++		if (reset_rc == 0 || reset_rc == -ENODEV || reset_rc == -ENXIO || ++retries > PQI_LUN_RESET_RETRIES)
+ 			break;
+ 		msleep(PQI_LUN_RESET_RETRY_INTERVAL_MSECS);
+ 	}
+@@ -6334,60 +6373,53 @@ static int pqi_lun_reset_with_retries(struct pqi_ctrl_info *ctrl_info, struct sc
+ 	timeout_msecs = reset_rc ? PQI_LUN_RESET_FAILED_PENDING_IO_TIMEOUT_MSECS :
+ 		PQI_LUN_RESET_PENDING_IO_TIMEOUT_MSECS;
+ 
+-	wait_rc = pqi_device_wait_for_pending_io(ctrl_info, device, scmd->device->lun, timeout_msecs);
++	wait_rc = pqi_device_wait_for_pending_io(ctrl_info, device, lun, timeout_msecs);
+ 	if (wait_rc && reset_rc == 0)
+ 		reset_rc = wait_rc;
+ 
+ 	return reset_rc == 0 ? SUCCESS : FAILED;
+ }
+ 
+-static int pqi_device_reset(struct pqi_ctrl_info *ctrl_info, struct scsi_cmnd *scmd)
++static int pqi_device_reset(struct pqi_ctrl_info *ctrl_info, struct pqi_scsi_dev *device, u8 lun)
+ {
+ 	int rc;
+-	struct pqi_scsi_dev *device;
+ 
+-	device = scmd->device->hostdata;
+ 	pqi_ctrl_block_requests(ctrl_info);
+ 	pqi_ctrl_wait_until_quiesced(ctrl_info);
+-	pqi_fail_io_queued_for_device(ctrl_info, device);
++	pqi_fail_io_queued_for_device(ctrl_info, device, lun);
+ 	rc = pqi_wait_until_inbound_queues_empty(ctrl_info);
++	pqi_device_reset_start(device, lun);
++	pqi_ctrl_unblock_requests(ctrl_info);
+ 	if (rc)
+ 		rc = FAILED;
+ 	else
+-		rc = pqi_lun_reset_with_retries(ctrl_info, scmd);
+-	pqi_ctrl_unblock_requests(ctrl_info);
++		rc = pqi_lun_reset_with_retries(ctrl_info, device, lun);
++	pqi_device_reset_done(device, lun);
+ 
+ 	return rc;
+ }
+ 
+-static int pqi_eh_device_reset_handler(struct scsi_cmnd *scmd)
++static int pqi_device_reset_handler(struct pqi_ctrl_info *ctrl_info, struct pqi_scsi_dev *device, u8 lun, struct scsi_cmnd *scmd, u8 scsi_opcode)
+ {
+ 	int rc;
+-	struct Scsi_Host *shost;
+-	struct pqi_ctrl_info *ctrl_info;
+-	struct pqi_scsi_dev *device;
+-
+-	shost = scmd->device->host;
+-	ctrl_info = shost_to_hba(shost);
+-	device = scmd->device->hostdata;
+ 
+ 	mutex_lock(&ctrl_info->lun_reset_mutex);
+ 
+ 	dev_err(&ctrl_info->pci_dev->dev,
+ 		"resetting scsi %d:%d:%d:%d due to cmd 0x%02x\n",
+-		shost->host_no,
+-		device->bus, device->target, (u32)scmd->device->lun,
++		ctrl_info->scsi_host->host_no,
++		device->bus, device->target, lun,
+ 		scmd->cmd_len > 0 ? scmd->cmnd[0] : 0xff);
+ 
+ 	pqi_check_ctrl_health(ctrl_info);
+ 	if (pqi_ctrl_offline(ctrl_info))
+ 		rc = FAILED;
+ 	else
+-		rc = pqi_device_reset(ctrl_info, scmd);
++		rc = pqi_device_reset(ctrl_info, device, lun);
+ 
+ 	dev_err(&ctrl_info->pci_dev->dev,
+-		"reset of scsi %d:%d:%d:%d: %s\n",
+-		shost->host_no, device->bus, device->target, (u32)scmd->device->lun,
++		"reset of scsi %d:%d:%d:%u: %s\n",
++		ctrl_info->scsi_host->host_no, device->bus, device->target, lun,
+ 		rc == SUCCESS ? "SUCCESS" : "FAILED");
+ 
+ 	mutex_unlock(&ctrl_info->lun_reset_mutex);
+@@ -6395,6 +6427,74 @@ static int pqi_eh_device_reset_handler(struct scsi_cmnd *scmd)
+ 	return rc;
+ }
+ 
++static int pqi_eh_device_reset_handler(struct scsi_cmnd *scmd)
++{
++	struct Scsi_Host *shost;
++	struct pqi_ctrl_info *ctrl_info;
++	struct pqi_scsi_dev *device;
++	u8 scsi_opcode;
++
++	shost = scmd->device->host;
++	ctrl_info = shost_to_hba(shost);
++	device = scmd->device->hostdata;
++	scsi_opcode = scmd->cmd_len > 0 ? scmd->cmnd[0] : 0xff;
++
++	return pqi_device_reset_handler(ctrl_info, device, (u8)scmd->device->lun, scmd, scsi_opcode);
++}
++
++static void pqi_tmf_worker(struct work_struct *work)
++{
++	struct pqi_tmf_work *tmf_work;
++	struct scsi_cmnd *scmd;
++
++	tmf_work = container_of(work, struct pqi_tmf_work, work_struct);
++	scmd = (struct scsi_cmnd *)xchg(&tmf_work->scmd, NULL);
++
++	pqi_device_reset_handler(tmf_work->ctrl_info, tmf_work->device, tmf_work->lun, scmd, tmf_work->scsi_opcode);
++}
++
++static int pqi_eh_abort_handler(struct scsi_cmnd *scmd)
++{
++	struct Scsi_Host *shost;
++	struct pqi_ctrl_info *ctrl_info;
++	struct pqi_scsi_dev *device;
++	struct pqi_tmf_work *tmf_work;
++	DECLARE_COMPLETION_ONSTACK(wait);
++
++	shost = scmd->device->host;
++	ctrl_info = shost_to_hba(shost);
++
++	dev_err(&ctrl_info->pci_dev->dev,
++		"attempting TASK ABORT on SCSI cmd at %p\n", scmd);
++
++	if (cmpxchg(&scmd->host_scribble, PQI_NO_COMPLETION, (void *)&wait) == NULL) {
++		dev_err(&ctrl_info->pci_dev->dev,
++			"SCSI cmd at %p already completed\n", scmd);
++		scmd->result = DID_RESET << 16;
++		goto out;
++	}
++
++	device = scmd->device->hostdata;
++	tmf_work = &device->tmf_work[scmd->device->lun];
++
++	if (cmpxchg(&tmf_work->scmd, NULL, scmd) == NULL) {
++		tmf_work->ctrl_info = ctrl_info;
++		tmf_work->device = device;
++		tmf_work->lun = (u8)scmd->device->lun;
++		tmf_work->scsi_opcode = scmd->cmd_len > 0 ? scmd->cmnd[0] : 0xff;
++		schedule_work(&tmf_work->work_struct);
++	}
++
++	wait_for_completion(&wait);
++
++	dev_err(&ctrl_info->pci_dev->dev,
++		"TASK ABORT on SCSI cmd at %p: SUCCESS\n", scmd);
++
++out:
++
++	return SUCCESS;
++}
++
+ static int pqi_slave_alloc(struct scsi_device *sdev)
+ {
+ 	struct pqi_scsi_dev *device;
+@@ -7398,6 +7498,7 @@ static struct scsi_host_template pqi_driver_template = {
+ 	.scan_finished = pqi_scan_finished,
+ 	.this_id = -1,
+ 	.eh_device_reset_handler = pqi_eh_device_reset_handler,
++	.eh_abort_handler = pqi_eh_abort_handler,
+ 	.ioctl = pqi_ioctl,
+ 	.slave_alloc = pqi_slave_alloc,
+ 	.slave_configure = pqi_slave_configure,
 -- 
 2.51.0
 
