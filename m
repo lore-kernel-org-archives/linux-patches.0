@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 340C532FA3D;
-	Fri,  9 Jan 2026 11:52:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535B630FF1D;
+	Fri,  9 Jan 2026 11:52:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959573; cv=none; b=XdhcqWkYZ6EY0CAKn7SJVz2sI2oxeMFcL0gRjryWAUZU4tijSw53b5EIT1YuN56zHdBH1CaDLVFflXGhw+IksO6sKZNP8DX8WKEJWg7Xp0nUIpIjv3/KfcHZFiUHctnQsVeCx4WbjSVjmLT2kGqMNOYMPxgdghWF6OGgjEG/fVc=
+	t=1767959576; cv=none; b=ZS3WNPtVMqJ7WcHTbRRCb5u/0Lpu/7+sadNEGP8OZhs1MO8MrC4He4vrUNembtf3F8ealqu+PwxUOj8ZZGHTSDl7CNFzn3EVv8lIbppr8ToV8i4zGbRn5BM8/7Tlu5bh1Ml3e75q+zYi9K83VR1SsckQy/hmKq9t/H2kp4C47f4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959573; c=relaxed/simple;
-	bh=yrhltUoT1a8VSsL82cJmw4fAcAUTbFBqnaJFAC4Ki8M=;
+	s=arc-20240116; t=1767959576; c=relaxed/simple;
+	bh=+QJRyRf5pU5zmU2vuu6qnYGrY6ufcbmcEv8p7RMQDK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sPK6x4BSS+lpVEo3ngvoABTWGMQSxiJ1/r53h/VwLLfOzIeXbjrFFp3ABfFe/FzOl/SsRFwhY2KihxGa3gJl7NY5O3gPq6/RHLNdfKaYuuQUPsXKjL7PzZixz2H5aadniRNnHzhvZvl4NUkyAvdEaAuirlArHloc2Dfy6xBRTqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GB+CA48D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cezDok6i/En9JvDHFODQoO8sa2JU9jGKtvwErZbE3/7HorjWsfcuM5ePsFoYVvlHaHZALOQ2FQVyg7gqGjQ6Fui8xFdqOLua5z1c7Wl1LzR3C+CeLI/tb+/3HbMxDt2SnUWyaRjPwye6AHMY4O+XDL9IZFmJwqrS5K+yhRAFUiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DhJXvwDN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GB+CA48D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5426C4CEF1;
-	Fri,  9 Jan 2026 11:52:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DhJXvwDN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9173EC4CEF1;
+	Fri,  9 Jan 2026 11:52:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959573;
-	bh=yrhltUoT1a8VSsL82cJmw4fAcAUTbFBqnaJFAC4Ki8M=;
+	s=korg; t=1767959576;
+	bh=+QJRyRf5pU5zmU2vuu6qnYGrY6ufcbmcEv8p7RMQDK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GB+CA48DNGZNH2iRdwkvFlKV5gQJ06Cbrzik3b4cNBaT8CCr9AzF1FvY5KUnmFv85
-	 2v4Abg+Mt6ZLAceSETL0dJcYQnzHr7aPTPH59VjPpjXtI6lzWOUxtvqiI76Rcbmq+S
-	 HTheQxebC9YYIVfI71ap9FDCNc/+RC2gXOqH4VOM=
+	b=DhJXvwDNXy/0yw05/mndNMmq/UPTjul3NIl2Z/apHwHWsXcLr99G/BnNs7UgSLPnh
+	 usZRFGlnSVR+/qTkAj1P+pKIraZf9t/JRhcKVc4BwicAgJYWEY1xJ5xRYQvkQFVgsG
+	 nWyHY8ybLeocglpvd2MdqKAI4s+bPwXs7I6m9H10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Tengda Wu <wutengda@huaweicloud.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 072/737] inet: Avoid ehash lookup race in inet_ehash_insert()
-Date: Fri,  9 Jan 2026 12:33:31 +0100
-Message-ID: <20260109112136.705031527@linuxfoundation.org>
+Subject: [PATCH 6.6 099/737] x86/dumpstack: Prevent KASAN false positive warnings in __show_regs()
+Date: Fri,  9 Jan 2026 12:33:58 +0100
+Message-ID: <20260109112137.726237485@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -54,92 +53,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+From: Tengda Wu <wutengda@huaweicloud.com>
 
-[ Upstream commit 1532ed0d0753c83e72595f785f82b48c28bbe5dc ]
+[ Upstream commit ced37e9ceae50e4cb6cd058963bd315ec9afa651 ]
 
-Since ehash lookups are lockless, if one CPU performs a lookup while
-another concurrently deletes and inserts (removing reqsk and inserting sk),
-the lookup may fail to find the socket, an RST may be sent.
+When triggering a stack dump via sysrq (echo t > /proc/sysrq-trigger),
+KASAN may report false-positive out-of-bounds access:
 
-The call trace map is drawn as follows:
-   CPU 0                           CPU 1
-   -----                           -----
-				inet_ehash_insert()
-                                spin_lock()
-                                sk_nulls_del_node_init_rcu(osk)
-__inet_lookup_established()
-	(lookup failed)
-                                __sk_nulls_add_node_rcu(sk, list)
-                                spin_unlock()
+  BUG: KASAN: out-of-bounds in __show_regs+0x4b/0x340
+  Call Trace:
+    dump_stack_lvl
+    print_address_description.constprop.0
+    print_report
+    __show_regs
+    show_trace_log_lvl
+    sched_show_task
+    show_state_filter
+    sysrq_handle_showstate
+    __handle_sysrq
+    write_sysrq_trigger
+    proc_reg_write
+    vfs_write
+    ksys_write
+    do_syscall_64
+    entry_SYSCALL_64_after_hwframe
 
-As both deletion and insertion operate on the same ehash chain, this patch
-introduces a new sk_nulls_replace_node_init_rcu() helper functions to
-implement atomic replacement.
+The issue occurs as follows:
 
-Fixes: 5e0724d027f0 ("tcp/dccp: fix hashdance race for passive sessions")
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20251015020236.431822-3-xuanqiang.luo@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  Task A (walk other tasks' stacks)           Task B (running)
+  1. echo t > /proc/sysrq-trigger
+  show_trace_log_lvl
+    regs = unwind_get_entry_regs()
+    show_regs_if_on_stack(regs)
+                                              2. The stack value pointed by
+                                                 `regs` keeps changing, and
+                                                 so are the tags in its
+                                                 KASAN shadow region.
+      __show_regs(regs)
+        regs->ax, regs->bx, ...
+          3. hit KASAN redzones, OOB
+
+When task A walks task B's stack without suspending it, the continuous changes
+in task B's stack (and corresponding KASAN shadow tags) may cause task A to
+hit KASAN redzones when accessing obsolete values on the stack, resulting in
+false positive reports.
+
+Simply stopping the task before unwinding is not a viable fix, as it would
+alter the state intended to inspect. This is especially true for diagnosing
+misbehaving tasks (e.g., in a hard lockup), where stopping might fail or hide
+the root cause by changing the call stack.
+
+Therefore, fix this by disabling KASAN checks during asynchronous stack
+unwinding, which is identified when the unwinding task does not match the
+current task (task != current).
+
+  [ bp: Align arguments on function's opening brace. ]
+
+Fixes: 3b3fa11bc700 ("x86/dumpstack: Print any pt_regs found on the stack")
+Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Link: https://patch.msgid.link/all/20251023090632.269121-1-wutengda@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h         | 13 +++++++++++++
- net/ipv4/inet_hashtables.c |  8 ++++++--
- 2 files changed, 19 insertions(+), 2 deletions(-)
+ arch/x86/kernel/dumpstack.c | 23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index f8e029cc48ccc..d516ed8050084 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -825,6 +825,19 @@ static inline bool sk_nulls_del_node_init_rcu(struct sock *sk)
- 	return rc;
+diff --git a/arch/x86/kernel/dumpstack.c b/arch/x86/kernel/dumpstack.c
+index 52dc5839d1e8e..0667d947d82bb 100644
+--- a/arch/x86/kernel/dumpstack.c
++++ b/arch/x86/kernel/dumpstack.c
+@@ -183,8 +183,8 @@ static void show_regs_if_on_stack(struct stack_info *info, struct pt_regs *regs,
+  * in false positive reports. Disable instrumentation to avoid those.
+  */
+ __no_kmsan_checks
+-static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
+-			unsigned long *stack, const char *log_lvl)
++static void __show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
++				 unsigned long *stack, const char *log_lvl)
+ {
+ 	struct unwind_state state;
+ 	struct stack_info stack_info = {0};
+@@ -305,6 +305,25 @@ static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
+ 	}
  }
  
-+static inline bool sk_nulls_replace_node_init_rcu(struct sock *old,
-+						  struct sock *new)
++static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
++			       unsigned long *stack, const char *log_lvl)
 +{
-+	if (sk_hashed(old)) {
-+		hlist_nulls_replace_init_rcu(&old->sk_nulls_node,
-+					     &new->sk_nulls_node);
-+		__sock_put(old);
-+		return true;
-+	}
++	/*
++	 * Disable KASAN to avoid false positives during walking another
++	 * task's stacks, as values on these stacks may change concurrently
++	 * with task execution.
++	 */
++	bool disable_kasan = task && task != current;
 +
-+	return false;
++	if (disable_kasan)
++		kasan_disable_current();
++
++	__show_trace_log_lvl(task, regs, stack, log_lvl);
++
++	if (disable_kasan)
++		kasan_enable_current();
 +}
 +
- static inline void __sk_add_node(struct sock *sk, struct hlist_head *list)
+ void show_stack(struct task_struct *task, unsigned long *sp,
+ 		       const char *loglvl)
  {
- 	hlist_add_head(&sk->sk_node, list);
-diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
-index 60e81f6b1c6d4..7292f70176251 100644
---- a/net/ipv4/inet_hashtables.c
-+++ b/net/ipv4/inet_hashtables.c
-@@ -676,8 +676,11 @@ bool inet_ehash_insert(struct sock *sk, struct sock *osk, bool *found_dup_sk)
- 	spin_lock(lock);
- 	if (osk) {
- 		WARN_ON_ONCE(sk->sk_hash != osk->sk_hash);
--		ret = sk_nulls_del_node_init_rcu(osk);
--	} else if (found_dup_sk) {
-+		ret = sk_nulls_replace_node_init_rcu(osk, sk);
-+		goto unlock;
-+	}
-+
-+	if (found_dup_sk) {
- 		*found_dup_sk = inet_ehash_lookup_by_sk(sk, list);
- 		if (*found_dup_sk)
- 			ret = false;
-@@ -686,6 +689,7 @@ bool inet_ehash_insert(struct sock *sk, struct sock *osk, bool *found_dup_sk)
- 	if (ret)
- 		__sk_nulls_add_node_rcu(sk, list);
- 
-+unlock:
- 	spin_unlock(lock);
- 
- 	return ret;
 -- 
 2.51.0
 
