@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A84334C28;
-	Fri,  9 Jan 2026 11:44:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1E1359708;
+	Fri,  9 Jan 2026 11:44:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959059; cv=none; b=jew99120ZyooEI5ocZ+mx7CB2kZWfGghjGUXxMvdqQjFc0H+0MmVCxJt6FUPghX+y5mSBc/+DEuuSA4dYo6BomEn5AyFTfvpotJgxwTf+akABb0Sb6yBZb4614LkM2gMxW5vgcDXrfUXXllUtXhKaLDw0i1sJbrbMT2lAK/4iW0=
+	t=1767959061; cv=none; b=h+nPP+b1f97pux8CKi2bdBxCa3kwkmLZUuPWy+G9Gs8HLnvUbpJ5P4iaR5oGjtognQr1lDGFtDOX0/1kaDvGudw3p7RLUxExm3nJGA7VrZKnrMd2usS8Lh9td4T33eDtuTQxtHBf7xy97NFQzF2qswYevig9Cnafki2MhFPEico=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959059; c=relaxed/simple;
-	bh=zKDy/DMTPXYm9TwOv+xDrJUyXcx7Q0W4UzuJQ2rwNl4=;
+	s=arc-20240116; t=1767959061; c=relaxed/simple;
+	bh=+SNpbcqt/+qicvzhUBMJ0EhPUkwEKXHwg4Pp7LnKsms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AlAG0xEil5l8cO6Nuwee7hi3CZTNV3FUVC5RLcbkmpZ0honxIOyl5Rwhp5hBZVmDMStve7jQ7De59BbRtwlQFAgrDdBhmfPo+y8ZMSNqcI45O6KfSLfjzIpMvj9haTX89H82eYNORaDrxog50fqXTQ8w8/hUZTMfA/evzGZjs30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VT4X/O6w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i4m5BARgLIn6fmGz9olc1UNj2F3a2qJhZAV7J49hYtmNyEU7JYhbwIQc8zjUFf7glZdIRfVz99/ZyE5ZIrCkk67kEgo58SUR4dP9ELjTvqFowPXML9bgAhezTOICaV1wYg70I83G7r77Tb6hE+l/iGJgQwH5o+pMX81csFHHtqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WGysL5/C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VT4X/O6w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 552A5C16AAE;
-	Fri,  9 Jan 2026 11:44:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WGysL5/C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21FD3C4CEF1;
+	Fri,  9 Jan 2026 11:44:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959058;
-	bh=zKDy/DMTPXYm9TwOv+xDrJUyXcx7Q0W4UzuJQ2rwNl4=;
+	s=korg; t=1767959061;
+	bh=+SNpbcqt/+qicvzhUBMJ0EhPUkwEKXHwg4Pp7LnKsms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VT4X/O6wHJlz7NDQ5IiHNoh0jLLIAJcKlW5QmVVKKThtV+z60nS95omS4tgaAPa/R
-	 qHZSjmFSM1l2TGH90HY2l/VIzCeXrwpEbh5r0IVLsXSiRMQ5SfZybWdSjdLTwm/X7+
-	 /5ngraUk1VBBZ86CagBmNwMxuXzPRz626lRFBJ+s=
+	b=WGysL5/CIbnVFLXvOJFNgZLtPBFoJvLqo3MRBBhAeeZrW83qgL50lSaLBH39t+LhV
+	 p3J6IxkL1yTO032GrDgEsFN8fANAM1yN9jO9axaQLNLiJEEuHjR9DCgWI3PlTrO+LQ
+	 fJw8gda0HGyB7AKmE2uoUzEeeWFIEkYWfikxyzBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0ff6b771b4f7a5bce83b@syzkaller.appspotmail.com,
+	syzkaller <syzkaller@googlegroups.com>,
+	yan kang <kangyan91@outlook.com>,
+	yue sun <samsun1006219@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
 	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 01/16] mptcp: fallback earlier on simult connection
-Date: Fri,  9 Jan 2026 12:43:42 +0100
-Message-ID: <20260109111951.472996847@linuxfoundation.org>
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Subject: [PATCH 6.12 10/16] net: Remove RTNL dance for SIOCBRADDIF and SIOCBRDELIF.
+Date: Fri,  9 Jan 2026 12:43:51 +0100
+Message-ID: <20260109111951.812919085@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109111951.415522519@linuxfoundation.org>
 References: <20260109111951.415522519@linuxfoundation.org>
@@ -52,151 +57,297 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-[ Upstream commit 71154bbe49423128c1c8577b6576de1ed6836830 ]
+commit ed3ba9b6e280e14cc3148c1b226ba453f02fa76c upstream.
 
-Syzkaller reports a simult-connect race leading to inconsistent fallback
-status:
+SIOCBRDELIF is passed to dev_ioctl() first and later forwarded to
+br_ioctl_call(), which causes unnecessary RTNL dance and the splat
+below [0] under RTNL pressure.
 
-  WARNING: CPU: 3 PID: 33 at net/mptcp/subflow.c:1515 subflow_data_ready+0x40b/0x7c0 net/mptcp/subflow.c:1515
-  Modules linked in:
-  CPU: 3 UID: 0 PID: 33 Comm: ksoftirqd/3 Not tainted syzkaller #0 PREEMPT(full)
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
-  RIP: 0010:subflow_data_ready+0x40b/0x7c0 net/mptcp/subflow.c:1515
-  Code: 89 ee e8 78 61 3c f6 40 84 ed 75 21 e8 8e 66 3c f6 44 89 fe bf 07 00 00 00 e8 c1 61 3c f6 41 83 ff 07 74 09 e8 76 66 3c f6 90 <0f> 0b 90 e8 6d 66 3c f6 48 89 df e8 e5 ad ff ff 31 ff 89 c5 89 c6
-  RSP: 0018:ffffc900006cf338 EFLAGS: 00010246
-  RAX: 0000000000000000 RBX: ffff888031acd100 RCX: ffffffff8b7f2abf
-  RDX: ffff88801e6ea440 RSI: ffffffff8b7f2aca RDI: 0000000000000005
-  RBP: 0000000000000000 R08: 0000000000000005 R09: 0000000000000007
-  R10: 0000000000000004 R11: 0000000000002c10 R12: ffff88802ba69900
-  R13: 1ffff920000d9e67 R14: ffff888046f81800 R15: 0000000000000004
-  FS:  0000000000000000(0000) GS:ffff8880d69bc000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 0000560fc0ca1670 CR3: 0000000032c3a000 CR4: 0000000000352ef0
-  Call Trace:
-   <TASK>
-   tcp_data_queue+0x13b0/0x4f90 net/ipv4/tcp_input.c:5197
-   tcp_rcv_state_process+0xfdf/0x4ec0 net/ipv4/tcp_input.c:6922
-   tcp_v6_do_rcv+0x492/0x1740 net/ipv6/tcp_ipv6.c:1672
-   tcp_v6_rcv+0x2976/0x41e0 net/ipv6/tcp_ipv6.c:1918
-   ip6_protocol_deliver_rcu+0x188/0x1520 net/ipv6/ip6_input.c:438
-   ip6_input_finish+0x1e4/0x4b0 net/ipv6/ip6_input.c:489
-   NF_HOOK include/linux/netfilter.h:318 [inline]
-   NF_HOOK include/linux/netfilter.h:312 [inline]
-   ip6_input+0x105/0x2f0 net/ipv6/ip6_input.c:500
-   dst_input include/net/dst.h:471 [inline]
-   ip6_rcv_finish net/ipv6/ip6_input.c:79 [inline]
-   NF_HOOK include/linux/netfilter.h:318 [inline]
-   NF_HOOK include/linux/netfilter.h:312 [inline]
-   ipv6_rcv+0x264/0x650 net/ipv6/ip6_input.c:311
-   __netif_receive_skb_one_core+0x12d/0x1e0 net/core/dev.c:5979
-   __netif_receive_skb+0x1d/0x160 net/core/dev.c:6092
-   process_backlog+0x442/0x15e0 net/core/dev.c:6444
-   __napi_poll.constprop.0+0xba/0x550 net/core/dev.c:7494
-   napi_poll net/core/dev.c:7557 [inline]
-   net_rx_action+0xa9f/0xfe0 net/core/dev.c:7684
-   handle_softirqs+0x216/0x8e0 kernel/softirq.c:579
-   run_ksoftirqd kernel/softirq.c:968 [inline]
-   run_ksoftirqd+0x3a/0x60 kernel/softirq.c:960
-   smpboot_thread_fn+0x3f7/0xae0 kernel/smpboot.c:160
-   kthread+0x3c2/0x780 kernel/kthread.c:463
-   ret_from_fork+0x5d7/0x6f0 arch/x86/kernel/process.c:148
-   ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
-   </TASK>
+Let's say Thread A is trying to detach a device from a bridge and
+Thread B is trying to remove the bridge.
 
-The TCP subflow can process the simult-connect syn-ack packet after
-transitioning to TCP_FIN1 state, bypassing the MPTCP fallback check,
-as the sk_state_change() callback is not invoked for * -> FIN_WAIT1
-transitions.
+In dev_ioctl(), Thread A bumps the bridge device's refcnt by
+netdev_hold() and releases RTNL because the following br_ioctl_call()
+also re-acquires RTNL.
 
-That will move the msk socket to an inconsistent status and the next
-incoming data will hit the reported splat.
+In the race window, Thread B could acquire RTNL and try to remove
+the bridge device.  Then, rtnl_unlock() by Thread B will release RTNL
+and wait for netdev_put() by Thread A.
 
-Close the race moving the simult-fallback check at the earliest possible
-stage - that is at syn-ack generation time.
+Thread A, however, must hold RTNL after the unlock in dev_ifsioc(),
+which may take long under RTNL pressure, resulting in the splat by
+Thread B.
 
-About the fixes tags: [2] was supposed to also fix this issue introduced
-by [3]. [1] is required as a dependence: it was not explicitly marked as
-a fix, but it is one and it has already been backported before [3]. In
-other words, this commit should be backported up to [3], including [2]
-and [1] if that's not already there.
+  Thread A (SIOCBRDELIF)           Thread B (SIOCBRDELBR)
+  ----------------------           ----------------------
+  sock_ioctl                       sock_ioctl
+  `- sock_do_ioctl                 `- br_ioctl_call
+     `- dev_ioctl                     `- br_ioctl_stub
+        |- rtnl_lock                     |
+        |- dev_ifsioc                    '
+        '  |- dev = __dev_get_by_name(...)
+           |- netdev_hold(dev, ...)      .
+       /   |- rtnl_unlock  ------.       |
+       |   |- br_ioctl_call       `--->  |- rtnl_lock
+  Race |   |  `- br_ioctl_stub           |- br_del_bridge
+  Window   |     |                       |  |- dev = __dev_get_by_name(...)
+       |   |     |  May take long        |  `- br_dev_delete(dev, ...)
+       |   |     |  under RTNL pressure  |     `- unregister_netdevice_queue(dev, ...)
+       |   |     |               |       `- rtnl_unlock
+       \   |     |- rtnl_lock  <-'          `- netdev_run_todo
+           |     |- ...                        `- netdev_run_todo
+           |     `- rtnl_unlock                   |- __rtnl_unlock
+           |                                      |- netdev_wait_allrefs_any
+           |- netdev_put(dev, ...)  <----------------'
+                                                Wait refcnt decrement
+                                                and log splat below
 
-Fixes: 23e89e8ee7be ("tcp: Don't drop SYN+ACK for simultaneous connect().") [1]
-Fixes: 4fd19a307016 ("mptcp: fix inconsistent state on fastopen race") [2]
-Fixes: 1e777f39b4d7 ("mptcp: add MSG_FASTOPEN sendmsg flag support") [3]
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+0ff6b771b4f7a5bce83b@syzkaller.appspotmail.com
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/586
+To avoid blocking SIOCBRDELBR unnecessarily, let's not call
+dev_ioctl() for SIOCBRADDIF and SIOCBRDELIF.
+
+In the dev_ioctl() path, we do the following:
+
+  1. Copy struct ifreq by get_user_ifreq in sock_do_ioctl()
+  2. Check CAP_NET_ADMIN in dev_ioctl()
+  3. Call dev_load() in dev_ioctl()
+  4. Fetch the master dev from ifr.ifr_name in dev_ifsioc()
+
+3. can be done by request_module() in br_ioctl_call(), so we move
+1., 2., and 4. to br_ioctl_stub().
+
+Note that 2. is also checked later in add_del_if(), but it's better
+performed before RTNL.
+
+SIOCBRADDIF and SIOCBRDELIF have been processed in dev_ioctl() since
+the pre-git era, and there seems to be no specific reason to process
+them there.
+
+[0]:
+unregister_netdevice: waiting for wpan3 to become free. Usage count = 2
+ref_tracker: wpan3@ffff8880662d8608 has 1/1 users at
+     __netdev_tracker_alloc include/linux/netdevice.h:4282 [inline]
+     netdev_hold include/linux/netdevice.h:4311 [inline]
+     dev_ifsioc+0xc6a/0x1160 net/core/dev_ioctl.c:624
+     dev_ioctl+0x255/0x10c0 net/core/dev_ioctl.c:826
+     sock_do_ioctl+0x1ca/0x260 net/socket.c:1213
+     sock_ioctl+0x23a/0x6c0 net/socket.c:1318
+     vfs_ioctl fs/ioctl.c:51 [inline]
+     __do_sys_ioctl fs/ioctl.c:906 [inline]
+     __se_sys_ioctl fs/ioctl.c:892 [inline]
+     __x64_sys_ioctl+0x1a4/0x210 fs/ioctl.c:892
+     do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+     do_syscall_64+0xcb/0x250 arch/x86/entry/common.c:83
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Fixes: 893b19587534 ("net: bridge: fix ioctl locking")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Reported-by: yan kang <kangyan91@outlook.com>
+Reported-by: yue sun <samsun1006219@gmail.com>
+Closes: https://lore.kernel.org/netdev/SY8P300MB0421225D54EB92762AE8F0F2A1D32@SY8P300MB0421.AUSP300.PROD.OUTLOOK.COM/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20250316192851.19781-1-kuniyu@amazon.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251212-net-mptcp-subflow_data_ready-warn-v1-1-d1f9fd1c36c8@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ adapted mptcp_try_fallback() call ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[cascardo: fixed conflict at dev_ifsioc]
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/options.c  |   10 ++++++++++
- net/mptcp/protocol.h |    6 ++----
- net/mptcp/subflow.c  |   10 +---------
- 3 files changed, 13 insertions(+), 13 deletions(-)
+ include/linux/if_bridge.h |    6 ++----
+ net/bridge/br_ioctl.c     |   36 +++++++++++++++++++++++++++++++++---
+ net/bridge/br_private.h   |    3 +--
+ net/core/dev_ioctl.c      |   16 ----------------
+ net/socket.c              |   19 +++++++++----------
+ 5 files changed, 45 insertions(+), 35 deletions(-)
 
---- a/net/mptcp/options.c
-+++ b/net/mptcp/options.c
-@@ -408,6 +408,16 @@ bool mptcp_syn_options(struct sock *sk,
- 	 */
- 	subflow->snd_isn = TCP_SKB_CB(skb)->end_seq;
- 	if (subflow->request_mptcp) {
-+		if (unlikely(subflow_simultaneous_connect(sk))) {
-+			WARN_ON_ONCE(!mptcp_try_fallback(sk));
-+
-+			/* Ensure mptcp_finish_connect() will not process the
-+			 * MPC handshake.
-+			 */
-+			subflow->request_mptcp = 0;
-+			return false;
-+		}
-+
- 		opts->suboptions = OPTION_MPTCP_MPC_SYN;
- 		opts->csum_reqd = mptcp_is_checksum_enabled(sock_net(sk));
- 		opts->allow_join_id0 = mptcp_allow_join_id0(sock_net(sk));
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -1283,10 +1283,8 @@ static inline bool subflow_simultaneous_
- {
- 	struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(sk);
+--- a/include/linux/if_bridge.h
++++ b/include/linux/if_bridge.h
+@@ -65,11 +65,9 @@ struct br_ip_list {
+ #define BR_DEFAULT_AGEING_TIME	(300 * HZ)
  
--	return (1 << sk->sk_state) &
--	       (TCPF_ESTABLISHED | TCPF_FIN_WAIT1 | TCPF_FIN_WAIT2 | TCPF_CLOSING) &&
--	       is_active_ssk(subflow) &&
--	       !subflow->conn_finished;
-+	/* Note that the sk state implies !subflow->conn_finished. */
-+	return sk->sk_state == TCP_SYN_RECV && is_active_ssk(subflow);
+ struct net_bridge;
+-void brioctl_set(int (*hook)(struct net *net, struct net_bridge *br,
+-			     unsigned int cmd, struct ifreq *ifr,
++void brioctl_set(int (*hook)(struct net *net, unsigned int cmd,
+ 			     void __user *uarg));
+-int br_ioctl_call(struct net *net, struct net_bridge *br, unsigned int cmd,
+-		  struct ifreq *ifr, void __user *uarg);
++int br_ioctl_call(struct net *net, unsigned int cmd, void __user *uarg);
+ 
+ #if IS_ENABLED(CONFIG_BRIDGE) && IS_ENABLED(CONFIG_BRIDGE_IGMP_SNOOPING)
+ int br_multicast_list_adjacent(struct net_device *dev,
+--- a/net/bridge/br_ioctl.c
++++ b/net/bridge/br_ioctl.c
+@@ -394,10 +394,26 @@ static int old_deviceless(struct net *ne
+ 	return -EOPNOTSUPP;
  }
  
- #ifdef CONFIG_SYN_COOKIES
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -1848,18 +1848,10 @@ static void subflow_state_change(struct
+-int br_ioctl_stub(struct net *net, struct net_bridge *br, unsigned int cmd,
+-		  struct ifreq *ifr, void __user *uarg)
++int br_ioctl_stub(struct net *net, unsigned int cmd, void __user *uarg)
  {
- 	struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(sk);
- 	struct sock *parent = subflow->conn;
--	struct mptcp_sock *msk;
-+	struct mptcp_sock *msk = mptcp_sk(parent);
+ 	int ret = -EOPNOTSUPP;
++	struct ifreq ifr;
++
++	if (cmd == SIOCBRADDIF || cmd == SIOCBRDELIF) {
++		void __user *data;
++		char *colon;
++
++		if (!ns_capable(net->user_ns, CAP_NET_ADMIN))
++			return -EPERM;
++
++		if (get_user_ifreq(&ifr, &data, uarg))
++			return -EFAULT;
++
++		ifr.ifr_name[IFNAMSIZ - 1] = 0;
++		colon = strchr(ifr.ifr_name, ':');
++		if (colon)
++			*colon = 0;
++	}
  
- 	__subflow_state_change(sk);
+ 	rtnl_lock();
  
--	msk = mptcp_sk(parent);
--	if (subflow_simultaneous_connect(sk)) {
--		WARN_ON_ONCE(!mptcp_try_fallback(sk));
--		pr_fallback(msk);
--		subflow->conn_finished = 1;
--		mptcp_propagate_state(parent, sk, subflow, NULL);
--	}
+@@ -430,7 +446,21 @@ int br_ioctl_stub(struct net *net, struc
+ 		break;
+ 	case SIOCBRADDIF:
+ 	case SIOCBRDELIF:
+-		ret = add_del_if(br, ifr->ifr_ifindex, cmd == SIOCBRADDIF);
++	{
++		struct net_device *dev;
++
++		dev = __dev_get_by_name(net, ifr.ifr_name);
++		if (!dev || !netif_device_present(dev)) {
++			ret = -ENODEV;
++			break;
++		}
++		if (!netif_is_bridge_master(dev)) {
++			ret = -EOPNOTSUPP;
++			break;
++		}
++
++		ret = add_del_if(netdev_priv(dev), ifr.ifr_ifindex, cmd == SIOCBRADDIF);
++	}
+ 		break;
+ 	}
+ 
+--- a/net/bridge/br_private.h
++++ b/net/bridge/br_private.h
+@@ -953,8 +953,7 @@ br_port_get_check_rtnl(const struct net_
+ /* br_ioctl.c */
+ int br_dev_siocdevprivate(struct net_device *dev, struct ifreq *rq,
+ 			  void __user *data, int cmd);
+-int br_ioctl_stub(struct net *net, struct net_bridge *br, unsigned int cmd,
+-		  struct ifreq *ifr, void __user *uarg);
++int br_ioctl_stub(struct net *net, unsigned int cmd, void __user *uarg);
+ 
+ /* br_multicast.c */
+ #ifdef CONFIG_BRIDGE_IGMP_SNOOPING
+--- a/net/core/dev_ioctl.c
++++ b/net/core/dev_ioctl.c
+@@ -514,7 +514,6 @@ static int dev_ifsioc(struct net *net, s
+ 	int err;
+ 	struct net_device *dev = __dev_get_by_name(net, ifr->ifr_name);
+ 	const struct net_device_ops *ops;
+-	netdevice_tracker dev_tracker;
+ 
+ 	if (!dev)
+ 		return -ENODEV;
+@@ -577,19 +576,6 @@ static int dev_ifsioc(struct net *net, s
+ 	case SIOCWANDEV:
+ 		return dev_siocwandev(dev, &ifr->ifr_settings);
+ 
+-	case SIOCBRADDIF:
+-	case SIOCBRDELIF:
+-		if (!netif_device_present(dev))
+-			return -ENODEV;
+-		if (!netif_is_bridge_master(dev))
+-			return -EOPNOTSUPP;
+-		netdev_hold(dev, &dev_tracker, GFP_KERNEL);
+-		rtnl_unlock();
+-		err = br_ioctl_call(net, netdev_priv(dev), cmd, ifr, NULL);
+-		netdev_put(dev, &dev_tracker);
+-		rtnl_lock();
+-		return err;
 -
- 	/* as recvmsg() does not acquire the subflow socket for ssk selection
- 	 * a fin packet carrying a DSS can be unnoticed if we don't trigger
- 	 * the data available machinery here.
+ 	case SIOCDEVPRIVATE ... SIOCDEVPRIVATE + 15:
+ 		return dev_siocdevprivate(dev, ifr, data, cmd);
+ 
+@@ -770,8 +756,6 @@ int dev_ioctl(struct net *net, unsigned
+ 	case SIOCBONDRELEASE:
+ 	case SIOCBONDSETHWADDR:
+ 	case SIOCBONDCHANGEACTIVE:
+-	case SIOCBRADDIF:
+-	case SIOCBRDELIF:
+ 	case SIOCSHWTSTAMP:
+ 		if (!ns_capable(net->user_ns, CAP_NET_ADMIN))
+ 			return -EPERM;
+--- a/net/socket.c
++++ b/net/socket.c
+@@ -1173,12 +1173,10 @@ static ssize_t sock_write_iter(struct ki
+  */
+ 
+ static DEFINE_MUTEX(br_ioctl_mutex);
+-static int (*br_ioctl_hook)(struct net *net, struct net_bridge *br,
+-			    unsigned int cmd, struct ifreq *ifr,
++static int (*br_ioctl_hook)(struct net *net, unsigned int cmd,
+ 			    void __user *uarg);
+ 
+-void brioctl_set(int (*hook)(struct net *net, struct net_bridge *br,
+-			     unsigned int cmd, struct ifreq *ifr,
++void brioctl_set(int (*hook)(struct net *net, unsigned int cmd,
+ 			     void __user *uarg))
+ {
+ 	mutex_lock(&br_ioctl_mutex);
+@@ -1187,8 +1185,7 @@ void brioctl_set(int (*hook)(struct net
+ }
+ EXPORT_SYMBOL(brioctl_set);
+ 
+-int br_ioctl_call(struct net *net, struct net_bridge *br, unsigned int cmd,
+-		  struct ifreq *ifr, void __user *uarg)
++int br_ioctl_call(struct net *net, unsigned int cmd, void __user *uarg)
+ {
+ 	int err = -ENOPKG;
+ 
+@@ -1197,7 +1194,7 @@ int br_ioctl_call(struct net *net, struc
+ 
+ 	mutex_lock(&br_ioctl_mutex);
+ 	if (br_ioctl_hook)
+-		err = br_ioctl_hook(net, br, cmd, ifr, uarg);
++		err = br_ioctl_hook(net, cmd, uarg);
+ 	mutex_unlock(&br_ioctl_mutex);
+ 
+ 	return err;
+@@ -1297,7 +1294,9 @@ static long sock_ioctl(struct file *file
+ 		case SIOCSIFBR:
+ 		case SIOCBRADDBR:
+ 		case SIOCBRDELBR:
+-			err = br_ioctl_call(net, NULL, cmd, NULL, argp);
++		case SIOCBRADDIF:
++		case SIOCBRDELIF:
++			err = br_ioctl_call(net, cmd, argp);
+ 			break;
+ 		case SIOCGIFVLAN:
+ 		case SIOCSIFVLAN:
+@@ -3466,6 +3465,8 @@ static int compat_sock_ioctl_trans(struc
+ 	case SIOCGPGRP:
+ 	case SIOCBRADDBR:
+ 	case SIOCBRDELBR:
++	case SIOCBRADDIF:
++	case SIOCBRDELIF:
+ 	case SIOCGIFVLAN:
+ 	case SIOCSIFVLAN:
+ 	case SIOCGSKNS:
+@@ -3505,8 +3506,6 @@ static int compat_sock_ioctl_trans(struc
+ 	case SIOCGIFPFLAGS:
+ 	case SIOCGIFTXQLEN:
+ 	case SIOCSIFTXQLEN:
+-	case SIOCBRADDIF:
+-	case SIOCBRDELIF:
+ 	case SIOCGIFNAME:
+ 	case SIOCSIFNAME:
+ 	case SIOCGMIIPHY:
 
 
