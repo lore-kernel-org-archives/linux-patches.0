@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0316A35A92D;
-	Fri,  9 Jan 2026 12:07:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8CE61DE885;
+	Fri,  9 Jan 2026 12:07:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960460; cv=none; b=dVvIpZJVPFH6gqt8EHkyppnzXhaqEpWPOnyqjFGRKA6r1t/jQNAAfnvktynPB8kuHiK/Hb+OSwQ5/T2pqQbmND27XzX7zcuF7ZYsbAq26vvFF/iAlUe1ask7R5Yk1jhW3qRn/YBMlp1wL3eUuro+MYBMyFC5lWXkmkd26J+8g54=
+	t=1767960462; cv=none; b=Fo4nvrtL66ZAZkb0+sCHvhdQ3m591fddPghGn1Rv2UiHXTlLsYzZbVQdQqR/3bZVYPEHduWpsVcCkGsJ9lcd9//L1u3DUaAE4/e//OPHAJcGnSwSe840iqW1M482vnoArJvrhqTOLArheVZWbTcOKud0HOe0Y2uYGQdhmu5tIMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960460; c=relaxed/simple;
-	bh=oogJmf3jWsoZP8sIXJiCZghc6mUFps+AToIMedNNtEI=;
+	s=arc-20240116; t=1767960462; c=relaxed/simple;
+	bh=JBfQUKgKGEewf3nLVuVPN1JydGDdSfkdXejIaHzrbZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=puxcQn8aC8kTTJ3zFfIynL4X28rzzhKePZ3CRJ8c3Ui+1asDoFJpcBGNAOgByGCbBOyy1RADFDbI26IVPoMHeiTvH9MTkWv6HyOEzicS5LQzHc+LFl5Y6F4h4bB7QV8uVEDn0+xQ70/0SDXHKruI0+blW67sRMe3OEa4UyzsDNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y7lU5Xtp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O9czE+XMa5J3/UZ4be/H3s4hWQQXzjoCtkwhfrXNDv9wwzT6wnj1iSjAg4LbMrW55CcaVbt6KVNVRhW0zCWh48JFDtUya4PGpdADjc2pzh/q+3HAwFN7dE0a98fxf+xtgvv1w1SEW19Ae0sjHWMkhn1Bnp12RLiQKujI+ahPMH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KzRMBxJS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y7lU5Xtp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 864E1C4CEF1;
-	Fri,  9 Jan 2026 12:07:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KzRMBxJS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A177C4CEF1;
+	Fri,  9 Jan 2026 12:07:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960459;
-	bh=oogJmf3jWsoZP8sIXJiCZghc6mUFps+AToIMedNNtEI=;
+	s=korg; t=1767960462;
+	bh=JBfQUKgKGEewf3nLVuVPN1JydGDdSfkdXejIaHzrbZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y7lU5XtpyZhesNPlO7Ea7jQAJ6kwmyQj4tEeOPim8ZEPs09S6+VOHjKXFIDeMQlRb
-	 Ep6XrQCv/3ryHtTVMdrPQoh5ysEjFIu8sv9YimpPJ7A/aM2SidqEX3SwDyYvVlQwPL
-	 DE+TWrZGij6nezduPgigaT470S2sHqv3/tE0lnHg=
+	b=KzRMBxJS6cwdW7IxIz6UmWOsRj6cWUXMSf+6ZylP5NaGCVbOx1d/YSmT/ZmtJZe2E
+	 zEN94/JHRXSH9mOJao2K4mKfCui9bYFxrQRZGcLejfOAKebdDQ14GKb8ms+AVxY9MJ
+	 oQrm03lds9BZVrcx+LGvwuUA2zfwPbnuX69g++Ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 411/737] cifs: Fix memory and information leak in smb3_reconfigure()
-Date: Fri,  9 Jan 2026 12:39:10 +0100
-Message-ID: <20260109112149.457434261@linuxfoundation.org>
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.6 412/737] KEYS: trusted: Fix a memory leak in tpm2_load_cmd
+Date: Fri,  9 Jan 2026 12:39:11 +0100
+Message-ID: <20260109112149.494457462@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,42 +49,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Jarkko Sakkinen <jarkko@kernel.org>
 
-[ Upstream commit cb6d5aa9c0f10074f1ad056c3e2278ad2cc7ec8d ]
+commit 62cd5d480b9762ce70d720a81fa5b373052ae05f upstream.
 
-In smb3_reconfigure(), if smb3_sync_session_ctx_passwords() fails, the
-function returns immediately without freeing and erasing the newly
-allocated new_password and new_password2. This causes both a memory leak
-and a potential information leak.
+'tpm2_load_cmd' allocates a tempoary blob indirectly via 'tpm2_key_decode'
+but it is not freed in the failure paths. Address this by wrapping the blob
+into with a cleanup helper.
 
-Fix this by calling kfree_sensitive() on both password buffers before
-returning in this error case.
-
-Fixes: 0f0e357902957 ("cifs: during remount, make sure passwords are in sync")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org # v5.13+
+Fixes: f2219745250f ("security: keys: trusted: use ASN.1 TPM2 key format for the blobs")
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/fs_context.c | 2 ++
- 1 file changed, 2 insertions(+)
+ security/keys/trusted-keys/trusted_tpm2.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/client/fs_context.c b/fs/smb/client/fs_context.c
-index 6358f2483c86..37b04c23ee89 100644
---- a/fs/smb/client/fs_context.c
-+++ b/fs/smb/client/fs_context.c
-@@ -979,6 +979,8 @@ static int smb3_reconfigure(struct fs_context *fc)
- 	rc = smb3_sync_session_ctx_passwords(cifs_sb, ses);
- 	if (rc) {
- 		mutex_unlock(&ses->session_mutex);
-+		kfree_sensitive(new_password);
-+		kfree_sensitive(new_password2);
- 		return rc;
+--- a/security/keys/trusted-keys/trusted_tpm2.c
++++ b/security/keys/trusted-keys/trusted_tpm2.c
+@@ -375,6 +375,7 @@ static int tpm2_load_cmd(struct tpm_chip
+ 			 struct trusted_key_options *options,
+ 			 u32 *blob_handle)
+ {
++	u8 *blob_ref __free(kfree) = NULL;
+ 	struct tpm_buf buf;
+ 	unsigned int private_len;
+ 	unsigned int public_len;
+@@ -388,6 +389,9 @@ static int tpm2_load_cmd(struct tpm_chip
+ 		/* old form */
+ 		blob = payload->blob;
+ 		payload->old_format = 1;
++	} else {
++		/* Bind for cleanup: */
++		blob_ref = blob;
  	}
  
--- 
-2.51.0
-
+ 	/* new format carries keyhandle but old format doesn't */
+@@ -446,8 +450,6 @@ static int tpm2_load_cmd(struct tpm_chip
+ 			(__be32 *) &buf.data[TPM_HEADER_SIZE]);
+ 
+ out:
+-	if (blob != payload->blob)
+-		kfree(blob);
+ 	tpm_buf_destroy(&buf);
+ 
+ 	if (rc > 0)
 
 
