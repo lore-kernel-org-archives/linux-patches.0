@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A3C0326D51;
-	Fri,  9 Jan 2026 12:47:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52EDC35BDDB;
+	Fri,  9 Jan 2026 12:47:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962852; cv=none; b=DZCqUQsN86zVWKJxuZCQAYPmLHi7CUNNkTw0ANoJX+Vzixv8TB7uB424ElGijhj0tPac8FOSxg220uJfoer354/DUV2cUPXsDiuTkxvBnXpnwXtqnos8AWgZpRMXvmP6ArV81cEEgPynCHgrAiElHGy+NSS6USZ37iyQTKv3biA=
+	t=1767962855; cv=none; b=E4G4XoBwoNL+PCracPWqqTN6RD6W6NAfeXbxatjj+GQPWlfLlgBkAXnjxTebFMCytcA7kPGPq1M9/Xn3VmpbWiqgTQQtEau0uDYD5c9MYV7LtGzC2O2SjLCNSWOGdieOBfIqKCfoQ0twl9HjiR0N9SXjnHMELbYUFof9sDMTk0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962852; c=relaxed/simple;
-	bh=HSkj32ykIovpLGSh+deJVR/g0/n9el7rgR3TsyFRW3U=;
+	s=arc-20240116; t=1767962855; c=relaxed/simple;
+	bh=aSN3fQw5bBtJi/+WPeBt4lyQqY1Kj9nBIjNGiXJHdS8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mjd4XVZ2no77oQg/ALh8IxVCklKDGMg3Plm0BFdA58Fb+jOPYa3YkIfueY9KMryLLZwlSDnxACoHHJKkXwk28OyYkjin5I+a0Jf2GtlRdeV+EmXOvY/29pR9iU2Bp72JFElHlqVBGEd/Hh9RF999Ig3RFllIsvDU0OPKV1nrcI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zSYpj/nY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mq/BMPRHxNt7OwUoojb3Z9TiUJJLBVlnnsvLrSnLRJUUHXbsMPf+APZz+LuubfLtWdYq2GXDFwzq76PL6A2c48e0C3jWr7jMnuUA39l2YDcoGzNc4Fhakg1/vDOaBf3TZRkYcf9mhNw/K9FdAtuN7YSJeOmfhXod64A0u/aPCT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V+QP6p3W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zSYpj/nY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8CFAC4CEF1;
-	Fri,  9 Jan 2026 12:47:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V+QP6p3W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEF45C4CEF1;
+	Fri,  9 Jan 2026 12:47:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962852;
-	bh=HSkj32ykIovpLGSh+deJVR/g0/n9el7rgR3TsyFRW3U=;
+	s=korg; t=1767962855;
+	bh=aSN3fQw5bBtJi/+WPeBt4lyQqY1Kj9nBIjNGiXJHdS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zSYpj/nY2JvZp5Ij6hhV1L/xqvom+eQiTr4GJXPAdVsQERd63me7uEOcGDE2tYm9z
-	 YZO7QVMcw966pNeN9j4yj6gJNI5vlI7+GEGtGIWz1FXZByTcLVvgqcQL6V57vcE70N
-	 rinIn6Oz+J4qsfG4MnyDbUebl+Kfvu5SAwWTfhcQ=
+	b=V+QP6p3Whs4nGjO4QiK/wojvV/JV8yBltCdOR+un6aewu8oUoITzqWsQnRyY4qVtD
+	 NEmLYNE3Muj9Ct719XTqkOXW0WI8TgDM6YDAlrQ0apa8b8Hwk2Fp8X6nAnh2EMVORL
+	 0gU6SCOOP09iDO+3hq/LVfQ8+CtJhrvcc1uVM9RM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lyude Paul <lyude@redhat.com>,
-	Dave Airlie <airlied@redhat.com>
-Subject: [PATCH 6.1 510/634] drm/nouveau/dispnv50: Dont call drm_atomic_get_crtc_state() in prepare_fb
-Date: Fri,  9 Jan 2026 12:43:08 +0100
-Message-ID: <20260109112136.742650283@linuxfoundation.org>
+	Raju Cheerla <rcheerla@redhat.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 511/634] blk-mq: add helper for checking if one CPU is mapped to specified hctx
+Date: Fri,  9 Jan 2026 12:43:09 +0100
+Message-ID: <20260109112136.782488652@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -50,63 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lyude Paul <lyude@redhat.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-commit 560271e10b2c86e95ea35afa9e79822e4847f07a upstream.
+commit 7b815817aa58d2e2101feb2fcf64c60cae0b2695 upstream.
 
-Since we recently started warning about uses of this function after the
-atomic check phase completes, we've started getting warnings about this in
-nouveau. It appears a misplaced drm_atomic_get_crtc_state() call has been
-hiding in our .prepare_fb callback for a while.
+Commit a46c27026da1 ("blk-mq: don't schedule block kworker on isolated CPUs")
+rules out isolated CPUs from hctx->cpumask, and hctx->cpumask should only be
+used for scheduling kworker.
 
-So, fix this by adding a new nv50_head_atom_get_new() function and use that
-in our .prepare_fb callback instead.
+Add helper blk_mq_cpu_mapped_to_hctx() and apply it into cpuhp handlers.
 
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Reviewed-by: Dave Airlie <airlied@redhat.com>
-Fixes: 1590700d94ac ("drm/nouveau/kms/nv50-: split each resource type into their own source files")
-Cc: <stable@vger.kernel.org> # v4.18+
-Link: https://patch.msgid.link/20251211190256.396742-1-lyude@redhat.com
+This patch avoids to forget clearing INACTIVE of hctx state in case that one
+isolated CPU becomes online, and fixes hang issue when allocating request
+from this hctx's tags.
+
+Cc: Raju Cheerla <rcheerla@redhat.com>
+Fixes: a46c27026da1 ("blk-mq: don't schedule block kworker on isolated CPUs")
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20240517020514.149771-1-ming.lei@redhat.com
+Tested-by: Raju Cheerla <rcheerla@redhat.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/dispnv50/atom.h |   13 +++++++++++++
- drivers/gpu/drm/nouveau/dispnv50/wndw.c |    2 +-
- 2 files changed, 14 insertions(+), 1 deletion(-)
+ block/blk-mq.c |   20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/dispnv50/atom.h
-+++ b/drivers/gpu/drm/nouveau/dispnv50/atom.h
-@@ -152,8 +152,21 @@ static inline struct nv50_head_atom *
- nv50_head_atom_get(struct drm_atomic_state *state, struct drm_crtc *crtc)
- {
- 	struct drm_crtc_state *statec = drm_atomic_get_crtc_state(state, crtc);
-+
- 	if (IS_ERR(statec))
- 		return (void *)statec;
-+
-+	return nv50_head_atom(statec);
-+}
-+
-+static inline struct nv50_head_atom *
-+nv50_head_atom_get_new(struct drm_atomic_state *state, struct drm_crtc *crtc)
-+{
-+	struct drm_crtc_state *statec = drm_atomic_get_new_crtc_state(state, crtc);
-+
-+	if (!statec)
-+		return NULL;
-+
- 	return nv50_head_atom(statec);
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -3579,12 +3579,28 @@ static int blk_mq_hctx_notify_offline(un
+ 	return ret;
  }
  
---- a/drivers/gpu/drm/nouveau/dispnv50/wndw.c
-+++ b/drivers/gpu/drm/nouveau/dispnv50/wndw.c
-@@ -567,7 +567,7 @@ nv50_wndw_prepare_fb(struct drm_plane *p
- 	asyw->image.offset[0] = nvbo->offset;
++/*
++ * Check if one CPU is mapped to the specified hctx
++ *
++ * Isolated CPUs have been ruled out from hctx->cpumask, which is supposed
++ * to be used for scheduling kworker only. For other usage, please call this
++ * helper for checking if one CPU belongs to the specified hctx
++ */
++static bool blk_mq_cpu_mapped_to_hctx(unsigned int cpu,
++		const struct blk_mq_hw_ctx *hctx)
++{
++	struct blk_mq_hw_ctx *mapped_hctx = blk_mq_map_queue_type(hctx->queue,
++			hctx->type, cpu);
++
++	return mapped_hctx == hctx;
++}
++
+ static int blk_mq_hctx_notify_online(unsigned int cpu, struct hlist_node *node)
+ {
+ 	struct blk_mq_hw_ctx *hctx = hlist_entry_safe(node,
+ 			struct blk_mq_hw_ctx, cpuhp_online);
  
- 	if (wndw->func->prepare) {
--		asyh = nv50_head_atom_get(asyw->state.state, asyw->state.crtc);
-+		asyh = nv50_head_atom_get_new(asyw->state.state, asyw->state.crtc);
- 		if (IS_ERR(asyh))
- 			return PTR_ERR(asyh);
+-	if (cpumask_test_cpu(cpu, hctx->cpumask))
++	if (blk_mq_cpu_mapped_to_hctx(cpu, hctx))
+ 		clear_bit(BLK_MQ_S_INACTIVE, &hctx->state);
+ 	return 0;
+ }
+@@ -3602,7 +3618,7 @@ static int blk_mq_hctx_notify_dead(unsig
+ 	enum hctx_type type;
  
+ 	hctx = hlist_entry_safe(node, struct blk_mq_hw_ctx, cpuhp_dead);
+-	if (!cpumask_test_cpu(cpu, hctx->cpumask))
++	if (!blk_mq_cpu_mapped_to_hctx(cpu, hctx))
+ 		return 0;
+ 
+ 	ctx = __blk_mq_get_ctx(hctx->queue, cpu);
 
 
