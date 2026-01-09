@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3AEE310636;
-	Fri,  9 Jan 2026 12:42:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE38735B151;
+	Fri,  9 Jan 2026 12:42:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962521; cv=none; b=uklZFcMi+gpIixrCNwH7Jo5TdkYsIdOcm5YEAFriItvAW3XLHdNqVUp47vdv1fmr9aw0NzO9IiiHcTgWyxx42TAvQ713ZgwiYcx+5knjbA/BRsfgL3ujSFPU2eJrTiWGhMvT8tTu+SowsE+/GhAhZ1hIllkY4erRzg5anDVPgNQ=
+	t=1767962524; cv=none; b=rVpCWmQ7IiN36Z1VAJiNv6pQar/WmFZ3gd/PWpjQR/sWBulDelseyfIVeF8o6nJCh0wRRgy0xE4hetoP16rb7dLO9GLx7M7KQkzzuXOg1Un7BNtWFn1ot4Cb5GwqQ7xRxcueRy+UVYhxf05eFc8UmoxG1Vm0zacvCJUO2Oldtq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962521; c=relaxed/simple;
-	bh=n5bRgbjuRT0coxBjXu9HBDpyZUDjcbAl0eIu1dzat00=;
+	s=arc-20240116; t=1767962524; c=relaxed/simple;
+	bh=XBY5n6rzc9mb2w42ZA4+A/vFwzKkykDNvupR1jISmDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AkCYYE4kyd0PhNJ7CHNrBJZvdBRs2yoUTVR70tlz4CBEV37QMUj6OGicTFUHIJGWyIeWPEGXhXcVSyFH22QJ5b/z+bFlCpmHMVu88FdI/iVTAUHRLk1bUtk0iiFUK4szjZWFVxp+ht9XXBcwQjx3S81fhodLRo+g8hB7FhV/GAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mc10lDw9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kuBqGXMdOXl/f1PzPguaI3vnI1lk1MNEGzaO/gn+iw4HOCOBI0Kdn4EEC/BhWZJSvOiFUkEQaUvAUOVqVhOCJes400kuQIAIS0eoBID7s7UwbsLq2Wh6h3eCQ/6IHDbOd3YY4wFAiBVyIlWK+jeVZn+yP5DlxtZwd3uFNZhyQq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vNojd3p+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mc10lDw9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66167C19422;
-	Fri,  9 Jan 2026 12:42:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vNojd3p+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F43FC4CEF1;
+	Fri,  9 Jan 2026 12:42:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962521;
-	bh=n5bRgbjuRT0coxBjXu9HBDpyZUDjcbAl0eIu1dzat00=;
+	s=korg; t=1767962524;
+	bh=XBY5n6rzc9mb2w42ZA4+A/vFwzKkykDNvupR1jISmDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mc10lDw9W+YgBIrhBaS5YRX6PSNzCEU9iNUiuyrCmoeJx4ksDgGiaTl3SbQKhUc74
-	 fgYbZmW0jgnvlHUqNWddTtRlCfuiql8caAA8xOXnHiDwMC8lJRn9HxbXZ7hl/2xoi2
-	 ta9tslcRyoeuiangeys4H49VlAnT5GT2eoW8g/6w=
+	b=vNojd3p+VeZiUi0fF3XM21nCZtaRz/KSoMqWXmacQD0wuT7YGowPuG/dG7CviaLk1
+	 9b6cdbGAZXUQNrblpAvpbyaKyl7ncqa2s/OcK/+cP2wWnlZJE1jMeVlWJnTmB+WoHR
+	 suCQzuqSJ+mL9R1hGD7Hh8E4KUy/AQKyyHyEo8o4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Aloka Dixit <quic_alokad@quicinc.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 395/634] cfg80211: support RNR for EMA AP
-Date: Fri,  9 Jan 2026 12:41:13 +0100
-Message-ID: <20260109112132.393478368@linuxfoundation.org>
+Subject: [PATCH 6.1 396/634] mac80211: support RNR for EMA AP
+Date: Fri,  9 Jan 2026 12:41:14 +0100
+Message-ID: <20260109112132.430658027@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -53,299 +53,237 @@ Content-Transfer-Encoding: 8bit
 
 From: Aloka Dixit <quic_alokad@quicinc.com>
 
-[ Upstream commit dbbb27e183b1568d5a907ace1cd144b0709ea52a ]
+[ Upstream commit 68b9bea267bfc1259e195dcac1bf69db0c0c28da ]
 
-As per IEEE Std 802.11ax-2021, 11.1.3.8.3 Discovery of a nontransmitted
-BSSID profile, an EMA AP that transmits a Beacon frame carrying a partial
-list of nontransmitted BSSID profiles should include in the frame
-a Reduced Neighbor Report element carrying information for at least the
-nontransmitted BSSIDs that are not present in the Multiple BSSID element
-carried in that frame.
-Add new nested attribute NL80211_ATTR_EMA_RNR_ELEMS to support the above.
-Number of RNR elements must be more than or equal to the number of
-MBSSID elements. This attribute can be used only when EMA is enabled.
-Userspace is responsible for splitting the RNR into multiple elements such
-that each element excludes the non-transmitting profiles already included
-in the MBSSID element (%NL80211_ATTR_MBSSID_ELEMS) at the same index.
-Each EMA beacon will be generated by adding MBSSID and RNR elements
-at the same index. If the userspace provides more RNR elements than the
-number of MBSSID elements then these will be added in every EMA beacon.
+Generate EMA beacons, each including MBSSID and RNR elements at a given
+index. If number of stored RNR elements is more than the number of
+MBSSID elements then add those in every EMA beacon.
 
 Signed-off-by: Aloka Dixit <quic_alokad@quicinc.com>
-Link: https://lore.kernel.org/r/20230323113801.6903-2-quic_alokad@quicinc.com
-[Johannes: validate elements]
+Link: https://lore.kernel.org/r/20230323113801.6903-3-quic_alokad@quicinc.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Stable-dep-of: a519be2f5d95 ("wifi: mac80211: do not use old MBSSID elements")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/cfg80211.h       | 19 +++++++++
- include/uapi/linux/nl80211.h | 13 ++++++
- net/wireless/nl80211.c       | 79 ++++++++++++++++++++++++++++++++----
- 3 files changed, 104 insertions(+), 7 deletions(-)
+ net/mac80211/cfg.c         | 63 +++++++++++++++++++++++++++++++++++---
+ net/mac80211/ieee80211_i.h | 21 +++++++++++--
+ net/mac80211/tx.c          | 10 ++++++
+ 3 files changed, 86 insertions(+), 8 deletions(-)
 
-diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
-index 34709bd733ed..f39a60475c24 100644
---- a/include/net/cfg80211.h
-+++ b/include/net/cfg80211.h
-@@ -1187,6 +1187,23 @@ struct cfg80211_mbssid_elems {
- 	} elem[];
- };
- 
-+/**
-+ * struct cfg80211_rnr_elems - Reduced neighbor report (RNR) elements
-+ *
-+ * @cnt: Number of elements in array %elems.
-+ *
-+ * @elem: Array of RNR element(s) to be added into Beacon frames.
-+ * @elem.data: Data for RNR elements.
-+ * @elem.len: Length of data.
-+ */
-+struct cfg80211_rnr_elems {
-+	u8 cnt;
-+	struct {
-+		const u8 *data;
-+		size_t len;
-+	} elem[];
-+};
-+
- /**
-  * struct cfg80211_beacon_data - beacon data
-  * @link_id: the link ID for the AP MLD link sending this beacon
-@@ -1207,6 +1224,7 @@ struct cfg80211_mbssid_elems {
-  * @probe_resp_len: length of probe response template (@probe_resp)
-  * @probe_resp: probe response template (AP mode only)
-  * @mbssid_ies: multiple BSSID elements
-+ * @rnr_ies: reduced neighbor report elements
-  * @ftm_responder: enable FTM responder functionality; -1 for no change
-  *	(which also implies no change in LCI/civic location data)
-  * @lci: Measurement Report element content, starting with Measurement Token
-@@ -1230,6 +1248,7 @@ struct cfg80211_beacon_data {
- 	const u8 *lci;
- 	const u8 *civicloc;
- 	struct cfg80211_mbssid_elems *mbssid_ies;
-+	struct cfg80211_rnr_elems *rnr_ies;
- 	s8 ftm_responder;
- 
- 	size_t head_len, tail_len;
-diff --git a/include/uapi/linux/nl80211.h b/include/uapi/linux/nl80211.h
-index 274d1b34c954..63d7241edd49 100644
---- a/include/uapi/linux/nl80211.h
-+++ b/include/uapi/linux/nl80211.h
-@@ -2776,6 +2776,17 @@ enum nl80211_commands {
-  * @NL80211_ATTR_HW_TIMESTAMP_ENABLED: Indicates whether HW timestamping should
-  *	be enabled or not (flag attribute).
-  *
-+ * @NL80211_ATTR_EMA_RNR_ELEMS: Optional nested attribute for
-+ *	reduced neighbor report (RNR) elements. This attribute can be used
-+ *	only when NL80211_MBSSID_CONFIG_ATTR_EMA is enabled.
-+ *	Userspace is responsible for splitting the RNR into multiple
-+ *	elements such that each element excludes the non-transmitting
-+ *	profiles already included in the MBSSID element
-+ *	(%NL80211_ATTR_MBSSID_ELEMS) at the same index. Each EMA beacon
-+ *	will be generated by adding MBSSID and RNR elements at the same
-+ *	index. If the userspace includes more RNR elements than number of
-+ *	MBSSID elements then these will be added in every EMA beacon.
-+ *
-  * @NUM_NL80211_ATTR: total number of nl80211_attrs available
-  * @NL80211_ATTR_MAX: highest attribute number currently defined
-  * @__NL80211_ATTR_AFTER_LAST: internal use
-@@ -3310,6 +3321,8 @@ enum nl80211_attrs {
- 	NL80211_ATTR_MAX_HW_TIMESTAMP_PEERS,
- 	NL80211_ATTR_HW_TIMESTAMP_ENABLED,
- 
-+	NL80211_ATTR_EMA_RNR_ELEMS,
-+
- 	/* add attributes here, update the policy in nl80211.c */
- 
- 	__NL80211_ATTR_AFTER_LAST,
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index 5e2b676f5ce0..7a976bd1641f 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -814,6 +814,7 @@ static const struct nla_policy nl80211_policy[NUM_NL80211_ATTR] = {
- 
- 	[NL80211_ATTR_MAX_HW_TIMESTAMP_PEERS] = { .type = NLA_U16 },
- 	[NL80211_ATTR_HW_TIMESTAMP_ENABLED] = { .type = NLA_FLAG },
-+	[NL80211_ATTR_EMA_RNR_ELEMS] = { .type = NLA_NESTED },
- };
- 
- /* policy for the key attributes */
-@@ -5455,6 +5456,38 @@ nl80211_parse_mbssid_elems(struct wiphy *wiphy, struct nlattr *attrs)
- 	return elems;
+diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
+index 72dd534492bf..a25d647c1c4b 100644
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -1087,6 +1087,23 @@ ieee80211_copy_mbssid_beacon(u8 *pos, struct cfg80211_mbssid_elems *dst,
+ 	return offset;
  }
  
-+static struct cfg80211_rnr_elems *
-+nl80211_parse_rnr_elems(struct wiphy *wiphy, struct nlattr *attrs,
-+			struct netlink_ext_ack *extack)
++static int
++ieee80211_copy_rnr_beacon(u8 *pos, struct cfg80211_rnr_elems *dst,
++			  struct cfg80211_rnr_elems *src)
 +{
-+	struct nlattr *nl_elems;
-+	struct cfg80211_rnr_elems *elems;
-+	int rem_elems;
-+	u8 i = 0, num_elems = 0;
++	int i, offset = 0;
 +
-+	nla_for_each_nested(nl_elems, attrs, rem_elems) {
-+		int ret;
-+
-+		ret = validate_ie_attr(nl_elems, extack);
-+		if (ret)
-+			return ERR_PTR(ret);
-+
-+		num_elems++;
++	for (i = 0; i < src->cnt; i++) {
++		memcpy(pos + offset, src->elem[i].data, src->elem[i].len);
++		dst->elem[i].len = src->elem[i].len;
++		dst->elem[i].data = pos + offset;
++		offset += dst->elem[i].len;
 +	}
++	dst->cnt = src->cnt;
 +
-+	elems = kzalloc(struct_size(elems, elem, num_elems), GFP_KERNEL);
-+	if (!elems)
-+		return ERR_PTR(-ENOMEM);
-+
-+	nla_for_each_nested(nl_elems, attrs, rem_elems) {
-+		elems->elem[i].data = nla_data(nl_elems);
-+		elems->elem[i].len = nla_len(nl_elems);
-+		i++;
-+	}
-+	elems->cnt = num_elems;
-+	return elems;
++	return offset;
 +}
 +
- static int nl80211_parse_he_bss_color(struct nlattr *attrs,
- 				      struct cfg80211_he_bss_color *he_bss_color)
+ static int ieee80211_assign_beacon(struct ieee80211_sub_if_data *sdata,
+ 				   struct ieee80211_link_data *link,
+ 				   struct cfg80211_beacon_data *params,
+@@ -1094,6 +1111,7 @@ static int ieee80211_assign_beacon(struct ieee80211_sub_if_data *sdata,
+ 				   const struct ieee80211_color_change_settings *cca)
  {
-@@ -5481,7 +5514,8 @@ static int nl80211_parse_he_bss_color(struct nlattr *attrs,
+ 	struct cfg80211_mbssid_elems *mbssid = NULL;
++	struct cfg80211_rnr_elems *rnr = NULL;
+ 	struct beacon_data *new, *old;
+ 	int new_head_len, new_tail_len;
+ 	int size, err;
+@@ -1125,11 +1143,21 @@ static int ieee80211_assign_beacon(struct ieee80211_sub_if_data *sdata,
+ 	if (params->mbssid_ies) {
+ 		mbssid = params->mbssid_ies;
+ 		size += struct_size(new->mbssid_ies, elem, mbssid->cnt);
+-		size += ieee80211_get_mbssid_beacon_len(mbssid, mbssid->cnt);
++		if (params->rnr_ies) {
++			rnr = params->rnr_ies;
++			size += struct_size(new->rnr_ies, elem, rnr->cnt);
++		}
++		size += ieee80211_get_mbssid_beacon_len(mbssid, rnr,
++							mbssid->cnt);
+ 	} else if (old && old->mbssid_ies) {
+ 		mbssid = old->mbssid_ies;
+ 		size += struct_size(new->mbssid_ies, elem, mbssid->cnt);
+-		size += ieee80211_get_mbssid_beacon_len(mbssid, mbssid->cnt);
++		if (old && old->rnr_ies) {
++			rnr = old->rnr_ies;
++			size += struct_size(new->rnr_ies, elem, rnr->cnt);
++		}
++		size += ieee80211_get_mbssid_beacon_len(mbssid, rnr,
++							mbssid->cnt);
+ 	}
  
- static int nl80211_parse_beacon(struct cfg80211_registered_device *rdev,
- 				struct nlattr *attrs[],
--				struct cfg80211_beacon_data *bcn)
-+				struct cfg80211_beacon_data *bcn,
-+				struct netlink_ext_ack *extack)
- {
- 	bool haveinfo = false;
- 	int err;
-@@ -5578,6 +5612,21 @@ static int nl80211_parse_beacon(struct cfg80211_registered_device *rdev,
- 			return PTR_ERR(mbssid);
+ 	new = kzalloc(size, GFP_KERNEL);
+@@ -1140,7 +1168,7 @@ static int ieee80211_assign_beacon(struct ieee80211_sub_if_data *sdata,
  
- 		bcn->mbssid_ies = mbssid;
+ 	/*
+ 	 * pointers go into the block we allocated,
+-	 * memory is | beacon_data | head | tail | mbssid_ies
++	 * memory is | beacon_data | head | tail | mbssid_ies | rnr_ies
+ 	 */
+ 	new->head = ((u8 *) new) + sizeof(*new);
+ 	new->tail = new->head + new_head_len;
+@@ -1152,7 +1180,13 @@ static int ieee80211_assign_beacon(struct ieee80211_sub_if_data *sdata,
+ 
+ 		new->mbssid_ies = (void *)pos;
+ 		pos += struct_size(new->mbssid_ies, elem, mbssid->cnt);
+-		ieee80211_copy_mbssid_beacon(pos, new->mbssid_ies, mbssid);
++		pos += ieee80211_copy_mbssid_beacon(pos, new->mbssid_ies,
++						    mbssid);
++		if (rnr) {
++			new->rnr_ies = (void *)pos;
++			pos += struct_size(new->rnr_ies, elem, rnr->cnt);
++			ieee80211_copy_rnr_beacon(pos, new->rnr_ies, rnr);
++		}
+ 		/* update bssid_indicator */
+ 		link_conf->bssid_indicator =
+ 			ilog2(__roundup_pow_of_two(mbssid->cnt + 1));
+@@ -1448,6 +1482,7 @@ static void ieee80211_free_next_beacon(struct ieee80211_link_data *link)
+ 		return;
+ 
+ 	kfree(link->u.ap.next_beacon->mbssid_ies);
++	kfree(link->u.ap.next_beacon->rnr_ies);
+ 	kfree(link->u.ap.next_beacon);
+ 	link->u.ap.next_beacon = NULL;
+ }
+@@ -3360,6 +3395,7 @@ cfg80211_beacon_dup(struct cfg80211_beacon_data *beacon)
+ 
+ 	if (beacon->mbssid_ies)
+ 		len += ieee80211_get_mbssid_beacon_len(beacon->mbssid_ies,
++						       beacon->rnr_ies,
+ 						       beacon->mbssid_ies->cnt);
+ 
+ 	new_beacon = kzalloc(sizeof(*new_beacon) + len, GFP_KERNEL);
+@@ -3375,6 +3411,18 @@ cfg80211_beacon_dup(struct cfg80211_beacon_data *beacon)
+ 			kfree(new_beacon);
+ 			return NULL;
+ 		}
 +
-+		if (bcn->mbssid_ies && attrs[NL80211_ATTR_EMA_RNR_ELEMS]) {
-+			struct cfg80211_rnr_elems *rnr =
-+				nl80211_parse_rnr_elems(&rdev->wiphy,
-+							attrs[NL80211_ATTR_EMA_RNR_ELEMS],
-+							extack);
-+
-+			if (IS_ERR(rnr))
-+				return PTR_ERR(rnr);
-+
-+			if (rnr && rnr->cnt < bcn->mbssid_ies->cnt)
-+				return -EINVAL;
-+
-+			bcn->rnr_ies = rnr;
++		if (beacon->rnr_ies && beacon->rnr_ies->cnt) {
++			new_beacon->rnr_ies =
++				kzalloc(struct_size(new_beacon->rnr_ies,
++						    elem, beacon->rnr_ies->cnt),
++					GFP_KERNEL);
++			if (!new_beacon->rnr_ies) {
++				kfree(new_beacon->mbssid_ies);
++				kfree(new_beacon);
++				return NULL;
++			}
 +		}
  	}
  
- 	return 0;
-@@ -5860,7 +5909,8 @@ static int nl80211_start_ap(struct sk_buff *skb, struct genl_info *info)
- 	if (!params)
- 		return -ENOMEM;
- 
--	err = nl80211_parse_beacon(rdev, info->attrs, &params->beacon);
-+	err = nl80211_parse_beacon(rdev, info->attrs, &params->beacon,
-+				   info->extack);
- 	if (err)
- 		goto out;
- 
-@@ -6090,6 +6140,11 @@ static int nl80211_start_ap(struct sk_buff *skb, struct genl_info *info)
- 			goto out_unlock;
+ 	pos = (u8 *)(new_beacon + 1);
+@@ -3414,10 +3462,15 @@ cfg80211_beacon_dup(struct cfg80211_beacon_data *beacon)
+ 		memcpy(pos, beacon->probe_resp, beacon->probe_resp_len);
+ 		pos += beacon->probe_resp_len;
  	}
+-	if (beacon->mbssid_ies && beacon->mbssid_ies->cnt)
++	if (beacon->mbssid_ies && beacon->mbssid_ies->cnt) {
+ 		pos += ieee80211_copy_mbssid_beacon(pos,
+ 						    new_beacon->mbssid_ies,
+ 						    beacon->mbssid_ies);
++		if (beacon->rnr_ies && beacon->rnr_ies->cnt)
++			pos += ieee80211_copy_rnr_beacon(pos,
++							 new_beacon->rnr_ies,
++							 beacon->rnr_ies);
++	}
  
-+	if (!params->mbssid_config.ema && params->beacon.rnr_ies) {
-+		err = -EINVAL;
-+		goto out_unlock;
+ 	/* might copy -1, meaning no changes requested */
+ 	new_beacon->ftm_responder = beacon->ftm_responder;
+diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
+index d08aa09002df..64f8d8f2b799 100644
+--- a/net/mac80211/ieee80211_i.h
++++ b/net/mac80211/ieee80211_i.h
+@@ -269,6 +269,7 @@ struct beacon_data {
+ 	u16 cntdwn_counter_offsets[IEEE80211_MAX_CNTDWN_COUNTERS_NUM];
+ 	u8 cntdwn_current_counter;
+ 	struct cfg80211_mbssid_elems *mbssid_ies;
++	struct cfg80211_rnr_elems *rnr_ies;
+ 	struct rcu_head rcu_head;
+ };
+ 
+@@ -1165,20 +1166,34 @@ ieee80211_vif_get_shift(struct ieee80211_vif *vif)
+ }
+ 
+ static inline int
+-ieee80211_get_mbssid_beacon_len(struct cfg80211_mbssid_elems *elems, u8 i)
++ieee80211_get_mbssid_beacon_len(struct cfg80211_mbssid_elems *elems,
++				struct cfg80211_rnr_elems *rnr_elems,
++				u8 i)
+ {
+ 	int len = 0;
+ 
+ 	if (!elems || !elems->cnt || i > elems->cnt)
+ 		return 0;
+ 
+-	if (i < elems->cnt)
+-		return elems->elem[i].len;
++	if (i < elems->cnt) {
++		len = elems->elem[i].len;
++		if (rnr_elems) {
++			len += rnr_elems->elem[i].len;
++			for (i = elems->cnt; i < rnr_elems->cnt; i++)
++				len += rnr_elems->elem[i].len;
++		}
++		return len;
++	}
+ 
+ 	/* i == elems->cnt, calculate total length of all MBSSID elements */
+ 	for (i = 0; i < elems->cnt; i++)
+ 		len += elems->elem[i].len;
+ 
++	if (rnr_elems) {
++		for (i = 0; i < rnr_elems->cnt; i++)
++			len += rnr_elems->elem[i].len;
 +	}
 +
- 	err = nl80211_calculate_ap_params(params);
- 	if (err)
- 		goto out_unlock;
-@@ -6129,6 +6184,7 @@ static int nl80211_start_ap(struct sk_buff *skb, struct genl_info *info)
- 	    params->mbssid_config.tx_wdev->netdev &&
- 	    params->mbssid_config.tx_wdev->netdev != dev)
- 		dev_put(params->mbssid_config.tx_wdev->netdev);
-+	kfree(params->beacon.rnr_ies);
- 	kfree(params);
- 
- 	return err;
-@@ -6153,7 +6209,7 @@ static int nl80211_set_beacon(struct sk_buff *skb, struct genl_info *info)
- 	if (!wdev->links[link_id].ap.beacon_interval)
- 		return -EINVAL;
- 
--	err = nl80211_parse_beacon(rdev, info->attrs, &params);
-+	err = nl80211_parse_beacon(rdev, info->attrs, &params, info->extack);
- 	if (err)
- 		goto out;
- 
-@@ -6163,6 +6219,7 @@ static int nl80211_set_beacon(struct sk_buff *skb, struct genl_info *info)
- 
- out:
- 	kfree(params.mbssid_ies);
-+	kfree(params.rnr_ies);
- 	return err;
+ 	return len;
  }
  
-@@ -10017,7 +10074,8 @@ static int nl80211_channel_switch(struct sk_buff *skb, struct genl_info *info)
- 	if (!need_new_beacon)
- 		goto skip_beacons;
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 854bad6fbe19..5b7587cda883 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -5149,6 +5149,15 @@ ieee80211_beacon_add_mbssid(struct sk_buff *skb, struct beacon_data *beacon,
+ 	if (i < beacon->mbssid_ies->cnt) {
+ 		skb_put_data(skb, beacon->mbssid_ies->elem[i].data,
+ 			     beacon->mbssid_ies->elem[i].len);
++
++		if (beacon->rnr_ies && beacon->rnr_ies->cnt) {
++			skb_put_data(skb, beacon->rnr_ies->elem[i].data,
++				     beacon->rnr_ies->elem[i].len);
++
++			for (i = beacon->mbssid_ies->cnt; i < beacon->rnr_ies->cnt; i++)
++				skb_put_data(skb, beacon->rnr_ies->elem[i].data,
++					     beacon->rnr_ies->elem[i].len);
++		}
+ 		return;
+ 	}
  
--	err = nl80211_parse_beacon(rdev, info->attrs, &params.beacon_after);
-+	err = nl80211_parse_beacon(rdev, info->attrs, &params.beacon_after,
-+				   info->extack);
- 	if (err)
- 		goto free;
+@@ -5186,6 +5195,7 @@ ieee80211_beacon_get_ap(struct ieee80211_hw *hw,
+ 	 * tail length, maximum TIM length and multiple BSSID length
+ 	 */
+ 	mbssid_len = ieee80211_get_mbssid_beacon_len(beacon->mbssid_ies,
++						     beacon->rnr_ies,
+ 						     ema_index);
  
-@@ -10034,7 +10092,8 @@ static int nl80211_channel_switch(struct sk_buff *skb, struct genl_info *info)
- 	if (err)
- 		goto free;
- 
--	err = nl80211_parse_beacon(rdev, csa_attrs, &params.beacon_csa);
-+	err = nl80211_parse_beacon(rdev, csa_attrs, &params.beacon_csa,
-+				   info->extack);
- 	if (err)
- 		goto free;
- 
-@@ -10154,6 +10213,8 @@ static int nl80211_channel_switch(struct sk_buff *skb, struct genl_info *info)
- free:
- 	kfree(params.beacon_after.mbssid_ies);
- 	kfree(params.beacon_csa.mbssid_ies);
-+	kfree(params.beacon_after.rnr_ies);
-+	kfree(params.beacon_csa.rnr_ies);
- 	kfree(csa_attrs);
- 	return err;
- }
-@@ -15880,7 +15941,8 @@ static int nl80211_color_change(struct sk_buff *skb, struct genl_info *info)
- 	params.count = nla_get_u8(info->attrs[NL80211_ATTR_COLOR_CHANGE_COUNT]);
- 	params.color = nla_get_u8(info->attrs[NL80211_ATTR_COLOR_CHANGE_COLOR]);
- 
--	err = nl80211_parse_beacon(rdev, info->attrs, &params.beacon_next);
-+	err = nl80211_parse_beacon(rdev, info->attrs, &params.beacon_next,
-+				   info->extack);
- 	if (err)
- 		return err;
- 
-@@ -15894,7 +15956,8 @@ static int nl80211_color_change(struct sk_buff *skb, struct genl_info *info)
- 	if (err)
- 		goto out;
- 
--	err = nl80211_parse_beacon(rdev, tb, &params.beacon_color_change);
-+	err = nl80211_parse_beacon(rdev, tb, &params.beacon_color_change,
-+				   info->extack);
- 	if (err)
- 		goto out;
- 
-@@ -15950,6 +16013,8 @@ static int nl80211_color_change(struct sk_buff *skb, struct genl_info *info)
- out:
- 	kfree(params.beacon_next.mbssid_ies);
- 	kfree(params.beacon_color_change.mbssid_ies);
-+	kfree(params.beacon_next.rnr_ies);
-+	kfree(params.beacon_color_change.rnr_ies);
- 	kfree(tb);
- 	return err;
- }
+ 	skb = dev_alloc_skb(local->tx_headroom + beacon->head_len +
 -- 
 2.51.0
 
