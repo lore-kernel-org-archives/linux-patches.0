@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6812F359FB5;
-	Fri,  9 Jan 2026 12:01:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B13C359F99;
+	Fri,  9 Jan 2026 12:01:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960115; cv=none; b=oc4a0/F61UtQ0tctmQaYjojDMH3Y9sWOHZnL++BlnFks30CC5nHLhB0hddJpj3UW/Mj1+qfYXBw1XS2G+VxUOMduvezj/JNNmKJlf2ZTxCr1amcA/HdaCuSR53y+tZvfi9EW63UaB0oJHc51OGdoWUgVux/FqBhGm+L28/PBWcs=
+	t=1767960118; cv=none; b=XqZa9quGxqCd7j5whHSIu0v4qxfZbgaZN06fItTzgumCg/cVdLWM0BqnyMlEU8OciKph322oPGZaHvu3zKS/gLtcpGbkp+qxhzUQPGN5JuKvrMazm60/epvBGzpmrQWeu8JQlNrGkOzYRHqGe8FwYqQMQ44UxTpHou4rNYiVysI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960115; c=relaxed/simple;
-	bh=WqK6fnFH3eIvAhUnGxhqxkw33leqSjll1MPiHOjEoNA=;
+	s=arc-20240116; t=1767960118; c=relaxed/simple;
+	bh=lUw0WdYhg7nugtaAia+13PRR3tk8bLLsnUsUhMNYFS4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mfCPH+G+6ylXp5qbTmaMfVf0PXSJzM/FCs+4BbnwHrZHaO2HK4sRrAGc8Aww6Rfpt/ZvhVDHoU0kPWCi49D7tw7DOfgYmsNcPCX5jYYzZChx5MNXh+6pO5CVuHBB/Xw5sO1gC6cpBBlxoEzpKXGYgN8YpWaaWR3ycyizEQv6cuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N8tgf5ru; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YuECxQ+3UWXFZ2Ku6frXDU3yUCOLmv5eGNldvCV22QyjqgKTJVUBv+Jih+NPdWHF27FNgL310e3l1e66MlNbr1sEElt321gzpkM20k9EwpE9VLVkdScq0+YIM6hUf3gxAsKwQs9K+CchyYEDn5oaUARNyhi6vyjCETw7SJ+SO6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RuYciDKe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N8tgf5ru"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E757AC4CEF1;
-	Fri,  9 Jan 2026 12:01:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RuYciDKe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD009C4CEF1;
+	Fri,  9 Jan 2026 12:01:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960115;
-	bh=WqK6fnFH3eIvAhUnGxhqxkw33leqSjll1MPiHOjEoNA=;
+	s=korg; t=1767960118;
+	bh=lUw0WdYhg7nugtaAia+13PRR3tk8bLLsnUsUhMNYFS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N8tgf5ruxPA4ggF7vDrCItb8dtPmO/568PFaNBOOYhXu5XTsVAc7s0t3FaijwBHsg
-	 ilL+418onpNTCyCWZFW+RBNHHLgK6qxGRtMZ6GuPIaEpqT6z1bE0xgqv3DF+51nINy
-	 bl8aC/h9VIDPlxBQDFTVbgr6QaXoSMB2NpTLNEZc=
+	b=RuYciDKe+KXjyBFO1iJZvvOC5zy+aJnPMJvjWTeWa/Wz5cV13ehzdvOWoJD1B18e2
+	 9TYb73p6IcqUZcihD/e6jMi7zir+AQ7k2yQRRBLRZ9DkoxVasKkiuLmauTqHeYDKmA
+	 DE8ube5WCBCbGg9fVY36z2Gk3Z+NO+cj4DDM9J6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xie Yuanbin <xieyuanbin1@huawei.com>,
-	Liyuan Pang <pangliyuan1@huawei.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 283/737] ARM: 9464/1: fix input-only operand modification in load_unaligned_zeropad()
-Date: Fri,  9 Jan 2026 12:37:02 +0100
-Message-ID: <20260109112144.658426947@linuxfoundation.org>
+	Tianyang Zhang <zhangtianyang@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.6 292/737] [PATCH 6.12] LoongArch: Add machine_kexec_mask_interrupts() implementation
+Date: Fri,  9 Jan 2026 12:37:11 +0100
+Message-ID: <20260109112144.995034291@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,66 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liyuan Pang <pangliyuan1@huawei.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit edb924a7211c9aa7a4a415e03caee4d875e46b8e ]
+Commit 863a320dc6fd7c855f47da4b ("LoongArch: Mask all interrupts during
+kexec/kdump") is backported to LTS branches, but they lack a generic
+machine_kexec_mask_interrupts() implementation, so add an arch-specific
+one.
 
-In the inline assembly inside load_unaligned_zeropad(), the "addr" is
-constrained as input-only operand. The compiler assumes that on exit
-from the asm statement these operands contain the same values as they
-had before executing the statement, but when kernel page fault happened, the assembly fixup code "bic %2 %2, #0x3" modify the value of "addr", which may lead to an unexpected behavior.
-
-Use a temporary variable "tmp" to handle it, instead of modifying the
-input-only operand, just like what arm64's load_unaligned_zeropad()
-does.
-
-Fixes: b9a50f74905a ("ARM: 7450/1: dcache: select DCACHE_WORD_ACCESS for little-endian ARMv6+ CPUs")
-Co-developed-by: Xie Yuanbin <xieyuanbin1@huawei.com>
-Signed-off-by: Xie Yuanbin <xieyuanbin1@huawei.com>
-Signed-off-by: Liyuan Pang <pangliyuan1@huawei.com>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Tianyang Zhang <zhangtianyang@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/include/asm/word-at-a-time.h | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/loongarch/kernel/machine_kexec.c |   22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/arch/arm/include/asm/word-at-a-time.h b/arch/arm/include/asm/word-at-a-time.h
-index 352ab213520d2..2e6d0b4349f47 100644
---- a/arch/arm/include/asm/word-at-a-time.h
-+++ b/arch/arm/include/asm/word-at-a-time.h
-@@ -66,7 +66,7 @@ static inline unsigned long find_zero(unsigned long mask)
-  */
- static inline unsigned long load_unaligned_zeropad(const void *addr)
- {
--	unsigned long ret, offset;
-+	unsigned long ret, tmp;
+--- a/arch/loongarch/kernel/machine_kexec.c
++++ b/arch/loongarch/kernel/machine_kexec.c
+@@ -136,6 +136,28 @@ void kexec_reboot(void)
+ 	BUG();
+ }
  
- 	/* Load word from unaligned pointer addr */
- 	asm(
-@@ -74,9 +74,9 @@ static inline unsigned long load_unaligned_zeropad(const void *addr)
- 	"2:\n"
- 	"	.pushsection .text.fixup,\"ax\"\n"
- 	"	.align 2\n"
--	"3:	and	%1, %2, #0x3\n"
--	"	bic	%2, %2, #0x3\n"
--	"	ldr	%0, [%2]\n"
-+	"3:	bic	%1, %2, #0x3\n"
-+	"	ldr	%0, [%1]\n"
-+	"	and	%1, %2, #0x3\n"
- 	"	lsl	%1, %1, #0x3\n"
- #ifndef __ARMEB__
- 	"	lsr	%0, %0, %1\n"
-@@ -89,7 +89,7 @@ static inline unsigned long load_unaligned_zeropad(const void *addr)
- 	"	.align	3\n"
- 	"	.long	1b, 3b\n"
- 	"	.popsection"
--	: "=&r" (ret), "=&r" (offset)
-+	: "=&r" (ret), "=&r" (tmp)
- 	: "r" (addr), "Qo" (*(unsigned long *)addr));
++static void machine_kexec_mask_interrupts(void)
++{
++	unsigned int i;
++	struct irq_desc *desc;
++
++	for_each_irq_desc(i, desc) {
++		struct irq_chip *chip;
++
++		chip = irq_desc_get_chip(desc);
++		if (!chip)
++			continue;
++
++		if (chip->irq_eoi && irqd_irq_inprogress(&desc->irq_data))
++			chip->irq_eoi(&desc->irq_data);
++
++		if (chip->irq_mask)
++			chip->irq_mask(&desc->irq_data);
++
++		if (chip->irq_disable && !irqd_irq_disabled(&desc->irq_data))
++			chip->irq_disable(&desc->irq_data);
++	}
++}
  
- 	return ret;
--- 
-2.51.0
-
+ #ifdef CONFIG_SMP
+ static void kexec_shutdown_secondary(void *regs)
 
 
