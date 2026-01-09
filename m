@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D8433C53A;
-	Fri,  9 Jan 2026 12:44:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B321F335BCD;
+	Fri,  9 Jan 2026 12:44:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962694; cv=none; b=HyqojfbiKiB/PLdNBqkQ1es05vWjKrowGLUQqUhKkQzVq2uEXw0aloFUM/XO+I076n1fmEw14PwQrWtHmpWySB2fJy6fZeegahpcAqY1JNGYMQjgsNcGT/czBh4q2gN5HdVi9sXZmCIF26GUYGv7wtHnRZzRr9RPSw1/d8KJmC4=
+	t=1767962697; cv=none; b=bxSPfQV3z9zArkj/8TQBPsxlFX68uIPF4R8Gn8DGRS3UGthHnIcHC4/Zag4wlv9Kwj4NWq44TKOC0QgpP6omNYdnZZ0OlXrFalyjkZxVoJgfTABkT3kuGY0N8Zv4xCZPX3LfpqdFi8Cp/gd5g2T3bFkyLPw5xyCOrNOzCklR0KI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962694; c=relaxed/simple;
-	bh=BQ2Ocsx9qLYYWwzIVcU5Dj2aesDD9pfCT8QPWshz3sw=;
+	s=arc-20240116; t=1767962697; c=relaxed/simple;
+	bh=54RjP9svvz0o7HYFFTCn9htzJg8rYFuZ664VcURq+MY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VNowdnry9hWp7uVsDpkJKX4tzlyy9YiE0ua6f+t9gp32fXSe1UAo2A0iz/hn5oDasuVW80ocvUWnGaCnPGfQokR1xEafBVBBU1DmuP+N/eumqYMo5DCDMpKk0cIKRDS7ZeVJMxBJWu+mq4uCJ4udGfxYRI2rL5O4QUZHzfqX4KI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aN+RU990; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EhI0RxcIuHUiwJwKEJ/nYW+QkUbL5aA2+VLfttQ/u7EO1BrOzf1CtyZiFPTp7UI2mUeCq6pfWOq5IcsoPHTZSDS9zIjboongwfERWFq5h+YUYu2xF7U74FRlfaVkzGiM3AQa0tdRBLVlwvK7F6prxsT7gfat73hrmY+lCNKrFYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jRPzsbse; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aN+RU990"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BD8EC4CEF1;
-	Fri,  9 Jan 2026 12:44:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jRPzsbse"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D94CC4CEF1;
+	Fri,  9 Jan 2026 12:44:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962694;
-	bh=BQ2Ocsx9qLYYWwzIVcU5Dj2aesDD9pfCT8QPWshz3sw=;
+	s=korg; t=1767962697;
+	bh=54RjP9svvz0o7HYFFTCn9htzJg8rYFuZ664VcURq+MY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aN+RU990j5bi68G3sXCdX4skjdyDtD8rSW1Jz0Qqw/MqyU/RxB2b8PeADs2RpS/7B
-	 V0Y523UIg0zBme/CTM+oxKdpcLBx37eAMHTs9fQ77fco7VI8Z41DxfiwOmynde5+Fl
-	 vonTVwQP8U/lzLeSB1KqhrwkT8XAwphjl8/EdVcc=
+	b=jRPzsbseVrb3DCW9OcgWAVaBjPVXPbmtJppbjJzuIr4o3Pn7An1h/Js2/kRjjT7yB
+	 sX+sK1ZVSzzDXV+jyFwDe1QqsXcRVMAbr+a0QR2VRnLD6J3bHfnBTJKw2leFzOS2NJ
+	 NiHc0SIJBWqA/pUyVC/C3F+RbZS7vton/Ln7uAQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Halaney <ahalaney@redhat.com>,
-	Jesse Brandeburg <jesse.brandeburg@intel.com>,
-	Brian Masney <bmasney@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Song Yoong Siang <yoong.siang.song@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jesper Dangaard Brouer <brouer@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 423/634] net: stmmac: dwmac4: Allow platforms to specify some DMA/MTL offsets
-Date: Fri,  9 Jan 2026 12:41:41 +0100
-Message-ID: <20260109112133.458048193@linuxfoundation.org>
+Subject: [PATCH 6.1 424/634] net: stmmac: introduce wrapper for struct xdp_buff
+Date: Fri,  9 Jan 2026 12:41:42 +0100
+Message-ID: <20260109112133.496945670@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -53,924 +53,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Halaney <ahalaney@redhat.com>
+From: Song Yoong Siang <yoong.siang.song@intel.com>
 
-[ Upstream commit 33719b57f52e5b761234373f98f55f4e036d61c9 ]
+[ Upstream commit 5b24324a907c996faf47ea3969499e04beea9c4f ]
 
-Some platforms have dwmac4 implementations that have a different
-address space layout than the default, resulting in the need to define
-their own DMA/MTL offsets.
+Introduce struct stmmac_xdp_buff as a preparation to support XDP Rx
+metadata via kfuncs.
 
-Extend the functions to allow a platform driver to indicate what its
-addresses are, overriding the defaults.
-
-Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-Reviewed-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
-Tested-by: Brian Masney <bmasney@redhat.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Song Yoong Siang <yoong.siang.song@intel.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Acked-by: Jesper Dangaard Brouer <brouer@redhat.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: a48e23221000 ("net: stmmac: fix the crash issue for zero copy XDP_TX action")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac4.h  | 101 +++++++++--
- .../net/ethernet/stmicro/stmmac/dwmac4_core.c |  36 ++--
- .../net/ethernet/stmicro/stmmac/dwmac4_dma.c  | 157 ++++++++++--------
- .../net/ethernet/stmicro/stmmac/dwmac4_dma.h  |  54 +++---
- .../net/ethernet/stmicro/stmmac/dwmac4_lib.c  |  67 +++++---
- include/linux/stmmac.h                        |  19 +++
- 6 files changed, 293 insertions(+), 141 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac.h   |  4 ++++
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c  | 18 +++++++++---------
+ 2 files changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4.h b/drivers/net/ethernet/stmicro/stmmac/dwmac4.h
-index 12c0e60809f4..9c16265e527f 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac4.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4.h
-@@ -339,14 +339,25 @@ enum power_event {
- 
- #define MTL_CHAN_BASE_ADDR		0x00000d00
- #define MTL_CHAN_BASE_OFFSET		0x40
--#define MTL_CHANX_BASE_ADDR(x)		(MTL_CHAN_BASE_ADDR + \
--					(x * MTL_CHAN_BASE_OFFSET))
- 
--#define MTL_CHAN_TX_OP_MODE(x)		MTL_CHANX_BASE_ADDR(x)
--#define MTL_CHAN_TX_DEBUG(x)		(MTL_CHANX_BASE_ADDR(x) + 0x8)
--#define MTL_CHAN_INT_CTRL(x)		(MTL_CHANX_BASE_ADDR(x) + 0x2c)
--#define MTL_CHAN_RX_OP_MODE(x)		(MTL_CHANX_BASE_ADDR(x) + 0x30)
--#define MTL_CHAN_RX_DEBUG(x)		(MTL_CHANX_BASE_ADDR(x) + 0x38)
-+static inline u32 mtl_chanx_base_addr(const struct dwmac4_addrs *addrs,
-+				      const u32 x)
-+{
-+	u32 addr;
-+
-+	if (addrs)
-+		addr = addrs->mtl_chan + (x * addrs->mtl_chan_offset);
-+	else
-+		addr = MTL_CHAN_BASE_ADDR + (x * MTL_CHAN_BASE_OFFSET);
-+
-+	return addr;
-+}
-+
-+#define MTL_CHAN_TX_OP_MODE(addrs, x)	mtl_chanx_base_addr(addrs, x)
-+#define MTL_CHAN_TX_DEBUG(addrs, x)	(mtl_chanx_base_addr(addrs, x) + 0x8)
-+#define MTL_CHAN_INT_CTRL(addrs, x)	(mtl_chanx_base_addr(addrs, x) + 0x2c)
-+#define MTL_CHAN_RX_OP_MODE(addrs, x)	(mtl_chanx_base_addr(addrs, x) + 0x30)
-+#define MTL_CHAN_RX_DEBUG(addrs, x)	(mtl_chanx_base_addr(addrs, x) + 0x38)
- 
- #define MTL_OP_MODE_RSF			BIT(5)
- #define MTL_OP_MODE_TXQEN_MASK		GENMASK(3, 2)
-@@ -391,8 +402,19 @@ enum power_event {
- /* MTL ETS Control register */
- #define MTL_ETS_CTRL_BASE_ADDR		0x00000d10
- #define MTL_ETS_CTRL_BASE_OFFSET	0x40
--#define MTL_ETSX_CTRL_BASE_ADDR(x)	(MTL_ETS_CTRL_BASE_ADDR + \
--					((x) * MTL_ETS_CTRL_BASE_OFFSET))
-+
-+static inline u32 mtl_etsx_ctrl_base_addr(const struct dwmac4_addrs *addrs,
-+					  const u32 x)
-+{
-+	u32 addr;
-+
-+	if (addrs)
-+		addr = addrs->mtl_ets_ctrl + (x * addrs->mtl_ets_ctrl_offset);
-+	else
-+		addr = MTL_ETS_CTRL_BASE_ADDR + (x * MTL_ETS_CTRL_BASE_OFFSET);
-+
-+	return addr;
-+}
- 
- #define MTL_ETS_CTRL_CC			BIT(3)
- #define MTL_ETS_CTRL_AVALG		BIT(2)
-@@ -400,31 +422,76 @@ enum power_event {
- /* MTL Queue Quantum Weight */
- #define MTL_TXQ_WEIGHT_BASE_ADDR	0x00000d18
- #define MTL_TXQ_WEIGHT_BASE_OFFSET	0x40
--#define MTL_TXQX_WEIGHT_BASE_ADDR(x)	(MTL_TXQ_WEIGHT_BASE_ADDR + \
--					((x) * MTL_TXQ_WEIGHT_BASE_OFFSET))
-+
-+static inline u32 mtl_txqx_weight_base_addr(const struct dwmac4_addrs *addrs,
-+					    const u32 x)
-+{
-+	u32 addr;
-+
-+	if (addrs)
-+		addr = addrs->mtl_txq_weight + (x * addrs->mtl_txq_weight_offset);
-+	else
-+		addr = MTL_TXQ_WEIGHT_BASE_ADDR + (x * MTL_TXQ_WEIGHT_BASE_OFFSET);
-+
-+	return addr;
-+}
-+
- #define MTL_TXQ_WEIGHT_ISCQW_MASK	GENMASK(20, 0)
- 
- /* MTL sendSlopeCredit register */
- #define MTL_SEND_SLP_CRED_BASE_ADDR	0x00000d1c
- #define MTL_SEND_SLP_CRED_OFFSET	0x40
--#define MTL_SEND_SLP_CREDX_BASE_ADDR(x)	(MTL_SEND_SLP_CRED_BASE_ADDR + \
--					((x) * MTL_SEND_SLP_CRED_OFFSET))
-+
-+static inline u32 mtl_send_slp_credx_base_addr(const struct dwmac4_addrs *addrs,
-+					       const u32 x)
-+{
-+	u32 addr;
-+
-+	if (addrs)
-+		addr = addrs->mtl_send_slp_cred + (x * addrs->mtl_send_slp_cred_offset);
-+	else
-+		addr = MTL_SEND_SLP_CRED_BASE_ADDR + (x * MTL_SEND_SLP_CRED_OFFSET);
-+
-+	return addr;
-+}
- 
- #define MTL_SEND_SLP_CRED_SSC_MASK	GENMASK(13, 0)
- 
- /* MTL hiCredit register */
- #define MTL_HIGH_CRED_BASE_ADDR		0x00000d20
- #define MTL_HIGH_CRED_OFFSET		0x40
--#define MTL_HIGH_CREDX_BASE_ADDR(x)	(MTL_HIGH_CRED_BASE_ADDR + \
--					((x) * MTL_HIGH_CRED_OFFSET))
-+
-+static inline u32 mtl_high_credx_base_addr(const struct dwmac4_addrs *addrs,
-+					   const u32 x)
-+{
-+	u32 addr;
-+
-+	if (addrs)
-+		addr = addrs->mtl_high_cred + (x * addrs->mtl_high_cred_offset);
-+	else
-+		addr = MTL_HIGH_CRED_BASE_ADDR + (x * MTL_HIGH_CRED_OFFSET);
-+
-+	return addr;
-+}
- 
- #define MTL_HIGH_CRED_HC_MASK		GENMASK(28, 0)
- 
- /* MTL loCredit register */
- #define MTL_LOW_CRED_BASE_ADDR		0x00000d24
- #define MTL_LOW_CRED_OFFSET		0x40
--#define MTL_LOW_CREDX_BASE_ADDR(x)	(MTL_LOW_CRED_BASE_ADDR + \
--					((x) * MTL_LOW_CRED_OFFSET))
-+
-+static inline u32 mtl_low_credx_base_addr(const struct dwmac4_addrs *addrs,
-+					  const u32 x)
-+{
-+	u32 addr;
-+
-+	if (addrs)
-+		addr = addrs->mtl_low_cred + (x * addrs->mtl_low_cred_offset);
-+	else
-+		addr = MTL_LOW_CRED_BASE_ADDR + (x * MTL_LOW_CRED_OFFSET);
-+
-+	return addr;
-+}
- 
- #define MTL_HIGH_CRED_LC_MASK		GENMASK(28, 0)
- 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-index 279977d0d565..e7c1e150e2e9 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-@@ -230,12 +230,14 @@ static void dwmac4_set_mtl_tx_queue_weight(struct stmmac_priv *priv,
- 					   struct mac_device_info *hw,
- 					   u32 weight, u32 queue)
- {
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
- 	void __iomem *ioaddr = hw->pcsr;
--	u32 value = readl(ioaddr + MTL_TXQX_WEIGHT_BASE_ADDR(queue));
-+	u32 value = readl(ioaddr + mtl_txqx_weight_base_addr(dwmac4_addrs,
-+							     queue));
- 
- 	value &= ~MTL_TXQ_WEIGHT_ISCQW_MASK;
- 	value |= weight & MTL_TXQ_WEIGHT_ISCQW_MASK;
--	writel(value, ioaddr + MTL_TXQX_WEIGHT_BASE_ADDR(queue));
-+	writel(value, ioaddr + mtl_txqx_weight_base_addr(dwmac4_addrs, queue));
- }
- 
- static void dwmac4_map_mtl_dma(struct mac_device_info *hw, u32 queue, u32 chan)
-@@ -270,6 +272,7 @@ static void dwmac4_config_cbs(struct stmmac_priv *priv,
- 			      u32 send_slope, u32 idle_slope,
- 			      u32 high_credit, u32 low_credit, u32 queue)
- {
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
- 	void __iomem *ioaddr = hw->pcsr;
- 	u32 value;
- 
-@@ -280,31 +283,33 @@ static void dwmac4_config_cbs(struct stmmac_priv *priv,
- 	pr_debug("\tlow_credit: 0x%08x\n", low_credit);
- 
- 	/* enable AV algorithm */
--	value = readl(ioaddr + MTL_ETSX_CTRL_BASE_ADDR(queue));
-+	value = readl(ioaddr + mtl_etsx_ctrl_base_addr(dwmac4_addrs, queue));
- 	value |= MTL_ETS_CTRL_AVALG;
- 	value |= MTL_ETS_CTRL_CC;
--	writel(value, ioaddr + MTL_ETSX_CTRL_BASE_ADDR(queue));
-+	writel(value, ioaddr + mtl_etsx_ctrl_base_addr(dwmac4_addrs, queue));
- 
- 	/* configure send slope */
--	value = readl(ioaddr + MTL_SEND_SLP_CREDX_BASE_ADDR(queue));
-+	value = readl(ioaddr + mtl_send_slp_credx_base_addr(dwmac4_addrs,
-+							    queue));
- 	value &= ~MTL_SEND_SLP_CRED_SSC_MASK;
- 	value |= send_slope & MTL_SEND_SLP_CRED_SSC_MASK;
--	writel(value, ioaddr + MTL_SEND_SLP_CREDX_BASE_ADDR(queue));
-+	writel(value, ioaddr + mtl_send_slp_credx_base_addr(dwmac4_addrs,
-+							    queue));
- 
- 	/* configure idle slope (same register as tx weight) */
- 	dwmac4_set_mtl_tx_queue_weight(priv, hw, idle_slope, queue);
- 
- 	/* configure high credit */
--	value = readl(ioaddr + MTL_HIGH_CREDX_BASE_ADDR(queue));
-+	value = readl(ioaddr + mtl_high_credx_base_addr(dwmac4_addrs, queue));
- 	value &= ~MTL_HIGH_CRED_HC_MASK;
- 	value |= high_credit & MTL_HIGH_CRED_HC_MASK;
--	writel(value, ioaddr + MTL_HIGH_CREDX_BASE_ADDR(queue));
-+	writel(value, ioaddr + mtl_high_credx_base_addr(dwmac4_addrs, queue));
- 
- 	/* configure high credit */
--	value = readl(ioaddr + MTL_LOW_CREDX_BASE_ADDR(queue));
-+	value = readl(ioaddr + mtl_low_credx_base_addr(dwmac4_addrs, queue));
- 	value &= ~MTL_HIGH_CRED_LC_MASK;
- 	value |= low_credit & MTL_HIGH_CRED_LC_MASK;
--	writel(value, ioaddr + MTL_LOW_CREDX_BASE_ADDR(queue));
-+	writel(value, ioaddr + mtl_low_credx_base_addr(dwmac4_addrs, queue));
- }
- 
- static void dwmac4_dump_regs(struct mac_device_info *hw, u32 *reg_space)
-@@ -800,6 +805,7 @@ static void dwmac4_phystatus(void __iomem *ioaddr, struct stmmac_extra_stats *x)
- static int dwmac4_irq_mtl_status(struct stmmac_priv *priv,
- 				 struct mac_device_info *hw, u32 chan)
- {
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
- 	void __iomem *ioaddr = hw->pcsr;
- 	u32 mtl_int_qx_status;
- 	int ret = 0;
-@@ -809,12 +815,13 @@ static int dwmac4_irq_mtl_status(struct stmmac_priv *priv,
- 	/* Check MTL Interrupt */
- 	if (mtl_int_qx_status & MTL_INT_QX(chan)) {
- 		/* read Queue x Interrupt status */
--		u32 status = readl(ioaddr + MTL_CHAN_INT_CTRL(chan));
-+		u32 status = readl(ioaddr + MTL_CHAN_INT_CTRL(dwmac4_addrs,
-+							      chan));
- 
- 		if (status & MTL_RX_OVERFLOW_INT) {
- 			/*  clear Interrupt */
- 			writel(status | MTL_RX_OVERFLOW_INT,
--			       ioaddr + MTL_CHAN_INT_CTRL(chan));
-+			       ioaddr + MTL_CHAN_INT_CTRL(dwmac4_addrs, chan));
- 			ret = CORE_IRQ_MTL_RX_OVERFLOW;
- 		}
- 	}
-@@ -876,11 +883,12 @@ static void dwmac4_debug(struct stmmac_priv *priv, void __iomem *ioaddr,
- 			 struct stmmac_extra_stats *x,
- 			 u32 rx_queues, u32 tx_queues)
- {
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
- 	u32 value;
- 	u32 queue;
- 
- 	for (queue = 0; queue < tx_queues; queue++) {
--		value = readl(ioaddr + MTL_CHAN_TX_DEBUG(queue));
-+		value = readl(ioaddr + MTL_CHAN_TX_DEBUG(dwmac4_addrs, queue));
- 
- 		if (value & MTL_DEBUG_TXSTSFSTS)
- 			x->mtl_tx_status_fifo_full++;
-@@ -905,7 +913,7 @@ static void dwmac4_debug(struct stmmac_priv *priv, void __iomem *ioaddr,
- 	}
- 
- 	for (queue = 0; queue < rx_queues; queue++) {
--		value = readl(ioaddr + MTL_CHAN_RX_DEBUG(queue));
-+		value = readl(ioaddr + MTL_CHAN_RX_DEBUG(dwmac4_addrs, queue));
- 
- 		if (value & MTL_DEBUG_RXFSTS_MASK) {
- 			u32 rxfsts = (value & MTL_DEBUG_RXFSTS_MASK)
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_dma.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_dma.c
-index 6f255d12f60f..84d3a8551b03 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_dma.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_dma.c
-@@ -13,6 +13,7 @@
- #include <linux/io.h>
- #include "dwmac4.h"
- #include "dwmac4_dma.h"
-+#include "stmmac.h"
- 
- static void dwmac4_dma_axi(void __iomem *ioaddr, struct stmmac_axi *axi)
- {
-@@ -73,18 +74,20 @@ static void dwmac4_dma_init_rx_chan(struct stmmac_priv *priv,
- 				    struct stmmac_dma_cfg *dma_cfg,
- 				    dma_addr_t dma_rx_phy, u32 chan)
- {
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
- 	u32 value;
- 	u32 rxpbl = dma_cfg->rxpbl ?: dma_cfg->pbl;
- 
--	value = readl(ioaddr + DMA_CHAN_RX_CONTROL(chan));
-+	value = readl(ioaddr + DMA_CHAN_RX_CONTROL(dwmac4_addrs, chan));
- 	value = value | (rxpbl << DMA_BUS_MODE_RPBL_SHIFT);
--	writel(value, ioaddr + DMA_CHAN_RX_CONTROL(chan));
-+	writel(value, ioaddr + DMA_CHAN_RX_CONTROL(dwmac4_addrs, chan));
- 
- 	if (IS_ENABLED(CONFIG_ARCH_DMA_ADDR_T_64BIT) && likely(dma_cfg->eame))
- 		writel(upper_32_bits(dma_rx_phy),
--		       ioaddr + DMA_CHAN_RX_BASE_ADDR_HI(chan));
-+		       ioaddr + DMA_CHAN_RX_BASE_ADDR_HI(dwmac4_addrs, chan));
- 
--	writel(lower_32_bits(dma_rx_phy), ioaddr + DMA_CHAN_RX_BASE_ADDR(chan));
-+	writel(lower_32_bits(dma_rx_phy),
-+	       ioaddr + DMA_CHAN_RX_BASE_ADDR(dwmac4_addrs, chan));
- }
- 
- static void dwmac4_dma_init_tx_chan(struct stmmac_priv *priv,
-@@ -92,57 +95,61 @@ static void dwmac4_dma_init_tx_chan(struct stmmac_priv *priv,
- 				    struct stmmac_dma_cfg *dma_cfg,
- 				    dma_addr_t dma_tx_phy, u32 chan)
- {
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
- 	u32 value;
- 	u32 txpbl = dma_cfg->txpbl ?: dma_cfg->pbl;
- 
--	value = readl(ioaddr + DMA_CHAN_TX_CONTROL(chan));
-+	value = readl(ioaddr + DMA_CHAN_TX_CONTROL(dwmac4_addrs, chan));
- 	value = value | (txpbl << DMA_BUS_MODE_PBL_SHIFT);
- 
- 	/* Enable OSP to get best performance */
- 	value |= DMA_CONTROL_OSP;
- 
--	writel(value, ioaddr + DMA_CHAN_TX_CONTROL(chan));
-+	writel(value, ioaddr + DMA_CHAN_TX_CONTROL(dwmac4_addrs, chan));
- 
- 	if (IS_ENABLED(CONFIG_ARCH_DMA_ADDR_T_64BIT) && likely(dma_cfg->eame))
- 		writel(upper_32_bits(dma_tx_phy),
--		       ioaddr + DMA_CHAN_TX_BASE_ADDR_HI(chan));
-+		       ioaddr + DMA_CHAN_TX_BASE_ADDR_HI(dwmac4_addrs, chan));
- 
--	writel(lower_32_bits(dma_tx_phy), ioaddr + DMA_CHAN_TX_BASE_ADDR(chan));
-+	writel(lower_32_bits(dma_tx_phy),
-+	       ioaddr + DMA_CHAN_TX_BASE_ADDR(dwmac4_addrs, chan));
- }
- 
- static void dwmac4_dma_init_channel(struct stmmac_priv *priv,
- 				    void __iomem *ioaddr,
- 				    struct stmmac_dma_cfg *dma_cfg, u32 chan)
- {
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
- 	u32 value;
- 
- 	/* common channel control register config */
--	value = readl(ioaddr + DMA_CHAN_CONTROL(chan));
-+	value = readl(ioaddr + DMA_CHAN_CONTROL(dwmac4_addrs, chan));
- 	if (dma_cfg->pblx8)
- 		value = value | DMA_BUS_MODE_PBL;
--	writel(value, ioaddr + DMA_CHAN_CONTROL(chan));
-+	writel(value, ioaddr + DMA_CHAN_CONTROL(dwmac4_addrs, chan));
- 
- 	/* Mask interrupts by writing to CSR7 */
- 	writel(DMA_CHAN_INTR_DEFAULT_MASK,
--	       ioaddr + DMA_CHAN_INTR_ENA(chan));
-+	       ioaddr + DMA_CHAN_INTR_ENA(dwmac4_addrs, chan));
- }
- 
- static void dwmac410_dma_init_channel(struct stmmac_priv *priv,
- 				      void __iomem *ioaddr,
- 				      struct stmmac_dma_cfg *dma_cfg, u32 chan)
- {
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
- 	u32 value;
- 
- 	/* common channel control register config */
--	value = readl(ioaddr + DMA_CHAN_CONTROL(chan));
-+	value = readl(ioaddr + DMA_CHAN_CONTROL(dwmac4_addrs, chan));
- 	if (dma_cfg->pblx8)
- 		value = value | DMA_BUS_MODE_PBL;
- 
--	writel(value, ioaddr + DMA_CHAN_CONTROL(chan));
-+	writel(value, ioaddr + DMA_CHAN_CONTROL(dwmac4_addrs, chan));
- 
- 	/* Mask interrupts by writing to CSR7 */
- 	writel(DMA_CHAN_INTR_DEFAULT_MASK_4_10,
--	       ioaddr + DMA_CHAN_INTR_ENA(chan));
-+	       ioaddr + DMA_CHAN_INTR_ENA(dwmac4_addrs, chan));
- }
- 
- static void dwmac4_dma_init(void __iomem *ioaddr,
-@@ -184,40 +191,46 @@ static void _dwmac4_dump_dma_regs(struct stmmac_priv *priv,
- 				  void __iomem *ioaddr, u32 channel,
- 				  u32 *reg_space)
- {
--	reg_space[DMA_CHAN_CONTROL(channel) / 4] =
--		readl(ioaddr + DMA_CHAN_CONTROL(channel));
--	reg_space[DMA_CHAN_TX_CONTROL(channel) / 4] =
--		readl(ioaddr + DMA_CHAN_TX_CONTROL(channel));
--	reg_space[DMA_CHAN_RX_CONTROL(channel) / 4] =
--		readl(ioaddr + DMA_CHAN_RX_CONTROL(channel));
--	reg_space[DMA_CHAN_TX_BASE_ADDR(channel) / 4] =
--		readl(ioaddr + DMA_CHAN_TX_BASE_ADDR(channel));
--	reg_space[DMA_CHAN_RX_BASE_ADDR(channel) / 4] =
--		readl(ioaddr + DMA_CHAN_RX_BASE_ADDR(channel));
--	reg_space[DMA_CHAN_TX_END_ADDR(channel) / 4] =
--		readl(ioaddr + DMA_CHAN_TX_END_ADDR(channel));
--	reg_space[DMA_CHAN_RX_END_ADDR(channel) / 4] =
--		readl(ioaddr + DMA_CHAN_RX_END_ADDR(channel));
--	reg_space[DMA_CHAN_TX_RING_LEN(channel) / 4] =
--		readl(ioaddr + DMA_CHAN_TX_RING_LEN(channel));
--	reg_space[DMA_CHAN_RX_RING_LEN(channel) / 4] =
--		readl(ioaddr + DMA_CHAN_RX_RING_LEN(channel));
--	reg_space[DMA_CHAN_INTR_ENA(channel) / 4] =
--		readl(ioaddr + DMA_CHAN_INTR_ENA(channel));
--	reg_space[DMA_CHAN_RX_WATCHDOG(channel) / 4] =
--		readl(ioaddr + DMA_CHAN_RX_WATCHDOG(channel));
--	reg_space[DMA_CHAN_SLOT_CTRL_STATUS(channel) / 4] =
--		readl(ioaddr + DMA_CHAN_SLOT_CTRL_STATUS(channel));
--	reg_space[DMA_CHAN_CUR_TX_DESC(channel) / 4] =
--		readl(ioaddr + DMA_CHAN_CUR_TX_DESC(channel));
--	reg_space[DMA_CHAN_CUR_RX_DESC(channel) / 4] =
--		readl(ioaddr + DMA_CHAN_CUR_RX_DESC(channel));
--	reg_space[DMA_CHAN_CUR_TX_BUF_ADDR(channel) / 4] =
--		readl(ioaddr + DMA_CHAN_CUR_TX_BUF_ADDR(channel));
--	reg_space[DMA_CHAN_CUR_RX_BUF_ADDR(channel) / 4] =
--		readl(ioaddr + DMA_CHAN_CUR_RX_BUF_ADDR(channel));
--	reg_space[DMA_CHAN_STATUS(channel) / 4] =
--		readl(ioaddr + DMA_CHAN_STATUS(channel));
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
-+	const struct dwmac4_addrs *default_addrs = NULL;
-+
-+	/* Purposely save the registers in the "normal" layout, regardless of
-+	 * platform modifications, to keep reg_space size constant
-+	 */
-+	reg_space[DMA_CHAN_CONTROL(default_addrs, channel) / 4] =
-+		readl(ioaddr + DMA_CHAN_CONTROL(dwmac4_addrs, channel));
-+	reg_space[DMA_CHAN_TX_CONTROL(default_addrs, channel) / 4] =
-+		readl(ioaddr + DMA_CHAN_TX_CONTROL(dwmac4_addrs, channel));
-+	reg_space[DMA_CHAN_RX_CONTROL(default_addrs, channel) / 4] =
-+		readl(ioaddr + DMA_CHAN_RX_CONTROL(dwmac4_addrs, channel));
-+	reg_space[DMA_CHAN_TX_BASE_ADDR(default_addrs, channel) / 4] =
-+		readl(ioaddr + DMA_CHAN_TX_BASE_ADDR(dwmac4_addrs, channel));
-+	reg_space[DMA_CHAN_RX_BASE_ADDR(default_addrs, channel) / 4] =
-+		readl(ioaddr + DMA_CHAN_RX_BASE_ADDR(dwmac4_addrs, channel));
-+	reg_space[DMA_CHAN_TX_END_ADDR(default_addrs, channel) / 4] =
-+		readl(ioaddr + DMA_CHAN_TX_END_ADDR(dwmac4_addrs, channel));
-+	reg_space[DMA_CHAN_RX_END_ADDR(default_addrs, channel) / 4] =
-+		readl(ioaddr + DMA_CHAN_RX_END_ADDR(dwmac4_addrs, channel));
-+	reg_space[DMA_CHAN_TX_RING_LEN(default_addrs, channel) / 4] =
-+		readl(ioaddr + DMA_CHAN_TX_RING_LEN(dwmac4_addrs, channel));
-+	reg_space[DMA_CHAN_RX_RING_LEN(default_addrs, channel) / 4] =
-+		readl(ioaddr + DMA_CHAN_RX_RING_LEN(dwmac4_addrs, channel));
-+	reg_space[DMA_CHAN_INTR_ENA(default_addrs, channel) / 4] =
-+		readl(ioaddr + DMA_CHAN_INTR_ENA(dwmac4_addrs, channel));
-+	reg_space[DMA_CHAN_RX_WATCHDOG(default_addrs, channel) / 4] =
-+		readl(ioaddr + DMA_CHAN_RX_WATCHDOG(dwmac4_addrs, channel));
-+	reg_space[DMA_CHAN_SLOT_CTRL_STATUS(default_addrs, channel) / 4] =
-+		readl(ioaddr + DMA_CHAN_SLOT_CTRL_STATUS(dwmac4_addrs, channel));
-+	reg_space[DMA_CHAN_CUR_TX_DESC(default_addrs, channel) / 4] =
-+		readl(ioaddr + DMA_CHAN_CUR_TX_DESC(dwmac4_addrs, channel));
-+	reg_space[DMA_CHAN_CUR_RX_DESC(default_addrs, channel) / 4] =
-+		readl(ioaddr + DMA_CHAN_CUR_RX_DESC(dwmac4_addrs, channel));
-+	reg_space[DMA_CHAN_CUR_TX_BUF_ADDR(default_addrs, channel) / 4] =
-+		readl(ioaddr + DMA_CHAN_CUR_TX_BUF_ADDR(dwmac4_addrs, channel));
-+	reg_space[DMA_CHAN_CUR_RX_BUF_ADDR(default_addrs, channel) / 4] =
-+		readl(ioaddr + DMA_CHAN_CUR_RX_BUF_ADDR(dwmac4_addrs, channel));
-+	reg_space[DMA_CHAN_STATUS(default_addrs, channel) / 4] =
-+		readl(ioaddr + DMA_CHAN_STATUS(dwmac4_addrs, channel));
- }
- 
- static void dwmac4_dump_dma_regs(struct stmmac_priv *priv, void __iomem *ioaddr,
-@@ -232,17 +245,20 @@ static void dwmac4_dump_dma_regs(struct stmmac_priv *priv, void __iomem *ioaddr,
- static void dwmac4_rx_watchdog(struct stmmac_priv *priv, void __iomem *ioaddr,
- 			       u32 riwt, u32 queue)
- {
--	writel(riwt, ioaddr + DMA_CHAN_RX_WATCHDOG(queue));
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
-+
-+	writel(riwt, ioaddr + DMA_CHAN_RX_WATCHDOG(dwmac4_addrs, queue));
- }
- 
- static void dwmac4_dma_rx_chan_op_mode(struct stmmac_priv *priv,
- 				       void __iomem *ioaddr, int mode,
- 				       u32 channel, int fifosz, u8 qmode)
- {
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
- 	unsigned int rqs = fifosz / 256 - 1;
- 	u32 mtl_rx_op;
- 
--	mtl_rx_op = readl(ioaddr + MTL_CHAN_RX_OP_MODE(channel));
-+	mtl_rx_op = readl(ioaddr + MTL_CHAN_RX_OP_MODE(dwmac4_addrs, channel));
- 
- 	if (mode == SF_DMA_MODE) {
- 		pr_debug("GMAC: enable RX store and forward mode\n");
-@@ -300,14 +316,16 @@ static void dwmac4_dma_rx_chan_op_mode(struct stmmac_priv *priv,
- 		mtl_rx_op |= rfa << MTL_OP_MODE_RFA_SHIFT;
- 	}
- 
--	writel(mtl_rx_op, ioaddr + MTL_CHAN_RX_OP_MODE(channel));
-+	writel(mtl_rx_op, ioaddr + MTL_CHAN_RX_OP_MODE(dwmac4_addrs, channel));
- }
- 
- static void dwmac4_dma_tx_chan_op_mode(struct stmmac_priv *priv,
- 				       void __iomem *ioaddr, int mode,
- 				       u32 channel, int fifosz, u8 qmode)
- {
--	u32 mtl_tx_op = readl(ioaddr + MTL_CHAN_TX_OP_MODE(channel));
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
-+	u32 mtl_tx_op = readl(ioaddr + MTL_CHAN_TX_OP_MODE(dwmac4_addrs,
-+							   channel));
- 	unsigned int tqs = fifosz / 256 - 1;
- 
- 	if (mode == SF_DMA_MODE) {
-@@ -353,7 +371,7 @@ static void dwmac4_dma_tx_chan_op_mode(struct stmmac_priv *priv,
- 	mtl_tx_op &= ~MTL_OP_MODE_TQS_MASK;
- 	mtl_tx_op |= tqs << MTL_OP_MODE_TQS_SHIFT;
- 
--	writel(mtl_tx_op, ioaddr +  MTL_CHAN_TX_OP_MODE(channel));
-+	writel(mtl_tx_op, ioaddr +  MTL_CHAN_TX_OP_MODE(dwmac4_addrs, channel));
- }
- 
- static int dwmac4_get_hw_feature(void __iomem *ioaddr,
-@@ -454,25 +472,28 @@ static int dwmac4_get_hw_feature(void __iomem *ioaddr,
- static void dwmac4_enable_tso(struct stmmac_priv *priv, void __iomem *ioaddr,
- 			      bool en, u32 chan)
- {
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
- 	u32 value;
- 
- 	if (en) {
- 		/* enable TSO */
--		value = readl(ioaddr + DMA_CHAN_TX_CONTROL(chan));
-+		value = readl(ioaddr + DMA_CHAN_TX_CONTROL(dwmac4_addrs, chan));
- 		writel(value | DMA_CONTROL_TSE,
--		       ioaddr + DMA_CHAN_TX_CONTROL(chan));
-+		       ioaddr + DMA_CHAN_TX_CONTROL(dwmac4_addrs, chan));
- 	} else {
- 		/* enable TSO */
--		value = readl(ioaddr + DMA_CHAN_TX_CONTROL(chan));
-+		value = readl(ioaddr + DMA_CHAN_TX_CONTROL(dwmac4_addrs, chan));
- 		writel(value & ~DMA_CONTROL_TSE,
--		       ioaddr + DMA_CHAN_TX_CONTROL(chan));
-+		       ioaddr + DMA_CHAN_TX_CONTROL(dwmac4_addrs, chan));
- 	}
- }
- 
- static void dwmac4_qmode(struct stmmac_priv *priv, void __iomem *ioaddr,
- 			 u32 channel, u8 qmode)
- {
--	u32 mtl_tx_op = readl(ioaddr + MTL_CHAN_TX_OP_MODE(channel));
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
-+	u32 mtl_tx_op = readl(ioaddr + MTL_CHAN_TX_OP_MODE(dwmac4_addrs,
-+							   channel));
- 
- 	mtl_tx_op &= ~MTL_OP_MODE_TXQEN_MASK;
- 	if (qmode != MTL_QUEUE_AVB)
-@@ -480,50 +501,54 @@ static void dwmac4_qmode(struct stmmac_priv *priv, void __iomem *ioaddr,
- 	else
- 		mtl_tx_op |= MTL_OP_MODE_TXQEN_AV;
- 
--	writel(mtl_tx_op, ioaddr +  MTL_CHAN_TX_OP_MODE(channel));
-+	writel(mtl_tx_op, ioaddr +  MTL_CHAN_TX_OP_MODE(dwmac4_addrs, channel));
- }
- 
- static void dwmac4_set_bfsize(struct stmmac_priv *priv, void __iomem *ioaddr,
- 			      int bfsize, u32 chan)
- {
--	u32 value = readl(ioaddr + DMA_CHAN_RX_CONTROL(chan));
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
-+	u32 value = readl(ioaddr + DMA_CHAN_RX_CONTROL(dwmac4_addrs, chan));
- 
- 	value &= ~DMA_RBSZ_MASK;
- 	value |= (bfsize << DMA_RBSZ_SHIFT) & DMA_RBSZ_MASK;
- 
--	writel(value, ioaddr + DMA_CHAN_RX_CONTROL(chan));
-+	writel(value, ioaddr + DMA_CHAN_RX_CONTROL(dwmac4_addrs, chan));
- }
- 
- static void dwmac4_enable_sph(struct stmmac_priv *priv, void __iomem *ioaddr,
- 			      bool en, u32 chan)
- {
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
- 	u32 value = readl(ioaddr + GMAC_EXT_CONFIG);
- 
- 	value &= ~GMAC_CONFIG_HDSMS;
- 	value |= GMAC_CONFIG_HDSMS_256; /* Segment max 256 bytes */
- 	writel(value, ioaddr + GMAC_EXT_CONFIG);
- 
--	value = readl(ioaddr + DMA_CHAN_CONTROL(chan));
-+	value = readl(ioaddr + DMA_CHAN_CONTROL(dwmac4_addrs, chan));
- 	if (en)
- 		value |= DMA_CONTROL_SPH;
- 	else
- 		value &= ~DMA_CONTROL_SPH;
--	writel(value, ioaddr + DMA_CHAN_CONTROL(chan));
-+	writel(value, ioaddr + DMA_CHAN_CONTROL(dwmac4_addrs, chan));
- }
- 
- static int dwmac4_enable_tbs(struct stmmac_priv *priv, void __iomem *ioaddr,
- 			     bool en, u32 chan)
- {
--	u32 value = readl(ioaddr + DMA_CHAN_TX_CONTROL(chan));
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
-+	u32 value = readl(ioaddr + DMA_CHAN_TX_CONTROL(dwmac4_addrs, chan));
- 
- 	if (en)
- 		value |= DMA_CONTROL_EDSE;
- 	else
- 		value &= ~DMA_CONTROL_EDSE;
- 
--	writel(value, ioaddr + DMA_CHAN_TX_CONTROL(chan));
-+	writel(value, ioaddr + DMA_CHAN_TX_CONTROL(dwmac4_addrs, chan));
- 
--	value = readl(ioaddr + DMA_CHAN_TX_CONTROL(chan)) & DMA_CONTROL_EDSE;
-+	value = readl(ioaddr + DMA_CHAN_TX_CONTROL(dwmac4_addrs,
-+						   chan)) & DMA_CONTROL_EDSE;
- 	if (en && !value)
- 		return -EIO;
- 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_dma.h b/drivers/net/ethernet/stmicro/stmmac/dwmac4_dma.h
-index 740c3bc8d9a0..358e7dcb6a9a 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_dma.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_dma.h
-@@ -95,29 +95,41 @@
- /* Following DMA defines are chanels oriented */
- #define DMA_CHAN_BASE_ADDR		0x00001100
- #define DMA_CHAN_BASE_OFFSET		0x80
--#define DMA_CHANX_BASE_ADDR(x)		(DMA_CHAN_BASE_ADDR + \
--					(x * DMA_CHAN_BASE_OFFSET))
-+
-+static inline u32 dma_chanx_base_addr(const struct dwmac4_addrs *addrs,
-+				      const u32 x)
-+{
-+	u32 addr;
-+
-+	if (addrs)
-+		addr = addrs->dma_chan + (x * addrs->dma_chan_offset);
-+	else
-+		addr = DMA_CHAN_BASE_ADDR + (x * DMA_CHAN_BASE_OFFSET);
-+
-+	return addr;
-+}
-+
- #define DMA_CHAN_REG_NUMBER		17
- 
--#define DMA_CHAN_CONTROL(x)		DMA_CHANX_BASE_ADDR(x)
--#define DMA_CHAN_TX_CONTROL(x)		(DMA_CHANX_BASE_ADDR(x) + 0x4)
--#define DMA_CHAN_RX_CONTROL(x)		(DMA_CHANX_BASE_ADDR(x) + 0x8)
--#define DMA_CHAN_TX_BASE_ADDR_HI(x)	(DMA_CHANX_BASE_ADDR(x) + 0x10)
--#define DMA_CHAN_TX_BASE_ADDR(x)	(DMA_CHANX_BASE_ADDR(x) + 0x14)
--#define DMA_CHAN_RX_BASE_ADDR_HI(x)	(DMA_CHANX_BASE_ADDR(x) + 0x18)
--#define DMA_CHAN_RX_BASE_ADDR(x)	(DMA_CHANX_BASE_ADDR(x) + 0x1c)
--#define DMA_CHAN_TX_END_ADDR(x)		(DMA_CHANX_BASE_ADDR(x) + 0x20)
--#define DMA_CHAN_RX_END_ADDR(x)		(DMA_CHANX_BASE_ADDR(x) + 0x28)
--#define DMA_CHAN_TX_RING_LEN(x)		(DMA_CHANX_BASE_ADDR(x) + 0x2c)
--#define DMA_CHAN_RX_RING_LEN(x)		(DMA_CHANX_BASE_ADDR(x) + 0x30)
--#define DMA_CHAN_INTR_ENA(x)		(DMA_CHANX_BASE_ADDR(x) + 0x34)
--#define DMA_CHAN_RX_WATCHDOG(x)		(DMA_CHANX_BASE_ADDR(x) + 0x38)
--#define DMA_CHAN_SLOT_CTRL_STATUS(x)	(DMA_CHANX_BASE_ADDR(x) + 0x3c)
--#define DMA_CHAN_CUR_TX_DESC(x)		(DMA_CHANX_BASE_ADDR(x) + 0x44)
--#define DMA_CHAN_CUR_RX_DESC(x)		(DMA_CHANX_BASE_ADDR(x) + 0x4c)
--#define DMA_CHAN_CUR_TX_BUF_ADDR(x)	(DMA_CHANX_BASE_ADDR(x) + 0x54)
--#define DMA_CHAN_CUR_RX_BUF_ADDR(x)	(DMA_CHANX_BASE_ADDR(x) + 0x5c)
--#define DMA_CHAN_STATUS(x)		(DMA_CHANX_BASE_ADDR(x) + 0x60)
-+#define DMA_CHAN_CONTROL(addrs, x)	dma_chanx_base_addr(addrs, x)
-+#define DMA_CHAN_TX_CONTROL(addrs, x)	(dma_chanx_base_addr(addrs, x) + 0x4)
-+#define DMA_CHAN_RX_CONTROL(addrs, x)	(dma_chanx_base_addr(addrs, x) + 0x8)
-+#define DMA_CHAN_TX_BASE_ADDR_HI(addrs, x)	(dma_chanx_base_addr(addrs, x) + 0x10)
-+#define DMA_CHAN_TX_BASE_ADDR(addrs, x)	(dma_chanx_base_addr(addrs, x) + 0x14)
-+#define DMA_CHAN_RX_BASE_ADDR_HI(addrs, x)	(dma_chanx_base_addr(addrs, x) + 0x18)
-+#define DMA_CHAN_RX_BASE_ADDR(addrs, x)	(dma_chanx_base_addr(addrs, x) + 0x1c)
-+#define DMA_CHAN_TX_END_ADDR(addrs, x)	(dma_chanx_base_addr(addrs, x) + 0x20)
-+#define DMA_CHAN_RX_END_ADDR(addrs, x)	(dma_chanx_base_addr(addrs, x) + 0x28)
-+#define DMA_CHAN_TX_RING_LEN(addrs, x)	(dma_chanx_base_addr(addrs, x) + 0x2c)
-+#define DMA_CHAN_RX_RING_LEN(addrs, x)	(dma_chanx_base_addr(addrs, x) + 0x30)
-+#define DMA_CHAN_INTR_ENA(addrs, x)	(dma_chanx_base_addr(addrs, x) + 0x34)
-+#define DMA_CHAN_RX_WATCHDOG(addrs, x)	(dma_chanx_base_addr(addrs, x) + 0x38)
-+#define DMA_CHAN_SLOT_CTRL_STATUS(addrs, x)	(dma_chanx_base_addr(addrs, x) + 0x3c)
-+#define DMA_CHAN_CUR_TX_DESC(addrs, x)	(dma_chanx_base_addr(addrs, x) + 0x44)
-+#define DMA_CHAN_CUR_RX_DESC(addrs, x)	(dma_chanx_base_addr(addrs, x) + 0x4c)
-+#define DMA_CHAN_CUR_TX_BUF_ADDR(addrs, x)	(dma_chanx_base_addr(addrs, x) + 0x54)
-+#define DMA_CHAN_CUR_RX_BUF_ADDR(addrs, x)	(dma_chanx_base_addr(addrs, x) + 0x5c)
-+#define DMA_CHAN_STATUS(addrs, x)	(dma_chanx_base_addr(addrs, x) + 0x60)
- 
- /* DMA Control X */
- #define DMA_CONTROL_SPH			BIT(24)
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_lib.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_lib.c
-index 57328f010ab9..03ceb6a94073 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_lib.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_lib.c
-@@ -11,6 +11,7 @@
- #include "common.h"
- #include "dwmac4_dma.h"
- #include "dwmac4.h"
-+#include "stmmac.h"
- 
- int dwmac4_dma_reset(void __iomem *ioaddr)
- {
-@@ -28,22 +29,27 @@ int dwmac4_dma_reset(void __iomem *ioaddr)
- void dwmac4_set_rx_tail_ptr(struct stmmac_priv *priv, void __iomem *ioaddr,
- 			    u32 tail_ptr, u32 chan)
- {
--	writel(tail_ptr, ioaddr + DMA_CHAN_RX_END_ADDR(chan));
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
-+
-+	writel(tail_ptr, ioaddr + DMA_CHAN_RX_END_ADDR(dwmac4_addrs, chan));
- }
- 
- void dwmac4_set_tx_tail_ptr(struct stmmac_priv *priv, void __iomem *ioaddr,
- 			    u32 tail_ptr, u32 chan)
- {
--	writel(tail_ptr, ioaddr + DMA_CHAN_TX_END_ADDR(chan));
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
-+
-+	writel(tail_ptr, ioaddr + DMA_CHAN_TX_END_ADDR(dwmac4_addrs, chan));
- }
- 
- void dwmac4_dma_start_tx(struct stmmac_priv *priv, void __iomem *ioaddr,
- 			 u32 chan)
- {
--	u32 value = readl(ioaddr + DMA_CHAN_TX_CONTROL(chan));
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
-+	u32 value = readl(ioaddr + DMA_CHAN_TX_CONTROL(dwmac4_addrs, chan));
- 
- 	value |= DMA_CONTROL_ST;
--	writel(value, ioaddr + DMA_CHAN_TX_CONTROL(chan));
-+	writel(value, ioaddr + DMA_CHAN_TX_CONTROL(dwmac4_addrs, chan));
- 
- 	value = readl(ioaddr + GMAC_CONFIG);
- 	value |= GMAC_CONFIG_TE;
-@@ -53,20 +59,24 @@ void dwmac4_dma_start_tx(struct stmmac_priv *priv, void __iomem *ioaddr,
- void dwmac4_dma_stop_tx(struct stmmac_priv *priv, void __iomem *ioaddr,
- 			u32 chan)
- {
--	u32 value = readl(ioaddr + DMA_CHAN_TX_CONTROL(chan));
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
-+
-+	u32 value = readl(ioaddr + DMA_CHAN_TX_CONTROL(dwmac4_addrs, chan));
- 
- 	value &= ~DMA_CONTROL_ST;
--	writel(value, ioaddr + DMA_CHAN_TX_CONTROL(chan));
-+	writel(value, ioaddr + DMA_CHAN_TX_CONTROL(dwmac4_addrs, chan));
- }
- 
- void dwmac4_dma_start_rx(struct stmmac_priv *priv, void __iomem *ioaddr,
- 			 u32 chan)
- {
--	u32 value = readl(ioaddr + DMA_CHAN_RX_CONTROL(chan));
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
-+
-+	u32 value = readl(ioaddr + DMA_CHAN_RX_CONTROL(dwmac4_addrs, chan));
- 
- 	value |= DMA_CONTROL_SR;
- 
--	writel(value, ioaddr + DMA_CHAN_RX_CONTROL(chan));
-+	writel(value, ioaddr + DMA_CHAN_RX_CONTROL(dwmac4_addrs, chan));
- 
- 	value = readl(ioaddr + GMAC_CONFIG);
- 	value |= GMAC_CONFIG_RE;
-@@ -76,81 +86,91 @@ void dwmac4_dma_start_rx(struct stmmac_priv *priv, void __iomem *ioaddr,
- void dwmac4_dma_stop_rx(struct stmmac_priv *priv, void __iomem *ioaddr,
- 			u32 chan)
- {
--	u32 value = readl(ioaddr + DMA_CHAN_RX_CONTROL(chan));
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
-+	u32 value = readl(ioaddr + DMA_CHAN_RX_CONTROL(dwmac4_addrs, chan));
- 
- 	value &= ~DMA_CONTROL_SR;
--	writel(value, ioaddr + DMA_CHAN_RX_CONTROL(chan));
-+	writel(value, ioaddr + DMA_CHAN_RX_CONTROL(dwmac4_addrs, chan));
- }
- 
- void dwmac4_set_tx_ring_len(struct stmmac_priv *priv, void __iomem *ioaddr,
- 			    u32 len, u32 chan)
- {
--	writel(len, ioaddr + DMA_CHAN_TX_RING_LEN(chan));
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
-+
-+	writel(len, ioaddr + DMA_CHAN_TX_RING_LEN(dwmac4_addrs, chan));
- }
- 
- void dwmac4_set_rx_ring_len(struct stmmac_priv *priv, void __iomem *ioaddr,
- 			    u32 len, u32 chan)
- {
--	writel(len, ioaddr + DMA_CHAN_RX_RING_LEN(chan));
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
-+
-+	writel(len, ioaddr + DMA_CHAN_RX_RING_LEN(dwmac4_addrs, chan));
- }
- 
- void dwmac4_enable_dma_irq(struct stmmac_priv *priv, void __iomem *ioaddr,
- 			   u32 chan, bool rx, bool tx)
- {
--	u32 value = readl(ioaddr + DMA_CHAN_INTR_ENA(chan));
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
-+	u32 value = readl(ioaddr + DMA_CHAN_INTR_ENA(dwmac4_addrs, chan));
- 
- 	if (rx)
- 		value |= DMA_CHAN_INTR_DEFAULT_RX;
- 	if (tx)
- 		value |= DMA_CHAN_INTR_DEFAULT_TX;
- 
--	writel(value, ioaddr + DMA_CHAN_INTR_ENA(chan));
-+	writel(value, ioaddr + DMA_CHAN_INTR_ENA(dwmac4_addrs, chan));
- }
- 
- void dwmac410_enable_dma_irq(struct stmmac_priv *priv, void __iomem *ioaddr,
- 			     u32 chan, bool rx, bool tx)
- {
--	u32 value = readl(ioaddr + DMA_CHAN_INTR_ENA(chan));
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
-+	u32 value = readl(ioaddr + DMA_CHAN_INTR_ENA(dwmac4_addrs, chan));
- 
- 	if (rx)
- 		value |= DMA_CHAN_INTR_DEFAULT_RX_4_10;
- 	if (tx)
- 		value |= DMA_CHAN_INTR_DEFAULT_TX_4_10;
- 
--	writel(value, ioaddr + DMA_CHAN_INTR_ENA(chan));
-+	writel(value, ioaddr + DMA_CHAN_INTR_ENA(dwmac4_addrs, chan));
- }
- 
- void dwmac4_disable_dma_irq(struct stmmac_priv *priv, void __iomem *ioaddr,
- 			    u32 chan, bool rx, bool tx)
- {
--	u32 value = readl(ioaddr + DMA_CHAN_INTR_ENA(chan));
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
-+	u32 value = readl(ioaddr + DMA_CHAN_INTR_ENA(dwmac4_addrs, chan));
- 
- 	if (rx)
- 		value &= ~DMA_CHAN_INTR_DEFAULT_RX;
- 	if (tx)
- 		value &= ~DMA_CHAN_INTR_DEFAULT_TX;
- 
--	writel(value, ioaddr + DMA_CHAN_INTR_ENA(chan));
-+	writel(value, ioaddr + DMA_CHAN_INTR_ENA(dwmac4_addrs, chan));
- }
- 
- void dwmac410_disable_dma_irq(struct stmmac_priv *priv, void __iomem *ioaddr,
- 			      u32 chan, bool rx, bool tx)
- {
--	u32 value = readl(ioaddr + DMA_CHAN_INTR_ENA(chan));
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
-+	u32 value = readl(ioaddr + DMA_CHAN_INTR_ENA(dwmac4_addrs, chan));
- 
- 	if (rx)
- 		value &= ~DMA_CHAN_INTR_DEFAULT_RX_4_10;
- 	if (tx)
- 		value &= ~DMA_CHAN_INTR_DEFAULT_TX_4_10;
- 
--	writel(value, ioaddr + DMA_CHAN_INTR_ENA(chan));
-+	writel(value, ioaddr + DMA_CHAN_INTR_ENA(dwmac4_addrs, chan));
- }
- 
- int dwmac4_dma_interrupt(struct stmmac_priv *priv, void __iomem *ioaddr,
- 			 struct stmmac_extra_stats *x, u32 chan, u32 dir)
- {
--	u32 intr_status = readl(ioaddr + DMA_CHAN_STATUS(chan));
--	u32 intr_en = readl(ioaddr + DMA_CHAN_INTR_ENA(chan));
-+	const struct dwmac4_addrs *dwmac4_addrs = priv->plat->dwmac4_addrs;
-+	u32 intr_status = readl(ioaddr + DMA_CHAN_STATUS(dwmac4_addrs, chan));
-+	u32 intr_en = readl(ioaddr + DMA_CHAN_INTR_ENA(dwmac4_addrs, chan));
- 	int ret = 0;
- 
- 	if (dir == DMA_DIR_RX)
-@@ -195,7 +215,8 @@ int dwmac4_dma_interrupt(struct stmmac_priv *priv, void __iomem *ioaddr,
- 	if (unlikely(intr_status & DMA_CHAN_STATUS_ERI))
- 		x->rx_early_irq++;
- 
--	writel(intr_status & intr_en, ioaddr + DMA_CHAN_STATUS(chan));
-+	writel(intr_status & intr_en,
-+	       ioaddr + DMA_CHAN_STATUS(dwmac4_addrs, chan));
- 	return ret;
- }
- 
-diff --git a/include/linux/stmmac.h b/include/linux/stmmac.h
-index c97df9464f90..7c7553efa698 100644
---- a/include/linux/stmmac.h
-+++ b/include/linux/stmmac.h
-@@ -187,6 +187,24 @@ struct stmmac_safety_feature_cfg {
- 	u32 tmouten;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac.h b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
+index 46944c02b45e..b9b41dd18cde 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
+@@ -92,6 +92,10 @@ struct stmmac_rx_buffer {
+ 	dma_addr_t sec_addr;
  };
  
-+/* Addresses that may be customized by a platform */
-+struct dwmac4_addrs {
-+	u32 dma_chan;
-+	u32 dma_chan_offset;
-+	u32 mtl_chan;
-+	u32 mtl_chan_offset;
-+	u32 mtl_ets_ctrl;
-+	u32 mtl_ets_ctrl_offset;
-+	u32 mtl_txq_weight;
-+	u32 mtl_txq_weight_offset;
-+	u32 mtl_send_slp_cred;
-+	u32 mtl_send_slp_cred_offset;
-+	u32 mtl_high_cred;
-+	u32 mtl_high_cred_offset;
-+	u32 mtl_low_cred;
-+	u32 mtl_low_cred_offset;
++struct stmmac_xdp_buff {
++	struct xdp_buff xdp;
 +};
 +
- struct plat_stmmacenet_data {
- 	int bus_id;
- 	int phy_addr;
-@@ -274,5 +292,6 @@ struct plat_stmmacenet_data {
- 	bool use_phy_wol;
- 	bool sph_disable;
- 	bool serdes_up_after_phy_linkup;
-+	const struct dwmac4_addrs *dwmac4_addrs;
- };
- #endif
+ struct stmmac_rx_queue {
+ 	u32 rx_count_frames;
+ 	u32 queue_index;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 0483e8c2f1de..4aeacb5fe81e 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -5217,7 +5217,7 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+ 	enum dma_data_direction dma_dir;
+ 	unsigned int desc_size;
+ 	struct sk_buff *skb = NULL;
+-	struct xdp_buff xdp;
++	struct stmmac_xdp_buff ctx;
+ 	int xdp_status = 0;
+ 	int buf_sz;
+ 
+@@ -5339,17 +5339,17 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+ 			dma_sync_single_for_cpu(priv->device, buf->addr,
+ 						buf1_len, dma_dir);
+ 
+-			xdp_init_buff(&xdp, buf_sz, &rx_q->xdp_rxq);
+-			xdp_prepare_buff(&xdp, page_address(buf->page),
++			xdp_init_buff(&ctx.xdp, buf_sz, &rx_q->xdp_rxq);
++			xdp_prepare_buff(&ctx.xdp, page_address(buf->page),
+ 					 buf->page_offset, buf1_len, false);
+ 
+-			pre_len = xdp.data_end - xdp.data_hard_start -
++			pre_len = ctx.xdp.data_end - ctx.xdp.data_hard_start -
+ 				  buf->page_offset;
+-			skb = stmmac_xdp_run_prog(priv, &xdp);
++			skb = stmmac_xdp_run_prog(priv, &ctx.xdp);
+ 			/* Due xdp_adjust_tail: DMA sync for_device
+ 			 * cover max len CPU touch
+ 			 */
+-			sync_len = xdp.data_end - xdp.data_hard_start -
++			sync_len = ctx.xdp.data_end - ctx.xdp.data_hard_start -
+ 				   buf->page_offset;
+ 			sync_len = max(sync_len, pre_len);
+ 
+@@ -5359,7 +5359,7 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+ 
+ 				if (xdp_res & STMMAC_XDP_CONSUMED) {
+ 					page_pool_put_page(rx_q->page_pool,
+-							   virt_to_head_page(xdp.data),
++							   virt_to_head_page(ctx.xdp.data),
+ 							   sync_len, true);
+ 					buf->page = NULL;
+ 					priv->dev->stats.rx_dropped++;
+@@ -5387,7 +5387,7 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+ 
+ 		if (!skb) {
+ 			/* XDP program may expand or reduce tail */
+-			buf1_len = xdp.data_end - xdp.data;
++			buf1_len = ctx.xdp.data_end - ctx.xdp.data;
+ 
+ 			skb = napi_alloc_skb(&ch->rx_napi, buf1_len);
+ 			if (!skb) {
+@@ -5397,7 +5397,7 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+ 			}
+ 
+ 			/* XDP program may adjust header */
+-			skb_copy_to_linear_data(skb, xdp.data, buf1_len);
++			skb_copy_to_linear_data(skb, ctx.xdp.data, buf1_len);
+ 			skb_put(skb, buf1_len);
+ 
+ 			/* Data payload copied into SKB, page ready for recycle */
 -- 
 2.51.0
 
