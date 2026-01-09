@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCFC032BF21;
-	Fri,  9 Jan 2026 11:58:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 007832C21E6;
+	Fri,  9 Jan 2026 11:58:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959910; cv=none; b=dRpORVFyLYG3qidLsrJT1+OgwifoV5VqYWP4XjVgLYxtDdjKL+4jUnFPnpSnC8eRPbzFKp/lQ7s5XCImT6tTueLMbvcvfmK4G1E0fNpEXHumsP5hiu8uCWHncPz4mdY7b3VrGzEmIX+pyb/bCbM6cX0ihCAhX2lfJdWblV8kSDw=
+	t=1767959914; cv=none; b=rKBW/h5uGsFdf+GbVPOmXbtVkrbI14Rcdfe46lsGmw+hDIRCEwFjatSedlS3rBjc6R7tq9wICzj5+d0YUjd+kOnygt3gGjVUw/dv+Up9Tr4jD93FLAASMer6T31hAPpGAQHELJo5/unPDSZnurVoaliaBpQzWdhS0evNhkbJG2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959910; c=relaxed/simple;
-	bh=3VCmg8GlUvj5gb8QPCr2TZ74wkJ8kP6gi4uc+FIOtoc=;
+	s=arc-20240116; t=1767959914; c=relaxed/simple;
+	bh=9i4PUurDdkBo6Z3Qv16yr8s6NZSio1hqqstj6WIW6ow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=byWQuPlN4GaJUla6Z/g6a8F9lC04fciZWp34PmCq5C+qZrxuSItwKBe1HbyDHA4pguC/IVopbTj95+yDSB0SHxZhTKzdIFDP+6VZIdTisDTBQaPZvQ+ubhNxzWwH+0KxtJeMFZO1/znWcPUyimTSJFjwo7pw+R3oXXkmJU3ZJdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bivZYIPF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aQJN1MC/PfV+txXWR4nyeyRSJWxkTnDrunCKpeb2I6vJOH1Zeqmi3IcmAqWog7stmAH9IeaphnJD/dLWjsLmnoOVw911Zx4bC5qGK7HDA4bnFGh8cLtFBXHRdxuj3+b2E7cg2ei/V8uUq6w1XkDp/vA/GOJ1xcEVNj4a5oaNAFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ch5m0thW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bivZYIPF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 595F3C4CEF1;
-	Fri,  9 Jan 2026 11:58:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ch5m0thW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36146C4CEF1;
+	Fri,  9 Jan 2026 11:58:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959910;
-	bh=3VCmg8GlUvj5gb8QPCr2TZ74wkJ8kP6gi4uc+FIOtoc=;
+	s=korg; t=1767959913;
+	bh=9i4PUurDdkBo6Z3Qv16yr8s6NZSio1hqqstj6WIW6ow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bivZYIPFziRXAeTFIwrhYUJ4leTmpeFQ7LFLZbfanGYHCZI1+0sBG7EkPSdHsIFrG
-	 FnibFtKkTmyd/BPXNU6WPfsTS7omso4jqsHR5tbeNqq5DyTUEqQhA9nSXLDJdyVcSv
-	 l2KWY8m6YFm9RzQxat2lElkdBNYpG6H/GLr7HzTI=
+	b=Ch5m0thWYMFO3zcD01Z9PHm6mGtAhdLZlUCFZMdVW/1cbpm9ZcRnZEeOxiZKvh/wp
+	 L/+Hp4undcH1/RC90+ED9KfiIjDr1o3E1w/ZM9ReP6m4GcpJZs1FqhK3vzMg8K6KFE
+	 lq4xJzqUsfkEAu1ARwO083sMN91dfikD4n9VNgHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	James Clark <james.clark@linaro.org>,
-	Leo Yan <leo.yan@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Krzysztof Czurylo <krzysztof.czurylo@intel.com>,
+	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 176/737] perf arm-spe: Extend branch operations
-Date: Fri,  9 Jan 2026 12:35:15 +0100
-Message-ID: <20260109112140.612481185@linuxfoundation.org>
+Subject: [PATCH 6.6 212/737] RDMA/irdma: Fix data race in irdma_sc_ccq_arm
+Date: Fri,  9 Jan 2026 12:35:51 +0100
+Message-ID: <20260109112141.972225016@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -53,91 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Krzysztof Czurylo <krzysztof.czurylo@intel.com>
 
-[ Upstream commit 64d86c03e1441742216b6332bdfabfb6ede31662 ]
+[ Upstream commit a521928164433de44fed5aaf5f49aeb3f1fb96f5 ]
 
-In Arm ARM (ARM DDI 0487, L.a), the section "D18.2.7 Operation Type
-packet", the branch subclass is extended for Call Return (CR), Guarded
-control stack data access (GCS).
+Adds a lock around irdma_sc_ccq_arm body to prevent inter-thread data race.
+Fixes data race in irdma_sc_ccq_arm() reported by KCSAN:
 
-This commit adds support CR and GCS operations.  The IND (indirect)
-operation is defined only in bit [1], its macro is updated accordingly.
+BUG: KCSAN: data-race in irdma_sc_ccq_arm [irdma] / irdma_sc_ccq_arm [irdma]
 
-Move the COND (Conditional) macro into the same group with other
-operations for better maintenance.
+read to 0xffff9d51b4034220 of 8 bytes by task 255 on cpu 11:
+ irdma_sc_ccq_arm+0x36/0xd0 [irdma]
+ irdma_cqp_ce_handler+0x300/0x310 [irdma]
+ cqp_compl_worker+0x2a/0x40 [irdma]
+ process_one_work+0x402/0x7e0
+ worker_thread+0xb3/0x6d0
+ kthread+0x178/0x1a0
+ ret_from_fork+0x2c/0x50
 
-Reviewed-by: Ian Rogers <irogers@google.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Link: https://lore.kernel.org/r/20250304111240.3378214-8-leo.yan@arm.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Stable-dep-of: 33e1fffea492 ("perf arm_spe: Fix memset subclass in operation")
+write to 0xffff9d51b4034220 of 8 bytes by task 89 on cpu 3:
+ irdma_sc_ccq_arm+0x7e/0xd0 [irdma]
+ irdma_cqp_ce_handler+0x300/0x310 [irdma]
+ irdma_wait_event+0xd4/0x3e0 [irdma]
+ irdma_handle_cqp_op+0xa5/0x220 [irdma]
+ irdma_hw_flush_wqes+0xb1/0x300 [irdma]
+ irdma_flush_wqes+0x22e/0x3a0 [irdma]
+ irdma_cm_disconn_true+0x4c7/0x5d0 [irdma]
+ irdma_disconnect_worker+0x35/0x50 [irdma]
+ process_one_work+0x402/0x7e0
+ worker_thread+0xb3/0x6d0
+ kthread+0x178/0x1a0
+ ret_from_fork+0x2c/0x50
+
+value changed: 0x0000000000024000 -> 0x0000000000034000
+
+Fixes: 3f49d6842569 ("RDMA/irdma: Implement HW Admin Queue OPs")
+Signed-off-by: Krzysztof Czurylo <krzysztof.czurylo@intel.com>
+Signed-off-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
+Link: https://patch.msgid.link/20251125025350.180-2-tatyana.e.nikolova@intel.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../perf/util/arm-spe-decoder/arm-spe-pkt-decoder.c  | 12 +++++++++---
- .../perf/util/arm-spe-decoder/arm-spe-pkt-decoder.h  | 11 ++++++++---
- 2 files changed, 17 insertions(+), 6 deletions(-)
+ drivers/infiniband/hw/irdma/ctrl.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/perf/util/arm-spe-decoder/arm-spe-pkt-decoder.c b/tools/perf/util/arm-spe-decoder/arm-spe-pkt-decoder.c
-index a454c6737563d..7b45fcf2454be 100644
---- a/tools/perf/util/arm-spe-decoder/arm-spe-pkt-decoder.c
-+++ b/tools/perf/util/arm-spe-decoder/arm-spe-pkt-decoder.c
-@@ -410,10 +410,16 @@ static int arm_spe_pkt_desc_op_type(const struct arm_spe_pkt *packet,
+diff --git a/drivers/infiniband/hw/irdma/ctrl.c b/drivers/infiniband/hw/irdma/ctrl.c
+index 8a6200e55c542..ebbece4f09a22 100644
+--- a/drivers/infiniband/hw/irdma/ctrl.c
++++ b/drivers/infiniband/hw/irdma/ctrl.c
+@@ -3316,11 +3316,13 @@ int irdma_sc_cqp_destroy(struct irdma_sc_cqp *cqp)
+  */
+ void irdma_sc_ccq_arm(struct irdma_sc_cq *ccq)
+ {
++	unsigned long flags;
+ 	u64 temp_val;
+ 	u16 sw_cq_sel;
+ 	u8 arm_next_se;
+ 	u8 arm_seq_num;
  
- 		if (payload & SPE_OP_PKT_COND)
- 			arm_spe_pkt_out_string(&err, &buf, &buf_len, " COND");
--
--		if (SPE_OP_PKT_IS_INDIRECT_BRANCH(payload))
-+		if (payload & SPE_OP_PKT_INDIRECT_BRANCH)
- 			arm_spe_pkt_out_string(&err, &buf, &buf_len, " IND");
--
-+		if (payload & SPE_OP_PKT_GCS)
-+			arm_spe_pkt_out_string(&err, &buf, &buf_len, " GCS");
-+		if (SPE_OP_PKT_CR_BL(payload))
-+			arm_spe_pkt_out_string(&err, &buf, &buf_len, " CR-BL");
-+		if (SPE_OP_PKT_CR_RET(payload))
-+			arm_spe_pkt_out_string(&err, &buf, &buf_len, " CR-RET");
-+		if (SPE_OP_PKT_CR_NON_BL_RET(payload))
-+			arm_spe_pkt_out_string(&err, &buf, &buf_len, " CR-NON-BL-RET");
- 		break;
- 	default:
- 		/* Unknown index */
-diff --git a/tools/perf/util/arm-spe-decoder/arm-spe-pkt-decoder.h b/tools/perf/util/arm-spe-decoder/arm-spe-pkt-decoder.h
-index 464a912b221cd..32d760ede7013 100644
---- a/tools/perf/util/arm-spe-decoder/arm-spe-pkt-decoder.h
-+++ b/tools/perf/util/arm-spe-decoder/arm-spe-pkt-decoder.h
-@@ -7,6 +7,7 @@
- #ifndef INCLUDE__ARM_SPE_PKT_DECODER_H__
- #define INCLUDE__ARM_SPE_PKT_DECODER_H__
++	spin_lock_irqsave(&ccq->dev->cqp_lock, flags);
+ 	get_64bit_val(ccq->cq_uk.shadow_area, 32, &temp_val);
+ 	sw_cq_sel = (u16)FIELD_GET(IRDMA_CQ_DBSA_SW_CQ_SELECT, temp_val);
+ 	arm_next_se = (u8)FIELD_GET(IRDMA_CQ_DBSA_ARM_NEXT_SE, temp_val);
+@@ -3331,6 +3333,7 @@ void irdma_sc_ccq_arm(struct irdma_sc_cq *ccq)
+ 		   FIELD_PREP(IRDMA_CQ_DBSA_ARM_NEXT_SE, arm_next_se) |
+ 		   FIELD_PREP(IRDMA_CQ_DBSA_ARM_NEXT, 1);
+ 	set_64bit_val(ccq->cq_uk.shadow_area, 32, temp_val);
++	spin_unlock_irqrestore(&ccq->dev->cqp_lock, flags);
  
-+#include <linux/bitfield.h>
- #include <stddef.h>
- #include <stdint.h>
- 
-@@ -116,8 +117,6 @@ enum arm_spe_events {
- 
- #define SPE_OP_PKT_IS_OTHER_SVE_OP(v)		(((v) & (BIT(7) | BIT(3) | BIT(0))) == 0x8)
- 
--#define SPE_OP_PKT_COND				BIT(0)
--
- #define SPE_OP_PKT_LDST_SUBCLASS_GET(v)		((v) & GENMASK_ULL(7, 1))
- #define SPE_OP_PKT_LDST_SUBCLASS_GP_REG		0x0
- #define SPE_OP_PKT_LDST_SUBCLASS_SIMD_FP	0x4
-@@ -148,7 +147,13 @@ enum arm_spe_events {
- #define SPE_OP_PKT_SVE_PRED			BIT(2)
- #define SPE_OP_PKT_SVE_FP			BIT(1)
- 
--#define SPE_OP_PKT_IS_INDIRECT_BRANCH(v)	(((v) & GENMASK_ULL(7, 1)) == 0x2)
-+#define SPE_OP_PKT_CR_MASK			GENMASK_ULL(4, 3)
-+#define SPE_OP_PKT_CR_BL(v)			(FIELD_GET(SPE_OP_PKT_CR_MASK, (v)) == 1)
-+#define SPE_OP_PKT_CR_RET(v)			(FIELD_GET(SPE_OP_PKT_CR_MASK, (v)) == 2)
-+#define SPE_OP_PKT_CR_NON_BL_RET(v)		(FIELD_GET(SPE_OP_PKT_CR_MASK, (v)) == 3)
-+#define SPE_OP_PKT_GCS				BIT(2)
-+#define SPE_OP_PKT_INDIRECT_BRANCH		BIT(1)
-+#define SPE_OP_PKT_COND				BIT(0)
- 
- const char *arm_spe_pkt_name(enum arm_spe_pkt_type);
+ 	dma_wmb(); /* make sure shadow area is updated before arming */
  
 -- 
 2.51.0
