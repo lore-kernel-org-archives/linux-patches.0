@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 768F7224D6;
-	Fri,  9 Jan 2026 12:18:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9F3224D6;
+	Fri,  9 Jan 2026 12:18:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961119; cv=none; b=bZ9YFCcyJutVG2G+ZaVLuMXEgKVcPTBgEZUn97NW2qvv0EnZhVZ1TXwVYov1vaTWpFhFu9WJjH0MqNqj+SVkySc78qH7IvVFZqQYYx7QsWT/N1INXeCXoojVUjqtMQKwbJOwPnohPT/M4kWaD+bRU1nsGiPILNkqdnKqWjVhvTQ=
+	t=1767961122; cv=none; b=VIdqyiC++Ajh0roFHTcwBTnuIXH7niqzYJqS1rNNPYQL0oIRnISDHki6rcMHgUGL32A9u1icKuzlHyd0XyHBXYIwAoqRsM1YRadAUjJwfpUHL4RAUeTv1bJhaOLEzN2YddqGZHouqoVjCHj7ZJTKnsryMcr2pabAAQNzhKNvwR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961119; c=relaxed/simple;
-	bh=//tHedoQi8N+OjfFvovI+RGIJ2US60mSR3lTiAU2jyU=;
+	s=arc-20240116; t=1767961122; c=relaxed/simple;
+	bh=xKZmh3CcWEa8sTaw4nf7yJ9epelO5biUbc4RcJVgNPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sx+vyNKutdxxsgEu0OLBPLBQ59bhR0/QZYB8eEKqJXKMwnBqUsPijPNgFG+SFrJ+lEooGxNDJkufnHqZhzy7OhjfVSe2MptsHcaoZ1gOlISd8DSNwN2DUturXdyblDc7w5vRvWXxdzO3gwd8EmqWU/u0jjhbcsJXA1uQfyTO1ww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rascf6QY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UfMIMpfWSKlkjzOYQrsun0m+/GFcOdoyg8ptovI6zJT8b28JxjS8GYkQDgAIJEhJEed7Xt2nFiWP4kzof1RTlYUllEx6PNu4QVOvr9A18EAGTLifrdpCvauAvUy+tR/EYp32Oa816Pg6YwSJ8KNZsH9aL9BAQirpnqgOVuDvDYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T/0hHJpb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rascf6QY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D4AC4CEF1;
-	Fri,  9 Jan 2026 12:18:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T/0hHJpb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF8BBC19422;
+	Fri,  9 Jan 2026 12:18:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961119;
-	bh=//tHedoQi8N+OjfFvovI+RGIJ2US60mSR3lTiAU2jyU=;
+	s=korg; t=1767961122;
+	bh=xKZmh3CcWEa8sTaw4nf7yJ9epelO5biUbc4RcJVgNPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rascf6QYqqq1/MNpJnjm1kyX11E9ushC9ZO2KttXuSNAwr+mRiSthBuxnSP3m/cO/
-	 YIqNXM6uekbZ4yWtSTc1oIpisgwFPJfwtZRryhEDScdE1n7/Gha1ZUWp8Sa/41QnKY
-	 f+9RadMEKfn4LeD0DeYVTkIEEglFA+lvO0lpMzwI=
+	b=T/0hHJpbGc8yaTgc/vR/soLyk9ytOz3c1xb1IpMZrRI3yqYVhKVn0w+swtJxKUvNQ
+	 qRLprYLI4GHzUca9f1bMaO8dnYQlXqw/NC4Ofk9GJrmZYrjOvKchH4GjTLBmJb7bwX
+	 Gn7t4BKvs0/qIU6FqHrySLiJabQ1du3rxIH5CQeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b0da83a6c0e2e2bddbd4@syzkaller.appspotmail.com,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.6 608/737] RDMA/cm: Fix leaking the multicast GID table reference
-Date: Fri,  9 Jan 2026 12:42:27 +0100
-Message-ID: <20260109112156.876656528@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 6.6 609/737] e1000: fix OOB in e1000_tbi_should_accept()
+Date: Fri,  9 Jan 2026 12:42:28 +0100
+Message-ID: <20260109112156.914656213@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -50,51 +52,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 57f3cb6c84159d12ba343574df2115fb18dd83ca upstream.
+commit 9c72a5182ed92904d01057f208c390a303f00a0f upstream.
 
-If the CM ID is destroyed while the CM event for multicast creating is
-still queued the cancel_work_sync() will prevent the work from running
-which also prevents destroying the ah_attr. This leaks a refcount and
-triggers a WARN:
+In e1000_tbi_should_accept() we read the last byte of the frame via
+'data[length - 1]' to evaluate the TBI workaround. If the descriptor-
+reported length is zero or larger than the actual RX buffer size, this
+read goes out of bounds and can hit unrelated slab objects. The issue
+is observed from the NAPI receive path (e1000_clean_rx_irq):
 
-   GID entry ref leak for dev syz1 index 2 ref=573
-   WARNING: CPU: 1 PID: 655 at drivers/infiniband/core/cache.c:809 release_gid_table drivers/infiniband/core/cache.c:806 [inline]
-   WARNING: CPU: 1 PID: 655 at drivers/infiniband/core/cache.c:809 gid_table_release_one+0x284/0x3cc drivers/infiniband/core/cache.c:886
+==================================================================
+BUG: KASAN: slab-out-of-bounds in e1000_tbi_should_accept+0x610/0x790
+Read of size 1 at addr ffff888014114e54 by task sshd/363
 
-Destroy the ah_attr after canceling the work, it is safe to call this
-twice.
+CPU: 0 PID: 363 Comm: sshd Not tainted 5.18.0-rc1 #1
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.12.0-59-gc9ba5276e321-prebuilt.qemu.org 04/01/2014
+Call Trace:
+ <IRQ>
+ dump_stack_lvl+0x5a/0x74
+ print_address_description+0x7b/0x440
+ print_report+0x101/0x200
+ kasan_report+0xc1/0xf0
+ e1000_tbi_should_accept+0x610/0x790
+ e1000_clean_rx_irq+0xa8c/0x1110
+ e1000_clean+0xde2/0x3c10
+ __napi_poll+0x98/0x380
+ net_rx_action+0x491/0xa20
+ __do_softirq+0x2c9/0x61d
+ do_softirq+0xd1/0x120
+ </IRQ>
+ <TASK>
+ __local_bh_enable_ip+0xfe/0x130
+ ip_finish_output2+0x7d5/0xb00
+ __ip_queue_xmit+0xe24/0x1ab0
+ __tcp_transmit_skb+0x1bcb/0x3340
+ tcp_write_xmit+0x175d/0x6bd0
+ __tcp_push_pending_frames+0x7b/0x280
+ tcp_sendmsg_locked+0x2e4f/0x32d0
+ tcp_sendmsg+0x24/0x40
+ sock_write_iter+0x322/0x430
+ vfs_write+0x56c/0xa60
+ ksys_write+0xd1/0x190
+ do_syscall_64+0x43/0x90
+ entry_SYSCALL_64_after_hwframe+0x44/0xae
+RIP: 0033:0x7f511b476b10
+Code: 73 01 c3 48 8b 0d 88 d3 2b 00 f7 d8 64 89 01 48 83 c8 ff c3 66 0f 1f 44 00 00 83 3d f9 2b 2c 00 00 75 10 b8 01 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 31 c3 48 83 ec 08 e8 8e 9b 01 00 48 89 04 24
+RSP: 002b:00007ffc9211d4e8 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
+RAX: ffffffffffffffda RBX: 0000000000004024 RCX: 00007f511b476b10
+RDX: 0000000000004024 RSI: 0000559a9385962c RDI: 0000000000000003
+RBP: 0000559a9383a400 R08: fffffffffffffff0 R09: 0000000000004f00
+R10: 0000000000000070 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007ffc9211d57f R14: 0000559a9347bde7 R15: 0000000000000003
+ </TASK>
+Allocated by task 1:
+ __kasan_krealloc+0x131/0x1c0
+ krealloc+0x90/0xc0
+ add_sysfs_param+0xcb/0x8a0
+ kernel_add_sysfs_param+0x81/0xd4
+ param_sysfs_builtin+0x138/0x1a6
+ param_sysfs_init+0x57/0x5b
+ do_one_initcall+0x104/0x250
+ do_initcall_level+0x102/0x132
+ do_initcalls+0x46/0x74
+ kernel_init_freeable+0x28f/0x393
+ kernel_init+0x14/0x1a0
+ ret_from_fork+0x22/0x30
+The buggy address belongs to the object at ffff888014114000
+ which belongs to the cache kmalloc-2k of size 2048
+The buggy address is located 1620 bytes to the right of
+ 2048-byte region [ffff888014114000, ffff888014114800]
+The buggy address belongs to the physical page:
+page:ffffea0000504400 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x14110
+head:ffffea0000504400 order:3 compound_mapcount:0 compound_pincount:0
+flags: 0x100000000010200(slab|head|node=0|zone=1)
+raw: 0100000000010200 0000000000000000 dead000000000001 ffff888013442000
+raw: 0000000000000000 0000000000080008 00000001ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+==================================================================
 
-Link: https://patch.msgid.link/r/0-v1-4285d070a6b2+20a-rdma_mc_gid_leak_syz_jgg@nvidia.com
+This happens because the TBI check unconditionally dereferences the last
+byte without validating the reported length first:
+
+	u8 last_byte = *(data + length - 1);
+
+Fix by rejecting the frame early if the length is zero, or if it exceeds
+adapter->rx_buffer_len. This preserves the TBI workaround semantics for
+valid frames and prevents touching memory beyond the RX buffer.
+
+Fixes: 2037110c96d5 ("e1000: move tbi workaround code into helper function")
 Cc: stable@vger.kernel.org
-Fixes: fe454dc31e84 ("RDMA/ucma: Fix use-after-free bug in ucma_create_uevent")
-Reported-by: syzbot+b0da83a6c0e2e2bddbd4@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/68232e7b.050a0220.f2294.09f6.GAE@google.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/cma.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/intel/e1000/e1000_main.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/infiniband/core/cma.c
-+++ b/drivers/infiniband/core/cma.c
-@@ -1993,6 +1993,7 @@ static void destroy_mc(struct rdma_id_pr
- 		ib_sa_free_multicast(mc->sa_mc);
+--- a/drivers/net/ethernet/intel/e1000/e1000_main.c
++++ b/drivers/net/ethernet/intel/e1000/e1000_main.c
+@@ -4091,7 +4091,15 @@ static bool e1000_tbi_should_accept(stru
+ 				    u32 length, const u8 *data)
+ {
+ 	struct e1000_hw *hw = &adapter->hw;
+-	u8 last_byte = *(data + length - 1);
++	u8 last_byte;
++
++	/* Guard against OOB on data[length - 1] */
++	if (unlikely(!length))
++		return false;
++	/* Upper bound: length must not exceed rx_buffer_len */
++	if (unlikely(length > adapter->rx_buffer_len))
++		return false;
++	last_byte = *(data + length - 1);
  
- 	if (rdma_protocol_roce(id_priv->id.device, id_priv->id.port_num)) {
-+		struct rdma_cm_event *event = &mc->iboe_join.event;
- 		struct rdma_dev_addr *dev_addr =
- 			&id_priv->id.route.addr.dev_addr;
- 		struct net_device *ndev = NULL;
-@@ -2015,6 +2016,8 @@ static void destroy_mc(struct rdma_id_pr
- 		dev_put(ndev);
- 
- 		cancel_work_sync(&mc->iboe_join.work);
-+		if (event->event == RDMA_CM_EVENT_MULTICAST_JOIN)
-+			rdma_destroy_ah_attr(&event->param.ud.ah_attr);
- 	}
- 	kfree(mc);
- }
+ 	if (TBI_ACCEPT(hw, status, errors, length, last_byte)) {
+ 		unsigned long irq_flags;
 
 
