@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A872737EE;
-	Fri,  9 Jan 2026 12:21:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B554533B6F0;
+	Fri,  9 Jan 2026 12:21:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961302; cv=none; b=pUvT4Py/YRjY4QaAsywtB1QRlEQICC+fiZSKEqOVHdJQPYEdZ0uy5qo4KcqktbSmSUIrbkyBE5+EFLxv7lGCSYi9S7Bm+oxqArt+6v1jNa6t+lY4dmAbmp2I9cQxFZ5FLnP/zlb6Pphw1MftwOkK9DH7f3c2tFTXKW5GhyJL44I=
+	t=1767961305; cv=none; b=awVa2/ejhCBZvys4zG3VPQca9+0Fd5h3ka20LwBHck9OPuIy+1TLrR/H5dqLI/P34D4HEI0kYdA5DvHwPrDe2wosX0wGdEuiujOy8JuRvC7tVoE38avgoEMvhQxal0bCKCYVvtmeligM9MZ7Dd7gsyr/+wdWCFoAHTbXw1imv6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961302; c=relaxed/simple;
-	bh=d6CgWTIpwyNim1/7jG7FFLhLYEDJ4jaxJNOd+izSWnM=;
+	s=arc-20240116; t=1767961305; c=relaxed/simple;
+	bh=btnDQ4kge5eeAtX3YOogmvsmpnXwfvLsQcvvP2cg2Ds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dvsl8n6JoC0+y5ruqjtoo5MG3i7kBo/KaY4hMUOZcABtGYCujkX0asWYiNTCIkIjb6EnP3i5Emw3taplxbGqr7yczg8WCzLDcFQbskVbenmYw1898EBSNgtb1czji7qW+ZxWFEP21yekRB+bAjcGLJu6mJQB3ZHmdmHenwJQfRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mAE+GbTU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ErYoMrYnZpB6co51ijD6F9A9t85UguyHeHu3UN91M6o9i4shClz0wDqzRKjz+z6xqYWm2+bZ/831n9uSEPxae1+g52vqkYg+QHCEVSEHo/37gdRPvSopunsZ0fPKIzhn0v8NNymEDIuCy9vpxjQgu2kvLWobTVmVVSXQBQGCKqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yY9M7Fii; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mAE+GbTU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59F78C4CEF1;
-	Fri,  9 Jan 2026 12:21:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yY9M7Fii"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 384DAC4CEF1;
+	Fri,  9 Jan 2026 12:21:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961302;
-	bh=d6CgWTIpwyNim1/7jG7FFLhLYEDJ4jaxJNOd+izSWnM=;
+	s=korg; t=1767961305;
+	bh=btnDQ4kge5eeAtX3YOogmvsmpnXwfvLsQcvvP2cg2Ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mAE+GbTU+yhYiXlgJIdidWRUeiiS5ayxTg/5UiyICgKqTbTx9OKnziHm282HzBrHK
-	 zTmKixXaG/y+1NPG9/IIlQYY48SAbmYmCWDjT2R1hTtdTSlEQ+pH5jBgPeSi37UQg5
-	 RdYQeHFeG1G0dPE/jtpnJOQgRGKNRR5/8IcKx8CI=
+	b=yY9M7Fii9TKMJRZPGKj983SA1zoCf3s+0LQfEhu/uhhD22d09vOu5ZDKolLF7mw3f
+	 Vc3QD3h63I/fWJzTEZiKfTYQtk7W2aB4McBlzU8nqfagXwarpOmzRkPQMuShIIZn0M
+	 ppyyY509gT/ykqeqx/Iyd7uNWcZEjU7Dfx7nEvhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry.ahmed@linux.dev>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.6 704/737] KVM: nSVM: Fix and simplify LBR virtualization handling with nested
-Date: Fri,  9 Jan 2026 12:44:03 +0100
-Message-ID: <20260109112200.556031375@linuxfoundation.org>
+	Gabriel Krisman Bertazi <krisman@suse.de>,
+	Theodore Tso <tytso@mit.edu>,
+	Ankan Biswas <spyjetfayed@gmail.com>
+Subject: [PATCH 6.6 675/737] ext4: fix error message when rejecting the default hash
+Date: Fri,  9 Jan 2026 12:43:34 +0100
+Message-ID: <20260109112159.443868142@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -50,193 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yosry Ahmed <yosry.ahmed@linux.dev>
+From: Gabriel Krisman Bertazi <krisman@suse.de>
 
-commit 8a4821412cf2c1429fffa07c012dd150f2edf78c upstream.
+[ Upstream commit a2187431c395cdfbf144e3536f25468c64fc7cfa ]
 
-The current scheme for handling LBRV when nested is used is very
-complicated, especially when L1 does not enable LBRV (i.e. does not set
-LBR_CTL_ENABLE_MASK).
+Commit 985b67cd8639 ("ext4: filesystems without casefold feature cannot
+be mounted with siphash") properly rejects volumes where
+s_def_hash_version is set to DX_HASH_SIPHASH, but the check and the
+error message should not look into casefold setup - a filesystem should
+never have DX_HASH_SIPHASH as the default hash.  Fix it and, since we
+are there, move the check to ext4_hash_info_init.
 
-To avoid copying LBRs between VMCB01 and VMCB02 on every nested
-transition, the current implementation switches between using VMCB01 or
-VMCB02 as the source of truth for the LBRs while L2 is running. If L2
-enables LBR, VMCB02 is used as the source of truth. When L2 disables
-LBR, the LBRs are copied to VMCB01 and VMCB01 is used as the source of
-truth. This introduces significant complexity, and incorrect behavior in
-some cases.
+Fixes:985b67cd8639 ("ext4: filesystems without casefold feature cannot
+be mounted with siphash")
 
-For example, on a nested #VMEXIT, the LBRs are only copied from VMCB02
-to VMCB01 if LBRV is enabled in VMCB01. This is because L2's writes to
-MSR_IA32_DEBUGCTLMSR to enable LBR are intercepted and propagated to
-VMCB01 instead of VMCB02. However, LBRV is only enabled in VMCB02 when
-L2 is running.
-
-This means that if L2 enables LBR and exits to L1, the LBRs will not be
-propagated from VMCB02 to VMCB01, because LBRV is disabled in VMCB01.
-
-There is no meaningful difference in CPUID rate in L2 when copying LBRs
-on every nested transition vs. the current approach, so do the simple
-and correct thing and always copy LBRs between VMCB01 and VMCB02 on
-nested transitions (when LBRV is disabled by L1). Drop the conditional
-LBRs copying in __svm_{enable/disable}_lbrv() as it is now unnecessary.
-
-VMCB02 becomes the only source of truth for LBRs when L2 is running,
-regardless of LBRV being enabled by L1, drop svm_get_lbr_vmcb() and use
-svm->vmcb directly in its place.
-
-Fixes: 1d5a1b5860ed ("KVM: x86: nSVM: correctly virtualize LBR msrs when L2 is running")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yosry Ahmed <yosry.ahmed@linux.dev>
-Link: https://patch.msgid.link/20251108004524.1600006-4-yosry.ahmed@linux.dev
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Yosry Ahmed <yosry.ahmed@linux.dev>
+Signed-off-by: Gabriel Krisman Bertazi <krisman@suse.de>
+Link: https://patch.msgid.link/87jzg1en6j.fsf_-_@mailhost.krisman.be
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+[ The commit a2187431c395 intended to remove the if-block which was used
+  for an old SIPHASH rejection check. ]
+Signed-off-by: Ankan Biswas <spyjetfayed@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/nested.c |   20 ++++++-------------
- arch/x86/kvm/svm/svm.c    |   47 +++++++++-------------------------------------
- 2 files changed, 17 insertions(+), 50 deletions(-)
+ fs/ext4/ext4.h  |    1 +
+ fs/ext4/super.c |   20 +++++++++++++++++---
+ 2 files changed, 18 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -601,11 +601,10 @@ static void nested_vmcb02_prepare_save(s
- 		 */
- 		svm_copy_lbrs(vmcb02, vmcb12);
- 		vmcb02->save.dbgctl &= ~DEBUGCTL_RESERVED_BITS;
--		svm_update_lbrv(&svm->vcpu);
--
--	} else if (unlikely(vmcb01->control.virt_ext & LBR_CTL_ENABLE_MASK)) {
-+	} else {
- 		svm_copy_lbrs(vmcb02, vmcb01);
- 	}
-+	svm_update_lbrv(&svm->vcpu);
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -2459,6 +2459,7 @@ static inline __le16 ext4_rec_len_to_dis
+ #define DX_HASH_HALF_MD4_UNSIGNED	4
+ #define DX_HASH_TEA_UNSIGNED		5
+ #define DX_HASH_SIPHASH			6
++#define DX_HASH_LAST 			DX_HASH_SIPHASH
+ 
+ static inline u32 ext4_chksum(struct ext4_sb_info *sbi, u32 crc,
+ 			      const void *address, unsigned int length)
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -5140,16 +5140,27 @@ out:
+ 	return ret;
  }
  
- static inline bool is_evtinj_soft(u32 evtinj)
-@@ -731,11 +730,7 @@ static void nested_vmcb02_prepare_contro
- 			svm->soft_int_next_rip = vmcb12_rip;
- 	}
+-static void ext4_hash_info_init(struct super_block *sb)
++static int ext4_hash_info_init(struct super_block *sb)
+ {
+ 	struct ext4_sb_info *sbi = EXT4_SB(sb);
+ 	struct ext4_super_block *es = sbi->s_es;
+ 	unsigned int i;
  
--	vmcb02->control.virt_ext            = vmcb01->control.virt_ext &
--					      LBR_CTL_ENABLE_MASK;
--	if (guest_can_use(vcpu, X86_FEATURE_LBRV))
--		vmcb02->control.virt_ext  |=
--			(svm->nested.ctl.virt_ext & LBR_CTL_ENABLE_MASK);
-+	/* LBR_CTL_ENABLE_MASK is controlled by svm_update_lbrv() */
- 
- 	if (!nested_vmcb_needs_vls_intercept(svm))
- 		vmcb02->control.virt_ext |= VIRTUAL_VMLOAD_VMSAVE_ENABLE_MASK;
-@@ -1066,13 +1061,12 @@ int nested_svm_vmexit(struct vcpu_svm *s
- 		kvm_make_request(KVM_REQ_EVENT, &svm->vcpu);
- 
- 	if (unlikely(guest_can_use(vcpu, X86_FEATURE_LBRV) &&
--		     (svm->nested.ctl.virt_ext & LBR_CTL_ENABLE_MASK))) {
-+		     (svm->nested.ctl.virt_ext & LBR_CTL_ENABLE_MASK)))
- 		svm_copy_lbrs(vmcb12, vmcb02);
--		svm_update_lbrv(vcpu);
--	} else if (unlikely(vmcb01->control.virt_ext & LBR_CTL_ENABLE_MASK)) {
-+	else
- 		svm_copy_lbrs(vmcb01, vmcb02);
--		svm_update_lbrv(vcpu);
--	}
++	sbi->s_def_hash_version = es->s_def_hash_version;
 +
-+	svm_update_lbrv(vcpu);
++	if (sbi->s_def_hash_version > DX_HASH_LAST) {
++		ext4_msg(sb, KERN_ERR,
++			 "Invalid default hash set in the superblock");
++		return -EINVAL;
++	} else if (sbi->s_def_hash_version == DX_HASH_SIPHASH) {
++		ext4_msg(sb, KERN_ERR,
++			 "SIPHASH is not a valid default hash value");
++		return -EINVAL;
++	}
++
+ 	for (i = 0; i < 4; i++)
+ 		sbi->s_hash_seed[i] = le32_to_cpu(es->s_hash_seed[i]);
  
- 	if (vnmi) {
- 		if (vmcb02->control.int_ctl & V_NMI_BLOCKING_MASK)
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -1033,13 +1033,7 @@ static void svm_recalc_lbr_msr_intercept
- 
- static void __svm_enable_lbrv(struct kvm_vcpu *vcpu)
- {
--	struct vcpu_svm *svm = to_svm(vcpu);
--
--	svm->vmcb->control.virt_ext |= LBR_CTL_ENABLE_MASK;
--
--	/* Move the LBR msrs to the vmcb02 so that the guest can see them. */
--	if (is_guest_mode(vcpu))
--		svm_copy_lbrs(svm->vmcb, svm->vmcb01.ptr);
-+	to_svm(vcpu)->vmcb->control.virt_ext |= LBR_CTL_ENABLE_MASK;
+-	sbi->s_def_hash_version = es->s_def_hash_version;
+ 	if (ext4_has_feature_dir_index(sb)) {
+ 		i = le32_to_cpu(es->s_flags);
+ 		if (i & EXT2_FLAGS_UNSIGNED_HASH)
+@@ -5167,6 +5178,7 @@ static void ext4_hash_info_init(struct s
+ #endif
+ 		}
+ 	}
++	return 0;
  }
  
- void svm_enable_lbrv(struct kvm_vcpu *vcpu)
-@@ -1050,36 +1044,15 @@ void svm_enable_lbrv(struct kvm_vcpu *vc
+ static int ext4_block_group_meta_init(struct super_block *sb, int silent)
+@@ -5311,7 +5323,9 @@ static int __ext4_fill_super(struct fs_c
+ 	if (err)
+ 		goto failed_mount;
  
- static void __svm_disable_lbrv(struct kvm_vcpu *vcpu)
- {
--	struct vcpu_svm *svm = to_svm(vcpu);
--
- 	KVM_BUG_ON(sev_es_guest(vcpu->kvm), vcpu->kvm);
--
--	svm->vmcb->control.virt_ext &= ~LBR_CTL_ENABLE_MASK;
--
--	/*
--	 * Move the LBR msrs back to the vmcb01 to avoid copying them
--	 * on nested guest entries.
--	 */
--	if (is_guest_mode(vcpu))
--		svm_copy_lbrs(svm->vmcb01.ptr, svm->vmcb);
--}
--
--static struct vmcb *svm_get_lbr_vmcb(struct vcpu_svm *svm)
--{
--	/*
--	 * If LBR virtualization is disabled, the LBR MSRs are always kept in
--	 * vmcb01.  If LBR virtualization is enabled and L1 is running VMs of
--	 * its own, the MSRs are moved between vmcb01 and vmcb02 as needed.
--	 */
--	return svm->vmcb->control.virt_ext & LBR_CTL_ENABLE_MASK ? svm->vmcb :
--								   svm->vmcb01.ptr;
-+	to_svm(vcpu)->vmcb->control.virt_ext &= ~LBR_CTL_ENABLE_MASK;
- }
+-	ext4_hash_info_init(sb);
++	err = ext4_hash_info_init(sb);
++	if (err)
++		goto failed_mount;
  
- void svm_update_lbrv(struct kvm_vcpu *vcpu)
- {
- 	struct vcpu_svm *svm = to_svm(vcpu);
- 	bool current_enable_lbrv = svm->vmcb->control.virt_ext & LBR_CTL_ENABLE_MASK;
--	bool enable_lbrv = (svm_get_lbr_vmcb(svm)->save.dbgctl & DEBUGCTLMSR_LBR) ||
-+	bool enable_lbrv = (svm->vmcb->save.dbgctl & DEBUGCTLMSR_LBR) ||
- 			    (is_guest_mode(vcpu) && guest_can_use(vcpu, X86_FEATURE_LBRV) &&
- 			    (svm->nested.ctl.virt_ext & LBR_CTL_ENABLE_MASK));
- 
-@@ -2925,19 +2898,19 @@ static int svm_get_msr(struct kvm_vcpu *
- 		msr_info->data = svm->tsc_aux;
- 		break;
- 	case MSR_IA32_DEBUGCTLMSR:
--		msr_info->data = svm_get_lbr_vmcb(svm)->save.dbgctl;
-+		msr_info->data = svm->vmcb->save.dbgctl;
- 		break;
- 	case MSR_IA32_LASTBRANCHFROMIP:
--		msr_info->data = svm_get_lbr_vmcb(svm)->save.br_from;
-+		msr_info->data = svm->vmcb->save.br_from;
- 		break;
- 	case MSR_IA32_LASTBRANCHTOIP:
--		msr_info->data = svm_get_lbr_vmcb(svm)->save.br_to;
-+		msr_info->data = svm->vmcb->save.br_to;
- 		break;
- 	case MSR_IA32_LASTINTFROMIP:
--		msr_info->data = svm_get_lbr_vmcb(svm)->save.last_excp_from;
-+		msr_info->data = svm->vmcb->save.last_excp_from;
- 		break;
- 	case MSR_IA32_LASTINTTOIP:
--		msr_info->data = svm_get_lbr_vmcb(svm)->save.last_excp_to;
-+		msr_info->data = svm->vmcb->save.last_excp_to;
- 		break;
- 	case MSR_VM_HSAVE_PA:
- 		msr_info->data = svm->nested.hsave_msr;
-@@ -3206,10 +3179,10 @@ static int svm_set_msr(struct kvm_vcpu *
- 		if (data & DEBUGCTL_RESERVED_BITS)
- 			return 1;
- 
--		if (svm_get_lbr_vmcb(svm)->save.dbgctl == data)
-+		if (svm->vmcb->save.dbgctl == data)
- 			break;
- 
--		svm_get_lbr_vmcb(svm)->save.dbgctl = data;
-+		svm->vmcb->save.dbgctl = data;
- 		vmcb_mark_dirty(svm->vmcb, VMCB_LBR);
- 		svm_update_lbrv(vcpu);
- 		break;
+ 	err = ext4_handle_clustersize(sb);
+ 	if (err)
 
 
