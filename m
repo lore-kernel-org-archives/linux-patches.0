@@ -1,45 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88AE82EBBB2;
-	Fri,  9 Jan 2026 12:41:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F7B2EBBB2;
+	Fri,  9 Jan 2026 12:41:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962499; cv=none; b=doQDiufqwb7fuwMvrrisMCe+8d/Ow3n3e97zt/m26FnNcDzrO5EFdrThUl6AnrtoTdH6J9xpPA2QRR0yS8Gagp+P/pC+jw9xqnQV3+0JGl5NUB0RIHYKnUh619nsDOdmhM8PhuPaTywoKbbOmP4SAmxUv2cCci5SWUJAGqN267Q=
+	t=1767962502; cv=none; b=oQee4RalC/2PXifMkoS36ur4/hqMsrcK5/woO+UVoGtc/BvVaSTRogojMbqQ/zTtkMyPpOVzvkqkNseXWbkXFnILJN7NQ26Z8/ej3lzG/QbxZ3KBCxDdLszAoUGEo57dHghx+RlBOzB6eZJui3ZCWjWkPfJSQ5F3Jb+MkMKF3nk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962499; c=relaxed/simple;
-	bh=1gCRaNQKVbskhyERd6gM1BzzAuZBvcU7k7cMfuV1Tvg=;
+	s=arc-20240116; t=1767962502; c=relaxed/simple;
+	bh=lmz7HhhPO2Ke3rZtLSCXTLrw0eRwUa6prqYsENwuxl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q8CqCsTlfgxh+E+K3ZxTYU8UKU9fx6S228ujlI12kmALKsIYnw1o/CXRVDXlmNPQy55Bdik6VspbH+HTx1NnwSkDP740x7Ge0Y985PBjeV3xmkirXrWx82os50tYY3Nw9tNKXrfOOrj+vtlUm5rpCtmj/JsOxW3b7Ajaj2c7BZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B1GpAIim; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UykxDhn4/VwRO77t5tAG1zVFLxke4tf8Sd+mwPDVI9b4M9Dxdos8YzWXO6EdCjh5i0hjkYI/9OQ1BS173BCKTErnnGISE7d4CNWUwucvH9Rgz5mTXxTq9ZXoRhuBqBqLNEU4edz5aOIQ0I9M+/zmOTD5uhKgy4lT8p9zJmJRG2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RwthOFYj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B1GpAIim"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E8F8C4CEF1;
-	Fri,  9 Jan 2026 12:41:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RwthOFYj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 922F3C16AAE;
+	Fri,  9 Jan 2026 12:41:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962499;
-	bh=1gCRaNQKVbskhyERd6gM1BzzAuZBvcU7k7cMfuV1Tvg=;
+	s=korg; t=1767962502;
+	bh=lmz7HhhPO2Ke3rZtLSCXTLrw0eRwUa6prqYsENwuxl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B1GpAIimNG0XL5M19/R4e+uzJ+ls2HxiVTbuw0xXf7565OCyQAOWCYlZb9v8qUtZs
-	 9dawXm0U+Q0PKR76ayh47DXA2ySxMO1F3E7fv88dlvM5j5vck/LUl2d6nRHvhiX2r0
-	 zSrKfvHkDkcARWRVHAVkM4tAAN1/zkreKpjkV4QY=
+	b=RwthOFYjBO2sF/Qs5qVw0tQmZdBuBktrIHPapg9a9+HNWNHAISQWc3XaACzIXa5UR
+	 J7jLuHt02iioaePQPajE6lZ3OwFhRSKr+UL0SrH5VPBZBnz38MfqwkXiE0xRbvApKX
+	 z0rwyR2C3fFpieVIV/s+HAiDUMOuvXH+PrXGzx9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prithvi Tambewagh <activprithvi@gmail.com>,
-	syzbot+96d38c6e1655c1420a72@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 353/634] ocfs2: fix kernel BUG in ocfs2_find_victim_chain
-Date: Fri,  9 Jan 2026 12:40:31 +0100
-Message-ID: <20260109112130.808048496@linuxfoundation.org>
+	Maxim Levitsky <mlevitsk@redhat.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.1 354/634] KVM: x86: Dont clear async #PF queue when CR0.PG is disabled (e.g. on #SMI)
+Date: Fri,  9 Jan 2026 12:40:32 +0100
+Message-ID: <20260109112130.845361114@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -58,67 +50,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prithvi Tambewagh <activprithvi@gmail.com>
+From: Maxim Levitsky <mlevitsk@redhat.com>
 
-commit 039bef30e320827bac8990c9f29d2a68cd8adb5f upstream.
+commit ab4e41eb9fabd4607304fa7cfe8ec9c0bd8e1552 upstream.
 
-syzbot reported a kernel BUG in ocfs2_find_victim_chain() because the
-`cl_next_free_rec` field of the allocation chain list (next free slot in
-the chain list) is 0, triggring the BUG_ON(!cl->cl_next_free_rec)
-condition in ocfs2_find_victim_chain() and panicking the kernel.
+Fix an interaction between SMM and PV asynchronous #PFs where an #SMI can
+cause KVM to drop an async #PF ready event, and thus result in guest tasks
+becoming permanently stuck due to the task that encountered the #PF never
+being resumed.  Specifically, don't clear the completion queue when paging
+is disabled, and re-check for completed async #PFs if/when paging is
+enabled.
 
-To fix this, an if condition is introduced in ocfs2_claim_suballoc_bits(),
-just before calling ocfs2_find_victim_chain(), the code block in it being
-executed when either of the following conditions is true:
+Prior to commit 2635b5c4a0e4 ("KVM: x86: interrupt based APF 'page ready'
+event delivery"), flushing the APF queue without notifying the guest of
+completed APF requests when paging is disabled was "necessary", in that
+delivering a #PF to the guest when paging is disabled would likely confuse
+and/or crash the guest.  And presumably the original async #PF development
+assumed that a guest would only disable paging when there was no intent to
+ever re-enable paging.
 
-1. `cl_next_free_rec` is equal to 0, indicating that there are no free
-chains in the allocation chain list
-2. `cl_next_free_rec` is greater than `cl_count` (the total number of
-chains in the allocation chain list)
+That assumption fails in several scenarios, most visibly on an emulated
+SMI, as entering SMM always disables CR0.PG (i.e. initially runs with
+paging disabled).  When the SMM handler eventually executes RSM, the
+interrupted paging-enabled is restored, and the async #PF event is lost.
 
-Either of them being true is indicative of the fact that there are no
-chains left for usage.
+Similarly, invoking firmware, e.g. via EFI runtime calls, might require a
+transition through paging modes and thus also disable paging with valid
+entries in the competion queue.
 
-This is addressed using ocfs2_error(), which prints
-the error log for debugging purposes, rather than panicking the kernel.
+To avoid dropping completion events, drop the "clear" entirely, and handle
+paging-enable transitions in the same way KVM already handles APIC
+enable/disable events: if a vCPU's APIC is disabled, APF completion events
+are not kept pending and not injected while APIC is disabled.  Once a
+vCPU's APIC is re-enabled, KVM raises KVM_REQ_APF_READY so that the vCPU
+recognizes any pending pending #APF ready events.
 
-Link: https://lkml.kernel.org/r/20251201130711.143900-1-activprithvi@gmail.com
-Signed-off-by: Prithvi Tambewagh <activprithvi@gmail.com>
-Reported-by: syzbot+96d38c6e1655c1420a72@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=96d38c6e1655c1420a72
-Tested-by: syzbot+96d38c6e1655c1420a72@syzkaller.appspotmail.com
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20251015033258.50974-4-mlevitsk@redhat.com
+[sean: rework changelog to call out #PF injection, drop "real mode"
+       references, expand the code comment]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/suballoc.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/x86/kvm/x86.c |   25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
---- a/fs/ocfs2/suballoc.c
-+++ b/fs/ocfs2/suballoc.c
-@@ -1923,6 +1923,16 @@ static int ocfs2_claim_suballoc_bits(str
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -853,6 +853,13 @@ bool kvm_require_dr(struct kvm_vcpu *vcp
+ }
+ EXPORT_SYMBOL_GPL(kvm_require_dr);
+ 
++static bool kvm_pv_async_pf_enabled(struct kvm_vcpu *vcpu)
++{
++	u64 mask = KVM_ASYNC_PF_ENABLED | KVM_ASYNC_PF_DELIVERY_AS_INT;
++
++	return (vcpu->arch.apf.msr_en_val & mask) == mask;
++}
++
+ static inline u64 pdptr_rsvd_bits(struct kvm_vcpu *vcpu)
+ {
+ 	return vcpu->arch.reserved_gpa_bits | rsvd_bits(5, 8) | rsvd_bits(1, 2);
+@@ -939,15 +946,20 @@ void kvm_post_set_cr0(struct kvm_vcpu *v
  	}
  
- 	cl = (struct ocfs2_chain_list *) &fe->id2.i_chain;
-+	if (!le16_to_cpu(cl->cl_next_free_rec) ||
-+	    le16_to_cpu(cl->cl_next_free_rec) > le16_to_cpu(cl->cl_count)) {
-+		status = ocfs2_error(ac->ac_inode->i_sb,
-+				     "Chain allocator dinode %llu has invalid next "
-+				     "free chain record %u, but only %u total\n",
-+				     (unsigned long long)le64_to_cpu(fe->i_blkno),
-+				     le16_to_cpu(cl->cl_next_free_rec),
-+				     le16_to_cpu(cl->cl_count));
-+		goto bail;
-+	}
+ 	if ((cr0 ^ old_cr0) & X86_CR0_PG) {
+-		kvm_clear_async_pf_completion_queue(vcpu);
+-		kvm_async_pf_hash_reset(vcpu);
+-
+ 		/*
+ 		 * Clearing CR0.PG is defined to flush the TLB from the guest's
+ 		 * perspective.
+ 		 */
+ 		if (!(cr0 & X86_CR0_PG))
+ 			kvm_make_request(KVM_REQ_TLB_FLUSH_GUEST, vcpu);
++		/*
++		 * Check for async #PF completion events when enabling paging,
++		 * as the vCPU may have previously encountered async #PFs (it's
++		 * entirely legal for the guest to toggle paging on/off without
++		 * waiting for the async #PF queue to drain).
++		 */
++		else if (kvm_pv_async_pf_enabled(vcpu))
++			kvm_make_request(KVM_REQ_APF_READY, vcpu);
+ 	}
  
- 	victim = ocfs2_find_victim_chain(cl);
- 	ac->ac_chain = victim;
+ 	if ((cr0 ^ old_cr0) & KVM_MMU_CR0_ROLE_BITS)
+@@ -3358,13 +3370,6 @@ static int set_msr_mce(struct kvm_vcpu *
+ 	return 0;
+ }
+ 
+-static inline bool kvm_pv_async_pf_enabled(struct kvm_vcpu *vcpu)
+-{
+-	u64 mask = KVM_ASYNC_PF_ENABLED | KVM_ASYNC_PF_DELIVERY_AS_INT;
+-
+-	return (vcpu->arch.apf.msr_en_val & mask) == mask;
+-}
+-
+ static int kvm_pv_enable_async_pf(struct kvm_vcpu *vcpu, u64 data)
+ {
+ 	gpa_t gpa = data & ~0x3f;
 
 
