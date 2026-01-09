@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB4B33CE9A;
-	Fri,  9 Jan 2026 12:02:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D62733CE9A;
+	Fri,  9 Jan 2026 12:02:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960130; cv=none; b=Bdnp6HqGFeTcnyQcL7jSuqR7ZK2ZF7s9bxrFZlF2lmnRWRSR1PLEsLbXX9bk5EJqXaVirGDFSqwb6SmIeECRH4z6l7R/GmV7uVdvUWtULRWglYk72W0Me8xTYr9XY/3m29C8j0TD8PJ7Dgjabdpn/qGsX/teUuJbFiiaKFbh5vQ=
+	t=1767960132; cv=none; b=CuJrfPXRSDrRmEMVAgw0zjjCA7OlEOEuXQ8j1NayD7xLNhOLZAktHudUz8JXkkEoilbOESsHN4fQnlA4D9gT7kz+UISXRvBWRyV1heuqMyfXk2YrOf0PWlXfod8KJBmM2l/YSU57haDWNnJyFOcCa3/8HscDdnVoW/l2qOnhpko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960130; c=relaxed/simple;
-	bh=KFee/StysGxorIDGiQfx007SP6QSnHyXO18Oa23vSB4=;
+	s=arc-20240116; t=1767960132; c=relaxed/simple;
+	bh=VFNAFV9XbwgbcMAKJaS59QN96soPJ51AeerjUhTqujg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q6BgRmO8tg2QNSaWCQcNPIe7Qt40OwVByMyj6Dq0mEQ56amuifSfaR+YB4wtIaifxX+3jWsxFkq3SvX2ov5HOXmTHLvRpfbvdeQTzFaEgdOLi8UsFjGqaJeFU+hCU0hIHcSrqHVw1wta+RwGoNJAjLWERrObwyo4o6urjmy87pU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uvwPWqTk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oDsIM1c7qeUwQpMFPohz8HILo5zGICHMU9XGHDpsv4PTjIpeZfMH37g8wkqDKGoYRNfQT4NwqXkRhe0qgLmdtvXsOvqyyhjYWM4DGnRIbYNkYcGc+2bB1BCxDs5VTJ7o9rtO/AOwW1PrivXck8x32oXrRBAGj7QM/z6Jdr70wng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b1XcU1d8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uvwPWqTk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B563C4CEF1;
-	Fri,  9 Jan 2026 12:02:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b1XcU1d8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0624EC4CEF1;
+	Fri,  9 Jan 2026 12:02:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960129;
-	bh=KFee/StysGxorIDGiQfx007SP6QSnHyXO18Oa23vSB4=;
+	s=korg; t=1767960132;
+	bh=VFNAFV9XbwgbcMAKJaS59QN96soPJ51AeerjUhTqujg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uvwPWqTkab9TuqHJRnwiQZvbWpFQ5vJ5a8FVNqHlkYaVqrOq74r7dtfjXC+VweRMa
-	 yAAgwlqAcawbEPqxmN/GJAn698F1BQfpw/9/W28U9fCaAzHpolziCRs0p6WnlBAwL8
-	 ahlWTvfd4W3/I2/84CYUurlOHD087r+SPP+U2HzY=
+	b=b1XcU1d8B3dmu2momCqzVA9jzHnCcAx+b50kSM4LBzhI1fwAbiOJiV7OJ2jysaK5z
+	 6vmn/4MFnmgyIJWD1gmf2t/CBePijM3Ekmplx3mTqRD3cy6YByJhseGyCYCwbmOlP4
+	 AmCesGVYHy3yEx4EwHJfr5Cp2tKuHisaSz5UAp5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 296/737] ALSA: dice: fix buffer overflow in detect_stream_formats()
-Date: Fri,  9 Jan 2026 12:37:15 +0100
-Message-ID: <20260109112145.145439698@linuxfoundation.org>
+	syzbot+1de74b0794c40c8eb300@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Kui-Feng Lee <thinker.li@gmail.com>,
+	David Ahern <dsahern@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.6 297/737] ipv6: avoid possible NULL deref in modify_prefix_route()
+Date: Fri,  9 Jan 2026 12:37:16 +0100
+Message-ID: <20260109112145.182344920@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,50 +53,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 324f3e03e8a85931ce0880654e3c3eb38b0f0bba upstream.
+commit a747e02430dfb3657141f99aa6b09331283fa493 upstream.
 
-The function detect_stream_formats() reads the stream_count value directly
-from a FireWire device without validating it. This can lead to
-out-of-bounds writes when a malicious device provides a stream_count value
-greater than MAX_STREAMS.
+syzbot found a NULL deref [1] in modify_prefix_route(), caused by one
+fib6_info without a fib6_table pointer set.
 
-Fix by applying the same validation to both TX and RX stream counts in
-detect_stream_formats().
+This can happen for net->ipv6.fib6_null_entry
 
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Reported-by: Junrui Luo <moonafterrain@outlook.com>
-Fixes: 58579c056c1c ("ALSA: dice: use extended protocol to detect available stream formats")
-Cc: stable@vger.kernel.org
-Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Link: https://patch.msgid.link/SYBPR01MB7881B043FC68B4C0DA40B73DAFDCA@SYBPR01MB7881.ausprd01.prod.outlook.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[1]
+Oops: general protection fault, probably for non-canonical address 0xdffffc0000000006: 0000 [#1] PREEMPT SMP KASAN NOPTI
+KASAN: null-ptr-deref in range [0x0000000000000030-0x0000000000000037]
+CPU: 1 UID: 0 PID: 5837 Comm: syz-executor888 Not tainted 6.12.0-syzkaller-09567-g7eef7e306d3c #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+ RIP: 0010:__lock_acquire+0xe4/0x3c40 kernel/locking/lockdep.c:5089
+Code: 08 84 d2 0f 85 15 14 00 00 44 8b 0d ca 98 f5 0e 45 85 c9 0f 84 b4 0e 00 00 48 b8 00 00 00 00 00 fc ff df 4c 89 e2 48 c1 ea 03 <80> 3c 02 00 0f 85 96 2c 00 00 49 8b 04 24 48 3d a0 07 7f 93 0f 84
+RSP: 0018:ffffc900035d7268 EFLAGS: 00010006
+RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 0000000000000000
+RDX: 0000000000000006 RSI: 1ffff920006bae5f RDI: 0000000000000030
+RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000001
+R10: ffffffff90608e17 R11: 0000000000000001 R12: 0000000000000030
+R13: ffff888036334880 R14: 0000000000000000 R15: 0000000000000000
+FS:  0000555579e90380(0000) GS:ffff8880b8700000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007ffc59cc4278 CR3: 0000000072b54000 CR4: 00000000003526f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+  lock_acquire.part.0+0x11b/0x380 kernel/locking/lockdep.c:5849
+  __raw_spin_lock_bh include/linux/spinlock_api_smp.h:126 [inline]
+  _raw_spin_lock_bh+0x33/0x40 kernel/locking/spinlock.c:178
+  spin_lock_bh include/linux/spinlock.h:356 [inline]
+  modify_prefix_route+0x30b/0x8b0 net/ipv6/addrconf.c:4831
+  inet6_addr_modify net/ipv6/addrconf.c:4923 [inline]
+  inet6_rtm_newaddr+0x12c7/0x1ab0 net/ipv6/addrconf.c:5055
+  rtnetlink_rcv_msg+0x3c7/0xea0 net/core/rtnetlink.c:6920
+  netlink_rcv_skb+0x16b/0x440 net/netlink/af_netlink.c:2541
+  netlink_unicast_kernel net/netlink/af_netlink.c:1321 [inline]
+  netlink_unicast+0x53c/0x7f0 net/netlink/af_netlink.c:1347
+  netlink_sendmsg+0x8b8/0xd70 net/netlink/af_netlink.c:1891
+  sock_sendmsg_nosec net/socket.c:711 [inline]
+  __sock_sendmsg net/socket.c:726 [inline]
+  ____sys_sendmsg+0xaaf/0xc90 net/socket.c:2583
+  ___sys_sendmsg+0x135/0x1e0 net/socket.c:2637
+  __sys_sendmsg+0x16e/0x220 net/socket.c:2669
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fd1dcef8b79
+Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 c1 17 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007ffc59cc4378 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007fd1dcef8b79
+RDX: 0000000000040040 RSI: 0000000020000140 RDI: 0000000000000004
+RBP: 00000000000113fd R08: 0000000000000006 R09: 0000000000000006
+R10: 0000000000000006 R11: 0000000000000246 R12: 00007ffc59cc438c
+R13: 431bde82d7b634db R14: 0000000000000001 R15: 0000000000000001
+ </TASK>
+
+Fixes: 5eb902b8e719 ("net/ipv6: Remove expired routes with a separated list of routes.")
+Reported-by: syzbot+1de74b0794c40c8eb300@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/67461f7f.050a0220.1286eb.0021.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+CC: Kui-Feng Lee <thinker.li@gmail.com>
+Cc: David Ahern <dsahern@kernel.org>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/firewire/dice/dice-extension.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv6/addrconf.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/sound/firewire/dice/dice-extension.c
-+++ b/sound/firewire/dice/dice-extension.c
-@@ -116,7 +116,7 @@ static int detect_stream_formats(struct
- 			break;
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -4784,7 +4784,7 @@ inet6_rtm_deladdr(struct sk_buff *skb, s
+ 			      ifm->ifa_prefixlen, extack);
+ }
  
- 		base_offset += EXT_APP_STREAM_ENTRIES;
--		stream_count = be32_to_cpu(reg[0]);
-+		stream_count = min_t(unsigned int, be32_to_cpu(reg[0]), MAX_STREAMS);
- 		err = read_stream_entries(dice, section_addr, base_offset,
- 					  stream_count, mode,
- 					  dice->tx_pcm_chs,
-@@ -125,7 +125,7 @@ static int detect_stream_formats(struct
- 			break;
+-static int modify_prefix_route(struct inet6_ifaddr *ifp,
++static int modify_prefix_route(struct net *net, struct inet6_ifaddr *ifp,
+ 			       unsigned long expires, u32 flags,
+ 			       bool modify_peer)
+ {
+@@ -4808,7 +4808,9 @@ static int modify_prefix_route(struct in
+ 				      ifp->prefix_len,
+ 				      ifp->rt_priority, ifp->idev->dev,
+ 				      expires, flags, GFP_KERNEL);
+-	} else {
++		return 0;
++	}
++	if (f6i != net->ipv6.fib6_null_entry) {
+ 		table = f6i->fib6_table;
+ 		spin_lock_bh(&table->tb6_lock);
  
- 		base_offset += stream_count * EXT_APP_STREAM_ENTRY_SIZE;
--		stream_count = be32_to_cpu(reg[1]);
-+		stream_count = min_t(unsigned int, be32_to_cpu(reg[1]), MAX_STREAMS);
- 		err = read_stream_entries(dice, section_addr, base_offset,
- 					  stream_count,
- 					  mode, dice->rx_pcm_chs,
+@@ -4821,9 +4823,8 @@ static int modify_prefix_route(struct in
+ 		}
+ 
+ 		spin_unlock_bh(&table->tb6_lock);
+-
+-		fib6_info_release(f6i);
+ 	}
++	fib6_info_release(f6i);
+ 
+ 	return 0;
+ }
+@@ -4902,7 +4903,7 @@ static int inet6_addr_modify(struct net
+ 		int rc = -ENOENT;
+ 
+ 		if (had_prefixroute)
+-			rc = modify_prefix_route(ifp, expires, flags, false);
++			rc = modify_prefix_route(net, ifp, expires, flags, false);
+ 
+ 		/* prefix route could have been deleted; if so restore it */
+ 		if (rc == -ENOENT) {
+@@ -4912,7 +4913,7 @@ static int inet6_addr_modify(struct net
+ 		}
+ 
+ 		if (had_prefixroute && !ipv6_addr_any(&ifp->peer_addr))
+-			rc = modify_prefix_route(ifp, expires, flags, true);
++			rc = modify_prefix_route(net, ifp, expires, flags, true);
+ 
+ 		if (rc == -ENOENT && !ipv6_addr_any(&ifp->peer_addr)) {
+ 			addrconf_prefix_route(&ifp->peer_addr, ifp->prefix_len,
 
 
