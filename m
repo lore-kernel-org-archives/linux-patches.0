@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D011C3C08;
-	Fri,  9 Jan 2026 12:15:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB002F5306;
+	Fri,  9 Jan 2026 12:15:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960934; cv=none; b=JkRatcl0cxrBuW7KqILxXhSW6/Nm9jZg0jSlQzoERCIW3YQ9ug6CXZBDFTH12wfbkVT2707DWL4MQ70q6Pr1NvjVML/FEQOXNAi6aPEtpLHn/ySx5AwOrfsjf/BuTxgX+SwonY7Eu9PVpdNDk0cZavzh73tgEcFygSFNy9mg/14=
+	t=1767960937; cv=none; b=HL791rrlMIUnW7HpnVv4PxOSHsj5ees9diBzqWAPs0M9tp95I4+u2OjrIfwY1AnootTuoAhQeA30MZV+7uZ/6HKQT7tpcJqxBW9xY1Kjt9soZgTdxe3UmUmxkiUvbXPvLA3ZCWbspu3knJ9RerIGbmnKYso5iFIRaf3tTAbb618=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960934; c=relaxed/simple;
-	bh=dAgXcEoerScpsTTI0Lm6wveXpFmBwZZB892EGS+GsvE=;
+	s=arc-20240116; t=1767960937; c=relaxed/simple;
+	bh=w6AXbQ4fUpydDq1Vn5PJvQax3wFioPYFG49IiiObN8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=goUZCIB7v5E1aGxzH8v86nVWDywMHU6XJg4VAKI1b2ECnsD+lKMDKgzDblaRK5pa2YZWj8TqP+zsyfrhORjGL2b6zJmmF5fQ2/3KyqZyIm2MGVcnw26sQqA/ik+fJuZ46NvjjqdoYf4/IJp8zeNupl/yeDxQTnbJZXpWUCOaGzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IEDnBEKi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wrurb1X5kCgi7EsBV0ge/fRvNfbmu1vSo2LqEW1/oM2eSY1MbKq7If4wnKm8AcLtNg1bkP+3ObFg7Mm+TIIDqwX9VOBVFKkSbVgMQiPKBxtXSHaVLLYGV4kjg9PBiSfUfgOwggiqRfXMroOpttyX7WU6+ZTdMwOr27wojoDYkLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EvPjvTQb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IEDnBEKi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7300C4CEF1;
-	Fri,  9 Jan 2026 12:15:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EvPjvTQb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE4D3C4CEF1;
+	Fri,  9 Jan 2026 12:15:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960934;
-	bh=dAgXcEoerScpsTTI0Lm6wveXpFmBwZZB892EGS+GsvE=;
+	s=korg; t=1767960937;
+	bh=w6AXbQ4fUpydDq1Vn5PJvQax3wFioPYFG49IiiObN8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IEDnBEKimGtzRf4I84z9KjTMIHw8zwW7Ns3D9XsjKjK7LrhUxexGK7652GXoWJ33r
-	 oB9dXAV4jQHXuEmE58h/DAvRemSrAKDB/6KMmC3R0NGESnYURRnN7Cl/Pm/7yt2BqF
-	 fGRPw4G1dLLX62B2VOTRwb5KJTGPf5zdFaTYiOS4=
+	b=EvPjvTQbCJ/Odu47JuUmfeYYt3s5BAEKcgIjKV9RenP6bnZJSVdNT5FFtFf62KoU4
+	 xQfeMe28g89D9IQ8s6fnS+Dv8cKLlZ1RLJd2TpyKcfsj70kof9VtCJaR80J58+ve9c
+	 EUe630cxwjdTXOOwz8uluW72N+tnwQxGHX1Gvfpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahesh Rao <mahesh.rao@altera.com>,
-	Matthew Gerlach <matthew.gerlach@altera.com>,
-	Dinh Nguyen <dinguyen@kernel.org>
-Subject: [PATCH 6.6 577/737] firmware: stratix10-svc: Add mutex in stratix10 memory management
-Date: Fri,  9 Jan 2026 12:41:56 +0100
-Message-ID: <20260109112155.707033483@linuxfoundation.org>
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.6 578/737] dm-ebs: Mark full buffer dirty even on partial write
+Date: Fri,  9 Jan 2026 12:41:57 +0100
+Message-ID: <20260109112155.743864716@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,80 +50,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mahesh Rao <mahesh.rao@altera.com>
+From: Uladzislau Rezki (Sony) <urezki@gmail.com>
 
-commit 85f96cbbbc67b59652b2c1ec394b8ddc0ddf1b0b upstream.
+commit 7fa3e7d114abc9cc71cc35d768e116641074ddb4 upstream.
 
-Add mutex lock to stratix10_svc_allocate_memory and
-stratix10_svc_free_memory for thread safety. This prevents race
-conditions and ensures proper synchronization during memory operations.
-This is required for parallel communication with the Stratix10 service
-channel.
+When performing a read-modify-write(RMW) operation, any modification
+to a buffered block must cause the entire buffer to be marked dirty.
 
-Fixes: 7ca5ce896524f ("firmware: add Intel Stratix10 service layer driver")
+Marking only a subrange as dirty is incorrect because the underlying
+device block size(ubs) defines the minimum read/write granularity. A
+lower device can perform I/O only on regions which are fully aligned
+and sized to ubs.
+
+This change ensures that write-back operations always occur in full
+ubs-sized chunks, matching the intended emulation semantics of the
+EBS target.
+
+As for user space visible impact, submitting sub-ubs and misaligned
+I/O for devices which are tuned to ubs sizes only, will reject such
+requests, therefore it can lead to losing data. Example:
+
+1) Create a 8K nvme device in qemu by adding
+
+-device nvme,drive=drv0,serial=foo,logical_block_size=8192,physical_block_size=8192
+
+2) Setup dm-ebs to emulate 512B to 8K mapping
+
+urezki@pc638:~/bin$ cat dmsetup.sh
+
+lower=/dev/nvme0n1
+len=$(blockdev --getsz "$lower")
+
+echo "0 $len ebs $lower 0 1 16" | dmsetup create nvme-8k
+urezki@pc638:~/bin$
+
+offset 0, ebs=1 and ubs=16(in sectors).
+
+3) Create an ext4 filesystem(default 4K block size)
+
+urezki@pc638:~/bin$ sudo mkfs.ext4 -F /dev/dm-0
+mke2fs 1.47.0 (5-Feb-2023)
+Discarding device blocks: done
+Creating filesystem with 2072576 4k blocks and 518144 inodes
+Filesystem UUID: bd0b6ca6-0506-4e31-86da-8d22c9d50b63
+Superblock backups stored on blocks:
+        32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (16384 blocks): done
+Writing superblocks and filesystem accounting information: mkfs.ext4: Input/output error while writing out and closing file system
+urezki@pc638:~/bin$ dmesg
+
+<snip>
+[ 1618.875449] buffer_io_error: 1028 callbacks suppressed
+[ 1618.875456] Buffer I/O error on dev dm-0, logical block 0, lost async page write
+[ 1618.875527] Buffer I/O error on dev dm-0, logical block 1, lost async page write
+[ 1618.875602] Buffer I/O error on dev dm-0, logical block 2, lost async page write
+[ 1618.875620] Buffer I/O error on dev dm-0, logical block 3, lost async page write
+[ 1618.875639] Buffer I/O error on dev dm-0, logical block 4, lost async page write
+[ 1618.894316] Buffer I/O error on dev dm-0, logical block 5, lost async page write
+[ 1618.894358] Buffer I/O error on dev dm-0, logical block 6, lost async page write
+[ 1618.894380] Buffer I/O error on dev dm-0, logical block 7, lost async page write
+[ 1618.894405] Buffer I/O error on dev dm-0, logical block 8, lost async page write
+[ 1618.894427] Buffer I/O error on dev dm-0, logical block 9, lost async page write
+<snip>
+
+Many I/O errors because the lower 8K device rejects sub-ubs/misaligned
+requests.
+
+with a patch:
+
+urezki@pc638:~/bin$ sudo mkfs.ext4 -F /dev/dm-0
+mke2fs 1.47.0 (5-Feb-2023)
+Discarding device blocks: done
+Creating filesystem with 2072576 4k blocks and 518144 inodes
+Filesystem UUID: 9b54f44f-ef55-4bd4-9e40-c8b775a616ac
+Superblock backups stored on blocks:
+        32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (16384 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+urezki@pc638:~/bin$ sudo mount /dev/dm-0 /mnt/
+urezki@pc638:~/bin$ ls -al /mnt/
+total 24
+drwxr-xr-x  3 root root  4096 Oct 17 15:13 .
+drwxr-xr-x 19 root root  4096 Jul 10 19:42 ..
+drwx------  2 root root 16384 Oct 17 15:13 lost+found
+urezki@pc638:~/bin$
+
+After this change: mkfs completes; mount succeeds.
+
+Signed-off-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Mahesh Rao <mahesh.rao@altera.com>
-Reviewed-by: Matthew Gerlach <matthew.gerlach@altera.com>
-Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/stratix10-svc.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/md/dm-ebs-target.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/firmware/stratix10-svc.c
-+++ b/drivers/firmware/stratix10-svc.c
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- /*
-  * Copyright (C) 2017-2018, Intel Corporation
-+ * Copyright (C) 2025, Altera Corporation
-  */
+--- a/drivers/md/dm-ebs-target.c
++++ b/drivers/md/dm-ebs-target.c
+@@ -103,7 +103,7 @@ static int __ebs_rw_bvec(struct ebs_c *e
+ 			} else {
+ 				flush_dcache_page(bv->bv_page);
+ 				memcpy(ba, pa, cur_len);
+-				dm_bufio_mark_partial_buffer_dirty(b, buf_off, buf_off + cur_len);
++				dm_bufio_mark_buffer_dirty(b);
+ 			}
  
- #include <linux/completion.h>
-@@ -176,6 +177,12 @@ static LIST_HEAD(svc_ctrl);
- static LIST_HEAD(svc_data_mem);
- 
- /**
-+ * svc_mem_lock protects access to the svc_data_mem list for
-+ * concurrent multi-client operations
-+ */
-+static DEFINE_MUTEX(svc_mem_lock);
-+
-+/**
-  * svc_pa_to_va() - translate physical address to virtual address
-  * @addr: to be translated physical address
-  *
-@@ -187,6 +194,7 @@ static void *svc_pa_to_va(unsigned long
- 	struct stratix10_svc_data_mem *pmem;
- 
- 	pr_debug("claim back P-addr=0x%016x\n", (unsigned int)addr);
-+	guard(mutex)(&svc_mem_lock);
- 	list_for_each_entry(pmem, &svc_data_mem, node)
- 		if (pmem->paddr == addr)
- 			return pmem->vaddr;
-@@ -996,6 +1004,7 @@ int stratix10_svc_send(struct stratix10_
- 			p_data->flag = ct->flags;
- 		}
- 	} else {
-+		guard(mutex)(&svc_mem_lock);
- 		list_for_each_entry(p_mem, &svc_data_mem, node)
- 			if (p_mem->vaddr == p_msg->payload) {
- 				p_data->paddr = p_mem->paddr;
-@@ -1078,6 +1087,7 @@ void *stratix10_svc_allocate_memory(stru
- 	if (!pmem)
- 		return ERR_PTR(-ENOMEM);
- 
-+	guard(mutex)(&svc_mem_lock);
- 	va = gen_pool_alloc(genpool, s);
- 	if (!va)
- 		return ERR_PTR(-ENOMEM);
-@@ -1106,6 +1116,7 @@ EXPORT_SYMBOL_GPL(stratix10_svc_allocate
- void stratix10_svc_free_memory(struct stratix10_svc_chan *chan, void *kaddr)
- {
- 	struct stratix10_svc_data_mem *pmem;
-+	guard(mutex)(&svc_mem_lock);
- 
- 	list_for_each_entry(pmem, &svc_data_mem, node)
- 		if (pmem->vaddr == kaddr) {
+ 			dm_bufio_release(b);
 
 
