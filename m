@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC8C426ED41;
-	Fri,  9 Jan 2026 12:24:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0F62737EE;
+	Fri,  9 Jan 2026 12:24:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961480; cv=none; b=AmO4DtEAw3Ta5QsxntjAXLlGY+l7BdBbnbSZfJYv7ZxsoUcLXOXdu2ggriFvTjmHHQ765soXV4417gBhVqH5N+VsZMnMuryC1DO6JX9oZxKMWFKHkb7mwjfynLM7wFWLGFMzATOgUmJ38YIANeJlRkZzVUpWHCPs9BksevjSzA8=
+	t=1767961483; cv=none; b=qXy5ZJPZDD290LnoNmO1oyxmtKBliLyPMM6siR1kMkFqNzGDNsszeCYA81Zr3fluBVifI71AMjgMAyuDJW3X+DZdwOdJMxtu0eF1muD7eNSksqaeZ11GpBOj1WtPjD5HTroDM9Bdc4vuzy4fqrOKIJUCRC2l6HyFm6mLq/WSvEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961480; c=relaxed/simple;
-	bh=fbXnkkzQt97F7mr2E8Bjuc4xPI69rlaaLH7+3ubFWW4=;
+	s=arc-20240116; t=1767961483; c=relaxed/simple;
+	bh=F8K+mhDla6oCu39u3sW5m7WeBD12mkcztrmNHfTedsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S5plISGKr+cJvpYfzoncmW5AR9WFIyKCcAu8p00qVpSU30XqWkFz3LXhV/sgWZMu+lqPwVVaTQ4XXcMMlJfNKdRx2dDnWL6RgnqXkFxLvmISTDG/uv1M5B35xBBni4r1zhJZEPVVYwX9Jvs8KiMgMOy49E+ztjduBmdQWuWnBHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NXX3j4Bn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SbWZb9o43wIm47BWfHRZaZPR2HhI47oQAxLyBcyPfBWqSVZIeCAL6T303gEafB1hoqJvGpX8txIKjqsv/1OxFVPD8wbf3V5l+kJeSR+rBxJfCGP6ZS5n6uF7G/3SDBx0O7zgwUMAgo7pmRtqgX079oT3C2MZo3OejMjF8q4IteY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y8Bqg78s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NXX3j4Bn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37CD9C4CEF1;
-	Fri,  9 Jan 2026 12:24:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y8Bqg78s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3617FC4CEF1;
+	Fri,  9 Jan 2026 12:24:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961480;
-	bh=fbXnkkzQt97F7mr2E8Bjuc4xPI69rlaaLH7+3ubFWW4=;
+	s=korg; t=1767961483;
+	bh=F8K+mhDla6oCu39u3sW5m7WeBD12mkcztrmNHfTedsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NXX3j4BnpaC1J8QIzfaJPe9Yb17i5V11HQGkVTP11W1jkUi8f6ZjhkrZKpyFIXr44
-	 ho8meP+qFZARrFgJkYWaiB6kkrKgcdsbcRfjr+Q1V25Lv9bA4Tjig93NzCLNibIK2p
-	 gLPq6HMVw0l6NGjzVgwCuxPfj4RD9gWmZzkzKjA0=
+	b=Y8Bqg78saWgFlJvDE/NGbxTAObBacrThCuCfUIHdbv38DrRmMB4GHFEC27TbEk8IG
+	 5gggCgISo2kgoZezBFhGeY5a5PoaFetpqOtdKXB1KBADB9yz2V1apuvy0f2la1wP3d
+	 07SLCOR3VA6XS5Y9c8oUVPS8zAnhRzwlVt5fm5uA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Azeem Shaikh <azeemshaikh38@gmail.com>,
-	Kees Cook <keescook@chromium.org>,
+	Stefan Kalscheuer <stefan@stklcode.de>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 005/634] leds: Replace all non-returning strlcpy with strscpy
-Date: Fri,  9 Jan 2026 12:34:43 +0100
-Message-ID: <20260109112117.625063712@linuxfoundation.org>
+Subject: [PATCH 6.1 006/634] leds: spi-byte: Use devm_led_classdev_register_ext()
+Date: Fri,  9 Jan 2026 12:34:44 +0100
+Message-ID: <20260109112117.663064395@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,72 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Azeem Shaikh <azeemshaikh38@gmail.com>
+From: Stefan Kalscheuer <stefan@stklcode.de>
 
-[ Upstream commit bf4a35e9201d30b63a8d276797d6ecfaa596ccd3 ]
+[ Upstream commit ccc35ff2fd2911986b716a87fe65e03fac2312c9 ]
 
-strlcpy() reads the entire source buffer first.
-This read may exceed the destination size limit.
-This is both inefficient and can lead to linear read
-overflows if a source string is not NUL-terminated [1].
-In an effort to remove strlcpy() completely [2], replace
-strlcpy() here with strscpy().
-No return values were used, so direct replacement is safe.
+Use extended classdev registration to generate generic device names from
+color and function enums instead of reading only the label from the
+device tree.
 
-[1] https://www.kernel.org/doc/html/latest/process/deprecated.html#strlcpy
-[2] https://github.com/KSPP/linux/issues/89
-
-Signed-off-by: Azeem Shaikh <azeemshaikh38@gmail.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20230523021451.2406362-1-azeemshaikh38@gmail.com
+Signed-off-by: Stefan Kalscheuer <stefan@stklcode.de>
+Link: https://lore.kernel.org/r/20240204150726.29783-1-stefan@stklcode.de
 Signed-off-by: Lee Jones <lee@kernel.org>
-Stable-dep-of: ccc35ff2fd29 ("leds: spi-byte: Use devm_led_classdev_register_ext()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/flash/leds-aat1290.c | 2 +-
- drivers/leds/led-class.c          | 2 +-
- drivers/leds/leds-spi-byte.c      | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/leds/leds-spi-byte.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/leds/flash/leds-aat1290.c b/drivers/leds/flash/leds-aat1290.c
-index 589484b22c796..f12ecb2c65803 100644
---- a/drivers/leds/flash/leds-aat1290.c
-+++ b/drivers/leds/flash/leds-aat1290.c
-@@ -425,7 +425,7 @@ static void aat1290_init_v4l2_flash_config(struct aat1290_led *led,
- 	struct led_classdev *led_cdev = &led->fled_cdev.led_cdev;
- 	struct led_flash_setting *s;
- 
--	strlcpy(v4l2_sd_cfg->dev_name, led_cdev->dev->kobj.name,
-+	strscpy(v4l2_sd_cfg->dev_name, led_cdev->dev->kobj.name,
- 		sizeof(v4l2_sd_cfg->dev_name));
- 
- 	s = &v4l2_sd_cfg->intensity;
-diff --git a/drivers/leds/led-class.c b/drivers/leds/led-class.c
-index 93fdca5c7dc5d..923138c808ca2 100644
---- a/drivers/leds/led-class.c
-+++ b/drivers/leds/led-class.c
-@@ -321,7 +321,7 @@ static int led_classdev_next_name(const char *init_name, char *name,
- 	int ret = 0;
- 	struct device *dev;
- 
--	strlcpy(name, init_name, len);
-+	strscpy(name, init_name, len);
- 
- 	while ((ret < len) &&
- 	       (dev = class_find_device_by_name(leds_class, name))) {
 diff --git a/drivers/leds/leds-spi-byte.c b/drivers/leds/leds-spi-byte.c
-index 6883d3ba382f9..065a2bcb7c14b 100644
+index 065a2bcb7c14b..eb6481df5997f 100644
 --- a/drivers/leds/leds-spi-byte.c
 +++ b/drivers/leds/leds-spi-byte.c
-@@ -97,7 +97,7 @@ static int spi_byte_probe(struct spi_device *spi)
+@@ -83,7 +83,7 @@ static int spi_byte_probe(struct spi_device *spi)
+ 	struct device_node *child;
+ 	struct device *dev = &spi->dev;
+ 	struct spi_byte_led *led;
+-	const char *name = "leds-spi-byte::";
++	struct led_init_data init_data = {};
+ 	const char *state;
+ 	int ret;
+ 
+@@ -96,12 +96,9 @@ static int spi_byte_probe(struct spi_device *spi)
+ 	if (!led)
  		return -ENOMEM;
  
- 	of_property_read_string(child, "label", &name);
--	strlcpy(led->name, name, sizeof(led->name));
-+	strscpy(led->name, name, sizeof(led->name));
+-	of_property_read_string(child, "label", &name);
+-	strscpy(led->name, name, sizeof(led->name));
  	led->spi = spi;
  	mutex_init(&led->mutex);
  	led->cdef = device_get_match_data(dev);
+-	led->ldev.name = led->name;
+ 	led->ldev.brightness = LED_OFF;
+ 	led->ldev.max_brightness = led->cdef->max_value - led->cdef->off_value;
+ 	led->ldev.brightness_set_blocking = spi_byte_brightness_set_blocking;
+@@ -121,7 +118,11 @@ static int spi_byte_probe(struct spi_device *spi)
+ 	spi_byte_brightness_set_blocking(&led->ldev,
+ 					 led->ldev.brightness);
+ 
+-	ret = devm_led_classdev_register(&spi->dev, &led->ldev);
++	init_data.fwnode = of_fwnode_handle(child);
++	init_data.devicename = "leds-spi-byte";
++	init_data.default_label = ":";
++
++	ret = devm_led_classdev_register_ext(&spi->dev, &led->ldev, &init_data);
+ 	if (ret) {
+ 		of_node_put(child);
+ 		mutex_destroy(&led->mutex);
 -- 
 2.51.0
 
