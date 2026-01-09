@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2BCF2FBDF5;
-	Fri,  9 Jan 2026 11:49:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5FDC2FBDF5;
+	Fri,  9 Jan 2026 11:49:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959367; cv=none; b=SVL2cr17iLif1Zigea3Z7FmUY1ABvqBTYEy3lEtiK6m6jYyZQiuJa39rRhNXzZdEcsRj5ugFPFQajvoONTo8BkebgobXWJyCzZ3qOFfMdxh6t4VL3CbKuAQ8BMAbp99CbEtf55sFZji6qt257fZi55AjrfBiTn0qvbP0Yt/+W2E=
+	t=1767959370; cv=none; b=l+v284Sp+YAat+Be15zeaW4Qy5YLv//BQsBWDS7mOwixvc1rBfrHdL+oDymNjUQI9hzI4jX3yjCrixqDQyD3z6ZS0bjrMBjiGQBo7TfYmQUkBegZQernCCribbX5zzCxCqdmw5WSCFs06YmdmUrcgwOt42eFn44DU9ut8TxB5+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959367; c=relaxed/simple;
-	bh=l8wf6lhljYxjQWa2t+w05AaaQzv23xBb9bKHjRnUhVM=;
+	s=arc-20240116; t=1767959370; c=relaxed/simple;
+	bh=ofazdARJyqh66JMkbqTmRAWHe0IyAcLfWkFBnGbtOrk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uRNFdTqtfOIY3tBYVc1DRiV2hJ6LjOgUEuhkHDy3m+wIpb+mKDblAxwcTtB14NQBIKcR3ym8qPU9NpmOILrnTM53r6iXSmDChhN7QhUar7nb1Ft6VeFugvq3n01TxpwYS15DlQCr2SL3Jb5LwQXWtIqRMr8OhxRY38VW57f4ekY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P0A8ApRO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jAi5ktbwcygh/y6OjjHq96yu50uMnk27PWnsFcKxhfy8OdZtdQ2jDv6qsrYFp9+iEFvk3VVuZFxHI2B8n75T7rp9W1L5Vs5NRnduxXEXGIvIVZfUl6gPsAye3eBrECURFC7Mfyxam/AOJsoAjmrE6+YdEd3wC8UtjqGw+ycbJkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nkoKlvOp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P0A8ApRO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC95C4CEF1;
-	Fri,  9 Jan 2026 11:49:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nkoKlvOp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25DEBC4CEF1;
+	Fri,  9 Jan 2026 11:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959367;
-	bh=l8wf6lhljYxjQWa2t+w05AaaQzv23xBb9bKHjRnUhVM=;
+	s=korg; t=1767959370;
+	bh=ofazdARJyqh66JMkbqTmRAWHe0IyAcLfWkFBnGbtOrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P0A8ApROXshlzde50U22S+1yQ59cAwEi+FjFXyqOHzp2PK54KHcdbv3HhBpTKOIJb
-	 5dovR1jsqmX2jC1Ki90PWQnX3zIB2fDOs5CaBXFGeTUUus2d41p43bQDTd6Ht3NF1X
-	 dRgvIG2uGSaIpXNDiHJji9E+3YWGiBV61jfOA67s=
+	b=nkoKlvOp108SgmX1bMAp4zLl1J7OrtRKcMfTMHayHbG15fH7E68eDYWdVnZDctsHp
+	 ylroaocSmY/gJ8oftc+fDM3MsHL4HpOlNf4Z8M6SwkAS3GIyw2rntC4F5DToAqqq4u
+	 jLT0Dx2SnHCWy4crhXASDQKe10kYgst+ufIkZ2HY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lushih Hsieh <bruce@mail.kh.edu.tw>,
-	Takashi Iwai <tiwai@suse.de>,
+	syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Tigran Aivazian <aivazian.tigran@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 027/737] ALSA: usb-audio: Add native DSD quirks for PureAudio DAC series
-Date: Fri,  9 Jan 2026 12:32:46 +0100
-Message-ID: <20260109112135.017778085@linuxfoundation.org>
+Subject: [PATCH 6.6 028/737] bfs: Reconstruct file type when loading from disk
+Date: Fri,  9 Jan 2026 12:32:47 +0100
+Message-ID: <20260109112135.054909124@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,63 +53,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lushih Hsieh <bruce@mail.kh.edu.tw>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 21a9ab5b90b3716a631d559e62818029b4e7f5b7 ]
+[ Upstream commit 34ab4c75588c07cca12884f2bf6b0347c7a13872 ]
 
-The PureAudio APA DAC and Lotus DAC5 series are USB Audio
-2.0 Class devices that support native Direct Stream Digital (DSD)
-playback via specific vendor protocols.
+syzbot is reporting that S_IFMT bits of inode->i_mode can become bogus when
+the S_IFMT bits of the 32bits "mode" field loaded from disk are corrupted
+or when the 32bits "attributes" field loaded from disk are corrupted.
 
-Without these quirks, the devices may only function in standard
-PCM mode, or fail to correctly report their DSD format capabilities
-to the ALSA framework, preventing native DSD playback under Linux.
+A documentation says that BFS uses only lower 9 bits of the "mode" field.
+But I can't find an explicit explanation that the unused upper 23 bits
+(especially, the S_IFMT bits) are initialized with 0.
 
-This commit adds new quirk entries for the mentioned DAC models
-based on their respective Vendor/Product IDs (VID:PID), for example:
-0x16d0:0x0ab1 (APA DAC), 0x16d0:0xeca1 (DAC5 series), etc.
+Therefore, ignore the S_IFMT bits of the "mode" field loaded from disk.
+Also, verify that the value of the "attributes" field loaded from disk is
+either BFS_VREG or BFS_VDIR (because BFS supports only regular files and
+the root directory).
 
-The quirk ensures correct DSD format handling by setting the required
-SNDRV_PCM_FMTBIT_DSD_U32_BE format bit and defining the DSD-specific
-Audio Class 2.0 (AC2.0) endpoint configurations. This allows the ALSA
-DSD API to correctly address the device for high-bitrate DSD streams,
-bypassing the need for DoP (DSD over PCM).
-
-Test on APA DAC and Lotus DAC5 SE under Arch Linux.
-
-Tested-by: Lushih Hsieh <bruce@mail.kh.edu.tw>
-Signed-off-by: Lushih Hsieh <bruce@mail.kh.edu.tw>
-Link: https://patch.msgid.link/20251114052053.54989-1-bruce@mail.kh.edu.tw
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reported-by: syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=895c23f6917da440ed0d
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Link: https://patch.msgid.link/fabce673-d5b9-4038-8287-0fd65d80203b@I-love.SAKURA.ne.jp
+Reviewed-by: Tigran Aivazian <aivazian.tigran@gmail.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/bfs/inode.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index 68238e62020b0..44274f39d6937 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -1922,6 +1922,8 @@ u64 snd_usb_interface_dsd_format_quirks(struct snd_usb_audio *chip,
- 	case USB_ID(0x16d0, 0x09d8): /* NuPrime IDA-8 */
- 	case USB_ID(0x16d0, 0x09db): /* NuPrime Audio DAC-9 */
- 	case USB_ID(0x16d0, 0x09dd): /* Encore mDSD */
-+	case USB_ID(0x16d0, 0x0ab1): /* PureAudio APA DAC */
-+	case USB_ID(0x16d0, 0xeca1): /* PureAudio Lotus DAC5, DAC5 SE, DAC5 Pro */
- 	case USB_ID(0x1db5, 0x0003): /* Bryston BDA3 */
- 	case USB_ID(0x20a0, 0x4143): /* WaveIO USB Audio 2.0 */
- 	case USB_ID(0x22e1, 0xca01): /* HDTA Serenade DSD */
-@@ -2189,6 +2191,10 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_IGNORE_CLOCK_SOURCE),
- 	DEVICE_FLG(0x1686, 0x00dd, /* Zoom R16/24 */
- 		   QUIRK_FLAG_TX_LENGTH | QUIRK_FLAG_CTL_MSG_DELAY_1M),
-+	DEVICE_FLG(0x16d0, 0x0ab1, /* PureAudio APA DAC */
-+		   QUIRK_FLAG_DSD_RAW),
-+	DEVICE_FLG(0x16d0, 0xeca1, /* PureAudio Lotus DAC5, DAC5 SE and DAC5 Pro */
-+		   QUIRK_FLAG_DSD_RAW),
- 	DEVICE_FLG(0x17aa, 0x1046, /* Lenovo ThinkStation P620 Rear Line-in, Line-out and Microphone */
- 		   QUIRK_FLAG_DISABLE_AUTOSUSPEND),
- 	DEVICE_FLG(0x17aa, 0x104d, /* Lenovo ThinkStation P620 Internal Speaker + Front Headset */
+diff --git a/fs/bfs/inode.c b/fs/bfs/inode.c
+index e6a76ae9eb444..42805e3dbdaec 100644
+--- a/fs/bfs/inode.c
++++ b/fs/bfs/inode.c
+@@ -60,7 +60,19 @@ struct inode *bfs_iget(struct super_block *sb, unsigned long ino)
+ 	off = (ino - BFS_ROOT_INO) % BFS_INODES_PER_BLOCK;
+ 	di = (struct bfs_inode *)bh->b_data + off;
+ 
+-	inode->i_mode = 0x0000FFFF & le32_to_cpu(di->i_mode);
++	/*
++	 * https://martin.hinner.info/fs/bfs/bfs-structure.html explains that
++	 * BFS in SCO UnixWare environment used only lower 9 bits of di->i_mode
++	 * value. This means that, although bfs_write_inode() saves whole
++	 * inode->i_mode bits (which include S_IFMT bits and S_IS{UID,GID,VTX}
++	 * bits), middle 7 bits of di->i_mode value can be garbage when these
++	 * bits were not saved by bfs_write_inode().
++	 * Since we can't tell whether middle 7 bits are garbage, use only
++	 * lower 12 bits (i.e. tolerate S_IS{UID,GID,VTX} bits possibly being
++	 * garbage) and reconstruct S_IFMT bits for Linux environment from
++	 * di->i_vtype value.
++	 */
++	inode->i_mode = 0x00000FFF & le32_to_cpu(di->i_mode);
+ 	if (le32_to_cpu(di->i_vtype) == BFS_VDIR) {
+ 		inode->i_mode |= S_IFDIR;
+ 		inode->i_op = &bfs_dir_inops;
+@@ -70,6 +82,11 @@ struct inode *bfs_iget(struct super_block *sb, unsigned long ino)
+ 		inode->i_op = &bfs_file_inops;
+ 		inode->i_fop = &bfs_file_operations;
+ 		inode->i_mapping->a_ops = &bfs_aops;
++	} else {
++		brelse(bh);
++		printf("Unknown vtype=%u %s:%08lx\n",
++		       le32_to_cpu(di->i_vtype), inode->i_sb->s_id, ino);
++		goto error;
+ 	}
+ 
+ 	BFS_I(inode)->i_sblock =  le32_to_cpu(di->i_sblock);
 -- 
 2.51.0
 
