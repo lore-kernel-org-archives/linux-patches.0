@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC77933D511;
-	Fri,  9 Jan 2026 12:43:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D17591A2545;
+	Fri,  9 Jan 2026 12:43:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962629; cv=none; b=kKOnXSWfnv0Hf4rhaWRIdwH0wMyzjE7ZAotsmlDpSH/GLO0UWp87k0KqpApy0X2CpIOsn7PHe6eSS5LMgR/9PQbuiymlF/iD8tV+cM3dNGLMvXvRc5eLHvWc3yokm/gyjUfUSJMpybv0eESDwmKq8XdC2NI4YEN/yzKwDShV708=
+	t=1767962631; cv=none; b=aQjXnsGYQIdQWkDQdQLdoR7rRokw7sNR44bBqGczSpRRGdrH+ifw0VKWoYm7wLVDQMinwtc7NZUYjSs3Bqr2KUeM8crNmbYE/GdUqou1w7E/rr5y67Vlfy+/+568AqU58DIrXuMKqojDgXfhx9lmh66y402RNdcBygoSheE7yY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962629; c=relaxed/simple;
-	bh=85pUWt99SvTJIXHCGnIi+Sj/zFQWaz4KN1oFlNFutfI=;
+	s=arc-20240116; t=1767962631; c=relaxed/simple;
+	bh=7XrJnP3SrLldI1zBkKCi/CIRo0VJnQDXfR9lk0NZfjE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fjO28fnWutZq5fYmma6pC8taclKMmbvc4R7C0LIjYByg+nIQOI+85ik1Ayp/yZUpF2NUcyM1boSMui6Mi9Kmk96+tdegEm8wcE/hGXn6jAjcvI8gD2Om4/9Sy3h4fcFkf/bNn+ZZnm3uDVdW1qPpMzXZJRJEZaTMjJPHLyObmWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E9yBAo3j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a+ya/fkAFAHM1N2Ry2GH2qmWAVfB8A5T2rykplNGxi8mA+Vz2bV0mT5CoqcIZwz1JNmMWKlokGqsUJ0dvvJwvNUCtdP+aXd86uREN6ad+WacgXKSzZkz02pkypur/feAx0Yr2VHhXNI8mUkTzKI9XMUh9oOVQE8HzqKy2y7SLjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iDQ8Hdj8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E9yBAo3j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 781BDC4CEF1;
-	Fri,  9 Jan 2026 12:43:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iDQ8Hdj8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B8B4C4CEF1;
+	Fri,  9 Jan 2026 12:43:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962628;
-	bh=85pUWt99SvTJIXHCGnIi+Sj/zFQWaz4KN1oFlNFutfI=;
+	s=korg; t=1767962631;
+	bh=7XrJnP3SrLldI1zBkKCi/CIRo0VJnQDXfR9lk0NZfjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E9yBAo3jFTMmnModQlnBeFt/ce8RuNbvtsAKrZ2xA0KThQSsCojYNcAgRu/5O5O/a
-	 clyASK1ZcGVCzzmqTngRgK33/ZDCyPzK7I5zh4vMRNLdXztIyekRLnKTazr/afky99
-	 KE1FxUIX0wy7EIlfsmC6wC6p7C5zI8gqepmYw3Lk=
+	b=iDQ8Hdj86VO73PRlq6FBLjtsQlrvzGz0o4POlk8cbL7HJaYsHzFDSa8wXMLd+29yF
+	 IilAVAB5A6Yoyd1jCxVHiVVXAZXy41o/5UDMsGCgBQmbS8OCQuJrRRW6QUr0UKrNKs
+	 xHmVvZohgjjjeKI+tXmk/lHrMf/4jI8f2XnaTBLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jang Ingyu <ingyujang25@korea.ac.kr>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 433/634] RDMA/core: Fix logic error in ib_get_gids_from_rdma_hdr()
-Date: Fri,  9 Jan 2026 12:41:51 +0100
-Message-ID: <20260109112133.837061133@linuxfoundation.org>
+Subject: [PATCH 6.1 434/634] RDMA/bnxt_re: Fix incorrect BAR check in bnxt_qplib_map_creq_db()
+Date: Fri,  9 Jan 2026 12:41:52 +0100
+Message-ID: <20260109112133.874546991@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,37 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jang Ingyu <ingyujang25@korea.ac.kr>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 8aaa848eaddd9ef8680fc6aafbd3a0646da5df40 ]
+[ Upstream commit 145a417a39d7efbc881f52e829817376972b278c ]
 
-Fix missing comparison operator for RDMA_NETWORK_ROCE_V1 in the
-conditional statement. The constant was used directly instead of
-being compared with net_type, causing the condition to always
-evaluate to true.
+RCFW_COMM_CONS_PCI_BAR_REGION is defined as BAR 2, so checking
+!creq_db->reg.bar_id is incorrect and always false.
 
-Fixes: 1c15b4f2a42f ("RDMA/core: Modify enum ib_gid_type and enum rdma_network_type")
-Signed-off-by: Jang Ingyu <ingyujang25@korea.ac.kr>
-Link: https://patch.msgid.link/20251219041508.1725947-1-ingyujang25@korea.ac.kr
+pci_resource_start() returns the BAR base address, and a value of 0
+indicates that the BAR is unassigned. Update the condition to test
+bar_base == 0 instead.
+
+This ensures the driver detects and logs an error for an unassigned
+RCFW communication BAR.
+
+Fixes: cee0c7bba486 ("RDMA/bnxt_re: Refactor command queue management code")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Link: https://patch.msgid.link/20251217100158.752504-1-alok.a.tiwari@oracle.com
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/verbs.c | 2 +-
+ drivers/infiniband/hw/bnxt_re/qplib_rcfw.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/verbs.c b/drivers/infiniband/core/verbs.c
-index 97a116960f31..d0c8ad45f3c2 100644
---- a/drivers/infiniband/core/verbs.c
-+++ b/drivers/infiniband/core/verbs.c
-@@ -732,7 +732,7 @@ int ib_get_gids_from_rdma_hdr(const union rdma_network_hdr *hdr,
- 				       (struct in6_addr *)dgid);
- 		return 0;
- 	} else if (net_type == RDMA_NETWORK_IPV6 ||
--		   net_type == RDMA_NETWORK_IB || RDMA_NETWORK_ROCE_V1) {
-+		   net_type == RDMA_NETWORK_IB || net_type == RDMA_NETWORK_ROCE_V1) {
- 		*dgid = hdr->ibgrh.dgid;
- 		*sgid = hdr->ibgrh.sgid;
- 		return 0;
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
+index c03475b9fa28..69eb6408ce86 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
+@@ -777,7 +777,7 @@ static int bnxt_qplib_map_creq_db(struct bnxt_qplib_rcfw *rcfw, u32 reg_offt)
+ 
+ 	creq_db->reg.bar_id = RCFW_COMM_CONS_PCI_BAR_REGION;
+ 	creq_db->reg.bar_base = pci_resource_start(pdev, creq_db->reg.bar_id);
+-	if (!creq_db->reg.bar_id)
++	if (!creq_db->reg.bar_base)
+ 		dev_err(&pdev->dev,
+ 			"QPLIB: CREQ BAR region %d resc start is 0!",
+ 			creq_db->reg.bar_id);
 -- 
 2.51.0
 
