@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E921631A069;
-	Fri,  9 Jan 2026 12:53:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4C13596FC;
+	Fri,  9 Jan 2026 12:53:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767963201; cv=none; b=XJCWNq+UP21aS0e7QPYPZZ0W8D9K7T/gtdPci3URfs7bXZfSr5ddLUyDSorA6dIOBwqeRHAg+BlA79QCFASJLlVeczc2DL+x4ejiBCPceUNh4vadmoMIz7h99kjZ2cvfG77LtnSogmoIsH1YyUFkkXmk5lrpyDwnuDQlOEnFtdw=
+	t=1767963204; cv=none; b=Itg5EY9iQ7/l0YCYuMywDRpm+l378EdBsZCO7sgS08SaQASD9ODBp+J2Rr9fZjgTa0tiAkeYJIEBmTC+hvcZUrr7KPCYO2/Gj3F/qQTh+MFHIiT+JnoHEVvh7XnQkgObzEa+45+FdPByZkw/mal9DBJSr3BrUiKjfV2KhJ4rm3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767963201; c=relaxed/simple;
-	bh=F/eG3PtCPE9SBCs2b3M0a1BGkbZjb3fRqjWjoRw0qvk=;
+	s=arc-20240116; t=1767963204; c=relaxed/simple;
+	bh=Y7NFua6tuMkzoKLhll207Lba63B/eXxIp2A8SFbxjOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=grk5S5EblxVF2glzSKbP9j7MjBzvdV3oAzBhZY9S8IgvvzOpk/C9hAk92VEjYrLZCaP/drxi1eD4gHVZsP7uh0XDowCgQp9XtafV3+5aR5SmUB7Hb5nVto0OVsk9gSEhuv/dVJFbGr1mRbMQRr1DZmsqpFiUr8TVWn5P60ruQs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TEEXlRlB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AxPAoQ8QuxbltYGBFlPK03k70xYeJNnYyWNbJzxC5WwooTKLBpyHA/WC0l21qzZ/C2eos9np2ic+EpKrOC/PqKiB0pDmT5m5lHYjY8D5W7lrenFVUWLVmdqmB4UGcCMS6fUJ1JVHNvTOjX+WVPTn/Qc3T61YYh6wRExXKziBIaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MPLkhXfG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TEEXlRlB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79193C19421;
-	Fri,  9 Jan 2026 12:53:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MPLkhXfG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D067C4CEF1;
+	Fri,  9 Jan 2026 12:53:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767963200;
-	bh=F/eG3PtCPE9SBCs2b3M0a1BGkbZjb3fRqjWjoRw0qvk=;
+	s=korg; t=1767963203;
+	bh=Y7NFua6tuMkzoKLhll207Lba63B/eXxIp2A8SFbxjOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TEEXlRlB7mgaFrrW5w9yu9c6dvSTtlPT7/mAs/7PTqLAuncQMRlz2D2o8FnmEPEbS
-	 9xYujRP67sA0rlOcFqZ4EsW7+40cvoAel4FkWeeVP2AcTkGyWD8XokmLGIrGcxFbdG
-	 sYM1KiB225yuqIOPXCUggYfS/DLXZU7F0Hb9yq9A=
+	b=MPLkhXfGTVVKkXggKsH9NgRy0QgfAaIWWKTFWIvjqp/GGawOlLsz209LStfGyr9CM
+	 PxYjqoLfepjMGrWzaIbjVj7IHjKhz7IjQbe159JLZUZnXoQ7G9rUzCu6apMOmcWI/A
+	 sWRiuL8hAOw3fz6Zz0xno/OcWSrFm9R6/XL7S3mE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Jouni Malinen <jouni.malinen@oss.qualcomm.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 600/634] iommu/arm-smmu: Drop if with an always false condition
-Date: Fri,  9 Jan 2026 12:44:38 +0100
-Message-ID: <20260109112140.202555034@linuxfoundation.org>
+Subject: [PATCH 6.1 591/634] wifi: mac80211: Discard Beacon frames to non-broadcast address
+Date: Fri,  9 Jan 2026 12:44:29 +0100
+Message-ID: <20260109112139.860385224@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -46,60 +45,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Jouni Malinen <jouni.malinen@oss.qualcomm.com>
 
-[ Upstream commit a2972cb89935160bfe515b15d28a77694723ac06 ]
+[ Upstream commit 193d18f60588e95d62e0f82b6a53893e5f2f19f8 ]
 
-The remove and shutdown callback are only called after probe completed
-successfully. In this case platform_set_drvdata() was called with a
-non-NULL argument and so smmu is never NULL. Other functions in this
-driver also don't check for smmu being non-NULL before using it.
+Beacon frames are required to be sent to the broadcast address, see IEEE
+Std 802.11-2020, 11.1.3.1 ("The Address 1 field of the Beacon .. frame
+shall be set to the broadcast address"). A unicast Beacon frame might be
+used as a targeted attack to get one of the associated STAs to do
+something (e.g., using CSA to move it to another channel). As such, it
+is better have strict filtering for this on the received side and
+discard all Beacon frames that are sent to an unexpected address.
 
-Also note that returning an error code from a remove callback doesn't
-result in the device staying bound. It's still removed and devm allocated
-resources are freed (among others *smmu and the register mapping). So
-after an early exit to iommu device stayed around and using it probably
-oopses.
+This is even more important for cases where beacon protection is used.
+The current implementation in mac80211 is correctly discarding unicast
+Beacon frames if the Protected Frame bit in the Frame Control field is
+set to 0. However, if that bit is set to 1, the logic used for checking
+for configured BIGTK(s) does not actually work. If the driver does not
+have logic for dropping unicast Beacon frames with Protected Frame bit
+1, these frames would be accepted in mac80211 processing as valid Beacon
+frames even though they are not protected. This would allow beacon
+protection to be bypassed. While the logic for checking beacon
+protection could be extended to cover this corner case, a more generic
+check for discard all Beacon frames based on A1=unicast address covers
+this without needing additional changes.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-Link: https://lore.kernel.org/r/20230321084125.337021-2-u.kleine-koenig@pengutronix.de
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
-Stable-dep-of: 6a3908ce56e6 ("iommu/qcom: fix device leak on of_xlate()")
+Address all these issues by dropping received Beacon frames if they are
+sent to a non-broadcast address.
+
+Cc: stable@vger.kernel.org
+Fixes: af2d14b01c32 ("mac80211: Beacon protection using the new BIGTK (STA)")
+Signed-off-by: Jouni Malinen <jouni.malinen@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251215151134.104501-1-jouni.malinen@oss.qualcomm.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ adapted RX_DROP return value to RX_DROP_MONITOR ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu.c |    6 ------
- 1 file changed, 6 deletions(-)
+ net/mac80211/rx.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-@@ -2209,9 +2209,6 @@ static void arm_smmu_device_shutdown(str
- {
- 	struct arm_smmu_device *smmu = platform_get_drvdata(pdev);
+--- a/net/mac80211/rx.c
++++ b/net/mac80211/rx.c
+@@ -3299,6 +3299,11 @@ ieee80211_rx_h_mgmt_check(struct ieee802
+ 	if (!ieee80211_is_mgmt(mgmt->frame_control))
+ 		return RX_DROP_MONITOR;
  
--	if (!smmu)
--		return;
--
- 	if (!bitmap_empty(smmu->context_map, ARM_SMMU_MAX_CBS))
- 		dev_notice(&pdev->dev, "disabling translation\n");
- 
-@@ -2232,9 +2229,6 @@ static int arm_smmu_device_remove(struct
- {
- 	struct arm_smmu_device *smmu = platform_get_drvdata(pdev);
- 
--	if (!smmu)
--		return -ENODEV;
--
- 	iommu_device_unregister(&smmu->iommu);
- 	iommu_device_sysfs_remove(&smmu->iommu);
- 
++	/* Drop non-broadcast Beacon frames */
++	if (ieee80211_is_beacon(mgmt->frame_control) &&
++	    !is_broadcast_ether_addr(mgmt->da))
++		return RX_DROP_MONITOR;
++
+ 	if (rx->sdata->vif.type == NL80211_IFTYPE_AP &&
+ 	    ieee80211_is_beacon(mgmt->frame_control) &&
+ 	    !(rx->flags & IEEE80211_RX_BEACON_REPORTED)) {
 
 
