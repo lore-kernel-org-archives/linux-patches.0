@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFEEB359F8A;
-	Fri,  9 Jan 2026 11:51:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD8F233C511;
+	Fri,  9 Jan 2026 11:51:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959510; cv=none; b=SGb5znTHBWkpQrII1fnAoACFppivMFGlsvLx6+2RfFYPQDDRPhY5d+tIVLWzfYu+KoB429EUkjPFoF/myqsGqr3XTD8yK81Uc0nRC5gSq/0K4gjHa8px3Cp+HL4IJ8jw9cdbAH09GQ3rn+pfRqFRXVkBpyl7mSznCw1CFdpHCvo=
+	t=1767959513; cv=none; b=Nw7ikxTCz1khBZe/FBtkIUtqKBFa8+aEY320auKfeM2zCOANkV5FysY8xqH9VVQlMVrLrOtnd0pDkzoRyelWp11ZPNOC+gwC0UXB5ZxgX5+np2Hp9xjfzzO0gjF/9YOFL89A6mUBLmicVbaPo/KQs19nDVJn1iIHaVBtfVNzFto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959510; c=relaxed/simple;
-	bh=J/4yaW6wGxetNHvdkI+DtOfWrzaAeulqew3h/0aSJ7o=;
+	s=arc-20240116; t=1767959513; c=relaxed/simple;
+	bh=+e29otBe0yEWImE7S6vbzG8yAHMDth1u0SyVF/FZi9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EiKyMjBzBOG92wxjrDhyZZgs79e0ojWq6e1l9fBVQJGZHl9/9avRKcmnCPcsEkIM0xI3F6v9IJd0N4kTLKhqNX5amxxDJ2aKtYAuYolYsd4NYKZs/9loo50B2HV6H6QVph6pKeSFw6qprZ7IzLJXhddIOjozenKDWdFMt3hzbPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aXmvctJr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SmpcnA2ZlEVVHt2na5j5m7CokMgh7PEMbIPQ7+F7sYv5Og2dR7BBPAB89Ssrr70klVOHkPqf4dJesXkgKqL2cG6Ym8F9XlDAtKSCpkTWyzFh3KYQjIdp9Qm74tBeYgzw5kU2gFetyY2/hrnqT5JcxqhybJUVpCJijw03tFLaY4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lpkaskuG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aXmvctJr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71E6BC16AAE;
-	Fri,  9 Jan 2026 11:51:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lpkaskuG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8CDC4CEF1;
+	Fri,  9 Jan 2026 11:51:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959510;
-	bh=J/4yaW6wGxetNHvdkI+DtOfWrzaAeulqew3h/0aSJ7o=;
+	s=korg; t=1767959513;
+	bh=+e29otBe0yEWImE7S6vbzG8yAHMDth1u0SyVF/FZi9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aXmvctJrl1MJo0kaVkc/ujDqJlaPBXdCHQRH7orB6+iLrq7rUIAbdGTaJ6nNlC8jQ
-	 igE6ud1agJeybtEYAbgmAhH51illeppMa/lL3SsiT9rsktm57naZ4INtHWGLB0eeHO
-	 vh/eTEHrjoBRxKYtlpwCEXuDuHz1tZa2tf3lst38=
+	b=lpkaskuGAgZ1FqTSHlbo+qc8kmTZ9/7yB1HiBdihuYY+BGeQgLbxC3phHZZucl3LC
+	 BOLaXqeuqD/z4a8YOTyp5pZPey2DAXMQzmu0XOMF7mWhSZolPDXMTnHJtkiqy5J6Fs
+	 pIvAcu9XspJQ0Qc6rA82sznDgOrPBLPd8GOCB1fk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+332bd4e9d148f11a87dc@syzkaller.appspotmail.com,
-	Sidharth Seela <sidharthseela@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Li Qiang <liqiang01@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 070/737] ntfs3: Fix uninit buffer allocated by __getname()
-Date: Fri,  9 Jan 2026 12:33:29 +0100
-Message-ID: <20260109112136.630459529@linuxfoundation.org>
+Subject: [PATCH 6.6 079/737] uio: uio_fsl_elbc_gpcm:: Add null pointer check to uio_fsl_elbc_gpcm_probe
+Date: Fri,  9 Jan 2026 12:33:38 +0100
+Message-ID: <20260109112136.967360189@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,34 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sidharth Seela <sidharthseela@gmail.com>
+From: Li Qiang <liqiang01@kylinos.cn>
 
-[ Upstream commit 9948dcb2f7b5a1bf8e8710eafaf6016e00be3ad6 ]
+[ Upstream commit d48fb15e6ad142e0577428a8c5028136e10c7b3d ]
 
-Fix uninit errors caused after buffer allocation given to 'de'; by
-initializing the buffer with zeroes. The fix was found by using KMSAN.
+devm_kasprintf() returns a pointer to dynamically allocated memory
+which can be NULL upon failure.
 
-Reported-by: syzbot+332bd4e9d148f11a87dc@syzkaller.appspotmail.com
-Fixes: 78ab59fee07f2 ("fs/ntfs3: Rework file operations")
-Signed-off-by: Sidharth Seela <sidharthseela@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: d57801c45f53e ("uio: uio_fsl_elbc_gpcm: use device-managed allocators")
+Signed-off-by: Li Qiang <liqiang01@kylinos.cn>
+Link: https://patch.msgid.link/20251015064020.56589-1-liqiang01@kylinos.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/inode.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/uio/uio_fsl_elbc_gpcm.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
-index a967babea8a59..f27e25776b730 100644
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -1758,6 +1758,7 @@ int ntfs_link_inode(struct inode *inode, struct dentry *dentry)
- 	de = __getname();
- 	if (!de)
- 		return -ENOMEM;
-+	memset(de, 0, PATH_MAX);
+diff --git a/drivers/uio/uio_fsl_elbc_gpcm.c b/drivers/uio/uio_fsl_elbc_gpcm.c
+index 82dda799f327d..a433bc84313fa 100644
+--- a/drivers/uio/uio_fsl_elbc_gpcm.c
++++ b/drivers/uio/uio_fsl_elbc_gpcm.c
+@@ -384,6 +384,11 @@ static int uio_fsl_elbc_gpcm_probe(struct platform_device *pdev)
  
- 	/* Mark rw ntfs as dirty. It will be cleared at umount. */
- 	ntfs_set_state(sbi, NTFS_DIRTY_DIRTY);
+ 	/* set all UIO data */
+ 	info->mem[0].name = devm_kasprintf(&pdev->dev, GFP_KERNEL, "%pOFn", node);
++	if (!info->mem[0].name) {
++		ret = -ENODEV;
++		goto out_err3;
++	}
++
+ 	info->mem[0].addr = res.start;
+ 	info->mem[0].size = resource_size(&res);
+ 	info->mem[0].memtype = UIO_MEM_PHYS;
+@@ -423,6 +428,8 @@ static int uio_fsl_elbc_gpcm_probe(struct platform_device *pdev)
+ out_err2:
+ 	if (priv->shutdown)
+ 		priv->shutdown(info, true);
++
++out_err3:
+ 	iounmap(info->mem[0].internal_addr);
+ 	return ret;
+ }
 -- 
 2.51.0
 
