@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D4901C3C08;
-	Fri,  9 Jan 2026 12:15:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7411C335083;
+	Fri,  9 Jan 2026 12:15:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960928; cv=none; b=S4p/v1fXq/autQ1vMaTIE0d0wOpYMxZXZzhpxgjskxq/EyKWC0mVN0WORDdiyd9V92VJI9hSEDaKt2rIudUCDG5UMmUBUFPqcw6Rt1SXxaZmtn8a6OQR2tDg+djeLGPlV7ahkz3UaSJB/hT0iMqwFQxtRaaHZK5YPfoyXRxHh6g=
+	t=1767960931; cv=none; b=XULTvsGxTnfU08oZ3zbiGbiFLMZDy5bcqdX2+wTnCsbBpbMrAhF6BFpAfhUj0WmXzVkeQbBFq7XCHkjrXJfRrwhos/cPeIYrCCnqebCs/K+FPbX0Zp5z1WaJGti0UIWmS4NVDdtiVrAFmd9G8GZhU6F5VN4EjVgaUGqLua8TmpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960928; c=relaxed/simple;
-	bh=cnbzHJfwiZJRLrwdDge86rzhJ4odSCJOldNkbGwzuJU=;
+	s=arc-20240116; t=1767960931; c=relaxed/simple;
+	bh=C7iuL/XCQWYdjAM/y83eUQPnDtyDdTEad7pJrG4JXZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YSAJ5iuUJUo+17lJm0Gv7GEk4B/2LxWSH+B3cha/pmcqxgXC140mDh77cSDlGX1U922A+gUM1V5bHe0L17BLnW4PLEC9nrvCHSxzjJTW1jhnY5c5kSPPX/Dt7JhnZkrhcYjY8yUaKGzF2ZSNJW4ptelN4Z8AtLgGJQAyqEGUlJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uK3HkvWp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FwqBLFYHmWI/Y99EMhZWsolwjStTDya+hgsCALHxZWzGpSvKndWocq6RpMhmqEXqAqcWSzJrEzfWn1C59OZ1RAW/9pRiCrk1c2xmiIBH+N7UfPSOiM45kG7mvsNTHCbsWNDg4exRxwq5cxH03ydXjCCTJaCr39yAcNgsnAN7aQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J/w9SRM5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uK3HkvWp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2872BC4CEF1;
-	Fri,  9 Jan 2026 12:15:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/w9SRM5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F270CC4CEF1;
+	Fri,  9 Jan 2026 12:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960928;
-	bh=cnbzHJfwiZJRLrwdDge86rzhJ4odSCJOldNkbGwzuJU=;
+	s=korg; t=1767960931;
+	bh=C7iuL/XCQWYdjAM/y83eUQPnDtyDdTEad7pJrG4JXZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uK3HkvWpgfzLdHTITukXQn7e3QUTK0uq9TSy/OLRg49V6f1tzg/EkXxKypqBp4IkJ
-	 KxLda5KMOxuHMD7sN3oWgpJuAjkFAouaRIF417qqB2tq9opSI4vVRKMiBCv+zswQg/
-	 kC+LoWBt29ELPatcmBq5jr/XXQFEvnxjLinstmIM=
+	b=J/w9SRM5xMpDfHy+hrn6l3FDQvKYFc/n/RASOuCLm7+wys+NDlQmZSRtoG8b5V5VN
+	 CIBRGYnJ7m4MZPa2VfxAcsjwA/nOqKAEDlLWfhJ/V8JC5pS/crntu4mN0NVg/qoaPS
+	 T47pH67MrgPECd/f2Oz7uXxkloh0qcuXn+rCv8yg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 575/737] powerpc/pseries/cmm: call balloon_devinfo_init() also without CONFIG_BALLOON_COMPACTION
-Date: Fri,  9 Jan 2026 12:41:54 +0100
-Message-ID: <20260109112155.632606423@linuxfoundation.org>
+	Ivan Abramov <i.abramov@mt-integration.ru>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.6 576/737] media: adv7842: Avoid possible out-of-bounds array accesses in adv7842_cp_log_status()
+Date: Fri,  9 Jan 2026 12:41:55 +0100
+Message-ID: <20260109112155.670433518@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -55,59 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Ivan Abramov <i.abramov@mt-integration.ru>
 
-commit fc6bcf9ac4de76f5e7bcd020b3c0a86faff3f2d5 upstream.
+commit 8163419e3e05d71dcfa8fb49c8fdf8d76908fe51 upstream.
 
-Patch series "powerpc/pseries/cmm: two smaller fixes".
+It's possible for cp_read() and hdmi_read() to return -EIO. Those
+values are further used as indexes for accessing arrays.
 
-Two smaller fixes identified while doing a bigger rework.
+Fix that by checking return values where it's needed.
 
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-This patch (of 2):
-
-We always have to initialize the balloon_dev_info, even when compaction is
-not configured in: otherwise the containing list and the lock are left
-uninitialized.
-
-Likely not many such configs exist in practice, but let's CC stable to
-be sure.
-
-This was found by code inspection.
-
-Link: https://lkml.kernel.org/r/20251021100606.148294-1-david@redhat.com
-Link: https://lkml.kernel.org/r/20251021100606.148294-2-david@redhat.com
-Fixes: fe030c9b85e6 ("powerpc/pseries/cmm: Implement balloon compaction")
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: a89bcd4c6c20 ("[media] adv7842: add new video decoder driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ivan Abramov <i.abramov@mt-integration.ru>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/pseries/cmm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/i2c/adv7842.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/arch/powerpc/platforms/pseries/cmm.c
-+++ b/arch/powerpc/platforms/pseries/cmm.c
-@@ -550,7 +550,6 @@ static int cmm_migratepage(struct balloo
+--- a/drivers/media/i2c/adv7842.c
++++ b/drivers/media/i2c/adv7842.c
+@@ -2680,6 +2680,7 @@ static int adv7842_cp_log_status(struct
+ 	/* CP block */
+ 	struct adv7842_state *state = to_state(sd);
+ 	struct v4l2_dv_timings timings;
++	int temp;
+ 	u8 reg_io_0x02 = io_read(sd, 0x02);
+ 	u8 reg_io_0x21 = io_read(sd, 0x21);
+ 	u8 reg_rep_0x77 = rep_read(sd, 0x77);
+@@ -2802,8 +2803,9 @@ static int adv7842_cp_log_status(struct
+ 		  (((reg_io_0x02 >> 2) & 0x01) ^ (reg_io_0x02 & 0x01)) ?
+ 			"(16-235)" : "(0-255)",
+ 		  (reg_io_0x02 & 0x08) ? "enabled" : "disabled");
++	temp = cp_read(sd, 0xf4) >> 4;
+ 	v4l2_info(sd, "Color space conversion: %s\n",
+-		  csc_coeff_sel_rb[cp_read(sd, 0xf4) >> 4]);
++		  temp < 0 ? "" : csc_coeff_sel_rb[temp]);
  
- static void cmm_balloon_compaction_init(void)
- {
--	balloon_devinfo_init(&b_dev_info);
- 	b_dev_info.migratepage = cmm_migratepage;
- }
- #else /* CONFIG_BALLOON_COMPACTION */
-@@ -572,6 +571,7 @@ static int cmm_init(void)
- 	if (!firmware_has_feature(FW_FEATURE_CMO) && !simulate)
- 		return -EOPNOTSUPP;
+ 	if (!is_digital_input(sd))
+ 		return 0;
+@@ -2833,8 +2835,9 @@ static int adv7842_cp_log_status(struct
+ 			hdmi_read(sd, 0x5f));
+ 	v4l2_info(sd, "AV Mute: %s\n",
+ 			(hdmi_read(sd, 0x04) & 0x40) ? "on" : "off");
++	temp = hdmi_read(sd, 0x0b) >> 6;
+ 	v4l2_info(sd, "Deep color mode: %s\n",
+-			deep_color_mode_txt[hdmi_read(sd, 0x0b) >> 6]);
++			temp < 0 ? "" : deep_color_mode_txt[temp]);
  
-+	balloon_devinfo_init(&b_dev_info);
- 	cmm_balloon_compaction_init();
+ 	adv7842_log_infoframes(sd);
  
- 	rc = register_oom_notifier(&cmm_oom_nb);
 
 
