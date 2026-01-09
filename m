@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2B9933C1B6;
-	Fri,  9 Jan 2026 12:19:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D5FE35A948;
+	Fri,  9 Jan 2026 12:19:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961179; cv=none; b=EZ+9lbnpJdbLCUy0VpeNH2c5O0V6kNzqWekvYQ4cXAPNVZ3dIiaE3y3myj1FuDybfQWNmXE7j735EC7dg9L3QmBmJVY1JfLjSogOOYbTlCfI41GBUx78V0WW1NXAfPGDmIKb0JWVn/0C0rsPBlRxD6NV1hAyEEIXnYRg8xRHsh4=
+	t=1767961182; cv=none; b=Fngeg7JyA/2fkQrr1pJrh5DiROaWnfGysveN+Wt3tHRH4kbO+XA3gmH1W87fSfXvP1CHfQU8JQ+qHDDHt3nZvQDDH1s81wJVDvr4ov6Kdkiro9pT8zRVk524emnx2FfFZ/llqQ0PkZcC+OvE4RVOj4+A/ZueA1RVtQ/EPvxTV38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961179; c=relaxed/simple;
-	bh=uSyX+aPQhDw6+F70Zltk1ftC+OMP2sTcCOQwSxE389I=;
+	s=arc-20240116; t=1767961182; c=relaxed/simple;
+	bh=mhxTAE/fWqAYULPT6DYLJI4Paw7c2DuW59jpofXHV/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NWcBnTHrIsZTdE8lXs+xxqfH+HGSdJhZocc0g5/HiRBEoAT3EOUWwirxmMy0l1KI+CtWSlKNmXWet7L/oNGw03xfjfFyzAsdgpES62PmQi9LxLZyXWh/vsv/ws3Ji07T0UA20OnyzSCYu1We+5UUwIa0OsWIJITQ0hX23J9pLhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jnWCPOH2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uyaS8bRVVyA2BDQgpMEHiU8lYcwhQlSezPDZ+AJ0AHOGAt0EjzS/TmT7NTXyAAtBAF7YA2MHrcv51jkh1Jia570plKcyR5OYBAZyJZ3LfThkWAhvHPDTDsmZzQ64D9sB+YRd3vF2l5Vdc77PntU/FqMWyi1uxtysKOAY2UFSOQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rmH+dPcE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jnWCPOH2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BB79C4CEF1;
-	Fri,  9 Jan 2026 12:19:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rmH+dPcE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 187BDC4CEF1;
+	Fri,  9 Jan 2026 12:19:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961179;
-	bh=uSyX+aPQhDw6+F70Zltk1ftC+OMP2sTcCOQwSxE389I=;
+	s=korg; t=1767961182;
+	bh=mhxTAE/fWqAYULPT6DYLJI4Paw7c2DuW59jpofXHV/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jnWCPOH2nohHEcypFzePD/tZoC3Qh2BMbvb2myuC9vq42n1M/u5+slT9aa+PHh0mL
-	 5Z7A+A+XBVzttfvuBLs7Ds0h2VbP/MMZQc3q+HltSPj+qATMxxVJZZQydiZaPPAV2R
-	 riH5OG8gFqZWrpEOO+rf1QisM91O86yirOf+jyOg=
+	b=rmH+dPcE4iB8w/m3p7oEjGf5nbTuHBml6iisUhunLXOWeGCDRedyvCPIUkFe+pDca
+	 eWX0FIk2R0D32YkWIHqu1AafcgZN3g3YRhqquGKqyGY+N8sAH6QFB6PhJLh96QHVsV
+	 Dy7oKOOTDHq98v7lBi0YIewUbiIw8q4fS3uYGo/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Natalie Vock <natalie.vock@gmx.de>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	CK Hu <ck.hu@mediatek.com>,
+	Johan Hovold <johan@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 662/737] drm/amdgpu: Forward VMID reservation errors
-Date: Fri,  9 Jan 2026 12:43:21 +0100
-Message-ID: <20260109112158.943450673@linuxfoundation.org>
+Subject: [PATCH 6.6 663/737] drm/mediatek: Fix probe memory leak
+Date: Fri,  9 Jan 2026 12:43:22 +0100
+Message-ID: <20260109112158.981670085@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -46,49 +47,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Natalie Vock <natalie.vock@gmx.de>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 8defb4f081a5feccc3ea8372d0c7af3522124e1f ]
+[ Upstream commit 5e49200593f331cd0629b5376fab9192f698e8ef ]
 
-Otherwise userspace may be fooled into believing it has a reserved VMID
-when in reality it doesn't, ultimately leading to GPU hangs when SPM is
-used.
+The Mediatek DRM driver allocates private data for components without a
+platform driver but as the lifetime is tied to each component device,
+the memory is never freed.
 
-Fixes: 80e709ee6ecc ("drm/amdgpu: add option params to enforce process isolation between graphics and compute")
-Cc: stable@vger.kernel.org
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Natalie Vock <natalie.vock@gmx.de>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-[ adapted 3-argument amdgpu_vmid_alloc_reserved(adev, vm, vmhub) call to 2-argument version and added separate error check to preserve reserved_vmid tracking logic. ]
+Tie the allocation lifetime to the DRM platform device so that the
+memory is released on probe failure (e.g. probe deferral) and when the
+driver is unbound.
+
+Fixes: c0d36de868a6 ("drm/mediatek: Move clk info from struct mtk_ddp_comp to sub driver private data")
+Cc: stable@vger.kernel.org	# 5.12
+Cc: CK Hu <ck.hu@mediatek.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20250923152340.18234-3-johan@kernel.org/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_drm_ddp_comp.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -2496,10 +2496,12 @@ int amdgpu_vm_ioctl(struct drm_device *d
- 	case AMDGPU_VM_OP_RESERVE_VMID:
- 		/* We only have requirement to reserve vmid from gfxhub */
- 		if (!fpriv->vm.reserved_vmid[AMDGPU_GFXHUB(0)]) {
--			amdgpu_vmid_alloc_reserved(adev, AMDGPU_GFXHUB(0));
-+			int r = amdgpu_vmid_alloc_reserved(adev, AMDGPU_GFXHUB(0));
-+
-+			if (r)
-+				return r;
- 			fpriv->vm.reserved_vmid[AMDGPU_GFXHUB(0)] = true;
- 		}
--
- 		break;
- 	case AMDGPU_VM_OP_UNRESERVE_VMID:
- 		if (fpriv->vm.reserved_vmid[AMDGPU_GFXHUB(0)]) {
+--- a/drivers/gpu/drm/mediatek/mtk_drm_ddp_comp.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_ddp_comp.c
+@@ -588,7 +588,7 @@ int mtk_ddp_comp_init(struct device_node
+ 	    type == MTK_DSI)
+ 		return 0;
+ 
+-	priv = devm_kzalloc(comp->dev, sizeof(*priv), GFP_KERNEL);
++	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
+ 	if (!priv)
+ 		return -ENOMEM;
+ 
 
 
