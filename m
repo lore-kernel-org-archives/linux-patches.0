@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC9735970A;
-	Fri,  9 Jan 2026 11:48:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CB05359F80;
+	Fri,  9 Jan 2026 11:48:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959336; cv=none; b=WS4wjx6qU4TzHFSl78DtqYw26PIDhC+pIWvUDnKYxWh+3gWx2P+xUtmYWmtlVjdXN/nfiT1eOSVNUveGXWiUEupbvsxqnnkKVA7QKHtZ4gpnlWpRlEhFKM8UG8Rm+sV1REbdFqHUeUpRleFyrzPpyAt27fsENjVp2i9Zip+y7V4=
+	t=1767959339; cv=none; b=CGU/fk01tTn43vUPJhog0/L6WFZPbSzo+17CEhF42U5eI1/1ZMrB2YMZPhgUv1ir/FApPkxVCiOdkCbn1t8xP37j6d6BBU4NPGaw3kwHEzUj0614lNohH1XYnniFCZOp8sFZbOkGqNWqLfxhlBVIFDdRsMWZsnx7lNeXuOiza+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959336; c=relaxed/simple;
-	bh=FKX1zW4Fle9wk3H22EEgNGGRBGsy3BSd3Fgekrrv474=;
+	s=arc-20240116; t=1767959339; c=relaxed/simple;
+	bh=i9iew5YSd3sklqa4E2h/VfVwh24ebRfZRC0ltKzD9s4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eTmwkKo5SOFF2/Rk0j1ISGgFH7o10D8pc3wQsxNMfjx8HxizNpnwYnjxw8Vk6UZ2qSEAE5NnD5cvXuaA7AIVJTxrtBD0ACvu4OPRYDhGGNNs/y+ODrbHv1lsk1Wfrz8LUzlxI6cN9gmCbswPpirFRE1F8mscEi7pfOrlwyTNnz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JtrVLzU2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W+qynKx+0kTCoOO+QtquWSaNJ3Vt7wW2e3pqdm4Ykv31c+tyYOWt5cX3vfcWcpgrN4CUiXJTzNWHr48kOlVgMJf7Hav0EXbduq5IS8GrwZRQGuW3vp3NmKAgz6Iulm8FwgrOQKTacBr8eyMST6OC/+z1dBxzEd1asavhOyrRg8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M6dzacnA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JtrVLzU2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AC25C4CEF1;
-	Fri,  9 Jan 2026 11:48:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M6dzacnA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAC94C16AAE;
+	Fri,  9 Jan 2026 11:48:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959336;
-	bh=FKX1zW4Fle9wk3H22EEgNGGRBGsy3BSd3Fgekrrv474=;
+	s=korg; t=1767959339;
+	bh=i9iew5YSd3sklqa4E2h/VfVwh24ebRfZRC0ltKzD9s4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JtrVLzU28gTPEMDuEtQqdOkHbhL/szFfzR2AgT6o3wyqu7Ail0McRyW8tkLBTtc/E
-	 qEwBhrF4e1FdAPgBhpa7+Po1zaD5hgIjLdJbJp9avNt23XmOTsqDTdVw3s/dPLkUH0
-	 7VBRirematkB3sLcm1IRJ64edpF7jEGmXPOy9YVM=
+	b=M6dzacnA3cc9HchjNXFRfdWj0KSzOfAPn8Mzi+ZMIeKTYtHym6FG/iZ+l5kYOBuxN
+	 /jFhF8I97fR8IOHRf4MxFZlI6m0t/SMyqnq7Yj3ds5dG4Wpdf+83sp8ffUJ8tQ2buj
+	 EzxKqMypboqLhKfrOgn6j+xyDDew8f/Z4k/Y/sL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.6 017/737] USB: serial: ftdi_sio: match on interface number for jtag
-Date: Fri,  9 Jan 2026 12:32:36 +0100
-Message-ID: <20260109112134.642759084@linuxfoundation.org>
+	Magne Bruno <magne.bruno@addi-data.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.6 018/737] serial: add support of CPCI cards
+Date: Fri,  9 Jan 2026 12:32:37 +0100
+Message-ID: <20260109112134.680365950@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -49,176 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Magne Bruno <magne.bruno@addi-data.com>
 
-commit 4e31a5d0a9ee672f708fc993c1d5520643f769fd upstream.
+commit 0e5a99e0e5f50353b86939ff6e424800d769c818 upstream.
 
-Some FTDI devices have the first port reserved for JTAG and have been
-using a dedicated quirk to prevent binding to it.
+Addi-Data GmbH is manufacturing multi-serial ports cards supporting CompactPCI (known as CPCI).
+Those cards are identified with different DeviceIds. Those cards integrating standard UARTs
+work the same way as PCI/PCIe models already supported in the serial driver.
 
-As can be inferred directly or indirectly from the commit messages,
-almost all of these devices are dual port devices which means that the
-more recently added macro for matching on interface number can be used
-instead (and some such devices do so already).
-
-This avoids probing interfaces that will never be bound and cleans up
-the match table somewhat.
-
-Note that the JTAG quirk is kept for quad port devices, which would
-otherwise require three match entries.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Magne Bruno <magne.bruno@addi-data.com>
+Link: https://patch.msgid.link/20251110162456.341029-1-magne.bruno@addi-data.com
+Cc: stable <stable@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/ftdi_sio.c |   72 ++++++++++++++----------------------------
- 1 file changed, 24 insertions(+), 48 deletions(-)
+ drivers/tty/serial/8250/8250_pci.c |   37 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
---- a/drivers/usb/serial/ftdi_sio.c
-+++ b/drivers/usb/serial/ftdi_sio.c
-@@ -628,10 +628,8 @@ static const struct usb_device_id id_tab
- 	{ USB_DEVICE(FTDI_VID, FTDI_IBS_PEDO_PID) },
- 	{ USB_DEVICE(FTDI_VID, FTDI_IBS_PROD_PID) },
- 	{ USB_DEVICE(FTDI_VID, FTDI_TAVIR_STK500_PID) },
--	{ USB_DEVICE(FTDI_VID, FTDI_TIAO_UMPA_PID),
--		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
--	{ USB_DEVICE(FTDI_VID, FTDI_NT_ORIONLXM_PID),
--		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
-+	{ USB_DEVICE_INTERFACE_NUMBER(FTDI_VID, FTDI_TIAO_UMPA_PID, 1) },
-+	{ USB_DEVICE_INTERFACE_NUMBER(FTDI_VID, FTDI_NT_ORIONLXM_PID, 1) },
- 	{ USB_DEVICE(FTDI_VID, FTDI_NT_ORIONLX_PLUS_PID) },
- 	{ USB_DEVICE(FTDI_VID, FTDI_NT_ORION_IO_PID) },
- 	{ USB_DEVICE(FTDI_VID, FTDI_NT_ORIONMX_PID) },
-@@ -842,24 +840,17 @@ static const struct usb_device_id id_tab
- 	{ USB_DEVICE(FTDI_VID, FTDI_ELSTER_UNICOM_PID) },
- 	{ USB_DEVICE(FTDI_VID, FTDI_PROPOX_JTAGCABLEII_PID) },
- 	{ USB_DEVICE(FTDI_VID, FTDI_PROPOX_ISPCABLEIII_PID) },
--	{ USB_DEVICE(FTDI_VID, CYBER_CORTEX_AV_PID),
--		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
-+	{ USB_DEVICE_INTERFACE_NUMBER(FTDI_VID, CYBER_CORTEX_AV_PID, 1) },
- 	{ USB_DEVICE_INTERFACE_NUMBER(OLIMEX_VID, OLIMEX_ARM_USB_OCD_PID, 1) },
- 	{ USB_DEVICE_INTERFACE_NUMBER(OLIMEX_VID, OLIMEX_ARM_USB_OCD_H_PID, 1) },
- 	{ USB_DEVICE_INTERFACE_NUMBER(OLIMEX_VID, OLIMEX_ARM_USB_TINY_PID, 1) },
- 	{ USB_DEVICE_INTERFACE_NUMBER(OLIMEX_VID, OLIMEX_ARM_USB_TINY_H_PID, 1) },
--	{ USB_DEVICE(FIC_VID, FIC_NEO1973_DEBUG_PID),
--		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
--	{ USB_DEVICE(FTDI_VID, FTDI_OOCDLINK_PID),
--		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
--	{ USB_DEVICE(FTDI_VID, LMI_LM3S_DEVEL_BOARD_PID),
--		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
--	{ USB_DEVICE(FTDI_VID, LMI_LM3S_EVAL_BOARD_PID),
--		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
--	{ USB_DEVICE(FTDI_VID, LMI_LM3S_ICDI_BOARD_PID),
--		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
--	{ USB_DEVICE(FTDI_VID, FTDI_TURTELIZER_PID),
--		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
-+	{ USB_DEVICE_INTERFACE_NUMBER(FIC_VID, FIC_NEO1973_DEBUG_PID, 1) },
-+	{ USB_DEVICE_INTERFACE_NUMBER(FTDI_VID, FTDI_OOCDLINK_PID, 1) },
-+	{ USB_DEVICE_INTERFACE_NUMBER(FTDI_VID, LMI_LM3S_DEVEL_BOARD_PID, 1) },
-+	{ USB_DEVICE_INTERFACE_NUMBER(FTDI_VID, LMI_LM3S_EVAL_BOARD_PID, 1) },
-+	{ USB_DEVICE_INTERFACE_NUMBER(FTDI_VID, LMI_LM3S_ICDI_BOARD_PID, 1) },
-+	{ USB_DEVICE_INTERFACE_NUMBER(FTDI_VID, FTDI_TURTELIZER_PID, 1) },
- 	{ USB_DEVICE(RATOC_VENDOR_ID, RATOC_PRODUCT_ID_USB60F) },
- 	{ USB_DEVICE(RATOC_VENDOR_ID, RATOC_PRODUCT_ID_SCU18) },
- 	{ USB_DEVICE(FTDI_VID, FTDI_REU_TINY_PID) },
-@@ -901,17 +892,14 @@ static const struct usb_device_id id_tab
- 	{ USB_DEVICE(ATMEL_VID, STK541_PID) },
- 	{ USB_DEVICE(DE_VID, STB_PID) },
- 	{ USB_DEVICE(DE_VID, WHT_PID) },
--	{ USB_DEVICE(ADI_VID, ADI_GNICE_PID),
--		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
--	{ USB_DEVICE(ADI_VID, ADI_GNICEPLUS_PID),
--		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
-+	{ USB_DEVICE_INTERFACE_NUMBER(ADI_VID, ADI_GNICE_PID, 1) },
-+	{ USB_DEVICE_INTERFACE_NUMBER(ADI_VID, ADI_GNICEPLUS_PID, 1) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(MICROCHIP_VID, MICROCHIP_USB_BOARD_PID,
- 					USB_CLASS_VENDOR_SPEC,
- 					USB_SUBCLASS_VENDOR_SPEC, 0x00) },
- 	{ USB_DEVICE_INTERFACE_NUMBER(ACTEL_VID, MICROSEMI_ARROW_SF2PLUS_BOARD_PID, 2) },
- 	{ USB_DEVICE(JETI_VID, JETI_SPC1201_PID) },
--	{ USB_DEVICE(MARVELL_VID, MARVELL_SHEEVAPLUG_PID),
--		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
-+	{ USB_DEVICE_INTERFACE_NUMBER(MARVELL_VID, MARVELL_SHEEVAPLUG_PID, 1) },
- 	{ USB_DEVICE(LARSENBRUSGAARD_VID, LB_ALTITRACK_PID) },
- 	{ USB_DEVICE(GN_OTOMETRICS_VID, AURICAL_USB_PID) },
- 	{ USB_DEVICE(FTDI_VID, PI_C865_PID) },
-@@ -934,10 +922,8 @@ static const struct usb_device_id id_tab
- 	{ USB_DEVICE(PI_VID, PI_1016_PID) },
- 	{ USB_DEVICE(KONDO_VID, KONDO_USB_SERIAL_PID) },
- 	{ USB_DEVICE(BAYER_VID, BAYER_CONTOUR_CABLE_PID) },
--	{ USB_DEVICE(FTDI_VID, MARVELL_OPENRD_PID),
--		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
--	{ USB_DEVICE(FTDI_VID, TI_XDS100V2_PID),
--		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
-+	{ USB_DEVICE_INTERFACE_NUMBER(FTDI_VID, MARVELL_OPENRD_PID, 1) },
-+	{ USB_DEVICE_INTERFACE_NUMBER(FTDI_VID, TI_XDS100V2_PID, 1) },
- 	{ USB_DEVICE(FTDI_VID, HAMEG_HO820_PID) },
- 	{ USB_DEVICE(FTDI_VID, HAMEG_HO720_PID) },
- 	{ USB_DEVICE(FTDI_VID, HAMEG_HO730_PID) },
-@@ -946,18 +932,14 @@ static const struct usb_device_id id_tab
- 	{ USB_DEVICE(FTDI_VID, MJSG_SR_RADIO_PID) },
- 	{ USB_DEVICE(FTDI_VID, MJSG_HD_RADIO_PID) },
- 	{ USB_DEVICE(FTDI_VID, MJSG_XM_RADIO_PID) },
--	{ USB_DEVICE(FTDI_VID, XVERVE_SIGNALYZER_ST_PID),
--		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
--	{ USB_DEVICE(FTDI_VID, XVERVE_SIGNALYZER_SLITE_PID),
--		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
--	{ USB_DEVICE(FTDI_VID, XVERVE_SIGNALYZER_SH2_PID),
--		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
-+	{ USB_DEVICE_INTERFACE_NUMBER(FTDI_VID, XVERVE_SIGNALYZER_ST_PID, 1) },
-+	{ USB_DEVICE_INTERFACE_NUMBER(FTDI_VID, XVERVE_SIGNALYZER_SLITE_PID, 1) },
-+	{ USB_DEVICE_INTERFACE_NUMBER(FTDI_VID, XVERVE_SIGNALYZER_SH2_PID, 1) },
- 	{ USB_DEVICE(FTDI_VID, XVERVE_SIGNALYZER_SH4_PID),
- 		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
- 	{ USB_DEVICE(FTDI_VID, SEGWAY_RMP200_PID) },
- 	{ USB_DEVICE(FTDI_VID, ACCESIO_COM4SM_PID) },
--	{ USB_DEVICE(IONICS_VID, IONICS_PLUGCOMPUTER_PID),
--		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
-+	{ USB_DEVICE_INTERFACE_NUMBER(IONICS_VID, IONICS_PLUGCOMPUTER_PID, 1) },
- 	{ USB_DEVICE(FTDI_VID, FTDI_CHAMSYS_24_MASTER_WING_PID) },
- 	{ USB_DEVICE(FTDI_VID, FTDI_CHAMSYS_PC_WING_PID) },
- 	{ USB_DEVICE(FTDI_VID, FTDI_CHAMSYS_USB_DMX_PID) },
-@@ -972,15 +954,12 @@ static const struct usb_device_id id_tab
- 	{ USB_DEVICE(FTDI_VID, FTDI_CINTERION_MC55I_PID) },
- 	{ USB_DEVICE(FTDI_VID, FTDI_FHE_PID) },
- 	{ USB_DEVICE(FTDI_VID, FTDI_DOTEC_PID) },
--	{ USB_DEVICE(QIHARDWARE_VID, MILKYMISTONE_JTAGSERIAL_PID),
--		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
--	{ USB_DEVICE(ST_VID, ST_STMCLT_2232_PID),
--		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
-+	{ USB_DEVICE_INTERFACE_NUMBER(QIHARDWARE_VID, MILKYMISTONE_JTAGSERIAL_PID, 1) },
-+	{ USB_DEVICE_INTERFACE_NUMBER(ST_VID, ST_STMCLT_2232_PID, 1) },
- 	{ USB_DEVICE(ST_VID, ST_STMCLT_4232_PID),
- 		.driver_info = (kernel_ulong_t)&ftdi_stmclite_quirk },
- 	{ USB_DEVICE(FTDI_VID, FTDI_RF_R106) },
--	{ USB_DEVICE(FTDI_VID, FTDI_DISTORTEC_JTAG_LOCK_PICK_PID),
--		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
-+	{ USB_DEVICE_INTERFACE_NUMBER(FTDI_VID, FTDI_DISTORTEC_JTAG_LOCK_PICK_PID, 1) },
- 	{ USB_DEVICE(FTDI_VID, FTDI_LUMEL_PD12_PID) },
- 	/* Crucible Devices */
- 	{ USB_DEVICE(FTDI_VID, FTDI_CT_COMET_PID) },
-@@ -1055,8 +1034,7 @@ static const struct usb_device_id id_tab
- 	{ USB_DEVICE(ICPDAS_VID, ICPDAS_I7561U_PID) },
- 	{ USB_DEVICE(ICPDAS_VID, ICPDAS_I7563U_PID) },
- 	{ USB_DEVICE(WICED_VID, WICED_USB20706V2_PID) },
--	{ USB_DEVICE(TI_VID, TI_CC3200_LAUNCHPAD_PID),
--		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
-+	{ USB_DEVICE_INTERFACE_NUMBER(TI_VID, TI_CC3200_LAUNCHPAD_PID, 1) },
- 	{ USB_DEVICE(CYPRESS_VID, CYPRESS_WICED_BT_USB_PID) },
- 	{ USB_DEVICE(CYPRESS_VID, CYPRESS_WICED_WL_USB_PID) },
- 	{ USB_DEVICE(AIRBUS_DS_VID, AIRBUS_DS_P8GR) },
-@@ -1076,10 +1054,8 @@ static const struct usb_device_id id_tab
- 	{ USB_DEVICE(UBLOX_VID, UBLOX_C099F9P_ODIN_PID) },
- 	{ USB_DEVICE_INTERFACE_NUMBER(UBLOX_VID, UBLOX_EVK_M101_PID, 2) },
- 	/* FreeCalypso USB adapters */
--	{ USB_DEVICE(FTDI_VID, FTDI_FALCONIA_JTAG_BUF_PID),
--		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
--	{ USB_DEVICE(FTDI_VID, FTDI_FALCONIA_JTAG_UNBUF_PID),
--		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
-+	{ USB_DEVICE_INTERFACE_NUMBER(FTDI_VID, FTDI_FALCONIA_JTAG_BUF_PID, 1) },
-+	{ USB_DEVICE_INTERFACE_NUMBER(FTDI_VID, FTDI_FALCONIA_JTAG_UNBUF_PID, 1) },
- 	/* GMC devices */
- 	{ USB_DEVICE(GMC_VID, GMC_Z216C_PID) },
- 	/* Altera USB Blaster 3 */
+--- a/drivers/tty/serial/8250/8250_pci.c
++++ b/drivers/tty/serial/8250/8250_pci.c
+@@ -1971,6 +1971,11 @@ pci_moxa_setup(struct serial_private *pr
+ #define	PCI_DEVICE_ID_MOXA_CP138E_A	0x1381
+ #define	PCI_DEVICE_ID_MOXA_CP168EL_A	0x1683
+ 
++#define PCI_DEVICE_ID_ADDIDATA_CPCI7500        0x7003
++#define PCI_DEVICE_ID_ADDIDATA_CPCI7500_NG     0x7024
++#define PCI_DEVICE_ID_ADDIDATA_CPCI7420_NG     0x7025
++#define PCI_DEVICE_ID_ADDIDATA_CPCI7300_NG     0x7026
++
+ /* Unknown vendors/cards - this should not be in linux/pci_ids.h */
+ #define PCI_SUBDEVICE_ID_UNKNOWN_0x1584	0x1584
+ #define PCI_SUBDEVICE_ID_UNKNOWN_0x1588	0x1588
+@@ -5868,6 +5873,38 @@ static const struct pci_device_id serial
+ 		0,
+ 		pbn_ADDIDATA_PCIe_8_3906250 },
+ 
++	{	PCI_VENDOR_ID_ADDIDATA,
++		PCI_DEVICE_ID_ADDIDATA_CPCI7500,
++		PCI_ANY_ID,
++		PCI_ANY_ID,
++		0,
++		0,
++		pbn_b0_4_115200 },
++
++	{	PCI_VENDOR_ID_ADDIDATA,
++		PCI_DEVICE_ID_ADDIDATA_CPCI7500_NG,
++		PCI_ANY_ID,
++		PCI_ANY_ID,
++		0,
++		0,
++		pbn_b0_4_115200 },
++
++	{	PCI_VENDOR_ID_ADDIDATA,
++		PCI_DEVICE_ID_ADDIDATA_CPCI7420_NG,
++		PCI_ANY_ID,
++		PCI_ANY_ID,
++		0,
++		0,
++		pbn_b0_2_115200 },
++
++	{	PCI_VENDOR_ID_ADDIDATA,
++		PCI_DEVICE_ID_ADDIDATA_CPCI7300_NG,
++		PCI_ANY_ID,
++		PCI_ANY_ID,
++		0,
++		0,
++		pbn_b0_1_115200 },
++
+ 	{	PCI_VENDOR_ID_NETMOS, PCI_DEVICE_ID_NETMOS_9835,
+ 		PCI_VENDOR_ID_IBM, 0x0299,
+ 		0, 0, pbn_b0_bt_2_115200 },
 
 
