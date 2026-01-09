@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 611B535CBD5;
-	Fri,  9 Jan 2026 12:47:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3525135C1AE;
+	Fri,  9 Jan 2026 12:47:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962869; cv=none; b=IxPo5AV+kNUjihOwKDFc7oUq11PlDop8A4sffYvMEdyVnVDmzZhZMbxlth1ZyqYKV1Jmvz+OpgfL5sC9aP7CD9K7NWz2XRfyxJGwRYRe0TPP3yjcSnwxh8J5OVJfmUILmjnZNcXqOdlPeAVfOuSJXxRRPtifMVEyxCjZd9dFfNE=
+	t=1767962872; cv=none; b=tKnvgWpNHYzkUpHuWCRdUYeMG/8WhWw5btyfSPt33/bwLA5IUaKPguyJ8D0TuV/pzJ/+Pw9IEltGtVfi47AKV0cGwiGoeTWmPQd2BkN8TMvHdfvbqHOvrClmDBqhdgHo1R1dUed/hHR6YTqpSYjMpm1coG7ha73bXqR1oVJ2haA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962869; c=relaxed/simple;
-	bh=aAtAdb6jwz7Fvmt4sXZwQtpJVj4xZ0/Be/UA/4zhQN0=;
+	s=arc-20240116; t=1767962872; c=relaxed/simple;
+	bh=egZuM2v6wiEpdMBciC3CMAEzSR8dv8RFXSwBsj9dTaA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RjSbXQQ9s8nfe0y5Y1W4CbVNDhePj7Jea7evUf2AWuaJ0JgT6SOlgHzIxlFZkTG7r4LPATfVugKnqk8DodaDrIPGrWG3HaaHwPxSgBIoGHUcoZdg23k7d74k2Rg+/TIpY7BhX0e/rFxJNqpGWPnoeOZpKgvvgUjxJUYV3OCMT4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Shjmufeo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mPFSvJOC3i+UQ3R1qcMsUqbwe3D9SJq/F5XmkpzEHzoFpUrKgHahgwPJftJcutdtp/7aVOQ2MmtC8vlqzG1K9BiJhQZYbuXCAUi2K4oP5ayYLyGgSPrpCsbzsEnp4ykhZrbK3RROiHyRQFQM8lsPq9ywcsVVAkRkFYio8iCgXmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xFh7tjeD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Shjmufeo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE00C4CEF1;
-	Fri,  9 Jan 2026 12:47:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xFh7tjeD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B55A8C4CEF1;
+	Fri,  9 Jan 2026 12:47:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962869;
-	bh=aAtAdb6jwz7Fvmt4sXZwQtpJVj4xZ0/Be/UA/4zhQN0=;
+	s=korg; t=1767962872;
+	bh=egZuM2v6wiEpdMBciC3CMAEzSR8dv8RFXSwBsj9dTaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ShjmufeoZfi5q7YxqeWTRlebm1lMemOfUahWq+fi5eIwJPgEMM9X0nx7vaRHD9PNJ
-	 0jzam+w21eQf/6wK1oo4llDpMse3h2o4sWHQQZsW6FDwE1vL7JZ1mklHyeIDYMOmDQ
-	 r3kNgZf//CXg1+JF9qPuj0J0MtgBDLedLLUwudd4=
+	b=xFh7tjeDuZ0479xbZhP+T1jn4D2XuxjXSSRbRRcrcTwhCa59VlSbYWrP5xJkeahMq
+	 RgyPuU4ejdlQYmAKl9238RQlxtja6XwofV7N4G20U978lnAGohJVfkIJYNNHroadGn
+	 Yh9i/pJ+gvHCtbx+Pu9KKqhft+Tu2/IXHgWJ1WJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e2ce9e275ecc70a30b72@syzkaller.appspotmail.com,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Ajay Kaher <ajay.kaher@broadcom.com>,
-	Shivani Agarwal <shivani.agarwal@broadcom.com>
-Subject: [PATCH 6.1 516/634] RDMA/core: Fix "KASAN: slab-use-after-free Read in ib_register_device" problem
-Date: Fri,  9 Jan 2026 12:43:14 +0100
-Message-ID: <20260109112136.971935634@linuxfoundation.org>
+	Tianrui Zhao <zhaotianrui@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.1 490/634] LoongArch: Add new PCI ID for pci_fixup_vgadev()
+Date: Fri,  9 Jan 2026 12:42:48 +0100
+Message-ID: <20260109112135.983157152@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -54,85 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhu Yanjun <yanjun.zhu@linux.dev>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit d0706bfd3ee40923c001c6827b786a309e2a8713 upstream.
+commit bf3fa8f232a1eec8d7b88dcd9e925e60f04f018d upstream.
 
-Call Trace:
+Loongson-2K3000 has a new PCI ID (0x7a46) for its display controller,
+Add it for pci_fixup_vgadev() since we prefer a discrete graphics card
+as default boot device if present.
 
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:408 [inline]
- print_report+0xc3/0x670 mm/kasan/report.c:521
- kasan_report+0xe0/0x110 mm/kasan/report.c:634
- strlen+0x93/0xa0 lib/string.c:420
- __fortify_strlen include/linux/fortify-string.h:268 [inline]
- get_kobj_path_length lib/kobject.c:118 [inline]
- kobject_get_path+0x3f/0x2a0 lib/kobject.c:158
- kobject_uevent_env+0x289/0x1870 lib/kobject_uevent.c:545
- ib_register_device drivers/infiniband/core/device.c:1472 [inline]
- ib_register_device+0x8cf/0xe00 drivers/infiniband/core/device.c:1393
- rxe_register_device+0x275/0x320 drivers/infiniband/sw/rxe/rxe_verbs.c:1552
- rxe_net_add+0x8e/0xe0 drivers/infiniband/sw/rxe/rxe_net.c:550
- rxe_newlink+0x70/0x190 drivers/infiniband/sw/rxe/rxe.c:225
- nldev_newlink+0x3a3/0x680 drivers/infiniband/core/nldev.c:1796
- rdma_nl_rcv_msg+0x387/0x6e0 drivers/infiniband/core/netlink.c:195
- rdma_nl_rcv_skb.constprop.0.isra.0+0x2e5/0x450
- netlink_unicast_kernel net/netlink/af_netlink.c:1313 [inline]
- netlink_unicast+0x53a/0x7f0 net/netlink/af_netlink.c:1339
- netlink_sendmsg+0x8d1/0xdd0 net/netlink/af_netlink.c:1883
- sock_sendmsg_nosec net/socket.c:712 [inline]
- __sock_sendmsg net/socket.c:727 [inline]
- ____sys_sendmsg+0xa95/0xc70 net/socket.c:2566
- ___sys_sendmsg+0x134/0x1d0 net/socket.c:2620
- __sys_sendmsg+0x16d/0x220 net/socket.c:2652
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xcd/0x260 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-This problem is similar to the problem that the
-commit 1d6a9e7449e2 ("RDMA/core: Fix use-after-free when rename device name")
-fixes.
-
-The root cause is: the function ib_device_rename() renames the name with
-lock. But in the function kobject_uevent(), this name is accessed without
-lock protection at the same time.
-
-The solution is to add the lock protection when this name is accessed in
-the function kobject_uevent().
-
-Fixes: 779e0bf47632 ("RDMA/core: Do not indicate device ready when device enablement fails")
-Link: https://patch.msgid.link/r/20250506151008.75701-1-yanjun.zhu@linux.dev
-Reported-by: syzbot+e2ce9e275ecc70a30b72@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e2ce9e275ecc70a30b72
-Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-[ Ajay: Modified to apply on v5.10.y-v6.6.y
-        ib_device_notify_register() not present in v5.10.y-v6.6.y,
-        so directly added lock for kobject_uevent() ]
-Signed-off-by: Ajay Kaher <ajay.kaher@broadcom.com>
-Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Tianrui Zhao <zhaotianrui@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/device.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ arch/loongarch/pci/pci.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/infiniband/core/device.c
-+++ b/drivers/infiniband/core/device.c
-@@ -1450,8 +1450,13 @@ int ib_register_device(struct ib_device
- 		return ret;
- 	}
- 	dev_set_uevent_suppress(&device->dev, false);
-+
-+	down_read(&devices_rwsem);
-+
- 	/* Mark for userspace that device is ready */
- 	kobject_uevent(&device->dev.kobj, KOBJ_ADD);
-+
-+	up_read(&devices_rwsem);
- 	ib_device_put(device);
+--- a/arch/loongarch/pci/pci.c
++++ b/arch/loongarch/pci/pci.c
+@@ -15,6 +15,7 @@
+ #define PCI_DEVICE_ID_LOONGSON_HOST     0x7a00
+ #define PCI_DEVICE_ID_LOONGSON_DC1      0x7a06
+ #define PCI_DEVICE_ID_LOONGSON_DC2      0x7a36
++#define PCI_DEVICE_ID_LOONGSON_DC3      0x7a46
  
- 	return 0;
+ int raw_pci_read(unsigned int domain, unsigned int bus, unsigned int devfn,
+ 						int reg, int len, u32 *val)
+@@ -98,3 +99,4 @@ static void pci_fixup_vgadev(struct pci_
+ }
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_DC1, pci_fixup_vgadev);
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_DC2, pci_fixup_vgadev);
++DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_DC3, pci_fixup_vgadev);
 
 
