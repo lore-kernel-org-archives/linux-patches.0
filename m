@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0214A32AAB5;
-	Fri,  9 Jan 2026 12:20:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B319335A940;
+	Fri,  9 Jan 2026 12:20:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961231; cv=none; b=C+1wImDZjz7Ve4lNm74ivZGr/ppUtkESkBPvjVtdpyjmXTjF4008DnVXaaLcihQt5CF9yoQijF9yunaFGlJSaNAPHHIdcvDTy/H7lY/B13f9q8jYJsV3Rm8/k+tXLYMFQDdXg8MtYUyLlzaMF+DSeZh9UkPw2Eb/W6AuBuycknY=
+	t=1767961233; cv=none; b=CvAw2uWIopgtfy4HnwoaeYB3K9d5u4lsMhva4sF6lF1Il62h2PVa+g1Lc2mJZkQvIfDqRWmxyEyQZ9FJegtg1SonJZVZ5+/m8xvI1GKi4O2Uatx1Pr3QgOZ7nXL5FUOjUaHG7czYWtD+KgyWrWFIoFvN/RPvyeaYLCE19P3CQbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961231; c=relaxed/simple;
-	bh=wouDCOrxsWLOgQjLWg0n19PCQ7Uye3Y6aqEdWm8EcL0=;
+	s=arc-20240116; t=1767961233; c=relaxed/simple;
+	bh=dDrtfvsD6CjIE/g3Lb+2foHCzaF2Hlav0IA/QM0ZUeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MTQweIJXZBboS7W+zNLXzg7EhskollZXf/3ibv0X4eUn1kU8AmfBd99GFCqTijYau+kQuIC711PAETaW+9yidfJ6lQZssaSJ8KGWmFkQxzSUCkr1Zqt9Q3eJFRrdYqaePTJoQFrvhNTHUNMZf0EGd+pVD7LIuQ0V6eNRHGvHAwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yqeaWEJY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kTjdSMUu8c6VxYYE+g2XYLQlFOHWdR9CunTtfhpeV5CGCNXIg8z4EwsIXga1/ncq76R6+4kqLHdppdEfGOb7R4G13ZrzMyDQAN3+Xm+5xFw4p7FW6hrE69C5l4A21VXph2/EQyUPKhIQnqDvlmu36QtRCrwesgIkWgoIC3NCFwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IowdAzsb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yqeaWEJY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7923CC4CEF1;
-	Fri,  9 Jan 2026 12:20:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IowdAzsb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4168EC19423;
+	Fri,  9 Jan 2026 12:20:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961230;
-	bh=wouDCOrxsWLOgQjLWg0n19PCQ7Uye3Y6aqEdWm8EcL0=;
+	s=korg; t=1767961233;
+	bh=dDrtfvsD6CjIE/g3Lb+2foHCzaF2Hlav0IA/QM0ZUeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yqeaWEJY3uirT2vOU1EAxFgziwV9+0wDvyGxNhw/JovnmQtCUGD3Qe45x5GbWkYAc
-	 x5fx8o5yIwIiJIo1yM6/lR0HdQF2FIRQTEkB/01QRVAUXUhO+JbFvKH2qPDUxasixL
-	 bhz1tkDeG03JyOrNillvoEaTikO456Q70zQlarbs=
+	b=IowdAzsbEInjxmIbINuLRtXIfwF4CJIUXOSzB/ow2HA8BNTQixAJhyERkNm2597+K
+	 snn3SqxcwnWVLLG7qJ2C8HdqTsZbUP7UoDKfU4vbHt+fxYU4jYOMRO9rr/TDnKItvk
+	 A+uAl217Z0UsYPprIM4XiN613DLeUYAgkOYr6bIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
 	Stefan Roesch <shr@devkernel.io>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 681/737] mm: fix arithmetic for bdi min_ratio
-Date: Fri,  9 Jan 2026 12:43:40 +0100
-Message-ID: <20260109112159.673905192@linuxfoundation.org>
+Subject: [PATCH 6.6 682/737] mm: fix arithmetic for max_prop_frac when setting max_ratio
+Date: Fri,  9 Jan 2026 12:43:41 +0100
+Message-ID: <20260109112159.711036374@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -55,41 +55,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Jingbo Xu <jefflexu@linux.alibaba.com>
 
-commit e0646b7590084a5bf3b056d3ad871d9379d2c25a upstream.
+commit fa151a39a6879144b587f35c0dfcc15e1be9450f upstream.
 
-Since now bdi->min_ratio is part per million, fix the wrong arithmetic.
-Otherwise it will fail with -EINVAL when setting a reasonable min_ratio,
-as it tries to set min_ratio to (min_ratio * BDI_RATIO_SCALE) in
-percentage unit, which exceeds 100% anyway.
+Since now bdi->max_ratio is part per million, fix the wrong arithmetic for
+max_prop_frac when setting max_ratio.  Otherwise the miscalculated
+max_prop_frac will affect the incrementing of writeout completion count
+when max_ratio is not 100%.
 
-    # cat /sys/class/bdi/253\:0/min_ratio
-    0
-    # cat /sys/class/bdi/253\:0/max_ratio
-    100
-    # echo 1 > /sys/class/bdi/253\:0/min_ratio
-    -bash: echo: write error: Invalid argument
-
-Link: https://lkml.kernel.org/r/20231219142508.86265-2-jefflexu@linux.alibaba.com
-Fixes: 8021fb3232f2 ("mm: split off __bdi_set_min_ratio() function")
+Link: https://lkml.kernel.org/r/20231219142508.86265-3-jefflexu@linux.alibaba.com
+Fixes: efc3e6ad53ea ("mm: split off __bdi_set_max_ratio() function")
 Signed-off-by: Jingbo Xu <jefflexu@linux.alibaba.com>
-Reported-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Joseph Qi <joseph.qi@linux.alibaba.com>
 Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
 Cc: Stefan Roesch <shr@devkernel.io>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page-writeback.c |    1 -
- 1 file changed, 1 deletion(-)
+ mm/page-writeback.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 --- a/mm/page-writeback.c
 +++ b/mm/page-writeback.c
-@@ -714,7 +714,6 @@ static int __bdi_set_min_ratio(struct ba
+@@ -750,7 +750,8 @@ static int __bdi_set_max_ratio(struct ba
+ 		ret = -EINVAL;
+ 	} else {
+ 		bdi->max_ratio = max_ratio;
+-		bdi->max_prop_frac = (FPROP_FRAC_BASE * max_ratio) / 100;
++		bdi->max_prop_frac = (FPROP_FRAC_BASE * max_ratio) /
++						(100 * BDI_RATIO_SCALE);
+ 	}
+ 	spin_unlock_bh(&bdi_lock);
  
- 	if (min_ratio > 100 * BDI_RATIO_SCALE)
- 		return -EINVAL;
--	min_ratio *= BDI_RATIO_SCALE;
- 
- 	spin_lock_bh(&bdi_lock);
- 	if (min_ratio > bdi->max_ratio) {
 
 
