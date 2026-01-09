@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30D31482E8;
-	Fri,  9 Jan 2026 12:51:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B45835BDD5;
+	Fri,  9 Jan 2026 12:51:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767963070; cv=none; b=eB6BhqtA/7HwDWZqPeoWx5SDy76Ynm3+MQCajtDtX+duzxsaNNsHZm5VR8EfkBM7DqEvsQJD4fqu4BXl7XYt6qdL4CdNtRXUAVws/GuLtf30sF2QQ594VcwPv74dvwQrpu5iIjqI9xBZixDvn9JeHo+e3gTaQU77AC51RIi84cc=
+	t=1767963074; cv=none; b=jr4uraEngxEWCT5feWx3s8YYeEsTRmvuJgrPdLfe/uNkW3Nu6oFA0WUWsjg9ANgFlTGbDXg838/P18g4n+yZsl4HUJbWTMG8ENpMco3F0cI7WHWhWjIs4GH5uxdub4rmS5fvAGZ5wkPdKN6NVS4obCuGHtPyfBQwxmMI/4Y+Cjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767963070; c=relaxed/simple;
-	bh=HyBNSu2o4NYlSILqH1bgpZ7trgtPPzBliOKn8YKdTYw=;
+	s=arc-20240116; t=1767963074; c=relaxed/simple;
+	bh=MJrGn5FG7+3R+oQSPrI66vgebEgNKy3zkhts/bb6JWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uePjm7xiCFUpmPF+W05c0eBFxnEbBudT42IzorNlL5muOc1oLVAL2YLYAwZ5GvS0bawlNIHXc6MBXpHR/7PSHgRNbxTGhkwr/qZUeb3mTyA61eXS6olEOODIsaS+OITQWIFOxQRdgEmzHAR7jsNM4ixefhB311BF2+r3weO0T+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kvn7Emif; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gCPbJqQJ3rNH2UfF1yUAvh+UmPHxFme6tJIbZBji10wiZSE+bm/s7xSoydwbJ6z0ssoCNzD5JpeZDBFH82qGYEUY9yNw5ni/b6mFdc7vIvQZvFpgDqOXzvG7lcoLgEFYOkWUWgg1qIUj9uzDZBNZ4939wOu0nKlQgkB/z29xbE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O3r58dBo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kvn7Emif"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 488A1C4CEF1;
-	Fri,  9 Jan 2026 12:51:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O3r58dBo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32384C4CEF1;
+	Fri,  9 Jan 2026 12:51:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767963070;
-	bh=HyBNSu2o4NYlSILqH1bgpZ7trgtPPzBliOKn8YKdTYw=;
+	s=korg; t=1767963073;
+	bh=MJrGn5FG7+3R+oQSPrI66vgebEgNKy3zkhts/bb6JWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kvn7EmifoumGheqKWAwkwZNrIvm7FNjrKYs2ZvV2KmmJ4iZiniCCKavnskFrj5IrG
-	 Au0EfSkd8Q8Orx6vEBuAFnpL4P+qPb9Lmxcb01asWkfNWeOLGBDMJSm3xuvkX0RrbS
-	 USX71NDjy5+Nz28xSsAH7eAa4fdSfMuFzqg1Kuc4=
+	b=O3r58dBobw1r6G8w5h2PktbXRpuRBCs5V98BXevB+oO+9ahVJ40yordboDdgDctnu
+	 Z6RdfV+OsNjFmuB0pFSHWtaKyxQARuPosm5mrGc6S9MbLIKrqhPvmMUInPpsXpgpNI
+	 wKh5eSm8Z7YxSdmvJA8HafIBJqUGKWtuq958l9a4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Frank Li <Frank.Li@nxp.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Joshua Rogers <linux@joshua.hu>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 586/634] pmdomain: imx: Fix reference count leak in imx_gpc_probe()
-Date: Fri,  9 Jan 2026 12:44:24 +0100
-Message-ID: <20260109112139.668144043@linuxfoundation.org>
+Subject: [PATCH 6.1 560/634] SUNRPC: svcauth_gss: avoid NULL deref on zero length gss_token in gss_read_proxy_verf
+Date: Fri,  9 Jan 2026 12:43:58 +0100
+Message-ID: <20260109112138.670434186@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,45 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Joshua Rogers <linux@joshua.hu>
 
-[ Upstream commit 73cb5f6eafb0ac7aea8cdeb8ff12981aa741d8fb ]
+[ Upstream commit d4b69a6186b215d2dc1ebcab965ed88e8d41768d ]
 
-of_get_child_by_name() returns a node pointer with refcount incremented.
-Use the __free() attribute to manage the pgc_node reference, ensuring
-automatic of_node_put() cleanup when pgc_node goes out of scope.
+A zero length gss_token results in pages == 0 and in_token->pages[0]
+is NULL. The code unconditionally evaluates
+page_address(in_token->pages[0]) for the initial memcpy, which can
+dereference NULL even when the copy length is 0. Guard the first
+memcpy so it only runs when length > 0.
 
-This eliminates the need for explicit error handling paths and avoids
-reference count leaks.
-
-Fixes: 721cabf6c660 ("soc: imx: move PGC handling to a new GPC driver")
+Fixes: 5866efa8cbfb ("SUNRPC: Fix svcauth_gss_proxy_init()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Joshua Rogers <linux@joshua.hu>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+[ adapted xdr buffer pointer API to older argv iov_base/iov_len API ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/imx/gpc.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ net/sunrpc/auth_gss/svcauth_gss.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/soc/imx/gpc.c
-+++ b/drivers/soc/imx/gpc.c
-@@ -405,13 +405,12 @@ clk_err:
- static int imx_gpc_probe(struct platform_device *pdev)
- {
- 	const struct imx_gpc_dt_data *of_id_data = device_get_match_data(&pdev->dev);
--	struct device_node *pgc_node;
-+	struct device_node *pgc_node __free(device_node)
-+		= of_get_child_by_name(pdev->dev.of_node, "pgc");
- 	struct regmap *regmap;
- 	void __iomem *base;
- 	int ret;
+--- a/net/sunrpc/auth_gss/svcauth_gss.c
++++ b/net/sunrpc/auth_gss/svcauth_gss.c
+@@ -1179,7 +1179,8 @@ static int gss_read_proxy_verf(struct sv
+ 	}
  
--	pgc_node = of_get_child_by_name(pdev->dev.of_node, "pgc");
--
- 	/* bail out if DT too old and doesn't provide the necessary info */
- 	if (!of_property_read_bool(pdev->dev.of_node, "#power-domain-cells") &&
- 	    !pgc_node)
+ 	length = min_t(unsigned int, inlen, argv->iov_len);
+-	memcpy(page_address(in_token->pages[0]), argv->iov_base, length);
++	if (length)
++		memcpy(page_address(in_token->pages[0]), argv->iov_base, length);
+ 	inlen -= length;
+ 
+ 	to_offs = length;
 
 
