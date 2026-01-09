@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E271224D6;
-	Fri,  9 Jan 2026 12:18:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BEC82737EE;
+	Fri,  9 Jan 2026 12:18:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961099; cv=none; b=aC3hFtCSSzs2LerBdlX8DTs71KuiZqriJ5FilL8wz2C5PJCXwaZpGIkMMll4gky+aDqUYvv0UuT5TSkuLdv2f/4andQsC6YDsu3VtqclLfByPOw69V0dZmN5kwfW4zclwSMj+8LCxp3ayjH9K59Pz2xqTq+Jfxk121Fi6G/ecos=
+	t=1767961102; cv=none; b=SYsb7rsCHbXt1SmZZilIZ+RzqGv5ngui6QObHFcB7f9AALgY5G68PfQe9HLx/GguZseb0xmCSzIuxCgKkQUiV/YPAbLN2BevYNvQq9nEnO5qiLzKMXGXC7n4ocZLhb5rXURz+VRr9ceg/VKg/p4zMcv6kwxsig7kD7OIUAH3cRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961099; c=relaxed/simple;
-	bh=oQRy20LZfaMayIeQdnbEQAlryuzIaZgrS1n2Sw0Ivj0=;
+	s=arc-20240116; t=1767961102; c=relaxed/simple;
+	bh=fyuTTcZOFkqyvZJR5cH/6ws+R83o8Ub192TXV7ntk8I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aQGxG3tmPGDy1TQxPnVyymLtJ6rbHqov1EAKKWgBKJyCyGoCtzHlWCOYdFwrlnVOZzyI4h+XMBbntUuy6fy2H27NJcwVX1omo/Wf85myhHWE/9WJCEr4FWbKvw/WGWSBjsy/Mx1Mb2brA4WyPsL9zc6fG2y/ujbmA11mCViokSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C1VJkQA9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fEdsLgC2qU/3vuKaWLpsOtxw4kAGz0aAcndCplIGAHyRMYkOQWAq/cbHO1Czsu7zrQcZKNliosty5W/PjaVVn0YXqpCyq4iOduA2FEfX/Ag9kXelvZJOOXBPCTY5APhjJFJGcl0YvKfRHHfP7nRoZ22eG7/xnfuiziM9erhYkZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oJ0LPYqU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C1VJkQA9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5AFC4CEF1;
-	Fri,  9 Jan 2026 12:18:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oJ0LPYqU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE326C4CEF1;
+	Fri,  9 Jan 2026 12:18:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961099;
-	bh=oQRy20LZfaMayIeQdnbEQAlryuzIaZgrS1n2Sw0Ivj0=;
+	s=korg; t=1767961102;
+	bh=fyuTTcZOFkqyvZJR5cH/6ws+R83o8Ub192TXV7ntk8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C1VJkQA9S3TFmvmipMm1C/he1ERzzzUjr/WIdyGHTANCOr2xbm7Sbs9RrewBN2tN9
-	 my5FwYbVUlZnMwUxLcoQIYKK+z9E7QOgpH2BLQedb1FAIkg/k7Cp7tj/lK51lwwIXa
-	 jJHQeW6T4++sMFfVR4868U0E2FbfoTuJiIK3EYeY=
+	b=oJ0LPYqUZ0aDLl6xCi+xfrjMgjqKfV/rUq1ZvgSiO/RgpijOocW+sBwyduueskCXp
+	 JqB8dyHdsYQIfqLG4mkxobxKUMp2AFo1uPQqP3re8Gh8sE41aj83Vu/KGp52P1jjis
+	 RXrwE0vqoSzq73fwTnoBN6pZL/pNKiA7doZz9D9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
+	Denis Arefev <arefev@swemel.ru>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 633/737] ALSA: wavefront: Clear substream pointers on close
-Date: Fri,  9 Jan 2026 12:42:52 +0100
-Message-ID: <20260109112157.819518290@linuxfoundation.org>
+Subject: [PATCH 6.6 634/737] ALSA: hda: cs35l41: Fix NULL pointer dereference in cs35l41_hda_read_acpi()
+Date: Fri,  9 Jan 2026 12:42:53 +0100
+Message-ID: <20260109112157.856948629@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,44 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Denis Arefev <arefev@swemel.ru>
 
-[ Upstream commit e11c5c13ce0ab2325d38fe63500be1dd88b81e38 ]
+[ Upstream commit c34b04cc6178f33c08331568c7fd25c5b9a39f66 ]
 
-Clear substream pointers in close functions to avoid leaving dangling
-pointers, helping to improve code safety and
-prevents potential issues.
+The acpi_get_first_physical_node() function can return NULL, in which
+case the get_device() function also returns NULL, but this value is
+then dereferenced without checking,so add a check to prevent a crash.
 
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Reported-by: Junrui Luo <moonafterrain@outlook.com>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 7b2f3eb492da ("ALSA: hda: cs35l41: Add support for CS35L41 in HDA systems")
 Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Link: https://patch.msgid.link/SYBPR01MB7881DF762CAB45EE42F6D812AFC2A@SYBPR01MB7881.ausprd01.prod.outlook.com
+Signed-off-by: Denis Arefev <arefev@swemel.ru>
+Reviewed-by: Richard Fitzgerald <rf@opensource.cirrus.com>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20251202101338.11437-1-arefev@swemel.ru
+[ NULL check right after acpi_dev_put(adev) cleanup call ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/isa/wavefront/wavefront_midi.c |    2 ++
+ sound/pci/hda/cs35l41_hda.c |    2 ++
  1 file changed, 2 insertions(+)
 
---- a/sound/isa/wavefront/wavefront_midi.c
-+++ b/sound/isa/wavefront/wavefront_midi.c
-@@ -278,6 +278,7 @@ static int snd_wavefront_midi_input_clos
- 	        return -EIO;
+--- a/sound/pci/hda/cs35l41_hda.c
++++ b/sound/pci/hda/cs35l41_hda.c
+@@ -1432,6 +1432,8 @@ static int cs35l41_hda_read_acpi(struct
  
- 	guard(spinlock_irqsave)(&midi->open);
-+	midi->substream_input[mpu] = NULL;
- 	midi->mode[mpu] &= ~MPU401_MODE_INPUT;
+ 	physdev = get_device(acpi_get_first_physical_node(adev));
+ 	acpi_dev_put(adev);
++	if (!physdev)
++		return -ENODEV;
  
- 	return 0;
-@@ -300,6 +301,7 @@ static int snd_wavefront_midi_output_clo
- 	        return -EIO;
- 
- 	guard(spinlock_irqsave)(&midi->open);
-+	midi->substream_output[mpu] = NULL;
- 	midi->mode[mpu] &= ~MPU401_MODE_OUTPUT;
- 	return 0;
- }
+ 	sub = acpi_get_subsystem_id(ACPI_HANDLE(physdev));
+ 	if (IS_ERR(sub))
 
 
