@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B0B359FB6;
-	Fri,  9 Jan 2026 12:01:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6812F359FB5;
+	Fri,  9 Jan 2026 12:01:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960112; cv=none; b=oMu1szqiETDPWf6Jogul9Y8m8VwbWhpCx1+9LyeDmfblYpshCVx8oXCTrL/Fw5vwdu3vKLToDvnmadgWY8B27ltNsR5AkQP6O2cRkGu9+Ii/vD3GFYhdxYNnuVikl6tOcps6AilvIBWs7rUoeW703j7NzRtER0Fof0zW65iXLbY=
+	t=1767960115; cv=none; b=oc4a0/F61UtQ0tctmQaYjojDMH3Y9sWOHZnL++BlnFks30CC5nHLhB0hddJpj3UW/Mj1+qfYXBw1XS2G+VxUOMduvezj/JNNmKJlf2ZTxCr1amcA/HdaCuSR53y+tZvfi9EW63UaB0oJHc51OGdoWUgVux/FqBhGm+L28/PBWcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960112; c=relaxed/simple;
-	bh=oDkdIrThQ9xJMcyh44t/EkPF19PEu3/LTVR1AFtXHdI=;
+	s=arc-20240116; t=1767960115; c=relaxed/simple;
+	bh=WqK6fnFH3eIvAhUnGxhqxkw33leqSjll1MPiHOjEoNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XRgm0DKrGx/wQvM3K4NRDcT2cOSYDDYLoPo6XJE10jLKB3r7OeTrr/SSCg1hrWJLp+9YW4hwm1+Hxtribr4oKjdeoxr3WwkM/16pP2Go1GZVDx5CMuHtZ9z+eaIauVm2S0rUewJvx+ixN+kFD/SsqHC/NteOFO1+WgOeXZFl6a8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nOzIkDBA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mfCPH+G+6ylXp5qbTmaMfVf0PXSJzM/FCs+4BbnwHrZHaO2HK4sRrAGc8Aww6Rfpt/ZvhVDHoU0kPWCi49D7tw7DOfgYmsNcPCX5jYYzZChx5MNXh+6pO5CVuHBB/Xw5sO1gC6cpBBlxoEzpKXGYgN8YpWaaWR3ycyizEQv6cuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N8tgf5ru; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOzIkDBA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 186F3C4CEF1;
-	Fri,  9 Jan 2026 12:01:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N8tgf5ru"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E757AC4CEF1;
+	Fri,  9 Jan 2026 12:01:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960112;
-	bh=oDkdIrThQ9xJMcyh44t/EkPF19PEu3/LTVR1AFtXHdI=;
+	s=korg; t=1767960115;
+	bh=WqK6fnFH3eIvAhUnGxhqxkw33leqSjll1MPiHOjEoNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nOzIkDBA7W4R9V3kyFMWg6QBfq/8yI80AV25cuwF0u7OaSQcZcPaIhURxbHcqB1zl
-	 qUXIhIexdVme/hc4iLM+2IdSq9A2+KngZt41P9bi/U9GSpg8bCmyrSDs6GVdcg6zIs
-	 m4TLmLKFKpzvonkdt1l9+b0gV0EIKmugRpvfAvkM=
+	b=N8tgf5ruxPA4ggF7vDrCItb8dtPmO/568PFaNBOOYhXu5XTsVAc7s0t3FaijwBHsg
+	 ilL+418onpNTCyCWZFW+RBNHHLgK6qxGRtMZ6GuPIaEpqT6z1bE0xgqv3DF+51nINy
+	 bl8aC/h9VIDPlxBQDFTVbgr6QaXoSMB2NpTLNEZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Benjamin Poirier <bpoirier@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Xie Yuanbin <xieyuanbin1@huawei.com>,
+	Liyuan Pang <pangliyuan1@huawei.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 246/737] selftests: bonding: Add more missing config options
-Date: Fri,  9 Jan 2026 12:36:25 +0100
-Message-ID: <20260109112143.247524077@linuxfoundation.org>
+Subject: [PATCH 6.6 283/737] ARM: 9464/1: fix input-only operand modification in load_unaligned_zeropad()
+Date: Fri,  9 Jan 2026 12:37:02 +0100
+Message-ID: <20260109112144.658426947@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,45 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Poirier <bpoirier@nvidia.com>
+From: Liyuan Pang <pangliyuan1@huawei.com>
 
-[ Upstream commit dd2d40acdbb2b9e6bcddd5424b0e00c1760ecf26 ]
+[ Upstream commit edb924a7211c9aa7a4a415e03caee4d875e46b8e ]
 
-As a followup to commit 03fb8565c880 ("selftests: bonding: add missing
-build configs"), add more networking-specific config options which are
-needed for bonding tests.
+In the inline assembly inside load_unaligned_zeropad(), the "addr" is
+constrained as input-only operand. The compiler assumes that on exit
+from the asm statement these operands contain the same values as they
+had before executing the statement, but when kernel page fault happened, the assembly fixup code "bic %2 %2, #0x3" modify the value of "addr", which may lead to an unexpected behavior.
 
-For testing, I used the minimal config generated by virtme-ng and I added
-the options in the config file. All bonding tests passed.
+Use a temporary variable "tmp" to handle it, instead of modifying the
+input-only operand, just like what arm64's load_unaligned_zeropad()
+does.
 
-Fixes: bbb774d921e2 ("net: Add tests for bonding and team address list management") # for ipv6
-Fixes: 6cbe791c0f4e ("kselftest: bonding: add num_grat_arp test") # for tc options
-Fixes: 222c94ec0ad4 ("selftests: bonding: add tests for ether type changes") # for nlmon
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Benjamin Poirier <bpoirier@nvidia.com>
-Link: https://lore.kernel.org/r/20240116154926.202164-1-bpoirier@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 2c28ee720ad1 ("selftests: bonding: add delay before each xvlan_over_bond connectivity check")
+Fixes: b9a50f74905a ("ARM: 7450/1: dcache: select DCACHE_WORD_ACCESS for little-endian ARMv6+ CPUs")
+Co-developed-by: Xie Yuanbin <xieyuanbin1@huawei.com>
+Signed-off-by: Xie Yuanbin <xieyuanbin1@huawei.com>
+Signed-off-by: Liyuan Pang <pangliyuan1@huawei.com>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/drivers/net/bonding/config | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm/include/asm/word-at-a-time.h | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/tools/testing/selftests/drivers/net/bonding/config b/tools/testing/selftests/drivers/net/bonding/config
-index f85b16fc5128c..899d7fb6ea8e9 100644
---- a/tools/testing/selftests/drivers/net/bonding/config
-+++ b/tools/testing/selftests/drivers/net/bonding/config
-@@ -1,5 +1,10 @@
- CONFIG_BONDING=y
- CONFIG_BRIDGE=y
- CONFIG_DUMMY=y
-+CONFIG_IPV6=y
- CONFIG_MACVLAN=y
-+CONFIG_NET_ACT_GACT=y
-+CONFIG_NET_CLS_FLOWER=y
-+CONFIG_NET_SCH_INGRESS=y
-+CONFIG_NLMON=y
- CONFIG_VETH=y
+diff --git a/arch/arm/include/asm/word-at-a-time.h b/arch/arm/include/asm/word-at-a-time.h
+index 352ab213520d2..2e6d0b4349f47 100644
+--- a/arch/arm/include/asm/word-at-a-time.h
++++ b/arch/arm/include/asm/word-at-a-time.h
+@@ -66,7 +66,7 @@ static inline unsigned long find_zero(unsigned long mask)
+  */
+ static inline unsigned long load_unaligned_zeropad(const void *addr)
+ {
+-	unsigned long ret, offset;
++	unsigned long ret, tmp;
+ 
+ 	/* Load word from unaligned pointer addr */
+ 	asm(
+@@ -74,9 +74,9 @@ static inline unsigned long load_unaligned_zeropad(const void *addr)
+ 	"2:\n"
+ 	"	.pushsection .text.fixup,\"ax\"\n"
+ 	"	.align 2\n"
+-	"3:	and	%1, %2, #0x3\n"
+-	"	bic	%2, %2, #0x3\n"
+-	"	ldr	%0, [%2]\n"
++	"3:	bic	%1, %2, #0x3\n"
++	"	ldr	%0, [%1]\n"
++	"	and	%1, %2, #0x3\n"
+ 	"	lsl	%1, %1, #0x3\n"
+ #ifndef __ARMEB__
+ 	"	lsr	%0, %0, %1\n"
+@@ -89,7 +89,7 @@ static inline unsigned long load_unaligned_zeropad(const void *addr)
+ 	"	.align	3\n"
+ 	"	.long	1b, 3b\n"
+ 	"	.popsection"
+-	: "=&r" (ret), "=&r" (offset)
++	: "=&r" (ret), "=&r" (tmp)
+ 	: "r" (addr), "Qo" (*(unsigned long *)addr));
+ 
+ 	return ret;
 -- 
 2.51.0
 
