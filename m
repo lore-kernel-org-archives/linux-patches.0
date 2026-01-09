@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7171035A953;
-	Fri,  9 Jan 2026 12:20:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132D126ED41;
+	Fri,  9 Jan 2026 12:20:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961225; cv=none; b=iDWa8ILj0UffsNrgrBCcFqAPfU2xWvY3+R4bK4fiSZqWCzLKaOE6CM3RlpKVIHE37BTRZZZUZReuPqgTCY8qULwxRMXVgdcR1px9c3dHUsiAJn58MfeK6uAsUGfmSVXUqwBmSrs3haVYzYfZIQoMgIQhCxU1+81bZlu8rXL03Bc=
+	t=1767961228; cv=none; b=ON/nBdAy7OxuKgfp1L8XMkQ4iQwas1rLIEYcuwu/3H8gVlQhURon2pnd63wjGb+v7fvywje9bSRKGFdq8pky50qF1n40s8MnPuPJZAt/OBPDnboXNKn2XmKyZzH1PVGCzemGoyNKJMu7pJoRij+m0zsGsgqrC73Db1ctuR4+tPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961225; c=relaxed/simple;
-	bh=1xgSjTY2FGDLa7AlmKod3+4BbFJr3l6WPRwn6yE63Xw=;
+	s=arc-20240116; t=1767961228; c=relaxed/simple;
+	bh=QPf9kjo/KbZjFH9KBKFNFFhPNg4aoaRDi8ASGqvq8ME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GO5HzvxyqGfk9GJ07sd0WGU45mm0p4X2dZ/bIiIkwKGJiD/HAsXj0WYSYRXHJHzMDmu9LAJChM51DVEFss0zLyj184Z66Y8XDarPbbz4ZLWyM+LMHu4518vpR2ONgQEBr8NOPEUpjVFcbCdOAsj+YIUsPOa5LMmq4X0vLmY/+tQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wtxkEbPK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZNHY215zfUaQ1ka1RFyRU2OfM+Ty6LiGOuvztT1tsamV9PPiqTrDq5Pr80L4C/P1QqHnilly1YhTzgftZNNOtnOmvP4+ZkqhHbL4c+5op9/rNj9bCDvocVA4aPOZun94U84a50kLUuay6TFiN0wZUy25TD7XCTX96uK6wpNrsGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ajlcOKCp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wtxkEbPK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB6D3C4CEF1;
-	Fri,  9 Jan 2026 12:20:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ajlcOKCp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 962E6C4CEF1;
+	Fri,  9 Jan 2026 12:20:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961225;
-	bh=1xgSjTY2FGDLa7AlmKod3+4BbFJr3l6WPRwn6yE63Xw=;
+	s=korg; t=1767961228;
+	bh=QPf9kjo/KbZjFH9KBKFNFFhPNg4aoaRDi8ASGqvq8ME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wtxkEbPKgyV0Z2DyGyNWv+rJFT911jaVzgDp2Wg1u8nBcIgoZF20ptnLHqHrAcP8m
-	 C+x37gkg8Q2Y4bBqp0kmJHLXnJ9fn3N/pbPMqPUycfFnCwiFkC0tbmxkZLGSjqatt0
-	 j7F7znmOTzScO/IzRoR5D1MGX9Hymhgo9dS/dOr8=
+	b=ajlcOKCp54TlHP4WYXhiSiXzAAOptDHHezKt4kHG3PuE39QKLoAyvEQgCUPtR8gHu
+	 eWa28ECu/ND5DFPWAZ3TyAJkQiLwTRgveKLZfRPLTipz0TbVnLFlbVuumw0SRNoHPy
+	 FYr0IOEfUtaJKZxTCkRB28Cj+KuiF9HR0w2lmyGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
-	Baokun Li <libaokun1@huawei.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 636/737] jbd2: fix the inconsistency between checksum and data in memory for journal sb
-Date: Fri,  9 Jan 2026 12:42:55 +0100
-Message-ID: <20260109112157.934104349@linuxfoundation.org>
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?David=20Nystr=C3=B6m?= <david.nystrom@est.tech>
+Subject: [PATCH 6.6 672/737] drm/amd/display: Fix null pointer deref in dcn20_resource.c
+Date: Fri,  9 Jan 2026 12:43:31 +0100
+Message-ID: <20260109112159.330731622@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -49,97 +46,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ye Bin <yebin10@huawei.com>
+From: Aurabindo Pillai <aurabindo.pillai@amd.com>
 
-[ Upstream commit 6abfe107894af7e8ce3a2e120c619d81ee764ad5 ]
+[ Upstream commit ecbf60782662f0a388493685b85a645a0ba1613c ]
 
-Copying the file system while it is mounted as read-only results in
-a mount failure:
-[~]# mkfs.ext4 -F /dev/sdc
-[~]# mount /dev/sdc -o ro /mnt/test
-[~]# dd if=/dev/sdc of=/dev/sda bs=1M
-[~]# mount /dev/sda /mnt/test1
-[ 1094.849826] JBD2: journal checksum error
-[ 1094.850927] EXT4-fs (sda): Could not load journal inode
-mount: mount /dev/sda on /mnt/test1 failed: Bad message
+Fixes a hang thats triggered when MPV is run on a DCN401 dGPU:
 
-The process described above is just an abstracted way I came up with to
-reproduce the issue. In the actual scenario, the file system was mounted
-read-only and then copied while it was still mounted. It was found that
-the mount operation failed. The user intended to verify the data or use
-it as a backup, and this action was performed during a version upgrade.
-Above issue may happen as follows:
-ext4_fill_super
- set_journal_csum_feature_set(sb)
-  if (ext4_has_metadata_csum(sb))
-   incompat = JBD2_FEATURE_INCOMPAT_CSUM_V3;
-  if (test_opt(sb, JOURNAL_CHECKSUM)
-   jbd2_journal_set_features(sbi->s_journal, compat, 0, incompat);
-    lock_buffer(journal->j_sb_buffer);
-    sb->s_feature_incompat  |= cpu_to_be32(incompat);
-    //The data in the journal sb was modified, but the checksum was not
-      updated, so the data remaining in memory has a mismatch between the
-      data and the checksum.
-    unlock_buffer(journal->j_sb_buffer);
+mpv --hwdec=vaapi --vo=gpu --hwdec-codecs=all
 
-In this case, the journal sb copied over is in a state where the checksum
-and data are inconsistent, so mounting fails.
-To solve the above issue, update the checksum in memory after modifying
-the journal sb.
+and then enabling fullscreen playback (double click on the video)
 
-Fixes: 4fd5ea43bc11 ("jbd2: checksum journal superblock")
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Message-ID: <20251103010123.3753631-1-yebin@huaweicloud.com>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
-[ jbd2_superblock_csum() also takes a journal param ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The following calltrace will be seen:
+
+[  181.843989] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[  181.843997] #PF: supervisor instruction fetch in kernel mode
+[  181.844003] #PF: error_code(0x0010) - not-present page
+[  181.844009] PGD 0 P4D 0
+[  181.844020] Oops: 0010 [#1] PREEMPT SMP NOPTI
+[  181.844028] CPU: 6 PID: 1892 Comm: gnome-shell Tainted: G        W  OE      6.5.0-41-generic #41~22.04.2-Ubuntu
+[  181.844038] Hardware name: System manufacturer System Product Name/CROSSHAIR VI HERO, BIOS 6302 10/23/2018
+[  181.844044] RIP: 0010:0x0
+[  181.844079] Code: Unable to access opcode bytes at 0xffffffffffffffd6.
+[  181.844084] RSP: 0018:ffffb593c2b8f7b0 EFLAGS: 00010246
+[  181.844093] RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000004
+[  181.844099] RDX: ffffb593c2b8f804 RSI: ffffb593c2b8f7e0 RDI: ffff9e3c8e758400
+[  181.844105] RBP: ffffb593c2b8f7b8 R08: ffffb593c2b8f9c8 R09: ffffb593c2b8f96c
+[  181.844110] R10: 0000000000000000 R11: 0000000000000000 R12: ffffb593c2b8f9c8
+[  181.844115] R13: 0000000000000001 R14: ffff9e3c88000000 R15: 0000000000000005
+[  181.844121] FS:  00007c6e323bb5c0(0000) GS:ffff9e3f85f80000(0000) knlGS:0000000000000000
+[  181.844128] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  181.844134] CR2: ffffffffffffffd6 CR3: 0000000140fbe000 CR4: 00000000003506e0
+[  181.844141] Call Trace:
+[  181.844146]  <TASK>
+[  181.844153]  ? show_regs+0x6d/0x80
+[  181.844167]  ? __die+0x24/0x80
+[  181.844179]  ? page_fault_oops+0x99/0x1b0
+[  181.844192]  ? do_user_addr_fault+0x31d/0x6b0
+[  181.844204]  ? exc_page_fault+0x83/0x1b0
+[  181.844216]  ? asm_exc_page_fault+0x27/0x30
+[  181.844237]  dcn20_get_dcc_compression_cap+0x23/0x30 [amdgpu]
+[  181.845115]  amdgpu_dm_plane_validate_dcc.constprop.0+0xe5/0x180 [amdgpu]
+[  181.845985]  amdgpu_dm_plane_fill_plane_buffer_attributes+0x300/0x580 [amdgpu]
+[  181.846848]  fill_dc_plane_info_and_addr+0x258/0x350 [amdgpu]
+[  181.847734]  fill_dc_plane_attributes+0x162/0x350 [amdgpu]
+[  181.848748]  dm_update_plane_state.constprop.0+0x4e3/0x6b0 [amdgpu]
+[  181.849791]  ? dm_update_plane_state.constprop.0+0x4e3/0x6b0 [amdgpu]
+[  181.850840]  amdgpu_dm_atomic_check+0xdfe/0x1760 [amdgpu]
+
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: David Nyström <david.nystrom@est.tech>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jbd2/journal.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/gpu/drm/amd/display/dc/dcn20/dcn20_resource.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/fs/jbd2/journal.c
-+++ b/fs/jbd2/journal.c
-@@ -2405,6 +2405,12 @@ int jbd2_journal_set_features(journal_t
- 	sb->s_feature_compat    |= cpu_to_be32(compat);
- 	sb->s_feature_ro_compat |= cpu_to_be32(ro);
- 	sb->s_feature_incompat  |= cpu_to_be32(incompat);
-+	/*
-+	 * Update the checksum now so that it is valid even for read-only
-+	 * filesystems where jbd2_write_superblock() doesn't get called.
-+	 */
-+	if (jbd2_journal_has_csum_v2or3(journal))
-+		sb->s_checksum = jbd2_superblock_csum(journal, sb);
- 	unlock_buffer(journal->j_sb_buffer);
- 	jbd2_journal_init_transaction_limits(journal);
- 
-@@ -2434,9 +2440,17 @@ void jbd2_journal_clear_features(journal
- 
- 	sb = journal->j_superblock;
- 
-+	lock_buffer(journal->j_sb_buffer);
- 	sb->s_feature_compat    &= ~cpu_to_be32(compat);
- 	sb->s_feature_ro_compat &= ~cpu_to_be32(ro);
- 	sb->s_feature_incompat  &= ~cpu_to_be32(incompat);
-+	/*
-+	 * Update the checksum now so that it is valid even for read-only
-+	 * filesystems where jbd2_write_superblock() doesn't get called.
-+	 */
-+	if (jbd2_journal_has_csum_v2or3(journal))
-+		sb->s_checksum = jbd2_superblock_csum(journal, sb);
-+	unlock_buffer(journal->j_sb_buffer);
- 	jbd2_journal_init_transaction_limits(journal);
+--- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_resource.c
+@@ -2179,10 +2179,11 @@ bool dcn20_get_dcc_compression_cap(const
+ 		const struct dc_dcc_surface_param *input,
+ 		struct dc_surface_dcc_cap *output)
+ {
+-	return dc->res_pool->hubbub->funcs->get_dcc_compression_cap(
+-			dc->res_pool->hubbub,
+-			input,
+-			output);
++	if (dc->res_pool->hubbub->funcs->get_dcc_compression_cap)
++		return dc->res_pool->hubbub->funcs->get_dcc_compression_cap(
++			dc->res_pool->hubbub, input, output);
++
++	return false;
  }
- EXPORT_SYMBOL(jbd2_journal_clear_features);
+ 
+ static void dcn20_destroy_resource_pool(struct resource_pool **pool)
 
 
