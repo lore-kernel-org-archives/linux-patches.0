@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7531946C8;
-	Fri,  9 Jan 2026 12:02:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB4B33CE9A;
+	Fri,  9 Jan 2026 12:02:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960126; cv=none; b=s5P5ACo0ML4W5AtqwIQN/BC9Caka9L/qFy7NSIkhEKMVFUm4RCY6lSfRXM29TW0uG0tDlb+2O68sNHO+5h5sc/b9v6JN0CmfPmWNgxSlwojyqF+wv937oel4DDZLco8fK09UXGmSvyRSMqTM4uap/oqK/LujJmUqQZyZIMT/xrg=
+	t=1767960130; cv=none; b=Bdnp6HqGFeTcnyQcL7jSuqR7ZK2ZF7s9bxrFZlF2lmnRWRSR1PLEsLbXX9bk5EJqXaVirGDFSqwb6SmIeECRH4z6l7R/GmV7uVdvUWtULRWglYk72W0Me8xTYr9XY/3m29C8j0TD8PJ7Dgjabdpn/qGsX/teUuJbFiiaKFbh5vQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960126; c=relaxed/simple;
-	bh=wwHFzI7MByfogAWWCDDmeZTKfMo6ro8vybiiCmilUOI=;
+	s=arc-20240116; t=1767960130; c=relaxed/simple;
+	bh=KFee/StysGxorIDGiQfx007SP6QSnHyXO18Oa23vSB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fr0tJFlpppRwVge/QBx1UkPm8U9ndcC/J6WUQWGMmTnRN7HGTOea3T68+zI/HONvGu0Qs7L2xNOJyaDy+iz7355BahNRxP6cMyVRdjCt69ITNsNhL4laPR4PhNChM0HiObTUWNTRLJPkO76xvP41HK9ILUrU6TYiAr8IJqd151I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YMo9szF8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q6BgRmO8tg2QNSaWCQcNPIe7Qt40OwVByMyj6Dq0mEQ56amuifSfaR+YB4wtIaifxX+3jWsxFkq3SvX2ov5HOXmTHLvRpfbvdeQTzFaEgdOLi8UsFjGqaJeFU+hCU0hIHcSrqHVw1wta+RwGoNJAjLWERrObwyo4o6urjmy87pU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uvwPWqTk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YMo9szF8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57975C4CEF1;
-	Fri,  9 Jan 2026 12:02:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uvwPWqTk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B563C4CEF1;
+	Fri,  9 Jan 2026 12:02:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960126;
-	bh=wwHFzI7MByfogAWWCDDmeZTKfMo6ro8vybiiCmilUOI=;
+	s=korg; t=1767960129;
+	bh=KFee/StysGxorIDGiQfx007SP6QSnHyXO18Oa23vSB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YMo9szF8Ishy3t/hzQA6AgSGLZvtoVNwqGICJ2MlIRZ98z5uh/969O9U8exVaAHmn
-	 +QlpN82sj+UGrod5KoHnjTz3riVU4MEizcqVcNwHzUABuhbp0b7jRX/6rkG+2QO0k0
-	 +1wM9Y97pJ+y5WxdoIYS2nbCpQ/0u5FfrB9zvbbc=
+	b=uvwPWqTkab9TuqHJRnwiQZvbWpFQ5vJ5a8FVNqHlkYaVqrOq74r7dtfjXC+VweRMa
+	 yAAgwlqAcawbEPqxmN/GJAn698F1BQfpw/9/W28U9fCaAzHpolziCRs0p6WnlBAwL8
+	 ahlWTvfd4W3/I2/84CYUurlOHD087r+SPP+U2HzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
-Subject: [PATCH 6.6 295/737] usb: phy: Initialize struct usb_phy list_head
-Date: Fri,  9 Jan 2026 12:37:14 +0100
-Message-ID: <20260109112145.108140849@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 296/737] ALSA: dice: fix buffer overflow in detect_stream_formats()
+Date: Fri,  9 Jan 2026 12:37:15 +0100
+Message-ID: <20260109112145.145439698@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -50,59 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit c69ff68b097b0f53333114f1b2c3dc128f389596 upstream.
+commit 324f3e03e8a85931ce0880654e3c3eb38b0f0bba upstream.
 
-As part of the registration of a new 'struct usb_phy' with the USB PHY core
-via either usb_add_phy(struct usb_phy *x, ...) or usb_add_phy_dev(struct
-usb_phy *x) these functions call list_add_tail(&x->head, phy_list) in
-order for the new instance x to be stored in phy_list, a static list
-kept internally by the core.
+The function detect_stream_formats() reads the stream_count value directly
+from a FireWire device without validating it. This can lead to
+out-of-bounds writes when a malicious device provides a stream_count value
+greater than MAX_STREAMS.
 
-After 7d21114dc6a2 ("usb: phy: Introduce one extcon device into usb phy")
-when executing either of the registration functions above it is possible
-that usb_add_extcon() fails, leading to either function returning before
-the call to list_add_tail(), leaving x->head uninitialized.
+Fix by applying the same validation to both TX and RX stream counts in
+detect_stream_formats().
 
-Then, when a driver tries to undo the failed registration by calling
-usb_remove_phy(struct usb_phy *x) there will be an unconditional call to
-list_del(&x->head) acting on an uninitialized variable, and thus a
-possible NULL pointer dereference.
-
-Fix this by initializing x->head before usb_add_extcon() has a
-chance to fail. Note that this was not needed before 7d21114dc6a2 since
-list_add_phy() was executed unconditionally and it guaranteed that x->head
-was initialized.
-
-Fixes: 7d21114dc6a2 ("usb: phy: Introduce one extcon device into usb phy")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
-Link: https://patch.msgid.link/20251121-diogo-smaug_typec-v2-1-5c37c1169d57@tecnico.ulisboa.pt
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Reported-by: Junrui Luo <moonafterrain@outlook.com>
+Fixes: 58579c056c1c ("ALSA: dice: use extended protocol to detect available stream formats")
+Cc: stable@vger.kernel.org
+Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Link: https://patch.msgid.link/SYBPR01MB7881B043FC68B4C0DA40B73DAFDCA@SYBPR01MB7881.ausprd01.prod.outlook.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/phy/phy.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ sound/firewire/dice/dice-extension.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/phy/phy.c
-+++ b/drivers/usb/phy/phy.c
-@@ -672,6 +672,8 @@ int usb_add_phy(struct usb_phy *x, enum
- 		return -EINVAL;
- 	}
+--- a/sound/firewire/dice/dice-extension.c
++++ b/sound/firewire/dice/dice-extension.c
+@@ -116,7 +116,7 @@ static int detect_stream_formats(struct
+ 			break;
  
-+	INIT_LIST_HEAD(&x->head);
-+
- 	usb_charger_init(x);
- 	ret = usb_add_extcon(x);
- 	if (ret)
-@@ -722,6 +724,8 @@ int usb_add_phy_dev(struct usb_phy *x)
- 		return -EINVAL;
- 	}
+ 		base_offset += EXT_APP_STREAM_ENTRIES;
+-		stream_count = be32_to_cpu(reg[0]);
++		stream_count = min_t(unsigned int, be32_to_cpu(reg[0]), MAX_STREAMS);
+ 		err = read_stream_entries(dice, section_addr, base_offset,
+ 					  stream_count, mode,
+ 					  dice->tx_pcm_chs,
+@@ -125,7 +125,7 @@ static int detect_stream_formats(struct
+ 			break;
  
-+	INIT_LIST_HEAD(&x->head);
-+
- 	usb_charger_init(x);
- 	ret = usb_add_extcon(x);
- 	if (ret)
+ 		base_offset += stream_count * EXT_APP_STREAM_ENTRY_SIZE;
+-		stream_count = be32_to_cpu(reg[1]);
++		stream_count = min_t(unsigned int, be32_to_cpu(reg[1]), MAX_STREAMS);
+ 		err = read_stream_entries(dice, section_addr, base_offset,
+ 					  stream_count,
+ 					  mode, dice->rx_pcm_chs,
 
 
