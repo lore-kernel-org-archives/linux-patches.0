@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D93935BDC3;
-	Fri,  9 Jan 2026 12:09:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8E635B135;
+	Fri,  9 Jan 2026 12:09:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960545; cv=none; b=QJ2tlgy5RL6b2IjjaQm/d5A9OOY8RveQDY6XrWTzHWnoCXGgVcY/u7Ksj48QBWJfsu+JpNPVZUON9OVqXwgUC4hVU/Qd9vGfpd77rEDExyJQdreBtywwg4yxnMEj9t1LHT8ywzlZThVkJSjwsHIHr/gncF+2BDyfPsJL1mnE+kA=
+	t=1767960547; cv=none; b=jx4Jpop3ql6VmptPUqtUq0gdRPlM8HCUlAK136Pt7AnqDYO2ePPFF/3VS62jsvmfq9lOB+pqEJlZpLNHJ8DCFMbtGVfK6qIloqEkYy/ZhlfS74KZbJLy/UUhoWYpTmnxG1catE/KDLJZva/fAGqSlOOaH7KlhBot4yI1DYuEBV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960545; c=relaxed/simple;
-	bh=lSdJNrI98EkvGiF6fv7o1gcJrVx8QS9ijpsj6JpDpbc=;
+	s=arc-20240116; t=1767960547; c=relaxed/simple;
+	bh=EyZuUazGu5AWry6LBNIigVcgfYzpHCTa+Wyqf63i8Dc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NOJ5tgUYzg8+cs1MaqnQRg6IVZD0ziCwoYW/X4I+jPVNOAgoYgKZ5gIL9hWG78znsGVqEsTMl2PH/vbsFq31ETDRfHzBTGcZFBbBNbho3GB5AWojH6hgpC+EphfWatkWUepX+qyzrYfhvywWWAGlPenrsi2tuJxBapxc9O+oGM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fh15djPo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gOBkJY4N+jcUHtBWafA1XQ7GRj3TeGA3a+YN490U8FRrUKYP2YztN6sDBsVTmpJwvswWjcAT05eH0CJyFabXek5hAcSd7kEsRu4xlDz14JxbaqNGH3unDSwK7OZzsvQ3bo1lwg4VFnNyGm3UMVSSf2o4TJgESl72g1rS5jGeLN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xRW1a6mD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fh15djPo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DA53C19421;
-	Fri,  9 Jan 2026 12:09:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xRW1a6mD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C621C16AAE;
+	Fri,  9 Jan 2026 12:09:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960544;
-	bh=lSdJNrI98EkvGiF6fv7o1gcJrVx8QS9ijpsj6JpDpbc=;
+	s=korg; t=1767960547;
+	bh=EyZuUazGu5AWry6LBNIigVcgfYzpHCTa+Wyqf63i8Dc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fh15djPotGTu5fCDj4Yd+TNrki/51jhm1Dc9e6CBHPVRuKDc7qO1G/j1Sz+W2ZvuO
-	 cLn6OBgn5oap8l4r7wjPB4SJJDLS/qLW6TngDkRKHHoyROEP+AW8NYDtJjziJIwJBl
-	 AWiI58HBgBrvY/m2REcK/pdQ3UgPlbNpXEjCo6vI=
+	b=xRW1a6mDi3dHPnBfVOnoUfsow+EGE9MgH/uKAUt1Rk5pMnNvhZU9pBLVko3/0kUNN
+	 DMY96b7sXNLq1h3WAd15uMjLk858AN/rYa+Y32fW04lVdIUN8eqEuAh/Avv9Tz/30e
+	 kvTNpw94ByGH2O0PUKIl0NI29CRuIpBA00mRinek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ma Ke <make24@iscas.ac.cn>
-Subject: [PATCH 6.6 442/737] intel_th: Fix error handling in intel_th_output_open
-Date: Fri,  9 Jan 2026 12:39:41 +0100
-Message-ID: <20260109112150.619392476@linuxfoundation.org>
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.6 425/737] ext4: align max orphan file size with e2fsprogs limit
+Date: Fri,  9 Jan 2026 12:39:24 +0100
+Message-ID: <20260109112149.984718531@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -44,77 +46,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 6d5925b667e4ed9e77c8278cc215191d29454a3f upstream.
+commit 7c11c56eb32eae96893eebafdbe3decadefe88ad upstream.
 
-intel_th_output_open() calls bus_find_device_by_devt() which
-internally increments the device reference count via get_device(), but
-this reference is not properly released in several error paths. When
-device driver is unavailable, file operations cannot be obtained, or
-the driver's open method fails, the function returns without calling
-put_device(), leading to a permanent device reference count leak. This
-prevents the device from being properly released and could cause
-resource exhaustion over time.
+Kernel commit 0a6ce20c1564 ("ext4: verify orphan file size is not too big")
+limits the maximum supported orphan file size to 8 << 20.
 
-Found by code review.
+However, in e2fsprogs, the orphan file size is set to 32–512 filesystem
+blocks when creating a filesystem.
 
-Cc: stable <stable@kernel.org>
-Fixes: 39f4034693b7 ("intel_th: Add driver infrastructure for Intel(R) Trace Hub devices")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Link: https://patch.msgid.link/20251112091723.35963-1-make24@iscas.ac.cn
+With 64k block size, formatting an ext4 fs >32G gives an orphan file bigger
+than the kernel allows, so mount prints an error and fails:
+
+    EXT4-fs (vdb): orphan file too big: 8650752
+    EXT4-fs (vdb): mount failed
+
+To prevent this issue and allow previously created 64KB filesystems to
+mount, we updates the maximum allowed orphan file size in the kernel to
+512 filesystem blocks.
+
+Fixes: 0a6ce20c1564 ("ext4: verify orphan file size is not too big")
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Message-ID: <20251120134233.2994147-1-libaokun@huaweicloud.com>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwtracing/intel_th/core.c |   20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ fs/ext4/orphan.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/hwtracing/intel_th/core.c
-+++ b/drivers/hwtracing/intel_th/core.c
-@@ -810,13 +810,17 @@ static int intel_th_output_open(struct i
- 	int err;
+--- a/fs/ext4/orphan.c
++++ b/fs/ext4/orphan.c
+@@ -8,6 +8,8 @@
+ #include "ext4.h"
+ #include "ext4_jbd2.h"
  
- 	dev = bus_find_device_by_devt(&intel_th_bus, inode->i_rdev);
--	if (!dev || !dev->driver)
--		return -ENODEV;
-+	if (!dev || !dev->driver) {
-+		err = -ENODEV;
-+		goto out_no_device;
-+	}
- 
- 	thdrv = to_intel_th_driver(dev->driver);
- 	fops = fops_get(thdrv->fops);
--	if (!fops)
--		return -ENODEV;
-+	if (!fops) {
-+		err = -ENODEV;
-+		goto out_put_device;
-+	}
- 
- 	replace_fops(file, fops);
- 
-@@ -824,10 +828,16 @@ static int intel_th_output_open(struct i
- 
- 	if (file->f_op->open) {
- 		err = file->f_op->open(inode, file);
--		return err;
-+		if (err)
-+			goto out_put_device;
- 	}
- 
- 	return 0;
++#define EXT4_MAX_ORPHAN_FILE_BLOCKS 512
 +
-+out_put_device:
-+	put_device(dev);
-+out_no_device:
-+	return err;
- }
- 
- static const struct file_operations intel_th_output_fops = {
+ static int ext4_orphan_file_add(handle_t *handle, struct inode *inode)
+ {
+ 	int i, j, start;
+@@ -589,7 +591,7 @@ int ext4_init_orphan_info(struct super_b
+ 	 * consuming absurd amounts of memory when pinning blocks of orphan
+ 	 * file in memory.
+ 	 */
+-	if (inode->i_size > 8 << 20) {
++	if (inode->i_size > (EXT4_MAX_ORPHAN_FILE_BLOCKS << inode->i_blkbits)) {
+ 		ext4_msg(sb, KERN_ERR, "orphan file too big: %llu",
+ 			 (unsigned long long)inode->i_size);
+ 		ret = -EFSCORRUPTED;
 
 
