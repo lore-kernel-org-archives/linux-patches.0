@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ECD923F417;
-	Fri,  9 Jan 2026 12:49:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C5CC23F417;
+	Fri,  9 Jan 2026 12:49:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962972; cv=none; b=WSTk1oo5m1DLrnpR/K/YYzmWaUFathK0AstH6+EL0lWQgygc38ygiLcgvyU0dSOAoc0GMFDXO6MA+4A7dGT2da1VNPqtJ2NXMArDn/Yla2h9NBGFMnsoDe+3WkFO13C3Yr1r77pWKJqF112w5v/SRr8ZKTRUnWZxCdEPdX7HjVc=
+	t=1767962975; cv=none; b=qelnWgvxe3Oz7FGYsKMviEAXekXPjyW8reJWbRMps4pdQeZUgYKN74PWClo2JwyjuFQUEeAKvx/IdEH32k0IBk7aKQ8kaWkfCksVdj2s21g9hsajD55Xj3jwGMSbNVhH/r0Yq5riLoD+z2P5FzKxgLjpzrtvlC0KRyo8liofJF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962972; c=relaxed/simple;
-	bh=12Ht3Co6Vwk5ER+gT2bvDsVZWsPPEZk7oJXFOofdt9s=;
+	s=arc-20240116; t=1767962975; c=relaxed/simple;
+	bh=hlSLSRJUHhZCPpjjWrJX3+vZ8u0prIVMWH77iPZJhM0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=panttehPlH7mdiSkkCcy1mVsToFVK52ntRS/kgCWFMblceZvXzSeen9koTqe+98D89Y362OogyRDBBdEKxQb0QyUhUTyif4ZXkP7A5Tn2r38nD/Hc2UlsxXnDbKVmQJBdXE0QDtF19RQ+o/PdYyA7fvhbtT4b1fsdI9i8bKSMVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j8OgSzyv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=azFdh16lc74E23ATuBT1igFVKGtwi7fF4GJU0pj3LNNqobzOzSRWZPUIlvJ4vCwVdoYt3zk9ENqfFaZkh7vuDm/D38gn+KwyC4KYNJzLW28Hsdr1F0sGu6hMp7ZbheelXU0tJrl5u7uB47RfYV4oKatPTQKfTsmPgu5MB6IHWx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iOAMv/Sn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j8OgSzyv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C051CC4CEF1;
-	Fri,  9 Jan 2026 12:49:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iOAMv/Sn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3C2FC4CEF1;
+	Fri,  9 Jan 2026 12:49:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962972;
-	bh=12Ht3Co6Vwk5ER+gT2bvDsVZWsPPEZk7oJXFOofdt9s=;
+	s=korg; t=1767962975;
+	bh=hlSLSRJUHhZCPpjjWrJX3+vZ8u0prIVMWH77iPZJhM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j8OgSzyvkaAMmLHUonE6XvAvYnjg+IO7vmK7Bkm6b4Q2PLwFcu+d7xKsqjMnaklOJ
-	 xzJsmMo9M4cZoiR60PxrjZOXnBRYZWcQ9sRj+7P0qEBoQWWivXahqWrLEpeXYOqvQ8
-	 f+u6o2vDrzMtEoroUMI1Ubr+Y3W2/Rw3GfDBCEeo=
+	b=iOAMv/SnLngw3wq3KuT4hUwbYUu2Q1VugTePAoypEF5ig758scT9hJE69lhM2GMuA
+	 Rne6Dw6jzbqy03w9vHR5A1O+aVHVWt/yt3PJycLctxR+REjLDA7ipWxfKZWUQrGC/D
+	 DWo5SIVqpUScytsEC8jOQKQSxQcIZvivv6oSxjbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@google.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 525/634] mm/damon/tests/core-kunit: handle alloc failures in damon_test_set_regions()
-Date: Fri,  9 Jan 2026 12:43:23 +0100
-Message-ID: <20260109112137.320829752@linuxfoundation.org>
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 552/634] f2fs: remove unused GC_FAILURE_PIN
+Date: Fri,  9 Jan 2026 12:43:50 +0100
+Message-ID: <20260109112138.364587141@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -53,60 +51,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Chao Yu <chao@kernel.org>
 
-commit 74d5969995d129fd59dd93b9c7daa6669cb6810f upstream.
+[ Upstream commit 968c4f72b23c0c8f1e94e942eab89b8c5a3022e7 ]
 
-damon_test_set_regions() is assuming all dynamic memory allocation in it
-will succeed.  Those are indeed likely in the real use cases since those
-allocations are too small to fail, but theoretically those could fail.  In
-the case, inappropriate memory access can happen.  Fix it by appropriately
-cleanup pre-allocated memory and skip the execution of the remaining tests
-in the failure cases.
+After commit 3db1de0e582c ("f2fs: change the current atomic write way"),
+we removed all GC_FAILURE_ATOMIC usage, let's change i_gc_failures[]
+array to i_pin_failure for cleanup.
 
-Link: https://lkml.kernel.org/r/20251101182021.74868-11-sj@kernel.org
-Fixes: 62f409560eb2 ("mm/damon/core-test: test damon_set_regions")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>
-Cc: David Gow <davidgow@google.com>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: <stable@vger.kernel.org>	[6.1+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Meanwhile, let's define i_current_depth and i_gc_failures as union
+variable due to they won't be valid at the same time.
+
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: 10b591e7fb7c ("f2fs: fix to avoid updating compression context during writeback")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/core-test.h |   17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ fs/f2fs/f2fs.h     |   14 +++++---------
+ fs/f2fs/file.c     |   12 +++++-------
+ fs/f2fs/inode.c    |    6 ++----
+ fs/f2fs/recovery.c |    3 +--
+ 4 files changed, 13 insertions(+), 22 deletions(-)
 
---- a/mm/damon/core-test.h
-+++ b/mm/damon/core-test.h
-@@ -341,13 +341,26 @@ static void damon_test_ops_registration(
- static void damon_test_set_regions(struct kunit *test)
- {
- 	struct damon_target *t = damon_new_target();
--	struct damon_region *r1 = damon_new_region(4, 16);
--	struct damon_region *r2 = damon_new_region(24, 32);
-+	struct damon_region *r1, *r2;
- 	struct damon_addr_range range = {.start = 8, .end = 28};
- 	unsigned long expects[] = {8, 16, 16, 24, 24, 28};
- 	int expect_idx = 0;
- 	struct damon_region *r;
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -747,11 +747,6 @@ enum {
  
-+	if (!t)
-+		kunit_skip(test, "target alloc fail");
-+	r1 = damon_new_region(4, 16);
-+	if (!r1) {
-+		damon_free_target(t);
-+		kunit_skip(test, "region alloc fail");
-+	}
-+	r2 = damon_new_region(24, 32);
-+	if (!r2) {
-+		damon_free_target(t);
-+		damon_free_region(r1);
-+		kunit_skip(test, "second region alloc fail");
-+	}
-+
- 	damon_add_region(r1, t);
- 	damon_add_region(r2, t);
- 	damon_set_regions(t, &range, 1);
+ #define DEF_DIR_LEVEL		0
+ 
+-enum {
+-	GC_FAILURE_PIN,
+-	MAX_GC_FAILURE
+-};
+-
+ /* used for f2fs_inode_info->flags */
+ enum {
+ 	FI_NEW_INODE,		/* indicate newly allocated inode */
+@@ -797,9 +792,10 @@ struct f2fs_inode_info {
+ 	unsigned long i_flags;		/* keep an inode flags for ioctl */
+ 	unsigned char i_advise;		/* use to give file attribute hints */
+ 	unsigned char i_dir_level;	/* use for dentry level for large dir */
+-	unsigned int i_current_depth;	/* only for directory depth */
+-	/* for gc failure statistic */
+-	unsigned int i_gc_failures[MAX_GC_FAILURE];
++	union {
++		unsigned int i_current_depth;	/* only for directory depth */
++		unsigned int i_gc_failures;	/* for gc failure statistic */
++	};
+ 	unsigned int i_pino;		/* parent inode number */
+ 	umode_t i_acl_mode;		/* keep file acl mode temporarily */
+ 
+@@ -3100,7 +3096,7 @@ static inline void f2fs_i_depth_write(st
+ static inline void f2fs_i_gc_failures_write(struct inode *inode,
+ 					unsigned int count)
+ {
+-	F2FS_I(inode)->i_gc_failures[GC_FAILURE_PIN] = count;
++	F2FS_I(inode)->i_gc_failures = count;
+ 	f2fs_mark_inode_dirty_sync(inode, true);
+ }
+ 
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -3247,13 +3247,11 @@ int f2fs_pin_file_control(struct inode *
+ 
+ 	/* Use i_gc_failures for normal file as a risk signal. */
+ 	if (inc)
+-		f2fs_i_gc_failures_write(inode,
+-				fi->i_gc_failures[GC_FAILURE_PIN] + 1);
++		f2fs_i_gc_failures_write(inode, fi->i_gc_failures + 1);
+ 
+-	if (fi->i_gc_failures[GC_FAILURE_PIN] > sbi->gc_pin_file_threshold) {
++	if (fi->i_gc_failures > sbi->gc_pin_file_threshold) {
+ 		f2fs_warn(sbi, "%s: Enable GC = ino %lx after %x GC trials",
+-			  __func__, inode->i_ino,
+-			  fi->i_gc_failures[GC_FAILURE_PIN]);
++			  __func__, inode->i_ino, fi->i_gc_failures);
+ 		clear_inode_flag(inode, FI_PIN_FILE);
+ 		return -EAGAIN;
+ 	}
+@@ -3312,7 +3310,7 @@ static int f2fs_ioc_set_pin_file(struct
+ 	}
+ 
+ 	set_inode_flag(inode, FI_PIN_FILE);
+-	ret = F2FS_I(inode)->i_gc_failures[GC_FAILURE_PIN];
++	ret = F2FS_I(inode)->i_gc_failures;
+ done:
+ 	f2fs_update_time(F2FS_I_SB(inode), REQ_TIME);
+ out:
+@@ -3327,7 +3325,7 @@ static int f2fs_ioc_get_pin_file(struct
+ 	__u32 pin = 0;
+ 
+ 	if (is_inode_flag_set(inode, FI_PIN_FILE))
+-		pin = F2FS_I(inode)->i_gc_failures[GC_FAILURE_PIN];
++		pin = F2FS_I(inode)->i_gc_failures;
+ 	return put_user(pin, (u32 __user *)arg);
+ }
+ 
+--- a/fs/f2fs/inode.c
++++ b/fs/f2fs/inode.c
+@@ -362,8 +362,7 @@ static int do_read_inode(struct inode *i
+ 	if (S_ISDIR(inode->i_mode))
+ 		fi->i_current_depth = le32_to_cpu(ri->i_current_depth);
+ 	else if (S_ISREG(inode->i_mode))
+-		fi->i_gc_failures[GC_FAILURE_PIN] =
+-					le16_to_cpu(ri->i_gc_failures);
++		fi->i_gc_failures = le16_to_cpu(ri->i_gc_failures);
+ 	fi->i_xattr_nid = le32_to_cpu(ri->i_xattr_nid);
+ 	fi->i_flags = le32_to_cpu(ri->i_flags);
+ 	if (S_ISREG(inode->i_mode))
+@@ -623,8 +622,7 @@ void f2fs_update_inode(struct inode *ino
+ 		ri->i_current_depth =
+ 			cpu_to_le32(F2FS_I(inode)->i_current_depth);
+ 	else if (S_ISREG(inode->i_mode))
+-		ri->i_gc_failures =
+-			cpu_to_le16(F2FS_I(inode)->i_gc_failures[GC_FAILURE_PIN]);
++		ri->i_gc_failures = cpu_to_le16(F2FS_I(inode)->i_gc_failures);
+ 	ri->i_xattr_nid = cpu_to_le32(F2FS_I(inode)->i_xattr_nid);
+ 	ri->i_flags = cpu_to_le32(F2FS_I(inode)->i_flags);
+ 	ri->i_pino = cpu_to_le32(F2FS_I(inode)->i_pino);
+--- a/fs/f2fs/recovery.c
++++ b/fs/f2fs/recovery.c
+@@ -330,8 +330,7 @@ static int recover_inode(struct inode *i
+ 	F2FS_I(inode)->i_advise = raw->i_advise;
+ 	F2FS_I(inode)->i_flags = le32_to_cpu(raw->i_flags);
+ 	f2fs_set_inode_flags(inode);
+-	F2FS_I(inode)->i_gc_failures[GC_FAILURE_PIN] =
+-				le16_to_cpu(raw->i_gc_failures);
++	F2FS_I(inode)->i_gc_failures = le16_to_cpu(raw->i_gc_failures);
+ 
+ 	recover_inline_flags(inode, raw);
+ 
 
 
