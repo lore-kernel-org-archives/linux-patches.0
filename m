@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82FF132BF21;
-	Fri,  9 Jan 2026 11:51:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95FE433C511;
+	Fri,  9 Jan 2026 11:51:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959465; cv=none; b=WHalOEh59NTMXZL9Bd1hAP7xbJ59wb+xdkWb0eb/aKRyF9KVC+BV9WFq93YgfqCSJD0fGnB7F9cP1+heD7q6yxhZVoLndtG4vZCa9RfCzEDjN3rn51jAx+i+YnQXBXvmXMjGbxjIKRxgaMTCba9NPU6iyRy6pEudtYmIN7TjzXU=
+	t=1767959468; cv=none; b=p+JeP+W8Gp0k25pIc+hfFYp7m2fEYOXJNSd5jyFBO0bnNj+WGo0qlNRSkYI+u1eZVdSaYpeBF/ae5Uibld3QvQ5jAAPpUmuTJ8C9vwvJoAvNejV+9qhaUIcf5XCwBinhN6xNFzd4cKhqGLsH7EgwEH3tIDZw5kbLhyf7Q2XwUxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959465; c=relaxed/simple;
-	bh=+4wQwfS4ELo17Mtx0O857J/fhoMssCiahWYsAyXlYJ0=;
+	s=arc-20240116; t=1767959468; c=relaxed/simple;
+	bh=TsPqG8YKOl9vjLwIw+Ncuu/gABfuB8gpEmD3Fb+RXbU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sp+6n53STgCSoGgaBGeyqywg+X7JMEe1uvi4o90BpOArXRCx0n8x+prRs9agSs97gH0rxizuY+tnMoHq0kOhesiNiVkIvdg6yMHK2PNgAaEs9LmVnvqHxYS0WrGtSVKWnn7OKfF+Zkly335XqwEuxSkFXSlrQRmSIIzdgiyJ8m0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cYtFwNxP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W98K491XLe6K3VCqeBXQgPWxi61xnOE01vz/BFCBWqoiQQMuHwqoDqUphGplr0NwtVFLcCTI6MltSrPtNM0ynAK/7Ld6Ws+bd8/6kdjFfdghjwY0CrRNnxFTME6VYQfZ+t1Zcjy8/AGqYFCdnsY3VR9rmjcNDq28zzls5jPJBCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zd8zmqkL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cYtFwNxP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12449C4CEF1;
-	Fri,  9 Jan 2026 11:51:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zd8zmqkL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D879FC4CEF1;
+	Fri,  9 Jan 2026 11:51:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959465;
-	bh=+4wQwfS4ELo17Mtx0O857J/fhoMssCiahWYsAyXlYJ0=;
+	s=korg; t=1767959468;
+	bh=TsPqG8YKOl9vjLwIw+Ncuu/gABfuB8gpEmD3Fb+RXbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cYtFwNxPFQIIyBOPiKELshDppqfqVZJT4td9G+kykJDtEQ2M7J0BggRft0RSlcavk
-	 sa9S5oqyag3ACMxkpEZeHu/SLDTMn+ak9V+7BjJeAe4Mf6eb3+JvVQbwmcVsgZCnpU
-	 pJnYv+a1NsPipvaM1RjcstYPnFQEX3v0ABJrbtsA=
+	b=zd8zmqkLYOieAnT+d5kJoMDjjj5rXnuyk8aTEJg2vfD4tXzh2xw3WkhNQUiK3ojyq
+	 yx0N4/sklX3R78pv5/2qlqHJcWVAiRPs3//4+7IGq8pktboEyynjX3GuY5VKu1CTGt
+	 GkwspVlxBTTVbiYadNZh3lqWvpld9vN0TomvoITw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Mladek <pmladek@suse.com>,
-	Joe Lawrence <joe.lawrence@redhat.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Fernand Sieber <sieberf@amazon.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 061/737] objtool: Fix weak symbol detection
-Date: Fri,  9 Jan 2026 12:33:20 +0100
-Message-ID: <20260109112136.288113761@linuxfoundation.org>
+Subject: [PATCH 6.6 062/737] sched/fair: Forfeit vruntime on yield
+Date: Fri,  9 Jan 2026 12:33:21 +0100
+Message-ID: <20260109112136.325673768@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,63 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Fernand Sieber <sieberf@amazon.com>
 
-[ Upstream commit 72567c630d32bc31f671977f78228c80937ed80e ]
+[ Upstream commit 79104becf42baeeb4a3f2b106f954b9fc7c10a3c ]
 
-find_symbol_hole_containing() fails to find a symbol hole (aka stripped
-weak symbol) if its section has no symbols before the hole.  This breaks
-weak symbol detection if -ffunction-sections is enabled.
+If a task yields, the scheduler may decide to pick it again. The task in
+turn may decide to yield immediately or shortly after, leading to a tight
+loop of yields.
 
-Fix that by allowing the interval tree to contain section symbols, which
-are always at offset zero for a given section.
+If there's another runnable task as this point, the deadline will be
+increased by the slice at each loop. This can cause the deadline to runaway
+pretty quickly, and subsequent elevated run delays later on as the task
+doesn't get picked again. The reason the scheduler can pick the same task
+again and again despite its deadline increasing is because it may be the
+only eligible task at that point.
 
-Fixes a bunch of (-ffunction-sections) warnings like:
+Fix this by making the task forfeiting its remaining vruntime and pushing
+the deadline one slice ahead. This implements yield behavior more
+authentically.
 
-  vmlinux.o: warning: objtool: .text.__x64_sys_io_setup+0x10: unreachable instruction
+We limit the forfeiting to eligible tasks. This is because core scheduling
+prefers running ineligible tasks rather than force idling. As such, without
+the condition, we can end up on a yield loop which makes the vruntime
+increase rapidly, leading to anomalous run delays later down the line.
 
-Fixes: 4adb23686795 ("objtool: Ignore extra-symbol code")
-Acked-by: Petr Mladek <pmladek@suse.com>
-Tested-by: Joe Lawrence <joe.lawrence@redhat.com>
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Fixes: 147f3efaa24182 ("sched/fair: Implement an EEVDF-like scheduling  policy")
+Signed-off-by: Fernand Sieber <sieberf@amazon.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20250401123622.584018-1-sieberf@amazon.com
+Link: https://lore.kernel.org/r/20250911095113.203439-1-sieberf@amazon.com
+Link: https://lore.kernel.org/r/20250916140228.452231-1-sieberf@amazon.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/objtool/elf.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ kernel/sched/fair.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/tools/objtool/elf.c b/tools/objtool/elf.c
-index 081befa4674b8..797507a90251b 100644
---- a/tools/objtool/elf.c
-+++ b/tools/objtool/elf.c
-@@ -110,7 +110,7 @@ struct symbol_hole {
- };
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 7f23b866c3d4c..cf3a51f323e32 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -8614,7 +8614,19 @@ static void yield_task_fair(struct rq *rq)
+ 	 */
+ 	rq_clock_skip_update(rq);
  
- /*
-- * Find !section symbol where @offset is after it.
-+ * Find the last symbol before @offset.
-  */
- static int symbol_hole_by_offset(const void *key, const struct rb_node *node)
- {
-@@ -121,8 +121,7 @@ static int symbol_hole_by_offset(const void *key, const struct rb_node *node)
- 		return -1;
+-	se->deadline += calc_delta_fair(se->slice, se);
++	/*
++	 * Forfeit the remaining vruntime, only if the entity is eligible. This
++	 * condition is necessary because in core scheduling we prefer to run
++	 * ineligible tasks rather than force idling. If this happens we may
++	 * end up in a loop where the core scheduler picks the yielding task,
++	 * which yields immediately again; without the condition the vruntime
++	 * ends up quickly running away.
++	 */
++	if (entity_eligible(cfs_rq, se)) {
++		se->vruntime = se->deadline;
++		se->deadline += calc_delta_fair(se->slice, se);
++		update_min_vruntime(cfs_rq);
++	}
+ }
  
- 	if (sh->key >= s->offset + s->len) {
--		if (s->type != STT_SECTION)
--			sh->sym = s;
-+		sh->sym = s;
- 		return 1;
- 	}
- 
-@@ -410,7 +409,8 @@ static void elf_add_symbol(struct elf *elf, struct symbol *sym)
- 	sym->len = sym->sym.st_size;
- 
- 	__sym_for_each(iter, &sym->sec->symbol_tree, sym->offset, sym->offset) {
--		if (iter->offset == sym->offset && iter->type == sym->type)
-+		if (iter->offset == sym->offset && iter->type == sym->type &&
-+		    iter->len == sym->len)
- 			iter->alias = sym;
- 	}
- 
+ static bool yield_to_task_fair(struct rq *rq, struct task_struct *p)
 -- 
 2.51.0
 
