@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D29132FA3D;
-	Fri,  9 Jan 2026 11:49:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F5D2FBDF5;
+	Fri,  9 Jan 2026 11:49:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959396; cv=none; b=DYxuSW6WAsqddrhKN5gIwtdYRuV4z8wJ6z3Bt6SLFkghQnSajg3lCr0QOGi9lRSERmRTWK1/NXC8xnP+ovG5OEYhNnSNQdC6LtjueuxlWtX0rAHCHFo7MJINucxbTRWfDNX+buqT3dBSVgLKgIkuF6CWd8HMTKuxId8zdmT+PW4=
+	t=1767959399; cv=none; b=eyI4XS6r4NI3n4+SjwYlFfm1djkijx2ePyqiw7z8slRPkv8UmOStNHPF0HdOWBwhMHy/ZRB6FwMPMwL98fip2bESnv8qUSmoGKb23B7L9oA1KMn45SdoJlKHOaUma85/rDdxyW9zhFd1K3SrSPIvm4dVSror6JYNM+oXglBE+no=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959396; c=relaxed/simple;
-	bh=rtVIecRrTS9vx7Zs3B2HNVzqnP/9msRl3LnPY0xEJA4=;
+	s=arc-20240116; t=1767959399; c=relaxed/simple;
+	bh=yMKbVV+q/WiZiZNCS6YJDjwNliybpadDpGoCQGhs8jM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VKCXbg8b3aL9gLit0ablj77lI4zmH8dTmnRMUNOBU0yd298UwRbo33VNDfyDAHNLj5TB3M49xpGAUVYP9K7bU3dpMshY/v5ZF25VyuqjZRVq8oGdZ25W7/Iy4WAaE7+QgWOSoy9NBQFgLRy9hdOkQcAim+iAcog98LkYe5WnMoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oe5dclKp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X0qAcVuqvcAecDxlQ75VAMVdH7GbbWMNWXQhfpbxIT2K/svrynqG+AsSzOMSdD1TUp6FM5Rthj92WGcE30Kmujf/KNQiRsj+7/M1wXIXt90USZwJ4UfQPWzBnQVJzcZsP+uVRFV7ypj/JLYKb0h+0XVD/ub4Y7ZbJ3D22ly1rlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y+qqxf4Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oe5dclKp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93373C4CEF1;
-	Fri,  9 Jan 2026 11:49:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y+qqxf4Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 640D5C4CEF1;
+	Fri,  9 Jan 2026 11:49:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959395;
-	bh=rtVIecRrTS9vx7Zs3B2HNVzqnP/9msRl3LnPY0xEJA4=;
+	s=korg; t=1767959398;
+	bh=yMKbVV+q/WiZiZNCS6YJDjwNliybpadDpGoCQGhs8jM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oe5dclKpNR6C8kkYoulePwxndP5N6NIw88KIZ7Mx3oTObGwxZK6fQ3euMvjwmU+nG
-	 s+GsjXL5fa9mZuKlDyIyq9cZYqUVWh0xtEH7szrImgTBOjZJrQN5MGUrYtx0ulyYoT
-	 6gPMzRddKkW9BogHqbkIr04tBLqEvVW74YCWXWiM=
+	b=Y+qqxf4QBVKHX4WYpHwS+QIGrJ7rBWZ8XEFOTaVhYBc8VEuAxmERQB+g6b5m+CYWx
+	 /8KzsLrFNKYOz8OP/05zuFa2K28eTfOxWp+5ypXiRSwiSm8j1sVOVPEQgG0xNiWTwt
+	 7+/WL/49W5GuN1riiVU29h8kxtbanIoPkw/UauLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Jonathan Corbet <corbet@lwn.net>
-Subject: [PATCH 6.6 006/737] Documentation: process: Also mention Sasha Levin as stable tree maintainer
-Date: Fri,  9 Jan 2026 12:32:25 +0100
-Message-ID: <20260109112134.230556004@linuxfoundation.org>
+	Ye Bin <yebin10@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.6 007/737] jbd2: avoid bug_on in jbd2_journal_get_create_access() when file system corrupted
+Date: Fri,  9 Jan 2026 12:32:26 +0100
+Message-ID: <20260109112134.267786854@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,39 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bagas Sanjaya <bagasdotme@gmail.com>
+From: Ye Bin <yebin10@huawei.com>
 
-commit ba2457109d5b47a90fe565b39524f7225fc23e60 upstream.
+commit 986835bf4d11032bba4ab8414d18fce038c61bb4 upstream.
 
-Sasha has also maintaining stable branch in conjunction with Greg
-since cb5d21946d2a2f ("MAINTAINERS: Add Sasha as a stable branch
-maintainer"). Mention him in 2.Process.rst.
+There's issue when file system corrupted:
+------------[ cut here ]------------
+kernel BUG at fs/jbd2/transaction.c:1289!
+Oops: invalid opcode: 0000 [#1] SMP KASAN PTI
+CPU: 5 UID: 0 PID: 2031 Comm: mkdir Not tainted 6.18.0-rc1-next
+RIP: 0010:jbd2_journal_get_create_access+0x3b6/0x4d0
+RSP: 0018:ffff888117aafa30 EFLAGS: 00010202
+RAX: 0000000000000000 RBX: ffff88811a86b000 RCX: ffffffff89a63534
+RDX: 1ffff110200ec602 RSI: 0000000000000004 RDI: ffff888100763010
+RBP: ffff888100763000 R08: 0000000000000001 R09: ffff888100763028
+R10: 0000000000000003 R11: 0000000000000000 R12: 0000000000000000
+R13: ffff88812c432000 R14: ffff88812c608000 R15: ffff888120bfc000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f91d6970c99 CR3: 00000001159c4000 CR4: 00000000000006f0
+Call Trace:
+ <TASK>
+ __ext4_journal_get_create_access+0x42/0x170
+ ext4_getblk+0x319/0x6f0
+ ext4_bread+0x11/0x100
+ ext4_append+0x1e6/0x4a0
+ ext4_init_new_dir+0x145/0x1d0
+ ext4_mkdir+0x326/0x920
+ vfs_mkdir+0x45c/0x740
+ do_mkdirat+0x234/0x2f0
+ __x64_sys_mkdir+0xd6/0x120
+ do_syscall_64+0x5f/0xfa0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
-Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
-Message-ID: <20251022034336.22839-1-bagasdotme@gmail.com>
+The above issue occurs with us in errors=continue mode when accompanied by
+storage failures. There have been many inconsistencies in the file system
+data.
+In the case of file system data inconsistency, for example, if the block
+bitmap of a referenced block is not set, it can lead to the situation where
+a block being committed is allocated and used again. As a result, the
+following condition will not be satisfied then trigger BUG_ON. Of course,
+it is entirely possible to construct a problematic image that can trigger
+this BUG_ON through specific operations. In fact, I have constructed such
+an image and easily reproduced this issue.
+Therefore, J_ASSERT() holds true only under ideal conditions, but it may
+not necessarily be satisfied in exceptional scenarios. Using J_ASSERT()
+directly in abnormal situations would cause the system to crash, which is
+clearly not what we want. So here we directly trigger a JBD abort instead
+of immediately invoking BUG_ON.
+
+Fixes: 470decc613ab ("[PATCH] jbd2: initial copy of files from jbd")
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Message-ID: <20251025072657.307851-1-yebin@huaweicloud.com>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/process/2.Process.rst |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/jbd2/transaction.c |   19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
---- a/Documentation/process/2.Process.rst
-+++ b/Documentation/process/2.Process.rst
-@@ -104,8 +104,10 @@ kernels go out with a handful of known r
- of them are serious.
+--- a/fs/jbd2/transaction.c
++++ b/fs/jbd2/transaction.c
+@@ -1274,14 +1274,23 @@ int jbd2_journal_get_create_access(handl
+ 	 * committing transaction's lists, but it HAS to be in Forget state in
+ 	 * that case: the transaction must have deleted the buffer for it to be
+ 	 * reused here.
++	 * In the case of file system data inconsistency, for example, if the
++	 * block bitmap of a referenced block is not set, it can lead to the
++	 * situation where a block being committed is allocated and used again.
++	 * As a result, the following condition will not be satisfied, so here
++	 * we directly trigger a JBD abort instead of immediately invoking
++	 * bugon.
+ 	 */
+ 	spin_lock(&jh->b_state_lock);
+-	J_ASSERT_JH(jh, (jh->b_transaction == transaction ||
+-		jh->b_transaction == NULL ||
+-		(jh->b_transaction == journal->j_committing_transaction &&
+-			  jh->b_jlist == BJ_Forget)));
++	if (!(jh->b_transaction == transaction || jh->b_transaction == NULL ||
++	      (jh->b_transaction == journal->j_committing_transaction &&
++	       jh->b_jlist == BJ_Forget)) || jh->b_next_transaction != NULL) {
++		err = -EROFS;
++		spin_unlock(&jh->b_state_lock);
++		jbd2_journal_abort(journal, err);
++		goto out;
++	}
  
- Once a stable release is made, its ongoing maintenance is passed off to the
--"stable team," currently Greg Kroah-Hartman. The stable team will release
--occasional updates to the stable release using the 5.x.y numbering scheme.
-+"stable team," currently consists of Greg Kroah-Hartman and Sasha Levin. The
-+stable team will release occasional updates to the stable release using the
-+5.x.y numbering scheme.
-+
- To be considered for an update release, a patch must (1) fix a significant
- bug, and (2) already be merged into the mainline for the next development
- kernel. Kernels will typically receive stable updates for a little more
+-	J_ASSERT_JH(jh, jh->b_next_transaction == NULL);
+ 	J_ASSERT_JH(jh, buffer_locked(jh2bh(jh)));
+ 
+ 	if (jh->b_transaction == NULL) {
 
 
