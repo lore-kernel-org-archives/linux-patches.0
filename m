@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB241946C8;
-	Fri,  9 Jan 2026 12:06:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D9B61946C8;
+	Fri,  9 Jan 2026 12:06:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960363; cv=none; b=A7q9e3YG28QA9+fkniSVHzeAfq5lUith0iT95PfZD34Hsj3y6VLPJ6ff1GkurYH9H8xHcizCx+cjzGTJ6bVNjfqnKHX+yLhGyROmg2mCDvy8ZDDcuVh2ItvAUpc614kfBdYpKs7Z5ivv6KDwimxwRl5FVVt19lv9hGI0CDfp+WM=
+	t=1767960366; cv=none; b=cX0VVswFnVkMte9Nb7PqV7Ohrc8Yo+iFA6XRKwX5hHQwXWQNbjaCXjkfwWeWxK2Ysf6cOq10eA1fO7VlNgPZ76db0b3aD3mXsuqavZUHq5xjyhEeRDzRLRid9YxTKqywMn6h61r1ks1IFwI2AmK0wvObKiCe6abUQdPzLvzNygs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960363; c=relaxed/simple;
-	bh=/BDkqTGPuFOG//mEKeH6hPcYAJX3bjbEQzkNvs790PM=;
+	s=arc-20240116; t=1767960366; c=relaxed/simple;
+	bh=WnwrqoGkLv3bLtQ7pKl/P+6nEK0cOPeKVYnwNL7W4Zg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SV5lJIG3HG2Kyl8BCJdT/NbBPh/URu+rXve33q7jY6ovlf5pJbbNoLY+90Suwuiq9B8m4nJuxnF0ybUKlIrgXDjs8xiEe/9/p8+YxwtBPDvO/3gjvzVbJ8gRsv6PjtTzGUdtWuxN4aJd6zBZK44CwIm+AH9xtw9nVlrULyC9jQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KUm/DC9B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NBd4eNtjnAQ3w7w0pjRPqGH2RPb35Ss+UR0pb0pXtQgQeG+1NVEiWEl4qqbr3Y5XyI+KEtL9XGCvpGR8xZCOLPiLhHTzK7sRrDGcvZ748EkDxnQyd5t9M2KJdfTa4V022vMjIl1Fbr8go3GKMwV9wVmXIOeEz7W8y8LVIvWT7pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LyxyWFsA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KUm/DC9B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B47ACC4CEF1;
-	Fri,  9 Jan 2026 12:06:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LyxyWFsA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A269DC4CEF1;
+	Fri,  9 Jan 2026 12:06:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960363;
-	bh=/BDkqTGPuFOG//mEKeH6hPcYAJX3bjbEQzkNvs790PM=;
+	s=korg; t=1767960366;
+	bh=WnwrqoGkLv3bLtQ7pKl/P+6nEK0cOPeKVYnwNL7W4Zg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KUm/DC9B0DHw1AYlaK4Xk6NhrVEId9pDG97/Bq6qPJMrr7PNH85hW7EUSUflyc6KP
-	 n1VcfeN8Y2kr5Kg8fWUwnzktPBEon9J5Pq8Br11OaSj0hqRnjW0x0YriJHT419Gxo0
-	 v9NL9v95++OJ1o5c4aMgt2SvFZZUZmq3kDriymrk=
+	b=LyxyWFsAOT+XV63mD/r8Fz5q4Ya3vopRUwT7xf4BQ5HfkJz1kld7cYEbQijntrhKu
+	 qrKpvb5+AyJAhdLOWa7/ceO1/JbcSGvV0AG7q0v5IRWDcoE7dehpGJrXW/W+flQ9gY
+	 J7s28sP4EfjySs87Fc1oQYqaEf1uaEXxW2ysfOBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengjie Zhang <zhangpengjie2@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.6 377/737] ACPI: CPPC: Fix missing PCC check for guaranteed_perf
-Date: Fri,  9 Jan 2026 12:38:36 +0100
-Message-ID: <20260109112148.177037130@linuxfoundation.org>
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Sverdlin Alexander <alexander.sverdlin@siemens.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 378/737] spi: fsl-cpm: Check length parity before switching to 16 bit mode
+Date: Fri,  9 Jan 2026 12:38:37 +0100
+Message-ID: <20260109112148.218778555@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -50,40 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengjie Zhang <zhangpengjie2@huawei.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-commit 6ea3a44cef28add2d93b1ef119d84886cb1e3c9b upstream.
+commit 1417927df8049a0194933861e9b098669a95c762 upstream.
 
-The current implementation overlooks the 'guaranteed_perf'
-register in this check.
+Commit fc96ec826bce ("spi: fsl-cpm: Use 16 bit mode for large transfers
+with even size") failed to make sure that the size is really even
+before switching to 16 bit mode. Until recently the problem went
+unnoticed because kernfs uses a pre-allocated bounce buffer of size
+PAGE_SIZE for reading EEPROM.
 
-If the Guaranteed Performance register is located in the PCC
-subspace, the function currently attempts to read it without
-acquiring the lock and without sending the CMD_READ doorbell
-to the firmware. This can result in reading stale data.
+But commit 8ad6249c51d0 ("eeprom: at25: convert to spi-mem API")
+introduced an additional dynamically allocated bounce buffer whose size
+is exactly the size of the transfer, leading to a buffer overrun in
+the fsl-cpm driver when that size is odd.
 
-Fixes: 29523f095397 ("ACPI / CPPC: Add support for guaranteed performance")
-Signed-off-by: Pengjie Zhang <zhangpengjie2@huawei.com>
-Cc: 4.20+ <stable@vger.kernel.org> # 4.20+
-[ rjw: Subject and changelog edits ]
-Link: https://patch.msgid.link/20251210132227.1988380-1-zhangpengjie2@huawei.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Add the missing length parity verification and remain in 8 bit mode
+when the length is not even.
+
+Fixes: fc96ec826bce ("spi: fsl-cpm: Use 16 bit mode for large transfers with even size")
+Cc: stable@vger.kernel.org
+Closes: https://lore.kernel.org/all/638496dd-ec60-4e53-bad7-eb657f67d580@csgroup.eu/
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Reviewed-by: Sverdlin Alexander <alexander.sverdlin@siemens.com>
+Link: https://patch.msgid.link/3c4d81c3923c93f95ec56702a454744a4bad3cfc.1763627618.git.christophe.leroy@csgroup.eu
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/cppc_acpi.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/spi/spi-fsl-spi.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/acpi/cppc_acpi.c
-+++ b/drivers/acpi/cppc_acpi.c
-@@ -1299,7 +1299,8 @@ int cppc_get_perf_caps(int cpunum, struc
- 	/* Are any of the regs PCC ?*/
- 	if (CPC_IN_PCC(highest_reg) || CPC_IN_PCC(lowest_reg) ||
- 		CPC_IN_PCC(lowest_non_linear_reg) || CPC_IN_PCC(nominal_reg) ||
--		CPC_IN_PCC(low_freq_reg) || CPC_IN_PCC(nom_freq_reg)) {
-+		CPC_IN_PCC(low_freq_reg) || CPC_IN_PCC(nom_freq_reg) ||
-+		CPC_IN_PCC(guaranteed_reg)) {
- 		if (pcc_ss_id < 0) {
- 			pr_debug("Invalid pcc_ss_id\n");
- 			return -ENODEV;
+--- a/drivers/spi/spi-fsl-spi.c
++++ b/drivers/spi/spi-fsl-spi.c
+@@ -336,7 +336,7 @@ static int fsl_spi_prepare_message(struc
+ 			if (t->bits_per_word == 16 || t->bits_per_word == 32)
+ 				t->bits_per_word = 8; /* pretend its 8 bits */
+ 			if (t->bits_per_word == 8 && t->len >= 256 &&
+-			    (mpc8xxx_spi->flags & SPI_CPM1))
++			    !(t->len & 1) && (mpc8xxx_spi->flags & SPI_CPM1))
+ 				t->bits_per_word = 16;
+ 		}
+ 	}
 
 
