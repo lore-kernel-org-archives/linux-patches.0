@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C166359F99;
-	Fri,  9 Jan 2026 12:00:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5915733032C;
+	Fri,  9 Jan 2026 12:00:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960010; cv=none; b=FnGXin6qfFKme/e4n0k7qCuBEU2z8RZAHS8P7Ow4apov2qjJ8rb8Q28C3fqwG/GojYuApvG8HlZxMeslWSnhzaa+LxhvsnBPUAkXkE9ypJPZN41lcF3UvBFuRXrPppL+PJ+1MRUSmdyo1EFq55ymqcuGx4R9tZRt5Tkc1bjlHYg=
+	t=1767960013; cv=none; b=ftflkfJbeugbQcaPVUN05AWdq5O1HeS8QduPulDwq5opFagUZSj6wHI85FxFTsdSS9o3CNj2AhXOkUjnQ2dZqi5CAtfICKNNN3TDycAYkD7pZ7k9iHvt+GH+IqcgAuedIP8QjGebVDzJRifwU3CbK48cocXFXlNBb53OAebmUhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960010; c=relaxed/simple;
-	bh=NfsLdxRemgBf7enV3mrJm833IQ2BX8Elh0RN3xdpn4g=;
+	s=arc-20240116; t=1767960013; c=relaxed/simple;
+	bh=cExxKnbZg34lL484MMgl1A2lxgt0ui9X0ADxM8/5bls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ej+yw9XDvFh8YkPLMKXZF7gtZTfSrmUh+yXXu7MxYC7LS/iIOjcWd3J8NsVgDKXVgUPEML2B0zzMXN3NniRnnKaCKbtoCztBsgGa+Gn+91xh0KU9A8jKAj/RXDXsU6J4PCB3pc64RTvStpl0qqu6/MRrzvTQcr+jnt+VCWmYMzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=inAf2bpH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gciwCojQK5uwpplbgZACPsIzkGt0Ja7v7tHseyXbQxzDVsMhvnnv8wzet1ilAHy8L8R+uRbfU0+GZAoISFXhcVdVfxF8IpAb6/5OJxLUD994rjUaLs1i9YaEld+CMeNtHJR/Zh9lXRj8hz5LGwTybSGsH/gifY120w/TOzgilE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D285CqQi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="inAf2bpH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09419C4CEF1;
-	Fri,  9 Jan 2026 12:00:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D285CqQi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5837C4CEF1;
+	Fri,  9 Jan 2026 12:00:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960010;
-	bh=NfsLdxRemgBf7enV3mrJm833IQ2BX8Elh0RN3xdpn4g=;
+	s=korg; t=1767960013;
+	bh=cExxKnbZg34lL484MMgl1A2lxgt0ui9X0ADxM8/5bls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=inAf2bpHuoCwuykG3BzfT3zXPy8Q1NGk0lpzbp/Li2YXWnPQRCaXGZ6kCsCY/6tZN
-	 SPVPb30g7MDf3SOz2aIkdh4ejapxfmJwal/C7+ovCEjf0vUU5OcMOtobrW/1mtj8Iu
-	 hWJZQ9cU1JIKpoIFqfCIeqiXW6o46RMkfu4B0xkI=
+	b=D285CqQiyrUj6xHVhtDJZbyVYjHg8QaN75f9oQzSJxNLzXqy+LHspm7gTIocedD/F
+	 rG9aeX0A+0K5rhL8AQGUUaAP+TOd74dUOlJL5nqKgsk83G81qP+sYzkHHMtfWABqK4
+	 SZ9QzNM0SWqM7rKZ5EChIv3xf/lOtxJzB1eN3FTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Will Deacon <will@kernel.org>,
+	Etienne Champetier <champetier.etienne@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 211/737] iommu/arm-smmu-qcom: Enable use of all SMR groups when running bare-metal
-Date: Fri,  9 Jan 2026 12:35:50 +0100
-Message-ID: <20260109112141.935082915@linuxfoundation.org>
+Subject: [PATCH 6.6 247/737] selftests: bonding: add ipvlan over bond testing
+Date: Fri,  9 Jan 2026 12:36:26 +0100
+Message-ID: <20260109112143.285433391@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,82 +51,273 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
+From: Etienne Champetier <champetier.etienne@gmail.com>
 
-[ Upstream commit 5583a55e074b33ccd88ac0542fd7cd656a7e2c8c ]
+[ Upstream commit 08ac69b24507ab06871c18adc421c9d4f1008c61 ]
 
-Some platforms (e.g. SC8280XP and X1E) support more than 128 stream
-matching groups. This is more than what is defined as maximum by the ARM
-SMMU architecture specification. Commit 122611347326 ("iommu/arm-smmu-qcom:
-Limit the SMR groups to 128") disabled use of the additional groups because
-they don't exhibit the same behavior as the architecture supported ones.
+This rework bond_macvlan.sh into bond_macvlan_ipvlan.sh
+We only test bridge mode for macvlan and l2 mode
 
-It seems like this is just another quirk of the hypervisor: When running
-bare-metal without the hypervisor, the additional groups appear to behave
-just like all others. The boot firmware uses some of the additional groups,
-so ignoring them in this situation leads to stream match conflicts whenever
-we allocate a new SMR group for the same SID.
+]# ./bond_macvlan_ipvlan.sh
+TEST: active-backup/macvlan_bridge: IPv4: client->server            [ OK ]
+...
+TEST: active-backup/ipvlan_l2: IPv4: client->server                 [ OK ]
+...
+TEST: balance-tlb/macvlan_bridge: IPv4: client->server              [ OK ]
+...
+TEST: balance-tlb/ipvlan_l2: IPv4: client->server                   [ OK ]
+...
+TEST: balance-alb/macvlan_bridge: IPv4: client->server              [ OK ]
+...
+TEST: balance-alb/ipvlan_l2: IPv4: client->server                   [ OK ]
+...
 
-The workaround exists primarily because the bypass quirk detection fails
-when using a S2CR register from the additional matching groups, so let's
-perform the test with the last reliable S2CR (127) and then limit the
-number of SMR groups only if we detect that we are running below the
-hypervisor (because of the bypass quirk).
-
-Fixes: 122611347326 ("iommu/arm-smmu-qcom: Limit the SMR groups to 128")
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Etienne Champetier <champetier.etienne@gmail.com>
+Link: https://patch.msgid.link/20250109032819.326528-3-champetier.etienne@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 2c28ee720ad1 ("selftests: bonding: add delay before each xvlan_over_bond connectivity check")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 27 ++++++++++++++--------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ .../selftests/drivers/net/bonding/Makefile    |  2 +-
+ .../drivers/net/bonding/bond_macvlan.sh       | 99 -------------------
+ .../net/bonding/bond_macvlan_ipvlan.sh        | 96 ++++++++++++++++++
+ .../selftests/drivers/net/bonding/config      |  1 +
+ 4 files changed, 98 insertions(+), 100 deletions(-)
+ delete mode 100755 tools/testing/selftests/drivers/net/bonding/bond_macvlan.sh
+ create mode 100755 tools/testing/selftests/drivers/net/bonding/bond_macvlan_ipvlan.sh
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index 3d03136697963..62e2ab488c1be 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -295,17 +295,19 @@ static int qcom_smmu_cfg_probe(struct arm_smmu_device *smmu)
+diff --git a/tools/testing/selftests/drivers/net/bonding/Makefile b/tools/testing/selftests/drivers/net/bonding/Makefile
+index 8a72bb7de70f4..770aa7345aacd 100644
+--- a/tools/testing/selftests/drivers/net/bonding/Makefile
++++ b/tools/testing/selftests/drivers/net/bonding/Makefile
+@@ -10,7 +10,7 @@ TEST_PROGS := \
+ 	mode-2-recovery-updelay.sh \
+ 	bond_options.sh \
+ 	bond-eth-type-change.sh \
+-	bond_macvlan.sh
++	bond_macvlan_ipvlan.sh
  
- 	/*
- 	 * Some platforms support more than the Arm SMMU architected maximum of
--	 * 128 stream matching groups. For unknown reasons, the additional
--	 * groups don't exhibit the same behavior as the architected registers,
--	 * so limit the groups to 128 until the behavior is fixed for the other
--	 * groups.
-+	 * 128 stream matching groups. The additional registers appear to have
-+	 * the same behavior as the architected registers in the hardware.
-+	 * However, on some firmware versions, the hypervisor does not
-+	 * correctly trap and emulate accesses to the additional registers,
-+	 * resulting in unexpected behavior.
-+	 *
-+	 * If there are more than 128 groups, use the last reliable group to
-+	 * detect if we need to apply the bypass quirk.
- 	 */
--	if (smmu->num_mapping_groups > 128) {
--		dev_notice(smmu->dev, "\tLimiting the stream matching groups to 128\n");
--		smmu->num_mapping_groups = 128;
--	}
+ TEST_FILES := \
+ 	lag_lib.sh \
+diff --git a/tools/testing/selftests/drivers/net/bonding/bond_macvlan.sh b/tools/testing/selftests/drivers/net/bonding/bond_macvlan.sh
+deleted file mode 100755
+index b609fb6231f48..0000000000000
+--- a/tools/testing/selftests/drivers/net/bonding/bond_macvlan.sh
++++ /dev/null
+@@ -1,99 +0,0 @@
+-#!/bin/bash
+-# SPDX-License-Identifier: GPL-2.0
+-#
+-# Test macvlan over balance-alb
 -
--	last_s2cr = ARM_SMMU_GR0_S2CR(smmu->num_mapping_groups - 1);
-+	if (smmu->num_mapping_groups > 128)
-+		last_s2cr = ARM_SMMU_GR0_S2CR(127);
-+	else
-+		last_s2cr = ARM_SMMU_GR0_S2CR(smmu->num_mapping_groups - 1);
- 
- 	/*
- 	 * With some firmware versions writes to S2CR of type FAULT are
-@@ -328,6 +330,11 @@ static int qcom_smmu_cfg_probe(struct arm_smmu_device *smmu)
- 
- 		reg = FIELD_PREP(ARM_SMMU_CBAR_TYPE, CBAR_TYPE_S1_TRANS_S2_BYPASS);
- 		arm_smmu_gr1_write(smmu, ARM_SMMU_GR1_CBAR(qsmmu->bypass_cbndx), reg);
+-lib_dir=$(dirname "$0")
+-source ${lib_dir}/bond_topo_2d1c.sh
+-
+-m1_ns="m1-$(mktemp -u XXXXXX)"
+-m2_ns="m1-$(mktemp -u XXXXXX)"
+-m1_ip4="192.0.2.11"
+-m1_ip6="2001:db8::11"
+-m2_ip4="192.0.2.12"
+-m2_ip6="2001:db8::12"
+-
+-cleanup()
+-{
+-	ip -n ${m1_ns} link del macv0
+-	ip netns del ${m1_ns}
+-	ip -n ${m2_ns} link del macv0
+-	ip netns del ${m2_ns}
+-
+-	client_destroy
+-	server_destroy
+-	gateway_destroy
+-}
+-
+-check_connection()
+-{
+-	local ns=${1}
+-	local target=${2}
+-	local message=${3:-"macvlan_over_bond"}
+-	RET=0
+-
+-
+-	ip netns exec ${ns} ping ${target} -c 4 -i 0.1 &>/dev/null
+-	check_err $? "ping failed"
+-	log_test "$mode: $message"
+-}
+-
+-macvlan_over_bond()
+-{
+-	local param="$1"
+-	RET=0
+-
+-	# setup new bond mode
+-	bond_reset "${param}"
+-
+-	ip -n ${s_ns} link add link bond0 name macv0 type macvlan mode bridge
+-	ip -n ${s_ns} link set macv0 netns ${m1_ns}
+-	ip -n ${m1_ns} link set dev macv0 up
+-	ip -n ${m1_ns} addr add ${m1_ip4}/24 dev macv0
+-	ip -n ${m1_ns} addr add ${m1_ip6}/24 dev macv0
+-
+-	ip -n ${s_ns} link add link bond0 name macv0 type macvlan mode bridge
+-	ip -n ${s_ns} link set macv0 netns ${m2_ns}
+-	ip -n ${m2_ns} link set dev macv0 up
+-	ip -n ${m2_ns} addr add ${m2_ip4}/24 dev macv0
+-	ip -n ${m2_ns} addr add ${m2_ip6}/24 dev macv0
+-
+-	sleep 2
+-
+-	check_connection "${c_ns}" "${s_ip4}" "IPv4: client->server"
+-	check_connection "${c_ns}" "${s_ip6}" "IPv6: client->server"
+-	check_connection "${c_ns}" "${m1_ip4}" "IPv4: client->macvlan_1"
+-	check_connection "${c_ns}" "${m1_ip6}" "IPv6: client->macvlan_1"
+-	check_connection "${c_ns}" "${m2_ip4}" "IPv4: client->macvlan_2"
+-	check_connection "${c_ns}" "${m2_ip6}" "IPv6: client->macvlan_2"
+-	check_connection "${m1_ns}" "${m2_ip4}" "IPv4: macvlan_1->macvlan_2"
+-	check_connection "${m1_ns}" "${m2_ip6}" "IPv6: macvlan_1->macvlan_2"
+-
+-
+-	sleep 5
+-
+-	check_connection "${s_ns}" "${c_ip4}" "IPv4: server->client"
+-	check_connection "${s_ns}" "${c_ip6}" "IPv6: server->client"
+-	check_connection "${m1_ns}" "${c_ip4}" "IPv4: macvlan_1->client"
+-	check_connection "${m1_ns}" "${c_ip6}" "IPv6: macvlan_1->client"
+-	check_connection "${m2_ns}" "${c_ip4}" "IPv4: macvlan_2->client"
+-	check_connection "${m2_ns}" "${c_ip6}" "IPv6: macvlan_2->client"
+-	check_connection "${m2_ns}" "${m1_ip4}" "IPv4: macvlan_2->macvlan_2"
+-	check_connection "${m2_ns}" "${m1_ip6}" "IPv6: macvlan_2->macvlan_2"
+-
+-	ip -n ${c_ns} neigh flush dev eth0
+-}
+-
+-trap cleanup EXIT
+-
+-setup_prepare
+-ip netns add ${m1_ns}
+-ip netns add ${m2_ns}
+-
+-modes="active-backup balance-tlb balance-alb"
+-
+-for mode in $modes; do
+-	macvlan_over_bond "mode $mode"
+-done
+-
+-exit $EXIT_STATUS
+diff --git a/tools/testing/selftests/drivers/net/bonding/bond_macvlan_ipvlan.sh b/tools/testing/selftests/drivers/net/bonding/bond_macvlan_ipvlan.sh
+new file mode 100755
+index 0000000000000..c4711272fe45d
+--- /dev/null
++++ b/tools/testing/selftests/drivers/net/bonding/bond_macvlan_ipvlan.sh
+@@ -0,0 +1,96 @@
++#!/bin/bash
++# SPDX-License-Identifier: GPL-2.0
++#
++# Test macvlan/ipvlan over bond
 +
-+		if (smmu->num_mapping_groups > 128) {
-+			dev_notice(smmu->dev, "\tLimiting the stream matching groups to 128\n");
-+			smmu->num_mapping_groups = 128;
-+		}
- 	}
- 
- 	for (i = 0; i < smmu->num_mapping_groups; i++) {
++lib_dir=$(dirname "$0")
++source ${lib_dir}/bond_topo_2d1c.sh
++
++xvlan1_ns="xvlan1-$(mktemp -u XXXXXX)"
++xvlan2_ns="xvlan2-$(mktemp -u XXXXXX)"
++xvlan1_ip4="192.0.2.11"
++xvlan1_ip6="2001:db8::11"
++xvlan2_ip4="192.0.2.12"
++xvlan2_ip6="2001:db8::12"
++
++cleanup()
++{
++	client_destroy
++	server_destroy
++	gateway_destroy
++
++	ip netns del ${xvlan1_ns}
++	ip netns del ${xvlan2_ns}
++}
++
++check_connection()
++{
++	local ns=${1}
++	local target=${2}
++	local message=${3}
++	RET=0
++
++	ip netns exec ${ns} ping ${target} -c 4 -i 0.1 &>/dev/null
++	check_err $? "ping failed"
++	log_test "${bond_mode}/${xvlan_type}_${xvlan_mode}: ${message}"
++}
++
++xvlan_over_bond()
++{
++	local param="$1"
++	local xvlan_type="$2"
++	local xvlan_mode="$3"
++	RET=0
++
++	# setup new bond mode
++	bond_reset "${param}"
++
++	ip -n ${s_ns} link add link bond0 name ${xvlan_type}0 type ${xvlan_type} mode ${xvlan_mode}
++	ip -n ${s_ns} link set ${xvlan_type}0 netns ${xvlan1_ns}
++	ip -n ${xvlan1_ns} link set dev ${xvlan_type}0 up
++	ip -n ${xvlan1_ns} addr add ${xvlan1_ip4}/24 dev ${xvlan_type}0
++	ip -n ${xvlan1_ns} addr add ${xvlan1_ip6}/24 dev ${xvlan_type}0
++
++	ip -n ${s_ns} link add link bond0 name ${xvlan_type}0 type ${xvlan_type} mode ${xvlan_mode}
++	ip -n ${s_ns} link set ${xvlan_type}0 netns ${xvlan2_ns}
++	ip -n ${xvlan2_ns} link set dev ${xvlan_type}0 up
++	ip -n ${xvlan2_ns} addr add ${xvlan2_ip4}/24 dev ${xvlan_type}0
++	ip -n ${xvlan2_ns} addr add ${xvlan2_ip6}/24 dev ${xvlan_type}0
++
++	sleep 2
++
++	check_connection "${c_ns}" "${s_ip4}" "IPv4: client->server"
++	check_connection "${c_ns}" "${s_ip6}" "IPv6: client->server"
++	check_connection "${c_ns}" "${xvlan1_ip4}" "IPv4: client->${xvlan_type}_1"
++	check_connection "${c_ns}" "${xvlan1_ip6}" "IPv6: client->${xvlan_type}_1"
++	check_connection "${c_ns}" "${xvlan2_ip4}" "IPv4: client->${xvlan_type}_2"
++	check_connection "${c_ns}" "${xvlan2_ip6}" "IPv6: client->${xvlan_type}_2"
++	check_connection "${xvlan1_ns}" "${xvlan2_ip4}" "IPv4: ${xvlan_type}_1->${xvlan_type}_2"
++	check_connection "${xvlan1_ns}" "${xvlan2_ip6}" "IPv6: ${xvlan_type}_1->${xvlan_type}_2"
++
++	check_connection "${s_ns}" "${c_ip4}" "IPv4: server->client"
++	check_connection "${s_ns}" "${c_ip6}" "IPv6: server->client"
++	check_connection "${xvlan1_ns}" "${c_ip4}" "IPv4: ${xvlan_type}_1->client"
++	check_connection "${xvlan1_ns}" "${c_ip6}" "IPv6: ${xvlan_type}_1->client"
++	check_connection "${xvlan2_ns}" "${c_ip4}" "IPv4: ${xvlan_type}_2->client"
++	check_connection "${xvlan2_ns}" "${c_ip6}" "IPv6: ${xvlan_type}_2->client"
++	check_connection "${xvlan2_ns}" "${xvlan1_ip4}" "IPv4: ${xvlan_type}_2->${xvlan_type}_1"
++	check_connection "${xvlan2_ns}" "${xvlan1_ip6}" "IPv6: ${xvlan_type}_2->${xvlan_type}_1"
++
++	ip -n ${c_ns} neigh flush dev eth0
++}
++
++trap cleanup EXIT
++
++setup_prepare
++ip netns add ${xvlan1_ns}
++ip netns add ${xvlan2_ns}
++
++bond_modes="active-backup balance-tlb balance-alb"
++
++for bond_mode in ${bond_modes}; do
++	xvlan_over_bond "mode ${bond_mode}" macvlan bridge
++	xvlan_over_bond "mode ${bond_mode}" ipvlan  l2
++done
++
++exit $EXIT_STATUS
+diff --git a/tools/testing/selftests/drivers/net/bonding/config b/tools/testing/selftests/drivers/net/bonding/config
+index 899d7fb6ea8e9..dad4e5fda4db3 100644
+--- a/tools/testing/selftests/drivers/net/bonding/config
++++ b/tools/testing/selftests/drivers/net/bonding/config
+@@ -3,6 +3,7 @@ CONFIG_BRIDGE=y
+ CONFIG_DUMMY=y
+ CONFIG_IPV6=y
+ CONFIG_MACVLAN=y
++CONFIG_IPVLAN=y
+ CONFIG_NET_ACT_GACT=y
+ CONFIG_NET_CLS_FLOWER=y
+ CONFIG_NET_SCH_INGRESS=y
 -- 
 2.51.0
 
