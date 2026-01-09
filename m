@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70AF62F12D4;
-	Fri,  9 Jan 2026 11:50:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C512335970B;
+	Fri,  9 Jan 2026 11:50:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959422; cv=none; b=jrND9ay1gtTZ2iTgD8Tl7xXkHYt0tWqgBiwixjvdiYtVlScZgT5YplHN4rei1ZXEsrGkKL+q3yUKCP2LonTBzo/ktxlTABbGMrmG0+JSj0lBizzo3o1LrFxjx+IO3HL8GtwcpCboKY/DgBeHicAj6l0WQcCuVrUC2c1roexMraU=
+	t=1767959425; cv=none; b=TLhGwesE6+cvEshx39odONnSvHgZoUdjR5VxWRQP2cD0JMGOzTBDHbzymju7fIzoTLuIDwCvoCEJ9hp4QRepvj+sgTc+FIy1jlmaHrnM/oRBq4ao24dgHd+l9pSDfLrdV6G2eEd+yBdyqsV4e93JdHG6kIBtKr1x7g2FpvujIjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959422; c=relaxed/simple;
-	bh=/nc0GAoQ9FfSlTJQPIhst5+hgUyF6lWj5d7k+l7a6cY=;
+	s=arc-20240116; t=1767959425; c=relaxed/simple;
+	bh=gSnKq5KUiOccICC3xUGLZGeloV1CVU00lDIWk9OkcmQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cGC/XAyzkg1UYKY/AEgAmtcA++VXbDQjYJqVMrg2Wg8DakvRa3r1svtFOCaL9REyoLS9AQ512mQw0ocC7opl4xM+pDLwmwt9wYuX8V4T1FBXsFmnB3+I78dd6B82cKS8tslJ+QD2A266RFwjl40c2tMHxDeqaqL6pWTUK3bMcjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hhu0vNvl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nDBq2aDXIybn5tmBI13zoeSkKOt522samD0RoWwH3Xe1JUB+4eBlaDGu8uup0jL7viXqyXuxA9oqR18tQaM1FDD0oxlmcRGd5NAdx5fLHB5C5dNAPVfR0h6ha2AA/ExUodk4CGaVllTVJXLnMV+fBjt0UV07QMvdFVoYFPe84Ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PMkvFBiZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hhu0vNvl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E18C19422;
-	Fri,  9 Jan 2026 11:50:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PMkvFBiZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F17EAC19422;
+	Fri,  9 Jan 2026 11:50:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959422;
-	bh=/nc0GAoQ9FfSlTJQPIhst5+hgUyF6lWj5d7k+l7a6cY=;
+	s=korg; t=1767959425;
+	bh=gSnKq5KUiOccICC3xUGLZGeloV1CVU00lDIWk9OkcmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hhu0vNvlpBOpd06He3gI1l/u/6QlbiVyeNao2brSMOZE7M66g2nUTphYvLPPK8Nz+
-	 5n2DjAMlu00IDg7jon8a0SvPk3iwpEt51glEnxquitf1duFxp8yrVAvtL+U8rM0Jqv
-	 taUK01oOSqgoQXK5Bzu0upXEx0HkuIjsDahsk1wc=
+	b=PMkvFBiZyKh3fAvBD+BmbwT1hYzoeVivF5bhb/ccu8D3XFGoIu54kXbqPaRmwzimo
+	 vrJCOtD8M88GYnX1wZgOt00AO/kqcN01MF0Aemiu+zXt4/fpoJbqHzrXSgHY9I+IHq
+	 eLLsH019RBgInhg3s5kHrFQij7mn7A7OUwio719s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Andreev <andreev@swemel.ru>,
-	Casey Schaufler <casey@schaufler-ca.com>,
+	Mainak Sen <msen@nvidia.com>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 047/737] smack: fix bug: unprivileged task can create labels
-Date: Fri,  9 Jan 2026 12:33:06 +0100
-Message-ID: <20260109112135.764018445@linuxfoundation.org>
+Subject: [PATCH 6.6 048/737] gpu: host1x: Fix race in syncpt alloc/free
+Date: Fri,  9 Jan 2026 12:33:07 +0100
+Message-ID: <20260109112135.801750660@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,99 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Andreev <andreev@swemel.ru>
+From: Mainak Sen <msen@nvidia.com>
 
-[ Upstream commit c147e13ea7fe9f118f8c9ba5e96cbd644b00d6b3 ]
+[ Upstream commit c7d393267c497502fa737607f435f05dfe6e3d9b ]
 
-If an unprivileged task is allowed to relabel itself
-(/smack/relabel-self is not empty),
-it can freely create new labels by writing their
-names into own /proc/PID/attr/smack/current
+Fix race condition between host1x_syncpt_alloc()
+and host1x_syncpt_put() by using kref_put_mutex()
+instead of kref_put() + manual mutex locking.
 
-This occurs because do_setattr() imports
-the provided label in advance,
-before checking "relabel-self" list.
+This ensures no thread can acquire the
+syncpt_mutex after the refcount drops to zero
+but before syncpt_release acquires it.
+This prevents races where syncpoints could
+be allocated while still being cleaned up
+from a previous release.
 
-This change ensures that the "relabel-self" list
-is checked before importing the label.
+Remove explicit mutex locking in syncpt_release
+as kref_put_mutex() handles this atomically.
 
-Fixes: 38416e53936e ("Smack: limited capability for changing process label")
-Signed-off-by: Konstantin Andreev <andreev@swemel.ru>
-Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
+Signed-off-by: Mainak Sen <msen@nvidia.com>
+Fixes: f5ba33fb9690 ("gpu: host1x: Reserve VBLANK syncpoints at initialization")
+Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Link: https://lore.kernel.org/r/20250707-host1x-syncpt-race-fix-v1-1-28b0776e70bc@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/smack/smack_lsm.c | 41 +++++++++++++++++++++++++-------------
- 1 file changed, 27 insertions(+), 14 deletions(-)
+ drivers/gpu/host1x/syncpt.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
-index d272cf8160d53..8d38f4a813171 100644
---- a/security/smack/smack_lsm.c
-+++ b/security/smack/smack_lsm.c
-@@ -3687,8 +3687,8 @@ static int smack_setprocattr(const char *name, void *value, size_t size)
- 	struct task_smack *tsp = smack_cred(current_cred());
- 	struct cred *new;
- 	struct smack_known *skp;
--	struct smack_known_list_elem *sklep;
--	int rc;
-+	char *labelstr;
-+	int rc = 0;
+diff --git a/drivers/gpu/host1x/syncpt.c b/drivers/gpu/host1x/syncpt.c
+index f63d14a57a1d9..acc7d82e0585e 100644
+--- a/drivers/gpu/host1x/syncpt.c
++++ b/drivers/gpu/host1x/syncpt.c
+@@ -345,8 +345,6 @@ static void syncpt_release(struct kref *ref)
  
- 	if (!smack_privileged(CAP_MAC_ADMIN) && list_empty(&tsp->smk_relabel))
- 		return -EPERM;
-@@ -3699,28 +3699,41 @@ static int smack_setprocattr(const char *name, void *value, size_t size)
- 	if (strcmp(name, "current") != 0)
- 		return -EINVAL;
+ 	sp->locked = false;
  
--	skp = smk_import_entry(value, size);
--	if (IS_ERR(skp))
--		return PTR_ERR(skp);
-+	labelstr = smk_parse_smack(value, size);
-+	if (IS_ERR(labelstr))
-+		return PTR_ERR(labelstr);
+-	mutex_lock(&sp->host->syncpt_mutex);
+-
+ 	host1x_syncpt_base_free(sp->base);
+ 	kfree(sp->name);
+ 	sp->base = NULL;
+@@ -369,7 +367,7 @@ void host1x_syncpt_put(struct host1x_syncpt *sp)
+ 	if (!sp)
+ 		return;
  
- 	/*
- 	 * No process is ever allowed the web ("@") label
- 	 * and the star ("*") label.
- 	 */
--	if (skp == &smack_known_web || skp == &smack_known_star)
--		return -EINVAL;
-+	if (labelstr[1] == '\0' /* '@', '*' */) {
-+		const char c = labelstr[0];
-+
-+		if (c == *smack_known_web.smk_known ||
-+		    c == *smack_known_star.smk_known) {
-+			rc = -EPERM;
-+			goto free_labelstr;
-+		}
-+	}
+-	kref_put(&sp->ref, syncpt_release);
++	kref_put_mutex(&sp->ref, syncpt_release, &sp->host->syncpt_mutex);
+ }
+ EXPORT_SYMBOL(host1x_syncpt_put);
  
- 	if (!smack_privileged(CAP_MAC_ADMIN)) {
--		rc = -EPERM;
-+		const struct smack_known_list_elem *sklep;
- 		list_for_each_entry(sklep, &tsp->smk_relabel, list)
--			if (sklep->smk_label == skp) {
--				rc = 0;
--				break;
--			}
--		if (rc)
--			return rc;
-+			if (strcmp(sklep->smk_label->smk_known, labelstr) == 0)
-+				goto free_labelstr;
-+		rc = -EPERM;
- 	}
- 
-+free_labelstr:
-+	kfree(labelstr);
-+	if (rc)
-+		return -EPERM;
-+
-+	skp = smk_import_entry(value, size);
-+	if (IS_ERR(skp))
-+		return PTR_ERR(skp);
-+
- 	new = prepare_creds();
- 	if (new == NULL)
- 		return -ENOMEM;
 -- 
 2.51.0
 
