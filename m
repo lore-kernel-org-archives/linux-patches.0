@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E2E26ED41;
-	Fri,  9 Jan 2026 12:21:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA5F26ED41;
+	Fri,  9 Jan 2026 12:21:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961286; cv=none; b=MQlg5J7RJi+vVUMPX+99pgKpAdN8XocfdAqGXl9ZoGH9VlcQoF59VTQ7oyDuC+r8EAuCnUDbzBSamc6AdV+q/AmuZ6z+5hDBfrfY4vBMbI/2mhkgfQSK8yHgGi6/4BAhS5xym+CB832lyqnf9dMNmuTOsW09NVSFJO+jumQmBx8=
+	t=1767961289; cv=none; b=ZA4Ecl7rtoTW07pjmPSbjN/P7ix1QIcxsVgO9m/PWVT8x0CALsdfEdemGymVYLfCJt2p+Q3gEvYCVXvn47N7qdRONu/stmkK67QTu5HsoAPwDqK2Z7TdwcZqA7VK4jr/rJL1A/1+OtIrWW+CIXxGobhiW0Baj69QDcheFRsn+OY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961286; c=relaxed/simple;
-	bh=aLti+W1ZVJH7mdwwcjeCMbKXamVIOioTXWcupi2BsTI=;
+	s=arc-20240116; t=1767961289; c=relaxed/simple;
+	bh=XByjpTQOQrDfGNK0pjkmsDk5HOnpQ2f4ZGFMusY8TrE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cjS4wzUXC4uB9z/fx0zPIA/jP8uAD/WI2qQL+nw66aY1sOUn08PiHLY5qqi1bc7urxMA67f49iA9nWUqbgBnUBcKHDVQ3NWdqw8wRTeIk44Q5XfJ4ULP47U/keVL1OfMS2jTSA2STozDKUaDjkqvXbEfeu86217/g4S7PuKStbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UXBWOCly; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nrlzGVGhBdN+SIzH/PDqhfP5tP5Ksnf6OeLX9PJ7B3FJAgaAMcMqoCBKcpYAraLA4ADakYkM7VZoSxMb/2Mu+XTBz3g2gfe6/JFk4v9SxxosdBcJNp//WXlYCTFAR7NN5/dAUUi68qGAxfDq2sXYum5LvGS5vmXjVml9bcTipgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nFEgqju8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXBWOCly"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78144C4CEF1;
-	Fri,  9 Jan 2026 12:21:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nFEgqju8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38127C4CEF1;
+	Fri,  9 Jan 2026 12:21:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961285;
-	bh=aLti+W1ZVJH7mdwwcjeCMbKXamVIOioTXWcupi2BsTI=;
+	s=korg; t=1767961288;
+	bh=XByjpTQOQrDfGNK0pjkmsDk5HOnpQ2f4ZGFMusY8TrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UXBWOCly5c1qKkA+1SRDHbqzREbQQrHAUNAETywXFHUFjZyjt7sv6Fg5ppTuDpP0D
-	 FxDBiTqU8kz1pINUuSB91LTREwR8qUlvPq4YnOnqq1yxosPv1Fp4vUXL/8MldDkWR3
-	 oJIhwCm+DHO9QQC3t7m4xSOfCCqPOl3TS4xRB+V4=
+	b=nFEgqju8RLDxOoXrEPWLBmO0vSlQm2JjG1EHd55mAwAZ1d+WeKUgqbBYYUwNDP+19
+	 fouf62Tyjbkxqn8+MLe1Cjpu0j3NPiMUykomNFU5peBGDcPUseO89YV9r8Opa5ODaJ
+	 rEx7d6BSu1m6e23oBx/wG6/DzEqfYnu+3BXc2+oc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
 	Ming Qian <ming.qian@oss.nxp.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 699/737] media: amphion: Make some vpu_v4l2 functions static
-Date: Fri,  9 Jan 2026 12:43:58 +0100
-Message-ID: <20260109112200.364384475@linuxfoundation.org>
+Subject: [PATCH 6.6 700/737] media: amphion: Remove vpu_vb_is_codecconfig
+Date: Fri,  9 Jan 2026 12:43:59 +0100
+Message-ID: <20260109112200.403215832@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,95 +52,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+From: Ming Qian <ming.qian@oss.nxp.com>
 
-[ Upstream commit 5d1e54bb4dc6741284a3ed587e994308ddee2f16 ]
+[ Upstream commit 634c2cd17bd021487c57b95973bddb14be8002ff ]
 
-Some functions defined in vpu_v4l2.c are never used outside of that
-compilation unit. Make them static.
+Currently the function vpu_vb_is_codecconfig() always returns 0.
+Delete it and its related code.
 
-Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Reviewed-by: Ming Qian <ming.qian@oss.nxp.com>
+Fixes: 3cd084519c6f ("media: amphion: add vpu v4l2 m2m support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Stable-dep-of: 634c2cd17bd0 ("media: amphion: Remove vpu_vb_is_codecconfig")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/amphion/vpu_v4l2.c |   12 +++++++++---
- drivers/media/platform/amphion/vpu_v4l2.h |    8 --------
- 2 files changed, 9 insertions(+), 11 deletions(-)
+ drivers/media/platform/amphion/vpu_malone.c |   23 +++--------------------
+ drivers/media/platform/amphion/vpu_v4l2.c   |   10 ----------
+ drivers/media/platform/amphion/vpu_v4l2.h   |   10 ----------
+ 3 files changed, 3 insertions(+), 40 deletions(-)
 
+--- a/drivers/media/platform/amphion/vpu_malone.c
++++ b/drivers/media/platform/amphion/vpu_malone.c
+@@ -1320,22 +1320,18 @@ static int vpu_malone_insert_scode_vc1_g
+ {
+ 	if (!scode->inst->total_input_count)
+ 		return 0;
+-	if (vpu_vb_is_codecconfig(to_vb2_v4l2_buffer(scode->vb)))
+-		scode->need_data = 0;
+ 	return 0;
+ }
+ 
+ static int vpu_malone_insert_scode_vc1_g_pic(struct malone_scode_t *scode)
+ {
+-	struct vb2_v4l2_buffer *vbuf;
+ 	u8 nal_hdr[MALONE_VC1_NAL_HEADER_LEN];
+ 	u32 *data = NULL;
+ 	int ret;
+ 
+-	vbuf = to_vb2_v4l2_buffer(scode->vb);
+ 	data = vb2_plane_vaddr(scode->vb, 0);
+ 
+-	if (scode->inst->total_input_count == 0 || vpu_vb_is_codecconfig(vbuf))
++	if (scode->inst->total_input_count == 0)
+ 		return 0;
+ 	if (MALONE_VC1_CONTAIN_NAL(*data))
+ 		return 0;
+@@ -1356,8 +1352,6 @@ static int vpu_malone_insert_scode_vc1_l
+ 	int size = 0;
+ 	u8 rcv_seqhdr[MALONE_VC1_RCV_SEQ_HEADER_LEN];
+ 
+-	if (vpu_vb_is_codecconfig(to_vb2_v4l2_buffer(scode->vb)))
+-		scode->need_data = 0;
+ 	if (scode->inst->total_input_count)
+ 		return 0;
+ 	scode->need_data = 0;
+@@ -1543,7 +1537,7 @@ static int vpu_malone_input_frame_data(s
+ 	scode.vb = vb;
+ 	scode.wptr = wptr;
+ 	scode.need_data = 1;
+-	if (vbuf->sequence == 0 || vpu_vb_is_codecconfig(vbuf))
++	if (vbuf->sequence == 0)
+ 		ret = vpu_malone_insert_scode(&scode, SCODE_SEQUENCE);
+ 
+ 	if (ret < 0)
+@@ -1579,7 +1573,7 @@ static int vpu_malone_input_frame_data(s
+ 	 * This module is currently only supported for the H264 and HEVC formats,
+ 	 * for other formats, vpu_malone_add_scode() will return 0.
+ 	 */
+-	if ((disp_imm || low_latency) && !vpu_vb_is_codecconfig(vbuf)) {
++	if (disp_imm || low_latency) {
+ 		ret = vpu_malone_add_scode(inst->core->iface,
+ 					   inst->id,
+ 					   &inst->stream_buffer,
+@@ -1626,7 +1620,6 @@ int vpu_malone_input_frame(struct vpu_sh
+ 			   struct vpu_inst *inst, struct vb2_buffer *vb)
+ {
+ 	struct vpu_dec_ctrl *hc = shared->priv;
+-	struct vb2_v4l2_buffer *vbuf;
+ 	struct vpu_malone_str_buffer __iomem *str_buf = hc->str_buf[inst->id];
+ 	u32 disp_imm = hc->codec_param[inst->id].disp_imm;
+ 	u32 size;
+@@ -1640,16 +1633,6 @@ int vpu_malone_input_frame(struct vpu_sh
+ 		return ret;
+ 	size = ret;
+ 
+-	/*
+-	 * if buffer only contain codec data, and the timestamp is invalid,
+-	 * don't put the invalid timestamp to resync
+-	 * merge the data to next frame
+-	 */
+-	vbuf = to_vb2_v4l2_buffer(vb);
+-	if (vpu_vb_is_codecconfig(vbuf)) {
+-		inst->extra_size += size;
+-		return 0;
+-	}
+ 	if (inst->extra_size) {
+ 		size += inst->extra_size;
+ 		inst->extra_size = 0;
 --- a/drivers/media/platform/amphion/vpu_v4l2.c
 +++ b/drivers/media/platform/amphion/vpu_v4l2.c
-@@ -24,6 +24,11 @@
- #include "vpu_msgs.h"
- #include "vpu_helpers.h"
+@@ -342,16 +342,6 @@ struct vb2_v4l2_buffer *vpu_next_src_buf
+ 	if (!src_buf || vpu_get_buffer_state(src_buf) == VPU_BUF_STATE_IDLE)
+ 		return NULL;
  
-+static char *vpu_type_name(u32 type)
-+{
-+	return V4L2_TYPE_IS_OUTPUT(type) ? "output" : "capture";
-+}
-+
- void vpu_inst_lock(struct vpu_inst *inst)
- {
- 	mutex_lock(&inst->lock);
-@@ -42,7 +47,7 @@ dma_addr_t vpu_get_vb_phy_addr(struct vb
- 			vb->planes[plane_no].data_offset;
+-	while (vpu_vb_is_codecconfig(src_buf)) {
+-		v4l2_m2m_src_buf_remove(inst->fh.m2m_ctx);
+-		vpu_set_buffer_state(src_buf, VPU_BUF_STATE_IDLE);
+-		v4l2_m2m_buf_done(src_buf, VB2_BUF_STATE_DONE);
+-
+-		src_buf = v4l2_m2m_next_src_buf(inst->fh.m2m_ctx);
+-		if (!src_buf || vpu_get_buffer_state(src_buf) == VPU_BUF_STATE_IDLE)
+-			return NULL;
+-	}
+-
+ 	return src_buf;
  }
- 
--unsigned int vpu_get_vb_length(struct vb2_buffer *vb, u32 plane_no)
-+static unsigned int vpu_get_vb_length(struct vb2_buffer *vb, u32 plane_no)
- {
- 	if (plane_no >= vb->num_planes)
- 		return 0;
-@@ -74,7 +79,7 @@ void vpu_v4l2_set_error(struct vpu_inst
- 	vpu_inst_unlock(inst);
- }
- 
--int vpu_notify_eos(struct vpu_inst *inst)
-+static int vpu_notify_eos(struct vpu_inst *inst)
- {
- 	static const struct v4l2_event ev = {
- 		.id = 0,
-@@ -546,7 +551,8 @@ static void vpu_vb2_buf_finish(struct vb
- 		call_void_vop(inst, on_queue_empty, q->type);
- }
- 
--void vpu_vb2_buffers_return(struct vpu_inst *inst, unsigned int type, enum vb2_buffer_state state)
-+static void vpu_vb2_buffers_return(struct vpu_inst *inst, unsigned int type,
-+				   enum vb2_buffer_state state)
- {
- 	struct vb2_v4l2_buffer *buf;
  
 --- a/drivers/media/platform/amphion/vpu_v4l2.h
 +++ b/drivers/media/platform/amphion/vpu_v4l2.h
-@@ -25,15 +25,12 @@ void vpu_skip_frame(struct vpu_inst *ins
- struct vb2_v4l2_buffer *vpu_find_buf_by_sequence(struct vpu_inst *inst, u32 type, u32 sequence);
- struct vb2_v4l2_buffer *vpu_find_buf_by_idx(struct vpu_inst *inst, u32 type, u32 idx);
- void vpu_v4l2_set_error(struct vpu_inst *inst);
--int vpu_notify_eos(struct vpu_inst *inst);
- int vpu_notify_source_change(struct vpu_inst *inst);
- int vpu_set_last_buffer_dequeued(struct vpu_inst *inst, bool eos);
--void vpu_vb2_buffers_return(struct vpu_inst *inst, unsigned int type, enum vb2_buffer_state state);
- int vpu_get_num_buffers(struct vpu_inst *inst, u32 type);
- bool vpu_is_source_empty(struct vpu_inst *inst);
- 
- dma_addr_t vpu_get_vb_phy_addr(struct vb2_buffer *vb, u32 plane_no);
--unsigned int vpu_get_vb_length(struct vb2_buffer *vb, u32 plane_no);
- static inline struct vpu_format *vpu_get_format(struct vpu_inst *inst, u32 type)
- {
- 	if (V4L2_TYPE_IS_OUTPUT(type))
-@@ -42,11 +39,6 @@ static inline struct vpu_format *vpu_get
+@@ -38,14 +38,4 @@ static inline struct vpu_format *vpu_get
+ 	else
  		return &inst->cap_format;
  }
- 
--static inline char *vpu_type_name(u32 type)
+-
+-static inline int vpu_vb_is_codecconfig(struct vb2_v4l2_buffer *vbuf)
 -{
--	return V4L2_TYPE_IS_OUTPUT(type) ? "output" : "capture";
+-#ifdef V4L2_BUF_FLAG_CODECCONFIG
+-	return (vbuf->flags & V4L2_BUF_FLAG_CODECCONFIG) ? 1 : 0;
+-#else
+-	return 0;
+-#endif
 -}
 -
- static inline int vpu_vb_is_codecconfig(struct vb2_v4l2_buffer *vbuf)
- {
- #ifdef V4L2_BUF_FLAG_CODECCONFIG
+ #endif
 
 
