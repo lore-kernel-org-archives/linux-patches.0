@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E369E359F98;
-	Fri,  9 Jan 2026 12:05:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE9CC33CE9A;
+	Fri,  9 Jan 2026 12:05:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960332; cv=none; b=hVx3imNrIPy/ErGjuWRIhrRrR6xVSlKJFx6v1pBWApulheMig7s71DJnvycJKcCWL6d5sFHGY/SHvn7YFcOhWS+s0CcGoPWLiU5zfRpRWHt+2zJx9Kl/op88+gJJS4cRnugKRsCrpludV9DcLI7OZKkkzX8RQsp9B87deaJ8wpY=
+	t=1767960334; cv=none; b=D+5iT9A4dzB9aKP8ViwVdChRRuDs1fkEjPDyDYNCWimmzfKJv0dnUdalbxPNXXTEzMdUxppGlLzB8HuOiJK+T2y2TqPKzDZRq3Hy8Z9VRRoukZnApx1bko2cskU6z/TOX68NbMKtPBey3ICQ8Tu6+MlGTFoT7miskwhg6V5I8I0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960332; c=relaxed/simple;
-	bh=9a4yQRaLNWxEUZ/8cMWCjhvNd6c5Zmpf8lq5+X4jFLs=;
+	s=arc-20240116; t=1767960334; c=relaxed/simple;
+	bh=WS096ypEDK1d9d6qsQpZOyYsC1oEJ/PoYv+ELErPHOE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iMzSdm+x/jMsjP8iIglxkawyJF1U0+nzlci1c/jS4gcinv4tFmNhgST0Jnzhk+k5rHtt1kozW1Xv/shYZcYASPPdo8/eApbmVoElBqeAV2n20Qc1qtKhTGPKdM61kBlPnVMQzIr2+Jbmx1WHlvmhge0hHKKshliE8bP2FOU72j4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QlwDt+7u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KCSLSF2lJPD8KApXNtnEcRm5BhE/aD0dsfszrIX7JlXcCmB7OZTfijRJU/KCK+YXiYrA2uCzmXdxhqAEpguvQlzO00Y9cSVl+l4h13JyZEga/3EWn19/d4D+WSEtkRWZhgRsyBf3gVfYK6TYyDh7kt8iCvCFdH2ZUmg6UApSlX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cusZN4YC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QlwDt+7u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DE29C4CEF1;
-	Fri,  9 Jan 2026 12:05:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cusZN4YC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C622C4CEF1;
+	Fri,  9 Jan 2026 12:05:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960331;
-	bh=9a4yQRaLNWxEUZ/8cMWCjhvNd6c5Zmpf8lq5+X4jFLs=;
+	s=korg; t=1767960334;
+	bh=WS096ypEDK1d9d6qsQpZOyYsC1oEJ/PoYv+ELErPHOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QlwDt+7u0p/Vy8XLGT5yicKVXIQ60fj0lzEbLQ8B5t6aM78VB+b11JvofsGs98emX
-	 nccKYU5TPZeZbDCT7wAfpXOgXCAXN1yiJgQYk0FNG7b7Ana60NjTpIa/WNqcDZRHn0
-	 z3UxJpGclpeXcjvHCdRvet3byBZIsnbCfzZ0UP3Y=
+	b=cusZN4YC+ElxqfBBkjsKQycnl56qeBke2tOtYh5VGnKo3VhRG+eLf393nLoBpx7R2
+	 A61eTWAcwEUaPe8iCvxqNvA6dEDRCSjwhw3KdHCnVvPmftCiMuBKh6EKUQZHc8BxfG
+	 2KVHoms1HHLru+cBgM7GfPp2hNDcNV3/vqseY7wM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anurag Dutta <a-dutta@ti.com>,
-	Nishanth Menon <nm@ti.com>,
-	Mark Brown <broonie@kernel.org>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Jack Wang <jinpu.wang@ionos.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 367/737] spi: cadence-quadspi: Fix clock disable on probe failure path
-Date: Fri,  9 Jan 2026 12:38:26 +0100
-Message-ID: <20260109112147.801963633@linuxfoundation.org>
+Subject: [PATCH 6.6 368/737] block: rnbd-clt: Fix leaked ID in init_dev()
+Date: Fri,  9 Jan 2026 12:38:27 +0100
+Message-ID: <20260109112147.838566397@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,43 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anurag Dutta <a-dutta@ti.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 1889dd2081975ce1f6275b06cdebaa8d154847a9 ]
+[ Upstream commit c9b5645fd8ca10f310e41b07540f98e6a9720f40 ]
 
-When cqspi_request_mmap_dma() returns -EPROBE_DEFER after runtime PM
-is enabled, the error path calls clk_disable_unprepare() on an already
-disabled clock, causing an imbalance.
+If kstrdup() fails in init_dev(), then the newly allocated ID is lost.
 
-Use pm_runtime_get_sync() to increment the usage counter and resume the
-device. This prevents runtime_suspend() from being invoked and causing
-a double clock disable.
-
-Fixes: 140623410536 ("mtd: spi-nor: Add driver for Cadence Quad SPI Flash Controller")
-Signed-off-by: Anurag Dutta <a-dutta@ti.com>
-Tested-by: Nishanth Menon <nm@ti.com>
-Link: https://patch.msgid.link/20251212072312.2711806-3-a-dutta@ti.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 64e8a6ece1a5 ("block/rnbd-clt: Dynamically alloc buffer for pathname & blk_symlink_name")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Acked-by: Jack Wang <jinpu.wang@ionos.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-cadence-quadspi.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/block/rnbd/rnbd-clt.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/spi/spi-cadence-quadspi.c b/drivers/spi/spi-cadence-quadspi.c
-index 7b809644436e..eed88aba2cfe 100644
---- a/drivers/spi/spi-cadence-quadspi.c
-+++ b/drivers/spi/spi-cadence-quadspi.c
-@@ -1885,7 +1885,9 @@ static int cqspi_probe(struct platform_device *pdev)
- probe_reset_failed:
- 	if (cqspi->is_jh7110)
- 		cqspi_jh7110_disable_clk(pdev, cqspi);
--	clk_disable_unprepare(cqspi->clk);
-+
-+	if (pm_runtime_get_sync(&pdev->dev) >= 0)
-+		clk_disable_unprepare(cqspi->clk);
- probe_clk_failed:
- 	pm_runtime_put_sync(dev);
- probe_pm_failed:
+diff --git a/drivers/block/rnbd/rnbd-clt.c b/drivers/block/rnbd/rnbd-clt.c
+index b0550b68645d..0c3c63cf986b 100644
+--- a/drivers/block/rnbd/rnbd-clt.c
++++ b/drivers/block/rnbd/rnbd-clt.c
+@@ -1440,9 +1440,11 @@ static struct rnbd_clt_dev *init_dev(struct rnbd_clt_session *sess,
+ 		goto out_alloc;
+ 	}
+ 
+-	ret = ida_alloc_max(&index_ida, (1 << (MINORBITS - RNBD_PART_BITS)) - 1,
+-			    GFP_KERNEL);
+-	if (ret < 0) {
++	dev->clt_device_id = ida_alloc_max(&index_ida,
++					   (1 << (MINORBITS - RNBD_PART_BITS)) - 1,
++					   GFP_KERNEL);
++	if (dev->clt_device_id < 0) {
++		ret = dev->clt_device_id;
+ 		pr_err("Failed to initialize device '%s' from session %s, allocating idr failed, err: %d\n",
+ 		       pathname, sess->sessname, ret);
+ 		goto out_queues;
+@@ -1451,10 +1453,9 @@ static struct rnbd_clt_dev *init_dev(struct rnbd_clt_session *sess,
+ 	dev->pathname = kstrdup(pathname, GFP_KERNEL);
+ 	if (!dev->pathname) {
+ 		ret = -ENOMEM;
+-		goto out_queues;
++		goto out_ida;
+ 	}
+ 
+-	dev->clt_device_id	= ret;
+ 	dev->sess		= sess;
+ 	dev->access_mode	= access_mode;
+ 	dev->nr_poll_queues	= nr_poll_queues;
+@@ -1470,6 +1471,8 @@ static struct rnbd_clt_dev *init_dev(struct rnbd_clt_session *sess,
+ 
+ 	return dev;
+ 
++out_ida:
++	ida_free(&index_ida, dev->clt_device_id);
+ out_queues:
+ 	kfree(dev->hw_queues);
+ out_alloc:
 -- 
 2.51.0
 
