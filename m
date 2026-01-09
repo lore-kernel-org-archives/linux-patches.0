@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07ED635A95B;
-	Fri,  9 Jan 2026 12:35:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A12D335BCD;
+	Fri,  9 Jan 2026 12:35:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962104; cv=none; b=siXlDtZu3SuHu22STGsFIy+A4TRtiP1l8es2yQbZDc8HKw0hMyhrX7f4qH6DLIv+qv8gkYcdyScj6lhByOtrcdmzC1yK3PKPRng5l7gfTNQe7jqQz1VDaHBtUFAujCJnDp6KI/axdMlMHn+5HmfuzQnk1U5nkxNKlgox89GTtQQ=
+	t=1767962107; cv=none; b=jR4LkBTJfBYeHHXBed151XWTcxVkZRXcsLhKT5aoKkf9AzTw8xmzSPtFN7KwNAdiBofM7vuiHzU4UWdT8ydVAHzsfqYxC4h/fgU6uzCAwoi4s/Js9jH9s6rfFPWV6s752MyL8Ts6l0toL6DOec6dMMe1LeIuk3iwGedMKv1Xhtk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962104; c=relaxed/simple;
-	bh=a6UpgP+VOgxYYSb9qcfp+s6su7rxjIk15ov2jE48pZM=;
+	s=arc-20240116; t=1767962107; c=relaxed/simple;
+	bh=Ye0ZYHi7vG2cg6epoqHNqm3+qvgSxZMMkCaka+F5GDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k3xEj64NRQRkiFDKi8EERJBM61P8fsnubtv6pVt+rez8LrGk+Ul5coLlRaCYEakoObZsWcRGAMPGdOF2ebkajcQ3MM36mqs2ACRPOcl3NHteadXeTAtYz2VoWOH+PqYg86bsUt9ikV+ZOo3rZJrRs9ycvNZMxD5VJuWG0JKg27o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lnrf9t8e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lgiVDHJnCiyZQPR0xj8XWtkPyulyuuNoPoKy86/dfRyVpPmdhzqK5zgqifPLfiJgCD8MuaiPau2cJs4kZ6CGEL5upm3nfG4VDTJcseQBx0xnui84/eYg5QNJqS8aMyGf4+f3DmBKEeD+rsjx1V5KgiAVR6CdTm0OUGEGFqDtP2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nu4V9+Db; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lnrf9t8e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AD1FC4CEF1;
-	Fri,  9 Jan 2026 12:35:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nu4V9+Db"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D562C4CEF1;
+	Fri,  9 Jan 2026 12:35:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962103;
-	bh=a6UpgP+VOgxYYSb9qcfp+s6su7rxjIk15ov2jE48pZM=;
+	s=korg; t=1767962106;
+	bh=Ye0ZYHi7vG2cg6epoqHNqm3+qvgSxZMMkCaka+F5GDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lnrf9t8ePLossyNfJIoUq/B33rIpKwEAZpP8gDOEAXajh6XnryDlfDMScnaTPsZfz
-	 bsQ3Ajoulp7zzMkgq7/BkLKn2dOE0khHWs6EtSPtjTEYm07tBZ9TMby2zpqskh3VHM
-	 BK0xaA31OpKNqgK1jkymyPS7U6yUtUpTepYa/TMs=
+	b=nu4V9+DbZwRELUcMLXtuKyuaWHSDbyGQWyZroo/3Y4wuOErm81H26PLsvkdFPcpkv
+	 RYFSO1yvsjmgozho4y5McJ63G7FfddjdQ4a/spHZ+rPYMKIfP3ehIGEIeyt3qFIXDk
+	 DF3O8uDKVLvYaf/TQRDDjAqnbTrSTOlMAurlsSaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	shechenglong <shechenglong@xfusion.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Yangtao Li <frank.li@vivo.com>,
+	linux-fsdevel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 205/634] block: fix comment for op_is_zone_mgmt() to include RESET_ALL
-Date: Fri,  9 Jan 2026 12:38:03 +0100
-Message-ID: <20260109112125.153348117@linuxfoundation.org>
+Subject: [PATCH 6.1 241/634] hfsplus: fix volume corruption issue for generic/073
+Date: Fri,  9 Jan 2026 12:38:39 +0100
+Message-ID: <20260109112126.610859245@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -53,42 +53,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: shechenglong <shechenglong@xfusion.com>
+From: Viacheslav Dubeyko <slava@dubeyko.com>
 
-[ Upstream commit 8a32282175c964eb15638e8dfe199fc13c060f67 ]
+[ Upstream commit 24e17a29cf7537f0947f26a50f85319abd723c6c ]
 
-REQ_OP_ZONE_RESET_ALL is a zone management request, and op_is_zone_mgmt()
-has returned true for it.
+The xfstests' test-case generic/073 leaves HFS+ volume
+in corrupted state:
 
-Update the comment to remove the misleading exception note so
-the documentation matches the implementation.
+sudo ./check generic/073
+FSTYP -- hfsplus
+PLATFORM -- Linux/x86_64 hfsplus-testing-0001 6.17.0-rc1+ #4 SMP PREEMPT_DYNAMIC Wed Oct 1 15:02:44 PDT 2025
+MKFS_OPTIONS -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
 
-Fixes: 12a1c9353c47 ("block: fix op_is_zone_mgmt() to handle REQ_OP_ZONE_RESET_ALL")
-Signed-off-by: shechenglong <shechenglong@xfusion.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+generic/073 _check_generic_filesystem: filesystem on /dev/loop51 is inconsistent
+(see XFSTESTS-2/xfstests-dev/results//generic/073.full for details)
+
+Ran: generic/073
+Failures: generic/073
+Failed 1 of 1 tests
+
+sudo fsck.hfsplus -d /dev/loop51
+** /dev/loop51
+Using cacheBlockSize=32K cacheTotalBlock=1024 cacheSize=32768K.
+Executing fsck_hfs (version 540.1-Linux).
+** Checking non-journaled HFS Plus Volume.
+The volume name is untitled
+** Checking extents overflow file.
+** Checking catalog file.
+** Checking multi-linked files.
+** Checking catalog hierarchy.
+Invalid directory item count
+(It should be 1 instead of 0)
+** Checking extended attributes file.
+** Checking volume bitmap.
+** Checking volume information.
+Verify Status: VIStat = 0x0000, ABTStat = 0x0000 EBTStat = 0x0000
+CBTStat = 0x0000 CatStat = 0x00004000
+** Repairing volume.
+** Rechecking volume.
+** Checking non-journaled HFS Plus Volume.
+The volume name is untitled
+** Checking extents overflow file.
+** Checking catalog file.
+** Checking multi-linked files.
+** Checking catalog hierarchy.
+** Checking extended attributes file.
+** Checking volume bitmap.
+** Checking volume information.
+** The volume untitled was repaired successfully.
+
+The test is doing these steps on final phase:
+
+mv $SCRATCH_MNT/testdir_1/bar $SCRATCH_MNT/testdir_2/bar
+$XFS_IO_PROG -c "fsync" $SCRATCH_MNT/testdir_1
+$XFS_IO_PROG -c "fsync" $SCRATCH_MNT/foo
+
+So, we move file bar from testdir_1 into testdir_2 folder. It means that HFS+
+logic decrements the number of entries in testdir_1 and increments number of
+entries in testdir_2. Finally, we do fsync only for testdir_1 and foo but not
+for testdir_2. As a result, this is the reason why fsck.hfsplus detects the
+volume corruption afterwards.
+
+This patch fixes the issue by means of adding the
+hfsplus_cat_write_inode() call for old_dir and new_dir in
+hfsplus_rename() after the successful ending of
+hfsplus_rename_cat(). This method makes modification of in-core
+inode objects for old_dir and new_dir but it doesn't save these
+modifications in Catalog File's entries. It was expected that
+hfsplus_write_inode() will save these modifications afterwards.
+However, because generic/073 does fsync only for testdir_1 and foo
+then testdir_2 modification hasn't beed saved into Catalog File's
+entry and it was flushed without this modification. And it was
+detected by fsck.hfsplus. Now, hfsplus_rename() stores in Catalog
+File all modified entries and correct state of Catalog File will
+be flushed during hfsplus_file_fsync() call. Finally, it makes
+fsck.hfsplus happy.
+
+sudo ./check generic/073
+FSTYP         -- hfsplus
+PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 6.18.0-rc3+ #93 SMP PREEMPT_DYNAMIC Wed Nov 12 14:37:49 PST 2025
+MKFS_OPTIONS  -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
+
+generic/073 32s ...  32s
+Ran: generic/073
+Passed all 1 tests
+
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+cc: Yangtao Li <frank.li@vivo.com>
+cc: linux-fsdevel@vger.kernel.org
+Link: https://lore.kernel.org/r/20251112232522.814038-1-slava@dubeyko.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/blk_types.h | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ fs/hfsplus/dir.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/blk_types.h b/include/linux/blk_types.h
-index 83ede90bb106f..335bd6d0f6a5e 100644
---- a/include/linux/blk_types.h
-+++ b/include/linux/blk_types.h
-@@ -510,10 +510,7 @@ static inline bool op_is_discard(blk_opf_t op)
+diff --git a/fs/hfsplus/dir.c b/fs/hfsplus/dir.c
+index 84714bbccc123..98a30ca6354ce 100644
+--- a/fs/hfsplus/dir.c
++++ b/fs/hfsplus/dir.c
+@@ -552,8 +552,13 @@ static int hfsplus_rename(struct user_namespace *mnt_userns,
+ 	res = hfsplus_rename_cat((u32)(unsigned long)old_dentry->d_fsdata,
+ 				 old_dir, &old_dentry->d_name,
+ 				 new_dir, &new_dentry->d_name);
+-	if (!res)
++	if (!res) {
+ 		new_dentry->d_fsdata = old_dentry->d_fsdata;
++
++		res = hfsplus_cat_write_inode(old_dir);
++		if (!res)
++			res = hfsplus_cat_write_inode(new_dir);
++	}
+ 	return res;
  }
  
- /*
-- * Check if a bio or request operation is a zone management operation, with
-- * the exception of REQ_OP_ZONE_RESET_ALL which is treated as a special case
-- * due to its different handling in the block layer and device response in
-- * case of command failure.
-+ * Check if a bio or request operation is a zone management operation.
-  */
- static inline bool op_is_zone_mgmt(enum req_op op)
- {
 -- 
 2.51.0
 
