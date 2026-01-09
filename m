@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 523722F0C7F;
-	Fri,  9 Jan 2026 12:12:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 038EF1946C8;
+	Fri,  9 Jan 2026 12:12:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960774; cv=none; b=mjMC52vZYB9OkAxevWs1IOrCiL9vkzSyCLkh87G3PurkqT0nmvKmSL2RwNpr2uJ4PclKbFOdjb5d+ehdNcoa1Ia5faOS+s3E+JZHHg26K+JSZufjIRs4Hhlrpp6IbJjRy/7wDxTCbq3gnSxkeyPzM15FpuGbpwQ7Mvvh0WKAr9A=
+	t=1767960777; cv=none; b=p8kugizaLAn1iFl/as7Y7pAHM8PxUxCrxNXBlNg7zKMxayINkdcd8pcS1I0inq/Qha8QYNuLoJ3VCTeKrzPIlh5r+5+HnaLM7FxwndYhVad3pfdOV9NbfwU5fidNhAvOV5+NqQ672RkGx2TS21R7KBifr9TXVMutQcX0BcDj7pQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960774; c=relaxed/simple;
-	bh=bJfY/1pjgdq9jRyLvXcjPhL61O/6o/lnszWWkf4mCR0=;
+	s=arc-20240116; t=1767960777; c=relaxed/simple;
+	bh=L85XqhRnJ7U1d2xZzDxSAT0WPGAOdEmDlyJl+kbvYfw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rsvmbVJnmDNrpgWHZU36DeoIuaCV8HeGG6HCEcbUn5su0rQorHWJBekuSqg78fol9WFSozwCwo23EMIm6mOVavggN4NB3BeM2oSrY238IHd2tU2x1Efx1yiqBICRR/O5FbN8WnncCNRdeJomY47dgN0vtVhukh8c3XqYAECIo2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sQF6igpr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rHmHz1uomziiJFIicsJko+D73BcSv1M5oNO+DDZBKG0UYdIUYoAIARHxq4cCJCtz6CBVtJCvyIT4yhMLspvrC+gw61lSQaMKgFydBotYGPnfi46ay+ipuQj172bgByp/MsIxK3W59yxrS+/w1zKxXdGAQewL/JVplNqTWijfI5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mDFJx/dI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sQF6igpr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D24EBC4CEF1;
-	Fri,  9 Jan 2026 12:12:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mDFJx/dI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88C29C4CEF1;
+	Fri,  9 Jan 2026 12:12:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960774;
-	bh=bJfY/1pjgdq9jRyLvXcjPhL61O/6o/lnszWWkf4mCR0=;
+	s=korg; t=1767960776;
+	bh=L85XqhRnJ7U1d2xZzDxSAT0WPGAOdEmDlyJl+kbvYfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sQF6igprSZeC2ocXhGdsTJ8knEPx6cm2e3O0iBVHUjlqgWyhsx7/waiI0qNNcTSdK
-	 KZz8P8dnAb9osBg3lRSl5m0SOWfZKKYZb0G4rwlV0GWVoEaTIgwGNuVPuoWsOXVSaJ
-	 0sTAwx1sx3sM+JrmB9Zkn82SInuvpI3zio7OUPuM=
+	b=mDFJx/dInBEGOrdnR59X7yuFJn5g26oPU59qA+t8c22zqWym7WjOq6l5ipXTipcki
+	 diCyNfLbtntoNpu7pmSJ0JBLdr1S+jzsOs/9KTOKVz+NIX3VVbXNBWUr7NA4mDCkC8
+	 OneDHuj9oQRHR3hCCQT+0Jb3rDCssDANnkVOkVh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	syzbot+3d43c9066a5b54902232@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 520/737] net: dsa: b53: skip multicast entries for fdb_dump()
-Date: Fri,  9 Jan 2026 12:40:59 +0100
-Message-ID: <20260109112153.560564116@linuxfoundation.org>
+Subject: [PATCH 6.6 521/737] net: usb: asix: validate PHY address before use
+Date: Fri,  9 Jan 2026 12:41:00 +0100
+Message-ID: <20260109112153.600044850@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,42 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Gorski <jonas.gorski@gmail.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-[ Upstream commit d42bce414d1c5c0b536758466a1f63ac358e613c ]
+[ Upstream commit a1e077a3f76eea0dc671ed6792e7d543946227e8 ]
 
-port_fdb_dump() is supposed to only add fdb entries, but we iterate over
-the full ARL table, which also includes multicast entries.
+The ASIX driver reads the PHY address from the USB device via
+asix_read_phy_addr(). A malicious or faulty device can return an
+invalid address (>= PHY_MAX_ADDR), which causes a warning in
+mdiobus_get_phy():
 
-So check if the entry is a multicast entry before passing it on to the
-callback().
+  addr 207 out of range
+  WARNING: drivers/net/phy/mdio_bus.c:76
 
-Additionally, the port of those entries is a bitmask, not a port number,
-so any included entries would have even be for the wrong port.
+Validate the PHY address in asix_read_phy_addr() and remove the
+now-redundant check in ax88172a.c.
 
-Fixes: 1da6df85c6fb ("net: dsa: b53: Implement ARL add/del/dump operations")
-Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20251217205756.172123-1-jonas.gorski@gmail.com
+Reported-by: syzbot+3d43c9066a5b54902232@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=3d43c9066a5b54902232
+Tested-by: syzbot+3d43c9066a5b54902232@syzkaller.appspotmail.com
+Fixes: 7e88b11a862a ("net: usb: asix: refactor asix_read_phy_addr() and handle errors on return")
+Link: https://lore.kernel.org/all/20251217085057.270704-1-kartikey406@gmail.com/T/ [v1]
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20251218011156.276824-1-kartikey406@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/usb/asix_common.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index ffe8db7c2f1f..ee20f6487a02 100644
---- a/drivers/net/dsa/b53/b53_common.c
-+++ b/drivers/net/dsa/b53/b53_common.c
-@@ -1846,6 +1846,9 @@ static int b53_fdb_copy(int port, const struct b53_arl_entry *ent,
- 	if (!ent->is_valid)
- 		return 0;
+diff --git a/drivers/net/usb/asix_common.c b/drivers/net/usb/asix_common.c
+index 7fd763917ae2..6ab3486072cb 100644
+--- a/drivers/net/usb/asix_common.c
++++ b/drivers/net/usb/asix_common.c
+@@ -335,6 +335,11 @@ int asix_read_phy_addr(struct usbnet *dev, bool internal)
+ 	offset = (internal ? 1 : 0);
+ 	ret = buf[offset];
  
-+	if (is_multicast_ether_addr(ent->mac))
-+		return 0;
++	if (ret >= PHY_MAX_ADDR) {
++		netdev_err(dev->net, "invalid PHY address: %d\n", ret);
++		return -ENODEV;
++	}
 +
- 	if (port != ent->port)
- 		return 0;
+ 	netdev_dbg(dev->net, "%s PHY address 0x%x\n",
+ 		   internal ? "internal" : "external", ret);
  
 -- 
 2.51.0
