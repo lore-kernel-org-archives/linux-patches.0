@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB002F5306;
-	Fri,  9 Jan 2026 12:15:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22880359FAC;
+	Fri,  9 Jan 2026 12:15:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960937; cv=none; b=HL791rrlMIUnW7HpnVv4PxOSHsj5ees9diBzqWAPs0M9tp95I4+u2OjrIfwY1AnootTuoAhQeA30MZV+7uZ/6HKQT7tpcJqxBW9xY1Kjt9soZgTdxe3UmUmxkiUvbXPvLA3ZCWbspu3knJ9RerIGbmnKYso5iFIRaf3tTAbb618=
+	t=1767960940; cv=none; b=NSYBW0ZEv9CJof+Oilt6vFuP8V1bvl8quYVR/qP1FZhqhlqZXyGkozzHJ8uTUAqZteEIupmE70Qsj5j8B/pA1QJr9iu/pi4MoWvgV43z9ucoaKloIxCvVp0Z29In/uX7tGk3RVGbSLzGAfLXG/GJ+86YXHY5lA+j2ISl+etdCQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960937; c=relaxed/simple;
-	bh=w6AXbQ4fUpydDq1Vn5PJvQax3wFioPYFG49IiiObN8Y=;
+	s=arc-20240116; t=1767960940; c=relaxed/simple;
+	bh=AATplZk6NeYZhFPlfLAh31Uwlg1CBquCKM5/P60h8BQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wrurb1X5kCgi7EsBV0ge/fRvNfbmu1vSo2LqEW1/oM2eSY1MbKq7If4wnKm8AcLtNg1bkP+3ObFg7Mm+TIIDqwX9VOBVFKkSbVgMQiPKBxtXSHaVLLYGV4kjg9PBiSfUfgOwggiqRfXMroOpttyX7WU6+ZTdMwOr27wojoDYkLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EvPjvTQb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IlLBh3ZS8VAakoSF+LZRzlgZYvKqOrtHCSVYHoJSP4sJ2X6jHlTWW4UHOoZ1dwRsMjyLAsfXTVefLsVD0ZTAUwGVf6g0NUY1DBuJ+Ce4oLRb4EcCvx606eA6FY2Nr7j4osJCqlGN0cv6Q+F7eLOaum1v8C8KXB+FWv1fDxQF7L4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wqyFMGRZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EvPjvTQb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE4D3C4CEF1;
-	Fri,  9 Jan 2026 12:15:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wqyFMGRZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A746BC16AAE;
+	Fri,  9 Jan 2026 12:15:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960937;
-	bh=w6AXbQ4fUpydDq1Vn5PJvQax3wFioPYFG49IiiObN8Y=;
+	s=korg; t=1767960940;
+	bh=AATplZk6NeYZhFPlfLAh31Uwlg1CBquCKM5/P60h8BQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EvPjvTQbCJ/Odu47JuUmfeYYt3s5BAEKcgIjKV9RenP6bnZJSVdNT5FFtFf62KoU4
-	 xQfeMe28g89D9IQ8s6fnS+Dv8cKLlZ1RLJd2TpyKcfsj70kof9VtCJaR80J58+ve9c
-	 EUe630cxwjdTXOOwz8uluW72N+tnwQxGHX1Gvfpw=
+	b=wqyFMGRZXQcf21qyB6qBze8I8X0lMfGUEDgSnjBCTDafvMBtQde44etO5Oqe0Bd7s
+	 rINc0jrgS8aUz9X1drg3tiYMuQKznePzs7BzkYepAMfdiA+TZow6r44k371pRlWJ/w
+	 N3iu8UJN7NNO3z49ipcmu2eTlqLEe8cdKlRm+ozQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.6 578/737] dm-ebs: Mark full buffer dirty even on partial write
-Date: Fri,  9 Jan 2026 12:41:57 +0100
-Message-ID: <20260109112155.743864716@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>
+Subject: [PATCH 6.6 579/737] dm-bufio: align write boundary on physical block size
+Date: Fri,  9 Jan 2026 12:41:58 +0100
+Message-ID: <20260109112155.780803158@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -50,118 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uladzislau Rezki (Sony) <urezki@gmail.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 7fa3e7d114abc9cc71cc35d768e116641074ddb4 upstream.
+commit d0ac06ae53be0cdb61f5fe6b62d25d3317c51657 upstream.
 
-When performing a read-modify-write(RMW) operation, any modification
-to a buffered block must cause the entire buffer to be marked dirty.
+There may be devices with physical block size larger than 4k.
 
-Marking only a subrange as dirty is incorrect because the underlying
-device block size(ubs) defines the minimum read/write granularity. A
-lower device can perform I/O only on regions which are fully aligned
-and sized to ubs.
+If dm-bufio sends I/O that is not aligned on physical block size,
+performance is degraded.
 
-This change ensures that write-back operations always occur in full
-ubs-sized chunks, matching the intended emulation semantics of the
-EBS target.
+The 4k minimum alignment limit is there because some SSDs report logical
+and physical block size 512 despite having 4k internally - so dm-bufio
+shouldn't send I/Os not aligned on 4k boundary, because they perform
+badly (the SSD does read-modify-write for them).
 
-As for user space visible impact, submitting sub-ubs and misaligned
-I/O for devices which are tuned to ubs sizes only, will reject such
-requests, therefore it can lead to losing data. Example:
-
-1) Create a 8K nvme device in qemu by adding
-
--device nvme,drive=drv0,serial=foo,logical_block_size=8192,physical_block_size=8192
-
-2) Setup dm-ebs to emulate 512B to 8K mapping
-
-urezki@pc638:~/bin$ cat dmsetup.sh
-
-lower=/dev/nvme0n1
-len=$(blockdev --getsz "$lower")
-
-echo "0 $len ebs $lower 0 1 16" | dmsetup create nvme-8k
-urezki@pc638:~/bin$
-
-offset 0, ebs=1 and ubs=16(in sectors).
-
-3) Create an ext4 filesystem(default 4K block size)
-
-urezki@pc638:~/bin$ sudo mkfs.ext4 -F /dev/dm-0
-mke2fs 1.47.0 (5-Feb-2023)
-Discarding device blocks: done
-Creating filesystem with 2072576 4k blocks and 518144 inodes
-Filesystem UUID: bd0b6ca6-0506-4e31-86da-8d22c9d50b63
-Superblock backups stored on blocks:
-        32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632
-
-Allocating group tables: done
-Writing inode tables: done
-Creating journal (16384 blocks): done
-Writing superblocks and filesystem accounting information: mkfs.ext4: Input/output error while writing out and closing file system
-urezki@pc638:~/bin$ dmesg
-
-<snip>
-[ 1618.875449] buffer_io_error: 1028 callbacks suppressed
-[ 1618.875456] Buffer I/O error on dev dm-0, logical block 0, lost async page write
-[ 1618.875527] Buffer I/O error on dev dm-0, logical block 1, lost async page write
-[ 1618.875602] Buffer I/O error on dev dm-0, logical block 2, lost async page write
-[ 1618.875620] Buffer I/O error on dev dm-0, logical block 3, lost async page write
-[ 1618.875639] Buffer I/O error on dev dm-0, logical block 4, lost async page write
-[ 1618.894316] Buffer I/O error on dev dm-0, logical block 5, lost async page write
-[ 1618.894358] Buffer I/O error on dev dm-0, logical block 6, lost async page write
-[ 1618.894380] Buffer I/O error on dev dm-0, logical block 7, lost async page write
-[ 1618.894405] Buffer I/O error on dev dm-0, logical block 8, lost async page write
-[ 1618.894427] Buffer I/O error on dev dm-0, logical block 9, lost async page write
-<snip>
-
-Many I/O errors because the lower 8K device rejects sub-ubs/misaligned
-requests.
-
-with a patch:
-
-urezki@pc638:~/bin$ sudo mkfs.ext4 -F /dev/dm-0
-mke2fs 1.47.0 (5-Feb-2023)
-Discarding device blocks: done
-Creating filesystem with 2072576 4k blocks and 518144 inodes
-Filesystem UUID: 9b54f44f-ef55-4bd4-9e40-c8b775a616ac
-Superblock backups stored on blocks:
-        32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632
-
-Allocating group tables: done
-Writing inode tables: done
-Creating journal (16384 blocks): done
-Writing superblocks and filesystem accounting information: done
-
-urezki@pc638:~/bin$ sudo mount /dev/dm-0 /mnt/
-urezki@pc638:~/bin$ ls -al /mnt/
-total 24
-drwxr-xr-x  3 root root  4096 Oct 17 15:13 .
-drwxr-xr-x 19 root root  4096 Jul 10 19:42 ..
-drwx------  2 root root 16384 Oct 17 15:13 lost+found
-urezki@pc638:~/bin$
-
-After this change: mkfs completes; mount succeeds.
-
-Signed-off-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Reported-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-ebs-target.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/dm-bufio.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/md/dm-ebs-target.c
-+++ b/drivers/md/dm-ebs-target.c
-@@ -103,7 +103,7 @@ static int __ebs_rw_bvec(struct ebs_c *e
- 			} else {
- 				flush_dcache_page(bv->bv_page);
- 				memcpy(ba, pa, cur_len);
--				dm_bufio_mark_partial_buffer_dirty(b, buf_off, buf_off + cur_len);
-+				dm_bufio_mark_buffer_dirty(b);
- 			}
+--- a/drivers/md/dm-bufio.c
++++ b/drivers/md/dm-bufio.c
+@@ -1375,7 +1375,7 @@ static void submit_io(struct dm_buffer *
+ {
+ 	unsigned int n_sectors;
+ 	sector_t sector;
+-	unsigned int offset, end;
++	unsigned int offset, end, align;
  
- 			dm_bufio_release(b);
+ 	b->end_io = end_io;
+ 
+@@ -1389,9 +1389,11 @@ static void submit_io(struct dm_buffer *
+ 			b->c->write_callback(b);
+ 		offset = b->write_start;
+ 		end = b->write_end;
+-		offset &= -DM_BUFIO_WRITE_ALIGN;
+-		end += DM_BUFIO_WRITE_ALIGN - 1;
+-		end &= -DM_BUFIO_WRITE_ALIGN;
++		align = max(DM_BUFIO_WRITE_ALIGN,
++			bdev_physical_block_size(b->c->bdev));
++		offset &= -align;
++		end += align - 1;
++		end &= -align;
+ 		if (unlikely(end > b->c->block_size))
+ 			end = b->c->block_size;
+ 
 
 
