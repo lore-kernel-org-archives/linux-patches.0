@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36F652737EE;
-	Fri,  9 Jan 2026 12:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12D4332AAB5;
+	Fri,  9 Jan 2026 12:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961208; cv=none; b=L9we2eMLj9hmoTm9Mb0BPegTMxqfbO4kY5+3cd4hYXKIJbiqBNxnZNOpJGQx98fxxyGb+zTcMEoLjU1+Fk6j1oBQuwHMidnaWuBCJ2umbj5oTWHaSz/bz37Kfumru/eLAE3v+z0Ow8KEfSrybQNUz4j2z/NSqAilnCrvElvFoo8=
+	t=1767961211; cv=none; b=mdVuoTrP7QNyxr1Dx3+loOM1sxvcmgKjHYor6pEZXvGzrVXiMtQnvUH3b3DhMYDsP/nBnWalRsQVirybRUkoEaP+F4dS3uRE8Ip09Yvf5oB3cTtzqvMBH1zrICf7hClSvNzthAbR+iqr0l/zBlweby7cgNkoPsEeAObvy6n02b8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961208; c=relaxed/simple;
-	bh=LwkaHipD2NWcfnMNjCih0zrEajvzuiV2d9mYFMvT9mo=;
+	s=arc-20240116; t=1767961211; c=relaxed/simple;
+	bh=rftGmQlQ0tTMnDjImFykJ9IW8Fdwf9fvyicAOmMQSBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fOhXgbpx5x/fb2/suvOyiNpXJ0YvxHHXtw9WVDt7FWWPB3T3Xe/q0HX/TYZWhZJfOQxW+g2Yi+0T5ozKo+KwJiWNB3xh7FaWSHb/UjposhBiTJBT6AcHjTOU5t2wbhK1ZTMmvQ17Yyyytqgu+tkScJl9rp8X4twDT9Y/V/yyVTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bo6GsQYQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lILs9lGeTaQWhTdsekNzacTqNoqOQZmj5I9eq8Wc3V5fnuffM2PhZk536hwJqNkhcSREqTf72DlLIiQ94iFtkhs6dVDBBL0ChUQfenOFDccaVX8iAM+UlT1n5CFPkO29EbPf+C8boYHr3b0B+y7DImUy38e0w9jyxgOPoLQXB7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eXxTyWWS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bo6GsQYQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B80D8C4CEF1;
-	Fri,  9 Jan 2026 12:20:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eXxTyWWS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 913F3C4CEF1;
+	Fri,  9 Jan 2026 12:20:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961208;
-	bh=LwkaHipD2NWcfnMNjCih0zrEajvzuiV2d9mYFMvT9mo=;
+	s=korg; t=1767961211;
+	bh=rftGmQlQ0tTMnDjImFykJ9IW8Fdwf9fvyicAOmMQSBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bo6GsQYQz/ymla04opY5BCq7svQzFkAnP78nTFzPtJ3zsyKVXnNCq8YAQhybd1Wtc
-	 UV3ps50t+yZvj+3myWbhKl4zUtqgp+vGdp8YGBHmRXLEJAqxSK7ZU6KPfjZe+5Gcyb
-	 c3bZ+HvzbmjT/GnBuAuBmA2UMCqEuTOOqgFFkuJQ=
+	b=eXxTyWWSJuKxgm3veT8IaSb1a9GTZoO95obSGRNBhrIDOUmUpNuAOC0idU3O7QAYU
+	 2145LAjvSWLeLxI+MDQa6Kqnzd3JSCW5zndnc4QkSOgOpDpPRGotxIf9M0yEFs8DTx
+	 MKtkiGLd+Mp3bnUQei0BTko+2qlwmSbtRJE5iA/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xu xin <xu.xin16@zte.com.cn>,
-	Stefan Roesch <shr@devkernel.io>,
-	David Hildenbrand <david@redhat.com>,
-	Jinjiang Tu <tujinjiang@huawei.com>,
-	Wang Yaxin <wang.yaxin@zte.com.cn>,
-	Yang Yang <yang.yang29@zte.com.cn>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Zhang Zekun <zhangzekun11@huawei.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 640/737] mm/ksm: fix exec/fork inheritance support for prctl
-Date: Fri,  9 Jan 2026 12:42:59 +0100
-Message-ID: <20260109112158.086767461@linuxfoundation.org>
+Subject: [PATCH 6.6 641/737] usb: ohci-nxp: Use helper function devm_clk_get_enabled()
+Date: Fri,  9 Jan 2026 12:43:00 +0100
+Message-ID: <20260109112158.125341182@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -56,118 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: xu xin <xu.xin16@zte.com.cn>
+From: Zhang Zekun <zhangzekun11@huawei.com>
 
-[ Upstream commit 590c03ca6a3fbb114396673314e2aa483839608b ]
+[ Upstream commit c146ede472717f352b7283a525bd9a1a2b15e2cf ]
 
-Patch series "ksm: fix exec/fork inheritance", v2.
+devm_clk_get() and clk_prepare_enable() can be replaced by helper
+function devm_clk_get_enabled(). Let's use devm_clk_get_enabled() to
+simplify code and avoid calling clk_disable_unprepare().
 
-This series fixes exec/fork inheritance.  See the detailed description of
-the issue below.
-
-This patch (of 2):
-
-Background
-==========
-
-commit d7597f59d1d33 ("mm: add new api to enable ksm per process")
-introduced MMF_VM_MERGE_ANY for mm->flags, and allowed user to set it by
-prctl() so that the process's VMAs are forcibly scanned by ksmd.
-
-Subsequently, the 3c6f33b7273a ("mm/ksm: support fork/exec for prctl")
-supported inheriting the MMF_VM_MERGE_ANY flag when a task calls execve().
-
-Finally, commit 3a9e567ca45fb ("mm/ksm: fix ksm exec support for prctl")
-fixed the issue that ksmd doesn't scan the mm_struct with MMF_VM_MERGE_ANY
-by adding the mm_slot to ksm_mm_head in __bprm_mm_init().
-
-Problem
-=======
-
-In some extreme scenarios, however, this inheritance of MMF_VM_MERGE_ANY
-during exec/fork can fail.  For example, when the scanning frequency of
-ksmd is tuned extremely high, a process carrying MMF_VM_MERGE_ANY may
-still fail to pass it to the newly exec'd process.  This happens because
-ksm_execve() is executed too early in the do_execve flow (prematurely
-adding the new mm_struct to the ksm_mm_slot list).
-
-As a result, before do_execve completes, ksmd may have already performed a
-scan and found that this new mm_struct has no VM_MERGEABLE VMAs, thus
-clearing its MMF_VM_MERGE_ANY flag.  Consequently, when the new program
-executes, the flag MMF_VM_MERGE_ANY inheritance missed.
-
-Root reason
-===========
-
-commit d7597f59d1d33 ("mm: add new api to enable ksm per process") clear
-the flag MMF_VM_MERGE_ANY when ksmd found no VM_MERGEABLE VMAs.
-
-Solution
-========
-
-Firstly, Don't clear MMF_VM_MERGE_ANY when ksmd found no VM_MERGEABLE
-VMAs, because perhaps their mm_struct has just been added to ksm_mm_slot
-list, and its process has not yet officially started running or has not
-yet performed mmap/brk to allocate anonymous VMAS.
-
-Secondly, recheck MMF_VM_MERGEABLE again if a process takes
-MMF_VM_MERGE_ANY, and create a mm_slot and join it into ksm_scan_list
-again.
-
-Link: https://lkml.kernel.org/r/20251007182504440BJgK8VXRHh8TD7IGSUIY4@zte.com.cn
-Link: https://lkml.kernel.org/r/20251007182821572h_SoFqYZXEP1mvWI4n9VL@zte.com.cn
-Fixes: 3c6f33b7273a ("mm/ksm: support fork/exec for prctl")
-Fixes: d7597f59d1d3 ("mm: add new api to enable ksm per process")
-Signed-off-by: xu xin <xu.xin16@zte.com.cn>
-Cc: Stefan Roesch <shr@devkernel.io>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Jinjiang Tu <tujinjiang@huawei.com>
-Cc: Wang Yaxin <wang.yaxin@zte.com.cn>
-Cc: Yang Yang <yang.yang29@zte.com.cn>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ changed mm_flags_test() and mm_flags_clear() calls to test_bit() and clear_bit() ]
+Signed-off-by: Zhang Zekun <zhangzekun11@huawei.com>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20240902123020.29267-3-zhangzekun11@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: b4c61e542faf ("usb: ohci-nxp: fix device leak on probe failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/ksm.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ drivers/usb/host/ohci-nxp.c |   18 ++++--------------
+ 1 file changed, 4 insertions(+), 14 deletions(-)
 
---- a/mm/ksm.c
-+++ b/mm/ksm.c
-@@ -2451,8 +2451,14 @@ no_vmas:
- 		spin_unlock(&ksm_mmlist_lock);
+--- a/drivers/usb/host/ohci-nxp.c
++++ b/drivers/usb/host/ohci-nxp.c
+@@ -51,8 +51,6 @@ static struct hc_driver __read_mostly oh
  
- 		mm_slot_free(mm_slot_cache, mm_slot);
-+		/*
-+		 * Only clear MMF_VM_MERGEABLE. We must not clear
-+		 * MMF_VM_MERGE_ANY, because for those MMF_VM_MERGE_ANY process,
-+		 * perhaps their mm_struct has just been added to ksm_mm_slot
-+		 * list, and its process has not yet officially started running
-+		 * or has not yet performed mmap/brk to allocate anonymous VMAS.
-+		 */
- 		clear_bit(MMF_VM_MERGEABLE, &mm->flags);
--		clear_bit(MMF_VM_MERGE_ANY, &mm->flags);
- 		mmap_read_unlock(mm);
- 		mmdrop(mm);
- 	} else {
-@@ -2567,8 +2573,16 @@ void ksm_add_vma(struct vm_area_struct *
+ static struct i2c_client *isp1301_i2c_client;
+ 
+-static struct clk *usb_host_clk;
+-
+ static void isp1301_configure_lpc32xx(void)
  {
- 	struct mm_struct *mm = vma->vm_mm;
+ 	/* LPC32XX only supports DAT_SE0 USB mode */
+@@ -155,6 +153,7 @@ static int ohci_hcd_nxp_probe(struct pla
+ 	struct resource *res;
+ 	int ret = 0, irq;
+ 	struct device_node *isp1301_node;
++	struct clk *usb_host_clk;
  
--	if (test_bit(MMF_VM_MERGE_ANY, &mm->flags))
-+	if (test_bit(MMF_VM_MERGE_ANY, &mm->flags)) {
- 		__ksm_add_vma(vma);
-+		/*
-+		 * Generally, the flags here always include MMF_VM_MERGEABLE.
-+		 * However, in rare cases, this flag may be cleared by ksmd who
-+		 * scans a cycle without finding any mergeable vma.
-+		 */
-+		if (unlikely(!test_bit(MMF_VM_MERGEABLE, &mm->flags)))
-+			__ksm_enter(mm);
-+	}
+ 	if (pdev->dev.of_node) {
+ 		isp1301_node = of_parse_phandle(pdev->dev.of_node,
+@@ -180,26 +179,20 @@ static int ohci_hcd_nxp_probe(struct pla
+ 	}
+ 
+ 	/* Enable USB host clock */
+-	usb_host_clk = devm_clk_get(&pdev->dev, NULL);
++	usb_host_clk = devm_clk_get_enabled(&pdev->dev, NULL);
+ 	if (IS_ERR(usb_host_clk)) {
+-		dev_err(&pdev->dev, "failed to acquire USB OHCI clock\n");
++		dev_err(&pdev->dev, "failed to acquire and start USB OHCI clock\n");
+ 		ret = PTR_ERR(usb_host_clk);
+ 		goto fail_disable;
+ 	}
+ 
+-	ret = clk_prepare_enable(usb_host_clk);
+-	if (ret < 0) {
+-		dev_err(&pdev->dev, "failed to start USB OHCI clock\n");
+-		goto fail_disable;
+-	}
+-
+ 	isp1301_configure();
+ 
+ 	hcd = usb_create_hcd(driver, &pdev->dev, dev_name(&pdev->dev));
+ 	if (!hcd) {
+ 		dev_err(&pdev->dev, "Failed to allocate HC buffer\n");
+ 		ret = -ENOMEM;
+-		goto fail_hcd;
++		goto fail_disable;
+ 	}
+ 
+ 	hcd->regs = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
+@@ -229,8 +222,6 @@ static int ohci_hcd_nxp_probe(struct pla
+ 	ohci_nxp_stop_hc();
+ fail_resource:
+ 	usb_put_hcd(hcd);
+-fail_hcd:
+-	clk_disable_unprepare(usb_host_clk);
+ fail_disable:
+ 	isp1301_i2c_client = NULL;
+ 	return ret;
+@@ -243,7 +234,6 @@ static void ohci_hcd_nxp_remove(struct p
+ 	usb_remove_hcd(hcd);
+ 	ohci_nxp_stop_hc();
+ 	usb_put_hcd(hcd);
+-	clk_disable_unprepare(usb_host_clk);
+ 	isp1301_i2c_client = NULL;
  }
  
- static void ksm_add_vmas(struct mm_struct *mm)
 
 
