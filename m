@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEFCB33CE9A;
-	Fri,  9 Jan 2026 12:06:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC095359FBA;
+	Fri,  9 Jan 2026 12:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960388; cv=none; b=OhHC4KZGfOPuxbKspZ7mBNU74iFiAlEWVKcruILSD8dhbDZTMoULzWuMbeofHYYlDqk66Br6Q5vMtbGPWEYPcgyssQqIGPeRWq0+rh6PeVjE6AqBB+AmIbl1kv9oc8bIChRU2NAM3qaAcqmW+SsAd5hVqo+gDZ4BroFAZTTDGAU=
+	t=1767960391; cv=none; b=jFk0GpbLN5Nl0a4jo/FNePQUj7Vk0Dt1NgLvxkhu4wrbPnU72WjVh9ihKK0jdE2h2M5e6FsY7ybjtP2xwhpJduVNcLanHYtLzsirH++bWXWEqxpculLA8Zt9xFEP0N4rz/FmFnBwRtk7BYzjc5FrHMq/aeher0HAG0k4b7gdUNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960388; c=relaxed/simple;
-	bh=//O/ZgPhS9RjBRV7eq57+5/RgC6iq/5jRMRQhfNoRLI=;
+	s=arc-20240116; t=1767960391; c=relaxed/simple;
+	bh=vfIyUL9XwSv7n8uPBSgE6VfjDlVMoSjwc3CTAxRj1cE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t3zEb/Xrm2OnBvf8gonWkoyWGn71hC6B5EGQWz2fj6cZ+/6yJM8wMjIYW48JY5GaPmT3gRt4L5DStjRBaB75Dwv4Q6377by2dWC4GmGXVxCsPW0GGxSAGvgtDWEN30mYKkHBFSvgu6wz2rZynypld5KQXNLAii8tBf6yb9tCWW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ZLwJ2Py; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A0YjLVkHnagbvooTgaP7eHEwWDktt37SfvJTButQ9Qc0/FUEUj0odCTUDMzwbzSW2hRG8NlOw+fw/CqpyQ+9IBpADi6Y32lkCP7JFWodRORwBCInZjiY7x8EaVEJQ2CMdl+gdxta86BpwCFH3UXspbmD/5gOshxWcg8F1NO1ogg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sG4yfUww; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ZLwJ2Py"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41AF7C19421;
-	Fri,  9 Jan 2026 12:06:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sG4yfUww"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5D5C4CEF1;
+	Fri,  9 Jan 2026 12:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960388;
-	bh=//O/ZgPhS9RjBRV7eq57+5/RgC6iq/5jRMRQhfNoRLI=;
+	s=korg; t=1767960391;
+	bh=vfIyUL9XwSv7n8uPBSgE6VfjDlVMoSjwc3CTAxRj1cE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ZLwJ2PylPvfJQdl6V9578Qo2FfRihJE1512WsjQPwBPcN1LFbEJBXM1wsc4VvY1K
-	 jDkdRIoPLcF8U5Yx17SDmRrNjHLnPo9iiJoYA5SXd+2343rI8L0m7pBjuxhUbEdLZR
-	 sAYQcyili3IQ07IOP8qqSmwZgCK+90SOa++Yte74=
+	b=sG4yfUww3QgdDf1X8OFi+eEbnLKJI3xK322EIKiWaGDBXjbtob6o6oOOYLvZpzotQ
+	 PIirODZ87v73s79hDJFFw3fTEMrg9qW4iigffqMWgie3PMeTORG8RBGRb82WockFr0
+	 q6a+bRxGiOcLXb9EZD7ezjfMb5tC5eHzbX6wjGDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jinhui Guo <guojinhui.liam@bytedance.com>,
 	Corey Minyard <corey@minyard.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 385/737] ipmi: Fix the race between __scan_channels() and deliver_response()
-Date: Fri,  9 Jan 2026 12:38:44 +0100
-Message-ID: <20260109112148.483120545@linuxfoundation.org>
+Subject: [PATCH 6.6 386/737] ipmi: Fix __scan_channels() failing to rescan channels
+Date: Fri,  9 Jan 2026 12:38:45 +0100
+Message-ID: <20260109112148.521026160@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -53,86 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Jinhui Guo <guojinhui.liam@bytedance.com>
 
-[ Upstream commit 936750fdba4c45e13bbd17f261bb140dd55f5e93 ]
+[ Upstream commit 6bd30d8fc523fb880b4be548e8501bc0fe8f42d4 ]
 
-The race window between __scan_channels() and deliver_response() causes
-the parameters of some channels to be set to 0.
-
-1.[CPUA] __scan_channels() issues an IPMI request and waits with
-         wait_event() until all channels have been scanned.
-         wait_event() internally calls might_sleep(), which might
-         yield the CPU. (Moreover, an interrupt can preempt
-         wait_event() and force the task to yield the CPU.)
-2.[CPUB] deliver_response() is invoked when the CPU receives the
-         IPMI response. After processing a IPMI response,
-         deliver_response() directly assigns intf->wchannels to
-         intf->channel_list and sets intf->channels_ready to true.
-         However, not all channels are actually ready for use.
-3.[CPUA] Since intf->channels_ready is already true, wait_event()
-         never enters __wait_event(). __scan_channels() immediately
-         clears intf->null_user_handler and exits.
-4.[CPUB] Once intf->null_user_handler is set to NULL, deliver_response()
-         ignores further IPMI responses, leaving the remaining
-	 channels zero-initialized and unusable.
-
-CPUA                             CPUB
--------------------------------  -----------------------------
-__scan_channels()
- intf->null_user_handler
-       = channel_handler;
- send_channel_info_cmd(intf,
-       0);
- wait_event(intf->waitq,
-       intf->channels_ready);
-  do {
-   might_sleep();
-                                 deliver_response()
-                                  channel_handler()
-                                   intf->channel_list =
-				         intf->wchannels + set;
-                                   intf->channels_ready = true;
-                                   send_channel_info_cmd(intf,
-                                         intf->curr_channel);
-   if (condition)
-    break;
-   __wait_event(wq_head,
-          condition);
-  } while(0)
- intf->null_user_handler
-       = NULL;
-                                 deliver_response()
-                                  if (!msg->user)
-                                   if (intf->null_user_handler)
-                                    rv = -EINVAL;
-                                  return rv;
--------------------------------  -----------------------------
-
-Fix the race between __scan_channels() and deliver_response() by
-deferring both the assignment intf->channel_list = intf->wchannels
-and the flag intf->channels_ready = true until all channels have
-been successfully scanned or until the IPMI request has failed.
+channel_handler() sets intf->channels_ready to true but never
+clears it, so __scan_channels() skips any rescan. When the BMC
+firmware changes a rescan is required. Allow it by clearing
+the flag before starting a new scan.
 
 Signed-off-by: Jinhui Guo <guojinhui.liam@bytedance.com>
-Message-ID: <20250930074239.2353-2-guojinhui.liam@bytedance.com>
+Message-ID: <20250930074239.2353-3-guojinhui.liam@bytedance.com>
 Signed-off-by: Corey Minyard <corey@minyard.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ipmi/ipmi_msghandler.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/char/ipmi/ipmi_msghandler.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/char/ipmi/ipmi_msghandler.c b/drivers/char/ipmi/ipmi_msghandler.c
-index b7d8bf202ed2..4619ee5c744c 100644
+index 4619ee5c744c..fc5f9d757b94 100644
 --- a/drivers/char/ipmi/ipmi_msghandler.c
 +++ b/drivers/char/ipmi/ipmi_msghandler.c
-@@ -3414,8 +3414,6 @@ channel_handler(struct ipmi_smi *intf, struct ipmi_recv_msg *msg)
- 			intf->channels_ready = true;
- 			wake_up(&intf->waitq);
- 		} else {
--			intf->channel_list = intf->wchannels + set;
--			intf->channels_ready = true;
- 			rv = send_channel_info_cmd(intf, intf->curr_channel);
- 		}
+@@ -613,7 +613,8 @@ static void __ipmi_bmc_unregister(struct ipmi_smi *intf);
+ static int __ipmi_bmc_register(struct ipmi_smi *intf,
+ 			       struct ipmi_device_id *id,
+ 			       bool guid_set, guid_t *guid, int intf_num);
+-static int __scan_channels(struct ipmi_smi *intf, struct ipmi_device_id *id);
++static int __scan_channels(struct ipmi_smi *intf,
++				struct ipmi_device_id *id, bool rescan);
  
+ 
+ /*
+@@ -2665,7 +2666,7 @@ static int __bmc_get_device_id(struct ipmi_smi *intf, struct bmc_device *bmc,
+ 		if (__ipmi_bmc_register(intf, &id, guid_set, &guid, intf_num))
+ 			need_waiter(intf); /* Retry later on an error. */
+ 		else
+-			__scan_channels(intf, &id);
++			__scan_channels(intf, &id, false);
+ 
+ 
+ 		if (!intf_set) {
+@@ -2685,7 +2686,7 @@ static int __bmc_get_device_id(struct ipmi_smi *intf, struct bmc_device *bmc,
+ 		goto out_noprocessing;
+ 	} else if (memcmp(&bmc->fetch_id, &bmc->id, sizeof(bmc->id)))
+ 		/* Version info changes, scan the channels again. */
+-		__scan_channels(intf, &bmc->fetch_id);
++		__scan_channels(intf, &bmc->fetch_id, true);
+ 
+ 	bmc->dyn_id_expiry = jiffies + IPMI_DYN_DEV_ID_EXPIRY;
+ 
+@@ -3435,10 +3436,17 @@ channel_handler(struct ipmi_smi *intf, struct ipmi_recv_msg *msg)
+ /*
+  * Must be holding intf->bmc_reg_mutex to call this.
+  */
+-static int __scan_channels(struct ipmi_smi *intf, struct ipmi_device_id *id)
++static int __scan_channels(struct ipmi_smi *intf,
++				struct ipmi_device_id *id,
++				bool rescan)
+ {
+ 	int rv;
+ 
++	if (rescan) {
++		/* Clear channels_ready to force channels rescan. */
++		intf->channels_ready = false;
++	}
++
+ 	if (ipmi_version_major(id) > 1
+ 			|| (ipmi_version_major(id) == 1
+ 			    && ipmi_version_minor(id) >= 5)) {
+@@ -3641,7 +3649,7 @@ int ipmi_add_smi(struct module         *owner,
+ 	}
+ 
+ 	mutex_lock(&intf->bmc_reg_mutex);
+-	rv = __scan_channels(intf, &id);
++	rv = __scan_channels(intf, &id, false);
+ 	mutex_unlock(&intf->bmc_reg_mutex);
+ 	if (rv)
+ 		goto out_err_bmc_reg;
 -- 
 2.51.0
 
