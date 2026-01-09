@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46AF6359FAC;
-	Fri,  9 Jan 2026 12:41:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB6535B15C;
+	Fri,  9 Jan 2026 12:41:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962462; cv=none; b=uXXx10g6QGLgyzmUTm7vEjuy3fdkcHSBcKyTst38+L24MrxbV0ljWQmtYIrWYokw24eqSq7vFf2BoEa4CvK2wkTtSRBESBvEJq/Ig+/RJKLbBIAbjhzAL8ZsBhA3CJgSUY1JJbb4hB/ZyXZWOy0AOJes3u/6iUcKPqk7VQHQIHQ=
+	t=1767962465; cv=none; b=g0H9ZQaBQgXCtrt7ZpzaBfFjjroX6gO/8qUh1n2I1Xsw8FnsrFQYuIwnpbIeFvyD98xJGdEeVE1ecPtBEoh5555Uy5sa9q+2SySEAj91w3ZI9qEJyj0+rB+7wsi9Q3rYeD+Aqss395Tn4wcuC7iYhebUc51lMLIgHoVFt3y9Xcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962462; c=relaxed/simple;
-	bh=O93RQKU81Zvy35s8pK7pu3JwN3u7ilrZwJV4HU3f1Po=;
+	s=arc-20240116; t=1767962465; c=relaxed/simple;
+	bh=9QcYY1CoNVPMgSRS1qbYwDEnC8AuuY8k+rTO0AzVLv0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a9cHd+/l56YhzUnV6YSdI1eVr4tkJuLpYt4Y53hnfplGE6/+InwmCKBZjLPPnGr5xlTbwkGSBXv1gaIVl1PCJi3EZ/DKF0FjFexMTdLoK3C4pL4xuOnhP9YA1jT9HpibBNxZlE4LtktSqyARFa0zdYvQjtyHxBYNdx52vz3gQfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y+RIjt8F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mnFyqh75LLLz6R3LEL0uMZHQK9A4T1tuAmEjd/ghmukpEgYy4DmJ596LxRcbGdJjNwQL9keNCC5d6YawC/xZpE8z5eg59lIxRMoRl1N40pvuHmThiQow7OJ5rbnzIEiOoVHMR57aFU13i9bFcjm70RB4zAlYZy5V0B3CmZl9JcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mkB+QL7/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y+RIjt8F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C840BC16AAE;
-	Fri,  9 Jan 2026 12:41:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mkB+QL7/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACA0DC4CEF1;
+	Fri,  9 Jan 2026 12:41:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962462;
-	bh=O93RQKU81Zvy35s8pK7pu3JwN3u7ilrZwJV4HU3f1Po=;
+	s=korg; t=1767962465;
+	bh=9QcYY1CoNVPMgSRS1qbYwDEnC8AuuY8k+rTO0AzVLv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y+RIjt8F9NBtUTHwPaEGIPyDaS0xY/BqkKE16HVqBt2eh+432JSbfJqL1yLX68B17
-	 YYdsRMym2j64O4XFT7GnCHPsNwkM61xFy+qADbroke8zNl5TSBsoJx9btMwFbB5/YD
-	 wFQQkpNFCBgYh4fLG9SEW+BGl4H4oPe/nI9IRdp0=
+	b=mkB+QL7/tWQ9SSYPh6qphDcYl+83J92zMA2bueO182In0DDA2BdCWo5vr0reOyp0X
+	 MvIT8PKRif8430zc83N1nfCmzgCt/K0Cs9mqPUud86i6q7DXBQAyRJ/FSLksjp6Ny+
+	 gVrkuutsFycCwdmn3OAttlXtU5gAa4yXahiY/5ng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Joshua Rogers <linux@joshua.hu>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.1 373/634] nfsd: Mark variable __maybe_unused to avoid W=1 build break
-Date: Fri,  9 Jan 2026 12:40:51 +0100
-Message-ID: <20260109112131.565896035@linuxfoundation.org>
+Subject: [PATCH 6.1 374/634] svcrdma: return 0 on success from svc_rdma_copy_inline_range
+Date: Fri,  9 Jan 2026 12:40:52 +0100
+Message-ID: <20260109112131.603629400@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -50,41 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Joshua Rogers <linux@joshua.hu>
 
-commit ebae102897e760e9e6bc625f701dd666b2163bd1 upstream.
+commit 94972027ab55b200e031059fd6c7a649f8248020 upstream.
 
-Clang is not happy about set but (in some cases) unused variable:
+The function comment specifies 0 on success and -EINVAL on invalid
+parameters. Make the tail return 0 after a successful copy loop.
 
-fs/nfsd/export.c:1027:17: error: variable 'inode' set but not used [-Werror,-Wunused-but-set-variable]
-
-since it's used as a parameter to dprintk() which might be configured
-a no-op. To avoid uglifying code with the specific ifdeffery just mark
-the variable __maybe_unused.
-
-The commit [1], which introduced this behaviour, is quite old and hence
-the Fixes tag points to the first of the Git era.
-
-Link: https://git.kernel.org/pub/scm/linux/kernel/git/history/history.git/commit/?id=0431923fb7a1 [1]
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: d7cc73972661 ("svcrdma: support multiple Read chunks per RPC")
 Cc: stable@vger.kernel.org
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Joshua Rogers <linux@joshua.hu>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/export.c |    2 +-
+ net/sunrpc/xprtrdma/svc_rdma_rw.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nfsd/export.c
-+++ b/fs/nfsd/export.c
-@@ -990,7 +990,7 @@ exp_rootfh(struct net *net, struct auth_
- {
- 	struct svc_export	*exp;
- 	struct path		path;
--	struct inode		*inode;
-+	struct inode		*inode __maybe_unused;
- 	struct svc_fh		fh;
- 	int			err;
- 	struct nfsd_net		*nn = net_generic(net, nfsd_net_id);
+--- a/net/sunrpc/xprtrdma/svc_rdma_rw.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_rw.c
+@@ -830,7 +830,7 @@ static int svc_rdma_copy_inline_range(st
+ 		offset += page_len;
+ 	}
+ 
+-	return -EINVAL;
++	return 0;
+ }
+ 
+ /**
 
 
