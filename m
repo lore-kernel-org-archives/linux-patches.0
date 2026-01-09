@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EBA933290A;
-	Fri,  9 Jan 2026 11:54:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE36C33C511;
+	Fri,  9 Jan 2026 11:54:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959670; cv=none; b=gGBi+9ikOn9xsj/8xpSBS4ORt3bN0gq7sCCOVG1AbA5V7rDro2G87ZM+jfdeJCIVqwKtd2n1EYzIvFcoJNBLY7m4LFR2hMKpYOwcb8+NHbROos+fiYRNhInGCGlzSj5UXdhty9gDUNR8THXC9SYHG27nKeCV1AsSxdaNcTXOCjY=
+	t=1767959673; cv=none; b=KR/g3S9xePXG7rPd7PmCRcWhUvNWtLFk2wd7RphDLMF9LRrGulf9stqWPJPMQD4u4cxuEdHpNE8xgt4ADs211RsFavs0SveqZVimv1EJb8M+efg2Uo6xZqxoEmDdRVFP3Nu5oGYH5hwCQnQUiEcwx18av0+0u266VG+YmQvIegY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959670; c=relaxed/simple;
-	bh=eM6Tdu2h/VxmFZmF84EGSyIsg4tVi1GJ8wv2+pkDGZw=;
+	s=arc-20240116; t=1767959673; c=relaxed/simple;
+	bh=l1Ykn/WoEesvZzCiQ76LlHUmUsMOhCaUC9BjNhRYClI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IdV2Dshi0xtO9LZxk9ctTkczElaRlR+x6Cg3UoTegEelY6ehwLkWxR2BKdMfMkJA+IhArp5zkGAbwAUa/6LYnJO1Yo2WHtdGXTUQvy1ILf66VKxCATj1/nEYNflCMVvHGQPZo2tRHwcq9a1O5Ji6jd7quBFp7TY7hJZJUdqlKAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dUZkJRdX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hz5x+RH64vYabt8AVFVFUPOcPEh0Kha+DrgtKNxlmrcioMACmXSdKGk8YwBfhYbSgjtTUIOI9F5YxyZGm1CzDWZHHUfnb61eFdR5+IJ6jIErwgaHvtFUK4T8MGPpcat1CxKmd6jMSFetNYB24dkuZVuYVO3+HdFRMt6tCWGwrGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IyWFAYUg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dUZkJRdX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C3E9C4CEF1;
-	Fri,  9 Jan 2026 11:54:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IyWFAYUg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 794F7C4CEF1;
+	Fri,  9 Jan 2026 11:54:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959669;
-	bh=eM6Tdu2h/VxmFZmF84EGSyIsg4tVi1GJ8wv2+pkDGZw=;
+	s=korg; t=1767959672;
+	bh=l1Ykn/WoEesvZzCiQ76LlHUmUsMOhCaUC9BjNhRYClI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dUZkJRdXDUNJ05dR1tgYzZNZ8JEmlzU56ptj6ug13wAHedz8RWc/Owwo/b7UkoIqV
-	 VW9qZ4qX01dZtRlv9UaG0Iha9vkxtUimo36AuvvT/YLkKParh41ktjkmysH2O7CThs
-	 DCZqAQPj4aox5ypUivgjzaNB1r8CEJGPickZ1eJ0=
+	b=IyWFAYUgxtRnh9w30iF4voVKMF5EcMc+oh5r8q7L3aS7RCSRYlAEeI3XQkopibhP0
+	 uyjw+SeWwdXgrK3z9U5wiE4Jv9MOR2gDkszaGBCUX5KMxq8zZo/bjEo0ECULF7GWRW
+	 AGOq1QGM5/71tTgDL3BUL8K+Ly2Ix9hk/1zZGU80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Gromm <christian.gromm@microchip.com>,
-	Johan Hovold <johan@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 133/737] staging: most: remove broken i2c driver
-Date: Fri,  9 Jan 2026 12:34:32 +0100
-Message-ID: <20260109112139.004493446@linuxfoundation.org>
+Subject: [PATCH 6.6 134/737] dt-bindings: PCI: amlogic: Fix the register name of the DBI region
+Date: Fri,  9 Jan 2026 12:34:33 +0100
+Message-ID: <20260109112139.042041353@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,465 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit 495df2da6944477d282d5cc0c13174d06e25b310 ]
+[ Upstream commit 4813dea9e272ba0a57c50b8d51d440dd8e3ccdd7 ]
 
-The MOST I2C driver has been completely broken for five years without
-anyone noticing so remove the driver from staging.
+Binding incorrectly specifies the 'DBI' region as 'ELBI'. DBI is a must
+have region for DWC controllers as it has the Root Port and controller
+specific registers, while ELBI has optional registers.
 
-Specifically, commit 723de0f9171e ("staging: most: remove device from
-interface structure") started requiring drivers to set the interface
-device pointer before registration, but the I2C driver was never updated
-which results in a NULL pointer dereference if anyone ever tries to
-probe it.
+Hence, fix the binding. Though this is an ABI break, this change is needed
+to accurately describe the PCI memory map.
 
-Fixes: 723de0f9171e ("staging: most: remove device from interface structure")
-Cc: Christian Gromm <christian.gromm@microchip.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20251029093442.29256-1-johan@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7cd210391101 ("dt-bindings: PCI: meson: add DT bindings for Amlogic Meson PCIe controller")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/20251101-pci-meson-fix-v1-1-c50dcc56ed6a@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/most/Kconfig      |   2 -
- drivers/staging/most/Makefile     |   1 -
- drivers/staging/most/i2c/Kconfig  |  13 --
- drivers/staging/most/i2c/Makefile |   4 -
- drivers/staging/most/i2c/i2c.c    | 374 ------------------------------
- 5 files changed, 394 deletions(-)
- delete mode 100644 drivers/staging/most/i2c/Kconfig
- delete mode 100644 drivers/staging/most/i2c/Makefile
- delete mode 100644 drivers/staging/most/i2c/i2c.c
+ Documentation/devicetree/bindings/pci/amlogic,axg-pcie.yaml | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/staging/most/Kconfig b/drivers/staging/most/Kconfig
-index 6f420cbcdcfff..e89658df6f124 100644
---- a/drivers/staging/most/Kconfig
-+++ b/drivers/staging/most/Kconfig
-@@ -24,6 +24,4 @@ source "drivers/staging/most/video/Kconfig"
+diff --git a/Documentation/devicetree/bindings/pci/amlogic,axg-pcie.yaml b/Documentation/devicetree/bindings/pci/amlogic,axg-pcie.yaml
+index a5bd90bc0712e..9c3b8e65c42a3 100644
+--- a/Documentation/devicetree/bindings/pci/amlogic,axg-pcie.yaml
++++ b/Documentation/devicetree/bindings/pci/amlogic,axg-pcie.yaml
+@@ -36,13 +36,13 @@ properties:
  
- source "drivers/staging/most/dim2/Kconfig"
+   reg:
+     items:
+-      - description: External local bus interface registers
++      - description: Data Bus Interface registers
+       - description: Meson designed configuration registers
+       - description: PCIe configuration space
  
--source "drivers/staging/most/i2c/Kconfig"
--
- endif
-diff --git a/drivers/staging/most/Makefile b/drivers/staging/most/Makefile
-index 8b3fc5a7af514..e45084df7803a 100644
---- a/drivers/staging/most/Makefile
-+++ b/drivers/staging/most/Makefile
-@@ -3,4 +3,3 @@
- obj-$(CONFIG_MOST_NET)	+= net/
- obj-$(CONFIG_MOST_VIDEO)	+= video/
- obj-$(CONFIG_MOST_DIM2)	+= dim2/
--obj-$(CONFIG_MOST_I2C)	+= i2c/
-diff --git a/drivers/staging/most/i2c/Kconfig b/drivers/staging/most/i2c/Kconfig
-deleted file mode 100644
-index ff64283cbad18..0000000000000
---- a/drivers/staging/most/i2c/Kconfig
-+++ /dev/null
-@@ -1,13 +0,0 @@
--# SPDX-License-Identifier: GPL-2.0
--#
--# MOST I2C configuration
--#
--
--config MOST_I2C
--	tristate "I2C"
--	depends on I2C
--	help
--	  Say Y here if you want to connect via I2C to network transceiver.
--
--	  To compile this driver as a module, choose M here: the
--	  module will be called most_i2c.
-diff --git a/drivers/staging/most/i2c/Makefile b/drivers/staging/most/i2c/Makefile
-deleted file mode 100644
-index 71099dd0f85b9..0000000000000
---- a/drivers/staging/most/i2c/Makefile
-+++ /dev/null
-@@ -1,4 +0,0 @@
--# SPDX-License-Identifier: GPL-2.0
--obj-$(CONFIG_MOST_I2C) += most_i2c.o
--
--most_i2c-objs := i2c.o
-diff --git a/drivers/staging/most/i2c/i2c.c b/drivers/staging/most/i2c/i2c.c
-deleted file mode 100644
-index 184b2dd11fc34..0000000000000
---- a/drivers/staging/most/i2c/i2c.c
-+++ /dev/null
-@@ -1,374 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0
--/*
-- * i2c.c - Hardware Dependent Module for I2C Interface
-- *
-- * Copyright (C) 2013-2015, Microchip Technology Germany II GmbH & Co. KG
-- */
--
--#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
--
--#include <linux/init.h>
--#include <linux/module.h>
--#include <linux/slab.h>
--#include <linux/i2c.h>
--#include <linux/interrupt.h>
--#include <linux/err.h>
--#include <linux/most.h>
--
--enum { CH_RX, CH_TX, NUM_CHANNELS };
--
--#define MAX_BUFFERS_CONTROL 32
--#define MAX_BUF_SIZE_CONTROL 256
--
--/**
-- * list_first_mbo - get the first mbo from a list
-- * @ptr:	the list head to take the mbo from.
-- */
--#define list_first_mbo(ptr) \
--	list_first_entry(ptr, struct mbo, list)
--
--static unsigned int polling_rate;
--module_param(polling_rate, uint, 0644);
--MODULE_PARM_DESC(polling_rate, "Polling rate [Hz]. Default = 0 (use IRQ)");
--
--struct hdm_i2c {
--	struct most_interface most_iface;
--	struct most_channel_capability capabilities[NUM_CHANNELS];
--	struct i2c_client *client;
--	struct rx {
--		struct delayed_work dwork;
--		struct list_head list;
--		bool int_disabled;
--		unsigned int delay;
--	} rx;
--	char name[64];
--};
--
--static inline struct hdm_i2c *to_hdm(struct most_interface *iface)
--{
--	return container_of(iface, struct hdm_i2c, most_iface);
--}
--
--static irqreturn_t most_irq_handler(int, void *);
--static void pending_rx_work(struct work_struct *);
--
--/**
-- * configure_channel - called from MOST core to configure a channel
-- * @most_iface: interface the channel belongs to
-- * @ch_idx: channel to be configured
-- * @channel_config: structure that holds the configuration information
-- *
-- * Return 0 on success, negative on failure.
-- *
-- * Receives configuration information from MOST core and initialize the
-- * corresponding channel.
-- */
--static int configure_channel(struct most_interface *most_iface,
--			     int ch_idx,
--			     struct most_channel_config *channel_config)
--{
--	int ret;
--	struct hdm_i2c *dev = to_hdm(most_iface);
--	unsigned int delay, pr;
--
--	BUG_ON(ch_idx < 0 || ch_idx >= NUM_CHANNELS);
--
--	if (channel_config->data_type != MOST_CH_CONTROL) {
--		pr_err("bad data type for channel %d\n", ch_idx);
--		return -EPERM;
--	}
--
--	if (channel_config->direction != dev->capabilities[ch_idx].direction) {
--		pr_err("bad direction for channel %d\n", ch_idx);
--		return -EPERM;
--	}
--
--	if (channel_config->direction == MOST_CH_RX) {
--		if (!polling_rate) {
--			if (dev->client->irq <= 0) {
--				pr_err("bad irq: %d\n", dev->client->irq);
--				return -ENOENT;
--			}
--			dev->rx.int_disabled = false;
--			ret = request_irq(dev->client->irq, most_irq_handler, 0,
--					  dev->client->name, dev);
--			if (ret) {
--				pr_err("request_irq(%d) failed: %d\n",
--				       dev->client->irq, ret);
--				return ret;
--			}
--		} else {
--			delay = msecs_to_jiffies(MSEC_PER_SEC / polling_rate);
--			dev->rx.delay = delay ? delay : 1;
--			pr = MSEC_PER_SEC / jiffies_to_msecs(dev->rx.delay);
--			pr_info("polling rate is %u Hz\n", pr);
--		}
--	}
--
--	return 0;
--}
--
--/**
-- * enqueue - called from MOST core to enqueue a buffer for data transfer
-- * @most_iface: intended interface
-- * @ch_idx: ID of the channel the buffer is intended for
-- * @mbo: pointer to the buffer object
-- *
-- * Return 0 on success, negative on failure.
-- *
-- * Transmit the data over I2C if it is a "write" request or push the buffer into
-- * list if it is an "read" request
-- */
--static int enqueue(struct most_interface *most_iface,
--		   int ch_idx, struct mbo *mbo)
--{
--	struct hdm_i2c *dev = to_hdm(most_iface);
--	int ret;
--
--	BUG_ON(ch_idx < 0 || ch_idx >= NUM_CHANNELS);
--
--	if (ch_idx == CH_RX) {
--		/* RX */
--		if (!polling_rate)
--			disable_irq(dev->client->irq);
--		cancel_delayed_work_sync(&dev->rx.dwork);
--		list_add_tail(&mbo->list, &dev->rx.list);
--		if (dev->rx.int_disabled || polling_rate)
--			pending_rx_work(&dev->rx.dwork.work);
--		if (!polling_rate)
--			enable_irq(dev->client->irq);
--	} else {
--		/* TX */
--		ret = i2c_master_send(dev->client, mbo->virt_address,
--				      mbo->buffer_length);
--		if (ret <= 0) {
--			mbo->processed_length = 0;
--			mbo->status = MBO_E_INVAL;
--		} else {
--			mbo->processed_length = mbo->buffer_length;
--			mbo->status = MBO_SUCCESS;
--		}
--		mbo->complete(mbo);
--	}
--
--	return 0;
--}
--
--/**
-- * poison_channel - called from MOST core to poison buffers of a channel
-- * @most_iface: pointer to the interface the channel to be poisoned belongs to
-- * @ch_idx: corresponding channel ID
-- *
-- * Return 0 on success, negative on failure.
-- *
-- * If channel direction is RX, complete the buffers in list with
-- * status MBO_E_CLOSE
-- */
--static int poison_channel(struct most_interface *most_iface,
--			  int ch_idx)
--{
--	struct hdm_i2c *dev = to_hdm(most_iface);
--	struct mbo *mbo;
--
--	BUG_ON(ch_idx < 0 || ch_idx >= NUM_CHANNELS);
--
--	if (ch_idx == CH_RX) {
--		if (!polling_rate)
--			free_irq(dev->client->irq, dev);
--		cancel_delayed_work_sync(&dev->rx.dwork);
--
--		while (!list_empty(&dev->rx.list)) {
--			mbo = list_first_mbo(&dev->rx.list);
--			list_del(&mbo->list);
--
--			mbo->processed_length = 0;
--			mbo->status = MBO_E_CLOSE;
--			mbo->complete(mbo);
--		}
--	}
--
--	return 0;
--}
--
--static void do_rx_work(struct hdm_i2c *dev)
--{
--	struct mbo *mbo;
--	unsigned char msg[MAX_BUF_SIZE_CONTROL];
--	int ret;
--	u16 pml, data_size;
--
--	/* Read PML (2 bytes) */
--	ret = i2c_master_recv(dev->client, msg, 2);
--	if (ret <= 0) {
--		pr_err("Failed to receive PML\n");
--		return;
--	}
--
--	pml = (msg[0] << 8) | msg[1];
--	if (!pml)
--		return;
--
--	data_size = pml + 2;
--
--	/* Read the whole message, including PML */
--	ret = i2c_master_recv(dev->client, msg, data_size);
--	if (ret <= 0) {
--		pr_err("Failed to receive a Port Message\n");
--		return;
--	}
--
--	mbo = list_first_mbo(&dev->rx.list);
--	list_del(&mbo->list);
--
--	mbo->processed_length = min(data_size, mbo->buffer_length);
--	memcpy(mbo->virt_address, msg, mbo->processed_length);
--	mbo->status = MBO_SUCCESS;
--	mbo->complete(mbo);
--}
--
--/**
-- * pending_rx_work - Read pending messages through I2C
-- * @work: definition of this work item
-- *
-- * Invoked by the Interrupt Service Routine, most_irq_handler()
-- */
--static void pending_rx_work(struct work_struct *work)
--{
--	struct hdm_i2c *dev = container_of(work, struct hdm_i2c, rx.dwork.work);
--
--	if (list_empty(&dev->rx.list))
--		return;
--
--	do_rx_work(dev);
--
--	if (polling_rate) {
--		schedule_delayed_work(&dev->rx.dwork, dev->rx.delay);
--	} else {
--		dev->rx.int_disabled = false;
--		enable_irq(dev->client->irq);
--	}
--}
--
--/*
-- * most_irq_handler - Interrupt Service Routine
-- * @irq: irq number
-- * @_dev: private data
-- *
-- * Schedules a delayed work
-- *
-- * By default the interrupt line behavior is Active Low. Once an interrupt is
-- * generated by the device, until driver clears the interrupt (by reading
-- * the PMP message), device keeps the interrupt line in low state. Since i2c
-- * read is done in work queue, the interrupt line must be disabled temporarily
-- * to avoid ISR being called repeatedly. Re-enable the interrupt in workqueue,
-- * after reading the message.
-- *
-- * Note: If we use the interrupt line in Falling edge mode, there is a
-- * possibility to miss interrupts when ISR is getting executed.
-- *
-- */
--static irqreturn_t most_irq_handler(int irq, void *_dev)
--{
--	struct hdm_i2c *dev = _dev;
--
--	disable_irq_nosync(irq);
--	dev->rx.int_disabled = true;
--	schedule_delayed_work(&dev->rx.dwork, 0);
--
--	return IRQ_HANDLED;
--}
--
--/*
-- * i2c_probe - i2c probe handler
-- * @client: i2c client device structure
-- * @id: i2c client device id
-- *
-- * Return 0 on success, negative on failure.
-- *
-- * Register the i2c client device as a MOST interface
-- */
--static int i2c_probe(struct i2c_client *client)
--{
--	struct hdm_i2c *dev;
--	int ret, i;
--
--	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
--	if (!dev)
--		return -ENOMEM;
--
--	/* ID format: i2c-<bus>-<address> */
--	snprintf(dev->name, sizeof(dev->name), "i2c-%d-%04x",
--		 client->adapter->nr, client->addr);
--
--	for (i = 0; i < NUM_CHANNELS; i++) {
--		dev->capabilities[i].data_type = MOST_CH_CONTROL;
--		dev->capabilities[i].num_buffers_packet = MAX_BUFFERS_CONTROL;
--		dev->capabilities[i].buffer_size_packet = MAX_BUF_SIZE_CONTROL;
--	}
--	dev->capabilities[CH_RX].direction = MOST_CH_RX;
--	dev->capabilities[CH_RX].name_suffix = "rx";
--	dev->capabilities[CH_TX].direction = MOST_CH_TX;
--	dev->capabilities[CH_TX].name_suffix = "tx";
--
--	dev->most_iface.interface = ITYPE_I2C;
--	dev->most_iface.description = dev->name;
--	dev->most_iface.num_channels = NUM_CHANNELS;
--	dev->most_iface.channel_vector = dev->capabilities;
--	dev->most_iface.configure = configure_channel;
--	dev->most_iface.enqueue = enqueue;
--	dev->most_iface.poison_channel = poison_channel;
--
--	INIT_LIST_HEAD(&dev->rx.list);
--
--	INIT_DELAYED_WORK(&dev->rx.dwork, pending_rx_work);
--
--	dev->client = client;
--	i2c_set_clientdata(client, dev);
--
--	ret = most_register_interface(&dev->most_iface);
--	if (ret) {
--		pr_err("Failed to register i2c as a MOST interface\n");
--		kfree(dev);
--		return ret;
--	}
--
--	return 0;
--}
--
--/*
-- * i2c_remove - i2c remove handler
-- * @client: i2c client device structure
-- *
-- * Return 0 on success.
-- *
-- * Unregister the i2c client device as a MOST interface
-- */
--static void i2c_remove(struct i2c_client *client)
--{
--	struct hdm_i2c *dev = i2c_get_clientdata(client);
--
--	most_deregister_interface(&dev->most_iface);
--	kfree(dev);
--}
--
--static const struct i2c_device_id i2c_id[] = {
--	{ "most_i2c" },
--	{ } /* Terminating entry */
--};
--
--MODULE_DEVICE_TABLE(i2c, i2c_id);
--
--static struct i2c_driver i2c_driver = {
--	.driver = {
--		.name = "hdm_i2c",
--	},
--	.probe = i2c_probe,
--	.remove = i2c_remove,
--	.id_table = i2c_id,
--};
--
--module_i2c_driver(i2c_driver);
--
--MODULE_AUTHOR("Andrey Shvetsov <andrey.shvetsov@k2l.de>");
--MODULE_DESCRIPTION("I2C Hardware Dependent Module");
--MODULE_LICENSE("GPL");
+   reg-names:
+     items:
+-      - const: elbi
++      - const: dbi
+       - const: cfg
+       - const: config
+ 
+@@ -113,7 +113,7 @@ examples:
+     pcie: pcie@f9800000 {
+         compatible = "amlogic,axg-pcie", "snps,dw-pcie";
+         reg = <0xf9800000 0x400000>, <0xff646000 0x2000>, <0xf9f00000 0x100000>;
+-        reg-names = "elbi", "cfg", "config";
++        reg-names = "dbi", "cfg", "config";
+         interrupts = <GIC_SPI 177 IRQ_TYPE_EDGE_RISING>;
+         clocks = <&pclk>, <&clk_port>, <&clk_phy>;
+         clock-names = "pclk", "port", "general";
 -- 
 2.51.0
 
