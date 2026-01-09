@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9AC2F0C7F;
-	Fri,  9 Jan 2026 12:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 287EB2EAD10;
+	Fri,  9 Jan 2026 12:14:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960845; cv=none; b=MBiddVnIhqeyYOQHGoZu2dlplp/Zu0Bqy2FFjtmrQY5zJA0vR4yid0zym8z/inqnm3uroVhB6P79XRkYFw0X7G6kP/9BULmv7SvLGxBp2GZMQC1m+kXOLf7CTsiMkSvkaXkxAd5iBkwlpEHZA1qSAKvjMzsQ3MNQfSnkwwQrmi4=
+	t=1767960848; cv=none; b=TgovesqeOrCsihYLWBy/f4G4yqvaWDNHGvDPfI0IUOHRVtdRZSDZjc2ITr3GAWfrjFd9L1W9SiAvwQzLigP6U8nBKXWEbX3eIobFi1Fqi/cswgetfXW0GuoWWIGD6XF94iqigwxtYSl6aYJnL+FxMvisSLuELW1C0DR36f1deJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960845; c=relaxed/simple;
-	bh=ZpXbQA56tNTCU3jt80opTnPTKoEdUYmPOfa04Ak7Eps=;
+	s=arc-20240116; t=1767960848; c=relaxed/simple;
+	bh=OcM1XAiFZP9viyB848xN5WVDfFZ/7yXtGobtOTPxLIA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jCF/b+8qSjX4D/HYvtOgZ6LSfZLEwr6Njj0YLqae+3HUiHlTEV5SPPzQrs2qZHiEa4G6hLkHgvIvzZYWJOHW3pLixstrot5pzRwzcJJq0BSvmMuQUlpGsUBp9+VAfs8856RsppgpnXRgTbaKcyEz1/L33k/8C3mIaUvdHd8HN1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HFxVqP0+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fgxL37elL2Bh0XNiIQrP+b8emmvfJvFe/wYtd5bhAr4G0jaNFsisVTbZcwDPzD3IdLhQOTMz2ad7kKIzgflFFTcA1VPCOhqiVMIvrJB7AzHn/upDEukHtgxNIx73zU+nWr+jA5halZDmUfj1QttKJpW++EHQhlCXkWQRXCu2AxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EaeEGwNU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HFxVqP0+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCD78C4CEF1;
-	Fri,  9 Jan 2026 12:14:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EaeEGwNU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABB4EC4CEF1;
+	Fri,  9 Jan 2026 12:14:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960845;
-	bh=ZpXbQA56tNTCU3jt80opTnPTKoEdUYmPOfa04Ak7Eps=;
+	s=korg; t=1767960848;
+	bh=OcM1XAiFZP9viyB848xN5WVDfFZ/7yXtGobtOTPxLIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HFxVqP0+Llwt5rKfXNTVgVCyxn34zsv8uLbraQrCojWf2IsdqAQxpMgd63gBnXsMG
-	 r/Rn3LGBizk54r4jhP8DnpSAASkKMDTQ8lMSDS8G353NbAfD2zcYUY6bg5yHFhBqqR
-	 UE0lk4Fektc064OgKGX61GDJJyyZY+wUk9gX8Hq4=
+	b=EaeEGwNUnS4xJYNGN7GhivGcv+3U2aeW2sLzU+1EtCshGrS9nddBKYEdT+a8TQqpz
+	 +m6EuxwHeNZyfskjuEoy2xx8uojTu/+mSRsR6dxrl0dO7hrERBtwZEVuiobY989e7k
+	 aNK9Jpfn752A307HNCcu5oEhIQw6qAzlpQADVkG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Stable@vger.kernel.org,
+	Martino Facchin <m.facchin@arduino.cc>,
 	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
 	Mark Brown <broonie@kernel.org>,
 	Alexey Klimov <alexey.klimov@linaro.org>
-Subject: [PATCH 6.6 546/737] ASoC: qcom: q6asm-dai: perform correct state check before closing
-Date: Fri,  9 Jan 2026 12:41:25 +0100
-Message-ID: <20260109112154.535012766@linuxfoundation.org>
+Subject: [PATCH 6.6 547/737] ASoC: qcom: q6adm: the the copp device only during last instance
+Date: Fri,  9 Jan 2026 12:41:26 +0100
+Message-ID: <20260109112154.573236040@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -54,43 +55,221 @@ Content-Transfer-Encoding: 8bit
 
 From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-commit bfbb12dfa144d45575bcfe139a71360b3ce80237 upstream.
+commit 74cc4f3ea4e99262ba0d619c6a4ee33e2cd47f65 upstream.
 
-Do not stop a q6asm stream if its not started, this can result in
-unnecessary dsp command which will timeout anyway something like below:
+A matching Common object post processing instance is normally resused
+across multiple streams. However currently we close this on DSP
+even though there is a refcount on this copp object, this can result in
+below error.
 
-q6asm-dai ab00000.remoteproc:glink-edge:apr:service@7:dais: CMD 10bcd timeout
+q6routing ab00000.remoteproc:glink-edge:apr:service@8:routing: Found Matching Copp 0x0
+qcom-q6adm aprsvc:service:4:8: cmd = 0x10325 return error = 0x2
+q6routing ab00000.remoteproc:glink-edge:apr:service@8:routing: DSP returned error[2]
+q6routing ab00000.remoteproc:glink-edge:apr:service@8:routing: Found Matching Copp 0x0
+qcom-q6adm aprsvc:service:4:8: cmd = 0x10325 return error = 0x2
+q6routing ab00000.remoteproc:glink-edge:apr:service@8:routing: DSP returned error[2]
+qcom-q6adm aprsvc:service:4:8: cmd = 0x10327 return error = 0x2
+qcom-q6adm aprsvc:service:4:8: DSP returned error[2]
+qcom-q6adm aprsvc:service:4:8: Failed to close copp -22
+qcom-q6adm aprsvc:service:4:8: cmd = 0x10327 return error = 0x2
+qcom-q6adm aprsvc:service:4:8: DSP returned error[2]
+qcom-q6adm aprsvc:service:4:8: Failed to close copp -22
 
-Fix this by correctly checking the state.
+Fix this by addressing moving the adm_close to copp_kref destructor
+callback.
 
-Fixes: 2a9e92d371db ("ASoC: qdsp6: q6asm: Add q6asm dai driver")
+Fixes: 7b20b2be51e1 ("ASoC: qdsp6: q6adm: Add q6adm driver")
 Cc: Stable@vger.kernel.org
+Reported-by: Martino Facchin <m.facchin@arduino.cc>
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 Tested-by: Alexey Klimov <alexey.klimov@linaro.org> # RB5, RB3
-Link: https://patch.msgid.link/20251023102444.88158-5-srinivas.kandagatla@oss.qualcomm.com
+Link: https://patch.msgid.link/20251023102444.88158-3-srinivas.kandagatla@oss.qualcomm.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/qdsp6/q6asm-dai.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/qcom/qdsp6/q6adm.c |  146 ++++++++++++++++++++-----------------------
+ 1 file changed, 71 insertions(+), 75 deletions(-)
 
---- a/sound/soc/qcom/qdsp6/q6asm-dai.c
-+++ b/sound/soc/qcom/qdsp6/q6asm-dai.c
-@@ -237,13 +237,14 @@ static int q6asm_dai_prepare(struct snd_
- 	prtd->pcm_count = snd_pcm_lib_period_bytes(substream);
- 	prtd->pcm_irq_pos = 0;
- 	/* rate and channels are sent to audio driver */
--	if (prtd->state) {
-+	if (prtd->state == Q6ASM_STREAM_RUNNING) {
- 		/* clear the previous setup if any  */
- 		q6asm_cmd(prtd->audio_client, prtd->stream_id, CMD_CLOSE);
- 		q6asm_unmap_memory_regions(substream->stream,
- 					   prtd->audio_client);
- 		q6routing_stream_close(soc_prtd->dai_link->id,
- 					 substream->stream);
-+		prtd->state = Q6ASM_STREAM_STOPPED;
- 	}
+--- a/sound/soc/qcom/qdsp6/q6adm.c
++++ b/sound/soc/qcom/qdsp6/q6adm.c
+@@ -109,11 +109,75 @@ static struct q6copp *q6adm_find_copp(st
  
- 	ret = q6asm_map_memory_regions(substream->stream, prtd->audio_client,
+ }
+ 
++static int q6adm_apr_send_copp_pkt(struct q6adm *adm, struct q6copp *copp,
++				   struct apr_pkt *pkt, uint32_t rsp_opcode)
++{
++	struct device *dev = adm->dev;
++	uint32_t opcode = pkt->hdr.opcode;
++	int ret;
++
++	mutex_lock(&adm->lock);
++	copp->result.opcode = 0;
++	copp->result.status = 0;
++	ret = apr_send_pkt(adm->apr, pkt);
++	if (ret < 0) {
++		dev_err(dev, "Failed to send APR packet\n");
++		ret = -EINVAL;
++		goto err;
++	}
++
++	/* Wait for the callback with copp id */
++	if (rsp_opcode)
++		ret = wait_event_timeout(copp->wait,
++					 (copp->result.opcode == opcode) ||
++					 (copp->result.opcode == rsp_opcode),
++					 msecs_to_jiffies(TIMEOUT_MS));
++	else
++		ret = wait_event_timeout(copp->wait,
++					 (copp->result.opcode == opcode),
++					 msecs_to_jiffies(TIMEOUT_MS));
++
++	if (!ret) {
++		dev_err(dev, "ADM copp cmd timedout\n");
++		ret = -ETIMEDOUT;
++	} else if (copp->result.status > 0) {
++		dev_err(dev, "DSP returned error[%d]\n",
++			copp->result.status);
++		ret = -EINVAL;
++	}
++
++err:
++	mutex_unlock(&adm->lock);
++	return ret;
++}
++
++static int q6adm_device_close(struct q6adm *adm, struct q6copp *copp,
++			      int port_id, int copp_idx)
++{
++	struct apr_pkt close;
++
++	close.hdr.hdr_field = APR_HDR_FIELD(APR_MSG_TYPE_SEQ_CMD,
++					APR_HDR_LEN(APR_HDR_SIZE),
++					APR_PKT_VER);
++	close.hdr.pkt_size = sizeof(close);
++	close.hdr.src_port = port_id;
++	close.hdr.dest_port = copp->id;
++	close.hdr.token = port_id << 16 | copp_idx;
++	close.hdr.opcode = ADM_CMD_DEVICE_CLOSE_V5;
++
++	return q6adm_apr_send_copp_pkt(adm, copp, &close, 0);
++}
++
+ static void q6adm_free_copp(struct kref *ref)
+ {
+ 	struct q6copp *c = container_of(ref, struct q6copp, refcount);
+ 	struct q6adm *adm = c->adm;
+ 	unsigned long flags;
++	int ret;
++
++	ret = q6adm_device_close(adm, c, c->afe_port, c->copp_idx);
++	if (ret < 0)
++		dev_err(adm->dev, "Failed to close copp %d\n", ret);
+ 
+ 	spin_lock_irqsave(&adm->copps_list_lock, flags);
+ 	clear_bit(c->copp_idx, &adm->copp_bitmap[c->afe_port]);
+@@ -155,13 +219,13 @@ static int q6adm_callback(struct apr_dev
+ 		switch (result->opcode) {
+ 		case ADM_CMD_DEVICE_OPEN_V5:
+ 		case ADM_CMD_DEVICE_CLOSE_V5:
+-			copp = q6adm_find_copp(adm, port_idx, copp_idx);
+-			if (!copp)
+-				return 0;
+-
+-			copp->result = *result;
+-			wake_up(&copp->wait);
+-			kref_put(&copp->refcount, q6adm_free_copp);
++			list_for_each_entry(copp, &adm->copps_list, node) {
++				if ((port_idx == copp->afe_port) && (copp_idx == copp->copp_idx)) {
++					copp->result = *result;
++					wake_up(&copp->wait);
++					break;
++				}
++			}
+ 			break;
+ 		case ADM_CMD_MATRIX_MAP_ROUTINGS_V5:
+ 			adm->result = *result;
+@@ -234,65 +298,6 @@ static struct q6copp *q6adm_alloc_copp(s
+ 	return c;
+ }
+ 
+-static int q6adm_apr_send_copp_pkt(struct q6adm *adm, struct q6copp *copp,
+-				   struct apr_pkt *pkt, uint32_t rsp_opcode)
+-{
+-	struct device *dev = adm->dev;
+-	uint32_t opcode = pkt->hdr.opcode;
+-	int ret;
+-
+-	mutex_lock(&adm->lock);
+-	copp->result.opcode = 0;
+-	copp->result.status = 0;
+-	ret = apr_send_pkt(adm->apr, pkt);
+-	if (ret < 0) {
+-		dev_err(dev, "Failed to send APR packet\n");
+-		ret = -EINVAL;
+-		goto err;
+-	}
+-
+-	/* Wait for the callback with copp id */
+-	if (rsp_opcode)
+-		ret = wait_event_timeout(copp->wait,
+-					 (copp->result.opcode == opcode) ||
+-					 (copp->result.opcode == rsp_opcode),
+-					 msecs_to_jiffies(TIMEOUT_MS));
+-	else
+-		ret = wait_event_timeout(copp->wait,
+-					 (copp->result.opcode == opcode),
+-					 msecs_to_jiffies(TIMEOUT_MS));
+-
+-	if (!ret) {
+-		dev_err(dev, "ADM copp cmd timedout\n");
+-		ret = -ETIMEDOUT;
+-	} else if (copp->result.status > 0) {
+-		dev_err(dev, "DSP returned error[%d]\n",
+-			copp->result.status);
+-		ret = -EINVAL;
+-	}
+-
+-err:
+-	mutex_unlock(&adm->lock);
+-	return ret;
+-}
+-
+-static int q6adm_device_close(struct q6adm *adm, struct q6copp *copp,
+-			      int port_id, int copp_idx)
+-{
+-	struct apr_pkt close;
+-
+-	close.hdr.hdr_field = APR_HDR_FIELD(APR_MSG_TYPE_SEQ_CMD,
+-					APR_HDR_LEN(APR_HDR_SIZE),
+-					APR_PKT_VER);
+-	close.hdr.pkt_size = sizeof(close);
+-	close.hdr.src_port = port_id;
+-	close.hdr.dest_port = copp->id;
+-	close.hdr.token = port_id << 16 | copp_idx;
+-	close.hdr.opcode = ADM_CMD_DEVICE_CLOSE_V5;
+-
+-	return q6adm_apr_send_copp_pkt(adm, copp, &close, 0);
+-}
+-
+ static struct q6copp *q6adm_find_matching_copp(struct q6adm *adm,
+ 					       int port_id, int topology,
+ 					       int mode, int rate,
+@@ -567,15 +572,6 @@ EXPORT_SYMBOL_GPL(q6adm_matrix_map);
+  */
+ int q6adm_close(struct device *dev, struct q6copp *copp)
+ {
+-	struct q6adm *adm = dev_get_drvdata(dev->parent);
+-	int ret = 0;
+-
+-	ret = q6adm_device_close(adm, copp, copp->afe_port, copp->copp_idx);
+-	if (ret < 0) {
+-		dev_err(adm->dev, "Failed to close copp %d\n", ret);
+-		return ret;
+-	}
+-
+ 	kref_put(&copp->refcount, q6adm_free_copp);
+ 
+ 	return 0;
 
 
