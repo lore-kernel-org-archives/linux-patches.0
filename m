@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3237135CB68;
-	Fri,  9 Jan 2026 12:40:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03B035CB7C;
+	Fri,  9 Jan 2026 12:40:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962414; cv=none; b=sGbSRwKmXwPA4ZrITu1vetxbPbDkShCf16upIFopTFsWlsLWyFUkE0pmR3N4q17cQLH3xSrDgdJ3HwFhITPp3tNR1eNrao0xaNuS07t5F3xA55aoQe2NFojpPnXu65AfC2AMi2RJyRiCzkoCAcaw5yUHy6otO6Bk8LE36pa2/1s=
+	t=1767962416; cv=none; b=CWI6ilF8UHy070EaC7dJfsGzAft3LErIzmjXtBmWWPQMjkpdi/K3jCkQHluBbK1RChxImmpe/IBIdVyx4SWhMebcACxvqZOPO8TuvRDnCK3la1gchdVT9Lyn5useHeurk0lfSYGgGaVq3wj1I0lrrtXlovsrnOT1IwRu89IBfpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962414; c=relaxed/simple;
-	bh=oYQAxX+ujCuLQVAHNXebUNdL2Qo6KoVMuI27NL7BZF8=;
+	s=arc-20240116; t=1767962416; c=relaxed/simple;
+	bh=+iWPMUsG8lIs/9XWGNhH9+5kpzOE16TtwZe1RDczNJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QGo1B2tLk1BaHTQQj4bGQLQ58IETZQJvYuHKTb9G/IyLaXNxHSlAx9v7jO6AM/j5VwwSrg0JteHA0s8S0dU6BrFRj38pNIEShkh45FKAEYfC/owClQvuJPqjFYxJG8EDGnRF28gntrATef6A0YDnULdW2Thh/sGACTuHt+2qqCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Luz3m4LH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DK5u6vftCLajF8Pxxn4SQaNjqS2nvd3Vn+/8eUc1r2XmOuC5VIkUrpXchtW2NfXvppFfr7ku0ZOh1mJv38GsAKpon/N7JFELFlkVrhqo+n2raiN4SSvuXIzInAzNq/ZvVdVf45sgiAMS2asNpQwMczj4vxrsACR1ejWLfcZaapc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w7X/+i/R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Luz3m4LH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 645E1C19421;
-	Fri,  9 Jan 2026 12:40:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w7X/+i/R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E845C16AAE;
+	Fri,  9 Jan 2026 12:40:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962413;
-	bh=oYQAxX+ujCuLQVAHNXebUNdL2Qo6KoVMuI27NL7BZF8=;
+	s=korg; t=1767962416;
+	bh=+iWPMUsG8lIs/9XWGNhH9+5kpzOE16TtwZe1RDczNJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Luz3m4LHowN227rekNPSz0PHvcmErY3e3sJ0X0wwpmkJ0V2d8mnxm3bkSwTBaO2qX
-	 OFZQoFr2owBWcKvHSwp6CSfjTwavfW2m8XzCjkyDnclybBAwy6rmQcKut/TUtENasn
-	 o5IDO1gni9EjUfYimP/GST3pzs+W91oUf6gFSymw=
+	b=w7X/+i/RjhEXRNr1Ki/yq99EJdT6i0upcNFE4aBx/4JqQRgUhQN/fPcHY4drBIoSr
+	 RHFNnOFx96SKubxU4XLQMjhR/cGljd3sDEZWTbsgnCBxQ3JkmCyLN56yGQVurHJxyL
+	 1/FG3BuPGGPdXRKvcHWNkY775sY0HWK96/ZRdTlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.1 357/634] parisc: Do not reprogram affinitiy on ASP chip
-Date: Fri,  9 Jan 2026 12:40:35 +0100
-Message-ID: <20260109112130.957698496@linuxfoundation.org>
+	ziming zhang <ezrakiez@gmail.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
+	Xiubo Li <xiubli@redhat.com>
+Subject: [PATCH 6.1 358/634] libceph: make decode_pool() more resilient against corrupted osdmaps
+Date: Fri,  9 Jan 2026 12:40:36 +0100
+Message-ID: <20260109112130.994727857@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -49,36 +51,221 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-commit dca7da244349eef4d78527cafc0bf80816b261f5 upstream.
+commit 8c738512714e8c0aa18f8a10c072d5b01c83db39 upstream.
 
-The ASP chip is a very old variant of the GSP chip and is used e.g. in
-HP 730 workstations. When trying to reprogram the affinity it will crash
-with a HPMC as the relevant registers don't seem to be at the usual
-location.  Let's avoid the crash by checking the sversion. Also note,
-that reprogramming isn't necessary either, as the HP730 is a just a
-single-CPU machine.
+If the osdmap is (maliciously) corrupted such that the encoded length
+of ceph_pg_pool envelope is less than what is expected for a particular
+encoding version, out-of-bounds reads may ensue because the only bounds
+check that is there is based on that length value.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
+This patch adds explicit bounds checks for each field that is decoded
+or skipped.
+
 Cc: stable@vger.kernel.org
+Reported-by: ziming zhang <ezrakiez@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Xiubo Li <xiubli@redhat.com>
+Tested-by: ziming zhang <ezrakiez@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/parisc/gsc.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/ceph/osdmap.c |  118 ++++++++++++++++++++++++------------------------------
+ 1 file changed, 53 insertions(+), 65 deletions(-)
 
---- a/drivers/parisc/gsc.c
-+++ b/drivers/parisc/gsc.c
-@@ -154,7 +154,9 @@ static int gsc_set_affinity_irq(struct i
- 	gsc_dev->eim = ((u32) gsc_dev->gsc_irq.txn_addr) | gsc_dev->gsc_irq.txn_data;
+--- a/net/ceph/osdmap.c
++++ b/net/ceph/osdmap.c
+@@ -806,51 +806,49 @@ static int decode_pool(void **p, void *e
+ 	ceph_decode_need(p, end, len, bad);
+ 	pool_end = *p + len;
  
- 	/* switch IRQ's for devices below LASI/WAX to other CPU */
--	gsc_writel(gsc_dev->eim, gsc_dev->hpa + OFFSET_IAR);
-+	/* ASP chip (svers 0x70) does not support reprogramming */
-+	if (gsc_dev->gsc->id.sversion != 0x70)
-+		gsc_writel(gsc_dev->eim, gsc_dev->hpa + OFFSET_IAR);
++	ceph_decode_need(p, end, 4 + 4 + 4, bad);
+ 	pi->type = ceph_decode_8(p);
+ 	pi->size = ceph_decode_8(p);
+ 	pi->crush_ruleset = ceph_decode_8(p);
+ 	pi->object_hash = ceph_decode_8(p);
+-
+ 	pi->pg_num = ceph_decode_32(p);
+ 	pi->pgp_num = ceph_decode_32(p);
  
- 	irq_data_update_effective_affinity(d, &tmask);
+-	*p += 4 + 4;  /* skip lpg* */
+-	*p += 4;      /* skip last_change */
+-	*p += 8 + 4;  /* skip snap_seq, snap_epoch */
++	/* lpg*, last_change, snap_seq, snap_epoch */
++	ceph_decode_skip_n(p, end, 8 + 4 + 8 + 4, bad);
+ 
+ 	/* skip snaps */
+-	num = ceph_decode_32(p);
++	ceph_decode_32_safe(p, end, num, bad);
+ 	while (num--) {
+-		*p += 8;  /* snapid key */
+-		*p += 1 + 1; /* versions */
+-		len = ceph_decode_32(p);
+-		*p += len;
++		/* snapid key, pool snap (with versions) */
++		ceph_decode_skip_n(p, end, 8 + 2, bad);
++		ceph_decode_skip_string(p, end, bad);
+ 	}
+ 
+-	/* skip removed_snaps */
+-	num = ceph_decode_32(p);
+-	*p += num * (8 + 8);
++	/* removed_snaps */
++	ceph_decode_skip_map(p, end, 64, 64, bad);
+ 
++	ceph_decode_need(p, end, 8 + 8 + 4, bad);
+ 	*p += 8;  /* skip auid */
+ 	pi->flags = ceph_decode_64(p);
+ 	*p += 4;  /* skip crash_replay_interval */
+ 
+ 	if (ev >= 7)
+-		pi->min_size = ceph_decode_8(p);
++		ceph_decode_8_safe(p, end, pi->min_size, bad);
+ 	else
+ 		pi->min_size = pi->size - pi->size / 2;
+ 
+ 	if (ev >= 8)
+-		*p += 8 + 8;  /* skip quota_max_* */
++		/* quota_max_* */
++		ceph_decode_skip_n(p, end, 8 + 8, bad);
+ 
+ 	if (ev >= 9) {
+-		/* skip tiers */
+-		num = ceph_decode_32(p);
+-		*p += num * 8;
++		/* tiers */
++		ceph_decode_skip_set(p, end, 64, bad);
+ 
++		ceph_decode_need(p, end, 8 + 1 + 8 + 8, bad);
+ 		*p += 8;  /* skip tier_of */
+ 		*p += 1;  /* skip cache_mode */
+-
+ 		pi->read_tier = ceph_decode_64(p);
+ 		pi->write_tier = ceph_decode_64(p);
+ 	} else {
+@@ -858,86 +856,76 @@ static int decode_pool(void **p, void *e
+ 		pi->write_tier = -1;
+ 	}
+ 
+-	if (ev >= 10) {
+-		/* skip properties */
+-		num = ceph_decode_32(p);
+-		while (num--) {
+-			len = ceph_decode_32(p);
+-			*p += len; /* key */
+-			len = ceph_decode_32(p);
+-			*p += len; /* val */
+-		}
+-	}
++	if (ev >= 10)
++		/* properties */
++		ceph_decode_skip_map(p, end, string, string, bad);
+ 
+ 	if (ev >= 11) {
+-		/* skip hit_set_params */
+-		*p += 1 + 1; /* versions */
+-		len = ceph_decode_32(p);
+-		*p += len;
++		/* hit_set_params (with versions) */
++		ceph_decode_skip_n(p, end, 2, bad);
++		ceph_decode_skip_string(p, end, bad);
+ 
+-		*p += 4; /* skip hit_set_period */
+-		*p += 4; /* skip hit_set_count */
++		/* hit_set_period, hit_set_count */
++		ceph_decode_skip_n(p, end, 4 + 4, bad);
+ 	}
+ 
+ 	if (ev >= 12)
+-		*p += 4; /* skip stripe_width */
++		/* stripe_width */
++		ceph_decode_skip_32(p, end, bad);
+ 
+-	if (ev >= 13) {
+-		*p += 8; /* skip target_max_bytes */
+-		*p += 8; /* skip target_max_objects */
+-		*p += 4; /* skip cache_target_dirty_ratio_micro */
+-		*p += 4; /* skip cache_target_full_ratio_micro */
+-		*p += 4; /* skip cache_min_flush_age */
+-		*p += 4; /* skip cache_min_evict_age */
+-	}
+-
+-	if (ev >=  14) {
+-		/* skip erasure_code_profile */
+-		len = ceph_decode_32(p);
+-		*p += len;
+-	}
++	if (ev >= 13)
++		/* target_max_*, cache_target_*, cache_min_* */
++		ceph_decode_skip_n(p, end, 16 + 8 + 8, bad);
++
++	if (ev >= 14)
++		/* erasure_code_profile */
++		ceph_decode_skip_string(p, end, bad);
+ 
+ 	/*
+ 	 * last_force_op_resend_preluminous, will be overridden if the
+ 	 * map was encoded with RESEND_ON_SPLIT
+ 	 */
+ 	if (ev >= 15)
+-		pi->last_force_request_resend = ceph_decode_32(p);
++		ceph_decode_32_safe(p, end, pi->last_force_request_resend, bad);
+ 	else
+ 		pi->last_force_request_resend = 0;
+ 
+ 	if (ev >= 16)
+-		*p += 4; /* skip min_read_recency_for_promote */
++		/* min_read_recency_for_promote */
++		ceph_decode_skip_32(p, end, bad);
+ 
+ 	if (ev >= 17)
+-		*p += 8; /* skip expected_num_objects */
++		/* expected_num_objects */
++		ceph_decode_skip_64(p, end, bad);
+ 
+ 	if (ev >= 19)
+-		*p += 4; /* skip cache_target_dirty_high_ratio_micro */
++		/* cache_target_dirty_high_ratio_micro */
++		ceph_decode_skip_32(p, end, bad);
+ 
+ 	if (ev >= 20)
+-		*p += 4; /* skip min_write_recency_for_promote */
++		/* min_write_recency_for_promote */
++		ceph_decode_skip_32(p, end, bad);
+ 
+ 	if (ev >= 21)
+-		*p += 1; /* skip use_gmt_hitset */
++		/* use_gmt_hitset */
++		ceph_decode_skip_8(p, end, bad);
+ 
+ 	if (ev >= 22)
+-		*p += 1; /* skip fast_read */
++		/* fast_read */
++		ceph_decode_skip_8(p, end, bad);
+ 
+-	if (ev >= 23) {
+-		*p += 4; /* skip hit_set_grade_decay_rate */
+-		*p += 4; /* skip hit_set_search_last_n */
+-	}
++	if (ev >= 23)
++		/* hit_set_grade_decay_rate, hit_set_search_last_n */
++		ceph_decode_skip_n(p, end, 4 + 4, bad);
+ 
+ 	if (ev >= 24) {
+-		/* skip opts */
+-		*p += 1 + 1; /* versions */
+-		len = ceph_decode_32(p);
+-		*p += len;
++		/* opts (with versions) */
++		ceph_decode_skip_n(p, end, 2, bad);
++		ceph_decode_skip_string(p, end, bad);
+ 	}
+ 
+ 	if (ev >= 25)
+-		pi->last_force_request_resend = ceph_decode_32(p);
++		ceph_decode_32_safe(p, end, pi->last_force_request_resend, bad);
+ 
+ 	/* ignore the rest */
  
 
 
