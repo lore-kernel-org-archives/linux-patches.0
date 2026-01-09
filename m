@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C186333ADB8;
-	Fri,  9 Jan 2026 11:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BDC733C511;
+	Fri,  9 Jan 2026 11:54:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959695; cv=none; b=QhV85gfOkPJ7PIovnD/e2g5LMa8GlzQ0ymj2t6eoDHNoB+7aphk5O+pI9kEMOrU/3QqRkLVJ++M8WRuyqtqnWhNjqcygRW3k5cktIgK9plrjyKZuqVSimnUfwlt4zHoas1Zg2eES2iZdqE1FQhInpBlNvkOJEGO07Wkj1RegmkQ=
+	t=1767959698; cv=none; b=rQ/vRqGuhPhT8FLy+cIxu6zoQG0a796YuO/+fyxeypm5N+tp1PhzW/RceluQj142b6fxVvHBa5YugZk5OaChq18pVlaCvkTN4HJbbAr/6rId07AMfK3o9O+oCWchcHGI6kKeJDSPmTMdZ6j/BX49sie/B4jMUuUhcOF2o07L+MQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959695; c=relaxed/simple;
-	bh=z4iiz708vlu06hXY0YN2NFOtxidXNJ253TP/PMFflO4=;
+	s=arc-20240116; t=1767959698; c=relaxed/simple;
+	bh=dJY2yjVCQs79WWkDDrh1CtovdgPaVIOy7ATMVaOJ5Co=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OV93gAdfghSF9lGD3vd6V+iA0lX00b5WFg/8Bmlaj+l2tmbe6AoEHg6jGfN8NWHRCmM4wWAoqYd+dOWyC5YJgUL0xyXScykh47+X0oEwtH7huRX8ml+k6dHUjXKIGmtAGC/yrHn+NFR1AVsggDcDP/mzD7P5HuULyVSV40KJYkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tdp914OE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DHpY1fFWMsSDWugIYsqI6UOLOGgbBctJTQGWA0Djyp5I+UMrgVSd+DGUPzQX9fwU/Sh3mPNLU9bBsIfMwleA8OxP9UjFLhYxQOMhY0VxiJZCTSOc/nYqEnRWZm/Fyf8SxvtgIffLyjtWK5J2hVkwc7C3Q13a8iOxwwd84JejeKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gKjjlTi7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tdp914OE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14308C4CEF1;
-	Fri,  9 Jan 2026 11:54:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gKjjlTi7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDCDEC4CEF1;
+	Fri,  9 Jan 2026 11:54:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959695;
-	bh=z4iiz708vlu06hXY0YN2NFOtxidXNJ253TP/PMFflO4=;
+	s=korg; t=1767959698;
+	bh=dJY2yjVCQs79WWkDDrh1CtovdgPaVIOy7ATMVaOJ5Co=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tdp914OEAw7DlaOILuiiYdUsrRMiEQfJj9jcheqPEn5gM1zNgFjrTMVOENyrCW8Zo
-	 t2pDFQ4W5aOwQ9e/sv4s27R2x5pHkFUYVDID0OuyPJUfFUaM0WU81b99VciDBt28rR
-	 QgtYVWzdlD02dZvJI9abmkqlZj5mFXcSTdlLGZ24=
+	b=gKjjlTi7H4BAtScQpWxi+tMwLq37Tx/nO2drDrnF7VD9mjq5i53r/pWeNlfP4p++r
+	 +LHaVl+WhQrM0A+sWhG05TOg3k4OOdexUJkRpdGX0FvwDzsfgztJkZOR3dYqlWf6AH
+	 J0n77HDj/YHTs8T4XOyzqt6Wxs84SUBA11mL2GlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 110/737] perf lock contention: Load kernel map before lookup
-Date: Fri,  9 Jan 2026 12:34:09 +0100
-Message-ID: <20260109112138.142772814@linuxfoundation.org>
+Subject: [PATCH 6.6 111/737] perf record: skip synthesize event when open evsel failed
+Date: Fri,  9 Jan 2026 12:34:10 +0100
+Message-ID: <20260109112138.180687738@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,54 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Shuai Xue <xueshuai@linux.alibaba.com>
 
-[ Upstream commit 553d18c98a896094b99a01765b9698b204183d49 ]
+[ Upstream commit 163e5f2b96632b7fb2eaa965562aca0dbdf9f996 ]
 
-On some machines, it caused troubles when it tried to find kernel
-symbols.  I think it's because kernel modules and kallsyms are messed
-up during load and split.
+When using perf record with the `--overwrite` option, a segmentation fault
+occurs if an event fails to open. For example:
 
-Basically we want to make sure the kernel map is loaded and the code has
-it in the lock_contention_read().  But recently we added more lookups in
-the lock_contention_prepare() which is called before _read().
+  perf record -e cycles-ct -F 1000 -a --overwrite
+  Error:
+  cycles-ct:H: PMU Hardware doesn't support sampling/overflow-interrupts. Try 'perf stat'
+  perf: Segmentation fault
+      #0 0x6466b6 in dump_stack debug.c:366
+      #1 0x646729 in sighandler_dump_stack debug.c:378
+      #2 0x453fd1 in sigsegv_handler builtin-record.c:722
+      #3 0x7f8454e65090 in __restore_rt libc-2.32.so[54090]
+      #4 0x6c5671 in __perf_event__synthesize_id_index synthetic-events.c:1862
+      #5 0x6c5ac0 in perf_event__synthesize_id_index synthetic-events.c:1943
+      #6 0x458090 in record__synthesize builtin-record.c:2075
+      #7 0x45a85a in __cmd_record builtin-record.c:2888
+      #8 0x45deb6 in cmd_record builtin-record.c:4374
+      #9 0x4e5e33 in run_builtin perf.c:349
+      #10 0x4e60bf in handle_internal_command perf.c:401
+      #11 0x4e6215 in run_argv perf.c:448
+      #12 0x4e653a in main perf.c:555
+      #13 0x7f8454e4fa72 in __libc_start_main libc-2.32.so[3ea72]
+      #14 0x43a3ee in _start ??:0
 
-Also the kernel map (kallsyms) may not be the first one in the group
-like on ARM.  Let's use machine__kernel_map() rather than just loading
-the first map.
+The --overwrite option implies --tail-synthesize, which collects non-sample
+events reflecting the system status when recording finishes. However, when
+evsel opening fails (e.g., unsupported event 'cycles-ct'), session->evlist
+is not initialized and remains NULL. The code unconditionally calls
+record__synthesize() in the error path, which iterates through the NULL
+evlist pointer and causes a segfault.
 
-Reviewed-by: Ian Rogers <irogers@google.com>
-Fixes: 688d2e8de231c54e ("perf lock contention: Add -l/--lock-addr option")
+To fix it, move the record__synthesize() call inside the error check block, so
+it's only called when there was no error during recording, ensuring that evlist
+is properly initialized.
+
+Fixes: 4ea648aec019 ("perf record: Add --tail-synthesize option")
+Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/bpf_lock_contention.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/perf/builtin-record.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/bpf_lock_contention.c b/tools/perf/util/bpf_lock_contention.c
-index a73f39540a3d4..aa4c7baf20f57 100644
---- a/tools/perf/util/bpf_lock_contention.c
-+++ b/tools/perf/util/bpf_lock_contention.c
-@@ -24,6 +24,9 @@ int lock_contention_prepare(struct lock_contention *con)
- 	struct evlist *evlist = con->evlist;
- 	struct target *target = con->target;
+diff --git a/tools/perf/builtin-record.c b/tools/perf/builtin-record.c
+index 81f77c0505fde..ddaf38f92898f 100644
+--- a/tools/perf/builtin-record.c
++++ b/tools/perf/builtin-record.c
+@@ -2776,11 +2776,11 @@ static int __cmd_record(struct record *rec, int argc, const char **argv)
+ 		rec->bytes_written += off_cpu_write(rec->session);
  
-+	/* make sure it loads the kernel map before lookup */
-+	map__load(machine__kernel_map(con->machine));
-+
- 	skel = lock_contention_bpf__open();
- 	if (!skel) {
- 		pr_err("Failed to open lock-contention BPF skeleton\n");
-@@ -284,9 +287,6 @@ int lock_contention_read(struct lock_contention *con)
- 		bpf_prog_test_run_opts(prog_fd, &opts);
- 	}
+ 	record__read_lost_samples(rec);
+-	record__synthesize(rec, true);
+ 	/* this will be recalculated during process_buildids() */
+ 	rec->samples = 0;
  
--	/* make sure it loads the kernel map */
--	maps__load_first(machine->kmaps);
--
- 	prev_key = NULL;
- 	while (!bpf_map_get_next_key(fd, prev_key, &key)) {
- 		s64 ls_key;
+ 	if (!err) {
++		record__synthesize(rec, true);
+ 		if (!rec->timestamp_filename) {
+ 			record__finish_output(rec);
+ 		} else {
 -- 
 2.51.0
 
