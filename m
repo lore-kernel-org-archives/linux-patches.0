@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A05A632AAB5;
-	Fri,  9 Jan 2026 12:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6888426ED41;
+	Fri,  9 Jan 2026 12:19:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961150; cv=none; b=hIld1BnKuNU34TXSCskvFGN6q9rtaF9cMATT8kbMKg27pDe/777nQLsRR+Zt36dslIRqEh5MUodU+33Abhix4EscYbMLBAaWFAieedAr9RWmK+40mjTLDS/G988jLzQmefQ/9gkE2lWkKIk8r7AapItpIbDM+wAo7lhjlWrBo5E=
+	t=1767961153; cv=none; b=gc3YwGIpesOH5MAfdf7qtPnfJM5YjvMROXDmtj1ZTd4f7I7zZMs669lQvdSfaQDXMzk4ysDbifFTEP4gWUmGirHSIf/z/JU7bsgzNmOsyUMp9xMQB11eoLuFEzLQ3fmtI9hsKlUvxeb+Z9pX4XCEVXIONxT1L8Muwb/4SPg7sAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961150; c=relaxed/simple;
-	bh=6vSyp0pYyVSp0zNzFnoLtEUuYLv1HIXz3ff1h4vhPtM=;
+	s=arc-20240116; t=1767961153; c=relaxed/simple;
+	bh=JLj/STIVlXQjdHOR1EmHPNHQehjCkM8qdQzWtPdsiho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M7hXJVzC3hDsNh7vDi4VEQvI9uLBlxo85tlSmIHPh41BxmS7q90q01pDAqPCxeEoVE2x/1GBmBh9ReLEAIVBVq/+mHLr5sjVsUNkS7+v1qGQK2tE2whJ3fKsK1qZQ/+RkwpvGa8kYLMTO99dnX/Z3iYhKoXYdkdBHD9pdcm5KMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fZcZtWEu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=an2y9W8Gh4pzb+DJYublXKndchF5lbCGkDyWkyRROdbCLhZxu18UdtSZVb0f0m3aXHYQck01PtI9127z0QrXi5hmDMxqZvN0DHRIWkCuoF4fHzcqj+m7ZOSF3XEcaBdgcrbHBSTvEIXXKCWkSe1RbsbX8A34LgA2k+g54zRTTtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I8PBqeIp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fZcZtWEu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C445C4CEF1;
-	Fri,  9 Jan 2026 12:19:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I8PBqeIp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFAB0C4CEF1;
+	Fri,  9 Jan 2026 12:19:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961150;
-	bh=6vSyp0pYyVSp0zNzFnoLtEUuYLv1HIXz3ff1h4vhPtM=;
+	s=korg; t=1767961153;
+	bh=JLj/STIVlXQjdHOR1EmHPNHQehjCkM8qdQzWtPdsiho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fZcZtWEujZdD0vPqO+q76L/s06+VKhYA4J2H+i47e1vW/YZ9xyVb1Z2k9Qd+AvMSj
-	 jD2PYj75HUzgd7C+2bpLvbO6WxQ6v4lhQsXHp9ONJB4TVoBOH/O7UfmxMRjIG2hIn2
-	 wqavTpZiWe3quC8iug5hGOpmLYdvmgLQVH0qqlts=
+	b=I8PBqeIpQ7PpJLctBHwDhtkFLVD1+Dwjoe0yBUdGU4utII9Mx/0ql8ekrM0jBzN+5
+	 qtoBgV0YsPCYbI0un4quHtuQJDQuLKQzBSR5d+LUGkTVuZUEXUEu2lsHPO0qyrWSoa
+	 7SzHfqF9mzYfBZg0gsTT21U0jUinH6Zp0MTq5HDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0ff6b771b4f7a5bce83b@syzkaller.appspotmail.com,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Olga Kornievskaia <okorniev@redhat.com>,
+	NeilBrown <neil@brown.name>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 653/737] mptcp: fallback earlier on simult connection
-Date: Fri,  9 Jan 2026 12:43:12 +0100
-Message-ID: <20260109112158.587719147@linuxfoundation.org>
+Subject: [PATCH 6.6 654/737] lockd: fix vfs_test_lock() calls
+Date: Fri,  9 Jan 2026 12:43:13 +0100
+Message-ID: <20260109112158.625799340@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,151 +53,178 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: NeilBrown <neil@brown.name>
 
-[ Upstream commit 71154bbe49423128c1c8577b6576de1ed6836830 ]
+[ Upstream commit a49a2a1baa0c553c3548a1c414b6a3c005a8deba ]
 
-Syzkaller reports a simult-connect race leading to inconsistent fallback
-status:
+Usage of vfs_test_lock() is somewhat confused.  Documentation suggests
+it is given a "lock" but this is not the case.  It is given a struct
+file_lock which contains some details of the sort of lock it should be
+looking for.
 
-  WARNING: CPU: 3 PID: 33 at net/mptcp/subflow.c:1515 subflow_data_ready+0x40b/0x7c0 net/mptcp/subflow.c:1515
-  Modules linked in:
-  CPU: 3 UID: 0 PID: 33 Comm: ksoftirqd/3 Not tainted syzkaller #0 PREEMPT(full)
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
-  RIP: 0010:subflow_data_ready+0x40b/0x7c0 net/mptcp/subflow.c:1515
-  Code: 89 ee e8 78 61 3c f6 40 84 ed 75 21 e8 8e 66 3c f6 44 89 fe bf 07 00 00 00 e8 c1 61 3c f6 41 83 ff 07 74 09 e8 76 66 3c f6 90 <0f> 0b 90 e8 6d 66 3c f6 48 89 df e8 e5 ad ff ff 31 ff 89 c5 89 c6
-  RSP: 0018:ffffc900006cf338 EFLAGS: 00010246
-  RAX: 0000000000000000 RBX: ffff888031acd100 RCX: ffffffff8b7f2abf
-  RDX: ffff88801e6ea440 RSI: ffffffff8b7f2aca RDI: 0000000000000005
-  RBP: 0000000000000000 R08: 0000000000000005 R09: 0000000000000007
-  R10: 0000000000000004 R11: 0000000000002c10 R12: ffff88802ba69900
-  R13: 1ffff920000d9e67 R14: ffff888046f81800 R15: 0000000000000004
-  FS:  0000000000000000(0000) GS:ffff8880d69bc000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 0000560fc0ca1670 CR3: 0000000032c3a000 CR4: 0000000000352ef0
-  Call Trace:
-   <TASK>
-   tcp_data_queue+0x13b0/0x4f90 net/ipv4/tcp_input.c:5197
-   tcp_rcv_state_process+0xfdf/0x4ec0 net/ipv4/tcp_input.c:6922
-   tcp_v6_do_rcv+0x492/0x1740 net/ipv6/tcp_ipv6.c:1672
-   tcp_v6_rcv+0x2976/0x41e0 net/ipv6/tcp_ipv6.c:1918
-   ip6_protocol_deliver_rcu+0x188/0x1520 net/ipv6/ip6_input.c:438
-   ip6_input_finish+0x1e4/0x4b0 net/ipv6/ip6_input.c:489
-   NF_HOOK include/linux/netfilter.h:318 [inline]
-   NF_HOOK include/linux/netfilter.h:312 [inline]
-   ip6_input+0x105/0x2f0 net/ipv6/ip6_input.c:500
-   dst_input include/net/dst.h:471 [inline]
-   ip6_rcv_finish net/ipv6/ip6_input.c:79 [inline]
-   NF_HOOK include/linux/netfilter.h:318 [inline]
-   NF_HOOK include/linux/netfilter.h:312 [inline]
-   ipv6_rcv+0x264/0x650 net/ipv6/ip6_input.c:311
-   __netif_receive_skb_one_core+0x12d/0x1e0 net/core/dev.c:5979
-   __netif_receive_skb+0x1d/0x160 net/core/dev.c:6092
-   process_backlog+0x442/0x15e0 net/core/dev.c:6444
-   __napi_poll.constprop.0+0xba/0x550 net/core/dev.c:7494
-   napi_poll net/core/dev.c:7557 [inline]
-   net_rx_action+0xa9f/0xfe0 net/core/dev.c:7684
-   handle_softirqs+0x216/0x8e0 kernel/softirq.c:579
-   run_ksoftirqd kernel/softirq.c:968 [inline]
-   run_ksoftirqd+0x3a/0x60 kernel/softirq.c:960
-   smpboot_thread_fn+0x3f7/0xae0 kernel/smpboot.c:160
-   kthread+0x3c2/0x780 kernel/kthread.c:463
-   ret_from_fork+0x5d7/0x6f0 arch/x86/kernel/process.c:148
-   ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
-   </TASK>
+In particular passing a "file_lock" containing fl_lmops or fl_ops is
+meaningless and possibly confusing.
 
-The TCP subflow can process the simult-connect syn-ack packet after
-transitioning to TCP_FIN1 state, bypassing the MPTCP fallback check,
-as the sk_state_change() callback is not invoked for * -> FIN_WAIT1
-transitions.
+This is particularly problematic in lockd.  nlmsvc_testlock() receives
+an initialised "file_lock" from xdr-decode, including manager ops and an
+owner.  It then mistakenly passes this to vfs_test_lock() which might
+replace the owner and the ops.  This can lead to confusion when freeing
+the lock.
 
-That will move the msk socket to an inconsistent status and the next
-incoming data will hit the reported splat.
+The primary role of the 'struct file_lock' passed to vfs_test_lock() is
+to report a conflicting lock that was found, so it makes more sense for
+nlmsvc_testlock() to pass "conflock", which it uses for returning the
+conflicting lock.
 
-Close the race moving the simult-fallback check at the earliest possible
-stage - that is at syn-ack generation time.
+With this change, freeing of the lock is not confused and code in
+__nlm4svc_proc_test() and __nlmsvc_proc_test() can be simplified.
 
-About the fixes tags: [2] was supposed to also fix this issue introduced
-by [3]. [1] is required as a dependence: it was not explicitly marked as
-a fix, but it is one and it has already been backported before [3]. In
-other words, this commit should be backported up to [3], including [2]
-and [1] if that's not already there.
+Documentation for vfs_test_lock() is improved to reflect its real
+purpose, and a WARN_ON_ONCE() is added to avoid a similar problem in the
+future.
 
-Fixes: 23e89e8ee7be ("tcp: Don't drop SYN+ACK for simultaneous connect().") [1]
-Fixes: 4fd19a307016 ("mptcp: fix inconsistent state on fastopen race") [2]
-Fixes: 1e777f39b4d7 ("mptcp: add MSG_FASTOPEN sendmsg flag support") [3]
+Reported-by: Olga Kornievskaia <okorniev@redhat.com>
+Closes: https://lore.kernel.org/all/20251021130506.45065-1-okorniev@redhat.com
+Signed-off-by: NeilBrown <neil@brown.name>
+Fixes: 20fa19027286 ("nfs: add export operations")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+0ff6b771b4f7a5bce83b@syzkaller.appspotmail.com
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/586
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251212-net-mptcp-subflow_data_ready-warn-v1-1-d1f9fd1c36c8@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ adapted mptcp_try_fallback() call ]
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+[ adapted fl->c.flc_* field references to flat fl->fl_* naming convention ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/options.c  |   10 ++++++++++
- net/mptcp/protocol.h |    6 ++----
- net/mptcp/subflow.c  |   10 +---------
- 3 files changed, 13 insertions(+), 13 deletions(-)
+ fs/lockd/svc4proc.c |    4 +---
+ fs/lockd/svclock.c  |   21 ++++++++++++---------
+ fs/lockd/svcproc.c  |    5 +----
+ fs/locks.c          |   12 ++++++++++--
+ 4 files changed, 24 insertions(+), 18 deletions(-)
 
---- a/net/mptcp/options.c
-+++ b/net/mptcp/options.c
-@@ -408,6 +408,16 @@ bool mptcp_syn_options(struct sock *sk,
- 	 */
- 	subflow->snd_isn = TCP_SKB_CB(skb)->end_seq;
- 	if (subflow->request_mptcp) {
-+		if (unlikely(subflow_simultaneous_connect(sk))) {
-+			WARN_ON_ONCE(!mptcp_try_fallback(sk));
-+
-+			/* Ensure mptcp_finish_connect() will not process the
-+			 * MPC handshake.
-+			 */
-+			subflow->request_mptcp = 0;
-+			return false;
-+		}
-+
- 		opts->suboptions = OPTION_MPTCP_MPC_SYN;
- 		opts->csum_reqd = mptcp_is_checksum_enabled(sock_net(sk));
- 		opts->allow_join_id0 = mptcp_allow_join_id0(sock_net(sk));
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -1175,10 +1175,8 @@ static inline bool subflow_simultaneous_
- {
- 	struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(sk);
+--- a/fs/lockd/svc4proc.c
++++ b/fs/lockd/svc4proc.c
+@@ -96,7 +96,6 @@ __nlm4svc_proc_test(struct svc_rqst *rqs
+ 	struct nlm_args *argp = rqstp->rq_argp;
+ 	struct nlm_host	*host;
+ 	struct nlm_file	*file;
+-	struct nlm_lockowner *test_owner;
+ 	__be32 rc = rpc_success;
  
--	return (1 << sk->sk_state) &
--	       (TCPF_ESTABLISHED | TCPF_FIN_WAIT1 | TCPF_FIN_WAIT2 | TCPF_CLOSING) &&
--	       is_active_ssk(subflow) &&
--	       !subflow->conn_finished;
-+	/* Note that the sk state implies !subflow->conn_finished. */
-+	return sk->sk_state == TCP_SYN_RECV && is_active_ssk(subflow);
- }
+ 	dprintk("lockd: TEST4        called\n");
+@@ -106,7 +105,6 @@ __nlm4svc_proc_test(struct svc_rqst *rqs
+ 	if ((resp->status = nlm4svc_retrieve_args(rqstp, argp, &host, &file)))
+ 		return resp->status == nlm_drop_reply ? rpc_drop_reply :rpc_success;
  
- #ifdef CONFIG_SYN_COOKIES
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -1793,18 +1793,10 @@ static void subflow_state_change(struct
- {
- 	struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(sk);
- 	struct sock *parent = subflow->conn;
--	struct mptcp_sock *msk;
-+	struct mptcp_sock *msk = mptcp_sk(parent);
+-	test_owner = argp->lock.fl.fl_owner;
+ 	/* Now check for conflicting locks */
+ 	resp->status = nlmsvc_testlock(rqstp, file, host, &argp->lock, &resp->lock, &resp->cookie);
+ 	if (resp->status == nlm_drop_reply)
+@@ -114,7 +112,7 @@ __nlm4svc_proc_test(struct svc_rqst *rqs
+ 	else
+ 		dprintk("lockd: TEST4        status %d\n", ntohl(resp->status));
  
- 	__subflow_state_change(sk);
+-	nlmsvc_put_lockowner(test_owner);
++	nlmsvc_release_lockowner(&argp->lock);
+ 	nlmsvc_release_host(host);
+ 	nlm_release_file(file);
+ 	return rc;
+--- a/fs/lockd/svclock.c
++++ b/fs/lockd/svclock.c
+@@ -615,7 +615,13 @@ nlmsvc_testlock(struct svc_rqst *rqstp,
+ 	}
  
--	msk = mptcp_sk(parent);
--	if (subflow_simultaneous_connect(sk)) {
--		WARN_ON_ONCE(!mptcp_try_fallback(sk));
--		pr_fallback(msk);
--		subflow->conn_finished = 1;
--		mptcp_propagate_state(parent, sk, subflow, NULL);
--	}
+ 	mode = lock_to_openmode(&lock->fl);
+-	error = vfs_test_lock(file->f_file[mode], &lock->fl);
++	locks_init_lock(&conflock->fl);
++	/* vfs_test_lock only uses start, end, and owner, but tests fl_file */
++	conflock->fl.fl_file = lock->fl.fl_file;
++	conflock->fl.fl_start = lock->fl.fl_start;
++	conflock->fl.fl_end = lock->fl.fl_end;
++	conflock->fl.fl_owner = lock->fl.fl_owner;
++	error = vfs_test_lock(file->f_file[mode], &conflock->fl);
+ 	if (error) {
+ 		/* We can't currently deal with deferred test requests */
+ 		if (error == FILE_LOCK_DEFERRED)
+@@ -625,22 +631,19 @@ nlmsvc_testlock(struct svc_rqst *rqstp,
+ 		goto out;
+ 	}
+ 
+-	if (lock->fl.fl_type == F_UNLCK) {
++	if (conflock->fl.fl_type == F_UNLCK) {
+ 		ret = nlm_granted;
+ 		goto out;
+ 	}
+ 
+ 	dprintk("lockd: conflicting lock(ty=%d, %Ld-%Ld)\n",
+-		lock->fl.fl_type, (long long)lock->fl.fl_start,
+-		(long long)lock->fl.fl_end);
++		conflock->fl.fl_type, (long long)conflock->fl.fl_start,
++		(long long)conflock->fl.fl_end);
+ 	conflock->caller = "somehost";	/* FIXME */
+ 	conflock->len = strlen(conflock->caller);
+ 	conflock->oh.len = 0;		/* don't return OH info */
+-	conflock->svid = lock->fl.fl_pid;
+-	conflock->fl.fl_type = lock->fl.fl_type;
+-	conflock->fl.fl_start = lock->fl.fl_start;
+-	conflock->fl.fl_end = lock->fl.fl_end;
+-	locks_release_private(&lock->fl);
++	conflock->svid = conflock->fl.fl_pid;
++	locks_release_private(&conflock->fl);
+ 
+ 	ret = nlm_lck_denied;
+ out:
+--- a/fs/lockd/svcproc.c
++++ b/fs/lockd/svcproc.c
+@@ -117,7 +117,6 @@ __nlmsvc_proc_test(struct svc_rqst *rqst
+ 	struct nlm_args *argp = rqstp->rq_argp;
+ 	struct nlm_host	*host;
+ 	struct nlm_file	*file;
+-	struct nlm_lockowner *test_owner;
+ 	__be32 rc = rpc_success;
+ 
+ 	dprintk("lockd: TEST          called\n");
+@@ -127,8 +126,6 @@ __nlmsvc_proc_test(struct svc_rqst *rqst
+ 	if ((resp->status = nlmsvc_retrieve_args(rqstp, argp, &host, &file)))
+ 		return resp->status == nlm_drop_reply ? rpc_drop_reply :rpc_success;
+ 
+-	test_owner = argp->lock.fl.fl_owner;
 -
- 	/* as recvmsg() does not acquire the subflow socket for ssk selection
- 	 * a fin packet carrying a DSS can be unnoticed if we don't trigger
- 	 * the data available machinery here.
+ 	/* Now check for conflicting locks */
+ 	resp->status = cast_status(nlmsvc_testlock(rqstp, file, host, &argp->lock, &resp->lock, &resp->cookie));
+ 	if (resp->status == nlm_drop_reply)
+@@ -137,7 +134,7 @@ __nlmsvc_proc_test(struct svc_rqst *rqst
+ 		dprintk("lockd: TEST          status %d vers %d\n",
+ 			ntohl(resp->status), rqstp->rq_vers);
+ 
+-	nlmsvc_put_lockowner(test_owner);
++	nlmsvc_release_lockowner(&argp->lock);
+ 	nlmsvc_release_host(host);
+ 	nlm_release_file(file);
+ 	return rc;
+--- a/fs/locks.c
++++ b/fs/locks.c
+@@ -2124,13 +2124,21 @@ SYSCALL_DEFINE2(flock, unsigned int, fd,
+ /**
+  * vfs_test_lock - test file byte range lock
+  * @filp: The file to test lock for
+- * @fl: The lock to test; also used to hold result
++ * @fl: The byte-range in the file to test; also used to hold result
+  *
++ * On entry, @fl does not contain a lock, but identifies a range (fl_start, fl_end)
++ * in the file (c.flc_file), and an owner (c.flc_owner) for whom existing locks
++ * should be ignored.  c.flc_type and c.flc_flags are ignored.
++ * Both fl_lmops and fl_ops in @fl must be NULL.
+  * Returns -ERRNO on failure.  Indicates presence of conflicting lock by
+- * setting conf->fl_type to something other than F_UNLCK.
++ * setting fl->fl_type to something other than F_UNLCK.
++ *
++ * If vfs_test_lock() does find a lock and return it, the caller must
++ * use locks_free_lock() or locks_release_private() on the returned lock.
+  */
+ int vfs_test_lock(struct file *filp, struct file_lock *fl)
+ {
++	WARN_ON_ONCE(fl->fl_ops || fl->fl_lmops);
+ 	WARN_ON_ONCE(filp != fl->fl_file);
+ 	if (filp->f_op->lock)
+ 		return filp->f_op->lock(filp, F_GETLK, fl);
 
 
