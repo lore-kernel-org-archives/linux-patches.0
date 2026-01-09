@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24457336EDA;
-	Fri,  9 Jan 2026 12:31:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 019AC33372B;
+	Fri,  9 Jan 2026 12:31:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961908; cv=none; b=D1BTUdqySQsdGK8bgUn4lRe7M8EZxnIdfW26CVa5tjGmMfYDpojo/D+sVI8iCRZPWVV1zijtW3b6PgpbmhW1PVtt2tX74JCs6F88j4MXtk/itjvyIqXH8XOz8cULTSSgkBIrU1prkXLjT4I/bvc4pxDxnFKDezo0/CnHeltI3oY=
+	t=1767961911; cv=none; b=KdXf9hEef+KD/wSZfunjATSGUBt4LeNEm+IppEOm7ajlGmvdqGI4FBYPLePFInptVsKS3/z5srCEVcArzF6gMgXGRNMH2o/Ygig4A5AqykrlnxvuC9EtHFGUN9QYCfGkQhuDoqC9jqcQEr/0uqbu/3j5xH6j+QdB5Urjp3IR0h8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961908; c=relaxed/simple;
-	bh=d9Qyni7KfhUm5NiBpvybrAJScBgguA8YPyor0LTQ/Zo=;
+	s=arc-20240116; t=1767961911; c=relaxed/simple;
+	bh=DqWX3epzI1ARJ7PBKIu92xLpzuWBHe3D8jl+VMVyvUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sIEwPMWLyS/QCx2xw8oO903ddMs+tPFb9R2fnRdTe4Fwi2yD/hzsOSN7S+TNVgXKL3oxu1pcsGNU4qWzPgBWqfI5w/YkwHGPM24LSDgqVxqKyL7JiL+qGT/AUcQhhlQ8bnMbsiwQ/Gb7JvqR12fUHnInzY8gu5dGn44DcXsR1OU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eKjWmQZH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OE8dTIA+X4KP5qxylEvV1KJY8H+nF1VFMCMSIkF48uFpn7SXJxAYvOEdF38pe2JrkdQkRujCgBYN0Fnjtg8mCJ7IBZE0Pv2J2ttrzNwidVp5Y7TrrWw3+Ix/ayrLJQRiogZ0IP0Polr0Is3y769KWH4e58Vx3dtCdIw3clxMXJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zqaXkEoR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eKjWmQZH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6B59C4CEF1;
-	Fri,  9 Jan 2026 12:31:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zqaXkEoR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F930C4CEF1;
+	Fri,  9 Jan 2026 12:31:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961908;
-	bh=d9Qyni7KfhUm5NiBpvybrAJScBgguA8YPyor0LTQ/Zo=;
+	s=korg; t=1767961910;
+	bh=DqWX3epzI1ARJ7PBKIu92xLpzuWBHe3D8jl+VMVyvUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eKjWmQZHPNtKPAa2Dc6ErimfBXgk7PPHOOGeYAJEiGG8k4cYnN0BLD0d68dvNh7Tw
-	 w3D8FZW3kBbV+1ok0txrdsaoi3Pmve9/cpyGk+0czRpLOcp7DR7/vkcfl2f8FSk1lH
-	 RJE4AoFzYSJZFhI9FlyyAbnlARSlHGLRtYuD/Go0=
+	b=zqaXkEoR0D1u5QRGK/kkBFlwFPZCyCbHn4zZfPKPb3S7BWUekLtPujcXVsF/ter2x
+	 9vp8fSVUTP12vIe3C8GIuxGFqFcXu5C0cuecQAf3UWsH6RccE8XzA/1/Oz1oJVol1e
+	 Bpcwp6SeWALMBCkzD6mq4ITgRNzWKDASNVpG8lPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandru Gagniuc <mr.nuke.me@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 179/634] remoteproc: qcom_q6v5_wcss: fix parsing of qcom,halt-regs
-Date: Fri,  9 Jan 2026 12:37:37 +0100
-Message-ID: <20260109112124.177998988@linuxfoundation.org>
+Subject: [PATCH 6.1 180/634] md: export md_is_rdwr() and is_md_suspended()
+Date: Fri,  9 Jan 2026 12:37:38 +0100
+Message-ID: <20260109112124.215109288@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,55 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 7e81fa8d809ed1e67ae9ecd52d20a20c2c65d877 ]
+[ Upstream commit 431e61257d631157e1d374f1368febf37aa59f7c ]
 
-The "qcom,halt-regs" consists of a phandle reference followed by the
-three offsets within syscon for halt registers. Thus, we need to
-request 4 integers from of_property_read_variable_u32_array(), with
-the halt_reg ofsets at indexes 1, 2, and 3. Offset 0 is the phandle.
+The two apis will be used later to fix a deadlock in raid456, there are
+no functional changes.
 
-With MAX_HALT_REG at 3, of_property_read_variable_u32_array() returns
--EOVERFLOW, causing .probe() to fail.
-
-Increase MAX_HALT_REG to 4, and update the indexes accordingly.
-
-Fixes: 0af65b9b915e ("remoteproc: qcom: wcss: Add non pas wcss Q6 support for QCS404")
-Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
-Link: https://lore.kernel.org/r/20251129013207.3981517-1-mr.nuke.me@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20230512015610.821290-4-yukuai1@huaweicloud.com
+Stable-dep-of: a913d1f6a7f6 ("md/raid5: fix IO hang when array is broken with IO inflight")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5_wcss.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/md/md.c | 16 ----------------
+ drivers/md/md.h | 17 +++++++++++++++++
+ 2 files changed, 17 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
-index ba24d745b2d65..2bb94cdd60136 100644
---- a/drivers/remoteproc/qcom_q6v5_wcss.c
-+++ b/drivers/remoteproc/qcom_q6v5_wcss.c
-@@ -85,7 +85,7 @@
- #define TCSR_WCSS_CLK_MASK	0x1F
- #define TCSR_WCSS_CLK_ENABLE	0x14
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index a9fcfcbc2d110..fa1f487eb0300 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -93,18 +93,6 @@ static int remove_and_add_spares(struct mddev *mddev,
+ 				 struct md_rdev *this);
+ static void mddev_detach(struct mddev *mddev);
  
--#define MAX_HALT_REG		3
-+#define MAX_HALT_REG		4
- enum {
- 	WCSS_IPQ8074,
- 	WCSS_QCS404,
-@@ -864,9 +864,9 @@ static int q6v5_wcss_init_mmio(struct q6v5_wcss *wcss,
- 		return -EINVAL;
- 	}
+-enum md_ro_state {
+-	MD_RDWR,
+-	MD_RDONLY,
+-	MD_AUTO_READ,
+-	MD_MAX_STATE
+-};
+-
+-static bool md_is_rdwr(struct mddev *mddev)
+-{
+-	return (mddev->ro == MD_RDWR);
+-}
+-
+ /*
+  * Default number of read corrections we'll attempt on an rdev
+  * before ejecting it from the array. We divide the read error
+@@ -380,10 +368,6 @@ EXPORT_SYMBOL_GPL(md_new_event);
+ static LIST_HEAD(all_mddevs);
+ static DEFINE_SPINLOCK(all_mddevs_lock);
  
--	wcss->halt_q6 = halt_reg[0];
--	wcss->halt_wcss = halt_reg[1];
--	wcss->halt_nc = halt_reg[2];
-+	wcss->halt_q6 = halt_reg[1];
-+	wcss->halt_wcss = halt_reg[2];
-+	wcss->halt_nc = halt_reg[3];
+-static bool is_md_suspended(struct mddev *mddev)
+-{
+-	return percpu_ref_is_dying(&mddev->active_io);
+-}
+ /* Rather than calling directly into the personality make_request function,
+  * IO requests come here first so that we can check if the device is
+  * being suspended pending a reconfiguration.
+diff --git a/drivers/md/md.h b/drivers/md/md.h
+index 1fda5e139beb0..1d048976e7432 100644
+--- a/drivers/md/md.h
++++ b/drivers/md/md.h
+@@ -555,6 +555,23 @@ enum recovery_flags {
+ 	MD_RESYNCING_REMOTE,	/* remote node is running resync thread */
+ };
  
- 	return 0;
- }
++enum md_ro_state {
++	MD_RDWR,
++	MD_RDONLY,
++	MD_AUTO_READ,
++	MD_MAX_STATE
++};
++
++static inline bool md_is_rdwr(struct mddev *mddev)
++{
++	return (mddev->ro == MD_RDWR);
++}
++
++static inline bool is_md_suspended(struct mddev *mddev)
++{
++	return percpu_ref_is_dying(&mddev->active_io);
++}
++
+ static inline int __must_check mddev_lock(struct mddev *mddev)
+ {
+ 	return mutex_lock_interruptible(&mddev->reconfig_mutex);
 -- 
 2.51.0
 
