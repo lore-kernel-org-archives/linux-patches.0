@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B6326ED41;
-	Fri,  9 Jan 2026 12:20:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6AA33B6F0;
+	Fri,  9 Jan 2026 12:20:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961256; cv=none; b=M1l2TrrsP/sNnmX+E69h77dZkVtF1YpAYCM7CgqoB9ViXsxs4eHL0SO6X6lddChyBzhq/MKnVtb2imO9RvEWLqIQOln5ftMS9ub1OoBZICFGu+2z1MXXH9qy9ttqVVj8pANHYprPGHved7x05MhVqtP3HoW1Slp5IF8gGpNftes=
+	t=1767961259; cv=none; b=n4Gt269U6aL6JEUN5Ez6EcucY/WbqwWjjdCJIwfBTaKneJCgwpFGhafV2ditT7unV1zHBXyxobFaRABnL3wSsmgsU7WN5rzXBi52gtbXWmfG8bIcPK1259qWyBK8IE7juB+E+PYbSYlcaKQEhg+4x8MelN25m9+nESHh0ZT+v0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961256; c=relaxed/simple;
-	bh=WpXZxt6A2KBPwLTishpDLQAI0z9WWf9TV0lHWJF8AHE=;
+	s=arc-20240116; t=1767961259; c=relaxed/simple;
+	bh=x6AXOFH6tikA0icU2ZdXYbi9fSZsvyPz3w4Kck+Y0sY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JdRuf8+sCXJuWkM67K/kdCx1xPDT92wAUhDshA/GAeVhQYQPuuOjIdJ40POEntrY5ElY2Mhz5ZGi++zp5SXwKy1rXHpeG4qsUavrYccBUM2wDLFd3PYbMzUsn4REl094ZHa2LdZ+DbC2WfAAZ/2SCXUAPDo9FzbgR+oqrGC2JgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cj2T5f3e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kmPLHP5mOhgrc8iyq0m24CSMIGFjyuVA2VKGz77wM5caGfQAvvkavmaVa+wajOL9Bk5eyyvccUpSSYY/t2wLc2evURmTYyFpuVAw5XovldASRrHP8IU+v3MGaC89F3gikBcXjVPwyUnKdcgaZDhecb5k9XmjIMS/65a4dw4erbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nGNkr1PN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cj2T5f3e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5417C4CEF1;
-	Fri,  9 Jan 2026 12:20:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nGNkr1PN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A311BC4CEF1;
+	Fri,  9 Jan 2026 12:20:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961256;
-	bh=WpXZxt6A2KBPwLTishpDLQAI0z9WWf9TV0lHWJF8AHE=;
+	s=korg; t=1767961259;
+	bh=x6AXOFH6tikA0icU2ZdXYbi9fSZsvyPz3w4Kck+Y0sY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cj2T5f3eFdhqZ6YnT6Eo8l1q3Mpf5S39sPTlU0jhyfo1X8enD3PbR2L3v/S17L7l1
-	 gsWfynMTDeHIzimBpG9yUfiEN9N7UIeTAs/RWkKYSk3vF0uVu0OSLMGrfJmTE6Oe65
-	 EKBLeU6iiR7L2gNE5GXYJEKekSiWe3uim4nFI7tA=
+	b=nGNkr1PNZSrG/aUjijtkcglQgZEuYVjY4+ZlWt/aqxi4p6HysW1wz1VcjONV8mqiW
+	 rFJaCk0xsIj70h35Rvjtq1GvnqSSlZHJMg71N43EPOjzJUZcOKdkvrzJXI8hsDegko
+	 8uGuR4cD1IMsRGOCRtxEGLrbkpkUk5oRBs6YfmoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 690/737] f2fs: fix to detect recoverable inode during dryrun of find_fsync_dnodes()
-Date: Fri,  9 Jan 2026 12:43:49 +0100
-Message-ID: <20260109112200.018592033@linuxfoundation.org>
+	Chenghao Duan <duanchenghao@kylinos.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.6 673/737] LoongArch: Refactor register restoration in ftrace_common_return
+Date: Fri,  9 Jan 2026 12:43:32 +0100
+Message-ID: <20260109112159.367499336@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,106 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Chenghao Duan <duanchenghao@kylinos.cn>
 
-[ Upstream commit 68d05693f8c031257a0822464366e1c2a239a512 ]
+commit 45cb47c628dfbd1994c619f3eac271a780602826 upstream.
 
-mkfs.f2fs -f /dev/vdd
-mount /dev/vdd /mnt/f2fs
-touch /mnt/f2fs/foo
-sync		# avoid CP_UMOUNT_FLAG in last f2fs_checkpoint.ckpt_flags
-touch /mnt/f2fs/bar
-f2fs_io fsync /mnt/f2fs/bar
-f2fs_io shutdown 2 /mnt/f2fs
-umount /mnt/f2fs
-blockdev --setro /dev/vdd
-mount /dev/vdd /mnt/f2fs
-mount: /mnt/f2fs: WARNING: source write-protected, mounted read-only.
+Refactor the register restoration sequence in the ftrace_common_return
+function to clearly distinguish between the logic of normal returns and
+direct call returns in function tracing scenarios. The logic is as
+follows:
 
-For the case if we create and fsync a new inode before sudden power-cut,
-without norecovery or disable_roll_forward mount option, the following
-mount will succeed w/o recovering last fsynced inode.
+1. In the case of a normal return, the execution flow returns to the
+traced function, and ftrace must ensure that the register data is
+consistent with the state when the function was entered.
 
-The problem here is that we only check inode_list list after
-find_fsync_dnodes() in f2fs_recover_fsync_data() to find out whether
-there is recoverable data in the iamge, but there is a missed case, if
-last fsynced inode is not existing in last checkpoint, then, we will
-fail to get its inode due to nat of inode node is not existing in last
-checkpoint, so the inode won't be linked in inode_list.
+ra = parent return address; t0 = traced function return address.
 
-Let's detect such case in dyrun mode to fix this issue.
+2. In the case of a direct call return, the execution flow jumps to the
+custom trampoline function, and ftrace must ensure that the register
+data is consistent with the state when ftrace was entered.
 
-After this change, mount will fail as expected below:
-mount: /mnt/f2fs: cannot mount /dev/vdd read-only.
-       dmesg(1) may have more information after failed mount system call.
-demsg:
-F2FS-fs (vdd): Need to recover fsync data, but write access unavailable, please try mount w/ disable_roll_forward or norecovery
+ra = traced function return address; t0 = parent return address.
 
-Cc: stable@kernel.org
-Fixes: 6781eabba1bd ("f2fs: give -EINVAL for norecovery and rw mount")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ folio => page ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 9cdc3b6a299c ("LoongArch: ftrace: Add direct call support")
+Signed-off-by: Chenghao Duan <duanchenghao@kylinos.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/recovery.c |   20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ arch/loongarch/kernel/mcount_dyn.S |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/fs/f2fs/recovery.c
-+++ b/fs/f2fs/recovery.c
-@@ -404,7 +404,7 @@ static int sanity_check_node_chain(struc
- }
+--- a/arch/loongarch/kernel/mcount_dyn.S
++++ b/arch/loongarch/kernel/mcount_dyn.S
+@@ -93,7 +93,6 @@ SYM_INNER_LABEL(ftrace_graph_call, SYM_L
+  * at the callsite, so there is no need to restore the T series regs.
+  */
+ ftrace_common_return:
+-	PTR_L		ra, sp, PT_R1
+ 	PTR_L		a0, sp, PT_R4
+ 	PTR_L		a1, sp, PT_R5
+ 	PTR_L		a2, sp, PT_R6
+@@ -103,12 +102,17 @@ ftrace_common_return:
+ 	PTR_L		a6, sp, PT_R10
+ 	PTR_L		a7, sp, PT_R11
+ 	PTR_L		fp, sp, PT_R22
+-	PTR_L		t0, sp, PT_ERA
+ 	PTR_L		t1, sp, PT_R13
+-	PTR_ADDI	sp, sp, PT_SIZE
+ 	bnez		t1, .Ldirect
++
++	PTR_L		ra, sp, PT_R1
++	PTR_L		t0, sp, PT_ERA
++	PTR_ADDI	sp, sp, PT_SIZE
+ 	jr		t0
+ .Ldirect:
++	PTR_L		t0, sp, PT_R1
++	PTR_L		ra, sp, PT_ERA
++	PTR_ADDI	sp, sp, PT_SIZE
+ 	jr		t1
+ SYM_CODE_END(ftrace_common)
  
- static int find_fsync_dnodes(struct f2fs_sb_info *sbi, struct list_head *head,
--				bool check_only)
-+				bool check_only, bool *new_inode)
- {
- 	struct curseg_info *curseg;
- 	struct page *page = NULL;
-@@ -451,16 +451,19 @@ static int find_fsync_dnodes(struct f2fs
- 				quota_inode = true;
- 			}
+@@ -155,6 +159,8 @@ SYM_CODE_END(return_to_handler)
  
--			/*
--			 * CP | dnode(F) | inode(DF)
--			 * For this case, we should not give up now.
--			 */
- 			entry = add_fsync_inode(sbi, head, ino_of_node(page),
- 								quota_inode);
- 			if (IS_ERR(entry)) {
- 				err = PTR_ERR(entry);
--				if (err == -ENOENT)
-+				/*
-+				 * CP | dnode(F) | inode(DF)
-+				 * For this case, we should not give up now.
-+				 */
-+				if (err == -ENOENT) {
-+					if (check_only)
-+						*new_inode = true;
- 					goto next;
-+				}
- 				f2fs_put_page(page, 1);
- 				break;
- 			}
-@@ -863,6 +866,7 @@ int f2fs_recover_fsync_data(struct f2fs_
- 	unsigned long s_flags = sbi->sb->s_flags;
- 	bool need_writecp = false;
- 	bool fix_curseg_write_pointer = false;
-+	bool new_inode = false;
- 
- 	if (is_sbi_flag_set(sbi, SBI_IS_WRITABLE))
- 		f2fs_info(sbi, "recover fsync data on readonly fs");
-@@ -875,8 +879,8 @@ int f2fs_recover_fsync_data(struct f2fs_
- 	f2fs_down_write(&sbi->cp_global_sem);
- 
- 	/* step #1: find fsynced inode numbers */
--	err = find_fsync_dnodes(sbi, &inode_list, check_only);
--	if (err || list_empty(&inode_list))
-+	err = find_fsync_dnodes(sbi, &inode_list, check_only, &new_inode);
-+	if (err < 0 || (list_empty(&inode_list) && (!check_only || !new_inode)))
- 		goto skip;
- 
- 	if (check_only) {
+ #ifdef CONFIG_DYNAMIC_FTRACE_WITH_DIRECT_CALLS
+ SYM_CODE_START(ftrace_stub_direct_tramp)
+-	jr		t0
++	move		t1, ra
++	move		ra, t0
++	jr		t1
+ SYM_CODE_END(ftrace_stub_direct_tramp)
+ #endif /* CONFIG_DYNAMIC_FTRACE_WITH_DIRECT_CALLS */
 
 
