@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A64C335B15C;
-	Fri,  9 Jan 2026 12:38:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 259E433D511;
+	Fri,  9 Jan 2026 12:38:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962330; cv=none; b=VFbvJMEjaQe/eTdrm2jw3apsjwguLp+N+0FK3MMaXUADtKI3yeY4iYmnooj4hi8yfASwKzMLUh+yy4ZAACgOdi4EoxdJDTsROja4leN9hRxxWGSgT1fkhstHUkBpsiZYucxXBf9Een3s7Nhm5so7KjRco2cq8KEGXTQUsnhBbqE=
+	t=1767962333; cv=none; b=kyOA/jsIvN+9Ly8wOMV8aM/uN69ZQrvplHMef57fQ4ruo2QZO2DERoxMvfjXJopEMCKhXm+SX6cjem+IqgwHo+BWGpdsI7kEPGpt9A+27dx1m+woL8Ex4cj8U/cqtUUSHRvNT5SeBQdZ8hdF4fB5kF2iOz1mbnxTaQSe6l4oj7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962330; c=relaxed/simple;
-	bh=aj0g1xPl874+FQLBNlteac/R812owkP4SF60SqktdyI=;
+	s=arc-20240116; t=1767962333; c=relaxed/simple;
+	bh=bvLP3dfDlEi7yAOHfitNsEDWfwkQGdSwevExvpsBnI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u845CTHn2ykm8szHx358MpP412Qj1cGupLDRaWhtnnaRbhn0to0jwVrKzt663IpXXB+MGPmo/3wem7eEnYUF5UA5nn9rJhPQBJEiw1PnPyFQckYE0jkXEqGclSDOW11o2dBg1fH37JdFn6IuX8oFnRX31tODOHOQdH8DbdndTP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hukzdvts; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I5Ew7X2DXDj0o/yp0d2RpraIdDqPD5HfSC4BUqDKsn/Pcyan9sTDDJm9a9IKKmMr+V9vptHWwpmTmW0ugeIIAUAPn5u6Wpj0Wl6QVSauBDfD9jffZgVItOkb3Aae57+jI0S+VGFIuf/z++pTZAC1DUBG/CSCOgRuZfLCEoOB/FU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uruTDPt+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hukzdvts"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEAB7C4CEF1;
-	Fri,  9 Jan 2026 12:38:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uruTDPt+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB321C4CEF1;
+	Fri,  9 Jan 2026 12:38:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962330;
-	bh=aj0g1xPl874+FQLBNlteac/R812owkP4SF60SqktdyI=;
+	s=korg; t=1767962333;
+	bh=bvLP3dfDlEi7yAOHfitNsEDWfwkQGdSwevExvpsBnI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hukzdvts1wN1/Mw9L/RfDTzZzmz6hCpPldFAHy/Jb1NyNLqfc/VPiw2zCz1bJRhWF
-	 7JfK+uhPrhd8wZd+xLucGqf849NVc3AKTWmMmY4je6mmnX6cZjrh1Yzjg/itYM+RB7
-	 XQ3Ybl3tVagSQ/AolDlxayP5XC8XUsYCEGd6t2+A=
+	b=uruTDPt+2YOuMKft8iDI+9Bu5fq38VuLmt+XJwnN3QQQ6DRZj4F/Ex7wIKQFOlZai
+	 Q0cOj/Ak/SDxouX2kHwirMb9mmEGhLGaVQSrkQ+9QJ1KEPDVe2JZnAw2pVhVTWsOVQ
+	 OF0s15qDR1zaU40Z3aZvrwfdfLjPGPtMlz71QnRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haibo Chen <haibo.chen@nxp.com>,
+	Yongjian Sun <sunyongjian1@huawei.com>,
 	Baokun Li <libaokun1@huawei.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
 	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org
-Subject: [PATCH 6.1 328/634] ext4: clear i_state_flags when alloc inode
-Date: Fri,  9 Jan 2026 12:40:06 +0100
-Message-ID: <20260109112129.870071948@linuxfoundation.org>
+Subject: [PATCH 6.1 329/634] ext4: fix incorrect group number assertion in mb_check_buddy
+Date: Fri,  9 Jan 2026 12:40:07 +0100
+Message-ID: <20260109112129.907223568@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -54,59 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haibo Chen <haibo.chen@nxp.com>
+From: Yongjian Sun <sunyongjian1@huawei.com>
 
-commit 4091c8206cfd2e3bb529ef260887296b90d9b6a2 upstream.
+commit 3f7a79d05c692c7cfec70bf104b1b3c3d0ce6247 upstream.
 
-i_state_flags used on 32-bit archs, need to clear this flag when
-alloc inode.
-Find this issue when umount ext4, sometimes track the inode as orphan
-accidently, cause ext4 mesg dump.
+When the MB_CHECK_ASSERT macro is enabled, an assertion failure can
+occur in __mb_check_buddy when checking preallocated blocks (pa) in
+a block group:
 
-Fixes: acf943e9768e ("ext4: fix checks for orphan inodes")
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+Assertion failure in mb_free_blocks() : "groupnr == e4b->bd_group"
+
+This happens when a pa at the very end of a block group (e.g.,
+pa_pstart=32765, pa_len=3 in a group of 32768 blocks) becomes
+exhausted - its pa_pstart is advanced by pa_len to 32768, which
+lies in the next block group. If this exhausted pa (with pa_len == 0)
+is still in the bb_prealloc_list during the buddy check, the assertion
+incorrectly flags it as belonging to the wrong group. A possible
+sequence is as follows:
+
+ext4_mb_new_blocks
+  ext4_mb_release_context
+    pa->pa_pstart += EXT4_C2B(sbi, ac->ac_b_ex.fe_len)
+    pa->pa_len -= ac->ac_b_ex.fe_len
+
+	                 __mb_check_buddy
+                           for each pa in group
+                             ext4_get_group_no_and_offset
+                             MB_CHECK_ASSERT(groupnr == e4b->bd_group)
+
+To fix this, we modify the check to skip block group validation for
+exhausted preallocations (where pa_len == 0). Such entries are in a
+transitional state and will be removed from the list soon, so they
+should not trigger an assertion. This change prevents the false
+positive while maintaining the integrity of the checks for active
+allocations.
+
+Fixes: c9de560ded61f ("ext4: Add multi block allocator for ext4")
+Signed-off-by: Yongjian Sun <sunyongjian1@huawei.com>
 Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Message-ID: <20251104-ext4-v1-1-73691a0800f9@nxp.com>
+Message-ID: <20251106060614.631382-2-sunyongjian@huaweicloud.com>
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/ialloc.c |    1 -
- fs/ext4/inode.c  |    1 -
- fs/ext4/super.c  |    1 +
- 3 files changed, 1 insertion(+), 2 deletions(-)
+ fs/ext4/mballoc.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/ext4/ialloc.c
-+++ b/fs/ext4/ialloc.c
-@@ -1300,7 +1300,6 @@ got:
- 					      sizeof(gen));
- 	}
- 
--	ext4_clear_state_flags(ei); /* Only relevant on 32-bit archs */
- 	ext4_set_inode_state(inode, EXT4_STATE_NEW);
- 
- 	ei->i_extra_isize = sbi->s_want_extra_isize;
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -4937,7 +4937,6 @@ struct inode *__ext4_iget(struct super_b
- 	ei->i_projid = make_kprojid(&init_user_ns, i_projid);
- 	set_nlink(inode, le16_to_cpu(raw_inode->i_links_count));
- 
--	ext4_clear_state_flags(ei);	/* Only relevant on 32-bit archs */
- 	ei->i_inline_off = 0;
- 	ei->i_dir_start_lookup = 0;
- 	ei->i_dtime = le32_to_cpu(raw_inode->i_dtime);
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -1327,6 +1327,7 @@ static struct inode *ext4_alloc_inode(st
- 
- 	inode_set_iversion(&ei->vfs_inode, 1);
- 	ei->i_flags = 0;
-+	ext4_clear_state_flags(ei);	/* Only relevant on 32-bit archs */
- 	spin_lock_init(&ei->i_raw_lock);
- 	INIT_LIST_HEAD(&ei->i_prealloc_list);
- 	atomic_set(&ei->i_prealloc_active, 0);
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -767,6 +767,8 @@ static void __mb_check_buddy(struct ext4
+ 		ext4_group_t groupnr;
+ 		struct ext4_prealloc_space *pa;
+ 		pa = list_entry(cur, struct ext4_prealloc_space, pa_group_list);
++		if (!pa->pa_len)
++			continue;
+ 		ext4_get_group_no_and_offset(sb, pa->pa_pstart, &groupnr, &k);
+ 		MB_CHECK_ASSERT(groupnr == e4b->bd_group);
+ 		for (i = 0; i < pa->pa_len; i++)
 
 
