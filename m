@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0818935B137;
-	Fri,  9 Jan 2026 12:26:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB81435C182;
+	Fri,  9 Jan 2026 12:26:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961604; cv=none; b=gKCBeJKfYpGEzVebhVLjE75oosa9YouD+6hX5Gf8sYtg6VGKCKqBacEJcMYM4iUZy+9ktO0kTOics1ClScIwe66Gu9cp1bEB4p5kz7J5fDNDKU7Uzg2FTR4ExsiT/TjJEZg1yjJmxitV8bX29PUgUekjrVgvywgCe6dOg3tZylQ=
+	t=1767961606; cv=none; b=HU8HvO2i1FSc5nrWBBCvMC3l+zq6ny8FZlw66V3ydizmoEY3QQx6sVj++JnHz2CgKyA2+GpfYVqS5+hViMhuJKFSX/mMJfvwHn2VdNxRoJk6qhrQBT3X479GFeeMj1jJ6VVD92SGtKqogQzWoROnnpQeOwJtEOfGOTi6S2fdXQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961604; c=relaxed/simple;
-	bh=T9W1z4cDZZp5CcHZVZ/HYr53s9VbcOyBF40Eg6ixyz4=;
+	s=arc-20240116; t=1767961606; c=relaxed/simple;
+	bh=VM4df4C3FJ2n1HX4oEivgWyqyvy6IiefAfZL1jANFjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UM6tvrdNbTqxCrSN/P8j+5k5dA/zV+SoN0rzlNXG7CLlKmDaB2G/s8vRx1ZWO/kTLcDCQYZpQYYvZ7SJujqaygGLxVbUYS/zyOivEgopMonkrt7ASyxXpPr9WP99fuvCEbXyAnVuMj/yx88CDoo2uoXHTL3TvCrWUcplFNM04SY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gnEAJaRg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fzQPwhw0UsznsHqtrwPiUpZ2D53coLL1OAq4yUmZG+A3SXnFULxh4LJ4AvN4P6YJZtb9QVI5NYyZmWMCRTkYJKlkxdIv7Hfw6ztt2Vy0rQ6W0XpqRqhr05v48jN85gRcXjRyH2mVo1nCoehL/WuonamQqNGToKHphx6e7wwRKZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mznpttkS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gnEAJaRg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89BFDC19421;
-	Fri,  9 Jan 2026 12:26:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mznpttkS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69797C4CEF1;
+	Fri,  9 Jan 2026 12:26:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961603;
-	bh=T9W1z4cDZZp5CcHZVZ/HYr53s9VbcOyBF40Eg6ixyz4=;
+	s=korg; t=1767961606;
+	bh=VM4df4C3FJ2n1HX4oEivgWyqyvy6IiefAfZL1jANFjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gnEAJaRgYcWtLTgw01Y3JRGSpsvkwnIAlY1ZtqaT8KDNP/v7wqipkz7oGsa88/yRP
-	 XDlXCNKkIvZWcTPQvOoLfVaKWVqkwCnfyw3Nipi5OmPUaxaoJGTdsdGNUahIt4y1pu
-	 4Od7yjVximl5YsonlOvgy7RrZioGbwC1posXWkGU=
+	b=mznpttkSPkESVPqQVCrzLPPhCLAF5BJGOP9llCqNXfHaOamya+68dL4/qkyYijhPF
+	 3L7IxO6ralRaGBbB7780plh9Q2oVbEwbQBJKbwTHCoa9EhFez/akrZadmVSv6BACRz
+	 7yHHSAWplrCcK1rbHTtEHbRxMcFl8v+n7WGz2aFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+	Shuhao Fu <sfual@cse.ust.hk>,
+	Frank Li <Frank.Li@nxp.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 073/634] i3c: master: Inherit DMA masks and parameters from parent device
-Date: Fri,  9 Jan 2026 12:35:51 +0100
-Message-ID: <20260109112120.189492924@linuxfoundation.org>
+Subject: [PATCH 6.1 074/634] i3c: fix refcount inconsistency in i3c_master_register
+Date: Fri,  9 Jan 2026 12:35:52 +0100
+Message-ID: <20260109112120.226906911@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,34 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-[ Upstream commit 0c35691551387e060e6ae7a6652b4101270c73cf ]
+[ Upstream commit 9d4f219807d5ac11fb1d596e4ddb09336b040067 ]
 
-Copy the DMA masks and parameters for an I3C master device from parent
-device so that the master device has them set for the DMA buffer and
-mapping API.
+In `i3c_master_register`, a possible refcount inconsistency has been
+identified, causing possible resource leak.
 
-Signed-off-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Link: https://lore.kernel.org/r/20230921055704.1087277-2-jarkko.nikula@linux.intel.com
+Function `of_node_get` increases the refcount of `parent->of_node`. If
+function `i3c_bus_init` fails, the function returns immediately without
+a corresponding decrease, resulting in an inconsistent refcounter.
+
+Move call i3c_bus_init() after device_initialize() to let callback
+i3c_masterdev_release() release of_node.
+
+Reported-by: Shuhao Fu <sfual@cse.ust.hk>
+Closes: https://lore.kernel.org/linux-i3c/aO2tjp_FsV_WohPG@osx.local/T/#m2c05a982beeb14e7bf039c1d8db856734bf234c7
+Fixes: 3a379bbcea0a ("i3c: Add core I3C infrastructure")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20251016143814.2551256-1-Frank.Li@nxp.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Stable-dep-of: 9d4f219807d5 ("i3c: fix refcount inconsistency in i3c_master_register")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/i3c/master.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index 2f5cef08e737e..60a61e39e2bb7 100644
+index 60a61e39e2bb7..44574474bda35 100644
 --- a/drivers/i3c/master.c
 +++ b/drivers/i3c/master.c
-@@ -2770,6 +2770,10 @@ int i3c_master_register(struct i3c_master_controller *master,
+@@ -2763,10 +2763,6 @@ int i3c_master_register(struct i3c_master_controller *master,
+ 	INIT_LIST_HEAD(&master->boardinfo.i2c);
+ 	INIT_LIST_HEAD(&master->boardinfo.i3c);
+ 
+-	ret = i3c_bus_init(i3cbus, master->dev.of_node);
+-	if (ret)
+-		return ret;
+-
  	device_initialize(&master->dev);
  	dev_set_name(&master->dev, "i3c-%d", i3cbus->id);
  
-+	master->dev.dma_mask = parent->dma_mask;
-+	master->dev.coherent_dma_mask = parent->coherent_dma_mask;
-+	master->dev.dma_parms = parent->dma_parms;
+@@ -2774,6 +2770,10 @@ int i3c_master_register(struct i3c_master_controller *master,
+ 	master->dev.coherent_dma_mask = parent->coherent_dma_mask;
+ 	master->dev.dma_parms = parent->dma_parms;
+ 
++	ret = i3c_bus_init(i3cbus, master->dev.of_node);
++	if (ret)
++		goto err_put_dev;
 +
  	ret = of_populate_i3c_bus(master);
  	if (ret)
