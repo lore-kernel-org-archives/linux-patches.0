@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5915733032C;
-	Fri,  9 Jan 2026 12:00:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79475359FB4;
+	Fri,  9 Jan 2026 12:00:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960013; cv=none; b=ftflkfJbeugbQcaPVUN05AWdq5O1HeS8QduPulDwq5opFagUZSj6wHI85FxFTsdSS9o3CNj2AhXOkUjnQ2dZqi5CAtfICKNNN3TDycAYkD7pZ7k9iHvt+GH+IqcgAuedIP8QjGebVDzJRifwU3CbK48cocXFXlNBb53OAebmUhs=
+	t=1767960016; cv=none; b=BMJ1YKCT8ACNcR+m+H8fowJ6WqUwM15m2vBy4iJjEHBmqeBSh3cdXIIx3NhoCHHiuzpdbrNCZz03Hjh71xfCc6nn3U9IWmJuauZ43y+MgYgy/E1EZRV0DS/CHmeb4f0M6J+tJO8nKQFwndooJcwuRU6KSLEXSzGyuB/ziUCWukY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960013; c=relaxed/simple;
-	bh=cExxKnbZg34lL484MMgl1A2lxgt0ui9X0ADxM8/5bls=;
+	s=arc-20240116; t=1767960016; c=relaxed/simple;
+	bh=xLoaAZnKs2eLLsoAhia42RJFwOfcsjMzyz4HGCTxXjs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gciwCojQK5uwpplbgZACPsIzkGt0Ja7v7tHseyXbQxzDVsMhvnnv8wzet1ilAHy8L8R+uRbfU0+GZAoISFXhcVdVfxF8IpAb6/5OJxLUD994rjUaLs1i9YaEld+CMeNtHJR/Zh9lXRj8hz5LGwTybSGsH/gifY120w/TOzgilE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D285CqQi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eJSeOXvLcAD//XoUCBz+6563hYhKlUjFIiny5Ixw1yOv2rhJrgGcbGOPCjNevYJZOnGJlSTF3LBNmO07JBZTXUKjWbc/tZc4nFpj5RuF70/hhQMIll80UF4koE7F77ZalDey6kYEbO3CONKlPr87R1+mUZzr63mFhbjuilq2BmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q6aaYo+e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D285CqQi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5837C4CEF1;
-	Fri,  9 Jan 2026 12:00:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q6aaYo+e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF057C4CEF1;
+	Fri,  9 Jan 2026 12:00:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960013;
-	bh=cExxKnbZg34lL484MMgl1A2lxgt0ui9X0ADxM8/5bls=;
+	s=korg; t=1767960016;
+	bh=xLoaAZnKs2eLLsoAhia42RJFwOfcsjMzyz4HGCTxXjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D285CqQiyrUj6xHVhtDJZbyVYjHg8QaN75f9oQzSJxNLzXqy+LHspm7gTIocedD/F
-	 rG9aeX0A+0K5rhL8AQGUUaAP+TOd74dUOlJL5nqKgsk83G81qP+sYzkHHMtfWABqK4
-	 SZ9QzNM0SWqM7rKZ5EChIv3xf/lOtxJzB1eN3FTY=
+	b=Q6aaYo+eAx/Y999Lu9SLO3F3Ql0OZI1u09zB3FdCLY1VdLenG4NMLWmEYap2GV8Vt
+	 EjDFYu3U6jVI0zgh0bAdmh+6/l/QbHilldsqXOEe0Hv32JnFpHo/le5UcFYpYtoqL4
+	 T/w2btaSpxXyT1/WFRXWziVYodD9Xg4VovsWZcF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Etienne Champetier <champetier.etienne@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 247/737] selftests: bonding: add ipvlan over bond testing
-Date: Fri,  9 Jan 2026 12:36:26 +0100
-Message-ID: <20260109112143.285433391@linuxfoundation.org>
+Subject: [PATCH 6.6 256/737] pinctrl: single: Fix incorrect type for error return variable
+Date: Fri,  9 Jan 2026 12:36:35 +0100
+Message-ID: <20260109112143.622156484@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,273 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Etienne Champetier <champetier.etienne@gmail.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 08ac69b24507ab06871c18adc421c9d4f1008c61 ]
+[ Upstream commit 61d1bb53547d42c6bdaec9da4496beb3a1a05264 ]
 
-This rework bond_macvlan.sh into bond_macvlan_ipvlan.sh
-We only test bridge mode for macvlan and l2 mode
+pcs_pinconf_get() and pcs_pinconf_set() declare ret as unsigned int,
+but assign it the return values of pcs_get_function() that may return
+negative error codes. This causes negative error codes to be
+converted to large positive values.
 
-]# ./bond_macvlan_ipvlan.sh
-TEST: active-backup/macvlan_bridge: IPv4: client->server            [ OK ]
-...
-TEST: active-backup/ipvlan_l2: IPv4: client->server                 [ OK ]
-...
-TEST: balance-tlb/macvlan_bridge: IPv4: client->server              [ OK ]
-...
-TEST: balance-tlb/ipvlan_l2: IPv4: client->server                   [ OK ]
-...
-TEST: balance-alb/macvlan_bridge: IPv4: client->server              [ OK ]
-...
-TEST: balance-alb/ipvlan_l2: IPv4: client->server                   [ OK ]
-...
+Change ret from unsigned int to int in both functions.
 
-Signed-off-by: Etienne Champetier <champetier.etienne@gmail.com>
-Link: https://patch.msgid.link/20250109032819.326528-3-champetier.etienne@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 2c28ee720ad1 ("selftests: bonding: add delay before each xvlan_over_bond connectivity check")
+Fixes: 9dddb4df90d1 ("pinctrl: single: support generic pinconf")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/drivers/net/bonding/Makefile    |  2 +-
- .../drivers/net/bonding/bond_macvlan.sh       | 99 -------------------
- .../net/bonding/bond_macvlan_ipvlan.sh        | 96 ++++++++++++++++++
- .../selftests/drivers/net/bonding/config      |  1 +
- 4 files changed, 98 insertions(+), 100 deletions(-)
- delete mode 100755 tools/testing/selftests/drivers/net/bonding/bond_macvlan.sh
- create mode 100755 tools/testing/selftests/drivers/net/bonding/bond_macvlan_ipvlan.sh
+ drivers/pinctrl/pinctrl-single.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/drivers/net/bonding/Makefile b/tools/testing/selftests/drivers/net/bonding/Makefile
-index 8a72bb7de70f4..770aa7345aacd 100644
---- a/tools/testing/selftests/drivers/net/bonding/Makefile
-+++ b/tools/testing/selftests/drivers/net/bonding/Makefile
-@@ -10,7 +10,7 @@ TEST_PROGS := \
- 	mode-2-recovery-updelay.sh \
- 	bond_options.sh \
- 	bond-eth-type-change.sh \
--	bond_macvlan.sh
-+	bond_macvlan_ipvlan.sh
+diff --git a/drivers/pinctrl/pinctrl-single.c b/drivers/pinctrl/pinctrl-single.c
+index 5c6d5add6ecac..2ee0ee3b6ed14 100644
+--- a/drivers/pinctrl/pinctrl-single.c
++++ b/drivers/pinctrl/pinctrl-single.c
+@@ -489,7 +489,8 @@ static int pcs_pinconf_get(struct pinctrl_dev *pctldev,
+ 	struct pcs_device *pcs = pinctrl_dev_get_drvdata(pctldev);
+ 	struct pcs_function *func;
+ 	enum pin_config_param param;
+-	unsigned offset = 0, data = 0, i, j, ret;
++	unsigned offset = 0, data = 0, i, j;
++	int ret;
  
- TEST_FILES := \
- 	lag_lib.sh \
-diff --git a/tools/testing/selftests/drivers/net/bonding/bond_macvlan.sh b/tools/testing/selftests/drivers/net/bonding/bond_macvlan.sh
-deleted file mode 100755
-index b609fb6231f48..0000000000000
---- a/tools/testing/selftests/drivers/net/bonding/bond_macvlan.sh
-+++ /dev/null
-@@ -1,99 +0,0 @@
--#!/bin/bash
--# SPDX-License-Identifier: GPL-2.0
--#
--# Test macvlan over balance-alb
--
--lib_dir=$(dirname "$0")
--source ${lib_dir}/bond_topo_2d1c.sh
--
--m1_ns="m1-$(mktemp -u XXXXXX)"
--m2_ns="m1-$(mktemp -u XXXXXX)"
--m1_ip4="192.0.2.11"
--m1_ip6="2001:db8::11"
--m2_ip4="192.0.2.12"
--m2_ip6="2001:db8::12"
--
--cleanup()
--{
--	ip -n ${m1_ns} link del macv0
--	ip netns del ${m1_ns}
--	ip -n ${m2_ns} link del macv0
--	ip netns del ${m2_ns}
--
--	client_destroy
--	server_destroy
--	gateway_destroy
--}
--
--check_connection()
--{
--	local ns=${1}
--	local target=${2}
--	local message=${3:-"macvlan_over_bond"}
--	RET=0
--
--
--	ip netns exec ${ns} ping ${target} -c 4 -i 0.1 &>/dev/null
--	check_err $? "ping failed"
--	log_test "$mode: $message"
--}
--
--macvlan_over_bond()
--{
--	local param="$1"
--	RET=0
--
--	# setup new bond mode
--	bond_reset "${param}"
--
--	ip -n ${s_ns} link add link bond0 name macv0 type macvlan mode bridge
--	ip -n ${s_ns} link set macv0 netns ${m1_ns}
--	ip -n ${m1_ns} link set dev macv0 up
--	ip -n ${m1_ns} addr add ${m1_ip4}/24 dev macv0
--	ip -n ${m1_ns} addr add ${m1_ip6}/24 dev macv0
--
--	ip -n ${s_ns} link add link bond0 name macv0 type macvlan mode bridge
--	ip -n ${s_ns} link set macv0 netns ${m2_ns}
--	ip -n ${m2_ns} link set dev macv0 up
--	ip -n ${m2_ns} addr add ${m2_ip4}/24 dev macv0
--	ip -n ${m2_ns} addr add ${m2_ip6}/24 dev macv0
--
--	sleep 2
--
--	check_connection "${c_ns}" "${s_ip4}" "IPv4: client->server"
--	check_connection "${c_ns}" "${s_ip6}" "IPv6: client->server"
--	check_connection "${c_ns}" "${m1_ip4}" "IPv4: client->macvlan_1"
--	check_connection "${c_ns}" "${m1_ip6}" "IPv6: client->macvlan_1"
--	check_connection "${c_ns}" "${m2_ip4}" "IPv4: client->macvlan_2"
--	check_connection "${c_ns}" "${m2_ip6}" "IPv6: client->macvlan_2"
--	check_connection "${m1_ns}" "${m2_ip4}" "IPv4: macvlan_1->macvlan_2"
--	check_connection "${m1_ns}" "${m2_ip6}" "IPv6: macvlan_1->macvlan_2"
--
--
--	sleep 5
--
--	check_connection "${s_ns}" "${c_ip4}" "IPv4: server->client"
--	check_connection "${s_ns}" "${c_ip6}" "IPv6: server->client"
--	check_connection "${m1_ns}" "${c_ip4}" "IPv4: macvlan_1->client"
--	check_connection "${m1_ns}" "${c_ip6}" "IPv6: macvlan_1->client"
--	check_connection "${m2_ns}" "${c_ip4}" "IPv4: macvlan_2->client"
--	check_connection "${m2_ns}" "${c_ip6}" "IPv6: macvlan_2->client"
--	check_connection "${m2_ns}" "${m1_ip4}" "IPv4: macvlan_2->macvlan_2"
--	check_connection "${m2_ns}" "${m1_ip6}" "IPv6: macvlan_2->macvlan_2"
--
--	ip -n ${c_ns} neigh flush dev eth0
--}
--
--trap cleanup EXIT
--
--setup_prepare
--ip netns add ${m1_ns}
--ip netns add ${m2_ns}
--
--modes="active-backup balance-tlb balance-alb"
--
--for mode in $modes; do
--	macvlan_over_bond "mode $mode"
--done
--
--exit $EXIT_STATUS
-diff --git a/tools/testing/selftests/drivers/net/bonding/bond_macvlan_ipvlan.sh b/tools/testing/selftests/drivers/net/bonding/bond_macvlan_ipvlan.sh
-new file mode 100755
-index 0000000000000..c4711272fe45d
---- /dev/null
-+++ b/tools/testing/selftests/drivers/net/bonding/bond_macvlan_ipvlan.sh
-@@ -0,0 +1,96 @@
-+#!/bin/bash
-+# SPDX-License-Identifier: GPL-2.0
-+#
-+# Test macvlan/ipvlan over bond
-+
-+lib_dir=$(dirname "$0")
-+source ${lib_dir}/bond_topo_2d1c.sh
-+
-+xvlan1_ns="xvlan1-$(mktemp -u XXXXXX)"
-+xvlan2_ns="xvlan2-$(mktemp -u XXXXXX)"
-+xvlan1_ip4="192.0.2.11"
-+xvlan1_ip6="2001:db8::11"
-+xvlan2_ip4="192.0.2.12"
-+xvlan2_ip6="2001:db8::12"
-+
-+cleanup()
-+{
-+	client_destroy
-+	server_destroy
-+	gateway_destroy
-+
-+	ip netns del ${xvlan1_ns}
-+	ip netns del ${xvlan2_ns}
-+}
-+
-+check_connection()
-+{
-+	local ns=${1}
-+	local target=${2}
-+	local message=${3}
-+	RET=0
-+
-+	ip netns exec ${ns} ping ${target} -c 4 -i 0.1 &>/dev/null
-+	check_err $? "ping failed"
-+	log_test "${bond_mode}/${xvlan_type}_${xvlan_mode}: ${message}"
-+}
-+
-+xvlan_over_bond()
-+{
-+	local param="$1"
-+	local xvlan_type="$2"
-+	local xvlan_mode="$3"
-+	RET=0
-+
-+	# setup new bond mode
-+	bond_reset "${param}"
-+
-+	ip -n ${s_ns} link add link bond0 name ${xvlan_type}0 type ${xvlan_type} mode ${xvlan_mode}
-+	ip -n ${s_ns} link set ${xvlan_type}0 netns ${xvlan1_ns}
-+	ip -n ${xvlan1_ns} link set dev ${xvlan_type}0 up
-+	ip -n ${xvlan1_ns} addr add ${xvlan1_ip4}/24 dev ${xvlan_type}0
-+	ip -n ${xvlan1_ns} addr add ${xvlan1_ip6}/24 dev ${xvlan_type}0
-+
-+	ip -n ${s_ns} link add link bond0 name ${xvlan_type}0 type ${xvlan_type} mode ${xvlan_mode}
-+	ip -n ${s_ns} link set ${xvlan_type}0 netns ${xvlan2_ns}
-+	ip -n ${xvlan2_ns} link set dev ${xvlan_type}0 up
-+	ip -n ${xvlan2_ns} addr add ${xvlan2_ip4}/24 dev ${xvlan_type}0
-+	ip -n ${xvlan2_ns} addr add ${xvlan2_ip6}/24 dev ${xvlan_type}0
-+
-+	sleep 2
-+
-+	check_connection "${c_ns}" "${s_ip4}" "IPv4: client->server"
-+	check_connection "${c_ns}" "${s_ip6}" "IPv6: client->server"
-+	check_connection "${c_ns}" "${xvlan1_ip4}" "IPv4: client->${xvlan_type}_1"
-+	check_connection "${c_ns}" "${xvlan1_ip6}" "IPv6: client->${xvlan_type}_1"
-+	check_connection "${c_ns}" "${xvlan2_ip4}" "IPv4: client->${xvlan_type}_2"
-+	check_connection "${c_ns}" "${xvlan2_ip6}" "IPv6: client->${xvlan_type}_2"
-+	check_connection "${xvlan1_ns}" "${xvlan2_ip4}" "IPv4: ${xvlan_type}_1->${xvlan_type}_2"
-+	check_connection "${xvlan1_ns}" "${xvlan2_ip6}" "IPv6: ${xvlan_type}_1->${xvlan_type}_2"
-+
-+	check_connection "${s_ns}" "${c_ip4}" "IPv4: server->client"
-+	check_connection "${s_ns}" "${c_ip6}" "IPv6: server->client"
-+	check_connection "${xvlan1_ns}" "${c_ip4}" "IPv4: ${xvlan_type}_1->client"
-+	check_connection "${xvlan1_ns}" "${c_ip6}" "IPv6: ${xvlan_type}_1->client"
-+	check_connection "${xvlan2_ns}" "${c_ip4}" "IPv4: ${xvlan_type}_2->client"
-+	check_connection "${xvlan2_ns}" "${c_ip6}" "IPv6: ${xvlan_type}_2->client"
-+	check_connection "${xvlan2_ns}" "${xvlan1_ip4}" "IPv4: ${xvlan_type}_2->${xvlan_type}_1"
-+	check_connection "${xvlan2_ns}" "${xvlan1_ip6}" "IPv6: ${xvlan_type}_2->${xvlan_type}_1"
-+
-+	ip -n ${c_ns} neigh flush dev eth0
-+}
-+
-+trap cleanup EXIT
-+
-+setup_prepare
-+ip netns add ${xvlan1_ns}
-+ip netns add ${xvlan2_ns}
-+
-+bond_modes="active-backup balance-tlb balance-alb"
-+
-+for bond_mode in ${bond_modes}; do
-+	xvlan_over_bond "mode ${bond_mode}" macvlan bridge
-+	xvlan_over_bond "mode ${bond_mode}" ipvlan  l2
-+done
-+
-+exit $EXIT_STATUS
-diff --git a/tools/testing/selftests/drivers/net/bonding/config b/tools/testing/selftests/drivers/net/bonding/config
-index 899d7fb6ea8e9..dad4e5fda4db3 100644
---- a/tools/testing/selftests/drivers/net/bonding/config
-+++ b/tools/testing/selftests/drivers/net/bonding/config
-@@ -3,6 +3,7 @@ CONFIG_BRIDGE=y
- CONFIG_DUMMY=y
- CONFIG_IPV6=y
- CONFIG_MACVLAN=y
-+CONFIG_IPVLAN=y
- CONFIG_NET_ACT_GACT=y
- CONFIG_NET_CLS_FLOWER=y
- CONFIG_NET_SCH_INGRESS=y
+ 	ret = pcs_get_function(pctldev, pin, &func);
+ 	if (ret)
+@@ -553,9 +554,9 @@ static int pcs_pinconf_set(struct pinctrl_dev *pctldev,
+ {
+ 	struct pcs_device *pcs = pinctrl_dev_get_drvdata(pctldev);
+ 	struct pcs_function *func;
+-	unsigned offset = 0, shift = 0, i, data, ret;
++	unsigned offset = 0, shift = 0, i, data;
+ 	u32 arg;
+-	int j;
++	int j, ret;
+ 	enum pin_config_param param;
+ 
+ 	ret = pcs_get_function(pctldev, pin, &func);
 -- 
 2.51.0
 
