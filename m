@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799021946C8;
-	Fri,  9 Jan 2026 12:07:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 415D81946C8;
+	Fri,  9 Jan 2026 12:07:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767960468; cv=none; b=cUSexoRBm67hDeDdzWH4yV2Ax8QTTq2I/ktUQTFGT/iijDrkvj061k6WX3zyWanAyQ+iZjHGOGIXZEeUBybgW7of3Ti/WCCsswqLp2FH6T6Q2lOmx4YopbUhzSLs9l/6TuxjhZ7dzNtn+R6vlbtuABMADV/wLg1nLEI53pDOQh4=
+	t=1767960471; cv=none; b=MW0BHn6iALka3Jm9XuB7P9O93VKMfW6AjNerHmROftb0rTMGOASzcvJqMVnXTPwoTfIJ5DzqnGZ9zaxUm0HZpJwLtmq8bxXrlUWK3VfnMH8h4y+o9RiOtLXAc/Tt92g94D6hpx5/HpgYJ2qfESLEsWGFzNJHcB2FMSOljloEHUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767960468; c=relaxed/simple;
-	bh=E/pDEk2uDMC3F4w0+ALzdlhC8sW9Nvs8mM6aNPnUyOU=;
+	s=arc-20240116; t=1767960471; c=relaxed/simple;
+	bh=xRgKlAsuFg04jU9QivvhMhn0F7vWcc2op6TegL9vacs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RUBPD3GR87bXXR3LOnXG6/9cUEwaJMZl9RPoWioAmkSACwPXVgCYsVbcQh6I0vGJwhaLXrSfiWDHXIk6YKFvgUz1NyOHRUMxrK+dfhU+z4+ZXAALtGQC6EkWVKaNpbjCVqn4pq96r/2Bm/+h/TxFM4YSWcauJ7ekkSegPrdlVbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z129mKHY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KgAEyt4R4wb3tDTZCMEQqGP1Pzzg/D9pHbVNBiCVG63cX4vYuWxoQN//RVtO8/KRPrMZlDf72/IT1FPREIMuaK37GmwEyqptWaauSzEtmWTi6NrOj9EMVVHzSJX7quyVz63A8Brr+v6odyo3f+Y7iHXF/4EikDVoY2kFJ/rFgvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BG2K8YS2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z129mKHY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 012D8C4CEF1;
-	Fri,  9 Jan 2026 12:07:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BG2K8YS2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C685EC16AAE;
+	Fri,  9 Jan 2026 12:07:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767960468;
-	bh=E/pDEk2uDMC3F4w0+ALzdlhC8sW9Nvs8mM6aNPnUyOU=;
+	s=korg; t=1767960471;
+	bh=xRgKlAsuFg04jU9QivvhMhn0F7vWcc2op6TegL9vacs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z129mKHYeOJAa13IgsCPraa9F41i0DZkTv4aB1SjuwwJT8MdB7hIi/oytsMFcSChI
-	 Ikbk8STzHuqSo3w2JohMUzM+B66qaTsCtYOhS3afp/MtYr6FffyGy5IO0PrN904xqV
-	 xtmqXLoZs0IeGRkO9O3L6NZ5NGIhhWj1WEhf/yak=
+	b=BG2K8YS23Y/gSv2t87vVvuBRSDnttzQhe0HzOFksf5gGupUnEIhTOcNGjiRP7R8ny
+	 jkHVLR7jBe8v3EMYguFcvijTeqkWbxm/IihdnZ6L0KorH8TCAJddyeK4XqtPDw370a
+	 pA2swXkNY6cEayMy3p5jWW//5m0oX64U//nKqi+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sarthak Garg <sarthak.garg@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.6 414/737] mmc: sdhci-msm: Avoid early clock doubling during HS400 transition
-Date: Fri,  9 Jan 2026 12:39:13 +0100
-Message-ID: <20260109112149.570960786@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>
+Subject: [PATCH 6.6 415/737] lib/crypto: x86/blake2s: Fix 32-bit arg treated as 64-bit
+Date: Fri,  9 Jan 2026 12:39:14 +0100
+Message-ID: <20260109112149.607702460@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -52,121 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sarthak Garg <sarthak.garg@oss.qualcomm.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit b1f856b1727c2eaa4be2c6d7cd7a8ed052bbeb87 upstream.
+commit 2f22115709fc7ebcfa40af3367a508fbbd2f71e9 upstream.
 
-According to the hardware programming guide, the clock frequency must
-remain below 52MHz during the transition to HS400 mode.
+In the C code, the 'inc' argument to the assembly functions
+blake2s_compress_ssse3() and blake2s_compress_avx512() is declared with
+type u32, matching blake2s_compress().  The assembly code then reads it
+from the 64-bit %rcx.  However, the ABI doesn't guarantee zero-extension
+to 64 bits, nor do gcc or clang guarantee it.  Therefore, fix these
+functions to read this argument from the 32-bit %ecx.
 
-However,in the current implementation, the timing is set to HS400 (a
-DDR mode) before adjusting the clock. This causes the clock to double
-prematurely to 104MHz during the transition phase, violating the
-specification and potentially resulting in CRC errors or CMD timeouts.
+In theory, this bug could have caused the wrong 'inc' value to be used,
+causing incorrect BLAKE2s hashes.  In practice, probably not: I've fixed
+essentially this same bug in many other assembly files too, but there's
+never been a real report of it having caused a problem.  In x86_64, all
+writes to 32-bit registers are zero-extended to 64 bits.  That results
+in zero-extension in nearly all situations.  I've only been able to
+demonstrate a lack of zero-extension with a somewhat contrived example
+involving truncation, e.g. when the C code has a u64 variable holding
+0x1234567800000040 and passes it as a u32 expecting it to be truncated
+to 0x40 (64).  But that's not what the real code does, of course.
 
-This change ensures that clock doubling is avoided during intermediate
-transitions and is applied only when the card requires a 200MHz clock
-for HS400 operation.
-
-Signed-off-by: Sarthak Garg <sarthak.garg@oss.qualcomm.com>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Fixes: ed0356eda153 ("crypto: blake2s - x86_64 SIMD implementation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Link: https://lore.kernel.org/r/20251102234209.62133-2-ebiggers@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-msm.c |   27 +++++++++++++++------------
- 1 file changed, 15 insertions(+), 12 deletions(-)
+ arch/x86/crypto/blake2s-core.S |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -344,41 +344,43 @@ static void sdhci_msm_v5_variant_writel_
- 	writel_relaxed(val, host->ioaddr + offset);
- }
- 
--static unsigned int msm_get_clock_mult_for_bus_mode(struct sdhci_host *host)
-+static unsigned int msm_get_clock_mult_for_bus_mode(struct sdhci_host *host,
-+						    unsigned int clock,
-+						    unsigned int timing)
- {
--	struct mmc_ios ios = host->mmc->ios;
- 	/*
- 	 * The SDHC requires internal clock frequency to be double the
- 	 * actual clock that will be set for DDR mode. The controller
- 	 * uses the faster clock(100/400MHz) for some of its parts and
- 	 * send the actual required clock (50/200MHz) to the card.
- 	 */
--	if (ios.timing == MMC_TIMING_UHS_DDR50 ||
--	    ios.timing == MMC_TIMING_MMC_DDR52 ||
--	    ios.timing == MMC_TIMING_MMC_HS400 ||
-+	if (timing == MMC_TIMING_UHS_DDR50 ||
-+	    timing == MMC_TIMING_MMC_DDR52 ||
-+	    (timing == MMC_TIMING_MMC_HS400 &&
-+	    clock == MMC_HS200_MAX_DTR) ||
- 	    host->flags & SDHCI_HS400_TUNING)
- 		return 2;
- 	return 1;
- }
- 
- static void msm_set_clock_rate_for_bus_mode(struct sdhci_host *host,
--					    unsigned int clock)
-+					    unsigned int clock,
-+					    unsigned int timing)
- {
- 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
- 	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
--	struct mmc_ios curr_ios = host->mmc->ios;
- 	struct clk *core_clk = msm_host->bulk_clks[0].clk;
- 	unsigned long achieved_rate;
- 	unsigned int desired_rate;
- 	unsigned int mult;
- 	int rc;
- 
--	mult = msm_get_clock_mult_for_bus_mode(host);
-+	mult = msm_get_clock_mult_for_bus_mode(host, clock, timing);
- 	desired_rate = clock * mult;
- 	rc = dev_pm_opp_set_rate(mmc_dev(host->mmc), desired_rate);
- 	if (rc) {
- 		pr_err("%s: Failed to set clock at rate %u at timing %d\n",
--		       mmc_hostname(host->mmc), desired_rate, curr_ios.timing);
-+		       mmc_hostname(host->mmc), desired_rate, timing);
- 		return;
- 	}
- 
-@@ -397,7 +399,7 @@ static void msm_set_clock_rate_for_bus_m
- 	msm_host->clk_rate = desired_rate;
- 
- 	pr_debug("%s: Setting clock at rate %lu at timing %d\n",
--		 mmc_hostname(host->mmc), achieved_rate, curr_ios.timing);
-+		 mmc_hostname(host->mmc), achieved_rate, timing);
- }
- 
- /* Platform specific tuning */
-@@ -1239,7 +1241,7 @@ static int sdhci_msm_execute_tuning(stru
- 	 */
- 	if (host->flags & SDHCI_HS400_TUNING) {
- 		sdhci_msm_hc_select_mode(host);
--		msm_set_clock_rate_for_bus_mode(host, ios.clock);
-+		msm_set_clock_rate_for_bus_mode(host, ios.clock, ios.timing);
- 		host->flags &= ~SDHCI_HS400_TUNING;
- 	}
- 
-@@ -1864,6 +1866,7 @@ static void sdhci_msm_set_clock(struct s
- {
- 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
- 	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
-+	struct mmc_ios ios = host->mmc->ios;
- 
- 	if (!clock) {
- 		host->mmc->actual_clock = msm_host->clk_rate = 0;
-@@ -1872,7 +1875,7 @@ static void sdhci_msm_set_clock(struct s
- 
- 	sdhci_msm_hc_select_mode(host);
- 
--	msm_set_clock_rate_for_bus_mode(host, clock);
-+	msm_set_clock_rate_for_bus_mode(host, ios.clock, ios.timing);
- out:
- 	__sdhci_msm_set_clock(host, clock);
- }
+--- a/arch/x86/crypto/blake2s-core.S
++++ b/arch/x86/crypto/blake2s-core.S
+@@ -54,7 +54,7 @@ SYM_FUNC_START(blake2s_compress_ssse3)
+ 	movdqa		ROT16(%rip),%xmm12
+ 	movdqa		ROR328(%rip),%xmm13
+ 	movdqu		0x20(%rdi),%xmm14
+-	movq		%rcx,%xmm15
++	movd		%ecx,%xmm15
+ 	leaq		SIGMA+0xa0(%rip),%r8
+ 	jmp		.Lbeginofloop
+ 	.align		32
+@@ -179,7 +179,7 @@ SYM_FUNC_START(blake2s_compress_avx512)
+ 	vmovdqu		(%rdi),%xmm0
+ 	vmovdqu		0x10(%rdi),%xmm1
+ 	vmovdqu		0x20(%rdi),%xmm4
+-	vmovq		%rcx,%xmm5
++	vmovd		%ecx,%xmm5
+ 	vmovdqa		IV(%rip),%xmm14
+ 	vmovdqa		IV+16(%rip),%xmm15
+ 	jmp		.Lblake2s_compress_avx512_mainloop
 
 
