@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1463633C511;
-	Fri,  9 Jan 2026 11:59:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE0BA335561;
+	Fri,  9 Jan 2026 11:59:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767959956; cv=none; b=dm/TovCKZApYZ3FdH1QeCs+EjMdIBodxonCr+M1qbc6zZIwRXgLSeroBYeUXwCvHgnfDtCDOk3X6uZUs3jltVrCl3aTcGSetakkaqd/keu+0gkb8LgHADWwv6waBTwccpZ/EZxvRfPup1HqYv3chEdNhMKEmRiA+9WIAqVJ48AU=
+	t=1767959958; cv=none; b=KwnzbmuBBgf7Oph28qt2iw4eVScHEVBGW5lrbvsZ2OUsVRtLcVzGzO/gHEbYX3kt9uAxb8Xb8ZsR6XJhapo4qjFnFKumjcRbLDa3/wgLs4aLCw0ePso1V/WxGlQnfwwmYg6Ado4YtcZu88Gb58iCwEle3ERJ2g6WTzGyUavgpOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767959956; c=relaxed/simple;
-	bh=Z12e10FKobwSlweUy+ugYHBkJOJ6i/DxhY/WAs4DDZs=;
+	s=arc-20240116; t=1767959958; c=relaxed/simple;
+	bh=tsut64ycdIVvS0RDKjUxmFT3Kh/4xIo3vT9GQnbzJ1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Usu+fLEcv7F0fqwR1zY+9UCxYKVEMv1X1hLKNPoX6G0UHnU72fkH9EnlrYXZGxVLr6x9ytJpDRxUMDaVBYKhvZ9EjdB4dfazTPIiBLX3J+bSYtXzsupSqlFYBkAIPmF7iQbHJMeqxVz1kD8/anonzoXhOXou/NGrEInOZABGc5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fEu07Yk9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hMNWAJZyM+JuTgRtMVqunw7YPuwrPaR+flKESbmy5ogq/be0MpbjFuRR1g4nJmipI1EVmmi9ClCGuIFmuG7d6D1i7kAqD9dReAc8b4U3ZTWzhNGlLFAksyaMAX1wcT3+zzxXH4SXi8pVIBCj6jpbZc2DF/dF5Wy12QmfYsLOW8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HoPzENm4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fEu07Yk9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AB2DC4CEF1;
-	Fri,  9 Jan 2026 11:59:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HoPzENm4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A833C4CEF1;
+	Fri,  9 Jan 2026 11:59:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767959956;
-	bh=Z12e10FKobwSlweUy+ugYHBkJOJ6i/DxhY/WAs4DDZs=;
+	s=korg; t=1767959958;
+	bh=tsut64ycdIVvS0RDKjUxmFT3Kh/4xIo3vT9GQnbzJ1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fEu07Yk9hgXf4nIWbyD0401N5loNIpFzBHkCgEXazoYGjDuyGmq92YQD3TR+QO50n
-	 tSYDNwxS/HEimVf6Dv5HkrQJsWBtZzkFBSfhONz+GNjyyxi4AAzX6gbMqFG5t2cjtv
-	 GvFJ+uzK9GsqJBsnsKNtdyCKsAffJRYQhyuc0yro=
+	b=HoPzENm4aUzivsx6t9IxkEdDZG7fxmVRcQENfue+7sYSkN13/AmC59aYdIXWV9S1A
+	 IoJAxZz2ABtomRnuTqzO6datvh/z00sZKRkxgLzKF8tRq4SVvm1k5KFlsC+jVbCFrQ
+	 s9LjhQ7KAAtkEU1Axu+jsM2Rx7WNBz3jp6m2KPCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+	sparkhuang <huangshaobo3@xiaomi.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 234/737] ARM: dts: samsung: exynos4412-midas: turn off SDIO WLAN chip during system suspend
-Date: Fri,  9 Jan 2026 12:36:13 +0100
-Message-ID: <20260109112142.801401488@linuxfoundation.org>
+Subject: [PATCH 6.6 235/737] regulator: core: Protect regulator_supply_alias_list with regulator_list_mutex
+Date: Fri,  9 Jan 2026 12:36:14 +0100
+Message-ID: <20260109112142.838642028@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
 References: <20260109112133.973195406@linuxfoundation.org>
@@ -51,40 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: sparkhuang <huangshaobo3@xiaomi.com>
 
-[ Upstream commit 2ff147fdfa99b8cbb8c2833e685fde7c42580ae6 ]
+[ Upstream commit 0cc15a10c3b4ab14cd71b779fd5c9ca0cb2bc30d ]
 
-Commit 8c3170628a9c ("wifi: brcmfmac: keep power during suspend if board
-requires it") changed default behavior of the BRCMFMAC driver, which now
-keeps SDIO card powered during system suspend to enable optional support
-for WOWL. This feature is not supported by the legacy Exynos4 based
-boards and leads to WLAN disfunction after system suspend/resume cycle.
-Fix this by annotating SDIO host used by WLAN chip with
-'cap-power-off-card' property, which should have been there from the
-beginning.
+regulator_supply_alias_list was accessed without any locking in
+regulator_supply_alias(), regulator_register_supply_alias(), and
+regulator_unregister_supply_alias(). Concurrent registration,
+unregistration and lookups can race, leading to:
 
-Fixes: f77cbb9a3e5d ("ARM: dts: exynos: Add bcm4334 device node to Trats2")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://patch.msgid.link/20251126102618.3103517-5-m.szyprowski@samsung.com
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+1 use-after-free if an alias entry is removed while being read,
+2 duplicate entries when two threads register the same alias,
+3 inconsistent alias mappings observed by consumers.
+
+Protect all traversals, insertions and deletions on
+regulator_supply_alias_list with the existing regulator_list_mutex.
+
+Fixes: a06ccd9c3785f ("regulator: core: Add ability to create a lookup alias for supply")
+Signed-off-by: sparkhuang <huangshaobo3@xiaomi.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20251127025716.5440-1-huangshaobo3@xiaomi.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/samsung/exynos4412-midas.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/regulator/core.c | 32 ++++++++++++++++++++------------
+ 1 file changed, 20 insertions(+), 12 deletions(-)
 
-diff --git a/arch/arm/boot/dts/samsung/exynos4412-midas.dtsi b/arch/arm/boot/dts/samsung/exynos4412-midas.dtsi
-index 7daf25865551b..a77e57645f217 100644
---- a/arch/arm/boot/dts/samsung/exynos4412-midas.dtsi
-+++ b/arch/arm/boot/dts/samsung/exynos4412-midas.dtsi
-@@ -1440,6 +1440,7 @@ &sdhci_3 {
- 	#address-cells = <1>;
- 	#size-cells = <0>;
- 	non-removable;
-+	cap-power-off-card;
- 	bus-width = <4>;
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 465f4f870162f..23cdf220ca7db 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -1970,6 +1970,7 @@ static void regulator_supply_alias(struct device **dev, const char **supply)
+ {
+ 	struct regulator_supply_alias *map;
  
- 	mmc-pwrseq = <&wlan_pwrseq>;
++	mutex_lock(&regulator_list_mutex);
+ 	map = regulator_find_supply_alias(*dev, *supply);
+ 	if (map) {
+ 		dev_dbg(*dev, "Mapping supply %s to %s,%s\n",
+@@ -1978,6 +1979,7 @@ static void regulator_supply_alias(struct device **dev, const char **supply)
+ 		*dev = map->alias_dev;
+ 		*supply = map->alias_supply;
+ 	}
++	mutex_unlock(&regulator_list_mutex);
+ }
+ 
+ static int regulator_match(struct device *dev, const void *data)
+@@ -2456,22 +2458,26 @@ int regulator_register_supply_alias(struct device *dev, const char *id,
+ 				    const char *alias_id)
+ {
+ 	struct regulator_supply_alias *map;
++	struct regulator_supply_alias *new_map;
+ 
+-	map = regulator_find_supply_alias(dev, id);
+-	if (map)
+-		return -EEXIST;
+-
+-	map = kzalloc(sizeof(struct regulator_supply_alias), GFP_KERNEL);
+-	if (!map)
++	new_map = kzalloc(sizeof(struct regulator_supply_alias), GFP_KERNEL);
++	if (!new_map)
+ 		return -ENOMEM;
+ 
+-	map->src_dev = dev;
+-	map->src_supply = id;
+-	map->alias_dev = alias_dev;
+-	map->alias_supply = alias_id;
+-
+-	list_add(&map->list, &regulator_supply_alias_list);
++	mutex_lock(&regulator_list_mutex);
++	map = regulator_find_supply_alias(dev, id);
++	if (map) {
++		mutex_unlock(&regulator_list_mutex);
++		kfree(new_map);
++		return -EEXIST;
++	}
+ 
++	new_map->src_dev = dev;
++	new_map->src_supply = id;
++	new_map->alias_dev = alias_dev;
++	new_map->alias_supply = alias_id;
++	list_add(&new_map->list, &regulator_supply_alias_list);
++	mutex_unlock(&regulator_list_mutex);
+ 	pr_info("Adding alias for supply %s,%s -> %s,%s\n",
+ 		id, dev_name(dev), alias_id, dev_name(alias_dev));
+ 
+@@ -2491,11 +2497,13 @@ void regulator_unregister_supply_alias(struct device *dev, const char *id)
+ {
+ 	struct regulator_supply_alias *map;
+ 
++	mutex_lock(&regulator_list_mutex);
+ 	map = regulator_find_supply_alias(dev, id);
+ 	if (map) {
+ 		list_del(&map->list);
+ 		kfree(map);
+ 	}
++	mutex_unlock(&regulator_list_mutex);
+ }
+ EXPORT_SYMBOL_GPL(regulator_unregister_supply_alias);
+ 
 -- 
 2.51.0
 
