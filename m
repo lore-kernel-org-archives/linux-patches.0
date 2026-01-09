@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3630E156CA;
-	Fri,  9 Jan 2026 12:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB28B38FA3;
+	Fri,  9 Jan 2026 12:27:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767961646; cv=none; b=vGLmdhmTF3rik0xR3j5ysOAAzieWOpNgojcd4wHUpe9g5ub3Dmp/Hki5PdB7LJ+br6lounf1SYvMs/OJhcfyAzMk0AtBTDB19s88QmPgSxiMDg06R8XSdy632qW6n7LcCEi+0XYleKX7y2jaq9URBnj/pVKIkJjHDKhr3z29ie0=
+	t=1767961649; cv=none; b=T+hDimfGPu1/NnQBI5oX3PCGUp451osCJt9faFzVqmVlaGZWFTbbVLNzf0OyBNfhXqYUtI0khqLQmAQs2R9lW1Fz3pvOjzoUR+6X4SPGztJWoRoGCVN6zDMOJTe2tjFAoFNNjeS4VZN/MxClDCbL6bzGAk0Tiv5shJggE8Sg3IE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767961646; c=relaxed/simple;
-	bh=ukrWuhevP6XmMeIgU/1IeimDkaRR3X0zna277YwuQI4=;
+	s=arc-20240116; t=1767961649; c=relaxed/simple;
+	bh=Ae+H6bVkc/W0tdQX1Qk0ajwL77kcYrTqx1W4z3R5Eik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PzXYZ2ATPgT1lMZD/xBcWg5qdnFXK4k1BQisHRq0n1N514OkyJBw1DIdet6UTen39YtBZqOgnXtjOh0XYZ1GAHa6mkqcy0E/tD7jKanPqlgMParV7aWdjPGrd6AY15uxAUr/QM5SBG1Y58gK6odilFLb0QD2Gd/e2O3vB6OLR0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=peWyrhjZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=crzzPd24lUy/DgmsBYtpjgx3bO7xV+A6Hpu8g/D/dVEqMyTzxWAgtrTfLWkBRUTOWzJBQoptfBeNQgK/PEwzHJEPliXdy0xDgA9jsFE/4rlOmZNe8v/4fYZ8+q7fjVqo2w2WurhLl+s6aIkqD/kVC0eOwOoJ1XDrEOc6UqEdTEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r6X7bq3z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="peWyrhjZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76B1BC19422;
-	Fri,  9 Jan 2026 12:27:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r6X7bq3z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 770E1C19421;
+	Fri,  9 Jan 2026 12:27:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767961645;
-	bh=ukrWuhevP6XmMeIgU/1IeimDkaRR3X0zna277YwuQI4=;
+	s=korg; t=1767961648;
+	bh=Ae+H6bVkc/W0tdQX1Qk0ajwL77kcYrTqx1W4z3R5Eik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=peWyrhjZT1icIU9835fwjO1pwQA8g2R80Eaz8hlWIVpT9gEQrpZ4fn6OQlWhTruqb
-	 zD/ypk9H6NU3UemFfOvuolN73aEkFPVGaHeO+POA4XJPltSMurqkRJskDVBhpnOFUV
-	 Nsqz23PmTVi5UGabG8qI+/Jw4kQfm0sngvkLpKa4=
+	b=r6X7bq3ztFH+ZKi+cXQqBbFmZi1elk/NXOOvxcTUJI9znStbm02FLSR8huj4HbyH8
+	 gfPVL78YbDMY3WGMPPD8ytHTxbHFRBVZ+NjrklxTH8t16g9VZepmCVN1AYouFqYKrM
+	 W+MO9tBnKR5EK2kqnoxnlIamtmNX1bHKpFFsiYAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 086/634] ext4: correct the checking of quota files before moving extents
-Date: Fri,  9 Jan 2026 12:36:04 +0100
-Message-ID: <20260109112120.672724350@linuxfoundation.org>
+Subject: [PATCH 6.1 087/634] perf/x86/intel: Correct large PEBS flag check
+Date: Fri,  9 Jan 2026 12:36:05 +0100
+Message-ID: <20260109112120.709777989@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -52,36 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-[ Upstream commit a2e5a3cea4b18f6e2575acc444a5e8cce1fc8260 ]
+[ Upstream commit 5e4e355ae7cdeb0fef5dbe908866e1f895abfacc ]
 
-The move extent operation should return -EOPNOTSUPP if any of the inodes
-is a quota inode, rather than requiring both to be quota inodes.
+current large PEBS flag check only checks if sample_regs_user contains
+unsupported GPRs but doesn't check if sample_regs_intr contains
+unsupported GPRs.
 
-Fixes: 02749a4c2082 ("ext4: add ext4_is_quota_file()")
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Message-ID: <20251013015128.499308-2-yi.zhang@huaweicloud.com>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Of course, currently PEBS HW supports to sample all perf supported GPRs,
+the missed check doesn't cause real issue. But it won't be true any more
+after the subsequent patches support to sample SSP register. SSP
+sampling is not supported by adaptive PEBS HW and it would be supported
+until arch-PEBS HW. So correct this issue.
+
+Fixes: a47ba4d77e12 ("perf/x86: Enable free running PEBS for REGS_USER/INTR")
+Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20251029102136.61364-5-dapeng1.mi@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/move_extent.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/events/intel/core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/move_extent.c b/fs/ext4/move_extent.c
-index e8ec213b21443..e01632462db9f 100644
---- a/fs/ext4/move_extent.c
-+++ b/fs/ext4/move_extent.c
-@@ -481,7 +481,7 @@ mext_check_arguments(struct inode *orig_inode,
- 		return -ETXTBSY;
- 	}
+diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
+index 2cb5b1f715b62..b1bc81bef4083 100644
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -3779,7 +3779,9 @@ static unsigned long intel_pmu_large_pebs_flags(struct perf_event *event)
+ 	if (!event->attr.exclude_kernel)
+ 		flags &= ~PERF_SAMPLE_REGS_USER;
+ 	if (event->attr.sample_regs_user & ~PEBS_GP_REGS)
+-		flags &= ~(PERF_SAMPLE_REGS_USER | PERF_SAMPLE_REGS_INTR);
++		flags &= ~PERF_SAMPLE_REGS_USER;
++	if (event->attr.sample_regs_intr & ~PEBS_GP_REGS)
++		flags &= ~PERF_SAMPLE_REGS_INTR;
+ 	return flags;
+ }
  
--	if (ext4_is_quota_file(orig_inode) && ext4_is_quota_file(donor_inode)) {
-+	if (ext4_is_quota_file(orig_inode) || ext4_is_quota_file(donor_inode)) {
- 		ext4_debug("ext4 move extent: The argument files should not be quota files [ino:orig %lu, donor %lu]\n",
- 			orig_inode->i_ino, donor_inode->i_ino);
- 		return -EOPNOTSUPP;
 -- 
 2.51.0
 
