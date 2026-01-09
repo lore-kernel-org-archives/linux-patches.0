@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3693F35C19C;
-	Fri,  9 Jan 2026 12:49:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4125F35B12B;
+	Fri,  9 Jan 2026 12:49:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767962955; cv=none; b=mNfRrL5mj6vHmHdp/Sz1fB19cilGeV3sc2hWhercgBDk5dHFJZm+qxsV0x4hkHRC4O5z5ca5Bbii2FKJPJqgVhj3u2zaxrlhnDJl2FNmZOU2HKesndwTFr2XRy+OVW5w5EBSBTBa4N3fjieDMLq/Es8v1OXwYreYG8Q/Lbrq8Ic=
+	t=1767962958; cv=none; b=X5DyPexX0z1IlkFarHQlQkLwAy5r4cTEHBzP0fIM9WevA0bqG/DQ2XjRH+VIQGoB2lecAANJ5Dbmon12JA9SgxOMtdMDiP19g7C0SxvDr4IIZShNd61CVeJ/GL/l99P8zCQhd7FZ6fYUgLBYZ5VMgQdsu/DMHkJ9CW2vVBUGhLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767962955; c=relaxed/simple;
-	bh=6tAz5Mc+DEDB78WxSRLwWDGQuypC6nFwsUecGdfQbIo=;
+	s=arc-20240116; t=1767962958; c=relaxed/simple;
+	bh=Smq8Lx8JCOWzCl2CBqr4boRraSmv1BN1xb3+GT9TOY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SC35L1CP/UoU/V4gR5Unt1zXO5imQ7CwGBa8A+gEB3PByjzpmWP6Z+JTwVaiMRI5HMODXRQaZPz/EnSGfV6rsgt9mtB1xO7IygBoiza17Y4IsjF40DQ4e/Ww1c0UCIqf9kB087q3jFD16BfmLYd/uTkastgtf2X/fZIz8U2FISw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h7y+9b/I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mlPevA010QKQ4jdSd3/TUfeCV8yhNv+fFFtBDNJZZdSCAUaivkhczb9oitYuVww2i3Jp3Vs8c34pfHUve0+5InaEVmzaEb2OPIEZJYZ7FQ9OjueGfX1XPX53B5CG43eLZzuU1LsRwk9a7hYZ9n8FvAAGjkqa/0iLCk4+4nWcztE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GRAn5NZE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h7y+9b/I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6C26C2BCAF;
-	Fri,  9 Jan 2026 12:49:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GRAn5NZE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 859B9C4CEF1;
+	Fri,  9 Jan 2026 12:49:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767962955;
-	bh=6tAz5Mc+DEDB78WxSRLwWDGQuypC6nFwsUecGdfQbIo=;
+	s=korg; t=1767962957;
+	bh=Smq8Lx8JCOWzCl2CBqr4boRraSmv1BN1xb3+GT9TOY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h7y+9b/I66MkMnxeH4WMWXt8tZnqT8539VWismcwuKN4XuoZJAIiXpcL26Xh18pgW
-	 1vvpdW0HAUfgKCG57BNxN3Qawh8YMGiASV6/rkbPQrxWwqngtM88AMfkIGoBuO2khA
-	 OCBU+D9k7/u5vf7Tp3bfBw0htF7v+FX7+3m5vVFc=
+	b=GRAn5NZES+v0APc/J3PVIFYBaktujgR+EHSW0JIjmdGpCzBWxAzW6a5kdSnfGD+IH
+	 p2Nt+IzDJaGBuePcfW2lV20TN06VoVFV58EMnvN8+0qcseBwt/6809oUCngoxOVuaT
+	 GP7Qb3jZPiqloRjLkAIEkp/FY1hkpPSGNg2coK44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Zekun <zhangzekun11@huawei.com>,
+	Ma Ke <make24@iscas.ac.cn>,
+	Johan Hovold <johan@kernel.org>,
 	Alan Stern <stern@rowland.harvard.edu>,
+	Vladimir Zapolskiy <vz@mleia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 546/634] usb: ohci-nxp: Use helper function devm_clk_get_enabled()
-Date: Fri,  9 Jan 2026 12:43:44 +0100
-Message-ID: <20260109112138.135841826@linuxfoundation.org>
+Subject: [PATCH 6.1 547/634] usb: ohci-nxp: fix device leak on probe failure
+Date: Fri,  9 Jan 2026 12:43:45 +0100
+Message-ID: <20260109112138.173333893@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109112117.407257400@linuxfoundation.org>
 References: <20260109112117.407257400@linuxfoundation.org>
@@ -51,88 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Zekun <zhangzekun11@huawei.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit c146ede472717f352b7283a525bd9a1a2b15e2cf ]
+[ Upstream commit b4c61e542faf8c9131d69ecfc3ad6de96d1b2ab8 ]
 
-devm_clk_get() and clk_prepare_enable() can be replaced by helper
-function devm_clk_get_enabled(). Let's use devm_clk_get_enabled() to
-simplify code and avoid calling clk_disable_unprepare().
+Make sure to drop the reference taken when looking up the PHY I2C device
+during probe on probe failure (e.g. probe deferral) and on driver
+unbind.
 
-Signed-off-by: Zhang Zekun <zhangzekun11@huawei.com>
+Fixes: 73108aa90cbf ("USB: ohci-nxp: Use isp1301 driver")
+Cc: stable@vger.kernel.org	# 3.5
+Reported-by: Ma Ke <make24@iscas.ac.cn>
+Link: https://lore.kernel.org/lkml/20251117013428.21840-1-make24@iscas.ac.cn/
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20240902123020.29267-3-zhangzekun11@huawei.com
+Reviewed-by: Vladimir Zapolskiy <vz@mleia.com>
+Link: https://patch.msgid.link/20251218153519.19453-4-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: b4c61e542faf ("usb: ohci-nxp: fix device leak on probe failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/ohci-nxp.c |   18 ++++--------------
- 1 file changed, 4 insertions(+), 14 deletions(-)
+ drivers/usb/host/ohci-nxp.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
 --- a/drivers/usb/host/ohci-nxp.c
 +++ b/drivers/usb/host/ohci-nxp.c
-@@ -51,8 +51,6 @@ static struct hc_driver __read_mostly oh
- 
- static struct i2c_client *isp1301_i2c_client;
- 
--static struct clk *usb_host_clk;
--
- static void isp1301_configure_lpc32xx(void)
- {
- 	/* LPC32XX only supports DAT_SE0 USB mode */
-@@ -155,6 +153,7 @@ static int ohci_hcd_nxp_probe(struct pla
- 	struct resource *res;
- 	int ret = 0, irq;
- 	struct device_node *isp1301_node;
-+	struct clk *usb_host_clk;
- 
- 	if (pdev->dev.of_node) {
- 		isp1301_node = of_parse_phandle(pdev->dev.of_node,
-@@ -180,26 +179,20 @@ static int ohci_hcd_nxp_probe(struct pla
- 	}
- 
- 	/* Enable USB host clock */
--	usb_host_clk = devm_clk_get(&pdev->dev, NULL);
-+	usb_host_clk = devm_clk_get_enabled(&pdev->dev, NULL);
- 	if (IS_ERR(usb_host_clk)) {
--		dev_err(&pdev->dev, "failed to acquire USB OHCI clock\n");
-+		dev_err(&pdev->dev, "failed to acquire and start USB OHCI clock\n");
- 		ret = PTR_ERR(usb_host_clk);
- 		goto fail_disable;
- 	}
- 
--	ret = clk_prepare_enable(usb_host_clk);
--	if (ret < 0) {
--		dev_err(&pdev->dev, "failed to start USB OHCI clock\n");
--		goto fail_disable;
--	}
--
- 	isp1301_configure();
- 
- 	hcd = usb_create_hcd(driver, &pdev->dev, dev_name(&pdev->dev));
- 	if (!hcd) {
- 		dev_err(&pdev->dev, "Failed to allocate HC buffer\n");
- 		ret = -ENOMEM;
--		goto fail_hcd;
-+		goto fail_disable;
- 	}
- 
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-@@ -230,8 +223,6 @@ static int ohci_hcd_nxp_probe(struct pla
- 	ohci_nxp_stop_hc();
+@@ -224,6 +224,7 @@ static int ohci_hcd_nxp_probe(struct pla
  fail_resource:
  	usb_put_hcd(hcd);
--fail_hcd:
--	clk_disable_unprepare(usb_host_clk);
  fail_disable:
++	put_device(&isp1301_i2c_client->dev);
  	isp1301_i2c_client = NULL;
  	return ret;
-@@ -244,7 +235,6 @@ static int ohci_hcd_nxp_remove(struct pl
+ }
+@@ -235,6 +236,7 @@ static int ohci_hcd_nxp_remove(struct pl
  	usb_remove_hcd(hcd);
  	ohci_nxp_stop_hc();
  	usb_put_hcd(hcd);
--	clk_disable_unprepare(usb_host_clk);
++	put_device(&isp1301_i2c_client->dev);
  	isp1301_i2c_client = NULL;
  
  	return 0;
