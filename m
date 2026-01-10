@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11AF5A41;
-	Sat, 10 Jan 2026 21:15:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68470238C2A;
+	Sat, 10 Jan 2026 21:19:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768079748; cv=none; b=tTLqbeCaCHA4+tli/XnfRX369VFpHLO9JgL8XsEdJzzHxSnzNd73Ur+QCCt+fNQm7ft+R1WSVU2tWlKa16C/Lqk/I4x/zGMF5z+dzyP4q4KaH+aWK05ntdad0lMS2kWho/LYjRcXGU7YK8eRK8O0gtc79LlSn9jDl/BpMHko7Kw=
+	t=1768079963; cv=none; b=kvYvHFwdYvBtdx4hL/I7V7KMfxBP3KB9+/mACzsx6pbIhGRr1xoSCK8K4Pka5s/h0C8cL0la3t0mVfVDKCNgYGeqT10Tt74K4rS4FkCZutbaspEqV+mf7E2gqpwG4YQnpQlbSh4OyGs33PTvzqzzizws6XT+B5lQxtoXslZg44U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768079748; c=relaxed/simple;
-	bh=QwD8KnUtERO8VDxLiNrP7YwmQ0Bci1i+VhB9TVOwKnk=;
+	s=arc-20240116; t=1768079963; c=relaxed/simple;
+	bh=u81CRaZdbF50+Jq5V/Yg515cCGwe5elV3Thy6GCBakg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kc1OduAkJ4cUGnY8L7rTaoqSbVlmTCGy2w00P2LXL3gmeFtchpYCj8wFB3QiOrbwIjOzMBjRStZ7VdUNPMUGrovgru2Gqnk9d9dh4c2K/8fdpJkdq06lNJnTceaDkLjU6EjEgXMNkOColUhoq5iUdjT+br1zboaj1zYlfbkaHKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lkcAwxRM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rN+rgnyvrONvBNRDUis7w29QZ6z1wp66XV3gzHX0wtbJjpTv4/mOCRdX5RfxVXxiA2Ev9xXi8kX+wa0Uz7+bRWHJUIRmey7QxdfgYBzfZ9jnSNJIDm8TDlYSw0xRtesfEkK9Ax/EmUhDtGpb4Nz7FsKU6M+ZAZcbyrt4s+SiSMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rj7GU6Vw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lkcAwxRM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFE91C4CEF1;
-	Sat, 10 Jan 2026 21:15:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rj7GU6Vw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55A94C4CEF1;
+	Sat, 10 Jan 2026 21:19:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768079747;
-	bh=QwD8KnUtERO8VDxLiNrP7YwmQ0Bci1i+VhB9TVOwKnk=;
+	s=k20201202; t=1768079963;
+	bh=u81CRaZdbF50+Jq5V/Yg515cCGwe5elV3Thy6GCBakg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lkcAwxRMp+y7n0fwwsKCgy8I+jmKxzTHUXWGZP3keJyxKmmYzuScabitlQOJOV3sf
-	 Am3g749XmcFWgWriH2v05DlbGvKOIQzWwFX86OzMzir2nXbWK1b+p4nxJswvjrNRNS
-	 FEEOybIQtUADu+w0dkBR3XwWmV1Qv8fQA0t1yIAUZR+xPzovC3a75T5zSTnZUQ14Sq
-	 nY16TteYXjVfxge8gBkhoMQvSSniXd19xXsmm6Gvvh1y8gAscZmbQQltuChGwgFE77
-	 1K+sXIAk69l8zjIb1Bgto7ipv25NVsefXapWrJyg1W50LWgtPR4SIbWBtvPZ5nCNNj
-	 2cznyNUdrwT0Q==
+	b=Rj7GU6VwknFchtE9extXKsCOgD+GkNf0cjJgFlcv3q6Co5gxsVVZ9qDP1DRsjn+tz
+	 NUYd0pL0fXVCEMMFqJ0jZXHf9zBKRJKdD0HErZBnY04ymX5Wt7Oht4PWx7tG/ad6KW
+	 ZL5UFtszB6+xU0JNsty2e+5VgBwkyb3T9NuK/4KECm9h/KgNHIoyLWgg4Snfleas+r
+	 5QsF2umMGOBN90zg92AlomE2uurlFjhg34XEUJ4RsTiyWuxKICjSXU5tMLnjvqAZuU
+	 OF8GEx9K9DOyUpaICZa96qi4n5x8DtGn9bsuoPU5xE1Ed7QtxWBNTEer1ZGNYE41yF
+	 hlpmwaoeTMtNg==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: gregkh@linuxfoundation.org
 Cc: achill@achill.org,
@@ -48,11 +48,11 @@ Cc: achill@achill.org,
 	sudipm.mukherjee@gmail.com,
 	torvalds@linux-foundation.org,
 	Miguel Ojeda <ojeda@kernel.org>
-Subject: Re: [PATCH 6.6 000/737] 6.6.120-rc1 review
-Date: Sat, 10 Jan 2026 22:15:30 +0100
-Message-ID: <20260110211530.119650-1-ojeda@kernel.org>
-In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
-References: <20260109112133.973195406@linuxfoundation.org>
+Subject: Re: [PATCH 6.12 00/16] 6.12.65-rc1 review
+Date: Sat, 10 Jan 2026 22:19:12 +0100
+Message-ID: <20260110211912.120183-1-ojeda@kernel.org>
+In-Reply-To: <20260109111951.415522519@linuxfoundation.org>
+References: <20260109111951.415522519@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -61,17 +61,18 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Fri, 09 Jan 2026 12:32:19 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Fri, 09 Jan 2026 12:43:41 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 6.6.120 release.
-> There are 737 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.12.65 release.
+> There are 16 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
 > Responses should be made by Sun, 11 Jan 2026 11:19:41 +0000.
 > Anything received after that time might be too late.
 
-Boot-tested under QEMU for Rust x86_64:
+Boot-tested under QEMU for Rust x86_64, arm64 and riscv64; built-tested
+for loongarch64:
 
 Tested-by: Miguel Ojeda <ojeda@kernel.org>
 
