@@ -1,71 +1,71 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5880735965
-	for <patches@lists.linux.dev>; Sat, 10 Jan 2026 09:54:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46DF52F8BDF
+	for <patches@lists.linux.dev>; Sat, 10 Jan 2026 10:05:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768038843; cv=none; b=bZw/qgetHP+J+pbEQFY7rVCwsHKsap254eb6e8n/oSU8ad9GvHzxWEfxrhwDoY1vFqB6H3Ynjd57m97xWSDYISiJm2cvPjBd5goLYfib+TD0L4Yuk7WZzb5TzSrp3Kzv7wF/4JYRPDiHax9RJFPz+mueyfAzRspk30l7KI9ci+s=
+	t=1768039506; cv=none; b=u+MUIf1gGct1+ePrcVraURch3amyo9xF/j3QF8ow6gW4DFpX7waySjZjo5FEulwCLP0yF9G03zDKjCGBYWMNn0q3qpT8juIstpwQbmqFbSDJQHUussxm/r548nrQCvG+qrxxCsjAh00hkkSiWnMa42Vhg+/ek3ASn9YhDVbCWtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768038843; c=relaxed/simple;
-	bh=yL+5nDlRuP0DDKJR6kMiVZMt2mnQsVcin+5neQ6LxoQ=;
+	s=arc-20240116; t=1768039506; c=relaxed/simple;
+	bh=porvaBAkKdZCiyHP002qAS6ujzfbEMWqze1LBTMYLhI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CfRf1P4QVKgNyClvrP7CJ3RGYGK9TtUGEEIB5nVcXh/AEaCBScrsJZK3llqKEfy/16q7DOFazfikPfVSErg4PTpg+ckw4BgCaq2Hbhj53/gj45RkEV7OuR11Oio4anajl07AfEnjZogew3ZKvWLe30PX2lwy1CuEyD14g8sKRq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in; spf=none smtp.mailfrom=rajagiritech.edu.in; dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b=jKO1Dc3W; arc=none smtp.client-ip=209.85.218.54
+	 To:Cc:Content-Type; b=bF8HtpEuvvDEpTWzvLk5k010niY0jD62bsfb2DjBDYn3A8sutd2KmLYmOrCIhE4x/a0i5eFo93wamBgXHvGvez07lK1EazbTsiKhPLwVRKtzvQuxl5tkvtfFUt05oqOnV17o6mHFRNMxYoZMMpO3X6gsCgyke2oK69AwRr74EFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in; spf=none smtp.mailfrom=rajagiritech.edu.in; dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b=FUyKG7os; arc=none smtp.client-ip=209.85.208.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=rajagiritech.edu.in
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b="jKO1Dc3W"
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-b7cf4a975d2so812278966b.2
-        for <patches@lists.linux.dev>; Sat, 10 Jan 2026 01:54:02 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b="FUyKG7os"
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-6505cac9879so8470024a12.1
+        for <patches@lists.linux.dev>; Sat, 10 Jan 2026 02:05:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rajagiritech-edu-in.20230601.gappssmtp.com; s=20230601; t=1768038841; x=1768643641; darn=lists.linux.dev;
+        d=rajagiritech-edu-in.20230601.gappssmtp.com; s=20230601; t=1768039504; x=1768644304; darn=lists.linux.dev;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=vpheX/ey9FdByEahZt7dUCBS3OYWKh+3lgetnYEvmao=;
-        b=jKO1Dc3Wvf5XWVAVvMRhdLKb6rcd1yUtsqwd0/ndg+nrMCB+ZIfBD1zcxZOWvl0fc3
-         +kQq/BckeOphn8zZ5267T3faW+YhXr4fSWfQKfnvPI5dwR52EH10j0bNMmDo/9dzHz2z
-         TPAQbQ6Z5oc1bnFlcGY2R4STFZDO4D+zxPlp02BHTrfR6IGGeBGy/HI9oLjo9XCdk23W
-         xcfcj58XjaDOx6QsYafjTH6G1t/8VuXl4SblvsvLJ+0Aokqslu++L74GzDwyWUiiqhyQ
-         FNBMYxX/Gj2amzfM/EjZ4C3hMbEwCAM4/eroz84r5hVIPIq4erzR8gdkCmukshvDmlXw
-         S6WQ==
+        bh=Y//RHTw1emsVl3ktprI7wdvq0ZBKRoCim6D9KJfCwiQ=;
+        b=FUyKG7osvTbHSUkNGbEaHupj2IVIJLM21J/aZ+CaR+GcyNvT7u70kqyoFNurmfsIHr
+         LBG88JHh5PofIMTf9QOYuNuWL7fWawYkc6h2km0T3A+W4B2LhJEeOjP2zc76ZBeaM09v
+         +1AUKqP5uyGLxj8bwz81MT3ByNkIjp5geHtgH1lzr/VZdjUlBhLTlrcS00qdqtobR1bf
+         +AChsck7BvwMq6hLFM6d7cjfPBSGWkxmT3/nxis91yegSPuwKH4IcIVpWBoG7616mrsW
+         syUOlk2u4EutwMguRkl4PyfzJ/zIOoYI3c3PBVrsw15+/uyyVgwv8en4Q7PG9NxhoM21
+         7xBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768038841; x=1768643641;
+        d=1e100.net; s=20230601; t=1768039504; x=1768644304;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vpheX/ey9FdByEahZt7dUCBS3OYWKh+3lgetnYEvmao=;
-        b=PcYP20G09deU4sk+9k4/01vgtKVCA2d3eCTHhzN85sZUHzZKLOdj/3ph5ZBGetJEoo
-         emM/YFwjZCOaQgZfuaD+tnuMeyoqxfPMUvc4yktBnC0/bSAXob+KQFFyp2OBDw/ExbRj
-         JV3bZj2haTx9vyBNsltIWjeQHwiRANsjxQpCp+sT9y5UnSu/Mym8BkdKc8NnNGVl8DnV
-         Yl35eUVvE+9xeC52GU84ASyxAzgKNiJKs7e/LHv29awhboSSA0bZjr8IQ2zhJechj74N
-         8tQ0OW6mFIo8x1yypX1FhgoIrwgXECgOCFaLQ7EMBiQ/M4h0bFN2wAmcXU7Qwob8kQ/T
-         nE0g==
-X-Forwarded-Encrypted: i=1; AJvYcCV7+mX+H59dW6jVcRafxvKHPW3hxNbPlZWd3zkE8OxLqYQDgmEdtm5QILWtXnVJy69owwAmrYQt@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzqygf+gqu1XImI5yVyf1ZBpbLA/asP9nRqImFrJCmQ0THz5+UZ
-	p1CUbEX1fp9Ox7eFZzSelxtBOv9KckMGtbPSmMo4sU/coPRvFGbWVmvep2eoFIOREsvEmRozucw
-	jM+ctBUVexUqUR12qbbBqJSUZul1faFqSP+RDqzcdwg==
-X-Gm-Gg: AY/fxX4lgLu98/igOpZoefqZCb0VJm/VPH0g7m5zv820N2UsFk8GL7yCHBVdOsM5tt5
-	6D5vWMStsuHnQjsustFAfkHjB8vb8BDijfn5RIE2FU154NVUEYruvL1XjB0tlaBLS8r/e05IizD
-	R4Ix5mYYgFBHDhoxBDT4xB+xfLKqv7uJ2rJdQm4Nt54QxTTRwlS7APhW8Ku/hIYLODY9NXiUqVu
-	XT2lQ5Cxo4xyNopc0+/Oi8mYZQCO8E5L3O8hQuNnczaFkz8xnr21Az36jxX+5VDLHUVJk/w
-X-Google-Smtp-Source: AGHT+IGURXNNrj3WuTa9P2rOK93sGBZtBFjkgl0j2ENrDSP0o8OmoRnsi+DfVENA1fiY6l84H5lQQwXnfRapuUaFCQ0=
-X-Received: by 2002:a17:907:7fa5:b0:b73:8639:cd96 with SMTP id
- a640c23a62f3a-b8444ccea89mr1181718666b.24.1768038840793; Sat, 10 Jan 2026
- 01:54:00 -0800 (PST)
+        bh=Y//RHTw1emsVl3ktprI7wdvq0ZBKRoCim6D9KJfCwiQ=;
+        b=TrBG8y1a5r8JOt7b6UysdoTcc7C1yDKtIcPniG+Diy6G8Zn9vyVXpvDyHmGTj6RqcP
+         qcLw4KEiBXuxFBBfdZMcUKFA0/q/OewGeC4PBzVEa22XqVPzM/i77YquYcMSujZjk6SR
+         zoU/B0+k7j7lg5y2kYo6XQL+iZO2GJm4jbyNHQsB2Cti1pRJZ3TUYW4yxAGiSVgu/6Wt
+         Ygeb+PzUBzcibIpnwCcOZRsmPn/CfNuRfI3/9gl5RVm5Gby+97EciSBFndqDFxShPKyJ
+         rQqxWh/lDriUhkQOV4TQVakoM7ZvJriSpSNX14ZBzKjhej6w88A3SmHBXfmkPgWjMQAK
+         I5Bw==
+X-Forwarded-Encrypted: i=1; AJvYcCUSB9V+DPGUp/EAPCXPmNuKLErf1zOpmiVAaw8QpFkb1KzYoBBmdmxOABlX4XxIGWOlgMA3Xusj@lists.linux.dev
+X-Gm-Message-State: AOJu0YydIn36pWZM2U5vmgNRln3S4smb9HyxanIgEoY3K3v2/NhsT81V
+	Ur+DwQblOnfKdVAHCZbrQcIBu+F4lhnnXtKmFEo03bowrITI9T0kKwFbjuv46MG6d759AcaSi87
+	WiYpJvSFp8Ru3hRNw3138BBu7o2VWR1GToyfaYPi7pQ==
+X-Gm-Gg: AY/fxX5U3Sr7gaVeNTNTwOAYkGmGtv/v5zj/xsZE7Ev5QxQGFZUbEcgDpU+QfuY6RIy
+	cBRAJt31yfLwc+QGfi41vcIzjT2L+HiGgVy0j0qJCm2XjoN5tAO+fPSm6xPqUDa3SrCgxd4jWlh
+	qcqK7S9UsUO21dnSRH4T2qXff/mgsdvrQ0QvzesmhdUD0U+R/bScqXxtZXir3zvnwfuXGMhIbht
+	pZ1bRKyW3A0lxnzoWSGNu7s/qBXcy0w9oVHd9MT30F3Oi7t2JXnyhT3Yxbm2pTVXT1FHZ7O
+X-Google-Smtp-Source: AGHT+IF1RWdN6N56ML8fXmycusf+Bq3NDRkRpW+951bAOolZtq5MIecumLOhj5YHrMsS4882UGtfpG3VIajABXJ51u8=
+X-Received: by 2002:a17:907:3d0b:b0:b83:1349:3a7 with SMTP id
+ a640c23a62f3a-b8444c4d0e0mr1179195266b.10.1768039503669; Sat, 10 Jan 2026
+ 02:05:03 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260109111950.344681501@linuxfoundation.org>
-In-Reply-To: <20260109111950.344681501@linuxfoundation.org>
+References: <20260109111951.415522519@linuxfoundation.org>
+In-Reply-To: <20260109111951.415522519@linuxfoundation.org>
 From: Jeffrin Thalakkottoor <jeffrin@rajagiritech.edu.in>
-Date: Sat, 10 Jan 2026 15:23:24 +0530
-X-Gm-Features: AQt7F2q3IZTmlvbj4-K7nkwEjAM9xMP_OSy0LpooJtrgBLok0IruzPdn15OyjPU
-Message-ID: <CAG=yYw=UXQHH4j2vaPcMu7XsKRLm6HVuTHZW_aS5d23bLpSE1A@mail.gmail.com>
-Subject: Re: [PATCH 6.18 0/5] 6.18.5-rc1 review
+Date: Sat, 10 Jan 2026 15:34:27 +0530
+X-Gm-Features: AQt7F2otbVrWs9f-y8Zw1pDGca-fJHwhoppdt6Moya48H1a4SKOVBDK7n5-emS8
+Message-ID: <CAG=yYwmnh83acEUbUNT4f=G7n6ZeQzUkfmWMAPc1FioHwLwwZQ@mail.gmail.com>
+Subject: Re: [PATCH 6.12 00/16] 6.12.65-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
@@ -78,7 +78,7 @@ Content-Type: text/plain; charset="UTF-8"
 
 hello
 
-Compiled and booted  6.18.5-rc1+
+Compiled and booted  6.12.65-rc1+
 
 No  typical new regressions   from dmesg.
 
