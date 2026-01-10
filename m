@@ -1,100 +1,111 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2562024EF8C
-	for <patches@lists.linux.dev>; Sat, 10 Jan 2026 10:45:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4349B3242D9
+	for <patches@lists.linux.dev>; Sat, 10 Jan 2026 10:58:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768041933; cv=none; b=EPBKahUn88e4PNS4byhJkUhqvO/CGA2cgcZRVKzyT+C+Y0ANQkugLfV6ZRKqiRofLtRo5X5B5Ra/MLFhAMzr/jigoJ0gIQw9nxyJ3k9uGQqbIOjnFHOJrrtVGyTxYkOI3sYgiSybV3cp4Rth0u6HuLkLamdT7MBJvjgDhxaOsZs=
+	t=1768042714; cv=none; b=YUuHXiu+oEOIhKF1M66XAYxhv9DvQq4MNrUrVEcbyR3Aqk/WL1f2AtdfKo4QTvYHIIP+cO4yO6eyJeM/J6zYOK/UahXCL3LGE4BBy83W2iCWRDWlyOoleNrtwgpy/No5IVlwzTQ4YQKlE9NhDd8310eynuu9M2d8kQ3cifFRkm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768041933; c=relaxed/simple;
-	bh=RFZldikQMkCTqEZH8vKg7TSQIx5FlJQ4I/ZwY9mN/Os=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=N+jX2r5Y2g3gjuDhNwp5GW24tfMl/AWo3s0jry5YVITdeLOwCeo7yOwQsrJGpzT24VydwuVcrJcN5SsCpiepGa0FKXQz0n69zMaHWe9tkojzSomTkn+2P2R/0zLfh315eFHVnuNOFWEvr4BpmpL7yWxDPpPPdfl73Hl6OiffsRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in; spf=none smtp.mailfrom=rajagiritech.edu.in; dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b=KPdZKm5/; arc=none smtp.client-ip=209.85.218.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=rajagiritech.edu.in
+	s=arc-20240116; t=1768042714; c=relaxed/simple;
+	bh=3XdbUJDe+0LqYz062wAK4YU03aI6zrsn/ID500AHkMQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GmjCLx1/jRs82PC6JKocccm/dtPViqVUAzL+AeJvXZ9EM93OYdtAqfsB7JSCoO+pdDmqPAMM32ORWfNa5P3oNb1dGmuGyR77eVncg7dd/8UOwBQKxvfawT6nL6DZBN+NWSaBsAeBjq5roJQrY205p2kevL2IDA8hMtPcVV4jams=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=QIqebi6h; arc=none smtp.client-ip=65.109.113.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b="KPdZKm5/"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-b86f81d8051so43420066b.1
-        for <patches@lists.linux.dev>; Sat, 10 Jan 2026 02:45:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rajagiritech-edu-in.20230601.gappssmtp.com; s=20230601; t=1768041930; x=1768646730; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=mDD4gInLjVnOwXV5aynlTcIEFIM8N7gEUkgZcKzfgZY=;
-        b=KPdZKm5/L3q6Lsb84P22niUs1ijc18j2suCGUOq0gRq8Hq0D9OItzgPm2nivfOa8nF
-         yFPKWEPvdzWxEAuDh478mDmlfL13pxsdJQw5GXMM2uxWM0QGfastX/XppPyZ9MeQnnBu
-         Tf1OkMVCyHy/nJs4Yi+j1USRQb3/Fc50M4VQLO/Tu2Lhaw2KeTDyp/FbW4UTIn07/6Qc
-         RVTpw3PVY6VgyHgTVOdMF4RdreDoTqj0wIHk33KXU+wFvO9fahOzWzhAd1Yc7GOHhI0B
-         NNzYwv42+583l3K0DmMlshdAQrytxdfaWczjFgjzGTnKAJdNUE9NEYrPeMcsSLL5N9Hd
-         W3kw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768041930; x=1768646730;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mDD4gInLjVnOwXV5aynlTcIEFIM8N7gEUkgZcKzfgZY=;
-        b=E9Ak1rNIxNUaMcc8lFHyz0My3/AZzKuiY6/D0dfzBZ2CfrYq/RlkeoG2tkE6A0Ni6N
-         8gsyWjmoqr/rqMo5KKdq7FUmauq8lL/zyCSWakDy9DLKuqU76emFpTb60sBd1k3fRudW
-         Lj+Aheqp/pmBPPQf5lURlRfuHtIk/ytuTqLuBWYAZHwxpWZUhugs6XydIbm0VQM0ZAEL
-         49PyxxNUBR660dhv6JKwvJF7HW+vV0CneTBfah6jaYE88Gba+Jz9PgwL5RMuiP1aOKh/
-         6Zci6iagfyIC0THiWH5u8eusVU9Qy9TAnDlwa/slTSt5e4z6+C5UyEmF5c+SdVfHflls
-         0O0Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVfk0ScvAI15hTLacRtBuVT2P107/diy4lZylPce13AV3Q/UnAoOJKBXjfibErAGBLdJmdPAOMo@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw5mBF/I9uke9iPYYUxFy//APE6lb1q2VamAWB8QtiyrozbSPTe
-	W7biagAhBQtFuMb6Zx4qcOCM+6JdcvPb/X80JildgTnVZbx0V0pBH7lwy1hVAZQxsmE2pnwNhxK
-	3sjwuowMqaz41ZdmtUVbNdu7CdCagfxDXqOj3f0lAoEHkjOMqGhTQOO7UcvAx
-X-Gm-Gg: AY/fxX70PI9atU0o0rbnMpO8hdHPo9q9VU6MT0Q4lSnWDRGe+3v9ThEXL9JSP3IFLmL
-	ODXiA/a7zXREOhFsC7qWA1HVCtYGwXotUC7b3FHR9cippYqbP7dS6YBqr9J1tZCk17faq8bdKh6
-	KIFwQAT885bU82CUPyCei2YUq/fhB0TecyHBMjlQIKT3ycDo4hLUJFKuiO2zACawiRiXn6xABzX
-	YdLzsOzRMwCmV/UFE2KtgSCwN/0WCzWv+1vywE7hgo36EA9zCXKPBHaQFV1EnyEtVg2IPQy
-X-Google-Smtp-Source: AGHT+IGgoZhDVkixtpshz7HlFqMh1nze3xpKd/rBpJcn+L28SpykEQ1pjsm1fGxrjnpSL/PpcoFuRMP3p1Aw/CRQAA0=
-X-Received: by 2002:a17:906:aa43:b0:b73:6695:cae6 with SMTP id
- a640c23a62f3a-b84298aad06mr1171129066b.10.1768041930516; Sat, 10 Jan 2026
- 02:45:30 -0800 (PST)
+	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="QIqebi6h"
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 2546740E01BB;
+	Sat, 10 Jan 2026 10:58:23 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
+	header.d=alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id s-uA1Vp98zkk; Sat, 10 Jan 2026 10:58:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
+	t=1768042697; bh=+934YTZ9NLRSojxoJAPJ5CK67kXHfXN5tAnROirXSDs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=QIqebi6hDp8NhnTxxkNpfMfSlKPTT285sWHHHyWvdcxMfFxDLmfVmndqxTj9MWDh0
+	 7QhYisqCYIN+CtG7jVOHEzDT/EKaC2uhuCnh1+Oq97Zp7JWjc8JOnPHtAaAjGRCGgM
+	 TEgjGzH2VIW+ej7KlKYqRUP2ky27Xz8y9tLiEEv8b0hL/RXllQqvJMfXvDZzphQE98
+	 0PTqpjKVyvNDKcLmuEs5FbBh5cVch4eDrd6wpZ9xm+zg3lHN+tyQV8oEcl2r+4ZXFb
+	 C/sBLQ+ZbLporjmLuKv+cORhpTHgnYUlwkw6xc9XRoU+CuwzULAfZ3+y+iKc7mSPVK
+	 eeTVZ8riHBAPqOSW9g64RYvyi1Xi4rZb49Ld5uB8xa02794Gm3UydygXwUt4iz3hdn
+	 Akraj0mqm8o+yR8bp0QzJzFzwXXoMq6SgHM5caLVqUiAON9qRLtQs4eePQ3JZFcSju
+	 6c+pweT4obtmgtJlqKi6u7+5pryF23d3AS3Ihp8W0Zn7CWwWF5z+sCs76QDXU9S057
+	 yOvnsLoMhHNOFFhWTKPJHWZjjjhZazr7Lw7TZ5LhsPmvndvukD/fu95CE9JRubfhRj
+	 f51xr6IqMbvF1r5FO93HqTVtrpStV+PyqZG3tHf3DTyXwohRX7sAWsqakZqt1uzIo8
+	 5TL9mHQrLZevbDgzw3ZFlpUg=
+Received: from zn.tnic (pd953023b.dip0.t-ipconnect.de [217.83.2.59])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with UTF8SMTPSA id 7A17A40E00DE;
+	Sat, 10 Jan 2026 10:58:04 +0000 (UTC)
+Date: Sat, 10 Jan 2026 11:57:58 +0100
+From: Borislav Petkov <bp@alien8.de>
+To: Tony Luck <tony.luck@intel.com>
+Cc: Fenghua Yu <fenghuay@nvidia.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>, Chen Yu <yu.c.chen@intel.com>,
+	x86@kernel.org, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH v17 30/32] fs/resctrl: Provide interface to create
+ architecture specific debugfs area
+Message-ID: <20260110105758.GAaWIwtlX9o_oVXIM_@fat_crate.local>
+References: <20251217172121.12030-1-tony.luck@intel.com>
+ <20251217172121.12030-31-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260109112133.973195406@linuxfoundation.org>
-In-Reply-To: <20260109112133.973195406@linuxfoundation.org>
-From: Jeffrin Thalakkottoor <jeffrin@rajagiritech.edu.in>
-Date: Sat, 10 Jan 2026 16:14:53 +0530
-X-Gm-Features: AZwV_QhPeLVHL3GJoCDdXgIj-NTxjYMequNQwxjnr36FlDT43eApc9fXJptXTiM
-Message-ID: <CAG=yYwm0bXD7pCnNTuKJvBvWN88CqrftHykWD_-0_XY+sT+GUw@mail.gmail.com>
-Subject: Re: [PATCH 6.6 000/737] 6.6.120-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
-	achill@achill.org, sr@sladewatkins.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251217172121.12030-31-tony.luck@intel.com>
 
-hello
+On Wed, Dec 17, 2025 at 09:21:17AM -0800, Tony Luck wrote:
+> All files below /sys/fs/resctrl are considered user ABI.
+> 
+> This leaves no place for architectures to provide additional interfaces.
+> 
+> Add resctrl_debugfs_mon_info_arch_mkdir() which creates a directory in
+> the debugfs file system for a monitoring resource. Naming follows the
+> layout of the main resctrl hierarchy:
+> 
+> 	/sys/kernel/debug/resctrl/info/{resource}_MON/{arch}
+> 
+> The {arch} last level directory name matches the output of the user level
+> "uname -m" command.
+> 
+> Architecture code may use this directory for debug information, or for minor
+> tuning of features. It must not be used for basic feature enabling as debugfs
+> may not be configured/mounted on production systems.
 
-Compiled and booted  6.6.120-rc1+
+I, like you guys, thought that debugfs is "safe" in the sense, stuff there
+can't really be an ABI but just recently at LPC I got schooled about it and,
+basically, if anything in luserspace starts using debugfs, it will be
+considered an ABI.
 
-No  typical new regressions   from dmesg.
+And this thinking has been there for a looong time now:
 
-As per dmidecode command.
-Version: AMD Ryzen 3 3250U with Radeon Graphics
+https://lwn.net/Articles/309298/
 
-Processor Information
-        Socket Designation: FP5
-        Type: Central Processor
-        Family: Zen
-        Manufacturer: Advanced Micro Devices, Inc.
-        ID: 81 0F 81 00 FF FB 8B 17
-        Signature: Family 23, Model 24, Stepping 1
+So, before you put anything there, think again because you might end up
+supporting it just like an ABI.
 
-Tested-by: Jeffrin Jose T <jeffrin@rajagiritech.edu.in>
+Thx.
 
---
-software engineer
-rajagiri school of engineering and technology
+-- 
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
