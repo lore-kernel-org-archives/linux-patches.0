@@ -1,47 +1,47 @@
 Received: from mail.8bytes.org (mail.8bytes.org [85.214.250.239])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8132D145B27;
-	Sat, 10 Jan 2026 09:27:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FD9521771C;
+	Sat, 10 Jan 2026 09:41:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.214.250.239
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768037232; cv=none; b=fGdhaCAaReRxZeG5MWsIiw06O5RDm4CV2t3DHxGVjiNWmHpFNkBJDW8pJd1Bzf6ETDQcUIFDD9h/Pjf/D1Em52UTxPctajrLbwn9IOVs2UzBrG67GPPYvDML21Y3oHFrYaoNsw3X8pZPJK/J2VWw3zT0uMs9wMS6kiYHcorKnzo=
+	t=1768038100; cv=none; b=rPE5dCLkYvIdLbWCm15V2eGw+bNzazjTGYnHj38ef+xfawH2DGrvh3m+yBc3ECprcklcOjwjudhwW97X0ntrKaxXt7R3utYNY4MFtwHE/c57N74BToJtPCOjFYSS3mfKCweZabg2BRBp4dcK9u+cmORNux4TLSomuLiU5QtFYBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768037232; c=relaxed/simple;
-	bh=wYmoWm7BTojrEnJyTKvvqvGn/JiK9wET35aEG/KxfoU=;
+	s=arc-20240116; t=1768038100; c=relaxed/simple;
+	bh=97kj6NbcSZ1ah8oiUcYBe/jHNxkUWJmjCNuc8ugXpls=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EI32AcvO5ypv14dyVQGuAM7suCFZw6H/6fIANMpdArdvWp41IoBgbaoJq7geLuQrGeYpup59DaSRB20666G7zK1YDdwm5oIhHdoa2Y29PdEpdH7aG45Oh2qe/xTqsLBdi1hEls/Zd9aRCb1seYdNCzZ5kWQeI847gslH99AGijA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org; spf=pass smtp.mailfrom=8bytes.org; dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b=jDwehzmi; arc=none smtp.client-ip=85.214.250.239
+	 Content-Type:Content-Disposition:In-Reply-To; b=YhHSFaefodQyrZvnvfWs9Bf7VPSfG97HLYtyVajW2FYeDN7sHeb7iBVqdX3D/4c/ac/0c6T5yrKYo/W+tiG+Y6TFOlvVKBoRD7W4c/+hb0E7ScvdCgE9m8Jo03Veb0hRz88/NJfer2zuvZ9wVh03Awkwu7JDGOxAfvyhaJhKP0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org; spf=pass smtp.mailfrom=8bytes.org; dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b=I+o4nKf1; arc=none smtp.client-ip=85.214.250.239
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=8bytes.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b="jDwehzmi"
+	dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b="I+o4nKf1"
 Received: from 8bytes.org (p200300f6af1d9600dfc71246d978d903.dip0.t-ipconnect.de [IPv6:2003:f6:af1d:9600:dfc7:1246:d978:d903])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by mail.8bytes.org (Postfix) with ESMTPSA id 2914F5DC43;
-	Sat, 10 Jan 2026 10:27:03 +0100 (CET)
+	by mail.8bytes.org (Postfix) with ESMTPSA id 4689C5EC7D;
+	Sat, 10 Jan 2026 10:41:38 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
-	s=default; t=1768037223;
-	bh=wYmoWm7BTojrEnJyTKvvqvGn/JiK9wET35aEG/KxfoU=;
+	s=default; t=1768038098;
+	bh=97kj6NbcSZ1ah8oiUcYBe/jHNxkUWJmjCNuc8ugXpls=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jDwehzmiUPaneVy8leWWUS+FSM8CwhlYOagzG/QPx5OpdR79dWq0gFnxMh7QsvWxb
-	 esqVGiliwYW5JR7ntfQEg8m4Nz1nqf1jK8Sza68vMW1/3DtQ0/PMa0hY/Pxws08qUE
-	 u+JAL7GlwKnfAMny1kdVdijEeO1L9J8ZI2cZQbH4qxCzEutwIoVL5eZzb/ymVckkpJ
-	 NdIbPtRkMXOpSP86W7EnXN5Ve3GtkMVyB4BF3ZC5xV/h98OE8vho/EhkB1ZZjMZ6Ac
-	 tuHhUpugpklqEkxDpIrdJRMancXyp+uCALimyIhATb1m6zyhdfYm5HNKvr69zJzRnC
-	 L4VFHPVYrrJRQ==
-Date: Sat, 10 Jan 2026 10:27:01 +0100
-From: =?utf-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>
-To: Nicolin Chen <nicolinc@nvidia.com>
-Cc: will@kernel.org, robin.murphy@arm.com, afael@kernel.org, 
-	lenb@kernel.org, bhelgaas@google.com, alex@shazbot.org, jgg@nvidia.com, 
-	kevin.tian@intel.com, baolu.lu@linux.intel.com, linux-arm-kernel@lists.infradead.org, 
-	iommu@lists.linux.dev, linux-kernel@vger.kernel.org, linux-acpi@vger.kernel.org, 
-	linux-pci@vger.kernel.org, kvm@vger.kernel.org, patches@lists.linux.dev, 
-	pjaroszynski@nvidia.com, vsethi@nvidia.com, helgaas@kernel.org, etzhao1900@gmail.com
-Subject: Re: [PATCH v8 0/5] Disable ATS via iommu during PCI resets
-Message-ID: <u3763xmcq6tr5nnuye7jj7c74nxbboneylbgywvydjtuhlmxcu@ho7sf4z4u55l>
-References: <cover.1765834788.git.nicolinc@nvidia.com>
+	b=I+o4nKf1r3sWe0TyTDSCcZ6HbBDYt7UfQ9t2oBeSIIUPldVfxmbw6m13b36Legv2s
+	 PgNOpdsaNyEO4FieUMYOqhph8uEG0udMHRjUVurB5DvqqQ5RDwC4tRqAFuXpJmBpSc
+	 BCNIKR/bdYy2ldkkheTA8KSzTcRmSA6E1sXZaDnceynRF8C+OURHchAmQpqnx0QWih
+	 pzQHbm8+yfunBksD03aoGrT+L6gmAmIvhoPR8ssG8bOsIeOVv4gzf1w0w3YfPFIk6+
+	 7ZNw2hZIeKxbRRd4lmAo7HyOVS9902NSpTnr2i/srSjP6SP8teyQZtzdg4EBEG0R31
+	 EGDimyqQHNDew==
+Date: Sat, 10 Jan 2026 10:41:37 +0100
+From: Joerg Roedel <joro@8bytes.org>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: iommu@lists.linux.dev, Robin Murphy <robin.murphy@arm.com>, 
+	Will Deacon <will@kernel.org>, Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, 
+	Arnd Bergmann <arnd@arndb.de>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+	Joerg Roedel <joerg.roedel@amd.com>, Kevin Tian <kevin.tian@intel.com>, 
+	kernel test robot <lkp@intel.com>, Nicolin Chen <nicolinc@nvidia.com>, 
+	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev, Samiullah Khawaja <skhawaja@google.com>
+Subject: Re: [PATCH rc 0/3] Fix some kconfig related issues with iommu pt
+Message-ID: <b35etzxdizrzegxfyyzxxd62zbuzo5rdjph6fdb5c6nmdqxjsz@mqv3uxdw7x7s>
+References: <0-v1-946859fdf97e+1bc-iommupt_kconfig_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,14 +50,17 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cover.1765834788.git.nicolinc@nvidia.com>
+In-Reply-To: <0-v1-946859fdf97e+1bc-iommupt_kconfig_jgg@nvidia.com>
 
-On Mon, Dec 15, 2025 at 01:42:15PM -0800, Nicolin Chen wrote:
-> Nicolin Chen (5):
->   iommu: Lock group->mutex in iommu_deferred_attach()
->   iommu: Tidy domain for iommu_setup_dma_ops()
->   iommu: Add iommu_driver_get_domain_for_dev() helper
->   iommu: Introduce pci_dev_reset_iommu_prepare/done()
->   PCI: Suspend iommu function prior to resetting a device
+On Tue, Jan 06, 2026 at 03:22:09PM -0400, Jason Gunthorpe wrote:
+> Two issues found while checking the kunit against rc4, and one from some
+> build bots.
+> 
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> 
+> Jason Gunthorpe (3):
+>   iommupt: Fix the kunit building
+>   iommufd/selftest: Add missing kconfig for DMA_SHARED_BUFFER
+>   iommufd/selftest: Prevent module/builtin conflicts in kconfig
 
-Applied, thanks.
+Applied for -rc, thanks.
