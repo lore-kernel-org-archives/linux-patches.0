@@ -1,81 +1,113 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f47.google.com (mail-yx1-f47.google.com [74.125.224.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E342A33C53D;
-	Sun, 11 Jan 2026 13:58:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A06330BBBC
+	for <patches@lists.linux.dev>; Sun, 11 Jan 2026 16:02:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768139938; cv=none; b=TpqqadBUf6MVxw3DgJ7ZCr2NXWUjWqzgK11zf6ZSges0g9swNxXji+CVp5uC/+A6pi42qcIy/xQmxkbPYH/3XunjceeLb9bLQcFNE41sZCIrUF/71WvQiSduodC9dgX2phZxNtZuYp6a0ltecH5sSnBbTdXKP7WG42Z29fUCka8=
+	t=1768147351; cv=none; b=ds6Xb6CdsmTLiqiDaetTERYdDjlhFzacawyvue6d0QIMvryhaFw3zVg6qlFTV8g4ho3qVRebIQI7du3A+aGZGKsKGFPCHcup2tGlEFFdsPZeDkrzdxx4e75KlxkN43bbhYIZFx9WK8bD+ct/LaE5ClBLsi++2ZkrWPpx7g5wEVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768139938; c=relaxed/simple;
-	bh=rN6z0J8lbP/MELcsAsFSXrEVkj3IcYWmmG9UdzYY0nQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X2ivyGxm5stoSnZOlDL4HxKxE8s71YY+ij8lJkPdsHpTRAH4HCMxVj65rCvZJupZwzDBBe/mkWpMXjYCJPm1xMMudAtUzB4my3XAvqpbMq9e4vT2LjUYOaksYtT4924FThdfOVFI2aeZnAmQgXykHeTMl4Z9mTQuyMR16bERelU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AS+5sURa; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1768147351; c=relaxed/simple;
+	bh=eSaYeVb9xp7hiZVnt79Dppo3RCzVphfcMVldS9mlf6g=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jlNHi8US86f7d0QUFM/zxyLRrQOUCBO7ADyHnFUYHMU/mwmzgPJPVfnh7Cl+gmtvaTYR3nvhKRo0hz0RLW90iiQobl5H/NHWjiUcyixXFyKTrxi90l8n1nlBIHqvsUzbnvUCjwOBkH6+iJh6xYSHF69tUPksGe6lLGyUMlev+Hs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gfQDtmwP; arc=none smtp.client-ip=74.125.224.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AS+5sURa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31383C4CEF7;
-	Sun, 11 Jan 2026 13:58:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768139937;
-	bh=rN6z0J8lbP/MELcsAsFSXrEVkj3IcYWmmG9UdzYY0nQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AS+5sURaix/Wfjw8P0TEHJAk395yovn85f744bl8+PzWEEUU6xY9DlbyPY1j7KY2F
-	 E2WGoqG+IvkSLx9IT/ZH/NeKnaxVZAIUVlZ3F8aUcwup+ZNFstpf4ivoUGzpm1j8av
-	 cw9bf2VijF1paFAQ1zuahROVOZyiXzXlAx92MRQ0X4ihe+EARWGpHEXqOCtKkhj4dA
-	 PZ5VOM3M4URPruAY6SkAn43Ei4SVV/FATc+2u1Z3zTaM8zesuoFfHTpmg8KJIdPZzz
-	 SDxU63dHf1ndfI/MpEdcLUn52YAWBFr8lGCBVUHIgCHyKSsKKiaVBBbDzb9+h5/LMp
-	 EyYjOOHLwM9ng==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@denx.de,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	sr@sladewatkins.com,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: Re: [PATCH 6.1 000/633] 6.1.160-rc2 review
-Date: Sun, 11 Jan 2026 14:58:44 +0100
-Message-ID: <20260111135844.165322-1-ojeda@kernel.org>
-In-Reply-To: <20260110135319.581406700@linuxfoundation.org>
-References: <20260110135319.581406700@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gfQDtmwP"
+Received: by mail-yx1-f47.google.com with SMTP id 956f58d0204a3-6420c08f886so7954089d50.3
+        for <patches@lists.linux.dev>; Sun, 11 Jan 2026 08:02:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768147349; x=1768752149; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Mrycd130M4sr6y5csevbsCsisFex4vtcFdUC5UAakBY=;
+        b=gfQDtmwPui66qodivKc1qkBcdGuB/glGATaeaMqWX+QxmvdjkbvxZ0gXGAZVCCrco2
+         0Hd/eu32PV9KXc2Oah9p+2y58/CW1xq9tRB+C9KgfKZx1CZdRfIG31WsYYt87rFFWoEa
+         M+svMm4WTO2nFYumw3pJ+Qz1J8ZBq3DKjr0w6LOJkW7HiCSN5ie4fRABJVp/uTnTsyAG
+         tab0/Ai/oVUBldeWhA4mn4AvzKyw2XdWlXtXYafkXrOdxipDc0rFf/fFA+eERN4njqUm
+         semgVUM9h+WQCRab6NUR8KXt4u0+n3TvYxVJRSWJ4W7qKqNL1v0ZIH6AkIZpEfLis8Za
+         eTTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768147349; x=1768752149;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Mrycd130M4sr6y5csevbsCsisFex4vtcFdUC5UAakBY=;
+        b=LaUnwAgbld6oKXRqMiyX3yzrJAxwRRiKMfA3efkwVtkNZ5Ps4WxQGPE+kW4mGHmeZ8
+         4v7zEus24pyx0I9w9P4Pw4QA5tNKxQyhfkGssF6NT3vkoVEt8AZk5D0xkrBoZHXhrplR
+         YZii+1b758D9d5jcBXXlVkm7zUAy2bxapTMYYTmd2XwqXmCkP8Ldm1u0056LhuD3ew+d
+         G4vNYhr5m+CypXELOmfZjQw1oTRp1jgdz91ClSelzdJwoGiKxfLzLaUk2okpWfrYRysQ
+         U8X8t0RBTplWF3/wpx6kmEc9p1eJ6pCrHdlC2re3OUpsoCwteFOAJZCWjueha7OU+/nE
+         hOFg==
+X-Forwarded-Encrypted: i=1; AJvYcCXMZSNY2DuZZ86B91bfRHjO2LVdmmdv3LFtFccGoo0/VdK1D6hR5WA16w3K5QYuDiL5eoljfXux@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzsmi0i2avBq1PtIwCEHlueyFZd4aAOcFpVwVIR2WMcGGEvON2A
+	h1JZs/6yN+bd6bdrLUCeWRRjWDE0p5hXsNMAdwzKmqS8zYGLzqjYziHT9DXwSLbEHB/apgbJRbO
+	bSzfsd7sTX9A4LyPcl4iXIuVUVY75Uzg=
+X-Gm-Gg: AY/fxX70jXqQBIoVKSPu6Ii+1j1HCcwscKunCrfCNbM1s6EDJdg6ppA5Tn3vT3Hd/UB
+	Hg5FBgXsHDioa8+Qj+ptafZHpsWyLg7Ne18uHgUL/8s30bmP5Zh1i8FxHZv2eqbSsAapG0vdWQE
+	aTgAZ6pNA1BgTlUr3uET9bkVSj9cdtB9IHHKyuSaG5k0erN71a3IOK/2AFwUWIMDJ9MzDS/j+Wb
+	YXVWC+sbr5d/PG5PXeopxLQu+xm2sJSrznuKpmbVZycM/hA/dQcABe7+Svmx9sxud5fKZQ=
+X-Google-Smtp-Source: AGHT+IF8KwHX9n4cdLJcJVB+1Qbgj7xp3EnY3eddzftroQhS3lOBRejGEzTuxx79W8cJXIm8mv4flYclON7riLXunQ4=
+X-Received: by 2002:a53:be4f:0:b0:644:7612:6298 with SMTP id
+ 956f58d0204a3-64716c94ef8mr9426151d50.79.1768147349222; Sun, 11 Jan 2026
+ 08:02:29 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20251215004145.2760442-1-sashal@kernel.org> <20251215004145.2760442-3-sashal@kernel.org>
+ <CAPnZJGD0ifVdHTRcMzKBFX8UEf_me1KTrkbwezZrhzndcTx-3Q@mail.gmail.com>
+ <aV5Ap8TgMEDLucWR@laps> <CAPnZJGCJ1LZRzfzO=958EfcrLm4Z3pYdtHZEpp812fstsUcOAQ@mail.gmail.com>
+ <2026011119-stadium-trilogy-22ac@gregkh>
+In-Reply-To: <2026011119-stadium-trilogy-22ac@gregkh>
+From: Askar Safin <safinaskar@gmail.com>
+Date: Sun, 11 Jan 2026 19:01:53 +0300
+X-Gm-Features: AZwV_Qj8Iaiq8jyFrAWd7h_o61n6oQGSG9QPqA4Rx4PSntORpllo3Vv3IL8l3rU
+Message-ID: <CAPnZJGAXLEgqKx+XA3RugES1kcawtqMEYPTzFERcf2kgRjNbFQ@mail.gmail.com>
+Subject: Re: [PATCH AUTOSEL 6.18-6.17] ALSA: hda: intel-dsp-config: Prefer
+ legacy driver as fallback
+To: Greg KH <gregkh@linuxfoundation.org>
+Cc: Sasha Levin <sashal@kernel.org>, patches@lists.linux.dev, stable@vger.kernel.org, 
+	Takashi Iwai <tiwai@suse.de>, Peter Ujfalusi <peter.ujfalusi@linux.intel.com>, 
+	kai.vehmanen@linux.intel.com, cezary.rojewski@intel.com, 
+	ranjani.sridharan@linux.intel.com, rf@opensource.cirrus.com, 
+	bradynorander@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, 10 Jan 2026 17:27:38 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Sun, Jan 11, 2026 at 3:24=E2=80=AFPM Greg KH <gregkh@linuxfoundation.org=
+> wrote:
+> > You mean that 82d9d54a6c0e is in all trees? Okay, then,
+> > please, backport 161a0c617ab172bbcda7ce61803addeb2124dbff
+> > to all trees.
 >
-> This is the start of the stable review cycle for the 6.1.160 release.
-> There are 633 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Mon, 12 Jan 2026 13:51:43 +0000.
-> Anything received after that time might be too late.
+> Why?  I see no context here :(
 
-Boot-tested under QEMU for Rust x86_64:
+Please, backport 161a0c617ab1 to all stable kernels, which have 82d9d54a6c0=
+e.
 
-Tested-by: Miguel Ojeda <ojeda@kernel.org>
+161a0c617ab1 fixes bug, reported by me here:
+https://lore.kernel.org/all/20251014034156.4480-1-safinaskar@gmail.com/ .
 
-Thanks!
+I did bisect and found that 2d9223d2d64c is the culprit. But then Takashi I=
+wai
+explained that the bug appeared earlier:
+https://lore.kernel.org/all/87345iebky.wl-tiwai@suse.de/ .
+Iwai said: "the bug itself was introduced
+from the very beginning, and it could hit earlier".
 
-Cheers,
-Miguel
+I assume "the very beginning" here should be interpreted as
+"commit, where intel-dsp-config.c appeared", because the fix
+modifies "intel-dsp-config.c".
+
+"intel-dsp-config.c" introduced in 82d9d54a6c0e, so
+161a0c617ab1 should be backported to all kernels, which
+have 82d9d54a6c0e.
+
+--=20
+Askar Safin
