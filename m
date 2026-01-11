@@ -1,100 +1,86 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA1FC322B89
-	for <patches@lists.linux.dev>; Sun, 11 Jan 2026 13:33:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E911D63D1;
+	Sun, 11 Jan 2026 13:57:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768138436; cv=none; b=PEBe4e98VKhjhkGrr4e9bDA58DCM3Sbly+iAy9buTo43m/h9yVC8JMhFufPGMVNJovE176be4cEZHrP/vLly5DOYUjenRowjQWZJpK+aeLnwAYb4hRcjgFFiwXxMDAgWrgVSAc3luOG3+lNtOLUx+gpJQIOLEkeC5VNYCtHnZvI=
+	t=1768139845; cv=none; b=SQW8SuTy1uqIHmYfr3bQoWfkxHpcoSF+/iGU3nMqFcfezsRIrnASA/JQb5Jqw7Hacy3AhUIxHRt4PSxFQh97KhNdFaF7XRM65uCUC/NNvfxi1iL21niyNq/5uRHmBAdMCrwK3Zt0GduDTIcQ7zDwIpGC+nsJHwywFw39vRnaL4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768138436; c=relaxed/simple;
-	bh=Wzvtf1QIRWhfF9BNnhKptdI8gkJPgnhFK0K96o9KUig=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GK5zbqe3PhcSC7AwUagDqSWVYfMytb900/ZXPIBbUqDBOxe/GMTt4rS+7eFjNOaPL53CUN36Eou7j98P7a8QDuAnsiuSzV/UJsDhHfdm5338o15Y+qEOS2IDYPFBaAnC9nqRv6ZHCJ12Mz3dwiksp161058AmldqKCwCx0jQJ8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in; spf=none smtp.mailfrom=rajagiritech.edu.in; dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b=pm+FPtbK; arc=none smtp.client-ip=209.85.208.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=rajagiritech.edu.in
+	s=arc-20240116; t=1768139845; c=relaxed/simple;
+	bh=47/pTHouZ+vMmyjz9AyyEU/G9yvYRgyMg1/L66YJnY0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bsdiWK91NCjDdhFNlSNbDLg9QyLhmLW5u9Wbdb+NQ4Ct4s/nC/gI8TdSyKcxIvueGhH/b/4ERJitFmpQbJUO38P2yYhq2Xm3occfrNeNv3LkFrOeIXx32inPH5BYAwUEQUy/ATL0dQKV0m73thMZYBBKIyF9gmShDVRnMlPn33M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dXrASIDG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b="pm+FPtbK"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-64b5ed53d0aso8236123a12.3
-        for <patches@lists.linux.dev>; Sun, 11 Jan 2026 05:33:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rajagiritech-edu-in.20230601.gappssmtp.com; s=20230601; t=1768138433; x=1768743233; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=f2J4zv6B0sWCplg3AhmRAoRaHMt7uMnutkNab3hdAsU=;
-        b=pm+FPtbKQZ3xVs5Knr43aC1PyQgS1ci/IpGaayKFPYQ+oF1aUHK6SUADVMSknSrWW9
-         PEga/thGYWn98TfDLWkWIKdxs3oto+07snDDYV5L+aAQ7GGSFCTmOl0Z6S5kgfjBQIHm
-         rZamb1JgDa6cRzSy3PBEVqCNzyCYugZpX0zKAetQXV/Gwx9/9E7v8bkvHlzUbGtn86AY
-         x8rQayFkgyfvRh97LFHmu94+EDLEeB71hRgRKeTj2RBXKIdd2yJEMWWKufZJACxjHY7B
-         dVp/jLO4IsBqDiEBgyB4HAHBnV+kCSwfYzVMp3CY6sXcVIJODVZyfp0lPoqKg6UALwPK
-         5iSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768138433; x=1768743233;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=f2J4zv6B0sWCplg3AhmRAoRaHMt7uMnutkNab3hdAsU=;
-        b=MjaxlDu0zA1y33mqAcbs1dci2kWZsSP2QHvq7mGSB6N1YPmSWF/2LXHEIDXLTvXFpP
-         TgvGZj6ZFlnzbk4e1AkPpgZuhBvhgO3FmGlCY94GUHNQ131zotvYn9ZbwRx0bvEMuB+J
-         kcb1WBVoO55iX0VQ+geH6L/vah4FinFqSf8pSmEBcHObQ5QEaRL9jWE9rMZscH1zrv8s
-         fgqlVoYPCjl2weuduyw4lsvOMHbGoov7JbN8M32wsWf5SlL9GYbDtpVFEOIyRTy3H9zD
-         gK624ik9vXUZq/AWbFOJodqE9NmqJs9U+EvFJSU7wQc8/yuPK97sj7GO4c/cnEqUaz6T
-         2CCQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVNuBPuiy7od/LiYkvnzsI5bsFlbBVlxEilyCU86M/ylb+29vTEcFMwtl9BqXjlLE1VQqzbrTsj@lists.linux.dev
-X-Gm-Message-State: AOJu0YyZ5N4cgd12G9RTmQztNtVbKFnvMfpTz7LhTJwhb3KClmyrWLix
-	YIiSGX/mpdO4OrAfTkTc3VuwE+YFB0whEC6haYkHPx5Kbymp4cA+jNqgTt7Kt+4wUW7lh3V0xsd
-	DNLqUwGqRyu7watgt1Bh7Ql84Dai2Hiifusij4QGTYQ==
-X-Gm-Gg: AY/fxX4E+32FfMeRBbeOr3EoraLfqA+pTwJtMSNq0hr7HLc5S1TKnBQZT9X4noLwOdE
-	F/Fxh+zNYwJWOkesXsYPqjpfL6FGJtmYlSOuKdrQRzWh9I0/WfAkMBgHgsWOBAzrUKcQzDn9jvV
-	WRA2l7TNuWyPs4A+yXgrvuUZ62MxKyQB9sx3cln01ieZyXGujJuxdier8F6fUr3fjeyjEdajtcO
-	UQBeD7lJrX4n/TKVz6unxo7npB2FxwKjymk5Qxq87Wg0x5PmoKifS+eLWTJQ1ZrRR8o7h4F
-X-Google-Smtp-Source: AGHT+IFIyEV5GZ9LvzKs1Fn8qJm8k3Yl/9+E34x7MwrIBE/uxpqJdywpg2jp+1UpsvVTwV95NwxPwTrXn0S17pRWm3E=
-X-Received: by 2002:a17:907:6d1a:b0:b7a:6c39:8e73 with SMTP id
- a640c23a62f3a-b8444cced16mr1443786466b.23.1768138432293; Sun, 11 Jan 2026
- 05:33:52 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dXrASIDG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E02FCC4CEF7;
+	Sun, 11 Jan 2026 13:57:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1768139845;
+	bh=47/pTHouZ+vMmyjz9AyyEU/G9yvYRgyMg1/L66YJnY0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=dXrASIDGsJPr2BiECswmLyBd9EjZSwyOvhwqRpQgnPzGhyWoBtDu83/BW3kvV+2Jx
+	 LGMIp+9KZrUvgEnJ10v6/zY9bKfLtu+Zqo83plov5JYSmI++8kMjXTsHoykkg1w4r5
+	 IiWQnRZDbsrYop1jaj6/7doMqh2JwJsWc5hG3ca0=
+Date: Sun, 11 Jan 2026 14:57:22 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	syzbot+340581ba9dceb7e06fb3@syzkaller.appspotmail.com,
+	Lizhi Xu <lizhi.xu@windriver.com>, Theodore Tso <tytso@mit.edu>
+Subject: Re: [PATCH 6.6 731/737] ext4: filesystems without casefold feature
+ cannot be mounted with siphash
+Message-ID: <2026011114-contact-vocalize-37b2@gregkh>
+References: <20260109112133.973195406@linuxfoundation.org>
+ <20260109112201.603806562@linuxfoundation.org>
+ <aWEFUlM6PsTMMXxr@quatroqueijos.cascardo.eti.br>
+ <2026010942-overdue-repayment-b202@gregkh>
+ <aWN74hQARUawYete@quatroqueijos.cascardo.eti.br>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260110135319.581406700@linuxfoundation.org>
-In-Reply-To: <20260110135319.581406700@linuxfoundation.org>
-From: Jeffrin Thalakkottoor <jeffrin@rajagiritech.edu.in>
-Date: Sun, 11 Jan 2026 19:03:16 +0530
-X-Gm-Features: AZwV_QhkGV9F_PPBfvZcVv0UkUfx6ZL5ME9FEBCMlS1TdDX6na1L-wwPkJH4TYs
-Message-ID: <CAG=yYwn3BNTMt68xEocXDGDW+LRiSHDAD6XNPKfVN2xKN+t3Cw@mail.gmail.com>
-Subject: Re: [PATCH 6.1 000/633] 6.1.160-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
-	achill@achill.org, sr@sladewatkins.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aWN74hQARUawYete@quatroqueijos.cascardo.eti.br>
 
-hello
+On Sun, Jan 11, 2026 at 07:30:58AM -0300, Thadeu Lima de Souza Cascardo wrote:
+> On Fri, Jan 09, 2026 at 03:13:55PM +0100, Greg Kroah-Hartman wrote:
+> > On Fri, Jan 09, 2026 at 10:40:34AM -0300, Thadeu Lima de Souza Cascardo wrote:
+> > > Hi, Greg.
+> > > 
+> > > The followup to 985b67cd86392310d9e9326de941c22fc9340eec, that I submitted
+> > > in the same thread, has not been picked up.
+> > > 
+> > > 20260108150350.3354622-2-cascardo@igalia.com
+> > > https://lore.kernel.org/stable/20260108150350.3354622-2-cascardo@igalia.com/
+> > > a2187431c395 ("ext4: fix error message when rejecting the default hash")
+> > > 
+> > > You picked it up for 6.1 and 5.15 though.
+> > 
+> > It's in the queue, odd you didn't get an email.
+> > 
+> > thanks,
+> > 
+> > greg k-h
+> 
+> Ah, I see it now, when looking for the upstream hash and not my sign-off.
+> It was a different backport that ommitted the original fix and only applied
+> the fixup/followup.
+> 
+> The original fix adds a hunk that is then removed by the followup. So when
+> applying the followup that ignores that hunk and then the original fix with
+> that hunk, 6.6 queue now is carrying an undesired hunk message.
+> 
+> If you drop a032fc761cc3f1112c42732d9a2482f23acad5fc and apply
+> https://lore.kernel.org/stable/20260108150350.3354622-2-cascardo@igalia.com/
+> instead, it should be in the expected final state. I would rather do that,
+> as then 6.6.y would be carrying the original fix, avoiding it to be
+> backported again.
 
-Compiled and booted  6.1.160-rc2+
+Ok, thanks, now done!
 
-No  typical new regressions   from dmesg.
-
-As per the dmidecode command.
-Version: AMD Ryzen 3 3250U with Radeon Graphics
-
-Processor Information
-        Socket Designation: FP5
-        Type: Central Processor
-        Family: Zen
-        Manufacturer: Advanced Micro Devices, Inc.
-        ID: 81 0F 81 00 FF FB 8B 17
-        Signature: Family 23, Model 24, Stepping 1
-
-Tested-by: Jeffrin Jose T <jeffrin@rajagiritech.edu.in>
-
---
-software engineer
-rajagiri school of engineering and technology
+greg k-h
