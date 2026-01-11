@@ -1,91 +1,97 @@
-Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BEAF27FD7D;
-	Sun, 11 Jan 2026 10:31:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC0B3382DC
+	for <patches@lists.linux.dev>; Sun, 11 Jan 2026 11:36:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768127480; cv=none; b=YkM7O4Bio3nEeujWwvAAUGUQFbJFvIATem6EVGbpbE6G0LQ2oIylnUqQNExEvCAitTi9ty3+ekHzqcv0E+HjjcI2ulqH4EJr7jOzgC/ohDNQwAN4ozAL9lJHGFY5m3iQGBUOqwuH0GrxRfw3qwXVJamy9rAQQZ3BNUata/edbvk=
+	t=1768131384; cv=none; b=uddjVXbXdeQVL21pZ5IT1ePn7C/tglke4V40/UAR7eVfkkeAvUvbhKvrUxG8t98kRQR35js5+r58KCVAprJADGnyRH1c/irivnSEIn98wiM6GsDKsWUxeSwu1/Uqf92c/UkOREsJ17SUAF8fQxFVPsCHFTo5QO5Gp4lo3UhS3TY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768127480; c=relaxed/simple;
-	bh=B7fzFEMWfKPLrI7HpAcWmdwvOWpzP+NMgSymitdjl5M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=t+eUfhnuepbUwoN+a5nhNrP7fdQgGwRy8xcK1x255YguHTgX5pZxdK6KJP7gtVBU2+moOybd1BRZaiPYFWwKXcRF8nXrStrp37i9vj7gjVj4seI250TIZTWmZFpNXRH+1EVR0+PmMqJQ85dOnsOGCPFB5cOw1zgdqeVxmPcsATo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=hE2sPa0w; arc=none smtp.client-ip=213.97.179.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
+	s=arc-20240116; t=1768131384; c=relaxed/simple;
+	bh=WA2+qR7GJIrlDkE/8m2agQnhKKxdGQn++j4tKhGUs6k=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=XQL7LlPm/HZZbOvnCoKmgvTX3/FzVF3n5IEuXyvmKMKDR8vXQSov0RuySTj1csGu+N5G/fUojd0z48j+k2qbiDuhkS27hI+iBxU1n21pAORckqi1tQiJU3MOTXgArURbISKpghzJpxr0nqk+ptdEhAJ+HTD0stCmFSo9aE1LqTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c56vd/ul; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="hE2sPa0w"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
-	Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=5Yrv835MvV0UB+bYy9pdcf/uSOvvXEkkY8sNhxEs8xc=; b=hE2sPa0whH8Fry6HT7jvLT3W0C
-	0WaNJjro4YWtS5FJ9aBQbrvkA7rtcnTy8B9epqs0DpNBboJMxSD037E6+Rh6TEsSvc3mSf1F5G7AE
-	4zsj3Omv7Kr3jFGpP/vzYmQBoOHnyRBMeX+GzyIMEUJznwLMp9c2NKxP0EAQna8hqnjlLbW4rpkOl
-	0GmP3ZMRc1ZIlmicnWD5cSeMGJteWL+g2T3hTqbpCb/oRaF6wHnXXJfF8q+TZheImiVWGHgBheqNQ
-	dUh4rY0c2UUhc0rXIb+luHLA29ycLBR16yeW/ajiZR/Q7LPJKfLXm78U9eZQIVPMBOdYhoNcAonoo
-	qH+J6Jig==;
-Received: from 179-125-75-246-dinamico.pombonet.net.br ([179.125.75.246] helo=quatroqueijos.cascardo.eti.br)
-	by fanzine2.igalia.com with esmtpsa 
-	(Cipher TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
-	id 1vesiv-0042Dl-K4; Sun, 11 Jan 2026 11:31:06 +0100
-Date: Sun, 11 Jan 2026 07:30:58 -0300
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	syzbot+340581ba9dceb7e06fb3@syzkaller.appspotmail.com,
-	Lizhi Xu <lizhi.xu@windriver.com>, Theodore Tso <tytso@mit.edu>
-Subject: Re: [PATCH 6.6 731/737] ext4: filesystems without casefold feature
- cannot be mounted with siphash
-Message-ID: <aWN74hQARUawYete@quatroqueijos.cascardo.eti.br>
-References: <20260109112133.973195406@linuxfoundation.org>
- <20260109112201.603806562@linuxfoundation.org>
- <aWEFUlM6PsTMMXxr@quatroqueijos.cascardo.eti.br>
- <2026010942-overdue-repayment-b202@gregkh>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c56vd/ul"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-47d3ffa6720so53977285e9.0
+        for <patches@lists.linux.dev>; Sun, 11 Jan 2026 03:36:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768131381; x=1768736181; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SZI3ApSSp9u/jOiH3pWaGfMUo9z/yXLRfpgRERhRlFg=;
+        b=c56vd/ul8PGRc6XHwP/iD1fe9paUAxFCXKxMjykXI3WYa0c7zjRlNUVVwhRw6yG0lU
+         z3G+qjzfpD3YwbBhFIWYYVZ1zBAG10Jp24F+zbKsJZtMVEIKT2rVDEOcHwltzVRnEE5C
+         3mnkFTDslaelbPXUl4Ap4MF/G0X0cerAZa1DWTvhlhC7bdWWt+opy/S4p43LdRRA+5eX
+         e2zWyamQKFqc5021/RSFMBCoPPYNwKln9S8CT+HqDWeapAyXtbcKYGN/W1tUK3HZ7ovY
+         7ySM7NTsJJ8aa8VhjIhtZ9hyGBlrsDcYRB8CX5CNegAKNZtQgwb7pfbXYnJywbVqFK9z
+         1bzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768131381; x=1768736181;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=SZI3ApSSp9u/jOiH3pWaGfMUo9z/yXLRfpgRERhRlFg=;
+        b=RljuVQ38sLM+9ooA8XAg3QkT+UcDsPOOrMEUPt6ybLzTGllvqo/mi6wfub1x0pMCfk
+         Yy9BxiFNNkN0pKiw/ujaHnFC1Rpe2agxVUTgDr6sYcBjRDNi8zowe5uF8ETlsdWA8ceh
+         i6vnufkOl0IpF2T8Pxh216GhKvIBdBzc9Wr/QDxKkfNAmIeUk1rLz969LiA1BdzSty2n
+         Ln62Pf0b4I1j4n0fAQQiqnKtRr/PBvIZnrhe4n9+Xr1CyHzaljaTJRdBWtT3EmtFXXDT
+         oISH1fW7X0+leuIbu1VTfU5hxePxdPpfPU2o505+6UbAUSlyzojbUCIkOgNzxLHYv+je
+         g2DA==
+X-Forwarded-Encrypted: i=1; AJvYcCVaA//hTgoAh/TexwO9pwDip7cQ6CT5zwjVNKa+275Sz2Frbs1JcNIw3HDCV+sx0ACBPjhKUV/l@lists.linux.dev
+X-Gm-Message-State: AOJu0YxR/UWuc2VaMOrO9kBPXTzUmpBTNqo5U11eRJgBV35/9BRBGeyZ
+	2yQLTLOsyuOVGlug0b1BbMgrHF4dGO3hzWW/Hjzul8yuOqciQWajH7ho
+X-Gm-Gg: AY/fxX6ZIvHJFG2dcDTsVgV15QgkfA2irUkYQMHGxBaS7B7YOo2vIjQdYEQnHDtHQpD
+	7eN3MRiGzGGWcA5Sc+B70tQ4Bc95/38OFUbQldAkcJJ7Hys20vbKMPGKs+4IDoxsrZ/RCUeQQiu
+	pGcWHInGahVB/4I4qZ4pyT1OE+83Km2sqzzrZMUba8AWQ2aKkbtc1GJNfETkLmIO0Xby/Xoztk/
+	aL1V1bDb7i/CeOKkPkShXa8HSQnNsuWXASk1/oq68ldDvfol0jUwHyXeIGnjK3wndrwabQp5YFk
+	x2/3ZaEmuWE1Xx9EILuqommz4WJA6lmvxUkSH+DB7lqaKAQPEtPNoxI0PEYH3u04MUwkF5ZBgkH
+	68rFSHAkq6MQ7gOkWxStVIJaA4h3jHwQycGmTOWTh8RNGhCH53E9yHFbKil9mfI+nqspphf/oly
+	sdq3lv7cI=
+X-Google-Smtp-Source: AGHT+IFSg1iNVQHqnhtkbEsO4YlvooAwoO0jT3KKmSnsT9EAf57O0ht0v/OFdFfQ+b23tsFmCK60EQ==
+X-Received: by 2002:a05:600c:1e24:b0:477:5cc6:7e44 with SMTP id 5b1f17b1804b1-47d84b18ccfmr169969785e9.11.1768131380879;
+        Sun, 11 Jan 2026 03:36:20 -0800 (PST)
+Received: from localhost ([212.73.77.104])
+        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-432bd0daa84sm32553508f8f.2.2026.01.11.03.36.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 11 Jan 2026 03:36:20 -0800 (PST)
+From: Askar Safin <safinaskar@gmail.com>
+To: macro@orcam.me.uk
+Cc: kernel-janitors@vger.kernel.org,
+	linmag7@gmail.com,
+	linux-alpha@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	mattst88@gmail.com,
+	patches@lists.linux.dev,
+	richard.henderson@linaro.org
+Subject: Re: [PATCH 1/1] alpha: trivial: remove ^L chars
+Date: Sun, 11 Jan 2026 14:35:05 +0300
+Message-ID: <20260111113505.2146705-1-safinaskar@gmail.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <alpine.DEB.2.21.2601061310110.45251@angie.orcam.me.uk>
+References: <alpine.DEB.2.21.2601061310110.45251@angie.orcam.me.uk>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2026010942-overdue-repayment-b202@gregkh>
+Content-Transfer-Encoding: 8bit
 
-On Fri, Jan 09, 2026 at 03:13:55PM +0100, Greg Kroah-Hartman wrote:
-> On Fri, Jan 09, 2026 at 10:40:34AM -0300, Thadeu Lima de Souza Cascardo wrote:
-> > Hi, Greg.
-> > 
-> > The followup to 985b67cd86392310d9e9326de941c22fc9340eec, that I submitted
-> > in the same thread, has not been picked up.
-> > 
-> > 20260108150350.3354622-2-cascardo@igalia.com
-> > https://lore.kernel.org/stable/20260108150350.3354622-2-cascardo@igalia.com/
-> > a2187431c395 ("ext4: fix error message when rejecting the default hash")
-> > 
-> > You picked it up for 6.1 and 5.15 though.
-> 
-> It's in the queue, odd you didn't get an email.
-> 
-> thanks,
-> 
-> greg k-h
+"Maciej W. Rozycki" <macro@orcam.me.uk>:
+>  As a matter of interest, why would the presence of ^L characters cause 
+> any issues?  That is just another instance of white space and it has been 
 
-Ah, I see it now, when looking for the upstream hash and not my sign-off.
-It was a different backport that ommitted the original fix and only applied
-the fixup/followup.
+I have shell script, which allows me to remove given config (for example,
+CONFIG_NET) from whole Linux source tree. To do this, this script parses
+.c files, Kconfig files and makefiles. So, I want them to be as predictable
+and easy-to-parse as possible.
 
-The original fix adds a hunk that is then removed by the followup. So when
-applying the followup that ignores that hunk and then the original fix with
-that hunk, 6.6 queue now is carrying an undesired hunk message.
+P. S. I don't see your emails in my gmail inbox (not even in spam folder).
 
-If you drop a032fc761cc3f1112c42732d9a2482f23acad5fc and apply
-https://lore.kernel.org/stable/20260108150350.3354622-2-cascardo@igalia.com/
-instead, it should be in the expected final state. I would rather do that,
-as then 6.6.y would be carrying the original fix, avoiding it to be
-backported again.
-
-Cascardo.
+-- 
+Askar Safin
