@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B162D8375;
-	Mon, 12 Jan 2026 14:59:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76632DF6F4;
+	Mon, 12 Jan 2026 14:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768229960; cv=none; b=tIS1JUbHf8zCpc+YjFZANEORXJO7OxHUdodWxxrfhg+ArcpVwmw8MMaBBKqz5fY/Me22cRcMG1u9PsQk2SpisqIqAYm4yRYRt4iAWHvDHp8ztKGNO+VMARvHGxyTecflMtlzzH5HSCOhqzwMnpVE9/+5VIOmb34Ao1TNizm9HRs=
+	t=1768229961; cv=none; b=Mb0bucN/WdrX+SypFW2WBGI4yl9SwpzbKS104r8AbVmfniAKts6+h9vteNGdhBcxv7RfWkfG31d4MrLopNiyVoVPanKon2AOuBwg2m33Kw2Im9d9XG3CZZP+p4RvUPlQoGP88/Xc7MiNdyCw5vRlPnwCTSNq4jyL0M2WRveFx3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768229960; c=relaxed/simple;
-	bh=qfnVeAP+2teYA0lF85IxNyRRcQKU/0KkYpsbjWBYG88=;
+	s=arc-20240116; t=1768229961; c=relaxed/simple;
+	bh=BuWmwzZBgVbZzKtXVjoa4UF2cg+4GqjkbsAmVSu1kGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kza7hg/9rX6hwTeUf3pj7JXrMyAJoPEQo5RcGvDpJvBSNotgTVFPrlpx6rb5lxpew8BzZsYFQriuFVZBzwywOx3ceOZgJne81z4vAkHuea9azCtQyNvenQdGOE0NE0S4Ap2bbGLKVMFYW7yh+iR4kaxQQVUBjlKDt53tuWqPkTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ic0TOjWh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fcDqrf0aicvkgwul4KML/XP8+WAeZvGgDRnNDYQge3WWy/rLjB4a3V+udnZFWahHYfil+tow6B2FyKh+kOtDJKERygJZoOpECoe/G7FL9csW2oVUuvOcG08ih3jIpd9Y2ExZrPFgiwJiurR14PyzLe8U6rcqEK5s4cX5MwMWJDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TCEjKfVj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ic0TOjWh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 563A6C19423;
-	Mon, 12 Jan 2026 14:59:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TCEjKfVj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9B9C19425;
+	Mon, 12 Jan 2026 14:59:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768229960;
-	bh=qfnVeAP+2teYA0lF85IxNyRRcQKU/0KkYpsbjWBYG88=;
+	s=k20201202; t=1768229961;
+	bh=BuWmwzZBgVbZzKtXVjoa4UF2cg+4GqjkbsAmVSu1kGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ic0TOjWhJjdV/cCmFMT8ovvigb0q7bdVeK8BiMkBUhOimBmzH/jHxxs5TCpkRf+is
-	 YOp78oUT/EkW7ccYqM8irBt9JbsUJXv1Fxym4x3w28+DkfWYY0I/R+DJ01gKiayaCG
-	 yYGQfjmuvVo+Fft0RZZc7DcpDECw6V6q/X/LSLvqD9/kmX2uiJyZ5XU2a1+1uLaV6V
-	 RDrdDDvhLsqUyc6QzmNnHFYm7Q0MY9gUv1kjIRizD3dDBw24OjiaTL6gwAsUfdFvDx
-	 +mPgFq0p3dkgso8g+rpy5Ni13PgnaqPmm50r6U+CmC48pZfmOsd4CRomxefbOvykal
-	 G66Lw/5c2uUdQ==
+	b=TCEjKfVjfS/AB03JW3h1z370cHkSLJWSgo+a3iV7Cg7ph3FQy2f4iA8fR/N62afX4
+	 p3ixa9AtAi5LYtCoPyfYYB6YNQaSrw3NP3Iz283s1QzV7iLPUJ6QpIxlVwrawjroLu
+	 BPJHEXcWxoYYwOKp1Vmni1rLQXFg+F+UCz3KEqTzVTDsExHNDP7TDYXpGJcIHM+UBF
+	 OYCNopDWZvOfIRn6t0Vd8AUDRWnFHYfSjdKC6lSVLKjQn+aCZD1DjX6KBQbLHi0v2X
+	 znZgm3ThkeK18n0E9HBXGRwY6D6GX6kWudZqbIBkm52qXvJ4vkxuabnskrUhN0Ijs/
+	 Hkpmm3sS6WH3g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Matou=C5=A1=20L=C3=A1nsk=C3=BD?= <matouslansky@post.cz>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Dennis Marttinen <twelho@welho.tech>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	sbinding@opensource.cirrus.com,
-	kailang@realtek.com,
-	chris.chiu@canonical.com,
-	edip@medip.dev
-Subject: [PATCH AUTOSEL 6.18-6.12] ALSA: hda/realtek: Add quirk for Acer Nitro AN517-55
-Date: Mon, 12 Jan 2026 09:58:23 -0500
-Message-ID: <20260112145840.724774-22-sashal@kernel.org>
+	jikos@kernel.org,
+	bentiss@kernel.org,
+	linux-input@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.12] HID: logitech: add HID++ support for Logitech MX Anywhere 3S
+Date: Mon, 12 Jan 2026 09:58:24 -0500
+Message-ID: <20260112145840.724774-23-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260112145840.724774-1-sashal@kernel.org>
 References: <20260112145840.724774-1-sashal@kernel.org>
@@ -48,141 +47,173 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.5
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matouš Lánský <matouslansky@post.cz>
+From: Dennis Marttinen <twelho@welho.tech>
 
-[ Upstream commit 9be25402d8522e16e5ebe84f2b1b6c5de082a388 ]
+[ Upstream commit d7f6629bffdcb962d383ef8c9a30afef81e997fe ]
 
-Add headset mic quirk for Acer Nitro AN517-55. This laptop uses
-the same audio configuration as the AN515-58 model.
+I've acquired a Logitech MX Anywhere 3S mouse, which supports HID++ over
+Bluetooth. Adding its PID 0xb037 to the allowlist enables the additional
+features, such as high-resolution scrolling. Tested working across multiple
+machines, with a mix of Intel and Mediatek Bluetooth chips.
 
-Signed-off-by: Matouš Lánský <matouslansky@post.cz>
-Link: https://patch.msgid.link/20251231171207.76943-1-matouslansky@post.cz
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[jkosina@suse.com: standardize shortlog]
+Signed-off-by: Dennis Marttinen <twelho@welho.tech>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Commit Analysis: ALSA: hda/realtek: Add quirk for Acer Nitro AN517-55
+## Analysis of HID: logitech: add HID++ support for Logitech MX Anywhere
+3S
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The commit adds a headset mic quirk for the Acer Nitro AN517-55 laptop.
-The message clearly states this laptop uses the same audio configuration
-as the AN515-58 model, which already has a quirk entry. The commit has
-proper sign-offs from the submitter and the ALSA maintainer (Takashi
-Iwai).
+**Subject:** "HID: logitech: add HID++ support for Logitech MX Anywhere
+3S"
+
+The commit message explains:
+- Author acquired an MX Anywhere 3S mouse that supports HID++ over
+  Bluetooth
+- Adding PID 0xb037 to the allowlist enables additional features (high-
+  resolution scrolling)
+- Tested on multiple machines with Intel and Mediatek Bluetooth chips
+- Has proper sign-offs from author and maintainer (Jiri Kosina)
+
+No `Cc: stable` or `Fixes:` tags are present, but as noted, that's
+expected for commits undergoing manual review.
 
 ### 2. CODE CHANGE ANALYSIS
 
-The change is a **single line addition** to the quirk table in
-`sound/hda/codecs/realtek/alc269.c`:
+The actual change is minimal:
 
 ```c
-SND_PCI_QUIRK(0x1025, 0x1597, "Acer Nitro 5 AN517-55",
-ALC2XX_FIXUP_HEADSET_MIC),
++       { /* MX Anywhere 3S mouse over Bluetooth */
++         HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb037) },
 ```
 
-Breaking this down:
-- `0x1025` - Acer's PCI vendor ID
-- `0x1597` - Subsystem ID for the AN517-55 model
-- `ALC2XX_FIXUP_HEADSET_MIC` - The fixup to enable headset microphone
-  support
+This adds exactly **2 lines** - one comment and one device ID entry to
+the `hidpp_devices[]` table. Looking at the context, this table already
+contains many similar Logitech Bluetooth device entries:
+- MX Master (0xb012), MX Master 2S (0xb019), MX Master 3 (0xb023), MX
+  Master 3S (0xb034)
+- MX Anywhere 3 (0xb025), MX Anywhere 3SB (0xb038)
+- M720 Triathlon (0xb015), MX Ergo (0xb01d), MX Vertical (0xb020), etc.
 
-Looking at the context, the line immediately above is:
-```c
-SND_PCI_QUIRK(0x1025, 0x159c, "Acer Nitro 5 AN515-58",
-ALC2XX_FIXUP_HEADSET_MIC),
-```
-
-This confirms the AN517-55 uses the identical fixup as the AN515-58,
-which is already proven to work.
+The new entry follows the exact same pattern as all existing entries.
 
 ### 3. CLASSIFICATION
 
-This is a **HARDWARE QUIRK** - one of the explicitly allowed exceptions
-for stable backports. It:
-- Adds a PCI subsystem ID to an existing quirk table
-- Uses an already-established fixup mechanism
-- Does NOT add any new code logic or features
+This is a **NEW DEVICE ID** addition - one of the explicitly allowed
+exception categories for stable kernels:
+
+> "Adding PCI IDs, USB IDs, ACPI IDs, etc. to existing drivers - These
+are trivial one-line additions that enable hardware support"
+
+Key points:
+- The hid-logitech-hidpp driver already exists in stable kernels
+- The HID++ protocol support is fully implemented
+- Only the Bluetooth device ID 0xb037 is being added
+- This is not a new driver or new functionality - it's enabling an
+  existing driver for new hardware
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-- **Lines changed:** 1
-- **Files touched:** 1
-- **Complexity:** Trivial - table entry addition
-- **Risk:** **Essentially zero** - This quirk entry ONLY affects devices
-  with the exact PCI subsystem ID 0x1025:0x1597. It cannot possibly
-  impact any other hardware.
+**Risk: EXTREMELY LOW**
+
+| Factor | Assessment |
+|--------|------------|
+| Lines changed | 2 |
+| Files touched | 1 |
+| Code logic changed | None |
+| Complexity | Zero - pure data table entry |
+| Subsystem maturity | Very mature (HID drivers) |
+
+This cannot introduce regressions because:
+- No code paths are modified
+- No functions are changed
+- Only users with this specific mouse over Bluetooth are affected
+- If there were somehow an issue, it would only affect that specific
+  hardware
 
 ### 5. USER IMPACT
 
-- **Problem:** Headset microphone doesn't work on Acer Nitro AN517-55
-  laptops without this quirk
-- **Users affected:** Anyone with this specific laptop model who wants
-  to use a headset with microphone
-- **Severity:** This is a genuine hardware functionality bug - the mic
-  input doesn't work without the quirk
-- **Real-world impact:** Affects video calls, gaming chat, voice
-  recording, etc.
+**Who benefits:** Users with Logitech MX Anywhere 3S mice using
+Bluetooth connection
+
+**Without this fix:** The mouse works via basic HID, but lacks:
+- High-resolution scrolling
+- Battery status reporting
+- Other HID++ features that premium Logitech mice support
+
+**Impact level:** The MX Anywhere 3S is a current-generation retail
+product that users are actively purchasing. Stable kernel users expect
+their hardware to work properly.
 
 ### 6. STABILITY INDICATORS
 
-- Signed off by Takashi Iwai (the ALSA maintainer)
-- The `ALC2XX_FIXUP_HEADSET_MIC` fixup is well-established and used by
-  many similar Acer models
-- Pattern is identical to hundreds of other quirk entries in this file
+- ✅ Tested by author on multiple machines with different Bluetooth chips
+- ✅ Reviewed and signed off by HID maintainer Jiri Kosina
+- ✅ Pattern is identical to many existing, working entries
 
 ### 7. DEPENDENCY CHECK
 
-- **No dependencies** - the fixup being referenced already exists in
-  stable kernels
-- Will apply cleanly to any kernel with the HDA Realtek codec driver
-- The quirk infrastructure has been stable for many years
+**Dependencies:** None
 
-## Conclusion
+This is a pure data addition. The driver framework already exists in all
+stable kernels that have the hid-logitech-hidpp driver. No other commits
+are required.
 
-This is a **textbook stable backport candidate**:
+---
 
-1. **Fixes a real bug:** Headset mic doesn't work without it
-2. **Obviously correct:** Identical to existing entry for similar
+## Summary
+
+This commit is a **textbook example of a stable-appropriate device ID
+addition**:
+
+1. ✅ **Trivial 2-line change** - Just a device ID added to an existing
+   table
+2. ✅ **No code modifications** - Pure data entry
+3. ✅ **Driver already exists** - hid-logitech-hidpp is well-established
+   in stable
+4. ✅ **Follows existing pattern** - Identical format to dozens of other
+   entries
+5. ✅ **Tested** - Verified on multiple hardware configurations
+6. ✅ **Zero regression risk** - Only affects users with this specific
    hardware
-3. **Small and contained:** Single line addition to a quirk table
-4. **No new features:** Enables existing functionality for a new device
-   ID
-5. **Zero regression risk:** Only affects this specific laptop model
-6. **Explicitly allowed:** Hardware quirks are called out as stable-
-   appropriate in the rules
+7. ✅ **Real user benefit** - Enables proper hardware support for
+   current-generation product
+8. ✅ **No dependencies** - Can be cleanly cherry-picked to any stable
+   kernel
 
-The stable kernel rules explicitly permit hardware quirks because they
-fix real issues for specific hardware with essentially zero risk to
-other systems. Users of this laptop on stable kernels would otherwise
-have non-functional headset mic support until they upgrade to a newer
-kernel.
+The stable kernel rules explicitly allow device ID additions because
+they enable hardware support with virtually zero risk. This is precisely
+what the "device ID exception" exists for.
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/hid-logitech-hidpp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index b3582e390dfa3..705d6acc204cf 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -6239,6 +6239,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1025, 0x1466, "Acer Aspire A515-56", ALC255_FIXUP_ACER_HEADPHONE_AND_MIC),
- 	SND_PCI_QUIRK(0x1025, 0x1534, "Acer Predator PH315-54", ALC255_FIXUP_ACER_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1025, 0x159c, "Acer Nitro 5 AN515-58", ALC2XX_FIXUP_HEADSET_MIC),
-+	SND_PCI_QUIRK(0x1025, 0x1597, "Acer Nitro 5 AN517-55", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1025, 0x169a, "Acer Swift SFG16", ALC256_FIXUP_ACER_SFG16_MICMUTE_LED),
- 	SND_PCI_QUIRK(0x1025, 0x1826, "Acer Helios ZPC", ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1025, 0x182c, "Acer Helios ZPD", ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2),
+diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
+index a88f2e5f791c6..9b612f62d0fba 100644
+--- a/drivers/hid/hid-logitech-hidpp.c
++++ b/drivers/hid/hid-logitech-hidpp.c
+@@ -4661,6 +4661,8 @@ static const struct hid_device_id hidpp_devices[] = {
+ 	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb025) },
+ 	{ /* MX Master 3S mouse over Bluetooth */
+ 	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb034) },
++	{ /* MX Anywhere 3S mouse over Bluetooth */
++	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb037) },
+ 	{ /* MX Anywhere 3SB mouse over Bluetooth */
+ 	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb038) },
+ 	{}
 -- 
 2.51.0
 
