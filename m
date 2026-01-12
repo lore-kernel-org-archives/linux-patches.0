@@ -1,46 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07FB82DB7B0;
-	Mon, 12 Jan 2026 14:58:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DAAE2DCF43;
+	Mon, 12 Jan 2026 14:58:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768229934; cv=none; b=Lkg0mIYhnrpQqZyv4qlbTTS6Ug0jdMd1WFqf1yh3Cxr4MAOB+24D/obtlWV7nbelEEGeiPUuHunDkq50QLg/D0RuIiGTyMPdCWxPLs2pvQOti31CGEzSJGiQ7jhqQvz5vafcm/SS6GOAX9Iv3Q/MNWNvozpMUkKzVkmV5xgf4eo=
+	t=1768229936; cv=none; b=hT8Htsd87tD9FLL0oVetIYr1XNr1FovtmTeyLNpZ5eNOR/fWtOL+eVga3mqKon65yA5TdpRk5C/emBKDXR3zZpxOExp0D902CoNO2DeRbRKi+WqOm9CckfOegVU43tf8D97Sw6m4FoH1L85MVApJx4V+JHHIjFsDskCXjBmMWcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768229934; c=relaxed/simple;
-	bh=iANEYljBmEYObhC9mPTmReYboGBOtiRRyqhSY4jW/fk=;
+	s=arc-20240116; t=1768229936; c=relaxed/simple;
+	bh=QGi0ds/+im2mb7sW3M1Gg5OlQyOn8wmsoECSS6PGgIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eEwrnlMTX9rdxzYARChDPepUYO+qUZJyrf5ZDv5KXYN/acQhuv7ycHJ0TeD30ql5pY9f1r3zhCcK3y/9gCOveABkwuOi2xXRj5NonuXQ4e6zjTsPbKb8u3VlbgipWPXJp+XHT7qaDUBrwQnA/ACyTv5nYNTMJbLUYz7pc6QNK3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X40Sgitg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HrtwVimY/h4OvcSyTWFqvLzNGg++JKyiqWL57Ob73PKVeHlhEFVhBLJaJJPsv0eaa32EemocrOkEjj7iL0UConNmGbtI4rzkv+P9c9JZgLzthdE0yHs9l/ANQtqtQFQYNFMB9SRozO1EwyKfODxwlt+N15WGGnzq1EnR6H5QR8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fY6BS+xR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X40Sgitg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFA29C19423;
-	Mon, 12 Jan 2026 14:58:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fY6BS+xR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFAD9C16AAE;
+	Mon, 12 Jan 2026 14:58:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768229933;
-	bh=iANEYljBmEYObhC9mPTmReYboGBOtiRRyqhSY4jW/fk=;
+	s=k20201202; t=1768229936;
+	bh=QGi0ds/+im2mb7sW3M1Gg5OlQyOn8wmsoECSS6PGgIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X40SgitgBrKaCAwYmfse04ryC/cLHtow3tStaGYrQ6jjIjGoNfi8s1TyPQfb7nPez
-	 w9i20/GWD9JqFRKxlchj+JyfjLayec33CH9bIgQlANAgyhypZdIFDSJ5+hGvqFrobX
-	 DM1XjkdnBanlE0uiRnOuAPzGZ30qAptzAwhQNaAltz4TW/nZor/dMyP4IJJMpPzMW4
-	 sEyihrC71z6Hq/SE7JdJ5GOAJ+oSf3V4c0S838lUdLaAz53PqDGZVQ6vyv30YVDxYC
-	 b4XJMt+j4t4wdJcFID9ncTMLe7xcY2BW7VFT/FIeDGY6ekPo/NCI4AuhkM8xY06wnI
-	 Gkd21go6cnZoQ==
+	b=fY6BS+xRY20iHHs/6m1OR0J/RcEcApRX0kBN9I6TdxAq5JabghG3VrWfL5eOzNMMo
+	 qPwUAwLNiEGLTffXNW5uLqgW/P98MATZ5/mSQWhbkskrE4//a6jD4qbYmvkpy4x3mG
+	 PkbpUnYUtcTgs4sLwhJ3XFtYcjkHNUto3V8Nsh+acXMJ6ZLbOmlMYnYNqSpo4NT2JY
+	 K4Ccs/OuQf+Yjpbh4aErpoz032HqA13yrJ1O+q30EM6lFQ/Zds1APjPcDXjIRJp7sT
+	 yAxloN1HJuJUr2CjuvKBnlcohKKOh9Cj/MINrqY73+O9Mc9gjYCQmhBw2piPPJYcv1
+	 FaV4z/3oKYshQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Kwok Kin Ming <kenkinming2002@gmail.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+Cc: Martin Kaiser <martin@kaiser.cx>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	dianders@chromium.org,
-	jikos@kernel.org,
-	treapking@chromium.org,
-	dan.carpenter@linaro.org,
-	superm1@kernel.org,
-	guanwentao@uniontech.com
-Subject: [PATCH AUTOSEL 6.18-6.1] HID: i2c-hid: fix potential buffer overflow in i2c_hid_get_report()
-Date: Mon, 12 Jan 2026 09:58:10 -0500
-Message-ID: <20260112145840.724774-9-sashal@kernel.org>
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	bjorn@rivosinc.com,
+	songshuaishuai@tinylab.org,
+	alexghiti@rivosinc.com,
+	kees@kernel.org,
+	masahiroy@kernel.org,
+	charlie@rivosinc.com,
+	linux-riscv@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.18] riscv: trace: fix snapshot deadlock with sbi ecall
+Date: Mon, 12 Jan 2026 09:58:11 -0500
+Message-ID: <20260112145840.724774-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260112145840.724774-1-sashal@kernel.org>
 References: <20260112145840.724774-1-sashal@kernel.org>
@@ -56,173 +59,206 @@ X-stable-base: Linux 6.18.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kwok Kin Ming <kenkinming2002@gmail.com>
+From: Martin Kaiser <martin@kaiser.cx>
 
-[ Upstream commit 2497ff38c530b1af0df5130ca9f5ab22c5e92f29 ]
+[ Upstream commit b0d7f5f0c9f05f1b6d4ee7110f15bef9c11f9df0 ]
 
-`i2c_hid_xfer` is used to read `recv_len + sizeof(__le16)` bytes of data
-into `ihid->rawbuf`.
+If sbi_ecall.c's functions are traceable,
 
-The former can come from the userspace in the hidraw driver and is only
-bounded by HID_MAX_BUFFER_SIZE(16384) by default (unless we also set
-`max_buffer_size` field of `struct hid_ll_driver` which we do not).
+echo "__sbi_ecall:snapshot" > /sys/kernel/tracing/set_ftrace_filter
 
-The latter has size determined at runtime by the maximum size of
-different report types you could receive on any particular device and
-can be a much smaller value.
+may get the kernel into a deadlock.
 
-Fix this by truncating `recv_len` to `ihid->bufsize - sizeof(__le16)`.
+(Functions in sbi_ecall.c are excluded from tracing if
+CONFIG_RISCV_ALTERNATIVE_EARLY is set.)
 
-The impact is low since access to hidraw devices requires root.
+__sbi_ecall triggers a snapshot of the ringbuffer. The snapshot code
+raises an IPI interrupt, which results in another call to __sbi_ecall
+and another snapshot...
 
-Signed-off-by: Kwok Kin Ming <kenkinming2002@gmail.com>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+All it takes to get into this endless loop is one initial __sbi_ecall.
+On RISC-V systems without SSTC extension, the clock events in
+timer-riscv.c issue periodic sbi ecalls, making the problem easy to
+trigger.
+
+Always exclude the sbi_ecall.c functions from tracing to fix the
+potential deadlock.
+
+sbi ecalls can easiliy be logged via trace events, excluding ecall
+functions from function tracing is not a big limitation.
+
+Signed-off-by: Martin Kaiser <martin@kaiser.cx>
+Link: https://patch.msgid.link/20251223135043.1336524-1-martin@kaiser.cx
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of HID: i2c-hid: fix potential buffer overflow in
-i2c_hid_get_report()
+# Commit Analysis: riscv: trace: fix snapshot deadlock with sbi ecall
 
-### 1. COMMIT MESSAGE ANALYSIS
+## 1. COMMIT MESSAGE ANALYSIS
 
-The commit message clearly describes a **buffer overflow
-vulnerability**:
-- `recv_len` comes from userspace via the hidraw driver, bounded only by
-  HID_MAX_BUFFER_SIZE (16384)
-- `ihid->rawbuf` has size `ihid->bufsize` determined at runtime by
-  device report sizes - can be much smaller
-- The I2C transfer reads `recv_len + sizeof(__le16)` bytes into the
-  potentially smaller buffer
-- The fix truncates `recv_len` to prevent overflow
+The commit message clearly describes:
+- **Problem**: A deadlock occurs when sbi_ecall.c functions are
+  traceable and a snapshot is triggered
+- **Root cause**: `__sbi_ecall` triggers a ringbuffer snapshot → raises
+  IPI interrupt → causes another `__sbi_ecall` → triggers another
+  snapshot → endless loop
+- **Trigger condition**: Easy to hit on RISC-V systems without SSTC
+  extension, where timer-riscv.c issues periodic SBI ecalls
+- **Keywords**: "deadlock", "fix" - strong indicators of a bug fix
 
-Key phrase: "fix potential buffer overflow" - this is a security fix.
-The message acknowledges "impact is low since access to hidraw devices
-requires root," but buffer overflows are still serious vulnerabilities.
+The commit message provides a clear technical explanation of the bug
+mechanism.
 
-### 2. CODE CHANGE ANALYSIS
+## 2. CODE CHANGE ANALYSIS
 
-The fix is a single line addition:
-```c
-recv_len = min(recv_len, ihid->bufsize - sizeof(__le16));
-```
+Looking at the diff carefully:
 
-**Technical mechanism of the bug:**
-- `i2c_hid_xfer()` is called with `recv_len + sizeof(__le16)` as the
-  read length
-- If userspace requests a large report via hidraw, `recv_len` could be
-  up to 16384
-- The destination buffer `ihid->rawbuf` has size `ihid->bufsize`, which
-  is allocated based on the device's maximum report size
-- If `recv_len + 2 > ihid->bufsize`, data is written past the end of
-  `rawbuf`
+**Before the patch:**
+- `sbi_ecall.o` was only excluded from ftrace when
+  `CONFIG_RISCV_ALTERNATIVE_EARLY` was set
+- This left a gap where systems without that config option could hit the
+  deadlock
 
-**Why the fix is correct:**
-- The `min()` ensures `recv_len ≤ ihid->bufsize - sizeof(__le16)`
-- Therefore `recv_len + sizeof(__le16) ≤ ihid->bufsize` - no overflow
-  possible
-- Placement is perfect: right before the I2C transfer that performs the
-  write
+**After the patch:**
+- The Makefile is reorganized to consolidate all ftrace exclusions
+- `CFLAGS_REMOVE_sbi_ecall.o = $(CC_FLAGS_FTRACE)` is now placed in an
+  unconditional `ifdef CONFIG_FTRACE` block
+- This means sbi_ecall.o is **always** excluded from tracing when ftrace
+  is enabled
 
-### 3. CLASSIFICATION
+The fix is purely a build-time configuration change - it tells the
+compiler to not instrument sbi_ecall.c with ftrace hooks.
 
-This is a **security bug fix** - specifically a buffer overflow that:
-- Can be triggered from userspace (via hidraw)
-- Could lead to kernel memory corruption
-- Requires root access (limiting practical exploitability)
+## 3. CLASSIFICATION
 
-Even with limited exploitability, buffer overflows in kernel drivers are
-exactly what stable trees want to fix for defense-in-depth.
+- **Type**: Bug fix (deadlock prevention)
+- **Nature**: Build configuration change, not runtime code
+- **Not a feature**: It's restricting what can be traced, not adding
+  functionality
 
-### 4. SCOPE AND RISK ASSESSMENT
+## 4. SCOPE AND RISK ASSESSMENT
 
-| Metric | Assessment |
-|--------|------------|
-| Lines changed | 1 |
-| Files touched | 1 |
-| Complexity | Trivial (min() call) |
-| Subsystem maturity | High (i2c-hid is mature, widely used) |
-| Risk of regression | Near zero |
+- **Size**: Very small - reorganizes Makefile, effectively moves one
+  line
+- **Files touched**: 1 file (arch/riscv/kernel/Makefile)
+- **Subsystem**: RISC-V architecture specific
+- **Risk**: **LOW**
+  - Build-time only change
+  - Only affects what functions can be traced
+  - Commit notes that SBI ecalls can still be logged via trace events
+  - No runtime behavior change beyond preventing the tracing of these
+    functions
 
-The fix is **surgical and contained** - it only adds a bounds check. It
-cannot break correct behavior since:
-- Valid requests (where recv_len fits in the buffer) are unaffected
-- Invalid requests (oversized) now get safely truncated instead of
-  causing overflow
+## 5. USER IMPACT
 
-### 5. USER IMPACT
+- **Severity**: **HIGH** - This is a deadlock that can completely hang
+  the system
+- **Affected systems**: RISC-V users with ftrace enabled and without
+  CONFIG_RISCV_ALTERNATIVE_EARLY
+- **Trigger likelihood**: Easy to trigger on systems without SSTC
+  extension (common scenario)
+- **User action that triggers it**: Using ftrace snapshot on sbi_ecall
+  functions
 
-**Affected users:** Anyone using I2C-HID devices - common on laptops for
-touchpads, touchscreens, and keyboards.
+## 6. STABILITY INDICATORS
 
-**Severity:** Buffer overflow = potentially high severity for security
-(memory corruption, possible privilege escalation), though
-exploitability is limited by root requirement.
+- Properly signed off by author and RISC-V maintainer (Paul Walmsley)
+- Has a Link: to the patch discussion
+- Clear, detailed commit message explaining the issue
 
-**Real-world impact:** While requiring root reduces the attack surface,
-compromised root processes or certain security models (containers,
-sandboxes) make this relevant.
+## 7. DEPENDENCY CHECK
 
-### 6. STABILITY INDICATORS
+This is a self-contained Makefile change. The only dependency is that:
+- The stable tree has RISC-V architecture support with sbi_ecall.c
+- The Makefile structure is similar enough for the patch to apply
 
-- Signed-off-by Benjamin Tissoires (HID subsystem maintainer)
-- The fix is trivially verifiable as correct
-- Standard defensive bounds checking pattern
+The core concept (excluding sbi_ecall.o from ftrace) is simple and
+applicable to any kernel version with this file.
 
-### 7. DEPENDENCY CHECK
+## STABLE KERNEL RULES ASSESSMENT
 
-- Standalone fix, no dependencies on other commits
-- `i2c_hid_get_report()` and the buffer management have existed for
-  years
-- Will apply cleanly to stable trees
+| Criterion | Assessment |
+|-----------|------------|
+| Obviously correct | ✅ Yes - simple Makefile change to exclude a file
+from tracing |
+| Fixes real bug | ✅ Yes - fixes a deadlock |
+| Important issue | ✅ Yes - deadlock = system hang |
+| Small and contained | ✅ Yes - 1 file, Makefile only |
+| No new features | ✅ Yes - restricts functionality, doesn't add any |
+| Tested | ✅ Merged via maintainer tree |
 
-### STABLE KERNEL RULES ASSESSMENT
+## RISK VS BENEFIT
 
-| Criterion | Met? |
-|-----------|------|
-| Obviously correct and tested | ✅ Yes - trivial min() bounds check |
-| Fixes a real bug | ✅ Yes - buffer overflow |
-| Important issue (security/crash/corruption) | ✅ Yes - security
-vulnerability |
-| Small and contained | ✅ Yes - 1 line, 1 file |
-| No new features | ✅ Yes - pure bug fix |
-| Applies cleanly | ✅ Yes - no dependencies |
+- **Benefit**: Prevents a system deadlock on RISC-V platforms
+- **Risk**: Minimal - users cannot trace sbi_ecall functions (workaround
+  exists via trace events)
+- **Trade-off**: Clearly favorable - preventing deadlocks is worth
+  losing ability to trace a few functions
 
-### RISK VS BENEFIT
+## CONCERNS FOR BACKPORTING
 
-**Benefit:** Fixes a buffer overflow vulnerability in widely-used HID
-driver code
-**Risk:** Effectively zero - the fix is a trivial bounds check that
-cannot cause regressions
+The Makefile structure may differ slightly in older stable kernels. The
+patch may need minor adjustment but the concept is simple: ensure
+`CFLAGS_REMOVE_sbi_ecall.o = $(CC_FLAGS_FTRACE)` is set unconditionally
+when CONFIG_FTRACE is enabled.
 
-### CONCLUSION
+## CONCLUSION
 
-This commit is an ideal candidate for stable backporting:
-- It fixes a genuine security vulnerability (buffer overflow)
-- The fix is minimal (1 line), obviously correct, and risk-free
-- The i2c-hid driver is widely used on modern laptops
-- Even though root is required to exploit, defense-in-depth principles
-  favor fixing all buffer overflows
-- Has proper maintainer sign-off
+This is an excellent candidate for stable backporting:
+1. Fixes a real, easily-triggerable deadlock
+2. Small, surgical fix to build configuration
+3. Low risk - only prevents tracing of a few functions
+4. Self-contained with no dependencies on other patches
+5. Meets all stable kernel rules
 
 **YES**
 
- drivers/hid/i2c-hid/i2c-hid-core.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/riscv/kernel/Makefile | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
-index 63f46a2e57882..5a183af3d5c6a 100644
---- a/drivers/hid/i2c-hid/i2c-hid-core.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-core.c
-@@ -286,6 +286,7 @@ static int i2c_hid_get_report(struct i2c_hid *ihid,
- 	 * In addition to report data device will supply data length
- 	 * in the first 2 bytes of the response, so adjust .
- 	 */
-+	recv_len = min(recv_len, ihid->bufsize - sizeof(__le16));
- 	error = i2c_hid_xfer(ihid, ihid->cmdbuf, length,
- 			     ihid->rawbuf, recv_len + sizeof(__le16));
- 	if (error) {
+diff --git a/arch/riscv/kernel/Makefile b/arch/riscv/kernel/Makefile
+index f60fce69b7259..a01f6439d62b1 100644
+--- a/arch/riscv/kernel/Makefile
++++ b/arch/riscv/kernel/Makefile
+@@ -3,12 +3,6 @@
+ # Makefile for the RISC-V Linux kernel
+ #
+ 
+-ifdef CONFIG_FTRACE
+-CFLAGS_REMOVE_ftrace.o	= $(CC_FLAGS_FTRACE)
+-CFLAGS_REMOVE_patch.o	= $(CC_FLAGS_FTRACE)
+-CFLAGS_REMOVE_sbi.o	= $(CC_FLAGS_FTRACE)
+-CFLAGS_REMOVE_return_address.o	= $(CC_FLAGS_FTRACE)
+-endif
+ CFLAGS_syscall_table.o	+= $(call cc-disable-warning, override-init)
+ CFLAGS_compat_syscall_table.o += $(call cc-disable-warning, override-init)
+ 
+@@ -24,7 +18,6 @@ CFLAGS_sbi_ecall.o := -mcmodel=medany
+ ifdef CONFIG_FTRACE
+ CFLAGS_REMOVE_alternative.o = $(CC_FLAGS_FTRACE)
+ CFLAGS_REMOVE_cpufeature.o = $(CC_FLAGS_FTRACE)
+-CFLAGS_REMOVE_sbi_ecall.o = $(CC_FLAGS_FTRACE)
+ endif
+ ifdef CONFIG_RELOCATABLE
+ CFLAGS_alternative.o += -fno-pie
+@@ -43,6 +36,14 @@ CFLAGS_sbi_ecall.o += -D__NO_FORTIFY
+ endif
+ endif
+ 
++ifdef CONFIG_FTRACE
++CFLAGS_REMOVE_ftrace.o	= $(CC_FLAGS_FTRACE)
++CFLAGS_REMOVE_patch.o	= $(CC_FLAGS_FTRACE)
++CFLAGS_REMOVE_sbi.o	= $(CC_FLAGS_FTRACE)
++CFLAGS_REMOVE_return_address.o	= $(CC_FLAGS_FTRACE)
++CFLAGS_REMOVE_sbi_ecall.o = $(CC_FLAGS_FTRACE)
++endif
++
+ always-$(KBUILD_BUILTIN) += vmlinux.lds
+ 
+ obj-y	+= head.o
 -- 
 2.51.0
 
