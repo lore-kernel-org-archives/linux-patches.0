@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD5D2D8375;
-	Mon, 12 Jan 2026 14:58:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B02B62DB797;
+	Mon, 12 Jan 2026 14:58:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768229924; cv=none; b=UYH/Oy1Hy6H0BkJwKGUJAsAwC9T6fO72Wh9yz2pesK/+Axm7+919yYMxYGjFEcb568u3U2QLvPLmVY2Y6GcFBkP4C9ueScMUfVA2VtcSMz+ioPOQyP4SJ0WXI2jIt5b2KwjbIoobvjMBITx4Rk+GQsqNp3mSOvI93jCYEAkLbQE=
+	t=1768229925; cv=none; b=VpTVxelSBqz6qSxz8t0GfEtFk2cC+rdLbe9P+2R9JJJciClBtjDxwvMDwbiEYkAA5yDMWrblsY7RzB56UgWXShI3IUaDzdsOUBlnzBdnIs2SaMBl3uk+XKb71mC/GhWEYeGuf3TgOuJoa+KJXAz6ElT7STwI2BNp9AtEBcKda78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768229924; c=relaxed/simple;
-	bh=TcP8aCz11Hd2xDXus4EA8Y7dbVgzx5ZbKfqVHRsQz48=;
+	s=arc-20240116; t=1768229925; c=relaxed/simple;
+	bh=EvHDptncN54Nkvz1HybzgdOjR8fnhTbNY70OKrG0yYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m3U+UaDQ7IL9jx5Mhav8XRkKjIioHwwbHIivmDkXlBw3O3RetE62tYm8MDNMv8a8pf7J7Fei+XnoqS3I8cVDlYCXdyPWMt7ycsZ+hO4xR5QpldQc8rSeKQoAHZXQLORWlqHSrFTlzC/Z4qOpTv60Xo9L6rV+VcLGnnC97ZA9Pcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WthNu8Wb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=efLuVKzCVCKD9EQVRSgrEoKClX+J7hrp99grgM7zc2Tga9f5h5sn/qDVF4dGHbC6bxbXqOk6/rkDUkO+LyUjq98fSvUlVwmNHjds9l1OzIe18Db86agDm6WoeaPkL5PGd3PPtOcHBUH2UDIyCQYbQjX83d91MpXa6xbg6JN3kjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sTlkbxiN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WthNu8Wb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C4A3C19423;
-	Mon, 12 Jan 2026 14:58:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sTlkbxiN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7039C2BC86;
+	Mon, 12 Jan 2026 14:58:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768229924;
-	bh=TcP8aCz11Hd2xDXus4EA8Y7dbVgzx5ZbKfqVHRsQz48=;
+	s=k20201202; t=1768229925;
+	bh=EvHDptncN54Nkvz1HybzgdOjR8fnhTbNY70OKrG0yYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WthNu8Wb/7yZtL2GioS+un2O2XbJUft41Vqd4XwyQT8Ws6HT2KYMpk1jH5eERe00l
-	 +cOWLRp9rR4ZUaOELHZ6xVsAuQzZbm2M9AMqYfesIJBWDpV3+/L0HWNLSVDNOe9JyD
-	 AsJA5kfnRUBeZZ5ACeQ3VsM2a5T+geC+7jDCEaD6prrgqIYxw07xn28c/sgbz4O2Xy
-	 DMOW29bcXjGW4vwS0I9HZxQV1X2e6F8HYGRSKAYtsRAoVJfPs75MRfObpwOJq2nbXv
-	 Ucpsi1Q5l0YiC+bRNJqZwz9Ct3XrccxusxgQ/YeciYC5hd+ypP8PzYP9ueLV9RvlvL
-	 Lg7DR3zKt17QA==
+	b=sTlkbxiNg/dI2ErhQHVzd82Z9f2pW8u8qfcCCDtjO2212rYUD95RcGWnt4qP6pzKr
+	 BKS2E9P7XdYY8gQzV4ZUmjaDfNIP5XWeGnC5bhcl9wvNjyjzq27TpK2ieXx/3H8g9U
+	 UkSVND/oRTZbdendTQxK/BFZooicPrE6KgcnMMBEs2jTUXWIAuGyeayHwatniXremM
+	 PNhNPsDZ2qjCkyMnkXWCa9vfHxalSGyow1INZxRYpoCjcbQkAgtv5HoK5s/cMHux3b
+	 HEmgy6abNbWeFQu0JwP8mrAujNmt6SmD0LuARIMOKbxFnUsims2q7Fo4ln7TsAm/5k
+	 rqJEhJV011c0Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Brendan Jackman <jackmanb@google.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Marco Elver <elver@google.com>,
+Cc: Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	nathan@kernel.org,
-	ardb@kernel.org,
-	mingo@kernel.org,
-	llvm@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.18] x86/sev: Disable GCOV on noinstr object
-Date: Mon, 12 Jan 2026 09:58:03 -0500
-Message-ID: <20260112145840.724774-2-sashal@kernel.org>
+	johannes@sipsolutions.net,
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] wifi: mac80211: collect station statistics earlier when disconnect
+Date: Mon, 12 Jan 2026 09:58:04 -0500
+Message-ID: <20260112145840.724774-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260112145840.724774-1-sashal@kernel.org>
 References: <20260112145840.724774-1-sashal@kernel.org>
@@ -52,148 +49,178 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.5
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brendan Jackman <jackmanb@google.com>
+From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 
-[ Upstream commit 9efb74f84ba82a9de81fc921baf3c5e2decf8256 ]
+[ Upstream commit a203dbeeca15a9b924f0d51f510921f4bae96801 ]
 
-With Debian clang version 19.1.7 (3+build5) there are calls to
-kasan_check_write() from __sev_es_nmi_complete(), which violates noinstr.  Fix
-it by disabling GCOV for the noinstr object, as has been done for previous
-such instrumentation issues.
+In __sta_info_destroy_part2(), station statistics are requested after the
+IEEE80211_STA_NONE -> IEEE80211_STA_NOTEXIST transition. This is
+problematic because the driver may be unable to handle the request due to
+the STA being in the NOTEXIST state (i.e. if the driver destroys the
+underlying data when transitioning to NOTEXIST).
 
-Note that this file already disables __SANITIZE_ADDRESS__ and
-__SANITIZE_THREAD__, thus calls like kasan_check_write() ought to be nops
-regardless of GCOV. This has been fixed in other patches. However, to avoid
-any other accidental instrumentation showing up, (and since, in principle GCOV
-is instrumentation and hence should be disabled for noinstr code anyway),
-disable GCOV overall as well.
+Move the statistics collection to before the state transition to avoid
+this issue.
 
-Signed-off-by: Brendan Jackman <jackmanb@google.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Marco Elver <elver@google.com>
-Link: https://patch.msgid.link/20251216-gcov-inline-noinstr-v3-3-10244d154451@google.com
+Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251222-mac80211-move-station-stats-collection-earlier-v1-1-12cd4e42c633@oss.qualcomm.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of Commit: x86/sev: Disable GCOV on noinstr object
+## Analysis of wifi: mac80211: collect station statistics earlier when
+disconnect
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The commit message clearly explains the problem:
-- With Clang 19.1.7, GCOV instrumentation causes calls to
-  `kasan_check_write()` from `__sev_es_nmi_complete()`
-- This violates the `noinstr` (no instrumentation) attribute requirement
-- The fix follows an established pattern already used in the same file
-  for other sanitizers
+The commit message clearly identifies a **bug fix** for an ordering
+problem:
+- In `__sta_info_destroy_part2()`, station statistics are collected
+  **after** the STA transitions to `IEEE80211_STA_NOTEXIST`
+- This is problematic because drivers may have already destroyed the
+  underlying data structures when entering NOTEXIST state
+- The fix moves statistics collection to **before** the NOTEXIST
+  transition
 
-Key review tags:
-- Signed-off-by maintainers from Google and AMD (Borislav Petkov, well-
-  known x86 maintainer)
-- Acked-by from Marco Elver (instrumentation/sanitizer expert at Google)
+Key indicators:
+- "problematic" - acknowledges a real issue
+- Clear explanation of the root cause (ordering)
+- Author is from Qualcomm (driver vendor likely experiencing this issue)
+- Signed off by Johannes Berg (mac80211 maintainer) - strong positive
+  signal
 
 ### 2. CODE CHANGE ANALYSIS
 
-The change is trivially simple - one line added to a Makefile:
+**The actual change is minimal - just moving 3 lines of code:**
 
-```makefile
-GCOV_PROFILE_noinstr.o          := n
+```c
+// MOVED FROM AFTER drv_sta_state() TO BEFORE IT:
+sinfo = kzalloc(sizeof(*sinfo), GFP_KERNEL);
+if (sinfo)
+    sta_set_sinfo(sta, sinfo, true);
 ```
 
-This disables GCOV code coverage profiling for the `noinstr.o` object
-file. The context shows this follows an established pattern:
-- `UBSAN_SANITIZE_noinstr.o := n` - already disables UBSAN
-- `KASAN_SANITIZE_noinstr.o := n` - already disables KASAN
-- `KCSAN_SANITIZE_noinstr.o := n` - already disables KCSAN
+**Before the fix (buggy order):**
+1. Transition STA to NONE state
+2. Call `drv_sta_state()` to transition NONE→NOTEXIST (driver may
+   destroy internal STA data here)
+3. Try to collect statistics via `sta_set_sinfo()` → **FAILS if driver
+   destroyed data**
+4. Report statistics to cfg80211
 
-The `noinstr` attribute is critical for code that runs in sensitive
-contexts like NMI handlers, where any unexpected function calls can
-cause deadlocks, crashes, or undefined behavior.
+**After the fix (correct order):**
+1. Transition STA to NONE state
+2. Collect statistics via `sta_set_sinfo()` → **STA data still valid**
+3. Call `drv_sta_state()` to transition NONE→NOTEXIST
+4. Report statistics to cfg80211
+
+The `cfg80211_del_sta_sinfo()` call remains in the same relative
+position (after statistics collection and after transition), so the
+interface to cfg80211 is preserved.
 
 ### 3. CLASSIFICATION
 
-This is a **build fix** that prevents instrumentation violations. When
-`noinstr` code gets instrumented:
-- NMI handlers may call functions that aren't safe in NMI context
-- Potential deadlocks if instrumentation takes locks
-- Potential crashes or undefined behavior
-
-This falls squarely under the "build fixes" exception category for
-stable backports.
+- **Type:** Bug fix (ordering/race condition fix)
+- **Subsystem:** WiFi mac80211 (core wireless stack)
+- **Not a feature addition:** No new functionality, just correcting
+  execution order
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-- **Lines changed**: 2 (including blank line)
-- **Files touched**: 1 Makefile only
-- **Complexity**: Minimal
-- **Risk**: Extremely low
+**Scope:**
+- 1 file changed
+- Net 0 lines added (pure code movement)
+- Single function affected: `__sta_info_destroy_part2()`
 
-This change cannot cause regressions because:
-1. It's a Makefile-only change, not code modification
-2. It only disables optional build-time instrumentation
-3. GCOV is used for code coverage analysis, not production functionality
-4. The pattern is already used in the same file for other sanitizers
+**Risk: VERY LOW**
+- The same operations are performed, just in different order
+- `sta_set_sinfo()` reads statistics - no side effects that would affect
+  the subsequent NOTEXIST transition
+- The `sinfo` pointer is still passed to `cfg80211_del_sta_sinfo()`
+  correctly
+- No logic changes, no new error paths
 
 ### 5. USER IMPACT
 
-- **Affected users**: Those building with GCOV enabled + Clang 19+ + AMD
-  SEV support
-- **Severity if hit**: noinstr violations in NMI handlers can cause
-  crashes or deadlocks - severe
-- **Scope**: Relatively niche configuration, but real for users who hit
-  it
+**Who is affected:**
+- All WiFi users during disconnection events
+- Disconnection is a common operation (switching networks, leaving WiFi
+  range, suspending laptop, etc.)
+
+**Severity:**
+- Without fix: Statistics may be missing, incorrect, or in worst case
+  cause driver errors/crashes depending on how drivers handle requests
+  when STA data is already destroyed
+- Qualcomm drivers (ath11k/ath12k) are likely affected based on author
+  affiliation
 
 ### 6. STABILITY INDICATORS
 
-- Reviewed and acked by instrumentation expert (Marco Elver)
-- Signed off by well-known x86 maintainer (Borislav Petkov)
-- Follows well-established pattern in the kernel
+- **Reviewed/signed by mac80211 maintainer** (Johannes Berg) - major
+  positive signal
+- Simple, self-contained fix with clear rationale
+- The fix addresses a specific defect in existing code
 
 ### 7. DEPENDENCY CHECK
 
-- No dependencies on other commits
-- The affected Makefile with existing `*_SANITIZE_noinstr.o` lines
-  exists in stable trees with SEV support
+- **No dependencies:** This is a standalone fix
+- The affected function `__sta_info_destroy_part2()` exists in all
+  recent stable kernels
+- No prerequisite commits needed
 
-### VERDICT
+### Summary
 
-**Pros:**
-- Trivially small change (1 line)
-- Fixes a real instrumentation violation issue
-- Zero risk of runtime regression
-- Follows established pattern already in the file
-- Well-reviewed by appropriate experts
-- Falls under "build fixes" exception
+| Criterion | Assessment |
+|-----------|------------|
+| Fixes real bug | ✅ Yes - ordering causes driver failures |
+| Obviously correct | ✅ Yes - simple code movement |
+| Small and contained | ✅ Yes - 3 lines moved, 1 function |
+| No new features | ✅ Yes - just reordering |
+| Risk level | ✅ Very low |
+| Maintainer review | ✅ Johannes Berg (mac80211 maintainer) |
 
-**Cons:**
-- Requires specific toolchain configuration to trigger
-- Somewhat niche (Clang 19 + GCOV + SEV)
-
-This is a textbook example of a safe, low-risk build fix. It disables
-optional instrumentation for code that must not be instrumented
-(`noinstr`). The change is defensive, harmless, and prevents potential
-crashes/deadlocks in NMI handlers. Even if users don't actively hit the
-issue with their current toolchain, disabling GCOV for noinstr code is
-the correct thing to do.
+This commit fixes a real bug affecting WiFi station disconnection. The
+fix is surgical (moving 3 lines of code earlier), has zero risk of
+introducing regressions since it's pure code reordering with no
+functional changes, and has been reviewed by the mac80211 maintainer.
+The bug affects all WiFi users during disconnection events, which is a
+very common operation.
 
 **YES**
 
- arch/x86/coco/sev/Makefile | 2 ++
- 1 file changed, 2 insertions(+)
+ net/mac80211/sta_info.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/coco/sev/Makefile b/arch/x86/coco/sev/Makefile
-index 3b8ae214a6a64..b2e9ec2f69014 100644
---- a/arch/x86/coco/sev/Makefile
-+++ b/arch/x86/coco/sev/Makefile
-@@ -8,3 +8,5 @@ UBSAN_SANITIZE_noinstr.o	:= n
- # GCC may fail to respect __no_sanitize_address or __no_kcsan when inlining
- KASAN_SANITIZE_noinstr.o	:= n
- KCSAN_SANITIZE_noinstr.o	:= n
+diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
+index f4d3b67fda062..1a995bc301b19 100644
+--- a/net/mac80211/sta_info.c
++++ b/net/mac80211/sta_info.c
+@@ -1533,6 +1533,10 @@ static void __sta_info_destroy_part2(struct sta_info *sta, bool recalc)
+ 		}
+ 	}
+ 
++	sinfo = kzalloc(sizeof(*sinfo), GFP_KERNEL);
++	if (sinfo)
++		sta_set_sinfo(sta, sinfo, true);
 +
-+GCOV_PROFILE_noinstr.o		:= n
+ 	if (sta->uploaded) {
+ 		ret = drv_sta_state(local, sdata, sta, IEEE80211_STA_NONE,
+ 				    IEEE80211_STA_NOTEXIST);
+@@ -1541,9 +1545,6 @@ static void __sta_info_destroy_part2(struct sta_info *sta, bool recalc)
+ 
+ 	sta_dbg(sdata, "Removed STA %pM\n", sta->sta.addr);
+ 
+-	sinfo = kzalloc(sizeof(*sinfo), GFP_KERNEL);
+-	if (sinfo)
+-		sta_set_sinfo(sta, sinfo, true);
+ 	cfg80211_del_sta_sinfo(sdata->dev, sta->sta.addr, sinfo, GFP_KERNEL);
+ 	kfree(sinfo);
+ 
 -- 
 2.51.0
 
