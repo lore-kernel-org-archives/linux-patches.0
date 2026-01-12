@@ -1,49 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DAAE2DCF43;
-	Mon, 12 Jan 2026 14:58:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 998492DB79C;
+	Mon, 12 Jan 2026 14:59:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768229936; cv=none; b=hT8Htsd87tD9FLL0oVetIYr1XNr1FovtmTeyLNpZ5eNOR/fWtOL+eVga3mqKon65yA5TdpRk5C/emBKDXR3zZpxOExp0D902CoNO2DeRbRKi+WqOm9CckfOegVU43tf8D97Sw6m4FoH1L85MVApJx4V+JHHIjFsDskCXjBmMWcM=
+	t=1768229940; cv=none; b=bdBCoU4pihZOVXLNIIfjfTXClp9nPnCpKhPf6Y/3lulgZQQ4lNHk/SWzqUzZT+o92OuxkUviRAenosOGGsTWBY+jLOSAzV/5XRazypZ8Lsyu6wUtXgJqRlnkhGa5z7T8rXs8fa/tYauIVjECcdi+0T+WX8JfP3IRLSdoazgm6fs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768229936; c=relaxed/simple;
-	bh=QGi0ds/+im2mb7sW3M1Gg5OlQyOn8wmsoECSS6PGgIE=;
+	s=arc-20240116; t=1768229940; c=relaxed/simple;
+	bh=yDuxJLWzF6kgfc2MCgc5E0fSNJNKC2uW57/u00KiBKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HrtwVimY/h4OvcSyTWFqvLzNGg++JKyiqWL57Ob73PKVeHlhEFVhBLJaJJPsv0eaa32EemocrOkEjj7iL0UConNmGbtI4rzkv+P9c9JZgLzthdE0yHs9l/ANQtqtQFQYNFMB9SRozO1EwyKfODxwlt+N15WGGnzq1EnR6H5QR8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fY6BS+xR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZhdrlBiNAePhdrtnS7W+NDQQKxuvykm3u8qo+SGEnX54I0g4nV9NtIL5LEgee5J++rKf4cEA0FyScZp8S7axeO67gKolUV2CLmeQoH4nMgwd7QydLsgvBZpmgMox0iaT9W9X8hGdXCJG0Tg/7OoMMT8sKQjbq9dLQG83B0nw9OY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SxobM8hO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fY6BS+xR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFAD9C16AAE;
-	Mon, 12 Jan 2026 14:58:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SxobM8hO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 804B3C16AAE;
+	Mon, 12 Jan 2026 14:58:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768229936;
-	bh=QGi0ds/+im2mb7sW3M1Gg5OlQyOn8wmsoECSS6PGgIE=;
+	s=k20201202; t=1768229940;
+	bh=yDuxJLWzF6kgfc2MCgc5E0fSNJNKC2uW57/u00KiBKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fY6BS+xRY20iHHs/6m1OR0J/RcEcApRX0kBN9I6TdxAq5JabghG3VrWfL5eOzNMMo
-	 qPwUAwLNiEGLTffXNW5uLqgW/P98MATZ5/mSQWhbkskrE4//a6jD4qbYmvkpy4x3mG
-	 PkbpUnYUtcTgs4sLwhJ3XFtYcjkHNUto3V8Nsh+acXMJ6ZLbOmlMYnYNqSpo4NT2JY
-	 K4Ccs/OuQf+Yjpbh4aErpoz032HqA13yrJ1O+q30EM6lFQ/Zds1APjPcDXjIRJp7sT
-	 yAxloN1HJuJUr2CjuvKBnlcohKKOh9Cj/MINrqY73+O9Mc9gjYCQmhBw2piPPJYcv1
-	 FaV4z/3oKYshQ==
+	b=SxobM8hOus9COszhWDayy0ubPfKikSUKL0DN6khSE6AixrAIRagIxCGxg6LuJ9zyU
+	 WUGoKee/EmgAKj/yvhP7/+/k2yYQcCzacwa+WSEYwWDEh7EuSyY/XqMvk5GZOJLpsJ
+	 hz4HncunV09itW37g7Nv+AWnEwH54z6OXk+7Dz+ALXIdTL8qgN/qORrgu5G9P35KQD
+	 +4FfKWGg9Y4dsWk1bLdcQGd7Ov1rjvWxKcl+n7TLUbwIm1qaxH3tcANCwgmwNrUqaF
+	 tA45OOZyYbk9AbuBEhB4DBFJdmTlHEieYXAHntS/FhJ3w+INOxZrjlB7KuzbmUrjSf
+	 H0FjDXfaM5z5Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Martin Kaiser <martin@kaiser.cx>,
-	Paul Walmsley <pjw@kernel.org>,
+Cc: Perry Yuan <perry.yuan@amd.com>,
+	Yifan Zhang <yifan1.zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	bjorn@rivosinc.com,
-	songshuaishuai@tinylab.org,
-	alexghiti@rivosinc.com,
-	kees@kernel.org,
-	masahiroy@kernel.org,
-	charlie@rivosinc.com,
-	linux-riscv@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.18] riscv: trace: fix snapshot deadlock with sbi ecall
-Date: Mon, 12 Jan 2026 09:58:11 -0500
-Message-ID: <20260112145840.724774-10-sashal@kernel.org>
+	lijo.lazar@amd.com,
+	christian.koenig@amd.com,
+	Hawking.Zhang@amd.com,
+	mario.limonciello@amd.com,
+	cesun102@amd.com,
+	superm1@kernel.org,
+	kenneth.feng@amd.com,
+	kevinyang.wang@amd.com,
+	Yifan.Zha@amd.com,
+	siqueira@igalia.com,
+	ilya.zlobintsev@gmail.com,
+	tomasz.pakula.oficjalny@gmail.com,
+	Jesse.Zhang@amd.com
+Subject: [PATCH AUTOSEL 6.18-6.12] drm/amd/pm: Disable MMIO access during SMU Mode 1 reset
+Date: Mon, 12 Jan 2026 09:58:12 -0500
+Message-ID: <20260112145840.724774-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260112145840.724774-1-sashal@kernel.org>
 References: <20260112145840.724774-1-sashal@kernel.org>
@@ -56,209 +61,207 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.5
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Kaiser <martin@kaiser.cx>
+From: Perry Yuan <perry.yuan@amd.com>
 
-[ Upstream commit b0d7f5f0c9f05f1b6d4ee7110f15bef9c11f9df0 ]
+[ Upstream commit 0de604d0357d0d22cbf03af1077d174b641707b6 ]
 
-If sbi_ecall.c's functions are traceable,
+During Mode 1 reset, the ASIC undergoes a reset cycle and becomes
+temporarily inaccessible via PCIe. Any attempt to access MMIO registers
+during this window (e.g., from interrupt handlers or other driver threads)
+can result in uncompleted PCIe transactions, leading to NMI panics or
+system hangs.
 
-echo "__sbi_ecall:snapshot" > /sys/kernel/tracing/set_ftrace_filter
+To prevent this, set the `no_hw_access` flag to true immediately after
+triggering the reset. This signals other driver components to skip
+register accesses while the device is offline.
 
-may get the kernel into a deadlock.
+A memory barrier `smp_mb()` is added to ensure the flag update is
+globally visible to all cores before the driver enters the sleep/wait
+state.
 
-(Functions in sbi_ecall.c are excluded from tracing if
-CONFIG_RISCV_ALTERNATIVE_EARLY is set.)
-
-__sbi_ecall triggers a snapshot of the ringbuffer. The snapshot code
-raises an IPI interrupt, which results in another call to __sbi_ecall
-and another snapshot...
-
-All it takes to get into this endless loop is one initial __sbi_ecall.
-On RISC-V systems without SSTC extension, the clock events in
-timer-riscv.c issue periodic sbi ecalls, making the problem easy to
-trigger.
-
-Always exclude the sbi_ecall.c functions from tracing to fix the
-potential deadlock.
-
-sbi ecalls can easiliy be logged via trace events, excluding ecall
-functions from function tracing is not a big limitation.
-
-Signed-off-by: Martin Kaiser <martin@kaiser.cx>
-Link: https://patch.msgid.link/20251223135043.1336524-1-martin@kaiser.cx
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Signed-off-by: Perry Yuan <perry.yuan@amd.com>
+Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 7edb503fe4b6d67f47d8bb0dfafb8e699bb0f8a4)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Commit Analysis: riscv: trace: fix snapshot deadlock with sbi ecall
+## Analysis of Commit: drm/amd/pm: Disable MMIO access during SMU Mode 1
+reset
 
-## 1. COMMIT MESSAGE ANALYSIS
+### 1. COMMIT MESSAGE ANALYSIS
 
-The commit message clearly describes:
-- **Problem**: A deadlock occurs when sbi_ecall.c functions are
-  traceable and a snapshot is triggered
-- **Root cause**: `__sbi_ecall` triggers a ringbuffer snapshot → raises
-  IPI interrupt → causes another `__sbi_ecall` → triggers another
-  snapshot → endless loop
-- **Trigger condition**: Easy to hit on RISC-V systems without SSTC
-  extension, where timer-riscv.c issues periodic SBI ecalls
-- **Keywords**: "deadlock", "fix" - strong indicators of a bug fix
+The commit message clearly describes a **serious stability problem**:
+- During Mode 1 reset, the ASIC becomes temporarily inaccessible via
+  PCIe
+- Any MMIO access during this window (from interrupt handlers or other
+  driver threads) results in **NMI panics or system hangs**
+- Keywords: "NMI panics", "system hangs" - these are critical stability
+  issues
 
-The commit message provides a clear technical explanation of the bug
-mechanism.
+The commit has proper attribution:
+- Reviewed-by tag from Yifan Zhang
+- Signed-off by AMD maintainer Alex Deucher
+- Already cherry-picked, suggesting it's considered stable material
 
-## 2. CODE CHANGE ANALYSIS
+### 2. CODE CHANGE ANALYSIS
 
-Looking at the diff carefully:
+The fix is straightforward and surgical:
 
-**Before the patch:**
-- `sbi_ecall.o` was only excluded from ftrace when
-  `CONFIG_RISCV_ALTERNATIVE_EARLY` was set
-- This left a gap where systems without that config option could hit the
-  deadlock
+**smu_v13_0_0_ppt.c and smu_v14_0_2_ppt.c:**
+```c
+/* disable mmio access while doing mode 1 reset*/
+smu->adev->no_hw_access = true;
+/* ensure no_hw_access is globally visible before any MMIO */
+smp_mb();
+msleep(...);
+```
+Sets the existing `no_hw_access` flag to block MMIO from other driver
+components during the reset sleep window. The `smp_mb()` ensures proper
+cross-CPU memory ordering.
 
-**After the patch:**
-- The Makefile is reorganized to consolidate all ftrace exclusions
-- `CFLAGS_REMOVE_sbi_ecall.o = $(CC_FLAGS_FTRACE)` is now placed in an
-  unconditional `ifdef CONFIG_FTRACE` block
-- This means sbi_ecall.o is **always** excluded from tracing when ftrace
-  is enabled
+**amdgpu_device.c:**
+```c
+/* enable mmio access after mode 1 reset completed */
+adev->no_hw_access = false;
+```
+Re-enables MMIO access after the reset completes successfully.
 
-The fix is purely a build-time configuration change - it tells the
-compiler to not instrument sbi_ecall.c with ftrace hooks.
+### 3. CLASSIFICATION
 
-## 3. CLASSIFICATION
+This is a **bug fix** - not a new feature. It uses an existing mechanism
+(`no_hw_access` flag) that other driver components already check. The
+fix simply sets this flag at the correct time during Mode 1 reset.
 
-- **Type**: Bug fix (deadlock prevention)
-- **Nature**: Build configuration change, not runtime code
-- **Not a feature**: It's restricting what can be traced, not adding
-  functionality
+### 4. SCOPE AND RISK ASSESSMENT
 
-## 4. SCOPE AND RISK ASSESSMENT
+- **Lines changed**: ~15 lines of actual code across 3 files
+- **Complexity**: Very low - just boolean flag setting and memory
+  barriers
+- **Risk**: LOW - uses existing infrastructure, pattern is well-
+  understood
+- **Subsystem**: AMD GPU power management (SMU v13.0.0 and v14.0.2)
 
-- **Size**: Very small - reorganizes Makefile, effectively moves one
-  line
-- **Files touched**: 1 file (arch/riscv/kernel/Makefile)
-- **Subsystem**: RISC-V architecture specific
-- **Risk**: **LOW**
-  - Build-time only change
-  - Only affects what functions can be traced
-  - Commit notes that SBI ecalls can still be logged via trace events
-  - No runtime behavior change beyond preventing the tracing of these
-    functions
+The changes are minimal and isolated to the Mode 1 reset path.
 
-## 5. USER IMPACT
+### 5. USER IMPACT
 
-- **Severity**: **HIGH** - This is a deadlock that can completely hang
-  the system
-- **Affected systems**: RISC-V users with ftrace enabled and without
-  CONFIG_RISCV_ALTERNATIVE_EARLY
-- **Trigger likelihood**: Easy to trigger on systems without SSTC
-  extension (common scenario)
-- **User action that triggers it**: Using ftrace snapshot on sbi_ecall
-  functions
+- **Severity**: CRITICAL - NMI panics and system hangs affect system
+  stability
+- **Affected users**: AMD GPU users (Radeon RX 7000 series and newer)
+  when GPU undergoes error recovery
+- **Trigger likelihood**: Mode 1 resets happen during GPU error recovery
+  - interrupt handlers racing with reset is a realistic scenario
 
-## 6. STABILITY INDICATORS
+### 6. STABILITY INDICATORS
 
-- Properly signed off by author and RISC-V maintainer (Paul Walmsley)
-- Has a Link: to the patch discussion
-- Clear, detailed commit message explaining the issue
+- Has `Reviewed-by` tag
+- Cherry-picked from mainline commit
+  7edb503fe4b6d67f47d8bb0dfafb8e699bb0f8a4
+- Comes from AMD engineers with domain expertise
 
-## 7. DEPENDENCY CHECK
+### 7. DEPENDENCY CHECK
 
-This is a self-contained Makefile change. The only dependency is that:
-- The stable tree has RISC-V architecture support with sbi_ecall.c
-- The Makefile structure is similar enough for the patch to apply
+The `no_hw_access` field in `amdgpu_device` structure is existing
+infrastructure used throughout the AMDGPU driver. This commit doesn't
+introduce new fields or dependencies - it only sets an existing flag at
+appropriate times.
 
-The core concept (excluding sbi_ecall.o from ftrace) is simple and
-applicable to any kernel version with this file.
+**Potential concern**: SMU v14 code is relatively new (2024+), so very
+old stable trees may not have this code path. However, if the code
+exists in the stable tree, the fix applies cleanly.
 
-## STABLE KERNEL RULES ASSESSMENT
+### RISK VS BENEFIT ASSESSMENT
 
-| Criterion | Assessment |
-|-----------|------------|
-| Obviously correct | ✅ Yes - simple Makefile change to exclude a file
-from tracing |
-| Fixes real bug | ✅ Yes - fixes a deadlock |
-| Important issue | ✅ Yes - deadlock = system hang |
-| Small and contained | ✅ Yes - 1 file, Makefile only |
-| No new features | ✅ Yes - restricts functionality, doesn't add any |
-| Tested | ✅ Merged via maintainer tree |
+**Benefits:**
+- Prevents NMI panics and system hangs - critical stability fix
+- Protects against realistic race conditions during GPU reset
 
-## RISK VS BENEFIT
+**Risks:**
+- Minimal - uses existing flag mechanism
+- Small, contained changes with proper memory barriers
+- No architectural changes or new features
 
-- **Benefit**: Prevents a system deadlock on RISC-V platforms
-- **Risk**: Minimal - users cannot trace sbi_ecall functions (workaround
-  exists via trace events)
-- **Trade-off**: Clearly favorable - preventing deadlocks is worth
-  losing ability to trace a few functions
+### CONCLUSION
 
-## CONCERNS FOR BACKPORTING
+This commit fixes a critical stability bug (NMI panics, system hangs)
+that can occur during normal GPU error recovery scenarios. The fix is:
+- Small and surgical (just flag setting + memory barrier)
+- Uses existing infrastructure
+- Properly reviewed
+- Low regression risk
+- Already cherry-picked indicating stable intent
 
-The Makefile structure may differ slightly in older stable kernels. The
-patch may need minor adjustment but the concept is simple: ensure
-`CFLAGS_REMOVE_sbi_ecall.o = $(CC_FLAGS_FTRACE)` is set unconditionally
-when CONFIG_FTRACE is enabled.
-
-## CONCLUSION
-
-This is an excellent candidate for stable backporting:
-1. Fixes a real, easily-triggerable deadlock
-2. Small, surgical fix to build configuration
-3. Low risk - only prevents tracing of a few functions
-4. Self-contained with no dependencies on other patches
-5. Meets all stable kernel rules
+The commit meets all stable kernel criteria: it's obviously correct,
+fixes a real and serious bug, is small and contained, and introduces no
+new features.
 
 **YES**
 
- arch/riscv/kernel/Makefile | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c           | 3 +++
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c | 7 ++++++-
+ drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c | 9 +++++++--
+ 3 files changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/arch/riscv/kernel/Makefile b/arch/riscv/kernel/Makefile
-index f60fce69b7259..a01f6439d62b1 100644
---- a/arch/riscv/kernel/Makefile
-+++ b/arch/riscv/kernel/Makefile
-@@ -3,12 +3,6 @@
- # Makefile for the RISC-V Linux kernel
- #
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 0cba31ec025c0..e9a14a62e73fc 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -5731,6 +5731,9 @@ int amdgpu_device_mode1_reset(struct amdgpu_device *adev)
+ 	if (ret)
+ 		goto mode1_reset_failed;
  
--ifdef CONFIG_FTRACE
--CFLAGS_REMOVE_ftrace.o	= $(CC_FLAGS_FTRACE)
--CFLAGS_REMOVE_patch.o	= $(CC_FLAGS_FTRACE)
--CFLAGS_REMOVE_sbi.o	= $(CC_FLAGS_FTRACE)
--CFLAGS_REMOVE_return_address.o	= $(CC_FLAGS_FTRACE)
--endif
- CFLAGS_syscall_table.o	+= $(call cc-disable-warning, override-init)
- CFLAGS_compat_syscall_table.o += $(call cc-disable-warning, override-init)
- 
-@@ -24,7 +18,6 @@ CFLAGS_sbi_ecall.o := -mcmodel=medany
- ifdef CONFIG_FTRACE
- CFLAGS_REMOVE_alternative.o = $(CC_FLAGS_FTRACE)
- CFLAGS_REMOVE_cpufeature.o = $(CC_FLAGS_FTRACE)
--CFLAGS_REMOVE_sbi_ecall.o = $(CC_FLAGS_FTRACE)
- endif
- ifdef CONFIG_RELOCATABLE
- CFLAGS_alternative.o += -fno-pie
-@@ -43,6 +36,14 @@ CFLAGS_sbi_ecall.o += -D__NO_FORTIFY
- endif
- endif
- 
-+ifdef CONFIG_FTRACE
-+CFLAGS_REMOVE_ftrace.o	= $(CC_FLAGS_FTRACE)
-+CFLAGS_REMOVE_patch.o	= $(CC_FLAGS_FTRACE)
-+CFLAGS_REMOVE_sbi.o	= $(CC_FLAGS_FTRACE)
-+CFLAGS_REMOVE_return_address.o	= $(CC_FLAGS_FTRACE)
-+CFLAGS_REMOVE_sbi_ecall.o = $(CC_FLAGS_FTRACE)
-+endif
++	/* enable mmio access after mode 1 reset completed */
++	adev->no_hw_access = false;
 +
- always-$(KBUILD_BUILTIN) += vmlinux.lds
+ 	amdgpu_device_load_pci_state(adev->pdev);
+ 	ret = amdgpu_psp_wait_for_bootloader(adev);
+ 	if (ret)
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
+index c1062e5f03936..8d070a9ea2c10 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
+@@ -2922,8 +2922,13 @@ static int smu_v13_0_0_mode1_reset(struct smu_context *smu)
+ 		break;
+ 	}
  
- obj-y	+= head.o
+-	if (!ret)
++	if (!ret) {
++		/* disable mmio access while doing mode 1 reset*/
++		smu->adev->no_hw_access = true;
++		/* ensure no_hw_access is globally visible before any MMIO */
++		smp_mb();
+ 		msleep(SMU13_MODE1_RESET_WAIT_TIME_IN_MS);
++	}
+ 
+ 	return ret;
+ }
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
+index 086501cc5213b..2cb2d93f9989a 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
+@@ -2142,10 +2142,15 @@ static int smu_v14_0_2_mode1_reset(struct smu_context *smu)
+ 
+ 	ret = smu_cmn_send_debug_smc_msg(smu, DEBUGSMC_MSG_Mode1Reset);
+ 	if (!ret) {
+-		if (amdgpu_emu_mode == 1)
++		if (amdgpu_emu_mode == 1) {
+ 			msleep(50000);
+-		else
++		} else {
++			/* disable mmio access while doing mode 1 reset*/
++			smu->adev->no_hw_access = true;
++			/* ensure no_hw_access is globally visible before any MMIO */
++			smp_mb();
+ 			msleep(1000);
++		}
+ 	}
+ 
+ 	return ret;
 -- 
 2.51.0
 
