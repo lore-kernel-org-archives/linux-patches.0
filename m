@@ -1,54 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 998492DB79C;
-	Mon, 12 Jan 2026 14:59:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BBA12E0916;
+	Mon, 12 Jan 2026 14:59:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768229940; cv=none; b=bdBCoU4pihZOVXLNIIfjfTXClp9nPnCpKhPf6Y/3lulgZQQ4lNHk/SWzqUzZT+o92OuxkUviRAenosOGGsTWBY+jLOSAzV/5XRazypZ8Lsyu6wUtXgJqRlnkhGa5z7T8rXs8fa/tYauIVjECcdi+0T+WX8JfP3IRLSdoazgm6fs=
+	t=1768229943; cv=none; b=aI6JeiqsmiIGGoVsC4qFQwkAZfGWcs8jXXFym35NqlsTbGbhtubm9LY9tbHN2j2V152x74eCPGLXYF++1CJUrj+d3CU4iim0Wq6Gf3rBELkxO2yvL6cUTjy/2PrbOqbYctZZX+vy+/GSKuc8CviYWsUnWoyPk15ueuExGCFNGFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768229940; c=relaxed/simple;
-	bh=yDuxJLWzF6kgfc2MCgc5E0fSNJNKC2uW57/u00KiBKw=;
+	s=arc-20240116; t=1768229943; c=relaxed/simple;
+	bh=opg4tncLaI6otjgqlDIEK5fsztRbZKQsPuoibXoWSsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZhdrlBiNAePhdrtnS7W+NDQQKxuvykm3u8qo+SGEnX54I0g4nV9NtIL5LEgee5J++rKf4cEA0FyScZp8S7axeO67gKolUV2CLmeQoH4nMgwd7QydLsgvBZpmgMox0iaT9W9X8hGdXCJG0Tg/7OoMMT8sKQjbq9dLQG83B0nw9OY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SxobM8hO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dVG+pejZwmm0JiJ7J3QvQ+Y6PNapVUWxWWfwngUkGrdFkD1KvEtZKhdrTIBcpYStmPQb0ABKrGeP/SJUAYdETGi9uE1ajYp0hjiXPtOspqXr0mK+o+B2+FS2nAK+HfHw6QbVqqz1WqNfpSmsWtYnd/jzu2ryN/AmC59RgUBbkQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=smWTvNFc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SxobM8hO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 804B3C16AAE;
-	Mon, 12 Jan 2026 14:58:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="smWTvNFc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B139C2BC86;
+	Mon, 12 Jan 2026 14:59:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768229940;
-	bh=yDuxJLWzF6kgfc2MCgc5E0fSNJNKC2uW57/u00KiBKw=;
+	s=k20201202; t=1768229943;
+	bh=opg4tncLaI6otjgqlDIEK5fsztRbZKQsPuoibXoWSsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SxobM8hOus9COszhWDayy0ubPfKikSUKL0DN6khSE6AixrAIRagIxCGxg6LuJ9zyU
-	 WUGoKee/EmgAKj/yvhP7/+/k2yYQcCzacwa+WSEYwWDEh7EuSyY/XqMvk5GZOJLpsJ
-	 hz4HncunV09itW37g7Nv+AWnEwH54z6OXk+7Dz+ALXIdTL8qgN/qORrgu5G9P35KQD
-	 +4FfKWGg9Y4dsWk1bLdcQGd7Ov1rjvWxKcl+n7TLUbwIm1qaxH3tcANCwgmwNrUqaF
-	 tA45OOZyYbk9AbuBEhB4DBFJdmTlHEieYXAHntS/FhJ3w+INOxZrjlB7KuzbmUrjSf
-	 H0FjDXfaM5z5Q==
+	b=smWTvNFcuBYIv/R5nX8oy4ig5e0vHxiu+qhkeb2N8iD2XbBfh/lqXmNWqn6De9sBK
+	 YFj8KRiyf6XCEqZp4hj18O8b/juoqPQDmylBMoT9No2jzRngCei7BaxT1/Z/AHeQHc
+	 wQid2g25IoZt0EbD1ZbtKJPO2xPhSkbsm4fsWYiBXcdkx4lhWyFlkTI0i8QYBq0ABl
+	 r6NNhaZn56XE7rbpo4XA9FfQlApdanvk+1P/NrJMug8y79zgSAfw+YYfI+WyJabR49
+	 vKXGA3n1AXyCXP+9Rz7yPta5bYPcojF7C5Gr+rY6TrlCoBO3moUpD1ytiHjbXz86st
+	 yd763xFWNq3NA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Perry Yuan <perry.yuan@amd.com>,
-	Yifan Zhang <yifan1.zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Daniel Gomez <da.gomez@samsung.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>,
-	lijo.lazar@amd.com,
-	christian.koenig@amd.com,
-	Hawking.Zhang@amd.com,
-	mario.limonciello@amd.com,
-	cesun102@amd.com,
-	superm1@kernel.org,
-	kenneth.feng@amd.com,
-	kevinyang.wang@amd.com,
-	Yifan.Zha@amd.com,
-	siqueira@igalia.com,
-	ilya.zlobintsev@gmail.com,
-	tomasz.pakula.oficjalny@gmail.com,
-	Jesse.Zhang@amd.com
-Subject: [PATCH AUTOSEL 6.18-6.12] drm/amd/pm: Disable MMIO access during SMU Mode 1 reset
-Date: Mon, 12 Jan 2026 09:58:12 -0500
-Message-ID: <20260112145840.724774-11-sashal@kernel.org>
+	pablo@netfilter.org,
+	netfilter-devel@vger.kernel.org,
+	coreteam@netfilter.org
+Subject: [PATCH AUTOSEL 6.18-5.15] netfilter: replace -EEXIST with -EBUSY
+Date: Mon, 12 Jan 2026 09:58:14 -0500
+Message-ID: <20260112145840.724774-13-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260112145840.724774-1-sashal@kernel.org>
 References: <20260112145840.724774-1-sashal@kernel.org>
@@ -61,207 +50,200 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.5
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Perry Yuan <perry.yuan@amd.com>
+From: Daniel Gomez <da.gomez@samsung.com>
 
-[ Upstream commit 0de604d0357d0d22cbf03af1077d174b641707b6 ]
+[ Upstream commit 2bafeb8d2f380c3a81d98bd7b78b854b564f9cd4 ]
 
-During Mode 1 reset, the ASIC undergoes a reset cycle and becomes
-temporarily inaccessible via PCIe. Any attempt to access MMIO registers
-during this window (e.g., from interrupt handlers or other driver threads)
-can result in uncompleted PCIe transactions, leading to NMI panics or
-system hangs.
+The -EEXIST error code is reserved by the module loading infrastructure
+to indicate that a module is already loaded. When a module's init
+function returns -EEXIST, userspace tools like kmod interpret this as
+"module already loaded" and treat the operation as successful, returning
+0 to the user even though the module initialization actually failed.
 
-To prevent this, set the `no_hw_access` flag to true immediately after
-triggering the reset. This signals other driver components to skip
-register accesses while the device is offline.
+Replace -EEXIST with -EBUSY to ensure correct error reporting in the module
+initialization path.
 
-A memory barrier `smp_mb()` is added to ensure the flag update is
-globally visible to all cores before the driver enters the sleep/wait
-state.
+Affected modules:
+  * ebtable_broute ebtable_filter ebtable_nat arptable_filter
+  * ip6table_filter ip6table_mangle ip6table_nat ip6table_raw
+  * ip6table_security iptable_filter iptable_mangle iptable_nat
+  * iptable_raw iptable_security
 
-Signed-off-by: Perry Yuan <perry.yuan@amd.com>
-Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 7edb503fe4b6d67f47d8bb0dfafb8e699bb0f8a4)
+Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of Commit: drm/amd/pm: Disable MMIO access during SMU Mode 1
-reset
+## Commit Analysis: netfilter: replace -EEXIST with -EBUSY
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The commit message clearly describes a **serious stability problem**:
-- During Mode 1 reset, the ASIC becomes temporarily inaccessible via
-  PCIe
-- Any MMIO access during this window (from interrupt handlers or other
-  driver threads) results in **NMI panics or system hangs**
-- Keywords: "NMI panics", "system hangs" - these are critical stability
-  issues
+The commit explains a subtle but important bug in error reporting:
+- When module initialization returns `-EEXIST`, the kernel module
+  loading infrastructure (kmod) interprets this as "module already
+  loaded"
+- kmod then returns **success (0)** to userspace, even though the module
+  initialization actually **failed**
+- This creates a silent failure condition where users believe operations
+  succeeded when they didn't
 
-The commit has proper attribution:
-- Reviewed-by tag from Yifan Zhang
-- Signed-off by AMD maintainer Alex Deucher
-- Already cherry-picked, suggesting it's considered stable material
+Keywords: "error reporting", "failed" - this is a bug fix, not a
+feature.
 
 ### 2. CODE CHANGE ANALYSIS
 
-The fix is straightforward and surgical:
+The changes are trivial and identical across three files:
 
-**smu_v13_0_0_ppt.c and smu_v14_0_2_ppt.c:**
+**net/bridge/netfilter/ebtables.c** (`ebt_register_template()`):
 ```c
-/* disable mmio access while doing mode 1 reset*/
-smu->adev->no_hw_access = true;
-/* ensure no_hw_access is globally visible before any MMIO */
-smp_mb();
-msleep(...);
+- return -EEXIST;
++                       return -EBUSY;
 ```
-Sets the existing `no_hw_access` flag to block MMIO from other driver
-components during the reset sleep window. The `smp_mb()` ensures proper
-cross-CPU memory ordering.
 
-**amdgpu_device.c:**
+**net/netfilter/nf_log.c** (`nf_log_register()`):
 ```c
-/* enable mmio access after mode 1 reset completed */
-adev->no_hw_access = false;
+- ret = -EEXIST;
++                       ret = -EBUSY;
 ```
-Re-enables MMIO access after the reset completes successfully.
+
+**net/netfilter/x_tables.c** (`xt_register_template()`):
+```c
+- int ret = -EEXIST, af = table->af;
++       int ret = -EBUSY, af = table->af;
+```
+
+All three functions are registration routines called during module
+initialization for netfilter tables. When a duplicate name/type is
+detected, they were returning `-EEXIST`, which gets misinterpreted by
+kmod.
 
 ### 3. CLASSIFICATION
 
-This is a **bug fix** - not a new feature. It uses an existing mechanism
-(`no_hw_access` flag) that other driver components already check. The
-fix simply sets this flag at the correct time during Mode 1 reset.
+**Bug fix**: Corrects error code semantics. No new functionality, no
+behavior change beyond proper error reporting.
+
+The `-EBUSY` error code is semantically appropriate ("resource is
+busy/in use") and is not intercepted specially by the module loading
+infrastructure.
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-- **Lines changed**: ~15 lines of actual code across 3 files
-- **Complexity**: Very low - just boolean flag setting and memory
-  barriers
-- **Risk**: LOW - uses existing infrastructure, pattern is well-
-  understood
-- **Subsystem**: AMD GPU power management (SMU v13.0.0 and v14.0.2)
+- **Lines changed**: ~6 actual code changes
+- **Files affected**: 3 files in netfilter subsystem
+- **Complexity**: Trivial - only changing error code constants
+- **Risk**: Extremely low - no logic changes at all
 
-The changes are minimal and isolated to the Mode 1 reset path.
+The only conceivable concern would be if userspace depended on
+`-EEXIST`, but:
+1. These are internal kernel registration functions
+2. The duplicate condition should never occur in normal operation (note
+   the `WARN_ON_ONCE`)
+3. The current behavior is **wrong** - it reports success on failure
 
 ### 5. USER IMPACT
 
-- **Severity**: CRITICAL - NMI panics and system hangs affect system
-  stability
-- **Affected users**: AMD GPU users (Radeon RX 7000 series and newer)
-  when GPU undergoes error recovery
-- **Trigger likelihood**: Mode 1 resets happen during GPU error recovery
-  - interrupt handlers racing with reset is a realistic scenario
+**High impact bug**:
+- Affects all netfilter/iptables users when module initialization fails
+- Security implications: Users may believe their firewall tables loaded
+  successfully when they didn't
+- Affected modules include: `iptable_filter`, `iptable_nat`,
+  `ip6table_filter`, `ebtable_filter`, etc. - core firewall components
+
+This is exactly the kind of silent failure that can cause security
+issues in production.
 
 ### 6. STABILITY INDICATORS
 
-- Has `Reviewed-by` tag
-- Cherry-picked from mainline commit
-  7edb503fe4b6d67f47d8bb0dfafb8e699bb0f8a4
-- Comes from AMD engineers with domain expertise
+- Signed-off-by: Florian Westphal (netfilter maintainer) - indicates
+  proper review
+- The fix is self-evidently correct
+- Clear problem description in commit message
 
 ### 7. DEPENDENCY CHECK
 
-The `no_hw_access` field in `amdgpu_device` structure is existing
-infrastructure used throughout the AMDGPU driver. This commit doesn't
-introduce new fields or dependencies - it only sets an existing flag at
-appropriate times.
+- No dependencies on other commits
+- The affected code (netfilter table registration) exists in all stable
+  kernel trees
+- These are long-standing, mature functions
 
-**Potential concern**: SMU v14 code is relatively new (2024+), so very
-old stable trees may not have this code path. However, if the code
-exists in the stable tree, the fix applies cleanly.
+### Summary
 
-### RISK VS BENEFIT ASSESSMENT
+| Criterion | Assessment |
+|-----------|------------|
+| Fixes real bug? | ✅ Yes - silent failure condition |
+| Obviously correct? | ✅ Yes - trivial error code change |
+| Small and contained? | ✅ Yes - 6 lines across 3 files |
+| Security relevant? | ✅ Yes - firewall may silently fail to load |
+| Risk of regression? | ✅ Minimal - no logic changes |
+| Dependencies? | ✅ None - self-contained |
 
-**Benefits:**
-- Prevents NMI panics and system hangs - critical stability fix
-- Protects against realistic race conditions during GPU reset
-
-**Risks:**
-- Minimal - uses existing flag mechanism
-- Small, contained changes with proper memory barriers
-- No architectural changes or new features
-
-### CONCLUSION
-
-This commit fixes a critical stability bug (NMI panics, system hangs)
-that can occur during normal GPU error recovery scenarios. The fix is:
-- Small and surgical (just flag setting + memory barrier)
-- Uses existing infrastructure
-- Properly reviewed
-- Low regression risk
-- Already cherry-picked indicating stable intent
-
-The commit meets all stable kernel criteria: it's obviously correct,
-fixes a real and serious bug, is small and contained, and introduces no
-new features.
+This commit fixes incorrect error semantics that cause userspace tools
+to report success when module initialization fails. The fix is trivial
+(changing error codes), affects widely-used firewall code, has potential
+security implications (users may not know their firewall failed), and
+carries virtually zero regression risk. It meets all stable kernel
+criteria.
 
 **YES**
 
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c           | 3 +++
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c | 7 ++++++-
- drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c | 9 +++++++--
- 3 files changed, 16 insertions(+), 3 deletions(-)
+ net/bridge/netfilter/ebtables.c | 2 +-
+ net/netfilter/nf_log.c          | 4 ++--
+ net/netfilter/x_tables.c        | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index 0cba31ec025c0..e9a14a62e73fc 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -5731,6 +5731,9 @@ int amdgpu_device_mode1_reset(struct amdgpu_device *adev)
- 	if (ret)
- 		goto mode1_reset_failed;
- 
-+	/* enable mmio access after mode 1 reset completed */
-+	adev->no_hw_access = false;
-+
- 	amdgpu_device_load_pci_state(adev->pdev);
- 	ret = amdgpu_psp_wait_for_bootloader(adev);
- 	if (ret)
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-index c1062e5f03936..8d070a9ea2c10 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-@@ -2922,8 +2922,13 @@ static int smu_v13_0_0_mode1_reset(struct smu_context *smu)
- 		break;
+diff --git a/net/bridge/netfilter/ebtables.c b/net/bridge/netfilter/ebtables.c
+index 5697e3949a365..a04fc17575289 100644
+--- a/net/bridge/netfilter/ebtables.c
++++ b/net/bridge/netfilter/ebtables.c
+@@ -1299,7 +1299,7 @@ int ebt_register_template(const struct ebt_table *t, int (*table_init)(struct ne
+ 	list_for_each_entry(tmpl, &template_tables, list) {
+ 		if (WARN_ON_ONCE(strcmp(t->name, tmpl->name) == 0)) {
+ 			mutex_unlock(&ebt_mutex);
+-			return -EEXIST;
++			return -EBUSY;
+ 		}
  	}
  
--	if (!ret)
-+	if (!ret) {
-+		/* disable mmio access while doing mode 1 reset*/
-+		smu->adev->no_hw_access = true;
-+		/* ensure no_hw_access is globally visible before any MMIO */
-+		smp_mb();
- 		msleep(SMU13_MODE1_RESET_WAIT_TIME_IN_MS);
-+	}
+diff --git a/net/netfilter/nf_log.c b/net/netfilter/nf_log.c
+index 74cef8bf554c5..62cf6a30875e3 100644
+--- a/net/netfilter/nf_log.c
++++ b/net/netfilter/nf_log.c
+@@ -89,7 +89,7 @@ int nf_log_register(u_int8_t pf, struct nf_logger *logger)
+ 	if (pf == NFPROTO_UNSPEC) {
+ 		for (i = NFPROTO_UNSPEC; i < NFPROTO_NUMPROTO; i++) {
+ 			if (rcu_access_pointer(loggers[i][logger->type])) {
+-				ret = -EEXIST;
++				ret = -EBUSY;
+ 				goto unlock;
+ 			}
+ 		}
+@@ -97,7 +97,7 @@ int nf_log_register(u_int8_t pf, struct nf_logger *logger)
+ 			rcu_assign_pointer(loggers[i][logger->type], logger);
+ 	} else {
+ 		if (rcu_access_pointer(loggers[pf][logger->type])) {
+-			ret = -EEXIST;
++			ret = -EBUSY;
+ 			goto unlock;
+ 		}
+ 		rcu_assign_pointer(loggers[pf][logger->type], logger);
+diff --git a/net/netfilter/x_tables.c b/net/netfilter/x_tables.c
+index 90b7630421c44..48105ea3df152 100644
+--- a/net/netfilter/x_tables.c
++++ b/net/netfilter/x_tables.c
+@@ -1764,7 +1764,7 @@ EXPORT_SYMBOL_GPL(xt_hook_ops_alloc);
+ int xt_register_template(const struct xt_table *table,
+ 			 int (*table_init)(struct net *net))
+ {
+-	int ret = -EEXIST, af = table->af;
++	int ret = -EBUSY, af = table->af;
+ 	struct xt_template *t;
  
- 	return ret;
- }
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
-index 086501cc5213b..2cb2d93f9989a 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
-@@ -2142,10 +2142,15 @@ static int smu_v14_0_2_mode1_reset(struct smu_context *smu)
- 
- 	ret = smu_cmn_send_debug_smc_msg(smu, DEBUGSMC_MSG_Mode1Reset);
- 	if (!ret) {
--		if (amdgpu_emu_mode == 1)
-+		if (amdgpu_emu_mode == 1) {
- 			msleep(50000);
--		else
-+		} else {
-+			/* disable mmio access while doing mode 1 reset*/
-+			smu->adev->no_hw_access = true;
-+			/* ensure no_hw_access is globally visible before any MMIO */
-+			smp_mb();
- 			msleep(1000);
-+		}
- 	}
- 
- 	return ret;
+ 	mutex_lock(&xt[af].mutex);
 -- 
 2.51.0
 
