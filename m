@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3347C2DE718;
-	Mon, 12 Jan 2026 14:58:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB67D2DC350;
+	Mon, 12 Jan 2026 14:58:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768229929; cv=none; b=imlasuLHLL3IMubRTYL56Qp4pEF1LVS711qhMSqBvJqyjKIsV84QrHyErhja98I/vN4uJkId7UCFDK+ikvQBZiyGxa4QyLrLRryfZY1sM3pU1e2uv979wSZDRyuq3ABGYxf+Wxb4CSVmYi+CiXPzScLgFPT57XhtUe7I/Oeti7M=
+	t=1768229931; cv=none; b=NhtlSTYGtLfHuX5J6nQxjgk6AozzLHo56B8rxfSfQPkgj/8CR1tp3tPewrwndFT4FuEYRPVj0QhyF6YBe7MSYC84Irp18y/vJpMjA4CEokfsMI6c8PAdBBjXZN5eBDrJJ4+L3Nh37x4276CnARgZ32uL2ySxHNtmmoQQsdqXukQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768229929; c=relaxed/simple;
-	bh=7qap7nbNmEHsF9VY8Qu2q9YvJE/9zREfCYKeItIGQqc=;
+	s=arc-20240116; t=1768229931; c=relaxed/simple;
+	bh=bx4wf6AN3E67U2DceUgAupNZMhxJl5I2M+lQOV1EcYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cv6Te/Jy6anVfGeLT5X6Z9lWfEgnpowQopbAbds6oUPJ5u6ageJ2b4zQudrRnaUELjRC6sSxKDco9Nh3xXfrtHrOFHbDvUXT/q2KU6UbckIX7mD1SltEmFhhafup6Fy4JmKVYtkVcLUfKliJpqYafTMfnHctTTsivtNRExNW87k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r2W3EY9l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o3AV8111FwZJXRer2YiMSwhf1Xt3lwyg6DuKAILHQAoCp7DkwICqPL5JsvyvhrNtDAMKGtEJyxoFj6YPp/TyiwXKsDavlrih5x9wfiX76dNrOT1S5TsSHup6O94QpLQit5J+vfIUOJ62x9RTqKNV9tW3FkDq9Mba8H84QSrPUqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aEGs5VTc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r2W3EY9l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D2C4C19423;
-	Mon, 12 Jan 2026 14:58:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aEGs5VTc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC53C19422;
+	Mon, 12 Jan 2026 14:58:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768229929;
-	bh=7qap7nbNmEHsF9VY8Qu2q9YvJE/9zREfCYKeItIGQqc=;
+	s=k20201202; t=1768229930;
+	bh=bx4wf6AN3E67U2DceUgAupNZMhxJl5I2M+lQOV1EcYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r2W3EY9l//h1IjZOGsgdOyr5WrIFih4E9BMETGnG0qaVbYnON8xsNT6sgeMkneunC
-	 2aCt8V8eBc5x9w4DNJPOsGOyNrI3aK26AI1kH2GFjZL+ApkuDlbXTSBJaH+yMHdkxq
-	 sStHk1OR8rvDFZifa6SU0nKUd0pPEVDjZFYeADc8add8QtrPznq6FhtgafuytZk0lc
-	 g4Du+grLJS6RS3aM00hy3U1XnoFzrKmNVcMeDLh55TFuQmbpc79775qc+WN2E9eNPx
-	 T6umUzquAHUMfl6Witb/yL7keuy3Ges64U9BKlEZzikOsiHtqSPNkMC2E1OV8Fylz8
-	 WsqywTgk7PhWw==
+	b=aEGs5VTcjvoKMV4Og9DAK75hlV3WtdcMNewcllUDK9UBr9U0x47Ent49pp4OVJDBE
+	 ViVVrXWExXqhblVmz1sirB9/6GGetnWcFtUocgF2w3OFbMAMdGt9P66eMBvxEPLIUw
+	 XU05l78QVrYEGPPLWeJ+hI3E9WxTgDxLr/jgC6Iwu3OKuCYI5uGDO2hBATwkEVKBJK
+	 iTaoPSD1oF11rYZYi7S3m1JAWm4nh+MN47toqP4kZ4g/Y/TuNavZ4p4OZDW/e8ZOyF
+	 WyKy4gmTOKFCJ6JVjjScsZofbjnqARltUn06Gh+FyBNl9UVCY+LQ/mhD0mP2rqZZGw
+	 Gbft9iyKgYKGA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chris Chiu <chris.chiu@canonical.com>,
+Cc: Zhang Lixu <lixu.zhang@intel.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
 	jikos@kernel.org,
-	linux-input@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] HID: quirks: Add another Chicony HP 5MP Cameras to hid_ignore_list
-Date: Mon, 12 Jan 2026 09:58:07 -0500
-Message-ID: <20260112145840.724774-6-sashal@kernel.org>
+	andriy.shevchenko@intel.com
+Subject: [PATCH AUTOSEL 6.18-6.1] HID: intel-ish-hid: Update ishtp bus match to support device ID table
+Date: Mon, 12 Jan 2026 09:58:08 -0500
+Message-ID: <20260112145840.724774-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260112145840.724774-1-sashal@kernel.org>
 References: <20260112145840.724774-1-sashal@kernel.org>
@@ -49,155 +50,173 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.5
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chris Chiu <chris.chiu@canonical.com>
+From: Zhang Lixu <lixu.zhang@intel.com>
 
-[ Upstream commit c06bc3557542307b9658fbd43cc946a14250347b ]
+[ Upstream commit daeed86b686855adda79f13729e0c9b0530990be ]
 
-Another Chicony Electronics HP 5MP Camera with USB ID 04F2:B882
-reports a HID sensor interface that is not actually implemented.
+The ishtp_cl_bus_match() function previously only checked the first entry
+in the driver's device ID table. Update it to iterate over the entire
+table, allowing proper matching for drivers with multiple supported
+protocol GUIDs.
 
-Add the device to the HID ignore list so the bogus sensor is never
-exposed to userspace. Then the system won't hang when runtime PM
-tries to wake the unresponsive device.
-
-Signed-off-by: Chris Chiu <chris.chiu@canonical.com>
+Signed-off-by: Zhang Lixu <lixu.zhang@intel.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Commit Analysis: HID Quirks for Chicony HP 5MP Camera
+## Analysis of Commit: HID: intel-ish-hid: Update ishtp bus match to
+support device ID table
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The commit message is clear and explains:
-- A specific Chicony HP 5MP Camera (USB ID 04F2:B882) reports a HID
-  sensor interface that **is not actually implemented**
-- Without this fix, **the system hangs** when runtime PM tries to wake
-  the unresponsive device
-- Solution: Add to `hid_ignore_list` so the bogus sensor is never
-  exposed to userspace
+The commit message clearly describes:
+- **The problem**: The `ishtp_cl_bus_match()` function only checked the
+  first entry (`id[0]`) in the driver's device ID table
+- **The fix**: Iterate over the entire ID table
+- **The purpose**: Allow proper matching for drivers with multiple
+  supported protocol GUIDs
 
-Key phrase: "the system won't hang" - this is a **system hang fix**.
+No "Fixes:" tag or "Reported-by:" tag is present (expected for commits
+under manual review).
 
 ### 2. CODE CHANGE ANALYSIS
 
-The change is minimal and surgical:
-
-**hid-ids.h:** Adds one new device ID define
+**Before (buggy code):**
 ```c
-#define USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA3    0xb882
+return(device->fw_client ? guid_equal(&driver->id[0].guid,
+       &device->fw_client->props.protocol_name) : 0);
 ```
+Only checks the **first entry** (`driver->id[0]`) in the device ID
+table.
 
-**hid-quirks.c:** Adds device to the ignore list
+**After (fixed code):**
 ```c
-{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY,
-USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA3) },
+if (client) {
+    for (id = driver->id; !guid_is_null(&id->guid); id++) {
+        if (guid_equal(&id->guid, &client->props.protocol_name))
+            return 1;
+    }
+}
+return 0;
 ```
+Properly iterates through **all entries** until finding a match or
+hitting the null GUID terminator.
 
-This follows an **already-established pattern** - there are already two
-similar entries:
-- `USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA` (0xb824)
-- `USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA2` (0xb82c)
+**Root cause**: Logic error - incomplete iteration through device ID
+table. This is objectively incorrect behavior for a bus match function.
+Standard Linux bus matching iterates through all device IDs in a
+driver's table.
+
+**Technical mechanism**: When a device with a protocol GUID that matches
+the 2nd, 3rd, or later entry in a driver's ID table is enumerated, the
+old code would fail to match, leaving the device without a driver.
 
 ### 3. CLASSIFICATION
 
-This falls into **two explicit exception categories** that are allowed
-in stable:
-
-1. **Device ID addition:** Adding a USB ID to an existing driver's quirk
-   list
-2. **Hardware quirk/workaround:** Fixing a broken device that falsely
-   advertises a non-functional HID sensor interface
+- **Bug fix**: Yes - this fixes fundamentally broken device matching
+  logic
+- **New feature**: No - it corrects existing functionality to work as
+  designed
+- **Exception category**: Not needed - it's a straightforward bug fix
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-| Metric | Assessment |
-|--------|------------|
-| Lines changed | 2 |
-| Files touched | 2 |
-| Complexity | Trivial - just adding ID to a list |
-| Risk level | **Extremely low** |
+- **Lines changed**: ~10 lines of actual code
+- **Files touched**: 1 (drivers/hid/intel-ish-hid/ishtp/bus.c)
+- **Complexity**: Low - simple loop structure following standard
+  patterns
+- **Subsystem**: Intel ISH (Integrated Sensor Hub) HID driver
+- **Risk**: Very low - if wrong, devices wouldn't match (no
+  crashes/corruption)
 
-The change only affects this specific USB device (04F2:B882). No logic
-changes, no control flow modifications. The `hid_ignore_list` mechanism
-is mature and proven.
+The change follows the standard Linux bus matching pattern used across
+the kernel (iterate until null terminator).
 
 ### 5. USER IMPACT
 
-- **Severity:** HIGH - Prevents **system hangs** on affected HP laptops
-- **Affected users:** Anyone with an HP laptop containing this specific
-  Chicony 5MP camera
-- **Real-world evidence:** The author is from Canonical (Ubuntu),
-  suggesting this was discovered through real user bug reports
+- **Affected users**: Intel ISH users with drivers supporting multiple
+  protocol GUIDs
+- **Severity**: Medium - affected devices simply wouldn't work (wouldn't
+  bind to their driver)
+- **Real bug**: Yes - the code was objectively wrong
 
 ### 6. STABILITY INDICATORS
 
-- Accepted by Benjamin Tissoires (HID maintainer)
-- Uses identical mechanism to existing, proven entries
-- Canonical developer submission suggests tested on real hardware
+- **Acked-by**: Srinivas Pandruvada (Intel ISH maintainer)
+- **Signed-off-by**: Benjamin Tissoires (HID subsystem maintainer)
+- Pattern follows well-established Linux driver matching conventions
 
 ### 7. DEPENDENCY CHECK
 
-**No dependencies.** The `hid_ignore_list` infrastructure exists in all
-stable kernel versions. This is a completely standalone device ID
-addition.
+- Self-contained, no dependencies on other commits
+- The `ishtp_cl_bus_match()` function exists in stable trees
+- No new APIs or infrastructure required
 
----
+### RISK VS BENEFIT TRADE-OFF
 
-## Conclusion
+**Benefits:**
+- Fixes obviously incorrect code in bus matching
+- Enables proper device/driver matching for drivers with multiple IDs
+- Small, surgical, low-risk change
+- Follows standard kernel patterns
 
-This commit is a **textbook example** of what should be backported to
-stable:
+**Risks:**
+- Minimal - only affects ISH device matching
+- Failure mode is "device doesn't match" not crash/corruption
 
-✅ **Fixes a real bug:** System hang during runtime PM suspend/resume
-✅ **Fixes an important issue:** System hangs are severe user-facing bugs
-✅ **Small and contained:** Only 2 lines, no logic changes
-✅ **Obviously correct:** Follows exact pattern of existing similar
-entries
-✅ **Hardware quirk exception:** Explicitly allowed by stable kernel
-rules
-✅ **No dependencies:** Standalone addition
-✅ **Zero risk:** Only affects one specific USB device ID
+**Concerns:**
+- No explicit bug report showing users hitting this
+- Could be seen as enabling new functionality if no drivers currently
+  use multiple IDs
 
-The bug is severe (system hang), the fix is trivial (add device to
-ignore list), and the mechanism is well-proven with existing similar
-entries. This is exactly what stable backports are for.
+### CONCLUSION
+
+This commit fixes objectively incorrect behavior in the ISHTP bus
+matching function. The old code only checking `id[0]` is clearly wrong
+for a device ID table that's designed to hold multiple entries. The fix
+is small, surgical, follows standard kernel patterns, and has low risk.
+Even without an explicit user report, fixing fundamentally broken
+matching logic is appropriate for stable trees. The change is acked by
+the Intel maintainer and the HID subsystem maintainer.
+
+The fix is self-contained, doesn't introduce new APIs, and corrects a
+logic error that would prevent devices from working if their GUID wasn't
+first in the table.
 
 **YES**
 
- drivers/hid/hid-ids.h    | 1 +
- drivers/hid/hid-quirks.c | 1 +
- 2 files changed, 2 insertions(+)
+ drivers/hid/intel-ish-hid/ishtp/bus.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index c4589075a5ed6..3a22129fb7075 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -317,6 +317,7 @@
- #define USB_DEVICE_ID_CHICONY_ACER_SWITCH12	0x1421
- #define USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA	0xb824
- #define USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA2	0xb82c
-+#define USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA3	0xb882
+diff --git a/drivers/hid/intel-ish-hid/ishtp/bus.c b/drivers/hid/intel-ish-hid/ishtp/bus.c
+index 93a0432e70581..8e9f5a28e62ec 100644
+--- a/drivers/hid/intel-ish-hid/ishtp/bus.c
++++ b/drivers/hid/intel-ish-hid/ishtp/bus.c
+@@ -240,9 +240,17 @@ static int ishtp_cl_bus_match(struct device *dev, const struct device_driver *dr
+ {
+ 	struct ishtp_cl_device *device = to_ishtp_cl_device(dev);
+ 	struct ishtp_cl_driver *driver = to_ishtp_cl_driver(drv);
++	struct ishtp_fw_client *client = device->fw_client;
++	const struct ishtp_device_id *id;
  
- #define USB_VENDOR_ID_CHUNGHWAT		0x2247
- #define USB_DEVICE_ID_CHUNGHWAT_MULTITOUCH	0x0001
-diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index c89a015686c07..3cf7971d49743 100644
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -769,6 +769,7 @@ static const struct hid_device_id hid_ignore_list[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_BERKSHIRE, USB_DEVICE_ID_BERKSHIRE_PCWD) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA2) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA3) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CIDC, 0x0103) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CYGNAL, USB_DEVICE_ID_CYGNAL_RADIO_SI470X) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CYGNAL, USB_DEVICE_ID_CYGNAL_RADIO_SI4713) },
+-	return(device->fw_client ? guid_equal(&driver->id[0].guid,
+-	       &device->fw_client->props.protocol_name) : 0);
++	if (client) {
++		for (id = driver->id; !guid_is_null(&id->guid); id++) {
++			if (guid_equal(&id->guid, &client->props.protocol_name))
++				return 1;
++		}
++	}
++
++	return 0;
+ }
+ 
+ /**
 -- 
 2.51.0
 
