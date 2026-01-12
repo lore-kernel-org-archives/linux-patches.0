@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C84AB2E265A;
-	Mon, 12 Jan 2026 14:59:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C08322E265A;
+	Mon, 12 Jan 2026 14:59:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768229948; cv=none; b=olaXPu05BPRYWFp1d78IaHwY1plWlgQFEqBsSxgMQwA+8vAbWHoIoj+8ky3Z/Fg2w40BPFDsL2Hy5xbNcCBB0CWNGiwJ5dtSYXvlMg9menNlqDlE7GMOqMGKZe5TYoHrs7tT5WPupTtFTWFfcSUNC4kc2DNRjDubr1pIsAUSJq8=
+	t=1768229949; cv=none; b=SDEKdVh1p+ZlpIAvSodeiAkQbpVUFuEHktWrjxU2nVOoumBkasrBlpFWUoQHegesyZShwrSohMM3cPqHXeMJHLWt2e12Vkn4VPPxZ3F3HBQH28dR5QIbT6flD6RtuwlVs3BBAPjPhkcJyU2Gz0XR3F641kqR47dzyoHEYH1J8gE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768229948; c=relaxed/simple;
-	bh=MvHTFuIbV3v7ViyPwDHswrpEdtUaZRkcU1bdSu0XMdQ=;
+	s=arc-20240116; t=1768229949; c=relaxed/simple;
+	bh=YLQwjPY7945bpXWCQeKlXHc04GePXtcbUxNXw7vn4TQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SAkT67hBq+GsNnIhkBgDMhXsfArla1Y+tE9i2iOm7M/xNbJVXH9YyThWiGNWy1RHGR+ozNIO3pAXp2r1U+tWM7JTIecGtN5h2LwAo+lk89fwo5p+dmALne2Sbm8iBPmDC4lUiNmURyH/WzXjoXV47tOQAB6ojoO3cZljlZTbSdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Eu7OYfZo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rBtpcNtypVd2AewDb256sv7BuOQ41hvv7g/zBjxgImxfss76/7OtcawmpGuD7gcMa+zYOG/LHVWrVJkRnfkb2rrXpsa5TkcLQMARg97u7dAu/v092UOTpuKLDK/oAHNgLY17SlQNXzx3DksDg67sIdQbCIKPb/lO9jIAp5wjO+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oeNR2b72; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Eu7OYfZo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D792C19422;
-	Mon, 12 Jan 2026 14:59:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oeNR2b72"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B77A2C16AAE;
+	Mon, 12 Jan 2026 14:59:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768229948;
-	bh=MvHTFuIbV3v7ViyPwDHswrpEdtUaZRkcU1bdSu0XMdQ=;
+	s=k20201202; t=1768229949;
+	bh=YLQwjPY7945bpXWCQeKlXHc04GePXtcbUxNXw7vn4TQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eu7OYfZoCUauno5bJvvaLV/lESboE1sJhHpFz9eFIE8q05NG0h2mf/DL4TH8TKFQh
-	 3sGjGBz/JniWHctTKiPLk4OtcAp2iVs5GTLGEcQ/f7pZLqGYwMCuQeen8fMplS27QG
-	 BNrjHejSpibU61bVr3ttXvlaJus32+ynd8a5tZQI5WL03wMQBMmEFPuqAn4544sxj6
-	 gH1eqH0pB2fPENUrdiDiLgZSWHJ0O4JvCo5NidQuDf1LaovQcxsMZ2YbmWHG8YJ+zC
-	 dlWjym/Vlv1YoYo6AAVj+QwfCfBsN1MBEzQYZCtoSgHAsoQIiLf6AAoMPBLf90id+Z
-	 O+vFpp9S+wnSA==
+	b=oeNR2b72QCik30PRaEi26f+EYqQVJKTKXTjf8PCUJvt9S1PSay33P7sLaJeJykjtW
+	 ohvclCUOTVS/qoQf9wT23sl3rfNB+il1Y3oCVCmL4P6Cvv6seeNnW+UOyUQzZ7XNke
+	 TwANCGU3tBJq9TTSpxuBBQD/yguk+o7gwO3Msy7eauYhh5rMspjCnFwPOkhSLQiTcy
+	 AXcCrWsdm/AjTW8ETAX9KU2O3wTvbT08qkTepj+4jsbKsjsBwguFZTtQWbkTijsYPm
+	 wOLbTh6Oqz1v/Jbx6v6MIPI60J338R7TN8OOrrIihXPsVf+dLFtBFRoXuojfXzB6Mn
+	 Ek/3NDSL+fujw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ruslan Krupitsa <krupitsarus@outlook.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Wupeng Ma <mawupeng1@huawei.com>,
+	mathieu.desnoyers@efficios.com,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>,
-	sbinding@opensource.cirrus.com,
-	kailang@realtek.com,
-	chris.chiu@canonical.com,
-	edip@medip.dev
-Subject: [PATCH AUTOSEL 6.18-5.10] ALSA: hda/realtek: add HP Laptop 15s-eq1xxx mute LED quirk
-Date: Mon, 12 Jan 2026 09:58:16 -0500
-Message-ID: <20260112145840.724774-15-sashal@kernel.org>
+	linux-kernel@vger.kernel.org,
+	linux-trace-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] ring-buffer: Avoid softlockup in ring_buffer_resize() during memory free
+Date: Mon, 12 Jan 2026 09:58:17 -0500
+Message-ID: <20260112145840.724774-16-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260112145840.724774-1-sashal@kernel.org>
 References: <20260112145840.724774-1-sashal@kernel.org>
@@ -53,145 +53,196 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.5
 Content-Transfer-Encoding: 8bit
 
-From: Ruslan Krupitsa <krupitsarus@outlook.com>
+From: Wupeng Ma <mawupeng1@huawei.com>
 
-[ Upstream commit 9ed7a28225af02b74f61e7880d460db49db83758 ]
+[ Upstream commit 6435ffd6c7fcba330dfa91c58dc30aed2df3d0bf ]
 
-HP Laptop 15s-eq1xxx with ALC236 codec does not enable the
-mute LED automatically. This patch adds a quirk entry for
-subsystem ID 0x8706 using the ALC236_FIXUP_HP_MUTE_LED_COEFBIT2
-fixup, enabling correct mute LED behavior.
+When user resize all trace ring buffer through file 'buffer_size_kb',
+then in ring_buffer_resize(), kernel allocates buffer pages for each
+cpu in a loop.
 
-Signed-off-by: Ruslan Krupitsa <krupitsarus@outlook.com>
-Link: https://patch.msgid.link/AS8P194MB112895B8EC2D87D53A876085BBBAA@AS8P194MB1128.EURP194.PROD.OUTLOOK.COM
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+If the kernel preemption model is PREEMPT_NONE and there are many cpus
+and there are many buffer pages to be freed, it may not give up cpu
+for a long time and finally cause a softlockup.
+
+To avoid it, call cond_resched() after each cpu buffer free as Commit
+f6bd2c92488c ("ring-buffer: Avoid softlockup in ring_buffer_resize()")
+does.
+
+Detailed call trace as follow:
+
+  rcu: INFO: rcu_sched self-detected stall on CPU
+  rcu: 	24-....: (14837 ticks this GP) idle=521c/1/0x4000000000000000 softirq=230597/230597 fqs=5329
+  rcu: 	(t=15004 jiffies g=26003221 q=211022 ncpus=96)
+  CPU: 24 UID: 0 PID: 11253 Comm: bash Kdump: loaded Tainted: G            EL      6.18.2+ #278 NONE
+  pc : arch_local_irq_restore+0x8/0x20
+   arch_local_irq_restore+0x8/0x20 (P)
+   free_frozen_page_commit+0x28c/0x3b0
+   __free_frozen_pages+0x1c0/0x678
+   ___free_pages+0xc0/0xe0
+   free_pages+0x3c/0x50
+   ring_buffer_resize.part.0+0x6a8/0x880
+   ring_buffer_resize+0x3c/0x58
+   __tracing_resize_ring_buffer.part.0+0x34/0xd8
+   tracing_resize_ring_buffer+0x8c/0xd0
+   tracing_entries_write+0x74/0xd8
+   vfs_write+0xcc/0x288
+   ksys_write+0x74/0x118
+   __arm64_sys_write+0x24/0x38
+
+Cc: <mathieu.desnoyers@efficios.com>
+Link: https://patch.msgid.link/20251228065008.2396573-1-mawupeng1@huawei.com
+Signed-off-by: Wupeng Ma <mawupeng1@huawei.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Commit Analysis: ALSA: hda/realtek: add HP Laptop 15s-eq1xxx mute LED
-quirk
+## Analysis of Commit: ring-buffer: Avoid softlockup in
+ring_buffer_resize() during memory free
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The commit adds a hardware quirk for the HP Laptop 15s-eq1xxx with
-ALC236 codec. The mute LED does not function correctly without this
-quirk entry. The fix uses an existing fixup
-(`ALC236_FIXUP_HP_MUTE_LED_COEFBIT2`) that is already applied to several
-other HP laptops.
+The commit message clearly describes:
+- **Problem**: When resizing trace ring buffers on systems with many
+  CPUs and PREEMPT_NONE, the kernel can hold the CPU for too long while
+  freeing buffer pages, causing a softlockup (RCU stall)
+- **Evidence**: Includes a complete stack trace showing the issue on a
+  96-CPU system with kernel 6.18.2+
+- **Solution**: Add `cond_resched()` after each buffer page free,
+  matching what was done in commit f6bd2c92488c for a different code
+  path
+- **Validation**: Acked by Masami Hiramatsu and signed off by Steven
+  Rostedt (the ring buffer subsystem maintainer)
 
-Keywords: "quirk" - indicates hardware-specific workaround.
+Keywords present: "softlockup", "self-detected stall", "rcu_sched" - all
+indicate a real, user-visible bug.
 
 ### 2. CODE CHANGE ANALYSIS
 
-The change is a **single line addition** to the quirk table:
+The change is minimal and surgical:
 
 ```c
-SND_PCI_QUIRK(0x103c, 0x8706, "HP Laptop 15s-eq1xxx",
-ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+list_for_each_entry_safe(bpage, tmp, &cpu_buffer->new_pages, list) {
+    list_del_init(&bpage->list);
+    free_buffer_page(bpage);
++
++   cond_resched();
+}
 ```
 
-This adds:
-- **Vendor ID**: 0x103c (HP)
-- **Subsystem ID**: 0x8706 (specific to this laptop model)
-- **Fixup**: `ALC236_FIXUP_HP_MUTE_LED_COEFBIT2` - an existing, well-
-  tested fixup
+This is in the `out_err:` error handling path of `ring_buffer_resize()`.
+The loop iterates over all buffer pages to free them on error cleanup.
+On systems with many CPUs and many pages, this loop can run for a very
+long time without yielding.
 
-Looking at the surrounding code, the same fixup is already used by
-multiple other HP laptops:
-- HP 15-db0403ng (0x84ae)
-- HP Laptop 15-da3001TU (0x86c1)
-- HP Laptop 14-fq0xxx (0x87b7)
+**Technical mechanism**:
+- `cond_resched()` checks if the scheduler needs to preempt the current
+  task
+- On PREEMPT_NONE kernels, voluntary preemption points like this are the
+  only way to yield
+- This is a standard, well-established kernel pattern for long-running
+  loops
 
 ### 3. CLASSIFICATION
 
-This is a **hardware quirk/workaround** - one of the explicit exception
-categories that ARE allowed in stable trees:
-- It's a hardware-specific quirk for a device that doesn't work
-  correctly without it
-- The fixup mechanism already exists and is proven on other devices
-- This is NOT a new feature - it's enabling existing functionality for a
-  specific PCI subsystem ID
+- **Bug type**: Softlockup fix - prevents RCU stalls and potential
+  watchdog timeouts
+- **Not a feature**: Does not add new functionality, just prevents a
+  hang
+- **Not an exception category**: Standard bug fix, not device
+  ID/quirk/DT
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-| Factor | Assessment |
+| Metric | Assessment |
 |--------|------------|
-| Lines changed | 1 |
+| Lines changed | 2 (1 blank + 1 cond_resched) |
 | Files touched | 1 |
-| Complexity | Trivial - table entry only |
-| Risk | **Extremely low** |
+| Complexity | Trivial |
+| Risk | Very Low |
 
-The change:
-- Only affects systems with the exact subsystem ID 0x8706
-- Uses a pre-existing, battle-tested fixup
-- Cannot break any other systems
-- Follows an established, well-understood pattern
+**Risk is minimal because**:
+- `cond_resched()` is designed to be safe to call anywhere
+- It's a no-op when no rescheduling is needed
+- The same pattern already exists in this function (per the referenced
+  commit)
+- Only affects the error path during cleanup
 
 ### 5. USER IMPACT
 
-**Affected users**: Owners of HP Laptop 15s-eq1xxx
-**Bug severity**: User-visible functionality issue (mute LED doesn't
-work)
-**Impact without fix**: The mute LED doesn't indicate mute state, which
-is a usability problem
+- **Affected users**: Systems with many CPUs, PREEMPT_NONE
+  configuration, using tracing
+- **Severity**: High - softlockups can trigger watchdog resets and
+  system hangs
+- **Trigger**: User-initiated action (writing to buffer_size_kb file)
+- **Real-world**: Stack trace demonstrates this was hit on production
+  hardware (96-CPU ARM64 system)
 
-While not a crash or data corruption issue, non-working hardware
-indicators are legitimate bugs that affect real users.
+This is particularly relevant for enterprise servers and embedded
+systems which commonly use PREEMPT_NONE for performance.
 
 ### 6. STABILITY INDICATORS
 
-- Signed off by Takashi Iwai (ALSA subsystem maintainer)
-- Uses an identical pattern to dozens of existing quirk entries
-- The `ALC236_FIXUP_HP_MUTE_LED_COEFBIT2` fixup has been in the kernel
-  and used by other devices for years
+- **Reviewed by maintainer**: Steven Rostedt (ring buffer maintainer)
+  signed off
+- **Acked by**: Masami Hiramatsu (Google) - experienced kernel tracing
+  developer
+- **Follows established pattern**: References commit f6bd2c92488c which
+  applied the same fix elsewhere
 
 ### 7. DEPENDENCY CHECK
 
-- **No dependencies** on other commits
-- The quirk table (`alc269_fixup_tbl[]`) exists in all stable kernels
-- The `ALC236_FIXUP_HP_MUTE_LED_COEFBIT2` fixup enum value exists in
-  stable kernels
-- This patch will apply cleanly to any stable tree that has this file
+- The `ring_buffer_resize()` function and its error path have existed
+  for years
+- `cond_resched()` is a fundamental kernel API available in all stable
+  trees
+- No dependencies on new code or recent changes
+- The fix is self-contained and independent
 
 ### CONCLUSION
 
-This commit is a textbook example of what should be backported to
-stable:
+This commit is an **ideal stable backport candidate**:
 
-1. **Hardware quirk addition** - explicitly allowed under stable rules
-2. **Single line change** - minimal code, minimal risk
-3. **Uses existing infrastructure** - no new code paths, just a table
-   entry
-4. **Precisely scoped** - only affects one specific hardware model
-   (subsystem ID match)
-5. **Cannot cause regressions** - doesn't touch any code paths for other
-   devices
-6. **Fixes real user-visible issue** - mute LED not working
-7. **Well-established pattern** - this exact type of change is routinely
-   backported
+1. **Obviously correct**: Adding `cond_resched()` to prevent softlockups
+   is a textbook kernel pattern
+2. **Fixes a real bug**: Softlockups are serious user-visible issues
+   that can hang systems
+3. **Small and contained**: 2-line change, single file, trivial
+   complexity
+4. **No new features**: Pure bug fix with no behavioral changes
+5. **No API changes**: No userspace-visible modifications
+6. **Very low risk**: `cond_resched()` is designed to be safe; worst
+   case is slightly increased latency
+7. **Maintainer approved**: Signed off by the subsystem maintainer
+8. **Affects all stable trees**: The vulnerable code path exists in all
+   supported stable kernels
 
-The fix is small, surgical, and meets all stable kernel criteria for
-hardware quirk additions.
+The fix follows the exact pattern already applied in the same function
+by a previous commit, demonstrating it's a proven solution. The risk-to-
+benefit ratio is excellent: near-zero risk for fixing a potentially
+system-hanging bug.
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/trace/ring_buffer.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 705d6acc204cf..16c2314839c38 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -6427,6 +6427,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x863e, "HP Spectre x360 15-df1xxx", ALC285_FIXUP_HP_SPECTRE_X360_DF1),
- 	SND_PCI_QUIRK(0x103c, 0x86e8, "HP Spectre x360 15-eb0xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
- 	SND_PCI_QUIRK(0x103c, 0x86f9, "HP Spectre x360 13-aw0xxx", ALC285_FIXUP_HP_SPECTRE_X360_MUTE_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8706, "HP Laptop 15s-eq1xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x8716, "HP Elite Dragonfly G2 Notebook PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
- 	SND_PCI_QUIRK(0x103c, 0x8720, "HP EliteBook x360 1040 G8 Notebook PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
- 	SND_PCI_QUIRK(0x103c, 0x8724, "HP EliteBook 850 G7", ALC285_FIXUP_HP_GPIO_LED),
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index afcd3747264d2..3ba08fc1b7d05 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -3121,6 +3121,8 @@ int ring_buffer_resize(struct trace_buffer *buffer, unsigned long size,
+ 					list) {
+ 			list_del_init(&bpage->list);
+ 			free_buffer_page(bpage);
++
++			cond_resched();
+ 		}
+ 	}
+  out_err_unlock:
 -- 
 2.51.0
 
