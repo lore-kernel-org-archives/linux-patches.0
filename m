@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823692DEA75;
-	Mon, 12 Jan 2026 14:59:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C84AB2E265A;
+	Mon, 12 Jan 2026 14:59:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768229945; cv=none; b=JmjcoijLXbbRT/weEZBw/8R8FLBOBs3et2AUgMSbOraOkJ43iS6fXN5RiUKBtpLYsZcFNwvyQB0IlTp2oOTu9U2SlciFclsZt1PymUsI9SfirLMQaJA8GweE3APLf27ix5ewlRWFfaO/p0pdZQuNS26AFctCDnT/hAL2ufxs+nA=
+	t=1768229948; cv=none; b=olaXPu05BPRYWFp1d78IaHwY1plWlgQFEqBsSxgMQwA+8vAbWHoIoj+8ky3Z/Fg2w40BPFDsL2Hy5xbNcCBB0CWNGiwJ5dtSYXvlMg9menNlqDlE7GMOqMGKZe5TYoHrs7tT5WPupTtFTWFfcSUNC4kc2DNRjDubr1pIsAUSJq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768229945; c=relaxed/simple;
-	bh=SA/M8GWVAADSFvD6UBoCN3tcb14Prw7mwfbgA1gGdbQ=;
+	s=arc-20240116; t=1768229948; c=relaxed/simple;
+	bh=MvHTFuIbV3v7ViyPwDHswrpEdtUaZRkcU1bdSu0XMdQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BiFAvhcSZXod2r0DL3kPTabkNHGT6KJojd6We5sCEpv+9YzHb2+8g9rHlYBkyRjl9GqLRcA7J++QriuCaEpNBF/CRjwAo4hgJfhDZIWowEkbLEFWkRWWivPI6JvVcp4UPF4JCSVX+Tbo+b9ienvEKu5D4aR0esA2t8YKJQz6LNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=edKPUyP/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SAkT67hBq+GsNnIhkBgDMhXsfArla1Y+tE9i2iOm7M/xNbJVXH9YyThWiGNWy1RHGR+ozNIO3pAXp2r1U+tWM7JTIecGtN5h2LwAo+lk89fwo5p+dmALne2Sbm8iBPmDC4lUiNmURyH/WzXjoXV47tOQAB6ojoO3cZljlZTbSdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Eu7OYfZo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="edKPUyP/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBA31C16AAE;
-	Mon, 12 Jan 2026 14:59:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Eu7OYfZo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D792C19422;
+	Mon, 12 Jan 2026 14:59:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768229944;
-	bh=SA/M8GWVAADSFvD6UBoCN3tcb14Prw7mwfbgA1gGdbQ=;
+	s=k20201202; t=1768229948;
+	bh=MvHTFuIbV3v7ViyPwDHswrpEdtUaZRkcU1bdSu0XMdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=edKPUyP/00h/W8PxH6ojlxeEhIZPlh7Qoh6G9P5TtoNbOx39uvJYjKntnLXQiIsSu
-	 bUT38baC4KgUQc82bzwU+MOdIOdc7yfxToISle1QDHzVR9rQLkEdqxlz+nnYLX1fqg
-	 hJ7M6knzvfAYjVioYhqDhGBWDgVgo6PBTS7y6RAXRn/EemmnNIVIz0SeHdOUT/+mPo
-	 1UzbUP5KkfrrZBrVx5zuyl27BOn8MuDPAtAwn1FmFG8Ywi/TGIdVaxcjnDTSHbg8Ij
-	 ogphNTunmYQisT1KfZvSM3y+wqVRirnlqOZvvK04iaAtqIKHQg2B24byn8tW47hgBg
-	 RqAyugmx7qa8A==
+	b=Eu7OYfZoCUauno5bJvvaLV/lESboE1sJhHpFz9eFIE8q05NG0h2mf/DL4TH8TKFQh
+	 3sGjGBz/JniWHctTKiPLk4OtcAp2iVs5GTLGEcQ/f7pZLqGYwMCuQeen8fMplS27QG
+	 BNrjHejSpibU61bVr3ttXvlaJus32+ynd8a5tZQI5WL03wMQBMmEFPuqAn4544sxj6
+	 gH1eqH0pB2fPENUrdiDiLgZSWHJ0O4JvCo5NidQuDf1LaovQcxsMZ2YbmWHG8YJ+zC
+	 dlWjym/Vlv1YoYo6AAVj+QwfCfBsN1MBEzQYZCtoSgHAsoQIiLf6AAoMPBLf90id+Z
+	 O+vFpp9S+wnSA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+Cc: Ruslan Krupitsa <krupitsarus@outlook.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] PCI: qcom: Remove ASPM L0s support for MSM8996 SoC
-Date: Mon, 12 Jan 2026 09:58:15 -0500
-Message-ID: <20260112145840.724774-14-sashal@kernel.org>
+	sbinding@opensource.cirrus.com,
+	kailang@realtek.com,
+	chris.chiu@canonical.com,
+	edip@medip.dev
+Subject: [PATCH AUTOSEL 6.18-5.10] ALSA: hda/realtek: add HP Laptop 15s-eq1xxx mute LED quirk
+Date: Mon, 12 Jan 2026 09:58:16 -0500
+Message-ID: <20260112145840.724774-15-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260112145840.724774-1-sashal@kernel.org>
 References: <20260112145840.724774-1-sashal@kernel.org>
@@ -54,153 +53,145 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.5
 Content-Transfer-Encoding: 8bit
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Ruslan Krupitsa <krupitsarus@outlook.com>
 
-[ Upstream commit 0cc13256b60510936c34098ee7b929098eed823b ]
+[ Upstream commit 9ed7a28225af02b74f61e7880d460db49db83758 ]
 
-Though I couldn't confirm ASPM L0s support with the Qcom hardware team, a
-bug report from Dmitry suggests that L0s is broken on this legacy SoC.
-Hence, remove L0s support from the Root Port Link Capabilities in this SoC.
+HP Laptop 15s-eq1xxx with ALC236 codec does not enable the
+mute LED automatically. This patch adds a quirk entry for
+subsystem ID 0x8706 using the ALC236_FIXUP_HP_MUTE_LED_COEFBIT2
+fixup, enabling correct mute LED behavior.
 
-Since qcom_pcie_clear_aspm_l0s() is now used by more than one SoC config,
-call it from qcom_pcie_host_init() instead.
-
-Reported-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Closes: https://lore.kernel.org/linux-pci/4cp5pzmlkkht2ni7us6p3edidnk25l45xrp6w3fxguqcvhq2id@wjqqrdpkypkf
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251126081718.8239-1-mani@kernel.org
+Signed-off-by: Ruslan Krupitsa <krupitsarus@outlook.com>
+Link: https://patch.msgid.link/AS8P194MB112895B8EC2D87D53A876085BBBAA@AS8P194MB1128.EURP194.PROD.OUTLOOK.COM
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Looking at this commit, I need to analyze whether it's appropriate for
-stable backporting.
+## Commit Analysis: ALSA: hda/realtek: add HP Laptop 15s-eq1xxx mute LED
+quirk
 
-## Commit Analysis
+### 1. COMMIT MESSAGE ANALYSIS
 
-### What the Commit Does
-This commit fixes broken ASPM L0s (Active State Power Management L0s)
-support on the MSM8996 SoC. The key changes are:
+The commit adds a hardware quirk for the HP Laptop 15s-eq1xxx with
+ALC236 codec. The mute LED does not function correctly without this
+quirk entry. The fix uses an existing fixup
+(`ALC236_FIXUP_HP_MUTE_LED_COEFBIT2`) that is already applied to several
+other HP laptops.
 
-1. **Adds `.no_l0s = true`** to the `cfg_2_3_2` configuration struct
-   (MSM8996's config)
-2. **Moves `qcom_pcie_clear_aspm_l0s()` call** from
-   `qcom_pcie_post_init_2_7_0()` to `qcom_pcie_host_init()` so it
-   applies to all SoCs that need it (based on their config flags)
-3. **Removes the L0s clearing** from the 2_7_0 post_init since it's now
-   centralized
+Keywords: "quirk" - indicates hardware-specific workaround.
 
-### Bug Being Fixed
-According to the commit message and linked bug report, ASPM L0s is
-broken on the MSM8996 SoC. When L0s is enabled on broken hardware, users
-can experience:
-- PCIe link instability
-- Power management failures
-- Potential system hangs or communication failures
+### 2. CODE CHANGE ANALYSIS
 
-### Classification: Hardware Quirk/Workaround
-This is clearly a **hardware quirk** - disabling a broken power
-management feature on specific hardware. This falls under the explicit
-exception category for stable backporting, similar to USB quirks or PCI
-quirks for broken devices.
+The change is a **single line addition** to the quirk table:
 
-### Code Change Assessment
 ```c
-// Addition to MSM8996 config - trivial one-liner:
-static const struct qcom_pcie_cfg cfg_2_3_2 = {
-        .ops = &ops_2_3_2,
-+       .no_l0s = true,
-};
-
-// Centralized call in host_init for all SoCs needing it:
-+       qcom_pcie_clear_aspm_l0s(pcie->pci);
+SND_PCI_QUIRK(0x103c, 0x8706, "HP Laptop 15s-eq1xxx",
+ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
 ```
 
-The actual fix is small and surgical. The refactoring (moving the
-function call) is minimal and just enables the fix to work for multiple
-SoCs that need it.
+This adds:
+- **Vendor ID**: 0x103c (HP)
+- **Subsystem ID**: 0x8706 (specific to this laptop model)
+- **Fixup**: `ALC236_FIXUP_HP_MUTE_LED_COEFBIT2` - an existing, well-
+  tested fixup
 
-### Stability Indicators
-- **Tested-by: Dmitry Baryshkov** - The reporter confirmed the fix works
-- **Reviewed-by: Konrad Dybcio** - Proper review by another Qualcomm
-  developer
-- **Signed-off by Bjorn Helgaas** - PCI subsystem maintainer approved
+Looking at the surrounding code, the same fixup is already used by
+multiple other HP laptops:
+- HP 15-db0403ng (0x84ae)
+- HP Laptop 15-da3001TU (0x86c1)
+- HP Laptop 14-fq0xxx (0x87b7)
 
-### Risk Assessment
-- **Low risk**: Disabling a broken feature is safer than leaving it
-  enabled
-- **Targeted scope**: Only affects MSM8996 SoC (legacy Qualcomm
-  platform)
-- **Well-tested**: Has explicit test confirmation from the bug reporter
+### 3. CLASSIFICATION
 
-### Dependency Concerns
-This commit assumes:
-1. The `no_l0s` field exists in `struct qcom_pcie_cfg`
-2. The `qcom_pcie_clear_aspm_l0s()` function exists
+This is a **hardware quirk/workaround** - one of the explicit exception
+categories that ARE allowed in stable trees:
+- It's a hardware-specific quirk for a device that doesn't work
+  correctly without it
+- The fixup mechanism already exists and is proven on other devices
+- This is NOT a new feature - it's enabling existing functionality for a
+  specific PCI subsystem ID
 
-Looking at the diff, the commit adds to an existing `no_l0s` field (it
-wouldn't compile otherwise). The function was already being called in
-the 2_7_0 init path, so it exists. The infrastructure appears to already
-be in place.
+### 4. SCOPE AND RISK ASSESSMENT
 
-### User Impact
-Users with MSM8996 devices (mobile/embedded Qualcomm platform)
-experiencing PCIe stability issues due to broken L0s will benefit from
-this fix. This is a real-world hardware problem affecting actual users.
+| Factor | Assessment |
+|--------|------------|
+| Lines changed | 1 |
+| Files touched | 1 |
+| Complexity | Trivial - table entry only |
+| Risk | **Extremely low** |
 
-## Conclusion
+The change:
+- Only affects systems with the exact subsystem ID 0x8706
+- Uses a pre-existing, battle-tested fixup
+- Cannot break any other systems
+- Follows an established, well-understood pattern
 
-This commit is a **hardware quirk/workaround** which is explicitly
-allowed in stable trees. It:
-- Fixes a real bug (broken ASPM L0s causing hardware issues)
-- Is small and contained
-- Has been properly tested and reviewed
-- Affects only the specific broken hardware (MSM8996)
-- Falls under the device quirk exception category
+### 5. USER IMPACT
 
-The refactoring aspect (moving the function call) is minimal and merely
-enables the fix to work cleanly. The actual fix is just adding `no_l0s =
-true` to the MSM8996 configuration.
+**Affected users**: Owners of HP Laptop 15s-eq1xxx
+**Bug severity**: User-visible functionality issue (mute LED doesn't
+work)
+**Impact without fix**: The mute LED doesn't indicate mute state, which
+is a usability problem
+
+While not a crash or data corruption issue, non-working hardware
+indicators are legitimate bugs that affect real users.
+
+### 6. STABILITY INDICATORS
+
+- Signed off by Takashi Iwai (ALSA subsystem maintainer)
+- Uses an identical pattern to dozens of existing quirk entries
+- The `ALC236_FIXUP_HP_MUTE_LED_COEFBIT2` fixup has been in the kernel
+  and used by other devices for years
+
+### 7. DEPENDENCY CHECK
+
+- **No dependencies** on other commits
+- The quirk table (`alc269_fixup_tbl[]`) exists in all stable kernels
+- The `ALC236_FIXUP_HP_MUTE_LED_COEFBIT2` fixup enum value exists in
+  stable kernels
+- This patch will apply cleanly to any stable tree that has this file
+
+### CONCLUSION
+
+This commit is a textbook example of what should be backported to
+stable:
+
+1. **Hardware quirk addition** - explicitly allowed under stable rules
+2. **Single line change** - minimal code, minimal risk
+3. **Uses existing infrastructure** - no new code paths, just a table
+   entry
+4. **Precisely scoped** - only affects one specific hardware model
+   (subsystem ID match)
+5. **Cannot cause regressions** - doesn't touch any code paths for other
+   devices
+6. **Fixes real user-visible issue** - mute LED not working
+7. **Well-established pattern** - this exact type of change is routinely
+   backported
+
+The fix is small, surgical, and meets all stable kernel criteria for
+hardware quirk additions.
 
 **YES**
 
- drivers/pci/controller/dwc/pcie-qcom.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index c48a20602d7fa..6e820595ba32a 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1033,7 +1033,6 @@ static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
- 		writel(WR_NO_SNOOP_OVERRIDE_EN | RD_NO_SNOOP_OVERRIDE_EN,
- 				pcie->parf + PARF_NO_SNOOP_OVERRIDE);
- 
--	qcom_pcie_clear_aspm_l0s(pcie->pci);
- 	qcom_pcie_clear_hpc(pcie->pci);
- 
- 	return 0;
-@@ -1302,6 +1301,8 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
- 			goto err_disable_phy;
- 	}
- 
-+	qcom_pcie_clear_aspm_l0s(pcie->pci);
-+
- 	qcom_ep_reset_deassert(pcie);
- 
- 	if (pcie->cfg->ops->config_sid) {
-@@ -1450,6 +1451,7 @@ static const struct qcom_pcie_cfg cfg_2_1_0 = {
- 
- static const struct qcom_pcie_cfg cfg_2_3_2 = {
- 	.ops = &ops_2_3_2,
-+	.no_l0s = true,
- };
- 
- static const struct qcom_pcie_cfg cfg_2_3_3 = {
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 705d6acc204cf..16c2314839c38 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -6427,6 +6427,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x863e, "HP Spectre x360 15-df1xxx", ALC285_FIXUP_HP_SPECTRE_X360_DF1),
+ 	SND_PCI_QUIRK(0x103c, 0x86e8, "HP Spectre x360 15-eb0xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
+ 	SND_PCI_QUIRK(0x103c, 0x86f9, "HP Spectre x360 13-aw0xxx", ALC285_FIXUP_HP_SPECTRE_X360_MUTE_LED),
++	SND_PCI_QUIRK(0x103c, 0x8706, "HP Laptop 15s-eq1xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x8716, "HP Elite Dragonfly G2 Notebook PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8720, "HP EliteBook x360 1040 G8 Notebook PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8724, "HP EliteBook 850 G7", ALC285_FIXUP_HP_GPIO_LED),
 -- 
 2.51.0
 
