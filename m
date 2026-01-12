@@ -1,46 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FC6F2E06EF;
-	Mon, 12 Jan 2026 14:59:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823692DEA75;
+	Mon, 12 Jan 2026 14:59:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768229943; cv=none; b=uF/c+V7KZHmCKK4v4vSLRYLGL8Cw1+qq/lGit4yv/KDE8tFqfhQ2IBNxUMxeEqgTIHZoBYn/dR0yGlpKTymr17ANKnE+f75/DcQEJoVCUXpG3OEgHWByMgZWgTQ1zSUF5Iorz/HiTDSw9wY+qAxlD6HrZe66bJd0Fj0zL+7x60A=
+	t=1768229945; cv=none; b=JmjcoijLXbbRT/weEZBw/8R8FLBOBs3et2AUgMSbOraOkJ43iS6fXN5RiUKBtpLYsZcFNwvyQB0IlTp2oOTu9U2SlciFclsZt1PymUsI9SfirLMQaJA8GweE3APLf27ix5ewlRWFfaO/p0pdZQuNS26AFctCDnT/hAL2ufxs+nA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768229943; c=relaxed/simple;
-	bh=d/Hk7pYr4QRi+FKcMg9nhvQmJRSFfVO6mTcYAH99iTg=;
+	s=arc-20240116; t=1768229945; c=relaxed/simple;
+	bh=SA/M8GWVAADSFvD6UBoCN3tcb14Prw7mwfbgA1gGdbQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZCFfIFFS3wPvPs82XJB+GeBFH1u0Mwk2HrJMtbq25Y0gfrRWZEznAbzUblTJHw6kU5Nx8KUHmR29GuR1gmgnME5vzLcLjITfwA3Q+H0rNUDThU5F/V9q5X0f2HxJTN89QASCUOGjPci9f2mUGJq86eAbn8jUEAzExPNilZcYTjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AJ9tKkVL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BiFAvhcSZXod2r0DL3kPTabkNHGT6KJojd6We5sCEpv+9YzHb2+8g9rHlYBkyRjl9GqLRcA7J++QriuCaEpNBF/CRjwAo4hgJfhDZIWowEkbLEFWkRWWivPI6JvVcp4UPF4JCSVX+Tbo+b9ienvEKu5D4aR0esA2t8YKJQz6LNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=edKPUyP/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AJ9tKkVL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07E7FC16AAE;
-	Mon, 12 Jan 2026 14:59:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="edKPUyP/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBA31C16AAE;
+	Mon, 12 Jan 2026 14:59:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768229942;
-	bh=d/Hk7pYr4QRi+FKcMg9nhvQmJRSFfVO6mTcYAH99iTg=;
+	s=k20201202; t=1768229944;
+	bh=SA/M8GWVAADSFvD6UBoCN3tcb14Prw7mwfbgA1gGdbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AJ9tKkVLiC3hcUnvnr2U/MBHaNOywYwFe6kRM5s/oZOUik6OQR9TUSM+2Ipezchjd
-	 ouO6/7+vVDPrk5jD3PIg2laoLsSaHPjJulfrThd2FOxDc1ANaiLFaXw09CEOvLVgf3
-	 scgwvcnA8gLVWM0hbUWyKc5Rr6l+5QmT8csmgwmnd+BBPYGUltpwZOrDsJ+YOzG5qd
-	 9H15ZR8PpC1FO6JmftE4hnQqpG0KyMg7QibKljVthUUcEERiV+J9jDCViT1DrqxWH/
-	 MWu2Au1Qasnm4ohsIVP35NmqmpJmoSO1nodosGaB3FMc9T6Dyis3PHnv7NL/3GPS++
-	 0ccFjHgERd1qQ==
+	b=edKPUyP/00h/W8PxH6ojlxeEhIZPlh7Qoh6G9P5TtoNbOx39uvJYjKntnLXQiIsSu
+	 bUT38baC4KgUQc82bzwU+MOdIOdc7yfxToISle1QDHzVR9rQLkEdqxlz+nnYLX1fqg
+	 hJ7M6knzvfAYjVioYhqDhGBWDgVgo6PBTS7y6RAXRn/EemmnNIVIz0SeHdOUT/+mPo
+	 1UzbUP5KkfrrZBrVx5zuyl27BOn8MuDPAtAwn1FmFG8Ywi/TGIdVaxcjnDTSHbg8Ij
+	 ogphNTunmYQisT1KfZvSM3y+wqVRirnlqOZvvK04iaAtqIKHQg2B24byn8tW47hgBg
+	 RqAyugmx7qa8A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lukas Gerlach <lukas.gerlach@cispa.de>,
-	Paul Walmsley <pjw@kernel.org>,
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	alexghiti@rivosinc.com,
-	cleger@rivosinc.com,
-	namcao@linutronix.de,
-	linux-riscv@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.18-6.12] riscv: Sanitize syscall table indexing under speculation
-Date: Mon, 12 Jan 2026 09:58:13 -0500
-Message-ID: <20260112145840.724774-12-sashal@kernel.org>
+	linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.12] PCI: qcom: Remove ASPM L0s support for MSM8996 SoC
+Date: Mon, 12 Jan 2026 09:58:15 -0500
+Message-ID: <20260112145840.724774-14-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260112145840.724774-1-sashal@kernel.org>
 References: <20260112145840.724774-1-sashal@kernel.org>
@@ -53,182 +52,155 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.5
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lukas Gerlach <lukas.gerlach@cispa.de>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit 25fd7ee7bf58ac3ec7be3c9f82ceff153451946c ]
+[ Upstream commit 0cc13256b60510936c34098ee7b929098eed823b ]
 
-The syscall number is a user-controlled value used to index into the
-syscall table. Use array_index_nospec() to clamp this value after the
-bounds check to prevent speculative out-of-bounds access and subsequent
-data leakage via cache side channels.
+Though I couldn't confirm ASPM L0s support with the Qcom hardware team, a
+bug report from Dmitry suggests that L0s is broken on this legacy SoC.
+Hence, remove L0s support from the Root Port Link Capabilities in this SoC.
 
-Signed-off-by: Lukas Gerlach <lukas.gerlach@cispa.de>
-Link: https://patch.msgid.link/20251218191332.35849-3-lukas.gerlach@cispa.de
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Since qcom_pcie_clear_aspm_l0s() is now used by more than one SoC config,
+call it from qcom_pcie_host_init() instead.
+
+Reported-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Closes: https://lore.kernel.org/linux-pci/4cp5pzmlkkht2ni7us6p3edidnk25l45xrp6w3fxguqcvhq2id@wjqqrdpkypkf
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251126081718.8239-1-mani@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Commit Analysis: riscv: Sanitize syscall table indexing under
-speculation
+Looking at this commit, I need to analyze whether it's appropriate for
+stable backporting.
 
-### 1. COMMIT MESSAGE ANALYSIS
+## Commit Analysis
 
-The commit message clearly describes a **security vulnerability fix**:
-- User-controlled syscall numbers are used to index into the syscall
-  table
-- The fix prevents speculative out-of-bounds access
-- Addresses data leakage via cache side channels (Spectre v1-style
-  attack)
+### What the Commit Does
+This commit fixes broken ASPM L0s (Active State Power Management L0s)
+support on the MSM8996 SoC. The key changes are:
 
-Key indicators: "speculative out-of-bounds access", "data leakage",
-"cache side channels" - these are unmistakable security vulnerability
-descriptions.
+1. **Adds `.no_l0s = true`** to the `cfg_2_3_2` configuration struct
+   (MSM8996's config)
+2. **Moves `qcom_pcie_clear_aspm_l0s()` call** from
+   `qcom_pcie_post_init_2_7_0()` to `qcom_pcie_host_init()` so it
+   applies to all SoCs that need it (based on their config flags)
+3. **Removes the L0s clearing** from the 2_7_0 post_init since it's now
+   centralized
 
-### 2. CODE CHANGE ANALYSIS
+### Bug Being Fixed
+According to the commit message and linked bug report, ASPM L0s is
+broken on the MSM8996 SoC. When L0s is enabled on broken hardware, users
+can experience:
+- PCIe link instability
+- Power management failures
+- Potential system hangs or communication failures
 
-The change is minimal and surgical:
+### Classification: Hardware Quirk/Workaround
+This is clearly a **hardware quirk** - disabling a broken power
+management feature on specific hardware. This falls under the explicit
+exception category for stable backporting, similar to USB quirks or PCI
+quirks for broken devices.
 
+### Code Change Assessment
 ```c
-- if (syscall >= 0 && syscall < NR_syscalls)
-+               if (syscall >= 0 && syscall < NR_syscalls) {
-+                       syscall = array_index_nospec(syscall,
-NR_syscalls);
-                        syscall_handler(regs, syscall);
-+               }
+// Addition to MSM8996 config - trivial one-liner:
+static const struct qcom_pcie_cfg cfg_2_3_2 = {
+        .ops = &ops_2_3_2,
++       .no_l0s = true,
+};
+
+// Centralized call in host_init for all SoCs needing it:
++       qcom_pcie_clear_aspm_l0s(pcie->pci);
 ```
 
-**Technical mechanism:**
-- The bounds check (`syscall >= 0 && syscall < NR_syscalls`) is
-  performed at runtime
-- However, speculative execution can bypass this check - the CPU may
-  speculatively execute `syscall_handler()` with an out-of-bounds index
-  before the branch is resolved
-- This speculative access leaves traces in the cache that can be
-  measured via timing attacks
-- `array_index_nospec()` creates a data dependency that architecturally
-  clamps the index, preventing speculative OOB access
+The actual fix is small and surgical. The refactoring (moving the
+function call) is minimal and just enables the fix to work for multiple
+SoCs that need it.
 
-This is the standard Spectre v1 (bounds check bypass) mitigation pattern
-used extensively throughout the kernel since 2018.
+### Stability Indicators
+- **Tested-by: Dmitry Baryshkov** - The reporter confirmed the fix works
+- **Reviewed-by: Konrad Dybcio** - Proper review by another Qualcomm
+  developer
+- **Signed-off by Bjorn Helgaas** - PCI subsystem maintainer approved
 
-### 3. CLASSIFICATION
+### Risk Assessment
+- **Low risk**: Disabling a broken feature is safer than leaving it
+  enabled
+- **Targeted scope**: Only affects MSM8996 SoC (legacy Qualcomm
+  platform)
+- **Well-tested**: Has explicit test confirmation from the bug reporter
 
-**Type:** Security fix (speculative execution side-channel
-vulnerability)
+### Dependency Concerns
+This commit assumes:
+1. The `no_l0s` field exists in `struct qcom_pcie_cfg`
+2. The `qcom_pcie_clear_aspm_l0s()` function exists
 
-This is NOT:
-- A new feature
-- A code cleanup
-- An optimization
-- A refactoring
+Looking at the diff, the commit adds to an existing `no_l0s` field (it
+wouldn't compile otherwise). The function was already being called in
+the 2_7_0 init path, so it exists. The infrastructure appears to already
+be in place.
 
-This IS a security hardening fix addressing a well-known class of
-vulnerabilities.
+### User Impact
+Users with MSM8996 devices (mobile/embedded Qualcomm platform)
+experiencing PCIe stability issues due to broken L0s will benefit from
+this fix. This is a real-world hardware problem affecting actual users.
 
-### 4. SCOPE AND RISK ASSESSMENT
+## Conclusion
 
-**Size:** 2 lines of actual code change
-**Files:** 1 file (arch/riscv/kernel/traps.c)
-**Complexity:** Extremely low - standard pattern
+This commit is a **hardware quirk/workaround** which is explicitly
+allowed in stable trees. It:
+- Fixes a real bug (broken ASPM L0s causing hardware issues)
+- Is small and contained
+- Has been properly tested and reviewed
+- Affects only the specific broken hardware (MSM8996)
+- Falls under the device quirk exception category
 
-**Risk analysis:**
-- `array_index_nospec()` is a mature, battle-tested macro available
-  since kernel 4.16+
-- The logic flow is identical - only adds speculation barrier
-- No functional behavior change
-- Zero regression risk - this is purely defensive
-
-### 5. USER IMPACT
-
-**Affected users:** All RISC-V kernel users
-
-**Severity:** High - this is a security vulnerability:
-- Allows potential kernel memory disclosure via timing side-channels
-- Spectre-class vulnerabilities have resulted in numerous CVEs
-- The syscall path is one of the most critical attack surfaces (user →
-  kernel transition)
-
-**Real-world impact:** While exploitation requires sophistication,
-Spectre attacks are well-documented and actively exploited. This
-vulnerability class affects every major cloud provider and is taken very
-seriously.
-
-### 6. STABILITY INDICATORS
-
-- Authored by researcher from CISPA (Helmholtz Center for Information
-  Security)
-- Signed-off by Paul Walmsley (RISC-V maintainer)
-- Follows established kernel security patterns
-- Other architectures (x86, ARM64) already have equivalent protections
-
-### 7. DEPENDENCY CHECK
-
-**`array_index_nospec()`:** This macro has been in the kernel since
-early 2018 (v4.16) for Spectre mitigations. It will be present in all
-maintained stable trees.
-
-**Code context:** The `do_trap_ecall_u()` function in
-`arch/riscv/kernel/traps.c` is a fundamental part of the RISC-V syscall
-handling and exists in all stable trees supporting RISC-V.
-
-No other commits are required as dependencies.
-
-### STABLE KERNEL RULES ASSESSMENT
-
-| Criteria | Assessment |
-|----------|------------|
-| Obviously correct | ✅ Uses standard kernel pattern |
-| Fixes real bug | ✅ Security vulnerability |
-| Important issue | ✅ Information disclosure via side-channel |
-| Small and contained | ✅ 2 lines, 1 file |
-| No new features | ✅ Pure security hardening |
-| Can apply cleanly | ✅ Self-contained change |
-
-### CONCLUSION
-
-This is an exemplary stable backport candidate:
-
-1. **Security fix** for a Spectre v1-class vulnerability in the RISC-V
-   syscall path
-2. **Minimal change** - 2 lines using well-established kernel security
-   primitives
-3. **Zero regression risk** - no functional change, only speculation
-   barrier
-4. **High value** - protects all RISC-V users from potential kernel
-   memory disclosure
-5. **Brings RISC-V in line** with other architectures that already have
-   this protection
-
-The fix is small, surgical, addresses a real security vulnerability,
-uses a mature mitigation pattern, and has essentially no risk of causing
-regressions. This meets all stable kernel criteria.
+The refactoring aspect (moving the function call) is minimal and merely
+enables the fix to work cleanly. The actual fix is just adding `no_l0s =
+true` to the MSM8996 configuration.
 
 **YES**
 
- arch/riscv/kernel/traps.c | 4 +++-
+ drivers/pci/controller/dwc/pcie-qcom.c | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/riscv/kernel/traps.c b/arch/riscv/kernel/traps.c
-index 80230de167def..47afea4ff1a8d 100644
---- a/arch/riscv/kernel/traps.c
-+++ b/arch/riscv/kernel/traps.c
-@@ -339,8 +339,10 @@ void do_trap_ecall_u(struct pt_regs *regs)
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index c48a20602d7fa..6e820595ba32a 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -1033,7 +1033,6 @@ static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
+ 		writel(WR_NO_SNOOP_OVERRIDE_EN | RD_NO_SNOOP_OVERRIDE_EN,
+ 				pcie->parf + PARF_NO_SNOOP_OVERRIDE);
  
- 		add_random_kstack_offset();
+-	qcom_pcie_clear_aspm_l0s(pcie->pci);
+ 	qcom_pcie_clear_hpc(pcie->pci);
  
--		if (syscall >= 0 && syscall < NR_syscalls)
-+		if (syscall >= 0 && syscall < NR_syscalls) {
-+			syscall = array_index_nospec(syscall, NR_syscalls);
- 			syscall_handler(regs, syscall);
-+		}
+ 	return 0;
+@@ -1302,6 +1301,8 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
+ 			goto err_disable_phy;
+ 	}
  
- 		/*
- 		 * Ultimately, this value will get limited by KSTACK_OFFSET_MAX(),
++	qcom_pcie_clear_aspm_l0s(pcie->pci);
++
+ 	qcom_ep_reset_deassert(pcie);
+ 
+ 	if (pcie->cfg->ops->config_sid) {
+@@ -1450,6 +1451,7 @@ static const struct qcom_pcie_cfg cfg_2_1_0 = {
+ 
+ static const struct qcom_pcie_cfg cfg_2_3_2 = {
+ 	.ops = &ops_2_3_2,
++	.no_l0s = true,
+ };
+ 
+ static const struct qcom_pcie_cfg cfg_2_3_3 = {
 -- 
 2.51.0
 
