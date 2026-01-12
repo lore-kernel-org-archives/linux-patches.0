@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D25C2DEA8C;
-	Mon, 12 Jan 2026 14:58:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3347C2DE718;
+	Mon, 12 Jan 2026 14:58:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768229928; cv=none; b=eVGgn8S0aX7lnSwRsuBgfSoNXeyAq48tMLadgCbyyBoG6g6K6RvuRBjmdHNcsiTeF5t+KOfYTqDzXMucJojwyhdCkuh3ZxJ5/At1iWFfRCvuHaxI9+PIYH1jBlA8daAtD5bwEdC6nxzivm8oASSeIYyT22ib4zL1YAT//lVJpaY=
+	t=1768229929; cv=none; b=imlasuLHLL3IMubRTYL56Qp4pEF1LVS711qhMSqBvJqyjKIsV84QrHyErhja98I/vN4uJkId7UCFDK+ikvQBZiyGxa4QyLrLRryfZY1sM3pU1e2uv979wSZDRyuq3ABGYxf+Wxb4CSVmYi+CiXPzScLgFPT57XhtUe7I/Oeti7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768229928; c=relaxed/simple;
-	bh=9ufFQrLplOWQaQsN4QFutvJ+PkbTL1HroOqWQdJrCUg=;
+	s=arc-20240116; t=1768229929; c=relaxed/simple;
+	bh=7qap7nbNmEHsF9VY8Qu2q9YvJE/9zREfCYKeItIGQqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gaYxISMfMizw57ls0S6l+m8KkvSA775EEoJ+0h3UYLyhUDPCG4FxyD35fR3a7TTFYLE2v2TCOwkyqYtg/ufSs8oTNEMt6UCxXX/CkYst3iVhanh9oXwPWhOT6qy9fXl2wzYr9RijEhzluXhRzVciqpKM9YzgXOCTwC6c5n1uGpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AvFuzqfJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cv6Te/Jy6anVfGeLT5X6Z9lWfEgnpowQopbAbds6oUPJ5u6ageJ2b4zQudrRnaUELjRC6sSxKDco9Nh3xXfrtHrOFHbDvUXT/q2KU6UbckIX7mD1SltEmFhhafup6Fy4JmKVYtkVcLUfKliJpqYafTMfnHctTTsivtNRExNW87k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r2W3EY9l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AvFuzqfJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17682C16AAE;
-	Mon, 12 Jan 2026 14:58:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r2W3EY9l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D2C4C19423;
+	Mon, 12 Jan 2026 14:58:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768229927;
-	bh=9ufFQrLplOWQaQsN4QFutvJ+PkbTL1HroOqWQdJrCUg=;
+	s=k20201202; t=1768229929;
+	bh=7qap7nbNmEHsF9VY8Qu2q9YvJE/9zREfCYKeItIGQqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AvFuzqfJNQNNmyPtsDLCYuVR3S8tCXfKYFgdU2rjZQQwkFCGHpU//+wGHDpLoaLI2
-	 NeIAFWxDDQ0TjsFG3q+jl0e1K0eQ7YnkCLeYnPRNXOGvycWsrO1TN6030I4XxGy3pO
-	 SbvkgKc2d8e0apQjON5kfeWFs5cHHPI2QcLXRZT6KPpiPMCnl4hNVTMmwtWtw+quMv
-	 P/NWGMbKnQOigPH5XFrVSNWF6FCAlkiB1LTejT+wyaKQqPTxNJJGBwYDlGIbk4cvtq
-	 VASIjc5VzA1KjtFhJlr2/JCP2/TWilmWBSWH1zSuyZ1y/xi8btQkwnWNKM5rgypuqc
-	 Ank2auTBHm+kA==
+	b=r2W3EY9l//h1IjZOGsgdOyr5WrIFih4E9BMETGnG0qaVbYnON8xsNT6sgeMkneunC
+	 2aCt8V8eBc5x9w4DNJPOsGOyNrI3aK26AI1kH2GFjZL+ApkuDlbXTSBJaH+yMHdkxq
+	 sStHk1OR8rvDFZifa6SU0nKUd0pPEVDjZFYeADc8add8QtrPznq6FhtgafuytZk0lc
+	 g4Du+grLJS6RS3aM00hy3U1XnoFzrKmNVcMeDLh55TFuQmbpc79775qc+WN2E9eNPx
+	 T6umUzquAHUMfl6Witb/yL7keuy3Ges64U9BKlEZzikOsiHtqSPNkMC2E1OV8Fylz8
+	 WsqywTgk7PhWw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Robbie Ko <robbieko@synology.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+Cc: Chris Chiu <chris.chiu@canonical.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	clm@fb.com,
-	linux-btrfs@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] btrfs: fix deadlock in wait_current_trans() due to ignored transaction type
-Date: Mon, 12 Jan 2026 09:58:06 -0500
-Message-ID: <20260112145840.724774-5-sashal@kernel.org>
+	jikos@kernel.org,
+	linux-input@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] HID: quirks: Add another Chicony HP 5MP Cameras to hid_ignore_list
+Date: Mon, 12 Jan 2026 09:58:07 -0500
+Message-ID: <20260112145840.724774-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260112145840.724774-1-sashal@kernel.org>
 References: <20260112145840.724774-1-sashal@kernel.org>
@@ -53,251 +52,152 @@ X-stable-base: Linux 6.18.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robbie Ko <robbieko@synology.com>
+From: Chris Chiu <chris.chiu@canonical.com>
 
-[ Upstream commit 5037b342825df7094a4906d1e2a9674baab50cb2 ]
+[ Upstream commit c06bc3557542307b9658fbd43cc946a14250347b ]
 
-When wait_current_trans() is called during start_transaction(), it
-currently waits for a blocked transaction without considering whether
-the given transaction type actually needs to wait for that particular
-transaction state. The btrfs_blocked_trans_types[] array already defines
-which transaction types should wait for which transaction states, but
-this check was missing in wait_current_trans().
+Another Chicony Electronics HP 5MP Camera with USB ID 04F2:B882
+reports a HID sensor interface that is not actually implemented.
 
-This can lead to a deadlock scenario involving two transactions and
-pending ordered extents:
+Add the device to the HID ignore list so the bogus sensor is never
+exposed to userspace. Then the system won't hang when runtime PM
+tries to wake the unresponsive device.
 
-  1. Transaction A is in TRANS_STATE_COMMIT_DOING state
-
-  2. A worker processing an ordered extent calls start_transaction()
-     with TRANS_JOIN
-
-  3. join_transaction() returns -EBUSY because Transaction A is in
-     TRANS_STATE_COMMIT_DOING
-
-  4. Transaction A moves to TRANS_STATE_UNBLOCKED and completes
-
-  5. A new Transaction B is created (TRANS_STATE_RUNNING)
-
-  6. The ordered extent from step 2 is added to Transaction B's
-     pending ordered extents
-
-  7. Transaction B immediately starts commit by another task and
-     enters TRANS_STATE_COMMIT_START
-
-  8. The worker finally reaches wait_current_trans(), sees Transaction B
-     in TRANS_STATE_COMMIT_START (a blocked state), and waits
-     unconditionally
-
-  9. However, TRANS_JOIN should NOT wait for TRANS_STATE_COMMIT_START
-     according to btrfs_blocked_trans_types[]
-
-  10. Transaction B is waiting for pending ordered extents to complete
-
-  11. Deadlock: Transaction B waits for ordered extent, ordered extent
-      waits for Transaction B
-
-This can be illustrated by the following call stacks:
-  CPU0                              CPU1
-                                    btrfs_finish_ordered_io()
-                                      start_transaction(TRANS_JOIN)
-                                        join_transaction()
-                                          # -EBUSY (Transaction A is
-                                          # TRANS_STATE_COMMIT_DOING)
-  # Transaction A completes
-  # Transaction B created
-  # ordered extent added to
-  # Transaction B's pending list
-  btrfs_commit_transaction()
-    # Transaction B enters
-    # TRANS_STATE_COMMIT_START
-    # waiting for pending ordered
-    # extents
-                                        wait_current_trans()
-                                          # waits for Transaction B
-                                          # (should not wait!)
-
-Task bstore_kv_sync in btrfs_commit_transaction waiting for ordered
-extents:
-
-  __schedule+0x2e7/0x8a0
-  schedule+0x64/0xe0
-  btrfs_commit_transaction+0xbf7/0xda0 [btrfs]
-  btrfs_sync_file+0x342/0x4d0 [btrfs]
-  __x64_sys_fdatasync+0x4b/0x80
-  do_syscall_64+0x33/0x40
-  entry_SYSCALL_64_after_hwframe+0x44/0xa9
-
-Task kworker in wait_current_trans waiting for transaction commit:
-
-  Workqueue: btrfs-syno_nocow btrfs_work_helper [btrfs]
-  __schedule+0x2e7/0x8a0
-  schedule+0x64/0xe0
-  wait_current_trans+0xb0/0x110 [btrfs]
-  start_transaction+0x346/0x5b0 [btrfs]
-  btrfs_finish_ordered_io.isra.0+0x49b/0x9c0 [btrfs]
-  btrfs_work_helper+0xe8/0x350 [btrfs]
-  process_one_work+0x1d3/0x3c0
-  worker_thread+0x4d/0x3e0
-  kthread+0x12d/0x150
-  ret_from_fork+0x1f/0x30
-
-Fix this by passing the transaction type to wait_current_trans() and
-checking btrfs_blocked_trans_types[cur_trans->state] against the given
-type before deciding to wait. This ensures that transaction types which
-are allowed to join during certain blocked states will not unnecessarily
-wait and cause deadlocks.
-
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Robbie Ko <robbieko@synology.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Chris Chiu <chris.chiu@canonical.com>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## COMPREHENSIVE ANALYSIS
+## Commit Analysis: HID Quirks for Chicony HP 5MP Camera
 
-### What the Bug Is
+### 1. COMMIT MESSAGE ANALYSIS
 
-The deadlock occurs because `wait_current_trans()` ignores the
-transaction type when deciding whether to wait:
+The commit message is clear and explains:
+- A specific Chicony HP 5MP Camera (USB ID 04F2:B882) reports a HID
+  sensor interface that **is not actually implemented**
+- Without this fix, **the system hangs** when runtime PM tries to wake
+  the unresponsive device
+- Solution: Add to `hid_ignore_list` so the bogus sensor is never
+  exposed to userspace
 
-1. `join_transaction()` correctly uses
-   `btrfs_blocked_trans_types[cur_trans->state] & type` to return
-   `-EBUSY`
-2. But `wait_current_trans()` waits **unconditionally** whenever a
-   transaction is blocked
+Key phrase: "the system won't hang" - this is a **system hang fix**.
 
-Looking at `btrfs_blocked_trans_types[]`:
-- `TRANS_STATE_COMMIT_START` only blocks `__TRANS_START |
-  __TRANS_ATTACH`
-- `__TRANS_JOIN` is NOT blocked during `TRANS_STATE_COMMIT_START`
+### 2. CODE CHANGE ANALYSIS
 
-The deadlock: `TRANS_JOIN` from ordered extent processing waits for a
-transaction in `COMMIT_START` state (which it shouldn't), while that
-transaction waits for the ordered extent to complete.
+The change is minimal and surgical:
 
-### Technical Assessment
+**hid-ids.h:** Adds one new device ID define
+```c
+#define USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA3    0xb882
+```
 
-**The Fix:**
-- Adds `type` parameter to `wait_current_trans()`
-- Adds check: `btrfs_blocked_trans_types[cur_trans->state] & type`
-- Updates 3 call sites to pass the type
+**hid-quirks.c:** Adds device to the ignore list
+```c
+{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY,
+USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA3) },
+```
 
-**Lines of actual change**: ~6 lines of logic change
-**Files changed**: 1 (fs/btrfs/transaction.c)
-**Risk level**: LOW - the fix makes behavior *more restrictive* about
-when to wait, aligning with already-defined semantics
+This follows an **already-established pattern** - there are already two
+similar entries:
+- `USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA` (0xb824)
+- `USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA2` (0xb82c)
 
-### Stable Kernel Criteria Assessment
+### 3. CLASSIFICATION
 
-| Criterion | Assessment |
-|-----------|------------|
-| Obviously correct? | ✅ Yes - aligns `wait_current_trans()` with
-existing `btrfs_blocked_trans_types[]` semantics |
-| Fixes real bug? | ✅ Yes - deadlock with real call stacks provided |
-| Important issue? | ✅ Yes - deadlock is severe (system hang, potential
-data loss) |
-| Small and contained? | ✅ Yes - ~6 lines logic change in one file |
-| No new features? | ✅ Correct - pure bug fix |
-| Dependencies in stable? | ✅ Yes - `btrfs_blocked_trans_types[]` exists
-since 2013 |
+This falls into **two explicit exception categories** that are allowed
+in stable:
 
-### Review Quality
+1. **Device ID addition:** Adding a USB ID to an existing driver's quirk
+   list
+2. **Hardware quirk/workaround:** Fixing a broken device that falsely
+   advertises a non-functional HID sensor interface
 
-- Reviewed-by: Filipe Manana (btrfs maintainer)
-- Reviewed-by: David Sterba (btrfs maintainer)
-- Signed-off-by: David Sterba (merged by maintainer)
+### 4. SCOPE AND RISK ASSESSMENT
 
-### User Impact
+| Metric | Assessment |
+|--------|------------|
+| Lines changed | 2 |
+| Files touched | 2 |
+| Complexity | Trivial - just adding ID to a list |
+| Risk level | **Extremely low** |
 
-- **Severity**: HIGH - deadlock causes complete hang
-- **Affected users**: btrfs users with ordered extent workloads (common
-  during fsync)
-- **Evidence**: Real production call stacks provided from Synology
-  system
+The change only affects this specific USB device (04F2:B882). No logic
+changes, no control flow modifications. The `hid_ignore_list` mechanism
+is mature and proven.
 
-### Risk vs Benefit
+### 5. USER IMPACT
 
-**Benefits:**
-- Fixes a critical deadlock in filesystem code
-- Small, surgical change with minimal risk
-- Uses existing, well-tested infrastructure
+- **Severity:** HIGH - Prevents **system hangs** on affected HP laptops
+- **Affected users:** Anyone with an HP laptop containing this specific
+  Chicony 5MP camera
+- **Real-world evidence:** The author is from Canonical (Ubuntu),
+  suggesting this was discovered through real user bug reports
 
-**Risks:**
-- Very low - the change only affects waiting behavior and aligns it with
-  already-existing type-specific blocking rules
-- The fix is conservative: it makes the code wait *less* (only when it
-  should), not more
+### 6. STABILITY INDICATORS
 
-### Conclusion
+- Accepted by Benjamin Tissoires (HID maintainer)
+- Uses identical mechanism to existing, proven entries
+- Canonical developer submission suggests tested on real hardware
 
-This commit fixes a **real deadlock** in btrfs transaction handling. The
-fix is:
-- Small and surgical
-- Obviously correct (makes `wait_current_trans()` respect existing type-
-  specific blocking rules)
-- Well-reviewed by btrfs maintainers
-- Low risk with high benefit
+### 7. DEPENDENCY CHECK
 
-The `btrfs_blocked_trans_types[]` array has existed since 2013, ensuring
-clean backporting to all stable kernels. This is exactly the type of
-commit that should be backported - a critical deadlock fix with minimal
-risk.
+**No dependencies.** The `hid_ignore_list` infrastructure exists in all
+stable kernel versions. This is a completely standalone device ID
+addition.
+
+---
+
+## Conclusion
+
+This commit is a **textbook example** of what should be backported to
+stable:
+
+✅ **Fixes a real bug:** System hang during runtime PM suspend/resume
+✅ **Fixes an important issue:** System hangs are severe user-facing bugs
+✅ **Small and contained:** Only 2 lines, no logic changes
+✅ **Obviously correct:** Follows exact pattern of existing similar
+entries
+✅ **Hardware quirk exception:** Explicitly allowed by stable kernel
+rules
+✅ **No dependencies:** Standalone addition
+✅ **Zero risk:** Only affects one specific USB device ID
+
+The bug is severe (system hang), the fix is trivial (add device to
+ignore list), and the mechanism is well-proven with existing similar
+entries. This is exactly what stable backports are for.
 
 **YES**
 
- fs/btrfs/transaction.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/hid/hid-ids.h    | 1 +
+ drivers/hid/hid-quirks.c | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
-index 89ae0c7a610aa..c457316c2788b 100644
---- a/fs/btrfs/transaction.c
-+++ b/fs/btrfs/transaction.c
-@@ -518,13 +518,14 @@ static inline int is_transaction_blocked(struct btrfs_transaction *trans)
-  * when this is done, it is safe to start a new transaction, but the current
-  * transaction might not be fully on disk.
-  */
--static void wait_current_trans(struct btrfs_fs_info *fs_info)
-+static void wait_current_trans(struct btrfs_fs_info *fs_info, unsigned int type)
- {
- 	struct btrfs_transaction *cur_trans;
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index c4589075a5ed6..3a22129fb7075 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -317,6 +317,7 @@
+ #define USB_DEVICE_ID_CHICONY_ACER_SWITCH12	0x1421
+ #define USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA	0xb824
+ #define USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA2	0xb82c
++#define USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA3	0xb882
  
- 	spin_lock(&fs_info->trans_lock);
- 	cur_trans = fs_info->running_transaction;
--	if (cur_trans && is_transaction_blocked(cur_trans)) {
-+	if (cur_trans && is_transaction_blocked(cur_trans) &&
-+	    (btrfs_blocked_trans_types[cur_trans->state] & type)) {
- 		refcount_inc(&cur_trans->use_count);
- 		spin_unlock(&fs_info->trans_lock);
- 
-@@ -699,12 +700,12 @@ start_transaction(struct btrfs_root *root, unsigned int num_items,
- 		sb_start_intwrite(fs_info->sb);
- 
- 	if (may_wait_transaction(fs_info, type))
--		wait_current_trans(fs_info);
-+		wait_current_trans(fs_info, type);
- 
- 	do {
- 		ret = join_transaction(fs_info, type);
- 		if (ret == -EBUSY) {
--			wait_current_trans(fs_info);
-+			wait_current_trans(fs_info, type);
- 			if (unlikely(type == TRANS_ATTACH ||
- 				     type == TRANS_JOIN_NOSTART))
- 				ret = -ENOENT;
-@@ -1001,7 +1002,7 @@ int btrfs_wait_for_commit(struct btrfs_fs_info *fs_info, u64 transid)
- 
- void btrfs_throttle(struct btrfs_fs_info *fs_info)
- {
--	wait_current_trans(fs_info);
-+	wait_current_trans(fs_info, TRANS_START);
- }
- 
- bool btrfs_should_end_transaction(struct btrfs_trans_handle *trans)
+ #define USB_VENDOR_ID_CHUNGHWAT		0x2247
+ #define USB_DEVICE_ID_CHUNGHWAT_MULTITOUCH	0x0001
+diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+index c89a015686c07..3cf7971d49743 100644
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -769,6 +769,7 @@ static const struct hid_device_id hid_ignore_list[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_BERKSHIRE, USB_DEVICE_ID_BERKSHIRE_PCWD) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA2) },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA3) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CIDC, 0x0103) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CYGNAL, USB_DEVICE_ID_CYGNAL_RADIO_SI470X) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CYGNAL, USB_DEVICE_ID_CYGNAL_RADIO_SI4713) },
 -- 
 2.51.0
 
