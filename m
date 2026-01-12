@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB67D2DC350;
-	Mon, 12 Jan 2026 14:58:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D71D2DB7B0;
+	Mon, 12 Jan 2026 14:58:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768229931; cv=none; b=NhtlSTYGtLfHuX5J6nQxjgk6AozzLHo56B8rxfSfQPkgj/8CR1tp3tPewrwndFT4FuEYRPVj0QhyF6YBe7MSYC84Irp18y/vJpMjA4CEokfsMI6c8PAdBBjXZN5eBDrJJ4+L3Nh37x4276CnARgZ32uL2ySxHNtmmoQQsdqXukQ=
+	t=1768229932; cv=none; b=t1zWarNgqtIoYQZ9Gm4Nn7t0wTtRvyYiZBK8fPbG3RyrOQ22FxPeQ46kMIGj7sw8+PrmZ86mjcKqzFfUPVAnlo4ZNWWsy6YXSWzqO5Myxw28W3bym7SzSAEdsKmK96SJLmtl8GXsA4ixNfsoVA3awVrabJttc+10YNwI8hHaTG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768229931; c=relaxed/simple;
-	bh=bx4wf6AN3E67U2DceUgAupNZMhxJl5I2M+lQOV1EcYw=;
+	s=arc-20240116; t=1768229932; c=relaxed/simple;
+	bh=tmveYG3MYrcIOx8fgo5jQ0uyIL+4rJEKzFawxuWWjgY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o3AV8111FwZJXRer2YiMSwhf1Xt3lwyg6DuKAILHQAoCp7DkwICqPL5JsvyvhrNtDAMKGtEJyxoFj6YPp/TyiwXKsDavlrih5x9wfiX76dNrOT1S5TsSHup6O94QpLQit5J+vfIUOJ62x9RTqKNV9tW3FkDq9Mba8H84QSrPUqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aEGs5VTc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iXaARuNwsRMGS00IUrVC615xtp9WrsRN0w/lGDZ7CmHIIs+y06jG+SKbGd2KltHBH4W7vy3T1EFVl1Fj495P4dOFb40YH9ZO/DJEmw4o0M5IYUH/ceiS6dshbdyFdvYMHXPEaRAZp4JFK6XiM1te4Qg024dxkZXaW6Gez+kwd6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lckl+44M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aEGs5VTc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC53C19422;
-	Mon, 12 Jan 2026 14:58:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lckl+44M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 231CFC19422;
+	Mon, 12 Jan 2026 14:58:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768229930;
-	bh=bx4wf6AN3E67U2DceUgAupNZMhxJl5I2M+lQOV1EcYw=;
+	s=k20201202; t=1768229931;
+	bh=tmveYG3MYrcIOx8fgo5jQ0uyIL+4rJEKzFawxuWWjgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aEGs5VTcjvoKMV4Og9DAK75hlV3WtdcMNewcllUDK9UBr9U0x47Ent49pp4OVJDBE
-	 ViVVrXWExXqhblVmz1sirB9/6GGetnWcFtUocgF2w3OFbMAMdGt9P66eMBvxEPLIUw
-	 XU05l78QVrYEGPPLWeJ+hI3E9WxTgDxLr/jgC6Iwu3OKuCYI5uGDO2hBATwkEVKBJK
-	 iTaoPSD1oF11rYZYi7S3m1JAWm4nh+MN47toqP4kZ4g/Y/TuNavZ4p4OZDW/e8ZOyF
-	 WyKy4gmTOKFCJ6JVjjScsZofbjnqARltUn06Gh+FyBNl9UVCY+LQ/mhD0mP2rqZZGw
-	 Gbft9iyKgYKGA==
+	b=lckl+44Mbe8FW04Gi084rW/NR2OCxWbFu3Iw4YjwFx/0XA+Cnc+HMPDGrn2XZZ/jB
+	 b3jp6VFVcGGTtJ8590pm8xoAHf8fH/j+1RuXYrn8S4H21dBxFbW9qPYyE8UmvihOVT
+	 e5ER4SPUC42d4RBMyNht1B9CE+PLy1rIwEJtQUwupP7dQXe+z0/6WEoRkic6s0jYU6
+	 4/vKhXxWzrF+oXMqTQtktHGYJH/nVDrIyMws5d0UQ1e8RCLl383rS5YaGR/jzvgtju
+	 zG1z2ZpS/TXpzx0YjsAUFt47z0rYtfPUQkj+fzTjggYJWA3lkKcux/Tr5bsBwh581B
+	 xmOivLHrlF+eA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zhang Lixu <lixu.zhang@intel.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+Cc: DaytonCL <artem749507@gmail.com>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
 	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
 	jikos@kernel.org,
-	andriy.shevchenko@intel.com
-Subject: [PATCH AUTOSEL 6.18-6.1] HID: intel-ish-hid: Update ishtp bus match to support device ID table
-Date: Mon, 12 Jan 2026 09:58:08 -0500
-Message-ID: <20260112145840.724774-7-sashal@kernel.org>
+	linux-input@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] HID: multitouch: add MT_QUIRK_STICKY_FINGERS to MT_CLS_VTL
+Date: Mon, 12 Jan 2026 09:58:09 -0500
+Message-ID: <20260112145840.724774-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260112145840.724774-1-sashal@kernel.org>
 References: <20260112145840.724774-1-sashal@kernel.org>
@@ -50,173 +50,161 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.5
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Lixu <lixu.zhang@intel.com>
+From: DaytonCL <artem749507@gmail.com>
 
-[ Upstream commit daeed86b686855adda79f13729e0c9b0530990be ]
+[ Upstream commit ff3f234ff1dcd6d626a989151db067a1b7f0f215 ]
 
-The ishtp_cl_bus_match() function previously only checked the first entry
-in the driver's device ID table. Update it to iterate over the entire
-table, allowing proper matching for drivers with multiple supported
-protocol GUIDs.
+Some VTL-class touchpads (e.g. TOPS0102:00 35CC:0104) intermittently
+fail to release a finger contact. A previous slot remains logically
+active, accompanied by stale BTN_TOOL_DOUBLETAP state, causing
+gestures to stay latched and resulting in stuck two-finger
+scrolling and false right-clicks.
 
-Signed-off-by: Zhang Lixu <lixu.zhang@intel.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Apply MT_QUIRK_STICKY_FINGERS to handle the unreleased contact correctly.
+
+Link: https://gitlab.freedesktop.org/libinput/libinput/-/issues/1225
+Suggested-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Tested-by: DaytonCL <artem749507@gmail.com>
+Signed-off-by: DaytonCL <artem749507@gmail.com>
 Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of Commit: HID: intel-ish-hid: Update ishtp bus match to
-support device ID table
+## Analysis of HID Multitouch Quirk Addition
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The commit message clearly describes:
-- **The problem**: The `ishtp_cl_bus_match()` function only checked the
-  first entry (`id[0]`) in the driver's device ID table
-- **The fix**: Iterate over the entire ID table
-- **The purpose**: Allow proper matching for drivers with multiple
-  supported protocol GUIDs
-
-No "Fixes:" tag or "Reported-by:" tag is present (expected for commits
-under manual review).
+The commit clearly describes a **real user-visible bug**:
+- VTL-class touchpads (specifically TOPS0102:00 35CC:0104)
+  intermittently fail to release finger contacts
+- This causes gestures to stay latched - stuck two-finger scrolling and
+  false right-clicks
+- Links to a libinput bug report:
+  https://gitlab.freedesktop.org/libinput/libinput/-/issues/1225
+- Has `Tested-by:` from the reporter and `Suggested-by:` from Benjamin
+  Tissoires (HID maintainer)
+- Signed off by the maintainer (Benjamin Tissoires)
 
 ### 2. CODE CHANGE ANALYSIS
 
-**Before (buggy code):**
+The change is **extremely minimal** - adding one line:
 ```c
-return(device->fw_client ? guid_equal(&driver->id[0].guid,
-       &device->fw_client->props.protocol_name) : 0);
+MT_QUIRK_STICKY_FINGERS |
 ```
-Only checks the **first entry** (`driver->id[0]`) in the device ID
-table.
 
-**After (fixed code):**
-```c
-if (client) {
-    for (id = driver->id; !guid_is_null(&id->guid); id++) {
-        if (guid_equal(&id->guid, &client->props.protocol_name))
-            return 1;
-    }
-}
-return 0;
-```
-Properly iterates through **all entries** until finding a match or
-hitting the null GUID terminator.
+to the existing `MT_CLS_VTL` class definition. This enables an already-
+existing quirk flag (`MT_QUIRK_STICKY_FINGERS`) for VTL-class devices.
 
-**Root cause**: Logic error - incomplete iteration through device ID
-table. This is objectively incorrect behavior for a bus match function.
-Standard Linux bus matching iterates through all device IDs in a
-driver's table.
-
-**Technical mechanism**: When a device with a protocol GUID that matches
-the 2nd, 3rd, or later entry in a driver's ID table is enumerated, the
-old code would fail to match, leaving the device without a driver.
+The quirk mechanism handles cases where a touchpad firmware fails to
+properly report when a finger has been lifted. Without it, the system
+thinks the finger is still touching, causing "sticky" gestures. The
+quirk infrastructure already exists and is well-tested - this commit
+just enables it for another device class.
 
 ### 3. CLASSIFICATION
 
-- **Bug fix**: Yes - this fixes fundamentally broken device matching
-  logic
-- **New feature**: No - it corrects existing functionality to work as
-  designed
-- **Exception category**: Not needed - it's a straightforward bug fix
+This falls squarely into the **QUIRKS and WORKAROUNDS exception
+category**:
+- Hardware-specific quirk for buggy/non-compliant devices
+- The quirk code already exists in mainline - only enabling it for VTL
+  class
+- Fixes real-world hardware behavior issues
+
+This is NOT:
+- A new feature or API
+- A new driver
+- Code refactoring
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-- **Lines changed**: ~10 lines of actual code
-- **Files touched**: 1 (drivers/hid/intel-ish-hid/ishtp/bus.c)
-- **Complexity**: Low - simple loop structure following standard
-  patterns
-- **Subsystem**: Intel ISH (Integrated Sensor Hub) HID driver
-- **Risk**: Very low - if wrong, devices wouldn't match (no
-  crashes/corruption)
+| Factor | Assessment |
+|--------|------------|
+| Lines changed | 1 |
+| Files touched | 1 |
+| Complexity | Trivially low |
+| Subsystem | HID multitouch (mature, stable) |
+| Risk | Very low |
 
-The change follows the standard Linux bus matching pattern used across
-the kernel (iterate until null terminator).
+The worst case scenario: if the quirk somehow caused issues on a
+specific VTL device, it would only affect that device class. But the
+current behavior is already broken for affected users, so this is a
+clear improvement.
 
 ### 5. USER IMPACT
 
-- **Affected users**: Intel ISH users with drivers supporting multiple
-  protocol GUIDs
-- **Severity**: Medium - affected devices simply wouldn't work (wouldn't
-  bind to their driver)
-- **Real bug**: Yes - the code was objectively wrong
+- **Affected users**: Anyone with VTL-class touchpads
+- **Symptoms**: Stuck two-finger scrolling, false right-clicks - these
+  are highly disruptive daily-use issues
+- **Severity**: Medium-high for affected users (makes touchpad
+  unreliable)
+- **Evidence of real impact**: Linked bug report from libinput tracker
 
 ### 6. STABILITY INDICATORS
 
-- **Acked-by**: Srinivas Pandruvada (Intel ISH maintainer)
-- **Signed-off-by**: Benjamin Tissoires (HID subsystem maintainer)
-- Pattern follows well-established Linux driver matching conventions
+- `Tested-by:` tag from the reporter who experienced the issue
+- Suggested and signed off by HID subsystem maintainer
+- The `MT_QUIRK_STICKY_FINGERS` quirk has existed since ~Linux 3.15
+- The `MT_CLS_VTL` class has existed since ~Linux 4.13
+- Well-established quirk pattern used by many other device classes
+  (FLATFROG, LG, ASUS, etc.)
 
 ### 7. DEPENDENCY CHECK
 
-- Self-contained, no dependencies on other commits
-- The `ishtp_cl_bus_match()` function exists in stable trees
-- No new APIs or infrastructure required
+- **No dependencies** on other commits
+- Both the quirk flag and VTL class exist in all recent stable trees
+- Should apply cleanly without modification
 
-### RISK VS BENEFIT TRADE-OFF
+### STABLE KERNEL RULES ASSESSMENT
 
-**Benefits:**
-- Fixes obviously incorrect code in bus matching
-- Enables proper device/driver matching for drivers with multiple IDs
-- Small, surgical, low-risk change
-- Follows standard kernel patterns
-
-**Risks:**
-- Minimal - only affects ISH device matching
-- Failure mode is "device doesn't match" not crash/corruption
-
-**Concerns:**
-- No explicit bug report showing users hitting this
-- Could be seen as enabling new functionality if no drivers currently
-  use multiple IDs
+| Criterion | Met? |
+|-----------|------|
+| Obviously correct and tested | ✅ Yes - trivial change, has Tested-by |
+| Fixes a real bug | ✅ Yes - documented hardware issue with bug report |
+| Important issue | ✅ Yes - stuck gestures/false clicks affect daily use
+|
+| Small and contained | ✅ Yes - 1 line in 1 file |
+| No new features | ✅ Yes - uses existing quirk mechanism |
+| Applies cleanly | ✅ Yes - no dependencies |
 
 ### CONCLUSION
 
-This commit fixes objectively incorrect behavior in the ISHTP bus
-matching function. The old code only checking `id[0]` is clearly wrong
-for a device ID table that's designed to hold multiple entries. The fix
-is small, surgical, follows standard kernel patterns, and has low risk.
-Even without an explicit user report, fixing fundamentally broken
-matching logic is appropriate for stable trees. The change is acked by
-the Intel maintainer and the HID subsystem maintainer.
+This is an **ideal stable backport candidate**:
 
-The fix is self-contained, doesn't introduce new APIs, and corrects a
-logic error that would prevent devices from working if their GUID wasn't
-first in the table.
+1. **Minimal risk**: Single-line addition of an existing, well-tested
+   quirk flag
+2. **Real user benefit**: Fixes stuck gestures and false clicks on VTL
+   touchpads
+3. **Proper testing**: Has Tested-by tag and maintainer approval
+4. **Falls under hardware quirk exception**: Hardware quirks/workarounds
+   are explicitly allowed in stable even though they add code
+5. **Self-contained**: No dependencies, applies cleanly to stable trees
+
+The fix is small, surgical, obviously correct, and addresses a real
+user-visible hardware issue. This is exactly the type of hardware quirk
+addition that stable trees should accept.
 
 **YES**
 
- drivers/hid/intel-ish-hid/ishtp/bus.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/hid/hid-multitouch.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hid/intel-ish-hid/ishtp/bus.c b/drivers/hid/intel-ish-hid/ishtp/bus.c
-index 93a0432e70581..8e9f5a28e62ec 100644
---- a/drivers/hid/intel-ish-hid/ishtp/bus.c
-+++ b/drivers/hid/intel-ish-hid/ishtp/bus.c
-@@ -240,9 +240,17 @@ static int ishtp_cl_bus_match(struct device *dev, const struct device_driver *dr
- {
- 	struct ishtp_cl_device *device = to_ishtp_cl_device(dev);
- 	struct ishtp_cl_driver *driver = to_ishtp_cl_driver(drv);
-+	struct ishtp_fw_client *client = device->fw_client;
-+	const struct ishtp_device_id *id;
- 
--	return(device->fw_client ? guid_equal(&driver->id[0].guid,
--	       &device->fw_client->props.protocol_name) : 0);
-+	if (client) {
-+		for (id = driver->id; !guid_is_null(&id->guid); id++) {
-+			if (guid_equal(&id->guid, &client->props.protocol_name))
-+				return 1;
-+		}
-+	}
-+
-+	return 0;
- }
- 
- /**
+diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
+index 179dc316b4b51..a0c1ad5acb670 100644
+--- a/drivers/hid/hid-multitouch.c
++++ b/drivers/hid/hid-multitouch.c
+@@ -393,6 +393,7 @@ static const struct mt_class mt_classes[] = {
+ 	{ .name = MT_CLS_VTL,
+ 		.quirks = MT_QUIRK_ALWAYS_VALID |
+ 			MT_QUIRK_CONTACT_CNT_ACCURATE |
++			MT_QUIRK_STICKY_FINGERS |
+ 			MT_QUIRK_FORCE_GET_FEATURE,
+ 	},
+ 	{ .name = MT_CLS_GOOGLE,
 -- 
 2.51.0
 
