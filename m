@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76632DF6F4;
-	Mon, 12 Jan 2026 14:59:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FCF42EB840;
+	Mon, 12 Jan 2026 14:59:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768229961; cv=none; b=Mb0bucN/WdrX+SypFW2WBGI4yl9SwpzbKS104r8AbVmfniAKts6+h9vteNGdhBcxv7RfWkfG31d4MrLopNiyVoVPanKon2AOuBwg2m33Kw2Im9d9XG3CZZP+p4RvUPlQoGP88/Xc7MiNdyCw5vRlPnwCTSNq4jyL0M2WRveFx3k=
+	t=1768229963; cv=none; b=WuAYLOLOVvYJxi7l+5Lviqlgan5PwEXx6ylKEl/pGCDLffnY1Yla4wPFgza2gGKzn664CcgsOWkERSsyVI8cYfamriXzkpyzmnX90jEtsPAgi4g6nUb+X194MlX7Y0hRkrAav+V43QSzhwici8ktY91USEUnECL+t7SJyEDRJfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768229961; c=relaxed/simple;
-	bh=BuWmwzZBgVbZzKtXVjoa4UF2cg+4GqjkbsAmVSu1kGs=;
+	s=arc-20240116; t=1768229963; c=relaxed/simple;
+	bh=aoNZSkoUZ0CeTuQbzC1WKUULM3GlF9x8csRxu63dhi8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fcDqrf0aicvkgwul4KML/XP8+WAeZvGgDRnNDYQge3WWy/rLjB4a3V+udnZFWahHYfil+tow6B2FyKh+kOtDJKERygJZoOpECoe/G7FL9csW2oVUuvOcG08ih3jIpd9Y2ExZrPFgiwJiurR14PyzLe8U6rcqEK5s4cX5MwMWJDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TCEjKfVj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fsKgoq43QdkKPqk5LYe/i1n3eRBzFBA80lGG/yyD+TlasbgPCHB0q3oqDJKV0qn4mV2Hl9qDYD8pse0FZFuk24/wyQ4pv6IDL7hAIsTwzc7+2YiXWe6IiqVzXf6oAF6wDNnO1CQNuQ5BSHoKUNmNMgUo5EhFGeFtf+c4wZBezvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dDis71s8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TCEjKfVj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9B9C19425;
-	Mon, 12 Jan 2026 14:59:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dDis71s8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50ABAC19424;
+	Mon, 12 Jan 2026 14:59:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768229961;
-	bh=BuWmwzZBgVbZzKtXVjoa4UF2cg+4GqjkbsAmVSu1kGs=;
+	s=k20201202; t=1768229963;
+	bh=aoNZSkoUZ0CeTuQbzC1WKUULM3GlF9x8csRxu63dhi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TCEjKfVjfS/AB03JW3h1z370cHkSLJWSgo+a3iV7Cg7ph3FQy2f4iA8fR/N62afX4
-	 p3ixa9AtAi5LYtCoPyfYYB6YNQaSrw3NP3Iz283s1QzV7iLPUJ6QpIxlVwrawjroLu
-	 BPJHEXcWxoYYwOKp1Vmni1rLQXFg+F+UCz3KEqTzVTDsExHNDP7TDYXpGJcIHM+UBF
-	 OYCNopDWZvOfIRn6t0Vd8AUDRWnFHYfSjdKC6lSVLKjQn+aCZD1DjX6KBQbLHi0v2X
-	 znZgm3ThkeK18n0E9HBXGRwY6D6GX6kWudZqbIBkm52qXvJ4vkxuabnskrUhN0Ijs/
-	 Hkpmm3sS6WH3g==
+	b=dDis71s8BXeVbL3X3GsZVnhTSg5KEpD4Z1zAu2eniD4vJdcNpQMi8oYSnUtkAEukX
+	 Z2a/Hl+EBkEPf6I+IJZ+wRaPPRVGuvvrtTSJxdJdaXRbTF85doFrfrJg1vtpzs2HJQ
+	 3YnPPi3ED5iiTHGs1TqEQ5G5jjEZea9Vy4zjKXeDumKjPUE7/p4kes5K14GOulR8E5
+	 cKnGQwSPBmioSMMXpBuFxDKqGZNE4lG1Vk8dLbNis0/e7KUmaNGyrIusueVDqK5zO3
+	 I4fdN95aYz/hcfLxcTSS9+MubqFdekXdoPl0hPIIRzhFfSkXm/Oi7+m86MitN7m1RO
+	 Zq2ttC6xptnHw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Dennis Marttinen <twelho@welho.tech>,
-	Jiri Kosina <jkosina@suse.com>,
+Cc: Even Xu <even.xu@intel.com>,
+	Rui Zhang <rui1.zhang@intel.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
 	jikos@kernel.org,
-	bentiss@kernel.org,
-	linux-input@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] HID: logitech: add HID++ support for Logitech MX Anywhere 3S
-Date: Mon, 12 Jan 2026 09:58:24 -0500
-Message-ID: <20260112145840.724774-23-sashal@kernel.org>
+	andriy.shevchenko@linux.intel.com,
+	fourier.thomas@gmail.com
+Subject: [PATCH AUTOSEL 6.18] HID: Intel-thc-hid: Intel-thc: Add safety check for reading DMA buffer
+Date: Mon, 12 Jan 2026 09:58:25 -0500
+Message-ID: <20260112145840.724774-24-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260112145840.724774-1-sashal@kernel.org>
 References: <20260112145840.724774-1-sashal@kernel.org>
@@ -53,167 +54,102 @@ X-stable-base: Linux 6.18.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dennis Marttinen <twelho@welho.tech>
+From: Even Xu <even.xu@intel.com>
 
-[ Upstream commit d7f6629bffdcb962d383ef8c9a30afef81e997fe ]
+[ Upstream commit a9a917998d172ec117f9e9de1919174153c0ace4 ]
 
-I've acquired a Logitech MX Anywhere 3S mouse, which supports HID++ over
-Bluetooth. Adding its PID 0xb037 to the allowlist enables the additional
-features, such as high-resolution scrolling. Tested working across multiple
-machines, with a mix of Intel and Mediatek Bluetooth chips.
+Add DMA buffer readiness check before reading DMA buffer to avoid
+unexpected NULL pointer accessing.
 
-[jkosina@suse.com: standardize shortlog]
-Signed-off-by: Dennis Marttinen <twelho@welho.tech>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Even Xu <even.xu@intel.com>
+Tested-by: Rui Zhang <rui1.zhang@intel.com>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of HID: logitech: add HID++ support for Logitech MX Anywhere
-3S
+### Summary
 
-### 1. COMMIT MESSAGE ANALYSIS
+| Aspect | Assessment |
+|--------|------------|
+| **Bug Type** | NULL pointer dereference (kernel crash/oops) |
+| **Fix Size** | 4 lines added |
+| **Risk** | Very low - adds defensive check before pointer access |
+| **Driver Availability** | Added in v6.14, exists in 6.14.x stable tree
+|
+| **Testing** | Has Tested-by tag from Intel |
 
-**Subject:** "HID: logitech: add HID++ support for Logitech MX Anywhere
-3S"
+### Technical Analysis
 
-The commit message explains:
-- Author acquired an MX Anywhere 3S mouse that supports HID++ over
-  Bluetooth
-- Adding PID 0xb037 to the allowlist enables additional features (high-
-  resolution scrolling)
-- Tested on multiple machines with Intel and Mediatek Bluetooth chips
-- Has proper sign-offs from author and maintainer (Jiri Kosina)
-
-No `Cc: stable` or `Fixes:` tags are present, but as noted, that's
-expected for commits undergoing manual review.
-
-### 2. CODE CHANGE ANALYSIS
-
-The actual change is minimal:
-
+The bug is straightforward: in `read_dma_buffer()`, after checking
+bounds on the PRD table index, the code directly accesses:
 ```c
-+       { /* MX Anywhere 3S mouse over Bluetooth */
-+         HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb037) },
+prd_tbl = &read_config->prd_tbls[prd_table_index];  // Could be NULL
+sg = read_config->sgls[prd_table_index];             // Could be NULL
 ```
 
-This adds exactly **2 lines** - one comment and one device ID entry to
-the `hidpp_devices[]` table. Looking at the context, this table already
-contains many similar Logitech Bluetooth device entries:
-- MX Master (0xb012), MX Master 2S (0xb019), MX Master 3 (0xb023), MX
-  Master 3S (0xb034)
-- MX Anywhere 3 (0xb025), MX Anywhere 3SB (0xb038)
-- M720 Triathlon (0xb015), MX Ergo (0xb01d), MX Vertical (0xb020), etc.
+If DMA buffers haven't been properly initialized (race condition during
+device init/probe or error path), this causes a NULL pointer dereference
+leading to a kernel crash.
 
-The new entry follows the exact same pattern as all existing entries.
+The fix adds a simple and obviously correct NULL check:
+```c
+if (!read_config->prd_tbls || !read_config->sgls[prd_table_index]) {
+    dev_err_once(dev->dev, "PRD tables are not ready yet\n");
+    return -EINVAL;
+}
+```
 
-### 3. CLASSIFICATION
+### Stable Kernel Criteria Check
 
-This is a **NEW DEVICE ID** addition - one of the explicitly allowed
-exception categories for stable kernels:
+| Criterion | Met? |
+|-----------|------|
+| Obviously correct and tested | ✅ Yes - Simple NULL check, has Tested-
+by |
+| Fixes a real bug | ✅ Yes - NULL pointer dereference crash |
+| Fixes important issue | ✅ Yes - Kernel crash/oops |
+| Small and contained | ✅ Yes - 4 lines, 1 file |
+| No new features | ✅ Yes - Pure bug fix |
 
-> "Adding PCI IDs, USB IDs, ACPI IDs, etc. to existing drivers - These
-are trivial one-line additions that enable hardware support"
+### Risk vs Benefit
 
-Key points:
-- The hid-logitech-hidpp driver already exists in stable kernels
-- The HID++ protocol support is fully implemented
-- Only the Bluetooth device ID 0xb037 is being added
-- This is not a new driver or new functionality - it's enabling an
-  existing driver for new hardware
+- **Benefit:** Prevents kernel crashes on Intel THC devices when DMA
+  buffers are accessed before ready
+- **Risk:** Minimal - the check can only trigger an early return with
+  error on an already-buggy condition
+- **Scope:** Limited to Intel THC driver (touchscreens/touchpads on
+  Intel platforms)
 
-### 4. SCOPE AND RISK ASSESSMENT
+### Conclusion
 
-**Risk: EXTREMELY LOW**
-
-| Factor | Assessment |
-|--------|------------|
-| Lines changed | 2 |
-| Files touched | 1 |
-| Code logic changed | None |
-| Complexity | Zero - pure data table entry |
-| Subsystem maturity | Very mature (HID drivers) |
-
-This cannot introduce regressions because:
-- No code paths are modified
-- No functions are changed
-- Only users with this specific mouse over Bluetooth are affected
-- If there were somehow an issue, it would only affect that specific
-  hardware
-
-### 5. USER IMPACT
-
-**Who benefits:** Users with Logitech MX Anywhere 3S mice using
-Bluetooth connection
-
-**Without this fix:** The mouse works via basic HID, but lacks:
-- High-resolution scrolling
-- Battery status reporting
-- Other HID++ features that premium Logitech mice support
-
-**Impact level:** The MX Anywhere 3S is a current-generation retail
-product that users are actively purchasing. Stable kernel users expect
-their hardware to work properly.
-
-### 6. STABILITY INDICATORS
-
-- ✅ Tested by author on multiple machines with different Bluetooth chips
-- ✅ Reviewed and signed off by HID maintainer Jiri Kosina
-- ✅ Pattern is identical to many existing, working entries
-
-### 7. DEPENDENCY CHECK
-
-**Dependencies:** None
-
-This is a pure data addition. The driver framework already exists in all
-stable kernels that have the hid-logitech-hidpp driver. No other commits
-are required.
-
----
-
-## Summary
-
-This commit is a **textbook example of a stable-appropriate device ID
-addition**:
-
-1. ✅ **Trivial 2-line change** - Just a device ID added to an existing
-   table
-2. ✅ **No code modifications** - Pure data entry
-3. ✅ **Driver already exists** - hid-logitech-hidpp is well-established
-   in stable
-4. ✅ **Follows existing pattern** - Identical format to dozens of other
-   entries
-5. ✅ **Tested** - Verified on multiple hardware configurations
-6. ✅ **Zero regression risk** - Only affects users with this specific
-   hardware
-7. ✅ **Real user benefit** - Enables proper hardware support for
-   current-generation product
-8. ✅ **No dependencies** - Can be cleanly cherry-picked to any stable
-   kernel
-
-The stable kernel rules explicitly allow device ID additions because
-they enable hardware support with virtually zero risk. This is precisely
-what the "device ID exception" exists for.
+This is an excellent stable backport candidate. It fixes a NULL pointer
+dereference that causes kernel crashes, using a minimal and obviously
+correct defensive check. The driver exists in 6.14.x stable tree, and
+users with Intel THC touch devices would benefit from this fix. The
+change has been tested and is trivially reviewable.
 
 **YES**
 
- drivers/hid/hid-logitech-hidpp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hid/intel-thc-hid/intel-thc/intel-thc-dma.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
-index a88f2e5f791c6..9b612f62d0fba 100644
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -4661,6 +4661,8 @@ static const struct hid_device_id hidpp_devices[] = {
- 	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb025) },
- 	{ /* MX Master 3S mouse over Bluetooth */
- 	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb034) },
-+	{ /* MX Anywhere 3S mouse over Bluetooth */
-+	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb037) },
- 	{ /* MX Anywhere 3SB mouse over Bluetooth */
- 	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb038) },
- 	{}
+diff --git a/drivers/hid/intel-thc-hid/intel-thc/intel-thc-dma.c b/drivers/hid/intel-thc-hid/intel-thc/intel-thc-dma.c
+index 82b8854843e05..e1aadae4eb244 100644
+--- a/drivers/hid/intel-thc-hid/intel-thc/intel-thc-dma.c
++++ b/drivers/hid/intel-thc-hid/intel-thc/intel-thc-dma.c
+@@ -573,6 +573,11 @@ static int read_dma_buffer(struct thc_device *dev,
+ 		return -EINVAL;
+ 	}
+ 
++	if (!read_config->prd_tbls || !read_config->sgls[prd_table_index]) {
++		dev_err_once(dev->dev, "PRD tables are not ready yet\n");
++		return -EINVAL;
++	}
++
+ 	prd_tbl = &read_config->prd_tbls[prd_table_index];
+ 	mes_len = calc_message_len(prd_tbl, &nent);
+ 	if (mes_len > read_config->max_packet_size) {
 -- 
 2.51.0
 
