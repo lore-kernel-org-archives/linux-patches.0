@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BBA12E0916;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FC6F2E06EF;
 	Mon, 12 Jan 2026 14:59:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768229943; cv=none; b=aI6JeiqsmiIGGoVsC4qFQwkAZfGWcs8jXXFym35NqlsTbGbhtubm9LY9tbHN2j2V152x74eCPGLXYF++1CJUrj+d3CU4iim0Wq6Gf3rBELkxO2yvL6cUTjy/2PrbOqbYctZZX+vy+/GSKuc8CviYWsUnWoyPk15ueuExGCFNGFQ=
+	t=1768229943; cv=none; b=uF/c+V7KZHmCKK4v4vSLRYLGL8Cw1+qq/lGit4yv/KDE8tFqfhQ2IBNxUMxeEqgTIHZoBYn/dR0yGlpKTymr17ANKnE+f75/DcQEJoVCUXpG3OEgHWByMgZWgTQ1zSUF5Iorz/HiTDSw9wY+qAxlD6HrZe66bJd0Fj0zL+7x60A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1768229943; c=relaxed/simple;
-	bh=opg4tncLaI6otjgqlDIEK5fsztRbZKQsPuoibXoWSsM=;
+	bh=d/Hk7pYr4QRi+FKcMg9nhvQmJRSFfVO6mTcYAH99iTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dVG+pejZwmm0JiJ7J3QvQ+Y6PNapVUWxWWfwngUkGrdFkD1KvEtZKhdrTIBcpYStmPQb0ABKrGeP/SJUAYdETGi9uE1ajYp0hjiXPtOspqXr0mK+o+B2+FS2nAK+HfHw6QbVqqz1WqNfpSmsWtYnd/jzu2ryN/AmC59RgUBbkQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=smWTvNFc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZCFfIFFS3wPvPs82XJB+GeBFH1u0Mwk2HrJMtbq25Y0gfrRWZEznAbzUblTJHw6kU5Nx8KUHmR29GuR1gmgnME5vzLcLjITfwA3Q+H0rNUDThU5F/V9q5X0f2HxJTN89QASCUOGjPci9f2mUGJq86eAbn8jUEAzExPNilZcYTjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AJ9tKkVL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="smWTvNFc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B139C2BC86;
-	Mon, 12 Jan 2026 14:59:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AJ9tKkVL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07E7FC16AAE;
+	Mon, 12 Jan 2026 14:59:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768229943;
-	bh=opg4tncLaI6otjgqlDIEK5fsztRbZKQsPuoibXoWSsM=;
+	s=k20201202; t=1768229942;
+	bh=d/Hk7pYr4QRi+FKcMg9nhvQmJRSFfVO6mTcYAH99iTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=smWTvNFcuBYIv/R5nX8oy4ig5e0vHxiu+qhkeb2N8iD2XbBfh/lqXmNWqn6De9sBK
-	 YFj8KRiyf6XCEqZp4hj18O8b/juoqPQDmylBMoT9No2jzRngCei7BaxT1/Z/AHeQHc
-	 wQid2g25IoZt0EbD1ZbtKJPO2xPhSkbsm4fsWYiBXcdkx4lhWyFlkTI0i8QYBq0ABl
-	 r6NNhaZn56XE7rbpo4XA9FfQlApdanvk+1P/NrJMug8y79zgSAfw+YYfI+WyJabR49
-	 vKXGA3n1AXyCXP+9Rz7yPta5bYPcojF7C5Gr+rY6TrlCoBO3moUpD1ytiHjbXz86st
-	 yd763xFWNq3NA==
+	b=AJ9tKkVLiC3hcUnvnr2U/MBHaNOywYwFe6kRM5s/oZOUik6OQR9TUSM+2Ipezchjd
+	 ouO6/7+vVDPrk5jD3PIg2laoLsSaHPjJulfrThd2FOxDc1ANaiLFaXw09CEOvLVgf3
+	 scgwvcnA8gLVWM0hbUWyKc5Rr6l+5QmT8csmgwmnd+BBPYGUltpwZOrDsJ+YOzG5qd
+	 9H15ZR8PpC1FO6JmftE4hnQqpG0KyMg7QibKljVthUUcEERiV+J9jDCViT1DrqxWH/
+	 MWu2Au1Qasnm4ohsIVP35NmqmpJmoSO1nodosGaB3FMc9T6Dyis3PHnv7NL/3GPS++
+	 0ccFjHgERd1qQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Daniel Gomez <da.gomez@samsung.com>,
-	Florian Westphal <fw@strlen.de>,
+Cc: Lukas Gerlach <lukas.gerlach@cispa.de>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	pablo@netfilter.org,
-	netfilter-devel@vger.kernel.org,
-	coreteam@netfilter.org
-Subject: [PATCH AUTOSEL 6.18-5.15] netfilter: replace -EEXIST with -EBUSY
-Date: Mon, 12 Jan 2026 09:58:14 -0500
-Message-ID: <20260112145840.724774-13-sashal@kernel.org>
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	alexghiti@rivosinc.com,
+	cleger@rivosinc.com,
+	namcao@linutronix.de,
+	linux-riscv@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.18-6.12] riscv: Sanitize syscall table indexing under speculation
+Date: Mon, 12 Jan 2026 09:58:13 -0500
+Message-ID: <20260112145840.724774-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260112145840.724774-1-sashal@kernel.org>
 References: <20260112145840.724774-1-sashal@kernel.org>
@@ -53,197 +56,179 @@ X-stable-base: Linux 6.18.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Gomez <da.gomez@samsung.com>
+From: Lukas Gerlach <lukas.gerlach@cispa.de>
 
-[ Upstream commit 2bafeb8d2f380c3a81d98bd7b78b854b564f9cd4 ]
+[ Upstream commit 25fd7ee7bf58ac3ec7be3c9f82ceff153451946c ]
 
-The -EEXIST error code is reserved by the module loading infrastructure
-to indicate that a module is already loaded. When a module's init
-function returns -EEXIST, userspace tools like kmod interpret this as
-"module already loaded" and treat the operation as successful, returning
-0 to the user even though the module initialization actually failed.
+The syscall number is a user-controlled value used to index into the
+syscall table. Use array_index_nospec() to clamp this value after the
+bounds check to prevent speculative out-of-bounds access and subsequent
+data leakage via cache side channels.
 
-Replace -EEXIST with -EBUSY to ensure correct error reporting in the module
-initialization path.
-
-Affected modules:
-  * ebtable_broute ebtable_filter ebtable_nat arptable_filter
-  * ip6table_filter ip6table_mangle ip6table_nat ip6table_raw
-  * ip6table_security iptable_filter iptable_mangle iptable_nat
-  * iptable_raw iptable_security
-
-Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Lukas Gerlach <lukas.gerlach@cispa.de>
+Link: https://patch.msgid.link/20251218191332.35849-3-lukas.gerlach@cispa.de
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Commit Analysis: netfilter: replace -EEXIST with -EBUSY
+## Commit Analysis: riscv: Sanitize syscall table indexing under
+speculation
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The commit explains a subtle but important bug in error reporting:
-- When module initialization returns `-EEXIST`, the kernel module
-  loading infrastructure (kmod) interprets this as "module already
-  loaded"
-- kmod then returns **success (0)** to userspace, even though the module
-  initialization actually **failed**
-- This creates a silent failure condition where users believe operations
-  succeeded when they didn't
+The commit message clearly describes a **security vulnerability fix**:
+- User-controlled syscall numbers are used to index into the syscall
+  table
+- The fix prevents speculative out-of-bounds access
+- Addresses data leakage via cache side channels (Spectre v1-style
+  attack)
 
-Keywords: "error reporting", "failed" - this is a bug fix, not a
-feature.
+Key indicators: "speculative out-of-bounds access", "data leakage",
+"cache side channels" - these are unmistakable security vulnerability
+descriptions.
 
 ### 2. CODE CHANGE ANALYSIS
 
-The changes are trivial and identical across three files:
+The change is minimal and surgical:
 
-**net/bridge/netfilter/ebtables.c** (`ebt_register_template()`):
 ```c
-- return -EEXIST;
-+                       return -EBUSY;
+- if (syscall >= 0 && syscall < NR_syscalls)
++               if (syscall >= 0 && syscall < NR_syscalls) {
++                       syscall = array_index_nospec(syscall,
+NR_syscalls);
+                        syscall_handler(regs, syscall);
++               }
 ```
 
-**net/netfilter/nf_log.c** (`nf_log_register()`):
-```c
-- ret = -EEXIST;
-+                       ret = -EBUSY;
-```
+**Technical mechanism:**
+- The bounds check (`syscall >= 0 && syscall < NR_syscalls`) is
+  performed at runtime
+- However, speculative execution can bypass this check - the CPU may
+  speculatively execute `syscall_handler()` with an out-of-bounds index
+  before the branch is resolved
+- This speculative access leaves traces in the cache that can be
+  measured via timing attacks
+- `array_index_nospec()` creates a data dependency that architecturally
+  clamps the index, preventing speculative OOB access
 
-**net/netfilter/x_tables.c** (`xt_register_template()`):
-```c
-- int ret = -EEXIST, af = table->af;
-+       int ret = -EBUSY, af = table->af;
-```
-
-All three functions are registration routines called during module
-initialization for netfilter tables. When a duplicate name/type is
-detected, they were returning `-EEXIST`, which gets misinterpreted by
-kmod.
+This is the standard Spectre v1 (bounds check bypass) mitigation pattern
+used extensively throughout the kernel since 2018.
 
 ### 3. CLASSIFICATION
 
-**Bug fix**: Corrects error code semantics. No new functionality, no
-behavior change beyond proper error reporting.
+**Type:** Security fix (speculative execution side-channel
+vulnerability)
 
-The `-EBUSY` error code is semantically appropriate ("resource is
-busy/in use") and is not intercepted specially by the module loading
-infrastructure.
+This is NOT:
+- A new feature
+- A code cleanup
+- An optimization
+- A refactoring
+
+This IS a security hardening fix addressing a well-known class of
+vulnerabilities.
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-- **Lines changed**: ~6 actual code changes
-- **Files affected**: 3 files in netfilter subsystem
-- **Complexity**: Trivial - only changing error code constants
-- **Risk**: Extremely low - no logic changes at all
+**Size:** 2 lines of actual code change
+**Files:** 1 file (arch/riscv/kernel/traps.c)
+**Complexity:** Extremely low - standard pattern
 
-The only conceivable concern would be if userspace depended on
-`-EEXIST`, but:
-1. These are internal kernel registration functions
-2. The duplicate condition should never occur in normal operation (note
-   the `WARN_ON_ONCE`)
-3. The current behavior is **wrong** - it reports success on failure
+**Risk analysis:**
+- `array_index_nospec()` is a mature, battle-tested macro available
+  since kernel 4.16+
+- The logic flow is identical - only adds speculation barrier
+- No functional behavior change
+- Zero regression risk - this is purely defensive
 
 ### 5. USER IMPACT
 
-**High impact bug**:
-- Affects all netfilter/iptables users when module initialization fails
-- Security implications: Users may believe their firewall tables loaded
-  successfully when they didn't
-- Affected modules include: `iptable_filter`, `iptable_nat`,
-  `ip6table_filter`, `ebtable_filter`, etc. - core firewall components
+**Affected users:** All RISC-V kernel users
 
-This is exactly the kind of silent failure that can cause security
-issues in production.
+**Severity:** High - this is a security vulnerability:
+- Allows potential kernel memory disclosure via timing side-channels
+- Spectre-class vulnerabilities have resulted in numerous CVEs
+- The syscall path is one of the most critical attack surfaces (user →
+  kernel transition)
+
+**Real-world impact:** While exploitation requires sophistication,
+Spectre attacks are well-documented and actively exploited. This
+vulnerability class affects every major cloud provider and is taken very
+seriously.
 
 ### 6. STABILITY INDICATORS
 
-- Signed-off-by: Florian Westphal (netfilter maintainer) - indicates
-  proper review
-- The fix is self-evidently correct
-- Clear problem description in commit message
+- Authored by researcher from CISPA (Helmholtz Center for Information
+  Security)
+- Signed-off by Paul Walmsley (RISC-V maintainer)
+- Follows established kernel security patterns
+- Other architectures (x86, ARM64) already have equivalent protections
 
 ### 7. DEPENDENCY CHECK
 
-- No dependencies on other commits
-- The affected code (netfilter table registration) exists in all stable
-  kernel trees
-- These are long-standing, mature functions
+**`array_index_nospec()`:** This macro has been in the kernel since
+early 2018 (v4.16) for Spectre mitigations. It will be present in all
+maintained stable trees.
 
-### Summary
+**Code context:** The `do_trap_ecall_u()` function in
+`arch/riscv/kernel/traps.c` is a fundamental part of the RISC-V syscall
+handling and exists in all stable trees supporting RISC-V.
 
-| Criterion | Assessment |
-|-----------|------------|
-| Fixes real bug? | ✅ Yes - silent failure condition |
-| Obviously correct? | ✅ Yes - trivial error code change |
-| Small and contained? | ✅ Yes - 6 lines across 3 files |
-| Security relevant? | ✅ Yes - firewall may silently fail to load |
-| Risk of regression? | ✅ Minimal - no logic changes |
-| Dependencies? | ✅ None - self-contained |
+No other commits are required as dependencies.
 
-This commit fixes incorrect error semantics that cause userspace tools
-to report success when module initialization fails. The fix is trivial
-(changing error codes), affects widely-used firewall code, has potential
-security implications (users may not know their firewall failed), and
-carries virtually zero regression risk. It meets all stable kernel
-criteria.
+### STABLE KERNEL RULES ASSESSMENT
+
+| Criteria | Assessment |
+|----------|------------|
+| Obviously correct | ✅ Uses standard kernel pattern |
+| Fixes real bug | ✅ Security vulnerability |
+| Important issue | ✅ Information disclosure via side-channel |
+| Small and contained | ✅ 2 lines, 1 file |
+| No new features | ✅ Pure security hardening |
+| Can apply cleanly | ✅ Self-contained change |
+
+### CONCLUSION
+
+This is an exemplary stable backport candidate:
+
+1. **Security fix** for a Spectre v1-class vulnerability in the RISC-V
+   syscall path
+2. **Minimal change** - 2 lines using well-established kernel security
+   primitives
+3. **Zero regression risk** - no functional change, only speculation
+   barrier
+4. **High value** - protects all RISC-V users from potential kernel
+   memory disclosure
+5. **Brings RISC-V in line** with other architectures that already have
+   this protection
+
+The fix is small, surgical, addresses a real security vulnerability,
+uses a mature mitigation pattern, and has essentially no risk of causing
+regressions. This meets all stable kernel criteria.
 
 **YES**
 
- net/bridge/netfilter/ebtables.c | 2 +-
- net/netfilter/nf_log.c          | 4 ++--
- net/netfilter/x_tables.c        | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ arch/riscv/kernel/traps.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/bridge/netfilter/ebtables.c b/net/bridge/netfilter/ebtables.c
-index 5697e3949a365..a04fc17575289 100644
---- a/net/bridge/netfilter/ebtables.c
-+++ b/net/bridge/netfilter/ebtables.c
-@@ -1299,7 +1299,7 @@ int ebt_register_template(const struct ebt_table *t, int (*table_init)(struct ne
- 	list_for_each_entry(tmpl, &template_tables, list) {
- 		if (WARN_ON_ONCE(strcmp(t->name, tmpl->name) == 0)) {
- 			mutex_unlock(&ebt_mutex);
--			return -EEXIST;
-+			return -EBUSY;
- 		}
- 	}
+diff --git a/arch/riscv/kernel/traps.c b/arch/riscv/kernel/traps.c
+index 80230de167def..47afea4ff1a8d 100644
+--- a/arch/riscv/kernel/traps.c
++++ b/arch/riscv/kernel/traps.c
+@@ -339,8 +339,10 @@ void do_trap_ecall_u(struct pt_regs *regs)
  
-diff --git a/net/netfilter/nf_log.c b/net/netfilter/nf_log.c
-index 74cef8bf554c5..62cf6a30875e3 100644
---- a/net/netfilter/nf_log.c
-+++ b/net/netfilter/nf_log.c
-@@ -89,7 +89,7 @@ int nf_log_register(u_int8_t pf, struct nf_logger *logger)
- 	if (pf == NFPROTO_UNSPEC) {
- 		for (i = NFPROTO_UNSPEC; i < NFPROTO_NUMPROTO; i++) {
- 			if (rcu_access_pointer(loggers[i][logger->type])) {
--				ret = -EEXIST;
-+				ret = -EBUSY;
- 				goto unlock;
- 			}
- 		}
-@@ -97,7 +97,7 @@ int nf_log_register(u_int8_t pf, struct nf_logger *logger)
- 			rcu_assign_pointer(loggers[i][logger->type], logger);
- 	} else {
- 		if (rcu_access_pointer(loggers[pf][logger->type])) {
--			ret = -EEXIST;
-+			ret = -EBUSY;
- 			goto unlock;
- 		}
- 		rcu_assign_pointer(loggers[pf][logger->type], logger);
-diff --git a/net/netfilter/x_tables.c b/net/netfilter/x_tables.c
-index 90b7630421c44..48105ea3df152 100644
---- a/net/netfilter/x_tables.c
-+++ b/net/netfilter/x_tables.c
-@@ -1764,7 +1764,7 @@ EXPORT_SYMBOL_GPL(xt_hook_ops_alloc);
- int xt_register_template(const struct xt_table *table,
- 			 int (*table_init)(struct net *net))
- {
--	int ret = -EEXIST, af = table->af;
-+	int ret = -EBUSY, af = table->af;
- 	struct xt_template *t;
+ 		add_random_kstack_offset();
  
- 	mutex_lock(&xt[af].mutex);
+-		if (syscall >= 0 && syscall < NR_syscalls)
++		if (syscall >= 0 && syscall < NR_syscalls) {
++			syscall = array_index_nospec(syscall, NR_syscalls);
+ 			syscall_handler(regs, syscall);
++		}
+ 
+ 		/*
+ 		 * Ultimately, this value will get limited by KSTACK_OFFSET_MAX(),
 -- 
 2.51.0
 
