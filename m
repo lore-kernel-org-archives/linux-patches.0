@@ -1,54 +1,54 @@
-Received: from mailout3.samsung.com (mailout3.samsung.com [203.254.224.33])
+Received: from mailout2.samsung.com (mailout2.samsung.com [203.254.224.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6E7341678
-	for <patches@lists.linux.dev>; Tue, 13 Jan 2026 09:35:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.33
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA03234167B
+	for <patches@lists.linux.dev>; Tue, 13 Jan 2026 09:35:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.25
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768296944; cv=none; b=AR8R7tvWg6fsIRKfNTDNv4pPv0I850AcwBzZGzg0RrwixHCIYJHFtVx/GTDaYXTelUpWQMslBS0vGyYtQSGqc3WFuM/mfqReziflpnM6ogdR6sndMS1o7JFZ5ok65vlX1h4iHH1pzHXLh8QIx3hsObl7Vx4WD7q358npBVa5HE0=
+	t=1768296944; cv=none; b=Uf3qMo/gGaD8XA0CVIibul69vZKImGcVElhHrpP8pK29PxTmxAwJfaXnd/xt6cc5c/NCoHwjk2jEEyvLWxwOB8u6cbGO6GybBag56rxvEAkm/2QyfJVM5v2u9AEeyBaH3Pj5dL0y5GgEeN8wQiZYuBqo9ENd8ksfy93nm9EsR4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1768296944; c=relaxed/simple;
-	bh=3/Z4uHerD2Azm4PUQpd57a/8qOZfnIVXLtE7Hv1WmNQ=;
+	bh=1fBsQUYCo7i2F3J1W00LC+Bh7UG07mYXWYtIKWMX5HI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:MIME-Version:
-	 Content-Type:References; b=uCzmJ91bmhzgSftV6BPD4Mij+WH6b97vQ5iFrm8t01quuns6HF54kNc3CajJkqikQKfL4gOtlP+x3uaCoI4tm2HNRBiV1PxHeferHg1b7AqWv6S/RFblMBbXnbmfcCvSFE5HamfAkjhqP7IxswIvy81rcapDrqKx0smCcBLu/cA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=cqt5cGwS; arc=none smtp.client-ip=203.254.224.33
+	 Content-Type:References; b=AMAQ+2LdrrVhxLVgjsS0+Ki8FYzktL6fKPp4YYRhDnS6znvUnP1HrM1j6GPP2pC6cpU5JENT5UiZjMSixbb+ap5zsDNAfNWNdFC6W38os9j6xnUcm8QdYZ/JwQemdrsA7TVzlYbzTjvTCD89TrEmAfro+og285xirTuALCEVELo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=nvKXBBoB; arc=none smtp.client-ip=203.254.224.25
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="cqt5cGwS"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="nvKXBBoB"
 Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
-	by mailout3.samsung.com (KnoxPortal) with ESMTP id 20260113093539epoutp03272d64ed06e2455c4f416732e07da5e5~KQLKyDzdp0575405754epoutp03h
-	for <patches@lists.linux.dev>; Tue, 13 Jan 2026 09:35:39 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20260113093539epoutp03272d64ed06e2455c4f416732e07da5e5~KQLKyDzdp0575405754epoutp03h
+	by mailout2.samsung.com (KnoxPortal) with ESMTP id 20260113093541epoutp023a2372819aadb72c715cc992a40377cd~KQLMGFzrx1750017500epoutp02M
+	for <patches@lists.linux.dev>; Tue, 13 Jan 2026 09:35:41 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com 20260113093541epoutp023a2372819aadb72c715cc992a40377cd~KQLMGFzrx1750017500epoutp02M
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1768296939;
-	bh=6v0lih7n9GXk10aAmk2cbiH/nXIUk019UpHfdrpY2kU=;
+	s=mail20170921; t=1768296941;
+	bh=5ZZwSbBXD3iP83HOt36aK0JzGigNCXxXew3cIDxEBHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cqt5cGwS9FKtNhtsCYlQSn6+AOIsBDGNfrYnPL5JI76excScu2xJml00ofYm8JLOc
-	 k80N2SDoj16nCUqaIJVlielTkYVO0KpsWn7DTrtz02A+UF2bTABKbh1vWQuV8qA/Q3
-	 jBDyb9JRO6RS8Z+EmNGN5LhjyqTOO76GkEiPJAEo=
-Received: from epsnrtp04.localdomain (unknown [182.195.42.156]) by
+	b=nvKXBBoBztTlwwz5aNgOiA0OkgfGS1fTF/UXzsDJlKy8AoAJ3tmZWC8WPCPZYJb+w
+	 2A/ukiohgKHZHU0ABCkVACyqsSXwA8qKa15d4tUskXIB6Km0dom71V9JoaFwPZBxID
+	 GCaf08dYS/Fy+wbOMx3V0b75VBgaHS3TAqqRaVnA=
+Received: from epsnrtp03.localdomain (unknown [182.195.42.155]) by
 	epcas5p2.samsung.com (KnoxPortal) with ESMTPS id
-	20260113093539epcas5p2770da039c97e57d812169d3f819754af~KQLKfyaaf1628216282epcas5p2G;
-	Tue, 13 Jan 2026 09:35:39 +0000 (GMT)
-Received: from epcas5p4.samsung.com (unknown [182.195.38.88]) by
-	epsnrtp04.localdomain (Postfix) with ESMTP id 4dr3yL6MDwz6B9m6; Tue, 13 Jan
-	2026 09:35:38 +0000 (GMT)
+	20260113093541epcas5p2ac06e97267a869a00d65df02719be37c~KQLL2L_Zy1628216282epcas5p2L;
+	Tue, 13 Jan 2026 09:35:41 +0000 (GMT)
+Received: from epcas5p1.samsung.com (unknown [182.195.38.88]) by
+	epsnrtp03.localdomain (Postfix) with ESMTP id 4dr3yN2NBFz3hhT3; Tue, 13 Jan
+	2026 09:35:40 +0000 (GMT)
 Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
-	epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
-	20260113093538epcas5p199dc8af6e4cd847fc6c9c10cc6c519b2~KQLJKknkC2277022770epcas5p1s;
-	Tue, 13 Jan 2026 09:35:38 +0000 (GMT)
+	epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
+	20260113093539epcas5p2a0e38b5c59155b7dc107943c7a4be798~KQLKvhGzU1108811088epcas5p25;
+	Tue, 13 Jan 2026 09:35:39 +0000 (GMT)
 Received: from localhost.localdomain (unknown [107.99.41.245]) by
 	epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
-	20260113093537epsmtip2bcc8410a2012ab590fec0fc949ae28f4~KQLIp97oM2766827668epsmtip2F;
-	Tue, 13 Jan 2026 09:35:37 +0000 (GMT)
+	20260113093539epsmtip22e8b837429d8e46ec377cf16af74095c~KQLKL8Og52909129091epsmtip2k;
+	Tue, 13 Jan 2026 09:35:39 +0000 (GMT)
 From: Kundan Kumar <kundan.kumar@samsung.com>
 To: anuj20.g@samsung.com
 Cc: patches@lists.linux.dev, Kundan Kumar <kundan.kumar@samsung.com>
-Subject: [PATCH 4/6] xfs: tag folios with AG number during buffered write
- via iomap attach hook
-Date: Tue, 13 Jan 2026 15:00:48 +0530
-Message-Id: <20260113093050.31705-5-kundan.kumar@samsung.com>
+Subject: [PATCH 6/6] xfs: offload writeback by AG using per-inode dirty
+ bitmap and per-AG workers
+Date: Tue, 13 Jan 2026 15:00:50 +0530
+Message-Id: <20260113093050.31705-7-kundan.kumar@samsung.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20260113093050.31705-1-kundan.kumar@samsung.com>
 Precedence: bulk
@@ -58,173 +58,295 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CMS-MailID: 20260113093538epcas5p199dc8af6e4cd847fc6c9c10cc6c519b2
+X-CMS-MailID: 20260113093539epcas5p2a0e38b5c59155b7dc107943c7a4be798
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
 CMS-TYPE: 105P
 cpgsPolicy: CPGSC10-542,Y
 X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20260113093538epcas5p199dc8af6e4cd847fc6c9c10cc6c519b2
+X-CMS-RootMailID: 20260113093539epcas5p2a0e38b5c59155b7dc107943c7a4be798
 References: <20260113093050.31705-1-kundan.kumar@samsung.com>
-	<CGME20260113093538epcas5p199dc8af6e4cd847fc6c9c10cc6c519b2@epcas5p1.samsung.com>
+	<CGME20260113093539epcas5p2a0e38b5c59155b7dc107943c7a4be798@epcas5p2.samsung.com>
 
-Use the iomap attach hook to tag folios with their predicted
-allocation group at write time. Mapped extents derive AG directly;
-delalloc and hole cases use a lightweight predictor.
+Offload XFS writeback to per-AG workers based on the inode dirty-AG
+bitmap. Each worker scans and submits writeback only for folios
+belonging to its AG.
 
 Signed-off-by: Kundan Kumar <kundan.kumar@samsung.com>
 Signed-off-by: Anuj Gupta <anuj20.g@samsung.com>
 ---
- fs/xfs/xfs_iomap.c | 120 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 120 insertions(+)
+ fs/xfs/xfs_aops.c | 225 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 225 insertions(+)
 
-diff --git a/fs/xfs/xfs_iomap.c b/fs/xfs/xfs_iomap.c
-index 2a74f2957341..db9be6a14bfd 100644
---- a/fs/xfs/xfs_iomap.c
-+++ b/fs/xfs/xfs_iomap.c
-@@ -12,6 +12,9 @@
- #include "xfs_trans_resv.h"
- #include "xfs_mount.h"
- #include "xfs_inode.h"
-+#include "xfs_alloc.h"
-+#include "xfs_ag.h"
-+#include "xfs_ag_resv.h"
- #include "xfs_btree.h"
- #include "xfs_bmap_btree.h"
- #include "xfs_bmap.h"
-@@ -33,6 +36,8 @@
- #include "xfs_icache.h"
+diff --git a/fs/xfs/xfs_aops.c b/fs/xfs/xfs_aops.c
+index ff5cca0e9060..55fbc81baeb1 100644
+--- a/fs/xfs/xfs_aops.c
++++ b/fs/xfs/xfs_aops.c
+@@ -23,6 +23,18 @@
  #include "xfs_zone_alloc.h"
+ #include "xfs_rtgroup.h"
  
-+struct xfs_alloc_arg;
++#define XFS_AG_TASK_POOL_MIN 1024
 +
- #define XFS_ALLOC_ALIGN(mp, off) \
- 	(((off) >> mp->m_allocsize_log) << mp->m_allocsize_log)
- 
-@@ -92,8 +97,123 @@ xfs_iomap_valid(
- 	return true;
- }
- 
-+static xfs_agnumber_t
-+xfs_predict_delalloc_agno(const struct xfs_inode *ip, loff_t pos, loff_t len)
-+{
-+	struct xfs_mount *mp = ip->i_mount;
-+	xfs_agnumber_t start_agno, agno, best_agno;
-+	struct xfs_perag *pag;
++static struct kmem_cache *xfs_ag_task_cachep;
++static mempool_t *xfs_ag_task_pool;
 +
-+	xfs_extlen_t free, resv, avail;
-+	xfs_extlen_t need_fsbs, min_free_fsbs;
-+	xfs_extlen_t best_free = 0;
-+	xfs_agnumber_t agcount = mp->m_sb.sb_agcount;
-+
-+	/* RT inodes allocate from the realtime volume */
-+	if (XFS_IS_REALTIME_INODE(ip))
-+		return XFS_INO_TO_AGNO(mp, ip->i_ino);
-+
-+	start_agno =  XFS_INO_TO_AGNO(mp, ip->i_ino);
-+
-+	/*
-+	 * size-based minimum free requirement.
-+	 * Convert bytes to fsbs and require some slack.
-+	 */
-+	need_fsbs = XFS_B_TO_FSB(mp, (xfs_fsize_t)len);
-+	min_free_fsbs = need_fsbs + max_t(xfs_extlen_t, need_fsbs >> 2, 128);
-+
-+	/*
-+	 * scan AGs starting at start_agno and wrapping.
-+	 * Pick the first AG that meets min_free_fsbs after reservations.
-+	 * Keep a "best" fallback = maximum (free - resv).
-+	 */
-+	best_agno = start_agno;
-+
-+	for (xfs_agnumber_t i = 0; i < agcount; i++) {
-+		agno = (start_agno + i) % agcount;
-+		pag = xfs_perag_get(mp, agno);
-+
-+		if (!xfs_perag_initialised_agf(pag))
-+			goto next;
-+
-+		free = READ_ONCE(pag->pagf_freeblks);
-+		resv = xfs_ag_resv_needed(pag, XFS_AG_RESV_NONE);
-+
-+		if (free <= resv)
-+			goto next;
-+
-+		avail = free - resv;
-+
-+		if (avail >= min_free_fsbs) {
-+			xfs_perag_put(pag);
-+			return agno;
-+		}
-+
-+		if (avail > best_free) {
-+			best_free = avail;
-+			best_agno = agno;
-+		}
-+next:
-+		xfs_perag_put(pag);
-+	}
-+
-+	return best_agno;
-+}
-+
-+static inline xfs_agnumber_t xfs_ag_from_iomap(const struct xfs_mount *mp,
-+		const struct iomap *iomap,
-+		const struct xfs_inode *ip, loff_t pos, size_t len)
-+{
-+	if (iomap->type == IOMAP_MAPPED || iomap->type == IOMAP_UNWRITTEN) {
-+		/* iomap->addr is byte address on device for buffered I/O */
-+		xfs_fsblock_t fsb = XFS_BB_TO_FSBT(mp, BTOBB(iomap->addr));
-+
-+		return XFS_FSB_TO_AGNO(mp, fsb);
-+	} else if (iomap->type == IOMAP_HOLE || iomap->type == IOMAP_DELALLOC) {
-+		return xfs_predict_delalloc_agno(ip, pos, len);
-+	}
-+
-+	return XFS_INO_TO_AGNO(mp, ip->i_ino);
-+}
-+
-+static void xfs_agp_set(struct xfs_inode *ip, pgoff_t index, u16 agno, u8 type)
-+{
-+	u32 packed = xfs_agp_pack(agno, type, true);
-+
-+	/* store as immediate value */
-+	xa_store(&ip->i_ag_pmap, index, xa_mk_value(packed), GFP_NOFS);
-+
-+	/* Mark this AG as having potential dirty work */
-+	if (ip->i_ag_dirty_bitmap && agno < ip->i_ag_dirty_bits) {
-+		spin_lock(&ip->i_ag_dirty_lock);
-+		set_bit(agno, ip->i_ag_dirty_bitmap);
-+		spin_unlock(&ip->i_ag_dirty_lock);
-+	}
-+}
-+
-+static int
-+xfs_iomap_attach_folio(const struct iomap *iomap, struct folio *folio,
-+		loff_t pos, size_t len)
-+{
-+	struct inode *inode;
++struct xfs_ag_wb_task {
++	struct list_head list;
 +	struct xfs_inode *ip;
-+	struct xfs_mount *mp;
-+	u16 agno;
++	struct writeback_control wbc;
++	xfs_agnumber_t agno;
++};
 +
-+	inode = folio_mapping(folio)->host;
-+	ip = XFS_I(inode);
-+	mp = ip->i_mount;
+ struct xfs_ag_wb {
+ 	struct delayed_work ag_work;
+ 	spinlock_t lock;
+@@ -674,6 +686,213 @@ static const struct iomap_writeback_ops xfs_zoned_writeback_ops = {
+ 	.writeback_submit	= xfs_zoned_writeback_submit,
+ };
+ 
++static bool xfs_agp_match(struct xfs_inode *ip, pgoff_t index,
++			  xfs_agnumber_t agno)
++{
++	void *ent;
++	u32 v;
 +
-+	agno = xfs_ag_from_iomap(mp, iomap, ip, pos, len);
++	ent = xa_load(&ip->i_ag_pmap, index);
++	if (!ent)
++		return false;
++	if (!xa_is_value(ent))
++		return false;
 +
-+	xfs_agp_set(ip, folio->index, (u16)agno, (u8)iomap->type);
++	v = xa_to_value(ent);
++	if (!xfs_agp_valid(v))
++		return false;
++
++	return xfs_agp_agno(v) == agno;
++}
++
++static bool xfs_folio_matches_ag(struct folio *folio, xfs_agnumber_t agno)
++{
++	struct xfs_inode *ip = XFS_I(folio_mapping(folio)->host);
++
++	return xfs_agp_match(ip, folio->index, agno);
++}
++
++static int xfs_writepages_ag(struct xfs_inode *ip,
++			     struct writeback_control *wbc,
++			     xfs_agnumber_t agno)
++{
++	struct inode *inode = VFS_I(ip);
++	struct address_space *mapping = inode->i_mapping;
++	struct folio_batch fbatch;
++	int ret = 0;
++	pgoff_t index, end;
++
++	folio_batch_init(&fbatch);
++	index = wbc->range_start >> PAGE_SHIFT;
++	end = wbc->range_end >> PAGE_SHIFT;
++
++	struct xfs_writepage_ctx wpc = {
++		.ctx = {
++			.inode = inode,
++			.wbc = wbc,
++			.ops = &xfs_writeback_ops,
++		},
++	};
++
++	while (index <= end) {
++		int i, nr;
++
++		/* get a batch of DIRTY folios starting at index */
++		nr = filemap_get_folios_tag(mapping, &index, end,
++					    PAGECACHE_TAG_DIRTY, &fbatch);
++		if (!nr)
++			break;
++
++		for (i = 0; i < nr; i++) {
++			struct folio *folio = fbatch.folios[i];
++
++			/* Filter BEFORE locking */
++			if (!xfs_folio_matches_ag(folio, agno))
++				continue;
++
++			folio_lock(folio);
++
++			/*
++			 * Now it's ours: clear dirty and submit.
++			 * This prevents *this AG worker* from seeing it again
++			 * next time.
++			 */
++			if (!folio_clear_dirty_for_io(folio)) {
++				folio_unlock(folio);
++				continue;
++			}
++			xa_erase(&XFS_I(mapping->host)->i_ag_pmap, folio->index);
++
++			ret = iomap_writeback_folio(&wpc.ctx, folio);
++			folio_unlock(folio);
++
++			if (ret) {
++				folio_batch_release(&fbatch);
++				goto out;
++			}
++		}
++
++		folio_batch_release(&fbatch);
++		cond_resched();
++	}
++	if (wpc.ctx.wb_ctx)
++		xfs_writeback_ops.writeback_submit(&wpc.ctx, ret);
++
++out:
++	return ret;
++}
++
++static void xfs_ag_writeback_work(struct work_struct *work)
++{
++	struct xfs_ag_wb *awb = container_of(to_delayed_work(work),
++					     struct xfs_ag_wb, ag_work);
++	for (;;) {
++		struct xfs_ag_wb_task *task;
++		struct inode *inode;
++		struct xfs_inode *ip;
++		int ret;
++
++		spin_lock(&awb->lock);
++		task = list_first_entry_or_null(&awb->task_list,
++						struct xfs_ag_wb_task, list);
++		if (task)
++			list_del_init(&task->list);
++		spin_unlock(&awb->lock);
++
++		if (!task)
++			break;
++
++		ip = task->ip;
++		inode = VFS_I(ip);
++
++		ret = xfs_writepages_ag(ip, &task->wbc, task->agno);
++
++		/*
++		 * If we submit everything for this AG, clear its bit.
++		 */
++		if (ret == 0) {
++			spin_lock(&ip->i_ag_dirty_lock);
++			clear_bit(task->agno, ip->i_ag_dirty_bitmap);
++			spin_unlock(&ip->i_ag_dirty_lock);
++		}
++
++		iput(inode); /* drop igrab */
++		mempool_free(task, xfs_ag_task_pool);
++	}
++}
++
++static int xfs_vm_writepages_offload(struct address_space *mapping,
++				     struct writeback_control *wbc)
++{
++	struct inode *inode = mapping->host;
++	struct xfs_inode *ip = XFS_I(inode);
++	struct xfs_mount *mp = ip->i_mount;
++	unsigned int nlongs;
++	xfs_agnumber_t agno;
++
++	if (!ip->i_ag_dirty_bits)
++		return 0;
++
++	nlongs = BITS_TO_LONGS(ip->i_ag_dirty_bits);
++
++	spin_lock(&ip->i_ag_dirty_lock);
++	for_each_set_bit(agno, ip->i_ag_dirty_bitmap, ip->i_ag_dirty_bits) {
++		struct xfs_ag_wb *awb = &mp->m_ag_wb[agno];
++		struct xfs_ag_wb_task *task;
++
++		task =  mempool_alloc(xfs_ag_task_pool, GFP_NOFS);
++		if (!task)
++			continue;
++
++		INIT_LIST_HEAD(&task->list);
++		task->ip = ip;
++		task->agno = agno;
++		task->wbc = *wbc;
++		igrab(inode); /* worker owns inode ref */
++
++		spin_lock(&awb->lock);
++		list_add_tail(&task->list, &awb->task_list);
++		spin_unlock(&awb->lock);
++
++		mod_delayed_work(mp->m_ag_wq, &awb->ag_work, 0);
++	}
++	spin_unlock(&ip->i_ag_dirty_lock);
 +
 +	return 0;
 +}
 +
- const struct iomap_write_ops xfs_iomap_write_ops = {
- 	.iomap_valid		= xfs_iomap_valid,
-+	.iomap_attach_folio	= xfs_iomap_attach_folio,
- };
++static int xfs_ag_task_pool_init(void)
++{
++	if (xfs_ag_task_pool)
++		return 0;
++
++	xfs_ag_task_cachep = kmem_cache_create("xfs_ag_wb_task",
++					       sizeof(struct xfs_ag_wb_task),
++					       0,
++					       SLAB_RECLAIM_ACCOUNT,
++					       NULL);
++	if (!xfs_ag_task_cachep)
++		return -ENOMEM;
++
++	xfs_ag_task_pool = mempool_create_slab_pool(XFS_AG_TASK_POOL_MIN,
++						    xfs_ag_task_cachep);
++	if (!xfs_ag_task_pool) {
++		kmem_cache_destroy(xfs_ag_task_cachep);
++		xfs_ag_task_cachep = NULL;
++		return -ENOMEM;
++	}
++	return 0;
++}
++
++static void xfs_ag_task_pool_destroy(void)
++{
++	mempool_destroy(xfs_ag_task_pool);
++	xfs_ag_task_pool = NULL;
++
++	kmem_cache_destroy(xfs_ag_task_cachep);
++	xfs_ag_task_cachep = NULL;
++}
++
+ void
+ xfs_init_ag_writeback(struct xfs_mount *mp)
+ {
+@@ -697,11 +916,13 @@ xfs_init_ag_writeback(struct xfs_mount *mp)
+ 	for (agno = 0; agno < mp->m_sb.sb_agcount; agno++) {
+ 		struct xfs_ag_wb *awb = &mp->m_ag_wb[agno];
  
- int
++		INIT_DELAYED_WORK(&awb->ag_work, xfs_ag_writeback_work);
+ 		spin_lock_init(&awb->lock);
+ 		INIT_LIST_HEAD(&awb->task_list);
+ 		awb->agno = agno;
+ 		awb->mp = mp;
+ 	}
++	xfs_ag_task_pool_init();
+ }
+ 
+ void
+@@ -714,6 +935,7 @@ xfs_destroy_ag_writeback(struct xfs_mount *mp)
+ 	}
+ 	kfree(mp->m_ag_wb);
+ 	mp->m_ag_wb = NULL;
++	xfs_ag_task_pool_destroy();
+ }
+ 
+ STATIC int
+@@ -740,6 +962,9 @@ xfs_vm_writepages(
+ 			xfs_open_zone_put(xc.open_zone);
+ 		return error;
+ 	} else {
++		if (wbc->sync_mode != WB_SYNC_ALL)
++			return xfs_vm_writepages_offload(mapping, wbc);
++
+ 		struct xfs_writepage_ctx	wpc = {
+ 			.ctx = {
+ 				.inode	= mapping->host,
 -- 
 2.25.1
 
