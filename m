@@ -1,124 +1,156 @@
-Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D270341678
-	for <patches@lists.linux.dev>; Tue, 13 Jan 2026 09:35:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61BE1239E76;
+	Tue, 13 Jan 2026 21:00:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768296947; cv=none; b=qMcLucjoobC57lt5CvVBUAEe5BmHGOPOPsBf0jGmiGLxEZ8vIrTbBUxZXdCCBvkjrhPveCRviZLSDB4EEStxh2BzLqwuPkeCgCd8u5T30ycdGvL7nXt4/ADfXaJdnszUogweN9t3l2L2bW1yiEtNEf0gqCYAz+ylzvwqZfU6ppI=
+	t=1768338001; cv=none; b=gmdg+0Gpl0gbT20bO++4O6nQZn76hAT+bRbzxx1pacsLpIhb0J6LT1t7V2MwUdB72EVRFeDbjBYLZYF1Bz18xhqwzQ38gsH5249j9vF2DawZRkjrPCJWnIZr5jmSbMuMnux47ddHGNlevh1ENnuEI+HU8bPjsQE87XSVrktnaKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768296947; c=relaxed/simple;
-	bh=Sej1ZQX93ATp2dW4HPDjJlSX+7nIiKdIWVmrJYf1SC4=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:MIME-Version:
-	 Content-Type:References; b=Cs8G8MYJKqq8xZi2kmO3Ef76IesRGWf0qsZJ40Si0hCUQhiqPz+mRyzQDw3V3y32j88dozWLe41jfW+cibeBB+RrRo4bCm63JxmN3XEwWFYsmGE5ILD4qokqO/aWMFxD9OOAMXKFmLyOd7n9MO3bnaYf/2thQUP7qwer+ZDbd6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=C2G/1+aI; arc=none smtp.client-ip=203.254.224.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+	s=arc-20240116; t=1768338001; c=relaxed/simple;
+	bh=lmfFO/unuLH4tjf+bCfXXy7t0C9+nXei62nDVi+zFSc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nzRoZRhwB7HD2nZmhvumIjTTNX2MECwL6QpTKnPBSImljVgdIOa7dgfHbIj0Lrtxv5uJeOYO3zF7XuHWHxq5qRE0PUZVQ2RMCQhB44xq/Od0bCQCxoeTdCaph/1SUERA2SpCdrEZUkQpVnCckcUkMmxliGs56VvV+shfYmOvbwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kEDuiNCX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="C2G/1+aI"
-Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
-	by mailout4.samsung.com (KnoxPortal) with ESMTP id 20260113093537epoutp04a0646de67d32dc0d4a3afb80f2cbf467~KQLI_awRb0353303533epoutp04F
-	for <patches@lists.linux.dev>; Tue, 13 Jan 2026 09:35:37 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20260113093537epoutp04a0646de67d32dc0d4a3afb80f2cbf467~KQLI_awRb0353303533epoutp04F
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1768296938;
-	bh=W2k6j+UDR9hg14nvC+kHMAmrnyKR1B3Q/aTfRmX8bEo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C2G/1+aIKVih1a270m47w0YYwKGJbG2df8O4jRJcBBJbXN5+GU389XI4vN1cyusXI
-	 r0txEsZv9vBvjddx6BFpX8Hdq2WdaS1GISqYIGm8VQlEznm4awvMbEircdOLOeJ8oQ
-	 4Sf78ua9jtoDmvaAETpzGEU7wpoLfB1SxLPfnXj0=
-Received: from epsnrtp03.localdomain (unknown [182.195.42.155]) by
-	epcas5p1.samsung.com (KnoxPortal) with ESMTPS id
-	20260113093537epcas5p104ad1cb8fdba2068b4c501ab2a231c59~KQLIt2bVr2753527535epcas5p1I;
-	Tue, 13 Jan 2026 09:35:37 +0000 (GMT)
-Received: from epcas5p3.samsung.com (unknown [182.195.38.86]) by
-	epsnrtp03.localdomain (Postfix) with ESMTP id 4dr3yK06qSz3hhT8; Tue, 13 Jan
-	2026 09:35:37 +0000 (GMT)
-Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
-	epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
-	20260113093536epcas5p44494b80930a25c63d50241b5359a3ea9~KQLHa5YpM3080830808epcas5p4D;
-	Tue, 13 Jan 2026 09:35:36 +0000 (GMT)
-Received: from localhost.localdomain (unknown [107.99.41.245]) by
-	epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
-	20260113093534epsmtip2d408abad3dc9fff3f494ad645991e9e0~KQLGGny0m2766827668epsmtip2D;
-	Tue, 13 Jan 2026 09:35:34 +0000 (GMT)
-From: Kundan Kumar <kundan.kumar@samsung.com>
-To: anuj20.g@samsung.com
-Cc: patches@lists.linux.dev, Kundan Kumar <kundan.kumar@samsung.com>
-Subject: [PATCH 2/6] xfs: add helpers to pack AG prediction info for
- per-folio tracking
-Date: Tue, 13 Jan 2026 15:00:46 +0530
-Message-Id: <20260113093050.31705-3-kundan.kumar@samsung.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20260113093050.31705-1-kundan.kumar@samsung.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kEDuiNCX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59A4EC19424;
+	Tue, 13 Jan 2026 20:59:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768338001;
+	bh=lmfFO/unuLH4tjf+bCfXXy7t0C9+nXei62nDVi+zFSc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=kEDuiNCXzya7A8DKIJ32AJwqUd0yNt0iDY+qLZUoiFvM313srKdajF7oGN68V9Fhk
+	 NinwQXuPp+Ma1SBYaSZvrdmfARNX9iKg/YVh1ZXVSN7BiT957ficuyPp/n+tkU6bz6
+	 41LGxaju7XHbQGw1bUP23iUu4AqH9fOKdsZzKFwI62a6Z1AWG4tW7EJ0FOnpnFDCnJ
+	 yxXL9k5ANzDHdXuBd8EtWKaKSVe4RCG5URbjPhQFnuqp202nPjBpGIvfQJwtUy+XUH
+	 Q/8kwR5ShaFNkTFBHXGJ6Jtq4JZGSDSNLhoQUjsroKrJLA16+QgS0B0OszEMRW5Z3T
+	 I1I6yGKZyK5IA==
+Date: Tue, 13 Jan 2026 13:59:55 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org, llvm@lists.linux.dev,
+	patches@lists.linux.dev, kernel test robot <lkp@intel.com>
+Subject: Re: [PATCH] drm/msm/dp: Avoid division by zero in
+ msm_dp_ctrl_config_msa()
+Message-ID: <20260113205955.GA2893481@ax162>
+References: <20260108-drm-msm-dp_ctrl-avoid-zero-div-v1-1-6a8debcb3033@kernel.org>
+ <ca851614-2804-4029-9799-19e71dd73414@oss.qualcomm.com>
+ <zmfgq5d2gwrxgvr4eh4th2gjef76gpbv54kz2myvfnqgpor4dn@7qjr262yryap>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMS-MailID: 20260113093536epcas5p44494b80930a25c63d50241b5359a3ea9
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-CMS-TYPE: 105P
-cpgsPolicy: CPGSC10-542,Y
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20260113093536epcas5p44494b80930a25c63d50241b5359a3ea9
-References: <20260113093050.31705-1-kundan.kumar@samsung.com>
-	<CGME20260113093536epcas5p44494b80930a25c63d50241b5359a3ea9@epcas5p4.samsung.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <zmfgq5d2gwrxgvr4eh4th2gjef76gpbv54kz2myvfnqgpor4dn@7qjr262yryap>
 
-Introduce helper routines to pack and unpack AG prediction metadata
-for folios. This provides a compact and self-contained representation
-for AG tracking.
+On Mon, Jan 12, 2026 at 04:37:46AM +0200, Dmitry Baryshkov wrote:
+> On Fri, Jan 09, 2026 at 10:06:29AM +0100, Konrad Dybcio wrote:
+> > Dmitry, would it be beneficial to throw an actual error when the rate is
+> > is mangled? i.e.
+> > 
+> > diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> > index aa2303d0e148..4f710b8e6bc6 100644
+> > --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> > +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> > @@ -2404,9 +2404,9 @@ static int msm_dp_ctrl_link_retrain(struct msm_dp_ctrl_private *ctrl)
+> >         return msm_dp_ctrl_setup_main_link(ctrl, &training_step);
+> >  }
+> >  
+> > -static void msm_dp_ctrl_config_msa(struct msm_dp_ctrl_private *ctrl,
+> > -                              u32 rate, u32 stream_rate_khz,
+> > -                              bool is_ycbcr_420)
+> > +static int msm_dp_ctrl_config_msa(struct msm_dp_ctrl_private *ctrl,
+> > +                                 u32 rate, u32 stream_rate_khz,
+> > +                                 bool is_ycbcr_420)
+> >  {
+> >         u32 pixel_m, pixel_n;
+> >         u32 mvid, nvid, pixel_div = 0, dispcc_input_rate;
+> > @@ -2415,14 +2415,21 @@ static void msm_dp_ctrl_config_msa(struct msm_dp_ctrl_private *ctrl,
+> >         u32 const link_rate_hbr3 = 810000;
+> >         unsigned long den, num;
+> >  
+> > -       if (rate == link_rate_hbr3)
+> > +       switch (rate) {
+> > +       case link_rate_hbr3:
+> >                 pixel_div = 6;
+> > -       else if (rate == 162000 || rate == 270000)
+> > -               pixel_div = 2;
+> > -       else if (rate == link_rate_hbr2)
+> > +               break;
+> > +       case link_rate_hbr2:
+> >                 pixel_div = 4;
+> > -       else
+> > +               break;
+> > +       case 270000:
+> > +       case 162000:
+> > +               pixel_div = 2;
+> > +               break;
+> > +       default:
+> >                 DRM_ERROR("Invalid pixel mux divider\n");
+> > +               return -EINVAL;
+> 
+> Well... In the ideal world, we can't end up here, PHY's
+> configure_dp_clocks (or qcom_edp_set_vco_div()) will fail if the link
+> rate is is invalid here. I think, we should return an error here, but
+> there is no need to propagate it further.
+> 
+> See the discussion at https://lore.kernel.org/dri-devel/f2ce6ae51c50b0d2e57b905c63b43413@codeaurora.org/
 
-Signed-off-by: Kundan Kumar <kundan.kumar@samsung.com>
-Signed-off-by: Anuj Gupta <anuj20.g@samsung.com>
----
- fs/xfs/xfs_iomap.h | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+I interpret that as approving of the above hunk but omitting the hunk
+that modifies msm_dp_ctrl_on_stream(). In that case, what is the point
+of changing the return type of msm_dp_ctrl_config_msa()? Wouldn't the
+below diff have the same exact effect as a smaller change? I don't mind
+rolling this up as a v2.
 
-diff --git a/fs/xfs/xfs_iomap.h b/fs/xfs/xfs_iomap.h
-index ebcce7d49446..fdff7ef2d1a7 100644
---- a/fs/xfs/xfs_iomap.h
-+++ b/fs/xfs/xfs_iomap.h
-@@ -12,6 +12,36 @@ struct xfs_inode;
- struct xfs_bmbt_irec;
- struct xfs_zone_alloc_ctx;
+Cheers,
+Nathan
+
+diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+index aa2303d0e148..d8ea73b89f7c 100644
+--- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
++++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+@@ -2409,20 +2409,27 @@ static void msm_dp_ctrl_config_msa(struct msm_dp_ctrl_private *ctrl,
+ 			       bool is_ycbcr_420)
+ {
+ 	u32 pixel_m, pixel_n;
+-	u32 mvid, nvid, pixel_div = 0, dispcc_input_rate;
++	u32 mvid, nvid, pixel_div, dispcc_input_rate;
+ 	u32 const nvid_fixed = DP_LINK_CONSTANT_N_VALUE;
+ 	u32 const link_rate_hbr2 = 540000;
+ 	u32 const link_rate_hbr3 = 810000;
+ 	unsigned long den, num;
  
-+/* pack prediction in a u32 stored in xarray */
-+#define XFS_AGP_VALID_SHIFT 31
-+#define XFS_AGP_TYPE_SHIFT 24
-+#define XFS_AGP_AGNO_MASK 0x0000ffffu
-+
-+static inline u32 xfs_agp_pack(u16 agno, u8 iomap_type, bool valid)
-+{
-+	u32 v = (u32)agno & XFS_AGP_AGNO_MASK;
-+
-+	v |= ((u32)iomap_type) << XFS_AGP_TYPE_SHIFT;
-+	if (valid)
-+		v |= (1u << XFS_AGP_VALID_SHIFT);
-+	return v;
-+}
-+
-+static inline bool xfs_agp_valid(u32 v)
-+{
-+	return v >> XFS_AGP_VALID_SHIFT;
-+}
-+
-+static inline u16 xfs_agp_agno(u32 v)
-+{
-+	return (u16)(v & XFS_AGP_AGNO_MASK);
-+}
-+
-+static inline u8 xfs_agp_type(u32 v)
-+{
-+	return (u8)((v >> XFS_AGP_TYPE_SHIFT) & 0x7f);
-+}
-+
- int xfs_iomap_write_direct(struct xfs_inode *ip, xfs_fileoff_t offset_fsb,
- 		xfs_fileoff_t count_fsb, unsigned int flags,
- 		struct xfs_bmbt_irec *imap, u64 *sequence);
--- 
-2.25.1
-
+-	if (rate == link_rate_hbr3)
++	switch (rate) {
++	case link_rate_hbr3:
+ 		pixel_div = 6;
+-	else if (rate == 162000 || rate == 270000)
+-		pixel_div = 2;
+-	else if (rate == link_rate_hbr2)
++		break;
++	case link_rate_hbr2:
+ 		pixel_div = 4;
+-	else
++		break;
++	case 162000:
++	case 270000:
++		pixel_div = 2;
++		break;
++	default:
+ 		DRM_ERROR("Invalid pixel mux divider\n");
++		return;
++	}
+ 
+ 	dispcc_input_rate = (rate * 10) / pixel_div;
+ 
