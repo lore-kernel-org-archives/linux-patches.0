@@ -1,54 +1,53 @@
 Received: from mailout2.samsung.com (mailout2.samsung.com [203.254.224.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA03234167B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9FA8340A51
 	for <patches@lists.linux.dev>; Tue, 13 Jan 2026 09:35:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.25
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768296944; cv=none; b=Uf3qMo/gGaD8XA0CVIibul69vZKImGcVElhHrpP8pK29PxTmxAwJfaXnd/xt6cc5c/NCoHwjk2jEEyvLWxwOB8u6cbGO6GybBag56rxvEAkm/2QyfJVM5v2u9AEeyBaH3Pj5dL0y5GgEeN8wQiZYuBqo9ENd8ksfy93nm9EsR4U=
+	t=1768296945; cv=none; b=JWanKvdZCf2QrxnzO5KCE4mK6yLRR8QIXcWAQPvsYLjtLM/4eP/G69+HO8ypF+d1C2xnG2hCO8BVJaurgMYy04Z30ljrxV6XUYqYf3APsreZ6OY6HoIMDWQViJJN3ErPzuHMXTMZGzoi42KT0XFIfKAojyG48dk8TV1URZWMtZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768296944; c=relaxed/simple;
-	bh=1fBsQUYCo7i2F3J1W00LC+Bh7UG07mYXWYtIKWMX5HI=;
+	s=arc-20240116; t=1768296945; c=relaxed/simple;
+	bh=X1NTbZ4HtgwItf1M0dGUZmKPl1yEOX5dIuYzHBLldhc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:MIME-Version:
-	 Content-Type:References; b=AMAQ+2LdrrVhxLVgjsS0+Ki8FYzktL6fKPp4YYRhDnS6znvUnP1HrM1j6GPP2pC6cpU5JENT5UiZjMSixbb+ap5zsDNAfNWNdFC6W38os9j6xnUcm8QdYZ/JwQemdrsA7TVzlYbzTjvTCD89TrEmAfro+og285xirTuALCEVELo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=nvKXBBoB; arc=none smtp.client-ip=203.254.224.25
+	 Content-Type:References; b=ADnPkn7fPTbI8x12Q0NL7b839goqPhqwzSVaPUjpla7y5Go+0tNk+5ybEydnuooYa1pelAPCEw4PjbPTJ3CyBwkpSL182fqVopBkjpgiSYqfRQj5YumqtRfI1bjLLa9o+CctNWIUIyn4gItKhLX35nX7Xzi7uLrtU1BUrdSs/fI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=KhzcHs4d; arc=none smtp.client-ip=203.254.224.25
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="nvKXBBoB"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="KhzcHs4d"
 Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
-	by mailout2.samsung.com (KnoxPortal) with ESMTP id 20260113093541epoutp023a2372819aadb72c715cc992a40377cd~KQLMGFzrx1750017500epoutp02M
+	by mailout2.samsung.com (KnoxPortal) with ESMTP id 20260113093541epoutp02b329488ffe1c6a913dc0678eb1705876~KQLLxzZc_1749317493epoutp02P
 	for <patches@lists.linux.dev>; Tue, 13 Jan 2026 09:35:41 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com 20260113093541epoutp023a2372819aadb72c715cc992a40377cd~KQLMGFzrx1750017500epoutp02M
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com 20260113093541epoutp02b329488ffe1c6a913dc0678eb1705876~KQLLxzZc_1749317493epoutp02P
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
 	s=mail20170921; t=1768296941;
-	bh=5ZZwSbBXD3iP83HOt36aK0JzGigNCXxXew3cIDxEBHA=;
+	bh=JXEc7WYYz0D91lss2sfQ8WHA1SKGfdDKsfd3hEXieV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nvKXBBoBztTlwwz5aNgOiA0OkgfGS1fTF/UXzsDJlKy8AoAJ3tmZWC8WPCPZYJb+w
-	 2A/ukiohgKHZHU0ABCkVACyqsSXwA8qKa15d4tUskXIB6Km0dom71V9JoaFwPZBxID
-	 GCaf08dYS/Fy+wbOMx3V0b75VBgaHS3TAqqRaVnA=
-Received: from epsnrtp03.localdomain (unknown [182.195.42.155]) by
+	b=KhzcHs4dLbAkp/+kD7ZFdQKc/xSNR+ysPF0oqzocHmPyFG6l3/3tdJ3dK/q5CoJMT
+	 2q69i+waXEu+mQCbwvRYCUr22CCBIVR761SQEHcrq1NRPc2jj5fwJxWZsWNWqZ3OTN
+	 a18+xw4UOCISxjCqoL3iVHrgJpvrJrlScAG78Ovo=
+Received: from epsnrtp01.localdomain (unknown [182.195.42.153]) by
 	epcas5p2.samsung.com (KnoxPortal) with ESMTPS id
-	20260113093541epcas5p2ac06e97267a869a00d65df02719be37c~KQLL2L_Zy1628216282epcas5p2L;
-	Tue, 13 Jan 2026 09:35:41 +0000 (GMT)
+	20260113093540epcas5p2c87db7c3dff53117adbf562eb32e469d~KQLLYe9Gp1630616306epcas5p2B;
+	Tue, 13 Jan 2026 09:35:40 +0000 (GMT)
 Received: from epcas5p1.samsung.com (unknown [182.195.38.88]) by
-	epsnrtp03.localdomain (Postfix) with ESMTP id 4dr3yN2NBFz3hhT3; Tue, 13 Jan
-	2026 09:35:40 +0000 (GMT)
+	epsnrtp01.localdomain (Postfix) with ESMTP id 4dr3yM6MKlz6B9m5; Tue, 13 Jan
+	2026 09:35:39 +0000 (GMT)
 Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
 	epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
-	20260113093539epcas5p2a0e38b5c59155b7dc107943c7a4be798~KQLKvhGzU1108811088epcas5p25;
+	20260113093539epcas5p2cad66d9ab86c35d9e5e0b14ac59268a8~KQLJ8guRH1108811088epcas5p23;
 	Tue, 13 Jan 2026 09:35:39 +0000 (GMT)
 Received: from localhost.localdomain (unknown [107.99.41.245]) by
 	epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
-	20260113093539epsmtip22e8b837429d8e46ec377cf16af74095c~KQLKL8Og52909129091epsmtip2k;
-	Tue, 13 Jan 2026 09:35:39 +0000 (GMT)
+	20260113093538epsmtip2ba548fc57fc78f870761879335dcb52f~KQLJZ71eD2795327953epsmtip2t;
+	Tue, 13 Jan 2026 09:35:38 +0000 (GMT)
 From: Kundan Kumar <kundan.kumar@samsung.com>
 To: anuj20.g@samsung.com
 Cc: patches@lists.linux.dev, Kundan Kumar <kundan.kumar@samsung.com>
-Subject: [PATCH 6/6] xfs: offload writeback by AG using per-inode dirty
- bitmap and per-AG workers
-Date: Tue, 13 Jan 2026 15:00:50 +0530
-Message-Id: <20260113093050.31705-7-kundan.kumar@samsung.com>
+Subject: [PATCH 5/6] xfs: add per-AG writeback workqueue infrastructure
+Date: Tue, 13 Jan 2026 15:00:49 +0530
+Message-Id: <20260113093050.31705-6-kundan.kumar@samsung.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20260113093050.31705-1-kundan.kumar@samsung.com>
 Precedence: bulk
@@ -58,295 +57,160 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CMS-MailID: 20260113093539epcas5p2a0e38b5c59155b7dc107943c7a4be798
+X-CMS-MailID: 20260113093539epcas5p2cad66d9ab86c35d9e5e0b14ac59268a8
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
 CMS-TYPE: 105P
 cpgsPolicy: CPGSC10-542,Y
 X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20260113093539epcas5p2a0e38b5c59155b7dc107943c7a4be798
+X-CMS-RootMailID: 20260113093539epcas5p2cad66d9ab86c35d9e5e0b14ac59268a8
 References: <20260113093050.31705-1-kundan.kumar@samsung.com>
-	<CGME20260113093539epcas5p2a0e38b5c59155b7dc107943c7a4be798@epcas5p2.samsung.com>
+	<CGME20260113093539epcas5p2cad66d9ab86c35d9e5e0b14ac59268a8@epcas5p2.samsung.com>
 
-Offload XFS writeback to per-AG workers based on the inode dirty-AG
-bitmap. Each worker scans and submits writeback only for folios
-belonging to its AG.
+Introduce per-AG writeback worker infrastructure at mount time.
+This patch adds initialization and teardown only, without changing
+writeback behavior.
 
 Signed-off-by: Kundan Kumar <kundan.kumar@samsung.com>
 Signed-off-by: Anuj Gupta <anuj20.g@samsung.com>
 ---
- fs/xfs/xfs_aops.c | 225 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 225 insertions(+)
+ fs/xfs/xfs_aops.c  | 50 ++++++++++++++++++++++++++++++++++++++++++++++
+ fs/xfs/xfs_aops.h  |  3 +++
+ fs/xfs/xfs_mount.c |  2 ++
+ fs/xfs/xfs_mount.h |  6 ++++++
+ fs/xfs/xfs_super.c |  2 ++
+ 5 files changed, 63 insertions(+)
 
 diff --git a/fs/xfs/xfs_aops.c b/fs/xfs/xfs_aops.c
-index ff5cca0e9060..55fbc81baeb1 100644
+index a26f79815533..ff5cca0e9060 100644
 --- a/fs/xfs/xfs_aops.c
 +++ b/fs/xfs/xfs_aops.c
-@@ -23,6 +23,18 @@
+@@ -23,6 +23,14 @@
  #include "xfs_zone_alloc.h"
  #include "xfs_rtgroup.h"
  
-+#define XFS_AG_TASK_POOL_MIN 1024
-+
-+static struct kmem_cache *xfs_ag_task_cachep;
-+static mempool_t *xfs_ag_task_pool;
-+
-+struct xfs_ag_wb_task {
-+	struct list_head list;
-+	struct xfs_inode *ip;
-+	struct writeback_control wbc;
++struct xfs_ag_wb {
++	struct delayed_work ag_work;
++	spinlock_t lock;
++	struct list_head task_list;
 +	xfs_agnumber_t agno;
++	struct xfs_mount *mp;
 +};
 +
- struct xfs_ag_wb {
- 	struct delayed_work ag_work;
- 	spinlock_t lock;
-@@ -674,6 +686,213 @@ static const struct iomap_writeback_ops xfs_zoned_writeback_ops = {
+ struct xfs_writepage_ctx {
+ 	struct iomap_writepage_ctx ctx;
+ 	unsigned int		data_seq;
+@@ -666,6 +674,48 @@ static const struct iomap_writeback_ops xfs_zoned_writeback_ops = {
  	.writeback_submit	= xfs_zoned_writeback_submit,
  };
  
-+static bool xfs_agp_match(struct xfs_inode *ip, pgoff_t index,
-+			  xfs_agnumber_t agno)
++void
++xfs_init_ag_writeback(struct xfs_mount *mp)
 +{
-+	void *ent;
-+	u32 v;
-+
-+	ent = xa_load(&ip->i_ag_pmap, index);
-+	if (!ent)
-+		return false;
-+	if (!xa_is_value(ent))
-+		return false;
-+
-+	v = xa_to_value(ent);
-+	if (!xfs_agp_valid(v))
-+		return false;
-+
-+	return xfs_agp_agno(v) == agno;
-+}
-+
-+static bool xfs_folio_matches_ag(struct folio *folio, xfs_agnumber_t agno)
-+{
-+	struct xfs_inode *ip = XFS_I(folio_mapping(folio)->host);
-+
-+	return xfs_agp_match(ip, folio->index, agno);
-+}
-+
-+static int xfs_writepages_ag(struct xfs_inode *ip,
-+			     struct writeback_control *wbc,
-+			     xfs_agnumber_t agno)
-+{
-+	struct inode *inode = VFS_I(ip);
-+	struct address_space *mapping = inode->i_mapping;
-+	struct folio_batch fbatch;
-+	int ret = 0;
-+	pgoff_t index, end;
-+
-+	folio_batch_init(&fbatch);
-+	index = wbc->range_start >> PAGE_SHIFT;
-+	end = wbc->range_end >> PAGE_SHIFT;
-+
-+	struct xfs_writepage_ctx wpc = {
-+		.ctx = {
-+			.inode = inode,
-+			.wbc = wbc,
-+			.ops = &xfs_writeback_ops,
-+		},
-+	};
-+
-+	while (index <= end) {
-+		int i, nr;
-+
-+		/* get a batch of DIRTY folios starting at index */
-+		nr = filemap_get_folios_tag(mapping, &index, end,
-+					    PAGECACHE_TAG_DIRTY, &fbatch);
-+		if (!nr)
-+			break;
-+
-+		for (i = 0; i < nr; i++) {
-+			struct folio *folio = fbatch.folios[i];
-+
-+			/* Filter BEFORE locking */
-+			if (!xfs_folio_matches_ag(folio, agno))
-+				continue;
-+
-+			folio_lock(folio);
-+
-+			/*
-+			 * Now it's ours: clear dirty and submit.
-+			 * This prevents *this AG worker* from seeing it again
-+			 * next time.
-+			 */
-+			if (!folio_clear_dirty_for_io(folio)) {
-+				folio_unlock(folio);
-+				continue;
-+			}
-+			xa_erase(&XFS_I(mapping->host)->i_ag_pmap, folio->index);
-+
-+			ret = iomap_writeback_folio(&wpc.ctx, folio);
-+			folio_unlock(folio);
-+
-+			if (ret) {
-+				folio_batch_release(&fbatch);
-+				goto out;
-+			}
-+		}
-+
-+		folio_batch_release(&fbatch);
-+		cond_resched();
-+	}
-+	if (wpc.ctx.wb_ctx)
-+		xfs_writeback_ops.writeback_submit(&wpc.ctx, ret);
-+
-+out:
-+	return ret;
-+}
-+
-+static void xfs_ag_writeback_work(struct work_struct *work)
-+{
-+	struct xfs_ag_wb *awb = container_of(to_delayed_work(work),
-+					     struct xfs_ag_wb, ag_work);
-+	for (;;) {
-+		struct xfs_ag_wb_task *task;
-+		struct inode *inode;
-+		struct xfs_inode *ip;
-+		int ret;
-+
-+		spin_lock(&awb->lock);
-+		task = list_first_entry_or_null(&awb->task_list,
-+						struct xfs_ag_wb_task, list);
-+		if (task)
-+			list_del_init(&task->list);
-+		spin_unlock(&awb->lock);
-+
-+		if (!task)
-+			break;
-+
-+		ip = task->ip;
-+		inode = VFS_I(ip);
-+
-+		ret = xfs_writepages_ag(ip, &task->wbc, task->agno);
-+
-+		/*
-+		 * If we submit everything for this AG, clear its bit.
-+		 */
-+		if (ret == 0) {
-+			spin_lock(&ip->i_ag_dirty_lock);
-+			clear_bit(task->agno, ip->i_ag_dirty_bitmap);
-+			spin_unlock(&ip->i_ag_dirty_lock);
-+		}
-+
-+		iput(inode); /* drop igrab */
-+		mempool_free(task, xfs_ag_task_pool);
-+	}
-+}
-+
-+static int xfs_vm_writepages_offload(struct address_space *mapping,
-+				     struct writeback_control *wbc)
-+{
-+	struct inode *inode = mapping->host;
-+	struct xfs_inode *ip = XFS_I(inode);
-+	struct xfs_mount *mp = ip->i_mount;
-+	unsigned int nlongs;
 +	xfs_agnumber_t agno;
 +
-+	if (!ip->i_ag_dirty_bits)
-+		return 0;
++	mp->m_ag_wq = alloc_workqueue("xfs-ag-wb", WQ_UNBOUND | WQ_MEM_RECLAIM,
++		0);
++	if (!mp->m_ag_wq)
++		return;
 +
-+	nlongs = BITS_TO_LONGS(ip->i_ag_dirty_bits);
++	mp->m_ag_wb = kcalloc(mp->m_sb.sb_agcount,
++			      sizeof(struct xfs_ag_wb),
++			      GFP_KERNEL);
 +
-+	spin_lock(&ip->i_ag_dirty_lock);
-+	for_each_set_bit(agno, ip->i_ag_dirty_bitmap, ip->i_ag_dirty_bits) {
++	if (!mp->m_ag_wb) {
++		destroy_workqueue(mp->m_ag_wq);
++		mp->m_ag_wq = NULL;
++		return;
++	}
++
++	for (agno = 0; agno < mp->m_sb.sb_agcount; agno++) {
 +		struct xfs_ag_wb *awb = &mp->m_ag_wb[agno];
-+		struct xfs_ag_wb_task *task;
 +
-+		task =  mempool_alloc(xfs_ag_task_pool, GFP_NOFS);
-+		if (!task)
-+			continue;
-+
-+		INIT_LIST_HEAD(&task->list);
-+		task->ip = ip;
-+		task->agno = agno;
-+		task->wbc = *wbc;
-+		igrab(inode); /* worker owns inode ref */
-+
-+		spin_lock(&awb->lock);
-+		list_add_tail(&task->list, &awb->task_list);
-+		spin_unlock(&awb->lock);
-+
-+		mod_delayed_work(mp->m_ag_wq, &awb->ag_work, 0);
++		spin_lock_init(&awb->lock);
++		INIT_LIST_HEAD(&awb->task_list);
++		awb->agno = agno;
++		awb->mp = mp;
 +	}
-+	spin_unlock(&ip->i_ag_dirty_lock);
-+
-+	return 0;
 +}
 +
-+static int xfs_ag_task_pool_init(void)
++void
++xfs_destroy_ag_writeback(struct xfs_mount *mp)
 +{
-+	if (xfs_ag_task_pool)
-+		return 0;
-+
-+	xfs_ag_task_cachep = kmem_cache_create("xfs_ag_wb_task",
-+					       sizeof(struct xfs_ag_wb_task),
-+					       0,
-+					       SLAB_RECLAIM_ACCOUNT,
-+					       NULL);
-+	if (!xfs_ag_task_cachep)
-+		return -ENOMEM;
-+
-+	xfs_ag_task_pool = mempool_create_slab_pool(XFS_AG_TASK_POOL_MIN,
-+						    xfs_ag_task_cachep);
-+	if (!xfs_ag_task_pool) {
-+		kmem_cache_destroy(xfs_ag_task_cachep);
-+		xfs_ag_task_cachep = NULL;
-+		return -ENOMEM;
++	if (mp->m_ag_wq) {
++		flush_workqueue(mp->m_ag_wq);
++		destroy_workqueue(mp->m_ag_wq);
++		mp->m_ag_wq = NULL;
 +	}
-+	return 0;
++	kfree(mp->m_ag_wb);
++	mp->m_ag_wb = NULL;
 +}
 +
-+static void xfs_ag_task_pool_destroy(void)
-+{
-+	mempool_destroy(xfs_ag_task_pool);
-+	xfs_ag_task_pool = NULL;
-+
-+	kmem_cache_destroy(xfs_ag_task_cachep);
-+	xfs_ag_task_cachep = NULL;
-+}
-+
- void
- xfs_init_ag_writeback(struct xfs_mount *mp)
- {
-@@ -697,11 +916,13 @@ xfs_init_ag_writeback(struct xfs_mount *mp)
- 	for (agno = 0; agno < mp->m_sb.sb_agcount; agno++) {
- 		struct xfs_ag_wb *awb = &mp->m_ag_wb[agno];
- 
-+		INIT_DELAYED_WORK(&awb->ag_work, xfs_ag_writeback_work);
- 		spin_lock_init(&awb->lock);
- 		INIT_LIST_HEAD(&awb->task_list);
- 		awb->agno = agno;
- 		awb->mp = mp;
- 	}
-+	xfs_ag_task_pool_init();
- }
- 
- void
-@@ -714,6 +935,7 @@ xfs_destroy_ag_writeback(struct xfs_mount *mp)
- 	}
- 	kfree(mp->m_ag_wb);
- 	mp->m_ag_wb = NULL;
-+	xfs_ag_task_pool_destroy();
- }
- 
  STATIC int
-@@ -740,6 +962,9 @@ xfs_vm_writepages(
- 			xfs_open_zone_put(xc.open_zone);
- 		return error;
- 	} else {
-+		if (wbc->sync_mode != WB_SYNC_ALL)
-+			return xfs_vm_writepages_offload(mapping, wbc);
+ xfs_vm_writepages(
+ 	struct address_space	*mapping,
+diff --git a/fs/xfs/xfs_aops.h b/fs/xfs/xfs_aops.h
+index 5a7a0f1a0b49..e84acb7e8ca8 100644
+--- a/fs/xfs/xfs_aops.h
++++ b/fs/xfs/xfs_aops.h
+@@ -12,4 +12,7 @@ extern const struct address_space_operations xfs_dax_aops;
+ int xfs_setfilesize(struct xfs_inode *ip, xfs_off_t offset, size_t size);
+ void xfs_end_bio(struct bio *bio);
+ 
++void xfs_init_ag_writeback(struct xfs_mount *mp);
++void xfs_destroy_ag_writeback(struct xfs_mount *mp);
 +
- 		struct xfs_writepage_ctx	wpc = {
- 			.ctx = {
- 				.inode	= mapping->host,
+ #endif /* __XFS_AOPS_H__ */
+diff --git a/fs/xfs/xfs_mount.c b/fs/xfs/xfs_mount.c
+index dc32c5e34d81..78cb115e05fe 100644
+--- a/fs/xfs/xfs_mount.c
++++ b/fs/xfs/xfs_mount.c
+@@ -1336,6 +1336,8 @@ xfs_unmountfs(
+ 
+ 	xfs_qm_unmount(mp);
+ 
++	xfs_destroy_ag_writeback(mp);
++
+ 	/*
+ 	 * Unreserve any blocks we have so that when we unmount we don't account
+ 	 * the reserved free space as used. This is really only necessary for
+diff --git a/fs/xfs/xfs_mount.h b/fs/xfs/xfs_mount.h
+index 97de44c32272..7477173fc7b6 100644
+--- a/fs/xfs/xfs_mount.h
++++ b/fs/xfs/xfs_mount.h
+@@ -13,6 +13,7 @@ struct xfs_ail;
+ struct xfs_quotainfo;
+ struct xfs_da_geometry;
+ struct xfs_perag;
++struct xfs_ag_wb;
+ 
+ /* dynamic preallocation free space thresholds, 5% down to 1% */
+ enum {
+@@ -343,6 +344,11 @@ typedef struct xfs_mount {
+ 
+ 	/* Hook to feed dirent updates to an active online repair. */
+ 	struct xfs_hooks	m_dir_update_hooks;
++
++	/* global XFS AG writeback wq */
++	struct workqueue_struct *m_ag_wq;
++	/* array of [sb_agcount] */
++	struct xfs_ag_wb	*m_ag_wb;
+ } xfs_mount_t;
+ 
+ #define M_IGEO(mp)		(&(mp)->m_ino_geo)
+diff --git a/fs/xfs/xfs_super.c b/fs/xfs/xfs_super.c
+index aa97b59f53c6..5c0fc487badd 100644
+--- a/fs/xfs/xfs_super.c
++++ b/fs/xfs/xfs_super.c
+@@ -1785,6 +1785,8 @@ xfs_fs_fill_super(
+ 
+ 	bdi_inc_writeback(sb->s_bdi, mp->m_sb.sb_agcount);
+ 
++	xfs_init_ag_writeback(mp);
++
+ 	/*
+ 	 * V4 support is undergoing deprecation.
+ 	 *
 -- 
 2.25.1
 
