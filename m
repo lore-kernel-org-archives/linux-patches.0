@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3810B356A0E;
-	Wed, 14 Jan 2026 20:43:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CCA62FD685;
+	Wed, 14 Jan 2026 23:27:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768423417; cv=none; b=YdnOv9oM92hTJ4boKe/prMBcP6W/cOvjEPGygsQTprMm9y6MzPhAP8vk9WxuG37ursyH3acdi76wd8lEEOuT2EkmAHIjEuOy4Miat7ioTM6TMhUglxu2RKartUyOsl97inQjIGcljg3sr2T9a4ah432QDCtihGZDXdvJxTskNHA=
+	t=1768433240; cv=none; b=l8HIsjrU4dy6b+H+jwVqtI6EOTRxOisv3EpIN0i8rAs4PFXp0dxrLQOx3IeJz006SNe4Rm6LZLqwNS46vRW5WYQLPll1P+Wy8CwPFuWPPjWaeqn8yRnyximpmFhBSCgI1nQ+cU8YmHr/mGJGihcFlhQg8HXc3kPhbai2vXgzNsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768423417; c=relaxed/simple;
-	bh=qfichP7xshYGFSCR4CwpNABFHfqMVK0zW00HFV+0Ppc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=QA2pf6l7Gv/8bZcHQ95OUBcZSTijUd/hTz/MH/q5H6WXRXRfLZaCF+6UZNw/kPlux8LwFOcRq+Vf2T/DaX/auwKo8A3Ig16/y/VRtjUIsicYOgjlOrUhpGd7HH7Gup9JhC2SYK8DKI8OAX1aZnsoh0KVtt65c487ApUeEj/iyXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=etJouZgf; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1768433240; c=relaxed/simple;
+	bh=QFhLAdfdwRbMaxWtoYTf49tqZsozy+rXRjby4c7UuNY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=LEAhzDMdvoWMEJfrFjaRE9c4l4g7KJBEBVFydPVyglgAfxCNGtvvgGgH0PTXexJY24GtNuv5OvNhVYNtH7x/YGSicBkJ6s+vbbAggMTIMcQROTb4t1PrzFGJED/5NIfm0zzU19qMfeld7+HB6PX8JrNTMK1NydBZS5a2YUQKR4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bojR1z4+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="etJouZgf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72BBDC4CEF7;
-	Wed, 14 Jan 2026 20:43:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bojR1z4+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E069FC16AAE;
+	Wed, 14 Jan 2026 23:27:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768423416;
-	bh=qfichP7xshYGFSCR4CwpNABFHfqMVK0zW00HFV+0Ppc=;
+	s=k20201202; t=1768433239;
+	bh=QFhLAdfdwRbMaxWtoYTf49tqZsozy+rXRjby4c7UuNY=;
 	h=From:Date:Subject:To:Cc:From;
-	b=etJouZgfLTBrE3zutq1WvgULMAXLMPLYRA1OB+IkohMIN+G/kuGNOZLMDFORxfiHA
-	 qCr2G2zT8hu3QOp291w6wr+JwiE13yamT81agkXb1n1Psu5sqZHuB/84IsC4ZcVIYb
-	 WYUKmZO0rio1CHfSSs69jl+BmzoBtBowsRNS5a5Om9Bt54j5+wEWV0oruv0XdCTV0H
-	 YiM7WAqLqeeXs+XqDFfydl8+Rp57F0khLMVYJrAmV2qaXx1GCjYXotoIRoNsXnJo6g
-	 YIcE4g9CYEIg6AErCkaqySM7i7Ip7RpTR0FR1Ad2YiUhqi6RQ2H/xosLiOfivHbMky
-	 1v4i0DEL3cMxQ==
+	b=bojR1z4+h1yVjRTKlWNK+rOmoQAy3g77QHLMbDFuDFbOyHOhF1Ai7veGJKml1r8yK
+	 5rzAJ9gltiWzi9ynbmXt0VKAsufOOwxaaJZ4HQtA83rPAPxfMk2b6ClYmojPGOarb+
+	 0mJtFgtqcb/laKlTv7WiNtm1ilnyzbufbRs+S4t5Kc8JfBYwnQB+YjU+UDe5XpdPw2
+	 A9NXvov0e4vqbXQjB/dyC/BPo5tde9PxfE/iGVP7P7M1QJ6ufQbpiDKQiThkus6fD3
+	 ljSA27aVngW93RXp7jLSNFltRQvCNPnajQB+w9S5qMHoCgwUhe9EpjXS8mI5THTkLR
+	 F7RFQEM58s0YQ==
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 14 Jan 2026 13:43:31 -0700
-Subject: [PATCH] drm/panel: ilitek-ili9882t: Remove duplicate initializers
- in tianma_il79900a_dsc
+Date: Wed, 14 Jan 2026 16:27:11 -0700
+Subject: [PATCH] ACPI: APEI: GHES: Disable KASAN instrumentation when
+ compile testing with clang < 18
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,117 +37,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260114-panel-ilitek-ili9882t-fix-override-init-v1-1-1d69a2b096df@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yWNwQ6CMBBEf4Xs2U26lQj4K8YDwqCrpJBtJSaEf
- 7foafKSmTcrRZgi0rlYybBo1ClkkENB3aMNd7D2mck7f3IiJc9twMg6asJrj6aufeJBPzwtMNM
- +L4Im9gJppDwOVeUo22ZDLv2eLtc/x/ftiS7tetq2L8ZhFAiLAAAA
-X-Change-ID: 20260114-panel-ilitek-ili9882t-fix-override-init-21e19143f770
-To: Neil Armstrong <neil.armstrong@linaro.org>, 
- Jessica Zhang <jesszhan0024@gmail.com>, 
- Langyan Ye <yelangyan@huaqin.corp-partner.google.com>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, 
+Message-Id: <20260114-ghes-avoid-wflt-clang-older-than-18-v1-1-9c8248bfe4f4@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yWNQQrCMBBFr1Jm7UAS2mq9iriIybQdCY1kYhVK7
+ +6oywfvv7+BUGESODcbFFpZOC8K9tBAmP0yEXJUBmdcb6xtcZpJ0K+ZI77GVDEktTCnSAWrLtC
+ esDOt64ZwNIPvQUuPQiO/fy+X65/lebtTqN807PsH49QFOYcAAAA=
+X-Change-ID: 20260114-ghes-avoid-wflt-clang-older-than-18-504259c709a6
+To: "Rafael J. Wysocki" <rafael@kernel.org>
+Cc: Tony Luck <tony.luck@intel.com>, Borislav Petkov <bp@alien8.de>, 
+ Hanjun Guo <guohanjun@huawei.com>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, 
+ Shuai Xue <xueshuai@linux.alibaba.com>, Len Brown <lenb@kernel.org>, 
+ Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, 
  Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, 
- dri-devel@lists.freedesktop.org, llvm@lists.linux.dev, 
- patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+ linux-acpi@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
+ Nathan Chancellor <nathan@kernel.org>
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4540; i=nathan@kernel.org;
- h=from:subject:message-id; bh=qfichP7xshYGFSCR4CwpNABFHfqMVK0zW00HFV+0Ppc=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDJnp/79pL5Mv6jR+3VjU5eS10X0q68sN/FzCwn07l7p6p
- 37+Pm9vRykLgxgXg6yYIkv1Y9XjhoZzzjLeODUJZg4rE8gQBi5OAZiIBz8jQ5Me8yLnjy4Mn2Iq
- p92dIuZrPefAk4yqufafJy89Ksf2rZ+R4cc3/9MpU6p3uOe+r2e1ZWVSaHpgyl6Rm8mq5S1y9sB
- OTgA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2058; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=QFhLAdfdwRbMaxWtoYTf49tqZsozy+rXRjby4c7UuNY=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDJkZaiEdn6ZFtCfmpYZ/WLFCSkCqsf9iR/OpDoU/eYzGp
+ 415XvR1lLIwiHExyIopslQ/Vj1uaDjnLOONU5Ng5rAygQxh4OIUgIlsz2f4Z8+c1PHKKny6492N
+ Fd8ZpaYuKTmxVWSZ3o3tTXGsDjf/LWNk+Bt77MgFlWR5ZnP+e0kte1sOX/5cm+HFJ6MxT6tKTiS
+ YBQA=
 X-Developer-Key: i=nathan@kernel.org; a=openpgp;
  fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Clang warns (or errors with CONFIG_WERROR=y / W=e):
+After a recent innocuous change to drivers/acpi/apei/ghes.c, building
+ARCH=arm64 allmodconfig with clang-17 or older (which has both
+CONFIG_KASAN=y and CONFIG_WERROR=y) fails with:
 
-  drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:95:16: error: initializer overrides prior initialization of this subobject [-Werror,-Winitializer-overrides]
-     95 |         .vbr_enable = 0,
-        |                       ^
-  drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:90:16: note: previous initialization is here
-     90 |         .vbr_enable = false,
-        |                       ^~~~~
-  drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:97:19: error: initializer overrides prior initialization of this subobject [-Werror,-Winitializer-overrides]
-     97 |         .rc_model_size = DSC_RC_MODEL_SIZE_CONST,
-        |                          ^~~~~~~~~~~~~~~~~~~~~~~
-  include/drm/display/drm_dsc.h:22:38: note: expanded from macro 'DSC_RC_MODEL_SIZE_CONST'
-     22 | #define DSC_RC_MODEL_SIZE_CONST             8192
-        |                                             ^~~~
-  drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:91:19: note: previous initialization is here
-     91 |         .rc_model_size = DSC_RC_MODEL_SIZE_CONST,
-        |                          ^~~~~~~~~~~~~~~~~~~~~~~
-  include/drm/display/drm_dsc.h:22:38: note: expanded from macro 'DSC_RC_MODEL_SIZE_CONST'
-     22 | #define DSC_RC_MODEL_SIZE_CONST             8192
-        |                                             ^~~~
-  drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:132:25: error: initializer overrides prior initialization of this subobject [-Werror,-Winitializer-overrides]
-    132 |         .initial_scale_value = 32,
-        |                                ^~
-  drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:126:25: note: previous initialization is here
-    126 |         .initial_scale_value = 32,
-        |                                ^~
-  drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:133:20: error: initializer overrides prior initialization of this subobject [-Werror,-Winitializer-overrides]
-    133 |         .nfl_bpg_offset = 3511,
-        |                           ^~~~
-  drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:108:20: note: previous initialization is here
-    108 |         .nfl_bpg_offset = 1402,
-        |                           ^~~~
+  drivers/acpi/apei/ghes.c:902:13: error: stack frame size (2768) exceeds limit (2048) in 'ghes_do_proc' [-Werror,-Wframe-larger-than]
+    902 | static void ghes_do_proc(struct ghes *ghes,
+        |             ^
 
-GCC would warn about this in the same manner but its version,
--Woverride-init, is disabled for a normal kernel build in
-scripts/Makefile.warn. For clang, -Wextra in drivers/gpu/drm/Makefile
-turns it back but GCC respects turning it off earlier in the command
-line.
+A KASAN pass that removes unneeded stack instrumentation, enabled by
+default in clang-18 [1], drastically improves stack usage in this case.
 
-Of all the duplicate fields in the initializer, only nfl_bpg_offset is a
-different value. Clear up the duplicate initializers, keeping the
-'false' value for .vbr_enable, as it is bool, and the second value for
-.nfl_bpg_offset, assuming it is the correct one since it was the one
-tested in the original change.
+To avoid the warning in the common allmodconfig case when it can break
+the build, disable KASAN for ghes.o when compile testing with clang-17
+and older. Disabling KASAN outright may hide legitimate runtime issues,
+so live with the warning in that case; the user can either increase the
+frame warning limit or disable -Werror, which they should probably do
+when debugging with KASAN anyways.
 
-Fixes: 65ce1f5834e9 ("drm/panel: ilitek-ili9882t: Switch Tianma TL121BVMS07 to DSC 120Hz mode")
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2148
+Link: https://github.com/llvm/llvm-project/commit/51fbab134560ece663517bf1e8c2a30300d08f1a [1]
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-ilitek-ili9882t.c | 4 ----
- 1 file changed, 4 deletions(-)
+ drivers/acpi/apei/Makefile | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/panel/panel-ilitek-ili9882t.c b/drivers/gpu/drm/panel/panel-ilitek-ili9882t.c
-index 370424ddfc80..8b2bfb7d3638 100644
---- a/drivers/gpu/drm/panel/panel-ilitek-ili9882t.c
-+++ b/drivers/gpu/drm/panel/panel-ilitek-ili9882t.c
-@@ -88,11 +88,9 @@ static const struct drm_dsc_config tianma_il79900a_dsc = {
- 	.native_422 = false,
- 	.simple_422 = false,
- 	.vbr_enable = false,
--	.rc_model_size = DSC_RC_MODEL_SIZE_CONST,
- 	.pic_width = 1600,
- 	.pic_height = 2560,
- 	.convert_rgb = 0,
--	.vbr_enable = 0,
- 	.rc_buf_thresh = {14, 28, 42, 56, 70, 84, 98, 105, 112, 119, 121, 123, 125, 126},
- 	.rc_model_size = DSC_RC_MODEL_SIZE_CONST,
- 	.rc_edge_factor = DSC_RC_EDGE_FACTOR_CONST,
-@@ -105,7 +103,6 @@ static const struct drm_dsc_config tianma_il79900a_dsc = {
- 	.initial_offset = 6144,
- 	.rc_quant_incr_limit0 = 11,
- 	.rc_quant_incr_limit1 = 11,
--	.nfl_bpg_offset = 1402,
- 	.rc_range_params = {
- 		{ 0,  4, DSC_BPG_OFFSET(2)},
- 		{ 0,  4, DSC_BPG_OFFSET(0)},
-@@ -123,7 +120,6 @@ static const struct drm_dsc_config tianma_il79900a_dsc = {
- 		{ 9, 12, DSC_BPG_OFFSET(-12)},
- 		{12, 13, DSC_BPG_OFFSET(-12)},
- 	},
--	.initial_scale_value = 32,
- 	.slice_chunk_size = 800,
- 	.initial_dec_delay = 657,
- 	.final_offset = 4320,
+diff --git a/drivers/acpi/apei/Makefile b/drivers/acpi/apei/Makefile
+index 2c474e6477e1..346cdf0a0ef9 100644
+--- a/drivers/acpi/apei/Makefile
++++ b/drivers/acpi/apei/Makefile
+@@ -1,6 +1,10 @@
+ # SPDX-License-Identifier: GPL-2.0
+ obj-$(CONFIG_ACPI_APEI)		+= apei.o
+ obj-$(CONFIG_ACPI_APEI_GHES)	+= ghes.o
++# clang versions prior to 18 may blow out the stack with KASAN
++ifeq ($(CONFIG_COMPILE_TEST)_$(CONFIG_CC_IS_CLANG)_$(call clang-min-version, 180000),y_y_)
++KASAN_SANITIZE_ghes.o := n
++endif
+ obj-$(CONFIG_ACPI_APEI_EINJ)	+= einj.o
+ einj-y				:= einj-core.o
+ einj-$(CONFIG_ACPI_APEI_EINJ_CXL) += einj-cxl.o
 
 ---
-base-commit: b36178488d479e9a53bbef2b01280378b5586e60
-change-id: 20260114-panel-ilitek-ili9882t-fix-override-init-21e19143f770
+base-commit: 4c96ec13fcaee154368f19887f7f84985ef605bc
+change-id: 20260114-ghes-avoid-wflt-clang-older-than-18-504259c709a6
 
 Best regards,
 --  
