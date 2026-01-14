@@ -1,64 +1,155 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DFBB25228C;
-	Wed, 14 Jan 2026 20:00:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3810B356A0E;
+	Wed, 14 Jan 2026 20:43:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768420843; cv=none; b=Jo2oymoDn6afpxrBfBxI6xpzVMjsnfM1dQrwXPFwSpMMxJiox6AQF6CywZ/i3PVjSDrJ5HW0/LnyyKY6jRXNmJlOofl0ogxaUCml7NacbuNUbjT1H4OZCKJvRV6YY8HphXS1lINv0ih2zvbIle99Bu+4/GYRZLxlRujUKKf28/c=
+	t=1768423417; cv=none; b=YdnOv9oM92hTJ4boKe/prMBcP6W/cOvjEPGygsQTprMm9y6MzPhAP8vk9WxuG37ursyH3acdi76wd8lEEOuT2EkmAHIjEuOy4Miat7ioTM6TMhUglxu2RKartUyOsl97inQjIGcljg3sr2T9a4ah432QDCtihGZDXdvJxTskNHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768420843; c=relaxed/simple;
-	bh=jQL2DGJIUuoKsRj/apvhOGnSH97GSGbmLb6wMNSpcro=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lGZSNCVuO5bIi1K66RegnbJPJMdMUVrgs/8KuKQGLagzLTQzFBUGtFYUIdPi+Wn7KCwvmL1fmjIyEu8x+Psi8mgVqkp+BUYRA69yXrlGjOwosSDIfWhQIdXRzGGVxNOIhIvXeVgPjyX6w2OjGupZ2tvF9F4Ep5NhIus6dwdkoMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QadWT2e0; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1768423417; c=relaxed/simple;
+	bh=qfichP7xshYGFSCR4CwpNABFHfqMVK0zW00HFV+0Ppc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=QA2pf6l7Gv/8bZcHQ95OUBcZSTijUd/hTz/MH/q5H6WXRXRfLZaCF+6UZNw/kPlux8LwFOcRq+Vf2T/DaX/auwKo8A3Ig16/y/VRtjUIsicYOgjlOrUhpGd7HH7Gup9JhC2SYK8DKI8OAX1aZnsoh0KVtt65c487ApUeEj/iyXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=etJouZgf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QadWT2e0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185E1C4CEF7;
-	Wed, 14 Jan 2026 20:00:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="etJouZgf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72BBDC4CEF7;
+	Wed, 14 Jan 2026 20:43:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768420843;
-	bh=jQL2DGJIUuoKsRj/apvhOGnSH97GSGbmLb6wMNSpcro=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=QadWT2e0PDyMcL9h7VjXXD1zuDeJ7jZmCpJdTcv2vLDdW7NlZYekOW+elzS9vb+QU
-	 Cz0dzydVe29gAdQYoLHDRaTHBOhDVNWIYdi8rw0v+NxQv+obPGZWrfmj2D1aRJ2zpj
-	 9ecaEhedTDKI0rgkLpYbCVS3uAT5z5qJ6gmNWDsKh1ncmDDBy7i3+36PSv4vCLsW6d
-	 XJzhjifLMcSO7ZAsNOJYBv7hn9/6l+BOMtblR2vgOAm50PMQ2G2UhvlrMR/MNbmect
-	 fYrcmLWVS+BGdZe6safAhfa4kS2zWiVsnEKkZctA3TBjtYZpzwnECq9Vb635jeLtAv
-	 X+P1KGn32oXMQ==
-Date: Wed, 14 Jan 2026 15:00:40 -0500
-From: Sasha Levin <sashal@kernel.org>
-To: Florian Westphal <fw@strlen.de>
-Cc: patches@lists.linux.dev, stable@vger.kernel.org,
-	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>,
-	pablo@netfilter.org, netfilter-devel@vger.kernel.org,
-	coreteam@netfilter.org
-Subject: Re: [PATCH AUTOSEL 6.18-6.6] netfilter: nf_tables: avoid chain
- re-validation if possible
-Message-ID: <aWf16HxPQNNg8XIU@laps>
-References: <20251223100518.2383364-1-sashal@kernel.org>
- <20251223100518.2383364-2-sashal@kernel.org>
- <aUprB84-pTouDuac@strlen.de>
+	s=k20201202; t=1768423416;
+	bh=qfichP7xshYGFSCR4CwpNABFHfqMVK0zW00HFV+0Ppc=;
+	h=From:Date:Subject:To:Cc:From;
+	b=etJouZgfLTBrE3zutq1WvgULMAXLMPLYRA1OB+IkohMIN+G/kuGNOZLMDFORxfiHA
+	 qCr2G2zT8hu3QOp291w6wr+JwiE13yamT81agkXb1n1Psu5sqZHuB/84IsC4ZcVIYb
+	 WYUKmZO0rio1CHfSSs69jl+BmzoBtBowsRNS5a5Om9Bt54j5+wEWV0oruv0XdCTV0H
+	 YiM7WAqLqeeXs+XqDFfydl8+Rp57F0khLMVYJrAmV2qaXx1GCjYXotoIRoNsXnJo6g
+	 YIcE4g9CYEIg6AErCkaqySM7i7Ip7RpTR0FR1Ad2YiUhqi6RQ2H/xosLiOfivHbMky
+	 1v4i0DEL3cMxQ==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 14 Jan 2026 13:43:31 -0700
+Subject: [PATCH] drm/panel: ilitek-ili9882t: Remove duplicate initializers
+ in tianma_il79900a_dsc
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <aUprB84-pTouDuac@strlen.de>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260114-panel-ilitek-ili9882t-fix-override-init-v1-1-1d69a2b096df@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yWNwQ6CMBBEf4Xs2U26lQj4K8YDwqCrpJBtJSaEf
+ 7foafKSmTcrRZgi0rlYybBo1ClkkENB3aMNd7D2mck7f3IiJc9twMg6asJrj6aufeJBPzwtMNM
+ +L4Im9gJppDwOVeUo22ZDLv2eLtc/x/ftiS7tetq2L8ZhFAiLAAAA
+X-Change-ID: 20260114-panel-ilitek-ili9882t-fix-override-init-21e19143f770
+To: Neil Armstrong <neil.armstrong@linaro.org>, 
+ Jessica Zhang <jesszhan0024@gmail.com>, 
+ Langyan Ye <yelangyan@huaqin.corp-partner.google.com>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, 
+ Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, 
+ dri-devel@lists.freedesktop.org, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4540; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=qfichP7xshYGFSCR4CwpNABFHfqMVK0zW00HFV+0Ppc=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDJnp/79pL5Mv6jR+3VjU5eS10X0q68sN/FzCwn07l7p6p
+ 37+Pm9vRykLgxgXg6yYIkv1Y9XjhoZzzjLeODUJZg4rE8gQBi5OAZiIBz8jQ5Me8yLnjy4Mn2Iq
+ p92dIuZrPefAk4yqufafJy89Ksf2rZ+R4cc3/9MpU6p3uOe+r2e1ZWVSaHpgyl6Rm8mq5S1y9sB
+ OTgA=
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Tue, Dec 23, 2025 at 11:12:23AM +0100, Florian Westphal wrote:
->Sasha Levin <sashal@kernel.org> wrote:
->> +	if (WARN_ON_ONCE(!nft_is_base_chain(ctx->chain)))
->> +		return false;
->
->This WARN will fire unless you also pick up
->a67fd55f6a09 ("netfilter: nf_tables: remove redundant chain validation on register store")
+Clang warns (or errors with CONFIG_WERROR=y / W=e):
 
-Looks like it's already in the trees, thanks!
+  drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:95:16: error: initializer overrides prior initialization of this subobject [-Werror,-Winitializer-overrides]
+     95 |         .vbr_enable = 0,
+        |                       ^
+  drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:90:16: note: previous initialization is here
+     90 |         .vbr_enable = false,
+        |                       ^~~~~
+  drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:97:19: error: initializer overrides prior initialization of this subobject [-Werror,-Winitializer-overrides]
+     97 |         .rc_model_size = DSC_RC_MODEL_SIZE_CONST,
+        |                          ^~~~~~~~~~~~~~~~~~~~~~~
+  include/drm/display/drm_dsc.h:22:38: note: expanded from macro 'DSC_RC_MODEL_SIZE_CONST'
+     22 | #define DSC_RC_MODEL_SIZE_CONST             8192
+        |                                             ^~~~
+  drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:91:19: note: previous initialization is here
+     91 |         .rc_model_size = DSC_RC_MODEL_SIZE_CONST,
+        |                          ^~~~~~~~~~~~~~~~~~~~~~~
+  include/drm/display/drm_dsc.h:22:38: note: expanded from macro 'DSC_RC_MODEL_SIZE_CONST'
+     22 | #define DSC_RC_MODEL_SIZE_CONST             8192
+        |                                             ^~~~
+  drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:132:25: error: initializer overrides prior initialization of this subobject [-Werror,-Winitializer-overrides]
+    132 |         .initial_scale_value = 32,
+        |                                ^~
+  drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:126:25: note: previous initialization is here
+    126 |         .initial_scale_value = 32,
+        |                                ^~
+  drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:133:20: error: initializer overrides prior initialization of this subobject [-Werror,-Winitializer-overrides]
+    133 |         .nfl_bpg_offset = 3511,
+        |                           ^~~~
+  drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:108:20: note: previous initialization is here
+    108 |         .nfl_bpg_offset = 1402,
+        |                           ^~~~
 
--- 
-Thanks,
-Sasha
+GCC would warn about this in the same manner but its version,
+-Woverride-init, is disabled for a normal kernel build in
+scripts/Makefile.warn. For clang, -Wextra in drivers/gpu/drm/Makefile
+turns it back but GCC respects turning it off earlier in the command
+line.
+
+Of all the duplicate fields in the initializer, only nfl_bpg_offset is a
+different value. Clear up the duplicate initializers, keeping the
+'false' value for .vbr_enable, as it is bool, and the second value for
+.nfl_bpg_offset, assuming it is the correct one since it was the one
+tested in the original change.
+
+Fixes: 65ce1f5834e9 ("drm/panel: ilitek-ili9882t: Switch Tianma TL121BVMS07 to DSC 120Hz mode")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/gpu/drm/panel/panel-ilitek-ili9882t.c | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/drivers/gpu/drm/panel/panel-ilitek-ili9882t.c b/drivers/gpu/drm/panel/panel-ilitek-ili9882t.c
+index 370424ddfc80..8b2bfb7d3638 100644
+--- a/drivers/gpu/drm/panel/panel-ilitek-ili9882t.c
++++ b/drivers/gpu/drm/panel/panel-ilitek-ili9882t.c
+@@ -88,11 +88,9 @@ static const struct drm_dsc_config tianma_il79900a_dsc = {
+ 	.native_422 = false,
+ 	.simple_422 = false,
+ 	.vbr_enable = false,
+-	.rc_model_size = DSC_RC_MODEL_SIZE_CONST,
+ 	.pic_width = 1600,
+ 	.pic_height = 2560,
+ 	.convert_rgb = 0,
+-	.vbr_enable = 0,
+ 	.rc_buf_thresh = {14, 28, 42, 56, 70, 84, 98, 105, 112, 119, 121, 123, 125, 126},
+ 	.rc_model_size = DSC_RC_MODEL_SIZE_CONST,
+ 	.rc_edge_factor = DSC_RC_EDGE_FACTOR_CONST,
+@@ -105,7 +103,6 @@ static const struct drm_dsc_config tianma_il79900a_dsc = {
+ 	.initial_offset = 6144,
+ 	.rc_quant_incr_limit0 = 11,
+ 	.rc_quant_incr_limit1 = 11,
+-	.nfl_bpg_offset = 1402,
+ 	.rc_range_params = {
+ 		{ 0,  4, DSC_BPG_OFFSET(2)},
+ 		{ 0,  4, DSC_BPG_OFFSET(0)},
+@@ -123,7 +120,6 @@ static const struct drm_dsc_config tianma_il79900a_dsc = {
+ 		{ 9, 12, DSC_BPG_OFFSET(-12)},
+ 		{12, 13, DSC_BPG_OFFSET(-12)},
+ 	},
+-	.initial_scale_value = 32,
+ 	.slice_chunk_size = 800,
+ 	.initial_dec_delay = 657,
+ 	.final_offset = 4320,
+
+---
+base-commit: b36178488d479e9a53bbef2b01280378b5586e60
+change-id: 20260114-panel-ilitek-ili9882t-fix-override-init-21e19143f770
+
+Best regards,
+--  
+Nathan Chancellor <nathan@kernel.org>
+
