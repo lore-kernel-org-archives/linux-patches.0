@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9405E3C199E;
-	Thu, 15 Jan 2026 17:52:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30D234216C;
+	Thu, 15 Jan 2026 17:52:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499562; cv=none; b=sNV8SjE1DTg84WHlMcmGSSimRx7EsGym7oNhP4f4Xt4l0iBquwDuB84eR7T4GJlFX6GaaJsZYggULQDLGmMX4onCNm7SjcZeRmjYjRmwmgtncYg4iwRtHoaz16VrdWhFkr3Co39EOt4W73BcjbngIY8U3qGZnDx7ZnFS+8zC5vg=
+	t=1768499565; cv=none; b=gaccC+euT/5RTxAPZaT0qJZTJ0O6wlM38ZVLFVoU6uvvoF0MTO5T78kV+b07ivbxAlcCKrXUa4ncUWwkYiK0EVOx7LD+F6kKWAoKMEC/s2jFkjA9X7KRWISbm23H0vNR2P/0Au4xC1ERqZIznYPIGfn785Crq9c8VDxqx0O9itQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499562; c=relaxed/simple;
-	bh=N4x2L/aZ/yqfUVZzcu1Lca0vKA+wtyoOfhOCidXtlZA=;
+	s=arc-20240116; t=1768499565; c=relaxed/simple;
+	bh=iuhIp+QCeHrIkwxmuy6kJSrNDM8oX5t815fKMzR3Fkk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cFaqJ3jXQLh3mktTrU2QsbTkXG90y8dc6OMhGjMoC5TcZb3/KMplh/wKOiRpSTwLPsdsTHOB4IMqr3UgbvM6ObpjFJLxmL8rOUholu7ugnV16Dwv3V7LL5td68ZgDZMueIVJX534XhTy7c9XcaCO+lPRN4nHC77NkD+L9H32Has=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Glo5jcr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZeMOyzprkhIuPs71PjS3X7rkc4qzoO9Z9k/reIeAU6eKY6jCysFoxVNqst9eXBq01GhftQ+RGb9ZZpfx6UInXHSnY5NikGFU8/0k7E/gh3bI1Kr5Jo7SAMDH6XGsZoUW+sDAQvmyHloG6S+oT8hqRYZ3DgPUl9La2B3bxJr1bgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eeQs9oWX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Glo5jcr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 216DAC116D0;
-	Thu, 15 Jan 2026 17:52:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eeQs9oWX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 079DBC116D0;
+	Thu, 15 Jan 2026 17:52:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499562;
-	bh=N4x2L/aZ/yqfUVZzcu1Lca0vKA+wtyoOfhOCidXtlZA=;
+	s=korg; t=1768499565;
+	bh=iuhIp+QCeHrIkwxmuy6kJSrNDM8oX5t815fKMzR3Fkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Glo5jcrl6nCgLguMLsE26YtxVvNU1xSJijlMzuIsVfxuuPDPuCad+5HzlexZb3ps
-	 uorzLCvHnl0np74ch+1nCdLDwmjlyc72qCObeTceyrsnQTp1O+In7Rn4MAGi4XD4xN
-	 UnXlyI7VeViIHIjtbZY37aX8oWImZi6FHuU7NWLc=
+	b=eeQs9oWXmPL3NUxmZl4/mVT1CMAt4Ng32C+J0LcoInhwF8w0IL8ZGJqYQ8w4XbYnW
+	 XDA2Yb6weCAhhn97F01XXt6oywqyarNF6FEZUHD+H2i6AGRxH5I6WPw7Grn2l53Xzz
+	 fNQCtYKTGhD9Mye97VZs94XOQ68MFf0SwZqborOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianchu Chen <flynnnchen@tencent.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.10 237/451] char: applicom: fix NULL pointer dereference in ac_ioctl
-Date: Thu, 15 Jan 2026 17:47:18 +0100
-Message-ID: <20260115164239.467084956@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ma Ke <make24@iscas.ac.cn>
+Subject: [PATCH 5.10 238/451] intel_th: Fix error handling in intel_th_output_open
+Date: Thu, 15 Jan 2026 17:47:19 +0100
+Message-ID: <20260115164239.503412459@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -51,46 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tianchu Chen <flynnnchen@tencent.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 82d12088c297fa1cef670e1718b3d24f414c23f7 upstream.
+commit 6d5925b667e4ed9e77c8278cc215191d29454a3f upstream.
 
-Discovered by Atuin - Automated Vulnerability Discovery Engine.
+intel_th_output_open() calls bus_find_device_by_devt() which
+internally increments the device reference count via get_device(), but
+this reference is not properly released in several error paths. When
+device driver is unavailable, file operations cannot be obtained, or
+the driver's open method fails, the function returns without calling
+put_device(), leading to a permanent device reference count leak. This
+prevents the device from being properly released and could cause
+resource exhaustion over time.
 
-In ac_ioctl, the validation of IndexCard and the check for a valid
-RamIO pointer are skipped when cmd is 6. However, the function
-unconditionally executes readb(apbs[IndexCard].RamIO + VERS) at the
-end.
+Found by code review.
 
-If cmd is 6, IndexCard may reference a board that does not exist
-(where RamIO is NULL), leading to a NULL pointer dereference.
-
-Fix this by skipping the readb access when cmd is 6, as this
-command is a global information query and does not target a specific
-board context.
-
-Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
-Acked-by: Arnd Bergmann <arnd@arndb.de>
 Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20251128155323.a786fde92ebb926cbe96fcb1@linux.dev
+Fixes: 39f4034693b7 ("intel_th: Add driver infrastructure for Intel(R) Trace Hub devices")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Link: https://patch.msgid.link/20251112091723.35963-1-make24@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/applicom.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/hwtracing/intel_th/core.c |   20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
---- a/drivers/char/applicom.c
-+++ b/drivers/char/applicom.c
-@@ -836,7 +836,10 @@ static long ac_ioctl(struct file *file,
- 		ret = -ENOTTY;
- 		break;
+--- a/drivers/hwtracing/intel_th/core.c
++++ b/drivers/hwtracing/intel_th/core.c
+@@ -810,13 +810,17 @@ static int intel_th_output_open(struct i
+ 	int err;
+ 
+ 	dev = bus_find_device_by_devt(&intel_th_bus, inode->i_rdev);
+-	if (!dev || !dev->driver)
+-		return -ENODEV;
++	if (!dev || !dev->driver) {
++		err = -ENODEV;
++		goto out_no_device;
++	}
+ 
+ 	thdrv = to_intel_th_driver(dev->driver);
+ 	fops = fops_get(thdrv->fops);
+-	if (!fops)
+-		return -ENODEV;
++	if (!fops) {
++		err = -ENODEV;
++		goto out_put_device;
++	}
+ 
+ 	replace_fops(file, fops);
+ 
+@@ -824,10 +828,16 @@ static int intel_th_output_open(struct i
+ 
+ 	if (file->f_op->open) {
+ 		err = file->f_op->open(inode, file);
+-		return err;
++		if (err)
++			goto out_put_device;
  	}
--	Dummy = readb(apbs[IndexCard].RamIO + VERS);
-+
-+	if (cmd != 6)
-+		Dummy = readb(apbs[IndexCard].RamIO + VERS);
-+
- 	kfree(adgl);
- 	mutex_unlock(&ac_mutex);
+ 
  	return 0;
++
++out_put_device:
++	put_device(dev);
++out_no_device:
++	return err;
+ }
+ 
+ static const struct file_operations intel_th_output_fops = {
 
 
