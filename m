@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56EEA399011;
-	Thu, 15 Jan 2026 17:26:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B673C1FEA;
+	Thu, 15 Jan 2026 17:26:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497987; cv=none; b=mNkXqxvgtz1ES99d61kFCluuUlsNn0FStBEymw/nuSXA+8UxNHATHOCMrJFVBqBFJBjulAktVgZx02NFxq7A7ojSP/0C7hnpZbNxNlObD7stXR2u+gztqru2sP9VWrSHAjjTIIUbQfH71XQXBzfqDVszN0q5l3IXAasP/o89OZ8=
+	t=1768497990; cv=none; b=j+Abirx+H9UyVVDMmmqIWe17W/rfdpBNT+TBJr4DNbMZ3S3zdg+yvOPLbDCRq3FT5CeA5Kmw9tkas/1OwKn71FBVu5e4MaI50DjhboHQ8t22NKzTYl7JBW13+t3vylln3SIDKNhZxcyxGqBp1iyYIEdQj3yRkSKmKBXIjX4ffgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497987; c=relaxed/simple;
-	bh=TPjbPUpkNjKY/IqZYghauoLT7Dy23+8FitfJz3fauBU=;
+	s=arc-20240116; t=1768497990; c=relaxed/simple;
+	bh=vBXyIfdzfZAr2sdrWZctRmBl9MyuEh6oR730vyO21Ck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VgV9bHjWyLIoHOdyi6EvDgUmyUfzVVNzGSvch/FMD73OoIjaUHk7ik9Zo1KOkFWDRok97l9mrDxdxJtBwK2trgbYpcTS3DwFFcuWpdcbrMt6aYEKAc85Z8IC6FY1yNzfqAlHDY84WdJ66bV6DA2dkB7+Y1t2dc4eRxIiAAHCWT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ILRBDrzq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EUljUTwwkmI7v+ROVyPDNZeDPodusfxfUFpUPHqt4L7mtsLHJizQFwjaR7WK+EbSee6rbIEsffBzYZJvjkw6YYoBXELPjzmTtSt63kApL9hNfX6K+z4JYTJLZDlnw/aElA7YclC6JxJv0istTCpxHZPlE4W3OL8jMVT6Fg6YGnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vbJd+HgU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ILRBDrzq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D81B1C116D0;
-	Thu, 15 Jan 2026 17:26:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vbJd+HgU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA5B6C116D0;
+	Thu, 15 Jan 2026 17:26:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497987;
-	bh=TPjbPUpkNjKY/IqZYghauoLT7Dy23+8FitfJz3fauBU=;
+	s=korg; t=1768497990;
+	bh=vBXyIfdzfZAr2sdrWZctRmBl9MyuEh6oR730vyO21Ck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ILRBDrzqk72BF3M6+RAFJxBkF8cJWEJLlgVT6oTqnp5GRO81xvTVrX0P6yvVJ+eqc
-	 W0GzMyR40lq/EgCJPFmb2odBQeJdfT+uIsg5aa7JvH9On1LxuHSQmxVJqyqfENVRH9
-	 x4BgYawD0xjakLwOE9Fhz7E40S2bH0rnIPy4fMm4=
+	b=vbJd+HgU004n5RqorYBljbn440JLZLMb7a/H4AmmZRAGR9jg0OIxNjPtjMfuhuuTY
+	 pPPCdQ6Ftm84OcObrh3E0DedIMpGLPGxBmcNnbSYuIDeUc8qn/c0XZGmtjjZj61IgR
+	 +Fr81oRuunrll0WOfSm2dSmRyQh43GLX0rELKwz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenhua Lin <Wenhua.Lin@unisoc.com>,
-	Cixi Geng <cixi.geng@linux.dev>,
+	Justin Tee <justin.tee@broadcom.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Daniel Wagner <wagi@kernel.org>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 272/554] serial: sprd: Return -EPROBE_DEFER when uart clock is not ready
-Date: Thu, 15 Jan 2026 17:45:38 +0100
-Message-ID: <20260115164256.075009422@linuxfoundation.org>
+Subject: [PATCH 5.15 273/554] nvme-fc: dont hold rport lock when putting ctrl
+Date: Thu, 15 Jan 2026 17:45:39 +0100
+Message-ID: <20260115164256.111693715@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -51,61 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenhua Lin <Wenhua.Lin@unisoc.com>
+From: Daniel Wagner <wagi@kernel.org>
 
-[ Upstream commit 29e8a0c587e328ed458380a45d6028adf64d7487 ]
+[ Upstream commit b71cbcf7d170e51148d5467820ae8a72febcb651 ]
 
-In sprd_clk_init(), when devm_clk_get() returns -EPROBE_DEFER
-for either uart or source clock, we should propagate the
-error instead of just warning and continuing with NULL clocks.
+nvme_fc_ctrl_put can acquire the rport lock when freeing the
+ctrl object:
 
-Currently the driver only emits a warning when clock acquisition
-fails and proceeds with NULL clock pointers. This can lead to
-issues later when the clocks are actually needed. More importantly,
-when the clock provider is not ready yet and returns -EPROBE_DEFER,
-we should return this error to allow deferred probing.
+nvme_fc_ctrl_put
+  nvme_fc_ctrl_free
+    spin_lock_irqsave(rport->lock)
 
-This change adds explicit checks for -EPROBE_DEFER after both:
-1. devm_clk_get(uport->dev, uart)
-2. devm_clk_get(uport->dev, source)
+Thus we can't hold the rport lock when calling nvme_fc_ctrl_put.
 
-When -EPROBE_DEFER is encountered, the function now returns
--EPROBE_DEFER to let the driver framework retry probing
-later when the clock dependencies are resolved.
+Justin suggested use the safe list iterator variant because
+nvme_fc_ctrl_put will also modify the rport->list.
 
-Signed-off-by: Wenhua Lin <Wenhua.Lin@unisoc.com>
-Link: https://patch.msgid.link/20251022030840.956589-1-Wenhua.Lin@unisoc.com
-Reviewed-by: Cixi Geng <cixi.geng@linux.dev>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Justin Tee <justin.tee@broadcom.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Daniel Wagner <wagi@kernel.org>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sprd_serial.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/nvme/host/fc.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/serial/sprd_serial.c b/drivers/tty/serial/sprd_serial.c
-index a1952e4f1fcb..e850959ecf55 100644
---- a/drivers/tty/serial/sprd_serial.c
-+++ b/drivers/tty/serial/sprd_serial.c
-@@ -1137,6 +1137,9 @@ static int sprd_clk_init(struct uart_port *uport)
+diff --git a/drivers/nvme/host/fc.c b/drivers/nvme/host/fc.c
+index 3fe4db3c9c34..0bbc226ea4f4 100644
+--- a/drivers/nvme/host/fc.c
++++ b/drivers/nvme/host/fc.c
+@@ -1500,14 +1500,14 @@ nvme_fc_match_disconn_ls(struct nvme_fc_rport *rport,
+ {
+ 	struct fcnvme_ls_disconnect_assoc_rqst *rqst =
+ 					&lsop->rqstbuf->rq_dis_assoc;
+-	struct nvme_fc_ctrl *ctrl, *ret = NULL;
++	struct nvme_fc_ctrl *ctrl, *tmp, *ret = NULL;
+ 	struct nvmefc_ls_rcv_op *oldls = NULL;
+ 	u64 association_id = be64_to_cpu(rqst->associd.association_id);
+ 	unsigned long flags;
  
- 	clk_uart = devm_clk_get(uport->dev, "uart");
- 	if (IS_ERR(clk_uart)) {
-+		if (PTR_ERR(clk_uart) == -EPROBE_DEFER)
-+			return -EPROBE_DEFER;
-+
- 		dev_warn(uport->dev, "uart%d can't get uart clock\n",
- 			 uport->line);
- 		clk_uart = NULL;
-@@ -1144,6 +1147,9 @@ static int sprd_clk_init(struct uart_port *uport)
+ 	spin_lock_irqsave(&rport->lock, flags);
  
- 	clk_parent = devm_clk_get(uport->dev, "source");
- 	if (IS_ERR(clk_parent)) {
-+		if (PTR_ERR(clk_parent) == -EPROBE_DEFER)
-+			return -EPROBE_DEFER;
-+
- 		dev_warn(uport->dev, "uart%d can't get source clock\n",
- 			 uport->line);
- 		clk_parent = NULL;
+-	list_for_each_entry(ctrl, &rport->ctrl_list, ctrl_list) {
++	list_for_each_entry_safe(ctrl, tmp, &rport->ctrl_list, ctrl_list) {
+ 		if (!nvme_fc_ctrl_get(ctrl))
+ 			continue;
+ 		spin_lock(&ctrl->lock);
+@@ -1520,7 +1520,9 @@ nvme_fc_match_disconn_ls(struct nvme_fc_rport *rport,
+ 		if (ret)
+ 			/* leave the ctrl get reference */
+ 			break;
++		spin_unlock_irqrestore(&rport->lock, flags);
+ 		nvme_fc_ctrl_put(ctrl);
++		spin_lock_irqsave(&rport->lock, flags);
+ 	}
+ 
+ 	spin_unlock_irqrestore(&rport->lock, flags);
 -- 
 2.51.0
 
