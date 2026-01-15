@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF554C81;
-	Thu, 15 Jan 2026 17:21:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8940039B48E;
+	Thu, 15 Jan 2026 17:21:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497687; cv=none; b=koP9bdW1lmuJty+6fl805wTE8beN8Tluo6YCZZGIX8fyFTvwEY1nbeiFeVdywX2FO/ingIwaZiLlOYcLmlZWJOCPRO3P1b21+euHaBy2hhhvcc19TEKLyaUSGXjDtOepQXuMMkaLU7U/3On8tYD1HQF1h/fXtIdKZB2A07fnwz8=
+	t=1768497690; cv=none; b=joWrj+QhKvqY3ziRa0xz3oRb1lkD42ed0pIuekThhZIDyc/tfwSMzpkyM5y8VBqcP9GFZfNLtQiAHVIf7U/cCEa6pAaHbaSf/HRHbwhs5dDCpMTZRcXZfCW5sJrbT9mdhN06c9RtsY/V0xKCpWAQyNM3HBT0saJdO1b9xVkqpho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497687; c=relaxed/simple;
-	bh=AHUY62AhcsNu5zYeHSFs9vewAx0yE3uZe6UtRbihgrk=;
+	s=arc-20240116; t=1768497690; c=relaxed/simple;
+	bh=H4UCD2ZlHLZvUtjRuZ9VY6rpBw9Jz26zlkyt2hFo25w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vCl8kknm+/85huzs0KWHXWlr0ZbV4HJ0xhTbaDVRrGOHaDe8ywi64Ejtu1AGBnVDri0kM8B9bdiIscYlnKgZPldgBRhrw+Hx71o8I2nJOX0OUQ5/co0K0BPMO/G+2bgheJNw+LBR/vATVGIg8qKfOnjyxpjBoGZM+x1KA1AKvz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HxYk0l/5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GBwBoBtEBbC/ERAIKdAQ4Jmq42TXdjyeSm/QKZjruKiXYb19+5gGVmLyfOoTAMTz01qVyCwcnN12UvE68r6R15QDmCJ5hfXrYxv0h22DUOx5D8wAEXYogpxv2dt1rmaEMy4FJtHmE0CYSjGti5hxtEk2f/Jneaj8uiEjDziYw5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NUAOnIXm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HxYk0l/5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C181C116D0;
-	Thu, 15 Jan 2026 17:21:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NUAOnIXm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15EF6C116D0;
+	Thu, 15 Jan 2026 17:21:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497687;
-	bh=AHUY62AhcsNu5zYeHSFs9vewAx0yE3uZe6UtRbihgrk=;
+	s=korg; t=1768497690;
+	bh=H4UCD2ZlHLZvUtjRuZ9VY6rpBw9Jz26zlkyt2hFo25w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HxYk0l/54nNVIzuFueogY9DV0rrh+WgDbEJJBDNKGe9UHyQF2lEq5cv3PvTLob9Yk
-	 rXTFwkRD/KcgSHlYh4NX7h0vTpT/5gdEYhoOg8+OJpDt5SRbOPCngvhlLA7SYcV7q8
-	 YzEzEfaXD9VhRifegoz3w9e5w+5W09rE9gIrI3xA=
+	b=NUAOnIXmL6tdVnZFH6p9h/OGenqQixmwboyGVxo5Z84Ah/OW9ZNl5MfIJhSCq/32M
+	 dgbODdiw0pT0vG7WQWWgZv1mz1ACMwKsyn/GRMbbVw7cy9mMQir6woTXXSWkhyhPxS
+	 q4ykeeboxBtgmA5qY/XTTgmFxch8ddIU4yRY/8Nc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Ria Thomas <ria.thomas@morsemicro.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 135/554] PCI: dwc: Fix wrong PORT_LOGIC_LTSSM_STATE_MASK definition
-Date: Thu, 15 Jan 2026 17:43:21 +0100
-Message-ID: <20260115164251.138049514@linuxfoundation.org>
+Subject: [PATCH 5.15 136/554] wifi: ieee80211: correct FILS status codes
+Date: Thu, 15 Jan 2026 17:43:22 +0100
+Message-ID: <20260115164251.174799355@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -52,42 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shawn Lin <shawn.lin@rock-chips.com>
+From: Ria Thomas <ria.thomas@morsemicro.com>
 
-[ Upstream commit bcc9a4a0bca3aee4303fa4a20302e57b24ac8f68 ]
+[ Upstream commit 24d4da5c2565313c2ad3c43449937a9351a64407 ]
 
-As per DesignWare Cores PCI Express Controller Databook, section 5.50,
-SII: Debug Signals, cxpl_debug_info[63:0]:
+The FILS status codes are set to 108/109, but the IEEE 802.11-2020
+spec defines them as 112/113. Update the enum so it matches the
+specification and keeps the kernel consistent with standard values.
 
-  [5:0] smlh_ltssm_state: LTSSM current state. Encoding is same as the
-  dedicated smlh_ltssm_state output.
-
-The mask should be 6 bits, from 0 to 5. Hence, fix the mask definition.
-
-Fixes: 23fe5bd4be90 ("PCI: keystone: Cleanup ks_pcie_link_up()")
-Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
-[mani: reworded description]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/1763122140-203068-1-git-send-email-shawn.lin@rock-chips.com
+Fixes: a3caf7440ded ("cfg80211: Add support for FILS shared key authentication offload")
+Signed-off-by: Ria Thomas <ria.thomas@morsemicro.com>
+Reviewed-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251124125637.3936154-1-ria.thomas@morsemicro.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/ieee80211.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-index 8ba2392926346..5960ae40b0f2d 100644
---- a/drivers/pci/controller/dwc/pcie-designware.h
-+++ b/drivers/pci/controller/dwc/pcie-designware.h
-@@ -52,7 +52,7 @@
- #define PORT_LINK_MODE_8_LANES		PORT_LINK_MODE(0xf)
- 
- #define PCIE_PORT_DEBUG0		0x728
--#define PORT_LOGIC_LTSSM_STATE_MASK	0x1f
-+#define PORT_LOGIC_LTSSM_STATE_MASK	0x3f
- #define PORT_LOGIC_LTSSM_STATE_L0	0x11
- #define PCIE_PORT_DEBUG1		0x72C
- #define PCIE_PORT_DEBUG1_LINK_UP		BIT(4)
+diff --git a/include/linux/ieee80211.h b/include/linux/ieee80211.h
+index 00ed7c17698d1..0c00a628cbde7 100644
+--- a/include/linux/ieee80211.h
++++ b/include/linux/ieee80211.h
+@@ -2720,8 +2720,8 @@ enum ieee80211_statuscode {
+ 	WLAN_STATUS_DENIED_WITH_SUGGESTED_BAND_AND_CHANNEL = 99,
+ 	WLAN_STATUS_DENIED_DUE_TO_SPECTRUM_MANAGEMENT = 103,
+ 	/* 802.11ai */
+-	WLAN_STATUS_FILS_AUTHENTICATION_FAILURE = 108,
+-	WLAN_STATUS_UNKNOWN_AUTHENTICATION_SERVER = 109,
++	WLAN_STATUS_FILS_AUTHENTICATION_FAILURE = 112,
++	WLAN_STATUS_UNKNOWN_AUTHENTICATION_SERVER = 113,
+ 	WLAN_STATUS_SAE_HASH_TO_ELEMENT = 126,
+ 	WLAN_STATUS_SAE_PK = 127,
+ };
 -- 
 2.51.0
 
