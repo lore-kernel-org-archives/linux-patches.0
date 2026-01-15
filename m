@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E8C92D060B;
-	Thu, 15 Jan 2026 17:36:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF42F2D060B;
+	Thu, 15 Jan 2026 17:36:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498586; cv=none; b=Yu0mbfJ8lqIkZBrxo2Mfz0ytMeJEWEGvRT1vic1hrPukhsQuPAYRxErgFni0ZF05SzJxH1dLsCFWgUpr7W5Q6ZNKFc6O7ozSTcP1sr61F2uViNbV/Klb3v7HNVV4+LtaWBZQBRRVSllF4FIvCSk09rDAWQk2Kpw7343vDSf7Z+E=
+	t=1768498588; cv=none; b=gGRFlYBGHU7tRJnCgxtlaqwK32HSVdUWtKiY5b9EUhLKCbTVbGsq2eOECwmNvcxRoQUI9UuvNiZ+tG5zQHChxV/QGsXai8FpR6kER1Q52Z0mD+knhUN1oO8PWvlbDmJH8a1j8ORgb8PeEzghEtdLnX3PTk5eYtke6cjlhccuWpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498586; c=relaxed/simple;
-	bh=X6TBzOhQt3JCcf1dZkR5TsKi4cnTpxYRqWFHZwl3dcI=;
+	s=arc-20240116; t=1768498588; c=relaxed/simple;
+	bh=mmtDX58XG2fwXtivbUFlEEwcSIhvK34y8GvNaW8oVlw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T2aT63Sd9xPwYyqqAUA+m6pttx1XfwhZIkr2KDjgiXbGPUCK2R7qqH2d1ltnR3qbBEJBQQngNUNcLI4uxvqlic63fKZfrvqOiJyiyjpaoIZE2s4J+EeYg1DPKJX/QfrexzR2s8xUUhP23dxHa5qwKxS9T1aW1R+vG+Wma9vjyrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rwkMEB8F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cI6o7LUWywxYwXLEvtuJFzC+BSto8wD2BC5OFjl5kEO9hEOMvphIFzU3phca8QXJ3NvknuFLe4Qg9RhQb3n43O27E2w9FoBK0yG/DY3WEUTl0vsv2mBM+jhXANf2NMJhSP1YqJVuKNEwCWcYKYX4z4ZJfmL5x6zaGzItBunfjoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kt10sUov; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rwkMEB8F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93F86C116D0;
-	Thu, 15 Jan 2026 17:36:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kt10sUov"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69990C116D0;
+	Thu, 15 Jan 2026 17:36:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498585;
-	bh=X6TBzOhQt3JCcf1dZkR5TsKi4cnTpxYRqWFHZwl3dcI=;
+	s=korg; t=1768498588;
+	bh=mmtDX58XG2fwXtivbUFlEEwcSIhvK34y8GvNaW8oVlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rwkMEB8FaEnOh+swzb0/qgiev3Y/54H8O3fl3a2kl/aG1yXGrha+mvpV4QnKBY+hu
-	 zJo8rC4Cr/zJcFGXjEq8Us26dYDHqrqN9JWx1Xlq1JPtYi72ODqnGX3hcSVQ/8dHOw
-	 bVdNXYUExkVPr08f5hLOZucX2RxSQFKfu5nl1oEo=
+	b=kt10sUovHqxuVTFBTdfq0mi/1DV2IEhjsqXQyR/8mv0b6Mdii/ERktqtgoSZY670+
+	 bjNiVc/3ugB+FLSFupYwcubj6RKsydteqs7fMq+jDLW4wquJkotLbiE8dDA5DCj//v
+	 eSRB6dK7CaFw+HpZs05SSki2SUjSf+0I4j4HxVpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Rajani Kantha <681739313@139.com>
-Subject: [PATCH 5.15 483/554] drm/i915/selftests: fix subtraction overflow bug
-Date: Thu, 15 Jan 2026 17:49:09 +0100
-Message-ID: <20260115164303.794013994@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+204a4382fcb3311f3858@syzkaller.appspotmail.com,
+	Dong Chenchen <dongchenchen2@huawei.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Mina Almasry <almasrymina@google.com>,
+	Ruohan Lan <ruohanlan@aliyun.com>
+Subject: [PATCH 5.15 484/554] page_pool: Fix use-after-free in page_pool_recycle_in_ring
+Date: Thu, 15 Jan 2026 17:49:10 +0100
+Message-ID: <20260115164303.831711125@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -46,44 +48,133 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrzej Hajda <andrzej.hajda@intel.com>
+From: Dong Chenchen <dongchenchen2@huawei.com>
 
-[ Upstream commit ab3edc679c552a466e4bf0b11af3666008bd65a2 ]
+[ Upstream commit 271683bb2cf32e5126c592b5d5e6a756fa374fd9 ]
 
-On some machines hole_end can be small enough to cause subtraction
-overflow. On the other side (addr + 2 * min_alignment) can overflow
-in case of mock tests. This patch should handle both cases.
+syzbot reported a uaf in page_pool_recycle_in_ring:
 
-Fixes: e1c5f754067b59 ("drm/i915: Avoid overflow in computing pot_hole loop termination")
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/3674
-Signed-off-by: Andrzej Hajda <andrzej.hajda@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20220624113528.2159210-1-andrzej.hajda@intel.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-[ Using I915_GTT_PAGE_SIZE instead of min_alignment due to 5.15 missing commit:87bd701ee268 ("drm/i915: enforce min GTT alignment for discrete cards")]
-Signed-off-by: Rajani Kantha <681739313@139.com>
+BUG: KASAN: slab-use-after-free in lock_release+0x151/0xa30 kernel/locking/lockdep.c:5862
+Read of size 8 at addr ffff8880286045a0 by task syz.0.284/6943
+
+CPU: 0 UID: 0 PID: 6943 Comm: syz.0.284 Not tainted 6.13.0-rc3-syzkaller-gdfa94ce54f41 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:378 [inline]
+ print_report+0x169/0x550 mm/kasan/report.c:489
+ kasan_report+0x143/0x180 mm/kasan/report.c:602
+ lock_release+0x151/0xa30 kernel/locking/lockdep.c:5862
+ __raw_spin_unlock_bh include/linux/spinlock_api_smp.h:165 [inline]
+ _raw_spin_unlock_bh+0x1b/0x40 kernel/locking/spinlock.c:210
+ spin_unlock_bh include/linux/spinlock.h:396 [inline]
+ ptr_ring_produce_bh include/linux/ptr_ring.h:164 [inline]
+ page_pool_recycle_in_ring net/core/page_pool.c:707 [inline]
+ page_pool_put_unrefed_netmem+0x748/0xb00 net/core/page_pool.c:826
+ page_pool_put_netmem include/net/page_pool/helpers.h:323 [inline]
+ page_pool_put_full_netmem include/net/page_pool/helpers.h:353 [inline]
+ napi_pp_put_page+0x149/0x2b0 net/core/skbuff.c:1036
+ skb_pp_recycle net/core/skbuff.c:1047 [inline]
+ skb_free_head net/core/skbuff.c:1094 [inline]
+ skb_release_data+0x6c4/0x8a0 net/core/skbuff.c:1125
+ skb_release_all net/core/skbuff.c:1190 [inline]
+ __kfree_skb net/core/skbuff.c:1204 [inline]
+ sk_skb_reason_drop+0x1c9/0x380 net/core/skbuff.c:1242
+ kfree_skb_reason include/linux/skbuff.h:1263 [inline]
+ __skb_queue_purge_reason include/linux/skbuff.h:3343 [inline]
+
+root cause is:
+
+page_pool_recycle_in_ring
+  ptr_ring_produce
+    spin_lock(&r->producer_lock);
+    WRITE_ONCE(r->queue[r->producer++], ptr)
+      //recycle last page to pool
+				page_pool_release
+				  page_pool_scrub
+				    page_pool_empty_ring
+				      ptr_ring_consume
+				      page_pool_return_page  //release all page
+				  __page_pool_destroy
+				     free_percpu(pool->recycle_stats);
+				     free(pool) //free
+
+     spin_unlock(&r->producer_lock); //pool->ring uaf read
+  recycle_stat_inc(pool, ring);
+
+page_pool can be free while page pool recycle the last page in ring.
+Add producer-lock barrier to page_pool_release to prevent the page
+pool from being free before all pages have been recycled.
+
+recycle_stat_inc() is empty when CONFIG_PAGE_POOL_STATS is not
+enabled, which will trigger Wempty-body build warning. Add definition
+for pool stat macro to fix warning.
+
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/netdev/20250513083123.3514193-1-dongchenchen2@huawei.com
+Fixes: ff7d6b27f894 ("page_pool: refurbish version of page_pool code")
+Reported-by: syzbot+204a4382fcb3311f3858@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=204a4382fcb3311f3858
+Signed-off-by: Dong Chenchen <dongchenchen2@huawei.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Reviewed-by: Mina Almasry <almasrymina@google.com>
+Link: https://patch.msgid.link/20250527114152.3119109-1-dongchenchen2@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Linux 5.15.y does not support page pool statistics
+  (CONFIG_PAGE_POOL_STATS), so remove the related source code
+  changes from the patch. ]
+Signed-off-by: Ruohan Lan <ruohanlan@aliyun.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/selftests/i915_gem_gtt.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/page_pool.c |   16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/i915/selftests/i915_gem_gtt.c
-+++ b/drivers/gpu/drm/i915/selftests/i915_gem_gtt.c
-@@ -715,7 +715,7 @@ static int pot_hole(struct i915_address_
- 		u64 addr;
+--- a/net/core/page_pool.c
++++ b/net/core/page_pool.c
+@@ -414,14 +414,14 @@ static void page_pool_return_page(struct
  
- 		for (addr = round_up(hole_start + I915_GTT_PAGE_SIZE, step) - I915_GTT_PAGE_SIZE;
--		     addr <= round_down(hole_end - 2*I915_GTT_PAGE_SIZE, step) - I915_GTT_PAGE_SIZE;
-+		     hole_end > addr && hole_end - addr >= 2 * I915_GTT_PAGE_SIZE;
- 		     addr += step) {
- 			err = i915_vma_pin(vma, 0, 0, addr | flags);
- 			if (err) {
+ static bool page_pool_recycle_in_ring(struct page_pool *pool, struct page *page)
+ {
+-	int ret;
++	bool in_softirq, ret;
++
+ 	/* BH protection not needed if current is softirq */
+-	if (in_softirq())
+-		ret = ptr_ring_produce(&pool->ring, page);
+-	else
+-		ret = ptr_ring_produce_bh(&pool->ring, page);
++	in_softirq = page_pool_producer_lock(pool);
++	ret = !__ptr_ring_produce(&pool->ring, page);
++	page_pool_producer_unlock(pool, in_softirq);
+ 
+-	return (ret == 0) ? true : false;
++	return ret;
+ }
+ 
+ /* Only allow direct recycling in special circumstances, into the
+@@ -684,10 +684,14 @@ static void page_pool_scrub(struct page_
+ 
+ static int page_pool_release(struct page_pool *pool)
+ {
++	bool in_softirq;
+ 	int inflight;
+ 
+ 	page_pool_scrub(pool);
+ 	inflight = page_pool_inflight(pool);
++	/* Acquire producer lock to make sure producers have exited. */
++	in_softirq = page_pool_producer_lock(pool);
++	page_pool_producer_unlock(pool, in_softirq);
+ 	if (!inflight)
+ 		page_pool_free(pool);
+ 
 
 
