@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189EA27AC5C;
-	Thu, 15 Jan 2026 17:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A3D86334;
+	Thu, 15 Jan 2026 17:37:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498668; cv=none; b=fWJ2i4frYuLq7LiahMUW+54KhYG9SjUkhLqeC2uwyjSnJMSMB8v2GHI3iBS+vbgcFVHaqvzbWWBLLW2aSojodhLXLVkqUGFFL8YvGgusijkAVx637PK93YBErzesR1P1027T94xf/dgXIUtcW5uR8KOLOOyCYkdI4W4nSo51vLA=
+	t=1768498670; cv=none; b=aAnLI1HHHiqaDmQLDNcmMxwxSyh3BEIYRHwvnbIR09EVylETWl1V8s3EB5I3JjpM+jiuhrxntps0et4EhkdjW+uIcPmNbjYZ2lD5tU5Xv0qTwD5HMKKNN3PMPyQZbeToMUFhPLmUabvapMacWi1eItwa3Pf/DTge+JnTwzASf2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498668; c=relaxed/simple;
-	bh=A25BmfQSfCayPgW9geVNY8dTtiJwA8UfBFU51lAWudY=;
+	s=arc-20240116; t=1768498670; c=relaxed/simple;
+	bh=ohSJ4/P6NJ7KBAVhhosJDF9eW3wwWU7xcmLF/a7pxgM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Dk6xivAHmH1KeAi+yZyZtoC6aIU2QLJSuMTGJVPuTDuUEqxKpsZX1sfFCdrxUfFFk3slsUr8rR1N+8iGTsCorJcKAdueQIlL4ph5MUvdQb+NFMcBOkAkjkX2DaFakUe8n3aWB/GtdVnsa2WggCrJvG7ZGdgLOBn3VkkSyHG9Qe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XI1EhP2d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tKblT4C+KX90qK2ySEoDL19NLnv3j94bVaKJ9wMg/nivfqyjdj8L9sHMvZyH9po/IYMRZFoJac7MsXL7mQlMZWzL/uvNnzPx3qhqdqaTZ/6CiDuwwZNbMnWeqSYHGmlXndIn+x3949WNXsREZl9+wblm5Aax0JZQYsQUxKNwI2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ho2F496U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XI1EhP2d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D984C16AAE;
-	Thu, 15 Jan 2026 17:37:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ho2F496U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53FA0C116D0;
+	Thu, 15 Jan 2026 17:37:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498667;
-	bh=A25BmfQSfCayPgW9geVNY8dTtiJwA8UfBFU51lAWudY=;
+	s=korg; t=1768498670;
+	bh=ohSJ4/P6NJ7KBAVhhosJDF9eW3wwWU7xcmLF/a7pxgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XI1EhP2dVAqzv1tQ6W9z/45XlrViUNF6X9CLz8uU1q/wniAmAg301C6AgRYpEiF18
-	 wQ7j2KrVMfAEFeW6o7gkYk+pI4XRw6H8E33KwCkuUqr/ccNkbtWALjhDkfLu4RcYK4
-	 cO87ogWbUxdUy2dJ692yGGRugkUXj0q6b45WzK6o=
+	b=ho2F496U3OpIzoYBp+OH1Tob+MYFW+34mycOgfy8b7U0T1mXt+XGyjdmYpIpIIESV
+	 /SJ3eoDSmKu+xcm7ihD7BggSZgJbnFHcTuJKB5cPFvUwzFzFRW+HkVhd97aYKLYJVC
+	 H6rgYFBAz9Vq4D0ludwifQfc3OizTNxZ8oo8LWX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	=?UTF-8?q?David=20Nystr=C3=B6m?= <david.nystrom@est.tech>
-Subject: [PATCH 5.15 512/554] ext4: introduce ITAIL helper
-Date: Thu, 15 Jan 2026 17:49:38 +0100
-Message-ID: <20260115164304.849415686@linuxfoundation.org>
+Subject: [PATCH 5.15 513/554] ext4: fix out-of-bound read in ext4_xattr_inode_dec_ref_all()
+Date: Thu, 15 Jan 2026 17:49:39 +0100
+Message-ID: <20260115164304.887393715@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -55,79 +55,189 @@ Content-Transfer-Encoding: 8bit
 
 From: Ye Bin <yebin10@huawei.com>
 
-[ Upstream commit 69f3a3039b0d0003de008659cafd5a1eaaa0a7a4 ]
+[ Upstream commit 5701875f9609b000d91351eaa6bfd97fe2f157f4 ]
 
-Introduce ITAIL helper to get the bound of xattr in inode.
+There's issue as follows:
+BUG: KASAN: use-after-free in ext4_xattr_inode_dec_ref_all+0x6ff/0x790
+Read of size 4 at addr ffff88807b003000 by task syz-executor.0/15172
 
+CPU: 3 PID: 15172 Comm: syz-executor.0
+Call Trace:
+ __dump_stack lib/dump_stack.c:82 [inline]
+ dump_stack+0xbe/0xfd lib/dump_stack.c:123
+ print_address_description.constprop.0+0x1e/0x280 mm/kasan/report.c:400
+ __kasan_report.cold+0x6c/0x84 mm/kasan/report.c:560
+ kasan_report+0x3a/0x50 mm/kasan/report.c:585
+ ext4_xattr_inode_dec_ref_all+0x6ff/0x790 fs/ext4/xattr.c:1137
+ ext4_xattr_delete_inode+0x4c7/0xda0 fs/ext4/xattr.c:2896
+ ext4_evict_inode+0xb3b/0x1670 fs/ext4/inode.c:323
+ evict+0x39f/0x880 fs/inode.c:622
+ iput_final fs/inode.c:1746 [inline]
+ iput fs/inode.c:1772 [inline]
+ iput+0x525/0x6c0 fs/inode.c:1758
+ ext4_orphan_cleanup fs/ext4/super.c:3298 [inline]
+ ext4_fill_super+0x8c57/0xba40 fs/ext4/super.c:5300
+ mount_bdev+0x355/0x410 fs/super.c:1446
+ legacy_get_tree+0xfe/0x220 fs/fs_context.c:611
+ vfs_get_tree+0x8d/0x2f0 fs/super.c:1576
+ do_new_mount fs/namespace.c:2983 [inline]
+ path_mount+0x119a/0x1ad0 fs/namespace.c:3316
+ do_mount+0xfc/0x110 fs/namespace.c:3329
+ __do_sys_mount fs/namespace.c:3540 [inline]
+ __se_sys_mount+0x219/0x2e0 fs/namespace.c:3514
+ do_syscall_64+0x33/0x40 arch/x86/entry/common.c:46
+ entry_SYSCALL_64_after_hwframe+0x67/0xd1
+
+Memory state around the buggy address:
+ ffff88807b002f00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ ffff88807b002f80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>ffff88807b003000: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+                   ^
+ ffff88807b003080: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+ ffff88807b003100: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+
+Above issue happens as ext4_xattr_delete_inode() isn't check xattr
+is valid if xattr is in inode.
+To solve above issue call xattr_check_inode() check if xattr if valid
+in inode. In fact, we can directly verify in ext4_iget_extra_inode(),
+so that there is no divergent verification.
+
+Fixes: e50e5129f384 ("ext4: xattr-in-inode support")
 Signed-off-by: Ye Bin <yebin10@huawei.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20250208063141.1539283-2-yebin@huaweicloud.com
+Link: https://patch.msgid.link/20250208063141.1539283-3-yebin@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: David Nyström <david.nystrom@est.tech>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/xattr.c |   10 +++++-----
- fs/ext4/xattr.h |    3 +++
- 2 files changed, 8 insertions(+), 5 deletions(-)
+ fs/ext4/inode.c |    5 +++++
+ fs/ext4/xattr.c |   26 +-------------------------
+ fs/ext4/xattr.h |    7 +++++++
+ 3 files changed, 13 insertions(+), 25 deletions(-)
 
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -4562,6 +4562,11 @@ static inline int ext4_iget_extra_inode(
+ 	    *magic == cpu_to_le32(EXT4_XATTR_MAGIC)) {
+ 		int err;
+ 
++		err = xattr_check_inode(inode, IHDR(inode, raw_inode),
++					ITAIL(inode, raw_inode));
++		if (err)
++			return err;
++
+ 		ext4_set_inode_state(inode, EXT4_STATE_XATTR);
+ 		err = ext4_find_inline_data_nolock(inode);
+ 		if (!err && ext4_has_inline_data(inode))
 --- a/fs/ext4/xattr.c
 +++ b/fs/ext4/xattr.c
-@@ -599,7 +599,7 @@ ext4_xattr_ibody_get(struct inode *inode
+@@ -263,7 +263,7 @@ errout:
+ 	__ext4_xattr_check_block((inode), (bh),  __func__, __LINE__)
+ 
+ 
+-static int
++int
+ __xattr_check_inode(struct inode *inode, struct ext4_xattr_ibody_header *header,
+ 			 void *end, const char *function, unsigned int line)
+ {
+@@ -280,9 +280,6 @@ errout:
+ 	return error;
+ }
+ 
+-#define xattr_check_inode(inode, header, end) \
+-	__xattr_check_inode((inode), (header), (end), __func__, __LINE__)
+-
+ static int
+ xattr_find_entry(struct inode *inode, struct ext4_xattr_entry **pentry,
+ 		 void *end, int name_index, const char *name, int sorted)
+@@ -600,9 +597,6 @@ ext4_xattr_ibody_get(struct inode *inode
+ 	raw_inode = ext4_raw_inode(&iloc);
+ 	header = IHDR(inode, raw_inode);
+ 	end = ITAIL(inode, raw_inode);
+-	error = xattr_check_inode(inode, header, end);
+-	if (error)
+-		goto cleanup;
+ 	entry = IFIRST(header);
+ 	error = xattr_find_entry(inode, &entry, end, name_index, name, 0);
+ 	if (error)
+@@ -734,7 +728,6 @@ ext4_xattr_ibody_list(struct dentry *den
+ 	struct ext4_xattr_ibody_header *header;
+ 	struct ext4_inode *raw_inode;
+ 	struct ext4_iloc iloc;
+-	void *end;
+ 	int error;
+ 
+ 	if (!ext4_test_inode_state(inode, EXT4_STATE_XATTR))
+@@ -744,14 +737,9 @@ ext4_xattr_ibody_list(struct dentry *den
  		return error;
  	raw_inode = ext4_raw_inode(&iloc);
  	header = IHDR(inode, raw_inode);
--	end = (void *)raw_inode + EXT4_SB(inode->i_sb)->s_inode_size;
-+	end = ITAIL(inode, raw_inode);
- 	error = xattr_check_inode(inode, header, end);
- 	if (error)
- 		goto cleanup;
-@@ -744,7 +744,7 @@ ext4_xattr_ibody_list(struct dentry *den
- 		return error;
- 	raw_inode = ext4_raw_inode(&iloc);
- 	header = IHDR(inode, raw_inode);
--	end = (void *)raw_inode + EXT4_SB(inode->i_sb)->s_inode_size;
-+	end = ITAIL(inode, raw_inode);
- 	error = xattr_check_inode(inode, header, end);
- 	if (error)
- 		goto cleanup;
-@@ -830,7 +830,7 @@ int ext4_get_inode_usage(struct inode *i
+-	end = ITAIL(inode, raw_inode);
+-	error = xattr_check_inode(inode, header, end);
+-	if (error)
+-		goto cleanup;
+ 	error = ext4_xattr_list_entries(dentry, IFIRST(header),
+ 					buffer, buffer_size);
+ 
+-cleanup:
+ 	brelse(iloc.bh);
+ 	return error;
+ }
+@@ -819,7 +807,6 @@ int ext4_get_inode_usage(struct inode *i
+ 	struct ext4_xattr_ibody_header *header;
+ 	struct ext4_xattr_entry *entry;
+ 	qsize_t ea_inode_refs = 0;
+-	void *end;
+ 	int ret;
+ 
+ 	lockdep_assert_held_read(&EXT4_I(inode)->xattr_sem);
+@@ -830,10 +817,6 @@ int ext4_get_inode_usage(struct inode *i
  			goto out;
  		raw_inode = ext4_raw_inode(&iloc);
  		header = IHDR(inode, raw_inode);
--		end = (void *)raw_inode + EXT4_SB(inode->i_sb)->s_inode_size;
-+		end = ITAIL(inode, raw_inode);
- 		ret = xattr_check_inode(inode, header, end);
- 		if (ret)
- 			goto out;
-@@ -2228,7 +2228,7 @@ int ext4_xattr_ibody_find(struct inode *
- 	header = IHDR(inode, raw_inode);
- 	is->s.base = is->s.first = IFIRST(header);
- 	is->s.here = is->s.first;
--	is->s.end = (void *)raw_inode + EXT4_SB(inode->i_sb)->s_inode_size;
-+	is->s.end = ITAIL(inode, raw_inode);
- 	if (ext4_test_inode_state(inode, EXT4_STATE_XATTR)) {
- 		error = xattr_check_inode(inode, header, is->s.end);
- 		if (error)
-@@ -2753,7 +2753,7 @@ retry:
- 	 */
+-		end = ITAIL(inode, raw_inode);
+-		ret = xattr_check_inode(inode, header, end);
+-		if (ret)
+-			goto out;
  
- 	base = IFIRST(header);
--	end = (void *)raw_inode + EXT4_SB(inode->i_sb)->s_inode_size;
-+	end = ITAIL(inode, raw_inode);
+ 		for (entry = IFIRST(header); !IS_LAST_ENTRY(entry);
+ 		     entry = EXT4_XATTR_NEXT(entry))
+@@ -2230,9 +2213,6 @@ int ext4_xattr_ibody_find(struct inode *
+ 	is->s.here = is->s.first;
+ 	is->s.end = ITAIL(inode, raw_inode);
+ 	if (ext4_test_inode_state(inode, EXT4_STATE_XATTR)) {
+-		error = xattr_check_inode(inode, header, is->s.end);
+-		if (error)
+-			return error;
+ 		/* Find the named attribute. */
+ 		error = xattr_find_entry(inode, &is->s.here, is->s.end,
+ 					 i->name_index, i->name, 0);
+@@ -2757,10 +2737,6 @@ retry:
  	min_offs = end - base;
  	total_ino = sizeof(struct ext4_xattr_ibody_header) + sizeof(u32);
  
+-	error = xattr_check_inode(inode, header, end);
+-	if (error)
+-		goto cleanup;
+-
+ 	ifree = ext4_xattr_free_space(base, &min_offs, base, &total_ino);
+ 	if (ifree >= isize_diff)
+ 		goto shift;
 --- a/fs/ext4/xattr.h
 +++ b/fs/ext4/xattr.h
-@@ -68,6 +68,9 @@ struct ext4_xattr_entry {
- 		((void *)raw_inode + \
- 		EXT4_GOOD_OLD_INODE_SIZE + \
- 		EXT4_I(inode)->i_extra_isize))
-+#define ITAIL(inode, raw_inode) \
-+	((void *)(raw_inode) + \
-+	 EXT4_SB((inode)->i_sb)->s_inode_size)
- #define IFIRST(hdr) ((struct ext4_xattr_entry *)((hdr)+1))
+@@ -210,6 +210,13 @@ extern int ext4_xattr_ibody_set(handle_t
+ extern struct mb_cache *ext4_xattr_create_cache(void);
+ extern void ext4_xattr_destroy_cache(struct mb_cache *);
  
- /*
++extern int
++__xattr_check_inode(struct inode *inode, struct ext4_xattr_ibody_header *header,
++		    void *end, const char *function, unsigned int line);
++
++#define xattr_check_inode(inode, header, end) \
++	__xattr_check_inode((inode), (header), (end), __func__, __LINE__)
++
+ #ifdef CONFIG_EXT4_FS_SECURITY
+ extern int ext4_init_security(handle_t *handle, struct inode *inode,
+ 			      struct inode *dir, const struct qstr *qstr);
 
 
