@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25EB542049;
-	Thu, 15 Jan 2026 16:51:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED1DC3624C4;
+	Thu, 15 Jan 2026 16:52:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768495918; cv=none; b=gxDbLaBGNCFTdKA3q/QzBgFJ8i4YUwDIzeFlvN9ZbkmxWyoippU6cxwHpkFtNF8yquJoriR06IqifxzEHpwfZrIYcV6MVC2fXaNNW1nNYAgnSgsNKbUhfoFC7epBWeOZzDLOENNmNMzUoCPbeT3SuJkFWi8ulUCWvPDHq8DxtxI=
+	t=1768495921; cv=none; b=Rzwl6VFAhIN+bwTQyId4ukofxG7Ww7rslg8EADw40dHj5cwyEmcRtL/48zzT0Q05oLZLbBOVflVTNMDWFBRNBgrQiLH49uKMJUKSPpR48n7duP/BnDXQ5rWmuxb00z1tjC2Y+Jaac2qfd4dIxhdrjlxOIfyIi4BWM3N/3yeaKmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768495918; c=relaxed/simple;
-	bh=Yvnb3zVyxlQjbwhrJtfXTJZlx6zsy1PpRzf9T4yaovU=;
+	s=arc-20240116; t=1768495921; c=relaxed/simple;
+	bh=v5d8kCVXLHGdtF8eUs4WvU0IkjQXkRE1ckWkOZmzEKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R7bGR3JfyiiJQgN2/ZO8uIUn9tr3/RbnDh1Z7fnKCdsSVu+WBAOLlsul4dzNAakggNAJO7gk4dEt2/pfk9Fa4aYEQ9C8YN3jy+Zmp8fPCK1LBrqMDyYHJDvVwzdw306iyVDFvlBE9iP9/0XAA566+NNStRVR4/3a8lnPI6yIv/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=guTpbHGm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=orHfXnxX7DXSZUQFhWxzFjXIoTH9ajdajcSCtP9LjLKQzUPOd9xZ4XXtr30CllWHLxKn+osiZZnnjL/bV+l4iJ45WPxdt98vSo41XR3IPSQO9ZMSXE8mCbSbtN8LVbFE9MBSw/16FIHe44uYgy/+gzw8ez0ft2lVU8VDrXytTWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m5jaLHUW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="guTpbHGm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DF3AC116D0;
-	Thu, 15 Jan 2026 16:51:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m5jaLHUW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EBB6C116D0;
+	Thu, 15 Jan 2026 16:52:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768495917;
-	bh=Yvnb3zVyxlQjbwhrJtfXTJZlx6zsy1PpRzf9T4yaovU=;
+	s=korg; t=1768495920;
+	bh=v5d8kCVXLHGdtF8eUs4WvU0IkjQXkRE1ckWkOZmzEKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=guTpbHGmK6vUFd+btn996z1B2TWyZinBeu2l+1+RddzhXWQhMKPLmWuuOHI8Y311/
-	 JjC+EEBA+r+p7HOiD1VKLQdcnJLAUBIBVXRW5BAARb5vHENCuq0Ib9yX+YZfiooRLb
-	 Z1Su2+5SpMGFXO+/vXIr5J0mF8vPPQZHAYlFbcGw=
+	b=m5jaLHUWPp/vCvX7LrTc6gKV4AI8O7UYccapzNah6QVqgdLexyKlaNolBJdSc63TE
+	 mLMcy2sH5la8rh9R8xh026kkRIw3jVrzpVXMi7Ze95ObD3tiHuCyfHs5rUNan2Yhg1
+	 HcySWGkt7vwzT7Gw3HhxEGkX7RWXzAQeZ41MYwJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>
-Subject: [PATCH 6.18 014/181] rust_binder: remove spin_lock() in rust_shrink_free_page()
-Date: Thu, 15 Jan 2026 17:45:51 +0100
-Message-ID: <20260115164202.835707641@linuxfoundation.org>
+	Qingfang Deng <dqfext@gmail.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>
+Subject: [PATCH 6.18 015/181] lib/crypto: aes: Fix missing MMU protection for AES S-box
+Date: Thu, 15 Jan 2026 17:45:52 +0100
+Message-ID: <20260115164202.871887326@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -50,69 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Ryhl <aliceryhl@google.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit 361e0ff456a8daf9753c18030533256e4133ce7a upstream.
+commit 74d74bb78aeccc9edc10db216d6be121cf7ec176 upstream.
 
-When forward-porting Rust Binder to 6.18, I neglected to take commit
-fb56fdf8b9a2 ("mm/list_lru: split the lock to per-cgroup scope") into
-account, and apparently I did not end up running the shrinker callback
-when I sanity tested the driver before submission. This leads to crashes
-like the following:
+__cacheline_aligned puts the data in the ".data..cacheline_aligned"
+section, which isn't marked read-only i.e. it doesn't receive MMU
+protection.  Replace it with ____cacheline_aligned which does the right
+thing and just aligns the data while keeping it in ".rodata".
 
-	============================================
-	WARNING: possible recursive locking detected
-	6.18.0-mainline-maybe-dirty #1 Tainted: G          IO
-	--------------------------------------------
-	kswapd0/68 is trying to acquire lock:
-	ffff956000fa18b0 (&l->lock){+.+.}-{2:2}, at: lock_list_lru_of_memcg+0x128/0x230
-
-	but task is already holding lock:
-	ffff956000fa18b0 (&l->lock){+.+.}-{2:2}, at: rust_helper_spin_lock+0xd/0x20
-
-	other info that might help us debug this:
-	 Possible unsafe locking scenario:
-
-	       CPU0
-	       ----
-	  lock(&l->lock);
-	  lock(&l->lock);
-
-	 *** DEADLOCK ***
-
-	 May be due to missing lock nesting notation
-
-	3 locks held by kswapd0/68:
-	 #0: ffffffff90d2e260 (fs_reclaim){+.+.}-{0:0}, at: kswapd+0x597/0x1160
-	 #1: ffff956000fa18b0 (&l->lock){+.+.}-{2:2}, at: rust_helper_spin_lock+0xd/0x20
-	 #2: ffffffff90cf3680 (rcu_read_lock){....}-{1:2}, at: lock_list_lru_of_memcg+0x2d/0x230
-
-To fix this, remove the spin_lock() call from rust_shrink_free_page().
-
-Cc: stable <stable@kernel.org>
-Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://patch.msgid.link/20251202-binder-shrink-unspin-v1-1-263efb9ad625@google.com
+Fixes: b5e0b032b6c3 ("crypto: aes - add generic time invariant AES cipher")
+Cc: stable@vger.kernel.org
+Reported-by: Qingfang Deng <dqfext@gmail.com>
+Closes: https://lore.kernel.org/r/20260105074712.498-1-dqfext@gmail.com/
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Link: https://lore.kernel.org/r/20260107052023.174620-1-ebiggers@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder/page_range.rs | 3 ---
- 1 file changed, 3 deletions(-)
+ lib/crypto/aes.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/android/binder/page_range.rs b/drivers/android/binder/page_range.rs
-index 9379038f61f5..fdd97112ef5c 100644
---- a/drivers/android/binder/page_range.rs
-+++ b/drivers/android/binder/page_range.rs
-@@ -727,8 +727,5 @@ fn drop(self: Pin<&mut Self>) {
-     drop(mm);
-     drop(page);
+--- a/lib/crypto/aes.c
++++ b/lib/crypto/aes.c
+@@ -13,7 +13,7 @@
+  * Emit the sbox as volatile const to prevent the compiler from doing
+  * constant folding on sbox references involving fixed indexes.
+  */
+-static volatile const u8 __cacheline_aligned aes_sbox[] = {
++static volatile const u8 ____cacheline_aligned aes_sbox[] = {
+ 	0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5,
+ 	0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76,
+ 	0xca, 0x82, 0xc9, 0x7d, 0xfa, 0x59, 0x47, 0xf0,
+@@ -48,7 +48,7 @@ static volatile const u8 __cacheline_ali
+ 	0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16,
+ };
  
--    // SAFETY: We just unlocked the lru lock, but it should be locked when we return.
--    unsafe { bindings::spin_lock(&raw mut (*lru).lock) };
--
-     LRU_REMOVED_ENTRY
- }
--- 
-2.52.0
-
+-static volatile const u8 __cacheline_aligned aes_inv_sbox[] = {
++static volatile const u8 ____cacheline_aligned aes_inv_sbox[] = {
+ 	0x52, 0x09, 0x6a, 0xd5, 0x30, 0x36, 0xa5, 0x38,
+ 	0xbf, 0x40, 0xa3, 0x9e, 0x81, 0xf3, 0xd7, 0xfb,
+ 	0x7c, 0xe3, 0x39, 0x82, 0x9b, 0x2f, 0xff, 0x87,
 
 
