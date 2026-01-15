@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E11C1258EC2;
-	Thu, 15 Jan 2026 17:16:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C043E258EC2;
+	Thu, 15 Jan 2026 17:16:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497362; cv=none; b=sj8GF5nrCP8efniZvNd6Qim0Gh8A9QK8GPvKxnHjcDklpuK+jITNdzgO8NPVqlinK3A1E6lV8qedLlF/xpVpQxNsVcFo2mcVtzV0XuOCD5f9P2zPEWpYypKv7rV+XV/abVw9YiAV7TLyLeDSbSqpXhbCYygYlUq6RsEV6seD71I=
+	t=1768497364; cv=none; b=We25u9aebeQfukiD2P7xHHOSNIW7fhvtIbCI1ZVoEFbvPx7JL2Sy3Jd00zBTlfD120ilu4tW1h1KNUHYk3nS2RG2RDaBjX9KXt9MYGtqwyfrxV+0JeJThyxJuf7qgOm85huBn5oSh5/Wj96wuMYFy+00jygp7AJ6kyh4pz28wNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497362; c=relaxed/simple;
-	bh=uHXSY8z+uj1jV+bZIClCmvKcjc+hea+yK3QSg8Qijtc=;
+	s=arc-20240116; t=1768497364; c=relaxed/simple;
+	bh=+NXsEYxw98adp6PbXurqNFGljDs8adHoMTm2QMfhhBo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WqjCf2jy3NaHvk8zw8zuHtJOR+gA5IIyrluCEZiuFosbBidOSU78SMpq5+8uiuK4f0cvM3fP8n+L9Jlbx4WvriowIZeNZQNsvmy0kxHs3CgLrvgqmohqWCP1EwCdwkxKcor4I7K5/LNayjYkCUzx6bV7E4OjppMnr313r44pZbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KTsIUEAO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gguIm/RUr8NxutvJBtlPr5CrMoneR+2O5qZYF/9L1Fy8GOWZ56kTAe6nZ0QrM9FfvW0r78LA2wm2oNw2cW4djui9CLkV4D9ifpZcgeziOuSfbYhKl5RDCB7HVXUGWW8O9Fgw1Y6MsJKwYnt0lUJgjeHNJPs6EOaLyeB//itkkxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wcw7tDM/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KTsIUEAO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E16BC116D0;
-	Thu, 15 Jan 2026 17:16:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wcw7tDM/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A9EEC116D0;
+	Thu, 15 Jan 2026 17:16:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497361;
-	bh=uHXSY8z+uj1jV+bZIClCmvKcjc+hea+yK3QSg8Qijtc=;
+	s=korg; t=1768497364;
+	bh=+NXsEYxw98adp6PbXurqNFGljDs8adHoMTm2QMfhhBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KTsIUEAObHkfjI/i/ZL82iJ+bCPiJGZY1QpxHKfjTrxq+1Rjbolykg31FespXdvu7
-	 jHJSr0pjv+oZh+NvdTYupMdMyW+PQBO5Agnx7t2uwauycLmFTdwDP41JluU6THym9z
-	 iORIfihLfFvH9E+z+aDs8yyhc/VgfnZgnDaEkvNE=
+	b=Wcw7tDM/0taKNX+lw9AHM5+4D0uo5COZyeVfjgnj2wB8XvFN+Po8l4LNGCyhGHRFk
+	 8fzNzxUZL9saT2R4FfNQbDI/GYytRUcp7IgUcIItqJbrN+W1xr+DmRPM4VFh0iIQLe
+	 zh9x8BzDzlE36nlDl6K51eRU0auiDejOyGF/iHfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ston Jia <ston.jia@outlook.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 027/554] platform/x86: huawei-wmi: add keys for HONOR models
-Date: Thu, 15 Jan 2026 17:41:33 +0100
-Message-ID: <20260115164247.223192308@linuxfoundation.org>
+Subject: [PATCH 5.15 054/554] firmware: imx: scu-irq: fix OF node leak in
+Date: Thu, 15 Jan 2026 17:42:00 +0100
+Message-ID: <20260115164248.200056930@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -45,49 +46,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jia Ston <ston.jia@outlook.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 5c72329716d0858621021193330594d5d26bf44d ]
+[ Upstream commit ee67247843a2b62d1473cfa4df300e69b5190ccf ]
 
-HONOR MagicBook X16/X14 models produced in 2025 cannot use the Print
-Screen and YOYO keys properly, with the system reporting them as
-unknown key presses (codes: 0x028b and 0x028e).
+imx_scu_enable_general_irq_channel() calls of_parse_phandle_with_args(),
+but does not release the OF node reference. Add a of_node_put() call
+to release the reference.
 
-To resolve this, a key_entry is added for both the HONOR Print Screen
-key and the HONOR YOYO key, ensuring they function correctly on these
-models.
-
-Signed-off-by: Ston Jia <ston.jia@outlook.com>
-Link: https://patch.msgid.link/20251029051804.220111-1-ston.jia@outlook.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: 851826c7566e ("firmware: imx: enable imx scu general irq function")
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/huawei-wmi.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/firmware/imx/imx-scu-irq.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/huawei-wmi.c b/drivers/platform/x86/huawei-wmi.c
-index 23ebd0c046e16..da9f80bde794f 100644
---- a/drivers/platform/x86/huawei-wmi.c
-+++ b/drivers/platform/x86/huawei-wmi.c
-@@ -82,6 +82,10 @@ static const struct key_entry huawei_wmi_keymap[] = {
- 	{ KE_KEY,    0x289, { KEY_WLAN } },
- 	// Huawei |M| key
- 	{ KE_KEY,    0x28a, { KEY_CONFIG } },
-+	// HONOR YOYO key
-+	{ KE_KEY,    0x28b, { KEY_NOTIFICATION_CENTER } },
-+	// HONOR print screen
-+	{ KE_KEY,    0x28e, { KEY_PRINT } },
- 	// Keyboard backlit
- 	{ KE_IGNORE, 0x293, { KEY_KBDILLUMTOGGLE } },
- 	{ KE_IGNORE, 0x294, { KEY_KBDILLUMUP } },
+diff --git a/drivers/firmware/imx/imx-scu-irq.c b/drivers/firmware/imx/imx-scu-irq.c
+index d9dcc20945c6a..32b1ca4e10508 100644
+--- a/drivers/firmware/imx/imx-scu-irq.c
++++ b/drivers/firmware/imx/imx-scu-irq.c
+@@ -160,8 +160,10 @@ int imx_scu_enable_general_irq_channel(struct device *dev)
+ 	INIT_WORK(&imx_sc_irq_work, imx_scu_irq_work_handler);
+ 
+ 	if (!of_parse_phandle_with_args(dev->of_node, "mboxes",
+-				       "#mbox-cells", 0, &spec))
++				       "#mbox-cells", 0, &spec)) {
+ 		i = of_alias_get_id(spec.np, "mu");
++		of_node_put(spec.np);
++	}
+ 
+ 	/* use mu1 as general mu irq channel if failed */
+ 	if (i < 0)
 -- 
 2.51.0
 
