@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 963F127A462;
-	Thu, 15 Jan 2026 17:45:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C3A927B340;
+	Thu, 15 Jan 2026 17:45:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499132; cv=none; b=Epozmpj08VXy4/T4hacEA4fyh6TLKRA9aGeN0EX302i2l6TBBjSm+Drto1W/ZWwfO6jopC43xu7GIA0HCBZClDq2CllH4ObB9FQJs/jGdo6f26H/qZHjL6xyw0gwyBgNgpwLldwE7zhb6ilpVFzbzgTvhN158vZF2vGmkBVqYMI=
+	t=1768499135; cv=none; b=ix4G5/mY07KyIOGjsPaCkgJT1unuLtfgf8pxfJbqIoUBXOj+XJ5yP5vCuGR9XzwnYUkYtGI6wDu5vkrpggVr3zsTPPFbS31xSWC+O5GXik6Mko8YBT5jO63dYD5TJwJEz4xmh3aNr1wiHW1y83N/rep4bVOLcPWxCOHLIuVj2sk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499132; c=relaxed/simple;
-	bh=090aMFQYoo+DHFGk4pN419ZL5K2T6OhValGnsnDFFyw=;
+	s=arc-20240116; t=1768499135; c=relaxed/simple;
+	bh=CpvYQ6JiB86W3G9kbECVp9Fm1HvJGolhNDeCGB/X5eQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uQl0/8tQv2zX/Nd1NAzfdMGGz0LKEqQBvRu7/4mmcPeQ60zTy6aSArP91okMn6Im17NxHkjm7IaQ38pVpALp4gR7qEVOqv3Gd/R5OSExUR56FJk07ucAV7f4gLi/u+U5BxvHF9RiIgqNJ2pdi6fU2TmyPPK+gHFqznaqTscNXEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TCns35/y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k7xJvwqzt7JK9irVes2FZooGfIyHlqKuAOpghZUD0bnvN5bbUR1OPSIIixY0jTQ/R8KqAryHfmeNFZxUYO1yu1nNGSRL8J6vpZZL2EGA0G6tvTAzKoW0MhDPgdC7abNM3pL8ZNFdsH0bHdlDEJNk59WZBfNwCff4JM8D5JSkGWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M4HcEeTd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TCns35/y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21991C116D0;
-	Thu, 15 Jan 2026 17:45:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M4HcEeTd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08708C116D0;
+	Thu, 15 Jan 2026 17:45:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499132;
-	bh=090aMFQYoo+DHFGk4pN419ZL5K2T6OhValGnsnDFFyw=;
+	s=korg; t=1768499135;
+	bh=CpvYQ6JiB86W3G9kbECVp9Fm1HvJGolhNDeCGB/X5eQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TCns35/yLJu+hn6WRWXFDZtZFaw0wfY38PwENg6iV3wRH/v7innB72e/8vbB6UWwL
-	 pzV65Z7jQEtAl2vO/cEfmqmQY0KmMRZr50pq7BHC2SLGHpqMMMA26zcp+JvlcJmaLm
-	 NGex/3Gz0/OCOae9Sr/heYbV5GJmlFv22T7kXoXE=
+	b=M4HcEeTdTrhm6iLIikijaQhSVwNpyALXG0ACsCpPgJcF0mAiHPsBHbLti4q7NIgop
+	 Cq08lQc2pYktIBH4y/8QsOIjzZHXffB1LxZvdAggnSm3WCxq31Pw756x4lZ0MxDcaP
+	 QTC3gukosr1tnuzy7qYK3lbkD1oMPX5yrt/+wINQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Linus Walleij <linusw@kernel.org>,
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 118/451] pinctrl: single: Fix incorrect type for error return variable
-Date: Thu, 15 Jan 2026 17:45:19 +0100
-Message-ID: <20260115164235.192689232@linuxfoundation.org>
+Subject: [PATCH 5.10 119/451] fbdev: ssd1307fb: fix potential page leak in ssd1307fb_probe()
+Date: Thu, 15 Jan 2026 17:45:20 +0100
+Message-ID: <20260115164235.228752137@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -51,51 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-[ Upstream commit 61d1bb53547d42c6bdaec9da4496beb3a1a05264 ]
+[ Upstream commit 164312662ae9764b83b84d97afb25c42eb2be473 ]
 
-pcs_pinconf_get() and pcs_pinconf_set() declare ret as unsigned int,
-but assign it the return values of pcs_get_function() that may return
-negative error codes. This causes negative error codes to be
-converted to large positive values.
+The page allocated for vmem using __get_free_pages() is not freed on the
+error paths after it. Fix that by adding a corresponding __free_pages()
+call to the error path.
 
-Change ret from unsigned int to int in both functions.
-
-Fixes: 9dddb4df90d1 ("pinctrl: single: support generic pinconf")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Fixes: facd94bc458a ("fbdev: ssd1307fb: Allocate page aligned video memory.")
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-single.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/video/fbdev/ssd1307fb.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/pinctrl-single.c b/drivers/pinctrl/pinctrl-single.c
-index bdcb5ede9b631..07bf090420453 100644
---- a/drivers/pinctrl/pinctrl-single.c
-+++ b/drivers/pinctrl/pinctrl-single.c
-@@ -490,7 +490,8 @@ static int pcs_pinconf_get(struct pinctrl_dev *pctldev,
- 	struct pcs_device *pcs = pinctrl_dev_get_drvdata(pctldev);
- 	struct pcs_function *func;
- 	enum pin_config_param param;
--	unsigned offset = 0, data = 0, i, j, ret;
-+	unsigned offset = 0, data = 0, i, j;
-+	int ret;
+diff --git a/drivers/video/fbdev/ssd1307fb.c b/drivers/video/fbdev/ssd1307fb.c
+index eda448b7a0c9d..fd26d368fdf5c 100644
+--- a/drivers/video/fbdev/ssd1307fb.c
++++ b/drivers/video/fbdev/ssd1307fb.c
+@@ -676,7 +676,7 @@ static int ssd1307fb_probe(struct i2c_client *client)
+ 	if (!ssd1307fb_defio) {
+ 		dev_err(dev, "Couldn't allocate deferred io.\n");
+ 		ret = -ENOMEM;
+-		goto fb_alloc_error;
++		goto fb_defio_error;
+ 	}
  
- 	ret = pcs_get_function(pctldev, pin, &func);
- 	if (ret)
-@@ -553,9 +554,9 @@ static int pcs_pinconf_set(struct pinctrl_dev *pctldev,
- {
- 	struct pcs_device *pcs = pinctrl_dev_get_drvdata(pctldev);
- 	struct pcs_function *func;
--	unsigned offset = 0, shift = 0, i, data, ret;
-+	unsigned offset = 0, shift = 0, i, data;
- 	u32 arg;
--	int j;
-+	int j, ret;
- 	enum pin_config_param param;
- 
- 	ret = pcs_get_function(pctldev, pin, &func);
+ 	ssd1307fb_defio->delay = HZ / refreshrate;
+@@ -756,6 +756,8 @@ static int ssd1307fb_probe(struct i2c_client *client)
+ 		regulator_disable(par->vbat_reg);
+ reset_oled_error:
+ 	fb_deferred_io_cleanup(info);
++fb_defio_error:
++	__free_pages(vmem, get_order(vmem_size));
+ fb_alloc_error:
+ 	framebuffer_release(info);
+ 	return ret;
 -- 
 2.51.0
 
