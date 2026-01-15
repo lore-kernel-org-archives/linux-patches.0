@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8663B1A08AF;
-	Thu, 15 Jan 2026 17:10:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2BC33993;
+	Thu, 15 Jan 2026 17:10:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497043; cv=none; b=DJrzUfDG9QnHRzkv7WmdBcPwnn1UP7jk4lzFGDNWr32YLGQIXbd3Rou1MrGsRN5SVXti9cpgu2/3eDzjYsYf7Rkcp3jYd34vqmxF/74BmpL7voti5oSFY8O4Axik/zUy/rIR9KSiQhxCqHuMMLIJ/VwHFT48iDLXV2V/FDJCwK0=
+	t=1768497046; cv=none; b=JtnDf+ifW3PMsZc2rewvJ+2uhU0FRlJjasILiDx5vCpx+vP8Vo5Zz2G+jUL0S6kf89YQ3Vy7LYr+0pbLVRPfCdzywDFDmtLc6UnUZcNdZvIy580/oMyI5HWztxSlnnk4OY+3cX/b8V1wXzf/OsIALr/qm8dUKo61lCV7eJQnyqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497043; c=relaxed/simple;
-	bh=rQ6m91mdkPQG3vise2l2fkWWR1Ja9hucj3QbnxhRwZQ=;
+	s=arc-20240116; t=1768497046; c=relaxed/simple;
+	bh=t8M0B4vdnfep4V8bdxVMviH1d7aCyKFWFNr1oB/f4II=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y2gJl2jsc9eGA+j7OnUs/uOQ7zpVREby6/IF2v1tX7NdG9g9Kj1bms8/9T+FozFtjLPgNKOn+b8Jxq6af1uwDGLaZbHYLxEzDru10EYLIKiRi9eu86OxluHsaRxxojypOBypKfFkpg4K8v03raA65WqC85UZua7x2p7HcA2Z6qQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D2pc1BK0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L2lmP+Mtf38w1IhoNBAC1gON4cUyzp1srQOks1RS4UVw3V6zPcMvFfWNyhZpODQB8QDPGRznN5RvptpE1Udn+hurBw7r4UcjaG9axHZB1notNVC/pMCpy3h3ECM0n84CamNasQZHQ77Q1l+9KGMDyGa5PeybmRNtQiQXY4wnPz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y8vLAbVz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D2pc1BK0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13334C116D0;
-	Thu, 15 Jan 2026 17:10:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y8vLAbVz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E72B7C116D0;
+	Thu, 15 Jan 2026 17:10:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497043;
-	bh=rQ6m91mdkPQG3vise2l2fkWWR1Ja9hucj3QbnxhRwZQ=;
+	s=korg; t=1768497046;
+	bh=t8M0B4vdnfep4V8bdxVMviH1d7aCyKFWFNr1oB/f4II=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D2pc1BK0HBSwLJLKfpDVRBHrJuTHPRoewmQjA50zeYC+Xtxcfx90Azz+FlanifOUj
-	 YF+0q4q2+LjBlg+Na0PQV7I4VdPQb1QyJex42lae9Gmw9yOvjJtRLzvd2fZzb2MaZp
-	 kYVU5WoiNn8BDLnnwmvcPme0lhw1gmtJhUs+/sZs=
+	b=y8vLAbVziHVuXcops4bjw59Z0RYO9ZwsL7ISfCfhzfH50qP8u4XrnMbgmAQGDPFv1
+	 iE0FOud7FAeraq45EGTRknjHZS6+5L1KrdO90b9lg3rhfOsz2jOqmkrhYflbELokhR
+	 ghSp1ltgS7PAc+mGbJA8PIp+CgW2mRE2qAOj8lx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Tomas Winkler <tomasw@gmail.com>,
-	Alexander Usyskin <alexander.usyskin@intel.com>
-Subject: [PATCH 6.1 04/72] mei: me: add nova lake point S DID
-Date: Thu, 15 Jan 2026 17:48:14 +0100
-Message-ID: <20260115164143.650227365@linuxfoundation.org>
+	Qingfang Deng <dqfext@gmail.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>
+Subject: [PATCH 6.1 05/72] lib/crypto: aes: Fix missing MMU protection for AES S-box
+Date: Thu, 15 Jan 2026 17:48:15 +0100
+Message-ID: <20260115164143.685907173@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164143.482647486@linuxfoundation.org>
 References: <20260115164143.482647486@linuxfoundation.org>
@@ -51,44 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit 420f423defcf6d0af2263d38da870ca4a20c0990 upstream.
+commit 74d74bb78aeccc9edc10db216d6be121cf7ec176 upstream.
 
-Add Nova Lake S device id.
+__cacheline_aligned puts the data in the ".data..cacheline_aligned"
+section, which isn't marked read-only i.e. it doesn't receive MMU
+protection.  Replace it with ____cacheline_aligned which does the right
+thing and just aligns the data while keeping it in ".rodata".
 
-Cc: stable <stable@kernel.org>
-Co-developed-by: Tomas Winkler <tomasw@gmail.com>
-Signed-off-by: Tomas Winkler <tomasw@gmail.com>
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Link: https://patch.msgid.link/20251215105915.1672659-1-alexander.usyskin@intel.com
+Fixes: b5e0b032b6c3 ("crypto: aes - add generic time invariant AES cipher")
+Cc: stable@vger.kernel.org
+Reported-by: Qingfang Deng <dqfext@gmail.com>
+Closes: https://lore.kernel.org/r/20260105074712.498-1-dqfext@gmail.com/
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Link: https://lore.kernel.org/r/20260107052023.174620-1-ebiggers@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mei/hw-me-regs.h |    2 ++
- drivers/misc/mei/pci-me.c     |    2 ++
- 2 files changed, 4 insertions(+)
+ lib/crypto/aes.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/misc/mei/hw-me-regs.h
-+++ b/drivers/misc/mei/hw-me-regs.h
-@@ -122,6 +122,8 @@
- 
- #define MEI_DEV_ID_WCL_P      0x4D70  /* Wildcat Lake P */
- 
-+#define MEI_DEV_ID_NVL_S      0x6E68  /* Nova Lake Point S */
-+
- /*
-  * MEI HW Section
+--- a/lib/crypto/aes.c
++++ b/lib/crypto/aes.c
+@@ -12,7 +12,7 @@
+  * Emit the sbox as volatile const to prevent the compiler from doing
+  * constant folding on sbox references involving fixed indexes.
   */
---- a/drivers/misc/mei/pci-me.c
-+++ b/drivers/misc/mei/pci-me.c
-@@ -129,6 +129,8 @@ static const struct pci_device_id mei_me
- 
- 	{MEI_PCI_DEVICE(MEI_DEV_ID_WCL_P, MEI_ME_PCH15_CFG)},
- 
-+	{MEI_PCI_DEVICE(MEI_DEV_ID_NVL_S, MEI_ME_PCH15_CFG)},
-+
- 	/* required last entry */
- 	{0, }
+-static volatile const u8 __cacheline_aligned aes_sbox[] = {
++static volatile const u8 ____cacheline_aligned aes_sbox[] = {
+ 	0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5,
+ 	0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76,
+ 	0xca, 0x82, 0xc9, 0x7d, 0xfa, 0x59, 0x47, 0xf0,
+@@ -47,7 +47,7 @@ static volatile const u8 __cacheline_ali
+ 	0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16,
  };
+ 
+-static volatile const u8 __cacheline_aligned aes_inv_sbox[] = {
++static volatile const u8 ____cacheline_aligned aes_inv_sbox[] = {
+ 	0x52, 0x09, 0x6a, 0xd5, 0x30, 0x36, 0xa5, 0x38,
+ 	0xbf, 0x40, 0xa3, 0x9e, 0x81, 0xf3, 0xd7, 0xfb,
+ 	0x7c, 0xe3, 0x39, 0x82, 0x9b, 0x2f, 0xff, 0x87,
 
 
