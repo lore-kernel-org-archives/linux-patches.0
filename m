@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B24B3BF2F7;
-	Thu, 15 Jan 2026 17:12:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460CB3BFE59;
+	Thu, 15 Jan 2026 17:12:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497152; cv=none; b=qypBmZhiC/2VYWhmu9TuvX26oZdDEPgxGZVHWTpkhjqGsbjhBnLho8Q+zP/H21GpxRA165Oh4DZgJ0qKJ23P2GSXHjTwD5fdD6h3ctxDjq8Zm2gk4Q5YW61Vjwn0S3se+L/2A2xzKl5y14Bjb1lxMykJk3wILck7W/1p+8aJfxY=
+	t=1768497155; cv=none; b=g46I+28UUOu1U/47lGJY9gjy450Hok+TDrL/BL61VBSmURvakyZYTd9KIoGPBaM7fkJFtOr+vrifgCiCksCCZhCgEJBQ9OqAYWtlxG3lKzzROF7CCaPsGw3/dMYbj1htmniNTl4gdbBuQ9GV97QDq3VfanPXMWb9lY1HmZwo+WU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497152; c=relaxed/simple;
-	bh=dTw27T6oUu9M9bxw31FJhyuH0my+b81Ip/u6IlTsvHQ=;
+	s=arc-20240116; t=1768497155; c=relaxed/simple;
+	bh=S9iQU8MfUEn5OL6q9og0coBwset3QvSS5amZ9bLM5js=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=suYN985s2bKps97PBhQuwYQb43c1fNh//UXxPx2JCWc69XBrvGIWH6cW0lYXhzNy0Fc1a/7H2Jpehs3ZCRxvPuSx0kOr/XPVaSCm25zYrjZNdAqkMNS+NKFop54ixFF9atbYGHQBUBGCXCk1YT6mcUQKH98W9tFqQ7c1rpVWtgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GEbLW68k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nISR05TriwDk6AQXWzCTvNbx45KQxZqTGQmPylsTutaUoMT93LB+oLuHDO0pnBy7VxTQGX7TkZr/HxO/Tup1S4MK1wgzBu+ZwkQCvyB+5KzG/xJ6MeGkIK7Gm5zvdZgOx0scrS2YdkqHVoPx/ZcetwC9reaT8U0b37E7waKKMNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMRiQUEn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GEbLW68k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA0E6C19422;
-	Thu, 15 Jan 2026 17:12:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMRiQUEn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D60C2BCB2;
+	Thu, 15 Jan 2026 17:12:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497152;
-	bh=dTw27T6oUu9M9bxw31FJhyuH0my+b81Ip/u6IlTsvHQ=;
+	s=korg; t=1768497155;
+	bh=S9iQU8MfUEn5OL6q9og0coBwset3QvSS5amZ9bLM5js=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GEbLW68kpW0Slxd3N3AdY8nEyFCbd91up6xysiER49goBWBpAFaxyntSE/DQPUHVN
-	 K8pzlrvYyExkZFpeEBrQNQ5XpsgIUEJ3WaC9bHkgUW+wmKDKqWtNyFn24jwyOJ4t9S
-	 AAcENx961knJa8nuytxTCyTn9dkoKZG6/e/ohCn0=
+	b=XMRiQUEnrnTL9yypS/IP1ILjSX7iRrFQk6OzLpL+c52JtMR2GV45TWBZJVxiIJvqt
+	 2YjQ1zg9QqTjCoF6oJr1GqMMQB//biEQgfma5nGdxDylSPaHoSSSxKtO125um9qx+u
+	 Vy8591flAvq3rzik5qeGTz5r7e7J73Xllsx0W/Vw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam James <sam@gentoo.org>,
-	Magnus Lindholm <linmag7@gmail.com>,
+	Scott Mayhew <smayhew@redhat.com>,
+	Benjamin Coddington <bcodding@hammerspace.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 21/72] alpha: dont reference obsolete termio struct for TC* constants
-Date: Thu, 15 Jan 2026 17:48:31 +0100
-Message-ID: <20260115164144.264853978@linuxfoundation.org>
+Subject: [PATCH 6.1 22/72] NFSv4: ensure the open stateid seqid doesnt go backwards
+Date: Thu, 15 Jan 2026 17:48:32 +0100
+Message-ID: <20260115164144.301129043@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164143.482647486@linuxfoundation.org>
 References: <20260115164143.482647486@linuxfoundation.org>
@@ -51,47 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sam James <sam@gentoo.org>
+From: Scott Mayhew <smayhew@redhat.com>
 
-[ Upstream commit 9aeed9041929812a10a6d693af050846942a1d16 ]
+[ Upstream commit 2e47c3cc64b44b0b06cd68c2801db92ff143f2b2 ]
 
-Similar in nature to ab107276607af90b13a5994997e19b7b9731e251. glibc-2.42
-drops the legacy termio struct, but the ioctls.h header still defines some
-TC* constants in terms of termio (via sizeof). Hardcode the values instead.
+We have observed an NFSv4 client receiving a LOCK reply with a status of
+NFS4ERR_OLD_STATEID and subsequently retrying the LOCK request with an
+earlier seqid value in the stateid.  As this was for a new lockowner,
+that would imply that nfs_set_open_stateid_locked() had updated the open
+stateid seqid with an earlier value.
 
-This fixes building Python for example, which falls over like:
-  ./Modules/termios.c:1119:16: error: invalid application of 'sizeof' to incomplete type 'struct termio'
+Looking at nfs_set_open_stateid_locked(), if the incoming seqid is out
+of sequence, the task will sleep on the state->waitq for up to 5
+seconds.  If the task waits for the full 5 seconds, then after finishing
+the wait it'll update the open stateid seqid with whatever value the
+incoming seqid has.  If there are multiple waiters in this scenario,
+then the last one to perform said update may not be the one with the
+highest seqid.
 
-Link: https://bugs.gentoo.org/961769
-Link: https://bugs.gentoo.org/962600
-Signed-off-by: Sam James <sam@gentoo.org>
-Reviewed-by: Magnus Lindholm <linmag7@gmail.com>
-Link: https://lore.kernel.org/r/6ebd3451908785cad53b50ca6bc46cfe9d6bc03c.1764922497.git.sam@gentoo.org
-Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
+Add a check to ensure that the seqid can only be incremented, and add a
+tracepoint to indicate when old seqids are skipped.
+
+Signed-off-by: Scott Mayhew <smayhew@redhat.com>
+Reviewed-by: Benjamin Coddington <bcodding@hammerspace.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/alpha/include/uapi/asm/ioctls.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/nfs/nfs4proc.c  | 13 +++++++++++--
+ fs/nfs/nfs4trace.h |  1 +
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/arch/alpha/include/uapi/asm/ioctls.h b/arch/alpha/include/uapi/asm/ioctls.h
-index 971311605288f..a09d04b49cc65 100644
---- a/arch/alpha/include/uapi/asm/ioctls.h
-+++ b/arch/alpha/include/uapi/asm/ioctls.h
-@@ -23,10 +23,10 @@
- #define TCSETSW		_IOW('t', 21, struct termios)
- #define TCSETSF		_IOW('t', 22, struct termios)
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index d4ae2ce56af4a..8258bce82e5bc 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -1700,8 +1700,17 @@ static void nfs_set_open_stateid_locked(struct nfs4_state *state,
+ 		if (nfs_stateid_is_sequential(state, stateid))
+ 			break;
  
--#define TCGETA		_IOR('t', 23, struct termio)
--#define TCSETA		_IOW('t', 24, struct termio)
--#define TCSETAW		_IOW('t', 25, struct termio)
--#define TCSETAF		_IOW('t', 28, struct termio)
-+#define TCGETA          0x40127417
-+#define TCSETA          0x80127418
-+#define TCSETAW         0x80127419
-+#define TCSETAF         0x8012741c
+-		if (status)
+-			break;
++		if (status) {
++			if (nfs4_stateid_match_other(stateid, &state->open_stateid) &&
++			    !nfs4_stateid_is_newer(stateid, &state->open_stateid)) {
++				trace_nfs4_open_stateid_update_skip(state->inode,
++								    stateid, status);
++				return;
++			} else {
++				break;
++			}
++		}
++
+ 		/* Rely on seqids for serialisation with NFSv4.0 */
+ 		if (!nfs4_has_session(NFS_SERVER(state->inode)->nfs_client))
+ 			break;
+diff --git a/fs/nfs/nfs4trace.h b/fs/nfs/nfs4trace.h
+index c8a57cfde64b4..0fc1b4a6eab90 100644
+--- a/fs/nfs/nfs4trace.h
++++ b/fs/nfs/nfs4trace.h
+@@ -1248,6 +1248,7 @@ DEFINE_NFS4_INODE_STATEID_EVENT(nfs4_setattr);
+ DEFINE_NFS4_INODE_STATEID_EVENT(nfs4_delegreturn);
+ DEFINE_NFS4_INODE_STATEID_EVENT(nfs4_open_stateid_update);
+ DEFINE_NFS4_INODE_STATEID_EVENT(nfs4_open_stateid_update_wait);
++DEFINE_NFS4_INODE_STATEID_EVENT(nfs4_open_stateid_update_skip);
+ DEFINE_NFS4_INODE_STATEID_EVENT(nfs4_close_stateid_update_wait);
  
- #define TCSBRK		_IO('t', 29)
- #define TCXONC		_IO('t', 30)
+ DECLARE_EVENT_CLASS(nfs4_getattr_event,
 -- 
 2.51.0
 
