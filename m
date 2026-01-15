@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64C663B8BAB;
-	Thu, 15 Jan 2026 16:55:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D063BF2EF;
+	Thu, 15 Jan 2026 16:55:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496117; cv=none; b=jJv48nmh5VUf2uCMYGpHeygvQMPRaVl+cQ+1i4RTRAQTnlBtj2R4Gx9pOWgDYTM6NMvLnmxcjOwrp7fObMM5vqpO574Z1/grcqinAuSFZE+a9Oh8/QcP6n2UfRou+3fDIeergwGz4PHmFJXp7aYkhLSkqDXrfRFtCfw1vetLfdk=
+	t=1768496120; cv=none; b=dc0CuJ8Zpajtp4sJGm66Jsn8hXnteC6/YiMqGa0stx78qVCEQat1bVD8D9Qx/luDKOgF8dQdv0FexZyUq5lXXC80fn8XjVWcVfMS7ox/JTA1J2Au8pxM6PFPz5qyH7rbx2MEOeudPEd6xJkNCxHLT46p4bkoK6TE1sIZYCPvg8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496117; c=relaxed/simple;
-	bh=afUsduel1+Ha3dY79t/HDe2X9tG5HodgBE4xuD9A4PM=;
+	s=arc-20240116; t=1768496120; c=relaxed/simple;
+	bh=FNqC3S33neonoHjP5hUyNEs2CgxgkzGj1gwxgWn0LLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QxVSYOnxsWt7HcMz237RZz/DYglFhZFVs3Ndz6kL3/vLk0M7vvAaoy7m2BCWEBxkQCLR6c8xT1dTLuufT1qi4u99FkTV17nMTnbb62VJSpAWlaODOsf05yaCtGfSaOVUrZQe/XXJk0Slf4BY3Z5uehZWJ99VBSnUDesSuPP7d58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qYzv8hbo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MES3BGLFLpZpFrP7u4Mfiw0W2jJ5BQ2I2N8cSnfQJnrt/A1dS04lp+iqbXgh1g2oZvU7s0qEZapS6sErj83efU1t+imn0eNyDYjkKkBgF4GcQ04nqKsqd+rYXQD92VFHHa+qEnTit0Uxa9GNVOQiAOTkKOYaPPWnJMDdWGbl7HM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KCCAtZpe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qYzv8hbo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6409C116D0;
-	Thu, 15 Jan 2026 16:55:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KCCAtZpe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9996EC116D0;
+	Thu, 15 Jan 2026 16:55:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496117;
-	bh=afUsduel1+Ha3dY79t/HDe2X9tG5HodgBE4xuD9A4PM=;
+	s=korg; t=1768496120;
+	bh=FNqC3S33neonoHjP5hUyNEs2CgxgkzGj1gwxgWn0LLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qYzv8hbobp++eZfOpx6D8D1FGyHdfqhQo/iWOz/Q5Du9qCJBsfH2X7kx1tOLQYvdN
-	 Q7AmFYHBdlaelxEHOrofyogWL36Ua9qVz4y0ciFPzyGyO234EsTauJrjQGkBo3897u
-	 IuajXxVOCUxt7m1qYsEtk4Yavw+Wa1e4WsySjj/Y=
+	b=KCCAtZpe6x6WbJphNeWnu9BlL4FgF6vtRSz/KiH6CN7oxdMEbebWSf1vRRels0FS/
+	 cCqXOvL1jC7lkEKrK84WeRxLnohaiQG5Yddn+C4Wm8w69yBvDvDBC0eQbZVWPBOqmS
+	 Kt5+EQAGU0Shx8KN0QCivS/qeYFgs2ksWgfPwJNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marek.vasut@mailbox.org>,
-	Christoph Niedermaier <cniedermaier@dh-electronics.com>,
+	Sherry Sun <sherry.sun@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 084/181] arm64: dts: imx8mp: Fix LAN8740Ai PHY reference clock on DH electronics i.MX8M Plus DHCOM
-Date: Thu, 15 Jan 2026 17:47:01 +0100
-Message-ID: <20260115164205.358606899@linuxfoundation.org>
+Subject: [PATCH 6.18 085/181] arm64: dts: imx8qm-ss-dma: correct the dma channels of lpuart
+Date: Thu, 15 Jan 2026 17:47:02 +0100
+Message-ID: <20260115164205.394114669@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -52,39 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marek.vasut@mailbox.org>
+From: Sherry Sun <sherry.sun@nxp.com>
 
-[ Upstream commit c63749a7ddc59ac6ec0b05abfa0a21af9f2c1d38 ]
+[ Upstream commit a988caeed9d918452aa0a68de2c6e94d86aa43ba ]
 
-Add missing 'clocks' property to LAN8740Ai PHY node, to allow the PHY driver
-to manage LAN8740Ai CLKIN reference clock supply. This fixes sporadic link
-bouncing caused by interruptions on the PHY reference clock, by letting the
-PHY driver manage the reference clock and assure there are no interruptions.
+The commit 616effc0272b5 ("arm64: dts: imx8: Fix lpuart DMA channel
+order") swap uart rx and tx channel at common imx8-ss-dma.dtsi. But miss
+update imx8qm-ss-dma.dtsi.
 
-This follows the matching PHY driver recommendation described in commit
-bedd8d78aba3 ("net: phy: smsc: LAN8710/20: add phy refclk in support")
+The commit 5a8e9b022e569 ("arm64: dts: imx8qm-ss-dma: Pass lpuart
+dma-names") just simple add dma-names as binding doc requirement.
 
-Fixes: 8d6712695bc8 ("arm64: dts: imx8mp: Add support for DH electronics i.MX8M Plus DHCOM and PDK2")
-Signed-off-by: Marek Vasut <marek.vasut@mailbox.org>
-Tested-by: Christoph Niedermaier <cniedermaier@dh-electronics.com>
+Correct lpuart0 - lpuart3 dma rx and tx channels, and use defines for
+the FSL_EDMA_RX flag.
+
+Fixes: 5a8e9b022e56 ("arm64: dts: imx8qm-ss-dma: Pass lpuart dma-names")
+Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Alexander Stein <alexander.stein@ew.tq-group.com>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/freescale/imx8qm-ss-dma.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi
-index 68c2e0156a5c8..f8303b7e2bd22 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi
-@@ -113,6 +113,7 @@ mdio {
- 		ethphy0f: ethernet-phy@1 { /* SMSC LAN8740Ai */
- 			compatible = "ethernet-phy-id0007.c110",
- 				     "ethernet-phy-ieee802.3-c22";
-+			clocks = <&clk IMX8MP_CLK_ENET_QOS>;
- 			interrupt-parent = <&gpio3>;
- 			interrupts = <19 IRQ_TYPE_LEVEL_LOW>;
- 			pinctrl-0 = <&pinctrl_ethphy0>;
+diff --git a/arch/arm64/boot/dts/freescale/imx8qm-ss-dma.dtsi b/arch/arm64/boot/dts/freescale/imx8qm-ss-dma.dtsi
+index d4856b8590e0c..e186c31bfd482 100644
+--- a/arch/arm64/boot/dts/freescale/imx8qm-ss-dma.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8qm-ss-dma.dtsi
+@@ -171,25 +171,25 @@ &flexcan3 {
+ 
+ &lpuart0 {
+ 	compatible = "fsl,imx8qm-lpuart", "fsl,imx8qxp-lpuart";
+-	dmas = <&edma2 13 0 0>, <&edma2 12 0 1>;
++	dmas = <&edma2 12 0 FSL_EDMA_RX>, <&edma2 13 0 0>;
+ 	dma-names = "rx","tx";
+ };
+ 
+ &lpuart1 {
+ 	compatible = "fsl,imx8qm-lpuart", "fsl,imx8qxp-lpuart";
+-	dmas = <&edma2 15 0 0>, <&edma2 14 0 1>;
++	dmas = <&edma2 14 0 FSL_EDMA_RX>, <&edma2 15 0 0>;
+ 	dma-names = "rx","tx";
+ };
+ 
+ &lpuart2 {
+ 	compatible = "fsl,imx8qm-lpuart", "fsl,imx8qxp-lpuart";
+-	dmas = <&edma2 17 0 0>, <&edma2 16 0 1>;
++	dmas = <&edma2 16 0 FSL_EDMA_RX>, <&edma2 17 0 0>;
+ 	dma-names = "rx","tx";
+ };
+ 
+ &lpuart3 {
+ 	compatible = "fsl,imx8qm-lpuart", "fsl,imx8qxp-lpuart";
+-	dmas = <&edma2 19 0 0>, <&edma2 18 0 1>;
++	dmas = <&edma2 18 0 FSL_EDMA_RX>, <&edma2 19 0 0>;
+ 	dma-names = "rx","tx";
+ };
+ 
 -- 
 2.51.0
 
