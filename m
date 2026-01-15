@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E10041A08AF;
-	Thu, 15 Jan 2026 17:07:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D5533993;
+	Thu, 15 Jan 2026 17:07:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496873; cv=none; b=I9vFc3btZH2HM4el6XYPHzlBd+ZnNCBigHiVXj22yJ10OQBJHJuyAQHwum2kpFIiZsTwbQez5Xz2tpJfp7kJBEbzG6LskRvnv9iCTD9CNcmk1vH2LUVPf7tEVhOIm7lzAHwY3m34pNwSMFnhXd97Mly9Ru4jWYykVQDhwm2v2ec=
+	t=1768496876; cv=none; b=LoMqbQlhtha7/RroMCmY4ppWI+Y1DLTgSSjgtXxZSzTvMFWv2FDaNdfxgQpYJwjY76YjsawI/BLVTXhp5vHa4zqfp5NSE/M4mPfzK92A2qG1pC+Mp/aHyXAio6ulqPvj5I1VlhXkATnycALktJ5npifGz97uO5KY8GPjdyvOuBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496873; c=relaxed/simple;
-	bh=tlb9wnwB1GLzA6l8qPnVddu2GzYqDs84eCBleJQmeXg=;
+	s=arc-20240116; t=1768496876; c=relaxed/simple;
+	bh=NZTIBIQbOT3evKUB+HvE0/auFrc8SJSDmk1snGMsiHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dS/AraKpV6HS315cS9VoqLKdELp6kYlZRFb31lc6gtJ50KvIjCo14QFeGu9Mu9XvkG1XAtjrVBzXs1V4f8SctqYyBlqBvScEOIsbVHQa7wcvnqSJ3qJDHXr0wvsR6x6ZiUoo4hAdi9QeH+Qq7uLJkHgWUB9ory30Bz9uBuRvm+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tI4xIrhz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=q1KttiIVPV3GX4mm5UObhDkPYVr/3qZUW1IdrcsAemTAxB+u4e8GnOBF1LsLW75xh07p+0s6CrKjGqsAod7Hr45Dx1M4KCjZi1ZBzIQXRNPWMkfUJTLF61KNz4oC7L5W/ykOVmd29zko/IDhFgaj+fI1XalE37HThK2mjtRdiNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FqqnCjgQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tI4xIrhz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67261C116D0;
-	Thu, 15 Jan 2026 17:07:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FqqnCjgQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 383E5C116D0;
+	Thu, 15 Jan 2026 17:07:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496872;
-	bh=tlb9wnwB1GLzA6l8qPnVddu2GzYqDs84eCBleJQmeXg=;
+	s=korg; t=1768496875;
+	bh=NZTIBIQbOT3evKUB+HvE0/auFrc8SJSDmk1snGMsiHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tI4xIrhzdoq47n35JhYtoCGdu3xEpe6FxF+q01tE6BOAY6M+AA0QugBDE1+mKNuM6
-	 qR6azulByeFu/U+C5JHiO6Sht0QonhgowSXkFvDU8SKWSexF1VejYnoeqDCavnTLTX
-	 N34OcA+QvoXcPpwtHHLVkJLLOXNL5/tuyi9Sos44=
+	b=FqqnCjgQ6XZsclNvxVS5epryxGj0yEFNYGxVufaFeBPGQvCXc/d9lAd0Kp2rpayaW
+	 4eWpD+wLCZg/3s4Y5yN6SoBbwMGvw+3tXW5pTmBBQIjWv+kqqrjNYd8qmHazBVQKLD
+	 B3tq1/hjVu1oowCIkeq7X+eM/NRGI2himVravgIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Kao <powenkao@google.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Ernest Van Hoecke <ernest.vanhoecke@toradex.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 38/88] scsi: ufs: core: Fix EH failure after W-LUN resume error
-Date: Thu, 15 Jan 2026 17:48:21 +0100
-Message-ID: <20260115164147.689891955@linuxfoundation.org>
+Subject: [PATCH 6.6 47/88] gpio: pca953x: handle short interrupt pulses on PCAL devices
+Date: Thu, 15 Jan 2026 17:48:30 +0100
+Message-ID: <20260115164148.012666868@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164146.312481509@linuxfoundation.org>
 References: <20260115164146.312481509@linuxfoundation.org>
@@ -46,130 +46,150 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brian Kao <powenkao@google.com>
+From: Ernest Van Hoecke <ernest.vanhoecke@toradex.com>
 
-[ Upstream commit b4bb6daf4ac4d4560044ecdd81e93aa2f6acbb06 ]
+[ Upstream commit 014a17deb41201449f76df2b20c857a9c3294a7c ]
 
-When a W-LUN resume fails, its parent devices in the SCSI hierarchy,
-including the scsi_target, may be runtime suspended. Subsequently, the
-error handler in ufshcd_recover_pm_error() fails to set the W-LUN device
-back to active because the parent target is not active.  This results in
-the following errors:
+GPIO drivers with latch input support may miss short pulses on input
+pins even when input latching is enabled. The generic interrupt logic in
+the pca953x driver reports interrupts by comparing the current input
+value against the previously sampled one and only signals an event when
+a level change is observed between two reads.
 
-  google-ufshcd 3c2d0000.ufs: ufshcd_err_handler started; HBA state eh_fatal; ...
-  ufs_device_wlun 0:0:0:49488: START_STOP failed for power mode: 1, result 40000
-  ufs_device_wlun 0:0:0:49488: ufshcd_wl_runtime_resume failed: -5
-  ...
-  ufs_device_wlun 0:0:0:49488: runtime PM trying to activate child device 0:0:0:49488 but parent (target0:0:0) is not active
+For short pulses, the first edge is captured when the input register is
+read, but if the signal returns to its previous level before the read,
+the second edge is not observed. As a result, successive pulses can
+produce identical input values at read time and no level change is
+detected, causing interrupts to be missed. Below timing diagram shows
+this situation where the top signal is the input pin level and the
+bottom signal indicates the latched value.
 
-Address this by:
+─────┐     ┌──*───────────────┐     ┌──*─────────────────┐     ┌──*───
+     │     │  .               │     │  .                 │     │  .
+     │     │  │               │     │  │                 │     │  │
+     └──*──┘  │               └──*──┘  │                 └──*──┘  │
+Input   │     │                  │     │                    │     │
+        ▼     │                  ▼     │                    ▼     │
+       IRQ    │                 IRQ    │                   IRQ    │
+              .                        .                          .
+─────┐        .┌──────────────┐        .┌────────────────┐        .┌──
+     │         │              │         │                │         │
+     │         │              │         │                │         │
+     └────────*┘              └────────*┘                └────────*┘
+Latched       │                        │                          │
+              ▼                        ▼                          ▼
+            READ 0                   READ 0                     READ 0
+                                   NO CHANGE                  NO CHANGE
 
- 1. Ensuring the W-LUN's parent scsi_target is runtime resumed before
-    attempting to set the W-LUN to active within
-    ufshcd_recover_pm_error().
+PCAL variants provide an interrupt status register that records which
+pins triggered an interrupt, but the status and input registers cannot
+be read atomically. The interrupt status is only cleared when the input
+port is read, and the input value must also be read to determine the
+triggering edge. If another interrupt occurs on a different line after
+the status register has been read but before the input register is
+sampled, that event will not be reflected in the earlier status
+snapshot, so relying solely on the interrupt status register is also
+insufficient.
 
- 2. Explicitly checking for power.runtime_error on the HBA and W-LUN
-    devices before calling pm_runtime_set_active() to clear the error
-    state.
+Support for input latching and interrupt status handling was previously
+added by [1], but the interrupt status-based logic was reverted by [2]
+due to these issues. This patch addresses the original problem by
+combining both sources of information. Events indicated by the interrupt
+status register are merged with events detected through the existing
+level-change logic. As a result:
 
- 3. Adding pm_runtime_get_sync(hba->dev) in
-    ufshcd_err_handling_prepare() to ensure the HBA itself is active
-    during error recovery, even if a child device resume failed.
+* short pulses, whose second edges are invisible, are detected via the
+  interrupt status register, and
+* interrupts that occur between the status and input reads are still
+  caught by the generic level-change logic.
 
-These changes ensure the device power states are managed correctly
-during error recovery.
+This significantly improves robustness on devices that signal interrupts
+as short pulses, while avoiding the issues that led to the earlier
+reversion. In practice, even if only the first edge of a pulse is
+observable, the interrupt is reliably detected.
 
-Signed-off-by: Brian Kao <powenkao@google.com>
-Tested-by: Brian Kao <powenkao@google.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20251112063214.1195761-1-powenkao@google.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+This fixes missed interrupts from an Ilitek touch controller with its
+interrupt line connected to a PCAL6416A, where active-low pulses are
+approximately 200 us long.
+
+[1] commit 44896beae605 ("gpio: pca953x: add PCAL9535 interrupt support for Galileo Gen2")
+[2] commit d6179f6c6204 ("gpio: pca953x: Improve interrupt support")
+
+Fixes: d6179f6c6204 ("gpio: pca953x: Improve interrupt support")
+Signed-off-by: Ernest Van Hoecke <ernest.vanhoecke@toradex.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20251217153050.142057-1-ernestvanhoecke@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 36 ++++++++++++++++++++++++++++--------
- 1 file changed, 28 insertions(+), 8 deletions(-)
+ drivers/gpio/gpio-pca953x.c | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 50d8a816d943a..9f53ee92486dc 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -6383,6 +6383,11 @@ static void ufshcd_clk_scaling_suspend(struct ufs_hba *hba, bool suspend)
+diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
+index 6b9bfdebadb5a..120d6695a4b55 100644
+--- a/drivers/gpio/gpio-pca953x.c
++++ b/drivers/gpio/gpio-pca953x.c
+@@ -840,14 +840,35 @@ static bool pca953x_irq_pending(struct pca953x_chip *chip, unsigned long *pendin
+ 	DECLARE_BITMAP(old_stat, MAX_LINE);
+ 	DECLARE_BITMAP(cur_stat, MAX_LINE);
+ 	DECLARE_BITMAP(new_stat, MAX_LINE);
++	DECLARE_BITMAP(int_stat, MAX_LINE);
+ 	DECLARE_BITMAP(trigger, MAX_LINE);
+ 	DECLARE_BITMAP(edges, MAX_LINE);
+ 	int ret;
  
- static void ufshcd_err_handling_prepare(struct ufs_hba *hba)
- {
-+	/*
-+	 * A WLUN resume failure could potentially lead to the HBA being
-+	 * runtime suspended, so take an extra reference on hba->dev.
-+	 */
-+	pm_runtime_get_sync(hba->dev);
- 	ufshcd_rpm_get_sync(hba);
- 	if (pm_runtime_status_suspended(&hba->ufs_device_wlun->sdev_gendev) ||
- 	    hba->is_sys_suspended) {
-@@ -6423,6 +6428,7 @@ static void ufshcd_err_handling_unprepare(struct ufs_hba *hba)
- 	if (ufshcd_is_clkscaling_supported(hba))
- 		ufshcd_clk_scaling_suspend(hba, false);
- 	ufshcd_rpm_put(hba);
-+	pm_runtime_put(hba->dev);
- }
- 
- static inline bool ufshcd_err_handling_should_stop(struct ufs_hba *hba)
-@@ -6437,28 +6443,42 @@ static inline bool ufshcd_err_handling_should_stop(struct ufs_hba *hba)
- #ifdef CONFIG_PM
- static void ufshcd_recover_pm_error(struct ufs_hba *hba)
- {
-+	struct scsi_target *starget = hba->ufs_device_wlun->sdev_target;
- 	struct Scsi_Host *shost = hba->host;
- 	struct scsi_device *sdev;
- 	struct request_queue *q;
--	int ret;
-+	bool resume_sdev_queues = false;
- 
- 	hba->is_sys_suspended = false;
-+
- 	/*
--	 * Set RPM status of wlun device to RPM_ACTIVE,
--	 * this also clears its runtime error.
-+	 * Ensure the parent's error status is cleared before proceeding
-+	 * to the child, as the parent must be active to activate the child.
- 	 */
--	ret = pm_runtime_set_active(&hba->ufs_device_wlun->sdev_gendev);
-+	if (hba->dev->power.runtime_error) {
-+		/* hba->dev has no functional parent thus simplily set RPM_ACTIVE */
-+		pm_runtime_set_active(hba->dev);
-+		resume_sdev_queues = true;
++	if (chip->driver_data & PCA_PCAL) {
++		/* Read INT_STAT before it is cleared by the input-port read. */
++		ret = pca953x_read_regs(chip, PCAL953X_INT_STAT, int_stat);
++		if (ret)
++			return false;
 +	}
 +
-+	if (hba->ufs_device_wlun->sdev_gendev.power.runtime_error) {
-+		/*
-+		 * starget, parent of wlun, might be suspended if wlun resume failed.
-+		 * Make sure parent is resumed before set child (wlun) active.
-+		 */
-+		pm_runtime_get_sync(&starget->dev);
-+		pm_runtime_set_active(&hba->ufs_device_wlun->sdev_gendev);
-+		pm_runtime_put_sync(&starget->dev);
-+		resume_sdev_queues = true;
-+	}
+ 	ret = pca953x_read_regs(chip, chip->regs->input, cur_stat);
+ 	if (ret)
+ 		return false;
  
--	/* hba device might have a runtime error otherwise */
--	if (ret)
--		ret = pm_runtime_set_active(hba->dev);
- 	/*
- 	 * If wlun device had runtime error, we also need to resume those
- 	 * consumer scsi devices in case any of them has failed to be
- 	 * resumed due to supplier runtime resume failure. This is to unblock
- 	 * blk_queue_enter in case there are bios waiting inside it.
- 	 */
--	if (!ret) {
-+	if (resume_sdev_queues) {
- 		shost_for_each_device(sdev, shost) {
- 			q = sdev->request_queue;
- 			if (q->dev && (q->rpm_status == RPM_SUSPENDED ||
++	if (chip->driver_data & PCA_PCAL) {
++		/* Detect short pulses via INT_STAT. */
++		bitmap_and(trigger, int_stat, chip->irq_mask, gc->ngpio);
++
++		/* Apply filter for rising/falling edge selection. */
++		bitmap_replace(new_stat, chip->irq_trig_fall, chip->irq_trig_raise,
++			       cur_stat, gc->ngpio);
++
++		bitmap_and(int_stat, new_stat, trigger, gc->ngpio);
++	} else {
++		bitmap_zero(int_stat, gc->ngpio);
++	}
++
+ 	/* Remove output pins from the equation */
+ 	pca953x_read_regs(chip, chip->regs->direction, reg_direction);
+ 
+@@ -861,7 +882,8 @@ static bool pca953x_irq_pending(struct pca953x_chip *chip, unsigned long *pendin
+ 
+ 	if (bitmap_empty(chip->irq_trig_level_high, gc->ngpio) &&
+ 	    bitmap_empty(chip->irq_trig_level_low, gc->ngpio)) {
+-		if (bitmap_empty(trigger, gc->ngpio))
++		if (bitmap_empty(trigger, gc->ngpio) &&
++		    bitmap_empty(int_stat, gc->ngpio))
+ 			return false;
+ 	}
+ 
+@@ -869,6 +891,7 @@ static bool pca953x_irq_pending(struct pca953x_chip *chip, unsigned long *pendin
+ 	bitmap_and(old_stat, chip->irq_trig_raise, new_stat, gc->ngpio);
+ 	bitmap_or(edges, old_stat, cur_stat, gc->ngpio);
+ 	bitmap_and(pending, edges, trigger, gc->ngpio);
++	bitmap_or(pending, pending, int_stat, gc->ngpio);
+ 
+ 	bitmap_and(cur_stat, new_stat, chip->irq_trig_level_high, gc->ngpio);
+ 	bitmap_and(cur_stat, cur_stat, chip->irq_mask, gc->ngpio);
 -- 
 2.51.0
 
