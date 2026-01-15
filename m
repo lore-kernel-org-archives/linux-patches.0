@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67262D6E72;
-	Thu, 15 Jan 2026 17:22:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4282C027B;
+	Thu, 15 Jan 2026 17:22:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497733; cv=none; b=NvxM/auyCQBFeHdpTbUKO9h1CEh1UkQBmQSugOMLuk4+2acjxRu3GzU3crWmMijEnrtgdogSUCf7ZROFrmo1H4h8UE6Cc/nLetYl64CKlxRUZN4X1FjxOPjkHXVJsvNDd+xCnSN7yT2MQKulVwAuXLKmPl7GSe6vkCGa5IKwbV8=
+	t=1768497736; cv=none; b=M0XmTj5mSIURMs41a45LkcS0Wh6m+DOhUkyDAxeAV5QNHYfuClnFIfVPR8FZk33//8JX2Aun+sLnYWxSZraLW7Aq+cDwwIa/53c/ep7Bdxp+ULJlXISKX8nr7Ybx1vMXguX4YyKHjTIbiISAqxQUt+dTsWbTUVSbRfKoL2F+RKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497733; c=relaxed/simple;
-	bh=jPmdEjRJ7srLTRJpv60ZGwb26xG8n/Bu/qAfpTNr1jA=;
+	s=arc-20240116; t=1768497736; c=relaxed/simple;
+	bh=zUjie7ePC7h5MQDZiMe3b2dJyzv9s03lhaZg0Svr2iU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X+m9SIpdCi7NMrHRceNaWTjILjDeyVbuPBT6ELx2h2XAPy68i3gtsBTFIZ3c6UY+N6HftUnPKNjTLkC3VEX3u6FUy7WP/xMbSMdCVRlVMLWc1FULuyAuMvyYWqtBVIkmbGSXamhj6z1n50p16cqn8NVyMgjEmURpJROWZaWxsz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0/8DpGa2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G9yOvNJ7CIxmAhvrDD59wdxDFbwJw7AMaWBjVKrvqo7Zv0wjdDnz3eMfTFOiPl+HdAyEwhSPUPKAbS0qDGcO2CHGm88xo8d9vMt6faVHBNG9kFHOAkz7cu3gyvxX1QlXfxw09oBOdOWUP2LOaiRYfK0QbuRVShlgP+ltxuRdIwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xf1e+IAV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0/8DpGa2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 162E2C116D0;
-	Thu, 15 Jan 2026 17:22:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xf1e+IAV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2701C116D0;
+	Thu, 15 Jan 2026 17:22:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497733;
-	bh=jPmdEjRJ7srLTRJpv60ZGwb26xG8n/Bu/qAfpTNr1jA=;
+	s=korg; t=1768497736;
+	bh=zUjie7ePC7h5MQDZiMe3b2dJyzv9s03lhaZg0Svr2iU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0/8DpGa2RbUEj6cQMlnSXqcdDGMgbVnIWVnw3+VHlIfLJBfszzXSwtvCkhlXRuzwe
-	 0Sx97h7EymMhCq4bckArosX7k7xxYZMwrkCp0w44cABJ5HHB+XxbQCrnExEdnEIn3V
-	 Q6WPpUjb8LHdLIQOjWhSV6x4Df6abjLlYrcslaNY=
+	b=xf1e+IAVlaYBe+KLogyuNzD8YDq96vCTzLwqpP6tyb258MMMjTouWxNeBoPd8e8c9
+	 6UgKsvUfLK7asB/nTYK6QWsGOVjbhMemQsbU9pSB57fwVq6LvNSCWYLVo2QYFQGxmb
+	 8JIoq7CzXxXMtBzs702IXJN1RFp700bRHUvBWrOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shengjiu Wang <shengjiu.wang@nxp.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 185/554] ASoC: ak4458: Disable regulator when error happens
-Date: Thu, 15 Jan 2026 17:44:11 +0100
-Message-ID: <20260115164252.958573315@linuxfoundation.org>
+Subject: [PATCH 5.15 186/554] ASoC: ak5558: Disable regulator when error happens
+Date: Thu, 15 Jan 2026 17:44:12 +0100
+Message-ID: <20260115164252.994402429@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -53,41 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit ae585fabb9713a43e358cf606451386757225c95 ]
+[ Upstream commit 1f8f726a2a29c28f65b30880335a1610c5e63594 ]
 
 Disable regulator in runtime resume when error happens to balance
 the reference count of regulator.
 
-Fixes: 7e3096e8f823 ("ASoC: ak4458: Add regulator support")
+Fixes: 2ff6d5a108c6 ("ASoC: ak5558: Add regulator support")
 Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/20251203100529.3841203-2-shengjiu.wang@nxp.com
+Link: https://patch.msgid.link/20251203100529.3841203-3-shengjiu.wang@nxp.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/ak4458.c | 10 +++++++++-
+ sound/soc/codecs/ak5558.c | 10 +++++++++-
  1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/ak4458.c b/sound/soc/codecs/ak4458.c
-index 29eb78702bf35..1c179df6f0926 100644
---- a/sound/soc/codecs/ak4458.c
-+++ b/sound/soc/codecs/ak4458.c
-@@ -709,7 +709,15 @@ static int __maybe_unused ak4458_runtime_resume(struct device *dev)
- 	regcache_cache_only(ak4458->regmap, false);
- 	regcache_mark_dirty(ak4458->regmap);
+diff --git a/sound/soc/codecs/ak5558.c b/sound/soc/codecs/ak5558.c
+index 37d4600b6f2c2..ba32cef2bf8ad 100644
+--- a/sound/soc/codecs/ak5558.c
++++ b/sound/soc/codecs/ak5558.c
+@@ -372,7 +372,15 @@ static int __maybe_unused ak5558_runtime_resume(struct device *dev)
+ 	regcache_cache_only(ak5558->regmap, false);
+ 	regcache_mark_dirty(ak5558->regmap);
  
--	return regcache_sync(ak4458->regmap);
-+	ret = regcache_sync(ak4458->regmap);
+-	return regcache_sync(ak5558->regmap);
++	ret = regcache_sync(ak5558->regmap);
 +	if (ret)
 +		goto err;
 +
 +	return 0;
 +err:
-+	regcache_cache_only(ak4458->regmap, true);
-+	regulator_bulk_disable(ARRAY_SIZE(ak4458->supplies), ak4458->supplies);
++	regcache_cache_only(ak5558->regmap, true);
++	regulator_bulk_disable(ARRAY_SIZE(ak5558->supplies), ak5558->supplies);
 +	return ret;
  }
- #endif /* CONFIG_PM */
  
+ static const struct dev_pm_ops ak5558_pm = {
 -- 
 2.51.0
 
