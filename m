@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9C543D6F17;
-	Thu, 15 Jan 2026 17:49:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A073C00B0;
+	Thu, 15 Jan 2026 17:49:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499382; cv=none; b=otXdtD77Y2lNIihnK7N2d0S5uak5cOzMn6S5R1A9g/hEmdfOcoJwxq0l2awEHvY1pHKLTFPSk4xpyV4rRTCW8FNPaGGQhADFvDpeCvll4TyArNAHXyJ0JWc4FWwRl8TxmNQQgrqfIL9dlsNLwsYgcQ1wg6nX5J5g4GaDxtvY30M=
+	t=1768499385; cv=none; b=ZWdJiMuvMc/cFYhnfGoqD2D+kESyPPlSwkY2cg2SuDT+m0sIv6M72vXfqV+JCgEc1HDw2aR22lAWXNCMk9LW+mugssPKyl8DkXu0RhRwO1hlht3hvFmRYhsz4Sug0C63UJkH9JWkzL99mn/Y40ht6tkbFBZR8xfZSr/E1y7WkoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499382; c=relaxed/simple;
-	bh=YQAoAoZyXq1NglJWJ+uoYNSHXjfqguZcHg8oR6ohVDE=;
+	s=arc-20240116; t=1768499385; c=relaxed/simple;
+	bh=fX6e3Lrg7PEyoDebCmmeSLtdHUlIQHd5spjgRHnCeaA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VaOOIENbEAhou5o/q2IdbJNM+HCuLs1Jbe5TfetbrYHn/X0SXkOes62r58vO8wXg086E9k0oyaavm0A+IyhtL2UvcJaDaHYcsjbN2K0omeJSAii0BqSkosChugq8qQyKuDK6yt4bpLgNptAigipFgsW0HgtrANede2fEmBXNR7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vZg56Fj2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FdjTltQZ/0wN/um+w/w+yDHBuGDeAlzPe83yqFWGXd88pYm/ee5I5nxLlD/qI1rpkKyRkqkyekSJyT/BT247UgmTteqdJWyMQVRZsqJDbyeMQch7cReHCxqFzH/LdBaLxqGDSXXuhBsh9M8t3jcKGRwJEqlKRovfP9LH5P0gJu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cWUKoY2g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vZg56Fj2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27136C16AAE;
-	Thu, 15 Jan 2026 17:49:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cWUKoY2g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EADCDC2BC86;
+	Thu, 15 Jan 2026 17:49:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499382;
-	bh=YQAoAoZyXq1NglJWJ+uoYNSHXjfqguZcHg8oR6ohVDE=;
+	s=korg; t=1768499385;
+	bh=fX6e3Lrg7PEyoDebCmmeSLtdHUlIQHd5spjgRHnCeaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vZg56Fj2NpUy6SrRNf9MwQDJoy/k0t2pA/sL+t+itKaA8JKo0Os5pnRo6SM3OXk2Z
-	 UyRfI7ZXpIKv6oeuSfe++5m0KMrN4WUKRT3zhwUo3sqmViAl5VgCPlAXUy9D8vKG8S
-	 VjqmJkSm+JMhezZJQ3lEbizkKtV7BTlzsr8TmNiA=
+	b=cWUKoY2g4HYzCb1KnlgG8yoUIQP8QYsztrHmFdtSYW59HMwicxj7/j9oLn9LE5Sxz
+	 xCx2m6PJ3CkN2zIWFBJQcZYSljZEIwTdxfWpwn4Qkv7bvIREUQhIGP371hT10e+hZK
+	 e3KAesDtLKT9TFkeXcwcGj7AX+nZOxX76ZghCQ0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Collins <bcollins@kernel.org>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Tony Battersby <tonyb@cybernetics.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 208/451] powerpc/addnote: Fix overflow on 32-bit builds
-Date: Thu, 15 Jan 2026 17:46:49 +0100
-Message-ID: <20260115164238.425097681@linuxfoundation.org>
+Subject: [PATCH 5.10 209/451] scsi: qla2xxx: Fix initiator mode with qlini_mode=exclusive
+Date: Thu, 15 Jan 2026 17:46:50 +0100
+Message-ID: <20260115164238.461435105@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -52,48 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Collins <bcollins@kernel.org>
+From: Tony Battersby <tonyb@cybernetics.com>
 
-[ Upstream commit 825ce89a3ef17f84cf2c0eacfa6b8dc9fd11d13f ]
+[ Upstream commit 8f58fc64d559b5fda1b0a5e2a71422be61e79ab9 ]
 
-The PUT_64[LB]E() macros need to cast the value to unsigned long long
-like the GET_64[LB]E() macros. Caused lots of warnings when compiled
-on 32-bit, and clobbered addresses (36-bit P4080).
+When given the module parameter qlini_mode=exclusive, qla2xxx in
+initiator mode is initially unable to successfully send SCSI commands to
+devices it finds while scanning, resulting in an escalating series of
+resets until an adapter reset clears the issue.  Fix by checking the
+active mode instead of the module parameter.
 
-Signed-off-by: Ben Collins <bcollins@kernel.org>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/2025042122-mustard-wrasse-694572@boujee-and-buff
+Signed-off-by: Tony Battersby <tonyb@cybernetics.com>
+Link: https://patch.msgid.link/1715ec14-ba9a-45dc-9cf2-d41aa6b81b5e@cybernetics.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/boot/addnote.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/scsi/qla2xxx/qla_os.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/arch/powerpc/boot/addnote.c b/arch/powerpc/boot/addnote.c
-index 53b3b2621457..78704927453a 100644
---- a/arch/powerpc/boot/addnote.c
-+++ b/arch/powerpc/boot/addnote.c
-@@ -68,8 +68,8 @@ static int e_class = ELFCLASS32;
- #define PUT_16BE(off, v)(buf[off] = ((v) >> 8) & 0xff, \
- 			 buf[(off) + 1] = (v) & 0xff)
- #define PUT_32BE(off, v)(PUT_16BE((off), (v) >> 16L), PUT_16BE((off) + 2, (v)))
--#define PUT_64BE(off, v)((PUT_32BE((off), (v) >> 32L), \
--			  PUT_32BE((off) + 4, (v))))
-+#define PUT_64BE(off, v)((PUT_32BE((off), (unsigned long long)(v) >> 32L), \
-+			  PUT_32BE((off) + 4, (unsigned long long)(v))))
+diff --git a/drivers/scsi/qla2xxx/qla_os.c b/drivers/scsi/qla2xxx/qla_os.c
+index a6ecb4bb7456..f35a53cc00dd 100644
+--- a/drivers/scsi/qla2xxx/qla_os.c
++++ b/drivers/scsi/qla2xxx/qla_os.c
+@@ -3288,13 +3288,7 @@ qla2x00_probe_one(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	    base_vha->mgmt_svr_loop_id, host->sg_tablesize);
  
- #define GET_16LE(off)	((buf[off]) + (buf[(off)+1] << 8))
- #define GET_32LE(off)	(GET_16LE(off) + (GET_16LE((off)+2U) << 16U))
-@@ -78,7 +78,8 @@ static int e_class = ELFCLASS32;
- #define PUT_16LE(off, v) (buf[off] = (v) & 0xff, \
- 			  buf[(off) + 1] = ((v) >> 8) & 0xff)
- #define PUT_32LE(off, v) (PUT_16LE((off), (v)), PUT_16LE((off) + 2, (v) >> 16L))
--#define PUT_64LE(off, v) (PUT_32LE((off), (v)), PUT_32LE((off) + 4, (v) >> 32L))
-+#define PUT_64LE(off, v) (PUT_32LE((off), (unsigned long long)(v)), \
-+			  PUT_32LE((off) + 4, (unsigned long long)(v) >> 32L))
+ 	if (ha->mqenable) {
+-		bool startit = false;
+-
+-		if (QLA_TGT_MODE_ENABLED())
+-			startit = false;
+-
+-		if (ql2x_ini_mode == QLA2XXX_INI_MODE_ENABLED)
+-			startit = true;
++		bool startit = !!(host->active_mode & MODE_INITIATOR);
  
- #define GET_16(off)	(e_data == ELFDATA2MSB ? GET_16BE(off) : GET_16LE(off))
- #define GET_32(off)	(e_data == ELFDATA2MSB ? GET_32BE(off) : GET_32LE(off))
+ 		/* Create start of day qpairs for Block MQ */
+ 		for (i = 0; i < ha->max_qpairs; i++)
 -- 
 2.51.0
 
