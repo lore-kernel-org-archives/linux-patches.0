@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2BC33993;
-	Thu, 15 Jan 2026 17:10:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31DAB2D781B;
+	Thu, 15 Jan 2026 17:10:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497046; cv=none; b=JtnDf+ifW3PMsZc2rewvJ+2uhU0FRlJjasILiDx5vCpx+vP8Vo5Zz2G+jUL0S6kf89YQ3Vy7LYr+0pbLVRPfCdzywDFDmtLc6UnUZcNdZvIy580/oMyI5HWztxSlnnk4OY+3cX/b8V1wXzf/OsIALr/qm8dUKo61lCV7eJQnyqo=
+	t=1768497049; cv=none; b=LfC7yW3owtQq87PbqnCDq2lrGwgHAq5Z9EU7Ewu+Jaa0SMKddXMSob3jkgTHie+WUc4YC5LF1gNLSt55vvC3aocejmY3+nk6VgVnes5Q98ZVMtp/nukdaq/8HCYCjW+qxf4OrSQ6uAapcKBVmQYLtqjBobYfwbJF7oEAejRMbOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497046; c=relaxed/simple;
-	bh=t8M0B4vdnfep4V8bdxVMviH1d7aCyKFWFNr1oB/f4II=;
+	s=arc-20240116; t=1768497049; c=relaxed/simple;
+	bh=I8W+aG/3zRePFkBX/8hxnKWxjJhJjilHuufJ7iTvI/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L2lmP+Mtf38w1IhoNBAC1gON4cUyzp1srQOks1RS4UVw3V6zPcMvFfWNyhZpODQB8QDPGRznN5RvptpE1Udn+hurBw7r4UcjaG9axHZB1notNVC/pMCpy3h3ECM0n84CamNasQZHQ77Q1l+9KGMDyGa5PeybmRNtQiQXY4wnPz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y8vLAbVz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FY/Wq3b04f08uewLPbsoOSpVxG6IJbYnyWb7LKqJmHPW0NR/+PWKT4jcV5JPxFnjSdnl+Z+mitAtrEaVMDKzlJl+IK/U1G0X3Oi1hUCpArnkjCCp2wt+Ms85kZ+I1ki0CbwzAC9rOewI1ayn/Edrh/4PUiSQJU39mwEK4RmdLsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fGvAtbpz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y8vLAbVz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E72B7C116D0;
-	Thu, 15 Jan 2026 17:10:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fGvAtbpz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B455AC116D0;
+	Thu, 15 Jan 2026 17:10:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497046;
-	bh=t8M0B4vdnfep4V8bdxVMviH1d7aCyKFWFNr1oB/f4II=;
+	s=korg; t=1768497049;
+	bh=I8W+aG/3zRePFkBX/8hxnKWxjJhJjilHuufJ7iTvI/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y8vLAbVziHVuXcops4bjw59Z0RYO9ZwsL7ISfCfhzfH50qP8u4XrnMbgmAQGDPFv1
-	 iE0FOud7FAeraq45EGTRknjHZS6+5L1KrdO90b9lg3rhfOsz2jOqmkrhYflbELokhR
-	 ghSp1ltgS7PAc+mGbJA8PIp+CgW2mRE2qAOj8lx0=
+	b=fGvAtbpz4F8D9MnbuvEsQ48n5CokytHSpUaT2diN5SUv3HuU9qPfZxy6pQ+iUiT7/
+	 OUYqJcu5BAHHM5Vclfl2vRkkXR0/gjm43fjakll9WJzics9dNdGD1kuRVHa/ZKm00y
+	 kCT9k0wUsQJhWUfUOdoS1g8w6QBTPaZPlJ8BKfYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang Deng <dqfext@gmail.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.1 05/72] lib/crypto: aes: Fix missing MMU protection for AES S-box
-Date: Thu, 15 Jan 2026 17:48:15 +0100
-Message-ID: <20260115164143.685907173@linuxfoundation.org>
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	William Breathitt Gray <wbg@kernel.org>
+Subject: [PATCH 6.1 06/72] counter: interrupt-cnt: Drop IRQF_NO_THREAD flag
+Date: Thu, 15 Jan 2026 17:48:16 +0100
+Message-ID: <20260115164143.722099028@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164143.482647486@linuxfoundation.org>
 References: <20260115164143.482647486@linuxfoundation.org>
@@ -51,46 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-commit 74d74bb78aeccc9edc10db216d6be121cf7ec176 upstream.
+commit 23f9485510c338476b9735d516c1d4aacb810d46 upstream.
 
-__cacheline_aligned puts the data in the ".data..cacheline_aligned"
-section, which isn't marked read-only i.e. it doesn't receive MMU
-protection.  Replace it with ____cacheline_aligned which does the right
-thing and just aligns the data while keeping it in ".rodata".
+An IRQ handler can either be IRQF_NO_THREAD or acquire spinlock_t, as
+CONFIG_PROVE_RAW_LOCK_NESTING warns:
+=============================
+[ BUG: Invalid wait context ]
+6.18.0-rc1+git... #1
+-----------------------------
+some-user-space-process/1251 is trying to lock:
+(&counter->events_list_lock){....}-{3:3}, at: counter_push_event [counter]
+other info that might help us debug this:
+context-{2:2}
+no locks held by some-user-space-process/....
+stack backtrace:
+CPU: 0 UID: 0 PID: 1251 Comm: some-user-space-process 6.18.0-rc1+git... #1 PREEMPT
+Call trace:
+ show_stack (C)
+ dump_stack_lvl
+ dump_stack
+ __lock_acquire
+ lock_acquire
+ _raw_spin_lock_irqsave
+ counter_push_event [counter]
+ interrupt_cnt_isr [interrupt_cnt]
+ __handle_irq_event_percpu
+ handle_irq_event
+ handle_simple_irq
+ handle_irq_desc
+ generic_handle_domain_irq
+ gpio_irq_handler
+ handle_irq_desc
+ generic_handle_domain_irq
+ gic_handle_irq
+ call_on_irq_stack
+ do_interrupt_handler
+ el0_interrupt
+ __el0_irq_handler_common
+ el0t_64_irq_handler
+ el0t_64_irq
 
-Fixes: b5e0b032b6c3 ("crypto: aes - add generic time invariant AES cipher")
+... and Sebastian correctly points out. Remove IRQF_NO_THREAD as an
+alternative to switching to raw_spinlock_t, because the latter would limit
+all potential nested locks to raw_spinlock_t only.
+
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Cc: stable@vger.kernel.org
-Reported-by: Qingfang Deng <dqfext@gmail.com>
-Closes: https://lore.kernel.org/r/20260105074712.498-1-dqfext@gmail.com/
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://lore.kernel.org/r/20260107052023.174620-1-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Link: https://lore.kernel.org/all/20251117151314.xwLAZrWY@linutronix.de/
+Fixes: a55ebd47f21f ("counter: add IRQ or GPIO based counter")
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://lore.kernel.org/r/20251118083603.778626-1-alexander.sverdlin@siemens.com
+Signed-off-by: William Breathitt Gray <wbg@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/crypto/aes.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/counter/interrupt-cnt.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/lib/crypto/aes.c
-+++ b/lib/crypto/aes.c
-@@ -12,7 +12,7 @@
-  * Emit the sbox as volatile const to prevent the compiler from doing
-  * constant folding on sbox references involving fixed indexes.
-  */
--static volatile const u8 __cacheline_aligned aes_sbox[] = {
-+static volatile const u8 ____cacheline_aligned aes_sbox[] = {
- 	0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5,
- 	0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76,
- 	0xca, 0x82, 0xc9, 0x7d, 0xfa, 0x59, 0x47, 0xf0,
-@@ -47,7 +47,7 @@ static volatile const u8 __cacheline_ali
- 	0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16,
- };
+--- a/drivers/counter/interrupt-cnt.c
++++ b/drivers/counter/interrupt-cnt.c
+@@ -229,8 +229,7 @@ static int interrupt_cnt_probe(struct pl
  
--static volatile const u8 __cacheline_aligned aes_inv_sbox[] = {
-+static volatile const u8 ____cacheline_aligned aes_inv_sbox[] = {
- 	0x52, 0x09, 0x6a, 0xd5, 0x30, 0x36, 0xa5, 0x38,
- 	0xbf, 0x40, 0xa3, 0x9e, 0x81, 0xf3, 0xd7, 0xfb,
- 	0x7c, 0xe3, 0x39, 0x82, 0x9b, 0x2f, 0xff, 0x87,
+ 	irq_set_status_flags(priv->irq, IRQ_NOAUTOEN);
+ 	ret = devm_request_irq(dev, priv->irq, interrupt_cnt_isr,
+-			       IRQF_TRIGGER_RISING | IRQF_NO_THREAD,
+-			       dev_name(dev), counter);
++			       IRQF_TRIGGER_RISING, dev_name(dev), counter);
+ 	if (ret)
+ 		return ret;
+ 
 
 
