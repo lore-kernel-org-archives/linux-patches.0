@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A073C00B0;
-	Thu, 15 Jan 2026 17:49:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738653C00AA;
+	Thu, 15 Jan 2026 17:49:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499385; cv=none; b=ZWdJiMuvMc/cFYhnfGoqD2D+kESyPPlSwkY2cg2SuDT+m0sIv6M72vXfqV+JCgEc1HDw2aR22lAWXNCMk9LW+mugssPKyl8DkXu0RhRwO1hlht3hvFmRYhsz4Sug0C63UJkH9JWkzL99mn/Y40ht6tkbFBZR8xfZSr/E1y7WkoY=
+	t=1768499388; cv=none; b=TgKPNihIX3UFrCXe4Cn+kYeIfIFXqeJY5OkJ6qw/hamQaxXHse6Yqej9Ds6NLo+ysPKz7mLdnZxDbuZ5NWpsuKmI506MXMogv+dqp+/waeLyYPANLn1XQTnKaIJBMu78tL5H5Fnye3plx6sDprM9WnX9MnpEYY/MHdo8YN7LuKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499385; c=relaxed/simple;
-	bh=fX6e3Lrg7PEyoDebCmmeSLtdHUlIQHd5spjgRHnCeaA=;
+	s=arc-20240116; t=1768499388; c=relaxed/simple;
+	bh=0ZBtzssjPq1dkW0lFk+sL2Ad0+saExS8wAy94+nOrhI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FdjTltQZ/0wN/um+w/w+yDHBuGDeAlzPe83yqFWGXd88pYm/ee5I5nxLlD/qI1rpkKyRkqkyekSJyT/BT247UgmTteqdJWyMQVRZsqJDbyeMQch7cReHCxqFzH/LdBaLxqGDSXXuhBsh9M8t3jcKGRwJEqlKRovfP9LH5P0gJu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cWUKoY2g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XLYLQ7aopsjbcLmq2Vx9/QpoDfgHUWMJVFNIOY44NH9gwtirlyWIJRCOaAEwV6fn/97n5wWieFqGJOJ+6tIDP32bf4RptGQPsS3HL3LnUD666/VO9woQJNBC6DIMfV9emZkM7W0lrssSKXLOjfx4SlKJYSbRYGJTGMZh3DmvoTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kkZpjyWP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cWUKoY2g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EADCDC2BC86;
-	Thu, 15 Jan 2026 17:49:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kkZpjyWP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C47C16AAE;
+	Thu, 15 Jan 2026 17:49:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499385;
-	bh=fX6e3Lrg7PEyoDebCmmeSLtdHUlIQHd5spjgRHnCeaA=;
+	s=korg; t=1768499388;
+	bh=0ZBtzssjPq1dkW0lFk+sL2Ad0+saExS8wAy94+nOrhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cWUKoY2g4HYzCb1KnlgG8yoUIQP8QYsztrHmFdtSYW59HMwicxj7/j9oLn9LE5Sxz
-	 xCx2m6PJ3CkN2zIWFBJQcZYSljZEIwTdxfWpwn4Qkv7bvIREUQhIGP371hT10e+hZK
-	 e3KAesDtLKT9TFkeXcwcGj7AX+nZOxX76ZghCQ0c=
+	b=kkZpjyWPJdKckaLmyU84F/05w3MB9uRw4Sj0AEanccNRRjWKId9JwOaMkACGbaDbQ
+	 nvGi76VtPxhutHgmNOt5jduxfCRb6HBBhKZFLQyjRAYKFdwrgw5JmO0ZuW1IxHOiiH
+	 Mk9a2bOo1lN1m5X04qGx5zIIReOxS5ccgYzGfd8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tony Battersby <tonyb@cybernetics.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 209/451] scsi: qla2xxx: Fix initiator mode with qlini_mode=exclusive
-Date: Thu, 15 Jan 2026 17:46:50 +0100
-Message-ID: <20260115164238.461435105@linuxfoundation.org>
+Subject: [PATCH 5.10 210/451] scsi: qla2xxx: Use reinit_completion on mbx_intr_comp
+Date: Thu, 15 Jan 2026 17:46:51 +0100
+Message-ID: <20260115164238.497629469@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -53,41 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Tony Battersby <tonyb@cybernetics.com>
 
-[ Upstream commit 8f58fc64d559b5fda1b0a5e2a71422be61e79ab9 ]
+[ Upstream commit 957aa5974989fba4ae4f807ebcb27f12796edd4d ]
 
-When given the module parameter qlini_mode=exclusive, qla2xxx in
-initiator mode is initially unable to successfully send SCSI commands to
-devices it finds while scanning, resulting in an escalating series of
-resets until an adapter reset clears the issue.  Fix by checking the
-active mode instead of the module parameter.
+If a mailbox command completes immediately after
+wait_for_completion_timeout() times out, ha->mbx_intr_comp could be left
+in an inconsistent state, causing the next mailbox command not to wait
+for the hardware.  Fix by reinitializing the completion before use.
 
 Signed-off-by: Tony Battersby <tonyb@cybernetics.com>
-Link: https://patch.msgid.link/1715ec14-ba9a-45dc-9cf2-d41aa6b81b5e@cybernetics.com
+Link: https://patch.msgid.link/11b6485e-0bfd-4784-8f99-c06a196dad94@cybernetics.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_os.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/scsi/qla2xxx/qla_mbx.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/scsi/qla2xxx/qla_os.c b/drivers/scsi/qla2xxx/qla_os.c
-index a6ecb4bb7456..f35a53cc00dd 100644
---- a/drivers/scsi/qla2xxx/qla_os.c
-+++ b/drivers/scsi/qla2xxx/qla_os.c
-@@ -3288,13 +3288,7 @@ qla2x00_probe_one(struct pci_dev *pdev, const struct pci_device_id *id)
- 	    base_vha->mgmt_svr_loop_id, host->sg_tablesize);
+diff --git a/drivers/scsi/qla2xxx/qla_mbx.c b/drivers/scsi/qla2xxx/qla_mbx.c
+index 8b7c71e779a7..aa6a68e235c9 100644
+--- a/drivers/scsi/qla2xxx/qla_mbx.c
++++ b/drivers/scsi/qla2xxx/qla_mbx.c
+@@ -249,6 +249,7 @@ qla2x00_mailbox_command(scsi_qla_host_t *vha, mbx_cmd_t *mcp)
+ 	/* Issue set host interrupt command to send cmd out. */
+ 	ha->flags.mbox_int = 0;
+ 	clear_bit(MBX_INTERRUPT, &ha->mbx_cmd_flags);
++	reinit_completion(&ha->mbx_intr_comp);
  
- 	if (ha->mqenable) {
--		bool startit = false;
--
--		if (QLA_TGT_MODE_ENABLED())
--			startit = false;
--
--		if (ql2x_ini_mode == QLA2XXX_INI_MODE_ENABLED)
--			startit = true;
-+		bool startit = !!(host->active_mode & MODE_INITIATOR);
+ 	/* Unlock mbx registers and wait for interrupt */
+ 	ql_dbg(ql_dbg_mbx, vha, 0x100f,
+@@ -275,6 +276,7 @@ qla2x00_mailbox_command(scsi_qla_host_t *vha, mbx_cmd_t *mcp)
+ 			    "cmd=%x Timeout.\n", command);
+ 			spin_lock_irqsave(&ha->hardware_lock, flags);
+ 			clear_bit(MBX_INTR_WAIT, &ha->mbx_cmd_flags);
++			reinit_completion(&ha->mbx_intr_comp);
+ 			spin_unlock_irqrestore(&ha->hardware_lock, flags);
  
- 		/* Create start of day qpairs for Block MQ */
- 		for (i = 0; i < ha->max_qpairs; i++)
+ 			if (chip_reset != ha->chip_reset) {
 -- 
 2.51.0
 
