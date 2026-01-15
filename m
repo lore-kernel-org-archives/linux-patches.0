@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 592D7396B75;
-	Thu, 15 Jan 2026 16:58:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 235FA349B0A;
+	Thu, 15 Jan 2026 16:58:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496296; cv=none; b=h31VEgZ2cAh71pLd6sG/sGK9ezJtde8kdlzPuLhONnJiF+Ir332diX9pJvOGu+5jMLG26DWGDrYyqknBFK0YEgEHlWzmsdca++7ZNJfdETtZh/O2pDYJBLJW5St1rMlDm17ZX57hoxExNsyMyRPbCN6l0xDcM8hYQbaMtZKNSt0=
+	t=1768496299; cv=none; b=SOtGo+xtQVftepNtwp8D3Dq1JwoKAebR9zlM3PqwqI1wMz6aJBZ1ANkkgY6LzCg2aOrQXu9Xq/qJuQ4nRZmWzBCgebmGmuqgF5rL9Zi1XD8C7ygCQqXuza28+prjkvztcxaUUz4kfSTwaKlLULj50ZP7kXi71KVD7K2C650LqeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496296; c=relaxed/simple;
-	bh=MJ7wasB6lg4r70JRrC3UMjJ7dEK9x0RAVVOwlFNgx5w=;
+	s=arc-20240116; t=1768496299; c=relaxed/simple;
+	bh=Qyhb7a13K5vr/yyJtZbWaeSsfp8n8diWBVB2ypq6a+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tWg5C7dYRRqcrCagfTJ8DKJ4MlU76d8tnJOTdRrjNJs4HuE+4JBJIeePKZPVzIboWTpFKplPOVke1v/fgdV9db4Bz3B+neXLxhfun39DR2xtWm07oC3hcevHC0VwnrqDrD6yf2LTJ1+821XpExGtr1xnVO7xP34WaGwBmwA8N4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ody9nuow; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sd4cHkEdUyA10vtfWDOyG0x4DlLh3+UQnP87q8K3hWuTXluVd6nXxjkiHeIL8dK0dh8aZcEvRz+0Q1EnHDRQ7WK38j5xFfrgPXweRPcMtYIkuaR742Li0QDombPEsQj+vBVX2P84ippmYszf9hIpUxNTBamn6Q5z1b1aM+2mXj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j+73qllV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ody9nuow"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCDCDC116D0;
-	Thu, 15 Jan 2026 16:58:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j+73qllV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5961C116D0;
+	Thu, 15 Jan 2026 16:58:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496296;
-	bh=MJ7wasB6lg4r70JRrC3UMjJ7dEK9x0RAVVOwlFNgx5w=;
+	s=korg; t=1768496299;
+	bh=Qyhb7a13K5vr/yyJtZbWaeSsfp8n8diWBVB2ypq6a+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ody9nuowoIGUqW31khzng+QD+5Y5+ylekJjWwQngzcB+D+YrA2iZVblM4acT/GWcF
-	 KUsavfsJZJX4QXhjNJwhSx/XrgZkWHCdR+tM+MzCAoi7PkL4rllXVtgGsb/gP0i5tT
-	 SLxdRZuO+NfLvJLqX9zX0L6zufWP3+QeS7QJ0jLg=
+	b=j+73qllVLZzHheJR+TQZp385BI+PDyLALEnftVrkI+o/E7Q5zbs4Nl6QKgsR7VXBv
+	 NwzNjed3SjIu0pdD+aS+8ZqYvRs2tSySwpEcaRUt0gTfyxrw2NFryAl51/Y+nWVB36
+	 Ve0jlFLbsHR2RUFmd1uiY2AdfJUtAustPQmKE1Hc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Michal Luczaj <mhal@rbox.co>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 113/181] drm/amd/pm: force send pcie parmater on navi1x
-Date: Thu, 15 Jan 2026 17:47:30 +0100
-Message-ID: <20260115164206.395684108@linuxfoundation.org>
+Subject: [PATCH 6.18 114/181] vsock: Make accept()ed sockets use custom setsockopt()
+Date: Thu, 15 Jan 2026 17:47:31 +0100
+Message-ID: <20260115164206.431205386@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -52,72 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Wang <kevinyang.wang@amd.com>
+From: Michal Luczaj <mhal@rbox.co>
 
-[ Upstream commit dc8a887de1a7d397ab4131f45676e89565417aa8 ]
+[ Upstream commit ce5e612dd411de096aa041b9e9325ba1bec5f9f4 ]
 
-v1:
-the PMFW didn't initialize the PCIe DPM parameters
-and requires the KMD to actively provide these parameters.
+SO_ZEROCOPY handling in vsock_connectible_setsockopt() does not get called
+on accept()ed sockets due to a missing flag. Flip it.
 
-v2:
-clean & remove unused code logic (lijo)
-
-Fixes: 1a18607c07bb ("drm/amd/pm: override pcie dpm parameters only if it is necessary")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4671
-Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit b0dbd5db7cf1f81e4aaedd25cb5e72ce369387b2)
+Fixes: e0718bd82e27 ("vsock: enable setting SO_ZEROCOPY")
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Link: https://patch.msgid.link/20251229-vsock-child-sock-custom-sockopt-v2-1-64778d6c4f88@rbox.co
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c   | 33 +++++++++----------
- 1 file changed, 15 insertions(+), 18 deletions(-)
+ net/vmw_vsock/af_vsock.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c
-index d0fd9537e6236..a2fcf678182b4 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c
-@@ -2454,24 +2454,21 @@ static int navi10_update_pcie_parameters(struct smu_context *smu,
- 	}
- 
- 	for (i = 0; i < NUM_LINK_LEVELS; i++) {
--		if (pptable->PcieGenSpeed[i] > pcie_gen_cap ||
--			pptable->PcieLaneCount[i] > pcie_width_cap) {
--			dpm_context->dpm_tables.pcie_table.pcie_gen[i] =
--									pptable->PcieGenSpeed[i] > pcie_gen_cap ?
--									pcie_gen_cap : pptable->PcieGenSpeed[i];
--			dpm_context->dpm_tables.pcie_table.pcie_lane[i] =
--									pptable->PcieLaneCount[i] > pcie_width_cap ?
--									pcie_width_cap : pptable->PcieLaneCount[i];
--			smu_pcie_arg = i << 16;
--			smu_pcie_arg |= dpm_context->dpm_tables.pcie_table.pcie_gen[i] << 8;
--			smu_pcie_arg |= dpm_context->dpm_tables.pcie_table.pcie_lane[i];
--			ret = smu_cmn_send_smc_msg_with_param(smu,
--							SMU_MSG_OverridePcieParameters,
--							smu_pcie_arg,
--							NULL);
--			if (ret)
--				break;
--		}
-+		dpm_context->dpm_tables.pcie_table.pcie_gen[i] =
-+			pptable->PcieGenSpeed[i] > pcie_gen_cap ?
-+			pcie_gen_cap : pptable->PcieGenSpeed[i];
-+		dpm_context->dpm_tables.pcie_table.pcie_lane[i] =
-+			pptable->PcieLaneCount[i] > pcie_width_cap ?
-+			pcie_width_cap : pptable->PcieLaneCount[i];
-+		smu_pcie_arg = i << 16;
-+		smu_pcie_arg |= dpm_context->dpm_tables.pcie_table.pcie_gen[i] << 8;
-+		smu_pcie_arg |= dpm_context->dpm_tables.pcie_table.pcie_lane[i];
-+		ret = smu_cmn_send_smc_msg_with_param(smu,
-+						      SMU_MSG_OverridePcieParameters,
-+						      smu_pcie_arg,
-+						      NULL);
-+		if (ret)
-+			return ret;
- 	}
- 
- 	return ret;
+diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
+index a9ca9c3b87b31..cbd649bf01459 100644
+--- a/net/vmw_vsock/af_vsock.c
++++ b/net/vmw_vsock/af_vsock.c
+@@ -1787,6 +1787,10 @@ static int vsock_accept(struct socket *sock, struct socket *newsock,
+ 		} else {
+ 			newsock->state = SS_CONNECTED;
+ 			sock_graft(connected, newsock);
++
++			set_bit(SOCK_CUSTOM_SOCKOPT,
++				&connected->sk_socket->flags);
++
+ 			if (vsock_msgzerocopy_allow(vconnected->transport))
+ 				set_bit(SOCK_SUPPORT_ZC,
+ 					&connected->sk_socket->flags);
 -- 
 2.51.0
 
