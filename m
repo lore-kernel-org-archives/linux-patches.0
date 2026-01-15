@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 018B82C3268;
-	Thu, 15 Jan 2026 17:20:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98F22C3268;
+	Thu, 15 Jan 2026 17:20:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497636; cv=none; b=WonlxJP6+7sd63z3Sd4NuLzJDTiZc8hzH7EquUw9gPcu0rfgup8DEdJPj9G4zuyBWoIj91qilIkIfzSGexuFjgCoOpx/7HJJp7oZgbxJrjcqMAVGWsQ7NCks7yIU7CceuknMEcz628kJ9Ta4Lpvx+3RAhqNgrkNkK2PbDwPCuhU=
+	t=1768497639; cv=none; b=dC1uQi/SbbXAsVujyNc3OYATydMTrK8E90lJVDgBCyRnNW+f0xMfl+zNH9v5NhovH95uJGyDMtiob11vsZ1nrF0t/UKYoaZdAt/Nv+Y+fuZ7xUKZ/PFtDySOuNLqlHIrJ85eCtMUIw2Kt4jhv/O1mZF9BbI8NclpcdDSgyQ7tI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497636; c=relaxed/simple;
-	bh=N/I4+OL9DXIgT7/gOzEq+B2heW33m6rUPd3pCy8Xtac=;
+	s=arc-20240116; t=1768497639; c=relaxed/simple;
+	bh=WHdBnqQxm8rOsqzIdEnmNicx5gH+C4uOPQIjwKbaa6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=khyOdEln/jVU0FqiwdQ31nO7B+iVCxApBLbidpmel+f3WhlAvQA8IzyC/kHbvm9tBelK2c6x7PGzcM+7f9RcMFOkG/lcZFvXSapSVIXdjZvYgBO3jn2mamA/x1nejV3xsEG1dp2AA8iPt+uY7+s3SCyvFyw8pnbt4yrBRCcz0rk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MmlPqDqc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jkfCwypOxqPgnuEbBOSdV9Lzq04Lkq9YoSGy3bUYNlts1STM0D6pnDwdSTtMZbNOU4gbfVpsP8Y/4Y83EMLlzgVWu4oqRU0a1FoYvxrAnRgGjfXKY32/rZFNb9YYpwD1kVj5rsqt5+u2v7uC9XHzXG15CWjS0DB7mRONQszXqbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VxEqZ4Nl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MmlPqDqc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 407B5C116D0;
-	Thu, 15 Jan 2026 17:20:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VxEqZ4Nl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B6E6C116D0;
+	Thu, 15 Jan 2026 17:20:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497635;
-	bh=N/I4+OL9DXIgT7/gOzEq+B2heW33m6rUPd3pCy8Xtac=;
+	s=korg; t=1768497638;
+	bh=WHdBnqQxm8rOsqzIdEnmNicx5gH+C4uOPQIjwKbaa6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MmlPqDqcipMpxOFuJ2DA4h127cIjOQKAKeNHphkw2iJCPDUtsaFYVV02UnCqYvsjX
-	 jM6ECbH1nyui74HUnjc8CzpVlLjmp9RHCyxn4NOQQhv67T57PHc9atw9AFuPtwXtw7
-	 ao6jHrdQO7o1T9AossDn6vFQCoezfDVJIUDOspMI=
+	b=VxEqZ4NlUVnt/UhMRNtErqdx1YMNEGgWEkdeAYkelykBKD6Kz0uaoKKevYFtQRulJ
+	 sI/fOLfuJEp4IS1vvq9rKK1Sp0MuFxPw0NaCLd2EBg0f2RZCX7cNemux3vExfcmcwT
+	 fr1iwUbfXHV14SHrYSR2iHRtEfRrmNJwlMZ+aQ+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Felix Fietkau <nbd@nbd.name>,
+	Parav Pandit <parav@nvidia.com>,
+	Eli Cohen <elic@nvidia.com>,
+	Jason Wang <jasowang@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 133/554] mt76: mt7615: Fix memory leak in mt7615_mcu_wtbl_sta_add()
-Date: Thu, 15 Jan 2026 17:43:19 +0100
-Message-ID: <20260115164251.065317407@linuxfoundation.org>
+Subject: [PATCH 5.15 151/554] vdpa: Introduce query of device config layout
+Date: Thu, 15 Jan 2026 17:43:37 +0100
+Message-ID: <20260115164251.729661673@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -52,43 +53,325 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Parav Pandit <parav@nvidia.com>
 
-[ Upstream commit 53d1548612670aa8b5d89745116cc33d9d172863 ]
+[ Upstream commit ad69dd0bf26b88ec6ab26f8bbe5cd74fbed7672a ]
 
-In mt7615_mcu_wtbl_sta_add(), an skb sskb is allocated. If the
-subsequent call to mt76_connac_mcu_alloc_wtbl_req() fails, the function
-returns an error without freeing sskb, leading to a memory leak.
+Introduce a command to query a device config layout.
 
-Fix this by calling dev_kfree_skb() on sskb in the error handling path
-to ensure it is properly released.
+An example query of network vdpa device:
 
-Fixes: 99c457d902cf9 ("mt76: mt7615: move mt7615_mcu_set_bmc to mt7615_mcu_ops")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20251113062415.103611-1-zilin@seu.edu.cn
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+$ vdpa dev add name bar mgmtdev vdpasim_net
+
+$ vdpa dev config show
+bar: mac 00:35:09:19:48:05 link up link_announce false mtu 1500
+
+$ vdpa dev config show -jp
+{
+    "config": {
+        "bar": {
+            "mac": "00:35:09:19:48:05",
+            "link ": "up",
+            "link_announce ": false,
+            "mtu": 1500,
+        }
+    }
+}
+
+Signed-off-by: Parav Pandit <parav@nvidia.com>
+Signed-off-by: Eli Cohen <elic@nvidia.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Link: https://lore.kernel.org/r/20211026175519.87795-3-parav@nvidia.com
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Stable-dep-of: e40b6abe0b12 ("virtio_vdpa: fix misleading return in void function")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7615/mcu.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/vdpa/vdpa.c       | 176 ++++++++++++++++++++++++++++++++++++++
+ include/linux/vdpa.h      |   2 +
+ include/uapi/linux/vdpa.h |   6 ++
+ 3 files changed, 184 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
-index bde65af72feda..0776af7f74d94 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
-@@ -1045,8 +1045,10 @@ mt7615_mcu_wtbl_sta_add(struct mt7615_phy *phy, struct ieee80211_vif *vif,
- 	wtbl_hdr = mt76_connac_mcu_alloc_wtbl_req(&dev->mt76, &msta->wcid,
- 						  WTBL_RESET_AND_SET, NULL,
- 						  &wskb);
--	if (IS_ERR(wtbl_hdr))
-+	if (IS_ERR(wtbl_hdr)) {
-+		dev_kfree_skb(sskb);
- 		return PTR_ERR(wtbl_hdr);
-+	}
+diff --git a/drivers/vdpa/vdpa.c b/drivers/vdpa/vdpa.c
+index 563b06563e17a..b12fc70510bb7 100644
+--- a/drivers/vdpa/vdpa.c
++++ b/drivers/vdpa/vdpa.c
+@@ -14,6 +14,8 @@
+ #include <uapi/linux/vdpa.h>
+ #include <net/genetlink.h>
+ #include <linux/mod_devicetable.h>
++#include <linux/virtio_net.h>
++#include <linux/virtio_ids.h>
  
- 	if (enable) {
- 		mt76_connac_mcu_wtbl_generic_tlv(&dev->mt76, wskb, vif, sta,
+ static LIST_HEAD(mdev_head);
+ /* A global mutex that protects vdpa management device and device level operations. */
+@@ -58,6 +60,7 @@ static void vdpa_release_dev(struct device *d)
+ 		ops->free(vdev);
+ 
+ 	ida_simple_remove(&vdpa_index_ida, vdev->index);
++	mutex_destroy(&vdev->cf_mutex);
+ 	kfree(vdev);
+ }
+ 
+@@ -119,6 +122,7 @@ struct vdpa_device *__vdpa_alloc_device(struct device *parent,
+ 	if (err)
+ 		goto err_name;
+ 
++	mutex_init(&vdev->cf_mutex);
+ 	device_initialize(&vdev->dev);
+ 
+ 	return vdev;
+@@ -301,6 +305,7 @@ void vdpa_get_config(struct vdpa_device *vdev, unsigned int offset,
+ {
+ 	const struct vdpa_config_ops *ops = vdev->config;
+ 
++	mutex_lock(&vdev->cf_mutex);
+ 	/*
+ 	 * Config accesses aren't supposed to trigger before features are set.
+ 	 * If it does happen we assume a legacy guest.
+@@ -308,6 +313,7 @@ void vdpa_get_config(struct vdpa_device *vdev, unsigned int offset,
+ 	if (!vdev->features_valid)
+ 		vdpa_set_features(vdev, 0);
+ 	ops->get_config(vdev, offset, buf, len);
++	mutex_unlock(&vdev->cf_mutex);
+ }
+ EXPORT_SYMBOL_GPL(vdpa_get_config);
+ 
+@@ -321,7 +327,9 @@ EXPORT_SYMBOL_GPL(vdpa_get_config);
+ void vdpa_set_config(struct vdpa_device *vdev, unsigned int offset,
+ 		     const void *buf, unsigned int length)
+ {
++	mutex_lock(&vdev->cf_mutex);
+ 	vdev->config->set_config(vdev, offset, buf, length);
++	mutex_unlock(&vdev->cf_mutex);
+ }
+ EXPORT_SYMBOL_GPL(vdpa_set_config);
+ 
+@@ -654,6 +662,168 @@ static int vdpa_nl_cmd_dev_get_dumpit(struct sk_buff *msg, struct netlink_callba
+ 	return msg->len;
+ }
+ 
++static int vdpa_dev_net_mq_config_fill(struct vdpa_device *vdev,
++				       struct sk_buff *msg, u64 features,
++				       const struct virtio_net_config *config)
++{
++	u16 val_u16;
++
++	if ((features & (1ULL << VIRTIO_NET_F_MQ)) == 0)
++		return 0;
++
++	val_u16 = le16_to_cpu(config->max_virtqueue_pairs);
++	return nla_put_u16(msg, VDPA_ATTR_DEV_NET_CFG_MAX_VQP, val_u16);
++}
++
++static int vdpa_dev_net_config_fill(struct vdpa_device *vdev, struct sk_buff *msg)
++{
++	struct virtio_net_config config = {};
++	u64 features;
++	u16 val_u16;
++
++	vdpa_get_config(vdev, 0, &config, sizeof(config));
++
++	if (nla_put(msg, VDPA_ATTR_DEV_NET_CFG_MACADDR, sizeof(config.mac),
++		    config.mac))
++		return -EMSGSIZE;
++
++	val_u16 = le16_to_cpu(config.status);
++	if (nla_put_u16(msg, VDPA_ATTR_DEV_NET_STATUS, val_u16))
++		return -EMSGSIZE;
++
++	val_u16 = le16_to_cpu(config.mtu);
++	if (nla_put_u16(msg, VDPA_ATTR_DEV_NET_CFG_MTU, val_u16))
++		return -EMSGSIZE;
++
++	features = vdev->config->get_features(vdev);
++
++	return vdpa_dev_net_mq_config_fill(vdev, msg, features, &config);
++}
++
++static int
++vdpa_dev_config_fill(struct vdpa_device *vdev, struct sk_buff *msg, u32 portid, u32 seq,
++		     int flags, struct netlink_ext_ack *extack)
++{
++	u32 device_id;
++	void *hdr;
++	int err;
++
++	hdr = genlmsg_put(msg, portid, seq, &vdpa_nl_family, flags,
++			  VDPA_CMD_DEV_CONFIG_GET);
++	if (!hdr)
++		return -EMSGSIZE;
++
++	if (nla_put_string(msg, VDPA_ATTR_DEV_NAME, dev_name(&vdev->dev))) {
++		err = -EMSGSIZE;
++		goto msg_err;
++	}
++
++	device_id = vdev->config->get_device_id(vdev);
++	if (nla_put_u32(msg, VDPA_ATTR_DEV_ID, device_id)) {
++		err = -EMSGSIZE;
++		goto msg_err;
++	}
++
++	switch (device_id) {
++	case VIRTIO_ID_NET:
++		err = vdpa_dev_net_config_fill(vdev, msg);
++		break;
++	default:
++		err = -EOPNOTSUPP;
++		break;
++	}
++	if (err)
++		goto msg_err;
++
++	genlmsg_end(msg, hdr);
++	return 0;
++
++msg_err:
++	genlmsg_cancel(msg, hdr);
++	return err;
++}
++
++static int vdpa_nl_cmd_dev_config_get_doit(struct sk_buff *skb, struct genl_info *info)
++{
++	struct vdpa_device *vdev;
++	struct sk_buff *msg;
++	const char *devname;
++	struct device *dev;
++	int err;
++
++	if (!info->attrs[VDPA_ATTR_DEV_NAME])
++		return -EINVAL;
++	devname = nla_data(info->attrs[VDPA_ATTR_DEV_NAME]);
++	msg = nlmsg_new(NLMSG_DEFAULT_SIZE, GFP_KERNEL);
++	if (!msg)
++		return -ENOMEM;
++
++	mutex_lock(&vdpa_dev_mutex);
++	dev = bus_find_device(&vdpa_bus, NULL, devname, vdpa_name_match);
++	if (!dev) {
++		NL_SET_ERR_MSG_MOD(info->extack, "device not found");
++		err = -ENODEV;
++		goto dev_err;
++	}
++	vdev = container_of(dev, struct vdpa_device, dev);
++	if (!vdev->mdev) {
++		NL_SET_ERR_MSG_MOD(info->extack, "unmanaged vdpa device");
++		err = -EINVAL;
++		goto mdev_err;
++	}
++	err = vdpa_dev_config_fill(vdev, msg, info->snd_portid, info->snd_seq,
++				   0, info->extack);
++	if (!err)
++		err = genlmsg_reply(msg, info);
++
++mdev_err:
++	put_device(dev);
++dev_err:
++	mutex_unlock(&vdpa_dev_mutex);
++	if (err)
++		nlmsg_free(msg);
++	return err;
++}
++
++static int vdpa_dev_config_dump(struct device *dev, void *data)
++{
++	struct vdpa_device *vdev = container_of(dev, struct vdpa_device, dev);
++	struct vdpa_dev_dump_info *info = data;
++	int err;
++
++	if (!vdev->mdev)
++		return 0;
++	if (info->idx < info->start_idx) {
++		info->idx++;
++		return 0;
++	}
++	err = vdpa_dev_config_fill(vdev, info->msg, NETLINK_CB(info->cb->skb).portid,
++				   info->cb->nlh->nlmsg_seq, NLM_F_MULTI,
++				   info->cb->extack);
++	if (err)
++		return err;
++
++	info->idx++;
++	return 0;
++}
++
++static int
++vdpa_nl_cmd_dev_config_get_dumpit(struct sk_buff *msg, struct netlink_callback *cb)
++{
++	struct vdpa_dev_dump_info info;
++
++	info.msg = msg;
++	info.cb = cb;
++	info.start_idx = cb->args[0];
++	info.idx = 0;
++
++	mutex_lock(&vdpa_dev_mutex);
++	bus_for_each_dev(&vdpa_bus, NULL, &info, vdpa_dev_config_dump);
++	mutex_unlock(&vdpa_dev_mutex);
++	cb->args[0] = info.idx;
++	return msg->len;
++}
++
+ static const struct nla_policy vdpa_nl_policy[VDPA_ATTR_MAX + 1] = {
+ 	[VDPA_ATTR_MGMTDEV_BUS_NAME] = { .type = NLA_NUL_STRING },
+ 	[VDPA_ATTR_MGMTDEV_DEV_NAME] = { .type = NLA_STRING },
+@@ -685,6 +855,12 @@ static const struct genl_ops vdpa_nl_ops[] = {
+ 		.doit = vdpa_nl_cmd_dev_get_doit,
+ 		.dumpit = vdpa_nl_cmd_dev_get_dumpit,
+ 	},
++	{
++		.cmd = VDPA_CMD_DEV_CONFIG_GET,
++		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
++		.doit = vdpa_nl_cmd_dev_config_get_doit,
++		.dumpit = vdpa_nl_cmd_dev_config_get_dumpit,
++	},
+ };
+ 
+ static struct genl_family vdpa_nl_family __ro_after_init = {
+diff --git a/include/linux/vdpa.h b/include/linux/vdpa.h
+index 88ed82e03b666..d26f5777f30f7 100644
+--- a/include/linux/vdpa.h
++++ b/include/linux/vdpa.h
+@@ -69,6 +69,7 @@ struct vdpa_mgmt_dev;
+  * @dev: underlying device
+  * @dma_dev: the actual device that is performing DMA
+  * @config: the configuration ops for this device.
++ * @cf_mutex: Protects get and set access to configuration layout.
+  * @index: device index
+  * @features_valid: were features initialized? for legacy guests
+  * @use_va: indicate whether virtual address must be used by this device
+@@ -80,6 +81,7 @@ struct vdpa_device {
+ 	struct device dev;
+ 	struct device *dma_dev;
+ 	const struct vdpa_config_ops *config;
++	struct mutex cf_mutex; /* Protects get/set config */
+ 	unsigned int index;
+ 	bool features_valid;
+ 	bool use_va;
+diff --git a/include/uapi/linux/vdpa.h b/include/uapi/linux/vdpa.h
+index 66a41e4ec163a..37ef30130a283 100644
+--- a/include/uapi/linux/vdpa.h
++++ b/include/uapi/linux/vdpa.h
+@@ -17,6 +17,7 @@ enum vdpa_command {
+ 	VDPA_CMD_DEV_NEW,
+ 	VDPA_CMD_DEV_DEL,
+ 	VDPA_CMD_DEV_GET,		/* can dump */
++	VDPA_CMD_DEV_CONFIG_GET,	/* can dump */
+ };
+ 
+ enum vdpa_attr {
+@@ -33,6 +34,11 @@ enum vdpa_attr {
+ 	VDPA_ATTR_DEV_MAX_VQS,			/* u32 */
+ 	VDPA_ATTR_DEV_MAX_VQ_SIZE,		/* u16 */
+ 
++	VDPA_ATTR_DEV_NET_CFG_MACADDR,		/* binary */
++	VDPA_ATTR_DEV_NET_STATUS,		/* u8 */
++	VDPA_ATTR_DEV_NET_CFG_MAX_VQP,		/* u16 */
++	VDPA_ATTR_DEV_NET_CFG_MTU,		/* u16 */
++
+ 	/* new attributes must be added above here */
+ 	VDPA_ATTR_MAX,
+ };
 -- 
 2.51.0
 
