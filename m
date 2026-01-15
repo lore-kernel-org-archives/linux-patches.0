@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0858258EC2;
-	Thu, 15 Jan 2026 17:18:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869BE258EC2;
+	Thu, 15 Jan 2026 17:18:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497495; cv=none; b=T1VEloK89KEXGXMX2zowR0h4Dbt/OxMwZCGN/Z/Qa4plootjHjlYihcZWeSvsqpMcx7ZuSvRLjz0l+GkqSmSy5KbxdPs7pzOhJRwcQoLOVGki0kJ94DUdqI3EuRdZlFOiRMPFsky+1BAHI+CpQYgI9XromqBeatNK7ocIBNIBL8=
+	t=1768497498; cv=none; b=K5lqSjlhma6HbRvmLoOlA8DOleRkLHL21Z63vAFh2dvzjjHrTMRBpQxLXrMg/i8ygusCSCzVI0pybBXA8LT71CXc8x/g7E/Ljk3bXVEldSu9Te3b3GvdMkftgQlb0M01ER/mPdtXH2OUoDHvtuQPs/U5rQoH6gNTubNJmDOYVp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497495; c=relaxed/simple;
-	bh=GFaI0YiauHOrvpDtgcl7kc4jc1/lv4gs5dHaoQ2Iq8Q=;
+	s=arc-20240116; t=1768497498; c=relaxed/simple;
+	bh=VFnbuzl7oqmOSZKfaRyAuKMun70GZhg6ALVEo2fLcWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GGBhW+D36WYnpQwIY3CgesGZexwHPF0BNNVdYxHxc0OzYbsU0pCxRu19jH6T52pmQA/MThnpCfyZN12ovySZEowrLvRH/8VWKmkJX9WMqJEP0sIUE+/4E7tumxI1MBX7yBJOagd263cfw8SEctCIx++gl689569//t8cdn01+TI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZLn31zPE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zjc+aGLkPn31o6n5tBNTF98nW2oNS7FxHpl5UF3mlmyeE2OqmlqTuADJOPvWsI+zO83a2+9SJe3DQQd0sd9miPcS4VbVKPBnk0HbNrcJqFvIP0qVVOKSmuo52ZllSSPuAwOOuYdOC1nbYrCMBM91ZtPu0iPi9lJ9002owYKIkTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yQDcoXYq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZLn31zPE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1123CC116D0;
-	Thu, 15 Jan 2026 17:18:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yQDcoXYq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D42D4C116D0;
+	Thu, 15 Jan 2026 17:18:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497495;
-	bh=GFaI0YiauHOrvpDtgcl7kc4jc1/lv4gs5dHaoQ2Iq8Q=;
+	s=korg; t=1768497498;
+	bh=VFnbuzl7oqmOSZKfaRyAuKMun70GZhg6ALVEo2fLcWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZLn31zPEYV0BRrqUsjEraEDvQuH2rfe8Kb1IpW+SIg1j0Jtp5irSCxP8SsLaKlcAx
-	 eLhflUEHfC6PrfsgTcY7doxBZWPTQONOQb2E5Fs7X2JVrF36CC7N//4IxX8n8Umw6J
-	 fmNpPefdqNpJZc5YE2+g/oHLXcUtls1bRbGCAM0A=
+	b=yQDcoXYqydQZbjEFCNUyKN73b2Y5MBtj4uI5NrM2Y8xSIYsNH/qQFXNlixGliH3ot
+	 bkpHckeiK48nyrVy5tLQUNbkLUbmO0Kux0KRGKBLkjOqjsGzKRqC8B/lRefEznX2bG
+	 iNO9Ft4j7e1cGGJ0HWxczZscnEcSdx/LIhInwI0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ahelenia=20Ziemia=C5=84ska?= <nabijaczleweli@nabijaczleweli.xyz>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Tengda Wu <wutengda@huaweicloud.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 069/554] power: supply: apm_power: only unset own apm_get_power_status
-Date: Thu, 15 Jan 2026 17:42:15 +0100
-Message-ID: <20260115164248.740286096@linuxfoundation.org>
+Subject: [PATCH 5.15 060/554] x86/dumpstack: Prevent KASAN false positive warnings in __show_regs()
+Date: Thu, 15 Jan 2026 17:42:06 +0100
+Message-ID: <20260115164248.419375653@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -45,44 +47,120 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ahelenia Ziemiańska <nabijaczleweli@nabijaczleweli.xyz>
+From: Tengda Wu <wutengda@huaweicloud.com>
 
-[ Upstream commit bd44ea12919ac4e83c9f3997240fe58266aa8799 ]
+[ Upstream commit ced37e9ceae50e4cb6cd058963bd315ec9afa651 ]
 
-Mirroring drivers/macintosh/apm_emu.c, this means that
-  modprobe apm_power && modprobe $anotherdriver && modprobe -r apm_power
-leaves $anotherdriver's apm_get_power_status instead of deleting it.
+When triggering a stack dump via sysrq (echo t > /proc/sysrq-trigger),
+KASAN may report false-positive out-of-bounds access:
 
-Fixes: 3788ec932bfd ("[BATTERY] APM emulation driver for class batteries")
-Signed-off-by: Ahelenia Ziemiańska <nabijaczleweli@nabijaczleweli.xyz>
-Link: https://patch.msgid.link/xczpgox57hxbunkcbdl5fxhc4gnsajsipldfidi7355afezk64@tarta.nabijaczleweli.xyz
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+  BUG: KASAN: out-of-bounds in __show_regs+0x4b/0x340
+  Call Trace:
+    dump_stack_lvl
+    print_address_description.constprop.0
+    print_report
+    __show_regs
+    show_trace_log_lvl
+    sched_show_task
+    show_state_filter
+    sysrq_handle_showstate
+    __handle_sysrq
+    write_sysrq_trigger
+    proc_reg_write
+    vfs_write
+    ksys_write
+    do_syscall_64
+    entry_SYSCALL_64_after_hwframe
+
+The issue occurs as follows:
+
+  Task A (walk other tasks' stacks)           Task B (running)
+  1. echo t > /proc/sysrq-trigger
+  show_trace_log_lvl
+    regs = unwind_get_entry_regs()
+    show_regs_if_on_stack(regs)
+                                              2. The stack value pointed by
+                                                 `regs` keeps changing, and
+                                                 so are the tags in its
+                                                 KASAN shadow region.
+      __show_regs(regs)
+        regs->ax, regs->bx, ...
+          3. hit KASAN redzones, OOB
+
+When task A walks task B's stack without suspending it, the continuous changes
+in task B's stack (and corresponding KASAN shadow tags) may cause task A to
+hit KASAN redzones when accessing obsolete values on the stack, resulting in
+false positive reports.
+
+Simply stopping the task before unwinding is not a viable fix, as it would
+alter the state intended to inspect. This is especially true for diagnosing
+misbehaving tasks (e.g., in a hard lockup), where stopping might fail or hide
+the root cause by changing the call stack.
+
+Therefore, fix this by disabling KASAN checks during asynchronous stack
+unwinding, which is identified when the unwinding task does not match the
+current task (task != current).
+
+  [ bp: Align arguments on function's opening brace. ]
+
+Fixes: 3b3fa11bc700 ("x86/dumpstack: Print any pt_regs found on the stack")
+Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Link: https://patch.msgid.link/all/20251023090632.269121-1-wutengda@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/apm_power.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/kernel/dumpstack.c | 23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/power/supply/apm_power.c b/drivers/power/supply/apm_power.c
-index 9d1a7fbcaed42..50b9636945599 100644
---- a/drivers/power/supply/apm_power.c
-+++ b/drivers/power/supply/apm_power.c
-@@ -365,7 +365,8 @@ static int __init apm_battery_init(void)
- 
- static void __exit apm_battery_exit(void)
+diff --git a/arch/x86/kernel/dumpstack.c b/arch/x86/kernel/dumpstack.c
+index 4adbc85b74a33..82ade5a7879ff 100644
+--- a/arch/x86/kernel/dumpstack.c
++++ b/arch/x86/kernel/dumpstack.c
+@@ -189,8 +189,8 @@ static void show_regs_if_on_stack(struct stack_info *info, struct pt_regs *regs,
+  * in false positive reports. Disable instrumentation to avoid those.
+  */
+ __no_kmsan_checks
+-static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
+-			unsigned long *stack, const char *log_lvl)
++static void __show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
++				 unsigned long *stack, const char *log_lvl)
  {
--	apm_get_power_status = NULL;
-+	if (apm_get_power_status == apm_battery_apm_get_power_status)
-+		apm_get_power_status = NULL;
+ 	struct unwind_state state;
+ 	struct stack_info stack_info = {0};
+@@ -311,6 +311,25 @@ static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
+ 	}
  }
  
- module_init(apm_battery_init);
++static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
++			       unsigned long *stack, const char *log_lvl)
++{
++	/*
++	 * Disable KASAN to avoid false positives during walking another
++	 * task's stacks, as values on these stacks may change concurrently
++	 * with task execution.
++	 */
++	bool disable_kasan = task && task != current;
++
++	if (disable_kasan)
++		kasan_disable_current();
++
++	__show_trace_log_lvl(task, regs, stack, log_lvl);
++
++	if (disable_kasan)
++		kasan_enable_current();
++}
++
+ void show_stack(struct task_struct *task, unsigned long *sp,
+ 		       const char *loglvl)
+ {
 -- 
 2.51.0
 
