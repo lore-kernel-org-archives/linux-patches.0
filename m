@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C84893BFE50;
-	Thu, 15 Jan 2026 17:30:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EB23BFE43;
+	Thu, 15 Jan 2026 17:30:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498246; cv=none; b=RwcTSivB8ph5vyaraeyvjVtXXlFZ+E6VL8We0xfwbAkrKIeiVVphTmgGWqDiBFeUl93TC8wy7xcJtCMFbqOXyXVLxpt7HQQ3uAZE7aLzwBmn2zOOS9FcJwSUtTW3hRlVGoDBQB1qIBCx3i/XRqx+jMEQIb+ng8SgaYbx5niOuBo=
+	t=1768498249; cv=none; b=nbPDMw4pn7m/xBSgTMIRWaKCeBtLDRPjOqtP1+jLnv3HKEBmXYrgat6yo7wULrjiviVKiIimYB0YIvBYbDB+AizVTKUkv4jDHNicKqdALHXHCAUsb/urmlXlNnbzRsuUxD5fPqhan8x64Bhbwtc4+EoG/6DBbaYFyCJmYwZqN+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498246; c=relaxed/simple;
-	bh=qzTM8dqqpJW8+8SvpXRaats5zHXi9wChbvWbpWNakFM=;
+	s=arc-20240116; t=1768498249; c=relaxed/simple;
+	bh=kFYh4SE7VRIwiNxf9NKDxPKm9vSHKd8PYmhCdgk7wZc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j7hOhgMi6wL/SX8IDSwIGZsi8FIJYxT1AD+m9H+Rb4m4w8vYsOXKrRolNAE9bnkM6FJs5ymUa7GX6l7WzlTlCVWdyElm6gofnk+do8POFAyVT/bRctAt72Hc/9Y/J0h8tFhZTuBOX7GihIyGWQdBJeNqLLTX97kB8fRpW/nUmU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RVlcdItm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XEtWgY8Mus5UiXXkyoYqmITSJlQC09fOOb2R7Dp84hklXoKvDL9LzDgCJ0BPP4zbrs97EFSNFc0gP8WHNlfmOJjrbGcYSfgwat26IzsYi+cjlw8R3W+VB2AqjNPEWbspYHBi9Zo2i1kNfndNn44JxaE0huYIsCzMtcqYijlTIYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lxBWP6Ma; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RVlcdItm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D4C1C116D0;
-	Thu, 15 Jan 2026 17:30:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lxBWP6Ma"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1403FC116D0;
+	Thu, 15 Jan 2026 17:30:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498246;
-	bh=qzTM8dqqpJW8+8SvpXRaats5zHXi9wChbvWbpWNakFM=;
+	s=korg; t=1768498249;
+	bh=kFYh4SE7VRIwiNxf9NKDxPKm9vSHKd8PYmhCdgk7wZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RVlcdItmds8VT4TTiJbKYSFmUsWwJDfM9GqRWCF5+Wl0UcJgTi2zNYKM5qQjGQKqg
-	 pvBX1v+uq2J5dZauuRTc8qwgOC16CtO4JxszPQGrk+z/gosGzOsCggLEcVh+HiU0ln
-	 ecC3fGMiDIR7tc/BS9wTrMXTa+Z+nmq/J56nZbsE=
+	b=lxBWP6MaHm9UPO+XETJ6P+iKByJSpUdgy7jIDSnI7TYMQLb0nuPpMMcLXIr8iv3Us
+	 y3pMEU+PfJ8mtKiwLbzPZ3LITx0Tv60QFI3qTonBhrC7dRF6W0eUAbnzcly2UTSdyS
+	 H1uJ0QleQ3pjmNMXVbpbXcLDeTWL4uCxhOH1Qxk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damodharam Ammepalli <damodharam.ammepalli@broadcom.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Honggang LI <honggangli@163.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 365/554] RDMA/bnxt_re: Fix to use correct page size for PDE table
-Date: Thu, 15 Jan 2026 17:47:11 +0100
-Message-ID: <20260115164259.438377591@linuxfoundation.org>
+Subject: [PATCH 5.15 366/554] RDMA/rtrs: Fix clt_path::max_pages_per_mr calculation
+Date: Thu, 15 Jan 2026 17:47:12 +0100
+Message-ID: <20260115164259.473531990@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -53,48 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+From: Honggang LI <honggangli@163.com>
 
-[ Upstream commit 3d70e0fb0f289b0c778041c5bb04d099e1aa7c1c ]
+[ Upstream commit 43bd09d5b750f700499ae8ec45fd41a4c48673e6 ]
 
-In bnxt_qplib_alloc_init_hwq(), while allocating memory for PDE table
-driver incorrectly is using the "pg_size" value passed to the function.
-Fixed to use the right value 4K. Also, fixed the allocation size for
-PBL table.
+If device max_mr_size bits in the range [mr_page_shift+31:mr_page_shift]
+are zero, the `min3` function will set clt_path::max_pages_per_mr to
+zero.
 
-Fixes: 0c4dcd602817 ("RDMA/bnxt_re: Refactor hardware queue memory allocation")
-Signed-off-by: Damodharam Ammepalli <damodharam.ammepalli@broadcom.com>
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Link: https://patch.msgid.link/20251223131855.145955-1-kalesh-anakkur.purayil@broadcom.com
-Reviewed-by: Selvin Xavier <selvin.xavier@broadcom.com>
+`alloc_path_reqs` will pass zero, which is invalid, as the third parameter
+to `ib_alloc_mr`.
+
+Fixes: 6a98d71daea1 ("RDMA/rtrs: client: main functionality")
+Signed-off-by: Honggang LI <honggangli@163.com>
+Link: https://patch.msgid.link/20251229025617.13241-1-honggangli@163.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_res.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/ulp/rtrs/rtrs-clt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.c b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-index 7585d5a55db2..76fbe52a957c 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_res.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-@@ -242,7 +242,7 @@ int bnxt_qplib_alloc_init_hwq(struct bnxt_qplib_hwq *hwq,
- 			if (npbl % BIT(MAX_PDL_LVL_SHIFT))
- 				npde++;
- 			/* Alloc PDE pages */
--			sginfo.pgsize = npde * pg_size;
-+			sginfo.pgsize = npde * ROCE_PG_SIZE_4K;
- 			sginfo.npages = 1;
- 			rc = __alloc_pbl(res, &hwq->pbl[PBL_LVL_0], &sginfo);
- 			if (rc)
-@@ -250,7 +250,7 @@ int bnxt_qplib_alloc_init_hwq(struct bnxt_qplib_hwq *hwq,
- 
- 			/* Alloc PBL pages */
- 			sginfo.npages = npbl;
--			sginfo.pgsize = PAGE_SIZE;
-+			sginfo.pgsize = ROCE_PG_SIZE_4K;
- 			rc = __alloc_pbl(res, &hwq->pbl[PBL_LVL_1], &sginfo);
- 			if (rc)
- 				goto fail;
+diff --git a/drivers/infiniband/ulp/rtrs/rtrs-clt.c b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
+index e8f5a1f104cf..cda7849e2133 100644
+--- a/drivers/infiniband/ulp/rtrs/rtrs-clt.c
++++ b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
+@@ -1469,6 +1469,7 @@ static void query_fast_reg_mode(struct rtrs_clt_path *clt_path)
+ 	mr_page_shift      = max(12, ffs(ib_dev->attrs.page_size_cap) - 1);
+ 	max_pages_per_mr   = ib_dev->attrs.max_mr_size;
+ 	do_div(max_pages_per_mr, (1ull << mr_page_shift));
++	max_pages_per_mr = min_not_zero((u32)max_pages_per_mr, U32_MAX);
+ 	clt_path->max_pages_per_mr =
+ 		min3(clt_path->max_pages_per_mr, (u32)max_pages_per_mr,
+ 		     ib_dev->attrs.max_fast_reg_page_list_len);
 -- 
 2.51.0
 
