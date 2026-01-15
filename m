@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE00258EC2;
-	Thu, 15 Jan 2026 17:18:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B111C29B200;
+	Thu, 15 Jan 2026 17:18:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497506; cv=none; b=EU5zZT4cOuXhczFsKWl3qUSSvHlT0yhkTyhCyRfOXQa7zg1K6G6bMWuASeZ7ZWa1Wo3fYchea4XtZ+MVZWWxrJojS69T0H8m/4J6ZR6RTjdPAzLtw21L4zfEzCIPZYaXRbUgNHqzgPZ+Garsj5zDdh6IVomlPhx+TNLeNh4KNqw=
+	t=1768497509; cv=none; b=Ad6SHpudspJ+YaMWFxENzevj7o+c+OdK8u20Hban+D54W4i4sJobODd60BQgKGKhvXQVRTIXRKMYqacapFyMYSPXzSGm1lLJH2tzzdgcebMS/8/2vZJ7e6/2rYFNkCa+U5AXQCerTRdLdmjvlkuQlNJJvHAnyosiR0EBqqU3W9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497506; c=relaxed/simple;
-	bh=Y9NoliMUDvxHje9V08eYcAu5fRp8ux1nAa4EAZL0cD8=;
+	s=arc-20240116; t=1768497509; c=relaxed/simple;
+	bh=kDK8eO9TjwseFz0buQhaim4IKEEbz+jstV4ItIKzh9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HFfg97TfTuZMkxdifVOAHWLoc9Ck7ltnSWK+lUuAUKJJM2lN1K4/G2n074F6BGOUDU29PLBylttflB9LGUIq6wp7GOuOsJLK04Dmv0dGeg61cHLtNuufXOMNH8aAlU183bn785VsTZYSIsH9R0uDZK6Co5TmAmEJ8Aiq1UYMWAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0fyhix1W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Zm7LCQkil2U1Wz7wtGxxIyOTW9dvdudhkRNUvppd/KoRpA4fGSSPd25ey3jWiSsEkauWlicO9zEF0TgjpwUR4L4N8vYOe+JF0tHJWMhWik9DlLYehpTIunREvw4y0tgTXSZMTZ0+mhyk4lKDQ91CNr6NsyO+kKbEXQHAn0hY/7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PBxLl0bc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0fyhix1W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5180AC116D0;
-	Thu, 15 Jan 2026 17:18:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PBxLl0bc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AD52C116D0;
+	Thu, 15 Jan 2026 17:18:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497506;
-	bh=Y9NoliMUDvxHje9V08eYcAu5fRp8ux1nAa4EAZL0cD8=;
+	s=korg; t=1768497509;
+	bh=kDK8eO9TjwseFz0buQhaim4IKEEbz+jstV4ItIKzh9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0fyhix1WOAQFaAV6cVhooQcIJ/q5ZM4NT7Z2aYI8A6fKEYBQ6BV6+Ge/uF2XlMnPw
-	 /3tJTFfVheIihLWl9s0PcW8oY0jxpqucGgyC35NYPLr8Xa+YK1GfdY4cd9ioQKxOSG
-	 xaEVxI+4sSA1noTIpGrP28RJm/QwYIFKsOP7Qr6Q=
+	b=PBxLl0bcLzQ7VXfG0gBDmLMMjvtJ48Et1Jjm+5MAhPqvYGFsMtY1MG7fE+vgPbYzV
+	 GXi1npzOQddT+eqy9oVAi/odSJwukEA/rihfBPAXgSs382DQm7G3z2aoH8vdqE3pf2
+	 PaRajkCpbyWEBjtk2oNWaBzvGQMxYAK+/B7KrxJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 106/554] PCI: keystone: Exit ks_pcie_probe() for invalid mode
-Date: Thu, 15 Jan 2026 17:42:52 +0100
-Message-ID: <20260115164250.091949678@linuxfoundation.org>
+Subject: [PATCH 5.15 107/554] ps3disk: use memcpy_{from,to}_bvec index
+Date: Thu, 15 Jan 2026 17:42:53 +0100
+Message-ID: <20260115164250.127515356@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -46,50 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: Rene Rebe <rene@exactco.de>
 
-[ Upstream commit 95d9c3f0e4546eaec0977f3b387549a8463cd49f ]
+[ Upstream commit 79bd8c9814a273fa7ba43399e1c07adec3fc95db ]
 
-Commit under Fixes introduced support for PCIe EP mode on AM654x platforms.
-When the mode happens to be either "DW_PCIE_RC_TYPE" or "DW_PCIE_EP_TYPE",
-the PCIe Controller is configured accordingly. However, when the mode is
-neither of them, an error message is displayed, but the driver probe
-succeeds. Since this "invalid" mode is not associated with a functional
-PCIe Controller, the probe should fail.
+With 6e0a48552b8c (ps3disk: use memcpy_{from,to}_bvec) converting
+ps3disk to new bvec helpers, incrementing the offset was accidently
+lost, corrupting consecutive buffers. Restore index for non-corrupted
+data transfers.
 
-Fix the behavior by exiting "ks_pcie_probe()" with the return value of
-"-EINVAL" in addition to displaying the existing error message when the
-mode is invalid.
-
-Fixes: 23284ad677a9 ("PCI: keystone: Add support for PCIe EP in AM654x Platforms")
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20251029080547.1253757-4-s-vadapalli@ti.com
+Fixes: 6e0a48552b8c (ps3disk: use memcpy_{from,to}_bvec)
+Signed-off-by: René Rebe <rene@exactco.de>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pci-keystone.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/block/ps3disk.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/pci/controller/dwc/pci-keystone.c b/drivers/pci/controller/dwc/pci-keystone.c
-index c277f76276ab1..ad399e9ce5dc5 100644
---- a/drivers/pci/controller/dwc/pci-keystone.c
-+++ b/drivers/pci/controller/dwc/pci-keystone.c
-@@ -1328,6 +1328,8 @@ static int ks_pcie_probe(struct platform_device *pdev)
- 		break;
- 	default:
- 		dev_err(dev, "INVALID device type %d\n", mode);
-+		ret = -EINVAL;
-+		goto err_get_sync;
- 	}
+diff --git a/drivers/block/ps3disk.c b/drivers/block/ps3disk.c
+index 8d51efbe045dd..8628ee818da96 100644
+--- a/drivers/block/ps3disk.c
++++ b/drivers/block/ps3disk.c
+@@ -85,10 +85,14 @@ static void ps3disk_scatter_gather(struct ps3_storage_device *dev,
+ 	struct bio_vec bvec;
  
- 	ks_pcie_enable_error_irq(ks_pcie);
+ 	rq_for_each_segment(bvec, req, iter) {
++		dev_dbg(&dev->sbd.core, "%s:%u: %u sectors from %llu\n",
++			__func__, __LINE__, bio_sectors(iter.bio),
++			iter.bio->bi_iter.bi_sector);
+ 		if (gather)
+ 			memcpy_from_bvec(dev->bounce_buf + offset, &bvec);
+ 		else
+ 			memcpy_to_bvec(&bvec, dev->bounce_buf + offset);
++		offset += bvec.bv_len;
+ 	}
+ }
+ 
 -- 
 2.51.0
 
