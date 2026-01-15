@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323B22D73AB;
-	Thu, 15 Jan 2026 17:47:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01FFA3BFE5F;
+	Thu, 15 Jan 2026 17:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499243; cv=none; b=Pon1L3UyiiV+ovAr5ByxhHq9+1ukxtiGqdxg08htdtZ5kwXsI0CfUf588BAuLvCdHc7LTQB3Nj59PtmwDIb9CAPRo9svY7axqiCqBBOu7V7Up29GKoeP0QAg8DsyHXMOxhXWrggqkNcaOXih9AVwrbRjuKcptLe8EKyqLLQRu1g=
+	t=1768499246; cv=none; b=lmGMvWoqpkJf7Ho5VxbCPDDqxbTSgmStOhyvcEh/AHaPj7FIe8vZ2zqZdWXTOAlO8REyeZrzbtoiiGJo6mFFxg9yyahIdjiaHTBgGrW/+A4lIdvGgFJDRi0+BC10UyIPkutHwkoYT22/vWXNZHMgFaI9KgXxGDcvq4u2IhDHzl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499243; c=relaxed/simple;
-	bh=Ugi7YkgcHSjL+hS2OvVtdCaVyn7K8uG+m103Fj+6lOQ=;
+	s=arc-20240116; t=1768499246; c=relaxed/simple;
+	bh=IqFVyBuSvbQmtGbm6aZ7Kga6fRuGKnDw4q77sso3uVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=llwv+v6IMQ2kduYe188OfvxBOC3bQUEqDtSNNhjgZbMbgUc3hN9blHy8aJ+RRhKCLis22KRH5AnJGrABan5ucetrG7Usqyk1Z+wJ5ZgIS9G5tCgjPWZPeCESsQN8F9Sjqs7LxWg9dks3b0kZTDRj0vUGbM8JzfBffVimoOfI4X8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ndr2Pdxd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lABNqBAaqKzmq2i7op2NKyXaI5HrOEPDCz7+jslClrIOdIgRZ99TBp4PTW+LHacrqqj3GlpmT7eQy6STih6nZiqK1ZOQwAyLEhpLxFbUCbZglT7gY+9yiliiKpGlPyF/Zn7+ga9wq+1WAoRMnxqmssKqvga6soWwHgTjXHhgi8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZnaqbKP8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ndr2Pdxd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF020C19422;
-	Thu, 15 Jan 2026 17:47:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZnaqbKP8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 836BFC116D0;
+	Thu, 15 Jan 2026 17:47:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499243;
-	bh=Ugi7YkgcHSjL+hS2OvVtdCaVyn7K8uG+m103Fj+6lOQ=;
+	s=korg; t=1768499245;
+	bh=IqFVyBuSvbQmtGbm6aZ7Kga6fRuGKnDw4q77sso3uVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ndr2PdxdBuZI40whF3r7+RNi11PoJb1Vsud00bHXXqtgWVHVQrTTjwa5MunSXSgaC
-	 qKdY61f5dJO8FrkZj9g7OAXuFB4G+mGzPWhoh6fG9MbYMtK0gqVEafFjLQAcLGzipM
-	 VorOAfI0nctjB6kXfj1vaGMSaFR5IxESr8YaPSes=
+	b=ZnaqbKP8qjSGh0k5OesJhVXZ9zvjL7yrfU8O8loMvwCLSh7DbUmIt7Vb8cI3V7qDr
+	 YfA1L3I4PdS6eIP+6ct5HO/T8g3vh4JFvHF2PjLbOP131+zGweLKBkG3xNsJ+8h9e/
+	 0OhgoUetZreDOp75j/1EudThahOMgSMoGu+0SSMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
+	Cryolitia PukNgae <cryolitia.pukngae@linux.dev>,
+	WangYuli <wangyl5933@chinaunicom.cn>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 157/451] x86/ptrace: Always inline trivial accessors
-Date: Thu, 15 Jan 2026 17:45:58 +0100
-Message-ID: <20260115164236.592069654@linuxfoundation.org>
+Subject: [PATCH 5.10 158/451] ACPICA: Avoid walking the Namespace if start_node is NULL
+Date: Thu, 15 Jan 2026 17:45:59 +0100
+Message-ID: <20260115164236.627662622@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -51,87 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Cryolitia PukNgae <cryolitia.pukngae@linux.dev>
 
-[ Upstream commit 1fe4002cf7f23d70c79bda429ca2a9423ebcfdfa ]
+[ Upstream commit 9d6c58dae8f6590c746ac5d0012ffe14a77539f0 ]
 
-A KASAN build bloats these single load/store helpers such that
-it fails to inline them:
+Although commit 0c9992315e73 ("ACPICA: Avoid walking the ACPI Namespace
+if it is not there") fixed the situation when both start_node and
+acpi_gbl_root_node are NULL, the Linux kernel mainline now still crashed
+on Honor Magicbook 14 Pro [1].
 
-  vmlinux.o: error: objtool: irqentry_exit+0x5e8: call to instruction_pointer_set() with UACCESS enabled
+That happens due to the access to the member of parent_node in
+acpi_ns_get_next_node().  The NULL pointer dereference will always
+happen, no matter whether or not the start_node is equal to
+ACPI_ROOT_OBJECT, so move the check of start_node being NULL
+out of the if block.
 
-Make sure the compiler isn't allowed to do stupid.
+Unfortunately, all the attempts to contact Honor have failed, they
+refused to provide any technical support for Linux.
 
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://patch.msgid.link/20251031105435.GU4068168@noisy.programming.kicks-ass.net
+The bad DSDT table's dump could be found on GitHub [2].
+
+DMI: HONOR FMB-P/FMB-P-PCB, BIOS 1.13 05/08/2025
+
+Link: https://github.com/acpica/acpica/commit/1c1b57b9eba4554cb132ee658dd942c0210ed20d
+Link: https://gist.github.com/Cryolitia/a860ffc97437dcd2cd988371d5b73ed7 [1]
+Link: https://github.com/denis-bb/honor-fmb-p-dsdt [2]
+Signed-off-by: Cryolitia PukNgae <cryolitia.pukngae@linux.dev>
+Reviewed-by: WangYuli <wangyl5933@chinaunicom.cn>
+[ rjw: Subject adjustment, changelog edits ]
+Link: https://patch.msgid.link/20251125-acpica-v1-1-99e63b1b25f8@linux.dev
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/ptrace.h | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ drivers/acpi/acpica/nswalk.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/include/asm/ptrace.h b/arch/x86/include/asm/ptrace.h
-index b94f615600d57..d5186653311da 100644
---- a/arch/x86/include/asm/ptrace.h
-+++ b/arch/x86/include/asm/ptrace.h
-@@ -109,12 +109,12 @@ convert_ip_to_linear(struct task_struct *child, struct pt_regs *regs);
- extern void send_sigtrap(struct pt_regs *regs, int error_code, int si_code);
+diff --git a/drivers/acpi/acpica/nswalk.c b/drivers/acpi/acpica/nswalk.c
+index 901fa5ca284d2..91c4dc9026bf1 100644
+--- a/drivers/acpi/acpica/nswalk.c
++++ b/drivers/acpi/acpica/nswalk.c
+@@ -169,9 +169,12 @@ acpi_ns_walk_namespace(acpi_object_type type,
  
+ 	if (start_node == ACPI_ROOT_OBJECT) {
+ 		start_node = acpi_gbl_root_node;
+-		if (!start_node) {
+-			return_ACPI_STATUS(AE_NO_NAMESPACE);
+-		}
++	}
++
++	/* Avoid walking the namespace if the StartNode is NULL */
++
++	if (!start_node) {
++		return_ACPI_STATUS(AE_NO_NAMESPACE);
+ 	}
  
--static inline unsigned long regs_return_value(struct pt_regs *regs)
-+static __always_inline unsigned long regs_return_value(struct pt_regs *regs)
- {
- 	return regs->ax;
- }
- 
--static inline void regs_set_return_value(struct pt_regs *regs, unsigned long rc)
-+static __always_inline void regs_set_return_value(struct pt_regs *regs, unsigned long rc)
- {
- 	regs->ax = rc;
- }
-@@ -195,34 +195,34 @@ static inline bool ip_within_syscall_gap(struct pt_regs *regs)
- }
- #endif
- 
--static inline unsigned long kernel_stack_pointer(struct pt_regs *regs)
-+static __always_inline unsigned long kernel_stack_pointer(struct pt_regs *regs)
- {
- 	return regs->sp;
- }
- 
--static inline unsigned long instruction_pointer(struct pt_regs *regs)
-+static __always_inline unsigned long instruction_pointer(struct pt_regs *regs)
- {
- 	return regs->ip;
- }
- 
--static inline void instruction_pointer_set(struct pt_regs *regs,
--		unsigned long val)
-+static __always_inline
-+void instruction_pointer_set(struct pt_regs *regs, unsigned long val)
- {
- 	regs->ip = val;
- }
- 
--static inline unsigned long frame_pointer(struct pt_regs *regs)
-+static __always_inline unsigned long frame_pointer(struct pt_regs *regs)
- {
- 	return regs->bp;
- }
- 
--static inline unsigned long user_stack_pointer(struct pt_regs *regs)
-+static __always_inline unsigned long user_stack_pointer(struct pt_regs *regs)
- {
- 	return regs->sp;
- }
- 
--static inline void user_stack_pointer_set(struct pt_regs *regs,
--		unsigned long val)
-+static __always_inline
-+void user_stack_pointer_set(struct pt_regs *regs, unsigned long val)
- {
- 	regs->sp = val;
- }
+ 	/* Null child means "get first node" */
 -- 
 2.51.0
 
