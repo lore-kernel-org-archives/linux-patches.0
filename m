@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8593642049;
-	Thu, 15 Jan 2026 16:52:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499F542049;
+	Thu, 15 Jan 2026 16:52:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768495926; cv=none; b=swtzxY+7Rlx/4uUnYpXGcnVTuuf3rFPUUXAWg9sBWt3qvsT6xOUCHlkbwI8Ik6tvTJXLfRuWwu1wy1NNxbXf9Uzmg8gE8vkTmyiL4ft/I53H97rdkXajp6bbyv2M6tNvBQVy9Do44E/3yFsUUXuuuqmKgm6Y4P0SWDJVMTyEiBs=
+	t=1768495929; cv=none; b=UZfHnUmoFbvibsdippgVZAVOF743kwvDG0q4ENrR+HNz/einHi/wbZ1zWXa34iMX4ATUKwaOVg1zQ/w9pNGCAFpBhY0lLgnF4bIQB6v1oX0yW7IUM6du87ACwI3JE70lR1o7K2hRRw5yTbVMwabpEDaN23F3aOD1UYJIr1dfn18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768495926; c=relaxed/simple;
-	bh=aBTqApGIlw40MxYgCdIrFABRbgrdyghveN4TeQE2S/Q=;
+	s=arc-20240116; t=1768495929; c=relaxed/simple;
+	bh=PzY+Ss/rf0aMKHE9GQ+nuAE530ziR+fXBfWJfN+HJ7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fNyjjnPHf0NCVz6Wgaw6AJ1FJa0NtUq4SFJgg7bMz3LMScdeN6/0sv9NpsH7kWyfpfA+tLL8gAKncDXwr9Wu1XEzr2moHoXh0nOtOidm+qSiwJMjlGfDIUWN7i4skqIqIdASDGxJwRX8/c1t2nTgqgpGjwB1p72vdyYxzIhU5Wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gV3CtAnS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t0I6nm5dBTmfjSyopTwbXMFIau7nWuDX9kPpt0l8lDb9FCwYPsp8kz9HV0T4DRXZiGg7/1kzQuFevAmi563NDcntcO3d2blbbY/qUZxV3Po1jSH1Xb3aoWxa/vpJurRhjUo87EhHYb1WIYMBL91On3mVOCd/K+vWCLnEk1S/3k4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FVOYiERN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gV3CtAnS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12133C116D0;
-	Thu, 15 Jan 2026 16:52:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FVOYiERN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBC80C116D0;
+	Thu, 15 Jan 2026 16:52:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768495926;
-	bh=aBTqApGIlw40MxYgCdIrFABRbgrdyghveN4TeQE2S/Q=;
+	s=korg; t=1768495929;
+	bh=PzY+Ss/rf0aMKHE9GQ+nuAE530ziR+fXBfWJfN+HJ7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gV3CtAnSpZqE7r1jidbZBMJyJK/TWjFliDJiXI9CjqJ+4wuFFjKRoyutnv9trtWA2
-	 5vVroQtj7M00SZqhOCMFlKvMS6hSmpImcG4aAWyX4KeCxMm0vBv6j59sOIlWtcaYk6
-	 eeL98sxnVGFRcUnukutH/LdwoaGEwwUbnFyCzhLc=
+	b=FVOYiERNea/8pyyAM0IeAvre6wpO0caQancR2pma3hB+uUJCc1sdd2o3sGCWgNDPL
+	 xaJ39iprk0FMDRa4NxJht0v++Y82TsE9KircboH4kNklYHSgnV3IJKlXQt+EVD3nzp
+	 injEDw664MtNLmasJVLecdcuiHFfr2UqTZJDvjNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	William Breathitt Gray <wbg@kernel.org>
-Subject: [PATCH 6.18 017/181] counter: interrupt-cnt: Drop IRQF_NO_THREAD flag
-Date: Thu, 15 Jan 2026 17:45:54 +0100
-Message-ID: <20260115164202.944206356@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Joel Fernandes <joel@joelfernandes.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Yao Kai <yaokai34@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.18 018/181] tracing: Add recursion protection in kernel stack trace recording
+Date: Thu, 15 Jan 2026 17:45:55 +0100
+Message-ID: <20260115164202.980492981@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -52,77 +55,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 23f9485510c338476b9735d516c1d4aacb810d46 upstream.
+commit 5f1ef0dfcb5b7f4a91a9b0e0ba533efd9f7e2cdb upstream.
 
-An IRQ handler can either be IRQF_NO_THREAD or acquire spinlock_t, as
-CONFIG_PROVE_RAW_LOCK_NESTING warns:
-=============================
-[ BUG: Invalid wait context ]
-6.18.0-rc1+git... #1
------------------------------
-some-user-space-process/1251 is trying to lock:
-(&counter->events_list_lock){....}-{3:3}, at: counter_push_event [counter]
-other info that might help us debug this:
-context-{2:2}
-no locks held by some-user-space-process/....
-stack backtrace:
-CPU: 0 UID: 0 PID: 1251 Comm: some-user-space-process 6.18.0-rc1+git... #1 PREEMPT
-Call trace:
- show_stack (C)
- dump_stack_lvl
- dump_stack
- __lock_acquire
- lock_acquire
- _raw_spin_lock_irqsave
- counter_push_event [counter]
- interrupt_cnt_isr [interrupt_cnt]
- __handle_irq_event_percpu
- handle_irq_event
- handle_simple_irq
- handle_irq_desc
- generic_handle_domain_irq
- gpio_irq_handler
- handle_irq_desc
- generic_handle_domain_irq
- gic_handle_irq
- call_on_irq_stack
- do_interrupt_handler
- el0_interrupt
- __el0_irq_handler_common
- el0t_64_irq_handler
- el0t_64_irq
+A bug was reported about an infinite recursion caused by tracing the rcu
+events with the kernel stack trace trigger enabled. The stack trace code
+called back into RCU which then called the stack trace again.
 
-... and Sebastian correctly points out. Remove IRQF_NO_THREAD as an
-alternative to switching to raw_spinlock_t, because the latter would limit
-all potential nested locks to raw_spinlock_t only.
+Expand the ftrace recursion protection to add a set of bits to protect
+events from recursion. Each bit represents the context that the event is
+in (normal, softirq, interrupt and NMI).
 
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Have the stack trace code use the interrupt context to protect against
+recursion.
+
+Note, the bug showed an issue in both the RCU code as well as the tracing
+stacktrace code. This only handles the tracing stack trace side of the
+bug. The RCU fix will be handled separately.
+
+Link: https://lore.kernel.org/all/20260102122807.7025fc87@gandalf.local.home/
+
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20251117151314.xwLAZrWY@linutronix.de/
-Fixes: a55ebd47f21f ("counter: add IRQ or GPIO based counter")
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://lore.kernel.org/r/20251118083603.778626-1-alexander.sverdlin@siemens.com
-Signed-off-by: William Breathitt Gray <wbg@kernel.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Joel Fernandes <joel@joelfernandes.org>
+Cc: "Paul E. McKenney" <paulmck@kernel.org>
+Cc: Boqun Feng <boqun.feng@gmail.com>
+Link: https://patch.msgid.link/20260105203141.515cd49f@gandalf.local.home
+Reported-by: Yao Kai <yaokai34@huawei.com>
+Tested-by: Yao Kai <yaokai34@huawei.com>
+Fixes: 5f5fa7ea89dc ("rcu: Don't use negative nesting depth in __rcu_read_unlock()")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/counter/interrupt-cnt.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ include/linux/trace_recursion.h |    9 +++++++++
+ kernel/trace/trace.c            |    6 ++++++
+ 2 files changed, 15 insertions(+)
 
---- a/drivers/counter/interrupt-cnt.c
-+++ b/drivers/counter/interrupt-cnt.c
-@@ -229,8 +229,7 @@ static int interrupt_cnt_probe(struct pl
+--- a/include/linux/trace_recursion.h
++++ b/include/linux/trace_recursion.h
+@@ -34,6 +34,13 @@ enum {
+ 	TRACE_INTERNAL_SIRQ_BIT,
+ 	TRACE_INTERNAL_TRANSITION_BIT,
  
- 	irq_set_status_flags(priv->irq, IRQ_NOAUTOEN);
- 	ret = devm_request_irq(dev, priv->irq, interrupt_cnt_isr,
--			       IRQF_TRIGGER_RISING | IRQF_NO_THREAD,
--			       dev_name(dev), counter);
-+			       IRQF_TRIGGER_RISING, dev_name(dev), counter);
- 	if (ret)
- 		return ret;
++	/* Internal event use recursion bits */
++	TRACE_INTERNAL_EVENT_BIT,
++	TRACE_INTERNAL_EVENT_NMI_BIT,
++	TRACE_INTERNAL_EVENT_IRQ_BIT,
++	TRACE_INTERNAL_EVENT_SIRQ_BIT,
++	TRACE_INTERNAL_EVENT_TRANSITION_BIT,
++
+ 	TRACE_BRANCH_BIT,
+ /*
+  * Abuse of the trace_recursion.
+@@ -58,6 +65,8 @@ enum {
  
+ #define TRACE_LIST_START	TRACE_INTERNAL_BIT
+ 
++#define TRACE_EVENT_START	TRACE_INTERNAL_EVENT_BIT
++
+ #define TRACE_CONTEXT_MASK	((1 << (TRACE_LIST_START + TRACE_CONTEXT_BITS)) - 1)
+ 
+ /*
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -3003,6 +3003,11 @@ static void __ftrace_trace_stack(struct
+ 	struct ftrace_stack *fstack;
+ 	struct stack_entry *entry;
+ 	int stackidx;
++	int bit;
++
++	bit = trace_test_and_set_recursion(_THIS_IP_, _RET_IP_, TRACE_EVENT_START);
++	if (bit < 0)
++		return;
+ 
+ 	/*
+ 	 * Add one, for this function and the call to save_stack_trace()
+@@ -3071,6 +3076,7 @@ static void __ftrace_trace_stack(struct
+ 	/* Again, don't let gcc optimize things here */
+ 	barrier();
+ 	__this_cpu_dec(ftrace_stack_reserve);
++	trace_clear_recursion(bit);
+ }
+ 
+ static inline void ftrace_trace_stack(struct trace_array *tr,
 
 
