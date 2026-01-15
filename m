@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9918925228D;
-	Thu, 15 Jan 2026 16:53:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCC57396B75;
+	Thu, 15 Jan 2026 16:53:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768495983; cv=none; b=dAYLFtWoY/QgQfOW0dFSWvsKXB5ML98h+uc49HAOwOTVbXaWsyzgD+a7jO51ZXA63axntBY2oHLGkbGs833nVJ7yY5rLpSOBAcoaqPrMvYiBDZsJ1yWZVfBHlpzok0FN2xxByMtWwWxQNZ7IIXhe/frQFPG6qB2Eqih9NXhYH9s=
+	t=1768495986; cv=none; b=sMosLke96b6rIr/6P5IQw8BKpZWx3j7mAZpT2sQ+wMvE7dqkHCK/DkTeEZdGlt0sQ/ktsmspQaOJI5Nl2L/+YK10Oj7bKjOer3nAnbB/kHQnjlx95BKPVPYvPnUyABUXb9C9dLgjbzL9qYGGBDKTAO43cTzGK8hBAJpl4nMsErE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768495983; c=relaxed/simple;
-	bh=vqBGXu0M9Gcmpol9f3LLt4Qg+k5uu5A7kmp/XldQqxE=;
+	s=arc-20240116; t=1768495986; c=relaxed/simple;
+	bh=wUcyXdihqamN/TwrpGL6QfN3/S98IR4tXXrXcdBHAVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J5c67zpDYNQUs2RdR0V4jeeeyv8UWqHGp0McNht6ncSk1EDMv2+MlSViDWe7kQzRfyumyWpunFifDyTq12G+g203eFLvHK4c6kppzXQUEYaFTdHYr3zPou5bjtXTDfqu72EK8N1tNE09mnr+riJSIn7+WRMTqh3CTzppezDJzrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PjeNdPRs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o093/1r0AcZVgLmRSP67rwFPYzY8TWZAJtBa141HUqMm4fCl7kMAyKInp5PJ8ZdZBw6ez8JrAGYedQGYFkxDpQEmK6DJXOg/kfVNHoKK5cMNvDsOM3UWHbivD3m01uYlG0lRe7eLIjvNGi0X2AsLFYWmZBBP1s+8idjZAGbM/Q8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1RLbQitW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PjeNdPRs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B3ADC116D0;
-	Thu, 15 Jan 2026 16:53:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1RLbQitW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 096BFC116D0;
+	Thu, 15 Jan 2026 16:53:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768495983;
-	bh=vqBGXu0M9Gcmpol9f3LLt4Qg+k5uu5A7kmp/XldQqxE=;
+	s=korg; t=1768495986;
+	bh=wUcyXdihqamN/TwrpGL6QfN3/S98IR4tXXrXcdBHAVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PjeNdPRsc9zBIDSx22ozOr2FyphipZ7p1owoO/Nj5x+qlOjbYYy1iC1uHL0bGjHA1
-	 G5FGq03lCI/Qj+dBk6uiSc9l5BSD538hxy3FvGdP5QMbI8HLOqJlA6DW1Au4Qg2Lx8
-	 F284cZrumaEBLWuKcOQ+JHl5OFqSfzKUHP3TKB90=
+	b=1RLbQitWFj7trdnjy6Q45mWnqMaHpBQxw3GB8H5n9i9RptInVhx+FW09qhpVd7n2P
+	 2+TmNDH1r4MfK6fnPNCe/7J5X84/A/p7sTQSJyEw44as4FZwQTLOl/eBrpSJr8S8pp
+	 JvignuFsjM7ClBS4PtLxyUx7obzFqLw+OWpg5Umk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6ee3b889bdeada0a6226@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
+	NeilBrown <neil@brown.name>,
+	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.18 005/181] NFSD: net ref data still needs to be freed even if net hasnt startup
-Date: Thu, 15 Jan 2026 17:45:42 +0100
-Message-ID: <20260115164202.509591289@linuxfoundation.org>
+Subject: [PATCH 6.18 006/181] NFSD: Remove NFSERR_EAGAIN
+Date: Thu, 15 Jan 2026 17:45:43 +0100
+Message-ID: <20260115164202.545017239@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -51,83 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 0b88bfa42e5468baff71909c2f324a495318532b upstream.
+commit c6c209ceb87f64a6ceebe61761951dcbbf4a0baa upstream.
 
-When the NFSD instance doesn't to startup, the net ref data memory is
-not properly reclaimed, which triggers the memory leak issue reported
-by syzbot [1].
+I haven't found an NFSERR_EAGAIN in RFCs 1094, 1813, 7530, or 8881.
+None of these RFCs have an NFS status code that match the numeric
+value "11".
 
-To avoid the problem reported in [1], the net ref data memory reclamation
-action is moved outside of nfsd_net_up when the net is shutdown.
+Based on the meaning of the EAGAIN errno, I presume the use of this
+status in NFSD means NFS4ERR_DELAY. So replace the one usage of
+nfserr_eagain, and remove it from NFSD's NFS status conversion
+tables.
 
-[1]
-unreferenced object 0xffff88812a39dfc0 (size 64):
-  backtrace (crc a2262fc6):
-    percpu_ref_init+0x94/0x1e0 lib/percpu-refcount.c:76
-    nfsd_create_serv+0xbe/0x260 fs/nfsd/nfssvc.c:605
-    nfsd_nl_listener_set_doit+0x62/0xb00 fs/nfsd/nfsctl.c:1882
-    genl_family_rcv_msg_doit+0x11e/0x190 net/netlink/genetlink.c:1115
-    genl_family_rcv_msg net/netlink/genetlink.c:1195 [inline]
-    genl_rcv_msg+0x2fd/0x440 net/netlink/genetlink.c:1210
+As far as I can tell, NFSERR_EAGAIN has existed since the pre-git
+era, but was not actually used by any code until commit f4e44b393389
+("NFSD: delay unmount source's export after inter-server copy
+completed."), at which time it become possible for NFSD to return
+a status code of 11 (which is not valid NFS protocol).
 
-BUG: memory leak
-
-Reported-by: syzbot+6ee3b889bdeada0a6226@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6ee3b889bdeada0a6226
-Fixes: 39972494e318 ("nfsd: update percpu_ref to manage references on nfsd_net")
+Fixes: f4e44b393389 ("NFSD: delay unmount source's export after inter-server copy completed.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Reviewed-by: NeilBrown <neil@brown.name>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfssvc.c |   30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ fs/nfs_common/common.c   |    1 -
+ fs/nfsd/nfs4proc.c       |    2 +-
+ fs/nfsd/nfsd.h           |    1 -
+ include/trace/misc/nfs.h |    2 --
+ include/uapi/linux/nfs.h |    1 -
+ 5 files changed, 1 insertion(+), 6 deletions(-)
 
---- a/fs/nfsd/nfssvc.c
-+++ b/fs/nfsd/nfssvc.c
-@@ -424,26 +424,26 @@ static void nfsd_shutdown_net(struct net
- {
- 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
- 
--	if (!nn->nfsd_net_up)
--		return;
--
--	percpu_ref_kill_and_confirm(&nn->nfsd_net_ref, nfsd_net_done);
--	wait_for_completion(&nn->nfsd_net_confirm_done);
--
--	nfsd_export_flush(net);
--	nfs4_state_shutdown_net(net);
--	nfsd_reply_cache_shutdown(nn);
--	nfsd_file_cache_shutdown_net(net);
--	if (nn->lockd_up) {
--		lockd_down(net);
--		nn->lockd_up = false;
-+	if (nn->nfsd_net_up) {
-+		percpu_ref_kill_and_confirm(&nn->nfsd_net_ref, nfsd_net_done);
-+		wait_for_completion(&nn->nfsd_net_confirm_done);
-+
-+		nfsd_export_flush(net);
-+		nfs4_state_shutdown_net(net);
-+		nfsd_reply_cache_shutdown(nn);
-+		nfsd_file_cache_shutdown_net(net);
-+		if (nn->lockd_up) {
-+			lockd_down(net);
-+			nn->lockd_up = false;
-+		}
-+		wait_for_completion(&nn->nfsd_net_free_done);
- 	}
- 
--	wait_for_completion(&nn->nfsd_net_free_done);
- 	percpu_ref_exit(&nn->nfsd_net_ref);
- 
-+	if (nn->nfsd_net_up)
-+		nfsd_shutdown_generic();
- 	nn->nfsd_net_up = false;
--	nfsd_shutdown_generic();
- }
- 
- static DEFINE_SPINLOCK(nfsd_notifier_lock);
+--- a/fs/nfs_common/common.c
++++ b/fs/nfs_common/common.c
+@@ -17,7 +17,6 @@ static const struct {
+ 	{ NFSERR_NOENT,		-ENOENT		},
+ 	{ NFSERR_IO,		-EIO		},
+ 	{ NFSERR_NXIO,		-ENXIO		},
+-/*	{ NFSERR_EAGAIN,	-EAGAIN		}, */
+ 	{ NFSERR_ACCES,		-EACCES		},
+ 	{ NFSERR_EXIST,		-EEXIST		},
+ 	{ NFSERR_XDEV,		-EXDEV		},
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -1506,7 +1506,7 @@ try_again:
+ 					(schedule_timeout(20*HZ) == 0)) {
+ 				finish_wait(&nn->nfsd_ssc_waitq, &wait);
+ 				kfree(work);
+-				return nfserr_eagain;
++				return nfserr_jukebox;
+ 			}
+ 			finish_wait(&nn->nfsd_ssc_waitq, &wait);
+ 			goto try_again;
+--- a/fs/nfsd/nfsd.h
++++ b/fs/nfsd/nfsd.h
+@@ -232,7 +232,6 @@ void		nfsd_lockd_shutdown(void);
+ #define	nfserr_noent		cpu_to_be32(NFSERR_NOENT)
+ #define	nfserr_io		cpu_to_be32(NFSERR_IO)
+ #define	nfserr_nxio		cpu_to_be32(NFSERR_NXIO)
+-#define	nfserr_eagain		cpu_to_be32(NFSERR_EAGAIN)
+ #define	nfserr_acces		cpu_to_be32(NFSERR_ACCES)
+ #define	nfserr_exist		cpu_to_be32(NFSERR_EXIST)
+ #define	nfserr_xdev		cpu_to_be32(NFSERR_XDEV)
+--- a/include/trace/misc/nfs.h
++++ b/include/trace/misc/nfs.h
+@@ -16,7 +16,6 @@ TRACE_DEFINE_ENUM(NFSERR_PERM);
+ TRACE_DEFINE_ENUM(NFSERR_NOENT);
+ TRACE_DEFINE_ENUM(NFSERR_IO);
+ TRACE_DEFINE_ENUM(NFSERR_NXIO);
+-TRACE_DEFINE_ENUM(NFSERR_EAGAIN);
+ TRACE_DEFINE_ENUM(NFSERR_ACCES);
+ TRACE_DEFINE_ENUM(NFSERR_EXIST);
+ TRACE_DEFINE_ENUM(NFSERR_XDEV);
+@@ -52,7 +51,6 @@ TRACE_DEFINE_ENUM(NFSERR_JUKEBOX);
+ 		{ NFSERR_NXIO,			"NXIO" }, \
+ 		{ ECHILD,			"CHILD" }, \
+ 		{ ETIMEDOUT,			"TIMEDOUT" }, \
+-		{ NFSERR_EAGAIN,		"AGAIN" }, \
+ 		{ NFSERR_ACCES,			"ACCES" }, \
+ 		{ NFSERR_EXIST,			"EXIST" }, \
+ 		{ NFSERR_XDEV,			"XDEV" }, \
+--- a/include/uapi/linux/nfs.h
++++ b/include/uapi/linux/nfs.h
+@@ -49,7 +49,6 @@
+ 	NFSERR_NOENT = 2,		/* v2 v3 v4 */
+ 	NFSERR_IO = 5,			/* v2 v3 v4 */
+ 	NFSERR_NXIO = 6,		/* v2 v3 v4 */
+-	NFSERR_EAGAIN = 11,		/* v2 v3 */
+ 	NFSERR_ACCES = 13,		/* v2 v3 v4 */
+ 	NFSERR_EXIST = 17,		/* v2 v3 v4 */
+ 	NFSERR_XDEV = 18,		/*    v3 v4 */
 
 
