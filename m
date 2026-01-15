@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0484029C338;
-	Thu, 15 Jan 2026 17:03:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEEC43AE701;
+	Thu, 15 Jan 2026 17:03:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496595; cv=none; b=KQ27elBEiYfQJN89E6N5zs7vd01yqR0+8sDo29K5sx7yMd9uy3SdPIrlRyoChgmfXwfCxDW5lyyGRKNC+qHfJH/S2PHdHPkrN0VkcN4R2a93r3pUFNm5iYKH6gYzCm3GuQMviXR3li9Zv1QWfo1xNo/BWrJ76Xcu8HBzXjXSuI4=
+	t=1768496597; cv=none; b=NYIseASs2U7vFhnmvGZQ6AXPw/7H56PrkK99DcI//rFcU2EjLOhWc2z7x9EqYY/rLQWuDz0Q+6yEeMJZKyAapqD2NvN19qZIrMPxT0/K7bChXOOiY+5Pz0YZ7g2bxQlQEuIhPylYRq24Mkwu3ikfHeNMavtLO05PwSmsB0dKe5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496595; c=relaxed/simple;
-	bh=7zxoqvqC0Itm13seZGgDOTDkVUJzrQ7WStIHXlZBWYI=;
+	s=arc-20240116; t=1768496597; c=relaxed/simple;
+	bh=/KvdZYq9JUOV8RNoDmpbTCEzML7RUiqr70YmXg6zbTk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k5LYERgRboh1UR+8JswLcZGKGWtjvgQm5p25TiIrigEVJ+rZYFLzkyPxt68Jz/0urwGRNoH1fNffvj2eGHIyxlEB+1EBRvQoIOZrCNErGYtKrY1lvc4WBwGlHPuJlDDrODFnTHbr0CcoH5OgSYi2YsFHLOoErwFuRkqF5m1+4ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aPHU/D6Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ojd94FeMkLkSe5v+qyqT49SWjSwVgJpMdd3R5evBC3V3g+IGkbZD59Si8TxQYzl8LY3nOyMtrLJEKUbW0s/ulbLk9BiSQ6pNPR4X/XgE6OfwW1WKU07zi1Pi7FvUVrOK7KANm78iI/E8NC3mCjgSA1y35g0xSD/VzayVd+/x/yY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iUXoG88m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aPHU/D6Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE77C116D0;
-	Thu, 15 Jan 2026 17:03:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iUXoG88m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BD30C116D0;
+	Thu, 15 Jan 2026 17:03:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496594;
-	bh=7zxoqvqC0Itm13seZGgDOTDkVUJzrQ7WStIHXlZBWYI=;
+	s=korg; t=1768496597;
+	bh=/KvdZYq9JUOV8RNoDmpbTCEzML7RUiqr70YmXg6zbTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aPHU/D6QS6w1MpFBv/YABXGpOaICXMboodcU5UiqAPcmk6BuRVfF9Tk0X0IREQzAd
-	 cxy2qAFqyuqXK+8f+mdv2NZdG+rYkjw2bkCXUKSSlrB6Zl4xwmkv22d6UUZV/nxqJ6
-	 gg4t+UCHfq+YGKCjr5stl/H/yp7WQSTAhEQEsxtw=
+	b=iUXoG88mHY6OBSr7aqk6ETka2apJdgzgKDTI5DtIoIGFKF1w858FhPENzHxBxmr9T
+	 cH7QfRCKLKEV7nmUDlzd1ddVSlXVy9I8rFw0TUzF3NRJQPRS6qrjr6fAKCF7ukYKT0
+	 mUHVfMnxH0Jf/KbxaOY0po18Y51oEa3jjJSuxtDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Jiping Ma <jiping.ma2@windriver.com>,
+	Scott Mayhew <smayhew@redhat.com>,
+	Benjamin Coddington <bcodding@hammerspace.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 034/119] dm-snapshot: fix scheduling while atomic on real-time kernels
-Date: Thu, 15 Jan 2026 17:47:29 +0100
-Message-ID: <20260115164153.192596958@linuxfoundation.org>
+Subject: [PATCH 6.12 035/119] NFSv4: ensure the open stateid seqid doesnt go backwards
+Date: Thu, 15 Jan 2026 17:47:30 +0100
+Message-ID: <20260115164153.228405856@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -51,236 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Scott Mayhew <smayhew@redhat.com>
 
-[ Upstream commit 8581b19eb2c5ccf06c195d3b5468c3c9d17a5020 ]
+[ Upstream commit 2e47c3cc64b44b0b06cd68c2801db92ff143f2b2 ]
 
-There is reported 'scheduling while atomic' bug when using dm-snapshot on
-real-time kernels. The reason for the bug is that the hlist_bl code does
-preempt_disable() when taking the lock and the kernel attempts to take
-other spinlocks while holding the hlist_bl lock.
+We have observed an NFSv4 client receiving a LOCK reply with a status of
+NFS4ERR_OLD_STATEID and subsequently retrying the LOCK request with an
+earlier seqid value in the stateid.  As this was for a new lockowner,
+that would imply that nfs_set_open_stateid_locked() had updated the open
+stateid seqid with an earlier value.
 
-Fix this by converting a hlist_bl spinlock into a regular spinlock.
+Looking at nfs_set_open_stateid_locked(), if the incoming seqid is out
+of sequence, the task will sleep on the state->waitq for up to 5
+seconds.  If the task waits for the full 5 seconds, then after finishing
+the wait it'll update the open stateid seqid with whatever value the
+incoming seqid has.  If there are multiple waiters in this scenario,
+then the last one to perform said update may not be the one with the
+highest seqid.
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Reported-by: Jiping Ma <jiping.ma2@windriver.com>
+Add a check to ensure that the seqid can only be incremented, and add a
+tracepoint to indicate when old seqids are skipped.
+
+Signed-off-by: Scott Mayhew <smayhew@redhat.com>
+Reviewed-by: Benjamin Coddington <bcodding@hammerspace.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-exception-store.h |  2 +-
- drivers/md/dm-snap.c            | 73 +++++++++++++++------------------
- 2 files changed, 35 insertions(+), 40 deletions(-)
+ fs/nfs/nfs4proc.c  | 13 +++++++++++--
+ fs/nfs/nfs4trace.h |  1 +
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/md/dm-exception-store.h b/drivers/md/dm-exception-store.h
-index b679766375381..061b4d3108132 100644
---- a/drivers/md/dm-exception-store.h
-+++ b/drivers/md/dm-exception-store.h
-@@ -29,7 +29,7 @@ typedef sector_t chunk_t;
-  * chunk within the device.
-  */
- struct dm_exception {
--	struct hlist_bl_node hash_list;
-+	struct hlist_node hash_list;
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index 172ff213b50b6..89f779f16f0dc 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -1753,8 +1753,17 @@ static void nfs_set_open_stateid_locked(struct nfs4_state *state,
+ 		if (nfs_stateid_is_sequential(state, stateid))
+ 			break;
  
- 	chunk_t old_chunk;
- 	chunk_t new_chunk;
-diff --git a/drivers/md/dm-snap.c b/drivers/md/dm-snap.c
-index f40c18da40000..dbd148967de42 100644
---- a/drivers/md/dm-snap.c
-+++ b/drivers/md/dm-snap.c
-@@ -40,10 +40,15 @@ static const char dm_snapshot_merge_target_name[] = "snapshot-merge";
- #define DM_TRACKED_CHUNK_HASH(x)	((unsigned long)(x) & \
- 					 (DM_TRACKED_CHUNK_HASH_SIZE - 1))
- 
-+struct dm_hlist_head {
-+	struct hlist_head head;
-+	spinlock_t lock;
-+};
+-		if (status)
+-			break;
++		if (status) {
++			if (nfs4_stateid_match_other(stateid, &state->open_stateid) &&
++			    !nfs4_stateid_is_newer(stateid, &state->open_stateid)) {
++				trace_nfs4_open_stateid_update_skip(state->inode,
++								    stateid, status);
++				return;
++			} else {
++				break;
++			}
++		}
 +
- struct dm_exception_table {
- 	uint32_t hash_mask;
- 	unsigned int hash_shift;
--	struct hlist_bl_head *table;
-+	struct dm_hlist_head *table;
- };
+ 		/* Rely on seqids for serialisation with NFSv4.0 */
+ 		if (!nfs4_has_session(NFS_SERVER(state->inode)->nfs_client))
+ 			break;
+diff --git a/fs/nfs/nfs4trace.h b/fs/nfs/nfs4trace.h
+index 22c973316f0bd..9a38a5d3bf512 100644
+--- a/fs/nfs/nfs4trace.h
++++ b/fs/nfs/nfs4trace.h
+@@ -1278,6 +1278,7 @@ DEFINE_NFS4_INODE_STATEID_EVENT(nfs4_setattr);
+ DEFINE_NFS4_INODE_STATEID_EVENT(nfs4_delegreturn);
+ DEFINE_NFS4_INODE_STATEID_EVENT(nfs4_open_stateid_update);
+ DEFINE_NFS4_INODE_STATEID_EVENT(nfs4_open_stateid_update_wait);
++DEFINE_NFS4_INODE_STATEID_EVENT(nfs4_open_stateid_update_skip);
+ DEFINE_NFS4_INODE_STATEID_EVENT(nfs4_close_stateid_update_wait);
  
- struct dm_snapshot {
-@@ -628,8 +633,8 @@ static uint32_t exception_hash(struct dm_exception_table *et, chunk_t chunk);
- 
- /* Lock to protect access to the completed and pending exception hash tables. */
- struct dm_exception_table_lock {
--	struct hlist_bl_head *complete_slot;
--	struct hlist_bl_head *pending_slot;
-+	spinlock_t *complete_slot;
-+	spinlock_t *pending_slot;
- };
- 
- static void dm_exception_table_lock_init(struct dm_snapshot *s, chunk_t chunk,
-@@ -638,20 +643,20 @@ static void dm_exception_table_lock_init(struct dm_snapshot *s, chunk_t chunk,
- 	struct dm_exception_table *complete = &s->complete;
- 	struct dm_exception_table *pending = &s->pending;
- 
--	lock->complete_slot = &complete->table[exception_hash(complete, chunk)];
--	lock->pending_slot = &pending->table[exception_hash(pending, chunk)];
-+	lock->complete_slot = &complete->table[exception_hash(complete, chunk)].lock;
-+	lock->pending_slot = &pending->table[exception_hash(pending, chunk)].lock;
- }
- 
- static void dm_exception_table_lock(struct dm_exception_table_lock *lock)
- {
--	hlist_bl_lock(lock->complete_slot);
--	hlist_bl_lock(lock->pending_slot);
-+	spin_lock_nested(lock->complete_slot, 1);
-+	spin_lock_nested(lock->pending_slot, 2);
- }
- 
- static void dm_exception_table_unlock(struct dm_exception_table_lock *lock)
- {
--	hlist_bl_unlock(lock->pending_slot);
--	hlist_bl_unlock(lock->complete_slot);
-+	spin_unlock(lock->pending_slot);
-+	spin_unlock(lock->complete_slot);
- }
- 
- static int dm_exception_table_init(struct dm_exception_table *et,
-@@ -661,13 +666,15 @@ static int dm_exception_table_init(struct dm_exception_table *et,
- 
- 	et->hash_shift = hash_shift;
- 	et->hash_mask = size - 1;
--	et->table = kvmalloc_array(size, sizeof(struct hlist_bl_head),
-+	et->table = kvmalloc_array(size, sizeof(struct dm_hlist_head),
- 				   GFP_KERNEL);
- 	if (!et->table)
- 		return -ENOMEM;
- 
--	for (i = 0; i < size; i++)
--		INIT_HLIST_BL_HEAD(et->table + i);
-+	for (i = 0; i < size; i++) {
-+		INIT_HLIST_HEAD(&et->table[i].head);
-+		spin_lock_init(&et->table[i].lock);
-+	}
- 
- 	return 0;
- }
-@@ -675,16 +682,17 @@ static int dm_exception_table_init(struct dm_exception_table *et,
- static void dm_exception_table_exit(struct dm_exception_table *et,
- 				    struct kmem_cache *mem)
- {
--	struct hlist_bl_head *slot;
-+	struct dm_hlist_head *slot;
- 	struct dm_exception *ex;
--	struct hlist_bl_node *pos, *n;
-+	struct hlist_node *pos;
- 	int i, size;
- 
- 	size = et->hash_mask + 1;
- 	for (i = 0; i < size; i++) {
- 		slot = et->table + i;
- 
--		hlist_bl_for_each_entry_safe(ex, pos, n, slot, hash_list) {
-+		hlist_for_each_entry_safe(ex, pos, &slot->head, hash_list) {
-+			hlist_del(&ex->hash_list);
- 			kmem_cache_free(mem, ex);
- 			cond_resched();
- 		}
-@@ -700,7 +708,7 @@ static uint32_t exception_hash(struct dm_exception_table *et, chunk_t chunk)
- 
- static void dm_remove_exception(struct dm_exception *e)
- {
--	hlist_bl_del(&e->hash_list);
-+	hlist_del(&e->hash_list);
- }
- 
- /*
-@@ -710,12 +718,11 @@ static void dm_remove_exception(struct dm_exception *e)
- static struct dm_exception *dm_lookup_exception(struct dm_exception_table *et,
- 						chunk_t chunk)
- {
--	struct hlist_bl_head *slot;
--	struct hlist_bl_node *pos;
-+	struct hlist_head *slot;
- 	struct dm_exception *e;
- 
--	slot = &et->table[exception_hash(et, chunk)];
--	hlist_bl_for_each_entry(e, pos, slot, hash_list)
-+	slot = &et->table[exception_hash(et, chunk)].head;
-+	hlist_for_each_entry(e, slot, hash_list)
- 		if (chunk >= e->old_chunk &&
- 		    chunk <= e->old_chunk + dm_consecutive_chunk_count(e))
- 			return e;
-@@ -762,18 +769,17 @@ static void free_pending_exception(struct dm_snap_pending_exception *pe)
- static void dm_insert_exception(struct dm_exception_table *eh,
- 				struct dm_exception *new_e)
- {
--	struct hlist_bl_head *l;
--	struct hlist_bl_node *pos;
-+	struct hlist_head *l;
- 	struct dm_exception *e = NULL;
- 
--	l = &eh->table[exception_hash(eh, new_e->old_chunk)];
-+	l = &eh->table[exception_hash(eh, new_e->old_chunk)].head;
- 
- 	/* Add immediately if this table doesn't support consecutive chunks */
- 	if (!eh->hash_shift)
- 		goto out;
- 
- 	/* List is ordered by old_chunk */
--	hlist_bl_for_each_entry(e, pos, l, hash_list) {
-+	hlist_for_each_entry(e, l, hash_list) {
- 		/* Insert after an existing chunk? */
- 		if (new_e->old_chunk == (e->old_chunk +
- 					 dm_consecutive_chunk_count(e) + 1) &&
-@@ -804,13 +810,13 @@ static void dm_insert_exception(struct dm_exception_table *eh,
- 		 * Either the table doesn't support consecutive chunks or slot
- 		 * l is empty.
- 		 */
--		hlist_bl_add_head(&new_e->hash_list, l);
-+		hlist_add_head(&new_e->hash_list, l);
- 	} else if (new_e->old_chunk < e->old_chunk) {
- 		/* Add before an existing exception */
--		hlist_bl_add_before(&new_e->hash_list, &e->hash_list);
-+		hlist_add_before(&new_e->hash_list, &e->hash_list);
- 	} else {
- 		/* Add to l's tail: e is the last exception in this slot */
--		hlist_bl_add_behind(&new_e->hash_list, &e->hash_list);
-+		hlist_add_behind(&new_e->hash_list, &e->hash_list);
- 	}
- }
- 
-@@ -820,7 +826,6 @@ static void dm_insert_exception(struct dm_exception_table *eh,
-  */
- static int dm_add_exception(void *context, chunk_t old, chunk_t new)
- {
--	struct dm_exception_table_lock lock;
- 	struct dm_snapshot *s = context;
- 	struct dm_exception *e;
- 
-@@ -833,17 +838,7 @@ static int dm_add_exception(void *context, chunk_t old, chunk_t new)
- 	/* Consecutive_count is implicitly initialised to zero */
- 	e->new_chunk = new;
- 
--	/*
--	 * Although there is no need to lock access to the exception tables
--	 * here, if we don't then hlist_bl_add_head(), called by
--	 * dm_insert_exception(), will complain about accessing the
--	 * corresponding list without locking it first.
--	 */
--	dm_exception_table_lock_init(s, old, &lock);
--
--	dm_exception_table_lock(&lock);
- 	dm_insert_exception(&s->complete, e);
--	dm_exception_table_unlock(&lock);
- 
- 	return 0;
- }
-@@ -873,7 +868,7 @@ static int calc_max_buckets(void)
- 	/* use a fixed size of 2MB */
- 	unsigned long mem = 2 * 1024 * 1024;
- 
--	mem /= sizeof(struct hlist_bl_head);
-+	mem /= sizeof(struct dm_hlist_head);
- 
- 	return mem;
- }
+ DECLARE_EVENT_CLASS(nfs4_getattr_event,
 -- 
 2.51.0
 
