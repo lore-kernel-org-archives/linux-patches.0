@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D2073BF30A;
-	Thu, 15 Jan 2026 17:05:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2778C3C008A;
+	Thu, 15 Jan 2026 17:05:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496754; cv=none; b=JFHTZVJrluvkhK0yvMMMHRArRFe9H461FpGUl6L+xfJbFU7bn7phE61ELUZ+SUwTNzcJZA+N2nDMSTAYFk86Z8Vq7EBEUs8K3+LirQB2rtWMjyqhQNs6Fh6yKHhpiD1jA8jbnz/V6CAY9ls8/rObE45t5YpeLqev1wZh/Iexj8A=
+	t=1768496757; cv=none; b=XpCXjF/LtwPfMbzHXfU+hSWz0/wM+x5rkBm51X1JSEY+eXB+xo/1K8GHywdjoJ70XCMZw+fOtaTE2hCOWIBqhX8+bfFPz3OssUDMvG1IaosrOT+4EC1iQi3PyrT5mn3eJ1AozojjhAhKvEC+QEfLsEa98etJDqtJnYtwAxPAp7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496754; c=relaxed/simple;
-	bh=zll4jvel5PKNAMJUvOf+3etQmqmHYCW4S++MBucOTpo=;
+	s=arc-20240116; t=1768496757; c=relaxed/simple;
+	bh=xlsFkmIequumzM1aVcg93vZgYtnpM53vwiGpOFsif3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YlpvBV4Cx31SGwmlTaTu/gVD9k1PQYRi6nTRfeLXdRd/DdYVrALmAWRJW3Q6Uw98S9z6SPZvvKOUAoAhyNzmWcH6notOFmMdWbTA6TzPnjFoRZrs5qYVkDw0pKwzpbuqY0ZdnQ7SmI5S5h95mTgGrOn+CDBPeX2tMqai3uTQJYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OfkgODP8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HeNJl+7yqvbYZkN78da8ylgIcyzmGfAxItN/YuMZCU7l+v4xu9DnfKtqIL+unkPxEcdEW2PnCBrCm2FrzlvadnOrN0PQwyp17zfrI1cO7Pb1WAL/gDluUOjOtaUzlU7OJBU0cd60dxvSYBbuPbEaC4wIoZIbfXJ/o/5dga3SmYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FSndsRaB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OfkgODP8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC3E6C116D0;
-	Thu, 15 Jan 2026 17:05:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FSndsRaB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 749B6C116D0;
+	Thu, 15 Jan 2026 17:05:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496754;
-	bh=zll4jvel5PKNAMJUvOf+3etQmqmHYCW4S++MBucOTpo=;
+	s=korg; t=1768496756;
+	bh=xlsFkmIequumzM1aVcg93vZgYtnpM53vwiGpOFsif3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OfkgODP8qhjt203a4kqfOoCvLEWmC/3pA9gZXnV8nUWrbL4SFg1YJy3dJWuRoUcQk
-	 lMINdEVfq6uENuULIYCiWN2UQVW1ndMCBVnF5MmDHOFZE/fJG+PNHc3hmzMLxKO9q2
-	 ugRku2phf7YS21wxQrV1py3qXApwXvrG0WE1sZp0=
+	b=FSndsRaBTqajQbSCp3CVQrVbDJRZG/7ko5l1VNpSrreLB335PDf6rhJYAFdPbnhqY
+	 OhoeKp+vTU472t89D4+Ab1TR+yBIl6z4oEBMSPgAiYW4hb+IzMvbO6/oxpnJDISurt
+	 I0dE8Rq/6/1/1YumFyYqDsXhFdFyyDZhQPXxbCsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emerson Pinter <e@pinter.dev>,
-	Niklas Cassel <cassel@kernel.org>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Swapnil Patel <swapnil.patel@amd.com>,
+	Charlene Liu <Charlene.Liu@amd.com>,
+	Chenyu Chen <chen-yu.chen@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 106/119] ata: libata-core: Disable LPM on ST2000DM008-2FR102
-Date: Thu, 15 Jan 2026 17:48:41 +0100
-Message-ID: <20260115164155.777881584@linuxfoundation.org>
+Subject: [PATCH 6.12 107/119] drm/amd/display: Fix DP no audio issue
+Date: Thu, 15 Jan 2026 17:48:42 +0100
+Message-ID: <20260115164155.814085598@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -52,35 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Charlene Liu <Charlene.Liu@amd.com>
 
-[ Upstream commit ba624ba88d9f5c3e2ace9bb6697dbeb05b2dbc44 ]
+[ Upstream commit 3886b198bd6e49c801fe9552fcfbfc387a49fbbc ]
 
-According to a user report, the ST2000DM008-2FR102 has problems with LPM.
+[why]
+need to enable APG_CLOCK_ENABLE enable first
+also need to wake up az from D3 before access az block
 
-Reported-by: Emerson Pinter <e@pinter.dev>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220693
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Swapnil Patel <swapnil.patel@amd.com>
+Signed-off-by: Charlene Liu <Charlene.Liu@amd.com>
+Signed-off-by: Chenyu Chen <chen-yu.chen@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit bf5e396957acafd46003318965500914d5f4edfa)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
-index 0cb97181d10a9..802967eabc344 100644
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -4064,6 +4064,9 @@ static const struct ata_dev_quirks_entry __ata_dev_quirks[] = {
- 	{ "ST3320[68]13AS",	"SD1[5-9]",	ATA_QUIRK_NONCQ |
- 						ATA_QUIRK_FIRMWARE_WARN },
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
+index 13e7c253ad697..31c7dfff27cbb 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
+@@ -1096,13 +1096,13 @@ void dce110_enable_audio_stream(struct pipe_ctx *pipe_ctx)
+ 			if (dc->current_state->res_ctx.pipe_ctx[i].stream_res.audio != NULL)
+ 				num_audio++;
+ 		}
++		if (num_audio >= 1 && clk_mgr->funcs->enable_pme_wa) {
++			/*wake AZ from D3 first before access az endpoint*/
++			clk_mgr->funcs->enable_pme_wa(clk_mgr);
++		}
  
-+	/* Seagate disks with LPM issues */
-+	{ "ST2000DM008-2FR102",	NULL,		ATA_QUIRK_NOLPM },
-+
- 	/* drives which fail FPDMA_AA activation (some may freeze afterwards)
- 	   the ST disks also have LPM issues */
- 	{ "ST1000LM024 HN-M101MBB", NULL,	ATA_QUIRK_BROKEN_FPDMA_AA |
+ 		pipe_ctx->stream_res.audio->funcs->az_enable(pipe_ctx->stream_res.audio);
+ 
+-		if (num_audio >= 1 && clk_mgr->funcs->enable_pme_wa)
+-			/*this is the first audio. apply the PME w/a in order to wake AZ from D3*/
+-			clk_mgr->funcs->enable_pme_wa(clk_mgr);
+-
+ 		link_hwss->enable_audio_packet(pipe_ctx);
+ 
+ 		if (pipe_ctx->stream_res.audio)
 -- 
 2.51.0
 
