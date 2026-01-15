@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EE17396B7D;
-	Thu, 15 Jan 2026 16:58:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685B823A9AD;
+	Thu, 15 Jan 2026 16:58:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496307; cv=none; b=n9Z5O0RsgF/ov7sQPtCrTmTEmcXVRdHMOpLn7jmgR7mEk+6j7EALvXuYlONZAuc5IliYd7+RSMLugo6i1BhoX15CuIs9UHx/p9vykm2jfp3pG/8UJ/aTsDJMdx7V5vDh3MPiW5zwjOnFAHBHJKtK7l/8VHCTtcpcNgyrGJErkI4=
+	t=1768496310; cv=none; b=QN6v3qd6bLDyfA97Plnc5P8Zfz3s4dVWyfiZubJSSsuBlPFAZ08cTordu/5ACROHSH7wVxAMGodFDatrtxaLWsPyWKZsq4eWR6PqIBxDbn0yAmAB6hO4lq4XFs6VCfd0ZrdEbs9l/mrQtIVumw5D8vaqcUaIkmcB9Q3YDvwhKTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496307; c=relaxed/simple;
-	bh=aAXlDYEfEXrbCnyfe3g6GpF1ZKGQHI7EXEEzcQAiK/M=;
+	s=arc-20240116; t=1768496310; c=relaxed/simple;
+	bh=T7nf5R43VvX5ELNv1r++BoIVfJ2/UUDEdBK/gQivxd8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZsYN4LtEinygmwfI39kSPnZvCvH9ALKrM0PEwtGVSx4AjZjsFJFBBF/6YlfTkgUi1J/15g3fE5K6aZJt/QRCnI9mTGq6a41INIdciGX1CEEHACK5H8R+Uz0WDM3TGWKQChA+o2oiia8mhd0CTbz/W27N/WVe3ANxpftBE745Jfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2gXY1Oyn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DLP/yOHuBakt/1R4BOlNoq6iJUXu68iw/zM/M4iXGwUBz7/bZXqm0Gc/oiDhCSrevKcldXTVy7LzkvHPUdVbxJCyHo1uzRtcjge7EYzNVHxV0Ck+VH3utNoHbow7+ZwN4n8Dw9tPWpUgsCMaMfMr0uPt8EN+gbJJZySf0tN95X0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v+MtUq1I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2gXY1Oyn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1371EC116D0;
-	Thu, 15 Jan 2026 16:58:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v+MtUq1I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6FFDC116D0;
+	Thu, 15 Jan 2026 16:58:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496307;
-	bh=aAXlDYEfEXrbCnyfe3g6GpF1ZKGQHI7EXEEzcQAiK/M=;
+	s=korg; t=1768496310;
+	bh=T7nf5R43VvX5ELNv1r++BoIVfJ2/UUDEdBK/gQivxd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2gXY1Oyny8ioESCTlL3vmtbRJ4sUQGonl4qH1ZWsanc/GaPIFsN7n9oMxIYSs0Wsh
-	 HdwHwBq2jwY3aUhN3RJSz7DB9wrtG7nvWkHbcVcSJ1Jj9Ls8exz3OK5kdVwiJTP/g+
-	 3M0WJAs7h3w7xR61IAFA7L8v/3A8Cx1zelVAiR9A=
+	b=v+MtUq1IaTcvLTTmdYRi/GI5QqGCdDQzygQ5ek/WPOe510C0yuAqDSq5BT7RLwAjy
+	 Mgt9B33qHwDMCDk0EF9bugpWJbKTtfNfBU7hmTMf5GQL0uT5ijgYXibqKq04ZPLmoc
+	 CRRJWzm8uelDbVUnNqxteVbhEmokmxsQTs3Ima1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Wei Fang <wei.fang@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	syzbot+58b44a770a1585795351@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 151/181] net: enetc: fix build warning when PAGE_SIZE is greater than 128K
-Date: Thu, 15 Jan 2026 17:48:08 +0100
-Message-ID: <20260115164207.764476726@linuxfoundation.org>
+Subject: [PATCH 6.18 152/181] arp: do not assume dev_hard_header() does not change skb->head
+Date: Thu, 15 Jan 2026 17:48:09 +0100
+Message-ID: <20260115164207.800263953@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -53,47 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 4b5bdabb5449b652122e43f507f73789041d4abe ]
+[ Upstream commit c92510f5e3f82ba11c95991824a41e59a9c5ed81 ]
 
-The max buffer size of ENETC RX BD is 0xFFFF bytes, so if the PAGE_SIZE
-is greater than 128K, ENETC_RXB_DMA_SIZE and ENETC_RXB_DMA_SIZE_XDP will
-be greater than 0xFFFF, thus causing a build warning.
+arp_create() is the only dev_hard_header() caller
+making assumption about skb->head being unchanged.
 
-This will not cause any practical issues because ENETC is currently only
-used on the ARM64 platform, and the max PAGE_SIZE is 64K. So this patch
-is only for fixing the build warning that occurs when compiling ENETC
-drivers for other platforms.
+A recent commit broke this assumption.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202601050637.kHEKKOG7-lkp@intel.com/
-Fixes: e59bc32df2e9 ("net: enetc: correct the value of ENETC_RXB_TRUESIZE")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260107091204.1980222-1-wei.fang@nxp.com
+Initialize @arp pointer after dev_hard_header() call.
+
+Fixes: db5b4e39c4e6 ("ip6_gre: make ip6gre_header() robust")
+Reported-by: syzbot+58b44a770a1585795351@syzkaller.appspotmail.com
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260107212250.384552-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv4/arp.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc.h b/drivers/net/ethernet/freescale/enetc/enetc.h
-index f279fa597991e..60c7205ea9ff5 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc.h
-+++ b/drivers/net/ethernet/freescale/enetc/enetc.h
-@@ -79,9 +79,9 @@ struct enetc_lso_t {
- #define ENETC_RXB_TRUESIZE	(PAGE_SIZE >> 1)
- #define ENETC_RXB_PAD		NET_SKB_PAD /* add extra space if needed */
- #define ENETC_RXB_DMA_SIZE	\
--	(SKB_WITH_OVERHEAD(ENETC_RXB_TRUESIZE) - ENETC_RXB_PAD)
-+	min(SKB_WITH_OVERHEAD(ENETC_RXB_TRUESIZE) - ENETC_RXB_PAD, 0xffff)
- #define ENETC_RXB_DMA_SIZE_XDP	\
--	(SKB_WITH_OVERHEAD(ENETC_RXB_TRUESIZE) - XDP_PACKET_HEADROOM)
-+	min(SKB_WITH_OVERHEAD(ENETC_RXB_TRUESIZE) - XDP_PACKET_HEADROOM, 0xffff)
+diff --git a/net/ipv4/arp.c b/net/ipv4/arp.c
+index 833f2cf97178e..3ce1664e8632a 100644
+--- a/net/ipv4/arp.c
++++ b/net/ipv4/arp.c
+@@ -564,7 +564,7 @@ struct sk_buff *arp_create(int type, int ptype, __be32 dest_ip,
  
- struct enetc_rx_swbd {
- 	dma_addr_t dma;
+ 	skb_reserve(skb, hlen);
+ 	skb_reset_network_header(skb);
+-	arp = skb_put(skb, arp_hdr_len(dev));
++	skb_put(skb, arp_hdr_len(dev));
+ 	skb->dev = dev;
+ 	skb->protocol = htons(ETH_P_ARP);
+ 	if (!src_hw)
+@@ -572,12 +572,13 @@ struct sk_buff *arp_create(int type, int ptype, __be32 dest_ip,
+ 	if (!dest_hw)
+ 		dest_hw = dev->broadcast;
+ 
+-	/*
+-	 *	Fill the device header for the ARP frame
++	/* Fill the device header for the ARP frame.
++	 * Note: skb->head can be changed.
+ 	 */
+ 	if (dev_hard_header(skb, dev, ptype, dest_hw, src_hw, skb->len) < 0)
+ 		goto out;
+ 
++	arp = arp_hdr(skb);
+ 	/*
+ 	 * Fill out the arp protocol part.
+ 	 *
 -- 
 2.51.0
 
