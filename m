@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A5D83D331A;
-	Thu, 15 Jan 2026 17:48:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52DC43C196E;
+	Thu, 15 Jan 2026 17:48:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499317; cv=none; b=Fd/+W/ZsgZLuH17VjS9f6EzLUo3iF0gMteoGvxATcd2D8VGBfgXrjzDt8pnoeeUzm89xNgzbajX/1Z8dFvnXp4WhTSAk9GyEA47L0KYMl73Aic54sZXut6byEJjVwmyYtgrr9eviLTPAiR1fSrA8rECMC4y9IUYB4S2VHx5ckRg=
+	t=1768499320; cv=none; b=qR0AAuqnjJYEhwT8l/ah9elqg0Dj3V6CecXNdqCryQeqCIcSJdWQ29xgoMzcuVjKfC++4WWcyYZDGq8OQ/yz/a/lP7T6On58AFbGHk2dF6r8pl2jMnkE5CVs8U953lt8NwW5L2f+CzJSwJIQ6WcHUYIn2xAD4dflEKN3GLEbXII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499317; c=relaxed/simple;
-	bh=I9dxoNHhlciASeKYTDNrbNJYmOyX9lqK9Uc/kxZjnxk=;
+	s=arc-20240116; t=1768499320; c=relaxed/simple;
+	bh=wnmvv538AGcxyiT/8YR/jOYUs4/zow0lSPoYMWzL+lY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n4Wr1yO7jOBUwHooQq+xIJY2XsTg/PEF8kDy4a1bSTzQYgzCA68xvQ/G/dUJwms5Ibkm9yKbQtIa3euNKU0yI2qwXCrzkM5w/s96h0mgCyVF8Edb5FVWWmbavQIjIOKlAPd7L3MaXAYNNJFd6WpuKwQY0luUbkDOuzvLZMLlvfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1w2AGx32; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X8/uivGZMA8f9sgkAVj4OHSmUZ5R+I/8mhgcxgQdbIkHE9xDsS1svjhjaMEXYMqrCuaGWZ/SAgxsWTLf4ngapKcrgPonCL+wS8PuQt5n2wra2G/iF/M1WmSnOAraLZhSiOrHOt+I5A8qBiEpfhKYskHJa+/NhAZCl2B1BaHmX7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hhntBAEk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1w2AGx32"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0505DC16AAE;
-	Thu, 15 Jan 2026 17:48:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hhntBAEk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE7C8C2BCAF;
+	Thu, 15 Jan 2026 17:48:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499317;
-	bh=I9dxoNHhlciASeKYTDNrbNJYmOyX9lqK9Uc/kxZjnxk=;
+	s=korg; t=1768499320;
+	bh=wnmvv538AGcxyiT/8YR/jOYUs4/zow0lSPoYMWzL+lY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1w2AGx32Oa6nsmqXVQS1lOLRRysevSv5bGJk0+LVosMaZ3gNnb+1hP/3b4aR0p8Jo
-	 /0AJGAGsJgD+yIKQR80OecKrmfhlFwla1KrLZ4T16It9lgJ2BvX9wLfkIRnNNIP3rW
-	 Vir8/Zm7VTsh38l3cCoMeOnA0Jf6JtMDA2iDYQu8=
+	b=hhntBAEkyvheAqAqfDHrolx+Hv1sPF5ek8Q4mCFEveTYqYZQ8uZGokVyFwxggwzua
+	 90HCUGOKQrz5hD37r/XLw0td3dl3oiMbb9dazOABUrv9Cl8kvgXi/uSrCX4jMcfLmC
+	 XSbjSE6nbqjjAGnlYP4YUmCSzq1WR0H1ouK7WQ4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Shay Drory <shayd@nvidia.com>,
 	Moshe Shemesh <moshe@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Breno Leitao <leitao@debian.org>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 184/451] net/mlx5: fw_tracer, Add support for unrecognized string
-Date: Thu, 15 Jan 2026 17:46:25 +0100
-Message-ID: <20260115164237.559058446@linuxfoundation.org>
+Subject: [PATCH 5.10 185/451] net/mlx5: fw_tracer, Validate format string parameters
+Date: Thu, 15 Jan 2026 17:46:26 +0100
+Message-ID: <20260115164237.595388979@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -54,90 +56,191 @@ Content-Transfer-Encoding: 8bit
 
 From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit f7133135235dbd11e7cb5fe62fe5d05ce5e82eeb ]
+[ Upstream commit b35966042d20b14e2d83330049f77deec5229749 ]
 
-In case FW is publishing a string which isn't found in the driver's
-string DBs, keep the string as raw data.
+Add validation for format string parameters in the firmware tracer to
+prevent potential security vulnerabilities and crashes from malformed
+format strings received from firmware.
 
+The firmware tracer receives format strings from the device firmware and
+uses them to format trace messages. Without proper validation, bad
+firmware could provide format strings with invalid format specifiers
+(e.g., %s, %p, %n) that could lead to crashes, or other undefined
+behavior.
+
+Add mlx5_tracer_validate_params() to validate that all format specifiers
+in trace strings are limited to safe integer/hex formats (%x, %d, %i,
+%u, %llx, %lx, etc.). Reject strings containing other format types that
+could be used to access arbitrary memory or cause crashes.
+Invalid format strings are added to the trace output for visibility with
+"BAD_FORMAT: " prefix.
+
+Fixes: 70dd6fdb8987 ("net/mlx5: FW tracer, parse traces and kernel tracing support")
 Signed-off-by: Shay Drory <shayd@nvidia.com>
 Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Stable-dep-of: b35966042d20 ("net/mlx5: fw_tracer, Validate format string parameters")
+Reported-by: Breno Leitao <leitao@debian.org>
+Closes: https://lore.kernel.org/netdev/hanz6rzrb2bqbplryjrakvkbmv4y5jlmtthnvi3thg5slqvelp@t3s3erottr6s/
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/1765284977-1363052-4-git-send-email-tariqt@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/diag/fw_tracer.c       | 25 +++++++++++++++++--
+ .../mellanox/mlx5/core/diag/fw_tracer.c       | 83 ++++++++++++++++---
  .../mellanox/mlx5/core/diag/fw_tracer.h       |  1 +
- 2 files changed, 24 insertions(+), 2 deletions(-)
+ 2 files changed, 74 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-index d49fd21f49637..1002bf0078659 100644
+index 1002bf0078659..2645e941ef1ce 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-@@ -460,6 +460,7 @@ static void poll_trace(struct mlx5_fw_tracer *tracer,
+@@ -33,6 +33,7 @@
+ #include "lib/eq.h"
+ #include "fw_tracer.h"
+ #include "fw_tracer_tracepoint.h"
++#include <linux/ctype.h>
  
- 	tracer_event->event_id = MLX5_GET(tracer_event, trace, event_id);
- 	tracer_event->lost_event = MLX5_GET(tracer_event, trace, lost);
-+	tracer_event->out = trace;
+ static int mlx5_query_mtrc_caps(struct mlx5_fw_tracer *tracer)
+ {
+@@ -354,6 +355,43 @@ static const char *VAL_PARM		= "%llx";
+ static const char *REPLACE_64_VAL_PARM	= "%x%x";
+ static const char *PARAM_CHAR		= "%";
  
- 	switch (tracer_event->event_id) {
- 	case TRACER_EVENT_TYPE_TIMESTAMP:
-@@ -582,6 +583,26 @@ void mlx5_tracer_print_trace(struct tracer_string_format *str_frmt,
- 	mlx5_tracer_clean_message(str_frmt);
++static bool mlx5_is_valid_spec(const char *str)
++{
++	/* Parse format specifiers to find the actual type.
++	 * Structure: %[flags][width][.precision][length]type
++	 * Skip flags, width, precision & length.
++	 */
++	while (isdigit(*str) || *str == '#' || *str == '.' || *str == 'l')
++		str++;
++
++	/* Check if it's a valid integer/hex specifier:
++	 * Valid formats: %x, %d, %i, %u, etc.
++	 */
++	if (*str != 'x' && *str != 'X' && *str != 'd' && *str != 'i' &&
++	    *str != 'u' && *str != 'c')
++		return false;
++
++	return true;
++}
++
++static bool mlx5_tracer_validate_params(const char *str)
++{
++	const char *substr = str;
++
++	if (!str)
++		return false;
++
++	substr = strstr(substr, PARAM_CHAR);
++	while (substr) {
++		if (!mlx5_is_valid_spec(substr + 1))
++			return false;
++
++		substr = strstr(substr + 1, PARAM_CHAR);
++	}
++
++	return true;
++}
++
+ static int mlx5_tracer_message_hash(u32 message_id)
+ {
+ 	return jhash_1word(message_id, 0) & (MESSAGE_HASH_SIZE - 1);
+@@ -413,6 +451,10 @@ static int mlx5_tracer_get_num_of_params(char *str)
+ 	char *substr, *pstr = str;
+ 	int num_of_params = 0;
+ 
++	/* Validate that all parameters are valid before processing */
++	if (!mlx5_tracer_validate_params(str))
++		return -EINVAL;
++
+ 	/* replace %llx with %x%x */
+ 	substr = strstr(pstr, VAL_PARM);
+ 	while (substr) {
+@@ -564,14 +606,17 @@ void mlx5_tracer_print_trace(struct tracer_string_format *str_frmt,
+ {
+ 	char	tmp[512];
+ 
+-	snprintf(tmp, sizeof(tmp), str_frmt->string,
+-		 str_frmt->params[0],
+-		 str_frmt->params[1],
+-		 str_frmt->params[2],
+-		 str_frmt->params[3],
+-		 str_frmt->params[4],
+-		 str_frmt->params[5],
+-		 str_frmt->params[6]);
++	if (str_frmt->invalid_string)
++		snprintf(tmp, sizeof(tmp), "BAD_FORMAT: %s", str_frmt->string);
++	else
++		snprintf(tmp, sizeof(tmp), str_frmt->string,
++			 str_frmt->params[0],
++			 str_frmt->params[1],
++			 str_frmt->params[2],
++			 str_frmt->params[3],
++			 str_frmt->params[4],
++			 str_frmt->params[5],
++			 str_frmt->params[6]);
+ 
+ 	trace_mlx5_fw(dev->tracer, trace_timestamp, str_frmt->lost,
+ 		      str_frmt->event_id, tmp);
+@@ -603,6 +648,13 @@ static int mlx5_tracer_handle_raw_string(struct mlx5_fw_tracer *tracer,
+ 	return 0;
  }
  
-+static int mlx5_tracer_handle_raw_string(struct mlx5_fw_tracer *tracer,
-+					 struct tracer_event *tracer_event)
++static void mlx5_tracer_handle_bad_format_string(struct mlx5_fw_tracer *tracer,
++						 struct tracer_string_format *cur_string)
 +{
-+	struct tracer_string_format *cur_string;
-+
-+	cur_string = mlx5_tracer_message_insert(tracer, tracer_event);
-+	if (!cur_string)
-+		return -1;
-+
-+	cur_string->event_id = tracer_event->event_id;
-+	cur_string->timestamp = tracer_event->string_event.timestamp;
-+	cur_string->lost = tracer_event->lost_event;
-+	cur_string->string = "0x%08x%08x";
-+	cur_string->num_of_params = 2;
-+	cur_string->params[0] = upper_32_bits(*tracer_event->out);
-+	cur_string->params[1] = lower_32_bits(*tracer_event->out);
++	cur_string->invalid_string = true;
 +	list_add_tail(&cur_string->list, &tracer->ready_strings_list);
-+	return 0;
 +}
 +
  static int mlx5_tracer_handle_string_trace(struct mlx5_fw_tracer *tracer,
  					   struct tracer_event *tracer_event)
  {
-@@ -590,7 +611,7 @@ static int mlx5_tracer_handle_string_trace(struct mlx5_fw_tracer *tracer,
- 	if (tracer_event->string_event.tdsn == 0) {
- 		cur_string = mlx5_tracer_get_string(tracer, tracer_event);
+@@ -613,12 +665,18 @@ static int mlx5_tracer_handle_string_trace(struct mlx5_fw_tracer *tracer,
  		if (!cur_string)
--			return -1;
-+			return mlx5_tracer_handle_raw_string(tracer, tracer_event);
+ 			return mlx5_tracer_handle_raw_string(tracer, tracer_event);
  
- 		cur_string->num_of_params = mlx5_tracer_get_num_of_params(cur_string->string);
- 		cur_string->last_param_num = 0;
-@@ -605,7 +626,7 @@ static int mlx5_tracer_handle_string_trace(struct mlx5_fw_tracer *tracer,
- 		if (!cur_string) {
- 			pr_debug("%s Got string event for unknown string tmsn: %d\n",
+-		cur_string->num_of_params = mlx5_tracer_get_num_of_params(cur_string->string);
+-		cur_string->last_param_num = 0;
+ 		cur_string->event_id = tracer_event->event_id;
+ 		cur_string->tmsn = tracer_event->string_event.tmsn;
+ 		cur_string->timestamp = tracer_event->string_event.timestamp;
+ 		cur_string->lost = tracer_event->lost_event;
++		cur_string->last_param_num = 0;
++		cur_string->num_of_params = mlx5_tracer_get_num_of_params(cur_string->string);
++		if (cur_string->num_of_params < 0) {
++			pr_debug("%s Invalid format string parameters\n",
++				 __func__);
++			mlx5_tracer_handle_bad_format_string(tracer, cur_string);
++			return 0;
++		}
+ 		if (cur_string->num_of_params == 0) /* trace with no params */
+ 			list_add_tail(&cur_string->list, &tracer->ready_strings_list);
+ 	} else {
+@@ -628,6 +686,11 @@ static int mlx5_tracer_handle_string_trace(struct mlx5_fw_tracer *tracer,
  				 __func__, tracer_event->string_event.tmsn);
--			return -1;
-+			return mlx5_tracer_handle_raw_string(tracer, tracer_event);
+ 			return mlx5_tracer_handle_raw_string(tracer, tracer_event);
  		}
++		if (cur_string->num_of_params < 0) {
++			pr_debug("%s string parameter of invalid string, dumping\n",
++				 __func__);
++			return 0;
++		}
  		cur_string->last_param_num += 1;
  		if (cur_string->last_param_num > TRACER_MAX_PARAMS) {
+ 			pr_debug("%s Number of params exceeds the max (%d)\n",
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.h b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.h
-index 97252a85d65e6..568efb1e2bd24 100644
+index 568efb1e2bd24..603ef441f1b21 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.h
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.h
-@@ -158,6 +158,7 @@ struct tracer_event {
- 		struct tracer_string_event string_event;
- 		struct tracer_timestamp_event timestamp_event;
- 	};
-+	u64 *out;
+@@ -117,6 +117,7 @@ struct tracer_string_format {
+ 	struct list_head list;
+ 	u32 timestamp;
+ 	bool lost;
++	bool invalid_string;
  };
  
- struct mlx5_ifc_tracer_event_bits {
+ enum mlx5_fw_tracer_ownership_state {
 -- 
 2.51.0
 
