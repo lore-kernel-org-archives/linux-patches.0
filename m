@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17193BF2E4;
-	Thu, 15 Jan 2026 16:59:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5943B530C;
+	Thu, 15 Jan 2026 16:59:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496347; cv=none; b=TFy6BSkiEaEOH4BHSYTZ7EeIGBlF3lgwR91TLQ0OtYGAE0JcJu1MVEcx4KYVgK3hXys8tukGW4x2ZlL7QMGl1aV185XimvltGmXk6ft0LRT5Av4TpU0GZi382DoT7SAWhXNrscAaJOeyOocKPILBEOuilIRWxLTsy9ZeCog6VVc=
+	t=1768496350; cv=none; b=qQMGdix68GFKL8Wxje184iokUt4o//3qGE9ijW525CZ9k0y+16X5XDHKQvJE6fiDscNUb4gMfjJJCQYp3NpcLbs34J1I5otroVKn93O6I8p8P8TyroYoDeHDE92PANAV4BNWmP31BmH2Fs8s2yKGK+GP/6P1rnT/e2Ok0INrOE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496347; c=relaxed/simple;
-	bh=eYHt2miYXTEaLqNKxRIUx0tMgmIcFIOKKskEbZzBOes=;
+	s=arc-20240116; t=1768496350; c=relaxed/simple;
+	bh=5N7hzLipx6MIaoKmwTPThg/xrA4oY3ptfAMjptjnJOc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=k/3kUP9Qw6KyQlXX0Ex//DamhaysMZbjKoQV2BjbMn0ghgggm3ntNc89RBrqagXCrWbOa0NcvgX/ZOncYB3XW5WK3mrwrE+z53td4d68PYqH1c1545s4fA1IXNzB1sSMU+iZojnMuURJf85yxHMtlQU0Kjf/hzW+Vx5HSU9ia+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hZuhxZG8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M0DURlYy7NE+GHk5q+lKXd7Bh5x3uTpG/MZ8nD9iOJtsxUMQcBsmYZUs7UH/ihNDNSQ6QnGGsAmgaeeqFgCaf7DzJUohi4ZtgsXufgA1UTcsQe+A+KSfH1Oqaf0hb+Dmp13T7g304PVDGr/M/WoDTNVsExaEiw6NdXw3Ah34Wlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=smdDQoEh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hZuhxZG8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDB7CC116D0;
-	Thu, 15 Jan 2026 16:59:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="smdDQoEh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A88BFC116D0;
+	Thu, 15 Jan 2026 16:59:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496347;
-	bh=eYHt2miYXTEaLqNKxRIUx0tMgmIcFIOKKskEbZzBOes=;
+	s=korg; t=1768496350;
+	bh=5N7hzLipx6MIaoKmwTPThg/xrA4oY3ptfAMjptjnJOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hZuhxZG8RbW2FFgqiCTr6fI6CISokvcsiV8Phw9nkwJ9+BwlCS4aUcehHdH4RaAqq
-	 spYvq7jNtnSe2qPWM8lz6GRkVj+W4tJtLxUZCV5260M/SOcSz9f2pVreJXKmVYoDz/
-	 BntxlvCPoOCeXKqZs1c3V1ctjeOJp2IzmOuF4Wbs=
+	b=smdDQoEhQYXJsb8Ik0kaTP0cixNLXko3DEaoklMqJqsRMnvRQ2/9Z/8Z13J7LqdUI
+	 9KUbU4MA6rAoavSMJsiShcKktqKiSU/+jdgkn0P/aIy2q1jsXP3aX0IN/UZ4Fg+dfy
+	 h4wPqGR5b6xuZWHUSlv/HY9phh4TiRsFwFPqLqoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Marcus Hughes <marcus.hughes@betterinternet.ltd>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 164/181] bpf: Fix reference count leak in bpf_prog_test_run_xdp()
-Date: Thu, 15 Jan 2026 17:48:21 +0100
-Message-ID: <20260115164208.236103302@linuxfoundation.org>
+Subject: [PATCH 6.18 165/181] net: sfp: extend Potron XGSPON quirk to cover additional EEPROM variant
+Date: Thu, 15 Jan 2026 17:48:22 +0100
+Message-ID: <20260115164208.271634671@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -47,81 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Marcus Hughes <marcus.hughes@betterinternet.ltd>
 
-[ Upstream commit ec69daabe45256f98ac86c651b8ad1b2574489a7 ]
+[ Upstream commit 71cfa7c893a05d09e7dc14713b27a8309fd4a2db ]
 
-syzbot is reporting
+Some Potron SFP+ XGSPON ONU sticks are shipped with different EEPROM
+vendor ID and vendor name strings, but are otherwise functionally
+identical to the existing "Potron SFP+ XGSPON ONU Stick" handled by
+sfp_quirk_potron().
 
-  unregister_netdevice: waiting for sit0 to become free. Usage count = 2
+These modules, including units distributed under the "Better Internet"
+branding, use the same UART pin assignment and require the same
+TX_FAULT/LOS behaviour and boot delay. Re-use the existing Potron
+quirk for this EEPROM variant.
 
-problem. A debug printk() patch found that a refcount is obtained at
-xdp_convert_md_to_buff() from bpf_prog_test_run_xdp().
-
-According to commit ec94670fcb3b ("bpf: Support specifying ingress via
-xdp_md context in BPF_PROG_TEST_RUN"), the refcount obtained by
-xdp_convert_md_to_buff() will be released by xdp_convert_buff_to_md().
-
-Therefore, we can consider that the error handling path introduced by
-commit 1c1949982524 ("bpf: introduce frags support to
-bpf_prog_test_run_xdp()") forgot to call xdp_convert_buff_to_md().
-
-Reported-by: syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=881d65229ca4f9ae8c84
-Fixes: 1c1949982524 ("bpf: introduce frags support to bpf_prog_test_run_xdp()")
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://lore.kernel.org/r/af090e53-9d9b-4412-8acb-957733b3975c@I-love.SAKURA.ne.jp
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Marcus Hughes <marcus.hughes@betterinternet.ltd>
+Link: https://patch.msgid.link/20251207210355.333451-1-marcus.hughes@betterinternet.ltd
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bpf/test_run.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/phy/sfp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
-index 59620fdd5cfda..6b04f47301c1e 100644
---- a/net/bpf/test_run.c
-+++ b/net/bpf/test_run.c
-@@ -1300,13 +1300,13 @@ int bpf_prog_test_run_xdp(struct bpf_prog *prog, const union bpf_attr *kattr,
+diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
+index 6b4dd906b804f..84bef5099dda6 100644
+--- a/drivers/net/phy/sfp.c
++++ b/drivers/net/phy/sfp.c
+@@ -497,6 +497,8 @@ static const struct sfp_quirk sfp_quirks[] = {
+ 	SFP_QUIRK("ALCATELLUCENT", "3FE46541AA", sfp_quirk_2500basex,
+ 		  sfp_fixup_nokia),
  
- 			if (sinfo->nr_frags == MAX_SKB_FRAGS) {
- 				ret = -ENOMEM;
--				goto out;
-+				goto out_put_dev;
- 			}
++	SFP_QUIRK_F("BIDB", "X-ONU-SFPP", sfp_fixup_potron),
++
+ 	// FLYPRO SFP-10GT-CS-30M uses Rollball protocol to talk to the PHY.
+ 	SFP_QUIRK_F("FLYPRO", "SFP-10GT-CS-30M", sfp_fixup_rollball),
  
- 			page = alloc_page(GFP_KERNEL);
- 			if (!page) {
- 				ret = -ENOMEM;
--				goto out;
-+				goto out_put_dev;
- 			}
- 
- 			frag = &sinfo->frags[sinfo->nr_frags++];
-@@ -1318,7 +1318,7 @@ int bpf_prog_test_run_xdp(struct bpf_prog *prog, const union bpf_attr *kattr,
- 			if (copy_from_user(page_address(page), data_in + size,
- 					   data_len)) {
- 				ret = -EFAULT;
--				goto out;
-+				goto out_put_dev;
- 			}
- 			sinfo->xdp_frags_size += data_len;
- 			size += data_len;
-@@ -1333,6 +1333,7 @@ int bpf_prog_test_run_xdp(struct bpf_prog *prog, const union bpf_attr *kattr,
- 		ret = bpf_test_run_xdp_live(prog, &xdp, repeat, batch_size, &duration);
- 	else
- 		ret = bpf_test_run(prog, &xdp, repeat, &retval, &duration, true);
-+out_put_dev:
- 	/* We convert the xdp_buff back to an xdp_md before checking the return
- 	 * code so the reference count of any held netdevice will be decremented
- 	 * even if the test run failed.
 -- 
 2.51.0
 
