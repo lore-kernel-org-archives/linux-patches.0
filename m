@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E3343BC4EE;
-	Thu, 15 Jan 2026 16:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D471F396B75;
+	Thu, 15 Jan 2026 16:58:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496285; cv=none; b=fXcduWNZSOCQ9RW35gY9E9+bOZKMT1XxMAwjNJ4e+Z4ff+Lk6+uWuToPharY6OzaLIBJBQpXd4Eh9ctbO6Zq7kdXQIgmPuPg39F12VN/czLyIl/PINdiAPjj2Q6WLOvHqyXq4Ijx6SGXz5OFrYNO0AgmHAXpf0t+QFKCoLQGkU4=
+	t=1768496287; cv=none; b=rEhoZtPpwcgz2t6Oo/FxuBKFz3cojF3kEcVj1CmXkfrXL3/v4FAFBjBqswo9L1ZOamkFAvyCpYHja1whOyeR1JFp5YA1CxKvb+t0moIY/61mR59c1Khb7xavpl8euHYb2MxmTLKuEXa390LpvElILyCkLnJtAt52G82nSCNleMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496285; c=relaxed/simple;
-	bh=GbkiGVkNqdh/wnUnRjTwsfjBcKaNq9OLc5+JL0OURJY=;
+	s=arc-20240116; t=1768496287; c=relaxed/simple;
+	bh=W+RgqqdLMz2YRDHkv1rX8gQV/hGRIUrW/68PnYJdm60=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=roRM5yTr9ud220J8vq5rDFZL/bUtqMRKdDX+rBtE46xYLRzAac9ykMOrpfE/EUx+zMf/cfU4MM5ycwc5sm7dQx9dCq4kC0/9873BghqxHaXFfjwLxVMos2weGJJe/JoFY8YPIytNX9ptNSSPCsQ2bJ8S0F3c9Uq0B4dGof5Hrj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YB7IjvbR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WUWo0bAWIAVEeG09vkpDOe50q1bCXWDCIE9qvoF2upOsNTTNizU+vNv963QCZceAlD5buP5Au1jm84/c8aDwaMvxLoBS3GBA5Msv28zI6pGIMX/hapEvr4ZTlOvsETrT6FBTxT1Dnn/ZvJFetVsUpKaQ+JD7qHSRLLhoW7l+y1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ljd2dW61; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YB7IjvbR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70C21C116D0;
-	Thu, 15 Jan 2026 16:58:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ljd2dW61"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D8B4C116D0;
+	Thu, 15 Jan 2026 16:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496284;
-	bh=GbkiGVkNqdh/wnUnRjTwsfjBcKaNq9OLc5+JL0OURJY=;
+	s=korg; t=1768496287;
+	bh=W+RgqqdLMz2YRDHkv1rX8gQV/hGRIUrW/68PnYJdm60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YB7IjvbR1MWlUbovMD25FLIqTp/h7Y3/y9lbfuSt4mRYVFw4ThGiTVz4OqCgukraS
-	 RCCOC7U1Lsv9AymYcESazt5HA6LOXfMwJyaflleT7PQrEy+YZOJNPckmM3l0L/bDY/
-	 majcvTMqJ5VHVY6uEfcT9VdC8k9DALKsE0xnNzZc=
+	b=ljd2dW61JPOcP77RNU3LafkBHjoLEqwVv3ytROB3Hik30gMR9+huRos4HZvWISKrl
+	 fDSdKzAYSziW5x6lfs7uIOgelVrxQIjQJ9JyEz4fzX4SISGu+tmhzsgYrKVRFbkcVa
+	 VIGTWnuHdl52zYne64J3wQu25mlAyPzzkLjCXAGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kommula Shiva Shankar <kshankar@marvell.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	syzbot+4393c47753b7808dac7d@syzkaller.appspotmail.com,
+	Florian Westphal <fw@strlen.de>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 109/181] virtio_net: fix device mismatch in devm_kzalloc/devm_kfree
-Date: Thu, 15 Jan 2026 17:47:26 +0100
-Message-ID: <20260115164206.252993397@linuxfoundation.org>
+Subject: [PATCH 6.18 110/181] inet: frags: drop fraglist conntrack references
+Date: Thu, 15 Jan 2026 17:47:27 +0100
+Message-ID: <20260115164206.288529175@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -54,124 +53,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kommula Shiva Shankar <kshankar@marvell.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit acb4bc6e1ba34ae1a34a9334a1ce8474c909466e ]
+[ Upstream commit 2ef02ac38d3c17f34a00c4b267d961a8d4b45d1a ]
 
-Initial rss_hdr allocation uses virtio_device->device,
-but virtnet_set_queues() frees using net_device->device.
-This device mismatch causing below devres warning
+Jakub added a warning in nf_conntrack_cleanup_net_list() to make debugging
+leaked skbs/conntrack references more obvious.
 
-[ 3788.514041] ------------[ cut here ]------------
-[ 3788.514044] WARNING: drivers/base/devres.c:1095 at devm_kfree+0x84/0x98, CPU#16: vdpa/1463
-[ 3788.514054] Modules linked in: octep_vdpa virtio_net virtio_vdpa [last unloaded: virtio_vdpa]
-[ 3788.514064] CPU: 16 UID: 0 PID: 1463 Comm: vdpa Tainted: G        W           6.18.0 #10 PREEMPT
-[ 3788.514067] Tainted: [W]=WARN
-[ 3788.514069] Hardware name: Marvell CN106XX board (DT)
-[ 3788.514071] pstate: 63400009 (nZCv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
-[ 3788.514074] pc : devm_kfree+0x84/0x98
-[ 3788.514076] lr : devm_kfree+0x54/0x98
-[ 3788.514079] sp : ffff800084e2f220
-[ 3788.514080] x29: ffff800084e2f220 x28: ffff0003b2366000 x27: 000000000000003f
-[ 3788.514085] x26: 000000000000003f x25: ffff000106f17c10 x24: 0000000000000080
-[ 3788.514089] x23: ffff00045bb8ab08 x22: ffff00045bb8a000 x21: 0000000000000018
-[ 3788.514093] x20: ffff0004355c3080 x19: ffff00045bb8aa00 x18: 0000000000080000
-[ 3788.514098] x17: 0000000000000040 x16: 000000000000001f x15: 000000000007ffff
-[ 3788.514102] x14: 0000000000000488 x13: 0000000000000005 x12: 00000000000fffff
-[ 3788.514106] x11: ffffffffffffffff x10: 0000000000000005 x9 : ffff800080c8c05c
-[ 3788.514110] x8 : ffff800084e2eeb8 x7 : 0000000000000000 x6 : 000000000000003f
-[ 3788.514115] x5 : ffff8000831bafe0 x4 : ffff800080c8b010 x3 : ffff0004355c3080
-[ 3788.514119] x2 : ffff0004355c3080 x1 : 0000000000000000 x0 : 0000000000000000
-[ 3788.514123] Call trace:
-[ 3788.514125]  devm_kfree+0x84/0x98 (P)
-[ 3788.514129]  virtnet_set_queues+0x134/0x2e8 [virtio_net]
-[ 3788.514135]  virtnet_probe+0x9c0/0xe00 [virtio_net]
-[ 3788.514139]  virtio_dev_probe+0x1e0/0x338
-[ 3788.514144]  really_probe+0xc8/0x3a0
-[ 3788.514149]  __driver_probe_device+0x84/0x170
-[ 3788.514152]  driver_probe_device+0x44/0x120
-[ 3788.514155]  __device_attach_driver+0xc4/0x168
-[ 3788.514158]  bus_for_each_drv+0x8c/0xf0
-[ 3788.514161]  __device_attach+0xa4/0x1c0
-[ 3788.514164]  device_initial_probe+0x1c/0x30
-[ 3788.514168]  bus_probe_device+0xb4/0xc0
-[ 3788.514170]  device_add+0x614/0x828
-[ 3788.514173]  register_virtio_device+0x214/0x258
-[ 3788.514175]  virtio_vdpa_probe+0xa0/0x110 [virtio_vdpa]
-[ 3788.514179]  vdpa_dev_probe+0xa8/0xd8
-[ 3788.514183]  really_probe+0xc8/0x3a0
-[ 3788.514186]  __driver_probe_device+0x84/0x170
-[ 3788.514189]  driver_probe_device+0x44/0x120
-[ 3788.514192]  __device_attach_driver+0xc4/0x168
-[ 3788.514195]  bus_for_each_drv+0x8c/0xf0
-[ 3788.514197]  __device_attach+0xa4/0x1c0
-[ 3788.514200]  device_initial_probe+0x1c/0x30
-[ 3788.514203]  bus_probe_device+0xb4/0xc0
-[ 3788.514206]  device_add+0x614/0x828
-[ 3788.514209]  _vdpa_register_device+0x58/0x88
-[ 3788.514211]  octep_vdpa_dev_add+0x104/0x228 [octep_vdpa]
-[ 3788.514215]  vdpa_nl_cmd_dev_add_set_doit+0x2d0/0x3c0
-[ 3788.514218]  genl_family_rcv_msg_doit+0xe4/0x158
-[ 3788.514222]  genl_rcv_msg+0x218/0x298
-[ 3788.514225]  netlink_rcv_skb+0x64/0x138
-[ 3788.514229]  genl_rcv+0x40/0x60
-[ 3788.514233]  netlink_unicast+0x32c/0x3b0
-[ 3788.514237]  netlink_sendmsg+0x170/0x3b8
-[ 3788.514241]  __sys_sendto+0x12c/0x1c0
-[ 3788.514246]  __arm64_sys_sendto+0x30/0x48
-[ 3788.514249]  invoke_syscall.constprop.0+0x58/0xf8
-[ 3788.514255]  do_el0_svc+0x48/0xd0
-[ 3788.514259]  el0_svc+0x48/0x210
-[ 3788.514264]  el0t_64_sync_handler+0xa0/0xe8
-[ 3788.514268]  el0t_64_sync+0x198/0x1a0
-[ 3788.514271] ---[ end trace 0000000000000000 ]---
+syzbot reports this as triggering, and I can also reproduce this via
+ip_defrag.sh selftest:
 
-Fix by using virtio_device->device consistently for
-allocation and deallocation
+ conntrack cleanup blocked for 60s
+ WARNING: net/netfilter/nf_conntrack_core.c:2512
+ [..]
 
-Fixes: 4944be2f5ad8c ("virtio_net: Allocate rss_hdr with devres")
-Signed-off-by: Kommula Shiva Shankar <kshankar@marvell.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Link: https://patch.msgid.link/20260102101900.692770-1-kshankar@marvell.com
+conntrack clenups gets stuck because there are skbs with still hold nf_conn
+references via their frag_list.
+
+   net.core.skb_defer_max=0 makes the hang disappear.
+
+Eric Dumazet points out that skb_release_head_state() doesn't follow the
+fraglist.
+
+ip_defrag.sh can only reproduce this problem since
+commit 6471658dc66c ("udp: use skb_attempt_defer_free()"), but AFAICS this
+problem could happen with TCP as well if pmtu discovery is off.
+
+The relevant problem path for udp is:
+1. netns emits fragmented packets
+2. nf_defrag_v6_hook reassembles them (in output hook)
+3. reassembled skb is tracked (skb owns nf_conn reference)
+4. ip6_output refragments
+5. refragmented packets also own nf_conn reference (ip6_fragment
+   calls ip6_copy_metadata())
+6. on input path, nf_defrag_v6_hook skips defragmentation: the
+   fragments already have skb->nf_conn attached
+7. skbs are reassembled via ipv6_frag_rcv()
+8. skb_consume_udp -> skb_attempt_defer_free() -> skb ends up
+   in pcpu freelist, but still has nf_conn reference.
+
+Possible solutions:
+ 1 let defrag engine drop nf_conn entry, OR
+ 2 export kick_defer_list_purge() and call it from the conntrack
+   netns exit callback, OR
+ 3 add skb_has_frag_list() check to skb_attempt_defer_free()
+
+2 & 3 also solve ip_defrag.sh hang but share same drawback:
+
+Such reassembled skbs, queued to socket, can prevent conntrack module
+removal until userspace has consumed the packet. While both tcp and udp
+stack do call nf_reset_ct() before placing skb on socket queue, that
+function doesn't iterate frag_list skbs.
+
+Therefore drop nf_conn entries when they are placed in defrag queue.
+Keep the nf_conn entry of the first (offset 0) skb so that reassembled
+skb retains nf_conn entry for sake of TX path.
+
+Note that fixes tag is incorrect; it points to the commit introducing the
+'ip_defrag.sh reproducible problem': no need to backport this patch to
+every stable kernel.
+
+Reported-by: syzbot+4393c47753b7808dac7d@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/693b0fa7.050a0220.4004e.040d.GAE@google.com/
+Fixes: 6471658dc66c ("udp: use skb_attempt_defer_free()")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260102140030.32367-1-fw@strlen.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/ipv4/inet_fragment.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index 8e04adb57f52a..4e1a5291099a5 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -3783,7 +3783,7 @@ static int virtnet_set_queues(struct virtnet_info *vi, u16 queue_pairs)
- 	if (vi->has_rss && !netif_is_rxfh_configured(dev)) {
- 		old_rss_hdr = vi->rss_hdr;
- 		old_rss_trailer = vi->rss_trailer;
--		vi->rss_hdr = devm_kzalloc(&dev->dev, virtnet_rss_hdr_size(vi), GFP_KERNEL);
-+		vi->rss_hdr = devm_kzalloc(&vi->vdev->dev, virtnet_rss_hdr_size(vi), GFP_KERNEL);
- 		if (!vi->rss_hdr) {
- 			vi->rss_hdr = old_rss_hdr;
- 			return -ENOMEM;
-@@ -3794,7 +3794,7 @@ static int virtnet_set_queues(struct virtnet_info *vi, u16 queue_pairs)
- 
- 		if (!virtnet_commit_rss_command(vi)) {
- 			/* restore ctrl_rss if commit_rss_command failed */
--			devm_kfree(&dev->dev, vi->rss_hdr);
-+			devm_kfree(&vi->vdev->dev, vi->rss_hdr);
- 			vi->rss_hdr = old_rss_hdr;
- 			vi->rss_trailer = old_rss_trailer;
- 
-@@ -3802,7 +3802,7 @@ static int virtnet_set_queues(struct virtnet_info *vi, u16 queue_pairs)
- 				 queue_pairs);
- 			return -EINVAL;
- 		}
--		devm_kfree(&dev->dev, old_rss_hdr);
-+		devm_kfree(&vi->vdev->dev, old_rss_hdr);
- 		goto succ;
+diff --git a/net/ipv4/inet_fragment.c b/net/ipv4/inet_fragment.c
+index 001ee5c4d962e..4e6d7467ed444 100644
+--- a/net/ipv4/inet_fragment.c
++++ b/net/ipv4/inet_fragment.c
+@@ -488,6 +488,8 @@ int inet_frag_queue_insert(struct inet_frag_queue *q, struct sk_buff *skb,
  	}
  
+ 	FRAG_CB(skb)->ip_defrag_offset = offset;
++	if (offset)
++		nf_reset_ct(skb);
+ 
+ 	return IPFRAG_OK;
+ }
 -- 
 2.51.0
 
