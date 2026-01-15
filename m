@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EE15E555;
-	Thu, 15 Jan 2026 17:43:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DAE32D94A7;
+	Thu, 15 Jan 2026 17:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498984; cv=none; b=RecZToII3R3qZV9Gljo/OwvhUcFBGuZs0dpv9BZ1hvQziWfDL4A1Ox9Bt45yy3AScWTzOmiJEHp26rjy1fLBt7qFxjQB4bp+xN/tAuNdeUT7cqASa/HGLlZQ0X8cOlr+mzmxCj1GBIa34kKnZ19q324A4YZxw37G4OqmKyiPKrU=
+	t=1768498987; cv=none; b=ac7ekNav2yXeigc9LNWkLhprU+eKkwO0ckh0vE8Wx7DVTLIjoJ4bZRkHgnMKKUtQTAvuvpiHU20W2Ixh/WxixuRRLqq6KE/jpgDeN6W4J9+9vkMbFowvndRSs8mAiJcu87HLXU9VckFJ1OIW8uNDt2S2MwuLuFQ6gbo1XmU8ItE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498984; c=relaxed/simple;
-	bh=JX1tmltUU/Ewean0fBovDGpBt+iOHBhdfbCURMK44rs=;
+	s=arc-20240116; t=1768498987; c=relaxed/simple;
+	bh=mcqkFsg/RX4IlVqbwKDYg37Gilagk3tdvNEz3n2gbV8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sA0C/TkiA4rFOBaCvNirdz3eGRCngcPk3ZfclWaA1ZETtuWFMKxH0mZIBBQ3RCztDJpQuiuqTTAqywjI4WCbCv1+FJicz7nUifOS3L7FSs1cvR4Wfeo3E52SCcdH7RmlNx7O19LKtQuBOC/l3CcTFwT6STqJP6vEn+2KNKpcpU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pbmQgNa+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YMqv89WWEbZDQptj4mM4TYGo5k8+xsauNVVLiwOHTpPuA987kX3WNqgfjM8mgklYpiXAxMG92Je9H7VsezpC3L+HPTFXIEl0LjknbjTs6NHhwei4JvGxbKO998Myq0MEClAIfRj9rCyj6+hw1JhrZ1stYYLnMYSEnaKFGQo+kLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+RuOjws; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pbmQgNa+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8006C116D0;
-	Thu, 15 Jan 2026 17:43:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+RuOjws"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73B1FC116D0;
+	Thu, 15 Jan 2026 17:43:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498984;
-	bh=JX1tmltUU/Ewean0fBovDGpBt+iOHBhdfbCURMK44rs=;
+	s=korg; t=1768498986;
+	bh=mcqkFsg/RX4IlVqbwKDYg37Gilagk3tdvNEz3n2gbV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pbmQgNa+p27w/sd9sU2S5Dzlrf4AO+20E3EXFmPG7fF1PxAyOGGudcXGtVHd/jqyR
-	 kjvtuUfVxnzzWWhSOeOgm630jZfEcd5+0Hxi0N0RyN5SSws/pmFLDeHjAqDR8T/63k
-	 37y1XZ/ukR3kKclHFBMm7wzjSINFER3+vrrNZyPM=
+	b=z+RuOjwss3/rChR+hRvMKPX0caLJzi4rUcbgUAW5JLP3E5OefQQ0coHUlAaluPfao
+	 Agjc1Em/wG30lS5WUGU33ustTlZZxWnqRzIjFoOni3s71eDNYWvkXISXjpcy+R5RSw
+	 gH/xwlCFqOt6spDA+35MqfFv7sK5r1on0xgCTld4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Qixing <zhengqixing@huawei.com>,
-	Yu Kuai <yukuai@fnnas.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 068/451] nbd: defer config unlock in nbd_genl_connect
-Date: Thu, 15 Jan 2026 17:44:29 +0100
-Message-ID: <20260115164233.362608555@linuxfoundation.org>
+Subject: [PATCH 5.10 069/451] clk: renesas: r9a06g032: Export function to set dmamux
+Date: Thu, 15 Jan 2026 17:44:30 +0100
+Message-ID: <20260115164233.397731345@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -52,70 +53,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Qixing <zhengqixing@huawei.com>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit 1649714b930f9ea6233ce0810ba885999da3b5d4 ]
+[ Upstream commit 885525c1e7e27ea6207d648a8db20dfbbd9e4238 ]
 
-There is one use-after-free warning when running NBD_CMD_CONNECT and
-NBD_CLEAR_SOCK:
+The dmamux register is located within the system controller.
 
-nbd_genl_connect
-  nbd_alloc_and_init_config // config_refs=1
-  nbd_start_device // config_refs=2
-  set NBD_RT_HAS_CONFIG_REF			open nbd // config_refs=3
-  recv_work done // config_refs=2
-						NBD_CLEAR_SOCK // config_refs=1
-						close nbd // config_refs=0
-  refcount_inc -> uaf
+Without syscon, we need an extra helper in order to give write access to
+this register to a dmamux driver.
 
-------------[ cut here ]------------
-refcount_t: addition on 0; use-after-free.
-WARNING: CPU: 24 PID: 1014 at lib/refcount.c:25 refcount_warn_saturate+0x12e/0x290
- nbd_genl_connect+0x16d0/0x1ab0
- genl_family_rcv_msg_doit+0x1f3/0x310
- genl_rcv_msg+0x44a/0x790
-
-The issue can be easily reproduced by adding a small delay before
-refcount_inc(&nbd->config_refs) in nbd_genl_connect():
-
-        mutex_unlock(&nbd->config_lock);
-        if (!ret) {
-                set_bit(NBD_RT_HAS_CONFIG_REF, &config->runtime_flags);
-+               printk("before sleep\n");
-+               mdelay(5 * 1000);
-+               printk("after sleep\n");
-                refcount_inc(&nbd->config_refs);
-                nbd_connect_reply(info, nbd->index);
-        }
-
-Fixes: e46c7287b1c2 ("nbd: add a basic netlink interface")
-Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
-Reviewed-by: Yu Kuai <yukuai@fnnas.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Acked-by: Stephen Boyd <sboyd@kernel.org>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Acked-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20220427095653.91804-5-miquel.raynal@bootlin.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: f8def051bbcf ("clk: renesas: r9a06g032: Fix memory leak in error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/nbd.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/clk/renesas/r9a06g032-clocks.c        | 35 ++++++++++++++++++-
+ include/linux/soc/renesas/r9a06g032-sysctrl.h | 11 ++++++
+ 2 files changed, 45 insertions(+), 1 deletion(-)
+ create mode 100644 include/linux/soc/renesas/r9a06g032-sysctrl.h
 
-diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
-index faa3f6c52f5f9..649a1e8812652 100644
---- a/drivers/block/nbd.c
-+++ b/drivers/block/nbd.c
-@@ -2052,12 +2052,13 @@ static int nbd_genl_connect(struct sk_buff *skb, struct genl_info *info)
- 	}
- 	ret = nbd_start_device(nbd);
- out:
--	mutex_unlock(&nbd->config_lock);
- 	if (!ret) {
- 		set_bit(NBD_RT_HAS_CONFIG_REF, &config->runtime_flags);
- 		refcount_inc(&nbd->config_refs);
- 		nbd_connect_reply(info, nbd->index);
- 	}
-+	mutex_unlock(&nbd->config_lock);
+diff --git a/drivers/clk/renesas/r9a06g032-clocks.c b/drivers/clk/renesas/r9a06g032-clocks.c
+index 285f6ac25372d..65cd6ed68923e 100644
+--- a/drivers/clk/renesas/r9a06g032-clocks.c
++++ b/drivers/clk/renesas/r9a06g032-clocks.c
+@@ -20,9 +20,12 @@
+ #include <linux/pm_clock.h>
+ #include <linux/pm_domain.h>
+ #include <linux/slab.h>
++#include <linux/soc/renesas/r9a06g032-sysctrl.h>
+ #include <linux/spinlock.h>
+ #include <dt-bindings/clock/r9a06g032-sysctrl.h>
+ 
++#define R9A06G032_SYSCTRL_DMAMUX 0xA0
 +
- 	nbd_config_put(nbd);
- 	if (put_dev)
- 		nbd_put(nbd);
+ struct r9a06g032_gate {
+ 	u16 gate, reset, ready, midle,
+ 		scon, mirack, mistat;
+@@ -315,6 +318,30 @@ struct r9a06g032_priv {
+ 	void __iomem *reg;
+ };
+ 
++static struct r9a06g032_priv *sysctrl_priv;
++
++/* Exported helper to access the DMAMUX register */
++int r9a06g032_sysctrl_set_dmamux(u32 mask, u32 val)
++{
++	unsigned long flags;
++	u32 dmamux;
++
++	if (!sysctrl_priv)
++		return -EPROBE_DEFER;
++
++	spin_lock_irqsave(&sysctrl_priv->lock, flags);
++
++	dmamux = readl(sysctrl_priv->reg + R9A06G032_SYSCTRL_DMAMUX);
++	dmamux &= ~mask;
++	dmamux |= val & mask;
++	writel(dmamux, sysctrl_priv->reg + R9A06G032_SYSCTRL_DMAMUX);
++
++	spin_unlock_irqrestore(&sysctrl_priv->lock, flags);
++
++	return 0;
++}
++EXPORT_SYMBOL_GPL(r9a06g032_sysctrl_set_dmamux);
++
+ /* register/bit pairs are encoded as an uint16_t */
+ static void
+ clk_rdesc_set(struct r9a06g032_priv *clocks,
+@@ -961,7 +988,13 @@ static int __init r9a06g032_clocks_probe(struct platform_device *pdev)
+ 	if (error)
+ 		return error;
+ 
+-	return r9a06g032_add_clk_domain(dev);
++	error = r9a06g032_add_clk_domain(dev);
++	if (error)
++		return error;
++
++	sysctrl_priv = clocks;
++
++	return 0;
+ }
+ 
+ static const struct of_device_id r9a06g032_match[] = {
+diff --git a/include/linux/soc/renesas/r9a06g032-sysctrl.h b/include/linux/soc/renesas/r9a06g032-sysctrl.h
+new file mode 100644
+index 0000000000000..066dfb15cbddd
+--- /dev/null
++++ b/include/linux/soc/renesas/r9a06g032-sysctrl.h
+@@ -0,0 +1,11 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++#ifndef __LINUX_SOC_RENESAS_R9A06G032_SYSCTRL_H__
++#define __LINUX_SOC_RENESAS_R9A06G032_SYSCTRL_H__
++
++#ifdef CONFIG_CLK_R9A06G032
++int r9a06g032_sysctrl_set_dmamux(u32 mask, u32 val);
++#else
++static inline int r9a06g032_sysctrl_set_dmamux(u32 mask, u32 val) { return -ENODEV; }
++#endif
++
++#endif /* __LINUX_SOC_RENESAS_R9A06G032_SYSCTRL_H__ */
 -- 
 2.51.0
 
