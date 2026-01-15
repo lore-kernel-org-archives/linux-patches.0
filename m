@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FCF13C1974;
-	Thu, 15 Jan 2026 17:50:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758983EC57C;
+	Thu, 15 Jan 2026 17:50:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499439; cv=none; b=lHiD6jJSrqoY1m8b6+fUp1v7pM1m+qhP4bLMbQ05d2m7Gx3J4rIwSkXKUkn/3hGV7ltOBrfzzwMocwzUcUQ+AjA8ExeQa5662jSqVY+4C9E2PV8B/f4MzaKvn5an2PSLjrcvbKpbVeVPivoFBMpPbur3q24YXWKV16VgXQukpgA=
+	t=1768499442; cv=none; b=HNPtV6ycrB4L5+/mWb35o3hG0tPW/pp4c2NiWkIeDl5P6EC5AFMV0eEHh44brqKbW4hHjpYLwO4ZxZiX7U/Zj2tiy5WEU7bYMuZYOcs52CE7YDeuIb0UzueOFThjFwUwBQtv/WFlWaXQOWZVgq24EUDACZ9gLxeAE3TNC3TsxUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499439; c=relaxed/simple;
-	bh=5ZhdE8FlHk55a6i5XgaU1tLMXNL8hAG8PoMT3cn5ZHE=;
+	s=arc-20240116; t=1768499442; c=relaxed/simple;
+	bh=IoqcjD55rzyvIxlkDeenj1DBs8RpNBS23/YGqbhf0Q8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YoxMmP4+a4hhYFTyW/Fb//A898DOENtlJruB0+r2LXaZEazE7sBJdAuyk1FcTqdnMnL+jSYODtZdQMOLU+hFO03ma/2fOmiDSQP9VRyUZcdZqBQMvaR9/xLn7+O1TgQmINv1t3oUvyqH5GV+IsMo+vbfaZwl9HqFMiSn4p6Gks4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=klIiHV53; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QvwA+5jwv/JXX8N+nnSFOLAGJvV1PiM47zNlaeA4AzxPd4A3IZ1d9w+CIL7khbIHbN4ScaNT0cjOwnczsdOTWtXJB3PZe1+39E7/rp4QwBusNK7Ni5FkB4oCBW7N2/QTIiM2HizTgrbMCsoH8ypcEOSvHvJC/rdPVEjLJyG1hG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W0pkNOz9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="klIiHV53"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E27EFC116D0;
-	Thu, 15 Jan 2026 17:50:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W0pkNOz9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2393C16AAE;
+	Thu, 15 Jan 2026 17:50:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499439;
-	bh=5ZhdE8FlHk55a6i5XgaU1tLMXNL8hAG8PoMT3cn5ZHE=;
+	s=korg; t=1768499442;
+	bh=IoqcjD55rzyvIxlkDeenj1DBs8RpNBS23/YGqbhf0Q8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=klIiHV53B48Eqt2hx3EQUkAyKpjWhmPyLDWGMfgczokHqe8tiMxb6BYf8UrIS8XJQ
-	 aNNAizjYO4P+u1qDyDZOKtqo6ulR+DRoaVoB4kh+V2oFYDpOVwcHHqK2re08zJMYbR
-	 a4FOy14kUjqfCS8YiOfBHZUfVL0g+Gru0NZ3ECJw=
+	b=W0pkNOz9aq3jiYAfB/p/zphlw7u05RiTVL31p+key1MZ3fnEe1d08KUX6H+l5AeaT
+	 EdKwRKH0Nn+g2k8i7joS8s/7g1kPppY6xNnri7stJVIFTVfvPQAwY2q8PM5WI/dU/8
+	 ItVyoT5eHqQfZ9q1+tY71NJmctvOeDXX4nISBgSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongjian Sun <sunyongjian1@huawei.com>,
-	Baokun Li <libaokun1@huawei.com>,
+	Byungchul Park <byungchul@sk.com>,
 	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 5.10 226/451] ext4: fix incorrect group number assertion in mb_check_buddy
-Date: Thu, 15 Jan 2026 17:47:07 +0100
-Message-ID: <20260115164239.071693574@linuxfoundation.org>
+	stable@kernel.org,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.10 227/451] jbd2: use a weaker annotation in journal handling
+Date: Thu, 15 Jan 2026 17:47:08 +0100
+Message-ID: <20260115164239.107946738@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -53,63 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongjian Sun <sunyongjian1@huawei.com>
+From: Byungchul Park <byungchul@sk.com>
 
-commit 3f7a79d05c692c7cfec70bf104b1b3c3d0ce6247 upstream.
+commit 40a71b53d5a6d4ea17e4d54b99b2ac03a7f5e783 upstream.
 
-When the MB_CHECK_ASSERT macro is enabled, an assertion failure can
-occur in __mb_check_buddy when checking preallocated blocks (pa) in
-a block group:
+jbd2 journal handling code doesn't want jbd2_might_wait_for_commit()
+to be placed between start_this_handle() and stop_this_handle().  So it
+marks the region with rwsem_acquire_read() and rwsem_release().
 
-Assertion failure in mb_free_blocks() : "groupnr == e4b->bd_group"
+However, the annotation is too strong for that purpose.  We don't have
+to use more than try lock annotation for that.
 
-This happens when a pa at the very end of a block group (e.g.,
-pa_pstart=32765, pa_len=3 in a group of 32768 blocks) becomes
-exhausted - its pa_pstart is advanced by pa_len to 32768, which
-lies in the next block group. If this exhausted pa (with pa_len == 0)
-is still in the bb_prealloc_list during the buddy check, the assertion
-incorrectly flags it as belonging to the wrong group. A possible
-sequence is as follows:
+rwsem_acquire_read() implies:
 
-ext4_mb_new_blocks
-  ext4_mb_release_context
-    pa->pa_pstart += EXT4_C2B(sbi, ac->ac_b_ex.fe_len)
-    pa->pa_len -= ac->ac_b_ex.fe_len
+   1. might be a waiter on contention of the lock.
+   2. enter to the critical section of the lock.
 
-	                 __mb_check_buddy
-                           for each pa in group
-                             ext4_get_group_no_and_offset
-                             MB_CHECK_ASSERT(groupnr == e4b->bd_group)
+All we need in here is to act 2, not 1.  So trylock version of
+annotation is sufficient for that purpose.  Now that dept partially
+relies on lockdep annotaions, dept interpets rwsem_acquire_read() as a
+potential wait and might report a deadlock by the wait.
 
-To fix this, we modify the check to skip block group validation for
-exhausted preallocations (where pa_len == 0). Such entries are in a
-transitional state and will be removed from the list soon, so they
-should not trigger an assertion. This change prevents the false
-positive while maintaining the integrity of the checks for active
-allocations.
+Replace it with trylock version of annotation.
 
-Fixes: c9de560ded61f ("ext4: Add multi block allocator for ext4")
-Signed-off-by: Yongjian Sun <sunyongjian1@huawei.com>
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
+Signed-off-by: Byungchul Park <byungchul@sk.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Message-ID: <20251106060614.631382-2-sunyongjian@huaweicloud.com>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
+Message-ID: <20251024073940.1063-1-byungchul@sk.com>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/mballoc.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/jbd2/transaction.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -706,6 +706,8 @@ static void __mb_check_buddy(struct ext4
- 		ext4_group_t groupnr;
- 		struct ext4_prealloc_space *pa;
- 		pa = list_entry(cur, struct ext4_prealloc_space, pa_group_list);
-+		if (!pa->pa_len)
-+			continue;
- 		ext4_get_group_no_and_offset(sb, pa->pa_pstart, &groupnr, &k);
- 		MB_CHECK_ASSERT(groupnr == e4b->bd_group);
- 		for (i = 0; i < pa->pa_len; i++)
+--- a/fs/jbd2/transaction.c
++++ b/fs/jbd2/transaction.c
+@@ -448,7 +448,7 @@ repeat:
+ 	read_unlock(&journal->j_state_lock);
+ 	current->journal_info = handle;
+ 
+-	rwsem_acquire_read(&journal->j_trans_commit_map, 0, 0, _THIS_IP_);
++	rwsem_acquire_read(&journal->j_trans_commit_map, 0, 1, _THIS_IP_);
+ 	jbd2_journal_free_transaction(new_transaction);
+ 	/*
+ 	 * Ensure that no allocations done while the transaction is open are
 
 
