@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C883D5D97;
-	Thu, 15 Jan 2026 17:54:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EDD73D5DAF;
+	Thu, 15 Jan 2026 17:54:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499642; cv=none; b=Tu6fq/j0HOfjkBXp1+D6i/DANavQRs82nUJH9SL4LCo+QczsUCU/7zLRHqGUJhopbvdaGY0UKOnlbhmKPsHDwoZG2Sb/WlGj5d9XyvG4GMRM+Hs/zvgqgXCUMUylCMzKERkbHzz4yjWDcQZVaGEoSxE7ryqsNiClTEJwpouDeXs=
+	t=1768499645; cv=none; b=QSCSFeCzdy5mFkbQYQVFqLdwDn+AFoymCrqhk4LxSfIf2sBqM04rgjiXah1dr3uzgeM57I34+mpSm/zyK2mOf3EQ7s2DA13a98ybu5NL7NcM4560BqJT5G2GfVKQmIbuGF2RZqH83qMYejYGUUa+fKNE2hS/EZjj3X50ol8PXZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499642; c=relaxed/simple;
-	bh=/L7vZP43AEtsAh9Po48Hfd6RWqT4Fr3rizQbFfnIXBE=;
+	s=arc-20240116; t=1768499645; c=relaxed/simple;
+	bh=YsSXZ4QbcjepYA5WiPEM+IiQPljt49+N0cUnozvLRJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EDkwfp79PH4kt2oVj+D4eLC9jPqCEKpTV1/B7acMUHnGqJMntzzOK9aIomU7MQlH96k9j33ULCIJo6X5FvCSy7ngdqkuohiH4PUGwq2YfHX7vPDlLJ0275vg70Fqz/E+rU2oiuVpGNc0F8AkZxo/b/Is8urmuB29/giRPRZoMXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T49EJuLU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ocVSLsjmLThidZesz24KvSy0VbzWDR9jOFQYYY8mshyzm01xhJax6AF7ftWtswwuspwdv4PTKFVe4pVFvInIz1wJiOHqd+9oFKxJ5xlIaeA8+uumPi3Hmq1tnmAfboKWSzyF1CyMLDW2OrqzDfoGsxdHTtsIrL99S653lzKYMKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ctxaJZLT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T49EJuLU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 757F2C16AAE;
-	Thu, 15 Jan 2026 17:54:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ctxaJZLT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5821AC116D0;
+	Thu, 15 Jan 2026 17:54:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499641;
-	bh=/L7vZP43AEtsAh9Po48Hfd6RWqT4Fr3rizQbFfnIXBE=;
+	s=korg; t=1768499644;
+	bh=YsSXZ4QbcjepYA5WiPEM+IiQPljt49+N0cUnozvLRJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T49EJuLUTNeCtTKAhv/DC+n5tQ0HeHOADWnuG6fFag8UZ8UtJWebm3TKS1Cerkdmq
-	 vtfCnh5efBfjhJtpvO0Wc0MlQuKDy9BOcxtraS6jQa1TQg0ol8O6duu+acnMef/dh7
-	 sF4dRFsKLg+zNJlTFr5f2lp57Z/C0+/qT0U+O0zQ=
+	b=ctxaJZLTV6Pd4/uY0T5W0vXOb4oRPfriSEzdoecQm7nDPnfIFnbtXMEYEDjVhwEvU
+	 bECEUWtp0RcaGmcNb4fUpSBFPHhMSjrV+LF3DksLO99PQ8+hZa+DCfYdk7iQWyO5ae
+	 Kb9WZZYjIh6KAx9VegONl57qTpKbEW6yvytMcyXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Yipeng Zou <zouyipeng@huawei.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 297/451] selftests/ftrace: traceonoff_triggers: strip off names
-Date: Thu, 15 Jan 2026 17:48:18 +0100
-Message-ID: <20260115164241.633893924@linuxfoundation.org>
+	olivier moysan <olivier.moysan@st.com>,
+	Wen Yang <yellowriver2010@hotmail.com>,
+	Johan Hovold <johan@kernel.org>,
+	olivier moysan <olivier.moysan@foss.st.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.10 298/451] ASoC: stm32: sai: fix device leak on probe
+Date: Thu, 15 Jan 2026 17:48:19 +0100
+Message-ID: <20260115164241.669520761@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -53,88 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yipeng Zou <zouyipeng@huawei.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit b889b4fb4cbea3ca7eb9814075d6a51936394bd9 ]
+commit e26ff429eaf10c4ef1bc3dabd9bf27eb54b7e1f4 upstream.
 
-The func_traceonoff_triggers.tc sometimes goes to fail
-on my board, Kunpeng-920.
+Make sure to drop the reference taken when looking up the sync provider
+device and its driver data during DAI probe on probe failures and on
+unbind.
 
-[root@localhost]# ./ftracetest ./test.d/ftrace/func_traceonoff_triggers.tc -l fail.log
-=== Ftrace unit tests ===
-[1] ftrace - test for function traceon/off triggers     [FAIL]
-[2] (instance)  ftrace - test for function traceon/off triggers [UNSUPPORTED]
+Note that holding a reference to a device does not prevent its driver
+data from going away so there is no point in keeping the reference.
 
-I look up the log, and it shows that the md5sum is different between csum1 and csum2.
-
-++ cnt=611
-++ sleep .1
-+++ cnt_trace
-+++ grep -v '^#' trace
-+++ wc -l
-++ cnt2=611
-++ '[' 611 -ne 611 ']'
-+++ cat tracing_on
-++ on=0
-++ '[' 0 '!=' 0 ']'
-+++ md5sum trace
-++ csum1='76896aa74362fff66a6a5f3cf8a8a500  trace'
-++ sleep .1
-+++ md5sum trace
-++ csum2='ee8625a21c058818fc26e45c1ed3f6de  trace'
-++ '[' '76896aa74362fff66a6a5f3cf8a8a500  trace' '!=' 'ee8625a21c058818fc26e45c1ed3f6de  trace' ']'
-++ fail 'Tracing file is still changing'
-++ echo Tracing file is still changing
-Tracing file is still changing
-++ exit_fail
-++ exit 1
-
-So I directly dump the trace file before md5sum, the diff shows that:
-
-[root@localhost]# diff trace_1.log trace_2.log -y --suppress-common-lines
-dockerd-12285   [036] d.... 18385.510290: sched_stat | <...>-12285   [036] d.... 18385.510290: sched_stat
-dockerd-12285   [036] d.... 18385.510291: sched_swit | <...>-12285   [036] d.... 18385.510291: sched_swit
-<...>-740       [044] d.... 18385.602859: sched_stat | kworker/44:1-740 [044] d.... 18385.602859: sched_stat
-<...>-740       [044] d.... 18385.602860: sched_swit | kworker/44:1-740 [044] d.... 18385.602860: sched_swit
-
-And we can see that <...> filed be filled with names.
-
-We can strip off the names there to fix that.
-
-After strip off the names:
-
-kworker/u257:0-12 [019] d..2.  2528.758910: sched_stat | -12 [019] d..2.  2528.758910: sched_stat_runtime: comm=k
-kworker/u257:0-12 [019] d..2.  2528.758912: sched_swit | -12 [019] d..2.  2528.758912: sched_switch: prev_comm=kw
-<idle>-0          [000] d.s5.  2528.762318: sched_waki | -0  [000] d.s5.  2528.762318: sched_waking: comm=sshd pi
-<idle>-0          [037] dNh2.  2528.762326: sched_wake | -0  [037] dNh2.  2528.762326: sched_wakeup: comm=sshd pi
-<idle>-0          [037] d..2.  2528.762334: sched_swit | -0  [037] d..2.  2528.762334: sched_switch: prev_comm=sw
-
-Link: https://lore.kernel.org/r/20230818013226.2182299-1-zouyipeng@huawei.com
-Fixes: d87b29179aa0 ("selftests: ftrace: Use md5sum to take less time of checking logs")
-Suggested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Yipeng Zou <zouyipeng@huawei.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 7dd0d835582f ("ASoC: stm32: sai: simplify sync modes management")
+Fixes: 1c3816a19487 ("ASoC: stm32: sai: add missing put_device()")
+Cc: stable@vger.kernel.org	# 4.16: 1c3816a19487
+Cc: olivier moysan <olivier.moysan@st.com>
+Cc: Wen Yang <yellowriver2010@hotmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: olivier moysan <olivier.moysan@foss.st.com>
+Link: https://patch.msgid.link/20251124104908.15754-2-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/ftrace/test.d/ftrace/func_traceonoff_triggers.tc |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ sound/soc/stm/stm32_sai.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/testing/selftests/ftrace/test.d/ftrace/func_traceonoff_triggers.tc
-+++ b/tools/testing/selftests/ftrace/test.d/ftrace/func_traceonoff_triggers.tc
-@@ -90,9 +90,10 @@ if [ $on != "0" ]; then
-     fail "Tracing is not off"
- fi
+--- a/sound/soc/stm/stm32_sai.c
++++ b/sound/soc/stm/stm32_sai.c
+@@ -127,6 +127,7 @@ static int stm32_sai_set_sync(struct stm
+ 	}
  
--csum1=`md5sum trace`
-+# Cannot rely on names being around as they are only cached, strip them
-+csum1=`cat trace | sed -e 's/^ *[^ ]*\(-[0-9][0-9]*\)/\1/' | md5sum`
- sleep $SLEEP_TIME
--csum2=`md5sum trace`
-+csum2=`cat trace | sed -e 's/^ *[^ ]*\(-[0-9][0-9]*\)/\1/' | md5sum`
+ 	sai_provider = platform_get_drvdata(pdev);
++	put_device(&pdev->dev);
+ 	if (!sai_provider) {
+ 		dev_err(&sai_client->pdev->dev,
+ 			"SAI sync provider data not found\n");
+@@ -143,7 +144,6 @@ static int stm32_sai_set_sync(struct stm
+ 	ret = stm32_sai_sync_conf_provider(sai_provider, synco);
  
- if [ "$csum1" != "$csum2" ]; then
-     fail "Tracing file is still changing"
+ error:
+-	put_device(&pdev->dev);
+ 	of_node_put(np_provider);
+ 	return ret;
+ }
 
 
