@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 858B23C008E;
-	Thu, 15 Jan 2026 17:48:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3742D3D1CB9;
+	Thu, 15 Jan 2026 17:48:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499300; cv=none; b=h9k4VRccFXFe/wQCDZcshQwVGyadSR6tEWTeOZ2h2yG4C5EjF6HJIKJLYkwzjM4hEwU3/WA1ZtONCwFnpuyWoi/XI7voTxjhkBTBsmeHZqONe5DRKTo/8pJIzWD9rbrXedv9ct+diYgwm1ThDEPgQkbBSPH3nJ/n7eDbULj1tDk=
+	t=1768499303; cv=none; b=FSfq1c3lB1pf8aqHhU5VcnI4SDw96boQb3n2ZWmYKPA+6E3Z5v0OsP75pxaQ8+ibTi0OoH0z0gk2c2Oa3Qid5QF1b+/2fAYFLzoxj32IWCJdwKKxL/Wl19zA3j4TiunT+ptUOBBsy7PlL0uVAwzSoi/6/6s0egA0znCVMa9caqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499300; c=relaxed/simple;
-	bh=HB+t+2DFusKdSYSLwVJFrT/ELV2dSDfUpkDRBBFk2vk=;
+	s=arc-20240116; t=1768499303; c=relaxed/simple;
+	bh=A6cYIgB0S724l5YtpaC0KRbImLEFNTP1BZ2jjOXQnB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kqDIaa/AOp6uITSHFSw3RVWKx6mlVX2rAXDedea3Tg/kkwgcamJoi0ykpl5F12ujAbEkqXzNS6jztXF5iY0Dh8EZ/rGOKA7U7hAUTPojXfJb7Ta5VFHFZZGyJwI6eI+2lY87Nk0QbV4H5EyidDxRMyR7ygNpjI2gKmTt2sYEtYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MJgbQB+G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qlroSeANHgk/BOZxaa9AH8fm+4/z3zax9jl6eI+rylY53mdnFxt5jYl3O38uWA4pyaVxBJWtjX7fe8pgHGKds4teqsWlY86YxiwA8bIH2Ir5CgCFQbpBGGmE4JksuHdvIInaXKdFu6HQHvq7GcsC8WbTF8lfehJAvT+Xe/WcwVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=To7eY4a2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MJgbQB+G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A637EC19422;
-	Thu, 15 Jan 2026 17:48:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="To7eY4a2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7192FC2BC86;
+	Thu, 15 Jan 2026 17:48:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499300;
-	bh=HB+t+2DFusKdSYSLwVJFrT/ELV2dSDfUpkDRBBFk2vk=;
+	s=korg; t=1768499302;
+	bh=A6cYIgB0S724l5YtpaC0KRbImLEFNTP1BZ2jjOXQnB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MJgbQB+GK7LsvGfllKkNMH7wh4MUOCM73IKnKAzKuBJFWD8VuytwRDyEct2T2Q9jw
-	 gYADYa7FrMgeApd2HptU92P1o9zxXZ5Nz/bvfH8et35IEZGM5xx9guRj1bw4rKsCaJ
-	 rfavlYhqbU6stHVDPVzI4wZgb89aBct/fsyr7/SI=
+	b=To7eY4a22VZSEvPZ9YMtpga0Pn7GN7ZOtYQqnDDMp9Od2N+LhLIFMeE/6XgrayUiU
+	 76/zBJ9G2x2zMleC2E4YNVGivI/cmX1Ua3NQXzY5TuNvPWxsoODtfc+YeJfohtoWEA
+	 P0gu4mQeXffKnFw2x06jDitESNY+eSq6/l4b8gnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Liu <song@kernel.org>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Petr Mladek <pmladek@suse.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 161/451] livepatch: Match old_sympos 0 and 1 in klp_find_func()
-Date: Thu, 15 Jan 2026 17:46:02 +0100
-Message-ID: <20260115164236.735196500@linuxfoundation.org>
+Subject: [PATCH 5.10 179/451] nfc: pn533: Fix error code in pn533_acr122_poweron_rdr()
+Date: Thu, 15 Jan 2026 17:46:20 +0100
+Message-ID: <20260115164237.380932519@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -52,86 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Song Liu <song@kernel.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 139560e8b973402140cafeb68c656c1374bd4c20 ]
+[ Upstream commit 885bebac9909994050bbbeed0829c727e42bd1b7 ]
 
-When there is only one function of the same name, old_sympos of 0 and 1
-are logically identical. Match them in klp_find_func().
+Set the error code if "transferred != sizeof(cmd)" instead of
+returning success.
 
-This is to avoid a corner case with different toolchain behavior.
-
-In this specific issue, two versions of kpatch-build were used to
-build livepatch for the same kernel. One assigns old_sympos == 0 for
-unique local functions, the other assigns old_sympos == 1 for unique
-local functions. Both versions work fine by themselves. (PS: This
-behavior change was introduced in a downstream version of kpatch-build.
-This change does not exist in upstream kpatch-build.)
-
-However, during livepatch upgrade (with the replace flag set) from a
-patch built with one version of kpatch-build to the same fix built with
-the other version of kpatch-build, livepatching fails with errors like:
-
-[   14.218706] sysfs: cannot create duplicate filename 'xxx/somefunc,1'
-...
-[   14.219466] Call Trace:
-[   14.219468]  <TASK>
-[   14.219469]  dump_stack_lvl+0x47/0x60
-[   14.219474]  sysfs_warn_dup.cold+0x17/0x27
-[   14.219476]  sysfs_create_dir_ns+0x95/0xb0
-[   14.219479]  kobject_add_internal+0x9e/0x260
-[   14.219483]  kobject_add+0x68/0x80
-[   14.219485]  ? kstrdup+0x3c/0xa0
-[   14.219486]  klp_enable_patch+0x320/0x830
-[   14.219488]  patch_init+0x443/0x1000 [ccc_0_6]
-[   14.219491]  ? 0xffffffffa05eb000
-[   14.219492]  do_one_initcall+0x2e/0x190
-[   14.219494]  do_init_module+0x67/0x270
-[   14.219496]  init_module_from_file+0x75/0xa0
-[   14.219499]  idempotent_init_module+0x15a/0x240
-[   14.219501]  __x64_sys_finit_module+0x61/0xc0
-[   14.219503]  do_syscall_64+0x5b/0x160
-[   14.219505]  entry_SYSCALL_64_after_hwframe+0x4b/0x53
-[   14.219507] RIP: 0033:0x7f545a4bd96d
-...
-[   14.219516] kobject: kobject_add_internal failed for somefunc,1 with
-    -EEXIST, don't try to register things with the same name ...
-
-This happens because klp_find_func() thinks somefunc with old_sympos==0
-is not the same as somefunc with old_sympos==1, and klp_add_object_nops
-adds another xxx/func,1 to the list of functions to patch.
-
-Signed-off-by: Song Liu <song@kernel.org>
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
-[pmladek@suse.com: Fixed some typos.]
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Tested-by: Petr Mladek <pmladek@suse.com>
-Signed-off-by: Petr Mladek <pmladek@suse.com>
+Fixes: dbafc28955fa ("NFC: pn533: don't send USB data off of the stack")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/aTfIJ9tZPmeUF4W1@stanley.mountain
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/livepatch/core.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/nfc/pn533/usb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/livepatch/core.c b/kernel/livepatch/core.c
-index 147ed154ebc77..c49042f5e71ec 100644
---- a/kernel/livepatch/core.c
-+++ b/kernel/livepatch/core.c
-@@ -89,8 +89,14 @@ static struct klp_func *klp_find_func(struct klp_object *obj,
- 	struct klp_func *func;
- 
- 	klp_for_each_func(obj, func) {
-+		/*
-+		 * Besides identical old_sympos, also consider old_sympos
-+		 * of 0 and 1 are identical.
-+		 */
- 		if ((strcmp(old_func->old_name, func->old_name) == 0) &&
--		    (old_func->old_sympos == func->old_sympos)) {
-+		    ((old_func->old_sympos == func->old_sympos) ||
-+		     (old_func->old_sympos == 0 && func->old_sympos == 1) ||
-+		     (old_func->old_sympos == 1 && func->old_sympos == 0))) {
- 			return func;
- 		}
+diff --git a/drivers/nfc/pn533/usb.c b/drivers/nfc/pn533/usb.c
+index 68eb1253f888f..77ada0a5c7396 100644
+--- a/drivers/nfc/pn533/usb.c
++++ b/drivers/nfc/pn533/usb.c
+@@ -411,7 +411,7 @@ static int pn533_acr122_poweron_rdr(struct pn533_usb_phy *phy)
+ 	if (rc || (transferred != sizeof(cmd))) {
+ 		nfc_err(&phy->udev->dev,
+ 			"Reader power on cmd error %d\n", rc);
+-		return rc;
++		return rc ?: -EINVAL;
  	}
+ 
+ 	rc =  usb_submit_urb(phy->in_urb, GFP_KERNEL);
 -- 
 2.51.0
 
