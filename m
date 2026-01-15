@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 616CE2D541B;
-	Thu, 15 Jan 2026 17:43:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3AFC2D73B4;
+	Thu, 15 Jan 2026 17:43:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499004; cv=none; b=b+IHS8eymvBc0X2+Q9v/dH/T60nGAHnEw9L4qRgq5POAhbVpNnE2t0Z+V8KVxUZLmJHbL4KRk75kaEyLAYU9CEerNMB6BJad5aEBAiagX+7+UbVWmMFspksZe7zofkmwCcEMaAhpxpkjtttyNDsJ84VjI4uM38Ut6DxkdWnKPyM=
+	t=1768499007; cv=none; b=uPyyloP2F3TK3ezUOmhXBEeTKMvFncvaE9J0FKKUJbF96jcroLPqNxNVLaPuwnfMrVeRhrvGonKBOOpanGbTEFkyKqtyAJwgD4jMFlFhsjn9VzSnTria+93WL5umeLiiXAwJL2kJRqtuVok994HoXiuheEoP6ZVzr6bE8YhCuaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499004; c=relaxed/simple;
-	bh=iL8HG70ghfCwCJxpOoNOwpdXjOx+4klQhX6ogx+6EmQ=;
+	s=arc-20240116; t=1768499007; c=relaxed/simple;
+	bh=5eiVqiWLQ2102rJm71sGErBvWPwg3Ogmn+n4bML51p8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W7CCnr31xiFkpAQJikYMMWWgpwLzkdmLMY9vdx47Axs0EJ1NtaeaAdc2WcisAB0ygn/UpLKqIybfpG+H1uFi9CNMHv3Z13E1/4fhfiP65mdrKkF6J2+Wevc4xURC7IZxkbzYUsoGDgyi3LiK5PlH/1f71Z3dVbhtkDxi5Snwdkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dmk35ycK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XgBQ7O5r/U0vvnqFdQyBqrVPdreEeezTcLsXe36ylcMmRCRYe+8rUhWCSa34ZI0EyhRAVvctXPhpxdlong1RJ+O3QmoLpa71IcuMA0+9pDiCB0eW/U5TYcloKXVo37dHRKMOY4xvREFBV2ljD/XBt+tXdge47eSEmKtIg0hxLXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E2bziiXG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dmk35ycK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D39C6C116D0;
-	Thu, 15 Jan 2026 17:43:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E2bziiXG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B453FC116D0;
+	Thu, 15 Jan 2026 17:43:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499004;
-	bh=iL8HG70ghfCwCJxpOoNOwpdXjOx+4klQhX6ogx+6EmQ=;
+	s=korg; t=1768499007;
+	bh=5eiVqiWLQ2102rJm71sGErBvWPwg3Ogmn+n4bML51p8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dmk35ycKuCJhF6NIPdQeNJ3GCpz8243vdvfOeNaA9QTRiVzEscJS5vp0JaGE/iD2O
-	 lvkSHA8l5AI4EC8fFvjKzwhHT43z7IGPzYszhB6sjw6im+ino+RnlO4ijBzgYUJyRm
-	 Yb+IOIu/nvlCrIXc3lYSxAJ4/L2rscD4cnShJ2Ck=
+	b=E2bziiXGfKgByivuLVRpjUmR/TFJwhfrJGNwlbhELMIhP3dUp+SdSUXoCWKNi5ojQ
+	 93hPwKVLJq3mrUf0ylCgGVBDw/A0x1zIACmFlRpoYeBki0doX0ZU9vV+dRSMnVrItl
+	 jRM0wANh2tZL7VSVFDSTk0cLQQNJLLADP8HpYmNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Haotian Zhang <vulab@iscas.ac.cn>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 074/451] ACPI: property: Fix fwnode refcount leak in acpi_fwnode_graph_parse_endpoint()
-Date: Thu, 15 Jan 2026 17:44:35 +0100
-Message-ID: <20260115164233.577414774@linuxfoundation.org>
+Subject: [PATCH 5.10 075/451] scsi: sim710: Fix resource leak by adding missing ioport_unmap() calls
+Date: Thu, 15 Jan 2026 17:44:36 +0100
+Message-ID: <20260115164233.616714591@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -54,39 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 593ee49222a0d751062fd9a5e4a963ade4ec028a ]
+[ Upstream commit acd194d9b5bac419e04968ffa44351afabb50bac ]
 
-acpi_fwnode_graph_parse_endpoint() calls fwnode_get_parent() to obtain the
-parent fwnode but returns without calling fwnode_handle_put() on it. This
-potentially leads to a fwnode refcount leak and prevents the parent node
-from being released properly.
+The driver calls ioport_map() to map I/O ports in sim710_probe_common()
+but never calls ioport_unmap() to release the mapping. This causes
+resource leaks in both the error path when request_irq() fails and in
+the normal device removal path via sim710_device_remove().
 
-Call fwnode_handle_put() on the parent fwnode before returning to prevent
-the leak from occurring.
+Add ioport_unmap() calls in the out_release error path and in
+sim710_device_remove().
 
-Fixes: 3b27d00e7b6d ("device property: Move fwnode graph ops to firmware specific locations")
+Fixes: 56fece20086e ("[PATCH] finally fix 53c700 to use the generic iomem infrastructure")
 Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-[ rjw: Changelog edits ]
-Link: https://patch.msgid.link/20251111075000.1828-1-vulab@iscas.ac.cn
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/20251029032555.1476-1-vulab@iscas.ac.cn
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/property.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/sim710.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/acpi/property.c b/drivers/acpi/property.c
-index 821150dcb9762..7c3d98fae457d 100644
---- a/drivers/acpi/property.c
-+++ b/drivers/acpi/property.c
-@@ -1423,6 +1423,7 @@ static int acpi_fwnode_graph_parse_endpoint(const struct fwnode_handle *fwnode,
- 	if (fwnode_property_read_u32(fwnode, "reg", &endpoint->id))
- 		fwnode_property_read_u32(fwnode, "endpoint", &endpoint->id);
+diff --git a/drivers/scsi/sim710.c b/drivers/scsi/sim710.c
+index 22302612e032b..3c2a07bf92094 100644
+--- a/drivers/scsi/sim710.c
++++ b/drivers/scsi/sim710.c
+@@ -133,6 +133,7 @@ static int sim710_probe_common(struct device *dev, unsigned long base_addr,
+  out_put_host:
+ 	scsi_host_put(host);
+  out_release:
++	ioport_unmap(hostdata->base);
+ 	release_region(base_addr, 64);
+  out_free:
+ 	kfree(hostdata);
+@@ -148,6 +149,7 @@ static int sim710_device_remove(struct device *dev)
  
-+	fwnode_handle_put(port_fwnode);
- 	return 0;
- }
- 
+ 	scsi_remove_host(host);
+ 	NCR_700_release(host);
++	ioport_unmap(hostdata->base);
+ 	kfree(hostdata);
+ 	free_irq(host->irq, host);
+ 	release_region(host->base, 64);
 -- 
 2.51.0
 
