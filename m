@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5B63BFE5D;
-	Thu, 15 Jan 2026 17:26:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8682D0C79;
+	Thu, 15 Jan 2026 17:26:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497973; cv=none; b=M5bj6/K45AkVcELcGZhSUfhZ8PXk6BdZ3aLUe/L96E09/UHbjuY1IZ5r6Iu5UmiLj/hnjNDuxjGuAPNa5os6YpWjw4lCAJIV37M3762r0YlRWKBU6UTru+azaXm5f5VSz2DbZqC2EAdMpeFK9BFy1nuzwzaPdvNKWGkMahvdjRw=
+	t=1768497976; cv=none; b=ZHn1inax/X71CVYpNiNRA65ewIXUu7lBj9e8RocVVTGbF+7htXnYPrepwQfjragEtjnlQBZ5WQLGegvaPK6PGqiawOW2GyPIH3CiyeeQkl9MN9dijDDyeqfHDIhHIAJ/XUj9oWBZhL6wbzNJn8wK+2M5V7r1LHOjLphkYoTGfWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497973; c=relaxed/simple;
-	bh=vaTJY1a/3RrUHYs6DjsRRWnzSbqOdHdMrysk5u+VPnE=;
+	s=arc-20240116; t=1768497976; c=relaxed/simple;
+	bh=gmVC6qS1/B/FpokK/aWBUacY2VkohnYi2us55sBN9yU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IRYj/Vvcgi8H/dF5Jx/kxElWlt6ncYelZYAsDV4woKZd9QVRbd0aA9KGzhHD2efCWP4+LfrXp+pY5dPIUmF/nXyiraUbH+VJMcXdCq7lzikbfQekQA8ddZHD8F3NE4bC1d+9w6FynzIKtScjcApfcxZ10FkmavQGFsxa6n1+wAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xkdMWAdM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ky9dGFSyAHZH/17wPNBVszysvU33lEtNPzoRbuV2Ihf+InjYoyQ+M65+bZ514nXxpg3XDD489+1swVTYvlFQ9KxpRvi+zkmEqNH9JnCdzulrxQV96QO08xRcaT6oLH6zRjgUGWtYp/CmfIQS00DI9kbfDhK8pEn93jIuXcTS5c8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ghHblmys; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xkdMWAdM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3746C16AAE;
-	Thu, 15 Jan 2026 17:26:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ghHblmys"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ABB3C116D0;
+	Thu, 15 Jan 2026 17:26:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497973;
-	bh=vaTJY1a/3RrUHYs6DjsRRWnzSbqOdHdMrysk5u+VPnE=;
+	s=korg; t=1768497975;
+	bh=gmVC6qS1/B/FpokK/aWBUacY2VkohnYi2us55sBN9yU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xkdMWAdMVniAo60ibzpuoJ3S8wpPXQ8riBBNVa8SfzWYVJ7SoSyeLlVetk+K6cRiM
-	 FxCLCP8mgKYhxQR5yXLaNj9+L3T3AKbiHh8MPNhvLwhmmxsYlTA/bEJJkgjz0loJga
-	 +VfOFZ0TziQptyy2D2NMpwY+TbUq9GH+XWPUvALg=
+	b=ghHblmys1BlwWgZW4lW7T4IrNjvnWYfNLB3QkFQjEVM41iOU/qio2i1ZqDXRoXlAn
+	 ZSNarPb9hBZAGpzMWlWlodn1GG1j6iX935yT6CtnttXiulrWkTB5auVTxpOBgGioIz
+	 bwvwDtJgsdC4qV0WlkiykJrZ2iiWTEvUvueCtrnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+205ef33a3b636b4181fb@syzkaller.appspotmail.com,
-	Lizhi Xu <lizhi.xu@windriver.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Jian Shen <shenjian15@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 268/554] usbip: Fix locking bug in RT-enabled kernels
-Date: Thu, 15 Jan 2026 17:45:34 +0100
-Message-ID: <20260115164255.932016493@linuxfoundation.org>
+Subject: [PATCH 5.15 242/554] net: hns3: using the num_tqps in the vf driver to apply for resources
+Date: Thu, 15 Jan 2026 17:45:08 +0100
+Message-ID: <20260115164255.003119399@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -52,62 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Xu <lizhi.xu@windriver.com>
+From: Jian Shen <shenjian15@huawei.com>
 
-[ Upstream commit 09bf21bf5249880f62fe759b53b14b4b52900c6c ]
+[ Upstream commit c2a16269742e176fccdd0ef9c016a233491a49ad ]
 
-Interrupts are disabled before entering usb_hcd_giveback_urb().
-A spinlock_t becomes a sleeping lock on PREEMPT_RT, so it cannot be
-acquired with disabled interrupts.
+Currently, hdev->htqp is allocated using hdev->num_tqps, and kinfo->tqp
+is allocated using kinfo->num_tqps. However, kinfo->num_tqps is set to
+min(new_tqps, hdev->num_tqps);  Therefore, kinfo->num_tqps may be smaller
+than hdev->num_tqps, which causes some hdev->htqp[i] to remain
+uninitialized in hclgevf_knic_setup().
 
-Save the interrupt status and restore it after usb_hcd_giveback_urb().
+Thus, this patch allocates hdev->htqp and kinfo->tqp using hdev->num_tqps,
+ensuring that the lengths of hdev->htqp and kinfo->tqp are consistent
+and that all elements are properly initialized.
 
-syz reported:
-BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
-Call Trace:
- dump_stack_lvl+0x189/0x250 lib/dump_stack.c:120
- rt_spin_lock+0xc7/0x2c0 kernel/locking/spinlock_rt.c:57
- spin_lock include/linux/spinlock_rt.h:44 [inline]
- mon_bus_complete drivers/usb/mon/mon_main.c:134 [inline]
- mon_complete+0x5c/0x200 drivers/usb/mon/mon_main.c:147
- usbmon_urb_complete include/linux/usb/hcd.h:738 [inline]
- __usb_hcd_giveback_urb+0x254/0x5e0 drivers/usb/core/hcd.c:1647
- vhci_urb_enqueue+0xb4f/0xe70 drivers/usb/usbip/vhci_hcd.c:818
-
-Reported-by: syzbot+205ef33a3b636b4181fb@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=205ef33a3b636b4181fb
-Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
-Acked-by: Shuah Khan <skhan@linuxfoundation.org>
-Link: https://lore.kernel.org/r/20250916014143.1439759-1-lizhi.xu@windriver.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e2cb1dec9779 ("net: hns3: Add HNS3 VF HCL(Hardware Compatibility Layer) Support")
+Signed-off-by: Jian Shen <shenjian15@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20251211023737.2327018-2-shaojijie@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/usbip/vhci_hcd.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/usbip/vhci_hcd.c b/drivers/usb/usbip/vhci_hcd.c
-index e3c8483d7ba4..cfe51672ca41 100644
---- a/drivers/usb/usbip/vhci_hcd.c
-+++ b/drivers/usb/usbip/vhci_hcd.c
-@@ -830,15 +830,15 @@ static int vhci_urb_enqueue(struct usb_hcd *hcd, struct urb *urb, gfp_t mem_flag
- no_need_xmit:
- 	usb_hcd_unlink_urb_from_ep(hcd, urb);
- no_need_unlink:
--	spin_unlock_irqrestore(&vhci->lock, flags);
- 	if (!ret) {
- 		/* usb_hcd_giveback_urb() should be called with
- 		 * irqs disabled
- 		 */
--		local_irq_disable();
-+		spin_unlock(&vhci->lock);
- 		usb_hcd_giveback_urb(hcd, urb, urb->status);
--		local_irq_enable();
-+		spin_lock(&vhci->lock);
- 	}
-+	spin_unlock_irqrestore(&vhci->lock, flags);
- 	return ret;
- }
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
+index 94e615177ff14..0f3c91afba02b 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
+@@ -458,12 +458,12 @@ static int hclgevf_knic_setup(struct hclgevf_dev *hdev)
+ 	new_tqps = kinfo->rss_size * num_tc;
+ 	kinfo->num_tqps = min(new_tqps, hdev->num_tqps);
  
+-	kinfo->tqp = devm_kcalloc(&hdev->pdev->dev, kinfo->num_tqps,
++	kinfo->tqp = devm_kcalloc(&hdev->pdev->dev, hdev->num_tqps,
+ 				  sizeof(struct hnae3_queue *), GFP_KERNEL);
+ 	if (!kinfo->tqp)
+ 		return -ENOMEM;
+ 
+-	for (i = 0; i < kinfo->num_tqps; i++) {
++	for (i = 0; i < hdev->num_tqps; i++) {
+ 		hdev->htqp[i].q.handle = &hdev->nic;
+ 		hdev->htqp[i].q.tqp_index = i;
+ 		kinfo->tqp[i] = &hdev->htqp[i].q;
 -- 
 2.51.0
 
