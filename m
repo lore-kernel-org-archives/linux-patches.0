@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A64F621CC5A;
-	Thu, 15 Jan 2026 17:22:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67262D6E72;
+	Thu, 15 Jan 2026 17:22:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497731; cv=none; b=AxenI6ukVW9ncbm0N5Pkz+4y9xFnSvJcSW3MR6rIt34zcGDzb9aTYDbDTQ542x6Zml6TTIZ5G8JVCe1DxU9Np5ZI1p7avoLNaeOsLG4Qh5IRvy6OtlJQlTvP4nb4mtv7z5rQ9t4XW8EqbzJEL+wMdY5PCklGNoqEfh81MhIQUYw=
+	t=1768497733; cv=none; b=NvxM/auyCQBFeHdpTbUKO9h1CEh1UkQBmQSugOMLuk4+2acjxRu3GzU3crWmMijEnrtgdogSUCf7ZROFrmo1H4h8UE6Cc/nLetYl64CKlxRUZN4X1FjxOPjkHXVJsvNDd+xCnSN7yT2MQKulVwAuXLKmPl7GSe6vkCGa5IKwbV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497731; c=relaxed/simple;
-	bh=jvTwUufVTw9dQuNhs4Osul5PIGp1A8femj9Y5plT4Wc=;
+	s=arc-20240116; t=1768497733; c=relaxed/simple;
+	bh=jPmdEjRJ7srLTRJpv60ZGwb26xG8n/Bu/qAfpTNr1jA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H4+PXXi9SiYECE0yWr+0gKdAFyjtjSrrBTnNlv95VH+eyFO7w5Inb7eH0fi1Hu25uf7z+7coqTMsdE9YcXSt9tDV+lXvzod0WSqGy1BGGaL6X7ylTtv/4YITGCZ5l/tqZ52WfM0dPpnCBhWBiljUqSVcMKRTknJq0uieG2eRZW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H/UQAhYQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X+m9SIpdCi7NMrHRceNaWTjILjDeyVbuPBT6ELx2h2XAPy68i3gtsBTFIZ3c6UY+N6HftUnPKNjTLkC3VEX3u6FUy7WP/xMbSMdCVRlVMLWc1FULuyAuMvyYWqtBVIkmbGSXamhj6z1n50p16cqn8NVyMgjEmURpJROWZaWxsz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0/8DpGa2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H/UQAhYQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE2DC116D0;
-	Thu, 15 Jan 2026 17:22:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0/8DpGa2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 162E2C116D0;
+	Thu, 15 Jan 2026 17:22:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497730;
-	bh=jvTwUufVTw9dQuNhs4Osul5PIGp1A8femj9Y5plT4Wc=;
+	s=korg; t=1768497733;
+	bh=jPmdEjRJ7srLTRJpv60ZGwb26xG8n/Bu/qAfpTNr1jA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H/UQAhYQUEQyrQNR29USNKhY/SkYEcDB6LX0FL76bM+xWvmgDq2BvoaKCU36HBO6S
-	 1D7Ti8zBYTP4xx/KLadekwJlIHxhhgrCuai5Zgt6wZ9W2E8RbkCfeGH1apYKHVy8VZ
-	 KTwmlO2U563gg1zvM8yb2FS178W8+575AcKe5mcw=
+	b=0/8DpGa2RbUEj6cQMlnSXqcdDGMgbVnIWVnw3+VHlIfLJBfszzXSwtvCkhlXRuzwe
+	 0Sx97h7EymMhCq4bckArosX7k7xxYZMwrkCp0w44cABJ5HHB+XxbQCrnExEdnEIn3V
+	 Q6WPpUjb8LHdLIQOjWhSV6x4Df6abjLlYrcslaNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 184/554] ASoC: bcm: bcm63xx-pcm-whistler: Check return value of of_dma_configure()
-Date: Thu, 15 Jan 2026 17:44:10 +0100
-Message-ID: <20260115164252.922356428@linuxfoundation.org>
+Subject: [PATCH 5.15 185/554] ASoC: ak4458: Disable regulator when error happens
+Date: Thu, 15 Jan 2026 17:44:11 +0100
+Message-ID: <20260115164252.958573315@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -51,41 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit 0ebbd45c33d0049ebf5a22c1434567f0c420b333 ]
+[ Upstream commit ae585fabb9713a43e358cf606451386757225c95 ]
 
-bcm63xx_soc_pcm_new() does not check the return value of
-of_dma_configure(), which may fail with -EPROBE_DEFER or
-other errors, allowing PCM setup to continue with incomplete
-DMA configuration.
+Disable regulator in runtime resume when error happens to balance
+the reference count of regulator.
 
-Add error checking for of_dma_configure() and return on failure.
-
-Fixes: 88eb404ccc3e ("ASoC: brcm: Add DSL/PON SoC audio driver")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20251202101642.492-1-vulab@iscas.ac.cn
+Fixes: 7e3096e8f823 ("ASoC: ak4458: Add regulator support")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://patch.msgid.link/20251203100529.3841203-2-shengjiu.wang@nxp.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/bcm/bcm63xx-pcm-whistler.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/codecs/ak4458.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/bcm/bcm63xx-pcm-whistler.c b/sound/soc/bcm/bcm63xx-pcm-whistler.c
-index b5096f64c576e..456aacc59e507 100644
---- a/sound/soc/bcm/bcm63xx-pcm-whistler.c
-+++ b/sound/soc/bcm/bcm63xx-pcm-whistler.c
-@@ -353,7 +353,9 @@ static int bcm63xx_soc_pcm_new(struct snd_soc_component *component,
+diff --git a/sound/soc/codecs/ak4458.c b/sound/soc/codecs/ak4458.c
+index 29eb78702bf35..1c179df6f0926 100644
+--- a/sound/soc/codecs/ak4458.c
++++ b/sound/soc/codecs/ak4458.c
+@@ -709,7 +709,15 @@ static int __maybe_unused ak4458_runtime_resume(struct device *dev)
+ 	regcache_cache_only(ak4458->regmap, false);
+ 	regcache_mark_dirty(ak4458->regmap);
  
- 	i2s_priv = dev_get_drvdata(asoc_rtd_to_cpu(rtd, 0)->dev);
- 
--	of_dma_configure(pcm->card->dev, pcm->card->dev->of_node, 1);
-+	ret = of_dma_configure(pcm->card->dev, pcm->card->dev->of_node, 1);
+-	return regcache_sync(ak4458->regmap);
++	ret = regcache_sync(ak4458->regmap);
 +	if (ret)
-+		return ret;
++		goto err;
++
++	return 0;
++err:
++	regcache_cache_only(ak4458->regmap, true);
++	regulator_bulk_disable(ARRAY_SIZE(ak4458->supplies), ak4458->supplies);
++	return ret;
+ }
+ #endif /* CONFIG_PM */
  
- 	ret = dma_coerce_mask_and_coherent(pcm->card->dev, DMA_BIT_MASK(32));
- 	if (ret)
 -- 
 2.51.0
 
