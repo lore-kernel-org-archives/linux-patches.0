@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C022FDC4D;
-	Thu, 15 Jan 2026 16:58:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D57025228D;
+	Thu, 15 Jan 2026 16:58:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496313; cv=none; b=LTLgDLw5jPuTcMoaWoKGhjRie/xXSzqr66mI89yq6sFxamLsb2BWq7bTqgxBpoIA/Q5lz3zrU86l0EDeT+HYrF0d08+hZnj6O3xi+F4nEk6kVwkZkfX0d+N77o0h1MQCkRrXRJP36JaVAG0962xII0sR9pGCxXRafFz+dyOJqnw=
+	t=1768496316; cv=none; b=FOxJQtjlK70VU13DL2pUUA8Q51e1WUuZ7os8C9l8GW3w18VhJ23wxouptfy2ucR+iv2VINWfaeR7CaUc0deL7mP8p4K3sTZ05qAgNWuU0PvqNDujNv2z9+q/QgFDe4woSsYFhtO9MGvQDC1y0uAq14c2Hd/qwPzgSNnPc8lvt2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496313; c=relaxed/simple;
-	bh=gIApn50qCgE71j1Flq2qViBBlN/fLTiqGxTPSBkbkng=;
+	s=arc-20240116; t=1768496316; c=relaxed/simple;
+	bh=n88uynv8kskMs4pf4tjzglrgYFXT/5snoVf+pNKeN7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HbjXyEoeEvW06+LeQVKfnmidBT0ARZ6awvPxeUgDpHZBOWdTZnH/xxTzN2NNqVwMmLI3dQGYGzdzNbgqSXbmDMoLd2xVFa825TpoB5nzZBplvfPF5JYOUJZ3/mLxKkrZUj4Tr/vq+AjbeWkQba52oETFJ9KlppS5ZYrFIZG3hRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ojhn7Bt2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HdXvA3pgCI/hXRFdI4E8tso+bwYKt1RBOvC4DFYoNH+FHysH4PqLcSai4Mw5ij4Ge5P6Z1+WyRxnMRfiIuxQAjNrK8telppOY5PKhO2pO5YGy2ESZJjfiA8LaO6brFtclbWYTKCLXequUakLaDowsiCrhxy6uR7Kh0/FI5Qg1BI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lJ/3SOz8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ojhn7Bt2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4A4AC116D0;
-	Thu, 15 Jan 2026 16:58:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJ/3SOz8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DA56C116D0;
+	Thu, 15 Jan 2026 16:58:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496313;
-	bh=gIApn50qCgE71j1Flq2qViBBlN/fLTiqGxTPSBkbkng=;
+	s=korg; t=1768496316;
+	bh=n88uynv8kskMs4pf4tjzglrgYFXT/5snoVf+pNKeN7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ojhn7Bt2EcQ9NzV1dcPSxy0X1TnFAX4+zmSn0VubU2H4/ySHrrsQzlabGpqCsy364
-	 9C8C4bcjqWhhQCHG39pUmyaSvbVepRlDHAPAXcc2qG1MxSHLCTW4hUwur1FlbR+xLJ
-	 FNRvjYalgy5Z//mkuMrzGYMxWxYzT+KvIKoVCUQg=
+	b=lJ/3SOz8le9CECI3e5l0YX/FckrsfDWPigQUO525z7FwPdGtXuQwIZ/frSFQ508Xt
+	 WRAnoVTy8//4S8dAMDTftKLQ3ICroQlyd8n54mY9tlRpf7cD86WmC5MOGUJ1+9Ax8A
+	 2RieGm8Wu+d6GYAg/VBdO5NDp6yC3CM2ediVGonA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruikai Peng <ruikai@pwno.io>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	kernel test robot <lkp@intel.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 153/181] ublk: fix use-after-free in ublk_partition_scan_work
-Date: Thu, 15 Jan 2026 17:48:10 +0100
-Message-ID: <20260115164207.836226739@linuxfoundation.org>
+Subject: [PATCH 6.18 154/181] irqchip/gic-v5: Fix gicv5_its_map_event() ITTE read endianness
+Date: Thu, 15 Jan 2026 17:48:11 +0100
+Message-ID: <20260115164207.871681048@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -52,100 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Lorenzo Pieralisi <lpieralisi@kernel.org>
 
-[ Upstream commit f0d385f6689f37a2828c686fb279121df006b4cb ]
+[ Upstream commit 1690eeb0cb2bb77096cb6c826b6849ef05013e34 ]
 
-A race condition exists between the async partition scan work and device
-teardown that can lead to a use-after-free of ub->ub_disk:
+Kbuild bot (through sparse) reported that the ITTE read to carry out
+a valid check in gicv5_its_map_event() lacks proper endianness handling.
 
-1. ublk_ctrl_start_dev() schedules partition_scan_work after add_disk()
-2. ublk_stop_dev() calls ublk_stop_dev_unlocked() which does:
-   - del_gendisk(ub->ub_disk)
-   - ublk_detach_disk() sets ub->ub_disk = NULL
-   - put_disk() which may free the disk
-3. The worker ublk_partition_scan_work() then dereferences ub->ub_disk
-   leading to UAF
+Add the missing endianess conversion.
 
-Fix this by using ublk_get_disk()/ublk_put_disk() in the worker to hold
-a reference to the disk during the partition scan. The spinlock in
-ublk_get_disk() synchronizes with ublk_detach_disk() ensuring the worker
-either gets a valid reference or sees NULL and exits early.
-
-Also change flush_work() to cancel_work_sync() to avoid running the
-partition scan work unnecessarily when the disk is already detached.
-
-Fixes: 7fc4da6a304b ("ublk: scan partition in async way")
-Reported-by: Ruikai Peng <ruikai@pwno.io>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 57d72196dfc8 ("irqchip/gic-v5: Add GICv5 ITS support")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Link: https://patch.msgid.link/20251222102250.435460-1-lpieralisi@kernel.org
+Closes: https://lore.kernel.org/oe-kbuild-all/202512131849.30ZRTBeR-lkp@intel.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 37 ++++++++++++++++++++++---------------
- 1 file changed, 22 insertions(+), 15 deletions(-)
+ drivers/irqchip/irq-gic-v5-its.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index babb58d2dcaf7..e09c1b5999b75 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -255,20 +255,6 @@ static inline struct request *__ublk_check_and_get_req(struct ublk_device *ub,
- 		u16 q_id, u16 tag, struct ublk_io *io, size_t offset);
- static inline unsigned int ublk_req_build_flags(struct request *req);
+diff --git a/drivers/irqchip/irq-gic-v5-its.c b/drivers/irqchip/irq-gic-v5-its.c
+index 554485f0be1fb..8e22134b9f486 100644
+--- a/drivers/irqchip/irq-gic-v5-its.c
++++ b/drivers/irqchip/irq-gic-v5-its.c
+@@ -849,7 +849,7 @@ static int gicv5_its_map_event(struct gicv5_its_dev *its_dev, u16 event_id, u32
  
--static void ublk_partition_scan_work(struct work_struct *work)
--{
--	struct ublk_device *ub =
--		container_of(work, struct ublk_device, partition_scan_work);
--
--	if (WARN_ON_ONCE(!test_and_clear_bit(GD_SUPPRESS_PART_SCAN,
--					     &ub->ub_disk->state)))
--		return;
--
--	mutex_lock(&ub->ub_disk->open_mutex);
--	bdev_disk_changed(ub->ub_disk, false);
--	mutex_unlock(&ub->ub_disk->open_mutex);
--}
--
- static inline struct ublksrv_io_desc *
- ublk_get_iod(const struct ublk_queue *ubq, unsigned tag)
- {
-@@ -1663,6 +1649,27 @@ static void ublk_put_disk(struct gendisk *disk)
- 		put_device(disk_to_dev(disk));
- }
+ 	itte = gicv5_its_device_get_itte_ref(its_dev, event_id);
  
-+static void ublk_partition_scan_work(struct work_struct *work)
-+{
-+	struct ublk_device *ub =
-+		container_of(work, struct ublk_device, partition_scan_work);
-+	/* Hold disk reference to prevent UAF during concurrent teardown */
-+	struct gendisk *disk = ublk_get_disk(ub);
-+
-+	if (!disk)
-+		return;
-+
-+	if (WARN_ON_ONCE(!test_and_clear_bit(GD_SUPPRESS_PART_SCAN,
-+					     &disk->state)))
-+		goto out;
-+
-+	mutex_lock(&disk->open_mutex);
-+	bdev_disk_changed(disk, false);
-+	mutex_unlock(&disk->open_mutex);
-+out:
-+	ublk_put_disk(disk);
-+}
-+
- /*
-  * Use this function to ensure that ->canceling is consistently set for
-  * the device and all queues. Do not set these flags directly.
-@@ -2107,7 +2114,7 @@ static void ublk_stop_dev(struct ublk_device *ub)
- 	mutex_lock(&ub->mutex);
- 	ublk_stop_dev_unlocked(ub);
- 	mutex_unlock(&ub->mutex);
--	flush_work(&ub->partition_scan_work);
-+	cancel_work_sync(&ub->partition_scan_work);
- 	ublk_cancel_dev(ub);
- }
+-	if (FIELD_GET(GICV5_ITTL2E_VALID, *itte))
++	if (FIELD_GET(GICV5_ITTL2E_VALID, le64_to_cpu(*itte)))
+ 		return -EEXIST;
  
+ 	itt_entry = FIELD_PREP(GICV5_ITTL2E_LPI_ID, lpi) |
 -- 
 2.51.0
 
