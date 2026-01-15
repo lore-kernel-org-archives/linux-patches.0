@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A3BD3C1988;
-	Thu, 15 Jan 2026 17:48:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 858B23C008E;
+	Thu, 15 Jan 2026 17:48:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499297; cv=none; b=ulvbYmPpn6ZIDolIAfkEYRShFW1SSd7W3Opjzc3rwMLI6INkKSCW4UIGRQkADdleI3oHxU21M1AOoF2RPD6Pqqh7NBFA4dkiNrji1bZMRR4G9Gt6OYKdbYSekUMbhC4/dqHfnaBe9+uw3GPGkGPrj1uNvQ6PpjZbJWuXzuuzaKc=
+	t=1768499300; cv=none; b=h9k4VRccFXFe/wQCDZcshQwVGyadSR6tEWTeOZ2h2yG4C5EjF6HJIKJLYkwzjM4hEwU3/WA1ZtONCwFnpuyWoi/XI7voTxjhkBTBsmeHZqONe5DRKTo/8pJIzWD9rbrXedv9ct+diYgwm1ThDEPgQkbBSPH3nJ/n7eDbULj1tDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499297; c=relaxed/simple;
-	bh=mCo3k/hLTp5ZzK8bMKtmk7TO61NjThBSQsvDPGNkriI=;
+	s=arc-20240116; t=1768499300; c=relaxed/simple;
+	bh=HB+t+2DFusKdSYSLwVJFrT/ELV2dSDfUpkDRBBFk2vk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pvrb9pOgpGSH0jRYApprDn0HrHsgMxTYbaglNRPObzJFUmHndm7Ky7+vpSEoo7yLiHvAdh95WcS1Yi1fMIHFDiTOSOj7M/RDeLJgdkWEfvS0T+HvWAjcgNgFbV9L6U85MHWSb40cLqIG8+yVaCLxY9X+C9tmtpYj4I+bsjGok2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O7zq85Nl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kqDIaa/AOp6uITSHFSw3RVWKx6mlVX2rAXDedea3Tg/kkwgcamJoi0ykpl5F12ujAbEkqXzNS6jztXF5iY0Dh8EZ/rGOKA7U7hAUTPojXfJb7Ta5VFHFZZGyJwI6eI+2lY87Nk0QbV4H5EyidDxRMyR7ygNpjI2gKmTt2sYEtYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MJgbQB+G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O7zq85Nl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC2ADC16AAE;
-	Thu, 15 Jan 2026 17:48:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MJgbQB+G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A637EC19422;
+	Thu, 15 Jan 2026 17:48:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499297;
-	bh=mCo3k/hLTp5ZzK8bMKtmk7TO61NjThBSQsvDPGNkriI=;
+	s=korg; t=1768499300;
+	bh=HB+t+2DFusKdSYSLwVJFrT/ELV2dSDfUpkDRBBFk2vk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O7zq85Nl8A0xF4Y/wqy46UoTGdlvXpN9n3wVb/KbiEKWgpAqMszrrD6pzJue9OfqL
-	 ytZWlHzLIYG9JfBeLxQWRxMxQ3QwYtv5sqBFuSKml2vnqPY0yy6rMxDeWdcKe5/w2u
-	 xB2fgAdv1HLph80AHuIFTb/QmzdabNAi6qciP0XY=
+	b=MJgbQB+GK7LsvGfllKkNMH7wh4MUOCM73IKnKAzKuBJFWD8VuytwRDyEct2T2Q9jw
+	 gYADYa7FrMgeApd2HptU92P1o9zxXZ5Nz/bvfH8et35IEZGM5xx9guRj1bw4rKsCaJ
+	 rfavlYhqbU6stHVDPVzI4wZgb89aBct/fsyr7/SI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Song Liu <song@kernel.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Petr Mladek <pmladek@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 178/451] net/sched: ets: Remove drr class from the active list if it changes to strict
-Date: Thu, 15 Jan 2026 17:46:19 +0100
-Message-ID: <20260115164237.344753744@linuxfoundation.org>
+Subject: [PATCH 5.10 161/451] livepatch: Match old_sympos 0 and 1 in klp_find_func()
+Date: Thu, 15 Jan 2026 17:46:02 +0100
+Message-ID: <20260115164236.735196500@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -53,85 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Nogueira <victor@mojatatu.com>
+From: Song Liu <song@kernel.org>
 
-[ Upstream commit b1e125ae425aba9b45252e933ca8df52a843ec70 ]
+[ Upstream commit 139560e8b973402140cafeb68c656c1374bd4c20 ]
 
-Whenever a user issues an ets qdisc change command, transforming a
-drr class into a strict one, the ets code isn't checking whether that
-class was in the active list and removing it. This means that, if a
-user changes a strict class (which was in the active list) back to a drr
-one, that class will be added twice to the active list [1].
+When there is only one function of the same name, old_sympos of 0 and 1
+are logically identical. Match them in klp_find_func().
 
-Doing so with the following commands:
+This is to avoid a corner case with different toolchain behavior.
 
-tc qdisc add dev lo root handle 1: ets bands 2 strict 1
-tc qdisc add dev lo parent 1:2 handle 20: \
-    tbf rate 8bit burst 100b latency 1s
-tc filter add dev lo parent 1: basic classid 1:2
-ping -c1 -W0.01 -s 56 127.0.0.1
-tc qdisc change dev lo root handle 1: ets bands 2 strict 2
-tc qdisc change dev lo root handle 1: ets bands 2 strict 1
-ping -c1 -W0.01 -s 56 127.0.0.1
+In this specific issue, two versions of kpatch-build were used to
+build livepatch for the same kernel. One assigns old_sympos == 0 for
+unique local functions, the other assigns old_sympos == 1 for unique
+local functions. Both versions work fine by themselves. (PS: This
+behavior change was introduced in a downstream version of kpatch-build.
+This change does not exist in upstream kpatch-build.)
 
-Will trigger the following splat with list debug turned on:
+However, during livepatch upgrade (with the replace flag set) from a
+patch built with one version of kpatch-build to the same fix built with
+the other version of kpatch-build, livepatching fails with errors like:
 
-[   59.279014][  T365] ------------[ cut here ]------------
-[   59.279452][  T365] list_add double add: new=ffff88801d60e350, prev=ffff88801d60e350, next=ffff88801d60e2c0.
-[   59.280153][  T365] WARNING: CPU: 3 PID: 365 at lib/list_debug.c:35 __list_add_valid_or_report+0x17f/0x220
-[   59.280860][  T365] Modules linked in:
-[   59.281165][  T365] CPU: 3 UID: 0 PID: 365 Comm: tc Not tainted 6.18.0-rc7-00105-g7e9f13163c13-dirty #239 PREEMPT(voluntary)
-[   59.281977][  T365] Hardware name: Bochs Bochs, BIOS Bochs 01/01/2011
-[   59.282391][  T365] RIP: 0010:__list_add_valid_or_report+0x17f/0x220
-[   59.282842][  T365] Code: 89 c6 e8 d4 b7 0d ff 90 0f 0b 90 90 31 c0 e9 31 ff ff ff 90 48 c7 c7 e0 a0 22 9f 48 89 f2 48 89 c1 4c 89 c6 e8 b2 b7 0d ff 90 <0f> 0b 90 90 31 c0 e9 0f ff ff ff 48 89 f7 48 89 44 24 10 4c 89 44
+[   14.218706] sysfs: cannot create duplicate filename 'xxx/somefunc,1'
 ...
-[   59.288812][  T365] Call Trace:
-[   59.289056][  T365]  <TASK>
-[   59.289224][  T365]  ? srso_alias_return_thunk+0x5/0xfbef5
-[   59.289546][  T365]  ets_qdisc_change+0xd2b/0x1e80
-[   59.289891][  T365]  ? __lock_acquire+0x7e7/0x1be0
-[   59.290223][  T365]  ? __pfx_ets_qdisc_change+0x10/0x10
-[   59.290546][  T365]  ? srso_alias_return_thunk+0x5/0xfbef5
-[   59.290898][  T365]  ? __mutex_trylock_common+0xda/0x240
-[   59.291228][  T365]  ? __pfx___mutex_trylock_common+0x10/0x10
-[   59.291655][  T365]  ? srso_alias_return_thunk+0x5/0xfbef5
-[   59.291993][  T365]  ? srso_alias_return_thunk+0x5/0xfbef5
-[   59.292313][  T365]  ? trace_contention_end+0xc8/0x110
-[   59.292656][  T365]  ? srso_alias_return_thunk+0x5/0xfbef5
-[   59.293022][  T365]  ? srso_alias_return_thunk+0x5/0xfbef5
-[   59.293351][  T365]  tc_modify_qdisc+0x63a/0x1cf0
+[   14.219466] Call Trace:
+[   14.219468]  <TASK>
+[   14.219469]  dump_stack_lvl+0x47/0x60
+[   14.219474]  sysfs_warn_dup.cold+0x17/0x27
+[   14.219476]  sysfs_create_dir_ns+0x95/0xb0
+[   14.219479]  kobject_add_internal+0x9e/0x260
+[   14.219483]  kobject_add+0x68/0x80
+[   14.219485]  ? kstrdup+0x3c/0xa0
+[   14.219486]  klp_enable_patch+0x320/0x830
+[   14.219488]  patch_init+0x443/0x1000 [ccc_0_6]
+[   14.219491]  ? 0xffffffffa05eb000
+[   14.219492]  do_one_initcall+0x2e/0x190
+[   14.219494]  do_init_module+0x67/0x270
+[   14.219496]  init_module_from_file+0x75/0xa0
+[   14.219499]  idempotent_init_module+0x15a/0x240
+[   14.219501]  __x64_sys_finit_module+0x61/0xc0
+[   14.219503]  do_syscall_64+0x5b/0x160
+[   14.219505]  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+[   14.219507] RIP: 0033:0x7f545a4bd96d
+...
+[   14.219516] kobject: kobject_add_internal failed for somefunc,1 with
+    -EEXIST, don't try to register things with the same name ...
 
-Fix this by always checking and removing an ets class from the active list
-when changing it to strict.
+This happens because klp_find_func() thinks somefunc with old_sympos==0
+is not the same as somefunc with old_sympos==1, and klp_add_object_nops
+adds another xxx/func,1 to the list of functions to patch.
 
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/tree/net/sched/sch_ets.c?id=ce052b9402e461a9aded599f5b47e76bc727f7de#n663
-
-Fixes: cd9b50adc6bb9 ("net/sched: ets: fix crash when flipping from 'strict' to 'quantum'")
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Link: https://patch.msgid.link/20251208190125.1868423-1-victor@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Song Liu <song@kernel.org>
+Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
+[pmladek@suse.com: Fixed some typos.]
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Tested-by: Petr Mladek <pmladek@suse.com>
+Signed-off-by: Petr Mladek <pmladek@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_ets.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ kernel/livepatch/core.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_ets.c b/net/sched/sch_ets.c
-index ad5d9b27670ca..c939937b2b81d 100644
---- a/net/sched/sch_ets.c
-+++ b/net/sched/sch_ets.c
-@@ -677,6 +677,10 @@ static int ets_qdisc_change(struct Qdisc *sch, struct nlattr *opt,
- 			q->classes[i].deficit = quanta[i];
+diff --git a/kernel/livepatch/core.c b/kernel/livepatch/core.c
+index 147ed154ebc77..c49042f5e71ec 100644
+--- a/kernel/livepatch/core.c
++++ b/kernel/livepatch/core.c
+@@ -89,8 +89,14 @@ static struct klp_func *klp_find_func(struct klp_object *obj,
+ 	struct klp_func *func;
+ 
+ 	klp_for_each_func(obj, func) {
++		/*
++		 * Besides identical old_sympos, also consider old_sympos
++		 * of 0 and 1 are identical.
++		 */
+ 		if ((strcmp(old_func->old_name, func->old_name) == 0) &&
+-		    (old_func->old_sympos == func->old_sympos)) {
++		    ((old_func->old_sympos == func->old_sympos) ||
++		     (old_func->old_sympos == 0 && func->old_sympos == 1) ||
++		     (old_func->old_sympos == 1 && func->old_sympos == 0))) {
+ 			return func;
  		}
  	}
-+	for (i = q->nstrict; i < nstrict; i++) {
-+		if (cl_is_active(&q->classes[i]))
-+			list_del_init(&q->classes[i].alist);
-+	}
- 	WRITE_ONCE(q->nstrict, nstrict);
- 	memcpy(q->prio2band, priomap, sizeof(priomap));
- 
 -- 
 2.51.0
 
