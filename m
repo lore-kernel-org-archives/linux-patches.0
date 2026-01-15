@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B312D9494;
-	Thu, 15 Jan 2026 17:24:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58542D9494;
+	Thu, 15 Jan 2026 17:24:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497847; cv=none; b=cxITkWPZex8K7/uGzJC2JgvJdQZWh6vbrjp/s9S2cqQtKlVawZx70EEvxDwSB06zMfBvK92ZzFXxtJw+R+gJtoTcn8Jz1omNdKv4FLAHTcuwDbf1SI4+oEugxrJ3e+uH43IVsSuUrNKT+YgqRWUzeop6jj1UhA4HiPaPRSfRAwE=
+	t=1768497850; cv=none; b=WtzDHuTJJzgIaznz5NKRylagvIVsGUz3I/+7J417tKI/w5phwxBFeZFdjC0z+Kskdv9pn2ZiNl+eUu65qmJij2g3ZZsFWQATYEAblA2JDtqdTHHyGY6yBdRo53PH+GsLH5ifcclVcEfD3txg93DxK3Ao4OBV9GRC3ZO4XkDkvIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497847; c=relaxed/simple;
-	bh=XF6NseEevpHqO8JLh4PWxE5DeiHS6VcMTgD2saUdJ7A=;
+	s=arc-20240116; t=1768497850; c=relaxed/simple;
+	bh=mE6I6U4Cvebo4fodznGB+VFlixQqMRf5QmqwvZxVod4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f3mTiQ7AXXslwBnKPjaEvipn643L4s2tYSUsTrKhQLBhJPr0Ilj8ASRYKyigyVKOPdoITAt7g1FRgFfR6sbDkWelO9DIo7SsR6XIQ10tUKQfHauhfV8iOGNXrKRFPlGTXeapE0KIjerBfPhc+TVnxPS3BiuIdLJDlGTljzholSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WzHhClQs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EtFnT5bRxIWCTxWdua/Bzl50A8+WIBJywzcd6BrbbQjzMz6qTRsvcg0bxSqI9YunHOLXwcm+MyFSYXkE1fuMAA4McgGs2vZcIYVB3OrawPsRcAMLW5c/CoWDf0ptdZqt/FbOYbL8JJSLRpqwmstYGSESQkxCi2biQH94GNmRxKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T/+6J0Xf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WzHhClQs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B00C116D0;
-	Thu, 15 Jan 2026 17:24:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T/+6J0Xf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71A37C116D0;
+	Thu, 15 Jan 2026 17:24:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497847;
-	bh=XF6NseEevpHqO8JLh4PWxE5DeiHS6VcMTgD2saUdJ7A=;
+	s=korg; t=1768497849;
+	bh=mE6I6U4Cvebo4fodznGB+VFlixQqMRf5QmqwvZxVod4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WzHhClQs8k+xOPm4afUInakVt9YV7nWUxzCeksXbWvLq6q0hp28FMrNfh3HXQQ9Uw
-	 ispMQhbLK/ai/w7EHhyt1QsHzIyuJDYwWZ6nNgd1ouNgzga8UiT321P9A7IwHT7/o7
-	 +CBU1OEA+xakLURUhcSoy7l3QaOQPQALWVwhI7zs=
+	b=T/+6J0XfQiWvjrp/nioxTHkup1K/AqtZrZw8esTLGKKIxBf5J6RRpKSF3IenWXUXV
+	 2xhQHzG/6/etzTVUtNs4gKNkb51uC2jh3hZUbcrioLDHSn6OnJUm0MOnYUiyBWH2XV
+	 OGCUZZ3wKzgsmXjnNXbcNL4hcEpv+AdCBoQOqfJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zdi-disclosures@trendmicro.com,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Davide Caratti <dcaratti@redhat.com>,
+	Dmitry Skorodumov <skorodumov.dmitry@huawei.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 224/554] net/sched: ets: Always remove class from active list before deleting in ets_qdisc_change
-Date: Thu, 15 Jan 2026 17:44:50 +0100
-Message-ID: <20260115164254.354445993@linuxfoundation.org>
+Subject: [PATCH 5.15 225/554] ipvlan: Ignore PACKET_LOOPBACK in handle_mode_l2()
+Date: Thu, 15 Jan 2026 17:44:51 +0100
+Message-ID: <20260115164254.390605324@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -54,229 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Dmitry Skorodumov <skorodumov.dmitry@huawei.com>
 
-[ Upstream commit ce052b9402e461a9aded599f5b47e76bc727f7de ]
+[ Upstream commit 0c57ff008a11f24f7f05fa760222692a00465fec ]
 
-zdi-disclosures@trendmicro.com says:
+Packets with pkt_type == PACKET_LOOPBACK are captured by
+handle_frame() function, but they don't have L2 header.
+We should not process them in handle_mode_l2().
 
-The vulnerability is a race condition between `ets_qdisc_dequeue` and
-`ets_qdisc_change`.  It leads to UAF on `struct Qdisc` object.
-Attacker requires the capability to create new user and network namespace
-in order to trigger the bug.
-See my additional commentary at the end of the analysis.
+This doesn't affect old L2 functionality, since handling
+was anyway incorrect.
 
-Analysis:
+Handle them the same way as in br_handle_frame():
+just pass the skb.
 
-static int ets_qdisc_change(struct Qdisc *sch, struct nlattr *opt,
-                          struct netlink_ext_ack *extack)
-{
-...
+To observe invalid behaviour, just start "ping -b" on bcast address
+of port-interface.
 
-      // (1) this lock is preventing .change handler (`ets_qdisc_change`)
-      //to race with .dequeue handler (`ets_qdisc_dequeue`)
-      sch_tree_lock(sch);
-
-      for (i = nbands; i < oldbands; i++) {
-              if (i >= q->nstrict && q->classes[i].qdisc->q.qlen)
-                      list_del_init(&q->classes[i].alist);
-              qdisc_purge_queue(q->classes[i].qdisc);
-      }
-
-      WRITE_ONCE(q->nbands, nbands);
-      for (i = nstrict; i < q->nstrict; i++) {
-              if (q->classes[i].qdisc->q.qlen) {
-		      // (2) the class is added to the q->active
-                      list_add_tail(&q->classes[i].alist, &q->active);
-                      q->classes[i].deficit = quanta[i];
-              }
-      }
-      WRITE_ONCE(q->nstrict, nstrict);
-      memcpy(q->prio2band, priomap, sizeof(priomap));
-
-      for (i = 0; i < q->nbands; i++)
-              WRITE_ONCE(q->classes[i].quantum, quanta[i]);
-
-      for (i = oldbands; i < q->nbands; i++) {
-              q->classes[i].qdisc = queues[i];
-              if (q->classes[i].qdisc != &noop_qdisc)
-                      qdisc_hash_add(q->classes[i].qdisc, true);
-      }
-
-      // (3) the qdisc is unlocked, now dequeue can be called in parallel
-      // to the rest of .change handler
-      sch_tree_unlock(sch);
-
-      ets_offload_change(sch);
-      for (i = q->nbands; i < oldbands; i++) {
-	      // (4) we're reducing the refcount for our class's qdisc and
-	      //  freeing it
-              qdisc_put(q->classes[i].qdisc);
-	      // (5) If we call .dequeue between (4) and (5), we will have
-	      // a strong UAF and we can control RIP
-              q->classes[i].qdisc = NULL;
-              WRITE_ONCE(q->classes[i].quantum, 0);
-              q->classes[i].deficit = 0;
-              gnet_stats_basic_sync_init(&q->classes[i].bstats);
-              memset(&q->classes[i].qstats, 0, sizeof(q->classes[i].qstats));
-      }
-      return 0;
-}
-
-Comment:
-This happens because some of the classes have their qdiscs assigned to
-NULL, but remain in the active list. This commit fixes this issue by always
-removing the class from the active list before deleting and freeing its
-associated qdisc
-
-Reproducer Steps
-(trimmed version of what was sent by zdi-disclosures@trendmicro.com)
-
-```
-DEV="${DEV:-lo}"
-ROOT_HANDLE="${ROOT_HANDLE:-1:}"
-BAND2_HANDLE="${BAND2_HANDLE:-20:}"   # child under 1:2
-PING_BYTES="${PING_BYTES:-48}"
-PING_COUNT="${PING_COUNT:-200000}"
-PING_DST="${PING_DST:-127.0.0.1}"
-
-SLOW_TBF_RATE="${SLOW_TBF_RATE:-8bit}"
-SLOW_TBF_BURST="${SLOW_TBF_BURST:-100b}"
-SLOW_TBF_LAT="${SLOW_TBF_LAT:-1s}"
-
-cleanup() {
-  tc qdisc del dev "$DEV" root 2>/dev/null
-}
-trap cleanup EXIT
-
-ip link set "$DEV" up
-
-tc qdisc del dev "$DEV" root 2>/dev/null || true
-
-tc qdisc add dev "$DEV" root handle "$ROOT_HANDLE" ets bands 2 strict 2
-
-tc qdisc add dev "$DEV" parent 1:2 handle "$BAND2_HANDLE" \
-  tbf rate "$SLOW_TBF_RATE" burst "$SLOW_TBF_BURST" latency "$SLOW_TBF_LAT"
-
-tc filter add dev "$DEV" parent 1: protocol all prio 1 u32 match u32 0 0 flowid 1:2
-tc -s qdisc ls dev $DEV
-
-ping -I "$DEV" -f -c "$PING_COUNT" -s "$PING_BYTES" -W 0.001 "$PING_DST" \
-  >/dev/null 2>&1 &
-tc qdisc change dev "$DEV" root handle "$ROOT_HANDLE" ets bands 2 strict 0
-tc qdisc change dev "$DEV" root handle "$ROOT_HANDLE" ets bands 2 strict 2
-tc -s qdisc ls dev $DEV
-tc qdisc del dev "$DEV" parent 1:2 || true
-tc -s qdisc ls dev $DEV
-tc qdisc change dev "$DEV" root handle "$ROOT_HANDLE" ets bands 1 strict 1
-```
-
-KASAN report
-```
-==================================================================
-BUG: KASAN: slab-use-after-free in ets_qdisc_dequeue+0x1071/0x11b0 kernel/net/sched/sch_ets.c:481
-Read of size 8 at addr ffff8880502fc018 by task ping/12308
->
-CPU: 0 UID: 0 PID: 12308 Comm: ping Not tainted 6.18.0-rc4-dirty #1 PREEMPT(full)
-Hardware name: QEMU Ubuntu 25.04 PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-Call Trace:
- <IRQ>
- __dump_stack kernel/lib/dump_stack.c:94
- dump_stack_lvl+0x100/0x190 kernel/lib/dump_stack.c:120
- print_address_description kernel/mm/kasan/report.c:378
- print_report+0x156/0x4c9 kernel/mm/kasan/report.c:482
- kasan_report+0xdf/0x110 kernel/mm/kasan/report.c:595
- ets_qdisc_dequeue+0x1071/0x11b0 kernel/net/sched/sch_ets.c:481
- dequeue_skb kernel/net/sched/sch_generic.c:294
- qdisc_restart kernel/net/sched/sch_generic.c:399
- __qdisc_run+0x1c9/0x1b00 kernel/net/sched/sch_generic.c:417
- __dev_xmit_skb kernel/net/core/dev.c:4221
- __dev_queue_xmit+0x2848/0x4410 kernel/net/core/dev.c:4729
- dev_queue_xmit kernel/./include/linux/netdevice.h:3365
-[...]
-
-Allocated by task 17115:
- kasan_save_stack+0x30/0x50 kernel/mm/kasan/common.c:56
- kasan_save_track+0x14/0x30 kernel/mm/kasan/common.c:77
- poison_kmalloc_redzone kernel/mm/kasan/common.c:400
- __kasan_kmalloc+0xaa/0xb0 kernel/mm/kasan/common.c:417
- kasan_kmalloc kernel/./include/linux/kasan.h:262
- __do_kmalloc_node kernel/mm/slub.c:5642
- __kmalloc_node_noprof+0x34e/0x990 kernel/mm/slub.c:5648
- kmalloc_node_noprof kernel/./include/linux/slab.h:987
- qdisc_alloc+0xb8/0xc30 kernel/net/sched/sch_generic.c:950
- qdisc_create_dflt+0x93/0x490 kernel/net/sched/sch_generic.c:1012
- ets_class_graft+0x4fd/0x800 kernel/net/sched/sch_ets.c:261
- qdisc_graft+0x3e4/0x1780 kernel/net/sched/sch_api.c:1196
-[...]
-
-Freed by task 9905:
- kasan_save_stack+0x30/0x50 kernel/mm/kasan/common.c:56
- kasan_save_track+0x14/0x30 kernel/mm/kasan/common.c:77
- __kasan_save_free_info+0x3b/0x70 kernel/mm/kasan/generic.c:587
- kasan_save_free_info kernel/mm/kasan/kasan.h:406
- poison_slab_object kernel/mm/kasan/common.c:252
- __kasan_slab_free+0x5f/0x80 kernel/mm/kasan/common.c:284
- kasan_slab_free kernel/./include/linux/kasan.h:234
- slab_free_hook kernel/mm/slub.c:2539
- slab_free kernel/mm/slub.c:6630
- kfree+0x144/0x700 kernel/mm/slub.c:6837
- rcu_do_batch kernel/kernel/rcu/tree.c:2605
- rcu_core+0x7c0/0x1500 kernel/kernel/rcu/tree.c:2861
- handle_softirqs+0x1ea/0x8a0 kernel/kernel/softirq.c:622
- __do_softirq kernel/kernel/softirq.c:656
-[...]
-
-Commentary:
-
-1. Maher Azzouzi working with Trend Micro Zero Day Initiative was reported as
-the person who found the issue. I requested to get a proper email to add to the
-reported-by tag but got no response. For this reason i will credit the person
-i exchanged emails with i.e zdi-disclosures@trendmicro.com
-
-2. Neither i nor Victor who did a much more thorough testing was able to
-reproduce a UAF with the PoC or other approaches we tried. We were both able to
-reproduce a null ptr deref. After exchange with zdi-disclosures@trendmicro.com
-they sent a small change to be made to the code to add an extra delay which
-was able to simulate the UAF. i.e, this:
-   qdisc_put(q->classes[i].qdisc);
-   mdelay(90);
-   q->classes[i].qdisc = NULL;
-
-I was informed by Thomas Gleixner(tglx@linutronix.de) that adding delays was
-acceptable approach for demonstrating the bug, quote:
-"Adding such delays is common exploit validation practice"
-The equivalent delay could happen "by virt scheduling the vCPU out, SMIs,
-NMIs, PREEMPT_RT enabled kernel"
-
-3. I asked the OP to test and report back but got no response and after a
-few days gave up and proceeded to submit this fix.
-
-Fixes: de6d25924c2a ("net/sched: sch_ets: don't peek at classes beyond 'nbands'")
-Reported-by: zdi-disclosures@trendmicro.com
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Davide Caratti <dcaratti@redhat.com>
-Link: https://patch.msgid.link/20251128151919.576920-1-jhs@mojatatu.com
+Fixes: 2ad7bf363841 ("ipvlan: Initial check-in of the IPVLAN driver.")
+Signed-off-by: Dmitry Skorodumov <skorodumov.dmitry@huawei.com>
+Link: https://patch.msgid.link/20251202103906.4087675-1-skorodumov.dmitry@huawei.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_ets.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ipvlan/ipvlan_core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/sched/sch_ets.c b/net/sched/sch_ets.c
-index d95d127975254..bcd91ffe9bc6a 100644
---- a/net/sched/sch_ets.c
-+++ b/net/sched/sch_ets.c
-@@ -665,7 +665,7 @@ static int ets_qdisc_change(struct Qdisc *sch, struct nlattr *opt,
- 	sch_tree_lock(sch);
+diff --git a/drivers/net/ipvlan/ipvlan_core.c b/drivers/net/ipvlan/ipvlan_core.c
+index a18b49db38ee0..35ec6d1af6ea6 100644
+--- a/drivers/net/ipvlan/ipvlan_core.c
++++ b/drivers/net/ipvlan/ipvlan_core.c
+@@ -725,6 +725,9 @@ static rx_handler_result_t ipvlan_handle_mode_l2(struct sk_buff **pskb,
+ 	struct ethhdr *eth = eth_hdr(skb);
+ 	rx_handler_result_t ret = RX_HANDLER_PASS;
  
- 	for (i = nbands; i < oldbands; i++) {
--		if (i >= q->nstrict && q->classes[i].qdisc->q.qlen)
-+		if (cl_is_active(&q->classes[i]))
- 			list_del_init(&q->classes[i].alist);
- 		qdisc_purge_queue(q->classes[i].qdisc);
- 	}
++	if (unlikely(skb->pkt_type == PACKET_LOOPBACK))
++		return RX_HANDLER_PASS;
++
+ 	if (is_multicast_ether_addr(eth->h_dest)) {
+ 		if (ipvlan_external_frame(skb, port)) {
+ 			struct sk_buff *nskb = skb_clone(skb, GFP_ATOMIC);
 -- 
 2.51.0
 
