@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B3B9396B75;
-	Thu, 15 Jan 2026 16:54:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 606D942049;
+	Thu, 15 Jan 2026 16:54:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496060; cv=none; b=EwHNxXnOTiJ81yvEcUDNyx2kxk0ozRckRNV7UVuhAJz4Pt/57lVti1y77X0QUkmCuj9/VnHPG7GAXW+obrh2DTi1yxexM5qYZ6HM/rm7qcAFd2IDnuC+VmyzCjFInpMdGiBxB6Nm6ZoqNWbEZHSaC04TV6lgj02A+bK2RxueiFM=
+	t=1768496063; cv=none; b=t1jJUhn/L1hHbDR0NAHSgE8o+wUIwshLDmDhnGeWJ6lRsSjCYST6tiDeo5olQU6kiWbpjrr1ufhSqoEJOtS7eLI6HFw2lqqIG61n80+TK+lL8eou2tsbVL7ZEmxg44SqwfNowmUcp/kQOjUJeB+SeN0JddVIttDPUMsZNIjb53I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496060; c=relaxed/simple;
-	bh=1CiEMI6r7XQbbOF8hsOwILJ0ai1u16GuCLlArL4VP2Y=;
+	s=arc-20240116; t=1768496063; c=relaxed/simple;
+	bh=J4bTb74X9OJ6aksbrTPMfbYESZ5lkTEr6OFMxyZ2TyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TLHpNpxovGho1NSHdlB+VJdi8daYkAHbf0t0pMmPGH9/ruRie6Sw1Pt8iMm/cC+QiS00PxuXvaNx65AIff+rAETlU+pNa+khe0H+fkLMiKD/Wdp3D9Su4rpK5wL6Y8Z9g6gHdRwTi8UPE7Q+QlaLpVGTdx7wwS32qF92aoG/ZOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xHH4boI8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CK5y2YxjHaGA11W9SHTT/nxFHEzUrkMMBB41InLqJrAzj4YzFzWHuOq1zeh/W2YJEdtxpBvzus//5KHQeip5J4NbBAfooe/T5gYbD7Btd4Vq8OCB7QlygNP8aCszYdTe7Da4ZRwcRTw5/EqtkrFt5H2f3OZJhtKKGGYk0alnB8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e2iJdGOa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xHH4boI8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BBD3C16AAE;
-	Thu, 15 Jan 2026 16:54:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e2iJdGOa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3808C116D0;
+	Thu, 15 Jan 2026 16:54:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496060;
-	bh=1CiEMI6r7XQbbOF8hsOwILJ0ai1u16GuCLlArL4VP2Y=;
+	s=korg; t=1768496063;
+	bh=J4bTb74X9OJ6aksbrTPMfbYESZ5lkTEr6OFMxyZ2TyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xHH4boI8w95txzWsg7g4eDsgd7czffpGYUprVc9J4GFnKbTctuNj7dvuyVcaY3f9X
-	 cnnl6awy5tQa3sPRv8npfqIaZlpyPU9rnG5GIKzSwj7WnXEfmr/CBYLTlHCNd1W4lW
-	 PnjqtLp1NkRwWl+eshF/7bpxcxGZYZgt1MbdoZ5w=
+	b=e2iJdGOa/UZXgg26rlryrIm42pGpZvTxmt1n92uNBEASakn0nlWq0lrDI9anNCL+C
+	 pJwOHYy48km945m+Xl9Bi8GnBKfNmDpI2Et4RZI469BkJE9xntwbVojneiwB4SGytm
+	 99BDHZdA9EIkH9DfVaiyWKeqQ/eRlbTTckYgn/fU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingui Yang <yangxingui@huawei.com>,
-	Jason Yan <yanaijie@huawei.com>,
-	John Garry <john.g.garry@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 063/181] scsi: Revert "scsi: libsas: Fix exp-attached device scan after probe failure scanned in again after probe failed"
-Date: Thu, 15 Jan 2026 17:46:40 +0100
-Message-ID: <20260115164204.602300017@linuxfoundation.org>
+	syzbot+bfc7323743ca6dbcc3d3@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.18 037/181] wifi: avoid kernel-infoleak from struct iw_point
+Date: Thu, 15 Jan 2026 17:46:14 +0100
+Message-ID: <20260115164203.668561581@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -53,58 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xingui Yang <yangxingui@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 278712d20bc8ec29d1ad6ef9bdae9000ef2c220c ]
+commit 21cbf883d073abbfe09e3924466aa5e0449e7261 upstream.
 
-This reverts commit ab2068a6fb84751836a84c26ca72b3beb349619d.
+struct iw_point has a 32bit hole on 64bit arches.
 
-When probing the exp-attached sata device, libsas/libata will issue a
-hard reset in sas_probe_sata() -> ata_sas_async_probe(), then a
-broadcast event will be received after the disk probe fails, and this
-commit causes the probe will be re-executed on the disk, and a faulty
-disk may get into an indefinite loop of probe.
+struct iw_point {
+  void __user   *pointer;       /* Pointer to the data  (in user space) */
+  __u16         length;         /* number of fields or size in bytes */
+  __u16         flags;          /* Optional params */
+};
 
-Therefore, revert this commit, although it can fix some temporary issues
-with disk probe failure.
+Make sure to zero the structure to avoid disclosing 32bits of kernel data
+to user space.
 
-Signed-off-by: Xingui Yang <yangxingui@huawei.com>
-Reviewed-by: Jason Yan <yanaijie@huawei.com>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Link: https://patch.msgid.link/20251202065627.140361-1-yangxingui@huawei.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 87de87d5e47f ("wext: Dispatch and handle compat ioctls entirely in net/wireless/wext.c")
+Reported-by: syzbot+bfc7323743ca6dbcc3d3@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/695f83f3.050a0220.1c677c.0392.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260108101927.857582-1-edumazet@google.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/libsas/sas_internal.h | 14 --------------
- 1 file changed, 14 deletions(-)
+ net/wireless/wext-core.c |    4 ++++
+ net/wireless/wext-priv.c |    4 ++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/drivers/scsi/libsas/sas_internal.h b/drivers/scsi/libsas/sas_internal.h
-index 6706f2be8d274..da5408c701cdd 100644
---- a/drivers/scsi/libsas/sas_internal.h
-+++ b/drivers/scsi/libsas/sas_internal.h
-@@ -145,20 +145,6 @@ static inline void sas_fail_probe(struct domain_device *dev, const char *func, i
- 		func, dev->parent ? "exp-attached" :
- 		"direct-attached",
- 		SAS_ADDR(dev->sas_addr), err);
--
--	/*
--	 * If the device probe failed, the expander phy attached address
--	 * needs to be reset so that the phy will not be treated as flutter
--	 * in the next revalidation
--	 */
--	if (dev->parent && !dev_is_expander(dev->dev_type)) {
--		struct sas_phy *phy = dev->phy;
--		struct domain_device *parent = dev->parent;
--		struct ex_phy *ex_phy = &parent->ex_dev.ex_phy[phy->number];
--
--		memset(ex_phy->attached_sas_addr, 0, SAS_ADDR_SIZE);
--	}
--
- 	sas_unregister_dev(dev->port, dev);
- }
+--- a/net/wireless/wext-core.c
++++ b/net/wireless/wext-core.c
+@@ -1101,6 +1101,10 @@ static int compat_standard_call(struct n
+ 		return ioctl_standard_call(dev, iwr, cmd, info, handler);
  
--- 
-2.51.0
-
+ 	iwp_compat = (struct compat_iw_point *) &iwr->u.data;
++
++	/* struct iw_point has a 32bit hole on 64bit arches. */
++	memset(&iwp, 0, sizeof(iwp));
++
+ 	iwp.pointer = compat_ptr(iwp_compat->pointer);
+ 	iwp.length = iwp_compat->length;
+ 	iwp.flags = iwp_compat->flags;
+--- a/net/wireless/wext-priv.c
++++ b/net/wireless/wext-priv.c
+@@ -228,6 +228,10 @@ int compat_private_call(struct net_devic
+ 		struct iw_point iwp;
+ 
+ 		iwp_compat = (struct compat_iw_point *) &iwr->u.data;
++
++		/* struct iw_point has a 32bit hole on 64bit arches. */
++		memset(&iwp, 0, sizeof(iwp));
++
+ 		iwp.pointer = compat_ptr(iwp_compat->pointer);
+ 		iwp.length = iwp_compat->length;
+ 		iwp.flags = iwp_compat->flags;
 
 
