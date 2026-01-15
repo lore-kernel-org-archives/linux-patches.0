@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E13B3D1CAD;
-	Thu, 15 Jan 2026 17:53:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C883D5D97;
+	Thu, 15 Jan 2026 17:54:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499639; cv=none; b=aUCy2qb8UvPPynlEjdQQnE9tb307jzc4W+xNInvH1gk13KZBxqQmV46WRowS+/zxcQP+wq4JUYG04nMlY3x+OdSnDsDWj2rfhjrbZyy5V/YtqI7igm+14YgPcUC/ODmyX6uRFWg6+D660sLJouwhkw6V1pzqdWoXo27kfTRSiZo=
+	t=1768499642; cv=none; b=Tu6fq/j0HOfjkBXp1+D6i/DANavQRs82nUJH9SL4LCo+QczsUCU/7zLRHqGUJhopbvdaGY0UKOnlbhmKPsHDwoZG2Sb/WlGj5d9XyvG4GMRM+Hs/zvgqgXCUMUylCMzKERkbHzz4yjWDcQZVaGEoSxE7ryqsNiClTEJwpouDeXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499639; c=relaxed/simple;
-	bh=5gNrw5GwXnwSbUqQXaY8eC5sAYuJSu2JQ/4KBEpncPY=;
+	s=arc-20240116; t=1768499642; c=relaxed/simple;
+	bh=/L7vZP43AEtsAh9Po48Hfd6RWqT4Fr3rizQbFfnIXBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jykS7CFZzCmn/ng+EcZnZEgKxwhJoi95ZO62pCnC5bYVva4JGRUZPn8JjjG9u2/89xXswK1xXUKHT0CzX5mpx3MX2VO54tpRHjVrh/KiI2B3vZcV7/qCHlICMKHCarM+rQoWsHoHWkuLD+/yzyx4SDBHXZ/q8Tjxu1xVGUWWiKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iv5jpx91; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EDkwfp79PH4kt2oVj+D4eLC9jPqCEKpTV1/B7acMUHnGqJMntzzOK9aIomU7MQlH96k9j33ULCIJo6X5FvCSy7ngdqkuohiH4PUGwq2YfHX7vPDlLJ0275vg70Fqz/E+rU2oiuVpGNc0F8AkZxo/b/Is8urmuB29/giRPRZoMXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T49EJuLU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iv5jpx91"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9701AC16AAE;
-	Thu, 15 Jan 2026 17:53:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T49EJuLU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 757F2C16AAE;
+	Thu, 15 Jan 2026 17:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499639;
-	bh=5gNrw5GwXnwSbUqQXaY8eC5sAYuJSu2JQ/4KBEpncPY=;
+	s=korg; t=1768499641;
+	bh=/L7vZP43AEtsAh9Po48Hfd6RWqT4Fr3rizQbFfnIXBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iv5jpx91aFL/69n7p1RG4cnRiM1Vgo4l9m9zyFMh6ypikMrKr3b+p2iEg8L2CRH2U
-	 Ig8NQabp8RkB1a1OM0UwUwbD+rhlrX95CzmYxHOEe2iN6i/dPxAbiPAYfdBb7rAanx
-	 teLpg8Pu7o6moZHXUTqLllrmWk00j+EmP1WrEmSI=
+	b=T49EJuLUTNeCtTKAhv/DC+n5tQ0HeHOADWnuG6fFag8UZ8UtJWebm3TKS1Cerkdmq
+	 vtfCnh5efBfjhJtpvO0Wc0MlQuKDy9BOcxtraS6jQa1TQg0ol8O6duu+acnMef/dh7
+	 sF4dRFsKLg+zNJlTFr5f2lp57Z/C0+/qT0U+O0zQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <hanguidong02@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 5.10 270/451] hwmon: (w83l786ng) Convert macros to functions to avoid TOCTOU
-Date: Thu, 15 Jan 2026 17:47:51 +0100
-Message-ID: <20260115164240.653799876@linuxfoundation.org>
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Yipeng Zou <zouyipeng@huawei.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 297/451] selftests/ftrace: traceonoff_triggers: strip off names
+Date: Thu, 15 Jan 2026 17:48:18 +0100
+Message-ID: <20260115164241.633893924@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -50,93 +53,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gui-Dong Han <hanguidong02@gmail.com>
+From: Yipeng Zou <zouyipeng@huawei.com>
 
-commit 07272e883fc61574b8367d44de48917f622cdd83 upstream.
+[ Upstream commit b889b4fb4cbea3ca7eb9814075d6a51936394bd9 ]
 
-The macros FAN_FROM_REG and TEMP_FROM_REG evaluate their arguments
-multiple times. When used in lockless contexts involving shared driver
-data, this causes Time-of-Check to Time-of-Use (TOCTOU) race
-conditions.
+The func_traceonoff_triggers.tc sometimes goes to fail
+on my board, Kunpeng-920.
 
-Convert the macros to static functions. This guarantees that arguments
-are evaluated only once (pass-by-value), preventing the race
-conditions.
+[root@localhost]# ./ftracetest ./test.d/ftrace/func_traceonoff_triggers.tc -l fail.log
+=== Ftrace unit tests ===
+[1] ftrace - test for function traceon/off triggers     [FAIL]
+[2] (instance)  ftrace - test for function traceon/off triggers [UNSUPPORTED]
 
-Adhere to the principle of minimal changes by only converting macros
-that evaluate arguments multiple times and are used in lockless
-contexts.
+I look up the log, and it shows that the md5sum is different between csum1 and csum2.
 
-Link: https://lore.kernel.org/all/CALbr=LYJ_ehtp53HXEVkSpYoub+XYSTU8Rg=o1xxMJ8=5z8B-g@mail.gmail.com/
-Fixes: 85f03bccd6e0 ("hwmon: Add support for Winbond W83L786NG/NR")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
-Link: https://lore.kernel.org/r/20251128123816.3670-1-hanguidong02@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+++ cnt=611
+++ sleep .1
++++ cnt_trace
++++ grep -v '^#' trace
++++ wc -l
+++ cnt2=611
+++ '[' 611 -ne 611 ']'
++++ cat tracing_on
+++ on=0
+++ '[' 0 '!=' 0 ']'
++++ md5sum trace
+++ csum1='76896aa74362fff66a6a5f3cf8a8a500  trace'
+++ sleep .1
++++ md5sum trace
+++ csum2='ee8625a21c058818fc26e45c1ed3f6de  trace'
+++ '[' '76896aa74362fff66a6a5f3cf8a8a500  trace' '!=' 'ee8625a21c058818fc26e45c1ed3f6de  trace' ']'
+++ fail 'Tracing file is still changing'
+++ echo Tracing file is still changing
+Tracing file is still changing
+++ exit_fail
+++ exit 1
+
+So I directly dump the trace file before md5sum, the diff shows that:
+
+[root@localhost]# diff trace_1.log trace_2.log -y --suppress-common-lines
+dockerd-12285   [036] d.... 18385.510290: sched_stat | <...>-12285   [036] d.... 18385.510290: sched_stat
+dockerd-12285   [036] d.... 18385.510291: sched_swit | <...>-12285   [036] d.... 18385.510291: sched_swit
+<...>-740       [044] d.... 18385.602859: sched_stat | kworker/44:1-740 [044] d.... 18385.602859: sched_stat
+<...>-740       [044] d.... 18385.602860: sched_swit | kworker/44:1-740 [044] d.... 18385.602860: sched_swit
+
+And we can see that <...> filed be filled with names.
+
+We can strip off the names there to fix that.
+
+After strip off the names:
+
+kworker/u257:0-12 [019] d..2.  2528.758910: sched_stat | -12 [019] d..2.  2528.758910: sched_stat_runtime: comm=k
+kworker/u257:0-12 [019] d..2.  2528.758912: sched_swit | -12 [019] d..2.  2528.758912: sched_switch: prev_comm=kw
+<idle>-0          [000] d.s5.  2528.762318: sched_waki | -0  [000] d.s5.  2528.762318: sched_waking: comm=sshd pi
+<idle>-0          [037] dNh2.  2528.762326: sched_wake | -0  [037] dNh2.  2528.762326: sched_wakeup: comm=sshd pi
+<idle>-0          [037] d..2.  2528.762334: sched_swit | -0  [037] d..2.  2528.762334: sched_switch: prev_comm=sw
+
+Link: https://lore.kernel.org/r/20230818013226.2182299-1-zouyipeng@huawei.com
+Fixes: d87b29179aa0 ("selftests: ftrace: Use md5sum to take less time of checking logs")
+Suggested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Yipeng Zou <zouyipeng@huawei.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/w83l786ng.c |   26 ++++++++++++++++++--------
- 1 file changed, 18 insertions(+), 8 deletions(-)
+ tools/testing/selftests/ftrace/test.d/ftrace/func_traceonoff_triggers.tc |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/hwmon/w83l786ng.c
-+++ b/drivers/hwmon/w83l786ng.c
-@@ -77,15 +77,25 @@ FAN_TO_REG(long rpm, int div)
- 	return clamp_val((1350000 + rpm * div / 2) / (rpm * div), 1, 254);
- }
+--- a/tools/testing/selftests/ftrace/test.d/ftrace/func_traceonoff_triggers.tc
++++ b/tools/testing/selftests/ftrace/test.d/ftrace/func_traceonoff_triggers.tc
+@@ -90,9 +90,10 @@ if [ $on != "0" ]; then
+     fail "Tracing is not off"
+ fi
  
--#define FAN_FROM_REG(val, div)	((val) == 0   ? -1 : \
--				((val) == 255 ? 0 : \
--				1350000 / ((val) * (div))))
-+static int fan_from_reg(int val, int div)
-+{
-+	if (val == 0)
-+		return -1;
-+	if (val == 255)
-+		return 0;
-+	return 1350000 / (val * div);
-+}
+-csum1=`md5sum trace`
++# Cannot rely on names being around as they are only cached, strip them
++csum1=`cat trace | sed -e 's/^ *[^ ]*\(-[0-9][0-9]*\)/\1/' | md5sum`
+ sleep $SLEEP_TIME
+-csum2=`md5sum trace`
++csum2=`cat trace | sed -e 's/^ *[^ ]*\(-[0-9][0-9]*\)/\1/' | md5sum`
  
- /* for temp */
- #define TEMP_TO_REG(val)	(clamp_val(((val) < 0 ? (val) + 0x100 * 1000 \
- 						      : (val)) / 1000, 0, 0xff))
--#define TEMP_FROM_REG(val)	(((val) & 0x80 ? \
--				  (val) - 0x100 : (val)) * 1000)
-+
-+static int temp_from_reg(int val)
-+{
-+	if (val & 0x80)
-+		return (val - 0x100) * 1000;
-+	return val * 1000;
-+}
- 
- /*
-  * The analog voltage inputs have 8mV LSB. Since the sysfs output is
-@@ -281,7 +291,7 @@ static ssize_t show_##reg(struct device
- 	int nr = to_sensor_dev_attr(attr)->index; \
- 	struct w83l786ng_data *data = w83l786ng_update_device(dev); \
- 	return sprintf(buf, "%d\n", \
--		FAN_FROM_REG(data->reg[nr], DIV_FROM_REG(data->fan_div[nr]))); \
-+		fan_from_reg(data->reg[nr], DIV_FROM_REG(data->fan_div[nr]))); \
- }
- 
- show_fan_reg(fan);
-@@ -348,7 +358,7 @@ store_fan_div(struct device *dev, struct
- 
- 	/* Save fan_min */
- 	mutex_lock(&data->update_lock);
--	min = FAN_FROM_REG(data->fan_min[nr], DIV_FROM_REG(data->fan_div[nr]));
-+	min = fan_from_reg(data->fan_min[nr], DIV_FROM_REG(data->fan_div[nr]));
- 
- 	data->fan_div[nr] = DIV_TO_REG(val);
- 
-@@ -410,7 +420,7 @@ show_temp(struct device *dev, struct dev
- 	int nr = sensor_attr->nr;
- 	int index = sensor_attr->index;
- 	struct w83l786ng_data *data = w83l786ng_update_device(dev);
--	return sprintf(buf, "%d\n", TEMP_FROM_REG(data->temp[nr][index]));
-+	return sprintf(buf, "%d\n", temp_from_reg(data->temp[nr][index]));
- }
- 
- static ssize_t
+ if [ "$csum1" != "$csum2" ]; then
+     fail "Tracing file is still changing"
 
 
