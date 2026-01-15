@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B12325228D;
-	Thu, 15 Jan 2026 16:56:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F72274B43;
+	Thu, 15 Jan 2026 16:56:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496165; cv=none; b=Ty3GLIJq8jYIC37PhUDyd3HgtP6mvprAbQd3PzHfhPYM+PZoTFy04lhg6BoyxHgMTM13HYBMLACtAZv5NL9bEbDU1GRr8taELT+Y7DKzt6lHLhRRrg6rVv3GrwTH7oeJD10JngXlXa0IcAFXFLEsUHZyctqet6Q9tm8V2m56M/A=
+	t=1768496168; cv=none; b=ma9lsdXyOXZsSZ1bYjOP4ORi0FBotPHrWVNyNqbbvYG6YV9TLIadIk9SiGraujChx6q5pbfIuUdIhJu7QirpnjkKrTXNzlHXaXtxz+N7HytjNce7CmXTG3WB25y99EWC6wZNhkSzazrhIJlk8r5EkR0/pCJTQVlhLSXJolHE6ys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496165; c=relaxed/simple;
-	bh=sjq8KJ4oENh2JYLAmw04qFNVg0QdgAgDpCnIJSJrhkM=;
+	s=arc-20240116; t=1768496168; c=relaxed/simple;
+	bh=EjL3rN0RduJpaYBx5PWbS+kCsep3VKXLmNfpPcq5fX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RAC7l+ovC6PJWxJ94F3pz/r2lL8fZT73zLq1KT36JkOYBkQrCGbIsUp3SSZ41Ah53Zth6toOnN1j582UpxvhMOw3LKytxZGbl5vDqw6G9d4Kr6/zICUAfxP7yQtc7TYhJisoHNUsyP3fCvfAJdjSBS9ASjXcLSYPgfOUi4+C3LE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h6cN1SV2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sXkusgLIRNfBRXFO+TBWnI+/7RAYUHDEWdF6MbVsbVCCwlWna/TC5xAjeV3cglRngjVu3l9/wzrFCaYGyzD0qrTXz0ElgJTkDSORz2ly79HHE8u2DBV5K2+u10CUJ4j0jtUnS/FzxduWeZSsrbFjP1BcX+FPcLZH0eMRA4DCBFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mj8nOkLn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h6cN1SV2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0254C116D0;
-	Thu, 15 Jan 2026 16:56:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mj8nOkLn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FB0CC116D0;
+	Thu, 15 Jan 2026 16:56:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496165;
-	bh=sjq8KJ4oENh2JYLAmw04qFNVg0QdgAgDpCnIJSJrhkM=;
+	s=korg; t=1768496167;
+	bh=EjL3rN0RduJpaYBx5PWbS+kCsep3VKXLmNfpPcq5fX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h6cN1SV20QNxITOvRpPyzt9cT1I26O69m5eMKJ1pXStugYTsIC+Apza73oah1dew7
-	 GqGrSq6Zpt/W8kzP8emHvRyw4liPu/NLaFZCY5Eox0OxfPNcgR0lH/d+4/8zpBpTtm
-	 5EsxHcVX3C29HP48Xt00g4awzDxzMt1vT0y3IkwY=
+	b=Mj8nOkLntD0ovKg/GxIfrJonR6t5J0VTLDwdGyeqCV+E2zyMFM/PvOXGQjmAaoKft
+	 jdCf45PVfCRcdYHKBR8TcLdw4a+i8+H3qH+nmoPZMvWy+XNKXd/8oaN3luZzeruY/2
+	 d4Tte5ow6LIZoB9LxLkbX2lkX7gvtRJNxwu5/5eU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Gibson <daniel@gibson.sh>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 073/181] gpio: it87: balance superio enter/exit calls in error path
-Date: Thu, 15 Jan 2026 17:46:50 +0100
-Message-ID: <20260115164204.959139064@linuxfoundation.org>
+Subject: [PATCH 6.18 100/181] net: sock: fix hardened usercopy panic in sock_recv_errqueue
+Date: Thu, 15 Jan 2026 17:47:17 +0100
+Message-ID: <20260115164205.929863570@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -51,62 +53,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit a05543d6b05ba998fdbb4b383319ae5121bb7407 ]
+[ Upstream commit 2a71a1a8d0ed718b1c7a9ac61f07e5755c47ae20 ]
 
-We always call superio_enter() in it87_gpio_direction_out() but only
-call superio_exit() if the call to it87_gpio_set() succeeds. Move the
-label to balance the calls in error path as well.
+skbuff_fclone_cache was created without defining a usercopy region,
+[1] unlike skbuff_head_cache which properly whitelists the cb[] field.
+[2] This causes a usercopy BUG() when CONFIG_HARDENED_USERCOPY is
+enabled and the kernel attempts to copy sk_buff.cb data to userspace
+via sock_recv_errqueue() -> put_cmsg().
 
-Fixes: ef877a159072 ("gpio: it87: use new line value setter callbacks")
-Reported-by: Daniel Gibson <daniel@gibson.sh>
-Closes: https://lore.kernel.org/all/bd0a00e3-9b8c-43e8-8772-e67b91f4c71e@gibson.sh/
-Link: https://lore.kernel.org/r/20251210055026.23146-1-bartosz.golaszewski@oss.qualcomm.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+The crash occurs when: 1. TCP allocates an skb using alloc_skb_fclone()
+   (from skbuff_fclone_cache) [1]
+2. The skb is cloned via skb_clone() using the pre-allocated fclone
+[3] 3. The cloned skb is queued to sk_error_queue for timestamp
+reporting 4. Userspace reads the error queue via recvmsg(MSG_ERRQUEUE)
+5. sock_recv_errqueue() calls put_cmsg() to copy serr->ee from skb->cb
+[4] 6. __check_heap_object() fails because skbuff_fclone_cache has no
+   usercopy whitelist [5]
+
+When cloned skbs allocated from skbuff_fclone_cache are used in the
+socket error queue, accessing the sock_exterr_skb structure in skb->cb
+via put_cmsg() triggers a usercopy hardening violation:
+
+[    5.379589] usercopy: Kernel memory exposure attempt detected from SLUB object 'skbuff_fclone_cache' (offset 296, size 16)!
+[    5.382796] kernel BUG at mm/usercopy.c:102!
+[    5.383923] Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
+[    5.384903] CPU: 1 UID: 0 PID: 138 Comm: poc_put_cmsg Not tainted 6.12.57 #7
+[    5.384903] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+[    5.384903] RIP: 0010:usercopy_abort+0x6c/0x80
+[    5.384903] Code: 1a 86 51 48 c7 c2 40 15 1a 86 41 52 48 c7 c7 c0 15 1a 86 48 0f 45 d6 48 c7 c6 80 15 1a 86 48 89 c1 49 0f 45 f3 e8 84 27 88 ff <0f> 0b 490
+[    5.384903] RSP: 0018:ffffc900006f77a8 EFLAGS: 00010246
+[    5.384903] RAX: 000000000000006f RBX: ffff88800f0ad2a8 RCX: 1ffffffff0f72e74
+[    5.384903] RDX: 0000000000000000 RSI: 0000000000000004 RDI: ffffffff87b973a0
+[    5.384903] RBP: 0000000000000010 R08: 0000000000000000 R09: fffffbfff0f72e74
+[    5.384903] R10: 0000000000000003 R11: 79706f6372657375 R12: 0000000000000001
+[    5.384903] R13: ffff88800f0ad2b8 R14: ffffea00003c2b40 R15: ffffea00003c2b00
+[    5.384903] FS:  0000000011bc4380(0000) GS:ffff8880bf100000(0000) knlGS:0000000000000000
+[    5.384903] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[    5.384903] CR2: 000056aa3b8e5fe4 CR3: 000000000ea26004 CR4: 0000000000770ef0
+[    5.384903] PKRU: 55555554
+[    5.384903] Call Trace:
+[    5.384903]  <TASK>
+[    5.384903]  __check_heap_object+0x9a/0xd0
+[    5.384903]  __check_object_size+0x46c/0x690
+[    5.384903]  put_cmsg+0x129/0x5e0
+[    5.384903]  sock_recv_errqueue+0x22f/0x380
+[    5.384903]  tls_sw_recvmsg+0x7ed/0x1960
+[    5.384903]  ? srso_alias_return_thunk+0x5/0xfbef5
+[    5.384903]  ? schedule+0x6d/0x270
+[    5.384903]  ? srso_alias_return_thunk+0x5/0xfbef5
+[    5.384903]  ? mutex_unlock+0x81/0xd0
+[    5.384903]  ? __pfx_mutex_unlock+0x10/0x10
+[    5.384903]  ? __pfx_tls_sw_recvmsg+0x10/0x10
+[    5.384903]  ? _raw_spin_lock_irqsave+0x8f/0xf0
+[    5.384903]  ? _raw_read_unlock_irqrestore+0x20/0x40
+[    5.384903]  ? srso_alias_return_thunk+0x5/0xfbef5
+
+The crash offset 296 corresponds to skb2->cb within skbuff_fclones:
+  - sizeof(struct sk_buff) = 232 - offsetof(struct sk_buff, cb) = 40 -
+  offset of skb2.cb in fclones = 232 + 40 = 272 - crash offset 296 =
+  272 + 24 (inside sock_exterr_skb.ee)
+
+This patch uses a local stack variable as a bounce buffer to avoid the hardened usercopy check failure.
+
+[1] https://elixir.bootlin.com/linux/v6.12.62/source/net/ipv4/tcp.c#L885
+[2] https://elixir.bootlin.com/linux/v6.12.62/source/net/core/skbuff.c#L5104
+[3] https://elixir.bootlin.com/linux/v6.12.62/source/net/core/skbuff.c#L5566
+[4] https://elixir.bootlin.com/linux/v6.12.62/source/net/core/skbuff.c#L5491
+[5] https://elixir.bootlin.com/linux/v6.12.62/source/mm/slub.c#L5719
+
+Fixes: 6d07d1cd300f ("usercopy: Restrict non-usercopy caches to size 0")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20251223203534.1392218-2-bestswngs@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-it87.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ net/core/sock.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpio/gpio-it87.c b/drivers/gpio/gpio-it87.c
-index 5d677bcfccf26..2ad3c239367bc 100644
---- a/drivers/gpio/gpio-it87.c
-+++ b/drivers/gpio/gpio-it87.c
-@@ -12,6 +12,7 @@
+diff --git a/net/core/sock.c b/net/core/sock.c
+index dc03d4b5909a2..5a38837a58384 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -3836,7 +3836,7 @@ void sock_enable_timestamp(struct sock *sk, enum sock_flags flag)
+ int sock_recv_errqueue(struct sock *sk, struct msghdr *msg, int len,
+ 		       int level, int type)
+ {
+-	struct sock_exterr_skb *serr;
++	struct sock_extended_err ee;
+ 	struct sk_buff *skb;
+ 	int copied, err;
  
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+@@ -3856,8 +3856,9 @@ int sock_recv_errqueue(struct sock *sk, struct msghdr *msg, int len,
  
-+#include <linux/cleanup.h>
- #include <linux/init.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
-@@ -241,23 +242,17 @@ static int it87_gpio_direction_out(struct gpio_chip *chip,
- 	mask = 1 << (gpio_num % 8);
- 	group = (gpio_num / 8);
+ 	sock_recv_timestamp(msg, sk, skb);
  
--	spin_lock(&it87_gpio->lock);
-+	guard(spinlock)(&it87_gpio->lock);
+-	serr = SKB_EXT_ERR(skb);
+-	put_cmsg(msg, level, type, sizeof(serr->ee), &serr->ee);
++	/* We must use a bounce buffer for CONFIG_HARDENED_USERCOPY=y */
++	ee = SKB_EXT_ERR(skb)->ee;
++	put_cmsg(msg, level, type, sizeof(ee), &ee);
  
- 	rc = superio_enter();
- 	if (rc)
--		goto exit;
-+		return rc;
- 
- 	/* set the output enable bit */
- 	superio_set_mask(mask, group + it87_gpio->output_base);
- 
- 	rc = it87_gpio_set(chip, gpio_num, val);
--	if (rc)
--		goto exit;
--
- 	superio_exit();
--
--exit:
--	spin_unlock(&it87_gpio->lock);
- 	return rc;
- }
- 
+ 	msg->msg_flags |= MSG_ERRQUEUE;
+ 	err = copied;
 -- 
 2.51.0
 
