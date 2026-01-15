@@ -1,39 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7459C2D541B;
-	Thu, 15 Jan 2026 17:16:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39BFC86334;
+	Thu, 15 Jan 2026 17:16:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497370; cv=none; b=ZIfuklKScf8UBSQrhA/Ql45zKjpVNw0Fxp1YvDGD6W+kKtxdA5b1JPrLDOzK4T2jwfMuvyd38c8MpuaYOPDibNuufjVCQe8ICHV9UFFkkDddzS3K4gpz7NfxEj7JJfIuAZ/bnpucDGOjKjLPV6Jiwa2udw3UnRJgsJSzLM7KfQk=
+	t=1768497373; cv=none; b=gWtnYejtCtQ+2R+EGXWf7df7KXr7klqnCBCljiHAVxESLpRUIAcZpIy1qynaiRsqhppaxtDZwb71hDl9iAuEITsKQJCcA0R3jcvLFADD1V4ODBJF6LkhOAZKszilaAKb9uAQFPDrHXtGFL8wknIqPleLIjDPNAqr+9cymjZJ4AI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497370; c=relaxed/simple;
-	bh=ydwaucHDpENCsVsD+MZq2MxoZ4wHCwtYTNHBi0yUnwo=;
+	s=arc-20240116; t=1768497373; c=relaxed/simple;
+	bh=/Xfu+GLfL/gNB3NygmKWW1xZCpnYx7ANVJgGf5YJpZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DuZ/v4sdw/FppPenFEgtsYHrZgOKgLvSRn+lEukPP39u7eKQEWyR6yUiPDfhgoZqbRyFOp+GuiVz2IhJGcpnD8RNU1bIGdZRY7H5bBecAGWzbuJQETCR2YyiuMjeHBXSLyjBBAXxXziFehl8rtEtHvmjR5O3kbbWu8DB+XwJfzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NQ3J0Cto; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T0KaK9Tv/IUfE83U72fbGApYiv1Gr3Y8q02GQo3bqcHRxt6H8XypryiMkkkSip46grdAJ4aGVORf08ZlabmrV4LlVcP8KNd1kOYwnGbFG2RFBX+aBgFN5mPbTlsbRjnxREhHfIoje4CeI/4OpL2uez8v7RHVWX1xBaqufgITivY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NfYFN6zG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NQ3J0Cto"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0DB3C116D0;
-	Thu, 15 Jan 2026 17:16:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NfYFN6zG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 917B0C116D0;
+	Thu, 15 Jan 2026 17:16:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497370;
-	bh=ydwaucHDpENCsVsD+MZq2MxoZ4wHCwtYTNHBi0yUnwo=;
+	s=korg; t=1768497373;
+	bh=/Xfu+GLfL/gNB3NygmKWW1xZCpnYx7ANVJgGf5YJpZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NQ3J0Cto4sLXxI1kuf1SVcGqn2jVfdWS3dcno/KSvt+bIJWRM+TbZ2XtCZ87jIMTl
-	 c7m2DCo2tvP+5MWwBcEWJGWlEuOI88uYCVGQfhEKtncHw2MwtYguA/Tz8k7q63yNNu
-	 /FzoObywu5JvLIwikm9BdVX8fWgEYnn39apCkvkE=
+	b=NfYFN6zGRsrcHuFoCT3gRs6DOb+yJrac+VHA4RC3CYh8k/VOAW7Qd+XRHsAe0q8sQ
+	 KWqIT91Vvvii75tpM02TWRZ1P4wrRVV8zHssmy9Xa+CKLKVxO5IyXTwr49UMqkiwep
+	 wnJkPq4yTaE3HJ3ChxaSMRctOYlPphwcc1ThEH5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Will Deacon <will@kernel.org>,
+	Arvind Sankar <nivedita@alum.mit.edu>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	llvm@lists.linux.dev,
+	Kees Cook <keescook@chromium.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Marco Elver <elver@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 056/554] sctp: Defer SCTP_DBG_OBJCNT_DEC() to sctp_destroy_sock().
-Date: Thu, 15 Jan 2026 17:42:02 +0100
-Message-ID: <20260115164248.273180215@linuxfoundation.org>
+Subject: [PATCH 5.15 057/554] compiler-gcc.h: Define __SANITIZE_ADDRESS__ under hwaddress sanitizer
+Date: Thu, 15 Jan 2026 17:42:03 +0100
+Message-ID: <20260115164248.309136820@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -52,64 +60,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 622e8838a29845316668ec2e7648428878df7f9a ]
+[ Upstream commit 9a48e7564ac83fb0f1d5b0eac5fe8a7af62da398 ]
 
-SCTP_DBG_OBJCNT_INC() is called only when sctp_init_sock()
-returns 0 after successfully allocating sctp_sk(sk)->ep.
+When Clang is using the hwaddress sanitizer, it sets __SANITIZE_ADDRESS__
+explicitly:
 
-OTOH, SCTP_DBG_OBJCNT_DEC() is called in sctp_close().
+ #if __has_feature(address_sanitizer) || __has_feature(hwaddress_sanitizer)
+ /* Emulate GCC's __SANITIZE_ADDRESS__ flag */
+ #define __SANITIZE_ADDRESS__
+ #endif
 
-The code seems to expect that the socket is always exposed
-to userspace once SCTP_DBG_OBJCNT_INC() is incremented, but
-there is a path where the assumption is not true.
+Once hwaddress sanitizer was added to GCC, however, a separate define
+was created, __SANITIZE_HWADDRESS__. The kernel is expecting to find
+__SANITIZE_ADDRESS__ in either case, though, and the existing string
+macros break on supported architectures:
 
-In sctp_accept(), sctp_sock_migrate() could fail after
-sctp_init_sock().
+ #if (defined(CONFIG_KASAN_GENERIC) || defined(CONFIG_KASAN_SW_TAGS)) && \
+          !defined(__SANITIZE_ADDRESS__)
 
-Then, sk_common_release() does not call inet_release() nor
-sctp_close().  Instead, it calls sk->sk_prot->destroy().
+where as other architectures (like arm32) have no idea about hwaddress
+sanitizer and just check for __SANITIZE_ADDRESS__:
 
-Let's move SCTP_DBG_OBJCNT_DEC() from sctp_close() to
-sctp_destroy_sock().
+ #if defined(CONFIG_KASAN) && !defined(__SANITIZE_ADDRESS__)
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20251023231751.4168390-2-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This would lead to compiler foritfy self-test warnings when building
+with CONFIG_KASAN_SW_TAGS=y:
+
+warning: unsafe memmove() usage lacked '__read_overflow2' symbol in lib/test_fortify/read_overflow2-memmove.c
+warning: unsafe memcpy() usage lacked '__write_overflow' symbol in lib/test_fortify/write_overflow-memcpy.c
+...
+
+Sort this out by also defining __SANITIZE_ADDRESS__ in GCC under the
+hwaddress sanitizer.
+
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: Arvind Sankar <nivedita@alum.mit.edu>
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Cc: llvm@lists.linux.dev
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Miguel Ojeda <ojeda@kernel.org>
+Reviewed-by: Marco Elver <elver@google.com>
+Link: https://lore.kernel.org/r/20211020200039.170424-1-keescook@chromium.org
+Stable-dep-of: ced37e9ceae5 ("x86/dumpstack: Prevent KASAN false positive warnings in __show_regs()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ include/linux/compiler-gcc.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 0aaea911b21ef..424af9d0434db 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -1551,8 +1551,6 @@ static void sctp_close(struct sock *sk, long timeout)
- 	spin_unlock_bh(&net->sctp.addr_wq_lock);
+diff --git a/include/linux/compiler-gcc.h b/include/linux/compiler-gcc.h
+index b9d5f9c373a09..06c1cf2ab0244 100644
+--- a/include/linux/compiler-gcc.h
++++ b/include/linux/compiler-gcc.h
+@@ -123,6 +123,14 @@
+ #define __no_sanitize_coverage
+ #endif
  
- 	sock_put(sk);
--
--	SCTP_DBG_OBJCNT_DEC(sock);
- }
- 
- /* Handle EPIPE error. */
-@@ -5101,9 +5099,12 @@ static void sctp_destroy_sock(struct sock *sk)
- 		sp->do_auto_asconf = 0;
- 		list_del(&sp->auto_asconf_list);
- 	}
++/*
++ * Treat __SANITIZE_HWADDRESS__ the same as __SANITIZE_ADDRESS__ in the kernel,
++ * matching the defines used by Clang.
++ */
++#ifdef __SANITIZE_HWADDRESS__
++#define __SANITIZE_ADDRESS__
++#endif
 +
- 	sctp_endpoint_free(sp->ep);
-+
- 	sk_sockets_allocated_dec(sk);
- 	sock_prot_inuse_add(sock_net(sk), sk->sk_prot, -1);
-+	SCTP_DBG_OBJCNT_DEC(sock);
- }
- 
- /* Triggered when there are no references on the socket anymore */
+ /*
+  * Turn individual warnings and errors on and off locally, depending
+  * on version.
 -- 
 2.51.0
 
