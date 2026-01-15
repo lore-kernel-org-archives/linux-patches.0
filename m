@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 344D73D2FF3;
-	Thu, 15 Jan 2026 17:55:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48CE03D6464;
+	Thu, 15 Jan 2026 17:55:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499715; cv=none; b=D6rlRl2w6Drzeo+utLROyokPcVyCWfhnW7Q5EcRzIbzwcvPlo6vr7yaC8po1AfUfM7pbw7jz+IdQOm9o01k+t/D/9ARN9N5/7eecSpoNN+k0IXAcDBlIHrgfAt4+4CCF/603CYbcqReQ4BWQ/WuJaIIQDAMGGBwBwRkt5VQ60IY=
+	t=1768499718; cv=none; b=FgCxFRSrPTg9d+/PDNDX7AZgz+0c1O3KE//V0f8S2ngWfAomEaXFA/LtVnyANBIoGQv6dXkh5s36r6XNKihjVaZSpK2Qbw7afmQDNAgGutwPdraFfEe2OlwFq1IqYTgAh8ADRB9pooM+rIKYjUMJGl3OZlNLbj1qPqy8SsunXgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499715; c=relaxed/simple;
-	bh=0a0TLag+NhhUH+BkH/7xkiRQMMMu5X1KNfoyDwSfPc4=;
+	s=arc-20240116; t=1768499718; c=relaxed/simple;
+	bh=RAxjgPIIjjsTg+E5QwLbG+L9Ddr37E9WxXX8QHXU/Nw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jJ340Sz5S4WD1Ovk0t0YCoDcIPy4R7smK37iVSQ3/LS0cXMawT9Db6mw1H1VqgcVOtcUb9azRKRsEzhKE9pDjJDFhUz4Otxc3rdhhrC0eI6urOn0FaRpLCTa9Bv6F/jwqw6Yf9oj80UxVKz1RPe1rg1hWahNoavgPgWh58zCMyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oRd5tgPA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CmCiIehIrXHDtvh/HiQRr/bnZMz4UR1i8Rw0lKSqMD3l6G4Va7SArWqeGOjTAOZJo7NY8hNU72NuVeowqWSXpOmkNpSJ1+g/GwI6dN2VKLs60vhOhbw3dPsUaP748oST78C7jV9C48ot1YoxuZTIPEVoTO+4lwo0cXiP5dluBaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AnHRtmT1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oRd5tgPA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6FCCC116D0;
-	Thu, 15 Jan 2026 17:55:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AnHRtmT1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82769C116D0;
+	Thu, 15 Jan 2026 17:55:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499715;
-	bh=0a0TLag+NhhUH+BkH/7xkiRQMMMu5X1KNfoyDwSfPc4=;
+	s=korg; t=1768499717;
+	bh=RAxjgPIIjjsTg+E5QwLbG+L9Ddr37E9WxXX8QHXU/Nw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oRd5tgPAlHeqXvHAHN5UZLqroJMhotDBeZe0JrS929MggPcJ911zRTMPzbtWb2KWO
-	 LT8+aEd1qiwNAiqSiKB/mULQPbvr3Y18JEcGcSFNmdDb3wjkDDEcKrTdIV5QP4MS1l
-	 +ME/oZiRerwIkqvbHDcPjQuZcvbrHDzq0VTiDXBY=
+	b=AnHRtmT1PgEZ9u9bM5ZBoUwHrPgCMF127HTJcAPfVLbrgBxse/LMEE7Agv1JLMUlO
+	 DQuXaB6WjR1sKwIO0558lsteW50YFQH2h+Z0EcGZcNHpZL2C/jrnzjt68dnbfgnmes
+	 G8lsUSK9Q0mQVYL6e57DwJI4JXoFLuB/UOfKV2a0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Duoming Zhou <duoming@zju.edu.cn>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.10 324/451] media: TDA1997x: Remove redundant cancel_delayed_work in probe
-Date: Thu, 15 Jan 2026 17:48:45 +0100
-Message-ID: <20260115164242.620539205@linuxfoundation.org>
+Subject: [PATCH 5.10 325/451] media: i2c: ADV7604: Remove redundant cancel_delayed_work in probe
+Date: Thu, 15 Jan 2026 17:48:46 +0100
+Message-ID: <20260115164242.655773015@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -52,36 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Duoming Zhou <duoming@zju.edu.cn>
 
-commit 29de195ca39fc2ac0af6fd45522994df9f431f80 upstream.
+commit 8f34f24355a607b98ecd9924837aab13c676eeca upstream.
 
-The delayed_work delayed_work_enable_hpd is initialized with
-INIT_DELAYED_WORK(), but it is never scheduled in tda1997x_probe().
+The delayed_work delayed_work_enable_hotplug is initialized with
+INIT_DELAYED_WORK() in adv76xx_probe(), but it is never scheduled
+anywhere in the probe function.
 
 Calling cancel_delayed_work() on a work that has never been
 scheduled is redundant and unnecessary, as there is no pending
 work to cancel.
 
 Remove the redundant cancel_delayed_work() from error handling
-path in tda1997x_probe() to avoid potential confusion.
+path and adjust the goto label accordingly to simplify the code
+and avoid potential confusion.
 
-Fixes: 9ac0038db9a7 ("media: i2c: Add TDA1997x HDMI receiver driver")
+Fixes: 54450f591c99 ("[media] adv7604: driver for the Analog Devices ADV7604 video decoder")
 Cc: stable@vger.kernel.org
 Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/tda1997x.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/media/i2c/adv7604.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/media/i2c/tda1997x.c
-+++ b/drivers/media/i2c/tda1997x.c
-@@ -2779,7 +2779,6 @@ err_free_media:
- err_free_handler:
- 	v4l2_ctrl_handler_free(&state->hdl);
- err_free_mutex:
--	cancel_delayed_work(&state->delayed_work_enable_hpd);
- 	mutex_destroy(&state->page_lock);
- 	mutex_destroy(&state->lock);
- err_free_state:
+--- a/drivers/media/i2c/adv7604.c
++++ b/drivers/media/i2c/adv7604.c
+@@ -3561,7 +3561,7 @@ static int adv76xx_probe(struct i2c_clie
+ 	err = media_entity_pads_init(&sd->entity, state->source_pad + 1,
+ 				state->pads);
+ 	if (err)
+-		goto err_work_queues;
++		goto err_i2c;
+ 
+ 	/* Configure regmaps */
+ 	err = configure_regmaps(state);
+@@ -3602,8 +3602,6 @@ static int adv76xx_probe(struct i2c_clie
+ 
+ err_entity:
+ 	media_entity_cleanup(&sd->entity);
+-err_work_queues:
+-	cancel_delayed_work(&state->delayed_work_enable_hotplug);
+ err_i2c:
+ 	adv76xx_unregister_clients(state);
+ err_hdl:
 
 
