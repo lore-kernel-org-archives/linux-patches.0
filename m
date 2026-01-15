@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6FA73D1CDA;
-	Thu, 15 Jan 2026 17:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB8FF2C0270;
+	Thu, 15 Jan 2026 17:33:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498403; cv=none; b=D6dtZxNCsoB83O8RKJMwsk90vfEdB9qPAeehginv86JRjL+eGUjsOgPT1XrLNkifvXlRrMBhqUIjDymJq503r9yYML+oJS0Zd6+lmkhKGC+Fg3URD2wrZrTvZ/I+e4WU5avLzfkdoVP0j6/8aeZyR3vXQ733XJ928C8YWSA8fQM=
+	t=1768498405; cv=none; b=XSj+DG2u8/qA76sT18E8CZyXxiME9doB/khvwE0Hs9fYvtlyhKIxd8F9+9+pw6BNvg8hUpTqL3owDyrdMCmzdr79wUdjeuvb1MKCPip4fRk2S34oOyK1VUQQZS76E9CblM3I2u+QofPXDM/OcyZwzVLUfnh2CJFvGoKjMUd6/Z0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498403; c=relaxed/simple;
-	bh=epW6DfGnN/fJJhRI0W8i4/Vp0OlaEBb1tmcr/TdjFEY=;
+	s=arc-20240116; t=1768498405; c=relaxed/simple;
+	bh=K/fSK+0iv+pivVh6LEmqvVNwgxMkImDbrkz/jYQ6vUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cW78gRUoUjp7O/XfV83KDx4ldWlRp2ijEwRrkAoiQSIjK92P4WWN60rE8tgpaVNB1DszypvAkDWdQxPDgfDXwBXzV4xwuLTbybSjjtoTqT6hZ1R5T9E/eGf/VlAeeED0LGDhoi9HpThxoxCsl5ZDUSpA6dECGEUXF/QkXeMhmpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cSvoF0P7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZC6T9ApKhp9sDqfpNmTr3KBfNi+cJWPrV2m44VR3HQAOdDknfGstyVLbZxepOPOW/zqEuyIGgxPpSq1ONFC53ilbqn3/aIAbW3T/q8kwaKflgM5jZbaiqgIex9+mglPCtwL7eoHnU9mSvPAYzzsvdOytJKT/mgM5EijX4ldLs9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QTD7Cmlp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cSvoF0P7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D577C116D0;
-	Thu, 15 Jan 2026 17:33:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QTD7Cmlp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4884BC116D0;
+	Thu, 15 Jan 2026 17:33:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498402;
-	bh=epW6DfGnN/fJJhRI0W8i4/Vp0OlaEBb1tmcr/TdjFEY=;
+	s=korg; t=1768498405;
+	bh=K/fSK+0iv+pivVh6LEmqvVNwgxMkImDbrkz/jYQ6vUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cSvoF0P7dfcs2N+J7d5s3B81mDvdRC/L/6mrJ44akSyxnHrgz2N/BvO2i0YZHk3/Q
-	 hSt/EPdsT0zcRDDli5K1X4cwTCC100fIIUsbsSChbacp6eT8HRAftBa9PHJhupXV0B
-	 gxNI7B6S3k4v8jTOucU9K+GNYIfiL2m1EKlCTrOM=
+	b=QTD7Cmlp7sZwAtY9UmHq7MzKl5jVln30hkCU2tU1WAnwWfWlc5DQa0ehYULjDUGR5
+	 BNnqMaz8z0aQFV9cZeIhvkTlD/85i9mE3k40BwLwtZ4bPeGt1xqZ/gX8wFQyOsmmwb
+	 u5PiSworNn44JCoO9rRd4PIj1+v7l85eLwI7hFVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@google.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 418/554] mm/damon/tests/core-kunit: handle alloc failures on dasmon_test_merge_regions_of()
-Date: Thu, 15 Jan 2026 17:48:04 +0100
-Message-ID: <20260115164301.372523796@linuxfoundation.org>
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Patrice Chotard <patrice.chotard@foss.st.com>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 5.15 387/554] media: rc: st_rc: Fix reset control resource leak
+Date: Thu, 15 Jan 2026 17:47:33 +0100
+Message-ID: <20260115164300.246823406@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -53,46 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-commit 0998d2757218771c59d5ca59ccf13d1542a38f17 upstream.
+commit 1240abf4b71f632f0117b056e22488e4d9808938 upstream.
 
-damon_test_merge_regions_of() is assuming all dynamic memory allocation in
-it will succeed.  Those are indeed likely in the real use cases since
-those allocations are too small to fail, but theoretically those could
-fail.  In the case, inappropriate memory access can happen.  Fix it by
-appropriately cleanup pre-allocated memory and skip the execution of the
-remaining tests in the failure cases.
+The driver calls reset_control_get_optional_exclusive() but never calls
+reset_control_put() in error paths or in the remove function. This causes
+a resource leak when probe fails after successfully acquiring the reset
+control, or when the driver is unloaded.
 
-Link: https://lkml.kernel.org/r/20251101182021.74868-8-sj@kernel.org
-Fixes: 17ccae8bb5c9 ("mm/damon: add kunit tests")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>
-Cc: David Gow <davidgow@google.com>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: <stable@vger.kernel.org>	[5.15+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Switch to devm_reset_control_get_optional_exclusive() to automatically
+manage the reset control resource.
+
+Fixes: a4b80242d046 ("media: st-rc: explicitly request exclusive reset control")
+Cc: stable@vger.kernel.org
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Reviewed-by: Patrice Chotard <patrice.chotard@foss.st.com>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/core-test.h |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/media/rc/st_rc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/damon/core-test.h
-+++ b/mm/damon/core-test.h
-@@ -209,8 +209,14 @@ static void damon_test_merge_regions_of(
- 	int i;
+--- a/drivers/media/rc/st_rc.c
++++ b/drivers/media/rc/st_rc.c
+@@ -287,7 +287,7 @@ static int st_rc_probe(struct platform_d
+ 	else
+ 		rc_dev->rx_base = rc_dev->base;
  
- 	t = damon_new_target(42);
-+	if (!t)
-+		kunit_skip(test, "target alloc fail");
- 	for (i = 0; i < ARRAY_SIZE(sa); i++) {
- 		r = damon_new_region(sa[i], ea[i]);
-+		if (!r) {
-+			damon_free_target(t);
-+			kunit_skip(test, "region alloc fail");
-+		}
- 		r->nr_accesses = nrs[i];
- 		damon_add_region(r, t);
- 	}
+-	rc_dev->rstc = reset_control_get_optional_exclusive(dev, NULL);
++	rc_dev->rstc = devm_reset_control_get_optional_exclusive(dev, NULL);
+ 	if (IS_ERR(rc_dev->rstc)) {
+ 		ret = PTR_ERR(rc_dev->rstc);
+ 		goto err;
 
 
