@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6555D3624C4;
-	Thu, 15 Jan 2026 17:39:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A9AA2D0C79;
+	Thu, 15 Jan 2026 17:39:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498775; cv=none; b=KqD9IBmFl/owjaH3z78Ko33r9Yq1glFFwrnEZ5NAORw77QokLEQFdukQB1FwaNuAs3gtdOoJXqdLvFf8zTrT3dwHVc7dJGx4YZTA9dtmviy23hyh8dSvVrEcOBxslXwuO7TxnB98q1RIoHoQH+ykHbdYLWcwBtc7VAZBtpR9KVo=
+	t=1768498778; cv=none; b=S8S6aX33Llcj6MzTSwglj0VMk37o6XVLYU2WalXRdhPxsQJZavzI7srO25nce4EhgsG5ps53qNuc961s+xaGC0dXAwxu8DdBAp1QQMFhkjw2z/xIS35JWAiog7Dhi/t32dUtdy51MoEKemVs2Dod1b6KAZmeEJNB+fEeNsfQGGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498775; c=relaxed/simple;
-	bh=4ZD2pfzhrX49eguK2Jhkfx1ePbQHf67YJqc0o12TvCY=;
+	s=arc-20240116; t=1768498778; c=relaxed/simple;
+	bh=hACj+KIMEuuiLZ3yqRrAFhNze5xzY2J3ajahYER2Flw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nvt0gaMEPRBItuOswTup7vtB3rVALGqVGWQcc7/yGe0GqlCPhrWwNrayW2sQbqZNB7WUE81hnUxLxPg/ku+3C38WyZvMM6A2roycQlw/eWYVtZy9rbegmh4HJyHysyY4gUJfkH3iOdb8Lfgfys0yNFthjjlRRY2K/uvr1aqVxnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D27GwgWb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XhGYBFLabHa3cbZk6wmIegeHD/4sYtsv/4Tg4cVsdBiVSjFOfEsoXQgzATKrrL+fkYNSYoXEZ9W4Ka/vtPWbkOMD4IOTPJKXDaj1TZqdKWCxIowGLwWloDUdV5D//1JEtuKbG+FBO097K4FZLBynlufRXY+dXKrB9h84ZGqjVBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xVET4aTx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D27GwgWb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2212C16AAE;
-	Thu, 15 Jan 2026 17:39:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xVET4aTx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EA63C116D0;
+	Thu, 15 Jan 2026 17:39:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498775;
-	bh=4ZD2pfzhrX49eguK2Jhkfx1ePbQHf67YJqc0o12TvCY=;
+	s=korg; t=1768498777;
+	bh=hACj+KIMEuuiLZ3yqRrAFhNze5xzY2J3ajahYER2Flw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D27GwgWbAseboMgknaku9I8Ycuu1HbHT7NFQxP4AMbNLBQMZGeulDXkHrfxu1q6PK
-	 yhDWW5ql2N0e4S4FC9ko86eGXjMdHqIxU8Uj+2zQdBZZtNLBBpmaFkv6iIdpXXc2zc
-	 fQWPhwDuVWpq3LMml+EqLQ3rAqex4UsxLV/XjBG0=
+	b=xVET4aTxrUwXRrLM9is2CCDGQeB/jVosSPowUENw8Fs/DvwuoNesVvU64vPnuEYF/
+	 lVw+UasGJ+Py31mQItEIGnvvRGA24b/ySwyOhxs5SBG7gKAKWaJ35jJ4QShl8XNiVa
+	 qLf+dh468q++HaZHP6bd6cQO5FXmYJxe1dO1hJbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laibin Qiu <qiulaibin@huawei.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>,
-	Keerthana K <keerthana.kalyanasundaram@broadcom.com>,
-	Shivani Agarwal <shivani.agarwal@broadcom.com>
-Subject: [PATCH 5.15 549/554] blk-throttle: Set BIO_THROTTLED when bio has been throttled
-Date: Thu, 15 Jan 2026 17:50:15 +0100
-Message-ID: <20260115164306.200991490@linuxfoundation.org>
+	Sumeet Pawnikar <sumeet4linux@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 550/554] powercap: fix race condition in register_control_type()
+Date: Thu, 15 Jan 2026 17:50:16 +0100
+Message-ID: <20260115164306.238160702@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -54,152 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laibin Qiu <qiulaibin@huawei.com>
+From: Sumeet Pawnikar <sumeet4linux@gmail.com>
 
-[ Upstream commit 5a011f889b4832aa80c2a872a5aade5c48d2756f ]
+[ Upstream commit 7bda1910c4bccd4b8d4726620bb3d6bbfb62286e ]
 
-1.In current process, all bio will set the BIO_THROTTLED flag
-after __blk_throtl_bio().
+The device becomes visible to userspace via device_register()
+even before it fully initialized by idr_init(). If userspace
+or another thread tries to register a zone immediately after
+device_register(), the control_type_valid() will fail because
+the control_type is not yet in the list. The IDR is not yet
+initialized, so this race condition causes zone registration
+failure.
 
-2.If bio needs to be throttled, it will start the timer and
-stop submit bio directly. Bio will submit in
-blk_throtl_dispatch_work_fn() when the timer expires.But in
-the current process, if bio is throttled. The BIO_THROTTLED
-will be set to bio after timer start. If the bio has been
-completed, it may cause use-after-free blow.
+Move idr_init() and list addition before device_register()
+fix the race condition.
 
-BUG: KASAN: use-after-free in blk_throtl_bio+0x12f0/0x2c70
-Read of size 2 at addr ffff88801b8902d4 by task fio/26380
-
- dump_stack+0x9b/0xce
- print_address_description.constprop.6+0x3e/0x60
- kasan_report.cold.9+0x22/0x3a
- blk_throtl_bio+0x12f0/0x2c70
- submit_bio_checks+0x701/0x1550
- submit_bio_noacct+0x83/0xc80
- submit_bio+0xa7/0x330
- mpage_readahead+0x380/0x500
- read_pages+0x1c1/0xbf0
- page_cache_ra_unbounded+0x471/0x6f0
- do_page_cache_ra+0xda/0x110
- ondemand_readahead+0x442/0xae0
- page_cache_async_ra+0x210/0x300
- generic_file_buffered_read+0x4d9/0x2130
- generic_file_read_iter+0x315/0x490
- blkdev_read_iter+0x113/0x1b0
- aio_read+0x2ad/0x450
- io_submit_one+0xc8e/0x1d60
- __se_sys_io_submit+0x125/0x350
- do_syscall_64+0x2d/0x40
- entry_SYSCALL_64_after_hwframe+0x44/0xa9
-
-Allocated by task 26380:
- kasan_save_stack+0x19/0x40
- __kasan_kmalloc.constprop.2+0xc1/0xd0
- kmem_cache_alloc+0x146/0x440
- mempool_alloc+0x125/0x2f0
- bio_alloc_bioset+0x353/0x590
- mpage_alloc+0x3b/0x240
- do_mpage_readpage+0xddf/0x1ef0
- mpage_readahead+0x264/0x500
- read_pages+0x1c1/0xbf0
- page_cache_ra_unbounded+0x471/0x6f0
- do_page_cache_ra+0xda/0x110
- ondemand_readahead+0x442/0xae0
- page_cache_async_ra+0x210/0x300
- generic_file_buffered_read+0x4d9/0x2130
- generic_file_read_iter+0x315/0x490
- blkdev_read_iter+0x113/0x1b0
- aio_read+0x2ad/0x450
- io_submit_one+0xc8e/0x1d60
- __se_sys_io_submit+0x125/0x350
- do_syscall_64+0x2d/0x40
- entry_SYSCALL_64_after_hwframe+0x44/0xa9
-
-Freed by task 0:
- kasan_save_stack+0x19/0x40
- kasan_set_track+0x1c/0x30
- kasan_set_free_info+0x1b/0x30
- __kasan_slab_free+0x111/0x160
- kmem_cache_free+0x94/0x460
- mempool_free+0xd6/0x320
- bio_free+0xe0/0x130
- bio_put+0xab/0xe0
- bio_endio+0x3a6/0x5d0
- blk_update_request+0x590/0x1370
- scsi_end_request+0x7d/0x400
- scsi_io_completion+0x1aa/0xe50
- scsi_softirq_done+0x11b/0x240
- blk_mq_complete_request+0xd4/0x120
- scsi_mq_done+0xf0/0x200
- virtscsi_vq_done+0xbc/0x150
- vring_interrupt+0x179/0x390
- __handle_irq_event_percpu+0xf7/0x490
- handle_irq_event_percpu+0x7b/0x160
- handle_irq_event+0xcc/0x170
- handle_edge_irq+0x215/0xb20
- common_interrupt+0x60/0x120
- asm_common_interrupt+0x1e/0x40
-
-Fix this by move BIO_THROTTLED set into the queue_lock.
-
-Signed-off-by: Laibin Qiu <qiulaibin@huawei.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20220301123919.2381579-1-qiulaibin@huawei.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sumeet Pawnikar <sumeet4linux@gmail.com>
+[ rjw: Subject adjustment, empty line added ]
+Link: https://patch.msgid.link/20251205190216.5032-1-sumeet4linux@gmail.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-[ Keerthana: Remove 'out' and handle return with reference to commit 81c7a63 ]
-Signed-off-by: Keerthana K <keerthana.kalyanasundaram@broadcom.com>
-Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-throttle.c |   16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/powercap/powercap_sys.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
---- a/block/blk-throttle.c
-+++ b/block/blk-throttle.c
-@@ -2222,8 +2222,10 @@ bool blk_throtl_bio(struct bio *bio)
- 	rcu_read_lock();
+diff --git a/drivers/powercap/powercap_sys.c b/drivers/powercap/powercap_sys.c
+index fd475e463d1fa..d7dadcaa3736b 100644
+--- a/drivers/powercap/powercap_sys.c
++++ b/drivers/powercap/powercap_sys.c
+@@ -624,17 +624,23 @@ struct powercap_control_type *powercap_register_control_type(
+ 	INIT_LIST_HEAD(&control_type->node);
+ 	control_type->dev.class = &powercap_class;
+ 	dev_set_name(&control_type->dev, "%s", name);
+-	result = device_register(&control_type->dev);
+-	if (result) {
+-		put_device(&control_type->dev);
+-		return ERR_PTR(result);
+-	}
+ 	idr_init(&control_type->idr);
  
- 	/* see throtl_charge_bio() */
--	if (bio_flagged(bio, BIO_THROTTLED))
--		goto out;
-+	if (bio_flagged(bio, BIO_THROTTLED)) {
-+		rcu_read_unlock();
-+		return false;
-+	}
+ 	mutex_lock(&powercap_cntrl_list_lock);
+ 	list_add_tail(&control_type->node, &powercap_cntrl_list);
+ 	mutex_unlock(&powercap_cntrl_list_lock);
  
- 	if (!cgroup_subsys_on_dfl(io_cgrp_subsys)) {
- 		blkg_rwstat_add(&tg->stat_bytes, bio->bi_opf,
-@@ -2231,8 +2233,10 @@ bool blk_throtl_bio(struct bio *bio)
- 		blkg_rwstat_add(&tg->stat_ios, bio->bi_opf, 1);
- 	}
- 
--	if (!tg->has_rules[rw])
--		goto out;
-+	if (!tg->has_rules[rw]) {
-+		rcu_read_unlock();
-+		return false;
-+	}
- 
- 	spin_lock_irq(&q->queue_lock);
- 
-@@ -2316,14 +2320,14 @@ again:
- 	}
- 
- out_unlock:
--	spin_unlock_irq(&q->queue_lock);
--out:
- 	bio_set_flag(bio, BIO_THROTTLED);
- 
- #ifdef CONFIG_BLK_DEV_THROTTLING_LOW
- 	if (throttled || !td->track_bio_latency)
- 		bio->bi_issue.value |= BIO_ISSUE_THROTL_SKIP_LATENCY;
- #endif
-+	spin_unlock_irq(&q->queue_lock);
++	result = device_register(&control_type->dev);
++	if (result) {
++		mutex_lock(&powercap_cntrl_list_lock);
++		list_del(&control_type->node);
++		mutex_unlock(&powercap_cntrl_list_lock);
 +
- 	rcu_read_unlock();
- 	return throttled;
++		idr_destroy(&control_type->idr);
++		put_device(&control_type->dev);
++		return ERR_PTR(result);
++	}
++
+ 	return control_type;
  }
+ EXPORT_SYMBOL_GPL(powercap_register_control_type);
+-- 
+2.51.0
+
 
 
