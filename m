@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14FCB274FE3;
-	Thu, 15 Jan 2026 17:44:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59633A0E9A;
+	Thu, 15 Jan 2026 17:44:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499093; cv=none; b=HYoTbNw166Ox2gheTIgOG2xowchyCbtuqDRt0pn4OpwdLCTqlvy7mAEELJozJ2hTcCZqVvdqEvEOlsld3jDVc1W9Y3t1eQcs7FFfpkYBCh9hsHut68mR3QCFKycN1iblDl4iajVxEhFklGa+8LPGBA2RMF9eFLB0iU/k15IVJoQ=
+	t=1768499096; cv=none; b=lZ7R7NH6siU2EEsYito3X8pBkiHJTw1qTWIb1930KHiUTyUlZlo84jRKA03PtWPSXGFELy8f/GXkmZ4hp7RwyUPzXBtVSapYOSgVbAqUPualgAc9jUVcQJfussh28S2uum60WK11bD8WofQ7WV7Ei11HyniyBo7Dksi84hIrA7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499093; c=relaxed/simple;
-	bh=KGbemRA6nLzVvhLJSEwsa1rT3IK6cwDP82FkUMa2c3c=;
+	s=arc-20240116; t=1768499096; c=relaxed/simple;
+	bh=GY/Ub4hnpRGj7pi0DU/VzlrIEENkR8+hdUYGE+lZ7XU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U27QDuVYuwTz/rfjwUD2V/yqRqQjqv3r3AUs4wEAbJd0O/w1XyRRNgoXi8qlQDzeEC8sjObv6UY/guQnd2HV3fs2KUPXLJiUZClWVoRikxoSo3jUGl/rftyaPA54WOv+y07BCI3UwvROTES4MBubHi9G5+7moKs2DVp0uYHLleA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CrT6CZoV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VPTpoSMwEJ2sdMvDPfsWidPqq6cxLE/sLIXoox0f6kVwQCjrdlxWqrnn6Xl/NJpLbMnif+BWn2Vib/Dm0jmHofWZRjXk7iEtaIcWbKFZNTVsncKFti3zSj5LDWlRXyA9VR/6Db52MEYtmFLKm0yS1yv6b0El0fqOYmYRdYbvGrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vDl4p0V5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CrT6CZoV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95FFAC116D0;
-	Thu, 15 Jan 2026 17:44:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vDl4p0V5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 709AEC116D0;
+	Thu, 15 Jan 2026 17:44:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499093;
-	bh=KGbemRA6nLzVvhLJSEwsa1rT3IK6cwDP82FkUMa2c3c=;
+	s=korg; t=1768499095;
+	bh=GY/Ub4hnpRGj7pi0DU/VzlrIEENkR8+hdUYGE+lZ7XU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CrT6CZoVKrKt+p3xAY72NMzRczrVNA0BMT4XiQ8/+IljLySYNS73e2rj+AQfs2i3s
-	 v+A51SIg+4/tEU8WFmB6Gn92p2UAFIpyy/wpfSwEmn78KtfcR8nTDat3VmHgv3npsu
-	 UHIWCisSDLnhbCu7SKUGyQZji/KG9P5uq9sonxv0=
+	b=vDl4p0V52KeIJ78mbpcCVwej+1SghIwOmYn/Yyt6WKuSb+3e96Z5FMKTcrwrrcWgT
+	 3Mkl81xpIyfH1TXTDzUt6cR41a0XomBjdMh1aXN1xUP6vvCWQelQGtI68vXDFW2ZmO
+	 fvjy9KIYT/3KJRkKuEDO/2ApQ8NWiembPVm9+fE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Zhao Yipeng <zhaoyipeng5@huawei.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 106/451] ext4: remove unused return value of __mb_check_buddy
-Date: Thu, 15 Jan 2026 17:45:07 +0100
-Message-ID: <20260115164234.751059359@linuxfoundation.org>
+Subject: [PATCH 5.10 089/451] ima: Handle error code returned by ima_filter_rule_match()
+Date: Thu, 15 Jan 2026 17:44:50 +0100
+Message-ID: <20260115164234.138316622@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -52,61 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Zhao Yipeng <zhaoyipeng5@huawei.com>
 
-[ Upstream commit 133de5a0d8f8e32b34feaa8beae7a189482f1856 ]
+[ Upstream commit 738c9738e690f5cea24a3ad6fd2d9a323cf614f6 ]
 
-Remove unused return value of __mb_check_buddy.
+In ima_match_rules(), if ima_filter_rule_match() returns -ENOENT due to
+the rule being NULL, the function incorrectly skips the 'if (!rc)' check
+and sets 'result = true'. The LSM rule is considered a match, causing
+extra files to be measured by IMA.
 
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20240105092102.496631-2-shikemeng@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Stable-dep-of: d9ee3ff810f1 ("ext4: improve integrity checking in __mb_check_buddy by enhancing order-0 validation")
+This issue can be reproduced in the following scenario:
+After unloading the SELinux policy module via 'semodule -d', if an IMA
+measurement is triggered before ima_lsm_rules is updated,
+in ima_match_rules(), the first call to ima_filter_rule_match() returns
+-ESTALE. This causes the code to enter the 'if (rc == -ESTALE &&
+!rule_reinitialized)' block, perform ima_lsm_copy_rule() and retry. In
+ima_lsm_copy_rule(), since the SELinux module has been removed, the rule
+becomes NULL, and the second call to ima_filter_rule_match() returns
+-ENOENT. This bypasses the 'if (!rc)' check and results in a false match.
+
+Call trace:
+  selinux_audit_rule_match+0x310/0x3b8
+  security_audit_rule_match+0x60/0xa0
+  ima_match_rules+0x2e4/0x4a0
+  ima_match_policy+0x9c/0x1e8
+  ima_get_action+0x48/0x60
+  process_measurement+0xf8/0xa98
+  ima_bprm_check+0x98/0xd8
+  security_bprm_check+0x5c/0x78
+  search_binary_handler+0x6c/0x318
+  exec_binprm+0x58/0x1b8
+  bprm_execve+0xb8/0x130
+  do_execveat_common.isra.0+0x1a8/0x258
+  __arm64_sys_execve+0x48/0x68
+  invoke_syscall+0x50/0x128
+  el0_svc_common.constprop.0+0xc8/0xf0
+  do_el0_svc+0x24/0x38
+  el0_svc+0x44/0x200
+  el0t_64_sync_handler+0x100/0x130
+  el0t_64_sync+0x3c8/0x3d0
+
+Fix this by changing 'if (!rc)' to 'if (rc <= 0)' to ensure that error
+codes like -ENOENT do not bypass the check and accidentally result in a
+successful match.
+
+Fixes: 4af4662fa4a9d ("integrity: IMA policy")
+Signed-off-by: Zhao Yipeng <zhaoyipeng5@huawei.com>
+Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ security/integrity/ima/ima_policy.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index 60c56a39798cc..65042bef41e4e 100644
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -602,7 +602,7 @@ do {									\
- 	}								\
- } while (0)
- 
--static int __mb_check_buddy(struct ext4_buddy *e4b, char *file,
-+static void __mb_check_buddy(struct ext4_buddy *e4b, char *file,
- 				const char *function, int line)
- {
- 	struct super_block *sb = e4b->bd_sb;
-@@ -621,7 +621,7 @@ static int __mb_check_buddy(struct ext4_buddy *e4b, char *file,
- 	void *buddy2;
- 
- 	if (e4b->bd_info->bb_check_counter++ % 10)
--		return 0;
-+		return;
- 
- 	while (order > 1) {
- 		buddy = mb_find_buddy(e4b, order, &max);
-@@ -686,7 +686,7 @@ static int __mb_check_buddy(struct ext4_buddy *e4b, char *file,
- 
- 	grp = ext4_get_group_info(sb, e4b->bd_group);
- 	if (!grp)
--		return NULL;
-+		return;
- 	list_for_each(cur, &grp->bb_prealloc_list) {
- 		ext4_group_t groupnr;
- 		struct ext4_prealloc_space *pa;
-@@ -696,7 +696,6 @@ static int __mb_check_buddy(struct ext4_buddy *e4b, char *file,
- 		for (i = 0; i < pa->pa_len; i++)
- 			MB_CHECK_ASSERT(mb_test_bit(k + i, buddy));
- 	}
--	return 0;
- }
- #undef MB_CHECK_ASSERT
- #define mb_check_buddy(e4b) __mb_check_buddy(e4b,	\
+diff --git a/security/integrity/ima/ima_policy.c b/security/integrity/ima/ima_policy.c
+index 8d69b2e27936a..540c1ec9fe729 100644
+--- a/security/integrity/ima/ima_policy.c
++++ b/security/integrity/ima/ima_policy.c
+@@ -581,7 +581,7 @@ static bool ima_match_rules(struct ima_rule_entry *rule, struct inode *inode,
+ 				goto retry;
+ 			}
+ 		}
+-		if (!rc) {
++		if (rc <= 0) {
+ 			result = false;
+ 			goto out;
+ 		}
 -- 
 2.51.0
 
