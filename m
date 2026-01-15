@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCBA13BF2E7;
-	Thu, 15 Jan 2026 17:22:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A240D3BFE22;
+	Thu, 15 Jan 2026 17:22:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497775; cv=none; b=R1q8a7RdXZJdPbEQHqpRjrSRWhUeKZvgJa+EUthVEgiA51b3Q9lsVpAzzAO3hXgp/P7uvg74HsBEZM+EqcalF+J+Dtu05j1pHv66boeGNuVVRq8RNi6VlWyopRU4j6mFLaYbWHEEo4zu0vxBbVHyLwKYGGKyzAyIgtrRboArwcc=
+	t=1768497778; cv=none; b=lcGma/1YrjR2Y+nOyFiasMDQTT2nS5Tb4HlMM+vciCNl4L4TWCOPXQEiR8o7l/jsMvUr5AG5gJJ5uStENm9vWXOp599KXypMKihGrDF+6E031x2ValzCmxlxy9xi6chgq9P3a6/GNoV7xiYHa5kIzFTyU0MfVrpPxb40hFNt6PQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497775; c=relaxed/simple;
-	bh=EQo+azW+sWfFB3cQ/MkhD7I1yfbN77ipxXzwWE2yvCs=;
+	s=arc-20240116; t=1768497778; c=relaxed/simple;
+	bh=eRk/p7Pvg0Amh/U1YKm4RsL/zhhONEG4csrA91P+WP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zpy48sDGzPHfeQPZqC7PMDsTBiEnCd+DV017OXqMjwt6ivWE784nq33LJjuZkOOMvNXaDw8MWZ5oqqvr4LRaIF6Nk/Raq3OoCmkSz/c9nTyRIu5xlHQ3gY/htxkdDk/vmtz1bJBy8qnQwmB97lWW2kfzXBM5qHFz4SYx93Aw4OE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1IKU5xO8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NMhA/QN++aiND0hZVlRXj1nWdjxVGACmIXruylLJcijCq4TDb/JmilSwegzB5sG8MycRpZr2dTHnDO4NHeTQqptph5Ql9X4o2g7LLz/GOeUGX0aQ89hgmpYbqTHMVXW15ovQepeBZQfJOhpCBK/EXXovKT7da+VHK/A5DEmMFN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j1VgIDyT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1IKU5xO8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C2CBC19423;
-	Thu, 15 Jan 2026 17:22:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j1VgIDyT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31796C116D0;
+	Thu, 15 Jan 2026 17:22:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497775;
-	bh=EQo+azW+sWfFB3cQ/MkhD7I1yfbN77ipxXzwWE2yvCs=;
+	s=korg; t=1768497778;
+	bh=eRk/p7Pvg0Amh/U1YKm4RsL/zhhONEG4csrA91P+WP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1IKU5xO8oHsN/74CCCls/vqvNxGVMsLqA4F4/241zonUhuokWFdSYKNDyPO/cJHVR
-	 0qRA1N3fy92bbgGQmVAvVB6acrW50CbpxCeTYCIg/NTZig2klgQauuYTDN2RwlXdHj
-	 93JmhVzIgpskAh4xKgoXirAzXx3OIE1isMErKtPk=
+	b=j1VgIDyT73liQBR9NvUMCxWYX11iwCPYt9gc8Xpjv3h1mcSyPefwZfWDyJnObfOAX
+	 DdnC0+hOyKVu5PiVP8s0ZVjIl3KaPMp4d/tMLUaHNhEpP6uL+ChRSO9ktZsnhbJIEi
+	 a7p9X1yDrpE1idGs17YBTi57c1Prehq9nHVmjKmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Haotien Hsu <haotienh@nvidia.com>,
-	Wayne Chang <waynec@nvidia.com>
-Subject: [PATCH 5.15 198/554] usb: gadget: tegra-xudc: Always reinitialize data toggle when clear halt
-Date: Thu, 15 Jan 2026 17:44:24 +0100
-Message-ID: <20260115164253.423672745@linuxfoundation.org>
+	Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
+Subject: [PATCH 5.15 199/554] usb: phy: Initialize struct usb_phy list_head
+Date: Thu, 15 Jan 2026 17:44:25 +0100
+Message-ID: <20260115164253.459758966@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -51,48 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotien Hsu <haotienh@nvidia.com>
+From: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
 
-commit 2585973c7f9ee31d21e5848c996fab2521fd383d upstream.
+commit c69ff68b097b0f53333114f1b2c3dc128f389596 upstream.
 
-The driver previously skipped handling ClearFeature(ENDPOINT_HALT)
-when the endpoint was already not halted. This prevented the
-controller from resetting the data sequence number and reinitializing
-the endpoint state.
+As part of the registration of a new 'struct usb_phy' with the USB PHY core
+via either usb_add_phy(struct usb_phy *x, ...) or usb_add_phy_dev(struct
+usb_phy *x) these functions call list_add_tail(&x->head, phy_list) in
+order for the new instance x to be stored in phy_list, a static list
+kept internally by the core.
 
-According to USB 3.2 specification Rev. 1.1, section 9.4.5,
-ClearFeature(ENDPOINT_HALT) must always reset the data sequence and
-set the stream state machine to Disabled, regardless of whether the
-endpoint was halted.
+After 7d21114dc6a2 ("usb: phy: Introduce one extcon device into usb phy")
+when executing either of the registration functions above it is possible
+that usb_add_extcon() fails, leading to either function returning before
+the call to list_add_tail(), leaving x->head uninitialized.
 
-Remove the early return so that ClearFeature(ENDPOINT_HALT) always
-resets the endpoint sequence state as required by the specification.
+Then, when a driver tries to undo the failed registration by calling
+usb_remove_phy(struct usb_phy *x) there will be an unconditional call to
+list_del(&x->head) acting on an uninitialized variable, and thus a
+possible NULL pointer dereference.
 
-Fixes: 49db427232fe ("usb: gadget: Add UDC driver for tegra XUSB device mode controller")
+Fix this by initializing x->head before usb_add_extcon() has a
+chance to fail. Note that this was not needed before 7d21114dc6a2 since
+list_add_phy() was executed unconditionally and it guaranteed that x->head
+was initialized.
+
+Fixes: 7d21114dc6a2 ("usb: phy: Introduce one extcon device into usb phy")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Haotien Hsu <haotienh@nvidia.com>
-Signed-off-by: Wayne Chang <waynec@nvidia.com>
-Link: https://patch.msgid.link/20251127033540.2287517-1-waynec@nvidia.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
+Link: https://patch.msgid.link/20251121-diogo-smaug_typec-v2-1-5c37c1169d57@tecnico.ulisboa.pt
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/tegra-xudc.c |    6 ------
- 1 file changed, 6 deletions(-)
+ drivers/usb/phy/phy.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/gadget/udc/tegra-xudc.c
-+++ b/drivers/usb/gadget/udc/tegra-xudc.c
-@@ -1542,12 +1542,6 @@ static int __tegra_xudc_ep_set_halt(stru
- 		return -ENOTSUPP;
+--- a/drivers/usb/phy/phy.c
++++ b/drivers/usb/phy/phy.c
+@@ -672,6 +672,8 @@ int usb_add_phy(struct usb_phy *x, enum
+ 		return -EINVAL;
  	}
  
--	if (!!(xudc_readl(xudc, EP_HALT) & BIT(ep->index)) == halt) {
--		dev_dbg(xudc->dev, "EP %u already %s\n", ep->index,
--			halt ? "halted" : "not halted");
--		return 0;
--	}
--
- 	if (halt) {
- 		ep_halt(xudc, ep->index);
- 	} else {
++	INIT_LIST_HEAD(&x->head);
++
+ 	usb_charger_init(x);
+ 	ret = usb_add_extcon(x);
+ 	if (ret)
+@@ -722,6 +724,8 @@ int usb_add_phy_dev(struct usb_phy *x)
+ 		return -EINVAL;
+ 	}
+ 
++	INIT_LIST_HEAD(&x->head);
++
+ 	usb_charger_init(x);
+ 	ret = usb_add_extcon(x);
+ 	if (ret)
 
 
