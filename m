@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAFE23BF2E6;
-	Thu, 15 Jan 2026 17:31:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8D434216C;
+	Thu, 15 Jan 2026 17:31:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498315; cv=none; b=V0JzLAqpVEYdUhuzzEgDJU7h06CpHNzmcLgQWl+vYNfasRd1db4wEM0UjA2IwiQq7T8H+WmZE064r24eWyJN56LqAGaPz0XWiKA49eTOtam7okWpZaArvUImQqwWO/bmaUrGNkmic7LFYHBNljGwi9OqJpTtyPoAa5oWYgFd0KA=
+	t=1768498317; cv=none; b=r89Dh9TqbkG+4PJnetL5FVv9C2BdnQZwHfHbN/qOP0H6R0mk2wTA+vCf39wMVJhCMNBDtM73fgCu/xYVa3HBIysYNkxaz3KXfIEbga+m868QomqivmQYFuJm+Q1cx70iklYqZZ1B+Ov2QKlg92bmRRoYVJWpTG7jglbZxdrmr58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498315; c=relaxed/simple;
-	bh=nKOluNQc3N5sYFgCUTHWHOB5BY19hYmaIjd9nXPdZHU=;
+	s=arc-20240116; t=1768498317; c=relaxed/simple;
+	bh=09JFyfYBelWqGW9OlkacI+ZvxU9pG/fZUnFybMJXiSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gaavgrgt9BbGudqsgslbFUg+dx0fTJZtcXJfYMY5tDnKLT0bpNHjapE/2rBVIqV5orEbH1YH0Cv9ZmtZqK77/usdF+7peXNs16T9Kn2yAr8VzeolPGQ4Ru7MKBOdrVshZd7zS3bwu28a2ezndjNn7tE2WiXsMUuaOHYmnPb6ZCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rAQTz8sQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HH1TkbFsEoflvA0/FNKkooSc3WRIVIJBXCBz1jL7jVVI/VEiry91+e/EW+XlRAjz80AYFpnOA1FXEoil4t9BsxSkx/4L/5dj1ogMbtJe9dYfSLLr78jtRZseLraRCg8d5SN847WRkhZp0qkQxK3fVFzMfFFh8GkAyTgY+kefIYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WTfnfJdF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rAQTz8sQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76262C116D0;
-	Thu, 15 Jan 2026 17:31:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WTfnfJdF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5442DC116D0;
+	Thu, 15 Jan 2026 17:31:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498314;
-	bh=nKOluNQc3N5sYFgCUTHWHOB5BY19hYmaIjd9nXPdZHU=;
+	s=korg; t=1768498317;
+	bh=09JFyfYBelWqGW9OlkacI+ZvxU9pG/fZUnFybMJXiSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rAQTz8sQeqKpBlSZ6xel89YYgkYyzNQ+5nulFrfe7f9SJy+aKSKglH+5SMp8+iC7j
-	 ExJHsy4Sr06w201VXE3u7eYjHipVPHLjt6rwawn9KK/RI4SvA9c/jvGf/VBTs26Tgi
-	 pq4JPWOafOm/afvARkiICMjkoKM5i026JsLH58Gs=
+	b=WTfnfJdFIRvTC1e91NXNBDvede9PenIAkW/9NkI+TKdUao0tIkBZH+4Dmcweu2lZK
+	 qoLjlBYcbljIOa8LuH3hy+N0QQaFr9q/z2IcU3cP31hARPFQdG//tJxZMcrPk5en+j
+	 dnigjuRhFezw9JS4Pcn/KoAwOLwjpSd4jgxtYAk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Anshumali Gaur <agaur@marvell.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 355/554] net: bridge: Describe @tunnel_hash member in net_bridge_vlan_group struct
-Date: Thu, 15 Jan 2026 17:47:01 +0100
-Message-ID: <20260115164259.078364745@linuxfoundation.org>
+Subject: [PATCH 5.15 356/554] octeontx2-pf: fix "UBSAN: shift-out-of-bounds error"
+Date: Thu, 15 Jan 2026 17:47:02 +0100
+Message-ID: <20260115164259.113674202@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -53,39 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bagas Sanjaya <bagasdotme@gmail.com>
+From: Anshumali Gaur <agaur@marvell.com>
 
-[ Upstream commit f79f9b7ace1713e4b83888c385f5f55519dfb687 ]
+[ Upstream commit 85f4b0c650d9f9db10bda8d3acfa1af83bf78cf7 ]
 
-Sphinx reports kernel-doc warning:
+This patch ensures that the RX ring size (rx_pending) is not
+set below the permitted length. This avoids UBSAN
+shift-out-of-bounds errors when users passes small or zero
+ring sizes via ethtool -G.
 
-WARNING: ./net/bridge/br_private.h:267 struct member 'tunnel_hash' not described in 'net_bridge_vlan_group'
-
-Fix it by describing @tunnel_hash member.
-
-Fixes: efa5356b0d9753 ("bridge: per vlan dst_metadata netlink support")
-Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20251218042936.24175-2-bagasdotme@gmail.com
+Fixes: d45d8979840d ("octeontx2-pf: Add basic ethtool support")
+Signed-off-by: Anshumali Gaur <agaur@marvell.com>
+Link: https://patch.msgid.link/20251219062226.524844-1-agaur@marvell.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_private.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
-index 8acb427ae6de..0fd8dad7eca4 100644
---- a/net/bridge/br_private.h
-+++ b/net/bridge/br_private.h
-@@ -221,6 +221,7 @@ struct net_bridge_vlan {
-  * struct net_bridge_vlan_group
-  *
-  * @vlan_hash: VLAN entry rhashtable
-+ * @tunnel_hash: Hash table to map from tunnel key ID (e.g. VXLAN VNI) to VLAN
-  * @vlan_list: sorted VLAN entry list
-  * @num_vlans: number of total VLAN entries
-  * @pvid: PVID VLAN id
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c
+index db4a9fc399f3..e0c108d48d2e 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c
+@@ -391,6 +391,14 @@ static int otx2_set_ringparam(struct net_device *netdev,
+ 	 */
+ 	if (rx_count < pfvf->hw.rq_skid)
+ 		rx_count =  pfvf->hw.rq_skid;
++
++	if (ring->rx_pending < 16) {
++		netdev_err(netdev,
++			   "rx ring size %u invalid, min is 16\n",
++			   ring->rx_pending);
++		return -EINVAL;
++	}
++
+ 	rx_count = Q_COUNT(Q_SIZE(rx_count, 3));
+ 
+ 	/* Due pipelining impact minimum 2000 unused SQ CQE's
 -- 
 2.51.0
 
