@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1965521CC5A;
-	Thu, 15 Jan 2026 17:23:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2517827B340;
+	Thu, 15 Jan 2026 17:23:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497807; cv=none; b=dR7NP48T+4KdECUxXT1l6LXbRSYLSvj158q097qq1xNjL/JK3qSy6VS4gxp6BLuSTAL77xwJENVirCWKrKdw04IrQ/FlCA7scxwU4F+7n0iraSSryH5tzd1k6d31IHVbg8dJ2+LTmoGzYQz0+xJm5k8dsye3r0ooRoY2H7BKnXM=
+	t=1768497810; cv=none; b=dhcM6XgG9N2u9TlsDD+ZsoR28kJ96HMfBjkLv5r2Ap6stUoQDvXjviZgV8+PPh98DBZsxvdbeqGQX+Nmy8V5tn+L+eP6ZXuFEaTgYV/JZTYoz2AiWpvhlbbNEkf8i79mXY9n+aB7OmmSkA3kdLaLgpvTlWtxpCSf2ZCnwX6GRWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497807; c=relaxed/simple;
-	bh=d8umWh7rXCOyLALny245fjfgTDEcQPbe/lsmbh87VAU=;
+	s=arc-20240116; t=1768497810; c=relaxed/simple;
+	bh=bH/r2sf1RHMQxlsvQWz8+RKI+UekEdBIH91QzEhYNm8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gcx83xqPrfxPNGOoxsWO+w/Zv5yhw9hN21hgOZ/bUJxQw0e+1XEFNbbh4bhAtTbTS5C+teLjdDSRCn1+X8C5yLOAZbodSmALIz77nxPtm61/Ejc0jm4lWOyUw1nPAy9B5UE7D4G6SiPo/4ri2JeRA1Mk1JzSMbXaszeCtc9dEfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A08FRxpg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z0pfThCHe8M7eTB/1t+LJBcRuZawe9u5w71RXxqaZBtd5aE3AZCmMpA3y/DUlBrZZrGDAGc3oToNm0YDm4Tg+1SnyR1ODt/LWJN+yNqUxbZOs2VgSMD1XlVAEFL3HwGhBm/3EEvWOlsmN1/mtEwji1tCpJuuGV7r8lv5tTcA1pE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MotN5MVM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A08FRxpg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DC0CC116D0;
-	Thu, 15 Jan 2026 17:23:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MotN5MVM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DFCCC116D0;
+	Thu, 15 Jan 2026 17:23:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497807;
-	bh=d8umWh7rXCOyLALny245fjfgTDEcQPbe/lsmbh87VAU=;
+	s=korg; t=1768497810;
+	bh=bH/r2sf1RHMQxlsvQWz8+RKI+UekEdBIH91QzEhYNm8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A08FRxpgxyH3phZESZ5s8Os/wW1kAycfaiVGOxqz4MPb83Mvstq/MefNLFBBgZYyG
-	 /MOBz22E/IdorB7rZtrcXmavHTNY4KxGxy5EbXuiemAdMBTYZUPSwbhfTSJi1UdOMJ
-	 oUXZ+063RctLsPQOmSk64qsz5H78x/e3DoVE85Ek=
+	b=MotN5MVMDFJB7HJ5uvP1B2JzorVVh1hHuVjg7WLbXz3NErC7N8hYvMS7Be68MdMHJ
+	 tca5hJr8ICluVb1kxEJR4lv7XywI/3HFjakpb1zV2O6xTLCKxHbFkXcUTIl7N8FGAH
+	 /nhdJ7d4Z5rgiX+5lL739JGQjecXFUtZ1DWDswqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Linus Walleij <linusw@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 167/554] pinctrl: single: Fix incorrect type for error return variable
-Date: Thu, 15 Jan 2026 17:43:53 +0100
-Message-ID: <20260115164252.313260910@linuxfoundation.org>
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	James Clark <james.clark@linaro.org>,
+	Leo Yan <leo.yan@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>
+Subject: [PATCH 5.15 204/554] coresight: etm4x: Correct polling IDLE bit
+Date: Thu, 15 Jan 2026 17:44:30 +0100
+Message-ID: <20260115164253.639692966@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -51,53 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit 61d1bb53547d42c6bdaec9da4496beb3a1a05264 ]
+commit 4dc4e22f9536341255f5de6047977a80ff47eaef upstream.
 
-pcs_pinconf_get() and pcs_pinconf_set() declare ret as unsigned int,
-but assign it the return values of pcs_get_function() that may return
-negative error codes. This causes negative error codes to be
-converted to large positive values.
+Since commit 4ff6039ffb79 ("coresight-etm4x: add isb() before reading
+the TRCSTATR"), the code has incorrectly been polling the PMSTABLE bit
+instead of the IDLE bit.
 
-Change ret from unsigned int to int in both functions.
+This commit corrects the typo.
 
-Fixes: 9dddb4df90d1 ("pinctrl: single: support generic pinconf")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4ff6039ffb79 ("coresight-etm4x: add isb() before reading the TRCSTATR")
+Reviewed-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Reviewed-by: Mike Leach <mike.leach@linaro.org>
+Tested-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20251111-arm_coresight_power_management_fix-v6-4-f55553b6c8b3@arm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/pinctrl-single.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/hwtracing/coresight/coresight-etm4x-core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/pinctrl-single.c b/drivers/pinctrl/pinctrl-single.c
-index b81297084f097..0659cd3aa3a5a 100644
---- a/drivers/pinctrl/pinctrl-single.c
-+++ b/drivers/pinctrl/pinctrl-single.c
-@@ -490,7 +490,8 @@ static int pcs_pinconf_get(struct pinctrl_dev *pctldev,
- 	struct pcs_device *pcs = pinctrl_dev_get_drvdata(pctldev);
- 	struct pcs_function *func;
- 	enum pin_config_param param;
--	unsigned offset = 0, data = 0, i, j, ret;
-+	unsigned offset = 0, data = 0, i, j;
-+	int ret;
+--- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+@@ -1761,7 +1761,7 @@ static int __etm4_cpu_save(struct etmv4_
+ 		state->trcpdcr = etm4x_read32(csa, TRCPDCR);
  
- 	ret = pcs_get_function(pctldev, pin, &func);
- 	if (ret)
-@@ -554,9 +555,9 @@ static int pcs_pinconf_set(struct pinctrl_dev *pctldev,
- {
- 	struct pcs_device *pcs = pinctrl_dev_get_drvdata(pctldev);
- 	struct pcs_function *func;
--	unsigned offset = 0, shift = 0, i, data, ret;
-+	unsigned offset = 0, shift = 0, i, data;
- 	u32 arg;
--	int j;
-+	int j, ret;
- 	enum pin_config_param param;
- 
- 	ret = pcs_get_function(pctldev, pin, &func);
--- 
-2.51.0
-
+ 	/* wait for TRCSTATR.IDLE to go up */
+-	if (etm4x_wait_status(csa, TRCSTATR_PMSTABLE_BIT, 1)) {
++	if (etm4x_wait_status(csa, TRCSTATR_IDLE_BIT, 1)) {
+ 		dev_err(etm_dev,
+ 			"timeout while waiting for Idle Trace Status\n");
+ 		etm4_os_unlock(drvdata);
 
 
