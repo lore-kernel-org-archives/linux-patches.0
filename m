@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8693D29ACDD;
-	Thu, 15 Jan 2026 17:01:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B44729ACDD;
+	Thu, 15 Jan 2026 17:01:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496480; cv=none; b=h5VgG/UjtEWmLuGJ0HALvDFt0vQXJsRjOhwXMVymXk8scTd0aGAt/o6Eh56romENbEEkZze52H5XndNTuNczZRS6ZjRiB2th+0ssGEvS4BDNK1QTBXBN3OUCIMtSzpRQoZdklB7FuEexk4bsy+JS7hyIRTyt/lf3fM+cAbGmkpI=
+	t=1768496483; cv=none; b=MOVfIgIaSmi+HcatRoOhULEeR5/LaTmD2oGaaAVhLVU7s8z1nuAUV1NHlM5zu55sk/kdIFSBm6ZnR04w9P6jftmBaLtuCvA+PQZ+petpoEPwr8wAWLESIQdc0I/VTxrA33ugCXBrSL74B1VcLkoN7zri+CP+wCc3tG19NeToSK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496480; c=relaxed/simple;
-	bh=pr1bQ4pEij7MjkTRKFQo99aQ6QUECN4sYl33NxMBfSA=;
+	s=arc-20240116; t=1768496483; c=relaxed/simple;
+	bh=sV8X1fOOl6IOzUChg+BDGHVkXfzVQv/4pdKF/WYT+Ro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=keJz+eb9UmAEGT50Q/uiopPCQ1FCo0hG0gCZoMxzkg8xHUaUdKCuoCPBnCgTfNJ5yCbfnLuzONZagORf+Zh8OCyg2qFJTv6dtPddYEjFJMchGYHoVUaKfF8m01mH2k/2V/SVTQxnvwTkLNoO4Xs7C+u33xsgWD/oY8lsi18qCzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KiPpP/wY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SLeAVg7uCmgf6Dpo9Mt/Qq0/f/bIEORHFJUmld2Dh+ytWUVgH1IcxroWUrBvWMLdtZd+wjaLwWjFJRJ3HcQZ8n4f6NjEk5fl/8LX0F/JkzJTGJwHKpemFXUqndCXHfqxpzKl8obyBKGgc8xPzi+culov7RSetBEZPiD0fhRsb48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kb2deSng; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KiPpP/wY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A820C116D0;
-	Thu, 15 Jan 2026 17:01:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kb2deSng"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D44B3C116D0;
+	Thu, 15 Jan 2026 17:01:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496480;
-	bh=pr1bQ4pEij7MjkTRKFQo99aQ6QUECN4sYl33NxMBfSA=;
+	s=korg; t=1768496483;
+	bh=sV8X1fOOl6IOzUChg+BDGHVkXfzVQv/4pdKF/WYT+Ro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KiPpP/wYBkXaqTSzRfMv2OqD2WJnCekQrtNj9VTnE0XpN7mUQnzprOILBRpPpG9r/
-	 Yt7Z0sjXiN3tPvHJ+k/j2SSY6xxugekKTbjAyqbgsZBzaWWgIcQ/0i2vAhC3T0GPU5
-	 rWrw0dv6dAoPSs69lOw1rcuJ2gZfSLTEUewBib/Q=
+	b=kb2deSngxTP3g6ZIDnAWy5qvyR1eGhlFlv3Y2ZScSdA8/7Qh5+9cfkCa3g1FIygTv
+	 6yDPY/vVIwXxo5wGLeadYxxPMjI4B0Ecp8aFxmjVIQpvZWIvD1CwuGIgFOF6Q9WGg0
+	 4R4j2AivYZYTci2x8QV8kFVJC73YYx0ko8CICgNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Subject: [PATCH 6.12 027/119] libceph: make calc_target() set t->paused, not just clear it
-Date: Thu, 15 Jan 2026 17:47:22 +0100
-Message-ID: <20260115164152.942070458@linuxfoundation.org>
+	NeilBrown <neil@brown.name>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.12 003/119] nfsd: use correct loop termination in nfsd4_revoke_states()
+Date: Thu, 15 Jan 2026 17:46:58 +0100
+Message-ID: <20260115164152.080393358@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -51,74 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: NeilBrown <neil@brown.name>
 
-commit c0fe2994f9a9d0a2ec9e42441ea5ba74b6a16176 upstream.
+commit fb321998de7639f1954430674475e469fb529d9c upstream.
 
-Currently calc_target() clears t->paused if the request shouldn't be
-paused anymore, but doesn't ever set t->paused even though it's able to
-determine when the request should be paused.  Setting t->paused is left
-to __submit_request() which is fine for regular requests but doesn't
-work for linger requests -- since __submit_request() doesn't operate
-on linger requests, there is nowhere for lreq->t.paused to be set.
-One consequence of this is that watches don't get reestablished on
-paused -> unpaused transitions in cases where requests have been paused
-long enough for the (paused) unwatch request to time out and for the
-subsequent (re)watch request to enter the paused state.  On top of the
-watch not getting reestablished, rbd_reregister_watch() gets stuck with
-rbd_dev->watch_mutex held:
+The loop in nfsd4_revoke_states() stops one too early because
+the end value given is CLIENT_HASH_MASK where it should be
+CLIENT_HASH_SIZE.
 
-  rbd_register_watch
-    __rbd_register_watch
-      ceph_osdc_watch
-        linger_reg_commit_wait
+This means that an admin request to drop all locks for a filesystem will
+miss locks held by clients which hash to the maximum possible hash value.
 
-It's waiting for lreq->reg_commit_wait to be completed, but for that to
-happen the respective request needs to end up on need_resend_linger list
-and be kicked when requests are unpaused.  There is no chance for that
-if the request in question is never marked paused in the first place.
-
-The fact that rbd_dev->watch_mutex remains taken out forever then
-prevents the image from getting unmapped -- "rbd unmap" would inevitably
-hang in D state on an attempt to grab the mutex.
-
+Fixes: 1ac3629bf012 ("nfsd: prepare for supporting admin-revocation of state")
 Cc: stable@vger.kernel.org
-Reported-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: NeilBrown <neil@brown.name>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osd_client.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ fs/nfsd/nfs4state.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ceph/osd_client.c
-+++ b/net/ceph/osd_client.c
-@@ -1611,6 +1611,7 @@ static enum calc_target_result calc_targ
- 	struct ceph_pg_pool_info *pi;
- 	struct ceph_pg pgid, last_pgid;
- 	struct ceph_osds up, acting;
-+	bool should_be_paused;
- 	bool is_read = t->flags & CEPH_OSD_FLAG_READ;
- 	bool is_write = t->flags & CEPH_OSD_FLAG_WRITE;
- 	bool force_resend = false;
-@@ -1679,10 +1680,16 @@ static enum calc_target_result calc_targ
- 				 &last_pgid))
- 		force_resend = true;
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -1764,7 +1764,7 @@ void nfsd4_revoke_states(struct net *net
+ 	sc_types = SC_TYPE_OPEN | SC_TYPE_LOCK | SC_TYPE_DELEG | SC_TYPE_LAYOUT;
  
--	if (t->paused && !target_should_be_paused(osdc, t, pi)) {
--		t->paused = false;
-+	should_be_paused = target_should_be_paused(osdc, t, pi);
-+	if (t->paused && !should_be_paused) {
- 		unpaused = true;
- 	}
-+	if (t->paused != should_be_paused) {
-+		dout("%s t %p paused %d -> %d\n", __func__, t, t->paused,
-+		     should_be_paused);
-+		t->paused = should_be_paused;
-+	}
-+
- 	legacy_change = ceph_pg_compare(&t->pgid, &pgid) ||
- 			ceph_osds_changed(&t->acting, &acting,
- 					  t->used_replica || any_change);
+ 	spin_lock(&nn->client_lock);
+-	for (idhashval = 0; idhashval < CLIENT_HASH_MASK; idhashval++) {
++	for (idhashval = 0; idhashval < CLIENT_HASH_SIZE; idhashval++) {
+ 		struct list_head *head = &nn->conf_id_hashtbl[idhashval];
+ 		struct nfs4_client *clp;
+ 	retry:
 
 
