@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 606D942049;
-	Thu, 15 Jan 2026 16:54:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30DCD42049;
+	Thu, 15 Jan 2026 16:54:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496063; cv=none; b=t1jJUhn/L1hHbDR0NAHSgE8o+wUIwshLDmDhnGeWJ6lRsSjCYST6tiDeo5olQU6kiWbpjrr1ufhSqoEJOtS7eLI6HFw2lqqIG61n80+TK+lL8eou2tsbVL7ZEmxg44SqwfNowmUcp/kQOjUJeB+SeN0JddVIttDPUMsZNIjb53I=
+	t=1768496066; cv=none; b=Oq/5rKwQTJT/Zp4IfrwWZDvDU4Bl1fvjvuAK80gv0LXSGFjMRVGeyxvsG4g0MwalYVv0ME6DnG+Olan0aVmcG7kiGIu6fs0mivRat1IcMUagRVHtNEQWgMOiQSk3H/hX4P+u7QJH0HpqG3cHi3H6vWPevrF9l768Uej2GZiQ5es=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496063; c=relaxed/simple;
-	bh=J4bTb74X9OJ6aksbrTPMfbYESZ5lkTEr6OFMxyZ2TyM=;
+	s=arc-20240116; t=1768496066; c=relaxed/simple;
+	bh=DfkQW+IwSf2iYTVOhReVEjQAn7rZRI4L2dXiplxPW2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CK5y2YxjHaGA11W9SHTT/nxFHEzUrkMMBB41InLqJrAzj4YzFzWHuOq1zeh/W2YJEdtxpBvzus//5KHQeip5J4NbBAfooe/T5gYbD7Btd4Vq8OCB7QlygNP8aCszYdTe7Da4ZRwcRTw5/EqtkrFt5H2f3OZJhtKKGGYk0alnB8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e2iJdGOa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jd30oBYa4eP3GtEaqjq0yKf2rwA/48VkpjaDu6ikq6JAPpSZermzl9uu/lTugyxcsbsUQO/OlP4UW7iwuCPsUbwg0IOjwTQviiMx9r6s8FS1664MjshywJU4IDC5devNxwJNsvN4vQ8PNGmSF9tt0dzmFJhxZgifE8p/SU47kH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K+z3oqah; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e2iJdGOa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3808C116D0;
-	Thu, 15 Jan 2026 16:54:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K+z3oqah"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3BE8C116D0;
+	Thu, 15 Jan 2026 16:54:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496063;
-	bh=J4bTb74X9OJ6aksbrTPMfbYESZ5lkTEr6OFMxyZ2TyM=;
+	s=korg; t=1768496066;
+	bh=DfkQW+IwSf2iYTVOhReVEjQAn7rZRI4L2dXiplxPW2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e2iJdGOa/UZXgg26rlryrIm42pGpZvTxmt1n92uNBEASakn0nlWq0lrDI9anNCL+C
-	 pJwOHYy48km945m+Xl9Bi8GnBKfNmDpI2Et4RZI469BkJE9xntwbVojneiwB4SGytm
-	 99BDHZdA9EIkH9DfVaiyWKeqQ/eRlbTTckYgn/fU=
+	b=K+z3oqahTzJRVDuGBoQJ3+PQXF/w4FvI9LJ6EEgDQlgW6PsNbdDH4JDeq+A6O15gN
+	 yi4/JQHLpgaZ/m4OrJJu/Xhmez+Odhc7WXyLwnKGadKFapX2rzgNp+wLikba61mzWG
+	 X8z6tbbB1aEGsh7BRCvgbwZWXsf1SnVqcX5JwVCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+bfc7323743ca6dbcc3d3@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.18 037/181] wifi: avoid kernel-infoleak from struct iw_point
-Date: Thu, 15 Jan 2026 17:46:14 +0100
-Message-ID: <20260115164203.668561581@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Boris Burkov <boris@bur.io>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 064/181] btrfs: fix qgroup_snapshot_quick_inherit() squota bug
+Date: Thu, 15 Jan 2026 17:46:41 +0100
+Message-ID: <20260115164204.637368369@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -51,59 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Boris Burkov <boris@bur.io>
 
-commit 21cbf883d073abbfe09e3924466aa5e0449e7261 upstream.
+[ Upstream commit 7ee19a59a75e3d5b9ec00499b86af8e2a46fbe86 ]
 
-struct iw_point has a 32bit hole on 64bit arches.
+qgroup_snapshot_quick_inherit() detects conditions where the snapshot
+destination would land in the same parent qgroup as the snapshot source
+subvolume. In this case we can avoid costly qgroup calculations and just
+add the nodesize of the new snapshot to the parent.
 
-struct iw_point {
-  void __user   *pointer;       /* Pointer to the data  (in user space) */
-  __u16         length;         /* number of fields or size in bytes */
-  __u16         flags;          /* Optional params */
-};
+However, in the case of squotas this is actually a double count, and
+also an undercount for deeper qgroup nestings.
 
-Make sure to zero the structure to avoid disclosing 32bits of kernel data
-to user space.
+The following annotated script shows the issue:
 
-Fixes: 87de87d5e47f ("wext: Dispatch and handle compat ioctls entirely in net/wireless/wext.c")
-Reported-by: syzbot+bfc7323743ca6dbcc3d3@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/695f83f3.050a0220.1c677c.0392.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260108101927.857582-1-edumazet@google.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  btrfs quota enable --simple "$mnt"
+
+  # Create 2-level qgroup hierarchy
+  btrfs qgroup create 2/100 "$mnt"  # Q2 (level 2)
+  btrfs qgroup create 1/100 "$mnt"  # Q1 (level 1)
+  btrfs qgroup assign 1/100 2/100 "$mnt"
+
+  # Create base subvolume
+  btrfs subvolume create "$mnt/base" >/dev/null
+  base_id=$(btrfs subvolume show "$mnt/base" | grep 'Subvolume ID:' | awk '{print $3}')
+
+  # Create intermediate snapshot and add to Q1
+  btrfs subvolume snapshot "$mnt/base" "$mnt/intermediate" >/dev/null
+  inter_id=$(btrfs subvolume show "$mnt/intermediate" | grep 'Subvolume ID:' | awk '{print $3}')
+  btrfs qgroup assign "0/$inter_id" 1/100 "$mnt"
+
+  # Create working snapshot with --inherit (auto-adds to Q1)
+  # src=intermediate (in only Q1)
+  # dst=snap (inheriting only into Q1)
+  # This double counts the 16k nodesize of the snapshot in Q1, and
+  # undercounts it in Q2.
+  btrfs subvolume snapshot -i 1/100 "$mnt/intermediate" "$mnt/snap" >/dev/null
+  snap_id=$(btrfs subvolume show "$mnt/snap" | grep 'Subvolume ID:' | awk '{print $3}')
+
+  # Fully complete snapshot creation
+  sync
+
+  # Delete working snapshot
+  # Q1 and Q2 will lose the full snap usage
+  btrfs subvolume delete "$mnt/snap" >/dev/null
+
+  # Delete intermediate and remove from Q1
+  # Q1 and Q2 will lose the full intermediate usage
+  btrfs qgroup remove "0/$inter_id" 1/100 "$mnt"
+  btrfs subvolume delete "$mnt/intermediate" >/dev/null
+
+  # Q1 should be at 0, but still has 16k. Q2 is "correct" at 0 (for now...)
+
+  # Trigger cleaner, wait for deletions
+  mount -o remount,sync=1 "$mnt"
+  btrfs subvolume sync "$mnt" "$snap_id"
+  btrfs subvolume sync "$mnt" "$inter_id"
+
+  # Remove Q1 from Q2
+  # Frees 16k more from Q2, underflowing it to 16EiB
+  btrfs qgroup remove 1/100 2/100 "$mnt"
+
+  # And show the bad state:
+  btrfs qgroup show -pc "$mnt"
+
+        Qgroupid    Referenced    Exclusive Parent   Child   Path
+        --------    ----------    --------- ------   -----   ----
+        0/5           16.00KiB     16.00KiB -        -       <toplevel>
+        0/256         16.00KiB     16.00KiB -        -       base
+        1/100         16.00KiB     16.00KiB -        -       <0 member qgroups>
+        2/100         16.00EiB     16.00EiB -        -       <0 member qgroups>
+
+Fix this by simply not doing this quick inheritance with squotas.
+
+I suspect that it is also wrong in normal qgroups to not recurse up the
+qgroup tree in the quick inherit case, though other consistency checks
+will likely fix it anyway.
+
+Fixes: b20fe56cd285 ("btrfs: qgroup: allow quick inherit if snapshot is created and added to the same parent")
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/wext-core.c |    4 ++++
- net/wireless/wext-priv.c |    4 ++++
- 2 files changed, 8 insertions(+)
+ fs/btrfs/qgroup.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/wireless/wext-core.c
-+++ b/net/wireless/wext-core.c
-@@ -1101,6 +1101,10 @@ static int compat_standard_call(struct n
- 		return ioctl_standard_call(dev, iwr, cmd, info, handler);
+diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
+index 31ad8580322a6..7faaa777010d7 100644
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -3247,6 +3247,9 @@ static int qgroup_snapshot_quick_inherit(struct btrfs_fs_info *fs_info,
+ 	struct btrfs_qgroup_list *list;
+ 	int nr_parents = 0;
  
- 	iwp_compat = (struct compat_iw_point *) &iwr->u.data;
++	if (btrfs_qgroup_mode(fs_info) != BTRFS_QGROUP_MODE_FULL)
++		return 0;
 +
-+	/* struct iw_point has a 32bit hole on 64bit arches. */
-+	memset(&iwp, 0, sizeof(iwp));
-+
- 	iwp.pointer = compat_ptr(iwp_compat->pointer);
- 	iwp.length = iwp_compat->length;
- 	iwp.flags = iwp_compat->flags;
---- a/net/wireless/wext-priv.c
-+++ b/net/wireless/wext-priv.c
-@@ -228,6 +228,10 @@ int compat_private_call(struct net_devic
- 		struct iw_point iwp;
- 
- 		iwp_compat = (struct compat_iw_point *) &iwr->u.data;
-+
-+		/* struct iw_point has a 32bit hole on 64bit arches. */
-+		memset(&iwp, 0, sizeof(iwp));
-+
- 		iwp.pointer = compat_ptr(iwp_compat->pointer);
- 		iwp.length = iwp_compat->length;
- 		iwp.flags = iwp_compat->flags;
+ 	src = find_qgroup_rb(fs_info, srcid);
+ 	if (!src)
+ 		return -ENOENT;
+-- 
+2.51.0
+
 
 
