@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0076427AC5C;
-	Thu, 15 Jan 2026 17:40:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D01A22C21F4;
+	Thu, 15 Jan 2026 17:40:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498830; cv=none; b=qo5dOJAA1Uv4Qiw1wauav+NUxz3QYi9DzNqO6M6irRNVW8iSxCaX7J0eGjef1UXBN3lSXa047zBLCH2zSE7cCbYEx0OF8YfTmPnkBjY//y5TRBelHstHI4VKYQgbiuuBWFyeapiOtqBL676CEwwwJy7FIh/KoiwUL/T7PiNYPng=
+	t=1768498832; cv=none; b=IDgpdSt7rk6NX+PCRhZhUi7+QNwSOg1K6TJGCA6hZSnDd/2NvB/kekwXc2MpleOAAH7Jd21/EJyfbaNXTD2GJ2bmvRnCvDJxkfnNOicWr7yIxxiZZ9DlEsoJHBpBr5L3MoFcipDN9aBJKcdYrJdl+eZWHu1W8PkokzJWFRfkK8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498830; c=relaxed/simple;
-	bh=hDcg9GkpOE6zb5wy47KG9FjST2jXkMQQfkJu5oBKzRc=;
+	s=arc-20240116; t=1768498832; c=relaxed/simple;
+	bh=v3KeZSkV2F1Fq440TzrHfPJ+dl4Zkk13fQ4XhaypkvQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nnwqgezs95Lq6tcL9P0+HM4iNqpZpniD+xSgQRvo8LnXVKoYzVfngsxIpJIZTSuFiTPoLRyqrmvLR8vS3Aw7eh7Z4iyCwss8oSBI/9fqvyATKQKW9NPvTHNg9Tq6j91pBybdfwf+O2eMvzT1Tew6eYPaTCh9daI0AZYIFOxbBK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KmLHfSf8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vo/kQiS4y8KRhodd6Ai/1yLxuTdS/8mjiZqCrNLw9U0rpOvGB2K1gu/EwJukYGaVqtjHQty9LmSdx1OdEATAYf6IJiYIIcWyh4yZE7OC7jm106Tbih3du+Cqdn9tl3ENGwWhP52m17SNvu50cDfGVQuLNj/9HDA3h4ukvyOzr7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MmCDeCNI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KmLHfSf8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D636C116D0;
-	Thu, 15 Jan 2026 17:40:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MmCDeCNI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59629C19423;
+	Thu, 15 Jan 2026 17:40:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498829;
-	bh=hDcg9GkpOE6zb5wy47KG9FjST2jXkMQQfkJu5oBKzRc=;
+	s=korg; t=1768498832;
+	bh=v3KeZSkV2F1Fq440TzrHfPJ+dl4Zkk13fQ4XhaypkvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KmLHfSf8RxKiaaE/lbC0Z2sIq2TGV99RlS2+zRFQcQMQqhtHCjwjgH9v/+E6yMn+1
-	 vxnvrAAJ3hV9wAbm+aqvA0b6f9CJ6KlqStFUDF29NGs0fiF7itU68uudEJWAly0sqF
-	 dgvEcoB4qtIHaPKXBmu0Cg0NPu5CqYc5SXNMkt9o=
+	b=MmCDeCNIWtmNV9N2lF0B+jpKuIMTajSd137uMfIe+YhCuYoru9txBExtI0ejriHtr
+	 w8VAvLBTY/OiK8lYk1zeCXzm1I6V2lk744YdTM3VMsTXRymsoHmQTA43kK+WKaN7/a
+	 Cmwx+SYDuT9xlY369/vSaYRkFvI5NpY3ejZ1cYhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Magne Bruno <magne.bruno@addi-data.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.10 014/451] serial: add support of CPCI cards
-Date: Thu, 15 Jan 2026 17:43:35 +0100
-Message-ID: <20260115164231.405334676@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.10 015/451] USB: serial: belkin_sa: fix TIOCMBIS and TIOCMBIC
+Date: Thu, 15 Jan 2026 17:43:36 +0100
+Message-ID: <20260115164231.441137932@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -50,74 +49,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Magne Bruno <magne.bruno@addi-data.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 0e5a99e0e5f50353b86939ff6e424800d769c818 upstream.
+commit b6e0b3016187446ddef9edac03cd9d544ac63f11 upstream.
 
-Addi-Data GmbH is manufacturing multi-serial ports cards supporting CompactPCI (known as CPCI).
-Those cards are identified with different DeviceIds. Those cards integrating standard UARTs
-work the same way as PCI/PCIe models already supported in the serial driver.
+Asserting or deasserting a modem control line using TIOCMBIS or TIOCMBIC
+should not deassert any lines that are not in the mask.
 
-Signed-off-by: Magne Bruno <magne.bruno@addi-data.com>
-Link: https://patch.msgid.link/20251110162456.341029-1-magne.bruno@addi-data.com
-Cc: stable <stable@kernel.org>
+Fix this long-standing regression dating back to 2003 when the
+tiocmset() callback was introduced.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_pci.c |   37 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ drivers/usb/serial/belkin_sa.c |   28 +++++++++++++++++-----------
+ 1 file changed, 17 insertions(+), 11 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_pci.c
-+++ b/drivers/tty/serial/8250/8250_pci.c
-@@ -1926,6 +1926,11 @@ pci_moxa_setup(struct serial_private *pr
- #define	PCI_DEVICE_ID_MOXA_CP138E_A	0x1381
- #define	PCI_DEVICE_ID_MOXA_CP168EL_A	0x1683
+--- a/drivers/usb/serial/belkin_sa.c
++++ b/drivers/usb/serial/belkin_sa.c
+@@ -448,7 +448,7 @@ static int belkin_sa_tiocmset(struct tty
+ 	struct belkin_sa_private *priv = usb_get_serial_port_data(port);
+ 	unsigned long control_state;
+ 	unsigned long flags;
+-	int retval;
++	int retval = 0;
+ 	int rts = 0;
+ 	int dtr = 0;
  
-+#define PCI_DEVICE_ID_ADDIDATA_CPCI7500        0x7003
-+#define PCI_DEVICE_ID_ADDIDATA_CPCI7500_NG     0x7024
-+#define PCI_DEVICE_ID_ADDIDATA_CPCI7420_NG     0x7025
-+#define PCI_DEVICE_ID_ADDIDATA_CPCI7300_NG     0x7026
-+
- /* Unknown vendors/cards - this should not be in linux/pci_ids.h */
- #define PCI_SUBDEVICE_ID_UNKNOWN_0x1584	0x1584
- #define PCI_SUBDEVICE_ID_UNKNOWN_0x1588	0x1588
-@@ -5753,6 +5758,38 @@ static const struct pci_device_id serial
- 		0,
- 		pbn_ADDIDATA_PCIe_8_3906250 },
+@@ -465,26 +465,32 @@ static int belkin_sa_tiocmset(struct tty
+ 	}
+ 	if (clear & TIOCM_RTS) {
+ 		control_state &= ~TIOCM_RTS;
+-		rts = 0;
++		rts = 1;
+ 	}
+ 	if (clear & TIOCM_DTR) {
+ 		control_state &= ~TIOCM_DTR;
+-		dtr = 0;
++		dtr = 1;
+ 	}
  
-+	{	PCI_VENDOR_ID_ADDIDATA,
-+		PCI_DEVICE_ID_ADDIDATA_CPCI7500,
-+		PCI_ANY_ID,
-+		PCI_ANY_ID,
-+		0,
-+		0,
-+		pbn_b0_4_115200 },
-+
-+	{	PCI_VENDOR_ID_ADDIDATA,
-+		PCI_DEVICE_ID_ADDIDATA_CPCI7500_NG,
-+		PCI_ANY_ID,
-+		PCI_ANY_ID,
-+		0,
-+		0,
-+		pbn_b0_4_115200 },
-+
-+	{	PCI_VENDOR_ID_ADDIDATA,
-+		PCI_DEVICE_ID_ADDIDATA_CPCI7420_NG,
-+		PCI_ANY_ID,
-+		PCI_ANY_ID,
-+		0,
-+		0,
-+		pbn_b0_2_115200 },
-+
-+	{	PCI_VENDOR_ID_ADDIDATA,
-+		PCI_DEVICE_ID_ADDIDATA_CPCI7300_NG,
-+		PCI_ANY_ID,
-+		PCI_ANY_ID,
-+		0,
-+		0,
-+		pbn_b0_1_115200 },
-+
- 	{	PCI_VENDOR_ID_NETMOS, PCI_DEVICE_ID_NETMOS_9835,
- 		PCI_VENDOR_ID_IBM, 0x0299,
- 		0, 0, pbn_b0_bt_2_115200 },
+ 	priv->control_state = control_state;
+ 	spin_unlock_irqrestore(&priv->lock, flags);
+ 
+-	retval = BSA_USB_CMD(BELKIN_SA_SET_RTS_REQUEST, rts);
+-	if (retval < 0) {
+-		dev_err(&port->dev, "Set RTS error %d\n", retval);
+-		goto exit;
++	if (rts) {
++		retval = BSA_USB_CMD(BELKIN_SA_SET_RTS_REQUEST,
++					!!(control_state & TIOCM_RTS));
++		if (retval < 0) {
++			dev_err(&port->dev, "Set RTS error %d\n", retval);
++			goto exit;
++		}
+ 	}
+ 
+-	retval = BSA_USB_CMD(BELKIN_SA_SET_DTR_REQUEST, dtr);
+-	if (retval < 0) {
+-		dev_err(&port->dev, "Set DTR error %d\n", retval);
+-		goto exit;
++	if (dtr) {
++		retval = BSA_USB_CMD(BELKIN_SA_SET_DTR_REQUEST,
++					!!(control_state & TIOCM_DTR));
++		if (retval < 0) {
++			dev_err(&port->dev, "Set DTR error %d\n", retval);
++			goto exit;
++		}
+ 	}
+ exit:
+ 	return retval;
 
 
