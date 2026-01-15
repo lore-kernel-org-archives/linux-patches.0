@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3F53AEF27;
-	Thu, 15 Jan 2026 17:25:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB0A239B48E;
+	Thu, 15 Jan 2026 17:25:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497901; cv=none; b=cviN+aTOz4pIga5P6R3KIwyFIWZaXCQj+zomld4ctL/uHY3ITXJFttNZqaReF889IxGzWYqzI230KbNbsy+E0yeoYXp4lWmYps4ZAkjZDEFFNa8JxeV2QAOTi0p024qVu/3xi5kD3QagICwamE3xxysZBiobIpFE2CBuE5/xYdI=
+	t=1768497904; cv=none; b=nfSa72wTL0IGMJTdxTdmjYwkhKN1GSvdeccIaNKsVoUyxb3CzwHF3IJ65ZGP+f+F23OQ9bDZAeCeMFviMoC6s2BuxvQOwwu6Ye/xwmI7qU8b9kzkhxFwmWuFrYuvZwoRakKZmTjh/ezGyORwV1xAr8t2B5gKkVTLpqX6DlOFSkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497901; c=relaxed/simple;
-	bh=xW1t6HtPkZph4ed2TvICkHRnd8dJHUb9DwhFiKLCu94=;
+	s=arc-20240116; t=1768497904; c=relaxed/simple;
+	bh=bUWPjT8FXhyDs19/lCj5W7V5ovSwd3BTPHG6vEO95ks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l54WafzIoegpEF+VIcNb72Gv51CPpAGuaMIDFxGHimvCi/jPdIiuVpJnV3VKdvcMgL5DYOpt4gXYDIELUfWP4qIvhWxWYGjqpOgci+SOxzYqoR+1M4mf3KZvJ65zhxHJPd2Gc/FQWWAGZ5FLEc423vJ5sJryDyVi7WvPWFWQdN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m6yecjE5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qTL9OU/VapQPLmzFrs8e5CHHdOecH3OVn0UwroB3uIuO/Zsnr3bMK4BBNwrhyrGfYNuf5QZMuA6jChq2K1E4yV9MXzH5cFvR8m1W2nP4/zopHkz18A/xg4WhtdADEfgwtYGzgo/XTIgk5t0aHmnt/AseeaektRV47plzj8pbTjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fwnSBolN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m6yecjE5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64554C116D0;
-	Thu, 15 Jan 2026 17:25:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fwnSBolN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39C45C116D0;
+	Thu, 15 Jan 2026 17:25:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497901;
-	bh=xW1t6HtPkZph4ed2TvICkHRnd8dJHUb9DwhFiKLCu94=;
+	s=korg; t=1768497904;
+	bh=bUWPjT8FXhyDs19/lCj5W7V5ovSwd3BTPHG6vEO95ks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m6yecjE5pYc/l82RV2ncoTQLrJTTwwbcXsgsBpxhe8/Ldr7jnUon+6mOlfUDMHIGo
-	 xPO8cXPo3CoPzZCvMiQN0OZFAL1f3XVL5coNl4FeBGxFdSVJIjmZzCZpKOVueVDeAK
-	 rZNIpGSLH8IJtb9vsxGt1YzbMnnDHcWrkLQqWlFM=
+	b=fwnSBolNXiyzHgG7ivArjPR77Ost4wya9+8g2xRn9BD8YGyDp/WisADIalaRYFNHq
+	 ZpIVd/VnG0SxxXfJc+uED7uH6O3GB6Z5DniTW6vtS4ac8/s6BARk2XTBzoq3TwsXH4
+	 uxR5Q1Mo/9vXOETYINHx0qOAig0CugzT4Mya5FL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Berger <opendmb@gmail.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 210/554] sched/deadline: only set free_cpus for online runqueues
-Date: Thu, 15 Jan 2026 17:44:36 +0100
-Message-ID: <20260115164253.853877007@linuxfoundation.org>
+Subject: [PATCH 5.15 211/554] x86/ptrace: Always inline trivial accessors
+Date: Thu, 15 Jan 2026 17:44:37 +0100
+Message-ID: <20260115164253.889216149@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -51,187 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doug Berger <opendmb@gmail.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 382748c05e58a9f1935f5a653c352422375566ea ]
+[ Upstream commit 1fe4002cf7f23d70c79bda429ca2a9423ebcfdfa ]
 
-Commit 16b269436b72 ("sched/deadline: Modify cpudl::free_cpus
-to reflect rd->online") introduced the cpudl_set/clear_freecpu
-functions to allow the cpu_dl::free_cpus mask to be manipulated
-by the deadline scheduler class rq_on/offline callbacks so the
-mask would also reflect this state.
+A KASAN build bloats these single load/store helpers such that
+it fails to inline them:
 
-Commit 9659e1eeee28 ("sched/deadline: Remove cpu_active_mask
-from cpudl_find()") removed the check of the cpu_active_mask to
-save some processing on the premise that the cpudl::free_cpus
-mask already reflected the runqueue online state.
+  vmlinux.o: error: objtool: irqentry_exit+0x5e8: call to instruction_pointer_set() with UACCESS enabled
 
-Unfortunately, there are cases where it is possible for the
-cpudl_clear function to set the free_cpus bit for a CPU when the
-deadline runqueue is offline. When this occurs while a CPU is
-connected to the default root domain the flag may retain the bad
-state after the CPU has been unplugged. Later, a different CPU
-that is transitioning through the default root domain may push a
-deadline task to the powered down CPU when cpudl_find sees its
-free_cpus bit is set. If this happens the task will not have the
-opportunity to run.
+Make sure the compiler isn't allowed to do stupid.
 
-One example is outlined here:
-https://lore.kernel.org/lkml/20250110233010.2339521-1-opendmb@gmail.com
-
-Another occurs when the last deadline task is migrated from a
-CPU that has an offlined runqueue. The dequeue_task member of
-the deadline scheduler class will eventually call cpudl_clear
-and set the free_cpus bit for the CPU.
-
-This commit modifies the cpudl_clear function to be aware of the
-online state of the deadline runqueue so that the free_cpus mask
-can be updated appropriately.
-
-It is no longer necessary to manage the mask outside of the
-cpudl_set/clear functions so the cpudl_set/clear_freecpu
-functions are removed. In addition, since the free_cpus mask is
-now only updated under the cpudl lock the code was changed to
-use the non-atomic __cpumask functions.
-
-Signed-off-by: Doug Berger <opendmb@gmail.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://patch.msgid.link/20251031105435.GU4068168@noisy.programming.kicks-ass.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/cpudeadline.c | 34 +++++++++-------------------------
- kernel/sched/cpudeadline.h |  4 +---
- kernel/sched/deadline.c    |  8 ++++----
- 3 files changed, 14 insertions(+), 32 deletions(-)
+ arch/x86/include/asm/ptrace.h | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/kernel/sched/cpudeadline.c b/kernel/sched/cpudeadline.c
-index 221ca10505738..219cec91ecee4 100644
---- a/kernel/sched/cpudeadline.c
-+++ b/kernel/sched/cpudeadline.c
-@@ -166,12 +166,13 @@ int cpudl_find(struct cpudl *cp, struct task_struct *p,
-  * cpudl_clear - remove a CPU from the cpudl max-heap
-  * @cp: the cpudl max-heap context
-  * @cpu: the target CPU
-+ * @online: the online state of the deadline runqueue
-  *
-  * Notes: assumes cpu_rq(cpu)->lock is locked
-  *
-  * Returns: (void)
-  */
--void cpudl_clear(struct cpudl *cp, int cpu)
-+void cpudl_clear(struct cpudl *cp, int cpu, bool online)
+diff --git a/arch/x86/include/asm/ptrace.h b/arch/x86/include/asm/ptrace.h
+index b94f615600d57..d5186653311da 100644
+--- a/arch/x86/include/asm/ptrace.h
++++ b/arch/x86/include/asm/ptrace.h
+@@ -109,12 +109,12 @@ convert_ip_to_linear(struct task_struct *child, struct pt_regs *regs);
+ extern void send_sigtrap(struct pt_regs *regs, int error_code, int si_code);
+ 
+ 
+-static inline unsigned long regs_return_value(struct pt_regs *regs)
++static __always_inline unsigned long regs_return_value(struct pt_regs *regs)
  {
- 	int old_idx, new_cpu;
- 	unsigned long flags;
-@@ -184,7 +185,7 @@ void cpudl_clear(struct cpudl *cp, int cpu)
- 	if (old_idx == IDX_INVALID) {
- 		/*
- 		 * Nothing to remove if old_idx was invalid.
--		 * This could happen if a rq_offline_dl is
-+		 * This could happen if rq_online_dl or rq_offline_dl is
- 		 * called for a CPU without -dl tasks running.
- 		 */
- 	} else {
-@@ -195,9 +196,12 @@ void cpudl_clear(struct cpudl *cp, int cpu)
- 		cp->elements[new_cpu].idx = old_idx;
- 		cp->elements[cpu].idx = IDX_INVALID;
- 		cpudl_heapify(cp, old_idx);
--
--		cpumask_set_cpu(cpu, cp->free_cpus);
- 	}
-+	if (likely(online))
-+		__cpumask_set_cpu(cpu, cp->free_cpus);
-+	else
-+		__cpumask_clear_cpu(cpu, cp->free_cpus);
-+
- 	raw_spin_unlock_irqrestore(&cp->lock, flags);
+ 	return regs->ax;
  }
  
-@@ -228,7 +232,7 @@ void cpudl_set(struct cpudl *cp, int cpu, u64 dl)
- 		cp->elements[new_idx].cpu = cpu;
- 		cp->elements[cpu].idx = new_idx;
- 		cpudl_heapify_up(cp, new_idx);
--		cpumask_clear_cpu(cpu, cp->free_cpus);
-+		__cpumask_clear_cpu(cpu, cp->free_cpus);
- 	} else {
- 		cp->elements[old_idx].dl = dl;
- 		cpudl_heapify(cp, old_idx);
-@@ -237,26 +241,6 @@ void cpudl_set(struct cpudl *cp, int cpu, u64 dl)
- 	raw_spin_unlock_irqrestore(&cp->lock, flags);
+-static inline void regs_set_return_value(struct pt_regs *regs, unsigned long rc)
++static __always_inline void regs_set_return_value(struct pt_regs *regs, unsigned long rc)
+ {
+ 	regs->ax = rc;
+ }
+@@ -195,34 +195,34 @@ static inline bool ip_within_syscall_gap(struct pt_regs *regs)
+ }
+ #endif
+ 
+-static inline unsigned long kernel_stack_pointer(struct pt_regs *regs)
++static __always_inline unsigned long kernel_stack_pointer(struct pt_regs *regs)
+ {
+ 	return regs->sp;
  }
  
--/*
-- * cpudl_set_freecpu - Set the cpudl.free_cpus
-- * @cp: the cpudl max-heap context
-- * @cpu: rd attached CPU
-- */
--void cpudl_set_freecpu(struct cpudl *cp, int cpu)
--{
--	cpumask_set_cpu(cpu, cp->free_cpus);
--}
--
--/*
-- * cpudl_clear_freecpu - Clear the cpudl.free_cpus
-- * @cp: the cpudl max-heap context
-- * @cpu: rd attached CPU
-- */
--void cpudl_clear_freecpu(struct cpudl *cp, int cpu)
--{
--	cpumask_clear_cpu(cpu, cp->free_cpus);
--}
--
- /*
-  * cpudl_init - initialize the cpudl structure
-  * @cp: the cpudl max-heap context
-diff --git a/kernel/sched/cpudeadline.h b/kernel/sched/cpudeadline.h
-index 0adeda93b5fb5..ecff718d94aea 100644
---- a/kernel/sched/cpudeadline.h
-+++ b/kernel/sched/cpudeadline.h
-@@ -18,9 +18,7 @@ struct cpudl {
- #ifdef CONFIG_SMP
- int  cpudl_find(struct cpudl *cp, struct task_struct *p, struct cpumask *later_mask);
- void cpudl_set(struct cpudl *cp, int cpu, u64 dl);
--void cpudl_clear(struct cpudl *cp, int cpu);
-+void cpudl_clear(struct cpudl *cp, int cpu, bool online);
- int  cpudl_init(struct cpudl *cp);
--void cpudl_set_freecpu(struct cpudl *cp, int cpu);
--void cpudl_clear_freecpu(struct cpudl *cp, int cpu);
- void cpudl_cleanup(struct cpudl *cp);
- #endif /* CONFIG_SMP */
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index 708c3960bd06e..923ac2244d4b5 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -1418,7 +1418,7 @@ static void dec_dl_deadline(struct dl_rq *dl_rq, u64 deadline)
- 	if (!dl_rq->dl_nr_running) {
- 		dl_rq->earliest_dl.curr = 0;
- 		dl_rq->earliest_dl.next = 0;
--		cpudl_clear(&rq->rd->cpudl, rq->cpu);
-+		cpudl_clear(&rq->rd->cpudl, rq->cpu, rq->online);
- 		cpupri_set(&rq->rd->cpupri, rq->cpu, rq->rt.highest_prio.curr);
- 	} else {
- 		struct rb_node *leftmost = dl_rq->root.rb_leftmost;
-@@ -2377,9 +2377,10 @@ static void rq_online_dl(struct rq *rq)
- 	if (rq->dl.overloaded)
- 		dl_set_overload(rq);
- 
--	cpudl_set_freecpu(&rq->rd->cpudl, rq->cpu);
- 	if (rq->dl.dl_nr_running > 0)
- 		cpudl_set(&rq->rd->cpudl, rq->cpu, rq->dl.earliest_dl.curr);
-+	else
-+		cpudl_clear(&rq->rd->cpudl, rq->cpu, true);
+-static inline unsigned long instruction_pointer(struct pt_regs *regs)
++static __always_inline unsigned long instruction_pointer(struct pt_regs *regs)
+ {
+ 	return regs->ip;
  }
  
- /* Assumes rq->lock is held */
-@@ -2388,8 +2389,7 @@ static void rq_offline_dl(struct rq *rq)
- 	if (rq->dl.overloaded)
- 		dl_clear_overload(rq);
- 
--	cpudl_clear(&rq->rd->cpudl, rq->cpu);
--	cpudl_clear_freecpu(&rq->rd->cpudl, rq->cpu);
-+	cpudl_clear(&rq->rd->cpudl, rq->cpu, false);
+-static inline void instruction_pointer_set(struct pt_regs *regs,
+-		unsigned long val)
++static __always_inline
++void instruction_pointer_set(struct pt_regs *regs, unsigned long val)
+ {
+ 	regs->ip = val;
  }
  
- void __init init_sched_dl_class(void)
+-static inline unsigned long frame_pointer(struct pt_regs *regs)
++static __always_inline unsigned long frame_pointer(struct pt_regs *regs)
+ {
+ 	return regs->bp;
+ }
+ 
+-static inline unsigned long user_stack_pointer(struct pt_regs *regs)
++static __always_inline unsigned long user_stack_pointer(struct pt_regs *regs)
+ {
+ 	return regs->sp;
+ }
+ 
+-static inline void user_stack_pointer_set(struct pt_regs *regs,
+-		unsigned long val)
++static __always_inline
++void user_stack_pointer_set(struct pt_regs *regs, unsigned long val)
+ {
+ 	regs->sp = val;
+ }
 -- 
 2.51.0
 
