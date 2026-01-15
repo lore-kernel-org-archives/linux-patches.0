@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 344723BF2F6;
-	Thu, 15 Jan 2026 17:37:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE23B3BFE5F;
+	Thu, 15 Jan 2026 17:37:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498648; cv=none; b=p0rpPXVqO7URHNOZbG9+8Yniz08XzJskArnp4UULpHb8eG7CnD3FvIb7EdSUlR++4AE1rm+GLbURtcuEY9vDfL5HAso8LEWLb62RKmPvHrl/xw+lPDl2PtJkLCShtSt2nqqLFv9le0JLiTBcWzF7NFp+Dyz3yyGEgEHW3lJTLaM=
+	t=1768498651; cv=none; b=CyPejHSuBlbsMoAk7kRGooeS8Ya5yWy/T010wyMV4bBpPrgfoD+C1KQU/4VReaYiBOXammrQ6nd+yKat6LXAJJV+6yUoaUTmlkymzckQm5jb2dPlAGNLM8iszs+n0VopUpQ5XSxcKr2emCWGqUbBGY9tqHo9vs11/MnF0L93zpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498648; c=relaxed/simple;
-	bh=eh5bsBrFehuyxV5Nej+r0IX+XlWxRZyUiYUXVSTPtws=;
+	s=arc-20240116; t=1768498651; c=relaxed/simple;
+	bh=Lr8BD/FDf+tqt6L0uhZLLXSeawZhFd1ipkrHR5WclCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nXdaiJKGn9W1azmWWF5bLp8DvN8zvbDyhyeggHLo++JUMC0z4ieKcO2R7+ySy2sbxfSsiTulKtV4/pM59xOT+/KAlaNg0T1056b6dkUzTvgq6wDKSQ385yMB1nyP/efPQv22geS7H3ov0MbUn7kg/egdUusSkad2V/lCsZlaWl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LYMCts3z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BhjVpDusEhGriUWR5BU6i4qjuQs2tJNUEFq3M8qCeuQSbR61Rd2sMiLzFialyphtcdCeK0X44yvSVKBnQ/dZKg9rCvPQMce2KQ6AiMiflvEm0XP5BXVvbMFheLWQVffnKMSmo++Jbqd+YQoYrmi/oQuDK1JRd0se+jvS2AF/1jY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rXY2PRBP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LYMCts3z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3829C116D0;
-	Thu, 15 Jan 2026 17:37:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rXY2PRBP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D895C116D0;
+	Thu, 15 Jan 2026 17:37:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498648;
-	bh=eh5bsBrFehuyxV5Nej+r0IX+XlWxRZyUiYUXVSTPtws=;
+	s=korg; t=1768498650;
+	bh=Lr8BD/FDf+tqt6L0uhZLLXSeawZhFd1ipkrHR5WclCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LYMCts3zCyOvcV4Afip+C6ekQeMMWPD3UOFgs117qaXvgOhjwDiYT+9260FR2aW8+
-	 hRXKa/1JGIjjCnNqPAp6DIUtkkxP1M/lC8oLGOKZbWFTsEmjj4npdpDO7R9uvCbUu0
-	 M1qeEDK6vPRK7PUdSWx2cnO7S/aD1fSX3b/BP2Xs=
+	b=rXY2PRBPtbIWaqQ3my5Xx/zr7BAroNbwKihw/z4RTBcc4qG8uqdhDdGy+1vMqhL5B
+	 Cgm00BatIg9FLTFQP2Jq43LpLZxabDYxX6+6gspfGG177YfQLgBWqpDZ9PmPMfdczf
+	 7GlKC2sQBG4yh7dnxSM2DfM2m/QDxpz2WqGvKUao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+bfc7323743ca6dbcc3d3@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.15 506/554] wifi: avoid kernel-infoleak from struct iw_point
-Date: Thu, 15 Jan 2026 17:49:32 +0100
-Message-ID: <20260115164304.632479078@linuxfoundation.org>
+	ziming zhang <ezrakiez@gmail.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 5.15 507/554] libceph: prevent potential out-of-bounds reads in handle_auth_done()
+Date: Thu, 15 Jan 2026 17:49:33 +0100
+Message-ID: <20260115164304.669339664@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -51,59 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: ziming zhang <ezrakiez@gmail.com>
 
-commit 21cbf883d073abbfe09e3924466aa5e0449e7261 upstream.
+commit 818156caffbf55cb4d368f9c3cac64e458fb49c9 upstream.
 
-struct iw_point has a 32bit hole on 64bit arches.
+Perform an explicit bounds check on payload_len to avoid a possible
+out-of-bounds access in the callout.
 
-struct iw_point {
-  void __user   *pointer;       /* Pointer to the data  (in user space) */
-  __u16         length;         /* number of fields or size in bytes */
-  __u16         flags;          /* Optional params */
-};
+[ idryomov: changelog ]
 
-Make sure to zero the structure to avoid disclosing 32bits of kernel data
-to user space.
-
-Fixes: 87de87d5e47f ("wext: Dispatch and handle compat ioctls entirely in net/wireless/wext.c")
-Reported-by: syzbot+bfc7323743ca6dbcc3d3@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/695f83f3.050a0220.1c677c.0392.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260108101927.857582-1-edumazet@google.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: ziming zhang <ezrakiez@gmail.com>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/wext-core.c |    4 ++++
- net/wireless/wext-priv.c |    4 ++++
- 2 files changed, 8 insertions(+)
+ net/ceph/messenger_v2.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/wireless/wext-core.c
-+++ b/net/wireless/wext-core.c
-@@ -1084,6 +1084,10 @@ static int compat_standard_call(struct n
- 		return ioctl_standard_call(dev, iwr, cmd, info, handler);
+--- a/net/ceph/messenger_v2.c
++++ b/net/ceph/messenger_v2.c
+@@ -2068,7 +2068,9 @@ static int process_auth_done(struct ceph
  
- 	iwp_compat = (struct compat_iw_point *) &iwr->u.data;
+ 	ceph_decode_64_safe(&p, end, global_id, bad);
+ 	ceph_decode_32_safe(&p, end, con->v2.con_mode, bad);
 +
-+	/* struct iw_point has a 32bit hole on 64bit arches. */
-+	memset(&iwp, 0, sizeof(iwp));
-+
- 	iwp.pointer = compat_ptr(iwp_compat->pointer);
- 	iwp.length = iwp_compat->length;
- 	iwp.flags = iwp_compat->flags;
---- a/net/wireless/wext-priv.c
-+++ b/net/wireless/wext-priv.c
-@@ -228,6 +228,10 @@ int compat_private_call(struct net_devic
- 		struct iw_point iwp;
+ 	ceph_decode_32_safe(&p, end, payload_len, bad);
++	ceph_decode_need(&p, end, payload_len, bad);
  
- 		iwp_compat = (struct compat_iw_point *) &iwr->u.data;
-+
-+		/* struct iw_point has a 32bit hole on 64bit arches. */
-+		memset(&iwp, 0, sizeof(iwp));
-+
- 		iwp.pointer = compat_ptr(iwp_compat->pointer);
- 		iwp.length = iwp_compat->length;
- 		iwp.flags = iwp_compat->flags;
+ 	dout("%s con %p global_id %llu con_mode %d payload_len %d\n",
+ 	     __func__, con, global_id, con->v2.con_mode, payload_len);
 
 
