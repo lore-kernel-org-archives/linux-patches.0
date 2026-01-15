@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58FA3BF30A;
-	Thu, 15 Jan 2026 17:57:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45FF53BFE3B;
+	Thu, 15 Jan 2026 17:58:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499877; cv=none; b=fifmEFIg/NmTqSbODskKnzv7iCGo127hRIzOk/w2LWbOIGccdLgK4SxYpp9EFW06EMlALRjFUgiHjX92JPgDkGe2kYJuZxafNx+DIZJgjuPDkXtO1vHiww9c4XreiWXkpST5nvO7Tg1+aNEeesNoSlJlX8DglSI6ezDggtCoUbU=
+	t=1768499880; cv=none; b=WmdsYzrR9+FPQF51/GC841NuT6zlDnHpAiauDfgOIAhT86/skXPUtINScMGUjTklxTbSc0F3x5DIG5qVrKog85qTboX2ZZ7Gr9ZFkeUxo2k4adFXYFdQZflSbsEV+tPLdGKh0HEE2NXN21XGbWsvSSzsTBLCR6ICS/1WZPOWYfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499877; c=relaxed/simple;
-	bh=nCFwKsPKbW8InkQEm1ape+yignrch2Z+2ZiyCj2HA00=;
+	s=arc-20240116; t=1768499880; c=relaxed/simple;
+	bh=SczT44jpRwRnjmBQob2T/Q5ucqYysIMMiFTVB4o2Njg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A7BaSTQxWWgJzkXDWDW0TvYSfXeiaaqlNoSTgvil7PO7Nw1vTn6H1qbjEtJFrp7ff9uwc+2eFkdmTs1VdpxKLYvV0T/RhPwknW0OrgnBAY3dzncNc2sHSk2fOyVGbqHWGRP8VWuVZDLYbtr96/gIvff0exxejAljYAc8OwUTwMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HdhF0Kqt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VS9pZbLaKj6SWbJX9D8f5uBGx5dIIPuEYsJG6r68lQo7Dc9le7HJapLb3CYNM3jgUW0+NsN1liqYgF2tsI/IxoQk2TxUUFUuRLt9Y+HxF0SfmfDZJI2RcHBkRVVPMfJ2V3xnkXyXN+laTxzDqH2iZMYntC7+0sDfOkvgb+w2POk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A2nrDPsy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HdhF0Kqt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1A49C116D0;
-	Thu, 15 Jan 2026 17:57:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A2nrDPsy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBFFEC116D0;
+	Thu, 15 Jan 2026 17:57:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499877;
-	bh=nCFwKsPKbW8InkQEm1ape+yignrch2Z+2ZiyCj2HA00=;
+	s=korg; t=1768499880;
+	bh=SczT44jpRwRnjmBQob2T/Q5ucqYysIMMiFTVB4o2Njg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HdhF0Kqt0mnX12tGFmVVI4XZ+taYrGcyR0f8KlWQnBoviGobAauYx2wFqMfpR4qAo
-	 A4A1+dLAGd5YGyVPIKvOMjyc0aVZ/H5PxFol0NAq27Ad/6uMdJRJyoWcb53X48cdKs
-	 tD76H/zjlG78hVDPh9iWEs1/2rSkP/bdyyGr5Pyw=
+	b=A2nrDPsyOFk2n2FZ0Op2CwSV/iCZM7oLkBqun4gDPpmr6uN2MmSbNdPJPOCJ5wioI
+	 6O+HrXdWws+F+/lJE/1P/syN1Q4tuZN2rOhXOI9f+VP/9o9VMP6iCM4vYcFAnPJbPE
+	 N7Opi0qYRJ0c6txEPqrKOk1a2yP/5Gsq+9EyuAzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	syzbot+e2ce9e275ecc70a30b72@syzkaller.appspotmail.com,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Ajay Kaher <ajay.kaher@broadcom.com>,
 	Shivani Agarwal <shivani.agarwal@broadcom.com>
-Subject: [PATCH 5.10 347/451] usb: xhci: Apply the link chain quirk on NEC isoc endpoints
-Date: Thu, 15 Jan 2026 17:49:08 +0100
-Message-ID: <20260115164243.451034652@linuxfoundation.org>
+Subject: [PATCH 5.10 338/451] RDMA/core: Fix "KASAN: slab-use-after-free Read in ib_register_device" problem
+Date: Thu, 15 Jan 2026 17:48:59 +0100
+Message-ID: <20260115164243.122839438@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -51,113 +54,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Zhu Yanjun <yanjun.zhu@linux.dev>
 
-commit bb0ba4cb1065e87f9cc75db1fa454e56d0894d01 upstream.
+commit d0706bfd3ee40923c001c6827b786a309e2a8713 upstream.
 
-Two clearly different specimens of NEC uPD720200 (one with start/stop
-bug, one without) were seen to cause IOMMU faults after some Missed
-Service Errors. Faulting address is immediately after a transfer ring
-segment and patched dynamic debug messages revealed that the MSE was
-received when waiting for a TD near the end of that segment:
+Call Trace:
 
-[ 1.041954] xhci_hcd: Miss service interval error for slot 1 ep 2 expected TD DMA ffa08fe0
-[ 1.042120] xhci_hcd: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0005 address=0xffa09000 flags=0x0000]
-[ 1.042146] xhci_hcd: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0005 address=0xffa09040 flags=0x0000]
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:408 [inline]
+ print_report+0xc3/0x670 mm/kasan/report.c:521
+ kasan_report+0xe0/0x110 mm/kasan/report.c:634
+ strlen+0x93/0xa0 lib/string.c:420
+ __fortify_strlen include/linux/fortify-string.h:268 [inline]
+ get_kobj_path_length lib/kobject.c:118 [inline]
+ kobject_get_path+0x3f/0x2a0 lib/kobject.c:158
+ kobject_uevent_env+0x289/0x1870 lib/kobject_uevent.c:545
+ ib_register_device drivers/infiniband/core/device.c:1472 [inline]
+ ib_register_device+0x8cf/0xe00 drivers/infiniband/core/device.c:1393
+ rxe_register_device+0x275/0x320 drivers/infiniband/sw/rxe/rxe_verbs.c:1552
+ rxe_net_add+0x8e/0xe0 drivers/infiniband/sw/rxe/rxe_net.c:550
+ rxe_newlink+0x70/0x190 drivers/infiniband/sw/rxe/rxe.c:225
+ nldev_newlink+0x3a3/0x680 drivers/infiniband/core/nldev.c:1796
+ rdma_nl_rcv_msg+0x387/0x6e0 drivers/infiniband/core/netlink.c:195
+ rdma_nl_rcv_skb.constprop.0.isra.0+0x2e5/0x450
+ netlink_unicast_kernel net/netlink/af_netlink.c:1313 [inline]
+ netlink_unicast+0x53a/0x7f0 net/netlink/af_netlink.c:1339
+ netlink_sendmsg+0x8d1/0xdd0 net/netlink/af_netlink.c:1883
+ sock_sendmsg_nosec net/socket.c:712 [inline]
+ __sock_sendmsg net/socket.c:727 [inline]
+ ____sys_sendmsg+0xa95/0xc70 net/socket.c:2566
+ ___sys_sendmsg+0x134/0x1d0 net/socket.c:2620
+ __sys_sendmsg+0x16d/0x220 net/socket.c:2652
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xcd/0x260 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-It gets even funnier if the next page is a ring segment accessible to
-the HC. Below, it reports MSE in segment at ff1e8000, plows through a
-zero-filled page at ff1e9000 and starts reporting events for TRBs in
-page at ff1ea000 every microframe, instead of jumping to seg ff1e6000.
+This problem is similar to the problem that the
+commit 1d6a9e7449e2 ("RDMA/core: Fix use-after-free when rename device name")
+fixes.
 
-[ 7.041671] xhci_hcd: Miss service interval error for slot 1 ep 2 expected TD DMA ff1e8fe0
-[ 7.041999] xhci_hcd: Miss service interval error for slot 1 ep 2 expected TD DMA ff1e8fe0
-[ 7.042011] xhci_hcd: WARN: buffer overrun event for slot 1 ep 2 on endpoint
-[ 7.042028] xhci_hcd: All TDs skipped for slot 1 ep 2. Clear skip flag.
-[ 7.042134] xhci_hcd: WARN: buffer overrun event for slot 1 ep 2 on endpoint
-[ 7.042138] xhci_hcd: ERROR Transfer event TRB DMA ptr not part of current TD ep_index 2 comp_code 31
-[ 7.042144] xhci_hcd: Looking for event-dma 00000000ff1ea040 trb-start 00000000ff1e6820 trb-end 00000000ff1e6820
-[ 7.042259] xhci_hcd: WARN: buffer overrun event for slot 1 ep 2 on endpoint
-[ 7.042262] xhci_hcd: ERROR Transfer event TRB DMA ptr not part of current TD ep_index 2 comp_code 31
-[ 7.042266] xhci_hcd: Looking for event-dma 00000000ff1ea050 trb-start 00000000ff1e6820 trb-end 00000000ff1e6820
+The root cause is: the function ib_device_rename() renames the name with
+lock. But in the function kobject_uevent(), this name is accessed without
+lock protection at the same time.
 
-At some point completion events change from Isoch Buffer Overrun to
-Short Packet and the HC finally finds cycle bit mismatch in ff1ec000.
+The solution is to add the lock protection when this name is accessed in
+the function kobject_uevent().
 
-[ 7.098130] xhci_hcd: ERROR Transfer event TRB DMA ptr not part of current TD ep_index 2 comp_code 13
-[ 7.098132] xhci_hcd: Looking for event-dma 00000000ff1ecc50 trb-start 00000000ff1e6820 trb-end 00000000ff1e6820
-[ 7.098254] xhci_hcd: ERROR Transfer event TRB DMA ptr not part of current TD ep_index 2 comp_code 13
-[ 7.098256] xhci_hcd: Looking for event-dma 00000000ff1ecc60 trb-start 00000000ff1e6820 trb-end 00000000ff1e6820
-[ 7.098379] xhci_hcd: Overrun event on slot 1 ep 2
-
-It's possible that data from the isochronous device were written to
-random buffers of pending TDs on other endpoints (either IN or OUT),
-other devices or even other HCs in the same IOMMU domain.
-
-Lastly, an error from a different USB device on another HC. Was it
-caused by the above? I don't know, but it may have been. The disk
-was working without any other issues and generated PCIe traffic to
-starve the NEC of upstream BW and trigger those MSEs. The two HCs
-shared one x1 slot by means of a commercial "PCIe splitter" board.
-
-[ 7.162604] usb 10-2: reset SuperSpeed USB device number 3 using xhci_hcd
-[ 7.178990] sd 9:0:0:0: [sdb] tag#0 UNKNOWN(0x2003) Result: hostbyte=0x07 driverbyte=DRIVER_OK cmd_age=0s
-[ 7.179001] sd 9:0:0:0: [sdb] tag#0 CDB: opcode=0x28 28 00 04 02 ae 00 00 02 00 00
-[ 7.179004] I/O error, dev sdb, sector 67284480 op 0x0:(READ) flags 0x80700 phys_seg 5 prio class 0
-
-Fortunately, it appears that this ridiculous bug is avoided by setting
-the chain bit of Link TRBs on isochronous rings. Other ancient HCs are
-known which also expect the bit to be set and they ignore Link TRBs if
-it's not. Reportedly, 0.95 spec guaranteed that the bit is set.
-
-The bandwidth-starved NEC HC running a 32KB/uframe UVC endpoint reports
-tens of MSEs per second and runs into the bug within seconds. Chaining
-Link TRBs allows the same workload to run for many minutes, many times.
-
-No negative side effects seen in UVC recording and UAC playback with a
-few devices at full speed, high speed and SuperSpeed.
-
-The problem doesn't reproduce on the newer Renesas uPD720201/uPD720202
-and on old Etron EJ168 and VIA VL805 (but the VL805 has other bug).
-
-[shorten line length of log snippets in commit messge -Mathias]
-
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250306144954.3507700-14-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[Shivani: Modified to apply on v5.10.y-v6.1.y]
+Fixes: 779e0bf47632 ("RDMA/core: Do not indicate device ready when device enablement fails")
+Link: https://patch.msgid.link/r/20250506151008.75701-1-yanjun.zhu@linux.dev
+Reported-by: syzbot+e2ce9e275ecc70a30b72@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e2ce9e275ecc70a30b72
+Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+[ Ajay: Modified to apply on v5.10.y-v6.6.y
+        ib_device_notify_register() not present in v5.10.y-v6.6.y,
+        so directly added lock for kobject_uevent() ]
+Signed-off-by: Ajay Kaher <ajay.kaher@broadcom.com>
 Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci.h |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/infiniband/core/device.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -1999,11 +1999,20 @@ static inline void xhci_write_64(struct
- }
+--- a/drivers/infiniband/core/device.c
++++ b/drivers/infiniband/core/device.c
+@@ -1396,8 +1396,13 @@ int ib_register_device(struct ib_device
+ 		return ret;
+ 	}
+ 	dev_set_uevent_suppress(&device->dev, false);
++
++	down_read(&devices_rwsem);
++
+ 	/* Mark for userspace that device is ready */
+ 	kobject_uevent(&device->dev.kobj, KOBJ_ADD);
++
++	up_read(&devices_rwsem);
+ 	ib_device_put(device);
  
- 
--/* Link TRB chain should always be set on 0.95 hosts, and AMD 0.96 ISOC rings */
-+/*
-+ * Reportedly, some chapters of v0.95 spec said that Link TRB always has its chain bit set.
-+ * Other chapters and later specs say that it should only be set if the link is inside a TD
-+ * which continues from the end of one segment to the next segment.
-+ *
-+ * Some 0.95 hardware was found to misbehave if any link TRB doesn't have the chain bit set.
-+ *
-+ * 0.96 hardware from AMD and NEC was found to ignore unchained isochronous link TRBs when
-+ * "resynchronizing the pipe" after a Missed Service Error.
-+ */
- static inline bool xhci_link_chain_quirk(struct xhci_hcd *xhci, enum xhci_ring_type type)
- {
- 	return (xhci->quirks & XHCI_LINK_TRB_QUIRK) ||
--	       (type == TYPE_ISOC && (xhci->quirks & XHCI_AMD_0x96_HOST));
-+	       (type == TYPE_ISOC && (xhci->quirks & (XHCI_AMD_0x96_HOST | XHCI_NEC_HOST)));
- }
- 
- /* xHCI debugging */
+ 	return 0;
 
 
