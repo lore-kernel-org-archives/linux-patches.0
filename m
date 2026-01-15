@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2D13195F9;
-	Thu, 15 Jan 2026 17:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B6C73A7F5D;
+	Thu, 15 Jan 2026 17:06:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496810; cv=none; b=REAyzzwbByGsQoCqDzoY8FJMXpNh4oFihJKu+/pfhHMOtsUwnWls3uJKLZ53ULAvD4wtL4BDtOyiyWSm7ikdrBKpPyClUN25bcGYtrAGIzbYrn5D1kOgat3Etew5dCWeolRWY6dxiE96rNurRvFEgBX12hHw6jizg6LgCGJZ+kQ=
+	t=1768496813; cv=none; b=Ysf0ylY1ZCl6/11oKOO/XGXIYcnyW9qd59jJy9DUQX4vQof058bWY06IoCZ9rIktSlYyDMrsgfNGH+VZQ6zrVFRJwD9w2XOlSqCpekeog8//dDffFrhIp03fg3jApBA4ROfwPpWh/VWIWdwWi0b6br35MLYJuhiHInud9us+zBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496810; c=relaxed/simple;
-	bh=5eIrqEN3BbD8feXTnioCR1bfDegJWYei1M64zc2btmI=;
+	s=arc-20240116; t=1768496813; c=relaxed/simple;
+	bh=Dxmc8KeY9bBB/7AsRuOnvyF8p8lH8Eqj675cGMJPmaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Buwiay0ee06HGs1Y4N6C+T57OXz1/XLkUgnS0DclJF3kRKi4ZkjUIHY6GnnFf0l8tYrXmGMiwbwoqFcX4RAqevbXEKUmm94Zb9JlXHjHcI6nn3IaYAy/lWVNAw31jRoA+a2Cwg4D/d16kotRL3CXJ4gwBdAGgPjMOZbESCpTDyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yrM/YKjj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sh8WvROOUNC8pwpDVz+Sb4mY3/J+SYg5qXEFIoUCJ5vwGPUQE4gD8tmGoRB6sAqx8NaD3muh5epCB3Hbfx+0M0g7+6sc/ch3/9GdC0/Zn+/nLvbn89iAep7BjLqgbzMYn0q+xov660Fi/XvEjNBO7Id/NWg8npz8CmU4yIV7MMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fKNu5IGN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yrM/YKjj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D326C116D0;
-	Thu, 15 Jan 2026 17:06:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fKNu5IGN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD4CBC116D0;
+	Thu, 15 Jan 2026 17:06:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496810;
-	bh=5eIrqEN3BbD8feXTnioCR1bfDegJWYei1M64zc2btmI=;
+	s=korg; t=1768496813;
+	bh=Dxmc8KeY9bBB/7AsRuOnvyF8p8lH8Eqj675cGMJPmaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yrM/YKjjO8GWeT7Zzg5uVH8IYduUGRTbJlivbyxuBTfTUE0EQ8xIIQNIjJYdLxpEo
-	 rIpgMPvy/hVuPpjZ7g8L31qPe3xmiyy83C4sr6DTQfuCM/ye9jE3N13w6Gny6MN6Iq
-	 c3/YwPQGYV/dxtZsk6aHKjugDpgBCgsCfPcynxGI=
+	b=fKNu5IGNarXbDg29f0Z8LdB5JyHT3YIii157iEMUriUlv++OKn8ddi6nOpK+oAcXe
+	 6tKFVcGKeoOzeXiy88iXO5gPmNBmCx49jDrwi0OHosZ2bLkxFi1P9rWSLod4ZddDZv
+	 qjM8D1QfN17IfbK6fUmCy/BQARZDVOGeCxturHw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Jeff Layton <jlayton@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
+	NeilBrown <neilb@suse.de>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.6 23/88] nfsd: convert to new timestamp accessors
-Date: Thu, 15 Jan 2026 17:48:06 +0100
-Message-ID: <20260115164147.153345894@linuxfoundation.org>
+Subject: [PATCH 6.6 24/88] nfsd: Fix NFSv3 atomicity bugs in nfsd_setattr()
+Date: Thu, 15 Jan 2026 17:48:07 +0100
+Message-ID: <20260115164147.188341985@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164146.312481509@linuxfoundation.org>
 References: <20260115164146.312481509@linuxfoundation.org>
@@ -51,101 +52,206 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit 11fec9b9fb04fd1b3330a3b91ab9dcfa81ad5ad3 upstream.
+commit 24d92de9186ebc340687caf7356e1070773e67bc upstream.
 
-Convert to using the new inode timestamp accessor functions.
+The main point of the guarded SETATTR is to prevent races with other
+WRITE and SETATTR calls. That requires that the check of the guard time
+against the inode ctime be done after taking the inode lock.
 
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://lore.kernel.org/r/20231004185347.80880-50-jlayton@kernel.org
-Stable-dep-of: 24d92de9186e ("nfsd: Fix NFSv3 atomicity bugs in nfsd_setattr()")
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-[ cel: d68886bae76a has already been applied ]
+Furthermore, we need to take into account the 32-bit nature of
+timestamps in NFSv3, and the possibility that files may change at a
+faster rate than once a second.
+
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: NeilBrown <neilb@suse.de>
+Stable-dep-of: 442d27ff09a2 ("nfsd: set security label during create operations")
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/blocklayout.c |    3 ++-
- fs/nfsd/nfs3proc.c    |    4 ++--
- fs/nfsd/nfs4proc.c    |    8 ++++----
- fs/nfsd/nfsctl.c      |    2 +-
- fs/nfsd/vfs.c         |    2 +-
- 5 files changed, 10 insertions(+), 9 deletions(-)
+ fs/nfsd/nfs3proc.c  |    6 ++++--
+ fs/nfsd/nfs3xdr.c   |    5 +----
+ fs/nfsd/nfs4proc.c  |    3 +--
+ fs/nfsd/nfs4state.c |    2 +-
+ fs/nfsd/nfsproc.c   |    6 +++---
+ fs/nfsd/vfs.c       |   20 +++++++++++++-------
+ fs/nfsd/vfs.h       |    2 +-
+ fs/nfsd/xdr3.h      |    2 +-
+ 8 files changed, 25 insertions(+), 21 deletions(-)
 
---- a/fs/nfsd/blocklayout.c
-+++ b/fs/nfsd/blocklayout.c
-@@ -119,11 +119,12 @@ static __be32
- nfsd4_block_commit_blocks(struct inode *inode, struct nfsd4_layoutcommit *lcp,
- 		struct iomap *iomaps, int nr_iomaps)
- {
-+	struct timespec64 mtime = inode_get_mtime(inode);
- 	struct iattr iattr = { .ia_valid = 0 };
- 	int error;
- 
- 	if (lcp->lc_mtime.tv_nsec == UTIME_NOW ||
--	    timespec64_compare(&lcp->lc_mtime, &inode->i_mtime) < 0)
-+	    timespec64_compare(&lcp->lc_mtime, &mtime) < 0)
- 		lcp->lc_mtime = current_time(inode);
- 	iattr.ia_valid |= ATTR_ATIME | ATTR_CTIME | ATTR_MTIME;
- 	iattr.ia_atime = iattr.ia_ctime = iattr.ia_mtime = lcp->lc_mtime;
 --- a/fs/nfsd/nfs3proc.c
 +++ b/fs/nfsd/nfs3proc.c
-@@ -294,8 +294,8 @@ nfsd3_create_file(struct svc_rqst *rqstp
- 			status = nfserr_exist;
- 			break;
- 		case NFS3_CREATE_EXCLUSIVE:
--			if (d_inode(child)->i_mtime.tv_sec == v_mtime &&
--			    d_inode(child)->i_atime.tv_sec == v_atime &&
-+			if (inode_get_mtime_sec(d_inode(child)) == v_mtime &&
-+			    inode_get_atime_sec(d_inode(child)) == v_atime &&
- 			    d_inode(child)->i_size == 0) {
- 				break;
- 			}
+@@ -71,13 +71,15 @@ nfsd3_proc_setattr(struct svc_rqst *rqst
+ 	struct nfsd_attrs attrs = {
+ 		.na_iattr	= &argp->attrs,
+ 	};
++	const struct timespec64 *guardtime = NULL;
+ 
+ 	dprintk("nfsd: SETATTR(3)  %s\n",
+ 				SVCFH_fmt(&argp->fh));
+ 
+ 	fh_copy(&resp->fh, &argp->fh);
+-	resp->status = nfsd_setattr(rqstp, &resp->fh, &attrs,
+-				    argp->check_guard, argp->guardtime);
++	if (argp->check_guard)
++		guardtime = &argp->guardtime;
++	resp->status = nfsd_setattr(rqstp, &resp->fh, &attrs, guardtime);
+ 	return rpc_success;
+ }
+ 
+--- a/fs/nfsd/nfs3xdr.c
++++ b/fs/nfsd/nfs3xdr.c
+@@ -295,17 +295,14 @@ svcxdr_decode_sattr3(struct svc_rqst *rq
+ static bool
+ svcxdr_decode_sattrguard3(struct xdr_stream *xdr, struct nfsd3_sattrargs *args)
+ {
+-	__be32 *p;
+ 	u32 check;
+ 
+ 	if (xdr_stream_decode_bool(xdr, &check) < 0)
+ 		return false;
+ 	if (check) {
+-		p = xdr_inline_decode(xdr, XDR_UNIT * 2);
+-		if (!p)
++		if (!svcxdr_decode_nfstime3(xdr, &args->guardtime))
+ 			return false;
+ 		args->check_guard = 1;
+-		args->guardtime = be32_to_cpup(p);
+ 	} else
+ 		args->check_guard = 0;
+ 
 --- a/fs/nfsd/nfs4proc.c
 +++ b/fs/nfsd/nfs4proc.c
-@@ -322,8 +322,8 @@ nfsd4_create_file(struct svc_rqst *rqstp
- 			status = nfserr_exist;
- 			break;
- 		case NFS4_CREATE_EXCLUSIVE:
--			if (d_inode(child)->i_mtime.tv_sec == v_mtime &&
--			    d_inode(child)->i_atime.tv_sec == v_atime &&
-+			if (inode_get_mtime_sec(d_inode(child)) == v_mtime &&
-+			    inode_get_atime_sec(d_inode(child)) == v_atime &&
- 			    d_inode(child)->i_size == 0) {
- 				open->op_created = true;
- 				break;		/* subtle */
-@@ -331,8 +331,8 @@ nfsd4_create_file(struct svc_rqst *rqstp
- 			status = nfserr_exist;
- 			break;
- 		case NFS4_CREATE_EXCLUSIVE4_1:
--			if (d_inode(child)->i_mtime.tv_sec == v_mtime &&
--			    d_inode(child)->i_atime.tv_sec == v_atime &&
-+			if (inode_get_mtime_sec(d_inode(child)) == v_mtime &&
-+			    inode_get_atime_sec(d_inode(child)) == v_atime &&
- 			    d_inode(child)->i_size == 0) {
- 				open->op_created = true;
- 				goto set_attr;	/* subtle */
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -1139,7 +1139,7 @@ static struct inode *nfsd_get_inode(stru
- 	/* Following advice from simple_fill_super documentation: */
- 	inode->i_ino = iunique(sb, NFSD_MaxReserved);
- 	inode->i_mode = mode;
--	inode->i_atime = inode->i_mtime = inode_set_ctime_current(inode);
-+	simple_inode_init_ts(inode);
- 	switch (mode & S_IFMT) {
- 	case S_IFDIR:
- 		inode->i_fop = &simple_dir_operations;
+@@ -1160,8 +1160,7 @@ nfsd4_setattr(struct svc_rqst *rqstp, st
+ 		goto out;
+ 	save_no_wcc = cstate->current_fh.fh_no_wcc;
+ 	cstate->current_fh.fh_no_wcc = true;
+-	status = nfsd_setattr(rqstp, &cstate->current_fh, &attrs,
+-				0, (time64_t)0);
++	status = nfsd_setattr(rqstp, &cstate->current_fh, &attrs, NULL);
+ 	cstate->current_fh.fh_no_wcc = save_no_wcc;
+ 	if (!status)
+ 		status = nfserrno(attrs.na_labelerr);
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -5225,7 +5225,7 @@ nfsd4_truncate(struct svc_rqst *rqstp, s
+ 		return 0;
+ 	if (!(open->op_share_access & NFS4_SHARE_ACCESS_WRITE))
+ 		return nfserr_inval;
+-	return nfsd_setattr(rqstp, fh, &attrs, 0, (time64_t)0);
++	return nfsd_setattr(rqstp, fh, &attrs, NULL);
+ }
+ 
+ static __be32 nfs4_get_vfs_file(struct svc_rqst *rqstp, struct nfs4_file *fp,
+--- a/fs/nfsd/nfsproc.c
++++ b/fs/nfsd/nfsproc.c
+@@ -103,7 +103,7 @@ nfsd_proc_setattr(struct svc_rqst *rqstp
+ 		}
+ 	}
+ 
+-	resp->status = nfsd_setattr(rqstp, fhp, &attrs, 0, (time64_t)0);
++	resp->status = nfsd_setattr(rqstp, fhp, &attrs, NULL);
+ 	if (resp->status != nfs_ok)
+ 		goto out;
+ 
+@@ -390,8 +390,8 @@ nfsd_proc_create(struct svc_rqst *rqstp)
+ 		 */
+ 		attr->ia_valid &= ATTR_SIZE;
+ 		if (attr->ia_valid)
+-			resp->status = nfsd_setattr(rqstp, newfhp, &attrs, 0,
+-						    (time64_t)0);
++			resp->status = nfsd_setattr(rqstp, newfhp, &attrs,
++						    NULL);
+ 	}
+ 
+ out_unlock:
 --- a/fs/nfsd/vfs.c
 +++ b/fs/nfsd/vfs.c
-@@ -521,7 +521,7 @@ nfsd_setattr(struct svc_rqst *rqstp, str
+@@ -459,7 +459,6 @@ static int __nfsd_setattr(struct dentry
+  * @rqstp: controlling RPC transaction
+  * @fhp: filehandle of target
+  * @attr: attributes to set
+- * @check_guard: set to 1 if guardtime is a valid timestamp
+  * @guardtime: do not act if ctime.tv_sec does not match this timestamp
+  *
+  * This call may adjust the contents of @attr (in particular, this
+@@ -471,8 +470,7 @@ static int __nfsd_setattr(struct dentry
+  */
+ __be32
+ nfsd_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp,
+-	     struct nfsd_attrs *attr,
+-	     int check_guard, time64_t guardtime)
++	     struct nfsd_attrs *attr, const struct timespec64 *guardtime)
+ {
+ 	struct dentry	*dentry;
+ 	struct inode	*inode;
+@@ -521,9 +519,6 @@ nfsd_setattr(struct svc_rqst *rqstp, str
  
  	nfsd_sanitize_attrs(inode, iap);
  
--	if (check_guard && guardtime != inode_get_ctime(inode).tv_sec)
-+	if (check_guard && guardtime != inode_get_ctime_sec(inode))
- 		return nfserr_notsync;
- 
+-	if (check_guard && guardtime != inode_get_ctime_sec(inode))
+-		return nfserr_notsync;
+-
  	/*
+ 	 * The size case is special, it changes the file in addition to the
+ 	 * attributes, and file systems don't expect it to be mixed with
+@@ -541,6 +536,16 @@ nfsd_setattr(struct svc_rqst *rqstp, str
+ 	err = fh_fill_pre_attrs(fhp);
+ 	if (err)
+ 		goto out_unlock;
++
++	if (guardtime) {
++		struct timespec64 ctime = inode_get_ctime(inode);
++		if ((u32)guardtime->tv_sec != (u32)ctime.tv_sec ||
++		    guardtime->tv_nsec != ctime.tv_nsec) {
++			err = nfserr_notsync;
++			goto out_fill_attrs;
++		}
++	}
++
+ 	for (retries = 1;;) {
+ 		struct iattr attrs;
+ 
+@@ -568,6 +573,7 @@ nfsd_setattr(struct svc_rqst *rqstp, str
+ 		attr->na_aclerr = set_posix_acl(&nop_mnt_idmap,
+ 						dentry, ACL_TYPE_DEFAULT,
+ 						attr->na_dpacl);
++out_fill_attrs:
+ 	fh_fill_post_attrs(fhp);
+ out_unlock:
+ 	inode_unlock(inode);
+@@ -1374,7 +1380,7 @@ nfsd_create_setattr(struct svc_rqst *rqs
+ 	 * if the attributes have not changed.
+ 	 */
+ 	if (iap->ia_valid)
+-		status = nfsd_setattr(rqstp, resfhp, attrs, 0, (time64_t)0);
++		status = nfsd_setattr(rqstp, resfhp, attrs, NULL);
+ 	else
+ 		status = nfserrno(commit_metadata(resfhp));
+ 
+--- a/fs/nfsd/vfs.h
++++ b/fs/nfsd/vfs.h
+@@ -69,7 +69,7 @@ __be32		 nfsd_lookup_dentry(struct svc_r
+ 				const char *, unsigned int,
+ 				struct svc_export **, struct dentry **);
+ __be32		nfsd_setattr(struct svc_rqst *, struct svc_fh *,
+-				struct nfsd_attrs *, int, time64_t);
++			     struct nfsd_attrs *, const struct timespec64 *);
+ int nfsd_mountpoint(struct dentry *, struct svc_export *);
+ #ifdef CONFIG_NFSD_V4
+ __be32		nfsd4_vfs_fallocate(struct svc_rqst *, struct svc_fh *,
+--- a/fs/nfsd/xdr3.h
++++ b/fs/nfsd/xdr3.h
+@@ -14,7 +14,7 @@ struct nfsd3_sattrargs {
+ 	struct svc_fh		fh;
+ 	struct iattr		attrs;
+ 	int			check_guard;
+-	time64_t		guardtime;
++	struct timespec64	guardtime;
+ };
+ 
+ struct nfsd3_diropargs {
 
 
