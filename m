@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76060E56A;
-	Thu, 15 Jan 2026 17:23:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5144D3A0E9A;
+	Thu, 15 Jan 2026 17:23:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497781; cv=none; b=QsaeiObGPXsDAXAaUJ26NnM7fQcRh1YEUU/J3KLYpCvGygC469kE82SG+u0zAjP9paajAodVIZuaKq3o8n+5jKki5exskRjJHkk+0LtIUXceh3uJOV4u+HLO0CwAOecqpxrTtzQ3vcyaGtaTuGMRb1h0dd4M/9S47Sck9JdSFcI=
+	t=1768497784; cv=none; b=r5YAobtJmp5VHcOHlDYpU1YEphEBJktDk9J+jRcCwXfiN4ATvdSDQfISc8MnugwMHiLCbECos0Fwx+f884cbPJPdO6YOtiKPa0lcCMsFdYtd1n72vTW7jUcYGJiy4+OV3b6S0lY8l+8BdfvEwRodMuWNBBAieAYu6765jRA/IrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497781; c=relaxed/simple;
-	bh=03h2MOct8p3o3i56P2ZtDda29+cUVjSmQBeOIg4vtJY=;
+	s=arc-20240116; t=1768497784; c=relaxed/simple;
+	bh=cmTueW8AgUpAOIoP6kZ6k3zSG3y5PL7hfGTmDcq4FsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iAYvwY+cOR4FktxuJ4+bTmdqOq7Vg3SmLTQqK2V+s++xC6m8UxtjSzddB5+sWOchwkX0+Eu8En/noW/bwWd5Zbir7L5xDOt3iOTGWCE8AZRVCeDLAWAKiJ8btCe2TUgAOVtAZy1DB9hq+UrHbR+7JQqAbZmsriwpzhAQz6gdPPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CeLXTchm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ccHd2ZhV0EBiGujLqID7uPHzq6sj5jmS5MjTRF5/tmcMvwVngpGJtSE70lG76DUqdAwGwC7I3/LU2P1gK2A6WgZ/DstIbEjYkW0VfkxZgUUEuX4pvE2POCo6R6ykW4jN2EXVW0OfxpuqR6OKYyeqiRLLREgIhq/QQfu3gLaEAkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a2QTC/Dt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CeLXTchm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02302C116D0;
-	Thu, 15 Jan 2026 17:23:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a2QTC/Dt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2173C116D0;
+	Thu, 15 Jan 2026 17:23:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497781;
-	bh=03h2MOct8p3o3i56P2ZtDda29+cUVjSmQBeOIg4vtJY=;
+	s=korg; t=1768497784;
+	bh=cmTueW8AgUpAOIoP6kZ6k3zSG3y5PL7hfGTmDcq4FsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CeLXTchmzK/qDrjQLtwRnbtDu5rFi32FwqJwhO2mhrmGxOCa/CIRT5d+4odwb+KW6
-	 F4YQiwjcvcmzafCWuubKzW8K626t0kbLWMoX54WdGUUDVfeMBFs7nvLjMchIiFNtRa
-	 FuMpryT7i3XPXgurL85o23CD3dF31PjqOfLrlLS8=
+	b=a2QTC/DtQE9rZbi782fVo1WC0bCHqYKLTSRmGqKkur+0ei1SVTtgEhUJWgoZ5xsuq
+	 1mNO7NPwhT81xEgecQ0zEbDY9t3ZcF3W4qKS4rD54tTX/xdbJfzmRvbSxe5uDjswPN
+	 FC3UdRnmw+01UYNaNZWSgnbEHnHmEGncTk/uGT1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 200/554] ALSA: dice: fix buffer overflow in detect_stream_formats()
-Date: Thu, 15 Jan 2026 17:44:26 +0100
-Message-ID: <20260115164253.496149131@linuxfoundation.org>
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.15 201/554] ASoC: fsl_xcvr: get channel status data when PHY is not exists
+Date: Thu, 15 Jan 2026 17:44:27 +0100
+Message-ID: <20260115164253.532512299@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -52,50 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-commit 324f3e03e8a85931ce0880654e3c3eb38b0f0bba upstream.
+commit ca592e20659e0304ebd8f4dabb273da4f9385848 upstream.
 
-The function detect_stream_formats() reads the stream_count value directly
-from a FireWire device without validating it. This can lead to
-out-of-bounds writes when a malicious device provides a stream_count value
-greater than MAX_STREAMS.
+There is no PHY for the XCVR module on i.MX93, the channel status needs
+to be obtained from FSL_XCVR_RX_CS_DATA_* registers. And channel status
+acknowledge (CSA) bit should be set once channel status is processed.
 
-Fix by applying the same validation to both TX and RX stream counts in
-detect_stream_formats().
-
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Reported-by: Junrui Luo <moonafterrain@outlook.com>
-Fixes: 58579c056c1c ("ALSA: dice: use extended protocol to detect available stream formats")
-Cc: stable@vger.kernel.org
-Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Link: https://patch.msgid.link/SYBPR01MB7881B043FC68B4C0DA40B73DAFDCA@SYBPR01MB7881.ausprd01.prod.outlook.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: e240b9329a30 ("ASoC: fsl_xcvr: Add support for i.MX93 platform")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://patch.msgid.link/20250710030405.3370671-2-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/firewire/dice/dice-extension.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/fsl/fsl_xcvr.c |   20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
---- a/sound/firewire/dice/dice-extension.c
-+++ b/sound/firewire/dice/dice-extension.c
-@@ -116,7 +116,7 @@ static int detect_stream_formats(struct
- 			break;
- 
- 		base_offset += EXT_APP_STREAM_ENTRIES;
--		stream_count = be32_to_cpu(reg[0]);
-+		stream_count = min_t(unsigned int, be32_to_cpu(reg[0]), MAX_STREAMS);
- 		err = read_stream_entries(dice, section_addr, base_offset,
- 					  stream_count, mode,
- 					  dice->tx_pcm_chs,
-@@ -125,7 +125,7 @@ static int detect_stream_formats(struct
- 			break;
- 
- 		base_offset += stream_count * EXT_APP_STREAM_ENTRY_SIZE;
--		stream_count = be32_to_cpu(reg[1]);
-+		stream_count = min_t(unsigned int, be32_to_cpu(reg[1]), MAX_STREAMS);
- 		err = read_stream_entries(dice, section_addr, base_offset,
- 					  stream_count,
- 					  mode, dice->rx_pcm_chs,
+--- a/sound/soc/fsl/fsl_xcvr.c
++++ b/sound/soc/fsl/fsl_xcvr.c
+@@ -1165,6 +1165,26 @@ static irqreturn_t irq0_isr(int irq, voi
+ 				/* clear CS control register */
+ 				writel_relaxed(0, reg_ctrl);
+ 			}
++		} else {
++			regmap_read(xcvr->regmap, FSL_XCVR_RX_CS_DATA_0,
++				    (u32 *)&xcvr->rx_iec958.status[0]);
++			regmap_read(xcvr->regmap, FSL_XCVR_RX_CS_DATA_1,
++				    (u32 *)&xcvr->rx_iec958.status[4]);
++			regmap_read(xcvr->regmap, FSL_XCVR_RX_CS_DATA_2,
++				    (u32 *)&xcvr->rx_iec958.status[8]);
++			regmap_read(xcvr->regmap, FSL_XCVR_RX_CS_DATA_3,
++				    (u32 *)&xcvr->rx_iec958.status[12]);
++			regmap_read(xcvr->regmap, FSL_XCVR_RX_CS_DATA_4,
++				    (u32 *)&xcvr->rx_iec958.status[16]);
++			regmap_read(xcvr->regmap, FSL_XCVR_RX_CS_DATA_5,
++				    (u32 *)&xcvr->rx_iec958.status[20]);
++			for (i = 0; i < 6; i++) {
++				val = *(u32 *)(xcvr->rx_iec958.status + i * 4);
++				*(u32 *)(xcvr->rx_iec958.status + i * 4) =
++					bitrev32(val);
++			}
++			regmap_set_bits(xcvr->regmap, FSL_XCVR_RX_DPTH_CTRL,
++					FSL_XCVR_RX_DPTH_CTRL_CSA);
+ 		}
+ 	}
+ 	if (isr & FSL_XCVR_IRQ_NEW_UD) {
 
 
