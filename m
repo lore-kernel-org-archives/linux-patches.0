@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1684274FE3;
-	Thu, 15 Jan 2026 17:40:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60FB61A2389;
+	Thu, 15 Jan 2026 17:40:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498841; cv=none; b=dxUNoliWeR+vYPZuOrf35gae4BO7u+WPBWo4WeoW9QkHfUQperfOF3bUw9fOg6IC1bgoRqA5ZUlL8tZKWCq3KL5LJhvBB1KQEPBUNDMUF4AYZGy75TxGlXOGUWj8sY1MSpQAOpuMIbtgnNIKU8wuef7nsF4W2T1nTSzmfkH96yY=
+	t=1768498844; cv=none; b=JdFwZssTE3VoSS/gBvq7MaPHtuZ4ypKBS00FeLor1cqOTm9q6ApZgLnVqZsOlGGms1h0s00ERM2vxB5LluURc62yQKQ24gykggOhqyTq78Zlgxc6qSYfe8HOpYDf2RU9ccQ4ez3S5Px6ojhESk9uOIp8kk+jaaRK8HkKsFKHJRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498841; c=relaxed/simple;
-	bh=hTOP879t9hHdWmapUcPlampw7hHwjmSWQoL4kyaHgPc=;
+	s=arc-20240116; t=1768498844; c=relaxed/simple;
+	bh=2ofqnW618QA5bTuvQrVU6lGmkxdVMcjBzSDLK0/uvVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pOS0bSBUalraFaFEHZ7SxFfqtoxja9CuE9cVSt7Fs/6Cb85rywd07uAKJm7It9yreckkX42Q4rncCEmMEgxN8c//L4ga2cxpMZDbycbbNcoWKRFW79PudPWGeMfSZ3tBtEhfHe4FyA/L4aPkaNQ6LO54pbwIV6EGJ9WmeHPhs1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tkc05zBa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WmVu0fslrdPEiKeaWK/EI4eIhE6xsQsytDgpg5we7qJiLNC9FGcyvWErBO2VVXPKsoZOMLvfN0vsfVyZaqTyGGjSUMh+aZVzZIvJgbnuVmUAqCzb+3rJVXUtdRqnl51+EVIZlDJ6O5bs/Fw+RZwe2xC5A4OGFqFi/g1Se9GdcR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MmsyVB8F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tkc05zBa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE141C116D0;
-	Thu, 15 Jan 2026 17:40:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MmsyVB8F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0081C116D0;
+	Thu, 15 Jan 2026 17:40:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498841;
-	bh=hTOP879t9hHdWmapUcPlampw7hHwjmSWQoL4kyaHgPc=;
+	s=korg; t=1768498844;
+	bh=2ofqnW618QA5bTuvQrVU6lGmkxdVMcjBzSDLK0/uvVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tkc05zBakN9HBtZsfinDKiu8GbXLDYPxvLuU5BEQkfN73XtaEbA91T9wTmmpXNxPS
-	 L6isVAfEKH3pBST2ijSBynL50rHWhlZcNR6f6kfT6Qpm6aKIjYUgLI52MRkF8vyQ7t
-	 msSZHrSPxc/XPoApHMq4sjZKWjGqPXySor+F/D/g=
+	b=MmsyVB8FyiDyqLJGAPzoFXossidY9wfzAY2tXE6UzBJKRVRBHVARFeXFNe6lhTEnG
+	 l2jxgkOMQyrijtnFg1Eq8rjqHhynsegiBVT11beSkhNlsAui6hEwBk0KHPYc+BGI+6
+	 s42aF0tEUVycOxzc1PC4Wdszn3LbtUETbmtBDjBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6641a61fe0e2e89ae8c5@syzkaller.appspotmail.com,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Simon Horman <horms@kernel.org>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 004/451] xfrm: flush all states in xfrm_state_fini
-Date: Thu, 15 Jan 2026 17:43:25 +0100
-Message-ID: <20260115164231.038627818@linuxfoundation.org>
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Jonathan Corbet <corbet@lwn.net>
+Subject: [PATCH 5.10 005/451] Documentation: process: Also mention Sasha Levin as stable tree maintainer
+Date: Thu, 15 Jan 2026 17:43:26 +0100
+Message-ID: <20260115164231.074397464@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -53,61 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Bagas Sanjaya <bagasdotme@gmail.com>
 
-[ Upstream commit 42e42562c9cfcdacf000f1b42284a4fad24f8546 ]
+commit ba2457109d5b47a90fe565b39524f7225fc23e60 upstream.
 
-While reverting commit f75a2804da39 ("xfrm: destroy xfrm_state
-synchronously on net exit path"), I incorrectly changed
-xfrm_state_flush's "proto" argument back to IPSEC_PROTO_ANY. This
-reverts some of the changes in commit dbb2483b2a46 ("xfrm: clean up
-xfrm protocol checks"), and leads to some states not being removed
-when we exit the netns.
+Sasha has also maintaining stable branch in conjunction with Greg
+since cb5d21946d2a2f ("MAINTAINERS: Add Sasha as a stable branch
+maintainer"). Mention him in 2.Process.rst.
 
-Pass 0 instead of IPSEC_PROTO_ANY from both xfrm_state_fini
-xfrm6_tunnel_net_exit, so that xfrm_state_flush deletes all states.
-
-Fixes: 2a198bbec691 ("Revert "xfrm: destroy xfrm_state synchronously on net exit path"")
-Reported-by: syzbot+6641a61fe0e2e89ae8c5@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6641a61fe0e2e89ae8c5
-Tested-by: syzbot+6641a61fe0e2e89ae8c5@syzkaller.appspotmail.com
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+Message-ID: <20251022034336.22839-1-bagasdotme@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/xfrm6_tunnel.c | 2 +-
- net/xfrm/xfrm_state.c   | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ Documentation/process/2.Process.rst |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/xfrm6_tunnel.c b/net/ipv6/xfrm6_tunnel.c
-index 70f9540937489..6de3cc3ba25d2 100644
---- a/net/ipv6/xfrm6_tunnel.c
-+++ b/net/ipv6/xfrm6_tunnel.c
-@@ -331,7 +331,7 @@ static void __net_exit xfrm6_tunnel_net_exit(struct net *net)
- 	struct xfrm6_tunnel_net *xfrm6_tn = xfrm6_tunnel_pernet(net);
- 	unsigned int i;
+--- a/Documentation/process/2.Process.rst
++++ b/Documentation/process/2.Process.rst
+@@ -104,8 +104,10 @@ kernels go out with a handful of known r
+ of them are serious.
  
--	xfrm_state_flush(net, IPSEC_PROTO_ANY, false);
-+	xfrm_state_flush(net, 0, false);
- 	xfrm_flush_gc();
- 
- 	for (i = 0; i < XFRM6_TUNNEL_SPI_BYADDR_HSIZE; i++)
-diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
-index e13823d728127..b1243edf7f3a0 100644
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -2703,7 +2703,7 @@ void xfrm_state_fini(struct net *net)
- 	unsigned int sz;
- 
- 	flush_work(&net->xfrm.state_hash_work);
--	xfrm_state_flush(net, IPSEC_PROTO_ANY, false);
-+	xfrm_state_flush(net, 0, false);
- 	flush_work(&xfrm_state_gc_work);
- 
- 	WARN_ON(!list_empty(&net->xfrm.state_all));
--- 
-2.51.0
-
+ Once a stable release is made, its ongoing maintenance is passed off to the
+-"stable team," currently Greg Kroah-Hartman. The stable team will release
+-occasional updates to the stable release using the 5.x.y numbering scheme.
++"stable team," currently consists of Greg Kroah-Hartman and Sasha Levin. The
++stable team will release occasional updates to the stable release using the
++5.x.y numbering scheme.
++
+ To be considered for an update release, a patch must (1) fix a significant
+ bug, and (2) already be merged into the mainline for the next development
+ kernel. Kernels will typically receive stable updates for a little more
 
 
