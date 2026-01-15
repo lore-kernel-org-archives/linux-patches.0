@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA7022C0285;
-	Thu, 15 Jan 2026 17:05:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC8833BF2E0;
+	Thu, 15 Jan 2026 17:05:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496733; cv=none; b=le+Qr3MrFc76dtaTkJMb8ZQcTg8QHs3ha5TTXhVr3pCfdw8S0tRsY7Gfbni6upBg+VvdlT/xD7iZItZC1Lz4sB+qjuUfPkdZgQz5ysDs4pWej0vl86rBXUJsUQYuF8jtTRuUP5vcr49iQkOVSXqCpiLIjGQkFB4jGfjuCQyAC7k=
+	t=1768496736; cv=none; b=lix5LNy69BHSSKOCq90yJ0W6t6Vc22pMd83FyvPYJM/cpSeij0rv1T2uBpp4UMsvZRK5xo9o/9Fg7kPB3trBxVBu0RD2vc5QTRRiFaBwsoZFAU9k4cwG+zAE9l3G2Be24lyhAlVIsrZ/KnEDexA+E59grah8ECjjVdbsdWYeFAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496733; c=relaxed/simple;
-	bh=BuqdIhAImmSsqD0SnBb4Idm6LzIalk/18jQovS+vjPg=;
+	s=arc-20240116; t=1768496736; c=relaxed/simple;
+	bh=SskQZYTvZE1oJ0TrUx0wUwOyRNhQTBn7Q6EJSy7kD+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rgBUYBkuUH39zv6gEgiX97QVE/QhO7RlYhvbFwoqucf+WIJlvN7ed7tcbgRyvgloWd+R9tBPmEfUvE9VLK2Ab9iT+yP/EXiI19mh9rklQG9Il3kD8cvSnBS8IUSc74JIX/qRl6LnYOnPBTxeOgIxolnudRiEuSYqqbwxNAVWlYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OnCpfddg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LRpXtBa3S8LcUMNEtrIUhlxNArvF1f7zQO25GE/cpZGHla5DWVmSHfbsAO1NoVcutEDS8z47HiwTCBtzugyG5mW6uS73qHAQf0xZemQER9LsmGKnDdyuxdvGqmQkdwXUoDO0jr3PYLuJhO09EfGBBjtx1neVuj5Tfq3SHgYGTg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oNP6Oz2m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OnCpfddg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D88DC16AAE;
-	Thu, 15 Jan 2026 17:05:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oNP6Oz2m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 568E0C116D0;
+	Thu, 15 Jan 2026 17:05:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496733;
-	bh=BuqdIhAImmSsqD0SnBb4Idm6LzIalk/18jQovS+vjPg=;
+	s=korg; t=1768496736;
+	bh=SskQZYTvZE1oJ0TrUx0wUwOyRNhQTBn7Q6EJSy7kD+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OnCpfddgclXaluwoy86Ao37pJiKUVGlArKI7iBrhoh7Bwr97A0t7WQiV8XkBcZZI1
-	 y4NOnn2K7At/9qQxcQPuvj4tjlhrXJyQZMrXRIFKYzdLf/t2QiBmJ8C+bSgp2g0+8T
-	 kscbiACHnknpKOyYxRpKkXWN3rlNb/gIUBVTuWdc=
+	b=oNP6Oz2mGVkia3G1nkWQnf7v0xExdlXMh6t61DGKsGRinY6CTjdrpcl9JGIrfstWt
+	 BxhI3q8TgrMqPSPvmnc+4RA2TDPC4WrHH6PKFrVjMWSzwwSthztT4d/3O/+aHGb/+f
+	 +iGfM3qKSgOruPAM/RDzq9uMBY6hj4MC/l2oWiu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan McDowell <noodles@meta.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.12 117/119] tpm2-sessions: Fix out of range indexing in name_size
-Date: Thu, 15 Jan 2026 17:48:52 +0100
-Message-ID: <20260115164156.184030946@linuxfoundation.org>
+	Askar Safin <safinaskar@gmail.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 118/119] ALSA: hda: intel-dsp-config: Prefer legacy driver as fallback
+Date: Thu, 15 Jan 2026 17:48:53 +0100
+Message-ID: <20260115164156.220905007@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -50,403 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarkko Sakkinen <jarkko@kernel.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 6e9722e9a7bfe1bbad649937c811076acf86e1fd upstream.
+commit 161a0c617ab172bbcda7ce61803addeb2124dbff upstream.
 
-'name_size' does not have any range checks, and it just directly indexes
-with TPM_ALG_ID, which could lead into memory corruption at worst.
+When config table entries don't match with the device to be probed,
+currently we fall back to SND_INTEL_DSP_DRIVER_ANY, which means to
+allow any drivers to bind with it.
 
-Address the issue by only processing known values and returning -EINVAL for
-unrecognized values.
+This was set so with the assumption (or hope) that all controller
+drivers should cover the devices generally, but in practice, this
+caused a problem as reported recently.  Namely, when a specific
+kconfig for SOF isn't set for the modern Intel chips like Alderlake,
+a wrong driver (AVS) got probed and failed.  This is because we have
+entries like:
 
-Make also 'tpm_buf_append_name' and 'tpm_buf_fill_hmac_session' fallible so
-that errors are detected before causing any spurious TPM traffic.
+ #if IS_ENABLED(CONFIG_SND_SOC_SOF_ALDERLAKE)
+ /* Alder Lake / Raptor Lake */
+ 	{
+ 		.flags = FLAG_SOF | FLAG_SOF_ONLY_IF_DMIC_OR_SOUNDWIRE,
+ 		.device = PCI_DEVICE_ID_INTEL_HDA_ADL_S,
+ 	},
+ ....
+ #endif
 
-End also the authorization session on failure in both of the functions, as
-the session state would be then by definition corrupted.
+so this entry is effective only when CONFIG_SND_SOC_SOF_ALDERLAKE is
+set.  If not set, there is no matching entry, hence it returns
+SND_INTEL_DSP_DRIVER_ANY as fallback.  OTOH, if the kconfig is set, it
+explicitly falls back to SND_INTEL_DSP_DRIVER_LEGACY when no DMIC or
+SoundWire is found -- that was the working scenario.  That being said,
+the current setup may be broken for modern Intel chips that are
+supposed to work with either SOF or legacy driver when the
+corresponding kconfig were missing.
 
-Cc: stable@vger.kernel.org # v6.10+
-Fixes: 1085b8276bb4 ("tpm: Add the rest of the session HMAC API")
-Reviewed-by: Jonathan McDowell <noodles@meta.com>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+For addressing the problem above, this patch changes the fallback
+driver to the legacy driver, i.e. return SND_INTEL_DSP_DRIVER_LEGACY
+type as much as possible.  When CONFIG_SND_HDA_INTEL is also disabled,
+the fallback is set to SND_INTEL_DSP_DRIVER_ANY type, just to be sure.
+
+Reported-by: Askar Safin <safinaskar@gmail.com>
+Closes: https://lore.kernel.org/all/20251014034156.4480-1-safinaskar@gmail.com/
+Tested-by: Askar Safin <safinaskar@gmail.com>
+Reviewed-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20251210131553.184404-1-tiwai@suse.de
+Signed-off-by: Askar Safin <safinaskar@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm2-cmd.c               |   23 +++++-
- drivers/char/tpm/tpm2-sessions.c          |  114 ++++++++++++++++++++----------
- include/linux/tpm.h                       |   13 ++-
- security/keys/trusted-keys/trusted_tpm2.c |   29 ++++++-
- 4 files changed, 126 insertions(+), 53 deletions(-)
+ sound/hda/intel-dsp-config.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/char/tpm/tpm2-cmd.c
-+++ b/drivers/char/tpm/tpm2-cmd.c
-@@ -253,7 +253,11 @@ int tpm2_pcr_extend(struct tpm_chip *chi
- 	}
+--- a/sound/hda/intel-dsp-config.c
++++ b/sound/hda/intel-dsp-config.c
+@@ -676,7 +676,8 @@ int snd_intel_dsp_driver_probe(struct pc
+ 	/* find the configuration for the specific device */
+ 	cfg = snd_intel_dsp_find_config(pci, config_table, ARRAY_SIZE(config_table));
+ 	if (!cfg)
+-		return SND_INTEL_DSP_DRIVER_ANY;
++		return IS_ENABLED(CONFIG_SND_HDA_INTEL) ?
++			SND_INTEL_DSP_DRIVER_LEGACY : SND_INTEL_DSP_DRIVER_ANY;
  
- 	if (!disable_pcr_integrity) {
--		tpm_buf_append_name(chip, &buf, pcr_idx, NULL);
-+		rc = tpm_buf_append_name(chip, &buf, pcr_idx, NULL);
-+		if (rc) {
-+			tpm_buf_destroy(&buf);
-+			return rc;
-+		}
- 		tpm_buf_append_hmac_session(chip, &buf, 0, NULL, 0);
- 	} else {
- 		tpm_buf_append_handle(chip, &buf, pcr_idx);
-@@ -268,8 +272,14 @@ int tpm2_pcr_extend(struct tpm_chip *chi
- 			       chip->allocated_banks[i].digest_size);
- 	}
- 
--	if (!disable_pcr_integrity)
--		tpm_buf_fill_hmac_session(chip, &buf);
-+	if (!disable_pcr_integrity) {
-+		rc = tpm_buf_fill_hmac_session(chip, &buf);
-+		if (rc) {
-+			tpm_buf_destroy(&buf);
-+			return rc;
-+		}
-+	}
-+
- 	rc = tpm_transmit_cmd(chip, &buf, 0, "attempting extend a PCR value");
- 	if (!disable_pcr_integrity)
- 		rc = tpm_buf_check_hmac_response(chip, &buf, rc);
-@@ -327,7 +337,12 @@ int tpm2_get_random(struct tpm_chip *chi
- 						| TPM2_SA_CONTINUE_SESSION,
- 						NULL, 0);
- 		tpm_buf_append_u16(&buf, num_bytes);
--		tpm_buf_fill_hmac_session(chip, &buf);
-+		err = tpm_buf_fill_hmac_session(chip, &buf);
-+		if (err) {
-+			tpm_buf_destroy(&buf);
-+			return err;
-+		}
-+
- 		err = tpm_transmit_cmd(chip, &buf,
- 				       offsetof(struct tpm2_get_random_out,
- 						buffer),
---- a/drivers/char/tpm/tpm2-sessions.c
-+++ b/drivers/char/tpm/tpm2-sessions.c
-@@ -144,16 +144,23 @@ struct tpm2_auth {
- /*
-  * Name Size based on TPM algorithm (assumes no hash bigger than 255)
-  */
--static u8 name_size(const u8 *name)
-+static int name_size(const u8 *name)
- {
--	static u8 size_map[] = {
--		[TPM_ALG_SHA1] = SHA1_DIGEST_SIZE,
--		[TPM_ALG_SHA256] = SHA256_DIGEST_SIZE,
--		[TPM_ALG_SHA384] = SHA384_DIGEST_SIZE,
--		[TPM_ALG_SHA512] = SHA512_DIGEST_SIZE,
--	};
--	u16 alg = get_unaligned_be16(name);
--	return size_map[alg] + 2;
-+	u16 hash_alg = get_unaligned_be16(name);
-+
-+	switch (hash_alg) {
-+	case TPM_ALG_SHA1:
-+		return SHA1_DIGEST_SIZE + 2;
-+	case TPM_ALG_SHA256:
-+		return SHA256_DIGEST_SIZE + 2;
-+	case TPM_ALG_SHA384:
-+		return SHA384_DIGEST_SIZE + 2;
-+	case TPM_ALG_SHA512:
-+		return SHA512_DIGEST_SIZE + 2;
-+	default:
-+		pr_warn("tpm: unsupported name algorithm: 0x%04x\n", hash_alg);
-+		return -EINVAL;
-+	}
- }
- 
- static int tpm2_read_public(struct tpm_chip *chip, u32 handle, void *name)
-@@ -234,9 +241,11 @@ static int tpm2_read_public(struct tpm_c
-  * As with most tpm_buf operations, success is assumed because failure
-  * will be caused by an incorrect programming model and indicated by a
-  * kernel message.
-+ *
-+ * Ends the authorization session on failure.
-  */
--void tpm_buf_append_name(struct tpm_chip *chip, struct tpm_buf *buf,
--			 u32 handle, u8 *name)
-+int tpm_buf_append_name(struct tpm_chip *chip, struct tpm_buf *buf,
-+			u32 handle, u8 *name)
- {
- #ifdef CONFIG_TCG_TPM2_HMAC
- 	enum tpm2_mso_type mso = tpm2_handle_mso(handle);
-@@ -247,18 +256,22 @@ void tpm_buf_append_name(struct tpm_chip
- 
- 	if (!tpm2_chip_auth(chip)) {
- 		tpm_buf_append_handle(chip, buf, handle);
--		return;
-+		return 0;
- 	}
- 
- #ifdef CONFIG_TCG_TPM2_HMAC
- 	slot = (tpm_buf_length(buf) - TPM_HEADER_SIZE) / 4;
- 	if (slot >= AUTH_MAX_NAMES) {
--		dev_err(&chip->dev, "TPM: too many handles\n");
--		return;
-+		dev_err(&chip->dev, "too many handles\n");
-+		ret = -EIO;
-+		goto err;
- 	}
- 	auth = chip->auth;
--	WARN(auth->session != tpm_buf_length(buf),
--	     "name added in wrong place\n");
-+	if (auth->session != tpm_buf_length(buf)) {
-+		dev_err(&chip->dev, "session state malformed");
-+		ret = -EIO;
-+		goto err;
-+	}
- 	tpm_buf_append_u32(buf, handle);
- 	auth->session += 4;
- 
-@@ -271,17 +284,29 @@ void tpm_buf_append_name(struct tpm_chip
- 				goto err;
- 		}
- 	} else {
--		if (name)
--			dev_err(&chip->dev, "TPM: Handle does not require name but one is specified\n");
-+		if (name) {
-+			dev_err(&chip->dev, "handle 0x%08x does not use a name\n",
-+				handle);
-+			ret = -EIO;
-+			goto err;
-+		}
- 	}
- 
- 	auth->name_h[slot] = handle;
--	if (name)
--		memcpy(auth->name[slot], name, name_size(name));
--	return;
-+	if (name) {
-+		ret = name_size(name);
-+		if (ret < 0)
-+			goto err;
- 
-+		memcpy(auth->name[slot], name, ret);
-+	}
-+#endif
-+	return 0;
-+
-+#ifdef CONFIG_TCG_TPM2_HMAC
- err:
- 	tpm2_end_auth_session(chip);
-+	return tpm_ret_to_err(ret);
- #endif
- }
- EXPORT_SYMBOL_GPL(tpm_buf_append_name);
-@@ -599,11 +624,9 @@ static void tpm_buf_append_salt(struct t
-  * encryption key and encrypts the first parameter of the command
-  * buffer with it.
-  *
-- * As with most tpm_buf operations, success is assumed because failure
-- * will be caused by an incorrect programming model and indicated by a
-- * kernel message.
-+ * Ends the authorization session on failure.
-  */
--void tpm_buf_fill_hmac_session(struct tpm_chip *chip, struct tpm_buf *buf)
-+int tpm_buf_fill_hmac_session(struct tpm_chip *chip, struct tpm_buf *buf)
- {
- 	u32 cc, handles, val;
- 	struct tpm2_auth *auth = chip->auth;
-@@ -614,9 +637,12 @@ void tpm_buf_fill_hmac_session(struct tp
- 	u32 attrs;
- 	u8 cphash[SHA256_DIGEST_SIZE];
- 	struct sha256_state sctx;
-+	int ret;
- 
--	if (!auth)
--		return;
-+	if (!auth) {
-+		ret = -EIO;
-+		goto err;
-+	}
- 
- 	/* save the command code in BE format */
- 	auth->ordinal = head->ordinal;
-@@ -625,9 +651,11 @@ void tpm_buf_fill_hmac_session(struct tp
- 
- 	i = tpm2_find_cc(chip, cc);
- 	if (i < 0) {
--		dev_err(&chip->dev, "Command 0x%x not found in TPM\n", cc);
--		return;
-+		dev_err(&chip->dev, "command 0x%08x not found\n", cc);
-+		ret = -EIO;
-+		goto err;
- 	}
-+
- 	attrs = chip->cc_attrs_tbl[i];
- 
- 	handles = (attrs >> TPM2_CC_ATTR_CHANDLES) & GENMASK(2, 0);
-@@ -641,9 +669,9 @@ void tpm_buf_fill_hmac_session(struct tp
- 		u32 handle = tpm_buf_read_u32(buf, &offset_s);
- 
- 		if (auth->name_h[i] != handle) {
--			dev_err(&chip->dev, "TPM: handle %d wrong for name\n",
--				  i);
--			return;
-+			dev_err(&chip->dev, "invalid handle 0x%08x\n", handle);
-+			ret = -EIO;
-+			goto err;
- 		}
- 	}
- 	/* point offset_s to the start of the sessions */
-@@ -674,12 +702,14 @@ void tpm_buf_fill_hmac_session(struct tp
- 		offset_s += len;
- 	}
- 	if (offset_s != offset_p) {
--		dev_err(&chip->dev, "TPM session length is incorrect\n");
--		return;
-+		dev_err(&chip->dev, "session length is incorrect\n");
-+		ret = -EIO;
-+		goto err;
- 	}
- 	if (!hmac) {
--		dev_err(&chip->dev, "TPM could not find HMAC session\n");
--		return;
-+		dev_err(&chip->dev, "could not find HMAC session\n");
-+		ret = -EIO;
-+		goto err;
- 	}
- 
- 	/* encrypt before HMAC */
-@@ -711,8 +741,11 @@ void tpm_buf_fill_hmac_session(struct tp
- 		if (mso == TPM2_MSO_PERSISTENT ||
- 		    mso == TPM2_MSO_VOLATILE ||
- 		    mso == TPM2_MSO_NVRAM) {
--			sha256_update(&sctx, auth->name[i],
--				      name_size(auth->name[i]));
-+			ret = name_size(auth->name[i]);
-+			if (ret < 0)
-+				goto err;
-+
-+			sha256_update(&sctx, auth->name[i], ret);
- 		} else {
- 			__be32 h = cpu_to_be32(auth->name_h[i]);
- 
-@@ -733,6 +766,11 @@ void tpm_buf_fill_hmac_session(struct tp
- 	sha256_update(&sctx, &auth->attrs, 1);
- 	tpm2_hmac_final(&sctx, auth->session_key, sizeof(auth->session_key)
- 			+ auth->passphrase_len, hmac);
-+	return 0;
-+
-+err:
-+	tpm2_end_auth_session(chip);
-+	return ret;
- }
- EXPORT_SYMBOL(tpm_buf_fill_hmac_session);
- 
---- a/include/linux/tpm.h
-+++ b/include/linux/tpm.h
-@@ -523,8 +523,8 @@ static inline struct tpm2_auth *tpm2_chi
- #endif
- }
- 
--void tpm_buf_append_name(struct tpm_chip *chip, struct tpm_buf *buf,
--			 u32 handle, u8 *name);
-+int tpm_buf_append_name(struct tpm_chip *chip, struct tpm_buf *buf,
-+			u32 handle, u8 *name);
- void tpm_buf_append_hmac_session(struct tpm_chip *chip, struct tpm_buf *buf,
- 				 u8 attributes, u8 *passphrase,
- 				 int passphraselen);
-@@ -557,7 +557,7 @@ static inline void tpm_buf_append_hmac_s
- #ifdef CONFIG_TCG_TPM2_HMAC
- 
- int tpm2_start_auth_session(struct tpm_chip *chip);
--void tpm_buf_fill_hmac_session(struct tpm_chip *chip, struct tpm_buf *buf);
-+int tpm_buf_fill_hmac_session(struct tpm_chip *chip, struct tpm_buf *buf);
- int tpm_buf_check_hmac_response(struct tpm_chip *chip, struct tpm_buf *buf,
- 				int rc);
- void tpm2_end_auth_session(struct tpm_chip *chip);
-@@ -571,10 +571,13 @@ static inline int tpm2_start_auth_sessio
- static inline void tpm2_end_auth_session(struct tpm_chip *chip)
- {
- }
--static inline void tpm_buf_fill_hmac_session(struct tpm_chip *chip,
--					     struct tpm_buf *buf)
-+
-+static inline int tpm_buf_fill_hmac_session(struct tpm_chip *chip,
-+					    struct tpm_buf *buf)
- {
-+	return 0;
- }
-+
- static inline int tpm_buf_check_hmac_response(struct tpm_chip *chip,
- 					      struct tpm_buf *buf,
- 					      int rc)
---- a/security/keys/trusted-keys/trusted_tpm2.c
-+++ b/security/keys/trusted-keys/trusted_tpm2.c
-@@ -283,7 +283,10 @@ int tpm2_seal_trusted(struct tpm_chip *c
- 		goto out_put;
- 	}
- 
--	tpm_buf_append_name(chip, &buf, options->keyhandle, NULL);
-+	rc = tpm_buf_append_name(chip, &buf, options->keyhandle, NULL);
-+	if (rc)
-+		goto out;
-+
- 	tpm_buf_append_hmac_session(chip, &buf, TPM2_SA_DECRYPT,
- 				    options->keyauth, TPM_DIGEST_SIZE);
- 
-@@ -331,7 +334,10 @@ int tpm2_seal_trusted(struct tpm_chip *c
- 		goto out;
- 	}
- 
--	tpm_buf_fill_hmac_session(chip, &buf);
-+	rc = tpm_buf_fill_hmac_session(chip, &buf);
-+	if (rc)
-+		goto out;
-+
- 	rc = tpm_transmit_cmd(chip, &buf, 4, "sealing data");
- 	rc = tpm_buf_check_hmac_response(chip, &buf, rc);
- 	if (rc)
-@@ -448,7 +454,10 @@ static int tpm2_load_cmd(struct tpm_chip
- 		return rc;
- 	}
- 
--	tpm_buf_append_name(chip, &buf, options->keyhandle, NULL);
-+	rc = tpm_buf_append_name(chip, &buf, options->keyhandle, NULL);
-+	if (rc)
-+		goto out;
-+
- 	tpm_buf_append_hmac_session(chip, &buf, 0, options->keyauth,
- 				    TPM_DIGEST_SIZE);
- 
-@@ -460,7 +469,10 @@ static int tpm2_load_cmd(struct tpm_chip
- 		goto out;
- 	}
- 
--	tpm_buf_fill_hmac_session(chip, &buf);
-+	rc = tpm_buf_fill_hmac_session(chip, &buf);
-+	if (rc)
-+		goto out;
-+
- 	rc = tpm_transmit_cmd(chip, &buf, 4, "loading blob");
- 	rc = tpm_buf_check_hmac_response(chip, &buf, rc);
- 	if (!rc)
-@@ -508,7 +520,9 @@ static int tpm2_unseal_cmd(struct tpm_ch
- 		return rc;
- 	}
- 
--	tpm_buf_append_name(chip, &buf, blob_handle, NULL);
-+	rc = tpm_buf_append_name(chip, &buf, options->keyhandle, NULL);
-+	if (rc)
-+		goto out;
- 
- 	if (!options->policyhandle) {
- 		tpm_buf_append_hmac_session(chip, &buf, TPM2_SA_ENCRYPT,
-@@ -533,7 +547,10 @@ static int tpm2_unseal_cmd(struct tpm_ch
- 						NULL, 0);
- 	}
- 
--	tpm_buf_fill_hmac_session(chip, &buf);
-+	rc = tpm_buf_fill_hmac_session(chip, &buf);
-+	if (rc)
-+		goto out;
-+
- 	rc = tpm_transmit_cmd(chip, &buf, 6, "unsealing");
- 	rc = tpm_buf_check_hmac_response(chip, &buf, rc);
- 	if (rc > 0)
+ 	if (cfg->flags & FLAG_SOF) {
+ 		if (cfg->flags & FLAG_SOF_ONLY_IF_SOUNDWIRE &&
 
 
