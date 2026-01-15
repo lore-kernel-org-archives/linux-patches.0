@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 182E82FDC4D;
-	Thu, 15 Jan 2026 17:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DA22FDC4D;
+	Thu, 15 Jan 2026 17:09:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496967; cv=none; b=fg0UwXThgpZUal/mmzDRTagh5c3+1xrhigXUkmPiXeTGeUh0MUn/SHUWUTeZMj1rQ1CSDb85vj81gfwGV4raLEAqQh6yoVka+hAzpSscP2Mi0XF2Bs1naAg5/lPI1FQk5DOwCiK1cNNaru9+jBJQzklaHYq9KswvE3fxLdPKDAg=
+	t=1768496969; cv=none; b=M5gA34iB7aHKcRG+qMsUXS+jMIJMsbwm0hZDZHuHS0uKSt3+JoJzeoOFbgBZ2bQa8sv7A7RgNQVD2FSdo+PzsS2uXGWwbncnri4pzWBYdlLSCwgYztAKzdMhG1spReQu1/4KdDmgfD4m1LCraKaI9rTVkTUWGOcHrE4DCIm2zvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496967; c=relaxed/simple;
-	bh=hJiLbbHwMC7cDVNQeikXwl4VtvgqYjWVeaHJ6Zlao7I=;
+	s=arc-20240116; t=1768496969; c=relaxed/simple;
+	bh=Ne4x8Obt43xZ71TGy985rrCSIGx3YrL/p9FnCsnfQYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hKNRX9j8KeDdjpgnC6mGHrht6kBmieRa9Hl+g62qIGtcVcd9UV95kTcHXEdItc8PYtDKqkXDwtb/HDRjn55hdXEfxMqnbOHX43Uzs94A37U/+JsX8PkgYU+SxqwDAJsYKWTXGA8TKUFJG/3BfZFwQdUJ4peN5BP/Kxj4utekbmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZTvpib8B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TFSYt4i26uiCGXcY8pbXd0wHC+k/x/Su6lHIIHdOzgVbRrLO+SiKJ1CWPhfTiz4h40kTYblcdQ/d634WoE6DjiAhDImLcAqJ7lRH7YBLI69fwRylrgZk55glGL6zUEQsGSoM84kzvNgn8ebQyxswiH4cgPBfOvC9M+vinFI4slA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CMYn6v8V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZTvpib8B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 629BFC116D0;
-	Thu, 15 Jan 2026 17:09:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CMYn6v8V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D035C19422;
+	Thu, 15 Jan 2026 17:09:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496966;
-	bh=hJiLbbHwMC7cDVNQeikXwl4VtvgqYjWVeaHJ6Zlao7I=;
+	s=korg; t=1768496969;
+	bh=Ne4x8Obt43xZ71TGy985rrCSIGx3YrL/p9FnCsnfQYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZTvpib8Bp+CTp6bgfqDHtOxWJfpBAXXCcjivmUO8wbHZiMYNwSg6rCHmNIzJSd763
-	 oz7eJldAbMh3R2aCZYHv5hS93mcyy8PC7UN14auv1YEp/0xu1tPCBHNmVWUFGheYc5
-	 M5qJd18eVh64vOH3tFDHJQJK5SydnxpA0PW5T5KU=
+	b=CMYn6v8VCGG4WIPR5JdR/mPGnd9oSpu6aQPumvMNsqNgDx2Fn1uB/MgTr2mJ0lkr0
+	 rTDeTlR0Ac5KpbH3E6hseoamhvREJEyvnyXGCReBNqHkXqa5siXOYEw4PbI9PEkzGX
+	 KWPeoeIRT57XHdlpbNXjC0A4jlODXNkNzBAAIW28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Potin Lai <potin.lai.pt@gmail.com>,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 45/88] gpio: pca953x: Utilise temporary variable for struct device
-Date: Thu, 15 Jan 2026 17:48:28 +0100
-Message-ID: <20260115164147.940581307@linuxfoundation.org>
+Subject: [PATCH 6.6 46/88] gpio: pca953x: Add support for level-triggered interrupts
+Date: Thu, 15 Jan 2026 17:48:29 +0100
+Message-ID: <20260115164147.977655526@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164146.312481509@linuxfoundation.org>
 References: <20260115164146.312481509@linuxfoundation.org>
@@ -51,116 +51,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Potin Lai <potin.lai.pt@gmail.com>
 
-[ Upstream commit 6811886ac91eb414b1b74920e05e6590c3f2a688 ]
+[ Upstream commit 417b0f8d08f878615de9481c6e8827fbc8b57ed2 ]
 
-We have a temporary variable to keep pointer to struct device.
-Utilise it where it makes sense.
+Adds support for level-triggered interrupts in the PCA953x GPIO
+expander driver. Previously, the driver only supported edge-triggered
+interrupts, which could lead to missed events in scenarios where an
+interrupt condition persists until it is explicitly cleared.
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+By enabling level-triggered interrupts, the driver can now detect and
+respond to sustained interrupt conditions more reliably.
+
+Signed-off-by: Potin Lai <potin.lai.pt@gmail.com>
+Link: https://lore.kernel.org/r/20250409-gpio-pca953x-level-triggered-irq-v3-1-7f184d814934@gmail.com
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Stable-dep-of: 014a17deb412 ("gpio: pca953x: handle short interrupt pulses on PCAL devices")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-pca953x.c | 30 ++++++++++++++----------------
- 1 file changed, 14 insertions(+), 16 deletions(-)
+ drivers/gpio/gpio-pca953x.c | 32 +++++++++++++++++++++++++++-----
+ 1 file changed, 27 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
-index 3a0b999521e44..de965e6353c5b 100644
+index de965e6353c5b..6b9bfdebadb5a 100644
 --- a/drivers/gpio/gpio-pca953x.c
 +++ b/drivers/gpio/gpio-pca953x.c
-@@ -781,11 +781,11 @@ static int pca953x_irq_set_type(struct irq_data *d, unsigned int type)
- {
- 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
- 	struct pca953x_chip *chip = gpiochip_get_data(gc);
-+	struct device *dev = &chip->client->dev;
+@@ -207,6 +207,8 @@ struct pca953x_chip {
+ 	DECLARE_BITMAP(irq_stat, MAX_LINE);
+ 	DECLARE_BITMAP(irq_trig_raise, MAX_LINE);
+ 	DECLARE_BITMAP(irq_trig_fall, MAX_LINE);
++	DECLARE_BITMAP(irq_trig_level_high, MAX_LINE);
++	DECLARE_BITMAP(irq_trig_level_low, MAX_LINE);
+ #endif
+ 	atomic_t wakeup_path;
+ 
+@@ -767,6 +769,8 @@ static void pca953x_irq_bus_sync_unlock(struct irq_data *d)
+ 	pca953x_read_regs(chip, chip->regs->direction, reg_direction);
+ 
+ 	bitmap_or(irq_mask, chip->irq_trig_fall, chip->irq_trig_raise, gc->ngpio);
++	bitmap_or(irq_mask, irq_mask, chip->irq_trig_level_high, gc->ngpio);
++	bitmap_or(irq_mask, irq_mask, chip->irq_trig_level_low, gc->ngpio);
+ 	bitmap_complement(reg_direction, reg_direction, gc->ngpio);
+ 	bitmap_and(irq_mask, irq_mask, reg_direction, gc->ngpio);
+ 
+@@ -784,13 +788,15 @@ static int pca953x_irq_set_type(struct irq_data *d, unsigned int type)
+ 	struct device *dev = &chip->client->dev;
  	irq_hw_number_t hwirq = irqd_to_hwirq(d);
  
- 	if (!(type & IRQ_TYPE_EDGE_BOTH)) {
--		dev_err(&chip->client->dev, "irq %d: unsupported type %d\n",
--			d->irq, type);
-+		dev_err(dev, "irq %d: unsupported type %d\n", d->irq, type);
+-	if (!(type & IRQ_TYPE_EDGE_BOTH)) {
++	if (!(type & IRQ_TYPE_SENSE_MASK)) {
+ 		dev_err(dev, "irq %d: unsupported type %d\n", d->irq, type);
  		return -EINVAL;
  	}
  
-@@ -902,7 +902,7 @@ static int pca953x_irq_setup(struct pca953x_chip *chip, int irq_base)
- 	int ret;
- 
- 	if (dmi_first_match(pca953x_dmi_acpi_irq_info)) {
--		ret = pca953x_acpi_get_irq(&client->dev);
-+		ret = pca953x_acpi_get_irq(dev);
- 		if (ret > 0)
- 			client->irq = ret;
- 	}
-@@ -940,10 +940,9 @@ static int pca953x_irq_setup(struct pca953x_chip *chip, int irq_base)
- 	girq->threaded = true;
- 	girq->first = irq_base; /* FIXME: get rid of this */
- 
--	ret = devm_request_threaded_irq(&client->dev, client->irq,
--					NULL, pca953x_irq_handler,
--					IRQF_ONESHOT | IRQF_SHARED,
--					dev_name(&client->dev), chip);
-+	ret = devm_request_threaded_irq(dev, client->irq, NULL, pca953x_irq_handler,
-+					IRQF_ONESHOT | IRQF_SHARED, dev_name(dev),
-+					chip);
- 	if (ret)
- 		return dev_err_probe(dev, client->irq, "failed to request irq\n");
- 
-@@ -951,13 +950,13 @@ static int pca953x_irq_setup(struct pca953x_chip *chip, int irq_base)
- }
- 
- #else /* CONFIG_GPIO_PCA953X_IRQ */
--static int pca953x_irq_setup(struct pca953x_chip *chip,
--			     int irq_base)
-+static int pca953x_irq_setup(struct pca953x_chip *chip, int irq_base)
- {
- 	struct i2c_client *client = chip->client;
-+	struct device *dev = &client->dev;
- 
- 	if (client->irq && irq_base != -1 && (chip->driver_data & PCA_INT))
--		dev_warn(&client->dev, "interrupt support not compiled in\n");
-+		dev_warn(dev, "interrupt support not compiled in\n");
+ 	assign_bit(hwirq, chip->irq_trig_fall, type & IRQ_TYPE_EDGE_FALLING);
+ 	assign_bit(hwirq, chip->irq_trig_raise, type & IRQ_TYPE_EDGE_RISING);
++	assign_bit(hwirq, chip->irq_trig_level_low, type & IRQ_TYPE_LEVEL_LOW);
++	assign_bit(hwirq, chip->irq_trig_level_high, type & IRQ_TYPE_LEVEL_HIGH);
  
  	return 0;
  }
-@@ -1048,11 +1047,11 @@ static int pca953x_probe(struct i2c_client *client)
+@@ -803,6 +809,8 @@ static void pca953x_irq_shutdown(struct irq_data *d)
+ 
+ 	clear_bit(hwirq, chip->irq_trig_raise);
+ 	clear_bit(hwirq, chip->irq_trig_fall);
++	clear_bit(hwirq, chip->irq_trig_level_low);
++	clear_bit(hwirq, chip->irq_trig_level_high);
+ }
+ 
+ static void pca953x_irq_print_chip(struct irq_data *data, struct seq_file *p)
+@@ -833,6 +841,7 @@ static bool pca953x_irq_pending(struct pca953x_chip *chip, unsigned long *pendin
+ 	DECLARE_BITMAP(cur_stat, MAX_LINE);
+ 	DECLARE_BITMAP(new_stat, MAX_LINE);
+ 	DECLARE_BITMAP(trigger, MAX_LINE);
++	DECLARE_BITMAP(edges, MAX_LINE);
  	int ret;
- 	const struct regmap_config *regmap_config;
  
--	chip = devm_kzalloc(&client->dev, sizeof(*chip), GFP_KERNEL);
-+	chip = devm_kzalloc(dev, sizeof(*chip), GFP_KERNEL);
- 	if (chip == NULL)
- 		return -ENOMEM;
+ 	ret = pca953x_read_regs(chip, chip->regs->input, cur_stat);
+@@ -850,13 +859,26 @@ static bool pca953x_irq_pending(struct pca953x_chip *chip, unsigned long *pendin
  
--	pdata = dev_get_platdata(&client->dev);
-+	pdata = dev_get_platdata(dev);
- 	if (pdata) {
- 		irq_base = pdata->irq_base;
- 		chip->gpio_start = pdata->gpio_base;
-@@ -1069,8 +1068,7 @@ static int pca953x_probe(struct i2c_client *client)
- 		 * using "reset" GPIO. Otherwise any of those platform
- 		 * must use _DSD method with corresponding property.
- 		 */
--		reset_gpio = devm_gpiod_get_optional(&client->dev, "reset",
--						     GPIOD_OUT_LOW);
-+		reset_gpio = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_LOW);
- 		if (IS_ERR(reset_gpio))
- 			return dev_err_probe(dev, PTR_ERR(reset_gpio),
- 					     "Failed to get reset gpio\n");
-@@ -1090,10 +1088,10 @@ static int pca953x_probe(struct i2c_client *client)
- 	pca953x_setup_gpio(chip, chip->driver_data & PCA_GPIO_MASK);
+ 	bitmap_copy(chip->irq_stat, new_stat, gc->ngpio);
  
- 	if (NBANK(chip) > 2 || PCA_CHIP_TYPE(chip->driver_data) == PCA957X_TYPE) {
--		dev_info(&client->dev, "using AI\n");
-+		dev_info(dev, "using AI\n");
- 		regmap_config = &pca953x_ai_i2c_regmap;
- 	} else {
--		dev_info(&client->dev, "using no AI\n");
-+		dev_info(dev, "using no AI\n");
- 		regmap_config = &pca953x_i2c_regmap;
- 	}
+-	if (bitmap_empty(trigger, gc->ngpio))
+-		return false;
++	if (bitmap_empty(chip->irq_trig_level_high, gc->ngpio) &&
++	    bitmap_empty(chip->irq_trig_level_low, gc->ngpio)) {
++		if (bitmap_empty(trigger, gc->ngpio))
++			return false;
++	}
  
+ 	bitmap_and(cur_stat, chip->irq_trig_fall, old_stat, gc->ngpio);
+ 	bitmap_and(old_stat, chip->irq_trig_raise, new_stat, gc->ngpio);
+-	bitmap_or(new_stat, old_stat, cur_stat, gc->ngpio);
+-	bitmap_and(pending, new_stat, trigger, gc->ngpio);
++	bitmap_or(edges, old_stat, cur_stat, gc->ngpio);
++	bitmap_and(pending, edges, trigger, gc->ngpio);
++
++	bitmap_and(cur_stat, new_stat, chip->irq_trig_level_high, gc->ngpio);
++	bitmap_and(cur_stat, cur_stat, chip->irq_mask, gc->ngpio);
++	bitmap_or(pending, pending, cur_stat, gc->ngpio);
++
++	bitmap_complement(cur_stat, new_stat, gc->ngpio);
++	bitmap_and(cur_stat, cur_stat, reg_direction, gc->ngpio);
++	bitmap_and(old_stat, cur_stat, chip->irq_trig_level_low, gc->ngpio);
++	bitmap_and(old_stat, old_stat, chip->irq_mask, gc->ngpio);
++	bitmap_or(pending, pending, old_stat, gc->ngpio);
+ 
+ 	return !bitmap_empty(pending, gc->ngpio);
+ }
 -- 
 2.51.0
 
