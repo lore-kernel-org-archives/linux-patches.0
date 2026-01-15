@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A077D3BF2EF;
-	Thu, 15 Jan 2026 16:55:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464303BF2F7;
+	Thu, 15 Jan 2026 16:55:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496131; cv=none; b=E4QKc0oUSmkXWzEqou3/t1p3C2pGd2n9ECzL2OsVFDhpWUcZqyVelXARpTBpHsDAIHTSxZNmvidRbJRk3lgajpiFalqRNO3Jpm/V9J0EIslE7hEO2ellhPHHHjddrpmcqo5wtODkTCBHBNNl4/F3QFCQOpzK8OIeBx8jbJSj1mI=
+	t=1768496135; cv=none; b=kkQcSX0/d8dfQpGed8dJcK1qo6nc0Fdk0Iqym8WhbgUAPzz1q22q3aTyA/aluVXgMz36V/bkkjWUan9iMUrBPfUbKOKbzAr2qZqc6vgf4jZS/JFBhN9EyA5vYiHqnOe0WRvAPAXZOADFPV599qhzIEPvvpDViU42ag+M4+JvDaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496131; c=relaxed/simple;
-	bh=FKPRZkRQTLUWQLNNZpz99N+r4GXCqax9cT570QK5sNc=;
+	s=arc-20240116; t=1768496135; c=relaxed/simple;
+	bh=zRODUFtwzKtPQ8WLS4If7B4OpXGpX2YJt/nt3N5ffYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=af+9wLfpIuFj7ADH7Xm4UtpmRqyrp0qbExuK2WoxMmjEhQlMIJZ4dJktAQmyuXca83/FDI7r7TpPop4ES914ssQGtBg89G8Mm7sitmCzaUj4NWs4avU+FT/ZhfrMCqcb+nnDYJIN8fzFL9qlMS+qzBnK9j6kZRcehrSa6SLsWSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ltGh7sG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G+PAdeaHQyswixs8ZiXMY8PvCVsw2on54TQICQDUZQb4CZ4d81ROcd6pnIm98ltXP1rJnk+Ty3KxivbW0QVf7PjSpKtSdSMqc0FKL+2BmGX+u0CsoYqpNMpma/gBEB8+PMcgWsZNlvkWPLcC9FLHhYveal1CNYxUNjy70jwxsfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n5z+5s/H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ltGh7sG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA9D9C116D0;
-	Thu, 15 Jan 2026 16:55:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n5z+5s/H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDBA5C116D0;
+	Thu, 15 Jan 2026 16:55:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496131;
-	bh=FKPRZkRQTLUWQLNNZpz99N+r4GXCqax9cT570QK5sNc=;
+	s=korg; t=1768496134;
+	bh=zRODUFtwzKtPQ8WLS4If7B4OpXGpX2YJt/nt3N5ffYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ltGh7sGQ4Wao0oJAmADt9JvdJQrjz78efAJXOZGTRF08OwZACQNDG/xoRO17gajl
-	 lJ82Z0NSe+PSlfD1+woModiZfUqUl3uubcuIC6V3elLS9JxGBpKowOUKUOi8tl15ir
-	 k91q8iqkpEeTQ6qZMUHnZ06hcPsjfn+KLaT2ahrM=
+	b=n5z+5s/H/kW1tx4dvpRZFDT3WKeZChmso6NwvsbbLV/QP+zHA6hvrfv3DLBVHUUFf
+	 Am3LWkClFruAERlSgstfz+NRR8bxfzpURssm7W2G9RCLE7+YE1/udZgU8U1HqvUglY
+	 riCotAMEztExL6sEvjU1sICboubclbtXScuJs+O8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Alyssa Ross <hi@alyssa.is>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Alexandre Courbot <acourbot@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 089/181] gpiolib: remove unnecessary out of memory messages
-Date: Thu, 15 Jan 2026 17:47:06 +0100
-Message-ID: <20260115164205.536647780@linuxfoundation.org>
+Subject: [PATCH 6.18 072/181] gpu: nova-core: select RUST_FW_LOADER_ABSTRACTIONS
+Date: Thu, 15 Jan 2026 17:46:49 +0100
+Message-ID: <20260115164204.923028209@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -51,49 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Alexandre Courbot <acourbot@nvidia.com>
 
-[ Upstream commit 0ba6f1ed3808b1f095fbdb490006f0ecd00f52bd ]
+[ Upstream commit 3d3352e73a55a4ccf110f8b3419bbe2fbfd8a030 ]
 
-We don't need to add additional logs when returning -ENOMEM so remove
-unnecessary error messages.
+RUST_FW_LOADER_ABSTRACTIONS was depended on by NOVA_CORE, but NOVA_CORE
+is selected by DRM_NOVA. This creates a situation where, if DRM_NOVA is
+selected, NOVA_CORE gets enabled but not RUST_FW_LOADER_ABSTRACTIONS,
+which results in a build error.
 
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Stable-dep-of: a7ac22d53d09 ("gpiolib: fix race condition for gdev->srcu")
+Since the firmware loader is an implementation detail of the driver, it
+should be enabled along with it, so change the "depends on" to a
+"select".
+
+Fixes: 54e6baf123fd ("gpu: nova-core: add initial driver stub")
+Closes: https://lore.kernel.org/oe-kbuild-all/202512061721.rxKGnt5q-lkp@intel.com/
+Tested-by: Alyssa Ross <hi@alyssa.is>
+Acked-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://patch.msgid.link/20251106-b4-select-rust-fw-v3-2-771172257755@nvidia.com
+Signed-off-by: Alexandre Courbot <acourbot@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ drivers/gpu/nova-core/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index cd8800ba5825f..f2ed234b4135e 100644
---- a/drivers/gpio/gpiolib.c
-+++ b/drivers/gpio/gpiolib.c
-@@ -2316,10 +2316,8 @@ int gpiochip_add_pingroup_range(struct gpio_chip *gc,
- 	int ret;
- 
- 	pin_range = kzalloc(sizeof(*pin_range), GFP_KERNEL);
--	if (!pin_range) {
--		chip_err(gc, "failed to allocate pin ranges\n");
-+	if (!pin_range)
- 		return -ENOMEM;
--	}
- 
- 	/* Use local offset as range ID */
- 	pin_range->range.id = gpio_offset;
-@@ -2379,10 +2377,8 @@ int gpiochip_add_pin_range_with_pins(struct gpio_chip *gc,
- 	int ret;
- 
- 	pin_range = kzalloc(sizeof(*pin_range), GFP_KERNEL);
--	if (!pin_range) {
--		chip_err(gc, "failed to allocate pin ranges\n");
-+	if (!pin_range)
- 		return -ENOMEM;
--	}
- 
- 	/* Use local offset as range ID */
- 	pin_range->range.id = gpio_offset;
+diff --git a/drivers/gpu/nova-core/Kconfig b/drivers/gpu/nova-core/Kconfig
+index 20d3e6d0d796e..527920f9c4d39 100644
+--- a/drivers/gpu/nova-core/Kconfig
++++ b/drivers/gpu/nova-core/Kconfig
+@@ -3,7 +3,7 @@ config NOVA_CORE
+ 	depends on 64BIT
+ 	depends on PCI
+ 	depends on RUST
+-	depends on RUST_FW_LOADER_ABSTRACTIONS
++	select RUST_FW_LOADER_ABSTRACTIONS
+ 	select AUXILIARY_BUS
+ 	default n
+ 	help
 -- 
 2.51.0
 
