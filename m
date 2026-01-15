@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1B13C00A6;
-	Thu, 15 Jan 2026 17:34:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4B73C1997;
+	Thu, 15 Jan 2026 17:34:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498474; cv=none; b=XhLJE2QOf+sciTTjgO6gGx2Upvl27zh6FVPvjy/fcS+5dYH3E0QYGbBpd8dj2lm3GmDgNB7DixtFn6ziD2/gO6Uz5MgqTVyeeyYezZl/d9TBzuidujUJpKXOPgCoHJoxGzgoZXQg3hPx1fprnaOEZblSM+nunCuinWapXsUlEoE=
+	t=1768498476; cv=none; b=KoDDQ6P5SZxIb4MTpd/5BlIGSvmM6jKyZpR6Q8BeYplG9JbW7XWEBnknkxa4udeFJRx/OCvbuDAL3VyZxKh91yH0UI7CipQg2qFCXRJoHaqFuCeqbzZw0e5IAEiOuH8vMU5X9AI3noNOtnOKMM3UROXFJhve2bYdqiJafsSPxkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498474; c=relaxed/simple;
-	bh=mRPfj2RlzLMCYSnjXmaTKSQwkjTxOuvXQDx2sZ41XvI=;
+	s=arc-20240116; t=1768498476; c=relaxed/simple;
+	bh=wPki+DrT/P380REOJ5zKwGmNjCooDDGVXnp/atL2cVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m+/z316J80kb+Gb4gfxWp+uQGSM7Q/3HZfiROoS01Wk26ZPx83PV04fCLcAo9JZWEvsObLob6I58Rju4GDezDSqqviowCAFBmTBKZ5xXtOl4j26Ug983yMffbq2F4cnVINouKUiiAksX+JEH+TYSiWi2Q/rcfvKdaa4awDxpmg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hKVvOJUo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ebZ54SGhjJnnEavVWUiYUq0lw6JqdR7n9fnL+CyEt/cXE1lPznzix96UPdE3ti2KfKw3ks2V2ZdkbmEvSumHqk4YHV8aCbI0kGhr1ns3IxrABjZFK7uBWBBJHSqW45NSa144IHkL5UUtIlcxXtz1MrNo6IyAAtiBOoTjURAkkQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nrKQBcZd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hKVvOJUo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DC19C116D0;
-	Thu, 15 Jan 2026 17:34:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrKQBcZd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68B9EC19422;
+	Thu, 15 Jan 2026 17:34:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498473;
-	bh=mRPfj2RlzLMCYSnjXmaTKSQwkjTxOuvXQDx2sZ41XvI=;
+	s=korg; t=1768498476;
+	bh=wPki+DrT/P380REOJ5zKwGmNjCooDDGVXnp/atL2cVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hKVvOJUo1CbLWCBb13R5MJ+MCTgLju3WphZHAIRTQwixb5TvHBy1fr50aSBjrV25Q
-	 PbIos5ctnjcLURy8RkcpNsxxVUuBYoQLXLHDVikKW6LdaYttUIHSjEdGMbWYzsB151
-	 20nQRVsFEilFxarVFwYtrKm1cEZT9CN7BdMysmy8=
+	b=nrKQBcZdb9WVVA8vEifbc6LDc7ljlS/XfzELIquUrk336EhdNyiwQp6E8wz4FQNPu
+	 onkUTY0uZZj2dpzf23pXtjGzoP0KPCNYfyZxUMevLx7eNZUmbI6n4bkFv+XuOkmNGG
+	 f9H9t4GoY784WP/rUYiDGSkTQDqWAz1fp4ujQXB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	syzbot+24124df3170c3638b35f@syzkaller.appspotmail.com,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	stable <stable@kernel.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Udipto Goswami <udipto.goswami@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 444/554] f2fs: fix to avoid updating zero-sized extent in extent cache
-Date: Thu, 15 Jan 2026 17:48:30 +0100
-Message-ID: <20260115164302.339461125@linuxfoundation.org>
+Subject: [PATCH 5.15 445/554] usb: dwc3: keep susphy enabled during exit to avoid controller faults
+Date: Thu, 15 Jan 2026 17:48:31 +0100
+Message-ID: <20260115164302.376819251@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -53,62 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Udipto Goswami <udipto.goswami@oss.qualcomm.com>
 
-[ Upstream commit 7c37c79510329cd951a4dedf3f7bf7e2b18dccec ]
+[ Upstream commit e1003aa7ec9eccdde4c926bd64ef42816ad55f25 ]
 
-As syzbot reported:
+On some platforms, switching USB roles from host to device can trigger
+controller faults due to premature PHY power-down. This occurs when the
+PHY is disabled too early during teardown, causing synchronization
+issues between the PHY and controller.
 
-F2FS-fs (loop0): __update_extent_tree_range: extent len is zero, type: 0, extent [0, 0, 0], age [0, 0]
-------------[ cut here ]------------
-kernel BUG at fs/f2fs/extent_cache.c:678!
-Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-CPU: 0 UID: 0 PID: 5336 Comm: syz.0.0 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
-RIP: 0010:__update_extent_tree_range+0x13bc/0x1500 fs/f2fs/extent_cache.c:678
-Call Trace:
- <TASK>
- f2fs_update_read_extent_cache_range+0x192/0x3e0 fs/f2fs/extent_cache.c:1085
- f2fs_do_zero_range fs/f2fs/file.c:1657 [inline]
- f2fs_zero_range+0x10c1/0x1580 fs/f2fs/file.c:1737
- f2fs_fallocate+0x583/0x990 fs/f2fs/file.c:2030
- vfs_fallocate+0x669/0x7e0 fs/open.c:342
- ioctl_preallocate fs/ioctl.c:289 [inline]
- file_ioctl+0x611/0x780 fs/ioctl.c:-1
- do_vfs_ioctl+0xb33/0x1430 fs/ioctl.c:576
- __do_sys_ioctl fs/ioctl.c:595 [inline]
- __se_sys_ioctl+0x82/0x170 fs/ioctl.c:583
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f07bc58eec9
+Keep susphy enabled during dwc3_host_exit() and dwc3_gadget_exit()
+ensures the PHY remains in a low-power state capable of handling
+required commands during role switch.
 
-In error path of f2fs_zero_range(), it may add a zero-sized extent
-into extent cache, it should be avoided.
-
-Fixes: 6e9619499f53 ("f2fs: support in batch fzero in dnode page")
-Cc: stable@kernel.org
-Reported-by: syzbot+24124df3170c3638b35f@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-f2fs-devel/68e5d698.050a0220.256323.0032.GAE@google.com
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Cc: stable <stable@kernel.org>
+Fixes: 6d735722063a ("usb: dwc3: core: Prevent phy suspend during init")
+Suggested-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Signed-off-by: Udipto Goswami <udipto.goswami@oss.qualcomm.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://patch.msgid.link/20251126054221.120638-1-udipto.goswami@oss.qualcomm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/file.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/dwc3/gadget.c |    2 +-
+ drivers/usb/dwc3/host.c   |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -1470,7 +1470,8 @@ static int f2fs_do_zero_range(struct dno
- 		f2fs_set_data_blkaddr(dn);
- 	}
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -4585,7 +4585,7 @@ void dwc3_gadget_exit(struct dwc3 *dwc)
+ 	if (!dwc->gadget)
+ 		return;
  
--	f2fs_update_extent_cache_range(dn, start, 0, index - start);
-+	if (index > start)
-+		f2fs_update_extent_cache_range(dn, start, 0, index - start);
+-	dwc3_enable_susphy(dwc, false);
++	dwc3_enable_susphy(dwc, true);
+ 	usb_del_gadget(dwc->gadget);
+ 	dwc3_gadget_free_endpoints(dwc);
+ 	usb_put_gadget(dwc->gadget);
+--- a/drivers/usb/dwc3/host.c
++++ b/drivers/usb/dwc3/host.c
+@@ -157,7 +157,7 @@ err:
  
- 	return ret;
+ void dwc3_host_exit(struct dwc3 *dwc)
+ {
+-	dwc3_enable_susphy(dwc, false);
++	dwc3_enable_susphy(dwc, true);
+ 	platform_device_unregister(dwc->xhci);
+ 	dwc->xhci = NULL;
  }
 
 
