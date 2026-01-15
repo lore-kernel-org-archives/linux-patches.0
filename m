@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2379F3C009F;
-	Thu, 15 Jan 2026 17:33:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A6BE3BC4E8;
+	Thu, 15 Jan 2026 17:33:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498414; cv=none; b=L44CgXhnZpf55z17hiR8TDp+V0S9cLADfVXeGeFyyjXwLDYQisq37hs9AlFC6JmHON6HQ2EH42CXmt57Hwk5jux2yRNFwEidGxrQS3EeGqhukPZcH8G7LyN+cf+gN/2QR1AJRkOSU778zFngo2CpBeC9xlD9xDVy/hgbx8Tau20=
+	t=1768498417; cv=none; b=OxSwIrphgLIK0xoJEGutSswCE4X4Pt4v/PHF/S6QdkHEO1JqXzzv5TKNdJgeMllnGzTzKfIFlv0ri2fZc6RZxZMoahDewOMk2Cky47sSFdyOEn0XGu6GhovxzZrmqljh+xRXyXUHYakmJWi3hHOE7ePq7M9PTQLGDjiwqST97+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498414; c=relaxed/simple;
-	bh=5m9nRdhdAs0hZpe/cMGfZWrTJfbdISVNM3FwNCgufKU=;
+	s=arc-20240116; t=1768498417; c=relaxed/simple;
+	bh=LQHWZkA8aacHKoBCY6twu6DX5ugi352pqtD8uDUWhao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DZy1XXBhiKw5G9AzZ+eO9DMAB1efwinm+SQw534UWog6UZnLjsNSiHzvieapFklo0T4BV2ajNt57CbY+BgxvBPB4I34LAVZ7gH9L3x24UkxkIznxSM2fGLcvryDi7GMFV9d+EV1NGsvRVX5aEW977yvjzv3upj/mZg6TMK2Lgsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GzRCcywI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uELBAGQnIvGpM96hbsW+3aUPdBe6iDKGeFZwrQPTcKSImhel3CZ3mjt6qRMujTfDGsypVmlDHfvul20lcujrt2jUsus/uA7oDCrEhPq1l0HP+Q8yZ/1NdCNVU8iP4JALT9cm8K0snCDAc+Aqi3mTGII1sTmOSyiS4w4D4anP1WM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qV4qYfGm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GzRCcywI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A56B5C116D0;
-	Thu, 15 Jan 2026 17:33:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qV4qYfGm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91C62C116D0;
+	Thu, 15 Jan 2026 17:33:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498414;
-	bh=5m9nRdhdAs0hZpe/cMGfZWrTJfbdISVNM3FwNCgufKU=;
+	s=korg; t=1768498417;
+	bh=LQHWZkA8aacHKoBCY6twu6DX5ugi352pqtD8uDUWhao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GzRCcywIHg67sRkf9oyGueTVhCH/4GqLx/ltos0iDtnFN5F9vAb/Q5xnMOwYCxC3P
-	 FP3ZVQz3A2dMabRRXgfukc50K7emDvTGMnw7pxhPBIktOlNUWGXG+F8BFc6Mf/gfkH
-	 oQl43I2nVmssbrG68lux5N5UNQfCfbJH4LKoVdN0=
+	b=qV4qYfGmyK4Y1ugKG5QGBpptxyuwkj1FisvHTAE2ZgWHiSsJamAG+BK368oPTdvlC
+	 eNAMrmpY2eBWa+nJoa/pSk3Xv61KvCWhNHo8F/t3BKlaePCxc+Vt/anJvbJVFnJXb1
+	 a0u4eQRc2uMIdD3xE5Z/VRHbBJeFIpOGQ2QbP8cg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Abramov <i.abramov@mt-integration.ru>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.15 390/554] media: adv7842: Avoid possible out-of-bounds array accesses in adv7842_cp_log_status()
-Date: Thu, 15 Jan 2026 17:47:36 +0100
-Message-ID: <20260115164300.354000737@linuxfoundation.org>
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 5.15 391/554] dm-ebs: Mark full buffer dirty even on partial write
+Date: Thu, 15 Jan 2026 17:47:37 +0100
+Message-ID: <20260115164300.389613109@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -50,57 +50,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Abramov <i.abramov@mt-integration.ru>
+From: Uladzislau Rezki (Sony) <urezki@gmail.com>
 
-commit 8163419e3e05d71dcfa8fb49c8fdf8d76908fe51 upstream.
+commit 7fa3e7d114abc9cc71cc35d768e116641074ddb4 upstream.
 
-It's possible for cp_read() and hdmi_read() to return -EIO. Those
-values are further used as indexes for accessing arrays.
+When performing a read-modify-write(RMW) operation, any modification
+to a buffered block must cause the entire buffer to be marked dirty.
 
-Fix that by checking return values where it's needed.
+Marking only a subrange as dirty is incorrect because the underlying
+device block size(ubs) defines the minimum read/write granularity. A
+lower device can perform I/O only on regions which are fully aligned
+and sized to ubs.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+This change ensures that write-back operations always occur in full
+ubs-sized chunks, matching the intended emulation semantics of the
+EBS target.
 
-Fixes: a89bcd4c6c20 ("[media] adv7842: add new video decoder driver")
+As for user space visible impact, submitting sub-ubs and misaligned
+I/O for devices which are tuned to ubs sizes only, will reject such
+requests, therefore it can lead to losing data. Example:
+
+1) Create a 8K nvme device in qemu by adding
+
+-device nvme,drive=drv0,serial=foo,logical_block_size=8192,physical_block_size=8192
+
+2) Setup dm-ebs to emulate 512B to 8K mapping
+
+urezki@pc638:~/bin$ cat dmsetup.sh
+
+lower=/dev/nvme0n1
+len=$(blockdev --getsz "$lower")
+
+echo "0 $len ebs $lower 0 1 16" | dmsetup create nvme-8k
+urezki@pc638:~/bin$
+
+offset 0, ebs=1 and ubs=16(in sectors).
+
+3) Create an ext4 filesystem(default 4K block size)
+
+urezki@pc638:~/bin$ sudo mkfs.ext4 -F /dev/dm-0
+mke2fs 1.47.0 (5-Feb-2023)
+Discarding device blocks: done
+Creating filesystem with 2072576 4k blocks and 518144 inodes
+Filesystem UUID: bd0b6ca6-0506-4e31-86da-8d22c9d50b63
+Superblock backups stored on blocks:
+        32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (16384 blocks): done
+Writing superblocks and filesystem accounting information: mkfs.ext4: Input/output error while writing out and closing file system
+urezki@pc638:~/bin$ dmesg
+
+<snip>
+[ 1618.875449] buffer_io_error: 1028 callbacks suppressed
+[ 1618.875456] Buffer I/O error on dev dm-0, logical block 0, lost async page write
+[ 1618.875527] Buffer I/O error on dev dm-0, logical block 1, lost async page write
+[ 1618.875602] Buffer I/O error on dev dm-0, logical block 2, lost async page write
+[ 1618.875620] Buffer I/O error on dev dm-0, logical block 3, lost async page write
+[ 1618.875639] Buffer I/O error on dev dm-0, logical block 4, lost async page write
+[ 1618.894316] Buffer I/O error on dev dm-0, logical block 5, lost async page write
+[ 1618.894358] Buffer I/O error on dev dm-0, logical block 6, lost async page write
+[ 1618.894380] Buffer I/O error on dev dm-0, logical block 7, lost async page write
+[ 1618.894405] Buffer I/O error on dev dm-0, logical block 8, lost async page write
+[ 1618.894427] Buffer I/O error on dev dm-0, logical block 9, lost async page write
+<snip>
+
+Many I/O errors because the lower 8K device rejects sub-ubs/misaligned
+requests.
+
+with a patch:
+
+urezki@pc638:~/bin$ sudo mkfs.ext4 -F /dev/dm-0
+mke2fs 1.47.0 (5-Feb-2023)
+Discarding device blocks: done
+Creating filesystem with 2072576 4k blocks and 518144 inodes
+Filesystem UUID: 9b54f44f-ef55-4bd4-9e40-c8b775a616ac
+Superblock backups stored on blocks:
+        32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (16384 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+urezki@pc638:~/bin$ sudo mount /dev/dm-0 /mnt/
+urezki@pc638:~/bin$ ls -al /mnt/
+total 24
+drwxr-xr-x  3 root root  4096 Oct 17 15:13 .
+drwxr-xr-x 19 root root  4096 Jul 10 19:42 ..
+drwx------  2 root root 16384 Oct 17 15:13 lost+found
+urezki@pc638:~/bin$
+
+After this change: mkfs completes; mount succeeds.
+
+Signed-off-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Ivan Abramov <i.abramov@mt-integration.ru>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/adv7842.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/md/dm-ebs-target.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/i2c/adv7842.c
-+++ b/drivers/media/i2c/adv7842.c
-@@ -2690,6 +2690,7 @@ static int adv7842_cp_log_status(struct
- 	/* CP block */
- 	struct adv7842_state *state = to_state(sd);
- 	struct v4l2_dv_timings timings;
-+	int temp;
- 	u8 reg_io_0x02 = io_read(sd, 0x02);
- 	u8 reg_io_0x21 = io_read(sd, 0x21);
- 	u8 reg_rep_0x77 = rep_read(sd, 0x77);
-@@ -2812,8 +2813,9 @@ static int adv7842_cp_log_status(struct
- 		  (((reg_io_0x02 >> 2) & 0x01) ^ (reg_io_0x02 & 0x01)) ?
- 			"(16-235)" : "(0-255)",
- 		  (reg_io_0x02 & 0x08) ? "enabled" : "disabled");
-+	temp = cp_read(sd, 0xf4) >> 4;
- 	v4l2_info(sd, "Color space conversion: %s\n",
--		  csc_coeff_sel_rb[cp_read(sd, 0xf4) >> 4]);
-+		  temp < 0 ? "" : csc_coeff_sel_rb[temp]);
+--- a/drivers/md/dm-ebs-target.c
++++ b/drivers/md/dm-ebs-target.c
+@@ -101,7 +101,7 @@ static int __ebs_rw_bvec(struct ebs_c *e
+ 			} else {
+ 				flush_dcache_page(bv->bv_page);
+ 				memcpy(ba, pa, cur_len);
+-				dm_bufio_mark_partial_buffer_dirty(b, buf_off, buf_off + cur_len);
++				dm_bufio_mark_buffer_dirty(b);
+ 			}
  
- 	if (!is_digital_input(sd))
- 		return 0;
-@@ -2843,8 +2845,9 @@ static int adv7842_cp_log_status(struct
- 			hdmi_read(sd, 0x5f));
- 	v4l2_info(sd, "AV Mute: %s\n",
- 			(hdmi_read(sd, 0x04) & 0x40) ? "on" : "off");
-+	temp = hdmi_read(sd, 0x0b) >> 6;
- 	v4l2_info(sd, "Deep color mode: %s\n",
--			deep_color_mode_txt[hdmi_read(sd, 0x0b) >> 6]);
-+			temp < 0 ? "" : deep_color_mode_txt[temp]);
- 
- 	adv7842_log_infoframes(sd);
- 
+ 			dm_bufio_release(b);
 
 
