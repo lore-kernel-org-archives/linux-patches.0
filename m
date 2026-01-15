@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D0A3E9F61;
-	Thu, 15 Jan 2026 18:00:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34FFF3E95A1;
+	Thu, 15 Jan 2026 18:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768500026; cv=none; b=lLa5nBw7HkxMZfg9a96sKGSOdb0exx7tv+4rWqqwbjyZ7LjQECuKFo9a6lB9un32rwnHzbjKR9QH1byJEt+ygDnqV5ZcTBdhYc5m+5VrRMDLwP0hTwNOTiEh3zHpLLX5gQI99Te1Fw1UNMaVZ7j3eJc9qhtKJ+2M7kglAKOuTqo=
+	t=1768500029; cv=none; b=EFI7SgjFPkfIxVqPuWoZpCRThi39A1hP7f/bJLED3vzy1JIi5iWBzrBKVuw56Nv4F+ifAdY3xTZc85+2mOc2i81YA4a64O8ewAvhVh94YeN1Js8aQrTR5DfB73cSLfAXx+d9kgI1x+T0TE9LFnnQtZfMicqsPiC6HkSFPrkeQY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768500026; c=relaxed/simple;
-	bh=I5RQrRxDrQ/ct3jCd+NkSoqgBuC6LTKHP1iCfSrxWQ0=;
+	s=arc-20240116; t=1768500029; c=relaxed/simple;
+	bh=pguJ2BWRSeULrODFeP9SbmklGsQqx8Bz+4LGcYKcPPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OD4425iGl8OUdC8v2BBbYBuwFdikG1g163fYn+T3RlXdhi8Lylc6+ZkqqDvLB8JFRUn7B+QH6gSF8e102NOW4KyiiqwhpPomychu/TISui2CnF4jsTb/I/xbCjMkJr8Uj7J01Y1p3Q12qoumrYnqDGYgoDg+6AvGJt+WZF84tMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WJ5/RjHZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T0utwUF0CfwM6MstEr72ZksT5T10Te5hNKb34+vJsZFfrOrMcgRm1FK3ZODEsCzHKKRSoybNCM+typhWPqnkphybBjLS5Z03aO3j7ooRX5bsr+eZZ6bcYaL1NQAVQAjpYVRygqQgyxBGmBz3aRmI89RMeekgamhnBYth0Rl8JYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EEwF2Jmm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WJ5/RjHZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E66A3C116D0;
-	Thu, 15 Jan 2026 18:00:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EEwF2Jmm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE0B0C116D0;
+	Thu, 15 Jan 2026 18:00:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768500026;
-	bh=I5RQrRxDrQ/ct3jCd+NkSoqgBuC6LTKHP1iCfSrxWQ0=;
+	s=korg; t=1768500029;
+	bh=pguJ2BWRSeULrODFeP9SbmklGsQqx8Bz+4LGcYKcPPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WJ5/RjHZKcQ3CFbwT94v9SGxMYCwTG5j5mybd9vYwM/sThpPbcd0pjp+H5iCH1w2C
-	 CO2LFfUj6X8ixTY3Wo4zdI8I05FGgddjDoTtV3QCODlbPA6CAwlrRRgq4058pgnj0h
-	 UfAov2DzyBOV66G76/uzaokQDUUQ78WU+9f7igy4=
+	b=EEwF2Jmm+Yn7gbhuiXXje+2Ld6gW7M+xKzclECLHtB/upN2Q8hq1XNkL0VufiMBBH
+	 c1BklzHVbkIqhuAKEr7mkRM44whZRgiF5LREoifhbpEWQejWBjnw/iYGmoVUH6S37f
+	 8HcJkvLs4B97z619s+UxEProKvzrAJXMWg1yeNaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Fernando Fernandez Mancera <fmancera@suse.de>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 432/451] netfilter: nft_synproxy: avoid possible data-race on update operation
-Date: Thu, 15 Jan 2026 17:50:33 +0100
-Message-ID: <20260115164246.573861002@linuxfoundation.org>
+Subject: [PATCH 5.10 433/451] netfilter: nf_conncount: update last_gc only when GC has been performed
+Date: Thu, 15 Jan 2026 17:50:34 +0100
+Message-ID: <20260115164246.611676618@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -53,51 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 36a3200575642846a96436d503d46544533bb943 ]
+[ Upstream commit 7811ba452402d58628e68faedf38745b3d485e3c ]
 
-During nft_synproxy eval we are reading nf_synproxy_info struct which
-can be modified on update operation concurrently. As nf_synproxy_info
-struct fits in 32 bits, use READ_ONCE/WRITE_ONCE annotations.
+Currently last_gc is being updated everytime a new connection is
+tracked, that means that it is updated even if a GC wasn't performed.
+With a sufficiently high packet rate, it is possible to always bypass
+the GC, causing the list to grow infinitely.
 
-Fixes: ee394f96ad75 ("netfilter: nft_synproxy: add synproxy stateful object support")
+Update the last_gc value only when a GC has been actually performed.
+
+Fixes: d265929930e2 ("netfilter: nf_conncount: reduce unnecessary GC")
 Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_synproxy.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/netfilter/nf_conncount.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nft_synproxy.c b/net/netfilter/nft_synproxy.c
-index 0806813d3a767..46d2eefb0b218 100644
---- a/net/netfilter/nft_synproxy.c
-+++ b/net/netfilter/nft_synproxy.c
-@@ -48,7 +48,7 @@ static void nft_synproxy_eval_v4(const struct nft_synproxy *priv,
- 				 struct tcphdr *_tcph,
- 				 struct synproxy_options *opts)
- {
--	struct nf_synproxy_info info = priv->info;
-+	struct nf_synproxy_info info = READ_ONCE(priv->info);
- 	struct net *net = nft_net(pkt);
- 	struct synproxy_net *snet = synproxy_pernet(net);
- 	struct sk_buff *skb = pkt->skb;
-@@ -79,7 +79,7 @@ static void nft_synproxy_eval_v6(const struct nft_synproxy *priv,
- 				 struct tcphdr *_tcph,
- 				 struct synproxy_options *opts)
- {
--	struct nf_synproxy_info info = priv->info;
-+	struct nf_synproxy_info info = READ_ONCE(priv->info);
- 	struct net *net = nft_net(pkt);
- 	struct synproxy_net *snet = synproxy_pernet(net);
- 	struct sk_buff *skb = pkt->skb;
-@@ -339,7 +339,7 @@ static void nft_synproxy_obj_update(struct nft_object *obj,
- 	struct nft_synproxy *newpriv = nft_obj_data(newobj);
- 	struct nft_synproxy *priv = nft_obj_data(obj);
+diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
+index c00b8e522c5a7..a2c5a7ba0c6fc 100644
+--- a/net/netfilter/nf_conncount.c
++++ b/net/netfilter/nf_conncount.c
+@@ -229,6 +229,7 @@ static int __nf_conncount_add(struct net *net,
  
--	priv->info = newpriv->info;
-+	WRITE_ONCE(priv->info, newpriv->info);
- }
+ 		nf_ct_put(found_ct);
+ 	}
++	list->last_gc = (u32)jiffies;
  
- static struct nft_object_type nft_synproxy_obj_type;
+ add_new_node:
+ 	if (WARN_ON_ONCE(list->count > INT_MAX)) {
+@@ -248,7 +249,6 @@ static int __nf_conncount_add(struct net *net,
+ 	conn->jiffies32 = (u32)jiffies;
+ 	list_add_tail(&conn->node, &list->head);
+ 	list->count++;
+-	list->last_gc = (u32)jiffies;
+ 
+ out_put:
+ 	if (refcounted)
 -- 
 2.51.0
 
