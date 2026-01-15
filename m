@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A12A3A0E98;
-	Thu, 15 Jan 2026 17:31:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34B703B530F;
+	Thu, 15 Jan 2026 17:31:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498272; cv=none; b=V3jMz7yR1FgCrkd9zLEam9Ej81boyLn2WWz3dNnHsrl/tGyWZaVfFOh3eYVbQ2ksmr1dgMJBQ9DTKMja7IozS/F11BBYTJ+AMZX6hGVp0CNcMRIyu8HbkQr8aXgdvru+LSg+OjGgcigeaVSuFbglmeWS6VtXwGcRGZsabi9Cau0=
+	t=1768498275; cv=none; b=GaCXLO5BdFSV3k1QGYPqLxxQB8sRtXUvTFEvgd4tdtMtBJlztXL0D5N6zZB6C9h6tcW7OhHGKJXNCb16ST3Z6zbyBtN/ZwaMPTV5vFPrYRU66yxi1oXOZQ2w8oMvsByw2N/8yaPa2qJ5k2eFqgv58Do6UizI9IpKd7Sc0kk3A4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498272; c=relaxed/simple;
-	bh=IwjY0JnqA+WkD74y2Ow+DZPsrdinf+76nIxuGUEJJuo=;
+	s=arc-20240116; t=1768498275; c=relaxed/simple;
+	bh=bCSkDlNZzTqSMgtMoVCW2wKjf2AAPUky2BPqviw/ibE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KOGYNYNj2Mu6KF4bZrswjh9DPFlejE6ACgeM2KytFdqja+L3cQ8DiUv9AJDBBbnIpKCu9+wNRN81JbMGpVUDjq/vlEhfTVxGZ7aZcYO4jQ24taRhrv/7+wWy8sZpndxBi639ykHBdKG9GmSSc2NybX+wbO1Q0MnTerb/f+Et2X0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y9bL0g/B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nAO/eVCTxA0mzlSVqmfzu0f+LcJSDqUSeM8YjGHU8amzVH562Rpq3ieysJNsaFyMnDOYh9BVafPCxmUsLZTWFIgRtqBbX/MWz0P14dL8l1Ja8QjeJSnfDB32HJNIjpRN5xdWVwwvK6f9YeqzppNuiF2eNDJk1/rLjUUax52OR+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mnqVutGp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y9bL0g/B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB06FC116D0;
-	Thu, 15 Jan 2026 17:31:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mnqVutGp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3FAEC116D0;
+	Thu, 15 Jan 2026 17:31:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498272;
-	bh=IwjY0JnqA+WkD74y2Ow+DZPsrdinf+76nIxuGUEJJuo=;
+	s=korg; t=1768498275;
+	bh=bCSkDlNZzTqSMgtMoVCW2wKjf2AAPUky2BPqviw/ibE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y9bL0g/Bff1HjL2Uocc3CLz1GbnjYb+dw9X8Kjy1Dv1Cyot691IIg7inLSSk8TzKE
-	 0QqdkXmVFsjohVoJ/1cgjmLCfGo15Vdo1gxJcYIL8n6NS5K0tIr7NdfiOAG2TlZxyX
-	 3VghdIvLEmW4oqdZzUa06blqSJpOq4ooSlHFJwO0=
+	b=mnqVutGp9vfRNJLQJiQR63X8AS95wRO2oBiTMvLT3KpJZttOM92gM7a5xU4jXyRyU
+	 zTOuFLnOGMBgwqg06RM5vKyBI+qrdNFH/WB3IH+964n8x5pTT6WkRTXSUMyKI23x+d
+	 QggmExWz1Mui86rVDyNw4OUkTKwyoFi6jgrv7uDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Peter <sven@kernel.org>,
+	Yu Kuai <yukuai3@huawei.com>,
 	Robin Murphy <robin.murphy@arm.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Johan Hovold <johan@kernel.org>,
 	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 5.15 373/554] iommu/apple-dart: fix device leak on of_xlate()
-Date: Thu, 15 Jan 2026 17:47:19 +0100
-Message-ID: <20260115164259.732157797@linuxfoundation.org>
+Subject: [PATCH 5.15 374/554] iommu/exynos: fix device leak on of_xlate()
+Date: Thu, 15 Jan 2026 17:47:20 +0100
+Message-ID: <20260115164259.769660680@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -54,32 +55,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit a6eaa872c52a181ae9a290fd4e40c9df91166d7a upstream.
+commit 05913cc43cb122f9afecdbe775115c058b906e1b upstream.
 
 Make sure to drop the reference taken to the iommu platform device when
 looking up its driver data during of_xlate().
 
-Fixes: 46d1fb072e76 ("iommu/dart: Add DART iommu driver")
-Cc: stable@vger.kernel.org	# 5.15
-Cc: Sven Peter <sven@kernel.org>
+Note that commit 1a26044954a6 ("iommu/exynos: add missing put_device()
+call in exynos_iommu_of_xlate()") fixed the leak in a couple of error
+paths, but the reference is still leaking on success.
+
+Fixes: aa759fd376fb ("iommu/exynos: Add callback for initializing devices from device tree")
+Cc: stable@vger.kernel.org	# 4.2: 1a26044954a6
+Cc: Yu Kuai <yukuai3@huawei.com>
 Acked-by: Robin Murphy <robin.murphy@arm.com>
+Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/apple-dart.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iommu/exynos-iommu.c |    9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
---- a/drivers/iommu/apple-dart.c
-+++ b/drivers/iommu/apple-dart.c
-@@ -611,6 +611,8 @@ static int apple_dart_of_xlate(struct de
- 	struct apple_dart *cfg_dart;
- 	int i, sid;
+--- a/drivers/iommu/exynos-iommu.c
++++ b/drivers/iommu/exynos-iommu.c
+@@ -1284,17 +1284,14 @@ static int exynos_iommu_of_xlate(struct
+ 		return -ENODEV;
  
-+	put_device(&iommu_pdev->dev);
-+
- 	if (args->args_count != 1)
- 		return -EINVAL;
- 	sid = args->args[0];
+ 	data = platform_get_drvdata(sysmmu);
+-	if (!data) {
+-		put_device(&sysmmu->dev);
++	put_device(&sysmmu->dev);
++	if (!data)
+ 		return -ENODEV;
+-	}
+ 
+ 	if (!owner) {
+ 		owner = kzalloc(sizeof(*owner), GFP_KERNEL);
+-		if (!owner) {
+-			put_device(&sysmmu->dev);
++		if (!owner)
+ 			return -ENOMEM;
+-		}
+ 
+ 		INIT_LIST_HEAD(&owner->controllers);
+ 		mutex_init(&owner->rpm_lock);
 
 
