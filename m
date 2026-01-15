@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D80573C1FE8;
-	Thu, 15 Jan 2026 17:49:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B2013D6051;
+	Thu, 15 Jan 2026 17:49:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499359; cv=none; b=u2btCND1hCML9lGNjqbK71whQdGdIxasgysENtR4Nj6QUFbL4b4T6iiIy8UGfJfsaiZqHoa2Q9XtjLQm3tEx2nQ5zHDEgKy69ldriBqcrjxs38JdwqfiF7dUL18vQmcIE+akoADoIVT+D7PyutX9CsXXv0gEsCg1GucJvo9+pR0=
+	t=1768499363; cv=none; b=A+8o7N0lGcj9C51E6gPwfWwl7SEEig5KL5BxzIQYAL1EIcUSHj6THxVt/ESoiG0yZBV7daPujAt5VKWAQlNzcDPFPq1Mnvg0tY+sqlO/+3DG8YSS/fpObAk4UP+cidav2EYR73I/7Esi7cRE1mFcrb/1vhvE24VpMkmg8lqgz8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499359; c=relaxed/simple;
-	bh=2As9QX3BZv/w3+Hl5h0csh0O3axw8AsXMaNX9rHP/YU=;
+	s=arc-20240116; t=1768499363; c=relaxed/simple;
+	bh=vy25vNBzmKmCByIy+mC1E+3OcgrWL9L23J1usyDLNjA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nYQV0ymaW/Oy/A6A3jNZe9DkJOqtDMkn8JBhao/tw1F0u/trycRxzIBO9Z84uOfUR4D8OFB2vHNvFPMmTdhJm5R6IGb+9VTq9pQ3OtOFjOoXNNkFM14HOZNGfAR6YdrhBtRBw3q9Cn5kLxek+VuMPBdGlBuEkEawu2gzBm5nAwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dnuv5WoK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YIMkGuMM2fYINUIdLs0XTJb1a74XnuIk6E2QE2qxoBgn/uUo+TrfhNQH5f8lCHC9eH/PAOh/W8PbYPuBk27tuNBIVrH+rYGo5qm/VF3lTFKBBrdBK9fx2eQ0ZwD7szqOrizh2mStJ/+21YyWvK9KUzz4GlPlk6i5sRIaKwnxsIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YidW6Yb4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dnuv5WoK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65DCFC19422;
-	Thu, 15 Jan 2026 17:49:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YidW6Yb4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 402B6C19422;
+	Thu, 15 Jan 2026 17:49:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499359;
-	bh=2As9QX3BZv/w3+Hl5h0csh0O3axw8AsXMaNX9rHP/YU=;
+	s=korg; t=1768499362;
+	bh=vy25vNBzmKmCByIy+mC1E+3OcgrWL9L23J1usyDLNjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dnuv5WoK1h9uy0p/fwHFvcPaRU6xbwNpRiL2CKhEJ3Gl5LnfWbVsz12m84DVzfInt
-	 iQ0Q8IfRWqlJ0dvqlbLrXbx3Rdvwi4GJA5xODBiRSwJfVuDpZZcBPbqSG9WJrN+zpR
-	 ulMYiAwEFpg1xCgwjoCcgKvZX0mgc2ukRupZI2rg=
+	b=YidW6Yb4etrEy6AjqZygY9jcAwWlXWDqMIEhpwHioMkNVlj4/+/s6YH/JmDrRWzpm
+	 khxYn3LXLRpKt7H4DduzNid+Bt/tqf//oN7xgEXMHFmLnNi+49CZt9EC16D5RDtwYJ
+	 MDTTPJeDLwM4t6SlAoqGR4f15JxfY/ehrtHFt+iQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Gongwei Li <ligongwei@kylinos.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 166/451] btrfs: scrub: always update btrfs_scrub_progress::last_physical
-Date: Thu, 15 Jan 2026 17:46:07 +0100
-Message-ID: <20260115164236.913501226@linuxfoundation.org>
+Subject: [PATCH 5.10 167/451] Bluetooth: btusb: Add new VID/PID 13d3/3533 for RTL8821CE
+Date: Thu, 15 Jan 2026 17:46:08 +0100
+Message-ID: <20260115164236.949172003@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -51,88 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Gongwei Li <ligongwei@kylinos.cn>
 
-[ Upstream commit 54df8b80cc63aa0f22c4590cad11542731ed43ff ]
+[ Upstream commit 525459da4bd62a81142fea3f3d52188ceb4d8907 ]
 
-[BUG]
-When a scrub failed immediately without any byte scrubbed, the returned
-btrfs_scrub_progress::last_physical will always be 0, even if there is a
-non-zero @start passed into btrfs_scrub_dev() for resume cases.
+Add VID 13d3 & PID 3533 for Realtek RTL8821CE USB Bluetooth chip.
 
-This will reset the progress and make later scrub resume start from the
-beginning.
+The information in /sys/kernel/debug/usb/devices about the Bluetooth
+device is listed as the below.
 
-[CAUSE]
-The function btrfs_scrub_dev() accepts a @progress parameter to copy its
-updated progress to the caller, there are cases where we either don't
-touch progress::last_physical at all or copy 0 into last_physical:
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
+D:  Ver= 1.10 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=13d3 ProdID=3533 Rev= 1.10
+S:  Manufacturer=Realtek
+S:  Product=Bluetooth Radio
+S:  SerialNumber=00e04c000001
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
 
-- last_physical not updated at all
-  If some error happened before scrubbing any super block or chunk, we
-  will not copy the progress, leaving the @last_physical untouched.
-
-  E.g. failed to allocate @sctx, scrubbing a missing device or even
-  there is already a running scrub and so on.
-
-  All those cases won't touch @progress at all, resulting the
-  last_physical untouched and will be left as 0 for most cases.
-
-- Error out before scrubbing any bytes
-  In those case we allocated @sctx, and sctx->stat.last_physical is all
-  zero (initialized by kvzalloc()).
-  Unfortunately some critical errors happened during
-  scrub_enumerate_chunks() or scrub_supers() before any stripe is really
-  scrubbed.
-
-  In that case although we will copy sctx->stat back to @progress, since
-  no byte is really scrubbed, last_physical will be overwritten to 0.
-
-[FIX]
-Make sure the parameter @progress always has its @last_physical member
-updated to @start parameter inside btrfs_scrub_dev().
-
-At the very beginning of the function, set @progress->last_physical to
-@start, so that even if we error out without doing progress copying,
-last_physical is still at @start.
-
-Then after we got @sctx allocated, set sctx->stat.last_physical to
-@start, this will make sure even if we didn't get any byte scrubbed, at
-the progress copying stage the @last_physical is not left as zero.
-
-This should resolve the resume progress reset problem.
-
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Gongwei Li <ligongwei@kylinos.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/scrub.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
-index 715a0329ba277..c8d033deb8ab8 100644
---- a/fs/btrfs/scrub.c
-+++ b/fs/btrfs/scrub.c
-@@ -3820,6 +3820,10 @@ int btrfs_scrub_dev(struct btrfs_fs_info *fs_info, u64 devid, u64 start,
- 	unsigned int nofs_flag;
- 	bool need_commit = false;
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 155eaaf0485a1..c5e4f675270c2 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -396,6 +396,8 @@ static const struct usb_device_id blacklist_table[] = {
+ 	/* Realtek 8821CE Bluetooth devices */
+ 	{ USB_DEVICE(0x13d3, 0x3529), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x13d3, 0x3533), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
  
-+	/* Set the basic fallback @last_physical before we got a sctx. */
-+	if (progress)
-+		progress->last_physical = start;
-+
- 	if (btrfs_fs_closing(fs_info))
- 		return -EAGAIN;
- 
-@@ -3864,6 +3868,7 @@ int btrfs_scrub_dev(struct btrfs_fs_info *fs_info, u64 devid, u64 start,
- 	sctx = scrub_setup_ctx(fs_info, is_dev_replace);
- 	if (IS_ERR(sctx))
- 		return PTR_ERR(sctx);
-+	sctx->stat.last_physical = start;
- 
- 	ret = scrub_workers_get(fs_info, is_dev_replace);
- 	if (ret)
+ 	/* Realtek 8822CE Bluetooth devices */
+ 	{ USB_DEVICE(0x0bda, 0xb00c), .driver_info = BTUSB_REALTEK |
 -- 
 2.51.0
 
