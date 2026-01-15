@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57CC42049;
-	Thu, 15 Jan 2026 16:51:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9648B42049;
+	Thu, 15 Jan 2026 16:51:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768495903; cv=none; b=O5ddJCC+5ekifpyZElC2nvDyenP0mCTlNJksh4l1A5/o+LbMm/ubNd2NceUDutM5MdL4Ih46EqVgjoYd3p957L7j7lGlboaNZLZ7w3CCI8eoqrE8yauwGAXCMhjRIQl4gz4V2wtEfIm3g5wFfme2kGV0pbsq0lCX2wg/BbEC9Hs=
+	t=1768495906; cv=none; b=TKNDMz6pCTLByJTT7Ur4AHdOK9IN/hLsWs5EmUz9TJaXzOPQpwDHibRsKyfX3U///8EQenaMIwh5hKhduUOOqV33ojn0FEFk91RXgvEAoXGxQ1yT7mczANRD8uqVTflaSRPS3rdUcA/bM3w64JvIf6FbqtHeMJFVHFHP/W7XSyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768495903; c=relaxed/simple;
-	bh=V3qvVUcceNu3ifoXvnevanvqIfaSiwxAqXXmhQgIt78=;
+	s=arc-20240116; t=1768495906; c=relaxed/simple;
+	bh=8LfTjzgb4S/sYYYhGziqL8vWt472EzHMnRIAs4DodYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GB7xykEIZPXu8tZkLFGyIcLA9IhoxGgBiJ678icrR9psfth42E9WYNiX87t5y7pBCONO4KA+AeUXRF3FLWD3ASzYe6NKv6ttfp66W/u2LRliJfaVIPUDo12YzPb/s00Nq4KXtJnqiwweeuJkrtUbXSLEhcHyo44I0G6eNGdP1UA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rrXx2RxG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FaqYWP20NGHc/RxQ7kahBBQj9OJqSLuwa56pphT9DA+tYrgbqtREfpdVlfJxrxTti1InAp1phAxh9DkYlx+a5ax8xTL/xEzD2JJbqI4fA5Q9UlVfwt5AlJnihny2CUFNqhxalUYKpOdgzfuJ4Pvt2MxTbqftTfqvF+6JQubgHy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q1ShvqLB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rrXx2RxG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C09FAC116D0;
-	Thu, 15 Jan 2026 16:51:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q1ShvqLB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D279AC116D0;
+	Thu, 15 Jan 2026 16:51:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768495903;
-	bh=V3qvVUcceNu3ifoXvnevanvqIfaSiwxAqXXmhQgIt78=;
+	s=korg; t=1768495906;
+	bh=8LfTjzgb4S/sYYYhGziqL8vWt472EzHMnRIAs4DodYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rrXx2RxGqILpUK1Uch6n9f1GufmoobRvB7yPgc2UaxXsURtSZd3dQ60RiX/AHPVAW
-	 h5BZawjcGGbqK4OMGlUrT76RweBHrFSLsUlMOlhIwZQhZ52LaF7lgcOYhMtP1qjn37
-	 0Ti9+Ivori4y3f9mxY9V+/YKpunkOfrjB0jhYvk0=
+	b=q1ShvqLBvvg/L7Th7acSIsDo/zQhcNafk/9DgyBr9QFZRFfi4ZlXH4r42OFKqf7ma
+	 s3oVp6y6Aa7ext+OXaYMw9VHXfkwFK6uDulXzitAQBkeSo/3MrSXCY5Y9baYfy26ex
+	 WcapOO+R4WQKY7rBZvfIoPECnACHuvIGppmjVAdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Scott Mayhew <smayhew@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	NeilBrown <neil@brown.name>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.18 001/181] NFSD: Fix permission check for read access to executable-only files
-Date: Thu, 15 Jan 2026 17:45:38 +0100
-Message-ID: <20260115164202.364389562@linuxfoundation.org>
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Kevin Brodsky <kevin.brodsky@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 6.18 010/181] arm64: Fix cleared E0POE bit after cpu_suspend()/resume()
+Date: Thu, 15 Jan 2026 17:45:47 +0100
+Message-ID: <20260115164202.688793833@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -52,46 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Scott Mayhew <smayhew@redhat.com>
+From: Yeoreum Yun <yeoreum.yun@arm.com>
 
-commit e901c7fce59e72d9f3c92733c379849c4034ac50 upstream.
+commit bdf3f4176092df5281877cacf42f843063b4784d upstream.
 
-Commit abc02e5602f7 ("NFSD: Support write delegations in LAYOUTGET")
-added NFSD_MAY_OWNER_OVERRIDE to the access flags passed from
-nfsd4_layoutget() to fh_verify().  This causes LAYOUTGET to fail for
-executable-only files, and causes xfstests generic/126 to fail on
-pNFS SCSI.
+TCR2_ELx.E0POE is set during smp_init().
+However, this bit is not reprogrammed when the CPU enters suspension and
+later resumes via cpu_resume(), as __cpu_setup() does not re-enable E0POE
+and there is no save/restore logic for the TCR2_ELx system register.
 
-To allow read access to executable-only files, what we really want is:
-1. The "permissions" portion of the access flags (the lower 6 bits)
-   must be exactly NFSD_MAY_READ
-2. The "hints" portion of the access flags (the upper 26 bits) can
-   contain any combination of NFSD_MAY_OWNER_OVERRIDE and
-   NFSD_MAY_READ_IF_EXEC
+As a result, the E0POE feature no longer works after cpu_resume().
 
-Fixes: abc02e5602f7 ("NFSD: Support write delegations in LAYOUTGET")
-Cc: stable@vger.kernel.org # v6.6+
-Signed-off-by: Scott Mayhew <smayhew@redhat.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: NeilBrown <neil@brown.name>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+To address this, save and restore TCR2_EL1 in the cpu_suspend()/cpu_resume()
+path, rather than adding related logic to __cpu_setup(), taking into account
+possible future extensions of the TCR2_ELx feature.
+
+Fixes: bf83dae90fbc ("arm64: enable the Permission Overlay Extension for EL0")
+Cc: <stable@vger.kernel.org> # 6.12.x
+Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Reviewed-by: Kevin Brodsky <kevin.brodsky@arm.com>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/vfs.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/include/asm/suspend.h |    2 +-
+ arch/arm64/mm/proc.S             |    8 ++++++++
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
---- a/fs/nfsd/vfs.c
-+++ b/fs/nfsd/vfs.c
-@@ -2683,8 +2683,8 @@ nfsd_permission(struct svc_cred *cred, s
+--- a/arch/arm64/include/asm/suspend.h
++++ b/arch/arm64/include/asm/suspend.h
+@@ -2,7 +2,7 @@
+ #ifndef __ASM_SUSPEND_H
+ #define __ASM_SUSPEND_H
  
- 	/* Allow read access to binaries even when mode 111 */
- 	if (err == -EACCES && S_ISREG(inode->i_mode) &&
--	     (acc == (NFSD_MAY_READ | NFSD_MAY_OWNER_OVERRIDE) ||
--	      acc == (NFSD_MAY_READ | NFSD_MAY_READ_IF_EXEC)))
-+	     (((acc & NFSD_MAY_MASK) == NFSD_MAY_READ) &&
-+	      (acc & (NFSD_MAY_OWNER_OVERRIDE | NFSD_MAY_READ_IF_EXEC))))
- 		err = inode_permission(&nop_mnt_idmap, inode, MAY_EXEC);
+-#define NR_CTX_REGS 13
++#define NR_CTX_REGS 14
+ #define NR_CALLEE_SAVED_REGS 12
  
- 	return err? nfserrno(err) : 0;
+ /*
+--- a/arch/arm64/mm/proc.S
++++ b/arch/arm64/mm/proc.S
+@@ -100,6 +100,10 @@ SYM_FUNC_START(cpu_do_suspend)
+ 	 * call stack.
+ 	 */
+ 	str	x18, [x0, #96]
++alternative_if ARM64_HAS_TCR2
++	mrs	x2, REG_TCR2_EL1
++	str	x2, [x0, #104]
++alternative_else_nop_endif
+ 	ret
+ SYM_FUNC_END(cpu_do_suspend)
+ 
+@@ -134,6 +138,10 @@ SYM_FUNC_START(cpu_do_resume)
+ 	msr	tcr_el1, x8
+ 	msr	vbar_el1, x9
+ 	msr	mdscr_el1, x10
++alternative_if ARM64_HAS_TCR2
++	ldr	x2, [x0, #104]
++	msr	REG_TCR2_EL1, x2
++alternative_else_nop_endif
+ 
+ 	msr	sctlr_el1, x12
+ 	set_this_cpu_offset x13
 
 
