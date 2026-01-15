@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1A63BFE49;
-	Thu, 15 Jan 2026 17:32:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8ACF2C3268;
+	Thu, 15 Jan 2026 17:32:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498352; cv=none; b=qbdwnaQgmMcA7Naf/QDrnUtE933OZGbdYLMepWdmvJ7V+alS6tyuyITVcfJyqWaH/L8Z+opV7TqL1NF7YELw86S1fCYv8T90j/hjgAH6S8Lsf86HjbcSdBueUN0uK1/OIBieUtMD8Dkpqkyb0HNfMjdGliIxob8BSHPw6PKjSkU=
+	t=1768498354; cv=none; b=TftTAIseig/HknUOjh4yOZ45Y8XrDjSONszPlEEfhrqaMYRHKbWcklA05yfP/7tgLzeQE7b2BpOQ1vofwCf4eAotH8tPzvG3hsIya2KSVN3x7AvLTc65t+s1HyeOCt1cL0ozjZOhHuiuJWAXLXNn+PyE0FLSjDDeP/UOUE6g5JI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498352; c=relaxed/simple;
-	bh=qOv1WkiYHB3IwGriMluLMuWSAzD721smSrcQrbWXWLg=;
+	s=arc-20240116; t=1768498354; c=relaxed/simple;
+	bh=tYSOfI+DyG3jRVLV1DKmuloYlEvlRnvkTJeHqgx4udA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nIY/ZGlEoxuYJG9FEQE8o7mn+gy0Ksa3qZDCgaRpilq7DkHOxfKCapLz8h/k1cLOqHRC4bfNawP0T/oBpwz/clPVSBwyA92DyqehdeYnRyB5AaJEnWpM7owpkCMl8HG2Mp5DIgylDE3WJ+4O68gJDkoF9x1b7V3TOCTsN0oPYtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bgn3Kx0t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p5PBUo2Swb7tnEiufX7uoS0x4/i1lOBzenuCoBOtO3bzWTshLkxRpgBdSYuQzZ06yomUWh9UXjecEbBqDOIUDFyWCJgvIwvE/laPqoU5z6lua5RRWj2N3L9S3TI29csJyXLcpv0bcqBdTRJSesCW7mHiQHYLGlcCRfT7D4BUG3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ibDsVkEx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bgn3Kx0t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88C45C116D0;
-	Thu, 15 Jan 2026 17:32:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ibDsVkEx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62A56C116D0;
+	Thu, 15 Jan 2026 17:32:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498351;
-	bh=qOv1WkiYHB3IwGriMluLMuWSAzD721smSrcQrbWXWLg=;
+	s=korg; t=1768498354;
+	bh=tYSOfI+DyG3jRVLV1DKmuloYlEvlRnvkTJeHqgx4udA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bgn3Kx0tqNdU3KiNgWWYAKNRj50HzpLyEuLEwWh5vFBRzzr5v73ilY2sdaXR8E1dp
-	 O5/AZlWWm61IDFQ9nci2SyIotpvx6jJlqAI5z+wfbwpLjNx8OjfdFWlEymfsK2XmPr
-	 orUaeQcWaB5C3Z5YnxcGgeLXDcaxITuUHTgY8Jk4=
+	b=ibDsVkExL76VAT0+QXmMcwSrOxrpMYkV1Cpg2OLUU02mIsg2GSgcil72xAAlauL3R
+	 mn2lB3VNKLBAUosLK4hcZSkGg2ZcgES+ABvLMIKcz2KJX6BspnN2VZsqhmKbo1XtAR
+	 h7aeLIfxIlMrWpirtkBFt4lRsKQHTSvCsPRmjygk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b0da83a6c0e2e2bddbd4@syzkaller.appspotmail.com,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 5.15 402/554] RDMA/cm: Fix leaking the multicast GID table reference
-Date: Thu, 15 Jan 2026 17:47:48 +0100
-Message-ID: <20260115164300.785607898@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 5.15 385/554] mfd: altera-sysmgr: Fix device leak on sysmgr regmap lookup
+Date: Thu, 15 Jan 2026 17:47:31 +0100
+Message-ID: <20260115164300.173907157@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -50,51 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 57f3cb6c84159d12ba343574df2115fb18dd83ca upstream.
+commit ccb7cd3218e48665f3c7e19eede0da5f069c323d upstream.
 
-If the CM ID is destroyed while the CM event for multicast creating is
-still queued the cancel_work_sync() will prevent the work from running
-which also prevents destroying the ah_attr. This leaks a refcount and
-triggers a WARN:
+Make sure to drop the reference taken to the sysmgr platform device when
+retrieving its driver data.
 
-   GID entry ref leak for dev syz1 index 2 ref=573
-   WARNING: CPU: 1 PID: 655 at drivers/infiniband/core/cache.c:809 release_gid_table drivers/infiniband/core/cache.c:806 [inline]
-   WARNING: CPU: 1 PID: 655 at drivers/infiniband/core/cache.c:809 gid_table_release_one+0x284/0x3cc drivers/infiniband/core/cache.c:886
+Note that holding a reference to a device does not prevent its driver
+data from going away.
 
-Destroy the ah_attr after canceling the work, it is safe to call this
-twice.
-
-Link: https://patch.msgid.link/r/0-v1-4285d070a6b2+20a-rdma_mc_gid_leak_syz_jgg@nvidia.com
-Cc: stable@vger.kernel.org
-Fixes: fe454dc31e84 ("RDMA/ucma: Fix use-after-free bug in ucma_create_uevent")
-Reported-by: syzbot+b0da83a6c0e2e2bddbd4@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/68232e7b.050a0220.f2294.09f6.GAE@google.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: f36e789a1f8d ("mfd: altera-sysmgr: Add SOCFPGA System Manager")
+Cc: stable@vger.kernel.org	# 5.2
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/cma.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mfd/altera-sysmgr.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/infiniband/core/cma.c
-+++ b/drivers/infiniband/core/cma.c
-@@ -1836,6 +1836,7 @@ static void destroy_mc(struct rdma_id_pr
- 		ib_sa_free_multicast(mc->sa_mc);
+--- a/drivers/mfd/altera-sysmgr.c
++++ b/drivers/mfd/altera-sysmgr.c
+@@ -118,6 +118,8 @@ struct regmap *altr_sysmgr_regmap_lookup
  
- 	if (rdma_protocol_roce(id_priv->id.device, id_priv->id.port_num)) {
-+		struct rdma_cm_event *event = &mc->iboe_join.event;
- 		struct rdma_dev_addr *dev_addr =
- 			&id_priv->id.route.addr.dev_addr;
- 		struct net_device *ndev = NULL;
-@@ -1858,6 +1859,8 @@ static void destroy_mc(struct rdma_id_pr
- 		dev_put(ndev);
+ 	sysmgr = dev_get_drvdata(dev);
  
- 		cancel_work_sync(&mc->iboe_join.work);
-+		if (event->event == RDMA_CM_EVENT_MULTICAST_JOIN)
-+			rdma_destroy_ah_attr(&event->param.ud.ah_attr);
- 	}
- 	kfree(mc);
++	put_device(dev);
++
+ 	return sysmgr->regmap;
  }
+ EXPORT_SYMBOL_GPL(altr_sysmgr_regmap_lookup_by_phandle);
 
 
