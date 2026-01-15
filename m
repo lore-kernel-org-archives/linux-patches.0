@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F4A3BC4DA;
-	Thu, 15 Jan 2026 17:03:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8045A2C028F;
+	Thu, 15 Jan 2026 17:03:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496617; cv=none; b=VGbYEb+gtEqZXugRWX8xS01Jcu8RoZI8xHe5xqgj3H1wECoDwptMf2/UHEw7FRzqRGHhUiV27ybqUJwSb83q6qHQlDVeWa1CsEP7D+zpfK8b51zY39yO4Ti8ZRJiS11d20ql1dnsUYbLuO4pU9f75Xwwnx9xUEMDSTHlcK9aNL8=
+	t=1768496620; cv=none; b=YNqqPEwcHceLjlErWH/tceqMQnuW67UFiG1d9sTEy+rikhehX6GDCWuMo560yH2EQwZ3LWdcUZHrCF0XN2/9+muiZL0QXe92Spfvo+V2+IzRNJ8CDQMZgju2VNAFE+cJjOohtXoojJBLADQFoDqW6azZw/9tCUMuHU6pRQiJvAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496617; c=relaxed/simple;
-	bh=MguM8u2zeY9UgYN8sDflQnN2rnbyz2lw+RIOlDyuhjg=;
+	s=arc-20240116; t=1768496620; c=relaxed/simple;
+	bh=ihXOHmgARmb48A9B5wTwQpkdZwZE9E/F8dVnj60jJIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ufBSO12TfIWD4Sor9fTepqObwZtfG3geKCq9AKQ+a09Bf65u2Rcl21G7GAYDehruaqV+OBLUrmcAcdXKzex52x2ixSzqGqtspvvYc0/SqKAW+inmu4yoM1knvrLKGAhhe+8GGr15AenaR+zdG+If5fIaR9XJeyCsAsawAs/EdMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CuSD266L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NEmMDupjLESdT0c+q1T9vtobUCP5cTd7sp3JW5wMa4cu9eSq35LRY9XvXPwSQEN6ikfCLIW0DtAc0E10OH5rmY4v2o3Z5wqHf8WONSVbyIHglhJLmMGu7OqVEF4fMZ4ZMGYPqTFvd30DasbQoqhkRKRb8BUenebS1E1Riz6oid0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TSK513ru; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CuSD266L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 285C8C116D0;
-	Thu, 15 Jan 2026 17:03:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TSK513ru"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BC3CC116D0;
+	Thu, 15 Jan 2026 17:03:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496617;
-	bh=MguM8u2zeY9UgYN8sDflQnN2rnbyz2lw+RIOlDyuhjg=;
+	s=korg; t=1768496620;
+	bh=ihXOHmgARmb48A9B5wTwQpkdZwZE9E/F8dVnj60jJIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CuSD266L0oidnfdr5wnSuZgaQDCcfUG3UArv5zCCp0JFWTB9DYrcvgS975Uh49+xQ
-	 1sGizSTxPgV/41eq/KE2/wGYVQFg3nZukZRc2ofH641Q8jkY+Jy+GjIjfBcIDctnFr
-	 nDy2/zxBYCepU/E0NE5VXBpOKg5Dy6fJFgmNuGhc=
+	b=TSK513ru/CbXDSNSJBXKF7BxbtPDypwTZx1RcwF3Va52/9pIfokrLekwb6AjyVTHB
+	 kGxYnrjUJvsz/tdqFKbQBaFdcoHrP7N4O7l4c08m/FlJD1Fm8DKk2CRv9WNjswyvKo
+	 t3JCYdCE/OGfAK0R0e8puTi1lio6DP4uzCJaEInk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohammad Heib <mheib@redhat.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Emil Tantilov <emil.s.tantilov@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Samuel Salin <Samuel.salin@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 076/119] net: fix memory leak in skb_segment_list for GRO packets
-Date: Thu, 15 Jan 2026 17:48:11 +0100
-Message-ID: <20260115164154.695566474@linuxfoundation.org>
+Subject: [PATCH 6.12 077/119] idpf: keep the netdev when a reset fails
+Date: Thu, 15 Jan 2026 17:48:12 +0100
+Message-ID: <20260115164154.731137192@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -52,106 +53,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohammad Heib <mheib@redhat.com>
+From: Emil Tantilov <emil.s.tantilov@intel.com>
 
-[ Upstream commit 238e03d0466239410b72294b79494e43d4fabe77 ]
+[ Upstream commit 083029bd8b445595222a3cd14076b880781c1765 ]
 
-When skb_segment_list() is called during packet forwarding, it handles
-packets that were aggregated by the GRO engine.
+During a successful reset the driver would re-allocate vport resources
+while keeping the netdevs intact. However, in case of an error in the
+init task, the netdev of the failing vport will be unregistered,
+effectively removing the network interface:
 
-Historically, the segmentation logic in skb_segment_list assumes that
-individual segments are split from a parent SKB and may need to carry
-their own socket memory accounting. Accordingly, the code transfers
-truesize from the parent to the newly created segments.
+[  121.211076] idpf 0000:83:00.0: enabling device (0100 -> 0102)
+[  121.221976] idpf 0000:83:00.0: Device HW Reset initiated
+[  124.161229] idpf 0000:83:00.0 ens801f0: renamed from eth0
+[  124.163364] idpf 0000:83:00.0 ens801f0d1: renamed from eth1
+[  125.934656] idpf 0000:83:00.0 ens801f0d2: renamed from eth2
+[  128.218429] idpf 0000:83:00.0 ens801f0d3: renamed from eth3
 
-Prior to commit ed4cccef64c1 ("gro: fix ownership transfer"), this
-truesize subtraction in skb_segment_list() was valid because fragments
-still carry a reference to the original socket.
+ip -br a
+ens801f0         UP
+ens801f0d1       UP
+ens801f0d2       UP
+ens801f0d3       UP
+echo 1 > /sys/class/net/ens801f0/device/reset
 
-However, commit ed4cccef64c1 ("gro: fix ownership transfer") changed
-this behavior by ensuring that fraglist entries are explicitly
-orphaned (skb->sk = NULL) to prevent illegal orphaning later in the
-stack. This change meant that the entire socket memory charge remained
-with the head SKB, but the corresponding accounting logic in
-skb_segment_list() was never updated.
+[  145.885537] idpf 0000:83:00.0: resetting
+[  145.990280] idpf 0000:83:00.0: reset done
+[  146.284766] idpf 0000:83:00.0: HW reset detected
+[  146.296610] idpf 0000:83:00.0: Device HW Reset initiated
+[  211.556719] idpf 0000:83:00.0: Transaction timed-out (op:526 cookie:7700 vc_op:526 salt:77 timeout:60000ms)
+[  272.996705] idpf 0000:83:00.0: Transaction timed-out (op:502 cookie:7800 vc_op:502 salt:78 timeout:60000ms)
 
-As a result, the current code unconditionally adds each fragment's
-truesize to delta_truesize and subtracts it from the parent SKB. Since
-the fragments are no longer charged to the socket, this subtraction
-results in an effective under-count of memory when the head is freed.
-This causes sk_wmem_alloc to remain non-zero, preventing socket
-destruction and leading to a persistent memory leak.
+ip -br a
+ens801f0d1       DOWN
+ens801f0d2       DOWN
+ens801f0d3       DOWN
 
-The leak can be observed via KMEMLEAK when tearing down the networking
-environment:
+Re-shuffle the logic in the error path of the init task to make sure the
+netdevs remain intact. This will allow the driver to attempt recovery via
+subsequent resets, provided the FW is still functional.
 
-unreferenced object 0xffff8881e6eb9100 (size 2048):
-  comm "ping", pid 6720, jiffies 4295492526
-  backtrace:
-    kmem_cache_alloc_noprof+0x5c6/0x800
-    sk_prot_alloc+0x5b/0x220
-    sk_alloc+0x35/0xa00
-    inet6_create.part.0+0x303/0x10d0
-    __sock_create+0x248/0x640
-    __sys_socket+0x11b/0x1d0
+The main change is to make sure that idpf_decfg_netdev() is not called
+should the init task fail during a reset. The error handling is
+consolidated under unwind_vports, as the removed labels had the same
+cleanup logic split depending on the point of failure.
 
-Since skb_segment_list() is exclusively used for SKB_GSO_FRAGLIST
-packets constructed by GRO, the truesize adjustment is removed.
-
-The call to skb_release_head_state() must be preserved. As documented in
-commit cf673ed0e057 ("net: fix fraglist segmentation reference count
-leak"), it is still required to correctly drop references to SKB
-extensions that may be overwritten during __copy_skb_header().
-
-Fixes: ed4cccef64c1 ("gro: fix ownership transfer")
-Signed-off-by: Mohammad Heib <mheib@redhat.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260104213101.352887-1-mheib@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ce1b75d0635c ("idpf: add ptypes and MAC filter support")
+Signed-off-by: Emil Tantilov <emil.s.tantilov@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Samuel Salin <Samuel.salin@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/intel/idpf/idpf_lib.c | 17 ++++++-----------
+ 1 file changed, 6 insertions(+), 11 deletions(-)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index 6a92c03ee6f42..c3e1395d8ac5c 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -4585,12 +4585,14 @@ struct sk_buff *skb_segment_list(struct sk_buff *skb,
- {
- 	struct sk_buff *list_skb = skb_shinfo(skb)->frag_list;
- 	unsigned int tnl_hlen = skb_tnl_header_len(skb);
--	unsigned int delta_truesize = 0;
- 	unsigned int delta_len = 0;
- 	struct sk_buff *tail = NULL;
- 	struct sk_buff *nskb, *tmp;
- 	int len_diff, err;
- 
-+	/* Only skb_gro_receive_list generated skbs arrive here */
-+	DEBUG_NET_WARN_ON_ONCE(!(skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST));
-+
- 	skb_push(skb, -skb_network_offset(skb) + offset);
- 
- 	/* Ensure the head is writeable before touching the shared info */
-@@ -4604,8 +4606,9 @@ struct sk_buff *skb_segment_list(struct sk_buff *skb,
- 		nskb = list_skb;
- 		list_skb = list_skb->next;
- 
-+		DEBUG_NET_WARN_ON_ONCE(nskb->sk);
-+
- 		err = 0;
--		delta_truesize += nskb->truesize;
- 		if (skb_shared(nskb)) {
- 			tmp = skb_clone(nskb, GFP_ATOMIC);
- 			if (tmp) {
-@@ -4648,7 +4651,6 @@ struct sk_buff *skb_segment_list(struct sk_buff *skb,
- 			goto err_linearize;
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_lib.c b/drivers/net/ethernet/intel/idpf/idpf_lib.c
+index 173ddc2488678..568b57cb2298e 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_lib.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_lib.c
+@@ -1500,6 +1500,10 @@ void idpf_init_task(struct work_struct *work)
+ 		goto unwind_vports;
  	}
  
--	skb->truesize = skb->truesize - delta_truesize;
- 	skb->data_len = skb->data_len - delta_len;
- 	skb->len = skb->len - delta_len;
++	err = idpf_send_get_rx_ptype_msg(vport);
++	if (err)
++		goto unwind_vports;
++
+ 	index = vport->idx;
+ 	vport_config = adapter->vport_config[index];
  
+@@ -1512,15 +1516,11 @@ void idpf_init_task(struct work_struct *work)
+ 	err = idpf_check_supported_desc_ids(vport);
+ 	if (err) {
+ 		dev_err(&pdev->dev, "failed to get required descriptor ids\n");
+-		goto cfg_netdev_err;
++		goto unwind_vports;
+ 	}
+ 
+ 	if (idpf_cfg_netdev(vport))
+-		goto cfg_netdev_err;
+-
+-	err = idpf_send_get_rx_ptype_msg(vport);
+-	if (err)
+-		goto handle_err;
++		goto unwind_vports;
+ 
+ 	/* Once state is put into DOWN, driver is ready for dev_open */
+ 	np = netdev_priv(vport->netdev);
+@@ -1558,11 +1558,6 @@ void idpf_init_task(struct work_struct *work)
+ 
+ 	return;
+ 
+-handle_err:
+-	idpf_decfg_netdev(vport);
+-cfg_netdev_err:
+-	idpf_vport_rel(vport);
+-	adapter->vports[index] = NULL;
+ unwind_vports:
+ 	if (default_vport) {
+ 		for (index = 0; index < adapter->max_vports; index++) {
 -- 
 2.51.0
 
