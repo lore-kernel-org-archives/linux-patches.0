@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E843AE6E2;
-	Thu, 15 Jan 2026 16:55:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A077D3BF2EF;
+	Thu, 15 Jan 2026 16:55:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496128; cv=none; b=sWez73Ud4zJPrKEHZAUcA9BcQJz9GmYR299Vd/Btw7D+chguQBkBr1meRF428YDzDBcYfYIxFSTuLKyZKslzfJKzJs5I+HCN1kcySrdQ8r4iq+jP50SSB05Y+iWBT1KIXYtxcc3HzQj2kAZE/WfjNMKN337ED5R0rQqhghssRgs=
+	t=1768496131; cv=none; b=E4QKc0oUSmkXWzEqou3/t1p3C2pGd2n9ECzL2OsVFDhpWUcZqyVelXARpTBpHsDAIHTSxZNmvidRbJRk3lgajpiFalqRNO3Jpm/V9J0EIslE7hEO2ellhPHHHjddrpmcqo5wtODkTCBHBNNl4/F3QFCQOpzK8OIeBx8jbJSj1mI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496128; c=relaxed/simple;
-	bh=Th2xOlxYrPjtoyn73Zp1tA0TihUHOzPgupZoHI9ea6I=;
+	s=arc-20240116; t=1768496131; c=relaxed/simple;
+	bh=FKPRZkRQTLUWQLNNZpz99N+r4GXCqax9cT570QK5sNc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QTujYB8NJ4EVeRCis+EpzEYBcdjFiCc9w8mebq1b6eEB1CWy4QxlU9jnYAVkjDYV/FQ9nWZS+FtjypmG7OirQgFdgdpfp7h3mgfR3MkcdaOqQAUdpbhFQ7mmrtBQlpLVmuZCPtbvbC+F8+qOn2m/gMRxzOFm42IBotCTkL60djQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JdzkEhoI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=af+9wLfpIuFj7ADH7Xm4UtpmRqyrp0qbExuK2WoxMmjEhQlMIJZ4dJktAQmyuXca83/FDI7r7TpPop4ES914ssQGtBg89G8Mm7sitmCzaUj4NWs4avU+FT/ZhfrMCqcb+nnDYJIN8fzFL9qlMS+qzBnK9j6kZRcehrSa6SLsWSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ltGh7sG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JdzkEhoI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16BA9C116D0;
-	Thu, 15 Jan 2026 16:55:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ltGh7sG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA9D9C116D0;
+	Thu, 15 Jan 2026 16:55:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496128;
-	bh=Th2xOlxYrPjtoyn73Zp1tA0TihUHOzPgupZoHI9ea6I=;
+	s=korg; t=1768496131;
+	bh=FKPRZkRQTLUWQLNNZpz99N+r4GXCqax9cT570QK5sNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JdzkEhoItIFFzeNZKguRZYD6+6lFWIcMqq2EwE46R2umsW6+NOil/DZQ7qr2BN8gZ
-	 iwrg0atLdjo3Oso79cW5hif2VHpKdD1rfSroj1NG489SCkubq4rCNgyer+4FL/eSPZ
-	 QTVcsob5nfxJfWNbJ49lbW9cqhQeKdI+y9DCknfU=
+	b=1ltGh7sGQ4Wao0oJAmADt9JvdJQrjz78efAJXOZGTRF08OwZACQNDG/xoRO17gajl
+	 lJ82Z0NSe+PSlfD1+woModiZfUqUl3uubcuIC6V3elLS9JxGBpKowOUKUOi8tl15ir
+	 k91q8iqkpEeTQ6qZMUHnZ06hcPsjfn+KLaT2ahrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Florian Westphal <fw@strlen.de>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 088/181] netfilter: nft_synproxy: avoid possible data-race on update operation
-Date: Thu, 15 Jan 2026 17:47:05 +0100
-Message-ID: <20260115164205.500259726@linuxfoundation.org>
+Subject: [PATCH 6.18 089/181] gpiolib: remove unnecessary out of memory messages
+Date: Thu, 15 Jan 2026 17:47:06 +0100
+Message-ID: <20260115164205.536647780@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -51,53 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit 36a3200575642846a96436d503d46544533bb943 ]
+[ Upstream commit 0ba6f1ed3808b1f095fbdb490006f0ecd00f52bd ]
 
-During nft_synproxy eval we are reading nf_synproxy_info struct which
-can be modified on update operation concurrently. As nf_synproxy_info
-struct fits in 32 bits, use READ_ONCE/WRITE_ONCE annotations.
+We don't need to add additional logs when returning -ENOMEM so remove
+unnecessary error messages.
 
-Fixes: ee394f96ad75 ("netfilter: nft_synproxy: add synproxy stateful object support")
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Stable-dep-of: a7ac22d53d09 ("gpiolib: fix race condition for gdev->srcu")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_synproxy.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpio/gpiolib.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/net/netfilter/nft_synproxy.c b/net/netfilter/nft_synproxy.c
-index 5d3e518259859..4d3e5a31b4125 100644
---- a/net/netfilter/nft_synproxy.c
-+++ b/net/netfilter/nft_synproxy.c
-@@ -48,7 +48,7 @@ static void nft_synproxy_eval_v4(const struct nft_synproxy *priv,
- 				 struct tcphdr *_tcph,
- 				 struct synproxy_options *opts)
- {
--	struct nf_synproxy_info info = priv->info;
-+	struct nf_synproxy_info info = READ_ONCE(priv->info);
- 	struct net *net = nft_net(pkt);
- 	struct synproxy_net *snet = synproxy_pernet(net);
- 	struct sk_buff *skb = pkt->skb;
-@@ -79,7 +79,7 @@ static void nft_synproxy_eval_v6(const struct nft_synproxy *priv,
- 				 struct tcphdr *_tcph,
- 				 struct synproxy_options *opts)
- {
--	struct nf_synproxy_info info = priv->info;
-+	struct nf_synproxy_info info = READ_ONCE(priv->info);
- 	struct net *net = nft_net(pkt);
- 	struct synproxy_net *snet = synproxy_pernet(net);
- 	struct sk_buff *skb = pkt->skb;
-@@ -340,7 +340,7 @@ static void nft_synproxy_obj_update(struct nft_object *obj,
- 	struct nft_synproxy *newpriv = nft_obj_data(newobj);
- 	struct nft_synproxy *priv = nft_obj_data(obj);
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index cd8800ba5825f..f2ed234b4135e 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -2316,10 +2316,8 @@ int gpiochip_add_pingroup_range(struct gpio_chip *gc,
+ 	int ret;
  
--	priv->info = newpriv->info;
-+	WRITE_ONCE(priv->info, newpriv->info);
- }
+ 	pin_range = kzalloc(sizeof(*pin_range), GFP_KERNEL);
+-	if (!pin_range) {
+-		chip_err(gc, "failed to allocate pin ranges\n");
++	if (!pin_range)
+ 		return -ENOMEM;
+-	}
  
- static struct nft_object_type nft_synproxy_obj_type;
+ 	/* Use local offset as range ID */
+ 	pin_range->range.id = gpio_offset;
+@@ -2379,10 +2377,8 @@ int gpiochip_add_pin_range_with_pins(struct gpio_chip *gc,
+ 	int ret;
+ 
+ 	pin_range = kzalloc(sizeof(*pin_range), GFP_KERNEL);
+-	if (!pin_range) {
+-		chip_err(gc, "failed to allocate pin ranges\n");
++	if (!pin_range)
+ 		return -ENOMEM;
+-	}
+ 
+ 	/* Use local offset as range ID */
+ 	pin_range->range.id = gpio_offset;
 -- 
 2.51.0
 
