@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF763BF30D;
-	Thu, 15 Jan 2026 17:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29A83195F9;
+	Thu, 15 Jan 2026 17:05:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496739; cv=none; b=H8u42eKIt6u5CHPa29RIypJXIRNKbqEv61Hlo2kpsmeG+X+QGnVGpvbQdTGlCBJba7gKunRBu1fsZ/SESmYr3yXIxMdbX5lUfIVIHWS5QIG9mWbTZyPoZo/Yq33uRgEVx2su7PC8CD9RYMKuSGZBc6MYOyRUL7NSVgkCwUDyWsU=
+	t=1768496742; cv=none; b=UzuYWYWvZ5WpG5Je8mAYG+xJzRE37riHfnCjlKW6Y3ENV025pMWSBRUkDwJwPdLoU44CMzaUH9STcWaSRw77IWY3OeF5ou+FM3nRHfgBRP6i/t69fNEXJmxItnvYcg6LBTVKVlkfyk3kNK93Vs5+W3WYpiY/ptS+ZOcf8h2HleI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496739; c=relaxed/simple;
-	bh=OUF+jZYzAiGW9TaAX6OZQ9nh+4CExnrHWLpnco4jRBE=;
+	s=arc-20240116; t=1768496742; c=relaxed/simple;
+	bh=JgmpXDJhKzgtF6IgReCGuYHwm18rBAHHk/1QOhGvCiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hZORJkDX3MqgXBRy66r6hN4Kk22Y+xNGBqqg8FhMMaBiOauIR1aS5UcJQpo0JHwxtzlZH7en7ByPgChV1HeS7fGqQmaYu2kjNsoQ5UG7dUfGLN0kJaYMQ/ByCIZlI7aWo/Q30YDXHfcZXWGPmGJp45lzU04yNU27V0zL+QyR3Rs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ETwFhP/c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V30liKeN4E/GJqpX8Gv+IQZO2ga9y7QQmLo9xIk5xj75dEuwkTbsjOOyTWXf44CXebXQlNkKLuG1U5nvgE/iziJS0OQdmiq9Lb+97213SmxRQ0/L50cbo2O1p9TB0uQ6gY+bRmOG0b4Ktzxhh8oQjl4bUX4hA14LetR5B4nxCL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YW2IyLjY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ETwFhP/c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B919C19423;
-	Thu, 15 Jan 2026 17:05:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YW2IyLjY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 204F8C19423;
+	Thu, 15 Jan 2026 17:05:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496739;
-	bh=OUF+jZYzAiGW9TaAX6OZQ9nh+4CExnrHWLpnco4jRBE=;
+	s=korg; t=1768496742;
+	bh=JgmpXDJhKzgtF6IgReCGuYHwm18rBAHHk/1QOhGvCiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ETwFhP/cTBtAjS0UI+ggSVUcDdhGZ2SwDwdEZNVv/3DheStA3VDnbZklFIMWL1XFd
-	 MZkDa6lFRdR4gl68Z4l+LMV0mJefSp0kY3rmrz/iNsC7Hf7j7ZETG0GTOGB+bzrT3m
-	 jIQk1Ap09tsfIIVD8O1FMtFyB3/vcPwjX6gUqx/U=
+	b=YW2IyLjYnU2T93n6wYkl+gc0d/CSV1zdaBfv00heffPD50R3ALeauFEwf/m3yvYcb
+	 BtNbvq1a0+3MlDkfiRR+X3SG7+vEmfx6AQe+ItCMGYRlEM4/ij5WhkWiAneM0VGRhg
+	 xtBV69r/O0dOVPsg7RKAnSXyhkljw/5DKHoUCnb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shardul Bankar <shardulsb08@gmail.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>
-Subject: [PATCH 6.12 119/119] bpf: test_run: Fix ctx leak in bpf_prog_test_run_xdp error path
-Date: Thu, 15 Jan 2026 17:48:54 +0100
-Message-ID: <20260115164156.256690625@linuxfoundation.org>
+	Marcus Hughes <marcus.hughes@betterinternet.ltd>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 102/119] net: sfp: extend Potron XGSPON quirk to cover additional EEPROM variant
+Date: Thu, 15 Jan 2026 17:48:37 +0100
+Message-ID: <20260115164155.634677965@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -52,45 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shardul Bankar <shardulsb08@gmail.com>
+From: Marcus Hughes <marcus.hughes@betterinternet.ltd>
 
-commit 7f9ee5fc97e14682e36fe22ae2654c07e4998b82 upstream.
+[ Upstream commit 71cfa7c893a05d09e7dc14713b27a8309fd4a2db ]
 
-Fix a memory leak in bpf_prog_test_run_xdp() where the context buffer
-allocated by bpf_ctx_init() is not freed when the function returns early
-due to a data size check.
+Some Potron SFP+ XGSPON ONU sticks are shipped with different EEPROM
+vendor ID and vendor name strings, but are otherwise functionally
+identical to the existing "Potron SFP+ XGSPON ONU Stick" handled by
+sfp_quirk_potron().
 
-On the failing path:
-  ctx = bpf_ctx_init(...);
-  if (kattr->test.data_size_in - meta_sz < ETH_HLEN)
-      return -EINVAL;
+These modules, including units distributed under the "Better Internet"
+branding, use the same UART pin assignment and require the same
+TX_FAULT/LOS behaviour and boot delay. Re-use the existing Potron
+quirk for this EEPROM variant.
 
-The early return bypasses the cleanup label that kfree()s ctx, leading to a
-leak detectable by kmemleak under fuzzing. Change the return to jump to the
-existing free_ctx label.
-
-Fixes: fe9544ed1a2e ("bpf: Support specifying linear xdp packet data size for BPF_PROG_TEST_RUN")
-Reported-by: BPF Runtime Fuzzer (BRF)
-Signed-off-by: Shardul Bankar <shardulsb08@gmail.com>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://patch.msgid.link/20251014120037.1981316-1-shardulsb08@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Marcus Hughes <marcus.hughes@betterinternet.ltd>
+Link: https://patch.msgid.link/20251207210355.333451-1-marcus.hughes@betterinternet.ltd
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bpf/test_run.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/phy/sfp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/bpf/test_run.c
-+++ b/net/bpf/test_run.c
-@@ -1270,7 +1270,7 @@ int bpf_prog_test_run_xdp(struct bpf_pro
- 		goto free_ctx;
+diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
+index f1827a1bd7a59..964aad00dc87c 100644
+--- a/drivers/net/phy/sfp.c
++++ b/drivers/net/phy/sfp.c
+@@ -491,6 +491,8 @@ static const struct sfp_quirk sfp_quirks[] = {
+ 	SFP_QUIRK("ALCATELLUCENT", "3FE46541AA", sfp_quirk_2500basex,
+ 		  sfp_fixup_nokia),
  
- 	if (kattr->test.data_size_in - meta_sz < ETH_HLEN)
--		return -EINVAL;
-+		goto free_ctx;
++	SFP_QUIRK_F("BIDB", "X-ONU-SFPP", sfp_fixup_potron),
++
+ 	// FLYPRO SFP-10GT-CS-30M uses Rollball protocol to talk to the PHY.
+ 	SFP_QUIRK_F("FLYPRO", "SFP-10GT-CS-30M", sfp_fixup_rollball),
  
- 	data = bpf_test_init(kattr, linear_sz, max_linear_sz, headroom, tailroom);
- 	if (IS_ERR(data)) {
+-- 
+2.51.0
+
 
 
