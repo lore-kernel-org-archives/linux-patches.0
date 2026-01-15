@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C8BD3C1FCC;
-	Thu, 15 Jan 2026 17:29:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55BC93D3017;
+	Thu, 15 Jan 2026 17:29:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498181; cv=none; b=K5SsRKUsZP63BEVvh8MTqz9NKnd7xqkaFbsHkvPzpfnOe0KS1yCApiagommEVYp4vOq2BWawJtVCvDw361f+oRYjO6xdBndI4apXDZ19GIqfD+HUxsEhqy2/y7/xrPUSIqESR5FUvoUHVzB/fD4WwM4i06gykxK9bg0nUWHgnzI=
+	t=1768498184; cv=none; b=E317kU5x1MEoB92x3HPX7WC/Oi4ZTCl80POsxq4CNLr9dQy2OuV9VT0NkSXrrV6gj5lT0WxPm8Bh+j8dqSEqy7iLz7XnO3ywtd4HyqSCCgBupoY0iSdEeqztXRWgCSZLRsmugQweNdi8idjmicLHJyh6WUfGNMmv944VdIjV8Ng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498181; c=relaxed/simple;
-	bh=OgAOY96ShFeDkFEKHDwGKmI+bKym4tgMkNz5RmTcuE8=;
+	s=arc-20240116; t=1768498184; c=relaxed/simple;
+	bh=CuTGPElDfxPFeAo3fuVjd9Pfi82HBXO01hCcJ8c+3Io=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=knulpyAen/jowTl5cmz1SkEH+ZcJ/4+MtprVq4j8T97jxYqrcnFUn4owzX+3sTyLUeK4n4lhH7aoY+BejYh3AQ91YQLrbmlENJMbM9Aiybh3reMJA9R+YLpypbcJt3bE7whQRaUOeGBo1hkoWvejCgREYrRIkpChkbuittTGD/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rj1fUexT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qi64fg+CXT3scZfugjQIXw56lEqepNV2I95/rWQqsomXjD5Bx16zv4u60dRGZRpoLHezAQyD2ZDv9Nq7w+UUpNhWrjhbibklPAFCITfMSDkDCXH/19heRqJHkX18RPNLVC805FEddnysxbM8VEcVHQrCHtwecvXAridXgFmVzPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t+92Zpzo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rj1fUexT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE551C116D0;
-	Thu, 15 Jan 2026 17:29:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t+92Zpzo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4574C116D0;
+	Thu, 15 Jan 2026 17:29:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498181;
-	bh=OgAOY96ShFeDkFEKHDwGKmI+bKym4tgMkNz5RmTcuE8=;
+	s=korg; t=1768498184;
+	bh=CuTGPElDfxPFeAo3fuVjd9Pfi82HBXO01hCcJ8c+3Io=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rj1fUexT2B6upFtqtjpNpJYYl9Oygqf2vwFQHc8ZCaojNoJtrfBMnvA41WwGmdcQx
-	 joKsan8lWU0bMoXl2sO8YN+JPPzMTEFKGjDKNnew+h3tQKCTUEebdSFZGcAJCRP2bi
-	 ismZYtUaniuM57RROrGtJ/3JqXzJuBJ/Ulu559AE=
+	b=t+92ZpzozaWQv7htkaRrAbYbjEfOW/dm5t8ujcjp5dvev89qQPCfyvsFkqt3IOdyu
+	 T97PHgndLwmGMIAPJebBASYhXXbICPmZoQCeMOC3kFSCORa2gF9ZBT76UlU+/SFWPd
+	 YxTdA0mltV1h5MH/YLPFMwcvTL7oOlI/2tyZFvBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 5.15 314/554] KVM: x86: WARN if hrtimer callback for periodic APIC timer fires with period=0
-Date: Thu, 15 Jan 2026 17:46:20 +0100
-Message-ID: <20260115164257.597724347@linuxfoundation.org>
+	Raphael Pinsonneault-Thibeault <rpthibeault@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 341/554] Bluetooth: btusb: revert use of devm_kzalloc in btusb
+Date: Thu, 15 Jan 2026 17:46:47 +0100
+Message-ID: <20260115164258.573608245@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -49,36 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Raphael Pinsonneault-Thibeault <rpthibeault@gmail.com>
 
-commit 0ea9494be9c931ddbc084ad5e11fda91b554cf47 upstream.
+[ Upstream commit 252714f1e8bdd542025b16321c790458014d6880 ]
 
-WARN and don't restart the hrtimer if KVM's callback runs with the guest's
-APIC timer in periodic mode but with a period of '0', as not advancing the
-hrtimer's deadline would put the CPU into an infinite loop of hrtimer
-events.  Observing a period of '0' should be impossible, even when the
-hrtimer is running on a different CPU than the vCPU, as KVM is supposed to
-cancel the hrtimer before changing (or zeroing) the period, e.g. when
-switching from periodic to one-shot.
+This reverts commit 98921dbd00c4e ("Bluetooth: Use devm_kzalloc in
+btusb.c file").
 
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251113205114.1647493-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+In btusb_probe(), we use devm_kzalloc() to allocate the btusb data. This
+ties the lifetime of all the btusb data to the binding of a driver to
+one interface, INTF. In a driver that binds to other interfaces, ISOC
+and DIAG, this is an accident waiting to happen.
+
+The issue is revealed in btusb_disconnect(), where calling
+usb_driver_release_interface(&btusb_driver, data->intf) will have devm
+free the data that is also being used by the other interfaces of the
+driver that may not be released yet.
+
+To fix this, revert the use of devm and go back to freeing memory
+explicitly.
+
+Fixes: 98921dbd00c4e ("Bluetooth: Use devm_kzalloc in btusb.c file")
+Signed-off-by: Raphael Pinsonneault-Thibeault <rpthibeault@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/lapic.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bluetooth/btusb.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kvm/lapic.c
-+++ b/arch/x86/kvm/lapic.c
-@@ -2449,7 +2449,7 @@ static enum hrtimer_restart apic_timer_f
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 95483a8d7b1e..c447e2e9417b 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -3788,7 +3788,7 @@ static int btusb_probe(struct usb_interface *intf,
+ 			return -ENODEV;
+ 	}
  
- 	apic_timer_expired(apic, true);
+-	data = devm_kzalloc(&intf->dev, sizeof(*data), GFP_KERNEL);
++	data = kzalloc(sizeof(*data), GFP_KERNEL);
+ 	if (!data)
+ 		return -ENOMEM;
  
--	if (lapic_is_periodic(apic)) {
-+	if (lapic_is_periodic(apic) && !WARN_ON_ONCE(!apic->lapic_timer.period)) {
- 		advance_periodic_target_expiration(apic);
- 		hrtimer_add_expires_ns(&ktimer->timer, ktimer->period);
- 		return HRTIMER_RESTART;
+@@ -3811,8 +3811,10 @@ static int btusb_probe(struct usb_interface *intf,
+ 		}
+ 	}
+ 
+-	if (!data->intr_ep || !data->bulk_tx_ep || !data->bulk_rx_ep)
++	if (!data->intr_ep || !data->bulk_tx_ep || !data->bulk_rx_ep) {
++		kfree(data);
+ 		return -ENODEV;
++	}
+ 
+ 	if (id->driver_info & BTUSB_AMP) {
+ 		data->cmdreq_type = USB_TYPE_CLASS | 0x01;
+@@ -3855,8 +3857,10 @@ static int btusb_probe(struct usb_interface *intf,
+ 	data->recv_acl = hci_recv_frame;
+ 
+ 	hdev = hci_alloc_dev_priv(priv_size);
+-	if (!hdev)
++	if (!hdev) {
++		kfree(data);
+ 		return -ENOMEM;
++	}
+ 
+ 	hdev->bus = HCI_USB;
+ 	hci_set_drvdata(hdev, data);
+@@ -4104,6 +4108,7 @@ static int btusb_probe(struct usb_interface *intf,
+ 	if (data->reset_gpio)
+ 		gpiod_put(data->reset_gpio);
+ 	hci_free_dev(hdev);
++	kfree(data);
+ 	return err;
+ }
+ 
+@@ -4149,6 +4154,7 @@ static void btusb_disconnect(struct usb_interface *intf)
+ 	}
+ 
+ 	hci_free_dev(hdev);
++	kfree(data);
+ }
+ 
+ #ifdef CONFIG_PM
+-- 
+2.51.0
+
 
 
