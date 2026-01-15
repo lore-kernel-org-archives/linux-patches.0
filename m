@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551983BF301;
-	Thu, 15 Jan 2026 17:07:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19470260569;
+	Thu, 15 Jan 2026 17:07:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496833; cv=none; b=ZuHDLpOkzsyoU7NqwfftPsmqyE0xP63NCOcdB561grl21q9VkbGaAWt1ZSeJPWiE5w2kKxN+4sROA2Smgqh2rOzWXtHHpyjN2Jwkm+GPIumSfyTRzJrhrKmN9zApREbRVKHlcITW4dtqQqKVYQZS42tOsiw9eCECXqDjqD+TBbE=
+	t=1768496836; cv=none; b=Zot0WsqiTjbdPr9e/MOJ1wPr9/U1MEMgfQgnejtu1ni9G+1PvPYTxhpbBS8HtWis0AnSZTJ8v7bLiotmvPA0ZpcWsPt0JdZbFbB3RuU1HhknQjo1t/sK2v6u8/pvv8BVMuUE0NWaGJX0YttEZpYPA3vroLi+VJWK1BjTSM7uWBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496833; c=relaxed/simple;
-	bh=GtTxZ1spdxXuH1kOx09t9FH3iN16kLyMmPMgpuO2TC8=;
+	s=arc-20240116; t=1768496836; c=relaxed/simple;
+	bh=ewMXpGtpT7oFv8Mm3RvS2PoN3IxRMzNcW7necELP/ss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=APVmV9o0yjFD+zo9bA0Nhfg+DDBR0+q/2tDPJ/IPLgKlAPbolVmHCy8JvvPsY01EdEjBWe0ORPsVGCi4Yxot/t7ZVOQtvfP7jrsQGV458DeJv7LJIlyBuuzyVe5EyBiZNkMlEj0m0oWbwjUIK3y37vjZS5/V9tzQBrNEu1H+kEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zxOxoe9z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ailZ1XmDcKOAEF1x2dM5m/xXM3W9TH5hoFDtFwvMUdiqHu1enWmzFrnlInWMoFCuv21wR191n89ZtHO+Ogzeppwb2twUzxRzef+KIibjHxIscA5jxCSxpi+CT8MGBjL6ikxdaGqQNYYSXJaW3D1nkiTzf4wsowpKFRox1X9c/0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c7wUDeCM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zxOxoe9z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D6DAC116D0;
-	Thu, 15 Jan 2026 17:07:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c7wUDeCM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98FCAC116D0;
+	Thu, 15 Jan 2026 17:07:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496833;
-	bh=GtTxZ1spdxXuH1kOx09t9FH3iN16kLyMmPMgpuO2TC8=;
+	s=korg; t=1768496836;
+	bh=ewMXpGtpT7oFv8Mm3RvS2PoN3IxRMzNcW7necELP/ss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zxOxoe9zt2f4gFzUNlhbjZZUg+qCXuyISOM8fgfdekf9gfbSyOZH5fVZws6xgbinl
-	 geRF+HEWfnuTP5lO1xxwG7Mwc7Sla/hCyIg0j0Bna8canKTuR/BjpSuosuIEC1wxAS
-	 zkSNLPjyCU/+MsA/COzmDlHsTVDuMNXPzzayQ6Bo=
+	b=c7wUDeCMJwWfPLHucn5WsWnkPlq3Pw1kCnECepAEnb8FgHPWgKKD6wmPEpg0w7Gtt
+	 E+OujNjlkKwhnC9OtV6uk285TkL2hBs3d+OupXrVqrYJ/Rntw9qWW/a2tsEluG4EP7
+	 Hntuggb3uB4ZyP58/aK/fnxA2hwfwJs7Gr47wZYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Jiping Ma <jiping.ma2@windriver.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 31/88] dm-snapshot: fix scheduling while atomic on real-time kernels
-Date: Thu, 15 Jan 2026 17:48:14 +0100
-Message-ID: <20260115164147.439805751@linuxfoundation.org>
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.6 05/88] btrfs: always detect conflicting inodes when logging inode refs
+Date: Thu, 15 Jan 2026 17:47:48 +0100
+Message-ID: <20260115164146.512663202@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164146.312481509@linuxfoundation.org>
 References: <20260115164146.312481509@linuxfoundation.org>
@@ -51,238 +50,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 8581b19eb2c5ccf06c195d3b5468c3c9d17a5020 ]
+commit 7ba0b6461bc4edb3005ea6e00cdae189bcf908a5 upstream.
 
-There is reported 'scheduling while atomic' bug when using dm-snapshot on
-real-time kernels. The reason for the bug is that the hlist_bl code does
-preempt_disable() when taking the lock and the kernel attempts to take
-other spinlocks while holding the hlist_bl lock.
+After rename exchanging (either with the rename exchange operation or
+regular renames in multiple non-atomic steps) two inodes and at least
+one of them is a directory, we can end up with a log tree that contains
+only of the inodes and after a power failure that can result in an attempt
+to delete the other inode when it should not because it was not deleted
+before the power failure. In some case that delete attempt fails when
+the target inode is a directory that contains a subvolume inside it, since
+the log replay code is not prepared to deal with directory entries that
+point to root items (only inode items).
 
-Fix this by converting a hlist_bl spinlock into a regular spinlock.
+1) We have directories "dir1" (inode A) and "dir2" (inode B) under the
+   same parent directory;
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Reported-by: Jiping Ma <jiping.ma2@windriver.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+2) We have a file (inode C) under directory "dir1" (inode A);
+
+3) We have a subvolume inside directory "dir2" (inode B);
+
+4) All these inodes were persisted in a past transaction and we are
+   currently at transaction N;
+
+5) We rename the file (inode C), so at btrfs_log_new_name() we update
+   inode C's last_unlink_trans to N;
+
+6) We get a rename exchange for "dir1" (inode A) and "dir2" (inode B),
+   so after the exchange "dir1" is inode B and "dir2" is inode A.
+   During the rename exchange we call btrfs_log_new_name() for inodes
+   A and B, but because they are directories, we don't update their
+   last_unlink_trans to N;
+
+7) An fsync against the file (inode C) is done, and because its inode
+   has a last_unlink_trans with a value of N we log its parent directory
+   (inode A) (through btrfs_log_all_parents(), called from
+   btrfs_log_inode_parent()).
+
+8) So we end up with inode B not logged, which now has the old name
+   of inode A. At copy_inode_items_to_log(), when logging inode A, we
+   did not check if we had any conflicting inode to log because inode
+   A has a generation lower than the current transaction (created in
+   a past transaction);
+
+9) After a power failure, when replaying the log tree, since we find that
+   inode A has a new name that conflicts with the name of inode B in the
+   fs tree, we attempt to delete inode B... this is wrong since that
+   directory was never deleted before the power failure, and because there
+   is a subvolume inside that directory, attempting to delete it will fail
+   since replay_dir_deletes() and btrfs_unlink_inode() are not prepared
+   to deal with dir items that point to roots instead of inodes.
+
+   When that happens the mount fails and we get a stack trace like the
+   following:
+
+   [87.2314] BTRFS info (device dm-0): start tree-log replay
+   [87.2318] BTRFS critical (device dm-0): failed to delete reference to subvol, root 5 inode 256 parent 259
+   [87.2332] ------------[ cut here ]------------
+   [87.2338] BTRFS: Transaction aborted (error -2)
+   [87.2346] WARNING: CPU: 1 PID: 638968 at fs/btrfs/inode.c:4345 __btrfs_unlink_inode+0x416/0x440 [btrfs]
+   [87.2368] Modules linked in: btrfs loop dm_thin_pool (...)
+   [87.2470] CPU: 1 UID: 0 PID: 638968 Comm: mount Tainted: G        W           6.18.0-rc7-btrfs-next-218+ #2 PREEMPT(full)
+   [87.2489] Tainted: [W]=WARN
+   [87.2494] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.2-0-gea1b7a073390-prebuilt.qemu.org 04/01/2014
+   [87.2514] RIP: 0010:__btrfs_unlink_inode+0x416/0x440 [btrfs]
+   [87.2538] Code: c0 89 04 24 (...)
+   [87.2568] RSP: 0018:ffffc0e741f4b9b8 EFLAGS: 00010286
+   [87.2574] RAX: 0000000000000000 RBX: ffff9d3ec8a6cf60 RCX: 0000000000000000
+   [87.2582] RDX: 0000000000000002 RSI: ffffffff84ab45a1 RDI: 00000000ffffffff
+   [87.2591] RBP: ffff9d3ec8a6ef20 R08: 0000000000000000 R09: ffffc0e741f4b840
+   [87.2599] R10: ffff9d45dc1fffa8 R11: 0000000000000003 R12: ffff9d3ee26d77e0
+   [87.2608] R13: ffffc0e741f4ba98 R14: ffff9d4458040800 R15: ffff9d44b6b7ca10
+   [87.2618] FS:  00007f7b9603a840(0000) GS:ffff9d4658982000(0000) knlGS:0000000000000000
+   [87.2629] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+   [87.2637] CR2: 00007ffc9ec33b98 CR3: 000000011273e003 CR4: 0000000000370ef0
+   [87.2648] Call Trace:
+   [87.2651]  <TASK>
+   [87.2654]  btrfs_unlink_inode+0x15/0x40 [btrfs]
+   [87.2661]  unlink_inode_for_log_replay+0x27/0xf0 [btrfs]
+   [87.2669]  check_item_in_log+0x1ea/0x2c0 [btrfs]
+   [87.2676]  replay_dir_deletes+0x16b/0x380 [btrfs]
+   [87.2684]  fixup_inode_link_count+0x34b/0x370 [btrfs]
+   [87.2696]  fixup_inode_link_counts+0x41/0x160 [btrfs]
+   [87.2703]  btrfs_recover_log_trees+0x1ff/0x7c0 [btrfs]
+   [87.2711]  ? __pfx_replay_one_buffer+0x10/0x10 [btrfs]
+   [87.2719]  open_ctree+0x10bb/0x15f0 [btrfs]
+   [87.2726]  btrfs_get_tree.cold+0xb/0x16c [btrfs]
+   [87.2734]  ? fscontext_read+0x15c/0x180
+   [87.2740]  ? rw_verify_area+0x50/0x180
+   [87.2746]  vfs_get_tree+0x25/0xd0
+   [87.2750]  vfs_cmd_create+0x59/0xe0
+   [87.2755]  __do_sys_fsconfig+0x4f6/0x6b0
+   [87.2760]  do_syscall_64+0x50/0x1220
+   [87.2764]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+   [87.2770] RIP: 0033:0x7f7b9625f4aa
+   [87.2775] Code: 73 01 c3 48 (...)
+   [87.2803] RSP: 002b:00007ffc9ec35b08 EFLAGS: 00000246 ORIG_RAX: 00000000000001af
+   [87.2817] RAX: ffffffffffffffda RBX: 0000558bfa91ac20 RCX: 00007f7b9625f4aa
+   [87.2829] RDX: 0000000000000000 RSI: 0000000000000006 RDI: 0000000000000003
+   [87.2842] RBP: 0000558bfa91b120 R08: 0000000000000000 R09: 0000000000000000
+   [87.2854] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+   [87.2864] R13: 00007f7b963f1580 R14: 00007f7b963f326c R15: 00007f7b963d8a23
+   [87.2877]  </TASK>
+   [87.2882] ---[ end trace 0000000000000000 ]---
+   [87.2891] BTRFS: error (device dm-0 state A) in __btrfs_unlink_inode:4345: errno=-2 No such entry
+   [87.2904] BTRFS: error (device dm-0 state EAO) in do_abort_log_replay:191: errno=-2 No such entry
+   [87.2915] BTRFS critical (device dm-0 state EAO): log tree (for root 5) leaf currently being processed (slot 7 key (258 12 257)):
+   [87.2929] BTRFS info (device dm-0 state EAO): leaf 30736384 gen 10 total ptrs 7 free space 15712 owner 18446744073709551610
+   [87.2929] BTRFS info (device dm-0 state EAO): refs 3 lock_owner 0 current 638968
+   [87.2929]      item 0 key (257 INODE_ITEM 0) itemoff 16123 itemsize 160
+   [87.2929]              inode generation 9 transid 10 size 0 nbytes 0
+   [87.2929]              block group 0 mode 40755 links 1 uid 0 gid 0
+   [87.2929]              rdev 0 sequence 7 flags 0x0
+   [87.2929]              atime 1765464494.678070921
+   [87.2929]              ctime 1765464494.686606513
+   [87.2929]              mtime 1765464494.686606513
+   [87.2929]              otime 1765464494.678070921
+   [87.2929]      item 1 key (257 INODE_REF 256) itemoff 16109 itemsize 14
+   [87.2929]              index 4 name_len 4
+   [87.2929]      item 2 key (257 DIR_LOG_INDEX 2) itemoff 16101 itemsize 8
+   [87.2929]              dir log end 2
+   [87.2929]      item 3 key (257 DIR_LOG_INDEX 3) itemoff 16093 itemsize 8
+   [87.2929]              dir log end 18446744073709551615
+   [87.2930]      item 4 key (257 DIR_INDEX 3) itemoff 16060 itemsize 33
+   [87.2930]              location key (258 1 0) type 1
+   [87.2930]              transid 10 data_len 0 name_len 3
+   [87.2930]      item 5 key (258 INODE_ITEM 0) itemoff 15900 itemsize 160
+   [87.2930]              inode generation 9 transid 10 size 0 nbytes 0
+   [87.2930]              block group 0 mode 100644 links 1 uid 0 gid 0
+   [87.2930]              rdev 0 sequence 2 flags 0x0
+   [87.2930]              atime 1765464494.678456467
+   [87.2930]              ctime 1765464494.686606513
+   [87.2930]              mtime 1765464494.678456467
+   [87.2930]              otime 1765464494.678456467
+   [87.2930]      item 6 key (258 INODE_REF 257) itemoff 15887 itemsize 13
+   [87.2930]              index 3 name_len 3
+   [87.2930] BTRFS critical (device dm-0 state EAO): log replay failed in unlink_inode_for_log_replay:1045 for root 5, stage 3, with error -2: failed to unlink inode 256 parent dir 259 name subvol root 5
+   [87.2963] BTRFS: error (device dm-0 state EAO) in btrfs_recover_log_trees:7743: errno=-2 No such entry
+   [87.2981] BTRFS: error (device dm-0 state EAO) in btrfs_replay_log:2083: errno=-2 No such entry (Failed to recover log tr
+
+So fix this by changing copy_inode_items_to_log() to always detect if
+there are conflicting inodes for the ref/extref of the inode being logged
+even if the inode was created in a past transaction.
+
+A test case for fstests will follow soon.
+
+CC: stable@vger.kernel.org # 6.1+
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-exception-store.h |  2 +-
- drivers/md/dm-snap.c            | 73 +++++++++++++++------------------
- 2 files changed, 35 insertions(+), 40 deletions(-)
+ fs/btrfs/tree-log.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/md/dm-exception-store.h b/drivers/md/dm-exception-store.h
-index b679766375381..061b4d3108132 100644
---- a/drivers/md/dm-exception-store.h
-+++ b/drivers/md/dm-exception-store.h
-@@ -29,7 +29,7 @@ typedef sector_t chunk_t;
-  * chunk within the device.
-  */
- struct dm_exception {
--	struct hlist_bl_node hash_list;
-+	struct hlist_node hash_list;
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -6002,10 +6002,8 @@ again:
+ 			 * and no keys greater than that, so bail out.
+ 			 */
+ 			break;
+-		} else if ((min_key->type == BTRFS_INODE_REF_KEY ||
+-			    min_key->type == BTRFS_INODE_EXTREF_KEY) &&
+-			   (inode->generation == trans->transid ||
+-			    ctx->logging_conflict_inodes)) {
++		} else if (min_key->type == BTRFS_INODE_REF_KEY ||
++			   min_key->type == BTRFS_INODE_EXTREF_KEY) {
+ 			u64 other_ino = 0;
+ 			u64 other_parent = 0;
  
- 	chunk_t old_chunk;
- 	chunk_t new_chunk;
-diff --git a/drivers/md/dm-snap.c b/drivers/md/dm-snap.c
-index 0ace06d1bee38..dcffa3441a662 100644
---- a/drivers/md/dm-snap.c
-+++ b/drivers/md/dm-snap.c
-@@ -40,10 +40,15 @@ static const char dm_snapshot_merge_target_name[] = "snapshot-merge";
- #define DM_TRACKED_CHUNK_HASH(x)	((unsigned long)(x) & \
- 					 (DM_TRACKED_CHUNK_HASH_SIZE - 1))
- 
-+struct dm_hlist_head {
-+	struct hlist_head head;
-+	spinlock_t lock;
-+};
-+
- struct dm_exception_table {
- 	uint32_t hash_mask;
- 	unsigned int hash_shift;
--	struct hlist_bl_head *table;
-+	struct dm_hlist_head *table;
- };
- 
- struct dm_snapshot {
-@@ -628,8 +633,8 @@ static uint32_t exception_hash(struct dm_exception_table *et, chunk_t chunk);
- 
- /* Lock to protect access to the completed and pending exception hash tables. */
- struct dm_exception_table_lock {
--	struct hlist_bl_head *complete_slot;
--	struct hlist_bl_head *pending_slot;
-+	spinlock_t *complete_slot;
-+	spinlock_t *pending_slot;
- };
- 
- static void dm_exception_table_lock_init(struct dm_snapshot *s, chunk_t chunk,
-@@ -638,20 +643,20 @@ static void dm_exception_table_lock_init(struct dm_snapshot *s, chunk_t chunk,
- 	struct dm_exception_table *complete = &s->complete;
- 	struct dm_exception_table *pending = &s->pending;
- 
--	lock->complete_slot = &complete->table[exception_hash(complete, chunk)];
--	lock->pending_slot = &pending->table[exception_hash(pending, chunk)];
-+	lock->complete_slot = &complete->table[exception_hash(complete, chunk)].lock;
-+	lock->pending_slot = &pending->table[exception_hash(pending, chunk)].lock;
- }
- 
- static void dm_exception_table_lock(struct dm_exception_table_lock *lock)
- {
--	hlist_bl_lock(lock->complete_slot);
--	hlist_bl_lock(lock->pending_slot);
-+	spin_lock_nested(lock->complete_slot, 1);
-+	spin_lock_nested(lock->pending_slot, 2);
- }
- 
- static void dm_exception_table_unlock(struct dm_exception_table_lock *lock)
- {
--	hlist_bl_unlock(lock->pending_slot);
--	hlist_bl_unlock(lock->complete_slot);
-+	spin_unlock(lock->pending_slot);
-+	spin_unlock(lock->complete_slot);
- }
- 
- static int dm_exception_table_init(struct dm_exception_table *et,
-@@ -661,13 +666,15 @@ static int dm_exception_table_init(struct dm_exception_table *et,
- 
- 	et->hash_shift = hash_shift;
- 	et->hash_mask = size - 1;
--	et->table = kvmalloc_array(size, sizeof(struct hlist_bl_head),
-+	et->table = kvmalloc_array(size, sizeof(struct dm_hlist_head),
- 				   GFP_KERNEL);
- 	if (!et->table)
- 		return -ENOMEM;
- 
--	for (i = 0; i < size; i++)
--		INIT_HLIST_BL_HEAD(et->table + i);
-+	for (i = 0; i < size; i++) {
-+		INIT_HLIST_HEAD(&et->table[i].head);
-+		spin_lock_init(&et->table[i].lock);
-+	}
- 
- 	return 0;
- }
-@@ -675,16 +682,17 @@ static int dm_exception_table_init(struct dm_exception_table *et,
- static void dm_exception_table_exit(struct dm_exception_table *et,
- 				    struct kmem_cache *mem)
- {
--	struct hlist_bl_head *slot;
-+	struct dm_hlist_head *slot;
- 	struct dm_exception *ex;
--	struct hlist_bl_node *pos, *n;
-+	struct hlist_node *pos;
- 	int i, size;
- 
- 	size = et->hash_mask + 1;
- 	for (i = 0; i < size; i++) {
- 		slot = et->table + i;
- 
--		hlist_bl_for_each_entry_safe(ex, pos, n, slot, hash_list) {
-+		hlist_for_each_entry_safe(ex, pos, &slot->head, hash_list) {
-+			hlist_del(&ex->hash_list);
- 			kmem_cache_free(mem, ex);
- 			cond_resched();
- 		}
-@@ -700,7 +708,7 @@ static uint32_t exception_hash(struct dm_exception_table *et, chunk_t chunk)
- 
- static void dm_remove_exception(struct dm_exception *e)
- {
--	hlist_bl_del(&e->hash_list);
-+	hlist_del(&e->hash_list);
- }
- 
- /*
-@@ -710,12 +718,11 @@ static void dm_remove_exception(struct dm_exception *e)
- static struct dm_exception *dm_lookup_exception(struct dm_exception_table *et,
- 						chunk_t chunk)
- {
--	struct hlist_bl_head *slot;
--	struct hlist_bl_node *pos;
-+	struct hlist_head *slot;
- 	struct dm_exception *e;
- 
--	slot = &et->table[exception_hash(et, chunk)];
--	hlist_bl_for_each_entry(e, pos, slot, hash_list)
-+	slot = &et->table[exception_hash(et, chunk)].head;
-+	hlist_for_each_entry(e, slot, hash_list)
- 		if (chunk >= e->old_chunk &&
- 		    chunk <= e->old_chunk + dm_consecutive_chunk_count(e))
- 			return e;
-@@ -762,18 +769,17 @@ static void free_pending_exception(struct dm_snap_pending_exception *pe)
- static void dm_insert_exception(struct dm_exception_table *eh,
- 				struct dm_exception *new_e)
- {
--	struct hlist_bl_head *l;
--	struct hlist_bl_node *pos;
-+	struct hlist_head *l;
- 	struct dm_exception *e = NULL;
- 
--	l = &eh->table[exception_hash(eh, new_e->old_chunk)];
-+	l = &eh->table[exception_hash(eh, new_e->old_chunk)].head;
- 
- 	/* Add immediately if this table doesn't support consecutive chunks */
- 	if (!eh->hash_shift)
- 		goto out;
- 
- 	/* List is ordered by old_chunk */
--	hlist_bl_for_each_entry(e, pos, l, hash_list) {
-+	hlist_for_each_entry(e, l, hash_list) {
- 		/* Insert after an existing chunk? */
- 		if (new_e->old_chunk == (e->old_chunk +
- 					 dm_consecutive_chunk_count(e) + 1) &&
-@@ -804,13 +810,13 @@ static void dm_insert_exception(struct dm_exception_table *eh,
- 		 * Either the table doesn't support consecutive chunks or slot
- 		 * l is empty.
- 		 */
--		hlist_bl_add_head(&new_e->hash_list, l);
-+		hlist_add_head(&new_e->hash_list, l);
- 	} else if (new_e->old_chunk < e->old_chunk) {
- 		/* Add before an existing exception */
--		hlist_bl_add_before(&new_e->hash_list, &e->hash_list);
-+		hlist_add_before(&new_e->hash_list, &e->hash_list);
- 	} else {
- 		/* Add to l's tail: e is the last exception in this slot */
--		hlist_bl_add_behind(&new_e->hash_list, &e->hash_list);
-+		hlist_add_behind(&new_e->hash_list, &e->hash_list);
- 	}
- }
- 
-@@ -820,7 +826,6 @@ static void dm_insert_exception(struct dm_exception_table *eh,
-  */
- static int dm_add_exception(void *context, chunk_t old, chunk_t new)
- {
--	struct dm_exception_table_lock lock;
- 	struct dm_snapshot *s = context;
- 	struct dm_exception *e;
- 
-@@ -833,17 +838,7 @@ static int dm_add_exception(void *context, chunk_t old, chunk_t new)
- 	/* Consecutive_count is implicitly initialised to zero */
- 	e->new_chunk = new;
- 
--	/*
--	 * Although there is no need to lock access to the exception tables
--	 * here, if we don't then hlist_bl_add_head(), called by
--	 * dm_insert_exception(), will complain about accessing the
--	 * corresponding list without locking it first.
--	 */
--	dm_exception_table_lock_init(s, old, &lock);
--
--	dm_exception_table_lock(&lock);
- 	dm_insert_exception(&s->complete, e);
--	dm_exception_table_unlock(&lock);
- 
- 	return 0;
- }
-@@ -873,7 +868,7 @@ static int calc_max_buckets(void)
- 	/* use a fixed size of 2MB */
- 	unsigned long mem = 2 * 1024 * 1024;
- 
--	mem /= sizeof(struct hlist_bl_head);
-+	mem /= sizeof(struct dm_hlist_head);
- 
- 	return mem;
- }
--- 
-2.51.0
-
 
 
