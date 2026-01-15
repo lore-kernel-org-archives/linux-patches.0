@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2963BF2F3;
-	Thu, 15 Jan 2026 17:41:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33A683271F2;
+	Thu, 15 Jan 2026 17:41:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498913; cv=none; b=nhBl8dDTVjBheN8N/unPcWRhFZU7rE36EcNSP+z/U4+Ohr2eHZerN7U+JdNrhgqJFwTpfaoykyTi5ngvnga1HGydQ3Gwb9PLLDxvKC5Onaiuyf49eVz4MUaQom+EZoUyGwQQwB9khHg2HVHu607oBz46nRxSYhlqj5F4bHTsV0Q=
+	t=1768498916; cv=none; b=HQ8905/4V/bSQ8cvMDe4DvXKsAdij0o49FjVwSE463r6pr0zXRbYORT7Fomq0Q6UmFJmq5sPnGZ6rAqKoMlouB9yVrMJOuFtuam0axcdsos/O6MK9uqhHBU49ZsK82BWinvo2zsr+PUUd8P//EoOh9UjjvOvBili5PmRBKx29Wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498913; c=relaxed/simple;
-	bh=LCN8wS7arpRyg+Cs49rm95IpLG8d3p24D3PsKcYzgI0=;
+	s=arc-20240116; t=1768498916; c=relaxed/simple;
+	bh=awOEpI+q1G3yIokUWW0M5YlA5Xi3fJA6Fql86X0oT4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O1TURKQy0gStIZM0y6A/nJ4PhdelCfvt1GEyBrLASwpj5CZjRpYS89oYOj2+jfGAv4MowTS7rmjgI08llQRNtJsnYWqAN1TG9dQ+7sHiJa5jkiMiEOBVcgvg9Nbp/MZtFcYrofojYfhvgtJHBxICc5p0ifzCkI4/VcphiR71uA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=enOUMd08; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tGf3d+0k80nCzEbsEL3rw3tharRWXU9yvyOcg3r7N4Zc4kVTbzw801JjTFiSocGIvAhdjVznmISSrsFoffCsJmaNSCHhrCav89yIrDQaaecNFQgDjuPLOWsnASziArj84ic1rCPYVa8+MjcFLhSiccw92D3xrWecrHU7CUw47oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wvuPsT6m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="enOUMd08"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAC05C116D0;
-	Thu, 15 Jan 2026 17:41:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wvuPsT6m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 890FAC116D0;
+	Thu, 15 Jan 2026 17:41:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498913;
-	bh=LCN8wS7arpRyg+Cs49rm95IpLG8d3p24D3PsKcYzgI0=;
+	s=korg; t=1768498916;
+	bh=awOEpI+q1G3yIokUWW0M5YlA5Xi3fJA6Fql86X0oT4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=enOUMd08uYm4sA4hzqMPlHlyLb+kkv/cNoAAvzVh8rfplUW0sg/HT2gpcKFrZ8rKw
-	 cfCfgtkoHfWrVy6MAe6vaU5i72wQxniwCClnimjJz3JOAg4skoh0weCxP2w/Xlj3ko
-	 F7gqbpwipndnl1XEPu18gilgrCl/Rc/bm8FZWBG0=
+	b=wvuPsT6m3vHKqBSGdHtIu35HT+FvyxnwWBc+S7JQJSqOdiQld++FWIVVJ+J5tVphZ
+	 QxKQFrZabKJ28JNca49v4fnt7T3DNVdzHpIN4xPJQMysyg8HWtwXQ+zCIJ7fmyh6qf
+	 Fx2R/XcUL+/KXZqEUvsJ9XzJW20dptYxo5Drvnzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Su <sh_def@163.com>,
-	Borislav Petkov <bp@suse.de>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Will Deacon <will@kernel.org>,
+	Arvind Sankar <nivedita@alum.mit.edu>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	llvm@lists.linux.dev,
+	Kees Cook <keescook@chromium.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Marco Elver <elver@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 042/451] x86/dumpstack: Make show_trace_log_lvl() static
-Date: Thu, 15 Jan 2026 17:44:03 +0100
-Message-ID: <20260115164232.415699574@linuxfoundation.org>
+Subject: [PATCH 5.10 043/451] compiler-gcc.h: Define __SANITIZE_ADDRESS__ under hwaddress sanitizer
+Date: Thu, 15 Jan 2026 17:44:04 +0100
+Message-ID: <20260115164232.451882189@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -51,50 +60,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Su <sh_def@163.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 09a217c10504bcaef911cf2af74e424338efe629 ]
+[ Upstream commit 9a48e7564ac83fb0f1d5b0eac5fe8a7af62da398 ]
 
-show_trace_log_lvl() is not used by other compilation units so make it
-static and remove the declaration from the header file.
+When Clang is using the hwaddress sanitizer, it sets __SANITIZE_ADDRESS__
+explicitly:
 
-Signed-off-by: Hui Su <sh_def@163.com>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Link: https://lkml.kernel.org/r/20201113133943.GA136221@rlk
+ #if __has_feature(address_sanitizer) || __has_feature(hwaddress_sanitizer)
+ /* Emulate GCC's __SANITIZE_ADDRESS__ flag */
+ #define __SANITIZE_ADDRESS__
+ #endif
+
+Once hwaddress sanitizer was added to GCC, however, a separate define
+was created, __SANITIZE_HWADDRESS__. The kernel is expecting to find
+__SANITIZE_ADDRESS__ in either case, though, and the existing string
+macros break on supported architectures:
+
+ #if (defined(CONFIG_KASAN_GENERIC) || defined(CONFIG_KASAN_SW_TAGS)) && \
+          !defined(__SANITIZE_ADDRESS__)
+
+where as other architectures (like arm32) have no idea about hwaddress
+sanitizer and just check for __SANITIZE_ADDRESS__:
+
+ #if defined(CONFIG_KASAN) && !defined(__SANITIZE_ADDRESS__)
+
+This would lead to compiler foritfy self-test warnings when building
+with CONFIG_KASAN_SW_TAGS=y:
+
+warning: unsafe memmove() usage lacked '__read_overflow2' symbol in lib/test_fortify/read_overflow2-memmove.c
+warning: unsafe memcpy() usage lacked '__write_overflow' symbol in lib/test_fortify/write_overflow-memcpy.c
+...
+
+Sort this out by also defining __SANITIZE_ADDRESS__ in GCC under the
+hwaddress sanitizer.
+
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: Arvind Sankar <nivedita@alum.mit.edu>
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Cc: llvm@lists.linux.dev
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Miguel Ojeda <ojeda@kernel.org>
+Reviewed-by: Marco Elver <elver@google.com>
+Link: https://lore.kernel.org/r/20211020200039.170424-1-keescook@chromium.org
 Stable-dep-of: ced37e9ceae5 ("x86/dumpstack: Prevent KASAN false positive warnings in __show_regs()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/stacktrace.h | 3 ---
- arch/x86/kernel/dumpstack.c       | 2 +-
- 2 files changed, 1 insertion(+), 4 deletions(-)
+ include/linux/compiler-gcc.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/x86/include/asm/stacktrace.h b/arch/x86/include/asm/stacktrace.h
-index 49600643faba8..f248eb2ac2d4a 100644
---- a/arch/x86/include/asm/stacktrace.h
-+++ b/arch/x86/include/asm/stacktrace.h
-@@ -88,9 +88,6 @@ get_stack_pointer(struct task_struct *task, struct pt_regs *regs)
- 	return (unsigned long *)task->thread.sp;
- }
+diff --git a/include/linux/compiler-gcc.h b/include/linux/compiler-gcc.h
+index ae9a8e17287ce..faf0fd509cb5a 100644
+--- a/include/linux/compiler-gcc.h
++++ b/include/linux/compiler-gcc.h
+@@ -140,6 +140,14 @@
+ #define __no_sanitize_coverage
+ #endif
  
--void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
--			unsigned long *stack, const char *log_lvl);
--
- /* The form of the top of the frame on the stack */
- struct stack_frame {
- 	struct stack_frame *next_frame;
-diff --git a/arch/x86/kernel/dumpstack.c b/arch/x86/kernel/dumpstack.c
-index cf92191de2b2a..7a1fe0d382ce6 100644
---- a/arch/x86/kernel/dumpstack.c
-+++ b/arch/x86/kernel/dumpstack.c
-@@ -183,7 +183,7 @@ static void show_regs_if_on_stack(struct stack_info *info, struct pt_regs *regs,
- 	}
- }
- 
--void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
-+static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
- 			unsigned long *stack, const char *log_lvl)
- {
- 	struct unwind_state state;
++/*
++ * Treat __SANITIZE_HWADDRESS__ the same as __SANITIZE_ADDRESS__ in the kernel,
++ * matching the defines used by Clang.
++ */
++#ifdef __SANITIZE_HWADDRESS__
++#define __SANITIZE_ADDRESS__
++#endif
++
+ /*
+  * Turn individual warnings and errors on and off locally, depending
+  * on version.
 -- 
 2.51.0
 
