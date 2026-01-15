@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D3C53D349F;
-	Thu, 15 Jan 2026 17:59:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A973E8C51;
+	Thu, 15 Jan 2026 17:59:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499978; cv=none; b=OswuqJjnxF9dNGHHfuDFNGaCKUe83+fOSLhvmxfmtRq0kBqUkS7MA5nqBHZb4uhwFC6N/lFaLcPGt/2FHbvnZjLUkpOuI1q/eS88qKmAqsgqsUmBxacDCXbl6OedU40z6iEtzGoZQ32Ckx3PdywdC3A12daogtTXE8C8kK9L4YI=
+	t=1768499980; cv=none; b=i308LJhh/pyY5s+QnVWBbSKAIqzkroooGG7FqX3VAOF/fsAtP6IlRGfRRWvLVEpfxPt9QY+5mJi6VW++N8HfxnLxfH+TaTz7rjD+WGc9Qfopady6W8jpZ+H2aSktyf8ALKar8/3pZ9h/dRzPzySoFihpCxG3daMlw2JpP1mDVXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499978; c=relaxed/simple;
-	bh=LP3oHkCKW1nds/wrMQuc4uNc5my8IY+bS+ERkqXe7oQ=;
+	s=arc-20240116; t=1768499980; c=relaxed/simple;
+	bh=Ud7DVjA8PcDKXUz3cjARxagDtsUflNs/1swQPIFSZRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sLJnsIiyb/21m026rntJHdGMfzH0ljZz7mGGfcjxy6Uc8sHKmtoDdeCbVyPqiXP0Ral6Pu47rTDug7E+4Et6jZFTVJvY/2HJtcvw+v76Is1nxb9Ma+ddAS84XBzbbW9/hIUGxZE+5avHhyNGmkyVJxYj0Cs3xpxv8kv54yFKS4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fc0MGEj4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rph4jsEv+ApSwCW70qDf+o1HqmEtUcSGcIQdfpQcum1izEYYU/KkDWRhREQGg+EIpH8j5fk7lWS5QU8YcCVn0+qW7NibmTrUZMBQ7ysCQRtE3HzHNlzOAyTul//sFkIf7V4tmmmZ8KFtFukuaz0c2nYCWM2pW+QThPU3k7kB4gM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TSmT5ir8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fc0MGEj4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60F60C116D0;
-	Thu, 15 Jan 2026 17:59:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TSmT5ir8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E0ADC16AAE;
+	Thu, 15 Jan 2026 17:59:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499977;
-	bh=LP3oHkCKW1nds/wrMQuc4uNc5my8IY+bS+ERkqXe7oQ=;
+	s=korg; t=1768499980;
+	bh=Ud7DVjA8PcDKXUz3cjARxagDtsUflNs/1swQPIFSZRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fc0MGEj4v9SqP07looUr5Z4aAaBYJe2mHad9JBTGTfh68g9/Yo0+xcGyjROltbJvF
-	 r/5pwYhPnc6c2DkQJPhBQoLsTLGcfe4UbVVjqgTb1NvyoPY4s80TdClaW8be7gWqC7
-	 JrWkXaaocCYj6ZW4iEUg/cFGDGTzrfCnT/Og4aLQ=
+	b=TSmT5ir8MDYCnCcocJvlkhgaiDIFbACzz/NcdhGj3hxCEAl7wUrkvbz3LQnk+1RvQ
+	 xZ93k13EDbqUFH+IwsANhzEVO8IsHL0DT1F7wRuXLkCFl/Ly9S6f9Z1DdGlgcpynA/
+	 80nrs10WsPCZT/KPg+usS0iFFyHYzCXpeOl+ApME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Muchun Song <songmuchun@bytedance.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 383/451] mm/balloon_compaction: make balloon page compaction callbacks static
-Date: Thu, 15 Jan 2026 17:49:44 +0100
-Message-ID: <20260115164244.778754008@linuxfoundation.org>
+Subject: [PATCH 5.10 374/451] ARM: dts: microchip: sama5d2: fix spi flexcom fifo size to 32
+Date: Thu, 15 Jan 2026 17:49:35 +0100
+Message-ID: <20260115164244.445442721@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -52,93 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaohe Lin <linmiaohe@huawei.com>
+From: Nicolas Ferre <nicolas.ferre@microchip.com>
 
-[ Upstream commit 504c1cabe325df65c18ef38365ddd1a41c6b591b ]
+[ Upstream commit 7d5864dc5d5ea6a35983dd05295fb17f2f2f44ce ]
 
-Since commit b1123ea6d3b3 ("mm: balloon: use general non-lru movable page
-feature"), these functions are called via balloon_aops callbacks. They're
-not called directly outside this file. So make them static and clean up
-the relevant code.
+Unlike standalone spi peripherals, on sama5d2, the flexcom spi have fifo
+size of 32 data. Fix flexcom/spi nodes where this property is wrong.
 
-Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
-Link: https://lore.kernel.org/r/20220125132221.2220-1-linmiaohe@huawei.com
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Muchun Song <songmuchun@bytedance.com>
-Stable-dep-of: 0da2ba35c0d5 ("powerpc/pseries/cmm: adjust BALLOON_MIGRATE when migrating pages")
+Fixes: 6b9a3584c7ed ("ARM: dts: at91: sama5d2: Add missing flexcom definitions")
+Cc: stable@vger.kernel.org # 5.8+
+Signed-off-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Link: https://lore.kernel.org/r/20251114140225.30372-1-nicolas.ferre@microchip.com
+Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/balloon_compaction.h |   22 ----------------------
- mm/balloon_compaction.c            |    6 +++---
- 2 files changed, 3 insertions(+), 25 deletions(-)
+ arch/arm/boot/dts/sama5d2.dtsi |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/include/linux/balloon_compaction.h
-+++ b/include/linux/balloon_compaction.h
-@@ -80,12 +80,6 @@ static inline void balloon_devinfo_init(
+--- a/arch/arm/boot/dts/sama5d2.dtsi
++++ b/arch/arm/boot/dts/sama5d2.dtsi
+@@ -555,7 +555,7 @@
+ 						 AT91_XDMAC_DT_PER_IF(1) |
+ 						 AT91_XDMAC_DT_PERID(12))>;
+ 					dma-names = "tx", "rx";
+-					atmel,fifo-size = <16>;
++					atmel,fifo-size = <32>;
+ 					status = "disabled";
+ 				};
  
- #ifdef CONFIG_BALLOON_COMPACTION
- extern const struct address_space_operations balloon_aops;
--extern bool balloon_page_isolate(struct page *page,
--				isolate_mode_t mode);
--extern void balloon_page_putback(struct page *page);
--extern int balloon_page_migrate(struct address_space *mapping,
--				struct page *newpage,
--				struct page *page, enum migrate_mode mode);
+@@ -625,7 +625,7 @@
+ 						 AT91_XDMAC_DT_PER_IF(1) |
+ 						 AT91_XDMAC_DT_PERID(14))>;
+ 					dma-names = "tx", "rx";
+-					atmel,fifo-size = <16>;
++					atmel,fifo-size = <32>;
+ 					status = "disabled";
+ 				};
  
- /*
-  * balloon_page_insert - insert a page into the balloon's page list and make
-@@ -155,22 +149,6 @@ static inline void balloon_page_delete(s
- 	list_del(&page->lru);
- }
+@@ -835,7 +835,7 @@
+ 						 AT91_XDMAC_DT_PER_IF(1) |
+ 						 AT91_XDMAC_DT_PERID(16))>;
+ 					dma-names = "tx", "rx";
+-					atmel,fifo-size = <16>;
++					atmel,fifo-size = <32>;
+ 					status = "disabled";
+ 				};
  
--static inline bool balloon_page_isolate(struct page *page)
--{
--	return false;
--}
--
--static inline void balloon_page_putback(struct page *page)
--{
--	return;
--}
--
--static inline int balloon_page_migrate(struct page *newpage,
--				struct page *page, enum migrate_mode mode)
--{
--	return 0;
--}
--
- static inline gfp_t balloon_mapping_gfp_mask(void)
- {
- 	return GFP_HIGHUSER;
---- a/mm/balloon_compaction.c
-+++ b/mm/balloon_compaction.c
-@@ -203,7 +203,7 @@ EXPORT_SYMBOL_GPL(balloon_page_dequeue);
+@@ -925,7 +925,7 @@
+ 						 AT91_XDMAC_DT_PER_IF(1) |
+ 						 AT91_XDMAC_DT_PERID(18))>;
+ 					dma-names = "tx", "rx";
+-					atmel,fifo-size = <16>;
++					atmel,fifo-size = <32>;
+ 					status = "disabled";
+ 				};
  
- #ifdef CONFIG_BALLOON_COMPACTION
+@@ -976,7 +976,7 @@
+ 						 AT91_XDMAC_DT_PER_IF(1) |
+ 						 AT91_XDMAC_DT_PERID(20))>;
+ 					dma-names = "tx", "rx";
+-					atmel,fifo-size = <16>;
++					atmel,fifo-size = <32>;
+ 					status = "disabled";
+ 				};
  
--bool balloon_page_isolate(struct page *page, isolate_mode_t mode)
-+static bool balloon_page_isolate(struct page *page, isolate_mode_t mode)
- 
- {
- 	struct balloon_dev_info *b_dev_info = balloon_page_device(page);
-@@ -217,7 +217,7 @@ bool balloon_page_isolate(struct page *p
- 	return true;
- }
- 
--void balloon_page_putback(struct page *page)
-+static void balloon_page_putback(struct page *page)
- {
- 	struct balloon_dev_info *b_dev_info = balloon_page_device(page);
- 	unsigned long flags;
-@@ -230,7 +230,7 @@ void balloon_page_putback(struct page *p
- 
- 
- /* move_to_new_page() counterpart for a ballooned page */
--int balloon_page_migrate(struct address_space *mapping,
-+static int balloon_page_migrate(struct address_space *mapping,
- 		struct page *newpage, struct page *page,
- 		enum migrate_mode mode)
- {
 
 
