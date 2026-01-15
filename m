@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 661F32F619D;
-	Thu, 15 Jan 2026 17:15:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 408F829B200;
+	Thu, 15 Jan 2026 17:15:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497327; cv=none; b=cyPuVIQAXNaU+vkYrTjjlRW5yXHKsqVej0O9pKmzu3nOiLEpkr+U9RoTTG6+R4vcZMUwJB1SWjHU70HvDpekYiEucCCeNIaZqmwp+tJxYIPBCY3ynfHzQ3veK9qX/jgGzaOLaubuI20mlcUkAKOh4AaTbSDadPDg5CdVR/LzYJw=
+	t=1768497330; cv=none; b=s9L/XRF+hD1yFtCB0itYu8t1fh9V2JHKFKD1UlZOfbLVPplJtaxCcZmd4EwYtT90I7Uppb8n5It/3DAK5LU3V41il2hgiUbjJkoRUgllSi301OwTu7D/+2LwCnZLz3OF1ESD449Wvnmo6MVHwxwZBDZAxW4S4NyNz/OlwPoAejg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497327; c=relaxed/simple;
-	bh=Vxfue+zNX0Rq8N5dbUOjzi+SMcXOufcnB4fGZpmTsZc=;
+	s=arc-20240116; t=1768497330; c=relaxed/simple;
+	bh=YI8JNCZY0hDFHdYH+kNDdT9M+eJH684RCs12pNCnsnw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kmUej1Y6in3O7WLQc8X04kRp0rpghgnY6cwzUnPvaGRuAXpe0vU5RIb9Y9TKMBndBG6SDWLo1dkWiTB7PT4YM4dszj9Im1D8KM0JxGIstwoUMxUtQF5AzdYoPzxAjSdmTwzcjKf4GTtb5SDEls5fy8WqaYpIezVozu+NLPQ1VvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hzOjCYuu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OQPw+ORf3HN5NUMpyWrWixVrWbYEgVkUJYx6V0j4Gh+8xfnPc2Mi37gVAnA9t2KGi6p0ojNYIlunAHo/uLWPnpxYw3UwhCISJUbV1B8aJy5HBQos9szq2sO/cg7GK6nhYqcXg/HlUkbFek/LfOhBIVvSFPC3N0nUrng+XTIOdLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o+uGaGAp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hzOjCYuu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2E7DC116D0;
-	Thu, 15 Jan 2026 17:15:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+uGaGAp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3882C116D0;
+	Thu, 15 Jan 2026 17:15:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497327;
-	bh=Vxfue+zNX0Rq8N5dbUOjzi+SMcXOufcnB4fGZpmTsZc=;
+	s=korg; t=1768497330;
+	bh=YI8JNCZY0hDFHdYH+kNDdT9M+eJH684RCs12pNCnsnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hzOjCYuuKa9avkSitdA9YE+aynXIL5QJ+ZNtWuANZ8szWYr7fyCgMfPh95yJfP8r1
-	 lzy0SbtLhKRqiFIGv/7fIkqAOGW7PTR+rihuvjrE/k95kCFTwBT0Ln308F+Vvve52z
-	 1Rr/tM3FGm3PYBowcrfhPfkOSDOo4/sRWlHNXc1g=
+	b=o+uGaGAp1qPYU5oWvdh6ZQS5BYFoATAoKz9M0FG3aXhd9jQLmbt0DM/zU8YHfmW3U
+	 44m2mhEUEjdiZrx1hDJS5bD1j9QHyJpzYKBXa9wrC5Q51Alw0bPQkPKKuozS7siubS
+	 5NtpuZE4qY1lnwoNCfE8jDe32krwjqM8AffAW7BE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Bugaddr <Bugaddr@protonmail.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 043/554] rculist: Add hlist_nulls_replace_rcu() and hlist_nulls_replace_init_rcu()
-Date: Thu, 15 Jan 2026 17:41:49 +0100
-Message-ID: <20260115164247.805901464@linuxfoundation.org>
+Subject: [PATCH 5.15 026/554] platform/x86: acer-wmi: Ignore backlight event
+Date: Thu, 15 Jan 2026 17:41:32 +0100
+Message-ID: <20260115164247.186751245@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -48,114 +46,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 9c4609225ec1cb551006d6a03c7c4ad8cb5584c0 ]
+[ Upstream commit 444a9256f8d106e08a6bc2dc8ef28a8699e4b3ba ]
 
-Add two functions to atomically replace RCU-protected hlist_nulls entries.
+On the Acer Nitro AN515-58, the event 4 - 0 is send by the ACPI
+firmware when the backlight up/down keys are pressed. Ignore this
+event to avoid spamming the kernel log with error messages, as the
+acpi-video driver already handles brightness up/down events.
 
-Keep using WRITE_ONCE() to assign values to ->next and ->pprev, as
-mentioned in the patch below:
-commit efd04f8a8b45 ("rcu: Use WRITE_ONCE() for assignments to ->next for
-rculist_nulls")
-commit 860c8802ace1 ("rcu: Use WRITE_ONCE() for assignments to ->pprev for
-hlist_nulls")
-
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Link: https://patch.msgid.link/20251015020236.431822-2-xuanqiang.luo@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 1532ed0d0753 ("inet: Avoid ehash lookup race in inet_ehash_insert()")
+Reported-by: Bugaddr <Bugaddr@protonmail.com>
+Closes: https://bugaddr.tech/posts/2025-11-16-debugging-the-acer-nitro-5-an515-58-fn-f10-keyboard-backlight-bug-on-linux/#wmi-interface-issues
+Tested-by: Bugaddr <Bugaddr@protonmail.com>
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://patch.msgid.link/20251117155938.3030-1-W_Armin@gmx.de
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/rculist_nulls.h | 59 +++++++++++++++++++++++++++++++++++
- 1 file changed, 59 insertions(+)
+ drivers/platform/x86/acer-wmi.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/linux/rculist_nulls.h b/include/linux/rculist_nulls.h
-index d8afdb8784c1c..c89dd30fa3dff 100644
---- a/include/linux/rculist_nulls.h
-+++ b/include/linux/rculist_nulls.h
-@@ -52,6 +52,13 @@ static inline void hlist_nulls_del_init_rcu(struct hlist_nulls_node *n)
- #define hlist_nulls_next_rcu(node) \
- 	(*((struct hlist_nulls_node __rcu __force **)&(node)->next))
+diff --git a/drivers/platform/x86/acer-wmi.c b/drivers/platform/x86/acer-wmi.c
+index 7ef80f517e76e..ea5dbe8081570 100644
+--- a/drivers/platform/x86/acer-wmi.c
++++ b/drivers/platform/x86/acer-wmi.c
+@@ -86,6 +86,7 @@ MODULE_ALIAS("wmi:676AA15E-6A47-4D9F-A2CC-1E6D18D14026");
  
-+/**
-+ * hlist_nulls_pprev_rcu - returns the dereferenced pprev of @node.
-+ * @node: element of the list.
-+ */
-+#define hlist_nulls_pprev_rcu(node) \
-+	(*((struct hlist_nulls_node __rcu __force **)(node)->pprev))
-+
- /**
-  * hlist_nulls_del_rcu - deletes entry from hash list without re-initialization
-  * @n: the element to delete from the hash list.
-@@ -152,6 +159,58 @@ static inline void hlist_nulls_add_fake(struct hlist_nulls_node *n)
- 	n->next = (struct hlist_nulls_node *)NULLS_MARKER(NULL);
- }
- 
-+/**
-+ * hlist_nulls_replace_rcu - replace an old entry by a new one
-+ * @old: the element to be replaced
-+ * @new: the new element to insert
-+ *
-+ * Description:
-+ * Replace the old entry with the new one in a RCU-protected hlist_nulls, while
-+ * permitting racing traversals.
-+ *
-+ * The caller must take whatever precautions are necessary (such as holding
-+ * appropriate locks) to avoid racing with another list-mutation primitive, such
-+ * as hlist_nulls_add_head_rcu() or hlist_nulls_del_rcu(), running on this same
-+ * list.  However, it is perfectly legal to run concurrently with the _rcu
-+ * list-traversal primitives, such as hlist_nulls_for_each_entry_rcu().
-+ */
-+static inline void hlist_nulls_replace_rcu(struct hlist_nulls_node *old,
-+					   struct hlist_nulls_node *new)
-+{
-+	struct hlist_nulls_node *next = old->next;
-+
-+	WRITE_ONCE(new->next, next);
-+	WRITE_ONCE(new->pprev, old->pprev);
-+	rcu_assign_pointer(hlist_nulls_pprev_rcu(new), new);
-+	if (!is_a_nulls(next))
-+		WRITE_ONCE(next->pprev, &new->next);
-+}
-+
-+/**
-+ * hlist_nulls_replace_init_rcu - replace an old entry by a new one and
-+ * initialize the old
-+ * @old: the element to be replaced
-+ * @new: the new element to insert
-+ *
-+ * Description:
-+ * Replace the old entry with the new one in a RCU-protected hlist_nulls, while
-+ * permitting racing traversals, and reinitialize the old entry.
-+ *
-+ * Note: @old must be hashed.
-+ *
-+ * The caller must take whatever precautions are necessary (such as holding
-+ * appropriate locks) to avoid racing with another list-mutation primitive, such
-+ * as hlist_nulls_add_head_rcu() or hlist_nulls_del_rcu(), running on this same
-+ * list. However, it is perfectly legal to run concurrently with the _rcu
-+ * list-traversal primitives, such as hlist_nulls_for_each_entry_rcu().
-+ */
-+static inline void hlist_nulls_replace_init_rcu(struct hlist_nulls_node *old,
-+						struct hlist_nulls_node *new)
-+{
-+	hlist_nulls_replace_rcu(old, new);
-+	WRITE_ONCE(old->pprev, NULL);
-+}
-+
- /**
-  * hlist_nulls_for_each_entry_rcu - iterate over rcu list of given type
-  * @tpos:	the type * to use as a loop cursor.
+ enum acer_wmi_event_ids {
+ 	WMID_HOTKEY_EVENT = 0x1,
++	WMID_BACKLIGHT_EVENT = 0x4,
+ 	WMID_ACCEL_OR_KBD_DOCK_EVENT = 0x5,
+ 	WMID_GAMING_TURBO_KEY_EVENT = 0x7,
+ 	WMID_AC_EVENT = 0x8,
+@@ -2060,6 +2061,9 @@ static void acer_wmi_notify(u32 value, void *context)
+ 			sparse_keymap_report_event(acer_wmi_input_dev, scancode, 1, true);
+ 		}
+ 		break;
++	case WMID_BACKLIGHT_EVENT:
++		/* Already handled by acpi-video */
++		break;
+ 	case WMID_ACCEL_OR_KBD_DOCK_EVENT:
+ 		acer_gsensor_event();
+ 		acer_kbd_dock_event(&return_value);
 -- 
 2.51.0
 
