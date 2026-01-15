@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA76F3A0E98;
-	Thu, 15 Jan 2026 17:21:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF554C81;
+	Thu, 15 Jan 2026 17:21:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497685; cv=none; b=ZQBho9iji50qrxGKv6JXTL8i8DLUL1XJW5x2yKP+E3qHHurNyHZ4hEGiFmimZb5pJzGK7M4MdnCZBHWgSYOkPX6a4dnKdEaeoUYZKBO/IOKjXEAmuMCXAb52iE+5x74GkB+T1mHQf4pmXSKO26Vn249/2QsOQIB8mfkVGEIkueg=
+	t=1768497687; cv=none; b=koP9bdW1lmuJty+6fl805wTE8beN8Tluo6YCZZGIX8fyFTvwEY1nbeiFeVdywX2FO/ingIwaZiLlOYcLmlZWJOCPRO3P1b21+euHaBy2hhhvcc19TEKLyaUSGXjDtOepQXuMMkaLU7U/3On8tYD1HQF1h/fXtIdKZB2A07fnwz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497685; c=relaxed/simple;
-	bh=Yj0poCItF8kZTX0dsKPiYnq3mL25ORCAW/xk1yTgses=;
+	s=arc-20240116; t=1768497687; c=relaxed/simple;
+	bh=AHUY62AhcsNu5zYeHSFs9vewAx0yE3uZe6UtRbihgrk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VWTzfmzD1ByWR1QLlaX8X25Koi2rO+jZwXcu1VR34NM6Q/ypvGaQg5GUhJmVzL8G5bzzX89BvABOS/BfSp9mFeiBuD617YXgSgwqeqF3iyMIhjHKjvn/jFEfVMFELWzOeLjMKIOu5WHOQiLaAFGZje5SOaW5dgj+b4ctrpfPgMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b9cabBAs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vCl8kknm+/85huzs0KWHXWlr0ZbV4HJ0xhTbaDVRrGOHaDe8ywi64Ejtu1AGBnVDri0kM8B9bdiIscYlnKgZPldgBRhrw+Hx71o8I2nJOX0OUQ5/co0K0BPMO/G+2bgheJNw+LBR/vATVGIg8qKfOnjyxpjBoGZM+x1KA1AKvz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HxYk0l/5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b9cabBAs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CAC7C116D0;
-	Thu, 15 Jan 2026 17:21:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HxYk0l/5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C181C116D0;
+	Thu, 15 Jan 2026 17:21:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497684;
-	bh=Yj0poCItF8kZTX0dsKPiYnq3mL25ORCAW/xk1yTgses=;
+	s=korg; t=1768497687;
+	bh=AHUY62AhcsNu5zYeHSFs9vewAx0yE3uZe6UtRbihgrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b9cabBAs0BYHxbaVxVqTrXpC2D47gNbfqGfAFSnhOCsJzQ06YPUZ2vTWGnYYczxOD
-	 pyIsol3/msISH//Y59a6Dot6NcyrD3PWek6gDaSc5zPwCHkNEl1/jN1qq8FNBkc4jk
-	 FA01lpvxBkCbGqjTWC3TPmoIlpP/pZpMciMqBzqA=
+	b=HxYk0l/54nNVIzuFueogY9DV0rrh+WgDbEJJBDNKGe9UHyQF2lEq5cv3PvTLob9Yk
+	 rXTFwkRD/KcgSHlYh4NX7h0vTpT/5gdEYhoOg8+OJpDt5SRbOPCngvhlLA7SYcV7q8
+	 YzEzEfaXD9VhRifegoz3w9e5w+5W09rE9gIrI3xA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthijs Kooijman <matthijs@stdin.nl>,
-	Haojian Zhuang <haojian.zhuang@linaro.org>,
-	Tony Lindgren <tony@atomide.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 166/554] pinctrl: single: Fix PIN_CONFIG_BIAS_DISABLE handling
-Date: Thu, 15 Jan 2026 17:43:52 +0100
-Message-ID: <20260115164252.276662488@linuxfoundation.org>
+Subject: [PATCH 5.15 135/554] PCI: dwc: Fix wrong PORT_LOGIC_LTSSM_STATE_MASK definition
+Date: Thu, 15 Jan 2026 17:43:21 +0100
+Message-ID: <20260115164251.138049514@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -53,93 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthijs Kooijman <matthijs@stdin.nl>
+From: Shawn Lin <shawn.lin@rock-chips.com>
 
-[ Upstream commit b5fe46efc147516a908d2d31bf40eb858ab76d51 ]
+[ Upstream commit bcc9a4a0bca3aee4303fa4a20302e57b24ac8f68 ]
 
-The pinctrl-single driver handles pin_config_set by looking up the
-requested setting in a DT-defined lookup table, which defines what bits
-correspond to each setting. There is no way to add
-PIN_CONFIG_BIAS_DISABLE entries to the table, since there is instead
-code to disable the bias by applying the disable values of both the
-pullup and pulldown entries in the table.
+As per DesignWare Cores PCI Express Controller Databook, section 5.50,
+SII: Debug Signals, cxpl_debug_info[63:0]:
 
-However, this code is inside the table-lookup loop, so it would only
-execute if there is an entry for PIN_CONFIG_BIAS_DISABLE in the table,
-which can never exist, so this code never runs.
+  [5:0] smlh_ltssm_state: LTSSM current state. Encoding is same as the
+  dedicated smlh_ltssm_state output.
 
-This commit lifts the offending code out of the loop, so it just
-executes directly whenever PIN_CONFIG_BIAS_DISABLE is requested,
-skippipng the table lookup loop.
+The mask should be 6 bits, from 0 to 5. Hence, fix the mask definition.
 
-This also introduces a new `param` variable to make the code slightly
-more readable.
-
-This bug seems to have existed when this code was first merged in commit
-9dddb4df90d13 ("pinctrl: single: support generic pinconf"). Earlier
-versions of this patch did have an entry for PIN_CONFIG_BIAS_DISABLE in
-the lookup table, but that was removed, which is probably how this bug
-was introduced.
-
-Signed-off-by: Matthijs Kooijman <matthijs@stdin.nl>
-Reviewed-by: Haojian Zhuang <haojian.zhuang@linaro.org>
-Reviewed-by: Tony Lindgren <tony@atomide.com>
-Message-ID: <20240319110633.230329-1-matthijs@stdin.nl>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Stable-dep-of: 61d1bb53547d ("pinctrl: single: Fix incorrect type for error return variable")
+Fixes: 23fe5bd4be90 ("PCI: keystone: Cleanup ks_pcie_link_up()")
+Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+[mani: reworded description]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/1763122140-203068-1-git-send-email-shawn.lin@rock-chips.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-single.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/pci/controller/dwc/pcie-designware.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/pinctrl-single.c b/drivers/pinctrl/pinctrl-single.c
-index a72911e8ea82d..b81297084f097 100644
---- a/drivers/pinctrl/pinctrl-single.c
-+++ b/drivers/pinctrl/pinctrl-single.c
-@@ -557,21 +557,30 @@ static int pcs_pinconf_set(struct pinctrl_dev *pctldev,
- 	unsigned offset = 0, shift = 0, i, data, ret;
- 	u32 arg;
- 	int j;
-+	enum pin_config_param param;
+diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+index 8ba2392926346..5960ae40b0f2d 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.h
++++ b/drivers/pci/controller/dwc/pcie-designware.h
+@@ -52,7 +52,7 @@
+ #define PORT_LINK_MODE_8_LANES		PORT_LINK_MODE(0xf)
  
- 	ret = pcs_get_function(pctldev, pin, &func);
- 	if (ret)
- 		return ret;
- 
- 	for (j = 0; j < num_configs; j++) {
-+		param = pinconf_to_config_param(configs[j]);
-+
-+		/* BIAS_DISABLE has no entry in the func->conf table */
-+		if (param == PIN_CONFIG_BIAS_DISABLE) {
-+			/* This just disables all bias entries */
-+			pcs_pinconf_clear_bias(pctldev, pin);
-+			continue;
-+		}
-+
- 		for (i = 0; i < func->nconfs; i++) {
--			if (pinconf_to_config_param(configs[j])
--				!= func->conf[i].param)
-+			if (param != func->conf[i].param)
- 				continue;
- 
- 			offset = pin * (pcs->width / BITS_PER_BYTE);
- 			data = pcs->read(pcs->base + offset);
- 			arg = pinconf_to_config_argument(configs[j]);
--			switch (func->conf[i].param) {
-+			switch (param) {
- 			/* 2 parameters */
- 			case PIN_CONFIG_INPUT_SCHMITT:
- 			case PIN_CONFIG_DRIVE_STRENGTH:
-@@ -583,9 +592,6 @@ static int pcs_pinconf_set(struct pinctrl_dev *pctldev,
- 				data |= (arg << shift) & func->conf[i].mask;
- 				break;
- 			/* 4 parameters */
--			case PIN_CONFIG_BIAS_DISABLE:
--				pcs_pinconf_clear_bias(pctldev, pin);
--				break;
- 			case PIN_CONFIG_BIAS_PULL_DOWN:
- 			case PIN_CONFIG_BIAS_PULL_UP:
- 				if (arg) {
+ #define PCIE_PORT_DEBUG0		0x728
+-#define PORT_LOGIC_LTSSM_STATE_MASK	0x1f
++#define PORT_LOGIC_LTSSM_STATE_MASK	0x3f
+ #define PORT_LOGIC_LTSSM_STATE_L0	0x11
+ #define PCIE_PORT_DEBUG1		0x72C
+ #define PCIE_PORT_DEBUG1_LINK_UP		BIT(4)
 -- 
 2.51.0
 
