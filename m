@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 812FC3BFE27;
-	Thu, 15 Jan 2026 17:47:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526953BFE5F;
+	Thu, 15 Jan 2026 17:47:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499237; cv=none; b=YK8QzacfwdnsUHdCOfH7SePAcU2PmOCeXAE3mmvtF54k6JH1e+c1Mpo8NeocVcpd6a1lfKog2hqKoQxSFzGd1WYZPhrDryRjwRND/Fo3sqAVSAimxcdc4Q8oE9uRZIxS/3pbWvH9/jrjYlHa6d2eHXHq1LyoRgjImO6tSIUP/fc=
+	t=1768499240; cv=none; b=T3e/Ec5qf/wuqDPUi6QvK2wTWcYWs1K7Hq5AiNyONwWQd7cmwYyByba94qkAuaCcp83BuI3qd09rh98uxr7zucLP31AEzmr9pfquCHdqU2dBEl9CI3MKSrh95FrTuWeQn1+4qEgs1iDAscA1h+4z91GY7BW3kwNP8tD3vyua3Ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499237; c=relaxed/simple;
-	bh=y3pM0IXDkqmaNAhiGnQv/CqvJo5F2Syyqdex5un1z/k=;
+	s=arc-20240116; t=1768499240; c=relaxed/simple;
+	bh=vAcruV3qsmgntAAN3p1ReQUIA0M6HiDZZaVMd1Hqh24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MKYy4hTKIvU5DRC6kFYxxZobGNaNmukgMxCwhF0EYLli0RVXtBDc5YZ20nwdjnmUdh+FIdhz1S7E7eZInSkf5Ic/5VVviCrefrVGwhWzarTSUTQqBXSV8ElrCTAfBD+FoJtN5ZSDgQ/S53RzTIDfObbddOPaYEh8++PiSrLxc0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DyvbNyrM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=quDsCOlvzMDJArXe3ZjUXDwYvq2GTpygT7xEI2YZBYrGljmVRi6o+tMGdjofomOx+iZ0RxW4HGwbqgbKra8JNYcLaK18Xkzu/P8TsRqdy3kICghgEbY3jUGfj+OeKEti3sCu7+W95Gv3TqPm9hGYOKGYy6yhsT1GCBGJka/IOAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rem5eMaw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DyvbNyrM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D1B9C116D0;
-	Thu, 15 Jan 2026 17:47:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rem5eMaw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D157AC16AAE;
+	Thu, 15 Jan 2026 17:47:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499237;
-	bh=y3pM0IXDkqmaNAhiGnQv/CqvJo5F2Syyqdex5un1z/k=;
+	s=korg; t=1768499240;
+	bh=vAcruV3qsmgntAAN3p1ReQUIA0M6HiDZZaVMd1Hqh24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DyvbNyrMtjPGvYGniuuEfYt7Bq0nZjtpfud1KhW9Y7o28V8Wd3m7UvGHK8JTJLQVj
-	 7Yyg5PzCDJ5aZHuncJlijp1qh5NzBkQVuTDh2dSWQ+iDNWmpBZezjEhG0VusdnPhEt
-	 BNAjvYMSo0TLQRSBP18t1GRSlq4E4rmmPZ43tjGc=
+	b=rem5eMawWmkPUJdJZ8DtD/nVT+C8GBstjX5bv5zoC7cJcg5ciIdKt2fBOgy0HDTy/
+	 vRRHlCyFnFyljnr2oriyxojvlxzugzoMHCZITPmNo53AprA01+8SS91gP082fg2lmI
+	 tK5AIpMN1XiH70DmD0u2K+MSF6v6/QxBpMLU/gF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Mosnacek <omosnace@redhat.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	syzbot+eadd98df8bceb15d7fed@syzkaller.appspotmail.com,
+	Qu Wenruo <wqu@suse.com>,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 155/451] bpf, arm64: Do not audit capability check in do_jit()
-Date: Thu, 15 Jan 2026 17:45:56 +0100
-Message-ID: <20260115164236.520575220@linuxfoundation.org>
+Subject: [PATCH 5.10 156/451] btrfs: fix memory leak of fs_devices in degraded seed device path
+Date: Thu, 15 Jan 2026 17:45:57 +0100
+Message-ID: <20260115164236.556461436@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -51,54 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ondrej Mosnacek <omosnace@redhat.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-[ Upstream commit 189e5deb944a6f9c7992355d60bffd8ec2e54a9c ]
+[ Upstream commit b57f2ddd28737db6ff0e9da8467f0ab9d707e997 ]
 
-Analogically to the x86 commit 881a9c9cb785 ("bpf: Do not audit
-capability check in do_jit()"), change the capable() call to
-ns_capable_noaudit() in order to avoid spurious SELinux denials in audit
-log.
+In open_seed_devices(), when find_fsid() fails and we're in DEGRADED
+mode, a new fs_devices is allocated via alloc_fs_devices() but is never
+added to the seed_list before returning. This contrasts with the normal
+path where fs_devices is properly added via list_add().
 
-The commit log from that commit applies here as well:
-"""
-The failure of this check only results in a security mitigation being
-applied, slightly affecting performance of the compiled BPF program. It
-doesn't result in a failed syscall, an thus auditing a failed LSM
-permission check for it is unwanted. For example with SELinux, it causes
-a denial to be reported for confined processes running as root, which
-tends to be flagged as a problem to be fixed in the policy. Yet
-dontauditing or allowing CAP_SYS_ADMIN to the domain may not be
-desirable, as it would allow/silence also other checks - either going
-against the principle of least privilege or making debugging potentially
-harder.
+If any error occurs later in read_one_dev() or btrfs_read_chunk_tree(),
+the cleanup code iterates seed_list to free seed devices, but this
+orphaned fs_devices is never found and never freed, causing a memory
+leak. Any devices allocated via add_missing_dev() and attached to this
+fs_devices are also leaked.
 
-Fix it by changing it from capable() to ns_capable_noaudit(), which
-instructs the LSMs to not audit the resulting denials.
-"""
+Fix this by adding the newly allocated fs_devices to seed_list in the
+degraded path, consistent with the normal path.
 
-Fixes: f300769ead03 ("arm64: bpf: Only mitigate cBPF programs loaded by unprivileged users")
-Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
-Link: https://lore.kernel.org/r/20251204125916.441021-1-omosnace@redhat.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 5f37583569442 ("Btrfs: move the missing device to its own fs device list")
+Reported-by: syzbot+eadd98df8bceb15d7fed@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=eadd98df8bceb15d7fed
+Tested-by: syzbot+eadd98df8bceb15d7fed@syzkaller.appspotmail.com
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/net/bpf_jit_comp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/volumes.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
-index 970d8f318177c..e98fe8c006cc9 100644
---- a/arch/arm64/net/bpf_jit_comp.c
-+++ b/arch/arm64/net/bpf_jit_comp.c
-@@ -342,7 +342,7 @@ static void __maybe_unused build_bhb_mitigation(struct jit_ctx *ctx)
- 	    arm64_get_spectre_v2_state() == SPECTRE_VULNERABLE)
- 		return;
+diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
+index 9c1a7b3b84e42..2bba6e8d43740 100644
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -6899,6 +6899,7 @@ static struct btrfs_fs_devices *open_seed_devices(struct btrfs_fs_info *fs_info,
  
--	if (capable(CAP_SYS_ADMIN))
-+	if (ns_capable_noaudit(&init_user_ns, CAP_SYS_ADMIN))
- 		return;
+ 		fs_devices->seeding = true;
+ 		fs_devices->opened = 1;
++		list_add(&fs_devices->seed_list, &fs_info->fs_devices->seed_list);
+ 		return fs_devices;
+ 	}
  
- 	if (supports_clearbhb(SCOPE_SYSTEM)) {
 -- 
 2.51.0
 
