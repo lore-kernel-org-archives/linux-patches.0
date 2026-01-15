@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C2B86334;
-	Thu, 15 Jan 2026 17:38:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C796A2C0270;
+	Thu, 15 Jan 2026 17:38:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498720; cv=none; b=hNYm9nI4lfZqKdcPGYKbYZ0e/3whhhM46bBvieu+fzZ+bP2pQ1+4ne72DUzbepsnRpsqS8E0cBntBfZsrKxY4nFevRoM2wAEZnSU//0KkD2s++VMqSd2KMKYyD4QuOngwNTUfPLAK232z3xhlK9Hp4Oxyf+KVQ7/XXJ9HKoz/NM=
+	t=1768498723; cv=none; b=A03g1ek5uem5FC6TaZ2rsrN+dBho/CoCzrxYdiqoybZvcNr3WoF/aL7QLvsFYjBZGU4kBvkiEh7xumNEmKNCQmVSOGuaLOPr+CyIhLhU6vKdaeKuLIow51OyE1V/vNKByJ2wzAsY/8nJ/np8v2eg+XZCrSLfN95hE8woZQ4/AAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498720; c=relaxed/simple;
-	bh=vcb8DYub5I7ndI/ak1HH/wHxSCAJH/eudNXlyBxVylc=;
+	s=arc-20240116; t=1768498723; c=relaxed/simple;
+	bh=BUHlI4RyfazMwnpvV2MGJhKNL3T8454fRgEuSrmwr6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y7oQe8Qk+9Ew21tgwww4oryyts4NW43cXcOBRxuh/Ao/L/0nfY6LB+Vc8Cd5/A4UvgqhwXPb06JIDsgwu/BqQ8F2xuL+OZ6krZPdyKaQ7zdNp8EOS4id2iW0dkZPEawq/OZBstwljgRSzklF3USOYcazVdwbelfaUTsOH9aIAU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GBL0Vske; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dUs/GkGn53whhy47nd/B8Q+msjFbQ2AbJa3KH5BXjnKdsDDMAlFezs7s81l7wVhzUfbvjpbpYeTrPk2TgY5SOajZsCE7nNJM3XLqsNpQSLwTsmQsZkHLMboI+1eAjaYw/iMBLojI1QgnczGbCeYkGqFeklZ3oHr/SaccfRFToj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DZPqNYU3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GBL0Vske"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 422D0C116D0;
-	Thu, 15 Jan 2026 17:38:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DZPqNYU3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0052EC116D0;
+	Thu, 15 Jan 2026 17:38:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498720;
-	bh=vcb8DYub5I7ndI/ak1HH/wHxSCAJH/eudNXlyBxVylc=;
+	s=korg; t=1768498723;
+	bh=BUHlI4RyfazMwnpvV2MGJhKNL3T8454fRgEuSrmwr6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GBL0VskeqxRuqrXmcMrnrzOvYDxvQGMagH7P+z35gSHUikQVo4V9ExUjzzdd+GKvy
-	 hOhiUc47qVEIJqyXgRiDrJqdtw92IR5/r97TWr4QxEgUy7HZaIoEsZmcWKDyXY97kK
-	 rnDlo6SzhcsJPq8KmCbzw8dGc4sMwsSG6+ExcNpQ=
+	b=DZPqNYU3wJzuEy9j5bwSvQb/uum2YcrgtLoJ8bMNOaQWp7P/b2Wb6LoDgq7skJEem
+	 BnikLc+MDsQNQ9wQnO0ElRT8jtM+xrmLAbI5h6E1ccSrgr0ZlJBYqfgnLlKB4MZONJ
+	 LUmd/hfZDus6siNpIyjCvkXFT0RoXEdK6Wxo2Wl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Amitai Gottlieb <amitaig@hailo.ai>,
-	Sudeep Holla <sudeep.holla@arm.com>
-Subject: [PATCH 5.15 497/554] firmware: arm_scmi: Fix unused notifier-block in unregister
-Date: Thu, 15 Jan 2026 17:49:23 +0100
-Message-ID: <20260115164304.308193945@linuxfoundation.org>
+	Ashish Kalra <ashish.kalra@amd.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Sairaj Kodilkar <sarunkod@amd.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 498/554] Revert "iommu/amd: Skip enabling command/event buffers for kdump"
+Date: Thu, 15 Jan 2026 17:49:24 +0100
+Message-ID: <20260115164304.345165719@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -52,39 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amitai Gottlieb <amitaig@hailo.ai>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-In scmi_devm_notifier_unregister(), the notifier-block argument was ignored
-and never passed to devres_release(). As a result, the function always
-returned -ENOENT and failed to unregister the notifier.
+This reverts commit bb8f9de71c9bd442ec5e1d52ce830428860892f0 which is
+commit 9be15fbfc6c5c89c22cf6e209f66ea43ee0e58bb upstream.
 
-Drivers that depend on this helper for teardown could therefore hit
-unexpected failures, including kernel panics.
+This causes problems in older kernel trees as SNP host kdump is not
+supported in them, so drop it from the stable branches.
 
-Commit 264a2c520628 ("firmware: arm_scmi: Simplify scmi_devm_notifier_unregister")
-removed the faulty code path during refactoring and hence this fix is not
-required upstream.
-
-Cc: <stable@vger.kernel.org> # 5.15.x, 6.1.x, and 6.6.x
-Fixes: 5ad3d1cf7d34 ("firmware: arm_scmi: Introduce new devres notification ops")
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
-Signed-off-by: Amitai Gottlieb <amitaig@hailo.ai>
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Reported-by: Ashish Kalra <ashish.kalra@amd.com>
+Link: https://lore.kernel.org/r/dacdff7f-0606-4ed5-b056-2de564404d51@amd.com
+Cc: Vasant Hegde <vasant.hegde@amd.com>
+Cc: Sairaj Kodilkar <sarunkod@amd.com>
+Cc: Joerg Roedel <joerg.roedel@amd.com>
+Cc: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/arm_scmi/notify.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/iommu/amd/init.c |   28 +++++++++-------------------
+ 1 file changed, 9 insertions(+), 19 deletions(-)
 
---- a/drivers/firmware/arm_scmi/notify.c
-+++ b/drivers/firmware/arm_scmi/notify.c
-@@ -1539,6 +1539,7 @@ static int scmi_devm_notifier_unregister
- 	dres.handle = sdev->handle;
- 	dres.proto_id = proto_id;
- 	dres.evt_id = evt_id;
-+	dres.nb = nb;
- 	if (src_id) {
- 		dres.__src_id = *src_id;
- 		dres.src_id = &dres.__src_id;
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -696,16 +696,11 @@ static void iommu_enable_command_buffer(
+ 
+ 	BUG_ON(iommu->cmd_buf == NULL);
+ 
+-	if (!is_kdump_kernel()) {
+-		/*
+-		 * Command buffer is re-used for kdump kernel and setting
+-		 * of MMIO register is not required.
+-		 */
+-		entry = iommu_virt_to_phys(iommu->cmd_buf);
+-		entry |= MMIO_CMD_SIZE_512;
+-		memcpy_toio(iommu->mmio_base + MMIO_CMD_BUF_OFFSET,
+-			    &entry, sizeof(entry));
+-	}
++	entry = iommu_virt_to_phys(iommu->cmd_buf);
++	entry |= MMIO_CMD_SIZE_512;
++
++	memcpy_toio(iommu->mmio_base + MMIO_CMD_BUF_OFFSET,
++		    &entry, sizeof(entry));
+ 
+ 	amd_iommu_reset_cmd_buffer(iommu);
+ }
+@@ -754,15 +749,10 @@ static void iommu_enable_event_buffer(st
+ 
+ 	BUG_ON(iommu->evt_buf == NULL);
+ 
+-	if (!is_kdump_kernel()) {
+-		/*
+-		 * Event buffer is re-used for kdump kernel and setting
+-		 * of MMIO register is not required.
+-		 */
+-		entry = iommu_virt_to_phys(iommu->evt_buf) | EVT_LEN_MASK;
+-		memcpy_toio(iommu->mmio_base + MMIO_EVT_BUF_OFFSET,
+-			    &entry, sizeof(entry));
+-	}
++	entry = iommu_virt_to_phys(iommu->evt_buf) | EVT_LEN_MASK;
++
++	memcpy_toio(iommu->mmio_base + MMIO_EVT_BUF_OFFSET,
++		    &entry, sizeof(entry));
+ 
+ 	/* set head and tail to zero manually */
+ 	writel(0x00, iommu->mmio_base + MMIO_EVT_HEAD_OFFSET);
 
 
