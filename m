@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26C813D1CB5;
-	Thu, 15 Jan 2026 17:54:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0DA43C00AA;
+	Thu, 15 Jan 2026 17:54:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499690; cv=none; b=HyPvBcBN+3n6TULuKN5C7wup6VhBTN3bmVjMkjDeY9MfuXqoXkZTdNbAzj+OFglWBpT2ztgJnaCGdfjRDtpXND0sWzCxIqmlYWroVcJXJ0c5xeN//qQm50MqaQvYtoDBwQ4gjyp8sOvcmLb4I+VYaMi5qv+3szayARS6DPcR0Uk=
+	t=1768499692; cv=none; b=b0IHr93drD6g9zGIcsDlRgZU7Z8NslAyFbH/05YXDOwG4jVa1KjhxWlh30PI9CGZ7lpxKiN/C78VsA9g3ZzaHsldceTOC2LXvFmEmmUW9Dv5UPDag0qyWWZEvTwF/QRakEwmVll9M8kGQu/ym9KnikANYYOvTc/PZ90TJQh1sQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499690; c=relaxed/simple;
-	bh=eF2Acnhms8BvdSNUNBdAqEj4M0u2N8uAe6rSFpCC5FA=;
+	s=arc-20240116; t=1768499692; c=relaxed/simple;
+	bh=nf18jLEYGqjo9p8SI90o/A0pbQb66QGHekcam4KKLi8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ra9XUD57pjo83rJ84I2mFcvsfQRDgw/uB1JezQxwspLd2nn1T7JjGsRnchrTlHG9EcW9ItwHGxwgFC65YPbHMO6eapPQNRYUtvHW1qaF2dSq+KWYTf/hsTXZq8iAtEJaNC+urXv4+5GjgkCdRg7jQ9+iyToEnjM2iqFEjqZJjCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qk32/46e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jNQe2HSsYPV3ho3RQPhihLTE65ll1eOFqk/vfUYLUC02lJ/oNJfA4gYj5Io8LiRUIw8Ts4MMHeJtn+Cx9Bs6NeHODp78u9ubUwoZmFVTfv11R7dB/0fJZ5XZq1xdzdyoSNGw0MqQ4aL+IuwOpC/hUviNkbF1FMtKHqwnbnUyN9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Il3l4aql; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qk32/46e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AC8CC116D0;
-	Thu, 15 Jan 2026 17:54:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Il3l4aql"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B07AC116D0;
+	Thu, 15 Jan 2026 17:54:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499689;
-	bh=eF2Acnhms8BvdSNUNBdAqEj4M0u2N8uAe6rSFpCC5FA=;
+	s=korg; t=1768499692;
+	bh=nf18jLEYGqjo9p8SI90o/A0pbQb66QGHekcam4KKLi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qk32/46e+2KlFRoIdwkHk08P5OvXE20gJ+O+HLtBgJWgZOoJbiJaHNcng+nwFV42W
-	 sSTCqL4RX0nRrYX6SyJH30aBOPW/jqmevFdZSJAICNAAlGz1v+n75wcuHIyz/TjR2+
-	 Ho51tboJjQDEGVdvBobbn05WsY5C5TAHkZRHJ/1g=
+	b=Il3l4aqlqbpqmBICbD8ZPyPSpDoO2qrKLPUkPCq1GfKqUcDs0++VL8PQWNU9byJzt
+	 0om+UHHcSKqp+vixxA5sEqKgRk1sPSaILOCiY33ebAgKu1fpikOdIgntY4m+uPoIn+
+	 UoA3wuko2rZhf7DkfIh9FfxZAX3RMXztq6rP+9pQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schnelle <svens@stackframe.org>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.10 316/451] parisc: entry: set W bit for !compat tasks in syscall_restore_rfi()
-Date: Thu, 15 Jan 2026 17:48:37 +0100
-Message-ID: <20260115164242.332790793@linuxfoundation.org>
+	Ivan Abramov <i.abramov@mt-integration.ru>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 5.10 317/451] media: adv7842: Avoid possible out-of-bounds array accesses in adv7842_cp_log_status()
+Date: Thu, 15 Jan 2026 17:48:38 +0100
+Message-ID: <20260115164242.368641079@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -50,58 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Schnelle <svens@stackframe.org>
+From: Ivan Abramov <i.abramov@mt-integration.ru>
 
-commit 5fb1d3ce3e74a4530042795e1e065422295f1371 upstream.
+commit 8163419e3e05d71dcfa8fb49c8fdf8d76908fe51 upstream.
 
-When the kernel leaves to userspace via syscall_restore_rfi(), the
-W bit is not set in the new PSW. This doesn't cause any problems
-because there's no 64 bit userspace for parisc. Simple static binaries
-are usually loaded at addresses way below the 32 bit limit so the W bit
-doesn't matter.
+It's possible for cp_read() and hdmi_read() to return -EIO. Those
+values are further used as indexes for accessing arrays.
 
-Fix this by setting the W bit when TIF_32BIT is not set.
+Fix that by checking return values where it's needed.
 
-Signed-off-by: Sven Schnelle <svens@stackframe.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: a89bcd4c6c20 ("[media] adv7842: add new video decoder driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Ivan Abramov <i.abramov@mt-integration.ru>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/asm-offsets.c |    2 ++
- arch/parisc/kernel/entry.S       |    5 ++++-
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ drivers/media/i2c/adv7842.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/arch/parisc/kernel/asm-offsets.c
-+++ b/arch/parisc/kernel/asm-offsets.c
-@@ -262,6 +262,8 @@ int main(void)
- 	BLANK();
- 	DEFINE(TIF_BLOCKSTEP_PA_BIT, 31-TIF_BLOCKSTEP);
- 	DEFINE(TIF_SINGLESTEP_PA_BIT, 31-TIF_SINGLESTEP);
-+	DEFINE(TIF_32BIT_PA_BIT, 31-TIF_32BIT);
-+
- 	BLANK();
- 	DEFINE(ASM_PMD_SHIFT, PMD_SHIFT);
- 	DEFINE(ASM_PGDIR_SHIFT, PGDIR_SHIFT);
---- a/arch/parisc/kernel/entry.S
-+++ b/arch/parisc/kernel/entry.S
-@@ -1913,6 +1913,10 @@ syscall_restore_rfi:
- 	extru,= %r19,TIF_BLOCKSTEP_PA_BIT,1,%r0
- 	depi	-1,7,1,%r20			   /* T bit */
+--- a/drivers/media/i2c/adv7842.c
++++ b/drivers/media/i2c/adv7842.c
+@@ -2671,6 +2671,7 @@ static int adv7842_cp_log_status(struct
+ 	/* CP block */
+ 	struct adv7842_state *state = to_state(sd);
+ 	struct v4l2_dv_timings timings;
++	int temp;
+ 	u8 reg_io_0x02 = io_read(sd, 0x02);
+ 	u8 reg_io_0x21 = io_read(sd, 0x21);
+ 	u8 reg_rep_0x77 = rep_read(sd, 0x77);
+@@ -2793,8 +2794,9 @@ static int adv7842_cp_log_status(struct
+ 		  (((reg_io_0x02 >> 2) & 0x01) ^ (reg_io_0x02 & 0x01)) ?
+ 			"(16-235)" : "(0-255)",
+ 		  (reg_io_0x02 & 0x08) ? "enabled" : "disabled");
++	temp = cp_read(sd, 0xf4) >> 4;
+ 	v4l2_info(sd, "Color space conversion: %s\n",
+-		  csc_coeff_sel_rb[cp_read(sd, 0xf4) >> 4]);
++		  temp < 0 ? "" : csc_coeff_sel_rb[temp]);
  
-+#ifdef CONFIG_64BIT
-+	extru,<> %r19,TIF_32BIT_PA_BIT,1,%r0
-+	depi	-1,4,1,%r20			   /* W bit */
-+#endif
- 	STREG	%r20,TASK_PT_PSW(%r1)
+ 	if (!is_digital_input(sd))
+ 		return 0;
+@@ -2824,8 +2826,9 @@ static int adv7842_cp_log_status(struct
+ 			hdmi_read(sd, 0x5f));
+ 	v4l2_info(sd, "AV Mute: %s\n",
+ 			(hdmi_read(sd, 0x04) & 0x40) ? "on" : "off");
++	temp = hdmi_read(sd, 0x0b) >> 6;
+ 	v4l2_info(sd, "Deep color mode: %s\n",
+-			deep_color_mode_txt[hdmi_read(sd, 0x0b) >> 6]);
++			temp < 0 ? "" : deep_color_mode_txt[temp]);
  
- 	/* Always store space registers, since sr3 can be changed (e.g. fork) */
-@@ -1926,7 +1930,6 @@ syscall_restore_rfi:
- 	STREG   %r25,TASK_PT_IASQ0(%r1)
- 	STREG   %r25,TASK_PT_IASQ1(%r1)
+ 	adv7842_log_infoframes(sd);
  
--	/* XXX W bit??? */
- 	/* Now if old D bit is clear, it means we didn't save all registers
- 	 * on syscall entry, so do that now.  This only happens on TRACEME
- 	 * calls, or if someone attached to us while we were on a syscall.
 
 
