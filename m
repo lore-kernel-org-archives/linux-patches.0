@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 405713BBA12;
-	Thu, 15 Jan 2026 17:01:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13244350A05;
+	Thu, 15 Jan 2026 17:01:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496469; cv=none; b=ODE4UIsusWUR5/+HucSq3ED+/4uaGj10yRSg18Qs7SPNwu84hKKTbtIlKvMYLUKwDPS8/Lqi9Es++Y0Zf5+Izj9vIl8h6KzoMfbkG4G66Wwt6pWtMaQE/zVFmPosWuvXFhpqT5i5TIb3Mp4FsO6HFz8LpFmSH6JfI30BQts5Qx8=
+	t=1768496472; cv=none; b=u2KF63Pr1X14U/j64CKyf0KjAhZ4CWFs33iQtsvRL1DMelp1f4vSnHgA0A3pPhMuUq5+5viTxsIwQigzZxQE1Br6DghVPwyXm2sstbcgq+sEFQ4MeGWROOfDuiH1Xu1OAx7UWcilXBKSjQwSZTLfxoDbxTyj1HNUxS1V5ut5+ak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496469; c=relaxed/simple;
-	bh=2K8ReMRAxRhkX98YenyvX3b2rytspL644da2vplD63U=;
+	s=arc-20240116; t=1768496472; c=relaxed/simple;
+	bh=Rd/F/+dmcje+rzLWHWAnAaUWGJLURKzY681oeaA0BRk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uSZb1lTguKZiDdGIoruIdExa5ToX7OYucmZQdMgZkgqFm7DizSMb2WcWhynoQ4YSeYIf1v0FUVE1LY206MSjBtbTUOtcYVSAORO+AZ7G4m66VHmIvQGx6XYWnvgYiUGDDcFNWiLbPKT6Mpjk3WEiGm2hrDQAMEHaaKRyVVd95hQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MolPb/VR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CAXDWmqgbf6jpGcDQEmJ3bV8MVUtyQDuJ5Jzy5MPzaKuFZEOKeZaxsWDBmqzDLRnsDWgdfauSQHgVVeMuHj3cCKtrgPsxT80HBM5A8mcPiXUe8LxgD4qa7XJlTvpRXc3vEnphHkfXqIuoWVcwOFT+SAU4MekQ/Bkl59gEcHFCg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wSn8TKOK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MolPb/VR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78A0EC116D0;
-	Thu, 15 Jan 2026 17:01:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wSn8TKOK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 513E2C116D0;
+	Thu, 15 Jan 2026 17:01:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496468;
-	bh=2K8ReMRAxRhkX98YenyvX3b2rytspL644da2vplD63U=;
+	s=korg; t=1768496471;
+	bh=Rd/F/+dmcje+rzLWHWAnAaUWGJLURKzY681oeaA0BRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MolPb/VRmYOEs5Go9vmsU2UN4C6//Stwio5YvX9R4OakJb2cR5YdvFmt0YORk0lr4
-	 2LfO1ldF0ONQ0JLWAG0qK2J/nyiiHrBewIxVi1tvSfZb7E1eGCCQtAB6ftWTXAVsx1
-	 nIWoASDdz55rJ4B7XvIW9gQvqvgbVmso/Mj4sbt4=
+	b=wSn8TKOKgoAhtHIID7nQp9o048tWn9xmMYTxdO4geo8q1/5Wj0b/kLDFjSsHWcnp9
+	 p1VPXCnGIQOwYi9k20zUqq9xs0lhs8Jl3pcrEkdhqL5wJJDIUV0DSE7g05iNrlM1qL
+	 Vz/fkEKkKmA+9Xmw+Aw2QhllFPHUuesL9iScHllY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ziming zhang <ezrakiez@gmail.com>,
+	Tuo Li <islituo@gmail.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
 	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.12 023/119] libceph: replace overzealous BUG_ON in osdmap_apply_incremental()
-Date: Thu, 15 Jan 2026 17:47:18 +0100
-Message-ID: <20260115164152.798945919@linuxfoundation.org>
+Subject: [PATCH 6.12 024/119] libceph: make free_choose_arg_map() resilient to partial allocation
+Date: Thu, 15 Jan 2026 17:47:19 +0100
+Message-ID: <20260115164152.834735006@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -50,38 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Tuo Li <islituo@gmail.com>
 
-commit e00c3f71b5cf75681dbd74ee3f982a99cb690c2b upstream.
+commit e3fe30e57649c551757a02e1cad073c47e1e075e upstream.
 
-If the osdmap is (maliciously) corrupted such that the incremental
-osdmap epoch is different from what is expected, there is no need to
-BUG.  Instead, just declare the incremental osdmap to be invalid.
+free_choose_arg_map() may dereference a NULL pointer if its caller fails
+after a partial allocation.
+
+For example, in decode_choose_args(), if allocation of arg_map->args
+fails, execution jumps to the fail label and free_choose_arg_map() is
+called. Since arg_map->size is updated to a non-zero value before memory
+allocation, free_choose_arg_map() will iterate over arg_map->args and
+dereference a NULL pointer.
+
+To prevent this potential NULL pointer dereference and make
+free_choose_arg_map() more resilient, add checks for pointers before
+iterating.
 
 Cc: stable@vger.kernel.org
-Reported-by: ziming zhang <ezrakiez@gmail.com>
+Co-authored-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Tuo Li <islituo@gmail.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osdmap.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/ceph/osdmap.c |   20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
 --- a/net/ceph/osdmap.c
 +++ b/net/ceph/osdmap.c
-@@ -1979,11 +1979,13 @@ struct ceph_osdmap *osdmap_apply_increme
- 			 sizeof(u64) + sizeof(u32), e_inval);
- 	ceph_decode_copy(p, &fsid, sizeof(fsid));
- 	epoch = ceph_decode_32(p);
--	BUG_ON(epoch != map->epoch+1);
- 	ceph_decode_copy(p, &modified, sizeof(modified));
- 	new_pool_max = ceph_decode_64(p);
- 	new_flags = ceph_decode_32(p);
+@@ -241,22 +241,26 @@ static struct crush_choose_arg_map *allo
  
-+	if (epoch != map->epoch + 1)
-+		goto e_inval;
+ static void free_choose_arg_map(struct crush_choose_arg_map *arg_map)
+ {
+-	if (arg_map) {
+-		int i, j;
++	int i, j;
+ 
+-		WARN_ON(!RB_EMPTY_NODE(&arg_map->node));
++	if (!arg_map)
++		return;
+ 
++	WARN_ON(!RB_EMPTY_NODE(&arg_map->node));
 +
- 	/* full map? */
- 	ceph_decode_32_safe(p, end, len, e_inval);
- 	if (len > 0) {
++	if (arg_map->args) {
+ 		for (i = 0; i < arg_map->size; i++) {
+ 			struct crush_choose_arg *arg = &arg_map->args[i];
+-
+-			for (j = 0; j < arg->weight_set_size; j++)
+-				kfree(arg->weight_set[j].weights);
+-			kfree(arg->weight_set);
++			if (arg->weight_set) {
++				for (j = 0; j < arg->weight_set_size; j++)
++					kfree(arg->weight_set[j].weights);
++				kfree(arg->weight_set);
++			}
+ 			kfree(arg->ids);
+ 		}
+ 		kfree(arg_map->args);
+-		kfree(arg_map);
+ 	}
++	kfree(arg_map);
+ }
+ 
+ DEFINE_RB_FUNCS(choose_arg_map, struct crush_choose_arg_map, choose_args_index,
 
 
