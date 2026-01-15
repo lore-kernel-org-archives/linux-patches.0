@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A84258EC2;
-	Thu, 15 Jan 2026 17:18:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B98915530C;
+	Thu, 15 Jan 2026 17:18:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497533; cv=none; b=BsILlZXMIOQ4mPmDsEjThy+whbvlObFs+tI0Dkm3w5/tHmU1gE2kQgCg4t9mr5Z6DhnV2/0L+h93/GsFoF5nIQNTJmvgCBWVimannOPdxV4nk5zyefO3Lxjr6qjEt/OQzaoTlbhOnTEijWW3Cmv4zobWLf//BvAZW6wdv5QuXL0=
+	t=1768497535; cv=none; b=AcF6138E+B0yx3ww31wiKQF+zxklF00SuGmSmwewaTCGKlbMP3BjnFf5cqFTotK93Bx2k2QVc1l126JsTbtbJv6pPHc7FMpWrq4UuOWEFgx/rHDm4PST65E0grmXZpopcagzi6QJjFKVf/IJuQn2XCTVmtwYTWm7nseBBls+mbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497533; c=relaxed/simple;
-	bh=tgKFBbIqsNbxe58KovoQn6JmJ4EJYEkkQzWhnIS3rr0=;
+	s=arc-20240116; t=1768497535; c=relaxed/simple;
+	bh=h9jDns/Y8wzei6xDbb8gHJhXpLvoFFI6mAYzkmYfglw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KfNoitXd3/yDxsdrWqmBlSKG7dfDwgMGW2SUjODa1P0V167+nZVp3lkXGTA4+TQkw1bpln6ryP0qg9ZG0aQI94pb2rYXuhMb7meCj1EhmOY28/oLXeIupq4s32gfp4qTgzIKAD5DHQAYxVcrI3Iyk76QyBGe5erVYcZ6jT2O35k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MyqUiSLZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sB+WDPxFHpeMvDCo9uEQ2oKesJIYxmpePN/vFMgwy2e1zlrIOBaBc6g19vaz7qcjFgBhSY/9/QZSII7qSxCW/sh0JoHV0mjWUS6M+mWiu/qpZSgBqA6b1LAIXNFU35i4FsY4poHsQ8+rpfeu4Sz8dfAkI0S/4V6Q5AVb2xmTgvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=amC7W93X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MyqUiSLZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 250D2C116D0;
-	Thu, 15 Jan 2026 17:18:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="amC7W93X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED882C116D0;
+	Thu, 15 Jan 2026 17:18:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497532;
-	bh=tgKFBbIqsNbxe58KovoQn6JmJ4EJYEkkQzWhnIS3rr0=;
+	s=korg; t=1768497535;
+	bh=h9jDns/Y8wzei6xDbb8gHJhXpLvoFFI6mAYzkmYfglw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MyqUiSLZLSnRcIWDs83VYCUeKeBCzdEy8pV0QU6GCNDBpA9oqGjJyVEn+pGtnWgaK
-	 BsN+Z4qbDS8ZbrlIut4KbUBiBxNLJsd2uwGqhCIc4pK5LFiUXcLmRkcUybqrnYw9W0
-	 AGyhFd3DO0SgkkHVn9ZM+9ycsEdnB2Zl8wZ02Gto=
+	b=amC7W93X/63eJNRKzzW2UHn2AdsuSK2TosN8ALTsf1r1/cjafPl7puMSxxFZM7AJI
+	 NE3XpEQdcXewtJoHAoFkWsFhSoZHq3F6220yfnGDttIO/U75Cg85l6ktd8hSSnU/LJ
+	 DDVIxgma15YbZ7jhKqPtcYIHr+Y6/jh6Dfi+nALI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Leach <mike.leach@linaro.org>,
-	Yeoreun Yun <yeoreum.yun@arm.com>,
-	James Clark <james.clark@linaro.org>,
-	Leo Yan <leo.yan@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 097/554] coresight: etm4x: Add context synchronization before enabling trace
-Date: Thu, 15 Jan 2026 17:42:43 +0100
-Message-ID: <20260115164249.754611614@linuxfoundation.org>
+Subject: [PATCH 5.15 115/554] fs/ntfs3: Add new argument is_mft to ntfs_mark_rec_free
+Date: Thu, 15 Jan 2026 17:43:01 +0100
+Message-ID: <20260115164250.415527367@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -54,85 +50,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 64eb04ae545294e105ad91714dc3167a0b660731 ]
+[ Upstream commit 071100ea0e6c353258f322cb2f8dde9be62d6808 ]
 
-According to the software usage PKLXF in Arm ARM (ARM DDI 0487 L.a), a
-Context synchronization event is required before enabling the trace
-unit.
+This argument helps in avoiding double locking
 
-An ISB is added to meet this requirement, particularly for guarding the
-operations in the flow:
-
-  etm4x_allow_trace()
-   `> kvm_tracing_set_el1_configuration()
-	`> write_sysreg_s(trfcr_while_in_guest, SYS_TRFCR_EL12)
-
-Improved the barrier comments to provide more accurate information.
-
-Fixes: 1ab3bb9df5e3 ("coresight: etm4x: Add necessary synchronization for sysreg access")
-Reviewed-by: Mike Leach <mike.leach@linaro.org>
-Reviewed-by: Yeoreun Yun <yeoreum.yun@arm.com>
-Tested-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20251111-arm_coresight_power_management_fix-v6-5-f55553b6c8b3@arm.com
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Stable-dep-of: 4d78d1173a65 ("fs/ntfs3: out1 also needs to put mi")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../coresight/coresight-etm4x-core.c          | 27 ++++++++++++++++---
- 1 file changed, 23 insertions(+), 4 deletions(-)
+ fs/ntfs3/frecord.c | 12 ++++++------
+ fs/ntfs3/fsntfs.c  |  9 ++++++---
+ fs/ntfs3/inode.c   |  2 +-
+ fs/ntfs3/ntfs_fs.h |  2 +-
+ 4 files changed, 14 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-index 7cc854da81988..ce03a53fea7ad 100644
---- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-@@ -406,10 +406,24 @@ static int etm4_enable_trace_unit(struct etmv4_drvdata *drvdata)
- 		etm4x_relaxed_write32(csa, TRCRSR_TA, TRCRSR);
+diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
+index a74bbfec8e3ac..b5f3e7bc5d6da 100644
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -1037,7 +1037,7 @@ static int ni_ins_attr_ext(struct ntfs_inode *ni, struct ATTR_LIST_ENTRY *le,
+ 	err = -EINVAL;
  
- 	etm4x_allow_trace(drvdata);
-+
-+	/*
-+	 * According to software usage PKLXF in Arm ARM (ARM DDI 0487 L.a),
-+	 * execute a Context synchronization event to guarantee the trace unit
-+	 * will observe the new values of the System registers.
-+	 */
-+	if (!csa->io_mem)
-+		isb();
-+
- 	/* Enable the trace unit */
- 	etm4x_relaxed_write32(csa, 1, TRCPRGCTLR);
+ out1:
+-	ntfs_mark_rec_free(sbi, rno);
++	ntfs_mark_rec_free(sbi, rno, is_mft);
  
--	/* Synchronize the register updates for sysreg access */
-+	/*
-+	 * As recommended by section 4.3.7 ("Synchronization when using system
-+	 * instructions to progrom the trace unit") of ARM IHI 0064H.b, the
-+	 * self-hosted trace analyzer must perform a Context synchronization
-+	 * event between writing to the TRCPRGCTLR and reading the TRCSTATR.
-+	 */
- 	if (!csa->io_mem)
- 		isb();
+ out:
+ 	return err;
+@@ -1232,7 +1232,7 @@ static int ni_expand_mft_list(struct ntfs_inode *ni)
+ 		mft_min = mft_new;
+ 		mi_min = mi_new;
+ 	} else {
+-		ntfs_mark_rec_free(sbi, mft_new);
++		ntfs_mark_rec_free(sbi, mft_new, true);
+ 		mft_new = 0;
+ 		ni_remove_mi(ni, mi_new);
+ 	}
+@@ -1315,7 +1315,7 @@ static int ni_expand_mft_list(struct ntfs_inode *ni)
  
-@@ -830,11 +844,16 @@ static void etm4_disable_trace_unit(struct etmv4_drvdata *drvdata)
- 	 */
- 	etm4x_prohibit_trace(drvdata);
- 	/*
--	 * Make sure everything completes before disabling, as recommended
--	 * by section 7.3.77 ("TRCVICTLR, ViewInst Main Control Register,
--	 * SSTATUS") of ARM IHI 0064D
-+	 * Prevent being speculative at the point of disabling the trace unit,
-+	 * as recommended by section 7.3.77 ("TRCVICTLR, ViewInst Main Control
-+	 * Register, SSTATUS") of ARM IHI 0064D
- 	 */
- 	dsb(sy);
-+	/*
-+	 * According to software usage VKHHY in Arm ARM (ARM DDI 0487 L.a),
-+	 * execute a Context synchronization event to guarantee no new
-+	 * program-flow trace is generated.
-+	 */
- 	isb();
- 	/* Trace synchronization barrier, is a nop if not supported */
- 	tsb_csync();
+ out:
+ 	if (mft_new) {
+-		ntfs_mark_rec_free(sbi, mft_new);
++		ntfs_mark_rec_free(sbi, mft_new, true);
+ 		ni_remove_mi(ni, mi_new);
+ 	}
+ 
+@@ -1577,7 +1577,7 @@ int ni_delete_all(struct ntfs_inode *ni)
+ 		mi->dirty = true;
+ 		mi_write(mi, 0);
+ 
+-		ntfs_mark_rec_free(sbi, mi->rno);
++		ntfs_mark_rec_free(sbi, mi->rno, false);
+ 		ni_remove_mi(ni, mi);
+ 		mi_put(mi);
+ 		node = next;
+@@ -1588,7 +1588,7 @@ int ni_delete_all(struct ntfs_inode *ni)
+ 	ni->mi.dirty = true;
+ 	err = mi_write(&ni->mi, 0);
+ 
+-	ntfs_mark_rec_free(sbi, ni->mi.rno);
++	ntfs_mark_rec_free(sbi, ni->mi.rno, false);
+ 
+ 	return err;
+ }
+@@ -3292,7 +3292,7 @@ int ni_write_inode(struct inode *inode, int sync, const char *hint)
+ 			err = err2;
+ 
+ 		if (is_empty) {
+-			ntfs_mark_rec_free(sbi, mi->rno);
++			ntfs_mark_rec_free(sbi, mi->rno, false);
+ 			rb_erase(node, &ni->mi_tree);
+ 			mi_put(mi);
+ 		}
+diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
+index c82398194cd10..7dc2ae7dec591 100644
+--- a/fs/ntfs3/fsntfs.c
++++ b/fs/ntfs3/fsntfs.c
+@@ -703,12 +703,14 @@ int ntfs_look_free_mft(struct ntfs_sb_info *sbi, CLST *rno, bool mft,
+ 
+ /*
+  * ntfs_mark_rec_free - Mark record as free.
++ * is_mft - true if we are changing MFT
+  */
+-void ntfs_mark_rec_free(struct ntfs_sb_info *sbi, CLST rno)
++void ntfs_mark_rec_free(struct ntfs_sb_info *sbi, CLST rno, bool is_mft)
+ {
+ 	struct wnd_bitmap *wnd = &sbi->mft.bitmap;
+ 
+-	down_write_nested(&wnd->rw_lock, BITMAP_MUTEX_MFT);
++	if (!is_mft)
++		down_write_nested(&wnd->rw_lock, BITMAP_MUTEX_MFT);
+ 	if (rno >= wnd->nbits)
+ 		goto out;
+ 
+@@ -727,7 +729,8 @@ void ntfs_mark_rec_free(struct ntfs_sb_info *sbi, CLST rno)
+ 		sbi->mft.next_free = rno;
+ 
+ out:
+-	up_write(&wnd->rw_lock);
++	if (!is_mft)
++		up_write(&wnd->rw_lock);
+ }
+ 
+ /*
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index 0f4e166112de1..7ac76e6c35dcf 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -1668,7 +1668,7 @@ struct inode *ntfs_create_inode(struct user_namespace *mnt_userns,
+ 	ni->mi.dirty = false;
+ 	discard_new_inode(inode);
+ out3:
+-	ntfs_mark_rec_free(sbi, ino);
++	ntfs_mark_rec_free(sbi, ino, false);
+ 
+ out2:
+ 	__putname(new_de);
+diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
+index f7ef60bed6d84..69d1442eea623 100644
+--- a/fs/ntfs3/ntfs_fs.h
++++ b/fs/ntfs3/ntfs_fs.h
+@@ -596,7 +596,7 @@ int ntfs_look_for_free_space(struct ntfs_sb_info *sbi, CLST lcn, CLST len,
+ 			     enum ALLOCATE_OPT opt);
+ int ntfs_look_free_mft(struct ntfs_sb_info *sbi, CLST *rno, bool mft,
+ 		       struct ntfs_inode *ni, struct mft_inode **mi);
+-void ntfs_mark_rec_free(struct ntfs_sb_info *sbi, CLST rno);
++void ntfs_mark_rec_free(struct ntfs_sb_info *sbi, CLST rno, bool is_mft);
+ int ntfs_clear_mft_tail(struct ntfs_sb_info *sbi, size_t from, size_t to);
+ int ntfs_refresh_zone(struct ntfs_sb_info *sbi);
+ int ntfs_update_mftmirr(struct ntfs_sb_info *sbi, int wait);
 -- 
 2.51.0
 
