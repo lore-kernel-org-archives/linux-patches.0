@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6359B29C338;
-	Thu, 15 Jan 2026 17:02:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301042D7D47;
+	Thu, 15 Jan 2026 17:02:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496538; cv=none; b=ZQRd74f0SjO2AmsoKRr40k/a/jMk0iywOqX7FJFLUyw9UYWiRoUxbIPJSHwfbx2WoDNuW7k8zHTmewSqRRVI5Jxchb82FPLtL/DDBCTHzWvU4mmiRxbDKaQuwTrL+xcn2cfVGtlDrKfI2kRacIgbF5qM9YSodT9i24C8T3nKR2s=
+	t=1768496541; cv=none; b=rbt2Hn2phyM0kOsv5AKaGgo8MC/AuKyJ3WyQHSodX6HNN1dvYffs24UUL7xj6k8Vu7oaN5lIcY9Fg2jcgye4e12y9vy0KOfCDU1e7LpgoL6jktJEQkhIXB/5xye9NCTkjl1FxJOER24XWfG1Lc8QHaJXcUAdn2xjLpQofYKtqY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496538; c=relaxed/simple;
-	bh=MEUGeqtiP9VmQbAHu8Kyz+y6nTBDrpEqy1+6pWEipog=;
+	s=arc-20240116; t=1768496541; c=relaxed/simple;
+	bh=ImaQ6xAfpwrBHM1khCRW1B2gAkaM+IwgyEn0L9SnWT0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mQTgv69/wDaGKjGcliU84MJlue3o1awRwBFN1y7VyU8daUpFFzO9sgw+cC6tlqxjXhbpZy3/KshOz6jiBB0LrtCPN00RlikyjClC2mL3JdtnEMTJErkNmgk3d+uSmrvAC7bw5xiEGNz2eNIadubkaZxYtyPDPnzjw36lI8mrLLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MSEec1+k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IYUBaktM+pwmkRN9Q9HgBapUarpJI0f+Wz9rg1eVHbGVSccO9SG3TcX1f84cKVcFPQZ2Dh3At0o5cy3HitUPt2DUAWJQwi1/DGXLKJo7qXOFMHeGfpi1czUIrn1DmpGIZIjDHPy6cwqIi2Mn6NV/GQYkvMVBYDo4WuCpy60d12Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W+ZHrBuy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MSEec1+k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFDC2C19422;
-	Thu, 15 Jan 2026 17:02:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W+ZHrBuy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3A31C116D0;
+	Thu, 15 Jan 2026 17:02:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496538;
-	bh=MEUGeqtiP9VmQbAHu8Kyz+y6nTBDrpEqy1+6pWEipog=;
+	s=korg; t=1768496541;
+	bh=ImaQ6xAfpwrBHM1khCRW1B2gAkaM+IwgyEn0L9SnWT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MSEec1+kIv0ClJxPfmx1XY2gHphNmINIw/ZoC/HhYeM+blQLLzRq20r1c1WtzlxEq
-	 r+ter6vZC939siTGJBX8EGkFrfagySbRJzGxTqug3iLONyIsx6jKvk+KnRxEZ/ZGkP
-	 B4hs8ODX7rFW1TzF4b/Ez8r7vHwbgq95kAfjeeb8=
+	b=W+ZHrBuym2jGPUo1X9QTMsXnEoGhpRZ2XYg4f3qb8Sl1zvFoSIo/DCKPLxmiF/A2B
+	 lVzOXPPXWTyfiroC7uIsJzca23ThJgydoAYI9n3zjWW8j3nIdE5PM1EvbABibqe1Db
+	 c0U6yXpsVWOZjLQSm/3NXMnJNIJ6m1tJ4ga7sKPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Xin Wang <x.wang@intel.com>
-Subject: [PATCH 6.12 030/119] drm/xe: Ensure GT is in C0 during resumes
-Date: Thu, 15 Jan 2026 17:47:25 +0100
-Message-ID: <20260115164153.049939936@linuxfoundation.org>
+	syzbot+d991fea1b4b23b1f6bf8@syzkaller.appspotmail.com,
+	=?UTF-8?q?Miquel=20Sabat=C3=A9=20Sol=C3=A0?= <mssola@mssola.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 048/119] btrfs: fix NULL dereference on root when tracing inode eviction
+Date: Thu, 15 Jan 2026 17:47:43 +0100
+Message-ID: <20260115164153.693910039@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -44,67 +46,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xin Wang <x.wang@intel.com>
+From: Miquel Sabaté Solà <mssola@mssola.com>
 
-commit 95d0883ac8105717f59c2dcdc0d8b9150f13aa12 upstream.
+[ Upstream commit f157dd661339fc6f5f2b574fe2429c43bd309534 ]
 
-This patch ensures the gt will be awake for the entire duration
-of the resume sequences until GuCRC takes over and GT-C6 gets
-re-enabled.
+When evicting an inode the first thing we do is to setup tracing for it,
+which implies fetching the root's id. But in btrfs_evict_inode() the
+root might be NULL, as implied in the next check that we do in
+btrfs_evict_inode().
 
-Before suspending GT-C6 is kept enabled, but upon resume, GuCRC
-is not yet alive to properly control the exits and some cases of
-instability and corruption related to GT-C6 can be observed.
+Hence, we either should set the ->root_objectid to 0 in case the root is
+NULL, or we move tracing setup after checking that the root is not
+NULL. Setting the rootid to 0 at least gives us the possibility to trace
+this call even in the case when the root is NULL, so that's the solution
+taken here.
 
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/4037
-
-Suggested-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Xin Wang <x.wang@intel.com>
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/4037
-Link: https://lore.kernel.org/r/20250827000633.1369890-3-x.wang@intel.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1abe9b8a138c ("Btrfs: add initial tracepoint support for btrfs")
+Reported-by: syzbot+d991fea1b4b23b1f6bf8@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d991fea1b4b23b1f6bf8
+Signed-off-by: Miquel Sabaté Solà <mssola@mssola.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_pm.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ include/trace/events/btrfs.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/xe/xe_pm.c
-+++ b/drivers/gpu/drm/xe/xe_pm.c
-@@ -17,7 +17,7 @@
- #include "xe_device_sysfs.h"
- #include "xe_ggtt.h"
- #include "xe_gt.h"
--#include "xe_guc.h"
-+#include "xe_gt_idle.h"
- #include "xe_irq.h"
- #include "xe_pcode.h"
- #include "xe_trace.h"
-@@ -165,6 +165,9 @@ int xe_pm_resume(struct xe_device *xe)
- 	drm_dbg(&xe->drm, "Resuming device\n");
- 	trace_xe_pm_resume(xe, __builtin_return_address(0));
+diff --git a/include/trace/events/btrfs.h b/include/trace/events/btrfs.h
+index cc88074914283..0ca86909ce5bd 100644
+--- a/include/trace/events/btrfs.h
++++ b/include/trace/events/btrfs.h
+@@ -223,7 +223,8 @@ DECLARE_EVENT_CLASS(btrfs__inode,
+ 		__entry->generation = BTRFS_I(inode)->generation;
+ 		__entry->last_trans = BTRFS_I(inode)->last_trans;
+ 		__entry->logged_trans = BTRFS_I(inode)->logged_trans;
+-		__entry->root_objectid = btrfs_root_id(BTRFS_I(inode)->root);
++		__entry->root_objectid = BTRFS_I(inode)->root ?
++					 btrfs_root_id(BTRFS_I(inode)->root) : 0;
+ 	),
  
-+	for_each_gt(gt, xe, id)
-+		xe_gt_idle_disable_c6(gt);
-+
- 	for_each_tile(tile, xe, id)
- 		xe_wa_apply_tile_workarounds(tile);
- 
-@@ -451,6 +454,9 @@ int xe_pm_runtime_resume(struct xe_devic
- 
- 	xe_rpm_lockmap_acquire(xe);
- 
-+	for_each_gt(gt, xe, id)
-+		xe_gt_idle_disable_c6(gt);
-+
- 	if (xe->d3cold.allowed) {
- 		err = xe_pcode_ready(xe, true);
- 		if (err)
+ 	TP_printk_btrfs("root=%llu(%s) gen=%llu ino=%llu blocks=%llu "
+-- 
+2.51.0
+
 
 
