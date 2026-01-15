@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BE502820C6;
-	Thu, 15 Jan 2026 17:08:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07BAE2D5C9B;
+	Thu, 15 Jan 2026 17:08:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496904; cv=none; b=SMWZAvlr8kX5mxwMdxtVtUytfmyuk2uHq8kELsKe0wUhIJpDkNVuDsqVy1aiPR/aVHBtZP+xE3zNyRb8Cv9oJLEhdE0gu+LtYwp+YgXrgBt16yKfYlRMwK192J3TmMaRxy4sOGAQclj9k1KogbKgWm+jkaji+hLKXe8Nc6sCsnk=
+	t=1768496907; cv=none; b=ln7uNws//nlbGhp2qqDDtSo9fqCWqsXc1Y+yigTlnnDShGrNCl8z4MJrGA9sWaI6ws0/0nLjtiDqrLg3/J2Kix7GkoAXF/Ej0BnrWitkFw2g98qnthfrCOw5TD05llFv/N1eD6zN9sHALZuFufBJgbybG9PkEqt4EvnryS2FlAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496904; c=relaxed/simple;
-	bh=vEHe7qyGdCcdFbOvk6vZ3uS6KmO0A+YKn+DNesbTqNM=;
+	s=arc-20240116; t=1768496907; c=relaxed/simple;
+	bh=6gN1XKF5iEgm729SACStsqa5XK6CIf65cwmUTBog+VE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rgzzo9ErbAkozXw0ayZISbF7203GcdQmk+xnE12irjb+bUPhSuOmXP4FzFJf3Gm87DvjYN1zfTqMu6M5uybIOlioHpCCpLGmc0cQWebMI/dklPrEM7vY+oQSg196gx1RncJeZw5b2/LJ7NJQ6LmYzdFsfF/H2BNqVLRa0yT5DIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hVd88MVi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u1mf9scyjxNBH23cDK6p1oc9e8g0ShQhPBgIxNRF3Agy/0fmAUm/L7mONMAeRm4skKmYeKD0fBsdHSAfL/eZ8bFa2WAS0UtOQuxtQeJdVRAAtso8Mcbp/kCek63lTjAJ8DaDP6bPWL6PbNdr+3fAvlDcJAV+akhTB273j42TD/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mR8XVp7n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hVd88MVi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C3BC116D0;
-	Thu, 15 Jan 2026 17:08:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mR8XVp7n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E037C116D0;
+	Thu, 15 Jan 2026 17:08:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496904;
-	bh=vEHe7qyGdCcdFbOvk6vZ3uS6KmO0A+YKn+DNesbTqNM=;
+	s=korg; t=1768496906;
+	bh=6gN1XKF5iEgm729SACStsqa5XK6CIf65cwmUTBog+VE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hVd88MViCJkOvtq0hwT7iPIcLlkmzzO5KR1YPzPKBMQgWY2twKHjBVwOBsMq3lEFl
-	 J6FVx0jE8xeljr62XqdzqQfioAlT93t9MthQzw7pDnv/LllaIpNLh4nBJ4TW8Je3UJ
-	 FA7RFII/4hNe4MRLUOGr8lO/AdCk0NOk1dBYN25E=
+	b=mR8XVp7nIdz26E5j3g31sLpZWNm4fWZyjfTp0oj2n5UYZ89JBhJrIWiS4hEvx1CUE
+	 wy35J7t1Q15rAE0FtrnL7ODBEemtevlDm1hzGEy3LMzOTzpLpLIurPMzpVj0pwmi4b
+	 cv5pPkBTEo3H1D4YV5B2EBuojRIHcw2Az5zyaaUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingui Yang <yangxingui@huawei.com>,
-	Jason Yan <yanaijie@huawei.com>,
-	John Garry <john.g.garry@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jianhao Xu <jianhao.xu@seu.edu.cn>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 39/88] scsi: Revert "scsi: libsas: Fix exp-attached device scan after probe failure scanned in again after probe failed"
-Date: Thu, 15 Jan 2026 17:48:22 +0100
-Message-ID: <20260115164147.726454239@linuxfoundation.org>
+Subject: [PATCH 6.6 57/88] net: wwan: iosm: Fix memory leak in ipc_mux_deinit()
+Date: Thu, 15 Jan 2026 17:48:40 +0100
+Message-ID: <20260115164148.376540960@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164146.312481509@linuxfoundation.org>
 References: <20260115164146.312481509@linuxfoundation.org>
@@ -53,56 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xingui Yang <yangxingui@huawei.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit 278712d20bc8ec29d1ad6ef9bdae9000ef2c220c ]
+[ Upstream commit 92e6e0a87f6860a4710f9494f8c704d498ae60f8 ]
 
-This reverts commit ab2068a6fb84751836a84c26ca72b3beb349619d.
+Commit 1f52d7b62285 ("net: wwan: iosm: Enable M.2 7360 WWAN card support")
+allocated memory for pp_qlt in ipc_mux_init() but did not free it in
+ipc_mux_deinit(). This results in a memory leak when the driver is
+unloaded.
 
-When probing the exp-attached sata device, libsas/libata will issue a
-hard reset in sas_probe_sata() -> ata_sas_async_probe(), then a
-broadcast event will be received after the disk probe fails, and this
-commit causes the probe will be re-executed on the disk, and a faulty
-disk may get into an indefinite loop of probe.
+Free the allocated memory in ipc_mux_deinit() to fix the leak.
 
-Therefore, revert this commit, although it can fix some temporary issues
-with disk probe failure.
-
-Signed-off-by: Xingui Yang <yangxingui@huawei.com>
-Reviewed-by: Jason Yan <yanaijie@huawei.com>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Link: https://patch.msgid.link/20251202065627.140361-1-yangxingui@huawei.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 1f52d7b62285 ("net: wwan: iosm: Enable M.2 7360 WWAN card support")
+Co-developed-by: Jianhao Xu <jianhao.xu@seu.edu.cn>
+Signed-off-by: Jianhao Xu <jianhao.xu@seu.edu.cn>
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251230071853.1062223-1-zilin@seu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/libsas/sas_internal.h | 14 --------------
- 1 file changed, 14 deletions(-)
+ drivers/net/wwan/iosm/iosm_ipc_mux.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/scsi/libsas/sas_internal.h b/drivers/scsi/libsas/sas_internal.h
-index 277e45fed85d6..a6dc7dc07fce3 100644
---- a/drivers/scsi/libsas/sas_internal.h
-+++ b/drivers/scsi/libsas/sas_internal.h
-@@ -133,20 +133,6 @@ static inline void sas_fail_probe(struct domain_device *dev, const char *func, i
- 		func, dev->parent ? "exp-attached" :
- 		"direct-attached",
- 		SAS_ADDR(dev->sas_addr), err);
--
--	/*
--	 * If the device probe failed, the expander phy attached address
--	 * needs to be reset so that the phy will not be treated as flutter
--	 * in the next revalidation
--	 */
--	if (dev->parent && !dev_is_expander(dev->dev_type)) {
--		struct sas_phy *phy = dev->phy;
--		struct domain_device *parent = dev->parent;
--		struct ex_phy *ex_phy = &parent->ex_dev.ex_phy[phy->number];
--
--		memset(ex_phy->attached_sas_addr, 0, SAS_ADDR_SIZE);
--	}
--
- 	sas_unregister_dev(dev->port, dev);
- }
+diff --git a/drivers/net/wwan/iosm/iosm_ipc_mux.c b/drivers/net/wwan/iosm/iosm_ipc_mux.c
+index fc928b298a984..b846889fcb099 100644
+--- a/drivers/net/wwan/iosm/iosm_ipc_mux.c
++++ b/drivers/net/wwan/iosm/iosm_ipc_mux.c
+@@ -456,6 +456,7 @@ void ipc_mux_deinit(struct iosm_mux *ipc_mux)
+ 	struct sk_buff_head *free_list;
+ 	union mux_msg mux_msg;
+ 	struct sk_buff *skb;
++	int i;
  
+ 	if (!ipc_mux->initialized)
+ 		return;
+@@ -479,5 +480,10 @@ void ipc_mux_deinit(struct iosm_mux *ipc_mux)
+ 		ipc_mux->channel->dl_pipe.is_open = false;
+ 	}
+ 
++	if (ipc_mux->protocol != MUX_LITE) {
++		for (i = 0; i < IPC_MEM_MUX_IP_SESSION_ENTRIES; i++)
++			kfree(ipc_mux->ul_adb.pp_qlt[i]);
++	}
++
+ 	kfree(ipc_mux);
+ }
 -- 
 2.51.0
 
