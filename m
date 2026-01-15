@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C7C3EDAD8;
-	Thu, 15 Jan 2026 17:51:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4673D348B;
+	Thu, 15 Jan 2026 17:51:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499476; cv=none; b=EI5DbG941qK9IdrFKbNFn5CFtU1qjoQFKqVwJ4cwTSHZLpDzD4smeC6s62IKzMLxXD++yWKCDT+I3NNgz4+EWrTZ1i0yRriWCPueLIcYxwatsz+0nqMV6yxfZsf5tYI/d72s+xaEFAcUneZAp3L/exWgDdziVkkFvg4vAiANUXM=
+	t=1768499479; cv=none; b=kaY6c8NhCQKqJeckMmClXZXFCZzUovM9DshCJQStHnHxYscYYoy5rqzW7g2J0lmPlstSHH/xfZvDM0bIuvL/oMbh3ZuBkJuAAEsCkRXG/MwqHxeWoc3optHAvjs75BsBXxTrWdSLSaqAkMattoAQBc22INd5TMKa92GErIRs558=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499476; c=relaxed/simple;
-	bh=0A3U9aqkDw3Cvw+p3KvbXT3DLmvHG7dN3nqvd/SRchg=;
+	s=arc-20240116; t=1768499479; c=relaxed/simple;
+	bh=8pcQWL6WMULg7KE45SZI9B3cTNkNAsDIsT+jlIvUANY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sJBSuEiLT/Lk2h3jEgbYKH0z3VOFOZMZ4U+Vk8jwgTYNLBm9Tzr7nF4IwOv+ulF0WYRNwJBTP3E7YugzeDGDyJ1haffRgTSS1Z5od8JYCrrOoocSWYec5py5hIoJaQHU3cQigryT1f1UK38hHYIFYra7zH3ob79+4wDWg9kt7hw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CdQxv8r1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o5ntQAwATlRA28o0HN37fnRKK2VvISzYb2FsmqbOKEKV6VpHQciuBJYsaN6FL9RfzNWOS6o0XR6XGBXapBLL+PdpR07/PHmYjx9moxg7jLnEnqguzPdUkHo3izq7zlHIIkjLU6KPQokpD58N6n+GGLriQh9cRxG4A241RfjrtXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eMbdyV2/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CdQxv8r1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC17EC19425;
-	Thu, 15 Jan 2026 17:51:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eMbdyV2/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B93C116D0;
+	Thu, 15 Jan 2026 17:51:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499476;
-	bh=0A3U9aqkDw3Cvw+p3KvbXT3DLmvHG7dN3nqvd/SRchg=;
+	s=korg; t=1768499479;
+	bh=8pcQWL6WMULg7KE45SZI9B3cTNkNAsDIsT+jlIvUANY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CdQxv8r1AYGnoWwE/DL8mN/ba8MvEcTV/PSFOBwGXZ3mmeNUn0Z4ZmWUj941L9LCe
-	 kutkdIyI9nOULmr6ODNi8tOigxp9cleNFBYwebq80SnJ1mV2rZD7/8cZlGrMAZzSqb
-	 xpva9Uu/zbss3wRCEAANtK4CYlGbMb8ls9xpv6Ao=
+	b=eMbdyV2/iz/fqQ3VdIW7HfeX54enukUwKE27s0aXih8FPwO5RmTVhDibrOhZQUrPP
+	 oZptWUDlStYbF+mCW7QepfdJZbHPiBSgXKnetmXy20n4BZvRccdqX3FvfnDSviYFKM
+	 WQNKHwoAFStejANO0gRTrIzu8FTWqKwqIUTeQojE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.10 241/451] scsi: aic94xx: fix use-after-free in device removal path
-Date: Thu, 15 Jan 2026 17:47:22 +0100
-Message-ID: <20260115164239.611594823@linuxfoundation.org>
+	Dai Ngo <dai.ngo@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.10 242/451] NFSD: use correct reservation type in nfsd4_scsi_fence_client
+Date: Thu, 15 Jan 2026 17:47:23 +0100
+Message-ID: <20260115164239.647668868@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -51,43 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Dai Ngo <dai.ngo@oracle.com>
 
-commit f6ab594672d4cba08540919a4e6be2e202b60007 upstream.
+commit 6f52063db9aabdaabea929b1e998af98c2e8d917 upstream.
 
-The asd_pci_remove() function fails to synchronize with pending tasklets
-before freeing the asd_ha structure, leading to a potential
-use-after-free vulnerability.
+The reservation type argument for the pr_preempt call should match the
+one used in nfsd4_block_get_device_info_scsi.
 
-When a device removal is triggered (via hot-unplug or module unload),
-race condition can occur.
-
-The fix adds tasklet_kill() before freeing the asd_ha structure,
-ensuring all scheduled tasklets complete before cleanup proceeds.
-
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Reported-by: Junrui Luo <moonafterrain@outlook.com>
-Fixes: 2908d778ab3e ("[SCSI] aic94xx: new driver")
+Fixes: f99d4fbdae67 ("nfsd: add SCSI layout support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Link: https://patch.msgid.link/ME2PR01MB3156AB7DCACA206C845FC7E8AFFDA@ME2PR01MB3156.ausprd01.prod.outlook.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/aic94xx/aic94xx_init.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/nfsd/blocklayout.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/scsi/aic94xx/aic94xx_init.c
-+++ b/drivers/scsi/aic94xx/aic94xx_init.c
-@@ -897,6 +897,9 @@ static void asd_pci_remove(struct pci_de
+--- a/fs/nfsd/blocklayout.c
++++ b/fs/nfsd/blocklayout.c
+@@ -410,7 +410,8 @@ nfsd4_scsi_fence_client(struct nfs4_layo
+ 	struct block_device *bdev = ls->ls_file->nf_file->f_path.mnt->mnt_sb->s_bdev;
  
- 	asd_disable_ints(asd_ha);
+ 	bdev->bd_disk->fops->pr_ops->pr_preempt(bdev, NFSD_MDS_PR_KEY,
+-			nfsd4_scsi_pr_key(clp), 0, true);
++			nfsd4_scsi_pr_key(clp),
++			PR_EXCLUSIVE_ACCESS_REG_ONLY, true);
+ }
  
-+	/* Ensure all scheduled tasklets complete before freeing resources */
-+	tasklet_kill(&asd_ha->seq.dl_tasklet);
-+
- 	asd_remove_dev_attrs(asd_ha);
- 
- 	/* XXX more here as needed */
+ const struct nfsd4_layout_ops scsi_layout_ops = {
 
 
