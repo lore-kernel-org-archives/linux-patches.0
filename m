@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7669F2820C6;
-	Thu, 15 Jan 2026 17:08:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BAD03BC4DB;
+	Thu, 15 Jan 2026 17:09:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496938; cv=none; b=tCYWMEXet5F4l8LcFNhYjCjEAeX7FAdmTHdyFIAXdSeYwh6m0Q1sc4/fk4LnNqW/Vbg9SLrKVnWAXUb2l/c3mhIDbKbXycMmOopaZ6SToDt1Rr6dipWHLf07bIuQzSgmMincAsb6kNYAbeQKOUtEk8WzcUgywdRie3Mq2VVmbqs=
+	t=1768496941; cv=none; b=r4h78EwxSupx3H35RLHCcERFTpwZYaxbIb7rRsL12I37XLE0/h0x1+yULg0wEOiTQxGjIihaYEfB1o2C9//yOEVdgnGQUGrV/cRVm1JyQ9Xdjg4ESuW88ZShauOP31hbMybY3ZTBOYO0vU4ERnYiQ0+1WVOu6U7ZktUsQ/V3DOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496938; c=relaxed/simple;
-	bh=wtkH650UyjzEzY/+IG0IXhyBGzrbgKB1GTg6GlzFxxs=;
+	s=arc-20240116; t=1768496941; c=relaxed/simple;
+	bh=JOfbakIgZj5lvq4eapbCKbdZwrkPCC/kKkXH2Q5YRuo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rq3+2Za23q4YSjD/PkHaHEZbCo/zYJS62MD1s7YKKfVFMVy/lIhn+GqOaQYA4ocRlVhwucFrA2FKipsztYgL/pYzzHCNph8U6yO2PmIgaFTAYXzQr81IcsiNc7Esz6HKvR7ce6d02yCu8dmBVbJFtl+mlZuBWfCBWQoRrUa2LEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H5DAf0Bi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pD7niw+5aZh5S3q1oGRGhOTI/wrmjMEUesjAvPkEGdKQ1inNQsA7C6M3MbOYpmI+FPGVjLYFFZoBzbFIGfzm66Zucc2G4VihMmfIo9d6Xy2nECyNrqBrvnxgKLidRPM1VfTUjAqwE4HO7yMR42YPj0m97ujYJVEtPzwDpQecWRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VK6JKTLd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H5DAf0Bi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0E41C116D0;
-	Thu, 15 Jan 2026 17:08:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VK6JKTLd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A09DDC19422;
+	Thu, 15 Jan 2026 17:09:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496938;
-	bh=wtkH650UyjzEzY/+IG0IXhyBGzrbgKB1GTg6GlzFxxs=;
+	s=korg; t=1768496941;
+	bh=JOfbakIgZj5lvq4eapbCKbdZwrkPCC/kKkXH2Q5YRuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H5DAf0Bi7cZncKStunIKSB2ixgIz2Yq69s8AjcjP4tF/4jRDuDKvYhAtvFafvxLjL
-	 eWrYdUMlsTh6ZtTlLGGz9A11TDT92iKOdzlMCtjYigZj5qlEplonRi3msmAyX9T1jZ
-	 diJ/EvbIK/bIVrU+TUMxYzgJYrqPN9ja05jUqIxE=
+	b=VK6JKTLdvwEsrTfhO01nvMT5/0a84cANmtIcg4zqx4ICd65GZVx7hUcLwglTnIe9Q
+	 q1kfQECq5IvnLvB/ANZQnECCwIcWEy91OmJLTZlnLU63pln/hyiQ5IO8K1nYXLZuuI
+	 IrhyOV9iP6aniV91Omz3LK/55O4JIVuQyN08m80U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Chen Hanxiao <chenhx.fnst@fujitsu.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 67/88] ALSA: ac97: fix a double free in snd_ac97_controller_register()
-Date: Thu, 15 Jan 2026 17:48:50 +0100
-Message-ID: <20260115164148.736099734@linuxfoundation.org>
+Subject: [PATCH 6.6 68/88] NFS: trace: show TIMEDOUT instead of 0x6e
+Date: Thu, 15 Jan 2026 17:48:51 +0100
+Message-ID: <20260115164148.772722786@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164146.312481509@linuxfoundation.org>
 References: <20260115164146.312481509@linuxfoundation.org>
@@ -51,64 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: Chen Hanxiao <chenhx.fnst@fujitsu.com>
 
-[ Upstream commit 830988b6cf197e6dcffdfe2008c5738e6c6c3c0f ]
+[ Upstream commit cef48236dfe55fa266d505e8a497963a7bc5ef2a ]
 
-If ac97_add_adapter() fails, put_device() is the correct way to drop
-the device reference. kfree() is not required.
-Add kfree() if idr_alloc() fails and in ac97_adapter_release() to do
-the cleanup.
+__nfs_revalidate_inode may return ETIMEDOUT.
 
-Found by code review.
+print symbol of ETIMEDOUT in nfs trace:
 
-Fixes: 74426fbff66e ("ALSA: ac97: add an ac97 bus")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
-Link: https://patch.msgid.link/20251219162845.657525-1-lihaoxiang@isrc.iscas.ac.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+before:
+cat-5191 [005] 119.331127: nfs_revalidate_inode_exit: error=-110 (0x6e)
+
+after:
+cat-1738 [004] 44.365509: nfs_revalidate_inode_exit: error=-110 (TIMEDOUT)
+
+Signed-off-by: Chen Hanxiao <chenhx.fnst@fujitsu.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Stable-dep-of: c6c209ceb87f ("NFSD: Remove NFSERR_EAGAIN")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/ac97/bus.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ include/trace/misc/nfs.h |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/ac97/bus.c
-+++ b/sound/ac97/bus.c
-@@ -299,6 +299,7 @@ static void ac97_adapter_release(struct
- 	idr_remove(&ac97_adapter_idr, ac97_ctrl->nr);
- 	dev_dbg(&ac97_ctrl->adap, "adapter unregistered by %s\n",
- 		dev_name(ac97_ctrl->parent));
-+	kfree(ac97_ctrl);
- }
- 
- static const struct device_type ac97_adapter_type = {
-@@ -320,7 +321,9 @@ static int ac97_add_adapter(struct ac97_
- 		ret = device_register(&ac97_ctrl->adap);
- 		if (ret)
- 			put_device(&ac97_ctrl->adap);
--	}
-+	} else
-+		kfree(ac97_ctrl);
-+
- 	if (!ret) {
- 		list_add(&ac97_ctrl->controllers, &ac97_controllers);
- 		dev_dbg(&ac97_ctrl->adap, "adapter registered by %s\n",
-@@ -361,14 +364,11 @@ struct ac97_controller *snd_ac97_control
- 	ret = ac97_add_adapter(ac97_ctrl);
- 
- 	if (ret)
--		goto err;
-+		return ERR_PTR(ret);
- 	ac97_bus_reset(ac97_ctrl);
- 	ac97_bus_scan(ac97_ctrl);
- 
- 	return ac97_ctrl;
--err:
--	kfree(ac97_ctrl);
--	return ERR_PTR(ret);
- }
- EXPORT_SYMBOL_GPL(snd_ac97_controller_register);
- 
+--- a/include/trace/misc/nfs.h
++++ b/include/trace/misc/nfs.h
+@@ -52,6 +52,7 @@ TRACE_DEFINE_ENUM(NFSERR_JUKEBOX);
+ 		{ NFSERR_IO,			"IO" }, \
+ 		{ NFSERR_NXIO,			"NXIO" }, \
+ 		{ ECHILD,			"CHILD" }, \
++		{ ETIMEDOUT,			"TIMEDOUT" }, \
+ 		{ NFSERR_EAGAIN,		"AGAIN" }, \
+ 		{ NFSERR_ACCES,			"ACCES" }, \
+ 		{ NFSERR_EXIST,			"EXIST" }, \
 
 
