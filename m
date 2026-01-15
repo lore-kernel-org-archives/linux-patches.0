@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D02E56A;
-	Thu, 15 Jan 2026 17:24:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8411E56A;
+	Thu, 15 Jan 2026 17:24:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497852; cv=none; b=YV/E9PoqXoBb5MkaO5rxXPLNb87AfJnqponhOHuPOqZrv6CBxIW07woy4RW1ZJnhLlQNnXZY9zDV6A1S2mHwMMUyuW5uqYMdt9FJJxBmO0wk5QZ0Mk2Vjej5BqV9eBRHBIzaa9RkYASE9IsseCu1wbWMbi6Xh4c8HG68uxGR10w=
+	t=1768497855; cv=none; b=TUEBxwBLPoS8xQkZvFnqTfTHLBtYaZyBOa2XuTWNXtBWcJca1yKWo8o+AdKxYH1tHZqjJiAdVxF+8ry9k6aaNf9s2FDH+L25iucLfgI/hFLaUrSabZuViAEJA5rGZa64t2NgbpVStHjH0kgp8u7SHlRcukHKMRr5OQpFvJ0JPiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497852; c=relaxed/simple;
-	bh=33cS2elAu/ecjjSEjZJes/O5M2pw6mHeo3rxmC19pGo=;
+	s=arc-20240116; t=1768497855; c=relaxed/simple;
+	bh=SewFgkgc8c3VqmK8JTBW5pOzFfbh8/p5BD8W4S6JhAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oow6UWe8W7s8NSGeueu7Z0BFL9neyvqwi0aqk7qM2CzObaG1+JY+K4fnMxoeaqu6KWxf1xvNbyXu/h+jw8CBwUaLTs3Q9B9jf3gYAA0zuLjefm/+GJy1WqCj4guzqGOeGXGPpNEjeK8+3JRMXAQdagX93m6deE1dIyPv5B0rAVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1JjX5rYw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kMCiav4NM4iWWTz/Zyg9AVJdTmvZDflIBsIrMG/guYL1+8oSlNQdscqEXAoIVAwX59sao7M2m3/D8HOv72pCQYTZP9HDDgyW0QYNaqdD5eTLTMtRI4o/r9LjjRYgrFZW5+DmH8PX84Mz/o4YoSQzoLVqKXRR77vEb2TepzOci/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JhsJTZg+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1JjX5rYw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59E1AC116D0;
-	Thu, 15 Jan 2026 17:24:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JhsJTZg+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35C1EC116D0;
+	Thu, 15 Jan 2026 17:24:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497852;
-	bh=33cS2elAu/ecjjSEjZJes/O5M2pw6mHeo3rxmC19pGo=;
+	s=korg; t=1768497855;
+	bh=SewFgkgc8c3VqmK8JTBW5pOzFfbh8/p5BD8W4S6JhAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1JjX5rYwOzpIzqoI6j2pkgXh1Z+aW4bDZFo2s3xeKCng83ej8P1cVExNmscK4QlWn
-	 ix7klDqjt0gPIu2T3AxvNvW3mnoP+al5uOH39uoq2aziNCsdl9Tvfn1R5Zhx8jjxWz
-	 QIGkl3HWBD4QKKtK11ZC2u2Is7DvM5YQsWZrgmcE=
+	b=JhsJTZg+AzfIF0OgpR/l1q97Mp1mcIsdzLty8m4TPW3lIT4TXN8GeIUkNsMGfsNL8
+	 gtqEmw/G8qhANrw57qQxVHfZ11SyKsYJCfrSa7srlVCscvrIGjCpgNRWpExX9TZv2J
+	 aGF4bC/J/6Vnbdv83AAAd7gOgDZxNQTtoLERzk7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 226/554] mlxsw: spectrum_router: Fix neighbour use-after-free
-Date: Thu, 15 Jan 2026 17:44:52 +0100
-Message-ID: <20260115164254.426826612@linuxfoundation.org>
+Subject: [PATCH 5.15 227/554] mlxsw: spectrum_mr: Fix use-after-free when updating multicast route stats
+Date: Thu, 15 Jan 2026 17:44:53 +0100
+Message-ID: <20260115164254.462893764@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -55,195 +55,91 @@ Content-Transfer-Encoding: 8bit
 
 From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 8b0e69763ef948fb872a7767df4be665d18f5fd4 ]
+[ Upstream commit 8ac1dacec458f55f871f7153242ed6ab60373b90 ]
 
-We sometimes observe use-after-free when dereferencing a neighbour [1].
-The problem seems to be that the driver stores a pointer to the
-neighbour, but without holding a reference on it. A reference is only
-taken when the neighbour is used by a nexthop.
+Cited commit added a dedicated mutex (instead of RTNL) to protect the
+multicast route list, so that it will not change while the driver
+periodically traverses it in order to update the kernel about multicast
+route stats that were queried from the device.
 
-Fix by simplifying the reference counting scheme. Always take a
-reference when storing a neighbour pointer in a neighbour entry. Avoid
-taking a referencing when the neighbour is used by a nexthop as the
-neighbour entry associated with the nexthop already holds a reference.
+One instance of list entry deletion (during route replace) was missed
+and it can result in a use-after-free [1].
 
-Tested by running the test that uncovered the problem over 300 times.
-Without this patch the problem was reproduced after a handful of
-iterations.
+Fix by acquiring the mutex before deleting the entry from the list and
+releasing it afterwards.
 
 [1]
-BUG: KASAN: slab-use-after-free in mlxsw_sp_neigh_entry_update+0x2d4/0x310
-Read of size 8 at addr ffff88817f8e3420 by task ip/3929
+BUG: KASAN: slab-use-after-free in mlxsw_sp_mr_stats_update+0x4a5/0x540 drivers/net/ethernet/mellanox/mlxsw/spectrum_mr.c:1006 [mlxsw_spectrum]
+Read of size 8 at addr ffff8881523c2fa8 by task kworker/2:5/22043
 
-CPU: 3 UID: 0 PID: 3929 Comm: ip Not tainted 6.18.0-rc4-virtme-g36b21a067510 #3 PREEMPT(full)
-Hardware name: Nvidia SN5600/VMOD0013, BIOS 5.13 05/31/2023
+CPU: 2 UID: 0 PID: 22043 Comm: kworker/2:5 Not tainted 6.18.0-rc1-custom-g1a3d6d7cd014 #1 PREEMPT(full)
+Hardware name: Mellanox Technologies Ltd. MSN2010/SA002610, BIOS 5.6.5 08/24/2017
+Workqueue: mlxsw_core mlxsw_sp_mr_stats_update [mlxsw_spectrum]
 Call Trace:
  <TASK>
- dump_stack_lvl+0x6f/0xa0
- print_address_description.constprop.0+0x6e/0x300
- print_report+0xfc/0x1fb
- kasan_report+0xe4/0x110
- mlxsw_sp_neigh_entry_update+0x2d4/0x310
- mlxsw_sp_router_rif_gone_sync+0x35f/0x510
- mlxsw_sp_rif_destroy+0x1ea/0x730
- mlxsw_sp_inetaddr_port_vlan_event+0xa1/0x1b0
- __mlxsw_sp_inetaddr_lag_event+0xcc/0x130
- __mlxsw_sp_inetaddr_event+0xf5/0x3c0
- mlxsw_sp_router_netdevice_event+0x1015/0x1580
- notifier_call_chain+0xcc/0x150
- call_netdevice_notifiers_info+0x7e/0x100
- __netdev_upper_dev_unlink+0x10b/0x210
- netdev_upper_dev_unlink+0x79/0xa0
- vrf_del_slave+0x18/0x50
- do_set_master+0x146/0x7d0
- do_setlink.isra.0+0x9a0/0x2880
- rtnl_newlink+0x637/0xb20
- rtnetlink_rcv_msg+0x6fe/0xb90
- netlink_rcv_skb+0x123/0x380
- netlink_unicast+0x4a3/0x770
- netlink_sendmsg+0x75b/0xc90
- __sock_sendmsg+0xbe/0x160
- ____sys_sendmsg+0x5b2/0x7d0
- ___sys_sendmsg+0xfd/0x180
- __sys_sendmsg+0x124/0x1c0
- do_syscall_64+0xbb/0xfd0
- entry_SYSCALL_64_after_hwframe+0x4b/0x53
-[...]
+ dump_stack_lvl+0xba/0x110
+ print_report+0x174/0x4f5
+ kasan_report+0xdf/0x110
+ mlxsw_sp_mr_stats_update+0x4a5/0x540 drivers/net/ethernet/mellanox/mlxsw/spectrum_mr.c:1006 [mlxsw_spectrum]
+ process_one_work+0x9cc/0x18e0
+ worker_thread+0x5df/0xe40
+ kthread+0x3b8/0x730
+ ret_from_fork+0x3e9/0x560
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
 
-Allocated by task 109:
+Allocated by task 29933:
  kasan_save_stack+0x30/0x50
  kasan_save_track+0x14/0x30
- __kasan_kmalloc+0x7b/0x90
- __kmalloc_noprof+0x2c1/0x790
- neigh_alloc+0x6af/0x8f0
- ___neigh_create+0x63/0xe90
- mlxsw_sp_nexthop_neigh_init+0x430/0x7e0
- mlxsw_sp_nexthop_type_init+0x212/0x960
- mlxsw_sp_nexthop6_group_info_init.constprop.0+0x81f/0x1280
- mlxsw_sp_nexthop6_group_get+0x392/0x6a0
- mlxsw_sp_fib6_entry_create+0x46a/0xfd0
- mlxsw_sp_router_fib6_replace+0x1ed/0x5f0
- mlxsw_sp_router_fib6_event_work+0x10a/0x2a0
- process_one_work+0xd57/0x1390
- worker_thread+0x4d6/0xd40
- kthread+0x355/0x5b0
- ret_from_fork+0x1d4/0x270
- ret_from_fork_asm+0x11/0x20
+ __kasan_kmalloc+0x8f/0xa0
+ mlxsw_sp_mr_route_add+0xd8/0x4770 [mlxsw_spectrum]
+ mlxsw_sp_router_fibmr_event_work+0x371/0xad0 drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c:7965 [mlxsw_spectrum]
+ process_one_work+0x9cc/0x18e0
+ worker_thread+0x5df/0xe40
+ kthread+0x3b8/0x730
+ ret_from_fork+0x3e9/0x560
+ ret_from_fork_asm+0x1a/0x30
 
-Freed by task 154:
+Freed by task 29933:
  kasan_save_stack+0x30/0x50
  kasan_save_track+0x14/0x30
- __kasan_save_free_info+0x3b/0x60
+ __kasan_save_free_info+0x3b/0x70
  __kasan_slab_free+0x43/0x70
- kmem_cache_free_bulk.part.0+0x1eb/0x5e0
- kvfree_rcu_bulk+0x1f2/0x260
- kfree_rcu_work+0x130/0x1b0
- process_one_work+0xd57/0x1390
- worker_thread+0x4d6/0xd40
- kthread+0x355/0x5b0
- ret_from_fork+0x1d4/0x270
- ret_from_fork_asm+0x11/0x20
+ kfree+0x14e/0x700
+ mlxsw_sp_mr_route_add+0x2dea/0x4770 drivers/net/ethernet/mellanox/mlxsw/spectrum_mr.c:444 [mlxsw_spectrum]
+ mlxsw_sp_router_fibmr_event_work+0x371/0xad0 drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c:7965 [mlxsw_spectrum]
+ process_one_work+0x9cc/0x18e0
+ worker_thread+0x5df/0xe40
+ kthread+0x3b8/0x730
+ ret_from_fork+0x3e9/0x560
+ ret_from_fork_asm+0x1a/0x30
 
-Last potentially related work creation:
- kasan_save_stack+0x30/0x50
- kasan_record_aux_stack+0x8c/0xa0
- kvfree_call_rcu+0x93/0x5b0
- mlxsw_sp_router_neigh_event_work+0x67d/0x860
- process_one_work+0xd57/0x1390
- worker_thread+0x4d6/0xd40
- kthread+0x355/0x5b0
- ret_from_fork+0x1d4/0x270
- ret_from_fork_asm+0x11/0x20
-
-Fixes: 6cf3c971dc84 ("mlxsw: spectrum_router: Add private neigh table")
+Fixes: f38656d06725 ("mlxsw: spectrum_mr: Protect multicast route list with a lock")
 Signed-off-by: Ido Schimmel <idosch@nvidia.com>
 Reviewed-by: Petr Machata <petrm@nvidia.com>
 Signed-off-by: Petr Machata <petrm@nvidia.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/92d75e21d95d163a41b5cea67a15cd33f547cba6.1764695650.git.petrm@nvidia.com
+Link: https://patch.msgid.link/f996feecfd59fde297964bfc85040b6d83ec6089.1764695650.git.petrm@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlxsw/spectrum_router.c   | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/mellanox/mlxsw/spectrum_mr.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
-index 55de90d5ae591..487ea65417b4a 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
-@@ -2137,6 +2137,7 @@ mlxsw_sp_neigh_entry_alloc(struct mlxsw_sp *mlxsw_sp, struct neighbour *n,
- 	if (!neigh_entry)
- 		return NULL;
- 
-+	neigh_hold(n);
- 	neigh_entry->key.n = n;
- 	neigh_entry->rif = rif;
- 	INIT_LIST_HEAD(&neigh_entry->nexthop_list);
-@@ -2146,6 +2147,7 @@ mlxsw_sp_neigh_entry_alloc(struct mlxsw_sp *mlxsw_sp, struct neighbour *n,
- 
- static void mlxsw_sp_neigh_entry_free(struct mlxsw_sp_neigh_entry *neigh_entry)
- {
-+	neigh_release(neigh_entry->key.n);
- 	kfree(neigh_entry);
- }
- 
-@@ -3995,6 +3997,8 @@ mlxsw_sp_nexthop_dead_neigh_replace(struct mlxsw_sp *mlxsw_sp,
- 	if (err)
- 		goto err_neigh_entry_insert;
- 
-+	neigh_release(old_n);
-+
- 	read_lock_bh(&n->lock);
- 	nud_state = n->nud_state;
- 	dead = n->dead;
-@@ -4003,14 +4007,10 @@ mlxsw_sp_nexthop_dead_neigh_replace(struct mlxsw_sp *mlxsw_sp,
- 
- 	list_for_each_entry(nh, &neigh_entry->nexthop_list,
- 			    neigh_list_node) {
--		neigh_release(old_n);
--		neigh_clone(n);
- 		__mlxsw_sp_nexthop_neigh_update(nh, !entry_connected);
- 		mlxsw_sp_nexthop_group_refresh(mlxsw_sp, nh->nhgi->nh_grp);
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_mr.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_mr.c
+index 1f6bc0c7e91dd..c39aca54a0d6b 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_mr.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_mr.c
+@@ -440,7 +440,9 @@ int mlxsw_sp_mr_route_add(struct mlxsw_sp_mr_table *mr_table,
+ 		rhashtable_remove_fast(&mr_table->route_ht,
+ 				       &mr_orig_route->ht_node,
+ 				       mlxsw_sp_mr_route_ht_params);
++		mutex_lock(&mr_table->route_list_lock);
+ 		list_del(&mr_orig_route->node);
++		mutex_unlock(&mr_table->route_list_lock);
+ 		mlxsw_sp_mr_route_destroy(mr_table, mr_orig_route);
  	}
  
--	neigh_release(n);
--
- 	return 0;
- 
- err_neigh_entry_insert:
-@@ -4098,6 +4098,11 @@ static int mlxsw_sp_nexthop_neigh_init(struct mlxsw_sp *mlxsw_sp,
- 		}
- 	}
- 
-+	/* Release the reference taken by neigh_lookup() / neigh_create() since
-+	 * neigh_entry already holds one.
-+	 */
-+	neigh_release(n);
-+
- 	/* If that is the first nexthop connected to that neigh, add to
- 	 * nexthop_neighs_list
- 	 */
-@@ -4124,11 +4129,9 @@ static void mlxsw_sp_nexthop_neigh_fini(struct mlxsw_sp *mlxsw_sp,
- 					struct mlxsw_sp_nexthop *nh)
- {
- 	struct mlxsw_sp_neigh_entry *neigh_entry = nh->neigh_entry;
--	struct neighbour *n;
- 
- 	if (!neigh_entry)
- 		return;
--	n = neigh_entry->key.n;
- 
- 	__mlxsw_sp_nexthop_neigh_update(nh, true);
- 	list_del(&nh->neigh_list_node);
-@@ -4142,8 +4145,6 @@ static void mlxsw_sp_nexthop_neigh_fini(struct mlxsw_sp *mlxsw_sp,
- 
- 	if (!neigh_entry->connected && list_empty(&neigh_entry->nexthop_list))
- 		mlxsw_sp_neigh_entry_destroy(mlxsw_sp, neigh_entry);
--
--	neigh_release(n);
- }
- 
- static bool mlxsw_sp_ipip_netdev_ul_up(struct net_device *ol_dev)
 -- 
 2.51.0
 
