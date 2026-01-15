@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD3D02C027B;
-	Thu, 15 Jan 2026 17:17:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A286C2874E6;
+	Thu, 15 Jan 2026 17:17:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497472; cv=none; b=NBAixP2IdzQBRzooItIN5vcMfGfuJhvmvwV2uNNkzuaaNQ/KHhg5efXlWwjjORFainhOlStwRyGl98bQwTFmHUMHbGUEXalXqYqKmZh0kh1rGIIDBUIZGAz4bwUgRayFUmAvu1fM2lWUtr/wU6X8xzxJF1gThUtkdmNUBKQD17A=
+	t=1768497475; cv=none; b=aKii7n4BbTqZLPA9b9r0yDQxGhcpg6S8gXW+5WtUlnItslZHDjfUNs6W1ds+DBXtOsHqxDwDXlNTLMPFdwnIgxXwRaWVqEkr9wN09eLeQZHuvQjwfKkhayisVeXrjEVMpd5u4FzXBIVsS9fjaRhqNJulO2XYQZ/Tw0WTuQ2Ea5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497472; c=relaxed/simple;
-	bh=1oG4Bb5uFPmTJVE/x8PnnrSd6/dNLiap+zL9Q8sgtPA=;
+	s=arc-20240116; t=1768497475; c=relaxed/simple;
+	bh=+c2VqT2ZmiEzVLxLtJAPNH5/EDFTuY/VEb7Yi+37Jok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xl8fVr8HZ4K8l7SC7RiiZ4VzUnj8L3tXt4raABR+IvwxECLZbG0qNDGVgpvm6ZW3HBOJykAzGPCM7/AkUMPYiV4sapr9LZsJjH3UvzcVpxiJ3JUbHCAv/xZtHkqefTqSHMNFZVKqg2C6FBJQ7+BTAsY5xd97C1CbRq3sUIFMjFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ULlSA2qp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KITOFZPI9el4XOpc3JSmdI8R4iCvsvVL3I68h+zV6E33YIiAKwnkBmeu/81mHZT77BJQu7XAGUMnkNWQJLDYeQyWyxH3ZqeT965l5PlmTp4O5y7dHmzo0hh63OiYObz3XYEYZAWj4YNXXLXZahXN598nwnAFE7FQ1UyAdocRVYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wRTPbPGc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ULlSA2qp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D011C116D0;
-	Thu, 15 Jan 2026 17:17:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wRTPbPGc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E60FC116D0;
+	Thu, 15 Jan 2026 17:17:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497472;
-	bh=1oG4Bb5uFPmTJVE/x8PnnrSd6/dNLiap+zL9Q8sgtPA=;
+	s=korg; t=1768497475;
+	bh=+c2VqT2ZmiEzVLxLtJAPNH5/EDFTuY/VEb7Yi+37Jok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ULlSA2qpqj5HMtDqHKFBeoi+51U5B3uJ2/gvjzomwprEIRZlJ0rik9fPaP7+jaUCV
-	 IxY36sy3eCnGH0+YrNPVfYet6gGZgTCt7hZpTQ8nbOmQZ2TkCuN5O0wXVw1q0x4e8a
-	 mZ+YWSKNh5q+qX3Jz+aTAA0d6517FAWkSTLfq/YQ=
+	b=wRTPbPGcQA3E4UbL+HRqv3rYN9mQeoQslAfmv8WnIuflfSo8I7os8BZNUdTWbw2Ek
+	 bs5WSucgdlUVnORCqGwZV/RF3AobdEPV+oBLs9h5tOMzBfpN3lhl2kmuVpaFmXqBDj
+	 8PX9TtcPr4elW3m6RjwVVyBE0tzpjQHo3jgAE/fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Qixing <zhengqixing@huawei.com>,
-	Yu Kuai <yukuai@fnnas.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	Leo Yan <leo.yan@linaro.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 092/554] nbd: defer config unlock in nbd_genl_connect
-Date: Thu, 15 Jan 2026 17:42:38 +0100
-Message-ID: <20260115164249.576373259@linuxfoundation.org>
+Subject: [PATCH 5.15 093/554] coresight: etm4x: Save restore TRFCR_EL1
+Date: Thu, 15 Jan 2026 17:42:39 +0100
+Message-ID: <20260115164249.612004236@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -52,70 +54,182 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Qixing <zhengqixing@huawei.com>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
 
-[ Upstream commit 1649714b930f9ea6233ce0810ba885999da3b5d4 ]
+[ Upstream commit 937d3f58cacf377cab7c32e475e1ffa91d611dce ]
 
-There is one use-after-free warning when running NBD_CMD_CONNECT and
-NBD_CLEAR_SOCK:
+When the CPU enters a low power mode, the TRFCR_EL1 contents could be
+reset. Thus we need to save/restore the TRFCR_EL1 along with the ETM4x
+registers to allow the tracing.
 
-nbd_genl_connect
-  nbd_alloc_and_init_config // config_refs=1
-  nbd_start_device // config_refs=2
-  set NBD_RT_HAS_CONFIG_REF			open nbd // config_refs=3
-  recv_work done // config_refs=2
-						NBD_CLEAR_SOCK // config_refs=1
-						close nbd // config_refs=0
-  refcount_inc -> uaf
+The TRFCR related helpers are in a new header file, as we need to use
+them for TRBE in the later patches.
 
-------------[ cut here ]------------
-refcount_t: addition on 0; use-after-free.
-WARNING: CPU: 24 PID: 1014 at lib/refcount.c:25 refcount_warn_saturate+0x12e/0x290
- nbd_genl_connect+0x16d0/0x1ab0
- genl_family_rcv_msg_doit+0x1f3/0x310
- genl_rcv_msg+0x44a/0x790
-
-The issue can be easily reproduced by adding a small delay before
-refcount_inc(&nbd->config_refs) in nbd_genl_connect():
-
-        mutex_unlock(&nbd->config_lock);
-        if (!ret) {
-                set_bit(NBD_RT_HAS_CONFIG_REF, &config->runtime_flags);
-+               printk("before sleep\n");
-+               mdelay(5 * 1000);
-+               printk("after sleep\n");
-                refcount_inc(&nbd->config_refs);
-                nbd_connect_reply(info, nbd->index);
-        }
-
-Fixes: e46c7287b1c2 ("nbd: add a basic netlink interface")
-Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
-Reviewed-by: Yu Kuai <yukuai@fnnas.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc: Anshuman Khandual <anshuman.khandual@arm.com>
+Cc: Mike Leach <mike.leach@linaro.org>
+Cc: Leo Yan <leo.yan@linaro.org>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20210914102641.1852544-2-suzuki.poulose@arm.com
+[Fixed cosmetic details]
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Stable-dep-of: 64eb04ae5452 ("coresight: etm4x: Add context synchronization before enabling trace")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/nbd.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../coresight/coresight-etm4x-core.c          | 43 +++++++++++++------
+ drivers/hwtracing/coresight/coresight-etm4x.h |  2 +
+ .../coresight/coresight-self-hosted-trace.h   | 24 +++++++++++
+ 3 files changed, 57 insertions(+), 12 deletions(-)
+ create mode 100644 drivers/hwtracing/coresight/coresight-self-hosted-trace.h
 
-diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
-index ae89f6124cc6b..79b0056edbafe 100644
---- a/drivers/block/nbd.c
-+++ b/drivers/block/nbd.c
-@@ -2045,12 +2045,13 @@ static int nbd_genl_connect(struct sk_buff *skb, struct genl_info *info)
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+index 84734c7c19158..d124931ee2be5 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+@@ -40,6 +40,7 @@
+ #include "coresight-etm4x.h"
+ #include "coresight-etm-perf.h"
+ #include "coresight-etm4x-cfg.h"
++#include "coresight-self-hosted-trace.h"
+ #include "coresight-syscfg.h"
  
- 	ret = nbd_start_device(nbd);
- out:
--	mutex_unlock(&nbd->config_lock);
- 	if (!ret) {
- 		set_bit(NBD_RT_HAS_CONFIG_REF, &config->runtime_flags);
- 		refcount_inc(&nbd->config_refs);
- 		nbd_connect_reply(info, nbd->index);
- 	}
-+	mutex_unlock(&nbd->config_lock);
+ static int boot_enable;
+@@ -1009,7 +1010,7 @@ static void cpu_enable_tracing(struct etmv4_drvdata *drvdata)
+ 	if (is_kernel_in_hyp_mode())
+ 		trfcr |= TRFCR_EL2_CX;
+ 
+-	write_sysreg_s(trfcr, SYS_TRFCR_EL1);
++	write_trfcr(trfcr);
+ }
+ 
+ static void etm4_init_arch_data(void *info)
+@@ -1534,7 +1535,7 @@ static void etm4_init_trace_id(struct etmv4_drvdata *drvdata)
+ 	drvdata->trcid = coresight_get_trace_id(drvdata->cpu);
+ }
+ 
+-static int etm4_cpu_save(struct etmv4_drvdata *drvdata)
++static int __etm4_cpu_save(struct etmv4_drvdata *drvdata)
+ {
+ 	int i, ret = 0;
+ 	struct etmv4_save_state *state;
+@@ -1674,7 +1675,23 @@ static int etm4_cpu_save(struct etmv4_drvdata *drvdata)
+ 	return ret;
+ }
+ 
+-static void etm4_cpu_restore(struct etmv4_drvdata *drvdata)
++static int etm4_cpu_save(struct etmv4_drvdata *drvdata)
++{
++	int ret = 0;
 +
- 	nbd_config_put(nbd);
- 	if (put_dev)
- 		nbd_put(nbd);
++	/* Save the TRFCR irrespective of whether the ETM is ON */
++	if (drvdata->trfc)
++		drvdata->save_trfcr = read_trfcr();
++	/*
++	 * Save and restore the ETM Trace registers only if
++	 * the ETM is active.
++	 */
++	if (local_read(&drvdata->mode) && drvdata->save_state)
++		ret = __etm4_cpu_save(drvdata);
++	return ret;
++}
++
++static void __etm4_cpu_restore(struct etmv4_drvdata *drvdata)
+ {
+ 	int i;
+ 	struct etmv4_save_state *state = drvdata->save_state;
+@@ -1773,6 +1790,14 @@ static void etm4_cpu_restore(struct etmv4_drvdata *drvdata)
+ 	etm4_cs_lock(drvdata, csa);
+ }
+ 
++static void etm4_cpu_restore(struct etmv4_drvdata *drvdata)
++{
++	if (drvdata->trfc)
++		write_trfcr(drvdata->save_trfcr);
++	if (drvdata->state_needs_restore)
++		__etm4_cpu_restore(drvdata);
++}
++
+ static int etm4_cpu_pm_notify(struct notifier_block *nb, unsigned long cmd,
+ 			      void *v)
+ {
+@@ -1784,23 +1809,17 @@ static int etm4_cpu_pm_notify(struct notifier_block *nb, unsigned long cmd,
+ 
+ 	drvdata = etmdrvdata[cpu];
+ 
+-	if (!drvdata->save_state)
+-		return NOTIFY_OK;
+-
+ 	if (WARN_ON_ONCE(drvdata->cpu != cpu))
+ 		return NOTIFY_BAD;
+ 
+ 	switch (cmd) {
+ 	case CPU_PM_ENTER:
+-		/* save the state if self-hosted coresight is in use */
+-		if (local_read(&drvdata->mode))
+-			if (etm4_cpu_save(drvdata))
+-				return NOTIFY_BAD;
++		if (etm4_cpu_save(drvdata))
++			return NOTIFY_BAD;
+ 		break;
+ 	case CPU_PM_EXIT:
+ 	case CPU_PM_ENTER_FAILED:
+-		if (drvdata->state_needs_restore)
+-			etm4_cpu_restore(drvdata);
++		etm4_cpu_restore(drvdata);
+ 		break;
+ 	default:
+ 		return NOTIFY_DONE;
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x.h b/drivers/hwtracing/coresight/coresight-etm4x.h
+index 3ab528c6b91f1..74f1ba8ed148d 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x.h
++++ b/drivers/hwtracing/coresight/coresight-etm4x.h
+@@ -901,6 +901,7 @@ struct etmv4_save_state {
+  * @lpoverride:	If the implementation can support low-power state over.
+  * @trfc:	If the implementation supports Arm v8.4 trace filter controls.
+  * @config:	structure holding configuration parameters.
++ * @save_trfcr:	Saved TRFCR_EL1 register during a CPU PM event.
+  * @save_state:	State to be preserved across power loss
+  * @state_needs_restore: True when there is context to restore after PM exit
+  * @skip_power_up: Indicates if an implementation can skip powering up
+@@ -954,6 +955,7 @@ struct etmv4_drvdata {
+ 	bool				lpoverride;
+ 	bool				trfc;
+ 	struct etmv4_config		config;
++	u64				save_trfcr;
+ 	struct etmv4_save_state		*save_state;
+ 	bool				state_needs_restore;
+ 	bool				skip_power_up;
+diff --git a/drivers/hwtracing/coresight/coresight-self-hosted-trace.h b/drivers/hwtracing/coresight/coresight-self-hosted-trace.h
+new file mode 100644
+index 0000000000000..303d71911870f
+--- /dev/null
++++ b/drivers/hwtracing/coresight/coresight-self-hosted-trace.h
+@@ -0,0 +1,24 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/*
++ * Arm v8 Self-Hosted trace support.
++ *
++ * Copyright (C) 2021 ARM Ltd.
++ */
++
++#ifndef __CORESIGHT_SELF_HOSTED_TRACE_H
++#define __CORESIGHT_SELF_HOSTED_TRACE_H
++
++#include <asm/sysreg.h>
++
++static inline u64 read_trfcr(void)
++{
++	return read_sysreg_s(SYS_TRFCR_EL1);
++}
++
++static inline void write_trfcr(u64 val)
++{
++	write_sysreg_s(val, SYS_TRFCR_EL1);
++	isb();
++}
++
++#endif /*  __CORESIGHT_SELF_HOSTED_TRACE_H */
 -- 
 2.51.0
 
