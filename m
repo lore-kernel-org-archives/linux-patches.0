@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6073E350A05;
-	Thu, 15 Jan 2026 17:09:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B37F2F619D;
+	Thu, 15 Jan 2026 17:09:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496961; cv=none; b=DLj6rno9MfZgZhbCictVILv8F2ZdCYh9X6MDaWhnWg+pNSeJJgjCoD7wwH9lXV7BIxEVmo0fjRgpRe7loz99FuNkOJCPC2fXlizTXMVvMyZ3Lol+bVoWqTXWyUaZdcMjCIN4EUaI3dwpVF1gISW9Qc0nfArA07Zc+sZV4j1r5pw=
+	t=1768496964; cv=none; b=tAWM1qxbhfLsPs/enug45zsJvzPD4pzbii0jsN+3Z/v6ABNy4rp38h/RiYsDV81AKqsmhdGAGzeq2rjtVIPTU/QqloYdJKrp2W63mZ4qazQqu65Yhqhct5pLeZZXRH8ejBkFfvISv7580mZJFXIKWLd5MldJjg7nfGZbKdQyi08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496961; c=relaxed/simple;
-	bh=gjHyUsVZybrrcsZ4RiVN9v10taLzWg3Dhm8WOvJoMec=;
+	s=arc-20240116; t=1768496964; c=relaxed/simple;
+	bh=bp4tLl0qe3VeKvW3HMp/gpN5qHizZVd3e9vjZzMsdWw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N1nLhnX4O9kFdvaJPVbpj6yUf3vNAaRNK/BII3G0GRq6QJy4vv7fhNGLkYdpg62UuFN6R2Ms4JmpOY71NvfBAWeFAvW/D1cXaEoiBx5ujVRlmtK0S5Nd1K61oWk02WbedIfoFfeHYm6Wb6cYUZSwEVzQ7GKzpGsTXGrQ9B2wAEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y3VCieXZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cFqqtT3b/oC8XqzVSVnhdwtW4jP5JDQ+E8qnouoolbDk3qvk0cSRNG1nM2975xK/tGLJUhDMEAsSCE0VP37Z370+tYLiM0hssVy6TX/0k3NFMnkRh8e9OJSJU9ZqhiDy4Qv3G9dn2GWNzVgHfXH5fr9tqM/hLxJJxTso+ET9IHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sMz2RJUt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y3VCieXZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D00CC116D0;
-	Thu, 15 Jan 2026 17:09:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sMz2RJUt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 882ADC116D0;
+	Thu, 15 Jan 2026 17:09:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496961;
-	bh=gjHyUsVZybrrcsZ4RiVN9v10taLzWg3Dhm8WOvJoMec=;
+	s=korg; t=1768496963;
+	bh=bp4tLl0qe3VeKvW3HMp/gpN5qHizZVd3e9vjZzMsdWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y3VCieXZBbgvE2eNgb8AUprLwlGFQfRyTyIZhO2C1MUS3t0JS4yVu8FUQs9QWQHPt
-	 pZ14/FpTB4X87PTlPHJKH0/JXKQDDC2pBkxAIlnmivktlRzd4Mogbe4bLG5hSUBgVn
-	 N2rE8j0BR+J30ZpLXJn2K2Mz+UOijLKhvdEe0bY0=
+	b=sMz2RJUt2h9KVrpkUlmO1Wop67Q4ZqTzAjOpe8juIZ5mIQ4pnOO5WMdYnBsDaVX6I
+	 dEmzgnSJ/+KSv9i2xJPkGeoCdqsezrL6+3oX6anvpe5w+nE2JvviVBOIIGwJ1Ptz9L
+	 +bZjBvMyN9ZRS2+Ed8KT7XNyRJBVizja2kPu1PqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Florian Westphal <fw@strlen.de>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 43/88] netfilter: nft_synproxy: avoid possible data-race on update operation
-Date: Thu, 15 Jan 2026 17:48:26 +0100
-Message-ID: <20260115164147.868997181@linuxfoundation.org>
+Subject: [PATCH 6.6 44/88] gpio: pca953x: Utilise dev_err_probe() where it makes sense
+Date: Thu, 15 Jan 2026 17:48:27 +0100
+Message-ID: <20260115164147.904753069@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164146.312481509@linuxfoundation.org>
 References: <20260115164146.312481509@linuxfoundation.org>
@@ -51,53 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 36a3200575642846a96436d503d46544533bb943 ]
+[ Upstream commit c47f7ff0fe61738a40b1b4fef3cd8317ec314079 ]
 
-During nft_synproxy eval we are reading nf_synproxy_info struct which
-can be modified on update operation concurrently. As nf_synproxy_info
-struct fits in 32 bits, use READ_ONCE/WRITE_ONCE annotations.
+At least in pca953x_irq_setup() we may use dev_err_probe().
 
-Fixes: ee394f96ad75 ("netfilter: nft_synproxy: add synproxy stateful object support")
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Stable-dep-of: 014a17deb412 ("gpio: pca953x: handle short interrupt pulses on PCAL devices")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_synproxy.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpio/gpio-pca953x.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/net/netfilter/nft_synproxy.c b/net/netfilter/nft_synproxy.c
-index 5d3e518259859..4d3e5a31b4125 100644
---- a/net/netfilter/nft_synproxy.c
-+++ b/net/netfilter/nft_synproxy.c
-@@ -48,7 +48,7 @@ static void nft_synproxy_eval_v4(const struct nft_synproxy *priv,
- 				 struct tcphdr *_tcph,
- 				 struct synproxy_options *opts)
+diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
+index faadbe66b23e7..3a0b999521e44 100644
+--- a/drivers/gpio/gpio-pca953x.c
++++ b/drivers/gpio/gpio-pca953x.c
+@@ -895,6 +895,7 @@ static irqreturn_t pca953x_irq_handler(int irq, void *devid)
+ static int pca953x_irq_setup(struct pca953x_chip *chip, int irq_base)
  {
--	struct nf_synproxy_info info = priv->info;
-+	struct nf_synproxy_info info = READ_ONCE(priv->info);
- 	struct net *net = nft_net(pkt);
- 	struct synproxy_net *snet = synproxy_pernet(net);
- 	struct sk_buff *skb = pkt->skb;
-@@ -79,7 +79,7 @@ static void nft_synproxy_eval_v6(const struct nft_synproxy *priv,
- 				 struct tcphdr *_tcph,
- 				 struct synproxy_options *opts)
- {
--	struct nf_synproxy_info info = priv->info;
-+	struct nf_synproxy_info info = READ_ONCE(priv->info);
- 	struct net *net = nft_net(pkt);
- 	struct synproxy_net *snet = synproxy_pernet(net);
- 	struct sk_buff *skb = pkt->skb;
-@@ -340,7 +340,7 @@ static void nft_synproxy_obj_update(struct nft_object *obj,
- 	struct nft_synproxy *newpriv = nft_obj_data(newobj);
- 	struct nft_synproxy *priv = nft_obj_data(obj);
+ 	struct i2c_client *client = chip->client;
++	struct device *dev = &client->dev;
+ 	DECLARE_BITMAP(reg_direction, MAX_LINE);
+ 	DECLARE_BITMAP(irq_stat, MAX_LINE);
+ 	struct gpio_irq_chip *girq;
+@@ -943,11 +944,8 @@ static int pca953x_irq_setup(struct pca953x_chip *chip, int irq_base)
+ 					NULL, pca953x_irq_handler,
+ 					IRQF_ONESHOT | IRQF_SHARED,
+ 					dev_name(&client->dev), chip);
+-	if (ret) {
+-		dev_err(&client->dev, "failed to request irq %d\n",
+-			client->irq);
+-		return ret;
+-	}
++	if (ret)
++		return dev_err_probe(dev, client->irq, "failed to request irq\n");
  
--	priv->info = newpriv->info;
-+	WRITE_ONCE(priv->info, newpriv->info);
+ 	return 0;
  }
- 
- static struct nft_object_type nft_synproxy_obj_type;
 -- 
 2.51.0
 
