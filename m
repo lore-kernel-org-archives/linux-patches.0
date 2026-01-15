@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869BE258EC2;
-	Thu, 15 Jan 2026 17:18:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E1E586334;
+	Thu, 15 Jan 2026 17:18:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497498; cv=none; b=K5lqSjlhma6HbRvmLoOlA8DOleRkLHL21Z63vAFh2dvzjjHrTMRBpQxLXrMg/i8ygusCSCzVI0pybBXA8LT71CXc8x/g7E/Ljk3bXVEldSu9Te3b3GvdMkftgQlb0M01ER/mPdtXH2OUoDHvtuQPs/U5rQoH6gNTubNJmDOYVp8=
+	t=1768497501; cv=none; b=uyV6wtxsx2KvXsqmSZUOxTVwE43qXnQBgbyCC4lPu+Hgy4pXktb0PepTFJ6j+EzPG5Gzvoi5SVhaj7QLw8I0WxaCrMhSl8MsqYgMNm+QiTi2JjAzIs1x6H24Da16s6uNT8YIVQm+ZMqwOMlloSAnDL3BPb4+/fQSJCofkg+6VbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497498; c=relaxed/simple;
-	bh=VFnbuzl7oqmOSZKfaRyAuKMun70GZhg6ALVEo2fLcWQ=;
+	s=arc-20240116; t=1768497501; c=relaxed/simple;
+	bh=9xoqtVfi1+ptCSPUXKXE0rpvTY+/ixGH6SdtSAFSgNk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zjc+aGLkPn31o6n5tBNTF98nW2oNS7FxHpl5UF3mlmyeE2OqmlqTuADJOPvWsI+zO83a2+9SJe3DQQd0sd9miPcS4VbVKPBnk0HbNrcJqFvIP0qVVOKSmuo52ZllSSPuAwOOuYdOC1nbYrCMBM91ZtPu0iPi9lJ9002owYKIkTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yQDcoXYq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jt4Y6k7gBz5RRNYzVflz3HWGW4kOEgDF4ndU8xmqgCyEQqELhMNzaNd0bj6tRJGXoZxu/qLGhe+rBRTFRFPuNmviTBjFwEsoTXWQL9Cm+tjjleOfLZoQd5FK1/yFh/A18DzflzmdPAeeND6WJL07wsGScv5mJFKCKCsQZL9VZDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X/wZSWh6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yQDcoXYq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D42D4C116D0;
-	Thu, 15 Jan 2026 17:18:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X/wZSWh6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB17AC116D0;
+	Thu, 15 Jan 2026 17:18:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497498;
-	bh=VFnbuzl7oqmOSZKfaRyAuKMun70GZhg6ALVEo2fLcWQ=;
+	s=korg; t=1768497501;
+	bh=9xoqtVfi1+ptCSPUXKXE0rpvTY+/ixGH6SdtSAFSgNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yQDcoXYqydQZbjEFCNUyKN73b2Y5MBtj4uI5NrM2Y8xSIYsNH/qQFXNlixGliH3ot
-	 bkpHckeiK48nyrVy5tLQUNbkLUbmO0Kux0KRGKBLkjOqjsGzKRqC8B/lRefEznX2bG
-	 iNO9Ft4j7e1cGGJ0HWxczZscnEcSdx/LIhInwI0o=
+	b=X/wZSWh6wY9pbG0IwMXYz0qp32T4anWx288K5Pz1KEUbJJuIesj6hLlogX/tHLuQ5
+	 0F1nIJbTIlS6M+mCK9vHV7+cSr+C9wZSRKmEbqp/xHa+pcwSRR/uWKdJyVW45CnHvu
+	 C/QflRXu35KSe0J4sWGKvrkhhqwVFOuRDxJjv2KE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tengda Wu <wutengda@huaweicloud.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Leo Yan <leo.yan@arm.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	James Clark <james.clark@linaro.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 060/554] x86/dumpstack: Prevent KASAN false positive warnings in __show_regs()
-Date: Thu, 15 Jan 2026 17:42:06 +0100
-Message-ID: <20260115164248.419375653@linuxfoundation.org>
+Subject: [PATCH 5.15 096/554] coresight: etm4x: Extract the trace unit controlling
+Date: Thu, 15 Jan 2026 17:42:42 +0100
+Message-ID: <20260115164249.718999358@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -53,114 +53,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tengda Wu <wutengda@huaweicloud.com>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit ced37e9ceae50e4cb6cd058963bd315ec9afa651 ]
+[ Upstream commit 40f682ae5086366d51e29e66eb8a344501245d0d ]
 
-When triggering a stack dump via sysrq (echo t > /proc/sysrq-trigger),
-KASAN may report false-positive out-of-bounds access:
+The trace unit is controlled in the ETM hardware enabling and disabling.
+The sequential changes for support AUX pause and resume will reuse the
+same operations.
 
-  BUG: KASAN: out-of-bounds in __show_regs+0x4b/0x340
-  Call Trace:
-    dump_stack_lvl
-    print_address_description.constprop.0
-    print_report
-    __show_regs
-    show_trace_log_lvl
-    sched_show_task
-    show_state_filter
-    sysrq_handle_showstate
-    __handle_sysrq
-    write_sysrq_trigger
-    proc_reg_write
-    vfs_write
-    ksys_write
-    do_syscall_64
-    entry_SYSCALL_64_after_hwframe
+Extract the operations in the etm4_{enable|disable}_trace_unit()
+functions.  A minor improvement in etm4_enable_trace_unit() is for
+returning the timeout error to callers.
 
-The issue occurs as follows:
-
-  Task A (walk other tasks' stacks)           Task B (running)
-  1. echo t > /proc/sysrq-trigger
-  show_trace_log_lvl
-    regs = unwind_get_entry_regs()
-    show_regs_if_on_stack(regs)
-                                              2. The stack value pointed by
-                                                 `regs` keeps changing, and
-                                                 so are the tags in its
-                                                 KASAN shadow region.
-      __show_regs(regs)
-        regs->ax, regs->bx, ...
-          3. hit KASAN redzones, OOB
-
-When task A walks task B's stack without suspending it, the continuous changes
-in task B's stack (and corresponding KASAN shadow tags) may cause task A to
-hit KASAN redzones when accessing obsolete values on the stack, resulting in
-false positive reports.
-
-Simply stopping the task before unwinding is not a viable fix, as it would
-alter the state intended to inspect. This is especially true for diagnosing
-misbehaving tasks (e.g., in a hard lockup), where stopping might fail or hide
-the root cause by changing the call stack.
-
-Therefore, fix this by disabling KASAN checks during asynchronous stack
-unwinding, which is identified when the unwinding task does not match the
-current task (task != current).
-
-  [ bp: Align arguments on function's opening brace. ]
-
-Fixes: 3b3fa11bc700 ("x86/dumpstack: Print any pt_regs found on the stack")
-Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Link: https://patch.msgid.link/all/20251023090632.269121-1-wutengda@huaweicloud.com
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Reviewed-by: Mike Leach <mike.leach@linaro.org>
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20250401180708.385396-2-leo.yan@arm.com
+Stable-dep-of: 64eb04ae5452 ("coresight: etm4x: Add context synchronization before enabling trace")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/dumpstack.c | 23 +++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ .../coresight/coresight-etm4x-core.c          | 103 +++++++++++-------
+ 1 file changed, 62 insertions(+), 41 deletions(-)
 
-diff --git a/arch/x86/kernel/dumpstack.c b/arch/x86/kernel/dumpstack.c
-index 4adbc85b74a33..82ade5a7879ff 100644
---- a/arch/x86/kernel/dumpstack.c
-+++ b/arch/x86/kernel/dumpstack.c
-@@ -189,8 +189,8 @@ static void show_regs_if_on_stack(struct stack_info *info, struct pt_regs *regs,
-  * in false positive reports. Disable instrumentation to avoid those.
-  */
- __no_kmsan_checks
--static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
--			unsigned long *stack, const char *log_lvl)
-+static void __show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
-+				 unsigned long *stack, const char *log_lvl)
- {
- 	struct unwind_state state;
- 	struct stack_info stack_info = {0};
-@@ -311,6 +311,25 @@ static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
- 	}
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+index 0b7aceb96d753..7cc854da81988 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+@@ -392,6 +392,44 @@ static int etm4x_wait_status(struct csdev_access *csa, int pos, int val)
+ 	return coresight_timeout(csa, TRCSTATR, pos, val);
  }
  
-+static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
-+			       unsigned long *stack, const char *log_lvl)
++static int etm4_enable_trace_unit(struct etmv4_drvdata *drvdata)
 +{
++	struct coresight_device *csdev = drvdata->csdev;
++	struct device *etm_dev = &csdev->dev;
++	struct csdev_access *csa = &csdev->access;
++
 +	/*
-+	 * Disable KASAN to avoid false positives during walking another
-+	 * task's stacks, as values on these stacks may change concurrently
-+	 * with task execution.
++	 * ETE mandates that the TRCRSR is written to before
++	 * enabling it.
 +	 */
-+	bool disable_kasan = task && task != current;
++	if (etm4x_is_ete(drvdata))
++		etm4x_relaxed_write32(csa, TRCRSR_TA, TRCRSR);
 +
-+	if (disable_kasan)
-+		kasan_disable_current();
++	etm4x_allow_trace(drvdata);
++	/* Enable the trace unit */
++	etm4x_relaxed_write32(csa, 1, TRCPRGCTLR);
 +
-+	__show_trace_log_lvl(task, regs, stack, log_lvl);
++	/* Synchronize the register updates for sysreg access */
++	if (!csa->io_mem)
++		isb();
 +
-+	if (disable_kasan)
-+		kasan_enable_current();
++	/* wait for TRCSTATR.IDLE to go back down to '0' */
++	if (etm4x_wait_status(csa, TRCSTATR_IDLE_BIT, 0)) {
++		dev_err(etm_dev,
++			"timeout while waiting for Idle Trace Status\n");
++		return -ETIME;
++	}
++
++	/*
++	 * As recommended by section 4.3.7 ("Synchronization when using the
++	 * memory-mapped interface") of ARM IHI 0064D
++	 */
++	dsb(sy);
++	isb();
++
++	return 0;
 +}
 +
- void show_stack(struct task_struct *task, unsigned long *sp,
- 		       const char *loglvl)
+ static int etm4_enable_hw(struct etmv4_drvdata *drvdata)
  {
+ 	int i, rc;
+@@ -500,33 +538,7 @@ static int etm4_enable_hw(struct etmv4_drvdata *drvdata)
+ 		etm4x_relaxed_write32(csa, trcpdcr | TRCPDCR_PU, TRCPDCR);
+ 	}
+ 
+-	/*
+-	 * ETE mandates that the TRCRSR is written to before
+-	 * enabling it.
+-	 */
+-	if (etm4x_is_ete(drvdata))
+-		etm4x_relaxed_write32(csa, TRCRSR_TA, TRCRSR);
+-
+-	etm4x_allow_trace(drvdata);
+-	/* Enable the trace unit */
+-	etm4x_relaxed_write32(csa, 1, TRCPRGCTLR);
+-
+-	/* Synchronize the register updates for sysreg access */
+-	if (!csa->io_mem)
+-		isb();
+-
+-	/* wait for TRCSTATR.IDLE to go back down to '0' */
+-	if (etm4x_wait_status(csa, TRCSTATR_IDLE_BIT, 0))
+-		dev_err(etm_dev,
+-			"timeout while waiting for Idle Trace Status\n");
+-
+-	/*
+-	 * As recommended by section 4.3.7 ("Synchronization when using the
+-	 * memory-mapped interface") of ARM IHI 0064D
+-	 */
+-	dsb(sy);
+-	isb();
+-
++	rc = etm4_enable_trace_unit(drvdata);
+ done:
+ 	etm4_cs_lock(drvdata, csa);
+ 
+@@ -800,25 +812,12 @@ static int etm4_enable(struct coresight_device *csdev,
+ 	return ret;
+ }
+ 
+-static void etm4_disable_hw(void *info)
++static void etm4_disable_trace_unit(struct etmv4_drvdata *drvdata)
+ {
+ 	u32 control;
+-	struct etmv4_drvdata *drvdata = info;
+-	struct etmv4_config *config = &drvdata->config;
+ 	struct coresight_device *csdev = drvdata->csdev;
+ 	struct device *etm_dev = &csdev->dev;
+ 	struct csdev_access *csa = &csdev->access;
+-	int i;
+-
+-	etm4_cs_unlock(drvdata, csa);
+-	etm4_disable_arch_specific(drvdata);
+-
+-	if (!drvdata->skip_power_up) {
+-		/* power can be removed from the trace unit now */
+-		control = etm4x_relaxed_read32(csa, TRCPDCR);
+-		control &= ~TRCPDCR_PU;
+-		etm4x_relaxed_write32(csa, control, TRCPDCR);
+-	}
+ 
+ 	control = etm4x_relaxed_read32(csa, TRCPRGCTLR);
+ 
+@@ -859,6 +858,28 @@ static void etm4_disable_hw(void *info)
+ 	 * of ARM IHI 0064H.b.
+ 	 */
+ 	isb();
++}
++
++static void etm4_disable_hw(void *info)
++{
++	u32 control;
++	struct etmv4_drvdata *drvdata = info;
++	struct etmv4_config *config = &drvdata->config;
++	struct coresight_device *csdev = drvdata->csdev;
++	struct csdev_access *csa = &csdev->access;
++	int i;
++
++	etm4_cs_unlock(drvdata, csa);
++	etm4_disable_arch_specific(drvdata);
++
++	if (!drvdata->skip_power_up) {
++		/* power can be removed from the trace unit now */
++		control = etm4x_relaxed_read32(csa, TRCPDCR);
++		control &= ~TRCPDCR_PU;
++		etm4x_relaxed_write32(csa, control, TRCPDCR);
++	}
++
++	etm4_disable_trace_unit(drvdata);
+ 
+ 	/* read the status of the single shot comparators */
+ 	for (i = 0; i < drvdata->nr_ss_cmp; i++) {
 -- 
 2.51.0
 
