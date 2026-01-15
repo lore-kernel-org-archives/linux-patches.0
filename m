@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 236F2349B0A;
-	Thu, 15 Jan 2026 16:57:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A879F2FDC4D;
+	Thu, 15 Jan 2026 16:57:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496240; cv=none; b=WfYDcx7mcaPBBDx4tY+QG9NgbtWqTZFkGDwdmj/QFp8mAvU5isTaX8l8KdCMCoAtjyZ9itCv37zswM/UK0Os0FjQJm9YaXIYpHNajQGcSRPYggmydzK5OwX3Kyz2oCf37O5yGMCF4Ej1emVZAmh0dtpujQjFV+utUiMvsWYKMyw=
+	t=1768496242; cv=none; b=BBTWRGVqXmMDfPs7Wxs/XtPAW1wyBrF0+NSxE/edHcOMj9oW/svyZx4XuC3hbml0eKG06yu8NICEV7jHSY8GdfvSdToSpHmxcobq4veneDpOuSfar/rUVXukHoqSSC45VFeJ0WEXm1/hNHlkfNDLwPnVPv+0RSeobf5OcPSMDuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496240; c=relaxed/simple;
-	bh=hZsQA2NC2CjZRWqmwNYU63leka68y9IwtNJ2JNXK15E=;
+	s=arc-20240116; t=1768496242; c=relaxed/simple;
+	bh=c5chWPWGNaM3lxgQwZveYmrwLtvRxAwRFInRqsDPgGM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ir/ksiNHZqt5LgBES6TkyaMD4PUM0sPZ6S7QWjSeNAjxiXD9kFPx2ipVVG+XkMWg1zs0C43EMBH5Yl27zpZrTNzobVN2/lliOoD79CbrtVtbd7UTybqjHARKEaoi2WuypcV1RfQOCcNk2jwB0eltmgwhYDdAlqWP3crWWTird44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PbWwadq1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f99VFdlUSBSR7y3NbXtrugOfgYQm4hpfhEs3jV6zv8fY0eSIKilykbgpkbC8btcVdSmOYpdZe7JTUlLLq9rQgiD1A5y7PU/X4Fe6jgAo1uSZFtyByUYZHsI+2o6sRvWptwbzyPm7uYOrARUp1vjrvOo9SehvSkwUHw7wAcVjwss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dQWs/Q8y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PbWwadq1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66331C116D0;
-	Thu, 15 Jan 2026 16:57:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dQWs/Q8y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3789AC19421;
+	Thu, 15 Jan 2026 16:57:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496239;
-	bh=hZsQA2NC2CjZRWqmwNYU63leka68y9IwtNJ2JNXK15E=;
+	s=korg; t=1768496242;
+	bh=c5chWPWGNaM3lxgQwZveYmrwLtvRxAwRFInRqsDPgGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PbWwadq1u8/zYEafxMkD8oVUXFQ4eKtz3B48WjwtkX2pf21Jnc8J5q/AMh265LaPr
-	 NkIk2tzSTWnojuiuEKakU2dSzFvAZvMKytysgcNqZLcqbDbmqG26889ojyee+xPgO+
-	 mtX9AltKmp31fDcC9ff9+6uyBaCoxLZv87hGP6wk=
+	b=dQWs/Q8ypT0L6wtALDVXBNgRxYwyhtGCjnRWNzhQMih/klHQRdr26D2ARjE0nGxU2
+	 URv6L9rK1gCALnnrPYTslKL2G/ugj51Z5Ntt5iRvZeS2UINBomr8C3F1Ko1XidSLBs
+	 jwGmc6pw8VQgPbecMUzXMIKLY4c2G1SK+D3ClhYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Emil Tantilov <emil.s.tantilov@intel.com>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Madhu Chittim <madhu.chittim@intel.com>,
+	Joshua Hay <joshua.a.hay@intel.com>,
 	Samuel Salin <Samuel.salin@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 126/181] idpf: fix memory leak in idpf_vport_rel()
-Date: Thu, 15 Jan 2026 17:47:43 +0100
-Message-ID: <20260115164206.864634019@linuxfoundation.org>
+Subject: [PATCH 6.18 127/181] idpf: fix memory leak in idpf_vc_core_deinit()
+Date: Thu, 15 Jan 2026 17:47:44 +0100
+Message-ID: <20260115164206.900910284@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -56,50 +56,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Emil Tantilov <emil.s.tantilov@intel.com>
 
-[ Upstream commit f6242b354605faff263ca45882b148200915a3f6 ]
+[ Upstream commit e111cbc4adf9f9974eed040aeece7e17460f6bff ]
 
-Free vport->rx_ptype_lkup in idpf_vport_rel() to avoid leaking memory
-during a reset. Reported by kmemleak:
+Make sure to free hw->lan_regs. Reported by kmemleak during reset:
 
-unreferenced object 0xff450acac838a000 (size 4096):
-  comm "kworker/u258:5", pid 7732, jiffies 4296830044
+unreferenced object 0xff1b913d02a936c0 (size 96):
+  comm "kworker/u258:14", pid 2174, jiffies 4294958305
   hex dump (first 32 bytes):
-    00 00 00 00 00 10 00 00 00 10 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 10 00 00 00 00 00 00  ................
-  backtrace (crc 3da81902):
-    __kmalloc_cache_noprof+0x469/0x7a0
-    idpf_send_get_rx_ptype_msg+0x90/0x570 [idpf]
-    idpf_init_task+0x1ec/0x8d0 [idpf]
+    00 00 00 c0 a8 ba 2d ff 00 00 00 00 00 00 00 00  ......-.........
+    00 00 40 08 00 00 00 00 00 00 25 b3 a8 ba 2d ff  ..@.......%...-.
+  backtrace (crc 36063c4f):
+    __kmalloc_noprof+0x48f/0x890
+    idpf_vc_core_init+0x6ce/0x9b0 [idpf]
+    idpf_vc_event_task+0x1fb/0x350 [idpf]
     process_one_work+0x226/0x6d0
     worker_thread+0x19e/0x340
     kthread+0x10f/0x250
     ret_from_fork+0x251/0x2b0
     ret_from_fork_asm+0x1a/0x30
 
-Fixes: 0fe45467a104 ("idpf: add create vport and netdev configuration")
+Fixes: 6aa53e861c1a ("idpf: implement get LAN MMIO memory regions")
 Signed-off-by: Emil Tantilov <emil.s.tantilov@intel.com>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Madhu Chittim <madhu.chittim@intel.com>
+Reviewed-by: Joshua Hay <joshua.a.hay@intel.com>
 Tested-by: Samuel Salin <Samuel.salin@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf_lib.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/intel/idpf/idpf_virtchnl.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_lib.c b/drivers/net/ethernet/intel/idpf/idpf_lib.c
-index a964e0f5891eb..04af10cfaa8cb 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_lib.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_lib.c
-@@ -1082,6 +1082,8 @@ static void idpf_vport_rel(struct idpf_vport *vport)
- 		kfree(adapter->vport_config[idx]->req_qs_chunks);
- 		adapter->vport_config[idx]->req_qs_chunks = NULL;
- 	}
-+	kfree(vport->rx_ptype_lkup);
-+	vport->rx_ptype_lkup = NULL;
- 	kfree(vport);
- 	adapter->num_alloc_vports--;
- }
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
+index 5bbe7d9294c14..01bbd12a642a0 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
+@@ -3570,6 +3570,7 @@ int idpf_vc_core_init(struct idpf_adapter *adapter)
+  */
+ void idpf_vc_core_deinit(struct idpf_adapter *adapter)
+ {
++	struct idpf_hw *hw = &adapter->hw;
+ 	bool remove_in_prog;
+ 
+ 	if (!test_bit(IDPF_VC_CORE_INIT, adapter->flags))
+@@ -3593,6 +3594,9 @@ void idpf_vc_core_deinit(struct idpf_adapter *adapter)
+ 
+ 	idpf_vport_params_buf_rel(adapter);
+ 
++	kfree(hw->lan_regs);
++	hw->lan_regs = NULL;
++
+ 	kfree(adapter->vports);
+ 	adapter->vports = NULL;
+ 
 -- 
 2.51.0
 
