@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D77A2C0285;
-	Thu, 15 Jan 2026 17:04:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0804A2C0285;
+	Thu, 15 Jan 2026 17:04:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496680; cv=none; b=afR5tAphW6ErMa27soaYQ7TIrafTiySqTPMKfZAGX6tMtGfNPKEfugkXvazmfQQxQJuhIhxOOZiN5smmmje/bS6TCaPX/AB4K+4LLZqVJRVEaUUEnag3Hs1lDFxSqxRiQkfRN2uSZLt47FtM60Q+14BqXyhq0ZhoBDUbrKW7QeY=
+	t=1768496683; cv=none; b=uxFMSsOwt3NZKoDszKesrcl4AkHlgi+7vukOWvBZhBsS8z++kyjxQzQO+rr6CHhRMwLzH2+QxlaPyKsHHMdqC6p/hxXw4WvbULQ73WWlh94y8Uy9/+EXQZqsCfMXt+BK4j3aaTg7vd267t5k0EgIfgBKbz1Emo4cHfm6APAfTxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496680; c=relaxed/simple;
-	bh=Xywwu5uUHr2sgvLHganwXAxMTZIYNOZ3mQ+/1P6Zimw=;
+	s=arc-20240116; t=1768496683; c=relaxed/simple;
+	bh=JCbQqfdlPHL86Mt0tgo35rzawRyPPSn9Ere4/0buQCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZYnkom84VEXB2MnNnJUocxZygyk9pnj1zNocHezMCZwYugzCspqFT9Az4X3p69dblfAL9SHLuRe58UI5Rgy7fS6hMe08i3jMZcBI9+o9Tdj5jX12voCoFwiJAfkiS5oMwKquSh+MxDpct9SzUw2MOQKHm5zCVPCKaQKvgmGG5FY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OJ37jkFu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n8Ys9c3uREbqK+tN2qFAIElRQQtAG/ubvBfRge0iavJEUAv9gp7MevoDgTSzr8aYMWpVsK37cTLANq5riiE5MF7E7kBZMTSXy7CpZZNbhOhTB250zw3BdRFWXCr6vOUnpmOiy4p1pwTvjdthws8b19ND5xGOXjX0aH9ltMB73o0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VyR4uZHY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OJ37jkFu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 615EEC116D0;
-	Thu, 15 Jan 2026 17:04:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VyR4uZHY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C1E8C116D0;
+	Thu, 15 Jan 2026 17:04:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496679;
-	bh=Xywwu5uUHr2sgvLHganwXAxMTZIYNOZ3mQ+/1P6Zimw=;
+	s=korg; t=1768496682;
+	bh=JCbQqfdlPHL86Mt0tgo35rzawRyPPSn9Ere4/0buQCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OJ37jkFukvrB9VT8KvMdnpTMA2jGX1F/z1jM9VPXxWZv7i8mvNRA2WpzIdlGz0IMB
-	 TW+/EUglSTSCZGkCB4uMciZEiM1Jk/T6f70c5zSXKqVnhBPJOd4ZSrXBB1OrNg/r1j
-	 a2XSmHCq76jN6iHcqkd9W7rVzI3DrOzetVdtYK54=
+	b=VyR4uZHYm203vSgWOtrvNgZQ1+tevvgoiNqVaWxNgqKhRfFnwP3v5N4KwybxdYGp+
+	 ADM2I59+gGMbEvyHW1AFJFciJsLDAQKGZbXP1eiPzmT15fJ9BfIE7bzaNPg0eTHIEk
+	 jWTOu+2W1l4haqc8nF4j/BalG5HxW6W0GzyIi6G0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 096/119] btrfs: fix beyond-EOF write handling
-Date: Thu, 15 Jan 2026 17:48:31 +0100
-Message-ID: <20260115164155.418555680@linuxfoundation.org>
+Subject: [PATCH 6.12 097/119] bpf: Fix an issue in bpf_prog_test_run_xdp when page size greater than 4K
+Date: Thu, 15 Jan 2026 17:48:32 +0100
+Message-ID: <20260115164155.455406671@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -52,152 +51,219 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Yonghong Song <yonghong.song@linux.dev>
 
-[ Upstream commit e9e3b22ddfa760762b696ac6417c8d6edd182e49 ]
+[ Upstream commit 4fc012daf9c074772421c904357abf586336b1ca ]
 
-[BUG]
-For the following write sequence with 64K page size and 4K fs block size,
-it will lead to file extent items to be inserted without any data
-checksum:
+The bpf selftest xdp_adjust_tail/xdp_adjust_frags_tail_grow failed on
+arm64 with 64KB page:
+   xdp_adjust_tail/xdp_adjust_frags_tail_grow:FAIL
 
-  mkfs.btrfs -s 4k -f $dev > /dev/null
-  mount $dev $mnt
-  xfs_io -f -c "pwrite 0 16k" -c "pwrite 32k 4k" -c pwrite "60k 64K" \
-            -c "truncate 16k" $mnt/foobar
-  umount $mnt
+In bpf_prog_test_run_xdp(), the xdp->frame_sz is set to 4K, but later on
+when constructing frags, with 64K page size, the frag data_len could
+be more than 4K. This will cause problems in bpf_xdp_frags_increase_tail().
 
-This will result the following 2 file extent items to be inserted (extra
-trace point added to insert_ordered_extent_file_extent()):
+To fix the failure, the xdp->frame_sz is set to be PAGE_SIZE so kernel
+can test different page size properly. With the kernel change, the user
+space and bpf prog needs adjustment. Currently, the MAX_SKB_FRAGS default
+value is 17, so for 4K page, the maximum packet size will be less than 68K.
+To test 64K page, a bigger maximum packet size than 68K is desired. So two
+different functions are implemented for subtest xdp_adjust_frags_tail_grow.
+Depending on different page size, different data input/output sizes are used
+to adapt with different page size.
 
-  btrfs_finish_one_ordered: root=5 ino=257 file_off=61440 num_bytes=4096 csum_bytes=0
-  btrfs_finish_one_ordered: root=5 ino=257 file_off=0 num_bytes=16384 csum_bytes=16384
-
-Note for file offset 60K, we're inserting a file extent without any
-data checksum.
-
-Also note that range [32K, 36K) didn't reach
-insert_ordered_extent_file_extent(), which is the correct behavior as
-that OE is fully truncated, should not result any file extent.
-
-Although file extent at 60K will be later dropped by btrfs_truncate(),
-if the transaction got committed after file extent inserted but before
-the file extent dropping, we will have a small window where we have a
-file extent beyond EOF and without any data checksum.
-
-That will cause "btrfs check" to report error.
-
-[CAUSE]
-The sequence happens like this:
-
-- Buffered write dirtied the page cache and updated isize
-
-  Now the inode size is 64K, with the following page cache layout:
-
-  0             16K             32K              48K           64K
-  |/////////////|               |//|                        |//|
-
-- Truncate the inode to 16K
-  Which will trigger writeback through:
-
-  btrfs_setsize()
-  |- truncate_setsize()
-  |  Now the inode size is set to 16K
-  |
-  |- btrfs_truncate()
-     |- btrfs_wait_ordered_range() for [16K, u64(-1)]
-        |- btrfs_fdatawrite_range() for [16K, u64(-1)}
-	   |- extent_writepage() for folio 0
-	      |- writepage_delalloc()
-	      |  Generated OE for [0, 16K), [32K, 36K] and [60K, 64K)
-	      |
-	      |- extent_writepage_io()
-
-  Then inside extent_writepage_io(), the dirty fs blocks are handled
-  differently:
-
-  - Submit write for range [0, 16K)
-    As they are still inside the inode size (16K).
-
-  - Mark OE [32K, 36K) as truncated
-    Since we only call btrfs_lookup_first_ordered_range() once, which
-    returned the first OE after file offset 16K.
-
-  - Mark all OEs inside range [16K, 64K) as finished
-    Which will mark OE ranges [32K, 36K) and [60K, 64K) as finished.
-
-    For OE [32K, 36K) since it's already marked as truncated, and its
-    truncated length is 0, no file extent will be inserted.
-
-    For OE [60K, 64K) it has never been submitted thus has no data
-    checksum, and we insert the file extent as usual.
-    This is the root cause of file extent at 60K to be inserted without
-    any data checksum.
-
-  - Clear dirty flags for range [16K, 64K)
-    It is the function btrfs_folio_clear_dirty() which searches and clears
-    any dirty blocks inside that range.
-
-[FIX]
-The bug itself was introduced a long time ago, way before subpage and
-large folio support.
-
-At that time, fs block size must match page size, thus the range
-[cur, end) is just one fs block.
-
-But later with subpage and large folios, the same range [cur, end)
-can have multiple blocks and ordered extents.
-
-Later commit 18de34daa7c6 ("btrfs: truncate ordered extent when skipping
-writeback past i_size") was fixing a bug related to subpage/large
-folios, but it's still utilizing the old range [cur, end), meaning only
-the first OE will be marked as truncated.
-
-The proper fix here is to make EOF handling block-by-block, not trying
-to handle the whole range to @end.
-
-By this we always locate and truncate the OE for every dirty block.
-
-CC: stable@vger.kernel.org # 5.15+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/r/20250612035032.2207498-1-yonghong.song@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Stable-dep-of: e558cca21779 ("bpf, test_run: Subtract size of xdp_frame from allowed metadata size")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent_io.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/bpf/test_run.c                            |  2 +-
+ .../bpf/prog_tests/xdp_adjust_tail.c          | 96 +++++++++++++++++--
+ .../bpf/progs/test_xdp_adjust_tail_grow.c     |  8 +-
+ 3 files changed, 97 insertions(+), 9 deletions(-)
 
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -1531,7 +1531,7 @@ static noinline_for_stack int extent_wri
- 			unsigned long flags;
+diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
+index 8612023bec60d..6418846d6bc65 100644
+--- a/net/bpf/test_run.c
++++ b/net/bpf/test_run.c
+@@ -1248,7 +1248,7 @@ int bpf_prog_test_run_xdp(struct bpf_prog *prog, const union bpf_attr *kattr,
+ 		headroom -= ctx->data;
+ 	}
  
- 			ordered = btrfs_lookup_first_ordered_range(inode, cur,
--								   folio_end - cur);
-+								   fs_info->sectorsize);
- 			/*
- 			 * We have just run delalloc before getting here, so
- 			 * there must be an ordered extent.
-@@ -1545,7 +1545,7 @@ static noinline_for_stack int extent_wri
- 			btrfs_put_ordered_extent(ordered);
+-	max_data_sz = 4096 - headroom - tailroom;
++	max_data_sz = PAGE_SIZE - headroom - tailroom;
+ 	if (size > max_data_sz) {
+ 		/* disallow live data mode for jumbo frames */
+ 		if (do_live)
+diff --git a/tools/testing/selftests/bpf/prog_tests/xdp_adjust_tail.c b/tools/testing/selftests/bpf/prog_tests/xdp_adjust_tail.c
+index 53d6ad8c2257e..df90f5b4cee58 100644
+--- a/tools/testing/selftests/bpf/prog_tests/xdp_adjust_tail.c
++++ b/tools/testing/selftests/bpf/prog_tests/xdp_adjust_tail.c
+@@ -37,21 +37,26 @@ static void test_xdp_adjust_tail_shrink(void)
+ 	bpf_object__close(obj);
+ }
  
- 			btrfs_mark_ordered_io_finished(inode, folio, cur,
--						       end - cur, true);
-+						       fs_info->sectorsize, true);
- 			/*
- 			 * This range is beyond i_size, thus we don't need to
- 			 * bother writing back.
-@@ -1554,8 +1554,8 @@ static noinline_for_stack int extent_wri
- 			 * writeback the sectors with subpage dirty bits,
- 			 * causing writeback without ordered extent.
- 			 */
--			btrfs_folio_clear_dirty(fs_info, folio, cur, end - cur);
--			break;
-+			btrfs_folio_clear_dirty(fs_info, folio, cur, fs_info->sectorsize);
-+			continue;
- 		}
- 		ret = submit_one_sector(inode, folio, cur, bio_ctrl, i_size);
- 		if (unlikely(ret < 0)) {
+-static void test_xdp_adjust_tail_grow(void)
++static void test_xdp_adjust_tail_grow(bool is_64k_pagesize)
+ {
+ 	const char *file = "./test_xdp_adjust_tail_grow.bpf.o";
+ 	struct bpf_object *obj;
+-	char buf[4096]; /* avoid segfault: large buf to hold grow results */
++	char buf[8192]; /* avoid segfault: large buf to hold grow results */
+ 	__u32 expect_sz;
+ 	int err, prog_fd;
+ 	LIBBPF_OPTS(bpf_test_run_opts, topts,
+ 		.data_in = &pkt_v4,
+-		.data_size_in = sizeof(pkt_v4),
+ 		.data_out = buf,
+ 		.data_size_out = sizeof(buf),
+ 		.repeat = 1,
+ 	);
+ 
++	/* topts.data_size_in as a special signal to bpf prog */
++	if (is_64k_pagesize)
++		topts.data_size_in = sizeof(pkt_v4) - 1;
++	else
++		topts.data_size_in = sizeof(pkt_v4);
++
+ 	err = bpf_prog_test_load(file, BPF_PROG_TYPE_XDP, &obj, &prog_fd);
+ 	if (!ASSERT_OK(err, "test_xdp_adjust_tail_grow"))
+ 		return;
+@@ -206,7 +211,7 @@ static void test_xdp_adjust_frags_tail_shrink(void)
+ 	bpf_object__close(obj);
+ }
+ 
+-static void test_xdp_adjust_frags_tail_grow(void)
++static void test_xdp_adjust_frags_tail_grow_4k(void)
+ {
+ 	const char *file = "./test_xdp_adjust_tail_grow.bpf.o";
+ 	__u32 exp_size;
+@@ -271,16 +276,93 @@ static void test_xdp_adjust_frags_tail_grow(void)
+ 	bpf_object__close(obj);
+ }
+ 
++static void test_xdp_adjust_frags_tail_grow_64k(void)
++{
++	const char *file = "./test_xdp_adjust_tail_grow.bpf.o";
++	__u32 exp_size;
++	struct bpf_program *prog;
++	struct bpf_object *obj;
++	int err, i, prog_fd;
++	__u8 *buf;
++	LIBBPF_OPTS(bpf_test_run_opts, topts);
++
++	obj = bpf_object__open(file);
++	if (libbpf_get_error(obj))
++		return;
++
++	prog = bpf_object__next_program(obj, NULL);
++	if (bpf_object__load(obj))
++		goto out;
++
++	prog_fd = bpf_program__fd(prog);
++
++	buf = malloc(262144);
++	if (!ASSERT_OK_PTR(buf, "alloc buf 256Kb"))
++		goto out;
++
++	/* Test case add 10 bytes to last frag */
++	memset(buf, 1, 262144);
++	exp_size = 90000 + 10;
++
++	topts.data_in = buf;
++	topts.data_out = buf;
++	topts.data_size_in = 90000;
++	topts.data_size_out = 262144;
++	err = bpf_prog_test_run_opts(prog_fd, &topts);
++
++	ASSERT_OK(err, "90Kb+10b");
++	ASSERT_EQ(topts.retval, XDP_TX, "90Kb+10b retval");
++	ASSERT_EQ(topts.data_size_out, exp_size, "90Kb+10b size");
++
++	for (i = 0; i < 90000; i++) {
++		if (buf[i] != 1)
++			ASSERT_EQ(buf[i], 1, "90Kb+10b-old");
++	}
++
++	for (i = 90000; i < 90010; i++) {
++		if (buf[i] != 0)
++			ASSERT_EQ(buf[i], 0, "90Kb+10b-new");
++	}
++
++	for (i = 90010; i < 262144; i++) {
++		if (buf[i] != 1)
++			ASSERT_EQ(buf[i], 1, "90Kb+10b-untouched");
++	}
++
++	/* Test a too large grow */
++	memset(buf, 1, 262144);
++	exp_size = 90001;
++
++	topts.data_in = topts.data_out = buf;
++	topts.data_size_in = 90001;
++	topts.data_size_out = 262144;
++	err = bpf_prog_test_run_opts(prog_fd, &topts);
++
++	ASSERT_OK(err, "90Kb+10b");
++	ASSERT_EQ(topts.retval, XDP_DROP, "90Kb+10b retval");
++	ASSERT_EQ(topts.data_size_out, exp_size, "90Kb+10b size");
++
++	free(buf);
++out:
++	bpf_object__close(obj);
++}
++
+ void test_xdp_adjust_tail(void)
+ {
++	int page_size = getpagesize();
++
+ 	if (test__start_subtest("xdp_adjust_tail_shrink"))
+ 		test_xdp_adjust_tail_shrink();
+ 	if (test__start_subtest("xdp_adjust_tail_grow"))
+-		test_xdp_adjust_tail_grow();
++		test_xdp_adjust_tail_grow(page_size == 65536);
+ 	if (test__start_subtest("xdp_adjust_tail_grow2"))
+ 		test_xdp_adjust_tail_grow2();
+ 	if (test__start_subtest("xdp_adjust_frags_tail_shrink"))
+ 		test_xdp_adjust_frags_tail_shrink();
+-	if (test__start_subtest("xdp_adjust_frags_tail_grow"))
+-		test_xdp_adjust_frags_tail_grow();
++	if (test__start_subtest("xdp_adjust_frags_tail_grow")) {
++		if (page_size == 65536)
++			test_xdp_adjust_frags_tail_grow_64k();
++		else
++			test_xdp_adjust_frags_tail_grow_4k();
++	}
+ }
+diff --git a/tools/testing/selftests/bpf/progs/test_xdp_adjust_tail_grow.c b/tools/testing/selftests/bpf/progs/test_xdp_adjust_tail_grow.c
+index 81bb38d72cedd..e311e206be072 100644
+--- a/tools/testing/selftests/bpf/progs/test_xdp_adjust_tail_grow.c
++++ b/tools/testing/selftests/bpf/progs/test_xdp_adjust_tail_grow.c
+@@ -17,7 +17,9 @@ int _xdp_adjust_tail_grow(struct xdp_md *xdp)
+ 	/* Data length determine test case */
+ 
+ 	if (data_len == 54) { /* sizeof(pkt_v4) */
+-		offset = 4096; /* test too large offset */
++		offset = 4096; /* test too large offset, 4k page size */
++	} else if (data_len == 53) { /* sizeof(pkt_v4) - 1 */
++		offset = 65536; /* test too large offset, 64k page size */
+ 	} else if (data_len == 74) { /* sizeof(pkt_v6) */
+ 		offset = 40;
+ 	} else if (data_len == 64) {
+@@ -29,6 +31,10 @@ int _xdp_adjust_tail_grow(struct xdp_md *xdp)
+ 		offset = 10;
+ 	} else if (data_len == 9001) {
+ 		offset = 4096;
++	} else if (data_len == 90000) {
++		offset = 10; /* test a small offset, 64k page size */
++	} else if (data_len == 90001) {
++		offset = 65536; /* test too large offset, 64k page size */
+ 	} else {
+ 		return XDP_ABORTED; /* No matching test */
+ 	}
+-- 
+2.51.0
+
 
 
