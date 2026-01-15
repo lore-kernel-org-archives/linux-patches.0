@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD6E1C5D59;
-	Thu, 15 Jan 2026 16:54:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F9B53B8BAB;
+	Thu, 15 Jan 2026 16:54:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496094; cv=none; b=mgre10UPALanbwWE5C7z8+immdi+PjKvbDN7Su+qivCSbU+6e3tf1Zkdkuxb2tzjM1FcM6Vcdjd2xVlT73U9WrqFm+3lsKh7g5pP3JoxXhziNGUtNrCUzQpp694ttBoHC/Wk2Qzp3rF7yHh2PkDDlUqn6Velm4Clb9/nXQ36t+I=
+	t=1768496097; cv=none; b=kQMfo/0riRpzVYn7dByJdV7v0jZoSZiB4BqludzeJxTzd4gFz98mU7DVWN/UhLwjQv5o10Zk2riDmU6KS/zdhBK4kKmRvlnekl1AzoPMsihRCo2p6Lt0jLscxvGBysJl9jrHZuf2HGqMBjeMImWQfm7cUMqTSrP7r1OEh9WQIxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496094; c=relaxed/simple;
-	bh=hZhky6i+lnlgMjHpawWIuYRccG2kUkmeMMOxqFsBzMk=;
+	s=arc-20240116; t=1768496097; c=relaxed/simple;
+	bh=zAmr2NWGhf9rIReRd/KzO7pJW1re/c3N+fEHWqKXd7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T6qHa23O1R0cL+IAX9X84vgPGmtF02UKMaGhwljHQjSEUaVDEdCqftufE0JiI8Vx8qYYIwSKnf0b18p6rnv9R8XA0mPfRBycFaHbUBmthBVm3sOpDtK0rMYqhnBIU+FqnXW3X+ZcbRvuUJuBnf6RHeZ/sjL0wHDTTUiTTHyY6XA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lhwbLd0S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X+2BeOH3kCsoqhSbkKSGHdYHmWf2jF/PIf1u9EVwl2oMDYgIzZORnNbpnxaPr9B0QqOnWhMsf3+WK5HETjS1i6W75SvoRkkTx19v23SNZpUIhRTSAcsxG5BLlMRu0uGP6JdDdlmuUp4SYE7zzg0Xsdlq5V0MPaiCpNIvjiASTkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hET1KQu0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lhwbLd0S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17D9CC116D0;
-	Thu, 15 Jan 2026 16:54:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hET1KQu0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2F46C19422;
+	Thu, 15 Jan 2026 16:54:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496094;
-	bh=hZhky6i+lnlgMjHpawWIuYRccG2kUkmeMMOxqFsBzMk=;
+	s=korg; t=1768496097;
+	bh=zAmr2NWGhf9rIReRd/KzO7pJW1re/c3N+fEHWqKXd7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lhwbLd0S6Ay/wyFuJ2W53Ar95i3l5jjn9ilPPETgatjgfBzC5NpbEcp/aprnoMdGu
-	 mcDK6PsCHsITXzMPm5qF9rwYvxb/KImydyVH8zt0mBwlSYCnG+GIROu5wL51ExrRkm
-	 u5G7OPJDSncauKjpNs1QPfDEX4Od99JL113Yt1qc=
+	b=hET1KQu09UF4s54yjyT+85d8WXX4K8QG2dmFjPtlbZLNV6Qn5kp6gE+eNynJWOtbN
+	 H0DsKPy5qHi+Z19owYSEe3y8G5gfXG6z5kGmT/gCr6lW2iWmhRH1eIt+O+U/w1v51E
+	 ky8VtnrSatzO6aAUSpZFQN9v4BLVyq23zrn8+2h8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Subject: [PATCH 6.18 042/181] libceph: return the handler error from mon_handle_auth_done()
-Date: Thu, 15 Jan 2026 17:46:19 +0100
-Message-ID: <20260115164203.847572576@linuxfoundation.org>
+	Sam Edwards <CFSworks@gmail.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.18 043/181] libceph: reset sparse-read state in osd_fault()
+Date: Thu, 15 Jan 2026 17:46:20 +0100
+Message-ID: <20260115164203.883439124@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -50,38 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Sam Edwards <cfsworks@gmail.com>
 
-commit e84b48d31b5008932c0a0902982809fbaa1d3b70 upstream.
+commit 11194b416ef95012c2cfe5f546d71af07b639e93 upstream.
 
-Currently any error from ceph_auth_handle_reply_done() is propagated
-via finish_auth() but isn't returned from mon_handle_auth_done().  This
-results in higher layers learning that (despite the monitor considering
-us to be successfully authenticated) something went wrong in the
-authentication phase and reacting accordingly, but msgr2 still trying
-to proceed with establishing the session in the background.  In the
-case of secure mode this can trigger a WARN in setup_crypto() and later
-lead to a NULL pointer dereference inside of prepare_auth_signature().
+When a fault occurs, the connection is abandoned, reestablished, and any
+pending operations are retried. The OSD client tracks the progress of a
+sparse-read reply using a separate state machine, largely independent of
+the messenger's state.
+
+If a connection is lost mid-payload or the sparse-read state machine
+returns an error, the sparse-read state is not reset. The OSD client
+will then interpret the beginning of a new reply as the continuation of
+the old one. If this makes the sparse-read machinery enter a failure
+state, it may never recover, producing loops like:
+
+  libceph:  [0] got 0 extents
+  libceph: data len 142248331 != extent len 0
+  libceph: osd0 (1)...:6801 socket error on read
+  libceph: data len 142248331 != extent len 0
+  libceph: osd0 (1)...:6801 socket error on read
+
+Therefore, reset the sparse-read state in osd_fault(), ensuring retries
+start from a clean state.
 
 Cc: stable@vger.kernel.org
-Fixes: cd1a677cad99 ("libceph, ceph: implement msgr2.1 protocol (crc and secure modes)")
+Fixes: f628d7999727 ("libceph: add sparse read support to OSD client")
+Signed-off-by: Sam Edwards <CFSworks@gmail.com>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/mon_client.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ceph/osd_client.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/ceph/mon_client.c
-+++ b/net/ceph/mon_client.c
-@@ -1417,7 +1417,7 @@ static int mon_handle_auth_done(struct c
- 	if (!ret)
- 		finish_hunting(monc);
- 	mutex_unlock(&monc->mutex);
--	return 0;
-+	return ret;
- }
+--- a/net/ceph/osd_client.c
++++ b/net/ceph/osd_client.c
+@@ -4283,6 +4283,9 @@ static void osd_fault(struct ceph_connec
+ 		goto out_unlock;
+ 	}
  
- static int mon_handle_auth_bad_method(struct ceph_connection *con,
++	osd->o_sparse_op_idx = -1;
++	ceph_init_sparse_read(&osd->o_sparse_read);
++
+ 	if (!reopen_osd(osd))
+ 		kick_osd_requests(osd);
+ 	maybe_request_map(osdc);
 
 
