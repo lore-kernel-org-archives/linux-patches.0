@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6733BFE49;
-	Thu, 15 Jan 2026 18:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC49F3BFE49;
+	Thu, 15 Jan 2026 18:01:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768500061; cv=none; b=eHPM7OJ6pbsQmnxxkI3XtIx04uN2O2//OlHnWCrfw7XXZet+jzbmA0L674YfAvsZR/AWaATOTXh4wpbll7jw70tpWZJqHSVknp1YPbiQJwJjhrb0gYUqcDXUDpbsqXkKYORIzclrDhLcdLlBQq7Mzwrtm3ls9HbffxaqTMzlALI=
+	t=1768500064; cv=none; b=jadDoSiprKgv4A7YGdb4DGspt7nMSbTXprOCazawkRnArPKQ2TDGwviD3MDwSENaNl8OSBUKO7Pwo1+9QCTAWfzFOLkyByoUIFvydpe3wl/zbpiCtoUKD+JvRMcmcKgjzN0+bP9emOc3yxuuOWuETuumP0yMVcktPa75X0LWfng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768500061; c=relaxed/simple;
-	bh=DyBhaoAOHciw7wo0E0fMaiXCOgxz4hg4+vRroqupvEY=;
+	s=arc-20240116; t=1768500064; c=relaxed/simple;
+	bh=3Xj+AfzfX3PWYUmUJnnrBG/9LDaTqM7A/by5OnUBQOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QXuk9/FGIQZucDuudj3A1o5FOzEsohsTPCJPBx4YOn8GF3ZRh9qqhfGwxmAZnRrCW602M+S7cCAw7RHldO31OvIli9bNWHWK1FNymVXv2EoTr829fYAz2FiYruLY2oniXZaMRfO3g7UopoqVMHbMLrw6OR5hCdDYd2wvF8zVysY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ZMNMInZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bf0P/D54xnUBZNyEbiCEJCW3W1yC4C/INIYt0u62iw5GoxTfmfaxprSgv5NOcktbqEVuLiqPdWalgzqjOf69211v4a7CWcaQhZmagxLglzPuXqSVolqhnRX8Q2ruHoVN4I05vJlzpUGCzvW1yEbCOjCy62cZqtfUDQBCJweWc6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hREn9R/d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ZMNMInZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DDD9C116D0;
-	Thu, 15 Jan 2026 18:00:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hREn9R/d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3216CC116D0;
+	Thu, 15 Jan 2026 18:01:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768500060;
-	bh=DyBhaoAOHciw7wo0E0fMaiXCOgxz4hg4+vRroqupvEY=;
+	s=korg; t=1768500063;
+	bh=3Xj+AfzfX3PWYUmUJnnrBG/9LDaTqM7A/by5OnUBQOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ZMNMInZGHTUY9Si6Cvd640gInEczYXit28PrppIuoAJR2BLzUReXr0/q95lFqUCS
-	 jeOYwndvFNG2zOGCsXGHpXK/xvl0aSxmk2lP5fZHyWDRW8pMHscprkQ0UrV1l2eBHY
-	 T3O077Jxm4/kSbyXIul6w3g8Wria3rysvPzm59HM=
+	b=hREn9R/drenCaIxmKUSInqYCrZq/r+MDZfMvKEyY6wrzq+6CNg0qAk8UQN8PGIDZm
+	 nroUX9Fq2EiqZNP9c8UxTwnZ+qwKsesyACJgXP8chiLl3HzuKTCQGicmzxGWQ+W3oj
+	 OK0XyfT+bQUMTXomcQBlg0u6e5ExPil+kT08xmFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petko Manolov <petkan@nucleusys.com>,
+	syzbot+58b44a770a1585795351@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 443/451] net: usb: pegasus: fix memory leak in update_eth_regs_async()
-Date: Thu, 15 Jan 2026 17:50:44 +0100
-Message-ID: <20260115164246.971982868@linuxfoundation.org>
+Subject: [PATCH 5.10 444/451] arp: do not assume dev_hard_header() does not change skb->head
+Date: Thu, 15 Jan 2026 17:50:45 +0100
+Message-ID: <20260115164247.008085103@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -51,35 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petko Manolov <petkan@nucleusys.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit afa27621a28af317523e0836dad430bec551eb54 ]
+[ Upstream commit c92510f5e3f82ba11c95991824a41e59a9c5ed81 ]
 
-When asynchronously writing to the device registers and if usb_submit_urb()
-fail, the code fail to release allocated to this point resources.
+arp_create() is the only dev_hard_header() caller
+making assumption about skb->head being unchanged.
 
-Fixes: 323b34963d11 ("drivers: net: usb: pegasus: fix control urb submission")
-Signed-off-by: Petko Manolov <petkan@nucleusys.com>
-Link: https://patch.msgid.link/20260106084821.3746677-1-petko.manolov@konsulko.com
+A recent commit broke this assumption.
+
+Initialize @arp pointer after dev_hard_header() call.
+
+Fixes: db5b4e39c4e6 ("ip6_gre: make ip6gre_header() robust")
+Reported-by: syzbot+58b44a770a1585795351@syzkaller.appspotmail.com
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260107212250.384552-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/pegasus.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv4/arp.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/usb/pegasus.c b/drivers/net/usb/pegasus.c
-index 138279bbb544b..e3ddb990dc543 100644
---- a/drivers/net/usb/pegasus.c
-+++ b/drivers/net/usb/pegasus.c
-@@ -193,6 +193,8 @@ static int update_eth_regs_async(pegasus_t *pegasus)
- 			netif_device_detach(pegasus->net);
- 		netif_err(pegasus, drv, pegasus->net,
- 			  "%s returned %d\n", __func__, ret);
-+		usb_free_urb(async_urb);
-+		kfree(req);
- 	}
- 	return ret;
- }
+diff --git a/net/ipv4/arp.c b/net/ipv4/arp.c
+index 6879e0b70c769..5f2788b87dfd5 100644
+--- a/net/ipv4/arp.c
++++ b/net/ipv4/arp.c
+@@ -542,7 +542,7 @@ struct sk_buff *arp_create(int type, int ptype, __be32 dest_ip,
+ 
+ 	skb_reserve(skb, hlen);
+ 	skb_reset_network_header(skb);
+-	arp = skb_put(skb, arp_hdr_len(dev));
++	skb_put(skb, arp_hdr_len(dev));
+ 	skb->dev = dev;
+ 	skb->protocol = htons(ETH_P_ARP);
+ 	if (!src_hw)
+@@ -550,12 +550,13 @@ struct sk_buff *arp_create(int type, int ptype, __be32 dest_ip,
+ 	if (!dest_hw)
+ 		dest_hw = dev->broadcast;
+ 
+-	/*
+-	 *	Fill the device header for the ARP frame
++	/* Fill the device header for the ARP frame.
++	 * Note: skb->head can be changed.
+ 	 */
+ 	if (dev_hard_header(skb, dev, ptype, dest_hw, src_hw, skb->len) < 0)
+ 		goto out;
+ 
++	arp = arp_hdr(skb);
+ 	/*
+ 	 * Fill out the arp protocol part.
+ 	 *
 -- 
 2.51.0
 
