@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC49E56A;
-	Thu, 15 Jan 2026 17:24:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6601E21CC5A;
+	Thu, 15 Jan 2026 17:24:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497858; cv=none; b=kcYXqhY7Voo/SvYg4RVROy3kCZZK11Hw/zAszs/HoRKalRil4gHo013WmB+AK5F9d8kjn62K0Fzs88po09oJGuOJVW8wgshGcdVAhd0J7RxmOws6jkpWuvzzKOp3vuuqBxu5yTQxWNizdXEsRkX2Yxptcm1yTvl5spbRovL8fvE=
+	t=1768497861; cv=none; b=BXRbTrZYLM1+bnEu7Mx9CTFdA7IYKqJ1yb0v1tjtFEihCl/DMsuaa9EgpLNhTbtOxvalbI9d6HmJcATSb5PWXi+i1RKOMeWRJcfyfWB2fngUIov9gwUqNMtMTTgYxCOXBVhBt3VgP96Jcsx90GtwSkPO3/DwfrNqitzoqn8cD6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497858; c=relaxed/simple;
-	bh=MsoxqxCtewwJZnJqWs/RBSEMKeN3l5hLidRiMbayGSo=;
+	s=arc-20240116; t=1768497861; c=relaxed/simple;
+	bh=ACKYjJbdk3r08RXr4A93bRVInzLWdonXVymRcimWYgw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G7QVe+JgJlNP1aqwLGt8Bac0VPEo89+uEbbB0ABOd62rQOwSPJHMxwtpd7oB3Hv01+jAPvvMWReL3aobcRzllWyaJK3GaEANBFm/XTYTUsJStr55V7QCNdGHH2lYQr1MeDlxY0bCE3ZxU8fp815Vl82rQ/BSSbZPMtUP5/LJivA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UrPIGTPh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GWZ1KB/nFMeOhQnobLu3oPrucnB34Wh5iGAwrxejeMcrqPfrhlurLagd2waE6aNRyR9uV1GM9M/wBVVGqh/SM8Vrb8t00ZgeWzejYM/T4nZiJd4aIT/Jck5l8YbLRVrXNX3SXgrkRVK0IzecDLe5eMXqtAc+dL9yejAUc+nroKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QJMSUvTm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UrPIGTPh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BD78C116D0;
-	Thu, 15 Jan 2026 17:24:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QJMSUvTm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2FF3C116D0;
+	Thu, 15 Jan 2026 17:24:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497858;
-	bh=MsoxqxCtewwJZnJqWs/RBSEMKeN3l5hLidRiMbayGSo=;
+	s=korg; t=1768497861;
+	bh=ACKYjJbdk3r08RXr4A93bRVInzLWdonXVymRcimWYgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UrPIGTPhgjC6CrAHQCxkEE1zVtdPw/XANlZAmlY+Gn/DF0sM5rSBdSKbMxHTz0Ijx
-	 IXn+wgHbBY/NI21f9ILEwqNe7DLR5ZxScVCxsW0d/n++eA2tiMkfpsQdRoU8GE/zj3
-	 L/ptTLd3wAiEMQEa/7CGu4iBhDsABPO2IIM0Pxa8=
+	b=QJMSUvTm1KfnAymNkJWjF1E2ornJSXJcuUdRip1K+tr47PGQvQJrcIxUtVV8uNZq7
+	 RFZqEaK3uEpgMXYQ6krLMaj2HmHSJFh7sSKY8jcoSCriXlV6LpV06ZtEo1vo+FbPD7
+	 7C4rBWHrKP4kfBhEGLL/88dLmqVe48VnMvBQnf+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junvy Yang <zhuque@tencent.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Alexey Simakov <bigalex934@gmail.com>,
+	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 228/554] net: openvswitch: fix middle attribute validation in push_nsh() action
-Date: Thu, 15 Jan 2026 17:44:54 +0100
-Message-ID: <20260115164254.498183078@linuxfoundation.org>
+Subject: [PATCH 5.15 229/554] broadcom: b44: prevent uninitialized value usage
+Date: Thu, 15 Jan 2026 17:44:55 +0100
+Message-ID: <20260115164254.534772691@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -53,109 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Alexey Simakov <bigalex934@gmail.com>
 
-[ Upstream commit 5ace7ef87f059d68b5f50837ef3e8a1a4870c36e ]
+[ Upstream commit 50b3db3e11864cb4e18ff099cfb38e11e7f87a68 ]
 
-The push_nsh() action structure looks like this:
+On execution path with raised B44_FLAG_EXTERNAL_PHY, b44_readphy()
+leaves bmcr value uninitialized and it is used later in the code.
 
- OVS_ACTION_ATTR_PUSH_NSH(OVS_KEY_ATTR_NSH(OVS_NSH_KEY_ATTR_BASE,...))
+Add check of this flag at the beginning of the b44_nway_reset() and
+exit early of the function with restarting autonegotiation if an
+external PHY is used.
 
-The outermost OVS_ACTION_ATTR_PUSH_NSH attribute is OK'ed by the
-nla_for_each_nested() inside __ovs_nla_copy_actions().  The innermost
-OVS_NSH_KEY_ATTR_BASE/MD1/MD2 are OK'ed by the nla_for_each_nested()
-inside nsh_key_put_from_nlattr().  But nothing checks if the attribute
-in the middle is OK.  We don't even check that this attribute is the
-OVS_KEY_ATTR_NSH.  We just do a double unwrap with a pair of nla_data()
-calls - first time directly while calling validate_push_nsh() and the
-second time as part of the nla_for_each_nested() macro, which isn't
-safe, potentially causing invalid memory access if the size of this
-attribute is incorrect.  The failure may not be noticed during
-validation due to larger netlink buffer, but cause trouble later during
-action execution where the buffer is allocated exactly to the size:
-
- BUG: KASAN: slab-out-of-bounds in nsh_hdr_from_nlattr+0x1dd/0x6a0 [openvswitch]
- Read of size 184 at addr ffff88816459a634 by task a.out/22624
-
- CPU: 8 UID: 0 PID: 22624 6.18.0-rc7+ #115 PREEMPT(voluntary)
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0x51/0x70
-  print_address_description.constprop.0+0x2c/0x390
-  kasan_report+0xdd/0x110
-  kasan_check_range+0x35/0x1b0
-  __asan_memcpy+0x20/0x60
-  nsh_hdr_from_nlattr+0x1dd/0x6a0 [openvswitch]
-  push_nsh+0x82/0x120 [openvswitch]
-  do_execute_actions+0x1405/0x2840 [openvswitch]
-  ovs_execute_actions+0xd5/0x3b0 [openvswitch]
-  ovs_packet_cmd_execute+0x949/0xdb0 [openvswitch]
-  genl_family_rcv_msg_doit+0x1d6/0x2b0
-  genl_family_rcv_msg+0x336/0x580
-  genl_rcv_msg+0x9f/0x130
-  netlink_rcv_skb+0x11f/0x370
-  genl_rcv+0x24/0x40
-  netlink_unicast+0x73e/0xaa0
-  netlink_sendmsg+0x744/0xbf0
-  __sys_sendto+0x3d6/0x450
-  do_syscall_64+0x79/0x2c0
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-  </TASK>
-
-Let's add some checks that the attribute is properly sized and it's
-the only one attribute inside the action.  Technically, there is no
-real reason for OVS_KEY_ATTR_NSH to be there, as we know that we're
-pushing an NSH header already, it just creates extra nesting, but
-that's how uAPI works today.  So, keeping as it is.
-
-Fixes: b2d0f5d5dc53 ("openvswitch: enable NSH support")
-Reported-by: Junvy Yang <zhuque@tencent.com>
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Acked-by: Eelco Chaudron echaudro@redhat.com
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20251204105334.900379-1-i.maximets@ovn.org
+Fixes: 753f492093da ("[B44]: port to native ssb support")
+Reviewed-by: Jonas Gorski <jonas.gorski@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Alexey Simakov <bigalex934@gmail.com>
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20251205155815.4348-1-bigalex934@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/flow_netlink.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/broadcom/b44.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/openvswitch/flow_netlink.c b/net/openvswitch/flow_netlink.c
-index 7c2692f897f99..a7a9e4df3f600 100644
---- a/net/openvswitch/flow_netlink.c
-+++ b/net/openvswitch/flow_netlink.c
-@@ -2757,13 +2757,20 @@ static int validate_and_copy_set_tun(const struct nlattr *attr,
- 	return err;
- }
+diff --git a/drivers/net/ethernet/broadcom/b44.c b/drivers/net/ethernet/broadcom/b44.c
+index ce370ef641f01..3c4e0a78b8a03 100644
+--- a/drivers/net/ethernet/broadcom/b44.c
++++ b/drivers/net/ethernet/broadcom/b44.c
+@@ -1811,6 +1811,9 @@ static int b44_nway_reset(struct net_device *dev)
+ 	u32 bmcr;
+ 	int r;
  
--static bool validate_push_nsh(const struct nlattr *attr, bool log)
-+static bool validate_push_nsh(const struct nlattr *a, bool log)
- {
-+	struct nlattr *nsh_key = nla_data(a);
- 	struct sw_flow_match match;
- 	struct sw_flow_key key;
- 
-+	/* There must be one and only one NSH header. */
-+	if (!nla_ok(nsh_key, nla_len(a)) ||
-+	    nla_total_size(nla_len(nsh_key)) != nla_len(a) ||
-+	    nla_type(nsh_key) != OVS_KEY_ATTR_NSH)
-+		return false;
++	if (bp->flags & B44_FLAG_EXTERNAL_PHY)
++		return phy_ethtool_nway_reset(dev);
 +
- 	ovs_match_init(&match, &key, true, NULL);
--	return !nsh_key_put_from_nlattr(attr, &match, false, true, log);
-+	return !nsh_key_put_from_nlattr(nsh_key, &match, false, true, log);
- }
- 
- /* Return false if there are any non-masked bits set.
-@@ -3317,7 +3324,7 @@ static int __ovs_nla_copy_actions(struct net *net, const struct nlattr *attr,
- 					return -EINVAL;
- 			}
- 			mac_proto = MAC_PROTO_NONE;
--			if (!validate_push_nsh(nla_data(a), log))
-+			if (!validate_push_nsh(a, log))
- 				return -EINVAL;
- 			break;
- 
+ 	spin_lock_irq(&bp->lock);
+ 	b44_readphy(bp, MII_BMCR, &bmcr);
+ 	b44_readphy(bp, MII_BMCR, &bmcr);
 -- 
 2.51.0
 
