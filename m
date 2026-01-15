@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551B7396B75;
-	Thu, 15 Jan 2026 16:55:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607693624C4;
+	Thu, 15 Jan 2026 16:55:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496151; cv=none; b=ZASFhNghUyr59GAgmRffkx1kHq4ajQfrr9oHMI0qWe/U3R2psIdytPDB7WESWLGtLVg+V9CUFWLG4L4sM9eAAGbkdsdLeeJ63UZ7fg9TaKruHZOQFLHdejv299FtJ7wYl3lnZIwtYB7AQboAUeCL2DSQYPee5I5NTSj701BTC0s=
+	t=1768496154; cv=none; b=V+ebS1y5WysaXmLD8FcopgjrIJ3DqveOFt3GsqQa83e8nm3pJJ6hf54dZBIZ0S88sAddAXlMgLVFzSDTEuz5mPgfhAAj2fJifug5lI0lhhNcHE2COfCSjotYD1yn3JTAjkIbUnCql6C+r2jwaOQ9z+46C4TLE3y/0gwH+LVAcds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496151; c=relaxed/simple;
-	bh=4E/wmeTD7NDWUqpXPs6MWDatH893b/Vfw4d1lM3qlBs=;
+	s=arc-20240116; t=1768496154; c=relaxed/simple;
+	bh=dNwM6t2hJHl2TfwsC+SAcR0E346e0thgF4jd4KXaQ4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nYMsGKCG2ycdMF8pZlkWZf98nVBjEgp/kCmAFORvDPge6R2n+J/2kq8LY3VoJvFS8v3omdlyQgHX83gGrWyosc1HhGN7vVNr14gKs177GHZ4oKc3V2t673ta2x/MsDkJSHxZsGDjfHqqHw7YX8jCswJr7kD8KMQKjDv3RABiUeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cBCrTCn9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZfnFhfdXz7U++oLGrrz7d+Yoi5rnCmn9S7cHFRLISQ3AGTKtTpnIgQSvgZLLZMR6xw+a2yDuVuS8lHu7abBE2Maj9Dg8zrhj+IPnxg/3vPHracQw4WoRRIjhnqbKFt2ErcuO5tZ/Hh7dU5McuW8erZ1cYUuvghNbcsroc6XQTdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qeq6Fjtl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cBCrTCn9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4DB5C16AAE;
-	Thu, 15 Jan 2026 16:55:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qeq6Fjtl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2AA7C116D0;
+	Thu, 15 Jan 2026 16:55:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496151;
-	bh=4E/wmeTD7NDWUqpXPs6MWDatH893b/Vfw4d1lM3qlBs=;
+	s=korg; t=1768496154;
+	bh=dNwM6t2hJHl2TfwsC+SAcR0E346e0thgF4jd4KXaQ4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cBCrTCn9ZlxmB4oz4KQeLkaD5SSgLqwVjyPrq0/WvlAqlp39PHStr3qmUa5WPRnEo
-	 B/3GlsG7Jf1TspoTgdKPGx94taq/bm2XwEiQzqWo5GlLolVkWpiWLF7Ogx4Yqzut2A
-	 QWGVJvZDQzKT42DkIOJzKAsajrs1o1ySxsmQmIHE=
+	b=Qeq6Fjtl+cd4/NdB3bfq5+68soVIMcWkRLP2cFy3gKlolhx5rgPjnsvov9s7tKePq
+	 /Cz7O9R1Lag9IfvPVxaye3FB0j6l0UpB8N4FXzKvBxxZTMXhdZp7ioql+SjxOfXbaU
+	 OIeanSnkNfpY8WC9xBLK9VG7osRaecCCXKYq7CYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Elad Nachman <enachman@marvell.com>,
+	Alexandre Knecht <knecht.alexandre@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 095/181] net: marvell: prestera: fix NULL dereference on devlink_alloc() failure
-Date: Thu, 15 Jan 2026 17:47:12 +0100
-Message-ID: <20260115164205.751629650@linuxfoundation.org>
+Subject: [PATCH 6.18 096/181] bridge: fix C-VLAN preservation in 802.1ad vlan_tunnel egress
+Date: Thu, 15 Jan 2026 17:47:13 +0100
+Message-ID: <20260115164205.787089620@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -52,41 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Alexandre Knecht <knecht.alexandre@gmail.com>
 
-[ Upstream commit a428e0da1248c353557970848994f35fd3f005e2 ]
+[ Upstream commit 3128df6be147768fe536986fbb85db1d37806a9f ]
 
-devlink_alloc() may return NULL on allocation failure, but
-prestera_devlink_alloc() unconditionally calls devlink_priv() on
-the returned pointer.
+When using an 802.1ad bridge with vlan_tunnel, the C-VLAN tag is
+incorrectly stripped from frames during egress processing.
 
-This leads to a NULL pointer dereference if devlink allocation fails.
-Add a check for a NULL devlink pointer and return NULL early to avoid
-the crash.
+br_handle_egress_vlan_tunnel() uses skb_vlan_pop() to remove the S-VLAN
+from hwaccel before VXLAN encapsulation. However, skb_vlan_pop() also
+moves any "next" VLAN from the payload into hwaccel:
 
-Fixes: 34dd1710f5a3 ("net: marvell: prestera: Add basic devlink support")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Acked-by: Elad Nachman <enachman@marvell.com>
-Link: https://patch.msgid.link/20251230052124.897012-1-alok.a.tiwari@oracle.com
+    /* move next vlan tag to hw accel tag */
+    __skb_vlan_pop(skb, &vlan_tci);
+    __vlan_hwaccel_put_tag(skb, vlan_proto, vlan_tci);
+
+For QinQ frames where the C-VLAN sits in the payload, this moves it to
+hwaccel where it gets lost during VXLAN encapsulation.
+
+Fix by calling __vlan_hwaccel_clear_tag() directly, which clears only
+the hwaccel S-VLAN and leaves the payload untouched.
+
+This path is only taken when vlan_tunnel is enabled and tunnel_info
+is configured, so 802.1Q bridges are unaffected.
+
+Tested with 802.1ad bridge + VXLAN vlan_tunnel, verified C-VLAN
+preserved in VXLAN payload via tcpdump.
+
+Fixes: 11538d039ac6 ("bridge: vlan dst_metadata hooks in ingress and egress paths")
+Signed-off-by: Alexandre Knecht <knecht.alexandre@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20251228020057.2788865-1-knecht.alexandre@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/prestera/prestera_devlink.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/bridge/br_vlan_tunnel.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/prestera/prestera_devlink.c b/drivers/net/ethernet/marvell/prestera/prestera_devlink.c
-index 2a4c9df4eb797..e63d95c1842f3 100644
---- a/drivers/net/ethernet/marvell/prestera/prestera_devlink.c
-+++ b/drivers/net/ethernet/marvell/prestera/prestera_devlink.c
-@@ -387,6 +387,8 @@ struct prestera_switch *prestera_devlink_alloc(struct prestera_device *dev)
+diff --git a/net/bridge/br_vlan_tunnel.c b/net/bridge/br_vlan_tunnel.c
+index a966a6ec82634..257cae9f15698 100644
+--- a/net/bridge/br_vlan_tunnel.c
++++ b/net/bridge/br_vlan_tunnel.c
+@@ -189,7 +189,6 @@ int br_handle_egress_vlan_tunnel(struct sk_buff *skb,
+ 	IP_TUNNEL_DECLARE_FLAGS(flags) = { };
+ 	struct metadata_dst *tunnel_dst;
+ 	__be64 tunnel_id;
+-	int err;
  
- 	dl = devlink_alloc(&prestera_dl_ops, sizeof(struct prestera_switch),
- 			   dev->dev);
-+	if (!dl)
-+		return NULL;
+ 	if (!vlan)
+ 		return 0;
+@@ -199,9 +198,13 @@ int br_handle_egress_vlan_tunnel(struct sk_buff *skb,
+ 		return 0;
  
- 	return devlink_priv(dl);
- }
+ 	skb_dst_drop(skb);
+-	err = skb_vlan_pop(skb);
+-	if (err)
+-		return err;
++	/* For 802.1ad (QinQ), skb_vlan_pop() incorrectly moves the C-VLAN
++	 * from payload to hwaccel after clearing S-VLAN. We only need to
++	 * clear the hwaccel S-VLAN; the C-VLAN must stay in payload for
++	 * correct VXLAN encapsulation. This is also correct for 802.1Q
++	 * where no C-VLAN exists in payload.
++	 */
++	__vlan_hwaccel_clear_tag(skb);
+ 
+ 	if (BR_INPUT_SKB_CB(skb)->backup_nhid) {
+ 		__set_bit(IP_TUNNEL_KEY_BIT, flags);
 -- 
 2.51.0
 
