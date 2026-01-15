@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31B782C08AC;
-	Thu, 15 Jan 2026 17:56:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9FDB3D667D;
+	Thu, 15 Jan 2026 17:56:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499761; cv=none; b=eU5hIgCqzmECGfF6qkINo4SunlxlINRSe4AH+8tqWGQEyWnxekRf95cCj94iKP0rgZ4gotQrMba641o9jab7IxnfNypaXQtJnw96GJGgIT3d+be8xNe47Y6uI5fjLlYzRThAigH80uxN1t7parQ5AckxmeDnFFRHne4HC5Il/kg=
+	t=1768499763; cv=none; b=Pt4fatb3mfz1RhXvXt0Vq2u43067/QIfaJAWcja3HWwfH2TVTuw++MYUW5KyNxETyI7NunrgBPYaCowoBm8Z1m4fUrtsci2UMXaa2qVo0te563N6vWyTaCSwBqVMRCEfI6IcSO6rtuWe7M8Jw1XXEAibcWJg5k0Y1HSS+L+c4AA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499761; c=relaxed/simple;
-	bh=ohHpblvu/51f5mMKgs777BLjDivQpakemmrORkUicYw=;
+	s=arc-20240116; t=1768499763; c=relaxed/simple;
+	bh=9Km+ZYVrgkIItC4AFjPngdUOnntc20LNHvU0Cjnjsr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y5YAr1Cjg0UdW2+bJTpfUDA+78gBgFNicdDOTxNR0QqYH0A4Jo6LqJ1A9Dsz50syezoXrLHn8dlHuEKIHD5nr7K3/Aa1/6QOWI7whZanl5zpvCRDzb65870VMbeWdsAwAKGJsLqzWGaDTAei3/MBbCgHgar72H/5rX1WNamRLYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BD8sT9Gz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LTqp+CIJjTzaNDIKRgdqy/85ph4s74ndlXNpJEoyvBrQ9DBAVzEIVguaq9MSKGXPV4iR9zoCFO/qUX5fWy+mRHU8eJd1K3uShgj5sbOuec5y19UpwrM3T4YxYH10CMeaFSOL/4+8LOaKzM180UZfN8mB6zC0lol2aVU2G+YgaWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iEQt8Mf/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BD8sT9Gz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77182C16AAE;
-	Thu, 15 Jan 2026 17:56:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iEQt8Mf/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 405EFC116D0;
+	Thu, 15 Jan 2026 17:56:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499760;
-	bh=ohHpblvu/51f5mMKgs777BLjDivQpakemmrORkUicYw=;
+	s=korg; t=1768499763;
+	bh=9Km+ZYVrgkIItC4AFjPngdUOnntc20LNHvU0Cjnjsr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BD8sT9GzmRPLVXeCRra0DB6OK9/a69HQk8EZMVbffC3n0ErGcQ8MnpwWmg2tPEfhO
-	 HKPyNHKd0Fep4SpYOHpX9ho6OmgHflEdrsHFRcCtohCHf7NvbBnr8Jq+TzpX2T9PCC
-	 r9ssk/ZrSay4531Yj/AsII8gxsVCQj/B/DMBjUqg=
+	b=iEQt8Mf/nTywxGWe0RkpPwyUUnJFF8rMLZWRrdPIHDNj2IaOZ7SdpmlplBJG9VIPq
+	 W2xqOEpypWw+Hs5QzDM+0Gt8A3HircCpAs/ww8ArIDlXv0KASUP2/VojEm2Ae9UN94
+	 gPVRR2EUgW/uYB+Ywx7HYMPKIxXfmdjNVwuyyVJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Johan Hovold <johan@kernel.org>,
-	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 5.10 307/451] iommu/sun50i: fix device leak on of_xlate()
-Date: Thu, 15 Jan 2026 17:48:28 +0100
-Message-ID: <20260115164242.003864203@linuxfoundation.org>
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 5.10 308/451] HID: logitech-dj: Remove duplicate error logging
+Date: Thu, 15 Jan 2026 17:48:29 +0100
+Message-ID: <20260115164242.041166561@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -52,34 +50,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Hans de Goede <johannes.goede@oss.qualcomm.com>
 
-commit f916109bf53864605d10bf6f4215afa023a80406 upstream.
+commit ca389a55d8b2d86a817433bf82e0602b68c4d541 upstream.
 
-Make sure to drop the reference taken to the iommu platform device when
-looking up its driver data during of_xlate().
+logi_dj_recv_query_paired_devices() and logi_dj_recv_switch_to_dj_mode()
+both have 2 callers which all log an error if the function fails. Move
+the error logging to inside these 2 functions to remove the duplicated
+error logging in the callers.
 
-Fixes: 4100b8c229b3 ("iommu: Add Allwinner H6 IOMMU driver")
-Cc: stable@vger.kernel.org	# 5.8
-Cc: Maxime Ripard <mripard@kernel.org>
-Acked-by: Robin Murphy <robin.murphy@arm.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+While at it also move the logi_dj_recv_send_report() call error handling
+in logi_dj_recv_switch_to_dj_mode() to directly after the call. That call
+only fails if the report cannot be found and in that case it does nothing,
+so the msleep() is not necessary on failures.
+
+Fixes: 6f20d3261265 ("HID: logitech-dj: Fix error handling in logi_dj_recv_switch_to_dj_mode()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/sun50i-iommu.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hid/hid-logitech-dj.c |   56 +++++++++++++++++-------------------------
+ 1 file changed, 23 insertions(+), 33 deletions(-)
 
---- a/drivers/iommu/sun50i-iommu.c
-+++ b/drivers/iommu/sun50i-iommu.c
-@@ -767,6 +767,8 @@ static int sun50i_iommu_of_xlate(struct
+--- a/drivers/hid/hid-logitech-dj.c
++++ b/drivers/hid/hid-logitech-dj.c
+@@ -755,7 +755,6 @@ static void delayedwork_callback(struct
+ 	struct dj_workitem workitem;
+ 	unsigned long flags;
+ 	int count;
+-	int retval;
  
- 	dev_iommu_priv_set(dev, platform_get_drvdata(iommu_pdev));
+ 	dbg_hid("%s\n", __func__);
  
-+	put_device(&iommu_pdev->dev);
+@@ -792,11 +791,7 @@ static void delayedwork_callback(struct
+ 		logi_dj_recv_destroy_djhid_device(djrcv_dev, &workitem);
+ 		break;
+ 	case WORKITEM_TYPE_UNKNOWN:
+-		retval = logi_dj_recv_query_paired_devices(djrcv_dev);
+-		if (retval) {
+-			hid_err(djrcv_dev->hidpp, "%s: logi_dj_recv_query_paired_devices error: %d\n",
+-				__func__, retval);
+-		}
++		logi_dj_recv_query_paired_devices(djrcv_dev);
+ 		break;
+ 	case WORKITEM_TYPE_EMPTY:
+ 		dbg_hid("%s: device list is empty\n", __func__);
+@@ -1173,8 +1168,10 @@ static int logi_dj_recv_query_paired_dev
+ 
+ 	djrcv_dev->last_query = jiffies;
+ 
+-	if (djrcv_dev->type != recvr_type_dj)
+-		return logi_dj_recv_query_hidpp_devices(djrcv_dev);
++	if (djrcv_dev->type != recvr_type_dj) {
++		retval = logi_dj_recv_query_hidpp_devices(djrcv_dev);
++		goto out;
++	}
+ 
+ 	dj_report = kzalloc(sizeof(struct dj_report), GFP_KERNEL);
+ 	if (!dj_report)
+@@ -1184,6 +1181,10 @@ static int logi_dj_recv_query_paired_dev
+ 	dj_report->report_type = REPORT_TYPE_CMD_GET_PAIRED_DEVICES;
+ 	retval = logi_dj_recv_send_report(djrcv_dev, dj_report);
+ 	kfree(dj_report);
++out:
++	if (retval < 0)
++		hid_err(djrcv_dev->hidpp, "%s error:%d\n", __func__, retval);
 +
- 	return iommu_fwspec_add_ids(dev, &id, 1);
+ 	return retval;
  }
  
+@@ -1209,6 +1210,8 @@ static int logi_dj_recv_switch_to_dj_mod
+ 								(u8)timeout;
+ 
+ 		retval = logi_dj_recv_send_report(djrcv_dev, dj_report);
++		if (retval)
++			goto out;
+ 
+ 		/*
+ 		 * Ugly sleep to work around a USB 3.0 bug when the receiver is
+@@ -1217,11 +1220,6 @@ static int logi_dj_recv_switch_to_dj_mod
+ 		 * 50 msec should gives enough time to the receiver to be ready.
+ 		 */
+ 		msleep(50);
+-
+-		if (retval) {
+-			kfree(dj_report);
+-			return retval;
+-		}
+ 	}
+ 
+ 	/*
+@@ -1247,7 +1245,12 @@ static int logi_dj_recv_switch_to_dj_mod
+ 			HIDPP_REPORT_SHORT_LENGTH, HID_OUTPUT_REPORT,
+ 			HID_REQ_SET_REPORT);
+ 
++out:
+ 	kfree(dj_report);
++
++	if (retval < 0)
++		hid_err(hdev, "%s error:%d\n", __func__, retval);
++
+ 	return retval;
+ }
+ 
+@@ -1753,11 +1756,8 @@ static int logi_dj_probe(struct hid_devi
+ 
+ 	if (has_hidpp) {
+ 		retval = logi_dj_recv_switch_to_dj_mode(djrcv_dev, 0);
+-		if (retval < 0) {
+-			hid_err(hdev, "%s: logi_dj_recv_switch_to_dj_mode returned error:%d\n",
+-				__func__, retval);
++		if (retval < 0)
+ 			goto switch_to_dj_mode_fail;
+-		}
+ 	}
+ 
+ 	/* This is enabling the polling urb on the IN endpoint */
+@@ -1775,15 +1775,11 @@ static int logi_dj_probe(struct hid_devi
+ 		spin_lock_irqsave(&djrcv_dev->lock, flags);
+ 		djrcv_dev->ready = true;
+ 		spin_unlock_irqrestore(&djrcv_dev->lock, flags);
+-		retval = logi_dj_recv_query_paired_devices(djrcv_dev);
+-		if (retval < 0) {
+-			hid_err(hdev, "%s: logi_dj_recv_query_paired_devices error:%d\n",
+-				__func__, retval);
+-			/*
+-			 * This can happen with a KVM, let the probe succeed,
+-			 * logi_dj_recv_queue_unknown_work will retry later.
+-			 */
+-		}
++		/*
++		 * This can fail with a KVM. Ignore errors to let the probe
++		 * succeed, logi_dj_recv_queue_unknown_work will retry later.
++		 */
++		logi_dj_recv_query_paired_devices(djrcv_dev);
+ 	}
+ 
+ 	return 0;
+@@ -1800,18 +1796,12 @@ hid_hw_start_fail:
+ #ifdef CONFIG_PM
+ static int logi_dj_reset_resume(struct hid_device *hdev)
+ {
+-	int retval;
+ 	struct dj_receiver_dev *djrcv_dev = hid_get_drvdata(hdev);
+ 
+ 	if (!djrcv_dev || djrcv_dev->hidpp != hdev)
+ 		return 0;
+ 
+-	retval = logi_dj_recv_switch_to_dj_mode(djrcv_dev, 0);
+-	if (retval < 0) {
+-		hid_err(hdev, "%s: logi_dj_recv_switch_to_dj_mode returned error:%d\n",
+-			__func__, retval);
+-	}
+-
++	logi_dj_recv_switch_to_dj_mode(djrcv_dev, 0);
+ 	return 0;
+ }
+ #endif
 
 
