@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F183BF2FE;
-	Thu, 15 Jan 2026 17:12:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54BB3BFE45;
+	Thu, 15 Jan 2026 17:12:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497167; cv=none; b=ZCviLNVMtpCRRIbz9XJ548LGAaz/lzl6LbbP9G5OjBvuCG9DYN+1twdJaILG5/Cz1QeKiORSOfNN/IywcFOMl/XZSAFxg2fwyKuOZKB7AGEdU58LFC6AVYPBS8r6bvT/HIMH+omcJs6PKzf2pzorRabRgGPSODGme14uqXplSaQ=
+	t=1768497169; cv=none; b=cRca4J/91338iI3DppcJZ3ubGBF1KsRHKCY5YGajXCxrBmD3bRn5ksjge8ZK+QFzT2x7Kq8yKvSGh9ykhYPFArNmwuohWbsrz1/1qr+J6dj5E14owFti+37vJJbAi8hZkeNXH47HAiLlFLEfo3Un7poY/pjKW3ooDX+BYIjFXXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497167; c=relaxed/simple;
-	bh=NjVWU/Gs+4qTGmUQkvbA2PG5d299p7KBuNcfKAyIh+E=;
+	s=arc-20240116; t=1768497169; c=relaxed/simple;
+	bh=VozYGrwPKQDUHG2k8Ch36MbkmXR6klVBKaRzOQUk+nI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oe5CGsl2dq4MhSzLQQBmGYxVM14k0KpnEGEOwYqto1Fj5zpiIQlMWzbTtLViMuAdQXNkuZdZ3Qs+14EoJUB6VjtRqNS7rS9Bc3VJ0VeqqICu1U30Jkv1iHEOJfkSb7Duo2Ox4JI3919a/291RJZHHxiIoxj/1VFVPMcnAbV1wKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iI/yHAi3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nGr41EYJLWwDf0TAvurwJ4605KsfdBtSv4hF4BAIcMJem5PNUC8XBw+By1xabc/990E1jC8lHHg/mNDGB81va30uxTRE4VSkx29ICBuHHfQmYS8i8kj4BnKUOXIQXKgbHd975XZoAIZ2MS5qsgPbO6IFEZX7lJ4cOLSWKeeWtqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aRvuAqxi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iI/yHAi3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60D72C116D0;
-	Thu, 15 Jan 2026 17:12:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aRvuAqxi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6041DC116D0;
+	Thu, 15 Jan 2026 17:12:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497166;
-	bh=NjVWU/Gs+4qTGmUQkvbA2PG5d299p7KBuNcfKAyIh+E=;
+	s=korg; t=1768497169;
+	bh=VozYGrwPKQDUHG2k8Ch36MbkmXR6klVBKaRzOQUk+nI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iI/yHAi3/IZxULMwfcAkdpAtvHsylSk2S1HNQQD1He86jwW46OrXNMiFMkLG5p0b3
-	 O5f330U0nb3gCXckVh4NH1ZBiW4ilZX4IhxduqayI+ZFIgSwUJvsuhJQnSBXvIPk4O
-	 mZpwnA7K8usifiBbXqjJCkpq2eb9ck2walulsyfI=
+	b=aRvuAqxirqsXZPlzPq4tHdqaiTQ4MQ6kFSRPJ0qHECJwSlKTqYLSNajGmXdBktXQW
+	 uLXWs8P+GuMuZ1dcdYD8Koc0IVOTiBRQBYSh68JV4VSh6UWymnWZU3tUiUOhSS3Uwo
+	 2PfVHW76q3RNszU9nVFKedD0SFKnAIRm0alZLD6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Val Packett <val@packett.cool>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Linus Walleij <linusw@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.1 52/72] pinctrl: qcom: lpass-lpi: mark the GPIO controller as sleeping
-Date: Thu, 15 Jan 2026 17:49:02 +0100
-Message-ID: <20260115164145.379865648@linuxfoundation.org>
+	Yonghong Song <yonghong.song@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 61/72] bpf: Fix an issue in bpf_prog_test_run_xdp when page size greater than 4K
+Date: Thu, 15 Jan 2026 17:49:11 +0100
+Message-ID: <20260115164145.715724371@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164143.482647486@linuxfoundation.org>
 References: <20260115164143.482647486@linuxfoundation.org>
@@ -54,88 +51,219 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Yonghong Song <yonghong.song@linux.dev>
 
-commit ebc18e9854e5a2b62a041fb57b216a903af45b85 upstream.
+[ Upstream commit 4fc012daf9c074772421c904357abf586336b1ca ]
 
-The gpio_chip settings in this driver say the controller can't sleep
-but it actually uses a mutex for synchronization. This triggers the
-following BUG():
+The bpf selftest xdp_adjust_tail/xdp_adjust_frags_tail_grow failed on
+arm64 with 64KB page:
+   xdp_adjust_tail/xdp_adjust_frags_tail_grow:FAIL
 
-[    9.233659] BUG: sleeping function called from invalid context at kernel/locking/mutex.c:281
-[    9.233665] in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 554, name: (udev-worker)
-[    9.233669] preempt_count: 1, expected: 0
-[    9.233673] RCU nest depth: 0, expected: 0
-[    9.233688] Tainted: [W]=WARN
-[    9.233690] Hardware name: Dell Inc. Latitude 7455/0FK7MX, BIOS 2.10.1 05/20/2025
-[    9.233694] Call trace:
-[    9.233696]  show_stack+0x24/0x38 (C)
-[    9.233709]  dump_stack_lvl+0x40/0x88
-[    9.233716]  dump_stack+0x18/0x24
-[    9.233722]  __might_resched+0x148/0x160
-[    9.233731]  __might_sleep+0x38/0x98
-[    9.233736]  mutex_lock+0x30/0xd8
-[    9.233749]  lpi_config_set+0x2e8/0x3c8 [pinctrl_lpass_lpi]
-[    9.233757]  lpi_gpio_direction_output+0x58/0x90 [pinctrl_lpass_lpi]
-[    9.233761]  gpiod_direction_output_raw_commit+0x110/0x428
-[    9.233772]  gpiod_direction_output_nonotify+0x234/0x358
-[    9.233779]  gpiod_direction_output+0x38/0xd0
-[    9.233786]  gpio_shared_proxy_direction_output+0xb8/0x2a8 [gpio_shared_proxy]
-[    9.233792]  gpiod_direction_output_raw_commit+0x110/0x428
-[    9.233799]  gpiod_direction_output_nonotify+0x234/0x358
-[    9.233806]  gpiod_configure_flags+0x2c0/0x580
-[    9.233812]  gpiod_find_and_request+0x358/0x4f8
-[    9.233819]  gpiod_get_index+0x7c/0x98
-[    9.233826]  devm_gpiod_get+0x34/0xb0
-[    9.233829]  reset_gpio_probe+0x58/0x128 [reset_gpio]
-[    9.233836]  auxiliary_bus_probe+0xb0/0xf0
-[    9.233845]  really_probe+0x14c/0x450
-[    9.233853]  __driver_probe_device+0xb0/0x188
-[    9.233858]  driver_probe_device+0x4c/0x250
-[    9.233863]  __driver_attach+0xf8/0x2a0
-[    9.233868]  bus_for_each_dev+0xf8/0x158
-[    9.233872]  driver_attach+0x30/0x48
-[    9.233876]  bus_add_driver+0x158/0x2b8
-[    9.233880]  driver_register+0x74/0x118
-[    9.233886]  __auxiliary_driver_register+0x94/0xe8
-[    9.233893]  init_module+0x34/0xfd0 [reset_gpio]
-[    9.233898]  do_one_initcall+0xec/0x300
-[    9.233903]  do_init_module+0x64/0x260
-[    9.233910]  load_module+0x16c4/0x1900
-[    9.233915]  __arm64_sys_finit_module+0x24c/0x378
-[    9.233919]  invoke_syscall+0x4c/0xe8
-[    9.233925]  el0_svc_common+0x8c/0xf0
-[    9.233929]  do_el0_svc+0x28/0x40
-[    9.233934]  el0_svc+0x38/0x100
-[    9.233938]  el0t_64_sync_handler+0x84/0x130
-[    9.233943]  el0t_64_sync+0x17c/0x180
+In bpf_prog_test_run_xdp(), the xdp->frame_sz is set to 4K, but later on
+when constructing frags, with 64K page size, the frag data_len could
+be more than 4K. This will cause problems in bpf_xdp_frags_increase_tail().
 
-Mark the controller as sleeping.
+To fix the failure, the xdp->frame_sz is set to be PAGE_SIZE so kernel
+can test different page size properly. With the kernel change, the user
+space and bpf prog needs adjustment. Currently, the MAX_SKB_FRAGS default
+value is 17, so for 4K page, the maximum packet size will be less than 68K.
+To test 64K page, a bigger maximum packet size than 68K is desired. So two
+different functions are implemented for subtest xdp_adjust_frags_tail_grow.
+Depending on different page size, different data input/output sizes are used
+to adapt with different page size.
 
-Fixes: 6e261d1090d6 ("pinctrl: qcom: Add sm8250 lpass lpi pinctrl driver")
-Cc: stable@vger.kernel.org
-Reported-by: Val Packett <val@packett.cool>
-Closes: https://lore.kernel.org/all/98c0f185-b0e0-49ea-896c-f3972dd011ca@packett.cool/
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/r/20250612035032.2207498-1-yonghong.song@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Stable-dep-of: e558cca21779 ("bpf, test_run: Subtract size of xdp_frame from allowed metadata size")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/qcom/pinctrl-lpass-lpi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bpf/test_run.c                            |  2 +-
+ .../bpf/prog_tests/xdp_adjust_tail.c          | 96 +++++++++++++++++--
+ .../bpf/progs/test_xdp_adjust_tail_grow.c     |  8 +-
+ 3 files changed, 97 insertions(+), 9 deletions(-)
 
---- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-+++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-@@ -435,7 +435,7 @@ int lpi_pinctrl_probe(struct platform_de
- 	pctrl->chip.ngpio = data->npins;
- 	pctrl->chip.label = dev_name(dev);
- 	pctrl->chip.of_gpio_n_cells = 2;
--	pctrl->chip.can_sleep = false;
-+	pctrl->chip.can_sleep = true;
+diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
+index 77b386b76d463..939bd0d866aba 100644
+--- a/net/bpf/test_run.c
++++ b/net/bpf/test_run.c
+@@ -1322,7 +1322,7 @@ int bpf_prog_test_run_xdp(struct bpf_prog *prog, const union bpf_attr *kattr,
+ 		headroom -= ctx->data;
+ 	}
  
- 	mutex_init(&pctrl->lock);
+-	max_data_sz = 4096 - headroom - tailroom;
++	max_data_sz = PAGE_SIZE - headroom - tailroom;
+ 	if (size > max_data_sz) {
+ 		/* disallow live data mode for jumbo frames */
+ 		if (do_live)
+diff --git a/tools/testing/selftests/bpf/prog_tests/xdp_adjust_tail.c b/tools/testing/selftests/bpf/prog_tests/xdp_adjust_tail.c
+index 89366913a251c..df907798d59d3 100644
+--- a/tools/testing/selftests/bpf/prog_tests/xdp_adjust_tail.c
++++ b/tools/testing/selftests/bpf/prog_tests/xdp_adjust_tail.c
+@@ -37,21 +37,26 @@ static void test_xdp_adjust_tail_shrink(void)
+ 	bpf_object__close(obj);
+ }
  
+-static void test_xdp_adjust_tail_grow(void)
++static void test_xdp_adjust_tail_grow(bool is_64k_pagesize)
+ {
+ 	const char *file = "./test_xdp_adjust_tail_grow.bpf.o";
+ 	struct bpf_object *obj;
+-	char buf[4096]; /* avoid segfault: large buf to hold grow results */
++	char buf[8192]; /* avoid segfault: large buf to hold grow results */
+ 	__u32 expect_sz;
+ 	int err, prog_fd;
+ 	LIBBPF_OPTS(bpf_test_run_opts, topts,
+ 		.data_in = &pkt_v4,
+-		.data_size_in = sizeof(pkt_v4),
+ 		.data_out = buf,
+ 		.data_size_out = sizeof(buf),
+ 		.repeat = 1,
+ 	);
+ 
++	/* topts.data_size_in as a special signal to bpf prog */
++	if (is_64k_pagesize)
++		topts.data_size_in = sizeof(pkt_v4) - 1;
++	else
++		topts.data_size_in = sizeof(pkt_v4);
++
+ 	err = bpf_prog_test_load(file, BPF_PROG_TYPE_XDP, &obj, &prog_fd);
+ 	if (!ASSERT_OK(err, "test_xdp_adjust_tail_grow"))
+ 		return;
+@@ -201,7 +206,7 @@ static void test_xdp_adjust_frags_tail_shrink(void)
+ 	bpf_object__close(obj);
+ }
+ 
+-static void test_xdp_adjust_frags_tail_grow(void)
++static void test_xdp_adjust_frags_tail_grow_4k(void)
+ {
+ 	const char *file = "./test_xdp_adjust_tail_grow.bpf.o";
+ 	__u32 exp_size;
+@@ -266,16 +271,93 @@ static void test_xdp_adjust_frags_tail_grow(void)
+ 	bpf_object__close(obj);
+ }
+ 
++static void test_xdp_adjust_frags_tail_grow_64k(void)
++{
++	const char *file = "./test_xdp_adjust_tail_grow.bpf.o";
++	__u32 exp_size;
++	struct bpf_program *prog;
++	struct bpf_object *obj;
++	int err, i, prog_fd;
++	__u8 *buf;
++	LIBBPF_OPTS(bpf_test_run_opts, topts);
++
++	obj = bpf_object__open(file);
++	if (libbpf_get_error(obj))
++		return;
++
++	prog = bpf_object__next_program(obj, NULL);
++	if (bpf_object__load(obj))
++		goto out;
++
++	prog_fd = bpf_program__fd(prog);
++
++	buf = malloc(262144);
++	if (!ASSERT_OK_PTR(buf, "alloc buf 256Kb"))
++		goto out;
++
++	/* Test case add 10 bytes to last frag */
++	memset(buf, 1, 262144);
++	exp_size = 90000 + 10;
++
++	topts.data_in = buf;
++	topts.data_out = buf;
++	topts.data_size_in = 90000;
++	topts.data_size_out = 262144;
++	err = bpf_prog_test_run_opts(prog_fd, &topts);
++
++	ASSERT_OK(err, "90Kb+10b");
++	ASSERT_EQ(topts.retval, XDP_TX, "90Kb+10b retval");
++	ASSERT_EQ(topts.data_size_out, exp_size, "90Kb+10b size");
++
++	for (i = 0; i < 90000; i++) {
++		if (buf[i] != 1)
++			ASSERT_EQ(buf[i], 1, "90Kb+10b-old");
++	}
++
++	for (i = 90000; i < 90010; i++) {
++		if (buf[i] != 0)
++			ASSERT_EQ(buf[i], 0, "90Kb+10b-new");
++	}
++
++	for (i = 90010; i < 262144; i++) {
++		if (buf[i] != 1)
++			ASSERT_EQ(buf[i], 1, "90Kb+10b-untouched");
++	}
++
++	/* Test a too large grow */
++	memset(buf, 1, 262144);
++	exp_size = 90001;
++
++	topts.data_in = topts.data_out = buf;
++	topts.data_size_in = 90001;
++	topts.data_size_out = 262144;
++	err = bpf_prog_test_run_opts(prog_fd, &topts);
++
++	ASSERT_OK(err, "90Kb+10b");
++	ASSERT_EQ(topts.retval, XDP_DROP, "90Kb+10b retval");
++	ASSERT_EQ(topts.data_size_out, exp_size, "90Kb+10b size");
++
++	free(buf);
++out:
++	bpf_object__close(obj);
++}
++
+ void test_xdp_adjust_tail(void)
+ {
++	int page_size = getpagesize();
++
+ 	if (test__start_subtest("xdp_adjust_tail_shrink"))
+ 		test_xdp_adjust_tail_shrink();
+ 	if (test__start_subtest("xdp_adjust_tail_grow"))
+-		test_xdp_adjust_tail_grow();
++		test_xdp_adjust_tail_grow(page_size == 65536);
+ 	if (test__start_subtest("xdp_adjust_tail_grow2"))
+ 		test_xdp_adjust_tail_grow2();
+ 	if (test__start_subtest("xdp_adjust_frags_tail_shrink"))
+ 		test_xdp_adjust_frags_tail_shrink();
+-	if (test__start_subtest("xdp_adjust_frags_tail_grow"))
+-		test_xdp_adjust_frags_tail_grow();
++	if (test__start_subtest("xdp_adjust_frags_tail_grow")) {
++		if (page_size == 65536)
++			test_xdp_adjust_frags_tail_grow_64k();
++		else
++			test_xdp_adjust_frags_tail_grow_4k();
++	}
+ }
+diff --git a/tools/testing/selftests/bpf/progs/test_xdp_adjust_tail_grow.c b/tools/testing/selftests/bpf/progs/test_xdp_adjust_tail_grow.c
+index 53b64c9994500..706a8d4c6e2ca 100644
+--- a/tools/testing/selftests/bpf/progs/test_xdp_adjust_tail_grow.c
++++ b/tools/testing/selftests/bpf/progs/test_xdp_adjust_tail_grow.c
+@@ -13,7 +13,9 @@ int _xdp_adjust_tail_grow(struct xdp_md *xdp)
+ 	/* Data length determine test case */
+ 
+ 	if (data_len == 54) { /* sizeof(pkt_v4) */
+-		offset = 4096; /* test too large offset */
++		offset = 4096; /* test too large offset, 4k page size */
++	} else if (data_len == 53) { /* sizeof(pkt_v4) - 1 */
++		offset = 65536; /* test too large offset, 64k page size */
+ 	} else if (data_len == 74) { /* sizeof(pkt_v6) */
+ 		offset = 40;
+ 	} else if (data_len == 64) {
+@@ -25,6 +27,10 @@ int _xdp_adjust_tail_grow(struct xdp_md *xdp)
+ 		offset = 10;
+ 	} else if (data_len == 9001) {
+ 		offset = 4096;
++	} else if (data_len == 90000) {
++		offset = 10; /* test a small offset, 64k page size */
++	} else if (data_len == 90001) {
++		offset = 65536; /* test too large offset, 64k page size */
+ 	} else {
+ 		return XDP_ABORTED; /* No matching test */
+ 	}
+-- 
+2.51.0
+
 
 
