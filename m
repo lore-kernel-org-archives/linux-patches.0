@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29A83195F9;
-	Thu, 15 Jan 2026 17:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABDA43BFE4C;
+	Thu, 15 Jan 2026 17:05:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496742; cv=none; b=UzuYWYWvZ5WpG5Je8mAYG+xJzRE37riHfnCjlKW6Y3ENV025pMWSBRUkDwJwPdLoU44CMzaUH9STcWaSRw77IWY3OeF5ou+FM3nRHfgBRP6i/t69fNEXJmxItnvYcg6LBTVKVlkfyk3kNK93Vs5+W3WYpiY/ptS+ZOcf8h2HleI=
+	t=1768496745; cv=none; b=GgsNWCj5BHLXOQAwsrIVXDlMOoC+D7F1E1mMlm3bKTdWc4D6ktQDyWs0W4Npnwuv8epNcmABnCCNG9xJLpXbYVwwa/V8W52HKmQBp15V1XLzSu9pM4y+xyohlqGznfAxjVo6yMgOZ3O++aEq8eAWTtmmPNayRirKSRXEFodlNoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496742; c=relaxed/simple;
-	bh=JgmpXDJhKzgtF6IgReCGuYHwm18rBAHHk/1QOhGvCiA=;
+	s=arc-20240116; t=1768496745; c=relaxed/simple;
+	bh=q06xSbu4z/YZ1c4vTx5tuXW3ZCrAr5mxB6LFNOuU03I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V30liKeN4E/GJqpX8Gv+IQZO2ga9y7QQmLo9xIk5xj75dEuwkTbsjOOyTWXf44CXebXQlNkKLuG1U5nvgE/iziJS0OQdmiq9Lb+97213SmxRQ0/L50cbo2O1p9TB0uQ6gY+bRmOG0b4Ktzxhh8oQjl4bUX4hA14LetR5B4nxCL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YW2IyLjY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p6FnaRU81tkV6ciXwjfxnRVYrKkvJsZTarRmc5qKzsBDKZjUDlFTAefEMpZVJWbyzxRzUMnEZZ2ehlZohXRM02S5HN0iLEQWbbyYLTukmxcMZDikzHrzN6NZfnCJe0cEA36emOnEn+ZDBZvuHr6FD8z9AZOl1xpdnswuMjWLvfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eveA7Ani; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YW2IyLjY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 204F8C19423;
-	Thu, 15 Jan 2026 17:05:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eveA7Ani"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E780C16AAE;
+	Thu, 15 Jan 2026 17:05:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496742;
-	bh=JgmpXDJhKzgtF6IgReCGuYHwm18rBAHHk/1QOhGvCiA=;
+	s=korg; t=1768496745;
+	bh=q06xSbu4z/YZ1c4vTx5tuXW3ZCrAr5mxB6LFNOuU03I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YW2IyLjYnU2T93n6wYkl+gc0d/CSV1zdaBfv00heffPD50R3ALeauFEwf/m3yvYcb
-	 BtNbvq1a0+3MlDkfiRR+X3SG7+vEmfx6AQe+ItCMGYRlEM4/ij5WhkWiAneM0VGRhg
-	 xtBV69r/O0dOVPsg7RKAnSXyhkljw/5DKHoUCnb0=
+	b=eveA7AniN62FZmrkLvka715j7O+23OuMjCiJt1PHRNvbNyhH25hqgiqEceqCLYBZ3
+	 1C+O3i5t77y+UIleiDKQiOIMVG/NDwrpIY8v9mGc4JjK063ozouHPcvQSqKOIVvBRW
+	 wiuivtZ2nW4SyAL8TGZh9DxfGCFztp9nDDSspu14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcus Hughes <marcus.hughes@betterinternet.ltd>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sumeet Pawnikar <sumeet4linux@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 102/119] net: sfp: extend Potron XGSPON quirk to cover additional EEPROM variant
-Date: Thu, 15 Jan 2026 17:48:37 +0100
-Message-ID: <20260115164155.634677965@linuxfoundation.org>
+Subject: [PATCH 6.12 103/119] powercap: fix race condition in register_control_type()
+Date: Thu, 15 Jan 2026 17:48:38 +0100
+Message-ID: <20260115164155.670364092@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -51,41 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marcus Hughes <marcus.hughes@betterinternet.ltd>
+From: Sumeet Pawnikar <sumeet4linux@gmail.com>
 
-[ Upstream commit 71cfa7c893a05d09e7dc14713b27a8309fd4a2db ]
+[ Upstream commit 7bda1910c4bccd4b8d4726620bb3d6bbfb62286e ]
 
-Some Potron SFP+ XGSPON ONU sticks are shipped with different EEPROM
-vendor ID and vendor name strings, but are otherwise functionally
-identical to the existing "Potron SFP+ XGSPON ONU Stick" handled by
-sfp_quirk_potron().
+The device becomes visible to userspace via device_register()
+even before it fully initialized by idr_init(). If userspace
+or another thread tries to register a zone immediately after
+device_register(), the control_type_valid() will fail because
+the control_type is not yet in the list. The IDR is not yet
+initialized, so this race condition causes zone registration
+failure.
 
-These modules, including units distributed under the "Better Internet"
-branding, use the same UART pin assignment and require the same
-TX_FAULT/LOS behaviour and boot delay. Re-use the existing Potron
-quirk for this EEPROM variant.
+Move idr_init() and list addition before device_register()
+fix the race condition.
 
-Signed-off-by: Marcus Hughes <marcus.hughes@betterinternet.ltd>
-Link: https://patch.msgid.link/20251207210355.333451-1-marcus.hughes@betterinternet.ltd
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sumeet Pawnikar <sumeet4linux@gmail.com>
+[ rjw: Subject adjustment, empty line added ]
+Link: https://patch.msgid.link/20251205190216.5032-1-sumeet4linux@gmail.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/sfp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/powercap/powercap_sys.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
-index f1827a1bd7a59..964aad00dc87c 100644
---- a/drivers/net/phy/sfp.c
-+++ b/drivers/net/phy/sfp.c
-@@ -491,6 +491,8 @@ static const struct sfp_quirk sfp_quirks[] = {
- 	SFP_QUIRK("ALCATELLUCENT", "3FE46541AA", sfp_quirk_2500basex,
- 		  sfp_fixup_nokia),
+diff --git a/drivers/powercap/powercap_sys.c b/drivers/powercap/powercap_sys.c
+index 4112a00973382..d14b36b75189d 100644
+--- a/drivers/powercap/powercap_sys.c
++++ b/drivers/powercap/powercap_sys.c
+@@ -625,17 +625,23 @@ struct powercap_control_type *powercap_register_control_type(
+ 	INIT_LIST_HEAD(&control_type->node);
+ 	control_type->dev.class = &powercap_class;
+ 	dev_set_name(&control_type->dev, "%s", name);
+-	result = device_register(&control_type->dev);
+-	if (result) {
+-		put_device(&control_type->dev);
+-		return ERR_PTR(result);
+-	}
+ 	idr_init(&control_type->idr);
  
-+	SFP_QUIRK_F("BIDB", "X-ONU-SFPP", sfp_fixup_potron),
+ 	mutex_lock(&powercap_cntrl_list_lock);
+ 	list_add_tail(&control_type->node, &powercap_cntrl_list);
+ 	mutex_unlock(&powercap_cntrl_list_lock);
+ 
++	result = device_register(&control_type->dev);
++	if (result) {
++		mutex_lock(&powercap_cntrl_list_lock);
++		list_del(&control_type->node);
++		mutex_unlock(&powercap_cntrl_list_lock);
 +
- 	// FLYPRO SFP-10GT-CS-30M uses Rollball protocol to talk to the PHY.
- 	SFP_QUIRK_F("FLYPRO", "SFP-10GT-CS-30M", sfp_fixup_rollball),
- 
++		idr_destroy(&control_type->idr);
++		put_device(&control_type->dev);
++		return ERR_PTR(result);
++	}
++
+ 	return control_type;
+ }
+ EXPORT_SYMBOL_GPL(powercap_register_control_type);
 -- 
 2.51.0
 
