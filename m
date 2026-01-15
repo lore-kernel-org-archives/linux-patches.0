@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37AC93624C4;
-	Thu, 15 Jan 2026 16:53:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 034731C5D59;
+	Thu, 15 Jan 2026 16:53:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496032; cv=none; b=MDrI34cXEAJfIwINRDCU1N0gE6JppUD7LjSE706DwMhS70IwU4+bbDSg7ntww4Nj+OL68u5rdLHn65jpA3eVCTHCkBGxMIzkOKjGig0ktPW/eAMyOW3GqupTqFJ13Q2gOxxqnbO0Y67ul4eIl70YsZb+Zz8wq632JXPZl7xdSPU=
+	t=1768496035; cv=none; b=Qr17+/Qygz/lA25niNJxO5+IfT0D9iDlViyDZTK8uCk5VAIVmJtJVa2pPP6hL8nAKGvnUS9Ab5bdxFIW8PIoV0OZkyGEnpgyF3bl0oi8g/bwgA3NwjAf2/vSw9k2+fhoyIopKSpHCAwdDtGLYBx8gxYm9j34vZBd3ShYAIIs7sY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496032; c=relaxed/simple;
-	bh=/ZcsqsvOsCKowyVHm/AjgjqhAMGzhWrJfvJXJxFqwnw=;
+	s=arc-20240116; t=1768496035; c=relaxed/simple;
+	bh=h86JH/kMNGjPay2dJl5Qlk5q+7WO7jYXtybRxB95OwY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sze/EzeUxwOXkpEjfUmHLykSyD1pBuXhg4kYji/htGwO3HOw4bgCOnGka8U6Tojj/o8DS/OlpYB88XgeyR9ofN4TsvR1KZ1W6gpzHKVQs9gxwT/zwLu9Gj7fuCq+I9t34kl6EeKG6kq1Fm2f37xicgXmnuOnlEAXC+FoCCFG7Z0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e0QTBfEq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gwb2Br/oE9TC+1mv2kqHjeQEbpmKt4YdbFW8GK9rhuBgFG0kx5BaPEvGiUUp5SxfwLpkjL8Rd2RKi1Nik/1hcGCxQyC872zT1SN1PbL2maNaqr513U174IA+XnDpaI2FG2eMkzmPxr0tJmrcA02rGhq4plWihWqvz5hNmQSxhkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jBcPsIe2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e0QTBfEq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B997AC19421;
-	Thu, 15 Jan 2026 16:53:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jBcPsIe2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87491C19421;
+	Thu, 15 Jan 2026 16:53:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496032;
-	bh=/ZcsqsvOsCKowyVHm/AjgjqhAMGzhWrJfvJXJxFqwnw=;
+	s=korg; t=1768496034;
+	bh=h86JH/kMNGjPay2dJl5Qlk5q+7WO7jYXtybRxB95OwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e0QTBfEqXChby/JFMeYatNjMsSySPrrFvRRXwUPqGj5K5sEW4nf4PUt5YjqOzGdyl
-	 Q/di7Wt9MTF4cP5LbAzaseWJPyld+dQgrMuwf1O4O51e0VNUlEqgcLGS+rYbwQkREa
-	 CT9btAWmWLCbXwZMkSoejkRaTxLmumOyHMecbLHw=
+	b=jBcPsIe2VpUlzRg94949IBtnZiVIRjFyZfZsYYY543uKjBt5wNbyfiM9vj3Fqba8g
+	 nHPaCBzE0elBJhRdi31rXXBGeG7PuCJa1smuwYr0VMHrCFS0zS/ER43TtAJXd4m+tY
+	 nV+CLZaVYXnh8RVCCU4NLH5hvrpdQ/6dWlhBIPFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Linus Walleij <linusw@kernel.org>
-Subject: [PATCH 6.18 036/181] Revert "drm/mediatek: dsi: Fix DSI host and panel bridge pre-enable order"
-Date: Thu, 15 Jan 2026 17:46:13 +0100
-Message-ID: <20260115164203.632184368@linuxfoundation.org>
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 054/181] NFS: Fix up the automount fs_context to use the correct cred
+Date: Thu, 15 Jan 2026 17:46:31 +0100
+Message-ID: <20260115164204.279463558@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -51,43 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit 33e8150bd32d7dc25c977bb455f1f5d54bfd5241 upstream.
+[ Upstream commit a2a8fc27dd668e7562b5326b5ed2f1604cb1e2e9 ]
 
-This reverts commit f5b1819193667bf62c3c99d3921b9429997a14b2.
+When automounting, the fs_context should be fixed up to use the cred
+from the parent filesystem, since the operation is just extending the
+namespace. Authorisation to enter that namespace will already have been
+provided by the preceding lookup.
 
-As the original commit (c9b1150a68d9 ("drm/atomic-helper: Re-order
-bridge chain pre-enable and post-disable")) causing the issue has been
-reverted, let's revert the fix for mediatek.
-
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Cc: stable@vger.kernel.org # v6.17+
-Fixes: c9b1150a68d9 ("drm/atomic-helper: Re-order bridge chain pre-enable and post-disable")
-Reviewed-by: Maxime Ripard <mripard@kernel.org>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Tested-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20251205-drm-seq-fix-v1-2-fda68fa1b3de@ideasonboard.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_dsi.c |    6 ------
- 1 file changed, 6 deletions(-)
+ fs/nfs/namespace.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/gpu/drm/mediatek/mtk_dsi.c
-+++ b/drivers/gpu/drm/mediatek/mtk_dsi.c
-@@ -1002,12 +1002,6 @@ static int mtk_dsi_host_attach(struct mi
- 			return PTR_ERR(dsi->next_bridge);
- 	}
+diff --git a/fs/nfs/namespace.c b/fs/nfs/namespace.c
+index 9e4d94f41fc67..af9be0c5f5163 100644
+--- a/fs/nfs/namespace.c
++++ b/fs/nfs/namespace.c
+@@ -170,6 +170,11 @@ struct vfsmount *nfs_d_automount(struct path *path)
+ 	if (!ctx->clone_data.fattr)
+ 		goto out_fc;
  
--	/*
--	 * set flag to request the DSI host bridge be pre-enabled before device bridge
--	 * in the chain, so the DSI host is ready when the device bridge is pre-enabled
--	 */
--	dsi->next_bridge->pre_enable_prev_first = true;
--
- 	drm_bridge_add(&dsi->bridge);
- 
- 	ret = component_add(host->dev, &mtk_dsi_component_ops);
++	if (fc->cred != server->cred) {
++		put_cred(fc->cred);
++		fc->cred = get_cred(server->cred);
++	}
++
+ 	if (fc->net_ns != client->cl_net) {
+ 		put_net(fc->net_ns);
+ 		fc->net_ns = get_net(client->cl_net);
+-- 
+2.51.0
+
 
 
