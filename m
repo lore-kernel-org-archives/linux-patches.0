@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5092874E6;
-	Thu, 15 Jan 2026 17:16:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADDAE2874E6;
+	Thu, 15 Jan 2026 17:16:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497401; cv=none; b=u7NuV7KU7sRqKBma/k1A4cY33uh/Wye/JyBmcodDjIUirU0Od7j+TIqT3mHbkciwPmEILV09qv+tPrax6nnNmlhrPDsE0JeKGDvAwehl04/9dy8pS0+8Vp4cqYTzARKDx9vIzMo+qddxYp9rU1p/6f/CEiZZttAWv2PiDkvDRXY=
+	t=1768497404; cv=none; b=BrXBoorfprGJlrHaor7XHDw8IAR9aeWiQW5uxlJ1gm6P6XOA68gYhK2+oAt8VIjpClmuqYJFGEPpyysIvQ4oTPWj02W6wdhoEQAJuILZcXBmLQv7RBGSEvoPIFy5UYECfUG6xyRQFKv8JZvyNZ0+MDXW5oBKv5uzPN0MTYjgkf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497401; c=relaxed/simple;
-	bh=axFEBiuJq/2HEf2VO+AMSdD34//QSGX3dwIx84WF4UU=;
+	s=arc-20240116; t=1768497404; c=relaxed/simple;
+	bh=ebyuVoe1cT2BoKMDRme6FllSTjXTu5ZvUelyKEx2r4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SPqysqYLrsFKac/IYGGM7qxWZPBIBgjOntM6yGP3phPHcVnyOidkdA8Ld3tkSzJFFcKjoMev0AhmWO8wIDnLgtU3+MPaAMd1MUdzhRO4rKc6FJgLEJm/JjILm9ZSyDk2YAyvg1Uh7pqD5ZQe8pqF0pAsGBnDvuMhpuFC3sPi1cA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wq1hGSBx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bz/Db6dNOC9rD1gzPS/3kCPgGPDnrAqyP9A8J9oo4nqWNMMGeZVof0mAviHf5z554d2FHg4Svcwo5VllqM+h+u6g8l4RXhLpHXASZ3SSQ/IK5YYDuLGqgkGjkj8dzvTHS7AXfbBKiVszNJ3If1WtdrZ3LBeEDVAg/5e+Vy3abN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tShNr9qL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wq1hGSBx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CA2BC116D0;
-	Thu, 15 Jan 2026 17:16:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tShNr9qL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 364CFC16AAE;
+	Thu, 15 Jan 2026 17:16:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497401;
-	bh=axFEBiuJq/2HEf2VO+AMSdD34//QSGX3dwIx84WF4UU=;
+	s=korg; t=1768497404;
+	bh=ebyuVoe1cT2BoKMDRme6FllSTjXTu5ZvUelyKEx2r4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wq1hGSBxSCF2FwUWI93mNBNPNTwZT7zOCtNm+BRg/To6bpyP6eRJExz1ZRzrLJ4Qf
-	 9Lz56eT3EGXJH3JCrKfRkNWs0T50y1mJfcDiP1kGyDZfl/hB+9w8Njhtg3whgypKUb
-	 YLTTTn/Cox7UtXSVYxtiUXHaR8O/QvOfQi7RgZ0g=
+	b=tShNr9qLhlS/uBIQ0wQlIdAr0E1ZM71BsUpAOu3OI4uiqpHSZX1ebciF/BZGFwH+q
+	 n66d2bE3VcqL3F/MKUqO2A1bZBvuS7v6clcupN3/+hLds736NZa+A6cJInrMfa+JKW
+	 VOEXDreFao/JpE11/JzS5XbaEYxBoT9Ulx1IPxBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Antonio Borneo <antonio.borneo@foss.st.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 061/554] pinctrl: stm32: fix hwspinlock resource leak in probe function
-Date: Thu, 15 Jan 2026 17:42:07 +0100
-Message-ID: <20260115164248.454447003@linuxfoundation.org>
+Subject: [PATCH 5.15 070/554] scsi: target: Do not write NUL characters into ASCII configfs output
+Date: Thu, 15 Jan 2026 17:42:16 +0100
+Message-ID: <20260115164248.776572340@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -52,41 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 002679f79ed605e543fbace465557317cd307c9a ]
+[ Upstream commit c03b55f235e283cae49c88b9602fd11096b92eba ]
 
-In stm32_pctl_probe(), hwspin_lock_request_specific() is called to
-request a hwspinlock, but the acquired lock is not freed on multiple
-error paths after this call. This causes resource leakage when the
-function fails to initialize properly.
+NUL characters are not allowed in ASCII configfs output. Hence this
+patch.
 
-Use devm_hwspin_lock_request_specific() instead of
-hwspin_lock_request_specific() to automatically manage the hwspinlock
-resource lifecycle.
-
-Fixes: 97cfb6cd34f2 ("pinctrl: stm32: protect configuration registers with a hwspinlock")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Reviewed-by: Antonio Borneo <antonio.borneo@foss.st.com>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: c66ac9db8d4a ("[SCSI] target: Add LIO target core v4.0.0-rc6")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20251027184639.3501254-2-bvanassche@acm.org
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/stm32/pinctrl-stm32.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/target/target_core_configfs.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.c b/drivers/pinctrl/stm32/pinctrl-stm32.c
-index 821ec5a97551d..e8afed94fccc1 100644
---- a/drivers/pinctrl/stm32/pinctrl-stm32.c
-+++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
-@@ -1490,7 +1490,7 @@ int stm32_pctl_probe(struct platform_device *pdev)
- 		if (hwlock_id == -EPROBE_DEFER)
- 			return hwlock_id;
- 	} else {
--		pctl->hwlock = hwspin_lock_request_specific(hwlock_id);
-+		pctl->hwlock = devm_hwspin_lock_request_specific(dev, hwlock_id);
- 	}
+diff --git a/drivers/target/target_core_configfs.c b/drivers/target/target_core_configfs.c
+index 73a9e7b0ecbc7..120c19e41012b 100644
+--- a/drivers/target/target_core_configfs.c
++++ b/drivers/target/target_core_configfs.c
+@@ -2677,7 +2677,6 @@ static ssize_t target_lu_gp_members_show(struct config_item *item, char *page)
+ 		cur_len = snprintf(buf, LU_GROUP_NAME_BUF, "%s/%s\n",
+ 			config_item_name(&hba->hba_group.cg_item),
+ 			config_item_name(&dev->dev_group.cg_item));
+-		cur_len++; /* Extra byte for NULL terminator */
  
- 	spin_lock_init(&pctl->irqmux_lock);
+ 		if ((cur_len + len) > PAGE_SIZE || cur_len > LU_GROUP_NAME_BUF) {
+ 			pr_warn("Ran out of lu_gp_show_attr"
 -- 
 2.51.0
 
