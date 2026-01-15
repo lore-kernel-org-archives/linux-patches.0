@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD48E3624C4;
-	Thu, 15 Jan 2026 16:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F93F33993;
+	Thu, 15 Jan 2026 16:56:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496204; cv=none; b=i7ABCn+RHluwrtZAxZAl0L1XI5jU3nd3yMnRtll05/qqdLAOMnxiJBO4SiKbcGno6J1kqIxH9v/+DtoC2NhlzTqQUcG0UxptrETykCh198Ud93E4+oc5wDde0XSJ7+1Z8B82JiNKD80PSiVO7gPtqiw68LH2yvEOl+5WBGJ5XH8=
+	t=1768496208; cv=none; b=WDcB/GEDOd0piGymyZXV2gzR4ZI8oUnsM2xBPrlRG0hPVRRydN2IJiwbDMkLdYSsl7tv7OdxghxvV4jdomTwE3P2HnmfmF1UIT5IvDWjR91pnKDp6FPViazGZJCdL8e8+SZRx7cQnqREHuGzZtpFu8NLy5iGv9d4VzIUpWSAl6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496204; c=relaxed/simple;
-	bh=pLU5YBOyI4eUdcoXwuPhuCUiT9mBqMRfLlhwS2EFD0c=;
+	s=arc-20240116; t=1768496208; c=relaxed/simple;
+	bh=zOsrQULvx+ZzHeFOdQhsXaQX3m64bs8YquzoA9+xseI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gNuPJB9ECohAnv/Nu6ApBVrER8JddzcFE8KNXnL5q0Oa11jReOEoucWMyreWGbKl9eGDxMrGjyJBN8/XfLyToP5yBDo1MDGv6PcV17ofZ8ekp/mXIXjohHD/14WuceIJkaYw9/8SbGsb1uToSg0qG8qAEQtIxlKf1F1hCEyU1VM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oLp0kdT+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S+Q2KDgX3IQwcRxMeBVibvpHuq9UTh9DuLbjKGUEfhDeZyEzcu7ZYHIQYZjSllFHsK98SHRX/Vk8Il8cwHoHM3hHr7kNa/8gAPEZ1wEvK2kII2u//owCVZwjsa7Ku/2haB/Twffn8UJd1NUVJb8EI3ZnZLcAcMa6JjsSG1Oep2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1pvE1yoX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oLp0kdT+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E73EC16AAE;
-	Thu, 15 Jan 2026 16:56:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1pvE1yoX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FE01C116D0;
+	Thu, 15 Jan 2026 16:56:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496204;
-	bh=pLU5YBOyI4eUdcoXwuPhuCUiT9mBqMRfLlhwS2EFD0c=;
+	s=korg; t=1768496207;
+	bh=zOsrQULvx+ZzHeFOdQhsXaQX3m64bs8YquzoA9+xseI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oLp0kdT+cy/ONgvBXQiRxpFFeCySzQ7ldvnnzYMEKyPiTeo1a9YQHjXIhjvqjB456
-	 +wuRfqKmzaZ9382RZN1dYoUd6qQNEe4g1W5E9thA3G2ewU5qBYS4a4inpKE2DqMHMt
-	 EeBTBDHEKjyF68BjpYNYHcbSHSeWuQeEQOR7r42E=
+	b=1pvE1yoXcL29+qyp2h0VyNYvT8nx95hXYE1JjCUzlm48ROopFnjaDLzE3KGQgzTR8
+	 uGi1Ha122h2iuhx+ZmzoEfHzyR+JH8YmtBPV7vPwtxATNbkW3xBrLFjXd9dVpololI
+	 NP2ddsz7lKpnJdt+EbtNOptR7BY2VFQIsKk13GN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Qu Wenruo <wqu@suse.com>,
 	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 115/181] btrfs: release path before initializing extent tree in btrfs_read_locked_inode()
-Date: Thu, 15 Jan 2026 17:47:32 +0100
-Message-ID: <20260115164206.467990997@linuxfoundation.org>
+Subject: [PATCH 6.18 116/181] btrfs: only enforce free space tree if v1 cache is required for bs < ps cases
+Date: Thu, 15 Jan 2026 17:47:33 +0100
+Message-ID: <20260115164206.503365697@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -47,223 +46,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 8731f2c50b0b1d2b58ed5b9671ef2c4bdc2f8347 ]
+[ Upstream commit 30bcf4e824aa37d305502f52e1527c7b1eabef3d ]
 
-In btrfs_read_locked_inode() we are calling btrfs_init_file_extent_tree()
-while holding a path with a read locked leaf from a subvolume tree, and
-btrfs_init_file_extent_tree() may do a GFP_KERNEL allocation, which can
-trigger reclaim.
+[BUG]
+Since the introduction of btrfs bs < ps support, v1 cache was never on
+the plan due to its hard coded PAGE_SIZE usage, and the future plan to
+properly deprecate it.
 
-This can create a circular lock dependency which lockdep warns about with
-the following splat:
+However for bs < ps cases, even if 'nospace_cache,clear_cache' mount
+option is specified, it's never respected and free space tree is always
+enabled:
 
-   [6.1433] ======================================================
-   [6.1574] WARNING: possible circular locking dependency detected
-   [6.1583] 6.18.0+ #4 Tainted: G     U
-   [6.1591] ------------------------------------------------------
-   [6.1599] kswapd0/117 is trying to acquire lock:
-   [6.1606] ffff8d9b6333c5b8 (&delayed_node->mutex){+.+.}-{3:3}, at: __btrfs_release_delayed_node.part.0+0x39/0x2f0
-   [6.1625]
-            but task is already holding lock:
-   [6.1633] ffffffffa4ab8ce0 (fs_reclaim){+.+.}-{0:0}, at: balance_pgdat+0x195/0xc60
-   [6.1646]
-            which lock already depends on the new lock.
+  mkfs.btrfs -f -O ^bgt,fst $dev
+  mount $dev $mnt -o clear_cache,nospace_cache
+  umount $mnt
+  btrfs ins dump-super $dev
+  ...
+  compat_ro_flags		0x3
+         		( FREE_SPACE_TREE |
+         		  FREE_SPACE_TREE_VALID )
+  ...
 
-   [6.1657]
-            the existing dependency chain (in reverse order) is:
-   [6.1667]
-            -> #2 (fs_reclaim){+.+.}-{0:0}:
-   [6.1677]        fs_reclaim_acquire+0x9d/0xd0
-   [6.1685]        __kmalloc_cache_noprof+0x59/0x750
-   [6.1694]        btrfs_init_file_extent_tree+0x90/0x100
-   [6.1702]        btrfs_read_locked_inode+0xc3/0x6b0
-   [6.1710]        btrfs_iget+0xbb/0xf0
-   [6.1716]        btrfs_lookup_dentry+0x3c5/0x8e0
-   [6.1724]        btrfs_lookup+0x12/0x30
-   [6.1731]        lookup_open.isra.0+0x1aa/0x6a0
-   [6.1739]        path_openat+0x5f7/0xc60
-   [6.1746]        do_filp_open+0xd6/0x180
-   [6.1753]        do_sys_openat2+0x8b/0xe0
-   [6.1760]        __x64_sys_openat+0x54/0xa0
-   [6.1768]        do_syscall_64+0x97/0x3e0
-   [6.1776]        entry_SYSCALL_64_after_hwframe+0x76/0x7e
-   [6.1784]
-            -> #1 (btrfs-tree-00){++++}-{3:3}:
-   [6.1794]        lock_release+0x127/0x2a0
-   [6.1801]        up_read+0x1b/0x30
-   [6.1808]        btrfs_search_slot+0x8e0/0xff0
-   [6.1817]        btrfs_lookup_inode+0x52/0xd0
-   [6.1825]        __btrfs_update_delayed_inode+0x73/0x520
-   [6.1833]        btrfs_commit_inode_delayed_inode+0x11a/0x120
-   [6.1842]        btrfs_log_inode+0x608/0x1aa0
-   [6.1849]        btrfs_log_inode_parent+0x249/0xf80
-   [6.1857]        btrfs_log_dentry_safe+0x3e/0x60
-   [6.1865]        btrfs_sync_file+0x431/0x690
-   [6.1872]        do_fsync+0x39/0x80
-   [6.1879]        __x64_sys_fsync+0x13/0x20
-   [6.1887]        do_syscall_64+0x97/0x3e0
-   [6.1894]        entry_SYSCALL_64_after_hwframe+0x76/0x7e
-   [6.1903]
-            -> #0 (&delayed_node->mutex){+.+.}-{3:3}:
-   [6.1913]        __lock_acquire+0x15e9/0x2820
-   [6.1920]        lock_acquire+0xc9/0x2d0
-   [6.1927]        __mutex_lock+0xcc/0x10a0
-   [6.1934]        __btrfs_release_delayed_node.part.0+0x39/0x2f0
-   [6.1944]        btrfs_evict_inode+0x20b/0x4b0
-   [6.1952]        evict+0x15a/0x2f0
-   [6.1958]        prune_icache_sb+0x91/0xd0
-   [6.1966]        super_cache_scan+0x150/0x1d0
-   [6.1974]        do_shrink_slab+0x155/0x6f0
-   [6.1981]        shrink_slab+0x48e/0x890
-   [6.1988]        shrink_one+0x11a/0x1f0
-   [6.1995]        shrink_node+0xbfd/0x1320
-   [6.1002]        balance_pgdat+0x67f/0xc60
-   [6.1321]        kswapd+0x1dc/0x3e0
-   [6.1643]        kthread+0xff/0x240
-   [6.1965]        ret_from_fork+0x223/0x280
-   [6.1287]        ret_from_fork_asm+0x1a/0x30
-   [6.1616]
-            other info that might help us debug this:
+This means a different behavior compared to bs >= ps cases.
 
-   [6.1561] Chain exists of:
-              &delayed_node->mutex --> btrfs-tree-00 --> fs_reclaim
+[CAUSE]
+The forcing usage of v2 space cache is done inside
+btrfs_set_free_space_cache_settings(), however it never checks if we're
+even using space cache but always enabling v2 cache.
 
-   [6.1503]  Possible unsafe locking scenario:
+[FIX]
+Instead unconditionally enable v2 cache, only forcing v2 cache if the
+old v1 cache is required.
 
-   [6.1110]        CPU0                    CPU1
-   [6.1411]        ----                    ----
-   [6.1707]   lock(fs_reclaim);
-   [6.1998]                                lock(btrfs-tree-00);
-   [6.1291]                                lock(fs_reclaim);
-   [6.1581]   lock(&delayed_node->mutex);
-   [6.1874]
-             *** DEADLOCK ***
+Now v2 space cache can be properly disabled on bs < ps cases:
 
-   [6.1716] 2 locks held by kswapd0/117:
-   [6.1999]  #0: ffffffffa4ab8ce0 (fs_reclaim){+.+.}-{0:0}, at: balance_pgdat+0x195/0xc60
-   [6.1294]  #1: ffff8d998344b0e0 (&type->s_umount_key#40){++++}- {3:3}, at: super_cache_scan+0x37/0x1d0
-   [6.1596]
-            stack backtrace:
-   [6.1183] CPU: 11 UID: 0 PID: 117 Comm: kswapd0 Tainted: G     U 6.18.0+ #4 PREEMPT(lazy)
-   [6.1185] Tainted: [U]=USER
-   [6.1186] Hardware name: ASUS System Product Name/PRIME B560M-A AC, BIOS 2001 02/01/2023
-   [6.1187] Call Trace:
-   [6.1187]  <TASK>
-   [6.1189]  dump_stack_lvl+0x6e/0xa0
-   [6.1192]  print_circular_bug.cold+0x17a/0x1c0
-   [6.1194]  check_noncircular+0x175/0x190
-   [6.1197]  __lock_acquire+0x15e9/0x2820
-   [6.1200]  lock_acquire+0xc9/0x2d0
-   [6.1201]  ? __btrfs_release_delayed_node.part.0+0x39/0x2f0
-   [6.1204]  __mutex_lock+0xcc/0x10a0
-   [6.1206]  ? __btrfs_release_delayed_node.part.0+0x39/0x2f0
-   [6.1208]  ? __btrfs_release_delayed_node.part.0+0x39/0x2f0
-   [6.1211]  ? __btrfs_release_delayed_node.part.0+0x39/0x2f0
-   [6.1213]  __btrfs_release_delayed_node.part.0+0x39/0x2f0
-   [6.1215]  btrfs_evict_inode+0x20b/0x4b0
-   [6.1217]  ? lock_acquire+0xc9/0x2d0
-   [6.1220]  evict+0x15a/0x2f0
-   [6.1222]  prune_icache_sb+0x91/0xd0
-   [6.1224]  super_cache_scan+0x150/0x1d0
-   [6.1226]  do_shrink_slab+0x155/0x6f0
-   [6.1228]  shrink_slab+0x48e/0x890
-   [6.1229]  ? shrink_slab+0x2d2/0x890
-   [6.1231]  shrink_one+0x11a/0x1f0
-   [6.1234]  shrink_node+0xbfd/0x1320
-   [6.1236]  ? shrink_node+0xa2d/0x1320
-   [6.1236]  ? shrink_node+0xbd3/0x1320
-   [6.1239]  ? balance_pgdat+0x67f/0xc60
-   [6.1239]  balance_pgdat+0x67f/0xc60
-   [6.1241]  ? finish_task_switch.isra.0+0xc4/0x2a0
-   [6.1246]  kswapd+0x1dc/0x3e0
-   [6.1247]  ? __pfx_autoremove_wake_function+0x10/0x10
-   [6.1249]  ? __pfx_kswapd+0x10/0x10
-   [6.1250]  kthread+0xff/0x240
-   [6.1251]  ? __pfx_kthread+0x10/0x10
-   [6.1253]  ret_from_fork+0x223/0x280
-   [6.1255]  ? __pfx_kthread+0x10/0x10
-   [6.1257]  ret_from_fork_asm+0x1a/0x30
-   [6.1260]  </TASK>
+  mkfs.btrfs -f -O ^bgt,fst $dev
+  mount $dev $mnt -o clear_cache,nospace_cache
+  umount $mnt
+  btrfs ins dump-super $dev
+  ...
+  compat_ro_flags		0x0
+  ...
 
-This is because:
-
-1) The fsync task is holding an inode's delayed node mutex (for a
-   directory) while calling __btrfs_update_delayed_inode() and that needs
-   to do a search on the subvolume's btree (therefore read lock some
-   extent buffers);
-
-2) The lookup task, at btrfs_lookup(), triggered reclaim with the
-   GFP_KERNEL allocation done by btrfs_init_file_extent_tree() while
-   holding a read lock on a subvolume leaf;
-
-3) The reclaim triggered kswapd which is doing inode eviction for the
-   directory inode the fsync task is using as an argument to
-   btrfs_commit_inode_delayed_inode() - but in that call chain we are
-   trying to read lock the same leaf that the lookup task is holding
-   while calling btrfs_init_file_extent_tree() and doing the GFP_KERNEL
-   allocation.
-
-Fix this by calling btrfs_init_file_extent_tree() after we don't need the
-path anymore and release it in btrfs_read_locked_inode().
-
-Reported-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Link: https://lore.kernel.org/linux-btrfs/6e55113a22347c3925458a5d840a18401a38b276.camel@linux.intel.com/
-Fixes: 8679d2687c35 ("btrfs: initialize inode::file_extent_tree after i_mode has been set")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Fixes: 9f73f1aef98b ("btrfs: force v2 space cache usage for subpage mount")
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ fs/btrfs/super.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 51401d586a7b6..27a562bad6e87 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -3976,11 +3976,6 @@ static int btrfs_read_locked_inode(struct btrfs_inode *inode, struct btrfs_path
- 	btrfs_set_inode_mapping_order(inode);
- 
- cache_index:
--	ret = btrfs_init_file_extent_tree(inode);
--	if (ret)
--		goto out;
--	btrfs_inode_set_file_extent_range(inode, 0,
--			round_up(i_size_read(vfs_inode), fs_info->sectorsize));
- 	/*
- 	 * If we were modified in the current generation and evicted from memory
- 	 * and then re-read we need to do a full sync since we don't have any
-@@ -4067,6 +4062,20 @@ static int btrfs_read_locked_inode(struct btrfs_inode *inode, struct btrfs_path
- 				  btrfs_ino(inode), btrfs_root_id(root), ret);
+diff --git a/fs/btrfs/super.c b/fs/btrfs/super.c
+index 430e7419349c9..c40944ca7b948 100644
+--- a/fs/btrfs/super.c
++++ b/fs/btrfs/super.c
+@@ -736,14 +736,12 @@ bool btrfs_check_options(const struct btrfs_fs_info *info,
+  */
+ void btrfs_set_free_space_cache_settings(struct btrfs_fs_info *fs_info)
+ {
+-	if (fs_info->sectorsize < PAGE_SIZE) {
++	if (fs_info->sectorsize < PAGE_SIZE && btrfs_test_opt(fs_info, SPACE_CACHE)) {
++		btrfs_info(fs_info,
++			   "forcing free space tree for sector size %u with page size %lu",
++			   fs_info->sectorsize, PAGE_SIZE);
+ 		btrfs_clear_opt(fs_info->mount_opt, SPACE_CACHE);
+-		if (!btrfs_test_opt(fs_info, FREE_SPACE_TREE)) {
+-			btrfs_info(fs_info,
+-				   "forcing free space tree for sector size %u with page size %lu",
+-				   fs_info->sectorsize, PAGE_SIZE);
+-			btrfs_set_opt(fs_info->mount_opt, FREE_SPACE_TREE);
+-		}
++		btrfs_set_opt(fs_info->mount_opt, FREE_SPACE_TREE);
  	}
  
-+	/*
-+	 * We don't need the path anymore, so release it to avoid holding a read
-+	 * lock on a leaf while calling btrfs_init_file_extent_tree(), which can
-+	 * allocate memory that triggers reclaim (GFP_KERNEL) and cause a locking
-+	 * dependency.
-+	 */
-+	btrfs_release_path(path);
-+
-+	ret = btrfs_init_file_extent_tree(inode);
-+	if (ret)
-+		goto out;
-+	btrfs_inode_set_file_extent_range(inode, 0,
-+			  round_up(i_size_read(vfs_inode), fs_info->sectorsize));
-+
- 	if (!maybe_acls)
- 		cache_no_acl(vfs_inode);
- 
+ 	/*
 -- 
 2.51.0
 
