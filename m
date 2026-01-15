@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1633BF2EA;
-	Thu, 15 Jan 2026 17:47:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 141223BF309;
+	Thu, 15 Jan 2026 17:47:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499226; cv=none; b=QAxgJ91ZdE7fwLq33Ft6EoFHSo9MUQq+AiMYjp44uqpvXE4zLPxle/lrTJebzhgZEuNQiKNH/7Xli3NXNFXNQZtNpGBsTzkXzHVUIsRC/WsigBQfOlxtU5APm+CDJxSmxCsY544gvlSCjRZinzEO0pOPqZcK5388hK6EDEhpt6E=
+	t=1768499229; cv=none; b=cvTLrQwuTcBjoVvMzkXupagKXW0rZjxqWAl4PQaIqMB3f+G35jbJ1CuR4WiTYff5nh9AVMDH+qGyvczudywSUManS8+dwLnpz7FofXmgH1q4DJKI72+WNdPBTg9NSfkRUBa4ukIn9OAjWYqj6AE3EIUIjQI+PNGoHVdlb5cgYAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499226; c=relaxed/simple;
-	bh=KtcSZqt6GaGkfuYouRD2yPRKgoS3hR3OJztnMLtGNnA=;
+	s=arc-20240116; t=1768499229; c=relaxed/simple;
+	bh=gy5Tf/IJ8LXgZXsf49X0ZUq20OhGRPtde5TEEvkPiRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gKTfApSO6z2fhosK5ujtqGD0qqxtJf1CP4a1JLtoMCVLGZru0o6Bd9YApcmsjntFrrX2OKLh47KXPbDZfmfb2AV4qaLq90pnthw9T872KaQikzmLtYR2Hl/b56ae40oooFtEBU/5TIT7mimtxq6x8SlcWTNctPIzQToRgZEt9Ao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r4V858ae; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LAfFVuzK0YKRjl9laip/8K/91biAM/XnqGsHB7cBUQ3qQc3fefeMGTbL7osGkN6AExnRW/jm2Wqi5eYsZ/kukRuOVuPTj05hEzDGFKBkLX+aqqUXcN+jDJq5sOvg7PAGzctgAZSVJUANxdENrfgxPHYLH1BwQ6BD6YH4NsAqAkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IJz5W0W1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r4V858ae"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFB5AC19422;
-	Thu, 15 Jan 2026 17:47:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IJz5W0W1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F314C16AAE;
+	Thu, 15 Jan 2026 17:47:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499226;
-	bh=KtcSZqt6GaGkfuYouRD2yPRKgoS3hR3OJztnMLtGNnA=;
+	s=korg; t=1768499228;
+	bh=gy5Tf/IJ8LXgZXsf49X0ZUq20OhGRPtde5TEEvkPiRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r4V858aeMuBVy9lsUXELdpqMwMMc2SaRTXNiiJCZktG2TtNXJRXwSojhkPhJgSh9h
-	 x1eQ8/Pt1AmDTDEelvmo8fzrnncOMX7WeQAA12nu1qfQwCm6vNQqDLfjeP9NnIKQIp
-	 6yH57h/qp0wvHx2+l1x7yyACWwTeouYdeUaMdIYo=
+	b=IJz5W0W1lYL6rx7gGmmrpeEQo3UjIqSZqwK68A2qPWXvUubyyEkxaYfIxefgEEcHH
+	 wB9i5BDt5CDaTWiDwhPB/3blPQvC0Pxv5tiE5zWhipMIEn9cfWhTa7ePyth7b4bG/E
+	 k/xnH7CkXu/gflNRRcBerk+s3zt4m8ZTXQb0RQuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicklas Bo Jensen <njensen@akamai.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.10 152/451] netfilter: nf_conncount: garbage collection is not skipped when jiffies wrap around
-Date: Thu, 15 Jan 2026 17:45:53 +0100
-Message-ID: <20260115164236.412522445@linuxfoundation.org>
+	Jonathan Curley <jcurley@purestorage.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 126/451] NFSv4/pNFS: Clear NFS_INO_LAYOUTCOMMIT in pnfs_mark_layout_stateid_invalid
+Date: Thu, 15 Jan 2026 17:45:27 +0100
+Message-ID: <20260115164235.480027998@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -51,49 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicklas Bo Jensen <njensen@akamai.com>
+From: Jonathan Curley <jcurley@purestorage.com>
 
-commit df08c94baafb001de6cf44bb7098bb557f36c335 upstream.
+[ Upstream commit e0f8058f2cb56de0b7572f51cd563ca5debce746 ]
 
-nf_conncount is supposed to skip garbage collection if it has already
-run garbage collection in the same jiffy. Unfortunately, this is broken
-when jiffies wrap around which this patch fixes.
+Fixes a crash when layout is null during this call stack:
 
-The problem is that last_gc in the nf_conncount_list struct is an u32,
-but jiffies is an unsigned long which is 8 bytes on my systems. When
-those two are compared it only works until last_gc wraps around.
+write_inode
+    -> nfs4_write_inode
+        -> pnfs_layoutcommit_inode
 
-See bug report: https://bugzilla.netfilter.org/show_bug.cgi?id=1778
-for more details.
+pnfs_set_layoutcommit relies on the lseg refcount to keep the layout
+around. Need to clear NFS_INO_LAYOUTCOMMIT otherwise we might attempt
+to reference a null layout.
 
-Fixes: d265929930e2 ("netfilter: nf_conncount: reduce unnecessary GC")
-Signed-off-by: Nicklas Bo Jensen <njensen@akamai.com>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: fe1cf9469d7bc ("pNFS: Clear all layout segment state in pnfs_mark_layout_stateid_invalid")
+Signed-off-by: Jonathan Curley <jcurley@purestorage.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conncount.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nfs/pnfs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/netfilter/nf_conncount.c
-+++ b/net/netfilter/nf_conncount.c
-@@ -182,7 +182,7 @@ static int __nf_conncount_add(struct net
- 		return -EEXIST;
- 	}
+diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
+index e14cf7140bab4..c5dd301c43d7b 100644
+--- a/fs/nfs/pnfs.c
++++ b/fs/nfs/pnfs.c
+@@ -465,6 +465,7 @@ pnfs_mark_layout_stateid_invalid(struct pnfs_layout_hdr *lo,
+ 	struct pnfs_layout_segment *lseg, *next;
  
--	if (time_is_after_eq_jiffies((unsigned long)list->last_gc))
-+	if ((u32)jiffies == list->last_gc)
- 		goto add_new_node;
- 
- 	/* check the saved connections */
-@@ -288,7 +288,7 @@ bool nf_conncount_gc_list(struct net *ne
- 	bool ret = false;
- 
- 	/* don't bother if we just did GC */
--	if (time_is_after_eq_jiffies((unsigned long)READ_ONCE(list->last_gc)))
-+	if ((u32)jiffies == READ_ONCE(list->last_gc))
- 		return false;
- 
- 	/* don't bother if other cpu is already doing GC */
+ 	set_bit(NFS_LAYOUT_INVALID_STID, &lo->plh_flags);
++	clear_bit(NFS_INO_LAYOUTCOMMIT, &NFS_I(lo->plh_inode)->flags);
+ 	list_for_each_entry_safe(lseg, next, &lo->plh_segs, pls_list)
+ 		pnfs_clear_lseg_state(lseg, lseg_list);
+ 	pnfs_clear_layoutreturn_info(lo);
+-- 
+2.51.0
+
 
 
