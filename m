@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B98915530C;
-	Thu, 15 Jan 2026 17:18:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55A242874E6;
+	Thu, 15 Jan 2026 17:18:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497535; cv=none; b=AcF6138E+B0yx3ww31wiKQF+zxklF00SuGmSmwewaTCGKlbMP3BjnFf5cqFTotK93Bx2k2QVc1l126JsTbtbJv6pPHc7FMpWrq4UuOWEFgx/rHDm4PST65E0grmXZpopcagzi6QJjFKVf/IJuQn2XCTVmtwYTWm7nseBBls+mbg=
+	t=1768497538; cv=none; b=mU5LmOwJ8Of3fbzrXMxJmWNAJxV3m9s3kP2Txfd2tJ/AW8jGbDJ3wVphqJJhePEMcO8HOwEtr0dV+2WXnZA46LymVfoahC8wpDQz7poA5Q3sqLkhwNGtjMtjgHcydwKdaYl8+eiPWcY4TtqUFVv+J75twhb7H464oDej6Zv9Meo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497535; c=relaxed/simple;
-	bh=h9jDns/Y8wzei6xDbb8gHJhXpLvoFFI6mAYzkmYfglw=;
+	s=arc-20240116; t=1768497538; c=relaxed/simple;
+	bh=s1IL4A7wsf8ReH0Fa0/ep0VSmcffUyWCoCIlUc7HA9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sB+WDPxFHpeMvDCo9uEQ2oKesJIYxmpePN/vFMgwy2e1zlrIOBaBc6g19vaz7qcjFgBhSY/9/QZSII7qSxCW/sh0JoHV0mjWUS6M+mWiu/qpZSgBqA6b1LAIXNFU35i4FsY4poHsQ8+rpfeu4Sz8dfAkI0S/4V6Q5AVb2xmTgvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=amC7W93X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sRb8Tz0TAqKZ1fm9hhgltnDKveDVBrRftn+gKLl9Y+wzB43ARPlUHc6WVjzPeV74bJfSBBXqXK84vbGrtY1XqiypT+lyMU2T/L4Zwn5CQYItaPZbUbhaacWQrKOl47RpTfvmuxBEv78JemKLzhXr6k08NhCc56A3W+naLf0NUi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=amYKnCwG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="amC7W93X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED882C116D0;
-	Thu, 15 Jan 2026 17:18:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="amYKnCwG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3502C116D0;
+	Thu, 15 Jan 2026 17:18:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497535;
-	bh=h9jDns/Y8wzei6xDbb8gHJhXpLvoFFI6mAYzkmYfglw=;
+	s=korg; t=1768497538;
+	bh=s1IL4A7wsf8ReH0Fa0/ep0VSmcffUyWCoCIlUc7HA9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=amC7W93X/63eJNRKzzW2UHn2AdsuSK2TosN8ALTsf1r1/cjafPl7puMSxxFZM7AJI
-	 NE3XpEQdcXewtJoHAoFkWsFhSoZHq3F6220yfnGDttIO/U75Cg85l6ktd8hSSnU/LJ
-	 DDVIxgma15YbZ7jhKqPtcYIHr+Y6/jh6Dfi+nALI=
+	b=amYKnCwG7+L/i1EaWim/lAAiWdHRP9Mh2+1iOlr/P0vm3BRk0PJVhpNqeDPwwp487
+	 EpLz5NE9UFzBjK3EvPr+xZ6r9aIn9b/DiSJQukM6Kdp2paBt5A8D+d/ww3lSjmNcQV
+	 a4p4JeZKghtnL6tzuLcBYOjmdtyTA5szHWHFpf5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 115/554] fs/ntfs3: Add new argument is_mft to ntfs_mark_rec_free
-Date: Thu, 15 Jan 2026 17:43:01 +0100
-Message-ID: <20260115164250.415527367@linuxfoundation.org>
+Subject: [PATCH 5.15 116/554] fs/ntfs3: Make ni_ins_new_attr return error
+Date: Thu, 15 Jan 2026 17:43:02 +0100
+Message-ID: <20260115164250.451634690@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -52,135 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 071100ea0e6c353258f322cb2f8dde9be62d6808 ]
+[ Upstream commit 451e45a0e6df21e63acfd493feb5194f4697ce11 ]
 
-This argument helps in avoiding double locking
+Function ni_ins_new_attr now returns ERR_PTR(err),
+so we check it now in other functions like ni_expand_mft_list
 
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Stable-dep-of: 4d78d1173a65 ("fs/ntfs3: out1 also needs to put mi")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/frecord.c | 12 ++++++------
- fs/ntfs3/fsntfs.c  |  9 ++++++---
- fs/ntfs3/inode.c   |  2 +-
- fs/ntfs3/ntfs_fs.h |  2 +-
- 4 files changed, 14 insertions(+), 11 deletions(-)
+ fs/ntfs3/frecord.c | 29 ++++++++++++++++++++++++++---
+ 1 file changed, 26 insertions(+), 3 deletions(-)
 
 diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
-index a74bbfec8e3ac..b5f3e7bc5d6da 100644
+index b5f3e7bc5d6da..4db52dfde6328 100644
 --- a/fs/ntfs3/frecord.c
 +++ b/fs/ntfs3/frecord.c
-@@ -1037,7 +1037,7 @@ static int ni_ins_attr_ext(struct ntfs_inode *ni, struct ATTR_LIST_ENTRY *le,
- 	err = -EINVAL;
+@@ -470,7 +470,7 @@ ni_ins_new_attr(struct ntfs_inode *ni, struct mft_inode *mi,
+ 				&ref, &le);
+ 		if (err) {
+ 			/* No memory or no space. */
+-			return NULL;
++			return ERR_PTR(err);
+ 		}
+ 		le_added = true;
+ 
+@@ -1000,6 +1000,8 @@ static int ni_ins_attr_ext(struct ntfs_inode *ni, struct ATTR_LIST_ENTRY *le,
+ 				       name_off, svcn, ins_le);
+ 		if (!attr)
+ 			continue;
++		if (IS_ERR(attr))
++			return PTR_ERR(attr);
+ 
+ 		if (ins_attr)
+ 			*ins_attr = attr;
+@@ -1021,8 +1023,15 @@ static int ni_ins_attr_ext(struct ntfs_inode *ni, struct ATTR_LIST_ENTRY *le,
+ 
+ 	attr = ni_ins_new_attr(ni, mi, le, type, name, name_len, asize,
+ 			       name_off, svcn, ins_le);
+-	if (!attr)
++	if (!attr) {
++		err = -EINVAL;
+ 		goto out2;
++	}
++
++	if (IS_ERR(attr)) {
++		err = PTR_ERR(attr);
++		goto out2;
++	}
+ 
+ 	if (ins_attr)
+ 		*ins_attr = attr;
+@@ -1034,7 +1043,6 @@ static int ni_ins_attr_ext(struct ntfs_inode *ni, struct ATTR_LIST_ENTRY *le,
+ out2:
+ 	ni_remove_mi(ni, mi);
+ 	mi_put(mi);
+-	err = -EINVAL;
  
  out1:
--	ntfs_mark_rec_free(sbi, rno);
-+	ntfs_mark_rec_free(sbi, rno, is_mft);
- 
- out:
- 	return err;
-@@ -1232,7 +1232,7 @@ static int ni_expand_mft_list(struct ntfs_inode *ni)
- 		mft_min = mft_new;
- 		mi_min = mi_new;
- 	} else {
--		ntfs_mark_rec_free(sbi, mft_new);
-+		ntfs_mark_rec_free(sbi, mft_new, true);
- 		mft_new = 0;
- 		ni_remove_mi(ni, mi_new);
- 	}
-@@ -1315,7 +1315,7 @@ static int ni_expand_mft_list(struct ntfs_inode *ni)
- 
- out:
- 	if (mft_new) {
--		ntfs_mark_rec_free(sbi, mft_new);
-+		ntfs_mark_rec_free(sbi, mft_new, true);
- 		ni_remove_mi(ni, mi_new);
- 	}
- 
-@@ -1577,7 +1577,7 @@ int ni_delete_all(struct ntfs_inode *ni)
- 		mi->dirty = true;
- 		mi_write(mi, 0);
- 
--		ntfs_mark_rec_free(sbi, mi->rno);
-+		ntfs_mark_rec_free(sbi, mi->rno, false);
- 		ni_remove_mi(ni, mi);
- 		mi_put(mi);
- 		node = next;
-@@ -1588,7 +1588,7 @@ int ni_delete_all(struct ntfs_inode *ni)
- 	ni->mi.dirty = true;
- 	err = mi_write(&ni->mi, 0);
- 
--	ntfs_mark_rec_free(sbi, ni->mi.rno);
-+	ntfs_mark_rec_free(sbi, ni->mi.rno, false);
- 
- 	return err;
- }
-@@ -3292,7 +3292,7 @@ int ni_write_inode(struct inode *inode, int sync, const char *hint)
- 			err = err2;
- 
- 		if (is_empty) {
--			ntfs_mark_rec_free(sbi, mi->rno);
-+			ntfs_mark_rec_free(sbi, mi->rno, false);
- 			rb_erase(node, &ni->mi_tree);
- 			mi_put(mi);
- 		}
-diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
-index c82398194cd10..7dc2ae7dec591 100644
---- a/fs/ntfs3/fsntfs.c
-+++ b/fs/ntfs3/fsntfs.c
-@@ -703,12 +703,14 @@ int ntfs_look_free_mft(struct ntfs_sb_info *sbi, CLST *rno, bool mft,
- 
- /*
-  * ntfs_mark_rec_free - Mark record as free.
-+ * is_mft - true if we are changing MFT
-  */
--void ntfs_mark_rec_free(struct ntfs_sb_info *sbi, CLST rno)
-+void ntfs_mark_rec_free(struct ntfs_sb_info *sbi, CLST rno, bool is_mft)
- {
- 	struct wnd_bitmap *wnd = &sbi->mft.bitmap;
- 
--	down_write_nested(&wnd->rw_lock, BITMAP_MUTEX_MFT);
-+	if (!is_mft)
-+		down_write_nested(&wnd->rw_lock, BITMAP_MUTEX_MFT);
- 	if (rno >= wnd->nbits)
+ 	ntfs_mark_rec_free(sbi, rno, is_mft);
+@@ -1090,6 +1098,11 @@ static int ni_insert_attr(struct ntfs_inode *ni, enum ATTR_TYPE type,
+ 	if (asize <= free) {
+ 		attr = ni_ins_new_attr(ni, &ni->mi, NULL, type, name, name_len,
+ 				       asize, name_off, svcn, ins_le);
++		if (IS_ERR(attr)) {
++			err = PTR_ERR(attr);
++			goto out;
++		}
++
+ 		if (attr) {
+ 			if (ins_attr)
+ 				*ins_attr = attr;
+@@ -1187,6 +1200,11 @@ static int ni_insert_attr(struct ntfs_inode *ni, enum ATTR_TYPE type,
  		goto out;
+ 	}
  
-@@ -727,7 +729,8 @@ void ntfs_mark_rec_free(struct ntfs_sb_info *sbi, CLST rno)
- 		sbi->mft.next_free = rno;
++	if (IS_ERR(attr)) {
++		err = PTR_ERR(attr);
++		goto out;
++	}
++
+ 	if (ins_attr)
+ 		*ins_attr = attr;
+ 	if (ins_mi)
+@@ -1302,6 +1320,11 @@ static int ni_expand_mft_list(struct ntfs_inode *ni)
+ 		goto out;
+ 	}
  
- out:
--	up_write(&wnd->rw_lock);
-+	if (!is_mft)
-+		up_write(&wnd->rw_lock);
- }
- 
- /*
-diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
-index 0f4e166112de1..7ac76e6c35dcf 100644
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -1668,7 +1668,7 @@ struct inode *ntfs_create_inode(struct user_namespace *mnt_userns,
- 	ni->mi.dirty = false;
- 	discard_new_inode(inode);
- out3:
--	ntfs_mark_rec_free(sbi, ino);
-+	ntfs_mark_rec_free(sbi, ino, false);
- 
- out2:
- 	__putname(new_de);
-diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
-index f7ef60bed6d84..69d1442eea623 100644
---- a/fs/ntfs3/ntfs_fs.h
-+++ b/fs/ntfs3/ntfs_fs.h
-@@ -596,7 +596,7 @@ int ntfs_look_for_free_space(struct ntfs_sb_info *sbi, CLST lcn, CLST len,
- 			     enum ALLOCATE_OPT opt);
- int ntfs_look_free_mft(struct ntfs_sb_info *sbi, CLST *rno, bool mft,
- 		       struct ntfs_inode *ni, struct mft_inode **mi);
--void ntfs_mark_rec_free(struct ntfs_sb_info *sbi, CLST rno);
-+void ntfs_mark_rec_free(struct ntfs_sb_info *sbi, CLST rno, bool is_mft);
- int ntfs_clear_mft_tail(struct ntfs_sb_info *sbi, size_t from, size_t to);
- int ntfs_refresh_zone(struct ntfs_sb_info *sbi);
- int ntfs_update_mftmirr(struct ntfs_sb_info *sbi, int wait);
++	if (IS_ERR(attr)) {
++		err = PTR_ERR(attr);
++		goto out;
++	}
++
+ 	attr->non_res = 1;
+ 	attr->name_off = SIZEOF_NONRESIDENT_LE;
+ 	attr->flags = 0;
 -- 
 2.51.0
 
