@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 925C13BFE55;
-	Thu, 15 Jan 2026 17:27:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA73E2D94A7;
+	Thu, 15 Jan 2026 17:27:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498035; cv=none; b=skDkMs+iy0gr8bEc7xZ8t4HZRGcbNekAu2Awvo0beZGY5kk3m40NeDeGX8rpVhM9rCsr6yIxEGnEZj/+gHvOmD8v8DD3Roc37jB/oMgdvimYsMy6Fr5wiLiQ9+IUp2XktrVA6i0T3d3Z8c3nH8wQkto0t2mOvJmtAfGqAwvsiB0=
+	t=1768498038; cv=none; b=TEQzO8gO6UrnZLNcTZ/R6Kc4nw83AcPcM3KGDrsBafnUcQcE4ZiFyhTZiC4676wr/cPe99BZesUzeLrpex119C7u05qAKukUncsNGM/E8jG2YOkYoBMUPsboCGi+T/3YwDCFO2cuFpvQAg/G/dSPdlpr7AqXJlauqlesEhP2+cA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498035; c=relaxed/simple;
-	bh=d+IjrKVQuF8L0pfkBKyBoqoYFyyOHLCWG0dH0E81Esk=;
+	s=arc-20240116; t=1768498038; c=relaxed/simple;
+	bh=HtjX9BKPJD8/ww0Xr6+EVXQIXn1//2UtofgV95+YbV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ciqkEq3ElhEqde4ZRxypIY1EjpnNPH0/URsj9AgkYzTHOgdtJJkmh4BOEJ7QIb0/EKCpjRVIWPPL+mU1a5KXig21ADyzCVuti4VLd/O4AXAA3ymtm91lO1UFmppQI415tv0U8yPQrcjA0zQ3mzDP9IBjCg+DAYr+wVM7dUk7fjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nrSeJnok; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mizNuK7AvCSmnMyC33faE70J5zk5stDu2sXZYgt5/icmnjaDlZX0f1ehQJtaByxmKVKXWh1Rtu0b82/atYVvdSbWvIZ3gFZg4NO6ba9CKGq9ANaHy5IcEgAKdHFdB0P6UX3C2/sXyuGyEF3gZEIt44nylUEkmjGgDZ18IwDM5TE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BRpMejL+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrSeJnok"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20FD2C116D0;
-	Thu, 15 Jan 2026 17:27:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BRpMejL+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 081E2C19422;
+	Thu, 15 Jan 2026 17:27:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498035;
-	bh=d+IjrKVQuF8L0pfkBKyBoqoYFyyOHLCWG0dH0E81Esk=;
+	s=korg; t=1768498038;
+	bh=HtjX9BKPJD8/ww0Xr6+EVXQIXn1//2UtofgV95+YbV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nrSeJnoklUDYbITO6NJUSVjR+wwfSzz5epJRLURv1f6vOz4YF+uYjx+WAzBYd6iM4
-	 2zXNZaQffETDD+tSp/ehs9SNsF2bnKFQMsCl53kukIq9YdfJacBYM5bCHawPaZLvw/
-	 O5nkbnoWnQlMN2ywst3mbCU7ui4FrLEwTSNIgbgA=
+	b=BRpMejL+PfKVPuPzmDiRafaWvy4LFAaUDK7uRRUO/80jTsHo3hCPfhnH5e8wtfyRL
+	 HnBoIvDct2iZo6090a4FXCmmlOKiOjD1VSTFpYBGAB8ah3fUrohGC1b5N9/V/wIVCX
+	 MveDydKjBHjU2TDefXbtTD9LRMZqyMKXUS6saQn0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.15 291/554] media: pvrusb2: Fix incorrect variable used in trace message
-Date: Thu, 15 Jan 2026 17:45:57 +0100
-Message-ID: <20260115164256.759573685@linuxfoundation.org>
+	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
+	Johan Hovold <johan@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 5.15 292/554] phy: broadcom: bcm63xx-usbh: fix section mismatches
+Date: Thu, 15 Jan 2026 17:45:58 +0100
+Message-ID: <20260115164256.795689878@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -44,40 +46,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Colin Ian King <colin.i.king@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit be440980eace19c035a0745fd6b6e42707bc4f49 upstream.
+commit 356d1924b9a6bc2164ce2bf1fad147b0c37ae085 upstream.
 
-The pvr2_trace message is reporting an error about control read
-transfers, however it is using the incorrect variable write_len
-instead of read_lean. Fix this by using the correct variable
-read_len.
+Platform drivers can be probed after their init sections have been
+discarded (e.g. on probe deferral or manual rebind through sysfs) so the
+probe function and match table must not live in init.
 
-Fixes: d855497edbfb ("V4L/DVB (4228a): pvrusb2 to kernel 2.6.18")
-Cc: stable@vger.kernel.org
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: 783f6d3dcf35 ("phy: bcm63xx-usbh: Add BCM63xx USBH driver")
+Cc: stable@vger.kernel.org	# 5.9
+Cc: Álvaro Fernández Rojas <noltari@gmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20251017054537.6884-1-johan@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/pvrusb2/pvrusb2-hdw.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/broadcom/phy-bcm63xx-usbh.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/media/usb/pvrusb2/pvrusb2-hdw.c
-+++ b/drivers/media/usb/pvrusb2/pvrusb2-hdw.c
-@@ -3617,7 +3617,7 @@ static int pvr2_send_request_ex(struct p
- 		pvr2_trace(
- 			PVR2_TRACE_ERROR_LEGS,
- 			"Attempted to execute %d byte control-read transfer (limit=%d)",
--			write_len,PVR2_CTL_BUFFSIZE);
-+			read_len, PVR2_CTL_BUFFSIZE);
- 		return -EINVAL;
- 	}
- 	if ((!write_len) && (!read_len)) {
+--- a/drivers/phy/broadcom/phy-bcm63xx-usbh.c
++++ b/drivers/phy/broadcom/phy-bcm63xx-usbh.c
+@@ -374,7 +374,7 @@ static struct phy *bcm63xx_usbh_phy_xlat
+ 	return of_phy_simple_xlate(dev, args);
+ }
+ 
+-static int __init bcm63xx_usbh_phy_probe(struct platform_device *pdev)
++static int bcm63xx_usbh_phy_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+ 	struct bcm63xx_usbh_phy	*usbh;
+@@ -431,7 +431,7 @@ static int __init bcm63xx_usbh_phy_probe
+ 	return 0;
+ }
+ 
+-static const struct of_device_id bcm63xx_usbh_phy_ids[] __initconst = {
++static const struct of_device_id bcm63xx_usbh_phy_ids[] = {
+ 	{ .compatible = "brcm,bcm6318-usbh-phy", .data = &usbh_bcm6318 },
+ 	{ .compatible = "brcm,bcm6328-usbh-phy", .data = &usbh_bcm6328 },
+ 	{ .compatible = "brcm,bcm6358-usbh-phy", .data = &usbh_bcm6358 },
+@@ -442,7 +442,7 @@ static const struct of_device_id bcm63xx
+ };
+ MODULE_DEVICE_TABLE(of, bcm63xx_usbh_phy_ids);
+ 
+-static struct platform_driver bcm63xx_usbh_phy_driver __refdata = {
++static struct platform_driver bcm63xx_usbh_phy_driver = {
+ 	.driver	= {
+ 		.name = "bcm63xx-usbh-phy",
+ 		.of_match_table = bcm63xx_usbh_phy_ids,
 
 
