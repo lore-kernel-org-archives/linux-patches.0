@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6491350A05;
-	Thu, 15 Jan 2026 17:02:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A15C2C028F;
+	Thu, 15 Jan 2026 17:02:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496529; cv=none; b=ohdLnzxN52FWQACvmgP/K7G8jv98+MZ89H7cUmBYpiflj/lWWWBs9as7QH/IAOqybvrN/r3NdoDOVN07jpv5bng6a2QqaDztd4tEHEczKtCDqtEM5ITHSyT3a+s2YnQzVVHBOJ6YZpvZ55KunvcpbPZmC5KgliGt8ddigU+f8LM=
+	t=1768496532; cv=none; b=J+ySl1uOqT4/nB4mCr3GSmz9wCxzOq579ztHpAcCCzR5oI69kEWr2fMbsRyx94q5ip/OHNvMk8b466xSznSWMGSnDqPSUH+fTDwT4tKz0ehp33CQFO2iQC5qmebQF8Lg2gxducRSdx3Fhlztq/JvpQOev96PTY/JH84iLYK+KpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496529; c=relaxed/simple;
-	bh=IO+JoswLJY9KxPg7y4nZA1EsTTdsJguP4HLMJ/ULNHY=;
+	s=arc-20240116; t=1768496532; c=relaxed/simple;
+	bh=dKcqbBixiWyS6Kesxlf4sDBRrrr3AlKSwOrpYLl7/9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TF2O/Ep6xIFrfipLQpmJV4PAy4/JIjRImjnuA9rk1KClIe9nQJnC2hpXn8Gcb/Pi//BIfC6YxmkbDWjyq13ofoBtTQLuqt7IinD2iZxtUkua6jBAfc2eyVInsV1U9aIMMruiYvBqRnX+Jg0Rqod5EvbadjmCVuaU+eaJQ1P8zdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XbS3A6Q0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TwG/iQLjrTAmICvViSznu5kvGmFXsS7Sa72njZePYDMw6JHbnsOAlTOF/BPH0tLHhs0EqsKSP9wReMqDlAcIcN5Rvh728yV1FMVe8KYQeaYr8iJ9QBlNFI9UHJima31pJ3b7uqhUi73k6weQ05VTxquzTGzhW9wfXu8+uFVvPGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s7hUMK0Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XbS3A6Q0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53F92C116D0;
-	Thu, 15 Jan 2026 17:02:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s7hUMK0Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27259C116D0;
+	Thu, 15 Jan 2026 17:02:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496529;
-	bh=IO+JoswLJY9KxPg7y4nZA1EsTTdsJguP4HLMJ/ULNHY=;
+	s=korg; t=1768496532;
+	bh=dKcqbBixiWyS6Kesxlf4sDBRrrr3AlKSwOrpYLl7/9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XbS3A6Q0kMfYUHuvthdL3246xNNroU/SII5X4f4wJ9hf6ZXHwVLIqfTi7b4URuZXl
-	 K3SPWKOwk/9L4vc0rac+jgyVVFSnLts8crFqicyZHfl6JY6d+1i4x7wjhnfI6v46fr
-	 Ihbwq/bInemGx49SY5SEskkVzS9oParj5B38uK74=
+	b=s7hUMK0YrAPq43lNFEV7vGv8FzfjyGPdVUws6XDj2gbi70du0ZUWV0uL5m6AJldLl
+	 XPtukijYqWRDLAKyooNL9iGJn9rjHSSZ6/fKEm88XD4hRkSxZ4ZztED9hWY0YWYLGz
+	 cwQwYbtecKUHN7qfqYjO0u3OYQzxaJkt5D+2dPU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
 	Boris Burkov <boris@bur.io>,
+	Qu Wenruo <wqu@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 045/119] btrfs: fix qgroup_snapshot_quick_inherit() squota bug
-Date: Thu, 15 Jan 2026 17:47:40 +0100
-Message-ID: <20260115164153.586251319@linuxfoundation.org>
+Subject: [PATCH 6.12 046/119] btrfs: qgroup: update all parent qgroups when doing quick inherit
+Date: Thu, 15 Jan 2026 17:47:41 +0100
+Message-ID: <20260115164153.622142826@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -52,106 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 7ee19a59a75e3d5b9ec00499b86af8e2a46fbe86 ]
+[ Upstream commit 68d4b3fa18d72b7f649e83012e7e08f1881f6b75 ]
 
-qgroup_snapshot_quick_inherit() detects conditions where the snapshot
-destination would land in the same parent qgroup as the snapshot source
-subvolume. In this case we can avoid costly qgroup calculations and just
-add the nodesize of the new snapshot to the parent.
+[BUG]
+There is a bug that if a subvolume has multi-level parent qgroups, and
+is able to do a quick inherit, only the direct parent qgroup got
+updated:
 
-However, in the case of squotas this is actually a double count, and
-also an undercount for deeper qgroup nestings.
+  mkfs.btrfs  -f -O quota $dev
+  mount $dev $mnt
+  btrfs subv create $mnt/subv1
+  btrfs qgroup create 1/100 $mnt
+  btrfs qgroup create 2/100 $mnt
+  btrfs qgroup assign 1/100 2/100 $mnt
+  btrfs qgroup assign 0/256 1/100 $mnt
+  btrfs qgroup show -p --sync $mnt
 
-The following annotated script shows the issue:
+  Qgroupid    Referenced    Exclusive Parent     Path
+  --------    ----------    --------- ------     ----
+  0/5           16.00KiB     16.00KiB -          <toplevel>
+  0/256         16.00KiB     16.00KiB 1/100      subv1
+  1/100         16.00KiB     16.00KiB 2/100      2/100<1 member qgroup>
+  2/100         16.00KiB     16.00KiB -          <0 member qgroups>
 
-  btrfs quota enable --simple "$mnt"
+  btrfs subv snap -i 1/100 $mnt/subv1 $mnt/snap1
+  btrfs qgroup show -p --sync $mnt
 
-  # Create 2-level qgroup hierarchy
-  btrfs qgroup create 2/100 "$mnt"  # Q2 (level 2)
-  btrfs qgroup create 1/100 "$mnt"  # Q1 (level 1)
-  btrfs qgroup assign 1/100 2/100 "$mnt"
+  Qgroupid    Referenced    Exclusive Parent     Path
+  --------    ----------    --------- ------     ----
+  0/5           16.00KiB     16.00KiB -          <toplevel>
+  0/256         16.00KiB     16.00KiB 1/100      subv1
+  0/257         16.00KiB     16.00KiB 1/100      snap1
+  1/100         32.00KiB     32.00KiB 2/100      2/100<1 member qgroup>
+  2/100         16.00KiB     16.00KiB -          <0 member qgroups>
+  # Note that 2/100 is not updated, and qgroup numbers are inconsistent
 
-  # Create base subvolume
-  btrfs subvolume create "$mnt/base" >/dev/null
-  base_id=$(btrfs subvolume show "$mnt/base" | grep 'Subvolume ID:' | awk '{print $3}')
+  umount $mnt
 
-  # Create intermediate snapshot and add to Q1
-  btrfs subvolume snapshot "$mnt/base" "$mnt/intermediate" >/dev/null
-  inter_id=$(btrfs subvolume show "$mnt/intermediate" | grep 'Subvolume ID:' | awk '{print $3}')
-  btrfs qgroup assign "0/$inter_id" 1/100 "$mnt"
+[CAUSE]
+If the snapshot source subvolume belongs to a parent qgroup, and the new
+snapshot target is also added to the new same parent qgroup, we allow a
+quick update without marking qgroup inconsistent.
 
-  # Create working snapshot with --inherit (auto-adds to Q1)
-  # src=intermediate (in only Q1)
-  # dst=snap (inheriting only into Q1)
-  # This double counts the 16k nodesize of the snapshot in Q1, and
-  # undercounts it in Q2.
-  btrfs subvolume snapshot -i 1/100 "$mnt/intermediate" "$mnt/snap" >/dev/null
-  snap_id=$(btrfs subvolume show "$mnt/snap" | grep 'Subvolume ID:' | awk '{print $3}')
+But that quick update only update the parent qgroup, without checking if
+there is any more parent qgroups.
 
-  # Fully complete snapshot creation
-  sync
+[FIX]
+Iterate through all parent qgroups during the quick inherit.
 
-  # Delete working snapshot
-  # Q1 and Q2 will lose the full snap usage
-  btrfs subvolume delete "$mnt/snap" >/dev/null
-
-  # Delete intermediate and remove from Q1
-  # Q1 and Q2 will lose the full intermediate usage
-  btrfs qgroup remove "0/$inter_id" 1/100 "$mnt"
-  btrfs subvolume delete "$mnt/intermediate" >/dev/null
-
-  # Q1 should be at 0, but still has 16k. Q2 is "correct" at 0 (for now...)
-
-  # Trigger cleaner, wait for deletions
-  mount -o remount,sync=1 "$mnt"
-  btrfs subvolume sync "$mnt" "$snap_id"
-  btrfs subvolume sync "$mnt" "$inter_id"
-
-  # Remove Q1 from Q2
-  # Frees 16k more from Q2, underflowing it to 16EiB
-  btrfs qgroup remove 1/100 2/100 "$mnt"
-
-  # And show the bad state:
-  btrfs qgroup show -pc "$mnt"
-
-        Qgroupid    Referenced    Exclusive Parent   Child   Path
-        --------    ----------    --------- ------   -----   ----
-        0/5           16.00KiB     16.00KiB -        -       <toplevel>
-        0/256         16.00KiB     16.00KiB -        -       base
-        1/100         16.00KiB     16.00KiB -        -       <0 member qgroups>
-        2/100         16.00EiB     16.00EiB -        -       <0 member qgroups>
-
-Fix this by simply not doing this quick inheritance with squotas.
-
-I suspect that it is also wrong in normal qgroups to not recurse up the
-qgroup tree in the quick inherit case, though other consistency checks
-will likely fix it anyway.
-
+Reported-by: Boris Burkov <boris@bur.io>
 Fixes: b20fe56cd285 ("btrfs: qgroup: allow quick inherit if snapshot is created and added to the same parent")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/qgroup.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/btrfs/qgroup.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
 diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
-index 3c77f3506faf3..f23b482dfad9e 100644
+index f23b482dfad9e..029017afaf344 100644
 --- a/fs/btrfs/qgroup.c
 +++ b/fs/btrfs/qgroup.c
-@@ -3298,6 +3298,9 @@ static int qgroup_snapshot_quick_inherit(struct btrfs_fs_info *fs_info,
+@@ -3295,7 +3295,10 @@ static int qgroup_snapshot_quick_inherit(struct btrfs_fs_info *fs_info,
+ {
+ 	struct btrfs_qgroup *src;
+ 	struct btrfs_qgroup *parent;
++	struct btrfs_qgroup *qgroup;
  	struct btrfs_qgroup_list *list;
++	LIST_HEAD(qgroup_list);
++	const u32 nodesize = fs_info->nodesize;
  	int nr_parents = 0;
  
-+	if (btrfs_qgroup_mode(fs_info) != BTRFS_QGROUP_MODE_FULL)
-+		return 0;
+ 	if (btrfs_qgroup_mode(fs_info) != BTRFS_QGROUP_MODE_FULL)
+@@ -3335,8 +3338,19 @@ static int qgroup_snapshot_quick_inherit(struct btrfs_fs_info *fs_info,
+ 	if (parent->excl != parent->rfer)
+ 		return 1;
+ 
+-	parent->excl += fs_info->nodesize;
+-	parent->rfer += fs_info->nodesize;
++	qgroup_iterator_add(&qgroup_list, parent);
++	list_for_each_entry(qgroup, &qgroup_list, iterator) {
++		qgroup->rfer += nodesize;
++		qgroup->rfer_cmpr += nodesize;
++		qgroup->excl += nodesize;
++		qgroup->excl_cmpr += nodesize;
++		qgroup_dirty(fs_info, qgroup);
 +
- 	src = find_qgroup_rb(fs_info, srcid);
- 	if (!src)
- 		return -ENOENT;
++		/* Append parent qgroups to @qgroup_list. */
++		list_for_each_entry(list, &qgroup->groups, next_group)
++			qgroup_iterator_add(&qgroup_list, list->group);
++	}
++	qgroup_iterator_clean(&qgroup_list);
+ 	return 0;
+ }
+ 
 -- 
 2.51.0
 
