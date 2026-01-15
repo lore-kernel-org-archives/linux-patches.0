@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92BA62D948D;
-	Thu, 15 Jan 2026 17:44:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14FCB274FE3;
+	Thu, 15 Jan 2026 17:44:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499090; cv=none; b=ikmirpTIvzyURoGN/G+DuhP4l3N3lcW9/P4s+EsKpLHfZwy3kzKaUxaYb5twbzaVYo/tr4bUr17J99/iRKjAfM7Q+PnkYOls27jbGQu02IfucJueGHRpGCkATb+tC+Zd7hqxIGUbkw+F7AeCUQ2+bHkmyPRBN0dCg6QoxshWmhE=
+	t=1768499093; cv=none; b=HYoTbNw166Ox2gheTIgOG2xowchyCbtuqDRt0pn4OpwdLCTqlvy7mAEELJozJ2hTcCZqVvdqEvEOlsld3jDVc1W9Y3t1eQcs7FFfpkYBCh9hsHut68mR3QCFKycN1iblDl4iajVxEhFklGa+8LPGBA2RMF9eFLB0iU/k15IVJoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499090; c=relaxed/simple;
-	bh=IuApcJ5Lc5DW5L6esifQLN1INBPUSrfgrvSHW0Iy16A=;
+	s=arc-20240116; t=1768499093; c=relaxed/simple;
+	bh=KGbemRA6nLzVvhLJSEwsa1rT3IK6cwDP82FkUMa2c3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G0fT1WYdFR5rZwWcESR9eextvZR0822ccq0e88u3+kEpHE6gbL9aQOUk3gjaAUR1VNcCoE4m/Qp6UtsCk7y3VQljB2jvefnRouNkwaL1LVBH6K536Bv+UdyFJC7lwQr+DVv+Yot6kQrPbHABhifyhvRqmAL3LUajNn0xq44PBP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xtJnlDUO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U27QDuVYuwTz/rfjwUD2V/yqRqQjqv3r3AUs4wEAbJd0O/w1XyRRNgoXi8qlQDzeEC8sjObv6UY/guQnd2HV3fs2KUPXLJiUZClWVoRikxoSo3jUGl/rftyaPA54WOv+y07BCI3UwvROTES4MBubHi9G5+7moKs2DVp0uYHLleA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CrT6CZoV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xtJnlDUO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9B64C116D0;
-	Thu, 15 Jan 2026 17:44:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CrT6CZoV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95FFAC116D0;
+	Thu, 15 Jan 2026 17:44:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499090;
-	bh=IuApcJ5Lc5DW5L6esifQLN1INBPUSrfgrvSHW0Iy16A=;
+	s=korg; t=1768499093;
+	bh=KGbemRA6nLzVvhLJSEwsa1rT3IK6cwDP82FkUMa2c3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xtJnlDUOfcSWcMgiIq+2kYR/ZoFrjrU8fOCCDMgKQoa40Y2gP6vuQBcuSreXk0Yl1
-	 5jFSBl5QRDhLCYYAiMl7HXUejLxGgJT+DnVnpTn7SvwM+19zDMO0317tyVnSS5mwJB
-	 iIAJJkCPKs3ML6gVGQnyFa39Jm1l0ZESFXsPqXJE=
+	b=CrT6CZoVKrKt+p3xAY72NMzRczrVNA0BMT4XiQ8/+IljLySYNS73e2rj+AQfs2i3s
+	 v+A51SIg+4/tEU8WFmB6Gn92p2UAFIpyy/wpfSwEmn78KtfcR8nTDat3VmHgv3npsu
+	 UHIWCisSDLnhbCu7SKUGyQZji/KG9P5uq9sonxv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 105/451] ACPI: processor_core: fix map_x2apic_id for amd-pstate on am4
-Date: Thu, 15 Jan 2026 17:45:06 +0100
-Message-ID: <20260115164234.715695180@linuxfoundation.org>
+Subject: [PATCH 5.10 106/451] ext4: remove unused return value of __mb_check_buddy
+Date: Thu, 15 Jan 2026 17:45:07 +0100
+Message-ID: <20260115164234.751059359@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -45,66 +46,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: René Rebe <rene@exactco.de>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit 17e7972979e147cc51d4a165e6b6b0f93273ca68 ]
+[ Upstream commit 133de5a0d8f8e32b34feaa8beae7a189482f1856 ]
 
-On all AMD AM4 systems I have seen, e.g ASUS X470-i, Pro WS X570 Ace
-and equivalent Gigabyte, amd-pstate does not initialize when the
-x2apic is enabled in the BIOS. Kernel debug messages include:
+Remove unused return value of __mb_check_buddy.
 
-[    0.315438] acpi LNXCPU:00: Failed to get CPU physical ID.
-[    0.354756] ACPI CPPC: No CPC descriptor for CPU:0
-[    0.714951] amd_pstate: the _CPC object is not present in SBIOS or ACPI disabled
-
-I tracked this down to map_x2apic_id() checking device_declaration
-passed in via the type argument of acpi_get_phys_id() via
-map_madt_entry() while map_lapic_id() does not.
-
-It appears these BIOSes use Processor statements for declaring the CPUs
-in the ACPI namespace instead of processor device objects (which should
-have been used). CPU declarations via Processor statements were
-deprecated in ACPI 6.0 that was released 10 years ago. They should not
-be used any more in any contemporary platform firmware.
-
-I tried to contact Asus support multiple times, but never received a
-reply nor did any BIOS update ever change this.
-
-Fix amd-pstate w/ x2apic on am4 by allowing map_x2apic_id() to work with
-CPUs declared via Processor statements for IDs less than 255, which is
-consistent with ACPI 5.0 that still allowed Processor statements to be
-used for declaring CPUs.
-
-Fixes: 7237d3de78ff ("x86, ACPI: add support for x2apic ACPI extensions")
-Signed-off-by: René Rebe <rene@exactco.de>
-[ rjw: Changelog edits ]
-Link: https://patch.msgid.link/20251126.165513.1373131139292726554.rene@exactco.de
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20240105092102.496631-2-shikemeng@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: d9ee3ff810f1 ("ext4: improve integrity checking in __mb_check_buddy by enhancing order-0 validation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/processor_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/mballoc.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/acpi/processor_core.c b/drivers/acpi/processor_core.c
-index 2ac48cda5b201..eae7efae3b5cf 100644
---- a/drivers/acpi/processor_core.c
-+++ b/drivers/acpi/processor_core.c
-@@ -54,7 +54,7 @@ static int map_x2apic_id(struct acpi_subtable_header *entry,
- 	if (!(apic->lapic_flags & ACPI_MADT_ENABLED))
- 		return -ENODEV;
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index 60c56a39798cc..65042bef41e4e 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -602,7 +602,7 @@ do {									\
+ 	}								\
+ } while (0)
  
--	if (device_declaration && (apic->uid == acpi_id)) {
-+	if (apic->uid == acpi_id && (device_declaration || acpi_id < 255)) {
- 		*apic_id = apic->local_apic_id;
- 		return 0;
+-static int __mb_check_buddy(struct ext4_buddy *e4b, char *file,
++static void __mb_check_buddy(struct ext4_buddy *e4b, char *file,
+ 				const char *function, int line)
+ {
+ 	struct super_block *sb = e4b->bd_sb;
+@@ -621,7 +621,7 @@ static int __mb_check_buddy(struct ext4_buddy *e4b, char *file,
+ 	void *buddy2;
+ 
+ 	if (e4b->bd_info->bb_check_counter++ % 10)
+-		return 0;
++		return;
+ 
+ 	while (order > 1) {
+ 		buddy = mb_find_buddy(e4b, order, &max);
+@@ -686,7 +686,7 @@ static int __mb_check_buddy(struct ext4_buddy *e4b, char *file,
+ 
+ 	grp = ext4_get_group_info(sb, e4b->bd_group);
+ 	if (!grp)
+-		return NULL;
++		return;
+ 	list_for_each(cur, &grp->bb_prealloc_list) {
+ 		ext4_group_t groupnr;
+ 		struct ext4_prealloc_space *pa;
+@@ -696,7 +696,6 @@ static int __mb_check_buddy(struct ext4_buddy *e4b, char *file,
+ 		for (i = 0; i < pa->pa_len; i++)
+ 			MB_CHECK_ASSERT(mb_test_bit(k + i, buddy));
  	}
+-	return 0;
+ }
+ #undef MB_CHECK_ASSERT
+ #define mb_check_buddy(e4b) __mb_check_buddy(e4b,	\
 -- 
 2.51.0
 
