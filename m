@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1C1442049;
-	Thu, 15 Jan 2026 16:53:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D803624C4;
+	Thu, 15 Jan 2026 16:53:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496020; cv=none; b=mFlWdDxdek+KnRmYbtUagMSeK2HSKR886UnZXmPEPYUVVQBk9QyVqVNO1DpEbvw378IqEDADQy35f1t7Y/013vqoaL8z3NmUGpMWtBePpNpysAn5ZGBDbE/wJQFCAkOMos4s7xuFxbN9OqKeqb60Sbk9EvaKLYpubpIjK3cxpp0=
+	t=1768496023; cv=none; b=b3DkXkrMVIKDDX1UVlBScTqqJDIbWv3GAZ3q+xGpYLWlZ6rOndgk77ZDpvW/4tlWrmFZD2UfFAtqciOGETMSpYg3YuA2SWI/t+A56o6OeEAuxqotCnX9IJ9aX+RWFEAQm4klDD13btv3KFjETJz2qiq1V04RDOSf0Z26Suzo/jM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496020; c=relaxed/simple;
-	bh=7aCoXu/RrFu/5ZKrBQnt2dS+W/ZL74S6xVKhety+LGo=;
+	s=arc-20240116; t=1768496023; c=relaxed/simple;
+	bh=MzM6xM9gk3FxXX92PXHfnDVzce/LLbZg6/G4EhJ6Y4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d2WCbKsFCBm26KRfQ/Wufsl4q375Oyre+ETb0kQJaGpGkGNBsyjNVi3HaGIyw07CIgpVVb0jfoH/gIdW5YA3XAA3/xeJUv0Cyc0Au/S773SZlQjWwajwMfbgFy2NraAlv9GSJGhsGhUBIKEnDJBiKd5GhjPXOlpMVN8GHX+WV9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r9j769pr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fEc/uZHGltV2BG3GT8B5yZUx19ukWdmXu0QFeYdAWTz1lUg/Pt0IiW8Mbc+Frit66Gsevr0M10jQdngRfIoQ2gw/AmkyqDx2Cs2LkDjMdFjZzAdllk7HaecVjG70+slheNVhVocvvjFR7SSQ65ErfSvPoIamljyPapzy5dD0QQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z3zAFeyK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r9j769pr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CB6CC116D0;
-	Thu, 15 Jan 2026 16:53:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z3zAFeyK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 302D7C116D0;
+	Thu, 15 Jan 2026 16:53:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496020;
-	bh=7aCoXu/RrFu/5ZKrBQnt2dS+W/ZL74S6xVKhety+LGo=;
+	s=korg; t=1768496023;
+	bh=MzM6xM9gk3FxXX92PXHfnDVzce/LLbZg6/G4EhJ6Y4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r9j769prGoRiPmoY+1xifINyx+6XMLW38w8b18FqWkRh5KLKlAEGOtu3kYBmuRRpP
-	 0raubtAdkzLROVBZ8CD8HxkJAWDuRYzwZAxu8+NL3t2dr6o1uy1+CPzynLTtneyrE0
-	 pQ/OG2tlmQsDNa7wREaKkLogTixxd8b8qVGPJNQA=
+	b=Z3zAFeyKxtHFsaIwJxhhxTMShpmTI2DUGSzVwBSUTn2QEm8zdjizbPBshQGMTvhbf
+	 ClVymfyzpFsnILwoWigHZ7T7H/55GRJMXCeLF/7uCedNjf7/CO7F8al2k43UehBR1U
+	 BW7jloxLgHUC6hnoXlV0NtXnjmaZRowMZq72s7y8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mikulas Patocka <mpatocka@redhat.com>,
-	Guangwu Zhang <guazhang@redhat.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Eric Biggers <ebiggers@kernel.org>,
+	Jiping Ma <jiping.ma2@windriver.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 050/181] dm-verity: disable recursive forward error correction
-Date: Thu, 15 Jan 2026 17:46:27 +0100
-Message-ID: <20260115164204.136101700@linuxfoundation.org>
+Subject: [PATCH 6.18 051/181] dm-snapshot: fix scheduling while atomic on real-time kernels
+Date: Thu, 15 Jan 2026 17:46:28 +0100
+Message-ID: <20260115164204.171839169@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -55,76 +53,234 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit d9f3e47d3fae0c101d9094bc956ed24e7a0ee801 ]
+[ Upstream commit 8581b19eb2c5ccf06c195d3b5468c3c9d17a5020 ]
 
-There are two problems with the recursive correction:
+There is reported 'scheduling while atomic' bug when using dm-snapshot on
+real-time kernels. The reason for the bug is that the hlist_bl code does
+preempt_disable() when taking the lock and the kernel attempts to take
+other spinlocks while holding the hlist_bl lock.
 
-1. It may cause denial-of-service. In fec_read_bufs, there is a loop that
-has 253 iterations. For each iteration, we may call verity_hash_for_block
-recursively. There is a limit of 4 nested recursions - that means that
-there may be at most 253^4 (4 billion) iterations. Red Hat QE team
-actually created an image that pushes dm-verity to this limit - and this
-image just makes the udev-worker process get stuck in the 'D' state.
-
-2. It doesn't work. In fec_read_bufs we store data into the variable
-"fio->bufs", but fio bufs is shared between recursive invocations, if
-"verity_hash_for_block" invoked correction recursively, it would
-overwrite partially filled fio->bufs.
+Fix this by converting a hlist_bl spinlock into a regular spinlock.
 
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Reported-by: Guangwu Zhang <guazhang@redhat.com>
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Reviewed-by: Eric Biggers <ebiggers@kernel.org>
+Reported-by: Jiping Ma <jiping.ma2@windriver.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-verity-fec.c    | 4 +---
- drivers/md/dm-verity-fec.h    | 3 ---
- drivers/md/dm-verity-target.c | 2 +-
- 3 files changed, 2 insertions(+), 7 deletions(-)
+ drivers/md/dm-exception-store.h |  2 +-
+ drivers/md/dm-snap.c            | 73 +++++++++++++++------------------
+ 2 files changed, 35 insertions(+), 40 deletions(-)
 
-diff --git a/drivers/md/dm-verity-fec.c b/drivers/md/dm-verity-fec.c
-index 72047b47a7a0a..e41bde1d3b15b 100644
---- a/drivers/md/dm-verity-fec.c
-+++ b/drivers/md/dm-verity-fec.c
-@@ -413,10 +413,8 @@ int verity_fec_decode(struct dm_verity *v, struct dm_verity_io *io,
- 	if (!verity_fec_is_enabled(v))
- 		return -EOPNOTSUPP;
+diff --git a/drivers/md/dm-exception-store.h b/drivers/md/dm-exception-store.h
+index b679766375381..061b4d3108132 100644
+--- a/drivers/md/dm-exception-store.h
++++ b/drivers/md/dm-exception-store.h
+@@ -29,7 +29,7 @@ typedef sector_t chunk_t;
+  * chunk within the device.
+  */
+ struct dm_exception {
+-	struct hlist_bl_node hash_list;
++	struct hlist_node hash_list;
  
--	if (fio->level >= DM_VERITY_FEC_MAX_RECURSION) {
--		DMWARN_LIMIT("%s: FEC: recursion too deep", v->data_dev->name);
-+	if (fio->level)
- 		return -EIO;
--	}
+ 	chunk_t old_chunk;
+ 	chunk_t new_chunk;
+diff --git a/drivers/md/dm-snap.c b/drivers/md/dm-snap.c
+index f40c18da40000..dbd148967de42 100644
+--- a/drivers/md/dm-snap.c
++++ b/drivers/md/dm-snap.c
+@@ -40,10 +40,15 @@ static const char dm_snapshot_merge_target_name[] = "snapshot-merge";
+ #define DM_TRACKED_CHUNK_HASH(x)	((unsigned long)(x) & \
+ 					 (DM_TRACKED_CHUNK_HASH_SIZE - 1))
  
- 	fio->level++;
++struct dm_hlist_head {
++	struct hlist_head head;
++	spinlock_t lock;
++};
++
+ struct dm_exception_table {
+ 	uint32_t hash_mask;
+ 	unsigned int hash_shift;
+-	struct hlist_bl_head *table;
++	struct dm_hlist_head *table;
+ };
  
-diff --git a/drivers/md/dm-verity-fec.h b/drivers/md/dm-verity-fec.h
-index 09123a6129538..ec37e607cb3f0 100644
---- a/drivers/md/dm-verity-fec.h
-+++ b/drivers/md/dm-verity-fec.h
-@@ -23,9 +23,6 @@
- #define DM_VERITY_FEC_BUF_MAX \
- 	(1 << (PAGE_SHIFT - DM_VERITY_FEC_BUF_RS_BITS))
+ struct dm_snapshot {
+@@ -628,8 +633,8 @@ static uint32_t exception_hash(struct dm_exception_table *et, chunk_t chunk);
  
--/* maximum recursion level for verity_fec_decode */
--#define DM_VERITY_FEC_MAX_RECURSION	4
+ /* Lock to protect access to the completed and pending exception hash tables. */
+ struct dm_exception_table_lock {
+-	struct hlist_bl_head *complete_slot;
+-	struct hlist_bl_head *pending_slot;
++	spinlock_t *complete_slot;
++	spinlock_t *pending_slot;
+ };
+ 
+ static void dm_exception_table_lock_init(struct dm_snapshot *s, chunk_t chunk,
+@@ -638,20 +643,20 @@ static void dm_exception_table_lock_init(struct dm_snapshot *s, chunk_t chunk,
+ 	struct dm_exception_table *complete = &s->complete;
+ 	struct dm_exception_table *pending = &s->pending;
+ 
+-	lock->complete_slot = &complete->table[exception_hash(complete, chunk)];
+-	lock->pending_slot = &pending->table[exception_hash(pending, chunk)];
++	lock->complete_slot = &complete->table[exception_hash(complete, chunk)].lock;
++	lock->pending_slot = &pending->table[exception_hash(pending, chunk)].lock;
+ }
+ 
+ static void dm_exception_table_lock(struct dm_exception_table_lock *lock)
+ {
+-	hlist_bl_lock(lock->complete_slot);
+-	hlist_bl_lock(lock->pending_slot);
++	spin_lock_nested(lock->complete_slot, 1);
++	spin_lock_nested(lock->pending_slot, 2);
+ }
+ 
+ static void dm_exception_table_unlock(struct dm_exception_table_lock *lock)
+ {
+-	hlist_bl_unlock(lock->pending_slot);
+-	hlist_bl_unlock(lock->complete_slot);
++	spin_unlock(lock->pending_slot);
++	spin_unlock(lock->complete_slot);
+ }
+ 
+ static int dm_exception_table_init(struct dm_exception_table *et,
+@@ -661,13 +666,15 @@ static int dm_exception_table_init(struct dm_exception_table *et,
+ 
+ 	et->hash_shift = hash_shift;
+ 	et->hash_mask = size - 1;
+-	et->table = kvmalloc_array(size, sizeof(struct hlist_bl_head),
++	et->table = kvmalloc_array(size, sizeof(struct dm_hlist_head),
+ 				   GFP_KERNEL);
+ 	if (!et->table)
+ 		return -ENOMEM;
+ 
+-	for (i = 0; i < size; i++)
+-		INIT_HLIST_BL_HEAD(et->table + i);
++	for (i = 0; i < size; i++) {
++		INIT_HLIST_HEAD(&et->table[i].head);
++		spin_lock_init(&et->table[i].lock);
++	}
+ 
+ 	return 0;
+ }
+@@ -675,16 +682,17 @@ static int dm_exception_table_init(struct dm_exception_table *et,
+ static void dm_exception_table_exit(struct dm_exception_table *et,
+ 				    struct kmem_cache *mem)
+ {
+-	struct hlist_bl_head *slot;
++	struct dm_hlist_head *slot;
+ 	struct dm_exception *ex;
+-	struct hlist_bl_node *pos, *n;
++	struct hlist_node *pos;
+ 	int i, size;
+ 
+ 	size = et->hash_mask + 1;
+ 	for (i = 0; i < size; i++) {
+ 		slot = et->table + i;
+ 
+-		hlist_bl_for_each_entry_safe(ex, pos, n, slot, hash_list) {
++		hlist_for_each_entry_safe(ex, pos, &slot->head, hash_list) {
++			hlist_del(&ex->hash_list);
+ 			kmem_cache_free(mem, ex);
+ 			cond_resched();
+ 		}
+@@ -700,7 +708,7 @@ static uint32_t exception_hash(struct dm_exception_table *et, chunk_t chunk)
+ 
+ static void dm_remove_exception(struct dm_exception *e)
+ {
+-	hlist_bl_del(&e->hash_list);
++	hlist_del(&e->hash_list);
+ }
+ 
+ /*
+@@ -710,12 +718,11 @@ static void dm_remove_exception(struct dm_exception *e)
+ static struct dm_exception *dm_lookup_exception(struct dm_exception_table *et,
+ 						chunk_t chunk)
+ {
+-	struct hlist_bl_head *slot;
+-	struct hlist_bl_node *pos;
++	struct hlist_head *slot;
+ 	struct dm_exception *e;
+ 
+-	slot = &et->table[exception_hash(et, chunk)];
+-	hlist_bl_for_each_entry(e, pos, slot, hash_list)
++	slot = &et->table[exception_hash(et, chunk)].head;
++	hlist_for_each_entry(e, slot, hash_list)
+ 		if (chunk >= e->old_chunk &&
+ 		    chunk <= e->old_chunk + dm_consecutive_chunk_count(e))
+ 			return e;
+@@ -762,18 +769,17 @@ static void free_pending_exception(struct dm_snap_pending_exception *pe)
+ static void dm_insert_exception(struct dm_exception_table *eh,
+ 				struct dm_exception *new_e)
+ {
+-	struct hlist_bl_head *l;
+-	struct hlist_bl_node *pos;
++	struct hlist_head *l;
+ 	struct dm_exception *e = NULL;
+ 
+-	l = &eh->table[exception_hash(eh, new_e->old_chunk)];
++	l = &eh->table[exception_hash(eh, new_e->old_chunk)].head;
+ 
+ 	/* Add immediately if this table doesn't support consecutive chunks */
+ 	if (!eh->hash_shift)
+ 		goto out;
+ 
+ 	/* List is ordered by old_chunk */
+-	hlist_bl_for_each_entry(e, pos, l, hash_list) {
++	hlist_for_each_entry(e, l, hash_list) {
+ 		/* Insert after an existing chunk? */
+ 		if (new_e->old_chunk == (e->old_chunk +
+ 					 dm_consecutive_chunk_count(e) + 1) &&
+@@ -804,13 +810,13 @@ static void dm_insert_exception(struct dm_exception_table *eh,
+ 		 * Either the table doesn't support consecutive chunks or slot
+ 		 * l is empty.
+ 		 */
+-		hlist_bl_add_head(&new_e->hash_list, l);
++		hlist_add_head(&new_e->hash_list, l);
+ 	} else if (new_e->old_chunk < e->old_chunk) {
+ 		/* Add before an existing exception */
+-		hlist_bl_add_before(&new_e->hash_list, &e->hash_list);
++		hlist_add_before(&new_e->hash_list, &e->hash_list);
+ 	} else {
+ 		/* Add to l's tail: e is the last exception in this slot */
+-		hlist_bl_add_behind(&new_e->hash_list, &e->hash_list);
++		hlist_add_behind(&new_e->hash_list, &e->hash_list);
+ 	}
+ }
+ 
+@@ -820,7 +826,6 @@ static void dm_insert_exception(struct dm_exception_table *eh,
+  */
+ static int dm_add_exception(void *context, chunk_t old, chunk_t new)
+ {
+-	struct dm_exception_table_lock lock;
+ 	struct dm_snapshot *s = context;
+ 	struct dm_exception *e;
+ 
+@@ -833,17 +838,7 @@ static int dm_add_exception(void *context, chunk_t old, chunk_t new)
+ 	/* Consecutive_count is implicitly initialised to zero */
+ 	e->new_chunk = new;
+ 
+-	/*
+-	 * Although there is no need to lock access to the exception tables
+-	 * here, if we don't then hlist_bl_add_head(), called by
+-	 * dm_insert_exception(), will complain about accessing the
+-	 * corresponding list without locking it first.
+-	 */
+-	dm_exception_table_lock_init(s, old, &lock);
 -
- #define DM_VERITY_OPT_FEC_DEV		"use_fec_from_device"
- #define DM_VERITY_OPT_FEC_BLOCKS	"fec_blocks"
- #define DM_VERITY_OPT_FEC_START		"fec_start"
-diff --git a/drivers/md/dm-verity-target.c b/drivers/md/dm-verity-target.c
-index 66a00a8ccb398..c8695c079cfe0 100644
---- a/drivers/md/dm-verity-target.c
-+++ b/drivers/md/dm-verity-target.c
-@@ -1690,7 +1690,7 @@ static struct target_type verity_target = {
- 	.name		= "verity",
- /* Note: the LSMs depend on the singleton and immutable features */
- 	.features	= DM_TARGET_SINGLETON | DM_TARGET_IMMUTABLE,
--	.version	= {1, 12, 0},
-+	.version	= {1, 13, 0},
- 	.module		= THIS_MODULE,
- 	.ctr		= verity_ctr,
- 	.dtr		= verity_dtr,
+-	dm_exception_table_lock(&lock);
+ 	dm_insert_exception(&s->complete, e);
+-	dm_exception_table_unlock(&lock);
+ 
+ 	return 0;
+ }
+@@ -873,7 +868,7 @@ static int calc_max_buckets(void)
+ 	/* use a fixed size of 2MB */
+ 	unsigned long mem = 2 * 1024 * 1024;
+ 
+-	mem /= sizeof(struct hlist_bl_head);
++	mem /= sizeof(struct dm_hlist_head);
+ 
+ 	return mem;
+ }
 -- 
 2.51.0
 
