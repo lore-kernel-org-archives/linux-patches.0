@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA6033993;
-	Thu, 15 Jan 2026 17:11:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBBFA3A1CE4;
+	Thu, 15 Jan 2026 17:11:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497091; cv=none; b=N/t1uo3x09iWmLfDLCxGcejyhhnlWXVbmgnoed9ZlOonp5F8VnI0OzjX37AbpSOizbnbvWHOSxvMdtYSTEQJyAmyQXJoPJalBY5IZQBtL7TcB7otci9TqioEVdyUhBhegdHFJuL1wVvbZZzqeEHeaSLDvAem33jeFp26ZeNrBxc=
+	t=1768497094; cv=none; b=XTggXoxdZH5xkVXTOXc4h/yLt62rCdIinhnh9oVsRdSoyuWM10yVQNinJxjZRuiSQ3PpRh8LMh4bEVDrzw3IGc7RWxvvNSU7kiFkhGlDDbb5rT4mrlgdNIaqT5UEh/dXvCHxkYu9B7VVetWcqP+Be4kXVBHQAhbmd2eiIUndgC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497091; c=relaxed/simple;
-	bh=DidZO0CFzpjzkfbQRSb5hEVHEPeT0UKwJRL4aMViAa8=;
+	s=arc-20240116; t=1768497094; c=relaxed/simple;
+	bh=cDRv9GJ3XmknBbLhIa0PSW5zGlCymewtxPI495TzKSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jO2tlepCm8Mkb6hiHbiYBsgTc9DeWmhJCwoEAbSPYqIXH5mVR/rdjC41cIDyKGvqdy+intOwFUcJ5FF7ifGp72wgvqlMVtjo7TNaN7K8g/rsJNMeVdbnXUi0/EB2fiVPfMZfA9sMh5HQ8p7C9LROG70vyUWq+TMBpn7ow1u+dzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zEH6SPue; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lOk4XWb69ARLhr5G6JlVVg2LZJt3D/rWoU6KBRe+/kwlYnGd9DUV9dkBKIwJ5j/Q8SoEDIPYYxIrInYPEsdPDJ5QdqUVNy31CfDTANr7l2sUijleGC41ctuMsAsdJ/oqRiDyW+++sS5LhVvaWi2BCLmmNhWoiVVks7nFrsU8sBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mGDpFFDh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zEH6SPue"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE3AC116D0;
-	Thu, 15 Jan 2026 17:11:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mGDpFFDh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D938C116D0;
+	Thu, 15 Jan 2026 17:11:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497091;
-	bh=DidZO0CFzpjzkfbQRSb5hEVHEPeT0UKwJRL4aMViAa8=;
+	s=korg; t=1768497094;
+	bh=cDRv9GJ3XmknBbLhIa0PSW5zGlCymewtxPI495TzKSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zEH6SPueMWrOw75jX/qHPlYXnK9V7Du4Us1Eznox+Ni5tiohtjzj4PT2MDmMqKCgT
-	 xj5oEvcfWRSM2sgLMjFhOEQsrAAAOwb2McPEkF5AcwffldfkLOhL9LwCWVL7IQm9Me
-	 Ba/0MWhCQeE42+wyNIt+9O19qAOPFrH3MZnOdy3w=
+	b=mGDpFFDhqtBgywhOmb4c0/FrVyoXO6P2chYWLbZRgLX5kbFVAx/GZ8j6VeXIrAgEE
+	 6Lnw/1mbfQyHdk/uZhxXSY2Pq4+kKVeD+4zbL1dUGO7xzEkfRCOHeqQBVn0TglyCOc
+	 rYmok8Kwzg48JprLn7+mXuoytRxVIzC/mXGeyOmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Florian Westphal <fw@strlen.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 34/72] netfilter: nf_tables: fix memory leak in nf_tables_newrule()
-Date: Thu, 15 Jan 2026 17:48:44 +0100
-Message-ID: <20260115164144.731704255@linuxfoundation.org>
+	Sharath Chandra Vurukala <quic_sharathv@quicinc.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Keerthana K <keerthana.kalyanasundaram@broadcom.com>
+Subject: [PATCH 6.1 17/72] net: Add locking to protect skb->dev access in ip_output
+Date: Thu, 15 Jan 2026 17:48:27 +0100
+Message-ID: <20260115164144.119088292@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164143.482647486@linuxfoundation.org>
 References: <20260115164143.482647486@linuxfoundation.org>
@@ -51,49 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Sharath Chandra Vurukala <quic_sharathv@quicinc.com>
 
-[ Upstream commit d077e8119ddbb4fca67540f1a52453631a47f221 ]
+[ Upstream commit 1dbf1d590d10a6d1978e8184f8dfe20af22d680a]
 
-In nf_tables_newrule(), if nft_use_inc() fails, the function jumps to
-the err_release_rule label without freeing the allocated flow, leading
-to a memory leak.
+In ip_output() skb->dev is updated from the skb_dst(skb)->dev
+this can become invalid when the interface is unregistered and freed,
 
-Fix this by adding a new label err_destroy_flow and jumping to it when
-nft_use_inc() fails. This ensures that the flow is properly released
-in this error case.
+Introduced new skb_dst_dev_rcu() function to be used instead of
+skb_dst_dev() within rcu_locks in ip_output.This will ensure that
+all the skb's associated with the dev being deregistered will
+be transnmitted out first, before freeing the dev.
 
-Fixes: 1689f25924ada ("netfilter: nf_tables: report use refcount overflow")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Given that ip_output() is called within an rcu_read_lock()
+critical section or from a bottom-half context, it is safe to introduce
+an RCU read-side critical section within it.
+
+Multiple panic call stacks were observed when UL traffic was run
+in concurrency with device deregistration from different functions,
+pasting one sample for reference.
+
+[496733.627565][T13385] Call trace:
+[496733.627570][T13385] bpf_prog_ce7c9180c3b128ea_cgroupskb_egres+0x24c/0x7f0
+[496733.627581][T13385] __cgroup_bpf_run_filter_skb+0x128/0x498
+[496733.627595][T13385] ip_finish_output+0xa4/0xf4
+[496733.627605][T13385] ip_output+0x100/0x1a0
+[496733.627613][T13385] ip_send_skb+0x68/0x100
+[496733.627618][T13385] udp_send_skb+0x1c4/0x384
+[496733.627625][T13385] udp_sendmsg+0x7b0/0x898
+[496733.627631][T13385] inet_sendmsg+0x5c/0x7c
+[496733.627639][T13385] __sys_sendto+0x174/0x1e4
+[496733.627647][T13385] __arm64_sys_sendto+0x28/0x3c
+[496733.627653][T13385] invoke_syscall+0x58/0x11c
+[496733.627662][T13385] el0_svc_common+0x88/0xf4
+[496733.627669][T13385] do_el0_svc+0x2c/0xb0
+[496733.627676][T13385] el0_svc+0x2c/0xa4
+[496733.627683][T13385] el0t_64_sync_handler+0x68/0xb4
+[496733.627689][T13385] el0t_64_sync+0x1a4/0x1a8
+
+Changes in v3:
+- Replaced WARN_ON() with  WARN_ON_ONCE(), as suggested by Willem de Bruijn.
+- Dropped legacy lines mistakenly pulled in from an outdated branch.
+
+Changes in v2:
+- Addressed review comments from Eric Dumazet
+- Used READ_ONCE() to prevent potential load/store tearing
+- Added skb_dst_dev_rcu() and used along with rcu_read_lock() in ip_output
+
+Signed-off-by: Sharath Chandra Vurukala <quic_sharathv@quicinc.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250730105118.GA26100@hu-sharathv-hyd.qualcomm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Keerthana: Backported the patch to v5.15-v6.1 ]
+Signed-off-by: Keerthana K <keerthana.kalyanasundaram@broadcom.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/net/dst.h    |   12 ++++++++++++
+ net/ipv4/ip_output.c |   16 +++++++++++-----
+ 2 files changed, 23 insertions(+), 5 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index b278f493cc93c..d154e3e0c9803 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -3811,7 +3811,7 @@ static int nf_tables_newrule(struct sk_buff *skb, const struct nfnl_info *info,
+--- a/include/net/dst.h
++++ b/include/net/dst.h
+@@ -555,6 +555,18 @@ static inline void skb_dst_update_pmtu_n
+ 		dst->ops->update_pmtu(dst, NULL, skb, mtu, false);
+ }
  
- 	if (!nft_use_inc(&chain->use)) {
- 		err = -EMFILE;
--		goto err_release_rule;
-+		goto err_destroy_flow;
- 	}
++static inline struct net_device *dst_dev_rcu(const struct dst_entry *dst)
++{
++	/* In the future, use rcu_dereference(dst->dev) */
++	WARN_ON_ONCE(!rcu_read_lock_held());
++	return READ_ONCE(dst->dev);
++}
++
++static inline struct net_device *skb_dst_dev_rcu(const struct sk_buff *skb)
++{
++	return dst_dev_rcu(skb_dst(skb));
++}
++
+ struct dst_entry *dst_blackhole_check(struct dst_entry *dst, u32 cookie);
+ void dst_blackhole_update_pmtu(struct dst_entry *dst, struct sock *sk,
+ 			       struct sk_buff *skb, u32 mtu, bool confirm_neigh);
+--- a/net/ipv4/ip_output.c
++++ b/net/ipv4/ip_output.c
+@@ -420,17 +420,23 @@ int ip_mc_output(struct net *net, struct
  
- 	if (info->nlh->nlmsg_flags & NLM_F_REPLACE) {
-@@ -3861,6 +3861,7 @@ static int nf_tables_newrule(struct sk_buff *skb, const struct nfnl_info *info,
+ int ip_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ {
+-	struct net_device *dev = skb_dst(skb)->dev, *indev = skb->dev;
++	struct net_device *dev, *indev = skb->dev;
++	int ret_val;
++
++	rcu_read_lock();
++	dev = skb_dst_dev_rcu(skb);
  
- err_destroy_flow_rule:
- 	nft_use_dec_restore(&chain->use);
-+err_destroy_flow:
- 	if (flow)
- 		nft_flow_rule_destroy(flow);
- err_release_rule:
--- 
-2.51.0
-
+ 	IP_UPD_PO_STATS(net, IPSTATS_MIB_OUT, skb->len);
+ 
+ 	skb->dev = dev;
+ 	skb->protocol = htons(ETH_P_IP);
+ 
+-	return NF_HOOK_COND(NFPROTO_IPV4, NF_INET_POST_ROUTING,
+-			    net, sk, skb, indev, dev,
+-			    ip_finish_output,
+-			    !(IPCB(skb)->flags & IPSKB_REROUTED));
++	ret_val = NF_HOOK_COND(NFPROTO_IPV4, NF_INET_POST_ROUTING,
++				net, sk, skb, indev, dev,
++				ip_finish_output,
++				!(IPCB(skb)->flags & IPSKB_REROUTED));
++	rcu_read_unlock();
++	return ret_val;
+ }
+ EXPORT_SYMBOL(ip_output);
+ 
 
 
