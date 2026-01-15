@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 740BC3BF30A;
-	Thu, 15 Jan 2026 17:35:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4953BF315;
+	Thu, 15 Jan 2026 17:35:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498533; cv=none; b=PcMIwpoHJeEDdqe+ow57NU4Xj701gJmGItDBFNOv9gTqkBe13iWHG3N2ljy0TbNZP7RoRuwyLZiVP16gZIQ3cN/fNiXTGtPoMUpgn2gpMMzcrzRPyWeWE77XLV9z42S4AcV9W/u1WzecdpiDRtj9AnbZttqAGJcrtLlhaLN+OeU=
+	t=1768498536; cv=none; b=U8gmexOV1EWoxQ2Q5HJxXY3PsPJ2Sre22YyyzJKxHRRjCg/jyNYZ/oKESKz7DziNM6AWrgbxd+Jb2cB7DqLudTNrxU/OWEhMj4sj5t3+QfBcYGo9E5ytIdZ+cZlvHQ5+Y4T2mL9//r+aBeSJ54qtKnR9Pk2UQuoTLaofpSqAHlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498533; c=relaxed/simple;
-	bh=rL6cJH0ejIMYlgZ+KQAoUG9ijUgPLA8R/mRRnJqmbBM=;
+	s=arc-20240116; t=1768498536; c=relaxed/simple;
+	bh=iwqQWFVe2tOOIBXV3yVMRzQQ7ps7PjV7tdnPUDOKoo8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XzlscNGVLL78CNekHC4CkobpOdL1muqVRhnXT/mrEdSx8TGGXvvqrxt9YKE8z3MRCB9gS9F8s9Iqg1RuIPwQAsMnivt9nLmFb08ZTlUzFzIC+jIUzFZCtpn3uNF7zYRI7ksA5rST3GQoAw7eCg7FQwJrGTmEe98ayhygVa0DdRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zld9ltcU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GB62c7L6TsbAKPpiMgZeLd/AyswUtcsiazgpRgECuXs/YjF8vIIFB9xM5Rd2FN874gWPlGb/UMFlYReien8Uju+4t1BQOuWifdK5TDDdKs1XXdVO+Oe8Guml+TgZr/zgVu5Ak4Y3fsD0U+IyGK2pfuqcH0XIkUgVQsAvaXxj0qQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qN25c0ZF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zld9ltcU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E62A4C16AAE;
-	Thu, 15 Jan 2026 17:35:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qN25c0ZF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEFC6C116D0;
+	Thu, 15 Jan 2026 17:35:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498533;
-	bh=rL6cJH0ejIMYlgZ+KQAoUG9ijUgPLA8R/mRRnJqmbBM=;
+	s=korg; t=1768498536;
+	bh=iwqQWFVe2tOOIBXV3yVMRzQQ7ps7PjV7tdnPUDOKoo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zld9ltcUYkvzPnKWk28q9yCR8ZfzTfboXpiXkYj0T/Dk4GTV0JHQ3Q/5YTopF3CQO
-	 OR9mYSo4ystc2EuzHgmbcydD256hc8cB9OngJlLNx4IS3uTNX8bqQ3Kt1iXyJmDpQR
-	 2SBEfK+48fL2RIwcOUA4TWXU1rHj2ejWT9NAa8Ls=
+	b=qN25c0ZFro6dYZpYDfxGGsM/H7nmWHD45CwJmJzFHUCO1S2VVBWLSFz8eaDklABpD
+	 fHe9OnRAI034BQy+M32gwueLlL/blqPxzrB1e/m9mgko39/m7n0yDztkBs4AKPvpit
+	 QLb+SZDDu8JhZtJKhf4bmg9WnGAgPaJH0GNmdfN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 466/554] r8169: fix RTL8117 Wake-on-Lan in DASH mode
-Date: Thu, 15 Jan 2026 17:48:52 +0100
-Message-ID: <20260115164303.155385574@linuxfoundation.org>
+Subject: [PATCH 5.15 467/554] ASoC: stm: Use dev_err_probe() helper
+Date: Thu, 15 Jan 2026 17:48:53 +0100
+Message-ID: <20260115164303.193368182@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -46,57 +45,310 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: René Rebe <rene@exactco.de>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit dd75c723ef566f7f009c047f47e0eee95fe348ab ]
+[ Upstream commit efc162cbd480f1fb47d439c193ec9731bcc6c749 ]
 
-Wake-on-Lan does currently not work for r8169 in DASH mode, e.g. the
-ASUS Pro WS X570-ACE with RTL8168fp/RTL8117.
+Use the dev_err_probe() helper, instead of open-coding the same
+operation.
 
-Fix by not returning early in rtl_prepare_power_down when dash_enabled.
-While this fixes WoL, it still kills the OOB RTL8117 remote management
-BMC connection. Fix by not calling rtl8168_driver_stop if WoL is enabled.
-
-Fixes: 065c27c184d6 ("r8169: phy power ops")
-Signed-off-by: René Rebe <rene@exactco.de>
-Cc: stable@vger.kernel.org
-Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://patch.msgid.link/20251202.194137.1647877804487085954.rene@exactco.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ adapted tp->dash_enabled check to tp->dash_type != RTL_DASH_NONE comparison ]
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://lore.kernel.org/r/20211214020843.2225831-22-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 312ec2f0d9d1 ("ASoC: stm32: sai: fix clk prepare imbalance on probe failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ sound/soc/stm/stm32_i2s.c     |   62 ++++++++++++++----------------------------
+ sound/soc/stm/stm32_sai.c     |   37 ++++++++-----------------
+ sound/soc/stm/stm32_sai_sub.c |   25 +++++-----------
+ sound/soc/stm/stm32_spdifrx.c |   44 ++++++++++-------------------
+ 4 files changed, 57 insertions(+), 111 deletions(-)
 
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -2513,9 +2513,6 @@ static void rtl_wol_enable_rx(struct rtl
+--- a/sound/soc/stm/stm32_i2s.c
++++ b/sound/soc/stm/stm32_i2s.c
+@@ -1044,36 +1044,24 @@ static int stm32_i2s_parse_dt(struct pla
  
- static void rtl_prepare_power_down(struct rtl8169_private *tp)
- {
--	if (tp->dash_type != RTL_DASH_NONE)
--		return;
--
- 	if (tp->mac_version == RTL_GIGA_MAC_VER_32 ||
- 	    tp->mac_version == RTL_GIGA_MAC_VER_33)
- 		rtl_ephy_write(tp, 0x19, 0xff64);
-@@ -4763,7 +4760,7 @@ static void rtl8169_down(struct rtl8169_
+ 	/* Get clocks */
+ 	i2s->pclk = devm_clk_get(&pdev->dev, "pclk");
+-	if (IS_ERR(i2s->pclk)) {
+-		if (PTR_ERR(i2s->pclk) != -EPROBE_DEFER)
+-			dev_err(&pdev->dev, "Could not get pclk: %ld\n",
+-				PTR_ERR(i2s->pclk));
+-		return PTR_ERR(i2s->pclk);
+-	}
++	if (IS_ERR(i2s->pclk))
++		return dev_err_probe(&pdev->dev, PTR_ERR(i2s->pclk),
++				     "Could not get pclk\n");
  
- 	rtl_prepare_power_down(tp);
+ 	i2s->i2sclk = devm_clk_get(&pdev->dev, "i2sclk");
+-	if (IS_ERR(i2s->i2sclk)) {
+-		if (PTR_ERR(i2s->i2sclk) != -EPROBE_DEFER)
+-			dev_err(&pdev->dev, "Could not get i2sclk: %ld\n",
+-				PTR_ERR(i2s->i2sclk));
+-		return PTR_ERR(i2s->i2sclk);
+-	}
++	if (IS_ERR(i2s->i2sclk))
++		return dev_err_probe(&pdev->dev, PTR_ERR(i2s->i2sclk),
++				     "Could not get i2sclk\n");
  
--	if (tp->dash_type != RTL_DASH_NONE)
-+	if (tp->dash_type != RTL_DASH_NONE && !tp->saved_wolopts)
- 		rtl8168_driver_stop(tp);
- }
+ 	i2s->x8kclk = devm_clk_get(&pdev->dev, "x8k");
+-	if (IS_ERR(i2s->x8kclk)) {
+-		if (PTR_ERR(i2s->x8kclk) != -EPROBE_DEFER)
+-			dev_err(&pdev->dev, "Could not get x8k parent clock: %ld\n",
+-				PTR_ERR(i2s->x8kclk));
+-		return PTR_ERR(i2s->x8kclk);
+-	}
++	if (IS_ERR(i2s->x8kclk))
++		return dev_err_probe(&pdev->dev, PTR_ERR(i2s->x8kclk),
++				     "Could not get x8k parent clock\n");
  
+ 	i2s->x11kclk = devm_clk_get(&pdev->dev, "x11k");
+-	if (IS_ERR(i2s->x11kclk)) {
+-		if (PTR_ERR(i2s->x11kclk) != -EPROBE_DEFER)
+-			dev_err(&pdev->dev, "Could not get x11k parent clock: %ld\n",
+-				PTR_ERR(i2s->x11kclk));
+-		return PTR_ERR(i2s->x11kclk);
+-	}
++	if (IS_ERR(i2s->x11kclk))
++		return dev_err_probe(&pdev->dev, PTR_ERR(i2s->x11kclk),
++				     "Could not get x11k parent clock\n");
+ 
+ 	/* Register mclk provider if requested */
+ 	if (of_find_property(np, "#clock-cells", NULL)) {
+@@ -1096,12 +1084,10 @@ static int stm32_i2s_parse_dt(struct pla
+ 
+ 	/* Reset */
+ 	rst = devm_reset_control_get_optional_exclusive(&pdev->dev, NULL);
+-	if (IS_ERR(rst)) {
+-		if (PTR_ERR(rst) != -EPROBE_DEFER)
+-			dev_err(&pdev->dev, "Reset controller error %ld\n",
+-				PTR_ERR(rst));
+-		return PTR_ERR(rst);
+-	}
++	if (IS_ERR(rst))
++		return dev_err_probe(&pdev->dev, PTR_ERR(rst),
++				     "Reset controller error\n");
++
+ 	reset_control_assert(rst);
+ 	udelay(2);
+ 	reset_control_deassert(rst);
+@@ -1143,19 +1129,13 @@ static int stm32_i2s_probe(struct platfo
+ 
+ 	i2s->regmap = devm_regmap_init_mmio_clk(&pdev->dev, "pclk",
+ 						i2s->base, i2s->regmap_conf);
+-	if (IS_ERR(i2s->regmap)) {
+-		if (PTR_ERR(i2s->regmap) != -EPROBE_DEFER)
+-			dev_err(&pdev->dev, "Regmap init error %ld\n",
+-				PTR_ERR(i2s->regmap));
+-		return PTR_ERR(i2s->regmap);
+-	}
++	if (IS_ERR(i2s->regmap))
++		return dev_err_probe(&pdev->dev, PTR_ERR(i2s->regmap),
++				     "Regmap init error\n");
+ 
+ 	ret = snd_dmaengine_pcm_register(&pdev->dev, &stm32_i2s_pcm_config, 0);
+-	if (ret) {
+-		if (ret != -EPROBE_DEFER)
+-			dev_err(&pdev->dev, "PCM DMA register error %d\n", ret);
+-		return ret;
+-	}
++	if (ret)
++		return dev_err_probe(&pdev->dev, ret, "PCM DMA register error\n");
+ 
+ 	ret = snd_soc_register_component(&pdev->dev, &stm32_i2s_component,
+ 					 i2s->dai_drv, 1);
+--- a/sound/soc/stm/stm32_sai.c
++++ b/sound/soc/stm/stm32_sai.c
+@@ -173,29 +173,20 @@ static int stm32_sai_probe(struct platfo
+ 
+ 	if (!STM_SAI_IS_F4(sai)) {
+ 		sai->pclk = devm_clk_get(&pdev->dev, "pclk");
+-		if (IS_ERR(sai->pclk)) {
+-			if (PTR_ERR(sai->pclk) != -EPROBE_DEFER)
+-				dev_err(&pdev->dev, "missing bus clock pclk: %ld\n",
+-					PTR_ERR(sai->pclk));
+-			return PTR_ERR(sai->pclk);
+-		}
++		if (IS_ERR(sai->pclk))
++			return dev_err_probe(&pdev->dev, PTR_ERR(sai->pclk),
++					     "missing bus clock pclk\n");
+ 	}
+ 
+ 	sai->clk_x8k = devm_clk_get(&pdev->dev, "x8k");
+-	if (IS_ERR(sai->clk_x8k)) {
+-		if (PTR_ERR(sai->clk_x8k) != -EPROBE_DEFER)
+-			dev_err(&pdev->dev, "missing x8k parent clock: %ld\n",
+-				PTR_ERR(sai->clk_x8k));
+-		return PTR_ERR(sai->clk_x8k);
+-	}
++	if (IS_ERR(sai->clk_x8k))
++		return dev_err_probe(&pdev->dev, PTR_ERR(sai->clk_x8k),
++				     "missing x8k parent clock\n");
+ 
+ 	sai->clk_x11k = devm_clk_get(&pdev->dev, "x11k");
+-	if (IS_ERR(sai->clk_x11k)) {
+-		if (PTR_ERR(sai->clk_x11k) != -EPROBE_DEFER)
+-			dev_err(&pdev->dev, "missing x11k parent clock: %ld\n",
+-				PTR_ERR(sai->clk_x11k));
+-		return PTR_ERR(sai->clk_x11k);
+-	}
++	if (IS_ERR(sai->clk_x11k))
++		return dev_err_probe(&pdev->dev, PTR_ERR(sai->clk_x11k),
++				     "missing x11k parent clock\n");
+ 
+ 	/* init irqs */
+ 	sai->irq = platform_get_irq(pdev, 0);
+@@ -204,12 +195,10 @@ static int stm32_sai_probe(struct platfo
+ 
+ 	/* reset */
+ 	rst = devm_reset_control_get_optional_exclusive(&pdev->dev, NULL);
+-	if (IS_ERR(rst)) {
+-		if (PTR_ERR(rst) != -EPROBE_DEFER)
+-			dev_err(&pdev->dev, "Reset controller error %ld\n",
+-				PTR_ERR(rst));
+-		return PTR_ERR(rst);
+-	}
++	if (IS_ERR(rst))
++		return dev_err_probe(&pdev->dev, PTR_ERR(rst),
++				     "Reset controller error\n");
++
+ 	reset_control_assert(rst);
+ 	udelay(2);
+ 	reset_control_deassert(rst);
+--- a/sound/soc/stm/stm32_sai_sub.c
++++ b/sound/soc/stm/stm32_sai_sub.c
+@@ -1379,12 +1379,9 @@ static int stm32_sai_sub_parse_of(struct
+ 	 */
+ 	sai->regmap = devm_regmap_init_mmio(&pdev->dev, base,
+ 					    sai->regmap_config);
+-	if (IS_ERR(sai->regmap)) {
+-		if (PTR_ERR(sai->regmap) != -EPROBE_DEFER)
+-			dev_err(&pdev->dev, "Regmap init error %ld\n",
+-				PTR_ERR(sai->regmap));
+-		return PTR_ERR(sai->regmap);
+-	}
++	if (IS_ERR(sai->regmap))
++		return dev_err_probe(&pdev->dev, PTR_ERR(sai->regmap),
++				     "Regmap init error\n");
+ 
+ 	/* Get direction property */
+ 	if (of_property_match_string(np, "dma-names", "tx") >= 0) {
+@@ -1472,12 +1469,9 @@ static int stm32_sai_sub_parse_of(struct
+ 
+ 	of_node_put(args.np);
+ 	sai->sai_ck = devm_clk_get(&pdev->dev, "sai_ck");
+-	if (IS_ERR(sai->sai_ck)) {
+-		if (PTR_ERR(sai->sai_ck) != -EPROBE_DEFER)
+-			dev_err(&pdev->dev, "Missing kernel clock sai_ck: %ld\n",
+-				PTR_ERR(sai->sai_ck));
+-		return PTR_ERR(sai->sai_ck);
+-	}
++	if (IS_ERR(sai->sai_ck))
++		return dev_err_probe(&pdev->dev, PTR_ERR(sai->sai_ck),
++				     "Missing kernel clock sai_ck\n");
+ 
+ 	ret = clk_prepare(sai->pdata->pclk);
+ 	if (ret < 0)
+@@ -1551,11 +1545,8 @@ static int stm32_sai_sub_probe(struct pl
+ 		conf = &stm32_sai_pcm_config_spdif;
+ 
+ 	ret = snd_dmaengine_pcm_register(&pdev->dev, conf, 0);
+-	if (ret) {
+-		if (ret != -EPROBE_DEFER)
+-			dev_err(&pdev->dev, "Could not register pcm dma\n");
+-		return ret;
+-	}
++	if (ret)
++		return dev_err_probe(&pdev->dev, ret, "Could not register pcm dma\n");
+ 
+ 	ret = snd_soc_register_component(&pdev->dev, &stm32_component,
+ 					 &sai->cpu_dai_drv, 1);
+--- a/sound/soc/stm/stm32_spdifrx.c
++++ b/sound/soc/stm/stm32_spdifrx.c
+@@ -405,12 +405,9 @@ static int stm32_spdifrx_dma_ctrl_regist
+ 	int ret;
+ 
+ 	spdifrx->ctrl_chan = dma_request_chan(dev, "rx-ctrl");
+-	if (IS_ERR(spdifrx->ctrl_chan)) {
+-		if (PTR_ERR(spdifrx->ctrl_chan) != -EPROBE_DEFER)
+-			dev_err(dev, "dma_request_slave_channel error %ld\n",
+-				PTR_ERR(spdifrx->ctrl_chan));
+-		return PTR_ERR(spdifrx->ctrl_chan);
+-	}
++	if (IS_ERR(spdifrx->ctrl_chan))
++		return dev_err_probe(dev, PTR_ERR(spdifrx->ctrl_chan),
++				     "dma_request_slave_channel error\n");
+ 
+ 	spdifrx->dmab = devm_kzalloc(dev, sizeof(struct snd_dma_buffer),
+ 				     GFP_KERNEL);
+@@ -929,12 +926,9 @@ static int stm32_spdifrx_parse_of(struct
+ 	spdifrx->phys_addr = res->start;
+ 
+ 	spdifrx->kclk = devm_clk_get(&pdev->dev, "kclk");
+-	if (IS_ERR(spdifrx->kclk)) {
+-		if (PTR_ERR(spdifrx->kclk) != -EPROBE_DEFER)
+-			dev_err(&pdev->dev, "Could not get kclk: %ld\n",
+-				PTR_ERR(spdifrx->kclk));
+-		return PTR_ERR(spdifrx->kclk);
+-	}
++	if (IS_ERR(spdifrx->kclk))
++		return dev_err_probe(&pdev->dev, PTR_ERR(spdifrx->kclk),
++				     "Could not get kclk\n");
+ 
+ 	spdifrx->irq = platform_get_irq(pdev, 0);
+ 	if (spdifrx->irq < 0)
+@@ -985,12 +979,9 @@ static int stm32_spdifrx_probe(struct pl
+ 	spdifrx->regmap = devm_regmap_init_mmio_clk(&pdev->dev, "kclk",
+ 						    spdifrx->base,
+ 						    spdifrx->regmap_conf);
+-	if (IS_ERR(spdifrx->regmap)) {
+-		if (PTR_ERR(spdifrx->regmap) != -EPROBE_DEFER)
+-			dev_err(&pdev->dev, "Regmap init error %ld\n",
+-				PTR_ERR(spdifrx->regmap));
+-		return PTR_ERR(spdifrx->regmap);
+-	}
++	if (IS_ERR(spdifrx->regmap))
++		return dev_err_probe(&pdev->dev, PTR_ERR(spdifrx->regmap),
++				     "Regmap init error\n");
+ 
+ 	ret = devm_request_irq(&pdev->dev, spdifrx->irq, stm32_spdifrx_isr, 0,
+ 			       dev_name(&pdev->dev), spdifrx);
+@@ -1000,23 +991,18 @@ static int stm32_spdifrx_probe(struct pl
+ 	}
+ 
+ 	rst = devm_reset_control_get_optional_exclusive(&pdev->dev, NULL);
+-	if (IS_ERR(rst)) {
+-		if (PTR_ERR(rst) != -EPROBE_DEFER)
+-			dev_err(&pdev->dev, "Reset controller error %ld\n",
+-				PTR_ERR(rst));
+-		return PTR_ERR(rst);
+-	}
++	if (IS_ERR(rst))
++		return dev_err_probe(&pdev->dev, PTR_ERR(rst),
++				     "Reset controller error\n");
++
+ 	reset_control_assert(rst);
+ 	udelay(2);
+ 	reset_control_deassert(rst);
+ 
+ 	pcm_config = &stm32_spdifrx_pcm_config;
+ 	ret = snd_dmaengine_pcm_register(&pdev->dev, pcm_config, 0);
+-	if (ret) {
+-		if (ret != -EPROBE_DEFER)
+-			dev_err(&pdev->dev, "PCM DMA register error %d\n", ret);
+-		return ret;
+-	}
++	if (ret)
++		return dev_err_probe(&pdev->dev, ret, "PCM DMA register error\n");
+ 
+ 	ret = snd_soc_register_component(&pdev->dev,
+ 					 &stm32_spdifrx_component,
 
 
