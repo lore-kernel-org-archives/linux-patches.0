@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0703BC4F3;
-	Thu, 15 Jan 2026 17:12:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B704C3BFE35;
+	Thu, 15 Jan 2026 17:12:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497146; cv=none; b=XFYe5Fv94KnxN45YyPESaVebXWnGvs6d9wjSg4V6Rj6Zt3H/xOvuFU04je3TQ2DzEIQFWzgz18F77/rKiEYmLFIQenLd9Zuic5Py08OfCScOkP9UZlx8NrC6Q1KCBs6DxI3XNeC5TGFaYw3lt7WAT8wNiPVy5ZqFeuYyRjyR/Gg=
+	t=1768497149; cv=none; b=i0xku9MsgcLbO83p3M3B9t5Up6152VdsagK7/M1Y85zxfM7qszH8iFeq5J8OFvolQa9viZe9g9hYX1X4dxkjlDerkHQ+IW8I+dzWmha19++xh7I1cFnHfmC0e66M9kxPPaI9ia0yYGocjDLgshAdPFjSSpiahwv6Fw2+iCg/84E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497146; c=relaxed/simple;
-	bh=iKq4VmdiswjhKTKQzNQaIgLe5HfApvbuou2AHhcR9is=;
+	s=arc-20240116; t=1768497149; c=relaxed/simple;
+	bh=KunIIBS6O8Cwq5kPNo5y5KnldssfGrQoNpwaZkedSCQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IG7vnKHlZ8LgmHbwGQ6edFGloPqftLHU3Qc2RbGfRnRCKwx5AVXtSm5iLXhsBxMU+7cM9KYwClx2AzzignWGK3N4q4E0aiKu+AxTP0z7NB+YOJtd5yNgzb2hHx/T+OMelWVS2bKWtdLSIlXuFdaZYCJcuGctx5a8rb3IHE31XPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VueLnBaX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Aiam5M/qK/VytgDYO9N+Xnpn9nC9w+YIf6kpWyzcTJLfwSSlHifUy26jwPRTEt5ommiWC90F/d7S7oB0jdZt7KS16A7HF1kYv9q8M0rL0QU7E3GcxyH+UFsT4pIWIA/by0LYHE9SalGHJqT8g43IWf1sZXxqbCJv7B73rP1Kqk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=izTnokOi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VueLnBaX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E733DC116D0;
-	Thu, 15 Jan 2026 17:12:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="izTnokOi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC1DCC4AF09;
+	Thu, 15 Jan 2026 17:12:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497146;
-	bh=iKq4VmdiswjhKTKQzNQaIgLe5HfApvbuou2AHhcR9is=;
+	s=korg; t=1768497149;
+	bh=KunIIBS6O8Cwq5kPNo5y5KnldssfGrQoNpwaZkedSCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VueLnBaXxiObTI2lc3s5gxybVGBFfsZbGIoYz40jmF44vaKRK7Vpsr4a8PTyqwqFu
-	 eLzfhdF/nlPO6oAB/GYGzWChm6Wo+kJpuEBCi3I/RH8N7wALhFoj32p3cj4GJFga8K
-	 weEHl/w322VnnWFqUEia47a59V1vHwtrPXFMyfI0=
+	b=izTnokOixrZdPOqEhEVg4ni9FtnA9AKm8rXBdOldsMmp4AUPl1TESoKuDk7smJIqJ
+	 oiX+1lrd6CXviU3h3bJXhRYj+4Pr2WSdwjt7pc2hCqMX9yGPqdhTe0A9RDjKwFow8T
+	 9hbBGtbevSMhgnKWCGZXrOj+ry1Z9TyJCjxELRPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Li <yang.li85200@gmail.com>,
-	Guo Ren <guoren@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 19/72] csky: fix csky_cmpxchg_fixup not working
-Date: Thu, 15 Jan 2026 17:48:29 +0100
-Message-ID: <20260115164144.193358643@linuxfoundation.org>
+Subject: [PATCH 6.1 20/72] ARM: 9461/1: Disable HIGHPTE on PREEMPT_RT kernels
+Date: Thu, 15 Jan 2026 17:48:30 +0100
+Message-ID: <20260115164144.229310018@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164143.482647486@linuxfoundation.org>
 References: <20260115164143.482647486@linuxfoundation.org>
@@ -51,38 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Li <yang.li85200@gmail.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 809ef03d6d21d5fea016bbf6babeec462e37e68c ]
+[ Upstream commit fedadc4137234c3d00c4785eeed3e747fe9036ae ]
 
-In the csky_cmpxchg_fixup function, it is incorrect to use the global
-variable csky_cmpxchg_stw to determine the address where the exception
-occurred.The global variable csky_cmpxchg_stw stores the opcode at the
-time of the exception, while &csky_cmpxchg_stw shows the address where
-the exception occurred.
+gup_pgd_range() is invoked with disabled interrupts and invokes
+__kmap_local_page_prot() via pte_offset_map(), gup_p4d_range().
+With HIGHPTE enabled, __kmap_local_page_prot() invokes kmap_high_get()
+which uses a spinlock_t via lock_kmap_any(). This leads to an
+sleeping-while-atomic error on PREEMPT_RT because spinlock_t becomes a
+sleeping lock and must not be acquired in atomic context.
 
-Signed-off-by: Yang Li <yang.li85200@gmail.com>
-Signed-off-by: Guo Ren <guoren@kernel.org>
+The loop in map_new_virtual() uses wait_queue_head_t for wake up which
+also is using a spinlock_t.
+
+Since HIGHPTE is rarely needed at all, turn it off for PREEMPT_RT
+to allow the use of get_user_pages_fast().
+
+[arnd: rework patch to turn off HIGHPTE instead of HAVE_PAST_GUP]
+
+Co-developed-by: Arnd Bergmann <arnd@arndb.de>
+
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/csky/mm/fault.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/csky/mm/fault.c b/arch/csky/mm/fault.c
-index a885518ce1dd2..5226bc08c3360 100644
---- a/arch/csky/mm/fault.c
-+++ b/arch/csky/mm/fault.c
-@@ -45,8 +45,8 @@ static inline void csky_cmpxchg_fixup(struct pt_regs *regs)
- 	if (trap_no(regs) != VEC_TLBMODIFIED)
- 		return;
+diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
+index 6d5afe2e6ba33..f0352e5675dd0 100644
+--- a/arch/arm/Kconfig
++++ b/arch/arm/Kconfig
+@@ -1318,7 +1318,7 @@ config HIGHMEM
  
--	if (instruction_pointer(regs) == csky_cmpxchg_stw)
--		instruction_pointer_set(regs, csky_cmpxchg_ldw);
-+	if (instruction_pointer(regs) == (unsigned long)&csky_cmpxchg_stw)
-+		instruction_pointer_set(regs, (unsigned long)&csky_cmpxchg_ldw);
- 	return;
- }
- #endif
+ config HIGHPTE
+ 	bool "Allocate 2nd-level pagetables from highmem" if EXPERT
+-	depends on HIGHMEM
++	depends on HIGHMEM && !PREEMPT_RT
+ 	default y
+ 	help
+ 	  The VM uses one page of physical memory for each page table.
 -- 
 2.51.0
 
