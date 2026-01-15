@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67DB3BF31C;
-	Thu, 15 Jan 2026 17:05:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967A439A805;
+	Thu, 15 Jan 2026 17:06:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496759; cv=none; b=piOaMGIACEc483nzvp6vcLtsUqLKG521BXidGk8++CeLwbn1TskwHKV4akYZoXLGjF93jn1Hw1g4cJeBxX4JHStCSEKwEHK9pINTV3Nw4ABovgeCeU8kNVGeatiFqU3bndGaFHCxRT0+3ezB22mEeMwhTc8G6HlzV5eJF4rTo9U=
+	t=1768496762; cv=none; b=L8ZwFO0pCeEjTVuAe+MSO1vqv0DmVk5uYH41dxk8AElaLwTvjo/q97Rp59sLvLsRANtzKn7TGSj0f+J/AgFfL6YkdnAeeumP6Qa8/jsdgepQFXQ/NWe2gow8dcw0dtZsHOiSRvK/zKo6ctQ9SSwOmVic2mMgOCOnB2S2F+WBcvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496759; c=relaxed/simple;
-	bh=JtArep7jUM58TiSOVXof8PVKhCUKPEOjmOVjh35jmdI=;
+	s=arc-20240116; t=1768496762; c=relaxed/simple;
+	bh=CXhE8SYqzcJNWWLP1uEqoaOkpiezY8U6tCC1wSsL/iM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d/cU5h7aSCvL/NEJkeBMtrMci+mcyeJHK1ph9koBkkuYigekSZbsmcggytAeoo90oSYt0E4Xc8qKUt0toxpbaV9m3HYWJLnH9BLQERWHFdie6H0LzWVB72IODuBUbx2oLcrPYIylUB1XoNyE1ej0Br+36R0dg05JtKG26dHtnNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F0AM2VxJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lNHoCkgV6XWv/5GY9uAjdsWcP7FbD2+7vdsIQTapPsCQPuFi/q+7jcbxumpM9xXo9bIrolYsqSEFGEeJ2uWqXiKwPxI9iN1RuwB8Ea6FgBJt3hBRVhnffMqlzrsWtzHQTvHKJQM+xAc0q963Ft3wsxazePakXm4LHGsoy4+HIQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p4gfnp5T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F0AM2VxJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52333C16AAE;
-	Thu, 15 Jan 2026 17:05:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p4gfnp5T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 191D2C16AAE;
+	Thu, 15 Jan 2026 17:06:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496759;
-	bh=JtArep7jUM58TiSOVXof8PVKhCUKPEOjmOVjh35jmdI=;
+	s=korg; t=1768496762;
+	bh=CXhE8SYqzcJNWWLP1uEqoaOkpiezY8U6tCC1wSsL/iM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F0AM2VxJbXBRVhEMIfsWuW6OTXy49EBFRFFZfLxEDgKSaNtwB+Aqueww+ndRLJXM1
-	 6USH+3i60sukjne/sk9NOnNW/5ZFH6mEZHhUjp6INvJx55wHDw8PoQijLZQgew3Iij
-	 mhCrXzJwli0t13Celo63eY7aCx1gREnkhofqTEEU=
+	b=p4gfnp5TaZnWIK3Pzc8xinziCtv/qQpo1Ui4CXWwJDreryAOxxnelVL9WAQBpGR03
+	 IzZgRENEso2aRjQ4EnalaJ5gi5ZmTg3oxfIl7lkI/wP8jtsBQkDkjMxmc9kGuoOeHR
+	 Ep9XujoVDUZfndp8VlNOCsVhOiJ/T81/QCqeZWVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fei Shao <fshao@chromium.org>,
-	Mark Brown <broonie@kernel.org>,
+	Brian Kocoloski <brian.kocoloski@amd.com>,
+	Philip Yang <Philip.Yang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 108/119] spi: mt65xx: Use IRQF_ONESHOT with threaded IRQ
-Date: Thu, 15 Jan 2026 17:48:43 +0100
-Message-ID: <20260115164155.849566108@linuxfoundation.org>
+Subject: [PATCH 6.12 109/119] drm/amdkfd: Fix improper NULL termination of queue restore SMI event string
+Date: Thu, 15 Jan 2026 17:48:44 +0100
+Message-ID: <20260115164155.885984941@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -51,41 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fei Shao <fshao@chromium.org>
+From: Brian Kocoloski <brian.kocoloski@amd.com>
 
-[ Upstream commit 8c04b77f87e6e321ae6acd28ce1de5553916153f ]
+[ Upstream commit 969faea4e9d01787c58bab4d945f7ad82dad222d ]
 
-This driver is migrated to use threaded IRQ since commit 5972eb05ca32
-("spi: spi-mt65xx: Use threaded interrupt for non-SPIMEM transfer"), and
-we almost always want to disable the interrupt line to avoid excess
-interrupts while the threaded handler is processing SPI transfer.
-Use IRQF_ONESHOT for that purpose.
+Pass character "0" rather than NULL terminator to properly format
+queue restoration SMI events. Currently, the NULL terminator precedes
+the newline character that is intended to delineate separate events
+in the SMI event buffer, which can break userspace parsers.
 
-In practice, we see MediaTek devices show SPI transfer timeout errors
-when communicating with ChromeOS EC in certain scenarios, and with
-IRQF_ONESHOT, the issue goes away.
-
-Signed-off-by: Fei Shao <fshao@chromium.org>
-Link: https://patch.msgid.link/20251217101131.1975131-1-fshao@chromium.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Brian Kocoloski <brian.kocoloski@amd.com>
+Reviewed-by: Philip Yang <Philip.Yang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 6e7143e5e6e21f9d5572e0390f7089e6d53edf3c)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-mt65xx.c | 2 +-
+ drivers/gpu/drm/amd/amdkfd/kfd_smi_events.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-mt65xx.c b/drivers/spi/spi-mt65xx.c
-index dfee244fc3173..5532ace0b1334 100644
---- a/drivers/spi/spi-mt65xx.c
-+++ b/drivers/spi/spi-mt65xx.c
-@@ -1266,7 +1266,7 @@ static int mtk_spi_probe(struct platform_device *pdev)
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_smi_events.c b/drivers/gpu/drm/amd/amdkfd/kfd_smi_events.c
+index de8b9abf7afcf..592953fe9afc2 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_smi_events.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_smi_events.c
+@@ -312,7 +312,7 @@ void kfd_smi_event_queue_restore(struct kfd_node *node, pid_t pid)
+ {
+ 	kfd_smi_event_add(pid, node, KFD_SMI_EVENT_QUEUE_RESTORE,
+ 			  KFD_EVENT_FMT_QUEUE_RESTORE(ktime_get_boottime_ns(), pid,
+-			  node->id, 0));
++			  node->id, '0'));
+ }
  
- 	ret = devm_request_threaded_irq(dev, irq, mtk_spi_interrupt,
- 					mtk_spi_interrupt_thread,
--					IRQF_TRIGGER_NONE, dev_name(dev), host);
-+					IRQF_ONESHOT, dev_name(dev), host);
- 	if (ret)
- 		return dev_err_probe(dev, ret, "failed to register irq\n");
- 
+ void kfd_smi_event_queue_restore_rescheduled(struct mm_struct *mm)
 -- 
 2.51.0
 
