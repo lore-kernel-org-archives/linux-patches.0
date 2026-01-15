@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F31983D3015;
-	Thu, 15 Jan 2026 17:56:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC993C00BF;
+	Thu, 15 Jan 2026 17:56:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499814; cv=none; b=gS7fP46QhCkXYElW1SxZaeOCCY7N0Y9USaVasLr1DZG8rnAuqchvfpiuXjYM0viue3xokaBcpz5naJaF9AzRIQhD/U7eEcANuE4tuJG/RLw8yxHtPrQmBG8eN+P1A7bcLGRxdjJJ/d6MQNq0rHwH56LdRET6XfFv+YtdWkLqQIM=
+	t=1768499816; cv=none; b=nFQIlvBBivKRxFxpST6tXz/mJpxZ5It60fTaACyMhVk4Z7rTZwG81PAOicFEn8NbTO28Z3d/asbe4l7/7uGd0jg8uHzhPVKkaO2aLoubeDubDZz2o5bg0q14+SOCXZFmUhrNewZaHXkOswq+bY7cXRY4ZAJ50ANfdkvjJcJH8gA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499814; c=relaxed/simple;
-	bh=0Kr689bsQ3No5pLQKjCsZ6Fef4yooSQVYsNDEaS2oYo=;
+	s=arc-20240116; t=1768499816; c=relaxed/simple;
+	bh=eODbti4f5Me+vnpeWLL5unyFAJqmRKG2Hj3edDvEd6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M8sy0ZnFJ+yj5uRHl+bgr/RdSp86vQlOJzq4NsYDysAxmP3CTSj3YGO3zKdoT5A2/w3cYTWFpejPDxXbieDr/Gghn4svSTNA323fCIZg7pdZ4q8OkqiHoS47GKFxrI8DJPFkGyj1t2pu9BG/0Cywr5O78bLepb20Jgn3Nlh7Hu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHNySY/K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uySYmn3qCyIN2/30zcNysqJBG3siHRZ4rn8tclViXgEq78CMzoCc1u9jtvwHTciGjvnVRl5yWhR53kalihLoqye/vlcmvuz+iYLlqgw4TReeexiBLnS9DK/D6zv9a2ceqEMtoFhk6XuxqM3E3uWVPmurY1PFNiNew88kK5FF/Lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F020yRBF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHNySY/K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B9FAC116D0;
-	Thu, 15 Jan 2026 17:56:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F020yRBF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5461BC116D0;
+	Thu, 15 Jan 2026 17:56:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499813;
-	bh=0Kr689bsQ3No5pLQKjCsZ6Fef4yooSQVYsNDEaS2oYo=;
+	s=korg; t=1768499816;
+	bh=eODbti4f5Me+vnpeWLL5unyFAJqmRKG2Hj3edDvEd6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NHNySY/KVukDCYUikZvcwSKFz0ym4dt+rvEtQg0KUq9mOMuhGNZ6XiyfKGZvPMbFN
-	 Q5m3FZ1NPfEZRerYYGAtjWiSph9njwzNNqI2q830UIaPSUnnCP9Idz4FQ3oh8/sZ2k
-	 TnEOCZdXzebGP5UUfrixAPgY1/of3Pylqb1PeJfY=
+	b=F020yRBF/Ot77raKMuuJNU0VINHiS7KkcuSRjlAk1ZCTCzFLIDvuxpleIPDdcY5Wz
+	 urNWiYdlIzDMbbYNFoQLLPcDDPYr6MfHunoZKY9zPiC4wDjQPX3wFSgjAsQjzBdUGl
+	 w9tgzm9/y5l9hnjswZx2ttwbA9QNyMN+bMgQF5WU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	Carlos Maiolino <cem@kernel.org>,
+	stable@kernel.org,
+	Hong Yun <yhong@link.cuhk.edu.hk>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 358/451] xfs: fix a memory leak in xfs_buf_item_init()
-Date: Thu, 15 Jan 2026 17:49:19 +0100
-Message-ID: <20260115164243.854271831@linuxfoundation.org>
+Subject: [PATCH 5.10 359/451] f2fs: use global inline_xattr_slab instead of per-sb slab cache
+Date: Thu, 15 Jan 2026 17:49:20 +0100
+Message-ID: <20260115164243.891229800@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -47,41 +47,241 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit fc40459de82543b565ebc839dca8f7987f16f62e ]
+[ Upstream commit 1f27ef42bb0b7c0740c5616ec577ec188b8a1d05 ]
 
-xfs_buf_item_get_format() may allocate memory for bip->bli_formats,
-free the memory in the error path.
+As Hong Yun reported in mailing list:
 
-Fixes: c3d5f0c2fb85 ("xfs: complain if anyone tries to create a too-large buffer log item")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ Adjust context ]
+loop7: detected capacity change from 0 to 131072
+------------[ cut here ]------------
+kmem_cache of name 'f2fs_xattr_entry-7:7' already exists
+WARNING: CPU: 0 PID: 24426 at mm/slab_common.c:110 kmem_cache_sanity_check mm/slab_common.c:109 [inline]
+WARNING: CPU: 0 PID: 24426 at mm/slab_common.c:110 __kmem_cache_create_args+0xa6/0x320 mm/slab_common.c:307
+CPU: 0 UID: 0 PID: 24426 Comm: syz.7.1370 Not tainted 6.17.0-rc4 #1 PREEMPT(full)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+RIP: 0010:kmem_cache_sanity_check mm/slab_common.c:109 [inline]
+RIP: 0010:__kmem_cache_create_args+0xa6/0x320 mm/slab_common.c:307
+Call Trace:
+ __kmem_cache_create include/linux/slab.h:353 [inline]
+ f2fs_kmem_cache_create fs/f2fs/f2fs.h:2943 [inline]
+ f2fs_init_xattr_caches+0xa5/0xe0 fs/f2fs/xattr.c:843
+ f2fs_fill_super+0x1645/0x2620 fs/f2fs/super.c:4918
+ get_tree_bdev_flags+0x1fb/0x260 fs/super.c:1692
+ vfs_get_tree+0x43/0x140 fs/super.c:1815
+ do_new_mount+0x201/0x550 fs/namespace.c:3808
+ do_mount fs/namespace.c:4136 [inline]
+ __do_sys_mount fs/namespace.c:4347 [inline]
+ __se_sys_mount+0x298/0x2f0 fs/namespace.c:4324
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0x8e/0x3a0 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+The bug can be reproduced w/ below scripts:
+- mount /dev/vdb /mnt1
+- mount /dev/vdc /mnt2
+- umount /mnt1
+- mounnt /dev/vdb /mnt1
+
+The reason is if we created two slab caches, named f2fs_xattr_entry-7:3
+and f2fs_xattr_entry-7:7, and they have the same slab size. Actually,
+slab system will only create one slab cache core structure which has
+slab name of "f2fs_xattr_entry-7:3", and two slab caches share the same
+structure and cache address.
+
+So, if we destroy f2fs_xattr_entry-7:3 cache w/ cache address, it will
+decrease reference count of slab cache, rather than release slab cache
+entirely, since there is one more user has referenced the cache.
+
+Then, if we try to create slab cache w/ name "f2fs_xattr_entry-7:3" again,
+slab system will find that there is existed cache which has the same name
+and trigger the warning.
+
+Let's changes to use global inline_xattr_slab instead of per-sb slab cache
+for fixing.
+
+Fixes: a999150f4fe3 ("f2fs: use kmem_cache pool during inline xattr lookups")
+Cc: stable@kernel.org
+Reported-by: Hong Yun <yhong@link.cuhk.edu.hk>
+Tested-by: Hong Yun <yhong@link.cuhk.edu.hk>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+[ No f2fs_kmem_cache_alloc() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_buf_item.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/f2fs/f2fs.h  |    3 ---
+ fs/f2fs/super.c |   15 +++++++--------
+ fs/f2fs/xattr.c |   32 +++++++++++---------------------
+ fs/f2fs/xattr.h |   10 ++++++----
+ 4 files changed, 24 insertions(+), 36 deletions(-)
 
---- a/fs/xfs/xfs_buf_item.c
-+++ b/fs/xfs/xfs_buf_item.c
-@@ -744,6 +744,7 @@ xfs_buf_item_init(
- 		map_size = DIV_ROUND_UP(chunks, NBWORD);
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -1573,9 +1573,6 @@ struct f2fs_sb_info {
  
- 		if (map_size > XFS_BLF_DATAMAP_SIZE) {
-+			xfs_buf_item_free_format(bip);
- 			kmem_cache_free(xfs_buf_item_zone, bip);
- 			xfs_err(mp,
- 	"buffer item dirty bitmap (%u uints) too small to reflect %u bytes!",
+ 	struct workqueue_struct *post_read_wq;	/* post read workqueue */
+ 
+-	struct kmem_cache *inline_xattr_slab;	/* inline xattr entry */
+-	unsigned int inline_xattr_slab_size;	/* default inline xattr slab size */
+-
+ #ifdef CONFIG_F2FS_FS_COMPRESSION
+ 	struct kmem_cache *page_array_slab;	/* page array entry */
+ 	unsigned int page_array_slab_size;	/* default page array slab size */
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -1351,7 +1351,6 @@ static void f2fs_put_super(struct super_
+ 
+ 	destroy_device_list(sbi);
+ 	f2fs_destroy_page_array_cache(sbi);
+-	f2fs_destroy_xattr_caches(sbi);
+ 	mempool_destroy(sbi->write_io_dummy);
+ #ifdef CONFIG_QUOTA
+ 	for (i = 0; i < MAXQUOTAS; i++)
+@@ -3722,13 +3721,9 @@ try_onemore:
+ 		}
+ 	}
+ 
+-	/* init per sbi slab cache */
+-	err = f2fs_init_xattr_caches(sbi);
+-	if (err)
+-		goto free_io_dummy;
+ 	err = f2fs_init_page_array_cache(sbi);
+ 	if (err)
+-		goto free_xattr_cache;
++		goto free_io_dummy;
+ 
+ 	/* get an inode for meta space */
+ 	sbi->meta_inode = f2fs_iget(sb, F2FS_META_INO(sbi));
+@@ -4021,8 +4016,6 @@ free_meta_inode:
+ 	sbi->meta_inode = NULL;
+ free_page_array_cache:
+ 	f2fs_destroy_page_array_cache(sbi);
+-free_xattr_cache:
+-	f2fs_destroy_xattr_caches(sbi);
+ free_io_dummy:
+ 	mempool_destroy(sbi->write_io_dummy);
+ free_percpu:
+@@ -4174,7 +4167,12 @@ static int __init init_f2fs_fs(void)
+ 	err = f2fs_init_compress_cache();
+ 	if (err)
+ 		goto free_compress_mempool;
++	err = f2fs_init_xattr_cache();
++	if (err)
++		goto free_compress_cache;
+ 	return 0;
++free_compress_cache:
++	f2fs_destroy_compress_cache();
+ free_compress_mempool:
+ 	f2fs_destroy_compress_mempool();
+ free_bioset:
+@@ -4210,6 +4208,7 @@ fail:
+ 
+ static void __exit exit_f2fs_fs(void)
+ {
++	f2fs_destroy_xattr_cache();
+ 	f2fs_destroy_compress_cache();
+ 	f2fs_destroy_compress_mempool();
+ 	f2fs_destroy_bioset();
+--- a/fs/f2fs/xattr.c
++++ b/fs/f2fs/xattr.c
+@@ -23,11 +23,12 @@
+ #include "xattr.h"
+ #include "segment.h"
+ 
++static struct kmem_cache *inline_xattr_slab;
+ static void *xattr_alloc(struct f2fs_sb_info *sbi, int size, bool *is_inline)
+ {
+-	if (likely(size == sbi->inline_xattr_slab_size)) {
++	if (likely(size == DEFAULT_XATTR_SLAB_SIZE)) {
+ 		*is_inline = true;
+-		return kmem_cache_zalloc(sbi->inline_xattr_slab, GFP_NOFS);
++		return kmem_cache_zalloc(inline_xattr_slab, GFP_NOFS);
+ 	}
+ 	*is_inline = false;
+ 	return f2fs_kzalloc(sbi, size, GFP_NOFS);
+@@ -37,7 +38,7 @@ static void xattr_free(struct f2fs_sb_in
+ 							bool is_inline)
+ {
+ 	if (is_inline)
+-		kmem_cache_free(sbi->inline_xattr_slab, xattr_addr);
++		kmem_cache_free(inline_xattr_slab, xattr_addr);
+ 	else
+ 		kfree(xattr_addr);
+ }
+@@ -814,25 +815,14 @@ int f2fs_setxattr(struct inode *inode, i
+ 	return err;
+ }
+ 
+-int f2fs_init_xattr_caches(struct f2fs_sb_info *sbi)
++int __init f2fs_init_xattr_cache(void)
+ {
+-	dev_t dev = sbi->sb->s_bdev->bd_dev;
+-	char slab_name[32];
+-
+-	sprintf(slab_name, "f2fs_xattr_entry-%u:%u", MAJOR(dev), MINOR(dev));
+-
+-	sbi->inline_xattr_slab_size = F2FS_OPTION(sbi).inline_xattr_size *
+-					sizeof(__le32) + XATTR_PADDING_SIZE;
+-
+-	sbi->inline_xattr_slab = f2fs_kmem_cache_create(slab_name,
+-					sbi->inline_xattr_slab_size);
+-	if (!sbi->inline_xattr_slab)
+-		return -ENOMEM;
+-
+-	return 0;
++	inline_xattr_slab = f2fs_kmem_cache_create("f2fs_xattr_entry",
++					DEFAULT_XATTR_SLAB_SIZE);
++	return inline_xattr_slab ? 0 : -ENOMEM;
+ }
+ 
+-void f2fs_destroy_xattr_caches(struct f2fs_sb_info *sbi)
++void f2fs_destroy_xattr_cache(void)
+ {
+-	kmem_cache_destroy(sbi->inline_xattr_slab);
+-}
++	kmem_cache_destroy(inline_xattr_slab);
++}
+\ No newline at end of file
+--- a/fs/f2fs/xattr.h
++++ b/fs/f2fs/xattr.h
+@@ -88,6 +88,8 @@ struct f2fs_xattr_entry {
+ 			F2FS_TOTAL_EXTRA_ATTR_SIZE / sizeof(__le32) -	\
+ 			DEF_INLINE_RESERVED_SIZE -			\
+ 			MIN_INLINE_DENTRY_SIZE / sizeof(__le32))
++#define DEFAULT_XATTR_SLAB_SIZE	(DEFAULT_INLINE_XATTR_ADDRS *		\
++				sizeof(__le32) + XATTR_PADDING_SIZE)
+ 
+ /*
+  * On-disk structure of f2fs_xattr
+@@ -131,8 +133,8 @@ extern int f2fs_setxattr(struct inode *,
+ extern int f2fs_getxattr(struct inode *, int, const char *, void *,
+ 						size_t, struct page *);
+ extern ssize_t f2fs_listxattr(struct dentry *, char *, size_t);
+-extern int f2fs_init_xattr_caches(struct f2fs_sb_info *);
+-extern void f2fs_destroy_xattr_caches(struct f2fs_sb_info *);
++extern int __init f2fs_init_xattr_cache(void);
++extern void f2fs_destroy_xattr_cache(void);
+ #else
+ 
+ #define f2fs_xattr_handlers	NULL
+@@ -149,8 +151,8 @@ static inline int f2fs_getxattr(struct i
+ {
+ 	return -EOPNOTSUPP;
+ }
+-static inline int f2fs_init_xattr_caches(struct f2fs_sb_info *sbi) { return 0; }
+-static inline void f2fs_destroy_xattr_caches(struct f2fs_sb_info *sbi) { }
++static inline int __init f2fs_init_xattr_cache(void) { return 0; }
++static inline void f2fs_destroy_xattr_cache(void) { }
+ #endif
+ 
+ #ifdef CONFIG_F2FS_FS_SECURITY
 
 
