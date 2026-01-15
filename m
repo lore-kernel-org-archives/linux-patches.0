@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 533353D6041;
-	Thu, 15 Jan 2026 17:54:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF7D33D602C;
+	Thu, 15 Jan 2026 17:54:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499654; cv=none; b=DNCiWrTWpBdUHGXbPIY4Rzmb/sJP0bX5k14YKWKtHAeAqU8EDd39Us6ntdQs4axAnKtNKOhdNNcJqHn9LOEJtRCOstWrjL8T2pF6QesXAccldkqsnLfeORj/0N4MW6p9axwSZ07Pp+rBCxTC4PtOo4heY2oYZi8W92lEzO0GscM=
+	t=1768499657; cv=none; b=EHsAST7JfA11F2p3X9es/HnZ0bK3fVsYZwIPU9mZuB9mNRLKPbAsGkZtlaFmfprk2H+uYS/dSleK1YeJ4weudSRFFRw4f/6UjE3jOJC4bU5Kaf9wI5qYZKxHleSoyxH655dK/LN+4dstdAJHi/Mq6k7BWGlki0SFHkF/QUT9yVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499654; c=relaxed/simple;
-	bh=gY/hZUBgD6uuhxddunQKc5eNsleT+vOBnQsRM63l5Ng=;
+	s=arc-20240116; t=1768499657; c=relaxed/simple;
+	bh=qElGZQgn1OiMW6kuDT+++Mx7DQsGSdS5ysiHo0MV5/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t4SlmdIeULr8zzOb2KvQzIO39+qiiIFKmGiD3YUuvzB2jGBwVuyahckj6tFfQ2vXBwXLb3v+Iqb1NfAanYff7FO3f8LCr2UpZoj5WT+2yosiFVdbzm67dysym4OIp3z8D9kcdSt+7fNJLIrV/EWBry6yoKfEo59BdHSQrevLchs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LutQsvXd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uWfB+Vzc4yD9Tdvd2m605IqCWMo8zvXG3/d7lVBUoEWzo7xxqrM69XF9ZtQX159NdvqLYUfBTRbhQ+GfQ3H16wQgtcSaCkJVKcEs3yW7TITX02JTwIpDM1UVJl5wecEBC037+uOxfLhx/B9+btvQIgpux2j5iQPo7DwWE1uvo9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMgKBqCh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LutQsvXd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB03AC116D0;
-	Thu, 15 Jan 2026 17:54:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMgKBqCh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87D92C116D0;
+	Thu, 15 Jan 2026 17:54:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499653;
-	bh=gY/hZUBgD6uuhxddunQKc5eNsleT+vOBnQsRM63l5Ng=;
+	s=korg; t=1768499655;
+	bh=qElGZQgn1OiMW6kuDT+++Mx7DQsGSdS5ysiHo0MV5/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LutQsvXdzynw3Jdg0x/7+QxIKbsvFRtgUL9fS5KnKIRFlefvCUutNhnG22G2MZR9b
-	 nIQ7LNd484qcdPjRkhwSJjDWpZ4oC6LZuo1Q3H+LVp2wMalRet/WAwhWpVugXfqdpW
-	 NMCWOvBRNSlbushOGIF7Aa5KndZUcMq0DsX6cR5A=
+	b=yMgKBqChiD5lxEOzEr51CEaPlRTmfuB4s7oFHsLOa5uDOjwwhHY/SJikaQYFVxMyH
+	 tpPhhhiVCr7UPHou+Nu5idNi51B2Ejt+c70USL4eIgfMXars7kbZFKeou7nSYu4okJ
+	 Uebx2Jl9hcgpu9K7rGQQN3TJStxl5l02wvlS5iLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
-	Alexey Klimov <alexey.klimov@linaro.org>
-Subject: [PATCH 5.10 301/451] ASoC: qcom: qdsp6: q6asm-dai: set 10 ms period and buffer alignment.
-Date: Thu, 15 Jan 2026 17:48:22 +0100
-Message-ID: <20260115164241.781220967@linuxfoundation.org>
+	Grzegorz Nitka <grzegorz.nitka@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Przemyslaw Korba <przemyslaw.korba@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 5.10 271/451] i40e: fix scheduling in set_rx_mode
+Date: Thu, 15 Jan 2026 17:47:52 +0100
+Message-ID: <20260115164240.689339984@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -52,46 +55,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Przemyslaw Korba <przemyslaw.korba@intel.com>
 
-commit 81c53b52de21b8d5a3de55ebd06b6bf188bf7efd upstream.
+[ Upstream commit be43abc5514167cc129a8d8e9727b89b8e1d9719 ]
 
-DSP expects the periods to be aligned to fragment sizes, currently
-setting up to hw constriants on periods bytes is not going to work
-correctly as we can endup with periods sizes aligned to 32 bytes however
-not aligned to fragment size.
+Add service task schedule to set_rx_mode.
+In some cases there are error messages printed out in PTP application
+(ptp4l):
 
-Update the constriants to use fragment size, and also set at step of
-10ms for period size to accommodate DSP requirements of 10ms latency.
+ptp4l[13848.762]: port 1 (ens2f3np3): received SYNC without timestamp
+ptp4l[13848.825]: port 1 (ens2f3np3): received SYNC without timestamp
+ptp4l[13848.887]: port 1 (ens2f3np3): received SYNC without timestamp
 
-Fixes: 2a9e92d371db ("ASoC: qdsp6: q6asm: Add q6asm dai driver")
-Cc: Stable@vger.kernel.org
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Tested-by: Alexey Klimov <alexey.klimov@linaro.org> # RB5, RB3
-Link: https://patch.msgid.link/20251023102444.88158-4-srinivas.kandagatla@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This happens when service task would not run immediately after
+set_rx_mode, and we need it for setup tasks. This service task checks, if
+PTP RX packets are hung in firmware, and propagate correct settings such
+as multicast address for IEEE 1588 Precision Time Protocol.
+RX timestamping depends on some of these filters set. Bug happens only
+with high PTP packets frequency incoming, and not every run since
+sometimes service task is being ran from a different place immediately
+after starting ptp4l.
+
+Fixes: 0e4425ed641f ("i40e: fix: do not sleep in netdev_ops")
+Reviewed-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Przemyslaw Korba <przemyslaw.korba@intel.com>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/qdsp6/q6asm-dai.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/soc/qcom/qdsp6/q6asm-dai.c
-+++ b/sound/soc/qcom/qdsp6/q6asm-dai.c
-@@ -413,13 +413,13 @@ static int q6asm_dai_open(struct snd_soc
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
+index f11cb3176cab..f11d6166186f 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_main.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
+@@ -2101,6 +2101,7 @@ static void i40e_set_rx_mode(struct net_device *netdev)
+ 		vsi->flags |= I40E_VSI_FLAG_FILTER_CHANGED;
+ 		set_bit(__I40E_MACVLAN_SYNC_PENDING, vsi->back->state);
  	}
++	i40e_service_event_schedule(vsi->back);
+ }
  
- 	ret = snd_pcm_hw_constraint_step(runtime, 0,
--		SNDRV_PCM_HW_PARAM_PERIOD_BYTES, 32);
-+		SNDRV_PCM_HW_PARAM_PERIOD_SIZE, 480);
- 	if (ret < 0) {
- 		dev_err(dev, "constraint for period bytes step ret = %d\n",
- 								ret);
- 	}
- 	ret = snd_pcm_hw_constraint_step(runtime, 0,
--		SNDRV_PCM_HW_PARAM_BUFFER_BYTES, 32);
-+		SNDRV_PCM_HW_PARAM_BUFFER_SIZE, 480);
- 	if (ret < 0) {
- 		dev_err(dev, "constraint for buffer bytes step ret = %d\n",
- 								ret);
+ /**
+-- 
+2.51.0
+
 
 
