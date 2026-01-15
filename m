@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A522D73BE;
-	Thu, 15 Jan 2026 17:03:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192282D73A0;
+	Thu, 15 Jan 2026 17:03:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496586; cv=none; b=uMRZWUECtYeKf3BWw4YJDbCflQxHg3JYNjOwFbVd8TtdOtsQo8REdoGS/j3Du49ioMVhOAcmlsyqYmI9HYh4PJqjJU/HkNoNsXrrNVGTj96yK9sfuSLEmAL2LO6VBCIw5fyS06t4kILpR3yFrVhLUI2jWNv1nhKeG3pAe3WWO5g=
+	t=1768496589; cv=none; b=s2LsPMS4A/7aTtVIQfxwj9qC1Rd7lSAodUCNX0FLLxkeBDtD8rR3HBOpa/buKeAXYozdnOxRbz2F3hp1YseHGdjWonaXSucRZ0AQ9d5+kSdkB3qrgbh3MMHBVwRogjnUDMxcsSWqiXIiFBiPYm3nag9wXRsQkaMoziTE9TbW80E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496586; c=relaxed/simple;
-	bh=tFlVnIQEStf/XH5ABTmZyz0BamqSFlhOyIurXDJM2/k=;
+	s=arc-20240116; t=1768496589; c=relaxed/simple;
+	bh=rBKttZ3+1MCMUY/2XohaR47LjW5TDjppH509OEEUKt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IXUG8Ar6hGrqAr9J8TtfspUg4e5ZxwezmUExvaI4WX75u3PuhgzVA30GL0PXdEodMK5wejAooHVdHF2OdGnFgP3vtZlbI1FkfwiozVOr5+t5rwIKG+gIAZ4VzRRvNL40dX+WZwWOrA/xm6d8WA2cBwp1LNY9Dy0SpPCwzQ1XyuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GDkLHMzm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZoF3xlLBJYv+/7ic78bh1df9toZd4bb6aYVFqic8dM0z25tYYFCYIU5sQwHqH4By7eUpEHg1G9JdytQh7ySMxuWr8sPi81K5A54NxZmn3kBTVJuMC9RcvrI0scr9sx7xZkR42ZiOGhluczb4VTbGKrQ2Ga16/i4XRXL3KzMdg8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p/6vEo3h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GDkLHMzm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7B4CC116D0;
-	Thu, 15 Jan 2026 17:03:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p/6vEo3h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B8E9C16AAE;
+	Thu, 15 Jan 2026 17:03:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496586;
-	bh=tFlVnIQEStf/XH5ABTmZyz0BamqSFlhOyIurXDJM2/k=;
+	s=korg; t=1768496589;
+	bh=rBKttZ3+1MCMUY/2XohaR47LjW5TDjppH509OEEUKt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GDkLHMzmcQ+SRKpX9AewvnrZFYRIriGR7zi4bxnOeAhGti+O0PKDV4ANK0PBa0mXc
-	 Pjs4//ohtqlrWLrlEjn5cDNSswbxv+tIGA5pMUvU3TX3U/ZNy3YLdkziH8/P453ab1
-	 awr01vwueEgdUo+3kRV19lKebr9WVzWjJ7/0QGjk=
+	b=p/6vEo3hibcD8KjvV+HvpkNELazsNBrTEW/WZxCJHL1pcU+oFmWbMMiBwNVqcjCMi
+	 Gr3gWxyboSCM/LAYkCU9M2GDVAWswJpg1ivggFM8WSZRd7TPmIpbejaxaqZPJE2jOs
+	 yPNe/xOltQBwThIS8SLGHBUfml6JaBqFinib7Slo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Florian Westphal <fw@strlen.de>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 063/119] netfilter: nf_conncount: update last_gc only when GC has been performed
-Date: Thu, 15 Jan 2026 17:47:58 +0100
-Message-ID: <20260115164154.230450359@linuxfoundation.org>
+Subject: [PATCH 6.12 032/119] ARM: 9461/1: Disable HIGHPTE on PREEMPT_RT kernels
+Date: Thu, 15 Jan 2026 17:47:27 +0100
+Message-ID: <20260115164153.121790390@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -51,45 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 7811ba452402d58628e68faedf38745b3d485e3c ]
+[ Upstream commit fedadc4137234c3d00c4785eeed3e747fe9036ae ]
 
-Currently last_gc is being updated everytime a new connection is
-tracked, that means that it is updated even if a GC wasn't performed.
-With a sufficiently high packet rate, it is possible to always bypass
-the GC, causing the list to grow infinitely.
+gup_pgd_range() is invoked with disabled interrupts and invokes
+__kmap_local_page_prot() via pte_offset_map(), gup_p4d_range().
+With HIGHPTE enabled, __kmap_local_page_prot() invokes kmap_high_get()
+which uses a spinlock_t via lock_kmap_any(). This leads to an
+sleeping-while-atomic error on PREEMPT_RT because spinlock_t becomes a
+sleeping lock and must not be acquired in atomic context.
 
-Update the last_gc value only when a GC has been actually performed.
+The loop in map_new_virtual() uses wait_queue_head_t for wake up which
+also is using a spinlock_t.
 
-Fixes: d265929930e2 ("netfilter: nf_conncount: reduce unnecessary GC")
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Since HIGHPTE is rarely needed at all, turn it off for PREEMPT_RT
+to allow the use of get_user_pages_fast().
+
+[arnd: rework patch to turn off HIGHPTE instead of HAVE_PAST_GUP]
+
+Co-developed-by: Arnd Bergmann <arnd@arndb.de>
+
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conncount.c | 2 +-
+ arch/arm/Kconfig | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
-index 3c1b155f7a0ea..828d5c64c68a3 100644
---- a/net/netfilter/nf_conncount.c
-+++ b/net/netfilter/nf_conncount.c
-@@ -229,6 +229,7 @@ static int __nf_conncount_add(struct net *net,
+diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
+index d5bf16462bdba..cc8beccc4e86d 100644
+--- a/arch/arm/Kconfig
++++ b/arch/arm/Kconfig
+@@ -1229,7 +1229,7 @@ config HIGHMEM
  
- 		nf_ct_put(found_ct);
- 	}
-+	list->last_gc = (u32)jiffies;
- 
- add_new_node:
- 	if (WARN_ON_ONCE(list->count > INT_MAX)) {
-@@ -248,7 +249,6 @@ static int __nf_conncount_add(struct net *net,
- 	conn->jiffies32 = (u32)jiffies;
- 	list_add_tail(&conn->node, &list->head);
- 	list->count++;
--	list->last_gc = (u32)jiffies;
- 
- out_put:
- 	if (refcounted)
+ config HIGHPTE
+ 	bool "Allocate 2nd-level pagetables from highmem" if EXPERT
+-	depends on HIGHMEM
++	depends on HIGHMEM && !PREEMPT_RT
+ 	default y
+ 	help
+ 	  The VM uses one page of physical memory for each page table.
 -- 
 2.51.0
 
