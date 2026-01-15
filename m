@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB472820C6;
-	Thu, 15 Jan 2026 17:08:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BDA133993;
+	Thu, 15 Jan 2026 17:08:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496909; cv=none; b=SveCjdtNVUElki1z4NgGpqmvhowscmqxFlr+10jTSScRroCYfEFvKNFKdyXRh1j5U2MPkT3JQXarf8osuDgW3AjygvT08xFOKnK6CoqFcBhfHpehw28/NNozn814SSSt01fGnvaEZW+KNxoJY5lptzTwgmkPsHH0HRoDEs5wM4Y=
+	t=1768496912; cv=none; b=m/55Yp02G0B18NBD8NwoLvNll1PeOwQTvwPEuTeY96eV92EOPr7fvPYiJjfgH/RUmoqxT86NVD25RYony6sITh0JJWYCCFzT1IPLioQVJ3sBiqVN4JsoacY+ElMXRkOIvgHsGAU/X3A0uAJi0btfMDJWb9unBc6nh0LbT7vrM/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496909; c=relaxed/simple;
-	bh=L7O2Tb/vPsfev1uQoB7dxKmjUrn0OYqMcxFuWRVZ35s=;
+	s=arc-20240116; t=1768496912; c=relaxed/simple;
+	bh=CC1oljP2GRYMBudJGs9k47UcPCipdl8pzYwVGTBCB5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nYbW2qDHWuYOOlVnrsd4wz1FXyGc8BUkqG992AtVe1ixj04ZIYm/jTI2Kl5X7ugJjn2Yi/g8el8Ionf9b5MIZQsXyy7ykVLiCFhjZLWfKiEN0VkRAt+Hsho+BPKgF1UkllCE4Rot29w6Kx+r8naHvHGQLoXdDANrJfAnfK7+PJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oZcKvRMy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T+3BBdvWUCB8ZQnCq9ZOkQnJmvubgaC84AA3HZpgHsYLFkSBrTKdm3gQ2H99tS7p/ZjhPd0RwhfiDQwRHN5N65Bp0h4fDq4eIlOyFds05/09BzU66gw+VfS0JU8/hZOrJ4buC+BPX0Cnoiz5l5Scr8SE+Ur0cDyfGLEi0gEHLXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nYV7eTdC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oZcKvRMy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D799C16AAE;
-	Thu, 15 Jan 2026 17:08:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nYV7eTdC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16A4FC16AAE;
+	Thu, 15 Jan 2026 17:08:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496909;
-	bh=L7O2Tb/vPsfev1uQoB7dxKmjUrn0OYqMcxFuWRVZ35s=;
+	s=korg; t=1768496912;
+	bh=CC1oljP2GRYMBudJGs9k47UcPCipdl8pzYwVGTBCB5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oZcKvRMyTbOxVkrGgEjFFtB3IC3oGrSS9kDPEV/mSUYXHP8FDkBaH6SQdd0I8Ctp9
-	 rL6UPASLcwsR4QfRpJhVbWNc8hdKRzPUEzG/NP73CmTwZGTXGfcx6t7VWP+f9Ga+7s
-	 EeTVgZgvS4UhXDXq6mCVTeVow0NCD7CRoImmhlfI=
+	b=nYV7eTdC4tvRjR809PmsuOE+Y5///5AQZUCtHRyE2V+LZhkSSuJq8ZBhES+6mkT97
+	 0y75WbhmzGpmeTKdb+lzmhH07vPiwqpdqUB0zW4hiISX8/yIof4pZ1XH6suJL0szH4
+	 UoHSoUt0cn8SfbsWiBWZmCy74pi3ttNSH2jYlj1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ray Jui <ray.jui@broadcom.com>,
-	Srijit Bose <srijit.bose@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Mohammad Heib <mheib@redhat.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 58/88] bnxt_en: Fix potential data corruption with HW GRO/LRO
-Date: Thu, 15 Jan 2026 17:48:41 +0100
-Message-ID: <20260115164148.413674549@linuxfoundation.org>
+Subject: [PATCH 6.6 59/88] net: fix memory leak in skb_segment_list for GRO packets
+Date: Thu, 15 Jan 2026 17:48:42 +0100
+Message-ID: <20260115164148.449601526@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164146.312481509@linuxfoundation.org>
 References: <20260115164146.312481509@linuxfoundation.org>
@@ -54,86 +52,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srijit Bose <srijit.bose@broadcom.com>
+From: Mohammad Heib <mheib@redhat.com>
 
-[ Upstream commit ffeafa65b2b26df2f5b5a6118d3174f17bd12ec5 ]
+[ Upstream commit 238e03d0466239410b72294b79494e43d4fabe77 ]
 
-Fix the max number of bits passed to find_first_zero_bit() in
-bnxt_alloc_agg_idx().  We were incorrectly passing the number of
-long words.  find_first_zero_bit() may fail to find a zero bit and
-cause a wrong ID to be used.  If the wrong ID is already in use, this
-can cause data corruption.  Sometimes an error like this can also be
-seen:
+When skb_segment_list() is called during packet forwarding, it handles
+packets that were aggregated by the GRO engine.
 
-bnxt_en 0000:83:00.0 enp131s0np0: TPA end agg_buf 2 != expected agg_bufs 1
+Historically, the segmentation logic in skb_segment_list assumes that
+individual segments are split from a parent SKB and may need to carry
+their own socket memory accounting. Accordingly, the code transfers
+truesize from the parent to the newly created segments.
 
-Fix it by passing the correct number of bits MAX_TPA_P5.  Use
-DECLARE_BITMAP() to more cleanly define the bitmap.  Add a sanity
-check to warn if a bit cannot be found and reset the ring [MChan].
+Prior to commit ed4cccef64c1 ("gro: fix ownership transfer"), this
+truesize subtraction in skb_segment_list() was valid because fragments
+still carry a reference to the original socket.
 
-Fixes: ec4d8e7cf024 ("bnxt_en: Add TPA ID mapping logic for 57500 chips.")
-Reviewed-by: Ray Jui <ray.jui@broadcom.com>
-Signed-off-by: Srijit Bose <srijit.bose@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20251231083625.3911652-1-michael.chan@broadcom.com
+However, commit ed4cccef64c1 ("gro: fix ownership transfer") changed
+this behavior by ensuring that fraglist entries are explicitly
+orphaned (skb->sk = NULL) to prevent illegal orphaning later in the
+stack. This change meant that the entire socket memory charge remained
+with the head SKB, but the corresponding accounting logic in
+skb_segment_list() was never updated.
+
+As a result, the current code unconditionally adds each fragment's
+truesize to delta_truesize and subtracts it from the parent SKB. Since
+the fragments are no longer charged to the socket, this subtraction
+results in an effective under-count of memory when the head is freed.
+This causes sk_wmem_alloc to remain non-zero, preventing socket
+destruction and leading to a persistent memory leak.
+
+The leak can be observed via KMEMLEAK when tearing down the networking
+environment:
+
+unreferenced object 0xffff8881e6eb9100 (size 2048):
+  comm "ping", pid 6720, jiffies 4295492526
+  backtrace:
+    kmem_cache_alloc_noprof+0x5c6/0x800
+    sk_prot_alloc+0x5b/0x220
+    sk_alloc+0x35/0xa00
+    inet6_create.part.0+0x303/0x10d0
+    __sock_create+0x248/0x640
+    __sys_socket+0x11b/0x1d0
+
+Since skb_segment_list() is exclusively used for SKB_GSO_FRAGLIST
+packets constructed by GRO, the truesize adjustment is removed.
+
+The call to skb_release_head_state() must be preserved. As documented in
+commit cf673ed0e057 ("net: fix fraglist segmentation reference count
+leak"), it is still required to correctly drop references to SKB
+extensions that may be overwritten during __copy_skb_header().
+
+Fixes: ed4cccef64c1 ("gro: fix ownership transfer")
+Signed-off-by: Mohammad Heib <mheib@redhat.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260104213101.352887-1-mheib@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 15 ++++++++++++---
- drivers/net/ethernet/broadcom/bnxt/bnxt.h |  4 +---
- 2 files changed, 13 insertions(+), 6 deletions(-)
+ net/core/skbuff.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 8e4e8291d8c66..e337b6c7ee6f9 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -1268,9 +1268,11 @@ static u16 bnxt_alloc_agg_idx(struct bnxt_rx_ring_info *rxr, u16 agg_id)
- 	struct bnxt_tpa_idx_map *map = rxr->rx_tpa_idx_map;
- 	u16 idx = agg_id & MAX_TPA_P5_MASK;
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 073e2c5274079..4c28954f915fa 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -4344,12 +4344,14 @@ struct sk_buff *skb_segment_list(struct sk_buff *skb,
+ {
+ 	struct sk_buff *list_skb = skb_shinfo(skb)->frag_list;
+ 	unsigned int tnl_hlen = skb_tnl_header_len(skb);
+-	unsigned int delta_truesize = 0;
+ 	unsigned int delta_len = 0;
+ 	struct sk_buff *tail = NULL;
+ 	struct sk_buff *nskb, *tmp;
+ 	int len_diff, err;
  
--	if (test_bit(idx, map->agg_idx_bmap))
--		idx = find_first_zero_bit(map->agg_idx_bmap,
--					  BNXT_AGG_IDX_BMAP_SIZE);
-+	if (test_bit(idx, map->agg_idx_bmap)) {
-+		idx = find_first_zero_bit(map->agg_idx_bmap, MAX_TPA_P5);
-+		if (idx >= MAX_TPA_P5)
-+			return INVALID_HW_RING_ID;
-+	}
- 	__set_bit(idx, map->agg_idx_bmap);
- 	map->agg_id_tbl[agg_id] = idx;
- 	return idx;
-@@ -1303,6 +1305,13 @@ static void bnxt_tpa_start(struct bnxt *bp, struct bnxt_rx_ring_info *rxr,
- 	if (bp->flags & BNXT_FLAG_CHIP_P5) {
- 		agg_id = TPA_START_AGG_ID_P5(tpa_start);
- 		agg_id = bnxt_alloc_agg_idx(rxr, agg_id);
-+		if (unlikely(agg_id == INVALID_HW_RING_ID)) {
-+			netdev_warn(bp->dev, "Unable to allocate agg ID for ring %d, agg 0x%x\n",
-+				    rxr->bnapi->index,
-+				    TPA_START_AGG_ID_P5(tpa_start));
-+			bnxt_sched_reset_rxr(bp, rxr);
-+			return;
-+		}
- 	} else {
- 		agg_id = TPA_START_AGG_ID(tpa_start);
++	/* Only skb_gro_receive_list generated skbs arrive here */
++	DEBUG_NET_WARN_ON_ONCE(!(skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST));
++
+ 	skb_push(skb, -skb_network_offset(skb) + offset);
+ 
+ 	/* Ensure the head is writeable before touching the shared info */
+@@ -4363,8 +4365,9 @@ struct sk_buff *skb_segment_list(struct sk_buff *skb,
+ 		nskb = list_skb;
+ 		list_skb = list_skb->next;
+ 
++		DEBUG_NET_WARN_ON_ONCE(nskb->sk);
++
+ 		err = 0;
+-		delta_truesize += nskb->truesize;
+ 		if (skb_shared(nskb)) {
+ 			tmp = skb_clone(nskb, GFP_ATOMIC);
+ 			if (tmp) {
+@@ -4407,7 +4410,6 @@ struct sk_buff *skb_segment_list(struct sk_buff *skb,
+ 			goto err_linearize;
  	}
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-index 0116f67593e3a..d96c9aabf97a7 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-@@ -898,11 +898,9 @@ struct bnxt_tpa_info {
- 	struct rx_agg_cmp	*agg_arr;
- };
  
--#define BNXT_AGG_IDX_BMAP_SIZE	(MAX_TPA_P5 / BITS_PER_LONG)
--
- struct bnxt_tpa_idx_map {
- 	u16		agg_id_tbl[1024];
--	unsigned long	agg_idx_bmap[BNXT_AGG_IDX_BMAP_SIZE];
-+	DECLARE_BITMAP(agg_idx_bmap, MAX_TPA_P5);
- };
+-	skb->truesize = skb->truesize - delta_truesize;
+ 	skb->data_len = skb->data_len - delta_len;
+ 	skb->len = skb->len - delta_len;
  
- struct bnxt_rx_ring_info {
 -- 
 2.51.0
 
