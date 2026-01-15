@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D9A13D7D66;
-	Thu, 15 Jan 2026 17:58:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8443D3D7D6C;
+	Thu, 15 Jan 2026 17:58:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499909; cv=none; b=lmTWVGqj01vees4JCEqoiM29vDOHs4gydR6JAxjwAUma4O8DlnBWr2Ytdmj91sTPhJQfXWKOdbb3eq9n+hdAhn5CoieruTxu3f+BOjAtsPpSGyNxTJMDgtjIymG07dCr9iMVPSZaebIh6nOL+z/27qL4O9mUYIbbkg3dqZWrdOs=
+	t=1768499912; cv=none; b=RFchG740CvzbxKnxXXI0Wb+XCu2ZMt7Z38xDWsTILgVLES6+fIa1/SmzJietXtstQ62a6s3+CIdEgmmQe/1/TOEatqR2KP32H5YWB+Dz7WrM0st+t7Xx2+Y8iIvUMo3oRjvXcWiT3r7gRv7O4cVvPouEyabKDFqZBKZDIMpLQlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499909; c=relaxed/simple;
-	bh=GiyRikAbMkvewsku2/d54OEMUGWuQ1bcGCp7+Q2cSLg=;
+	s=arc-20240116; t=1768499912; c=relaxed/simple;
+	bh=eQl3TbBVJIYse2nrm/w5Fa5o7I2Ab3aZPSCQs6biKug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V+aUN90FVjY99c9WD7tSVFW2j8VEsAm29Va3Ne5VaETOiq58PMJsvXPVWS00k2IZD1oifV2rqYOtQ4DPtK1ZF4TV/Llb4VsgJb26L1OdfyQx9F1gsoGEKuw93OfEzdFXcT5zXyGp4UqjxSdCEGWWiFG3C5TTSWbPEedbP+76XQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bMzQ1GK4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uIu+ujCN1J29lbMCanFEScfyERehpZnPFWqZJknP2wIhjY7sPIVL5WhWiOwGjjsr1ys/aoLWIe4L1tHSeM53+6kc3mvPNpsvlof/0q42PI5jQ6YSW1Z0lJ2d26+f2GX1XEwEmvhpDXU+OJriUy5nBa/f729MIW5OthfVSf1egj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zkVe5z2y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMzQ1GK4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28925C19422;
-	Thu, 15 Jan 2026 17:58:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zkVe5z2y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C7EAC16AAE;
+	Thu, 15 Jan 2026 17:58:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499909;
-	bh=GiyRikAbMkvewsku2/d54OEMUGWuQ1bcGCp7+Q2cSLg=;
+	s=korg; t=1768499912;
+	bh=eQl3TbBVJIYse2nrm/w5Fa5o7I2Ab3aZPSCQs6biKug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bMzQ1GK4S4rnlSLO6SBFxWBU6l5tL8HqqAHpMfWbBicJCHYPk2ZO+OIcCbwSCYaJF
-	 xT77fNSXIZXPsvCFIpkpFT662sQjDvs3gidFmaw9nZOdzzKY+Vg9J6k/4TLtH9O5/4
-	 Wpfp3ViKSZUZVZdhhkBbucn3SfB0ssSDjZUouFt4=
+	b=zkVe5z2yk7ae1g/5/jgZPGZHxuRF8gehxEQ82q8xL1g3b7DeqKXagHLA9av5fd34O
+	 oTELz0eyl+JisroStk04pYjJcgx85RAY+oj6rTJAUYN3577DARgeK5Y6J0Wo2PDhL4
+	 msSbWaGmMD3VNdVXQIOEKnHgR9PPa99O3rwkTPgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jouni Malinen <jouni.malinen@oss.qualcomm.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 392/451] wifi: mac80211: Discard Beacon frames to non-broadcast address
-Date: Thu, 15 Jan 2026 17:49:53 +0100
-Message-ID: <20260115164245.114414972@linuxfoundation.org>
+	Aurelien Couderc <aurelien.couderc2002@gmail.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.10 393/451] NFSD: NFSv4 file creation neglects setting ACL
+Date: Thu, 15 Jan 2026 17:49:54 +0100
+Message-ID: <20260115164245.151340252@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -51,59 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jouni Malinen <jouni.malinen@oss.qualcomm.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 193d18f60588e95d62e0f82b6a53893e5f2f19f8 ]
+[ Upstream commit 913f7cf77bf14c13cfea70e89bcb6d0b22239562 ]
 
-Beacon frames are required to be sent to the broadcast address, see IEEE
-Std 802.11-2020, 11.1.3.1 ("The Address 1 field of the Beacon .. frame
-shall be set to the broadcast address"). A unicast Beacon frame might be
-used as a targeted attack to get one of the associated STAs to do
-something (e.g., using CSA to move it to another channel). As such, it
-is better have strict filtering for this on the received side and
-discard all Beacon frames that are sent to an unexpected address.
+An NFSv4 client that sets an ACL with a named principal during file
+creation retrieves the ACL afterwards, and finds that it is only a
+default ACL (based on the mode bits) and not the ACL that was
+requested during file creation. This violates RFC 8881 section
+6.4.1.3: "the ACL attribute is set as given".
 
-This is even more important for cases where beacon protection is used.
-The current implementation in mac80211 is correctly discarding unicast
-Beacon frames if the Protected Frame bit in the Frame Control field is
-set to 0. However, if that bit is set to 1, the logic used for checking
-for configured BIGTK(s) does not actually work. If the driver does not
-have logic for dropping unicast Beacon frames with Protected Frame bit
-1, these frames would be accepted in mac80211 processing as valid Beacon
-frames even though they are not protected. This would allow beacon
-protection to be bypassed. While the logic for checking beacon
-protection could be extended to cover this corner case, a more generic
-check for discard all Beacon frames based on A1=unicast address covers
-this without needing additional changes.
+The issue occurs in nfsd_create_setattr(). On 6.1.y, the check to
+determine whether nfsd_setattr() should be called is simply
+"iap->ia_valid", which only accounts for iattr changes. When only
+an ACL is present (and no iattr fields are set), nfsd_setattr() is
+skipped and the POSIX ACL is never applied to the inode.
 
-Address all these issues by dropping received Beacon frames if they are
-sent to a non-broadcast address.
+Subsequently, when the client retrieves the ACL, the server finds
+no POSIX ACL on the inode and returns one generated from the file's
+mode bits rather than returning the originally-specified ACL.
 
+Reported-by: Aurelien Couderc <aurelien.couderc2002@gmail.com>
+Fixes: c0cbe70742f4 ("NFSD: add posix ACLs to struct nfsd_attrs")
 Cc: stable@vger.kernel.org
-Fixes: af2d14b01c32 ("mac80211: Beacon protection using the new BIGTK (STA)")
-Signed-off-by: Jouni Malinen <jouni.malinen@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251215151134.104501-1-jouni.malinen@oss.qualcomm.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ adapted RX_DROP return value to RX_DROP_MONITOR ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[ cel: Adjust nfsd_create_setattr() instead of nfsd_attrs_valid() ]
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/rx.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/nfsd/vfs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/mac80211/rx.c
-+++ b/net/mac80211/rx.c
-@@ -3189,6 +3189,11 @@ ieee80211_rx_h_mgmt_check(struct ieee802
- 	if (!ieee80211_is_mgmt(mgmt->frame_control))
- 		return RX_DROP_MONITOR;
- 
-+	/* Drop non-broadcast Beacon frames */
-+	if (ieee80211_is_beacon(mgmt->frame_control) &&
-+	    !is_broadcast_ether_addr(mgmt->da))
-+		return RX_DROP_MONITOR;
-+
- 	if (rx->sdata->vif.type == NL80211_IFTYPE_AP &&
- 	    ieee80211_is_beacon(mgmt->frame_control) &&
- 	    !(rx->flags & IEEE80211_RX_BEACON_REPORTED)) {
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -1335,7 +1335,7 @@ nfsd_create_setattr(struct svc_rqst *rqs
+ 	 * Callers expect new file metadata to be committed even
+ 	 * if the attributes have not changed.
+ 	 */
+-	if (iap->ia_valid)
++	if (iap->ia_valid || attrs->na_pacl || attrs->na_dpacl)
+ 		status = nfsd_setattr(rqstp, resfhp, attrs, 0, (time64_t)0);
+ 	else
+ 		status = nfserrno(commit_metadata(resfhp));
 
 
