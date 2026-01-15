@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF108E56A;
-	Thu, 15 Jan 2026 17:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7865921CC5A;
+	Thu, 15 Jan 2026 17:23:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497821; cv=none; b=J3tIyT1s5hmQ2zwWoHSvN42u+tcZl9WCn7Kl4qXfGepc3TwmWhQ8S3ylC4KPC6d2temDAiCJUwPFGpdhZ3K+d48lJwi33K97mERzQl3lsC9ZD7+aBaFusMXRbyAKX/h+ZHGdiR0gutvw+NyZR6Qz2sDISi40SspMFz+4/9LbGw0=
+	t=1768497824; cv=none; b=Ya8PLU4dOMh1iBpBtbMQbcgxd8H+Q3Yb1XE8wnDMCdP60QmYGbscqdYrOhX3P1PWqm6f/9j1I8gCK6pBtV1FmPSskpAqLCYCiYPk6/6bsbFOH+qSzpSFPNMyID8XWI1/R68vGDL0YJjencYZwib0k6BddnxWvwTrMIEsVpMnaBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497821; c=relaxed/simple;
-	bh=qYArBgSmzVXcLSzshQM9vEN1/YeB5m99GDqKBghIKr4=;
+	s=arc-20240116; t=1768497824; c=relaxed/simple;
+	bh=xNZV2rjWU8AJVcpuiDjRkANG358phhfsXyjNpxmLiI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i8Cv0OISRo3g63lVZPjarTaEo2ZSMAGuklP5CSdbwyJDruQFWJLjiRMdI1In3zuGp5nlNXLdRR8kX7BaXpIkXR2MlIqaC9tV4CGMN5TaujX72lvLQ4yBC/JlajOBdchvcr/xOx64+8dMO+JKvZUkww+UWyEsli4Xu1CSO2YwP94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UfwmOqLW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d7YYHAtsAP0IR/s0Snb2dtGl/hLOntWRev3bPcjAfAZ3GsH81U93OaZvnVtD5fBn3i1Bm/24nXY1zh2WQqzptDCjQxdEIeLeKghi/o3CBR7y4Xnm53qYXu4swTN6Lsn7CQ3eFx7lznBu5mqju3NvOpQgN1b2w1kxjwfVwI7CkDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZkMk3BoJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UfwmOqLW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06424C116D0;
-	Thu, 15 Jan 2026 17:23:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZkMk3BoJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 002BEC116D0;
+	Thu, 15 Jan 2026 17:23:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497821;
-	bh=qYArBgSmzVXcLSzshQM9vEN1/YeB5m99GDqKBghIKr4=;
+	s=korg; t=1768497824;
+	bh=xNZV2rjWU8AJVcpuiDjRkANG358phhfsXyjNpxmLiI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UfwmOqLWBEtd0BKLM0wQkmSitAi61umccSEDQZL5+2EWpAzcEO4YY90CjQ8kMzvL0
-	 wD2IXbTWgIBP70r/1wtQnSHMLMXaU3jaPU/RoAkhxHQ93sc74o+JZbyXF9pqYgpVjS
-	 FItj2eeZTEE983FrMrt5Oem/RY135gx6HGX2bo/c=
+	b=ZkMk3BoJHTfqlD6ayweDOZG5P+a+s7sLELeELwXjwWwDz/gLryhMbh6nNBbDsGXg3
+	 PlkV4COBPS1+fweLZuR3pArpyJ4lPSgDPD60Ko2w7s9EAbsU+w5PoMRNLjmoSr8y0K
+	 EO5jbRStqnpCBUYckNdokrTqyhxzvWymXYOiMLO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Yangtao Li <frank.li@vivo.com>,
+	linux-fsdevel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 216/554] fs/ntfs3: Support timestamps prior to epoch
-Date: Thu, 15 Jan 2026 17:44:42 +0100
-Message-ID: <20260115164254.068353663@linuxfoundation.org>
+Subject: [PATCH 5.15 217/554] hfsplus: fix volume corruption issue for generic/070
+Date: Thu, 15 Jan 2026 17:44:43 +0100
+Message-ID: <20260115164254.104176818@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -50,41 +53,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Viacheslav Dubeyko <slava@dubeyko.com>
 
-[ Upstream commit 5180138604323895b5c291eca6aa7c20be494ade ]
+[ Upstream commit ed490f36f439b877393c12a2113601e4145a5a56 ]
 
-Before it used an unsigned 64-bit type, which prevented proper handling
-of timestamps earlier than 1970-01-01. Switch to a signed 64-bit type to
-support pre-epoch timestamps. The issue was caught by xfstests.
+The xfstests' test-case generic/070 leaves HFS+ volume
+in corrupted state:
 
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+sudo ./check generic/070
+FSTYP -- hfsplus
+PLATFORM -- Linux/x86_64 hfsplus-testing-0001 6.17.0-rc1+ #4 SMP PREEMPT_DYNAMIC Wed Oct 1 15:02:44 PDT 2025
+MKFS_OPTIONS -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
+
+generic/070 _check_generic_filesystem: filesystem on /dev/loop50 is inconsistent
+(see xfstests-dev/results//generic/070.full for details)
+
+Ran: generic/070
+Failures: generic/070
+Failed 1 of 1 tests
+
+sudo fsck.hfsplus -d /dev/loop50
+** /dev/loop50
+Using cacheBlockSize=32K cacheTotalBlock=1024 cacheSize=32768K.
+Executing fsck_hfs (version 540.1-Linux).
+** Checking non-journaled HFS Plus Volume.
+The volume name is test
+** Checking extents overflow file.
+Unused node is not erased (node = 1)
+** Checking catalog file.
+** Checking multi-linked files.
+** Checking catalog hierarchy.
+** Checking extended attributes file.
+** Checking volume bitmap.
+** Checking volume information.
+Verify Status: VIStat = 0x0000, ABTStat = 0x0000 EBTStat = 0x0004
+CBTStat = 0x0000 CatStat = 0x00000000
+** Repairing volume.
+** Rechecking volume.
+** Checking non-journaled HFS Plus Volume.
+The volume name is test
+** Checking extents overflow file.
+** Checking catalog file.
+** Checking multi-linked files.
+** Checking catalog hierarchy.
+** Checking extended attributes file.
+** Checking volume bitmap.
+** Checking volume information.
+** The volume test was repaired successfully.
+
+It is possible to see that fsck.hfsplus detected not
+erased and unused node for the case of extents overflow file.
+The HFS+ logic has special method that defines if the node
+should be erased:
+
+bool hfs_bnode_need_zeroout(struct hfs_btree *tree)
+{
+	struct super_block *sb = tree->inode->i_sb;
+	struct hfsplus_sb_info *sbi = HFSPLUS_SB(sb);
+	const u32 volume_attr = be32_to_cpu(sbi->s_vhdr->attributes);
+
+	return tree->cnid == HFSPLUS_CAT_CNID &&
+		volume_attr & HFSPLUS_VOL_UNUSED_NODE_FIX;
+}
+
+However, it is possible to see that this method works
+only for the case of catalog file. But debugging of the issue
+has shown that HFSPLUS_VOL_UNUSED_NODE_FIX attribute has been
+requested for the extents overflow file too:
+
+catalog file
+kernel: hfsplus: node 4, num_recs 0, flags 0x10
+kernel: hfsplus: tree->cnid 4, volume_attr 0x80000800
+
+extents overflow file
+kernel: hfsplus: node 1, num_recs 0, flags 0x10
+kernel: hfsplus: tree->cnid 3, volume_attr 0x80000800
+
+This patch modifies the hfs_bnode_need_zeroout() by checking
+only volume_attr but not the b-tree ID because node zeroing
+can be requested for all HFS+ b-tree types.
+
+sudo ./check generic/070
+FSTYP         -- hfsplus
+PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 6.18.0-rc3+ #79 SMP PREEMPT_DYNAMIC Fri Oct 31 16:07:42 PDT 2025
+MKFS_OPTIONS  -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
+
+generic/070 33s ...  34s
+Ran: generic/070
+Passed all 1 tests
+
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+cc: Yangtao Li <frank.li@vivo.com>
+cc: linux-fsdevel@vger.kernel.org
+Link: https://lore.kernel.org/r/20251101001229.247432-1-slava@dubeyko.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/ntfs_fs.h | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ fs/hfsplus/bnode.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
-index 69d1442eea623..d93cba03a65aa 100644
---- a/fs/ntfs3/ntfs_fs.h
-+++ b/fs/ntfs3/ntfs_fs.h
-@@ -975,11 +975,12 @@ static inline __le64 kernel2nt(const struct timespec64 *ts)
-  */
- static inline void nt2kernel(const __le64 tm, struct timespec64 *ts)
- {
--	u64 t = le64_to_cpu(tm) - _100ns2seconds * SecondsToStartOf1970;
-+	s32 t32;
-+	/* use signed 64 bit to support timestamps prior to epoch. xfstest 258. */
-+	s64 t = le64_to_cpu(tm) - _100ns2seconds * SecondsToStartOf1970;
+diff --git a/fs/hfsplus/bnode.c b/fs/hfsplus/bnode.c
+index e566cea238279..358294726ff17 100644
+--- a/fs/hfsplus/bnode.c
++++ b/fs/hfsplus/bnode.c
+@@ -717,6 +717,5 @@ bool hfs_bnode_need_zeroout(struct hfs_btree *tree)
+ 	struct hfsplus_sb_info *sbi = HFSPLUS_SB(sb);
+ 	const u32 volume_attr = be32_to_cpu(sbi->s_vhdr->attributes);
  
--	// WARNING: do_div changes its first argument(!)
--	ts->tv_nsec = do_div(t, _100ns2seconds) * 100;
--	ts->tv_sec = t;
-+	ts->tv_sec = div_s64_rem(t, _100ns2seconds, &t32);
-+	ts->tv_nsec = t32 * 100;
+-	return tree->cnid == HFSPLUS_CAT_CNID &&
+-		volume_attr & HFSPLUS_VOL_UNUSED_NODE_FIX;
++	return volume_attr & HFSPLUS_VOL_UNUSED_NODE_FIX;
  }
- 
- static inline struct ntfs_sb_info *ntfs_sb(struct super_block *sb)
 -- 
 2.51.0
 
