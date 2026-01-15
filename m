@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA49327AC5C;
-	Thu, 15 Jan 2026 17:39:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2903986334;
+	Thu, 15 Jan 2026 17:39:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498749; cv=none; b=HBaCiswpijouj68kn8KQTnRvJRq78jYhM8TPB3aC6zxEwCDIL7DuM6P1uMGQT/51jkfmZEFt6PXAR7yaEFn3C37NdNR/OiLvcg0BdIroxde6CrZNd1UUh/Ar41rt7aV4+XpSgxohPR1aA2IDIPtnaPWnDKGXAH1uLBBrm+KXADQ=
+	t=1768498752; cv=none; b=JKs29c7ZiRRuzPMu8vQ+FoGL3FjbV23JbiE/Lm+aXz9XCTnxkvODQJ+Ckv3FCViySARqdZW358OtO60qbYor3/Y1QRqOdOE8xyk/PYEzGKLYh5c/TebCITlbq2BUnbGpKdBbtFCevJ0gRWweWYEdzNX8KCjcn1WBRQ7c8I+NHJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498749; c=relaxed/simple;
-	bh=3xHGqtTal0thJBjK6VSnkOdW+fHJvakWI/zXIj5oHvg=;
+	s=arc-20240116; t=1768498752; c=relaxed/simple;
+	bh=v36icPnHLlt1mgM+Yncit7Sy/pCDMRiXQA+ufVRNtLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H0+ws8bxmvxEMA//SwRk+Z/MyD9uDs2hUYuur3/5m/9Atu6p6UqDbwv7/PRVnPN+4RVLNJdTIbYGy3UgD/NvaFf9NmZGHptA+ZNnO+wi2NVObkF88wFp/XWoGMvf+CPrpH61u81ny+xfWj/SkQX0CLjAM4MbtmOYoFRQGM0wq7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rZDlI8kR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MtvbF0oEU8jTN1t5KeqDdJhJmm3KbjsYJ0IaTFKrvE35cR3XhCfzb9Shbd1KeO59jMULjF0P0hWf+9t7K94UeEEnX9soH/jo5X/mO/BfOZW3MI55oCC6EAGOomyN1eA5UpqYmreBaVjZzhwEBNQmZhi0tma8fkmKNM7ieWNL3HA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ryCnnF8g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rZDlI8kR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D79C9C116D0;
-	Thu, 15 Jan 2026 17:39:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ryCnnF8g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC956C116D0;
+	Thu, 15 Jan 2026 17:39:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498749;
-	bh=3xHGqtTal0thJBjK6VSnkOdW+fHJvakWI/zXIj5oHvg=;
+	s=korg; t=1768498752;
+	bh=v36icPnHLlt1mgM+Yncit7Sy/pCDMRiXQA+ufVRNtLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rZDlI8kRsSeCY/hjlrC58MNZcsZ11yFZ/PxwE6tHOo3RwMPZaIXT/gI+0kg3+onZx
-	 +y+jvSBcfBAebF3XDDpWp3WehggmZuMRciSg0sSIW/4oDF8l7VHTWJF194NkdnV2In
-	 nIqBAekHyxsUksRgynTT8sImIgu9DxlZ+cSq8PlM=
+	b=ryCnnF8g9KOLFmKyWPjwgkf4c8c+y2shZQJH0tBRenb/hoRVCtk8QeYuTWbNtGCrJ
+	 Gr/Eqnxm3R9SjcugC+/RWbpg5n6WTHfp+00AB/iwZ/6ljZJCbDRc/61BzjuYMklNz6
+	 UEMJRVE15k82mKxwDu1ceamzf2Cd2pW3HrdES9pk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+58b44a770a1585795351@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chen Hanxiao <chenhx.fnst@fujitsu.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 541/554] arp: do not assume dev_hard_header() does not change skb->head
-Date: Thu, 15 Jan 2026 17:50:07 +0100
-Message-ID: <20260115164305.907390409@linuxfoundation.org>
+Subject: [PATCH 5.15 542/554] NFS: trace: show TIMEDOUT instead of 0x6e
+Date: Thu, 15 Jan 2026 17:50:08 +0100
+Message-ID: <20260115164305.942970814@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -52,58 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Chen Hanxiao <chenhx.fnst@fujitsu.com>
 
-[ Upstream commit c92510f5e3f82ba11c95991824a41e59a9c5ed81 ]
+[ Upstream commit cef48236dfe55fa266d505e8a497963a7bc5ef2a ]
 
-arp_create() is the only dev_hard_header() caller
-making assumption about skb->head being unchanged.
+__nfs_revalidate_inode may return ETIMEDOUT.
 
-A recent commit broke this assumption.
+print symbol of ETIMEDOUT in nfs trace:
 
-Initialize @arp pointer after dev_hard_header() call.
+before:
+cat-5191 [005] 119.331127: nfs_revalidate_inode_exit: error=-110 (0x6e)
 
-Fixes: db5b4e39c4e6 ("ip6_gre: make ip6gre_header() robust")
-Reported-by: syzbot+58b44a770a1585795351@syzkaller.appspotmail.com
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260107212250.384552-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+after:
+cat-1738 [004] 44.365509: nfs_revalidate_inode_exit: error=-110 (TIMEDOUT)
+
+Signed-off-by: Chen Hanxiao <chenhx.fnst@fujitsu.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Stable-dep-of: c6c209ceb87f ("NFSD: Remove NFSERR_EAGAIN")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/arp.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ include/trace/misc/nfs.h |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ipv4/arp.c b/net/ipv4/arp.c
-index ef69321886798..5a76164980344 100644
---- a/net/ipv4/arp.c
-+++ b/net/ipv4/arp.c
-@@ -542,7 +542,7 @@ struct sk_buff *arp_create(int type, int ptype, __be32 dest_ip,
- 
- 	skb_reserve(skb, hlen);
- 	skb_reset_network_header(skb);
--	arp = skb_put(skb, arp_hdr_len(dev));
-+	skb_put(skb, arp_hdr_len(dev));
- 	skb->dev = dev;
- 	skb->protocol = htons(ETH_P_ARP);
- 	if (!src_hw)
-@@ -550,12 +550,13 @@ struct sk_buff *arp_create(int type, int ptype, __be32 dest_ip,
- 	if (!dest_hw)
- 		dest_hw = dev->broadcast;
- 
--	/*
--	 *	Fill the device header for the ARP frame
-+	/* Fill the device header for the ARP frame.
-+	 * Note: skb->head can be changed.
- 	 */
- 	if (dev_hard_header(skb, dev, ptype, dest_hw, src_hw, skb->len) < 0)
- 		goto out;
- 
-+	arp = arp_hdr(skb);
- 	/*
- 	 * Fill out the arp protocol part.
- 	 *
--- 
-2.51.0
-
+--- a/include/trace/misc/nfs.h
++++ b/include/trace/misc/nfs.h
+@@ -52,6 +52,7 @@ TRACE_DEFINE_ENUM(NFSERR_JUKEBOX);
+ 		{ NFSERR_IO,			"IO" }, \
+ 		{ NFSERR_NXIO,			"NXIO" }, \
+ 		{ ECHILD,			"CHILD" }, \
++		{ ETIMEDOUT,			"TIMEDOUT" }, \
+ 		{ NFSERR_EAGAIN,		"AGAIN" }, \
+ 		{ NFSERR_ACCES,			"ACCES" }, \
+ 		{ NFSERR_EXIST,			"EXIST" }, \
 
 
