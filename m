@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87F4C2F619D;
-	Thu, 15 Jan 2026 17:42:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617D52D7DED;
+	Thu, 15 Jan 2026 17:42:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498958; cv=none; b=XFmZzeRZ/pPRl/+9ZN/Vuz6+y/gRd1rETvW0oQvdszrpRvc+sMa5mMhHucEHpNgFJmWfHBRPLs2lkgfD1I9A8cx4/2RXUW5D2oWiKhegaufM8OoepnsP3XTJQQq54q3lr3U9UG5B9koUS8hR2FE+qxdQ5N2JmHjxrOFq2zUG8e8=
+	t=1768498961; cv=none; b=m2PxbfuKbSLUyPkNBv2HKI2hjvJNWd//7AoN1hZgZjZM89WgpQYNefxsGSUGpOLKGQEci3EE0FTbS3BL7Ih1IAO9wglCK1U0HbZtLvXHDjAzf9+ZjnxUrNQvP/NSz7ppsfV/D2pajcqjFLBwSGnNq6FFIuD0RSpvQ/640etf10I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498958; c=relaxed/simple;
-	bh=+0Rab4jmdgJn+UiRN8tvEm/M87EQlkNcGEFWqJnuJtI=;
+	s=arc-20240116; t=1768498961; c=relaxed/simple;
+	bh=Jfh5+zzP5M05YPBqQ5rrwk51IL9hhEHGlC5k2XHYqD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u36+rECWe4zumWfXa3GH8qId1Os+xW4TPGKeovJBBcSdDndBnmwutlye8uLrxjJAHx0ZGdw+Xiy8np5mjBlF1Cn4B3o/qg8CqULKSvggLtX7vCKNLPaih3xYs/zz8qzxKiY3OlOkAap0BF99802PMjf7dpR/5c1k3+LW2E9X8BE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ann24PDo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lEg5KozRceJnhOGJDk2Qg4bkyUacd4tLMBK2a3jM60JKtr2RQbvjS5BoBcR4ipozhy+PLJ+wO8i7txY1K6ubISY5FHpjqXRZEM0S/XtOBUH1mwpEGggfgMQsm3rlhk5So4pomJftRbGPDeYbK5gF6elrqB7Z1g2neeIzbkzbqA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CNCVsE8S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ann24PDo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08CA6C116D0;
-	Thu, 15 Jan 2026 17:42:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CNCVsE8S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFF9EC116D0;
+	Thu, 15 Jan 2026 17:42:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498958;
-	bh=+0Rab4jmdgJn+UiRN8tvEm/M87EQlkNcGEFWqJnuJtI=;
+	s=korg; t=1768498961;
+	bh=Jfh5+zzP5M05YPBqQ5rrwk51IL9hhEHGlC5k2XHYqD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ann24PDohKqwYKso7TJyMicUfrKqjx7DXwFAGDBq97AbHY+lpjFRnjIjJC6LLrgqs
-	 ycqbIvodK4M0+yaNj97UHrnwULEJbrQGSJ0yKccsGTsyDh+wFpu26FF7LqYrEq0tVA
-	 VAS0mPIoCSLvn0aTmnvnkabKKmuGclDOAz5W2O2s=
+	b=CNCVsE8SXWO5qprfdmVcIzjoBRTet4g3y9/t66YVkZaID1ZbMV1d1uNuJ8529laKw
+	 91G+VZjhjVFsU4ETVvkaqOZIr9uI04gymSp+PmmPt4W0kM8aZASU3gpripv5n6FJmR
+	 R7P2lfhTi+bE0F7aPzqpgKWl4NVBy/DKfyOyRrV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.10 016/451] USB: serial: kobil_sct: fix TIOCMBIS and TIOCMBIC
-Date: Thu, 15 Jan 2026 17:43:37 +0100
-Message-ID: <20260115164231.476654810@linuxfoundation.org>
+	Shuhao Fu <sfual@cse.ust.hk>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 052/451] i3c: fix refcount inconsistency in i3c_master_register
+Date: Thu, 15 Jan 2026 17:44:13 +0100
+Message-ID: <20260115164232.781852936@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -49,78 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Frank Li <Frank.Li@nxp.com>
 
-commit d432df758f92c4c28aac409bc807fd1716167577 upstream.
+[ Upstream commit 9d4f219807d5ac11fb1d596e4ddb09336b040067 ]
 
-Asserting or deasserting a modem control line using TIOCMBIS or TIOCMBIC
-should not deassert any lines that are not in the mask.
+In `i3c_master_register`, a possible refcount inconsistency has been
+identified, causing possible resource leak.
 
-Fix this long-standing issue dating back to 2003 when the support for
-these ioctls was added with the introduction of the tiocmset() callback.
+Function `of_node_get` increases the refcount of `parent->of_node`. If
+function `i3c_bus_init` fails, the function returns immediately without
+a corresponding decrease, resulting in an inconsistent refcounter.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Move call i3c_bus_init() after device_initialize() to let callback
+i3c_masterdev_release() release of_node.
+
+Reported-by: Shuhao Fu <sfual@cse.ust.hk>
+Closes: https://lore.kernel.org/linux-i3c/aO2tjp_FsV_WohPG@osx.local/T/#m2c05a982beeb14e7bf039c1d8db856734bf234c7
+Fixes: 3a379bbcea0a ("i3c: Add core I3C infrastructure")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20251016143814.2551256-1-Frank.Li@nxp.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/kobil_sct.c |   18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/i3c/master.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/serial/kobil_sct.c
-+++ b/drivers/usb/serial/kobil_sct.c
-@@ -421,7 +421,7 @@ static int kobil_tiocmset(struct tty_str
- 	struct usb_serial_port *port = tty->driver_data;
- 	struct device *dev = &port->dev;
- 	struct kobil_private *priv;
--	int result;
-+	int result = 0;
- 	int dtr = 0;
- 	int rts = 0;
+diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
+index 507fb6d26d330..527bea0ffcd7f 100644
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -2661,10 +2661,6 @@ int i3c_master_register(struct i3c_master_controller *master,
+ 	INIT_LIST_HEAD(&master->boardinfo.i2c);
+ 	INIT_LIST_HEAD(&master->boardinfo.i3c);
  
-@@ -438,12 +438,12 @@ static int kobil_tiocmset(struct tty_str
- 	if (set & TIOCM_DTR)
- 		dtr = 1;
- 	if (clear & TIOCM_RTS)
--		rts = 0;
-+		rts = 1;
- 	if (clear & TIOCM_DTR)
--		dtr = 0;
-+		dtr = 1;
+-	ret = i3c_bus_init(i3cbus, master->dev.of_node);
+-	if (ret)
+-		return ret;
+-
+ 	device_initialize(&master->dev);
+ 	dev_set_name(&master->dev, "i3c-%d", i3cbus->id);
  
--	if (priv->device_type == KOBIL_ADAPTER_B_PRODUCT_ID) {
--		if (dtr != 0)
-+	if (dtr && priv->device_type == KOBIL_ADAPTER_B_PRODUCT_ID) {
-+		if (set & TIOCM_DTR)
- 			dev_dbg(dev, "%s - Setting DTR\n", __func__);
- 		else
- 			dev_dbg(dev, "%s - Clearing DTR\n", __func__);
-@@ -451,13 +451,13 @@ static int kobil_tiocmset(struct tty_str
- 			  usb_sndctrlpipe(port->serial->dev, 0),
- 			  SUSBCRequest_SetStatusLinesOrQueues,
- 			  USB_TYPE_VENDOR | USB_RECIP_ENDPOINT | USB_DIR_OUT,
--			  ((dtr != 0) ? SUSBCR_SSL_SETDTR : SUSBCR_SSL_CLRDTR),
-+			  ((set & TIOCM_DTR) ? SUSBCR_SSL_SETDTR : SUSBCR_SSL_CLRDTR),
- 			  0,
- 			  NULL,
- 			  0,
- 			  KOBIL_TIMEOUT);
--	} else {
--		if (rts != 0)
-+	} else if (rts) {
-+		if (set & TIOCM_RTS)
- 			dev_dbg(dev, "%s - Setting RTS\n", __func__);
- 		else
- 			dev_dbg(dev, "%s - Clearing RTS\n", __func__);
-@@ -465,7 +465,7 @@ static int kobil_tiocmset(struct tty_str
- 			usb_sndctrlpipe(port->serial->dev, 0),
- 			SUSBCRequest_SetStatusLinesOrQueues,
- 			USB_TYPE_VENDOR | USB_RECIP_ENDPOINT | USB_DIR_OUT,
--			((rts != 0) ? SUSBCR_SSL_SETRTS : SUSBCR_SSL_CLRRTS),
-+			((set & TIOCM_RTS) ? SUSBCR_SSL_SETRTS : SUSBCR_SSL_CLRRTS),
- 			0,
- 			NULL,
- 			0,
+@@ -2672,6 +2668,10 @@ int i3c_master_register(struct i3c_master_controller *master,
+ 	master->dev.coherent_dma_mask = parent->coherent_dma_mask;
+ 	master->dev.dma_parms = parent->dma_parms;
+ 
++	ret = i3c_bus_init(i3cbus, master->dev.of_node);
++	if (ret)
++		goto err_put_dev;
++
+ 	ret = of_populate_i3c_bus(master);
+ 	if (ret)
+ 		goto err_put_dev;
+-- 
+2.51.0
+
 
 
