@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C625523F42D;
-	Thu, 15 Jan 2026 17:00:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883FE2BE7C6;
+	Thu, 15 Jan 2026 17:00:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496416; cv=none; b=AeEd5L7o1pp/MZrEMJQhIYlNDnO/Mz9rWV7EjCMH8drHE21VAQGT2P7Ugmyznq9HEGo/pGPp4+E1URPZ2s9N1yy5+KZqW88xpXXIf4lDiOdgZ/V1iuqgqZvw1ggIS82lAkSujBljKyNq2W+w5uuvK8Wx1vNP08UgIYxTSsiTNus=
+	t=1768496419; cv=none; b=TNxhebjTmYU3h2+Y5H8D3IF66KruBils2kRrroGMB7txqwRLd9Tx1OOxsaNXkFQjkE+Em7NoLRQcRaXQFrpom9ZVbvO20Wr6VhMLDdI+WahDK9bvl6v08aR+lfIFGWCepSTff0j/wIzUevE/WtPofmtUAIjIq9a33hkb0THLivg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496416; c=relaxed/simple;
-	bh=AF5t10IVVzdl+11/CGp8CWcHSFvlZeGSp41He9h+tks=;
+	s=arc-20240116; t=1768496419; c=relaxed/simple;
+	bh=UIBdPndzv5+0MabyG6GJ7aqZHrnlIFJZGCM4bI97Lmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hDqT2qb8LpbZ0hAmzWcxNOhuQo+e4R5V/D/S5yCMhixNhbWGlqM+RR3T7o7WnZwqvwpkuZnDDSrmufpppvQX+ZV+hWqMeuHP+H2f1jg5weGsU76VlKL2Djq2Y8k2Uj/E97vxhX9p3ZwEa1s/sWp6FzlEQPVFhY1Y4kFTZtlNos0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H8lYfjIU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EXxGEQQ/cYfTY4XFM18I8yTKhmZK4zTvFN/kH/lKwTB/qQ4lKjTjB95dgM7BoTeScv/tRnDc8i3peTfDO85bd+UbapPBO9EvdV01vPwz9Vne88yh1VPydgRx7JjTFD3py0ywkyde20OAhDetkD8iiAKOgdv4BLS845xM7AhDGLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uTg6wUx8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H8lYfjIU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5192CC116D0;
-	Thu, 15 Jan 2026 17:00:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uTg6wUx8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18CDCC116D0;
+	Thu, 15 Jan 2026 17:00:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496416;
-	bh=AF5t10IVVzdl+11/CGp8CWcHSFvlZeGSp41He9h+tks=;
+	s=korg; t=1768496419;
+	bh=UIBdPndzv5+0MabyG6GJ7aqZHrnlIFJZGCM4bI97Lmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H8lYfjIUKUiXjbFx32YiN5/26mt2mx9RcD3VMZH6Zy61qpErDZS7ZAKvi4DzQoNp1
-	 Z7SSRK9EasKk0RmHEdb/jStLVTRBzVSWLQFolnNRPgFIrZrOPgEMcIc3eaxd7XBg3u
-	 p8LyKC8+xcpaw0qnfBo3jL7skWB6U0y9qTFs8LVQ=
+	b=uTg6wUx880qiAphkkS5Wdhk17IHpixgj/YqAnkxN5qJUyRLnzhcddw8KJyQE2i00d
+	 i19Jtd52fFCb5Tp190rswC0FL9KD/E8o3Gt8hbNJOt+LFfVbFf+edUhAKl7LuP2m4W
+	 gYL5Jhv8CZlj517wtsH6/PDLyC/IcB74PnwaCtKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Michal=20R=C3=A1bek?= <mrabek@redhat.com>,
-	Tomas Henzl <thenzl@redhat.com>,
-	Changhui Zhong <czhong@redhat.com>,
-	"Ewan D. Milne" <emilne@redhat.com>,
-	John Meneghini <jmeneghi@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Mateusz Litwin <mateusz.litwin@nokia.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 180/181] scsi: sg: Fix occasional bogus elapsed time that exceeds timeout
-Date: Thu, 15 Jan 2026 17:48:37 +0100
-Message-ID: <20260115164208.811825038@linuxfoundation.org>
+Subject: [PATCH 6.18 181/181] spi: cadence-quadspi: Prevent lost complete() call during indirect read
+Date: Thu, 15 Jan 2026 17:48:38 +0100
+Message-ID: <20260115164208.847590764@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -49,154 +45,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Rábek <mrabek@redhat.com>
+From: Mateusz Litwin <mateusz.litwin@nokia.com>
 
-[ Upstream commit 0e1677654259a2f3ccf728de1edde922a3c4ba57 ]
+[ Upstream commit d67396c9d697041b385d70ff2fd59cb07ae167e8 ]
 
-A race condition was found in sg_proc_debug_helper(). It was observed on
-a system using an IBM LTO-9 SAS Tape Drive (ULTRIUM-TD9) and monitoring
-/proc/scsi/sg/debug every second. A very large elapsed time would
-sometimes appear. This is caused by two race conditions.
+A race condition exists between the read loop and IRQ `complete()` call.
+An interrupt could call the complete() between the inner loop and
+reinit_completion(), potentially losing the completion event and causing
+an unnecessary timeout. Moving reinit_completion() before the loop
+prevents this. A premature signal will only result in a spurious wakeup
+and another wait cycle, which is preferable to waiting for a timeout.
 
-We reproduced the issue with an IBM ULTRIUM-HH9 tape drive on an x86_64
-architecture. A patched kernel was built, and the race condition could
-not be observed anymore after the application of this patch. A
-reproducer C program utilising the scsi_debug module was also built by
-Changhui Zhong and can be viewed here:
-
-https://github.com/MichaelRabek/linux-tests/blob/master/drivers/scsi/sg/sg_race_trigger.c
-
-The first race happens between the reading of hp->duration in
-sg_proc_debug_helper() and request completion in sg_rq_end_io().  The
-hp->duration member variable may hold either of two types of
-information:
-
- #1 - The start time of the request. This value is present while
-      the request is not yet finished.
-
- #2 - The total execution time of the request (end_time - start_time).
-
-If sg_proc_debug_helper() executes *after* the value of hp->duration was
-changed from #1 to #2, but *before* srp->done is set to 1 in
-sg_rq_end_io(), a fresh timestamp is taken in the else branch, and the
-elapsed time (value type #2) is subtracted from a timestamp, which
-cannot yield a valid elapsed time (which is a type #2 value as well).
-
-To fix this issue, the value of hp->duration must change under the
-protection of the sfp->rq_list_lock in sg_rq_end_io().  Since
-sg_proc_debug_helper() takes this read lock, the change to srp->done and
-srp->header.duration will happen atomically from the perspective of
-sg_proc_debug_helper() and the race condition is thus eliminated.
-
-The second race condition happens between sg_proc_debug_helper() and
-sg_new_write(). Even though hp->duration is set to the current time
-stamp in sg_add_request() under the write lock's protection, it gets
-overwritten by a call to get_sg_io_hdr(), which calls copy_from_user()
-to copy struct sg_io_hdr from userspace into kernel space. hp->duration
-is set to the start time again in sg_common_write(). If
-sg_proc_debug_helper() is called between these two calls, an arbitrary
-value set by userspace (usually zero) is used to compute the elapsed
-time.
-
-To fix this issue, hp->duration must be set to the current timestamp
-again after get_sg_io_hdr() returns successfully. A small race window
-still exists between get_sg_io_hdr() and setting hp->duration, but this
-window is only a few instructions wide and does not result in observable
-issues in practice, as confirmed by testing.
-
-Additionally, we fix the format specifier from %d to %u for printing
-unsigned int values in sg_proc_debug_helper().
-
-Signed-off-by: Michal Rábek <mrabek@redhat.com>
-Suggested-by: Tomas Henzl <thenzl@redhat.com>
-Tested-by: Changhui Zhong <czhong@redhat.com>
-Reviewed-by: Ewan D. Milne <emilne@redhat.com>
-Reviewed-by: John Meneghini <jmeneghi@redhat.com>
-Reviewed-by: Tomas Henzl <thenzl@redhat.com>
-Link: https://patch.msgid.link/20251212160900.64924-1-mrabek@redhat.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Mateusz Litwin <mateusz.litwin@nokia.com>
+Link: https://patch.msgid.link/20251218-cqspi_indirect_read_improve-v2-1-396079972f2a@nokia.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/sg.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ drivers/spi/spi-cadence-quadspi.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/sg.c b/drivers/scsi/sg.c
-index b3af9b78fa123..57fba34832ad1 100644
---- a/drivers/scsi/sg.c
-+++ b/drivers/scsi/sg.c
-@@ -731,6 +731,8 @@ sg_new_write(Sg_fd *sfp, struct file *file, const char __user *buf,
- 		sg_remove_request(sfp, srp);
- 		return -EFAULT;
- 	}
-+	hp->duration = jiffies_to_msecs(jiffies);
+diff --git a/drivers/spi/spi-cadence-quadspi.c b/drivers/spi/spi-cadence-quadspi.c
+index 3231bdaf9bd06..1cca9d87fbde4 100644
+--- a/drivers/spi/spi-cadence-quadspi.c
++++ b/drivers/spi/spi-cadence-quadspi.c
+@@ -769,6 +769,7 @@ static int cqspi_indirect_read_execute(struct cqspi_flash_pdata *f_pdata,
+ 	readl(reg_base + CQSPI_REG_INDIRECTRD); /* Flush posted write. */
+ 
+ 	while (remaining > 0) {
++		ret = 0;
+ 		if (use_irq &&
+ 		    !wait_for_completion_timeout(&cqspi->transfer_complete,
+ 						 msecs_to_jiffies(CQSPI_READ_TIMEOUT_MS)))
+@@ -781,6 +782,14 @@ static int cqspi_indirect_read_execute(struct cqspi_flash_pdata *f_pdata,
+ 		if (cqspi->slow_sram)
+ 			writel(0x0, reg_base + CQSPI_REG_IRQMASK);
+ 
++		/*
++		 * Prevent lost interrupt and race condition by reinitializing early.
++		 * A spurious wakeup and another wait cycle can occur here,
++		 * which is preferable to waiting until timeout if interrupt is lost.
++		 */
++		if (use_irq)
++			reinit_completion(&cqspi->transfer_complete);
 +
- 	if (hp->interface_id != 'S') {
- 		sg_remove_request(sfp, srp);
- 		return -ENOSYS;
-@@ -815,7 +817,6 @@ sg_common_write(Sg_fd * sfp, Sg_request * srp,
- 		return -ENODEV;
- 	}
+ 		bytes_to_read = cqspi_get_rd_sram_level(cqspi);
  
--	hp->duration = jiffies_to_msecs(jiffies);
- 	if (hp->interface_id != '\0' &&	/* v3 (or later) interface */
- 	    (SG_FLAG_Q_AT_TAIL & hp->flags))
- 		at_head = 0;
-@@ -1338,9 +1339,6 @@ sg_rq_end_io(struct request *rq, blk_status_t status)
- 				      "sg_cmd_done: pack_id=%d, res=0x%x\n",
- 				      srp->header.pack_id, result));
- 	srp->header.resid = resid;
--	ms = jiffies_to_msecs(jiffies);
--	srp->header.duration = (ms > srp->header.duration) ?
--				(ms - srp->header.duration) : 0;
- 	if (0 != result) {
- 		struct scsi_sense_hdr sshdr;
+ 		if (ret && bytes_to_read == 0) {
+@@ -813,7 +822,6 @@ static int cqspi_indirect_read_execute(struct cqspi_flash_pdata *f_pdata,
+ 		}
  
-@@ -1389,6 +1387,9 @@ sg_rq_end_io(struct request *rq, blk_status_t status)
- 			done = 0;
- 	}
- 	srp->done = done;
-+	ms = jiffies_to_msecs(jiffies);
-+	srp->header.duration = (ms > srp->header.duration) ?
-+				(ms - srp->header.duration) : 0;
- 	write_unlock_irqrestore(&sfp->rq_list_lock, iflags);
- 
- 	if (likely(done)) {
-@@ -2533,6 +2534,7 @@ static void sg_proc_debug_helper(struct seq_file *s, Sg_device * sdp)
- 	const sg_io_hdr_t *hp;
- 	const char * cp;
- 	unsigned int ms;
-+	unsigned int duration;
- 
- 	k = 0;
- 	list_for_each_entry(fp, &sdp->sfds, sfd_siblings) {
-@@ -2570,13 +2572,17 @@ static void sg_proc_debug_helper(struct seq_file *s, Sg_device * sdp)
- 			seq_printf(s, " id=%d blen=%d",
- 				   srp->header.pack_id, blen);
- 			if (srp->done)
--				seq_printf(s, " dur=%d", hp->duration);
-+				seq_printf(s, " dur=%u", hp->duration);
- 			else {
- 				ms = jiffies_to_msecs(jiffies);
--				seq_printf(s, " t_o/elap=%d/%d",
-+				duration = READ_ONCE(hp->duration);
-+				if (duration)
-+					duration = (ms > duration ?
-+						    ms - duration : 0);
-+				seq_printf(s, " t_o/elap=%u/%u",
- 					(new_interface ? hp->timeout :
- 						  jiffies_to_msecs(fp->timeout)),
--					(ms > hp->duration ? ms - hp->duration : 0));
-+					duration);
- 			}
- 			seq_printf(s, "ms sgat=%d op=0x%02x\n", usg,
- 				   (int) srp->data.cmd_opcode);
+ 		if (use_irq && remaining > 0) {
+-			reinit_completion(&cqspi->transfer_complete);
+ 			if (cqspi->slow_sram)
+ 				writel(CQSPI_REG_IRQ_WATERMARK, reg_base + CQSPI_REG_IRQMASK);
+ 		}
 -- 
 2.51.0
 
