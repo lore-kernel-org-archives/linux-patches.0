@@ -1,46 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 188393BF2FF;
-	Thu, 15 Jan 2026 17:22:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCBA13BF2E7;
+	Thu, 15 Jan 2026 17:22:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497773; cv=none; b=Da25ic+hnNxwKpTPm4YQ/UEJ4dN4oOfoys31k9Nx3L65VWtkjFiEDnNFxmcoOb7Tno30eSO06N92A7wLfPdH0C63Hw/8LDzSqTqCcETIEquBmPJQW51M4MSQ/236K9K/KDx9I33ZhNOC60Thnm/+SU3d8uJTPXWH8zn8bXNKVco=
+	t=1768497775; cv=none; b=R1q8a7RdXZJdPbEQHqpRjrSRWhUeKZvgJa+EUthVEgiA51b3Q9lsVpAzzAO3hXgp/P7uvg74HsBEZM+EqcalF+J+Dtu05j1pHv66boeGNuVVRq8RNi6VlWyopRU4j6mFLaYbWHEEo4zu0vxBbVHyLwKYGGKyzAyIgtrRboArwcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497773; c=relaxed/simple;
-	bh=n4WGg28TsKyx7SXgKEM+UGHWpFeqHWMDfJY1JZxPPNI=;
+	s=arc-20240116; t=1768497775; c=relaxed/simple;
+	bh=EQo+azW+sWfFB3cQ/MkhD7I1yfbN77ipxXzwWE2yvCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n3+NARavRMuhQDCi7FMQTZxT74rY2CKXQyyKEFSfDJvBbFazkBvt67NJHAMES56cSmBXRKM3qrHXjzxyc/y0AdLSBAX3a6iph58NA7hbJrYoDhr4ChKUmSS45LQC3O/qpf4qGqBoJzNVdobEI6nEziPPeK/GpbXP/Hrr3zZ+ra8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oi2KCusm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zpy48sDGzPHfeQPZqC7PMDsTBiEnCd+DV017OXqMjwt6ivWE784nq33LJjuZkOOMvNXaDw8MWZ5oqqvr4LRaIF6Nk/Raq3OoCmkSz/c9nTyRIu5xlHQ3gY/htxkdDk/vmtz1bJBy8qnQwmB97lWW2kfzXBM5qHFz4SYx93Aw4OE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1IKU5xO8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oi2KCusm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 701B5C16AAE;
-	Thu, 15 Jan 2026 17:22:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1IKU5xO8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C2CBC19423;
+	Thu, 15 Jan 2026 17:22:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497773;
-	bh=n4WGg28TsKyx7SXgKEM+UGHWpFeqHWMDfJY1JZxPPNI=;
+	s=korg; t=1768497775;
+	bh=EQo+azW+sWfFB3cQ/MkhD7I1yfbN77ipxXzwWE2yvCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oi2KCusmN74gvwMbz7m3+dSqqFb3WTEvRe03gzQfd8PkrB1cpCZdmrPaPHGpCjHK2
-	 yoRMUcl+zlDcBIw7tacLylCm/L0f7EuXm+4SnlhEt0eSa/seMCsMc5RRAUjqEanXrV
-	 ZZPnewbTYo7BEeREocQK/uUGJg1uuwOMhQv4ArOo=
+	b=1IKU5xO8oHsN/74CCCls/vqvNxGVMsLqA4F4/241zonUhuokWFdSYKNDyPO/cJHVR
+	 0qRA1N3fy92bbgGQmVAvVB6acrW50CbpxCeTYCIg/NTZig2klgQauuYTDN2RwlXdHj
+	 93JmhVzIgpskAh4xKgoXirAzXx3OIE1isMErKtPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	syzbot+cfc7cab3bb6eaa7c4de2@syzkaller.appspotmail.com,
-	Heming Zhao <heming.zhao@suse.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 197/554] ocfs2: fix memory leak in ocfs2_merge_rec_left()
-Date: Thu, 15 Jan 2026 17:44:23 +0100
-Message-ID: <20260115164253.387841861@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Haotien Hsu <haotienh@nvidia.com>,
+	Wayne Chang <waynec@nvidia.com>
+Subject: [PATCH 5.15 198/554] usb: gadget: tegra-xudc: Always reinitialize data toggle when clear halt
+Date: Thu, 15 Jan 2026 17:44:24 +0100
+Message-ID: <20260115164253.423672745@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -59,45 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Haotien Hsu <haotienh@nvidia.com>
 
-[ Upstream commit 2214ec4bf89d0fd27717322d3983a2f3b469c7f3 ]
+commit 2585973c7f9ee31d21e5848c996fab2521fd383d upstream.
 
-In 'ocfs2_merge_rec_left()', do not reset 'left_path' to NULL after
-move, thus allowing 'ocfs2_free_path()' to free it before return.
+The driver previously skipped handling ClearFeature(ENDPOINT_HALT)
+when the endpoint was already not halted. This prevented the
+controller from resetting the data sequence number and reinitializing
+the endpoint state.
 
-Link: https://lkml.kernel.org/r/20251205065159.392749-1-dmantipov@yandex.ru
-Fixes: 677b975282e4 ("ocfs2: Add support for cross extent block")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Reported-by: syzbot+cfc7cab3bb6eaa7c4de2@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=cfc7cab3bb6eaa7c4de2
-Reviewed-by: Heming Zhao <heming.zhao@suse.com>
-Acked-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+According to USB 3.2 specification Rev. 1.1, section 9.4.5,
+ClearFeature(ENDPOINT_HALT) must always reset the data sequence and
+set the stream state machine to Disabled, regardless of whether the
+endpoint was halted.
+
+Remove the early return so that ClearFeature(ENDPOINT_HALT) always
+resets the endpoint sequence state as required by the specification.
+
+Fixes: 49db427232fe ("usb: gadget: Add UDC driver for tegra XUSB device mode controller")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Haotien Hsu <haotienh@nvidia.com>
+Signed-off-by: Wayne Chang <waynec@nvidia.com>
+Link: https://patch.msgid.link/20251127033540.2287517-1-waynec@nvidia.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/alloc.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/usb/gadget/udc/tegra-xudc.c |    6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/fs/ocfs2/alloc.c b/fs/ocfs2/alloc.c
-index 9c95d911a14b1..9589b462b5913 100644
---- a/fs/ocfs2/alloc.c
-+++ b/fs/ocfs2/alloc.c
-@@ -3647,7 +3647,6 @@ static int ocfs2_merge_rec_left(struct ocfs2_path *right_path,
- 			 * So we use the new rightmost path.
- 			 */
- 			ocfs2_mv_path(right_path, left_path);
--			left_path = NULL;
- 		} else
- 			ocfs2_complete_edge_insert(handle, left_path,
- 						   right_path, subtree_index);
--- 
-2.51.0
-
+--- a/drivers/usb/gadget/udc/tegra-xudc.c
++++ b/drivers/usb/gadget/udc/tegra-xudc.c
+@@ -1542,12 +1542,6 @@ static int __tegra_xudc_ep_set_halt(stru
+ 		return -ENOTSUPP;
+ 	}
+ 
+-	if (!!(xudc_readl(xudc, EP_HALT) & BIT(ep->index)) == halt) {
+-		dev_dbg(xudc->dev, "EP %u already %s\n", ep->index,
+-			halt ? "halted" : "not halted");
+-		return 0;
+-	}
+-
+ 	if (halt) {
+ 		ep_halt(xudc, ep->index);
+ 	} else {
 
 
