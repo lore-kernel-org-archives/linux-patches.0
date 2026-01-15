@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB693BC4D8;
-	Thu, 15 Jan 2026 17:52:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF483C1FD9;
+	Thu, 15 Jan 2026 17:52:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499556; cv=none; b=H/irwZWQP9A5v4ucHuEN8b3OwHw7mu0W/UWlSM/FfU7UN9WGv06XNmXPePhJVeeXUA56PfU3hVSVDlVU31W0VGtjuJOVV11+J+JXg0csnz78OPhd/WYHtYTvnX/hY7yrKp5pxYryxGy8gsED+nONLzC/6534e8NqnmYaCzHDiRw=
+	t=1768499559; cv=none; b=TB7n5f5Kg/XzWt7+xaUPIG454Fn/CCq8UdtdT62vfo8nUdC97OrhSbALPXUzCs6cSN7AReV2AU1vewHE/zGgk+bZGLmcVPjWH+UadLcSWhJDQlr0R4RGj5utXaF/MBpfJGeHRPYHnMAmG+EWoECU7P7YorQsueOeXGKpGb6a8Q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499556; c=relaxed/simple;
-	bh=KzK91GU4c0TaLKduIY5jYHysScQCfseEXaKZU54idPA=;
+	s=arc-20240116; t=1768499559; c=relaxed/simple;
+	bh=Tm7J+cdUPdBPQkFIXnIM5AXVY8lAZTCP/1tzOtx/06M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LDMMsYCIMf8WsYYnA9tp2nkgdkLsVelfYlsgOaprL7AJUAWRXXTkvVT6HaQO6Ul87THTz3RNjjvuXr8XHhnjUrGlcGYjzReKO4kM/20w/cFrt4KV1VjF3WQZ0z620w4FKtnTdMDUwcovrvKZGKw7Xlrc5IVUbPwE25957QgqIiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YnA5HJjU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TyVxhwHpWt7cHkyDsRYyLjaKQ5OPLpUrCrsFX9Ppv3X5O5PHQ75GXbj5sSh3HrtV2PSDoa5HcNneL8HOrGIr3SkJm33t5fpM8LdtAc8FXB2F5vgTfUnfxQOC8KhPGn3hX6XWIGfCSQESdRqhxQJNyql1FujBHYmiwgy5+1Eg5z4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h4Rp4Rl+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YnA5HJjU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58BC6C116D0;
-	Thu, 15 Jan 2026 17:52:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h4Rp4Rl+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA69C116D0;
+	Thu, 15 Jan 2026 17:52:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499556;
-	bh=KzK91GU4c0TaLKduIY5jYHysScQCfseEXaKZU54idPA=;
+	s=korg; t=1768499559;
+	bh=Tm7J+cdUPdBPQkFIXnIM5AXVY8lAZTCP/1tzOtx/06M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YnA5HJjUFM4SeM2WfQADCa7aiSfVkLVdQlTMQM10SGlFeHZBfrRNDQCO3l+a0uCME
-	 8VlM9yAyZDQeL6ER4MnJMMEWY8bQxjsKT8/UnIWb8lfLblFKRu/XGnAhmf6ZEe2n8v
-	 89IzQ7Edb0vtHcwDMnBVmHdlHnBj1jWc2I5CzRHA=
+	b=h4Rp4Rl+Zn5W5ylVDQgtd79N2mi6/b0Ow8WMGMWrHIcUufGPEnJMSAgolGBhYT3nY
+	 dMHro3fJgzi7hQkZ0BsqJcO/v8WW4ixuX3fZPyZ+/AZJy/2FeMpiyDlae6KAVW8pZd
+	 z0O25cPEruPRFqsP2vU9KlaXziX6CIAhz0e/8iAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 5.10 235/451] usb: dwc3: of-simple: fix clock resource leak in dwc3_of_simple_probe
-Date: Thu, 15 Jan 2026 17:47:16 +0100
-Message-ID: <20260115164239.395592412@linuxfoundation.org>
+	Haoxiang Li <haoxiang_li2024@163.com>
+Subject: [PATCH 5.10 236/451] usb: renesas_usbhs: Fix a resource leak in usbhs_pipe_malloc()
+Date: Thu, 15 Jan 2026 17:47:17 +0100
+Message-ID: <20260115164239.431516628@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -51,56 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit 3b4961313d31e200c9e974bb1536cdea217f78b5 upstream.
+commit 36cc7e09df9e43db21b46519b740145410dd9f4a upstream.
 
-When clk_bulk_prepare_enable() fails, the error path jumps to
-err_resetc_assert, skipping clk_bulk_put_all() and leaking the
-clock references acquired by clk_bulk_get_all().
+usbhsp_get_pipe() set pipe's flags to IS_USED. In error paths,
+usbhsp_put_pipe() is required to clear pipe's flags to prevent
+pipe exhaustion.
 
-Add err_clk_put_all label to properly release clock resources
-in all error paths.
-
-Found via static analysis and code review.
-
-Fixes: c0c61471ef86 ("usb: dwc3: of-simple: Convert to bulk clk API")
+Fixes: f1407d5c6624 ("usb: renesas_usbhs: Add Renesas USBHS common code")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://patch.msgid.link/20251211064937.2360510-1-linmq006@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Link: https://patch.msgid.link/20251204132129.109234-1-haoxiang_li2024@163.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-of-simple.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/usb/renesas_usbhs/pipe.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/dwc3/dwc3-of-simple.c
-+++ b/drivers/usb/dwc3/dwc3-of-simple.c
-@@ -71,11 +71,11 @@ static int dwc3_of_simple_probe(struct p
- 	simple->num_clocks = ret;
- 	ret = clk_bulk_prepare_enable(simple->num_clocks, simple->clks);
- 	if (ret)
--		goto err_resetc_assert;
-+		goto err_clk_put_all;
+--- a/drivers/usb/renesas_usbhs/pipe.c
++++ b/drivers/usb/renesas_usbhs/pipe.c
+@@ -713,11 +713,13 @@ struct usbhs_pipe *usbhs_pipe_malloc(str
+ 	/* make sure pipe is not busy */
+ 	ret = usbhsp_pipe_barrier(pipe);
+ 	if (ret < 0) {
++		usbhsp_put_pipe(pipe);
+ 		dev_err(dev, "pipe setup failed %d\n", usbhs_pipe_number(pipe));
+ 		return NULL;
+ 	}
  
- 	ret = of_platform_populate(np, NULL, NULL, dev);
- 	if (ret)
--		goto err_clk_put;
-+		goto err_clk_disable;
- 
- 	pm_runtime_set_active(dev);
- 	pm_runtime_enable(dev);
-@@ -83,8 +83,9 @@ static int dwc3_of_simple_probe(struct p
- 
- 	return 0;
- 
--err_clk_put:
-+err_clk_disable:
- 	clk_bulk_disable_unprepare(simple->num_clocks, simple->clks);
-+err_clk_put_all:
- 	clk_bulk_put_all(simple->num_clocks, simple->clks);
- 
- err_resetc_assert:
+ 	if (usbhsp_setup_pipecfg(pipe, is_host, dir_in, &pipecfg)) {
++		usbhsp_put_pipe(pipe);
+ 		dev_err(dev, "can't setup pipe\n");
+ 		return NULL;
+ 	}
 
 
