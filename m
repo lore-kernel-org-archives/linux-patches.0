@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D015D25228D;
-	Thu, 15 Jan 2026 16:54:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A04B925228D;
+	Thu, 15 Jan 2026 16:54:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496074; cv=none; b=RZCrrTY9I8RcabDbrCoRKElBcfJErM5SHKWKQy+JLigT9qtLdeSD7K9lfc8xYAwgLfJxBxzO8wZIgJYOQxPrxFoFw+GvDg3PzJvt51RLtnkGi4WlpHAx9b2pSlk4k6LqMlb2a/UiE1TUvQc3Ah/pWth2YSSklJ6RYNSqbWRGu6M=
+	t=1768496077; cv=none; b=i403C4WMpF+hWMtc4RqcEpyXAN/Oi8bpnCfCZKfcttpYe9CMc4YpCColbrCD5gSQW9F6KkBzSWVVRZBhnHPn+iV3NjYFdUOXU59dG4C4h3czEtxWJAS7MA4+B0lRJLsGSVAiWwpTuF9ayySAzAL/5WLwRTV3QtRg9CiuX0imOP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496074; c=relaxed/simple;
-	bh=EJYfuMv2V93SgM8SRO+GZjKGxZoHIUTuiBn5XrIdDQg=;
+	s=arc-20240116; t=1768496077; c=relaxed/simple;
+	bh=/nHNGzqh6rZo32F/FYsSEtlrr5IUthFiOZf+ED946CM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C3HOgBWf6o0JwkvMKt+Gk0MjwWckJ6bMqNTRfzewzKAh3d6+oAN4EGqWx3X43k/7qt0kNtxxhin/4gb76MnzIba4/xN/2Hyv7g1IQnlaMFSwTPFm1UDQZc/5CB9ZnDSZBpiuVjOBDVJWR6FqRKObNy9BFpcLb9s/M57cxDZm9l4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wT+hrthA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JZRrE0sBqsjbfrlIYenLgTioCJWyblEnez/gDY1yyVW+yKwtizgCu0AaSkdFVbGs7NcK93myafDGBuoH2hnzLTLqIbmMMNMGDgADGOO+PuscS8qnrLpPVyTCiR4p5p0poj1vOXIMLzZnKsu4cTl+slQ7Er+fjSszzcOCXMaAu7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QtJoIRnl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wT+hrthA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C5D5C116D0;
-	Thu, 15 Jan 2026 16:54:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QtJoIRnl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3135BC116D0;
+	Thu, 15 Jan 2026 16:54:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496074;
-	bh=EJYfuMv2V93SgM8SRO+GZjKGxZoHIUTuiBn5XrIdDQg=;
+	s=korg; t=1768496077;
+	bh=/nHNGzqh6rZo32F/FYsSEtlrr5IUthFiOZf+ED946CM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wT+hrthAF8OulMXO63Qp9Hee1lOyhB3y0I8yZA0XRcvA+5h5SFRrXGB+nXJuUcs8Z
-	 8K86boEP5cLmMCSgIotOBcrvx07WyHasT1Tx4FN6girhpjorIn6pqfrx/pAdE0dVj+
-	 KCBVE2AUcQHGp7jU/3C7TW0jWXOXDQJgUZKFXA+w=
+	b=QtJoIRnl0xR8LCVbiGVaqbqD8u+u++9slYi+IXU6WZ5Z+Ex0z660wP4nKsjGfXoPo
+	 L+eohaUTR7NYVbWPnOy2RageCRoB7UpCtdJdMKwCFmc15QD7UrQW+P7SH3vBHAVCJN
+	 ZerBg+eJtGaVUtYE8SX/O4ftw3lTl2JXXBfQohDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	Leo Martins <loemra.dev@gmail.com>,
-	David Sterba <dsterba@suse.com>,
+	Rob Herring <robh@kernel.org>,
+	Jianhao Xu <jianhao.xu@seu.edu.cn>,
+	Zilin Guan <zilin@seu.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 067/181] btrfs: fix use-after-free warning in btrfs_get_or_create_delayed_node()
-Date: Thu, 15 Jan 2026 17:46:44 +0100
-Message-ID: <20260115164204.744515531@linuxfoundation.org>
+Subject: [PATCH 6.18 068/181] of: unittest: Fix memory leak in unittest_data_add()
+Date: Thu, 15 Jan 2026 17:46:45 +0100
+Message-ID: <20260115164204.780250888@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -53,101 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Martins <loemra.dev@gmail.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit 83f59076a1ae6f5c6845d6f7ed3a1a373d883684 ]
+[ Upstream commit 235a1eb8d2dcc49a6cf0a5ee1aa85544a5d0054b ]
 
-Previously, btrfs_get_or_create_delayed_node() set the delayed_node's
-refcount before acquiring the root->delayed_nodes lock.
-Commit e8513c012de7 ("btrfs: implement ref_tracker for delayed_nodes")
-moved refcount_set inside the critical section, which means there is
-no longer a memory barrier between setting the refcount and setting
-btrfs_inode->delayed_node.
+In unittest_data_add(), if of_resolve_phandles() fails, the allocated
+unittest_data is not freed, leading to a memory leak.
 
-Without that barrier, the stores to node->refs and
-btrfs_inode->delayed_node may become visible out of order. Another
-thread can then read btrfs_inode->delayed_node and attempt to
-increment a refcount that hasn't been set yet, leading to a
-refcounting bug and a use-after-free warning.
+Fix this by using scope-based cleanup helper __free(kfree) for automatic
+resource cleanup. This ensures unittest_data is automatically freed when
+it goes out of scope in error paths.
 
-The fix is to move refcount_set back to where it was to take
-advantage of the implicit memory barrier provided by lock
-acquisition.
+For the success path, use retain_and_null_ptr() to transfer ownership
+of the memory to the device tree and prevent double freeing.
 
-Because the allocations now happen outside of the lock's critical
-section, they can use GFP_NOFS instead of GFP_ATOMIC.
-
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202511262228.6dda231e-lkp@intel.com
-Fixes: e8513c012de7 ("btrfs: implement ref_tracker for delayed_nodes")
-Tested-by: kernel test robot <oliver.sang@intel.com>
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Leo Martins <loemra.dev@gmail.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 2eb46da2a760 ("of/selftest: Use the resolver to fixup phandles")
+Suggested-by: Rob Herring <robh@kernel.org>
+Co-developed-by: Jianhao Xu <jianhao.xu@seu.edu.cn>
+Signed-off-by: Jianhao Xu <jianhao.xu@seu.edu.cn>
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Link: https://patch.msgid.link/20251231114915.234638-1-zilin@seu.edu.cn
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/delayed-inode.c | 32 +++++++++++++++++---------------
- 1 file changed, 17 insertions(+), 15 deletions(-)
+ drivers/of/unittest.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/fs/btrfs/delayed-inode.c b/fs/btrfs/delayed-inode.c
-index 3df7b9d7fbe8d..59b489d7e4b58 100644
---- a/fs/btrfs/delayed-inode.c
-+++ b/fs/btrfs/delayed-inode.c
-@@ -152,37 +152,39 @@ static struct btrfs_delayed_node *btrfs_get_or_create_delayed_node(
- 		return ERR_PTR(-ENOMEM);
- 	btrfs_init_delayed_node(node, root, ino);
- 
-+	/* Cached in the inode and can be accessed. */
-+	refcount_set(&node->refs, 2);
-+	btrfs_delayed_node_ref_tracker_alloc(node, tracker, GFP_NOFS);
-+	btrfs_delayed_node_ref_tracker_alloc(node, &node->inode_cache_tracker, GFP_NOFS);
-+
- 	/* Allocate and reserve the slot, from now it can return a NULL from xa_load(). */
- 	ret = xa_reserve(&root->delayed_nodes, ino, GFP_NOFS);
--	if (ret == -ENOMEM) {
--		btrfs_delayed_node_ref_tracker_dir_exit(node);
--		kmem_cache_free(delayed_node_cache, node);
--		return ERR_PTR(-ENOMEM);
--	}
-+	if (ret == -ENOMEM)
-+		goto cleanup;
-+
- 	xa_lock(&root->delayed_nodes);
- 	ptr = xa_load(&root->delayed_nodes, ino);
- 	if (ptr) {
- 		/* Somebody inserted it, go back and read it. */
- 		xa_unlock(&root->delayed_nodes);
--		btrfs_delayed_node_ref_tracker_dir_exit(node);
--		kmem_cache_free(delayed_node_cache, node);
--		node = NULL;
--		goto again;
-+		goto cleanup;
+diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
+index 388e9ec2cccf8..3b773aaf9d050 100644
+--- a/drivers/of/unittest.c
++++ b/drivers/of/unittest.c
+@@ -1985,7 +1985,6 @@ static void attach_node_and_children(struct device_node *np)
+  */
+ static int __init unittest_data_add(void)
+ {
+-	void *unittest_data;
+ 	void *unittest_data_align;
+ 	struct device_node *unittest_data_node = NULL, *np;
+ 	/*
+@@ -2004,7 +2003,7 @@ static int __init unittest_data_add(void)
  	}
- 	ptr = __xa_store(&root->delayed_nodes, ino, node, GFP_ATOMIC);
- 	ASSERT(xa_err(ptr) != -EINVAL);
- 	ASSERT(xa_err(ptr) != -ENOMEM);
- 	ASSERT(ptr == NULL);
--
--	/* Cached in the inode and can be accessed. */
--	refcount_set(&node->refs, 2);
--	btrfs_delayed_node_ref_tracker_alloc(node, tracker, GFP_ATOMIC);
--	btrfs_delayed_node_ref_tracker_alloc(node, &node->inode_cache_tracker, GFP_ATOMIC);
--
- 	btrfs_inode->delayed_node = node;
- 	xa_unlock(&root->delayed_nodes);
  
- 	return node;
-+cleanup:
-+	btrfs_delayed_node_ref_tracker_free(node, tracker);
-+	btrfs_delayed_node_ref_tracker_free(node, &node->inode_cache_tracker);
-+	btrfs_delayed_node_ref_tracker_dir_exit(node);
-+	kmem_cache_free(delayed_node_cache, node);
-+	if (ret)
-+		return ERR_PTR(ret);
-+	goto again;
- }
+ 	/* creating copy */
+-	unittest_data = kmalloc(size + FDT_ALIGN_SIZE, GFP_KERNEL);
++	void *unittest_data __free(kfree) = kmalloc(size + FDT_ALIGN_SIZE, GFP_KERNEL);
+ 	if (!unittest_data)
+ 		return -ENOMEM;
  
- /*
+@@ -2014,12 +2013,10 @@ static int __init unittest_data_add(void)
+ 	ret = of_fdt_unflatten_tree(unittest_data_align, NULL, &unittest_data_node);
+ 	if (!ret) {
+ 		pr_warn("%s: unflatten testcases tree failed\n", __func__);
+-		kfree(unittest_data);
+ 		return -ENODATA;
+ 	}
+ 	if (!unittest_data_node) {
+ 		pr_warn("%s: testcases tree is empty\n", __func__);
+-		kfree(unittest_data);
+ 		return -ENODATA;
+ 	}
+ 
+@@ -2038,7 +2035,6 @@ static int __init unittest_data_add(void)
+ 	/* attach the sub-tree to live tree */
+ 	if (!of_root) {
+ 		pr_warn("%s: no live tree to attach sub-tree\n", __func__);
+-		kfree(unittest_data);
+ 		rc = -ENODEV;
+ 		goto unlock;
+ 	}
+@@ -2059,6 +2055,8 @@ static int __init unittest_data_add(void)
+ 	EXPECT_END(KERN_INFO,
+ 		   "Duplicate name in testcase-data, renamed to \"duplicate-name#1\"");
+ 
++	retain_and_null_ptr(unittest_data);
++
+ unlock:
+ 	of_overlay_mutex_unlock();
+ 
 -- 
 2.51.0
 
