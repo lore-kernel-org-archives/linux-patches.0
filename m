@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 854C486334;
-	Thu, 15 Jan 2026 17:17:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 661DD86334;
+	Thu, 15 Jan 2026 17:17:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497441; cv=none; b=aqXa0eyiZiVw2YnTBNdht2NmQHxZxZ8bankRsZUbX9xoqBoGntojQOZyAx5428RYMZ+DD2kCtQRIG+7low0fzvPgfdxztYs6JfVmYAYELmx9sY2GytYiVk/SBcpossPdpigGxjAtWdVLos6JZsDKbQfV2T1DBFI6LKGjozoBR2s=
+	t=1768497444; cv=none; b=YYAcRzlQGpnrsTfltiOjHPxXaLGiiKOGfkHFX9lwT8waUJXZbnM2NcTu4DV12vG049Bh+UQE/Umf61UPVFWw3jUlfFRobTF7AEwPR0zeDA1jpYrfw9oDJ31HE4JXBdwOPuoWUxl/n3GZu+KeT74xNb1c6V45EniklOa/9wA19r8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497441; c=relaxed/simple;
-	bh=9wY0/9LDZcJg3geEIsvx6NA+ebfsrMaDEisJHM4whF8=;
+	s=arc-20240116; t=1768497444; c=relaxed/simple;
+	bh=MSeyXNLmmDx9adEcbSGmPUK2GiG7Hkbs3LkFV+I8x88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gmNZlo2KG8UAc4Y5XlVFHltHBJxmn4O+e++ZJE6i3nsKJoNxqABwe+H0OdyOr4VnCom1LJ6AyE06YMy7DZGaCa/HzmHg45uBuoHPq3Ors9a1hUb23ButjjKFnJ8KwlwhnGjF3lIgHh8WBDeGP5x/OjT8Lgk3uvoM1NWYKas5yok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yIz2yB17; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t1RjfQ3NfnVFAmMe+c9qkH65Yihkhp3yxReYGV9hlLzZLGmjY+Can8ab5MddyFjwB0YCbyE163q6XMWxxpoa8siYj/6tYvdz5J0n+62StAOmxNFOPt1VYmYq6vP5sJuVkGUw676G5oXYdzk8YFKZs6bRpsNJlCCw/Sgp4BZS5rk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S5oNMlqx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yIz2yB17"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11C6FC116D0;
-	Thu, 15 Jan 2026 17:17:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S5oNMlqx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7615C116D0;
+	Thu, 15 Jan 2026 17:17:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497441;
-	bh=9wY0/9LDZcJg3geEIsvx6NA+ebfsrMaDEisJHM4whF8=;
+	s=korg; t=1768497444;
+	bh=MSeyXNLmmDx9adEcbSGmPUK2GiG7Hkbs3LkFV+I8x88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yIz2yB17eUmu+8quPSqZBah5pHnKCFcIBiPY4F5sck3ZJ68Jj+lWxmXZnw9sjbl7l
-	 jOf9AgpJBDLsARDUH40WUjJrsRZ8BmeNkmlH9WmLQjzvR6y75jURuMzPCM1Q/F1TeZ
-	 A8QIshvYY2c+dpwgQKDDnlXvbla7DSeM+nxSvUYU=
+	b=S5oNMlqxOdSWb1bv7+xzbDNmnZ39Iu16vkF8Ps/My8OST3yUQ75KjwpLuh5bVC5V5
+	 nUhwzIfj6JDk+KgnvKPOt03Kf7lBvKtvPv2c9HLmaX9J1OHZH5Zj2Y+wtjVIQH9S8n
+	 W6u7mSR9BfzK/nWRlPlxNOQ+HJKP89rYlFg1oMNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Josef Bacik <josef@toxicpanda.com>,
+	syzbot+56fbf4c7ddf65e95c7cc@syzkaller.appspotmail.com,
+	Zheng Qixing <zhengqixing@huawei.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 082/554] nbd: partition nbd_read_stat() into nbd_read_reply() and nbd_handle_reply()
-Date: Thu, 15 Jan 2026 17:42:28 +0100
-Message-ID: <20260115164249.207737806@linuxfoundation.org>
+Subject: [PATCH 5.15 083/554] nbd: defer config put in recv_work
+Date: Thu, 15 Jan 2026 17:42:29 +0100
+Message-ID: <20260115164249.244847535@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -53,160 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Zheng Qixing <zhengqixing@huawei.com>
 
-[ Upstream commit 3fe1db626a56cdf259c348404f2c5429e2f065a1 ]
+[ Upstream commit 9517b82d8d422d426a988b213fdd45c6b417b86d ]
 
-Prepare to fix uaf in nbd_read_stat(), no functional changes.
+There is one uaf issue in recv_work when running NBD_CLEAR_SOCK and
+NBD_CMD_RECONFIGURE:
+  nbd_genl_connect     // conf_ref=2 (connect and recv_work A)
+  nbd_open	       // conf_ref=3
+  recv_work A done     // conf_ref=2
+  NBD_CLEAR_SOCK       // conf_ref=1
+  nbd_genl_reconfigure // conf_ref=2 (trigger recv_work B)
+  close nbd	       // conf_ref=1
+  recv_work B
+    config_put         // conf_ref=0
+    atomic_dec(&config->recv_threads); -> UAF
 
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://lore.kernel.org/r/20210916093350.1410403-7-yukuai3@huawei.com
+Or only running NBD_CLEAR_SOCK:
+  nbd_genl_connect   // conf_ref=2
+  nbd_open 	     // conf_ref=3
+  NBD_CLEAR_SOCK     // conf_ref=2
+  close nbd
+    nbd_release
+      config_put     // conf_ref=1
+  recv_work
+    config_put 	     // conf_ref=0
+    atomic_dec(&config->recv_threads); -> UAF
+
+Commit 87aac3a80af5 ("nbd: call nbd_config_put() before notifying the
+waiter") moved nbd_config_put() to run before waking up the waiter in
+recv_work, in order to ensure that nbd_start_device_ioctl() would not
+be woken up while nbd->task_recv was still uncleared.
+
+However, in nbd_start_device_ioctl(), after being woken up it explicitly
+calls flush_workqueue() to make sure all current works are finished.
+Therefore, there is no need to move the config put ahead of the wakeup.
+
+Move nbd_config_put() to the end of recv_work, so that the reference is
+held for the whole lifetime of the worker thread. This makes sure the
+config cannot be freed while recv_work is still running, even if clear
++ reconfigure interleave.
+
+In addition, we don't need to worry about recv_work dropping the last
+nbd_put (which causes deadlock):
+
+path A (netlink with NBD_CFLAG_DESTROY_ON_DISCONNECT):
+  connect  // nbd_refs=1 (trigger recv_work)
+  open nbd // nbd_refs=2
+  NBD_CLEAR_SOCK
+  close nbd
+    nbd_release
+      nbd_disconnect_and_put
+        flush_workqueue // recv_work done
+      nbd_config_put
+        nbd_put // nbd_refs=1
+      nbd_put // nbd_refs=0
+        queue_work
+
+path B (netlink without NBD_CFLAG_DESTROY_ON_DISCONNECT):
+  connect  // nbd_refs=2 (trigger recv_work)
+  open nbd // nbd_refs=3
+  NBD_CLEAR_SOCK // conf_refs=2
+  close nbd
+    nbd_release
+      nbd_config_put // conf_refs=1
+      nbd_put // nbd_refs=2
+  recv_work done // conf_refs=0, nbd_refs=1
+  rmmod // nbd_refs=0
+
+Reported-by: syzbot+56fbf4c7ddf65e95c7cc@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/6907edce.a70a0220.37351b.0014.GAE@google.com/T/
+Fixes: 87aac3a80af5 ("nbd: make the config put is called before the notifying the waiter")
+Depends-on: e2daec488c57 ("nbd: Fix hungtask when nbd_config_put")
+Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 9517b82d8d42 ("nbd: defer config put in recv_work")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/nbd.c | 74 +++++++++++++++++++++++++++------------------
- 1 file changed, 44 insertions(+), 30 deletions(-)
+ drivers/block/nbd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
-index 3f5c5e122bf78..eb37427a3c019 100644
+index eb37427a3c019..ae89f6124cc6b 100644
 --- a/drivers/block/nbd.c
 +++ b/drivers/block/nbd.c
-@@ -692,38 +692,45 @@ static int nbd_send_cmd(struct nbd_device *nbd, struct nbd_cmd *cmd, int index)
- 	return 0;
- }
+@@ -836,9 +836,9 @@ static void recv_work(struct work_struct *work)
+ 	nbd_mark_nsock_dead(nbd, nsock, 1);
+ 	mutex_unlock(&nsock->tx_lock);
  
--/* NULL returned = something went wrong, inform userspace */
--static struct nbd_cmd *nbd_read_stat(struct nbd_device *nbd, int index)
-+static int nbd_read_reply(struct nbd_device *nbd, int index,
-+			  struct nbd_reply *reply)
- {
--	struct nbd_config *config = nbd->config;
--	int result;
--	struct nbd_reply reply;
--	struct nbd_cmd *cmd;
--	struct request *req = NULL;
--	u64 handle;
--	u16 hwq;
--	u32 tag;
--	struct kvec iov = {.iov_base = &reply, .iov_len = sizeof(reply)};
-+	struct kvec iov = {.iov_base = reply, .iov_len = sizeof(*reply)};
- 	struct iov_iter to;
--	int ret = 0;
-+	int result;
- 
--	reply.magic = 0;
--	iov_iter_kvec(&to, READ, &iov, 1, sizeof(reply));
-+	reply->magic = 0;
-+	iov_iter_kvec(&to, READ, &iov, 1, sizeof(*reply));
- 	result = sock_xmit(nbd, index, 0, &to, MSG_WAITALL, NULL);
- 	if (result < 0) {
--		if (!nbd_disconnected(config))
-+		if (!nbd_disconnected(nbd->config))
- 			dev_err(disk_to_dev(nbd->disk),
- 				"Receive control failed (result %d)\n", result);
--		return ERR_PTR(result);
-+		return result;
- 	}
- 
--	if (ntohl(reply.magic) != NBD_REPLY_MAGIC) {
-+	if (ntohl(reply->magic) != NBD_REPLY_MAGIC) {
- 		dev_err(disk_to_dev(nbd->disk), "Wrong magic (0x%lx)\n",
--				(unsigned long)ntohl(reply.magic));
--		return ERR_PTR(-EPROTO);
-+				(unsigned long)ntohl(reply->magic));
-+		return -EPROTO;
- 	}
- 
--	memcpy(&handle, reply.handle, sizeof(handle));
-+	return 0;
-+}
-+
-+/* NULL returned = something went wrong, inform userspace */
-+static struct nbd_cmd *nbd_handle_reply(struct nbd_device *nbd, int index,
-+					struct nbd_reply *reply)
-+{
-+	int result;
-+	struct nbd_cmd *cmd;
-+	struct request *req = NULL;
-+	u64 handle;
-+	u16 hwq;
-+	u32 tag;
-+	int ret = 0;
-+
-+	memcpy(&handle, reply->handle, sizeof(handle));
- 	tag = nbd_handle_to_tag(handle);
- 	hwq = blk_mq_unique_tag_to_hwq(tag);
- 	if (hwq < nbd->tag_set.nr_hw_queues)
-@@ -756,9 +763,9 @@ static struct nbd_cmd *nbd_read_stat(struct nbd_device *nbd, int index)
- 		ret = -ENOENT;
- 		goto out;
- 	}
--	if (ntohl(reply.error)) {
-+	if (ntohl(reply->error)) {
- 		dev_err(disk_to_dev(nbd->disk), "Other side returned error (%d)\n",
--			ntohl(reply.error));
-+			ntohl(reply->error));
- 		cmd->status = BLK_STS_IOERR;
- 		goto out;
- 	}
-@@ -767,6 +774,7 @@ static struct nbd_cmd *nbd_read_stat(struct nbd_device *nbd, int index)
- 	if (rq_data_dir(req) != WRITE) {
- 		struct req_iterator iter;
- 		struct bio_vec bvec;
-+		struct iov_iter to;
- 
- 		rq_for_each_segment(bvec, req, iter) {
- 			iov_iter_bvec(&to, READ, &bvec, 1, bvec.bv_len);
-@@ -780,7 +788,7 @@ static struct nbd_cmd *nbd_read_stat(struct nbd_device *nbd, int index)
- 				 * and let the timeout stuff handle resubmitting
- 				 * this request onto another connection.
- 				 */
--				if (nbd_disconnected(config)) {
-+				if (nbd_disconnected(nbd->config)) {
- 					cmd->status = BLK_STS_IOERR;
- 					goto out;
- 				}
-@@ -804,24 +812,30 @@ static void recv_work(struct work_struct *work)
- 						     work);
- 	struct nbd_device *nbd = args->nbd;
- 	struct nbd_config *config = nbd->config;
-+	struct nbd_sock *nsock;
- 	struct nbd_cmd *cmd;
- 	struct request *rq;
- 
- 	while (1) {
--		cmd = nbd_read_stat(nbd, args->index);
--		if (IS_ERR(cmd)) {
--			struct nbd_sock *nsock = config->socks[args->index];
-+		struct nbd_reply reply;
- 
--			mutex_lock(&nsock->tx_lock);
--			nbd_mark_nsock_dead(nbd, nsock, 1);
--			mutex_unlock(&nsock->tx_lock);
-+		if (nbd_read_reply(nbd, args->index, &reply))
-+			break;
-+
-+		cmd = nbd_handle_reply(nbd, args->index, &reply);
-+		if (IS_ERR(cmd))
- 			break;
--		}
- 
- 		rq = blk_mq_rq_from_pdu(cmd);
- 		if (likely(!blk_should_fake_timeout(rq->q)))
- 			blk_mq_complete_request(rq);
- 	}
-+
-+	nsock = config->socks[args->index];
-+	mutex_lock(&nsock->tx_lock);
-+	nbd_mark_nsock_dead(nbd, nsock, 1);
-+	mutex_unlock(&nsock->tx_lock);
-+
- 	nbd_config_put(nbd);
+-	nbd_config_put(nbd);
  	atomic_dec(&config->recv_threads);
  	wake_up(&config->recv_wq);
++	nbd_config_put(nbd);
+ 	kfree(args);
+ }
+ 
 -- 
 2.51.0
 
