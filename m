@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC7723B52ED;
-	Thu, 15 Jan 2026 16:54:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD6E1C5D59;
+	Thu, 15 Jan 2026 16:54:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496091; cv=none; b=F4nEOfNmaMctHW9hB8Z1tr+lTcCVhMcAgzqn5iReapTtikOkUgqR3H28jwl2Vdr8iycHKMy+qcdh9ka06Dc0QQCJoDab5Za0+UWB88/81XDfjqlErNQErApvhjYJYD7n/6Bh6O2kqJmvUNWbk8RGtL6RT9zi1UJwRIuEvsNpBvE=
+	t=1768496094; cv=none; b=mgre10UPALanbwWE5C7z8+immdi+PjKvbDN7Su+qivCSbU+6e3tf1Zkdkuxb2tzjM1FcM6Vcdjd2xVlT73U9WrqFm+3lsKh7g5pP3JoxXhziNGUtNrCUzQpp694ttBoHC/Wk2Qzp3rF7yHh2PkDDlUqn6Velm4Clb9/nXQ36t+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496091; c=relaxed/simple;
-	bh=JR2JylqvRkzUxvJvy0o6ib4e65VvP2+eWbIXo5Rz6CE=;
+	s=arc-20240116; t=1768496094; c=relaxed/simple;
+	bh=hZhky6i+lnlgMjHpawWIuYRccG2kUkmeMMOxqFsBzMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AC2dWQ6/t+8K/sdhXfFHMQjXWGIQpmoJIl739QfK2T/i0SYR1SKfd94iV08NVQBiHTSYjq7lOCIeiUiSjnsUq6/IfmoSoXnTVaA8joCpj/8J+byLxWt5/UzQw1rd3paXVFHa/0MeHDm/VjbX+Mdj9lTMrDCENTS+ODWtNwtSn+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QFTbOrC9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T6qHa23O1R0cL+IAX9X84vgPGmtF02UKMaGhwljHQjSEUaVDEdCqftufE0JiI8Vx8qYYIwSKnf0b18p6rnv9R8XA0mPfRBycFaHbUBmthBVm3sOpDtK0rMYqhnBIU+FqnXW3X+ZcbRvuUJuBnf6RHeZ/sjL0wHDTTUiTTHyY6XA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lhwbLd0S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QFTbOrC9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 477A9C116D0;
-	Thu, 15 Jan 2026 16:54:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lhwbLd0S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17D9CC116D0;
+	Thu, 15 Jan 2026 16:54:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496091;
-	bh=JR2JylqvRkzUxvJvy0o6ib4e65VvP2+eWbIXo5Rz6CE=;
+	s=korg; t=1768496094;
+	bh=hZhky6i+lnlgMjHpawWIuYRccG2kUkmeMMOxqFsBzMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QFTbOrC9zXEs1if1MiNRXQBUeUXcA3wxzpsNhpOYe7aYttZQlwYYG8k34n+kte+I8
-	 mD4hVk6JM0xGv3IUVkgPkdDNxbbZKFfyJu2EMHOkPfnlZ3OvlShEq1VcqoFhdGx9W/
-	 L/W/wF5IeebH/FrnKUXx05d5+t0v9oV4yiofzZic=
+	b=lhwbLd0S6Ay/wyFuJ2W53Ar95i3l5jjn9ilPPETgatjgfBzC5NpbEcp/aprnoMdGu
+	 mcDK6PsCHsITXzMPm5qF9rwYvxb/KImydyVH8zt0mBwlSYCnG+GIROu5wL51ExrRkm
+	 u5G7OPJDSncauKjpNs1QPfDEX4Od99JL113Yt1qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tuo Li <islituo@gmail.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.18 041/181] libceph: make free_choose_arg_map() resilient to partial allocation
-Date: Thu, 15 Jan 2026 17:46:18 +0100
-Message-ID: <20260115164203.811470351@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Subject: [PATCH 6.18 042/181] libceph: return the handler error from mon_handle_auth_done()
+Date: Thu, 15 Jan 2026 17:46:19 +0100
+Message-ID: <20260115164203.847572576@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -51,69 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tuo Li <islituo@gmail.com>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-commit e3fe30e57649c551757a02e1cad073c47e1e075e upstream.
+commit e84b48d31b5008932c0a0902982809fbaa1d3b70 upstream.
 
-free_choose_arg_map() may dereference a NULL pointer if its caller fails
-after a partial allocation.
-
-For example, in decode_choose_args(), if allocation of arg_map->args
-fails, execution jumps to the fail label and free_choose_arg_map() is
-called. Since arg_map->size is updated to a non-zero value before memory
-allocation, free_choose_arg_map() will iterate over arg_map->args and
-dereference a NULL pointer.
-
-To prevent this potential NULL pointer dereference and make
-free_choose_arg_map() more resilient, add checks for pointers before
-iterating.
+Currently any error from ceph_auth_handle_reply_done() is propagated
+via finish_auth() but isn't returned from mon_handle_auth_done().  This
+results in higher layers learning that (despite the monitor considering
+us to be successfully authenticated) something went wrong in the
+authentication phase and reacting accordingly, but msgr2 still trying
+to proceed with establishing the session in the background.  In the
+case of secure mode this can trigger a WARN in setup_crypto() and later
+lead to a NULL pointer dereference inside of prepare_auth_signature().
 
 Cc: stable@vger.kernel.org
-Co-authored-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Tuo Li <islituo@gmail.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Fixes: cd1a677cad99 ("libceph, ceph: implement msgr2.1 protocol (crc and secure modes)")
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osdmap.c |   20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ net/ceph/mon_client.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ceph/osdmap.c
-+++ b/net/ceph/osdmap.c
-@@ -241,22 +241,26 @@ static struct crush_choose_arg_map *allo
- 
- static void free_choose_arg_map(struct crush_choose_arg_map *arg_map)
- {
--	if (arg_map) {
--		int i, j;
-+	int i, j;
- 
--		WARN_ON(!RB_EMPTY_NODE(&arg_map->node));
-+	if (!arg_map)
-+		return;
- 
-+	WARN_ON(!RB_EMPTY_NODE(&arg_map->node));
-+
-+	if (arg_map->args) {
- 		for (i = 0; i < arg_map->size; i++) {
- 			struct crush_choose_arg *arg = &arg_map->args[i];
--
--			for (j = 0; j < arg->weight_set_size; j++)
--				kfree(arg->weight_set[j].weights);
--			kfree(arg->weight_set);
-+			if (arg->weight_set) {
-+				for (j = 0; j < arg->weight_set_size; j++)
-+					kfree(arg->weight_set[j].weights);
-+				kfree(arg->weight_set);
-+			}
- 			kfree(arg->ids);
- 		}
- 		kfree(arg_map->args);
--		kfree(arg_map);
- 	}
-+	kfree(arg_map);
+--- a/net/ceph/mon_client.c
++++ b/net/ceph/mon_client.c
+@@ -1417,7 +1417,7 @@ static int mon_handle_auth_done(struct c
+ 	if (!ret)
+ 		finish_hunting(monc);
+ 	mutex_unlock(&monc->mutex);
+-	return 0;
++	return ret;
  }
  
- DEFINE_RB_FUNCS(choose_arg_map, struct crush_choose_arg_map, choose_args_index,
+ static int mon_handle_auth_bad_method(struct ceph_connection *con,
 
 
