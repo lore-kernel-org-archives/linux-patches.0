@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9648B42049;
-	Thu, 15 Jan 2026 16:51:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF4942049;
+	Thu, 15 Jan 2026 16:51:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768495906; cv=none; b=TKNDMz6pCTLByJTT7Ur4AHdOK9IN/hLsWs5EmUz9TJaXzOPQpwDHibRsKyfX3U///8EQenaMIwh5hKhduUOOqV33ojn0FEFk91RXgvEAoXGxQ1yT7mczANRD8uqVTflaSRPS3rdUcA/bM3w64JvIf6FbqtHeMJFVHFHP/W7XSyE=
+	t=1768495909; cv=none; b=IBwiBYxL7X+kk9aj7OjktlaVUVJ8PySVy2DZ4tgREZvfGW5erLpkjSHHBZv5VAt/e2AwbuDNxu6ZZhwdqzg0/baA13TtQbOs/5NZ2pznQGC1hm3fcXrGy31XMwP2282OxbIoKDtFa/SRKcvbc8NYDeiwVyCPHetGO3IGlrjrQ9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768495906; c=relaxed/simple;
-	bh=8LfTjzgb4S/sYYYhGziqL8vWt472EzHMnRIAs4DodYM=;
+	s=arc-20240116; t=1768495909; c=relaxed/simple;
+	bh=dMe/BEdaK7ZM9l+Ah4YNA9QhD2igyuWnL+5ya/4JWoI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FaqYWP20NGHc/RxQ7kahBBQj9OJqSLuwa56pphT9DA+tYrgbqtREfpdVlfJxrxTti1InAp1phAxh9DkYlx+a5ax8xTL/xEzD2JJbqI4fA5Q9UlVfwt5AlJnihny2CUFNqhxalUYKpOdgzfuJ4Pvt2MxTbqftTfqvF+6JQubgHy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q1ShvqLB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tY3cHmboq/p7xzMcoL2yIa1v3IfjK/Mt4o2SMFgl1k+shcl1zEyewCdFyMh7j82hUXoQOmgQAwnv42Ht5z9F1KxierbwlMz2gSs4Z5qNUF0dGqg9voAomzYV5K/OHeRzOe9lmL3SsSMPvwZNN30VL+jkupxdAWU0mmMwGBfQunM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oHQh3uey; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q1ShvqLB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D279AC116D0;
-	Thu, 15 Jan 2026 16:51:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oHQh3uey"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4009C116D0;
+	Thu, 15 Jan 2026 16:51:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768495906;
-	bh=8LfTjzgb4S/sYYYhGziqL8vWt472EzHMnRIAs4DodYM=;
+	s=korg; t=1768495909;
+	bh=dMe/BEdaK7ZM9l+Ah4YNA9QhD2igyuWnL+5ya/4JWoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q1ShvqLBvvg/L7Th7acSIsDo/zQhcNafk/9DgyBr9QFZRFfi4ZlXH4r42OFKqf7ma
-	 s3oVp6y6Aa7ext+OXaYMw9VHXfkwFK6uDulXzitAQBkeSo/3MrSXCY5Y9baYfy26ex
-	 WcapOO+R4WQKY7rBZvfIoPECnACHuvIGppmjVAdk=
+	b=oHQh3ueyzxhioqEF3L0Xz5JEK2JZB7lqbeUk1s8BkLyqrB/wrfB5ye0EYay8z+vUa
+	 4uUnnqnFckaujiMiZGriDCO7C2cgxcAUZD2XaFIAVoU0o0bV1yoaKcUizqv6NsmTkn
+	 sP4Zn3eH8p40nZYFbGhQRFAczhmrtJxY56ftn0ME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yeoreum Yun <yeoreum.yun@arm.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Kevin Brodsky <kevin.brodsky@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.18 010/181] arm64: Fix cleared E0POE bit after cpu_suspend()/resume()
-Date: Thu, 15 Jan 2026 17:45:47 +0100
-Message-ID: <20260115164202.688793833@linuxfoundation.org>
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Breno Leitao <leitao@debian.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 011/181] bnxt_en: Fix NULL pointer crash in bnxt_ptp_enable during error cleanup
+Date: Thu, 15 Jan 2026 17:45:48 +0100
+Message-ID: <20260115164202.725716265@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -52,67 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yeoreum Yun <yeoreum.yun@arm.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit bdf3f4176092df5281877cacf42f843063b4784d upstream.
+commit 3358995b1a7f9dcb52a56ec8251570d71024dad0 upstream.
 
-TCR2_ELx.E0POE is set during smp_init().
-However, this bit is not reprogrammed when the CPU enters suspension and
-later resumes via cpu_resume(), as __cpu_setup() does not re-enable E0POE
-and there is no save/restore logic for the TCR2_ELx system register.
+When bnxt_init_one() fails during initialization (e.g.,
+bnxt_init_int_mode returns -ENODEV), the error path calls
+bnxt_free_hwrm_resources() which destroys the DMA pool and sets
+bp->hwrm_dma_pool to NULL. Subsequently, bnxt_ptp_clear() is called,
+which invokes ptp_clock_unregister().
 
-As a result, the E0POE feature no longer works after cpu_resume().
+Since commit a60fc3294a37 ("ptp: rework ptp_clock_unregister() to
+disable events"), ptp_clock_unregister() now calls
+ptp_disable_all_events(), which in turn invokes the driver's .enable()
+callback (bnxt_ptp_enable()) to disable PTP events before completing the
+unregistration.
 
-To address this, save and restore TCR2_EL1 in the cpu_suspend()/cpu_resume()
-path, rather than adding related logic to __cpu_setup(), taking into account
-possible future extensions of the TCR2_ELx feature.
+bnxt_ptp_enable() attempts to send HWRM commands via bnxt_ptp_cfg_pin()
+and bnxt_ptp_cfg_event(), both of which call hwrm_req_init(). This
+function tries to allocate from bp->hwrm_dma_pool, causing a NULL
+pointer dereference:
 
-Fixes: bf83dae90fbc ("arm64: enable the Permission Overlay Extension for EL0")
-Cc: <stable@vger.kernel.org> # 6.12.x
-Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Reviewed-by: Kevin Brodsky <kevin.brodsky@arm.com>
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+  bnxt_en 0000:01:00.0 (unnamed net_device) (uninitialized): bnxt_init_int_mode err: ffffffed
+  KASAN: null-ptr-deref in range [0x0000000000000028-0x000000000000002f]
+  Call Trace:
+   __hwrm_req_init (drivers/net/ethernet/broadcom/bnxt/bnxt_hwrm.c:72)
+   bnxt_ptp_enable (drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c:323 drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c:517)
+   ptp_disable_all_events (drivers/ptp/ptp_chardev.c:66)
+   ptp_clock_unregister (drivers/ptp/ptp_clock.c:518)
+   bnxt_ptp_clear (drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c:1134)
+   bnxt_init_one (drivers/net/ethernet/broadcom/bnxt/bnxt.c:16889)
+
+Lines are against commit f8f9c1f4d0c7 ("Linux 6.19-rc3")
+
+Fix this by clearing and unregistering ptp (bnxt_ptp_clear()) before
+freeing HWRM resources.
+
+Suggested-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Fixes: a60fc3294a37 ("ptp: rework ptp_clock_unregister() to disable events")
+Cc: stable@vger.kernel.org
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Link: https://patch.msgid.link/20260106-bnxt-v3-1-71f37e11446a@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/suspend.h |    2 +-
- arch/arm64/mm/proc.S             |    8 ++++++++
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/arm64/include/asm/suspend.h
-+++ b/arch/arm64/include/asm/suspend.h
-@@ -2,7 +2,7 @@
- #ifndef __ASM_SUSPEND_H
- #define __ASM_SUSPEND_H
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -16856,12 +16856,12 @@ init_err_dl:
  
--#define NR_CTX_REGS 13
-+#define NR_CTX_REGS 14
- #define NR_CALLEE_SAVED_REGS 12
- 
- /*
---- a/arch/arm64/mm/proc.S
-+++ b/arch/arm64/mm/proc.S
-@@ -100,6 +100,10 @@ SYM_FUNC_START(cpu_do_suspend)
- 	 * call stack.
- 	 */
- 	str	x18, [x0, #96]
-+alternative_if ARM64_HAS_TCR2
-+	mrs	x2, REG_TCR2_EL1
-+	str	x2, [x0, #104]
-+alternative_else_nop_endif
- 	ret
- SYM_FUNC_END(cpu_do_suspend)
- 
-@@ -134,6 +138,10 @@ SYM_FUNC_START(cpu_do_resume)
- 	msr	tcr_el1, x8
- 	msr	vbar_el1, x9
- 	msr	mdscr_el1, x10
-+alternative_if ARM64_HAS_TCR2
-+	ldr	x2, [x0, #104]
-+	msr	REG_TCR2_EL1, x2
-+alternative_else_nop_endif
- 
- 	msr	sctlr_el1, x12
- 	set_this_cpu_offset x13
+ init_err_pci_clean:
+ 	bnxt_hwrm_func_drv_unrgtr(bp);
+-	bnxt_free_hwrm_resources(bp);
+-	bnxt_hwmon_uninit(bp);
+-	bnxt_ethtool_free(bp);
+ 	bnxt_ptp_clear(bp);
+ 	kfree(bp->ptp_cfg);
+ 	bp->ptp_cfg = NULL;
++	bnxt_free_hwrm_resources(bp);
++	bnxt_hwmon_uninit(bp);
++	bnxt_ethtool_free(bp);
+ 	kfree(bp->fw_health);
+ 	bp->fw_health = NULL;
+ 	bnxt_cleanup_pci(bp);
 
 
