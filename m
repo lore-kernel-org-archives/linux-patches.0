@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 733293C1994;
-	Thu, 15 Jan 2026 17:51:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD843BFE37;
+	Thu, 15 Jan 2026 17:51:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499510; cv=none; b=Oh0TnWPf3Eeg9leqFKXVz2rFUbWmeMKmo+qRLoVXZDrNCVTgEQl0efJa6Dq3PXSlmRN/0MtmUig9rUDuie5PbmNfL4wq8x3fhXP6dPfBBFpFh51OkJ9CD26QDxmLr1e+PCJXyT4JaHmE1vGxB7j5gjz3TqGERnNmgc4FuoprlOk=
+	t=1768499513; cv=none; b=cZsiY4Fd3Xg3d7pku7YXm+qCtnuq/6G1zC+gykNYmRraED8j2u9xgU6DPeJ+4xXDhdWqjMoY1/Wn4EbkIsolDrWcRg+5WdLWq6/0M9HHs8aYcEaby8s6r5eYyeph0hmIxEkchjDYiX4TBIKKsDg6wmpGXzrZxO9jUlQch93NnQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499510; c=relaxed/simple;
-	bh=E/xF8ZYGoQg/0sH6txWOgSiw3jL/CHdbLmfXoKnNJY4=;
+	s=arc-20240116; t=1768499513; c=relaxed/simple;
+	bh=AfzBOSUV44X6Z9awrZ2GqTHWHYeMR8zg1D39qdJjipA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hutij0NrosOgJm8r3Cw1BFnYn1dY+9AQ9QbK56w6iv/mi8ZlABVM9b0rqg5gO7zqi4RgoBePKrv+IFsIJEgrDFyPfXqy3tEtNCY3Uc63K9rCR7AQ1SmTeCF4TxAqBcpZG/0PKcuiP2r0nRDQxCPXFnCpwjrFEXkyT4Nx0rALj+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fVUVwdvj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hXrXvPP0BjkVvmQ2RzXr0bUnGgRfw8BHVa5qDYhYve/B/S9VxzuRJBH5g1rMN2DM8tXGFLh0hZHZECsF96eb267aCiT4Ps+He6nuNHebmCSytve5XYZSGU7u0tMV+qmxbelafFyWeH55N2Q/xZ8DzGQgxDGxMP6W0QS9Ro+ST6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lm55/czz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fVUVwdvj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EED2EC116D0;
-	Thu, 15 Jan 2026 17:51:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lm55/czz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0AB7C19422;
+	Thu, 15 Jan 2026 17:51:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499510;
-	bh=E/xF8ZYGoQg/0sH6txWOgSiw3jL/CHdbLmfXoKnNJY4=;
+	s=korg; t=1768499513;
+	bh=AfzBOSUV44X6Z9awrZ2GqTHWHYeMR8zg1D39qdJjipA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fVUVwdvj0ycFyRZUdnG3ZLnhut3e8+bC06pKh9DFBnrSz+J/xWw7wVZkun/AIVAmM
-	 Yg81LN3bLQH1nx936D8K2dDO1wQ1RqmK31w+HPZ5BIcN2T+9NJUDc4foGDS1mdF3+4
-	 Daq4zBPM7ocydqoBTNOQOWUVtXw1I/SEFB4Sfvtc=
+	b=Lm55/czzFMPuHtEb9MIcLJPA9E42qsfS2ZIn1VEo2bRfNeCYOMaX58+8bLP1pmpmQ
+	 /vp1f1Liw7N7L5gbQq2ZCVqLAue3iyjyEPFZ6gWJ1pX/czdDphGBz2DRouCp8zw+V/
+	 4esrHdrnCb4MJnB4dov7XJyBm2XeaWDseA4SsbMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ziming zhang <ezrakiez@gmail.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Xiubo Li <xiubli@redhat.com>
-Subject: [PATCH 5.10 252/451] libceph: make decode_pool() more resilient against corrupted osdmaps
-Date: Thu, 15 Jan 2026 17:47:33 +0100
-Message-ID: <20260115164240.007098684@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 5.10 253/451] KVM: x86: WARN if hrtimer callback for periodic APIC timer fires with period=0
+Date: Thu, 15 Jan 2026 17:47:34 +0100
+Message-ID: <20260115164240.042652412@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -51,221 +49,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 8c738512714e8c0aa18f8a10c072d5b01c83db39 upstream.
+commit 0ea9494be9c931ddbc084ad5e11fda91b554cf47 upstream.
 
-If the osdmap is (maliciously) corrupted such that the encoded length
-of ceph_pg_pool envelope is less than what is expected for a particular
-encoding version, out-of-bounds reads may ensue because the only bounds
-check that is there is based on that length value.
-
-This patch adds explicit bounds checks for each field that is decoded
-or skipped.
+WARN and don't restart the hrtimer if KVM's callback runs with the guest's
+APIC timer in periodic mode but with a period of '0', as not advancing the
+hrtimer's deadline would put the CPU into an infinite loop of hrtimer
+events.  Observing a period of '0' should be impossible, even when the
+hrtimer is running on a different CPU than the vCPU, as KVM is supposed to
+cancel the hrtimer before changing (or zeroing) the period, e.g. when
+switching from periodic to one-shot.
 
 Cc: stable@vger.kernel.org
-Reported-by: ziming zhang <ezrakiez@gmail.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Xiubo Li <xiubli@redhat.com>
-Tested-by: ziming zhang <ezrakiez@gmail.com>
+Link: https://patch.msgid.link/20251113205114.1647493-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osdmap.c |  118 ++++++++++++++++++++++++------------------------------
- 1 file changed, 53 insertions(+), 65 deletions(-)
+ arch/x86/kvm/lapic.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ceph/osdmap.c
-+++ b/net/ceph/osdmap.c
-@@ -790,51 +790,49 @@ static int decode_pool(void **p, void *e
- 	ceph_decode_need(p, end, len, bad);
- 	pool_end = *p + len;
+--- a/arch/x86/kvm/lapic.c
++++ b/arch/x86/kvm/lapic.c
+@@ -2434,7 +2434,7 @@ static enum hrtimer_restart apic_timer_f
  
-+	ceph_decode_need(p, end, 4 + 4 + 4, bad);
- 	pi->type = ceph_decode_8(p);
- 	pi->size = ceph_decode_8(p);
- 	pi->crush_ruleset = ceph_decode_8(p);
- 	pi->object_hash = ceph_decode_8(p);
--
- 	pi->pg_num = ceph_decode_32(p);
- 	pi->pgp_num = ceph_decode_32(p);
+ 	apic_timer_expired(apic, true);
  
--	*p += 4 + 4;  /* skip lpg* */
--	*p += 4;      /* skip last_change */
--	*p += 8 + 4;  /* skip snap_seq, snap_epoch */
-+	/* lpg*, last_change, snap_seq, snap_epoch */
-+	ceph_decode_skip_n(p, end, 8 + 4 + 8 + 4, bad);
- 
- 	/* skip snaps */
--	num = ceph_decode_32(p);
-+	ceph_decode_32_safe(p, end, num, bad);
- 	while (num--) {
--		*p += 8;  /* snapid key */
--		*p += 1 + 1; /* versions */
--		len = ceph_decode_32(p);
--		*p += len;
-+		/* snapid key, pool snap (with versions) */
-+		ceph_decode_skip_n(p, end, 8 + 2, bad);
-+		ceph_decode_skip_string(p, end, bad);
- 	}
- 
--	/* skip removed_snaps */
--	num = ceph_decode_32(p);
--	*p += num * (8 + 8);
-+	/* removed_snaps */
-+	ceph_decode_skip_map(p, end, 64, 64, bad);
- 
-+	ceph_decode_need(p, end, 8 + 8 + 4, bad);
- 	*p += 8;  /* skip auid */
- 	pi->flags = ceph_decode_64(p);
- 	*p += 4;  /* skip crash_replay_interval */
- 
- 	if (ev >= 7)
--		pi->min_size = ceph_decode_8(p);
-+		ceph_decode_8_safe(p, end, pi->min_size, bad);
- 	else
- 		pi->min_size = pi->size - pi->size / 2;
- 
- 	if (ev >= 8)
--		*p += 8 + 8;  /* skip quota_max_* */
-+		/* quota_max_* */
-+		ceph_decode_skip_n(p, end, 8 + 8, bad);
- 
- 	if (ev >= 9) {
--		/* skip tiers */
--		num = ceph_decode_32(p);
--		*p += num * 8;
-+		/* tiers */
-+		ceph_decode_skip_set(p, end, 64, bad);
- 
-+		ceph_decode_need(p, end, 8 + 1 + 8 + 8, bad);
- 		*p += 8;  /* skip tier_of */
- 		*p += 1;  /* skip cache_mode */
--
- 		pi->read_tier = ceph_decode_64(p);
- 		pi->write_tier = ceph_decode_64(p);
- 	} else {
-@@ -842,86 +840,76 @@ static int decode_pool(void **p, void *e
- 		pi->write_tier = -1;
- 	}
- 
--	if (ev >= 10) {
--		/* skip properties */
--		num = ceph_decode_32(p);
--		while (num--) {
--			len = ceph_decode_32(p);
--			*p += len; /* key */
--			len = ceph_decode_32(p);
--			*p += len; /* val */
--		}
--	}
-+	if (ev >= 10)
-+		/* properties */
-+		ceph_decode_skip_map(p, end, string, string, bad);
- 
- 	if (ev >= 11) {
--		/* skip hit_set_params */
--		*p += 1 + 1; /* versions */
--		len = ceph_decode_32(p);
--		*p += len;
-+		/* hit_set_params (with versions) */
-+		ceph_decode_skip_n(p, end, 2, bad);
-+		ceph_decode_skip_string(p, end, bad);
- 
--		*p += 4; /* skip hit_set_period */
--		*p += 4; /* skip hit_set_count */
-+		/* hit_set_period, hit_set_count */
-+		ceph_decode_skip_n(p, end, 4 + 4, bad);
- 	}
- 
- 	if (ev >= 12)
--		*p += 4; /* skip stripe_width */
-+		/* stripe_width */
-+		ceph_decode_skip_32(p, end, bad);
- 
--	if (ev >= 13) {
--		*p += 8; /* skip target_max_bytes */
--		*p += 8; /* skip target_max_objects */
--		*p += 4; /* skip cache_target_dirty_ratio_micro */
--		*p += 4; /* skip cache_target_full_ratio_micro */
--		*p += 4; /* skip cache_min_flush_age */
--		*p += 4; /* skip cache_min_evict_age */
--	}
--
--	if (ev >=  14) {
--		/* skip erasure_code_profile */
--		len = ceph_decode_32(p);
--		*p += len;
--	}
-+	if (ev >= 13)
-+		/* target_max_*, cache_target_*, cache_min_* */
-+		ceph_decode_skip_n(p, end, 16 + 8 + 8, bad);
-+
-+	if (ev >= 14)
-+		/* erasure_code_profile */
-+		ceph_decode_skip_string(p, end, bad);
- 
- 	/*
- 	 * last_force_op_resend_preluminous, will be overridden if the
- 	 * map was encoded with RESEND_ON_SPLIT
- 	 */
- 	if (ev >= 15)
--		pi->last_force_request_resend = ceph_decode_32(p);
-+		ceph_decode_32_safe(p, end, pi->last_force_request_resend, bad);
- 	else
- 		pi->last_force_request_resend = 0;
- 
- 	if (ev >= 16)
--		*p += 4; /* skip min_read_recency_for_promote */
-+		/* min_read_recency_for_promote */
-+		ceph_decode_skip_32(p, end, bad);
- 
- 	if (ev >= 17)
--		*p += 8; /* skip expected_num_objects */
-+		/* expected_num_objects */
-+		ceph_decode_skip_64(p, end, bad);
- 
- 	if (ev >= 19)
--		*p += 4; /* skip cache_target_dirty_high_ratio_micro */
-+		/* cache_target_dirty_high_ratio_micro */
-+		ceph_decode_skip_32(p, end, bad);
- 
- 	if (ev >= 20)
--		*p += 4; /* skip min_write_recency_for_promote */
-+		/* min_write_recency_for_promote */
-+		ceph_decode_skip_32(p, end, bad);
- 
- 	if (ev >= 21)
--		*p += 1; /* skip use_gmt_hitset */
-+		/* use_gmt_hitset */
-+		ceph_decode_skip_8(p, end, bad);
- 
- 	if (ev >= 22)
--		*p += 1; /* skip fast_read */
-+		/* fast_read */
-+		ceph_decode_skip_8(p, end, bad);
- 
--	if (ev >= 23) {
--		*p += 4; /* skip hit_set_grade_decay_rate */
--		*p += 4; /* skip hit_set_search_last_n */
--	}
-+	if (ev >= 23)
-+		/* hit_set_grade_decay_rate, hit_set_search_last_n */
-+		ceph_decode_skip_n(p, end, 4 + 4, bad);
- 
- 	if (ev >= 24) {
--		/* skip opts */
--		*p += 1 + 1; /* versions */
--		len = ceph_decode_32(p);
--		*p += len;
-+		/* opts (with versions) */
-+		ceph_decode_skip_n(p, end, 2, bad);
-+		ceph_decode_skip_string(p, end, bad);
- 	}
- 
- 	if (ev >= 25)
--		pi->last_force_request_resend = ceph_decode_32(p);
-+		ceph_decode_32_safe(p, end, pi->last_force_request_resend, bad);
- 
- 	/* ignore the rest */
- 
+-	if (lapic_is_periodic(apic)) {
++	if (lapic_is_periodic(apic) && !WARN_ON_ONCE(!apic->lapic_timer.period)) {
+ 		advance_periodic_target_expiration(apic);
+ 		hrtimer_add_expires_ns(&ktimer->timer, ktimer->period);
+ 		return HRTIMER_RESTART;
 
 
