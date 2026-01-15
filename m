@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 159363D3CEA;
-	Thu, 15 Jan 2026 17:51:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BF923C0085;
+	Thu, 15 Jan 2026 17:51:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499502; cv=none; b=L/VKpIfZaRKtrmH0c9Z0027+9EgS3d5fx2+I1mIoSB8b5NpJ1/Z4ZL3O4zQY2M5fSQeKoyyxyWqmoN0yFjVV3kL0+sBGbPElqeVhaC32RABy+0aDN3SAeQ0ua47pS021RrFlkf5mXXwFhCyFoXrFV3+d2jVVkOnBU4Z7PcEa1TE=
+	t=1768499505; cv=none; b=r26cQzmVd5gkPfq0zYGPVh0AMGWyYrhXlozZAjZ6FY+f3nHyPJUCmN2G9k6tyIY5OHKuidBoBfd9l9opRC7QuzK2FfILd7zmmpjzMP4ZpD8pI/dvJ7Ly/ZA+UlslF8FFqRrEGqo3U5totq1dGMjTRZ823LcNIjbUP/zZGXqB7/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499502; c=relaxed/simple;
-	bh=LBZq/SQaaq8LWHBxdlh5VQ9CsQhLSF5jihrjDqJUnQ8=;
+	s=arc-20240116; t=1768499505; c=relaxed/simple;
+	bh=7tcD0KYnNm8+UTDMPga3Kecx/9opHoCk+/gb+WUAb/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pYVNpMUxoHJ2KltprlJZHg7xrEJPsXVENWUm7xCXUkw86768ub+XihrbCH8v+hy6QLKMAOVG9Xq4xIPRkEpEx7en6aqPEZcCLrc6z1d7JEwHe7ixZV/kzgb3G2jDGd/e9oASzf5O6ewrTy3fRcGmjdB0jBm25it0g6/R6zL2GvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A7MsAy5f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tuT/5zOqDO5nmPigFWbig4zShNGqVuwa00NBlyc7GAHDIIR7xVKBvdbNCqdthDxfuO4gIk/+4kwAgP3NPumEiMMUWIswwGr0gLxryniBn9GOc5aOaReoH2YMYYm4eWZxhAatrbf+M86HxPTxbvtYgP+cu3WTVSDM9RZLUXauoBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7rsN0CH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A7MsAy5f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8085BC19422;
-	Thu, 15 Jan 2026 17:51:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7rsN0CH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B7C9C116D0;
+	Thu, 15 Jan 2026 17:51:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499501;
-	bh=LBZq/SQaaq8LWHBxdlh5VQ9CsQhLSF5jihrjDqJUnQ8=;
+	s=korg; t=1768499504;
+	bh=7tcD0KYnNm8+UTDMPga3Kecx/9opHoCk+/gb+WUAb/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A7MsAy5fvbZmKtQomy/2IKrDvzAQmNa/kgLK5uiTp21YVMJiiG1FztnjDi4lBy57z
-	 Q8q5DoQcUPx9eulQaFjtnb7/BXRbUKllTarclVvGzqkUg9NBPbuaA92ITjFGLu/d32
-	 Xn6ux/s1Ry5A293j2Kotp6T2nIP/PHPunx1/03ag=
+	b=F7rsN0CHSBc3afsaexF3XY+TeYf9VQxYmB60mjqf1h9hiGdS2JQWnnvCwz0bPLD83
+	 N7KNOqKdVyzmYoSd9fqwtH6hl7wluL7DN5XvAdTtDwwx04D/8nRlk2Bu50tR3xlYYT
+	 e1VUPMD8xQrFJl70gul4micyY4/jNbtJ8K7Ui3Lk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiyuan Xie <xiejiyuan@vivo.com>,
-	Zhichi Lin <zhichi.lin@vivo.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Will Deacon <will@kernel.org>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Kees Cook <keescook@chromium.org>,
-	Marco Elver <elver@google.com>,
-	Yee Lee <yee.lee@mediatek.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 250/451] scs: fix a wrong parameter in __scs_magic
-Date: Thu, 15 Jan 2026 17:47:31 +0100
-Message-ID: <20260115164239.935210283@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ma Ke <make24@iscas.ac.cn>
+Subject: [PATCH 5.10 233/451] USB: lpc32xx_udc: Fix error handling in probe
+Date: Thu, 15 Jan 2026 17:47:14 +0100
+Message-ID: <20260115164239.324759125@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -57,65 +50,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhichi Lin <zhichi.lin@vivo.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 08bd4c46d5e63b78e77f2605283874bbe868ab19 upstream.
+commit c84117912bddd9e5d87e68daf182410c98181407 upstream.
 
-__scs_magic() needs a 'void *' variable, but a 'struct task_struct *' is
-given.  'task_scs(tsk)' is the starting address of the task's shadow call
-stack, and '__scs_magic(task_scs(tsk))' is the end address of the task's
-shadow call stack.  Here should be '__scs_magic(task_scs(tsk))'.
+lpc32xx_udc_probe() acquires an i2c_client reference through
+isp1301_get_client() but fails to release it in both error handling
+paths and the normal removal path. This could result in a reference
+count leak for the I2C device, preventing proper cleanup and potentially
+leading to resource exhaustion. Add put_device() to release the
+reference in the probe failure path and in the remove function.
 
-The user-visible effect of this bug is that when CONFIG_DEBUG_STACK_USAGE
-is enabled, the shadow call stack usage checking function
-(scs_check_usage) would scan an incorrect memory range.  This could lead
-to:
+Calling path: isp1301_get_client() -> of_find_i2c_device_by_node() ->
+i2c_find_device_by_fwnode(). As comments of i2c_find_device_by_fwnode()
+says, 'The user must call put_device(&client->dev) once done with the
+i2c client.'
 
-1. **Inaccurate stack usage reporting**: The function would calculate
-   wrong usage statistics for the shadow call stack, potentially showing
-   incorrect value in kmsg.
+Found by code review.
 
-2. **Potential kernel crash**: If the value of __scs_magic(tsk)is
-   greater than that of __scs_magic(task_scs(tsk)), the for loop may
-   access unmapped memory, potentially causing a kernel panic.  However,
-   this scenario is unlikely because task_struct is allocated via the slab
-   allocator (which typically returns lower addresses), while the shadow
-   call stack returned by task_scs(tsk) is allocated via vmalloc(which
-   typically returns higher addresses).
-
-However, since this is purely a debugging feature
-(CONFIG_DEBUG_STACK_USAGE), normal production systems should be not
-unaffected.  The bug only impacts developers and testers who are actively
-debugging stack usage with this configuration enabled.
-
-Link: https://lkml.kernel.org/r/20251011082222.12965-1-zhichi.lin@vivo.com
-Fixes: 5bbaf9d1fcb9 ("scs: Add support for stack usage debugging")
-Signed-off-by: Jiyuan Xie <xiejiyuan@vivo.com>
-Signed-off-by: Zhichi Lin <zhichi.lin@vivo.com>
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Acked-by: Will Deacon <will@kernel.org>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: Marco Elver <elver@google.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Yee Lee <yee.lee@mediatek.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable <stable@kernel.org>
+Fixes: 24a28e428351 ("USB: gadget driver for LPC32xx")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Link: https://patch.msgid.link/20251215020931.15324-1-make24@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/scs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/gadget/udc/lpc32xx_udc.c |   21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
---- a/kernel/scs.c
-+++ b/kernel/scs.c
-@@ -71,7 +71,7 @@ static void scs_check_usage(struct task_
- 	if (!IS_ENABLED(CONFIG_DEBUG_STACK_USAGE))
- 		return;
+--- a/drivers/usb/gadget/udc/lpc32xx_udc.c
++++ b/drivers/usb/gadget/udc/lpc32xx_udc.c
+@@ -3026,7 +3026,7 @@ static int lpc32xx_udc_probe(struct plat
+ 	pdev->dev.dma_mask = &lpc32xx_usbd_dmamask;
+ 	retval = dma_set_coherent_mask(&pdev->dev, DMA_BIT_MASK(32));
+ 	if (retval)
+-		return retval;
++		goto i2c_fail;
  
--	for (p = task_scs(tsk); p < __scs_magic(tsk); ++p) {
-+	for (p = task_scs(tsk); p < __scs_magic(task_scs(tsk)); ++p) {
- 		if (!READ_ONCE_NOCHECK(*p))
- 			break;
- 		used += sizeof(*p);
+ 	udc->board = &lpc32xx_usbddata;
+ 
+@@ -3044,28 +3044,32 @@ static int lpc32xx_udc_probe(struct plat
+ 	/* Get IRQs */
+ 	for (i = 0; i < 4; i++) {
+ 		udc->udp_irq[i] = platform_get_irq(pdev, i);
+-		if (udc->udp_irq[i] < 0)
+-			return udc->udp_irq[i];
++		if (udc->udp_irq[i] < 0) {
++			retval = udc->udp_irq[i];
++			goto i2c_fail;
++		}
+ 	}
+ 
+ 	udc->udp_baseaddr = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(udc->udp_baseaddr)) {
+ 		dev_err(udc->dev, "IO map failure\n");
+-		return PTR_ERR(udc->udp_baseaddr);
++		retval = PTR_ERR(udc->udp_baseaddr);
++		goto i2c_fail;
+ 	}
+ 
+ 	/* Get USB device clock */
+ 	udc->usb_slv_clk = devm_clk_get(&pdev->dev, NULL);
+ 	if (IS_ERR(udc->usb_slv_clk)) {
+ 		dev_err(udc->dev, "failed to acquire USB device clock\n");
+-		return PTR_ERR(udc->usb_slv_clk);
++		retval = PTR_ERR(udc->usb_slv_clk);
++		goto i2c_fail;
+ 	}
+ 
+ 	/* Enable USB device clock */
+ 	retval = clk_prepare_enable(udc->usb_slv_clk);
+ 	if (retval < 0) {
+ 		dev_err(udc->dev, "failed to start USB device clock\n");
+-		return retval;
++		goto i2c_fail;
+ 	}
+ 
+ 	/* Setup deferred workqueue data */
+@@ -3167,6 +3171,8 @@ dma_alloc_fail:
+ 	dma_free_coherent(&pdev->dev, UDCA_BUFF_SIZE,
+ 			  udc->udca_v_base, udc->udca_p_base);
+ i2c_fail:
++	if (udc->isp1301_i2c_client)
++		put_device(&udc->isp1301_i2c_client->dev);
+ 	clk_disable_unprepare(udc->usb_slv_clk);
+ 	dev_err(udc->dev, "%s probe failed, %d\n", driver_name, retval);
+ 
+@@ -3192,6 +3198,9 @@ static int lpc32xx_udc_remove(struct pla
+ 	dma_free_coherent(&pdev->dev, UDCA_BUFF_SIZE,
+ 			  udc->udca_v_base, udc->udca_p_base);
+ 
++	if (udc->isp1301_i2c_client)
++		put_device(&udc->isp1301_i2c_client->dev);
++
+ 	clk_disable_unprepare(udc->usb_slv_clk);
+ 
+ 	return 0;
 
 
