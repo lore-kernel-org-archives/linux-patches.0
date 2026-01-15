@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B8733993;
-	Thu, 15 Jan 2026 16:55:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B06D3BF2F9;
+	Thu, 15 Jan 2026 16:55:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496140; cv=none; b=m4ymZfky9nAG0OMGOrk9PwOEIRNZpr4KdIXMFCdb76Yji4SNTwwrdh8HTGPInFCn0keo2z4kD1o5U+rq7LvUOVCtqLd3VJuXBZC4dKG8rJvBFDmQgpS1EIYS+gJI7JCLDhaXjkK3akksJ+HchD4HEJG8u6eKRFQrK/uzM5wqcms=
+	t=1768496143; cv=none; b=e+KUG4sEcbs8/DgjSK044qW15PzrOeN+SUQVf0H0lrPEgdw/QNfFdnGRthR4q9VOnJ6I+nliXtQt7h3Yz/VIvHf+XB2SXBjQSuGjZDjFvpNISdL/X8V5zoK5APpZCgv1my9Bydwj3Ki2IDmLjCtygOuC84pEpObWfqlghVO36jk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496140; c=relaxed/simple;
-	bh=h+iXgwIiCxYUiR2W7EPFK2OSQkExYjzSbq3+UOID7iU=;
+	s=arc-20240116; t=1768496143; c=relaxed/simple;
+	bh=PK4wz2XQAliUh6TDSB5QeC0oj/kgvuzFBqpwApnS2Rk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aYHZFKX0GIaCE+suDvwjIXAuuOS/MiAyZdJRuEXq/vr93MUl9TIWrqtQi/Or15vlMi9fj9CombrenknViYcK5A181TPIUTwbPv2TF0+4HFmir02WkIQaq0wRISPAuiXrYALj/ZRVGNb47yfvrqktFcnIJmL3ysU2+q67H19+CJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v5RVm5/h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bKf7t0/907Q/3iYU7EYEB+VlzRq35BQFagU6gyJdOp95d4HQ/p8CI5hx8hB5VZuDMuaeLwdlu/9jOUxCP7hwGZnL52pqLXs9e2LyKwTYyGNJcdoJN1htydqD7I7wHezwFMjLzgpGc8cexvGI9iqo0Tae5I2CwGAG35lnI/c2cjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lzOFWSOO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v5RVm5/h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C895C116D0;
-	Thu, 15 Jan 2026 16:55:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lzOFWSOO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65ECEC19421;
+	Thu, 15 Jan 2026 16:55:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496139;
-	bh=h+iXgwIiCxYUiR2W7EPFK2OSQkExYjzSbq3+UOID7iU=;
+	s=korg; t=1768496142;
+	bh=PK4wz2XQAliUh6TDSB5QeC0oj/kgvuzFBqpwApnS2Rk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v5RVm5/hib3WgxKUZ8UxxoAXMwcowbkugXTiXvUzbajgrYwQKWdn7PgqARLLPkMtj
-	 QdxVCzberapIdFZzZVaYQyKACn1/3iv0TAMaMNNoIGWo9gfWQ+ppAEOgbC1mmAvcfm
-	 orqUxlZSRxDHKFwncNImTKUKbmZbywkYPQwAKz/U=
+	b=lzOFWSOOYCTLFLESB2kQXl9oF0tk3DUIdvA7kg8gVqQ2Ff+fmw37vmFMuVjYHfgxK
+	 cWxglMRQNj0bVbFHowOlWmX5zZ60/oHpNACayjwkRgscCjFk6odconDumko3F1wc8B
+	 dl3Pem4+apyGNPHHyP1khy4iZzrdvTDvty/H8htQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Lewalski <jakub.lewalski@nokia.com>,
-	=?UTF-8?q?Pawe=C5=82=20Narewski?= <pawel.narewski@nokia.com>,
+	Ernest Van Hoecke <ernest.vanhoecke@toradex.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 091/181] gpiolib: fix race condition for gdev->srcu
-Date: Thu, 15 Jan 2026 17:47:08 +0100
-Message-ID: <20260115164205.608551002@linuxfoundation.org>
+Subject: [PATCH 6.18 092/181] gpio: pca953x: handle short interrupt pulses on PCAL devices
+Date: Thu, 15 Jan 2026 17:47:09 +0100
+Message-ID: <20260115164205.644352089@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -53,152 +53,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paweł Narewski <pawel.narewski@nokia.com>
+From: Ernest Van Hoecke <ernest.vanhoecke@toradex.com>
 
-[ Upstream commit a7ac22d53d0990152b108c3f4fe30df45fcb0181 ]
+[ Upstream commit 014a17deb41201449f76df2b20c857a9c3294a7c ]
 
-If two drivers were calling gpiochip_add_data_with_key(), one may be
-traversing the srcu-protected list in gpio_name_to_desc(), meanwhile
-other has just added its gdev in gpiodev_add_to_list_unlocked().
-This creates a non-mutexed and non-protected timeframe, when one
-instance is dereferencing and using &gdev->srcu, before the other
-has initialized it, resulting in crash:
+GPIO drivers with latch input support may miss short pulses on input
+pins even when input latching is enabled. The generic interrupt logic in
+the pca953x driver reports interrupts by comparing the current input
+value against the previously sampled one and only signals an event when
+a level change is observed between two reads.
 
-[    4.935481] Unable to handle kernel paging request at virtual address ffff800272bcc000
-[    4.943396] Mem abort info:
-[    4.943400]   ESR = 0x0000000096000005
-[    4.943403]   EC = 0x25: DABT (current EL), IL = 32 bits
-[    4.943407]   SET = 0, FnV = 0
-[    4.943410]   EA = 0, S1PTW = 0
-[    4.943413]   FSC = 0x05: level 1 translation fault
-[    4.943416] Data abort info:
-[    4.943418]   ISV = 0, ISS = 0x00000005, ISS2 = 0x00000000
-[    4.946220]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-[    4.955261]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-[    4.955268] swapper pgtable: 4k pages, 48-bit VAs, pgdp=0000000038e6c000
-[    4.961449] [ffff800272bcc000] pgd=0000000000000000
-[    4.969203] , p4d=1000000039739003
-[    4.979730] , pud=0000000000000000
-[    4.980210] phandle (CPU): 0x0000005e, phandle (BE): 0x5e000000 for node "reset"
-[    4.991736] Internal error: Oops: 0000000096000005 [#1] PREEMPT SMP
-...
-[    5.121359] pc : __srcu_read_lock+0x44/0x98
-[    5.131091] lr : gpio_name_to_desc+0x60/0x1a0
-[    5.153671] sp : ffff8000833bb430
-[    5.298440]
-[    5.298443] Call trace:
-[    5.298445]  __srcu_read_lock+0x44/0x98
-[    5.309484]  gpio_name_to_desc+0x60/0x1a0
-[    5.320692]  gpiochip_add_data_with_key+0x488/0xf00
-    5.946419] ---[ end trace 0000000000000000 ]---
+For short pulses, the first edge is captured when the input register is
+read, but if the signal returns to its previous level before the read,
+the second edge is not observed. As a result, successive pulses can
+produce identical input values at read time and no level change is
+detected, causing interrupts to be missed. Below timing diagram shows
+this situation where the top signal is the input pin level and the
+bottom signal indicates the latched value.
 
-Move initialization code for gdev fields before it is added to
-gpio_devices, with adjacent initialization code.
-Adjust goto statements  to reflect modified order of operations
+─────┐     ┌──*───────────────┐     ┌──*─────────────────┐     ┌──*───
+     │     │  .               │     │  .                 │     │  .
+     │     │  │               │     │  │                 │     │  │
+     └──*──┘  │               └──*──┘  │                 └──*──┘  │
+Input   │     │                  │     │                    │     │
+        ▼     │                  ▼     │                    ▼     │
+       IRQ    │                 IRQ    │                   IRQ    │
+              .                        .                          .
+─────┐        .┌──────────────┐        .┌────────────────┐        .┌──
+     │         │              │         │                │         │
+     │         │              │         │                │         │
+     └────────*┘              └────────*┘                └────────*┘
+Latched       │                        │                          │
+              ▼                        ▼                          ▼
+            READ 0                   READ 0                     READ 0
+                                   NO CHANGE                  NO CHANGE
 
-Fixes: 47d8b4c1d868 ("gpio: add SRCU infrastructure to struct gpio_device")
-Reviewed-by: Jakub Lewalski <jakub.lewalski@nokia.com>
-Signed-off-by: Paweł Narewski <pawel.narewski@nokia.com>
-[Bartosz: fixed a build issue, removed stray newline]
-Link: https://lore.kernel.org/r/20251224082641.10769-1-bartosz.golaszewski@oss.qualcomm.com
+PCAL variants provide an interrupt status register that records which
+pins triggered an interrupt, but the status and input registers cannot
+be read atomically. The interrupt status is only cleared when the input
+port is read, and the input value must also be read to determine the
+triggering edge. If another interrupt occurs on a different line after
+the status register has been read but before the input register is
+sampled, that event will not be reflected in the earlier status
+snapshot, so relying solely on the interrupt status register is also
+insufficient.
+
+Support for input latching and interrupt status handling was previously
+added by [1], but the interrupt status-based logic was reverted by [2]
+due to these issues. This patch addresses the original problem by
+combining both sources of information. Events indicated by the interrupt
+status register are merged with events detected through the existing
+level-change logic. As a result:
+
+* short pulses, whose second edges are invisible, are detected via the
+  interrupt status register, and
+* interrupts that occur between the status and input reads are still
+  caught by the generic level-change logic.
+
+This significantly improves robustness on devices that signal interrupts
+as short pulses, while avoiding the issues that led to the earlier
+reversion. In practice, even if only the first edge of a pulse is
+observable, the interrupt is reliably detected.
+
+This fixes missed interrupts from an Ilitek touch controller with its
+interrupt line connected to a PCAL6416A, where active-low pulses are
+approximately 200 us long.
+
+[1] commit 44896beae605 ("gpio: pca953x: add PCAL9535 interrupt support for Galileo Gen2")
+[2] commit d6179f6c6204 ("gpio: pca953x: Improve interrupt support")
+
+Fixes: d6179f6c6204 ("gpio: pca953x: Improve interrupt support")
+Signed-off-by: Ernest Van Hoecke <ernest.vanhoecke@toradex.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20251217153050.142057-1-ernestvanhoecke@gmail.com
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib.c | 40 ++++++++++++++++++++--------------------
- 1 file changed, 20 insertions(+), 20 deletions(-)
+ drivers/gpio/gpio-pca953x.c | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index 9a4395a29f68e..9aa6ddf6389cc 100644
---- a/drivers/gpio/gpiolib.c
-+++ b/drivers/gpio/gpiolib.c
-@@ -1091,6 +1091,18 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
- 	gdev->ngpio = gc->ngpio;
- 	gdev->can_sleep = gc->can_sleep;
+diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
+index b46927f550389..b2de916107f42 100644
+--- a/drivers/gpio/gpio-pca953x.c
++++ b/drivers/gpio/gpio-pca953x.c
+@@ -940,14 +940,35 @@ static bool pca953x_irq_pending(struct pca953x_chip *chip, unsigned long *pendin
+ 	DECLARE_BITMAP(old_stat, MAX_LINE);
+ 	DECLARE_BITMAP(cur_stat, MAX_LINE);
+ 	DECLARE_BITMAP(new_stat, MAX_LINE);
++	DECLARE_BITMAP(int_stat, MAX_LINE);
+ 	DECLARE_BITMAP(trigger, MAX_LINE);
+ 	DECLARE_BITMAP(edges, MAX_LINE);
+ 	int ret;
  
-+	rwlock_init(&gdev->line_state_lock);
-+	RAW_INIT_NOTIFIER_HEAD(&gdev->line_state_notifier);
-+	BLOCKING_INIT_NOTIFIER_HEAD(&gdev->device_notifier);
++	if (chip->driver_data & PCA_PCAL) {
++		/* Read INT_STAT before it is cleared by the input-port read. */
++		ret = pca953x_read_regs(chip, PCAL953X_INT_STAT, int_stat);
++		if (ret)
++			return false;
++	}
 +
-+	ret = init_srcu_struct(&gdev->srcu);
-+	if (ret)
-+		goto err_free_label;
-+
-+	ret = init_srcu_struct(&gdev->desc_srcu);
-+	if (ret)
-+		goto err_cleanup_gdev_srcu;
-+
- 	scoped_guard(mutex, &gpio_devices_lock) {
- 		/*
- 		 * TODO: this allocates a Linux GPIO number base in the global
-@@ -1105,7 +1117,7 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
- 			if (base < 0) {
- 				ret = base;
- 				base = 0;
--				goto err_free_label;
-+				goto err_cleanup_desc_srcu;
- 			}
+ 	ret = pca953x_read_regs(chip, chip->regs->input, cur_stat);
+ 	if (ret)
+ 		return false;
  
- 			/*
-@@ -1125,22 +1137,10 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
- 		ret = gpiodev_add_to_list_unlocked(gdev);
- 		if (ret) {
- 			gpiochip_err(gc, "GPIO integer space overlap, cannot add chip\n");
--			goto err_free_label;
-+			goto err_cleanup_desc_srcu;
- 		}
++	if (chip->driver_data & PCA_PCAL) {
++		/* Detect short pulses via INT_STAT. */
++		bitmap_and(trigger, int_stat, chip->irq_mask, gc->ngpio);
++
++		/* Apply filter for rising/falling edge selection. */
++		bitmap_replace(new_stat, chip->irq_trig_fall, chip->irq_trig_raise,
++			       cur_stat, gc->ngpio);
++
++		bitmap_and(int_stat, new_stat, trigger, gc->ngpio);
++	} else {
++		bitmap_zero(int_stat, gc->ngpio);
++	}
++
+ 	/* Remove output pins from the equation */
+ 	pca953x_read_regs(chip, chip->regs->direction, reg_direction);
+ 
+@@ -961,7 +982,8 @@ static bool pca953x_irq_pending(struct pca953x_chip *chip, unsigned long *pendin
+ 
+ 	if (bitmap_empty(chip->irq_trig_level_high, gc->ngpio) &&
+ 	    bitmap_empty(chip->irq_trig_level_low, gc->ngpio)) {
+-		if (bitmap_empty(trigger, gc->ngpio))
++		if (bitmap_empty(trigger, gc->ngpio) &&
++		    bitmap_empty(int_stat, gc->ngpio))
+ 			return false;
  	}
  
--	rwlock_init(&gdev->line_state_lock);
--	RAW_INIT_NOTIFIER_HEAD(&gdev->line_state_notifier);
--	BLOCKING_INIT_NOTIFIER_HEAD(&gdev->device_notifier);
--
--	ret = init_srcu_struct(&gdev->srcu);
--	if (ret)
--		goto err_remove_from_list;
--
--	ret = init_srcu_struct(&gdev->desc_srcu);
--	if (ret)
--		goto err_cleanup_gdev_srcu;
--
- #ifdef CONFIG_PINCTRL
- 	INIT_LIST_HEAD(&gdev->pin_ranges);
- #endif
-@@ -1150,11 +1150,11 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
+@@ -969,6 +991,7 @@ static bool pca953x_irq_pending(struct pca953x_chip *chip, unsigned long *pendin
+ 	bitmap_and(old_stat, chip->irq_trig_raise, new_stat, gc->ngpio);
+ 	bitmap_or(edges, old_stat, cur_stat, gc->ngpio);
+ 	bitmap_and(pending, edges, trigger, gc->ngpio);
++	bitmap_or(pending, pending, int_stat, gc->ngpio);
  
- 	ret = gpiochip_set_names(gc);
- 	if (ret)
--		goto err_cleanup_desc_srcu;
-+		goto err_remove_from_list;
- 
- 	ret = gpiochip_init_valid_mask(gc);
- 	if (ret)
--		goto err_cleanup_desc_srcu;
-+		goto err_remove_from_list;
- 
- 	for (desc_index = 0; desc_index < gc->ngpio; desc_index++) {
- 		struct gpio_desc *desc = &gdev->descs[desc_index];
-@@ -1227,10 +1227,6 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
- 	of_gpiochip_remove(gc);
- err_free_valid_mask:
- 	gpiochip_free_valid_mask(gc);
--err_cleanup_desc_srcu:
--	cleanup_srcu_struct(&gdev->desc_srcu);
--err_cleanup_gdev_srcu:
--	cleanup_srcu_struct(&gdev->srcu);
- err_remove_from_list:
- 	scoped_guard(mutex, &gpio_devices_lock)
- 		list_del_rcu(&gdev->list);
-@@ -1240,6 +1236,10 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
- 		gpio_device_put(gdev);
- 		goto err_print_message;
- 	}
-+err_cleanup_desc_srcu:
-+	cleanup_srcu_struct(&gdev->desc_srcu);
-+err_cleanup_gdev_srcu:
-+	cleanup_srcu_struct(&gdev->srcu);
- err_free_label:
- 	kfree_const(gdev->label);
- err_free_descs:
+ 	bitmap_and(cur_stat, new_stat, chip->irq_trig_level_high, gc->ngpio);
+ 	bitmap_and(cur_stat, cur_stat, chip->irq_mask, gc->ngpio);
 -- 
 2.51.0
 
