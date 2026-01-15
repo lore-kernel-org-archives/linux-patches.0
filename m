@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0787349B0A;
-	Thu, 15 Jan 2026 16:57:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A46839C624;
+	Thu, 15 Jan 2026 16:57:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496262; cv=none; b=EtnWylPfSS6SFeLNDVm7yHpfUnwifj4VoZ45tU05ao3IWLMdics68AMiVm4GE02W4E9TKCAa4ZIGGJNGn0qIYfUOet/exgVbPA3JI72FGooOKf1uX6tqterPWHKf8ZZocVFs5feCFG0Cm7AVTci6A/NgOeCICw11OemWJ6Z5HU8=
+	t=1768496265; cv=none; b=MtTMYsXxqE4T2/vG+0FRISgiPfVh3nel4kpuwmik5C9PcIrgYEBDRxT9o8tDJZ+/8uqaWobtw4XsT2UKHruqL/B4ymLX6UejRGjf6XIn+M4X+IXt3AqchRoT8ntyq90BDPe9fKUSnnTM4pmRNjJOwWvlbr9X1ndKdKyp1J0858o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496262; c=relaxed/simple;
-	bh=SGN7uERA7k8Wz0LUWmGxhKhxwRar5fn3/bO1GLwosWA=;
+	s=arc-20240116; t=1768496265; c=relaxed/simple;
+	bh=tn535ekHrS7O0ErNKZS6K0RG3Nv3lajb45ZJbxoKjBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G+JFYf+keUCwWEelNMXN1RDbmKppkMPSVTs4xTT6QzE01ra0oaPRdwPEcUFIQvK70szELdoDlct/xXpkeaq/qb47kPnafJokP8izkXpQVDhQJbpORn3m9X9Z48YyXxlVIpoZgAviBBTumMBbaeLeKAtz4USMnfdxEQVQ0Iz+BFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nacSHApA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m6plosglKBT+HvBkjrqEGtCuvTo4g9ek/7DTnkg3JQNr4M8qxvmBAMnM/33g8DCoxQopdolKuGfds71GdUqA8eaiAhhev6QqNYQrrwNKYzx75S7gYR44M1ePxnQTEUsngH48AxnvCutPUrQa0Y7AqfBn6xq6Y0OWvYEPK42PVDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XSfN+U2z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nacSHApA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12DF1C116D0;
-	Thu, 15 Jan 2026 16:57:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XSfN+U2z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CECFDC116D0;
+	Thu, 15 Jan 2026 16:57:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496262;
-	bh=SGN7uERA7k8Wz0LUWmGxhKhxwRar5fn3/bO1GLwosWA=;
+	s=korg; t=1768496265;
+	bh=tn535ekHrS7O0ErNKZS6K0RG3Nv3lajb45ZJbxoKjBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nacSHApAKHF8RpJFkP2XSvN7C72KR9EhkJWCGghkLc9sDXMgdyWxTOJ7hC35b71ML
-	 1KwzSFzZDgeFy9/cSIm6bSz1bewaKQ2CrxDNm1Dnfi75XEGOF0gMGZR/B2BRXd18Bg
-	 QivuQyuvsaGCEpUrH1fnqiaBP7bgfrCu542rfkpA=
+	b=XSfN+U2znJ/+xWTOqxr8M519MDbUfHLSU3ovKITU2TNsw04+RXzO2ZQld6OcW/ngI
+	 0fyhIC5Br/LKreL1jZ/9c7Z7UXHxQaxqSXgkDgs2Jsl/XhtR61OlBWKKeG2aW0IJs4
+	 Rzq6fseXYAEl2WPXfAoNnAiNrTBT5I6KLQQEUPa8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sreedevi Joshi <sreedevi.joshi@intel.com>,
-	Madhu Chittim <madhu.chittim@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Samuel Salin <Samuel.salin@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Ray Jui <ray.jui@broadcom.com>,
+	Srijit Bose <srijit.bose@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 134/181] idpf: Fix error handling in idpf_vport_open()
-Date: Thu, 15 Jan 2026 17:47:51 +0100
-Message-ID: <20260115164207.158285195@linuxfoundation.org>
+Subject: [PATCH 6.18 108/181] bnxt_en: Fix potential data corruption with HW GRO/LRO
+Date: Thu, 15 Jan 2026 17:47:25 +0100
+Message-ID: <20260115164206.217170901@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -55,48 +54,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sreedevi Joshi <sreedevi.joshi@intel.com>
+From: Srijit Bose <srijit.bose@broadcom.com>
 
-[ Upstream commit 87b8ee64685bc096a087af833d4594b2332bfdb1 ]
+[ Upstream commit ffeafa65b2b26df2f5b5a6118d3174f17bd12ec5 ]
 
-Fix error handling to properly cleanup interrupts when
-idpf_vport_queue_ids_init() or idpf_rx_bufs_init_all() fail. Jump to
-'intr_deinit' instead of 'queues_rel' to ensure interrupts are cleaned up
-before releasing other resources.
+Fix the max number of bits passed to find_first_zero_bit() in
+bnxt_alloc_agg_idx().  We were incorrectly passing the number of
+long words.  find_first_zero_bit() may fail to find a zero bit and
+cause a wrong ID to be used.  If the wrong ID is already in use, this
+can cause data corruption.  Sometimes an error like this can also be
+seen:
 
-Fixes: d4d558718266 ("idpf: initialize interrupts and enable vport")
-Signed-off-by: Sreedevi Joshi <sreedevi.joshi@intel.com>
-Reviewed-by: Madhu Chittim <madhu.chittim@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Samuel Salin <Samuel.salin@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+bnxt_en 0000:83:00.0 enp131s0np0: TPA end agg_buf 2 != expected agg_bufs 1
+
+Fix it by passing the correct number of bits MAX_TPA_P5.  Use
+DECLARE_BITMAP() to more cleanly define the bitmap.  Add a sanity
+check to warn if a bit cannot be found and reset the ring [MChan].
+
+Fixes: ec4d8e7cf024 ("bnxt_en: Add TPA ID mapping logic for 57500 chips.")
+Reviewed-by: Ray Jui <ray.jui@broadcom.com>
+Signed-off-by: Srijit Bose <srijit.bose@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20251231083625.3911652-1-michael.chan@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf_lib.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 15 ++++++++++++---
+ drivers/net/ethernet/broadcom/bnxt/bnxt.h |  4 +---
+ 2 files changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_lib.c b/drivers/net/ethernet/intel/idpf/idpf_lib.c
-index 003bab3ce5ae6..131a8121839bd 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_lib.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_lib.c
-@@ -1524,14 +1524,14 @@ static int idpf_vport_open(struct idpf_vport *vport, bool rtnl)
- 	if (err) {
- 		dev_err(&adapter->pdev->dev, "Failed to initialize queue registers for vport %u: %d\n",
- 			vport->vport_id, err);
--		goto queues_rel;
-+		goto intr_deinit;
- 	}
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 0366323ab0676..95c774d98da66 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -1482,9 +1482,11 @@ static u16 bnxt_alloc_agg_idx(struct bnxt_rx_ring_info *rxr, u16 agg_id)
+ 	struct bnxt_tpa_idx_map *map = rxr->rx_tpa_idx_map;
+ 	u16 idx = agg_id & MAX_TPA_P5_MASK;
  
- 	err = idpf_rx_bufs_init_all(vport);
- 	if (err) {
- 		dev_err(&adapter->pdev->dev, "Failed to initialize RX buffers for vport %u: %d\n",
- 			vport->vport_id, err);
--		goto queues_rel;
-+		goto intr_deinit;
+-	if (test_bit(idx, map->agg_idx_bmap))
+-		idx = find_first_zero_bit(map->agg_idx_bmap,
+-					  BNXT_AGG_IDX_BMAP_SIZE);
++	if (test_bit(idx, map->agg_idx_bmap)) {
++		idx = find_first_zero_bit(map->agg_idx_bmap, MAX_TPA_P5);
++		if (idx >= MAX_TPA_P5)
++			return INVALID_HW_RING_ID;
++	}
+ 	__set_bit(idx, map->agg_idx_bmap);
+ 	map->agg_id_tbl[agg_id] = idx;
+ 	return idx;
+@@ -1548,6 +1550,13 @@ static void bnxt_tpa_start(struct bnxt *bp, struct bnxt_rx_ring_info *rxr,
+ 	if (bp->flags & BNXT_FLAG_CHIP_P5_PLUS) {
+ 		agg_id = TPA_START_AGG_ID_P5(tpa_start);
+ 		agg_id = bnxt_alloc_agg_idx(rxr, agg_id);
++		if (unlikely(agg_id == INVALID_HW_RING_ID)) {
++			netdev_warn(bp->dev, "Unable to allocate agg ID for ring %d, agg 0x%x\n",
++				    rxr->bnapi->index,
++				    TPA_START_AGG_ID_P5(tpa_start));
++			bnxt_sched_reset_rxr(bp, rxr);
++			return;
++		}
+ 	} else {
+ 		agg_id = TPA_START_AGG_ID(tpa_start);
  	}
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+index 3613a172483a1..45bbaec75ded4 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+@@ -1079,11 +1079,9 @@ struct bnxt_tpa_info {
+ 	struct rx_agg_cmp	*agg_arr;
+ };
  
- 	idpf_rx_init_buf_tail(vport);
+-#define BNXT_AGG_IDX_BMAP_SIZE	(MAX_TPA_P5 / BITS_PER_LONG)
+-
+ struct bnxt_tpa_idx_map {
+ 	u16		agg_id_tbl[1024];
+-	unsigned long	agg_idx_bmap[BNXT_AGG_IDX_BMAP_SIZE];
++	DECLARE_BITMAP(agg_idx_bmap, MAX_TPA_P5);
+ };
+ 
+ struct bnxt_rx_ring_info {
 -- 
 2.51.0
 
