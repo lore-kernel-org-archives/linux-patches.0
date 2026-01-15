@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80D03A7F43;
-	Thu, 15 Jan 2026 17:12:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0703BC4F3;
+	Thu, 15 Jan 2026 17:12:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497143; cv=none; b=L8wj0TLyk6/DIw+L1L/4YoBIVwQovow7PBWDPFWWwRdgcRZKlVXgQSHUoUVYE4kFFtdJ6BtncgOPUaOr1sgYOoopnQFcoeqJhUSXRHvkNrWF2Qu1WgnuIgBVaHs7C8AygtAApNogxv8B5rMYE6Xx37cz0XXrNDUqGGObxrhzbmo=
+	t=1768497146; cv=none; b=XFYe5Fv94KnxN45YyPESaVebXWnGvs6d9wjSg4V6Rj6Zt3H/xOvuFU04je3TQ2DzEIQFWzgz18F77/rKiEYmLFIQenLd9Zuic5Py08OfCScOkP9UZlx8NrC6Q1KCBs6DxI3XNeC5TGFaYw3lt7WAT8wNiPVy5ZqFeuYyRjyR/Gg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497143; c=relaxed/simple;
-	bh=eRWM0v8QaMgjpHttR1MWSzaJJ0/akhHJaaBUDcwqw2M=;
+	s=arc-20240116; t=1768497146; c=relaxed/simple;
+	bh=iKq4VmdiswjhKTKQzNQaIgLe5HfApvbuou2AHhcR9is=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bm2lvbI8BfIH9xLzoRZBsHYH4j3eAcOj5SD7CX2CNx6mvZ8VYKBDiw2zJprfe0W5rTYVbScZ4D40xDpHmJBMSLxoFyce3GgRYYQ05HYalexf1Zg3pPcgS1sUsdwMRHHzpVHA5ZL0gXfde6okWQVPQAkK15Sq1nTrVpCgsJaKFyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IrhmFmgt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IG7vnKHlZ8LgmHbwGQ6edFGloPqftLHU3Qc2RbGfRnRCKwx5AVXtSm5iLXhsBxMU+7cM9KYwClx2AzzignWGK3N4q4E0aiKu+AxTP0z7NB+YOJtd5yNgzb2hHx/T+OMelWVS2bKWtdLSIlXuFdaZYCJcuGctx5a8rb3IHE31XPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VueLnBaX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IrhmFmgt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D779C116D0;
-	Thu, 15 Jan 2026 17:12:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VueLnBaX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E733DC116D0;
+	Thu, 15 Jan 2026 17:12:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497143;
-	bh=eRWM0v8QaMgjpHttR1MWSzaJJ0/akhHJaaBUDcwqw2M=;
+	s=korg; t=1768497146;
+	bh=iKq4VmdiswjhKTKQzNQaIgLe5HfApvbuou2AHhcR9is=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IrhmFmgtsh9rzQS1yqi+BDPOBZKQCaTmFxigrqxgtwI1RTIWZtaoEskjPP4y4iLtD
-	 KiGiX/xtTlNG0UFfuQvy6qWPXARcWzx0Sen0EHoXSBWKinMUwgvqiZrr56hXBBANIs
-	 wZrzRmOHJAaalZNkGzsQEPqyBXtqdacdjBADM19o=
+	b=VueLnBaXxiObTI2lc3s5gxybVGBFfsZbGIoYz40jmF44vaKRK7Vpsr4a8PTyqwqFu
+	 eLzfhdF/nlPO6oAB/GYGzWChm6Wo+kJpuEBCi3I/RH8N7wALhFoj32p3cj4GJFga8K
+	 weEHl/w322VnnWFqUEia47a59V1vHwtrPXFMyfI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Wei Fang <wei.fang@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yang Li <yang.li85200@gmail.com>,
+	Guo Ren <guoren@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 50/72] net: enetc: fix build warning when PAGE_SIZE is greater than 128K
-Date: Thu, 15 Jan 2026 17:49:00 +0100
-Message-ID: <20260115164145.307968634@linuxfoundation.org>
+Subject: [PATCH 6.1 19/72] csky: fix csky_cmpxchg_fixup not working
+Date: Thu, 15 Jan 2026 17:48:29 +0100
+Message-ID: <20260115164144.193358643@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164143.482647486@linuxfoundation.org>
 References: <20260115164143.482647486@linuxfoundation.org>
@@ -53,47 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Yang Li <yang.li85200@gmail.com>
 
-[ Upstream commit 4b5bdabb5449b652122e43f507f73789041d4abe ]
+[ Upstream commit 809ef03d6d21d5fea016bbf6babeec462e37e68c ]
 
-The max buffer size of ENETC RX BD is 0xFFFF bytes, so if the PAGE_SIZE
-is greater than 128K, ENETC_RXB_DMA_SIZE and ENETC_RXB_DMA_SIZE_XDP will
-be greater than 0xFFFF, thus causing a build warning.
+In the csky_cmpxchg_fixup function, it is incorrect to use the global
+variable csky_cmpxchg_stw to determine the address where the exception
+occurred.The global variable csky_cmpxchg_stw stores the opcode at the
+time of the exception, while &csky_cmpxchg_stw shows the address where
+the exception occurred.
 
-This will not cause any practical issues because ENETC is currently only
-used on the ARM64 platform, and the max PAGE_SIZE is 64K. So this patch
-is only for fixing the build warning that occurs when compiling ENETC
-drivers for other platforms.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202601050637.kHEKKOG7-lkp@intel.com/
-Fixes: e59bc32df2e9 ("net: enetc: correct the value of ENETC_RXB_TRUESIZE")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260107091204.1980222-1-wei.fang@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Yang Li <yang.li85200@gmail.com>
+Signed-off-by: Guo Ren <guoren@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc.h | 4 ++--
+ arch/csky/mm/fault.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc.h b/drivers/net/ethernet/freescale/enetc/enetc.h
-index aacdfe98b65ab..d2ad5be02a0d8 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc.h
-+++ b/drivers/net/ethernet/freescale/enetc/enetc.h
-@@ -43,9 +43,9 @@ struct enetc_tx_swbd {
- #define ENETC_RXB_TRUESIZE	(PAGE_SIZE >> 1)
- #define ENETC_RXB_PAD		NET_SKB_PAD /* add extra space if needed */
- #define ENETC_RXB_DMA_SIZE	\
--	(SKB_WITH_OVERHEAD(ENETC_RXB_TRUESIZE) - ENETC_RXB_PAD)
-+	min(SKB_WITH_OVERHEAD(ENETC_RXB_TRUESIZE) - ENETC_RXB_PAD, 0xffff)
- #define ENETC_RXB_DMA_SIZE_XDP	\
--	(SKB_WITH_OVERHEAD(ENETC_RXB_TRUESIZE) - XDP_PACKET_HEADROOM)
-+	min(SKB_WITH_OVERHEAD(ENETC_RXB_TRUESIZE) - XDP_PACKET_HEADROOM, 0xffff)
+diff --git a/arch/csky/mm/fault.c b/arch/csky/mm/fault.c
+index a885518ce1dd2..5226bc08c3360 100644
+--- a/arch/csky/mm/fault.c
++++ b/arch/csky/mm/fault.c
+@@ -45,8 +45,8 @@ static inline void csky_cmpxchg_fixup(struct pt_regs *regs)
+ 	if (trap_no(regs) != VEC_TLBMODIFIED)
+ 		return;
  
- struct enetc_rx_swbd {
- 	dma_addr_t dma;
+-	if (instruction_pointer(regs) == csky_cmpxchg_stw)
+-		instruction_pointer_set(regs, csky_cmpxchg_ldw);
++	if (instruction_pointer(regs) == (unsigned long)&csky_cmpxchg_stw)
++		instruction_pointer_set(regs, (unsigned long)&csky_cmpxchg_ldw);
+ 	return;
+ }
+ #endif
 -- 
 2.51.0
 
