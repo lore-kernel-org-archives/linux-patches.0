@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B1683C1FC3;
-	Thu, 15 Jan 2026 17:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B705C3D2FEB;
+	Thu, 15 Jan 2026 17:29:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498170; cv=none; b=tMXh1dgfxqtUptpzpxQTrnrD905+xkw/2LS8MUQJG+bg7GUhCcb+H+xA3q1/zcqyMbnuDDt9uEo14Do1J6IYPPClSTno2GDlJtiRP+c+bl6lcaeW8kaHhvM5F4tslrBwlIKCKct+hBDlrneUZ+1HG9XuNHKLhkKuMV2v3baibDs=
+	t=1768498172; cv=none; b=ZeR3TA7FzVnQvAM/n+5pHg/PQC3nIvXIgXgehR5ZX9msch9OQchZlu1qBgNcJv/dR0kIeNZA4a49Y5qWYqnnp00refEqYgE4uYHxjCnXUJkw5FJoCzkMK7u30rksjCq42604nID2yJCUltJq4UMW5ycLKOUM9E8PhaIVx7HC4DY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498170; c=relaxed/simple;
-	bh=ofRsbVqRGJ1MFXfvcozsy9xIb4hjRhweINA56gDO0yA=;
+	s=arc-20240116; t=1768498172; c=relaxed/simple;
+	bh=gHC3pOEu51I9x3Sfrz7oR7+MXY7JIrXF4UQUxf7wI88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UPE1sTJgxvaE9Ecl/VACrd+LnZWWX2XCIpwUf0HKpSuPalXCfGCKymNyhE2UQbll5alRMUgshkjVwssEs2rw6CiCjFHbzg2xVBeRtJkV3Op/CUc4iTSMzk0V8iWICriMA8+LRAllIyZtAPUN0Q6hBPPX3THGjAepqHt9PX0hvn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g7RNX8xO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aKwYxjneGEw+yQmQnS+5wFjM2OxCpUp6BqyprIKLFHEJkfEij+0pCe7Sa1EoyiUFCkxHC4xk4S+Z+C3DFp+4cBw9cGHrdBT2fP6xssG1bL06umBwIJUwWndHzh71BIodEGmEIBlrtzMAQ+9pQ9EqJjE6UXKOrbC5o6lDlHk1XTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FLh2yuZ9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g7RNX8xO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E7A4C116D0;
-	Thu, 15 Jan 2026 17:29:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FLh2yuZ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 443BBC116D0;
+	Thu, 15 Jan 2026 17:29:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498169;
-	bh=ofRsbVqRGJ1MFXfvcozsy9xIb4hjRhweINA56gDO0yA=;
+	s=korg; t=1768498172;
+	bh=gHC3pOEu51I9x3Sfrz7oR7+MXY7JIrXF4UQUxf7wI88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g7RNX8xO5erGRFsR4GsF4Ujzj/bs88s8YsMduVikoZ4k4YciWJBqaBk4j+hQodE4r
-	 NbE7fTJQ2jRODDMO/gBWRXlmFporJqsLXl2+7gdlcvwY5on4J8hiMGdhZwvG+PYwQG
-	 ZHj1vZ8a/+sbZOHXmFEL8KfapWEW51WDTrJVya9Q=
+	b=FLh2yuZ9RyxB350JI6xmcJu2s0PWEFGjopXfLXsGYJqM58shKJhQApnWb5HwO/N1s
+	 VkHMlJp6nzHlI6vmrtjImoRfOhGzNgSwjHaq7iwzN8uVoPs1YD2bNss3aGzqm+JXBS
+	 JW8PCrgbjITbEEa7oAGpel4BvTItSDZjDdHRA21o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Schmidt <mschmidt@redhat.com>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>,
-	Ivan Vecera <ivecera@redhat.com>,
-	Simon Horman <horms@kernel.org>,
+	Gregory Herrero <gregory.herrero@oracle.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 337/554] i40e: Refactor argument of i40e_detect_recover_hung()
-Date: Thu, 15 Jan 2026 17:46:43 +0100
-Message-ID: <20260115164258.430213915@linuxfoundation.org>
+Subject: [PATCH 5.15 338/554] i40e: validate ring_len parameter against hardware-specific values
+Date: Thu, 15 Jan 2026 17:46:44 +0100
+Message-ID: <20260115164258.466750493@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -54,79 +53,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Vecera <ivecera@redhat.com>
+From: Gregory Herrero <gregory.herrero@oracle.com>
 
-[ Upstream commit 7033ada04e33048c8b33294fecbb0d73f3cd1088 ]
+[ Upstream commit 69942834215323cd9131db557091b4dec43f19c5 ]
 
-Commit 07d44190a389 ("i40e/i40evf: Detect and recover hung queue
-scenario") changes i40e_detect_recover_hung() argument type from
-i40e_pf* to i40e_vsi* to be shareable by both i40e and i40evf.
-Because the i40evf does not exist anymore and the function is
-exclusively used by i40e we can revert this change.
+The maximum number of descriptors supported by the hardware is
+hardware-dependent and can be retrieved using
+i40e_get_max_num_descriptors(). Move this function to a shared header
+and use it when checking for valid ring_len parameter rather than using
+hardcoded value.
 
-Reviewed-by: Michal Schmidt <mschmidt@redhat.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
+By fixing an over-acceptance issue, behavior change could be seen where
+ring_len could now be rejected while configuring rx and tx queues if its
+size is larger than the hardware-dependent maximum number of
+descriptors.
+
+Fixes: 55d225670def ("i40e: add validation for ring_len param")
+Signed-off-by: Gregory Herrero <gregory.herrero@oracle.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Stable-dep-of: 699428342153 ("i40e: validate ring_len parameter against hardware-specific values")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_main.c |  2 +-
- drivers/net/ethernet/intel/i40e/i40e_txrx.c | 10 ++++++----
- drivers/net/ethernet/intel/i40e/i40e_txrx.h |  2 +-
- 3 files changed, 8 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e.h             | 11 +++++++++++
+ drivers/net/ethernet/intel/i40e/i40e_ethtool.c     | 12 ------------
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |  4 ++--
+ 3 files changed, 13 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
-index 9671058cda40..b2e185357ab2 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_main.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
-@@ -11275,7 +11275,7 @@ static void i40e_service_task(struct work_struct *work)
- 		return;
+diff --git a/drivers/net/ethernet/intel/i40e/i40e.h b/drivers/net/ethernet/intel/i40e/i40e.h
+index bbd95b3d7326..022bf6e86164 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e.h
++++ b/drivers/net/ethernet/intel/i40e/i40e.h
+@@ -1305,4 +1305,15 @@ static inline u32 i40e_is_tc_mqprio_enabled(struct i40e_pf *pf)
+ 	return pf->flags & I40E_FLAG_TC_MQPRIO;
+ }
  
- 	if (!test_bit(__I40E_RECOVERY_MODE, pf->state)) {
--		i40e_detect_recover_hung(pf->vsi[pf->lan_vsi]);
-+		i40e_detect_recover_hung(pf);
- 		i40e_sync_filters_subtask(pf);
- 		i40e_reset_subtask(pf);
- 		i40e_handle_mdd_event(pf);
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_txrx.c b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
-index b94d67729283..dabeeffd06fc 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_txrx.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
-@@ -867,13 +867,15 @@ u32 i40e_get_tx_pending(struct i40e_ring *ring, bool in_sw)
++static inline u32 i40e_get_max_num_descriptors(const struct i40e_pf *pf)
++{
++	const struct i40e_hw *hw = &pf->hw;
++
++	switch (hw->mac.type) {
++	case I40E_MAC_XL710:
++		return I40E_MAX_NUM_DESCRIPTORS_XL710;
++	default:
++		return I40E_MAX_NUM_DESCRIPTORS;
++	}
++}
+ #endif /* _I40E_H_ */
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_ethtool.c b/drivers/net/ethernet/intel/i40e/i40e_ethtool.c
+index 74a18b8df11f..04d304eef379 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_ethtool.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_ethtool.c
+@@ -1918,18 +1918,6 @@ static void i40e_get_drvinfo(struct net_device *netdev,
+ 		drvinfo->n_priv_flags += I40E_GL_PRIV_FLAGS_STR_LEN;
+ }
  
- /**
-  * i40e_detect_recover_hung - Function to detect and recover hung_queues
-- * @vsi:  pointer to vsi struct with tx queues
-+ * @pf: pointer to PF struct
-  *
-- * VSI has netdev and netdev has TX queues. This function is to check each of
-- * those TX queues if they are hung, trigger recovery by issuing SW interrupt.
-+ * LAN VSI has netdev and netdev has TX queues. This function is to check
-+ * each of those TX queues if they are hung, trigger recovery by issuing
-+ * SW interrupt.
-  **/
--void i40e_detect_recover_hung(struct i40e_vsi *vsi)
-+void i40e_detect_recover_hung(struct i40e_pf *pf)
+-static u32 i40e_get_max_num_descriptors(struct i40e_pf *pf)
+-{
+-	struct i40e_hw *hw = &pf->hw;
+-
+-	switch (hw->mac.type) {
+-	case I40E_MAC_XL710:
+-		return I40E_MAX_NUM_DESCRIPTORS_XL710;
+-	default:
+-		return I40E_MAX_NUM_DESCRIPTORS;
+-	}
+-}
+-
+ static void i40e_get_ringparam(struct net_device *netdev,
+ 			       struct ethtool_ringparam *ring)
  {
-+	struct i40e_vsi *vsi = pf->vsi[pf->lan_vsi];
- 	struct i40e_ring *tx_ring = NULL;
- 	struct net_device *netdev;
- 	unsigned int i;
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_txrx.h b/drivers/net/ethernet/intel/i40e/i40e_txrx.h
-index 054b7d1632e1..2ea4138099be 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_txrx.h
-+++ b/drivers/net/ethernet/intel/i40e/i40e_txrx.h
-@@ -462,7 +462,7 @@ void i40e_free_rx_resources(struct i40e_ring *rx_ring);
- int i40e_napi_poll(struct napi_struct *napi, int budget);
- void i40e_force_wb(struct i40e_vsi *vsi, struct i40e_q_vector *q_vector);
- u32 i40e_get_tx_pending(struct i40e_ring *ring, bool in_sw);
--void i40e_detect_recover_hung(struct i40e_vsi *vsi);
-+void i40e_detect_recover_hung(struct i40e_pf *pf);
- int __i40e_maybe_stop_tx(struct i40e_ring *tx_ring, int size);
- bool __i40e_chk_linearize(struct sk_buff *skb);
- int i40e_xdp_xmit(struct net_device *dev, int n, struct xdp_frame **frames,
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+index 5cd7a2bc40fd..907727604c70 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+@@ -656,7 +656,7 @@ static int i40e_config_vsi_tx_queue(struct i40e_vf *vf, u16 vsi_id,
+ 
+ 	/* ring_len has to be multiple of 8 */
+ 	if (!IS_ALIGNED(info->ring_len, 8) ||
+-	    info->ring_len > I40E_MAX_NUM_DESCRIPTORS_XL710) {
++	    info->ring_len > i40e_get_max_num_descriptors(pf)) {
+ 		ret = -EINVAL;
+ 		goto error_context;
+ 	}
+@@ -728,7 +728,7 @@ static int i40e_config_vsi_rx_queue(struct i40e_vf *vf, u16 vsi_id,
+ 
+ 	/* ring_len has to be multiple of 32 */
+ 	if (!IS_ALIGNED(info->ring_len, 32) ||
+-	    info->ring_len > I40E_MAX_NUM_DESCRIPTORS_XL710) {
++	    info->ring_len > i40e_get_max_num_descriptors(pf)) {
+ 		ret = -EINVAL;
+ 		goto error_param;
+ 	}
 -- 
 2.51.0
 
