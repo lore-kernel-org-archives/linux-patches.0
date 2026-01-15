@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C043E258EC2;
-	Thu, 15 Jan 2026 17:16:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9901686334;
+	Thu, 15 Jan 2026 17:16:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497364; cv=none; b=We25u9aebeQfukiD2P7xHHOSNIW7fhvtIbCI1ZVoEFbvPx7JL2Sy3Jd00zBTlfD120ilu4tW1h1KNUHYk3nS2RG2RDaBjX9KXt9MYGtqwyfrxV+0JeJThyxJuf7qgOm85huBn5oSh5/Wj96wuMYFy+00jygp7AJ6kyh4pz28wNc=
+	t=1768497367; cv=none; b=jDDlrcyVQAqSWKFP0YViMJbIi2ba5I2eGH5TvvINomlqgq9WPQoCn6oE/u1u+PRYc6GVDK85kUKvQ5THoNVSyzH9Wo8ulFF0QjH3DC2Fw1cSQrBVmScan0H6NK1UO5FzZb29vU59a5dd+cza54x6BJyo1228ND1f1Q7ADBGxHt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497364; c=relaxed/simple;
-	bh=+NXsEYxw98adp6PbXurqNFGljDs8adHoMTm2QMfhhBo=;
+	s=arc-20240116; t=1768497367; c=relaxed/simple;
+	bh=aQ4lRWuXDJHvS5vgrRtK13fXVUiFy68Ku8l1u3rEnbE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gguIm/RUr8NxutvJBtlPr5CrMoneR+2O5qZYF/9L1Fy8GOWZ56kTAe6nZ0QrM9FfvW0r78LA2wm2oNw2cW4djui9CLkV4D9ifpZcgeziOuSfbYhKl5RDCB7HVXUGWW8O9Fgw1Y6MsJKwYnt0lUJgjeHNJPs6EOaLyeB//itkkxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wcw7tDM/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IjAb03yv0UzJO3pMYvp/LHddINQN1DyP+Syby3Z8fazWYEiLUrhOQlGTlhYNbF4+a60Q+dgVmMt5G+i+FnxLdgj+2RDK+O4Ebf7FyGivpIbz3qwcV9ShtTmHilmsyELMCGLriCKVITr1QDQeVmWxuhPSUyYZXki11xILFEOw2a8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W43C6lQ/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wcw7tDM/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A9EEC116D0;
-	Thu, 15 Jan 2026 17:16:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W43C6lQ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16217C116D0;
+	Thu, 15 Jan 2026 17:16:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497364;
-	bh=+NXsEYxw98adp6PbXurqNFGljDs8adHoMTm2QMfhhBo=;
+	s=korg; t=1768497367;
+	bh=aQ4lRWuXDJHvS5vgrRtK13fXVUiFy68Ku8l1u3rEnbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wcw7tDM/0taKNX+lw9AHM5+4D0uo5COZyeVfjgnj2wB8XvFN+Po8l4LNGCyhGHRFk
-	 8fzNzxUZL9saT2R4FfNQbDI/GYytRUcp7IgUcIItqJbrN+W1xr+DmRPM4VFh0iIQLe
-	 zh9x8BzDzlE36nlDl6K51eRU0auiDejOyGF/iHfg=
+	b=W43C6lQ/Kob/wxDN/xLNLZ5JYbhghPO605YFAqTFYpssfEyAk2J9YPr0+4t3t3U5/
+	 5iUGjU8GIeMkwfNKa50jy6IBTacoJ3PRTHZsHRs0DSR8bEushBDkl6WkeRCI98bnMk
+	 knTK1byQk2104KOMy5Tvzt17dL0epWe/VwiFp9UY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 054/554] firmware: imx: scu-irq: fix OF node leak in
-Date: Thu, 15 Jan 2026 17:42:00 +0100
-Message-ID: <20260115164248.200056930@linuxfoundation.org>
+Subject: [PATCH 5.15 055/554] phy: mscc: Fix PTP for VSC8574 and VSC8572
+Date: Thu, 15 Jan 2026 17:42:01 +0100
+Message-ID: <20260115164248.236196375@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -52,39 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Horatiu Vultur <horatiu.vultur@microchip.com>
 
-[ Upstream commit ee67247843a2b62d1473cfa4df300e69b5190ccf ]
+[ Upstream commit ea5df88aeca112aac69e6c32e3dd1433a113b0c9 ]
 
-imx_scu_enable_general_irq_channel() calls of_parse_phandle_with_args(),
-but does not release the OF node reference. Add a of_node_put() call
-to release the reference.
+The PTP initialization is two-step. First part are the function
+vsc8584_ptp_probe_once() and vsc8584_ptp_probe() at probe time which
+initialize the locks, queues, creates the PTP device. The second part is
+the function vsc8584_ptp_init() at config_init() time which initialize
+PTP in the HW.
 
-Fixes: 851826c7566e ("firmware: imx: enable imx scu general irq function")
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+For VSC8574 and VSC8572, the PTP initialization is incomplete. It is
+missing the first part but it makes the second part. Meaning that the
+ptp_clock_register() is never called.
+
+There is no crash without the first part when enabling PTP but this is
+unexpected because some PHys have PTP functionality exposed by the
+driver and some don't even though they share the same PTP clock PTP.
+
+Fixes: 774626fa440e ("net: phy: mscc: Add PTP support for 2 more VSC PHYs")
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Link: https://patch.msgid.link/20251023191350.190940-3-horatiu.vultur@microchip.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/imx/imx-scu-irq.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/phy/mscc/mscc_main.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/firmware/imx/imx-scu-irq.c b/drivers/firmware/imx/imx-scu-irq.c
-index d9dcc20945c6a..32b1ca4e10508 100644
---- a/drivers/firmware/imx/imx-scu-irq.c
-+++ b/drivers/firmware/imx/imx-scu-irq.c
-@@ -160,8 +160,10 @@ int imx_scu_enable_general_irq_channel(struct device *dev)
- 	INIT_WORK(&imx_sc_irq_work, imx_scu_irq_work_handler);
- 
- 	if (!of_parse_phandle_with_args(dev->of_node, "mboxes",
--				       "#mbox-cells", 0, &spec))
-+				       "#mbox-cells", 0, &spec)) {
- 		i = of_alias_get_id(spec.np, "mu");
-+		of_node_put(spec.np);
-+	}
- 
- 	/* use mu1 as general mu irq channel if failed */
- 	if (i < 0)
+diff --git a/drivers/net/phy/mscc/mscc_main.c b/drivers/net/phy/mscc/mscc_main.c
+index 982e73adf2bcf..acc9e1a266314 100644
+--- a/drivers/net/phy/mscc/mscc_main.c
++++ b/drivers/net/phy/mscc/mscc_main.c
+@@ -2560,7 +2560,7 @@ static struct phy_driver vsc85xx_driver[] = {
+ 	.suspend	= &genphy_suspend,
+ 	.resume		= &genphy_resume,
+ 	.remove		= &vsc85xx_remove,
+-	.probe		= &vsc8574_probe,
++	.probe		= &vsc8584_probe,
+ 	.set_wol	= &vsc85xx_wol_set,
+ 	.get_wol	= &vsc85xx_wol_get,
+ 	.get_tunable	= &vsc85xx_get_tunable,
+@@ -2581,12 +2581,12 @@ static struct phy_driver vsc85xx_driver[] = {
+ 	.config_aneg    = &vsc85xx_config_aneg,
+ 	.aneg_done	= &genphy_aneg_done,
+ 	.read_status	= &vsc85xx_read_status,
+-	.handle_interrupt = vsc85xx_handle_interrupt,
++	.handle_interrupt = vsc8584_handle_interrupt,
+ 	.config_intr    = &vsc85xx_config_intr,
+ 	.suspend	= &genphy_suspend,
+ 	.resume		= &genphy_resume,
+ 	.remove		= &vsc85xx_remove,
+-	.probe		= &vsc8574_probe,
++	.probe		= &vsc8584_probe,
+ 	.set_wol	= &vsc85xx_wol_set,
+ 	.get_wol	= &vsc85xx_wol_get,
+ 	.get_tunable	= &vsc85xx_get_tunable,
 -- 
 2.51.0
 
