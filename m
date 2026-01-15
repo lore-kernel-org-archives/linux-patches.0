@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3083BFE36;
-	Thu, 15 Jan 2026 17:47:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1633BF2EA;
+	Thu, 15 Jan 2026 17:47:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499223; cv=none; b=GxEkyG1OWcCAYvsZGJsJvCb0H/wmf4b8/bmBAcSi4cHBiQ141dEfUFUngC83UoVZ7OKv59a30M0cE9ZDmOy57RCjgzJRywcJvCVfYc86MKzT+WHlMmUzulqpQxfYGdIiTDgeqLf6E/MGZAG4MZM5D964MbA6m/WJjR8Nj+A30OY=
+	t=1768499226; cv=none; b=QAxgJ91ZdE7fwLq33Ft6EoFHSo9MUQq+AiMYjp44uqpvXE4zLPxle/lrTJebzhgZEuNQiKNH/7Xli3NXNFXNQZtNpGBsTzkXzHVUIsRC/WsigBQfOlxtU5APm+CDJxSmxCsY544gvlSCjRZinzEO0pOPqZcK5388hK6EDEhpt6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499223; c=relaxed/simple;
-	bh=G8BibseTnFMY+dlqcSBEYMD5BDx7wMyzndxu5yh5w8I=;
+	s=arc-20240116; t=1768499226; c=relaxed/simple;
+	bh=KtcSZqt6GaGkfuYouRD2yPRKgoS3hR3OJztnMLtGNnA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yzt8uM+KSdUPCjluOhCvZ0vOCjZbMeLkSJ569lfGmTmWHFjoKMo/HwqsgYItZKjdDL85919Rq/4pId1Ura3/lGjYZ7jaH1g9xyBL0jHey1mth+3E4y90//uhMJVLmXo9NKH27H5gxdp9UsgkjZdY8/1VhumIl+B6IOUUwkVOdmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tbLdLJGE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gKTfApSO6z2fhosK5ujtqGD0qqxtJf1CP4a1JLtoMCVLGZru0o6Bd9YApcmsjntFrrX2OKLh47KXPbDZfmfb2AV4qaLq90pnthw9T872KaQikzmLtYR2Hl/b56ae40oooFtEBU/5TIT7mimtxq6x8SlcWTNctPIzQToRgZEt9Ao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r4V858ae; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tbLdLJGE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9A40C16AAE;
-	Thu, 15 Jan 2026 17:47:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r4V858ae"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFB5AC19422;
+	Thu, 15 Jan 2026 17:47:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499223;
-	bh=G8BibseTnFMY+dlqcSBEYMD5BDx7wMyzndxu5yh5w8I=;
+	s=korg; t=1768499226;
+	bh=KtcSZqt6GaGkfuYouRD2yPRKgoS3hR3OJztnMLtGNnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tbLdLJGEeDo9ibYAd8f0+d1WgBt+D8f8micjl9D8Usd9/YI7GfqdsNrqkvwSYKz/V
-	 YhTLAlSDC5sLEtrO0BLJe7SSSArUJlk2p+HgUPMOge0uVz/Mv4ALuhkaQMGa3fFBrL
-	 1jL9c72BJLBxX0qyMSBC0bpzUoVXKcIncgAUR2y4=
+	b=r4V858aeMuBVy9lsUXELdpqMwMMc2SaRTXNiiJCZktG2TtNXJRXwSojhkPhJgSh9h
+	 x1eQ8/Pt1AmDTDEelvmo8fzrnncOMX7WeQAA12nu1qfQwCm6vNQqDLfjeP9NnIKQIp
+	 6yH57h/qp0wvHx2+l1x7yyACWwTeouYdeUaMdIYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sun Ke <sunke32@huawei.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>
-Subject: [PATCH 5.10 151/451] NFS: Fix missing unlock in nfs_unlink()
-Date: Thu, 15 Jan 2026 17:45:52 +0100
-Message-ID: <20260115164236.376971427@linuxfoundation.org>
+	Nicklas Bo Jensen <njensen@akamai.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.10 152/451] netfilter: nf_conncount: garbage collection is not skipped when jiffies wrap around
+Date: Thu, 15 Jan 2026 17:45:53 +0100
+Message-ID: <20260115164236.412522445@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -50,33 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sun Ke <sunke32@huawei.com>
+From: Nicklas Bo Jensen <njensen@akamai.com>
 
-commit 2067231a9e2cbbcae0a4aca6ac36ff2dd6a7b701 upstream.
+commit df08c94baafb001de6cf44bb7098bb557f36c335 upstream.
 
-Add the missing unlock before goto.
+nf_conncount is supposed to skip garbage collection if it has already
+run garbage collection in the same jiffy. Unfortunately, this is broken
+when jiffies wrap around which this patch fixes.
 
-Fixes: 3c59366c207e ("NFS: don't unhash dentry during unlink/rename")
-Signed-off-by: Sun Ke <sunke32@huawei.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+The problem is that last_gc in the nf_conncount_list struct is an u32,
+but jiffies is an unsigned long which is 8 bytes on my systems. When
+those two are compared it only works until last_gc wraps around.
+
+See bug report: https://bugzilla.netfilter.org/show_bug.cgi?id=1778
+for more details.
+
+Fixes: d265929930e2 ("netfilter: nf_conncount: reduce unnecessary GC")
+Signed-off-by: Nicklas Bo Jensen <njensen@akamai.com>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/dir.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/netfilter/nf_conncount.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/nfs/dir.c
-+++ b/fs/nfs/dir.c
-@@ -2109,8 +2109,10 @@ int nfs_unlink(struct inode *dir, struct
- 	 */
- 	error = -ETXTBSY;
- 	if (WARN_ON(dentry->d_flags & DCACHE_NFSFS_RENAMED) ||
--	    WARN_ON(dentry->d_fsdata == NFS_FSDATA_BLOCKED))
-+	    WARN_ON(dentry->d_fsdata == NFS_FSDATA_BLOCKED)) {
-+		spin_unlock(&dentry->d_lock);
- 		goto out;
-+	}
- 	if (dentry->d_fsdata)
- 		/* old devname */
- 		kfree(dentry->d_fsdata);
+--- a/net/netfilter/nf_conncount.c
++++ b/net/netfilter/nf_conncount.c
+@@ -182,7 +182,7 @@ static int __nf_conncount_add(struct net
+ 		return -EEXIST;
+ 	}
+ 
+-	if (time_is_after_eq_jiffies((unsigned long)list->last_gc))
++	if ((u32)jiffies == list->last_gc)
+ 		goto add_new_node;
+ 
+ 	/* check the saved connections */
+@@ -288,7 +288,7 @@ bool nf_conncount_gc_list(struct net *ne
+ 	bool ret = false;
+ 
+ 	/* don't bother if we just did GC */
+-	if (time_is_after_eq_jiffies((unsigned long)READ_ONCE(list->last_gc)))
++	if ((u32)jiffies == READ_ONCE(list->last_gc))
+ 		return false;
+ 
+ 	/* don't bother if other cpu is already doing GC */
 
 
