@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F883AE701;
-	Thu, 15 Jan 2026 17:32:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A84213BC4D8;
+	Thu, 15 Jan 2026 17:32:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498335; cv=none; b=gBpqiu5jPFrDFK61HX35I9rsUhAjCYkEVDzp9HyQ5kNfRjqJCY8QH6aSNYjjxkBGXAHEwupB9aT0kdabm7qjouzBY7lj3I37LDpmggYkSnm9Mr3eEJWdP21YIhbVo7EnDIUcJhbCAVlTq3EFYOHO/Dxl495iYwFCJFWelEuriAA=
+	t=1768498337; cv=none; b=jFplv1yCFyN0bbpnxDbzPdo65cxAXl4sxzWV6ZckBlBlQaHzwyBYT38Sna+sMllmF3fmOSOYH/RB5zhJF7F2umgHpDPpOpDW3apcm50oZ/AI+Tso1o19aix/WkVO9WFlEfj7DAqG2XWCxeLR0FAD5MLUIAHViNSVfQ9qOkWn4EU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498335; c=relaxed/simple;
-	bh=Qc75mJcGH02Bba9l7efjPebYCxz08WLObBFtjD8pwPw=;
+	s=arc-20240116; t=1768498337; c=relaxed/simple;
+	bh=fS2M4Q9RDbXwjF6GiB4DoNTlTQ5DREpoOhsYnmeaiHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CTY+Ajydt4US0F1MO3NxCMSiDnp9iuwWNXB96b6wrbclKvSsXgMBAU+mzWFpgaJ1eszaaWXdLwlHqFqJv6Oq9Cf5b8ZnPP9WVjLfik2Fdat0Fc4Ya5sdU9jnBAxUMBg7xpgCHr42Bevyq/AZMFk+h1MY41FGYgWUGYf7hNegCfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EKf2RRKZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j81SyiFO5shCML6fYERCIX/gOcftzSo1IXtCXhnIfSjInuFKQlzXvCjf1AsuJeL3y1uwzulbwPyu4IqXQi8g8oQyLOjMuMamRUpk1y/53m7q3ach6yAkBG3wmpj8/Xv563jZI+pzqJQeK67nImDqWDt7DoBQi/dPIrHgK8vvYAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ydxwauPI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EKf2RRKZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DED6C116D0;
-	Thu, 15 Jan 2026 17:32:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ydxwauPI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EAC6C116D0;
+	Thu, 15 Jan 2026 17:32:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498334;
-	bh=Qc75mJcGH02Bba9l7efjPebYCxz08WLObBFtjD8pwPw=;
+	s=korg; t=1768498337;
+	bh=fS2M4Q9RDbXwjF6GiB4DoNTlTQ5DREpoOhsYnmeaiHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EKf2RRKZL35efywMhO/MWWcd41tbDnTRjV9lyv/hmlwVoXlGV6ugPicVzE3skIFfm
-	 mjeGSUWqxYjI8sebNJ3FNbyLtmCBBW+ZEwIoqe7duj+Zg2X5AauamDM3IivVfsvvym
-	 DCBxSivi9oTn7Y3PV2yFF97ZOeibkRkf2RXgvT/U=
+	b=ydxwauPI5VixCzCsm3yHOTfblxabCfIfu/GnII5hG94w+5fBZwpUoiYD1SMrWKgJ3
+	 PNi+VGGfi0a4P5v3W5xJbdbIntvM6xS5iqplJswAxUpSHDt0dyCSY8NJ645uxR5u/C
+	 8qo+vUXrAM20DxJA8e0IVdGb0/YF5aKLY5MTMsKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Abramov <i.abramov@mt-integration.ru>,
+	Duoming Zhou <duoming@zju.edu.cn>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.15 396/554] media: msp3400: Avoid possible out-of-bounds array accesses in msp3400c_thread()
-Date: Thu, 15 Jan 2026 17:47:42 +0100
-Message-ID: <20260115164300.568897322@linuxfoundation.org>
+Subject: [PATCH 5.15 397/554] media: TDA1997x: Remove redundant cancel_delayed_work in probe
+Date: Thu, 15 Jan 2026 17:47:43 +0100
+Message-ID: <20260115164300.604473405@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -50,39 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Abramov <i.abramov@mt-integration.ru>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-commit d2bceb2e20e783d57e739c71e4e50b4b9f4a3953 upstream.
+commit 29de195ca39fc2ac0af6fd45522994df9f431f80 upstream.
 
-It's possible for max1 to remain -1 if msp_read() always fail. This
-variable is further used as index for accessing arrays.
+The delayed_work delayed_work_enable_hpd is initialized with
+INIT_DELAYED_WORK(), but it is never scheduled in tda1997x_probe().
 
-Fix that by checking max1 prior to array accesses.
+Calling cancel_delayed_work() on a work that has never been
+scheduled is redundant and unnecessary, as there is no pending
+work to cancel.
 
-It seems that restart is the preferable action in case of out-of-bounds
-value.
+Remove the redundant cancel_delayed_work() from error handling
+path in tda1997x_probe() to avoid potential confusion.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 8a4b275f9c19 ("V4L/DVB (3427): audmode and rxsubchans fixes (VIDIOC_G/S_TUNER)")
+Fixes: 9ac0038db9a7 ("media: i2c: Add TDA1997x HDMI receiver driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ivan Abramov <i.abramov@mt-integration.ru>
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/msp3400-kthreads.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/i2c/tda1997x.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/media/i2c/msp3400-kthreads.c
-+++ b/drivers/media/i2c/msp3400-kthreads.c
-@@ -596,6 +596,8 @@ restart:
- 				"carrier2 val: %5d / %s\n", val, cd[i].name);
- 		}
- 
-+		if (max1 < 0 || max1 > 3)
-+			goto restart;
- 		/* program the msp3400 according to the results */
- 		state->main = msp3400c_carrier_detect_main[max1].cdo;
- 		switch (max1) {
+--- a/drivers/media/i2c/tda1997x.c
++++ b/drivers/media/i2c/tda1997x.c
+@@ -2780,7 +2780,6 @@ err_free_media:
+ err_free_handler:
+ 	v4l2_ctrl_handler_free(&state->hdl);
+ err_free_mutex:
+-	cancel_delayed_work(&state->delayed_work_enable_hpd);
+ 	mutex_destroy(&state->page_lock);
+ 	mutex_destroy(&state->lock);
+ err_free_state:
 
 
