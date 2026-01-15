@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C62183C199C;
-	Thu, 15 Jan 2026 17:52:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11FA53C1997;
+	Thu, 15 Jan 2026 17:52:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499521; cv=none; b=lcItiA3giCKJzppaOfbXKzL1UjpbuX3tI49PFm9n6XvQap4vPiawfUcDz+GYYtK/oIoXQIy88ZF3c9HhsP2IY3n4T4J7ey12xVZLT52kT0HK5M7aCo2Eh5dKMrvPxqjkH+EXZgylHQ0SQFE1szhml3UTucXxPukQ+GeQmVFOuaY=
+	t=1768499525; cv=none; b=oedJlKIDMwF0oTt5XRm0X4bAnO4xsoh1f5tHbbB6LAvO20vGscJo7xytLK2A+bn1Sc/TjJggxGKH3ZTk3sDSPkv8S5QpruFM7D5e2VlD8OPevUt3PHOyM0zb5yMqDbOCW61Naeui5kH8tay8XvTkTxcqetTGZXIV5nL6C7+nT1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499521; c=relaxed/simple;
-	bh=eAdxM1hr51nUhYZ/iiKhe7uqzVi+NwhaO3FpFbUidAo=;
+	s=arc-20240116; t=1768499525; c=relaxed/simple;
+	bh=JRqKV84frnULDlOTsc7ps3KtKzW/UUzPABsQI9R/zng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LBqO+lFL8/9rxN0kMorVy25dRvgjuK4DzfIQE0zaMo5Lk5giEmO/qrl9zUyR0otpmnVM1pN+v27qNbM7mDIUoWxSb1q+wjyJX9OtOy7Lc+3gDzZYVLSWMwyM6/HpB+2SwEoomxMTxiJ6XcD4ZIzEVcH6ZrrXoK4UOuqZEmWk4hw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FU502mpG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YdXc9UID25cKxa9HV8Dsc2ji/7oPp8WB5lwlLEMYZgEP5gCw6MM7KHawn68RpDXmGxf2M7PhY/H4/rxJqWGbWf55Cu/Nz1ll9y/H020YXT1VTo9ebm9xPkunThJP+avuzuwxFLtHivtOUB7evTA0BBR6wJMLBAZZAk2Ay6PNxcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qXvjJkHN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FU502mpG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FC4DC116D0;
-	Thu, 15 Jan 2026 17:52:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qXvjJkHN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AF5EC16AAE;
+	Thu, 15 Jan 2026 17:52:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499521;
-	bh=eAdxM1hr51nUhYZ/iiKhe7uqzVi+NwhaO3FpFbUidAo=;
+	s=korg; t=1768499524;
+	bh=JRqKV84frnULDlOTsc7ps3KtKzW/UUzPABsQI9R/zng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FU502mpGc1CJZn9ZILt8HXDn5nyg9BxD2pnwSfifKLT5nH30srUoszeBb/CgoOZj2
-	 llvo20/qAwRq4c1KlIN1lYXPCmyqLfAW8ZVDWLjyCBqwmU0tXQwCiryRJ0oeGfj3tF
-	 Hzr44nxZj9CrQeHkq6Y9rYVKcLGzlSB1mDZonaNk=
+	b=qXvjJkHN0DOreiYDC+rWYjIPwxgiM4xknJfaaL8Xh2ubE9YmCe/uJbty8WfdtSUOv
+	 8dOjZxRekKyqxaVPSPnql3ntsI9peRQ16s4Kr7bGyyxGLlf2RyrihBMOpQinhj8bxT
+	 3pSqDYJsKs1j2kD/L+313+2pG4M7jpSZSgY1Wm/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matteo Rizzo <matteorizzo@google.com>,
+	Jim Mattson <jmattson@google.com>,
 	Yosry Ahmed <yosry.ahmed@linux.dev>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 5.10 256/451] KVM: nSVM: Propagate SVM_EXIT_CR0_SEL_WRITE correctly for LMSW emulation
-Date: Thu, 15 Jan 2026 17:47:37 +0100
-Message-ID: <20260115164240.149150186@linuxfoundation.org>
+Subject: [PATCH 5.10 257/451] KVM: nSVM: Set exit_code_hi to -1 when synthesizing SVM_EXIT_ERR (failed VMRUN)
+Date: Thu, 15 Jan 2026 17:47:38 +0100
+Message-ID: <20260115164240.185652119@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -52,65 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yosry Ahmed <yosry.ahmed@linux.dev>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 5674a76db0213f9db1e4d08e847ff649b46889c0 upstream.
+commit f402ecd7a8b6446547076f4bd24bd5d4dcc94481 upstream.
 
-When emulating L2 instructions, svm_check_intercept() checks whether a
-write to CR0 should trigger a synthesized #VMEXIT with
-SVM_EXIT_CR0_SEL_WRITE. For MOV-to-CR0, SVM_EXIT_CR0_SEL_WRITE is only
-triggered if any bit other than CR0.MP and CR0.TS is updated. However,
-according to the APM (24593—Rev.  3.42—March 2024, Table 15-7):
+Set exit_code_hi to -1u as a temporary band-aid to fix a long-standing
+(effectively since KVM's inception) bug where KVM treats the exit code as
+a 32-bit value, when in reality it's a 64-bit value.  Per the APM, offset
+0x70 is a single 64-bit value:
 
-  The LMSW instruction treats the selective CR0-write
-  intercept as a non-selective intercept (i.e., it intercepts
-  regardless of the value being written).
+  070h 63:0 EXITCODE
 
-Skip checking the changed bits for x86_intercept_lmsw and always inject
-SVM_EXIT_CR0_SEL_WRITE.
+And a sane reading of the error values defined in "Table C-1. SVM Intercept
+Codes" is that negative values use the full 64 bits:
 
-Fixes: cfec82cb7d31 ("KVM: SVM: Add intercept check for emulated cr accesses")
+  –1 VMEXIT_INVALID Invalid guest state in VMCB.
+  –2 VMEXIT_BUSYBUSY bit was set in the VMSA
+  –3 VMEXIT_IDLE_REQUIREDThe sibling thread is not in an idle state
+  -4 VMEXIT_INVALID_PMC Invalid PMC state
+
+And that interpretation is confirmed by testing on Milan and Turin (by
+setting bits in CR0[63:32] to generate VMEXIT_INVALID on VMRUN).
+
+Furthermore, Xen has treated exitcode as a 64-bit value since HVM support
+was adding in 2006 (see Xen commit d1bd157fbc ("Big merge the HVM
+full-virtualisation abstractions.")).
+
+Cc: Jim Mattson <jmattson@google.com>
+Cc: Yosry Ahmed <yosry.ahmed@linux.dev>
 Cc: stable@vger.kernel.org
-Reported-by: Matteo Rizzo <matteorizzo@google.com>
-Signed-off-by: Yosry Ahmed <yosry.ahmed@linux.dev>
-Link: https://patch.msgid.link/20251024192918.3191141-3-yosry.ahmed@linux.dev
+Reviewed-by: Yosry Ahmed <yosry.ahmed@linux.dev>
+Link: https://patch.msgid.link/20251113225621.1688428-3-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/svm.c |   18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ arch/x86/kvm/svm/nested.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -3900,20 +3900,20 @@ static int svm_check_intercept(struct kv
- 					INTERCEPT_SELECTIVE_CR0)))
- 			break;
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -528,7 +528,7 @@ int nested_svm_vmrun(struct vcpu_svm *sv
+ 	if (!nested_vmcb_check_save(svm, vmcb12) ||
+ 	    !nested_vmcb_check_controls(&svm->nested.ctl)) {
+ 		vmcb12->control.exit_code    = SVM_EXIT_ERR;
+-		vmcb12->control.exit_code_hi = 0;
++		vmcb12->control.exit_code_hi = -1u;
+ 		vmcb12->control.exit_info_1  = 0;
+ 		vmcb12->control.exit_info_2  = 0;
+ 		goto out;
+@@ -587,7 +587,7 @@ out_exit_err:
+ 	svm->nested.nested_run_pending = 0;
  
--		cr0 = vcpu->arch.cr0 & ~SVM_CR0_SELECTIVE_MASK;
--		val = info->src_val  & ~SVM_CR0_SELECTIVE_MASK;
--
-+		/* LMSW always triggers INTERCEPT_SELECTIVE_CR0 */
- 		if (info->intercept == x86_intercept_lmsw) {
--			cr0 &= 0xfUL;
--			val &= 0xfUL;
--			/* lmsw can't clear PE - catch this here */
--			if (cr0 & X86_CR0_PE)
--				val |= X86_CR0_PE;
-+			icpt_info.exit_code = SVM_EXIT_CR0_SEL_WRITE;
-+			break;
- 		}
+ 	svm->vmcb->control.exit_code    = SVM_EXIT_ERR;
+-	svm->vmcb->control.exit_code_hi = 0;
++	svm->vmcb->control.exit_code_hi = -1u;
+ 	svm->vmcb->control.exit_info_1  = 0;
+ 	svm->vmcb->control.exit_info_2  = 0;
  
-+		/*
-+		 * MOV-to-CR0 only triggers INTERCEPT_SELECTIVE_CR0 if any bit
-+		 * other than SVM_CR0_SELECTIVE_MASK is changed.
-+		 */
-+		cr0 = vcpu->arch.cr0 & ~SVM_CR0_SELECTIVE_MASK;
-+		val = info->src_val  & ~SVM_CR0_SELECTIVE_MASK;
- 		if (cr0 ^ val)
- 			icpt_info.exit_code = SVM_EXIT_CR0_SEL_WRITE;
--
- 		break;
- 	}
- 	case SVM_EXIT_READ_DR0:
 
 
