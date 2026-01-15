@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7652A3A35A4;
-	Thu, 15 Jan 2026 17:05:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9866F2C0285;
+	Thu, 15 Jan 2026 17:05:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496702; cv=none; b=s19+y2IJBPjBL8gxec3v8Y5+fRj6bpF8Qm+rCF/uM9H6ZkaFASIO+w/mMpY8vehV7XxMYfZyrNVQNh/7KFCxen6NXEaKoVXH6Cgm/SS6kFTdNbkRW4iKNWDmq7fFrKDwXFYG2EN0MjStfAq7JW8XrLVmF1GkkvZxZg+zPmnU+uU=
+	t=1768496705; cv=none; b=ohXtj/86fwAKFch+KSFnNzN8eN9GLLn6oS1xUYHNYRwJsOan1rqw7++FSyVPFOJHpvVIxm2jsI+bx8hPjUtj50GUWDVPZNZKgmo79VZbTnpSwR80sME6jHvddsu5ZlUoTHXJO8RWGrew0Az2i2BdP0nGxW9VErD5acD0uFaZEbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496702; c=relaxed/simple;
-	bh=p075b3z4dQ2+k/JlTRz8WZgRVeBFk4QcOuVMtthwJmg=;
+	s=arc-20240116; t=1768496705; c=relaxed/simple;
+	bh=AegRlaPLFMs2sUxJ+s08+DOKN1gXj9O9auVa3G+7Wz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=impNHdf8sf4lrwcrR4+dgZ/Lw8XsBTRnsGTj0aaQnoAVr+k/V4CkiywVSE44hruXR1Pn02JO9OzHypSmgQ4n95qUsOfL2BS1dgK5X6AhckM/4Us2Hy9sLYGHzOp7/q64tQ61kr/FdmTip6St4nFCHp2d2s5FnFFL17Ass/cPlFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W+HdbbvF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pRDPjAgdtv4bgWSU4k20MWwfGBE7H//y+EVBjOBA2cLacAsIRzMg398THNlQ04tI6OMHUX9p7NShI5C6AGG61xLbWOnhiIvJ0DTEQYnx7dRKUJhQpsS7a0fFyxm6s/bvZqeKDV2clBCH2ZYFlpLWAREoMKBX3KzpJgSvwYfyFRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YsLZkK6D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W+HdbbvF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00020C16AAE;
-	Thu, 15 Jan 2026 17:05:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YsLZkK6D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE698C19422;
+	Thu, 15 Jan 2026 17:05:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496702;
-	bh=p075b3z4dQ2+k/JlTRz8WZgRVeBFk4QcOuVMtthwJmg=;
+	s=korg; t=1768496705;
+	bh=AegRlaPLFMs2sUxJ+s08+DOKN1gXj9O9auVa3G+7Wz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W+HdbbvFLdkJijQV1Rwn7A3n0uTLhgcsoO4l5wKbfVL+oYgHAdEe2bT9nN7iOQa9Q
-	 TWdaK942TlNObET033c0xABFLGzKGa96I9lRkLLqh3BBQLId9/4FdUQ/XBn5lnH7cn
-	 6zTiqwpR5U7WZP8u/0L7IA8z0Q4t1ZibHzImHHaQ=
+	b=YsLZkK6DaAFhrAftNSG7om638CSzOJ5TyFIEfxk7kbF7PS9ldWIEjZ/srlTwNZgB9
+	 lfiSj7ix2kzip5jsqWZgMRpNdU9JSoQKoZcf1/FU8Q275mVoQJpvusf+BA4WOGcen9
+	 iiy5OjzzT+co6RMVIsNjDcPzAu/5dFVujGjVb6bc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ray Jui <ray.jui@broadcom.com>,
-	Srijit Bose <srijit.bose@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Michal Luczaj <mhal@rbox.co>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 072/119] bnxt_en: Fix potential data corruption with HW GRO/LRO
-Date: Thu, 15 Jan 2026 17:48:07 +0100
-Message-ID: <20260115164154.550948623@linuxfoundation.org>
+Subject: [PATCH 6.12 073/119] vsock: Make accept()ed sockets use custom setsockopt()
+Date: Thu, 15 Jan 2026 17:48:08 +0100
+Message-ID: <20260115164154.587497536@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -54,86 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srijit Bose <srijit.bose@broadcom.com>
+From: Michal Luczaj <mhal@rbox.co>
 
-[ Upstream commit ffeafa65b2b26df2f5b5a6118d3174f17bd12ec5 ]
+[ Upstream commit ce5e612dd411de096aa041b9e9325ba1bec5f9f4 ]
 
-Fix the max number of bits passed to find_first_zero_bit() in
-bnxt_alloc_agg_idx().  We were incorrectly passing the number of
-long words.  find_first_zero_bit() may fail to find a zero bit and
-cause a wrong ID to be used.  If the wrong ID is already in use, this
-can cause data corruption.  Sometimes an error like this can also be
-seen:
+SO_ZEROCOPY handling in vsock_connectible_setsockopt() does not get called
+on accept()ed sockets due to a missing flag. Flip it.
 
-bnxt_en 0000:83:00.0 enp131s0np0: TPA end agg_buf 2 != expected agg_bufs 1
-
-Fix it by passing the correct number of bits MAX_TPA_P5.  Use
-DECLARE_BITMAP() to more cleanly define the bitmap.  Add a sanity
-check to warn if a bit cannot be found and reset the ring [MChan].
-
-Fixes: ec4d8e7cf024 ("bnxt_en: Add TPA ID mapping logic for 57500 chips.")
-Reviewed-by: Ray Jui <ray.jui@broadcom.com>
-Signed-off-by: Srijit Bose <srijit.bose@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20251231083625.3911652-1-michael.chan@broadcom.com
+Fixes: e0718bd82e27 ("vsock: enable setting SO_ZEROCOPY")
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Link: https://patch.msgid.link/20251229-vsock-child-sock-custom-sockopt-v2-1-64778d6c4f88@rbox.co
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 15 ++++++++++++---
- drivers/net/ethernet/broadcom/bnxt/bnxt.h |  4 +---
- 2 files changed, 13 insertions(+), 6 deletions(-)
+ net/vmw_vsock/af_vsock.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index a3491b8383f5a..1f5149d45b089 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -1412,9 +1412,11 @@ static u16 bnxt_alloc_agg_idx(struct bnxt_rx_ring_info *rxr, u16 agg_id)
- 	struct bnxt_tpa_idx_map *map = rxr->rx_tpa_idx_map;
- 	u16 idx = agg_id & MAX_TPA_P5_MASK;
- 
--	if (test_bit(idx, map->agg_idx_bmap))
--		idx = find_first_zero_bit(map->agg_idx_bmap,
--					  BNXT_AGG_IDX_BMAP_SIZE);
-+	if (test_bit(idx, map->agg_idx_bmap)) {
-+		idx = find_first_zero_bit(map->agg_idx_bmap, MAX_TPA_P5);
-+		if (idx >= MAX_TPA_P5)
-+			return INVALID_HW_RING_ID;
-+	}
- 	__set_bit(idx, map->agg_idx_bmap);
- 	map->agg_id_tbl[agg_id] = idx;
- 	return idx;
-@@ -1478,6 +1480,13 @@ static void bnxt_tpa_start(struct bnxt *bp, struct bnxt_rx_ring_info *rxr,
- 	if (bp->flags & BNXT_FLAG_CHIP_P5_PLUS) {
- 		agg_id = TPA_START_AGG_ID_P5(tpa_start);
- 		agg_id = bnxt_alloc_agg_idx(rxr, agg_id);
-+		if (unlikely(agg_id == INVALID_HW_RING_ID)) {
-+			netdev_warn(bp->dev, "Unable to allocate agg ID for ring %d, agg 0x%x\n",
-+				    rxr->bnapi->index,
-+				    TPA_START_AGG_ID_P5(tpa_start));
-+			bnxt_sched_reset_rxr(bp, rxr);
-+			return;
-+		}
- 	} else {
- 		agg_id = TPA_START_AGG_ID(tpa_start);
- 	}
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-index 37bb9091bf771..38690fdc3c46c 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-@@ -1070,11 +1070,9 @@ struct bnxt_tpa_info {
- 	struct rx_agg_cmp	*agg_arr;
- };
- 
--#define BNXT_AGG_IDX_BMAP_SIZE	(MAX_TPA_P5 / BITS_PER_LONG)
--
- struct bnxt_tpa_idx_map {
- 	u16		agg_id_tbl[1024];
--	unsigned long	agg_idx_bmap[BNXT_AGG_IDX_BMAP_SIZE];
-+	DECLARE_BITMAP(agg_idx_bmap, MAX_TPA_P5);
- };
- 
- struct bnxt_rx_ring_info {
+diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
+index 621be9be64f67..282d973233245 100644
+--- a/net/vmw_vsock/af_vsock.c
++++ b/net/vmw_vsock/af_vsock.c
+@@ -1742,6 +1742,10 @@ static int vsock_accept(struct socket *sock, struct socket *newsock,
+ 		} else {
+ 			newsock->state = SS_CONNECTED;
+ 			sock_graft(connected, newsock);
++
++			set_bit(SOCK_CUSTOM_SOCKOPT,
++				&connected->sk_socket->flags);
++
+ 			if (vsock_msgzerocopy_allow(vconnected->transport))
+ 				set_bit(SOCK_SUPPORT_ZC,
+ 					&connected->sk_socket->flags);
 -- 
 2.51.0
 
