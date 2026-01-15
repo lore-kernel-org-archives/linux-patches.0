@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB3FC3D6482;
-	Thu, 15 Jan 2026 17:55:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23BE43C00AE;
+	Thu, 15 Jan 2026 17:55:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499737; cv=none; b=BkNfTFBSVPTQe5G3YidXNQE2VLAsPQ/KHSb2PFT0/mBWxBepxNtZKWgIKuTTmO4cURhoOvrib3CFr5yEIW8g2WTEgTpzdTzXFaLRv6NBrY0lMX2zrAwPKvg8M8BIXoFfg3n3cb2tldU5dWRChSdnqcKNcUhXFSAlmNH7iWiNsEY=
+	t=1768499741; cv=none; b=jrPqslPPsBFBm4kqxVFY1Fodb+9AaczD03D/zfLV17/uGGqvDNyUwv96YFxDy6IjHQHZ7WzkO+Y2ZC8DRQ5KYFZLC9b77h1xySWGmukkWnYdUaUOSvB+Vrsz8I3aaDMB4kuxx112pYnjUD7GyNTckYjkzNBHtxEOtmPd9o9iKpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499737; c=relaxed/simple;
-	bh=cWBfX6J8I1B6w6mTeJyo5nRl4O6gFJNtxqyImYS88P0=;
+	s=arc-20240116; t=1768499741; c=relaxed/simple;
+	bh=HUO6EHoS38Abp19yozkwumOQLi0jNF15EYKzZD7ULK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ma1sud6IhwLlblX3Rjk08ivIXJGxRl8/KWgVPeJ/cbtUJoqtQL22ntIV6O06IuS1HCO9PGzHU4KthYnaVGAH26GbpnAGc9h+dOJke06cb7h1zd8Jx9+86Lfl2T0Z0a3a4pWjriM23OhZnvu8N8jOVTRfN6LVPLcTYEz05kNoxHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z7IIhnI+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ETklMx2sJ221jB85zO+8+bIUQSGCoa1a8HVKH1GcCs8d/nKgajQfu3Px5XmRK7iAeN3WGpYl2QU1l28nyMQ5AQTQiZTjNJCVUGzHCXPX8/C/P38fC72hEzz9IzVAHj2UERl1FluanGxsoBClDyaBj/lZ0hKqpOvM02NkQacKtmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UOaoFs4m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z7IIhnI+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51139C116D0;
-	Thu, 15 Jan 2026 17:55:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UOaoFs4m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31948C116D0;
+	Thu, 15 Jan 2026 17:55:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499737;
-	bh=cWBfX6J8I1B6w6mTeJyo5nRl4O6gFJNtxqyImYS88P0=;
+	s=korg; t=1768499740;
+	bh=HUO6EHoS38Abp19yozkwumOQLi0jNF15EYKzZD7ULK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z7IIhnI+Ah0g/KTrbybTv3zYThqstyvCCZgPUKNThecMIhY2V5ZtczWskAxerw8Ul
-	 /y6E3ZLeyIx00SXEFhNJhg2Gm7YMxPCS/8/GMOj/OxfXHsoIzwBSE5vEIfNRaxE6N1
-	 fGtMTaTfYa6Cv6UKZq5W8GgRaSlgU7pGio8hDu8o=
+	b=UOaoFs4mtqLEEQZQBSxMMG4UAXXUfszmlygg8VP8/9ukPOwzfzwexCW9+Jr+Rc0a/
+	 tRSg+fIdodrqCLHl95btzppXLV4O3QJhd7myYWEouw7iTuiJMagiYk/XCW7hCIlM6s
+	 yZYRXtlTL+r1CMn4GCrenSP2Z3esgO7olZsHB6fU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Murphy <robin.murphy@arm.com>,
-	Yong Wu <yong.wu@mediatek.com>,
-	Johan Hovold <johan@kernel.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 5.10 305/451] iommu/mediatek: fix device leak on of_xlate()
-Date: Thu, 15 Jan 2026 17:48:26 +0100
-Message-ID: <20260115164241.929567985@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.10 332/451] nfsd: Drop the client reference in client_states_open()
+Date: Thu, 15 Jan 2026 17:48:53 +0100
+Message-ID: <20260115164242.906088721@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -53,35 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
 
-commit b3f1ee18280363ef17f82b564fc379ceba9ec86f upstream.
+commit 1f941b2c23fd34c6f3b76d36f9d0a2528fa92b8f upstream.
 
-Make sure to drop the reference taken to the iommu platform device when
-looking up its driver data during of_xlate().
+In error path, call drop_client() to drop the reference
+obtained by get_nfsdfs_clp().
 
-Fixes: 0df4fabe208d ("iommu/mediatek: Add mt8173 IOMMU driver")
-Cc: stable@vger.kernel.org	# 4.6
-Acked-by: Robin Murphy <robin.murphy@arm.com>
-Reviewed-by: Yong Wu <yong.wu@mediatek.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Fixes: 78599c42ae3c ("nfsd4: add file to display list of client's opens")
+Cc: stable@vger.kernel.org
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/mtk_iommu.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/nfsd/nfs4state.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/iommu/mtk_iommu.c
-+++ b/drivers/iommu/mtk_iommu.c
-@@ -526,6 +526,8 @@ static int mtk_iommu_of_xlate(struct dev
- 			return -EINVAL;
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -2802,8 +2802,10 @@ static int client_states_open(struct ino
+ 		return -ENXIO;
  
- 		dev_iommu_priv_set(dev, platform_get_drvdata(m4updev));
-+
-+		put_device(&m4updev->dev);
- 	}
- 
- 	return iommu_fwspec_add_ids(dev, args->args, 1);
+ 	ret = seq_open(file, &states_seq_ops);
+-	if (ret)
++	if (ret) {
++		drop_client(clp);
+ 		return ret;
++	}
+ 	s = file->private_data;
+ 	s->private = clp;
+ 	return 0;
 
 
