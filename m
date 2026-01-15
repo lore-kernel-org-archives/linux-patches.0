@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C4702D6E72;
-	Thu, 15 Jan 2026 17:22:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 573732D6E72;
+	Thu, 15 Jan 2026 17:22:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497750; cv=none; b=AcloM00TIle0Ft5D8zDA2RtKa9qGidkwA2UYCRKZJuPqu7OpofqUfLjDZLHTNbfpxd/PIGZj1jtj9GgMRlhKriWsK/VYKpQe2h1ezRw0mKIRPCoVdzEesYlw0KJuLwDdFbGIw3YpZbhcy3e3+l1y9tMcufVpK+LL6FdLa0sIgyg=
+	t=1768497753; cv=none; b=f6y32b6nsb4+ICeFUytNtnhLW49UkOOJY+11UJvKhQSYWXXa7d43yWf4CyUU5w32+Nlc2bcQJs+OeUS9N8eDDNtSVyQKG4FtJ1kc6CUgaaFwlXWq0AMvxZKxWJL9GVaLrHhQC18M7bpavJpl+hbm7Im4uZx5L4Dm/b9bTYS0H4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497750; c=relaxed/simple;
-	bh=8542yIQ7SYGCwGc3+EmWz8Cjf0Xiq08ZC0yBWTLjGAc=;
+	s=arc-20240116; t=1768497753; c=relaxed/simple;
+	bh=98CVSM4ItNvCDY8ocAuPPYj/iUoSFJkP6g6cG738FJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iSce+mtHXClIWbTC2jS5pnYtee9s57PFgfqoI+8jR58Ljp77vls60UaZ+JO6ZLAe6KqaEMZKONNBE0C2DOopu1/gknMWQr9Fzkf7f2rVZuE9rqOi99USk/v/hb2AmoMRpOECwThANoNzdoddm6ImOP9ypVqdDQHkzWHYQYbRT/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0M134WJi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DDGz+wxtFWhV5AWhmBnI4OxeU2XpirSr64XUB6G3yQXI6Kqvco2kieNlbtJaqC/sLmb6viIlFH2rj9ota2UmzT09ipPHwvj7Me5CkMBrA6jf7315qM344zq8QefqEOviTURGeE7aKxMt2obNYLrogDI4nSyDF4v3W/2THMkgvq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CKuL9tNt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0M134WJi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 189CFC116D0;
-	Thu, 15 Jan 2026 17:22:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CKuL9tNt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2D8BC116D0;
+	Thu, 15 Jan 2026 17:22:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497750;
-	bh=8542yIQ7SYGCwGc3+EmWz8Cjf0Xiq08ZC0yBWTLjGAc=;
+	s=korg; t=1768497753;
+	bh=98CVSM4ItNvCDY8ocAuPPYj/iUoSFJkP6g6cG738FJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0M134WJiqQUJx/gqhRiOii93ZsedTSaKsUTU3YaEQcxLQbs+7HPhdafcvceqLHZFq
-	 BodrsDmQRltKLls0271rme4Dr+rkaQWc92WP3VXRVm5Agsp/p+8iDLoYUFYfUfJKUT
-	 ZaiO4PZCLJbX4SCgyXyhhKZvorVfs4u2prXJT1Nc=
+	b=CKuL9tNtgp+dnZjzGFC98uoaKfDGhVlWBOndRgaXDQGnSSbEtAczyWE4UlH2cflVu
+	 kseKRuJS0zFVHF5ZEfkpELD/qou10bRTSlrxTg7PPjg4hqNODKPvd9Mw08hPuo9EeU
+	 bwZQyVWQDJtlmgzNMNuFilcY0wn/GwMKL1i0x+rA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andres J Rosa <andyrosa@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Xie Yuanbin <xieyuanbin1@huawei.com>,
+	Liyuan Pang <pangliyuan1@huawei.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 190/554] ALSA: uapi: Fix typo in asound.h comment
-Date: Thu, 15 Jan 2026 17:44:16 +0100
-Message-ID: <20260115164253.137168196@linuxfoundation.org>
+Subject: [PATCH 5.15 191/554] ARM: 9464/1: fix input-only operand modification in load_unaligned_zeropad()
+Date: Thu, 15 Jan 2026 17:44:17 +0100
+Message-ID: <20260115164253.172895652@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -51,34 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andres J Rosa <andyrosa@gmail.com>
+From: Liyuan Pang <pangliyuan1@huawei.com>
 
-[ Upstream commit 9a97857db0c5655b8932f86b5d18bb959079b0ee ]
+[ Upstream commit edb924a7211c9aa7a4a415e03caee4d875e46b8e ]
 
-Fix 'level-shit' to 'level-shift' in struct snd_cea_861_aud_if comment.
+In the inline assembly inside load_unaligned_zeropad(), the "addr" is
+constrained as input-only operand. The compiler assumes that on exit
+from the asm statement these operands contain the same values as they
+had before executing the statement, but when kernel page fault happened, the assembly fixup code "bic %2 %2, #0x3" modify the value of "addr", which may lead to an unexpected behavior.
 
-Fixes: 7ba1c40b536e ("ALSA: Add definitions for CEA-861 Audio InfoFrames")
-Signed-off-by: Andres J Rosa <andyrosa@gmail.com>
-Link: https://patch.msgid.link/20251203162509.1822-1-andyrosa@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Use a temporary variable "tmp" to handle it, instead of modifying the
+input-only operand, just like what arm64's load_unaligned_zeropad()
+does.
+
+Fixes: b9a50f74905a ("ARM: 7450/1: dcache: select DCACHE_WORD_ACCESS for little-endian ARMv6+ CPUs")
+Co-developed-by: Xie Yuanbin <xieyuanbin1@huawei.com>
+Signed-off-by: Xie Yuanbin <xieyuanbin1@huawei.com>
+Signed-off-by: Liyuan Pang <pangliyuan1@huawei.com>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/sound/asound.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/include/asm/word-at-a-time.h | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/include/uapi/sound/asound.h b/include/uapi/sound/asound.h
-index 93e40f91bd49a..6b9d4e0befa9d 100644
---- a/include/uapi/sound/asound.h
-+++ b/include/uapi/sound/asound.h
-@@ -76,7 +76,7 @@ struct snd_cea_861_aud_if {
- 	unsigned char db2_sf_ss; /* sample frequency and size */
- 	unsigned char db3; /* not used, all zeros */
- 	unsigned char db4_ca; /* channel allocation code */
--	unsigned char db5_dminh_lsv; /* downmix inhibit & level-shit values */
-+	unsigned char db5_dminh_lsv; /* downmix inhibit & level-shift values */
- };
+diff --git a/arch/arm/include/asm/word-at-a-time.h b/arch/arm/include/asm/word-at-a-time.h
+index 352ab213520d2..2e6d0b4349f47 100644
+--- a/arch/arm/include/asm/word-at-a-time.h
++++ b/arch/arm/include/asm/word-at-a-time.h
+@@ -66,7 +66,7 @@ static inline unsigned long find_zero(unsigned long mask)
+  */
+ static inline unsigned long load_unaligned_zeropad(const void *addr)
+ {
+-	unsigned long ret, offset;
++	unsigned long ret, tmp;
  
- /****************************************************************************
+ 	/* Load word from unaligned pointer addr */
+ 	asm(
+@@ -74,9 +74,9 @@ static inline unsigned long load_unaligned_zeropad(const void *addr)
+ 	"2:\n"
+ 	"	.pushsection .text.fixup,\"ax\"\n"
+ 	"	.align 2\n"
+-	"3:	and	%1, %2, #0x3\n"
+-	"	bic	%2, %2, #0x3\n"
+-	"	ldr	%0, [%2]\n"
++	"3:	bic	%1, %2, #0x3\n"
++	"	ldr	%0, [%1]\n"
++	"	and	%1, %2, #0x3\n"
+ 	"	lsl	%1, %1, #0x3\n"
+ #ifndef __ARMEB__
+ 	"	lsr	%0, %0, %1\n"
+@@ -89,7 +89,7 @@ static inline unsigned long load_unaligned_zeropad(const void *addr)
+ 	"	.align	3\n"
+ 	"	.long	1b, 3b\n"
+ 	"	.popsection"
+-	: "=&r" (ret), "=&r" (offset)
++	: "=&r" (ret), "=&r" (tmp)
+ 	: "r" (addr), "Qo" (*(unsigned long *)addr));
+ 
+ 	return ret;
 -- 
 2.51.0
 
