@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB51D15530C;
-	Thu, 15 Jan 2026 17:20:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C631315530C;
+	Thu, 15 Jan 2026 17:20:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497609; cv=none; b=Y4uM/ScqLzj3mogwF2qzSBI9yxGFHkljvanXFw9kQL9m5nctmn/K0RmnPHkaoJV5orbb2VdtuUhCtGFsETF4qVZbcrEtRbU1ghXJI4Ax1OfZdi3IHfYA4l1XKOBRAjYuEm+NBqZaeriiyiA6cLVJ8A1iASBjRlFhdJcWk0icVVo=
+	t=1768497612; cv=none; b=MkQsYVW97yr5tac81bclh6ytV06bXACle56niYDWc4AxnA6CggMgjHnvI562m3alKRec7GqcIyPsGgjUwtOEdHJh1YPCUSO/l68nB8hyelCq3Lt1YbFWbXNLzMo8AlLtBn+B88ANh+UWeTLL52goUNNs9jiS+eQKw8wejL2xsok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497609; c=relaxed/simple;
-	bh=GivHQIFwhmiC4F9aSfR4UZD1MxzU+dd3LBSo937oyvw=;
+	s=arc-20240116; t=1768497612; c=relaxed/simple;
+	bh=oiB3yJLXnV3wAMyLkSNhLqdnep9Tqbddf+Zg3Dd1mJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SuCpY5bLBNkUTvlAnzjpkCLihDCu7f75aWQnUhHdzJEtd7OXzpFH8arCqJgnxXtF/M84ewRGNW2YsZcp8/Xj8tuZesRdcl53Q7C+cD0929TcJ4+EdI1+s/jjpdAJQ7oMzQX4Gq9UYj+zQQFZwsfq6Ch2w11uC/0PM7Qohj+xVng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kq+PEyZn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ipA0AzoIQNRQ91I2MbnLioUFDhVoTH+755UyjLzCJGjGAOu0MM1OrSp9fPJSHQGKOTCWJoxvjkiT54aTscDzsl6Oh1vdSL2iLXaZ3udFH1NkiHM13KFC8wXKpYW0Nl6NNR6PjTLkp4IogmKe8O7NaAKudWOD4W9oYish1c4Z/xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sx73pXr0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kq+PEyZn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65548C16AAE;
-	Thu, 15 Jan 2026 17:20:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sx73pXr0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E138C116D0;
+	Thu, 15 Jan 2026 17:20:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497609;
-	bh=GivHQIFwhmiC4F9aSfR4UZD1MxzU+dd3LBSo937oyvw=;
+	s=korg; t=1768497612;
+	bh=oiB3yJLXnV3wAMyLkSNhLqdnep9Tqbddf+Zg3Dd1mJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kq+PEyZnzSp/CtgjS5K0FglhKkFlzw62YznDP4Y/VTz2oeGfv5gfCO+bQjbl8CkSe
-	 DKdfX8iel5m0DTjT7fkQQ3w70LVDE8ghu8uBoFH99BQlsL2zNU1vXscokYz2GrTWnv
-	 5g7rH4qgQxJmVJcDM4JYtPRWjWSNqNztecwgRWNc=
+	b=sx73pXr04CPKr1AJbz7UZ+z585PlXmSR9NE0qK0s0E3fFvlcyOHqeO4jfHrO89Bzk
+	 L90Ztiupe/+6Mymk5ZF/50u93r3da0Cb4R2sYv/0+gEA8gR6r9uiFka0My1YtuwVJL
+	 KT6vDEoTfH11jw3r2fYsLFhzBG9BZaJze/rStErs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Czurylo <krzysztof.czurylo@intel.com>,
-	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 142/554] RDMA/irdma: Fix data race in irdma_free_pble
-Date: Thu, 15 Jan 2026 17:43:28 +0100
-Message-ID: <20260115164251.391252814@linuxfoundation.org>
+Subject: [PATCH 5.15 143/554] ASoC: fsl_xcvr: Add Counter registers
+Date: Thu, 15 Jan 2026 17:43:29 +0100
+Message-ID: <20260115164251.427247559@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -52,78 +51,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Czurylo <krzysztof.czurylo@intel.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit 81f44409fb4f027d1e6d54edbeba5156ad94b214 ]
+[ Upstream commit 107d170dc46e14cfa575d1b995107ef2f2e51dfe ]
 
-Protects pble_rsrc counters with mutex to prevent data race.
-Fixes the following data race in irdma_free_pble reported by KCSAN:
+These counter registers are part of register list,
+add them to complete the register map
 
-BUG: KCSAN: data-race in irdma_free_pble [irdma] / irdma_free_pble [irdma]
+- DMAC counter control registers
+- Data path Timestamp counter register
+- Data path bit counter register
+- Data path bit count timestamp register
+- Data path bit read timestamp register
 
-write to 0xffff91430baa0078 of 8 bytes by task 16956 on cpu 5:
- irdma_free_pble+0x3b/0xb0 [irdma]
- irdma_dereg_mr+0x108/0x110 [irdma]
- ib_dereg_mr_user+0x74/0x160 [ib_core]
- uverbs_free_mr+0x26/0x30 [ib_uverbs]
- destroy_hw_idr_uobject+0x4a/0x90 [ib_uverbs]
- uverbs_destroy_uobject+0x7b/0x330 [ib_uverbs]
- uobj_destroy+0x61/0xb0 [ib_uverbs]
- ib_uverbs_run_method+0x1f2/0x380 [ib_uverbs]
- ib_uverbs_cmd_verbs+0x365/0x440 [ib_uverbs]
- ib_uverbs_ioctl+0x111/0x190 [ib_uverbs]
- __x64_sys_ioctl+0xc9/0x100
- do_syscall_64+0x44/0xa0
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
-read to 0xffff91430baa0078 of 8 bytes by task 16953 on cpu 2:
- irdma_free_pble+0x23/0xb0 [irdma]
- irdma_dereg_mr+0x108/0x110 [irdma]
- ib_dereg_mr_user+0x74/0x160 [ib_core]
- uverbs_free_mr+0x26/0x30 [ib_uverbs]
- destroy_hw_idr_uobject+0x4a/0x90 [ib_uverbs]
- uverbs_destroy_uobject+0x7b/0x330 [ib_uverbs]
- uobj_destroy+0x61/0xb0 [ib_uverbs]
- ib_uverbs_run_method+0x1f2/0x380 [ib_uverbs]
- ib_uverbs_cmd_verbs+0x365/0x440 [ib_uverbs]
- ib_uverbs_ioctl+0x111/0x190 [ib_uverbs]
- __x64_sys_ioctl+0xc9/0x100
- do_syscall_64+0x44/0xa0
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
-value changed: 0x0000000000005a62 -> 0x0000000000005a68
-
-Fixes: e8c4dbc2fcac ("RDMA/irdma: Add PBLE resource manager")
-Signed-off-by: Krzysztof Czurylo <krzysztof.czurylo@intel.com>
-Signed-off-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
-Link: https://patch.msgid.link/20251125025350.180-3-tatyana.e.nikolova@intel.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://lore.kernel.org/r/1666940627-7611-1-git-send-email-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 73b97d46dde6 ("ASoC: fsl_xcvr: clear the channel status control memory")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/pble.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/soc/fsl/fsl_xcvr.c | 40 ++++++++++++++++++++++++++++++++++++++++
+ sound/soc/fsl/fsl_xcvr.h | 21 +++++++++++++++++++++
+ 2 files changed, 61 insertions(+)
 
-diff --git a/drivers/infiniband/hw/irdma/pble.c b/drivers/infiniband/hw/irdma/pble.c
-index 6562592695b70..f4d5d1cee681f 100644
---- a/drivers/infiniband/hw/irdma/pble.c
-+++ b/drivers/infiniband/hw/irdma/pble.c
-@@ -507,12 +507,14 @@ enum irdma_status_code irdma_get_pble(struct irdma_hmc_pble_rsrc *pble_rsrc,
- void irdma_free_pble(struct irdma_hmc_pble_rsrc *pble_rsrc,
- 		     struct irdma_pble_alloc *palloc)
- {
--	pble_rsrc->freedpbles += palloc->total_cnt;
--
- 	if (palloc->level == PBLE_LEVEL_2)
- 		free_lvl2(pble_rsrc, palloc);
- 	else
- 		irdma_prm_return_pbles(&pble_rsrc->pinfo,
- 				       &palloc->level1.chunkinfo);
+diff --git a/sound/soc/fsl/fsl_xcvr.c b/sound/soc/fsl/fsl_xcvr.c
+index d0556c79fdb15..1feb5758245f0 100644
+--- a/sound/soc/fsl/fsl_xcvr.c
++++ b/sound/soc/fsl/fsl_xcvr.c
+@@ -933,6 +933,14 @@ static const struct reg_default fsl_xcvr_reg_defaults[] = {
+ 	{ FSL_XCVR_RX_DPTH_CTRL_SET,	0x00002C89 },
+ 	{ FSL_XCVR_RX_DPTH_CTRL_CLR,	0x00002C89 },
+ 	{ FSL_XCVR_RX_DPTH_CTRL_TOG,	0x00002C89 },
++	{ FSL_XCVR_RX_DPTH_CNTR_CTRL,	0x00000000 },
++	{ FSL_XCVR_RX_DPTH_CNTR_CTRL_SET, 0x00000000 },
++	{ FSL_XCVR_RX_DPTH_CNTR_CTRL_CLR, 0x00000000 },
++	{ FSL_XCVR_RX_DPTH_CNTR_CTRL_TOG, 0x00000000 },
++	{ FSL_XCVR_RX_DPTH_TSCR, 0x00000000 },
++	{ FSL_XCVR_RX_DPTH_BCR,  0x00000000 },
++	{ FSL_XCVR_RX_DPTH_BCTR, 0x00000000 },
++	{ FSL_XCVR_RX_DPTH_BCRR, 0x00000000 },
+ 	{ FSL_XCVR_TX_DPTH_CTRL,	0x00000000 },
+ 	{ FSL_XCVR_TX_DPTH_CTRL_SET,	0x00000000 },
+ 	{ FSL_XCVR_TX_DPTH_CTRL_CLR,	0x00000000 },
+@@ -943,6 +951,14 @@ static const struct reg_default fsl_xcvr_reg_defaults[] = {
+ 	{ FSL_XCVR_TX_CS_DATA_3,	0x00000000 },
+ 	{ FSL_XCVR_TX_CS_DATA_4,	0x00000000 },
+ 	{ FSL_XCVR_TX_CS_DATA_5,	0x00000000 },
++	{ FSL_XCVR_TX_DPTH_CNTR_CTRL,	0x00000000 },
++	{ FSL_XCVR_TX_DPTH_CNTR_CTRL_SET, 0x00000000 },
++	{ FSL_XCVR_TX_DPTH_CNTR_CTRL_CLR, 0x00000000 },
++	{ FSL_XCVR_TX_DPTH_CNTR_CTRL_TOG, 0x00000000 },
++	{ FSL_XCVR_TX_DPTH_TSCR, 0x00000000 },
++	{ FSL_XCVR_TX_DPTH_BCR,	 0x00000000 },
++	{ FSL_XCVR_TX_DPTH_BCTR, 0x00000000 },
++	{ FSL_XCVR_TX_DPTH_BCRR, 0x00000000 },
+ 	{ FSL_XCVR_DEBUG_REG_0,		0x00000000 },
+ 	{ FSL_XCVR_DEBUG_REG_1,		0x00000000 },
+ };
+@@ -974,6 +990,14 @@ static bool fsl_xcvr_readable_reg(struct device *dev, unsigned int reg)
+ 	case FSL_XCVR_RX_DPTH_CTRL_SET:
+ 	case FSL_XCVR_RX_DPTH_CTRL_CLR:
+ 	case FSL_XCVR_RX_DPTH_CTRL_TOG:
++	case FSL_XCVR_RX_DPTH_CNTR_CTRL:
++	case FSL_XCVR_RX_DPTH_CNTR_CTRL_SET:
++	case FSL_XCVR_RX_DPTH_CNTR_CTRL_CLR:
++	case FSL_XCVR_RX_DPTH_CNTR_CTRL_TOG:
++	case FSL_XCVR_RX_DPTH_TSCR:
++	case FSL_XCVR_RX_DPTH_BCR:
++	case FSL_XCVR_RX_DPTH_BCTR:
++	case FSL_XCVR_RX_DPTH_BCRR:
+ 	case FSL_XCVR_TX_DPTH_CTRL:
+ 	case FSL_XCVR_TX_DPTH_CTRL_SET:
+ 	case FSL_XCVR_TX_DPTH_CTRL_CLR:
+@@ -984,6 +1008,14 @@ static bool fsl_xcvr_readable_reg(struct device *dev, unsigned int reg)
+ 	case FSL_XCVR_TX_CS_DATA_3:
+ 	case FSL_XCVR_TX_CS_DATA_4:
+ 	case FSL_XCVR_TX_CS_DATA_5:
++	case FSL_XCVR_TX_DPTH_CNTR_CTRL:
++	case FSL_XCVR_TX_DPTH_CNTR_CTRL_SET:
++	case FSL_XCVR_TX_DPTH_CNTR_CTRL_CLR:
++	case FSL_XCVR_TX_DPTH_CNTR_CTRL_TOG:
++	case FSL_XCVR_TX_DPTH_TSCR:
++	case FSL_XCVR_TX_DPTH_BCR:
++	case FSL_XCVR_TX_DPTH_BCTR:
++	case FSL_XCVR_TX_DPTH_BCRR:
+ 	case FSL_XCVR_DEBUG_REG_0:
+ 	case FSL_XCVR_DEBUG_REG_1:
+ 		return true;
+@@ -1016,6 +1048,10 @@ static bool fsl_xcvr_writeable_reg(struct device *dev, unsigned int reg)
+ 	case FSL_XCVR_RX_DPTH_CTRL_SET:
+ 	case FSL_XCVR_RX_DPTH_CTRL_CLR:
+ 	case FSL_XCVR_RX_DPTH_CTRL_TOG:
++	case FSL_XCVR_RX_DPTH_CNTR_CTRL:
++	case FSL_XCVR_RX_DPTH_CNTR_CTRL_SET:
++	case FSL_XCVR_RX_DPTH_CNTR_CTRL_CLR:
++	case FSL_XCVR_RX_DPTH_CNTR_CTRL_TOG:
+ 	case FSL_XCVR_TX_DPTH_CTRL_SET:
+ 	case FSL_XCVR_TX_DPTH_CTRL_CLR:
+ 	case FSL_XCVR_TX_DPTH_CTRL_TOG:
+@@ -1025,6 +1061,10 @@ static bool fsl_xcvr_writeable_reg(struct device *dev, unsigned int reg)
+ 	case FSL_XCVR_TX_CS_DATA_3:
+ 	case FSL_XCVR_TX_CS_DATA_4:
+ 	case FSL_XCVR_TX_CS_DATA_5:
++	case FSL_XCVR_TX_DPTH_CNTR_CTRL:
++	case FSL_XCVR_TX_DPTH_CNTR_CTRL_SET:
++	case FSL_XCVR_TX_DPTH_CNTR_CTRL_CLR:
++	case FSL_XCVR_TX_DPTH_CNTR_CTRL_TOG:
+ 		return true;
+ 	default:
+ 		return false;
+diff --git a/sound/soc/fsl/fsl_xcvr.h b/sound/soc/fsl/fsl_xcvr.h
+index 7f2853c60085e..4769b0fca21de 100644
+--- a/sound/soc/fsl/fsl_xcvr.h
++++ b/sound/soc/fsl/fsl_xcvr.h
+@@ -49,6 +49,16 @@
+ #define FSL_XCVR_RX_DPTH_CTRL_CLR	0x188
+ #define FSL_XCVR_RX_DPTH_CTRL_TOG	0x18c
+ 
++#define FSL_XCVR_RX_DPTH_CNTR_CTRL	0x1C0
++#define FSL_XCVR_RX_DPTH_CNTR_CTRL_SET	0x1C4
++#define FSL_XCVR_RX_DPTH_CNTR_CTRL_CLR	0x1C8
++#define FSL_XCVR_RX_DPTH_CNTR_CTRL_TOG	0x1CC
 +
-+	mutex_lock(&pble_rsrc->pble_mutex_lock);
-+	pble_rsrc->freedpbles += palloc->total_cnt;
- 	pble_rsrc->stats_alloc_freed++;
-+	mutex_unlock(&pble_rsrc->pble_mutex_lock);
- }
++#define FSL_XCVR_RX_DPTH_TSCR		0x1D0
++#define FSL_XCVR_RX_DPTH_BCR		0x1D4
++#define FSL_XCVR_RX_DPTH_BCTR		0x1D8
++#define FSL_XCVR_RX_DPTH_BCRR		0x1DC
++
+ #define FSL_XCVR_TX_DPTH_CTRL		0x220 /* TX datapath ctrl reg */
+ #define FSL_XCVR_TX_DPTH_CTRL_SET	0x224
+ #define FSL_XCVR_TX_DPTH_CTRL_CLR	0x228
+@@ -59,6 +69,17 @@
+ #define FSL_XCVR_TX_CS_DATA_3		0x23C
+ #define FSL_XCVR_TX_CS_DATA_4		0x240
+ #define FSL_XCVR_TX_CS_DATA_5		0x244
++
++#define FSL_XCVR_TX_DPTH_CNTR_CTRL	0x260
++#define FSL_XCVR_TX_DPTH_CNTR_CTRL_SET	0x264
++#define FSL_XCVR_TX_DPTH_CNTR_CTRL_CLR	0x268
++#define FSL_XCVR_TX_DPTH_CNTR_CTRL_TOG	0x26C
++
++#define FSL_XCVR_TX_DPTH_TSCR		0x270
++#define FSL_XCVR_TX_DPTH_BCR		0x274
++#define FSL_XCVR_TX_DPTH_BCTR		0x278
++#define FSL_XCVR_TX_DPTH_BCRR		0x27C
++
+ #define FSL_XCVR_DEBUG_REG_0		0x2E0
+ #define FSL_XCVR_DEBUG_REG_1		0x2F0
+ 
 -- 
 2.51.0
 
