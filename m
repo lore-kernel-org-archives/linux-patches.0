@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 816BF3D2FE0;
-	Thu, 15 Jan 2026 17:50:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B18F2C08AC;
+	Thu, 15 Jan 2026 17:50:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499405; cv=none; b=ouXcmFdzEROG3YEvHqlObRbCbLsZmp3tVtNr+jCUYxVJZXaYEpbsN9R8Y26cpcmmW+mlXfOV8c27Rx+LpogH/f7d8rRGtz9siAYUgWH2W2zj+kZtaua+lHcEdBYDKBkNwxfdvmnseoPO8heLxrIctXaUgZAdlmplSest2EVQ3pA=
+	t=1768499408; cv=none; b=AQAI5Zrq3ICqqllNV2Y0bHRdxiEzXMwuRoyjcdK10cz8wNuadLL4WCWTdI/CvnUg+R8l63rdkQSnxDCHUp8YpEY8iBv6fSQAMODktgEm0+6LQfMzn230uqkj1ovMfFmqFP7L8yG6hK2hLIAwwXrC9s6EdEQ2kuCdKJKiyrA5mGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499405; c=relaxed/simple;
-	bh=nwB7poy+0E6NqxWv9MWOYXi6yiZwJuZkYGvLb16fGPY=;
+	s=arc-20240116; t=1768499408; c=relaxed/simple;
+	bh=SJfAHWOAK1CQ1Q7MuJLsclQAmcSogfHmm+Qg0IcFdcA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MGNpVvuMjlTenmj3UWLhqbxsQqC3ebC6S51BwmQzo7lSGvkje0ogWCSxp0wKHYzhdhuVIMu548LPhlFMv2DRznEPk97rtk4KAizlywdF803Br3mavkuVlDyDpnDbVNJIu6lyHGjGP66Pd5kmydhF3moUQ2VnSJ7PxVNjNafbHGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ehgkccnc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FTcPG9tlV46ks8/LAhm8cBfPZbY0+IfBsEB1XtZuRjpl/N8zycIKQJP/Qq6i5eKdJCsnup2CpgYaLK8SLNVSsZDn/08dkdZSbzndIBp4+ZgI1jOvfB9UsGx8pbBO4US+UkSnntmAVtiuezeBgnnuef5EEwJT9wGqvQkBigF5g28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QDpVOLBW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ehgkccnc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C32D8C116D0;
-	Thu, 15 Jan 2026 17:50:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QDpVOLBW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99FE4C19425;
+	Thu, 15 Jan 2026 17:50:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499405;
-	bh=nwB7poy+0E6NqxWv9MWOYXi6yiZwJuZkYGvLb16fGPY=;
+	s=korg; t=1768499408;
+	bh=SJfAHWOAK1CQ1Q7MuJLsclQAmcSogfHmm+Qg0IcFdcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ehgkccncdVUS1HEKWem7ym6LLYdLBwzLoupNV6TN7z5YJgC0sXMx0oER0hsmcHUeC
-	 lqbseEMAk9qNmidTeBELXlwfjcgq02AvYDKSJ79YUTm+b0NMzADSX6JQK8piBfPTMx
-	 lfa8zTN3pZGJ4+e+Vfx2xLSpZOpWgW9uKrdBPCZ0=
+	b=QDpVOLBWkPKAz51JimG/Ktm9Jff4lZLywPO+6C+jPxNBM4x2m36832MP9Mp5ZuJwe
+	 0FzpbVF6tDR8dcD7iO8h0UaadmU/XHQ2QvY/eLWCqrmYrwM4LauGK2RgBZjUJo0/J0
+	 t2wyzHnV4lpqEBbIwAZQ3aCT7BegwE7hlKQksStM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Hongyu Xie <xiehongyu1@kylinos.cn>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 215/451] usb: typec: ucsi: Handle incorrect num_connectors capability
-Date: Thu, 15 Jan 2026 17:46:56 +0100
-Message-ID: <20260115164238.676554132@linuxfoundation.org>
+Subject: [PATCH 5.10 216/451] usb: xhci: limit run_graceperiod for only usb 3.0 devices
+Date: Thu, 15 Jan 2026 17:46:57 +0100
+Message-ID: <20260115164238.713452422@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -51,47 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Pearson <mpearson-lenovo@squebb.ca>
+From: Hongyu Xie <xiehongyu1@kylinos.cn>
 
-[ Upstream commit 30cd2cb1abf4c4acdb1ddb468c946f68939819fb ]
+[ Upstream commit 8d34983720155b8f05de765f0183d9b0e1345cc0 ]
 
-The UCSI spec states that the num_connectors field is 7 bits, and the
-8th bit is reserved and should be set to zero.
-Some buggy FW has been known to set this bit, and it can lead to a
-system not booting.
-Flag that the FW is not behaving correctly, and auto-fix the value
-so that the system boots correctly.
+run_graceperiod blocks usb 2.0 devices from auto suspending after
+xhci_start for 500ms.
 
-Found on Lenovo P1 G8 during Linux enablement program. The FW will
-be fixed, but seemed worth addressing in case it hit platforms that
-aren't officially Linux supported.
+Log shows:
+[   13.387170] xhci_hub_control:1271: xhci-hcd PNP0D10:03: Get port status 7-1 read: 0x2a0, return 0x100
+[   13.387177] hub_event:5779: hub 7-0:1.0: state 7 ports 1 chg 0000 evt 0000
+[   13.387182] hub_suspend:3903: hub 7-0:1.0: hub_suspend
+[   13.387188] hcd_bus_suspend:2250: usb usb7: bus auto-suspend, wakeup 1
+[   13.387191] hcd_bus_suspend:2279: usb usb7: suspend raced with wakeup event
+[   13.387193] hcd_bus_resume:2303: usb usb7: usb auto-resume
+[   13.387296] hub_event:5779: hub 3-0:1.0: state 7 ports 1 chg 0000 evt 0000
+[   13.393343] handle_port_status:2034: xhci-hcd PNP0D10:02: handle_port_status: starting usb5 port polling.
+[   13.393353] xhci_hub_control:1271: xhci-hcd PNP0D10:02: Get port status 5-1 read: 0x206e1, return 0x10101
+[   13.400047] hub_suspend:3903: hub 3-0:1.0: hub_suspend
+[   13.403077] hub_resume:3948: hub 7-0:1.0: hub_resume
+[   13.403080] xhci_hub_control:1271: xhci-hcd PNP0D10:03: Get port status 7-1 read: 0x2a0, return 0x100
+[   13.403085] hub_event:5779: hub 7-0:1.0: state 7 ports 1 chg 0000 evt 0000
+[   13.403087] hub_suspend:3903: hub 7-0:1.0: hub_suspend
+[   13.403090] hcd_bus_suspend:2250: usb usb7: bus auto-suspend, wakeup 1
+[   13.403093] hcd_bus_suspend:2279: usb usb7: suspend raced with wakeup event
+[   13.403095] hcd_bus_resume:2303: usb usb7: usb auto-resume
+[   13.405002] handle_port_status:1913: xhci-hcd PNP0D10:04: Port change event, 9-1, id 1, portsc: 0x6e1
+[   13.405016] hub_activate:1169: usb usb5-port1: status 0101 change 0001
+[   13.405026] xhci_clear_port_change_bit:658: xhci-hcd PNP0D10:02: clear port1 connect change, portsc: 0x6e1
+[   13.413275] hcd_bus_suspend:2250: usb usb3: bus auto-suspend, wakeup 1
+[   13.419081] hub_resume:3948: hub 7-0:1.0: hub_resume
+[   13.419086] xhci_hub_control:1271: xhci-hcd PNP0D10:03: Get port status 7-1 read: 0x2a0, return 0x100
+[   13.419095] hub_event:5779: hub 7-0:1.0: state 7 ports 1 chg 0000 evt 0000
+[   13.419100] hub_suspend:3903: hub 7-0:1.0: hub_suspend
+[   13.419106] hcd_bus_suspend:2250: usb usb7: bus auto-suspend, wakeup 1
+[   13.419110] hcd_bus_suspend:2279: usb usb7: suspend raced with wakeup event
+[   13.419112] hcd_bus_resume:2303: usb usb7: usb auto-resume
+[   13.420455] handle_port_status:2034: xhci-hcd PNP0D10:04: handle_port_status: starting usb9 port polling.
+[   13.420493] handle_port_status:1913: xhci-hcd PNP0D10:05: Port change event, 10-1, id 1, portsc: 0x6e1
+[   13.425332] hcd_bus_suspend:2279: usb usb3: suspend raced with wakeup event
+[   13.431931] handle_port_status:2034: xhci-hcd PNP0D10:05: handle_port_status: starting usb10 port polling.
+[   13.435080] hub_resume:3948: hub 7-0:1.0: hub_resume
+[   13.435084] xhci_hub_control:1271: xhci-hcd PNP0D10:03: Get port status 7-1 read: 0x2a0, return 0x100
+[   13.435092] hub_event:5779: hub 7-0:1.0: state 7 ports 1 chg 0000 evt 0000
+[   13.435096] hub_suspend:3903: hub 7-0:1.0: hub_suspend
+[   13.435102] hcd_bus_suspend:2250: usb usb7: bus auto-suspend, wakeup 1
+[   13.435106] hcd_bus_suspend:2279: usb usb7: suspend raced with wakeup event
 
-Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250821185319.2585023-1-mpearson-lenovo@squebb.ca
+usb7 and other usb 2.0 root hub were rapidly toggling between suspend
+and resume states. More, "suspend raced with wakeup event" confuses people.
+
+So, limit run_graceperiod for only usb 3.0 devices
+
+Signed-off-by: Hongyu Xie <xiehongyu1@kylinos.cn>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20251119142417.2820519-2-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/usb/host/xhci-hub.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
-index 0851d93d5909..60339c746694 100644
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -1220,6 +1220,12 @@ static int ucsi_init(struct ucsi *ucsi)
- 		ret = -ENODEV;
- 		goto err_reset;
- 	}
-+	/* Check if reserved bit set. This is out of spec but happens in buggy FW */
-+	if (ucsi->cap.num_connectors & 0x80) {
-+		dev_warn(ucsi->dev, "UCSI: Invalid num_connectors %d. Likely buggy FW\n",
-+			 ucsi->cap.num_connectors);
-+		ucsi->cap.num_connectors &= 0x7f; // clear bit and carry on
-+	}
- 
- 	/* Allocate the connectors. Released in ucsi_unregister_ppm() */
- 	ucsi->connector = kcalloc(ucsi->cap.num_connectors + 1,
+diff --git a/drivers/usb/host/xhci-hub.c b/drivers/usb/host/xhci-hub.c
+index 05f119e7178c..a7a7f0a8488a 100644
+--- a/drivers/usb/host/xhci-hub.c
++++ b/drivers/usb/host/xhci-hub.c
+@@ -1564,7 +1564,7 @@ int xhci_hub_status_data(struct usb_hcd *hcd, char *buf)
+ 	 * SS devices are only visible to roothub after link training completes.
+ 	 * Keep polling roothubs for a grace period after xHC start
+ 	 */
+-	if (xhci->run_graceperiod) {
++	if (hcd->speed >= HCD_USB3 && xhci->run_graceperiod) {
+ 		if (time_before(jiffies, xhci->run_graceperiod))
+ 			status = 1;
+ 		else
 -- 
 2.51.0
 
