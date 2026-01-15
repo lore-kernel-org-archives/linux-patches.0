@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CB9D2C028F;
-	Thu, 15 Jan 2026 17:02:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E672D7DD7;
+	Thu, 15 Jan 2026 17:02:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496521; cv=none; b=UgyRC7nYckjipm13nj0bFxXg17a16TFec5DelizIdKPiKjmo7dF2tzkrWUn8L0roI0VHrmm/xj5ftjKHu0idB5ow+BhIb46Z9RU3od67Ip0DjbaPkfd+pAjV5Q9SoPL7XPGwaMPLfy+R/epd67CvsECuJc4x47mIGFuUDbJU1N8=
+	t=1768496524; cv=none; b=kTI6YQ0j+7bKiPXINHazPRIhmcVxl//lz2NjVdag4owSyn21lpdil9VdGitH5Nl+JBgIpGJq7t/mvqJ6WcUvTTO+5rvfEjLgVppJqbRwKl3SI6KhZQfC5LjRlYKlQWWwf9DaXdWgu8LQGgKmeV38RFnmh4ITaigMie5AoRAWWFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496521; c=relaxed/simple;
-	bh=yCWRqbufuWLsUi5SnCp+j+Ms+dv1H8MOoL+GvVGrw8o=;
+	s=arc-20240116; t=1768496524; c=relaxed/simple;
+	bh=QomDXIZHTpDAwA1UYUJHEqTgosYYFluCnIDTUbqDObM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GnPmUJVciMV2h2lok6JRnJukjJOAeRF5VmWT2KkKNfaOfUhqD2yDmbzrQPHkUQsHJUQ9GSrGQVzO+hBWeehtR5ZAaKY3W2Th8biM0MXGDC7bLGIjg02+Sh6R5wohClqiXMxUtg5Rwr1JhQ+mRCa3dQy5EHA3NFNOsZN+Tj1lXko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XjtlIqby; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WUc97zXaEsksXI8qJAJUsAol/JTe9JHNF+CXSeYfB8CA1cc6WDl4vka8qyDEi7cPLbBhGFAooDaZMImiiLmubaE0ZlLT7Jy8G4rb54FritBIYitZaFDEdtw+n35DFHcTaEs2EqsoECBlRUp6l65WJF2AoJfKW24D0mY3fITahXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LcIOq4lz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XjtlIqby"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FF9FC116D0;
-	Thu, 15 Jan 2026 17:02:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LcIOq4lz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95158C116D0;
+	Thu, 15 Jan 2026 17:02:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496521;
-	bh=yCWRqbufuWLsUi5SnCp+j+Ms+dv1H8MOoL+GvVGrw8o=;
+	s=korg; t=1768496524;
+	bh=QomDXIZHTpDAwA1UYUJHEqTgosYYFluCnIDTUbqDObM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XjtlIqbyY+lNOf2ENPLw076HiwxkluoE/2tcOXMjEL+DHbSOPMtdTAEUPUVyn5jKu
-	 +JqDSdHV6pSIPx5z8pfLE1XKd8MeX2H/HMpRhnKkvdlMGDYVf/5DfJimWjP4XEUC9D
-	 Zjy4tScgAVoTh1ziOXSfMrxSi6V+V5wgiHOLWPtA=
+	b=LcIOq4lz70c5krd1G45jC5f8wWPpApKlDe5bJgt/HAeai5X30eGLPf1nkKQdWITjw
+	 i533u368PFX0CIj+K96fuSV83UPuFMux3E8j0cARRDjecfSmY/gTZ87++Dk+RtY6fd
+	 JRAfSvCZlcefgbH1tZ8e0SG917+FgeBU2hZzO24E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Mahlkuch <Kyle.Mahlkuch@ibm.com>,
-	Wen Xiong <wenxiong@linux.ibm.com>,
+	Brian Kao <powenkao@google.com>,
+	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 042/119] scsi: ipr: Enable/disable IRQD_NO_BALANCING during reset
-Date: Thu, 15 Jan 2026 17:47:37 +0100
-Message-ID: <20260115164153.478991736@linuxfoundation.org>
+Subject: [PATCH 6.12 043/119] scsi: ufs: core: Fix EH failure after W-LUN resume error
+Date: Thu, 15 Jan 2026 17:47:38 +0100
+Message-ID: <20260115164153.514676704@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -52,188 +52,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wen Xiong <wenxiong@linux.ibm.com>
+From: Brian Kao <powenkao@google.com>
 
-[ Upstream commit 6ac3484fb13b2fc7f31cfc7f56093e7d0ce646a5 ]
+[ Upstream commit b4bb6daf4ac4d4560044ecdd81e93aa2f6acbb06 ]
 
-A dynamic remove/add storage adapter test hits EEH on PowerPC:
+When a W-LUN resume fails, its parent devices in the SCSI hierarchy,
+including the scsi_target, may be runtime suspended. Subsequently, the
+error handler in ufshcd_recover_pm_error() fails to set the W-LUN device
+back to active because the parent target is not active.  This results in
+the following errors:
 
-  EEH: [c00000000004f75c] __eeh_send_failure_event+0x7c/0x160
-  EEH: [c000000000048444] eeh_dev_check_failure.part.0+0x254/0x650
-  EEH: [c008000001650678] eeh_readl+0x60/0x90 [ipr]
-  EEH: [c00800000166746c] ipr_cancel_op+0x2b8/0x524 [ipr]
-  EEH: [c008000001656524] ipr_eh_abort+0x6c/0x130 [ipr]
-  EEH: [c000000000ab0d20] scmd_eh_abort_handler+0x140/0x440
-  EEH: [c00000000017e558] process_one_work+0x298/0x590
-  EEH: [c00000000017eef8] worker_thread+0xa8/0x620
-  EEH: [c00000000018be34] kthread+0x124/0x130
-  EEH: [c00000000000cd64] ret_from_kernel_thread+0x5c/0x64
+  google-ufshcd 3c2d0000.ufs: ufshcd_err_handler started; HBA state eh_fatal; ...
+  ufs_device_wlun 0:0:0:49488: START_STOP failed for power mode: 1, result 40000
+  ufs_device_wlun 0:0:0:49488: ufshcd_wl_runtime_resume failed: -5
+  ...
+  ufs_device_wlun 0:0:0:49488: runtime PM trying to activate child device 0:0:0:49488 but parent (target0:0:0) is not active
 
-A PCIe bus trace reveals that a vector of MSI-X is cleared to 0 by
-irqbalance daemon. If we disable irqbalance daemon, we won't see the
-issue.
+Address this by:
 
-With debug enabled in ipr driver:
+ 1. Ensuring the W-LUN's parent scsi_target is runtime resumed before
+    attempting to set the W-LUN to active within
+    ufshcd_recover_pm_error().
 
-  [   44.103071] ipr: Entering __ipr_remove
-  [   44.103083] ipr: Entering ipr_initiate_ioa_bringdown
-  [   44.103091] ipr: Entering ipr_reset_shutdown_ioa
-  [   44.103099] ipr: Leaving ipr_reset_shutdown_ioa
-  [   44.103105] ipr: Leaving ipr_initiate_ioa_bringdown
-  [   44.149918] ipr: Entering ipr_reset_ucode_download
-  [   44.149935] ipr: Entering ipr_reset_alert
-  [   44.150032] ipr: Entering ipr_reset_start_timer
-  [   44.150038] ipr: Leaving ipr_reset_alert
-  [   44.244343] scsi 1:2:3:0: alua: Detached
-  [   44.254300] ipr: Entering ipr_reset_start_bist
-  [   44.254320] ipr: Entering ipr_reset_start_timer
-  [   44.254325] ipr: Leaving ipr_reset_start_bist
-  [   44.364329] scsi 1:2:4:0: alua: Detached
-  [   45.134341] scsi 1:2:5:0: alua: Detached
-  [   45.860949] ipr: Entering ipr_reset_shutdown_ioa
-  [   45.860962] ipr: Leaving ipr_reset_shutdown_ioa
-  [   45.860966] ipr: Entering ipr_reset_alert
-  [   45.861028] ipr: Entering ipr_reset_start_timer
-  [   45.861035] ipr: Leaving ipr_reset_alert
-  [   45.964302] ipr: Entering ipr_reset_start_bist
-  [   45.964309] ipr: Entering ipr_reset_start_timer
-  [   45.964313] ipr: Leaving ipr_reset_start_bist
-  [   46.264301] ipr: Entering ipr_reset_bist_done
-  [   46.264309] ipr: Leaving ipr_reset_bist_done
+ 2. Explicitly checking for power.runtime_error on the HBA and W-LUN
+    devices before calling pm_runtime_set_active() to clear the error
+    state.
 
-During adapter reset, ipr device driver blocks config space access but
-can't block MMIO access for MSI-X entries.  There is very small window:
-irqbalance daemon kicks in during adapter reset before ipr driver calls
-pci_restore_state(pdev) to restore MSI-X table.
+ 3. Adding pm_runtime_get_sync(hba->dev) in
+    ufshcd_err_handling_prepare() to ensure the HBA itself is active
+    during error recovery, even if a child device resume failed.
 
-irqbalance daemon reads back all 0 for that MSI-X vector in
-__pci_read_msi_msg().
+These changes ensure the device power states are managed correctly
+during error recovery.
 
-irqbalance daemon:
-
-  msi_domain_set_affinity()
-  ->irq_chip_set_affinity_patent()
-  ->xive_irq_set_affinity()
-  ->irq_chip_compose_msi_msg()
-    ->pseries_msi_compose_msg()
-    ->__pci_read_msi_msg(): read all 0 since didn't call pci_restore_state
-  ->irq_chip_write_msi_msg()
-    -> pci_write_msg_msi(): write 0 to the msix vector entry
-
-When ipr driver calls pci_restore_state(pdev) in
-ipr_reset_restore_cfg_space(), the MSI-X vector entry has been cleared
-by irqbalance daemon in pci_write_msg_msix().
-
-  pci_restore_state()
-  ->__pci_restore_msix_state()
-
-Below is the MSI-X table for ipr adapter after irqbalance daemon kicked
-in during adapter reset:
-
-  Dump MSIx table: index=0 address_lo=c800 address_hi=10000000 msg_data=0
-  Dump MSIx table: index=1 address_lo=c810 address_hi=10000000 msg_data=0
-  Dump MSIx table: index=2 address_lo=c820 address_hi=10000000 msg_data=0
-  Dump MSIx table: index=3 address_lo=c830 address_hi=10000000 msg_data=0
-  Dump MSIx table: index=4 address_lo=c840 address_hi=10000000 msg_data=0
-  Dump MSIx table: index=5 address_lo=c850 address_hi=10000000 msg_data=0
-  Dump MSIx table: index=6 address_lo=c860 address_hi=10000000 msg_data=0
-  Dump MSIx table: index=7 address_lo=c870 address_hi=10000000 msg_data=0
-  Dump MSIx table: index=8 address_lo=0 address_hi=0 msg_data=0
-  ---------> Hit EEH since msix vector of index=8 are 0
-  Dump MSIx table: index=9 address_lo=c890 address_hi=10000000 msg_data=0
-  Dump MSIx table: index=10 address_lo=c8a0 address_hi=10000000 msg_data=0
-  Dump MSIx table: index=11 address_lo=c8b0 address_hi=10000000 msg_data=0
-  Dump MSIx table: index=12 address_lo=c8c0 address_hi=10000000 msg_data=0
-  Dump MSIx table: index=13 address_lo=c8d0 address_hi=10000000 msg_data=0
-  Dump MSIx table: index=14 address_lo=c8e0 address_hi=10000000 msg_data=0
-  Dump MSIx table: index=15 address_lo=c8f0 address_hi=10000000 msg_data=0
-
-  [   46.264312] ipr: Entering ipr_reset_restore_cfg_space
-  [   46.267439] ipr: Entering ipr_fail_all_ops
-  [   46.267447] ipr: Leaving ipr_fail_all_ops
-  [   46.267451] ipr: Leaving ipr_reset_restore_cfg_space
-  [   46.267454] ipr: Entering ipr_ioa_bringdown_done
-  [   46.267458] ipr: Leaving ipr_ioa_bringdown_done
-  [   46.267467] ipr: Entering ipr_worker_thread
-  [   46.267470] ipr: Leaving ipr_worker_thread
-
-IRQ balancing is not required during adapter reset.
-
-Enable "IRQ_NO_BALANCING" flag before starting adapter reset and disable
-it after calling pci_restore_state(). The irqbalance daemon is disabled
-for this short period of time (~2s).
-
-Co-developed-by: Kyle Mahlkuch <Kyle.Mahlkuch@ibm.com>
-Signed-off-by: Kyle Mahlkuch <Kyle.Mahlkuch@ibm.com>
-Signed-off-by: Wen Xiong <wenxiong@linux.ibm.com>
-Link: https://patch.msgid.link/20251028142427.3969819-2-wenxiong@linux.ibm.com
+Signed-off-by: Brian Kao <powenkao@google.com>
+Tested-by: Brian Kao <powenkao@google.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20251112063214.1195761-1-powenkao@google.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ipr.c | 28 +++++++++++++++++++++++++++-
- 1 file changed, 27 insertions(+), 1 deletion(-)
+ drivers/ufs/core/ufshcd.c | 36 ++++++++++++++++++++++++++++--------
+ 1 file changed, 28 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/scsi/ipr.c b/drivers/scsi/ipr.c
-index 31cf2d31cceba..ea3d8239c6b3d 100644
---- a/drivers/scsi/ipr.c
-+++ b/drivers/scsi/ipr.c
-@@ -61,8 +61,8 @@
- #include <linux/hdreg.h>
- #include <linux/reboot.h>
- #include <linux/stringify.h>
-+#include <linux/irq.h>
- #include <asm/io.h>
--#include <asm/irq.h>
- #include <asm/processor.h>
- #include <scsi/scsi.h>
- #include <scsi/scsi_host.h>
-@@ -7843,6 +7843,30 @@ static int ipr_dump_mailbox_wait(struct ipr_cmnd *ipr_cmd)
- 	return IPR_RC_JOB_RETURN;
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 24eb4795328ef..fb406e926d0cc 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -6411,6 +6411,11 @@ static void ufshcd_clk_scaling_suspend(struct ufs_hba *hba, bool suspend)
+ 
+ static void ufshcd_err_handling_prepare(struct ufs_hba *hba)
+ {
++	/*
++	 * A WLUN resume failure could potentially lead to the HBA being
++	 * runtime suspended, so take an extra reference on hba->dev.
++	 */
++	pm_runtime_get_sync(hba->dev);
+ 	ufshcd_rpm_get_sync(hba);
+ 	if (pm_runtime_status_suspended(&hba->ufs_device_wlun->sdev_gendev) ||
+ 	    hba->is_sys_suspended) {
+@@ -6451,6 +6456,7 @@ static void ufshcd_err_handling_unprepare(struct ufs_hba *hba)
+ 	if (ufshcd_is_clkscaling_supported(hba))
+ 		ufshcd_clk_scaling_suspend(hba, false);
+ 	ufshcd_rpm_put(hba);
++	pm_runtime_put(hba->dev);
  }
  
-+/**
-+ * ipr_set_affinity_nobalance
-+ * @ioa_cfg:	ipr_ioa_cfg struct for an ipr device
-+ * @flag:	bool
-+ *	true: ensable "IRQ_NO_BALANCING" bit for msix interrupt
-+ *	false: disable "IRQ_NO_BALANCING" bit for msix interrupt
-+ * Description: This function will be called to disable/enable
-+ *	"IRQ_NO_BALANCING" to avoid irqbalance daemon
-+ *	kicking in during adapter reset.
-+ **/
-+static void ipr_set_affinity_nobalance(struct ipr_ioa_cfg *ioa_cfg, bool flag)
-+{
-+	int irq, i;
+ static inline bool ufshcd_err_handling_should_stop(struct ufs_hba *hba)
+@@ -6465,28 +6471,42 @@ static inline bool ufshcd_err_handling_should_stop(struct ufs_hba *hba)
+ #ifdef CONFIG_PM
+ static void ufshcd_recover_pm_error(struct ufs_hba *hba)
+ {
++	struct scsi_target *starget = hba->ufs_device_wlun->sdev_target;
+ 	struct Scsi_Host *shost = hba->host;
+ 	struct scsi_device *sdev;
+ 	struct request_queue *q;
+-	int ret;
++	bool resume_sdev_queues = false;
+ 
+ 	hba->is_sys_suspended = false;
 +
-+	for (i = 0; i < ioa_cfg->nvectors; i++) {
-+		irq = pci_irq_vector(ioa_cfg->pdev, i);
-+
-+		if (flag)
-+			irq_set_status_flags(irq, IRQ_NO_BALANCING);
-+		else
-+			irq_clear_status_flags(irq, IRQ_NO_BALANCING);
+ 	/*
+-	 * Set RPM status of wlun device to RPM_ACTIVE,
+-	 * this also clears its runtime error.
++	 * Ensure the parent's error status is cleared before proceeding
++	 * to the child, as the parent must be active to activate the child.
+ 	 */
+-	ret = pm_runtime_set_active(&hba->ufs_device_wlun->sdev_gendev);
++	if (hba->dev->power.runtime_error) {
++		/* hba->dev has no functional parent thus simplily set RPM_ACTIVE */
++		pm_runtime_set_active(hba->dev);
++		resume_sdev_queues = true;
 +	}
-+}
 +
- /**
-  * ipr_reset_restore_cfg_space - Restore PCI config space.
-  * @ipr_cmd:	ipr command struct
-@@ -7867,6 +7891,7 @@ static int ipr_reset_restore_cfg_space(struct ipr_cmnd *ipr_cmd)
- 		return IPR_RC_JOB_CONTINUE;
- 	}
++	if (hba->ufs_device_wlun->sdev_gendev.power.runtime_error) {
++		/*
++		 * starget, parent of wlun, might be suspended if wlun resume failed.
++		 * Make sure parent is resumed before set child (wlun) active.
++		 */
++		pm_runtime_get_sync(&starget->dev);
++		pm_runtime_set_active(&hba->ufs_device_wlun->sdev_gendev);
++		pm_runtime_put_sync(&starget->dev);
++		resume_sdev_queues = true;
++	}
  
-+	ipr_set_affinity_nobalance(ioa_cfg, false);
- 	ipr_fail_all_ops(ioa_cfg);
- 
- 	if (ioa_cfg->sis64) {
-@@ -7946,6 +7971,7 @@ static int ipr_reset_start_bist(struct ipr_cmnd *ipr_cmd)
- 		rc = pci_write_config_byte(ioa_cfg->pdev, PCI_BIST, PCI_BIST_START);
- 
- 	if (rc == PCIBIOS_SUCCESSFUL) {
-+		ipr_set_affinity_nobalance(ioa_cfg, true);
- 		ipr_cmd->job_step = ipr_reset_bist_done;
- 		ipr_reset_start_timer(ipr_cmd, IPR_WAIT_FOR_BIST_TIMEOUT);
- 		rc = IPR_RC_JOB_RETURN;
+-	/* hba device might have a runtime error otherwise */
+-	if (ret)
+-		ret = pm_runtime_set_active(hba->dev);
+ 	/*
+ 	 * If wlun device had runtime error, we also need to resume those
+ 	 * consumer scsi devices in case any of them has failed to be
+ 	 * resumed due to supplier runtime resume failure. This is to unblock
+ 	 * blk_queue_enter in case there are bios waiting inside it.
+ 	 */
+-	if (!ret) {
++	if (resume_sdev_queues) {
+ 		shost_for_each_device(sdev, shost) {
+ 			q = sdev->request_queue;
+ 			if (q->dev && (q->rpm_status == RPM_SUSPENDED ||
 -- 
 2.51.0
 
