@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004DE2C029F;
-	Thu, 15 Jan 2026 17:47:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F77B3BF314;
+	Thu, 15 Jan 2026 17:47:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499249; cv=none; b=icSjQmkYN+XVvIhW6OuACkoxyxCUSox90vOwkWmo0no2D6BweWhWwfxzv2dEqApzvC5vNS8qKJOAw4yupKGMnIFJW5nkIDWRHOSMBUh8bpoRKvITPlCVvmMXIgaRmoM556sKWdTL7g44iLGSLiQ4A7YvaihwqizKLQevZfhJRWg=
+	t=1768499251; cv=none; b=TIowyn5KX0hpIieMYkrfpQ9aogxFEcnuse4IeySleQ5kM+dDsVB+PMuWdWjS4I7nqwxdBLoxM5vRPeIv9e2o5c8iMrcxUSAHMephQERPwWqLBYSRU9ISlvVD90FRDBpJ7HdjgAVJ08q76qG//ALfiwrvCQYBJIvO74/u255pLI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499249; c=relaxed/simple;
-	bh=wlRipzAQLJNL/CnBpMJqFU5LjrtXPR01GtCzoauwsYA=;
+	s=arc-20240116; t=1768499251; c=relaxed/simple;
+	bh=aOdQBCqoZNWlnSgJJdE/wqKzn6CNw3gfpvSWfcBULrs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MxMkhXFbDpN2BOzXeaezXGhKL7bNmptyqsYKpkbOd87lpPBpqx+rRm9b5AJDFxAEndin5IuW7ke4HItF3DLOZIZMZGV9HC0VX6i/Q6bZN9j78BMoBQpxzeVpPNXw0uzH04DeLZ4AePBMoxH0y4Qg06FbxcpNCgJo/EBm35pHk4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lx1FFB3/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=plA7nCyyx3xKaaHVfkGolkbsZSp+M9ImGbLDexxyjnhIUFeRhzMD1aOwYmDxbW7ghiziqeJc176UV+Qe0oyLByJ0ofcrZokl2vD98iS8eLoCegaNFfAH//7LpJfJYS4NoreBuIAUcBsMMzRRpxbTG7M/g81PHaP/St9cRakrg2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HjVamnvA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lx1FFB3/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F39CC116D0;
-	Thu, 15 Jan 2026 17:47:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HjVamnvA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CB3AC116D0;
+	Thu, 15 Jan 2026 17:47:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499248;
-	bh=wlRipzAQLJNL/CnBpMJqFU5LjrtXPR01GtCzoauwsYA=;
+	s=korg; t=1768499251;
+	bh=aOdQBCqoZNWlnSgJJdE/wqKzn6CNw3gfpvSWfcBULrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lx1FFB3/kEZJu324kqbcea5tBKJJcj+KIoliJOCArYZ2vx1YkigDtNHDUsKpY0yGG
-	 fk2MciBKTQCw6BntbamYtaqeoshBcRCzStIZGkaNHBCWfbOYxIDap/1an8eTUXu8M5
-	 KyU20twAD8+iLTETwgQO/NGXiAFFLH+v/ZaRMpoA=
+	b=HjVamnvAgzG+aN+E2/1MKSXlzJzjv/69mefFui/9UckknwFtbrPcf5bDL6LF9N1oj
+	 sFoOT2F6B/rFz4KiQT8IVjACeAVlTKvWxcQXnJ0BTbtq9F9v1ePzh5RSWJNEo7xgFt
+	 IojzYQyY1+PDTF99fVRssnchg4iz6Gl3kgmkhTjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Li Lingfeng <lilingfeng3@huawei.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 127/451] Revert "nfs: ignore SB_RDONLY when remounting nfs"
-Date: Thu, 15 Jan 2026 17:45:28 +0100
-Message-ID: <20260115164235.516047873@linuxfoundation.org>
+Subject: [PATCH 5.10 128/451] Revert "nfs: clear SB_RDONLY before getting superblock"
+Date: Thu, 15 Jan 2026 17:45:29 +0100
+Message-ID: <20260115164235.551849340@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -54,43 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 400fa37afbb11a601c204b72af0f0e5bc2db695c ]
+[ Upstream commit d216b698d44e33417ad4cc796cb04ccddbb8c0ee ]
 
-This reverts commit 80c4de6ab44c14e910117a02f2f8241ffc6ec54a.
+This reverts commit 8cd9b785943c57a136536250da80ba1eb6f8eb18.
 
 Silently ignoring the "ro" and "rw" mount options causes user confusion,
 and regressions.
 
 Reported-by: Alkis Georgopoulos<alkisg@gmail.com>
 Cc: Li Lingfeng <lilingfeng3@huawei.com>
-Fixes: 80c4de6ab44c ("nfs: ignore SB_RDONLY when remounting nfs")
+Fixes: 8cd9b785943c ("nfs: clear SB_RDONLY before getting superblock")
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/super.c | 10 ----------
- 1 file changed, 10 deletions(-)
+ fs/nfs/super.c | 9 ---------
+ 1 file changed, 9 deletions(-)
 
 diff --git a/fs/nfs/super.c b/fs/nfs/super.c
-index 7c58a1688f7f7..27923c2b36f77 100644
+index 27923c2b36f77..2d2238548a6e5 100644
 --- a/fs/nfs/super.c
 +++ b/fs/nfs/super.c
-@@ -1000,16 +1000,6 @@ int nfs_reconfigure(struct fs_context *fc)
- 
- 	sync_filesystem(sb);
+@@ -1248,17 +1248,8 @@ int nfs_get_tree_common(struct fs_context *fc)
+ 	if (IS_ERR(server))
+ 		return PTR_ERR(server);
  
 -	/*
--	 * The SB_RDONLY flag has been removed from the superblock during
--	 * mounts to prevent interference between different filesystems.
--	 * Similarly, it is also necessary to ignore the SB_RDONLY flag
--	 * during reconfiguration; otherwise, it may also result in the
--	 * creation of redundant superblocks when mounting a directory with
--	 * different rw and ro flags multiple times.
+-	 * When NFS_MOUNT_UNSHARED is not set, NFS forces the sharing of a
+-	 * superblock among each filesystem that mounts sub-directories
+-	 * belonging to a single exported root path.
+-	 * To prevent interference between different filesystems, the
+-	 * SB_RDONLY flag should be removed from the superblock.
 -	 */
--	fc->sb_flags_mask &= ~SB_RDONLY;
--
- 	/*
- 	 * Userspace mount programs that send binary options generally send
- 	 * them populated with default values. We have no way to know which
+ 	if (server->flags & NFS_MOUNT_UNSHARED)
+ 		compare_super = NULL;
+-	else
+-		fc->sb_flags &= ~SB_RDONLY;
+ 
+ 	/* -o noac implies -o sync */
+ 	if (server->flags & NFS_MOUNT_NOAC)
 -- 
 2.51.0
 
