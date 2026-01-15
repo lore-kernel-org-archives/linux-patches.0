@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F378B3BF2E7;
-	Thu, 15 Jan 2026 17:16:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E80153BC4F2;
+	Thu, 15 Jan 2026 17:16:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497396; cv=none; b=t53TcUPBmWWuQlF88mb9Y3+w4rV9AU/+CdUi3nyX++ba2Ym6/cdR8fxV9E/qvVTJT6ElyeIj8YqCbbkqAyblbHjRZwl6jioSUzTC7m8xrwhueIp43zkiKKGQbqgXRrQ6t9E/gSTzh1qnYL8ABIN9RljfLZjhyN/dJdXRrLUI80Y=
+	t=1768497399; cv=none; b=La3a/h5g7zjn2OO5ssgU0kNqb82N1eWqYMtP1Yp6OEqw7W+3CMLX5cjlQZ8hYpckkRWvC6DPI5dE6fwWxI2oZtZEC50saHxYNyrVxD0QVFh3I4Bc/PBDMlnIQsxDkIA9am0zOnWIDxbFD9SF7HrKpbkXcO2IfBO4Jgylr1Tc8+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497396; c=relaxed/simple;
-	bh=rYVNV89rejfKw+MNnU1YIBXoScoL+C/g/CugO7AhfVU=;
+	s=arc-20240116; t=1768497399; c=relaxed/simple;
+	bh=Ce3/7tilmOaGB17pcXEu9G2Czo6i28AD00r4F9npUZ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=up2a8LQeYmPPPfZydgU40sRwzbD1fxQgz+NDPxQtXMkt6kUP/x42mbL/jMokSbSOStr7nKO8SMWbzWe/kGlWM55NTCdefwU/cRyPdcAy6buE21nxdfBvko+fKuO+HSkbSvOs+1/OfcnA74K2tUlWA09C5GO0rlGjf6Oav6QC9Mk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZWMjfCsr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jPnDh/OPdZOqCNjDA5iq3J0P0kNy7eBq5ovw7XDkMLoxgAjbYF19uZzyanXc8vsXUZ4hwlpyC2KZO4iH32WKslYZ24CjoVuSsT29gqHXOlRsDVPnKtkk2M6RyfsVYw9cjCGgSYYmYt2l6gcHUjKT7ZLTN5dPtP9ES8z/VgJVtbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cn9ckpCi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZWMjfCsr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E038C19422;
-	Thu, 15 Jan 2026 17:16:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cn9ckpCi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70F59C116D0;
+	Thu, 15 Jan 2026 17:16:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497395;
-	bh=rYVNV89rejfKw+MNnU1YIBXoScoL+C/g/CugO7AhfVU=;
+	s=korg; t=1768497398;
+	bh=Ce3/7tilmOaGB17pcXEu9G2Czo6i28AD00r4F9npUZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZWMjfCsrt4R231dzo3lujV0DKVB9Iso9VI6GG/m2v5gDFxG6U1klEKMpciHRdN/r/
-	 cjCa+Rqh/YK3X3GI/BdY7rIWRyGtw6Q8Oo3RkRcF9BaE6c3dQpHJei0QR7v8TfYRmt
-	 +45YxpwDMgro6flN/fRYPjuum9G0i1qLxpla6wVE=
+	b=Cn9ckpCiFqik3Gjr11Zc/Cp+QAd9zVH4MxHoLt2wqiBu6Drt0qmGbepq33vcIBW3H
+	 5hpw9axBF0u11D7FWqjo4KBmsmHS6IHpcOufoZJpIC0HZcbQexxVZA5zhHC+tHEpji
+	 3uf//DXOCHUTRIl4mioki+CNDznX3nu7WiXSYraA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Navaneeth K <knavaneeth786@gmail.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.15 033/554] staging: rtl8723bs: fix stack buffer overflow in OnAssocReq IE parsing
-Date: Thu, 15 Jan 2026 17:41:39 +0100
-Message-ID: <20260115164247.438346903@linuxfoundation.org>
+	syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Tigran Aivazian <aivazian.tigran@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 024/554] bfs: Reconstruct file type when loading from disk
+Date: Thu, 15 Jan 2026 17:41:30 +0100
+Message-ID: <20260115164247.115490580@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -50,49 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Navaneeth K <knavaneeth786@gmail.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-commit 6ef0e1c10455927867cac8f0ed6b49f328f8cf95 upstream.
+[ Upstream commit 34ab4c75588c07cca12884f2bf6b0347c7a13872 ]
 
-The Supported Rates IE length from an incoming Association Request frame
-was used directly as the memcpy() length when copying into a fixed-size
-16-byte stack buffer (supportRate). A malicious station can advertise an
-IE length larger than 16 bytes, causing a stack buffer overflow.
+syzbot is reporting that S_IFMT bits of inode->i_mode can become bogus when
+the S_IFMT bits of the 32bits "mode" field loaded from disk are corrupted
+or when the 32bits "attributes" field loaded from disk are corrupted.
 
-Clamp ie_len to the buffer size before copying the Supported Rates IE,
-and correct the bounds check when merging Extended Supported Rates to
-prevent a second potential overflow.
+A documentation says that BFS uses only lower 9 bits of the "mode" field.
+But I can't find an explicit explanation that the unused upper 23 bits
+(especially, the S_IFMT bits) are initialized with 0.
 
-This prevents kernel stack corruption triggered by malformed association
-requests.
+Therefore, ignore the S_IFMT bits of the "mode" field loaded from disk.
+Also, verify that the value of the "attributes" field loaded from disk is
+either BFS_VREG or BFS_VDIR (because BFS supports only regular files and
+the root directory).
 
-Signed-off-by: Navaneeth K <knavaneeth786@gmail.com>
-Cc: stable <stable@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=895c23f6917da440ed0d
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Link: https://patch.msgid.link/fabce673-d5b9-4038-8287-0fd65d80203b@I-love.SAKURA.ne.jp
+Reviewed-by: Tigran Aivazian <aivazian.tigran@gmail.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_mlme_ext.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/bfs/inode.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
---- a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-@@ -1042,6 +1042,9 @@ unsigned int OnAssocReq(struct adapter *
- 		status = WLAN_STATUS_CHALLENGE_FAIL;
- 		goto OnAssocReqFail;
- 	} else {
-+		if (ie_len > sizeof(supportRate))
-+			ie_len = sizeof(supportRate);
-+
- 		memcpy(supportRate, p+2, ie_len);
- 		supportRateNum = ie_len;
+diff --git a/fs/bfs/inode.c b/fs/bfs/inode.c
+index fd691e4815c56..fa4e002925852 100644
+--- a/fs/bfs/inode.c
++++ b/fs/bfs/inode.c
+@@ -60,7 +60,19 @@ struct inode *bfs_iget(struct super_block *sb, unsigned long ino)
+ 	off = (ino - BFS_ROOT_INO) % BFS_INODES_PER_BLOCK;
+ 	di = (struct bfs_inode *)bh->b_data + off;
  
-@@ -1049,7 +1052,7 @@ unsigned int OnAssocReq(struct adapter *
- 				pkt_len - WLAN_HDR_A3_LEN - ie_offset);
- 		if (p) {
+-	inode->i_mode = 0x0000FFFF & le32_to_cpu(di->i_mode);
++	/*
++	 * https://martin.hinner.info/fs/bfs/bfs-structure.html explains that
++	 * BFS in SCO UnixWare environment used only lower 9 bits of di->i_mode
++	 * value. This means that, although bfs_write_inode() saves whole
++	 * inode->i_mode bits (which include S_IFMT bits and S_IS{UID,GID,VTX}
++	 * bits), middle 7 bits of di->i_mode value can be garbage when these
++	 * bits were not saved by bfs_write_inode().
++	 * Since we can't tell whether middle 7 bits are garbage, use only
++	 * lower 12 bits (i.e. tolerate S_IS{UID,GID,VTX} bits possibly being
++	 * garbage) and reconstruct S_IFMT bits for Linux environment from
++	 * di->i_vtype value.
++	 */
++	inode->i_mode = 0x00000FFF & le32_to_cpu(di->i_mode);
+ 	if (le32_to_cpu(di->i_vtype) == BFS_VDIR) {
+ 		inode->i_mode |= S_IFDIR;
+ 		inode->i_op = &bfs_dir_inops;
+@@ -70,6 +82,11 @@ struct inode *bfs_iget(struct super_block *sb, unsigned long ino)
+ 		inode->i_op = &bfs_file_inops;
+ 		inode->i_fop = &bfs_file_operations;
+ 		inode->i_mapping->a_ops = &bfs_aops;
++	} else {
++		brelse(bh);
++		printf("Unknown vtype=%u %s:%08lx\n",
++		       le32_to_cpu(di->i_vtype), inode->i_sb->s_id, ino);
++		goto error;
+ 	}
  
--			if (supportRateNum <= sizeof(supportRate)) {
-+			if (supportRateNum + ie_len <= sizeof(supportRate)) {
- 				memcpy(supportRate+supportRateNum, p+2, ie_len);
- 				supportRateNum += ie_len;
- 			}
+ 	BFS_I(inode)->i_sblock =  le32_to_cpu(di->i_sblock);
+-- 
+2.51.0
+
 
 
