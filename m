@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072AF3624C4;
-	Thu, 15 Jan 2026 17:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50F32D9488;
+	Thu, 15 Jan 2026 17:42:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498953; cv=none; b=nZlo0RkizGrrnuY4zwUadCqIBvAOqx7nEkqyN0jxl8t54KQsH2GfJJXi1M6krTr3H5/4WRH9b3UyNLlu1HcHfyaR5dzFuIZ4K+g4LbHP6t/xBz5K5JsO9oTLRlC9qbazC0uPMIoboL60EgrfhSIu8jlGSg/On61Olxm5jFugnCk=
+	t=1768498955; cv=none; b=W95G1D6v5mRL1oUYKiwgvV9yQET2B84QlG+TCtt04+I/rytb+kf123hqQJQqAOjs1BkwZTjlSRfS0TQHJQhxwX5S0TqV3HC9D5KEQR4RuIxxW3zaT1X8NEJ9z6j/wLXlPrfjHaIIsgdhwq/OxbyXpXiE5sUZHz50kTGRUDMg/yA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498953; c=relaxed/simple;
-	bh=rbANHboZuPhB95wz4Ec23JL2yuxrlwffwMVZ3FLUi8g=;
+	s=arc-20240116; t=1768498955; c=relaxed/simple;
+	bh=AV1M0K+WNRtEplGWKJjthm9rWJKi/OoADTljZuJcnEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vBt4PRpu4Bg5W35It+hQ0aUb6VFHHD7gX0hrxroUV0Bl6R6Yklw80hPtqRyQC6DgUMg9oRodmrZZVkBAbnlNvFaZ0da76eRXo7utQbAVrWXPsYJEU2IEs7xAe8M2q+5yT2glb+60A83hcjuNwQZe9AozznrLPX4QGni0g6jwu3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MMGrVPIL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u0d3psKm3AR1CKpoWbfj/WfTPv7kWWnCvQ74O7fbAkiz0BXSRHvxNhrduA+GxngHUNVowfQzg+AXFlwE7V4CBTVDVrMNAOuAYTPtx7I+MEv751fhogPAfot633+7RBBR+tIH8tKeTWKV2axPqmjOY8GPesdP0XKhjwCeWbZnrts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A3bg/V3+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MMGrVPIL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 832BFC116D0;
-	Thu, 15 Jan 2026 17:42:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A3bg/V3+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44323C116D0;
+	Thu, 15 Jan 2026 17:42:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498952;
-	bh=rbANHboZuPhB95wz4Ec23JL2yuxrlwffwMVZ3FLUi8g=;
+	s=korg; t=1768498955;
+	bh=AV1M0K+WNRtEplGWKJjthm9rWJKi/OoADTljZuJcnEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MMGrVPILSEuYDgiu8EhEqb9sdAX0C92PAmzcY/Eh4WniOpm8tYGgnm5knEZLfwnsO
-	 3ihp4kP/NBVK1bSkroNyS0gxZyAbCnpKxJOdyHHsJsSVUqfgr4HRyGzHhBUj1GrYIa
-	 JwjduQOmzLuD5yrmsEIWcsYCb+0+UyUQLqYe9jZI=
+	b=A3bg/V3+ke+2z0DW1HyTzoUCQZpxG/1yf5AsWY43OePCyHEQNp5OaPy7GaXzNoxri
+	 CcTRb5sbTpr4yC7M/iGH25pQgo9xqL/9+qxPkkOUA0SOv2l4BXt908INHgSiicmVY5
+	 EKkA7ip6CZ8y/MBsPPy319ZtzxS3BvdStTKmeSD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6616bba359cec7a1def1@syzkaller.appspotmail.com,
+	syzbot+7811bb68a317954a0347@syzkaller.appspotmail.com,
 	stable <stable@kernel.org>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
 	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 5.10 024/451] comedi: c6xdigio: Fix invalid PNP driver unregistration
-Date: Thu, 15 Jan 2026 17:43:45 +0100
-Message-ID: <20260115164231.765913976@linuxfoundation.org>
+Subject: [PATCH 5.10 025/451] comedi: multiq3: sanitize config options in multiq3_attach()
+Date: Thu, 15 Jan 2026 17:43:46 +0100
+Message-ID: <20260115164231.802160560@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -51,166 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-commit 72262330f7b3ad2130e800cecf02adcce3c32c77 upstream.
+commit f24c6e3a39fa355dabfb684c9ca82db579534e72 upstream.
 
-The Comedi low-level driver "c6xdigio" seems to be for a parallel port
-connected device.  When the Comedi core calls the driver's Comedi
-"attach" handler `c6xdigio_attach()` to configure a Comedi to use this
-driver, it tries to enable the parallel port PNP resources by
-registering a PNP driver with `pnp_register_driver()`, but ignores the
-return value.  (The `struct pnp_driver` it uses has only the `name` and
-`id_table` members filled in.)  The driver's Comedi "detach" handler
-`c6xdigio_detach()` unconditionally unregisters the PNP driver with
-`pnp_unregister_driver()`.
+Syzbot identified an issue [1] in multiq3_attach() that induces a
+task timeout due to open() or COMEDI_DEVCONFIG ioctl operations,
+specifically, in the case of multiq3 driver.
 
-It is possible for `c6xdigio_attach()` to return an error before it
-calls `pnp_register_driver()` and it is possible for the call to
-`pnp_register_driver()` to return an error (that is ignored).  In both
-cases, the driver should not be calling `pnp_unregister_driver()` as it
-does in `c6xdigio_detach()`.  (Note that `c6xdigio_detach()` will be
-called by the Comedi core if `c6xdigio_attach()` returns an error, or if
-the Comedi core decides to detach the Comedi device from the driver for
-some other reason.)
+This problem arose when syzkaller managed to craft weird configuration
+options used to specify the number of channels in encoder subdevice.
+If a particularly great number is passed to s->n_chan in
+multiq3_attach() via it->options[2], then multiple calls to
+multiq3_encoder_reset() at the end of driver-specific attach() method
+will be running for minutes, thus blocking tasks and affected devices
+as well.
 
-The unconditional call to `pnp_unregister_driver()` without a previous
-successful call to `pnp_register_driver()` will cause
-`driver_unregister()` to issue a warning "Unexpected driver
-unregister!".  This was detected by Syzbot [1].
+While this issue is most likely not too dangerous for real-life
+devices, it still makes sense to sanitize configuration inputs. Enable
+a sensible limit on the number of encoder chips (4 chips max, each
+with 2 channels) to stop this behaviour from manifesting.
 
-Also, the PNP driver registration and unregistration should be done at
-module init and exit time, respectively, not when attaching or detaching
-Comedi devices to the driver.  (There might be more than one Comedi
-device being attached to the driver, although that is unlikely.)
-
-Change the driver to do the PNP driver registration at module init time,
-and the unregistration at module exit time.  Since `c6xdigio_detach()`
-now only calls `comedi_legacy_detach()`, remove the function and change
-the Comedi driver "detach" handler to `comedi_legacy_detach`.
-
--------------------------------------------
-[1] Syzbot sample crash report:
-Unexpected driver unregister!
-WARNING: CPU: 0 PID: 5970 at drivers/base/driver.c:273 driver_unregister drivers/base/driver.c:273 [inline]
-WARNING: CPU: 0 PID: 5970 at drivers/base/driver.c:273 driver_unregister+0x90/0xb0 drivers/base/driver.c:270
-Modules linked in:
-CPU: 0 UID: 0 PID: 5970 Comm: syz.0.17 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/02/2025
-RIP: 0010:driver_unregister drivers/base/driver.c:273 [inline]
-RIP: 0010:driver_unregister+0x90/0xb0 drivers/base/driver.c:270
-Code: 48 89 ef e8 c2 e6 82 fc 48 89 df e8 3a 93 ff ff 5b 5d e9 c3 6d d9 fb e8 be 6d d9 fb 90 48 c7 c7 e0 f8 1f 8c e8 51 a2 97 fb 90 <0f> 0b 90 90 5b 5d e9 a5 6d d9 fb e8 e0 f4 41 fc eb 94 e8 d9 f4 41
-RSP: 0018:ffffc9000373f9a0 EFLAGS: 00010282
-RAX: 0000000000000000 RBX: ffffffff8ff24720 RCX: ffffffff817b6ee8
-RDX: ffff88807c932480 RSI: ffffffff817b6ef5 RDI: 0000000000000001
-RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000000000001 R11: 0000000000000001 R12: ffffffff8ff24660
-R13: dffffc0000000000 R14: 0000000000000000 R15: ffff88814cca0000
-FS:  000055556dab1500(0000) GS:ffff8881249d9000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000055f77f285cd0 CR3: 000000007d871000 CR4: 00000000003526f0
+[1] Syzbot crash:
+INFO: task syz.2.19:6067 blocked for more than 143 seconds.
+...
 Call Trace:
  <TASK>
- comedi_device_detach_locked+0x12f/0xa50 drivers/comedi/drivers.c:207
- comedi_device_detach+0x67/0xb0 drivers/comedi/drivers.c:215
- comedi_device_attach+0x43d/0x900 drivers/comedi/drivers.c:1011
- do_devconfig_ioctl+0x1b1/0x710 drivers/comedi/comedi_fops.c:872
- comedi_unlocked_ioctl+0x165d/0x2f00 drivers/comedi/comedi_fops.c:2178
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:597 [inline]
- __se_sys_ioctl fs/ioctl.c:583 [inline]
- __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:583
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xcd/0xfa0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fc05798eec9
-Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007ffcf8184238 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-RAX: ffffffffffffffda RBX: 00007fc057be5fa0 RCX: 00007fc05798eec9
-RDX: 0000200000000080 RSI: 0000000040946400 RDI: 0000000000000003
-RBP: 00007fc057a11f91 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007fc057be5fa0 R14: 00007fc057be5fa0 R15: 0000000000000003
- </TASK>
--------------------------------------------
+ context_switch kernel/sched/core.c:5254 [inline]
+ __schedule+0x17c4/0x4d60 kernel/sched/core.c:6862
+ __schedule_loop kernel/sched/core.c:6944 [inline]
+ schedule+0x165/0x360 kernel/sched/core.c:6959
+ schedule_preempt_disabled+0x13/0x30 kernel/sched/core.c:7016
+ __mutex_lock_common kernel/locking/mutex.c:676 [inline]
+ __mutex_lock+0x7e6/0x1350 kernel/locking/mutex.c:760
+ comedi_open+0xc0/0x590 drivers/comedi/comedi_fops.c:2868
+ chrdev_open+0x4cc/0x5e0 fs/char_dev.c:414
+ do_dentry_open+0x953/0x13f0 fs/open.c:965
+ vfs_open+0x3b/0x340 fs/open.c:1097
+...
 
-Reported-by: syzbot+6616bba359cec7a1def1@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6616bba359cec7a1def1
-Fixes: 2c89e159cd2f ("Staging: comedi: add c6xdigio driver")
+Reported-by: syzbot+7811bb68a317954a0347@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=7811bb68a317954a0347
+Fixes: 77e01cdbad51 ("Staging: comedi: add multiq3 driver")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20251023123141.6537-1-abbotti@mev.co.uk
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Reviewed-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://patch.msgid.link/20251023132205.395753-1-n.zhandarovich@fintech.ru
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/comedi/drivers/c6xdigio.c |   46 ++++++++++++++++++++++--------
- 1 file changed, 35 insertions(+), 11 deletions(-)
+ drivers/staging/comedi/drivers/multiq3.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/staging/comedi/drivers/c6xdigio.c
-+++ b/drivers/staging/comedi/drivers/c6xdigio.c
-@@ -250,9 +250,6 @@ static int c6xdigio_attach(struct comedi
- 	if (ret)
- 		return ret;
+--- a/drivers/staging/comedi/drivers/multiq3.c
++++ b/drivers/staging/comedi/drivers/multiq3.c
+@@ -68,6 +68,11 @@
+ #define MULTIQ3_TRSFRCNTR_OL		0x10	/* xfer CNTR to OL (x and y) */
+ #define MULTIQ3_EFLAG_RESET		0x06	/* reset E bit of flag reg */
  
--	/*  Make sure that PnP ports get activated */
--	pnp_register_driver(&c6xdigio_pnp_driver);
--
- 	s = &dev->subdevices[0];
- 	/* pwm output subdevice */
- 	s->type		= COMEDI_SUBD_PWM;
-@@ -279,19 +276,46 @@ static int c6xdigio_attach(struct comedi
- 	return 0;
- }
++/*
++ * Limit on the number of optional encoder channels
++ */
++#define MULTIQ3_MAX_ENC_CHANS		8
++
+ static void multiq3_set_ctrl(struct comedi_device *dev, unsigned int bits)
+ {
+ 	/*
+@@ -313,6 +318,10 @@ static int multiq3_attach(struct comedi_
+ 	s->insn_read	= multiq3_encoder_insn_read;
+ 	s->insn_config	= multiq3_encoder_insn_config;
  
--static void c6xdigio_detach(struct comedi_device *dev)
--{
--	comedi_legacy_detach(dev);
--	pnp_unregister_driver(&c6xdigio_pnp_driver);
--}
--
- static struct comedi_driver c6xdigio_driver = {
- 	.driver_name	= "c6xdigio",
- 	.module		= THIS_MODULE,
- 	.attach		= c6xdigio_attach,
--	.detach		= c6xdigio_detach,
-+	.detach		= comedi_legacy_detach,
- };
--module_comedi_driver(c6xdigio_driver);
++	/* sanity check for number of encoder channels */
++	if (s->n_chan > MULTIQ3_MAX_ENC_CHANS)
++		s->n_chan = MULTIQ3_MAX_ENC_CHANS;
 +
-+static bool c6xdigio_pnp_registered = false;
-+
-+static int __init c6xdigio_module_init(void)
-+{
-+	int ret;
-+
-+	ret = comedi_driver_register(&c6xdigio_driver);
-+	if (ret)
-+		return ret;
-+
-+	if (IS_ENABLED(CONFIG_PNP)) {
-+		/*  Try to activate the PnP ports */
-+		ret = pnp_register_driver(&c6xdigio_pnp_driver);
-+		if (ret) {
-+			pr_warn("failed to register pnp driver - err %d\n",
-+				ret);
-+			ret = 0;	/* ignore the error. */
-+		} else {
-+			c6xdigio_pnp_registered = true;
-+		}
-+	}
-+
-+	return 0;
-+}
-+module_init(c6xdigio_module_init);
-+
-+static void __exit c6xdigio_module_exit(void)
-+{
-+	if (c6xdigio_pnp_registered)
-+		pnp_unregister_driver(&c6xdigio_pnp_driver);
-+	comedi_driver_unregister(&c6xdigio_driver);
-+}
-+module_exit(c6xdigio_module_exit);
+ 	for (i = 0; i < s->n_chan; i++)
+ 		multiq3_encoder_reset(dev, i);
  
- MODULE_AUTHOR("Comedi https://www.comedi.org");
- MODULE_DESCRIPTION("Comedi driver for the C6x_DIGIO DSP daughter card");
 
 
