@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC762F619D;
-	Thu, 15 Jan 2026 17:09:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7053E2D3733;
+	Thu, 15 Jan 2026 17:09:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496986; cv=none; b=W0laqvg3DWIb9/gkeoEXkbG3DVPDVMQVlWu4TIZoyBIwKpFuNCNOz9GoaQ8GZFpcLciYoHotaAMxRm/HGnUiHfT83YD0FLV3ZvzFRpeRmNF5RwJjhPYdyMbrmPq1VuaLKgLIive3Jr1DnSLxJDasSzl/+M9JtUkcLLKmzutd5os=
+	t=1768496989; cv=none; b=n2bTcHBswgqgvUPbbu9U3cLg643m0wdk36KJBvMw2Xkx5GZCWhCN5+dEwHOcQa6f5Pva1y4sSL0+AlrdfPieDpeKx4Ad3I7eHMvEblDf7RLbWnbb91A8yPEQAsR27Y7IJ9QIzKteI8laRCmMiedCTcri3TNTZW6hcGFJ+PPI0wM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496986; c=relaxed/simple;
-	bh=pf7yvksPOpTdITZMqNrqlTk3+j6o+PMDYeI4goDdNJM=;
+	s=arc-20240116; t=1768496989; c=relaxed/simple;
+	bh=Y8htGl0oGdkdNjjSKOYcSpPWdZMSGHTWfBSMhkCOwJs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CpBcSjp87Nsh3tnqQgzZqhItw5IJit8t+1trmWZsLIOAy0rhtrLtJKxpPaqDpeOkiPkZltxeDL6vxUnLCoy0agHeIPv/c8rqVmS7KxEd/H9ke/GpwKxRLK3Ti8/wpTqoNVOk3QP7zkZ1hVFNaxrzNSWh78nKbD3U4hL3OYWcroI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ggN9NmaY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=icS8xDVZrekoBpKu1ujOxVelSWo0VeCQkjy2KT7rRqUrmh+AqqC9HJ7eFtwkHACOH+6RoB6SrcPwzl+9hhWe2fCwPZvtX8gceZxqLf2lMFwdkwFKe0XfbEsMu37LuVtmW1+FIUmRmiCuy5uBOdKXqNS5ts3qUSUxjrqcq6RrQ/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h84CQtCr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ggN9NmaY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C424C116D0;
-	Thu, 15 Jan 2026 17:09:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h84CQtCr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0589C116D0;
+	Thu, 15 Jan 2026 17:09:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496986;
-	bh=pf7yvksPOpTdITZMqNrqlTk3+j6o+PMDYeI4goDdNJM=;
+	s=korg; t=1768496989;
+	bh=Y8htGl0oGdkdNjjSKOYcSpPWdZMSGHTWfBSMhkCOwJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ggN9NmaYBjfqv5qCAlZS+Q8wZwOGQqP7XeKQFub1E5pJWrM3hZmXrsZTtDPpxCJwj
-	 2dpWgwxNRZaj//PKwwLPeBSuuEoNtj1CY42mEUzynRq1AW5CXrQaPEd8uV1tEeBTv4
-	 8AmJwZv93Srj3LipjIkOVxNe6Ijq7c6szjjVxgko=
+	b=h84CQtCrmV+CFpT6BgiX8sSqxkQOtY81u6eVSuPH6CkDRomLwuilcE4xbK1HVcuvz
+	 O5uHwYsp0YHdYfu6nDAU1sYYWzrox86ovWv3JFHAXbvWH3UCZUb5B9fwwSQQhMVgxb
+	 P/bpu2cQ1D5aK/UwKE6H9njes+Id3aCtiqRJeXX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Michal=20R=C3=A1bek?= <mrabek@redhat.com>,
-	Tomas Henzl <thenzl@redhat.com>,
-	Changhui Zhong <czhong@redhat.com>,
-	"Ewan D. Milne" <emilne@redhat.com>,
-	John Meneghini <jmeneghi@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 86/88] scsi: sg: Fix occasional bogus elapsed time that exceeds timeout
-Date: Thu, 15 Jan 2026 17:49:09 +0100
-Message-ID: <20260115164149.429167773@linuxfoundation.org>
+	Shardul Bankar <shardulsb08@gmail.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>
+Subject: [PATCH 6.6 87/88] bpf: test_run: Fix ctx leak in bpf_prog_test_run_xdp error path
+Date: Thu, 15 Jan 2026 17:49:10 +0100
+Message-ID: <20260115164149.464437793@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164146.312481509@linuxfoundation.org>
 References: <20260115164146.312481509@linuxfoundation.org>
@@ -49,156 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Rábek <mrabek@redhat.com>
+From: Shardul Bankar <shardulsb08@gmail.com>
 
-[ Upstream commit 0e1677654259a2f3ccf728de1edde922a3c4ba57 ]
+commit 7f9ee5fc97e14682e36fe22ae2654c07e4998b82 upstream.
 
-A race condition was found in sg_proc_debug_helper(). It was observed on
-a system using an IBM LTO-9 SAS Tape Drive (ULTRIUM-TD9) and monitoring
-/proc/scsi/sg/debug every second. A very large elapsed time would
-sometimes appear. This is caused by two race conditions.
+Fix a memory leak in bpf_prog_test_run_xdp() where the context buffer
+allocated by bpf_ctx_init() is not freed when the function returns early
+due to a data size check.
 
-We reproduced the issue with an IBM ULTRIUM-HH9 tape drive on an x86_64
-architecture. A patched kernel was built, and the race condition could
-not be observed anymore after the application of this patch. A
-reproducer C program utilising the scsi_debug module was also built by
-Changhui Zhong and can be viewed here:
+On the failing path:
+  ctx = bpf_ctx_init(...);
+  if (kattr->test.data_size_in - meta_sz < ETH_HLEN)
+      return -EINVAL;
 
-https://github.com/MichaelRabek/linux-tests/blob/master/drivers/scsi/sg/sg_race_trigger.c
+The early return bypasses the cleanup label that kfree()s ctx, leading to a
+leak detectable by kmemleak under fuzzing. Change the return to jump to the
+existing free_ctx label.
 
-The first race happens between the reading of hp->duration in
-sg_proc_debug_helper() and request completion in sg_rq_end_io().  The
-hp->duration member variable may hold either of two types of
-information:
-
- #1 - The start time of the request. This value is present while
-      the request is not yet finished.
-
- #2 - The total execution time of the request (end_time - start_time).
-
-If sg_proc_debug_helper() executes *after* the value of hp->duration was
-changed from #1 to #2, but *before* srp->done is set to 1 in
-sg_rq_end_io(), a fresh timestamp is taken in the else branch, and the
-elapsed time (value type #2) is subtracted from a timestamp, which
-cannot yield a valid elapsed time (which is a type #2 value as well).
-
-To fix this issue, the value of hp->duration must change under the
-protection of the sfp->rq_list_lock in sg_rq_end_io().  Since
-sg_proc_debug_helper() takes this read lock, the change to srp->done and
-srp->header.duration will happen atomically from the perspective of
-sg_proc_debug_helper() and the race condition is thus eliminated.
-
-The second race condition happens between sg_proc_debug_helper() and
-sg_new_write(). Even though hp->duration is set to the current time
-stamp in sg_add_request() under the write lock's protection, it gets
-overwritten by a call to get_sg_io_hdr(), which calls copy_from_user()
-to copy struct sg_io_hdr from userspace into kernel space. hp->duration
-is set to the start time again in sg_common_write(). If
-sg_proc_debug_helper() is called between these two calls, an arbitrary
-value set by userspace (usually zero) is used to compute the elapsed
-time.
-
-To fix this issue, hp->duration must be set to the current timestamp
-again after get_sg_io_hdr() returns successfully. A small race window
-still exists between get_sg_io_hdr() and setting hp->duration, but this
-window is only a few instructions wide and does not result in observable
-issues in practice, as confirmed by testing.
-
-Additionally, we fix the format specifier from %d to %u for printing
-unsigned int values in sg_proc_debug_helper().
-
-Signed-off-by: Michal Rábek <mrabek@redhat.com>
-Suggested-by: Tomas Henzl <thenzl@redhat.com>
-Tested-by: Changhui Zhong <czhong@redhat.com>
-Reviewed-by: Ewan D. Milne <emilne@redhat.com>
-Reviewed-by: John Meneghini <jmeneghi@redhat.com>
-Reviewed-by: Tomas Henzl <thenzl@redhat.com>
-Link: https://patch.msgid.link/20251212160900.64924-1-mrabek@redhat.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: fe9544ed1a2e ("bpf: Support specifying linear xdp packet data size for BPF_PROG_TEST_RUN")
+Reported-by: BPF Runtime Fuzzer (BRF)
+Signed-off-by: Shardul Bankar <shardulsb08@gmail.com>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://patch.msgid.link/20251014120037.1981316-1-shardulsb08@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/sg.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ net/bpf/test_run.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/sg.c b/drivers/scsi/sg.c
-index 9258a1a8c23c1..0dd8b9f8d6717 100644
---- a/drivers/scsi/sg.c
-+++ b/drivers/scsi/sg.c
-@@ -731,6 +731,8 @@ sg_new_write(Sg_fd *sfp, struct file *file, const char __user *buf,
- 		sg_remove_request(sfp, srp);
- 		return -EFAULT;
- 	}
-+	hp->duration = jiffies_to_msecs(jiffies);
-+
- 	if (hp->interface_id != 'S') {
- 		sg_remove_request(sfp, srp);
- 		return -ENOSYS;
-@@ -815,7 +817,6 @@ sg_common_write(Sg_fd * sfp, Sg_request * srp,
- 		return -ENODEV;
- 	}
+--- a/net/bpf/test_run.c
++++ b/net/bpf/test_run.c
+@@ -1214,7 +1214,7 @@ int bpf_prog_test_run_xdp(struct bpf_pro
+ 		goto free_ctx;
  
--	hp->duration = jiffies_to_msecs(jiffies);
- 	if (hp->interface_id != '\0' &&	/* v3 (or later) interface */
- 	    (SG_FLAG_Q_AT_TAIL & hp->flags))
- 		at_head = 0;
-@@ -1339,9 +1340,6 @@ sg_rq_end_io(struct request *rq, blk_status_t status)
- 				      "sg_cmd_done: pack_id=%d, res=0x%x\n",
- 				      srp->header.pack_id, result));
- 	srp->header.resid = resid;
--	ms = jiffies_to_msecs(jiffies);
--	srp->header.duration = (ms > srp->header.duration) ?
--				(ms - srp->header.duration) : 0;
- 	if (0 != result) {
- 		struct scsi_sense_hdr sshdr;
+ 	if (kattr->test.data_size_in - meta_sz < ETH_HLEN)
+-		return -EINVAL;
++		goto free_ctx;
  
-@@ -1390,6 +1388,9 @@ sg_rq_end_io(struct request *rq, blk_status_t status)
- 			done = 0;
- 	}
- 	srp->done = done;
-+	ms = jiffies_to_msecs(jiffies);
-+	srp->header.duration = (ms > srp->header.duration) ?
-+				(ms - srp->header.duration) : 0;
- 	write_unlock_irqrestore(&sfp->rq_list_lock, iflags);
- 
- 	if (likely(done)) {
-@@ -2537,6 +2538,7 @@ static void sg_proc_debug_helper(struct seq_file *s, Sg_device * sdp)
- 	const sg_io_hdr_t *hp;
- 	const char * cp;
- 	unsigned int ms;
-+	unsigned int duration;
- 
- 	k = 0;
- 	list_for_each_entry(fp, &sdp->sfds, sfd_siblings) {
-@@ -2574,13 +2576,17 @@ static void sg_proc_debug_helper(struct seq_file *s, Sg_device * sdp)
- 			seq_printf(s, " id=%d blen=%d",
- 				   srp->header.pack_id, blen);
- 			if (srp->done)
--				seq_printf(s, " dur=%d", hp->duration);
-+				seq_printf(s, " dur=%u", hp->duration);
- 			else {
- 				ms = jiffies_to_msecs(jiffies);
--				seq_printf(s, " t_o/elap=%d/%d",
-+				duration = READ_ONCE(hp->duration);
-+				if (duration)
-+					duration = (ms > duration ?
-+						    ms - duration : 0);
-+				seq_printf(s, " t_o/elap=%u/%u",
- 					(new_interface ? hp->timeout :
- 						  jiffies_to_msecs(fp->timeout)),
--					(ms > hp->duration ? ms - hp->duration : 0));
-+					duration);
- 			}
- 			seq_printf(s, "ms sgat=%d op=0x%02x\n", usg,
- 				   (int) srp->data.cmd_opcode);
--- 
-2.51.0
-
+ 	data = bpf_test_init(kattr, linear_sz, max_linear_sz, headroom, tailroom);
+ 	if (IS_ERR(data)) {
 
 
