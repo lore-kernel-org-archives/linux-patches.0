@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 704673B8BC0;
-	Thu, 15 Jan 2026 18:01:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 828B03B8BC0;
+	Thu, 15 Jan 2026 18:01:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768500080; cv=none; b=YdJmdU47X/R+9Tz46kMbC3nTQuOE4SFwVAgY4qL7BA6dGkjcnzl0/PAPVjVAKn7KywyxKePIPmbdrdNmn6XJ3vogEbeeMlQG0HJSODQtfJfkxPnGWMuwe/P9gOUqQVb0WBv9E+uV8BH45TTBX5FtB14+Uv67rN51v3SUyfyRJuw=
+	t=1768500083; cv=none; b=sho/LEjqsq8FQZgsUa2j6tC9SO3RhL2e4/W2xoQragNKruNbaWnym9mDBx4gfBdozTCVDBrZEy6UExVn59acAHn55d+MqvMGD4ShT/OCTwZwc+tBEEwKqdWAOMxNYtm7wy70MupAUrnI1uI9GvTJw1OmdMvOlTXSvNhKY2tmsDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768500080; c=relaxed/simple;
-	bh=dmvnBP9+xo10RY6bI2mBJEA2BYztnekHZaV56IhSCE4=;
+	s=arc-20240116; t=1768500083; c=relaxed/simple;
+	bh=4vmLit6E7ZQ2S+03y6XVYEzAq3HwxTk3F/Oz6SawP1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UhV9uZ2soiQcCUNCFeUp+6Ce6bT0wGqCfzFyrGmB9suZgT0mw6v+zC7uChQS0SbPB6t+ZciqmZFiU/LpAKVJw0ubGVTLfceBmAiCqbJt2NwKfEZfdCKNbORvKv2m3MDdtY5gajQpTcwJBOh//qNJJVLaATRcxkgLjrW36vMXaRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ju2+C3o0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oNR3Q8k+1Na3S9B/5jOpU7drJDVE4FDJJ48+WqazhHSYubvFl7rkU/TBiDRQXi2RmeWoxWbDIcX1SOkPYJbPmFACRycrwsgXhNSPq1zpdQd2v/bICEk+koNsb0iMG2Vlywvn48gXCwXQGiMqzfy58ylFV8/1JoBKsB01JHHRV40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qHe4+1ip; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ju2+C3o0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECFFAC116D0;
-	Thu, 15 Jan 2026 18:01:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qHe4+1ip"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3750C116D0;
+	Thu, 15 Jan 2026 18:01:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768500080;
-	bh=dmvnBP9+xo10RY6bI2mBJEA2BYztnekHZaV56IhSCE4=;
+	s=korg; t=1768500083;
+	bh=4vmLit6E7ZQ2S+03y6XVYEzAq3HwxTk3F/Oz6SawP1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ju2+C3o0GNV+Uzh+Bv2jrLq4TPFO/QkIuF6Bokv0oAi9xE7MSm63+ahaymfvFEFxg
-	 sjN04WIFOC8D8HDzZh/Bs7pSxYFYjZHk5IYg9ZiyB6lY6b69lavO4Mcxw7mEpSDKQZ
-	 wFRuAO5Vv+IpwCvLU1eOCohkLGgppO226yRfOhUI=
+	b=qHe4+1ip8sqrDE2r0Jbm1wghwuQKLtAkwdneAPLJJWE8ovzQe8aBZ6L2EPiLMmHJ3
+	 CVpFVUXCITrt/t9f4a6IxvQ5IW2w/cSzzbwCye512Mjl2k8H72JqOREvV0BqVD2jlK
+	 5UtGHrnWNDTawwErxamWu8o707n7hjCZg4bV36ng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Subject: [PATCH 5.10 418/451] libceph: make calc_target() set t->paused, not just clear it
-Date: Thu, 15 Jan 2026 17:50:19 +0100
-Message-ID: <20260115164246.059224338@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Johan Hovold <johan@kernel.org>,
+	Vladimir Zapolskiy <vz@mleia.com>
+Subject: [PATCH 5.10 409/451] usb: gadget: lpc32xx_udc: fix clock imbalance in error path
+Date: Thu, 15 Jan 2026 17:50:10 +0100
+Message-ID: <20260115164245.736754713@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -51,74 +51,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit c0fe2994f9a9d0a2ec9e42441ea5ba74b6a16176 upstream.
+commit 782be79e4551550d7a82b1957fc0f7347e6d461f upstream.
 
-Currently calc_target() clears t->paused if the request shouldn't be
-paused anymore, but doesn't ever set t->paused even though it's able to
-determine when the request should be paused.  Setting t->paused is left
-to __submit_request() which is fine for regular requests but doesn't
-work for linger requests -- since __submit_request() doesn't operate
-on linger requests, there is nowhere for lreq->t.paused to be set.
-One consequence of this is that watches don't get reestablished on
-paused -> unpaused transitions in cases where requests have been paused
-long enough for the (paused) unwatch request to time out and for the
-subsequent (re)watch request to enter the paused state.  On top of the
-watch not getting reestablished, rbd_reregister_watch() gets stuck with
-rbd_dev->watch_mutex held:
+A recent change fixing a device reference leak introduced a clock
+imbalance by reusing an error path so that the clock may be disabled
+before having been enabled.
 
-  rbd_register_watch
-    __rbd_register_watch
-      ceph_osdc_watch
-        linger_reg_commit_wait
+Note that the clock framework allows for passing in NULL clocks so there
+is no risk for a NULL pointer dereference.
 
-It's waiting for lreq->reg_commit_wait to be completed, but for that to
-happen the respective request needs to end up on need_resend_linger list
-and be kicked when requests are unpaused.  There is no chance for that
-if the request in question is never marked paused in the first place.
+Also drop the bogus I2C client NULL check added by the offending commit
+as the pointer has already been verified to be non-NULL.
 
-The fact that rbd_dev->watch_mutex remains taken out forever then
-prevents the image from getting unmapped -- "rbd unmap" would inevitably
-hang in D state on an attempt to grab the mutex.
-
+Fixes: c84117912bdd ("USB: lpc32xx_udc: Fix error handling in probe")
 Cc: stable@vger.kernel.org
-Reported-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Cc: Ma Ke <make24@iscas.ac.cn>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Vladimir Zapolskiy <vz@mleia.com>
+Link: https://patch.msgid.link/20251218153519.19453-2-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osd_client.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/udc/lpc32xx_udc.c |   19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
---- a/net/ceph/osd_client.c
-+++ b/net/ceph/osd_client.c
-@@ -1529,6 +1529,7 @@ static enum calc_target_result calc_targ
- 	struct ceph_pg_pool_info *pi;
- 	struct ceph_pg pgid, last_pgid;
- 	struct ceph_osds up, acting;
-+	bool should_be_paused;
- 	bool is_read = t->flags & CEPH_OSD_FLAG_READ;
- 	bool is_write = t->flags & CEPH_OSD_FLAG_WRITE;
- 	bool force_resend = false;
-@@ -1597,10 +1598,16 @@ static enum calc_target_result calc_targ
- 				 &last_pgid))
- 		force_resend = true;
+--- a/drivers/usb/gadget/udc/lpc32xx_udc.c
++++ b/drivers/usb/gadget/udc/lpc32xx_udc.c
+@@ -3026,7 +3026,7 @@ static int lpc32xx_udc_probe(struct plat
+ 	pdev->dev.dma_mask = &lpc32xx_usbd_dmamask;
+ 	retval = dma_set_coherent_mask(&pdev->dev, DMA_BIT_MASK(32));
+ 	if (retval)
+-		goto i2c_fail;
++		goto err_put_client;
  
--	if (t->paused && !target_should_be_paused(osdc, t, pi)) {
--		t->paused = false;
-+	should_be_paused = target_should_be_paused(osdc, t, pi);
-+	if (t->paused && !should_be_paused) {
- 		unpaused = true;
+ 	udc->board = &lpc32xx_usbddata;
+ 
+@@ -3046,7 +3046,7 @@ static int lpc32xx_udc_probe(struct plat
+ 		udc->udp_irq[i] = platform_get_irq(pdev, i);
+ 		if (udc->udp_irq[i] < 0) {
+ 			retval = udc->udp_irq[i];
+-			goto i2c_fail;
++			goto err_put_client;
+ 		}
  	}
-+	if (t->paused != should_be_paused) {
-+		dout("%s t %p paused %d -> %d\n", __func__, t, t->paused,
-+		     should_be_paused);
-+		t->paused = should_be_paused;
-+	}
+ 
+@@ -3054,7 +3054,7 @@ static int lpc32xx_udc_probe(struct plat
+ 	if (IS_ERR(udc->udp_baseaddr)) {
+ 		dev_err(udc->dev, "IO map failure\n");
+ 		retval = PTR_ERR(udc->udp_baseaddr);
+-		goto i2c_fail;
++		goto err_put_client;
+ 	}
+ 
+ 	/* Get USB device clock */
+@@ -3062,14 +3062,14 @@ static int lpc32xx_udc_probe(struct plat
+ 	if (IS_ERR(udc->usb_slv_clk)) {
+ 		dev_err(udc->dev, "failed to acquire USB device clock\n");
+ 		retval = PTR_ERR(udc->usb_slv_clk);
+-		goto i2c_fail;
++		goto err_put_client;
+ 	}
+ 
+ 	/* Enable USB device clock */
+ 	retval = clk_prepare_enable(udc->usb_slv_clk);
+ 	if (retval < 0) {
+ 		dev_err(udc->dev, "failed to start USB device clock\n");
+-		goto i2c_fail;
++		goto err_put_client;
+ 	}
+ 
+ 	/* Setup deferred workqueue data */
+@@ -3171,9 +3171,10 @@ dma_alloc_fail:
+ 	dma_free_coherent(&pdev->dev, UDCA_BUFF_SIZE,
+ 			  udc->udca_v_base, udc->udca_p_base);
+ i2c_fail:
+-	if (udc->isp1301_i2c_client)
+-		put_device(&udc->isp1301_i2c_client->dev);
+ 	clk_disable_unprepare(udc->usb_slv_clk);
++err_put_client:
++	put_device(&udc->isp1301_i2c_client->dev);
 +
- 	legacy_change = ceph_pg_compare(&t->pgid, &pgid) ||
- 			ceph_osds_changed(&t->acting, &acting,
- 					  t->used_replica || any_change);
+ 	dev_err(udc->dev, "%s probe failed, %d\n", driver_name, retval);
+ 
+ 	return retval;
+@@ -3198,11 +3199,9 @@ static int lpc32xx_udc_remove(struct pla
+ 	dma_free_coherent(&pdev->dev, UDCA_BUFF_SIZE,
+ 			  udc->udca_v_base, udc->udca_p_base);
+ 
+-	if (udc->isp1301_i2c_client)
+-		put_device(&udc->isp1301_i2c_client->dev);
+-
+ 	clk_disable_unprepare(udc->usb_slv_clk);
+ 
++	put_device(&udc->isp1301_i2c_client->dev);
+ 	return 0;
+ }
+ 
 
 
