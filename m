@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDAB22D663D;
-	Thu, 15 Jan 2026 17:43:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4672C3268;
+	Thu, 15 Jan 2026 17:43:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498989; cv=none; b=XCJl1H6EBjMnxBkrPa6OujD737TMEQOgvCEDVKGB69yscptPP5m/b2XfAZfbt1yHIIvBVEmlJuYHx9NPz3KwoSglRtJVwdGbltNNiJJv7lCWyfmyOiqTk7XcrJyi0gLeNNjP1fe25+WnBq7yzjkFKpPfVbAWPHpxZSfjKHzHJlk=
+	t=1768498992; cv=none; b=ED30lCsqNdjU19p48eLJS9e2yBfwtyXWUwlWz+PL3AXp5gzKb0WqSlR6yWh5+lcVyOZq04CKvydJj2+JlITz9iWe/GW6cZmIsqlwbIZeQOtNtsqIxOlpiZGGLB5vVkRblmbIJq7Cd379VSmqiuk/B6Jb3BPZLyXmOiIkXVJJaMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498989; c=relaxed/simple;
-	bh=A2jjWtmdHFiuguLbxR9vtuU9uo5JppkVwhzbzrqXN58=;
+	s=arc-20240116; t=1768498992; c=relaxed/simple;
+	bh=Xd5WSdC5GDGnX7eV0vrLVhOAKzVXjm19HQWsRE+9Uvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j1hY++vGI76GGs5vdIZOqdxplM03FSummc4zRgp+b5YQa8GFVBDFEWcKqB4nZK7qvG/tWTTyuAqho/LZZKijf4K6bLaeEqXMfosweGm5qq/cKRDv6RXyfsX/XyhxWwTGGp6vPGF51yfm0kE6Q3MFWwg3wVN44mxbNti1UoSl1XU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ezqqqey2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t+CfQJKgCBg3Czpu9BByaHivDkIk7YyD8yPXKV1ZIJHkrNo0Z8uB7GvUtjukwbLRt40bDIUNvJkD4wnfrfOZdZCYtRPwbcpRf7cvewcoXoS5j+HdMTRFCeOCQiCzQLDUO01MEG72W1YXFiQ2OfM5Dz8+4KVgv4yUTH1KqjlRd/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qfBvmOb4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ezqqqey2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46622C116D0;
-	Thu, 15 Jan 2026 17:43:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfBvmOb4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 228FAC116D0;
+	Thu, 15 Jan 2026 17:43:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498989;
-	bh=A2jjWtmdHFiuguLbxR9vtuU9uo5JppkVwhzbzrqXN58=;
+	s=korg; t=1768498992;
+	bh=Xd5WSdC5GDGnX7eV0vrLVhOAKzVXjm19HQWsRE+9Uvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ezqqqey20sUeXDZJz0GstnEq3q3Ntr4o1apWS2GZUbGfKco0nnsQSBsUZqNmpnc+m
-	 kCtC2HLracczS3E6RnjVMsi6cwx+NOTVRIamZ9okMiQtJBtJ0UOr+ASBnByyQhPqjF
-	 zLWCaNHrUP2FEBE8tPT8KrT0ICqmZx7q4emD4NpM=
+	b=qfBvmOb4II9hszw5+qB0oCeqZbuzfwY84k9vm6EJrLw7iRAQdaBUM5NGDpSJIcXKe
+	 13JXp1T4+r4mbVB6HglFOoPRej/oVYL0HmZOr2C+1+Yj5EXkeUtl++WpORPK4jGmpv
+	 IDu2kQkztaOLLuVPN6C1Ed28j5GMrMlBqf4NGsfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herve Codina <herve.codina@bootlin.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Ivan Abramov <i.abramov@mt-integration.ru>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 070/451] soc: renesas: r9a06g032-sysctrl: Handle h2mode setting based on USBF presence
-Date: Thu, 15 Jan 2026 17:44:31 +0100
-Message-ID: <20260115164233.433554572@linuxfoundation.org>
+Subject: [PATCH 5.10 053/451] power: supply: wm831x: Check wm831x_set_bits() return value
+Date: Thu, 15 Jan 2026 17:44:14 +0100
+Message-ID: <20260115164232.818600997@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -51,82 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herve Codina <herve.codina@bootlin.com>
+From: Ivan Abramov <i.abramov@mt-integration.ru>
 
-[ Upstream commit e9fee814b054e4f6f2faf3d9c1944869fe41c9dd ]
+[ Upstream commit ea14bae6df18942bccb467fcf5ff33ca677b8253 ]
 
-The CFG_USB[H2MODE] allows to switch the USB configuration. The
-configuration supported are:
-  - One host and one device
-or
-  - Two hosts
+Since wm831x_set_bits() may return error, log failure and exit from
+wm831x_usb_limit_change() in such case.
 
-Set CFG_USB[H2MODE] based on the USBF controller (USB device)
-availability.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Signed-off-by: Herve Codina <herve.codina@bootlin.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20230105152257.310642-3-herve.codina@bootlin.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: f8def051bbcf ("clk: renesas: r9a06g032: Fix memory leak in error path")
+Fixes: 626b6cd5f52e ("power: wm831x_power: Support USB charger current limit management")
+Signed-off-by: Ivan Abramov <i.abramov@mt-integration.ru>
+Link: https://patch.msgid.link/20251009170553.566561-1-i.abramov@mt-integration.ru
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/r9a06g032-clocks.c | 28 ++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ drivers/power/supply/wm831x_power.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/renesas/r9a06g032-clocks.c b/drivers/clk/renesas/r9a06g032-clocks.c
-index 65cd6ed68923e..b3fd97615fc4c 100644
---- a/drivers/clk/renesas/r9a06g032-clocks.c
-+++ b/drivers/clk/renesas/r9a06g032-clocks.c
-@@ -24,6 +24,8 @@
- #include <linux/spinlock.h>
- #include <dt-bindings/clock/r9a06g032-sysctrl.h>
+diff --git a/drivers/power/supply/wm831x_power.c b/drivers/power/supply/wm831x_power.c
+index 18b33f14dfeef..aae655109862c 100644
+--- a/drivers/power/supply/wm831x_power.c
++++ b/drivers/power/supply/wm831x_power.c
+@@ -144,6 +144,7 @@ static int wm831x_usb_limit_change(struct notifier_block *nb,
+ 							 struct wm831x_power,
+ 							 usb_notify);
+ 	unsigned int i, best;
++	int ret;
  
-+#define R9A06G032_SYSCTRL_USB    0x00
-+#define R9A06G032_SYSCTRL_USB_H2MODE  (1<<1)
- #define R9A06G032_SYSCTRL_DMAMUX 0xA0
+ 	/* Find the highest supported limit */
+ 	best = 0;
+@@ -156,8 +157,13 @@ static int wm831x_usb_limit_change(struct notifier_block *nb,
+ 	dev_dbg(wm831x_power->wm831x->dev,
+ 		"Limiting USB current to %umA", wm831x_usb_limits[best]);
  
- struct r9a06g032_gate {
-@@ -918,6 +920,29 @@ static void r9a06g032_clocks_del_clk_provider(void *data)
- 	of_clk_del_provider(data);
+-	wm831x_set_bits(wm831x_power->wm831x, WM831X_POWER_STATE,
+-		        WM831X_USB_ILIM_MASK, best);
++	ret = wm831x_set_bits(wm831x_power->wm831x, WM831X_POWER_STATE,
++			      WM831X_USB_ILIM_MASK, best);
++	if (ret < 0) {
++		dev_err(wm831x_power->wm831x->dev,
++			"Failed to set USB current limit: %d\n", ret);
++		return ret;
++	}
+ 
+ 	return 0;
  }
- 
-+static void __init r9a06g032_init_h2mode(struct r9a06g032_priv *clocks)
-+{
-+	struct device_node *usbf_np = NULL;
-+	u32 usb;
-+
-+	while ((usbf_np = of_find_compatible_node(usbf_np, NULL,
-+						  "renesas,rzn1-usbf"))) {
-+		if (of_device_is_available(usbf_np))
-+			break;
-+	}
-+
-+	usb = readl(clocks->reg + R9A06G032_SYSCTRL_USB);
-+	if (usbf_np) {
-+		/* 1 host and 1 device mode */
-+		usb &= ~R9A06G032_SYSCTRL_USB_H2MODE;
-+		of_node_put(usbf_np);
-+	} else {
-+		/* 2 hosts mode */
-+		usb |= R9A06G032_SYSCTRL_USB_H2MODE;
-+	}
-+	writel(usb, clocks->reg + R9A06G032_SYSCTRL_USB);
-+}
-+
- static int __init r9a06g032_clocks_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
-@@ -947,6 +972,9 @@ static int __init r9a06g032_clocks_probe(struct platform_device *pdev)
- 	clocks->reg = of_iomap(np, 0);
- 	if (WARN_ON(!clocks->reg))
- 		return -ENOMEM;
-+
-+	r9a06g032_init_h2mode(clocks);
-+
- 	for (i = 0; i < ARRAY_SIZE(r9a06g032_clocks); ++i) {
- 		const struct r9a06g032_clkdesc *d = &r9a06g032_clocks[i];
- 		const char *parent_name = d->source ?
 -- 
 2.51.0
 
