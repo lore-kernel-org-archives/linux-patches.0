@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E0CF3E95A6;
-	Thu, 15 Jan 2026 17:50:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C1F3E95B9;
+	Thu, 15 Jan 2026 17:50:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499428; cv=none; b=o/dEhUunrYL+1EZdKPFTH394V24UV1IhtN5gif4DT57p/S1l39uRHluwGIdYYbvjXwyRBtGivLPTa5IMQiAT7T76qD/JQ7yZhppvAjfKlMfCM/Vwg33GZUHraMKNVu1AogdggmHFSGtA8vwzrgJ+D6yDOsmA9r15hlVm9QYi/NU=
+	t=1768499431; cv=none; b=eXRK4FRBdZ4u4s17hfmmWWMLPadV+Zih7ysGFVvDD2c+i0Xy6kvaXHZMWthAxdpBpbAmAwtEYZIjedlc2OVKTQeycRkbzeqEbm/VeZP9OweSmsWoGX9MwksI/qVdAlmjNuFbk0ba5/6m0Ptjai/QmvkZ7lFAh9ICnZ7tsa6yWD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499428; c=relaxed/simple;
-	bh=y4cL95q2u1jkNJCUNNpM2uq86TyJukbXt1LiK6AXfjE=;
+	s=arc-20240116; t=1768499431; c=relaxed/simple;
+	bh=9/mi+LKkxdPXzSpcEkZQbsE+kxmvHNSP0buoCyl6LBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Trtl/oliunQaL/d3lzsEWxG9FBkWcW23DO8ZJq9Xdt2uB8Xzsf1TE/l6uvc3Xz4Zxczt/O/TbrBK4W9lUofz0umyBpI1PpXqA0w0SdFILtDwxFsAnaTOYkNcJf1maOjSOX3zOrd1v12jagoNU8LG3MSOLZUl6oC2QzX7YvXMVa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NYyV9HHV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KNuPKOEVi1c8q8xxxbOV5gpUhT6nDAEpOmJmT9ILwAcUV1j97DSZ0Robgn2WMl4pqTnV+cy19tvJeU0wSdts6EMhuYTMlMYb9Uhf8jHn8d3IrcXjHgwSFaTx6PgJloQM7MVRV7BBUyZiwSbYV5KZAlX4SWP3aVa8qVL53GVgptA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g8NiZev0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NYyV9HHV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C22FC19425;
-	Thu, 15 Jan 2026 17:50:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g8NiZev0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E57DC19423;
+	Thu, 15 Jan 2026 17:50:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499427;
-	bh=y4cL95q2u1jkNJCUNNpM2uq86TyJukbXt1LiK6AXfjE=;
+	s=korg; t=1768499430;
+	bh=9/mi+LKkxdPXzSpcEkZQbsE+kxmvHNSP0buoCyl6LBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NYyV9HHVTGIjX+5lXN7HfofR4cAtMrZh+CTLqLTwo2WrdHI/XphdB2rV+THmtJNcp
-	 9TQWrRMyPVX2G8AcJqwmKJnkYvdo2t7j2GwrLoo8uDVfnpu36KaFQmCdwE2IUt2RGP
-	 vRrvy7sxgt89i8BSBSK0gIRA9QjKtgKrcFQUV3PQ=
+	b=g8NiZev0mJ2PNgePKhU95NJmrPLborOZKrMONVAUWCXFYb7oEf01Axyam7XeDIJsy
+	 8QY0Am07WVCJDQaxRefMFpyR0GzVHMtAdvNWlkfZr/hfWHESeMV9X9txeLNjpNx4CT
+	 aAkNiFbe9nv58BkK6e5/FemD6CMLxWvkWoyAx2dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 223/451] floppy: fix for PAGE_SIZE != 4KB
-Date: Thu, 15 Jan 2026 17:47:04 +0100
-Message-ID: <20260115164238.965068210@linuxfoundation.org>
+	John Warthog9 Hawley <warthog9@kernel.org>,
+	"John W. Krahn" <jwkrahn@shaw.ca>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 5.10 224/451] ktest.pl: Fix uninitialized var in config-bisect.pl
+Date: Thu, 15 Jan 2026 17:47:05 +0100
+Message-ID: <20260115164239.000522289@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -44,50 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rene Rebe <rene@exactco.de>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 82d20481024cbae2ea87fe8b86d12961bfda7169 upstream.
+commit d3042cbe84a060b4df764eb6c5300bbe20d125ca upstream.
 
-For years I wondered why the floppy driver does not just work on
-sparc64, e.g:
+The error path of copying the old config used the wrong variable in the
+error message:
 
-root@SUNW_375_0066:# disktype /dev/fd0
-disktype: Can't open /dev/fd0: No such device or address
+ $ mkdir /tmp/build
+ $ ./tools/testing/ktest/config-bisect.pl -b /tmp/build config-good /tmp/config-bad
+ $ chmod 0 /tmp/build
+ $ ./tools/testing/ktest/config-bisect.pl -b /tmp/build config-good /tmp/config-bad good
+ cp /tmp/build//.config config-good.tmp ... [0 seconds] FAILED!
+ Use of uninitialized value $config in concatenation (.) or string at ./tools/testing/ktest/config-bisect.pl line 744.
+ failed to copy  to config-good.tmp
 
-[  525.341906] disktype: attempt to access beyond end of device
-fd0: rw=0, sector=0, nr_sectors = 16 limit=8
-[  525.341991] floppy: error 10 while reading block 0
+When it should have shown:
 
-Turns out floppy.c __floppy_read_block_0 tries to read one page for
-the first test read to determine the disk size and thus fails if that
-is greater than 4k. Adjust minimum MAX_DISK_SIZE to PAGE_SIZE to fix
-floppy on sparc64 and likely all other PAGE_SIZE != 4KB configs.
+ failed to copy /tmp/build//.config to config-good.tmp
 
 Cc: stable@vger.kernel.org
-Signed-off-by: René Rebe <rene@exactco.de>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: John 'Warthog9' Hawley <warthog9@kernel.org>
+Fixes: 0f0db065999cf ("ktest: Add standalone config-bisect.pl program")
+Link: https://patch.msgid.link/20251203180924.6862bd26@gandalf.local.home
+Reported-by: "John W. Krahn" <jwkrahn@shaw.ca>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/floppy.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/ktest/config-bisect.pl |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/block/floppy.c
-+++ b/drivers/block/floppy.c
-@@ -332,7 +332,7 @@ static bool initialized;
-  * This default is used whenever the current disk size is unknown.
-  * [Now it is rather a minimum]
-  */
--#define MAX_DISK_SIZE 4		/* 3984 */
-+#define MAX_DISK_SIZE (PAGE_SIZE / 1024)
+--- a/tools/testing/ktest/config-bisect.pl
++++ b/tools/testing/ktest/config-bisect.pl
+@@ -741,9 +741,9 @@ if ($start) {
+ 	die "Can not find file $bad\n";
+     }
+     if ($val eq "good") {
+-	run_command "cp $output_config $good" or die "failed to copy $config to $good\n";
++	run_command "cp $output_config $good" or die "failed to copy $output_config to $good\n";
+     } elsif ($val eq "bad") {
+-	run_command "cp $output_config $bad" or die "failed to copy $config to $bad\n";
++	run_command "cp $output_config $bad" or die "failed to copy $output_config to $bad\n";
+     }
+ }
  
- /*
-  * globals used by 'result()'
 
 
