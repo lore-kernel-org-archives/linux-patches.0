@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31DAB2D781B;
-	Thu, 15 Jan 2026 17:10:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D562D781B;
+	Thu, 15 Jan 2026 17:10:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497049; cv=none; b=LfC7yW3owtQq87PbqnCDq2lrGwgHAq5Z9EU7Ewu+Jaa0SMKddXMSob3jkgTHie+WUc4YC5LF1gNLSt55vvC3aocejmY3+nk6VgVnes5Q98ZVMtp/nukdaq/8HCYCjW+qxf4OrSQ6uAapcKBVmQYLtqjBobYfwbJF7oEAejRMbOI=
+	t=1768497052; cv=none; b=PqNl+H8LEkexb4Si7PvjSGbCjBrr5Hpz8up2DwUDshK7gD0ZaaZSOldCS1DnEXuEKbmx4FMp1OiqD7ynLaAAzQ3EtKlzL0awlyEvQwAE/+Oq6g2Sj5Xrr8snJ/pX5QufcCY3nTwJ8/3S/CsB6Cc8xZ+tLEbOiY9oJn0RSvLj9fk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497049; c=relaxed/simple;
-	bh=I8W+aG/3zRePFkBX/8hxnKWxjJhJjilHuufJ7iTvI/g=;
+	s=arc-20240116; t=1768497052; c=relaxed/simple;
+	bh=zpCmZmMwYUzU9DF6avncuHNEa4n6KXJ/zu3TmBaVO8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FY/Wq3b04f08uewLPbsoOSpVxG6IJbYnyWb7LKqJmHPW0NR/+PWKT4jcV5JPxFnjSdnl+Z+mitAtrEaVMDKzlJl+IK/U1G0X3Oi1hUCpArnkjCCp2wt+Ms85kZ+I1ki0CbwzAC9rOewI1ayn/Edrh/4PUiSQJU39mwEK4RmdLsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fGvAtbpz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c9Qq8j0AW2bHH1p5sX8xqOTac0gW8HAKWjN+VcCWRQLNmNrNuT3rM8ij9C5oePTKgSrLGpheq02RMRD7R324GuIOQGdjygZLSkQ//ohy3K8g91IBp1GK3MA0qxUvHxkj/qM0+sVsg3Z/GyeOh5zbn8I55HMfZtBPycKkfVlXE/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Exs/P1jK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fGvAtbpz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B455AC116D0;
-	Thu, 15 Jan 2026 17:10:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Exs/P1jK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F08C116D0;
+	Thu, 15 Jan 2026 17:10:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497049;
-	bh=I8W+aG/3zRePFkBX/8hxnKWxjJhJjilHuufJ7iTvI/g=;
+	s=korg; t=1768497051;
+	bh=zpCmZmMwYUzU9DF6avncuHNEa4n6KXJ/zu3TmBaVO8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fGvAtbpz4F8D9MnbuvEsQ48n5CokytHSpUaT2diN5SUv3HuU9qPfZxy6pQ+iUiT7/
-	 OUYqJcu5BAHHM5Vclfl2vRkkXR0/gjm43fjakll9WJzics9dNdGD1kuRVHa/ZKm00y
-	 kCT9k0wUsQJhWUfUOdoS1g8w6QBTPaZPlJ8BKfYk=
+	b=Exs/P1jKV+QsW53NiPPOPs3sdUnAFwuuj1N/kvytAmKZ210+4ZRWkKo49COyDYCUr
+	 0Bs/axMwjO9lvear5Wrwfqp6GLRiDotaCnIYLOi8UQFaOk1Cmr5avtEerrSeVoiKAw
+	 b/ufeicpqVDU/2MvE1kd/dCHQ3fWS08a1AAfy1Jg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	William Breathitt Gray <wbg@kernel.org>
-Subject: [PATCH 6.1 06/72] counter: interrupt-cnt: Drop IRQF_NO_THREAD flag
-Date: Thu, 15 Jan 2026 17:48:16 +0100
-Message-ID: <20260115164143.722099028@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Linus Walleij <linusw@kernel.org>
+Subject: [PATCH 6.1 07/72] drm/pl111: Fix error handling in pl111_amba_probe
+Date: Thu, 15 Jan 2026 17:48:17 +0100
+Message-ID: <20260115164143.757582067@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164143.482647486@linuxfoundation.org>
 References: <20260115164143.482647486@linuxfoundation.org>
@@ -52,77 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit 23f9485510c338476b9735d516c1d4aacb810d46 upstream.
+commit 0ddd3bb4b14c9102c0267b3fd916c81fe5ab89c1 upstream.
 
-An IRQ handler can either be IRQF_NO_THREAD or acquire spinlock_t, as
-CONFIG_PROVE_RAW_LOCK_NESTING warns:
-=============================
-[ BUG: Invalid wait context ]
-6.18.0-rc1+git... #1
------------------------------
-some-user-space-process/1251 is trying to lock:
-(&counter->events_list_lock){....}-{3:3}, at: counter_push_event [counter]
-other info that might help us debug this:
-context-{2:2}
-no locks held by some-user-space-process/....
-stack backtrace:
-CPU: 0 UID: 0 PID: 1251 Comm: some-user-space-process 6.18.0-rc1+git... #1 PREEMPT
-Call trace:
- show_stack (C)
- dump_stack_lvl
- dump_stack
- __lock_acquire
- lock_acquire
- _raw_spin_lock_irqsave
- counter_push_event [counter]
- interrupt_cnt_isr [interrupt_cnt]
- __handle_irq_event_percpu
- handle_irq_event
- handle_simple_irq
- handle_irq_desc
- generic_handle_domain_irq
- gpio_irq_handler
- handle_irq_desc
- generic_handle_domain_irq
- gic_handle_irq
- call_on_irq_stack
- do_interrupt_handler
- el0_interrupt
- __el0_irq_handler_common
- el0t_64_irq_handler
- el0t_64_irq
+Jump to the existing dev_put label when devm_request_irq() fails
+so drm_dev_put() and of_reserved_mem_device_release() run
+instead of returning early and leaking resources.
 
-... and Sebastian correctly points out. Remove IRQF_NO_THREAD as an
-alternative to switching to raw_spinlock_t, because the latter would limit
-all potential nested locks to raw_spinlock_t only.
+Found via static analysis and code review.
 
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Fixes: bed41005e617 ("drm/pl111: Initial drm/kms driver for pl111")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20251117151314.xwLAZrWY@linutronix.de/
-Fixes: a55ebd47f21f ("counter: add IRQ or GPIO based counter")
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://lore.kernel.org/r/20251118083603.778626-1-alexander.sverdlin@siemens.com
-Signed-off-by: William Breathitt Gray <wbg@kernel.org>
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20251211123345.2392065-1-linmq006@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/counter/interrupt-cnt.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/pl111/pl111_drv.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/counter/interrupt-cnt.c
-+++ b/drivers/counter/interrupt-cnt.c
-@@ -229,8 +229,7 @@ static int interrupt_cnt_probe(struct pl
+--- a/drivers/gpu/drm/pl111/pl111_drv.c
++++ b/drivers/gpu/drm/pl111/pl111_drv.c
+@@ -297,7 +297,7 @@ static int pl111_amba_probe(struct amba_
+ 			       variant->name, priv);
+ 	if (ret != 0) {
+ 		dev_err(dev, "%s failed irq %d\n", __func__, ret);
+-		return ret;
++		goto dev_put;
+ 	}
  
- 	irq_set_status_flags(priv->irq, IRQ_NOAUTOEN);
- 	ret = devm_request_irq(dev, priv->irq, interrupt_cnt_isr,
--			       IRQF_TRIGGER_RISING | IRQF_NO_THREAD,
--			       dev_name(dev), counter);
-+			       IRQF_TRIGGER_RISING, dev_name(dev), counter);
- 	if (ret)
- 		return ret;
- 
+ 	ret = pl111_modeset_init(drm);
 
 
