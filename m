@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D793C3624C4;
-	Thu, 15 Jan 2026 16:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 059B125228D;
+	Thu, 15 Jan 2026 16:52:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768495937; cv=none; b=JBdygbnktrJJF7VhzhXt06eFPdU2VS0GnCUkIXFC05RohnhtDJ7G6UzqSMNX8/l5lV49lmuSALVrqT81MzozgS4OLmNlcS1bZcxFdYXbujMtG8cSnILpSvNeMGgYEaIpCXG8GUS5nb1RLoP5WmGmM+//SkXOOjsScFVcgoAXGK0=
+	t=1768495941; cv=none; b=QcN8AqAj99PCVvl317Zs5nuDq37lO16ZT/+odHuUHjzwj9e6fgS/NX+EZ/c+UkDzH7wvk2/fy/kdW/dkli1zP0XoEQIte8yrMt3b1Yjz6mizsLmjaKKC8hvyg5aMrIgoYb7eeAGvqDZcnAKBBiF3qbhZhaM84NSZJ/RytX2Dxv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768495937; c=relaxed/simple;
-	bh=TfEx6OUyOwqixOEoc/jdoZ6+3W/bVH1t+SR7duNcsqc=;
+	s=arc-20240116; t=1768495941; c=relaxed/simple;
+	bh=qdVWp603Ql5LubXRSiscej5NbPj4mq/QGNV2+VRBmJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LpYKXbTYlMY5OpRNmsjeIuP9LEMrDaE7/UeohB4VqUWo3sfnwBzC3wKzndn7L9sLYbHdeLRgBb9/0DbhRwL3WVAZ4nwnz/mFGrgGz99hWoQ5stbo2HBPvq8YlXngWVT01f7aiNYoZwCAQwpEM9wOGk/SqpaL0XWIORw8RSDwMno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xKfLvcwC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l3jwwR7q9J4aQWRaP3L8xrNcFhFt7onskkeE2I8fsGge+gk+3r+LPK4rNyTf85ghlZ5B8Z+URXdXb21kDDRG1TpWtGhGDK63S00bFcbPO1UPPIVN8oqRv0Bao0OujUXhFu+SoDzZCb6deepLhFjUUw5ceqQTTlwTtGBdM24wqBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jrHoI9Gd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xKfLvcwC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66603C116D0;
-	Thu, 15 Jan 2026 16:52:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jrHoI9Gd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D06FC116D0;
+	Thu, 15 Jan 2026 16:52:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768495937;
-	bh=TfEx6OUyOwqixOEoc/jdoZ6+3W/bVH1t+SR7duNcsqc=;
+	s=korg; t=1768495940;
+	bh=qdVWp603Ql5LubXRSiscej5NbPj4mq/QGNV2+VRBmJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xKfLvcwCpkIIeTx7L359nsnWsarEmMH9YqLrlyl7MxhVTG+UeRMFDge1h76gkvAdi
-	 PVIVifkUk5IrJ7xv2WeU69Yx7zJqgnsOTqxUEGAhZCSRV7xZzh0oJVsX7eEEnifsYR
-	 Sgb6fFZsb+R2viKSW4oT4NiO9urMQQBElKVc0YuY=
+	b=jrHoI9GdKSw3G0pHOPjuGuIXxOTbqGjDoMpaWCMQJZComwWDFdV4vY1jjD/0Zfaag
+	 1fojQm/P7NkUIL3fRj5paiU8SA/RUeXtqKv+skGlu/WB3gMy7VeZjWp8RqQ7FrtYj9
+	 Vy/UD/CsMTE1r3WOQoOm+rmMtktvUixqUUNsTnoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lyude Paul <lyude@redhat.com>,
-	Timur Tabi <ttabi@nvidia.com>,
-	Matthew Schwartz <matthew.schwartz@linux.dev>,
-	Christopher Snowhill <chris@kode54.net>,
-	Dave Airlie <airlied@redhat.com>
-Subject: [PATCH 6.18 020/181] nouveau: dont attempt fwsec on sb on newer platforms.
-Date: Thu, 15 Jan 2026 17:45:57 +0100
-Message-ID: <20260115164203.052533773@linuxfoundation.org>
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Aradhya Bhatia <aradhya.bhatia@linux.dev>,
+	Maxime Ripard <mripard@kernel.org>,
+	Linus Walleij <linusw@kernel.org>
+Subject: [PATCH 6.18 021/181] Revert "drm/atomic-helper: Re-order bridge chain pre-enable and post-disable"
+Date: Thu, 15 Jan 2026 17:45:58 +0100
+Message-ID: <20260115164203.090438338@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -53,203 +52,398 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Airlie <airlied@redhat.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-commit e8b3627bec357698f2d4d6dbf27cdcfa0e9d8715 upstream.
+commit c1ef9a6cabb34dbc09e31417b0c0a672fe0de13a upstream.
 
-The changes to always loads fwsec sb causes problems on newer GPUs
-which don't use this path.
+This reverts commit c9b1150a68d9362a0827609fc0dc1664c0d8bfe1.
 
-Add hooks and pass through the device specific layers.
+Changing the enable/disable sequence has caused regressions on multiple
+platforms: R-Car, MCDE, Rockchip. A series (see link below)  was sent to
+fix these, but it was decided that it's better to revert the original
+patch and change the enable/disable sequence only in the tidss driver.
 
-Fixes: da67179e5538 ("drm/nouveau/gsp: Allocate fwsec-sb at boot")
-Cc: <stable@vger.kernel.org> # v6.16+
-Cc: Lyude Paul <lyude@redhat.com>
-Cc: Timur Tabi <ttabi@nvidia.com>
-Tested-by: Matthew Schwartz <matthew.schwartz@linux.dev>
-Tested-by: Christopher Snowhill <chris@kode54.net>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Link: https://patch.msgid.link/20260102041829.2748009-1-airlied@gmail.com
+Reverting this commit breaks tidss's DSI and OLDI outputs, which will be
+fixed in the following commits.
+
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://lore.kernel.org/all/20251202-mcde-drm-regression-thirdfix-v6-0-f1bffd4ec0fa%40kernel.org/
+Fixes: c9b1150a68d9 ("drm/atomic-helper: Re-order bridge chain pre-enable and post-disable")
+Cc: stable@vger.kernel.org # v6.17+
+Reviewed-by: Aradhya Bhatia <aradhya.bhatia@linux.dev>
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Tested-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20251205-drm-seq-fix-v1-1-fda68fa1b3de@ideasonboard.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../gpu/drm/nouveau/nvkm/subdev/gsp/ad102.c   |  3 +++
- .../gpu/drm/nouveau/nvkm/subdev/gsp/fwsec.c   |  8 +------
- .../gpu/drm/nouveau/nvkm/subdev/gsp/ga100.c   |  3 +++
- .../gpu/drm/nouveau/nvkm/subdev/gsp/ga102.c   |  3 +++
- .../gpu/drm/nouveau/nvkm/subdev/gsp/priv.h    | 23 +++++++++++++++++--
- .../gpu/drm/nouveau/nvkm/subdev/gsp/tu102.c   | 15 ++++++++++++
- .../gpu/drm/nouveau/nvkm/subdev/gsp/tu116.c   |  3 +++
- 7 files changed, 49 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/drm_atomic_helper.c |   8 +-
+ include/drm/drm_bridge.h            | 249 ++++++++--------------------
+ 2 files changed, 70 insertions(+), 187 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/ad102.c b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/ad102.c
-index 35d1fcef520b..c456a9626823 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/ad102.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/ad102.c
-@@ -30,6 +30,9 @@ ad102_gsp = {
- 
- 	.booter.ctor = ga102_gsp_booter_ctor,
- 
-+	.fwsec_sb.ctor = tu102_gsp_fwsec_sb_ctor,
-+	.fwsec_sb.dtor = tu102_gsp_fwsec_sb_dtor,
-+
- 	.dtor = r535_gsp_dtor,
- 	.oneinit = tu102_gsp_oneinit,
- 	.init = tu102_gsp_init,
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/fwsec.c b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/fwsec.c
-index 503760246660..851140e80122 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/fwsec.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/fwsec.c
-@@ -337,18 +337,12 @@ nvkm_gsp_fwsec_sb(struct nvkm_gsp *gsp)
- }
- 
- int
--nvkm_gsp_fwsec_sb_ctor(struct nvkm_gsp *gsp)
-+nvkm_gsp_fwsec_sb_init(struct nvkm_gsp *gsp)
+diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
+index 10adac9397cf..ef97f37560b2 100644
+--- a/drivers/gpu/drm/drm_atomic_helper.c
++++ b/drivers/gpu/drm/drm_atomic_helper.c
+@@ -1341,9 +1341,9 @@ disable_outputs(struct drm_device *dev, struct drm_atomic_state *state)
  {
- 	return nvkm_gsp_fwsec_init(gsp, &gsp->fws.falcon.sb, "fwsec-sb",
- 				   NVFW_FALCON_APPIF_DMEMMAPPER_CMD_SB);
- }
+ 	encoder_bridge_disable(dev, state);
  
--void
--nvkm_gsp_fwsec_sb_dtor(struct nvkm_gsp *gsp)
--{
--	nvkm_falcon_fw_dtor(&gsp->fws.falcon.sb);
--}
+-	crtc_disable(dev, state);
 -
- int
- nvkm_gsp_fwsec_frts(struct nvkm_gsp *gsp)
+ 	encoder_bridge_post_disable(dev, state);
++
++	crtc_disable(dev, state);
+ }
+ 
+ /**
+@@ -1682,10 +1682,10 @@ encoder_bridge_enable(struct drm_device *dev, struct drm_atomic_state *state)
+ void drm_atomic_helper_commit_modeset_enables(struct drm_device *dev,
+ 					      struct drm_atomic_state *state)
  {
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/ga100.c b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/ga100.c
-index d201e8697226..27a13aeccd3c 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/ga100.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/ga100.c
-@@ -47,6 +47,9 @@ ga100_gsp = {
+-	encoder_bridge_pre_enable(dev, state);
+-
+ 	crtc_enable(dev, state);
  
- 	.booter.ctor = tu102_gsp_booter_ctor,
- 
-+	.fwsec_sb.ctor = tu102_gsp_fwsec_sb_ctor,
-+	.fwsec_sb.dtor = tu102_gsp_fwsec_sb_dtor,
++	encoder_bridge_pre_enable(dev, state);
 +
- 	.dtor = r535_gsp_dtor,
- 	.oneinit = tu102_gsp_oneinit,
- 	.init = tu102_gsp_init,
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/ga102.c b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/ga102.c
-index 917f7e2f6c46..b6b3eb6f4c00 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/ga102.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/ga102.c
-@@ -158,6 +158,9 @@ ga102_gsp_r535 = {
+ 	encoder_bridge_enable(dev, state);
  
- 	.booter.ctor = ga102_gsp_booter_ctor,
- 
-+	.fwsec_sb.ctor = tu102_gsp_fwsec_sb_ctor,
-+	.fwsec_sb.dtor = tu102_gsp_fwsec_sb_dtor,
-+
- 	.dtor = r535_gsp_dtor,
- 	.oneinit = tu102_gsp_oneinit,
- 	.init = tu102_gsp_init,
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/priv.h b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/priv.h
-index 86bdd203bc10..9dd66a2e3801 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/priv.h
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/priv.h
-@@ -7,9 +7,8 @@ enum nvkm_acr_lsf_id;
- 
- int nvkm_gsp_fwsec_frts(struct nvkm_gsp *);
- 
--int nvkm_gsp_fwsec_sb_ctor(struct nvkm_gsp *);
- int nvkm_gsp_fwsec_sb(struct nvkm_gsp *);
--void nvkm_gsp_fwsec_sb_dtor(struct nvkm_gsp *);
-+int nvkm_gsp_fwsec_sb_init(struct nvkm_gsp *gsp);
- 
- struct nvkm_gsp_fwif {
- 	int version;
-@@ -52,6 +51,11 @@ struct nvkm_gsp_func {
- 			    struct nvkm_falcon *, struct nvkm_falcon_fw *);
- 	} booter;
- 
-+	struct {
-+		int (*ctor)(struct nvkm_gsp *);
-+		void (*dtor)(struct nvkm_gsp *);
-+	} fwsec_sb;
-+
- 	void (*dtor)(struct nvkm_gsp *);
- 	int (*oneinit)(struct nvkm_gsp *);
- 	int (*init)(struct nvkm_gsp *);
-@@ -67,6 +71,8 @@ extern const struct nvkm_falcon_func tu102_gsp_flcn;
- extern const struct nvkm_falcon_fw_func tu102_gsp_fwsec;
- int tu102_gsp_booter_ctor(struct nvkm_gsp *, const char *, const struct firmware *,
- 			  struct nvkm_falcon *, struct nvkm_falcon_fw *);
-+int tu102_gsp_fwsec_sb_ctor(struct nvkm_gsp *);
-+void tu102_gsp_fwsec_sb_dtor(struct nvkm_gsp *);
- int tu102_gsp_oneinit(struct nvkm_gsp *);
- int tu102_gsp_init(struct nvkm_gsp *);
- int tu102_gsp_fini(struct nvkm_gsp *, bool suspend);
-@@ -91,5 +97,18 @@ int r535_gsp_fini(struct nvkm_gsp *, bool suspend);
- int nvkm_gsp_new_(const struct nvkm_gsp_fwif *, struct nvkm_device *, enum nvkm_subdev_type, int,
- 		  struct nvkm_gsp **);
- 
-+static inline int nvkm_gsp_fwsec_sb_ctor(struct nvkm_gsp *gsp)
-+{
-+	if (gsp->func->fwsec_sb.ctor)
-+		return gsp->func->fwsec_sb.ctor(gsp);
-+	return 0;
-+}
-+
-+static inline void nvkm_gsp_fwsec_sb_dtor(struct nvkm_gsp *gsp)
-+{
-+	if (gsp->func->fwsec_sb.dtor)
-+		gsp->func->fwsec_sb.dtor(gsp);
-+}
-+
- extern const struct nvkm_gsp_func gv100_gsp;
- #endif
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/tu102.c b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/tu102.c
-index 81e56da0474a..04b642a1f730 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/tu102.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/tu102.c
-@@ -30,6 +30,18 @@
- #include <nvfw/fw.h>
- #include <nvfw/hs.h>
- 
-+int
-+tu102_gsp_fwsec_sb_ctor(struct nvkm_gsp *gsp)
-+{
-+	return nvkm_gsp_fwsec_sb_init(gsp);
-+}
-+
-+void
-+tu102_gsp_fwsec_sb_dtor(struct nvkm_gsp *gsp)
-+{
-+	nvkm_falcon_fw_dtor(&gsp->fws.falcon.sb);
-+}
-+
- static int
- tu102_gsp_booter_unload(struct nvkm_gsp *gsp, u32 mbox0, u32 mbox1)
- {
-@@ -370,6 +382,9 @@ tu102_gsp = {
- 
- 	.booter.ctor = tu102_gsp_booter_ctor,
- 
-+	.fwsec_sb.ctor = tu102_gsp_fwsec_sb_ctor,
-+	.fwsec_sb.dtor = tu102_gsp_fwsec_sb_dtor,
-+
- 	.dtor = r535_gsp_dtor,
- 	.oneinit = tu102_gsp_oneinit,
- 	.init = tu102_gsp_init,
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/tu116.c b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/tu116.c
-index 97eb046c25d0..58cf25842421 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/tu116.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/tu116.c
-@@ -30,6 +30,9 @@ tu116_gsp = {
- 
- 	.booter.ctor = tu102_gsp_booter_ctor,
- 
-+	.fwsec_sb.ctor = tu102_gsp_fwsec_sb_ctor,
-+	.fwsec_sb.dtor = tu102_gsp_fwsec_sb_dtor,
-+
- 	.dtor = r535_gsp_dtor,
- 	.oneinit = tu102_gsp_oneinit,
- 	.init = tu102_gsp_init,
+ 	drm_atomic_helper_commit_writebacks(dev, state);
+diff --git a/include/drm/drm_bridge.h b/include/drm/drm_bridge.h
+index 0ff7ab4aa868..dbafe136833f 100644
+--- a/include/drm/drm_bridge.h
++++ b/include/drm/drm_bridge.h
+@@ -176,33 +176,17 @@ struct drm_bridge_funcs {
+ 	/**
+ 	 * @disable:
+ 	 *
+-	 * The @disable callback should disable the bridge.
++	 * This callback should disable the bridge. It is called right before
++	 * the preceding element in the display pipe is disabled. If the
++	 * preceding element is a bridge this means it's called before that
++	 * bridge's @disable vfunc. If the preceding element is a &drm_encoder
++	 * it's called right before the &drm_encoder_helper_funcs.disable,
++	 * &drm_encoder_helper_funcs.prepare or &drm_encoder_helper_funcs.dpms
++	 * hook.
+ 	 *
+ 	 * The bridge can assume that the display pipe (i.e. clocks and timing
+ 	 * signals) feeding it is still running when this callback is called.
+ 	 *
+-	 *
+-	 * If the preceding element is a &drm_bridge, then this is called before
+-	 * that bridge is disabled via one of:
+-	 *
+-	 * - &drm_bridge_funcs.disable
+-	 * - &drm_bridge_funcs.atomic_disable
+-	 *
+-	 * If the preceding element of the bridge is a display controller, then
+-	 * this callback is called before the encoder is disabled via one of:
+-	 *
+-	 * - &drm_encoder_helper_funcs.atomic_disable
+-	 * - &drm_encoder_helper_funcs.prepare
+-	 * - &drm_encoder_helper_funcs.disable
+-	 * - &drm_encoder_helper_funcs.dpms
+-	 *
+-	 * and the CRTC is disabled via one of:
+-	 *
+-	 * - &drm_crtc_helper_funcs.prepare
+-	 * - &drm_crtc_helper_funcs.atomic_disable
+-	 * - &drm_crtc_helper_funcs.disable
+-	 * - &drm_crtc_helper_funcs.dpms.
+-	 *
+ 	 * The @disable callback is optional.
+ 	 *
+ 	 * NOTE:
+@@ -215,34 +199,17 @@ struct drm_bridge_funcs {
+ 	/**
+ 	 * @post_disable:
+ 	 *
++	 * This callback should disable the bridge. It is called right after the
++	 * preceding element in the display pipe is disabled. If the preceding
++	 * element is a bridge this means it's called after that bridge's
++	 * @post_disable function. If the preceding element is a &drm_encoder
++	 * it's called right after the encoder's
++	 * &drm_encoder_helper_funcs.disable, &drm_encoder_helper_funcs.prepare
++	 * or &drm_encoder_helper_funcs.dpms hook.
++	 *
+ 	 * The bridge must assume that the display pipe (i.e. clocks and timing
+-	 * signals) feeding this bridge is no longer running when the
+-	 * @post_disable is called.
+-	 *
+-	 * This callback should perform all the actions required by the hardware
+-	 * after it has stopped receiving signals from the preceding element.
+-	 *
+-	 * If the preceding element is a &drm_bridge, then this is called after
+-	 * that bridge is post-disabled (unless marked otherwise by the
+-	 * @pre_enable_prev_first flag) via one of:
+-	 *
+-	 * - &drm_bridge_funcs.post_disable
+-	 * - &drm_bridge_funcs.atomic_post_disable
+-	 *
+-	 * If the preceding element of the bridge is a display controller, then
+-	 * this callback is called after the encoder is disabled via one of:
+-	 *
+-	 * - &drm_encoder_helper_funcs.atomic_disable
+-	 * - &drm_encoder_helper_funcs.prepare
+-	 * - &drm_encoder_helper_funcs.disable
+-	 * - &drm_encoder_helper_funcs.dpms
+-	 *
+-	 * and the CRTC is disabled via one of:
+-	 *
+-	 * - &drm_crtc_helper_funcs.prepare
+-	 * - &drm_crtc_helper_funcs.atomic_disable
+-	 * - &drm_crtc_helper_funcs.disable
+-	 * - &drm_crtc_helper_funcs.dpms
++	 * signals) feeding it is no longer running when this callback is
++	 * called.
+ 	 *
+ 	 * The @post_disable callback is optional.
+ 	 *
+@@ -285,30 +252,18 @@ struct drm_bridge_funcs {
+ 	/**
+ 	 * @pre_enable:
+ 	 *
++	 * This callback should enable the bridge. It is called right before
++	 * the preceding element in the display pipe is enabled. If the
++	 * preceding element is a bridge this means it's called before that
++	 * bridge's @pre_enable function. If the preceding element is a
++	 * &drm_encoder it's called right before the encoder's
++	 * &drm_encoder_helper_funcs.enable, &drm_encoder_helper_funcs.commit or
++	 * &drm_encoder_helper_funcs.dpms hook.
++	 *
+ 	 * The display pipe (i.e. clocks and timing signals) feeding this bridge
+-	 * will not yet be running when the @pre_enable is called.
+-	 *
+-	 * This callback should perform all the necessary actions to prepare the
+-	 * bridge to accept signals from the preceding element.
+-	 *
+-	 * If the preceding element is a &drm_bridge, then this is called before
+-	 * that bridge is pre-enabled (unless marked otherwise by
+-	 * @pre_enable_prev_first flag) via one of:
+-	 *
+-	 * - &drm_bridge_funcs.pre_enable
+-	 * - &drm_bridge_funcs.atomic_pre_enable
+-	 *
+-	 * If the preceding element of the bridge is a display controller, then
+-	 * this callback is called before the CRTC is enabled via one of:
+-	 *
+-	 * - &drm_crtc_helper_funcs.atomic_enable
+-	 * - &drm_crtc_helper_funcs.commit
+-	 *
+-	 * and the encoder is enabled via one of:
+-	 *
+-	 * - &drm_encoder_helper_funcs.atomic_enable
+-	 * - &drm_encoder_helper_funcs.enable
+-	 * - &drm_encoder_helper_funcs.commit
++	 * will not yet be running when this callback is called. The bridge must
++	 * not enable the display link feeding the next bridge in the chain (if
++	 * there is one) when this callback is called.
+ 	 *
+ 	 * The @pre_enable callback is optional.
+ 	 *
+@@ -322,31 +277,19 @@ struct drm_bridge_funcs {
+ 	/**
+ 	 * @enable:
+ 	 *
+-	 * The @enable callback should enable the bridge.
++	 * This callback should enable the bridge. It is called right after
++	 * the preceding element in the display pipe is enabled. If the
++	 * preceding element is a bridge this means it's called after that
++	 * bridge's @enable function. If the preceding element is a
++	 * &drm_encoder it's called right after the encoder's
++	 * &drm_encoder_helper_funcs.enable, &drm_encoder_helper_funcs.commit or
++	 * &drm_encoder_helper_funcs.dpms hook.
+ 	 *
+ 	 * The bridge can assume that the display pipe (i.e. clocks and timing
+ 	 * signals) feeding it is running when this callback is called. This
+ 	 * callback must enable the display link feeding the next bridge in the
+ 	 * chain if there is one.
+ 	 *
+-	 * If the preceding element is a &drm_bridge, then this is called after
+-	 * that bridge is enabled via one of:
+-	 *
+-	 * - &drm_bridge_funcs.enable
+-	 * - &drm_bridge_funcs.atomic_enable
+-	 *
+-	 * If the preceding element of the bridge is a display controller, then
+-	 * this callback is called after the CRTC is enabled via one of:
+-	 *
+-	 * - &drm_crtc_helper_funcs.atomic_enable
+-	 * - &drm_crtc_helper_funcs.commit
+-	 *
+-	 * and the encoder is enabled via one of:
+-	 *
+-	 * - &drm_encoder_helper_funcs.atomic_enable
+-	 * - &drm_encoder_helper_funcs.enable
+-	 * - drm_encoder_helper_funcs.commit
+-	 *
+ 	 * The @enable callback is optional.
+ 	 *
+ 	 * NOTE:
+@@ -359,30 +302,17 @@ struct drm_bridge_funcs {
+ 	/**
+ 	 * @atomic_pre_enable:
+ 	 *
++	 * This callback should enable the bridge. It is called right before
++	 * the preceding element in the display pipe is enabled. If the
++	 * preceding element is a bridge this means it's called before that
++	 * bridge's @atomic_pre_enable or @pre_enable function. If the preceding
++	 * element is a &drm_encoder it's called right before the encoder's
++	 * &drm_encoder_helper_funcs.atomic_enable hook.
++	 *
+ 	 * The display pipe (i.e. clocks and timing signals) feeding this bridge
+-	 * will not yet be running when the @atomic_pre_enable is called.
+-	 *
+-	 * This callback should perform all the necessary actions to prepare the
+-	 * bridge to accept signals from the preceding element.
+-	 *
+-	 * If the preceding element is a &drm_bridge, then this is called before
+-	 * that bridge is pre-enabled (unless marked otherwise by
+-	 * @pre_enable_prev_first flag) via one of:
+-	 *
+-	 * - &drm_bridge_funcs.pre_enable
+-	 * - &drm_bridge_funcs.atomic_pre_enable
+-	 *
+-	 * If the preceding element of the bridge is a display controller, then
+-	 * this callback is called before the CRTC is enabled via one of:
+-	 *
+-	 * - &drm_crtc_helper_funcs.atomic_enable
+-	 * - &drm_crtc_helper_funcs.commit
+-	 *
+-	 * and the encoder is enabled via one of:
+-	 *
+-	 * - &drm_encoder_helper_funcs.atomic_enable
+-	 * - &drm_encoder_helper_funcs.enable
+-	 * - &drm_encoder_helper_funcs.commit
++	 * will not yet be running when this callback is called. The bridge must
++	 * not enable the display link feeding the next bridge in the chain (if
++	 * there is one) when this callback is called.
+ 	 *
+ 	 * The @atomic_pre_enable callback is optional.
+ 	 */
+@@ -392,31 +322,18 @@ struct drm_bridge_funcs {
+ 	/**
+ 	 * @atomic_enable:
+ 	 *
+-	 * The @atomic_enable callback should enable the bridge.
++	 * This callback should enable the bridge. It is called right after
++	 * the preceding element in the display pipe is enabled. If the
++	 * preceding element is a bridge this means it's called after that
++	 * bridge's @atomic_enable or @enable function. If the preceding element
++	 * is a &drm_encoder it's called right after the encoder's
++	 * &drm_encoder_helper_funcs.atomic_enable hook.
+ 	 *
+ 	 * The bridge can assume that the display pipe (i.e. clocks and timing
+ 	 * signals) feeding it is running when this callback is called. This
+ 	 * callback must enable the display link feeding the next bridge in the
+ 	 * chain if there is one.
+ 	 *
+-	 * If the preceding element is a &drm_bridge, then this is called after
+-	 * that bridge is enabled via one of:
+-	 *
+-	 * - &drm_bridge_funcs.enable
+-	 * - &drm_bridge_funcs.atomic_enable
+-	 *
+-	 * If the preceding element of the bridge is a display controller, then
+-	 * this callback is called after the CRTC is enabled via one of:
+-	 *
+-	 * - &drm_crtc_helper_funcs.atomic_enable
+-	 * - &drm_crtc_helper_funcs.commit
+-	 *
+-	 * and the encoder is enabled via one of:
+-	 *
+-	 * - &drm_encoder_helper_funcs.atomic_enable
+-	 * - &drm_encoder_helper_funcs.enable
+-	 * - drm_encoder_helper_funcs.commit
+-	 *
+ 	 * The @atomic_enable callback is optional.
+ 	 */
+ 	void (*atomic_enable)(struct drm_bridge *bridge,
+@@ -424,32 +341,16 @@ struct drm_bridge_funcs {
+ 	/**
+ 	 * @atomic_disable:
+ 	 *
+-	 * The @atomic_disable callback should disable the bridge.
++	 * This callback should disable the bridge. It is called right before
++	 * the preceding element in the display pipe is disabled. If the
++	 * preceding element is a bridge this means it's called before that
++	 * bridge's @atomic_disable or @disable vfunc. If the preceding element
++	 * is a &drm_encoder it's called right before the
++	 * &drm_encoder_helper_funcs.atomic_disable hook.
+ 	 *
+ 	 * The bridge can assume that the display pipe (i.e. clocks and timing
+ 	 * signals) feeding it is still running when this callback is called.
+ 	 *
+-	 * If the preceding element is a &drm_bridge, then this is called before
+-	 * that bridge is disabled via one of:
+-	 *
+-	 * - &drm_bridge_funcs.disable
+-	 * - &drm_bridge_funcs.atomic_disable
+-	 *
+-	 * If the preceding element of the bridge is a display controller, then
+-	 * this callback is called before the encoder is disabled via one of:
+-	 *
+-	 * - &drm_encoder_helper_funcs.atomic_disable
+-	 * - &drm_encoder_helper_funcs.prepare
+-	 * - &drm_encoder_helper_funcs.disable
+-	 * - &drm_encoder_helper_funcs.dpms
+-	 *
+-	 * and the CRTC is disabled via one of:
+-	 *
+-	 * - &drm_crtc_helper_funcs.prepare
+-	 * - &drm_crtc_helper_funcs.atomic_disable
+-	 * - &drm_crtc_helper_funcs.disable
+-	 * - &drm_crtc_helper_funcs.dpms.
+-	 *
+ 	 * The @atomic_disable callback is optional.
+ 	 */
+ 	void (*atomic_disable)(struct drm_bridge *bridge,
+@@ -458,34 +359,16 @@ struct drm_bridge_funcs {
+ 	/**
+ 	 * @atomic_post_disable:
+ 	 *
++	 * This callback should disable the bridge. It is called right after the
++	 * preceding element in the display pipe is disabled. If the preceding
++	 * element is a bridge this means it's called after that bridge's
++	 * @atomic_post_disable or @post_disable function. If the preceding
++	 * element is a &drm_encoder it's called right after the encoder's
++	 * &drm_encoder_helper_funcs.atomic_disable hook.
++	 *
+ 	 * The bridge must assume that the display pipe (i.e. clocks and timing
+-	 * signals) feeding this bridge is no longer running when the
+-	 * @atomic_post_disable is called.
+-	 *
+-	 * This callback should perform all the actions required by the hardware
+-	 * after it has stopped receiving signals from the preceding element.
+-	 *
+-	 * If the preceding element is a &drm_bridge, then this is called after
+-	 * that bridge is post-disabled (unless marked otherwise by the
+-	 * @pre_enable_prev_first flag) via one of:
+-	 *
+-	 * - &drm_bridge_funcs.post_disable
+-	 * - &drm_bridge_funcs.atomic_post_disable
+-	 *
+-	 * If the preceding element of the bridge is a display controller, then
+-	 * this callback is called after the encoder is disabled via one of:
+-	 *
+-	 * - &drm_encoder_helper_funcs.atomic_disable
+-	 * - &drm_encoder_helper_funcs.prepare
+-	 * - &drm_encoder_helper_funcs.disable
+-	 * - &drm_encoder_helper_funcs.dpms
+-	 *
+-	 * and the CRTC is disabled via one of:
+-	 *
+-	 * - &drm_crtc_helper_funcs.prepare
+-	 * - &drm_crtc_helper_funcs.atomic_disable
+-	 * - &drm_crtc_helper_funcs.disable
+-	 * - &drm_crtc_helper_funcs.dpms
++	 * signals) feeding it is no longer running when this callback is
++	 * called.
+ 	 *
+ 	 * The @atomic_post_disable callback is optional.
+ 	 */
 -- 
 2.52.0
 
