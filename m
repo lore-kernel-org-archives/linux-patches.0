@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A08D2D0C79;
-	Thu, 15 Jan 2026 17:26:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56EEA399011;
+	Thu, 15 Jan 2026 17:26:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497984; cv=none; b=g6RhS5riumtJyEYyJFwwFfZ27tvW+XRDdFCEhQrqHbUyZuXio/l73xZWRzyRYPB6QSe5ra0vvMPwNSxqHgfHRSkGQST+5QL+kzvAAds+cFozJEJrDVWgfjn11uN9syT5eow/mtqMvkxz4EMj0pZ/pXJqF7dYCGbRUlNKDwcf4M4=
+	t=1768497987; cv=none; b=mNkXqxvgtz1ES99d61kFCluuUlsNn0FStBEymw/nuSXA+8UxNHATHOCMrJFVBqBFJBjulAktVgZx02NFxq7A7ojSP/0C7hnpZbNxNlObD7stXR2u+gztqru2sP9VWrSHAjjTIIUbQfH71XQXBzfqDVszN0q5l3IXAasP/o89OZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497984; c=relaxed/simple;
-	bh=1UtsToLvofkMELPVYW1itPwygSMACF8m8uo/z0WnoVM=;
+	s=arc-20240116; t=1768497987; c=relaxed/simple;
+	bh=TPjbPUpkNjKY/IqZYghauoLT7Dy23+8FitfJz3fauBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SLIezYxHXiHfNAcGct9LP5kS2TEnOjFj7eifItR7dPBYJeiO84Qsbkn8keK6QmNnEqHtY3bSrqyqfOi+VF1YIhC2b73Bgmqxo5TS5/tmWmyMsmi9MsxWrKSaZeB0gwCRS7ciuxcCcz6iQYxBqGAVK3+MNHRuS6j4g3lMBZvfmJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DxN/4Sl1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VgV9bHjWyLIoHOdyi6EvDgUmyUfzVVNzGSvch/FMD73OoIjaUHk7ik9Zo1KOkFWDRok97l9mrDxdxJtBwK2trgbYpcTS3DwFFcuWpdcbrMt6aYEKAc85Z8IC6FY1yNzfqAlHDY84WdJ66bV6DA2dkB7+Y1t2dc4eRxIiAAHCWT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ILRBDrzq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DxN/4Sl1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 065F7C16AAE;
-	Thu, 15 Jan 2026 17:26:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ILRBDrzq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D81B1C116D0;
+	Thu, 15 Jan 2026 17:26:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497984;
-	bh=1UtsToLvofkMELPVYW1itPwygSMACF8m8uo/z0WnoVM=;
+	s=korg; t=1768497987;
+	bh=TPjbPUpkNjKY/IqZYghauoLT7Dy23+8FitfJz3fauBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DxN/4Sl1FgSOc+Cnd2lYu3kCy3NS0+A6EY5VRdJcaIqQUH0wxj8pZzdtjr0U+1yYm
-	 940g2OrRctL+fGfmmd9igr6lP/fqNNyUleqQznuepDilg4jEXvh/36ao5yZ866UbKd
-	 jtFVBC0E04qpZbNmC8HhakDA7Us1VM8CZ1zNSRUg=
+	b=ILRBDrzqk72BF3M6+RAFJxBkF8cJWEJLlgVT6oTqnp5GRO81xvTVrX0P6yvVJ+eqc
+	 W0GzMyR40lq/EgCJPFmb2odBQeJdfT+uIsg5aa7JvH9On1LxuHSQmxVJqyqfENVRH9
+	 x4BgYawD0xjakLwOE9Fhz7E40S2bH0rnIPy4fMm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Changcheng <chenchangcheng@kylinos.cn>,
+	Wenhua Lin <Wenhua.Lin@unisoc.com>,
+	Cixi Geng <cixi.geng@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 271/554] usb: usb-storage: No additional quirks need to be added to the EL-R12 optical drive.
-Date: Thu, 15 Jan 2026 17:45:37 +0100
-Message-ID: <20260115164256.039103666@linuxfoundation.org>
+Subject: [PATCH 5.15 272/554] serial: sprd: Return -EPROBE_DEFER when uart clock is not ready
+Date: Thu, 15 Jan 2026 17:45:38 +0100
+Message-ID: <20260115164256.075009422@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -50,62 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Changcheng <chenchangcheng@kylinos.cn>
+From: Wenhua Lin <Wenhua.Lin@unisoc.com>
 
-[ Upstream commit 955a48a5353f4fe009704a9a4272a3adf627cd35 ]
+[ Upstream commit 29e8a0c587e328ed458380a45d6028adf64d7487 ]
 
-The optical drive of EL-R12 has the same vid and pid as INIC-3069,
-as follows:
-T:  Bus=02 Lev=02 Prnt=02 Port=01 Cnt=01 Dev#=  3 Spd=5000 MxCh= 0
-D:  Ver= 3.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
-P:  Vendor=13fd ProdID=3940 Rev= 3.10
-S:  Manufacturer=HL-DT-ST
-S:  Product= DVD+-RW GT80N
-S:  SerialNumber=423349524E4E38303338323439202020
-C:* #Ifs= 1 Cfg#= 1 Atr=80 MxPwr=144mA
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=08(stor.) Sub=02 Prot=50 Driver=usb-storage
-E:  Ad=83(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=0a(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+In sprd_clk_init(), when devm_clk_get() returns -EPROBE_DEFER
+for either uart or source clock, we should propagate the
+error instead of just warning and continuing with NULL clocks.
 
-This will result in the optical drive device also adding
-the quirks of US_FL_NO_ATA_1X. When performing an erase operation,
-it will fail, and the reason for the failure is as follows:
-[  388.967742] sr 5:0:0:0: [sr0] tag#0 Send: scmd 0x00000000d20c33a7
-[  388.967742] sr 5:0:0:0: [sr0] tag#0 CDB: ATA command pass through(12)/Blank a1 11 00 00 00 00 00 00 00 00 00 00
-[  388.967773] sr 5:0:0:0: [sr0] tag#0 Done: SUCCESS Result: hostbyte=DID_TARGET_FAILURE driverbyte=DRIVER_OK cmd_age=0s
-[  388.967773] sr 5:0:0:0: [sr0] tag#0 CDB: ATA command pass through(12)/Blank a1 11 00 00 00 00 00 00 00 00 00 00
-[  388.967803] sr 5:0:0:0: [sr0] tag#0 Sense Key : Illegal Request [current]
-[  388.967803] sr 5:0:0:0: [sr0] tag#0 Add. Sense: Invalid field in cdb
-[  388.967803] sr 5:0:0:0: [sr0] tag#0 scsi host busy 1 failed 0
-[  388.967803] sr 5:0:0:0: Notifying upper driver of completion (result 8100002)
-[  388.967834] sr 5:0:0:0: [sr0] tag#0 0 sectors total, 0 bytes done.
+Currently the driver only emits a warning when clock acquisition
+fails and proceeds with NULL clock pointers. This can lead to
+issues later when the clocks are actually needed. More importantly,
+when the clock provider is not ready yet and returns -EPROBE_DEFER,
+we should return this error to allow deferred probing.
 
-For the EL-R12 standard optical drive, all operational commands
-and usage scenarios were tested without adding the IGNORE_RESIDUE quirks,
-and no issues were encountered. It can be reasonably concluded
-that removing the IGNORE_RESIDUE quirks has no impact.
+This change adds explicit checks for -EPROBE_DEFER after both:
+1. devm_clk_get(uport->dev, uart)
+2. devm_clk_get(uport->dev, source)
 
-Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
-Link: https://patch.msgid.link/20251121064020.29332-1-chenchangcheng@kylinos.cn
+When -EPROBE_DEFER is encountered, the function now returns
+-EPROBE_DEFER to let the driver framework retry probing
+later when the clock dependencies are resolved.
+
+Signed-off-by: Wenhua Lin <Wenhua.Lin@unisoc.com>
+Link: https://patch.msgid.link/20251022030840.956589-1-Wenhua.Lin@unisoc.com
+Reviewed-by: Cixi Geng <cixi.geng@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/storage/unusual_uas.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/sprd_serial.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/usb/storage/unusual_uas.h b/drivers/usb/storage/unusual_uas.h
-index 1477e31d7763..b695f5ba9a40 100644
---- a/drivers/usb/storage/unusual_uas.h
-+++ b/drivers/usb/storage/unusual_uas.h
-@@ -98,7 +98,7 @@ UNUSUAL_DEV(0x125f, 0xa94a, 0x0160, 0x0160,
- 		US_FL_NO_ATA_1X),
+diff --git a/drivers/tty/serial/sprd_serial.c b/drivers/tty/serial/sprd_serial.c
+index a1952e4f1fcb..e850959ecf55 100644
+--- a/drivers/tty/serial/sprd_serial.c
++++ b/drivers/tty/serial/sprd_serial.c
+@@ -1137,6 +1137,9 @@ static int sprd_clk_init(struct uart_port *uport)
  
- /* Reported-by: Benjamin Tissoires <benjamin.tissoires@redhat.com> */
--UNUSUAL_DEV(0x13fd, 0x3940, 0x0000, 0x9999,
-+UNUSUAL_DEV(0x13fd, 0x3940, 0x0309, 0x0309,
- 		"Initio Corporation",
- 		"INIC-3069",
- 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+ 	clk_uart = devm_clk_get(uport->dev, "uart");
+ 	if (IS_ERR(clk_uart)) {
++		if (PTR_ERR(clk_uart) == -EPROBE_DEFER)
++			return -EPROBE_DEFER;
++
+ 		dev_warn(uport->dev, "uart%d can't get uart clock\n",
+ 			 uport->line);
+ 		clk_uart = NULL;
+@@ -1144,6 +1147,9 @@ static int sprd_clk_init(struct uart_port *uport)
+ 
+ 	clk_parent = devm_clk_get(uport->dev, "source");
+ 	if (IS_ERR(clk_parent)) {
++		if (PTR_ERR(clk_parent) == -EPROBE_DEFER)
++			return -EPROBE_DEFER;
++
+ 		dev_warn(uport->dev, "uart%d can't get source clock\n",
+ 			 uport->line);
+ 		clk_parent = NULL;
 -- 
 2.51.0
 
