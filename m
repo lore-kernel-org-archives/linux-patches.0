@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B6C73A7F5D;
-	Thu, 15 Jan 2026 17:06:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6313A7F5D;
+	Thu, 15 Jan 2026 17:06:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496813; cv=none; b=Ysf0ylY1ZCl6/11oKOO/XGXIYcnyW9qd59jJy9DUQX4vQof058bWY06IoCZ9rIktSlYyDMrsgfNGH+VZQ6zrVFRJwD9w2XOlSqCpekeog8//dDffFrhIp03fg3jApBA4ROfwPpWh/VWIWdwWi0b6br35MLYJuhiHInud9us+zBg=
+	t=1768496816; cv=none; b=B23J+CSZFSzGZxC8vAzLLgs+WaVbkSONiUghPqFapPgN9B4QFZNY73Etx7rPM/2D5mciH5jdKb0P2yhMHORVehmh5myoHo5kDaJhLJV9/LzPIWGzfqxRBoirTqKHSCAcefpgxO0bwFSVCfcBgXfR92pZVfEwQcBbD3Xjy6rjnP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496813; c=relaxed/simple;
-	bh=Dxmc8KeY9bBB/7AsRuOnvyF8p8lH8Eqj675cGMJPmaQ=;
+	s=arc-20240116; t=1768496816; c=relaxed/simple;
+	bh=SAzb5bgw5iIIKeJHt4niMId2X3BVg+5YF9i8JoXjdLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sh8WvROOUNC8pwpDVz+Sb4mY3/J+SYg5qXEFIoUCJ5vwGPUQE4gD8tmGoRB6sAqx8NaD3muh5epCB3Hbfx+0M0g7+6sc/ch3/9GdC0/Zn+/nLvbn89iAep7BjLqgbzMYn0q+xov660Fi/XvEjNBO7Id/NWg8npz8CmU4yIV7MMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fKNu5IGN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZoLSX6ztewK+UH6o///dK5c2ftWXqdI/yDLYXNUGhD3tHuu2r+ztIzag90KgwFMdwX8Yg8MdWh/i2TPNnWmTvslA74eR5icSGX+QkJXgOHMIEtAk/sYvIE77U6INdDQNGF0ztcC680qcuKaVyDUmGaxvIs/DKkJCa6+npyvFRoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YsE5vv6C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fKNu5IGN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD4CBC116D0;
-	Thu, 15 Jan 2026 17:06:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YsE5vv6C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F4A9C116D0;
+	Thu, 15 Jan 2026 17:06:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496813;
-	bh=Dxmc8KeY9bBB/7AsRuOnvyF8p8lH8Eqj675cGMJPmaQ=;
+	s=korg; t=1768496816;
+	bh=SAzb5bgw5iIIKeJHt4niMId2X3BVg+5YF9i8JoXjdLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fKNu5IGNarXbDg29f0Z8LdB5JyHT3YIii157iEMUriUlv++OKn8ddi6nOpK+oAcXe
-	 6tKFVcGKeoOzeXiy88iXO5gPmNBmCx49jDrwi0OHosZ2bLkxFi1P9rWSLod4ZddDZv
-	 qjM8D1QfN17IfbK6fUmCy/BQARZDVOGeCxturHw8=
+	b=YsE5vv6CHeMUAQTaTOZVXgSGkeDutOX2YHb8EwZ8heDz6XKvT1rghYsn5+IG/dNvF
+	 5eLbRAWQlDiHv/hs+4CmB5jeu2/GSvYucUiceDWV3Bqfrb5ni9unL8LTa+6EA5DTMC
+	 QPcOUbEkDWYlYz5FRNOsMe1bdwFiw/fzAqqmY5BQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Stephen Smalley <stephen.smalley.work@gmail.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	NeilBrown <neilb@suse.de>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.6 24/88] nfsd: Fix NFSv3 atomicity bugs in nfsd_setattr()
-Date: Thu, 15 Jan 2026 17:48:07 +0100
-Message-ID: <20260115164147.188341985@linuxfoundation.org>
+Subject: [PATCH 6.6 25/88] nfsd: set security label during create operations
+Date: Thu, 15 Jan 2026 17:48:08 +0100
+Message-ID: <20260115164147.224139173@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164146.312481509@linuxfoundation.org>
 References: <20260115164146.312481509@linuxfoundation.org>
@@ -52,206 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Stephen Smalley <stephen.smalley.work@gmail.com>
 
-commit 24d92de9186ebc340687caf7356e1070773e67bc upstream.
+commit 442d27ff09a218b61020ab56387dbc508ad6bfa6 upstream.
 
-The main point of the guarded SETATTR is to prevent races with other
-WRITE and SETATTR calls. That requires that the check of the guard time
-against the inode ctime be done after taking the inode lock.
+When security labeling is enabled, the client can pass a file security
+label as part of a create operation for the new file, similar to mode
+and other attributes. At present, the security label is received by nfsd
+and passed down to nfsd_create_setattr(), but nfsd_setattr() is never
+called and therefore the label is never set on the new file. This bug
+may have been introduced on or around commit d6a97d3f589a ("NFSD:
+add security label to struct nfsd_attrs"). Looking at nfsd_setattr()
+I am uncertain as to whether the same issue presents for
+file ACLs and therefore requires a similar fix for those.
 
-Furthermore, we need to take into account the 32-bit nature of
-timestamps in NFSv3, and the possibility that files may change at a
-faster rate than once a second.
+An alternative approach would be to introduce a new LSM hook to set the
+"create SID" of the current task prior to the actual file creation, which
+would atomically label the new inode at creation time. This would be better
+for SELinux and a similar approach has been used previously
+(see security_dentry_create_files_as) but perhaps not usable by other LSMs.
 
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Reproducer:
+1. Install a Linux distro with SELinux - Fedora is easiest
+2. git clone https://github.com/SELinuxProject/selinux-testsuite
+3. Install the requisite dependencies per selinux-testsuite/README.md
+4. Run something like the following script:
+MOUNT=$HOME/selinux-testsuite
+sudo systemctl start nfs-server
+sudo exportfs -o rw,no_root_squash,security_label localhost:$MOUNT
+sudo mkdir -p /mnt/selinux-testsuite
+sudo mount -t nfs -o vers=4.2 localhost:$MOUNT /mnt/selinux-testsuite
+pushd /mnt/selinux-testsuite/
+sudo make -C policy load
+pushd tests/filesystem
+sudo runcon -t test_filesystem_t ./create_file -f trans_test_file \
+	-e test_filesystem_filetranscon_t -v
+sudo rm -f trans_test_file
+popd
+sudo make -C policy unload
+popd
+sudo umount /mnt/selinux-testsuite
+sudo exportfs -u localhost:$MOUNT
+sudo rmdir /mnt/selinux-testsuite
+sudo systemctl stop nfs-server
+
+Expected output:
+<eliding noise from commands run prior to or after the test itself>
+Process context:
+	unconfined_u:unconfined_r:test_filesystem_t:s0-s0:c0.c1023
+Created file: trans_test_file
+File context: unconfined_u:object_r:test_filesystem_filetranscon_t:s0
+File context is correct
+
+Actual output:
+<eliding noise from commands run prior to or after the test itself>
+Process context:
+	unconfined_u:unconfined_r:test_filesystem_t:s0-s0:c0.c1023
+Created file: trans_test_file
+File context: system_u:object_r:test_file_t:s0
+File context error, expected:
+	test_filesystem_filetranscon_t
+got:
+	test_file_t
+
+Signed-off-by: Stephen Smalley <stephen.smalley.work@gmail.com>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Reviewed-by: NeilBrown <neilb@suse.de>
-Stable-dep-of: 442d27ff09a2 ("nfsd: set security label during create operations")
+Stable-dep-of: 913f7cf77bf1 ("NFSD: NFSv4 file creation neglects setting ACL")
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs3proc.c  |    6 ++++--
- fs/nfsd/nfs3xdr.c   |    5 +----
- fs/nfsd/nfs4proc.c  |    3 +--
- fs/nfsd/nfs4state.c |    2 +-
- fs/nfsd/nfsproc.c   |    6 +++---
- fs/nfsd/vfs.c       |   20 +++++++++++++-------
- fs/nfsd/vfs.h       |    2 +-
- fs/nfsd/xdr3.h      |    2 +-
- 8 files changed, 25 insertions(+), 21 deletions(-)
+ fs/nfsd/vfs.c |    2 +-
+ fs/nfsd/vfs.h |    8 ++++++++
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
---- a/fs/nfsd/nfs3proc.c
-+++ b/fs/nfsd/nfs3proc.c
-@@ -71,13 +71,15 @@ nfsd3_proc_setattr(struct svc_rqst *rqst
- 	struct nfsd_attrs attrs = {
- 		.na_iattr	= &argp->attrs,
- 	};
-+	const struct timespec64 *guardtime = NULL;
- 
- 	dprintk("nfsd: SETATTR(3)  %s\n",
- 				SVCFH_fmt(&argp->fh));
- 
- 	fh_copy(&resp->fh, &argp->fh);
--	resp->status = nfsd_setattr(rqstp, &resp->fh, &attrs,
--				    argp->check_guard, argp->guardtime);
-+	if (argp->check_guard)
-+		guardtime = &argp->guardtime;
-+	resp->status = nfsd_setattr(rqstp, &resp->fh, &attrs, guardtime);
- 	return rpc_success;
- }
- 
---- a/fs/nfsd/nfs3xdr.c
-+++ b/fs/nfsd/nfs3xdr.c
-@@ -295,17 +295,14 @@ svcxdr_decode_sattr3(struct svc_rqst *rq
- static bool
- svcxdr_decode_sattrguard3(struct xdr_stream *xdr, struct nfsd3_sattrargs *args)
- {
--	__be32 *p;
- 	u32 check;
- 
- 	if (xdr_stream_decode_bool(xdr, &check) < 0)
- 		return false;
- 	if (check) {
--		p = xdr_inline_decode(xdr, XDR_UNIT * 2);
--		if (!p)
-+		if (!svcxdr_decode_nfstime3(xdr, &args->guardtime))
- 			return false;
- 		args->check_guard = 1;
--		args->guardtime = be32_to_cpup(p);
- 	} else
- 		args->check_guard = 0;
- 
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -1160,8 +1160,7 @@ nfsd4_setattr(struct svc_rqst *rqstp, st
- 		goto out;
- 	save_no_wcc = cstate->current_fh.fh_no_wcc;
- 	cstate->current_fh.fh_no_wcc = true;
--	status = nfsd_setattr(rqstp, &cstate->current_fh, &attrs,
--				0, (time64_t)0);
-+	status = nfsd_setattr(rqstp, &cstate->current_fh, &attrs, NULL);
- 	cstate->current_fh.fh_no_wcc = save_no_wcc;
- 	if (!status)
- 		status = nfserrno(attrs.na_labelerr);
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -5225,7 +5225,7 @@ nfsd4_truncate(struct svc_rqst *rqstp, s
- 		return 0;
- 	if (!(open->op_share_access & NFS4_SHARE_ACCESS_WRITE))
- 		return nfserr_inval;
--	return nfsd_setattr(rqstp, fh, &attrs, 0, (time64_t)0);
-+	return nfsd_setattr(rqstp, fh, &attrs, NULL);
- }
- 
- static __be32 nfs4_get_vfs_file(struct svc_rqst *rqstp, struct nfs4_file *fp,
---- a/fs/nfsd/nfsproc.c
-+++ b/fs/nfsd/nfsproc.c
-@@ -103,7 +103,7 @@ nfsd_proc_setattr(struct svc_rqst *rqstp
- 		}
- 	}
- 
--	resp->status = nfsd_setattr(rqstp, fhp, &attrs, 0, (time64_t)0);
-+	resp->status = nfsd_setattr(rqstp, fhp, &attrs, NULL);
- 	if (resp->status != nfs_ok)
- 		goto out;
- 
-@@ -390,8 +390,8 @@ nfsd_proc_create(struct svc_rqst *rqstp)
- 		 */
- 		attr->ia_valid &= ATTR_SIZE;
- 		if (attr->ia_valid)
--			resp->status = nfsd_setattr(rqstp, newfhp, &attrs, 0,
--						    (time64_t)0);
-+			resp->status = nfsd_setattr(rqstp, newfhp, &attrs,
-+						    NULL);
- 	}
- 
- out_unlock:
 --- a/fs/nfsd/vfs.c
 +++ b/fs/nfsd/vfs.c
-@@ -459,7 +459,6 @@ static int __nfsd_setattr(struct dentry
-  * @rqstp: controlling RPC transaction
-  * @fhp: filehandle of target
-  * @attr: attributes to set
-- * @check_guard: set to 1 if guardtime is a valid timestamp
-  * @guardtime: do not act if ctime.tv_sec does not match this timestamp
-  *
-  * This call may adjust the contents of @attr (in particular, this
-@@ -471,8 +470,7 @@ static int __nfsd_setattr(struct dentry
-  */
- __be32
- nfsd_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp,
--	     struct nfsd_attrs *attr,
--	     int check_guard, time64_t guardtime)
-+	     struct nfsd_attrs *attr, const struct timespec64 *guardtime)
- {
- 	struct dentry	*dentry;
- 	struct inode	*inode;
-@@ -521,9 +519,6 @@ nfsd_setattr(struct svc_rqst *rqstp, str
- 
- 	nfsd_sanitize_attrs(inode, iap);
- 
--	if (check_guard && guardtime != inode_get_ctime_sec(inode))
--		return nfserr_notsync;
--
- 	/*
- 	 * The size case is special, it changes the file in addition to the
- 	 * attributes, and file systems don't expect it to be mixed with
-@@ -541,6 +536,16 @@ nfsd_setattr(struct svc_rqst *rqstp, str
- 	err = fh_fill_pre_attrs(fhp);
- 	if (err)
- 		goto out_unlock;
-+
-+	if (guardtime) {
-+		struct timespec64 ctime = inode_get_ctime(inode);
-+		if ((u32)guardtime->tv_sec != (u32)ctime.tv_sec ||
-+		    guardtime->tv_nsec != ctime.tv_nsec) {
-+			err = nfserr_notsync;
-+			goto out_fill_attrs;
-+		}
-+	}
-+
- 	for (retries = 1;;) {
- 		struct iattr attrs;
- 
-@@ -568,6 +573,7 @@ nfsd_setattr(struct svc_rqst *rqstp, str
- 		attr->na_aclerr = set_posix_acl(&nop_mnt_idmap,
- 						dentry, ACL_TYPE_DEFAULT,
- 						attr->na_dpacl);
-+out_fill_attrs:
- 	fh_fill_post_attrs(fhp);
- out_unlock:
- 	inode_unlock(inode);
-@@ -1374,7 +1380,7 @@ nfsd_create_setattr(struct svc_rqst *rqs
+@@ -1379,7 +1379,7 @@ nfsd_create_setattr(struct svc_rqst *rqs
+ 	 * Callers expect new file metadata to be committed even
  	 * if the attributes have not changed.
  	 */
- 	if (iap->ia_valid)
--		status = nfsd_setattr(rqstp, resfhp, attrs, 0, (time64_t)0);
-+		status = nfsd_setattr(rqstp, resfhp, attrs, NULL);
+-	if (iap->ia_valid)
++	if (nfsd_attrs_valid(attrs))
+ 		status = nfsd_setattr(rqstp, resfhp, attrs, NULL);
  	else
  		status = nfserrno(commit_metadata(resfhp));
- 
 --- a/fs/nfsd/vfs.h
 +++ b/fs/nfsd/vfs.h
-@@ -69,7 +69,7 @@ __be32		 nfsd_lookup_dentry(struct svc_r
- 				const char *, unsigned int,
- 				struct svc_export **, struct dentry **);
- __be32		nfsd_setattr(struct svc_rqst *, struct svc_fh *,
--				struct nfsd_attrs *, int, time64_t);
-+			     struct nfsd_attrs *, const struct timespec64 *);
- int nfsd_mountpoint(struct dentry *, struct svc_export *);
- #ifdef CONFIG_NFSD_V4
- __be32		nfsd4_vfs_fallocate(struct svc_rqst *, struct svc_fh *,
---- a/fs/nfsd/xdr3.h
-+++ b/fs/nfsd/xdr3.h
-@@ -14,7 +14,7 @@ struct nfsd3_sattrargs {
- 	struct svc_fh		fh;
- 	struct iattr		attrs;
- 	int			check_guard;
--	time64_t		guardtime;
-+	struct timespec64	guardtime;
- };
+@@ -60,6 +60,14 @@ static inline void nfsd_attrs_free(struc
+ 	posix_acl_release(attrs->na_dpacl);
+ }
  
- struct nfsd3_diropargs {
++static inline bool nfsd_attrs_valid(struct nfsd_attrs *attrs)
++{
++	struct iattr *iap = attrs->na_iattr;
++
++	return (iap->ia_valid || (attrs->na_seclabel &&
++		attrs->na_seclabel->len));
++}
++
+ __be32		nfserrno (int errno);
+ int		nfsd_cross_mnt(struct svc_rqst *rqstp, struct dentry **dpp,
+ 		                struct svc_export **expp);
 
 
