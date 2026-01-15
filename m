@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920682BDC13;
-	Thu, 15 Jan 2026 17:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3633BF2FE;
+	Thu, 15 Jan 2026 17:47:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499260; cv=none; b=Bnyuf2WITfUgEuCXqduE4Fr0f7ihNa8wGHbZnN4bSE6RUtpm5A/PMmSGLmKnAafw5LddR1uwHPeQ8chHf2TFdGzCB11u7En9eHwR6GfGfKqZsgpC8ZYDgey3+augNs8JL4zXc/31jpTcjMePCNImr7QJjQ52QhZsdcQm/fWmfok=
+	t=1768499263; cv=none; b=s9IlXS0EAQREb1ogBqvMmx4iVwsOPRIpkPOeIxq8/0FTTq3UxRcbRIsXgNgROHCMdu14L/FWImf9d4jQy17avaRJZIFPJO7I/3FT94YR1eUyzl7mIJTasWgr+dQgVC6mwvCNaOJA2XXmpYfxPFch3K5fQIer7LpsvPdw6188yV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499260; c=relaxed/simple;
-	bh=6VxYK9fH/c4UmTiV4kMbpBhFOKyT6jhHDUu4PT6ehCU=;
+	s=arc-20240116; t=1768499263; c=relaxed/simple;
+	bh=cTrEk6xt8lfaeJQSsS1Z2OLoauls9V+riJOxlzzysuE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C4YcpEtbIgvI5RdsLxWQQLFt0iDC7GlPJDpJsiviT2iZtce6yNJ/tSK/8NDaARVWhQpbhC01cppLZrc0BnWnZjT4STH1vjWbEcCtyTTTdbYHrsv+jQTnRjbnhQY5za2E/Rk6UVvcPPjlJScw9PqRWvSqS33sNQjjNiQ/PK3XlhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ytjlbAJN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hfE5M6XQSv0oQqFnKr8bsytjsQImzpN/vlpNpLguPgQLfDsDD9mW7CpffKWop5UTOye3k4CVt5b0vaoVjOolMebXU5JPxkGr7PoXZ7HhmomAHUbMfGYu7DC2vhaVi9cHXXnBJkBCVOTRrFF9Dw3LxJZ4aVmBs8fCfkDZSuStOPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LKMIn62s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ytjlbAJN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C964BC116D0;
-	Thu, 15 Jan 2026 17:47:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LKMIn62s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D63EC116D0;
+	Thu, 15 Jan 2026 17:47:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499260;
-	bh=6VxYK9fH/c4UmTiV4kMbpBhFOKyT6jhHDUu4PT6ehCU=;
+	s=korg; t=1768499263;
+	bh=cTrEk6xt8lfaeJQSsS1Z2OLoauls9V+riJOxlzzysuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ytjlbAJNNaxXq+acu1+rsSzeq05iamqw18SCGQaSGlpKL38KVBh2+WhF7qcV/XfFA
-	 OBa2se4Jgk+Q6uh9Jwjqq8PU3houiWxvUdMLOgWNoJA7dvFxBbhYMSCtdnuJFk55Be
-	 897gA+96SnQbO2YDww+bo7qZRKsy5+o5VIsL+FKg=
+	b=LKMIn62sd2ao0LFyBMDkR9QYWjm7iYttuADWBIOfhxisor3CKvvlD0Icbi6DBqsfF
+	 mrok36P4qVvymFkoe6p/20/fZWiIn73qWjeaBgxp4CKdsQAObv/7lKdpAdGLJ8s7su
+	 vzZ0StbMHIAbDJaf50Xy3WsZZCmDdRjYbjdayKDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Lingfeng <lilingfeng3@huawei.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 131/451] NFS: Automounted filesystems should inherit ro,noexec,nodev,sync flags
-Date: Thu, 15 Jan 2026 17:45:32 +0100
-Message-ID: <20260115164235.660931720@linuxfoundation.org>
+Subject: [PATCH 5.10 132/451] fs/nls: Fix inconsistency between utf8_to_utf32() and utf32_to_utf8()
+Date: Thu, 15 Jan 2026 17:45:33 +0100
+Message-ID: <20260115164235.696471548@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -45,68 +46,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 8675c69816e4276b979ff475ee5fac4688f80125 ]
+[ Upstream commit c36f9d7b2869a003a2f7d6ff2c6bac9e62fd7d68 ]
 
-When a filesystem is being automounted, it needs to preserve the
-user-set superblock mount options, such as the "ro" flag.
+After commit 25524b619029 ("fs/nls: Fix utf16 to utf8 conversion"),
+the return values of utf8_to_utf32() and utf32_to_utf8() are
+inconsistent when encountering an error: utf8_to_utf32() returns -1,
+while utf32_to_utf8() returns errno codes. Fix this inconsistency
+by modifying utf8_to_utf32() to return errno codes as well.
 
-Reported-by: Li Lingfeng <lilingfeng3@huawei.com>
-Link: https://lore.kernel.org/all/20240604112636.236517-3-lilingfeng@huaweicloud.com/
-Fixes: f2aedb713c28 ("NFS: Add fs_context support.")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: 25524b619029 ("fs/nls: Fix utf16 to utf8 conversion")
+Suggested-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://patch.msgid.link/20251129111535.8984-1-W_Armin@gmx.de
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/namespace.c | 6 ++++++
- fs/nfs/super.c     | 4 ----
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ fs/nls/nls_base.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/fs/nfs/namespace.c b/fs/nfs/namespace.c
-index 1f03445b5cb43..d205598cdc457 100644
---- a/fs/nfs/namespace.c
-+++ b/fs/nfs/namespace.c
-@@ -149,6 +149,7 @@ struct vfsmount *nfs_d_automount(struct path *path)
- 	struct vfsmount *mnt = ERR_PTR(-ENOMEM);
- 	struct nfs_server *server = NFS_SB(path->dentry->d_sb);
- 	struct nfs_client *client = server->nfs_client;
-+	unsigned long s_flags = path->dentry->d_sb->s_flags;
- 	int timeout = READ_ONCE(nfs_mountpoint_expiry_timeout);
- 	int ret;
- 
-@@ -174,6 +175,11 @@ struct vfsmount *nfs_d_automount(struct path *path)
- 		fc->net_ns = get_net(client->cl_net);
- 	}
- 
-+	/* Inherit the flags covered by NFS_SB_MASK */
-+	fc->sb_flags_mask |= NFS_SB_MASK;
-+	fc->sb_flags &= ~NFS_SB_MASK;
-+	fc->sb_flags |= s_flags & NFS_SB_MASK;
+diff --git a/fs/nls/nls_base.c b/fs/nls/nls_base.c
+index 7eacded3c17d1..f072eb6b563f6 100644
+--- a/fs/nls/nls_base.c
++++ b/fs/nls/nls_base.c
+@@ -67,19 +67,22 @@ int utf8_to_utf32(const u8 *s, int inlen, unicode_t *pu)
+ 			l &= t->lmask;
+ 			if (l < t->lval || l > UNICODE_MAX ||
+ 					(l & SURROGATE_MASK) == SURROGATE_PAIR)
+-				return -1;
++				return -EILSEQ;
 +
- 	/* for submounts we want the same server; referrals will reassign */
- 	memcpy(&ctx->nfs_server.address, &client->cl_addr, client->cl_addrlen);
- 	ctx->nfs_server.addrlen	= client->cl_addrlen;
-diff --git a/fs/nfs/super.c b/fs/nfs/super.c
-index 45b4240fdc081..b99f40e6b951b 100644
---- a/fs/nfs/super.c
-+++ b/fs/nfs/super.c
-@@ -1255,10 +1255,6 @@ int nfs_get_tree_common(struct fs_context *fc)
- 	if (server->flags & NFS_MOUNT_NOAC)
- 		fc->sb_flags |= SB_SYNCHRONOUS;
+ 			*pu = (unicode_t) l;
+ 			return nc;
+ 		}
+ 		if (inlen <= nc)
+-			return -1;
++			return -EOVERFLOW;
++
+ 		s++;
+ 		c = (*s ^ 0x80) & 0xFF;
+ 		if (c & 0xC0)
+-			return -1;
++			return -EILSEQ;
++
+ 		l = (l << 6) | c;
+ 	}
+-	return -1;
++	return -EILSEQ;
+ }
+ EXPORT_SYMBOL(utf8_to_utf32);
  
--	if (ctx->clone_data.sb)
--		if (ctx->clone_data.sb->s_flags & SB_SYNCHRONOUS)
--			fc->sb_flags |= SB_SYNCHRONOUS;
--
- 	/* Get a superblock - note that we may end up sharing one that already exists */
- 	fc->s_fs_info = server;
- 	s = sget_fc(fc, compare_super, nfs_set_super);
 -- 
 2.51.0
 
