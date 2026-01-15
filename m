@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 379CE3D1CBE;
-	Thu, 15 Jan 2026 17:54:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0819F3D1CCC;
+	Thu, 15 Jan 2026 17:54:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499673; cv=none; b=iOMVVTOZeWO4EkmWVHVXHZ0wO5wpCSYo/vsnu7HLFxunclvRZUwQGvS38spu6/VKvWj6VZ+2U+znv4D0A8731E1KxQH1PwwU54famhpKLQ++k4KcdSE2TvvXeilx06QLMkazJfMVg8TOhV19yvYP7JxNPUj4sva5oQwVlckotz4=
+	t=1768499676; cv=none; b=ZNzxPBuYYtW7mAWOK+H6bxJa+GLPMiRPIgEXekHxLMxiDXQ5NU4hkPFIxexV0hejkxT+qOD0GZ8g9Zld8zp9v3VDTWK7niCZ0MLyRjKju3J5kJnqk2M241d3cXEt1X7dlW3Fex29MxQSHU7CXIVa0K0Auuhat7FKzBtz9IV6jFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499673; c=relaxed/simple;
-	bh=HP+GISZQUoBeCIUNV6txwj530CGAw/6h372M1mLQVtM=;
+	s=arc-20240116; t=1768499676; c=relaxed/simple;
+	bh=8tjjm8i0zTkDcIO0nJ4WX9UGEX8hydomso/d4x79jzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ld9jV2YIfCPMzZKFA/P1crEzvimChdAJlr5muXJ4YR1XUEP0C3dupHMdRXbt6jsKwtF6iHo2PkGSdpnHywwbS/7FZ1fWrbGztZb4o2JGmxVcbiQNX1Cllrn+bRNZneDVN+LJhArK+uuKoRhO9rtEhAwYOTRuwDFk1HNS/cexcZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QfVNItHg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CT9mli4Mk2igGLkPPJV/DAu6kQMxCQN55o9kLbOP+s7NWlCcNBcv7WHM3erplzbQ0xIJEiSgtvFvdOue3uHBDqxeFFTLhlcWT3+qTwe/tEGO95cpQGGJgRv4zRwwMBFtG8zh+KDG4VVWVgMW3lJfxfAGIItiBfe1UIisqGcPz7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C4WPWQbT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QfVNItHg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70302C116D0;
-	Thu, 15 Jan 2026 17:54:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C4WPWQbT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FC17C116D0;
+	Thu, 15 Jan 2026 17:54:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499672;
-	bh=HP+GISZQUoBeCIUNV6txwj530CGAw/6h372M1mLQVtM=;
+	s=korg; t=1768499675;
+	bh=8tjjm8i0zTkDcIO0nJ4WX9UGEX8hydomso/d4x79jzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QfVNItHgHXTfV+mT8GNgX7RrbIqHJYPJ+rZKuHEZ89TOTAKh9EhrNWfquDG2Bfqfl
-	 sccLevnUue1SsB64sKdi2cvFndsIifhhJcoRbf0rk+LcNKXWWHvmt5kTMGn8JngJQC
-	 JunDuE1iTvzhGziymWMkBNtSSr7e4/zXVbRCLdg0=
+	b=C4WPWQbTqn42rHR4LLABNVuzXNmJRiwErhljeDSivQ32m3aYTW5XqW1b121Gkc6hG
+	 ubBXRHmYBY39c2u4j9PpI5EM/IskS6Am+kDpKCu3Tv+ysB/0UyHV6KP68DDfqtxAef
+	 tmb3DF+BKPheKwJa34PupBeyfo/otxkdoUJgyiq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 5.10 267/451] rpmsg: glink: fix rpmsg device leak
-Date: Thu, 15 Jan 2026 17:47:48 +0100
-Message-ID: <20260115164240.545671191@linuxfoundation.org>
+	Magnus Damm <damm+renesas@opensource.se>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Johan Hovold <johan@kernel.org>,
+	Joerg Roedel <joerg.roedel@amd.com>
+Subject: [PATCH 5.10 303/451] iommu/ipmmu-vmsa: fix device leak on of_xlate()
+Date: Thu, 15 Jan 2026 17:48:24 +0100
+Message-ID: <20260115164241.855505585@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -52,83 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit a53e356df548f6b0e82529ef3cc6070f42622189 upstream.
+commit 80aa518452c4aceb9459f9a8e3184db657d1b441 upstream.
 
-While testing rpmsg-char interface it was noticed that duplicate sysfs
-entries are getting created and below warning is noticed.
+Make sure to drop the reference taken to the iommu platform device when
+looking up its driver data during of_xlate().
 
-Reason for this is that we are leaking rpmsg device pointer, setting it
-null without actually unregistering device.
-Any further attempts to unregister fail because rpdev is NULL,
-resulting in a leak.
-
-Fix this by unregistering rpmsg device before removing its reference
-from rpmsg channel.
-
-sysfs: cannot create duplicate filename '/devices/platform/soc@0/3700000.remot
-eproc/remoteproc/remoteproc1/3700000.remoteproc:glink-edge/3700000.remoteproc:
-glink-edge.adsp_apps.-1.-1'
-[  114.115347] CPU: 0 UID: 0 PID: 9 Comm: kworker/0:0 Not
- tainted 6.16.0-rc4 #7 PREEMPT
-[  114.115355] Hardware name: Qualcomm Technologies, Inc. Robotics RB3gen2 (DT)
-[  114.115358] Workqueue: events qcom_glink_work
-[  114.115371] Call trace:8
-[  114.115374]  show_stack+0x18/0x24 (C)
-[  114.115382]  dump_stack_lvl+0x60/0x80
-[  114.115388]  dump_stack+0x18/0x24
-[  114.115393]  sysfs_warn_dup+0x64/0x80
-[  114.115402]  sysfs_create_dir_ns+0xf4/0x120
-[  114.115409]  kobject_add_internal+0x98/0x260
-[  114.115416]  kobject_add+0x9c/0x108
-[  114.115421]  device_add+0xc4/0x7a0
-[  114.115429]  rpmsg_register_device+0x5c/0xb0
-[  114.115434]  qcom_glink_work+0x4bc/0x820
-[  114.115438]  process_one_work+0x148/0x284
-[  114.115446]  worker_thread+0x2c4/0x3e0
-[  114.115452]  kthread+0x12c/0x204
-[  114.115457]  ret_from_fork+0x10/0x20
-[  114.115464] kobject: kobject_add_internal failed for 3700000.remoteproc:
-glink-edge.adsp_apps.-1.-1 with -EEXIST, don't try to register things with
-the same name in the same directory.
-[  114.250045] rpmsg 3700000.remoteproc:glink-edge.adsp_apps.-1.-1:
-device_add failed: -17
-
-Fixes: 835764ddd9af ("rpmsg: glink: Move the common glink protocol implementation to glink_native.c")
-Cc: Stable@vger.kernel.org
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250822100043.2604794-2-srinivas.kandagatla@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 7b2d59611fef ("iommu/ipmmu-vmsa: Replace local utlb code with fwspec ids")
+Cc: stable@vger.kernel.org	# 4.14
+Cc: Magnus Damm <damm+renesas@opensource.se>
+Acked-by: Robin Murphy <robin.murphy@arm.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rpmsg/qcom_glink_native.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/iommu/ipmmu-vmsa.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -1244,6 +1244,7 @@ static void qcom_glink_destroy_ept(struc
- {
- 	struct glink_channel *channel = to_glink_channel(ept);
- 	struct qcom_glink *glink = channel->glink;
-+	struct rpmsg_channel_info chinfo;
- 	unsigned long flags;
+--- a/drivers/iommu/ipmmu-vmsa.c
++++ b/drivers/iommu/ipmmu-vmsa.c
+@@ -732,6 +732,8 @@ static int ipmmu_init_platform_device(st
  
- 	spin_lock_irqsave(&channel->recv_lock, flags);
-@@ -1251,6 +1252,13 @@ static void qcom_glink_destroy_ept(struc
- 	spin_unlock_irqrestore(&channel->recv_lock, flags);
+ 	dev_iommu_priv_set(dev, platform_get_drvdata(ipmmu_pdev));
  
- 	/* Decouple the potential rpdev from the channel */
-+	if (channel->rpdev) {
-+		strscpy_pad(chinfo.name, channel->name, sizeof(chinfo.name));
-+		chinfo.src = RPMSG_ADDR_ANY;
-+		chinfo.dst = RPMSG_ADDR_ANY;
++	put_device(&ipmmu_pdev->dev);
 +
-+		rpmsg_unregister_device(glink->dev, &chinfo);
-+	}
- 	channel->rpdev = NULL;
+ 	return 0;
+ }
  
- 	qcom_glink_send_close_req(glink, channel);
 
 
