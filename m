@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E10A274FE3;
-	Thu, 15 Jan 2026 17:40:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92CBE280327;
+	Thu, 15 Jan 2026 17:40:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498835; cv=none; b=Pc+I1icfykpTm9m+dDNbUtQAmN4qlHlWp6Yq2DxFxmLaF4onFFVdrMt63isKOKCzfRmET2UY3oOe0DpAesg5QH1bA1E8QHmPK1b7e+OPFGu81eyypYJ8OJ4b5L0vE8UelrQFPaTogZlbbhSPznLLHmJc3Io55iwF4czb6mFGlZk=
+	t=1768498838; cv=none; b=WSAdZyN5q5DKWG6w4/gLYGmntMobyOijZ8IzKHyQUDrA1H2+MK9Q1x8eiZc/Bny9YMmrCPYN80TOI5tn9eS11U8JacFZOQxDPEH8ZBsA2DsjlTwkelwlnahegQ8kSb5oSZUhXpqxHWkny7XKuF1ZUFFejpSm6laPxESgjCWUWZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498835; c=relaxed/simple;
-	bh=ivQadeAg689zU6WAy88sX/B+LObjrGdAjqsUhnUfrIY=;
+	s=arc-20240116; t=1768498838; c=relaxed/simple;
+	bh=j4bvNpsjdsgurrgxZJ2HxVITf9g5v+yKBJ4xL4bjOeQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oqct3GW3xGgjcoKu+iWvafmHVSztldYMHwMHskSxwf4L/ODyUppdF4jSx5WnkdaO054160yUiZpllGR6kyS+tLpnG0XLce4DH0DVj2g/szxXaC+VwYFXH1sbPySUHPoxqiIMB2X5adUG/5gK0tr17ihEwJxmz2oVvLujCxw+iAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=guG0nFQ1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y2xFi4i5DWDrVUCQPQvBof4cbGPU4aIG+bJ7k/h3zvXAyV2IXjdqDPJjLeRcVn5jqlWA086Fl4dXFP1G/epDpV7AVBmzU4fbqOXZCEcebWGbGvq73n/YHUqO8ind+K8xQt08+F1E0usU5m1O3Rwxj4BXN+q2CgJNV4vEusDaJXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zji23Tdk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="guG0nFQ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BEBDC116D0;
-	Thu, 15 Jan 2026 17:40:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zji23Tdk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19FD2C116D0;
+	Thu, 15 Jan 2026 17:40:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498835;
-	bh=ivQadeAg689zU6WAy88sX/B+LObjrGdAjqsUhnUfrIY=;
+	s=korg; t=1768498838;
+	bh=j4bvNpsjdsgurrgxZJ2HxVITf9g5v+yKBJ4xL4bjOeQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=guG0nFQ14yCFhJOsrBfCI2GE/kRjcMPFbhX14XGihRb2UYI2hfvwd4jbPphtMjoTE
-	 71qhySFYPsbvmz0Xf8IAvPOweSs9Dq96L3meiZHO7aJUcfqDTr0ovF4lPgJPtWkxYn
-	 XNF/0vfZjfYVTVIJHC5kM0Vz0cAwz8PlUiNUesRQ=
+	b=zji23TdkNCszCQHJYG/3Sq3Ic9BGkpilgdkCynkiu044bCm5YiofSMGSBq7ByOMQg
+	 vvZMVlnm3PeYZuQCgdq9KCM8f+YvydTR4kHCyMhCh779iCVHvSuUJ9vDfpP1VfTM+H
+	 oiBpCCSmbU10qTR2ZWX0dxUHVHzxWASTSMAlUlVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+999eb23467f83f9bf9bf@syzkaller.appspotmail.com,
 	Sabrina Dubroca <sd@queasysnail.net>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 002/451] Revert "xfrm: destroy xfrm_state synchronously on net exit path"
-Date: Thu, 15 Jan 2026 17:43:23 +0100
-Message-ID: <20260115164230.963258225@linuxfoundation.org>
+Subject: [PATCH 5.10 003/451] xfrm: also call xfrm_state_delete_tunnel at destroy time for states that were never added
+Date: Thu, 15 Jan 2026 17:43:24 +0100
+Message-ID: <20260115164231.000508914@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -53,172 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 2a198bbec6913ae1c90ec963750003c6213668c7 ]
+[ Upstream commit 10deb69864840ccf96b00ac2ab3a2055c0c04721 ]
 
-This reverts commit f75a2804da391571563c4b6b29e7797787332673.
+In commit b441cf3f8c4b ("xfrm: delete x->tunnel as we delete x"), I
+missed the case where state creation fails between full
+initialization (->init_state has been called) and being inserted on
+the lists.
 
-With all states (whether user or kern) removed from the hashtables
-during deletion, there's no need for synchronous destruction of
-states. xfrm6_tunnel states still need to have been destroyed (which
-will be the case when its last user is deleted (not destroyed)) so
-that xfrm6_tunnel_free_spi removes it from the per-netns hashtable
-before the netns is destroyed.
+In this situation, ->init_state has been called, so for IPcomp
+tunnels, the fallback tunnel has been created and added onto the
+lists, but the user state never gets added, because we fail before
+that. The user state doesn't go through __xfrm_state_delete, so we
+don't call xfrm_state_delete_tunnel for those states, and we end up
+leaking the FB tunnel.
 
-This has the benefit of skipping one synchronize_rcu per state (in
-__xfrm_state_destroy(sync=true)) when we exit a netns.
+There are several codepaths affected by this: the add/update paths, in
+both net/key and xfrm, and the migrate code (xfrm_migrate,
+xfrm_state_migrate). A "proper" rollback of the init_state work would
+probably be doable in the add/update code, but for migrate it gets
+more complicated as multiple states may be involved.
 
+At some point, the new (not-inserted) state will be destroyed, so call
+xfrm_state_delete_tunnel during xfrm_state_gc_destroy. Most states
+will have their fallback tunnel cleaned up during __xfrm_state_delete,
+which solves the issue that b441cf3f8c4b (and other patches before it)
+aimed at. All states (including FB tunnels) will be removed from the
+lists once xfrm_state_fini has called flush_work(&xfrm_state_gc_work).
+
+Reported-by: syzbot+999eb23467f83f9bf9bf@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=999eb23467f83f9bf9bf
+Fixes: b441cf3f8c4b ("xfrm: delete x->tunnel as we delete x")
 Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/xfrm.h      | 12 +++---------
- net/ipv6/xfrm6_tunnel.c |  2 +-
- net/key/af_key.c        |  2 +-
- net/xfrm/xfrm_state.c   | 23 +++++++++--------------
- net/xfrm/xfrm_user.c    |  2 +-
- 5 files changed, 15 insertions(+), 26 deletions(-)
+ net/xfrm/xfrm_state.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/xfrm.h b/include/net/xfrm.h
-index a8584de9b18b7..411949a66a83c 100644
---- a/include/net/xfrm.h
-+++ b/include/net/xfrm.h
-@@ -794,7 +794,7 @@ static inline void xfrm_pols_put(struct xfrm_policy **pols, int npols)
- 		xfrm_pol_put(pols[i]);
- }
- 
--void __xfrm_state_destroy(struct xfrm_state *, bool);
-+void __xfrm_state_destroy(struct xfrm_state *);
- 
- static inline void __xfrm_state_put(struct xfrm_state *x)
- {
-@@ -804,13 +804,7 @@ static inline void __xfrm_state_put(struct xfrm_state *x)
- static inline void xfrm_state_put(struct xfrm_state *x)
- {
- 	if (refcount_dec_and_test(&x->refcnt))
--		__xfrm_state_destroy(x, false);
--}
--
--static inline void xfrm_state_put_sync(struct xfrm_state *x)
--{
--	if (refcount_dec_and_test(&x->refcnt))
--		__xfrm_state_destroy(x, true);
-+		__xfrm_state_destroy(x);
- }
- 
- static inline void xfrm_state_hold(struct xfrm_state *x)
-@@ -1585,7 +1579,7 @@ struct xfrmk_spdinfo {
- 
- struct xfrm_state *xfrm_find_acq_byseq(struct net *net, u32 mark, u32 seq);
- int xfrm_state_delete(struct xfrm_state *x);
--int xfrm_state_flush(struct net *net, u8 proto, bool task_valid, bool sync);
-+int xfrm_state_flush(struct net *net, u8 proto, bool task_valid);
- int xfrm_dev_state_flush(struct net *net, struct net_device *dev, bool task_valid);
- void xfrm_sad_getinfo(struct net *net, struct xfrmk_sadinfo *si);
- void xfrm_spd_getinfo(struct net *net, struct xfrmk_spdinfo *si);
-diff --git a/net/ipv6/xfrm6_tunnel.c b/net/ipv6/xfrm6_tunnel.c
-index 61ffc01b6c479..70f9540937489 100644
---- a/net/ipv6/xfrm6_tunnel.c
-+++ b/net/ipv6/xfrm6_tunnel.c
-@@ -331,7 +331,7 @@ static void __net_exit xfrm6_tunnel_net_exit(struct net *net)
- 	struct xfrm6_tunnel_net *xfrm6_tn = xfrm6_tunnel_pernet(net);
- 	unsigned int i;
- 
--	xfrm_state_flush(net, 0, false, true);
-+	xfrm_state_flush(net, IPSEC_PROTO_ANY, false);
- 	xfrm_flush_gc();
- 
- 	for (i = 0; i < XFRM6_TUNNEL_SPI_BYADDR_HSIZE; i++)
-diff --git a/net/key/af_key.c b/net/key/af_key.c
-index f42854973ba8d..de4606d2eb643 100644
---- a/net/key/af_key.c
-+++ b/net/key/af_key.c
-@@ -1770,7 +1770,7 @@ static int pfkey_flush(struct sock *sk, struct sk_buff *skb, const struct sadb_m
- 	if (proto == 0)
- 		return -EINVAL;
- 
--	err = xfrm_state_flush(net, proto, true, false);
-+	err = xfrm_state_flush(net, proto, true);
- 	err2 = unicast_flush_resp(sk, hdr);
- 	if (err || err2) {
- 		if (err == -ESRCH) /* empty table - go quietly */
 diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
-index 3cd878a25602a..a45d7e1dc5c6f 100644
+index a45d7e1dc5c6f..e13823d728127 100644
 --- a/net/xfrm/xfrm_state.c
 +++ b/net/xfrm/xfrm_state.c
-@@ -476,7 +476,7 @@ void xfrm_state_free(struct xfrm_state *x)
+@@ -476,6 +476,7 @@ void xfrm_state_free(struct xfrm_state *x)
  }
  EXPORT_SYMBOL(xfrm_state_free);
  
--static void ___xfrm_state_destroy(struct xfrm_state *x)
-+static void xfrm_state_gc_destroy(struct xfrm_state *x)
++static void xfrm_state_delete_tunnel(struct xfrm_state *x);
+ static void xfrm_state_gc_destroy(struct xfrm_state *x)
  {
  	hrtimer_cancel(&x->mtimer);
- 	del_timer_sync(&x->rtimer);
-@@ -514,7 +514,7 @@ static void xfrm_state_gc_task(struct work_struct *work)
- 	synchronize_rcu();
- 
- 	hlist_for_each_entry_safe(x, tmp, &gc_list, gclist)
--		___xfrm_state_destroy(x);
-+		xfrm_state_gc_destroy(x);
- }
- 
- static enum hrtimer_restart xfrm_timer_handler(struct hrtimer *me)
-@@ -637,19 +637,14 @@ struct xfrm_state *xfrm_state_alloc(struct net *net)
- }
- EXPORT_SYMBOL(xfrm_state_alloc);
- 
--void __xfrm_state_destroy(struct xfrm_state *x, bool sync)
-+void __xfrm_state_destroy(struct xfrm_state *x)
- {
- 	WARN_ON(x->km.state != XFRM_STATE_DEAD);
- 
--	if (sync) {
--		synchronize_rcu();
--		___xfrm_state_destroy(x);
--	} else {
--		spin_lock_bh(&xfrm_state_gc_lock);
--		hlist_add_head(&x->gclist, &xfrm_state_gc_list);
--		spin_unlock_bh(&xfrm_state_gc_lock);
--		schedule_work(&xfrm_state_gc_work);
--	}
-+	spin_lock_bh(&xfrm_state_gc_lock);
-+	hlist_add_head(&x->gclist, &xfrm_state_gc_list);
-+	spin_unlock_bh(&xfrm_state_gc_lock);
-+	schedule_work(&xfrm_state_gc_work);
+@@ -490,6 +491,7 @@ static void xfrm_state_gc_destroy(struct xfrm_state *x)
+ 	kfree(x->preplay_esn);
+ 	if (x->type_offload)
+ 		xfrm_put_type_offload(x->type_offload);
++	xfrm_state_delete_tunnel(x);
+ 	if (x->type) {
+ 		x->type->destructor(x);
+ 		xfrm_put_type(x->type);
+@@ -648,7 +650,6 @@ void __xfrm_state_destroy(struct xfrm_state *x)
  }
  EXPORT_SYMBOL(__xfrm_state_destroy);
  
-@@ -758,7 +753,7 @@ xfrm_dev_state_flush_secctx_check(struct net *net, struct net_device *dev, bool
- }
- #endif
- 
--int xfrm_state_flush(struct net *net, u8 proto, bool task_valid, bool sync)
-+int xfrm_state_flush(struct net *net, u8 proto, bool task_valid)
+-static void xfrm_state_delete_tunnel(struct xfrm_state *x);
+ int __xfrm_state_delete(struct xfrm_state *x)
  {
- 	int i, err = 0, cnt = 0;
- 
-@@ -2707,7 +2702,7 @@ void xfrm_state_fini(struct net *net)
- 	unsigned int sz;
- 
- 	flush_work(&net->xfrm.state_hash_work);
--	xfrm_state_flush(net, 0, false, true);
-+	xfrm_state_flush(net, IPSEC_PROTO_ANY, false);
- 	flush_work(&xfrm_state_gc_work);
- 
- 	WARN_ON(!list_empty(&net->xfrm.state_all));
-diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index aa509857b6660..480da22b7ef85 100644
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -2111,7 +2111,7 @@ static int xfrm_flush_sa(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	struct xfrm_usersa_flush *p = nlmsg_data(nlh);
- 	int err;
- 
--	err = xfrm_state_flush(net, p->proto, true, false);
-+	err = xfrm_state_flush(net, p->proto, true);
- 	if (err) {
- 		if (err == -ESRCH) /* empty table */
- 			return 0;
+ 	struct net *net = xs_net(x);
 -- 
 2.51.0
 
