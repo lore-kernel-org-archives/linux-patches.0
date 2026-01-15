@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55BC93D3017;
-	Thu, 15 Jan 2026 17:29:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787323D3307;
+	Thu, 15 Jan 2026 17:29:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498184; cv=none; b=E317kU5x1MEoB92x3HPX7WC/Oi4ZTCl80POsxq4CNLr9dQy2OuV9VT0NkSXrrV6gj5lT0WxPm8Bh+j8dqSEqy7iLz7XnO3ywtd4HyqSCCgBupoY0iSdEeqztXRWgCSZLRsmugQweNdi8idjmicLHJyh6WUfGNMmv944VdIjV8Ng=
+	t=1768498187; cv=none; b=E0E0pJbmBbb07WQgMsio6di5OgICWtsElJSnW6TWnuAEIOWI2KzxzRj0wybj9Ow1RtybGx/6MBKNGXCMLgdd48SscQj06zNQTVwuTW66MMwHnFfnTZIXeGaZ1wW3+w8qTUVKCSTJlI+Kc/+SOcSRdcJgDNrdppXV9DKEcqJRyo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498184; c=relaxed/simple;
-	bh=CuTGPElDfxPFeAo3fuVjd9Pfi82HBXO01hCcJ8c+3Io=;
+	s=arc-20240116; t=1768498187; c=relaxed/simple;
+	bh=ZLzHcrnYq6eh537n2gRpxQBBRfivxZLSe/ZIMjZAaMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qi64fg+CXT3scZfugjQIXw56lEqepNV2I95/rWQqsomXjD5Bx16zv4u60dRGZRpoLHezAQyD2ZDv9Nq7w+UUpNhWrjhbibklPAFCITfMSDkDCXH/19heRqJHkX18RPNLVC805FEddnysxbM8VEcVHQrCHtwecvXAridXgFmVzPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t+92Zpzo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E41x9dH5rLMR0kEAjy5t4PAz4+Z6XEjUFR1Hg6gNAGV9n0rQqv8t1JM80JhuPNfLiLJ1IcH2IchGgBwfwYuZTaGM1ZIHI5uAktNloK+Fuvup5H7018IkRavq3pnCJABDEdhg4X9OHUpMBBwEKUVruntD2HhBmPHEIBvxvxz1OW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ntCHL4UI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t+92Zpzo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4574C116D0;
-	Thu, 15 Jan 2026 17:29:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ntCHL4UI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DECEC116D0;
+	Thu, 15 Jan 2026 17:29:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498184;
-	bh=CuTGPElDfxPFeAo3fuVjd9Pfi82HBXO01hCcJ8c+3Io=;
+	s=korg; t=1768498186;
+	bh=ZLzHcrnYq6eh537n2gRpxQBBRfivxZLSe/ZIMjZAaMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t+92ZpzozaWQv7htkaRrAbYbjEfOW/dm5t8ujcjp5dvev89qQPCfyvsFkqt3IOdyu
-	 T97PHgndLwmGMIAPJebBASYhXXbICPmZoQCeMOC3kFSCORa2gF9ZBT76UlU+/SFWPd
-	 YxTdA0mltV1h5MH/YLPFMwcvTL7oOlI/2tyZFvBg=
+	b=ntCHL4UIpOE40S+QADnXg5yIGjDIf4Rzbet9PxclU53ZRR4tohsXGP43TqunUG1Qx
+	 cYg+tHQkBa/RT5rYOxjltZS9dMaoPZR5uw79ApAXm+yoDywA4h+2pCMV2viNSkc9CK
+	 ITnZQnEN9Ucv0mhOEAqXLP8YX8rOw1FCijHataWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Pinsonneault-Thibeault <rpthibeault@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Potin Lai <potin.lai@quantatw.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 341/554] Bluetooth: btusb: revert use of devm_kzalloc in btusb
-Date: Thu, 15 Jan 2026 17:46:47 +0100
-Message-ID: <20260115164258.573608245@linuxfoundation.org>
+Subject: [PATCH 5.15 342/554] net: mdio: aspeed: move reg accessing part into separate functions
+Date: Thu, 15 Jan 2026 17:46:48 +0100
+Message-ID: <20260115164258.609778557@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -51,87 +52,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raphael Pinsonneault-Thibeault <rpthibeault@gmail.com>
+From: Potin Lai <potin.lai@quantatw.com>
 
-[ Upstream commit 252714f1e8bdd542025b16321c790458014d6880 ]
+[ Upstream commit 737ca352569e744bf753b4522a6f91b120a734f1 ]
 
-This reverts commit 98921dbd00c4e ("Bluetooth: Use devm_kzalloc in
-btusb.c file").
+Add aspeed_mdio_op() and aseed_mdio_get_data() for register accessing.
 
-In btusb_probe(), we use devm_kzalloc() to allocate the btusb data. This
-ties the lifetime of all the btusb data to the binding of a driver to
-one interface, INTF. In a driver that binds to other interfaces, ISOC
-and DIAG, this is an accident waiting to happen.
+aspeed_mdio_op() handles operations, write command to control register,
+then check and wait operations is finished (bit 31 is cleared).
 
-The issue is revealed in btusb_disconnect(), where calling
-usb_driver_release_interface(&btusb_driver, data->intf) will have devm
-free the data that is also being used by the other interfaces of the
-driver that may not be released yet.
+aseed_mdio_get_data() fetchs the result value of operation from data
+register.
 
-To fix this, revert the use of devm and go back to freeing memory
-explicitly.
-
-Fixes: 98921dbd00c4e ("Bluetooth: Use devm_kzalloc in btusb.c file")
-Signed-off-by: Raphael Pinsonneault-Thibeault <rpthibeault@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Potin Lai <potin.lai@quantatw.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: d1a1a4bade4b ("net: mdio: aspeed: add dummy read to avoid read-after-write issue")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/net/mdio/mdio-aspeed.c | 70 ++++++++++++++++++----------------
+ 1 file changed, 38 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 95483a8d7b1e..c447e2e9417b 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -3788,7 +3788,7 @@ static int btusb_probe(struct usb_interface *intf,
- 			return -ENODEV;
- 	}
+diff --git a/drivers/net/mdio/mdio-aspeed.c b/drivers/net/mdio/mdio-aspeed.c
+index e2273588c75b..f22be2f069e9 100644
+--- a/drivers/net/mdio/mdio-aspeed.c
++++ b/drivers/net/mdio/mdio-aspeed.c
+@@ -39,34 +39,35 @@ struct aspeed_mdio {
+ 	void __iomem *base;
+ };
  
--	data = devm_kzalloc(&intf->dev, sizeof(*data), GFP_KERNEL);
-+	data = kzalloc(sizeof(*data), GFP_KERNEL);
- 	if (!data)
- 		return -ENOMEM;
+-static int aspeed_mdio_read(struct mii_bus *bus, int addr, int regnum)
++static int aspeed_mdio_op(struct mii_bus *bus, u8 st, u8 op, u8 phyad, u8 regad,
++			  u16 data)
+ {
+ 	struct aspeed_mdio *ctx = bus->priv;
+ 	u32 ctrl;
+-	u32 data;
+-	int rc;
  
-@@ -3811,8 +3811,10 @@ static int btusb_probe(struct usb_interface *intf,
- 		}
- 	}
+-	dev_dbg(&bus->dev, "%s: addr: %d, regnum: %d\n", __func__, addr,
+-		regnum);
+-
+-	/* Just clause 22 for the moment */
+-	if (regnum & MII_ADDR_C45)
+-		return -EOPNOTSUPP;
++	dev_dbg(&bus->dev, "%s: st: %u op: %u, phyad: %u, regad: %u, data: %u\n",
++		__func__, st, op, phyad, regad, data);
  
--	if (!data->intr_ep || !data->bulk_tx_ep || !data->bulk_rx_ep)
-+	if (!data->intr_ep || !data->bulk_tx_ep || !data->bulk_rx_ep) {
-+		kfree(data);
- 		return -ENODEV;
-+	}
+ 	ctrl = ASPEED_MDIO_CTRL_FIRE
+-		| FIELD_PREP(ASPEED_MDIO_CTRL_ST, ASPEED_MDIO_CTRL_ST_C22)
+-		| FIELD_PREP(ASPEED_MDIO_CTRL_OP, MDIO_C22_OP_READ)
+-		| FIELD_PREP(ASPEED_MDIO_CTRL_PHYAD, addr)
+-		| FIELD_PREP(ASPEED_MDIO_CTRL_REGAD, regnum);
++		| FIELD_PREP(ASPEED_MDIO_CTRL_ST, st)
++		| FIELD_PREP(ASPEED_MDIO_CTRL_OP, op)
++		| FIELD_PREP(ASPEED_MDIO_CTRL_PHYAD, phyad)
++		| FIELD_PREP(ASPEED_MDIO_CTRL_REGAD, regad)
++		| FIELD_PREP(ASPEED_MDIO_DATA_MIIRDATA, data);
  
- 	if (id->driver_info & BTUSB_AMP) {
- 		data->cmdreq_type = USB_TYPE_CLASS | 0x01;
-@@ -3855,8 +3857,10 @@ static int btusb_probe(struct usb_interface *intf,
- 	data->recv_acl = hci_recv_frame;
+ 	iowrite32(ctrl, ctx->base + ASPEED_MDIO_CTRL);
  
- 	hdev = hci_alloc_dev_priv(priv_size);
--	if (!hdev)
-+	if (!hdev) {
-+		kfree(data);
- 		return -ENOMEM;
-+	}
+-	rc = readl_poll_timeout(ctx->base + ASPEED_MDIO_CTRL, ctrl,
++	return readl_poll_timeout(ctx->base + ASPEED_MDIO_CTRL, ctrl,
+ 				!(ctrl & ASPEED_MDIO_CTRL_FIRE),
+ 				ASPEED_MDIO_INTERVAL_US,
+ 				ASPEED_MDIO_TIMEOUT_US);
+-	if (rc < 0)
+-		return rc;
++}
++
++static int aspeed_mdio_get_data(struct mii_bus *bus)
++{
++	struct aspeed_mdio *ctx = bus->priv;
++	int rc;
++	u32 data;
  
- 	hdev->bus = HCI_USB;
- 	hci_set_drvdata(hdev, data);
-@@ -4104,6 +4108,7 @@ static int btusb_probe(struct usb_interface *intf,
- 	if (data->reset_gpio)
- 		gpiod_put(data->reset_gpio);
- 	hci_free_dev(hdev);
-+	kfree(data);
- 	return err;
+ 	rc = readl_poll_timeout(ctx->base + ASPEED_MDIO_DATA, data,
+ 				data & ASPEED_MDIO_DATA_IDLE,
+@@ -78,31 +79,36 @@ static int aspeed_mdio_read(struct mii_bus *bus, int addr, int regnum)
+ 	return FIELD_GET(ASPEED_MDIO_DATA_MIIRDATA, data);
  }
  
-@@ -4149,6 +4154,7 @@ static void btusb_disconnect(struct usb_interface *intf)
- 	}
+-static int aspeed_mdio_write(struct mii_bus *bus, int addr, int regnum, u16 val)
++static int aspeed_mdio_read(struct mii_bus *bus, int addr, int regnum)
+ {
+-	struct aspeed_mdio *ctx = bus->priv;
+-	u32 ctrl;
++	int rc;
  
- 	hci_free_dev(hdev);
-+	kfree(data);
+-	dev_dbg(&bus->dev, "%s: addr: %d, regnum: %d, val: 0x%x\n",
+-		__func__, addr, regnum, val);
++	dev_dbg(&bus->dev, "%s: addr: %d, regnum: %d\n", __func__, addr,
++		regnum);
+ 
+ 	/* Just clause 22 for the moment */
+ 	if (regnum & MII_ADDR_C45)
+ 		return -EOPNOTSUPP;
+ 
+-	ctrl = ASPEED_MDIO_CTRL_FIRE
+-		| FIELD_PREP(ASPEED_MDIO_CTRL_ST, ASPEED_MDIO_CTRL_ST_C22)
+-		| FIELD_PREP(ASPEED_MDIO_CTRL_OP, MDIO_C22_OP_WRITE)
+-		| FIELD_PREP(ASPEED_MDIO_CTRL_PHYAD, addr)
+-		| FIELD_PREP(ASPEED_MDIO_CTRL_REGAD, regnum)
+-		| FIELD_PREP(ASPEED_MDIO_CTRL_MIIWDATA, val);
++	rc = aspeed_mdio_op(bus, ASPEED_MDIO_CTRL_ST_C22, MDIO_C22_OP_READ,
++			    addr, regnum, 0);
++	if (rc < 0)
++		return rc;
+ 
+-	iowrite32(ctrl, ctx->base + ASPEED_MDIO_CTRL);
++	return aspeed_mdio_get_data(bus);
++}
+ 
+-	return readl_poll_timeout(ctx->base + ASPEED_MDIO_CTRL, ctrl,
+-				  !(ctrl & ASPEED_MDIO_CTRL_FIRE),
+-				  ASPEED_MDIO_INTERVAL_US,
+-				  ASPEED_MDIO_TIMEOUT_US);
++static int aspeed_mdio_write(struct mii_bus *bus, int addr, int regnum, u16 val)
++{
++	dev_dbg(&bus->dev, "%s: addr: %d, regnum: %d, val: 0x%x\n",
++		__func__, addr, regnum, val);
++
++	/* Just clause 22 for the moment */
++	if (regnum & MII_ADDR_C45)
++		return -EOPNOTSUPP;
++
++	return aspeed_mdio_op(bus, ASPEED_MDIO_CTRL_ST_C22, MDIO_C22_OP_WRITE,
++			      addr, regnum, val);
  }
  
- #ifdef CONFIG_PM
+ static int aspeed_mdio_probe(struct platform_device *pdev)
 -- 
 2.51.0
 
