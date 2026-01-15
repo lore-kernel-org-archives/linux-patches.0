@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657AA3BFE3A;
-	Thu, 15 Jan 2026 17:15:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1CD2D2491;
+	Thu, 15 Jan 2026 17:15:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497307; cv=none; b=VXZdlC1H0Zd4Zgun8mZvnSvO+0otig60XcI339d86oLjYWhS4pJkDt0eLT8hTh0XkRw1ZbdD6tLZXuQQmzV8INb5rdjiPoNXSLFGdXxFSrLIRPMLT6A2Nb711rlDKk3wYSmrGQGikW/aSq3fCY7kBxhtkhoQ7OfOwaoAwmnVH/U=
+	t=1768497310; cv=none; b=pM3I9oIB/A84t5SbdEiRS00PBZP2gUuY36npLIzwt5Q9NMaBBAfQbOme5O3LTNgTXD2Y9nWNqWIU4w420tdy6ZFapTK+9BWNDXfWfgBQ6ifNMcDDMPhey7Dr1Wj9WVDLk2pnEga/tRiDBc6bb+DS7TvSbHR34LsI2kRSDbpQXZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497307; c=relaxed/simple;
-	bh=FyWsh2EsSALa5iK2HjQYm6oFFfMF8qib4HqoWxB2TPQ=;
+	s=arc-20240116; t=1768497310; c=relaxed/simple;
+	bh=h6ku0b3XUN9s422Z2WlFr0NkIULXzzTE3GmwcePygNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LzGWh2SuS8iyReRNFhJD+OwDWAuVZ+SjCJH98CLLLJzdDmug3JiwNg0ocI98PglTpw6TDaJk1CY/l2WbNXvNgPMiWlFHgWbLG6D4Svqbcbsbg3XPsySft0UaFYN3bjJdHKw47fkwRyyVpueINJSyNCodLyGOpH87UtzT1s9jcLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DuimOm4j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Tps3rMhpXSWA8RElJD7hCpxD+EHLXDQZI5ly1eD9itrdqo/E+6ML102uC8RfME03S2lG99LnBU73va5FQCJlG05QFoWCXQwrKLHXxrA4PYKYphWQLMPLkdEdz0SDwZiA10r0Yt6GdYBQzrHfpH1/XniV+xZfszZ1wqx8QCB/vDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YB35PODn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DuimOm4j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACACDC116D0;
-	Thu, 15 Jan 2026 17:15:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YB35PODn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B789C116D0;
+	Thu, 15 Jan 2026 17:15:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497307;
-	bh=FyWsh2EsSALa5iK2HjQYm6oFFfMF8qib4HqoWxB2TPQ=;
+	s=korg; t=1768497309;
+	bh=h6ku0b3XUN9s422Z2WlFr0NkIULXzzTE3GmwcePygNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DuimOm4jPckc3j/8kr2mO5QjIT8fPR47URHeW9Hfbxz3bI0nfi/Q07BgFSXdKXGVd
-	 vczdrG3qO0YgiDV9beNxe/CmlYaR260Nr12k97ZA0n/gWCknjLrUE4tYnV5Jdmj6Ke
-	 Ydpl7jfCsQK5roSeyyTv5Fkv6Fg2v/swiLf8nmAM=
+	b=YB35PODn5SzrXAcNzCeAuQ9Sud/blF/GEyXAz8Oll6Dr2021wUB7Do20GSrJcf+CY
+	 8jDS/Wg6fRCO1mEHVQZfXBIWhXHaii/vPQ219J5rp8wtZhMLO6wLqly/fsvw2QOkw/
+	 J+QrXloHkKM8fjegWAHokBpWxep0DirqKiTI7Lig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mainak Sen <msen@nvidia.com>,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	=?UTF-8?q?Guido=20G=C3=BCnther?= <agx@sigxcpu.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 036/554] gpu: host1x: Fix race in syncpt alloc/free
-Date: Thu, 15 Jan 2026 17:41:42 +0100
-Message-ID: <20260115164247.547059415@linuxfoundation.org>
+Subject: [PATCH 5.15 037/554] drm/panel: visionox-rm69299: Dont clear all mode flags
+Date: Thu, 15 Jan 2026 17:41:43 +0100
+Message-ID: <20260115164247.583492208@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -46,62 +46,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mainak Sen <msen@nvidia.com>
+From: Guido Günther <agx@sigxcpu.org>
 
-[ Upstream commit c7d393267c497502fa737607f435f05dfe6e3d9b ]
+[ Upstream commit 39144b611e9cd4f5814f4098c891b545dd70c536 ]
 
-Fix race condition between host1x_syncpt_alloc()
-and host1x_syncpt_put() by using kref_put_mutex()
-instead of kref_put() + manual mutex locking.
+Don't clear all mode flags. We only want to maek sure we use HS mode
+during unprepare.
 
-This ensures no thread can acquire the
-syncpt_mutex after the refcount drops to zero
-but before syncpt_release acquires it.
-This prevents races where syncpoints could
-be allocated while still being cleaned up
-from a previous release.
-
-Remove explicit mutex locking in syncpt_release
-as kref_put_mutex() handles this atomically.
-
-Signed-off-by: Mainak Sen <msen@nvidia.com>
-Fixes: f5ba33fb9690 ("gpu: host1x: Reserve VBLANK syncpoints at initialization")
-Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://lore.kernel.org/r/20250707-host1x-syncpt-race-fix-v1-1-28b0776e70bc@nvidia.com
+Fixes: c7f66d32dd431 ("drm/panel: add support for rm69299 visionox panel")
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Guido Günther <agx@sigxcpu.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20250910-shift6mq-panel-v3-2-a7729911afb9@sigxcpu.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/host1x/syncpt.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/gpu/drm/panel/panel-visionox-rm69299.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/host1x/syncpt.c b/drivers/gpu/host1x/syncpt.c
-index a89a408182e60..c36197eab6fe4 100644
---- a/drivers/gpu/host1x/syncpt.c
-+++ b/drivers/gpu/host1x/syncpt.c
-@@ -394,8 +394,6 @@ static void syncpt_release(struct kref *ref)
+diff --git a/drivers/gpu/drm/panel/panel-visionox-rm69299.c b/drivers/gpu/drm/panel/panel-visionox-rm69299.c
+index 6134432e4918d..2260d5abf1ae8 100644
+--- a/drivers/gpu/drm/panel/panel-visionox-rm69299.c
++++ b/drivers/gpu/drm/panel/panel-visionox-rm69299.c
+@@ -64,7 +64,7 @@ static int visionox_rm69299_unprepare(struct drm_panel *panel)
+ 	struct visionox_rm69299 *ctx = panel_to_ctx(panel);
+ 	int ret;
  
- 	sp->locked = false;
+-	ctx->dsi->mode_flags = 0;
++	ctx->dsi->mode_flags &= ~MIPI_DSI_MODE_LPM;
  
--	mutex_lock(&sp->host->syncpt_mutex);
--
- 	host1x_syncpt_base_free(sp->base);
- 	kfree(sp->name);
- 	sp->base = NULL;
-@@ -418,7 +416,7 @@ void host1x_syncpt_put(struct host1x_syncpt *sp)
- 	if (!sp)
- 		return;
- 
--	kref_put(&sp->ref, syncpt_release);
-+	kref_put_mutex(&sp->ref, syncpt_release, &sp->host->syncpt_mutex);
- }
- EXPORT_SYMBOL(host1x_syncpt_put);
- 
+ 	ret = mipi_dsi_dcs_write(ctx->dsi, MIPI_DCS_SET_DISPLAY_OFF, NULL, 0);
+ 	if (ret < 0)
 -- 
 2.51.0
 
