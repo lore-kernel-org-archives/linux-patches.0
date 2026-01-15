@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A940E3BFE55;
-	Thu, 15 Jan 2026 17:13:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 822783BFE3A;
+	Thu, 15 Jan 2026 17:13:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497186; cv=none; b=JWeGgmo68nHRC2HUxCYh19us62vFbyVjJgv2AS9ELSAsQNqOaQfOA4b41oBX91fInsDs6hTGG7WZ1eslOk2CRvckMP5MCb4j4lPfSEqNcTo2dGWNyK1AMvLcQlkPep9xwG/JK+XMGecx1rKAba4kbOSpk8v5a/5xwo3j3JehRzs=
+	t=1768497189; cv=none; b=CpFh3ITZKERi9bC06XEp+f81uQdBFyS09j5dQJ0J6NfNi9rzi48m8e21GpGVTg5EfCcAnLMYKj6w0rb2ObeWSA76Gb2SSZ5fhSTDu3HiSTwlTIIFXk2pNmU0nGwybX82GvSN+Qr7ZjU/ZhxVLZ1P2uN9DD2bL/DJOG++YeIoEDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497186; c=relaxed/simple;
-	bh=weYvz//yoJoA5hF6VeXWx5KGNN2FDqTgx1kk6qxb0BE=;
+	s=arc-20240116; t=1768497189; c=relaxed/simple;
+	bh=6QEIpFpV+AiP7M2oBU3JH5uV/wC15GiNMd3o28wiyeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pn3ygjeGSGpuXJNg11Dk7aWdsSIU0m05mq3t4ycsnvpGj89lnKnkWFJhm7l7doLS0X4lw3/6x/l9Yk8uG8jn/eP0BLK+PAZDsXqIbllIqgwMu0hF0IDrDcXSQfB7g5Wknp6mtbih0/Yyf8xMYJqUmMILqMdvxlXj3VFFrc0LmNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a57vvd92; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XbaKI7ra0tOMvqg4Hyt0ei/lgStyuR9aA9TUeJMrBCfvVXk8V99eliK3S+QDwlmb/8C/fdkMfw6pSUGIVjxRjMmyyDAjafi+i4Uigds/Io3AS5EKdnO3flScfHwHdo23rGjS3lfjZz4kiY+qqrVrn+l+yebNIkcFj/8RA/xSHk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ljKp4U7m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a57vvd92"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37537C116D0;
-	Thu, 15 Jan 2026 17:13:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ljKp4U7m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D050C116D0;
+	Thu, 15 Jan 2026 17:13:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497186;
-	bh=weYvz//yoJoA5hF6VeXWx5KGNN2FDqTgx1kk6qxb0BE=;
+	s=korg; t=1768497189;
+	bh=6QEIpFpV+AiP7M2oBU3JH5uV/wC15GiNMd3o28wiyeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a57vvd92GJ55cvjDp2bdEeA5hcLXLg+/38c5Odhpmy5prPhQxSO2/iueAF6RJoL79
-	 02seGwmLRdISfr2DC+7n8FqWhNh+yqJkEuQbzRgdFhitVCcX8ieM2ne/RAEte2QLr3
-	 KTyx1s4YozKPo+KKFHC/2403QmatkdJXF2dYJ8UA=
+	b=ljKp4U7mRk7ZOebrvbPfAsCTczaA+m4vEWWFi/k5vbtB4EVc8gnfnLnqM0Ul5ScYi
+	 fj1sugavQ5Z70QZJ0aB3Ffm6Spba4v7zWpN1zD3edIa4yZVCFeuYGyJ24GtzgHCSm5
+	 3KbNjHj2pmIRcyQeRYzBl2zUjK06ljZul85s4Dho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumeet Pawnikar <sumeet4linux@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	syzbot <syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 67/72] powercap: fix sscanf() error return value handling
-Date: Thu, 15 Jan 2026 17:49:17 +0100
-Message-ID: <20260115164145.932851162@linuxfoundation.org>
+Subject: [PATCH 6.1 68/72] can: j1939: make j1939_session_activate() fail if device is no longer registered
+Date: Thu, 15 Jan 2026 17:49:18 +0100
+Message-ID: <20260115164145.968915397@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164143.482647486@linuxfoundation.org>
 References: <20260115164143.482647486@linuxfoundation.org>
@@ -51,65 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sumeet Pawnikar <sumeet4linux@gmail.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit efc4c35b741af973de90f6826bf35d3b3ac36bf1 ]
+[ Upstream commit 5d5602236f5db19e8b337a2cd87a90ace5ea776d ]
 
-Fix inconsistent error handling for sscanf() return value check.
+syzbot is still reporting
 
-Implicit boolean conversion is used instead of explicit return
-value checks. The code checks if (!sscanf(...)) which is incorrect
-because:
- 1. sscanf returns the number of successfully parsed items
- 2. On success, it returns 1 (one item passed)
- 3. On failure, it returns 0 or EOF
- 4. The check 'if (!sscanf(...))' is wrong because it treats
-    success (1) as failure
+  unregister_netdevice: waiting for vcan0 to become free. Usage count = 2
 
-All occurrences of sscanf() now uses explicit return value check.
-With this behavior it returns '-EINVAL' when parsing fails (returns
-0 or EOF), and continues when parsing succeeds (returns 1).
+even after commit 93a27b5891b8 ("can: j1939: add missing calls in
+NETDEV_UNREGISTER notification handler") was added. A debug printk() patch
+found that j1939_session_activate() can succeed even after
+j1939_cancel_active_session() from j1939_netdev_notify(NETDEV_UNREGISTER)
+has completed.
 
-Signed-off-by: Sumeet Pawnikar <sumeet4linux@gmail.com>
-[ rjw: Subject and changelog edits ]
-Link: https://patch.msgid.link/20251207151549.202452-1-sumeet4linux@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Since j1939_cancel_active_session() is processed with the session list lock
+held, checking ndev->reg_state in j1939_session_activate() with the session
+list lock held can reliably close the race window.
+
+Reported-by: syzbot <syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=881d65229ca4f9ae8c84
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/b9653191-d479-4c8b-8536-1326d028db5c@I-love.SAKURA.ne.jp
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/powercap/powercap_sys.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/can/j1939/transport.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/powercap/powercap_sys.c b/drivers/powercap/powercap_sys.c
-index d7dadcaa3736b..72fa1f5affcea 100644
---- a/drivers/powercap/powercap_sys.c
-+++ b/drivers/powercap/powercap_sys.c
-@@ -67,7 +67,7 @@ static ssize_t show_constraint_##_attr(struct device *dev, \
- 	int id; \
- 	struct powercap_zone_constraint *pconst;\
- 	\
--	if (!sscanf(dev_attr->attr.name, "constraint_%d_", &id)) \
-+	if (sscanf(dev_attr->attr.name, "constraint_%d_", &id) != 1) \
- 		return -EINVAL; \
- 	if (id >= power_zone->const_id_cnt)	\
- 		return -EINVAL; \
-@@ -92,7 +92,7 @@ static ssize_t store_constraint_##_attr(struct device *dev,\
- 	int id; \
- 	struct powercap_zone_constraint *pconst;\
- 	\
--	if (!sscanf(dev_attr->attr.name, "constraint_%d_", &id)) \
-+	if (sscanf(dev_attr->attr.name, "constraint_%d_", &id) != 1) \
- 		return -EINVAL; \
- 	if (id >= power_zone->const_id_cnt)	\
- 		return -EINVAL; \
-@@ -161,7 +161,7 @@ static ssize_t show_constraint_name(struct device *dev,
- 	ssize_t len = -ENODATA;
- 	struct powercap_zone_constraint *pconst;
- 
--	if (!sscanf(dev_attr->attr.name, "constraint_%d_", &id))
-+	if (sscanf(dev_attr->attr.name, "constraint_%d_", &id) != 1)
- 		return -EINVAL;
- 	if (id >= power_zone->const_id_cnt)
- 		return -EINVAL;
+diff --git a/net/can/j1939/transport.c b/net/can/j1939/transport.c
+index 76d625c668e05..0522c223570c7 100644
+--- a/net/can/j1939/transport.c
++++ b/net/can/j1939/transport.c
+@@ -1571,6 +1571,8 @@ int j1939_session_activate(struct j1939_session *session)
+ 	if (active) {
+ 		j1939_session_put(active);
+ 		ret = -EAGAIN;
++	} else if (priv->ndev->reg_state != NETREG_REGISTERED) {
++		ret = -ENODEV;
+ 	} else {
+ 		WARN_ON_ONCE(session->state != J1939_SESSION_NEW);
+ 		list_add_tail(&session->active_session_list_entry,
 -- 
 2.51.0
 
