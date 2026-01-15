@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FE803C1FFF;
-	Thu, 15 Jan 2026 17:28:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 486CB3BFE3C;
+	Thu, 15 Jan 2026 17:28:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498104; cv=none; b=Kttp/+bXqJLs1YT964l4205XAxtD/3Z+G866xpTFaLnVbRRi4e6Z93W6xLZm81Aq3w5gfM2PGajKtQJ1/BBgZvkMkOXVH0QTBwj0BuIATIZycGgf2JBTZvNufn7AHb3NatZRo/UeZ8IcqwvYlEzqONAssSM1ask2rKCgsXb2Iak=
+	t=1768498107; cv=none; b=FzhiAWoz1Ypi3HXs03gCvNrZjOvkC6VHXPuIQLUxZbPF1X/EdlwfDo60JhtNk8lnYzObEnEk+EfflT41uTDw2aHo+lLMTYFtqwHb+fmnsU82stxCr1LlJ+LlVGKEkAJPxLExuYWWXcFbm8y2sLoi8RGVYv/pNkVAgEh1O/ZtHYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498104; c=relaxed/simple;
-	bh=kLa+EhI/THGfo95SEqsPFB6Rt/lmuG5sPSbTLdn9C3A=;
+	s=arc-20240116; t=1768498107; c=relaxed/simple;
+	bh=FS985oOkl/X8pPcasQ7IRXVFJ+GePShIWqoBeWCyZo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AM5YW+YEO9HUeidGBC6srlMb8sjRHcRwL+NVp+MM21tI7pe7VGRiRLRx0qw2wbaOWoaPsdZ1jvYVymIE5F7LWKPnPCWLE/BlsN179i77S3AZCAxph0B8Y4ZXyu4Tl8lBvCfkhDhK76rT2yGc4bmH78pJYq390dFQotUpxVpPb/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r6fSvSyK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a39JIflPWLrJ163jQDVhX3bb/le2Oag8gvONwi7DJiBy/sZEmhgW2uUDzhfaB6FVOVNWou1nkatpwkOw8boSHJ6q0kM4wMd6GWSOGMgs0QH8jmJatfwEvD+XUTM40v7JbB1YJqlCFQAVdp1MofziuNJspWueXgfWSBu9tlNSFTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UR5ChWhg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r6fSvSyK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEA93C116D0;
-	Thu, 15 Jan 2026 17:28:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UR5ChWhg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA760C116D0;
+	Thu, 15 Jan 2026 17:28:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498104;
-	bh=kLa+EhI/THGfo95SEqsPFB6Rt/lmuG5sPSbTLdn9C3A=;
+	s=korg; t=1768498107;
+	bh=FS985oOkl/X8pPcasQ7IRXVFJ+GePShIWqoBeWCyZo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r6fSvSyKPsYYxUskUsvq5MDQrL1uwzZB9iqeA+fp7Ciqs6dRho8u2tgUZmd7NiYlb
-	 WOA9kQns9Qxeb2ak7WyMm0ivNJGuczopB29cQloCXwiuYI6a24iDJRED+5yiAKep4f
-	 OMHvb5tU9yRSn2pSu7jlY5RHOzpX4FPSrcfJqUKg=
+	b=UR5ChWhgpxuClcW86qbjP787onkAbJlxPu3fcOY/k4TnLArh2QQqP5zMJ5N7YL9Iy
+	 dZx3eKVU0oXW97hV61VgfN8WIVrGozgWlYZLQu3VGmDPpBi//ZvdVuJN4KNBHvk5cF
+	 wTs4YVEeDKLOLncKGaScdKHdk6f2ePJD30QKRDTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 5.15 281/554] fs/ntfs3: fix mount failure for sparse runs in run_unpack()
-Date: Thu, 15 Jan 2026 17:45:47 +0100
-Message-ID: <20260115164256.400367184@linuxfoundation.org>
+	John Warthog9 Hawley <warthog9@kernel.org>,
+	"John W. Krahn" <jwkrahn@shaw.ca>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 5.15 282/554] ktest.pl: Fix uninitialized var in config-bisect.pl
+Date: Thu, 15 Jan 2026 17:45:48 +0100
+Message-ID: <20260115164256.436434748@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -49,41 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 801f614ba263cb37624982b27b4c82f3c3c597a9 upstream.
+commit d3042cbe84a060b4df764eb6c5300bbe20d125ca upstream.
 
-Some NTFS volumes failed to mount because sparse data runs were not
-handled correctly during runlist unpacking. The code performed arithmetic
-on the special SPARSE_LCN64 marker, leading to invalid LCN values and
-mount errors.
+The error path of copying the old config used the wrong variable in the
+error message:
 
-Add an explicit check for the case described above, marking the run as
-sparse without applying arithmetic.
+ $ mkdir /tmp/build
+ $ ./tools/testing/ktest/config-bisect.pl -b /tmp/build config-good /tmp/config-bad
+ $ chmod 0 /tmp/build
+ $ ./tools/testing/ktest/config-bisect.pl -b /tmp/build config-good /tmp/config-bad good
+ cp /tmp/build//.config config-good.tmp ... [0 seconds] FAILED!
+ Use of uninitialized value $config in concatenation (.) or string at ./tools/testing/ktest/config-bisect.pl line 744.
+ failed to copy  to config-good.tmp
 
-Fixes: 736fc7bf5f68 ("fs: ntfs3: Fix integer overflow in run_unpack()")
+When it should have shown:
+
+ failed to copy /tmp/build//.config to config-good.tmp
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Cc: John 'Warthog9' Hawley <warthog9@kernel.org>
+Fixes: 0f0db065999cf ("ktest: Add standalone config-bisect.pl program")
+Link: https://patch.msgid.link/20251203180924.6862bd26@gandalf.local.home
+Reported-by: "John W. Krahn" <jwkrahn@shaw.ca>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/run.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ tools/testing/ktest/config-bisect.pl |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/ntfs3/run.c
-+++ b/fs/ntfs3/run.c
-@@ -937,8 +937,12 @@ int run_unpack(struct runs_tree *run, st
- 			if (!dlcn)
- 				return -EINVAL;
+--- a/tools/testing/ktest/config-bisect.pl
++++ b/tools/testing/ktest/config-bisect.pl
+@@ -741,9 +741,9 @@ if ($start) {
+ 	die "Can not find file $bad\n";
+     }
+     if ($val eq "good") {
+-	run_command "cp $output_config $good" or die "failed to copy $config to $good\n";
++	run_command "cp $output_config $good" or die "failed to copy $output_config to $good\n";
+     } elsif ($val eq "bad") {
+-	run_command "cp $output_config $bad" or die "failed to copy $config to $bad\n";
++	run_command "cp $output_config $bad" or die "failed to copy $output_config to $bad\n";
+     }
+ }
  
--			if (check_add_overflow(prev_lcn, dlcn, &lcn))
-+			/* Check special combination: 0 + SPARSE_LCN64. */
-+			if (!prev_lcn && dlcn == SPARSE_LCN64) {
-+				lcn = SPARSE_LCN64;
-+			} else if (check_add_overflow(prev_lcn, dlcn, &lcn)) {
- 				return -EINVAL;
-+			}
- 			prev_lcn = lcn;
- 		} else
- 			return -EINVAL;
 
 
