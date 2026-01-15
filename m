@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C061F2749DF;
-	Thu, 15 Jan 2026 17:39:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F822749DF;
+	Thu, 15 Jan 2026 17:39:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498763; cv=none; b=Y4yml1mdkf884ObseQ2Noo2u3nN9kvo0kJgG5y9LKVKxOnSPmax8EkscUIo+SEz/QabDX7q/zH32ryHbxnO+63rFxPXEfbWYdXfgJFaVePkpSi+j2Jh364rsK5Woc5ATGmvy1eFE9VnQoVuq0+8vZQeZ44L/CkhStn3ncPkRLmk=
+	t=1768498766; cv=none; b=VmWYtWy8A/syhh04ezCZ1UDLrIMruw6tPekkuGz4u5V0tN/TuyoXkPsscvGsJoYsI+x/eewHAOAvC4sjoTaAPmRDgSyrKnKy4j61dzZ/mD6qscCnG6JtPn/ucAGijzW/sFO/vauhb2CmPPONJaVXdVHAC/Z/RJSvbfCqOV677Qg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498763; c=relaxed/simple;
-	bh=qHMVfdQ5nqGzSkzF85Af2ROv49HmYDGGpZy57ID2dyI=;
+	s=arc-20240116; t=1768498766; c=relaxed/simple;
+	bh=Ecbi7AVbXUGz3Ej8nc0/bZXQ05zOxOiLRjJGGOrr7+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qKkTfeNfOl4CEseKO1pvWqgRGcq8+BCisrTngwEVydkA3cDiSwhIngg0ddSpQfYPRIOQQLWZQSuRXF6ry5Pko6HgOUqUQAHMESagDS4wurYUiY43zRzBCb+eqbc2dH0qqRCP80TMp748bL73gGC6NJWvnuVW1oAcI0v2+dmf/iY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OZzUgPCA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E5XUB63hl5m7EUA9whY6c0Kaw+0XfnxcUjaMl+aZ2dhyx1GIQuQMTsQUcphtf0GGqZOuIa4ajiwZV78djCkCVJB6bcyvSLJr7DGNZQGcWKhjMf3upJDYBVfV/Y3PGXNMhN2e29+g22+T7YdXiK5FaDDEOlCEE5QNb5mKe/lrMEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t3K083Ak; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OZzUgPCA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17B6AC116D0;
-	Thu, 15 Jan 2026 17:39:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t3K083Ak"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC53C116D0;
+	Thu, 15 Jan 2026 17:39:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498763;
-	bh=qHMVfdQ5nqGzSkzF85Af2ROv49HmYDGGpZy57ID2dyI=;
+	s=korg; t=1768498766;
+	bh=Ecbi7AVbXUGz3Ej8nc0/bZXQ05zOxOiLRjJGGOrr7+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OZzUgPCAqOqRZ6jEWD7uL6iIK6NAcRhMVdKAxT/LSwPdQcHP/JpgGS+b57rc/w4ty
-	 NpsYK3Ug2B5u/CU8GBsdBOH3A979wyOB15jy4YI8iR2cSugYLZhIsFAT7ONgdEB+uG
-	 PjlE4WdOpN1/dzojNhj3OYHbgbvm3lQKP2zVMDjc=
+	b=t3K083AkG+vS9Lbu4pkzfuKGB+U4+4YXPAdW8pWE28epfkisyU/6MQBOS6n2ibSt5
+	 0Z9bkSAvCpMUD084Egl4NfSZyklKr2WXN/Y7epeudEcEkSuezJIxcD+2cLeiZzU6E/
+	 peCDdlYt9aIEZBttaqlgY3hOVmyXYNFxonXQOsqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Elad Nachman <enachman@marvell.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	William Breathitt Gray <wbg@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 528/554] net: marvell: prestera: fix NULL dereference on devlink_alloc() failure
-Date: Thu, 15 Jan 2026 17:49:54 +0100
-Message-ID: <20260115164305.438988574@linuxfoundation.org>
+Subject: [PATCH 5.15 546/554] counter: interrupt-cnt: Drop IRQF_NO_THREAD flag
+Date: Thu, 15 Jan 2026 17:50:12 +0100
+Message-ID: <20260115164306.090516169@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -52,43 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-[ Upstream commit a428e0da1248c353557970848994f35fd3f005e2 ]
+[ Upstream commit 23f9485510c338476b9735d516c1d4aacb810d46 ]
 
-devlink_alloc() may return NULL on allocation failure, but
-prestera_devlink_alloc() unconditionally calls devlink_priv() on
-the returned pointer.
+An IRQ handler can either be IRQF_NO_THREAD or acquire spinlock_t, as
+CONFIG_PROVE_RAW_LOCK_NESTING warns:
+=============================
+[ BUG: Invalid wait context ]
+6.18.0-rc1+git... #1
+-----------------------------
+some-user-space-process/1251 is trying to lock:
+(&counter->events_list_lock){....}-{3:3}, at: counter_push_event [counter]
+other info that might help us debug this:
+context-{2:2}
+no locks held by some-user-space-process/....
+stack backtrace:
+CPU: 0 UID: 0 PID: 1251 Comm: some-user-space-process 6.18.0-rc1+git... #1 PREEMPT
+Call trace:
+ show_stack (C)
+ dump_stack_lvl
+ dump_stack
+ __lock_acquire
+ lock_acquire
+ _raw_spin_lock_irqsave
+ counter_push_event [counter]
+ interrupt_cnt_isr [interrupt_cnt]
+ __handle_irq_event_percpu
+ handle_irq_event
+ handle_simple_irq
+ handle_irq_desc
+ generic_handle_domain_irq
+ gpio_irq_handler
+ handle_irq_desc
+ generic_handle_domain_irq
+ gic_handle_irq
+ call_on_irq_stack
+ do_interrupt_handler
+ el0_interrupt
+ __el0_irq_handler_common
+ el0t_64_irq_handler
+ el0t_64_irq
 
-This leads to a NULL pointer dereference if devlink allocation fails.
-Add a check for a NULL devlink pointer and return NULL early to avoid
-the crash.
+... and Sebastian correctly points out. Remove IRQF_NO_THREAD as an
+alternative to switching to raw_spinlock_t, because the latter would limit
+all potential nested locks to raw_spinlock_t only.
 
-Fixes: 34dd1710f5a3 ("net: marvell: prestera: Add basic devlink support")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Acked-by: Elad Nachman <enachman@marvell.com>
-Link: https://patch.msgid.link/20251230052124.897012-1-alok.a.tiwari@oracle.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20251117151314.xwLAZrWY@linutronix.de/
+Fixes: a55ebd47f21f ("counter: add IRQ or GPIO based counter")
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://lore.kernel.org/r/20251118083603.778626-1-alexander.sverdlin@siemens.com
+Signed-off-by: William Breathitt Gray <wbg@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/prestera/prestera_devlink.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/counter/interrupt-cnt.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/prestera/prestera_devlink.c b/drivers/net/ethernet/marvell/prestera/prestera_devlink.c
-index 68b442eb6d694..59e865df6cee0 100644
---- a/drivers/net/ethernet/marvell/prestera/prestera_devlink.c
-+++ b/drivers/net/ethernet/marvell/prestera/prestera_devlink.c
-@@ -396,6 +396,8 @@ struct prestera_switch *prestera_devlink_alloc(struct prestera_device *dev)
+--- a/drivers/counter/interrupt-cnt.c
++++ b/drivers/counter/interrupt-cnt.c
+@@ -208,8 +208,7 @@ static int interrupt_cnt_probe(struct pl
  
- 	dl = devlink_alloc(&prestera_dl_ops, sizeof(struct prestera_switch),
- 			   dev->dev);
-+	if (!dl)
-+		return NULL;
+ 	irq_set_status_flags(priv->irq, IRQ_NOAUTOEN);
+ 	ret = devm_request_irq(dev, priv->irq, interrupt_cnt_isr,
+-			       IRQF_TRIGGER_RISING | IRQF_NO_THREAD,
+-			       dev_name(dev), priv);
++			       IRQF_TRIGGER_RISING, dev_name(dev), priv);
+ 	if (ret)
+ 		return ret;
  
- 	return devlink_priv(dl);
- }
--- 
-2.51.0
-
 
 
