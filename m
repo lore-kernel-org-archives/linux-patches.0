@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C776A3D4114;
-	Thu, 15 Jan 2026 17:29:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA9EC3C197F;
+	Thu, 15 Jan 2026 17:29:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498149; cv=none; b=ZYyouVAEh+3RD2kCtik5kfNHuUCAu/PXqZiZir3MAMB14kC/DveQ3+Eu3JDjOTTCa0nYVBfejVJksGhzf+7gbLpvRoyum66/+W4SIRjERkDjo2RWZunra365pKKtoHz/kQ81uBChqoXbx/yCCR/m6hDqBZbUvLgCDwU4i4ocDMI=
+	t=1768498152; cv=none; b=f+itA04EK5tLy5cbK7a9oQE27p7IRa3i7HYR6mrGljAoGdNoBj/gVVXMOJQy7L9Tny2xrYlEpC061Pz7DqwoLBg9lbMvQKY3GFge8AO6TBoD3NL3yXTlOGk/xx8rymZn08iqSVgEvlJqJmg8hx9vb3MwtkG5c8AxT+6B9c9hUQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498149; c=relaxed/simple;
-	bh=yTXcHujI396pOwhJoHXVUI2NSMluyGYYYqwl11ockYw=;
+	s=arc-20240116; t=1768498152; c=relaxed/simple;
+	bh=OkFft/t5kw6I+WI/71zrU83OkZbZQDsLYhXh4v7+wes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C7z4Dngans2WBC0XOgnl7mhnKLkn6SsRhFoIhTF75SKu37chS5GC6tvAqqJEOwcEVczMhp2EbCadp+GvTnOxx7EwaxCbNOlwUf7krea5tENR20e3eKopWcds0h4BMIJvwPc9glJ/mrKrH0rlImuALmpzMXmryIvMjeOI0JMkiJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fsI+JWGY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nRqxDQGHExat87eYT41kN6AAlv0INQsGmd9E5LZkZE6iGn6RkHiNWDMRwxnh1qsxPqUDHFDWsH/6dhRvofFJzDuUk+T7DWMi4+nAC5ggHuNZtxPnW7oODocHdsQR77JqRrxg+EWDr9QeHbByh8NpcDvr0Mc9FDm0K7tkt7uJAmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iB+1cDe8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fsI+JWGY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 527D3C116D0;
-	Thu, 15 Jan 2026 17:29:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iB+1cDe8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34360C116D0;
+	Thu, 15 Jan 2026 17:29:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498149;
-	bh=yTXcHujI396pOwhJoHXVUI2NSMluyGYYYqwl11ockYw=;
+	s=korg; t=1768498152;
+	bh=OkFft/t5kw6I+WI/71zrU83OkZbZQDsLYhXh4v7+wes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fsI+JWGYu77QU7NtXjF/7dmzsOUymhDd9/Qm9m5OYL7j8IQVW884hI2fGehRCGDEn
-	 4Sx8iXta1v8q/8uAZWgTOuZllyMKBUlaTL3W7ILZ+aJX4RJ/UVKWJsqNJ4G6FuLnKa
-	 dGcOYFVbHlBuxpotRVuZg1cMw2cnCJx93hvObrfg=
+	b=iB+1cDe84nmFc2a70BtOmTIh7VPgr64bp9DNv6vFyzKIS8NYWFIAPm+YRnxkhyqqT
+	 j9/QfSZ4UUkCxyqP57O+WJSS4UcTfxBtr+zT8JM3h4r8PshO67hKsGU51Og620YzJw
+	 P+BhmJJw48jZqa4MhjwvFBBRETUYARjPRMFY37dc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ziming zhang <ezrakiez@gmail.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Xiubo Li <xiubli@redhat.com>
-Subject: [PATCH 5.15 313/554] libceph: make decode_pool() more resilient against corrupted osdmaps
-Date: Thu, 15 Jan 2026 17:46:19 +0100
-Message-ID: <20260115164257.560418302@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 5.15 331/554] i2c: amd-mp2: fix reference leak in MP2 PCI device
+Date: Thu, 15 Jan 2026 17:46:37 +0100
+Message-ID: <20260115164258.212272896@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -51,221 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 8c738512714e8c0aa18f8a10c072d5b01c83db39 upstream.
+commit a6ee6aac66fb394b7f6e6187c73bdcd873f2d139 upstream.
 
-If the osdmap is (maliciously) corrupted such that the encoded length
-of ceph_pg_pool envelope is less than what is expected for a particular
-encoding version, out-of-bounds reads may ensue because the only bounds
-check that is there is based on that length value.
+In i2c_amd_probe(), amd_mp2_find_device() utilizes
+driver_find_next_device() which internally calls driver_find_device()
+to locate the matching device. driver_find_device() increments the
+reference count of the found device by calling get_device(), but
+amd_mp2_find_device() fails to call put_device() to decrement the
+reference count before returning. This results in a reference count
+leak of the PCI device each time i2c_amd_probe() is executed, which
+may prevent the device from being properly released and cause a memory
+leak.
 
-This patch adds explicit bounds checks for each field that is decoded
-or skipped.
+Found by code review.
 
 Cc: stable@vger.kernel.org
-Reported-by: ziming zhang <ezrakiez@gmail.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Xiubo Li <xiubli@redhat.com>
-Tested-by: ziming zhang <ezrakiez@gmail.com>
+Fixes: 529766e0a011 ("i2c: Add drivers for the AMD PCIe MP2 I2C controller")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20251022095402.8846-1-make24@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osdmap.c |  118 ++++++++++++++++++++++++------------------------------
- 1 file changed, 53 insertions(+), 65 deletions(-)
+ drivers/i2c/busses/i2c-amd-mp2-pci.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/net/ceph/osdmap.c
-+++ b/net/ceph/osdmap.c
-@@ -790,51 +790,49 @@ static int decode_pool(void **p, void *e
- 	ceph_decode_need(p, end, len, bad);
- 	pool_end = *p + len;
+--- a/drivers/i2c/busses/i2c-amd-mp2-pci.c
++++ b/drivers/i2c/busses/i2c-amd-mp2-pci.c
+@@ -452,13 +452,16 @@ struct amd_mp2_dev *amd_mp2_find_device(
+ {
+ 	struct device *dev;
+ 	struct pci_dev *pci_dev;
++	struct amd_mp2_dev *mp2_dev;
  
-+	ceph_decode_need(p, end, 4 + 4 + 4, bad);
- 	pi->type = ceph_decode_8(p);
- 	pi->size = ceph_decode_8(p);
- 	pi->crush_ruleset = ceph_decode_8(p);
- 	pi->object_hash = ceph_decode_8(p);
--
- 	pi->pg_num = ceph_decode_32(p);
- 	pi->pgp_num = ceph_decode_32(p);
+ 	dev = driver_find_next_device(&amd_mp2_pci_driver.driver, NULL);
+ 	if (!dev)
+ 		return NULL;
  
--	*p += 4 + 4;  /* skip lpg* */
--	*p += 4;      /* skip last_change */
--	*p += 8 + 4;  /* skip snap_seq, snap_epoch */
-+	/* lpg*, last_change, snap_seq, snap_epoch */
-+	ceph_decode_skip_n(p, end, 8 + 4 + 8 + 4, bad);
- 
- 	/* skip snaps */
--	num = ceph_decode_32(p);
-+	ceph_decode_32_safe(p, end, num, bad);
- 	while (num--) {
--		*p += 8;  /* snapid key */
--		*p += 1 + 1; /* versions */
--		len = ceph_decode_32(p);
--		*p += len;
-+		/* snapid key, pool snap (with versions) */
-+		ceph_decode_skip_n(p, end, 8 + 2, bad);
-+		ceph_decode_skip_string(p, end, bad);
- 	}
- 
--	/* skip removed_snaps */
--	num = ceph_decode_32(p);
--	*p += num * (8 + 8);
-+	/* removed_snaps */
-+	ceph_decode_skip_map(p, end, 64, 64, bad);
- 
-+	ceph_decode_need(p, end, 8 + 8 + 4, bad);
- 	*p += 8;  /* skip auid */
- 	pi->flags = ceph_decode_64(p);
- 	*p += 4;  /* skip crash_replay_interval */
- 
- 	if (ev >= 7)
--		pi->min_size = ceph_decode_8(p);
-+		ceph_decode_8_safe(p, end, pi->min_size, bad);
- 	else
- 		pi->min_size = pi->size - pi->size / 2;
- 
- 	if (ev >= 8)
--		*p += 8 + 8;  /* skip quota_max_* */
-+		/* quota_max_* */
-+		ceph_decode_skip_n(p, end, 8 + 8, bad);
- 
- 	if (ev >= 9) {
--		/* skip tiers */
--		num = ceph_decode_32(p);
--		*p += num * 8;
-+		/* tiers */
-+		ceph_decode_skip_set(p, end, 64, bad);
- 
-+		ceph_decode_need(p, end, 8 + 1 + 8 + 8, bad);
- 		*p += 8;  /* skip tier_of */
- 		*p += 1;  /* skip cache_mode */
--
- 		pi->read_tier = ceph_decode_64(p);
- 		pi->write_tier = ceph_decode_64(p);
- 	} else {
-@@ -842,86 +840,76 @@ static int decode_pool(void **p, void *e
- 		pi->write_tier = -1;
- 	}
- 
--	if (ev >= 10) {
--		/* skip properties */
--		num = ceph_decode_32(p);
--		while (num--) {
--			len = ceph_decode_32(p);
--			*p += len; /* key */
--			len = ceph_decode_32(p);
--			*p += len; /* val */
--		}
--	}
-+	if (ev >= 10)
-+		/* properties */
-+		ceph_decode_skip_map(p, end, string, string, bad);
- 
- 	if (ev >= 11) {
--		/* skip hit_set_params */
--		*p += 1 + 1; /* versions */
--		len = ceph_decode_32(p);
--		*p += len;
-+		/* hit_set_params (with versions) */
-+		ceph_decode_skip_n(p, end, 2, bad);
-+		ceph_decode_skip_string(p, end, bad);
- 
--		*p += 4; /* skip hit_set_period */
--		*p += 4; /* skip hit_set_count */
-+		/* hit_set_period, hit_set_count */
-+		ceph_decode_skip_n(p, end, 4 + 4, bad);
- 	}
- 
- 	if (ev >= 12)
--		*p += 4; /* skip stripe_width */
-+		/* stripe_width */
-+		ceph_decode_skip_32(p, end, bad);
- 
--	if (ev >= 13) {
--		*p += 8; /* skip target_max_bytes */
--		*p += 8; /* skip target_max_objects */
--		*p += 4; /* skip cache_target_dirty_ratio_micro */
--		*p += 4; /* skip cache_target_full_ratio_micro */
--		*p += 4; /* skip cache_min_flush_age */
--		*p += 4; /* skip cache_min_evict_age */
--	}
--
--	if (ev >=  14) {
--		/* skip erasure_code_profile */
--		len = ceph_decode_32(p);
--		*p += len;
--	}
-+	if (ev >= 13)
-+		/* target_max_*, cache_target_*, cache_min_* */
-+		ceph_decode_skip_n(p, end, 16 + 8 + 8, bad);
-+
-+	if (ev >= 14)
-+		/* erasure_code_profile */
-+		ceph_decode_skip_string(p, end, bad);
- 
- 	/*
- 	 * last_force_op_resend_preluminous, will be overridden if the
- 	 * map was encoded with RESEND_ON_SPLIT
- 	 */
- 	if (ev >= 15)
--		pi->last_force_request_resend = ceph_decode_32(p);
-+		ceph_decode_32_safe(p, end, pi->last_force_request_resend, bad);
- 	else
- 		pi->last_force_request_resend = 0;
- 
- 	if (ev >= 16)
--		*p += 4; /* skip min_read_recency_for_promote */
-+		/* min_read_recency_for_promote */
-+		ceph_decode_skip_32(p, end, bad);
- 
- 	if (ev >= 17)
--		*p += 8; /* skip expected_num_objects */
-+		/* expected_num_objects */
-+		ceph_decode_skip_64(p, end, bad);
- 
- 	if (ev >= 19)
--		*p += 4; /* skip cache_target_dirty_high_ratio_micro */
-+		/* cache_target_dirty_high_ratio_micro */
-+		ceph_decode_skip_32(p, end, bad);
- 
- 	if (ev >= 20)
--		*p += 4; /* skip min_write_recency_for_promote */
-+		/* min_write_recency_for_promote */
-+		ceph_decode_skip_32(p, end, bad);
- 
- 	if (ev >= 21)
--		*p += 1; /* skip use_gmt_hitset */
-+		/* use_gmt_hitset */
-+		ceph_decode_skip_8(p, end, bad);
- 
- 	if (ev >= 22)
--		*p += 1; /* skip fast_read */
-+		/* fast_read */
-+		ceph_decode_skip_8(p, end, bad);
- 
--	if (ev >= 23) {
--		*p += 4; /* skip hit_set_grade_decay_rate */
--		*p += 4; /* skip hit_set_search_last_n */
--	}
-+	if (ev >= 23)
-+		/* hit_set_grade_decay_rate, hit_set_search_last_n */
-+		ceph_decode_skip_n(p, end, 4 + 4, bad);
- 
- 	if (ev >= 24) {
--		/* skip opts */
--		*p += 1 + 1; /* versions */
--		len = ceph_decode_32(p);
--		*p += len;
-+		/* opts (with versions) */
-+		ceph_decode_skip_n(p, end, 2, bad);
-+		ceph_decode_skip_string(p, end, bad);
- 	}
- 
- 	if (ev >= 25)
--		pi->last_force_request_resend = ceph_decode_32(p);
-+		ceph_decode_32_safe(p, end, pi->last_force_request_resend, bad);
- 
- 	/* ignore the rest */
+ 	pci_dev = to_pci_dev(dev);
+-	return (struct amd_mp2_dev *)pci_get_drvdata(pci_dev);
++	mp2_dev = (struct amd_mp2_dev *)pci_get_drvdata(pci_dev);
++	put_device(dev);
++	return mp2_dev;
+ }
+ EXPORT_SYMBOL_GPL(amd_mp2_find_device);
  
 
 
