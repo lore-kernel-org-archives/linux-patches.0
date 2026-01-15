@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECDE726CE04;
-	Thu, 15 Jan 2026 17:33:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB5FA3B8D5F;
+	Thu, 15 Jan 2026 17:33:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498386; cv=none; b=gq4cnqiYG8hvpAJaycLOkeA4qBc8gHEswRKYNfygkNz4DuKrM0DgI43yVBHxjdB6VRcXRWL3j+Q3OBtoV0tlxOwzuLfs+TvdrfHO0tuenar4YifEwtz25wgi9hfel37pEoK6RdcHz8CotHoe6DqxEWFEvH5kPGhtWY94VLww7Bc=
+	t=1768498388; cv=none; b=nBGS1lOYxncdFvaZ7n45Izmu4nJF9yAhfqQ5cgjWQn+u+MDfgupc7mVzuV/v0K9ofV5/0McVjz/eX/W2swhrT7xHu9OU+zGdPkLUvJ2CgduTpso/KGaIqHrJOVNQRcriKsI8YLeJTC0J7B44o9pIGy/Artq39RPe3fsgOmGfUY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498386; c=relaxed/simple;
-	bh=iUGgGcup5sSXrVzcVvyb+q+CyjfRFvYK7+bg3H2rIPg=;
+	s=arc-20240116; t=1768498388; c=relaxed/simple;
+	bh=ctPlRb8VNegU8YBJczQ4OedyiLzmrl3VFKSc56fKA7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KIGxJ/bqCP10GoAp8ucxVGvt81dGivDnj7GycLsWLDUzAjsYN03q08B1daKz0PZgfrLgSxOUVQyQx4R8h4XLeIvlwSa5DYIwFlvXg0AH0wN6JNBikYbOC3geWuJceWJYDYtBWFiDxIVbJH8amHxIKBRMxWbDHGceRC7KwbEYAyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qBClWYMj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uj24wwYYK5JHFFq/YJt2IUFs9CdFbQVLs5oJuYkA8W5pLuipX+OiQPIaNUaVwi2kaMyWkyqby2vSXPQTea2qMJyYyuuESdiXSO++6f09QhbPjPwWw3Pjk0f6C9XqOb/R4fVwv060e0FpgRmIvsymfyv7+OyKH5JwKwNbsW70d+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dN9WHFM0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qBClWYMj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 790CAC116D0;
-	Thu, 15 Jan 2026 17:33:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dN9WHFM0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56BA7C116D0;
+	Thu, 15 Jan 2026 17:33:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498385;
-	bh=iUGgGcup5sSXrVzcVvyb+q+CyjfRFvYK7+bg3H2rIPg=;
+	s=korg; t=1768498388;
+	bh=ctPlRb8VNegU8YBJczQ4OedyiLzmrl3VFKSc56fKA7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qBClWYMjA00IYOXFSKj5aGfTJTsksBSTzlrFG25K8hjMN0BXamGfDnLHMvAxfEvlw
-	 6CiKkvNnBPVunPJupI50XrHqDuDAVFYMe++mmwC36d5n7hqjsKN/0Ryrsov3FFt0jX
-	 fyPxWfOKKdNTUcGLsJ8s23tOSBaSXeYa/OlBD9KA=
+	b=dN9WHFM0Vk/FTj5AJkoDuk5bGYN4uhvDJN3DesIuGrhPDx0kKueupk7O7jqSBRbfS
+	 tCQj8XjXm38LZ79JU/Z2YFlems5tvMZyBWFWTIVvCBYzjRQTMuA5+SDkV1Vd7XnoEX
+	 yR6JL/OUr9nuCfsi/7JEG8DctXgQoOcXCKsDx7Jk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 5.15 386/554] mfd: max77620: Fix potential IRQ chip conflict when probing two devices
-Date: Thu, 15 Jan 2026 17:47:32 +0100
-Message-ID: <20260115164300.210585084@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 413/554] mm/damon/tests/vaddr-kunit: handle alloc failures on damon_do_test_apply_three_regions()
+Date: Thu, 15 Jan 2026 17:47:59 +0100
+Message-ID: <20260115164301.186626633@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -50,81 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: SeongJae Park <sj@kernel.org>
 
-commit 2bac49bad1f3553cc3b3bfb22cc194e9bd9e8427 upstream.
+commit 2b22d0fcc6320ba29b2122434c1d2f0785fb0a25 upstream.
 
-MAX77620 is most likely always a single device on the board, however
-nothing stops board designers to have two of them, thus same device
-driver could probe twice. Or user could manually try to probing second
-time.
+damon_do_test_apply_three_regions() is assuming all dynamic memory
+allocation in it will succeed.  Those are indeed likely in the real use
+cases since those allocations are too small to fail, but theoretically
+those could fail.  In the case, inappropriate memory access can happen.
+Fix it by appropriately cleanup pre-allocated memory and skip the
+execution of the remaining tests in the failure cases.
 
-Device driver is not ready for that case, because it allocates
-statically 'struct regmap_irq_chip' as non-const and stores during
-probe in 'irq_drv_data' member a pointer to per-probe state
-container ('struct max77620_chip').  devm_regmap_add_irq_chip() does not
-make a copy of 'struct regmap_irq_chip' but store the pointer.
-
-Second probe - either successful or failure - would overwrite the
-'irq_drv_data' from previous device probe, so interrupts would be
-executed in a wrong context.
-
-Cc: stable@vger.kernel.org
-Fixes: 3df140d11c6d ("mfd: max77620: Mask/unmask interrupt before/after servicing it")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://patch.msgid.link/20251023101939.67991-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lkml.kernel.org/r/20251101182021.74868-18-sj@kernel.org
+Fixes: 17ccae8bb5c9 ("mm/damon: add kunit tests")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: Brendan Higgins <brendan.higgins@linux.dev>
+Cc: David Gow <davidgow@google.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: <stable@vger.kernel.org>	[5.15+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: SeongJae Park <sj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mfd/max77620.c |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ mm/damon/vaddr-test.h |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/mfd/max77620.c
-+++ b/drivers/mfd/max77620.c
-@@ -254,7 +254,7 @@ static int max77620_irq_global_unmask(vo
- 	return ret;
- }
+--- a/mm/damon/vaddr-test.h
++++ b/mm/damon/vaddr-test.h
+@@ -141,8 +141,14 @@ static void damon_do_test_apply_three_re
+ 	int i;
  
--static struct regmap_irq_chip max77620_top_irq_chip = {
-+static const struct regmap_irq_chip max77620_top_irq_chip = {
- 	.name = "max77620-top",
- 	.irqs = max77620_top_irqs,
- 	.num_irqs = ARRAY_SIZE(max77620_top_irqs),
-@@ -499,6 +499,7 @@ static int max77620_probe(struct i2c_cli
- {
- 	const struct regmap_config *rmap_config;
- 	struct max77620_chip *chip;
-+	struct regmap_irq_chip *chip_desc;
- 	const struct mfd_cell *mfd_cells;
- 	int n_mfd_cells;
- 	bool pm_off;
-@@ -509,6 +510,14 @@ static int max77620_probe(struct i2c_cli
- 		return -ENOMEM;
- 
- 	i2c_set_clientdata(client, chip);
-+
-+	chip_desc = devm_kmemdup(&client->dev, &max77620_top_irq_chip,
-+				 sizeof(max77620_top_irq_chip),
-+				 GFP_KERNEL);
-+	if (!chip_desc)
-+		return -ENOMEM;
-+	chip_desc->irq_drv_data = chip;
-+
- 	chip->dev = &client->dev;
- 	chip->chip_irq = client->irq;
- 	chip->chip_id = (enum max77620_chip_id)id->driver_data;
-@@ -545,11 +554,9 @@ static int max77620_probe(struct i2c_cli
- 	if (ret < 0)
- 		return ret;
- 
--	max77620_top_irq_chip.irq_drv_data = chip;
- 	ret = devm_regmap_add_irq_chip(chip->dev, chip->rmap, client->irq,
- 				       IRQF_ONESHOT | IRQF_SHARED, 0,
--				       &max77620_top_irq_chip,
--				       &chip->top_irq_data);
-+				       chip_desc, &chip->top_irq_data);
- 	if (ret < 0) {
- 		dev_err(chip->dev, "Failed to add regmap irq: %d\n", ret);
- 		return ret;
+ 	t = damon_new_target(42);
++	if (!t)
++		kunit_skip(test, "target alloc fail");
+ 	for (i = 0; i < nr_regions / 2; i++) {
+ 		r = damon_new_region(regions[i * 2], regions[i * 2 + 1]);
++		if (!r) {
++			damon_destroy_target(t);
++			kunit_skip(test, "region alloc fail");
++		}
+ 		damon_add_region(r, t);
+ 	}
+ 	damon_add_target(ctx, t);
 
 
