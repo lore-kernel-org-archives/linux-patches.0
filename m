@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EB23BFE43;
-	Thu, 15 Jan 2026 17:30:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902683BFE43;
+	Thu, 15 Jan 2026 17:30:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498249; cv=none; b=nbPDMw4pn7m/xBSgTMIRWaKCeBtLDRPjOqtP1+jLnv3HKEBmXYrgat6yo7wULrjiviVKiIimYB0YIvBYbDB+AizVTKUkv4jDHNicKqdALHXHCAUsb/urmlXlNnbzRsuUxD5fPqhan8x64Bhbwtc4+EoG/6DBbaYFyCJmYwZqN+Q=
+	t=1768498252; cv=none; b=pZAHPX7BYt0GMA2dtGbcHTLFSAvLcYIlJZS6FQYGrPvndyVrGctziDDX0BfT6RS0Fr70negQSHFo0fjgU4NbAXAKivokJ9kG3BFp81X2BzqSh1Vj10ls5IPE203uvhMdsGHPPxzsgTsPKFdQelR8I+HLmEPgQIeTg8y7cBbWwBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498249; c=relaxed/simple;
-	bh=kFYh4SE7VRIwiNxf9NKDxPKm9vSHKd8PYmhCdgk7wZc=;
+	s=arc-20240116; t=1768498252; c=relaxed/simple;
+	bh=J6QB77yQHYZL5DEIEmf7/dOZkraIKVyBJIzJA+Qk1YA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XEtWgY8Mus5UiXXkyoYqmITSJlQC09fOOb2R7Dp84hklXoKvDL9LzDgCJ0BPP4zbrs97EFSNFc0gP8WHNlfmOJjrbGcYSfgwat26IzsYi+cjlw8R3W+VB2AqjNPEWbspYHBi9Zo2i1kNfndNn44JxaE0huYIsCzMtcqYijlTIYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lxBWP6Ma; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZRpRw6248O0sgPTUGtTtkkd2vJhLsfWFAT5vHUxdkLIgyHpwYpMyLxwfqmVZx7cCFZFfD7njLPRSRi9qX38VS1xFiZ6yTQBpeagafKX/94G0x+wmnOtEzl1awSvAYbRlUSv90gjvvXtj0awz837/4a2yWdhB17Q2NBgjN899lxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gz+kjURx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lxBWP6Ma"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1403FC116D0;
-	Thu, 15 Jan 2026 17:30:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gz+kjURx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4EC7C116D0;
+	Thu, 15 Jan 2026 17:30:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498249;
-	bh=kFYh4SE7VRIwiNxf9NKDxPKm9vSHKd8PYmhCdgk7wZc=;
+	s=korg; t=1768498252;
+	bh=J6QB77yQHYZL5DEIEmf7/dOZkraIKVyBJIzJA+Qk1YA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lxBWP6MaHm9UPO+XETJ6P+iKByJSpUdgy7jIDSnI7TYMQLb0nuPpMMcLXIr8iv3Us
-	 y3pMEU+PfJ8mtKiwLbzPZ3LITx0Tv60QFI3qTonBhrC7dRF6W0eUAbnzcly2UTSdyS
-	 H1uJ0QleQ3pjmNMXVbpbXcLDeTWL4uCxhOH1Qxk4=
+	b=gz+kjURx4ZsW5Ml+VhSsCyELViZ82qW07sK2x1CCGjT5QioxZklov6GVfyF5y1K8b
+	 P4ZMfLJp5qfAIhJkh0MWddfqeRsIGyKRcQ6cKxmtVoW+i6W1A3GBZG2vt6MylWxs0A
+	 qchTJ04L3+bU0ejEtdPkd6xISzf3xt5N/988M18E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Honggang LI <honggangli@163.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	syzbot+8dd915c7cb0490fc8c52@syzkaller.appspotmail.com,
+	Deepakkumar Karn <dkarn@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 366/554] RDMA/rtrs: Fix clt_path::max_pages_per_mr calculation
-Date: Thu, 15 Jan 2026 17:47:12 +0100
-Message-ID: <20260115164259.473531990@linuxfoundation.org>
+Subject: [PATCH 5.15 349/554] net: usb: rtl8150: fix memory leak on usb_submit_urb() failure
+Date: Thu, 15 Jan 2026 17:46:55 +0100
+Message-ID: <20260115164258.860403074@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -51,38 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Honggang LI <honggangli@163.com>
+From: Deepakkumar Karn <dkarn@redhat.com>
 
-[ Upstream commit 43bd09d5b750f700499ae8ec45fd41a4c48673e6 ]
+[ Upstream commit 12cab1191d9890097171156d06bfa8d31f1e39c8 ]
 
-If device max_mr_size bits in the range [mr_page_shift+31:mr_page_shift]
-are zero, the `min3` function will set clt_path::max_pages_per_mr to
-zero.
+In async_set_registers(), when usb_submit_urb() fails, the allocated
+  async_req structure and URB are not freed, causing a memory leak.
 
-`alloc_path_reqs` will pass zero, which is invalid, as the third parameter
-to `ib_alloc_mr`.
+  The completion callback async_set_reg_cb() is responsible for freeing
+  these allocations, but it is only called after the URB is successfully
+  submitted and completes (successfully or with error). If submission
+  fails, the callback never runs and the memory is leaked.
 
-Fixes: 6a98d71daea1 ("RDMA/rtrs: client: main functionality")
-Signed-off-by: Honggang LI <honggangli@163.com>
-Link: https://patch.msgid.link/20251229025617.13241-1-honggangli@163.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+  Fix this by freeing both the URB and the request structure in the error
+  path when usb_submit_urb() fails.
+
+Reported-by: syzbot+8dd915c7cb0490fc8c52@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=8dd915c7cb0490fc8c52
+Fixes: 4d12997a9bb3 ("drivers: net: usb: rtl8150: concurrent URB bugfix")
+Signed-off-by: Deepakkumar Karn <dkarn@redhat.com>
+Link: https://patch.msgid.link/20251216151304.59865-2-dkarn@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/rtrs/rtrs-clt.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/usb/rtl8150.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/infiniband/ulp/rtrs/rtrs-clt.c b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-index e8f5a1f104cf..cda7849e2133 100644
---- a/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-+++ b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-@@ -1469,6 +1469,7 @@ static void query_fast_reg_mode(struct rtrs_clt_path *clt_path)
- 	mr_page_shift      = max(12, ffs(ib_dev->attrs.page_size_cap) - 1);
- 	max_pages_per_mr   = ib_dev->attrs.max_mr_size;
- 	do_div(max_pages_per_mr, (1ull << mr_page_shift));
-+	max_pages_per_mr = min_not_zero((u32)max_pages_per_mr, U32_MAX);
- 	clt_path->max_pages_per_mr =
- 		min3(clt_path->max_pages_per_mr, (u32)max_pages_per_mr,
- 		     ib_dev->attrs.max_fast_reg_page_list_len);
+diff --git a/drivers/net/usb/rtl8150.c b/drivers/net/usb/rtl8150.c
+index 011cf3a35378..fa69d59a309a 100644
+--- a/drivers/net/usb/rtl8150.c
++++ b/drivers/net/usb/rtl8150.c
+@@ -211,6 +211,8 @@ static int async_set_registers(rtl8150_t *dev, u16 indx, u16 size, u16 reg)
+ 		if (res == -ENODEV)
+ 			netif_device_detach(dev->netdev);
+ 		dev_err(&dev->udev->dev, "%s failed with %d\n", __func__, res);
++		kfree(req);
++		usb_free_urb(async_urb);
+ 	}
+ 	return res;
+ }
 -- 
 2.51.0
 
