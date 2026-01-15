@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA5A129B200;
-	Thu, 15 Jan 2026 17:21:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF8A27AC5C;
+	Thu, 15 Jan 2026 17:21:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497707; cv=none; b=Juw0mnk056oURmQB0wSs6B994g4FQ5UoEOVGqz+kEQ6Y476scrR/1EemPCjL1Rv78Qq3+s0GU+8g2Il+1nHAOpr76x4/jfQ4H/CFR0wNPi5YYZPcRSakWCytFurRb5yq3ksZKP+23m/gLe1F/o94nrQ1Aw7/yvNLJp5WCMhl4ho=
+	t=1768497710; cv=none; b=lfXat5yV9ufI/9oRrV58l9gmuWleORneVVZYijO0MfCiYGutKE2YOkDSTtok1sebkquPm4Y6Gjtzpz96nZMYcUqevSJ9I79WajrF1KhFr+aNzFysgEWsfLvGjenqRIVUmRJ3WU+6Qq+uLsELQ5zDCU8NTIsLR9uIXMPxVH5Y/P0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497707; c=relaxed/simple;
-	bh=XhLAv4zOj260dEQv2JPXXF55uL7f60tqYWSK8Gb5gK8=;
+	s=arc-20240116; t=1768497710; c=relaxed/simple;
+	bh=L8lNmek2Et6GGckIb4QQnpbMJhUsNm6+3M9pDEg30us=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TWfZ5ifedo0O8CnYUS1SVSzLyqUirWNBlkAEVMRxXAPExKOTrswRDNmo2A5ptSSnwud1yuWlYVMcDmzqMPOl6TD7skKLGs2Mx8Aoc6OCqsRaN01tYFpCuLwgVuSDeHnuDKVeaftWDJgj1Ihu8bQoI28VZlC8ggXCzt0VsrFpGKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aStyXtcm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B0V00BrqVRgtui/GZLYqeVqigOBpxH3oomJWTnjJjyJFMXkue9rfHUMgLiJ4qJDi8qrPMhzvwf/MkDDMhDtClthPZo+eL2JIYr1QZXDLf8x0dVILvd9IfWZtDdccptDgJ/XWZpWvqD5UeWRe5aKfDNvc4b+Mp2ygYk5khZ378mo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nzXkYNlO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aStyXtcm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57931C116D0;
-	Thu, 15 Jan 2026 17:21:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nzXkYNlO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B0D6C116D0;
+	Thu, 15 Jan 2026 17:21:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497707;
-	bh=XhLAv4zOj260dEQv2JPXXF55uL7f60tqYWSK8Gb5gK8=;
+	s=korg; t=1768497710;
+	bh=L8lNmek2Et6GGckIb4QQnpbMJhUsNm6+3M9pDEg30us=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aStyXtcmtBGpqo1UIbWNRH5pYFnclbMQJNVtLtDXc24Ut4pDc+LGTNft7qiVlMLYa
-	 cciBS+JQrZX/UX+O4dMOfVxwIf64wgvTicwxyDB3XDPLjIpx7q/kPqIjq16a8pvIQ1
-	 x5fCDpC/jBxhcGTszMJb3K598y9ZjnI0AFMxYFeg=
+	b=nzXkYNlOZWjFgerPpQWDyWJ8xx7tpYqBlVRykVPs/rKXLTr7NPHWvkV+b1Z5RpPM5
+	 +QzXkIxa+KhnKFy30qjASvAm1CxcrbNaX70wRIQQiPxEP70hrRGoWMx5FyUMC1sy7f
+	 cOlFvsqnrtIIjhIygPWsy19YPL9RhIhP+bRdrqe0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Helge Deller <deller@gmx.de>,
+	Alkis Georgopoulos <alkisg@gmail.com>,
+	Li Lingfeng <lilingfeng3@huawei.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 168/554] fbdev: ssd1307fb: fix potential page leak in ssd1307fb_probe()
-Date: Thu, 15 Jan 2026 17:43:54 +0100
-Message-ID: <20260115164252.348463453@linuxfoundation.org>
+Subject: [PATCH 5.15 177/554] Revert "nfs: ignore SB_RDONLY when remounting nfs"
+Date: Thu, 15 Jan 2026 17:44:03 +0100
+Message-ID: <20260115164252.675156354@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -51,44 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 164312662ae9764b83b84d97afb25c42eb2be473 ]
+[ Upstream commit 400fa37afbb11a601c204b72af0f0e5bc2db695c ]
 
-The page allocated for vmem using __get_free_pages() is not freed on the
-error paths after it. Fix that by adding a corresponding __free_pages()
-call to the error path.
+This reverts commit 80c4de6ab44c14e910117a02f2f8241ffc6ec54a.
 
-Fixes: facd94bc458a ("fbdev: ssd1307fb: Allocate page aligned video memory.")
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Silently ignoring the "ro" and "rw" mount options causes user confusion,
+and regressions.
+
+Reported-by: Alkis Georgopoulos<alkisg@gmail.com>
+Cc: Li Lingfeng <lilingfeng3@huawei.com>
+Fixes: 80c4de6ab44c ("nfs: ignore SB_RDONLY when remounting nfs")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/ssd1307fb.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/nfs/super.c | 10 ----------
+ 1 file changed, 10 deletions(-)
 
-diff --git a/drivers/video/fbdev/ssd1307fb.c b/drivers/video/fbdev/ssd1307fb.c
-index 7acf7c0b263e6..212494b0a4ba8 100644
---- a/drivers/video/fbdev/ssd1307fb.c
-+++ b/drivers/video/fbdev/ssd1307fb.c
-@@ -732,7 +732,7 @@ static int ssd1307fb_probe(struct i2c_client *client)
- 	if (!ssd1307fb_defio) {
- 		dev_err(dev, "Couldn't allocate deferred io.\n");
- 		ret = -ENOMEM;
--		goto fb_alloc_error;
-+		goto fb_defio_error;
- 	}
+diff --git a/fs/nfs/super.c b/fs/nfs/super.c
+index cc70800b9a4b2..aa11a6dcf6ce7 100644
+--- a/fs/nfs/super.c
++++ b/fs/nfs/super.c
+@@ -1017,16 +1017,6 @@ int nfs_reconfigure(struct fs_context *fc)
  
- 	ssd1307fb_defio->delay = HZ / refreshrate;
-@@ -812,6 +812,8 @@ static int ssd1307fb_probe(struct i2c_client *client)
- 		regulator_disable(par->vbat_reg);
- reset_oled_error:
- 	fb_deferred_io_cleanup(info);
-+fb_defio_error:
-+	__free_pages(vmem, get_order(vmem_size));
- fb_alloc_error:
- 	framebuffer_release(info);
- 	return ret;
+ 	sync_filesystem(sb);
+ 
+-	/*
+-	 * The SB_RDONLY flag has been removed from the superblock during
+-	 * mounts to prevent interference between different filesystems.
+-	 * Similarly, it is also necessary to ignore the SB_RDONLY flag
+-	 * during reconfiguration; otherwise, it may also result in the
+-	 * creation of redundant superblocks when mounting a directory with
+-	 * different rw and ro flags multiple times.
+-	 */
+-	fc->sb_flags_mask &= ~SB_RDONLY;
+-
+ 	/*
+ 	 * Userspace mount programs that send binary options generally send
+ 	 * them populated with default values. We have no way to know which
 -- 
 2.51.0
 
