@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A895E2C028F;
-	Thu, 15 Jan 2026 17:02:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77A5729C338;
+	Thu, 15 Jan 2026 17:02:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496563; cv=none; b=kl4IYZWUmqTAsenjm1xBxTdBFk/c4uUZSZicFJpJbz0+NzXnhxV12fVdSQnN118VbSBVwc6Bq1KkFArMcdMia/454jFHMOVAipzi5uC+nkw4iOwz2yI+Z0Y88Spi+IsbpOoYG26B7iyNn2wwi+cvHV2XoNEj5wOB2EBbWAWGwtw=
+	t=1768496566; cv=none; b=VUZYMk3afbmMD2deXFqo0C2tiZo/8YT2rAdJ336Wm2P5iE4oUOSn0XDIpptvJmBN1NXFpmLT/smRzUVLIR5Fn6XUS3EnfV+JXHNpr6AXJmHAW21Iht9BQYff2exZjHj+TXGm1UoVQ1bC2DOJMMN72+mPwPUBmj/itMqNhEoxWr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496563; c=relaxed/simple;
-	bh=PFVfqIGrwVzk6//ZzBPeCGnuRAHBaa8Dvt19BdsD1sM=;
+	s=arc-20240116; t=1768496566; c=relaxed/simple;
+	bh=/X2tYseuO9h4qnaAZsp8EjYRMBHNaDryGDVoxJje/74=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EmJ6vg/K227bGIHJhFQPBnckRPGuvMT//YE3F0TcCuPs8Ik8AoSPirbQjXu14sFHRH7pvKJrX814swwrH1ydOpWz5hSXkDfoclcA36CkGhKMnQi/27TB2f+8rPa0KnFxzLpcN37XzoBS4tUZ/U2c15xvTR4OO0ieEjUPJcvO8yE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RHFnuPQJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eTDWV0Z04ykLHNpgoOVakW1bx+lbYgvP0n/zpaI7TXvK9oWd84/a+nROXUIZ9kaAI7uncSzAxowtk4X/8m8BxRrowF7DCBs1PZT9ahBfXXzPjSMU6rQx1MVddsXSC342APR1LuKGMY3B5HBLU2dxLlksCM2JGe/v3AXV6WAlFBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RFdEVEHI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RHFnuPQJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3643CC116D0;
-	Thu, 15 Jan 2026 17:02:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RFdEVEHI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03AAFC116D0;
+	Thu, 15 Jan 2026 17:02:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496563;
-	bh=PFVfqIGrwVzk6//ZzBPeCGnuRAHBaa8Dvt19BdsD1sM=;
+	s=korg; t=1768496566;
+	bh=/X2tYseuO9h4qnaAZsp8EjYRMBHNaDryGDVoxJje/74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RHFnuPQJTy186KiFEUkbZpFMAhBcr1KhICy3g7akaNGzMlt6XMgUpiUpBVCJ+9ix2
-	 vc8i2Fm1zDRPb53vyR8c3g74TcjVUZAU/kJjKV2M9k0cKHqZysjnPqM+kY7QgvPV4q
-	 LNUvSH7oHzaVDkKE8T1pFFvJFX34M/EkrRlLfF2o=
+	b=RFdEVEHI9RfcdB/Y79eYfBwCT1F2jepSL6eh4iZJoKpl91BFyruNRCPlLuMqb7cjk
+	 F+4uBvsZGsXMxH05skFbgZJn3e+wA6CBigoKtu8TeUlBRA93OPA4Crj6/Vefwol9sR
+	 w8IUaiy/KbMLysQn2k3Rjy9YGvmfN624RObDaBdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sherry Sun <sherry.sun@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
 	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 056/119] arm64: dts: imx8qm-ss-dma: correct the dma channels of lpuart
-Date: Thu, 15 Jan 2026 17:47:51 +0100
-Message-ID: <20260115164153.980451626@linuxfoundation.org>
+Subject: [PATCH 6.12 057/119] arm64: dts: mba8mx: Fix Ethernet PHY IRQ support
+Date: Thu, 15 Jan 2026 17:47:52 +0100
+Message-ID: <20260115164154.016502921@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -53,64 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sherry Sun <sherry.sun@nxp.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit a988caeed9d918452aa0a68de2c6e94d86aa43ba ]
+[ Upstream commit 89e87d0dc87eb3654c9ae01afc4a18c1c6d1e523 ]
 
-The commit 616effc0272b5 ("arm64: dts: imx8: Fix lpuart DMA channel
-order") swap uart rx and tx channel at common imx8-ss-dma.dtsi. But miss
-update imx8qm-ss-dma.dtsi.
+Ethernet PHY interrupt mode is level triggered. Adjust the mode
+accordingly.
 
-The commit 5a8e9b022e569 ("arm64: dts: imx8qm-ss-dma: Pass lpuart
-dma-names") just simple add dma-names as binding doc requirement.
-
-Correct lpuart0 - lpuart3 dma rx and tx channels, and use defines for
-the FSL_EDMA_RX flag.
-
-Fixes: 5a8e9b022e56 ("arm64: dts: imx8qm-ss-dma: Pass lpuart dma-names")
-Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Fixes: 70cf622bb16e ("arm64: dts: mba8mx: Add Ethernet PHY IRQ support")
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8qm-ss-dma.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/freescale/mba8mx.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8qm-ss-dma.dtsi b/arch/arm64/boot/dts/freescale/imx8qm-ss-dma.dtsi
-index aa9f28c4431d0..f381e2636c3ad 100644
---- a/arch/arm64/boot/dts/freescale/imx8qm-ss-dma.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8qm-ss-dma.dtsi
-@@ -168,25 +168,25 @@ &flexcan3 {
- 
- &lpuart0 {
- 	compatible = "fsl,imx8qm-lpuart", "fsl,imx8qxp-lpuart";
--	dmas = <&edma2 13 0 0>, <&edma2 12 0 1>;
-+	dmas = <&edma2 12 0 FSL_EDMA_RX>, <&edma2 13 0 0>;
- 	dma-names = "rx","tx";
+diff --git a/arch/arm64/boot/dts/freescale/mba8mx.dtsi b/arch/arm64/boot/dts/freescale/mba8mx.dtsi
+index c60c7a9e54aff..66f927198fe94 100644
+--- a/arch/arm64/boot/dts/freescale/mba8mx.dtsi
++++ b/arch/arm64/boot/dts/freescale/mba8mx.dtsi
+@@ -186,7 +186,7 @@ ethphy0: ethernet-phy@e {
+ 			reset-assert-us = <500000>;
+ 			reset-deassert-us = <500>;
+ 			interrupt-parent = <&expander2>;
+-			interrupts = <6 IRQ_TYPE_EDGE_FALLING>;
++			interrupts = <6 IRQ_TYPE_LEVEL_LOW>;
+ 		};
+ 	};
  };
- 
- &lpuart1 {
- 	compatible = "fsl,imx8qm-lpuart", "fsl,imx8qxp-lpuart";
--	dmas = <&edma2 15 0 0>, <&edma2 14 0 1>;
-+	dmas = <&edma2 14 0 FSL_EDMA_RX>, <&edma2 15 0 0>;
- 	dma-names = "rx","tx";
- };
- 
- &lpuart2 {
- 	compatible = "fsl,imx8qm-lpuart", "fsl,imx8qxp-lpuart";
--	dmas = <&edma2 17 0 0>, <&edma2 16 0 1>;
-+	dmas = <&edma2 16 0 FSL_EDMA_RX>, <&edma2 17 0 0>;
- 	dma-names = "rx","tx";
- };
- 
- &lpuart3 {
- 	compatible = "fsl,imx8qm-lpuart", "fsl,imx8qxp-lpuart";
--	dmas = <&edma2 19 0 0>, <&edma2 18 0 1>;
-+	dmas = <&edma2 18 0 FSL_EDMA_RX>, <&edma2 19 0 0>;
- 	dma-names = "rx","tx";
- };
- 
 -- 
 2.51.0
 
