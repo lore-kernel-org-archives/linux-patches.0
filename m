@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 812A14C81;
-	Thu, 15 Jan 2026 17:37:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5472F3BF31D;
+	Thu, 15 Jan 2026 17:37:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498628; cv=none; b=oUi/jc/V2+Aq7HmX5h6fg6ee+QbxUfqZ1BqCML8VPMAvkluWIsSvqubF27Zak6wnHosKxns+/iyvJ273e1KM0FK84mrMNdUpVmO25hL2eOIMHq/H3CkqjiLaF1qkZo89YJRPesAE62+yHCZECjHzZIh29NUGUznC0VB0FpMeQ30=
+	t=1768498631; cv=none; b=UPWhajjJO3DpOxS9LLvZCpprPG7l8zVVyp6YUFcpszBHHR99KLnt3hou4BpYyjIJI3N0rSQfUlOF19Ae6hRwA1rdaQQvtwO4BcHIzgMNdbIhrBltVADFhNqau/3ICWCHIo88s62gJQCeAFxerDFw3R+9R08d36sSKGqlKp6NLtk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498628; c=relaxed/simple;
-	bh=udkqfgxTfj5TWr2TSjY7HzjPWnsCaeX8qAvohlGKdzE=;
+	s=arc-20240116; t=1768498631; c=relaxed/simple;
+	bh=gaLRKYwzP99upEKGaDY6khW/vlHEqFsGb7MIK8WK/yI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I4thlu7EaoexpiV+gFvoCFOGb/yCIm/WIEY9NTc/kWAOAxK4qCUOt9QnYVIJe2M0YM1bl9pRtjHl/lDrjn6A0A/BwLua9zvsBIpxGKzVTlUyEvJnS+ObHodXa3vKVQiJ15TvypJ4lghF7n4/bCRvYXfZXBOd4vo7oN9+0JTB4+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iG5fJTT5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U1gdCEzufZnN7FCLkzYAwwxDIvIEwt9TO2HepSpY6Gi/yYenPdL8cewFbuOCDzz5jyQIZHQyIC+0Fjs05Vm8TgSTUvkkcJmGswJcKZxG9rYsz32nTLWmiW4iKgfb5YOXxiTdOhQvIEUgY+PR3Hopnu5kWTnOPui5Pw7h/rGjabA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NE6Ob0kV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iG5fJTT5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 100CDC116D0;
-	Thu, 15 Jan 2026 17:37:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NE6Ob0kV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4A09C116D0;
+	Thu, 15 Jan 2026 17:37:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498628;
-	bh=udkqfgxTfj5TWr2TSjY7HzjPWnsCaeX8qAvohlGKdzE=;
+	s=korg; t=1768498631;
+	bh=gaLRKYwzP99upEKGaDY6khW/vlHEqFsGb7MIK8WK/yI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iG5fJTT5pZaUrZpfCn6//4f7zDKuFfR+5r3RXybFuL3NUruB8U+jNIrthhlMfPUJ+
-	 gXQwdy8KGfAbmhWkP/2jX8HgSIvjEuDGrz18/tUGVPzHGSrHbhc7Tax/ypD2TNrlG0
-	 QDPEH5WVMXRCUAd9ji4soQswDWbHtQnRPkChsAkc=
+	b=NE6Ob0kV9a9KP6n55ByU5z8cZxw3JEgtMn0vChnaawL3LiKEkyhGQbFgojPIVB6Ma
+	 efYaxzUm71QIAE7vMv1W1aeyWcu6KLdCyk86bhMB6KDiTkvZv3g3SLfOVs6dv+w571
+	 b0Gu/L9rv0NUYjsH6LY5t8OIwaJ746uyQPDqcQuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Righi <andrea.righi@canonical.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Cao Jiaqiang <caojiaqiang@huawei.com>
-Subject: [PATCH 5.15 491/554] selftests: net: test_vxlan_under_vrf: fix HV connectivity test
-Date: Thu, 15 Jan 2026 17:49:17 +0100
-Message-ID: <20260115164304.089353286@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Johan Hovold <johan@kernel.org>,
+	Vladimir Zapolskiy <vz@mleia.com>
+Subject: [PATCH 5.15 500/554] usb: gadget: lpc32xx_udc: fix clock imbalance in error path
+Date: Thu, 15 Jan 2026 17:49:26 +0100
+Message-ID: <20260115164304.417440252@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -51,55 +51,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Righi <andrea.righi@canonical.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit e7e4785fa30f9b5d1b60ed2d8e221891325dfc5f ]
+commit 782be79e4551550d7a82b1957fc0f7347e6d461f upstream.
 
-It looks like test_vxlan_under_vrf.sh is always failing to verify the
-connectivity test during the ping between the two simulated VMs.
+A recent change fixing a device reference leak introduced a clock
+imbalance by reusing an error path so that the clock may be disabled
+before having been enabled.
 
-This is due to the fact that veth-hv in each VM should have a distinct
-MAC address.
+Note that the clock framework allows for passing in NULL clocks so there
+is no risk for a NULL pointer dereference.
 
-Fix by setting a unique MAC address on each simulated VM interface.
+Also drop the bogus I2C client NULL check added by the offending commit
+as the pointer has already been verified to be non-NULL.
 
-Without this fix:
-
- $ sudo ./tools/testing/selftests/net/test_vxlan_under_vrf.sh
- Checking HV connectivity                                           [ OK ]
- Check VM connectivity through VXLAN (underlay in the default VRF)  [FAIL]
-
-With this fix applied:
-
- $ sudo ./tools/testing/selftests/net/test_vxlan_under_vrf.sh
- Checking HV connectivity                                           [ OK ]
- Check VM connectivity through VXLAN (underlay in the default VRF)  [ OK ]
- Check VM connectivity through VXLAN (underlay in a VRF)            [FAIL]
-
-NOTE: the connectivity test with the underlay VRF is still failing; it
-seems that ARP requests are blocked at the simulated hypervisor level,
-probably due to some missing ARP forwarding rules. This requires more
-investigation (in the meantime we may consider to set that test as
-expected failure - XFAIL).
-
-Signed-off-by: Andrea Righi <andrea.righi@canonical.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Cao Jiaqiang <caojiaqiang@huawei.com>
+Fixes: c84117912bdd ("USB: lpc32xx_udc: Fix error handling in probe")
+Cc: stable@vger.kernel.org
+Cc: Ma Ke <make24@iscas.ac.cn>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Vladimir Zapolskiy <vz@mleia.com>
+Link: https://patch.msgid.link/20251218153519.19453-2-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/test_vxlan_under_vrf.sh |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/gadget/udc/lpc32xx_udc.c |   19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
---- a/tools/testing/selftests/net/test_vxlan_under_vrf.sh
-+++ b/tools/testing/selftests/net/test_vxlan_under_vrf.sh
-@@ -101,6 +101,8 @@ setup-vm() {
-     ip -netns hv-$id link set veth-tap master br0
-     ip -netns hv-$id link set veth-tap up
+--- a/drivers/usb/gadget/udc/lpc32xx_udc.c
++++ b/drivers/usb/gadget/udc/lpc32xx_udc.c
+@@ -3025,7 +3025,7 @@ static int lpc32xx_udc_probe(struct plat
+ 	pdev->dev.dma_mask = &lpc32xx_usbd_dmamask;
+ 	retval = dma_set_coherent_mask(&pdev->dev, DMA_BIT_MASK(32));
+ 	if (retval)
+-		goto i2c_fail;
++		goto err_put_client;
  
-+    ip link set veth-hv address 02:1d:8d:dd:0c:6$id
+ 	udc->board = &lpc32xx_usbddata;
+ 
+@@ -3045,7 +3045,7 @@ static int lpc32xx_udc_probe(struct plat
+ 		udc->udp_irq[i] = platform_get_irq(pdev, i);
+ 		if (udc->udp_irq[i] < 0) {
+ 			retval = udc->udp_irq[i];
+-			goto i2c_fail;
++			goto err_put_client;
+ 		}
+ 	}
+ 
+@@ -3053,7 +3053,7 @@ static int lpc32xx_udc_probe(struct plat
+ 	if (IS_ERR(udc->udp_baseaddr)) {
+ 		dev_err(udc->dev, "IO map failure\n");
+ 		retval = PTR_ERR(udc->udp_baseaddr);
+-		goto i2c_fail;
++		goto err_put_client;
+ 	}
+ 
+ 	/* Get USB device clock */
+@@ -3061,14 +3061,14 @@ static int lpc32xx_udc_probe(struct plat
+ 	if (IS_ERR(udc->usb_slv_clk)) {
+ 		dev_err(udc->dev, "failed to acquire USB device clock\n");
+ 		retval = PTR_ERR(udc->usb_slv_clk);
+-		goto i2c_fail;
++		goto err_put_client;
+ 	}
+ 
+ 	/* Enable USB device clock */
+ 	retval = clk_prepare_enable(udc->usb_slv_clk);
+ 	if (retval < 0) {
+ 		dev_err(udc->dev, "failed to start USB device clock\n");
+-		goto i2c_fail;
++		goto err_put_client;
+ 	}
+ 
+ 	/* Setup deferred workqueue data */
+@@ -3170,9 +3170,10 @@ dma_alloc_fail:
+ 	dma_free_coherent(&pdev->dev, UDCA_BUFF_SIZE,
+ 			  udc->udca_v_base, udc->udca_p_base);
+ i2c_fail:
+-	if (udc->isp1301_i2c_client)
+-		put_device(&udc->isp1301_i2c_client->dev);
+ 	clk_disable_unprepare(udc->usb_slv_clk);
++err_put_client:
++	put_device(&udc->isp1301_i2c_client->dev);
 +
-     ip link set veth-hv netns vm-$id
-     ip -netns vm-$id addr add 10.0.0.$id/24 dev veth-hv
-     ip -netns vm-$id link set veth-hv up
+ 	dev_err(udc->dev, "%s probe failed, %d\n", driver_name, retval);
+ 
+ 	return retval;
+@@ -3197,11 +3198,9 @@ static int lpc32xx_udc_remove(struct pla
+ 	dma_free_coherent(&pdev->dev, UDCA_BUFF_SIZE,
+ 			  udc->udca_v_base, udc->udca_p_base);
+ 
+-	if (udc->isp1301_i2c_client)
+-		put_device(&udc->isp1301_i2c_client->dev);
+-
+ 	clk_disable_unprepare(udc->usb_slv_clk);
+ 
++	put_device(&udc->isp1301_i2c_client->dev);
+ 	return 0;
+ }
+ 
 
 
