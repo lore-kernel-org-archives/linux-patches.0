@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF4942049;
-	Thu, 15 Jan 2026 16:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 679FA42049;
+	Thu, 15 Jan 2026 16:51:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768495909; cv=none; b=IBwiBYxL7X+kk9aj7OjktlaVUVJ8PySVy2DZ4tgREZvfGW5erLpkjSHHBZv5VAt/e2AwbuDNxu6ZZhwdqzg0/baA13TtQbOs/5NZ2pznQGC1hm3fcXrGy31XMwP2282OxbIoKDtFa/SRKcvbc8NYDeiwVyCPHetGO3IGlrjrQ9M=
+	t=1768495912; cv=none; b=eokzwlFswFrSr+0nFn/pno5kNiSumRrWTVhBpZZIlFs5thYjRXmUvD0vrvxmpHGzLn+SeKWTPB/nYzgNizAlIBp5civMckYPBc2MMzvkT4VdOUDK0+Hh7P3Eh0mf5nIaqaqSKP+LzBDIYKCIrtm942QXZefQVurtrsQ9kNB86lo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768495909; c=relaxed/simple;
-	bh=dMe/BEdaK7ZM9l+Ah4YNA9QhD2igyuWnL+5ya/4JWoI=;
+	s=arc-20240116; t=1768495912; c=relaxed/simple;
+	bh=TdQ7D1Bwq8kKX9+jCv5ZDZ9zQVl2fbOozM5wujvPjEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tY3cHmboq/p7xzMcoL2yIa1v3IfjK/Mt4o2SMFgl1k+shcl1zEyewCdFyMh7j82hUXoQOmgQAwnv42Ht5z9F1KxierbwlMz2gSs4Z5qNUF0dGqg9voAomzYV5K/OHeRzOe9lmL3SsSMPvwZNN30VL+jkupxdAWU0mmMwGBfQunM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oHQh3uey; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X92cCWh0ZUSV/8K+Y1AQYIPkA/79Qe/loMtDdjC1S5Yq7CPTOQ/qEKHzrf187NWVYaL9LbnrW55wjt/52XqpvOcsa15vKm4uappxUnylMTtQ8j9ugiblnnTWoC/tEtPn0ktE2B+4V3Bc/VdBV7N/avGDuxJfsN7oZeFbHcbXvpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c9BF9iHN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oHQh3uey"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4009C116D0;
-	Thu, 15 Jan 2026 16:51:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c9BF9iHN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9663BC116D0;
+	Thu, 15 Jan 2026 16:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768495909;
-	bh=dMe/BEdaK7ZM9l+Ah4YNA9QhD2igyuWnL+5ya/4JWoI=;
+	s=korg; t=1768495912;
+	bh=TdQ7D1Bwq8kKX9+jCv5ZDZ9zQVl2fbOozM5wujvPjEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oHQh3ueyzxhioqEF3L0Xz5JEK2JZB7lqbeUk1s8BkLyqrB/wrfB5ye0EYay8z+vUa
-	 4uUnnqnFckaujiMiZGriDCO7C2cgxcAUZD2XaFIAVoU0o0bV1yoaKcUizqv6NsmTkn
-	 sP4Zn3eH8p40nZYFbGhQRFAczhmrtJxY56ftn0ME=
+	b=c9BF9iHNc0gKkhv7CBP8bVyDzDl4IjbUSCdDRohx8qdeNYLJ12i5XuAg0kVtWi2l4
+	 rJhlu3l8xcZGMttfnru8b1Mz87UvHJnfjIlaQsuYuG+pfuLwq0+pl28+elJVEL8nQ7
+	 3ePcpmFxPpTpi1LRZviAGVAe/SOjNS/OCNTbT9es=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Breno Leitao <leitao@debian.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 011/181] bnxt_en: Fix NULL pointer crash in bnxt_ptp_enable during error cleanup
-Date: Thu, 15 Jan 2026 17:45:48 +0100
-Message-ID: <20260115164202.725716265@linuxfoundation.org>
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.18 012/181] btrfs: always detect conflicting inodes when logging inode refs
+Date: Thu, 15 Jan 2026 17:45:49 +0100
+Message-ID: <20260115164202.762020188@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -51,71 +50,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 3358995b1a7f9dcb52a56ec8251570d71024dad0 upstream.
+commit 7ba0b6461bc4edb3005ea6e00cdae189bcf908a5 upstream.
 
-When bnxt_init_one() fails during initialization (e.g.,
-bnxt_init_int_mode returns -ENODEV), the error path calls
-bnxt_free_hwrm_resources() which destroys the DMA pool and sets
-bp->hwrm_dma_pool to NULL. Subsequently, bnxt_ptp_clear() is called,
-which invokes ptp_clock_unregister().
+After rename exchanging (either with the rename exchange operation or
+regular renames in multiple non-atomic steps) two inodes and at least
+one of them is a directory, we can end up with a log tree that contains
+only of the inodes and after a power failure that can result in an attempt
+to delete the other inode when it should not because it was not deleted
+before the power failure. In some case that delete attempt fails when
+the target inode is a directory that contains a subvolume inside it, since
+the log replay code is not prepared to deal with directory entries that
+point to root items (only inode items).
 
-Since commit a60fc3294a37 ("ptp: rework ptp_clock_unregister() to
-disable events"), ptp_clock_unregister() now calls
-ptp_disable_all_events(), which in turn invokes the driver's .enable()
-callback (bnxt_ptp_enable()) to disable PTP events before completing the
-unregistration.
+1) We have directories "dir1" (inode A) and "dir2" (inode B) under the
+   same parent directory;
 
-bnxt_ptp_enable() attempts to send HWRM commands via bnxt_ptp_cfg_pin()
-and bnxt_ptp_cfg_event(), both of which call hwrm_req_init(). This
-function tries to allocate from bp->hwrm_dma_pool, causing a NULL
-pointer dereference:
+2) We have a file (inode C) under directory "dir1" (inode A);
 
-  bnxt_en 0000:01:00.0 (unnamed net_device) (uninitialized): bnxt_init_int_mode err: ffffffed
-  KASAN: null-ptr-deref in range [0x0000000000000028-0x000000000000002f]
-  Call Trace:
-   __hwrm_req_init (drivers/net/ethernet/broadcom/bnxt/bnxt_hwrm.c:72)
-   bnxt_ptp_enable (drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c:323 drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c:517)
-   ptp_disable_all_events (drivers/ptp/ptp_chardev.c:66)
-   ptp_clock_unregister (drivers/ptp/ptp_clock.c:518)
-   bnxt_ptp_clear (drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c:1134)
-   bnxt_init_one (drivers/net/ethernet/broadcom/bnxt/bnxt.c:16889)
+3) We have a subvolume inside directory "dir2" (inode B);
 
-Lines are against commit f8f9c1f4d0c7 ("Linux 6.19-rc3")
+4) All these inodes were persisted in a past transaction and we are
+   currently at transaction N;
 
-Fix this by clearing and unregistering ptp (bnxt_ptp_clear()) before
-freeing HWRM resources.
+5) We rename the file (inode C), so at btrfs_log_new_name() we update
+   inode C's last_unlink_trans to N;
 
-Suggested-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Fixes: a60fc3294a37 ("ptp: rework ptp_clock_unregister() to disable events")
-Cc: stable@vger.kernel.org
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Link: https://patch.msgid.link/20260106-bnxt-v3-1-71f37e11446a@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+6) We get a rename exchange for "dir1" (inode A) and "dir2" (inode B),
+   so after the exchange "dir1" is inode B and "dir2" is inode A.
+   During the rename exchange we call btrfs_log_new_name() for inodes
+   A and B, but because they are directories, we don't update their
+   last_unlink_trans to N;
+
+7) An fsync against the file (inode C) is done, and because its inode
+   has a last_unlink_trans with a value of N we log its parent directory
+   (inode A) (through btrfs_log_all_parents(), called from
+   btrfs_log_inode_parent()).
+
+8) So we end up with inode B not logged, which now has the old name
+   of inode A. At copy_inode_items_to_log(), when logging inode A, we
+   did not check if we had any conflicting inode to log because inode
+   A has a generation lower than the current transaction (created in
+   a past transaction);
+
+9) After a power failure, when replaying the log tree, since we find that
+   inode A has a new name that conflicts with the name of inode B in the
+   fs tree, we attempt to delete inode B... this is wrong since that
+   directory was never deleted before the power failure, and because there
+   is a subvolume inside that directory, attempting to delete it will fail
+   since replay_dir_deletes() and btrfs_unlink_inode() are not prepared
+   to deal with dir items that point to roots instead of inodes.
+
+   When that happens the mount fails and we get a stack trace like the
+   following:
+
+   [87.2314] BTRFS info (device dm-0): start tree-log replay
+   [87.2318] BTRFS critical (device dm-0): failed to delete reference to subvol, root 5 inode 256 parent 259
+   [87.2332] ------------[ cut here ]------------
+   [87.2338] BTRFS: Transaction aborted (error -2)
+   [87.2346] WARNING: CPU: 1 PID: 638968 at fs/btrfs/inode.c:4345 __btrfs_unlink_inode+0x416/0x440 [btrfs]
+   [87.2368] Modules linked in: btrfs loop dm_thin_pool (...)
+   [87.2470] CPU: 1 UID: 0 PID: 638968 Comm: mount Tainted: G        W           6.18.0-rc7-btrfs-next-218+ #2 PREEMPT(full)
+   [87.2489] Tainted: [W]=WARN
+   [87.2494] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.2-0-gea1b7a073390-prebuilt.qemu.org 04/01/2014
+   [87.2514] RIP: 0010:__btrfs_unlink_inode+0x416/0x440 [btrfs]
+   [87.2538] Code: c0 89 04 24 (...)
+   [87.2568] RSP: 0018:ffffc0e741f4b9b8 EFLAGS: 00010286
+   [87.2574] RAX: 0000000000000000 RBX: ffff9d3ec8a6cf60 RCX: 0000000000000000
+   [87.2582] RDX: 0000000000000002 RSI: ffffffff84ab45a1 RDI: 00000000ffffffff
+   [87.2591] RBP: ffff9d3ec8a6ef20 R08: 0000000000000000 R09: ffffc0e741f4b840
+   [87.2599] R10: ffff9d45dc1fffa8 R11: 0000000000000003 R12: ffff9d3ee26d77e0
+   [87.2608] R13: ffffc0e741f4ba98 R14: ffff9d4458040800 R15: ffff9d44b6b7ca10
+   [87.2618] FS:  00007f7b9603a840(0000) GS:ffff9d4658982000(0000) knlGS:0000000000000000
+   [87.2629] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+   [87.2637] CR2: 00007ffc9ec33b98 CR3: 000000011273e003 CR4: 0000000000370ef0
+   [87.2648] Call Trace:
+   [87.2651]  <TASK>
+   [87.2654]  btrfs_unlink_inode+0x15/0x40 [btrfs]
+   [87.2661]  unlink_inode_for_log_replay+0x27/0xf0 [btrfs]
+   [87.2669]  check_item_in_log+0x1ea/0x2c0 [btrfs]
+   [87.2676]  replay_dir_deletes+0x16b/0x380 [btrfs]
+   [87.2684]  fixup_inode_link_count+0x34b/0x370 [btrfs]
+   [87.2696]  fixup_inode_link_counts+0x41/0x160 [btrfs]
+   [87.2703]  btrfs_recover_log_trees+0x1ff/0x7c0 [btrfs]
+   [87.2711]  ? __pfx_replay_one_buffer+0x10/0x10 [btrfs]
+   [87.2719]  open_ctree+0x10bb/0x15f0 [btrfs]
+   [87.2726]  btrfs_get_tree.cold+0xb/0x16c [btrfs]
+   [87.2734]  ? fscontext_read+0x15c/0x180
+   [87.2740]  ? rw_verify_area+0x50/0x180
+   [87.2746]  vfs_get_tree+0x25/0xd0
+   [87.2750]  vfs_cmd_create+0x59/0xe0
+   [87.2755]  __do_sys_fsconfig+0x4f6/0x6b0
+   [87.2760]  do_syscall_64+0x50/0x1220
+   [87.2764]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+   [87.2770] RIP: 0033:0x7f7b9625f4aa
+   [87.2775] Code: 73 01 c3 48 (...)
+   [87.2803] RSP: 002b:00007ffc9ec35b08 EFLAGS: 00000246 ORIG_RAX: 00000000000001af
+   [87.2817] RAX: ffffffffffffffda RBX: 0000558bfa91ac20 RCX: 00007f7b9625f4aa
+   [87.2829] RDX: 0000000000000000 RSI: 0000000000000006 RDI: 0000000000000003
+   [87.2842] RBP: 0000558bfa91b120 R08: 0000000000000000 R09: 0000000000000000
+   [87.2854] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+   [87.2864] R13: 00007f7b963f1580 R14: 00007f7b963f326c R15: 00007f7b963d8a23
+   [87.2877]  </TASK>
+   [87.2882] ---[ end trace 0000000000000000 ]---
+   [87.2891] BTRFS: error (device dm-0 state A) in __btrfs_unlink_inode:4345: errno=-2 No such entry
+   [87.2904] BTRFS: error (device dm-0 state EAO) in do_abort_log_replay:191: errno=-2 No such entry
+   [87.2915] BTRFS critical (device dm-0 state EAO): log tree (for root 5) leaf currently being processed (slot 7 key (258 12 257)):
+   [87.2929] BTRFS info (device dm-0 state EAO): leaf 30736384 gen 10 total ptrs 7 free space 15712 owner 18446744073709551610
+   [87.2929] BTRFS info (device dm-0 state EAO): refs 3 lock_owner 0 current 638968
+   [87.2929]      item 0 key (257 INODE_ITEM 0) itemoff 16123 itemsize 160
+   [87.2929]              inode generation 9 transid 10 size 0 nbytes 0
+   [87.2929]              block group 0 mode 40755 links 1 uid 0 gid 0
+   [87.2929]              rdev 0 sequence 7 flags 0x0
+   [87.2929]              atime 1765464494.678070921
+   [87.2929]              ctime 1765464494.686606513
+   [87.2929]              mtime 1765464494.686606513
+   [87.2929]              otime 1765464494.678070921
+   [87.2929]      item 1 key (257 INODE_REF 256) itemoff 16109 itemsize 14
+   [87.2929]              index 4 name_len 4
+   [87.2929]      item 2 key (257 DIR_LOG_INDEX 2) itemoff 16101 itemsize 8
+   [87.2929]              dir log end 2
+   [87.2929]      item 3 key (257 DIR_LOG_INDEX 3) itemoff 16093 itemsize 8
+   [87.2929]              dir log end 18446744073709551615
+   [87.2930]      item 4 key (257 DIR_INDEX 3) itemoff 16060 itemsize 33
+   [87.2930]              location key (258 1 0) type 1
+   [87.2930]              transid 10 data_len 0 name_len 3
+   [87.2930]      item 5 key (258 INODE_ITEM 0) itemoff 15900 itemsize 160
+   [87.2930]              inode generation 9 transid 10 size 0 nbytes 0
+   [87.2930]              block group 0 mode 100644 links 1 uid 0 gid 0
+   [87.2930]              rdev 0 sequence 2 flags 0x0
+   [87.2930]              atime 1765464494.678456467
+   [87.2930]              ctime 1765464494.686606513
+   [87.2930]              mtime 1765464494.678456467
+   [87.2930]              otime 1765464494.678456467
+   [87.2930]      item 6 key (258 INODE_REF 257) itemoff 15887 itemsize 13
+   [87.2930]              index 3 name_len 3
+   [87.2930] BTRFS critical (device dm-0 state EAO): log replay failed in unlink_inode_for_log_replay:1045 for root 5, stage 3, with error -2: failed to unlink inode 256 parent dir 259 name subvol root 5
+   [87.2963] BTRFS: error (device dm-0 state EAO) in btrfs_recover_log_trees:7743: errno=-2 No such entry
+   [87.2981] BTRFS: error (device dm-0 state EAO) in btrfs_replay_log:2083: errno=-2 No such entry (Failed to recover log tr
+
+So fix this by changing copy_inode_items_to_log() to always detect if
+there are conflicting inodes for the ref/extref of the inode being logged
+even if the inode was created in a past transaction.
+
+A test case for fstests will follow soon.
+
+CC: stable@vger.kernel.org # 6.1+
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/btrfs/tree-log.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -16856,12 +16856,12 @@ init_err_dl:
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -6348,10 +6348,8 @@ again:
+ 			 * and no keys greater than that, so bail out.
+ 			 */
+ 			break;
+-		} else if ((min_key->type == BTRFS_INODE_REF_KEY ||
+-			    min_key->type == BTRFS_INODE_EXTREF_KEY) &&
+-			   (inode->generation == trans->transid ||
+-			    ctx->logging_conflict_inodes)) {
++		} else if (min_key->type == BTRFS_INODE_REF_KEY ||
++			   min_key->type == BTRFS_INODE_EXTREF_KEY) {
+ 			u64 other_ino = 0;
+ 			u64 other_parent = 0;
  
- init_err_pci_clean:
- 	bnxt_hwrm_func_drv_unrgtr(bp);
--	bnxt_free_hwrm_resources(bp);
--	bnxt_hwmon_uninit(bp);
--	bnxt_ethtool_free(bp);
- 	bnxt_ptp_clear(bp);
- 	kfree(bp->ptp_cfg);
- 	bp->ptp_cfg = NULL;
-+	bnxt_free_hwrm_resources(bp);
-+	bnxt_hwmon_uninit(bp);
-+	bnxt_ethtool_free(bp);
- 	kfree(bp->fw_health);
- 	bp->fw_health = NULL;
- 	bnxt_cleanup_pci(bp);
 
 
