@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9E7A3624C4;
-	Thu, 15 Jan 2026 17:56:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1A6214A9B;
+	Thu, 15 Jan 2026 17:56:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499777; cv=none; b=X+Gbbglja1SQSPXQ/eM3sTWCt0zn/ziBTx6oQsgfrSZq69EV0YDvqZXsDmPKPCcNPJefUaMNZwtoG0l27We5NTPfdZXBsBmgPL/RU5eryvzRnRTqavxNLubLvYFdV9gvPpJbF3MCmv4nR8SkrBXRQ9R9DZpRGRYucSBszSESemA=
+	t=1768499780; cv=none; b=tLGd/JKh+oPVuHGbJymQgeDfabHcw06tvxzE7K7VtTd4cC3dAUzbb94iw5p+QEPLxWoEd8h1zW1yP57bhsW9yB3z0Bot1flkve9CNh/cXEtdR7XdlMH1SBYjggoE8anVG22ZYJP6RScUbv300WyKCtiAg0fJR5gU4zKjPU2eNVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499777; c=relaxed/simple;
-	bh=RhSlbeUIum+7yH8JIRPB2hymLq8eToLWOvBt0BppZVQ=;
+	s=arc-20240116; t=1768499780; c=relaxed/simple;
+	bh=OComwlTmShwIasOb2EyPFossJdHPvMzkgVJH5Zk9cG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kjl39rYdbopZ9296SO7KSlEBXzNTv0wkdaElvUcaCkEUCvLSliYa3WRjcnLST5GCPfoT4mExCagoJw1nf5uB+dyKKZyB2W6pXiKiKxOO2zBVldwoQqaQkxqMjcD5MdiSDfhz1o6ZTP08ows2gMpqJiBcYaZhjmdCZ4wHraLwahw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uAxdG73g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mcob3D4A8cvj2j6MApLA6oAtgR5GwUl3UIimJ3eWf8qBnzYxqSv0XVDd/CSwbVbODeBNO3RhhMCb53xb40pkaG93l9f3htVIOxchGgdiq0PNWZeZvhU7xbTv475N5UnT+TWvIQJvXP7Ra2lxeRDVMqm1+nrRbJGIOVRQWx5h2UM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QcMBxJR7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uAxdG73g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4659FC116D0;
-	Thu, 15 Jan 2026 17:56:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QcMBxJR7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DCE0C116D0;
+	Thu, 15 Jan 2026 17:56:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499777;
-	bh=RhSlbeUIum+7yH8JIRPB2hymLq8eToLWOvBt0BppZVQ=;
+	s=korg; t=1768499780;
+	bh=OComwlTmShwIasOb2EyPFossJdHPvMzkgVJH5Zk9cG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uAxdG73gz9QqtyZf6s5o8TagqWU/FFnC7hJluwqLAceDpEgTNEW8+wqNagpHQ0p4U
-	 fcAjBJKeaiNz7fvEVxHsvV7REmfEqGJmpLB/Pw1kl4bogLDCVeE18eCMWc5vTXC0gz
-	 ZQ+aiFTB0jMJwkDYhsfpH+TdF10cEOeKH0r5dxqY=
+	b=QcMBxJR7sJvpfRiAg1du0AhLXH5m3PJ1BDMNs74JFmInPjxtE8BnS2teP2dZ3Fx+q
+	 FGbpGwd+nOQbC78DhAtSOiUS1l4ezOf55Ht7Av3UT3qsD/Q5RF4QFHzOXIEMuC3ZgI
+	 ANGkdapdfT3Ahbxrb474sftmnpb9Gwg+EzrFzVyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Filip Hejsek <filip.hejsek@gmail.com>
-Subject: [PATCH 5.10 339/451] virtio_console: fix order of fields cols and rows
-Date: Thu, 15 Jan 2026 17:49:00 +0100
-Message-ID: <20260115164243.158335026@linuxfoundation.org>
+	Shigeru Yoshida <syoshida@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Shubham Kulkarni <skulkarni@mvista.com>
+Subject: [PATCH 5.10 348/451] ipv6: Fix potential uninit-value access in __ip6_make_skb()
+Date: Thu, 15 Jan 2026 17:49:09 +0100
+Message-ID: <20260115164243.488491079@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -51,36 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
+From: Shigeru Yoshida <syoshida@redhat.com>
 
-commit 5326ab737a47278dbd16ed3ee7380b26c7056ddd upstream.
+commit 4e13d3a9c25b7080f8a619f961e943fe08c2672c upstream.
 
-According to section 5.3.6.2 (Multiport Device Operation) of the virtio
-spec(version 1.2) a control buffer with the event VIRTIO_CONSOLE_RESIZE
-is followed by a virtio_console_resize struct containing cols then rows.
-The kernel implements this the wrong way around (rows then cols) resulting
-in the two values being swapped.
+As it was done in commit fc1092f51567 ("ipv4: Fix uninit-value access in
+__ip_make_skb()") for IPv4, check FLOWI_FLAG_KNOWN_NH on fl6->flowi6_flags
+instead of testing HDRINCL on the socket to avoid a race condition which
+causes uninit-value access.
 
-Signed-off-by: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
-Message-Id: <20250324144300.905535-1-maxbr@linux.ibm.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Cc: Filip Hejsek <filip.hejsek@gmail.com>
+Fixes: ea30388baebc ("ipv6: Fix an uninit variable access bug in __ip6_make_skb()")
+Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+[ Referred stable v6.1.y version of the patch to generate this one
+  v6.1 link: https://github.com/gregkh/linux/commit/a05c1ede50e9656f0752e523c7b54f3a3489e9a8 ]
+Signed-off-by: Shubham Kulkarni <skulkarni@mvista.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/virtio_console.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/ip6_output.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/char/virtio_console.c
-+++ b/drivers/char/virtio_console.c
-@@ -1617,8 +1617,8 @@ static void handle_control_message(struc
- 		break;
- 	case VIRTIO_CONSOLE_RESIZE: {
- 		struct {
--			__virtio16 rows;
- 			__virtio16 cols;
-+			__virtio16 rows;
- 		} size;
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -1917,7 +1917,8 @@ struct sk_buff *__ip6_make_skb(struct so
+ 		struct inet6_dev *idev = ip6_dst_idev(skb_dst(skb));
+ 		u8 icmp6_type;
  
- 		if (!is_console_port(port))
+-		if (sk->sk_socket->type == SOCK_RAW && !inet_sk(sk)->hdrincl)
++		if (sk->sk_socket->type == SOCK_RAW &&
++		    !(fl6->flowi6_flags & FLOWI_FLAG_KNOWN_NH))
+ 			icmp6_type = fl6->fl6_icmp_type;
+ 		else
+ 			icmp6_type = icmp6_hdr(skb)->icmp6_type;
 
 
