@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7474642049;
-	Thu, 15 Jan 2026 16:53:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B2B13BC4E2;
+	Thu, 15 Jan 2026 16:53:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496026; cv=none; b=oxit0xvBE49t+agRx2vkR9cHBsJPKNqyOdADhmmzjZdOeAup6YSe9/YHue2OeG4QnHtoiRyAotGf1DtLBK5A/8iTPaJjpiXrnbXabkhFsXUb1qXQg+Ta4RBnf2sAKAD4mzX0lQQiKMe6tK/WbykXWnASjxoTPhCRuCZb7dMWZlM=
+	t=1768496029; cv=none; b=ddX0A+njLf77hwPOZd8C+2BFY/pzwoTr5jKpoeqB/7qGEXJ1exJUnmN4QnnSKQzI7PeGCPdLyB7IR9njBodKdF+EDmJwSp7K490+VUYIGTv4tqDCYT+UaAmK5wFY6UWrMcZIFYUqFquooiVizo6uUh5GsHkOkqiP5Q+8MYkw5ek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496026; c=relaxed/simple;
-	bh=OILnDe8Q8AeCMbXagLzyzaBpdJuOEQF2pvulDPBLiW0=;
+	s=arc-20240116; t=1768496029; c=relaxed/simple;
+	bh=4A/P1R17Y+VdgtM13U0hN3UwnHD/zaiv33URe67yk+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t7XCFeTpzvhxpjPcwN06tW/5mrl2UAbyr2A9A6PI0CLCGJg6g7eJPPTdlDWAxPO2FAEUrJ4tAGk3d1cO1vgf35FSPFB1PyQ95JqAwqYGRHsuAQkwelSNF5D5D6LHLflqqPcriSkbnGyctG4moskC/bDuJgR1AJ3Qq5N07Izj2oM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nqUSgQM/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MmYg9eOwQwBL9B9Bjucbj5OS9uJZvdQ8B0k1m4UEtAWKeh35dc4UVx3h3SgakPIGHsVz8VQVoYB5xDyaIXfnPbLgXEUjIBYhmET9+XFmseiKBN3UsRMgT4TK0F0WXd8pPh6hZaMJgbwQQVWz9PbCBR/jaQtwqK6qooO3JTbCBwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CDrP98DZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nqUSgQM/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF16CC116D0;
-	Thu, 15 Jan 2026 16:53:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CDrP98DZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8278C116D0;
+	Thu, 15 Jan 2026 16:53:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496026;
-	bh=OILnDe8Q8AeCMbXagLzyzaBpdJuOEQF2pvulDPBLiW0=;
+	s=korg; t=1768496029;
+	bh=4A/P1R17Y+VdgtM13U0hN3UwnHD/zaiv33URe67yk+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nqUSgQM/ta7v4l91v07cLtap1cHICkN84dJma0KutZ9HpVDfk84N6Kx7V7v+9FgXV
-	 smHeJ+jC7XqHuepLxxCzC0ihof9ymRdKUZKq4osKWck3dFZkaI1FBrog0K6gn6mIlE
-	 bbORd1OCCR09095W4QTJ6Y0P6jS5MPAPtHZCEjWU=
+	b=CDrP98DZXouozdIeSZ/uYCIqOv4HisBUCUl1OU3X915alytb7iiDJCCOiEkvsCbN/
+	 6vwwJ54jOxI/i3llphwyNGDYZxrfd9+8DmT7FQ8cqJuqHDc2qHlU3o06M9PFQPYIaZ
+	 mII/WMIdSOtxWQOuVRTWlJCxz6hIH51NY3PO9fT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Scott Mayhew <smayhew@redhat.com>,
-	Benjamin Coddington <bcodding@hammerspace.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 052/181] NFSv4: ensure the open stateid seqid doesnt go backwards
-Date: Thu, 15 Jan 2026 17:46:29 +0100
-Message-ID: <20260115164204.207080308@linuxfoundation.org>
+Subject: [PATCH 6.18 053/181] ASoC: rockchip: Fix Wvoid-pointer-to-enum-cast warning (again)
+Date: Thu, 15 Jan 2026 17:46:30 +0100
+Message-ID: <20260115164204.243208954@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -52,72 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Scott Mayhew <smayhew@redhat.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-[ Upstream commit 2e47c3cc64b44b0b06cd68c2801db92ff143f2b2 ]
+[ Upstream commit 57d508b5f718730f74b11e0dc9609ac7976802d1 ]
 
-We have observed an NFSv4 client receiving a LOCK reply with a status of
-NFS4ERR_OLD_STATEID and subsequently retrying the LOCK request with an
-earlier seqid value in the stateid.  As this was for a new lockowner,
-that would imply that nfs_set_open_stateid_locked() had updated the open
-stateid seqid with an earlier value.
+'version' is an enum, thus cast of pointer on 64-bit compile test with
+clang W=1 causes:
 
-Looking at nfs_set_open_stateid_locked(), if the incoming seqid is out
-of sequence, the task will sleep on the state->waitq for up to 5
-seconds.  If the task waits for the full 5 seconds, then after finishing
-the wait it'll update the open stateid seqid with whatever value the
-incoming seqid has.  If there are multiple waiters in this scenario,
-then the last one to perform said update may not be the one with the
-highest seqid.
+  rockchip_pdm.c:583:17: error: cast to smaller integer type 'enum rk_pdm_version' from 'const void *' [-Werror,-Wvoid-pointer-to-enum-cast]
 
-Add a check to ensure that the seqid can only be incremented, and add a
-tracepoint to indicate when old seqids are skipped.
+This was already fixed in commit 49a4a8d12612 ("ASoC: rockchip: Fix
+Wvoid-pointer-to-enum-cast warning") but then got bad in
+commit 9958d85968ed ("ASoC: Use device_get_match_data()").
 
-Signed-off-by: Scott Mayhew <smayhew@redhat.com>
-Reviewed-by: Benjamin Coddington <bcodding@hammerspace.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Discussion on LKML also pointed out that 'uintptr_t' is not the correct
+type and either 'kernel_ulong_t' or 'unsigned long' should be used,
+with several arguments towards the latter [1].
+
+Link: https://lore.kernel.org/r/CAMuHMdX7t=mabqFE5O-Cii3REMuyaePHmqX+j_mqyrn6XXzsoA@mail.gmail.com/ [1]
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251203141644.106459-2-krzysztof.kozlowski@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c  | 13 +++++++++++--
- fs/nfs/nfs4trace.h |  1 +
- 2 files changed, 12 insertions(+), 2 deletions(-)
+ sound/soc/rockchip/rockchip_pdm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 6f4e14fb7b9b8..3b436ba2ed3bf 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -1780,8 +1780,17 @@ static void nfs_set_open_stateid_locked(struct nfs4_state *state,
- 		if (nfs_stateid_is_sequential(state, stateid))
- 			break;
+diff --git a/sound/soc/rockchip/rockchip_pdm.c b/sound/soc/rockchip/rockchip_pdm.c
+index c1ee470ec6079..c69cdd6f24994 100644
+--- a/sound/soc/rockchip/rockchip_pdm.c
++++ b/sound/soc/rockchip/rockchip_pdm.c
+@@ -580,7 +580,7 @@ static int rockchip_pdm_probe(struct platform_device *pdev)
+ 	if (!pdm)
+ 		return -ENOMEM;
  
--		if (status)
--			break;
-+		if (status) {
-+			if (nfs4_stateid_match_other(stateid, &state->open_stateid) &&
-+			    !nfs4_stateid_is_newer(stateid, &state->open_stateid)) {
-+				trace_nfs4_open_stateid_update_skip(state->inode,
-+								    stateid, status);
-+				return;
-+			} else {
-+				break;
-+			}
-+		}
-+
- 		/* Rely on seqids for serialisation with NFSv4.0 */
- 		if (!nfs4_has_session(NFS_SERVER(state->inode)->nfs_client))
- 			break;
-diff --git a/fs/nfs/nfs4trace.h b/fs/nfs/nfs4trace.h
-index 9776d220cec33..6285128e631a5 100644
---- a/fs/nfs/nfs4trace.h
-+++ b/fs/nfs/nfs4trace.h
-@@ -1353,6 +1353,7 @@ DEFINE_NFS4_INODE_STATEID_EVENT(nfs4_setattr);
- DEFINE_NFS4_INODE_STATEID_EVENT(nfs4_delegreturn);
- DEFINE_NFS4_INODE_STATEID_EVENT(nfs4_open_stateid_update);
- DEFINE_NFS4_INODE_STATEID_EVENT(nfs4_open_stateid_update_wait);
-+DEFINE_NFS4_INODE_STATEID_EVENT(nfs4_open_stateid_update_skip);
- DEFINE_NFS4_INODE_STATEID_EVENT(nfs4_close_stateid_update_wait);
- 
- DECLARE_EVENT_CLASS(nfs4_getattr_event,
+-	pdm->version = (enum rk_pdm_version)device_get_match_data(&pdev->dev);
++	pdm->version = (unsigned long)device_get_match_data(&pdev->dev);
+ 	if (pdm->version == RK_PDM_RK3308) {
+ 		pdm->reset = devm_reset_control_get(&pdev->dev, "pdm-m");
+ 		if (IS_ERR(pdm->reset))
 -- 
 2.51.0
 
