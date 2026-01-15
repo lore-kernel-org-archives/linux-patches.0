@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4253A1E86;
-	Thu, 15 Jan 2026 17:22:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A64F621CC5A;
+	Thu, 15 Jan 2026 17:22:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497727; cv=none; b=smtnKAo4rtLiffp04VnWYacPA50PISGzdYqb4WJcY/VUTfBkFIxvAE7TWKuIgr7Tn6MrbkwlE7VpZlVVOVwIcWOtcd7puNcgAFMqA1ZDt+3mppGJ+10yGZOnlYabo63mQw/ooFppZ7/oebGRlC5j6/I5l8KoQUzBR0FwMqTEiJc=
+	t=1768497731; cv=none; b=AxenI6ukVW9ncbm0N5Pkz+4y9xFnSvJcSW3MR6rIt34zcGDzb9aTYDbDTQ542x6Zml6TTIZ5G8JVCe1DxU9Np5ZI1p7avoLNaeOsLG4Qh5IRvy6OtlJQlTvP4nb4mtv7z5rQ9t4XW8EqbzJEL+wMdY5PCklGNoqEfh81MhIQUYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497727; c=relaxed/simple;
-	bh=HBa6/vKzK28gCQpHEMe/7/tCvrzofvByhHP/B0f8fcs=;
+	s=arc-20240116; t=1768497731; c=relaxed/simple;
+	bh=jvTwUufVTw9dQuNhs4Osul5PIGp1A8femj9Y5plT4Wc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EvyKqSr4CRW+AtF5IjFpECO26OSvaomXoDBG9YNUHR45sWxM06WLOwb1U+KgScGqbfxgJmYwddYKAiqZ8ENQ6BlEsk40gL01X138NLSfurAz4hKkIPYY0DNZ5PctPB9ZbPOrYfpvZwEWb2DCw4vS6Y3dtXAJRZ76lb7FEac+cts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QXhfRpSG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H4+PXXi9SiYECE0yWr+0gKdAFyjtjSrrBTnNlv95VH+eyFO7w5Inb7eH0fi1Hu25uf7z+7coqTMsdE9YcXSt9tDV+lXvzod0WSqGy1BGGaL6X7ylTtv/4YITGCZ5l/tqZ52WfM0dPpnCBhWBiljUqSVcMKRTknJq0uieG2eRZW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H/UQAhYQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QXhfRpSG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4706DC116D0;
-	Thu, 15 Jan 2026 17:22:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H/UQAhYQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE2DC116D0;
+	Thu, 15 Jan 2026 17:22:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497727;
-	bh=HBa6/vKzK28gCQpHEMe/7/tCvrzofvByhHP/B0f8fcs=;
+	s=korg; t=1768497730;
+	bh=jvTwUufVTw9dQuNhs4Osul5PIGp1A8femj9Y5plT4Wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QXhfRpSGRoIISOJS6AUQ5TXB2EKTNQsLGUhTUBI3sJfiHvFTRq9ZCtJjoEKQpqtMO
-	 vW+4GcLYe/CaG2J87oyZdLuNc1YIlA/dX9bDKTuHo+mP86CJcU+A/Z/8wM8TcCPcez
-	 JVg6ruVaae6aYCAdXig9q/089fG6ROp43MFQVPpc=
+	b=H/UQAhYQUEQyrQNR29USNKhY/SkYEcDB6LX0FL76bM+xWvmgDq2BvoaKCU36HBO6S
+	 1D7Ti8zBYTP4xx/KLadekwJlIHxhhgrCuai5Zgt6wZ9W2E8RbkCfeGH1apYKHVy8VZ
+	 KTwmlO2U563gg1zvM8yb2FS178W8+575AcKe5mcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Khirnov <anton@khirnov.net>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Denis Benato <benato.denis96@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 183/554] platform/x86: asus-wmi: use brightness_set_blocking() for kbd led
-Date: Thu, 15 Jan 2026 17:44:09 +0100
-Message-ID: <20260115164252.887224013@linuxfoundation.org>
+Subject: [PATCH 5.15 184/554] ASoC: bcm: bcm63xx-pcm-whistler: Check return value of of_dma_configure()
+Date: Thu, 15 Jan 2026 17:44:10 +0100
+Message-ID: <20260115164252.922356428@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -47,80 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anton Khirnov <anton@khirnov.net>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit ccb61a328321ba3f8567e350664c9ca7a42b6c70 ]
+[ Upstream commit 0ebbd45c33d0049ebf5a22c1434567f0c420b333 ]
 
-kbd_led_set() can sleep, and so may not be used as the brightness_set()
-callback.
+bcm63xx_soc_pcm_new() does not check the return value of
+of_dma_configure(), which may fail with -EPROBE_DEFER or
+other errors, allowing PCM setup to continue with incomplete
+DMA configuration.
 
-Otherwise using this led with a trigger leads to system hangs
-accompanied by:
-BUG: scheduling while atomic: acpi_fakekeyd/2588/0x00000003
-CPU: 4 UID: 0 PID: 2588 Comm: acpi_fakekeyd Not tainted 6.17.9+deb14-amd64 #1 PREEMPT(lazy)  Debian 6.17.9-1
-Hardware name: ASUSTeK COMPUTER INC. ASUS EXPERTBOOK B9403CVAR/B9403CVAR, BIOS B9403CVAR.311 12/24/2024
-Call Trace:
- <TASK>
- [...]
- schedule_timeout+0xbd/0x100
- __down_common+0x175/0x290
- down_timeout+0x67/0x70
- acpi_os_wait_semaphore+0x57/0x90
- [...]
- asus_wmi_evaluate_method3+0x87/0x190 [asus_wmi]
- led_trigger_event+0x3f/0x60
- [...]
+Add error checking for of_dma_configure() and return on failure.
 
-Fixes: 9fe44fc98ce4 ("platform/x86: asus-wmi: Simplify the keyboard brightness updating process")
-Signed-off-by: Anton Khirnov <anton@khirnov.net>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Denis Benato <benato.denis96@gmail.com>
-Link: https://patch.msgid.link/20251129101307.18085-3-anton@khirnov.net
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: 88eb404ccc3e ("ASoC: brcm: Add DSL/PON SoC audio driver")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20251202101642.492-1-vulab@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/asus-wmi.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sound/soc/bcm/bcm63xx-pcm-whistler.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
-index d9933d3718129..7714a8327021f 100644
---- a/drivers/platform/x86/asus-wmi.c
-+++ b/drivers/platform/x86/asus-wmi.c
-@@ -822,14 +822,14 @@ static void do_kbd_led_set(struct led_classdev *led_cdev, int value)
- 	kbd_led_update(asus);
- }
+diff --git a/sound/soc/bcm/bcm63xx-pcm-whistler.c b/sound/soc/bcm/bcm63xx-pcm-whistler.c
+index b5096f64c576e..456aacc59e507 100644
+--- a/sound/soc/bcm/bcm63xx-pcm-whistler.c
++++ b/sound/soc/bcm/bcm63xx-pcm-whistler.c
+@@ -353,7 +353,9 @@ static int bcm63xx_soc_pcm_new(struct snd_soc_component *component,
  
--static void kbd_led_set(struct led_classdev *led_cdev,
--			enum led_brightness value)
-+static int kbd_led_set(struct led_classdev *led_cdev, enum led_brightness value)
- {
- 	/* Prevent disabling keyboard backlight on module unregister */
- 	if (led_cdev->flags & LED_UNREGISTERING)
--		return;
-+		return 0;
+ 	i2s_priv = dev_get_drvdata(asoc_rtd_to_cpu(rtd, 0)->dev);
  
- 	do_kbd_led_set(led_cdev, value);
-+	return 0;
- }
+-	of_dma_configure(pcm->card->dev, pcm->card->dev->of_node, 1);
++	ret = of_dma_configure(pcm->card->dev, pcm->card->dev->of_node, 1);
++	if (ret)
++		return ret;
  
- static void kbd_led_set_by_kbd(struct asus_wmi *asus, enum led_brightness value)
-@@ -966,7 +966,7 @@ static int asus_wmi_led_init(struct asus_wmi *asus)
- 		asus->kbd_led_wk = led_val;
- 		asus->kbd_led.name = "asus::kbd_backlight";
- 		asus->kbd_led.flags = LED_BRIGHT_HW_CHANGED;
--		asus->kbd_led.brightness_set = kbd_led_set;
-+		asus->kbd_led.brightness_set_blocking = kbd_led_set;
- 		asus->kbd_led.brightness_get = kbd_led_get;
- 		asus->kbd_led.max_brightness = 3;
- 
+ 	ret = dma_coerce_mask_and_coherent(pcm->card->dev, DMA_BIT_MASK(32));
+ 	if (ret)
 -- 
 2.51.0
 
