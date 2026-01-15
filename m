@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21907349B0A;
-	Thu, 15 Jan 2026 16:58:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E3343BC4EE;
+	Thu, 15 Jan 2026 16:58:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496282; cv=none; b=cdlNueeKoqwkWXrD3wZ/TWhmTvTL27ciKiV9G8S3X/1JECJvSZ4qGeZwXQdXYC/S6ch/y2+FIQlVHCr8mlbEUE100LnwrDY1kb249OurK4dEJsHapw5HrputMYTt5zPKVoZC/MFku5fVSxYt+arLC9RPyE0GvOyuUmHEg699ZMw=
+	t=1768496285; cv=none; b=fXcduWNZSOCQ9RW35gY9E9+bOZKMT1XxMAwjNJ4e+Z4ff+Lk6+uWuToPharY6OzaLIBJBQpXd4Eh9ctbO6Zq7kdXQIgmPuPg39F12VN/czLyIl/PINdiAPjj2Q6WLOvHqyXq4Ijx6SGXz5OFrYNO0AgmHAXpf0t+QFKCoLQGkU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496282; c=relaxed/simple;
-	bh=uhSZKxDpARUQYOLlrH8MpV0X55rOI9ZdlaKEM2jO6Mw=;
+	s=arc-20240116; t=1768496285; c=relaxed/simple;
+	bh=GbkiGVkNqdh/wnUnRjTwsfjBcKaNq9OLc5+JL0OURJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NOa7e8XIdyY/5p2OAZpe4NlVIxCdj4HaN7vdcmltawW/kqKn/RY0UjkJrxvwu1M3y5PZ2/BNg5H2xvzuWm0IL0fhjSZ5a1/i/UGQ9jImwHgSxBHaMQ06ASAYApFs2s+8c7tnZTWe8h1LsS9XabOPh6LTUOKf7o43lQ4/6bWpOPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rOO/bQEc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=roRM5yTr9ud220J8vq5rDFZL/bUtqMRKdDX+rBtE46xYLRzAac9ykMOrpfE/EUx+zMf/cfU4MM5ycwc5sm7dQx9dCq4kC0/9873BghqxHaXFfjwLxVMos2weGJJe/JoFY8YPIytNX9ptNSSPCsQ2bJ8S0F3c9Uq0B4dGof5Hrj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YB7IjvbR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rOO/bQEc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A286AC116D0;
-	Thu, 15 Jan 2026 16:58:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YB7IjvbR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70C21C116D0;
+	Thu, 15 Jan 2026 16:58:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496282;
-	bh=uhSZKxDpARUQYOLlrH8MpV0X55rOI9ZdlaKEM2jO6Mw=;
+	s=korg; t=1768496284;
+	bh=GbkiGVkNqdh/wnUnRjTwsfjBcKaNq9OLc5+JL0OURJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rOO/bQEc3RfE1WNS6Q94+E3F61Gb1YzEfvreuUPncPufjZBZ6CZiBjCQilF0dFvOo
-	 JXc69537fe/Scbbp4ALbomrCMXZYwXOA96zfC8r0b1Gkjz2MFrzifVrovOEIR9QhWd
-	 VPaVyfHm4dpFoXm4EMaEztvL8eXenH63jicgLO0I=
+	b=YB7IjvbR1MWlUbovMD25FLIqTp/h7Y3/y9lbfuSt4mRYVFw4ThGiTVz4OqCgukraS
+	 RCCOC7U1Lsv9AymYcESazt5HA6LOXfMwJyaflleT7PQrEy+YZOJNPckmM3l0L/bDY/
+	 majcvTMqJ5VHVY6uEfcT9VdC8k9DALKsE0xnNzZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8f1c492ffa4644ff3826@syzkaller.appspotmail.com,
-	Shivani Gupta <shivani07g@gmail.com>,
+	Kommula Shiva Shankar <kshankar@marvell.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 140/181] net/sched: act_api: avoid dereferencing ERR_PTR in tcf_idrinfo_destroy
-Date: Thu, 15 Jan 2026 17:47:57 +0100
-Message-ID: <20260115164207.371646054@linuxfoundation.org>
+Subject: [PATCH 6.18 109/181] virtio_net: fix device mismatch in devm_kzalloc/devm_kfree
+Date: Thu, 15 Jan 2026 17:47:26 +0100
+Message-ID: <20260115164206.252993397@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -52,42 +54,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivani Gupta <shivani07g@gmail.com>
+From: Kommula Shiva Shankar <kshankar@marvell.com>
 
-[ Upstream commit adb25a46dc0a43173f5ea5f5f58fc8ba28970c7c ]
+[ Upstream commit acb4bc6e1ba34ae1a34a9334a1ce8474c909466e ]
 
-syzbot reported a crash in tc_act_in_hw() during netns teardown where
-tcf_idrinfo_destroy() passed an ERR_PTR(-EBUSY) value as a tc_action
-pointer, leading to an invalid dereference.
+Initial rss_hdr allocation uses virtio_device->device,
+but virtnet_set_queues() frees using net_device->device.
+This device mismatch causing below devres warning
 
-Guard against ERR_PTR entries when iterating the action IDR so teardown
-does not call tc_act_in_hw() on an error pointer.
+[ 3788.514041] ------------[ cut here ]------------
+[ 3788.514044] WARNING: drivers/base/devres.c:1095 at devm_kfree+0x84/0x98, CPU#16: vdpa/1463
+[ 3788.514054] Modules linked in: octep_vdpa virtio_net virtio_vdpa [last unloaded: virtio_vdpa]
+[ 3788.514064] CPU: 16 UID: 0 PID: 1463 Comm: vdpa Tainted: G        W           6.18.0 #10 PREEMPT
+[ 3788.514067] Tainted: [W]=WARN
+[ 3788.514069] Hardware name: Marvell CN106XX board (DT)
+[ 3788.514071] pstate: 63400009 (nZCv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+[ 3788.514074] pc : devm_kfree+0x84/0x98
+[ 3788.514076] lr : devm_kfree+0x54/0x98
+[ 3788.514079] sp : ffff800084e2f220
+[ 3788.514080] x29: ffff800084e2f220 x28: ffff0003b2366000 x27: 000000000000003f
+[ 3788.514085] x26: 000000000000003f x25: ffff000106f17c10 x24: 0000000000000080
+[ 3788.514089] x23: ffff00045bb8ab08 x22: ffff00045bb8a000 x21: 0000000000000018
+[ 3788.514093] x20: ffff0004355c3080 x19: ffff00045bb8aa00 x18: 0000000000080000
+[ 3788.514098] x17: 0000000000000040 x16: 000000000000001f x15: 000000000007ffff
+[ 3788.514102] x14: 0000000000000488 x13: 0000000000000005 x12: 00000000000fffff
+[ 3788.514106] x11: ffffffffffffffff x10: 0000000000000005 x9 : ffff800080c8c05c
+[ 3788.514110] x8 : ffff800084e2eeb8 x7 : 0000000000000000 x6 : 000000000000003f
+[ 3788.514115] x5 : ffff8000831bafe0 x4 : ffff800080c8b010 x3 : ffff0004355c3080
+[ 3788.514119] x2 : ffff0004355c3080 x1 : 0000000000000000 x0 : 0000000000000000
+[ 3788.514123] Call trace:
+[ 3788.514125]  devm_kfree+0x84/0x98 (P)
+[ 3788.514129]  virtnet_set_queues+0x134/0x2e8 [virtio_net]
+[ 3788.514135]  virtnet_probe+0x9c0/0xe00 [virtio_net]
+[ 3788.514139]  virtio_dev_probe+0x1e0/0x338
+[ 3788.514144]  really_probe+0xc8/0x3a0
+[ 3788.514149]  __driver_probe_device+0x84/0x170
+[ 3788.514152]  driver_probe_device+0x44/0x120
+[ 3788.514155]  __device_attach_driver+0xc4/0x168
+[ 3788.514158]  bus_for_each_drv+0x8c/0xf0
+[ 3788.514161]  __device_attach+0xa4/0x1c0
+[ 3788.514164]  device_initial_probe+0x1c/0x30
+[ 3788.514168]  bus_probe_device+0xb4/0xc0
+[ 3788.514170]  device_add+0x614/0x828
+[ 3788.514173]  register_virtio_device+0x214/0x258
+[ 3788.514175]  virtio_vdpa_probe+0xa0/0x110 [virtio_vdpa]
+[ 3788.514179]  vdpa_dev_probe+0xa8/0xd8
+[ 3788.514183]  really_probe+0xc8/0x3a0
+[ 3788.514186]  __driver_probe_device+0x84/0x170
+[ 3788.514189]  driver_probe_device+0x44/0x120
+[ 3788.514192]  __device_attach_driver+0xc4/0x168
+[ 3788.514195]  bus_for_each_drv+0x8c/0xf0
+[ 3788.514197]  __device_attach+0xa4/0x1c0
+[ 3788.514200]  device_initial_probe+0x1c/0x30
+[ 3788.514203]  bus_probe_device+0xb4/0xc0
+[ 3788.514206]  device_add+0x614/0x828
+[ 3788.514209]  _vdpa_register_device+0x58/0x88
+[ 3788.514211]  octep_vdpa_dev_add+0x104/0x228 [octep_vdpa]
+[ 3788.514215]  vdpa_nl_cmd_dev_add_set_doit+0x2d0/0x3c0
+[ 3788.514218]  genl_family_rcv_msg_doit+0xe4/0x158
+[ 3788.514222]  genl_rcv_msg+0x218/0x298
+[ 3788.514225]  netlink_rcv_skb+0x64/0x138
+[ 3788.514229]  genl_rcv+0x40/0x60
+[ 3788.514233]  netlink_unicast+0x32c/0x3b0
+[ 3788.514237]  netlink_sendmsg+0x170/0x3b8
+[ 3788.514241]  __sys_sendto+0x12c/0x1c0
+[ 3788.514246]  __arm64_sys_sendto+0x30/0x48
+[ 3788.514249]  invoke_syscall.constprop.0+0x58/0xf8
+[ 3788.514255]  do_el0_svc+0x48/0xd0
+[ 3788.514259]  el0_svc+0x48/0x210
+[ 3788.514264]  el0t_64_sync_handler+0xa0/0xe8
+[ 3788.514268]  el0t_64_sync+0x198/0x1a0
+[ 3788.514271] ---[ end trace 0000000000000000 ]---
 
-Fixes: 84a7d6797e6a ("net/sched: acp_api: no longer acquire RTNL in tc_action_net_exit()")
-Link: https://syzkaller.appspot.com/bug?extid=8f1c492ffa4644ff3826
-Reported-by: syzbot+8f1c492ffa4644ff3826@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=8f1c492ffa4644ff3826
-Signed-off-by: Shivani Gupta <shivani07g@gmail.com>
-Link: https://patch.msgid.link/20260105005905.243423-1-shivani07g@gmail.com
+Fix by using virtio_device->device consistently for
+allocation and deallocation
+
+Fixes: 4944be2f5ad8c ("virtio_net: Allocate rss_hdr with devres")
+Signed-off-by: Kommula Shiva Shankar <kshankar@marvell.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Link: https://patch.msgid.link/20260102101900.692770-1-kshankar@marvell.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_api.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/virtio_net.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/sched/act_api.c b/net/sched/act_api.c
-index ff6be5cfe2b05..e1ab0faeb8113 100644
---- a/net/sched/act_api.c
-+++ b/net/sched/act_api.c
-@@ -940,6 +940,8 @@ void tcf_idrinfo_destroy(const struct tc_action_ops *ops,
- 	int ret;
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index 8e04adb57f52a..4e1a5291099a5 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -3783,7 +3783,7 @@ static int virtnet_set_queues(struct virtnet_info *vi, u16 queue_pairs)
+ 	if (vi->has_rss && !netif_is_rxfh_configured(dev)) {
+ 		old_rss_hdr = vi->rss_hdr;
+ 		old_rss_trailer = vi->rss_trailer;
+-		vi->rss_hdr = devm_kzalloc(&dev->dev, virtnet_rss_hdr_size(vi), GFP_KERNEL);
++		vi->rss_hdr = devm_kzalloc(&vi->vdev->dev, virtnet_rss_hdr_size(vi), GFP_KERNEL);
+ 		if (!vi->rss_hdr) {
+ 			vi->rss_hdr = old_rss_hdr;
+ 			return -ENOMEM;
+@@ -3794,7 +3794,7 @@ static int virtnet_set_queues(struct virtnet_info *vi, u16 queue_pairs)
  
- 	idr_for_each_entry_ul(idr, p, tmp, id) {
-+		if (IS_ERR(p))
-+			continue;
- 		if (tc_act_in_hw(p) && !mutex_taken) {
- 			rtnl_lock();
- 			mutex_taken = true;
+ 		if (!virtnet_commit_rss_command(vi)) {
+ 			/* restore ctrl_rss if commit_rss_command failed */
+-			devm_kfree(&dev->dev, vi->rss_hdr);
++			devm_kfree(&vi->vdev->dev, vi->rss_hdr);
+ 			vi->rss_hdr = old_rss_hdr;
+ 			vi->rss_trailer = old_rss_trailer;
+ 
+@@ -3802,7 +3802,7 @@ static int virtnet_set_queues(struct virtnet_info *vi, u16 queue_pairs)
+ 				 queue_pairs);
+ 			return -EINVAL;
+ 		}
+-		devm_kfree(&dev->dev, old_rss_hdr);
++		devm_kfree(&vi->vdev->dev, old_rss_hdr);
+ 		goto succ;
+ 	}
+ 
 -- 
 2.51.0
 
