@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D59C63A1CE4;
-	Thu, 15 Jan 2026 17:09:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3665B3BC4E8;
+	Thu, 15 Jan 2026 17:10:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496997; cv=none; b=Gzdo90Phl7NerfFZaKzweTYYOabLTTbecrIy7Wm1LSunZxcDj8jMLBFZc+eZM+T8Pib+y7QwjbcWuGysKzZwDJTiiWEbEl/jSP1DzjbYKk8YlWTrRueoJ9vQs5cyx3fFVoNoJ7jxEjGda40bO73woZxBWMWLLSOIwr6HL4l9K38=
+	t=1768497001; cv=none; b=AhcXRCWBI7cdLMxRvc4V0gm7d8tH0TojtwIqrBxiblh1bzbWoaZRsNuWN+EiX45pfEI95s33z210SUx+ZRMgZ5qOim5/nNSj0ynbD/hQlzS7FcM2ieZHwiPtYT+ZGruWq96E2yg7cY3uAU/8PiVNi+4FkTalPyRxkHUgAJba73I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496997; c=relaxed/simple;
-	bh=EPfHaFGct54rP7DHQYr2EHpLl5YIvlSOPcuoXSSiK/Q=;
+	s=arc-20240116; t=1768497001; c=relaxed/simple;
+	bh=1isOONgbOKA3tSCIDlfYPiD/wlcA5Mc0cnuGhph+0Yc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oekVGPFhh9IgNzL0z5oYCpYjPZ9wPdzjiTqArXEHeF9FXzSd0WQazww6wNqFV7DGIOq48ehmuN9LfbW0ayRpty/Uu4Y0IS+DwscsGR3bUSocKsG+1i1NthweUgfSYwXUCYM0vyJVQ1QjHCLQQ+2L1c7CQ2V/LzaULWR5iDssYi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WAYd+hsm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pjtmXSMUGGef+IlcW4JrB52SOi27jCqPg5/SMlX7Ipxn0Cf3NNdv2n6tKeh31ghiYBZZ8m42c7hanIoSSp/dYXR7CtE1XKmiG2rnV4d47qmpBiBGQ624Aprp+Retj4QoPerfe3p9sGPYDui4LCO0Mm2ctIYoKjBBOvdLOhIF8w0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y858YchH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WAYd+hsm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E866C19423;
-	Thu, 15 Jan 2026 17:09:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y858YchH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B60DC19423;
+	Thu, 15 Jan 2026 17:10:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496997;
-	bh=EPfHaFGct54rP7DHQYr2EHpLl5YIvlSOPcuoXSSiK/Q=;
+	s=korg; t=1768497000;
+	bh=1isOONgbOKA3tSCIDlfYPiD/wlcA5Mc0cnuGhph+0Yc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WAYd+hsmuemRQZxm99hI9fPIfollbOoCmWTw4vkDVfrE3rnoB3b0t5Ulrqelr5mA+
-	 MkxShIVn6xlrAi/erAvBuOpWMgzl78P2uikewmIdr1EnnQbHEyxcM33KLhgWFROf4c
-	 ddG0y9tsyZPHZ7IYvay57451iKmgU9Aco2piuLR0=
+	b=Y858YchHWH27JY0z37eW+t2AOpkLjuyTAQtDFK1kCI5OXg9dLlu4KIBe/4nMmccvK
+	 VhNg7Toklxqs7jCzEN1/W0xA790zTQGjfNa84vBCVbgL6H4QKzHaSmUU+N9FWlr8rK
+	 Dty6zYjLBGJcLl5y2TdFAbBy8apKndPycuTlalJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yinhao Hu <dddddd@hust.edu.cn>,
-	Kaiyan Mei <M202472210@hust.edu.cn>,
+	syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
 	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Amery Hung <ameryhung@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 76/88] bpf, test_run: Subtract size of xdp_frame from allowed metadata size
-Date: Thu, 15 Jan 2026 17:48:59 +0100
-Message-ID: <20260115164149.069355729@linuxfoundation.org>
+Subject: [PATCH 6.6 77/88] bpf: Fix reference count leak in bpf_prog_test_run_xdp()
+Date: Thu, 15 Jan 2026 17:49:00 +0100
+Message-ID: <20260115164149.104962248@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164146.312481509@linuxfoundation.org>
 References: <20260115164146.312481509@linuxfoundation.org>
@@ -55,82 +54,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Toke Høiland-Jørgensen <toke@redhat.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit e558cca217790286e799a8baacd1610bda31b261 ]
+[ Upstream commit ec69daabe45256f98ac86c651b8ad1b2574489a7 ]
 
-The xdp_frame structure takes up part of the XDP frame headroom,
-limiting the size of the metadata. However, in bpf_test_run, we don't
-take this into account, which makes it possible for userspace to supply
-a metadata size that is too large (taking up the entire headroom).
+syzbot is reporting
 
-If userspace supplies such a large metadata size in live packet mode,
-the xdp_update_frame_from_buff() call in xdp_test_run_init_page() call
-will fail, after which packet transmission proceeds with an
-uninitialised frame structure, leading to the usual Bad Stuff.
+  unregister_netdevice: waiting for sit0 to become free. Usage count = 2
 
-The commit in the Fixes tag fixed a related bug where the second check
-in xdp_update_frame_from_buff() could fail, but did not add any
-additional constraints on the metadata size. Complete the fix by adding
-an additional check on the metadata size. Reorder the checks slightly to
-make the logic clearer and add a comment.
+problem. A debug printk() patch found that a refcount is obtained at
+xdp_convert_md_to_buff() from bpf_prog_test_run_xdp().
 
-Link: https://lore.kernel.org/r/fa2be179-bad7-4ee3-8668-4903d1853461@hust.edu.cn
-Fixes: b6f1f780b393 ("bpf, test_run: Fix packet size check for live packet mode")
-Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
-Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
-Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Reviewed-by: Amery Hung <ameryhung@gmail.com>
-Link: https://lore.kernel.org/r/20260105114747.1358750-1-toke@redhat.com
+According to commit ec94670fcb3b ("bpf: Support specifying ingress via
+xdp_md context in BPF_PROG_TEST_RUN"), the refcount obtained by
+xdp_convert_md_to_buff() will be released by xdp_convert_buff_to_md().
+
+Therefore, we can consider that the error handling path introduced by
+commit 1c1949982524 ("bpf: introduce frags support to
+bpf_prog_test_run_xdp()") forgot to call xdp_convert_buff_to_md().
+
+Reported-by: syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=881d65229ca4f9ae8c84
+Fixes: 1c1949982524 ("bpf: introduce frags support to bpf_prog_test_run_xdp()")
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Link: https://lore.kernel.org/r/af090e53-9d9b-4412-8acb-957733b3975c@I-love.SAKURA.ne.jp
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bpf/test_run.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ net/bpf/test_run.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
-index b4a912ed8f2ec..1989d239939b1 100644
+index 1989d239939b1..7e11ec31d40e4 100644
 --- a/net/bpf/test_run.c
 +++ b/net/bpf/test_run.c
-@@ -1174,8 +1174,6 @@ int bpf_prog_test_run_xdp(struct bpf_prog *prog, const union bpf_attr *kattr,
- 			batch_size = NAPI_POLL_WEIGHT;
- 		else if (batch_size > TEST_XDP_MAX_BATCH)
- 			return -E2BIG;
--
--		headroom += sizeof(struct xdp_page_head);
- 	} else if (batch_size) {
- 		return -EINVAL;
- 	}
-@@ -1188,16 +1186,26 @@ int bpf_prog_test_run_xdp(struct bpf_prog *prog, const union bpf_attr *kattr,
- 		/* There can't be user provided data before the meta data */
- 		if (ctx->data_meta || ctx->data_end > kattr->test.data_size_in ||
- 		    ctx->data > ctx->data_end ||
--		    unlikely(xdp_metalen_invalid(ctx->data)) ||
- 		    (do_live && (kattr->test.data_out || kattr->test.ctx_out)))
- 			goto free_ctx;
--		/* Meta data is allocated from the headroom */
--		headroom -= ctx->data;
+@@ -1243,13 +1243,13 @@ int bpf_prog_test_run_xdp(struct bpf_prog *prog, const union bpf_attr *kattr,
  
- 		meta_sz = ctx->data;
-+		if (xdp_metalen_invalid(meta_sz) || meta_sz > headroom - sizeof(struct xdp_frame))
-+			goto free_ctx;
-+
-+		/* Meta data is allocated from the headroom */
-+		headroom -= meta_sz;
- 		linear_sz = ctx->data_end;
- 	}
+ 			if (sinfo->nr_frags == MAX_SKB_FRAGS) {
+ 				ret = -ENOMEM;
+-				goto out;
++				goto out_put_dev;
+ 			}
  
-+	/* The xdp_page_head structure takes up space in each page, limiting the
-+         * size of the packet data; add the extra size to headroom here to make
-+         * sure it's accounted in the length checks below, but not in the
-+         * metadata size check above.
-+         */
-+        if (do_live)
-+		headroom += sizeof(struct xdp_page_head);
-+
- 	max_linear_sz = PAGE_SIZE - headroom - tailroom;
- 	linear_sz = min_t(u32, linear_sz, max_linear_sz);
+ 			page = alloc_page(GFP_KERNEL);
+ 			if (!page) {
+ 				ret = -ENOMEM;
+-				goto out;
++				goto out_put_dev;
+ 			}
  
+ 			frag = &sinfo->frags[sinfo->nr_frags++];
+@@ -1261,7 +1261,7 @@ int bpf_prog_test_run_xdp(struct bpf_prog *prog, const union bpf_attr *kattr,
+ 			if (copy_from_user(page_address(page), data_in + size,
+ 					   data_len)) {
+ 				ret = -EFAULT;
+-				goto out;
++				goto out_put_dev;
+ 			}
+ 			sinfo->xdp_frags_size += data_len;
+ 			size += data_len;
+@@ -1276,6 +1276,7 @@ int bpf_prog_test_run_xdp(struct bpf_prog *prog, const union bpf_attr *kattr,
+ 		ret = bpf_test_run_xdp_live(prog, &xdp, repeat, batch_size, &duration);
+ 	else
+ 		ret = bpf_test_run(prog, &xdp, repeat, &retval, &duration, true);
++out_put_dev:
+ 	/* We convert the xdp_buff back to an xdp_md before checking the return
+ 	 * code so the reference count of any held netdevice will be decremented
+ 	 * even if the test run failed.
 -- 
 2.51.0
 
