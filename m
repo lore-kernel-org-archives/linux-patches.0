@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F44B2D781B;
-	Thu, 15 Jan 2026 17:09:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D1234216C;
+	Thu, 15 Jan 2026 17:09:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496975; cv=none; b=Sr1I4cWQLDpMusuJmQsApo3IGir+wZ6UyhD/dgDBWRUNvYlv5xcVobhmOw5vghfn9KZo4WBsFIdj3NGdOVPOMLaVae9H7bqngId2ICIsPoUDjQUnNiCKFKliKxgZUnwkcmSySsHIbLZ4ZW3X8+4ezQwc9RrEz1aPveFp21LMSLY=
+	t=1768496978; cv=none; b=sOQZptCZ52Am5Pc5YVin5e4Tx4YPqgxpRRsX70DpssuKdm/j6IUwMVMLXYphIqLMo4E+QD8sKdu0wGFAtHcr6mB/PeCA3u0El1WF7yb6stG38mTc5jj698FPmexJoh9qSTo31O2zDSEnqvRhHQr1IEtxmPrqsoAhb4DYprPDogk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496975; c=relaxed/simple;
-	bh=kM1TTMMRt1ghz9jQrfGxC/5mt+5BzLn/HdtkfaSbxTE=;
+	s=arc-20240116; t=1768496978; c=relaxed/simple;
+	bh=c0va2lmcHKrna7O3ovEng0HqxEhiuTuT7A56Mlg2Vco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r+3yhn4l9ZSlFPQoM0OkemG2Wn/4MzsdBcHs/qVitDG7PK4D/VRFIRfx0xeo7lODyt8PH2HV5kv2EbVgTaceNfh15HlPKFYjmaFnmtqYdBcFBIvSUw239tJ8LJ4usuh2bMGeYxQMxQrq9crdqXK3PAWuiGfJPPp22uXLO+25G+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NxUQvNo1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E/U5U+udsegQLwqf8848Q8pvS/Ekkowb12Xq2k2AbaoE2aHrJrZTgEz1xJsCo8RH88TdXU1DOVbSqboaBjwqziHCbpJHHbjX1KTTilztmZ44DW+P+JTuHXOLVHIa+Oi9LMRmZNYyx/JYLwN6X8bil+QV4vV24Tbe8tr/gmf17TQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d1KwNwDC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NxUQvNo1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE6ACC116D0;
-	Thu, 15 Jan 2026 17:09:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d1KwNwDC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EBB2C16AAE;
+	Thu, 15 Jan 2026 17:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496975;
-	bh=kM1TTMMRt1ghz9jQrfGxC/5mt+5BzLn/HdtkfaSbxTE=;
+	s=korg; t=1768496977;
+	bh=c0va2lmcHKrna7O3ovEng0HqxEhiuTuT7A56Mlg2Vco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NxUQvNo1oueTH+J2dXv0u84Y5HjWuD/B5dbusugoKodGQ8JFImR6FBaB7RdqJXTBR
-	 9l32hEjhu8r8Sp5mtWoMa2haM9LBVADfxARYEA2KVjr2gOGSnn/2I0b49yimUEAWvs
-	 ZRvet/sUIglgWjRx7fiS3ArxxQrabZvvd6nQepbo=
+	b=d1KwNwDCGma+Ea0Q2smGif4A9yNpnwg11/eu8Npwwvsei4gsD0Rmp6zugZgubjldj
+	 lTKrwDIxnsKktn9Q3msPVHukhGtSvRoHLcLFqSRYUYE4ZqNTGWbEN3TEBlsZQbKenD
+	 fDOJjKgSCxnCglpyGWZST/vVQyPvBRr9vm8KyLo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amery Hung <ameryhung@gmail.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Jussi Laako <jussi@sonarnerd.net>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 74/88] bpf: Make variables in bpf_prog_test_run_xdp less confusing
-Date: Thu, 15 Jan 2026 17:48:57 +0100
-Message-ID: <20260115164148.997758425@linuxfoundation.org>
+Subject: [PATCH 6.6 83/88] ALSA: usb-audio: Update for native DSD support quirks
+Date: Thu, 15 Jan 2026 17:49:06 +0100
+Message-ID: <20260115164149.320193189@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164146.312481509@linuxfoundation.org>
 References: <20260115164146.312481509@linuxfoundation.org>
@@ -51,99 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amery Hung <ameryhung@gmail.com>
+From: Jussi Laako <jussi@sonarnerd.net>
 
-[ Upstream commit 7eb83bff02ad5e82e8c456c58717ef181c220870 ]
+[ Upstream commit da3a7efff64ec0d63af4499eea3a46a2e13b5797 ]
 
-Change the variable naming in bpf_prog_test_run_xdp() to make the
-overall logic less confusing. As different modes were added to the
-function over the time, some variables got overloaded, making
-it hard to understand and changing the code becomes error-prone.
+Maintenance patch for native DSD support.
 
-Replace "size" with "linear_sz" where it refers to the size of metadata
-and data. If "size" refers to input data size, use test.data_size_in
-directly.
+Add set of missing device and vendor quirks; TEAC, Esoteric, Luxman and
+Musical Fidelity.
 
-Replace "max_data_sz" with "max_linear_sz" to better reflect the fact
-that it is the maximum size of metadata and data (i.e., linear_sz). Also,
-xdp_rxq.frags_size is always PAGE_SIZE, so just set it directly instead
-of subtracting headroom and tailroom and adding them back.
-
-Signed-off-by: Amery Hung <ameryhung@gmail.com>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/20250922233356.3356453-6-ameryhung@gmail.com
-Stable-dep-of: e558cca21779 ("bpf, test_run: Subtract size of xdp_frame from allowed metadata size")
+Signed-off-by: Jussi Laako <jussi@sonarnerd.net>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20251211152224.1780782-1-jussi@sonarnerd.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bpf/test_run.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ sound/usb/quirks.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
-index 373ccb243545f..1e598c858a145 100644
---- a/net/bpf/test_run.c
-+++ b/net/bpf/test_run.c
-@@ -1144,9 +1144,9 @@ int bpf_prog_test_run_xdp(struct bpf_prog *prog, const union bpf_attr *kattr,
- {
- 	bool do_live = (kattr->test.flags & BPF_F_TEST_XDP_LIVE_FRAMES);
- 	u32 tailroom = SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
-+	u32 retval = 0, duration, max_linear_sz, size;
-+	u32 linear_sz = kattr->test.data_size_in;
- 	u32 batch_size = kattr->test.batch_size;
--	u32 retval = 0, duration, max_data_sz;
--	u32 size = kattr->test.data_size_in;
- 	u32 headroom = XDP_PACKET_HEADROOM;
- 	u32 repeat = kattr->test.repeat;
- 	struct netdev_rx_queue *rxqueue;
-@@ -1183,7 +1183,7 @@ int bpf_prog_test_run_xdp(struct bpf_prog *prog, const union bpf_attr *kattr,
- 
- 	if (ctx) {
- 		/* There can't be user provided data before the meta data */
--		if (ctx->data_meta || ctx->data_end != size ||
-+		if (ctx->data_meta || ctx->data_end != kattr->test.data_size_in ||
- 		    ctx->data > ctx->data_end ||
- 		    unlikely(xdp_metalen_invalid(ctx->data)) ||
- 		    (do_live && (kattr->test.data_out || kattr->test.ctx_out)))
-@@ -1192,30 +1192,30 @@ int bpf_prog_test_run_xdp(struct bpf_prog *prog, const union bpf_attr *kattr,
- 		headroom -= ctx->data;
- 	}
- 
--	max_data_sz = PAGE_SIZE - headroom - tailroom;
--	if (size > max_data_sz) {
--		/* disallow live data mode for jumbo frames */
--		if (do_live)
--			goto free_ctx;
--		size = max_data_sz;
--	}
-+	max_linear_sz = PAGE_SIZE - headroom - tailroom;
-+	linear_sz = min_t(u32, linear_sz, max_linear_sz);
-+
-+	/* disallow live data mode for jumbo frames */
-+	if (do_live && kattr->test.data_size_in > linear_sz)
-+		goto free_ctx;
- 
--	data = bpf_test_init(kattr, size, max_data_sz, headroom, tailroom);
-+	data = bpf_test_init(kattr, linear_sz, max_linear_sz, headroom, tailroom);
- 	if (IS_ERR(data)) {
- 		ret = PTR_ERR(data);
- 		goto free_ctx;
- 	}
- 
- 	rxqueue = __netif_get_rx_queue(current->nsproxy->net_ns->loopback_dev, 0);
--	rxqueue->xdp_rxq.frag_size = headroom + max_data_sz + tailroom;
-+	rxqueue->xdp_rxq.frag_size = PAGE_SIZE;
- 	xdp_init_buff(&xdp, rxqueue->xdp_rxq.frag_size, &rxqueue->xdp_rxq);
--	xdp_prepare_buff(&xdp, data, headroom, size, true);
-+	xdp_prepare_buff(&xdp, data, headroom, linear_sz, true);
- 	sinfo = xdp_get_shared_info_from_buff(&xdp);
- 
- 	ret = xdp_convert_md_to_buff(ctx, &xdp);
- 	if (ret)
- 		goto free_data;
- 
-+	size = linear_sz;
- 	if (unlikely(kattr->test.data_size_in > size)) {
- 		void __user *data_in = u64_to_user_ptr(kattr->test.data_in);
- 
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 44274f39d6937..cde5b5c165096 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2125,6 +2125,12 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 	DEVICE_FLG(0x0644, 0x806b, /* TEAC UD-701 */
+ 		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY |
+ 		   QUIRK_FLAG_IFACE_DELAY),
++	DEVICE_FLG(0x0644, 0x807d, /* TEAC UD-507 */
++		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY |
++		   QUIRK_FLAG_IFACE_DELAY),
++	DEVICE_FLG(0x0644, 0x806c, /* Esoteric XD */
++		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY |
++		   QUIRK_FLAG_IFACE_DELAY),
+ 	DEVICE_FLG(0x06f8, 0xb000, /* Hercules DJ Console (Windows Edition) */
+ 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
+ 	DEVICE_FLG(0x06f8, 0xd002, /* Hercules DJ Console (Macintosh Edition) */
+@@ -2277,6 +2283,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
+ 	DEVICE_FLG(0x30be, 0x0101, /* Schiit Hel */
+ 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
++	DEVICE_FLG(0x3255, 0x0000, /* Luxman D-10X */
++		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY),
+ 	DEVICE_FLG(0x339b, 0x3a07, /* Synaptics HONOR USB-C HEADSET */
+ 		   QUIRK_FLAG_MIXER_MIN_MUTE),
+ 	DEVICE_FLG(0x413c, 0xa506, /* Dell AE515 sound bar */
+@@ -2320,6 +2328,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_DSD_RAW),
+ 	VENDOR_FLG(0x2622, /* IAG Limited devices */
+ 		   QUIRK_FLAG_DSD_RAW),
++	VENDOR_FLG(0x2772, /* Musical Fidelity devices */
++		   QUIRK_FLAG_DSD_RAW),
+ 	VENDOR_FLG(0x278b, /* Rotel? */
+ 		   QUIRK_FLAG_DSD_RAW),
+ 	VENDOR_FLG(0x292b, /* Gustard/Ess based devices */
 -- 
 2.51.0
 
