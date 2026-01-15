@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 243F63AA1A8;
-	Thu, 15 Jan 2026 17:32:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC1B3C1975;
+	Thu, 15 Jan 2026 17:32:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498329; cv=none; b=VXlV/Jz8BVfrwk+wexwOxPSuveiY0s7djjLB9+hkmoQ1rUgXPLSaanmTOh6OEYkPxAepA7wIGdYoFQSh3IWpZRIKKuDfKpXuG/ZsAcsALMjs1hOaP/STXwsWyuHZ0z36VF5nuNA0EsLQHTpfQS3DelQkzGNVVMrYGtWtSZ+hyEE=
+	t=1768498332; cv=none; b=TNYHZGBwedy0mEhmAOeGrxxt6GywskoeUIBujDvdmsYFwHcS/R09CDrdD8LNGXPZH7zxDjEcPE0GCJNwA2V7hpS8P6PvXC9gh/iaU8IqqcjTYV4JpAAgtrdGoOZjmDoSy8CxUITFSVyduCvcSBhoPrYc6uXk25HFn7qe2E1jDu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498329; c=relaxed/simple;
-	bh=QmIg3geB0T9QNr27x5iTPzHthGePoSXM8TWshG1iqQI=;
+	s=arc-20240116; t=1768498332; c=relaxed/simple;
+	bh=TQyB83BZawHCIKJCP0ISOSiebGPA3hizNON54bAHdHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LRI1+mOYucN2dVQkV3enHF0XIYTT0QSTsE4A7kSmp5lhTOC8n9uHRV97Ey8MybXTZtvDHiXTbnv7pM3Irvd1MCpx2IFbbGdnP58tNFydAeh1eQznZLcT545vv0sftyRjsYi15OZX4Ff4NwwmyaVuZubOuSzx8K9BRo5ic1bf7nQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w+6jB/R6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YYoN3DcXNivfN9SA7E2/vooXeR6fBsG/DFORlveVTcH3B1JNjsMHcL9qO8cAkDTtV6QNO8U9/VYRFpoB2RTCVrVHcQZGtqsdqBroJKH6Krm4AXF3x0LEf0EtLnf+Kg7SQuHHjzJPQRoSG9PCQ/xu0F6ViEoq7nAwhfWZpMVpDnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BO0ETR+f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w+6jB/R6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3B8AC116D0;
-	Thu, 15 Jan 2026 17:32:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BO0ETR+f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 811DBC116D0;
+	Thu, 15 Jan 2026 17:32:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498329;
-	bh=QmIg3geB0T9QNr27x5iTPzHthGePoSXM8TWshG1iqQI=;
+	s=korg; t=1768498331;
+	bh=TQyB83BZawHCIKJCP0ISOSiebGPA3hizNON54bAHdHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w+6jB/R69rTkDgRyWv/P/9SlwY/oW5B+lmK+Fq7uDR4BT3tael7iaaN2lIeKo7GN9
-	 tU5OxRxi+JzhEE18fJEyJHqUfLlZGjF0pI2c/FOTq3ulHsC6+aR6Sj0VNuP1IknZ0g
-	 2JG4t94tEDel2uYo92G6DIHZRwmUiiwPeM2sw3ug=
+	b=BO0ETR+f0h0KvEiVnCpUY1G6zlysmyWD5o9DGviVad6OMWAWfkFFoKFkNw+MQBqm2
+	 ADriYzzomu/XGlYK5OG28H5rmDF4i0agF57ZM3T/FniepIMKVhbN75YCn8WXm4chlL
+	 19ycj6gbanXyor7sEHyqlmoD19S12W+xlwj+KMUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.15 394/554] fbdev: tcx.c fix mem_map to correct smem_start offset
-Date: Thu, 15 Jan 2026 17:47:40 +0100
-Message-ID: <20260115164300.496629984@linuxfoundation.org>
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 5.15 395/554] media: cec: Fix debugfs leak on bus_register() failure
+Date: Thu, 15 Jan 2026 17:47:41 +0100
+Message-ID: <20260115164300.533459057@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -44,43 +44,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: René Rebe <rene@exactco.de>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-commit 35fa2b4bf96415b88d7edaa5cf8af5185d9ce76e upstream.
+commit c43bcd2b2aa3c2ca9d2433c3990ecbc2c47d10eb upstream.
 
-403ae52ac047 ("sparc: fix drivers/video/tcx.c warning") changed the
-physbase initializing breaking the user-space mmap, e.g. for Xorg
-entirely.
+In cec_devnode_init(), the debugfs directory created with
+debugfs_create_dir() is not removed if bus_register() fails.
+This leaves a stale "cec" entry in debugfs and prevents
+proper module reloading.
 
-Fix fbdev mmap table so the sbus mmap helper work correctly, and
-not try to map vastly (physbase) offset memory.
+Fix this by removing the debugfs directory in the error path.
 
-Fixes: 403ae52ac047 ("sparc: fix drivers/video/tcx.c warning")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: René Rebe <rene@exactco.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: a56960e8b406 ("[media] cec: add HDMI CEC framework (core)")
+Cc: stable@vger.kernel.org
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/tcx.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/cec/core/cec-core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/video/fbdev/tcx.c
-+++ b/drivers/video/fbdev/tcx.c
-@@ -436,7 +436,7 @@ static int tcx_probe(struct platform_dev
- 			j = i;
- 			break;
- 		}
--		par->mmap_map[i].poff = op->resource[j].start;
-+		par->mmap_map[i].poff = op->resource[j].start - info->fix.smem_start;
- 	}
+--- a/drivers/media/cec/core/cec-core.c
++++ b/drivers/media/cec/core/cec-core.c
+@@ -433,6 +433,7 @@ static int __init cec_devnode_init(void)
  
- 	info->flags = FBINFO_DEFAULT;
+ 	ret = bus_register(&cec_bus_type);
+ 	if (ret < 0) {
++		debugfs_remove_recursive(top_cec_dir);
+ 		unregister_chrdev_region(cec_dev_t, CEC_NUM_DEVICES);
+ 		pr_warn("cec: bus_register failed\n");
+ 		return -EIO;
 
 
