@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33A3B3BC4F2;
-	Thu, 15 Jan 2026 17:42:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06ECD39E199;
+	Thu, 15 Jan 2026 17:42:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498970; cv=none; b=jfwAlO+0oNALibyXrF7iDg5a7kPMmNge+SpD2jZcc3utCYisJ2KBWxUVQmSWyds7SWuLzBTiQ0qiS2AH4F5rL5CpT35UkpWoVlqCRY5933HLHkNdG46zcMla6bS7ddPR5udymxXWrKN0m3X0jy5OkrAjOiGLO3f2wX+7duhx1mU=
+	t=1768498973; cv=none; b=J4WkbOXSrEOy9HJXmgT5Jx4JqG8e6r5qneo2m8qMQSJGBqTahMnu2rYaVCokz7hrshcnp3TT63eYqPJvrxhYn0NXQoynt2uc2XjjFT1Yqo2bi2MrDJFbrNoWxbwZu++DL+6RDtV7QByNktvqHvwDQKWlxXJFkKHCe4ba+E+KgFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498970; c=relaxed/simple;
-	bh=2Zv2M6NiVF1IoPak4a9N4zsR+gMKYZ2y6r8FD8usGvw=;
+	s=arc-20240116; t=1768498973; c=relaxed/simple;
+	bh=b+PN0cG9NiJDQnqeDQOsqCQb5KJpgdsjhvHvDk0YkXo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L4pqS9eDqPARL+Vh6KQXJVijSU51gCeY6ggNl/FgtddHkxenpUbUZCDP+UF/R1oON1UqHQ/gVltBxJgOVDnXwMAVHRkPSkNiE725mMcrOgkrFG7ikYtkMy8r2tajabhXmOpME7v7W2gbyeln6rANXGfpbvLfNblHcCK/SbIgEtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YMSaf2Xi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LEAQYiCS/IHjBLMO0ZZYhDbHfUOijxp9GB5ofeyD5nTUAjA3/TMmaiavgD7jHkvtsO9JO8n5jV1rY6rl40lxwNLBBDaASJvGLz7CAKKd7c3wZmtrBgOp72deOF7Gs3u+6QyLo5ZvUqYmS98N9SGnCSYhFIIt+/FuIRlnbtsxY1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P0Ttko5Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YMSaf2Xi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 698D4C19423;
-	Thu, 15 Jan 2026 17:42:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P0Ttko5Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E4AFC116D0;
+	Thu, 15 Jan 2026 17:42:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498969;
-	bh=2Zv2M6NiVF1IoPak4a9N4zsR+gMKYZ2y6r8FD8usGvw=;
+	s=korg; t=1768498972;
+	bh=b+PN0cG9NiJDQnqeDQOsqCQb5KJpgdsjhvHvDk0YkXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YMSaf2XiTDW8kr8jteYWkwz48mNFo4+TghVWItFGBsLHis1Y1qcZFKaHq0TjDjrbm
-	 nC1iYLzrB4pYQ1s6ptqRzm2lvglLgQgov7cJb6bwUYHUKzhKYXKjCHCKSxGC7rVkn5
-	 HGM9y4qEcdkQQa4A8grvt4YwM+wOACVbnGPBDZAs=
+	b=P0Ttko5Y+FnSNkCyaz51cyft66SEF7vkDOMN5/32e7ko8oALO9pBJWKKGcfu2fYHR
+	 KjrIx8H4qIgazD/mxQMsoC2dtoUb6fW3XO2XoHuZbkxWQ/EAwMCK5cSIT3+KlDglFz
+	 b47ka+Jzyv/FL64L7boC470KNTwN1VpVKOX7QDsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+56fbf4c7ddf65e95c7cc@syzkaller.appspotmail.com,
-	Zheng Qixing <zhengqixing@huawei.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 063/451] nbd: defer config put in recv_work
-Date: Thu, 15 Jan 2026 17:44:24 +0100
-Message-ID: <20260115164233.178771790@linuxfoundation.org>
+Subject: [PATCH 5.10 064/451] scsi: stex: Fix reboot_notifier leak in probe error path
+Date: Thu, 15 Jan 2026 17:44:25 +0100
+Message-ID: <20260115164233.214267928@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -52,100 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Qixing <zhengqixing@huawei.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 9517b82d8d422d426a988b213fdd45c6b417b86d ]
+[ Upstream commit 20da637eb545b04753e20c675cfe97b04c7b600b ]
 
-There is one uaf issue in recv_work when running NBD_CLEAR_SOCK and
-NBD_CMD_RECONFIGURE:
-  nbd_genl_connect     // conf_ref=2 (connect and recv_work A)
-  nbd_open	       // conf_ref=3
-  recv_work A done     // conf_ref=2
-  NBD_CLEAR_SOCK       // conf_ref=1
-  nbd_genl_reconfigure // conf_ref=2 (trigger recv_work B)
-  close nbd	       // conf_ref=1
-  recv_work B
-    config_put         // conf_ref=0
-    atomic_dec(&config->recv_threads); -> UAF
+In stex_probe(), register_reboot_notifier() is called at the beginning,
+but if any subsequent initialization step fails, the function returns
+without unregistering the notifier, resulting in a resource leak.
 
-Or only running NBD_CLEAR_SOCK:
-  nbd_genl_connect   // conf_ref=2
-  nbd_open 	     // conf_ref=3
-  NBD_CLEAR_SOCK     // conf_ref=2
-  close nbd
-    nbd_release
-      config_put     // conf_ref=1
-  recv_work
-    config_put 	     // conf_ref=0
-    atomic_dec(&config->recv_threads); -> UAF
+Add unregister_reboot_notifier() in the out_disable error path to ensure
+proper cleanup on all failure paths.
 
-Commit 87aac3a80af5 ("nbd: call nbd_config_put() before notifying the
-waiter") moved nbd_config_put() to run before waking up the waiter in
-recv_work, in order to ensure that nbd_start_device_ioctl() would not
-be woken up while nbd->task_recv was still uncleared.
-
-However, in nbd_start_device_ioctl(), after being woken up it explicitly
-calls flush_workqueue() to make sure all current works are finished.
-Therefore, there is no need to move the config put ahead of the wakeup.
-
-Move nbd_config_put() to the end of recv_work, so that the reference is
-held for the whole lifetime of the worker thread. This makes sure the
-config cannot be freed while recv_work is still running, even if clear
-+ reconfigure interleave.
-
-In addition, we don't need to worry about recv_work dropping the last
-nbd_put (which causes deadlock):
-
-path A (netlink with NBD_CFLAG_DESTROY_ON_DISCONNECT):
-  connect  // nbd_refs=1 (trigger recv_work)
-  open nbd // nbd_refs=2
-  NBD_CLEAR_SOCK
-  close nbd
-    nbd_release
-      nbd_disconnect_and_put
-        flush_workqueue // recv_work done
-      nbd_config_put
-        nbd_put // nbd_refs=1
-      nbd_put // nbd_refs=0
-        queue_work
-
-path B (netlink without NBD_CFLAG_DESTROY_ON_DISCONNECT):
-  connect  // nbd_refs=2 (trigger recv_work)
-  open nbd // nbd_refs=3
-  NBD_CLEAR_SOCK // conf_refs=2
-  close nbd
-    nbd_release
-      nbd_config_put // conf_refs=1
-      nbd_put // nbd_refs=2
-  recv_work done // conf_refs=0, nbd_refs=1
-  rmmod // nbd_refs=0
-
-Reported-by: syzbot+56fbf4c7ddf65e95c7cc@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/6907edce.a70a0220.37351b.0014.GAE@google.com/T/
-Fixes: 87aac3a80af5 ("nbd: make the config put is called before the notifying the waiter")
-Depends-on: e2daec488c57 ("nbd: Fix hungtask when nbd_config_put")
-Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 61b745fa63db ("scsi: stex: Add S6 support")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20251104094847.270-1-vulab@iscas.ac.cn
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/nbd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/stex.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
-index 92a94fa568a05..faa3f6c52f5f9 100644
---- a/drivers/block/nbd.c
-+++ b/drivers/block/nbd.c
-@@ -817,9 +817,9 @@ static void recv_work(struct work_struct *work)
- 	nbd_mark_nsock_dead(nbd, nsock, 1);
- 	mutex_unlock(&nsock->tx_lock);
+diff --git a/drivers/scsi/stex.c b/drivers/scsi/stex.c
+index fa607f2182500..2b074b26db725 100644
+--- a/drivers/scsi/stex.c
++++ b/drivers/scsi/stex.c
+@@ -1849,6 +1849,7 @@ static int stex_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ out_scsi_host_put:
+ 	scsi_host_put(host);
+ out_disable:
++	unregister_reboot_notifier(&stex_notifier);
+ 	pci_disable_device(pdev);
  
--	nbd_config_put(nbd);
- 	atomic_dec(&config->recv_threads);
- 	wake_up(&config->recv_wq);
-+	nbd_config_put(nbd);
- 	kfree(args);
- }
- 
+ 	return err;
 -- 
 2.51.0
 
