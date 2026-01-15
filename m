@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01AA927AC5C;
-	Thu, 15 Jan 2026 17:21:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA5A129B200;
+	Thu, 15 Jan 2026 17:21:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497705; cv=none; b=ihYP4ZsMN4mhAmkrse7q/EdXwveveD8Jio4eBIluf3YS276X6eAxeKjo21zzdjTPq1Gp8y11a74sZ0Z6LUMre4MMzBYRvbMR9Skbln0XfowdYLVqdeBsaIwfSEQfj7FRYCVknC1Ap4IOQVGHn6AJEY/geE6ORhPoi+wXG5bOOq8=
+	t=1768497707; cv=none; b=Juw0mnk056oURmQB0wSs6B994g4FQ5UoEOVGqz+kEQ6Y476scrR/1EemPCjL1Rv78Qq3+s0GU+8g2Il+1nHAOpr76x4/jfQ4H/CFR0wNPi5YYZPcRSakWCytFurRb5yq3ksZKP+23m/gLe1F/o94nrQ1Aw7/yvNLJp5WCMhl4ho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497705; c=relaxed/simple;
-	bh=DtM0zKgWTAbwKE7soCQRJIH+gm3uqMgGOlKc1FBwER8=;
+	s=arc-20240116; t=1768497707; c=relaxed/simple;
+	bh=XhLAv4zOj260dEQv2JPXXF55uL7f60tqYWSK8Gb5gK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hqmZoWr1qut5MtO0ye9xVTVsP6/VB9MneUhw/30VG5ZWeiorjf/UiYqWwCYf+vRfgcxm0dvzKfuE0TVdvzrs3qiPV7/vicGujZ/zR5OIcs4YS33HwYHZ9u2Pfg1JErewW6+MU6awnCaKfwadFj5OqTv1BKLwyNZDuYPEc4IVMb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=POspRXDS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TWfZ5ifedo0O8CnYUS1SVSzLyqUirWNBlkAEVMRxXAPExKOTrswRDNmo2A5ptSSnwud1yuWlYVMcDmzqMPOl6TD7skKLGs2Mx8Aoc6OCqsRaN01tYFpCuLwgVuSDeHnuDKVeaftWDJgj1Ihu8bQoI28VZlC8ggXCzt0VsrFpGKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aStyXtcm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="POspRXDS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8414DC116D0;
-	Thu, 15 Jan 2026 17:21:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aStyXtcm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57931C116D0;
+	Thu, 15 Jan 2026 17:21:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497704;
-	bh=DtM0zKgWTAbwKE7soCQRJIH+gm3uqMgGOlKc1FBwER8=;
+	s=korg; t=1768497707;
+	bh=XhLAv4zOj260dEQv2JPXXF55uL7f60tqYWSK8Gb5gK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=POspRXDSbz1LitfIYgQkod6x02B7Xh2lGL2n2YdmmGgiPVs0ETIK8PPVfCpKq9H4c
-	 jCcWVyRbW5Y1zVWYIRlfL6O6jmX9e6hDgTV/fZzWbeAAvd1GhjbI4NKISEwFpbLBsz
-	 z13+iRh1DBPhf9f81q/REY+rB/aac+MS1ekgw5DM=
+	b=aStyXtcmtBGpqo1UIbWNRH5pYFnclbMQJNVtLtDXc24Ut4pDc+LGTNft7qiVlMLYa
+	 cciBS+JQrZX/UX+O4dMOfVxwIf64wgvTicwxyDB3XDPLjIpx7q/kPqIjq16a8pvIQ1
+	 x5fCDpC/jBxhcGTszMJb3K598y9ZjnI0AFMxYFeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Bobrowski <mattbobrowski@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 131/554] selftests/bpf: Improve reliability of test_perf_branches_no_hw()
-Date: Thu, 15 Jan 2026 17:43:17 +0100
-Message-ID: <20260115164250.992960910@linuxfoundation.org>
+Subject: [PATCH 5.15 168/554] fbdev: ssd1307fb: fix potential page leak in ssd1307fb_probe()
+Date: Thu, 15 Jan 2026 17:43:54 +0100
+Message-ID: <20260115164252.348463453@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -52,124 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Bobrowski <mattbobrowski@google.com>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-[ Upstream commit ae24fc8a16b0481ea8c5acbc66453c49ec0431c4 ]
+[ Upstream commit 164312662ae9764b83b84d97afb25c42eb2be473 ]
 
-Currently, test_perf_branches_no_hw() relies on the busy loop within
-test_perf_branches_common() being slow enough to allow at least one
-perf event sample tick to occur before starting to tear down the
-backing perf event BPF program. With a relatively small fixed
-iteration count of 1,000,000, this is not guaranteed on modern fast
-CPUs, resulting in the test run to subsequently fail with the
-following:
+The page allocated for vmem using __get_free_pages() is not freed on the
+error paths after it. Fix that by adding a corresponding __free_pages()
+call to the error path.
 
-bpf_testmod.ko is already unloaded.
-Loading bpf_testmod.ko...
-Successfully loaded bpf_testmod.ko.
-test_perf_branches_common:PASS:test_perf_branches_load 0 nsec
-test_perf_branches_common:PASS:attach_perf_event 0 nsec
-test_perf_branches_common:PASS:set_affinity 0 nsec
-check_good_sample:PASS:output not valid 0 nsec
-check_good_sample:PASS:read_branches_size 0 nsec
-check_good_sample:PASS:read_branches_stack 0 nsec
-check_good_sample:PASS:read_branches_stack 0 nsec
-check_good_sample:PASS:read_branches_global 0 nsec
-check_good_sample:PASS:read_branches_global 0 nsec
-check_good_sample:PASS:read_branches_size 0 nsec
-test_perf_branches_no_hw:PASS:perf_event_open 0 nsec
-test_perf_branches_common:PASS:test_perf_branches_load 0 nsec
-test_perf_branches_common:PASS:attach_perf_event 0 nsec
-test_perf_branches_common:PASS:set_affinity 0 nsec
-check_bad_sample:FAIL:output not valid no valid sample from prog
-Summary: 0/1 PASSED, 0 SKIPPED, 1 FAILED
-Successfully unloaded bpf_testmod.ko.
-
-On a modern CPU (i.e. one with a 3.5 GHz clock rate), executing 1
-million increments of a volatile integer can take significantly less
-than 1 millisecond. If the spin loop and detachment of the perf event
-BPF program elapses before the first 1 ms sampling interval elapses,
-the perf event will never end up firing. Fix this by bumping the loop
-iteration counter a little within test_perf_branches_common(), along
-with ensuring adding another loop termination condition which is
-directly influenced by the backing perf event BPF program
-executing. Notably, a concious decision was made to not adjust the
-sample_freq value as that is just not a reliable way to go about
-fixing the problem. It effectively still leaves the race window open.
-
-Fixes: 67306f84ca78c ("selftests/bpf: Add bpf_read_branch_records() selftest")
-Signed-off-by: Matt Bobrowski <mattbobrowski@google.com>
-Reviewed-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/r/20251119143540.2911424-1-mattbobrowski@google.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: facd94bc458a ("fbdev: ssd1307fb: Allocate page aligned video memory.")
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/bpf/prog_tests/perf_branches.c     | 16 ++++++++++++++--
- .../selftests/bpf/progs/test_perf_branches.c     |  3 +++
- 2 files changed, 17 insertions(+), 2 deletions(-)
+ drivers/video/fbdev/ssd1307fb.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/perf_branches.c b/tools/testing/selftests/bpf/prog_tests/perf_branches.c
-index 4a17253413a3a..67cf46056ffe9 100644
---- a/tools/testing/selftests/bpf/prog_tests/perf_branches.c
-+++ b/tools/testing/selftests/bpf/prog_tests/perf_branches.c
-@@ -15,6 +15,10 @@ static void check_good_sample(struct test_perf_branches *skel)
- 	int pbe_size = sizeof(struct perf_branch_entry);
- 	int duration = 0;
+diff --git a/drivers/video/fbdev/ssd1307fb.c b/drivers/video/fbdev/ssd1307fb.c
+index 7acf7c0b263e6..212494b0a4ba8 100644
+--- a/drivers/video/fbdev/ssd1307fb.c
++++ b/drivers/video/fbdev/ssd1307fb.c
+@@ -732,7 +732,7 @@ static int ssd1307fb_probe(struct i2c_client *client)
+ 	if (!ssd1307fb_defio) {
+ 		dev_err(dev, "Couldn't allocate deferred io.\n");
+ 		ret = -ENOMEM;
+-		goto fb_alloc_error;
++		goto fb_defio_error;
+ 	}
  
-+	if (CHECK(!skel->bss->run_cnt, "invalid run_cnt",
-+		  "checked sample validity before prog run"))
-+		return;
-+
- 	if (CHECK(!skel->bss->valid, "output not valid",
- 		 "no valid sample from prog"))
- 		return;
-@@ -45,6 +49,10 @@ static void check_bad_sample(struct test_perf_branches *skel)
- 	int written_stack = skel->bss->written_stack_out;
- 	int duration = 0;
- 
-+	if (CHECK(!skel->bss->run_cnt, "invalid run_cnt",
-+		  "checked sample validity before prog run"))
-+		return;
-+
- 	if (CHECK(!skel->bss->valid, "output not valid",
- 		 "no valid sample from prog"))
- 		return;
-@@ -83,8 +91,12 @@ static void test_perf_branches_common(int perf_fd,
- 	err = pthread_setaffinity_np(pthread_self(), sizeof(cpu_set), &cpu_set);
- 	if (CHECK(err, "set_affinity", "cpu #0, err %d\n", err))
- 		goto out_destroy;
--	/* spin the loop for a while (random high number) */
--	for (i = 0; i < 1000000; ++i)
-+
-+	/* Spin the loop for a while by using a high iteration count, and by
-+	 * checking whether the specific run count marker has been explicitly
-+	 * incremented at least once by the backing perf_event BPF program.
-+	 */
-+	for (i = 0; i < 100000000 && !*(volatile int *)&skel->bss->run_cnt; ++i)
- 		++j;
- 
- 	test_perf_branches__detach(skel);
-diff --git a/tools/testing/selftests/bpf/progs/test_perf_branches.c b/tools/testing/selftests/bpf/progs/test_perf_branches.c
-index a1ccc831c882f..05ac9410cd68c 100644
---- a/tools/testing/selftests/bpf/progs/test_perf_branches.c
-+++ b/tools/testing/selftests/bpf/progs/test_perf_branches.c
-@@ -8,6 +8,7 @@
- #include <bpf/bpf_tracing.h>
- 
- int valid = 0;
-+int run_cnt = 0;
- int required_size_out = 0;
- int written_stack_out = 0;
- int written_global_out = 0;
-@@ -24,6 +25,8 @@ int perf_branches(void *ctx)
- 	__u64 entries[4 * 3] = {0};
- 	int required_size, written_stack, written_global;
- 
-+	++run_cnt;
-+
- 	/* write to stack */
- 	written_stack = bpf_read_branch_records(ctx, entries, sizeof(entries), 0);
- 	/* ignore spurious events */
+ 	ssd1307fb_defio->delay = HZ / refreshrate;
+@@ -812,6 +812,8 @@ static int ssd1307fb_probe(struct i2c_client *client)
+ 		regulator_disable(par->vbat_reg);
+ reset_oled_error:
+ 	fb_deferred_io_cleanup(info);
++fb_defio_error:
++	__free_pages(vmem, get_order(vmem_size));
+ fb_alloc_error:
+ 	framebuffer_release(info);
+ 	return ret;
 -- 
 2.51.0
 
