@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5997B3A1E86;
-	Thu, 15 Jan 2026 17:21:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871483A9D9F;
+	Thu, 15 Jan 2026 17:21:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497693; cv=none; b=D0tOzUW0KKBKy+0YVttO68hc67BadkrIk2OQyrUNkHwpLtdkxzLWEqdx2+yd30MiPGmLVLzyqVhYhtw3eaVXVAp7Rk2uxoy/oRVi1kjBhGo/Zm1sL4bFucMPZepbAcIf6YU7im9CSZgVB+/csCvYEgLnvnhogmGyj0Kmc73Bepk=
+	t=1768497696; cv=none; b=Yz1E1gtXtlxBaAzdqt7r4pkgdy24UObaQsqD9y7UYksbtsyPZ7RqsCoYjoR3SHlLldhBJcz2HxXSClMe/ORF9Ycfbx0lSD74E5k/7118QvhDDFiBYCoQbp59yhj311c04H98yZTU+/9e9iEza0sRUycRBEyjs59yoby60tRHBus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497693; c=relaxed/simple;
-	bh=npcIGcaQniEePFgskXAIX1w8pdcBiyM/qsPGPM0LJw4=;
+	s=arc-20240116; t=1768497696; c=relaxed/simple;
+	bh=GQT3WRTBM3zLdBBwayTG7Ygg/VU4SBfnDu66V009zZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l6WU0kA/C1UCibARY1Pvx1fhIdJPkOjWz3wJN3aHp+E9PXvG/ApegqNsQ4tdMufEBdmZvA4IdANHMI2NWdzeEAW9WpuCJnfo6Vsm/PirkI9WogEZgc52qLfQwDhBLmrGOR99SAwsFeLxkDj8YBpR5aa28/bWd+WT8Jsf7hIyxRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZqU2rS4p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aYHEBIS0tLV/yPaqZz1+LIZ+174BH0AHBJFVRNGxn6Q2LvLGeWaohLiIoBS8iWciW28n+0nfT8bHB2Wyy1D+HyNE5Lh0xnKN5h0jncV32CX8BZX3/B/hVatPMcMAzuSS48ZMQu1CRzIgYzmutjlTyUzhhw4PADL34/PfGEcxkO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zCkV6Ap7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZqU2rS4p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7EBFC19423;
-	Thu, 15 Jan 2026 17:21:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zCkV6Ap7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA9C6C19425;
+	Thu, 15 Jan 2026 17:21:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497693;
-	bh=npcIGcaQniEePFgskXAIX1w8pdcBiyM/qsPGPM0LJw4=;
+	s=korg; t=1768497696;
+	bh=GQT3WRTBM3zLdBBwayTG7Ygg/VU4SBfnDu66V009zZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZqU2rS4pAz37gzRTPkV8WCbIGUEc9z9q+Pg/oX5AYLCTDFmJWh+bLWTowMmOAo7Og
-	 +5pUZhHW/01De3RaM53WX4NGBXzGLsrz4YtcVb4XjvfCXWkeYMhKydmN6gRmbYrQXf
-	 s1VYTctcD7c/D1ubdv55g4YtL6fS+OugRuP813kg=
+	b=zCkV6Ap7rlPHzTZ3yqsOrh75f4P6So06misOGDT1DhDNp2Vj347XiONp+vWGbr7JZ
+	 zeOHhMzwsdqbaDbIjkVzqW1uFaxgcxJhLjVRuOqkI8EIZu/RoaCObJx9FqFh6eKJ+w
+	 6J833su6HqH2LCQivg2oKA3w1MeTN91zvFtf613Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mans Rullgard <mans@mansr.com>,
-	Daniel Thompson <daniel.thompson@linaro.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
+	Herve Codina <herve.codina@bootlin.com>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 137/554] backlight: led_bl: Take led_access lock when required
-Date: Thu, 15 Jan 2026 17:43:23 +0100
-Message-ID: <20260115164251.210692231@linuxfoundation.org>
+Subject: [PATCH 5.15 138/554] backlight: led-bl: Add devlink to supplier LEDs
+Date: Thu, 15 Jan 2026 17:43:24 +0100
+Message-ID: <20260115164251.246276528@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -52,71 +54,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mans Rullgard <mans@mansr.com>
+From: Luca Ceresoli <luca.ceresoli@bootlin.com>
 
-[ Upstream commit a33677b9211b6c328ad359b072043af94f7c9592 ]
+[ Upstream commit 9341d6698f4cfdfc374fb6944158d111ebe16a9d ]
 
-The led_access lock must be held when calling led_sysfs_enable() and
-led_sysfs_disable().  This fixes warnings such as this:
+LED Backlight is a consumer of one or multiple LED class devices, but
+devlink is currently unable to create correct supplier-producer links when
+the supplier is a class device. It creates instead a link where the
+supplier is the parent of the expected device.
 
-[    2.432495] ------------[ cut here ]------------
-[    2.437316] WARNING: CPU: 0 PID: 22 at drivers/leds/led-core.c:349 led_sysfs_disable+0x54/0x58
-[    2.446105] Modules linked in:
-[    2.449218] CPU: 0 PID: 22 Comm: kworker/u2:1 Not tainted 6.3.8+ #1
-[    2.456268] Hardware name: Generic AM3517 (Flattened Device Tree)
-[    2.462402] Workqueue: events_unbound deferred_probe_work_func
-[    2.468353]  unwind_backtrace from show_stack+0x10/0x14
-[    2.473632]  show_stack from dump_stack_lvl+0x24/0x2c
-[    2.478759]  dump_stack_lvl from __warn+0x9c/0xc4
-[    2.483551]  __warn from warn_slowpath_fmt+0x64/0xc0
-[    2.488586]  warn_slowpath_fmt from led_sysfs_disable+0x54/0x58
-[    2.494567]  led_sysfs_disable from led_bl_probe+0x20c/0x3b0
-[    2.500305]  led_bl_probe from platform_probe+0x5c/0xb8
-[    2.505615]  platform_probe from really_probe+0xc8/0x2a0
-[    2.510986]  really_probe from __driver_probe_device+0x88/0x19c
-[    2.516967]  __driver_probe_device from driver_probe_device+0x30/0xcc
-[    2.523498]  driver_probe_device from __device_attach_driver+0x94/0xc4
-[    2.530090]  __device_attach_driver from bus_for_each_drv+0x80/0xcc
-[    2.536437]  bus_for_each_drv from __device_attach+0xf8/0x19c
-[    2.542236]  __device_attach from bus_probe_device+0x8c/0x90
-[    2.547973]  bus_probe_device from deferred_probe_work_func+0x80/0xb0
-[    2.554504]  deferred_probe_work_func from process_one_work+0x228/0x4c0
-[    2.561187]  process_one_work from worker_thread+0x1fc/0x4d0
-[    2.566925]  worker_thread from kthread+0xb4/0xd0
-[    2.571685]  kthread from ret_from_fork+0x14/0x2c
-[    2.576446] Exception stack(0xd0079fb0 to 0xd0079ff8)
-[    2.581573] 9fa0:                                     00000000 00000000 00000000 00000000
-[    2.589813] 9fc0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
-[    2.598052] 9fe0: 00000000 00000000 00000000 00000000 00000013 00000000
-[    2.604888] ---[ end trace 0000000000000000 ]---
+One consequence is that removal order is not correctly enforced.
 
-Signed-off-by: Mans Rullgard <mans@mansr.com>
-Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
-Link: https://lore.kernel.org/r/20230619160249.10414-1-mans@mansr.com
+Issues happen for example with the following sections in a device tree
+overlay:
+
+    // An LED driver chip
+    pca9632@62 {
+        compatible = "nxp,pca9632";
+        reg = <0x62>;
+
+	// ...
+
+        addon_led_pwm: led-pwm@3 {
+            reg = <3>;
+            label = "addon:led:pwm";
+        };
+    };
+
+    backlight-addon {
+        compatible = "led-backlight";
+        leds = <&addon_led_pwm>;
+        brightness-levels = <255>;
+        default-brightness-level = <255>;
+    };
+
+In this example, the devlink should be created between the backlight-addon
+(consumer) and the pca9632@62 (supplier). Instead it is created between the
+backlight-addon (consumer) and the parent of the pca9632@62, which is
+typically the I2C bus adapter.
+
+On removal of the above overlay, the LED driver can be removed before the
+backlight device, resulting in:
+
+    Unable to handle kernel NULL pointer dereference at virtual address 0000000000000010
+    ...
+    Call trace:
+     led_put+0xe0/0x140
+     devm_led_release+0x6c/0x98
+
+Another way to reproduce the bug without any device tree overlays is
+unbinding the LED class device (pca9632@62) before unbinding the consumer
+(backlight-addon):
+
+  echo 11-0062 >/sys/bus/i2c/drivers/leds-pca963x/unbind
+  echo ...backlight-dock >/sys/bus/platform/drivers/led-backlight/unbind
+
+Fix by adding a devlink between the consuming led-backlight device and the
+supplying LED device, as other drivers and subsystems do as well.
+
+Fixes: ae232e45acf9 ("backlight: add led-backlight driver")
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Reviewed-by: Daniel Thompson (RISCstar) <danielt@kernel.org>
+Reviewed-by: Herve Codina <herve.codina@bootlin.com>
+Tested-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Link: https://patch.msgid.link/20250519-led-backlight-add-devlink-to-supplier-class-device-v6-1-845224aeb2ce@bootlin.com
 Signed-off-by: Lee Jones <lee@kernel.org>
-Stable-dep-of: 9341d6698f4c ("backlight: led-bl: Add devlink to supplier LEDs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/backlight/led_bl.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/video/backlight/led_bl.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
 diff --git a/drivers/video/backlight/led_bl.c b/drivers/video/backlight/led_bl.c
-index 589dae9ebb638..d360def24747d 100644
+index d360def24747d..223f078acfd9f 100644
 --- a/drivers/video/backlight/led_bl.c
 +++ b/drivers/video/backlight/led_bl.c
-@@ -209,8 +209,11 @@ static int led_bl_probe(struct platform_device *pdev)
+@@ -209,6 +209,19 @@ static int led_bl_probe(struct platform_device *pdev)
  		return PTR_ERR(priv->bl_dev);
  	}
  
--	for (i = 0; i < priv->nb_leds; i++)
 +	for (i = 0; i < priv->nb_leds; i++) {
-+		mutex_lock(&priv->leds[i]->led_access);
- 		led_sysfs_disable(priv->leds[i]);
-+		mutex_unlock(&priv->leds[i]->led_access);
++		struct device_link *link;
++
++		link = device_link_add(&pdev->dev, priv->leds[i]->dev->parent,
++				       DL_FLAG_AUTOREMOVE_CONSUMER);
++		if (!link) {
++			dev_err(&pdev->dev, "Failed to add devlink (consumer %s, supplier %s)\n",
++				dev_name(&pdev->dev), dev_name(priv->leds[i]->dev->parent));
++			backlight_device_unregister(priv->bl_dev);
++			return -EINVAL;
++		}
 +	}
- 
- 	backlight_update_status(priv->bl_dev);
- 
++
+ 	for (i = 0; i < priv->nb_leds; i++) {
+ 		mutex_lock(&priv->leds[i]->led_access);
+ 		led_sysfs_disable(priv->leds[i]);
 -- 
 2.51.0
 
