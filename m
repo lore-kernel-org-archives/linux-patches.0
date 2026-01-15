@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAFB42F619D;
-	Thu, 15 Jan 2026 17:13:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770A03C00A1;
+	Thu, 15 Jan 2026 17:13:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497203; cv=none; b=fmyURFtWui4UXZyc84rGp3+VQe1BgOT8ZKWBjtz6QMmGzfZ9OZyXCngYfFsW1ECpSLgg1R/BF2hPcR59ZFZ16/r1CHFc87GQPBB877hC3TaN6dO1EUJvbqudBBhFLG2EnlsNgUov5elJS+udkTsiax1LUN8Ca596425C4rnAJLk=
+	t=1768497206; cv=none; b=PzW3bSIrMq7oVyLUjOoWh0aFtZJ2svX/adB43e1aiI8nMUXzfKU7of8EzL7HldSDhdnG8ohdxcVjDNj/qfACLmmIGhHJNZW3gOpbtHwnne7PgKqsz+/8ocPTefg8YwsTua15ZVg87wiKzol6N0m9hx3bwRCJ8TrhWorOf4TQXBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497203; c=relaxed/simple;
-	bh=Ww0isepZsg3RL47S7CM/H+lLjC/Qlxav8eHwApMPlio=;
+	s=arc-20240116; t=1768497206; c=relaxed/simple;
+	bh=/RwbKF4JjpzzxALBuNdIxEzSnERylfnS4ntxVuKk+P4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YdpOOT4C2FrukQVgRre6iHnxGjcBp7yki4BfI53TTWJRLtfS7I/bFgRlRYA0zx5IhaoCycrS4INkPgp0RI9DfLqpHuqAixGQAfSN4KdOZjZX4OdacpvcbRkxEQSRqmiD9E/gWZ0Zpr9BUESe0nyImq0T2CyyklMTimo0AGV6Q2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mtVw/ewF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o3+urfQpfYEPknLK8jskibLZ0yK2Hc2YhBtfpezAhn1tE3Vq2vsZV2rXVuXHQRg7J3kDOCykz6hcuf+Mq4dTT/kUeuwZRBarDDymAHz3z07ar8hiwxBN8WPpc6DlNezoY81Jaus6tZQTHbdbjKe107OGjZhpBfn2KnNkvdQORvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zCAaJOcp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mtVw/ewF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 440B3C116D0;
-	Thu, 15 Jan 2026 17:13:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zCAaJOcp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03111C116D0;
+	Thu, 15 Jan 2026 17:13:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497203;
-	bh=Ww0isepZsg3RL47S7CM/H+lLjC/Qlxav8eHwApMPlio=;
+	s=korg; t=1768497206;
+	bh=/RwbKF4JjpzzxALBuNdIxEzSnERylfnS4ntxVuKk+P4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mtVw/ewF75QGhdZ+1ogTI3hzldrj0QsLuXgD8vYQ1Pq4m/Ui5SiGTXk4PEL2YLuZy
-	 ri61MyV+/tk6Epo4BMmuTNh/G5+YefDkxUNDk+XkhQrtJGJaU/RsvBi5FGT9pjKdFW
-	 HgTzpOoeaHc0O0OBkHt2H3fbxVR/Xw2ZyhXRMCK0=
+	b=zCAaJOcp6J6oeR1IDGHGHMUpudDuNbTp+bmas6oT5i1xuzy2DFastyT3HUQvnRzq1
+	 ZM6+QOgHUgCD0vXCbrGdJxn+rdD4LrsnVxwwNZYnh5B0mfCpZmAVL6YBPwPn8iywqd
+	 3wOwzDJA1FOHbATfbBNeJkZwAziO+jwMCet2PWss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shardul Bankar <shardulsb08@gmail.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>
-Subject: [PATCH 6.1 72/72] bpf: test_run: Fix ctx leak in bpf_prog_test_run_xdp error path
-Date: Thu, 15 Jan 2026 17:49:22 +0100
-Message-ID: <20260115164146.114481975@linuxfoundation.org>
+	Pedro Demarchi Gomes <pedrodemargomes@gmail.com>,
+	David Hildenbrand <david@redhat.com>,
+	craftfever <craftfever@airmail.cc>,
+	Chengming Zhou <chengming.zhou@linux.dev>,
+	xu xin <xu.xin16@zte.com.cn>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 54/72] ksm: use range-walk function to jump over holes in scan_get_next_rmap_item
+Date: Thu, 15 Jan 2026 17:49:04 +0100
+Message-ID: <20260115164145.454123348@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164143.482647486@linuxfoundation.org>
 References: <20260115164143.482647486@linuxfoundation.org>
@@ -52,45 +54,238 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shardul Bankar <shardulsb08@gmail.com>
+From: Pedro Demarchi Gomes <pedrodemargomes@gmail.com>
 
-commit 7f9ee5fc97e14682e36fe22ae2654c07e4998b82 upstream.
+[ Upstream commit f5548c318d6520d4fa3c5ed6003eeb710763cbc5 ]
 
-Fix a memory leak in bpf_prog_test_run_xdp() where the context buffer
-allocated by bpf_ctx_init() is not freed when the function returns early
-due to a data size check.
+Currently, scan_get_next_rmap_item() walks every page address in a VMA to
+locate mergeable pages.  This becomes highly inefficient when scanning
+large virtual memory areas that contain mostly unmapped regions, causing
+ksmd to use large amount of cpu without deduplicating much pages.
 
-On the failing path:
-  ctx = bpf_ctx_init(...);
-  if (kattr->test.data_size_in - meta_sz < ETH_HLEN)
-      return -EINVAL;
+This patch replaces the per-address lookup with a range walk using
+walk_page_range().  The range walker allows KSM to skip over entire
+unmapped holes in a VMA, avoiding unnecessary lookups.  This problem was
+previously discussed in [1].
 
-The early return bypasses the cleanup label that kfree()s ctx, leading to a
-leak detectable by kmemleak under fuzzing. Change the return to jump to the
-existing free_ctx label.
+Consider the following test program which creates a 32 TiB mapping in the
+virtual address space but only populates a single page:
 
-Fixes: fe9544ed1a2e ("bpf: Support specifying linear xdp packet data size for BPF_PROG_TEST_RUN")
-Reported-by: BPF Runtime Fuzzer (BRF)
-Signed-off-by: Shardul Bankar <shardulsb08@gmail.com>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://patch.msgid.link/20251014120037.1981316-1-shardulsb08@gmail.com
+/* 32 TiB */
+const size_t size = 32ul * 1024 * 1024 * 1024 * 1024;
+
+int main() {
+        char *area = mmap(NULL, size, PROT_READ | PROT_WRITE,
+                          MAP_NORESERVE | MAP_PRIVATE | MAP_ANON, -1, 0);
+
+        if (area == MAP_FAILED) {
+                perror("mmap() failed\n");
+                return -1;
+        }
+
+        /* Populate a single page such that we get an anon_vma. */
+        *area = 0;
+
+        /* Enable KSM. */
+        madvise(area, size, MADV_MERGEABLE);
+        pause();
+        return 0;
+}
+
+$ ./ksm-sparse  &
+$ echo 1 > /sys/kernel/mm/ksm/run
+
+Without this patch ksmd uses 100% of the cpu for a long time (more then 1
+hour in my test machine) scanning all the 32 TiB virtual address space
+that contain only one mapped page.  This makes ksmd essentially deadlocked
+not able to deduplicate anything of value.  With this patch ksmd walks
+only the one mapped page and skips the rest of the 32 TiB virtual address
+space, making the scan fast using little cpu.
+
+Link: https://lkml.kernel.org/r/20251023035841.41406-1-pedrodemargomes@gmail.com
+Link: https://lkml.kernel.org/r/20251022153059.22763-1-pedrodemargomes@gmail.com
+Link: https://lore.kernel.org/linux-mm/423de7a3-1c62-4e72-8e79-19a6413e420c@redhat.com/ [1]
+Fixes: 31dbd01f3143 ("ksm: Kernel SamePage Merging")
+Signed-off-by: Pedro Demarchi Gomes <pedrodemargomes@gmail.com>
+Co-developed-by: David Hildenbrand <david@redhat.com>
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Reported-by: craftfever <craftfever@airmail.cc>
+Closes: https://lkml.kernel.org/r/020cf8de6e773bb78ba7614ef250129f11a63781@murena.io
+Suggested-by: David Hildenbrand <david@redhat.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Chengming Zhou <chengming.zhou@linux.dev>
+Cc: xu xin <xu.xin16@zte.com.cn>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ replace pmdp_get_lockless with pmd_read_atomic and pmdp_get with
+ READ_ONCE(*pmdp) ]
+Signed-off-by: Pedro Demarchi Gomes <pedrodemargomes@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bpf/test_run.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/ksm.c |  126 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 113 insertions(+), 13 deletions(-)
 
---- a/net/bpf/test_run.c
-+++ b/net/bpf/test_run.c
-@@ -1344,7 +1344,7 @@ int bpf_prog_test_run_xdp(struct bpf_pro
- 		goto free_ctx;
+--- a/mm/ksm.c
++++ b/mm/ksm.c
+@@ -39,6 +39,7 @@
+ #include <linux/freezer.h>
+ #include <linux/oom.h>
+ #include <linux/numa.h>
++#include <linux/pagewalk.h>
  
- 	if (kattr->test.data_size_in - meta_sz < ETH_HLEN)
--		return -EINVAL;
-+		goto free_ctx;
+ #include <asm/tlbflush.h>
+ #include "internal.h"
+@@ -2223,6 +2224,94 @@ static struct ksm_rmap_item *get_next_rm
+ 	return rmap_item;
+ }
  
- 	data = bpf_test_init(kattr, linear_sz, max_linear_sz, headroom, tailroom);
- 	if (IS_ERR(data)) {
++struct ksm_next_page_arg {
++	struct folio *folio;
++	struct page *page;
++	unsigned long addr;
++};
++
++static int ksm_next_page_pmd_entry(pmd_t *pmdp, unsigned long addr, unsigned long end,
++		struct mm_walk *walk)
++{
++	struct ksm_next_page_arg *private = walk->private;
++	struct vm_area_struct *vma = walk->vma;
++	pte_t *start_ptep = NULL, *ptep, pte;
++	struct mm_struct *mm = walk->mm;
++	struct folio *folio;
++	struct page *page;
++	spinlock_t *ptl;
++	pmd_t pmd;
++
++	if (ksm_test_exit(mm))
++		return 0;
++
++	cond_resched();
++
++	pmd = pmd_read_atomic(pmdp);
++	if (!pmd_present(pmd))
++		return 0;
++
++	if (IS_ENABLED(CONFIG_TRANSPARENT_HUGEPAGE) && pmd_leaf(pmd)) {
++		ptl = pmd_lock(mm, pmdp);
++		pmd = READ_ONCE(*pmdp);
++
++		if (!pmd_present(pmd)) {
++			goto not_found_unlock;
++		} else if (pmd_leaf(pmd)) {
++			page = vm_normal_page_pmd(vma, addr, pmd);
++			if (!page)
++				goto not_found_unlock;
++			folio = page_folio(page);
++
++			if (folio_is_zone_device(folio) || !folio_test_anon(folio))
++				goto not_found_unlock;
++
++			page += ((addr & (PMD_SIZE - 1)) >> PAGE_SHIFT);
++			goto found_unlock;
++		}
++		spin_unlock(ptl);
++	}
++
++	start_ptep = pte_offset_map_lock(mm, pmdp, addr, &ptl);
++	if (!start_ptep)
++		return 0;
++
++	for (ptep = start_ptep; addr < end; ptep++, addr += PAGE_SIZE) {
++		pte = ptep_get(ptep);
++
++		if (!pte_present(pte))
++			continue;
++
++		page = vm_normal_page(vma, addr, pte);
++		if (!page)
++			continue;
++		folio = page_folio(page);
++
++		if (folio_is_zone_device(folio) || !folio_test_anon(folio))
++			continue;
++		goto found_unlock;
++	}
++
++not_found_unlock:
++	spin_unlock(ptl);
++	if (start_ptep)
++		pte_unmap(start_ptep);
++	return 0;
++found_unlock:
++	folio_get(folio);
++	spin_unlock(ptl);
++	if (start_ptep)
++		pte_unmap(start_ptep);
++	private->page = page;
++	private->folio = folio;
++	private->addr = addr;
++	return 1;
++}
++
++static struct mm_walk_ops ksm_next_page_ops = {
++	.pmd_entry = ksm_next_page_pmd_entry,
++};
++
+ static struct ksm_rmap_item *scan_get_next_rmap_item(struct page **page)
+ {
+ 	struct mm_struct *mm;
+@@ -2307,32 +2396,43 @@ next_mm:
+ 			ksm_scan.address = vma->vm_end;
+ 
+ 		while (ksm_scan.address < vma->vm_end) {
++			struct ksm_next_page_arg ksm_next_page_arg;
++			struct page *tmp_page = NULL;
++			struct folio *folio;
++
+ 			if (ksm_test_exit(mm))
+ 				break;
+-			*page = follow_page(vma, ksm_scan.address, FOLL_GET);
+-			if (IS_ERR_OR_NULL(*page)) {
+-				ksm_scan.address += PAGE_SIZE;
+-				cond_resched();
+-				continue;
++
++			int found;
++
++			found = walk_page_range_vma(vma, ksm_scan.address,
++						    vma->vm_end,
++						    &ksm_next_page_ops,
++						    &ksm_next_page_arg);
++
++			if (found > 0) {
++				folio = ksm_next_page_arg.folio;
++				tmp_page = ksm_next_page_arg.page;
++				ksm_scan.address = ksm_next_page_arg.addr;
++			} else {
++				VM_WARN_ON_ONCE(found < 0);
++				ksm_scan.address = vma->vm_end - PAGE_SIZE;
+ 			}
+-			if (is_zone_device_page(*page))
+-				goto next_page;
+-			if (PageAnon(*page)) {
+-				flush_anon_page(vma, *page, ksm_scan.address);
+-				flush_dcache_page(*page);
++			if (tmp_page) {
++				flush_anon_page(vma, tmp_page, ksm_scan.address);
++				flush_dcache_page(tmp_page);
+ 				rmap_item = get_next_rmap_item(mm_slot,
+ 					ksm_scan.rmap_list, ksm_scan.address);
+ 				if (rmap_item) {
+ 					ksm_scan.rmap_list =
+ 							&rmap_item->rmap_list;
+ 					ksm_scan.address += PAGE_SIZE;
++					*page = tmp_page;
+ 				} else
+-					put_page(*page);
++					folio_put(folio);
+ 				mmap_read_unlock(mm);
+ 				return rmap_item;
+ 			}
+-next_page:
+-			put_page(*page);
+ 			ksm_scan.address += PAGE_SIZE;
+ 			cond_resched();
+ 		}
 
 
