@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B7A39B48E;
-	Thu, 15 Jan 2026 17:25:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512D53A1E86;
+	Thu, 15 Jan 2026 17:25:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497907; cv=none; b=sBZw+ZqVOyjXc1FPZBhCfdrs2iTZ4ZKop04U/pcPq7BVKCmC3yHsgLbg1XLUXiScJXUuvvaU8PjOdsouqrW/yA6EyUTpWonZR+ZMigGIh4AAIybFHnSsjFSEzG4WH/wZI/JngmjH6JIx7mQ1eKTfdZObuoNhZIc+snsoVgl4XNo=
+	t=1768497910; cv=none; b=polOZOKoJAqeCgzmLk0wc+GcgCUAhEpKRRO/9lpmWm6v38F4hSHvDdyyuIlXjhPhxf3CEXIxJKab1ORPjroDne7VL8wsgEwBjrYEtzBcflzNBf/7K09OtG7Ol210WRm7pEo2sR9hYUiv0EW+BDsugZoIUNb6n2RVjXPS8mK81lE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497907; c=relaxed/simple;
-	bh=s6pEeZ3OvFkDuDWL8ngyQHiiRxLy/lbiZialyks/CdM=;
+	s=arc-20240116; t=1768497910; c=relaxed/simple;
+	bh=9a0mnm6/ZJ2boU2ckJhbeiw5cZ/rgah2fqEjKCWvDUg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T4tywQoxyxldXeaFGhTuO9QYxxW9V3kEa2tA1pIfceh4KZY5GxzvUdow4DLlUZTunW9YrouN/euhgsF/epFkaPclVXrkWv1pqCJVz6FrrsSOgWh+QMyESM1amq8jST/AU25Jhajdp2+FmkTMFugkrQLMxrx5WSHjzD28AAM0PY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OAZdiVkY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JslMkf+Gzd8pQWRkpLTDO/ehP9u7fBqUVHz39cN/GIdgHsm2hgrYlDq3AUofsDOPDbG5A089JxpU77rtInnIZEpI1lcZU791R3IBMpm3v0CNpwjpqrxiE6b/twqZzV34DmyOjl7CcLLZju9jVG5Db3BWTiDhs4RXc2XS6F+6sWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cV8HRUG4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OAZdiVkY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E64FC116D0;
-	Thu, 15 Jan 2026 17:25:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cV8HRUG4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2C26C116D0;
+	Thu, 15 Jan 2026 17:25:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497907;
-	bh=s6pEeZ3OvFkDuDWL8ngyQHiiRxLy/lbiZialyks/CdM=;
+	s=korg; t=1768497910;
+	bh=9a0mnm6/ZJ2boU2ckJhbeiw5cZ/rgah2fqEjKCWvDUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OAZdiVkYWMZOPfXooI0BD2lQJkfNAiLJ+o6S4AxndepBUoMo3dG5J8uv11nVhRmI9
-	 uxORORG2bJHUMf3z2CckOB7IlJXA5AbanOKxiGfJEw6qu44SyDenauT/9is2Iw8vSr
-	 C98PD/tWjUcYsuYN6njaAZOaPqkOiSDfHG9Ok0Go=
+	b=cV8HRUG4e+ZcFRgTLGSyZLTr/wF1e8XE99TsZg96fZI12y2N/+vie5oxXhM7PG0Az
+	 Ax29m2PfosQj+jxoIKY3DdJ0FeGOdlVSB41ZbHdbSzY3FJ851dPe9TNzxEo1Y6YQ4n
+	 aR45KC3UeFKOt5xHswMZY1uHJy6Z8IJTktUDaUVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cryolitia PukNgae <cryolitia.pukngae@linux.dev>,
-	WangYuli <wangyl5933@chinaunicom.cn>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 212/554] ACPICA: Avoid walking the Namespace if start_node is NULL
-Date: Thu, 15 Jan 2026 17:44:38 +0100
-Message-ID: <20260115164253.924575021@linuxfoundation.org>
+	Nicklas Bo Jensen <njensen@akamai.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.15 203/554] netfilter: nf_conncount: garbage collection is not skipped when jiffies wrap around
+Date: Thu, 15 Jan 2026 17:44:29 +0100
+Message-ID: <20260115164253.603634806@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -52,63 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cryolitia PukNgae <cryolitia.pukngae@linux.dev>
+From: Nicklas Bo Jensen <njensen@akamai.com>
 
-[ Upstream commit 9d6c58dae8f6590c746ac5d0012ffe14a77539f0 ]
+commit df08c94baafb001de6cf44bb7098bb557f36c335 upstream.
 
-Although commit 0c9992315e73 ("ACPICA: Avoid walking the ACPI Namespace
-if it is not there") fixed the situation when both start_node and
-acpi_gbl_root_node are NULL, the Linux kernel mainline now still crashed
-on Honor Magicbook 14 Pro [1].
+nf_conncount is supposed to skip garbage collection if it has already
+run garbage collection in the same jiffy. Unfortunately, this is broken
+when jiffies wrap around which this patch fixes.
 
-That happens due to the access to the member of parent_node in
-acpi_ns_get_next_node().  The NULL pointer dereference will always
-happen, no matter whether or not the start_node is equal to
-ACPI_ROOT_OBJECT, so move the check of start_node being NULL
-out of the if block.
+The problem is that last_gc in the nf_conncount_list struct is an u32,
+but jiffies is an unsigned long which is 8 bytes on my systems. When
+those two are compared it only works until last_gc wraps around.
 
-Unfortunately, all the attempts to contact Honor have failed, they
-refused to provide any technical support for Linux.
+See bug report: https://bugzilla.netfilter.org/show_bug.cgi?id=1778
+for more details.
 
-The bad DSDT table's dump could be found on GitHub [2].
-
-DMI: HONOR FMB-P/FMB-P-PCB, BIOS 1.13 05/08/2025
-
-Link: https://github.com/acpica/acpica/commit/1c1b57b9eba4554cb132ee658dd942c0210ed20d
-Link: https://gist.github.com/Cryolitia/a860ffc97437dcd2cd988371d5b73ed7 [1]
-Link: https://github.com/denis-bb/honor-fmb-p-dsdt [2]
-Signed-off-by: Cryolitia PukNgae <cryolitia.pukngae@linux.dev>
-Reviewed-by: WangYuli <wangyl5933@chinaunicom.cn>
-[ rjw: Subject adjustment, changelog edits ]
-Link: https://patch.msgid.link/20251125-acpica-v1-1-99e63b1b25f8@linux.dev
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: d265929930e2 ("netfilter: nf_conncount: reduce unnecessary GC")
+Signed-off-by: Nicklas Bo Jensen <njensen@akamai.com>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/acpica/nswalk.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/netfilter/nf_conncount.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/acpica/nswalk.c b/drivers/acpi/acpica/nswalk.c
-index e7c30ce06e189..dee2cb5fb9617 100644
---- a/drivers/acpi/acpica/nswalk.c
-+++ b/drivers/acpi/acpica/nswalk.c
-@@ -169,9 +169,12 @@ acpi_ns_walk_namespace(acpi_object_type type,
- 
- 	if (start_node == ACPI_ROOT_OBJECT) {
- 		start_node = acpi_gbl_root_node;
--		if (!start_node) {
--			return_ACPI_STATUS(AE_NO_NAMESPACE);
--		}
-+	}
-+
-+	/* Avoid walking the namespace if the StartNode is NULL */
-+
-+	if (!start_node) {
-+		return_ACPI_STATUS(AE_NO_NAMESPACE);
+--- a/net/netfilter/nf_conncount.c
++++ b/net/netfilter/nf_conncount.c
+@@ -182,7 +182,7 @@ static int __nf_conncount_add(struct net
+ 		return -EEXIST;
  	}
  
- 	/* Null child means "get first node" */
--- 
-2.51.0
-
+-	if (time_is_after_eq_jiffies((unsigned long)list->last_gc))
++	if ((u32)jiffies == list->last_gc)
+ 		goto add_new_node;
+ 
+ 	/* check the saved connections */
+@@ -288,7 +288,7 @@ bool nf_conncount_gc_list(struct net *ne
+ 	bool ret = false;
+ 
+ 	/* don't bother if we just did GC */
+-	if (time_is_after_eq_jiffies((unsigned long)READ_ONCE(list->last_gc)))
++	if ((u32)jiffies == READ_ONCE(list->last_gc))
+ 		return false;
+ 
+ 	/* don't bother if other cpu is already doing GC */
 
 
