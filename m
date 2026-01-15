@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301042D7D47;
-	Thu, 15 Jan 2026 17:02:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C27F345758;
+	Thu, 15 Jan 2026 17:02:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496541; cv=none; b=rbt2Hn2phyM0kOsv5AKaGgo8MC/AuKyJ3WyQHSodX6HNN1dvYffs24UUL7xj6k8Vu7oaN5lIcY9Fg2jcgye4e12y9vy0KOfCDU1e7LpgoL6jktJEQkhIXB/5xye9NCTkjl1FxJOER24XWfG1Lc8QHaJXcUAdn2xjLpQofYKtqY4=
+	t=1768496546; cv=none; b=QbxgzhURuCUIMT4ebwI8pbG/mLJyrlh1KhghVYtIC3pDp/K4LLsS2nfLBFDWHTKO8+soLq/6XKkbxbrqoXLU0PeA4mtYtmt8yXyejKyMZwK6vFUITTYr8LMCWsFLbv1zCdPgONS9bKpsQ1LPZIcubXga1FZF3t5K36NKMXPO/7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496541; c=relaxed/simple;
-	bh=ImaQ6xAfpwrBHM1khCRW1B2gAkaM+IwgyEn0L9SnWT0=;
+	s=arc-20240116; t=1768496546; c=relaxed/simple;
+	bh=ZkMal0X4EdC/zE1PYvDpssLk7FxTsKzb+1yyj57Hisg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IYUBaktM+pwmkRN9Q9HgBapUarpJI0f+Wz9rg1eVHbGVSccO9SG3TcX1f84cKVcFPQZ2Dh3At0o5cy3HitUPt2DUAWJQwi1/DGXLKJo7qXOFMHeGfpi1czUIrn1DmpGIZIjDHPy6cwqIi2Mn6NV/GQYkvMVBYDo4WuCpy60d12Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W+ZHrBuy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m82USn3gbxTpOf+Tv4tY9oua4yNmztfcD40lldlSYpQI+7Od1kpIJlCdXUW1eQsymHRXf3A/fdDKbgKRUA5hdINtq9c75JrRLUMYsrbM75SVaVqq+JuUzLW/L3dBemAAUP6R9RGHakyh0kDMW7DAkedhzKUFTDCKFZ3HMyJPR4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JzBQ6mKG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W+ZHrBuy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3A31C116D0;
-	Thu, 15 Jan 2026 17:02:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JzBQ6mKG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8465BC116D0;
+	Thu, 15 Jan 2026 17:02:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496541;
-	bh=ImaQ6xAfpwrBHM1khCRW1B2gAkaM+IwgyEn0L9SnWT0=;
+	s=korg; t=1768496543;
+	bh=ZkMal0X4EdC/zE1PYvDpssLk7FxTsKzb+1yyj57Hisg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W+ZHrBuym2jGPUo1X9QTMsXnEoGhpRZ2XYg4f3qb8Sl1zvFoSIo/DCKPLxmiF/A2B
-	 lVzOXPPXWTyfiroC7uIsJzca23ThJgydoAYI9n3zjWW8j3nIdE5PM1EvbABibqe1Db
-	 c0U6yXpsVWOZjLQSm/3NXMnJNIJ6m1tJ4ga7sKPk=
+	b=JzBQ6mKGTOVCho+vxSL3R2X30A5skqj/kXKU1CgBa8pnZ4F6TN5i2bMsxSd7iVOZN
+	 lLhUOwUQhQaNlQeCFVRYvPgP8drMoelL8ySSvA3vQZ2tcnU+XKCs6AkS+2GbyccLxP
+	 wCngDIR0TS4HWHvDA2NoxSW1fAHluoGnZNt8I2t0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d991fea1b4b23b1f6bf8@syzkaller.appspotmail.com,
-	=?UTF-8?q?Miquel=20Sabat=C3=A9=20Sol=C3=A0?= <mssola@mssola.com>,
-	David Sterba <dsterba@suse.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 048/119] btrfs: fix NULL dereference on root when tracing inode eviction
-Date: Thu, 15 Jan 2026 17:47:43 +0100
-Message-ID: <20260115164153.693910039@linuxfoundation.org>
+Subject: [PATCH 6.12 049/119] drm/amd/display: Respect users CONFIG_FRAME_WARN more for dml files
+Date: Thu, 15 Jan 2026 17:47:44 +0100
+Message-ID: <20260115164153.729904375@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -46,53 +46,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miquel Sabaté Solà <mssola@mssola.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit f157dd661339fc6f5f2b574fe2429c43bd309534 ]
+[ Upstream commit 820ccf8cb2b145ab9fc12651f7f80339614fa46c ]
 
-When evicting an inode the first thing we do is to setup tracing for it,
-which implies fetching the root's id. But in btrfs_evict_inode() the
-root might be NULL, as implied in the next check that we do in
-btrfs_evict_inode().
+Currently, there are several files in drm/amd/display that aim to have a
+higher -Wframe-larger-than value to avoid instances of that warning with
+a lower value from the user's configuration. However, with the way that
+it is currently implemented, it does not respect the user's request via
+CONFIG_FRAME_WARN for a higher stack frame limit, which can cause pain
+when new instances of the warning appear and break the build due to
+CONFIG_WERROR.
 
-Hence, we either should set the ->root_objectid to 0 in case the root is
-NULL, or we move tracing setup after checking that the root is not
-NULL. Setting the rootid to 0 at least gives us the possibility to trace
-this call even in the case when the root is NULL, so that's the solution
-taken here.
+Adjust the logic to switch from a hard coded -Wframe-larger-than value
+to only using the value as a minimum clamp and deferring to the
+requested value from CONFIG_FRAME_WARN if it is higher.
 
-Fixes: 1abe9b8a138c ("Btrfs: add initial tracepoint support for btrfs")
-Reported-by: syzbot+d991fea1b4b23b1f6bf8@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=d991fea1b4b23b1f6bf8
-Signed-off-by: Miquel Sabaté Solà <mssola@mssola.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Suggested-by: Harry Wentland <harry.wentland@amd.com>
+Reported-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Closes: https://lore.kernel.org/2025013003-audience-opposing-7f95@gregkh/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 70740454377f ("drm/amd/display: Apply e4479aecf658 to dml")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/btrfs.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dml/Makefile  | 14 ++++++++-----
+ drivers/gpu/drm/amd/display/dc/dml2/Makefile | 22 ++++++++++++--------
+ 2 files changed, 22 insertions(+), 14 deletions(-)
 
-diff --git a/include/trace/events/btrfs.h b/include/trace/events/btrfs.h
-index cc88074914283..0ca86909ce5bd 100644
---- a/include/trace/events/btrfs.h
-+++ b/include/trace/events/btrfs.h
-@@ -223,7 +223,8 @@ DECLARE_EVENT_CLASS(btrfs__inode,
- 		__entry->generation = BTRFS_I(inode)->generation;
- 		__entry->last_trans = BTRFS_I(inode)->last_trans;
- 		__entry->logged_trans = BTRFS_I(inode)->logged_trans;
--		__entry->root_objectid = btrfs_root_id(BTRFS_I(inode)->root);
-+		__entry->root_objectid = BTRFS_I(inode)->root ?
-+					 btrfs_root_id(BTRFS_I(inode)->root) : 0;
- 	),
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/Makefile b/drivers/gpu/drm/amd/display/dc/dml/Makefile
+index 46f9c05de16e8..e1d500633dfad 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/Makefile
++++ b/drivers/gpu/drm/amd/display/dc/dml/Makefile
+@@ -29,11 +29,15 @@ dml_ccflags := $(CC_FLAGS_FPU)
+ dml_rcflags := $(CC_FLAGS_NO_FPU)
  
- 	TP_printk_btrfs("root=%llu(%s) gen=%llu ino=%llu blocks=%llu "
+ ifneq ($(CONFIG_FRAME_WARN),0)
+-ifeq ($(filter y,$(CONFIG_KASAN)$(CONFIG_KCSAN)),y)
+-frame_warn_flag := -Wframe-larger-than=3072
+-else
+-frame_warn_flag := -Wframe-larger-than=2048
+-endif
++    ifeq ($(filter y,$(CONFIG_KASAN)$(CONFIG_KCSAN)),y)
++        frame_warn_limit := 3072
++    else
++        frame_warn_limit := 2048
++    endif
++
++    ifeq ($(call test-lt, $(CONFIG_FRAME_WARN), $(frame_warn_limit)),y)
++        frame_warn_flag := -Wframe-larger-than=$(frame_warn_limit)
++    endif
+ endif
+ 
+ CFLAGS_$(AMDDALPATH)/dc/dml/display_mode_lib.o := $(dml_ccflags)
+diff --git a/drivers/gpu/drm/amd/display/dc/dml2/Makefile b/drivers/gpu/drm/amd/display/dc/dml2/Makefile
+index 986a69c5bd4bc..2a7669a1071e4 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml2/Makefile
++++ b/drivers/gpu/drm/amd/display/dc/dml2/Makefile
+@@ -28,15 +28,19 @@ dml2_ccflags := $(CC_FLAGS_FPU)
+ dml2_rcflags := $(CC_FLAGS_NO_FPU)
+ 
+ ifneq ($(CONFIG_FRAME_WARN),0)
+-ifeq ($(filter y,$(CONFIG_KASAN)$(CONFIG_KCSAN)),y)
+-ifeq ($(CONFIG_CC_IS_CLANG)$(CONFIG_COMPILE_TEST),yy)
+-frame_warn_flag := -Wframe-larger-than=4096
+-else
+-frame_warn_flag := -Wframe-larger-than=3072
+-endif
+-else
+-frame_warn_flag := -Wframe-larger-than=2048
+-endif
++    ifeq ($(filter y,$(CONFIG_KASAN)$(CONFIG_KCSAN)),y)
++        ifeq ($(CONFIG_CC_IS_CLANG)$(CONFIG_COMPILE_TEST),yy)
++            frame_warn_limit := 4096
++        else
++            frame_warn_limit := 3072
++        endif
++    else
++        frame_warn_limit := 2048
++    endif
++
++    ifeq ($(call test-lt, $(CONFIG_FRAME_WARN), $(frame_warn_limit)),y)
++        frame_warn_flag := -Wframe-larger-than=$(frame_warn_limit)
++    endif
+ endif
+ 
+ subdir-ccflags-y += -I$(FULL_AMD_DISPLAY_PATH)/dc/dml2
 -- 
 2.51.0
 
