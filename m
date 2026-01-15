@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BD43C1FC7;
-	Thu, 15 Jan 2026 17:33:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D573D1CBD;
+	Thu, 15 Jan 2026 17:33:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498397; cv=none; b=ZGUemgP1oXdieTdE9Szlx+bEp1j03HA04aTBaEBnq7dNbTkvxNeGjngSoSAxRGzW87XEafP2Ku3ZJx287gtQrbHNuU1XO/MMi7SruyWWlhoLVFG1wXHJNOSCF8UiEmhMjJqdxcKKGcLGgDiKyuwDENvDc3lpnS3c29hGhjusG1Q=
+	t=1768498400; cv=none; b=oGAe+EFvQ4UmYYEURwML0gDgTKekqiglknZMXvT2aIQDwC3vVMnMm2Kpd9aLVQPTb82hk9+ADabdPJ9y3FemkSGeQ6UWr0IReoGLsSkxJsNvK3chCeS5G1OqY+3AWQzV5F76S5x2N8vKC16vwaVdfNXce6ArLy02xBPjdHesDqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498397; c=relaxed/simple;
-	bh=BDbt7dMBguZYMjcPOtjL5CVidwja6bRyNBPHrCxd5no=;
+	s=arc-20240116; t=1768498400; c=relaxed/simple;
+	bh=ykfN4tidfekWw3xCczzev4MjDHLTeGdMIdEiPmCK0rU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ViDjYP0a1NNoyCceBHBpFLqWw7o4HOlcrFGpFHtn1LJtHuGU5UbDEbVNjefKYx71Yv/5InuxUNyxBEzmMvuoIOGOCKjQUkCXuZu5f7rV8JF7q2y5+ghI4TUSXWNbnASPtPe7VCHHgMS2JHgZkNWekoCCeAckVFgr6gvcRmxy9SA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LFfvNF1M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lh5Pb7j7Amt0MqAfZ4tryPTaa8MICNlyUMMlmpIguHIST/z35M0y7YfytHmRGTP3W2rvp28fTAs1JB74HpIM0J9MCa+lob03e0ZJigLL4ZMe2Vo6CJxX0L+FO82lzviAb2IBrPmtEWkgFfgZ6f8h0CclpQbzbGp9eD9Ij1vDcJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r8dZ3Jwt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LFfvNF1M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8F93C116D0;
-	Thu, 15 Jan 2026 17:33:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r8dZ3Jwt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91825C2BC86;
+	Thu, 15 Jan 2026 17:33:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498397;
-	bh=BDbt7dMBguZYMjcPOtjL5CVidwja6bRyNBPHrCxd5no=;
+	s=korg; t=1768498399;
+	bh=ykfN4tidfekWw3xCczzev4MjDHLTeGdMIdEiPmCK0rU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LFfvNF1MoWQu6QY9NuiM9BIUf7jc0QBCKE9mUCM6Sq9hmLeowXfICGOdzzVqZixRE
-	 iPIfPiOjtcSkNdeuB7icyv1Znjg9zpyv08BS4Futt5WyFevTjQ1AIZTDYP9B9q8lra
-	 rgISIIQP3+OffsKZvGNiOMmXeGhQ1PU8AXfPbVc8=
+	b=r8dZ3JwteI2GXm76gx0rREEeTXghiWUBSLq755qpA3WRQ0GI+MsEWURIvyITjWcVP
+	 LBSWeJqO43XyquIuTv3i3eJ4xAr1WLUIHPwo9V4zldM6A7HkWOkjvooaDBHo6BMOXS
+	 CqcDLrIzormaBW96euHeGQGYpv15TdgTth5GqO6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	David Gow <davidgow@google.com>,
 	Kefeng Wang <wangkefeng.wang@huawei.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 416/554] mm/damon/tests/core-kunit: handle allocation failures in damon_test_regions()
-Date: Thu, 15 Jan 2026 17:48:02 +0100
-Message-ID: <20260115164301.297368302@linuxfoundation.org>
+Subject: [PATCH 5.15 417/554] mm/damon/tests/core-kunit: handle alloc failures on damon_test_split_at()
+Date: Thu, 15 Jan 2026 17:48:03 +0100
+Message-ID: <20260115164301.335013233@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -55,16 +55,16 @@ Content-Transfer-Encoding: 8bit
 
 From: SeongJae Park <sj@kernel.org>
 
-commit e16fdd4f754048d6e23c56bd8d920b71e41e3777 upstream.
+commit 5e80d73f22043c59c8ad36452a3253937ed77955 upstream.
 
-damon_test_regions() is assuming all dynamic memory allocation in it will
+damon_test_split_at() is assuming all dynamic memory allocation in it will
 succeed.  Those are indeed likely in the real use cases since those
 allocations are too small to fail, but theoretically those could fail.  In
 the case, inappropriate memory access can happen.  Fix it by appropriately
 cleanup pre-allocated memory and skip the execution of the remaining tests
 in the failure cases.
 
-Link: https://lkml.kernel.org/r/20251101182021.74868-3-sj@kernel.org
+Link: https://lkml.kernel.org/r/20251101182021.74868-6-sj@kernel.org
 Fixes: 17ccae8bb5c9 ("mm/damon: add kunit tests")
 Signed-off-by: SeongJae Park <sj@kernel.org>
 Cc: Brendan Higgins <brendan.higgins@linux.dev>
@@ -74,28 +74,30 @@ Cc: <stable@vger.kernel.org>	[5.15+]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/core-test.h |    6 ++++++
- 1 file changed, 6 insertions(+)
+ mm/damon/core-test.h |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 --- a/mm/damon/core-test.h
 +++ b/mm/damon/core-test.h
-@@ -20,11 +20,17 @@ static void damon_test_regions(struct ku
+@@ -128,8 +128,19 @@ static void damon_test_split_at(struct k
  	struct damon_target *t;
+ 	struct damon_region *r;
  
- 	r = damon_new_region(1, 2);
-+	if (!r)
-+		kunit_skip(test, "region alloc fail");
- 	KUNIT_EXPECT_EQ(test, 1ul, r->ar.start);
- 	KUNIT_EXPECT_EQ(test, 2ul, r->ar.end);
- 	KUNIT_EXPECT_EQ(test, 0u, r->nr_accesses);
- 
++	if (!c)
++		kunit_skip(test, "ctx alloc fail");
  	t = damon_new_target(42);
 +	if (!t) {
-+		damon_free_region(r);
++		damon_destroy_ctx(c);
 +		kunit_skip(test, "target alloc fail");
 +	}
- 	KUNIT_EXPECT_EQ(test, 0u, damon_nr_regions(t));
- 
+ 	r = damon_new_region(0, 100);
++	if (!r) {
++		damon_destroy_ctx(c);
++		damon_free_target(t);
++		kunit_skip(test, "region alloc fail");
++	}
  	damon_add_region(r, t);
+ 	damon_split_region_at(c, t, r, 25);
+ 	KUNIT_EXPECT_EQ(test, r->ar.start, 0ul);
 
 
