@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9FDC3624C4;
-	Thu, 15 Jan 2026 16:53:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 926C842049;
+	Thu, 15 Jan 2026 16:53:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496003; cv=none; b=MpuE1dOwm+cIOUWe1f/oq/IM+waJhmyBp9aeuLWvchMO/7/if8SQW8Ruh4UFNa5kZkdS0h5FqGNAC9UY/vCNhdFT7GR8JuH9oFpILB4z78+gZsQ1nVxbvTJ07rdyf+2t020MhQHDiGic1HZDUtirkRTacCdNnyNteqLtItZbP8A=
+	t=1768496006; cv=none; b=G8jYbRbvoWAlwYoUWUc3ruZpJLWiN5wy1qmxmak0mo0QXlJe79EWiFqxkeFNUBzbQS/YXSUI/ayEnUbCxuETxiEFBpHXnYo/yqOJ+709Njei85Ns9OuRnfHbS2UxRbD+WNVw30vOih1JI7G3Gvd4qk/Nk6j/HHYN6hEgTiykbtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496003; c=relaxed/simple;
-	bh=smtAWOfpzoy8yevM0ckkZs4NlTpk9VY5EWsKuWMNbsw=;
+	s=arc-20240116; t=1768496006; c=relaxed/simple;
+	bh=8joNl3LGViLPAMG0sPi05lUxlSeGC2GOnXZwb6Byv+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ofLnMnPMaqjKaMCGcuJfNyiC/j2uuavf3hbayHP7auEa/0UA64bmkuE1TOrsMV7BUUCPUm2R616oLQ+FBQ45yXLc0/zvo9CO5bhs8Av16X/JZMxcBiXX7AkOlBHsy7F/yQIqzopEklNyHTPTTbnMMqNqIqVrWt1mwphb2EZSxhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jUbE0m9w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=itI0CeW1ylTfkH4VqCdJVAPRRwI4eimBoB1UgReX6lh9/T7FpY7GIXag/cHutKvmCBNZCA2uRl7Qpz3Wwkbc9mb8DvmQo3xz7fGON9tVXffNmWTVW567G8T6zGmrw0xsIAZ1GcHVyIcv1IccZmVVgQ+AEra+3g/H1VZMiBzX3sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uJOfiVWx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jUbE0m9w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 391E9C116D0;
-	Thu, 15 Jan 2026 16:53:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uJOfiVWx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CFEDC19421;
+	Thu, 15 Jan 2026 16:53:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496003;
-	bh=smtAWOfpzoy8yevM0ckkZs4NlTpk9VY5EWsKuWMNbsw=;
+	s=korg; t=1768496006;
+	bh=8joNl3LGViLPAMG0sPi05lUxlSeGC2GOnXZwb6Byv+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jUbE0m9wQpoaFJkvBCmRRpoBmWO5Tb0zz/4jSu8MeR74S3Z684FQ2lto3ZveF4vHx
-	 qEjMlcq7v07+884T/BAOIgeH5D/iWornAd1IGU5v7xKqLTcpsQqtmqQLY8d0L6e4rS
-	 CWDniLqjKQjeYZ+lzkQQgAprT7wMc5eWO+OfywZs=
+	b=uJOfiVWxvYhpl+K+Yq2Bb0NQ7/buR30L+1SQ0jBYPxixJ3vqezjteq5rGjqsCb7BB
+	 WH7ONbh/VRDEfxbAjxjdfKH1PLQjXcVTuJXg9lMpwtq2pidqeUUK7GTcnJxO0HnEmg
+	 ihOzvTOkfarXmSvN3jpBp2nFdKBd8/Ebd8JufSKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Subject: [PATCH 6.18 044/181] libceph: make calc_target() set t->paused, not just clear it
-Date: Thu, 15 Jan 2026 17:46:21 +0100
-Message-ID: <20260115164203.920415024@linuxfoundation.org>
+	Caleb Sander Mateos <csander@purestorage.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 045/181] ublk: reorder tag_set initialization before queue allocation
+Date: Thu, 15 Jan 2026 17:46:22 +0100
+Message-ID: <20260115164203.956190061@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -51,74 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-commit c0fe2994f9a9d0a2ec9e42441ea5ba74b6a16176 upstream.
+commit 011af85ccd871526df36988c7ff20ca375fb804d upstream.
 
-Currently calc_target() clears t->paused if the request shouldn't be
-paused anymore, but doesn't ever set t->paused even though it's able to
-determine when the request should be paused.  Setting t->paused is left
-to __submit_request() which is fine for regular requests but doesn't
-work for linger requests -- since __submit_request() doesn't operate
-on linger requests, there is nowhere for lreq->t.paused to be set.
-One consequence of this is that watches don't get reestablished on
-paused -> unpaused transitions in cases where requests have been paused
-long enough for the (paused) unwatch request to time out and for the
-subsequent (re)watch request to enter the paused state.  On top of the
-watch not getting reestablished, rbd_reregister_watch() gets stuck with
-rbd_dev->watch_mutex held:
+Move ublk_add_tag_set() before ublk_init_queues() in the device
+initialization path. This allows us to use the blk-mq CPU-to-queue
+mapping established by the tag_set to determine the appropriate
+NUMA node for each queue allocation.
 
-  rbd_register_watch
-    __rbd_register_watch
-      ceph_osdc_watch
-        linger_reg_commit_wait
+The error handling paths are also reordered accordingly.
 
-It's waiting for lreq->reg_commit_wait to be completed, but for that to
-happen the respective request needs to end up on need_resend_linger list
-and be kicked when requests are unpaused.  There is no chance for that
-if the request in question is never marked paused in the first place.
-
-The fact that rbd_dev->watch_mutex remains taken out forever then
-prevents the image from getting unmapped -- "rbd unmap" would inevitably
-hang in D state on an attempt to grab the mutex.
-
-Cc: stable@vger.kernel.org
-Reported-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Reviewed-by: Caleb Sander Mateos <csander@purestorage.com>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[ Upstream commit 529d4d632788 ("ublk: implement NUMA-aware memory allocation")
+  is ported to linux-6.18.y, but it depends on commit 011af85ccd87 ("ublk:
+  reorder tag_set initialization before queue allocation"). kernel panic is
+  reported on 6.18.y: https://github.com/ublk-org/ublksrv/issues/174 ]
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osd_client.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/block/ublk_drv.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/net/ceph/osd_client.c
-+++ b/net/ceph/osd_client.c
-@@ -1588,6 +1588,7 @@ static enum calc_target_result calc_targ
- 	struct ceph_pg_pool_info *pi;
- 	struct ceph_pg pgid, last_pgid;
- 	struct ceph_osds up, acting;
-+	bool should_be_paused;
- 	bool is_read = t->flags & CEPH_OSD_FLAG_READ;
- 	bool is_write = t->flags & CEPH_OSD_FLAG_WRITE;
- 	bool force_resend = false;
-@@ -1656,10 +1657,16 @@ static enum calc_target_result calc_targ
- 				 &last_pgid))
- 		force_resend = true;
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -3280,17 +3280,17 @@ static int ublk_ctrl_add_dev(const struc
+ 			ub->dev_info.nr_hw_queues, nr_cpu_ids);
+ 	ublk_align_max_io_size(ub);
  
--	if (t->paused && !target_should_be_paused(osdc, t, pi)) {
--		t->paused = false;
-+	should_be_paused = target_should_be_paused(osdc, t, pi);
-+	if (t->paused && !should_be_paused) {
- 		unpaused = true;
- 	}
-+	if (t->paused != should_be_paused) {
-+		dout("%s t %p paused %d -> %d\n", __func__, t, t->paused,
-+		     should_be_paused);
-+		t->paused = should_be_paused;
-+	}
-+
- 	legacy_change = ceph_pg_compare(&t->pgid, &pgid) ||
- 			ceph_osds_changed(&t->acting, &acting,
- 					  t->used_replica || any_change);
+-	ret = ublk_init_queues(ub);
++	ret = ublk_add_tag_set(ub);
+ 	if (ret)
+ 		goto out_free_dev_number;
+ 
+-	ret = ublk_add_tag_set(ub);
++	ret = ublk_init_queues(ub);
+ 	if (ret)
+-		goto out_deinit_queues;
++		goto out_free_tag_set;
+ 
+ 	ret = -EFAULT;
+ 	if (copy_to_user(argp, &ub->dev_info, sizeof(info)))
+-		goto out_free_tag_set;
++		goto out_deinit_queues;
+ 
+ 	/*
+ 	 * Add the char dev so that ublksrv daemon can be setup.
+@@ -3299,10 +3299,10 @@ static int ublk_ctrl_add_dev(const struc
+ 	ret = ublk_add_chdev(ub);
+ 	goto out_unlock;
+ 
+-out_free_tag_set:
+-	blk_mq_free_tag_set(&ub->tag_set);
+ out_deinit_queues:
+ 	ublk_deinit_queues(ub);
++out_free_tag_set:
++	blk_mq_free_tag_set(&ub->tag_set);
+ out_free_dev_number:
+ 	ublk_free_dev_number(ub);
+ out_free_ub:
 
 
